@@ -238,13 +238,13 @@ function rt_fetch_images_for_album() {
 
     global $wpdb,$bp,$kaltura_validation_data;
     $album_name = $_POST['album_name'];
+    $album_name = trim($album_name);
     $album_table =$bp->media->table_media_album;
     $data_table =$bp->media->table_media_data;
     $user_id = $bp->loggedin_user->id;
-    $query = "SELECT $data_table.entry_id FROM $album_table INNER JOIN $data_table WHERE $album_table.user_id = '$user_id'
-                AND $album_table.album_id = $data_table.album_id AND wp_bp_media_album.name = '$album_name'";
+    $query = "SELECT $data_table.entry_id FROM $album_table INNER JOIN $data_table WHERE $album_table.user_id = '$user_id' AND $album_table.album_id = $data_table.album_id AND $album_table.name = '$album_name'";
     $result = $wpdb->get_results($query);
-//    var_dump($query);
+//    var_dump($result);
     // Got the entry id's now fetch the thumbs from kaltura
     foreach ($result as $key => $value) {
         ?>

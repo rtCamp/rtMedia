@@ -108,7 +108,7 @@ if($bp->current_component == BP_MEDIA_SLUG) {
         //store any album name
         $rt_first_album = $result[0]->name;
 //        var_dump($rt_first_album);
-        echo "<ul id = 'rt-album-list'>";
+        echo "<ul id = 'rt-album-list-ul'>";
 
         foreach ($result as $key => $value) {
             ?>
@@ -133,22 +133,16 @@ if($bp->current_component == BP_MEDIA_SLUG) {
             ?>
                 <li class="<?php echo $value->name;?>" <?php if($rt_first_album == $value->name) {echo "style = 'display:inline'";} else {echo "style = 'display:none'";}?>>
                     <?php //echo $value->entry_id?>
-
-
-                                    <?php
+                    <?php
                     try {
                         $picture_data = $kaltura_validation_data['client']-> media -> get($value->entry_id);
                          ?><img src="<?php echo $picture_data->thumbnailUrl;?>" />
                     <?php }
                     catch (Exception $e ) {
-    //                    $test->entry_id = -9999;
                             echo 'Error Connecting to Media Server';
                             break;
                     }
                 ?>
-
-
-
                 </li>
             <?php
         }
@@ -172,7 +166,14 @@ if($bp->current_component == BP_MEDIA_SLUG) {
     $flash_url = get_site_option('bp_rt_kaltura_url')."/kse/ui_conf_id/501";
     $flashVarsStr = "userId=1&sessionId=".$kaltura_validation_data['ks']."&partnerId=".$kaltura_validation_data['partner_id']."&subPartnerId=".$kaltura_validation_data['subpartner_id']."&kshowId=-1&afterAddentry=onContributionWizardAfterAddEntry&close=onContributionWizardClose&termsOfUse=http://corp.kaltura.com/static/tandc&showCloseButton=false";
     ?>
-<div id="kaltura_contribution_wizard_wrapper"></div>
+<!--
+If current Component is group then show the KCW
+-->
+<?php if($bp->current_component == BP_GROUPS_SLUG) {?>
+    <div id="kaltura_contribution_wizard_wrapper"></div>
+<?php }else{ ?>
+    <div id="kaltura_contribution_wizard_wrapper" style="display: none"></div>
+<?php }?>
 <script type="text/javascript">
     var cwWidth = 680;
     var cwHeight = 360;
@@ -193,7 +194,9 @@ if($bp->current_component == BP_MEDIA_SLUG) {
             rt_entry_media_type = rt_entry_media_type+ entries[i].mediaType+',';
         }
 
-
+        //as album_name and visibility is only related to group and groups may not have album, both variables must be initialized
+        var album_name = ''
+        var visibility = '1'; //every group media is by default public
         //here check which radio button is selected.(new album or existing album)
         rt_album_type = jQuery("input[@name='rt-album']:checked").val();
         //        console.log(rt_album_type);
@@ -210,6 +213,7 @@ if($bp->current_component == BP_MEDIA_SLUG) {
             console.log(album_name);
             visibility = 0; //by default set validity to 0
         }
+
 
         var data = {
             action: 'media_upload',

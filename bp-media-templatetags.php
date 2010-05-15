@@ -36,6 +36,7 @@ class BP_User_Media_Template {
         global $bp;
         if ( !$user_id )
             $user_id = $bp->loggedin_user->id;
+//        var_dump($user_id);
         $this->pag_page = isset( $_GET['fpage'] ) ? intval( $_GET['fpage'] ) : $page;
         $this->pag_num = isset( $_GET['num'] ) ? intval( $_GET['num'] ) : $per_page;
 
@@ -171,7 +172,7 @@ function bp_has_media( $args = '' ) {
     }
 
     $pictures_template = new BP_User_Media_Template( $user_id,$page, $per_page, $max,$scope, $view,$group_id );
-
+//    var_dump($pictures_template);
     return $pictures_template->has_pictures();
 }
 /**
@@ -198,7 +199,8 @@ function is_media_exists($id) {
     global $wpdb,$bp;
     $qry = "SELECT id FROM {$bp->media->table_media_data} WHERE id='$id'";
     $result = $wpdb->get_col($qry);
-
+//    var_dump($result);
+//    die();
     if($result)
         return true;
     else
@@ -1114,8 +1116,8 @@ function bp_media_displayed_user_username() {
 function bp_media_get_displayed_user_username() {
     global $bp,$wpdb;
     $media_id = rt_who_owns_this_media($bp->action_variables[0]);
-    $user_id = $wpdb->get_var("SELECT user_id from {$bp->media->table_media_data} WHERE ID = {$media_id} ");
-    return apply_filters( 'bp_media_get_displayed_user_username', bp_core_get_username( $user_id ) );
+//    $user_id = $wpdb->get_var("SELECT user_id from {$bp->media->table_media_data} WHERE ID = {$media_id} ");
+    return apply_filters( 'bp_media_get_displayed_user_username', bp_core_get_username( $media_id ) );
 }
 
 function bp_media_displayed_user_fullname() {
@@ -1148,6 +1150,49 @@ function bp_media_group_media_tabs( $group = false ) {
 <li<?php if ( 'upload' == $current_tab ) : ?> class="current"<?php endif; ?>><a href="<?php echo $bp->root_domain . '/' . $bp->groups->slug ?>/<?php echo $group->slug ?>/<?php echo $bp->media->slug ?>/upload"><?php printf( __('Upload', 'buddypress-media')) ?></a></li>
 
     <?php
+}
+
+/**
+ * Returns the type of visibility of media
+ */
+function rt_get_media_visibility() {
+    global $bp,$pictures_template;
+//    var_dump($pictures_template);
+    $entry_id = $pictures_template->pictures[0]->id;
+//    var_dump($pictures_template);
+    switch($pictures_template->pictures[0]->visibility){
+        case 'private':
+            $visibility = 'Private';
+            break;
+        case 'public':
+            $visibility = 'Public';
+            break;
+    }
+//    echo $entry_id;
+//    echo rt_get_media_type($entry_id);
+    return $visibility . rt_get_media_type($entry_id);
+//    return $visibility;
+    
+}
+function rt_get_media_type($entry_id) {
+    global $pictures_template;
+    $type = '';
+    foreach ($pictures_template->pictures[0] as $key => $value){
+        if($key == 'mediaType'){
+            switch ($value){
+                case '1': 
+                        $type = ' Video';
+                        break;
+                case '2': 
+                        $type = ' Photo';
+                        break;
+                case '5': 
+                        $type = ' Audio';
+                        break;
+            }
+        }
+    }
+    return $type;
 }
 
 ?>

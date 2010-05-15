@@ -61,7 +61,7 @@ jQuery(document).ready(function(){
 
 
     //jquery for album in upload tab. (only available under media tab and not in group)
-    jQuery('#rt-album-list li').live('click',function(){
+    jQuery('#rt-album-list-ul li').live('click',function(){
         album_name = this.innerHTML;
         //album name is added as a class to the album thumb images so that its easy to show hide.
         //only "this" album name will be shown and all others are kept hidden

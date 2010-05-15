@@ -253,6 +253,7 @@ Class BP_Media_Picture {
             $where_1 = "AND group_id = $group_id";
         }
 
+
         $list_all_elements = BP_Media_Picture::get_media_data($media_type,$view,$group_id); //data from kaltura user seperated
 
         $j=0;
@@ -262,11 +263,20 @@ Class BP_Media_Picture {
         else {
             $current_user_data = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM {$bp->media->table_media_data} WHERE user_id= $user_id $where_1") );
         }
-
+//        var_dump($bp->displayed_user);
         foreach ($list_all_elements['pictures'] as $key => $value) {
 
             for($i=0;$i<count($current_user_data);$i++) {
                 if($value->id == $current_user_data[$i]->entry_id) {
+
+                    /**
+                     * Insert visibility of the media. ITs in album table
+                     */
+                    $q = "SELECT visibility from {$bp->media->table_media_album} WHERE album_id = {$current_user_data[$i]->album_id}";
+                    $result = $wpdb->get_col($q);
+
+//                    if($user_id == 0) continue;
+                    $value->visibility = $result[0];
                     $value->db_id = $current_user_data[$i]->id;
                     $value->localview = $current_user_data[$i]->views;
                     $value->local_tot_rank = $current_user_data[$i]->total_rating;

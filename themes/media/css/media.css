@@ -80,11 +80,11 @@ a#delete-img { background: transparent url(../images/delete-icon.png) no-repeat 
 /*album message display css*/
 .rt-album-message{}
 #rt-album-subnav ul li{float:left;margin-right: 15px }
-#kaltura_contribution_wizard_wrapper{ display: none}
+#kaltura_contribution_wizard_wrapper{}
 /*displaying album @ upload page*/
 #rt-album-wrapper{border: 1px solid gray;margin-top: 10px;}
-#rt-album-list{}
-#rt-album-list li{display: inline;margin-right: 10px}
+#rt-album-list-ul{}
+#rt-album-list-ul li{display: inline;margin-right: 10px}
 #rt-pics-list li {display: inline;margin-right: 10px}
 
 /*album media thumbs*/
