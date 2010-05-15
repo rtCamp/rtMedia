@@ -248,13 +248,16 @@ function rt_fetch_images_for_album() {
     // Got the entry id's now fetch the thumbs from kaltura
     foreach ($result as $key => $value) {
         ?>
-            <li>                <?php
+            <li>
+        <?php
                 try {
                     $picture_data = $kaltura_validation_data['client']-> media -> get($value->entry_id);
                      ?><img src="<?php echo $picture_data->thumbnailUrl;?>" />
                 <?php }
                 catch (Exception $e ) {
-                    $test->entry_id = -9999;
+//                    $test->entry_id = -9999;
+                        echo 'Error Connecting to Media Server';
+                        break;
                 }
                 ?>
 

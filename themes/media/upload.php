@@ -95,6 +95,7 @@ if($bp->current_component == BP_MEDIA_SLUG) {
     ?>
 <div id="rt-album-wrapper">
 <?php
+
         $user_id = $bp->loggedin_user->id;
         $album_table =$bp->media->table_media_album;
         $data_table =$bp->media->table_media_data;
@@ -111,7 +112,10 @@ if($bp->current_component == BP_MEDIA_SLUG) {
 
         foreach ($result as $key => $value) {
             ?>
-                <li><?php echo $value->name?></li>
+                <li>
+                 <?php echo $value->name?>
+
+                </li>
             <?php
         }
         echo "</ul>";//rt-album list ends
@@ -127,7 +131,25 @@ if($bp->current_component == BP_MEDIA_SLUG) {
         echo "<ul id='rt-pics-list'>";
         foreach ($result as $key => $value) {
             ?>
-                <li class="<?php echo $value->name;?>" <?php if($rt_first_album == $value->name) {echo "style = 'display:inline'";} else {echo "style = 'display:none'";}?>><?php echo $value->entry_id?></li>
+                <li class="<?php echo $value->name;?>" <?php if($rt_first_album == $value->name) {echo "style = 'display:inline'";} else {echo "style = 'display:none'";}?>>
+                    <?php //echo $value->entry_id?>
+
+
+                                    <?php
+                    try {
+                        $picture_data = $kaltura_validation_data['client']-> media -> get($value->entry_id);
+                         ?><img src="<?php echo $picture_data->thumbnailUrl;?>" />
+                    <?php }
+                    catch (Exception $e ) {
+    //                    $test->entry_id = -9999;
+                            echo 'Error Connecting to Media Server';
+                            break;
+                    }
+                ?>
+
+
+
+                </li>
             <?php
         }
         echo "</ul>";
