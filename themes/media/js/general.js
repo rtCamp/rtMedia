@@ -66,15 +66,27 @@ jQuery(document).ready(function(){
         //album name is added as a class to the album thumb images so that its easy to show hide.
         //only "this" album name will be shown and all others are kept hidden
         //Most funny code I have ever written in jquery :D Enjoyed this a lot!
-        jQuery('#rt-pics-list li').each(function(index) {
-              if(jQuery(this).is('.'+album_name)){
-                    jQuery(this).removeAttr('display');
-                    jQuery(this).removeAttr('style');
-                    jQuery(this).attr('display','inline');
-              }else{
-                  jQuery(this).hide();
-              }
+        var data = {
+            action: 'rt_fetch_images_for_album',
+            album_name : album_name
+        };
+
+        jQuery.post(ajaxurl, data, function(response) {
+            jQuery('#rt-pics-list li').remove();
+            jQuery('#rt-pics-list').append(response);
+//        jQuery('#rt-pics-list li').each(function(index) {
+//              if(jQuery(this).is('.'+album_name)){
+//                    jQuery(this).removeAttr('display');
+//                    jQuery(this).removeAttr('style');
+//                    jQuery(this).attr('display','inline');
+//              }else{
+//                  jQuery(this).hide();
+//              }
+//        });
+
         });
+
+        //this with come in respose.
 
     });
 });

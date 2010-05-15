@@ -121,14 +121,14 @@ function rt_media_upload() {
 
     $album_name = $_POST['album_name'];
     $visibility = $_POST['visibility'];
-    
-    switch($visibility){
+
+    switch($visibility) {
         case 'public': default:
-                $visibility = 1;
-                break;
+            $visibility = 1;
+            break;
         case 'private':
-                $visibility = 0;
-                break;
+            $visibility = 0;
+            break;
     }
     //check for the new name availibility for the same user.
     //if the name is available in the database then, insert the records with the album id
@@ -231,4 +231,36 @@ function rt_create_new_album() {
 
 add_action('wp_ajax_create_new_album','rt_create_new_album');
 
+/**
+ * Fetching thumbs for selected album from kaltura Server
+ */
+function rt_fetch_images_for_album() {
+
+    global $wpdb,$bp,$kaltura_validation_data;
+    $album_name = $_POST['album_name'];
+    $album_table =$bp->media->table_media_album;
+    $data_table =$bp->media->table_media_data;
+    $user_id = $bp->loggedin_user->id;
+    $query = "SELECT $data_table.entry_id FROM $album_table INNER JOIN $data_table WHERE $album_table.user_id = '$user_id'
+                AND $album_table.album_id = $data_table.album_id AND wp_bp_media_album.name = '$album_name'";
+    $result = $wpdb->get_results($query);
+//    var_dump($query);
+    // Got the entry id's now fetch the thumbs from kaltura
+    foreach ($result as $key => $value) {
+        ?>
+            <li>                <?php
+                try {
+                    $picture_data = $kaltura_validation_data['client']-> media -> get($value->entry_id);
+                     ?><img src="<?php echo $picture_data->thumbnailUrl;?>" />
+                <?php }
+                catch (Exception $e ) {
+                    $test->entry_id = -9999;
+                }
+                ?>
+
+            </li>
+        <?php
+    }
+}
+add_action('wp_ajax_rt_fetch_images_for_album','rt_fetch_images_for_album');
 ?>

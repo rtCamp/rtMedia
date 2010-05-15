@@ -346,6 +346,8 @@ Class BP_Media_Picture {
             $k = $test->entry_id;
             try {
                 $picture_data = $kaltura_validation_data['client']-> media -> get($k);
+//                var_dump($picture_data);
+
                 $total_picture_count = 1;
                 $temp_array = array();
                 $temp_array[0] = $picture_data;

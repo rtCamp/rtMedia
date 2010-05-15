@@ -75,16 +75,18 @@ a#delete-img { background: transparent url(../images/delete-icon.png) no-repeat 
 .rt-album-selection{padding: 10px;/*border: 1px solid green ;*/width: 350px;float: left}
 
 .rt-visibility li{float:left}
+
+
 /*album message display css*/
 .rt-album-message{}
-
 #rt-album-subnav ul li{float:left;margin-right: 15px }
-
-
 #kaltura_contribution_wizard_wrapper{ display: none}
 /*displaying album @ upload page*/
-
 #rt-album-wrapper{border: 1px solid gray;margin-top: 10px;}
 #rt-album-list{}
 #rt-album-list li{display: inline;margin-right: 10px}
 #rt-pics-list li {display: inline;margin-right: 10px}
+
+/*album media thumbs*/
+#rt-album-media-thumbs{}
+#rt-album-media-thumbs li{display: inline;margin-right: 10px;background: gray}

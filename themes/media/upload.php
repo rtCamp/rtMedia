@@ -86,9 +86,11 @@ if(is_kaltura_configured()):
 
 </div><!-- #rt-album-create ends-->
         <?php
-    } //this makes sure that album options are only available for media and nowhere in other components
+    } 
 ?>
 <?php
+
+//this makes sure that album options are only available for media and nowhere in other components
 if($bp->current_component == BP_MEDIA_SLUG) {
     ?>
 <div id="rt-album-wrapper">
