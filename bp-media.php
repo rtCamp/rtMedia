@@ -134,10 +134,9 @@ function media_setup_globals() {
     $bp->media->table_media_data = $wpdb->base_prefix . 'bp_media_data';
     $bp->media->table_media_album = $wpdb->base_prefix . 'bp_media_album';
     $bp->media->table_user_rating_data = $wpdb->base_prefix . 'bp_media_user_rating_list';
-    $bp->media->image_base = WP_PLUGIN_URL . '/images';
+    $bp->media->image_base = BP_MEDIA_PLUGIN_URL . '/themes/media/images'; //kapil
     $bp->media->format_activity_function = 'bp_media_format_activity';
     $bp->media->format_notification_function = 'bp_media_format_notifications';
-
     if ( function_exists('bp_wire_install') )
         $bp->media->table_name_wire = $wpdb->base_prefix . 'bp_media_wire';
     $bp->version_numbers->media = BP_MEDIA_VERSION;
@@ -394,9 +393,9 @@ add_action( 'bp_media_picture', 'bp_media_remove_screen_notifications' );
  * @param string $view single/multiple
  * @return the media for user
  */
-function bp_pictures_get_pictures_for_user( $user_id, $media_type,$view,$group_id ) {
+function bp_pictures_get_pictures_for_user( $user_id, $media_type,$view,$group_id,$album_id ) { //kapil
 
-    return BP_Media_Picture::get_pictures_for_user( $user_id,$media_type,$view,$group_id);
+    return BP_Media_Picture::get_pictures_for_user( $user_id,$media_type,$view,$group_id,$album_id); //kapil
 }
 /**
  * This function sets a new navigation item Media to the Buddypress Component

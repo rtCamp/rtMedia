@@ -32,7 +32,7 @@ class BP_User_Media_Template {
      * @param string $view is single page
      *
      */
-    function BP_User_Media_Template( $user_id_filter, $page, $per_page, $max, $media_type, $view = 'multiple',$group_id ) {
+    function BP_User_Media_Template( $user_id_filter, $page, $per_page, $max, $media_type, $view = 'multiple',$group_id,$album_id ) { //kapil
         global $bp;
         if ( !$user_id )
             $user_id = $bp->loggedin_user->id;
@@ -41,7 +41,7 @@ class BP_User_Media_Template {
         $this->pag_num = isset( $_GET['num'] ) ? intval( $_GET['num'] ) : $per_page;
 
         if ( !$this->pictures = wp_cache_get( 'bp_pictures_for_user_' . $user_id, 'bp' ) ) {
-            $this->pictures = bp_pictures_get_pictures_for_user( $user_id_filter, $media_type,$view,$group_id);
+            $this->pictures = bp_pictures_get_pictures_for_user( $user_id_filter, $media_type,$view,$group_id,$album_id);//kapil
 //            var_dump($group_id);
             $this->media_slug = $this->pictures['media_slug'];
             wp_cache_set( 'bp_pictures_for_user_' . $user_id, $this->pictures, 'bp' );
@@ -159,7 +159,8 @@ function bp_has_media( $args = '' ) {
             'max' => false,
             'scope'=> 'mediaall',
             'group_id'=> false,
-            'view' => $view
+            'view' => $view,
+            'album_id' => 0 //album_id = 0 >> default album //kapil
     );
 
     $r = wp_parse_args( $args, $defaults );
@@ -167,11 +168,12 @@ function bp_has_media( $args = '' ) {
 
     extract( $r, EXTR_SKIP );
     
+    //group_id initialized only when group template is loaded : kapil
     if ( $bp->groups->current_group->id ) {
         $group_id = $bp->groups->current_group->id;
     }
 
-    $pictures_template = new BP_User_Media_Template( $user_id,$page, $per_page, $max,$scope, $view,$group_id );
+    $pictures_template = new BP_User_Media_Template( $user_id,$page, $per_page, $max,$scope, $view,$group_id,$album_id ); //kapil
 //    var_dump($pictures_template);
     return $pictures_template->has_pictures();
 }
@@ -428,9 +430,9 @@ function bp_get_picture_view_link() {
 //    if($bp->current_component == BP_GROUPS_SLUG){
 //        return apply_filters('bp_get_picture_view_link',$bp->displayed_user->domain . $bp->media->slug .'/'. $pictures_template->media_slug .'/'. $pictures_template->picture->db_id) ;
 //    }else {
-        return apply_filters('bp_get_picture_view_link',$url) ;
+    return apply_filters('bp_get_picture_view_link',$url) ;
 //    }
-    
+
 }
 /**
  * Returns the single media path
@@ -1158,7 +1160,7 @@ function rt_get_media_visibility() {
 //    var_dump($pictures_template);
     $entry_id = $pictures_template->pictures[0]->id;
 //    var_dump($pictures_template);
-    switch($pictures_template->pictures[0]->visibility){
+    switch($pictures_template->pictures[0]->visibility) {
         case 'private':
             $visibility = 'Private';
             break;
@@ -1170,23 +1172,23 @@ function rt_get_media_visibility() {
 //    echo rt_get_media_type($entry_id);
     return $visibility . rt_get_media_type($entry_id);
 //    return $visibility;
-    
+
 }
 function rt_get_media_type($entry_id) {
     global $pictures_template;
     $type = '';
-    foreach ($pictures_template->pictures[0] as $key => $value){
-        if($key == 'mediaType'){
-            switch ($value){
-                case '1': 
-                        $type = ' Video';
-                        break;
-                case '2': 
-                        $type = ' Photo';
-                        break;
-                case '5': 
-                        $type = ' Audio';
-                        break;
+    foreach ($pictures_template->pictures[0] as $key => $value) { //kapil
+        if($key == 'mediaType') {
+            switch ($value) {
+                case '1':
+                    $type = ' Video';
+                    break;
+                case '2':
+                    $type = ' Photo';
+                    break;
+                case '5':
+                    $type = ' Audio';
+                    break;
             }
         }
     }

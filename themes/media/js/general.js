@@ -94,4 +94,18 @@ jQuery(document).ready(function(){
 
         //this with come in respose.
     });
+
+    //filter for album drop down : kapil
+        jQuery('#media-order-select select option').live('click',function(){
+//            alert('hello');
+//                console.log(jQuery(this).val());
+                if(jQuery(this).val() == 'my-media-data'){
+                    //hide other's album from drop down'
+                    jQuery('#media-sort-album-select select option.rt-others-album').hide();
+                }
+                else if(jQuery(this).val() == 'all-media-data'){
+                    //show all album in the drop down
+                    jQuery('#media-sort-album-select select option.rt-others-album').show();
+                }
+        });
 });

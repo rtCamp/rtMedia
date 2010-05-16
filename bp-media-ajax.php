@@ -60,6 +60,18 @@ function bp_media_ajax_querystring($query_string, $object, $filter, $scope, $pag
         $user_id = ( $bp->displayed_user->id ) ? $bp->displayed_user->id : $bp->loggedin_user->id;
         $new_qs[] = 'user_id=' . $user_id;
     }
+
+    //media album filter : kapil
+    $filter_string = $_BP_COOKIE['bp-' . $object . '-filter'];
+    $rt_filter = explode('_', $filter_string);
+    if($rt_filter[0] == 'rt-album-filter') {
+        $album_id = $rt_filter[1];
+        $new_qs[] = 'album_id=' . $album_id;
+    }
+    
+
+// fnc crap!
+//    rt_get_album_filter($_BP_COOKIE['bp-' . $object . '-filter']);
     /* If page and search_terms have been passed via the AJAX post request, use those */
     if ( !empty( $_POST['page'] ) && '-1' != $_POST['page'] )
         $new_qs[] = 'page=' . $_POST['page'];
@@ -73,7 +85,7 @@ add_filter('bp_dtheme_ajax_querystring', 'bp_media_ajax_querystring',1,7);
 
 
 function bp_media_object_template_loader() {
-
+//    var_dump($_POST['filter']);
     if($_POST['scope'] == 'upload') {
         if(is_kaltura_configured()):
 
