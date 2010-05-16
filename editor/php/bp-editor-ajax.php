@@ -36,8 +36,6 @@ if ( bp_has_media( "scope=$filter&per_page=99999" ) ) :
         <?php while ( bp_pictures() ) : bp_the_picture(); 
             global $picture;
         ?>
-
-		
     <li class="picture-thumb">
         <a href='<?php bp_picture_view_link() ?> target="_blank"'><img src='<?php bp_picture_small_link() ?>' /></a><br />
         <span class="title"><?php bp_picture_title() ?></span>
@@ -45,14 +43,13 @@ if ( bp_has_media( "scope=$filter&per_page=99999" ) ) :
         	<?php
         		//insert code
         		//type checking
-        		//TODO::
+                        if($picture->mediaType == 2){
         		//photo code
-        		$code = '<a href="'.bp_get_picture_view_link().'"><img src="'.$picture->downloadUrl.'"/></a>'; 
-        		
-        		//audio code
-        		
-        		//video code
-        		
+        		$code = '<a href="'.bp_get_picture_view_link().'"><img src="'.$picture->downloadUrl.'"/></a>';
+                        }
+                        else{ //for audio and video
+                            $code = rt_get_object_markup();
+                        }
         	?>
         	<input type="submit" value="Insert into Post" class="button insert-into-post-button" onclick="insert_into_post('<?php echo rt_js_escape($code); ?>')"/>
         </p>

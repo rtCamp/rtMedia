@@ -522,29 +522,38 @@ function bp_rt_media_video_library() {
 <input id="current-user-id" type = "hidden" value = "<?php echo $bp->loggedin_user->id?>"/>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js"></script>
 <div id="asdf1">
-    <object
-        name="mykdp"
-        id="mykdp"
-        type="application/x-shockwave-flash"
-        allowScriptAccess="always"
-        allowNetworking="all"
-        allowFullScreen="true"
-        height="335" width="400"
-        data="<?php echo $kaltura_url ?>/index.php/kwidget/cache_st/1253598756/wid/_<?php echo $partner_id?>/uiconf_id/48410/entry_id/<?php echo $single_pic_template->picture_id?>">
-
-        <param name="allowScriptAccess" value="always" />
-        <param name="allowNetworking" value="all" />
-        <param name="allowFullScreen" value="true" />
-        <param name="bgcolor" value="#000000" />
-        <param name="movie" value="<?php echo $kaltura_url ?>/index.php/kwidget/cache_st/1253598756/wid/_<?php echo $partner_id?>/uiconf_id/48410/entry_id/<?php echo $single_pic_template->picture_id?>"/>
-        <param name="flashVars" value=""/>
-    </object>
+    <?php echo rt_get_object_markup();?>
 </div>
 
     <?php
+
 }
 
+/**
+ * To call in editor
+ */
 
+function rt_get_object_markup() {
+    global $bp,$kaltura_validation_data,$single_pic_template,$picture;
+    $partner_id = $kaltura_validation_data['partner_id'];
+    $kaltura_url = $kaltura_validation_data['config']->serviceUrl;
+    ob_start();
+    ?>
+
+<object name="kaltura_player" id="kaltura_player" type="application/x-shockwave-flash"
+        allowScriptAccess="always" allowNetworking="all"
+        allowFullScreen="true" height="335" width="400"
+        data="<?php echo  $kaltura_url;?>/index.php/kwidget/cache_st/1274050232/wid/_<?php echo $partner_id?>/uiconf_id/48410/entry_id/<?php echo $picture->id?>">
+    <param name="allowScriptAccess" value="always" /><param name="allowNetworking" value="all" />
+    <param name="allowFullScreen" value="true" /><param name="bgcolor" value="#000000" />
+    <param name="movie" value="<?php echo  $kaltura_url;?>/index.php/kwidget/cache_st/1274050232/wid/_<?php echo $partner_id?>/uiconf_id/48410/entry_id/<?php echo $picture->id?>"/>
+    <param name="flashVars" value=""/></object>
+
+
+
+<?php
+    return ob_get_clean();
+}
 
 /**
  * returns the current single media title
