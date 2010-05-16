@@ -1,0 +1,89 @@
+<?php
+	/*
+	 * This is main file for adding Kaltua Media Button inside wordpress post-editor
+	 */
+
+/* **** ACTIONS AND FILTERS *** */
+// add the button to the media button bar 
+add_filter( 'media_buttons_context', 'kaltura_add_media_button', 100);
+
+// action handler - will run when kaltura iframe will load inside thickbox
+add_action( 'media_upload_kaltura', 'kaltura_media_add_thickbox', 100);
+add_action( 'media_upload_kaltura_media_all', 'kaltura_media_add_thickbox', 100);
+add_action( 'media_upload_kaltura_media_photo', 'kaltura_media_add_thickbox', 100);
+add_action( 'media_upload_kaltura_media_video', 'kaltura_media_add_thickbox', 100);
+add_action( 'media_upload_kaltura_media_audio', 'kaltura_media_add_thickbox', 100);
+
+//kaltura iframe header
+add_action('admin_print_styles', 'admin_head_kaltura_media_library_form');
+
+function kaltura_add_media_button($context)  {
+	global $post_ID, $temp_ID;
+	$uploading_iframe_ID = (int) (0 == $post_ID ? $temp_ID : $post_ID);
+
+	$iconurl = BP_MEDIA_PLUGIN_URL .'/editor/img/bp-media-logo-13x13.png';
+	$kaltura_media_button = '%s<a href="media-upload.php?post_id='.$uploading_iframe_ID.'&amp;type=kaltura&amp;tab=kaltura_media_all&amp;TB_iframe=true" title="Add Kaltura Media" class="thickbox"><img src="'.$iconurl.'" alt="All Kaltura Media" /></a>';
+	return sprintf($context, $kaltura_media_button);
+}
+
+// function to show kaltura tabs
+function kaltura_add_media_tab($defaulttabs) {
+	return array(
+		'kaltura_media_all' => 'All Media',
+		'kaltura_media_photo' => 'Photos',
+		'kaltura_media_audio' => 'Audios',
+		'kaltura_media_video' => 'Videos'
+	);
+}	
+
+function admin_head_kaltura_media_library_form(){
+	global $type;
+	
+	//add media CSS		
+	if($type == 'kaltura' ){
+		wp_enqueue_style( 'media' );
+	}	
+}
+
+// the media_upload functions
+function kaltura_media_add_thickbox($stuff) {
+	// clean up the tabs to only show kaltura
+	add_filter( 'media_upload_tabs', 'kaltura_add_media_tab', 100);
+
+	$post_id = $_GET['post_id']; 
+
+	//check which tab currently "viewed"
+	switch($GLOBALS['tab']){
+		case 'kaltura_media_photo':
+			return wp_iframe('kaltura_media_library_form','photo',$post_id);
+		case 'kaltura_media_audio':
+			return wp_iframe('kaltura_media_library_form','audio',$post_id);
+		case 'kaltura_media_video':
+			return wp_iframe('kaltura_media_library_form','video',$post_id);
+		case 'kaltura_media_all':	
+			return wp_iframe('kaltura_media_library_form','all',$post_id);
+	}
+}
+
+//main function which will "write" body of iframe
+function kaltura_media_library_form($filter, $post_id){
+    global $wpdb, $wp_query, $wp_locale, $type, $tab, $post_mime_types;
+    
+    //just to get header - if you comment out this line, tabs will vanish
+    media_upload_header();
+/*     call_user_func_array('kaltura_media_library_'.$filter, $args); */
+	switch($filter){
+		case 'photo':
+				echo "CODE TO GET PHOTOS";
+				break;
+		case 'audio':
+				echo "CODE TO GET AUDIOS";		
+				break;				
+		case 'video':
+				echo "CODE TO GET VIDEOS";		
+				break;				
+		case 'all':
+				echo "CODE TO GET ALL";		
+	} 	   
+}
+?>

@@ -11,7 +11,7 @@ if(is_kaltura_configured()):
      * So these options MUST be avail only while uploading media from media component and NOT from group
      */
     if($bp->current_component == BP_MEDIA_SLUG) {
-        ?>
+	?>
 
 <!-- message div -->
 <div class="rt-album-message updated fade " id="message">
@@ -19,142 +19,59 @@ if(is_kaltura_configured()):
 
 <!-- Album div -->
 <div id="rt-album-create">
-    <table border="1">
-        <tr>
-            <!--<td><input type="radio" name="rt-album" value="rt-new" id="rt-new-album-radio" checked="checked"/>Create New Album</td>-->
-            <td><input type="radio" name="rt-album" id="rt-album-choice-new" value="rt-new" checked="checked"/>Create New Album</td>
-            <td><input type="radio" name="rt-album" value="rt-select-existing" id="rt-album-choice-existing"  />Select  Existing Album</td>
-        </tr>
-        <tr>
-            <td>
-                <form action="" method="post" id="rt-create-album">
-                    Album Visibility : &nbsp;
-                    <ul class="rt-visibility">
-                        <li><input type="radio" checked="checked" name="rt-visibility" value="public" /> Public</li>
-                        <li><input type="radio" name="rt-visibility" value="private" />Private</li>
-                        <!--<li>Friends Only<input type="radio" checked="checked" value="yes" name="notifications[notification_activity_new_reply]"></li>-->
-                    </ul>
-                    <br/>
-                    <input name="rt-album-name" type="text"  id="rt-new-album-name"/>
-
-                    <!--
-                        This go button is must because we can not dependent on flash uploder for album name validation.
-                    -->
-                    <a href="JavaScript:void(0)" class="button" id="rt-create-album-button"> Go </a>
-                    <span id="rt-album-create-loader" class="ajax-loader"></span>
-                </form>
-
-            </td>
-            <td>
-                <!--<div class="rt-album-selection">-->
-                <form method="post" action="" name="" id="rt-selected-album">
-                    Add Media to existing Album : &nbsp;
+    <p><input type="radio" name="rt-album" id="rt-album-choice-new" value="rt-new"/>Create New Album</p>
+	    <form action="" method="post" id="rt-create-album">
+			<input name="rt-album-name" type="text"  id="rt-new-album-name" size="25"/>
+			<a href="JavaScript:void(0)" class="button" id="rt-create-album-button"> Go </a>
+			<br/>
+			<label>Keep this album:
+			    <ul class="rt-visibility">
+				<li><input type="radio" checked="checked" name="rt-visibility" value="public" /> Public</li>
+				<li><input type="radio" name="rt-visibility" value="private" />Private</li>
+				<!--<li>Friends Only<input type="radio" checked="checked" value="yes" name="notifications[notification_activity_new_reply]"></li>-->
+			    </ul>
+			</label>
+			<!--
+			    This go button is must because we can not dependent on flash uploder for album name validation.
+			-->
+			<span id="rt-album-create-loader" class="ajax-loader"></span>
+	    </form>
+    <p><input type="radio" name="rt-album" value="rt-select-existing" id="rt-album-choice-existing"  />Select  Existing Album</p>
+	<!--<div class="rt-album-selection">-->
+	<form method="post" action="" name="" id="rt-selected-album">
+	    Upload to : &nbsp;
 
 
-                    <select name="rt-album-list">
-                                <?php
-                                global $bp,$wpdb;
-                                $user_id = $bp->loggedin_user->id;
-                                $query = "SELECT name FROM {$bp->media->table_media_album} WHERE user_id = $user_id";
-                                $result = $wpdb->get_results($query);
-//                            var_dump($result);
-                                ?><option value="">Default Album</option><?php
-                                foreach ($result as $key => $value) {
-//                                var_dump($value->name);
-//                                var_dump($key);
-                                    ?>
-                        <option value="<?php echo $key?>"><?php echo $value->name;?></option>
-                                    <?php
-                                }
-                                ?>
-                    </select>
-                    <br />
-                    <!-- Change Name of the selected Album
-                    <input name="" type="text" value="from the selected option"/>-->
-                    <br />
-                    <!--<a href="" class="button"> Go </a>-->
-                </form>
-                <!--</div>-->
-
-            </td>
-
-        </tr>
-
-    </table>
+	    <select name="rt-album-list">
+			<?php
+			global $bp,$wpdb;
+			$user_id = $bp->loggedin_user->id;
+			$query = "SELECT name FROM {$bp->media->table_media_album} WHERE user_id = $user_id";
+			$result = $wpdb->get_results($query);
+			?><option value="">Default Album</option><?php
+			foreach ($result as $key => $value) {
+    //                                var_dump($value->name);
+    //                                var_dump($key);
+			    ?>
+		<option value="<?php echo $key?>"><?php echo $value->name;?></option>
+			    <?php
+			}
+			?>
+	    </select>
+	    <br />
+	    <!-- Change Name of the selected Album
+	    <input name="" type="text" value="from the selected option"/>-->
+	    <br />
+	    <!--<a href="" class="button"> Go </a>-->
+	</form>
+    <!--</div>-->
 
 <!-- <input type="radio" checked="checked" value="yes" name="notifications[notification_activity_new_reply]"> -->
 
 </div><!-- #rt-album-create ends-->
-        <?php
-    } 
-?>
-<?php
+	<?php
+    }
 
-//this makes sure that album options are only available for media and nowhere in other components
-if($bp->current_component == BP_MEDIA_SLUG) {
-    ?>
-<div id="rt-album-wrapper">
-<?php
-
-        $user_id = $bp->loggedin_user->id;
-        $album_table =$bp->media->table_media_album;
-        $data_table =$bp->media->table_media_data;
-
-
-        $query = "SELECT * FROM $album_table WHERE user_id = $user_id";
-        $result = $wpdb->get_results($query);
-        //showing albums list
-
-        //store any album name
-        $rt_first_album = $result[0]->name;
-//        var_dump($rt_first_album);
-        echo "<ul id = 'rt-album-list-ul'>";
-
-        foreach ($result as $key => $value) {
-            ?>
-                <li>
-                 <?php echo $value->name?>
-
-                </li>
-            <?php
-        }
-        echo "</ul>";//rt-album list ends
-
-
-
-        $query = "SELECT * FROM $data_table INNER JOIN $album_table
-                    WHERE $data_table.album_id = $album_table.album_id AND $album_table.user_id = $user_id
-                 ";
-        $result = $wpdb->get_results($query);
-
-        //show pictures from selected albums pictures
-        echo "<ul id='rt-pics-list'>";
-        foreach ($result as $key => $value) {
-            ?>
-                <li class="<?php echo $value->name;?>" <?php if($rt_first_album == $value->name) {echo "style = 'display:inline'";} else {echo "style = 'display:none'";}?>>
-                    <?php //echo $value->entry_id?>
-                    <?php
-                    try {
-                        $picture_data = $kaltura_validation_data['client']-> media -> get($value->entry_id);
-                         ?><img src="<?php echo $picture_data->thumbnailUrl;?>" />
-                    <?php }
-                    catch (Exception $e ) {
-                            echo 'Error Connecting to Media Server';
-                            break;
-                    }
-                ?>
-                </li>
-            <?php
-        }
-        echo "</ul>";
-?>
-                <div class="clear"></div>
-</div>
-    <?php
-
-
-//    var_dump($result);
-}
     $flashVars = array();
     $flashVars["uid"]               = $kaltura_validation_data['partnerUserID'];
     $flashVars["partnerId"]         = $kaltura_validation_data['partner_id'];
@@ -169,11 +86,11 @@ if($bp->current_component == BP_MEDIA_SLUG) {
 <!--
 If current Component is group then show the KCW
 -->
-<?php if($bp->current_component == BP_GROUPS_SLUG) {?>
-    <div id="kaltura_contribution_wizard_wrapper"></div>
-<?php }else{ ?>
-    <div id="kaltura_contribution_wizard_wrapper" style="display: none"></div>
-<?php }?>
+    <?php if($bp->current_component == BP_GROUPS_SLUG) {?>
+<div id="kaltura_contribution_wizard_wrapper"></div>
+	<?php }else { ?>
+<div id="kaltura_contribution_wizard_wrapper" style="display: none"></div>
+	<?php }?>
 <script type="text/javascript">
     var cwWidth = 680;
     var cwHeight = 360;
@@ -224,7 +141,7 @@ If current Component is group then show the KCW
             visibility : visibility
         };
         jQuery.post(ajaxurl, data, function(response) {
-                        console.log(response);
+	    console.log(response);
             //            var data = {
             //                action: 'create_new_album',
             //                new_album_name : new_album_name,

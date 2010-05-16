@@ -24,10 +24,10 @@
 <ul id="media-list" class="item-list">
         <?php while ( bp_pictures() ) : bp_the_picture(); ?>
 
-    <div class="picture-thumb">
+	<li class="picture-thumb">
         <a href='<?php bp_picture_view_link() ?>'><img src='<?php bp_picture_small_link() ?>' /></a><br />
         <span class="title"><?php bp_picture_title() ?><br><h6><?php bp_media_rating() ?></h6></span>
-    </div>
+    </li>
 
         <?php endwhile; ?>
             <div class="clear"></div>

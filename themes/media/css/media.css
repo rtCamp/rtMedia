@@ -68,13 +68,21 @@ a#delete-img { background: transparent url(../images/delete-icon.png) no-repeat 
  *
  */
 
- #rt-album-create{ border: 1px solid gray; margin-bottom: 10px;}
+ #rt-album-create{ /* border: 1px solid gray;  */margin-bottom: 10px;}
+ 	#rt-album-create p{margin: 10px 0; font-weight: bold; clear: both}
+ 	#rt-album-create form{margin-left: 20px}
+	 	form#rt-create-album label,
+	 	form#rt-create-album ul{float: left; padding: 2px}
+	 	
+	 	#rt-create-album,
+	 	#rt-selected-album{display: none}	 	
  
  .rt-album-create-album {padding: 10px;/* border: 1px solid red;*/ width: 350px;float: left}
  .rt-album-create-album .rt-create-table{ width: 50%;}
 .rt-album-selection{padding: 10px;/*border: 1px solid green ;*/width: 350px;float: left}
 
-.rt-visibility li{float:left}
+.rt-visibility ul{float:left}
+    .rt-visibility li{float:left}
 
 
 /*album message display css*/

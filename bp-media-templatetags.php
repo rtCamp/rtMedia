@@ -498,8 +498,6 @@ function get_media_data() {
                 break;
         }
     }
-
-
 }
 /**
  *This functions embeds the media player using swf object from the Kaltura server

@@ -1,4 +1,5 @@
 //var j = 'jQuery';
+/* alert('HELLO'); */
 jQuery(document).ready(function(){
     jQuery('.star').rating();
     jQuery('.star').rating('readOnly');
@@ -8,13 +9,18 @@ jQuery(document).ready(function(){
      */
 
     //message box manipulation for various events
+    // Upload tab - album selection
+
     jQuery('#rt-album-choice-existing').live('click',function(){
+		jQuery('#rt-selected-album').fadeIn('slow');    
+        jQuery('#rt-create-album').fadeOut('slow'); 
         jQuery('#kaltura_contribution_wizard_wrapper').css("display","block");
         jQuery('.rt-album-message p').remove();
         jQuery('.rt-album-message').append('<p>Select Album before Uoloading media</p>');
-
     });
     jQuery('#rt-album-choice-new').live('click',function(){
+		jQuery('#rt-selected-album').fadeOut('slow');    
+        jQuery('#rt-create-album').fadeIn('slow'); 
         jQuery('#kaltura_contribution_wizard_wrapper').css("display","none");
         jQuery('.rt-album-message p').remove();
         jQuery('.rt-album-message').append('<p>Create Album to Upload Media</p>');
@@ -87,6 +93,5 @@ jQuery(document).ready(function(){
         });
 
         //this with come in respose.
-
     });
 });
