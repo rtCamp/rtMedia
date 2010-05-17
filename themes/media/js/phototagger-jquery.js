@@ -50,18 +50,19 @@
 		// Check to make sure the container has a position that 
 		// will allow us to absolutely position the other elements
 		// inside of it.
-		if (
-			(this.container.css( "position" ) != "relative") &&
-			(this.container.css( "position" ) != "absolute") &&
-			(this.container.css( "position" ) != "fixed")
-			){
-			
-			// Make this contianer relative.
-			//this.container.css( "position", "relative" );
-                        //this.container.css( "height", "none !important" );
-                        //this.container.css( "width", "none !important" );
-			
-		}
+//		if (
+//			(this.container.css( "position" ) != "relative") &&
+//			(this.container.css( "position" ) != "absolute") &&
+//			(this.container.css( "position" ) != "fixed")
+//			){
+//
+//			// Make this contianer relative.
+////			this.container.css( "position", "relative" );
+//                        //this.container.css( "height", "none !important" );
+//                        //this.container.css( "width", "none !important" );
+//                        console.log('');
+//
+//		}
 				
 		// Resize the container to be the dimensions of the 
 		// image so that we don't have any mouse confusion.
