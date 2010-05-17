@@ -60,7 +60,6 @@
 			//this.container.css( "position", "relative" );
                         //this.container.css( "height", "none !important" );
                         //this.container.css( "width", "none !important" );
-                        alert('hello');
 			
 		}
 				
