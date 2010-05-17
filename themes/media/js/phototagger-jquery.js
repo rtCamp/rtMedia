@@ -58,7 +58,7 @@
 			
 			// Make this contianer relative.
 			this.container.css( "position", "absolute" );
-                        this.container.css( "overflow", "hidden" );
+                        this.container.css( "clear", "both" );
                         //this.container.css( "width", "none !important" );
                         console.log('');
 			
