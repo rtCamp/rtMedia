@@ -66,7 +66,7 @@
 		this.container.width( this.image.width() );
 		this.container.height( this.image.height() ); 
                 console.log(this.image.attr('height') );
-                console.log( this.image.attr('width')  );
+                console.log('hah'+ this.image.attr('width')  );
 		
 		// Hide the message object and add the message to the 
 		// contianer.
