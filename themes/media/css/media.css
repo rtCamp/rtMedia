@@ -100,3 +100,4 @@ a#delete-img { background: transparent url(../images/delete-icon.png) no-repeat 
 #rt-album-media-thumbs li{display: inline;margin-right: 10px;background: gray}
 
 div.rt-picture-single div.last{background: url(../images/Icon_ExclamationMark.png) no-repeat  260px 1px}
+div.photo-container{height:none !important;width:none !important;}
