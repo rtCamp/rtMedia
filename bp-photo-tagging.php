@@ -4,21 +4,14 @@
  * and open the template in the editor.
  */
 
-
-
-
 function load_bp_data_callback() {
     global $bp, $wpdb;
     $photo_id = $_GET['photoID'];
     $bp->media->photo_tag = $wpdb->base_prefix . 'bp_photo_tags';
     $result = $wpdb->get_results("SELECT * FROM {$bp->media->photo_tag} WHERE PHOTOID = '{$photo_id}' ");
-//    echo $wpdb->last_query;
     $tag = count($result);
     $active_tags = ($result);
-
-//    var_dump($active_tags)
-
-    if(!empty($result)) {
+   if(!empty($result)) {
         for($i = 0 ;$i<$tag;$i++){
             (int)$active_tags[$i]->ID = $result[$i]->ID;
                  $active_tags[$i]->PHOTOID = $result[$i]->PHOTOID;
@@ -31,9 +24,6 @@ function load_bp_data_callback() {
         }
 
     }
-
-
-
 
     $active_tags = json_encode($active_tags);
     header('Content-type: application/json');
