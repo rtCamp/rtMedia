@@ -57,11 +57,8 @@
 			){
 			
 			// Make this contianer relative.
-			this.container.css( "position", "absolute" );
-                        this.container.css( "clear", "both" );
-                        //this.container.css( "width", "none !important" );
-                        console.log('');
-			
+			this.container.css( "position", "relative" );
+  			
 		}
 				
 		// Resize the container to be the dimensions of the 
