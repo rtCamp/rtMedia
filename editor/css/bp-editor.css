@@ -1,9 +1,0 @@
-.ui-tabs .ui-tabs-hide { display: none; }
-
-#media-upload-header #sidemenu li.ui-tabs-selected a{background-color:#FFFFFF;border-color:#DFDFDF #DFDFDF #FFFFFF;color:#D54E21;border-style:solid;border-width:1px;padding: 0 6px;-webkit-border-top-left-radius: 4px; -webkit-border-top-right-radius: 4px; -moz-border-radius-topleft: 4px; -moz-border-radius-topright: 4px; border-top-left-radius: 4px; border-top-right-radius: 4px;}
-
-img#loading{margin-top: 150px; margin-left: 300px; border: none; !important} 
-
-
-#media-list .picture-thumb{margin: 5px; padding: 5px; width: 150px; height: 180px;}
-#media-list .picture-thumb .title{margin-bottom: 5px; font-size: 1em}
