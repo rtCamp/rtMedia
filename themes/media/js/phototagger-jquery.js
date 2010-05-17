@@ -6,9 +6,7 @@
 
 // Create a self-executing function that will warp the window
 // object and translate the jQuery function name.
-//(function( window, jQuery ){
-jQuery(document).ready(function(){
-
+(function( window, jQuery ){
 
 	// Define the controller class that's going to be doing 
 	// the heavy lifitng in the photo tagging system. Each 
@@ -21,14 +19,6 @@ jQuery(document).ready(function(){
 		// I am the container object that holds the photo and
 		// any tags added to the photo.
 		this.container = container;
-
-                // Resize the container to be the dimensions of the
-                // image so that we don't have any mouse confusion.
-		this.container.width( this.image.width() );
-		this.container.height( this.image.height() );
-                console.log(this.image.height() );
-                console.log( this.image.width() );
-
 		
 		// I am the settings object used to get AJAX and photo
 		// ID information.
@@ -71,7 +61,13 @@ jQuery(document).ready(function(){
 			
 		}
 				
-	
+		// Resize the container to be the dimensions of the 
+		// image so that we don't have any mouse confusion.
+		this.container.width( this.image.width() );
+		this.container.height( this.image.height() ); 
+                console.log(this.image.height() );
+                console.log( this.image.width() );
+		
 		// Hide the message object and add the message to the 
 		// contianer.
 		this.message
@@ -1168,6 +1164,6 @@ jQuery(document).ready(function(){
 		
 	};
 
-});
+})( jQuery( window ), jQuery );
 
 
