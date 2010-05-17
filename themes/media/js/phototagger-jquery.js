@@ -1132,7 +1132,7 @@
 		// written to the page once to create the tags.
 		css: {
 			"a.tag": {
-				"background-image": "url( './transparent.gif' )",
+				"background-image": "url( '../images/transparent.gif' )",
 				"border": "1px solid #FFFFFF",
 				"display": "block",
 				"height": "1px",
