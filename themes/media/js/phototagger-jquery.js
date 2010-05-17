@@ -58,8 +58,7 @@
 			
 			// Make this contianer relative.
 			this.container.css( "position", "relative" );
-                        this.container.css( "height", "auto !important" );
-                        this.container.css( "width", "auto !important" );
+                        
   			
 		}
 				
@@ -68,7 +67,7 @@
 		this.container.width( this.image.width() );
 		this.container.height( this.image.height() ); 
                 console.log('hoh ' +this.container.children( "img" ).attr('height') );
-                console.log('hah '+ this.container.children( "img" ).attr('width')  );
+                console.log('hah'+ this.container.children( "img" ).attr('width')  );
 		
 		// Hide the message object and add the message to the 
 		// contianer.
@@ -179,6 +178,9 @@
 				return( false );
 			}
 		);
+
+                    this.container.css( "height", "auto !important" );
+                    this.container.css( "width", "auto !important" );
 		
 	}
 	
