@@ -57,7 +57,7 @@
 			){
 			
 			// Make this contianer relative.
-			this.container.css( "position", "relative" );
+			this.container.css( "position", "absolute" );
                         this.container.css( "height", this.image.height() );
                         this.container.css( "width",  this.image.width());
   			
