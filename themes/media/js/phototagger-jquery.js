@@ -6,7 +6,9 @@
 
 // Create a self-executing function that will warp the window
 // object and translate the jQuery function name.
-(function( window, jQuery ){
+//(function( window, jQuery ){
+jQuery(document).ready(function(){
+
 
 	// Define the controller class that's going to be doing 
 	// the heavy lifitng in the photo tagging system. Each 
@@ -1164,6 +1166,6 @@
 		
 	};
 
-})( jQuery( window ), jQuery );
+});
 
 
