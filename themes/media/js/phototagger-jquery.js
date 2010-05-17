@@ -58,6 +58,8 @@
 			
 			// Make this contianer relative.
 			this.container.css( "position", "relative" );
+                        this.container.css( "height", "auto" );
+                        this.container.css( "width", "auto" );
   			
 		}
 				
