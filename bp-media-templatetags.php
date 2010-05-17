@@ -36,13 +36,12 @@ class BP_User_Media_Template {
         global $bp;
         if ( !$user_id )
             $user_id = $bp->loggedin_user->id;
-//        var_dump($user_id);
         $this->pag_page = isset( $_GET['fpage'] ) ? intval( $_GET['fpage'] ) : $page;
         $this->pag_num = isset( $_GET['num'] ) ? intval( $_GET['num'] ) : $per_page;
 
         if ( !$this->pictures = wp_cache_get( 'bp_pictures_for_user_' . $user_id, 'bp' ) ) {
             $this->pictures = bp_pictures_get_pictures_for_user( $user_id_filter, $media_type,$view,$group_id,$album_id);//kapil
-//            var_dump($group_id);
+
             $this->media_slug = $this->pictures['media_slug'];
             wp_cache_set( 'bp_pictures_for_user_' . $user_id, $this->pictures, 'bp' );
 //          wp_cache_set($key, $data, $flag = '', $expire = 0)
@@ -158,13 +157,12 @@ function bp_has_media( $args = '' ) {
             'page' =>1,
             'max' => false,
             'scope'=> 'mediaall',
-            'group_id'=> false,
+            'group_id'=> 0,
             'view' => $view,
             'album_id' => 0 //album_id = 0 >> default album //kapil
     );
 
     $r = wp_parse_args( $args, $defaults );
-//    var_dump($args);
 
     extract( $r, EXTR_SKIP );
     
@@ -174,7 +172,6 @@ function bp_has_media( $args = '' ) {
     }
 
     $pictures_template = new BP_User_Media_Template( $user_id,$page, $per_page, $max,$scope, $view,$group_id,$album_id ); //kapil
-//    var_dump($pictures_template);
     return $pictures_template->has_pictures();
 }
 /**
@@ -201,7 +198,6 @@ function is_media_exists($id) {
     global $wpdb,$bp;
     $qry = "SELECT id FROM {$bp->media->table_media_data} WHERE id='$id'";
     $result = $wpdb->get_col($qry);
-//    var_dump($result);
 //    die();
     if($result)
         return true;
@@ -425,7 +421,6 @@ function bp_picture_view_link() {
  */
 function bp_get_picture_view_link() {
     global $pictures_template, $bp;//$pictures_template->picture->id shud point to the id and not entry_id
-//    var_dump($bp->displayed_user->domain, $bp->media->slug , $pictures_template->media_slug , $pictures_template->picture->db_id);
     $url = site_url() . '/' . BP_MEDIA_SLUG .'/' . $pictures_template->media_slug . '/' . $pictures_template->picture->db_id;
 //    if($bp->current_component == BP_GROUPS_SLUG){
 //        return apply_filters('bp_get_picture_view_link',$bp->displayed_user->domain . $bp->media->slug .'/'. $pictures_template->media_slug .'/'. $pictures_template->picture->db_id) ;

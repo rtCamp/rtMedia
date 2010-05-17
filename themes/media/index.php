@@ -67,7 +67,7 @@
 
             $query = "SELECT album_id,name,user_id,visibility FROM $album_table";
             $result = $wpdb->get_results($query);
-            ?><option value=""><?php _e( 'All Album', 'buddypress' ) ?></option><?php
+            ?><!--<option value=""><?php //_e( 'All Album', 'buddypress' ) ?></option>--><?php
 
             //no private albums will be listed in here!
             foreach ($result as $key => $value) {

@@ -59,6 +59,24 @@ function bp_media_install() {
     require_once( ABSPATH . 'wp-admin/upgrade-functions.php' );
     dbDelta($sql);
 
+    //Default album must have album_id = 0 and user_id = 0 to make sure everybody can use it
+    //check if any row?
+
+    $q = "select * from wp_bp_media_album";
+    $result = $wpdb->query($q);
+    if(!$result){
+        $query_1 = "INSERT INTO `wp2-9-2`.`wp_bp_media_album` (
+                                `user_id` ,
+                                `visibility` ,
+                                `name` ,
+                                `last_updated` ,
+                                `category`
+                        )
+                        VALUES (
+                                '0', 'public', 'Default', now(), NULL
+                        );";
+        $wpdb->query($query_1);
+    }
 
     update_site_option( 'bp-media-db-version', BP_MEDIA_DB_VERSION );
 }
@@ -834,10 +852,8 @@ function bp_media_record_activity( $args = '' ) {
  */
 function bp_media_recent_activity_item_ids_for_user( $user_id = false ) {
     global $bp;
-    // var_dump($bp->loggedin_user->id, $bp->displayed_user->id);
     if ( !$user_id )
         $user_id = ( $bp->displayed_user->id ) ? $bp->displayed_user->id : $bp->loggedin_user->id;
-//var_dump($user_id);
     return BP_Media_Picture::get_activity_recent_ids_for_user( $user_id );
 }
 
@@ -865,7 +881,6 @@ function bp_media_fetch_avatar( $args = '', $media = false ) {
             'css_id' => false,
             'alt' => __( 'Media Avatar', 'buddypress-media' )
     );
-//        var_dump($defaults);
     $params = wp_parse_args( $args, $defaults );
 
     // hard code these options to prevent tampering
@@ -924,9 +939,6 @@ function bp_media_dtheme_ajax_querystring_group_filter( $query_string ) {
 
         return http_build_query( $args );
     }
-//        var_dump($query_string);
-
-//        var_dump($bp->groups->slug, $bp->current_component , $bp->current_action , $bp->media->slug );
     return $query_string;
 }
 add_filter( 'bp_dtheme_ajax_querystring', 'bp_media_dtheme_ajax_querystring_group_filter', 1 );

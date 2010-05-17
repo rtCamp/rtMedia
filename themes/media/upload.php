@@ -18,8 +18,8 @@ if(is_kaltura_configured()):
 </div>
 
 <!-- Album div -->
-<div id="rt-album-create">
-    <p><input type="radio" name="rt-album" id="rt-album-choice-new" value="rt-new"/>Create New Album</p>
+<div id="rt-album-get">
+    <p><input type="radio" name="rt-album-choice" id="rt-album-choice-new" value="rt-new"/>Create New Album</p>
 	    <form action="" method="post" id="rt-create-album">
 			<input name="rt-album-name" type="text"  id="rt-new-album-name" size="25"/>
 			<a href="JavaScript:void(0)" class="button" id="rt-create-album-button"> Go </a>
@@ -36,7 +36,7 @@ if(is_kaltura_configured()):
 			-->
 			<span id="rt-album-create-loader" class="ajax-loader"></span>
 	    </form>
-    <p><input type="radio" name="rt-album" value="rt-select-existing" id="rt-album-choice-existing"  />Select  Existing Album</p>
+    <p><input type="radio" name="rt-album-choice" value="rt-select-existing" id="rt-album-choice-existing"  />Select  Existing Album</p>
 	<!--<div class="rt-album-selection">-->
 	<form method="post" action="" name="" id="rt-selected-album">
 	    Upload to : &nbsp;
@@ -50,8 +50,6 @@ if(is_kaltura_configured()):
 			$result = $wpdb->get_results($query);
 			?><option value="">Default Album</option><?php
 			foreach ($result as $key => $value) {
-    //                                var_dump($value->name);
-    //                                var_dump($key);
 			    ?>
 		<option value="<?php echo $key?>"><?php echo $value->name;?></option>
 			    <?php
@@ -86,9 +84,16 @@ if(is_kaltura_configured()):
 <!--
 If current Component is group then show the KCW
 -->
-    <?php if($bp->current_component == BP_GROUPS_SLUG) {?>
+    <?php if($bp->current_component == BP_GROUPS_SLUG) {
+        $rt_group_id = $groups_template->group->id;
+        ?>
+    
 <div id="kaltura_contribution_wizard_wrapper"></div>
-	<?php }else { ?>
+	<?php }else {
+         $rt_group_id = 0;
+         
+            ?>
+        
 <div id="kaltura_contribution_wizard_wrapper" style="display: none"></div>
 	<?php }?>
 <script type="text/javascript">
@@ -115,33 +120,35 @@ If current Component is group then show the KCW
         var album_name = ''
         var visibility = '1'; //every group media is by default public
         //here check which radio button is selected.(new album or existing album)
-        rt_album_type = jQuery("input[@name='rt-album']:checked").val();
+//        WTF
+        rt_album_type = jQuery("#rt-album-get p input[@name='rt-album-choice']:checked").val();
         //        console.log(rt_album_type);
         if( rt_album_type == 'rt-new'){
             //creating new album
             album_name = jQuery('#rt-new-album-name').val();
-            visibility = jQuery("input[@name='rt-visibility']:checked").val();
+            visibility = jQuery("#rt-create-album input[@name='rt-visibility']:checked").val();
         }
-        if(rt_album_type == 'rt-select-existing'){
+        else {
+            if(rt_album_type == 'rt-select-existing'){
             //select album from drop down
             //get the name of the album from drop down
-            console.log('existing album name = ');
+//            console.log('existing album name = ');
             album_name = jQuery("#rt-selected-album select[@name='rt-album-list'] :selected'").text();
-            console.log(album_name);
-            visibility = 0; //by default set validity to 0
+//            console.log(album_name);
+            visibility = 'public'; //by default set validity to public and this is checked frm php (ajax) file
+            }
         }
 
-
+        console.log(rt_entry_id_list + "---" + rt_entry_media_type + "----" + rt_entry_group_id + "----" + album_name + "-----" + visibility + "------");
         var data = {
             action: 'media_upload',
             rt_entry_id_list:rt_entry_id_list,
             rt_entry_media_type:rt_entry_media_type,
-            rt_entry_group_id:'<?php echo $groups_template->group->id;?>',
+            rt_entry_group_id:"<?php echo $rt_group_id?>",
             album_name :album_name,
             visibility : visibility
         };
         jQuery.post(ajaxurl, data, function(response) {
-	    console.log(response);
             //            var data = {
             //                action: 'create_new_album',
             //                new_album_name : new_album_name,

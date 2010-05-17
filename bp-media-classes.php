@@ -245,38 +245,32 @@ Class BP_Media_Picture {
         //this function should give the data uploaded by this user only.
         global $wpdb,$bp, $list_entry_by_user;
         $list_entry_by_user = array();
-
-
         //album are not ralated to group so $where variable can be independent of each other
-        if($group_id == 0) {
-            $where = "";
+        if($group_id == '0') {//it means we are not in group so care for album
+            if($album_id == 0) {
+                $where = "";
+            }
+            else {
+                $where = "WHERE album_id = $album_id";
+                $where_1 = "AND album_id = $album_id";
+            }
         }
-        else {
+        else { //it means we are in group no don't care about album
             $where = "WHERE group_id = $group_id";
             $where_1 = "AND group_id = $group_id";
-        }
-
-        if($album_id == 0){
-            $where = "";
-        }
-        else{
-            $where = "WHERE album_id = $album_id";
-            $where_1 = "AND album_id = $album_id";
         }
 
         $list_all_elements = BP_Media_Picture::get_media_data($media_type,$view,$group_id,$album_id); //data from kaltura user seperated
 
         $j=0;
         if($user_id == 0) {//this will give all data of all users
-            $current_user_data = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM {$bp->media->table_media_data} $where") );
+            $q ="SELECT * FROM {$bp->media->table_media_data} $where";
+            $current_user_data = $wpdb->get_results( $wpdb->prepare($q) );
         }
         else {//this will give data of the perticulat user
-            $current_user_data = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM {$bp->media->table_media_data} WHERE user_id= $user_id $where_1") );
+            $q ="SELECT * FROM {$bp->media->table_media_data} WHERE user_id= $user_id $where_1";
+            $current_user_data = $wpdb->get_results( $wpdb->prepare( $q) );
         }
-        
-//        var_dump($album_id,$wpdb->last_query);
-//        var_dump($list_all_elements);
-//        var_dump($current_user_data);
 
         foreach ($list_all_elements['pictures'] as $key => $value) {
 
@@ -286,13 +280,18 @@ Class BP_Media_Picture {
                     /**
                      * Insert visibility of the media. ITs in album table
                      */
-                    $q = "SELECT visibility,user_id,album_id from {$bp->media->table_media_album} WHERE album_id = {$current_user_data[$i]->album_id}";
-                    $result = $wpdb->get_row($q);
+                    if($group_id == '0'){
+                        $q = "SELECT visibility,user_id,album_id from {$bp->media->table_media_album} WHERE album_id = {$current_user_data[$i]->album_id}";
+                        $result = $wpdb->get_row($q);
 
                     //if album is private and logged in user is not viewing then skip
-                    if(($result->album_id == $current_user_data[$i]->album_id) && ($result->visibility == 'private') && !($result->user_id == $bp->loggedin_user->id))
-                        continue;
-                    $value->visibility = $result->visibility;
+                        if(($result->album_id == $current_user_data[$i]->album_id) && ($result->visibility == 'private') && !($result->user_id == $bp->loggedin_user->id))
+                            continue;
+
+                        //visibility matters only for album and not for group
+                        $value->visibility = $result->visibility;
+                    }
+                    
                     $value->db_id = $current_user_data[$i]->id;
                     $value->localview = $current_user_data[$i]->views;
                     $value->local_tot_rank = $current_user_data[$i]->total_rating;
@@ -322,7 +321,6 @@ Class BP_Media_Picture {
     }
     //this function should give the data uploaded by kce
     function get_media_data($media_type,$view,$group_id,$album_id) {
-
         global $bp,$wpdb;
         global $kaltura_validation_data;
         $filter = new KalturaMediaEntryFilter();
@@ -350,29 +348,26 @@ Class BP_Media_Picture {
 
         }
 
-        if($group_id == 0)
+        if($group_id == 0){
             $where = "";
-        else{
+        }
+        else {
             $where = "WHERE group_id = $group_id";
             $where_1 = "AND group_id = $group_id";
-            
+
         }
         if($view == 'multiple') {
             $picture_data = $kaltura_validation_data['client']-> media ->listAction($filter,$pager); // list all of the media items in the partnerID
             $total_picture_count = $picture_data -> totalCount;
             $temp = array( 'pictures' => $picture_data->objects, 'count' => $total_picture_count );
-
         }
-        elseif ($view == 'single') {
+        if($view == 'single') {
             $current_item = $bp->action_variables[0];
             $query = "SELECT * FROM {$bp->media->table_media_data} where id = $current_item $where_1";
             $test = $wpdb->get_row($query);
-//            var_dump($test);
             $k = $test->entry_id;
             try {
                 $picture_data = $kaltura_validation_data['client']-> media -> get($k);
-//                var_dump($picture_data);
-
                 $total_picture_count = 1;
                 $temp_array = array();
                 $temp_array[0] = $picture_data;
@@ -444,20 +439,17 @@ function get_adjacent_picture($previous = true) {
     else
         $where = $wpdb->prepare("WHERE id $op %d  and media_type=%d", $current_picture_id,$single_pic_template->media_type);
 
-    
-    
+
+
 
     $sort  = "ORDER BY id $order LIMIT 1";
     $query = "SELECT * FROM {$bp->media->table_media_data} $where $sort";
     $test = $wpdb->get_row($query);
     $k = $test->entry_id;
     $test->album_id;
-//    var_dump($test->album_id);
     $q11 = "SELECT * FROM {$bp->media->table_media_album} WHERE album_id = '$test->album_id'";
-//    var_dump($q);
     $result = $wpdb->get_row($q11);
-//    var_dump($result->visibility);
-    if(($result->visibility == 'private') && !($bp->loggedin_user->id == $result->user_id)){
+    if(($result->visibility == 'private') && !($bp->loggedin_user->id == $result->user_id)) {
         return 0;
     }
 

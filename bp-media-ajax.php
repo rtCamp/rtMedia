@@ -5,12 +5,9 @@
 ?>
 <?php
 function bp_media_ajax_querystring($query_string, $object, $filter, $scope, $page, $search_terms, $extras ) {
-//    var_dump('-=0-00000----',$query_string,'-=0-00000----');
     global $bp;
     if ($object!='media') //return false;
         return apply_filters( 'bp_media_ajax_querystring', $query_string, $object, $filter, $scope, $page, $search_terms, $extras);
-
-//    var_dump($query_string, $object, $filter, $scope, $page, $search_terms, $extras);
     /* Set up the cookies passed on this AJAX request. Store a local var to avoid conflicts */
     if ( !empty( $_POST['cookie'] ) )
         $_BP_COOKIE = wp_parse_args( str_replace( '; ', '&', urldecode( $_POST['cookie'] ) ) );
@@ -21,11 +18,7 @@ function bp_media_ajax_querystring($query_string, $object, $filter, $scope, $pag
     if ( !empty( $_BP_COOKIE['bp-' . $object . '-filter'] ) && '-1' != $_BP_COOKIE['bp-' . $object . '-filter'] ) {
         $new_qs[] = 'type=' . $_BP_COOKIE['bp-' . $object . '-filter'];
         $new_qs[] = 'action=' . $_BP_COOKIE['bp-' . $object . '-filter']; // Activity stream filtering on action
-//        $new_qs[] = 'user_id=' . $user_id;
-
     }
-
-
 
     if ( !empty( $_POST['cookie'] ) )
         $_BP_COOKIE = wp_parse_args( str_replace( '; ', '&', urldecode( $_POST['cookie'] ) ) );
@@ -77,7 +70,6 @@ function bp_media_ajax_querystring($query_string, $object, $filter, $scope, $pag
         $new_qs[] = 'page=' . $_POST['page'];
     $new_query_string = empty( $new_qs ) ? '' : join( '&', (array)$new_qs );
     bp_init_media();
-//var_dump('----',$new_query_string,'----');
     return apply_filters( 'bp_media_ajax_querystring', $new_query_string, $object, $filter, $scope, $page, $search_terms, $extras);
 }
 add_filter('bp_dtheme_ajax_querystring', 'bp_media_ajax_querystring',1,7);
@@ -85,7 +77,6 @@ add_filter('bp_dtheme_ajax_querystring', 'bp_media_ajax_querystring',1,7);
 
 
 function bp_media_object_template_loader() {
-//    var_dump($_POST['filter']);
     if($_POST['scope'] == 'upload') {
         if(is_kaltura_configured()):
 
@@ -145,18 +136,19 @@ function rt_media_upload() {
     //check for the new name availibility for the same user.
     //if the name is available in the database then, insert the records with the album id
     $user_id = $bp->loggedin_user->id;
-    $query = "SELECT name,album_id,visibility FROM {$bp->media->table_media_album} WHERE user_id = '$user_id' AND name='$album_name'";
-
+    $query = "SELECT name,album_id,visibility,user_id FROM {$bp->media->table_media_album} WHERE user_id = '$user_id' AND name='$album_name'";
+    
     $result = $wpdb->get_row($query);
 
     if($result == NULL) {//no album found of this name so insert the all these media into default album
-        $album_id = 0; //album_id = 0 means its a default album and every user has his default album
-        $visibility = 1; //visibility = 1 => public by default; 0 => Private
+        $album_id = 1; //album_id = 1 means its a default album and every user has his default album
+        $visibility = 'public'; //visibility = 1 => public by default; 0 => Private
     }
     else {
         $album_id = $result->album_id;
         $visibility = $result->visibility;
     }
+
 
     if($rt_entry_group_id == '' || $rt_entry_group_id == NULL)
         $rt_entry_group_id = 0;
@@ -220,7 +212,6 @@ function rt_create_new_album() {
 //    if found existing name then return
     $query = "SELECT name FROM {$bp->media->table_media_album} WHERE name = '$new_album_name' AND user_id = $user_id";
     $result = $wpdb->get_col($query);
-//    print_r($result);
     if($result == NULL) {//no duplicate found so insert the album name
         $query_1 = "INSERT INTO {$bp->media->table_media_album}( user_id,visibility, name ,last_updated , category)
                 VALUES  (
@@ -238,7 +229,6 @@ function rt_create_new_album() {
     else {
         echo 'nops@#@Album name already in use. Please try different name';
     }
-//    die();
 }
 
 add_action('wp_ajax_create_new_album','rt_create_new_album');
@@ -256,7 +246,6 @@ function rt_fetch_images_for_album() {
     $user_id = $bp->loggedin_user->id;
     $query = "SELECT $data_table.entry_id FROM $album_table INNER JOIN $data_table WHERE $album_table.user_id = '$user_id' AND $album_table.album_id = $data_table.album_id AND $album_table.name = '$album_name'";
     $result = $wpdb->get_results($query);
-//    var_dump($result);
     // Got the entry id's now fetch the thumbs from kaltura
     foreach ($result as $key => $value) {
         ?>
@@ -267,7 +256,6 @@ function rt_fetch_images_for_album() {
                      ?><img src="<?php echo $picture_data->thumbnailUrl;?>" />
                 <?php }
                 catch (Exception $e ) {
-//                    $test->entry_id = -9999;
                         echo 'Error Connecting to Media Server';
                         break;
                 }
