@@ -17,7 +17,7 @@
 
 <div id="item-header-content">
     <h2 class="fn"><a href="<?php bp_root_domain() ?>/members/<?php bp_media_displayed_user_username() ?>"><span class="highlight">@<?php bp_media_displayed_user_username() ?> <span>?</span></span></a></h2>
-    <span class="highlight"><?php echo rt_get_media_visibility()?></span> <span class="activity"><?php bp_media_creation_time();?></span><br>
+    <span class="highlight"><?php echo rt_get_media_visibility()?></span> <span class="activity"><?php bp_media_creation_time();?></span><br/>
     <hr/>
         <!--add single page here-->
         <?php
