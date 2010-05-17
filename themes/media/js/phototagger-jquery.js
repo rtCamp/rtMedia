@@ -21,6 +21,14 @@ jQuery(document).ready(function(){
 		// I am the container object that holds the photo and
 		// any tags added to the photo.
 		this.container = container;
+
+                // Resize the container to be the dimensions of the
+                // image so that we don't have any mouse confusion.
+		this.container.width( this.image.width() );
+		this.container.height( this.image.height() );
+                console.log(this.image.height() );
+                console.log( this.image.width() );
+
 		
 		// I am the settings object used to get AJAX and photo
 		// ID information.
@@ -63,13 +71,7 @@ jQuery(document).ready(function(){
 			
 		}
 				
-		// Resize the container to be the dimensions of the 
-		// image so that we don't have any mouse confusion.
-		this.container.width( this.image.width() );
-		this.container.height( this.image.height() ); 
-                console.log(this.image.height() );
-                console.log( this.image.width() );
-		
+	
 		// Hide the message object and add the message to the 
 		// contianer.
 		this.message
