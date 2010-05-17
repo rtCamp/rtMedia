@@ -1,8 +1,13 @@
 <?php
-/* 
+/*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
+
+/* Phototagging code starts from here
+ *
+ */
+
 
 function load_bp_data_callback() {
     global $bp, $wpdb;
@@ -11,7 +16,7 @@ function load_bp_data_callback() {
     $result = $wpdb->get_results("SELECT * FROM {$bp->media->photo_tag} WHERE PHOTOID = '{$photo_id}' ");
     $tag = count($result);
     $active_tags = ($result);
-   if(!empty($result)) {
+    if(!empty($result)) {
         for($i = 0 ;$i<$tag;$i++){
             (int)$active_tags[$i]->ID = $result[$i]->ID;
                  $active_tags[$i]->PHOTOID = $result[$i]->PHOTOID;
@@ -20,23 +25,16 @@ function load_bp_data_callback() {
             (int)$active_tags[$i]->HEIGHT = $result[$i]->HEIGHT;
                 $active_tags[$i]->MESSAGE = $result[$i]->MESSAGE;
             (int)$active_tags[$i]->X = $result[$i]->X;
-
         }
-
     }
 
     $active_tags = json_encode($active_tags);
     header('Content-type: application/json');
     echo $active_tags;
-
-
     die();
 }
 add_action('wp_ajax_load_bp_data', 'load_bp_data_callback');
 add_action('wp_ajax_nopriv_load_bp_data', 'load_bp_data_callback');
-
-
-
 
 //saving tagged data
 
@@ -100,5 +98,6 @@ function delete_bp_tag_data_callback() {
 }
 add_action('wp_ajax_delete_bp_tag_data', 'delete_bp_tag_data_callback');
 add_action('wp_ajax_nopriv_delete_bp_tag_data', 'delete_bp_tag_data_callback');
+
 
 ?>
