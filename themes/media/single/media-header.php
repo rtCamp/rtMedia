@@ -18,15 +18,15 @@
 <div id="item-header-content">
     <h2 class="fn"><a href="<?php bp_root_domain() ?>/members/<?php bp_media_displayed_user_username() ?>"><span class="highlight">@<?php bp_media_displayed_user_username() ?> <span>?</span></span></a></h2>
     <span class="highlight"><?php echo rt_get_media_visibility()?></span> <span class="activity"><?php bp_media_creation_time();?></span><br>
-    <hr>
+    <hr/>
         <!--add single page here-->
         <?php
         if(!get_site_option('bp_rt_kaltura_url')) :
             ?>
         <div id="message" class="info"><p>Please Configure Kaltura Setting</p></div>
         <?php else :?>
-        <input type ="hidden" id="url" value="">
-        <input type ="hidden" id="current-url" value="">
+        <input type ="hidden" id="url" value=""/>
+        <input type ="hidden" id="current-url" value=""/>
             <?php if ( bp_single_pic_exist() && bp_single_pic_check_owner()):?>
                       <?php if (isMediaOwner(bp_single_media_id()) && is_user_logged_in()): ?>
         <div id="user-title" style="cursor: pointer;"><h2 title="Click Here to Edit Media Title"><p><?php bp_single_picture_title() ?></p></h2></div>
@@ -36,7 +36,7 @@
                     <div id="item-meta">
         <div class="rt-picture-single">
             <div id='rt-display_media'>
-                        <?php  echo get_media_data(); ?><br>
+                        <?php  echo get_media_data(); ?><br/>
             </div>
                     <?php bp_media_user_rated(); ?>
 
@@ -68,7 +68,7 @@
                                             <option>Advertisment/Spam</option>
                                 </select>
                         <span class="ajax-loader"></span> &nbsp;
-                    <input type ="button"value ="Report Content" class="rpt-btn">
+                    <input type ="button"value ="Report Content" class="rpt-btn"/>
                     <a class="cancel-abuse" style="cursor:pointer">Cancel</a>
                     </div>
             <?php endif; ?>
