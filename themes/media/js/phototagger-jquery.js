@@ -65,8 +65,8 @@
 		// image so that we don't have any mouse confusion.
 		this.container.width( this.image.width() );
 		this.container.height( this.image.height() ); 
-                console.log(this.image.attr('height') );
-                console.log('hah'+ this.image.attr('width')  );
+                console.log(this.container.children( "img" ).attr('height') );
+                console.log('hah'+ this.container.children( "img" ).attr('width')  );
 		
 		// Hide the message object and add the message to the 
 		// contianer.
