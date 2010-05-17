@@ -57,9 +57,9 @@
 			){
 			
 			// Make this contianer relative.
-			this.container.css( "position:relative","height:auto !important" );
-                        this.container.css( "height", "auto !important" );
-                        this.container.css( "width", "auto !important" );
+			this.container.css( "position", "relative" );
+                        this.container.css( "height", this.image.height() );
+                        this.container.css( "width",  this.image.width());
   			
 		}
 				
@@ -67,7 +67,7 @@
 		// image so that we don't have any mouse confusion.
 		this.container.width( this.image.width() );
 		this.container.height( this.image.height() ); 
-                console.log('hoh ' +this.container.children( "img" ).attr('height') );
+                console.log(this.container.children( "img" ).attr('height') );
                 console.log('hah'+ this.container.children( "img" ).attr('width')  );
 		
 		// Hide the message object and add the message to the 
