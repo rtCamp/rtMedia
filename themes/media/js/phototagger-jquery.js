@@ -57,8 +57,9 @@
 			){
 			
 			// Make this contianer relative.
-			this.container.css( "position", "relative" );
-                        
+			this.container.css( "position:relative","height:auto !important" );
+                        this.container.css( "height", "auto !important" );
+                        this.container.css( "width", "auto !important" );
   			
 		}
 				
@@ -178,9 +179,6 @@
 				return( false );
 			}
 		);
-
-                    this.container.css( "height", "auto !important" );
-                    this.container.css( "width", "auto !important" );
 		
 	}
 	
