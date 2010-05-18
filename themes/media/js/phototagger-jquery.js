@@ -65,8 +65,8 @@
 				
 		// Resize the container to be the dimensions of the 
 		// image so that we don't have any mouse confusion.
-//		this.container.width( this.image.width() );
-//		this.container.height( this.image.height() );
+		this.container.width( this.image.width() );
+		this.container.height( this.image.height() );
                 console.log(this.container.children( "img" ).attr('height'));
                 console.log('hah'+ this.container.children( "img" ).attr('width')  );
 		
