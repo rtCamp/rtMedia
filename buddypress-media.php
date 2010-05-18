@@ -1,7 +1,7 @@
 <?php
 
 /*
-Plugin Name: BuddyPress-Kaltura Media Component with KalturaCE Support
+Plugin Name: BuddyPress-Kaltura Media Component with KalturaCE Support 1
 Plugin URI: http://mediabp.com/
 Description: This BuddyPress media component adds features like photos, videos and audio upload to BuddyPress.
 Version: 1.2 
