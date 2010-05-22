@@ -12,7 +12,7 @@
 function load_bp_data_callback() {
     global $bp, $wpdb;
     $photo_id = $_GET['photoID'];
-    $bp->media->photo_tag = $wpdb->base_prefix . 'bp_photo_tags';
+//    $bp->media->photo_tag = $wpdb->base_prefix . 'bp_media_photo_tags';
     $result = $wpdb->get_results("SELECT * FROM {$bp->media->photo_tag} WHERE PHOTOID = '{$photo_id}' ");
     $tag = count($result);
     $active_tags = ($result);
@@ -48,8 +48,8 @@ function save_bp_tag_data_callback() {
     $width = $_GET['width'];
     $x = $_GET['x'];
     $y = $_GET['y'];
-    if(is_user_logged_in()){
-   $bp->media->photo_tag = $wpdb->base_prefix . 'bp_photo_tags';
+   if(is_user_logged_in()){
+//   $bp->media->photo_tag = $wpdb->base_prefix . 'bp_media_photo_tags';
    $k = $wpdb->query("INSERT INTO {$bp->media->photo_tag} (PHOTOID, Y,WIDTH,HEIGHT,MESSAGE,X) VALUES ('{$photo_id}',{$y},{$width},{$height},'{$message}',{$x}) ");
 
    $id = $wpdb->get_var($wpdb->prepare("SELECT ID from {$bp->media->photo_tag} WHERE PHOTOID = '{$photo_id}' AND X = {$x} AND Y = {$y} "));
@@ -80,7 +80,7 @@ function delete_bp_tag_data_callback() {
     $id = $_GET['id'];
     if(is_user_logged_in()){
 
-   $bp->media->photo_tag = $wpdb->base_prefix . 'bp_photo_tags';
+//   $bp->media->photo_tag = $wpdb->base_prefix . 'bp_media_photo_tags';
    $k = $wpdb->query($wpdb->prepare("DELETE FROM {$bp->media->photo_tag} WHERE ID = {$id} "));
 
     $delete_tag = array("ID"=>$id );

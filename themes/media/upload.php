@@ -50,9 +50,7 @@ if(is_kaltura_configured()):
 			$result = $wpdb->get_results($query);
 			?><option value="">Default</option><?php
 			foreach ($result as $key => $value) {
-    //                                var_dump($value->name);
-    //                                var_dump($key);
-			    ?>
+    			    ?>
 		<option value="<?php echo $key?>"><?php echo $value->name;?></option>
 			    <?php
 			}

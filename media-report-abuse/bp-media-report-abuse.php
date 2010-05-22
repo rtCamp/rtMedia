@@ -15,13 +15,11 @@ function media_report_abuse_callback() {
     $report_url = $_GET['report_url'];
 
     $kalturaid = get_kaltura_media_id($report_id);
-//    $url = $bp->root_domain.'/media/mediaall/'.$report_id;
+
     $media_user_owner_id = rt_who_owns_this_media($report_id);
     $meda_owner_username = bp_core_get_username($media_user_owner_id);
     $abuse_reporter = bp_get_loggedin_user_fullname();
     $admin_email = get_option('admin_email');
-
-    $bp->media->table_report_abuse = $wpdb->base_prefix . 'bp_media_report_abuse';
 
     $to = $admin_email;
     $subject = 'Report Abuse on Media id : '.$report_id;

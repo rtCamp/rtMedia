@@ -70,11 +70,7 @@ function kaltura_media_library_form($post_id){
 	<div id="kaltura_lib">
 
 	</div>
-	<?php	/*
-$pictures_template = new BP_User_Media_Template($bp->loggedin_user->id, 1, 10, 10, 'photo', 'multiple','0' );
-var_dump($pictures_template);
-*/
-?>
+	
 
 	<?php
 }

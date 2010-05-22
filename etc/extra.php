@@ -21,7 +21,7 @@
 
 	    //store any album name
 	    $rt_first_album = $result[0]->name;
-//        var_dump($rt_first_album);
+
 	    echo "<ul id = 'rt-album-list-ul'>";
 
 	    foreach ($result as $key => $value) {
@@ -70,7 +70,4 @@
 </div>
 
 	<?php
-
-
-//    var_dump($result);
-    }
+}

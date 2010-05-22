@@ -30,9 +30,7 @@ if ( bp_has_media( "scope=$filter&per_page=99999" ) ) :
 	global $pictures_template;
 //if ( bp_has_media( bp_ajax_querystring( 'media' ) ) ) : 
 ?>
-       <?php /* var_dump($pictures_template) */ ?>
-
-<ul id="rt-media-list" class="item-list">
+   <ul id="rt-media-list" class="item-list">
         <?php while ( bp_pictures() ) : bp_the_picture(); 
             global $picture;
         ?>

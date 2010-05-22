@@ -5,12 +5,11 @@
 ?>
 <?php
 function bp_media_ajax_querystring($query_string, $object, $filter, $scope, $page, $search_terms, $extras ) {
-//    var_dump('-=0-00000----',$query_string,'-=0-00000----');
+
     global $bp;
     if ($object!='media') //return false;
         return apply_filters( 'bp_media_ajax_querystring', $query_string, $object, $filter, $scope, $page, $search_terms, $extras);
 
-//    var_dump($query_string, $object, $filter, $scope, $page, $search_terms, $extras);
     /* Set up the cookies passed on this AJAX request. Store a local var to avoid conflicts */
     if ( !empty( $_POST['cookie'] ) )
         $_BP_COOKIE = wp_parse_args( str_replace( '; ', '&', urldecode( $_POST['cookie'] ) ) );
@@ -95,7 +94,7 @@ function bp_media_ajax_querystring($query_string, $object, $filter, $scope, $pag
         $new_qs[] = 'page=' . $_POST['page'];
     $new_query_string = empty( $new_qs ) ? '' : join( '&', (array)$new_qs );
     bp_init_media();
-//var_dump('----',$new_query_string,'----');
+
     return apply_filters( 'bp_media_ajax_querystring', $new_query_string, $object, $filter, $scope, $page, $search_terms, $extras);
 }
 add_filter('bp_dtheme_ajax_querystring', 'bp_media_ajax_querystring',1,7);
@@ -103,7 +102,7 @@ add_filter('bp_dtheme_ajax_querystring', 'bp_media_ajax_querystring',1,7);
 
 
 function bp_media_object_template_loader() {
-//    var_dump($_POST['filter']);
+
     if($_POST['scope'] == 'upload') {
         if(is_kaltura_configured()):
 
@@ -281,7 +280,7 @@ function rt_fetch_images_for_album() {
     $user_id = $bp->loggedin_user->id;
     $query = "SELECT $data_table.entry_id FROM $album_table INNER JOIN $data_table WHERE $album_table.user_id = '$user_id' AND $album_table.album_id = $data_table.album_id AND $album_table.name = '$album_name'";
     $result = $wpdb->get_results($query);
-//    var_dump($result);
+
     // Got the entry id's now fetch the thumbs from kaltura
     foreach ($result as $key => $value) {
         ?>

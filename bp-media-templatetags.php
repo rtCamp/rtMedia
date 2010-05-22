@@ -147,7 +147,7 @@ class BP_User_Media_Template {
  *
  */
 function bp_has_media( $args = '' ) {
-//  var_dump($args);
+
     global $pictures_template,$bp;
     
     $defaults = array(
@@ -163,7 +163,7 @@ function bp_has_media( $args = '' ) {
     );
 
     $r = wp_parse_args( $args, $defaults );
-//    var_dump($args);
+
 
     extract( $r, EXTR_SKIP );
 
@@ -173,7 +173,6 @@ function bp_has_media( $args = '' ) {
     elseif($bp->media->view == 'multiple')
         $view = 'multiple';
 
-//    var_dump($view);
     if(($view != 'single') && ($type == 'popular' || $type == 'recent' || $type == 'rating') )
         $view = 'widget';
     
@@ -211,8 +210,7 @@ function is_media_exists($id) {
     global $wpdb,$bp;
     $qry = "SELECT id FROM {$bp->media->table_media_data} WHERE id='$id'";
     $result = $wpdb->get_col($qry);
-//    var_dump($result);
-//    die();
+
     if($result)
         return true;
     else
@@ -446,15 +444,11 @@ function bp_picture_view_link() {
  */
 function bp_get_picture_view_link() {
     global $pictures_template, $bp;//$pictures_template->picture->id shud point to the id and not entry_id
-//    var_dump($bp->displayed_user->domain, $bp->media->slug , $pictures_template->media_slug , $pictures_template->picture->db_id);
-    $url = site_url() . '/' . BP_MEDIA_SLUG .'/' . $pictures_template->media_slug . '/' . $pictures_template->picture->db_id;
-//    if($bp->current_component == BP_GROUPS_SLUG){
-//        return apply_filters('bp_get_picture_view_link',$bp->displayed_user->domain . $bp->media->slug .'/'. $pictures_template->media_slug .'/'. $pictures_template->picture->db_id) ;
-//    }else {
-    return apply_filters('bp_get_picture_view_link',$url) ;
-//    }
 
+    $url = site_url() . '/' . BP_MEDIA_SLUG .'/' . $pictures_template->media_slug . '/' . $pictures_template->picture->db_id;
+    return apply_filters('bp_get_picture_view_link',$url) ;
 }
+
 /**
  * Returns the single media path
  * @global object $bp
@@ -910,7 +904,7 @@ function get_media_rating() {
 
 //new functions for bp 1.2 : Kapil
 function bp_media_locate_template( $template_names, $load = false ) {
-//    var_dump($template_names);
+
     if ( !is_array( $template_names ) )
         return '';
     $located = '';
@@ -1160,8 +1154,7 @@ function bp_media_displayed_user_fullname() {
 }
 function bp_media_get_displayed_user_fullname() {
     global $bp;
-    //  var_dump($bp);
-    return apply_filters( 'bp_media_displayed_user_fullname', $bp->displayed_user->fullname );
+      return apply_filters( 'bp_media_displayed_user_fullname', $bp->displayed_user->fullname );
 }
 
 
@@ -1176,7 +1169,7 @@ function bp_media_group_media_tabs( $group = false ) {
         $group = ( $groups_template->group ) ? $groups_template->group : $bp->groups->current_group;
 
     $current_tab = $bp->action_variables[0];
-//    var_dump($current_tab);
+
     ?>
 <li<?php if ( 'mediaall' == $current_tab || '' == $current_tab) : ?> class="current"<?php endif; ?>><a href="<?php echo $bp->root_domain . '/' . $bp->groups->slug ?>/<?php echo $group->slug ?>/<?php echo $bp->media->slug ?>/mediaall"><?php printf( __('Media', 'buddypress-media')) ?></a></li>
 <li<?php if ( 'video' == $current_tab ) : ?> class="current"<?php endif; ?>><a href="<?php echo $bp->root_domain . '/' . $bp->groups->slug ?>/<?php echo $group->slug ?>/<?php echo $bp->media->slug ?>/video"><?php printf( __('Video', 'buddypress-media')) ?></a></li>
@@ -1192,9 +1185,8 @@ function bp_media_group_media_tabs( $group = false ) {
  */
 function rt_get_media_visibility() {
     global $bp,$pictures_template;
-//    var_dump($pictures_template);
     $entry_id = $pictures_template->pictures[0]->id;
-//    var_dump($pictures_template);
+
     switch($pictures_template->pictures[0]->visibility) {
         case 'private':
             $visibility = 'Private';
@@ -1234,7 +1226,7 @@ function rt_get_media_type($entry_id) {
  */
 function bp_is_photo_action($photo) {
 	global $bp;
-//        var_dump($photo);
+
 	if ( BP_PHOTO_SLUG == $bp->current_action )
 		return true;
 
@@ -1246,7 +1238,6 @@ function bp_is_photo_action($photo) {
  */
 function bp_is_video_action($video) {
         global $bp;
-//        var_dump($video);
 	if ( BP_VIDEO_SLUG == $bp->current_action )
 		return true;
 

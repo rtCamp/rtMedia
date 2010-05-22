@@ -53,7 +53,7 @@ Class BP_Media_Picture {
         global $wpdb, $bp,$kaltura_validation_data,$e_id;
 
         //change following query to get sinlge value so that i can get entry_id directly from db ashish
-//  //      $entry_id = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM {$bp->media->table_media_data} WHERE id = %d ", $this->id) );
+
         $e_id = $wpdb->get_var($wpdb->prepare("SELECT * FROM {$bp->media->table_media_data} WHERE id = %d ", $this->id),1,0);
         $r_id = $wpdb->get_results($wpdb->prepare("SELECT * FROM {$bp->media->table_media_data} WHERE id = %d ", $this->id));
 
@@ -67,11 +67,6 @@ Class BP_Media_Picture {
         catch (Exception $e ) {
             $picture->id = -9999;
         }
-
-
-
-//        $picture = $kaltura_validation_data['client']-> media -> get($e_id);
-//        $picture = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM {$bp->media->table_media_data} WHERE id = %d", $this->id ) );
 
         $this->user_id = $bp->displayed_user->id;
         $this->picture_id = $picture->id;
@@ -192,36 +187,10 @@ Class BP_Media_Picture {
             bp_media_setup_globals();
 
 
-//        if($group_id == 0) {
-//            $where = "";
-//        }
-//        else {
-//            $where = "WHERE group_id = $group_id";
-//        }
+
 
         if ( !bp_is_home() ) {
-            //TODO sort this mess!
-//            if(!$user_id) {
 
-//                $qry = "SELECT * FROM {$bp->media->table_media_data} ORDER BY id DESC";
-//                $picture_data = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM {$bp->media->table_media_data} $where ORDER BY id DESC") );
-//                $rt_pictures = BP_Media_Picture::get_media_data_by_user($user_id,$media_type,$view,$group_id);
-//            }
-//            else {
-
-//                $qry = "SELECT * FROM {$bp->media->table_media_data} WHERE user_id = $user_id ORDER BY id DESC";
-//                $picture_data = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM {$bp->media->table_media_data} $where  ORDER BY id DESC") );
-
-//                $rt_pictures = BP_Media_Picture::get_media_data_by_user($user_id,$media_type,$view,$group_id);
-//            }
-//        }
-//        else {
-//            if($user_id == 0) {
-//                $picture_data = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM {$bp->media->table_media_data} $where  ORDER BY id DESC") );
-//            }
-//            else {
-//                $picture_data = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM {$bp->media->table_media_data} $where ORDER BY id DESC") );
-//            }
             //this function should give the data uploaded by this user only.
             $rt_pictures = BP_Media_Picture::get_media_data_by_user($user_id,$media_type,$view,$group_id,$album_id,$type);
         }
@@ -265,23 +234,7 @@ Class BP_Media_Picture {
 
         $list_all_elements = BP_Media_Picture::get_media_data($media_type,$view,$group_id,$album_id,$type); //data from kaltura user seperated
 
-        //on the basis of type we have to fetch the result from wp_bp_media_data with some order so 'tag' the query
-//        var_dump($type);
-//        switch ($type){
-//            case 'popular';
-//                    $query_tag = " ORDER BY views";
-//                    break;
-//            case 'recent'://no need to pu filter here as query fetches result in ascending order of creation
-//                          //so just reverse the result
-//                    break;
-//            case 'rating':
-//                    //rating not updated in database!!! TODO Ashish
-//                    break;
-//
-//        }
-
-
-        $j=0;
+           $j=0;
         if($user_id == 0) {//this will give all data of all users
             $current_user_data = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM {$bp->media->table_media_data} $where") );
         }
@@ -289,25 +242,21 @@ Class BP_Media_Picture {
             $current_user_data = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM {$bp->media->table_media_data} WHERE user_id= $user_id $where_1") );
         }
 
-//        var_dump($album_id,$wpdb->last_query);
-//        var_dump($list_all_elements);
-//        var_dump($current_user_data);
 
-        //why reverse?
+        //why reverse? to get recent list
         $list_all_elements['pictures']= array_reverse($list_all_elements['pictures']);
 
 
         foreach ($list_all_elements['pictures'] as $key => $value) {
             for($i=0;$i<count($current_user_data);$i++) {
-//                    echo $current_user_data[$i]->entry_id." ";
+
                 if($value->id == $current_user_data[$i]->entry_id) {
-//                    echo 'adsf';
-                    /**
-                     * Insert visibility of the media. ITs in album table
-                     */
+
+                /**
+                 * Insert visibility of the media. ITs in album table
+                 */
                     $q = "SELECT visibility,user_id,album_id from {$bp->media->table_media_album} WHERE album_id = {$current_user_data[$i]->album_id}";
                     $result = $wpdb->get_row($q);
-//                    var_dump($q);
 
                     //if album is private and logged in user is not viewing then skip
                     if(($result->album_id == $current_user_data[$i]->album_id) && ($result->visibility == 'private') && !($result->user_id == $bp->loggedin_user->id))
@@ -341,7 +290,7 @@ Class BP_Media_Picture {
 
 
         /*ashish code edits here for sorting and populalarity wise and rating
- * Here simple usort function at last of this page which actually sorts for specicifc requirements
+        * Here simple usort function at last of this page which actually sorts for specicifc requirements
         */
 
         switch($type) {
@@ -366,12 +315,7 @@ Class BP_Media_Picture {
         }
 
 
-        //kapil lines
-//           if(!empty ($list_entry_by_user['pictures']))
-//            $list_entry_by_user['pictures'] = array_reverse($list_entry_by_user['pictures']);
-//         //kapil lines ends
-//        var_dump($list_entry_by_user);
-//        return $list_entry_by_user;
+
     }
     //this function should give the data uploaded by kce
     function get_media_data($media_type,$view,$group_id,$album_id,$type) {
@@ -425,11 +369,9 @@ Class BP_Media_Picture {
             $current_item = $bp->action_variables[0];
             $query = "SELECT * FROM {$bp->media->table_media_data} where id = $current_item $where_1";
             $test = $wpdb->get_row($query);
-//            var_dump($test);
             $k = $test->entry_id;
             try {
                 $picture_data = $kaltura_validation_data['client']-> media -> get($k);
-//                var_dump($picture_data);
 
                 $total_picture_count = 1;
                 $temp_array = array();
@@ -466,10 +408,9 @@ Class BP_Media_Picture {
         // Hide Hidden Items?
         if ( !$show_hidden )
             $hidden_sql = " AND a.hide_sitewide = 0";
-//                        echo $bp->media->id;
+
         $k = $wpdb->get_col( $wpdb->prepare( "SELECT DISTINCT l.id FROM {$bp->media->table_media_data} AS l JOIN {$bp->activity->table_name} AS a ON l.id = a.item_id WHERE l.user_id = %d AND a.component = %s{$hidden_sql} ORDER BY a.date_recorded DESC LIMIT %d", $user_id, $bp->media->id, BP_MEDIA_PERSONAL_ACTIVITY_HISTORY ) );
-//                $k = $wpdb->get_col( $wpdb->prepare("SELECT * FROM `wp_bp_activity` WHERE component = 'media' AND item_id =%d ORDER BY date_recorded DESC LIMIT %d",$bp->action_variables[0], BP_MEDIA_PERSONAL_ACTIVITY_HISTORY ));
-//                echo $wpdb->last_query;
+
         return $k;
 
     }
@@ -509,11 +450,9 @@ function get_adjacent_picture($previous = true) {
     $test = $wpdb->get_row($query);
     $k = $test->entry_id;
     $test->album_id;
-//    var_dump($test->album_id);
     $q11 = "SELECT * FROM {$bp->media->table_media_album} WHERE album_id = '$test->album_id'";
-//    var_dump($q);
     $result = $wpdb->get_row($q11);
-//    var_dump($result->visibility);
+
     if(($result->visibility == 'private') && !($bp->loggedin_user->id == $result->user_id)) {
         return 0;
     }
@@ -529,7 +468,7 @@ function get_adjacent_picture($previous = true) {
 
 }
 
-//added by ashish
+//added by ashish sorting functions
 
 function get_widget_popularlity($a,$b) {
     if($a->localview == $b->localview) {

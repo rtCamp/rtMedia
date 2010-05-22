@@ -8,7 +8,7 @@
  */
 ?>
 <?php
-
+//require ( BP_MEDIA_PLUGIN_DIR . 'bp-media-admin-report-abuse.php' );
 require ( BP_MEDIA_PLUGIN_DIR . '/bp-media-classes.php' );
 require ( BP_MEDIA_PLUGIN_DIR . '/bp-media-templatetags.php' );
 require ( BP_MEDIA_PLUGIN_DIR . '/bp-media-widgets.php' );
@@ -18,7 +18,8 @@ require ( BP_MEDIA_PLUGIN_DIR . '/media-report-abuse/bp-media-report-abuse.php' 
 require ( BP_MEDIA_PLUGIN_DIR . '/bp-media-admin.php' );
 require ( BP_MEDIA_PLUGIN_DIR . '/lib-kaltura/KalturaClient.php' );
 require ( BP_MEDIA_PLUGIN_DIR . '/editor/bp-editor.php' );		//inculde support for post-editor media button
-/**
+
+/*
  * Installs bp_media
  * Create required tables
  *
@@ -111,11 +112,11 @@ function bp_media_install() {
 
     $q = "select * from wp_bp_media_album";
     $result = $wpdb->query($q);
-//    var_dump($q);
+
     if(!$result){
         $query_1 = "INSERT INTO {$bp->media->table_media_album} ( `user_id`,`visibility`,`name`,`last_updated`,`category`) VALUES (0, 'public', 'Default', now(), NULL);";
         $wpdb->query($query_1);
-//        var_dump($query_1);
+
     }
 
 
@@ -142,20 +143,7 @@ function media_wire_install() {
 //    dbDelta($sql);
 }
 
-//function media_user_rating_install() {
-//    global $wpdb, $bp;
-//
-//    if ( !empty($wpdb->charset) )
-//        $charset_collate = "DEFAULT CHARACTER SET $wpdb->charset";
-//
-//    $sql[] = "CREATE TABLE {$bp->media->table_user_rating_data} (
-//	  		image_id int(11),
-//			user_id int(11)
-//	 	   ) {$charset_collate};";
-//
-//    require_once(ABSPATH . 'wp-admin/upgrade-functions.php');
-//    dbDelta($sql);
-//}
+
 
 function media_setup_globals() {
 
@@ -192,7 +180,7 @@ function media_setup_globals() {
 
     $bp->media->table_media_data = $wpdb->base_prefix . 'bp_media_data';
     $bp->media->table_media_album = $wpdb->base_prefix . 'bp_media_album';
-     $bp->media->photo_tag = $wpdb->base_prefix . 'bp_photo_tags'; //added by ashish
+    $bp->media->photo_tag = $wpdb->base_prefix . 'bp_media_photo_tags'; //added by ashish
     $bp->media->table_report_abuse = $wpdb->base_prefix . 'bp_media_report_abuse'; //added by ashish
     $bp->media->table_user_rating_data = $wpdb->base_prefix . 'bp_media_user_rating_list';
     $bp->media->image_base = BP_MEDIA_PLUGIN_URL . '/themes/media/images'; //kapil
@@ -234,11 +222,8 @@ function bp_media_check_installed() {
     if ( !is_site_admin() )
         return false;
 
-//    require ( 'bp-media-admin.php' );
-//    if ( get_site_option('bp-media-db-version') < BP_MEDIA_DB_VERSION )
     bp_media_install();
-    media_wire_install();
-//    media_user_rating_install();
+
 }
 add_action( 'admin_menu', 'bp_media_check_installed' );
 //
@@ -378,18 +363,7 @@ function picture_new_wire_post( $picture_id, $content ) {
     if ( $wire_post_id = bp_wire_new_post( $picture_id, $content, $bp->media->slug, $private ) ) {
 
         bp_core_add_notification( $picture_id, $bp->displayed_user->id, $bp->media->slug, 'picture_new_wire_post' );
-        /*
-        bp_picture_record_activity(
-                    array(
-                        'item_id' => $wire_post_id,
-                        'user_id' => $bp->loggedin_user->id,
-                        'component_name' => $bp->media->slug,
-                        'component_action' => 'picture_new_wire_post',
-                        'is_private' => 0
-                    )
-                );
- *
-        */
+   
         do_action( 'picture_new_wire_post', $picture_id, $content );
 
         return true;
@@ -407,16 +381,7 @@ function picture_delete_wire_post( $wire_post_id, $table_name ) {
         return false;
 
     if ( bp_wire_delete_post( $wire_post_id, $bp->media->slug, $table_name ) ) {
-        /*
-        bp_picture_delete_activity( array(
-                                            'item_id' => $wire_post_id,
-                                            'component_name' => $bp->media->slug,
-                                            'component_action' => 'picture_new_wire_post',
-                                            'user_id' => $bp->loggedin_user->id
-                                    )
-                                );
-
-        */
+    
 
         do_action( 'picture_deleted_wire_post', $wire_post_id );
         return true;
@@ -799,7 +764,7 @@ function media_delete_local_callback( ) {
             echo "Error !!!";
         }
         else {
-            echo "Successfully deleted !!!@#$@#audio OR video OR photo";
+            echo "Successfully deleted !!!";
         }
     }
 }
@@ -932,10 +897,7 @@ function bp_media_record_activity( $args = '' ) {
 
 
     /* If media is not public, hide the activity sitewide. */
-//        if ()
-//                $privacy = false;
-//        else
-//                $privacy = true;
+
     $privacy = false;
 
     $defaults = array(
@@ -979,10 +941,10 @@ function bp_media_record_activity( $args = '' ) {
  */
 function bp_media_recent_activity_item_ids_for_user( $user_id = false ) {
     global $bp;
-    // var_dump($bp->loggedin_user->id, $bp->displayed_user->id);
+    
     if ( !$user_id )
         $user_id = ( $bp->displayed_user->id ) ? $bp->displayed_user->id : $bp->loggedin_user->id;
-//var_dump($user_id);
+
     return BP_Media_Picture::get_activity_recent_ids_for_user( $user_id );
 }
 
@@ -1010,7 +972,7 @@ function bp_media_fetch_avatar( $args = '', $media = false ) {
             'css_id' => false,
             'alt' => __( 'Media Avatar', 'buddypress-media' )
     );
-//        var_dump($defaults);
+
     $params = wp_parse_args( $args, $defaults );
 
     // hard code these options to prevent tampering
