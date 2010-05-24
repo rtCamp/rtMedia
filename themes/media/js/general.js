@@ -107,4 +107,27 @@ jQuery(document).ready(function(){
                     jQuery('#media-sort-album-select select option.rt-others-album').show();
                 }
         });
+
+//START OF FUNCTION FOR DELETING ABUSE LIST
+
+        jQuery('a.ignore').click(function(){
+           jQuery(this).addClass('loading');
+           var ignID = jQuery(this).parent('td').attr('id');
+           var ignID_tr = jQuery(this).parent('td').parent('tr').attr('id');
+           var temp = ignID.split("-");
+           var id = temp[1];
+           //codde for ajax call here
+           var data = {action: 'undo_media_abuse',image_id: id};
+            jQuery.post(ajaxurl, data, function(response) {
+                        if(response == '1'){
+//                              jQuery('#'+ignID1).fadeOut('slow');
+                                jQuery('#'+ignID_tr).slideUp(300,function(){
+                                    jQuery(this).remove();
+                                });
+                        }
+                        else
+                            alert('error in deleting');
+                });
+
+        });//END OF FUNCTION FOR DELETING ABUSE LIST
 });

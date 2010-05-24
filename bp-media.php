@@ -8,7 +8,7 @@
  */
 ?>
 <?php
-//require ( BP_MEDIA_PLUGIN_DIR . 'bp-media-admin-report-abuse.php' );
+
 require ( BP_MEDIA_PLUGIN_DIR . '/bp-media-classes.php' );
 require ( BP_MEDIA_PLUGIN_DIR . '/bp-media-templatetags.php' );
 require ( BP_MEDIA_PLUGIN_DIR . '/bp-media-widgets.php' );
@@ -18,6 +18,7 @@ require ( BP_MEDIA_PLUGIN_DIR . '/media-report-abuse/bp-media-report-abuse.php' 
 require ( BP_MEDIA_PLUGIN_DIR . '/bp-media-admin.php' );
 require ( BP_MEDIA_PLUGIN_DIR . '/lib-kaltura/KalturaClient.php' );
 require ( BP_MEDIA_PLUGIN_DIR . '/editor/bp-editor.php' );		//inculde support for post-editor media button
+require ( BP_MEDIA_PLUGIN_DIR . '/bp-media-admin-report-abuse.php' );
 
 /*
  * Installs bp_media
