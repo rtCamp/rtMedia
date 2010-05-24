@@ -52,31 +52,41 @@ jQuery(document).ready(function(){
 // Delete from database click function
      jQuery('#no').click(function(){
                     var url = jQuery('#url').val();
+                           var answer = confirm("Really want to delete?")
+	if (answer){
                     jQuery(".rt-thanks").addClass('m-loading');
                     var data ={action:'media_delete_local', media_id:jQuery('#current-media-id').val()};
                      jQuery.post(ajaxurl, data, function(response) {
-                     jQuery(".rt-thanks").remove('img');
-                     jQuery(".rt-thanks").html(response);
-                     jQuery(".rt-thanks").removeClass('m-loading');
-                          window.location=url+"/media";
+                      jQuery(".rt-thanks").removeClass('m-loading');
+                       alert(response);
+                       jQuery('div#user-title h2').text("Please Wait while ur being redirected...");
+                       jQuery('.rt-picture-single').slideUp(1000,function(){
+                        window.location=url+"/media";
+                       });
                 });
+        }
         });
 
 
 
 // Delete from database + kaltura server click function
 
-
             jQuery('#yes').click(function(){
                 var url = jQuery('#url').val();
-                jQuery(".rt-thanks").addClass('m-loading');
+                var answer = confirm("Really want to delete?")
+	if (answer){
+	       jQuery(".rt-thanks").addClass('m-loading');
                var data = {action: 'media_delete_server', media_id:jQuery('#current-media-id').val()};
                jQuery.post(ajaxurl, data, function(response) {
-                   jQuery(".rt-thanks").remove('img');
-                   jQuery(".rt-thanks").html(response);
                    jQuery(".rt-thanks").removeClass('m-loading');
+                   alert(response);
+                   jQuery('div#user-title h2').text("Please Wait while ur being redirected...");
+                   jQuery('.rt-picture-single').slideUp(1000,function(){
                         window.location=url+"/media";
+                   });
+                       
                     });
+        }
              });
 
 

@@ -338,13 +338,13 @@ function media_add_single_js() {
         wp_deregister_script('bp-media-general');
         wp_deregister_script('jquery');
         wp_enqueue_script( 'jquery', 'http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js');
-        if(is_user_logged_in()){
-            $photo_tag_path = BP_MEDIA_PLUGIN_URL.'/photo-tagging/';
-            $abuse_path = BP_MEDIA_PLUGIN_URL.'/media-report-abuse/';
-            wp_enqueue_script( 'bp-phototagger',$photo_tag_path.'phototagger-jquery.js',true);
-            wp_enqueue_script( 'bp-phototag-init',$photo_tag_path.'photo-tag-init.js',true);
-            wp_enqueue_script( 'bp-media-abuse', $abuse_path.'abuse.js',true);
-        }
+//        if(is_user_logged_in()){
+//            $photo_tag_path = BP_MEDIA_PLUGIN_URL.'/photo-tagging/';
+//            $abuse_path = BP_MEDIA_PLUGIN_URL.'/media-report-abuse/';
+//            wp_enqueue_script( 'bp-phototagger',$photo_tag_path.'phototagger-jquery.js',true);
+//            wp_enqueue_script( 'bp-phototag-init',$photo_tag_path.'photo-tag-init.js',true);
+//            wp_enqueue_script( 'bp-media-abuse', $abuse_path.'abuse.js',true);
+//        }
          wp_enqueue_script( 'bp-media-single', $js_path.'single.js');
         
     }
@@ -674,6 +674,7 @@ add_action('wp_ajax_nopriv_media_change_description', 'media_chage_description_c
 /**
  *
  * Updating Stars using Wp admin-ajax
+ * Ajax call ..  Reference can be found in single.js
  * @global <type> $wpdb
  * @global <type> $bp
  */
@@ -684,12 +685,16 @@ function media_user_rating_callback() {
     global $wpdb, $bp;
     $bp->media->table_media_data = $wpdb->base_prefix . 'bp_media_data';
     $bp->media->table_media_rating = $wpdb->base_prefix . 'bp_media_user_rating_list';
-    $result = $wpdb->query("SELECT * FROM {$bp->media->table_media_rating} WHERE image_id = {$image_id} AND user_id = {$user_id} ");
+    $q = "SELECT * FROM {$bp->media->table_media_rating} WHERE image_id = {$image_id} AND user_id = {$user_id} ";
+    $result = $wpdb->query($q);
 
     if(empty($result)) {
-        $wpdb->query("UPDATE {$bp->media->table_media_data} SET total_rating = total_rating + {$rating}, rating_counter= rating_counter + 1 WHERE ID = {$image_id} ");
-        $wpdb->query("INSERT INTO {$bp->media->table_media_rating} (image_id, user_id) VALUES ({$image_id},{$user_id}) ");
-        echo 'THANKS / ';
+        $q1 = "UPDATE {$bp->media->table_media_data} SET total_rating = total_rating + {$rating}, rating_counter= rating_counter + 1 WHERE ID = {$image_id} ";
+        $wpdb->query($q1);
+        echo $wpdb->last_query;
+        $q2 = "INSERT INTO {$bp->media->table_media_rating} (image_id, user_id) VALUES ({$image_id},{$user_id}) ";
+        $wpdb->query($q2); //insert data here since we can check that user cannt make multiple rating
+         echo 'THANKS / ';
     }
     else {
         echo "ALREADY VOTED / " ;
@@ -702,6 +707,7 @@ add_action('wp_ajax_nopriv_media_user-rating', 'media_user_rating_callback');
 
 /**
  * Udating the view counter values
+ * ajax call reference can be found in single.js
  * @global <type> $wpdb
  * @global <type> $bp
  */
@@ -711,16 +717,17 @@ function media_view_update_callback() {
     global $wpdb, $bp;
     $url = $bp->root_domain;
     echo $url;
-    $bp->media->table_media_data = $wpdb->base_prefix . 'bp_media_data';
-    $p = $wpdb->query("UPDATE {$bp->media->table_media_data} SET views = views + 1  WHERE ID = {$image_id} ");
-    die();
+//    $bp->media->table_media_data = $wpdb->base_prefix . 'bp_media_data';
+    $q = "UPDATE {$bp->media->table_media_data} SET views = views + 1  WHERE ID = {$image_id} ";
+    $p = $wpdb->query($q);
+    die(); //ajax call must die after the sequence is complete
 }
 add_action('wp_ajax_media_view_update', 'media_view_update_callback');
 add_action('wp_ajax_nopriv_media_view_update', 'media_view_update_callback');
 
 /**
  *
- * Deleting the media from local db and kaltura server as well
+ * Deleting the media from local db and kaltura server as well ~~ code reference can be found in single.js
  * @global <type> $bp
  * @global <type> $kaltura_validation_data
  * @global <type> $wpdb
@@ -729,6 +736,7 @@ function media_delete_server_callback() {
     global $bp,$kaltura_validation_data,$wpdb;
     $media_id = $_POST['media_id'];
 //    echo $media_id;
+    $kaltura_id = get_kaltura_media_id($media_id);
     $e_id = $wpdb->get_var("SELECT entry_id from {$bp->media->table_media_data} WHERE ID = {$media_id} ");
     if (isMediaOwner($media_id)) {
         $pic = new BP_Media_Picture($picture_id);
@@ -737,7 +745,14 @@ function media_delete_server_callback() {
         }
         else {
             $kaltura_validation_data['client']->media->delete($e_id);
-            echo "Successfully deleted from server";
+
+            $q = "DELETE FROM {$bp->media->photo_tag} WHERE PHOTOID={$kaltura_id}";
+            $q1 = "DELETE FROM {$bp->media->table_report_abuse} WHERE entry_id ={$kaltura_id}";
+            $q2 = "DELETE FROM {$bp->media->table_user_rating_data} WHERE image_id={$media_id}";
+            $wpdb->query($q);
+            $wpdb->query($q1);
+            $wpdb->query($q2);
+            echo "Media deleted from Server";
             //redireect code
         }
     }
@@ -750,10 +765,10 @@ add_action('wp_ajax_media_delete_server', 'media_delete_server_callback');
 add_action('wp_ajax_nopriv_media_delete_server', 'media_delete_server_callback');
 
 /**
- * Deleting media from the locally installed db
+ * Deleting media from the locally installed db //using ajax call u can find this reference in single.js
  * @global <type> $bp
  */
-function media_delete_local_callback( ) {
+function media_delete_local_callback() {
     global $bp;
     // what u have deleted? audio / video / photo
 
@@ -765,6 +780,13 @@ function media_delete_local_callback( ) {
             echo "Error !!!";
         }
         else {
+
+            $q = "DELETE FROM {$bp->media->photo_tag} WHERE PHOTOID={$kaltura_id}";
+            $q1 = "DELETE FROM {$bp->media->table_report_abuse} WHERE entry_id ={$kaltura_id}";
+            $q2 = "DELETE FROM {$bp->media->table_user_rating_data} WHERE image_id={$media_id}";
+            $wpdb->query($q);
+            $wpdb->query($q1);
+            $wpdb->query($q2);
             echo "Successfully deleted !!!";
         }
     }
@@ -948,7 +970,11 @@ function bp_media_recent_activity_item_ids_for_user( $user_id = false ) {
 
     return BP_Media_Picture::get_activity_recent_ids_for_user( $user_id );
 }
-
+/**
+ * This code is intented for search purpose for reference only
+ * @global <type> $bp
+ *
+ */
 function bp_directory_media_search_form() {
     global $bp; ?>
 <form action="" method="get" id="search-media-form">
@@ -1035,5 +1061,16 @@ function bp_media_dtheme_ajax_querystring_group_filter( $query_string ) {
     return $query_string;
 }
 add_filter( 'bp_dtheme_ajax_querystring', 'bp_media_dtheme_ajax_querystring_group_filter', 1 );
-
+/**
+ *This function retrieves the kaltura id stored in db
+ * @global <type> $bp
+ * @global <type> $wpdb
+ * @param <type> $id
+ * @return <type> 
+ */
+function get_kaltura_media_id($id){
+    global $bp, $wpdb;
+    $q = "SELECT entry_id from {$bp->media->table_media_data} WHERE id = {$id} ";
+    return  $wpdb->get_var($wpdb->prepare($q));
+}
 ?>

@@ -54,7 +54,7 @@ function bp_media_abused_content(){
 //        echo '"<td><a href ="'.$result[$i]->abusued_url.'">'.$result[$i]->abusued_url.'</a></td>"';
         echo '<td align=center><a href ="'.$result[$i]->abusued_url.'">'.$kaltura_validation_data['client']->media->get($result[$i]->entry_id)->name.'</a></td>';
         echo "<td align=center>".$result[$i]->abusue_type."</td>";
-        echo '<td align="center" id ="ignore-'.$result[$i]->id.'" ><a class="ignore" href="#">Ignore</a></td>';// this js call is witten in general.js
+        echo '<td align="center" id ="ignore-'.$result[$i]->id.'" ><a class="ignore" style ="cursor:pointer">Ignore</a></td>';// this js call is witten in general.js
         echo '</tr>';
       }
       echo "</table>";

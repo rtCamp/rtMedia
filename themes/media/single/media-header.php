@@ -27,7 +27,7 @@
         <?php else :?>
         <input type ="hidden" id="url" value=""/>
         <input type ="hidden" id="current-url" value=""/>
-            <?php if ( bp_single_pic_exist() && bp_single_pic_check_owner()):?>
+            <?php if ( bp_single_pic_exist() && bp_single_pic_check_owner()|| is_site_admin()):?>
                       <?php if (isMediaOwner(bp_single_media_id()) && is_user_logged_in()): ?>
         <div id="user-title" style="cursor: pointer;"><h2 title="Click Here to Edit Media Title"><p><?php bp_single_picture_title() ?></p></h2></div>
                               <?php else: ?>

@@ -149,7 +149,7 @@ class BP_User_Media_Template {
 function bp_has_media( $args = '' ) {
 
     global $pictures_template,$bp;
-    
+
     $defaults = array(
             'user_id' => false,
             'per_page' => 8,
@@ -282,19 +282,20 @@ function bp_media_rating() {
  * @global object $single_pic_template It holds data for the single media
  */
 function bp_get_media_rating() {
-    global $pictures_template,$single_pic_template;
+    global $pictures_template,$single_pic_template,$bp,$wpdb;
+//    var_dump($pictures_template);
     $view = $pictures_template->picture->localview;
     $tot_rank = $pictures_template->picture->local_tot_rank;
     $ctr_rank = $pictures_template->picture->local_rating_ctr;
+    $local_entry = $pictures_template->picture->id;//kaltura id
     $rank.'a '.$view.' b '. $tot_rank.'c '.$ctr_rank;
 
-    $local_entry = $pictures_template->picture->id;
     if($tot_rank==0 && ctr_rank ==0) {
         get_actual_rating($r,$local_entry);
     }else {
         try {
             $rating = $tot_rank / $ctr_rank;
-            $r =  ceil($rating);
+            $r =  ceil($rating);// rating logic
             get_actual_rating($r,$local_entry);
         }
         catch(Exception $e) {
@@ -308,7 +309,7 @@ function bp_get_media_rating() {
  * @param int $local_entry : db local entryid
  */
 function get_actual_rating($r,$local_entry) {
-    switch ($r) {
+       switch ($r) {
         case 0:
 
             echo '<div class="jquerystar">
@@ -470,8 +471,9 @@ function bp_picture_view() {
  */
 function bp_media_user_rated() {
     global $bp,$single_pic_template,$pictures_template;
-    $rating = $single_pic_template->tot_rating;
-    $views =  $single_pic_template->rating_ctr;
+       $rating = $single_pic_template->tot_rating;
+       $views =  $single_pic_template->rating_ctr;
+       $local_entry = $single_pic_template->picture_id;//its kaltura entry residing in the database
 
     if ($rating == 0 && $views == 0) {
         get_actual_rating($r = 0,$local_entry);
