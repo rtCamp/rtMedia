@@ -120,7 +120,6 @@ jQuery(document).ready(function(){
            var data = {action: 'undo_media_abuse',image_id: id};
             jQuery.post(ajaxurl, data, function(response) {
                         if(response == '1'){
-//                              jQuery('#'+ignID1).fadeOut('slow');
                                 jQuery('#'+ignID_tr).slideUp(300,function(){
                                     jQuery(this).remove();
                                 });
