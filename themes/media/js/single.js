@@ -1,5 +1,7 @@
 jQuery(document).ready(function(){
 
+//removing cancel rating button
+    jQuery(".rating-cancel").remove();
 
 // general show/hide options
             jQuery('.confirm').hide();
@@ -106,6 +108,25 @@ jQuery(document).ready(function(){
     });
 
     jQuery('#current-url').val(window.location);
+
+    //Changing album from the single page function
+        var default_selected = jQuery("#change-album option:selected").text();
+        
+    jQuery('#change-album').change(function(){
+        var select_option = jQuery("#change-album option:selected").text();
+
+        if(!(select_option == default_selected)){
+             jQuery( 'div.rt-media-album').children('span.ajax-loader' ).show();
+             var data = {action: 'rt_album_update',image_id: jQuery('#current-media-id').val(), album_id:jQuery("#change-album option:selected").val()};
+            jQuery.post(ajaxurl, data, function(response) {
+                        alert(response + select_option);
+                        jQuery( 'div.rt-media-album').children('span.ajax-loader' ).hide();
+                    
+                });
+        }
+
+    });
+
 
 });
 

@@ -691,7 +691,7 @@ function media_user_rating_callback() {
     if(empty($result)) {
         $q1 = "UPDATE {$bp->media->table_media_data} SET total_rating = total_rating + {$rating}, rating_counter= rating_counter + 1 WHERE ID = {$image_id} ";
         $wpdb->query($q1);
-        echo $wpdb->last_query;
+//        echo $wpdb->last_query;
         $q2 = "INSERT INTO {$bp->media->table_media_rating} (image_id, user_id) VALUES ({$image_id},{$user_id}) ";
         $wpdb->query($q2); //insert data here since we can check that user cannt make multiple rating
          echo 'THANKS / ';
@@ -1073,4 +1073,22 @@ function get_kaltura_media_id($id){
     $q = "SELECT entry_id from {$bp->media->table_media_data} WHERE id = {$id} ";
     return  $wpdb->get_var($wpdb->prepare($q));
 }
+/**
+ * this function is for changing the media album via ajax call ref can be found in single.js
+ *
+ */
+
+function rt_album_update_callback() {
+    $image_id = $_POST['image_id'];
+    $album_id = $_POST['album_id'];
+    global $wpdb,$bp,$kaltura_validation_data; // this is how you get access to the database
+
+    $q1 = "UPDATE {$bp->media->table_media_data} SET album_id = {$album_id} WHERE ID = {$image_id} ";
+    $wpdb->query($q1);
+    echo 'Changed to album ';
+
+    die();//Ajax call must die here
+}
+add_action('wp_ajax_rt_album_update', 'rt_album_update_callback');
+add_action('wp_ajax_nopriv_rt_album_update', 'rt_album_update_callback');
 ?>

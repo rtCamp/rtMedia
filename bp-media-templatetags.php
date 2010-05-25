@@ -1246,6 +1246,32 @@ function bp_is_video_action($video) {
 	return false;
 }
 
+/**
+ * this function is for showing album name for the respective media
+ */
+
+function rt_show_album_name(){
+    echo rt_get_album_name();
+}
+
+function rt_get_album_name(){
+    global $bp, $wpdb;
+
+    $id = $bp->action_variables[0];
+   $q = "SELECT * FROM {$bp->media->table_media_album} ma JOIN {$bp->media->table_media_data} md WHERE ma.album_id = md.album_id and md.id = '{$id}'";
+    $result = $wpdb->get_results($wpdb->prepare($q));
+    $q2 =  "SELECT * FROM {$bp->media->table_media_album} WHERE user_id = 0 OR user_id = {$result[0]->user_id}";
+
+    $album_name = $wpdb->get_results($wpdb->prepare($q2));
+    $cnt = count($album_name);
+    echo '<select id = "change-album"><option selected="selected" value="'.$result[0]->album_id.'">'.$result[0]->name.'</option>';
+                for($i = 0;$i<$cnt;$i++){
+                    if(!($album_name[$i]->name == $result[0]->name))
+                    echo '<option value="'.$album_name[$i]->album_id.'">'.$album_name[$i]->name.'</option>';
+                }
+    echo '</select>';
+
+}
 
 
 ?>

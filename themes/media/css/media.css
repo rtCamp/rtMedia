@@ -100,7 +100,7 @@ a#delete-img { background: transparent url(../images/delete-icon.png) no-repeat 
 #rt-album-media-thumbs{}
 #rt-album-media-thumbs li{display: inline;margin-right: 10px;background: gray}
 
-div.rt-picture-single div.last{background: url(../images/Icon_ExclamationMark.png) no-repeat  260px 1px}
+div.rt-picture-single div.last{font-size: 80%}
 
 /*Photo tagging 1 liner CSS for showing Add Tag Functionality*/
 a.enable-tag-create {font-size: 70%;font-weight: bold; }

@@ -71,6 +71,8 @@
                     <input type ="button"value ="Report Content" class="rpt-btn"/>
                     <a class="cancel-abuse" style="cursor:pointer">Cancel</a>
                     </div>
+                    <div class="rt-media-album"><span>Change Album</span> <?php rt_show_album_name(); ?><span class="ajax-loader"></span> &nbsp;</div>
+
             <?php endif; ?>
 
 
