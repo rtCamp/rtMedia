@@ -93,7 +93,8 @@ function bp_media_ajax_querystring($query_string, $object, $filter, $scope, $pag
     if ( !empty( $_POST['page'] ) && '-1' != $_POST['page'] )
         $new_qs[] = 'page=' . $_POST['page'];
     $new_query_string = empty( $new_qs ) ? '' : join( '&', (array)$new_qs );
-    bp_init_media();
+    if (!( 'upload' == $_BP_COOKIE['bp-' . $object . '-scope'] ))
+          bp_init_media();
 
     return apply_filters( 'bp_media_ajax_querystring', $new_query_string, $object, $filter, $scope, $page, $search_terms, $extras);
 }
