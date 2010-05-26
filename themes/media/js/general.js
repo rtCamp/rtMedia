@@ -129,4 +129,7 @@ jQuery(document).ready(function(){
                 });
 
         });//END OF FUNCTION FOR DELETING ABUSE LIST
+        
+        jQuery('#datepicker').datepicker({ changeMonth: true,changeYear: true});
+
 });

@@ -19,6 +19,7 @@ require ( BP_MEDIA_PLUGIN_DIR . '/bp-media-admin.php' );
 require ( BP_MEDIA_PLUGIN_DIR . '/lib-kaltura/KalturaClient.php' );
 require ( BP_MEDIA_PLUGIN_DIR . '/editor/bp-editor.php' );		//inculde support for post-editor media button
 require ( BP_MEDIA_PLUGIN_DIR . '/bp-media-admin-report-abuse.php' );
+require ( BP_MEDIA_PLUGIN_DIR . '/bp-media-admin-list.php' );
 
 /*
  * Installs bp_media

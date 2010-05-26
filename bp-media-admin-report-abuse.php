@@ -25,7 +25,7 @@ add_action( 'wp', 'bp_media_add_abuse_nav', 2 );
 add_action( 'admin_menu', 'bp_media_add_abuse_nav', 2 );
 
 function bp_media_abused_list(){
-//    echo 'hai';
+
     do_action( 'bp_media_abused_screen' );
         add_action( 'bp_template_title', 'bp_media_abused_title' );
 	add_action( 'bp_template_content', 'bp_media_abused_content' );
