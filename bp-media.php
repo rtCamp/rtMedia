@@ -1091,4 +1091,21 @@ function rt_album_update_callback() {
 }
 add_action('wp_ajax_rt_album_update', 'rt_album_update_callback');
 add_action('wp_ajax_nopriv_rt_album_update', 'rt_album_update_callback');
+/**
+ * Feed Trail
+ */
+
+function bp_media_action_link_feed() {
+	global $bp, $wp_query;
+
+	if ( $bp->current_component != $bp->media->slug || $bp->current_action != 'feed' )
+		return false;
+
+	$wp_query->is_404 = false;
+	status_header( 200 );
+
+	include_once( 'feed/bp-media-feed.php' );
+	die;
+}
+add_action( 'bp_init', 'bp_media_action_link_feed', 6 );
 ?>

@@ -1272,6 +1272,49 @@ function rt_get_album_name(){
     echo '</select>';
 
 }
+/**
+ * Feed Function
+ */
+function bp_media_feed_link() {
+	echo bp_get_media_feed_link();
+}
+	function bp_get_media_feed_link() {
+		global $bp;
+		return apply_filters( 'bp_get_media_feed_link', site_url( $bp->media->slug . '/feed/' ) );
+	}
 
+        function bp_media_feed_item_guid() {
+	echo bp_get_media_feed_item_guid();
+}
+	function bp_get_media_feed_item_guid() {
+		return apply_filters( 'bp_get_media_feed_item_guid', bp_get_media_feed_permalink() );
+	}
 
+        function bp_media_feed_item_title() {
+	echo bp_get_media_feed_item_title();
+}
+	function bp_get_media_feed_item_title() {
+		return apply_filters( 'bp_get_media_feed_item_title', bp_picture_title() );
+	}
+
+        function bp_media_feed_item_link() {
+	echo bp_get_media_feed_item_link();
+}
+	function bp_get_media_feed_item_link() {
+		return apply_filters( 'bp_get_media_feed_item_link', bp_get_media_feed_permalink() );
+	}
+
+        function bp_media_feed_item_description() {
+	echo bp_get_media_feed_item_description();
+}
+	function bp_get_media_feed_item_description() {
+		return apply_filters( 'bp_get_media_feed_item_description', bp_get_single_picture_description() );
+	}
+
+        function bp_get_media_feed_permalink() {
+    global $bp,$pictures_template,$single_pic_template;
+
+    $url = site_url() . '/' . BP_MEDIA_SLUG .'/mediaall/' . $pictures_template->picture->db_id;
+    echo $url;
+}
 ?>

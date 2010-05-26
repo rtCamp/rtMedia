@@ -1,6 +1,6 @@
 <?php
 /**
- * BP_Links classes
+ * BP_Media classes
  *
  * @package Media_Component
  * @author rtCamp
