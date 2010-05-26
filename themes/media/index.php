@@ -58,6 +58,9 @@
 
                                         <!-- Media album filters -->
                     <?php //rt_get_album_list()?>
+<li class="feed last"><a href ="<?php bp_media_feed_link(); ?>"><?php _e( 'RSS', 'buddypress' ) ?></a></li>
+<?php do_action( 'bp_media_syndication_options' ) ?>
+
 <li id="media-sort-album-select" class="last filter">
         <?php _e( 'Sort By Album:', 'buddypress' ) ?>
     <select>
@@ -97,6 +100,7 @@
                             <?php do_action( 'bp_media_directory_order_options' ) ?>
                         </select>
                     </li>
+                    
                 <?php endif;?>
                 </ul>
             </div><!-- .item-list-tabs -->
