@@ -148,6 +148,7 @@ function rt_media_upload() {
     $rt_entry_id_list       =  $_POST['rt_entry_id_list'];
     $rt_entry_media_type    =  $_POST['rt_entry_media_type'];
     $rt_entry_group_id      =  $_POST['rt_entry_group_id'];
+    $rt_entry_date_time     =  $_POST['rt_entry_date_time'];
 
     echo $album_name = $_POST['album_name'];
     $visibility = $_POST['visibility'];
@@ -195,16 +196,20 @@ function rt_media_upload() {
     $rt_entry_type_list_arr = explode(',',$rt_entry_type_list);
     $rt_entry_media_type_list_arr_len = explode(',',$rt_entry_type_list);
 
+     $rt_entry_time_list_arr = explode(',',$rt_entry_date_time);
+    $rt_entry_list_arr_time_length = count($rt_entry_time_list_arr);
+
 
     for($i = 0;$i<$rt_entry_list_arr_length-1;$i++) {
 
-        $query = "INSERT INTO {$bp->media->table_media_data} (album_id, entry_id, user_id, media_type,group_id)
+        $query = "INSERT INTO {$bp->media->table_media_data} (album_id, entry_id, user_id, media_type,group_id,date_uploaded)
             VALUES  (
                         '$album_id',
                         '$rt_entry_id_list_arr[$i]',
                         '$current_user->ID',
                         '$rt_entry_media_type_list_arr[$i]',
-                        '$rt_entry_group_id'
+                        '$rt_entry_group_id',
+
                 )";
 
 

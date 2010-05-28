@@ -104,10 +104,13 @@ If current Component is group then show the KCW
         var rt_entry_id_list= '';
         var rt_entry_media_type = '';
         var rt_entry_group_id='';
+        var rt_entry_date_time='';
+        
         
         for(i = 0; i < entries.length; i++) {
             rt_entry_id_list = rt_entry_id_list+ entries[i].entryId+',';
             rt_entry_media_type = rt_entry_media_type+ entries[i].mediaType+',';
+            rt_entry_date_time = rt_entry_date_time+ entries[i].createdAt+',';
         }
 
         //as album_name and visibility is only related to group and groups may not have album, both variables must be initialized
@@ -133,7 +136,8 @@ If current Component is group then show the KCW
             rt_entry_media_type:rt_entry_media_type,
             rt_entry_group_id:'<?php echo $groups_template->group->id;?>',
             album_name :album_name,
-            visibility : visibility
+            visibility : visibility,
+            rt_entry_date_time : rt_entry_date_time
         };
         jQuery.post(ajaxurl, data, function(response) {
             //            var data = {

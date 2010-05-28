@@ -49,6 +49,7 @@ function bp_media_install() {
                             views int(10) DEFAULT '1',
                             group_id bigint(20),
                             album_id BIGINT( 100 ) NOT NULL,
+                            date_uploaded BIGINT( 100 ) NOT NULL,
                             KEY (id)
                             ) {$charset_collate};";
 
