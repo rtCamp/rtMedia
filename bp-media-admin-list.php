@@ -53,92 +53,29 @@ function rt_media_admin_page() {
 }
 
 
-/*
-    if(isset($_POST['rt-submit'])){
-    if(isset($_POST['filter-user']) || isset($_POST['filter-type']) || ((isset($_POST['filter-user'])) && (isset($_POST['filter-type'])))) {
-     $filter_date = $_POST['filter-date'];
-     $filter_user = $_POST['filter-user'];
-     $filter_type = $_POST['filter-type'];
-       $pick_date   = $_POST['pick-date'];
-    switch($filter_type){
-        case 'video':
-                $filter_type = 1;
-                break;
-        case 'audio':
-                $filter_type = 5;
-                break;
-        case 'photo':
-              $filter_type = 2;
-                break;
-        }
-
-        //to find username
-        if(!empty($filter_user) && $filter_user!= -1 && $filter_type == -1){
-           
-            echo 'Right user query';
-            $where = "WHERE md.user_id={$filter_user} AND md.user_id = wu.id";
-            $q =  "select * from {$bp->media->table_media_data} md JOIN {$wpdb->users} wu {$where} AND md.user_id = wu.id";
-        }
-
-        if(!empty($filter_type) && $filter_type != -1 && $filter_user == -1 ){
-            echo 'Right media query';
-            $where = "WHERE md.media_type={$filter_type}";
-            $q =  "select * from {$bp->media->table_media_data} md JOIN {$wpdb->users} wu {$where} AND md.user_id = wu.id";
-        }
-
-        if(!empty($filter_type) && !empty($filter_user) && $filter_type != -1 && $filter_user != -1){
-            echo 'Right user + media query';
-            $where = "WHERE md.user_id={$filter_user} AND md.media_type={$filter_type} AND md.user_id = wu.id";
-            $q =  "select * from {$bp->media->table_media_data} md JOIN {$wpdb->users} wu {$where}";
-        }
-        // for no filtereing
-        if(!empty($filter_type) && !empty($filter_user) && $filter_type == -1 && $filter_user == -1){
-         $where_default = "WHERE md.user_id = wu.id";
-         $q =  "select * from {$bp->media->table_media_data} md JOIN {$wpdb->users} wu {$where_default}";
-      }
-  }
-
-  if(isset($_POST['filter-date']) && $_POST['filter-date'] != -1) {
-        $filter_date = $_POST['filter-date'];
-        $pick_date   = $_POST['pick-date'];
-        if($fpage<1)$fpage=1;
-       $fpage = 1;
-    switch ($filter_date){
-        case 'last-week';
-        echo 'i last week';
-          $kaltura_data = get_last_week($fpage);
-          $kaltura_list[0] =$kaltura_data[0];
-          $pag_num = 3;
-        break;
-        case 'last-month';
-          $kaltura_data = get_last_month($fpage);
-          echo 'ashis1';
-          $kaltura_list[0]= $kaltura_data[0];
-          $pag_num = 5;
-        break;
-        case '-1';
-        break;
-       }
-}
-
-
-
-}
-
-    else{
-     echo 'when no opration is done';
-     $where_default = "WHERE md.user_id = wu.id";
-      $q =  "select * from {$bp->media->table_media_data} md JOIN {$wpdb->users} wu {$where_default} ";
-    }*/
-
-    
+ 
     $fpage = isset( $_REQUEST['fpage'] ) ? intval( $_REQUEST['fpage'] ) : 1;
     $owner = isset( $_REQUEST['filter-user']) ? intval($_REQUEST['filter-user']) : -1;
     $media_type_filter = isset( $_REQUEST['filter-type']) ? intval($_REQUEST['filter-type']) : -1;
-    $time_filter = isset( $_REQUEST['filter-date']) ? intval($_REQUEST['filter-date']) : -1;
+    $time_filter = isset( $_REQUEST['filter-date']) ? ($_REQUEST['filter-date']) : -1;
+    $specific_date = isset( $_REQUEST['pick-date']) ? ($_REQUEST['pick-date']) : '';
+//    var_dump($specific_date);
+    $d = strtotime($specific_date);
 
-    
+    $from_date = getDate($d);
+    $from_date = $from_date[0];
+    $to_date = $from_date+24*60*60;
+//    var_dump($from_date,$to_date);
 
+    $today = getdate();
+    $unixtime = $today[0];
+    if($time_filter=='last-week'){
+        $timesince = $unixtime - 7*24*60*60;
+    }
+
+    if($time_filter=='last-month'){
+        $timesince = $unixtime - 30*24*60*60;
+    }
 
     if (isset ($_POST['filter-user'])) {
         $fpage = 1;
@@ -151,6 +88,15 @@ function rt_media_admin_page() {
     if ($media_type_filter != -1) {
         $where .= "md.media_type={$media_type_filter} AND ";
     }
+    if($time_filter != -1)
+        $where  .= "md.date_uploaded > {$timesince} AND ";
+
+    if($specific_date != ''){
+        if($time_filter != -1)
+            $where.=' ';
+
+        $where .="md.date_uploaded BETWEEN {$from_date} AND {$to_date} AND ";
+    }
 
     $q =  "select * from {$bp->media->table_media_data} md JOIN {$wpdb->users} wu {$where}md.user_id = wu.id";
     $result = $wpdb->get_results($wpdb->prepare($q));
@@ -160,7 +106,7 @@ function rt_media_admin_page() {
 
 
     $pagination = array(
-      'base' => add_query_arg( array('fpage'=> '%#%', 'num' => $pag_num, 'filter-user' => $owner, 'filter-type' => $media_type_filter ) ), // http://example.com/all_posts.php%_% : %_% is replaced by format (below)
+      'base' => add_query_arg( array('fpage'=> '%#%', 'num' => $pag_num, 'filter-user' => $owner, 'filter-type' => $media_type_filter, 'pick-date' =>$specific_date ) ), // http://example.com/all_posts.php%_% : %_% is replaced by format (below)
       'format' => '', // ?page=%#% : %#% is replaced by the page number
       'total' => ceil( ($cnt) / $pag_num),
       'current' => $fpage,
@@ -174,7 +120,7 @@ function rt_media_admin_page() {
     $q .= " LIMIT {$rt_media_offset}, {$pag_num}";
 //    echo $ql;
     $media_user_name = $wpdb->get_results($wpdb->prepare($q));
-    echo $wpdb->last_query;
+//    echo $wpdb->last_query;
 //    var_dump($media_user_name);
 
     $kaltura_data = get_data_from_kaltura();//data fetched from kaltura
@@ -322,16 +268,9 @@ $kaltura_list[0] = array_slice( (array)$kaltura_list[0], intval( ( $fpage - 1 ) 
 function get_data_from_kaltura() {
     global $bp,$kaltura_validation_data;
     ob_clean();
-    var_dump($rt_media_offset,$pag_num);
-    $pageIndex = $rt_media_offset/$pag_num;
-    if($pageIndex ==0)
-        $pageIndex = 1;
-    var_dump($pageIndex);
 
     $filter = new KalturaMediaEntryFilter();
     $pager  = new KalturaFilterPager();
-//    $pager->pageIndex = $pageIndex;
-//    $pager->pageSize =$pag_num;
 
     try {
         $data1 =  $kaltura_validation_data['client']->media->listAction($filter,$pager);
@@ -339,72 +278,11 @@ function get_data_from_kaltura() {
     catch (Exception $e) {
         echo 'Oops Error while fetching data .. try Again ';
     }
-//    var_dump($data1);
 
     return array($data1->objects,$data1->totalCount);
 }
 
-function get_last_week($page) {
-
-     global $bp,$kaltura_validation_data;
-    ob_clean();
-
-    $lastweek = getDate();
-    $lastweek = $lastweek[0]-7*24*60*60;
-     
-    echo $lastweek;
-
-    echo date('d/m/y',$lastweek);
-
-    $filter = new KalturaMediaEntryFilter();
-    $pager  = new KalturaFilterPager();
-    $pager->pageSize=3;
-    $pager->pageIndex=$page;
-    $filter->createdAtGreaterThanOrEqual = $lastweek;
-    try {
-        $dataforlastweek =  $kaltura_validation_data['client']->media->listAction($filter,$pager);
-    }
-    catch (Exception $e) {
-        echo 'Oops Error while fetching data .. try Again ';
-    }
-
-//    var_dump('---------------------',$dataforlastweek);
- $kaltura_list[0] = $dataforlastweek;
- return array($kaltura_list[0]->objects,$kaltura_list[0]->totalCount);
-    
-}
-
-function get_last_month($page) {
-
-     global $bp,$kaltura_validation_data;
-    ob_clean();
-   
-    $lastmonth = getDate();
-    $lastmonth = $lastmonth[0]-30*24*60*60;
-
-    echo $lastmonth;
-
-    echo date('d/m/y',$lastmonth);
-
-    $filter = new KalturaMediaEntryFilter();
-    $pager  = new KalturaFilterPager();
-
-    $pager->pageSize=5;
-    $pager->pageIndex=$page;
-    $filter->createdAtGreaterThanOrEqual = $lastmonth;
-    try {
-        $dataforlastmonth =  $kaltura_validation_data['client']->media->listAction($filter,$pager);
-    }
-    catch (Exception $e) {
-        echo 'Oops Error while fetching data .. try Again ';
-    }
-
-//    var_dump('---------------------',$dataforlastmonth);
- $kaltura_list[0] = $dataforlastmonth;
- return array($kaltura_list[0]->objects,$kaltura_list[0]->totalCount);
-
-}
-
+//function to delete selected media
 function rt_entry_to_delete($rt_entry_list){
     global $wpdb,$kaltura_validation_data,$bp;
         

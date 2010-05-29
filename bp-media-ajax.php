@@ -142,13 +142,14 @@ add_action( 'wp_ajax_media_filter', 'bp_media_object_template_loader' );
 
 function rt_media_upload() {
 
-    global $current_user,$wpdb,$bp;
+    global $current_user,$wpdb,$bp,$kaltura_validation_data;
+
 
     $user_id = $bp->loggedin_user->id;
     $rt_entry_id_list       =  $_POST['rt_entry_id_list'];
     $rt_entry_media_type    =  $_POST['rt_entry_media_type'];
     $rt_entry_group_id      =  $_POST['rt_entry_group_id'];
-    $rt_entry_date_time     =  $_POST['rt_entry_date_time'];
+   
 
     echo $album_name = $_POST['album_name'];
     $visibility = $_POST['visibility'];
@@ -202,19 +203,38 @@ function rt_media_upload() {
 
     for($i = 0;$i<$rt_entry_list_arr_length-1;$i++) {
 
-        $query = "INSERT INTO {$bp->media->table_media_data} (album_id, entry_id, user_id, media_type,group_id,date_uploaded)
+        $query = "INSERT INTO {$bp->media->table_media_data} (album_id, entry_id, user_id, media_type,group_id)
             VALUES  (
                         '$album_id',
                         '$rt_entry_id_list_arr[$i]',
                         '$current_user->ID',
                         '$rt_entry_media_type_list_arr[$i]',
-                        '$rt_entry_group_id',
+                        '$rt_entry_group_id'
 
                 )";
 
-
+      
         $wpdb->query($query);
     }
+
+    
+    try {
+        $data1 =  $kaltura_validation_data['client']->baseEntry->getByIds($rt_entry_id_list);
+    }
+    catch (Exception $e) {
+        echo 'Oops Error while fetching data .. try Again ';
+    }
+    
+    for($i = 0;$i<count($data1);$i++) {
+        $q = "UPDATE {$bp->media->table_media_data} SET date_uploaded = {$data1[$i]->createdAt} WHERE entry_id = '{$rt_entry_id_list_arr[$i]}'  ";
+        echo $q;
+        $wpdb->query($q);
+     }
+
+     
+    echo $wpdb->last_query;
+
+
 
 }
 
