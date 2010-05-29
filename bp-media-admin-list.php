@@ -39,7 +39,7 @@ add_action('admin_menu', 'rt_media_administration');
 
 function rt_media_admin_page() {
     global $bp,$kaltura_validation_data,$wpdb,$kaltura_list,$kaltura_data;
-    $pag_num = 4;
+    $pag_num = 5;
 
     if(isset($_POST['delete_media'])) {
         if($_POST['rt-media-action'] == -1)
@@ -59,7 +59,7 @@ function rt_media_admin_page() {
     $media_type_filter = isset( $_REQUEST['filter-type']) ? intval($_REQUEST['filter-type']) : -1;
     $time_filter = isset( $_REQUEST['filter-date']) ? ($_REQUEST['filter-date']) : -1;
     $specific_date = isset( $_REQUEST['pick-date']) ? ($_REQUEST['pick-date']) : '';
-//    var_dump($specific_date);
+//    var_dump($owner);
     $d = strtotime($specific_date);
 
     $from_date = getDate($d);
@@ -148,9 +148,11 @@ function rt_media_admin_page() {
                             $media_slug = 'mediaall';
                     }
                     $kaltura_list[0]['media_slug'] = $media_type;
+                    $j++;
                 }
             }
     }
+     $kaltura_list[0]['count'] = $j++;
 //  var_dump('-----------',$kaltura_list[0],'----------');
 
 //var_dump($fpage,$pag_num);
@@ -175,18 +177,19 @@ $kaltura_list[0] = array_slice( (array)$kaltura_list[0], intval( ( $fpage - 1 ) 
                 <input type="submit" value="<?php esc_attr_e('Apply'); ?>" name="delete_media" id="doaction" class="button-secondary action" />
 
                 <select name="filter-date">
-                    <option value="-1" selected="selected"><?php _e('Time Filter'); ?></option>
-                    <option value="last-week"><?php _e('Last Week'); ?></option>
-                    <option value="last-month"><?php _e('Last Month'); ?></option>
+                    <option value="-1" <?php if($time_filter === -1) { echo 'SELECTED';}?>><?php _e('Time Filter'); ?></option>
+                    <option value="last-week" <?php if($time_filter === 'last-week') { echo 'SELECTED';}?>><?php _e('Last Week'); ?></option>
+                    <option value="last-month" <?php if($time_filter === 'last-month' ) { echo 'SELECTED';}?>><?php _e('Last Month'); ?></option>
                 </select>
                 <span>Specify Date: <input type="text" id="datepicker" name="pick-date" size="10"></span>
 
                 <select name="filter-user">
-                    <option value="-1" selected="selected"><?php _e('All Users'); ?></option>
+                    <option value="-1" <?php if( ($owner === -1) ) { echo 'SELECTED=selected';}?>><?php _e('All Users'); ?></option>
                         <?php
                         for($name =0 ; $name<count($res);$name++) {
                             ?>
-                    <option value="<?php _e($res[$name]->id); ?>"><?php _e($res[$name]->display_name); ?></option>
+                    <option value="<?php _e($res[$name]->id); ?>" <?php if($owner === intval($res[$name]->id) ) { echo 'SELECTED=selected';}?> ><?php _e($res[$name]->display_name)  ; ?></option>
+                    
                             <?php }?>
                 </select>
 
@@ -218,6 +221,8 @@ $kaltura_list[0] = array_slice( (array)$kaltura_list[0], intval( ( $fpage - 1 ) 
                     <?php
                   
                     $kaltura_cnt =count($kaltura_list[0]);
+//                    echo $kaltura_cnt ;
+//                    var_dump($kaltura_list[0]);
 
                     for($k=0;$k<$kaltura_cnt;$k++) {
 
@@ -232,13 +237,16 @@ $kaltura_list[0] = array_slice( (array)$kaltura_list[0], intval( ( $fpage - 1 ) 
                                 $media_type ='Audio';
                                 break;
                         }
-                        echo '</tr>';
+                        if(!empty($kaltura_list[0][$k]->id)){
+                        echo '<tr>';
                         echo '<th scope="row" class="check-column"><input type="checkbox" name="linkcheck[]" value="'.$kaltura_list[0][$k]->id.'" /></th>';
-                        echo '<td class="column-title"><img height= "30" width = "45px"  src= "'.$kaltura_list[0][$k]->thumbnailUrl .'jpg"><p>'.$kaltura_list[0][$k]->name.'</p></td>';
+                        echo '<td class="column-title"><a href="'. $bp->root_domain.'/'.BP_MEDIA_SLUG.'/'.$media_type.'/'.$kaltura_list[0][$k]->db_id. '"><img height= "30" width = "45px"  src= "'.$kaltura_list[0][$k]->thumbnailUrl .'jpg"><p>'.$kaltura_list[0][$k]->name.'</p></a></td>';
                         echo '<td class="column-author">'.$kaltura_list[0][$k]->display_name.'</td>';
                         echo '<td class="column-categories">'.$media_type.'</td>';
+                        
                         echo '<td class="column-date">'.date( "F j, Y",$kaltura_list[0][$k]->createdAt).'</td>';
                         echo '</tr>';
+                        }
 
                     }
 
@@ -286,12 +294,12 @@ function get_data_from_kaltura() {
 function rt_entry_to_delete($rt_entry_list){
     global $wpdb,$kaltura_validation_data,$bp;
         
-        var_dump($bp);
+//        var_dump($bp);
     //Since $wpdb is not having access for the tables  here so this is written
-        $bp->media->table_media_data = $wpdb->base_prefix . 'bp_media_data';
-        $bp->media->photo_tag = $wpdb->base_prefix . 'bp_media_photo_tags'; //added by ashish
-        $bp->media->table_report_abuse = $wpdb->base_prefix . 'bp_media_report_abuse'; //added by ashish
-        $bp->media->table_user_rating_data = $wpdb->base_prefix . 'bp_media_user_rating_list';//added by ashish
+//        $bp->media->table_media_data = $wpdb->base_prefix . 'bp_media_data';
+//        $bp->media->photo_tag = $wpdb->base_prefix . 'bp_media_photo_tags'; //added by ashish
+//        $bp->media->table_report_abuse = $wpdb->base_prefix . 'bp_media_report_abuse'; //added by ashish
+//        $bp->media->table_user_rating_data = $wpdb->base_prefix . 'bp_media_user_rating_list';//added by ashish
 
        
     $media_user_name = $wpdb->get_results($wpdb->prepare($q1));
@@ -306,14 +314,21 @@ function rt_entry_to_delete($rt_entry_list){
         $q_media_rating = "DELETE from {$bp->media->table_user_rating_data} WHERE image_id='{$media_id}' ";
         $q_report_abuse = "DELETE from {$bp->media->table_report_abuse} WHERE entry_id='{$rt_entry_list[$i]}' ";
 
-        echo $q_report_abuse;
-        echo $q_media_data;
-        echo $q_media_photo_tag;
-        echo $q_media_rating;
+//        echo $q_report_abuse;
+//        echo $q_media_data;
+//        echo $q_media_photo_tag;
+//        echo $q_media_rating;
+//
+
+        $wpdb->query($q_media_data);
+        $wpdb->query($q_media_photo_tag);
+        $wpdb->query($q_media_rating);
+        $wpdb->query($q_report_abuse);
+     $kaltura_validation_data['client']->media->delete($rt_entry_list[$i]);
         
 //        var_dump($media_id);
         }
-//        $kaltura_validation_data['client']->media->delete($rt_entry_list[$i]);
+
         
     }
 //    var_dump('-----------------------',$rt_entry_list,'---------------------');

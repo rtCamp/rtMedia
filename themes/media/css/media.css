@@ -107,3 +107,4 @@ a.enable-tag-create {font-size: 70%;font-weight: bold; }
 a.enable-tag-create:hover{text-decoration: underline}
 
 .m-loading{background: url(../images/ajax-loader.gif) no-repeat right top}
+div.item-list-tabs ul li.last {margin-top:5px ;}

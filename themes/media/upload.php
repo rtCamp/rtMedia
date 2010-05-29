@@ -87,7 +87,7 @@ If current Component is group then show the KCW
     <?php if($bp->current_component == BP_GROUPS_SLUG) {?>
 <div id="kaltura_contribution_wizard_wrapper"></div>
 	<?php }else { ?>
-<div id="kaltura_contribution_wizard_wrapper" style="display: none"></div>
+<div id="kaltura_contribution_wizard_wrapper" style="display: none"><div id ="eeee">'HELLO</div></div>
 	<?php }?>
 <script type="text/javascript">
     var cwWidth = 680;
@@ -149,6 +149,7 @@ If current Component is group then show the KCW
             //            jQuery.post(ajaxurl, data, function(response) {
             //                jQuery('.rt-album-message p').text(response);
             //            });
+            alert('Media Uploded');
         });
     }
 </script>
