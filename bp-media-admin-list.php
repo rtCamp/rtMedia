@@ -1,5 +1,7 @@
 <?php
 //require_once('admin.php');
+ if(is_kaltura_configured()):
+
 function media_add_admin_css() {
     wp_enqueue_style( 'media_add_admin_css',  BP_MEDIA_PLUGIN_URL . '/themes/media/css/media-admin.css' );
     wp_enqueue_style( 'media_add_datepicker_css',  BP_MEDIA_PLUGIN_URL . '/themes/media/css/datepicker/jquery.ui.all.css' );
@@ -15,21 +17,21 @@ function media_add_admin_js() {
 }
 add_action( 'admin_menu', 'media_add_admin_js' );
 
-function rt_media_administration() {
-    global $wpdb, $bp;
-
-    if ( !is_site_admin() )
-        return false;
-
-    /* Add the administration tab under the "Site Admin" tab for site administrators */
-    add_submenu_page('bp-general-settings', //$parent
-            __('Media Adminstration','Media Adminstration'),//$page_title
-            __('Media Adminstration','Media Adminstration'),//$menu_title
-            'manage_options',//$access_level
-            'bp-media-admin',//$file
-            "rt_media_admin_page" );//$function
-}
-add_action('admin_menu', 'rt_media_administration');
+//function rt_media_administration() {
+//    global $wpdb, $bp;
+//
+//    if ( !is_site_admin() )
+//        return false;
+//
+//    /* Add the administration tab under the "Site Admin" tab for site administrators */
+//    add_submenu_page('bp-general-settings', //$parent
+//            __('Media Adminstration','buddypress'),//$page_title
+//            '<span class="rt-buddypress-admin-media">'.__('Media Admin','buddypress'). '&nbsp;&nbsp;&nbsp;</span>',//$menu_title
+//            'manage_options',//$access_level
+//            'bp-media-admin',//$file
+//            "rt_media_admin_page" );//$function
+//}
+//add_action('admin_menu', 'rt_media_administration');
 
 
 //code to catch the post fields
@@ -39,11 +41,11 @@ add_action('admin_menu', 'rt_media_administration');
 
 function rt_media_admin_page() {
     global $bp,$kaltura_validation_data,$wpdb,$kaltura_list,$kaltura_data;
-    $pag_num = 5;
+    $pag_num = 6;
 
     if(isset($_POST['delete_media'])) {
         if($_POST['rt-media-action'] == -1)
-            return;
+            wp_redirect( admin_url('admin.php?page=bp-media-admin') );
         if($_POST['rt-media-action'] == 'delete' ){
 
                $rt_entry_list = $_POST['linkcheck'];
@@ -52,8 +54,6 @@ function rt_media_admin_page() {
         }
 }
 
-
- 
     $fpage = isset( $_REQUEST['fpage'] ) ? intval( $_REQUEST['fpage'] ) : 1;
     $owner = isset( $_REQUEST['filter-user']) ? intval($_REQUEST['filter-user']) : -1;
     $media_type_filter = isset( $_REQUEST['filter-type']) ? intval($_REQUEST['filter-type']) : -1;
@@ -117,7 +117,7 @@ function rt_media_admin_page() {
 
     );
     $rt_media_offset = ($fpage-1) * $pag_num;
-    $q .= " LIMIT {$rt_media_offset}, {$pag_num}";
+//    $q .= " LIMIT {$rt_media_offset}, {$pag_num}";
 //    echo $ql;
     $media_user_name = $wpdb->get_results($wpdb->prepare($q));
 //    echo $wpdb->last_query;
@@ -339,4 +339,12 @@ function rt_entry_to_delete($rt_entry_list){
 
 }
 
-?>
+
+ else:
+     ?>
+
+                    <div id="message" class="info">
+                        <p>Kaltura is not configured. Please contact Admin</p>
+                    </div>
+
+<?endif; ?>

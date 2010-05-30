@@ -11,7 +11,7 @@
    Syntax recommendation http://www.w3.org/TR/REC-CSS2/
 */
 
-.tablenav select[name="filter-date"] {
+.tablenav select[name="filter-date"],.tablenav select[name="user-to-reassign"],.tablenav select[name="type-to-reassign"] {
 width:155px;
 }
 
@@ -22,4 +22,19 @@ width:155px;
 .tablenav select[name="filter-type"] {
 width:155px;
 }
+span.rt-buddypress-admin-media-head {
+	font-weight: bold;
+	border-top: 1px solid gray;
+	padding-top: 3px;
+}
+span.rt-buddypress-admin-media {
+	padding-left: 10px;
+}
+
+/* Content */
+/*div.buddypress-links-admin-content ul {
+	list-style: disc outside none;
+	margin-left: 24px;
+}
+*/
 
