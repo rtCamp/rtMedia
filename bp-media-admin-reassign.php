@@ -12,9 +12,17 @@ function rt_media_admin_page_reassign(){
         if($_REQUEST['rt-media-assign-action'] == -1 || $_REQUEST['user-id'] == -1)
              wp_redirect( admin_url('admin.php?page=bp-media-admin-reassign') );
         if($_REQUEST['rt-media-assign-action'] == 'reassign' && $_REQUEST['user-id'] ){
-               $newuserid =  $_REQUEST['user-id'];
-               $rt_media_entry_to_assign = $_POST['assigncheck'];
-               var_dump($rt_media_entry_to_assign,$newuserid);
+               $rt_newuserid =  $_REQUEST['user-id'];
+               $rt_datapath = $_POST['assigncheck'];
+//               $rt_mediatype = $_POST['rt_media_type'];
+
+
+//               var_dump($rt_datapath,$rt_newuserid);
+               
+
+               $new_entry_id = reassign_media_owner($rt_datapath,$rt_newuserid);
+
+
 
         }
 
@@ -189,7 +197,7 @@ $kaltura_list[0] = array_slice( (array)$kaltura_list[0], intval( ( $fpage - 1 ) 
                         }
                         if(!empty($kaltura_list[0][$k]->id)){
                         echo '<tr>';
-                        echo '<th scope="row" class="check-column"><input type="checkbox" name="assigncheck[]" value="'.$kaltura_list[0][$k]->dataUrl.'" /><input type = "hidden" name ="kid[]" value ="'.$kaltura_list[0][$k]->id.'"  ></th>';
+                        echo '<th scope="row" class="check-column"><input type="checkbox" name="assigncheck[]" value="'.$kaltura_list[0][$k]->dataUrl. ' '.$kaltura_list[0][$k]->mediaType.'" /></th>';
                         echo '<td class="column-title"><a href="'. $bp->root_domain.'/'.BP_MEDIA_SLUG.'/'.$media_type.'/'.$kaltura_list[0][$k]->db_id. '"><img height= "30" width = "45px"  src= "'.$kaltura_list[0][$k]->thumbnailUrl .'jpg"><p>'.$kaltura_list[0][$k]->name.'</p></a></td>';
                         echo '<td class="column-author">'.$kaltura_list[0][$k]->display_name.'</td>';
                         echo '<td class="column-categories">'.$media_type.'</td>';
@@ -221,5 +229,53 @@ $kaltura_list[0] = array_slice( (array)$kaltura_list[0], intval( ( $fpage - 1 ) 
 
 </div>
     <?php
+}
+
+function reassign_media_owner($rt_datapath,$rt_newuserid){
+    global $bp,$kaltura_validation_data,$wpdb;
+    $rt_olduserdata = $rt_datapath;
+    $oldtype = $rt_media_type;
+    $album_id = 1;
+    $rt_entry_group_id =0;
+//    var_dump($kaltura_validation_data);
+    $t = "You can add Title Here";
+    
+    try{
+        for($i =0;$i < count($rt_olduserdata);$i++ ){
+            $path_type = split(' ',$rt_olduserdata[$i]);
+
+        $kaltura_entry = new KalturaMediaEntry();
+        $kaltura_entry->name = $t;
+        $kaltura_entry->mediaType = intval($path_type[1]);
+        $url = "$path_type[0]";
+//            echo $kaltura_entry->name. ' ';
+//            echo $kaltura_entry->mediaType. ' ';
+//            echo $path_type[0]. '  <br>';
+//            var_dump($kaltura_entry->mediaType,$path_type[0]);
+        $newdata =  $kaltura_validation_data['client']->media->addFromUrl($kaltura_entry,$url);
+//        var_dump($newdata);
+        if(!empty($newdata)){
+          $query = "INSERT INTO {$bp->media->table_media_data} (album_id, entry_id, user_id, media_type,group_id,date_uploaded)
+            VALUES  (
+                        '$album_id',
+                        '$newdata->id',
+                        '$rt_newuserid',
+                        '$newdata->mediaType',
+                        '$rt_entry_group_id',
+                        '$newdata->createdAt'
+                )";
+
+
+        $wpdb->query($query);
+        }
+        }
+        
+        
+    }
+    catch(Exception $e){
+        echo ' Oops Server Responded Unexpected';
+    }
+
+
 }
 ?>
