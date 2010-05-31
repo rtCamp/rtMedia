@@ -21,6 +21,7 @@ require ( BP_MEDIA_PLUGIN_DIR . '/editor/bp-editor.php' );		//inculde support fo
 require ( BP_MEDIA_PLUGIN_DIR . '/bp-media-admin-report-abuse.php' );
 require ( BP_MEDIA_PLUGIN_DIR . '/bp-media-admin-list.php' );
 require ( BP_MEDIA_PLUGIN_DIR . '/bp-media-admin-reassign.php' );
+require ( BP_MEDIA_PLUGIN_DIR . '/album-importer.php' );
 
 
 /*
@@ -231,6 +232,14 @@ function media_add_admin_menu() {
             'manage_options',//$access_level
             'bp-media-admin-reassign',//$file
             "rt_media_admin_page_reassign" );//$function
+
+       add_submenu_page('bp-general-settings', //$parent
+            __('Media Importer','buddypress'),//$page_title
+           '<span class="rt-buddypress-admin-media">&middot; '. __('Media Importer','buddypress'). '&nbsp;&nbsp;&nbsp;</span>',//$menu_title
+            'manage_options',//$access_level
+            'bp-media-importer',//$file
+            "rt_media_importer_page" );//$function
+
 }
 add_action('admin_menu', 'media_add_admin_menu');
 
