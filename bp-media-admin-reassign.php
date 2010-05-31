@@ -7,10 +7,12 @@
 function rt_media_admin_page_reassign(){
      global $bp,$kaltura_validation_data,$wpdb,$kaltura_list,$kaltura_data;
     $pag_num = 6;
-
+ if(is_kaltura_configured() == '1' || is_kaltura_configured() == true){
     if(isset($_REQUEST['assign_media_btn'])) {
-        if($_REQUEST['rt-media-assign-action'] == -1 || $_REQUEST['user-id'] == -1)
+        if($_REQUEST['rt-media-assign-action'] == -1 || $_REQUEST['user-id'] == -1 ){
              wp_redirect( admin_url('admin.php?page=bp-media-admin-reassign') );
+              echo '  <div class="updated fade" style="background-color: #FFF123;">Please select an action</div>';
+        }
         if($_REQUEST['rt-media-assign-action'] == 'reassign' && $_REQUEST['user-id'] ){
                $rt_newuserid =  $_REQUEST['user-id'];
                $rt_datapath = $_POST['assigncheck'];
@@ -21,6 +23,9 @@ function rt_media_admin_page_reassign(){
                
 
                $new_entry_id = reassign_media_owner($rt_datapath,$rt_newuserid);
+               if(!empty($new_entry_id)){
+                    echo '  <div class="updated fade" style="background-color: #FFF123;">Reassignment Succussfully Done ! </div>';
+               }
 
 
 
@@ -114,18 +119,22 @@ $kaltura_list[0] = array_slice( (array)$kaltura_list[0], intval( ( $fpage - 1 ) 
 
     $q_users =  "select DISTINCT(display_name), wu.id from {$bp->media->table_media_data} md JOIN {$wpdb->users} wu WHERE md.user_id = wu.id";
     $res = $wpdb->get_results($wpdb->prepare($q_users));
-
+ }
+ else{
+     // kaltura not configured
+ }
 
 ?>
 
 <div class="wrap">
 
     <h2>Media Reassign : Advanced</h2>
+    <?php if(is_kaltura_configured() == true || is_kaltura_configured() == 1){ ?>
     <form id="media-reassign" action="" method="post">
         <div class="tablenav">
             <div class="alignleft actions">
                 <select name="rt-media-assign-action">
-                    <option value="-1" name="bulk-action" selected="selected"><?php _e('Bulk Actions'); ?></option>
+                    <option value="-1" name="bulk-action" selected="selected"><?php _e('Select Action'); ?></option>
                     <option name="bulk-reassign" value="reassign"><?php _e('Reassign Media'); ?></option>
                 </select>
                 <span><b>to</b></span>
@@ -226,7 +235,13 @@ $kaltura_list[0] = array_slice( (array)$kaltura_list[0], intval( ( $fpage - 1 ) 
 
 
     </form>
+    <?php }else{ ?>
 
+    <div class="updated" style="background-color: #FF0000;">
+        Kaltura is not configured !!! Please check settings from <a href="<?php echo admin_url('admin.php?page=media-admin')?>">here</a>
+    </div>
+
+    <?php } ?>
 </div>
     <?php
 }
@@ -269,6 +284,7 @@ function reassign_media_owner($rt_datapath,$rt_newuserid){
         $wpdb->query($query);
         }
         }
+        return $newdata;
         
         
     }

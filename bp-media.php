@@ -210,24 +210,24 @@ function media_add_admin_menu() {
         return false;
 
     /* Add the administration tab under the "Site Admin" tab for site administrators */
-    add_submenu_page( 'bp-general-settings', __( 'BP Media ', 'buddypress'), '<span class="rt-buddypress-admin-media-head">' . __( 'BP Media Setup', 'buddypress' ) . '&nbsp;&nbsp;&nbsp;</span>', 'manage_options', 'buddypress-media-admin', 'bp_media_admin_index' );
+    add_submenu_page( 'bp-general-settings', __( 'BuddyPress Media', 'buddypress'), '<span class="rt-buddypress-admin-media-head">' . __( 'BuddyPress Media', 'buddypress' ) . '&nbsp;&nbsp;&nbsp;</span>', 'manage_options', 'buddypress-media-admin', 'rt_media_admin_page' );
     add_submenu_page('bp-general-settings', //$parent
             __('Kaltura Setting','buddypress'),//$page_title
-             '<span class="rt-buddypress-admin-media">&middot; '.__('Kaltura Setup','buddypress'). '&nbsp;&nbsp;&nbsp;</span>',//$menu_title
+             '<span class="rt-buddypress-admin-media">&middot; '.__('Kaltura Setting','buddypress'). '&nbsp;&nbsp;&nbsp;</span>',//$menu_title
             'manage_options',//$access_level
             'bp-media-setup',//$file
             "media_admin" );//$function
 
     add_submenu_page('bp-general-settings', //$parent
-            __('Media Adminstration','buddypress'),//$page_title
-            '<span class="rt-buddypress-admin-media">&middot; '.__('Media Admin','buddypress'). '&nbsp;&nbsp;&nbsp;</span>',//$menu_title
+            __('Dashboard','buddypress'),//$page_title
+            '<span class="rt-buddypress-admin-media">&middot; '.__('Dashboard','buddypress'). '&nbsp;&nbsp;&nbsp;</span>',//$menu_title
             'manage_options',//$access_level
             'bp-media-admin',//$file
             "rt_media_admin_page" );//$function
 
      add_submenu_page('bp-general-settings', //$parent
-            __('Media Reassign','buddypress'),//$page_title
-            '<span class="rt-buddypress-admin-media">&middot; '.__('Media Reassign','buddypress'). '&nbsp;&nbsp;&nbsp;</span>',//$menu_title
+            __('Reassignment','buddypress'),//$page_title
+            '<span class="rt-buddypress-admin-media">&middot; '.__('Reassignment','buddypress'). '&nbsp;&nbsp;&nbsp;</span>',//$menu_title
             'manage_options',//$access_level
             'bp-media-admin-reassign',//$file
             "rt_media_admin_page_reassign" );//$function

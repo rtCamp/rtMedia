@@ -1,6 +1,6 @@
 <?php
 //require_once('admin.php');
- if(is_kaltura_configured()):
+ 
 
 function media_add_admin_css() {
     wp_enqueue_style( 'media_add_admin_css',  BP_MEDIA_PLUGIN_URL . '/themes/media/css/media-admin.css' );
@@ -17,39 +17,27 @@ function media_add_admin_js() {
 }
 add_action( 'admin_menu', 'media_add_admin_js' );
 
-//function rt_media_administration() {
-//    global $wpdb, $bp;
-//
-//    if ( !is_site_admin() )
-//        return false;
-//
-//    /* Add the administration tab under the "Site Admin" tab for site administrators */
-//    add_submenu_page('bp-general-settings', //$parent
-//            __('Media Adminstration','buddypress'),//$page_title
-//            '<span class="rt-buddypress-admin-media">'.__('Media Admin','buddypress'). '&nbsp;&nbsp;&nbsp;</span>',//$menu_title
-//            'manage_options',//$access_level
-//            'bp-media-admin',//$file
-//            "rt_media_admin_page" );//$function
-//}
-//add_action('admin_menu', 'rt_media_administration');
-
-
 //code to catch the post fields
-
-
-
 
 function rt_media_admin_page() {
     global $bp,$kaltura_validation_data,$wpdb,$kaltura_list,$kaltura_data;
     $pag_num = 6;
 
+    if(is_kaltura_configured() == '1' || is_kaltura_configured() == true){
     if(isset($_POST['delete_media'])) {
-        if($_POST['rt-media-action'] == -1)
+        if($_POST['rt-media-action'] == -1){
             wp_redirect( admin_url('admin.php?page=bp-media-admin') );
+            echo '  <div class="updated fade" style="background-color: #FFF123;">Please select an action</div>';
+        }
         if($_POST['rt-media-action'] == 'delete' ){
 
                $rt_entry_list = $_POST['linkcheck'];
                $rt_delete_success = rt_entry_to_delete($rt_entry_list);
+//               if(!empty ($rt_delete_success)){
+                echo '  <div class="updated fade" style="background-color: #FFF123;">Selected entry Deleted Successfully
+                                      </div>';
+//               }
+
 
         }
 }
@@ -124,6 +112,7 @@ function rt_media_admin_page() {
 //    var_dump($media_user_name);
 
     $kaltura_data = get_data_from_kaltura();//data fetched from kaltura
+
      $kaltura_list[0] = array();
     $j = 0;
     foreach ($kaltura_data[0] as $key => $value) {
@@ -160,18 +149,20 @@ $kaltura_list[0] = array_slice( (array)$kaltura_list[0], intval( ( $fpage - 1 ) 
 
     $q_users =  "select DISTINCT(display_name), wu.id from {$bp->media->table_media_data} md JOIN {$wpdb->users} wu WHERE md.user_id = wu.id";
     $res = $wpdb->get_results($wpdb->prepare($q_users));
-    
-    
+    }else{ 
+        ////kaltura is not configured
+    }
 ?>
 
 <div class="wrap">
    
     <h2>Media Adminstration : Advanced</h2>
+        <?php if(is_kaltura_configured() == true || is_kaltura_configured() == 1){ ?>
     <form id="media-filter" action="" method="post">
         <div class="tablenav">
             <div class="alignleft actions">
                 <select name="rt-media-action">
-                    <option value="-1" name="bulk-action" selected="selected"><?php _e('Bulk Actions'); ?></option>
+                    <option value="-1" name="bulk-action" selected="selected"><?php _e('Select Actions'); ?></option>
                     <option name="bulk-delete" value="delete"><?php _e('Delete Forever'); ?></option>
                 </select>
                 <input type="submit" value="<?php esc_attr_e('Apply'); ?>" name="delete_media" id="doaction" class="button-secondary action" />
@@ -268,9 +259,16 @@ $kaltura_list[0] = array_slice( (array)$kaltura_list[0], intval( ( $fpage - 1 ) 
 
 
     </form>
+  <?php }
+    else{ ?>
+   <div class="updated fade" style="background-color: #FF0000;">
+        Kaltura is not configured !!! Please check settings from <a href="<?php echo admin_url('admin.php?page=media_admin')?>">here</a>
+    </div>
+    <?php } ?>
 
 </div>
     <?php
+  
 }
 
 function get_data_from_kaltura() {
@@ -301,7 +299,7 @@ function rt_entry_to_delete($rt_entry_list){
 //        $bp->media->table_report_abuse = $wpdb->base_prefix . 'bp_media_report_abuse'; //added by ashish
 //        $bp->media->table_user_rating_data = $wpdb->base_prefix . 'bp_media_user_rating_list';//added by ashish
 
-       
+        $result_add = 0;
     $media_user_name = $wpdb->get_results($wpdb->prepare($q1));
     try{
     for($i=0;$i<count($rt_entry_list);$i++){
@@ -314,23 +312,18 @@ function rt_entry_to_delete($rt_entry_list){
         $q_media_rating = "DELETE from {$bp->media->table_user_rating_data} WHERE image_id='{$media_id}' ";
         $q_report_abuse = "DELETE from {$bp->media->table_report_abuse} WHERE entry_id='{$rt_entry_list[$i]}' ";
 
-//        echo $q_report_abuse;
-//        echo $q_media_data;
-//        echo $q_media_photo_tag;
-//        echo $q_media_rating;
-//
-
         $wpdb->query($q_media_data);
         $wpdb->query($q_media_photo_tag);
         $wpdb->query($q_media_rating);
         $wpdb->query($q_report_abuse);
-     $kaltura_validation_data['client']->media->delete($rt_entry_list[$i]);
-        
+    $kaltura_result =  $rt_kaltura_result = $kaltura_validation_data['client']->media->delete($rt_entry_list[$i]);
+            $result_add = intval($kaltura_result->executionTime)+ intval($result_add);
 //        var_dump($media_id);
         }
 
         
     }
+    return $result_add;
 //    var_dump('-----------------------',$rt_entry_list,'---------------------');
     }
     catch(Exception $e){
@@ -340,11 +333,4 @@ function rt_entry_to_delete($rt_entry_list){
 }
 
 
- else:
-     ?>
-
-                    <div id="message" class="info">
-                        <p>Kaltura is not configured. Please contact Admin</p>
-                    </div>
-
-<?endif; ?>
+      ?>
