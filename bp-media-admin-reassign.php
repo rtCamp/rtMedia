@@ -118,7 +118,11 @@ function rt_media_admin_page_reassign(){
 $kaltura_list[0] = array_slice( (array)$kaltura_list[0], intval( ( $fpage - 1 ) * $pag_num), intval( $pag_num ) );
 
     $q_users =  "select DISTINCT(display_name), wu.id from {$bp->media->table_media_data} md JOIN {$wpdb->users} wu WHERE md.user_id = wu.id";
-    $res = $wpdb->get_results($wpdb->prepare($q_users));
+    $res = $wpdb->get_results($wpdb->prepare($q_users) );
+
+    $total_users = "select id,display_name FROM {$wpdb->users} ";
+    $user_list = $wpdb->get_results($wpdb->prepare($total_users) );
+    var_dump($user_list,$total_users);
  }
  else{
      // kaltura not configured
@@ -141,9 +145,9 @@ $kaltura_list[0] = array_slice( (array)$kaltura_list[0], intval( ( $fpage - 1 ) 
                 <select name="user-id">
                     <option value="-1" <?php if( ($newowner === -1) ) { echo 'SELECTED=selected';}?>><?php _e('Select User'); ?></option>
                         <?php
-                        for($name =0 ; $name<count($res);$name++) {
+                        for($name =0 ; $name<count($user_list);$name++) {
                             ?>
-                    <option value="<?php _e($res[$name]->id); ?>" <?php if($owner === intval($res[$name]->id) ) { echo 'SELECTED=selected';}?> ><?php _e($res[$name]->display_name)  ; ?></option>
+                    <option value="<?php _e($user_list[$name]->id); ?>" <?php if($owner === intval($user_list[$name]->id) ) { echo 'SELECTED=selected';}?> ><?php _e($user_list[$name]->display_name)  ; ?></option>
 
                             <?php }?>
                 </select>

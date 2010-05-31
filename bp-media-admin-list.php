@@ -212,12 +212,11 @@ $kaltura_list[0] = array_slice( (array)$kaltura_list[0], intval( ( $fpage - 1 ) 
                     <?php
                   
                     $kaltura_cnt =count($kaltura_list[0]);
-//                    echo $kaltura_cnt ;
-//                    var_dump($kaltura_list[0]);
+                     $kaltura_media_list = $kaltura_list[0];
 
-                    for($k=0;$k<$kaltura_cnt;$k++) {
-
-                        switch($kaltura_list[0][$k]->mediaType) {
+//                    for($k=0;$k<$kaltura_cnt;$k++) {
+                      foreach ($kaltura_media_list as $kaltura_media) {
+                        switch($kaltura_media->mediaType) {
                             case '2':
                                 $media_type ='Photo';
                                 break;
@@ -228,14 +227,14 @@ $kaltura_list[0] = array_slice( (array)$kaltura_list[0], intval( ( $fpage - 1 ) 
                                 $media_type ='Audio';
                                 break;
                         }
-                        if(!empty($kaltura_list[0][$k]->id)){
+                        if(!empty($kaltura_media->id)){
                         echo '<tr>';
-                        echo '<th scope="row" class="check-column"><input type="checkbox" name="linkcheck[]" value="'.$kaltura_list[0][$k]->id.'" /></th>';
-                        echo '<td class="column-title"><a href="'. $bp->root_domain.'/'.BP_MEDIA_SLUG.'/'.$media_type.'/'.$kaltura_list[0][$k]->db_id. '"><img height= "30" width = "45px"  src= "'.$kaltura_list[0][$k]->thumbnailUrl .'jpg"><p>'.$kaltura_list[0][$k]->name.'</p></a></td>';
-                        echo '<td class="column-author">'.$kaltura_list[0][$k]->display_name.'</td>';
+                        echo '<th scope="row" class="check-column"><input type="checkbox" name="linkcheck[]" value="'.$kaltura_media->id.'" /></th>';
+                        echo '<td class="column-title"><a href="'. $bp->root_domain.'/'.BP_MEDIA_SLUG.'/'.$media_type.'/'.$kaltura_media->db_id. '"><img height= "30" width = "45px"  src= "'.$kaltura_media->thumbnailUrl .'jpg"><p>'.$kaltura_media->name.'</p></a></td>';
+                        echo '<td class="column-author">'.$kaltura_media->display_name.'</td>';
                         echo '<td class="column-categories">'.$media_type.'</td>';
                         
-                        echo '<td class="column-date">'.date( "F j, Y",$kaltura_list[0][$k]->createdAt).'</td>';
+                        echo '<td class="column-date">'.date( "F j, Y",$kaltura_media->createdAt).'</td>';
                         echo '</tr>';
                         }
 

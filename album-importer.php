@@ -4,9 +4,6 @@
  * and open the template in the editor.
 */
 
-////////////////////////////////// Check for if BP Album plugin is installed and active or not
-
-
 function rt_media_importer_page() {
     if(isset($_REQUEST['rt_importer_media_btn']) ) {
         if($_REQUEST['rt-media-importer-action'] == -1 ) {
@@ -120,15 +117,10 @@ function rt_media_importer_page() {
 
 
     </form>
-
-
-        <?php } ?>
+        
 </div>
-
-
-
-
 <?php
+}
 
 //function to import data from album to kaltura server and our media data table
 function rt_import_album_data_to_mediabp($rt_importdetails) {
@@ -218,79 +210,4 @@ function rt_import_album_data_to_mediabp($rt_importdetails) {
     return $kaltura_data;
 
 }
-
-
-//function rt_media_importer_page() {
-//    global $wpdb,$bp,$kaltura_validation_data;
-//    $q = "SELECT * FROM {$wpdb->base_prefix}bp_album";
-//    $result = $wpdb->get_results($q);
-//
-//    $site_url = get_option('siteurl');
-//    /**
-//     * algo for every row
-//     * 1. Get the row data/per user
-//     * 2. upload the data to kaltura and get the entryid
-//     * 3. update the media_data table with user_id entry_id and other with activity
-//     */
-//
-//     $cnt = 0;
-//
-//    foreach ($result as $key => $value) {
-//        $cnt++;
-//        $img_url = $site_url . $value->pic_org_url;
-//
-//        echo $cnt. ' = ' . $value->owner_id . " = " .$site_url . $value->pic_org_url . " = " . $value->title . "<br/>";
-//
-//        $entry = new KalturaMediaEntry();
-//        $url = $site_url . $value->pic_org_url;
-//        $entry->name = $value->title;
-//        $entry->mediaType = 2; //its constant for photo
-//        try {
-//            $picture_data = $kaltura_validation_data['client']-> media ->addFromUrl($entry, $url);
-//
-//            //var_dump($picture_data);
-//            //$picture_data contain all the info from kaltura
-//            //$picture_data + $ value should go to wp_bp_media_data
-////id entry_id user_id service_type media_type total_rating rating_counter rating views group_id album_id date_uploaded
-//            //insert data
-//            $user_id = $value->owner_id;
-//            $entry_id = $picture_data->id;
-//            $date_uploaded = strtotime($value->date_uploaded); //convert $value->date_uploaded the date into unix time stamp
-////            // coverride katura createdAt by our time.
-//            echo $cnt. ' = ' .$entry_id . ' = ' . $value->owner_id . " = " .$site_url . $value->pic_org_url . " = " . $value->title . "<br/>";
-//
-//            $service_type = 'kaltura';
-//            $media_type = 2;
-//            $total_rating = 1;
-//            $rating_counter = 1;
-//            $rating = 1;
-//            $views = 1;
-//            $group_id = 0;
-//            $album_id  = 1;
-//            $query = "INSERT INTO {$bp->media->table_media_data} (entry_id, user_id, service_type, media_type, total_rating, rating_counter, rating, views, group_id, album_id, date_uploaded)
-//            VALUES  (
-//                    '$entry_id',
-//                    '$user_id',
-//                    '$service_type',
-//                    '$media_type',
-//                    '$total_rating',
-//                    '$rating_counter',
-//                    '$rating',
-//                    '$views',
-//                    '$group_id',
-//                    '$album_id',
-//                    '$date_uploaded'
-//                )";
-//
-//
-////            $wpdb->query($query);
-//        }
-//        catch(Exception $e) {
-//            echo  "Error in updating title :: Kaltura Error";
-//        }
-//    }
-//
-//
-//}
-
 ?>

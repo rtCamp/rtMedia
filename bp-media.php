@@ -237,7 +237,7 @@ function media_add_admin_menu() {
             __('Media Importer','buddypress'),//$page_title
            '<span class="rt-buddypress-admin-media">&middot; '. __('Media Importer','buddypress'). '&nbsp;&nbsp;&nbsp;</span>',//$menu_title
             'manage_options',//$access_level
-            'bp-media-importer',//$file
+            'album-importer',//$file
             "rt_media_importer_page" );//$function
 
 }
