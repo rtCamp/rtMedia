@@ -108,3 +108,5 @@ a.enable-tag-create:hover{text-decoration: underline}
 
 .m-loading{background: url(../images/ajax-loader.gif) no-repeat right top}
 div.item-list-tabs ul li.last {margin-top:5px ;}
+
+.rt-my-media-list{height: 125px !important}

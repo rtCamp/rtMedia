@@ -348,13 +348,11 @@ function media_add_js() {
     wp_enqueue_script( 'bp-media-swfobject', $js_path.'swfobject.js');
     wp_enqueue_script( 'bp-media-rating', $js_path.'rating.js');
     wp_enqueue_script( 'bp-media-general', $js_path.'general.js');
-     if('photo' == $bp->current_action && 'media' == $bp->current_component){
-          // wp_enqueue_script('jquery');
+     if('photo' == $bp->current_action && 'media' == $bp->current_component &&empty ($bp->action_variables)){
+         
            wp_enqueue_script('jquery-min','http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js');
            wp_enqueue_script('thickbox',$js_path.'thickbox.js');
      }
-
-
 }
 add_action( 'wp_print_scripts', 'media_add_js', 1 );
 
