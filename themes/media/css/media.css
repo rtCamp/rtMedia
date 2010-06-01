@@ -13,9 +13,9 @@ These structure styles can be overridden by the theme CSS file if needed.
     background: url(../images/media-wire.png) 0 4px no-repeat;
 }
 
-li a#user-media, li a#my-media {
+/*li a#user-media, li a#my-media {
 					background: url(../images/media.png) 88% 52% no-repeat;
-				}
+				}*/
 
 table#bp-media-notification-settings th.icon {
 		background-image: url(../images/media.png);

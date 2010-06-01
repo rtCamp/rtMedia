@@ -1139,20 +1139,4 @@ function bp_media_action_link_feed() {
 	die;
 }
 add_action( 'bp_init', 'bp_media_action_link_feed', 6 );
-/**
- * showing admin media index
- */
-function bp_media_admin_index(){
-    ?>
-<div class="wrap">
-<?php
-    echo 'ashish';
-
-    ?>
-
-
-    </div>
-    <?php
-}
-
 ?>
