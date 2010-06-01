@@ -147,12 +147,15 @@ function rt_import_album_data_to_mediabp($rt_importdetails) {
 
             // form data as per requirement
             $entry = new KalturaMediaEntry();
+            if($pic_title == ' ' || $pic_title == '')
+                $entry->name = "Default Title";
+            else
             $entry->name = $pic_title;
             if($pic_desc == ' ' || $pic_desc == '')
                 $entry->description = "";
             else
                 $entry->description = $pic_desc;
-            $entry->name = $pic_title;
+//            $entry->name = $pic_title;
             $entry->mediaType = 2;
             $entry->createdAt = $pic_date;
 

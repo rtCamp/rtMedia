@@ -1,6 +1,4 @@
 <?php
-//require_once('admin.php');
- 
 
 function media_add_admin_css() {
     wp_enqueue_style( 'media_add_admin_css',  BP_MEDIA_PLUGIN_URL . '/themes/media/css/media-admin.css' );
@@ -9,12 +7,15 @@ function media_add_admin_css() {
 }
 add_action( 'admin_menu', 'media_add_admin_css' );
 
+
 function media_add_admin_js() {
-    wp_deregister_script('jquery');
-    wp_enqueue_script( 'jquery', 'http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js');
+//    wp_deregister_script('jquery');
+//    wp_enqueue_script( 'jquery1', 'http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js');
 //    wp_enqueue_script( 'rt_jqueryui',  BP_MEDIA_PLUGIN_URL . '/themes/media/js/jquery.ui.core.js','jquery' );
-    wp_enqueue_script('jqueryui');
-    wp_enqueue_script( 'media_add_admin_js',  BP_MEDIA_PLUGIN_URL . '/themes/media/js/jquery.ui.datepicker.js','rt_jqueryui' );
+//    wp_enqueue_script('jqueryui');
+
+//    wp_enqueue_script('datepicker');
+    wp_enqueue_script( 'media_add_admin_js',  BP_MEDIA_PLUGIN_URL . '/themes/media/js/jquery.ui.datepicker.js','jquery1,rt_jqueryui,datepicker' );
 }
 add_action( 'admin_menu', 'media_add_admin_js' );
 
