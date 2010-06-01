@@ -347,9 +347,9 @@ function media_add_js() {
     $js_path = BP_MEDIA_PLUGIN_URL.'/themes/media/js/';
     wp_enqueue_script( 'bp-media-swfobject', $js_path.'swfobject.js');
     wp_enqueue_script( 'bp-media-rating', $js_path.'rating.js');
+
     wp_enqueue_script( 'bp-media-general', $js_path.'general.js');
      if('photo' == $bp->current_action && 'media' == $bp->current_component &&empty ($bp->action_variables)){
-         
            wp_enqueue_script('jquery-min','http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js');
            wp_enqueue_script('thickbox',$js_path.'thickbox.js');
      }
@@ -369,13 +369,7 @@ function media_add_single_js() {
         wp_deregister_script('bp-media-general');
         wp_deregister_script('jquery');
         wp_enqueue_script( 'jquery', 'http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js');
-//        if(is_user_logged_in()){
-//            $photo_tag_path = BP_MEDIA_PLUGIN_URL.'/photo-tagging/';
-//            $abuse_path = BP_MEDIA_PLUGIN_URL.'/media-report-abuse/';
-//            wp_enqueue_script( 'bp-phototagger',$photo_tag_path.'phototagger-jquery.js',true);
-//            wp_enqueue_script( 'bp-phototag-init',$photo_tag_path.'photo-tag-init.js',true);
-//            wp_enqueue_script( 'bp-media-abuse', $abuse_path.'abuse.js',true);
-//        }
+
          wp_enqueue_script( 'bp-media-single', $js_path.'single.js');
         
     }
@@ -1139,4 +1133,5 @@ function bp_media_action_link_feed() {
 	die;
 }
 add_action( 'bp_init', 'bp_media_action_link_feed', 6 );
+
 ?>
