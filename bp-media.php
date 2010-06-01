@@ -16,12 +16,13 @@ require ( BP_MEDIA_PLUGIN_DIR . '/bp-media-ajax.php' );
 require ( BP_MEDIA_PLUGIN_DIR . '/photo-tagging/bp-photo-tagging.php' );
 require ( BP_MEDIA_PLUGIN_DIR . '/media-report-abuse/bp-media-report-abuse.php' );
 require ( BP_MEDIA_PLUGIN_DIR . '/bp-media-admin.php' );
-require ( BP_MEDIA_PLUGIN_DIR . '/lib-kaltura/KalturaClient.php' );
+require ( BP_MEDIA_PLUGIN_DIR . '/lib-kaltura/KalturaClient.php' ); //include for kaltura api call
 require ( BP_MEDIA_PLUGIN_DIR . '/editor/bp-editor.php' );		//inculde support for post-editor media button
-require ( BP_MEDIA_PLUGIN_DIR . '/bp-media-admin-report-abuse.php' );
-require ( BP_MEDIA_PLUGIN_DIR . '/bp-media-admin-list.php' );
-require ( BP_MEDIA_PLUGIN_DIR . '/bp-media-admin-reassign.php' );
-require ( BP_MEDIA_PLUGIN_DIR . '/album-importer.php' );
+require ( BP_MEDIA_PLUGIN_DIR . '/bp-media-admin-report-abuse.php' ); //for report abuse under settings menu
+require ( BP_MEDIA_PLUGIN_DIR . '/bp-media-admin-list.php' );//for showing and deleting media
+require ( BP_MEDIA_PLUGIN_DIR . '/bp-media-admin-reassign.php' ); //for reassigning media
+require ( BP_MEDIA_PLUGIN_DIR . '/album-importer.php' ); //for importing albums
+require ( BP_MEDIA_PLUGIN_DIR . '/bp-media-my-media-items.php' );//for adding menu @adminbar
 
 
 /*
@@ -347,8 +348,13 @@ function media_add_js() {
     wp_enqueue_script( 'bp-media-swfobject', $js_path.'swfobject.js');
     wp_enqueue_script( 'bp-media-rating', $js_path.'rating.js');
     wp_enqueue_script( 'bp-media-general', $js_path.'general.js');
-     if('photo' == $bp->current_action && 'media' == $bp->current_component)
-             wp_enqueue_script('thickbox');
+     if('photo' == $bp->current_action && 'media' == $bp->current_component){
+          // wp_enqueue_script('jquery');
+           wp_enqueue_script('jquery-min','http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js');
+           wp_enqueue_script('thickbox',$js_path.'thickbox.js');
+     }
+
+
 }
 add_action( 'wp_print_scripts', 'media_add_js', 1 );
 
@@ -356,7 +362,6 @@ function media_add_single_js() {
     global $bp;
 
     $js_path = BP_MEDIA_PLUGIN_URL.'/themes/media/js/';
-
     $action = array("mediaall","photo","audio","video");
     $cc = $bp->current_component;
     $ca = $bp->current_action;
@@ -639,7 +644,7 @@ function media_add_css() {
        
     }
     if('photo' == $bp->current_action && 'media' == $bp->current_component)
-        wp_enqueue_style( 'bp-media-thickbox', $css_file_path.'thickbox.css');
+        wp_enqueue_style( 'thickbox',$css_file_path.'thickbox.css');
 }
 add_action( 'wp_print_styles', 'media_add_css' );
 

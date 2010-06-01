@@ -25,7 +25,8 @@
         <?php while ( bp_pictures() ) : bp_the_picture(); ?>
 
 	<li class="rt-picture-thumb rt-photo">
-        <a class="thickbox" href='<?php bp_picture_data_url() ?>.jpg' rel="gallery-plants"><img src='<?php bp_picture_small_link() ?>' /></a><br />
+
+        <a rel="gallery-plants" href="<?php bp_picture_data_url() ?>.jpeg" class="thickbox" title="<?php bp_picture_title() ?>"><img src='<?php bp_picture_small_link() ?>.jpeg'/></a><br/>
         <span class="rt-title"><?php bp_picture_title() ?></span>
     </li>
 
