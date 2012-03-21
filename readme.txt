@@ -1,10 +1,10 @@
 === BuddyPress Media Component ===
-Contributors: rtCamp, tech.kapil, rahul286, ashish.anand
+Contributors: rtCamp, tech.kapil, rahul286, 
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=9488824
 Tags: BuddyPress, Kaltura, KalturaCE, Media, Video, Photo, Images, Albums, Pictures, Audio, Upload
 Requires at least: WPMU 2.9.1
 Tested up to: WPMU 2.9.2
-Stable tag: 1.2.1
+Stable tag: 1.3.2
 
 This BuddyPress media component adds features like photos, videos and audio upload to BuddyPress with activity streaming.
 

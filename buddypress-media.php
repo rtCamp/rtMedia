@@ -4,9 +4,9 @@
 Plugin Name: BuddyPress-Kaltura Media Component with KalturaCE Support 
 Plugin URI: http://mediabp.com/
 Description: This BuddyPress media component adds features like photos, videos and audio upload to BuddyPress.
-Version: 1.2 
+Version: 1.3.2 
 Revision Date: 24 Mar 2010
-Author: rtCamp, Rahul Bansal, Kapil Gonge, Ashish Anand
+Author: rtCamp, Rahul Bansal, Kapil Gonge
 Author URI: http://mediabp.com/about/
 */
 
