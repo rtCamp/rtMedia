@@ -5,7 +5,7 @@
 # main config
 PLUGINSLUG="buddypress-kaltura-media-component"
 CURRENTDIR=`pwd`
-MAINFILE="buddypress-media.phpt.php" # this should be the name of your main php file in the wordpress plugin
+MAINFILE="buddypress-media.php" # this should be the name of your main php file in the wordpress plugin
 
 # git config
 GITPATH="$CURRENTDIR/" # this file should be in the base of your git repository
