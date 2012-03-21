@@ -32,20 +32,21 @@ class BP_User_Media_Template {
      * @param string $view is single page
      *
      */
-    function BP_User_Media_Template( $user_id_filter, $page, $per_page, $max, $media_type, $view = 'multiple',$group_id,$album_id ) { //kapil
+    function BP_User_Media_Template( $user_id_filter, $page, $per_page, $max, $media_type, $view = 'multiple',$group_id,$album_id,$type ) { //kapil
         global $bp;
+
         if ( !$user_id )
             $user_id = $bp->loggedin_user->id;
-//        var_dump($user_id);
         $this->pag_page = isset( $_GET['fpage'] ) ? intval( $_GET['fpage'] ) : $page;
         $this->pag_num = isset( $_GET['num'] ) ? intval( $_GET['num'] ) : $per_page;
 
         if ( !$this->pictures = wp_cache_get( 'bp_pictures_for_user_' . $user_id, 'bp' ) ) {
-            $this->pictures = bp_pictures_get_pictures_for_user( $user_id_filter, $media_type,$view,$group_id,$album_id);//kapil
-//            var_dump($group_id);
+            $this->pictures = bp_pictures_get_pictures_for_user( $user_id_filter, $media_type,$view,$group_id,$album_id,$type);//kapil
             $this->media_slug = $this->pictures['media_slug'];
-            wp_cache_set( 'bp_pictures_for_user_' . $user_id, $this->pictures, 'bp' );
-//          wp_cache_set($key, $data, $flag = '', $expire = 0)
+            //IMP : I have commented this variable as it was resetting $view.
+            //TODO : I don't know the consequences of this??! :(
+
+//            wp_cache_set( 'bp_pictures_for_user_' . $user_id, $this->pictures, 'bp' );
         }
 
         if ( !$max )
@@ -146,11 +147,8 @@ class BP_User_Media_Template {
  *
  */
 function bp_has_media( $args = '' ) {
+
     global $pictures_template,$bp;
-    if($bp->media->view == 'single')
-        $view = 'single';
-    else
-        $view = 'multiple';
 
     $defaults = array(
             'user_id' => false,
@@ -160,21 +158,32 @@ function bp_has_media( $args = '' ) {
             'scope'=> 'mediaall',
             'group_id'=> false,
             'view' => $view,
-            'album_id' => 0 //album_id = 0 >> default album //kapil
+            'album_id' => 1, //album_id = 1 >> default album //kapil
+            'type' => 'recent'
     );
 
     $r = wp_parse_args( $args, $defaults );
-//    var_dump($args);
+
 
     extract( $r, EXTR_SKIP );
+
+    // segrigate the widget view
+    if(($view != 'widget') && ($bp->media->view == 'single'))
+        $view = 'single';
+    elseif($bp->media->view == 'multiple')
+        $view = 'multiple';
+
+    if(($view != 'single') && ($type == 'popular' || $type == 'recent' || $type == 'rating') )
+        $view = 'widget';
     
     //group_id initialized only when group template is loaded : kapil
     if ( $bp->groups->current_group->id ) {
         $group_id = $bp->groups->current_group->id;
     }
 
-    $pictures_template = new BP_User_Media_Template( $user_id,$page, $per_page, $max,$scope, $view,$group_id,$album_id ); //kapil
-//    var_dump($pictures_template);
+   
+    $pictures_template = new BP_User_Media_Template( $user_id,$page, $per_page, $max,$scope, $view,$group_id,$album_id,$type ); //kapil
+        
     return $pictures_template->has_pictures();
 }
 /**
@@ -201,8 +210,7 @@ function is_media_exists($id) {
     global $wpdb,$bp;
     $qry = "SELECT id FROM {$bp->media->table_media_data} WHERE id='$id'";
     $result = $wpdb->get_col($qry);
-//    var_dump($result);
-//    die();
+
     if($result)
         return true;
     else
@@ -274,19 +282,20 @@ function bp_media_rating() {
  * @global object $single_pic_template It holds data for the single media
  */
 function bp_get_media_rating() {
-    global $pictures_template,$single_pic_template;
+    global $pictures_template,$single_pic_template,$bp,$wpdb;
+//    var_dump($pictures_template);
     $view = $pictures_template->picture->localview;
     $tot_rank = $pictures_template->picture->local_tot_rank;
     $ctr_rank = $pictures_template->picture->local_rating_ctr;
+    $local_entry = $pictures_template->picture->id;//kaltura id
     $rank.'a '.$view.' b '. $tot_rank.'c '.$ctr_rank;
 
-    $local_entry = $pictures_template->picture->id;
     if($tot_rank==0 && ctr_rank ==0) {
         get_actual_rating($r,$local_entry);
     }else {
         try {
             $rating = $tot_rank / $ctr_rank;
-            $r =  ceil($rating);
+            $r =  ceil($rating);// rating logic
             get_actual_rating($r,$local_entry);
         }
         catch(Exception $e) {
@@ -300,7 +309,7 @@ function bp_get_media_rating() {
  * @param int $local_entry : db local entryid
  */
 function get_actual_rating($r,$local_entry) {
-    switch ($r) {
+       switch ($r) {
         case 0:
 
             echo '<div class="jquerystar">
@@ -404,6 +413,17 @@ function bp_picture_small_link() {
     echo $pictures_template->picture->thumbnailUrl;
 
 }
+/**
+ * This function returns the url of the media from the kaltura serve
+ * 
+ * 
+ */
+
+function bp_picture_data_url() {
+    global $bp,$pictures_template;
+    echo $pictures_template->picture->dataUrl;
+
+}
 
 /**
  *  Functions for Single picture View
@@ -425,15 +445,11 @@ function bp_picture_view_link() {
  */
 function bp_get_picture_view_link() {
     global $pictures_template, $bp;//$pictures_template->picture->id shud point to the id and not entry_id
-//    var_dump($bp->displayed_user->domain, $bp->media->slug , $pictures_template->media_slug , $pictures_template->picture->db_id);
-    $url = site_url() . '/' . BP_MEDIA_SLUG .'/' . $pictures_template->media_slug . '/' . $pictures_template->picture->db_id;
-//    if($bp->current_component == BP_GROUPS_SLUG){
-//        return apply_filters('bp_get_picture_view_link',$bp->displayed_user->domain . $bp->media->slug .'/'. $pictures_template->media_slug .'/'. $pictures_template->picture->db_id) ;
-//    }else {
-    return apply_filters('bp_get_picture_view_link',$url) ;
-//    }
 
+    $url = site_url() . '/' . BP_MEDIA_SLUG .'/' . $pictures_template->media_slug . '/' . $pictures_template->picture->db_id;
+    return apply_filters('bp_get_picture_view_link',$url) ;
 }
+
 /**
  * Returns the single media path
  * @global object $bp
@@ -455,8 +471,9 @@ function bp_picture_view() {
  */
 function bp_media_user_rated() {
     global $bp,$single_pic_template,$pictures_template;
-    $rating = $single_pic_template->tot_rating;
-    $views =  $single_pic_template->rating_ctr;
+       $rating = $single_pic_template->tot_rating;
+       $views =  $single_pic_template->rating_ctr;
+       $local_entry = $single_pic_template->picture_id;//its kaltura entry residing in the database
 
     if ($rating == 0 && $views == 0) {
         get_actual_rating($r = 0,$local_entry);
@@ -492,7 +509,8 @@ function get_media_data() {
                 return bp_rt_media_video_library();
                 break;
             case '2':
-                return '<center><div class="photo-container"><img id ='.$img_id.' src='. bp_picture_view().'  /></div></center>
+                return '<center><div class="photo-container"><img id ='.$img_id.' src='. bp_picture_view().'/></div></center>
+                        
                         <input id="current-media-id" type = "hidden" value = "'.$bp->action_variables[0].'"/>
                         <input id="current-user-id" type = "hidden" value = "'.$bp->loggedin_user->id.'"/>
                         ';
@@ -888,7 +906,7 @@ function get_media_rating() {
 
 //new functions for bp 1.2 : Kapil
 function bp_media_locate_template( $template_names, $load = false ) {
-//    var_dump($template_names);
+
     if ( !is_array( $template_names ) )
         return '';
     $located = '';
@@ -1138,8 +1156,7 @@ function bp_media_displayed_user_fullname() {
 }
 function bp_media_get_displayed_user_fullname() {
     global $bp;
-    //  var_dump($bp);
-    return apply_filters( 'bp_media_displayed_user_fullname', $bp->displayed_user->fullname );
+      return apply_filters( 'bp_media_displayed_user_fullname', $bp->displayed_user->fullname );
 }
 
 
@@ -1154,7 +1171,7 @@ function bp_media_group_media_tabs( $group = false ) {
         $group = ( $groups_template->group ) ? $groups_template->group : $bp->groups->current_group;
 
     $current_tab = $bp->action_variables[0];
-//    var_dump($current_tab);
+
     ?>
 <li<?php if ( 'mediaall' == $current_tab || '' == $current_tab) : ?> class="current"<?php endif; ?>><a href="<?php echo $bp->root_domain . '/' . $bp->groups->slug ?>/<?php echo $group->slug ?>/<?php echo $bp->media->slug ?>/mediaall"><?php printf( __('Media', 'buddypress-media')) ?></a></li>
 <li<?php if ( 'video' == $current_tab ) : ?> class="current"<?php endif; ?>><a href="<?php echo $bp->root_domain . '/' . $bp->groups->slug ?>/<?php echo $group->slug ?>/<?php echo $bp->media->slug ?>/video"><?php printf( __('Video', 'buddypress-media')) ?></a></li>
@@ -1170,9 +1187,8 @@ function bp_media_group_media_tabs( $group = false ) {
  */
 function rt_get_media_visibility() {
     global $bp,$pictures_template;
-//    var_dump($pictures_template);
     $entry_id = $pictures_template->pictures[0]->id;
-//    var_dump($pictures_template);
+
     switch($pictures_template->pictures[0]->visibility) {
         case 'private':
             $visibility = 'Private';
@@ -1207,5 +1223,98 @@ function rt_get_media_type($entry_id) {
     }
     return $type;
 }
+/***
+ * This function checks for the current action for audio
+ */
+function bp_is_photo_action($photo) {
+	global $bp;
 
+	if ( BP_PHOTO_SLUG == $bp->current_action )
+		return true;
+
+	return false;
+}
+
+/***
+ * This function checks for the current action for video
+ */
+function bp_is_video_action($video) {
+        global $bp;
+	if ( BP_VIDEO_SLUG == $bp->current_action )
+		return true;
+
+	return false;
+}
+
+/**
+ * this function is for showing album name for the respective media
+ */
+
+function rt_show_album_name(){
+    echo rt_get_album_name();
+}
+
+function rt_get_album_name(){
+    global $bp, $wpdb;
+
+    $id = $bp->action_variables[0];
+   $q = "SELECT * FROM {$bp->media->table_media_album} ma JOIN {$bp->media->table_media_data} md WHERE ma.album_id = md.album_id and md.id = '{$id}'";
+    $result = $wpdb->get_results($wpdb->prepare($q));
+    $q2 =  "SELECT * FROM {$bp->media->table_media_album} WHERE user_id = 0 OR user_id = {$result[0]->user_id}";
+
+    $album_name = $wpdb->get_results($wpdb->prepare($q2));
+    $cnt = count($album_name);
+    echo '<select id = "change-album"><option selected="selected" value="'.$result[0]->album_id.'">'.$result[0]->name.'</option>';
+                for($i = 0;$i<$cnt;$i++){
+                    if(!($album_name[$i]->name == $result[0]->name))
+                    echo '<option value="'.$album_name[$i]->album_id.'">'.$album_name[$i]->name.'</option>';
+                }
+    echo '</select>';
+
+}
+/**
+ * Feed Function
+ */
+function bp_media_feed_link() {
+	echo bp_get_media_feed_link();
+}
+	function bp_get_media_feed_link() {
+		global $bp;
+		return apply_filters( 'bp_get_media_feed_link', site_url( $bp->media->slug . '/feed/' ) );
+	}
+
+        function bp_media_feed_item_guid() {
+	echo bp_get_media_feed_item_guid();
+}
+	function bp_get_media_feed_item_guid() {
+		return apply_filters( 'bp_get_media_feed_item_guid', bp_get_media_feed_permalink() );
+	}
+
+        function bp_media_feed_item_title() {
+	echo bp_get_media_feed_item_title();
+}
+	function bp_get_media_feed_item_title() {
+		return apply_filters( 'bp_get_media_feed_item_title', bp_picture_title() );
+	}
+
+        function bp_media_feed_item_link() {
+	echo bp_get_media_feed_item_link();
+}
+	function bp_get_media_feed_item_link() {
+		return apply_filters( 'bp_get_media_feed_item_link', bp_get_media_feed_permalink() );
+	}
+
+        function bp_media_feed_item_description() {
+	echo bp_get_media_feed_item_description();
+}
+	function bp_get_media_feed_item_description() {
+		return apply_filters( 'bp_get_media_feed_item_description', bp_get_single_picture_description() );
+	}
+
+        function bp_get_media_feed_permalink() {
+    global $bp,$pictures_template,$single_pic_template;
+
+    $url = site_url() . '/' . BP_MEDIA_SLUG .'/mediaall/' . $pictures_template->picture->db_id;
+    echo $url;
+}
 ?>

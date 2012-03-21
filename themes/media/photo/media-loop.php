@@ -24,9 +24,10 @@
 <ul id="rt-media-list" class="item-list">
         <?php while ( bp_pictures() ) : bp_the_picture(); ?>
 
-	<li class="rt-picture-thumb">
-        <a href='<?php bp_picture_view_link() ?>'><img src='<?php bp_picture_small_link() ?>' /></a><br />
-        <span class="rt-title"><?php bp_picture_title() ?><br><h6><?php bp_media_rating() ?></h6></span>
+	<li class="rt-picture-thumb rt-photo">
+
+        <a rel="gallery-plants" href="<?php bp_picture_data_url() ?>.jpeg" class="thickbox" title="<?php bp_picture_title() ?>"><img src='<?php bp_picture_small_link() ?>.jpeg'/></a><br/>
+        <span class="rt-title"><?php bp_picture_title() ?></span>
     </li>
 
         <?php endwhile; ?>

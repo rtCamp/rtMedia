@@ -18,7 +18,7 @@ jQuery('.cancel-abuse').click(function(){
         var k = jQuery('#report-option').val();
         var media_id =jQuery('#current-media-id').val();
         jQuery( 'div.report-hide').children('span.ajax-loader' ).show();
-        var data = {action: 'media_report_abuse',report_type: k,report_id:media_id,report_url:url};
+        var data = {action: 'media_report_abuse',report_type: k,report_id:media_id,report_url:url}; // function ref in bp-media.php function prefix wp_ajax
 
       jQuery.get(ajaxurl, data, function(response) {
                        jQuery( 'div.report-hide').children('span.ajax-loader' ).hide();

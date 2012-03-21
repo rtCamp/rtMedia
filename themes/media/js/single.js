@@ -1,20 +1,12 @@
 jQuery(document).ready(function(){
 
-                 // Photo tagging js code starts from here
-                // code for photo tagging feature
-//                jQuery('div.photo-container').photoTagger({
-//                        loadURL:ajaxurl,
-//                        saveURL:ajaxurl,
-//                        deleteURL:ajaxurl,
-//                        isDelayedLoad:true,
-//                        isTagCreationEnabled:true,
-//                        isTagDeletionEnabled:true
-//});
-                //Photo taggging ends here
+//removing cancel rating button
+    jQuery(".rating-cancel").remove();
 
+// general show/hide options
             jQuery('.confirm').hide();
             var a = jQuery("#current-media-id").val();
-
+//updating view counter
             var data = {action: 'media_view_update',image_id: jQuery('#current-media-id').val()};
             jQuery.post(ajaxurl, data, function(response) {
                     var new_url = response;
@@ -22,7 +14,7 @@ jQuery(document).ready(function(){
                     jQuery('#url').val(new_url);
                 });
 
-                 //JQUERY STAR RATING
+ //JQUERY STAR RATING
 
                 var timesClicked = 0;
 
@@ -30,8 +22,9 @@ jQuery(document).ready(function(){
                 jQuery('.star').children('a').bind('click',function(event){
                 var k = this.innerHTML;
                 var url = jQuery('#url').val();
+                jQuery(".rt-thanks").addClass('m-loading');
                 var view = jQuery('.view').text();
-                jQuery(".rt-thanks").prepend('<img src="'+url+'"/images/loading_wheel.gif" />');
+
                 var data = {
                     action: 'media_user_rating',
                     rating:k,
@@ -39,7 +32,9 @@ jQuery(document).ready(function(){
                     user_id:jQuery('#current-user-id').val()
                 };
                      jQuery.post(ajaxurl, data, function(response) {
-                     jQuery('.rt-thanks').find('img').replaceWith(response);
+                         jQuery('.star').rating('readOnly');
+                         jQuery(".rt-thanks").removeClass('m-loading');
+                         jQuery('.rt-thanks').prepend(response);
                 });
                 timesClicked++;
                 if (timesClicked >= 1) {
@@ -49,39 +44,51 @@ jQuery(document).ready(function(){
 
                 //END STAR RATING
 
-        jQuery('.delete').click(function(){
+ //general show hide
+ jQuery('.delete').click(function(){
             jQuery('.confirm').show(200);
         });
         jQuery('#cancel').click(function(){
             jQuery('.confirm').hide(200);
         });
-
+// Delete from database click function
      jQuery('#no').click(function(){
                     var url = jQuery('#url').val();
-                    jQuery(".rt-thanks").append('<img src="<?php echo WP_PLUGIN_URL; ?>/buddypress-media/themes/media/images/ajax-loader.gif" />');
+                           var answer = confirm("Really want to delete?")
+	if (answer){
+                    jQuery(".rt-thanks").addClass('m-loading');
                     var data ={action:'media_delete_local', media_id:jQuery('#current-media-id').val()};
                      jQuery.post(ajaxurl, data, function(response) {
-                     jQuery(".rt-thanks").remove('img');
-                     jQuery(".rt-thanks").html(response);
-//                        window.location="<?php echo $bp->root_domain.'/media'?>";
-                          window.location=url+"/media";
+                      jQuery(".rt-thanks").removeClass('m-loading');
+                       alert(response);
+                       jQuery('div#user-title h2').text("Please Wait while ur being redirected...");
+                       jQuery('.rt-picture-single').slideUp(1000,function(){
+                        window.location=url+"/media";
+                       });
                 });
+        }
         });
 
 
 
-
+// Delete from database + kaltura server click function
 
             jQuery('#yes').click(function(){
                 var url = jQuery('#url').val();
-               jQuery(".rt-thanks").append('<img src="<?php echo WP_PLUGIN_URL; ?>/buddypress-media/themes/media/images/ajax-loader.gif" />');
+                var answer = confirm("Really want to delete?")
+	if (answer){
+	       jQuery(".rt-thanks").addClass('m-loading');
                var data = {action: 'media_delete_server', media_id:jQuery('#current-media-id').val()};
                jQuery.post(ajaxurl, data, function(response) {
-                   jQuery(".rt-thanks").remove('img');
-                   jQuery(".rt-thanks").html(response);
-//                       window.location="<?php echo $bp->root_domain.'/media'?>";
+                   jQuery(".rt-thanks").removeClass('m-loading');
+                   alert(response);
+                   jQuery('div#user-title h2').text("Please Wait while ur being redirected...");
+                   jQuery('.rt-picture-single').slideUp(1000,function(){
                         window.location=url+"/media";
+                   });
+                       
                     });
+        }
              });
 
 
@@ -101,6 +108,25 @@ jQuery(document).ready(function(){
     });
 
     jQuery('#current-url').val(window.location);
+
+    //Changing album from the single page function
+        var default_selected = jQuery("#change-album option:selected").text();
+        
+    jQuery('#change-album').change(function(){
+        var select_option = jQuery("#change-album option:selected").text();
+
+        if(!(select_option == default_selected)){
+             jQuery( 'div.rt-media-album').children('span.ajax-loader' ).show();
+             var data = {action: 'rt_album_update',image_id: jQuery('#current-media-id').val(), album_id:jQuery("#change-album option:selected").val()};
+            jQuery.post(ajaxurl, data, function(response) {
+                        alert(response + select_option);
+                        jQuery( 'div.rt-media-album').children('span.ajax-loader' ).hide();
+                    
+                });
+        }
+
+    });
+
 
 });
 
@@ -136,9 +162,6 @@ function saveChanges(obj, cancel, n) {
             'id': id,
             new_title: new_title
         };
-//            jQuery('#user-title h2' ).children('div').remove();
-//            jQuery('#user-title h2' ).children().add('p').text('Updating ...');
-//            jQuery('#user-title').addClass('ajax-loader');
         var newt = '<p>'+new_title+'</p>';
         jQuery(obj).parent().parent().html(newt);
         jQuery('#user-title h2 p' ).addClass('load');

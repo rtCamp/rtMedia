@@ -16,9 +16,16 @@ require ( BP_MEDIA_PLUGIN_DIR . '/bp-media-ajax.php' );
 require ( BP_MEDIA_PLUGIN_DIR . '/photo-tagging/bp-photo-tagging.php' );
 require ( BP_MEDIA_PLUGIN_DIR . '/media-report-abuse/bp-media-report-abuse.php' );
 require ( BP_MEDIA_PLUGIN_DIR . '/bp-media-admin.php' );
-require ( BP_MEDIA_PLUGIN_DIR . '/lib-kaltura/KalturaClient.php' );
+require ( BP_MEDIA_PLUGIN_DIR . '/lib-kaltura/KalturaClient.php' ); //include for kaltura api call
 require ( BP_MEDIA_PLUGIN_DIR . '/editor/bp-editor.php' );		//inculde support for post-editor media button
-/**
+require ( BP_MEDIA_PLUGIN_DIR . '/bp-media-admin-report-abuse.php' ); //for report abuse under settings menu
+require ( BP_MEDIA_PLUGIN_DIR . '/bp-media-admin-list.php' );//for showing and deleting media
+require ( BP_MEDIA_PLUGIN_DIR . '/bp-media-admin-reassign.php' ); //for reassigning media
+require ( BP_MEDIA_PLUGIN_DIR . '/album-importer.php' ); //for importing albums
+require ( BP_MEDIA_PLUGIN_DIR . '/bp-media-my-media-items.php' );//for adding menu @adminbar
+
+
+/*
  * Installs bp_media
  * Create required tables
  *
@@ -46,6 +53,7 @@ function bp_media_install() {
                             views int(10) DEFAULT '1',
                             group_id bigint(20),
                             album_id BIGINT( 100 ) NOT NULL,
+                            date_uploaded BIGINT( 100 ) ,
                             KEY (id)
                             ) {$charset_collate};";
 
@@ -106,6 +114,19 @@ function bp_media_install() {
     dbDelta($sql);
 
 
+        //Default album must have album_id = 0 and user_id = 0 to make sure everybody can use it
+    //check if any row?
+
+    $q = "select * from wp_bp_media_album";
+    $result = $wpdb->query($q);
+
+    if(!$result){
+        $query_1 = "INSERT INTO {$bp->media->table_media_album} ( `user_id`,`visibility`,`name`,`last_updated`,`category`) VALUES (0, 'public', 'Default', now(), NULL);";
+        $wpdb->query($query_1);
+
+    }
+
+
     update_site_option( 'bp-media-db-version', BP_MEDIA_DB_VERSION );
 }
 //this is not operational as bp1.2 wire is completely changed and need to rethink the whole thing :kapil
@@ -129,20 +150,7 @@ function media_wire_install() {
 //    dbDelta($sql);
 }
 
-//function media_user_rating_install() {
-//    global $wpdb, $bp;
-//
-//    if ( !empty($wpdb->charset) )
-//        $charset_collate = "DEFAULT CHARACTER SET $wpdb->charset";
-//
-//    $sql[] = "CREATE TABLE {$bp->media->table_user_rating_data} (
-//	  		image_id int(11),
-//			user_id int(11)
-//	 	   ) {$charset_collate};";
-//
-//    require_once(ABSPATH . 'wp-admin/upgrade-functions.php');
-//    dbDelta($sql);
-//}
+
 
 function media_setup_globals() {
 
@@ -179,7 +187,7 @@ function media_setup_globals() {
 
     $bp->media->table_media_data = $wpdb->base_prefix . 'bp_media_data';
     $bp->media->table_media_album = $wpdb->base_prefix . 'bp_media_album';
-     $bp->media->photo_tag = $wpdb->base_prefix . 'bp_photo_tags'; //added by ashish
+    $bp->media->photo_tag = $wpdb->base_prefix . 'bp_media_photo_tags'; //added by ashish
     $bp->media->table_report_abuse = $wpdb->base_prefix . 'bp_media_report_abuse'; //added by ashish
     $bp->media->table_user_rating_data = $wpdb->base_prefix . 'bp_media_user_rating_list';
     $bp->media->image_base = BP_MEDIA_PLUGIN_URL . '/themes/media/images'; //kapil
@@ -204,12 +212,35 @@ function media_add_admin_menu() {
         return false;
 
     /* Add the administration tab under the "Site Admin" tab for site administrators */
+    add_submenu_page( 'bp-general-settings', __( 'BuddyPress Media', 'buddypress'), '<span class="rt-buddypress-admin-media-head">' . __( 'BuddyPress Media', 'buddypress' ) . '&nbsp;&nbsp;&nbsp;</span>', 'manage_options', 'buddypress-media-admin', 'rt_media_admin_page' );
     add_submenu_page('bp-general-settings', //$parent
-            __('Kaltura Setting','Kaltura Setting'),//$page_title
-            __('Kaltura Setting','Kaltura Setting'),//$menu_title
+            __('Kaltura Setting','buddypress'),//$page_title
+             '<span class="rt-buddypress-admin-media">&middot; '.__('Kaltura Setting','buddypress'). '&nbsp;&nbsp;&nbsp;</span>',//$menu_title
             'manage_options',//$access_level
             'bp-media-setup',//$file
             "media_admin" );//$function
+
+    add_submenu_page('bp-general-settings', //$parent
+            __('Dashboard','buddypress'),//$page_title
+            '<span class="rt-buddypress-admin-media">&middot; '.__('Dashboard','buddypress'). '&nbsp;&nbsp;&nbsp;</span>',//$menu_title
+            'manage_options',//$access_level
+            'bp-media-admin',//$file
+            "rt_media_admin_page" );//$function
+
+     add_submenu_page('bp-general-settings', //$parent
+            __('Reassignment','buddypress'),//$page_title
+            '<span class="rt-buddypress-admin-media">&middot; '.__('Reassignment','buddypress'). '&nbsp;&nbsp;&nbsp;</span>',//$menu_title
+            'manage_options',//$access_level
+            'bp-media-admin-reassign',//$file
+            "rt_media_admin_page_reassign" );//$function
+
+       add_submenu_page('bp-general-settings', //$parent
+            __('Media Importer','buddypress'),//$page_title
+           '<span class="rt-buddypress-admin-media">&middot; '. __('Media Importer','buddypress'). '&nbsp;&nbsp;&nbsp;</span>',//$menu_title
+            'manage_options',//$access_level
+            'album-importer',//$file
+            "rt_media_importer_page" );//$function
+
 }
 add_action('admin_menu', 'media_add_admin_menu');
 
@@ -221,11 +252,8 @@ function bp_media_check_installed() {
     if ( !is_site_admin() )
         return false;
 
-//    require ( 'bp-media-admin.php' );
-//    if ( get_site_option('bp-media-db-version') < BP_MEDIA_DB_VERSION )
     bp_media_install();
-    media_wire_install();
-//    media_user_rating_install();
+
 }
 add_action( 'admin_menu', 'bp_media_check_installed' );
 //
@@ -234,6 +262,7 @@ add_action( 'admin_menu', 'bp_media_check_installed' );
 
 function bp_media_header_nav_setup() {//done
     global $bp;
+    if(empty($bp->current_action) || ($bp->current_action == 'mediaall') || ($bp->current_action == 'audio') && (!empty($bp->action_variables[0])) )
     $selected = ( bp_is_page( BP_MEDIA_SLUG ) ) ? ' class="selected"' : '';
     $title = __( 'Media', 'Media' );
     echo sprintf('<li%s><a href="%s/%s" title="%s">%s</a></li>', $selected, get_option('home'), BP_MEDIA_SLUG, $title, $title );
@@ -244,7 +273,10 @@ add_action( 'bp_nav_items', 'bp_media_header_nav_setup', 100);
 //code by ashish
 function bp_photo_header_nav_setup() {//done
     global $bp;
-    $selected = ( bp_is_page( BP_MEDIA_SLUG ) ) ? ' class="selected"' : '';
+
+    bp_is_active($component);
+//    $selected = ( bp_is_media_component( BP_MEDIA_SLUG ) ) ? '' : '';
+    $selected = (bp_is_photo_action(BP_PHOTO_SLUG)) ? ' class="selected"' : '';
     $title = __( 'Photo', 'Photo' );
     echo sprintf('<li%s><a href="%s/%s" title="%s">%s</a></li>', $selected, get_option('home'), BP_MEDIA_SLUG.'/'.BP_PHOTO_SLUG, $title, $title );
 }
@@ -253,7 +285,7 @@ add_action( 'bp_nav_items', 'bp_photo_header_nav_setup', 100);
 
 function bp_video_header_nav_setup() {//done
     global $bp;
-    $selected = ( bp_is_page( BP_VIDEO_SLUG ) ) ? ' class="selected"' : '';
+    $selected = (bp_is_video_action(BP_VIDEO_SLUG) ) ? ' class="selected"' : '';
     $title = __( 'Video', 'Video' );
     echo sprintf('<li%s><a href="%s/%s" title="%s">%s</a></li>', $selected, get_option('home'), BP_MEDIA_SLUG.'/'.BP_VIDEO_SLUG, $title, $title );
 }
@@ -311,10 +343,16 @@ add_action( 'wp', 'video_directory_media_setup', 2 );
 
 
 function media_add_js() {
+    global $bp;
     $js_path = BP_MEDIA_PLUGIN_URL.'/themes/media/js/';
     wp_enqueue_script( 'bp-media-swfobject', $js_path.'swfobject.js');
     wp_enqueue_script( 'bp-media-rating', $js_path.'rating.js');
+
     wp_enqueue_script( 'bp-media-general', $js_path.'general.js');
+     if('photo' == $bp->current_action && 'media' == $bp->current_component &&empty ($bp->action_variables)){
+           wp_enqueue_script('jquery-min','http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js');
+           wp_enqueue_script('thickbox',$js_path.'thickbox.js');
+     }
 }
 add_action( 'wp_print_scripts', 'media_add_js', 1 );
 
@@ -322,7 +360,6 @@ function media_add_single_js() {
     global $bp;
 
     $js_path = BP_MEDIA_PLUGIN_URL.'/themes/media/js/';
-
     $action = array("mediaall","photo","audio","video");
     $cc = $bp->current_component;
     $ca = $bp->current_action;
@@ -332,15 +369,9 @@ function media_add_single_js() {
         wp_deregister_script('bp-media-general');
         wp_deregister_script('jquery');
         wp_enqueue_script( 'jquery', 'http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js');
-        if(is_user_logged_in()){
-            $photo_tag_path = BP_MEDIA_PLUGIN_URL.'/photo-tagging/';
-            $abuse_path = BP_MEDIA_PLUGIN_URL.'/media-report-abuse/';
-            wp_enqueue_script( 'bp-phototagger',$photo_tag_path.'phototagger-jquery.js',true);
-            wp_enqueue_script( 'bp-phototag-init',$photo_tag_path.'photo-tag-init.js',true);
-            wp_enqueue_script( 'bp-media-abuse', $abuse_path.'abuse.js',true);
-        }
-         wp_enqueue_script( 'bp-media-single', $js_path.'single.js'); 
 
+         wp_enqueue_script( 'bp-media-single', $js_path.'single.js');
+        
     }
 }
 
@@ -358,18 +389,7 @@ function picture_new_wire_post( $picture_id, $content ) {
     if ( $wire_post_id = bp_wire_new_post( $picture_id, $content, $bp->media->slug, $private ) ) {
 
         bp_core_add_notification( $picture_id, $bp->displayed_user->id, $bp->media->slug, 'picture_new_wire_post' );
-        /*
-        bp_picture_record_activity(
-                    array(
-                        'item_id' => $wire_post_id,
-                        'user_id' => $bp->loggedin_user->id,
-                        'component_name' => $bp->media->slug,
-                        'component_action' => 'picture_new_wire_post',
-                        'is_private' => 0
-                    )
-                );
- *
-        */
+   
         do_action( 'picture_new_wire_post', $picture_id, $content );
 
         return true;
@@ -387,16 +407,7 @@ function picture_delete_wire_post( $wire_post_id, $table_name ) {
         return false;
 
     if ( bp_wire_delete_post( $wire_post_id, $bp->media->slug, $table_name ) ) {
-        /*
-        bp_picture_delete_activity( array(
-                                            'item_id' => $wire_post_id,
-                                            'component_name' => $bp->media->slug,
-                                            'component_action' => 'picture_new_wire_post',
-                                            'user_id' => $bp->loggedin_user->id
-                                    )
-                                );
-
-        */
+    
 
         do_action( 'picture_deleted_wire_post', $wire_post_id );
         return true;
@@ -512,9 +523,9 @@ add_action( 'bp_media_picture', 'bp_media_remove_screen_notifications' );
  * @param string $view single/multiple
  * @return the media for user
  */
-function bp_pictures_get_pictures_for_user( $user_id, $media_type,$view,$group_id,$album_id ) { //kapil
+function bp_pictures_get_pictures_for_user( $user_id, $media_type,$view,$group_id,$album_id,$type ) { //kapil
 
-    return BP_Media_Picture::get_pictures_for_user( $user_id,$media_type,$view,$group_id,$album_id); //kapil
+    return BP_Media_Picture::get_pictures_for_user( $user_id,$media_type,$view,$group_id,$album_id,$type); //kapil
 }
 /**
  * This function sets a new navigation item Media to the Buddypress Component
@@ -536,6 +547,9 @@ function media_setup_nav() {
         $bp->is_single_item = true;
         $bp->media->view = 'single';
         bp_core_load_template( apply_filters( 'media_template_media_home', 'media/single/home' ) );
+    }
+    else{
+        $bp->media->view = 'multiple';
     }
     $counter_indicator = (10);
 
@@ -610,16 +624,19 @@ add_action('bp_after_member_body','media_members_content');
  * Adding custom CSS and JS to the Buddypress Media Component
  */
 function media_add_css() {
+    global $bp;
+       $css_file_path = BP_MEDIA_PLUGIN_URL."/themes/media/css/";
     if (bp_is_user_media()) {
-        $css_file_path = BP_MEDIA_PLUGIN_URL."/themes/media/css/";
         wp_enqueue_style( 'bp-media-structure', $css_file_path.'media.css');
         wp_enqueue_style( 'bp-media-rate', $css_file_path.'rating.css');
     }else
     if($bp->current_component == $bp->groups->slug && $bp->current_action == $bp->media->slug) {
-        $css_file_path = BP_MEDIA_PLUGIN_URL."/themes/media/css/";
         wp_enqueue_style( 'bp-media-structure', $css_file_path.'media.css');
         wp_enqueue_style( 'bp-media-rate', $css_file_path.'rating.css');
+       
     }
+    if('photo' == $bp->current_action && 'media' == $bp->current_component)
+        wp_enqueue_style( 'thickbox',$css_file_path.'thickbox.css');
 }
 add_action( 'wp_print_styles', 'media_add_css' );
 
@@ -682,6 +699,7 @@ add_action('wp_ajax_nopriv_media_change_description', 'media_chage_description_c
 /**
  *
  * Updating Stars using Wp admin-ajax
+ * Ajax call ..  Reference can be found in single.js
  * @global <type> $wpdb
  * @global <type> $bp
  */
@@ -692,12 +710,16 @@ function media_user_rating_callback() {
     global $wpdb, $bp;
     $bp->media->table_media_data = $wpdb->base_prefix . 'bp_media_data';
     $bp->media->table_media_rating = $wpdb->base_prefix . 'bp_media_user_rating_list';
-    $result = $wpdb->query("SELECT * FROM {$bp->media->table_media_rating} WHERE image_id = {$image_id} AND user_id = {$user_id} ");
+    $q = "SELECT * FROM {$bp->media->table_media_rating} WHERE image_id = {$image_id} AND user_id = {$user_id} ";
+    $result = $wpdb->query($q);
 
     if(empty($result)) {
-        $wpdb->query("UPDATE {$bp->media->table_media_data} SET total_rating = total_rating + {$rating}, rating_counter= rating_counter + 1 WHERE ID = {$image_id} ");
-        $wpdb->query("INSERT INTO {$bp->media->table_media_rating} (image_id, user_id) VALUES ({$image_id},{$user_id}) ");
-        echo 'THANKS / ';
+        $q1 = "UPDATE {$bp->media->table_media_data} SET total_rating = total_rating + {$rating}, rating_counter= rating_counter + 1 WHERE ID = {$image_id} ";
+        $wpdb->query($q1);
+//        echo $wpdb->last_query;
+        $q2 = "INSERT INTO {$bp->media->table_media_rating} (image_id, user_id) VALUES ({$image_id},{$user_id}) ";
+        $wpdb->query($q2); //insert data here since we can check that user cannt make multiple rating
+         echo 'THANKS / ';
     }
     else {
         echo "ALREADY VOTED / " ;
@@ -710,6 +732,7 @@ add_action('wp_ajax_nopriv_media_user-rating', 'media_user_rating_callback');
 
 /**
  * Udating the view counter values
+ * ajax call reference can be found in single.js
  * @global <type> $wpdb
  * @global <type> $bp
  */
@@ -719,16 +742,17 @@ function media_view_update_callback() {
     global $wpdb, $bp;
     $url = $bp->root_domain;
     echo $url;
-    $bp->media->table_media_data = $wpdb->base_prefix . 'bp_media_data';
-    $p = $wpdb->query("UPDATE {$bp->media->table_media_data} SET views = views + 1  WHERE ID = {$image_id} ");
-    die();
+//    $bp->media->table_media_data = $wpdb->base_prefix . 'bp_media_data';
+    $q = "UPDATE {$bp->media->table_media_data} SET views = views + 1  WHERE ID = {$image_id} ";
+    $p = $wpdb->query($q);
+    die(); //ajax call must die after the sequence is complete
 }
 add_action('wp_ajax_media_view_update', 'media_view_update_callback');
 add_action('wp_ajax_nopriv_media_view_update', 'media_view_update_callback');
 
 /**
  *
- * Deleting the media from local db and kaltura server as well
+ * Deleting the media from local db and kaltura server as well ~~ code reference can be found in single.js
  * @global <type> $bp
  * @global <type> $kaltura_validation_data
  * @global <type> $wpdb
@@ -737,6 +761,7 @@ function media_delete_server_callback() {
     global $bp,$kaltura_validation_data,$wpdb;
     $media_id = $_POST['media_id'];
 //    echo $media_id;
+    $kaltura_id = get_kaltura_media_id($media_id);
     $e_id = $wpdb->get_var("SELECT entry_id from {$bp->media->table_media_data} WHERE ID = {$media_id} ");
     if (isMediaOwner($media_id)) {
         $pic = new BP_Media_Picture($picture_id);
@@ -745,7 +770,14 @@ function media_delete_server_callback() {
         }
         else {
             $kaltura_validation_data['client']->media->delete($e_id);
-            echo "Successfully deleted from server";
+
+            $q = "DELETE FROM {$bp->media->photo_tag} WHERE PHOTOID={$kaltura_id}";
+            $q1 = "DELETE FROM {$bp->media->table_report_abuse} WHERE entry_id ={$kaltura_id}";
+            $q2 = "DELETE FROM {$bp->media->table_user_rating_data} WHERE image_id={$media_id}";
+            $wpdb->query($q);
+            $wpdb->query($q1);
+            $wpdb->query($q2);
+            echo "Media deleted from Server";
             //redireect code
         }
     }
@@ -758,10 +790,10 @@ add_action('wp_ajax_media_delete_server', 'media_delete_server_callback');
 add_action('wp_ajax_nopriv_media_delete_server', 'media_delete_server_callback');
 
 /**
- * Deleting media from the locally installed db
+ * Deleting media from the locally installed db //using ajax call u can find this reference in single.js
  * @global <type> $bp
  */
-function media_delete_local_callback( ) {
+function media_delete_local_callback() {
     global $bp;
     // what u have deleted? audio / video / photo
 
@@ -773,7 +805,14 @@ function media_delete_local_callback( ) {
             echo "Error !!!";
         }
         else {
-            echo "Successfully deleted !!!@#$@#audio OR video OR photo";
+
+            $q = "DELETE FROM {$bp->media->photo_tag} WHERE PHOTOID={$kaltura_id}";
+            $q1 = "DELETE FROM {$bp->media->table_report_abuse} WHERE entry_id ={$kaltura_id}";
+            $q2 = "DELETE FROM {$bp->media->table_user_rating_data} WHERE image_id={$media_id}";
+            $wpdb->query($q);
+            $wpdb->query($q1);
+            $wpdb->query($q2);
+            echo "Successfully deleted !!!";
         }
     }
 }
@@ -906,10 +945,7 @@ function bp_media_record_activity( $args = '' ) {
 
 
     /* If media is not public, hide the activity sitewide. */
-//        if ()
-//                $privacy = false;
-//        else
-//                $privacy = true;
+
     $privacy = false;
 
     $defaults = array(
@@ -953,13 +989,17 @@ function bp_media_record_activity( $args = '' ) {
  */
 function bp_media_recent_activity_item_ids_for_user( $user_id = false ) {
     global $bp;
-    // var_dump($bp->loggedin_user->id, $bp->displayed_user->id);
+    
     if ( !$user_id )
         $user_id = ( $bp->displayed_user->id ) ? $bp->displayed_user->id : $bp->loggedin_user->id;
-//var_dump($user_id);
+
     return BP_Media_Picture::get_activity_recent_ids_for_user( $user_id );
 }
-
+/**
+ * This code is intented for search purpose for reference only
+ * @global <type> $bp
+ *
+ */
 function bp_directory_media_search_form() {
     global $bp; ?>
 <form action="" method="get" id="search-media-form">
@@ -984,7 +1024,7 @@ function bp_media_fetch_avatar( $args = '', $media = false ) {
             'css_id' => false,
             'alt' => __( 'Media Avatar', 'buddypress-media' )
     );
-//        var_dump($defaults);
+
     $params = wp_parse_args( $args, $defaults );
 
     // hard code these options to prevent tampering
@@ -1046,5 +1086,52 @@ function bp_media_dtheme_ajax_querystring_group_filter( $query_string ) {
     return $query_string;
 }
 add_filter( 'bp_dtheme_ajax_querystring', 'bp_media_dtheme_ajax_querystring_group_filter', 1 );
+/**
+ *This function retrieves the kaltura id stored in db
+ * @global <type> $bp
+ * @global <type> $wpdb
+ * @param <type> $id
+ * @return <type> 
+ */
+function get_kaltura_media_id($id){
+    global $bp, $wpdb;
+    $q = "SELECT entry_id from {$bp->media->table_media_data} WHERE id = {$id} ";
+    return  $wpdb->get_var($wpdb->prepare($q));
+}
+/**
+ * this function is for changing the media album via ajax call ref can be found in single.js
+ *
+ */
+
+function rt_album_update_callback() {
+    $image_id = $_POST['image_id'];
+    $album_id = $_POST['album_id'];
+    global $wpdb,$bp,$kaltura_validation_data; // this is how you get access to the database
+
+    $q1 = "UPDATE {$bp->media->table_media_data} SET album_id = {$album_id} WHERE ID = {$image_id} ";
+    $wpdb->query($q1);
+    echo 'Changed to album ';
+
+    die();//Ajax call must die here
+}
+add_action('wp_ajax_rt_album_update', 'rt_album_update_callback');
+add_action('wp_ajax_nopriv_rt_album_update', 'rt_album_update_callback');
+/**
+ * Feed Trail
+ */
+
+function bp_media_action_link_feed() {
+	global $bp, $wp_query;
+
+	if ( $bp->current_component != $bp->media->slug || $bp->current_action != 'feed' )
+		return false;
+
+	$wp_query->is_404 = false;
+	status_header( 200 );
+
+	include_once( 'feed/bp-media-feed.php' );
+	die;
+}
+add_action( 'bp_init', 'bp_media_action_link_feed', 6 );
 
 ?>

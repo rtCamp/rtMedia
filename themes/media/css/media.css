@@ -13,17 +13,18 @@ These structure styles can be overridden by the theme CSS file if needed.
     background: url(../images/media-wire.png) 0 4px no-repeat;
 }
 
-li a#user-media, li a#my-media {
+/*li a#user-media, li a#my-media {
 					background: url(../images/media.png) 88% 52% no-repeat;
-				}
+				}*/
 
 table#bp-media-notification-settings th.icon {
 		background-image: url(../images/media.png);
 	}
 
 .rt-picture-thumb {
-    background: #f0f0f0;-moz-border-radius: 4px;-webkit-border-radius: 4px;float: left;padding: 15px 15px;margin:10px;text-align: center;width: 170px;height:210px;
+    background: #f0f0f0;-moz-border-radius: 4px;-webkit-border-radius: 4px;float: left;padding: 15px 15px;margin:10px;text-align: center;width: 170px;height:160px;
 }
+.rt-photo{height:140px}
 
 
 .rt-picture-thumb img{
@@ -99,5 +100,13 @@ a#delete-img { background: transparent url(../images/delete-icon.png) no-repeat 
 #rt-album-media-thumbs{}
 #rt-album-media-thumbs li{display: inline;margin-right: 10px;background: gray}
 
-div.rt-picture-single div.last{background: url(../images/Icon_ExclamationMark.png) no-repeat  260px 1px}
-/*div.photo-container{height:none !important;width:none !important;}*/
+div.rt-picture-single div.last{font-size: 80%}
+
+/*Photo tagging 1 liner CSS for showing Add Tag Functionality*/
+a.enable-tag-create {font-size: 70%;font-weight: bold; }
+a.enable-tag-create:hover{text-decoration: underline}
+
+.m-loading{background: url(../images/ajax-loader.gif) no-repeat right top}
+div.item-list-tabs ul li.last {margin-top:5px ;}
+
+.rt-my-media-list{height: 125px !important}

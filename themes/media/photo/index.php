@@ -24,7 +24,7 @@
 
             <div id="media-dir-list" class="media dir-list">
                 <?php if(is_kaltura_configured()):?>
-                <?php bp_media_locate_template( array( 'media/media-loop.php' ), true ) ?>
+                <?php bp_media_locate_template( array( 'media/photo/media-loop.php' ), true ) ?>
                 <?php else: ?>
                     <div id="message" class="info">
                         <p>Kaltura is not configured. Please contact Admin</p>
