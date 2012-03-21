@@ -1,0 +1,23 @@
+/* 
+    Document   : rt-css-ui
+    Created on : Jun 23, 2010, 11:41:39 PM
+    Author     : kapil
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+/* 
+   TODO customize this sample style
+   Media Dashboard CSS
+*/
+/*reassign_page's photo sequesing*/
+#rt-contentLeft-photo, #rt-contentLeft-video {float: left; width: 100%; margin-bottom: 4px;}
+
+#rt-contentLeft-photo li,#rt-contentLeft-video li { list-style: none; margin: 0 0 4px 0; padding: 1px; background-color:#EFEFEF; border: #DFDFDF solid 2px;}
+
+#rt-contentLeft-video ul li span.rt-media-dashboard-title,#rt-contentLeft-photo ul li span.rt-media-dashboard-title {font-weight: bolder; margin-left: 10px}
+#rt-contentLeft-video ul li span.rt-media-dashboard-user,#rt-contentLeft-photo ul li span.rt-media-dashboard-user {font-size: 10px;  color: #7F7F7F}
+#rt-contentLeft-video ul li span.rt-media-dashboard-user a,#rt-contentLeft-photo ul li span.rt-media-dashboard-user a { color: #7f7f7f}
+#rt-contentRight-photo,#rt-contentRight-video{ display: none; background-color: #CFFFE8;  padding: 3px; border: #99DFBD solid 2px; margin-bottom: 2px;}
+
+.rt-featured-media-description{ font-size: 12px; color: #8F8F8F; font-style: italic}
