@@ -1,0 +1,9 @@
+/* 
+Basic layout structure styles for your BuddyPress component. The structure CSS performs
+basic structural formatting on component's interface. Your structure CSS should provide
+enough structure so that regardless of the theme enabled, your interface should still work.
+
+No colors, fonts or pretty stuff.
+
+These structure styles can be overridden by the theme CSS file if needed.
+*/

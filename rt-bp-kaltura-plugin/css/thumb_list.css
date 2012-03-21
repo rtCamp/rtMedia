@@ -1,0 +1,18 @@
+/* 
+    Document   : thumb_list
+    Created on : Aug 28, 2009, 2:45:37 PM
+    Author     : kapil
+    Description:
+        this is thumbnail script included into original code inline
+*/
+
+/* 
+   TODO customize this sample style
+   Syntax recommendation http://www.w3.org/TR/REC-CSS2/
+*/
+		div.scrollable { text-align:left;position:relative; overflow:hidden; width: 638px; height:1000px; }
+		div.scrollable div.items { width:20000em; position:absolute; }
+		div.scrollable div.items div { float:left; }
+		div.scrollable div.items div.active { border:1px inset #ccc; background-color:#fff;	}
+		div.scrollable div.items div.img a:hover img{ border:1px inset #fff; background-color:#fff; }
+		div.scrollable div.items div.img a:link img{ border:1px inset #fff; background-color:#fff; }
