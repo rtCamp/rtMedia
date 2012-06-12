@@ -1,29 +1,42 @@
 <?php
 /**
- * 
+ * The Main loader file of BuddyPress Media Component Plugin
  */
 
 //Exit if accessed directlly.
 if ( !defined( 'ABSPATH' ) ) exit;
 
 
-//Constants
-define( 'BP_MEDIA_SLUG', 'media' );
-define( 'BP_MEDIA_IMAGES_SLUG' , 'images' );
-define( 'BP_MEDIA_VIDEOS_SLUG' , 'videos' );
-define( 'BP_MEDIA_AUDIO_SLUG' , 'audio' );
-define( 'BP_MEDIA_UPLOAD_SLUG' , 'upload' );
+//Slug Constants
+define( 'BP_MEDIA_SLUG'			, 'media'	);
+define( 'BP_MEDIA_IMAGES_SLUG'	, 'images'	);
+define( 'BP_MEDIA_VIDEOS_SLUG'	, 'videos'	);
+define( 'BP_MEDIA_AUDIO_SLUG'	, 'audio'	);
+define( 'BP_MEDIA_UPLOAD_SLUG'	, 'upload'	);
+
+//Label Constants
+define( 'BP_MEDIA_LABEL'		, __( 'Media'	, 'bp-media'));
+define( 'BP_MEDIA_IMAGES_LABEL'	, __( 'Images'	, 'bp-media'));
+define( 'BP_MEDIA_VIDEOS_LABEL'	, __( 'Videos'	, 'bp-media'));
+define( 'BP_MEDIA_AUDIO_LABEL'	, __( 'Audio'	, 'bp-media'));
+define( 'BP_MEDIA_UPLOAD_LABEL'	, __( 'Upload'	, 'bp-media'));
 
 
 //To set the language according to the locale selected and availability of the language file.
 if ( file_exists( BP_MEDIA_PLUGIN_DIR . '/languages/' . get_locale() . '.mo' ) )
 	load_textdomain( 'bp-media', BP_MEDIA_PLUGIN_DIR . '/languages/' . get_locale() . '.mo' );
 
+/**
+ * 
+ */
 class BP_Media_Component extends BP_Component {
+	/**
+	 * 
+	 */
 	function __construct() {
 		global $bp;
 		
-		parent::start('media', __('Media','bp-media'), BP_MEDIA_PLUGIN_DIR);
+		parent::start(BP_MEDIA_SLUG, BP_MEDIA_LABEL, BP_MEDIA_PLUGIN_DIR);
 		
 		$this->includes();
 		
@@ -32,6 +45,9 @@ class BP_Media_Component extends BP_Component {
 		add_action( 'init', array( &$this, 'register_post_types' ) );
 	}
 	
+	/**
+	 * 
+	 */
 	function includes() {
 		
 		$includes=array(
@@ -39,8 +55,11 @@ class BP_Media_Component extends BP_Component {
 		);
 		
 		parent::includes($includes);
-	}
+	}//End includes()
 	
+	/**
+	 * 
+	 */
 	function setup_globals() {
 		global $bp;
 		$globals = array(
@@ -50,13 +69,16 @@ class BP_Media_Component extends BP_Component {
 			'search_string'         => __( 'Search Media...', 'bp-media' ),
 		);
 		parent::setup_globals( $globals );
-	}
+	}//End setup_globals()
 	
+	/**
+	 * 
+	 */
 	function setup_nav() {
 		// Add 'Media' to the main navigation
 		if(bp_is_my_profile()){
 			$main_nav = array(
-				'name' 		      => __( 'Media', 'bp-media' ),
+				'name' 		      => BP_MEDIA_LABEL,
 				'slug' 		      => BP_MEDIA_SLUG,
 				'position' 	      => 80,
 				'screen_function'     => 'bp_media_upload_screen',
@@ -65,49 +87,42 @@ class BP_Media_Component extends BP_Component {
 		}
 		else{
 			$main_nav = array(
-				'name' 		      => __( 'Media', 'bp-media' ),
+				'name' 		      => BP_MEDIA_LABEL,
 				'slug' 		      => BP_MEDIA_SLUG,
 				'position' 	      => 80,
 				'screen_function'     => 'bp_media_images_screen',
 				'default_subnav_slug' => BP_MEDIA_IMAGES_SLUG
 			);
-		}
-
-
-		
+		}//EndIf(bp_is_my_profile)
 		$sub_nav[] = array(
-			'name'            =>  __( 'Upload', 'bp-media' ),
-			'slug'            => BP_MEDIA_UPLOAD_SLUG,
-			'parent_url'      => trailingslashit(bp_displayed_user_domain().BP_MEDIA_SLUG),
-			'parent_slug'     => BP_MEDIA_SLUG,
-			'screen_function' => 'bp_media_upload_screen',
-			'position'        => 10,
-			'user_has_access' => bp_is_my_profile()
+			'name'            =>	BP_MEDIA_UPLOAD_LABEL,
+			'slug'            =>	BP_MEDIA_UPLOAD_SLUG,
+			'parent_url'      =>	trailingslashit(bp_loggedin_user_domain().BP_MEDIA_SLUG),
+			'parent_slug'     =>	BP_MEDIA_SLUG,
+			'screen_function' =>	'bp_media_upload_screen',
+			'position'        =>	10,
+			'user_has_access' =>	bp_is_my_profile()
 		);
-
-
-
 		parent::setup_nav( $main_nav , $sub_nav);
 
 		
 		bp_core_new_nav_item(array(
-			'name'				=>	__('Images','bp-media'),
+			'name'				=>	BP_MEDIA_IMAGES_LABEL,
 			'slug'				=>	BP_MEDIA_IMAGES_SLUG,
 			'screen_function'	=>	'bp_media_images_screen'			
 			));
 		bp_core_new_nav_item(array(
-			'name'				=>	__('Videos','bp-media'),
+			'name'				=>	BP_MEDIA_VIDEOS_LABEL,
 			'slug'				=>	BP_MEDIA_VIDEOS_SLUG,
 			'screen_function'	=>	'bp_media_videos_screen'			
 			));
 		bp_core_new_nav_item(array(
-			'name'				=>	__('Audio','bp-media'),
+			'name'				=>	BP_MEDIA_AUDIO_LABEL,
 			'slug'				=>	BP_MEDIA_AUDIO_SLUG,
 			'screen_function'	=>	'bp_media_videos_screen'			
 			));
-	}
-	
-}
+	}//End setup_nav()
+}//End BP_Media_Component
 
 
 function bp_media_load_core_component() {
@@ -117,13 +132,17 @@ function bp_media_load_core_component() {
 }
 add_action( 'bp_loaded', 'bp_media_load_core_component' );
 
+
+/**
+ * Function to set the custom navigation system in effect.
+ */
 function bp_media_custom_nav() {
 	global $bp;
 	foreach($bp->bp_nav as $key=>$nav_item) {
 		if($nav_item['slug']==BP_MEDIA_IMAGES_SLUG||$nav_item['slug']==BP_MEDIA_VIDEOS_SLUG||$nav_item['slug']==BP_MEDIA_AUDIO_SLUG) {
 			$bp->bp_options_nav[BP_MEDIA_SLUG][]=array(
 				'name'	=>	$nav_item['name'],
-				'link'	=>	$bp->displayed_user->domain . $nav_item['slug'] . '/',//$nav_item['link'],
+				'link'	=>	(isset( $bp->displayed_user->domain )? $bp->displayed_user->domain:(isset( $bp->loggedin_user->domain )?$bp->loggedin_user->domain:'')) . $nav_item['slug'] . '/',
 				'slug'	=>	$nav_item['slug'],
 				'css_id'	=>	$nav_item['css_id'],
 				'position'	=>	$nav_item['position'],
@@ -138,8 +157,6 @@ function bp_media_custom_nav() {
 		$bp->current_action=$bp->current_component;
 		$bp->current_component=BP_MEDIA_SLUG;
 	}
-	
-	
-}
+}//End bp_media_custom_nav()
 add_action ( 'bp_setup_nav' , 'bp_media_custom_nav' , 999 );
 ?>
