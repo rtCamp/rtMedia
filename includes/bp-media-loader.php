@@ -54,13 +54,24 @@ class BP_Media_Component extends BP_Component {
 	
 	function setup_nav() {
 		// Add 'Media' to the main navigation
-		$main_nav = array(
-			'name' 		      => __( 'Media', 'bp-media' ),
-			'slug' 		      => BP_MEDIA_SLUG,
-			'position' 	      => 80,
-			'screen_function'     => 'bp_media_images_screen',
-			'default_subnav_slug' => BP_MEDIA_IMAGES_SLUG
-		);
+		if(bp_is_my_profile()){
+			$main_nav = array(
+				'name' 		      => __( 'Media', 'bp-media' ),
+				'slug' 		      => BP_MEDIA_SLUG,
+				'position' 	      => 80,
+				'screen_function'     => 'bp_media_upload_screen',
+				'default_subnav_slug' => BP_MEDIA_UPLOAD_SLUG
+			);
+		}
+		else{
+			$main_nav = array(
+				'name' 		      => __( 'Media', 'bp-media' ),
+				'slug' 		      => BP_MEDIA_SLUG,
+				'position' 	      => 80,
+				'screen_function'     => 'bp_media_images_screen',
+				'default_subnav_slug' => BP_MEDIA_IMAGES_SLUG
+			);
+		}
 
 
 		
@@ -70,7 +81,8 @@ class BP_Media_Component extends BP_Component {
 			'parent_url'      => trailingslashit(bp_displayed_user_domain().BP_MEDIA_SLUG),
 			'parent_slug'     => BP_MEDIA_SLUG,
 			'screen_function' => 'bp_media_upload_screen',
-			'position'        => 10
+			'position'        => 10,
+			'user_has_access' => bp_is_my_profile()
 		);
 
 
@@ -93,15 +105,6 @@ class BP_Media_Component extends BP_Component {
 			'slug'				=>	BP_MEDIA_AUDIO_SLUG,
 			'screen_function'	=>	'bp_media_videos_screen'			
 			));
-//		bp_core_new_subnav_item( array(
-//			'name' 		  => __( 'Images', 'bp-media' ),
-//			'slug' 		  => BP_MEDIA_IMAGES_SLUG,
-//			'parent_slug'     => bp_get_loggedin_user_username(),
-//			'parent_url' 	  => trailingslashit( bp_loggedin_user_domain()),
-//			'screen_function' => 'bp_media_images_screen',
-//			'position' 	  => 40,
-//			'user_has_access' => bp_is_my_profile() // Only the logged in user can access this on his/her profile
-//		) );
 	}
 	
 }
@@ -120,12 +123,13 @@ function bp_media_custom_nav() {
 		if($nav_item['slug']==BP_MEDIA_IMAGES_SLUG||$nav_item['slug']==BP_MEDIA_VIDEOS_SLUG||$nav_item['slug']==BP_MEDIA_AUDIO_SLUG) {
 			$bp->bp_options_nav[BP_MEDIA_SLUG][]=array(
 				'name'	=>	$nav_item['name'],
-				'link'	=>	$nav_item['link'],
+				'link'	=>	$bp->displayed_user->domain . $nav_item['slug'] . '/',//$nav_item['link'],
 				'slug'	=>	$nav_item['slug'],
 				'css_id'	=>	$nav_item['css_id'],
 				'position'	=>	$nav_item['position'],
 				'screen_function'	=>	$nav_item['screen_function'],
 				'user_has_access'	=>	true,
+				'parent_url'		=>	trailingslashit(bp_displayed_user_domain())
 			);
 			unset($bp->bp_nav[$key]);
 		}
