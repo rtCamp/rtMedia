@@ -51,9 +51,17 @@ class BP_Media_Component extends BP_Component {
 	function includes() {
 		
 		$includes=array(
-			'includes/bp-media-screens.php'
+			'includes/bp-media-screens.php',
+			'includes/bp-media-functions.php',
+			'includes/bp-media-filters.php',
+			'includes/bp-media-template-functions',
+			'includes/bp-media-actions.php',
+			'includes/bp-media-test.php'
 		);
-		
+		if ( is_admin() || is_network_admin() ) {
+			$includes[]='includes/lib/class-form-helper.php';
+			$includes[]='includes/bp-media-admin.php';
+		}
 		parent::includes($includes);
 	}//End includes()
 	
@@ -119,7 +127,7 @@ class BP_Media_Component extends BP_Component {
 		bp_core_new_nav_item(array(
 			'name'				=>	BP_MEDIA_AUDIO_LABEL,
 			'slug'				=>	BP_MEDIA_AUDIO_SLUG,
-			'screen_function'	=>	'bp_media_videos_screen'			
+			'screen_function'	=>	'bp_media_audio_screen'			
 			));
 	}//End setup_nav()
 }//End BP_Media_Component
