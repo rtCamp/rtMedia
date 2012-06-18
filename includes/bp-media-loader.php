@@ -22,6 +22,8 @@ define( 'BP_MEDIA_AUDIO_LABEL'	, __( 'Audio'	, 'bp-media'));
 define( 'BP_MEDIA_UPLOAD_LABEL'	, __( 'Upload'	, 'bp-media'));
 
 
+
+
 //To set the language according to the locale selected and availability of the language file.
 if ( file_exists( BP_MEDIA_PLUGIN_DIR . '/languages/' . get_locale() . '.mo' ) )
 	load_textdomain( 'bp-media', BP_MEDIA_PLUGIN_DIR . '/languages/' . get_locale() . '.mo' );
@@ -33,6 +35,12 @@ class BP_Media_Component extends BP_Component {
 	/**
 	 * 
 	 */
+	//To hold the messages generated during initialization process and will be shown on the screen functions
+	var $messages= array(
+			'error'	=>		array(),
+			'info'		=>		array(),
+			'updated'	=>		array()
+		);
 	function __construct() {
 		global $bp;
 		
@@ -43,6 +51,8 @@ class BP_Media_Component extends BP_Component {
 		$bp->active_components[$this->id] = '1';
 		
 		add_action( 'init', array( &$this, 'register_post_types' ) );
+		
+		
 	}
 	
 	/**
@@ -54,7 +64,7 @@ class BP_Media_Component extends BP_Component {
 			'includes/bp-media-screens.php',
 			'includes/bp-media-functions.php',
 			'includes/bp-media-filters.php',
-			'includes/bp-media-template-functions',
+			'includes/bp-media-template-functions.php',
 			'includes/bp-media-actions.php',
 			'includes/bp-media-test.php'
 		);
@@ -129,6 +139,8 @@ class BP_Media_Component extends BP_Component {
 			'slug'				=>	BP_MEDIA_AUDIO_SLUG,
 			'screen_function'	=>	'bp_media_audio_screen'			
 			));
+		
+		
 	}//End setup_nav()
 }//End BP_Media_Component
 

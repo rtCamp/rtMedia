@@ -40,4 +40,13 @@ function bp_media_override_allowed_tags($activity_allowedtags) {
 	return $activity_allowedtags;
 }
 
+function bp_media_show_formatted_message($messages,$type) {
+	echo '<div id="message" class="'.$type.'">';
+	foreach($messages as $key=>$message) {
+		if(is_string($message)){
+			echo '<p>'.$message.'</p>';
+		}
+	}
+	echo '</div>';
+}
 ?>
