@@ -54,6 +54,10 @@ function bp_media_audio_screen() {
 	function bp_media_audio_screen_content() {
 		global $bp;
 		_e('Test Audo Content');
+		echo '<pre>';
+		var_dump($bp);
+		echo '</pre>';
+
 
 	}
 	
