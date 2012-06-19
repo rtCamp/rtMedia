@@ -66,6 +66,8 @@ class BP_Media_Component extends BP_Component {
 			'includes/bp-media-filters.php',
 			'includes/bp-media-template-functions.php',
 			'includes/bp-media-actions.php',
+			'includes/bp-media-interface.php',
+			'includes/bp-media-class-wordpress.php',
 			'includes/bp-media-test.php'
 		);
 		if ( is_admin() || is_network_admin() ) {
@@ -139,7 +141,30 @@ class BP_Media_Component extends BP_Component {
 			'slug'				=>	BP_MEDIA_AUDIO_SLUG,
 			'screen_function'	=>	'bp_media_audio_screen'			
 			));
-		
+		bp_core_new_subnav_item(array(
+			'name'            => 'listen', // Display name for the nav item
+			'slug'            => 'listen', // URL slug for the nav item
+			'parent_slug'     => BP_MEDIA_AUDIO_SLUG, // URL slug of the parent nav item
+			'parent_url'      => trailingslashit(bp_loggedin_user_domain().BP_MEDIA_AUDIO_SLUG), // URL of the parent item
+			'position'        => 90,    // Index of where this nav item should be positioned
+			'screen_function' => 'bp_media_audio_screen', // The name of the function to run when clicked
+		));
+		bp_core_new_subnav_item(array(
+			'name'            => 'watch', // Display name for the nav item
+			'slug'            => 'watch', // URL slug for the nav item
+			'parent_slug'     => BP_MEDIA_VIDEOS_SLUG, // URL slug of the parent nav item
+			'parent_url'      => trailingslashit(bp_loggedin_user_domain().BP_MEDIA_VIDEOS_SLUG), // URL of the parent item
+			'position'        => 90,    // Index of where this nav item should be positioned
+			'screen_function' => 'bp_media_videos_screen', // The name of the function to run when clicked
+		));
+		bp_core_new_subnav_item(array(
+			'name'            => 'view', // Display name for the nav item
+			'slug'            => 'view', // URL slug for the nav item
+			'parent_slug'     => BP_MEDIA_IMAGES_SLUG, // URL slug of the parent nav item
+			'parent_url'      => trailingslashit(bp_loggedin_user_domain().BP_MEDIA_IMAGES_SLUG), // URL of the parent item
+			'position'        => 90,    // Index of where this nav item should be positioned
+			'screen_function' => 'bp_media_images_screen', // The name of the function to run when clicked
+		));
 		
 	}//End setup_nav()
 }//End BP_Media_Component
@@ -174,6 +199,11 @@ function bp_media_custom_nav() {
 		}
 	}
 	if($bp->current_component==BP_MEDIA_IMAGES_SLUG||$bp->current_component==BP_MEDIA_VIDEOS_SLUG||$bp->current_component==BP_MEDIA_AUDIO_SLUG){
+		$count=count($bp->action_variables);
+		for($i=$count;$i>0;$i--){
+			$bp->action_variables[$i]=$bp->action_variables[$i-1];
+		}
+		$bp->action_variables[0]=$bp->current_action;
 		$bp->current_action=$bp->current_component;
 		$bp->current_component=BP_MEDIA_SLUG;
 	}
