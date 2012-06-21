@@ -53,4 +53,13 @@ function bp_media_enqueue_scripts_styles() {
 	wp_enqueue_style('bp-media-default', plugins_url( 'includes/css/bp-media-style.css' , dirname(__FILE__) ));
 }
 add_action( 'wp_enqueue_scripts', 'bp_media_enqueue_scripts_styles', 11 );
+
+function bp_media_delete_activity_handler($activity_id,$user){
+	
+	$post_id = bp_activity_get_meta($activity_id, 'bp_media_parent_post');
+	$attachment_id= get_post_meta($post_id,'bp_media_child_attachment',true);
+	wp_delete_attachment($attachment_id,true);
+	wp_delete_post($post_id,true);
+}
+add_action('bp_activity_before_action_delete_activity','bp_media_delete_activity_handler',10,2);
 ?>
