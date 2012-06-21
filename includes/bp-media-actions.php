@@ -6,7 +6,7 @@
 function bp_media_handle_uploads() {
 	global $bp;
 	
-	if(isset($_FILES)&&  is_array($_FILES)&&  array_key_exists('bp_media_file', $_FILES)){
+	if(isset($_FILES)&&  is_array($_FILES)&&  array_key_exists('bp_media_file', $_FILES)&& $_FILES['bp_media_file']['name']!=''){
 		//$bp->{BP_MEDIA_SLUG}->messages['updated'][]='File '.$_FILES['bp_media_file']['name'].' was uploaded successfully';
 		//$bp->{BP_MEDIA_SLUG}->messages['error'][]='Uploading function reached';
 		//$bp->{BP_MEDIA_SLUG}->messages['updated'][]='Uploading function reached';
@@ -15,10 +15,11 @@ function bp_media_handle_uploads() {
 		$bp_media_entry=new BP_Media_Host_Wordpress();
 	
 		$bp_media_entry->add_media($_POST['bp_media_title'],$_POST['bp_media_description']);
+		$bp->{BP_MEDIA_SLUG}->messages['updated'][]='Upload Successful';
 		
-		echo '<pre>';
-		var_dump($bp_media_entry);
-		echo '</pre>';
+	}
+	else{
+		$bp->{BP_MEDIA_SLUG}->messages['error'][]='You did not specified a file to upload';
 	}
 }
 add_action('bp_init','bp_media_handle_uploads');
@@ -39,4 +40,12 @@ function bp_media_show_messages() {
 }
 
 add_action('bp_media_before_content','bp_media_show_messages');
+
+
+function bp_media_enqueue_scripts_styles() {
+	wp_enqueue_script( 'bp-media-mejs',plugins_url( 'includes/js/mediaelement-and-player.min.js' , dirname(__FILE__) ));
+	wp_enqueue_script( 'bp-media-default',plugins_url( 'includes/js/bp-media.js' , dirname(__FILE__) ));
+	wp_enqueue_style('bp-media-mecss', plugins_url( 'includes/css/mediaelementplayer.min.css' , dirname(__FILE__) ));
+}
+add_action( 'wp_enqueue_scripts', 'bp_media_enqueue_scripts_styles', 11 );
 ?>

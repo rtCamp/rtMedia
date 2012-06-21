@@ -3,7 +3,6 @@
 /**
  * 
  */
-
 function bp_media_record_activity( $args = '' ) {
 	global $bp;
 
@@ -24,7 +23,7 @@ function bp_media_record_activity( $args = '' ) {
 		'recorded_time'     => bp_core_current_time(), // The GMT time that this activity was recorded
 		'hide_sitewide'     => false  // Should this be hidden on the sitewide activity stream?
 	);
-	//add_filter('bp_activity_allowed_tags','bp_media_override_allowed_tags');
+	add_filter('bp_activity_allowed_tags','bp_media_override_allowed_tags');
 	$r = wp_parse_args( $args, $defaults );
 	extract( $r );
 	$activity_id=bp_activity_add( array( 'id' => $id, 'user_id' => $user_id, 'action' => $action, 'content' => $content, 'primary_link' => $primary_link, 'component' => $component, 'type' => $type, 'item_id' => $item_id, 'secondary_item_id' => $secondary_item_id, 'recorded_time' => $recorded_time, 'hide_sitewide' => $hide_sitewide ) );
@@ -34,9 +33,27 @@ function bp_media_record_activity( $args = '' ) {
 
 function bp_media_override_allowed_tags($activity_allowedtags) {
 	
-	$activity_allowedtags['h3']				=	array();
-	$activity_allowedtags['h3']['class']	=	array();
-	$activity_allowedtags['h3']['id']		=	array();
+	$activity_allowedtags['h3']					=	array();
+	$activity_allowedtags['h3']['class']		=	array();
+	$activity_allowedtags['h3']['id']			=	array();
+	$activity_allowedtags['video']				=	array();
+	$activity_allowedtags['video']['id']		=	array();
+	$activity_allowedtags['video']['class']		=	array();
+	$activity_allowedtags['video']['src']		=	array();
+	$activity_allowedtags['video']['height']	=	array();
+	$activity_allowedtags['video']['width']		=	array();
+	$activity_allowedtags['video']['controls']	=	array();
+	$activity_allowedtags['video']['preload']	=	array();
+	$activity_allowedtags['video']['alt']		=	array();
+	$activity_allowedtags['video']['title']		=	array();
+	$activity_allowedtags['audio']				=	array();
+	$activity_allowedtags['audio']['id']		=	array();
+	$activity_allowedtags['audio']['class']		=	array();
+	$activity_allowedtags['audio']['src']		=	array();
+	$activity_allowedtags['audio']['controls']	=	array();
+	$activity_allowedtags['audio']['preload']	=	array();
+	$activity_allowedtags['audio']['alt']		=	array();
+	$activity_allowedtags['audio']['title']		=	array();
 	return $activity_allowedtags;
 }
 
