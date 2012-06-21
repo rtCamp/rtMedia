@@ -13,7 +13,19 @@ class BP_Media_Host_Wordpress implements BP_Media {
 			$type,			//Type of the entry (Video, Image or Audio)
 			$owner;			//Owner of the entry.
 	
-	
+	function __construct($media_id='') {
+		if(!$media_id==''){
+			$this->init($media_id);
+		}
+	}
+	function init($media_id=''){
+		if(!$media_id==''){
+			$media=get_post($media_id);
+			echo '<pre>';
+			var_dump($media);
+			echo '</pre>';
+		}		
+	}
 	function add_media($name,$description) {
 		global $bp;
 		include_once(ABSPATH.'wp-admin/includes/file.php');
@@ -68,6 +80,7 @@ class BP_Media_Host_Wordpress implements BP_Media {
 									break;
 			default				:	unlink($file);
 									wp_delete_post($post_id, true);
+									unlink($file);
 									$activity_content=false;
 									return false;
 		}
@@ -76,18 +89,32 @@ class BP_Media_Host_Wordpress implements BP_Media {
 		if ( !is_wp_error($attachment_id) ) {
 			wp_update_attachment_metadata( $attachment_id, wp_generate_attachment_metadata( $attachment_id, $file ) );
 		}
+		else{
+			wp_delete_post($post_id, true);
+			unlink($file);
+			return false;
+		}
 		$postarr['post_excerpt']= trailingslashit(bp_loggedin_user_domain().BP_MEDIA_IMAGES_SLUG.'/'.$post_id);
 		$postarr['ID'] = $post_id;
 		$postarr['post_mime_type']=$type;
 		$postarr['post_status']='published';
 		
 		wp_insert_post($postarr);
-		bp_media_record_activity(array(
+		$activity_id=bp_media_record_activity(array(
 			'action'		=>	sprintf(__("%s uploaded a media."),bp_core_get_userlink(bp_loggedin_user_id() )),
 			'content'		=>	$activity_content,
 			'primary_link'	=>	$activity_url,
 			'type'			=>	'media_upload'
 		));
+		bp_activity_update_meta($activity_id, 'bp_media_parent_post', $post_id);
+		update_post_meta($post_id, 'bp_media_child_activity', $activity_id);
+		update_post_meta($post_id, 'bp_media_child_attachment', $attachment_id);
+		$this->id			=	$post_id;
+		$this->name			=	$name;
+		$this->description	=	$description;
+		$this->owner		=	bp_loggedin_user_id();
+		$this->type			=	$type;
+		$this->url			=	$url;
 	}
 	function remove_media() {
 		
