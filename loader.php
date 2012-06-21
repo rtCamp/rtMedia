@@ -14,7 +14,7 @@ Author URI: http://www.rtCamp.com
 define( 'BP_MEDIA_IS_INSTALLED', 1 );
 
 // Constant to store the current version of the BP Media Plugin.
-define( 'BP_MEDIA_VERSION', '0.0.0' );
+define( 'BP_MEDIA_VERSION', '0.0.1' );
 
 // A constant to be used as base for other URLs throughout the plugin
 define( 'BP_MEDIA_PLUGIN_DIR', dirname( __FILE__ ) );
