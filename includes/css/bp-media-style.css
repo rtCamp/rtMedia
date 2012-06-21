@@ -1,12 +1,15 @@
 /* 
-    Document   : bp-media.css
-    Created on : Jun 14, 2012, 6:23:50 PM
-    Author     : Gagan
-    Description:
-        Purpose of the stylesheet follows.
-*/
+ *	Default stylesheet for BuddyPress Media Component
+ */
 
-root { 
-    display: block;
+.bp_media_content img{
+	max-width:98%;
 }
-
+.bp_media_title {
+	display:block;
+	font-size:20px;
+	font-weight:bold;
+}
+.bp_media_description {
+	display:block;
+}
