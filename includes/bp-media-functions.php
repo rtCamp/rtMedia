@@ -32,10 +32,6 @@ function bp_media_record_activity( $args = '' ) {
 }
 
 function bp_media_override_allowed_tags($activity_allowedtags) {
-	
-	$activity_allowedtags['h3']					=	array();
-	$activity_allowedtags['h3']['class']		=	array();
-	$activity_allowedtags['h3']['id']			=	array();
 	$activity_allowedtags['video']				=	array();
 	$activity_allowedtags['video']['id']		=	array();
 	$activity_allowedtags['video']['class']		=	array();
@@ -54,10 +50,12 @@ function bp_media_override_allowed_tags($activity_allowedtags) {
 	$activity_allowedtags['audio']['preload']	=	array();
 	$activity_allowedtags['audio']['alt']		=	array();
 	$activity_allowedtags['audio']['title']		=	array();
+	$activity_allowedtags['script']				=	array();
+	$activity_allowedtags['script']['type']		=	array();
 	return $activity_allowedtags;
 }
 
-function bp_media_show_formatted_message($messages,$type) {
+function bp_media_show_formatted_error_message($messages,$type) {
 	echo '<div id="message" class="'.$type.'">';
 	foreach($messages as $key=>$message) {
 		if(is_string($message)){
@@ -66,4 +64,17 @@ function bp_media_show_formatted_message($messages,$type) {
 	}
 	echo '</div>';
 }
+
+function bp_media_conditional_override_allowed_tags($content,$activity) {
+	if($activity->type='media_upload') {
+		add_filter('bp_activity_allowed_tags','bp_media_override_allowed_tags',1);
+	}
+	return bp_activity_filter_kses($content);
+}
+function bp_media_swap_filters(){
+	add_filter('bp_get_activity_content_body','bp_media_conditional_override_allowed_tags',1,2);
+	remove_filter( 'bp_get_activity_content_body' , 'bp_activity_filter_kses',1);
+}
+add_action('bp_init','bp_media_swap_filters');
+
 ?>

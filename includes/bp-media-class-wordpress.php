@@ -56,11 +56,20 @@ class BP_Media_Host_Wordpress implements BP_Media {
 		$activity_content	=	'<span class="bp_media_title">'.$name.'</span><span class="bp_media_description">'.$description.'</span><span class="bp_media_content">';
 		switch($type) {
 			case 'video/mp4'	:	$activity_content.='<video src="'.$url.'" width="640" height="480" type="video/mp4" id="bp_media_video_'.$post_id.'" controls="controls" preload="none"></video><script>jQuery("#bp_media_video_'.$post_id.'").mediaelementplayer();</script></span>';
-									$activity_url	=trailingslashit(bp_loggedin_user_domain().BP_MEDIA_VIDEOS_SLUG.'/'.$post_id);
+									$activity_url	=trailingslashit(bp_loggedin_user_domain().BP_MEDIA_VIDEOS_SLUG.'/watch/'.$post_id);
 									break;
-			case 'audio/mp3'	:	$activity_content.='<audio src="'.$url.'" type="audio/mp3" id="bp_media_audio_'.$post_id.'" controls="controls" ></audio><script>jQuery("#bp_media_audio_'.$post_id.'").mediaelementplayer();</script>';
-									$activity_url	=trailingslashit(bp_loggedin_user_domain().BP_MEDIA_AUDIO_SLUG.'/'.$post_id);
+			case 'audio/mpeg'	:	$activity_content.='<audio src="'.$url.'" type="audio/mp3" id="bp_media_audio_'.$post_id.'" controls="controls" preload="none" ></audio><script>jQuery("#bp_media_audio_'.$post_id.'").mediaelementplayer();</script>';
+									$activity_url	=trailingslashit(bp_loggedin_user_domain().BP_MEDIA_AUDIO_SLUG.'/listen/'.$post_id);
 									break;
+			case 'image/gif'	:
+			case 'image/jpeg'	:
+			case 'image/png'	:	$activity_content.='<img src="'.$url.'" id="bp_media_image_'.$post_id.'" />';
+									$activity_url	=trailingslashit(bp_loggedin_user_domain().BP_MEDIA_IMAGES_SLUG.'/view/'.$post_id);
+									break;
+			default				:	unlink($file);
+									wp_delete_post($post_id, true);
+									$activity_content=false;
+									return false;
 		}
 		$activity_content .= '</span>';
 		$attachment_id = wp_insert_attachment($attachment, $file, $post_id);	
