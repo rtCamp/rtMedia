@@ -39,13 +39,6 @@ class BP_Media_Host_Wordpress implements BP_Media {
 		$post_id=wp_insert_post($postarr);
 		
 		
-//		$id=media_handle_upload('bp_media_file', $post_id);
-//		if ( is_wp_error($id) ) {
-//			wp_delete_post($post_id, true);
-//			//return false;
-//		}
-		
-		
 		$file=wp_handle_upload($_FILES['bp_media_file']);
 		if ( isset($file['error']) || $file===null ){
 			wp_delete_post($post_id, true);
@@ -94,7 +87,6 @@ class BP_Media_Host_Wordpress implements BP_Media {
 			unlink($file);
 			return false;
 		}
-		$postarr['post_excerpt']= trailingslashit(bp_loggedin_user_domain().BP_MEDIA_IMAGES_SLUG.'/'.$post_id);
 		$postarr['ID'] = $post_id;
 		$postarr['post_mime_type']=$type;
 		$postarr['post_status']='published';
