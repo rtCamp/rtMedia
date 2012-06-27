@@ -65,18 +65,14 @@ function bp_media_get_permalink($id = 0) {
 		return false;
 	if (!$media->post_type == 'bp_media')
 		return false;
-	$attachment = get_post_meta($media->ID, 'bp_media_child_attachment', true);
-	$type = get_post_mime_type($attachment);
-	switch ($type) {
-		case 'video/mp4' :
+	switch (get_post_meta($media->ID, 'bp_media_type', true)) {
+		case 'video' :
 			return trailingslashit(bp_displayed_user_domain() . BP_MEDIA_VIDEOS_SLUG . '/watch/' . $media->ID);
 			break;
-		case 'audio/mpeg' :
+		case 'audio' :
 			return trailingslashit(bp_displayed_user_domain() . BP_MEDIA_AUDIO_SLUG . '/listen/' . $media->ID);
 			break;
-		case 'image/gif' :
-		case 'image/jpeg' :
-		case 'image/png' :
+		case 'image' :
 			return trailingslashit(bp_displayed_user_domain() . BP_MEDIA_IMAGES_SLUG . '/view/' . $media->ID);
 			break;
 		default :
@@ -86,5 +82,42 @@ function bp_media_get_permalink($id = 0) {
 
 function bp_media_the_permalink() {
 	echo apply_filters('bp_media_the_permalink', bp_media_get_permalink());
+}
+
+function bp_media_the_content($id = 0) {
+	if (is_object($id))
+		$media = $id;
+	else
+		$media = &get_post($id);
+	if (empty($media->ID))
+		return false;
+	if (!$media->post_type == 'bp_media')
+		return false;
+	if (!get_post_meta($media->ID, 'bp_media_hosting', true) == 'wordpress')
+		return false;
+	$attachment = get_post_meta($media->ID, 'bp_media_child_attachment', true);
+	switch (get_post_meta($media->ID, 'bp_media_type', true)) {
+		case 'video' :
+
+			break;
+		case 'audio' :
+
+			break;
+		case 'image' :
+			$medium_array = image_downsize($attachment, 'thumbnail');
+			$medium_path = $medium_array[0];
+			?>
+			<li>
+				<a href="<?php bp_media_the_permalink() ?>" title="<?php echo $media->post_content ?>">
+					<img src="<?php echo $medium_path ?>" />
+					<h3><?php echo $media->post_title ?></h3>
+				</a>
+			</li>
+
+			<?php
+			break;
+		default :
+			return false;
+	}
 }
 ?>

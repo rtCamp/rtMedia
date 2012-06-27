@@ -36,7 +36,8 @@ class BP_Media_Host_Wordpress implements BP_Media {
 			'post_status' => 'draft',
 			'post_type' => 'bp_media',
 			'post_content' => $description,
-			'post_title' => $name);
+			'post_title' => $name
+		);
 		$post_id = wp_insert_post($postarr);
 
 
@@ -92,7 +93,6 @@ class BP_Media_Host_Wordpress implements BP_Media {
 		}
 		$postarr['ID'] = $post_id;
 		$postarr['post_mime_type'] = $type;
-		echo $type;
 		$postarr['post_status'] = 'publish';
 		//$wpdb->update( $wpdb->posts, $postarr, array( 'ID' => $post_id ) );
 		wp_insert_post($postarr);
@@ -106,6 +106,7 @@ class BP_Media_Host_Wordpress implements BP_Media {
 		update_post_meta($post_id, 'bp_media_child_activity', $activity_id);
 		update_post_meta($post_id, 'bp_media_child_attachment', $attachment_id);
 		update_post_meta($post_id, 'bp_media_type', $type);
+		update_post_meta($post_id, 'bp_media_hosting', 'wordpress');
 		$this->id = $post_id;
 		$this->name = $name;
 		$this->description = $description;
