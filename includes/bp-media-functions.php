@@ -57,9 +57,15 @@ function bp_media_override_allowed_tags($activity_allowedtags) {
 
 function bp_media_show_formatted_error_message($messages, $type) {
 	echo '<div id="message" class="' . $type . '">';
-	foreach ($messages as $key => $message) {
-		if (is_string($message)) {
-			echo '<p>' . $message . '</p>';
+	if (is_array($messages)) {
+		foreach ($messages as $key => $message) {
+			if (is_string($message)) {
+				echo '<p>' . $message . '</p>';
+			}
+		}
+	} else {
+		if (is_string($messages)) {
+			echo '<p>' . $messages . '</p>';
 		}
 	}
 	echo '</div>';

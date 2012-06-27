@@ -72,7 +72,11 @@ function bp_media_set_query() {
 	$args = array(
 		'post_type' => 'bp_media',
 		'author' => $bp->displayed_user->id,
-		'post_mime_type' => 'image'
+		'meta_query' => array(
+			'key' => 'bp_media_type',
+			'value' => 'image',
+			'compare' => 'LIKE'
+		)
 	);
 	$bp_media_query = new WP_Query($args);
 }

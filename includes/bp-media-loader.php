@@ -300,7 +300,6 @@ function bp_media_custom_nav() {
 		$bp->action_variables[0] = $bp->current_action;
 		$bp->current_action = $bp->current_component;
 		$bp->current_component = BP_MEDIA_SLUG;
-		add_action('bp_init', 'bp_media_set_query');
 	}
 }
 
