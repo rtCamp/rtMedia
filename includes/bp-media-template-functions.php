@@ -91,6 +91,7 @@ function bp_media_the_content($id = 0) {
 		$media = &get_post($id);
 	if (empty($media->ID))
 		return false;
+	$m=new BP_Media_Host_Wordpress($media->ID);
 	if (!$media->post_type == 'bp_media')
 		return false;
 	if (!get_post_meta($media->ID, 'bp_media_hosting', true) == 'wordpress')

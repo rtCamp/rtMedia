@@ -83,7 +83,8 @@ class BP_Media_Component extends BP_Component {
 			'includes/bp-media-actions.php',
 			'includes/bp-media-interface.php',
 			'includes/bp-media-class-wordpress.php',
-			'includes/bp-media-test.php'
+			'includes/bp-media-test.php',
+			'includes/bp-media-shortcodes.php'
 		);
 		if (is_admin() || is_network_admin()) {
 			$includes[] = 'includes/lib/class-form-helper.php';

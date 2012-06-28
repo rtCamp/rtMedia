@@ -3,7 +3,7 @@
 /**
  * 
  */
-interface BP_Media {
+interface BP_Media_Host {
 
 	/**
 	 * Handles the uploads and creates a post.
