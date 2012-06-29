@@ -91,34 +91,10 @@ function bp_media_the_content($id = 0) {
 		$media = &get_post($id);
 	if (empty($media->ID))
 		return false;
-	$m=new BP_Media_Host_Wordpress($media->ID);
 	if (!$media->post_type == 'bp_media')
 		return false;
-	if (!get_post_meta($media->ID, 'bp_media_hosting', true) == 'wordpress')
-		return false;
-	$attachment = get_post_meta($media->ID, 'bp_media_child_attachment', true);
-	switch (get_post_meta($media->ID, 'bp_media_type', true)) {
-		case 'video' :
-
-			break;
-		case 'audio' :
-
-			break;
-		case 'image' :
-			$medium_array = image_downsize($attachment, 'thumbnail');
-			$medium_path = $medium_array[0];
-			?>
-			<li>
-				<a href="<?php bp_media_the_permalink() ?>" title="<?php echo $media->post_content ?>">
-					<img src="<?php echo $medium_path ?>" />
-					<h3><?php echo $media->post_title ?></h3>
-				</a>
-			</li>
-
-			<?php
-			break;
-		default :
-			return false;
-	}
+	$media=new BP_Media_Host_Wordpress($media->ID);
+	echo $media->get_media_gallery_content();
+	
 }
 ?>
