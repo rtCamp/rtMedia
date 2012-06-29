@@ -39,3 +39,7 @@
 .bp-media-gallery a{
 	display:block;
 }
+
+.bp-media-single .activity-list .activity-content,.bp-media-single div.activity-comments{
+	margin-left:0;
+}
