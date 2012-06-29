@@ -109,6 +109,7 @@ function bp_media_images_entry_screen_content() {
 		return false;
 	$image=new BP_Media_Host_Wordpress($bp->action_variables[1]);
 	echo $image->get_media_single_content();
+	echo $image->get_comment_form();
 }
 
 /**
