@@ -33,13 +33,13 @@ class BP_Media_Host_Wordpress implements BP_Media_Host {
 		$this->type = get_post_meta($media->ID, 'bp_media_type', true);
 		switch ($this->type) {
 			case 'video' :
-				$this->url = trailingslashit(bp_loggedin_user_domain() . BP_MEDIA_VIDEOS_SLUG . '/'.BP_MEDIA_VIDEOS_ENTRY_SLUG.'/' . $this->id);
+				$this->url = trailingslashit(bp_loggedin_user_domain() . BP_MEDIA_VIDEOS_SLUG . '/' . BP_MEDIA_VIDEOS_ENTRY_SLUG . '/' . $this->id);
 				break;
 			case 'audio' :
-				$this->url = trailingslashit(bp_loggedin_user_domain() . BP_MEDIA_AUDIO_SLUG . '/'.BP_MEDIA_AUDIO_ENTRY_SLUG.'/' . $this->id);
+				$this->url = trailingslashit(bp_loggedin_user_domain() . BP_MEDIA_AUDIO_SLUG . '/' . BP_MEDIA_AUDIO_ENTRY_SLUG . '/' . $this->id);
 				break;
 			case 'image' :
-				$this->url = trailingslashit(bp_loggedin_user_domain() . BP_MEDIA_IMAGES_SLUG . '/'.BP_MEDIA_IMAGES_ENTRY_SLUG.'/' . $this->id);
+				$this->url = trailingslashit(bp_loggedin_user_domain() . BP_MEDIA_IMAGES_SLUG . '/' . BP_MEDIA_IMAGES_ENTRY_SLUG . '/' . $this->id);
 				break;
 			default :
 				return false;
@@ -188,10 +188,10 @@ class BP_Media_Host_Wordpress implements BP_Media_Host {
 		$content = '<span class="bp_media_title">' . $this->name . '</span><span class="bp_media_description">' . $this->description . '</span><span class="bp_media_content">';
 		switch ($this->type) {
 			case 'video' :
-				$content.='<video src="' . wp_get_attachment_url($attachment_id) . '" width="'.$bp_media_default_sizes['single_video']['width'].'" height="'.($bp_media_default_sizes['single_video']['height']==0?'auto':$bp_media_default_sizes['single_video']['height']).'" type="video/mp4" id="bp_media_video_' . $this->id . '" controls="controls" preload="none"></video><script>jQuery("#bp_media_video_' . $this->id . '").mediaelementplayer();</script></span>';
+				$content.='<video src="' . wp_get_attachment_url($attachment_id) . '" width="' . $bp_media_default_sizes['single_video']['width'] . '" height="' . ($bp_media_default_sizes['single_video']['height'] == 0 ? 'auto' : $bp_media_default_sizes['single_video']['height']) . '" type="video/mp4" id="bp_media_video_' . $this->id . '" controls="controls" preload="none"></video><script>jQuery("#bp_media_video_' . $this->id . '").mediaelementplayer();</script></span>';
 				break;
 			case 'audio' :
-				$content.='<audio src="' . wp_get_attachment_url($attachment_id) . '" width="'.$bp_media_default_sizes['single_audio']['width'].'" type="audio/mp3" id="bp_media_audio_' . $this->id . '" controls="controls" preload="none" ></audio><script>jQuery("#bp_media_audio_' . $this->id . '").mediaelementplayer();</script>';
+				$content.='<audio src="' . wp_get_attachment_url($attachment_id) . '" width="' . $bp_media_default_sizes['single_audio']['width'] . '" type="audio/mp3" id="bp_media_audio_' . $this->id . '" controls="controls" preload="none" ></audio><script>jQuery("#bp_media_audio_' . $this->id . '").mediaelementplayer();</script>';
 				$type = 'audio';
 				break;
 			case 'image' :
@@ -213,7 +213,7 @@ class BP_Media_Host_Wordpress implements BP_Media_Host {
 				?>
 				<li>
 					<a href="<?php echo $this->url ?>" title="<?php echo $this->description ?>">
-						<img src="<?php echo plugins_url('css/video_thumb.jpg',__FILE__)  ?>" />
+						<img src="<?php echo plugins_url('css/video_thumb.jpg', __FILE__) ?>" />
 					</a>
 					<h3>
 						<a href="<?php echo $this->url ?>" title="<?php echo $this->description ?>"><?php echo $this->name ?></a>
@@ -225,7 +225,7 @@ class BP_Media_Host_Wordpress implements BP_Media_Host {
 				?>
 				<li>
 					<a href="<?php echo $this->url ?>" title="<?php echo $this->description ?>">
-						<img src="<?php echo plugins_url('css/audio_thumb.jpg',__FILE__)  ?>" />
+						<img src="<?php echo plugins_url('css/audio_thumb.jpg', __FILE__) ?>" />
 					</a>
 					<h3>
 						<a href="<?php echo $this->url ?>" title="<?php echo $this->description ?>"><?php echo $this->name ?></a>
@@ -250,6 +250,20 @@ class BP_Media_Host_Wordpress implements BP_Media_Host {
 			default :
 				return false;
 		}
+	}
+
+	function get_comment_form() {
+		$activity_id = get_post_meta($this->id, 'bp_media_child_activity', true);
+		bp_has_activities(array(
+			'display_comments' => 'stream',
+			'include' => $activity_id,
+			'max' => 1
+		));
+		
+	}
+	
+	function get_url() {
+		return $this->url;
 	}
 
 }
