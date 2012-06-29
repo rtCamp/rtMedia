@@ -68,17 +68,29 @@ add_action('bp_activity_before_action_delete_activity', 'bp_media_delete_activit
  */
 function bp_media_set_query() {
 	global $bp, $bp_media_query;
-
-	$args = array(
-		'post_type' => 'bp_media',
-		'author' => $bp->displayed_user->id,
-		'meta_query' => array(
-			'key' => 'bp_media_type',
-			'value' => 'image',
-			'compare' => 'LIKE'
-		)
-	);
-	$bp_media_query = new WP_Query($args);
+	switch($bp->current_action) {
+		case BP_MEDIA_IMAGES_SLUG:
+			$type='image';
+			break;
+		case BP_MEDIA_AUDIO_SLUG:
+			$type='audio';
+			break;
+		case BP_MEDIA_VIDEOS_SLUG:
+			$type='video';
+			break;
+		default :
+			$type=null;
+	}
+	if($type){
+		$args = array(
+			'post_type' => 'bp_media',
+			'author' => $bp->displayed_user->id,
+			'meta_key' => 'bp_media_type',
+			'meta_value' => $type,
+			'meta_compare' => 'LIKE'
+		);
+		$bp_media_query = new WP_Query($args);
+	}
 }
 
 ?>

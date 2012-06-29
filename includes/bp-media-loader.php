@@ -36,8 +36,38 @@ define('BP_MEDIA_AUDIO_LABEL_SINGULAR', __('Audio', 'bp-media'));
 define('BP_MEDIA_UPLOAD_LABEL', __('Upload', 'bp-media'));
 
 
-//Global variable to store the query
-$bp_media_query;
+/* Global variable to store the query */
+global $bp_media_query;
+
+/*Global variable for various display sizes*/
+global $bp_media_default_sizes;
+$bp_media_default_sizes = array(
+	'activity_image' => array(
+		'width' => 200,
+		'height' => 150
+	),
+	'activity_video' => array(
+		'width'	=>	320,
+		'height'=>	240
+	),
+	'activity_audio' => array(
+		'width'	=>	320,
+		'height'=>	0
+	),
+	'single_image' => array(
+		'width'	=>	800,
+		'height'=>	0
+	),
+	'single_video' => array(
+		'width'	=>	640,
+		'height'=>	480
+	),
+	'single_audio' => array(
+		'width'	=>	640,
+		'height'=>	0
+	),
+);
+
 
 //To set the language according to the locale selected and availability of the language file.
 if (file_exists(BP_MEDIA_PLUGIN_DIR . '/languages/' . get_locale() . '.mo'))
@@ -306,4 +336,12 @@ function bp_media_custom_nav() {
 
 //End bp_media_custom_nav()
 add_action('bp_setup_nav', 'bp_media_custom_nav', 999);
+
+function bp_media_thumbnail() {
+	global $bp_media_default_sizes;
+	add_image_size('bp_media_activity_image', $bp_media_default_sizes['activity_image']['width'], $bp_media_default_sizes['activity_image']['height'], true);
+	add_image_size('bp_media_single_image',$bp_media_default_sizes['single_image']['width'],$bp_media_default_sizes['single_image']['height'],true);
+}
+
+add_action('after_setup_theme', 'bp_media_thumbnail');
 ?>
