@@ -33,13 +33,13 @@ class BP_Media_Host_Wordpress implements BP_Media_Host {
 		$this->type = get_post_meta($media->ID, 'bp_media_type', true);
 		switch ($this->type) {
 			case 'video' :
-				$this->url = trailingslashit(bp_loggedin_user_domain() . BP_MEDIA_VIDEOS_SLUG . '/' . BP_MEDIA_VIDEOS_ENTRY_SLUG . '/' . $this->id);
+				$this->url = trailingslashit(bp_core_get_user_domain($this->owner) . BP_MEDIA_VIDEOS_SLUG . '/' . BP_MEDIA_VIDEOS_ENTRY_SLUG . '/' . $this->id);
 				break;
 			case 'audio' :
-				$this->url = trailingslashit(bp_loggedin_user_domain() . BP_MEDIA_AUDIO_SLUG . '/' . BP_MEDIA_AUDIO_ENTRY_SLUG . '/' . $this->id);
+				$this->url = trailingslashit(bp_core_get_user_domain($this->owner) . BP_MEDIA_AUDIO_SLUG . '/' . BP_MEDIA_AUDIO_ENTRY_SLUG . '/' . $this->id);
 				break;
 			case 'image' :
-				$this->url = trailingslashit(bp_loggedin_user_domain() . BP_MEDIA_IMAGES_SLUG . '/' . BP_MEDIA_IMAGES_ENTRY_SLUG . '/' . $this->id);
+				$this->url = trailingslashit(bp_core_get_user_domain($this->owner) . BP_MEDIA_IMAGES_SLUG . '/' . BP_MEDIA_IMAGES_ENTRY_SLUG . '/' . $this->id);
 				break;
 			default :
 				return false;

@@ -196,8 +196,11 @@ function bp_media_videos_entry_screen_content() {
 	global $bp;
 	if(!$bp->action_variables[0]==BP_MEDIA_IMAGES_ENTRY_SLUG)
 		return false;
-	$image=new BP_Media_Host_Wordpress($bp->action_variables[1]);
-	echo $image->get_media_single_content();
+	$video=new BP_Media_Host_Wordpress($bp->action_variables[1]);
+	echo '<div class="bp-media-single bp-media-video">';
+	echo $video->get_media_single_content();
+	echo $video->show_comment_form();
+	echo '</div>';
 }
 
 /**
