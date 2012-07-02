@@ -20,7 +20,7 @@ function bp_media_show_upload_form() {
  * 
  */
 function bp_media_show_pagination() {
-	global $bp;
+	global $bp,$bp_media_paginated_links,$bp_media_query;
 	switch ($bp->current_action) {
 		case BP_MEDIA_IMAGES_SLUG :
 			$current = BP_MEDIA_IMAGES_LABEL;
@@ -38,18 +38,28 @@ function bp_media_show_pagination() {
 			$current = BP_MEDIA_LABEL;
 			$current_single = BP_MEDIA_LABEL_SINGULAR;
 	}
-	?>
-	<div id="pag-top" class="pagination">
+	$args = array(
+		'base' => trailingslashit(bp_displayed_user_domain() . $bp->current_action . '/').'%_%',
+		'format' => 'page/%#%',
+		'total' => $bp_media_query->max_num_pages,
+		'current' => $bp_media_query->query_vars['paged'],
+		'type'	=>	'array',
+	);
+	$start_num = intval($bp_media_query->query_vars['posts_per_page']*($bp_media_query->query_vars['paged']-1)) + 1;
+	$from_num  =  $start_num ;
+	$to_num    = $start_num + $bp_media_query->post_count - 1;
+	$total     = $bp_media_query->found_posts;
+	$bp_media_paginated_links=paginate_links($args);
+		?>
+	<div id="pag-top" class="pagination no-ajax">
 
 		<div class="pag-count" id="group-dir-count-top">
-			Viewing <?php echo $current_single ?> 1 to 20 (of 72 <?php echo $current ?>)
+			Viewing <?php echo $current_single ?> <?php echo $from_num ?> to <?php echo $to_num ?> (of <?php echo $total; ?> <?php echo $current ?>)
 		</div>
 		<div class="pagination-links" id="group-dir-pag-top">
-			<span class="page-numbers current">1</span>
-			<a class="page-numbers" href="#">2</a>
-			<span class="page-numbers dots">…</span>
-			<a class="page-numbers" href="#">4</a>
-			<a class="next page-numbers" href="#">→</a>
+			<?php foreach($bp_media_paginated_links as $link) :?>
+			<?php echo $link; ?>
+			<?php endforeach; ?>
 		</div>
 
 	</div>
