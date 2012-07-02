@@ -39,6 +39,11 @@ define('BP_MEDIA_UPLOAD_LABEL', __('Upload', 'bp-media'));
 /* Global variable to store the query */
 global $bp_media_query;
 
+/* Global variable for making distinct ids for different media objects in activity stream */
+global $bp_media_counter;
+$bp_media_counter=0;
+
+
 /* Global variable for various display sizes */
 global $bp_media_default_sizes;
 $bp_media_default_sizes = array(
@@ -59,8 +64,8 @@ $bp_media_default_sizes = array(
 		'height' => 0
 	),
 	'single_video' => array(
-		'width' => 640,
-		'height' => 480
+		'width' => '640',
+		'height' => '480'
 	),
 	'single_audio' => array(
 		'width' => 640,
