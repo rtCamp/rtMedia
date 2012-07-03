@@ -23,11 +23,11 @@ function bp_media_show_pagination() {
 	global $bp,$bp_media_paginated_links,$bp_media_query;
 	switch ($bp->current_action) {
 		case BP_MEDIA_IMAGES_SLUG :
-			$current = BP_MEDIA_IMAGES_LABEL;
+			$current = $bp_media_query->found_posts>1?BP_MEDIA_IMAGES_LABEL:BP_MEDIA_IMAGES_LABEL_SINGULAR;
 			$current_single = BP_MEDIA_IMAGES_LABEL_SINGULAR;
 			break;
 		case BP_MEDIA_VIDEOS_SLUG :
-			$current = BP_MEDIA_VIDEOS_LABEL;
+			$current = $bp_media_query->found_posts>1?BP_MEDIA_VIDEOS_LABEL:BP_MEDIA_VIDEOS_LABEL_SINGULAR;
 			$current_single = BP_MEDIA_VIDEOS_LABEL_SINGULAR;
 			break;
 		case BP_MEDIA_AUDIO_SLUG :
@@ -44,6 +44,8 @@ function bp_media_show_pagination() {
 		'total' => $bp_media_query->max_num_pages,
 		'current' => $bp_media_query->query_vars['paged'],
 		'type'	=>	'array',
+		'prev_text'	=>	'&larr;',
+		'next_text'	=>	'&rarr;',
 	);
 	$start_num = intval($bp_media_query->query_vars['posts_per_page']*($bp_media_query->query_vars['paged']-1)) + 1;
 	$from_num  =  $start_num ;

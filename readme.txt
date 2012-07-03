@@ -1,0 +1,1 @@
+Just activate the plugin and it will handle everything.

@@ -1,0 +1,12 @@
+/* 
+    Document   : bp-media-admin
+    Created on : Jul 3, 2012, 11:39:03 AM
+    Author     : rtCamp
+    Description:
+        Purpose of the stylesheet follows.
+*/
+#wpbody-content .metabox-fixed{
+	margin:0 10px 0 0;
+	width:22%;
+	clear:both;
+}
