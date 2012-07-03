@@ -263,7 +263,7 @@ class BP_Media_Host_Wordpress implements BP_Media_Host {
 			while (bp_activities()) : bp_the_activity();
 				do_action('bp_before_activity_entry');
 				?>
-				<div class="activity">
+				<div>
 					<ul id="activity-stream" class="activity-list item-list">
 						<li class="activity activity_update" id="activity-<?php echo $activity_id; ?>">
 							<div class="activity-content">
@@ -272,7 +272,7 @@ class BP_Media_Host_Wordpress implements BP_Media_Host {
 
 								<?php if (is_user_logged_in()) : ?>
 
-									<div class="activity-meta">
+									<div class="activity-meta no-ajax">
 
 										<?php if (bp_activity_can_comment()) : ?>
 

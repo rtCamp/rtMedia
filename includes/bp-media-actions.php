@@ -53,6 +53,9 @@ function bp_media_enqueue_scripts_styles() {
 
 add_action('wp_enqueue_scripts', 'bp_media_enqueue_scripts_styles', 11);
 
+/**
+ * Deletes associated media entry and its files upon deletion of an activity.
+ */
 function bp_media_delete_activity_handler($activity_id, $user) {
 
 	$post_id = bp_activity_get_meta($activity_id, 'bp_media_parent_post');
@@ -61,10 +64,12 @@ function bp_media_delete_activity_handler($activity_id, $user) {
 	wp_delete_post($post_id, true);
 }
 
+/* Adds bp_media_delete_activity_handler() function to be called on bp_activity_before_action_delete_activity hook */
 add_action('bp_activity_before_action_delete_activity', 'bp_media_delete_activity_handler', 10, 2);
 
 /**
  * Called on bp_init by screen functions
+ * @uses global $bp, $bp_media_query
  */
 function bp_media_set_query() {
 	global $bp, $bp_media_query;
@@ -97,7 +102,15 @@ function bp_media_set_query() {
 		);
 		$bp_media_query = new WP_Query($args);
 	}
-		
 }
 
+/**
+ * Adds a download button on single entry pages of media files.
+ */
+function bp_media_action_download_button() {
+	echo '<a href="download" class="button item-button bp-secondary-action bp-media-download" title="Download">Download</a>';
+}
+
+/* Adds bp_media_action_download_button() function to be called on bp_activity_entry_meta hook */
+add_action('bp_activity_entry_meta', 'bp_media_action_download_button');
 ?>

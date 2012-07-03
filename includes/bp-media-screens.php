@@ -39,7 +39,6 @@ function bp_media_images_screen() {
 				break;
 			case BP_MEDIA_IMAGES_ENTRY_SLUG:
 				global $bp_media_current_entry;
-				//add_action('bp_template_title', 'bp_media_images_entry_screen_title');
 				if (!$bp->action_variables[0] == BP_MEDIA_IMAGES_ENTRY_SLUG)
 					return false;
 				try {
@@ -116,20 +115,13 @@ function bp_media_images_entry_screen_title() {
 }
 
 function bp_media_images_entry_screen_content() {
-	global $bp;
+	global $bp,$bp_media_current_entry;
 
 	if (!$bp->action_variables[0] == BP_MEDIA_IMAGES_ENTRY_SLUG)
 		return false;
-	try {
-		$image = new BP_Media_Host_Wordpress($bp->action_variables[1]);
-	} catch (Exception $e) {
-		bp_media_show_formatted_error_message($e->getMessage());
-		$image = null;
-		return false;
-	}
 	echo '<div class="bp-media-single bp-media-image">';
-	echo $image->get_media_single_content();
-	echo $image->show_comment_form();
+	echo $bp_media_current_entry->get_media_single_content();
+	echo $bp_media_current_entry->show_comment_form();
 	echo '</div>';
 }
 
@@ -145,7 +137,18 @@ function bp_media_videos_screen() {
 				add_action('bp_template_content', 'bp_media_videos_edit_screen_content');
 				break;
 			case BP_MEDIA_VIDEOS_ENTRY_SLUG:
-				//add_action('bp_template_title', 'bp_media_videos_entry_screen_title');
+				global $bp_media_current_entry;
+				if (!$bp->action_variables[0] == BP_MEDIA_IMAGES_ENTRY_SLUG)
+					return false;
+				try {
+					$bp_media_current_entry = new BP_Media_Host_Wordpress($bp->action_variables[1]);
+				} catch (Exception $e) {
+					// Send the values to the cookie for page reload display
+					@setcookie('bp-message', $_COOKIE['bp-message'], time() + 60 * 60 * 24, COOKIEPATH);
+					@setcookie('bp-message-type', $_COOKIE['bp-message-type'], time() + 60 * 60 * 24, COOKIEPATH);
+					wp_redirect(trailingslashit(bp_displayed_user_domain() . BP_MEDIA_VIDEOS_SLUG));
+					exit;
+				}
 				add_action('bp_template_content', 'bp_media_videos_entry_screen_content');
 				break;
 			default:
@@ -212,13 +215,12 @@ function bp_media_videos_entry_screen_title() {
 }
 
 function bp_media_videos_entry_screen_content() {
-	global $bp;
-	if (!$bp->action_variables[0] == BP_MEDIA_IMAGES_ENTRY_SLUG)
+	global $bp,$bp_media_current_entry;
+	if (!$bp->action_variables[0] == BP_MEDIA_VIDEOS_ENTRY_SLUG)
 		return false;
-	$video = new BP_Media_Host_Wordpress($bp->action_variables[1]);
 	echo '<div class="bp-media-single bp-media-video">';
-	echo $video->get_media_single_content();
-	echo $video->show_comment_form();
+	echo $bp_media_current_entry->get_media_single_content();
+	echo $bp_media_current_entry->show_comment_form();
 	echo '</div>';
 }
 
@@ -234,7 +236,18 @@ function bp_media_audio_screen() {
 				add_action('bp_template_content', 'bp_media_audio_edit_screen_content');
 				break;
 			case BP_MEDIA_AUDIO_ENTRY_SLUG:
-				//add_action('bp_template_title', 'bp_media_audio_entry_screen_title');
+				global $bp_media_current_entry;
+				if (!$bp->action_variables[0] == BP_MEDIA_IMAGES_ENTRY_SLUG)
+					return false;
+				try {
+					$bp_media_current_entry = new BP_Media_Host_Wordpress($bp->action_variables[1]);
+				} catch (Exception $e) {
+					// Send the values to the cookie for page reload display
+					@setcookie('bp-message', $_COOKIE['bp-message'], time() + 60 * 60 * 24, COOKIEPATH);
+					@setcookie('bp-message-type', $_COOKIE['bp-message-type'], time() + 60 * 60 * 24, COOKIEPATH);
+					wp_redirect(trailingslashit(bp_displayed_user_domain() . BP_MEDIA_AUDIO_SLUG));
+					exit;
+				}
 				add_action('bp_template_content', 'bp_media_audio_entry_screen_content');
 				break;
 			default:
@@ -301,13 +314,12 @@ function bp_media_audio_entry_screen_title() {
 }
 
 function bp_media_audio_entry_screen_content() {
-	global $bp;
-	if (!$bp->action_variables[0] == BP_MEDIA_IMAGES_ENTRY_SLUG)
+	global $bp,$bp_media_current_entry;
+	if (!$bp->action_variables[0] == BP_MEDIA_AUDIO_ENTRY_SLUG)
 		return false;
-	$audio = new BP_Media_Host_Wordpress($bp->action_variables[1]);
 	echo '<div class="bp-media-single bp-media-audio">';
-	echo $audio->get_media_single_content();
-	echo $audio->show_comment_form();
+	echo $bp_media_current_entry->get_media_single_content();
+	echo $bp_media_current_entry->show_comment_form();
 	echo '</div>';
 }
 
