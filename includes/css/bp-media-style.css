@@ -13,13 +13,16 @@
 .bp_media_description {
 	display:block;
 }
-
-.bp-media-gallery li{
+ul.bp-media-gallery{
+	overflow:hidden;
+}
+ul.bp-media-gallery li{
 	float:left;
 	margin:1%;
 	width:18%;
+	border-bottom:none;
 }
-.bp-media-gallery li img{
+ul.bp-media-gallery li img{
 	max-width:150px;
 	width:100%;
 	height:auto;
@@ -28,7 +31,7 @@
 	box-shadow: 1px 1px 10px #CCC;
 }
 
-.bp-media-gallery h3{
+ul.bp-media-gallery h3{
 	max-width:150px;
 	overflow: hidden;
 	text-align: center;
@@ -36,7 +39,7 @@
 	overflow: hidden;
     white-space: nowrap;
 }
-.bp-media-gallery a{
+ul.bp-media-gallery a{
 	display:block;
 }
 

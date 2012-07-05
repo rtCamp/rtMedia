@@ -308,34 +308,34 @@ if (!class_exists('RTL_Form_Field')) {
 		private function show_title_text() {
 			?>
 			<th scope="row">
-			<?php echo $this->label ?>
+				<?php echo $this->label ?>
 			</th>
-				<?php
-			}
+			<?php
+		}
 
-			/**
-			 * Internal function to output the content of the Form Element depending upon the type of element
-			 */
-			private function show_content() {
-				echo '<td>';
-				//Types are text, textarea, color, date, datetime, datetime-local, email, month, number, range, search, tel, time, url, week, number
-				switch ($this->type) {
-					case 'file' :
-					case 'password' :
-					case 'hidden' :
-					case 'text' : $this->show_content_generic();
-						break;
-					case 'textarea' : $this->show_content_textarea();
-						break;
-					case 'radio' : $this->show_content_radio();
-						break;
-					case 'checkbox' : $this->show_content_checkbox();
-						break;
-					case 'select' : $this->show_content_select_list();
-						break;
-				}
-				if ($this->description != '') {
-					?>
+		/**
+		 * Internal function to output the content of the Form Element depending upon the type of element
+		 */
+		private function show_content() {
+			echo '<td>';
+			//Types are text, textarea, color, date, datetime, datetime-local, email, month, number, range, search, tel, time, url, week, number
+			switch ($this->type) {
+				case 'file' :
+				case 'password' :
+				case 'hidden' :
+				case 'text' : $this->show_content_generic();
+					break;
+				case 'textarea' : $this->show_content_textarea();
+					break;
+				case 'radio' : $this->show_content_radio();
+					break;
+				case 'checkbox' : $this->show_content_checkbox();
+					break;
+				case 'select' : $this->show_content_select_list();
+					break;
+			}
+			if ($this->description != '') {
+				?>
 				<span class="description">
 					<label for="<?php echo $this->id; ?>"><?php echo $this->description; ?></label>
 				</span>
@@ -380,61 +380,61 @@ if (!class_exists('RTL_Form_Field')) {
 					<span><?php echo $this->label ?></span>
 				</legend>
 				<p>
-			<?php
-			$flag = true;
-			foreach ($this->options as $option) {
-				if ($flag) {
-					$flag = false;
-				} else {
-					echo '<br/>';
-				}
-				?>
+					<?php
+					$flag = true;
+					foreach ($this->options as $option) {
+						if ($flag) {
+							$flag = false;
+						} else {
+							echo '<br/>';
+						}
+						?>
 						<label><input name="<?php echo $this->name ?>" type="radio" value="<?php echo $option['value'] ?>" <?php echo (isset($option['checked']) && $option['checked'] == true) ? 'checked="checked"' : ''; ?> /> <?php echo $option['label'] ?></label>
-						<?php }
+					<?php }
 					?>
 				</p>
 			</fieldset>
-					<?php
-				}
-
-				/**
-				 * Output the content of Select type form field
-				 */
-				private function show_content_select_list() {
-					//todo Implement select list
-					?>
-			<select name="<?php echo $this->name ?>" id="<?php echo $this->id ?>" class="postform <?php echo $this->class ?>">
 			<?php
-			foreach ($this->options as $option) {
-				?>
+		}
+
+		/**
+		 * Output the content of Select type form field
+		 */
+		private function show_content_select_list() {
+			//todo Implement select list
+			?>
+			<select name="<?php echo $this->name ?>" id="<?php echo $this->id ?>" class="postform <?php echo $this->class ?>">
+				<?php
+				foreach ($this->options as $option) {
+					?>
 					<option value="<?php echo $option['value'] ?>" <?php echo (isset($option['selected']) && $option['selected'] == true) ? 'selected="selected"' : ''; ?>><?php echo $option['label'] ?></option>
 					<?php
 				}
 				?>
 			</select>
-				<?php
-			}
+			<?php
+		}
 
-			/**
-			 * Output the content of checkbox type form field
-			 */
-			private function show_content_checkbox() {
-				?>
+		/**
+		 * Output the content of checkbox type form field
+		 */
+		private function show_content_checkbox() {
+			?>
 			<fieldset>
 				<legend class="screen-reader-text">
 					<span><?php echo $this->label ?></span>
 				</legend>
 				<p>
-			<?php
-			if (count($this->options) > 1) {
-				$flag = true;
-				foreach ($this->options as $option) {
-					if ($flag) {
-						$flag = false;
-					} else {
-						echo '<br/>';
-					}
-					?>
+					<?php
+					if (count($this->options) > 1) {
+						$flag = true;
+						foreach ($this->options as $option) {
+							if ($flag) {
+								$flag = false;
+							} else {
+								echo '<br/>';
+							}
+							?>
 							<label><input name="<?php echo $this->name ?>" type="checkbox" value="<?php echo $option['value'] ?>" <?php echo (isset($option['checked']) && $option['checked'] == true) ? 'checked="checked"' : ''; ?> /> <?php echo $option['label'] ?></label>
 							<?php
 						}
@@ -447,44 +447,44 @@ if (!class_exists('RTL_Form_Field')) {
 					?>
 				</p>
 			</fieldset>
-					<?php
-				}
-
-				/**
-				 * Output the content of custom type form field
-				 */
-				private function show_custom() {
-					
-				}
-
-				public function __destruct() {
-					//todo Functionality of RTL Form Element Destructor
-				}
-
-			}
-
+			<?php
 		}
 
-		if (!class_exists('RTL_Exception')) {
-
-			Class RTL_Exception Extends Exception {
-
-				public function __construct($message, $code = 0, Exception $previous = null) {
-					parent::__construct($message, $code, $previous);
-				}
-
-				public function __toString() {
-					return __CLASS__ . ": [{$this->code}]: {$this->message} " . ' in ' . parent::getFile() . " on line " . parent::getLine() . "\n";
-				}
-
-			}
-
-		}
-
-		/*
-		 * Exceptions listing:
-		 * 10	Label not set while creating an RTL Form Element
-		 * 11	Name not set while creating an RTL Form Element
-		 * 12	Field is not an RTL Form Field
+		/**
+		 * Output the content of custom type form field
 		 */
-		?>
+		private function show_custom() {
+			
+		}
+
+		public function __destruct() {
+			//todo Functionality of RTL Form Element Destructor
+		}
+
+	}
+
+}
+
+if (!class_exists('RTL_Exception')) {
+
+	Class RTL_Exception Extends Exception {
+
+		public function __construct($message, $code = 0, Exception $previous = null) {
+			parent::__construct($message, $code, $previous);
+		}
+
+		public function __toString() {
+			return __CLASS__ . ": [{$this->code}]: {$this->message} " . ' in ' . parent::getFile() . " on line " . parent::getLine() . "\n";
+		}
+
+	}
+
+}
+
+/*
+ * Exceptions listing:
+ * 10	Label not set while creating an RTL Form Element
+ * 11	Name not set while creating an RTL Form Element
+ * 12	Field is not an RTL Form Field
+ */
+?>

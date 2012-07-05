@@ -19,15 +19,15 @@ function bp_media_show_upload_form() {
 /**
  * 
  */
-function bp_media_show_pagination() {
-	global $bp,$bp_media_paginated_links,$bp_media_query;
+function bp_media_show_pagination($type = 'top') {
+	global $bp, $bp_media_paginated_links, $bp_media_query;
 	switch ($bp->current_action) {
 		case BP_MEDIA_IMAGES_SLUG :
-			$current = $bp_media_query->found_posts>1?BP_MEDIA_IMAGES_LABEL:BP_MEDIA_IMAGES_LABEL_SINGULAR;
+			$current = $bp_media_query->found_posts > 1 ? BP_MEDIA_IMAGES_LABEL : BP_MEDIA_IMAGES_LABEL_SINGULAR;
 			$current_single = BP_MEDIA_IMAGES_LABEL_SINGULAR;
 			break;
 		case BP_MEDIA_VIDEOS_SLUG :
-			$current = $bp_media_query->found_posts>1?BP_MEDIA_VIDEOS_LABEL:BP_MEDIA_VIDEOS_LABEL_SINGULAR;
+			$current = $bp_media_query->found_posts > 1 ? BP_MEDIA_VIDEOS_LABEL : BP_MEDIA_VIDEOS_LABEL_SINGULAR;
 			$current_single = BP_MEDIA_VIDEOS_LABEL_SINGULAR;
 			break;
 		case BP_MEDIA_AUDIO_SLUG :
@@ -39,28 +39,28 @@ function bp_media_show_pagination() {
 			$current_single = BP_MEDIA_LABEL_SINGULAR;
 	}
 	$args = array(
-		'base' => trailingslashit(bp_displayed_user_domain() . $bp->current_action . '/').'%_%',
+		'base' => trailingslashit(bp_displayed_user_domain() . $bp->current_action . '/') . '%_%',
 		'format' => 'page/%#%',
 		'total' => $bp_media_query->max_num_pages,
 		'current' => $bp_media_query->query_vars['paged'],
-		'type'	=>	'array',
-		'prev_text'	=>	'&larr;',
-		'next_text'	=>	'&rarr;',
+		'type' => 'array',
+		'prev_text' => '&larr;',
+		'next_text' => '&rarr;',
 	);
-	$start_num = intval($bp_media_query->query_vars['posts_per_page']*($bp_media_query->query_vars['paged']-1)) + 1;
-	$from_num  =  $start_num ;
-	$to_num    = $start_num + $bp_media_query->post_count - 1;
-	$total     = $bp_media_query->found_posts;
-	$bp_media_paginated_links=paginate_links($args);
-		?>
-	<div id="pag-top" class="pagination no-ajax">
+	$start_num = intval($bp_media_query->query_vars['posts_per_page'] * ($bp_media_query->query_vars['paged'] - 1)) + 1;
+	$from_num = $start_num;
+	$to_num = $start_num + $bp_media_query->post_count - 1;
+	$total = $bp_media_query->found_posts;
+	$bp_media_paginated_links = paginate_links($args);
+	?>
+	<div id="pag-<?php echo $type; ?>" class="pagination no-ajax">
 
-		<div class="pag-count" id="group-dir-count-top">
+		<div class="pag-count">
 			Viewing <?php echo $current_single ?> <?php echo $from_num ?> to <?php echo $to_num ?> (of <?php echo $total; ?> <?php echo $current ?>)
 		</div>
-		<div class="pagination-links" id="group-dir-pag-top">
-			<?php foreach($bp_media_paginated_links as $link) :?>
-			<?php echo $link; ?>
+		<div class="pagination-links">
+			<?php foreach ($bp_media_paginated_links as $link) : ?>
+				<?php echo $link; ?>
 			<?php endforeach; ?>
 		</div>
 
@@ -105,8 +105,7 @@ function bp_media_the_content($id = 0) {
 		return false;
 	if (!$media->post_type == 'bp_media')
 		return false;
-	$media=new BP_Media_Host_Wordpress($media->ID);
+	$media = new BP_Media_Host_Wordpress($media->ID);
 	echo $media->get_media_gallery_content();
-	
 }
 ?>
