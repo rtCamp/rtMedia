@@ -73,11 +73,14 @@ function bp_media_images_screen_content() {
 	global $bp_media_query;
 	if ($bp_media_query && $bp_media_query->have_posts()):
 		bp_media_show_pagination();
-		echo '<ul class="bp-media-gallery">';
+		do_action('bp_media_before_content');
+		echo '<ul id="groups-list" class="bp-media-gallery item-list">';
 		while ($bp_media_query->have_posts()) : $bp_media_query->the_post();
 			bp_media_the_content();
 		endwhile;
 		echo '</ul>';
+		do_action('bp_media_after_content');
+		bp_media_show_pagination('bottom');
 	else:
 		bp_media_show_formatted_error_message(__('Sorry, no images were found.', 'bp-media'), 'info');
 	endif;
@@ -119,10 +122,12 @@ function bp_media_images_entry_screen_content() {
 
 	if (!$bp->action_variables[0] == BP_MEDIA_IMAGES_ENTRY_SLUG)
 		return false;
+	do_action('bp_media_before_content');
 	echo '<div class="bp-media-single bp-media-image">';
 	echo $bp_media_current_entry->get_media_single_content();
 	echo $bp_media_current_entry->show_comment_form();
 	echo '</div>';
+	do_action('bp_media_after_content');
 }
 
 /**
@@ -173,11 +178,14 @@ function bp_media_videos_screen_content() {
 	if ($bp_media_query && $bp_media_query->have_posts()):
 		//_e('Images List Content');
 		bp_media_show_pagination();
+		do_action('bp_media_before_content');
 		echo '<ul class="bp-media-gallery">';
 		while ($bp_media_query->have_posts()) : $bp_media_query->the_post();
 			bp_media_the_content();
 		endwhile;
 		echo '</ul>';
+		do_action('bp_media_after_content');
+		bp_media_show_pagination('bottom');
 	else:
 		bp_media_show_formatted_error_message(__('Sorry, no videos were found.', 'bp-media'), 'info');
 	endif;
@@ -218,10 +226,12 @@ function bp_media_videos_entry_screen_content() {
 	global $bp,$bp_media_current_entry;
 	if (!$bp->action_variables[0] == BP_MEDIA_VIDEOS_ENTRY_SLUG)
 		return false;
+	do_action('bp_media_before_content');
 	echo '<div class="bp-media-single bp-media-video">';
 	echo $bp_media_current_entry->get_media_single_content();
 	echo $bp_media_current_entry->show_comment_form();
 	echo '</div>';
+	do_action('bp_media_after_content');
 }
 
 /**
@@ -272,11 +282,14 @@ function bp_media_audio_screen_content() {
 	if ($bp_media_query && $bp_media_query->have_posts()):
 		//_e('Images List Content');
 		bp_media_show_pagination();
+		do_action('bp_media_before_content');
 		echo '<ul class="bp-media-gallery">';
 		while ($bp_media_query->have_posts()) : $bp_media_query->the_post();
 			bp_media_the_content();
 		endwhile;
 		echo '</ul>';
+		do_action('bp_media_after_content');
+		bp_media_show_pagination('bottom');
 	else:
 		bp_media_show_formatted_error_message(__('Sorry, no audio files were found.', 'bp-media'), 'info');
 	endif;
@@ -317,10 +330,12 @@ function bp_media_audio_entry_screen_content() {
 	global $bp,$bp_media_current_entry;
 	if (!$bp->action_variables[0] == BP_MEDIA_AUDIO_ENTRY_SLUG)
 		return false;
+	do_action('bp_media_before_content');
 	echo '<div class="bp-media-single bp-media-audio">';
 	echo $bp_media_current_entry->get_media_single_content();
 	echo $bp_media_current_entry->show_comment_form();
 	echo '</div>';
+	do_action('bp_media_after_content');
 }
 
 ?>

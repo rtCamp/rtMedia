@@ -48,8 +48,8 @@ $bp_media_counter=0;
 global $bp_media_default_sizes;
 $bp_media_default_sizes = array(
 	'activity_image' => array(
-		'width' => 200,
-		'height' => 150
+		'width' => 320,
+		'height' => 240
 	),
 	'activity_video' => array(
 		'width' => 320,
@@ -57,19 +57,17 @@ $bp_media_default_sizes = array(
 	),
 	'activity_audio' => array(
 		'width' => 320,
-		'height' => 0
 	),
 	'single_image' => array(
-		'width' => 800,
+		'width' => 640,
 		'height' => 0
 	),
 	'single_video' => array(
-		'width' => '640',
-		'height' => '480'
+		'width' => 640,
+		'height' => 480
 	),
 	'single_audio' => array(
 		'width' => 640,
-		'height' => 0
 	),
 );
 

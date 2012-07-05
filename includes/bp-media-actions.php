@@ -13,12 +13,14 @@ function bp_media_handle_uploads() {
 			//bp_core_add_message( __( 'No self-fives! :)', 'bp-example' ), 'error' );
 			//include(admin_url('file.php'));
 			$bp_media_entry = new BP_Media_Host_Wordpress();
-
-			$entry = $bp_media_entry->add_media($_POST['bp_media_title'], $_POST['bp_media_description']);
-			if ($entry === false)
-				$bp->{BP_MEDIA_SLUG}->messages['error'][] = __('Media Upload failed, supported filetypes are .jpg, .png, .gif, .mp3 and .mp4', 'bp-media');
-			else
+			try{
+				$entry = $bp_media_entry->add_media($_POST['bp_media_title'], $_POST['bp_media_description']);
 				$bp->{BP_MEDIA_SLUG}->messages['updated'][] = __('Upload Successful', 'bp-media');
+			}catch(Exception $e){
+				$bp->{BP_MEDIA_SLUG}->messages['error'][] = $e->getMessage();
+			}
+				
+				
 		}
 		else {
 			$bp->{BP_MEDIA_SLUG}->messages['error'][] = __('You did not specified a file to upload', 'bp-media');
@@ -45,9 +47,9 @@ function bp_media_show_messages() {
 add_action('bp_media_before_content', 'bp_media_show_messages');
 
 function bp_media_enqueue_scripts_styles() {
-	wp_enqueue_script('bp-media-mejs', plugins_url('includes/js/mediaelement-and-player.min.js', dirname(__FILE__)));
+	wp_enqueue_script('bp-media-mejs', plugins_url('includes/media-element/mediaelement-and-player.min.js', dirname(__FILE__)));
 	wp_enqueue_script('bp-media-default', plugins_url('includes/js/bp-media.js', dirname(__FILE__)));
-	wp_enqueue_style('bp-media-mecss', plugins_url('includes/css/mediaelementplayer.min.css', dirname(__FILE__)));
+	wp_enqueue_style('bp-media-mecss', plugins_url('includes/media-element/mediaelementplayer.min.css', dirname(__FILE__)));
 	wp_enqueue_style('bp-media-default', plugins_url('includes/css/bp-media-style.css', dirname(__FILE__)));
 }
 
@@ -112,5 +114,5 @@ function bp_media_action_download_button() {
 }
 
 /* Adds bp_media_action_download_button() function to be called on bp_activity_entry_meta hook */
-add_action('bp_activity_entry_meta', 'bp_media_action_download_button');
+//add_action('bp_activity_entry_meta', 'bp_media_action_download_button'); //Removed the button since it will open the jpg image instead of giving a save as like option
 ?>
