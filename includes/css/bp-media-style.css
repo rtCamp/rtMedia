@@ -36,11 +36,10 @@ ul.bp-media-gallery h3{
 	overflow: hidden;
 	text-align: center;
 	font-size:110%;
-	overflow: hidden;
     white-space: nowrap;
 }
 ul.bp-media-gallery a{
-	display:block;
+	width:150px;
 }
 
 .bp-media-single .activity-list .activity-content,.bp-media-single div.activity-comments{

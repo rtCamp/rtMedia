@@ -9,17 +9,6 @@ function bp_media_activity_permalink_filter($link, $activity_obj) {
 		$link = do_shortcode($activity_obj->primary_link);
 		remove_shortcode('bp_media_url');
 	}
-	$comment_id = bp_activity_add(array(
-		'id' => $id,
-		'action' => apply_filters('bp_activity_comment_action', sprintf(__('%s posted a new activity comment', 'buddypress'), bp_core_get_userlink($user_id))),
-		'content' => apply_filters('bp_activity_comment_content', $content),
-		'component' => $bp->activity->id,
-		'type' => 'activity_comment',
-		'user_id' => $user_id,
-		'item_id' => $activity_id,
-		'secondary_item_id' => $parent_id,
-		'hide_sitewide' => $is_hidden
-		));
 	if ('activity_comment' == $activity_obj->type) {
 		$parent = bp_activity_get_meta($activity_obj->item_id, 'bp_media_parent_post');
 		if ($parent) {
