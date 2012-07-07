@@ -59,9 +59,9 @@ function bp_media_show_pagination($type = 'top') {
 			Viewing <?php echo $current_single ?> <?php echo $from_num ?> to <?php echo $to_num ?> (of <?php echo $total; ?> <?php echo $current ?>)
 		</div>
 		<div class="pagination-links">
-			<?php foreach ($bp_media_paginated_links as $link) : ?>
+			<?php if(is_array($bp_media_paginated_links)) : foreach ($bp_media_paginated_links as $link) : ?>
 				<?php echo $link; ?>
-			<?php endforeach; ?>
+			<?php endforeach; endif; ?>
 		</div>
 
 	</div>
