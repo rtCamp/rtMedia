@@ -1,9 +1,9 @@
 <?php
 
 /**
- * 
+ * C
  */
-class BP_Media_Host_Wordpress implements BP_Media_Host {
+class BP_Media_Host_Wordpress {
 
 	private $id, //id of the entry
 		$name, //Name of the entry
@@ -47,7 +47,7 @@ class BP_Media_Host_Wordpress implements BP_Media_Host {
 	}
 
 	function add_media($name, $description) {
-		global $bp, $wpdb;
+		global $bp, $wpdb, $bp_media_count;
 		include_once(ABSPATH . 'wp-admin/includes/file.php');
 		include_once(ABSPATH . 'wp-admin/includes/image.php');
 		//media_handle_upload('async-upload', $_REQUEST['post_id']);
@@ -79,6 +79,7 @@ class BP_Media_Host_Wordpress implements BP_Media_Host {
 			'post_content' => $content,
 			'post_parent' => $post_id,
 		);
+		bp_media_init_count(bp_loggedin_user_id());
 		switch ($type) {
 			case 'video/mp4' :
 				$type = 'video';
@@ -116,14 +117,17 @@ class BP_Media_Host_Wordpress implements BP_Media_Host {
 					$activity_content = false;
 					throw new Exception(__('The MP4 file you have uploaded is not a video file.', 'bp-media'));
 				}
+				$bp_media_count['videos'] = intval($bp_media_count['videos']) + 1;
 				break;
 			case 'audio/mpeg' :
 				$type = 'audio';
+				$bp_media_count['audio'] = intval($bp_media_count['audio']) + 1;
 				break;
 			case 'image/gif' :
 			case 'image/jpeg' :
 			case 'image/png' :
 				$type = 'image';
+				$bp_media_count['images'] = intval($bp_media_count['images']) + 1;
 				break;
 			default : unlink($file);
 				wp_delete_post($post_id, true);
@@ -131,7 +135,7 @@ class BP_Media_Host_Wordpress implements BP_Media_Host {
 				$activity_content = false;
 				throw new Exception(__('Media File you have tried to upload is not supported. Supported media files are .jpg, .png, .gif, .mp3 and .mp4.', 'bp-media'));
 		}
-		$activity_content = '[bp_media_content id="' . $post_id . '"]';
+
 		$attachment_id = wp_insert_attachment($attachment, $file, $post_id);
 		if (!is_wp_error($attachment_id)) {
 			wp_update_attachment_metadata($attachment_id, wp_generate_attachment_metadata($attachment_id, $file));
@@ -145,6 +149,7 @@ class BP_Media_Host_Wordpress implements BP_Media_Host {
 		$postarr['post_status'] = 'publish';
 		//$wpdb->update( $wpdb->posts, $postarr, array( 'ID' => $post_id ) );
 		wp_insert_post($postarr);
+		$activity_content = '[bp_media_content id="' . $post_id . '"]';
 		$activity_id = bp_media_record_activity(array(
 			'action' => '[bp_media_action id="' . $post_id . '"]',
 			'content' => $activity_content,
@@ -162,27 +167,17 @@ class BP_Media_Host_Wordpress implements BP_Media_Host {
 		$this->owner = bp_loggedin_user_id();
 		$this->type = $type;
 		$this->url = $url;
-	}
-
-	function remove_media() {
-		
-	}
-
-	function update_media() {
-		
-	}
-
-	function display_media() {
-		
+		bp_update_user_meta(bp_loggedin_user_id(), 'bp_media_count', $bp_media_count);
 	}
 
 	function get_media_activity_content() {
 		if (!bp_is_activity_component()) {
 			return false;
 		}
-		global $bp_media_counter;
+		global $bp_media_counter, $bp_media_default_excerpts;
 		$attachment_id = get_post_meta($this->id, 'bp_media_child_attachment', true);
-		$activity_content = '<span class="bp_media_title"><a href="' . $this->url . '" title="' . $this->name . '">' . $this->name . '</a></span><span class="bp_media_description">' . $this->description . '</span><span class="bp_media_content">';
+		$activity_content = '<div class="bp_media_title"><a href="' . $this->url . '" title="' . $this->description . '">' . wp_html_excerpt($this->name, $bp_media_default_excerpts['activity_entry_title']) . '</a></div>';
+		$activity_content .='<div class="bp_media_content">';
 		switch ($this->type) {
 			case 'video' :
 				$activity_content.='<video src="' . wp_get_attachment_url($attachment_id) . '" width="320" height="240" type="video/mp4" id="bp_media_video_' . $this->id . '_' . $bp_media_counter . '" controls="controls" preload="none"></video></span><script>bp_media_create_element("bp_media_video_' . $this->id . '_' . $bp_media_counter . '");</script>';
@@ -199,7 +194,8 @@ class BP_Media_Host_Wordpress implements BP_Media_Host {
 			default :
 				return false;
 		}
-		$activity_content .= '</span>';
+		$activity_content .= '</div>';
+		$activity_content .= '<div class="bp_media_description">' . wp_html_excerpt($this->description, $bp_media_default_excerpts['activity_entry_description']) . '</div>';
 		return $activity_content;
 	}
 
@@ -218,9 +214,9 @@ class BP_Media_Host_Wordpress implements BP_Media_Host {
 	}
 
 	function get_media_single_content() {
-		global $bp_media_default_sizes;
+		global $bp_media_default_sizes, $bp_media_default_excerpts;
 		$attachment_id = get_post_meta($this->id, 'bp_media_child_attachment', true);
-		$content = '<span class="bp_media_title">' . $this->name . '</span><span class="bp_media_description">' . $this->description . '</span><span class="bp_media_content">';
+		$content = '<div class="bp_media_title">' . wp_html_excerpt($this->name, $bp_media_default_excerpts['single_entry_title']) . '</div><div class="bp_media_content">';
 		switch ($this->type) {
 			case 'video' :
 				$content.='<video src="' . wp_get_attachment_url($attachment_id) . '" width="' . $bp_media_default_sizes['single_video']['width'] . '" height="' . ($bp_media_default_sizes['single_video']['height'] == 0 ? 'auto' : $bp_media_default_sizes['single_video']['height']) . '" type="video/mp4" id="bp_media_video_' . $this->id . '" controls="controls" preload="none"></video><script>bp_media_create_element("bp_media_video_' . $this->id . '");</script>';
@@ -237,7 +233,8 @@ class BP_Media_Host_Wordpress implements BP_Media_Host {
 			default :
 				return false;
 		}
-		$content .= '</span>';
+		$content .= '</div>';
+		$content .= '<div class="bp_media_description">' . wp_html_excerpt($this->description, $bp_media_default_excerpts['single_entry_description']) . '</div>';
 		return $content;
 	}
 
@@ -250,9 +247,7 @@ class BP_Media_Host_Wordpress implements BP_Media_Host {
 					<a href="<?php echo $this->url ?>" title="<?php echo $this->description ?>">
 						<img src="<?php echo plugins_url('css/video_thumb.png', __FILE__) ?>" />
 					</a>
-					<h3>
-						<a href="<?php echo $this->url ?>" title="<?php echo $this->description ?>"><?php echo $this->name ?></a>
-					</h3>
+					<h3 title="<?php echo $this->name ?>"><a href="<?php echo $this->url ?>" title="<?php echo $this->description ?>"><?php echo $this->name ?></a></h3>
 				</li>
 				<?php
 				break;
@@ -262,9 +257,7 @@ class BP_Media_Host_Wordpress implements BP_Media_Host {
 					<a href="<?php echo $this->url ?>" title="<?php echo $this->description ?>">
 						<img src="<?php echo plugins_url('css/audio_thumb.png', __FILE__) ?>" />
 					</a>
-					<h3>
-						<a href="<?php echo $this->url ?>" title="<?php echo $this->description ?>"><?php echo $this->name ?></a>
-					</h3>
+					<h3 title="<?php echo $this->name ?>"><a href="<?php echo $this->url ?>" title="<?php echo $this->description ?>"><?php echo $this->name ?></a></h3>
 				</li>
 				<?php
 				break;
@@ -276,9 +269,7 @@ class BP_Media_Host_Wordpress implements BP_Media_Host {
 					<a href="<?php echo $this->url ?>" title="<?php echo $this->description ?>">
 						<img src="<?php echo $medium_path ?>" />
 					</a>
-					<h3>
-						<a href="<?php echo $this->url ?>" title="<?php echo $this->description ?>"><?php echo $this->name ?></a>
-					</h3>
+					<h3 title="<?php echo $this->name ?>"><a href="<?php echo $this->url ?>" title="<?php echo $this->description ?>"><?php echo $this->name ?></a></h3>
 				</li>
 				<?php
 				break;
@@ -302,17 +293,17 @@ class BP_Media_Host_Wordpress implements BP_Media_Host {
 						<li class="activity activity_update" id="activity-<?php echo $activity_id; ?>">
 							<div class="activity-content">
 
-				<?php do_action('bp_activity_entry_content'); ?>
+								<?php do_action('bp_activity_entry_content'); ?>
 
 								<?php if (is_user_logged_in()) : ?>
 
 									<div class="activity-meta no-ajax">
 
-					<?php if (bp_activity_can_comment()) : ?>
+										<?php if (bp_activity_can_comment()) : ?>
 
 											<a href="<?php bp_get_activity_comment_link(); ?>" class="button acomment-reply bp-primary-action" id="acomment-comment-<?php bp_activity_id(); ?>"><?php printf(__('Comment <span>%s</span>', 'buddypress'), bp_activity_get_comment_count()); ?></a>
 
-					<?php endif; ?>
+										<?php endif; ?>
 
 										<?php if (bp_activity_can_favorite()) : ?>
 
@@ -320,11 +311,11 @@ class BP_Media_Host_Wordpress implements BP_Media_Host {
 
 												<a href="<?php bp_activity_favorite_link(); ?>" class="button fav bp-secondary-action" title="<?php esc_attr_e('Mark as Favorite', 'buddypress'); ?>"><?php _e('Favorite', 'buddypress') ?></a>
 
-						<?php else : ?>
+											<?php else : ?>
 
 												<a href="<?php bp_activity_unfavorite_link(); ?>" class="button unfav bp-secondary-action" title="<?php esc_attr_e('Remove Favorite', 'buddypress'); ?>"><?php _e('Remove Favorite', 'buddypress') ?></a>
 
-						<?php endif; ?>
+											<?php endif; ?>
 
 										<?php endif; ?>
 
@@ -334,17 +325,17 @@ class BP_Media_Host_Wordpress implements BP_Media_Host {
 
 									</div>
 
-				<?php endif; ?>
+								<?php endif; ?>
 
 							</div>
 
-				<?php do_action('bp_before_activity_entry_comments'); ?>
+							<?php do_action('bp_before_activity_entry_comments'); ?>
 
 							<?php if (( is_user_logged_in() && bp_activity_can_comment() ) || bp_activity_get_comment_count()) : ?>
 
 								<div class="activity-comments">
 
-					<?php bp_activity_comments(); ?>
+									<?php bp_activity_comments(); ?>
 
 									<?php if (is_user_logged_in()) : ?>
 
@@ -358,17 +349,17 @@ class BP_Media_Host_Wordpress implements BP_Media_Host {
 												<input type="hidden" name="comment_form_id" value="<?php bp_activity_id(); ?>" />
 											</div>
 
-						<?php do_action('bp_activity_entry_comments'); ?>
+											<?php do_action('bp_activity_entry_comments'); ?>
 
 											<?php wp_nonce_field('new_activity_comment', '_wpnonce_new_activity_comment'); ?>
 
 										</form>
 
-					<?php endif; ?>
+									<?php endif; ?>
 
 								</div>
 
-				<?php endif; ?>
+							<?php endif; ?>
 
 							<?php do_action('bp_after_activity_entry_comments'); ?>
 						</li>

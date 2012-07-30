@@ -52,6 +52,12 @@ function bp_media_override_allowed_tags($activity_allowedtags) {
 	$activity_allowedtags['audio']['title'] = array();
 	$activity_allowedtags['script'] = array();
 	$activity_allowedtags['script']['type'] = array();
+	$activity_allowedtags['div'] = array();
+	$activity_allowedtags['div']['id'] = array();
+	$activity_allowedtags['div']['class'] = array();
+	$activity_allowedtags['a'] = array();
+	$activity_allowedtags['a']['title'] = array();
+	$activity_allowedtags['a']['href'] = array();
 	return $activity_allowedtags;
 }
 
@@ -72,11 +78,12 @@ function bp_media_show_formatted_error_message($messages, $type) {
 }
 
 function bp_media_conditional_override_allowed_tags($content, $activity) {
-	if ($activity->type = 'media_upload') {
+	if ($activity->type == 'media_upload') {
 		add_filter('bp_activity_allowed_tags', 'bp_media_override_allowed_tags', 1);
 	}
 	return bp_activity_filter_kses($content);
 }
+
 
 function bp_media_swap_filters() {
 	add_filter('bp_get_activity_content_body', 'bp_media_conditional_override_allowed_tags', 1, 2);
@@ -84,4 +91,37 @@ function bp_media_swap_filters() {
 }
 
 add_action('bp_init', 'bp_media_swap_filters');
+
+function bp_media_update_count() {
+	global $wpdb;
+	$query = "SELECT COUNT(*) AS total,b.meta_value AS type,a.post_author 
+		FROM $wpdb->posts AS a,$wpdb->postmeta AS b 
+		WHERE (a.id = b.post_id) AND a.post_type='bp_media' AND b.meta_key='bp_media_type' 
+		GROUP BY b.meta_value,a.post_author";
+	$result = $wpdb->get_results($query);
+	$users_count = array();
+	foreach ($result as $obj) {
+		$users_count[$obj->post_author][$obj->type] = $obj->total;
+	}
+	$users = get_users();
+	foreach ($users as $user) {
+		if (array_key_exists($user->ID, $users_count)) {
+			$count = array(
+				'images' => isset($users_count[$user->ID]['image']) ? intval($users_count[$user->ID]['image']) : 0,
+				'videos' => isset($users_count[$user->ID]['video']) ? intval($users_count[$user->ID]['video']) : 0,
+				'audio' => isset($users_count[$user->ID]['audio']) ? intval($users_count[$user->ID]['audio']) : 0,
+			);
+		} else {
+			$count = array(
+				'images' => 0,
+				'videos' => 0,
+				'audio' => 0
+			);
+		}
+		bp_update_user_meta($user->ID, 'bp_media_count', $count);
+	}
+	return true;
+}
+
+//Created another function to replace its functionality though left if for future reference
 ?>

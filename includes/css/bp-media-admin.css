@@ -5,8 +5,17 @@
     Description:
         Purpose of the stylesheet follows.
 */
-#wpbody-content .metabox-fixed{
-	margin:0 10px 0 0;
-	width:22%;
-	clear:both;
+
+#wpbody-content div.metabox-fixed{
+	width: 22%;
+	margin-right: 10px;
+	clear: both;
+}
+#wpbody-content div.wrap.bp-media-admin{
+	overflow: hidden;
+	width: 76%;
+}
+
+#icon-bp-media{
+	background:url('./logo_medibp_32.png') no-repeat scroll 0 0 transparent;
 }

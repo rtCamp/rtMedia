@@ -2,24 +2,25 @@
 
 /**
   Plugin Name: BuddyPress Media Component
-  Plugin URI: http://www.rtCamp.com
+  Plugin URI: http://www.rtCamp.com/buddypress-media/
   Description: This component adds missing media rich features like photos, videos and audios uploading to BuddyPress which are essential if you are building social network, seriously!
-  Version: 0.0.0
-  Requires at least: WP 3.3.2, BuddyPress 1.5.5
-  Tested up to: Wordpress 3.3.2, what BuddyPress 1.5.5
+  Version: 2.0
+  Requires at least: WordPress 3.3.2, BuddyPress 1.5.5
+  Tested up to: WordPress 3.4, BuddyPress 1.5.5
   Author: rtCamp
   Author URI: http://www.rtCamp.com
  */
-// A constant that can be checked to see if the BP Media is installed or not.
+
+/* A constant that can be checked to see if the BP Media is installed or not. */
 define('BP_MEDIA_IS_INSTALLED', 1);
 
-// Constant to store the current version of the BP Media Plugin.
-define('BP_MEDIA_VERSION', '0.0.1');
+/* Constant to store the current version of the BP Media Plugin. */
+define('BP_MEDIA_VERSION', '2.0');
 
-// A constant to be used as base for other URLs throughout the plugin
+/* A constant to be used as base for other URLs throughout the plugin */
 define('BP_MEDIA_PLUGIN_DIR', dirname(__FILE__));
 
-// A constant to store the Database Version of the BP Media Plugin
+/* A constant to store the Database Version of the BP Media Plugin */
 define('BP_MEDIA_DB_VERSION', '1');
 
 /**
@@ -29,7 +30,7 @@ define('BP_MEDIA_DB_VERSION', '1');
  * 
  */
 function bp_media_init() {
-	if (version_compare(BP_VERSION, '1.5', '>')) {
+	if (version_compare(BP_VERSION, '1.5.5', '>')) {
 		require( BP_MEDIA_PLUGIN_DIR . '/includes/bp-media-loader.php' );
 	}
 }
