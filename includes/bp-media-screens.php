@@ -34,8 +34,7 @@ function bp_media_images_screen() {
 	if (isset($bp->action_variables[0])) {
 		switch ($bp->action_variables[0]) {
 			case BP_MEDIA_IMAGES_EDIT_SLUG :
-				//add_action('bp_template_title', 'bp_media_images_edit_screen_title');
-				add_action('bp_template_content', 'bp_media_images_edit_screen_content');
+				bp_media_images_edit_screen();
 				break;
 			case BP_MEDIA_IMAGES_ENTRY_SLUG:
 				global $bp_media_current_entry;
@@ -90,6 +89,14 @@ function bp_media_images_screen_content() {
  * Screen function for Images Edit page
  */
 function bp_media_images_edit_screen() {
+	if (bp_loggedin_user_id() != bp_displayed_user_id()) {
+		bp_core_no_access(array(
+			'message' => __('You do not have access to this page.', 'buddypress'),
+			'root' => bp_displayed_user_domain(),
+			'redirect' => false
+		));
+		exit;
+	}
 	add_action('bp_template_title', 'bp_media_images_edit_screen_title');
 	add_action('bp_template_content', 'bp_media_images_edit_screen_content');
 	bp_core_load_template(apply_filters('bp_core_template_plugin', 'members/single/plugins'));
@@ -118,7 +125,7 @@ function bp_media_images_entry_screen_title() {
 }
 
 function bp_media_images_entry_screen_content() {
-	global $bp,$bp_media_current_entry;
+	global $bp, $bp_media_current_entry;
 
 	if (!$bp->action_variables[0] == BP_MEDIA_IMAGES_ENTRY_SLUG)
 		return false;
@@ -223,7 +230,7 @@ function bp_media_videos_entry_screen_title() {
 }
 
 function bp_media_videos_entry_screen_content() {
-	global $bp,$bp_media_current_entry;
+	global $bp, $bp_media_current_entry;
 	if (!$bp->action_variables[0] == BP_MEDIA_VIDEOS_ENTRY_SLUG)
 		return false;
 	do_action('bp_media_before_content');
@@ -327,7 +334,7 @@ function bp_media_audio_entry_screen_title() {
 }
 
 function bp_media_audio_entry_screen_content() {
-	global $bp,$bp_media_current_entry;
+	global $bp, $bp_media_current_entry;
 	if (!$bp->action_variables[0] == BP_MEDIA_AUDIO_ENTRY_SLUG)
 		return false;
 	do_action('bp_media_before_content');

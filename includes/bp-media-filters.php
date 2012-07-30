@@ -62,4 +62,25 @@ function bp_media_delete_button_handler($link) {
 }
 add_filter('bp_get_activity_delete_link','bp_media_delete_button_handler');
 
+function bp_media_items_count_filter ($title,$nav_item) {
+	global $bp_media_count;
+	switch($nav_item['slug']){
+		case BP_MEDIA_SLUG	:
+			$count=  intval($bp_media_count['images'])+intval($bp_media_count['videos'])+intval($bp_media_count['audio']);
+			break;
+		case BP_MEDIA_IMAGES_SLUG:
+			$count=  intval($bp_media_count['images']);
+			break;
+		case BP_MEDIA_VIDEOS_SLUG:
+			$count=  intval($bp_media_count['videos']);
+			break;
+		case BP_MEDIA_AUDIO_SLUG:
+			$count=  intval($bp_media_count['audio']);
+			break;
+	}
+	$count_html=' <span>'. $count.'</span>';
+	return str_replace('</a>', $count_html.'</a>', $title);
+}
+//Filter added through media count init function conditionally
+
 ?>

@@ -41,8 +41,11 @@ global $bp_media_query;
 
 /* Global variable for making distinct ids for different media objects in activity stream */
 global $bp_media_counter;
-$bp_media_counter=0;
+$bp_media_counter = 0;
 
+/* Global variable storing the count of the media files displayed user has */
+global $bp_media_count;
+$bp_media_count=null;
 
 /* Global variable for various display sizes */
 global $bp_media_default_sizes;
@@ -59,7 +62,7 @@ $bp_media_default_sizes = array(
 		'width' => 320,
 	),
 	'single_image' => array(
-		'width' => 640,
+		'width' => 800,
 		'height' => 0
 	),
 	'single_video' => array(
@@ -71,6 +74,13 @@ $bp_media_default_sizes = array(
 	),
 );
 
+global $bp_media_default_excerpts;
+$bp_media_default_excerpts=array(
+	'single_entry_title'	=>	100,
+	'single_entry_description'	=>	500,	
+	'activity_entry_title'	=> 50,
+	'activity_entry_description'=>	500
+);
 
 //To set the language according to the locale selected and availability of the language file.
 if (file_exists(BP_MEDIA_PLUGIN_DIR . '/languages/' . get_locale() . '.mo'))
