@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Handles the uploads and creates respective posts for the upload
  * 
@@ -32,8 +31,6 @@ add_action('bp_init', 'bp_media_handle_uploads');
 function bp_media_show_messages() {
 	global $bp;
 	if (is_array($bp->{BP_MEDIA_SLUG}->messages)) {
-
-
 		$types = array('error', 'updated', 'info');
 		foreach ($types as $type) {
 			if (count($bp->{BP_MEDIA_SLUG}->messages[$type]) > 0) {
@@ -140,9 +137,8 @@ function bp_media_action_download_button() {
 	if($bp_media_current_entry!=NULL)
 		echo '<a href="'.$bp_media_current_entry->get_attachment_url().'" class="button item-button bp-secondary-action bp-media-download" title="Download">Download</a>';
 }
-
-/* Adds bp_media_action_download_button() function to be called on bp_activity_entry_meta hook */
 add_action('bp_activity_entry_meta', 'bp_media_action_download_button'); 
+
 /* Should be used with Content Disposition Type for media files set to attachment */
 
 /**
@@ -181,11 +177,10 @@ add_action('init', 'bp_media_init_count');
  * 
  * @since BP Media 2.0
  */
-function bp_media_footer() {
-	?><div id="bp-media-footer"><p>We &hearts; <a href="http://rtcamp.com/buddypress-media/">MediaBP</a></p></div>
-		<?php
+function bp_media_footer() { ?>
+	<div id="bp-media-footer"><p>We &hearts; <a href="http://rtcamp.com/buddypress-media/">MediaBP</a></p></div>
+	<?php
 }
 if(get_option('bp_media_remove_linkback')!='1')
 	add_action('bp_footer','bp_media_footer');
-
 ?>

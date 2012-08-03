@@ -53,12 +53,10 @@ function bp_media_images_screen() {
 				add_action('bp_template_content', 'bp_media_images_entry_screen_content');
 				break;
 			default:
-				/* add_action('bp_template_title', 'bp_media_images_screen_title'); */
 				bp_media_set_query();
 				add_action('bp_template_content', 'bp_media_images_screen_content');
 		}
 	} else {
-		/* add_action('bp_template_title', 'bp_media_images_screen_title'); */
 		bp_media_set_query();
 		add_action('bp_template_content', 'bp_media_images_screen_content');
 	}
@@ -127,7 +125,6 @@ function bp_media_images_entry_screen_title() {
 
 function bp_media_images_entry_screen_content() {
 	global $bp, $bp_media_current_entry;
-
 	if (!$bp->action_variables[0] == BP_MEDIA_IMAGES_ENTRY_SLUG)
 		return false;
 	do_action('bp_media_before_content');
@@ -146,7 +143,6 @@ function bp_media_videos_screen() {
 	if (isset($bp->action_variables[0])) {
 		switch ($bp->action_variables[0]) {
 			case BP_MEDIA_VIDEOS_EDIT_SLUG :
-				/* add_action('bp_template_title', 'bp_media_videos_edit_screen_title'); */
 				add_action('bp_template_content', 'bp_media_videos_edit_screen_content');
 				break;
 			case BP_MEDIA_VIDEOS_ENTRY_SLUG:
@@ -166,12 +162,10 @@ function bp_media_videos_screen() {
 				break;
 			default:
 				bp_media_set_query();
-				/* add_action('bp_template_title', 'bp_media_videos_screen_title'); */
 				add_action('bp_template_content', 'bp_media_videos_screen_content');
 		}
 	} else {
 		bp_media_set_query();
-		/* add_action('bp_template_title', 'bp_media_videos_screen_title'); */
 		add_action('bp_template_content', 'bp_media_videos_screen_content');
 	}
 	bp_core_load_template(apply_filters('bp_core_template_plugin', 'members/single/plugins'));
@@ -184,7 +178,6 @@ function bp_media_videos_screen_title() {
 function bp_media_videos_screen_content() {
 	global $bp_media_query;
 	if ($bp_media_query && $bp_media_query->have_posts()):
-		/* _e('Images List Content'); */
 		bp_media_show_pagination();
 		do_action('bp_media_before_content');
 		echo '<ul class="bp-media-gallery">';
@@ -250,7 +243,6 @@ function bp_media_audio_screen() {
 	if (isset($bp->action_variables[0])) {
 		switch ($bp->action_variables[0]) {
 			case BP_MEDIA_AUDIO_EDIT_SLUG :
-				/* add_action('bp_template_title', 'bp_media_audio_edit_screen_title'); */
 				add_action('bp_template_content', 'bp_media_audio_edit_screen_content');
 				break;
 			case BP_MEDIA_AUDIO_ENTRY_SLUG:
@@ -270,12 +262,10 @@ function bp_media_audio_screen() {
 				break;
 			default:
 				bp_media_set_query();
-				/* add_action('bp_template_title', 'bp_media_audio_screen_title'); */
 				add_action('bp_template_content', 'bp_media_audio_screen_content');
 		}
 	} else {
 		bp_media_set_query();
-		/* add_action('bp_template_title', 'bp_media_audio_screen_title'); */
 		add_action('bp_template_content', 'bp_media_audio_screen_content');
 	}
 	bp_core_load_template(apply_filters('bp_core_template_plugin', 'members/single/plugins'));
@@ -288,7 +278,6 @@ function bp_media_audio_screen_title() {
 function bp_media_audio_screen_content() {
 	global $bp_media_query;
 	if ($bp_media_query && $bp_media_query->have_posts()):
-		/* _e('Images List Content'); */
 		bp_media_show_pagination();
 		do_action('bp_media_before_content');
 		echo '<ul class="bp-media-gallery">';
@@ -345,5 +334,4 @@ function bp_media_audio_entry_screen_content() {
 	echo '</div>';
 	do_action('bp_media_after_content');
 }
-
 ?>

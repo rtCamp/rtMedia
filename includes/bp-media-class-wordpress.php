@@ -1,11 +1,6 @@
 <?php
-
-/**
- * 
- */
 class BP_Media_Host_Wordpress {
 
-	
 	/**
 	 * Private variables not to be accessible outside this class' member functions
 	 */
@@ -83,14 +78,11 @@ class BP_Media_Host_Wordpress {
 			'post_title' => $name
 		);
 		$post_id = wp_insert_post($postarr);
-
-
 		$file = wp_handle_upload($_FILES['bp_media_file']);
 		if (isset($file['error']) || $file === null) {
 			wp_delete_post($post_id, true);
 			throw new Exception(__('Error Uploading File', 'bp-media'));
 		}
-
 		$attachment = array();
 		$url = $file['url'];
 		$type = $file['type'];
@@ -160,7 +152,6 @@ class BP_Media_Host_Wordpress {
 				$activity_content = false;
 				throw new Exception(__('Media File you have tried to upload is not supported. Supported media files are .jpg, .png, .gif, .mp3 and .mp4.', 'bp-media'));
 		}
-
 		$attachment_id = wp_insert_attachment($attachment, $file, $post_id);
 		if (!is_wp_error($attachment_id)) {
 			wp_update_attachment_metadata($attachment_id, wp_generate_attachment_metadata($attachment_id, $file));
@@ -172,7 +163,6 @@ class BP_Media_Host_Wordpress {
 		$postarr['ID'] = $post_id;
 		$postarr['post_mime_type'] = $type;
 		$postarr['post_status'] = 'publish';
-		//$wpdb->update( $wpdb->posts, $postarr, array( 'ID' => $post_id ) );
 		wp_insert_post($postarr);
 		$activity_content = '[bp_media_content id="' . $post_id . '"]';
 		$activity_id = bp_media_record_activity(array(
@@ -180,7 +170,7 @@ class BP_Media_Host_Wordpress {
 			'content' => $activity_content,
 			'primary_link' => '[bp_media_url id="' . $post_id . '"]',
 			'type' => 'media_upload'
-			));
+		));
 		bp_activity_update_meta($activity_id, 'bp_media_parent_post', $post_id);
 		update_post_meta($post_id, 'bp_media_child_activity', $activity_id);
 		update_post_meta($post_id, 'bp_media_child_attachment', $attachment_id);
@@ -317,53 +307,29 @@ class BP_Media_Host_Wordpress {
 					<ul id="activity-stream" class="activity-list item-list">
 						<li class="activity activity_update" id="activity-<?php echo $activity_id; ?>">
 							<div class="activity-content">
-
 								<?php do_action('bp_activity_entry_content'); ?>
-
 								<?php if (is_user_logged_in()) : ?>
-
 									<div class="activity-meta no-ajax">
-
 										<?php if (bp_activity_can_comment()) : ?>
-
 											<a href="<?php bp_get_activity_comment_link(); ?>" class="button acomment-reply bp-primary-action" id="acomment-comment-<?php bp_activity_id(); ?>"><?php printf(__('Comment <span>%s</span>', 'buddypress'), bp_activity_get_comment_count()); ?></a>
-
 										<?php endif; ?>
-
 										<?php if (bp_activity_can_favorite()) : ?>
-
 											<?php if (!bp_get_activity_is_favorite()) : ?>
-
 												<a href="<?php bp_activity_favorite_link(); ?>" class="button fav bp-secondary-action" title="<?php esc_attr_e('Mark as Favorite', 'buddypress'); ?>"><?php _e('Favorite', 'buddypress') ?></a>
-
 											<?php else : ?>
-
 												<a href="<?php bp_activity_unfavorite_link(); ?>" class="button unfav bp-secondary-action" title="<?php esc_attr_e('Remove Favorite', 'buddypress'); ?>"><?php _e('Remove Favorite', 'buddypress') ?></a>
-
 											<?php endif; ?>
-
 										<?php endif; ?>
-
 										<?php if (bp_activity_user_can_delete()) bp_activity_delete_link(); ?>
-
 										<?php do_action('bp_activity_entry_meta'); ?>
-
 									</div>
-
 								<?php endif; ?>
-
 							</div>
-
 							<?php do_action('bp_before_activity_entry_comments'); ?>
-
 							<?php if (( is_user_logged_in() && bp_activity_can_comment() ) || bp_activity_get_comment_count()) : ?>
-
 								<div class="activity-comments">
-
 									<?php bp_activity_comments(); ?>
-
 									<?php if (is_user_logged_in()) : ?>
-
 										<form action="<?php bp_activity_comment_form_action(); ?>" method="post" id="ac-form-<?php bp_activity_id(); ?>" class="ac-form"<?php bp_activity_comment_form_nojs_display(); ?>>
 											<div class="ac-reply-avatar"><?php bp_loggedin_user_avatar('width=' . BP_AVATAR_THUMB_WIDTH . '&height=' . BP_AVATAR_THUMB_HEIGHT); ?></div>
 											<div class="ac-reply-content">
@@ -373,19 +339,12 @@ class BP_Media_Host_Wordpress {
 												<input type="submit" name="ac_form_submit" value="<?php _e('Post', 'buddypress'); ?>" /> &nbsp; <?php _e('or press esc to cancel.', 'buddypress'); ?>
 												<input type="hidden" name="comment_form_id" value="<?php bp_activity_id(); ?>" />
 											</div>
-
 											<?php do_action('bp_activity_entry_comments'); ?>
-
 											<?php wp_nonce_field('new_activity_comment', '_wpnonce_new_activity_comment'); ?>
-
 										</form>
-
 									<?php endif; ?>
-
 								</div>
-
 							<?php endif; ?>
-
 							<?php do_action('bp_after_activity_entry_comments'); ?>
 						</li>
 					</ul>

@@ -2,14 +2,6 @@
  * BuddyPress Media Default JS
  */
 
-
-jQuery(document).ready(function(){
-	
-	
-	
-	
-});
-
 function bp_media_create_element(id){
 	jQuery('#'+id).mediaelementplayer({ 
 		enableKeyboard: false,

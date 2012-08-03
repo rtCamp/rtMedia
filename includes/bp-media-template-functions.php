@@ -1,8 +1,4 @@
 <?php
-
-/**
- * 
- */
 function bp_media_show_upload_form() {
 	global $bp,$bp_media_default_excerpts;	
 	?>
@@ -16,9 +12,6 @@ function bp_media_show_upload_form() {
 	<?php
 }
 
-/**
- * 
- */
 function bp_media_show_pagination($type = 'top') {
 	global $bp, $bp_media_paginated_links, $bp_media_query;
 	switch ($bp->current_action) {
@@ -54,7 +47,6 @@ function bp_media_show_pagination($type = 'top') {
 	$bp_media_paginated_links = paginate_links($args);
 	?>
 	<div id="pag-<?php echo $type; ?>" class="pagination no-ajax">
-
 		<div class="pag-count">
 			Viewing <?php echo $current_single ?> <?php echo $from_num ?> to <?php echo $to_num ?> (of <?php echo $total; ?> <?php echo $current ?>)
 		</div>
@@ -63,7 +55,6 @@ function bp_media_show_pagination($type = 'top') {
 				<?php echo $link; ?>
 			<?php endforeach; endif; ?>
 		</div>
-
 	</div>
 	<?php
 }
