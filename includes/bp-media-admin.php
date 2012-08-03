@@ -1,7 +1,9 @@
 <?php
 
 /**
+ * Add the BuddyPress Media Component's options menu in the BuddyPress' options subnavigation.
  * 
+ * @since BP Media 2.0
  */
 function bp_media_add_admin_menu() {
 	global $bp;
@@ -12,9 +14,13 @@ function bp_media_add_admin_menu() {
 	);
 	add_action('admin_print_styles-' . $page, 'bp_media_admin_enqueue');
 }
-
 add_action(bp_core_admin_hook(), 'bp_media_add_admin_menu');
 
+/**
+ * Displays and updates the options menu of BuddyPress Media Component
+ * 
+ * @since BP Media 2.0
+ */
 function bp_media_admin_menu() {
 	$bp_media_errors=array();
 	$bp_media_messages=array();
@@ -78,6 +84,7 @@ function bp_media_admin_menu() {
  *
  * @param string $feed_url The Feed URL.
  *
+ * @since BP Media 2.0
  */
 function bp_media_get_feeds($feed_url = 'http://rtcamp.com/blog/category/buddypress-media/feed/') {
 
@@ -112,6 +119,8 @@ function bp_media_get_feeds($feed_url = 'http://rtcamp.com/blog/category/buddypr
 
 /**
  * Default BuddyPress Media Component admin sidebar with metabox styling
+ * 
+ * @since BP Media 2.0
  */
 function bp_media_default_admin_sidebar() {
 	?>
@@ -169,9 +178,12 @@ function bp_media_default_admin_sidebar() {
 	</div><?php
 }
 
+/**
+ * Enqueues the scripts and stylesheets needed for the BuddyPress Media Component's options page
+ */
 function bp_media_admin_enqueue() {
 	wp_enqueue_style('bp-media-admin-style', plugins_url('includes/css/bp-media-admin.css', dirname(__FILE__)));
+	wp_enqueue_script('rt-fb-share', ('http://static.ak.fbcdn.net/connect.php/js/FB.Share'), '', '', true);
 }
-
-add_action('wp_enqueue_scripts', 'bp_media_admin_enqueue');
+add_action('admin_enqueue_scripts', 'bp_media_admin_enqueue');
 ?>

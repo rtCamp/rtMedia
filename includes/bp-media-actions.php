@@ -1,18 +1,14 @@
 <?php
 
 /**
+ * Handles the uploads and creates respective posts for the upload
  * 
+ * @since BP Media 2.0
  */
 function bp_media_handle_uploads() {
 	global $bp;
 	if (isset($_POST['action']) && $_POST['action'] == 'wp_handle_upload') {
 		if (isset($_FILES) && is_array($_FILES) && array_key_exists('bp_media_file', $_FILES) && $_FILES['bp_media_file']['name'] != '') {
-			//$bp->{BP_MEDIA_SLUG}->messages['updated'][]='File '.$_FILES['bp_media_file']['name'].' was uploaded successfully';
-			//$bp->{BP_MEDIA_SLUG}->messages['error'][]='Uploading function reached';
-			//$bp->{BP_MEDIA_SLUG}->messages['updated'][]='Uploading function reached';
-			//bp_core_add_message( __( 'No self-fives! :)', 'bp-example' ), 'error' );
-			//include(admin_url('file.php'));
-
 			$bp_media_entry = new BP_Media_Host_Wordpress();
 			try {
 				$title = isset($_POST['bp_media_title']) ? ($_POST['bp_media_title'] != "") ? $_POST['bp_media_title'] : pathinfo($_FILES['bp_media_file']['name'], PATHINFO_FILENAME) : pathinfo($_FILES['bp_media_file']['name'], PATHINFO_FILENAME);
@@ -26,9 +22,13 @@ function bp_media_handle_uploads() {
 		}
 	}
 }
-
 add_action('bp_init', 'bp_media_handle_uploads');
 
+/**
+ * Displays the messages that other functions/methods creates according to the BuddyPress' formating
+ * 
+ * @since BP Media 2.0
+ */
 function bp_media_show_messages() {
 	global $bp;
 	if (is_array($bp->{BP_MEDIA_SLUG}->messages)) {
@@ -42,9 +42,13 @@ function bp_media_show_messages() {
 		}
 	}
 }
-
 add_action('bp_media_before_content', 'bp_media_show_messages');
 
+/**
+ * Enqueues all the required scripts and stylesheets for the proper working of BuddyPress Media Component
+ * 
+ * @since BP Media 2.0
+ */
 function bp_media_enqueue_scripts_styles() {
 	wp_enqueue_script('bp-media-mejs', plugins_url('includes/media-element/mediaelement-and-player.min.js', dirname(__FILE__)));
 	wp_enqueue_script('bp-media-default', plugins_url('includes/js/bp-media.js', dirname(__FILE__)));
@@ -56,6 +60,8 @@ add_action('wp_enqueue_scripts', 'bp_media_enqueue_scripts_styles', 11);
 
 /**
  * Deletes associated media entry and its files upon deletion of an activity.
+ * 
+ * @since BP Media 2.0
  */
 function bp_media_delete_activity_handler($activity_id, $user) {
 	global $bp_media_count;
@@ -84,7 +90,10 @@ add_action('bp_activity_before_action_delete_activity', 'bp_media_delete_activit
 
 /**
  * Called on bp_init by screen functions
+ * 
  * @uses global $bp, $bp_media_query
+ * 
+ * @since BP Media 2.0
  */
 function bp_media_set_query() {
 	global $bp, $bp_media_query;
@@ -121,16 +130,26 @@ function bp_media_set_query() {
 
 /**
  * Adds a download button on single entry pages of media files.
+ * 
+ * @since BP Media 2.0
  */
 function bp_media_action_download_button() {
-	echo '<a href="download" class="button item-button bp-secondary-action bp-media-download" title="Download">Download</a>';
+	if(!in_array('bp_media_current_entry', $GLOBALS))
+		return false;
+	global $bp_media_current_entry;
+	if($bp_media_current_entry!=NULL)
+		echo '<a href="'.$bp_media_current_entry->get_attachment_url().'" class="button item-button bp-secondary-action bp-media-download" title="Download">Download</a>';
 }
 
 /* Adds bp_media_action_download_button() function to be called on bp_activity_entry_meta hook */
+add_action('bp_activity_entry_meta', 'bp_media_action_download_button'); 
+/* Should be used with Content Disposition Type for media files set to attachment */
 
-//add_action('bp_activity_entry_meta', 'bp_media_action_download_button'); //Removed the button since it will open the jpg image instead of giving a save as like option
-
-
+/**
+ * Shows the media count of a user in the tabs
+ * 
+ * @since BP Media 2.0
+ */
 function bp_media_init_count($user = null) {
 	global $bp_media_count;
 	if (!$user)
@@ -155,13 +174,18 @@ function bp_media_init_count($user = null) {
 	}
 	return true;
 }
-
 add_action('init', 'bp_media_init_count');
 
+/**
+ * Displays the footer of the BP Media Plugin if enabled through the dashboard options page
+ * 
+ * @since BP Media 2.0
+ */
 function bp_media_footer() {
 	?><div id="bp-media-footer"><p>We &hearts; <a href="http://rtcamp.com/buddypress-media/">MediaBP</a></p></div>
 		<?php
 }
 if(get_option('bp_media_remove_linkback')!='1')
 	add_action('bp_footer','bp_media_footer');
+
 ?>

@@ -31,6 +31,9 @@ function bp_media_record_activity($args = '') {
 	return $activity_id;
 }
 
+/**
+ * 
+ */
 function bp_media_override_allowed_tags($activity_allowedtags) {
 	$activity_allowedtags['video'] = array();
 	$activity_allowedtags['video']['id'] = array();
@@ -61,6 +64,9 @@ function bp_media_override_allowed_tags($activity_allowedtags) {
 	return $activity_allowedtags;
 }
 
+/**
+ * 
+ */
 function bp_media_show_formatted_error_message($messages, $type) {
 	echo '<div id="message" class="' . $type . '">';
 	if (is_array($messages)) {
@@ -77,6 +83,9 @@ function bp_media_show_formatted_error_message($messages, $type) {
 	echo '</div>';
 }
 
+/**
+ * 
+ */
 function bp_media_conditional_override_allowed_tags($content, $activity) {
 	if ($activity->type == 'media_upload') {
 		add_filter('bp_activity_allowed_tags', 'bp_media_override_allowed_tags', 1);
@@ -84,7 +93,9 @@ function bp_media_conditional_override_allowed_tags($content, $activity) {
 	return bp_activity_filter_kses($content);
 }
 
-
+/**
+ * 
+ */
 function bp_media_swap_filters() {
 	add_filter('bp_get_activity_content_body', 'bp_media_conditional_override_allowed_tags', 1, 2);
 	remove_filter('bp_get_activity_content_body', 'bp_activity_filter_kses', 1);
@@ -92,6 +103,10 @@ function bp_media_swap_filters() {
 
 add_action('bp_init', 'bp_media_swap_filters');
 
+/**
+ * Updates the media count of all users.
+ * 
+ */
 function bp_media_update_count() {
 	global $wpdb;
 	$query = "SELECT COUNT(*) AS total,b.meta_value AS type,a.post_author 
@@ -122,6 +137,4 @@ function bp_media_update_count() {
 	}
 	return true;
 }
-
-//Created another function to replace its functionality though left if for future reference
 ?>
