@@ -3,7 +3,8 @@
 /**
  * Screens for all the slugs defined in the BuddyPress Media Component
  */
-//Exit if accessed directlly.
+
+/* Exit if accessed directlly. */
 if (!defined('ABSPATH'))
 	exit;
 
@@ -43,7 +44,7 @@ function bp_media_images_screen() {
 				try {
 					$bp_media_current_entry = new BP_Media_Host_Wordpress($bp->action_variables[1]);
 				} catch (Exception $e) {
-					// Send the values to the cookie for page reload display
+					/* Send the values to the cookie for page reload display */
 					@setcookie('bp-message', $_COOKIE['bp-message'], time() + 60 * 60 * 24, COOKIEPATH);
 					@setcookie('bp-message-type', $_COOKIE['bp-message-type'], time() + 60 * 60 * 24, COOKIEPATH);
 					wp_redirect(trailingslashit(bp_displayed_user_domain() . BP_MEDIA_IMAGES_SLUG));
@@ -52,12 +53,12 @@ function bp_media_images_screen() {
 				add_action('bp_template_content', 'bp_media_images_entry_screen_content');
 				break;
 			default:
-				//add_action('bp_template_title', 'bp_media_images_screen_title');
+				/* add_action('bp_template_title', 'bp_media_images_screen_title'); */
 				bp_media_set_query();
 				add_action('bp_template_content', 'bp_media_images_screen_content');
 		}
 	} else {
-		//add_action('bp_template_title', 'bp_media_images_screen_title');
+		/* add_action('bp_template_title', 'bp_media_images_screen_title'); */
 		bp_media_set_query();
 		add_action('bp_template_content', 'bp_media_images_screen_content');
 	}
@@ -145,7 +146,7 @@ function bp_media_videos_screen() {
 	if (isset($bp->action_variables[0])) {
 		switch ($bp->action_variables[0]) {
 			case BP_MEDIA_VIDEOS_EDIT_SLUG :
-				//add_action('bp_template_title', 'bp_media_videos_edit_screen_title');
+				/* add_action('bp_template_title', 'bp_media_videos_edit_screen_title'); */
 				add_action('bp_template_content', 'bp_media_videos_edit_screen_content');
 				break;
 			case BP_MEDIA_VIDEOS_ENTRY_SLUG:
@@ -155,7 +156,7 @@ function bp_media_videos_screen() {
 				try {
 					$bp_media_current_entry = new BP_Media_Host_Wordpress($bp->action_variables[1]);
 				} catch (Exception $e) {
-					// Send the values to the cookie for page reload display
+					/* Send the values to the cookie for page reload display */
 					@setcookie('bp-message', $_COOKIE['bp-message'], time() + 60 * 60 * 24, COOKIEPATH);
 					@setcookie('bp-message-type', $_COOKIE['bp-message-type'], time() + 60 * 60 * 24, COOKIEPATH);
 					wp_redirect(trailingslashit(bp_displayed_user_domain() . BP_MEDIA_VIDEOS_SLUG));
@@ -165,12 +166,12 @@ function bp_media_videos_screen() {
 				break;
 			default:
 				bp_media_set_query();
-				//add_action('bp_template_title', 'bp_media_videos_screen_title');
+				/* add_action('bp_template_title', 'bp_media_videos_screen_title'); */
 				add_action('bp_template_content', 'bp_media_videos_screen_content');
 		}
 	} else {
 		bp_media_set_query();
-		//add_action('bp_template_title', 'bp_media_videos_screen_title');
+		/* add_action('bp_template_title', 'bp_media_videos_screen_title'); */
 		add_action('bp_template_content', 'bp_media_videos_screen_content');
 	}
 	bp_core_load_template(apply_filters('bp_core_template_plugin', 'members/single/plugins'));
@@ -183,7 +184,7 @@ function bp_media_videos_screen_title() {
 function bp_media_videos_screen_content() {
 	global $bp_media_query;
 	if ($bp_media_query && $bp_media_query->have_posts()):
-		//_e('Images List Content');
+		/* _e('Images List Content'); */
 		bp_media_show_pagination();
 		do_action('bp_media_before_content');
 		echo '<ul class="bp-media-gallery">';
@@ -249,7 +250,7 @@ function bp_media_audio_screen() {
 	if (isset($bp->action_variables[0])) {
 		switch ($bp->action_variables[0]) {
 			case BP_MEDIA_AUDIO_EDIT_SLUG :
-				//add_action('bp_template_title', 'bp_media_audio_edit_screen_title');
+				/* add_action('bp_template_title', 'bp_media_audio_edit_screen_title'); */
 				add_action('bp_template_content', 'bp_media_audio_edit_screen_content');
 				break;
 			case BP_MEDIA_AUDIO_ENTRY_SLUG:
@@ -259,7 +260,7 @@ function bp_media_audio_screen() {
 				try {
 					$bp_media_current_entry = new BP_Media_Host_Wordpress($bp->action_variables[1]);
 				} catch (Exception $e) {
-					// Send the values to the cookie for page reload display
+					/* Send the values to the cookie for page reload display */
 					@setcookie('bp-message', $_COOKIE['bp-message'], time() + 60 * 60 * 24, COOKIEPATH);
 					@setcookie('bp-message-type', $_COOKIE['bp-message-type'], time() + 60 * 60 * 24, COOKIEPATH);
 					wp_redirect(trailingslashit(bp_displayed_user_domain() . BP_MEDIA_AUDIO_SLUG));
@@ -269,12 +270,12 @@ function bp_media_audio_screen() {
 				break;
 			default:
 				bp_media_set_query();
-				//add_action('bp_template_title', 'bp_media_audio_screen_title');
+				/* add_action('bp_template_title', 'bp_media_audio_screen_title'); */
 				add_action('bp_template_content', 'bp_media_audio_screen_content');
 		}
 	} else {
 		bp_media_set_query();
-		//add_action('bp_template_title', 'bp_media_audio_screen_title');
+		/* add_action('bp_template_title', 'bp_media_audio_screen_title'); */
 		add_action('bp_template_content', 'bp_media_audio_screen_content');
 	}
 	bp_core_load_template(apply_filters('bp_core_template_plugin', 'members/single/plugins'));
@@ -287,7 +288,7 @@ function bp_media_audio_screen_title() {
 function bp_media_audio_screen_content() {
 	global $bp_media_query;
 	if ($bp_media_query && $bp_media_query->have_posts()):
-		//_e('Images List Content');
+		/* _e('Images List Content'); */
 		bp_media_show_pagination();
 		do_action('bp_media_before_content');
 		echo '<ul class="bp-media-gallery">';

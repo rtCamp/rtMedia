@@ -1,23 +1,42 @@
 <?php
 
 /**
- * C
+ * 
  */
 class BP_Media_Host_Wordpress {
 
+	
+	/**
+	 * Private variables not to be accessible outside this class' member functions
+	 */
 	private $id, //id of the entry
 		$name, //Name of the entry
 		$description, //Description of the entry
 		$url, //URL of the entry
 		$type, //Type of the entry (Video, Image or Audio)
-		$owner;   //Owner of the entry
+		$owner,   //Owner of the entry
+		$attachment_id; //The attachment ID of the media file
 
+	/**
+	 * Constructs a new BP_Media_Host_Wordpress element
+	 * 
+	 * @param mixed $media_id optional Media ID of the element to be initialized if not defined, returns an empty element.
+	 * 
+	 * @since BP Media 2.0
+	 */
 	function __construct($media_id = '') {
 		if (!$media_id == '') {
 			$this->init($media_id);
 		}
 	}
 
+	/**
+	 * Initializes the object with the variables from the post
+	 * 
+	 * @param mixed $media_id Media ID of the element to be initialized. Can be the ID or the object of the Media
+	 * 
+	 * @since BP Media 2.0
+	 */
 	function init($media_id = '') {
 		if (is_object($media_id)) {
 			$media = $media_id;
@@ -44,8 +63,14 @@ class BP_Media_Host_Wordpress {
 			default :
 				return false;
 		}
+		$this->attachment_id = get_post_meta($this->id, 'bp_media_child_attachment', true);
 	}
 
+	/**
+	 * Handles the uploaded media file and creates attachment post for the file.
+	 * 
+	 * @since BP Media 2.0
+	 */
 	function add_media($name, $description) {
 		global $bp, $wpdb, $bp_media_count;
 		include_once(ABSPATH . 'wp-admin/includes/file.php');
@@ -215,18 +240,18 @@ class BP_Media_Host_Wordpress {
 
 	function get_media_single_content() {
 		global $bp_media_default_sizes, $bp_media_default_excerpts;
-		$attachment_id = get_post_meta($this->id, 'bp_media_child_attachment', true);
+
 		$content = '<div class="bp_media_title">' . wp_html_excerpt($this->name, $bp_media_default_excerpts['single_entry_title']) . '</div><div class="bp_media_content">';
 		switch ($this->type) {
 			case 'video' :
-				$content.='<video src="' . wp_get_attachment_url($attachment_id) . '" width="' . $bp_media_default_sizes['single_video']['width'] . '" height="' . ($bp_media_default_sizes['single_video']['height'] == 0 ? 'auto' : $bp_media_default_sizes['single_video']['height']) . '" type="video/mp4" id="bp_media_video_' . $this->id . '" controls="controls" preload="none"></video><script>bp_media_create_element("bp_media_video_' . $this->id . '");</script>';
+				$content.='<video src="' . wp_get_attachment_url($this->attachment_id) . '" width="' . $bp_media_default_sizes['single_video']['width'] . '" height="' . ($bp_media_default_sizes['single_video']['height'] == 0 ? 'auto' : $bp_media_default_sizes['single_video']['height']) . '" type="video/mp4" id="bp_media_video_' . $this->id . '" controls="controls" preload="none"></video><script>bp_media_create_element("bp_media_video_' . $this->id . '");</script>';
 				break;
 			case 'audio' :
-				$content.='<audio src="' . wp_get_attachment_url($attachment_id) . '" width="' . $bp_media_default_sizes['single_audio']['width'] . '" type="audio/mp3" id="bp_media_audio_' . $this->id . '" controls="controls" preload="none" ></audio><script>bp_media_create_element("bp_media_audio_' . $this->id . '");</script>';
+				$content.='<audio src="' . wp_get_attachment_url($this->attachment_id) . '" width="' . $bp_media_default_sizes['single_audio']['width'] . '" type="audio/mp3" id="bp_media_audio_' . $this->id . '" controls="controls" preload="none" ></audio><script>bp_media_create_element("bp_media_audio_' . $this->id . '");</script>';
 				$type = 'audio';
 				break;
 			case 'image' :
-				$image_array = image_downsize($attachment_id, 'bp_media_single_image');
+				$image_array = image_downsize($this->attachment_id, 'bp_media_single_image');
 				$content.='<img src="' . $image_array[0] . '" id="bp_media_image_' . $this->id . '" />';
 				$type = 'image';
 				break;
@@ -245,7 +270,7 @@ class BP_Media_Host_Wordpress {
 				?>
 				<li>
 					<a href="<?php echo $this->url ?>" title="<?php echo $this->description ?>">
-						<img src="<?php echo plugins_url('css/video_thumb.png', __FILE__) ?>" />
+						<img src="<?php echo plugins_url('img/video_thumb.png', __FILE__) ?>" />
 					</a>
 					<h3 title="<?php echo $this->name ?>"><a href="<?php echo $this->url ?>" title="<?php echo $this->description ?>"><?php echo $this->name ?></a></h3>
 				</li>
@@ -255,7 +280,7 @@ class BP_Media_Host_Wordpress {
 				?>
 				<li>
 					<a href="<?php echo $this->url ?>" title="<?php echo $this->description ?>">
-						<img src="<?php echo plugins_url('css/audio_thumb.png', __FILE__) ?>" />
+						<img src="<?php echo plugins_url('img/audio_thumb.png', __FILE__) ?>" />
 					</a>
 					<h3 title="<?php echo $this->name ?>"><a href="<?php echo $this->url ?>" title="<?php echo $this->description ?>"><?php echo $this->name ?></a></h3>
 				</li>
@@ -374,5 +399,8 @@ class BP_Media_Host_Wordpress {
 		return $this->url;
 	}
 
+	function get_attachment_url(){
+		return wp_get_attachment_url($this->attachment_id);
+	}
 }
 ?>
