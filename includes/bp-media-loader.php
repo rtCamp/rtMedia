@@ -1,12 +1,10 @@
 <?php
-
 /**
  * The Main loader file of BuddyPress Media Component Plugin
  */
 /* Exit if accessed directlly. */
 if (!defined('ABSPATH'))
 	exit;
-
 
 /* Slug Constants */
 define('BP_MEDIA_SLUG', 'media');
@@ -34,7 +32,6 @@ define('BP_MEDIA_VIDEOS_LABEL_SINGULAR', __('Video', 'bp-media'));
 define('BP_MEDIA_AUDIO_LABEL', __('Audio', 'bp-media'));
 define('BP_MEDIA_AUDIO_LABEL_SINGULAR', __('Audio', 'bp-media'));
 define('BP_MEDIA_UPLOAD_LABEL', __('Upload', 'bp-media'));
-
 
 /* Global variable to store the query */
 global $bp_media_query;
@@ -114,16 +111,11 @@ class BP_Media_Component extends BP_Component {
 	 */
 	function __construct() {
 		global $bp;
-
 		parent::start(BP_MEDIA_SLUG, BP_MEDIA_LABEL, BP_MEDIA_PLUGIN_DIR);
-
 		$this->includes();
-
 		$bp->active_components[$this->id] = '1';
-
 		add_action('init', array(&$this, 'register_post_types'));
 	}
-	/* End __construct() */
 	
 	/**
 	 * Includes the files required for the BuddyPress Media Component and calls the parent class' includes function
@@ -131,7 +123,6 @@ class BP_Media_Component extends BP_Component {
 	 * @since BP Media 2.0
 	 */
 	function includes() {
-
 		$includes = array(
 			'includes/bp-media-screens.php',
 			'includes/bp-media-functions.php',
@@ -140,7 +131,6 @@ class BP_Media_Component extends BP_Component {
 			'includes/bp-media-actions.php',
 			'includes/bp-media-interface.php',
 			'includes/bp-media-class-wordpress.php',
-			'includes/bp-media-test.php',
 			'includes/bp-media-shortcodes.php'
 		);
 		if (is_admin() || is_network_admin()) {
@@ -148,7 +138,6 @@ class BP_Media_Component extends BP_Component {
 		}
 		parent::includes($includes);
 	}
-	/* End includes() */
 
 	/**
 	 * Initializes the global variables of the BuddyPress Media component and its parent class.
@@ -163,11 +152,7 @@ class BP_Media_Component extends BP_Component {
 		);
 		parent::setup_globals($globals);
 	}
-	/* End setup_globals() */
 
-	/**
-	 * 
-	 */
 	function setup_nav() {
 		/* Add 'Media' to the main navigation */
 		if (bp_is_my_profile()) {
@@ -186,7 +171,7 @@ class BP_Media_Component extends BP_Component {
 				'screen_function' => 'bp_media_images_screen',
 				'default_subnav_slug' => BP_MEDIA_IMAGES_SLUG
 			);
-		}/* EndIf(bp_is_my_profile) */
+		}
 		$sub_nav[] = array(
 			'name' => BP_MEDIA_UPLOAD_LABEL,
 			'slug' => BP_MEDIA_UPLOAD_SLUG,
@@ -198,22 +183,24 @@ class BP_Media_Component extends BP_Component {
 		);
 		parent::setup_nav($main_nav, $sub_nav);
 
-		
 		bp_core_new_nav_item(array(
 			'name' => BP_MEDIA_IMAGES_LABEL,
 			'slug' => BP_MEDIA_IMAGES_SLUG,
 			'screen_function' => 'bp_media_images_screen'
 		));
+
 		bp_core_new_nav_item(array(
 			'name' => BP_MEDIA_VIDEOS_LABEL,
 			'slug' => BP_MEDIA_VIDEOS_SLUG,
 			'screen_function' => 'bp_media_videos_screen'
 		));
+		
 		bp_core_new_nav_item(array(
 			'name' => BP_MEDIA_AUDIO_LABEL,
 			'slug' => BP_MEDIA_AUDIO_SLUG,
 			'screen_function' => 'bp_media_audio_screen'
 		));
+		
 		bp_core_new_subnav_item(array(
 			'name' => 'Listen', /* Display name for the nav item(It won't be shown anywhere) */
 			'slug' => BP_MEDIA_AUDIO_ENTRY_SLUG, /* URL slug for the nav item */
@@ -222,6 +209,7 @@ class BP_Media_Component extends BP_Component {
 			'position' => 90, /* Index of where this nav item should be positioned */
 			'screen_function' => 'bp_media_audio_screen', /* The name of the function to run when clicked */
 		));
+		
 		bp_core_new_subnav_item(array(
 			'name' => 'Watch', /* Display name for the nav item(It won't be shown anywhere) */
 			'slug' => BP_MEDIA_VIDEOS_ENTRY_SLUG, /* URL slug for the nav item */
@@ -230,6 +218,7 @@ class BP_Media_Component extends BP_Component {
 			'position' => 90, /* Index of where this nav item should be positioned */
 			'screen_function' => 'bp_media_videos_screen', /* The name of the function to run when clicked */
 		));
+		
 		bp_core_new_subnav_item(array(
 			'name' => 'View', /* Display name for the nav item(It won't be shown anywhere) */
 			'slug' => BP_MEDIA_IMAGES_ENTRY_SLUG, /* URL slug for the nav item */
@@ -238,6 +227,7 @@ class BP_Media_Component extends BP_Component {
 			'position' => 90, /* Index of where this nav item should be positioned */
 			'screen_function' => 'bp_media_images_screen', /* The name of the function to run when clicked */
 		));
+		
 		bp_core_new_subnav_item(array(
 			'name' => 'Edit', /* Display name for the nav item(It won't be shown anywhere) */
 			'slug' => BP_MEDIA_IMAGES_EDIT_SLUG, /* URL slug for the nav item */
@@ -246,6 +236,7 @@ class BP_Media_Component extends BP_Component {
 			'position' => 90, /* Index of where this nav item should be positioned */
 			'screen_function' => 'bp_media_images_edit_screen', /* The name of the function to run when clicked */
 		));
+		
 		bp_core_new_subnav_item(array(
 			'name' => 'Edit', /* Display name for the nav item(It won't be shown anywhere) */
 			'slug' => BP_MEDIA_AUDIO_EDIT_SLUG, /* URL slug for the nav item */
@@ -254,6 +245,7 @@ class BP_Media_Component extends BP_Component {
 			'position' => 90, /* Index of where this nav item should be positioned */
 			'screen_function' => 'bp_media_audio_edit_screen', /* The name of the function to run when clicked */
 		));
+		
 		bp_core_new_subnav_item(array(
 			'name' => 'Edit', /* Display name for the nav item(It won't be shown anywhere) */
 			'slug' => BP_MEDIA_VIDEOS_EDIT_SLUG, /* URL slug for the nav item */
@@ -263,7 +255,6 @@ class BP_Media_Component extends BP_Component {
 			'screen_function' => 'bp_media_videos_edit_screen', /* The name of the function to run when clicked */
 		));
 
-
 		bp_core_new_subnav_item(array(
 			'name' => 'Page', /* Display name for the nav item(It won't be shown anywhere) */
 			'slug' => 'page', /* URL slug for the nav item */
@@ -272,6 +263,7 @@ class BP_Media_Component extends BP_Component {
 			'position' => 90, /* Index of where this nav item should be positioned */
 			'screen_function' => 'bp_media_images_screen', /* The name of the function to run when clicked */
 		));
+
 		bp_core_new_subnav_item(array(
 			'name' => 'Page', /* Display name for the nav item(It won't be shown anywhere) */
 			'slug' => 'page', /* URL slug for the nav item */
@@ -280,6 +272,7 @@ class BP_Media_Component extends BP_Component {
 			'position' => 90, /* Index of where this nav item should be positioned */
 			'screen_function' => 'bp_media_audio_screen', /* The name of the function to run when clicked */
 		));
+		
 		bp_core_new_subnav_item(array(
 			'name' => 'Page', /* Display name for the nav item(It won't be shown anywhere) */
 			'slug' => 'page', /* URL slug for the nav item */
@@ -289,7 +282,6 @@ class BP_Media_Component extends BP_Component {
 			'screen_function' => 'bp_media_videos_screen', /* The name of the function to run when clicked */
 		));
 	}
-	/* End setup_nav() */
 
 	function register_post_types() {
 		/* Set up labels for the post type */
@@ -309,21 +301,15 @@ class BP_Media_Component extends BP_Component {
 			'supports' => array('title', 'editor', 'excerpt', 'author', 'thumbnail', 'custom-fields')
 		);
 		register_post_type('bp_media', $args);
-
 		parent::register_post_types();
 	}
-
-/*End register_post_type() */
 }
-
-/*End BP_Media_Component */
 
 function bp_media_load_core_component() {
 	global $bp;
 
 	$bp->{BP_MEDIA_SLUG} = new BP_Media_Component();
 }
-
 add_action('bp_loaded', 'bp_media_load_core_component');
 
 /**
@@ -356,8 +342,6 @@ function bp_media_custom_nav() {
 		$bp->current_component = BP_MEDIA_SLUG;
 	}
 }
-
-/*End bp_media_custom_nav() */
 add_action('bp_setup_nav', 'bp_media_custom_nav', 999);
 
 function bp_media_thumbnail() {
@@ -365,6 +349,5 @@ function bp_media_thumbnail() {
 	add_image_size('bp_media_activity_image', $bp_media_default_sizes['activity_image']['width'], $bp_media_default_sizes['activity_image']['height'], true);
 	add_image_size('bp_media_single_image', $bp_media_default_sizes['single_image']['width'], $bp_media_default_sizes['single_image']['height'], true);
 }
-
 add_action('after_setup_theme', 'bp_media_thumbnail');
 ?>

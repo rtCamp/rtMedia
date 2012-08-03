@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Add the BuddyPress Media Component's options menu in the BuddyPress' options subnavigation.
  * 
@@ -40,7 +39,6 @@ function bp_media_admin_menu() {
 			update_option('bp_media_remove_linkback', '0');
 		}
 	}
-	
 	?>
 	<div class="metabox-fixed metabox-holder alignright">
 		<?php bp_media_default_admin_sidebar(); ?>
@@ -66,16 +64,17 @@ function bp_media_admin_menu() {
 					</tr>
 					<tr valign="top">
 						<th scope="row"><label for="remove_linkback">Remove Linkback</label></th>
-						<td> <fieldset><legend class="screen-reader-text"><span>Remove Linkback</span></legend><label for="remove_linkback">
-									<input name="remove_linkback" type="checkbox" id="remove_linkback" value="1" <?php if(get_option('bp_media_remove_linkback')=='1') echo 'checked="checked"' ?>>
-									Removes the link to MediaBP from footer</label>
-							</fieldset></td>
+						<td>
+							<fieldset>
+								<legend class="screen-reader-text"><span>Remove Linkback</span></legend>
+								<label for="remove_linkback"><input name="remove_linkback" type="checkbox" id="remove_linkback" value="1" <?php if(get_option('bp_media_remove_linkback')=='1') echo 'checked="checked"' ?>> Removes the link to MediaBP from footer</label>
+							</fieldset>
+						</td>
 					</tr>
 				</tbody>
 			</table>
 			<p class="submit"><input type="submit" name="submit" id="submit" class="button-primary" value="Save Changes"></p></form>
 	</div>
-
 	<?php
 }
 
@@ -87,7 +86,6 @@ function bp_media_admin_menu() {
  * @since BP Media 2.0
  */
 function bp_media_get_feeds($feed_url = 'http://rtcamp.com/blog/category/buddypress-media/feed/') {
-
 	// Get RSS Feed(s)
 	require_once( ABSPATH . WPINC . '/feed.php' );
 	$maxitems = 0;
@@ -128,9 +126,9 @@ function bp_media_default_admin_sidebar() {
 		<div title="<?php _e('Click to toggle', 'bp-media'); ?>" class="handlediv"><br /></div>
 		<h3 class="hndle"><span><?php _e('Getting Social is Good', 'bp-media'); ?></span></h3>
 		<div class="inside" style="text-align:center;">
-			<a href="<?php printf('%s', 'http://www.facebook.com/mediabp'); ?>" target="_blank" title="<?php _e('Become a fan on Facebook', 'bp-media'); ?>" class="bp-media-facebook"><?php _e('Facebook', 'bp-media'); ?></a>
-			<a href="<?php printf('%s', 'http://twitter.com/mediabp'); ?>" target="_blank" title="<?php _e('Follow us on Twitter', 'bp-media'); ?>" class="bp-media-twitter"><?php _e('Twitter', 'bp-media'); ?></a>
-			<a href="<?php printf('%s', 'http://feeds.feedburner.com/mediabp'); ?>" target="_blank" title="<?php _e('Subscribe to our feeds', 'bp-media'); ?>" class="bp-media-rss"><?php _e('RSS Feed', 'bp-media'); ?></a>
+			<a href="<?php printf('%s', 'http://www.facebook.com/rtCamp.solutions/'); ?>" target="_blank" title="<?php _e('Become a fan on Facebook', 'bp-media'); ?>" class="bp-media-facebook bp-media-social"><?php _e('Facebook', 'bp-media'); ?></a>
+			<a href="<?php printf('%s', 'https://twitter.com/rtcamp/'); ?>" target="_blank" title="<?php _e('Follow us on Twitter', 'bp-media'); ?>" class="bp-media-twitter bp-media-social"><?php _e('Twitter', 'bp-media'); ?></a>
+			<a href="<?php printf('%s', 'http://feeds.feedburner.com/rtcamp/'); ?>" target="_blank" title="<?php _e('Subscribe to our feeds', 'bp-media'); ?>" class="bp-media-rss bp-media-social"><?php _e('RSS Feed', 'bp-media'); ?></a>
 		</div>
 	</div>
 
@@ -138,7 +136,7 @@ function bp_media_default_admin_sidebar() {
 		<div title="<?php _e('Click to toggle', 'bp-media'); ?>" class="handlediv"><br /></div>
 		<h3 class="hndle"><span><?php _e('Promote, Donate, Share', 'bp-media'); ?>...</span></h3>
 		<div class="inside">
-			<p><?php printf(__('Buy coffee/beer for team behind <a href="%s" title="BuddyPress Media Component">MediaBP</a>.', 'bp-media'), 'http://rtcamp.com/buddypress-media/'); ?></p>
+			<p><?php printf(__('Buy coffee/beer for team behind <a href="%s" title="BuddyPress Media Component">BuddyPress Media Component</a>.', 'bp-media'), 'http://rtcamp.com/buddypress-media/'); ?></p>
 			<div class="bp-media-paypal" style="text-align:center">
 				<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
 					<input type="hidden" name="cmd" value="_donations" />

@@ -4,8 +4,6 @@
   Plugin URI: http://rtcamp.com/buddypress-media/
   Description: This component adds missing media rich features like photos, videos and audios uploading to BuddyPress which are essential if you are building social network, seriously!
   Version: 2.0
-  Requires at least: WordPress 3.3.2, BuddyPress 1.5.5
-  Tested up to: WordPress 3.4.1, BuddyPress 1.5.7
   Author: rtCamp
   Author URI: http://rtcamp.com
  */
@@ -36,8 +34,6 @@ function bp_media_init() {
 		require( BP_MEDIA_PLUGIN_DIR . '/includes/bp-media-loader.php' );
 	}
 }
-
-/* Add the initialize function to the bp_include hook */
 add_action('bp_include', 'bp_media_init');
 
 /**
@@ -46,17 +42,15 @@ add_action('bp_include', 'bp_media_init');
 function bp_media_activate() {
 	//todo
 }
-
 register_activation_hook(__FILE__, 'bp_media_activate');
 
 /**
  * Function to do the tasks during deactivation.
  * 
- * Make this function to do the db deletion and other things that might have been created with the plugin.
+ * Will Make this function to do the db deletion and other things that might have been created with the plugin.
  */
 function bp_media_deactivate() {
 	//todo
 }
-
 register_deactivation_hook(__FILE__, 'bp_media_deactivate');
 ?>

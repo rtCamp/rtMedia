@@ -1,8 +1,4 @@
 <?php
-
-/**
- * 
- */
 function bp_media_activity_permalink_filter($link, $activity_obj) {
 	if ('media_upload' == $activity_obj->type) {
 		add_shortcode('bp_media_url', 'bp_media_shortcode_url');
@@ -18,11 +14,9 @@ function bp_media_activity_permalink_filter($link, $activity_obj) {
 	}
 	return $link;
 }
-
 add_filter('bp_activity_get_permalink', 'bp_media_activity_permalink_filter', 10, 2);
 
 function bp_media_activity_action_filter($activity_action, $activity_obj) {
-
 	if ('media_upload' == $activity_obj->type) {
 		add_shortcode('bp_media_action', 'bp_media_shortcode_action');
 		$activity_action = do_shortcode($activity_action);
@@ -30,7 +24,6 @@ function bp_media_activity_action_filter($activity_action, $activity_obj) {
 	}
 	return $activity_action;
 }
-
 add_filter('bp_get_activity_action', 'bp_media_activity_action_filter', 10, 2);
 
 function bp_media_activity_content_filter($activity_content, $activity_obj) {
@@ -41,7 +34,6 @@ function bp_media_activity_content_filter($activity_content, $activity_obj) {
 	}
 	return $activity_content;
 }
-
 add_filter('bp_get_activity_content_body', 'bp_media_activity_content_filter', 10, 2);
 
 function bp_media_activity_parent_content_filter($content) {
@@ -81,6 +73,4 @@ function bp_media_items_count_filter ($title,$nav_item) {
 	$count_html=' <span>'. $count.'</span>';
 	return str_replace('</a>', $count_html.'</a>', $title);
 }
-//Filter added through media count init function conditionally
-
 ?>
