@@ -1,0 +1,65 @@
+/* 
+ *	Default stylesheet for BuddyPress Media Component
+*/
+.bp_media_content img{
+	max-width:98%;
+}
+.bp_media_title {
+	display:block;
+	font-size:20px;
+	font-weight:bold;
+}
+.bp_media_description {
+	display:block;
+}
+ul.bp-media-gallery{
+	overflow:hidden;
+}
+ul.bp-media-gallery li{
+	float:left;
+	margin:1%;
+	width:18%;
+	border-bottom:none;
+}
+ul.bp-media-gallery li img{
+	max-width:150px;
+	width:100%;
+	height:auto;
+	-moz-box-shadow: 1px 1px 10px #a0a0a0;
+	-webkit-box-shadow: 1px 1px 10px #a0a0a0;
+	box-shadow: 1px 1px 10px #a0a0a0;
+	-moz-transition: box-shadow 0.2s linear;
+	-webkit-transition: box-shadow 0.2s linear;
+	transition: box-shadow 0.2s linear;
+}
+ul.bp-media-gallery li img:hover{
+	-moz-box-shadow: 1px 1px 10px #333;
+	-webkit-box-shadow: 1px 1px 10px #333;
+	box-shadow: 1px 1px 10px #333;
+
+}
+ul.bp-media-gallery h3{
+	max-width:150px;
+	overflow: hidden;
+	text-align: center;
+	font-size:110%;
+    white-space: nowrap;
+	height:20px;
+}
+ul.bp-media-gallery a{
+	width:150px;
+}
+.bp-media-single .activity-list .activity-content,.bp-media-single div.activity-comments{
+	margin-left:0;
+}
+li.media div.activity-content div.activity-inner p{
+	display:none;
+}
+div.bp_media_title{
+	margin-bottom:5px;
+}
+#bp-media-footer {
+	color: #4D4D4D;
+	text-align: center;
+	text-shadow: #FAFAFA 1px 1px 0;
+}

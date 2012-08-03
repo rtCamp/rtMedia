@@ -1,0 +1,39 @@
+/* Used on backend */
+#wpbody-content div.metabox-fixed{
+	width: 22%;
+	margin-right: 10px;
+	clear: both;
+}
+#wpbody-content div.wrap.bp-media-admin{
+	overflow: hidden;
+	width: 76%;
+}
+#icon-bp-media{
+	background:url('../img/logo_medibp_32.png') no-repeat scroll 0 0 transparent;
+}.bp-media-social{
+	background: url('../img/bp_media_social.png');
+	height: 35px;
+	width: 35px;
+	display: inline-block;
+	font-size: 0px;
+	margin-right:5px;
+}
+.bp-media-facebook{
+	background-position: 0px 0px;
+}
+.bp-media-facebook:hover{
+	background-position: 0px 36px;
+}
+.bp-media-twitter{
+	background-position: 80px 0px;
+}
+.bp-media-twitter:hover{
+	background-position: 80px 36px;
+}
+.bp-media-rss{
+	background-position: 35px 0px;
+}
+.bp-media-rss:hover{
+	background-position: 35px 36px;
+}
+
