@@ -1,11 +1,11 @@
 <?php
-function bp_media_activity_permalink_filter($link, $activity_obj) {
-	if ('media_upload' == $activity_obj->type) {
+function bp_media_activity_permalink_filter($link, $activity_obj = null) {
+	if ($activity_obj != null && 'media_upload' == $activity_obj->type) {
 		add_shortcode('bp_media_url', 'bp_media_shortcode_url');
 		$link = do_shortcode($activity_obj->primary_link);
 		remove_shortcode('bp_media_url');
 	}
-	if ('activity_comment' == $activity_obj->type) {
+	if ($activity_obj != null && 'activity_comment' == $activity_obj->type) {
 		$parent = bp_activity_get_meta($activity_obj->item_id, 'bp_media_parent_post');
 		if ($parent) {
 			$parent = new BP_Media_Host_Wordpress($parent);
@@ -16,8 +16,8 @@ function bp_media_activity_permalink_filter($link, $activity_obj) {
 }
 add_filter('bp_activity_get_permalink', 'bp_media_activity_permalink_filter', 10, 2);
 
-function bp_media_activity_action_filter($activity_action, $activity_obj) {
-	if ('media_upload' == $activity_obj->type) {
+function bp_media_activity_action_filter($activity_action, $activity_obj = null) {
+	if ($activity_obj != null && 'media_upload' == $activity_obj->type) {
 		add_shortcode('bp_media_action', 'bp_media_shortcode_action');
 		$activity_action = do_shortcode($activity_action);
 		remove_shortcode('bp_media_action');
@@ -26,8 +26,8 @@ function bp_media_activity_action_filter($activity_action, $activity_obj) {
 }
 add_filter('bp_get_activity_action', 'bp_media_activity_action_filter', 10, 2);
 
-function bp_media_activity_content_filter($activity_content, $activity_obj) {
-	if ('media_upload' == $activity_obj->type) {
+function bp_media_activity_content_filter($activity_content, $activity_obj = null ) {
+	if ($activity_obj != null && 'media_upload' == $activity_obj->type) {
 		add_shortcode('bp_media_content', 'bp_media_shortcode_content');
 		$activity_content = do_shortcode($activity_content);
 		remove_shortcode('bp_media_content');
@@ -44,7 +44,6 @@ function bp_media_activity_parent_content_filter($content) {
 	remove_shortcode('bp_media_content');
 	return $content;
 }
-
 add_filter('bp_get_activity_parent_content', 'bp_media_activity_parent_content_filter');
 
 function bp_media_delete_button_handler($link) {

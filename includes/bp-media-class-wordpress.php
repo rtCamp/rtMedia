@@ -100,23 +100,19 @@ class BP_Media_Host_Wordpress {
 		switch ($type) {
 			case 'video/mp4' :
 				$type = 'video';
-				include_once(trailingslashit(BP_MEDIA_PLUGIN_DIR) . 'includes/lib/MP4Info.php');
+				include_once(trailingslashit(BP_MEDIA_PLUGIN_DIR) . 'includes/lib/getid3/getid3.php');
 				try {
-					$vid_info = MP4Info::getInfo($file);
-				} catch (MP4Info_Exception $e) {
-					wp_delete_post($post_id, true);
-					unlink($file);
-					$activity_content = false;
-					throw new Exception(__('MP4 file you have uploaded is currupt.', 'bp-media'));
+					$getID3 = new getID3;
+					$vid_info = $getID3->analyze($file);
 				} catch (Exception $e) {
 					wp_delete_post($post_id, true);
 					unlink($file);
 					$activity_content = false;
 					throw new Exception(__('MP4 file you have uploaded is currupt.', 'bp-media'));
 				}
-				if (is_object($vid_info)) {
-					if (isset($vid_info->hasVideo) && $vid_info->hasVideo && isset($vid_info->video)) {
-						if (!(isset($vid_info->video->codecStr) && $vid_info->video->codecStr == 'H.264')) {
+				if (is_array($vid_info)) {
+					if (!array_key_exists('error',$vid_info)&& array_key_exists('fileformat', $vid_info) && array_key_exists('video', $vid_info)&&array_key_exists('fourcc',$vid_info['video'])) {
+						if (!($vid_info['fileformat']=='mp4'&&$vid_info['video']['fourcc']=='avc1')) {
 							wp_delete_post($post_id, true);
 							unlink($file);
 							$activity_content = false;
@@ -126,7 +122,7 @@ class BP_Media_Host_Wordpress {
 						wp_delete_post($post_id, true);
 						unlink($file);
 						$activity_content = false;
-						throw new Exception(__('The MP4 file you have uploaded contains no video.', 'bp-media'));
+						throw new Exception(__('The MP4 file you have uploaded is using an unsupported video codec. Supported video codec is H.264.', 'bp-media'));
 					}
 				} else {
 					wp_delete_post($post_id, true);
