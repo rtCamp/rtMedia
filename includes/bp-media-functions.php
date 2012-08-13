@@ -69,8 +69,8 @@ function bp_media_show_formatted_error_message($messages, $type) {
 	echo '</div>';
 }
 
-function bp_media_conditional_override_allowed_tags($content, $activity) {
-	if ($activity->type == 'media_upload') {
+function bp_media_conditional_override_allowed_tags($content, $activity=null) {
+	if ($activity != null && $activity->type == 'media_upload') {
 		add_filter('bp_activity_allowed_tags', 'bp_media_override_allowed_tags', 1);
 	}
 	return bp_activity_filter_kses($content);
