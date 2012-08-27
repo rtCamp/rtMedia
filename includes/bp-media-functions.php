@@ -115,4 +115,5 @@ function bp_media_update_count() {
 	}
 	return true;
 }
+
 ?>
