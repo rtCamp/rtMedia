@@ -12,6 +12,22 @@ function bp_media_show_upload_form() {
 	<?php
 }
 
+function bp_media_show_upload_form2() {
+	global $bp,$bp_media_default_excerpts;	
+	?>
+<div id="bp-media-upload-ui" class="hide-if-no-js drag-drop">
+	<div id="drag-drop-area">
+		<div class="drag-drop-inside">
+		<p class="drag-drop-info">Drop files here</p>
+		<p>or</p>
+		<p class="drag-drop-buttons"><input id="bp-media-upload-browse-button" type="button" value="Select Files" class="button" /></p>
+		</div>
+	</div>
+</div>
+<div id="bp-media-uploaded-files"></div>
+	<?php
+}
+
 function bp_media_show_pagination($type = 'top') {
 	global $bp, $bp_media_paginated_links, $bp_media_query;
 	switch ($bp->current_action) {

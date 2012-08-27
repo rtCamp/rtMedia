@@ -11,7 +11,7 @@ function bp_media_handle_uploads() {
 			$bp_media_entry = new BP_Media_Host_Wordpress();
 			try {
 				$title = isset($_POST['bp_media_title']) ? ($_POST['bp_media_title'] != "") ? $_POST['bp_media_title'] : pathinfo($_FILES['bp_media_file']['name'], PATHINFO_FILENAME) : pathinfo($_FILES['bp_media_file']['name'], PATHINFO_FILENAME);
-				$entry = $bp_media_entry->add_media($title, $_POST['bp_media_description']);
+				$entry = $bp_media_entry->add_media($title, array_key_exists('bp_media_description',$_POST)?$_POST['bp_media_description']:'');
 				$bp->{BP_MEDIA_SLUG}->messages['updated'][] = __('Upload Successful', 'bp-media');
 			} catch (Exception $e) {
 				$bp->{BP_MEDIA_SLUG}->messages['error'][] = $e->getMessage();
@@ -60,10 +60,19 @@ add_action('wp_enqueue_scripts', 'bp_media_enqueue_scripts_styles', 11);
  * 
  * @since BP Media 2.0
  */
-function bp_media_delete_activity_handler($activity_id, $user) {
+function bp_media_delete_activity_handler($args) {
 	global $bp_media_count;
-	bp_media_init_count(bp_loggedin_user_id());
-	$post_id = bp_activity_get_meta($activity_id, 'bp_media_parent_post');
+	$author=$args['user_id'];
+	echo '<pre>';
+	var_dump($args);
+	echo '</pre>';
+	bp_get_activity_user_id();
+	echo '<pre>';
+	var_dump(bp_activity_get(array('in'=>$args['id'])));
+	echo '</pre>';
+	die();
+	bp_media_init_count($author);
+	$post_id = bp_activity_get_meta($author, 'bp_media_parent_post');
 	$type = get_post_meta($post_id, 'bp_media_type', true);
 	switch ($type) {
 		case 'image':
@@ -79,11 +88,11 @@ function bp_media_delete_activity_handler($activity_id, $user) {
 	$attachment_id = get_post_meta($post_id, 'bp_media_child_attachment', true);
 	wp_delete_attachment($attachment_id, true);
 	wp_delete_post($post_id, true);
-	bp_update_user_meta(bp_loggedin_user_id(), 'bp_media_count', $bp_media_count);
+	bp_update_user_meta($author, 'bp_media_count', $bp_media_count);
 }
 
 /* Adds bp_media_delete_activity_handler() function to be called on bp_activity_before_action_delete_activity hook */
-add_action('bp_activity_before_action_delete_activity', 'bp_media_delete_activity_handler', 10, 2);
+add_action('bp_before_activity_delete', 'bp_media_delete_activity_handler', 1, 2);
 
 /**
  * Called on bp_init by screen functions
@@ -183,4 +192,28 @@ function bp_media_footer() { ?>
 }
 if(get_option('bp_media_remove_linkback')!='1')
 	add_action('bp_footer','bp_media_footer');
+
+function bp_media_upload_enqueue(){
+	$params=array(
+		'url'=>plugins_url('bp-media-upload-handler.php',__FILE__),
+		'runtimes'	=>	'gears,html5,flash,silverlight,browserplus',
+		'browse_button'	=>	'bp-media-upload-browse-button',
+		'container'	=>	'bp-media-upload-ui',
+		'drop_element' =>	'drag-drop-area',
+		'filters'	=>	array(array('title' => "Media Files",'extensions'=> "mp4,jpg,png,jpeg,gif,mp3")),
+		'max_file_size'	=>	'100mb',
+		'multipart'           => true,
+		'urlstream_upload'    => true,
+		'flash_swf_url'       => includes_url( 'js/plupload/plupload.flash.swf' ),
+		'silverlight_xap_url' => includes_url( 'js/plupload/plupload.silverlight.xap' ),
+		'file_data_name'      => 'bp_media_file', // key passed to $_FILE.
+		'multi_selection'		=> true,
+		'multipart_params'	=> array('action'=>'wp_handle_upload')
+		//var resize_height = 1024, resize_width = 1024,wpUploaderInit = {"runtimes":"html5,silverlight,flash,html4","browse_button":"plupload-browse-button","container":"plupload-upload-ui","drop_element":"drag-drop-area","file_data_name":"async-upload","multiple_queues":true,"max_file_size":"524288000b","url":"http:\/\/dummy\/pdfconverter\/wp-admin\/async-upload.php","flash_swf_url":"http:\/\/dummy\/pdfconverter\/wp-includes\/js\/plupload\/plupload.flash.swf","silverlight_xap_url":"http:\/\/dummy\/pdfconverter\/wp-includes\/js\/plupload\/plupload.silverlight.xap","filters":[{"title":"Allowed Files","extensions":"*"}],"multipart":true,"urlstream_upload":true,"multipart_params":{"post_id":0,"_wpnonce":"14a410f0fa","type":"","tab":"","short":"1"}};
+	);		
+	wp_enqueue_script('bp-media-uploader',plugins_url('js/bp-media-uploader.js',__FILE__),array('plupload', 'plupload-html5', 'plupload-flash', 'plupload-silverlight', 'plupload-html4','plupload-handlers'));
+	wp_localize_script('bp-media-uploader','bp_media_uploader_params',$params);
+	wp_enqueue_style('bp-media-uploader',plugins_url('css/bp-media-uploader.css',__FILE__));
+}
+//add_action('wp_enqueue_scripts','bp_media_upload_enqueue');
 ?>
