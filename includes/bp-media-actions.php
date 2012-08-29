@@ -60,19 +60,10 @@ add_action('wp_enqueue_scripts', 'bp_media_enqueue_scripts_styles', 11);
  * 
  * @since BP Media 2.0
  */
-function bp_media_delete_activity_handler($args) {
+function bp_media_delete_activity_handler($activity_id, $user) {
 	global $bp_media_count;
-	$author=$args['user_id'];
-	echo '<pre>';
-	var_dump($args);
-	echo '</pre>';
-	bp_get_activity_user_id();
-	echo '<pre>';
-	var_dump(bp_activity_get(array('in'=>$args['id'])));
-	echo '</pre>';
-	die();
-	bp_media_init_count($author);
-	$post_id = bp_activity_get_meta($author, 'bp_media_parent_post');
+	bp_media_init_count(bp_loggedin_user_id());
+	$post_id = bp_activity_get_meta($activity_id, 'bp_media_parent_post');
 	$type = get_post_meta($post_id, 'bp_media_type', true);
 	switch ($type) {
 		case 'image':
@@ -88,11 +79,14 @@ function bp_media_delete_activity_handler($args) {
 	$attachment_id = get_post_meta($post_id, 'bp_media_child_attachment', true);
 	wp_delete_attachment($attachment_id, true);
 	wp_delete_post($post_id, true);
-	bp_update_user_meta($author, 'bp_media_count', $bp_media_count);
+	bp_update_user_meta(bp_loggedin_user_id(), 'bp_media_count', $bp_media_count);
 }
 
 /* Adds bp_media_delete_activity_handler() function to be called on bp_activity_before_action_delete_activity hook */
-add_action('bp_before_activity_delete', 'bp_media_delete_activity_handler', 1, 2);
+//add_action('bp_before_activity_delete', 'bp_media_delete_activity_handler', 1, 2);
+//The above hook isn't at right place yet, so skipped it till its corrected
+add_action('bp_activity_before_action_delete_activity', 'bp_media_delete_activity_handler', 10, 2);
+
 
 /**
  * Called on bp_init by screen functions
@@ -135,18 +129,21 @@ function bp_media_set_query() {
 }
 
 /**
- * Adds a download button on single entry pages of media files.
+ * Adds a download button and edit button on single entry pages of media files.
  * 
  * @since BP Media 2.0
  */
-function bp_media_action_download_button() {
+function bp_media_action_buttons() {
 	if(!in_array('bp_media_current_entry', $GLOBALS))
 		return false;
 	global $bp_media_current_entry;
-	if($bp_media_current_entry!=NULL)
+	if($bp_media_current_entry!=NULL){
+		echo '<a href="'.$bp_media_current_entry->get_edit_url().'" class="button item-button bp-secondary-action bp-media-edit" title="Edit Media">Edit</a>';
 		echo '<a href="'.$bp_media_current_entry->get_attachment_url().'" class="button item-button bp-secondary-action bp-media-download" title="Download">Download</a>';
+		
+	}
 }
-add_action('bp_activity_entry_meta', 'bp_media_action_download_button'); 
+add_action('bp_activity_entry_meta', 'bp_media_action_buttons'); 
 
 /* Should be used with Content Disposition Type for media files set to attachment */
 

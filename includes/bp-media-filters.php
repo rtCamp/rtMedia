@@ -48,7 +48,7 @@ add_filter('bp_get_activity_parent_content', 'bp_media_activity_parent_content_f
 
 function bp_media_delete_button_handler($link) {
 	if(bp_current_component()=='media')
-		$link=str_replace('class="button', 'class="button delete-activity-single', $link);
+		$link=str_replace('delete-activity ', 'delete-activity-single ', $link);
 	return $link;
 }
 add_filter('bp_get_activity_delete_link','bp_media_delete_button_handler');
