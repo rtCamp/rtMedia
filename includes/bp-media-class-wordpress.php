@@ -10,7 +10,8 @@ class BP_Media_Host_Wordpress {
 		$url, //URL of the entry
 		$type, //Type of the entry (Video, Image or Audio)
 		$owner,   //Owner of the entry
-		$attachment_id; //The attachment ID of the media file
+		$attachment_id, //The attachment ID of the media file
+		$edit_url; //The edit page's url for the media
 	
 	/**
 	 * Constructs a new BP_Media_Host_Wordpress element
@@ -54,6 +55,7 @@ class BP_Media_Host_Wordpress {
 				break;
 			case 'image' :
 				$this->url = trailingslashit(bp_core_get_user_domain($this->owner) . BP_MEDIA_IMAGES_SLUG . '/' . BP_MEDIA_IMAGES_ENTRY_SLUG . '/' . $this->id);
+				$this->edit_url = trailingslashit(bp_core_get_user_domain($this->owner) . BP_MEDIA_IMAGES_SLUG . '/' . BP_MEDIA_IMAGES_EDIT_SLUG . '/' . $this->id);
 				break;
 			default :
 				return false;
@@ -346,6 +348,8 @@ class BP_Media_Host_Wordpress {
 				</div>
 				<?php
 			endwhile;
+		else:
+			echo "Activity is already Deleted";
 		endif;
 	}
 
@@ -387,6 +391,15 @@ class BP_Media_Host_Wordpress {
 	
 	function get_content() {
 		return $this->description;
+	}
+	function get_author() {
+		return $this->owner;
+	}
+	function get_id(){
+		return $this->id;
+	}
+	function get_edit_url() {
+		return $this->edit_url;
 	}
 }
 ?>
