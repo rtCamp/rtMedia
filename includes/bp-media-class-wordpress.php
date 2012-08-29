@@ -11,7 +11,7 @@ class BP_Media_Host_Wordpress {
 		$type, //Type of the entry (Video, Image or Audio)
 		$owner,   //Owner of the entry
 		$attachment_id; //The attachment ID of the media file
-
+	
 	/**
 	 * Constructs a new BP_Media_Host_Wordpress element
 	 * 
@@ -226,7 +226,6 @@ class BP_Media_Host_Wordpress {
 
 	function get_media_single_content() {
 		global $bp_media_default_sizes, $bp_media_default_excerpts;
-
 		$content = '<div class="bp_media_title">' . wp_html_excerpt($this->name, $bp_media_default_excerpts['single_entry_title']) . '</div><div class="bp_media_content">';
 		switch ($this->type) {
 			case 'video' :
@@ -356,6 +355,38 @@ class BP_Media_Host_Wordpress {
 
 	function get_attachment_url(){
 		return wp_get_attachment_url($this->attachment_id);
+	}
+	
+	function update_media($args=array()){
+		$defaults=array(
+			'name'	=>	$this->name,
+			'description'	=>	$this->description,
+			'owner'			=>	$this->owner
+		);
+		$args = wp_parse_args( $args, $defaults );
+		$post=get_post($this->id,ARRAY_A);
+		$post['post_title']=esc_html($args['name']);
+		$post['post_content']=esc_html($args['description']);
+		$post['post_author']=$args['owner'];
+		$result =  wp_update_post($post);
+		$this->init($this->id);
+		return $result;
+	}
+	
+	function delete_media(){
+		wp_delete_attachment($this->attachment_id);
+		$activity_id = get_post_meta($post_id, 'bp_media_child_activity', true);
+		if($activity_id)
+			bp_activity_delete_by_activity_id($activity_id);
+		wp_delete_post($this->id);
+	}
+	
+	function get_title() {
+		return $this->name;
+	}
+	
+	function get_content() {
+		return $this->description;
 	}
 }
 ?>
