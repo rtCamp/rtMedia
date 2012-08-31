@@ -257,6 +257,15 @@ class BP_Media_Component extends BP_Component {
 		));
 		
 		bp_core_new_subnav_item(array(
+			'name' => 'Delete', /* Display name for the nav item(It won't be shown anywhere) */
+			'slug' => BP_MEDIA_DELETE_SLUG, /* URL slug for the nav item */
+			'parent_slug' => BP_MEDIA_AUDIO_SLUG, /* URL slug of the parent nav item */
+			'parent_url' => trailingslashit(bp_loggedin_user_domain() . BP_MEDIA_AUDIO_SLUG), /* URL of the parent item */
+			'position' => 90, /* Index of where this nav item should be positioned */
+			'screen_function' => 'bp_media_audio_screen', /* The name of the function to run when clicked */
+		));
+		
+		bp_core_new_subnav_item(array(
 			'name' => 'Edit', /* Display name for the nav item(It won't be shown anywhere) */
 			'slug' => BP_MEDIA_VIDEOS_EDIT_SLUG, /* URL slug for the nav item */
 			'parent_slug' => BP_MEDIA_VIDEOS_SLUG, /* URL slug of the parent nav item */
@@ -265,6 +274,15 @@ class BP_Media_Component extends BP_Component {
 			'screen_function' => 'bp_media_videos_edit_screen', /* The name of the function to run when clicked */
 		));
 
+		bp_core_new_subnav_item(array(
+			'name' => 'Delete', /* Display name for the nav item(It won't be shown anywhere) */
+			'slug' => BP_MEDIA_DELETE_SLUG, /* URL slug for the nav item */
+			'parent_slug' => BP_MEDIA_VIDEOS_SLUG, /* URL slug of the parent nav item */
+			'parent_url' => trailingslashit(bp_loggedin_user_domain() . BP_MEDIA_VIDEOS_SLUG), /* URL of the parent item */
+			'position' => 90, /* Index of where this nav item should be positioned */
+			'screen_function' => 'bp_media_videos_screen', /* The name of the function to run when clicked */
+		));
+		
 		bp_core_new_subnav_item(array(
 			'name' => 'Page', /* Display name for the nav item(It won't be shown anywhere) */
 			'slug' => 'page', /* URL slug for the nav item */

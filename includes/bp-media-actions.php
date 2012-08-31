@@ -85,8 +85,24 @@ function bp_media_delete_activity_handler($activity_id, $user) {
 /* Adds bp_media_delete_activity_handler() function to be called on bp_activity_before_action_delete_activity hook */
 //add_action('bp_before_activity_delete', 'bp_media_delete_activity_handler', 1, 2);
 //The above hook isn't at right place yet, so skipped it till its corrected
-add_action('bp_activity_before_action_delete_activity', 'bp_media_delete_activity_handler', 10, 2);
+//add_action('bp_activity_before_action_delete_activity', 'bp_media_delete_activity_handler', 10, 2);
 
+function bp_media_delete_activity_handler_old($args){
+	global $bp_media_count,$wpdb;
+	
+	if(!array_key_exists('id', $args))
+		return;
+	
+	$activity_id=$args['id'];
+	$query="SELECT post_id from $wpdb->postmeta WHERE meta_key='bp_media_child_activity' AND meta_value=$activity_id";
+	$result=$wpdb->get_results($query);
+	if(!(is_array($result)&& count($result)==1 ))
+		return;
+	$post_id=$result[0]->post_id;
+	$media = new BP_Media_Host_Wordpress($post_id);
+	$media->delete_media();
+}
+add_action('bp_before_activity_delete', 'bp_media_delete_activity_handler_old');
 
 /**
  * Called on bp_init by screen functions
@@ -138,7 +154,7 @@ function bp_media_action_buttons() {
 		return false;
 	global $bp_media_current_entry;
 	if($bp_media_current_entry!=NULL){
-		echo '<a href="'.$bp_media_current_entry->get_edit_url().'" class="button item-button bp-secondary-action bp-media-edit" title="Edit Media">Edit</a>';
+		if(bp_displayed_user_id()==  bp_loggedin_user_id())	echo '<a href="'.$bp_media_current_entry->get_edit_url().'" class="button item-button bp-secondary-action bp-media-edit" title="Edit Media">Edit</a>';
 		echo '<a href="'.$bp_media_current_entry->get_attachment_url().'" class="button item-button bp-secondary-action bp-media-download" title="Download">Download</a>';
 		
 	}
