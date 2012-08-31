@@ -116,4 +116,38 @@ function bp_media_update_count() {
 	return true;
 }
 
+function bp_media_update_media(){
+	global $bp_media_current_entry;
+	if($bp_media_current_entry->update_media(array('name'=> esc_html($_POST['bp_media_title']),'description'=> esc_html($_POST['bp_media_description'])))){
+		@setcookie('bp-message', 'The media has been updated' , time() + 60 * 60 * 24, COOKIEPATH);
+		@setcookie('bp-message-type', 'success' , time() + 60 * 60 * 24, COOKIEPATH);
+		wp_redirect($bp_media_current_entry->get_url());
+		exit;
+	}
+	else{
+		@setcookie('bp-message', 'The media update failed' , time() + 60 * 60 * 24, COOKIEPATH);
+		@setcookie('bp-message-type', 'error' , time() + 60 * 60 * 24, COOKIEPATH);
+		wp_redirect($bp_media_current_entry->get_edit_url());
+		exit;
+	}
+}
+
+function bp_media_check_user() {
+	if (bp_loggedin_user_id() != bp_displayed_user_id()) {
+		bp_core_no_access(array(
+			'message' => __('You do not have access to this page.', 'buddypress'),
+			'root' => bp_displayed_user_domain(),
+			'redirect' => false
+		));
+		exit;
+	}
+}
+
+function bp_media_page_not_exist() {
+	@setcookie('bp-message', 'The requested url does not exist' , time() + 60 * 60 * 24, COOKIEPATH);
+	@setcookie('bp-message-type', 'error' , time() + 60 * 60 * 24, COOKIEPATH);
+	wp_redirect(trailingslashit(bp_displayed_user_domain() . BP_MEDIA_IMAGES_SLUG));
+	exit;
+}
+
 ?>
