@@ -81,6 +81,12 @@ $bp_media_default_excerpts=array(
 	'activity_entry_description'=>	500
 );
 
+$bp_media_options = get_option('bp_media_options',array(
+	'videos_enabled'	=>	true,
+	'audio_enabled'		=>	true,
+	'images_enabled'	=>	true,
+));
+
 /* To set the language according to the locale selected and availability of the language file. */
 if (file_exists(BP_MEDIA_PLUGIN_DIR . '/languages/' . get_locale() . '.mo'))
 	load_textdomain('bp-media', BP_MEDIA_PLUGIN_DIR . '/languages/' . get_locale() . '.mo');

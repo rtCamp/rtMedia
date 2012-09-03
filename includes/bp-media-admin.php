@@ -23,7 +23,12 @@ add_action(bp_core_admin_hook(), 'bp_media_add_admin_menu');
 function bp_media_admin_menu() {
 	$bp_media_errors=array();
 	$bp_media_messages=array();
-	
+	global $bp_media_options;
+	$bp_media_options = get_option('bp_media_options',array(
+		'videos_enabled'	=>	true,
+		'audio_enabled'		=>	true,
+		'images_enabled'	=>	true,
+	));
 	if(array_key_exists('submit', $_POST)){
 		check_admin_referer('bp_media_update_options');
 		if(array_key_exists('refresh_media_count', $_POST)){
@@ -38,8 +43,30 @@ function bp_media_admin_menu() {
 		else{
 			update_option('bp_media_remove_linkback', '0');
 		}
+		if(array_key_exists('enable_videos',$_POST)){
+			$bp_media_options['videos_enabled'] = true;
+		}
+		else
+		{
+			$bp_media_options['videos_enabled'] = false;
+		}
+		if(array_key_exists('enable_audio',$_POST)){
+			$bp_media_options['audio_enabled'] = true;
+		}
+		else
+		{
+			$bp_media_options['audio_enabled'] = false;
+		}
+		if(array_key_exists('enable_images',$_POST)){
+			$bp_media_options['images_enabled'] = true;
+		}
+		else
+		{
+			$bp_media_options['images_enabled'] = false;
+		}
+		update_option('bp_media_options', $bp_media_options);
 	}
-	?>
+		?>
 	<div class="metabox-fixed metabox-holder alignright">
 		<?php bp_media_default_admin_sidebar(); ?>
 	</div>
@@ -53,6 +80,7 @@ function bp_media_admin_menu() {
 		<?php }?>
 		<form method="post">
 			 <?php wp_nonce_field( 'bp_media_update_options' ); ?>
+			<h3>General Settings</h3>
 			<table class="form-table ">
 				<tbody>
 					<tr valign="top">
@@ -68,6 +96,38 @@ function bp_media_admin_menu() {
 							<fieldset>
 								<legend class="screen-reader-text"><span>Remove Linkback</span></legend>
 								<label for="remove_linkback"><input name="remove_linkback" type="checkbox" id="remove_linkback" value="1" <?php if(get_option('bp_media_remove_linkback')=='1') echo 'checked="checked"' ?>> Removes the link to MediaBP from footer</label>
+							</fieldset>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<h3>Media Types Enabled</h3>
+			<table class="form-table ">
+				<tbody>
+					<tr valign="top">
+						<th scope="row"><label for="enable_videos">Videos</label></th>
+						<td>
+							<fieldset>
+								<legend class="screen-reader-text"><span>Enable Videos</span></legend>
+								<label for="enable_videos"><input name="enable_videos" type="checkbox" id="enable_videos" value="1" <?php global $bp_media_options;checked($bp_media_options['videos_enabled'],true) ?>> (Check to enable video upload functionality)</label>
+							</fieldset>
+						</td>
+					</tr>
+					<tr valign="top">
+						<th scope="row"><label for="enable_audio">Audio</label></th>
+						<td>
+							<fieldset>
+								<legend class="screen-reader-text"><span>Enable Audio</span></legend>
+								<label for="enable_audio"><input name="enable_audio" type="checkbox" id="enable_audio" value="1" <?php checked($bp_media_options['audio_enabled'],true) ?>> (Check to enable audio upload functionality)</label>
+							</fieldset>
+						</td>
+					</tr>
+					<tr valign="top">
+						<th scope="row"><label for="enable_images">Images</label></th>
+						<td>
+							<fieldset>
+								<legend class="screen-reader-text"><span>Enable Images</span></legend>
+								<label for="enable_images"><input name="enable_images" type="checkbox" id="enable_images" value="1" <?php checked($bp_media_options['images_enabled'],true) ?>> (Check to enable images upload functionality)</label>
 							</fieldset>
 						</td>
 					</tr>
