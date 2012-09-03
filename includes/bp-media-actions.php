@@ -5,9 +5,33 @@
  * @since BP Media 2.0
  */
 function bp_media_handle_uploads() {
-	global $bp;
+	global $bp,$bp_media_options;
+	global $bp_media_options;
+	$bp_media_options = get_option('bp_media_options',array(
+		'videos_enabled'	=>	true,
+		'audio_enabled'		=>	true,
+		'images_enabled'	=>	true,
+	));
 	if (isset($_POST['action']) && $_POST['action'] == 'wp_handle_upload') {
 		if (isset($_FILES) && is_array($_FILES) && array_key_exists('bp_media_file', $_FILES) && $_FILES['bp_media_file']['name'] != '') {
+			if(preg_match('/image/',$_FILES['bp_media_file']['type'])){
+				if($bp_media_options['images_enabled']==false){
+					$bp->{BP_MEDIA_SLUG}->messages['error'][] = __('Image uploads are disabled');
+					return;
+				}
+			}
+			else if(preg_match('/video/',$_FILES['bp_media_file']['type'])){
+				if($bp_media_options['videos_enabled']==false){
+					$bp->{BP_MEDIA_SLUG}->messages['error'][] = __('Video uploads are disabled');
+					return;
+				}
+			}
+			else if(preg_match('/audio/',$_FILES['bp_media_file']['type'])){
+				if($bp_media_options['audio_enabled']==false){
+					$bp->{BP_MEDIA_SLUG}->messages['error'][] = __('Audio uploads are disabled');
+					return;
+				}
+			}
 			$bp_media_entry = new BP_Media_Host_Wordpress();
 			try {
 				$title = isset($_POST['bp_media_title']) ? ($_POST['bp_media_title'] != "") ? $_POST['bp_media_title'] : pathinfo($_FILES['bp_media_file']['name'], PATHINFO_FILENAME) : pathinfo($_FILES['bp_media_file']['name'], PATHINFO_FILENAME);
@@ -229,4 +253,5 @@ function bp_media_upload_enqueue(){
 	wp_enqueue_style('bp-media-uploader',plugins_url('css/bp-media-uploader.css',__FILE__));
 }
 //add_action('wp_enqueue_scripts','bp_media_upload_enqueue');
+//This is used only on the uploads page
 ?>

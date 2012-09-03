@@ -12,19 +12,19 @@ if (!defined('ABSPATH'))
  * Screen function for Upload page
  */
 function bp_media_upload_screen() {
-	add_action('wp_enqueue_scripts','bp_media_upload_enqueue');
+	//add_action('wp_enqueue_scripts','bp_media_upload_enqueue');
 	add_action('bp_template_title', 'bp_media_upload_screen_title');
 	add_action('bp_template_content', 'bp_media_upload_screen_content');
 	bp_core_load_template(apply_filters('bp_core_template_plugin', 'members/single/plugins'));
 }
 
 function bp_media_upload_screen_title() {
-	_e('Upload Page');
+	_e('Upload Media');
 }
 
 function bp_media_upload_screen_content() {
 	do_action('bp_media_before_content');
-	bp_media_show_upload_form2();
+	bp_media_show_upload_form();
 	do_action('bp_media_after_content');
 }
 

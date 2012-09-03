@@ -1,11 +1,25 @@
 <?php
 function bp_media_show_upload_form() {
-	global $bp,$bp_media_default_excerpts;	
+	global $bp,$bp_media_default_excerpts,$bp_media_options;
+	$allowed=array();
+	if($bp_media_options['images_enabled'])
+		$allowed[] = 'image';
+	if($bp_media_options['audio_enabled'])
+		$allowed[] = 'audio';
+	if($bp_media_options['videos_enabled'])
+		$allowed[] = 'video';
+	if(count($allowed)){
+		$accept = implode('/*,',$allowed);
+		$accept .= '/*';
+	}
+	else{
+		$accept = '';
+	}
 	?>
 	<form method="post" enctype="multipart/form-data" class="standard-form" id="bp-media-upload-form">
 		<label for="bp-media-upload-input-title"><?php _e('Media Title', 'bp-media'); ?></label><input id="bp-media-upload-input-title" type="text" name="bp_media_title" class="settings-input" maxlength="<?php echo max(array($bp_media_default_excerpts['single_entry_title'],$bp_media_default_excerpts['activity_entry_title'])) ?>" />
 		<label for="bp-media-upload-input-description"><?php _e('Media Description', 'bp-media'); ?></label><input id="bp-media-upload-input-description" type="text" name="bp_media_description" class="settings-input" maxlength="<?php echo max(array($bp_media_default_excerpts['single_entry_description'],$bp_media_default_excerpts['activity_entry_description'])) ?>" />
-		<label for="bp-media-upload-file"><?php _e('Select Media File', 'bp-media') ?> (Max File Size:<?php echo min(array(ini_get('upload_max_filesize'),ini_get('post_max_size')));  ?>)</label><input type="file" name="bp_media_file" id="bp-media-upload-file" />
+		<label for="bp-media-upload-file"><?php _e('Select Media File', 'bp-media') ?> (Max File Size:<?php echo min(array(ini_get('upload_max_filesize'),ini_get('post_max_size')));  ?> , Allowed types: <?php echo implode(', ',$allowed) ?>)</label><input type="file" name="bp_media_file" id="bp-media-upload-file" accept="<?php echo $accept ?>" />
 		<input type="hidden" name="action" value="wp_handle_upload" />
 		<div class="submit"><input type="submit" class="auto" value="Upload" /></div>
 	</form>
