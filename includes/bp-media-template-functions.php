@@ -2,19 +2,21 @@
 function bp_media_show_upload_form() {
 	global $bp,$bp_media_default_excerpts,$bp_media_options;
 	$allowed=array();
-	if($bp_media_options['images_enabled'])
+	$accept = array();
+	if($bp_media_options['images_enabled']){
 		$allowed[] = 'image';
-	if($bp_media_options['audio_enabled'])
+		$accept[] = 'image/*';
+	}
+	if($bp_media_options['audio_enabled']){
 		$allowed[] = 'audio';
-	if($bp_media_options['videos_enabled'])
+		$accept[] = 'audio/mp3';
+	}
+	if($bp_media_options['videos_enabled']){
 		$allowed[] = 'video';
-	if(count($allowed)){
-		$accept = implode('/*,',$allowed);
-		$accept .= '/*';
+		$accept[] = 'video/mp4';
 	}
-	else{
-		$accept = '';
-	}
+	$accept = implode(',',$accept);
+	
 	?>
 	<form method="post" enctype="multipart/form-data" class="standard-form" id="bp-media-upload-form">
 		<label for="bp-media-upload-input-title"><?php _e('Media Title', 'bp-media'); ?></label><input id="bp-media-upload-input-title" type="text" name="bp_media_title" class="settings-input" maxlength="<?php echo max(array($bp_media_default_excerpts['single_entry_title'],$bp_media_default_excerpts['activity_entry_title'])) ?>" />
