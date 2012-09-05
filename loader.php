@@ -1,11 +1,11 @@
 <?php
 /*
-  Plugin Name: BuddyPress Media Component
-  Plugin URI: http://rtcamp.com/buddypress-media/
-  Description: This component adds missing media rich features like photos, videos and audios uploading to BuddyPress which are essential if you are building social network, seriously!
-  Version: 2.0.2
-  Author: rtCamp
-  Author URI: http://rtcamp.com
+Plugin Name: BuddyPress Media Component
+Plugin URI: http://rtcamp.com/buddypress-media/
+Description: This component adds missing media rich features like photos, videos and audios uploading to BuddyPress which are essential if you are building social network, seriously!
+Version: 2.0.2
+Author: rtCamp
+Author URI: http://rtcamp.com
  */
 
 /* A constant that can be checked to see if the BP Media is installed or not. */
