@@ -65,6 +65,7 @@ function bp_media_admin_menu() {
 			$bp_media_options['images_enabled'] = false;
 		}
 		update_option('bp_media_options', $bp_media_options);
+		do_action('bp_media_save_options');
 	}
 		?>
 	<div class="metabox-fixed metabox-holder alignright">
@@ -133,6 +134,7 @@ function bp_media_admin_menu() {
 					</tr>
 				</tbody>
 			</table>
+			<?php do_action('bp_media_extension_options'); ?>
 			<p class="submit"><input type="submit" name="submit" id="submit" class="button-primary" value="Save Changes"></p></form>
 	</div>
 	<?php

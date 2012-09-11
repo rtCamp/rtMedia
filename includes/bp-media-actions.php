@@ -31,7 +31,8 @@ function bp_media_handle_uploads() {
 					return;
 				}
 			}
-			$bp_media_entry = new BP_Media_Host_Wordpress();
+			$class_name = apply_filters('bp_media_transcoder','BP_Media_Host_Wordpress');
+			$bp_media_entry = new $class_name();
 			try {
 				$title = isset($_POST['bp_media_title']) ? ($_POST['bp_media_title'] != "") ? $_POST['bp_media_title'] : pathinfo($_FILES['bp_media_file']['name'], PATHINFO_FILENAME) : pathinfo($_FILES['bp_media_file']['name'], PATHINFO_FILENAME);
 				$entry = $bp_media_entry->add_media($title, array_key_exists('bp_media_description',$_POST)?$_POST['bp_media_description']:'');
