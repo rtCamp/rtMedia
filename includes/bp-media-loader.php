@@ -144,6 +144,7 @@ class BP_Media_Component extends BP_Component {
 			$includes[] = 'includes/bp-media-admin.php';
 		}
 		parent::includes($includes);
+		do_action('bp_media_init');
 	}
 
 	/**
