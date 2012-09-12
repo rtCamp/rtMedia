@@ -370,7 +370,7 @@ class BP_Media_Host_Wordpress {
 						</li>
 					</ul>
 				</div>
-			<?
+			<?php
 		endif;
 	}
 
