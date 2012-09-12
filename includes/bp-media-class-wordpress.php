@@ -189,6 +189,10 @@ class BP_Media_Host_Wordpress {
 		bp_update_user_meta(bp_loggedin_user_id(), 'bp_media_count', $bp_media_count);
 	}
 
+	/**
+	 * Fetches the content of the activity of media upload based on its type
+	 * 
+	 */
 	function get_media_activity_content() {
 		if (!bp_is_activity_component()) {
 			return false;
@@ -218,6 +222,9 @@ class BP_Media_Host_Wordpress {
 		return $activity_content;
 	}
 
+	/**
+	 * Returns the single media entry's URL
+	 */
 	function get_media_activity_url() {
 		if (!bp_is_activity_component())
 			return false;
@@ -225,6 +232,9 @@ class BP_Media_Host_Wordpress {
 		return $activity_url;
 	}
 
+	/**
+	 * Returns the media activity's action text
+	 */
 	function get_media_activity_action() {
 		if (!bp_is_activity_component())
 			return false;
@@ -232,6 +242,9 @@ class BP_Media_Host_Wordpress {
 		return $activity_action;
 	}
 
+	/**
+	 * Returns the content of the single entry page of the Media Entry
+	 */
 	function get_media_single_content() {
 		global $bp_media_default_sizes, $bp_media_default_excerpts;
 		$content = '<div class="bp_media_title">' . wp_html_excerpt($this->name, $bp_media_default_excerpts['single_entry_title']) . '</div><div class="bp_media_content">';
@@ -256,6 +269,9 @@ class BP_Media_Host_Wordpress {
 		return $content;
 	}
 
+	/**
+	 * Returns the HTML for a media entry to be shown in the listing/gallery page
+	 */
 	function get_media_gallery_content() {
 		$attachment = get_post_meta($this->id, 'bp_media_child_attachment', true);
 		switch ($this->type) {
@@ -296,6 +312,9 @@ class BP_Media_Host_Wordpress {
 		}
 	}
 
+	/**
+	 * Outputs the comments and comment form in the single media entry page
+	 */
 	function show_comment_form() {
 		$activity_id = get_post_meta($this->id, 'bp_media_child_activity', true);
 		if (bp_has_activities(array(
@@ -362,7 +381,6 @@ class BP_Media_Host_Wordpress {
 								<?php do_action('bp_activity_entry_content'); ?>
 								<?php if (is_user_logged_in()) : ?>
 									<div class="activity-meta no-ajax">
-																				
 										<a href="<?php echo $this->get_delete_url(); ?>" class="button item-button bp-secondary-action delete-activity-single confirm" rel="nofollow">Delete</a>
 									</div>
 								<?php endif; ?>
@@ -374,14 +392,30 @@ class BP_Media_Host_Wordpress {
 		endif;
 	}
 
+	/**
+	 * Returns the URL of the single media entry page
+	 */
 	function get_url() {
 		return $this->url;
 	}
 
+	/**
+	 * Returns the URL of the attached media file
+	 */
 	function get_attachment_url(){
 		return wp_get_attachment_url($this->attachment_id);
 	}
 	
+	/**
+	 * Updates the media entry
+	 * 
+	 * @param array $args Array with the following keys:<br/>
+	 * 'name' <br/>
+	 * 'description'<br/>
+	 * 'owner'
+	 * 
+	 * @return bool True when the update is successful, False when the update fails
+	 */
 	function update_media($args=array()){
 		$defaults=array(
 			'name'	=>	$this->name,
@@ -398,6 +432,9 @@ class BP_Media_Host_Wordpress {
 		return $result;
 	}
 	
+	/**
+	 * Deletes the Media Entry
+	 */
 	function delete_media(){
 		global $bp_media_count;
 		bp_media_init_count($this->owner);
@@ -414,29 +451,48 @@ class BP_Media_Host_Wordpress {
 		}
 		
 		wp_delete_attachment($this->attachment_id);
-//		$activity_id = get_post_meta($post_id, 'bp_media_child_activity', true);
-//		if($activity_id)
-//			bp_activity_delete_by_activity_id($activity_id);
 		wp_delete_post($this->id);
 		bp_update_user_meta($this->owner, 'bp_media_count', $bp_media_count);
 	}
 	
+	/**
+	 * Returns the title of the Media Entry
+	 */
 	function get_title() {
 		return $this->name;
 	}
 	
+	/**
+	 * Returns the description of the Media Entry
+	 */
 	function get_content() {
 		return $this->description;
 	}
+	
+	/**
+	 * Returns the owner id of the Media Entry
+	 */
 	function get_author() {
 		return $this->owner;
 	}
+	
+	/**
+	 * Returns the id of the Media Entry
+	 */
 	function get_id(){
 		return $this->id;
 	}
+	
+	/**
+	 * Returns the edit url of the Media Entry
+	 */
 	function get_edit_url() {
 		return $this->edit_url;
 	}
+	
+	/**
+	 * Returns the delete url of the Media Entry
+	 */
 	function get_delete_url() {
 		return $this->delete_url;
 	}
