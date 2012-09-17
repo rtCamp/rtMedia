@@ -141,6 +141,36 @@ class BP_Media_Host_Wordpress {
 				$bp_media_count['videos'] = intval($bp_media_count['videos']) + 1;
 				break;
 			case 'audio/mpeg' :
+				include_once(trailingslashit(BP_MEDIA_PLUGIN_DIR) . 'includes/lib/getid3/getid3.php');
+				try {
+					$getID3 = new getID3;
+					$file_info = $getID3->analyze($file);
+				} catch (Exception $e) {
+					wp_delete_post($post_id, true);
+					unlink($file);
+					$activity_content = false;
+					throw new Exception(__('MP3 file you have uploaded is currupt.', 'bp-media'));
+				}
+				if (is_array($file_info)) {
+					if (!array_key_exists('error',$file_info)&& array_key_exists('fileformat', $file_info) && array_key_exists('audio', $file_info)&&array_key_exists('dataformat',$file_info['audio'])) {
+						if (!($file_info['fileformat']=='mp3'&&$file_info['audio']['dataformat']=='mp3')) {
+							wp_delete_post($post_id, true);
+							unlink($file);
+							$activity_content = false;
+							throw new Exception(__('The MP3 file you have uploaded is using an unsupported audio format. Supported audio format is MP3.', 'bp-media'));
+						}
+					} else {
+						wp_delete_post($post_id, true);
+						unlink($file);
+						$activity_content = false;
+						throw new Exception(__('The MP3 file you have uploaded is using an unsupported audio format. Supported audio format is MP3.', 'bp-media'));
+					}
+				} else {
+					wp_delete_post($post_id, true);
+					unlink($file);
+					$activity_content = false;
+					throw new Exception(__('The MP3 file you have uploaded is not an audio file.', 'bp-media'));
+				}
 				$type = 'audio';
 				$bp_media_count['audio'] = intval($bp_media_count['audio']) + 1;
 				break;
