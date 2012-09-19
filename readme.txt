@@ -6,7 +6,7 @@ License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires at least: 3.3.2
 Tested up to: 3.4.1
-Stable tag: 2.0.3
+Stable tag: 2.0.4
 
 BuddyPress Media Component adds multimedia features to your BuddyPress based social network.
 
@@ -37,6 +37,10 @@ Please visit [BuddyPress Media Component's FAQ page](http://rtcamp.com/buddypres
 Please visit [BuddyPress Media Component's Features page](http://rtcamp.com/buddypress-media/features/)
 
 == Changelog ==
+
+= 2.0.4 =
+* Added remaining modules of getID3 php library
+* Added checking for MP3 filetype and its content before uploading
 
 = 2.0.3 =
 * Added a few filters and actions for addon support

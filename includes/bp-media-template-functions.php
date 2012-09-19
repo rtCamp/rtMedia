@@ -1,27 +1,30 @@
 <?php
 function bp_media_show_upload_form() {
 	global $bp,$bp_media_default_excerpts,$bp_media_options;
-	$allowed=array();
-	$accept = array();
+	$allowed=array(
+		'type'=>array(),
+		'accept'=>array()
+	);
 	if($bp_media_options['images_enabled']){
-		$allowed[] = 'image';
-		$accept[] = 'image/*';
+		$allowed['type'][] = 'image';
+		$allowed['accept'][] = 'image/*';
 	}
 	if($bp_media_options['audio_enabled']){
-		$allowed[] = 'audio';
-		$accept[] = 'audio/mp3';
+		$allowed['type'][] = 'audio';
+		$allowed['accept'][] = 'audio/mp3';
 	}
 	if($bp_media_options['videos_enabled']){
-		$allowed[] = 'video';
-		$accept[] = 'video/mp4';
+		$allowed['type'][] = 'video';
+		$allowed['accept'][] = 'video/mp4';
 	}
-	$accept = implode(',',$accept);
+	$allowed = apply_filters('bp_media_allowed_filter',$allowed);
+	$accept = implode(',',$allowed['accept']);
 	
 	?>
 	<form method="post" enctype="multipart/form-data" class="standard-form" id="bp-media-upload-form">
 		<label for="bp-media-upload-input-title"><?php _e('Media Title', 'bp-media'); ?></label><input id="bp-media-upload-input-title" type="text" name="bp_media_title" class="settings-input" maxlength="<?php echo max(array($bp_media_default_excerpts['single_entry_title'],$bp_media_default_excerpts['activity_entry_title'])) ?>" />
 		<label for="bp-media-upload-input-description"><?php _e('Media Description', 'bp-media'); ?></label><input id="bp-media-upload-input-description" type="text" name="bp_media_description" class="settings-input" maxlength="<?php echo max(array($bp_media_default_excerpts['single_entry_description'],$bp_media_default_excerpts['activity_entry_description'])) ?>" />
-		<label for="bp-media-upload-file"><?php _e('Select Media File', 'bp-media') ?> (Max File Size:<?php echo min(array(ini_get('upload_max_filesize'),ini_get('post_max_size')));  ?> , Allowed types: <?php echo implode(', ',$allowed) ?>)</label><input type="file" name="bp_media_file" id="bp-media-upload-file" accept="<?php echo $accept ?>" />
+		<label for="bp-media-upload-file"><?php _e('Select Media File', 'bp-media') ?> (Max File Size:<?php echo min(array(ini_get('upload_max_filesize'),ini_get('post_max_size')));  ?> , Allowed types: <?php echo implode(', ',$allowed['type']) ?>)</label><input type="file" name="bp_media_file" id="bp-media-upload-file" accept="<?php echo $accept ?>" />
 		<input type="hidden" name="action" value="wp_handle_upload" />
 		<div class="submit"><input type="submit" class="auto" value="Upload" /></div>
 	</form>
