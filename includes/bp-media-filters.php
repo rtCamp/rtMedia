@@ -1,15 +1,16 @@
 <?php
 function bp_media_activity_permalink_filter($link, $activity_obj = null) {
 	if ($activity_obj != null && 'media_upload' == $activity_obj->type) {
-		add_shortcode('bp_media_url', 'bp_media_shortcode_url');
-		$link = do_shortcode($activity_obj->primary_link);
-		remove_shortcode('bp_media_url');
+		if(preg_match('/bp_media_urlid=(\d+)/i',$activity_obj->primary_link, $result)&&isset($result[1])){
+			$media=new BP_Media_Host_Wordpress($result[1]);
+			return $media->get_media_activity_url();
+		}
 	}
 	if ($activity_obj != null && 'activity_comment' == $activity_obj->type) {
 		$parent = bp_activity_get_meta($activity_obj->item_id, 'bp_media_parent_post');
 		if ($parent) {
 			$parent = new BP_Media_Host_Wordpress($parent);
-			$link = $parent->get_url();
+			return $parent->get_url();
 		}
 	}
 	return $link;

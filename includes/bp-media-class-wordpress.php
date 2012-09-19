@@ -202,7 +202,7 @@ class BP_Media_Host_Wordpress {
 		$activity_id = bp_media_record_activity(array(
 			'action' => '[bp_media_action id="' . $post_id . '"]',
 			'content' => $activity_content,
-			'primary_link' => '[bp_media_url id="' . $post_id . '"]',
+			'primary_link' => 'bp_media_url id="' . $post_id . '"',
 			'type' => 'media_upload'
 		));
 		bp_activity_update_meta($activity_id, 'bp_media_parent_post', $post_id);
