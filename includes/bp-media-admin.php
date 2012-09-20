@@ -1,4 +1,6 @@
 <?php
+global $bp_media_admin_is_current;
+$bp_media_admin_is_current = false;
 /**
  * Add the BuddyPress Media Component's options menu in the BuddyPress' options subnavigation.
  * 
@@ -13,7 +15,7 @@ function bp_media_add_admin_menu() {
 	);
 	add_action('admin_print_styles-' . $page, 'bp_media_admin_enqueue');
 }
-add_action(bp_core_admin_hook(), 'bp_media_add_admin_menu');
+//add_action(bp_core_admin_hook(), 'bp_media_add_admin_menu');
 
 /**
  * Displays and updates the options menu of BuddyPress Media Component
@@ -67,12 +69,16 @@ function bp_media_admin_menu() {
 		update_option('bp_media_options', $bp_media_options);
 		do_action('bp_media_save_options');
 	}
+	global $bp_media_admin_is_current;
+	$bp_media_admin_is_current = true;
 		?>
 	<div class="metabox-fixed metabox-holder alignright">
 		<?php bp_media_default_admin_sidebar(); ?>
 	</div>
 	<div class="wrap bp-media-admin">
-		<div id="icon-bp-media" class="icon32"><br/></div>
+		<?php //screen_icon( 'buddypress' ); ?>
+		<div id="icon-bp-media" class="icon32"><br></div>
+		<h2 class="nav-tab-wrapper"><?php bp_core_admin_tabs( __( 'Media', 'bp-media' ) ); ?></h2>
 		<h2>BuddyPress Media Component Settings</h2>
 		<?php if(count($bp_media_errors)) { ?>
 		<div class="error"><p><?php foreach($bp_media_errors as $error) echo $error.'<br/>'; ?></p></div>
@@ -246,4 +252,50 @@ function bp_media_admin_enqueue() {
 	wp_enqueue_script('rt-fb-share', ('http://static.ak.fbcdn.net/connect.php/js/FB.Share'), '', '', true);
 }
 add_action('admin_enqueue_scripts', 'bp_media_admin_enqueue');
+
+/**
+ * Adds a tab for Media settings in the BuddyPress settings page
+ */
+function bp_media_admin_tab() {
+	$tabs_html    = '';
+	$idle_class   = 'nav-tab';
+	$active_class = 'nav-tab nav-tab-active';
+	$tab = array(
+			'href' => bp_get_admin_url( add_query_arg( array( 'page' => 'bp-media-settings'  ), 'admin.php' ) ),
+			'name' => __( 'Media', 'bp-media' )
+		);
+	global $bp_media_admin_is_current;
+	$tab_class  = $bp_media_admin_is_current ? $active_class : $idle_class;
+	$tabs_html	= '<a href="' . $tab['href'] . '" class="' . $tab_class . '">' . $tab['name'] . '</a>';
+	echo $tabs_html;
+	
+}
+add_action('bp_admin_tabs','bp_media_admin_tab');
+
+/**
+ * Adds which function to execute when bp-media settings page is called
+ */
+function bp_media_add_menu() {
+	global $bp;
+	
+	if ( !is_super_admin() )
+		return false;
+	
+	$page  = bp_core_do_network_admin()  ? 'settings.php' : 'options-general.php';
+	
+	$hook = add_submenu_page( $page, __( 'Media', 'bp-media' ), __( 'Media', 'bp-media' ), 'manage_options', 'bp-media-settings', "bp_media_admin_menu" );
+
+	// Fudge the highlighted subnav item when on the BuddyPress Forums admin page
+	add_action( "admin_head-$hook", 'bp_core_modify_admin_menu_highlight' );
+}
+add_action( bp_core_admin_hook(), 'bp_media_add_menu' );
+
+/**
+ * Removes the Media submenu item from the settings/options-general page so that there will only be one BuddyPress option
+ */
+function bp_media_modify_admin_menu() {
+ 	$page  = bp_core_do_network_admin()  ? 'settings.php' : 'options-general.php';
+	remove_submenu_page( $page, 'bp-media-settings');
+}
+add_action( 'admin_head', 'bp_media_modify_admin_menu', 999 );
 ?>
