@@ -3,6 +3,7 @@
  * The Main loader file of BuddyPress Media Component Plugin
  */
 /* Exit if accessed directlly. */
+
 if (!defined('ABSPATH'))
 	exit;
 
