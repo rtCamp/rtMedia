@@ -20,6 +20,9 @@ define('BP_MEDIA_PLUGIN_DIR', dirname(__FILE__));
 /* A constant to store the Database Version of the BP Media Plugin */
 define('BP_MEDIA_DB_VERSION', '1');
 
+/* A constant to store the required  */
+define('BP_MEDIA_REQUIRED_BP','1.5.5');
+
 /**
  * Function to initialize the BP Media Plugin
  * 
@@ -30,11 +33,8 @@ define('BP_MEDIA_DB_VERSION', '1');
  * @since BP Media 2.0
  */
 function bp_media_init() {
-	if (defined('BP_VERSION')&&version_compare(BP_VERSION, '1.6.0', '>')) {
+	if (defined('BP_VERSION')&&version_compare(BP_VERSION, BP_MEDIA_REQUIRED_BP, '>')) {
 		require( BP_MEDIA_PLUGIN_DIR . '/includes/bp-media-loader.php' );
-	}
-	else{
-		add_action('admin_notices', 'bp_media_admin_notice');
 	}
 }
 add_action('bp_include', 'bp_media_init');
@@ -66,15 +66,18 @@ function bp_media_admin_notice() {
         /* Check that the user hasn't already clicked to ignore the message */
     if ( ! get_user_meta($user_id, 'bp_media_ignore_notice') ) {
 		if(defined('BP_VERSION')){
-			echo '<div class="error"><p>';
-			printf(__('The BuddyPress version installed is an older version and is not supported, please update BuddyPress to use BuddyPress Media Plugin.<a class="alignright" href="%1$s">X</a>'), '?bp_media_nag_ignore=0');
-			echo "</p></div>";
+			if (version_compare(BP_VERSION, BP_MEDIA_REQUIRED_BP, '<')) {
+				echo '<div class="error"><p>';
+				printf(__('The BuddyPress version installed is an older version and is not supported, please update BuddyPress to use BuddyPress Media Plugin.<a class="alignright" href="%1$s">X</a>'), '?bp_media_nag_ignore=0');
+				echo "</p></div>";
+			}
 		}
-		else{
+		else if (version_compare(BP_VERSION, '1.5.5', '<')) {
 			echo '<div class="error"><p>';
 			printf(__('You have not installed BuddyPress. Please install latest version of BuddyPress to use BuddyPress Media plugin.<a class="alignright" href="%1$s">X</a>'), '?bp_media_nag_ignore=0');
 			echo "</p></div>";
 		}
     }
 }
+add_action('admin_notices', 'bp_media_admin_notice');
 ?>
