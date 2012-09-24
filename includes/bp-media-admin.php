@@ -10,7 +10,7 @@ function bp_media_add_admin_menu() {
 	global $bp;
 	if (!is_super_admin())
 		return false;
-
+	
 	$page = add_submenu_page('bp-general-settings', __('BuddyPress Media Component Settings', 'bp-media'), __('MediaBP', 'bp-media'), 'manage_options', 'bp-media-settings', 'bp_media_admin_menu'
 	);
 	add_action('admin_print_styles-' . $page, 'bp_media_admin_enqueue');
@@ -31,19 +31,24 @@ function bp_media_admin_menu() {
 		'audio_enabled'		=>	true,
 		'images_enabled'	=>	true,
 	));
+	if(array_key_exists('bp_media_refresh_count', $_GET)){
+		check_admin_referer('bp_media_refresh_count','wp_nonce');
+		if(!bp_media_update_count())
+			$bp_media_errors[]="Recounting Failed";
+		else
+			$bp_media_messages[]="Recounting of media files done successfully";
+	}
 	if(array_key_exists('submit', $_POST)){
-		check_admin_referer('bp_media_update_options');
-		if(array_key_exists('refresh_media_count', $_POST)){
-			if(!bp_media_update_count())
-				$bp_media_errors[]="Recounting Failed";
-			else
-				$bp_media_messages[]="Recounting of media files done successfully";
-		}
+		
 		if(array_key_exists('remove_linkback', $_POST)&&$_POST['remove_linkback']=='1'){
-			update_option('bp_media_remove_linkback', '1');
+			if(update_option('bp_media_remove_linkback', '0')){
+				$bp_media_messages[0]="<b>Settings saved.</b>";
+			}
 		}
 		else{
-			update_option('bp_media_remove_linkback', '0');
+			if(update_option('bp_media_remove_linkback', '1')){
+				$bp_media_messages[0]="<b>Settings saved.</b>";
+			}
 		}
 		if(array_key_exists('enable_videos',$_POST)){
 			$bp_media_options['videos_enabled'] = true;
@@ -66,8 +71,12 @@ function bp_media_admin_menu() {
 		{
 			$bp_media_options['images_enabled'] = false;
 		}
-		update_option('bp_media_options', $bp_media_options);
+		if(update_option('bp_media_options', $bp_media_options)){
+			$bp_media_messages[0]="<b>Settings saved.</b>";
+		}
 		do_action('bp_media_save_options');
+		$bp_media_messages = apply_filters('bp_media_settings_messages',$bp_media_messages);
+		$bp_media_errors = apply_filters('bp_media_settings_errors',$bp_media_errors);
 	}
 	global $bp_media_admin_is_current;
 	$bp_media_admin_is_current = true;
@@ -85,29 +94,8 @@ function bp_media_admin_menu() {
 		<?php } if(count($bp_media_messages)){?>
 		<div class="updated"><p><?php foreach($bp_media_messages as $message) echo $message.'<br/>'; ?></p></div>
 		<?php }?>
-		<form method="post">
+		<form method="post" action="?page=bp-media-settings">
 			 <?php wp_nonce_field( 'bp_media_update_options' ); ?>
-			<h3>General Settings</h3>
-			<table class="form-table ">
-				<tbody>
-					<tr valign="top">
-						<th scope="row"><label for="refresh_media_count">Re-Count Media Entries</label></th>
-						<td> <fieldset><legend class="screen-reader-text"><span>Re-Count Media Entries</span></legend><label for="refresh_media_count">
-									<input name="refresh_media_count" type="checkbox" id="refresh_media_count" value="1">
-									Check for Re-Count</label>
-							</fieldset></td>
-					</tr>
-					<tr valign="top">
-						<th scope="row"><label for="remove_linkback">Remove Linkback</label></th>
-						<td>
-							<fieldset>
-								<legend class="screen-reader-text"><span>Remove Linkback</span></legend>
-								<label for="remove_linkback"><input name="remove_linkback" type="checkbox" id="remove_linkback" value="1" <?php if(get_option('bp_media_remove_linkback')=='1') echo 'checked="checked"' ?>> Removes the link to MediaBP from footer</label>
-							</fieldset>
-						</td>
-					</tr>
-				</tbody>
-			</table>
 			<h3>Media Types Enabled</h3>
 			<table class="form-table ">
 				<tbody>
@@ -140,47 +128,35 @@ function bp_media_admin_menu() {
 					</tr>
 				</tbody>
 			</table>
+			<h3>General Settings</h3>
+			<table class="form-table ">
+				<tbody>
+					<tr valign="top">
+						<th scope="row"><label for="remove_linkback">Spread the word</label></th>
+						<td>
+							<fieldset>
+								<legend class="screen-reader-text"><span>Remove Linkback</span></legend>
+								<label for="remove_linkback"><input name="remove_linkback" type="checkbox" id="remove_linkback" value="1" <?php if(!get_option('bp_media_remove_linkback')=='1') echo 'checked="checked"' ?>> (Check to enable linkback to BuddyPress Media)</label>
+							</fieldset>
+						</td>
+					</tr>
+				</tbody>
+			</table>
 			<?php do_action('bp_media_extension_options'); ?>
 			<p class="submit"><input type="submit" name="submit" id="submit" class="button-primary" value="Save Changes"></p></form>
+			<h3>Other Options</h3>
+			<table class="form-table">
+				<tbody>
+					<tr valign="top">
+						<th scope="row"><label for="refresh_media_count">Re-Count Media Entries</label></th>
+						<td> <fieldset>
+								<a id="refresh_media_count" href ="?page=bp-media-settings&bp_media_refresh_count=1&wp_nonce=<?php echo wp_create_nonce( 'bp_media_refresh_count' ); ?>" class="button" title="<?php printf(__('It will re-count all media entries of all users and correct any discrepancies.')); ?>">Re-Count</a>
+							</fieldset></td>
+					</tr>
+				</tbody>
+			</table>
 	</div>
 	<?php
-}
-
-/**
- * Display feeds from a specified Feed URL
- *
- * @param string $feed_url The Feed URL.
- *
- * @since BP Media 2.0
- */
-function bp_media_get_feeds($feed_url = 'http://rtcamp.com/blog/category/buddypress-media/feed/') {
-	// Get RSS Feed(s)
-	require_once( ABSPATH . WPINC . '/feed.php' );
-	$maxitems = 0;
-	// Get a SimplePie feed object from the specified feed source.
-	$rss = fetch_feed($feed_url);
-	if (!is_wp_error($rss)) { // Checks that the object is created correctly
-		// Figure out how many total items there are, but limit it to 5.
-		$maxitems = $rss->get_item_quantity(5);
-
-		// Build an array of all the items, starting with element 0 (first element).
-		$rss_items = $rss->get_items(0, $maxitems);
-	}
-	?>
-	<ul><?php
-	if ($maxitems == 0) {
-		echo '<li>' . __('No items', 'bp-media') . '.</li>';
-	} else {
-		// Loop through each feed item and display each item as a hyperlink.
-		foreach ($rss_items as $item) {
-			?>
-				<li>
-					<a href='<?php echo $item->get_permalink(); ?>' title='<?php echo __('Posted ', 'bp-media') . $item->get_date('j F Y | g:i a'); ?>'><?php echo $item->get_title(); ?></a>
-				</li><?php
-		}
-	}
-	?>
-	</ul><?php
 }
 
 /**
@@ -190,6 +166,25 @@ function bp_media_get_feeds($feed_url = 'http://rtcamp.com/blog/category/buddypr
  */
 function bp_media_default_admin_sidebar() {
 	?>
+	<div class="postbox" id="support">
+		<div title="<?php _e('Click to toggle', 'bp-media'); ?>" class="handlediv"><br /></div>
+		<h3 class="hndle"><span><?php _e('Need Help?', 'bp-media'); ?></span></h3>
+		<div class="inside"><p><?php printf(__(' Please use our <a href="%s">free support forum</a>.<br/><span class="bpm-aligncenter">OR</span><br/>
+		<a href="%s">Hire us!</a> To get professional customisation/setup service.', 'bp-media'), 'http://rtcamp.com/support/forum/buddypress-media/','http://rtcamp.com/buddypress-media/hire/'); ?>.</p></div>
+	</div>
+
+	<div class="postbox" id="bp-media-premium-addons">
+		<div title="<?php _e('Click to toggle', 'bp-media'); ?>" class="handlediv"><br /></div>
+		<h3 class="hndle"><span><?php _e('Premium Addons', 'bp-media'); ?></span></h3>
+		<div class="inside">
+			<ul>
+				<li><a href="http://rtcamp.com/store/buddy-press-media-ffmpeg/" title="BuddyPress Media FFMPEG">BPM-FFMPEG</a> - add FFMEG-based audio/video conversion support</li>
+			</ul>
+			<h4><?php printf(__('Are you a developer?','bp-media')) ?></h4>
+			<p><?php printf(__('If you are developing a BuddyPress Media addon we would like to include it in above list. We can also help you sell them. <a href="%s">More info!</a>','bp-media'),'http://rtcamp.com/contact/') ?></p></h4>
+		</div>
+	</div>
+
 	<div class="postbox" id="social">
 		<div title="<?php _e('Click to toggle', 'bp-media'); ?>" class="handlediv"><br /></div>
 		<h3 class="hndle"><span><?php _e('Getting Social is Good', 'bp-media'); ?></span></h3>
@@ -200,16 +195,10 @@ function bp_media_default_admin_sidebar() {
 		</div>
 	</div>
 
-	<div class="postbox" id="support">
-		<div title="<?php _e('Click to toggle', 'bp-media'); ?>" class="handlediv"><br /></div>
-		<h3 class="hndle"><span><?php _e('Free Support', 'bp-media'); ?></span></h3>
-		<div class="inside"><p><?php printf(__(' If you are facing any problems while using BuddyPress Media Component, or have good ideas for improvements, please discuss the same in our <a href="%s" target="_blank" title="Click here for BuddyPress Media Component Free Support">Support forums</a>', 'bp-media'), 'http://rtcamp.com/support/forum/buddypress-media/'); ?>.</p></div>
-	</div>
-
-	<div class="postbox" id="latest_news">
+	<div class="postbox" id="bp_media_latest_news">
 		<div title="<?php _e('Click to toggle', 'bp-media'); ?>" class="handlediv"><br /></div>
 		<h3 class="hndle"><span><?php _e('Latest News', 'bp-media'); ?></span></h3>
-		<div class="inside"><?php bp_media_get_feeds(); ?></div>
+		<div class="inside"><img src ="<?php echo admin_url(); ?>/images/wpspin_light.gif" /> Loading...</div>
 	</div><?php
 }
 
@@ -217,8 +206,11 @@ function bp_media_default_admin_sidebar() {
  * Enqueues the scripts and stylesheets needed for the BuddyPress Media Component's options page
  */
 function bp_media_admin_enqueue() {
+	$admin_js = trailingslashit(site_url()).'?bp_media_get_feeds=1';
+	wp_enqueue_script('bp-media-js',plugins_url('includes/js/bp-media.js', dirname(__FILE__)));
+	wp_localize_script('bp-media-js','bp_media_news_url',$admin_js);
 	wp_enqueue_style('bp-media-admin-style', plugins_url('includes/css/bp-media-style.css', dirname(__FILE__)));
-	wp_enqueue_script('rt-fb-share', ('http://static.ak.fbcdn.net/connect.php/js/FB.Share'), '', '', true);
+	wp_enqueue_script( 'dashboard' );
 }
 add_action('admin_enqueue_scripts', 'bp_media_admin_enqueue');
 

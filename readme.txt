@@ -57,10 +57,9 @@ Please visit [BuddyPress Media Component's Features page](http://rtcamp.com/budd
 == Changelog ==
 
 = 2.1 =
-* Added necessary hooks & filters to support buddypress-media add-on creation
+* Added necessary hooks & filters to support buddypress-media add-on creation.
 * Support for video format added including *.avi, *.mkv, *.asf, *.flv, *.wmv, *.rm, *.mpg.
 * Support for audio format added including *.mp3, *.ogg, *.wav, *.aac, *.m4a, *.wma.
-
 
 = 2.0.4 =
 * Added remaining modules of getID3 php library
