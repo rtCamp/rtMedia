@@ -384,4 +384,12 @@ function bp_media_thumbnail() {
 	add_image_size('bp_media_single_image', $bp_media_default_sizes['single_image']['width'], $bp_media_default_sizes['single_image']['height'], true);
 }
 add_action('after_setup_theme', 'bp_media_thumbnail');
+
+function bp_media_fetch_feeds() {
+	if(isset($_GET['bp_media_get_feeds'])&&$_GET['bp_media_get_feeds']=='1'){
+		bp_media_get_feeds();
+		die();
+	}
+}
+add_action('init','bp_media_fetch_feeds');
 ?>

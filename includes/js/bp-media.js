@@ -13,3 +13,12 @@ function bp_media_create_element(id){
 		}
 	});
 }
+
+jQuery(document).ready(function(){
+	var bp_media_news_section = jQuery('#bp_media_latest_news');
+	if(bp_media_news_section.length>0){
+		jQuery.get(bp_media_news_url,function(data){
+			bp_media_news_section.find('.inside').html(data);
+		});
+	}
+});
