@@ -6,7 +6,7 @@ Description: This component adds missing media rich features like photos, videos
 Version: 2.1
 Author: rtCamp
 Author URI: http://rtcamp.com
- */
+*/
 
 /* A constant that can be checked to see if the BP Media is installed or not. */
 define('BP_MEDIA_IS_INSTALLED', 1);
