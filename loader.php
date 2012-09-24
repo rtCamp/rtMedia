@@ -35,6 +35,7 @@ define('BP_MEDIA_REQUIRED_BP','1.5.5');
 function bp_media_init() {
 	if (defined('BP_VERSION')&&version_compare(BP_VERSION, BP_MEDIA_REQUIRED_BP, '>')) {
 		require( BP_MEDIA_PLUGIN_DIR . '/includes/bp-media-loader.php' );
+		do_action('bp_media_init');
 	}
 }
 add_action('bp_include', 'bp_media_init');
@@ -80,4 +81,21 @@ function bp_media_admin_notice() {
     }
 }
 add_action('admin_notices', 'bp_media_admin_notice');
+
+/**
+ * Shows the settings link adjacent to the plugin in the plugins list
+ * @since BP Media 2.0.4
+ */
+function bp_media_settings_link($links, $file) {
+	/* create link */
+	$plugin_name  = plugin_basename( __FILE__ );
+	if ( $file == $plugin_name ) {
+		array_unshift(
+			$links,
+			sprintf( '<a href="options-general.php?page=%s">%s</a>', 'bp-media-settings', __('Settings') )
+		);
+	}
+	return $links;
+}
+add_filter( 'plugin_action_links', 'bp_media_settings_link', 10, 2 );
 ?>

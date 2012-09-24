@@ -200,37 +200,6 @@ function bp_media_default_admin_sidebar() {
 		</div>
 	</div>
 
-	<div class="postbox" id="donations">
-		<div title="<?php _e('Click to toggle', 'bp-media'); ?>" class="handlediv"><br /></div>
-		<h3 class="hndle"><span><?php _e('Promote, Donate, Share', 'bp-media'); ?>...</span></h3>
-		<div class="inside">
-			<p><?php printf(__('Buy coffee/beer for team behind <a href="%s" title="BuddyPress Media Component">BuddyPress Media Component</a>.', 'bp-media'), 'http://rtcamp.com/buddypress-media/'); ?></p>
-			<div class="bp-media-paypal" style="text-align:center">
-				<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
-					<input type="hidden" name="cmd" value="_donations" />
-					<input type="hidden" name="business" value="paypal@rtcamp.com" />
-					<input type="hidden" name="lc" value="US" />
-					<input type="hidden" name="item_name" value="BuddyPress Media Component" />
-					<input type="hidden" name="no_note" value="0" />
-					<input type="hidden" name="currency_code" value="USD" />
-					<input type="hidden" name="bn" value="PP-DonationsBF:btn_donateCC_LG.gif:NonHostedGuest" />
-					<input type="image" src="https://www.paypal.com/en_US/i/btn/btn_donateCC_LG.gif" name="submit" alt="PayPal - The safer, easier way to pay online!" />
-					<img alt="" border="0" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1" />
-				</form>
-			</div>
-			<div class="rt-social-share" style="text-align:center; width: 135px; margin: 2px auto">
-				<div class="rt-facebook" style="float:left; margin-right:5px;">
-					<a style=" text-align:center;" name="fb_share" type="box_count" share_url="http://rtcamp.com/buddypress-media/"></a>
-				</div>
-				<div class="rt-twitter" style="">
-					<a href="<?php printf('%s', 'http://twitter.com/share'); ?>"  class="twitter-share-button" data-text="I &hearts; #mediabp"  data-url="http://rtcamp.com/buddypress-media/" data-count="vertical" data-via="mediabp"><?php _e('Tweet', 'bp-media'); ?></a>
-					<script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
-				</div>
-				<div class="clear"></div>
-			</div>
-		</div>
-	</div>
-
 	<div class="postbox" id="support">
 		<div title="<?php _e('Click to toggle', 'bp-media'); ?>" class="handlediv"><br /></div>
 		<h3 class="hndle"><span><?php _e('Free Support', 'bp-media'); ?></span></h3>
@@ -248,7 +217,7 @@ function bp_media_default_admin_sidebar() {
  * Enqueues the scripts and stylesheets needed for the BuddyPress Media Component's options page
  */
 function bp_media_admin_enqueue() {
-	wp_enqueue_style('bp-media-admin-style', plugins_url('includes/css/bp-media-admin.css', dirname(__FILE__)));
+	wp_enqueue_style('bp-media-admin-style', plugins_url('includes/css/bp-media-style.css', dirname(__FILE__)));
 	wp_enqueue_script('rt-fb-share', ('http://static.ak.fbcdn.net/connect.php/js/FB.Share'), '', '', true);
 }
 add_action('admin_enqueue_scripts', 'bp_media_admin_enqueue');
