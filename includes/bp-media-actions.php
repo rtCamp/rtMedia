@@ -250,7 +250,7 @@ function bp_media_upload_enqueue(){
 	);		
 	wp_enqueue_script('bp-media-uploader',plugins_url('js/bp-media-uploader.js',__FILE__),array('plupload', 'plupload-html5', 'plupload-flash', 'plupload-silverlight', 'plupload-html4','plupload-handlers'));
 	wp_localize_script('bp-media-uploader','bp_media_uploader_params',$params);
-	wp_enqueue_style('bp-media-uploader',plugins_url('css/bp-media-uploader.css',__FILE__));
+	wp_enqueue_style('bp-media-default',plugins_url('css/bp-media-style.css',__FILE__));
 }
 //add_action('wp_enqueue_scripts','bp_media_upload_enqueue');
 //This is used only on the uploads page
