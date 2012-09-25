@@ -18,11 +18,11 @@ BuddyPress Media Component adds multimedia features to your BuddyPress based soc
 * Images, Audio and Video Support
 * Uploading Photos/Videos via mobile (Tested on iPhone running iOS6)
 * HTML5 player (with fall back to flash/silverlight player support)
-* Automatic conversion of common audio & video formats to mp3/mp4. (via premium add-on)[http://rtcamp.com/store]
+* Automatic conversion of common audio & video formats to mp3/mp4. via [Premium Add-On](http://rtcamp.com/store "Visit rtCamp's Store")
 
 = Roadmap =
-* Kaltura Integration (work already started)
-* Paid membership plans, i.e. "Upload Quota" for buddypress members  (in planning stage)
+* Kaltura Integration (work already started).
+* Paid membership plans, i.e. "Upload Quota" for buddypress members  (in planning stage).
 
 == Installation ==
 
@@ -30,7 +30,7 @@ BuddyPress Media Component adds multimedia features to your BuddyPress based soc
 
 Install the plugin from the 'Plugins' section in your dashboard (Go to `Plugins > Add New > Search` and search for BuddyPress Media).
 
-Alternatively, you can [download](http://downloads.wordpress.org/plugin/buddypress-media.zip) the plugin from the repository. Unzip it and upload it to the plugins folder of your WordPress installation (`wp-content/plugins/` directory of your WordPress installation).
+Alternatively, you can [download](http://downloads.wordpress.org/plugin/buddypress-media.zip "Download BuddyPress Media") the plugin from the repository. Unzip it and upload it to the plugins folder of your WordPress installation (`wp-content/plugins/` directory of your WordPress installation).
 
 Activate it through the 'Plugins' section.
 
@@ -41,20 +41,23 @@ Activate it through the 'Plugins' section.
 It also supports many video formats including *.avi, *.mkv, *.asf, *.flv, *.wmv, *.rm, *.mpg.
 It also supports many audio formats including *.mp3, *.ogg, *.wav, *.aac, *.m4a, *.wma.
 
-You can purchase it from here (http://rtcamp.com/store/bpm-ffmpeg/)
+You can purchase it from [here](http://rtcamp.com/store/buddypress-media-ffmpeg-converter/ "Buy bpm-ffmpeg from rtCamp").
 
-Important: bpm-ffmpeg addon needs free & open-source https://github.com/rtCamp/media-node
+Important: bpm-ffmpeg addon needs free & open-source [Media Node](https://github.com/rtCamp/media-node "Media Node on GitHub").
 
 
 == Frequently Asked Questions ==
 
-Please visit [BuddyPress Media Component's FAQ page](http://rtcamp.com/buddypress-media/faq/)
+Please visit [BuddyPress Media Component's FAQ page](http://rtcamp.com/buddypress-media/faq/ "Visit BuddyPress Media Component's FAQ page").
 
 == Screenshots ==
 
-Please visit [BuddyPress Media Component's Features page](http://rtcamp.com/buddypress-media/features/)
+Please visit [BuddyPress Media Component's Features page](http://rtcamp.com/buddypress-media/features/ "Visit BuddyPress Media Component's Features page").
 
 == Changelog ==
+
+= 2.1.1 =
+* Some changes in readme file
 
 = 2.1 =
 * Added necessary hooks & filters to support buddypress-media add-on creation.
