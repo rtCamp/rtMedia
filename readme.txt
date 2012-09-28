@@ -6,7 +6,7 @@ License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires at least: 3.3.2
 Tested up to: 3.4.2
-Stable tag: 2.1.1
+Stable tag: 2.1.2
 
 Adds multimedia features to your BuddyPress based social network. Support mobile devices.& audio/video conversion.
 
@@ -55,6 +55,9 @@ Please visit [BuddyPress Media Component's FAQ page](http://rtcamp.com/buddypres
 Please visit [BuddyPress Media Component's Features page](http://rtcamp.com/buddypress-media/features/ "Visit BuddyPress Media Component's Features page").
 
 == Changelog ==
+
+= 2.1.2 =
+* Changed some default values and normalized all files with end of file as line feed only
 
 = 2.1.1 =
 * Some changes in readme file
