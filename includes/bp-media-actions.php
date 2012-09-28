@@ -224,7 +224,7 @@ add_action('init', 'bp_media_init_count');
  * @since BP Media 2.0
  */
 function bp_media_footer() { ?>
-	<div id="bp-media-footer"><p>We &hearts; <a href="http://rtcamp.com/buddypress-media/">MediaBP</a></p></div>
+	<div id="bp-media-footer"><p>Using <a title="BuddyPress Media adds photos, video and audio upload/management feature" href="http://rtcamp.com/buddypress-media/">BuddyPress Media</a>.</p></div>
 	<?php
 }
 if(get_option('bp_media_remove_linkback')!='1')

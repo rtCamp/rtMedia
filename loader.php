@@ -35,7 +35,6 @@ define('BP_MEDIA_REQUIRED_BP','1.5.5');
 function bp_media_init() {
 	if (defined('BP_VERSION')&&version_compare(BP_VERSION, BP_MEDIA_REQUIRED_BP, '>')) {
 		require( BP_MEDIA_PLUGIN_DIR . '/includes/bp-media-loader.php' );
-		do_action('bp_media_init');
 	}
 }
 add_action('bp_include', 'bp_media_init');
@@ -44,7 +43,7 @@ add_action('bp_include', 'bp_media_init');
  * Function to do the tasks required to be done while activating the plugin
  */
 function bp_media_activate() {
-	//todo
+	update_option('bp_media_remove_linkback', '1');
 }
 register_activation_hook(__FILE__, 'bp_media_activate');
 

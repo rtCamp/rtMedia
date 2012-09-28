@@ -157,7 +157,7 @@ function bp_media_page_not_exist() {
  *
  * @since BP Media 2.0
  */
-function bp_media_get_feeds($feed_url = 'http://rtcamp.com/blog/category/buddypress-media/feed/') {
+function bp_media_get_feeds($feed_url = 'http://rtcamp.com/tag/buddypress/feed/') {
 	// Get RSS Feed(s)
 	require_once( ABSPATH . WPINC . '/feed.php' );
 	$maxitems = 0;
