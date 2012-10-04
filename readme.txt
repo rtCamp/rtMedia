@@ -6,7 +6,7 @@ License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires at least: 3.3.2
 Tested up to: 3.4.2
-Stable tag: 2.1.2
+Stable tag: 2.1.3
 
 Adds multimedia features to your BuddyPress based social network. Support mobile devices.& audio/video conversion.
 
@@ -56,6 +56,9 @@ Please visit [BuddyPress Media Component's Features page](http://rtcamp.com/budd
 
 == Changelog ==
 
+= 2.1.3 =
+* Fixed file uploading via iPhone.
+
 = 2.1.2 =
 * Changed some default values and normalized all files with end of file as line feed only
 
@@ -90,4 +93,4 @@ Please visit [BuddyPress Media Component's Features page](http://rtcamp.com/budd
 * HTML5 Video Tag Support (with fallback)
 
 == Upgrade Notice ==
-Added support for common video & audio format conversion using FFMPEG. Also added support for third-party add-ons.
+Fixed file uploading via iPhone.

@@ -16,6 +16,7 @@ function bp_media_show_upload_form() {
 	if($bp_media_options['videos_enabled']){
 		$allowed['type'][] = 'video';
 		$allowed['accept'][] = 'video/mp4';
+		$allowed['accept'][] = 'video/quicktime';
 	}
 	$allowed = apply_filters('bp_media_allowed_filter',$allowed);
 	$accept = implode(',',$allowed['accept']);

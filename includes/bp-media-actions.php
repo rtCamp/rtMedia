@@ -36,7 +36,8 @@ function bp_media_handle_uploads() {
 			try {
 				$title = isset($_POST['bp_media_title']) ? ($_POST['bp_media_title'] != "") ? $_POST['bp_media_title'] : pathinfo($_FILES['bp_media_file']['name'], PATHINFO_FILENAME) : pathinfo($_FILES['bp_media_file']['name'], PATHINFO_FILENAME);
 				$entry = $bp_media_entry->add_media($title, array_key_exists('bp_media_description',$_POST)?$_POST['bp_media_description']:'');
-				$bp->{BP_MEDIA_SLUG}->messages['updated'][] = __('Upload Successful', 'bp-media');
+				if(!isset($bp->{BP_MEDIA_SLUG}->messages['updated'][0]))
+					$bp->{BP_MEDIA_SLUG}->messages['updated'][0] = __('Upload Successful', 'bp-media');
 			} catch (Exception $e) {
 				$bp->{BP_MEDIA_SLUG}->messages['error'][] = $e->getMessage();
 			}
