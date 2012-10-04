@@ -107,6 +107,7 @@ class BP_Media_Host_Wordpress {
 		bp_media_init_count(bp_loggedin_user_id());
 		switch ($type) {
 			case 'video/mp4' :
+			case 'video/quicktime' :
 				$type = 'video';
 				include_once(trailingslashit(BP_MEDIA_PLUGIN_DIR) . 'includes/lib/getid3/getid3.php');
 				try {
@@ -184,7 +185,7 @@ class BP_Media_Host_Wordpress {
 				wp_delete_post($post_id, true);
 				unlink($file);
 				$activity_content = false;
-				throw new Exception(__('Media File you have tried to upload is not supported. Supported media files are .jpg, .png, .gif, .mp3 and .mp4.', 'bp-media'));
+				throw new Exception(__('Media File you have tried to upload is not supported. Supported media files are .jpg, .png, .gif, .mp3, .mov and .mp4.', 'bp-media'));
 		}
 		$attachment_id = wp_insert_attachment($attachment, $file, $post_id);
 		if (!is_wp_error($attachment_id)) {
