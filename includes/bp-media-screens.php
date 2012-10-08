@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Screens for all the slugs defined in the BuddyPress Media Component
+ * Screens for all the slugs defined in the BuddyPress Media
  */
 
 /* Exit if accessed directlly. */

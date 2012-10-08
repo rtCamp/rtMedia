@@ -2,7 +2,7 @@
 global $bp_media_admin_is_current;
 $bp_media_admin_is_current = false;
 /**
- * Add the BuddyPress Media Component's options menu in the BuddyPress' options subnavigation.
+ * Add the BuddyPress Media's options menu in the BuddyPress' options subnavigation.
  * 
  * @since BP Media 2.0
  */
@@ -11,14 +11,14 @@ function bp_media_add_admin_menu() {
 	if (!is_super_admin())
 		return false;
 	
-	$page = add_submenu_page('bp-general-settings', __('BuddyPress Media Component Settings', 'bp-media'), __('MediaBP', 'bp-media'), 'manage_options', 'bp-media-settings', 'bp_media_admin_menu'
+	$page = add_submenu_page('bp-general-settings', __('BuddyPress Media Settings', 'bp-media'), __('MediaBP', 'bp-media'), 'manage_options', 'bp-media-settings', 'bp_media_admin_menu'
 	);
 	add_action('admin_print_styles-' . $page, 'bp_media_admin_enqueue');
 }
 //add_action(bp_core_admin_hook(), 'bp_media_add_admin_menu');
 
 /**
- * Displays and updates the options menu of BuddyPress Media Component
+ * Displays and updates the options menu of BuddyPress Media
  * 
  * @since BP Media 2.0
  */
@@ -86,7 +86,7 @@ function bp_media_admin_menu() {
 		<?php //screen_icon( 'buddypress' ); ?>
 		<div id="icon-bp-media" class="icon32"><br></div>
 		<h2 class="nav-tab-wrapper"><?php bp_core_admin_tabs( __( 'Media', 'bp-media' ) ); ?></h2>
-		<h2>BuddyPress Media Component Settings</h2>
+		<h2>BuddyPress Media Settings</h2>
 		<?php if(count($bp_media_errors)) { ?>
 		<div class="error"><p><?php foreach($bp_media_errors as $error) echo $error.'<br/>'; ?></p></div>
 		<?php } if(count($bp_media_messages)){?>
@@ -161,7 +161,7 @@ function bp_media_admin_menu() {
 }
 
 /**
- * Default BuddyPress Media Component admin sidebar with metabox styling
+ * Default BuddyPress Media admin sidebar with metabox styling
  * 
  * @since BP Media 2.0
  */
@@ -204,7 +204,7 @@ function bp_media_default_admin_sidebar() {
 }
 
 /**
- * Enqueues the scripts and stylesheets needed for the BuddyPress Media Component's options page
+ * Enqueues the scripts and stylesheets needed for the BuddyPress Media's options page
  */
 function bp_media_admin_enqueue() {
 	$admin_js = trailingslashit(site_url()).'?bp_media_get_feeds=1';

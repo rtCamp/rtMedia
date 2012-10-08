@@ -1,6 +1,6 @@
 <?php
 /**
- * The Main loader file of BuddyPress Media Component Plugin
+ * The Main loader file of BuddyPress Media Plugin
  */
 /* Exit if accessed directlly. */
 
@@ -93,7 +93,7 @@ if (file_exists(BP_MEDIA_PLUGIN_DIR . '/languages/' . get_locale() . '.mo'))
 	load_textdomain('bp-media', BP_MEDIA_PLUGIN_DIR . '/languages/' . get_locale() . '.mo');
 
 /**
- * BP Media Component Class, extends BP_Component
+ * BP Media Class, extends BP_Component
  * 
  * @see BP_Component
  * 
@@ -113,7 +113,7 @@ class BP_Media_Component extends BP_Component {
 	);
 	
 	/**
-	 * Constructor for the BuddyPress Media Component
+	 * Constructor for the BuddyPress Media
 	 * 
 	 * @since BP Media 2.0
 	 */
@@ -126,7 +126,7 @@ class BP_Media_Component extends BP_Component {
 	}
 	
 	/**
-	 * Includes the files required for the BuddyPress Media Component and calls the parent class' includes function
+	 * Includes the files required for the BuddyPress Media and calls the parent class' includes function
 	 * 
 	 * @since BP Media 2.0
 	 */
@@ -149,7 +149,7 @@ class BP_Media_Component extends BP_Component {
 	}
 
 	/**
-	 * Initializes the global variables of the BuddyPress Media component and its parent class.
+	 * Initializes the global variables of the BuddyPress Media and its parent class.
 	 */
 	function setup_globals() {
 		global $bp;
@@ -331,7 +331,7 @@ class BP_Media_Component extends BP_Component {
 		$args = array(
 			'label' => __('Media', 'bp-media'),
 			'labels' => $labels,
-			'description' => 'BuddyPress Media Component\'s Media Files',
+			'description' => 'BuddyPress Media\'s Media Files',
 			'public' => true,
 			'show_ui' => false,
 			'supports' => array('title', 'editor', 'excerpt', 'author', 'thumbnail', 'custom-fields')

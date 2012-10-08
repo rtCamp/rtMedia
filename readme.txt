@@ -1,4 +1,4 @@
-=== BuddyPress Media Component ===
+=== BuddyPress Media ===
 Contributors: rtcamp
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=9488824
 Tags: BuddyPress, media, multimedia, audio, video, photo, images, upload, share, MediaElement.js, ffmpeg, kaltura
@@ -12,7 +12,7 @@ Adds multimedia features to your BuddyPress based social network. Support mobile
 
 == Description ==
 
-BuddyPress Media Component adds multimedia features to your BuddyPress based social network, so that your members can upload and share photos, audio and videos with their friends.
+BuddyPress Media adds multimedia features to your BuddyPress based social network, so that your members can upload and share photos, audio and videos with their friends.
 
 = Features =
 * Images, Audio and Video Support
@@ -48,11 +48,11 @@ Important: bpm-ffmpeg addon needs free & open-source [Media Node](https://github
 
 == Frequently Asked Questions ==
 
-Please visit [BuddyPress Media Component's FAQ page](http://rtcamp.com/buddypress-media/faq/ "Visit BuddyPress Media Component's FAQ page").
+Please visit [BuddyPress Media's FAQ page](http://rtcamp.com/buddypress-media/faq/ "Visit BuddyPress Media's FAQ page").
 
 == Screenshots ==
 
-Please visit [BuddyPress Media Component's Features page](http://rtcamp.com/buddypress-media/features/ "Visit BuddyPress Media Component's Features page").
+Please visit [BuddyPress Media's Features page](http://rtcamp.com/buddypress-media/features/ "Visit BuddyPress Media's Features page").
 
 == Changelog ==
 
