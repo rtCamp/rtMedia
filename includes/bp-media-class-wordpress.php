@@ -12,6 +12,7 @@ class BP_Media_Host_Wordpress {
 		$owner,   //Owner of the entry
 		$attachment_id, //The attachment ID of the media file
 		$delete_url, //The delete url for the media
+		$thumbnail_id, //The thumbnail's url
 		$edit_url; //The edit page's url for the media
 	
 	/**
@@ -47,26 +48,30 @@ class BP_Media_Host_Wordpress {
 		$this->name = $media->post_title;
 		$this->owner = $media->post_author;
 		$this->type = get_post_meta($media->ID, 'bp_media_type', true);
+		$this->attachment_id = get_post_meta($this->id, 'bp_media_child_attachment', true);
 		switch ($this->type) {
 			case 'video' :
 				$this->url = trailingslashit(bp_core_get_user_domain($this->owner) . BP_MEDIA_VIDEOS_SLUG . '/' . BP_MEDIA_VIDEOS_ENTRY_SLUG . '/' . $this->id);
 				$this->edit_url = trailingslashit(bp_core_get_user_domain($this->owner) . BP_MEDIA_VIDEOS_SLUG . '/' . BP_MEDIA_VIDEOS_EDIT_SLUG . '/' . $this->id);
 				$this->delete_url = trailingslashit(bp_core_get_user_domain($this->owner) . BP_MEDIA_VIDEOS_SLUG . '/' . BP_MEDIA_DELETE_SLUG . '/' . $this->id);
+				$this->thumbnail_id = get_post_meta($this->id, 'bp_media_thumbnail',true);
 				break;
 			case 'audio' :
 				$this->url = trailingslashit(bp_core_get_user_domain($this->owner) . BP_MEDIA_AUDIO_SLUG . '/' . BP_MEDIA_AUDIO_ENTRY_SLUG . '/' . $this->id);
 				$this->edit_url = trailingslashit(bp_core_get_user_domain($this->owner) . BP_MEDIA_AUDIO_SLUG . '/' . BP_MEDIA_AUDIO_EDIT_SLUG . '/' . $this->id);
 				$this->delete_url = trailingslashit(bp_core_get_user_domain($this->owner) . BP_MEDIA_AUDIO_SLUG . '/' . BP_MEDIA_DELETE_SLUG . '/' . $this->id);
+				$this->thumbnail_id = get_post_meta($this->id, 'bp_media_thumbnail',true);
 				break;
 			case 'image' :
 				$this->url = trailingslashit(bp_core_get_user_domain($this->owner) . BP_MEDIA_IMAGES_SLUG . '/' . BP_MEDIA_IMAGES_ENTRY_SLUG . '/' . $this->id);
 				$this->edit_url = trailingslashit(bp_core_get_user_domain($this->owner) . BP_MEDIA_IMAGES_SLUG . '/' . BP_MEDIA_IMAGES_EDIT_SLUG . '/' . $this->id);
 				$this->delete_url = trailingslashit(bp_core_get_user_domain($this->owner) . BP_MEDIA_IMAGES_SLUG . '/' . BP_MEDIA_DELETE_SLUG . '/' . $this->id);
+				$image_array = image_downsize($this->attachment_id, 'bp_media_single_image');
+				$this->thumbnail_id = $this->attachment_id;
 				break;
 			default :
 				return false;
 		}
-		$this->attachment_id = get_post_meta($this->id, 'bp_media_child_attachment', true);
 	}
 
 	/**
@@ -234,7 +239,13 @@ class BP_Media_Host_Wordpress {
 		$activity_content .='<div class="bp_media_content">';
 		switch ($this->type) {
 			case 'video' :
-				$activity_content.='<video src="' . wp_get_attachment_url($attachment_id) . '" width="320" height="240" type="video/mp4" id="bp_media_video_' . $this->id . '_' . $bp_media_counter . '" controls="controls" preload="none"></video></span><script>bp_media_create_element("bp_media_video_' . $this->id . '_' . $bp_media_counter . '");</script>';
+				if($this->thumbnail_id){
+					$image_array = image_downsize($this->thumbnail_id, 'bp_media_activity_image');
+					$activity_content.='<video poster="'.$image_array[0].'" src="' . wp_get_attachment_url($attachment_id) . '" width="320" height="240" type="video/mp4" id="bp_media_video_' . $this->id . '_' . $bp_media_counter . '" controls="controls" preload="none"></video></span><script>bp_media_create_element("bp_media_video_' . $this->id . '_' . $bp_media_counter . '");</script>';
+				}
+				else{
+					$activity_content.='<video src="' . wp_get_attachment_url($attachment_id) . '" width="320" height="240" type="video/mp4" id="bp_media_video_' . $this->id . '_' . $bp_media_counter . '" controls="controls" preload="none"></video></span><script>bp_media_create_element("bp_media_video_' . $this->id . '_' . $bp_media_counter . '");</script>';
+				}
 				break;
 			case 'audio' :
 				$activity_content.='<audio src="' . wp_get_attachment_url($attachment_id) . '" width="320" type="audio/mp3" id="bp_media_audio_' . $this->id . '_' . $bp_media_counter . '" controls="controls" preload="none" ></audio></span><script>bp_media_create_element("bp_media_audio_' . $this->id . '_' . $bp_media_counter . '");</script>';
