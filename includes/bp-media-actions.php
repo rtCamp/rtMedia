@@ -67,7 +67,7 @@ function bp_media_show_messages() {
 add_action('bp_media_before_content', 'bp_media_show_messages');
 
 /**
- * Enqueues all the required scripts and stylesheets for the proper working of BuddyPress Media Component
+ * Enqueues all the required scripts and stylesheets for the proper working of BuddyPress Media.
  * 
  * @since BP Media 2.0
  */
