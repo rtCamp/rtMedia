@@ -207,11 +207,14 @@ function bp_media_default_admin_sidebar() {
  * Enqueues the scripts and stylesheets needed for the BuddyPress Media's options page
  */
 function bp_media_admin_enqueue() {
-	$admin_js = trailingslashit(site_url()).'?bp_media_get_feeds=1';
-	wp_enqueue_script('bp-media-js',plugins_url('includes/js/bp-media.js', dirname(__FILE__)));
-	wp_localize_script('bp-media-js','bp_media_news_url',$admin_js);
-	wp_enqueue_style('bp-media-admin-style', plugins_url('includes/css/bp-media-style.css', dirname(__FILE__)));
-	wp_enqueue_script( 'dashboard' );
+	$current_screen=get_current_screen();
+	if(isset($current_screen->base)&&$current_screen->base=='settings_page_bp-media-settings'){
+		$admin_js = trailingslashit(site_url()).'?bp_media_get_feeds=1';
+		wp_enqueue_script('bp-media-js',plugins_url('includes/js/bp-media.js', dirname(__FILE__)));
+		wp_localize_script('bp-media-js','bp_media_news_url',$admin_js);
+		wp_enqueue_style('bp-media-admin-style', plugins_url('includes/css/bp-media-style.css', dirname(__FILE__)));
+		wp_enqueue_script( 'dashboard' );
+	}
 }
 add_action('admin_enqueue_scripts', 'bp_media_admin_enqueue');
 
