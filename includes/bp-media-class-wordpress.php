@@ -292,7 +292,13 @@ class BP_Media_Host_Wordpress {
 		$content = '<div class="bp_media_title">' . wp_html_excerpt($this->name, $bp_media_default_excerpts['single_entry_title']) . '</div><div class="bp_media_content">';
 		switch ($this->type) {
 			case 'video' :
-				$content.='<video src="' . wp_get_attachment_url($this->attachment_id) . '" width="' . $bp_media_default_sizes['single_video']['width'] . '" height="' . ($bp_media_default_sizes['single_video']['height'] == 0 ? 'auto' : $bp_media_default_sizes['single_video']['height']) . '" type="video/mp4" id="bp_media_video_' . $this->id . '" controls="controls" preload="none"></video><script>bp_media_create_element("bp_media_video_' . $this->id . '");</script>';
+				if($this->thumbnail_id){
+					$image_array = image_downsize($this->thumbnail_id, 'bp_media_single_image');
+					$content.='<video poster="'.$image_array[0].'" src="' . wp_get_attachment_url($this->attachment_id) . '" width="' . $bp_media_default_sizes['single_video']['width'] . '" height="' . ($bp_media_default_sizes['single_video']['height'] == 0 ? 'auto' : $bp_media_default_sizes['single_video']['height']) . '" type="video/mp4" id="bp_media_video_' . $this->id . '" controls="controls" preload="none"></video><script>bp_media_create_element("bp_media_video_' . $this->id . '");</script>';
+				}
+				else{
+					$content.='<video src="' . wp_get_attachment_url($this->attachment_id) . '" width="' . $bp_media_default_sizes['single_video']['width'] . '" height="' . ($bp_media_default_sizes['single_video']['height'] == 0 ? 'auto' : $bp_media_default_sizes['single_video']['height']) . '" type="video/mp4" id="bp_media_video_' . $this->id . '" controls="controls" preload="none"></video><script>bp_media_create_element("bp_media_video_' . $this->id . '");</script>';
+				}
 				break;
 			case 'audio' :
 				$content.='<audio src="' . wp_get_attachment_url($this->attachment_id) . '" width="' . $bp_media_default_sizes['single_audio']['width'] . '" type="audio/mp3" id="bp_media_audio_' . $this->id . '" controls="controls" preload="none" ></audio><script>bp_media_create_element("bp_media_audio_' . $this->id . '");</script>';
@@ -318,10 +324,17 @@ class BP_Media_Host_Wordpress {
 		$attachment = get_post_meta($this->id, 'bp_media_child_attachment', true);
 		switch ($this->type) {
 			case 'video' :
+				if($this->thumbnail_id){
+					$medium_array = image_downsize($this->thumbnail_id, 'thumbnail');
+					$thumb_url = $medium_array[0];
+				}
+				else{
+					$thumb_url = plugins_url('img/video_thumb.png', __FILE__);
+				}
 				?>
 				<li>
 					<a href="<?php echo $this->url ?>" title="<?php echo $this->description ?>">
-						<img src="<?php echo plugins_url('img/video_thumb.png', __FILE__) ?>" />
+						<img src="<?php echo $thumb_url; ?>" />
 					</a>
 					<h3 title="<?php echo $this->name ?>"><a href="<?php echo $this->url ?>" title="<?php echo $this->description ?>"><?php echo $this->name ?></a></h3>
 				</li>
