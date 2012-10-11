@@ -133,10 +133,10 @@ function bp_media_admin_menu() {
 						<th scope="row"><label for="remove_linkback">Spread the word</label></th>
 						<td>
 							<fieldset>
-								<legend class="screen-reader-text"><span>Yes, we support BuddyPress Media</span></legend>
+								<legend class="screen-reader-text"><span>Yes, I want to support BuddyPress Media</span></legend>
 								<label for="remove_linkback_yes"><input name="remove_linkback" type="radio" id="remove_linkback_yes" value="2" <?php if(get_option('bp_media_remove_linkback')=='2') echo 'checked="checked"' ?>> Yes, we support BuddyPress Media</label>
 								<br/>
-								<legend class="screen-reader-text"><span>No, we don't support BuddyPress Media</span></legend>
+								<legend class="screen-reader-text"><span>No, I don't want to support BuddyPress Media</span></legend>
 								<label for="remove_linkback_no"><input name="remove_linkback" type="radio" id="remove_linkback_no" value="1" <?php if(get_option('bp_media_remove_linkback')=='1') echo 'checked="checked"' ?>> No, we don't support BuddyPress Media</label>
 							</fieldset>
 						</td>
