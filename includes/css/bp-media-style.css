@@ -14,15 +14,18 @@
 }
 .bp_media_description {
 	display:block;
+	margin-top:10px;
 }
-ul.bp-media-gallery{
+ul.bp-media-gallery.item-list{
 	overflow:hidden;
+	margin: 1% 0;
 }
-ul.bp-media-gallery li{
-	float:left;
-	margin:1%;
-	width:18%;
-	border-bottom:none;
+#item-body ul.bp-media-gallery li{
+	float: left;
+	margin: 1% 1% 0;
+	width: 18%;
+	border-bottom: none;
+	padding: 0;
 }
 ul.bp-media-gallery li img{
 	max-width:150px;
@@ -42,12 +45,13 @@ ul.bp-media-gallery li img:hover{
 
 }
 ul.bp-media-gallery h3{
-	max-width:150px;
+	max-width: 150px;
 	overflow: hidden;
 	text-align: center;
-	font-size:110%;
-    white-space: nowrap;
-	height:20px;
+	font-size: 110%;
+	white-space: nowrap;
+	height: 20px;
+	margin: 10px 0px;
 }
 ul.bp-media-gallery a{
 	width:150px;
