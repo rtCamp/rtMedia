@@ -63,7 +63,7 @@ li.media div.activity-content div.activity-inner p{
 	display:none;
 }
 div.bp_media_title{
-	margin-bottom:5px;
+	margin-bottom:10px;
 }
 #bp-media-footer {
 	color: #4D4D4D;
@@ -214,4 +214,12 @@ rgba(0, 0, 0, 0.3);
 #bp-media-premium-addons ul,#bp-media-premium-addons li{
 	list-style:disc;
 	margin-left:10px;
+}
+.bp-media-single div.bp_media_content{
+	text-align:center;
+}
+
+.bp-media-single .bp_media_content .mejs-container{
+	margin-left:auto;
+	margin-right:auto;
 }
