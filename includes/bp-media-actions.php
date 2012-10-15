@@ -72,10 +72,14 @@ add_action('bp_media_before_content', 'bp_media_show_messages');
  * @since BP Media 2.0
  */
 function bp_media_enqueue_scripts_styles() {
-	wp_enqueue_script('bp-media-mejs', plugins_url('includes/media-element/mediaelement-and-player.min.js', dirname(__FILE__)));
+    
+	wp_enqueue_script('jquery-ui-tabs');
+    wp_enqueue_script('bp-media-mejs', plugins_url('includes/media-element/mediaelement-and-player.min.js', dirname(__FILE__)));
 	wp_enqueue_script('bp-media-default', plugins_url('includes/js/bp-media.js', dirname(__FILE__)));
-	wp_enqueue_style('bp-media-mecss', plugins_url('includes/media-element/mediaelementplayer.min.css', dirname(__FILE__)));
+	
+    wp_enqueue_style('bp-media-mecss', plugins_url('includes/media-element/mediaelementplayer.min.css', dirname(__FILE__)));
 	wp_enqueue_style('bp-media-default', plugins_url('includes/css/bp-media-style.css', dirname(__FILE__)));
+	
 }
 
 add_action('wp_enqueue_scripts', 'bp_media_enqueue_scripts_styles', 11);
