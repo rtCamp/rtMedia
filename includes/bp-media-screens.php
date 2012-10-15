@@ -18,10 +18,16 @@ function bp_media_upload_screen() {
 	bp_core_load_template(apply_filters('bp_core_template_plugin', 'members/single/plugins'));
 }
 
+/**
+ * Screen function to display upload screen title
+ */
 function bp_media_upload_screen_title() {
 	_e('Upload Media');
 }
 
+/**
+ * Screen function to display upload screen content
+ */
 function bp_media_upload_screen_content() {
 	do_action('bp_media_before_content');
 	bp_media_show_upload_form();
@@ -79,10 +85,16 @@ function bp_media_images_screen() {
 	bp_core_load_template(apply_filters('bp_core_template_plugin', 'members/single/plugins'));
 }
 
+/**
+ * Screen function to display images screen title
+ */
 function bp_media_images_screen_title() {
 	_e('Images List Page');
 }
 
+/**
+ * Screen function to display images screen content
+ */
 function bp_media_images_screen_content() {
 	global $bp_media_query;
 	if ($bp_media_query && $bp_media_query->have_posts()):
@@ -130,10 +142,16 @@ function bp_media_images_edit_screen() {
 	bp_core_load_template(apply_filters('bp_core_template_plugin', 'members/single/plugins'));
 }
 
+/**
+ * Screen function to dipslay edit images screen title
+ */
 function bp_media_images_edit_screen_title() {
 	_e('Edit Image','bp-media');
 }
 
+/**
+ * Screen function to display edit image screen content
+ */
 function bp_media_images_edit_screen_content() {
 	global $bp, $bp_media_current_entry,$bp_media_default_excerpts;
 	?>
@@ -221,7 +239,7 @@ function bp_media_videos_screen_content() {
 	if ($bp_media_query && $bp_media_query->have_posts()):
 		bp_media_show_pagination();
 		do_action('bp_media_before_content');
-		echo '<ul class="bp-media-gallery">';
+		echo '<ul id="groups-list" class="bp-media-gallery item-list">';
 		while ($bp_media_query->have_posts()) : $bp_media_query->the_post();
 			bp_media_the_content();
 		endwhile;
@@ -345,16 +363,22 @@ function bp_media_audio_screen() {
 	bp_core_load_template(apply_filters('bp_core_template_plugin', 'members/single/plugins'));
 }
 
+/**
+ * Screen function to dipslay edit audio screen title
+ */
 function bp_media_audio_screen_title() {
 	_e('Audio List Page');
 }
 
+/**
+ * Screen function to dipslay edit audio screen content
+ */
 function bp_media_audio_screen_content() {
 	global $bp_media_query;
 	if ($bp_media_query && $bp_media_query->have_posts()):
 		bp_media_show_pagination();
 		do_action('bp_media_before_content');
-		echo '<ul class="bp-media-gallery">';
+		echo '<ul id="groups-list" class="bp-media-gallery item-list">';
 		while ($bp_media_query->have_posts()) : $bp_media_query->the_post();
 			bp_media_the_content();
 		endwhile;
