@@ -21,4 +21,12 @@ jQuery(document).ready(function(){
 			bp_media_news_section.find('.inside').html(data);
 		});
 	}
+    var bp_media_recent_tabs = jQuery('#recent-media-tabs');
+    if(bp_media_recent_tabs.length>0){
+        jQuery(bp_media_recent_tabs).tabs();
+    }
+    var bp_media_popular_tabs = jQuery('#popular-media-tabs');
+    if(bp_media_popular_tabs.length>0){
+        jQuery( bp_media_popular_tabs ).tabs();
+    }
 });
