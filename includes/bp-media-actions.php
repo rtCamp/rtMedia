@@ -124,8 +124,13 @@ function bp_media_delete_activity_handler_old($args){
 	if(!(is_array($result)&& count($result)==1 ))
 		return;
 	$post_id=$result[0]->post_id;
-	$media = new BP_Media_Host_Wordpress($post_id);
-	$media->delete_media();
+	try{
+		$media = new BP_Media_Host_Wordpress($post_id);
+		$media->delete_media();
+	}
+	catch(Exception $e){
+		error_log('Media tried to delete was already deleted');
+	}
 }
 add_action('bp_before_activity_delete', 'bp_media_delete_activity_handler_old');
 
