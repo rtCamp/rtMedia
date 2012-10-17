@@ -132,7 +132,12 @@ function bp_media_the_content($id = 0) {
 		return false;
 	if (!$media->post_type == 'bp_media')
 		return false;
-	$media = new BP_Media_Host_Wordpress($media->ID);
-	echo $media->get_media_gallery_content();
+	try{
+		$media = new BP_Media_Host_Wordpress($media->ID);
+		echo $media->get_media_gallery_content();
+	}
+	catch(Exception $e){
+		echo '';
+	}
 }
 ?>
