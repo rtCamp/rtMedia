@@ -9,13 +9,12 @@ $bp_media_admin_is_current = false;
 function bp_media_add_admin_menu() {
 	global $bp;
 	if (!is_super_admin())
-		return false;
+        return false;
 	
-	$page = add_submenu_page('bp-general-settings', __('BuddyPress Media Settings', 'bp-media'), __('MediaBP', 'bp-media'), 'manage_options', 'bp-media-settings', 'bp_media_admin_menu'
-	);
+	$page = add_menu_page( 'BP Media Component', 'BP Media', 'manage_options', 'bp-media-settings', 'bp_media_admin_menu' );
 	add_action('admin_print_styles-' . $page, 'bp_media_admin_enqueue');
 }
-//add_action(bp_core_admin_hook(), 'bp_media_add_admin_menu');
+add_action(bp_core_admin_hook(), 'bp_media_add_admin_menu');
 
 /**
  * Displays and updates the options menu of BuddyPress Media
@@ -79,12 +78,10 @@ function bp_media_admin_menu() {
 	global $bp_media_admin_is_current;
 	$bp_media_admin_is_current = true;
 		?>
-	<div class="metabox-fixed metabox-holder alignright">
-		<?php bp_media_default_admin_sidebar(); ?>
-	</div>
+	
 	<div class="wrap bp-media-admin">
 		<?php //screen_icon( 'buddypress' ); ?>
-		<div id="icon-bp-media" class="icon32"><br></div>
+		<div id="icon-buddypress" class="icon32"><br></div>
 		<h2 class="nav-tab-wrapper"><?php bp_core_admin_tabs( __( 'Media', 'bp-media' ) ); ?></h2>
 		<h2>BuddyPress Media Settings</h2>
 		<?php if(count($bp_media_errors)) { ?>
@@ -157,6 +154,9 @@ function bp_media_admin_menu() {
 				</tbody>
 			</table>
 	</div>
+        <div class="metabox-fixed metabox-holder alignright">
+		<?php bp_media_default_admin_sidebar(); ?>
+	</div>
 	<?php
 }
 
@@ -168,14 +168,14 @@ function bp_media_admin_menu() {
 function bp_media_default_admin_sidebar() {
 	?>
 	<div class="postbox" id="support">
-		<div title="<?php _e('Click to toggle', 'bp-media'); ?>" class="handlediv"><br /></div>
+		
 		<h3 class="hndle"><span><?php _e('Need Help?', 'bp-media'); ?></span></h3>
 		<div class="inside"><p><?php printf(__(' Please use our <a href="%s">free support forum</a>.<br/><span class="bpm-aligncenter">OR</span><br/>
 		<a href="%s">Hire us!</a> To get professional customisation/setup service.', 'bp-media'), 'http://rtcamp.com/support/forum/buddypress-media/','http://rtcamp.com/buddypress-media/hire/'); ?>.</p></div>
 	</div>
 
 	<div class="postbox" id="bp-media-premium-addons">
-		<div title="<?php _e('Click to toggle', 'bp-media'); ?>" class="handlediv"><br /></div>
+		
 		<h3 class="hndle"><span><?php _e('Premium Addons', 'bp-media'); ?></span></h3>
 		<div class="inside">
 			<ul>
@@ -187,7 +187,7 @@ function bp_media_default_admin_sidebar() {
 	</div>
 
 	<div class="postbox" id="social">
-		<div title="<?php _e('Click to toggle', 'bp-media'); ?>" class="handlediv"><br /></div>
+		
 		<h3 class="hndle"><span><?php _e('Getting Social is Good', 'bp-media'); ?></span></h3>
 		<div class="inside" style="text-align:center;">
 			<a href="<?php printf('%s', 'http://www.facebook.com/rtCamp.solutions/'); ?>" target="_blank" title="<?php _e('Become a fan on Facebook', 'bp-media'); ?>" class="bp-media-facebook bp-media-social"><?php _e('Facebook', 'bp-media'); ?></a>
@@ -197,7 +197,7 @@ function bp_media_default_admin_sidebar() {
 	</div>
 
 	<div class="postbox" id="bp_media_latest_news">
-		<div title="<?php _e('Click to toggle', 'bp-media'); ?>" class="handlediv"><br /></div>
+		
 		<h3 class="hndle"><span><?php _e('Latest News', 'bp-media'); ?></span></h3>
 		<div class="inside"><img src ="<?php echo admin_url(); ?>/images/wpspin_light.gif" /> Loading...</div>
 	</div><?php
@@ -207,14 +207,10 @@ function bp_media_default_admin_sidebar() {
  * Enqueues the scripts and stylesheets needed for the BuddyPress Media's options page
  */
 function bp_media_admin_enqueue() {
-	$current_screen=get_current_screen();
-	if(isset($current_screen->base)&&$current_screen->base=='settings_page_bp-media-settings'){
 		$admin_js = trailingslashit(site_url()).'?bp_media_get_feeds=1';
 		wp_enqueue_script('bp-media-js',plugins_url('includes/js/bp-media.js', dirname(__FILE__)));
 		wp_localize_script('bp-media-js','bp_media_news_url',$admin_js);
 		wp_enqueue_style('bp-media-admin-style', plugins_url('includes/css/bp-media-style.css', dirname(__FILE__)));
-		wp_enqueue_script( 'dashboard' );
-	}
 }
 add_action('admin_enqueue_scripts', 'bp_media_admin_enqueue');
 
@@ -227,11 +223,11 @@ function bp_media_admin_tab() {
 	$active_class = 'nav-tab nav-tab-active';
 	$tab = array(
 			'href' => bp_get_admin_url( add_query_arg( array( 'page' => 'bp-media-settings'  ), 'admin.php' ) ),
-			'name' => __( 'Media', 'bp-media' )
+			'name' => __( 'BuddyPress Media', 'bp-media' )
 		);
 	global $bp_media_admin_is_current;
 	$tab_class  = $bp_media_admin_is_current ? $active_class : $idle_class;
-	$tabs_html	= '<a href="' . $tab['href'] . '" class="' . $tab_class . '">' . $tab['name'] . '</a>';
+	$tabs_html	= '<a id="bp-media" href="' . $tab['href'] . '" class="' . $tab_class . '">' . $tab['name'] . '</a>';
 	echo $tabs_html;
 	
 }
