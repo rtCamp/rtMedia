@@ -319,7 +319,42 @@ class BP_Media_Component extends BP_Component {
 		));
 	}
 
+	/**
+	* Creating a custom post type album for BuddyPress Media
+	*/
 	function register_post_types() {
+		$labels = array(
+			'name' => __('Albums', 'bp-media'),
+			'singular_name' => __('Album', 'bp-media'),
+			'add_new' => __('Create', 'bp-media'),
+			'add_new_item' => __('Create Album', 'bp-media'),
+			'edit_item' => __('Edit Album', 'bp-media'),
+			'new_item' => __('New Album', 'bp-media'),
+			'all_items' => __('All Albums', 'bp-media'),
+			'view_item' => __('View Album', 'bp-media'),
+			'search_items' => __('Search Albums', 'bp-media'),
+			'not_found' =>  __('No album found', 'bp-media'),
+			'not_found_in_trash' => __('No album found in Trash', 'bp-media'), 
+			'parent_item_colon' => '',
+			'menu_name' => __('Albums', 'bp-media')
+		);
+
+		$args = array(
+			'labels' => $labels,
+			'public' => true,
+			'publicly_queryable' => true,
+			'show_ui' => true, 
+			'show_in_menu' => true, 
+			'query_var' => true,
+			'rewrite' => array( 'slug' => 'albums', 'with_front'=>false),
+			'capability_type' => 'post',
+			'has_archive' => true, 
+			'hierarchical' => false,
+			'menu_position' => null,
+			'supports' => array( 'title', 'author', 'thumbnail', 'excerpt', 'comments' )
+		); 
+		register_post_type('bp_media_album', $args);
+		
 		/* Set up labels for the post type */
 		$labels = array(
 			'name' => __('Media', 'bp-media'),
