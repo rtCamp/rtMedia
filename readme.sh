@@ -23,7 +23,7 @@ echo &>> /tmp/file
 echo $LICENSE | grep 3.0 
 if [ $? -eq 0 ] 
 then
-        LICENSE="[GPL v3 or later] ($LICENSE)"
+        LICENSE="[GPL v3 or later] (http://www.gnu.org/licenses/gpl-3.0.html)"
         #echo $LICENSE
 else
         LICENSE="[GPL v2 or later] ($LICENSE)"
