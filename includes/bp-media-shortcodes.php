@@ -8,8 +8,13 @@ function bp_media_shortcode_action($atts) {
 			'id' => '0'
 			), $atts)
 	);
-	$media=new BP_Media_Host_Wordpress($id);
-	return $media->get_media_activity_action();
+	try{
+		$media=new BP_Media_Host_Wordpress($id);
+		return $media->get_media_activity_action();
+	}
+	catch(Exception $e){
+		return 'Media not present';
+	}
 }
 //add_shortcode('bp_media_action', 'bp_media_shortcode_action');
 
@@ -21,8 +26,13 @@ function bp_media_shortcode_content($atts) {
 			'id' => '0'
 			), $atts)
 	);
-	$media=new BP_Media_Host_Wordpress($id);
-	return $media->get_media_activity_content();
+	try{
+		$media=new BP_Media_Host_Wordpress($id);
+		return $media->get_media_activity_content();
+	}
+	catch(Exception $e){
+		return 'Media not present';
+	}
 }
 //add_shortcode('bp_media_content', 'bp_media_shortcode_content');
 
@@ -31,8 +41,13 @@ function bp_media_shortcode_url($atts) {
 			'id' => '0'
 			), $atts)
 	);
-	$media=new BP_Media_Host_Wordpress($id);
-	return $media->get_media_activity_url();
+	try{
+		$media=new BP_Media_Host_Wordpress($id);
+		return $media->get_media_activity_url();
+	}
+	catch(Exception $e){
+		return home_url();
+	}
 }
 //add_shortcode('bp_media_url','bp_media_shortcode_url');
 ?>
