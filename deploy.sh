@@ -4,8 +4,12 @@
 
 # main config
 PLUGINSLUG="buddypress-media"
-CURRENTDIR=`pwd`
 MAINFILE="loader.php" # this should be the name of your main php file in the wordpress plugin
+SVNUSER="rtcamp" # your svn username
+
+
+##### YOU CAN STOP EDITING HERE #####
+CURRENTDIR=`pwd`
 
 # git config
 GITPATH="$CURRENTDIR/" # this file should be in the base of your git repository
@@ -13,8 +17,6 @@ GITPATH="$CURRENTDIR/" # this file should be in the base of your git repository
 # svn config
 SVNPATH="/tmp/$PLUGINSLUG" # path to a temp SVN repo. No trailing slash required and don't add trunk.
 SVNURL="https://plugins.svn.wordpress.org/buddypress-media/" # Remote SVN repo on wordpress.org, with no trailing slash
-SVNUSER="rtcamp" # your svn username
-
 
 # Let's begin...
 echo ".........................................."
@@ -61,6 +63,9 @@ readme.sh
 README.md
 .git
 .gitignore" "$SVNPATH/trunk/"
+
+
+
 
 echo "Changing directory to SVN and committing to trunk"
 cd $SVNPATH/trunk/
