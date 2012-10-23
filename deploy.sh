@@ -35,6 +35,8 @@ if [ "$NEWVERSION1" != "$NEWVERSION2" ]; then echo "Versions don't match. Exitin
 echo "Versions match in readme.txt and PHP file. Let's proceed..."
 
 cd $GITPATH
+bash readme.sh
+git add README.md
 echo -e "Enter a commit message for this new version: \c"
 read COMMITMSG
 git commit -am "$COMMITMSG"
