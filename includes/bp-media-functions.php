@@ -118,7 +118,7 @@ function bp_media_update_count() {
 
 function bp_media_update_media(){
 	global $bp_media_current_entry;
-	if($bp_media_current_entry->update_media(array('name'=> esc_html($_POST['bp_media_title']),'description'=> esc_html($_POST['bp_media_description'])))){
+	if($bp_media_current_entry->update_media(array('description'=> esc_html($_POST['bp_media_description'])))){
 		@setcookie('bp-message', 'The media has been updated' , time() + 60 * 60 * 24, COOKIEPATH);
 		@setcookie('bp-message-type', 'success' , time() + 60 * 60 * 24, COOKIEPATH);
 		wp_redirect($bp_media_current_entry->get_url());
