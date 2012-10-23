@@ -83,15 +83,20 @@ function bp_media_admin_menu() {
 		<?php //screen_icon( 'buddypress' ); ?>
 		<div id="icon-buddypress" class="icon32"><br></div>
 		<h2 class="nav-tab-wrapper"><?php bp_core_admin_tabs( __( 'Media', 'bp-media' ) ); ?></h2>
-		<h2>BuddyPress Media Settings</h2>
+		
 		<?php if(count($bp_media_errors)) { ?>
 		<div class="error"><p><?php foreach($bp_media_errors as $error) echo $error.'<br/>'; ?></p></div>
 		<?php } if(count($bp_media_messages)){?>
 		<div class="updated"><p><?php foreach($bp_media_messages as $message) echo $message.'<br/>'; ?></p></div>
 		<?php }?>
+                <div class="metabox-holder columns-2">
+                <div id="bp-media-settings-boxes">
 		<form method="post" action="?page=bp-media-settings">
 			 <?php wp_nonce_field( 'bp_media_update_options' ); ?>
-			<h3>Media Types Enabled</h3>
+                    <div class="postbox">
+                        <div class="handlediv" title="Click to toggle"><br></div>
+                        <h3 class="hndle"><span>Media Types Enabled</span></h3>
+                        <div class="inside">
 			<table class="form-table ">
 				<tbody>
 					<tr valign="top">
@@ -123,7 +128,12 @@ function bp_media_admin_menu() {
 					</tr>
 				</tbody>
 			</table>
-			<h3>General Settings</h3>
+                        </div>
+                    </div>
+                    <div class="postbox">
+                        <div class="handlediv" title="Click to toggle"><br></div>
+                        <h3 class="hndle"><span>Spread the word</span></h3>
+                        <div class="inside">
 			<table class="form-table ">
 				<tbody>
 					<tr valign="top">
@@ -140,9 +150,16 @@ function bp_media_admin_menu() {
 					</tr>
 				</tbody>
 			</table>
+                            </div>
+                    </div>
 			<?php do_action('bp_media_extension_options'); ?>
-			<p class="submit"><input type="submit" name="submit" id="submit" class="button-primary" value="Save Changes"></p></form>
-			<h3>Other Options</h3>
+                        <p class="submit"><input type="submit" name="submit" id="submit" class="button-primary" value="Save Changes"></p>
+                            </form>
+			
+                    <div class="postbox">
+                        <div class="handlediv" title="Click to toggle"><br></div>
+                        <h3 class="hndle"><span>Other Options</span></h3>
+                <div class="inside">
 			<table class="form-table">
 				<tbody>
 					<tr valign="top">
@@ -153,10 +170,15 @@ function bp_media_admin_menu() {
 					</tr>
 				</tbody>
 			</table>
+                        </div>
+                    </div>
 	</div>
-        <div class="metabox-fixed metabox-holder alignright">
+                <div class="metabox-fixed metabox-holder alignright">
 		<?php bp_media_default_admin_sidebar(); ?>
 	</div>
+                </div>
+        </div>
+        
 	<?php
 }
 
@@ -167,14 +189,25 @@ function bp_media_admin_menu() {
  */
 function bp_media_default_admin_sidebar() {
 	?>
-	<div class="postbox" id="support">
+        <div class="rtmetabox postbox" id="branding">
+            <div class="inside">
+        	<a href="http://rtcamp.com" title="Empowering The Web With WordPress" id="logo"><img src="<?php echo plugins_url( '/img/rtcamp-logo.png', __FILE__ ); ?>" alt="rtCamp" /></a>
+                <ul id="social">
+                    <li><a href="<?php printf('%s', 'http://www.facebook.com/rtCamp.solutions/'); ?>" target="_blank" title="<?php _e('Become a fan on Facebook', 'bp-media'); ?>" class="bp-media-facebook bp-media-social"><?php _e('Facebook', 'bp-media'); ?></a></li>
+                    <li><a href="<?php printf('%s', 'https://twitter.com/rtcamp/'); ?>" target="_blank" title="<?php _e('Follow us on Twitter', 'bp-media'); ?>" class="bp-media-twitter bp-media-social"><?php _e('Twitter', 'bp-media'); ?></a></li>
+                    <li><a href="<?php printf('%s', 'http://feeds.feedburner.com/rtcamp/'); ?>" target="_blank" title="<?php _e('Subscribe to our feeds', 'bp-media'); ?>" class="bp-media-rss bp-media-social"><?php _e('RSS Feed', 'bp-media'); ?></a></li>
+                </ul>
+            </div>
+        </div>
+
+	<div class="rtmetabox postbox" id="support">
 		
 		<h3 class="hndle"><span><?php _e('Need Help?', 'bp-media'); ?></span></h3>
 		<div class="inside"><p><?php printf(__(' Please use our <a href="%s">free support forum</a>.<br/><span class="bpm-aligncenter">OR</span><br/>
 		<a href="%s">Hire us!</a> To get professional customisation/setup service.', 'bp-media'), 'http://rtcamp.com/support/forum/buddypress-media/','http://rtcamp.com/buddypress-media/hire/'); ?>.</p></div>
 	</div>
 
-	<div class="postbox" id="bp-media-premium-addons">
+	<div class="rtmetabox postbox" id="bp-media-premium-addons">
 		
 		<h3 class="hndle"><span><?php _e('Premium Addons', 'bp-media'); ?></span></h3>
 		<div class="inside">
@@ -186,17 +219,7 @@ function bp_media_default_admin_sidebar() {
 		</div>
 	</div>
 
-	<div class="postbox" id="social">
-		
-		<h3 class="hndle"><span><?php _e('Getting Social is Good', 'bp-media'); ?></span></h3>
-		<div class="inside" style="text-align:center;">
-			<a href="<?php printf('%s', 'http://www.facebook.com/rtCamp.solutions/'); ?>" target="_blank" title="<?php _e('Become a fan on Facebook', 'bp-media'); ?>" class="bp-media-facebook bp-media-social"><?php _e('Facebook', 'bp-media'); ?></a>
-			<a href="<?php printf('%s', 'https://twitter.com/rtcamp/'); ?>" target="_blank" title="<?php _e('Follow us on Twitter', 'bp-media'); ?>" class="bp-media-twitter bp-media-social"><?php _e('Twitter', 'bp-media'); ?></a>
-			<a href="<?php printf('%s', 'http://feeds.feedburner.com/rtcamp/'); ?>" target="_blank" title="<?php _e('Subscribe to our feeds', 'bp-media'); ?>" class="bp-media-rss bp-media-social"><?php _e('RSS Feed', 'bp-media'); ?></a>
-		</div>
-	</div>
-
-	<div class="postbox" id="bp_media_latest_news">
+	<div class="rtmetabox postbox" id="bp_media_latest_news">
 		
 		<h3 class="hndle"><span><?php _e('Latest News', 'bp-media'); ?></span></h3>
 		<div class="inside"><img src ="<?php echo admin_url(); ?>/images/wpspin_light.gif" /> Loading...</div>
@@ -207,10 +230,14 @@ function bp_media_default_admin_sidebar() {
  * Enqueues the scripts and stylesheets needed for the BuddyPress Media's options page
  */
 function bp_media_admin_enqueue() {
+    $current_screen=get_current_screen();
 		$admin_js = trailingslashit(site_url()).'?bp_media_get_feeds=1';
 		wp_enqueue_script('bp-media-js',plugins_url('includes/js/bp-media.js', dirname(__FILE__)));
 		wp_localize_script('bp-media-js','bp_media_news_url',$admin_js);
 		wp_enqueue_style('bp-media-admin-style', plugins_url('includes/css/bp-media-style.css', dirname(__FILE__)));
+                if(isset($current_screen->base)&&$current_screen->base=='toplevel_page_bp-media-settings'){
+                    wp_enqueue_script('dashboard');
+                }
 }
 add_action('admin_enqueue_scripts', 'bp_media_admin_enqueue');
 
