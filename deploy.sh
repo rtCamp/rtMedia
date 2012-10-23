@@ -55,6 +55,7 @@ git checkout-index -a -f --prefix=$SVNPATH/trunk/
 
 echo "Ignoring github specific files and deployment script"
 svn propset svn:ignore "deploy.sh
+readme.sh
 README.md
 .git
 .gitignore" "$SVNPATH/trunk/"
