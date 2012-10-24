@@ -150,8 +150,8 @@ class BP_Media_Component extends BP_Component {
 			'includes/bp-media-interface.php',
 			'includes/bp-media-class-wordpress.php',
 			'includes/bp-media-shortcodes.php',
-			'includes/bp-media-widgets.php'
-			'includes/bp-media-class-album.php'
+			'includes/bp-media-widgets.php',
+			'includes/bp-media-class-album.php',
 		);
 		if (is_admin() || is_network_admin()) {
 			$includes[] = 'includes/bp-media-admin.php';

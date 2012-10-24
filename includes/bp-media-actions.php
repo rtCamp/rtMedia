@@ -76,7 +76,17 @@ function bp_media_enqueue_scripts_styles() {
 	wp_enqueue_script('jquery-ui-tabs');
     wp_enqueue_script('bp-media-mejs', plugins_url('includes/media-element/mediaelement-and-player.min.js', dirname(__FILE__)));
 	wp_enqueue_script('bp-media-default', plugins_url('includes/js/bp-media.js', dirname(__FILE__)));
+	global $bp;
 	
+	$bp_media_vars = array( 
+		'ajaxurl' => admin_url( 'admin-ajax.php'),
+		'page'	=> 1,
+		'current_action' => isset($bp->current_action)?$bp->current_action:false,
+		'action_variables' =>	isset($bp->action_variables)?$bp->action_variables:false,
+		'displayed_user' => bp_displayed_user_id(),
+		'loggedin_user'	=> bp_loggedin_user_id()
+	);
+	wp_localize_script( 'bp-media-default', 'bp_media_vars', $bp_media_vars );
     wp_enqueue_style('bp-media-mecss', plugins_url('includes/media-element/mediaelementplayer.min.css', dirname(__FILE__)));
 	wp_enqueue_style('bp-media-default', plugins_url('includes/css/bp-media-style.css', dirname(__FILE__)));
 	
@@ -171,6 +181,9 @@ function bp_media_set_query() {
 			'post_status'	=>	'any',
 			'post_mime_type' =>	$type,
 			'author' => $bp->displayed_user->id,
+			'meta_key' => 'bp-media-key',
+			'meta_value' => $bp->displayed_user->id,
+			'meta_compare' => 'LIKE',
 			'paged' => $paged
 		);
 		$bp_media_query = new WP_Query($args);
@@ -261,7 +274,7 @@ function bp_media_upload_enqueue(){
 	wp_enqueue_style('bp-media-default',plugins_url('css/bp-media-style.css',__FILE__));
 }
 //add_action('wp_enqueue_scripts','bp_media_upload_enqueue');
-//This is used only on the uploads page
+//This is used only on the uploads page so its added as action in the screens function of upload page.
 
 
 /**
@@ -316,4 +329,50 @@ function bp_media_albums_set_inner_query($album_id=0) {
 	);
 	$bp_media_query = new WP_Query($args);
 }
+
+/**
+ * Function to return the media for the ajax requests
+ */
+function bp_media_load_more() {
+	global $bp,$bp_media_query;
+	$query_type;array(
+		'photos of author',
+		'videos of author',
+		'albums of author',
+		'music of author',
+		'photos of group',
+		'videos of group',
+		'music of group',
+		'media of album'
+		);
+	$media_type;
+	$author_id;
+	$album_id;
+	$group_id;
+	
+	$types = array('image','video','audio');
+	if(in_array('page', $_POST)&&  is_numeric($_POST['page']) && in_array('type', $_POST)){
+		if ($type) {
+			$args = array(
+				'post_type' => 'attachment',
+				'post_status'	=>	'any',
+				'post_mime_type' =>	$type,
+				'author' => $bp->displayed_user->id,
+				'meta_key' => 'bp-media-key',
+				'meta_value' => $bp->displayed_user->id,
+				'meta_compare' => 'LIKE',
+				'paged' => $paged
+			);
+			$bp_media_query = new WP_Query($args);
+		}
+	}
+	echo '<pre>';
+	var_dump($_POST);
+	echo '</pre>';
+
+	die();
+}
+add_action('wp_ajax_bp_media_load_more', 'bp_media_load_more');
+add_action( 'wp_ajax_nopriv_bp_media_load_more', 'bp_media_load_more' );
+
 ?>

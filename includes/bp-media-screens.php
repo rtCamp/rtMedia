@@ -12,7 +12,7 @@ if (!defined('ABSPATH'))
  * Screen function for Upload page
  */
 function bp_media_upload_screen() {
-	//add_action('wp_enqueue_scripts','bp_media_upload_enqueue');
+	add_action('wp_enqueue_scripts','bp_media_upload_enqueue');
 	add_action('bp_template_title', 'bp_media_upload_screen_title');
 	add_action('bp_template_content', 'bp_media_upload_screen_content');
 	bp_core_load_template(apply_filters('bp_core_template_plugin', 'members/single/plugins'));
@@ -30,7 +30,8 @@ function bp_media_upload_screen_title() {
  */
 function bp_media_upload_screen_content() {
 	do_action('bp_media_before_content');
-	bp_media_show_upload_form();
+	bp_media_show_upload_form_multiple();
+	bp_media_show_upload_form2();
 	do_action('bp_media_after_content');
 }
 
@@ -134,7 +135,7 @@ function bp_media_images_edit_screen() {
 	bp_media_check_user();
 	
 	//For saving the data if the form is submitted
-	if(array_key_exists('bp_media_description', $_POST)){
+	if(array_key_exists('bp_media_title', $_POST)){
 		bp_media_update_media();
 	}
 	add_action('bp_template_title', 'bp_media_images_edit_screen_title');
@@ -156,6 +157,7 @@ function bp_media_images_edit_screen_content() {
 	global $bp, $bp_media_current_entry,$bp_media_default_excerpts;
 	?>
 	<form method="post" class="standard-form" id="bp-media-upload-form">
+		<label for="bp-media-upload-input-title"><?php _e('Image Title', 'bp-media'); ?></label><input id="bp-media-upload-input-title" type="text" name="bp_media_title" class="settings-input" maxlength="<?php echo max(array($bp_media_default_excerpts['single_entry_title'],$bp_media_default_excerpts['activity_entry_title'])) ?>" value="<?php echo $bp_media_current_entry->get_title(); ?>" />
 		<label for="bp-media-upload-input-description"><?php _e('Image Description', 'bp-media'); ?></label><input id="bp-media-upload-input-description" type="text" name="bp_media_description" class="settings-input" maxlength="<?php echo max(array($bp_media_default_excerpts['single_entry_description'],$bp_media_default_excerpts['activity_entry_description'])) ?>" value="<?php echo $bp_media_current_entry->get_content(); ?>" />
 		<div class="submit"><input type="submit" class="auto" value="Update" /><a href="<?php echo $bp_media_current_entry->get_url(); ?>" class="button" title="Back to Media File">Back to Media</a></div>
 	</form>
@@ -177,7 +179,7 @@ function bp_media_images_entry_screen_title() {
 
 function bp_media_images_entry_screen_content() {
 	global $bp, $bp_media_current_entry;
-	if (!$bp_media_current_entry)
+	if (!$bp->action_variables[0] == BP_MEDIA_IMAGES_ENTRY_SLUG)
 		return false;
 	do_action('bp_media_before_content');
 	echo '<div class="bp-media-single bp-media-image">';
@@ -270,7 +272,6 @@ function bp_media_videos_edit_screen() {
 	//Creating global bp_media_current_entry for later use
 	try {
 		$bp_media_current_entry = new BP_Media_Host_Wordpress($bp->action_variables[1]);
-
 	} catch (Exception $e) {
 		/* Send the values to the cookie for page reload display */
 		@setcookie('bp-message', $e->getMessage(), time() + 60 * 60 * 24, COOKIEPATH);
@@ -297,6 +298,7 @@ function bp_media_videos_edit_screen_content() {
 	global $bp, $bp_media_current_entry,$bp_media_default_excerpts;
 	?>
 	<form method="post" class="standard-form" id="bp-media-upload-form">
+		<label for="bp-media-upload-input-title"><?php _e('Video Title', 'bp-media'); ?></label><input id="bp-media-upload-input-title" type="text" name="bp_media_title" class="settings-input" maxlength="<?php echo max(array($bp_media_default_excerpts['single_entry_title'],$bp_media_default_excerpts['activity_entry_title'])) ?>" value="<?php echo $bp_media_current_entry->get_title(); ?>" />
 		<label for="bp-media-upload-input-description"><?php _e('Video Description', 'bp-media'); ?></label><input id="bp-media-upload-input-description" type="text" name="bp_media_description" class="settings-input" maxlength="<?php echo max(array($bp_media_default_excerpts['single_entry_description'],$bp_media_default_excerpts['activity_entry_description'])) ?>" value="<?php echo $bp_media_current_entry->get_content(); ?>" />
 		<div class="submit"><input type="submit" class="auto" value="Update" /><a href="<?php echo $bp_media_current_entry->get_url(); ?>" class="button" title="Back to Media File">Back to Media</a></div>
 	</form>
@@ -442,6 +444,7 @@ function bp_media_audio_edit_screen_content() {
 	global $bp, $bp_media_current_entry,$bp_media_default_excerpts;
 	?>
 	<form method="post" class="standard-form" id="bp-media-upload-form">
+		<label for="bp-media-upload-input-title"><?php _e('Audio Title', 'bp-media'); ?></label><input id="bp-media-upload-input-title" type="text" name="bp_media_title" class="settings-input" maxlength="<?php echo max(array($bp_media_default_excerpts['single_entry_title'],$bp_media_default_excerpts['activity_entry_title'])) ?>" value="<?php echo $bp_media_current_entry->get_title(); ?>" />
 		<label for="bp-media-upload-input-description"><?php _e('Audio Description', 'bp-media'); ?></label><input id="bp-media-upload-input-description" type="text" name="bp_media_description" class="settings-input" maxlength="<?php echo max(array($bp_media_default_excerpts['single_entry_description'],$bp_media_default_excerpts['activity_entry_description'])) ?>" value="<?php echo $bp_media_current_entry->get_content(); ?>" />
 		<div class="submit"><input type="submit" class="auto" value="Update" /><a href="<?php echo $bp_media_current_entry->get_url(); ?>" class="button" title="Back to Media File">Back to Media</a></div>
 	</form>
@@ -618,6 +621,7 @@ function bp_media_albums_edit_screen_content() {
 	global $bp, $bp_media_current_entry,$bp_media_default_excerpts;
 	?>
 	<form method="post" class="standard-form" id="bp-media-upload-form">
+		<label for="bp-media-upload-input-title"><?php _e('Album Title', 'bp-media'); ?></label><input id="bp-media-upload-input-title" type="text" name="bp_media_title" class="settings-input" maxlength="<?php echo max(array($bp_media_default_excerpts['single_entry_title'],$bp_media_default_excerpts['activity_entry_title'])) ?>" value="<?php echo $bp_media_current_entry->get_title(); ?>" />
 		<label for="bp-media-upload-input-description"><?php _e('Album Description', 'bp-media'); ?></label><input id="bp-media-upload-input-description" type="text" name="bp_media_description" class="settings-input" maxlength="<?php echo max(array($bp_media_default_excerpts['single_entry_description'],$bp_media_default_excerpts['activity_entry_description'])) ?>" value="<?php echo $bp_media_current_entry->get_content(); ?>" />
 		<div class="submit"><input type="submit" class="auto" value="Update" /><a href="<?php echo $bp_media_current_entry->get_url(); ?>" class="button" title="Back to Media File">Back to Media</a></div>
 	</form>
@@ -628,6 +632,7 @@ function bp_media_albums_entry_screen_content() {
 	global $bp, $bp_media_current_album,$bp_media_query;
 	if (!$bp->action_variables[0] == BP_MEDIA_ALBUMS_ENTRY_SLUG)
 		return false;
+	echo '<div class="bp_media_title">'.$bp_media_current_album->get_title().'</div>';
 	bp_media_albums_set_inner_query($bp_media_current_album->get_id());
 	if ($bp_media_query && $bp_media_query->have_posts()):
 		bp_media_show_pagination('bottom',true);//Used bottom because top styling conflicting with the header
