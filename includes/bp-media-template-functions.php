@@ -32,7 +32,7 @@ function bp_media_show_upload_form() {
 	<?php
 }
 
-function bp_media_show_upload_form2() {
+function bp_media_show_upload_form_multiple() {
 	global $bp,$bp_media_default_excerpts;	
 	?>
 <div id="bp-media-upload-ui" class="hide-if-no-js drag-drop">

@@ -238,7 +238,7 @@ class BP_Media_Host_Wordpress {
 		}
 		global $bp_media_counter, $bp_media_default_excerpts;
 		$attachment_id = get_post_meta($this->id, 'bp_media_child_attachment', true);
-		$activity_content = '<div class="bp_media_title"><a href="' . $this->url . '" title="' . $this->description . '">' . wp_html_excerpt($this->description, $bp_media_default_excerpts['activity_entry_title']) . '</a></div>';
+		$activity_content = '<div class="bp_media_title"><a href="' . $this->url . '" title="' . $this->description . '">' . wp_html_excerpt($this->name, $bp_media_default_excerpts['activity_entry_title']) . '</a></div>';
 		$activity_content .='<div class="bp_media_content">';
 		switch ($this->type) {
 			case 'video' :
@@ -256,7 +256,7 @@ class BP_Media_Host_Wordpress {
 				break;
 			case 'image' :
 				$image_array = image_downsize($attachment_id, 'bp_media_activity_image');
-				$activity_content.='<a href="' . $this->url . '" title="' . $this->description . '"><img src="' . $image_array[0] . '" id="bp_media_image_' . $this->id . '_' . $bp_media_counter++ . '" alt="' . $this->description . '" /></a>';
+				$activity_content.='<a href="' . $this->url . '" title="' . $this->name . '"><img src="' . $image_array[0] . '" id="bp_media_image_' . $this->id . '_' . $bp_media_counter++ . '" alt="' . $this->name . '" /></a>';
 				$type = 'image';
 				break;
 			default :
@@ -292,8 +292,7 @@ class BP_Media_Host_Wordpress {
 	 */
 	function get_media_single_content() {
 		global $bp_media_default_sizes, $bp_media_default_excerpts;
-//		$content = '<div class="bp_media_title">' . wp_html_excerpt($this->description, $bp_media_default_excerpts['single_entry_title']) . '</div><div class="bp_media_content">';
-		$content = '<div class="bp_media_content">';
+		$content = '<div class="bp_media_title">' . wp_html_excerpt($this->name, $bp_media_default_excerpts['single_entry_title']) . '</div><div class="bp_media_content">';
 		switch ($this->type) {
 			case 'video' :
 				if($this->thumbnail_id){
@@ -340,6 +339,7 @@ class BP_Media_Host_Wordpress {
 					<a href="<?php echo $this->url ?>" title="<?php echo $this->description ?>">
 						<img src="<?php echo $thumb_url; ?>" />
 					</a>
+					<h3 title="<?php echo $this->name ?>"><a href="<?php echo $this->url ?>" title="<?php echo $this->description ?>"><?php echo $this->name ?></a></h3>
 				</li>
 				<?php
 				break;
@@ -356,6 +356,7 @@ class BP_Media_Host_Wordpress {
 					<a href="<?php echo $this->url ?>" title="<?php echo $this->description ?>">
 						<img src="<?php echo $thumb_url ?>" />
 					</a>
+					<h3 title="<?php echo $this->name ?>"><a href="<?php echo $this->url ?>" title="<?php echo $this->description ?>"><?php echo $this->name ?></a></h3>
 				</li>
 				<?php
 				break;
@@ -367,6 +368,7 @@ class BP_Media_Host_Wordpress {
 					<a href="<?php echo $this->url ?>" title="<?php echo $this->description ?>">
 						<img src="<?php echo $medium_path ?>" />
 					</a>
+					<h3 title="<?php echo $this->name ?>"><a href="<?php echo $this->url ?>" title="<?php echo $this->description ?>"><?php echo $this->name ?></a></h3>
 				</li>
 				<?php
 				break;
