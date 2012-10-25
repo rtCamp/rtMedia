@@ -45,12 +45,18 @@ float: right;}
 .media-tabs-container .ui-tabs-panel{}
 .media-tabs-container .ui-tabs-hide{display: none}
 
-.media-tabs-container .ui-tabs-nav{display: block; margin: 0 0 10px; clear: both;overflow: hidden}
+.media-tabs-container .ui-tabs-nav{clear: both;display: block;margin: 0 0 15px;overflow: hidden;}
 .media-tabs-container .ui-state-default{border-left: 1px solid;float: left;line-height: 110%;padding: 0 5px;}
 .media-tabs-container .ui-state-default:first-child{margin-left: 0px;border: 0; padding-left: 0}
 
 .media-tabs-container .ui-state-default a{text-decoration: none}
 .media-tabs-container .ui-state-default.ui-state-active a{text-decoration: underline}
+
+.media-tabs-container .widget-item-listing li{margin-top: 10px;overflow: hidden;}
+.media-tabs-container .widget-item-listing li img{max-width:52px; margin-right: 10px; float: left }
+.media-tabs-container .widget-item-listing li h3 {margin: 0}
+.media-tabs-container .widget-item-listing li h3 a{font-size: 13px;font-weight: normal;word-wrap: break-word; }
+
 .bp-media-actions{margin:20px 0;}
 .bp-media-actions a{display:inline-block;}
 
@@ -59,9 +65,7 @@ float: right;}
 #adminmenu li.toplevel_page_bp-media-settings:hover .wp-menu-image a,
 #adminmenu li.current.toplevel_page_bp-media-settings .wp-menu-image a{background-position: center 0;}
 #adminmenu li.toplevel_page_bp-media-settings .wp-menu-image a img{display:none;}
-#bp-media-settings-boxes{overflow: hidden;
-width: 100%;
-float: left;}
+#bp-media-settings-boxes{overflow: hidden;width: 100%;float: left;}
 .nav-tab-wrapper a#bp-media{background:url('../img/bpm-icon-32.png') transparent no-repeat; padding-left:32px;}
 .nav-tab-wrapper a#bp-media:hover,.nav-tab-wrapper a#bp-media.nav-tab-active{background-position:left -32px;}
 .metabox-holder .postbox#bp_media_latest_news .inside ul li{background: transparent url('../img/rtCamp-bullet.png') left top no-repeat; padding-left: 19px;}

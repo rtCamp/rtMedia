@@ -39,22 +39,27 @@ class BP_Media_Recent_Media extends WP_Widget {
                 </ul>
                 <div id="recent-media-tabs-all">                    
                     <?php 
-                    
-                        $args = array(  'post_type' => 'bp_media', 
-                                        'posts_per_page' => $number );
-                        
-                        $bp_media_widget_query = new WP_Query($args);
-                        
+                    // All Media
+                        $args = array( 'post_type' => 'attachment', 
+                                        'post_status' => 'any',                                        
+                                        'posts_per_page' => $number,
+                                        'meta_key' => 'bp-media-key',    
+                                        'meta_value' => 0,
+                                        'meta_compare' => '>' );                       
+                                    
+                        $bp_media_widget_query = new WP_Query($args);                        
+                       
                         if($bp_media_widget_query->have_posts()){   ?>
                     
                             <ul class="widget-item-listing"><?php 
                                 while ($bp_media_widget_query->have_posts()) {  $bp_media_widget_query->the_post(); 
-                                $entry = new BP_Media_Host_Wordpress( get_the_ID() );       ?>
+                                
+                                    $entry = new BP_Media_Host_Wordpress( get_the_ID() );?>
 
-                                    <li><a href="<?php echo $entry->get_url(); ?>" title="<?php echo get_the_title(); ?>"><?php echo get_the_title(); ?></a> </li>
-
-                                    <?php
+                                    <?php echo $entry -> get_media_gallery_content();?><?php 
+                                    
                                 } ?>
+                                    
                             </ul><!-- .widget-item-listing --><?php 
                             
                         }                        
@@ -64,24 +69,28 @@ class BP_Media_Recent_Media extends WP_Widget {
                 
                 <div id="recent-media-tabs-videos">
                     <?php 
-                    
-                        $args = array(  'post_type' => 'bp_media', 
+                        // Rescent Video
+                        $args = array( 'post_type' => 'attachment', 
+                                        'post_status' => 'any',
+                                        'post_mime_type' => 'video',
                                         'posts_per_page' => $number,
-                                        'meta_key' => 'bp_media_type',  
-                                        'meta_value' => 'video',
-                                        'meta_compare' => 'LIKE' );
+                                        'meta_key' => 'bp-media-key',    
+                                        'meta_value' => 0,
+                                        'meta_compare' => '>' );
+                        
                         $bp_media_widget_query = new WP_Query($args);
                         
                         if($bp_media_widget_query->have_posts()){   ?>
                     
                             <ul class="widget-item-listing"><?php 
-                                while ($bp_media_widget_query->have_posts()) {  $bp_media_widget_query->the_post();  
-                                    $entry = new BP_Media_Host_Wordpress( get_the_ID() );       ?>
+                                while ($bp_media_widget_query->have_posts()) {  $bp_media_widget_query->the_post(); 
+                                
+                                    $entry = new BP_Media_Host_Wordpress( get_the_ID() );?>
 
-                                    <li><a href="<?php echo $entry->get_url(); ?>" title="<?php echo get_the_title(); ?>"><?php echo get_the_title(); ?></a> </li>
-
-                                    <?php
+                                    <?php echo $entry -> get_media_gallery_content();?><?php 
+                                    
                                 } ?>
+                                    
                             </ul><!-- .widget-item-listing --><?php 
                             
                         }                        
@@ -91,26 +100,29 @@ class BP_Media_Recent_Media extends WP_Widget {
                 
                 <div id="recent-media-tabs-music">
                     <?php 
-                    
-                        $args = array(  'post_type' => 'bp_media', 
+                        // Rescent Audio
+                        $args = array( 'post_type' => 'attachment', 
+                                        'post_status' => 'any',
+                                        'post_mime_type' => 'audio',
                                         'posts_per_page' => $number,
-                                        'meta_key' => 'bp_media_type',
-                                        'meta_value' => 'audio',
-                                        'meta_compare' => 'LIKE' );
+                                        'meta_key' => 'bp-media-key',    
+                                        'meta_value' => 0,
+                                        'meta_compare' => '>' );
                         
                         $bp_media_widget_query = new WP_Query($args);
                         
                         if($bp_media_widget_query->have_posts()){   ?>
                     
                             <ul class="widget-item-listing"><?php 
-                                while ($bp_media_widget_query->have_posts()) {  $bp_media_widget_query->the_post();  
-                                    $entry = new BP_Media_Host_Wordpress( get_the_ID() );       ?>
+                                while ($bp_media_widget_query->have_posts()) {  $bp_media_widget_query->the_post(); 
+                                
+                                    $entry = new BP_Media_Host_Wordpress( get_the_ID() );?>
 
-                                    <li><a href="<?php echo $entry->get_url(); ?>" title="<?php echo get_the_title(); ?>"><?php echo get_the_title(); ?></a> </li>
-
-                                    <?php
+                                    <?php echo $entry -> get_media_gallery_content();?><?php 
+                                    
                                 } ?>
-                            </ul><!-- .widget-item-listing --><?php 
+                                    
+                            </ul><!-- .widget-item-listing --><?php  
                             
                         }                        
                         wp_reset_query();   ?>
@@ -119,28 +131,32 @@ class BP_Media_Recent_Media extends WP_Widget {
                 
                 <div id="recent-media-tabs-photos">
                     <?php 
-                    
-                        $args = array(  'post_type' => 'bp_media', 
+                        // Rescent photos
+                         $args = array( 'post_type' => 'attachment', 
+                                        'post_status' => 'any',
+                                        'post_mime_type' => 'image',
                                         'posts_per_page' => $number,
-                                        'meta_key' => 'bp_media_type',
-                                        'meta_value' => 'image',
-                                        'meta_compare' => 'LIKE');
+                                        'meta_key' => 'bp-media-key',    
+                                        'meta_value' => 0,
+                                        'meta_compare' => '>' );
+
                         
                         $bp_media_widget_query = new WP_Query($args);
                         
                         if($bp_media_widget_query->have_posts()){   ?>
                     
                             <ul class="widget-item-listing"><?php 
-                                while ($bp_media_widget_query->have_posts()) {  $bp_media_widget_query->the_post();  
-                                    $entry = new BP_Media_Host_Wordpress( get_the_ID() );   ?>
+                                while ($bp_media_widget_query->have_posts()) {  $bp_media_widget_query->the_post(); 
+                                
+                                    $entry = new BP_Media_Host_Wordpress( get_the_ID() );?>
 
-                                    <li><a href="<?php echo $entry->get_url(); ?>" title="<?php echo get_the_title(); ?>"><?php echo get_the_title(); ?></a> </li>
-
-                                    <?php
+                                    <?php echo $entry -> get_media_gallery_content();?><?php 
+                                    
                                 } ?>
+                                    
                             </ul><!-- .widget-item-listing --><?php 
                             
-                        }                        
+                        }
                         wp_reset_query();   ?>
                     
                 </div><!-- #media-tabs-photos -->
@@ -207,10 +223,13 @@ class BP_Media_Popular_Media extends WP_Widget {
                 </ul>
                 <div id="popular-media-tabs-comments">                    
                     <?php 
-                    
-                        $args = array(  'post_type' => 'bp_media', 
+                        $args = array( 'post_type' => 'attachment', 
+                                        'post_status' => 'any',                                        
                                         'posts_per_page' => $number,
-                                        'orderby' => 'comment_count' );
+                                        'meta_key' => 'bp-media-key',    
+                                        'meta_value' => 0,
+                                        'meta_compare' => '>',
+                                        'orderby' => 'comment_count');
                         
                         $bp_media_widget_query = new WP_Query($args);
                         
@@ -218,13 +237,14 @@ class BP_Media_Popular_Media extends WP_Widget {
                     
                             <ul class="widget-item-listing"><?php 
                                 while ($bp_media_widget_query->have_posts()) {  $bp_media_widget_query->the_post(); 
-                                $entry = new BP_Media_Host_Wordpress( get_the_ID() );       ?>
+                                
+                                    $entry = new BP_Media_Host_Wordpress( get_the_ID() );?>
 
-                                    <li><a href="<?php echo $entry->get_url(); ?>" title="<?php echo get_the_title(); ?>"><?php echo get_the_title(); ?></a> </li>
-
-                                    <?php
+                                    <?php echo $entry -> get_media_gallery_content();?><?php 
+                                    
                                 } ?>
-                            </ul><!-- .widget-item-listing --><?php      
+                                    
+                            </ul><!-- .widget-item-listing --><?php     
                             
                         }                        
                         wp_reset_query();   ?>
@@ -234,20 +254,27 @@ class BP_Media_Popular_Media extends WP_Widget {
                 <div id="popular-media-tabs-views">
                     <?php 
                     
-                        $args = array(  'post_type' => 'bp_media', 
-                                        'posts_per_page' => $number );
+                        $args = array( 'post_type' => 'attachment', 
+                                        'post_status' => 'any',
+                                        'posts_per_page' => $number,
+                                        'meta_key' => 'bp-media-key',    
+                                        'meta_value' => 0,
+                                        'meta_compare' => '>',
+                                        'orderby' => 'comment_count');
+                        
                         $bp_media_widget_query = new WP_Query($args);
                         
                         if($bp_media_widget_query->have_posts()){   ?>
                     
                             <ul class="widget-item-listing"><?php 
-                                while ($bp_media_widget_query->have_posts()) {  $bp_media_widget_query->the_post();  
-                                    $entry = new BP_Media_Host_Wordpress( get_the_ID() );       ?>
+                                while ($bp_media_widget_query->have_posts()) {  $bp_media_widget_query->the_post(); 
+                                
+                                    $entry = new BP_Media_Host_Wordpress( get_the_ID() );?>
 
-                                    <li><a href="<?php echo $entry->get_url(); ?>" title="<?php echo get_the_title(); ?>"><?php echo get_the_title(); ?></a> </li>
-
-                                    <?php
+                                    <?php echo $entry -> get_media_gallery_content();?><?php 
+                                    
                                 } ?>
+                                    
                             </ul><!-- .widget-item-listing --><?php 
                             
                         }                        
@@ -257,8 +284,6 @@ class BP_Media_Popular_Media extends WP_Widget {
             </div>
         <?php
             echo $after_widget; 
-            
-            
         }
 
 	function update( $new_instance, $old_instance ) {
@@ -290,4 +315,37 @@ function bp_media_widgets_init(){
 }
 
 add_action('widgets_init', 'bp_media_widgets_init', 1);
+
+
+add_action( 'admin_bar_menu', 'bp_media_my_account_menu', 100 );
+
+function bp_media_my_account_menu(){
+    
+    global $bp, $wp_admin_bar;
+    
+	// Bail if this is an ajax request
+	if ( defined( 'DOING_AJAX' ) )
+		return;
+    
+    
+	// Logged in user
+	if ( is_user_logged_in() ) {
+
+		// Stored in the global so we can add menus easily later on
+		$bp->my_account_menu_id = 'my-account-buddypress';
+
+		// Create the main 'My Account' menu
+		$wp_admin_bar->add_menu( array(
+            'parent' => 'my-account',
+			'id'     => 'media-setings',
+			'group'  => true,
+			'title'  => __( 'Media Settings' ),
+			'meta'   => array(
+                'class'  => 'ab-sub-secondary'
+		) ) );
+
+	// Show login and sign-up links
+	}
+}
+
 ?>
