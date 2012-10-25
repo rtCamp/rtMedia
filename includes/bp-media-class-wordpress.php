@@ -89,7 +89,7 @@ class BP_Media_Host_Wordpress {
 		//Select or create new Wall Posts album if not exist
 		$query_vars = array(
 			'post_name'	=>	'wall-posts',
-			'post_author'=> get_current_user_id(),
+			'author'=> get_current_user_id(),
 			'post_type'	=>	'bp_media_album',
 			'post_status'	=>	'any'
 		);
@@ -98,16 +98,11 @@ class BP_Media_Host_Wordpress {
 			$post_id = $query->posts[0]->ID;
 		}
 		else{
-			$post_vars = array(
-				'post_title'	=>	'Wall Posts',
-				'post_name'		=>	'Wall Posts',
-				'post_status'=>	'publish',
-				'post_type'	=>	'bp_media_album',
-				'post_author'=> get_current_user_id()
-			);
-			$post_id = wp_insert_post($post_vars);
+			$album = new BP_Media_Album();
+			$album->add_album('Wall Posts');
+			$post_id = $album->get_id();
 		}
-		
+
 		$file = wp_handle_upload($_FILES['bp_media_file']);
 		if (isset($file['error']) || $file === null) {
 			throw new Exception(__('Error Uploading File', 'bp-media'));

@@ -428,8 +428,8 @@ class BP_Media_Component extends BP_Component {
 			'labels' => $labels,
 			'public' => true,
 			'publicly_queryable' => true,
-			'show_ui' => false, 
-			'show_in_menu' => false,
+			'show_ui' => true, 
+			'show_in_menu' => true,
 			'query_var' => true,
 			'capability_type' => 'post',
 			'has_archive' => true, 
@@ -462,7 +462,6 @@ class BP_Media_Component extends BP_Component {
 
 function bp_media_load_core_component() {
 	global $bp;
-
 	$bp->{BP_MEDIA_SLUG} = new BP_Media_Component();
 }
 add_action('bp_loaded', 'bp_media_load_core_component');

@@ -87,31 +87,30 @@ add_action('bp_init', 'bp_media_swap_filters');
  */
 function bp_media_update_count() {
 	global $wpdb;
-	$query = "SELECT COUNT(*) AS total,b.meta_value AS type,a.post_author 
-		FROM $wpdb->posts AS a,$wpdb->postmeta AS b 
-		WHERE (a.id = b.post_id) AND a.post_type='bp_media' AND b.meta_key='bp_media_type' 
-		GROUP BY b.meta_value,a.post_author";
+	$query = 
+	"SELECT
+		post_author,
+		SUM(CASE WHEN post_mime_type LIKE 'image%' THEN 1 ELSE 0 END) as Images,
+		SUM(CASE WHEN post_mime_type LIKE 'audio%' THEN 1 ELSE 0 END) as Audio,
+		SUM(CASE WHEN post_mime_type LIKE 'video%' THEN 1 ELSE 0 END) as Videos,
+		SUM(CASE WHEN post_type LIKE 'bp_media_album' THEN 1 ELSE 0 END) as Albums,
+		COUNT(*) as Total
+	FROM  
+		$wpdb->posts RIGHT JOIN $wpdb->postmeta on wp_postmeta.post_id = wp_posts.id
+	WHERE 
+		`meta_key` = 'bp-media-key' AND 
+		`meta_value` > 0 AND
+		( post_mime_type LIKE 'image%' OR post_mime_type LIKE 'audio%' OR post_mime_type LIKE 'video%' OR post_type LIKE 'bp_media_album')
+	GROUP BY post_author";
 	$result = $wpdb->get_results($query);
-	$users_count = array();
 	foreach ($result as $obj) {
-		$users_count[$obj->post_author][$obj->type] = $obj->total;
-	}
-	$users = get_users();
-	foreach ($users as $user) {
-		if (array_key_exists($user->ID, $users_count)) {
-			$count = array(
-				'images' => isset($users_count[$user->ID]['image']) ? intval($users_count[$user->ID]['image']) : 0,
-				'videos' => isset($users_count[$user->ID]['video']) ? intval($users_count[$user->ID]['video']) : 0,
-				'audio' => isset($users_count[$user->ID]['audio']) ? intval($users_count[$user->ID]['audio']) : 0,
+		$count = array(
+			'images' => $obj->Images,
+			'videos' => $obj->Videos,
+			'audio' => $obj->Audio,
+			'albums'=>	$obj->Albums
 			);
-		} else {
-			$count = array(
-				'images' => 0,
-				'videos' => 0,
-				'audio' => 0
-			);
-		}
-		bp_update_user_meta($user->ID, 'bp_media_count', $count);
+		bp_update_user_meta($obj->post_author, 'bp_media_count', $count);
 	}
 	return true;
 }
