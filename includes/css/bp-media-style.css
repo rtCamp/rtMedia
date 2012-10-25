@@ -1,10 +1,11 @@
-/* 
+/*
  *	Default stylesheet for BuddyPress Media
 */
 .bp_media_content img{max-width:98%;}
 .bp_media_content .mejs-poster img{max-width: 100%;}
 .bp_media_title {display:block;font-size:20px;font-weight:bold;}
-.bp_media_description {display:block;margin-top:10px;}
+ul.bp-media-gallery{overflow: hidden}
+.bp_media_description {display:block;margin-top:20px;}
 ul.bp-media-gallery.item-list{overflow:hidden;margin: 1% 0;}
 #item-body ul.bp-media-gallery li{float: left;margin: 1% 1% 0;width: 18%;border-bottom: none;padding: 0;}
 ul.bp-media-gallery li img{max-width:150px;width:100%;height:auto;-moz-box-shadow: 1px 1px 10px #a0a0a0;-webkit-box-shadow: 1px 1px 10px #a0a0a0;box-shadow: 1px 1px 10px #a0a0a0;-moz-transition: box-shadow 0.2s linear;-webkit-transition: box-shadow 0.2s linear;transition: box-shadow 0.2s linear;}
@@ -15,9 +16,11 @@ ul.bp-media-gallery a{width:150px;}
 li.media div.activity-content div.activity-inner p{display:none;}
 div.bp_media_title{margin-bottom:10px;}
 #bp-media-footer {color: #4D4D4D;text-align: center;text-shadow: #FAFAFA 1px 1px 0;}
-#wpbody-content div.metabox-fixed{width: 22%;margin-right: 10px;clear: both;}
-#wpbody-content div.wrap.bp-media-admin{overflow: hidden;width: 76%;}
-#icon-bp-media{background:url('../img/logo_medibp_32.png') no-repeat scroll 0 0 transparent;}
+#wpbody-content div.metabox-fixed{width: 280px;
+margin-right: -300px;
+float: right;}
+#wpbody-content div.wrap.bp-media-admin .columns-2{margin-right:300px;}
+
 .bp-media-social{background: url('../img/bp_media_social.png');height: 35px;width: 35px;display: inline-block;font-size: 0px;margin-right:5px;}
 .bp-media-facebook{background-position: 0px 0px;}
 .bp-media-facebook:hover{background-position: 0px 36px;}
@@ -38,3 +41,31 @@ div.bp_media_title{margin-bottom:10px;}
 #bp-media-premium-addons ul,#bp-media-premium-addons li{list-style:disc;margin-left:10px;}
 .bp-media-single div.bp_media_content{text-align:center;}
 .bp-media-single .bp_media_content .mejs-container{margin-left:auto;margin-right:auto;}
+
+.media-tabs-container .ui-tabs-panel{}
+.media-tabs-container .ui-tabs-hide{display: none}
+
+.media-tabs-container .ui-tabs-nav{display: block; margin: 0 0 10px; clear: both;overflow: hidden}
+.media-tabs-container .ui-state-default{border-left: 1px solid;float: left;line-height: 110%;padding: 0 5px;}
+.media-tabs-container .ui-state-default:first-child{margin-left: 0px;border: 0; padding-left: 0}
+
+.media-tabs-container .ui-state-default a{text-decoration: none}
+.media-tabs-container .ui-state-default.ui-state-active a{text-decoration: underline}
+.bp-media-actions{margin:20px 0;}
+.bp-media-actions a{display:inline-block;}
+
+
+#adminmenu li.toplevel_page_bp-media-settings .wp-menu-image a{background:url('../img/bpm-icon-16.png') center -34px no-repeat;}
+#adminmenu li.toplevel_page_bp-media-settings:hover .wp-menu-image a,
+#adminmenu li.current.toplevel_page_bp-media-settings .wp-menu-image a{background-position: center 0;}
+#adminmenu li.toplevel_page_bp-media-settings .wp-menu-image a img{display:none;}
+#bp-media-settings-boxes{overflow: hidden;
+width: 100%;
+float: left;}
+.nav-tab-wrapper a#bp-media{background:url('../img/bpm-icon-32.png') transparent no-repeat; padding-left:32px;}
+.nav-tab-wrapper a#bp-media:hover,.nav-tab-wrapper a#bp-media.nav-tab-active{background-position:left -32px;}
+.metabox-holder .postbox#bp_media_latest_news .inside ul li{background: transparent url('../img/rtCamp-bullet.png') left top no-repeat; padding-left: 19px;}
+#branding #logo{text-align:center;padding: 10px 0;display:block;}
+ul#social{display:block;text-align:center;margin:0;}
+ul#social li{display:inline;}
+
