@@ -72,7 +72,7 @@ function bp_media_admin_notice() {
 				echo "</p></div>";
 			}
 		}
-		else if (version_compare(BP_VERSION, '1.5.5', '<')) {
+		else {
 			echo '<div class="error"><p>';
 			printf(__('You have not installed BuddyPress. Please install latest version of BuddyPress to use BuddyPress Media plugin.<a class="alignright" href="%1$s">X</a>'), '?bp_media_nag_ignore=0');
 			echo "</p></div>";

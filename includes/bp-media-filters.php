@@ -68,7 +68,7 @@ function bp_media_items_count_filter ($title,$nav_item) {
 	global $bp_media_count;
 	switch($nav_item['slug']){
 		case BP_MEDIA_SLUG	:
-			$count=  intval($bp_media_count['images'])+intval($bp_media_count['videos'])+intval($bp_media_count['audio']);
+			$count=  intval($bp_media_count['images'])+intval($bp_media_count['videos'])+intval($bp_media_count['audio'])+intval($bp_media_count['albums']);
 			break;
 		case BP_MEDIA_IMAGES_SLUG:
 			$count=  intval($bp_media_count['images']);
@@ -78,6 +78,9 @@ function bp_media_items_count_filter ($title,$nav_item) {
 			break;
 		case BP_MEDIA_AUDIO_SLUG:
 			$count=  intval($bp_media_count['audio']);
+			break;
+		case BP_MEDIA_ALBUMS_SLUG:
+			$count=  intval($bp_media_count['albums']);
 			break;
 	}
 	$count_html=' <span>'. $count.'</span>';

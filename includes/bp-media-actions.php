@@ -235,6 +235,7 @@ function bp_media_init_count($user = null) {
 		add_filter('bp_get_options_nav_' . BP_MEDIA_IMAGES_SLUG, 'bp_media_items_count_filter', 10, 2);
 		add_filter('bp_get_options_nav_' . BP_MEDIA_VIDEOS_SLUG, 'bp_media_items_count_filter', 10, 2);
 		add_filter('bp_get_options_nav_' . BP_MEDIA_AUDIO_SLUG, 'bp_media_items_count_filter', 10, 2);
+		add_filter('bp_get_options_nav_' . BP_MEDIA_ALBUMS_SLUG, 'bp_media_items_count_filter', 10, 2);
 	}
 	return true;
 }
@@ -372,4 +373,34 @@ function bp_media_load_more() {
 add_action('wp_ajax_bp_media_load_more', 'bp_media_load_more');
 add_action( 'wp_ajax_nopriv_bp_media_load_more', 'bp_media_load_more' );
 
+
+function bp_media_delete_attachment_handler($attachment_id){
+	if(get_post_meta($attachment_id,'bp-media-key')){
+		global $bp_media_count;
+		$attachment = get_post($attachment_id);
+		preg_match_all('/audio|video|image/i', $attachment->post_mime_type, $result);
+		if(isset($result[0][0]))
+			$type = $result[0][0];
+		else
+			return false;
+		bp_media_init_count($attachment->post_author);
+		switch($type){
+			case 'image':
+				$images = intval($bp_media_count['images'])?intval($bp_media_count['images']):0;
+				$bp_media_count['images'] = $images - 1;
+				break;
+			case 'audio':
+				$bp_media_count['audio'] = intval($bp_media_count['audio']) - 1;
+				break;
+			case 'video':
+				$bp_media_count['videos'] = intval($bp_media_count['videos']) - 1;
+				break;
+			default:
+				return false;
+		}
+		bp_update_user_meta($attachment->post_author, 'bp_media_count', $bp_media_count);
+		return true;
+	}
+}
+add_action('delete_attachment','bp_media_delete_attachment_handler');
 ?>
