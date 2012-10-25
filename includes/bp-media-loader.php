@@ -428,8 +428,8 @@ class BP_Media_Component extends BP_Component {
 			'labels' => $labels,
 			'public' => true,
 			'publicly_queryable' => true,
-			'show_ui' => true, 
-			'show_in_menu' => true,
+			'show_ui' => false, 
+			'show_in_menu' => false,
 			'query_var' => true,
 			'capability_type' => 'post',
 			'has_archive' => true, 
@@ -438,7 +438,7 @@ class BP_Media_Component extends BP_Component {
 			'supports' => array( 'title', 'author', 'thumbnail', 'excerpt', 'comments' )
 		); 
 		register_post_type('bp_media_album', $args);
-		
+
 		/* Set up labels for the post type */
 		$labels = array(
 			'name' => __('Media', 'bp-media'),
