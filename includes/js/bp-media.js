@@ -29,7 +29,8 @@ jQuery(document).ready(function(){
     if(bp_media_popular_tabs.length>0){
         jQuery( bp_media_popular_tabs ).tabs();
     }
-	jQuery('#pag-bottom').click(function(){
+	jQuery('#bp-media-show-more').click(function(event){
+		event.preventDefault();
 		var data = {
 			action: 'bp_media_load_more',
 			page:++bp_media_vars.page,
@@ -41,7 +42,7 @@ jQuery(document).ready(function(){
 
 		// since 2.8 ajaxurl is always defined in the admin header and points to admin-ajax.php
 		jQuery.post(bp_media_vars.ajaxurl, data, function(response) {
-			console.log('Got this from the server: ' + response);
+			jQuery('#bp-media-list').append(response);
 		});
 	});
 });

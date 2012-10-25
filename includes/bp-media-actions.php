@@ -349,25 +349,80 @@ function bp_media_load_more() {
 	$page = isset($_POST['page'])?$_POST['page']:die();
 	$current_action = isset($_POST['current_action'])?$_POST['current_action']:null;
 	$action_variables = isset($_POST['action_variables'])?$_POST['action_variables']:null;
-	
-	
-	$types = array('image','video','audio');
-	if(in_array('page', $_POST)&&  is_numeric($_POST['page']) && in_array('type', $_POST)){
-		if ($type) {
+	$displayed_user = isset($_POST['displayed_user'])?$_POST['displayed_user']:null;
+	$loggedin_user = isset($_POST['loggedin_user'])?$_POST['loggedin_user']:null;
+	if(!$displayed_user||intval($displayed_user)==0){
+		die('No displayed user found');
+	}
+	$posts_per_page = 10;
+	switch($current_action){
+		case BP_MEDIA_IMAGES_SLUG:
 			$args = array(
 				'post_type' => 'attachment',
 				'post_status'	=>	'any',
-				'post_mime_type' =>	$type,
+				'post_mime_type' =>	'image',
 				'author' => $bp->displayed_user->id,
 				'meta_key' => 'bp-media-key',
 				'meta_value' => $bp->displayed_user->id,
 				'meta_compare' => 'LIKE',
-				'paged' => $paged
+				'paged' => $page,
+				'posts_per_page' => $posts_per_page
 			);
-			$bp_media_query = new WP_Query($args);
+			break;			
+		case BP_MEDIA_AUDIO_SLUG:
+			$args = array(
+				'post_type' => 'attachment',
+				'post_status'	=>	'any',
+				'post_mime_type' =>	'audio',
+				'author' => $bp->displayed_user->id,
+				'meta_key' => 'bp-media-key',
+				'meta_value' => $bp->displayed_user->id,
+				'meta_compare' => 'LIKE',
+				'paged' => $page,
+				'posts_per_page' => $posts_per_page
+			);
+			break;
+		case BP_MEDIA_VIDEOS_SLUG:
+			$args = array(
+				'post_type' => 'attachment',
+				'post_status'	=>	'any',
+				'post_mime_type' =>	'video',
+				'author' => $bp->displayed_user->id,
+				'meta_key' => 'bp-media-key',
+				'meta_value' => $bp->displayed_user->id,
+				'meta_compare' => 'LIKE',
+				'paged' => $page,
+				'posts_per_page' => $posts_per_page
+			);
+			break;
+		case BP_MEDIA_ALBUMS_SLUG:
+			if(isset($action_variables)&&  is_array($action_variables)&&isset($action_variables[0])&&isset($action_variables[1])){
+				$args = array(
+					'post_type' => 'attachment',
+					'post_status'	=>	'any',
+					'author' => $displayed_user,
+					'post_parent'=>$action_variables[1],
+					'paged' => $page
+				);
+			}
+			else{
+				$args = array(
+					'post_type' => 'bp_media_album',
+					'author' => $displayed_user,
+					'paged' => $page,
+				);
+			}
+			break;
+		default:
+			die('Nothing found');
+	}
+	$bp_media_query = new WP_Query($args);
+	if(isset($bp_media_query->posts)&&is_array($bp_media_query->posts)&&count($bp_media_query->posts)){
+		foreach($bp_media_query->posts as $attachment){
+			$media = new BP_Media_Host_Wordpress($attachment->ID);
+			echo $media->get_media_gallery_content();
 		}
 	}
-
 	die();
 }
 add_action('wp_ajax_bp_media_load_more', 'bp_media_load_more');

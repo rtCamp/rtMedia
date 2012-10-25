@@ -98,15 +98,14 @@ function bp_media_images_screen_title() {
 function bp_media_images_screen_content() {
 	global $bp_media_query;
 	if ($bp_media_query && $bp_media_query->have_posts()):
-		bp_media_show_pagination();
 		do_action('bp_media_before_content');
-		echo '<ul id="groups-list" class="bp-media-gallery item-list">';
+		echo '<ul id="bp-media-list" class="bp-media-gallery item-list">';
 		while ($bp_media_query->have_posts()) : $bp_media_query->the_post();
 			bp_media_the_content();
 		endwhile;
 		echo '</ul>';
+		echo '<div class="bp-media-actions"><a href="#" class="button" id="bp-media-show-more">Show More</a></div>';
 		do_action('bp_media_after_content');
-		bp_media_show_pagination('bottom');
 	else:
 		bp_media_show_formatted_error_message(__('Sorry, no images were found.', 'bp-media'), 'info');
 	endif;
@@ -249,15 +248,14 @@ function bp_media_videos_screen_title() {
 function bp_media_videos_screen_content() {
 	global $bp_media_query;
 	if ($bp_media_query && $bp_media_query->have_posts()):
-		bp_media_show_pagination();
 		do_action('bp_media_before_content');
-		echo '<ul id="groups-list" class="bp-media-gallery item-list">';
+		echo '<ul id="bp-media-list" class="bp-media-gallery item-list">';
 		while ($bp_media_query->have_posts()) : $bp_media_query->the_post();
 			bp_media_the_content();
 		endwhile;
 		echo '</ul>';
+		echo '<div class="bp-media-actions"><a href="#" class="button" id="bp-media-show-more">Show More</a></div>';
 		do_action('bp_media_after_content');
-		bp_media_show_pagination('bottom');
 	else:
 		bp_media_show_formatted_error_message(__('Sorry, no videos were found.', 'bp-media'), 'info');
 	endif;
@@ -397,15 +395,14 @@ function bp_media_audio_screen_title() {
 function bp_media_audio_screen_content() {
 	global $bp_media_query;
 	if ($bp_media_query && $bp_media_query->have_posts()):
-		bp_media_show_pagination();
 		do_action('bp_media_before_content');
-		echo '<ul id="groups-list" class="bp-media-gallery item-list">';
+		echo '<ul id="bp-media-list" class="bp-media-gallery item-list">';
 		while ($bp_media_query->have_posts()) : $bp_media_query->the_post();
 			bp_media_the_content();
 		endwhile;
 		echo '</ul>';
+		echo '<div class="bp-media-actions"><a href="#" class="button" id="bp-media-show-more">Show More</a></div>';
 		do_action('bp_media_after_content');
-		bp_media_show_pagination('bottom');
 	else:
 		bp_media_show_formatted_error_message(__('Sorry, no audio files were found.', 'bp-media'), 'info');
 	endif;
@@ -578,15 +575,14 @@ function bp_media_albums_screen_title() {
 function bp_media_albums_screen_content() {
 	global $bp_media_albums_query;
 	if ($bp_media_albums_query && $bp_media_albums_query->have_posts()):
-		bp_media_show_pagination();
 		do_action('bp_media_before_content');
-		echo '<ul id="groups-list" class="bp-media-gallery item-list">';
+		echo '<ul id="bp-media-list" class="bp-media-gallery item-list">';
 		while ($bp_media_albums_query->have_posts()) : $bp_media_albums_query->the_post();
 			bp_media_album_the_content();
 		endwhile;
 		echo '</ul>';
+		echo '<div class="bp-media-actions"><a href="#" class="button" id="bp-media-show-more">Show More</a></div>';
 		do_action('bp_media_after_content');
-		bp_media_show_pagination('bottom');
 	else:
 		bp_media_show_formatted_error_message(__('Sorry, no albums were found.', 'bp-media'), 'info');
 	endif;
@@ -643,15 +639,14 @@ function bp_media_albums_entry_screen_content() {
 	echo '<div class="bp_media_title">'.$bp_media_current_album->get_title().'</div>';
 	bp_media_albums_set_inner_query($bp_media_current_album->get_id());
 	if ($bp_media_query && $bp_media_query->have_posts()):
-		bp_media_show_pagination('bottom',true);//Used bottom because top styling conflicting with the header
 		do_action('bp_media_before_content');
-		echo '<ul id="groups-list" class="bp-media-gallery item-list">';
+		echo '<ul id="bp-media-list" class="bp-media-gallery item-list">';
 		while ($bp_media_query->have_posts()) : $bp_media_query->the_post();
 			bp_media_the_content();
 		endwhile;
 		echo '</ul>';
+		echo '<div class="bp-media-actions"><a href="#" class="button" id="bp-media-show-more">Show More</a></div>';
 		do_action('bp_media_after_content');
-		bp_media_show_pagination('bottom',true);
 	else:
 		bp_media_show_formatted_error_message(__('Sorry, no media items were found in this album.', 'bp-media'), 'info');
 	endif;
