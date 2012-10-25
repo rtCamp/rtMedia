@@ -345,10 +345,10 @@ function bp_media_load_more() {
 		'music of group',
 		'media of album'
 		);
-	$media_type;
-	$author_id;
-	$album_id;
-	$group_id;
+	$page = isset($_POST['page'])?$_POST['page']:die();
+	$current_action = isset($_POST['current_action'])?$_POST['current_action']:null;
+	$action_variables = isset($_POST['action_variables'])?$_POST['action_variables']:null;
+	
 	
 	$types = array('image','video','audio');
 	if(in_array('page', $_POST)&&  is_numeric($_POST['page']) && in_array('type', $_POST)){
@@ -366,9 +366,6 @@ function bp_media_load_more() {
 			$bp_media_query = new WP_Query($args);
 		}
 	}
-	echo '<pre>';
-	var_dump($_POST);
-	echo '</pre>';
 
 	die();
 }

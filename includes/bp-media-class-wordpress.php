@@ -490,7 +490,7 @@ class BP_Media_Host_Wordpress {
 	 * Returns the URL of the attached media file
 	 */
 	function get_attachment_url(){
-		return wp_get_attachment_url($this->attachment_id);
+		return wp_get_attachment_url($this->id);
 	}
 	
 	/**

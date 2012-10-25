@@ -1,0 +1,137 @@
+<?php
+
+class BP_Media_Album{
+	private $id,
+		$name,
+		$description,
+		$url,
+		$owner,
+		$delete_url,
+		$thumbnail,
+		$edit_url,
+		$media_entries;
+	
+	/**
+	 * Constructs a new BP_Media_Album
+	 * 
+	 * @param mixed $album_id optional Album ID of the element to be initialized if not defined, returns an empty element.
+	 * 
+	 * @since BP Media 2.2
+	 */
+	function __construct($album_id = '') {
+		if (!$album_id == '') {
+			$this->init($album_id);
+		}
+	}
+	
+	/**
+	 * Initializes the object
+	 * 
+	 * @param mixed $album_id Album ID of the element to be initialized. Can be the ID or the object of the Album
+	 * 
+	 * @since BP Media 2.2
+	 */
+	function init($album_id){
+		if (is_object($album_id)) {
+			$album = $album_id;
+		} else {
+			$album = &get_post($album_id);
+		}
+		if (empty($album->ID))
+			throw new Exception(__('Sorry, the requested media does not exist.', 'bp-media'));
+		$this->id = $album->ID;
+		$this->description = $album->post_content;
+		$this->name = $album->post_title;
+		$this->owner = $album->post_author;
+		$this->url = trailingslashit(bp_core_get_user_domain($this->owner) . BP_MEDIA_ALBUMS_SLUG . '/' . $this->id);
+		$this->edit_url = trailingslashit(bp_core_get_user_domain($this->owner) . BP_MEDIA_ALBUMS_SLUG . '/' . BP_MEDIA_ALBUMS_EDIT_SLUG . '/' . $this->id);
+		$this->delete_url = trailingslashit(bp_core_get_user_domain($this->owner) . BP_MEDIA_ALBUMS_SLUG . '/' . BP_MEDIA_DELETE_SLUG . '/' . $this->id);
+		if(has_post_thumbnail($this->id)){
+			$this->thumbnail = get_the_post_thumbnail($this->id, 'thumbnail');
+		}
+		else{
+			$this->thumbnail = '<img src = '.plugins_url('img/image_thumb.png', __FILE__) .' />';
+		}
+		$this->media_entries = get_children(array(
+			'post_parent' => $this->id,
+			'post_type'	=>	'attachment'
+		));
+	}
+	
+	/**
+	 * Adds a new album and initializes the object with the new album
+	 * 
+	 * @param string $title The title of the album.
+	 * @param string $author_id Optional The author id, defaults to zero in which case takes the logged in user id.
+	 * @param string $group_id Optional The group id to which the album belongs, defaults to 0 meaning its not attached with a group.
+	 * 
+	 * @since BP Media 2.2
+	 */
+	function add_album($title,$author_id = 0, $group_id = 0){
+		
+	}
+	
+	/**
+	 * Deletes the album and all associated attachments
+	 * 
+	 * @since BP Media 2.2
+	 */
+	function delete_album(){
+		do_action('bp_media_before_delete_album');
+		foreach($this->media_entries as $entry){
+			wp_delete_attachment($entry->ID,true);
+		}
+		wp_delete_post($this->id,true);
+		do_action('bp_media_after_delete_album');
+	}
+	
+	function edit_album(){
+		
+	}
+	
+	function get_album_gallery_content(){
+		?><li>
+			<a href="<?php echo $this->url ?>" title="<?php echo $this->description ?>">
+				<?php echo $this->thumbnail; ?>
+			</a>
+			<h3 title="<?php echo $this->name ?>"><a href="<?php echo $this->url ?>" title="<?php echo $this->description ?>"><?php echo $this->name ?></a></h3>
+		</li><?php
+	}
+	
+	/**
+	 * Returns the attachments linked with the albume
+	 * 
+	 * @since BP Media 2.2
+	 */
+	function get_entries(){
+		return $this->media_entries;
+	}
+	
+	/**
+	 * Returns the title of the album
+	 * 
+	 * @since BP Media 2.2
+	 */
+	function get_title(){
+		return $this->name;
+	}
+	
+	/**
+	 * Echoes the title of the album
+	 * 
+	 * @since BP Media 2.2
+	 */
+	function the_title(){
+		echo $this->name;
+	}
+	
+	/**
+	 * Returns the id of the album
+	 * 
+	 * @since BP Media 2.2
+	 */
+	function get_id(){
+		return $this->id;
+	}
+}
+?>

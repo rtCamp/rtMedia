@@ -31,7 +31,6 @@ function bp_media_upload_screen_title() {
 function bp_media_upload_screen_content() {
 	do_action('bp_media_before_content');
 	bp_media_show_upload_form_multiple();
-	bp_media_show_upload_form2();
 	do_action('bp_media_after_content');
 }
 
@@ -178,7 +177,7 @@ function bp_media_images_entry_screen_title() {
 }
 
 function bp_media_images_entry_screen_content() {
-	global $bp, $bp_media_current_entry;
+	global $bp, $bp_media_current_entry,$bp_media_options;
 	if (!$bp->action_variables[0] == BP_MEDIA_IMAGES_ENTRY_SLUG)
 		return false;
 	do_action('bp_media_before_content');
@@ -189,6 +188,9 @@ function bp_media_images_entry_screen_content() {
 	if(bp_loggedin_user_id()==  bp_displayed_user_id()){
 		echo '<a href="'.$bp_media_current_entry->get_edit_url().'" class="button item-button bp-secondary-action edit-media">Edit</a>';
 		echo '<a href="'.$bp_media_current_entry->get_delete_url().'" class="button item-button bp-secondary-action delete-media confirm">Delete</a>';
+	}
+	if(isset($bp_media_options['download_enabled'])&&$bp_media_options['download_enabled']==true){
+		echo '<a href="'.$bp_media_current_entry->get_attachment_url().'" class="button item-button bp-secondary-action download-media">Download</a>';
 	}
 	echo '</div>';
 	echo $bp_media_current_entry->show_comment_form();
@@ -319,7 +321,7 @@ function bp_media_videos_entry_screen_title() {
 }
 
 function bp_media_videos_entry_screen_content() {
-	global $bp, $bp_media_current_entry;
+	global $bp, $bp_media_current_entry, $bp_media_options;
 	if (!$bp->action_variables[0] == BP_MEDIA_VIDEOS_ENTRY_SLUG)
 		return false;
 	do_action('bp_media_before_content');
@@ -330,6 +332,9 @@ function bp_media_videos_entry_screen_content() {
 	if(bp_loggedin_user_id()==  bp_displayed_user_id()){
 		echo '<a href="'.$bp_media_current_entry->get_edit_url().'" class="button item-button bp-secondary-action edit-media">Edit</a>';
 		echo '<a href="'.$bp_media_current_entry->get_delete_url().'" class="button item-button bp-secondary-action delete-media confirm">Delete</a>';
+	}
+	if(isset($bp_media_options['download_enabled'])&&$bp_media_options['download_enabled']==true){
+		echo '<a href="'.$bp_media_current_entry->get_attachment_url().'" class="button item-button bp-secondary-action download-media">Download</a>';
 	}
 	echo '</div>';
 	echo $bp_media_current_entry->show_comment_form();
@@ -465,7 +470,7 @@ function bp_media_audio_entry_screen_title() {
 }
 
 function bp_media_audio_entry_screen_content() {
-	global $bp, $bp_media_current_entry;
+	global $bp, $bp_media_current_entry, $bp_media_options;
 	if (!$bp->action_variables[0] == BP_MEDIA_AUDIO_ENTRY_SLUG)
 		return false;
 	do_action('bp_media_before_content');
@@ -476,6 +481,9 @@ function bp_media_audio_entry_screen_content() {
 	if(bp_loggedin_user_id()==  bp_displayed_user_id()){
 		echo '<a href="'.$bp_media_current_entry->get_edit_url().'" class="button item-button bp-secondary-action edit-media">Edit</a>';
 		echo '<a href="'.$bp_media_current_entry->get_delete_url().'" class="button item-button bp-secondary-action delete-media confirm">Delete</a>';
+	}
+	if(isset($bp_media_options['download_enabled'])&&$bp_media_options['download_enabled']==true){
+		echo '<a href="'.$bp_media_current_entry->get_attachment_url().'" class="button item-button bp-secondary-action download-media">Download</a>';
 	}
 	echo '</div>';
 	echo $bp_media_current_entry->show_comment_form();
