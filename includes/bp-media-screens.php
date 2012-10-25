@@ -104,7 +104,7 @@ function bp_media_images_screen_content() {
 			bp_media_the_content();
 		endwhile;
 		echo '</ul>';
-		echo '<div class="bp-media-actions"><a href="#" class="button" id="bp-media-show-more">Show More</a></div>';
+		bp_media_display_show_more();
 		do_action('bp_media_after_content');
 	else:
 		bp_media_show_formatted_error_message(__('Sorry, no images were found.', 'bp-media'), 'info');
@@ -254,7 +254,7 @@ function bp_media_videos_screen_content() {
 			bp_media_the_content();
 		endwhile;
 		echo '</ul>';
-		echo '<div class="bp-media-actions"><a href="#" class="button" id="bp-media-show-more">Show More</a></div>';
+		bp_media_display_show_more();
 		do_action('bp_media_after_content');
 	else:
 		bp_media_show_formatted_error_message(__('Sorry, no videos were found.', 'bp-media'), 'info');
@@ -401,7 +401,7 @@ function bp_media_audio_screen_content() {
 			bp_media_the_content();
 		endwhile;
 		echo '</ul>';
-		echo '<div class="bp-media-actions"><a href="#" class="button" id="bp-media-show-more">Show More</a></div>';
+		bp_media_display_show_more();
 		do_action('bp_media_after_content');
 	else:
 		bp_media_show_formatted_error_message(__('Sorry, no audio files were found.', 'bp-media'), 'info');
@@ -581,7 +581,7 @@ function bp_media_albums_screen_content() {
 			bp_media_album_the_content();
 		endwhile;
 		echo '</ul>';
-		echo '<div class="bp-media-actions"><a href="#" class="button" id="bp-media-show-more">Show More</a></div>';
+		bp_media_display_show_more();
 		do_action('bp_media_after_content');
 	else:
 		bp_media_show_formatted_error_message(__('Sorry, no albums were found.', 'bp-media'), 'info');
@@ -645,7 +645,7 @@ function bp_media_albums_entry_screen_content() {
 			bp_media_the_content();
 		endwhile;
 		echo '</ul>';
-		echo '<div class="bp-media-actions"><a href="#" class="button" id="bp-media-show-more">Show More</a></div>';
+		bp_media_display_show_more();
 		do_action('bp_media_after_content');
 	else:
 		bp_media_show_formatted_error_message(__('Sorry, no media items were found in this album.', 'bp-media'), 'info');

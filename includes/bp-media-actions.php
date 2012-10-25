@@ -336,23 +336,13 @@ function bp_media_albums_set_inner_query($album_id=0) {
  */
 function bp_media_load_more() {
 	global $bp,$bp_media_query;
-	$query_type;array(
-		'photos of author',
-		'videos of author',
-		'albums of author',
-		'music of author',
-		'photos of group',
-		'videos of group',
-		'music of group',
-		'media of album'
-		);
 	$page = isset($_POST['page'])?$_POST['page']:die();
 	$current_action = isset($_POST['current_action'])?$_POST['current_action']:null;
 	$action_variables = isset($_POST['action_variables'])?$_POST['action_variables']:null;
 	$displayed_user = isset($_POST['displayed_user'])?$_POST['displayed_user']:null;
 	$loggedin_user = isset($_POST['loggedin_user'])?$_POST['loggedin_user']:null;
 	if(!$displayed_user||intval($displayed_user)==0){
-		die('No displayed user found');
+		die();
 	}
 	$posts_per_page = 10;
 	switch($current_action){
@@ -414,7 +404,7 @@ function bp_media_load_more() {
 			}
 			break;
 		default:
-			die('Nothing found');
+			die();
 	}
 	$bp_media_query = new WP_Query($args);
 	if(isset($bp_media_query->posts)&&is_array($bp_media_query->posts)&&count($bp_media_query->posts)){

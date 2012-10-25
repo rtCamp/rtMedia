@@ -42,7 +42,10 @@ jQuery(document).ready(function(){
 
 		// since 2.8 ajaxurl is always defined in the admin header and points to admin-ajax.php
 		jQuery.post(bp_media_vars.ajaxurl, data, function(response) {
-			jQuery('#bp-media-list').append(response);
+			if(response.length==0)
+				jQuery('#bp-media-show-more').parent().remove();
+			else
+				jQuery('#bp-media-list').append(response);
 		});
 	});
 });

@@ -197,4 +197,10 @@ function bp_media_album_the_content($id = 0) {
 		echo '';
 	}
 }
+function bp_media_display_show_more(){
+	global $bp_media_query;
+	//found_posts
+	if($bp_media_query->found_posts>10)
+		echo '<div class="bp-media-actions"><a href="#" class="button" id="bp-media-show-more">Show More</a></div>';
+}
 ?>
