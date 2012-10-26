@@ -25,10 +25,23 @@ jQuery(document).ready(function(){
     if(bp_media_recent_tabs.length>0){
         jQuery(bp_media_recent_tabs).tabs();
     }
-    var bp_media_popular_tabs = jQuery('#popular-media-tabs');
-    if(bp_media_popular_tabs.length>0){
-        jQuery( bp_media_popular_tabs ).tabs();
-    }
+    
+//    var bp_media_popular_tabs = jQuery('#popular-media-tabs');
+//    if(bp_media_popular_tabs.length>0){
+//        jQuery( bp_media_popular_tabs ).tabs();
+//    }
+
+    var tallest = 0;
+    jQuery('#recent-media-tabs .bp-media-tab-panel').each(function() {
+            
+                var thisHeight = jQuery(this).height();
+                console.log(thisHeight);
+                if(thisHeight > tallest) {
+                        tallest = thisHeight;
+                }
+    }).height(tallest);
+
+    
 	jQuery('#pag-bottom').click(function(){
 		var data = {
 			action: 'bp_media_load_more',

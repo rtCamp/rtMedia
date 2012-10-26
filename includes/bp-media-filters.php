@@ -83,4 +83,117 @@ function bp_media_items_count_filter ($title,$nav_item) {
 	$count_html=' <span>'. $count.'</span>';
 	return str_replace('</a>', $count_html.'</a>', $title);
 }
-?>
+
+/**
+ * Added menu under buddypress menu 'my account' in admin bar 
+ * 
+ * @global type $wp_admin_bar 
+ */
+
+function bp_media_my_account_menu() {
+    global $wp_admin_bar;
+    
+    $bp_media_admin_nav = array();
+    
+    // Added Main menu for BP Media
+    $bp_media_admin_nav[] = array(
+        'parent' => 'my-account-buddypress',
+        'id'     => 'my-account-bpmedia',
+        'title'  => __('BP Media', 'bp-media'),
+        'href'   => trailingslashit(bp_loggedin_user_domain() . BP_MEDIA_SLUG),
+        'meta'   => array(
+            'class'  => 'menupop') 
+    );
+    
+    // Uplaod Media
+    $bp_media_admin_nav[] = array(
+        'parent' => 'my-account-bpmedia',
+        'id'     => 'my-account-upload-media',
+        'title'  => __('Upload Media','bp-media'),
+        'href'   => trailingslashit(bp_loggedin_user_domain() . BP_MEDIA_SLUG),
+    );
+    
+    // Photos
+    $bp_media_admin_nav[] = array(
+        'parent' => 'my-account-bpmedia',
+        'id'     => 'my-account-photos',
+        'title'  => __('Photos','bp-media'),
+        'href'   => trailingslashit(bp_loggedin_user_domain() . BP_MEDIA_IMAGES_SLUG)
+    );
+    
+    // Video
+    $bp_media_admin_nav[] = array(
+        'parent' => 'my-account-bpmedia',
+        'id'     => 'my-account-videos',
+        'title'  => __('Videos','bp-media'),
+        'href'   => trailingslashit(bp_loggedin_user_domain() . BP_MEDIA_VIDEOS_SLUG)
+    );
+    
+    // Audio
+    $bp_media_admin_nav[] = array(
+        'parent' => 'my-account-bpmedia',
+        'id'     => 'my-account-audio',
+        'title'  => __('Audio','bp-media'),
+        'href'   => trailingslashit(bp_loggedin_user_domain() . BP_MEDIA_AUDIO_SLUG)
+    );
+    
+    foreach( $bp_media_admin_nav as $admin_menu )
+				$wp_admin_bar->add_menu( $admin_menu );
+    
+}
+
+// and we hook our function via wp_before_admin_bar_render
+add_action( 'wp_before_admin_bar_render', 'bp_media_my_account_menu' );
+
+/**
+ * Added menu under buddypress menu 'my account' in admin bar 
+ * 
+ * @global type $wp_admin_bar 
+ */
+
+function bp_media_adminbar_settings_menu() {
+    global $wp_admin_bar;
+    
+    $bp_media_admin_nav = array();
+    $title = '<span class="ab-icon"></span><span class="ab-label">' . _x( 'BP Media', 'admin bar menu group label' ) . '</span>';
+    
+    // Added Main menu for BP Media
+    $bp_media_admin_nav[] = array(        
+        'id'     => 'bp-media-menu',
+        'title'  => $title,
+        'href'   => bp_get_admin_url( add_query_arg( array( 'page' => 'bp-media-settings'  ), 'admin.php' ) ),
+        'meta'   => array(
+            'class'  => 'menupop bp-media-settings-menu') 
+    );
+    
+    // Settins
+    $bp_media_admin_nav[] = array(
+        'parent' => 'bp-media-menu',
+        'id'     => 'bp-media-settings',
+        'title'  => __('BP Media Settings','bp-media'),
+        'href'   => bp_get_admin_url( add_query_arg( array( 'page' => 'bp-media-settings'  ), 'admin.php' ) )
+    );
+    
+    // Addons
+    $bp_media_admin_nav[] = array(
+        'parent' => 'bp-media-menu',
+        'id'     => 'my-account-addons',
+        'title'  => __('Addons','bp-media'),
+        'href'   => bp_get_admin_url( add_query_arg( array( 'page' => 'bp-media-addons'  ), 'admin.php' ) )
+    );
+   
+    // Support
+    $bp_media_admin_nav[] = array(
+        'parent' => 'bp-media-menu',
+        'id'     => 'my-account-support',
+        'title'  => __('Support','bp-media'),
+        'href'   => bp_get_admin_url( add_query_arg( array( 'page' => 'bp-media-support'  ), 'admin.php' ) )
+    );
+   
+    foreach( $bp_media_admin_nav as $admin_menu )
+				$wp_admin_bar->add_menu( $admin_menu );
+    
+}
+
+// and we hook our function via wp_before_admin_bar_render
+add_action( 'wp_before_admin_bar_render', 'bp_media_adminbar_settings_menu' );
