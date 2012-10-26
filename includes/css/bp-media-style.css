@@ -68,5 +68,4 @@ float: left;}
 #branding #logo{text-align:center;padding: 10px 0;display:block;}
 ul#social{display:block;text-align:center;margin:0;}
 ul#social li{display:inline;}
-#bp-media-show-more{width: 100px;margin-left: auto;margin-right: auto;display: block;}
-
+#bp-media-show-more{width: 200px;margin-left: auto;margin-right: auto;display: block;height: 30px;line-height: 30px;font-size: 20px;}

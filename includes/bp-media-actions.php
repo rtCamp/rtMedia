@@ -46,7 +46,7 @@ function bp_media_handle_uploads() {
 		}
 	}
 }
-add_action('bp_init', 'bp_media_handle_uploads');
+//add_action('bp_init', 'bp_media_handle_uploads');
 
 /**
  * Displays the messages that other functions/methods creates according to the BuddyPress' formating
@@ -270,9 +270,10 @@ function bp_media_upload_enqueue(){
 		'multi_selection'		=> true,
 		'multipart_params'	=> array('action'=>'wp_handle_upload')
 	);
-	wp_enqueue_script('bp-media-uploader',plugins_url('js/bp-media-uploader.js',__FILE__),array('plupload', 'plupload-html5', 'plupload-flash', 'plupload-silverlight', 'plupload-html4','plupload-handlers'));
+	wp_enqueue_script('bp-media-uploader',plugins_url('js/bp-media-uploader.js',__FILE__),array('plupload', 'plupload-html5', 'plupload-flash', 'plupload-silverlight', 'plupload-html4','plupload-handlers','jquery-ui-core','jquery-ui-widget','jquery-ui-position','jquery-ui-dialog'));
 	wp_localize_script('bp-media-uploader','bp_media_uploader_params',$params);
 	wp_enqueue_style('bp-media-default',plugins_url('css/bp-media-style.css',__FILE__));
+	wp_enqueue_style('jquery-style', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/themes/smoothness/jquery-ui.css'); 
 }
 //add_action('wp_enqueue_scripts','bp_media_upload_enqueue');
 //This is used only on the uploads page so its added as action in the screens function of upload page.
@@ -409,8 +410,13 @@ function bp_media_load_more() {
 	$bp_media_query = new WP_Query($args);
 	if(isset($bp_media_query->posts)&&is_array($bp_media_query->posts)&&count($bp_media_query->posts)){
 		foreach($bp_media_query->posts as $attachment){
-			$media = new BP_Media_Host_Wordpress($attachment->ID);
-			echo $media->get_media_gallery_content();
+			try{
+				$media = new BP_Media_Host_Wordpress($attachment->ID);
+				echo $media->get_media_gallery_content();
+			}
+			catch(exception $e){
+				die();
+			}
 		}
 	}
 	die();
