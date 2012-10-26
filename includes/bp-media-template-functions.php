@@ -35,6 +35,18 @@ function bp_media_show_upload_form() {
 function bp_media_show_upload_form_multiple() {
 	global $bp,$bp_media_default_excerpts;	
 	?>
+<div id="bp-media-album-prompt" title="Select Album"><select id="bp-media-selected-album"><?php 
+	$albums = new WP_Query(array(
+		'post_type'	=>	'bp_media_album',
+		'posts_per_page'=> -1,
+		'author'=>  get_current_user_id()
+	));
+	if(isset($albums->posts)&& is_array($albums->posts)&& count($albums->posts)>0){
+		foreach ($albums->posts as $album){ 
+			echo '<option value="'.$album->ID.'">'.$album->post_title.'</option>' ;
+		};
+	}?></select></div>
+<div id="bp-media-album-new" title="Create New Album"><label for="bp_media_album_name">Album Name</label><input id="bp_media_album_name" type="text" name="bp_media_album_name" /></div>
 <div id="bp-media-upload-ui" class="hide-if-no-js drag-drop">
 	<div id="drag-drop-area">
 		<div class="drag-drop-inside">

@@ -104,8 +104,24 @@ class BP_Media_Album{
 		do_action('bp_media_after_delete_album');
 	}
 	
-	function edit_album(){
-		
+	function edit_album($title=''){
+		if($title==''){
+			return false;
+		}
+		else{
+			$this->name = $title;
+			$args = array(
+				'ID'	=> $this->id,
+				'post_title'=>$this->name
+			);
+			$status = wp_insert_post($args);
+			if(get_class($status)=='WP_Error'||$status==0){
+				return false;
+			}
+			else{
+				return true;
+			}
+		}
 	}
 	
 	function get_album_gallery_content(){
