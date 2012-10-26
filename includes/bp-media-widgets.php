@@ -1,11 +1,4 @@
 <?php
-
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
-
 /**
  * Recent_media widget class
  *
@@ -217,10 +210,10 @@ class BP_Media_Popular_Media extends WP_Widget {
             echo $before_title . $title . $after_title;
         ?>
             <div id="popular-media-tabs" class="media-tabs-container">
-                <ul>
+<!--                <ul>
                     <li><a href="#popular-media-tabs-comments"><?php _e('comments','bp-media'); ?></a></li>
                     <li><a href="#popular-media-tabs-views"><?php _e('Views','bp-media'); ?></a></li>                    
-                </ul>
+                </ul>-->
                 <div id="popular-media-tabs-comments">                    
                     <?php 
                         $args = array( 'post_type' => 'attachment', 
@@ -250,37 +243,6 @@ class BP_Media_Popular_Media extends WP_Widget {
                         wp_reset_query();   ?>
                     
                 </div><!-- #popular-media-tabs-comments -->
-                
-                <div id="popular-media-tabs-views">
-                    <?php 
-                    
-                        $args = array( 'post_type' => 'attachment', 
-                                        'post_status' => 'any',
-                                        'posts_per_page' => $number,
-                                        'meta_key' => 'bp-media-key',    
-                                        'meta_value' => 0,
-                                        'meta_compare' => '>',
-                                        'orderby' => 'comment_count');
-                        
-                        $bp_media_widget_query = new WP_Query($args);
-                        
-                        if($bp_media_widget_query->have_posts()){   ?>
-                    
-                            <ul class="widget-item-listing"><?php 
-                                while ($bp_media_widget_query->have_posts()) {  $bp_media_widget_query->the_post(); 
-                                
-                                    $entry = new BP_Media_Host_Wordpress( get_the_ID() );?>
-
-                                    <?php echo $entry -> get_media_gallery_content();?><?php 
-                                    
-                                } ?>
-                                    
-                            </ul><!-- .widget-item-listing --><?php 
-                            
-                        }                        
-                        wp_reset_query();   ?>
-                    
-                </div><!-- #popular-media-tabs-views -->
             </div>
         <?php
             echo $after_widget; 
@@ -314,38 +276,6 @@ function bp_media_widgets_init(){
     register_widget('BP_Media_Popular_Media');
 }
 
+/* Initialize widgets */
 add_action('widgets_init', 'bp_media_widgets_init', 1);
-
-
-add_action( 'admin_bar_menu', 'bp_media_my_account_menu', 100 );
-
-function bp_media_my_account_menu(){
-    
-    global $bp, $wp_admin_bar;
-    
-	// Bail if this is an ajax request
-	if ( defined( 'DOING_AJAX' ) )
-		return;
-    
-    
-	// Logged in user
-	if ( is_user_logged_in() ) {
-
-		// Stored in the global so we can add menus easily later on
-		$bp->my_account_menu_id = 'my-account-buddypress';
-
-		// Create the main 'My Account' menu
-		$wp_admin_bar->add_menu( array(
-            'parent' => 'my-account',
-			'id'     => 'media-setings',
-			'group'  => true,
-			'title'  => __( 'Media Settings' ),
-			'meta'   => array(
-                'class'  => 'ab-sub-secondary'
-		) ) );
-
-	// Show login and sign-up links
-	}
-}
-
 ?>
