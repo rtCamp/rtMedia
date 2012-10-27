@@ -241,7 +241,7 @@ function bp_media_addons_list(){ ?>
                                         <h3>BuddyPress &ndash; Media Kaltura Add-on</h3>		
                                         <span class="price"><span class="amount">$99</span></span>
                                     </a>
-                                    <a class="add_to_cart_button button product_type_simple" target="_blank" data-product_id="15446" rel="nofollow" href="http://rtcamp.com/store/?add-to-cart=15446">Add to cart</a>
+                                    <a class="add_to_cart_button  product_type_simple" target="_blank" data-product_id="15446" rel="nofollow" href="http://rtcamp.com/store/?add-to-cart=15446"><?php _e('Buy Now', 'bp-media'); ?></a>
                                 </li>
 
                                 <li class="product last">
@@ -250,8 +250,9 @@ function bp_media_addons_list(){ ?>
                                         <h3>BuddyPress-Media FFMPEG Converter Plugin</h3>
                                         <span class="price"><span class="amount">$49</span></span>
                                     </a>
-                                    <a class="add_to_cart_button button product_type_simple" target="_blank" data-product_id="13677" rel="nofollow" href="http://rtcamp.com/store/?add-to-cart=13677">Add to cart</a>
+                                    <a class="add_to_cart_button  product_type_simple" target="_blank" data-product_id="13677" rel="nofollow" href="http://rtcamp.com/store/?add-to-cart=13677"><?php _e('Buy Now', 'bp-media'); ?></a>
                                 </li>
+                                
                             </ul><!-- .products -->
                         </div><!-- .addon-list -->
                     </div><!-- .inside -->
