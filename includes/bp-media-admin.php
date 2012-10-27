@@ -12,6 +12,7 @@ function bp_media_add_admin_menu() {
         return false;
 	
 	add_menu_page( 'BP Media Component', 'BP Media', 'manage_options', 'bp-media-settings', 'bp_media_admin_menu' );
+	add_submenu_page( 'bp-media-settings', __( 'BP-Media Settings', 'bp-media' ), __( 'Settings', 'bp-media' ), 'manage_options', 'bp-media-settings', "bp_media_admin_menu" );
 	add_submenu_page( 'bp-media-settings', __( 'BP-Media Addons', 'bp-media' ), __( 'Addons', 'bp-media' ), 'manage_options', 'bp-media-addons', "bp_media_addons_list" );
 	add_submenu_page( 'bp-media-settings', __( 'BP-Media Support', 'bp-media' ), __( 'Support ', 'bp-media' ), 'manage_options', 'bp-media-support', "bp_media_support" );
 	
@@ -333,9 +334,9 @@ function bp_media_admin_enqueue() {
     wp_enqueue_script('bp-media-js',plugins_url('includes/js/bp-media.js', dirname(__FILE__)));
     wp_localize_script('bp-media-js','bp_media_news_url',$admin_js);
     wp_enqueue_style('bp-media-admin-style', plugins_url('includes/css/bp-media-style.css', dirname(__FILE__)));
-        if(isset($current_screen->base)&&$current_screen->base=='toplevel_page_bp-media-settings'){
+//        if(isset($current_screen->base)&&$current_screen->base=='toplevel_page_bp-media-settings'){
             wp_enqueue_script('dashboard');
-    }
+//    }
 }
 add_action('admin_enqueue_scripts', 'bp_media_admin_enqueue');
 
