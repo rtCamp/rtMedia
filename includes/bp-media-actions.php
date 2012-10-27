@@ -12,6 +12,7 @@ function bp_media_handle_uploads() {
 		'images_enabled'	=>	true,
 	));
 	if (isset($_POST['action']) && $_POST['action'] == 'wp_handle_upload') {
+		/* @var $bp_media_entry BP_Media_Host_Wordpress */
 		if (isset($_FILES) && is_array($_FILES) && array_key_exists('bp_media_file', $_FILES) && $_FILES['bp_media_file']['name'] != '') {
 			if(preg_match('/image/',$_FILES['bp_media_file']['type'])){
 				if($bp_media_options['images_enabled']==false){
@@ -40,6 +41,16 @@ function bp_media_handle_uploads() {
 					$bp->{BP_MEDIA_SLUG}->messages['updated'][0] = __('Upload Successful', 'bp-media');
 			} catch (Exception $e) {
 				$bp->{BP_MEDIA_SLUG}->messages['error'][] = $e->getMessage();
+			}
+			if(function_exists('bp_activity_add')){
+				$activity_content = $bp_media_entry->get_media_activity_content();
+				$activity_id = bp_media_record_activity(array(
+					'action' => apply_filters( 'bp_media_added_media', sprintf( __( '%1$s added a %2$s', 'bp-media'), bp_core_get_userlink( bp_loggedin_user_id() ), '<a href="' . $bp_media_entry->get_url() . '">' . $bp_media_entry->get_media_activity_type() . '</a>' ) ),
+					'content' => $activity_content,
+					'primary_link' => $bp_media_entry->get_url(),
+					'item_id' => $bp_media_entry->get_id(),
+					'type' => 'media_upload',
+				));
 			}
 		} else {
 			$bp->{BP_MEDIA_SLUG}->messages['error'][] = __('You did not specified a file to upload', 'bp-media');
@@ -454,4 +465,25 @@ function bp_media_delete_attachment_handler($attachment_id){
 	}
 }
 add_action('delete_attachment','bp_media_delete_attachment_handler');
+
+/**
+ * Function to create new album called via ajax request
+ */
+function bp_media_add_album() {
+	if(isset($_POST['bp_media_album_name'])&&$_POST['bp_media_album_name']!=''){
+		$album = new BP_Media_Album();
+		try{
+			$album -> add_album($_POST['bp_media_album_name']);
+			echo $album->get_id();
+		}
+		catch(exception $e){
+			echo '0';
+		}
+	}
+	else{
+		echo '0';
+	}
+	die();
+}
+add_action('wp_ajax_bp_media_add_album', 'bp_media_add_album');
 ?>

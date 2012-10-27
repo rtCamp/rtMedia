@@ -77,6 +77,7 @@ class BP_Media_Album{
 				'post_author'=> $author_id
 			);
 		bp_media_init_count($author_id);
+		global $bp_media_count;
 		$album_id = wp_insert_post($post_vars);
 		if($group_id){
 			add_post_meta($album_id, 'bp-media-key', (-$group_id));
