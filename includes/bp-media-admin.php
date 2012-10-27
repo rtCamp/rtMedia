@@ -329,13 +329,13 @@ function bp_media_default_admin_sidebar() {
  */
 function bp_media_admin_enqueue() {
     $current_screen = get_current_screen();
-		$admin_js = trailingslashit(site_url()).'?bp_media_get_feeds=1';
-		wp_enqueue_script('bp-media-js',plugins_url('includes/js/bp-media.js', dirname(__FILE__)));
-		wp_localize_script('bp-media-js','bp_media_news_url',$admin_js);
-		wp_enqueue_style('bp-media-admin-style', plugins_url('includes/css/bp-media-style.css', dirname(__FILE__)));
-            if(isset($current_screen->base)&&$current_screen->base=='toplevel_page_bp-media-settings'){
-                wp_enqueue_script('dashboard');
-        }
+    $admin_js = trailingslashit(site_url()).'?bp_media_get_feeds=1';
+    wp_enqueue_script('bp-media-js',plugins_url('includes/js/bp-media.js', dirname(__FILE__)));
+    wp_localize_script('bp-media-js','bp_media_news_url',$admin_js);
+    wp_enqueue_style('bp-media-admin-style', plugins_url('includes/css/bp-media-style.css', dirname(__FILE__)));
+        if(isset($current_screen->base)&&$current_screen->base=='toplevel_page_bp-media-settings'){
+            wp_enqueue_script('dashboard');
+    }
 }
 add_action('admin_enqueue_scripts', 'bp_media_admin_enqueue');
 
@@ -377,8 +377,6 @@ function bp_media_admin_tab() {
         );
 
         foreach($tabs as $tab){
-
-    //        $tab_class  = $bp_media_admin_is_current ? $active_class : $idle_class;
             $tabs_html.= '<a id="bp-media" href="' . $tab['href'] . '" class="' . $tab['class'] . '">' . $tab['name'] . '</a>';
         }
         echo $tabs_html;	

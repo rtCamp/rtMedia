@@ -137,6 +137,14 @@ function bp_media_my_account_menu() {
         'href'   => trailingslashit(bp_loggedin_user_domain() . BP_MEDIA_AUDIO_SLUG)
     );
     
+    // Albums
+    $bp_media_admin_nav[] = array(
+        'parent' => 'my-account-bpmedia',
+        'id'     => 'my-account-album',
+        'title'  => __('Albums','bp-media'),
+        'href'   => trailingslashit(bp_loggedin_user_domain() . BP_MEDIA_ALBUMS_SLUG)
+    );
+    
     foreach( $bp_media_admin_nav as $admin_menu )
 				$wp_admin_bar->add_menu( $admin_menu );
     
@@ -154,46 +162,49 @@ add_action( 'wp_before_admin_bar_render', 'bp_media_my_account_menu' );
 function bp_media_adminbar_settings_menu() {
     global $wp_admin_bar;
     
-    $bp_media_admin_nav = array();
-    $title = '<span class="ab-icon"></span><span class="ab-label">' . _x( 'BP Media', 'admin bar menu group label' ) . '</span>';
-    
-    // Added Main menu for BP Media
-    $bp_media_admin_nav[] = array(        
-        'id'     => 'bp-media-menu',
-        'title'  => $title,
-        'href'   => bp_get_admin_url( add_query_arg( array( 'page' => 'bp-media-settings'  ), 'admin.php' ) ),
-        'meta'   => array(
-            'class'  => 'menupop bp-media-settings-menu') 
-    );
-    
-    // Settins
-    $bp_media_admin_nav[] = array(
-        'parent' => 'bp-media-menu',
-        'id'     => 'bp-media-settings',
-        'title'  => __('BP Media Settings','bp-media'),
-        'href'   => bp_get_admin_url( add_query_arg( array( 'page' => 'bp-media-settings'  ), 'admin.php' ) )
-    );
-    
-    // Addons
-    $bp_media_admin_nav[] = array(
-        'parent' => 'bp-media-menu',
-        'id'     => 'my-account-addons',
-        'title'  => __('Addons','bp-media'),
-        'href'   => bp_get_admin_url( add_query_arg( array( 'page' => 'bp-media-addons'  ), 'admin.php' ) )
-    );
-   
-    // Support
-    $bp_media_admin_nav[] = array(
-        'parent' => 'bp-media-menu',
-        'id'     => 'my-account-support',
-        'title'  => __('Support','bp-media'),
-        'href'   => bp_get_admin_url( add_query_arg( array( 'page' => 'bp-media-support'  ), 'admin.php' ) )
-    );
-   
-    foreach( $bp_media_admin_nav as $admin_menu )
-				$wp_admin_bar->add_menu( $admin_menu );
-    
+    if( current_user_can('manage_options') ){
+
+        $bp_media_admin_nav = array();
+        $title = '<span class="ab-icon"></span><span class="ab-label">' . _x( 'BP Media', 'admin bar menu group label' ) . '</span>';
+
+        // Added Main menu for BP Media
+        $bp_media_admin_nav[] = array(        
+            'id'     => 'bp-media-menu',
+            'title'  => $title,
+            'href'   => bp_get_admin_url( add_query_arg( array( 'page' => 'bp-media-settings'  ), 'admin.php' ) ),
+            'meta'   => array(
+                'class'  => 'menupop bp-media-settings-menu') 
+        );
+
+        // Settins
+        $bp_media_admin_nav[] = array(
+            'parent' => 'bp-media-menu',
+            'id'     => 'bp-media-settings',
+            'title'  => __('BP Media Settings','bp-media'),
+            'href'   => bp_get_admin_url( add_query_arg( array( 'page' => 'bp-media-settings'  ), 'admin.php' ) )
+        );
+
+        // Addons
+        $bp_media_admin_nav[] = array(
+            'parent' => 'bp-media-menu',
+            'id'     => 'my-account-addons',
+            'title'  => __('Addons','bp-media'),
+            'href'   => bp_get_admin_url( add_query_arg( array( 'page' => 'bp-media-addons'  ), 'admin.php' ) )
+        );
+
+        // Support
+        $bp_media_admin_nav[] = array(
+            'parent' => 'bp-media-menu',
+            'id'     => 'my-account-support',
+            'title'  => __('Support','bp-media'),
+            'href'   => bp_get_admin_url( add_query_arg( array( 'page' => 'bp-media-support'  ), 'admin.php' ) )
+        );
+
+        foreach( $bp_media_admin_nav as $admin_menu )
+                    $wp_admin_bar->add_menu( $admin_menu );
+    }
 }
 
 // and we hook our function via wp_before_admin_bar_render
 add_action( 'wp_before_admin_bar_render', 'bp_media_adminbar_settings_menu' );
+
