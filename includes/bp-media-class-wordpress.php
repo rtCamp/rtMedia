@@ -81,28 +81,31 @@ class BP_Media_Host_Wordpress {
 	 * 
 	 * @since BP Media 2.0
 	 */
-	function add_media($name, $description, $group = 0) {
+	function add_media($name, $description, $album_id = 0, $group = 0) {
 		global $bp, $wpdb, $bp_media_count;
 		include_once(ABSPATH . 'wp-admin/includes/file.php');
 		include_once(ABSPATH . 'wp-admin/includes/image.php');
-		
-		//Select or create new Wall Posts album if not exist
-		$query_vars = array(
-			'post_name'	=>	'wall-posts',
-			'author'=> get_current_user_id(),
-			'post_type'	=>	'bp_media_album',
-			'post_status'	=>	'any'
-		);
-		$query = new WP_Query($query_vars);
-		if(isset($query->posts)&&is_array($query->posts)&&count($query->posts)){
-			$post_id = $query->posts[0]->ID;
+		$create_new_album_flag = false;
+		if($album_id!=0){
+			$album = get_post($album_id);
+			if($album->post_author!=  get_current_user_id()){
+				$create_new_album_flag = true;
+			}
+			else{
+				$post_id = $album->ID;
+			}
 		}
 		else{
-			$album = new BP_Media_Album();
-			$album->add_album('Wall Posts');
-			$post_id = $album->get_id();
+			$create_new_album_flag = true;
 		}
-
+		if($create_new_album_flag){
+			$post_id = $wpdb->get_var( "SELECT ID FROM $wpdb->posts WHERE post_title = 'Wall Posts' AND post_author = '".  get_current_user_id()."' AND post_type='bp_media_album'");
+			if($post_id==null){
+				$album = new BP_Media_Album();
+				$album->add_album('Wall Posts');
+				$post_id = $album->get_id();
+			}
+		}
 		$file = wp_handle_upload($_FILES['bp_media_file']);
 		if (isset($file['error']) || $file === null) {
 			throw new Exception(__('Error Uploading File', 'bp-media'));
@@ -389,17 +392,17 @@ class BP_Media_Host_Wordpress {
 			global $bp_media_current_entry;
 			echo '<input type="hidden" name="redirect_to" value="'.$bp_media_current_entry->get_url().'">' ;
 		});
-		switch($this->type){
-			case 'image' :
-				add_filter('the_title', function() {return BP_MEDIA_IMAGES_LABEL_SINGULAR;});
-				break;
-			case 'audio' :
-				add_filter('the_title', function() {return BP_MEDIA_AUDIO_LABEL_SINGULAR;});
-				break;
-			case 'video' :
-				add_filter('the_title', function() {return BP_MEDIA_VIDEOS_LABEL_SINGULAR;});
-				break;
-		}
+//		switch($this->type){
+//			case 'image' :
+//				add_filter('the_title', function() {return BP_MEDIA_IMAGES_LABEL_SINGULAR;});
+//				break;
+//			case 'audio' :
+//				add_filter('the_title', function() {return BP_MEDIA_AUDIO_LABEL_SINGULAR;});
+//				break;
+//			case 'video' :
+//				add_filter('the_title', function() {return BP_MEDIA_VIDEOS_LABEL_SINGULAR;});
+//				break;
+//		}
 		comments_template();
 		endwhile;
 	}

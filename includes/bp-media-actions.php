@@ -36,7 +36,9 @@ function bp_media_handle_uploads() {
 			$bp_media_entry = new $class_name();
 			try {
 				$title = isset($_POST['bp_media_title']) ? ($_POST['bp_media_title'] != "") ? $_POST['bp_media_title'] : pathinfo($_FILES['bp_media_file']['name'], PATHINFO_FILENAME) : pathinfo($_FILES['bp_media_file']['name'], PATHINFO_FILENAME);
-				$entry = $bp_media_entry->add_media($title, array_key_exists('bp_media_description',$_POST)?$_POST['bp_media_description']:'');
+				$album_id = isset($_POST['bp_media_album_id']) ? intval($_POST['bp_media_album_id']) : 0;
+				$description = isset($_POST['bp_media_description'])? $_POST['bp_media_description'] : '';
+				$entry = $bp_media_entry->add_media($title, $description,$album_id);
 				if(!isset($bp->{BP_MEDIA_SLUG}->messages['updated'][0]))
 					$bp->{BP_MEDIA_SLUG}->messages['updated'][0] = __('Upload Successful', 'bp-media');
 			} catch (Exception $e) {
@@ -284,6 +286,7 @@ function bp_media_upload_enqueue(){
 	wp_enqueue_script('bp-media-uploader',plugins_url('js/bp-media-uploader.js',__FILE__),array('plupload', 'plupload-html5', 'plupload-flash', 'plupload-silverlight', 'plupload-html4','plupload-handlers','jquery-ui-core','jquery-ui-widget','jquery-ui-position','jquery-ui-dialog'));
 	wp_localize_script('bp-media-uploader','bp_media_uploader_params',$params);
 	wp_enqueue_style('bp-media-default',plugins_url('css/bp-media-style.css',__FILE__));
+//	wp_enqueue_style("wp-jquery-ui-dialog"); //Its not styling the Dialog box as it should so using different styling
 	wp_enqueue_style('jquery-style', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/themes/smoothness/jquery-ui.css'); 
 }
 //add_action('wp_enqueue_scripts','bp_media_upload_enqueue');

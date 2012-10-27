@@ -43,7 +43,10 @@ function bp_media_show_upload_form_multiple() {
 	));
 	if(isset($albums->posts)&& is_array($albums->posts)&& count($albums->posts)>0){
 		foreach ($albums->posts as $album){ 
-			echo '<option value="'.$album->ID.'">'.$album->post_title.'</option>' ;
+			if($album->post_title == 'Wall Posts')
+				echo '<option value="'.$album->ID.'" selected="selected">'.$album->post_title.'</option>' ;
+			else
+				echo '<option value="'.$album->ID.'">'.$album->post_title.'</option>' ;
 		};
 	}?></select></div>
 <div id="bp-media-album-new" title="Create New Album"><label for="bp_media_album_name">Album Name</label><input id="bp_media_album_name" type="text" name="bp_media_album_name" /></div>
