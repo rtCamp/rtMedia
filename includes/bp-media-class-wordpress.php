@@ -202,22 +202,35 @@ class BP_Media_Host_Wordpress {
 			unlink($file);
 			throw new Exception(__('Error creating attachment for the media file, please try again', 'bp-media'));
 		}
-//		$activity_content = '[bp_media_content id="' . $post_id . '"]';
-//		$activity_id = bp_media_record_activity(array(
-//			'action' => '[bp_media_action id="' . $post_id . '"]',
-//			'content' => $activity_content,
-//			'primary_link' => 'bp_media_url id="' . $post_id . '"',
-//			'type' => 'media_upload'
-//		));
-//		bp_activity_update_meta($activity_id, 'bp_media_parent_post', $post_id);
 		$this->id = $attachment_id;
 		$this->name = $name;
 		$this->description = $description;
-		$this->owner = get_current_user_id();
 		$this->type = $type;
-		$this->url = $url;
+		switch ($this->type) {
+			case 'video' :
+				$this->url = trailingslashit(bp_core_get_user_domain($this->owner) . BP_MEDIA_VIDEOS_SLUG . '/' . $this->id);
+				$this->edit_url = trailingslashit(bp_core_get_user_domain($this->owner) . BP_MEDIA_VIDEOS_SLUG . '/' . BP_MEDIA_VIDEOS_EDIT_SLUG . '/' . $this->id);
+				$this->delete_url = trailingslashit(bp_core_get_user_domain($this->owner) . BP_MEDIA_VIDEOS_SLUG . '/' . BP_MEDIA_DELETE_SLUG . '/' . $this->id);
+				$this->thumbnail_id = get_post_meta($this->id, 'bp_media_thumbnail',true);
+				break;
+			case 'audio' :
+				$this->url = trailingslashit(bp_core_get_user_domain($this->owner) . BP_MEDIA_AUDIO_SLUG . '/' . $this->id);
+				$this->edit_url = trailingslashit(bp_core_get_user_domain($this->owner) . BP_MEDIA_AUDIO_SLUG . '/' . BP_MEDIA_AUDIO_EDIT_SLUG . '/' . $this->id);
+				$this->delete_url = trailingslashit(bp_core_get_user_domain($this->owner) . BP_MEDIA_AUDIO_SLUG . '/' . BP_MEDIA_DELETE_SLUG . '/' . $this->id);
+				$this->thumbnail_id = get_post_meta($this->id, 'bp_media_thumbnail',true);
+				break;
+			case 'image' :
+				$this->url = trailingslashit(bp_core_get_user_domain($this->owner) . BP_MEDIA_IMAGES_SLUG . '/' . $this->id);
+				$this->edit_url = trailingslashit(bp_core_get_user_domain($this->owner) . BP_MEDIA_IMAGES_SLUG . '/' . BP_MEDIA_IMAGES_EDIT_SLUG . '/' . $this->id);
+				$this->delete_url = trailingslashit(bp_core_get_user_domain($this->owner) . BP_MEDIA_IMAGES_SLUG . '/' . BP_MEDIA_DELETE_SLUG . '/' . $this->id);
+				$image_array = image_downsize($this->attachment_id, 'bp_media_single_image');
+				$this->thumbnail_id = $this->attachment_id;
+				break;
+			default :
+				return false;
+		}
 		if($group == 0)
-			update_post_meta($attachment_id, 'bp-media-key', $this->owner);
+			update_post_meta($attachment_id, 'bp-media-key', get_current_user_id());
 		else
 			update_post_meta($attachment_id, 'bp-media-key', (-$group));
 		bp_update_user_meta(bp_loggedin_user_id(), 'bp_media_count', $bp_media_count);
@@ -228,11 +241,8 @@ class BP_Media_Host_Wordpress {
 	 * 
 	 */
 	function get_media_activity_content() {
-		if (!bp_is_activity_component()) {
-			return false;
-		}
 		global $bp_media_counter, $bp_media_default_excerpts;
-		$attachment_id = get_post_meta($this->id, 'bp_media_child_attachment', true);
+		$attachment_id = $this->id;
 		$activity_content = '<div class="bp_media_title"><a href="' . $this->url . '" title="' . $this->description . '">' . wp_html_excerpt($this->name, $bp_media_default_excerpts['activity_entry_title']) . '</a></div>';
 		$activity_content .='<div class="bp_media_content">';
 		switch ($this->type) {
@@ -569,6 +579,22 @@ class BP_Media_Host_Wordpress {
 	 */
 	function get_delete_url() {
 		return $this->delete_url;
+	}
+	
+	/**
+	 * 
+	 */
+	function get_media_activity_type() {
+		switch($this->type){
+			case 'image':
+				return BP_MEDIA_IMAGES_LABEL_SINGULAR;
+			case 'video':
+				return BP_MEDIA_VIDEOS_LABEL_SINGULAR;
+			case 'audio':
+				return BP_MEDIA_AUDIO_LABEL_SINGULAR;
+			default:
+				return 'Media';
+		}
 	}
 }
 ?>

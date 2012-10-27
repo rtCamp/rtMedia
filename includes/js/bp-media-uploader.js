@@ -16,14 +16,37 @@ jQuery(document).ready(function(){
 		});
 		bp_media_album_select.dialog('option','buttons',{
 				'Select': function() {
-					bp_media_uploader.start(); 
+					bp_media_uploader.start();
 					jQuery(this).dialog("close");
 				},
 				'Create New': function(){
+					bp_media_new_album.dialog('option','buttons',{
+						'Create' : function(){
+							var album_name = jQuery('#bp_media_album_name').val();
+							if(album_name.length==0){
+								alert('You have not filled the album name');
+								return false;
+							}
+							var data = {
+								action: 'bp_media_add_album',
+								bp_media_album_name : album_name
+							};
+							jQuery.post(bp_media_vars.ajaxurl,data,function(response){
+								var album = parseInt(response);
+								if(album == 0){
+									alert('There was some error creating album');
+								}
+								else{
+									jQuery('#bp-media-selected-album').append('<option value='+album+' selected="selected">'+jQuery('#bp_media_album_name').val()+'</option>')
+									bp_media_new_album.dialog('close');
+								}
+								console.log(response);
+							});
+							console.log(jQuery('#bp_media_album_name').val());
+						}
+					});
 					bp_media_new_album.dialog('open');
 				}
-				
-				
 		})
 		bp_media_album_select.dialog('open');
 		up.refresh(); // Reposition Flash/Silverlight
