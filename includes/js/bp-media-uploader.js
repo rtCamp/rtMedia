@@ -1,15 +1,18 @@
-/* 
+/*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
 
 jQuery(document).ready(function(){
 	var bp_media_is_multiple_upload = false;
+	if(jQuery('#'+bp_media_uploader_params.container).length==0)
+		return false;
 	var bp_media_uploader=new plupload.Uploader(bp_media_uploader_params);
 	var bp_media_album_selected = false;
 	bp_media_uploader.init();
 	bp_media_uploader.bind('FilesAdded', function(up, files) {
-		bp_media_is_multiple_upload = files.length==1&&jQuery('.bp-media-progressbar').length==0?false:true;
+		//bp_media_is_multiple_upload = files.length==1&&jQuery('.bp-media-progressbar').length==0?false:true;
+		bp_media_is_multiple_upload = files.length>1;
 		jQuery.each(files, function(i, file) {
 			jQuery('#bp-media-uploaded-files').append(
 				'<div id="bp-media-progress-'+file.id+'" class="bp-media-progressbar"><div class="bp-media-progress-text">' +
@@ -95,5 +98,13 @@ jQuery(document).ready(function(){
 		modal:true,
 		resizable:false,
 		closeOnEscape:false
+	});
+	bp_media_uploader.bind('UploadComplete',function(){
+		var new_location = window.location.href;
+		if(new_location.search('/media/')>0){
+			new_location = new_location.replace('media','albums');
+			new_location = new_location.concat(bp_media_album_selected);
+			//window.location.replace(new_location);
+		}
 	});
 });
