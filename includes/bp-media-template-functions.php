@@ -218,4 +218,32 @@ function bp_media_display_show_more(){
 	if($bp_media_query->found_posts>10)
 		echo '<div class="bp-media-actions"><a href="#" class="button" id="bp-media-show-more">Show More</a></div>';
 }
+
+function bp_media_show_upload_form_multiple_activity() {
+	global $bp,$bp_media_default_excerpts;	
+	if($bp->current_component!='activity')
+		return;
+	?>
+<div id="bp-media-album-prompt" title="Select Album"><select id="bp-media-selected-album"><?php 
+	$albums = new WP_Query(array(
+		'post_type'	=>	'bp_media_album',
+		'posts_per_page'=> -1,
+		'author'=>  get_current_user_id()
+	));
+	if(isset($albums->posts)&& is_array($albums->posts)&& count($albums->posts)>0){
+		foreach ($albums->posts as $album){ 
+			if($album->post_title == 'Wall Posts')
+				echo '<option value="'.$album->ID.'" selected="selected">'.$album->post_title.'</option>' ;
+			else
+				echo '<option value="'.$album->ID.'">'.$album->post_title.'</option>' ;
+		};
+	}?></select></div>
+<div id="bp-media-album-new" title="Create New Album"><label for="bp_media_album_name">Album Name</label><input id="bp_media_album_name" type="text" name="bp_media_album_name" /></div>
+<div id="bp-media-upload-ui" class="hide-if-no-js drag-drop activity-component">
+		<p class="drag-drop-buttons"><input id="bp-media-upload-browse-button" type="button" value="Add Media" class="button" /></p>
+</div>
+<div id="bp-media-uploaded-files"></div>
+	<?php
+}
+
 ?>

@@ -1,7 +1,7 @@
 <?php
 /**
  * Handles the uploads and creates respective posts for the upload
- * 
+ *
  * @since BP Media 2.0
  */
 function bp_media_handle_uploads() {
@@ -46,13 +46,19 @@ function bp_media_handle_uploads() {
 			}
 			if(function_exists('bp_activity_add')){
 				$activity_content = $bp_media_entry->get_media_activity_content();
-				$activity_id = bp_media_record_activity(array(
-					'action' => apply_filters( 'bp_media_added_media', sprintf( __( '%1$s added a %2$s', 'bp-media'), bp_core_get_userlink( bp_loggedin_user_id() ), '<a href="' . $bp_media_entry->get_url() . '">' . $bp_media_entry->get_media_activity_type() . '</a>' ) ),
-					'content' => $activity_content,
-					'primary_link' => $bp_media_entry->get_url(),
-					'item_id' => $bp_media_entry->get_id(),
-					'type' => 'media_upload',
-				));
+				$args = array(
+						'action' => apply_filters( 'bp_media_added_media', sprintf( __( '%1$s added a %2$s', 'bp-media'), bp_core_get_userlink( bp_loggedin_user_id() ), '<a href="' . $bp_media_entry->get_url() . '">' . $bp_media_entry->get_media_activity_type() . '</a>' ) ),
+						'content' => $activity_content,
+						'primary_link' => $bp_media_entry->get_url(),
+						'item_id' => $bp_media_entry->get_id(),
+						'type' => 'media_upload',
+					);
+				if(isset($_POST['is_multiple_upload'])&&$_POST['is_multiple_upload']=='true'){
+					$args['secondary_item_id'] = -999;
+					do_action('bp_media_album_updated');
+				}
+				$activity_id = bp_media_record_activity($args);
+			bp_activity_update_meta($activity_id, 'bp_media_show', false);
 			}
 		} else {
 			$bp->{BP_MEDIA_SLUG}->messages['error'][] = __('You did not specified a file to upload', 'bp-media');
@@ -63,7 +69,7 @@ function bp_media_handle_uploads() {
 
 /**
  * Displays the messages that other functions/methods creates according to the BuddyPress' formating
- * 
+ *
  * @since BP Media 2.0
  */
 function bp_media_show_messages() {
@@ -81,17 +87,17 @@ add_action('bp_media_before_content', 'bp_media_show_messages');
 
 /**
  * Enqueues all the required scripts and stylesheets for the proper working of BuddyPress Media.
- * 
+ *
  * @since BP Media 2.0
  */
 function bp_media_enqueue_scripts_styles() {
-    
+
 	wp_enqueue_script('jquery-ui-tabs');
     wp_enqueue_script('bp-media-mejs', plugins_url('includes/media-element/mediaelement-and-player.min.js', dirname(__FILE__)));
 	wp_enqueue_script('bp-media-default', plugins_url('includes/js/bp-media.js', dirname(__FILE__)));
 	global $bp;
-	
-	$bp_media_vars = array( 
+
+	$bp_media_vars = array(
 		'ajaxurl' => admin_url( 'admin-ajax.php'),
 		'page'	=> 1,
 		'current_action' => isset($bp->current_action)?$bp->current_action:false,
@@ -102,49 +108,16 @@ function bp_media_enqueue_scripts_styles() {
 	wp_localize_script( 'bp-media-default', 'bp_media_vars', $bp_media_vars );
     wp_enqueue_style('bp-media-mecss', plugins_url('includes/media-element/mediaelementplayer.min.css', dirname(__FILE__)));
 	wp_enqueue_style('bp-media-default', plugins_url('includes/css/bp-media-style.css', dirname(__FILE__)));
-	
+
 }
 
 add_action('wp_enqueue_scripts', 'bp_media_enqueue_scripts_styles', 11);
 
-/**
- * Deletes associated media entry and its files upon deletion of an activity.
- * 
- * @since BP Media 2.0
- */
-function bp_media_delete_activity_handler($activity_id, $user) {
-	global $bp_media_count;
-	bp_media_init_count(bp_loggedin_user_id());
-	$post_id = bp_activity_get_meta($activity_id, 'bp_media_parent_post');
-	$type = get_post_meta($post_id, 'bp_media_type', true);
-	switch ($type) {
-		case 'image':
-			$bp_media_count['images'] = intval($bp_media_count['images']) - 1;
-			break;
-		case 'video':
-			$bp_media_count['videos'] = intval($bp_media_count['videos']) - 1;
-			break;
-		case 'audio':
-			$bp_media_count['audio'] = intval($bp_media_count['audio']) - 1;
-			break;
-	}
-	$attachment_id = get_post_meta($post_id, 'bp_media_child_attachment', true);
-	wp_delete_attachment($attachment_id, true);
-	wp_delete_post($post_id, true);
-	bp_update_user_meta(bp_loggedin_user_id(), 'bp_media_count', $bp_media_count);
-}
-
-/* Adds bp_media_delete_activity_handler() function to be called on bp_activity_before_action_delete_activity hook */
-//add_action('bp_before_activity_delete', 'bp_media_delete_activity_handler', 1, 2);
-//The above hook isn't at right place yet, so skipped it till its corrected
-//add_action('bp_activity_before_action_delete_activity', 'bp_media_delete_activity_handler', 10, 2);
-
-function bp_media_delete_activity_handler_old($args){
+function bp_media_delete_activity_handler($args){
 	global $bp_media_count,$wpdb;
-	
 	if(!array_key_exists('id', $args))
 		return;
-	
+
 	$activity_id=$args['id'];
 	$query="SELECT post_id from $wpdb->postmeta WHERE meta_key='bp_media_child_activity' AND meta_value=$activity_id";
 	$result=$wpdb->get_results($query);
@@ -152,20 +125,31 @@ function bp_media_delete_activity_handler_old($args){
 		return;
 	$post_id=$result[0]->post_id;
 	try{
-		$media = new BP_Media_Host_Wordpress($post_id);
-		$media->delete_media();
+		$post = get_post($post_id);
+		switch($post->post_type){
+			case 'attachment':
+				$media = new BP_Media_Host_Wordpress($post_id);
+				$media->delete_media();
+				break;
+			case 'bp_media_album':
+				$album = new BP_Media_Album($post_id);
+				$album->delete_album();
+				break;
+			default:
+				wp_delete_post($post_id);
+		}
 	}
 	catch(Exception $e){
 		error_log('Media tried to delete was already deleted');
 	}
 }
-add_action('bp_before_activity_delete', 'bp_media_delete_activity_handler_old');
+add_action('bp_before_activity_delete', 'bp_media_delete_activity_handler');
 
 /**
  * Called on bp_init by screen functions
- * 
+ *
  * @uses global $bp, $bp_media_query
- * 
+ *
  * @since BP Media 2.0
  */
 function bp_media_set_query() {
@@ -205,7 +189,7 @@ function bp_media_set_query() {
 
 /**
  * Adds a download button and edit button on single entry pages of media files.
- * 
+ *
  * @since BP Media 2.0
  */
 function bp_media_action_buttons() {
@@ -215,7 +199,7 @@ function bp_media_action_buttons() {
 	if($bp_media_current_entry!=NULL){
 		if(bp_displayed_user_id()==  bp_loggedin_user_id())	echo '<a href="'.$bp_media_current_entry->get_edit_url().'" class="button item-button bp-secondary-action bp-media-edit" title="Edit Media">Edit</a>';
 		echo '<a href="'.$bp_media_current_entry->get_attachment_url().'" class="button item-button bp-secondary-action bp-media-download" title="Download">Download</a>';
-		
+
 	}
 }
 add_action('bp_activity_entry_meta', 'bp_media_action_buttons');
@@ -224,7 +208,7 @@ add_action('bp_activity_entry_meta', 'bp_media_action_buttons');
 
 /**
  * Shows the media count of a user in the tabs
- * 
+ *
  * @since BP Media 2.0
  */
 function bp_media_init_count($user = null) {
@@ -256,7 +240,7 @@ add_action('init', 'bp_media_init_count');
 
 /**
  * Displays the footer of the BP Media Plugin if enabled through the dashboard options page
- * 
+ *
  * @since BP Media 2.0
  */
 function bp_media_footer() { ?>
@@ -287,17 +271,17 @@ function bp_media_upload_enqueue(){
 	wp_localize_script('bp-media-uploader','bp_media_uploader_params',$params);
 	wp_enqueue_style('bp-media-default',plugins_url('css/bp-media-style.css',__FILE__));
 //	wp_enqueue_style("wp-jquery-ui-dialog"); //Its not styling the Dialog box as it should so using different styling
-	wp_enqueue_style('jquery-style', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/themes/smoothness/jquery-ui.css'); 
+	wp_enqueue_style('jquery-style', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/themes/smoothness/jquery-ui.css');
 }
-//add_action('wp_enqueue_scripts','bp_media_upload_enqueue');
+add_action('wp_enqueue_scripts','bp_media_upload_enqueue');
 //This is used only on the uploads page so its added as action in the screens function of upload page.
 
 
 /**
  * Called on bp_init by screen functions
- * 
+ *
  * @uses global $bp, $bp_media_albums_query
- * 
+ *
  * @since BP Media 2.2
  */
 function bp_media_albums_set_query() {
@@ -319,9 +303,9 @@ function bp_media_albums_set_query() {
 
 /**
  * Called on bp_init by screen functions
- * 
+ *
  * @uses global $bp, $bp_media_query
- * 
+ *
  * @since BP Media 2.2
  */
 function bp_media_albums_set_inner_query($album_id=0) {
@@ -333,7 +317,7 @@ function bp_media_albums_set_inner_query($album_id=0) {
 			$paged = $action_variables[1];
 		else if($action_variables[1] == 'page' && isset($action_variables[2]) && is_numeric($action_variables[2]))
 			$paged = $action_variables[2];
-	} 
+	}
 	if(!$paged)
 		$paged = 1;
 	$args = array(
@@ -373,7 +357,7 @@ function bp_media_load_more() {
 				'paged' => $page,
 				'posts_per_page' => $posts_per_page
 			);
-			break;			
+			break;
 		case BP_MEDIA_AUDIO_SLUG:
 			$args = array(
 				'post_type' => 'attachment',
@@ -489,4 +473,32 @@ function bp_media_add_album() {
 	die();
 }
 add_action('wp_ajax_bp_media_add_album', 'bp_media_add_album');
+
+function bp_media_add_new_from_activity(){
+	 bp_media_show_upload_form_multiple_activity();
+}
+add_action('bp_after_activity_post_form','bp_media_add_new_from_activity');
+
+
+function bp_media_album_create_activity($album){
+	/* @var $album BP_Media_Album */
+	$args = array(
+		'action' => apply_filters( 'bp_media_album_created', sprintf( __( '%1$s created an album %2$s', 'bp-media'), bp_core_get_userlink( bp_loggedin_user_id() ), '<a href="' . $album->get_url() . '">' . $album->get_title() . '</a>' ) ),
+		'content' => '',
+		'component' => BP_MEDIA_SLUG,
+		'type' => 'album_created',
+		'primary_link' => $album->get_url(),
+		'user_id' => get_current_user_id(),
+		'item_id' => $album->get_id(),
+		'recorded_time' => bp_core_current_time()
+	);
+	$activity_id = bp_media_record_activity($args);
+	update_post_meta($album->get_id(), 'bp_media_child_activity', $activity_id);
+}
+add_action('bp_media_after_add_album','bp_media_album_create_activity');
+
+function bp_media_album_activity_update(){
+	//@todo implementation pending
+}
+add_action('bp_media_album_updated','bp_media_album_activity_update');
 ?>

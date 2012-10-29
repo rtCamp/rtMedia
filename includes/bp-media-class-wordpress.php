@@ -13,12 +13,12 @@ class BP_Media_Host_Wordpress {
 		$delete_url, //The delete url for the media
 		$thumbnail_id, //The thumbnail's url
 		$edit_url; //The edit page's url for the media
-	
+
 	/**
 	 * Constructs a new BP_Media_Host_Wordpress element
-	 * 
+	 *
 	 * @param mixed $media_id optional Media ID of the element to be initialized if not defined, returns an empty element.
-	 * 
+	 *
 	 * @since BP Media 2.0
 	 */
 	function __construct($media_id = '') {
@@ -29,9 +29,9 @@ class BP_Media_Host_Wordpress {
 
 	/**
 	 * Initializes the object with the variables from the post
-	 * 
+	 *
 	 * @param mixed $media_id Media ID of the element to be initialized. Can be the ID or the object of the Media
-	 * 
+	 *
 	 * @since BP Media 2.0
 	 */
 	function init($media_id = '') {
@@ -68,8 +68,8 @@ class BP_Media_Host_Wordpress {
 				$this->url = trailingslashit(bp_core_get_user_domain($this->owner) . BP_MEDIA_IMAGES_SLUG . '/' . $this->id);
 				$this->edit_url = trailingslashit(bp_core_get_user_domain($this->owner) . BP_MEDIA_IMAGES_SLUG . '/' . BP_MEDIA_IMAGES_EDIT_SLUG . '/' . $this->id);
 				$this->delete_url = trailingslashit(bp_core_get_user_domain($this->owner) . BP_MEDIA_IMAGES_SLUG . '/' . BP_MEDIA_DELETE_SLUG . '/' . $this->id);
-				$image_array = image_downsize($this->attachment_id, 'bp_media_single_image');
-				$this->thumbnail_id = $this->attachment_id;
+				$image_array = image_downsize($this->id, 'bp_media_single_image');
+				$this->thumbnail_id = $this->id;
 				break;
 			default :
 				return false;
@@ -78,7 +78,7 @@ class BP_Media_Host_Wordpress {
 
 	/**
 	 * Handles the uploaded media file and creates attachment post for the file.
-	 * 
+	 *
 	 * @since BP Media 2.0
 	 */
 	function add_media($name, $description, $album_id = 0, $group = 0) {
@@ -110,7 +110,7 @@ class BP_Media_Host_Wordpress {
 		if (isset($file['error']) || $file === null) {
 			throw new Exception(__('Error Uploading File', 'bp-media'));
 		}
-		
+
 		$attachment = array();
 		$url = $file['url'];
 		$type = $file['type'];
@@ -193,7 +193,7 @@ class BP_Media_Host_Wordpress {
 				$type = 'image';
 				$bp_media_count['images'] = intval($bp_media_count['images']) + 1;
 				break;
-			default : unlink($file);
+			default :
 				unlink($file);
 				$activity_content = false;
 				throw new Exception(__('Media File you have tried to upload is not supported. Supported media files are .jpg, .png, .gif, .mp3, .mov and .mp4.', 'bp-media'));
@@ -209,6 +209,7 @@ class BP_Media_Host_Wordpress {
 		$this->name = $name;
 		$this->description = $description;
 		$this->type = $type;
+		$this->owner = get_current_user_id();
 		switch ($this->type) {
 			case 'video' :
 				$this->url = trailingslashit(bp_core_get_user_domain($this->owner) . BP_MEDIA_VIDEOS_SLUG . '/' . $this->id);
@@ -226,11 +227,11 @@ class BP_Media_Host_Wordpress {
 				$this->url = trailingslashit(bp_core_get_user_domain($this->owner) . BP_MEDIA_IMAGES_SLUG . '/' . $this->id);
 				$this->edit_url = trailingslashit(bp_core_get_user_domain($this->owner) . BP_MEDIA_IMAGES_SLUG . '/' . BP_MEDIA_IMAGES_EDIT_SLUG . '/' . $this->id);
 				$this->delete_url = trailingslashit(bp_core_get_user_domain($this->owner) . BP_MEDIA_IMAGES_SLUG . '/' . BP_MEDIA_DELETE_SLUG . '/' . $this->id);
-				$image_array = image_downsize($this->attachment_id, 'bp_media_single_image');
-				$this->thumbnail_id = $this->attachment_id;
+				$image_array = image_downsize($this->id, 'bp_media_single_image');
+				$this->thumbnail_id = $this->id;
 				break;
 			default :
-				return false;
+				//return false;
 		}
 		if($group == 0)
 			update_post_meta($attachment_id, 'bp-media-key', get_current_user_id());
@@ -241,7 +242,7 @@ class BP_Media_Host_Wordpress {
 
 	/**
 	 * Fetches the content of the activity of media upload based on its type
-	 * 
+	 *
 	 */
 	function get_media_activity_content() {
 		global $bp_media_counter, $bp_media_default_excerpts;
@@ -305,7 +306,7 @@ class BP_Media_Host_Wordpress {
 			case 'video' :
 				if($this->thumbnail_id){
 					$image_array = image_downsize($this->thumbnail_id, 'bp_media_single_image');
-					$content.='<video poster="'.$image_array[0].'" src="' . wp_get_attachment_url($this->attachment_id) . '" width="' . $bp_media_default_sizes['single_video']['width'] . '" height="' . ($bp_media_default_sizes['single_video']['height'] == 0 ? 'auto' : $bp_media_default_sizes['single_video']['height']) . '" type="video/mp4" id="bp_media_video_' . $this->id . '" controls="controls" preload="none"></video><script>bp_media_create_element("bp_media_video_' . $this->id . '");</script>';
+					$content.='<video poster="'.$image_array[0].'" src="' . wp_get_attachment_url($this->id) . '" width="' . $bp_media_default_sizes['single_video']['width'] . '" height="' . ($bp_media_default_sizes['single_video']['height'] == 0 ? 'auto' : $bp_media_default_sizes['single_video']['height']) . '" type="video/mp4" id="bp_media_video_' . $this->id . '" controls="controls" preload="none"></video><script>bp_media_create_element("bp_media_video_' . $this->id . '");</script>';
 				}
 				else{
 					$content.='<video src="' . wp_get_attachment_url($this->id) . '" width="' . $bp_media_default_sizes['single_video']['width'] . '" height="' . ($bp_media_default_sizes['single_video']['height'] == 0 ? 'auto' : $bp_media_default_sizes['single_video']['height']) . '" type="video/mp4" id="bp_media_video_' . $this->id . '" controls="controls" preload="none"></video><script>bp_media_create_element("bp_media_video_' . $this->id . '");</script>';
@@ -406,7 +407,7 @@ class BP_Media_Host_Wordpress {
 		comments_template();
 		endwhile;
 	}
-	
+
 	/**
 	 * Outputs the comments and comment form in the single media entry page
 	 */
@@ -500,15 +501,15 @@ class BP_Media_Host_Wordpress {
 	function get_attachment_url(){
 		return wp_get_attachment_url($this->id);
 	}
-	
+
 	/**
 	 * Updates the media entry
-	 * 
+	 *
 	 * @param array $args Array with the following keys:<br/>
 	 * 'name' <br/>
 	 * 'description'<br/>
 	 * 'owner'
-	 * 
+	 *
 	 * @return bool True when the update is successful, False when the update fails
 	 */
 	function update_media($args=array()){
@@ -526,7 +527,7 @@ class BP_Media_Host_Wordpress {
 		$this->init($this->id);
 		return $result;
 	}
-	
+
 	/**
 	 * Deletes the Media Entry
 	 */
@@ -544,48 +545,48 @@ class BP_Media_Host_Wordpress {
 				$bp_media_count['audio'] = intval($bp_media_count['audio']) - 1;
 				break;
 		}
-		
+
 		wp_delete_attachment($this->id,true);
 		bp_update_user_meta($this->owner, 'bp_media_count', $bp_media_count);
 	}
-	
+
 	/**
 	 * Returns the description of the Media Entry
 	 */
 	function get_content() {
 		return $this->description;
 	}
-	
+
 	/**
 	 * Returns the owner id of the Media Entry
 	 */
 	function get_author() {
 		return $this->owner;
 	}
-	
+
 	/**
 	 * Returns the id of the Media Entry
 	 */
 	function get_id(){
 		return $this->id;
 	}
-	
+
 	/**
 	 * Returns the edit url of the Media Entry
 	 */
 	function get_edit_url() {
 		return $this->edit_url;
 	}
-	
+
 	/**
 	 * Returns the delete url of the Media Entry
 	 */
 	function get_delete_url() {
 		return $this->delete_url;
 	}
-	
+
 	/**
-	 * 
+	 *
 	 */
 	function get_media_activity_type() {
 		switch($this->type){

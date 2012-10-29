@@ -1,10 +1,9 @@
 <?php
 function bp_media_activity_permalink_filter($link, $activity_obj = null) {
-	if ($activity_obj != null && 'media_upload' == $activity_obj->type) {
-		if(preg_match('/bp_media_urlid=(\d+)/i',$activity_obj->primary_link, $result)&&isset($result[1])){
+	if ($activity_obj != null && in_array($activity_obj->type,array('media_upload','album_created'))) {
+		if($activity_obj->primary_link!=''){
 			try{
-				$media=new BP_Media_Host_Wordpress($result[1]);
-				return $media->get_media_activity_url();
+				return $activity_obj->primary_link;
 			}
 			catch(Exception $e){
 				return $link;
@@ -12,11 +11,13 @@ function bp_media_activity_permalink_filter($link, $activity_obj = null) {
 		}
 	}
 	if ($activity_obj != null && 'activity_comment' == $activity_obj->type) {
-		$parent = bp_activity_get_meta($activity_obj->item_id, 'bp_media_parent_post');
+		$parent = $activity_obj->item_id;
 		if ($parent) {
 			try{
-				$parent = new BP_Media_Host_Wordpress($parent);
-				return $parent->get_url();
+				$activities = bp_activity_get(array('in' => $parent));
+				if(isset($activities['activities'][0])){
+					return $activities['activities'][0]->primary_link;
+				}
 			}
 			catch(Exception $e){
 				return $link;
@@ -86,4 +87,13 @@ function bp_media_items_count_filter ($title,$nav_item) {
 	$count_html=' <span>'. $count.'</span>';
 	return str_replace('</a>', $count_html.'</a>', $title);
 }
+
+/**
+ * To hide some activities of multiple uploads
+ */
+add_filter('bp_activity_get_user_join_filter',function($query){
+	global $wpdb;
+	$query = preg_replace('/WHERE/i', 'WHERE a.secondary_item_id!=-999 AND ',$query);
+		return $query;
+},10);
 ?>

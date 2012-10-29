@@ -10,12 +10,12 @@ class BP_Media_Album{
 		$thumbnail,
 		$edit_url,
 		$media_entries;
-	
+
 	/**
 	 * Constructs a new BP_Media_Album
-	 * 
+	 *
 	 * @param mixed $album_id optional Album ID of the element to be initialized if not defined, returns an empty element.
-	 * 
+	 *
 	 * @since BP Media 2.2
 	 */
 	function __construct($album_id = '') {
@@ -23,12 +23,12 @@ class BP_Media_Album{
 			$this->init($album_id);
 		}
 	}
-	
+
 	/**
 	 * Initializes the object
-	 * 
+	 *
 	 * @param mixed $album_id Album ID of the element to be initialized. Can be the ID or the object of the Album
-	 * 
+	 *
 	 * @since BP Media 2.2
 	 */
 	function init($album_id){
@@ -57,17 +57,18 @@ class BP_Media_Album{
 			'post_type'	=>	'attachment'
 		));
 	}
-	
+
 	/**
 	 * Adds a new album and initializes the object with the new album
-	 * 
+	 *
 	 * @param string $title The title of the album.
 	 * @param string $author_id Optional The author id, defaults to zero in which case takes the logged in user id.
 	 * @param string $group_id Optional The group id to which the album belongs, defaults to 0 meaning its not attached with a group.
-	 * 
+	 *
 	 * @since BP Media 2.2
 	 */
 	function add_album($title,$author_id = 0, $group_id = 0){
+		do_action('bp_media_before_add_album');
 		$author_id = $author_id?$author_id:get_current_user_id();
 		$post_vars = array(
 				'post_title'	=>	$title,
@@ -88,24 +89,26 @@ class BP_Media_Album{
 		$this->init($album_id);
 		$bp_media_count['albums'] = intval($bp_media_count['albums']) + 1;
 		bp_update_user_meta($author_id, 'bp_media_count', $bp_media_count);
+		do_action('bp_media_after_add_album',$this);
 		return $album_id;
 	}
-	
+
 	/**
 	 * Deletes the album and all associated attachments
-	 * 
+	 *
 	 * @since BP Media 2.2
 	 */
 	function delete_album(){
-		do_action('bp_media_before_delete_album');
+		do_action('bp_media_before_delete_album',  $this);
 		foreach($this->media_entries as $entry){
 			wp_delete_attachment($entry->ID,true);
 		}
 		wp_delete_post($this->id,true);
-		do_action('bp_media_after_delete_album');
+		do_action('bp_media_after_delete_album', $this);
 	}
-	
+
 	function edit_album($title=''){
+		do_action('bp_media_before_edit_album',$this);
 		if($title==''){
 			return false;
 		}
@@ -123,8 +126,9 @@ class BP_Media_Album{
 				return true;
 			}
 		}
+		do_action('bp_media_after_edit_album',$this);
 	}
-	
+
 	function get_album_gallery_content(){
 		?><li>
 			<a href="<?php echo $this->url ?>" title="<?php echo $this->description ?>">
@@ -133,41 +137,50 @@ class BP_Media_Album{
 			<h3 title="<?php echo $this->name ?>"><a href="<?php echo $this->url ?>" title="<?php echo $this->description ?>"><?php echo $this->name ?></a></h3>
 		</li><?php
 	}
-	
+
 	/**
 	 * Returns the attachments linked with the albume
-	 * 
+	 *
 	 * @since BP Media 2.2
 	 */
 	function get_entries(){
 		return $this->media_entries;
 	}
-	
+
 	/**
 	 * Returns the title of the album
-	 * 
+	 *
 	 * @since BP Media 2.2
 	 */
 	function get_title(){
 		return $this->name;
 	}
-	
+
 	/**
 	 * Echoes the title of the album
-	 * 
+	 *
 	 * @since BP Media 2.2
 	 */
 	function the_title(){
 		echo $this->name;
 	}
-	
+
 	/**
 	 * Returns the id of the album
-	 * 
+	 *
 	 * @since BP Media 2.2
 	 */
 	function get_id(){
 		return $this->id;
+	}
+
+	/**
+	 * Returns the url of the album
+	 *
+	 * @since BP Media 2.2
+	 */
+	function get_url(){
+		return $this->url;
 	}
 }
 ?>
