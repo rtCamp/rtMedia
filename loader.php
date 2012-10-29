@@ -43,7 +43,19 @@ add_action('bp_include', 'bp_media_init');
  * Function to do the tasks required to be done while activating the plugin
  */
 function bp_media_activate() {
+    
 	update_option('bp_media_remove_linkback', '1');
+    
+    /* Set default settings of BP Media */
+    $bp_media_options = array(
+            'videos_enabled'  => true,
+            'audio_enabled'   => true,
+            'images_enabled'  => true,
+            'remove_linkback' => '1',
+            'download_enabled' => true
+        );
+
+    update_option('bp_media_options', $bp_media_options);    
 }
 register_activation_hook(__FILE__, 'bp_media_activate');
 
