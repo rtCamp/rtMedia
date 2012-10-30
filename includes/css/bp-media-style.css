@@ -45,6 +45,9 @@ div.bp_media_title{margin-bottom:10px;}
 .bp-media-single div.bp_media_content{text-align:center;}
 .bp-media-single .bp_media_content .mejs-container{margin-left:auto;margin-right:auto;}
 
+.bp-media-support .support_list{ margin-left: 25px}
+.bp-media-support .support_list li{list-style: disc;margin-bottom: 10px}
+
 .media-tabs-container .ui-tabs-panel{}
 .media-tabs-container .ui-tabs-hide{display: none}
 
@@ -78,19 +81,20 @@ ul#social li{display:inline;}
 
 
 /* Addons page Styling */
+#bp-media-addons-list_metabox {background: #ffffff}
 .products ul:after, ul.products:after {clear: both;content: "";display: block;}
 .products ul, ul.products {clear: both;list-style: none outside none;margin: 0 0 14px;padding: 0;}
 .products {margin: 0;}
-ul.products li.product.first {clear: both;margin-left: 2.51% }
-ul.products li.product {float: left;margin: 1.7em 3.8% 2em 0;padding: 0;position: relative;width: 22.05%;height: 255px;}
-ul.products li.product h4 {font-size: 15px;font-weight: normal;margin: 0;padding: 0.5em 0;background: none repeat scroll 0 0 transparent;border: 0 none;color: #006999;font-family: "HelveticaNeue-Light","Helvetica Neue Light","Helvetica Neue",sans-serif;min-height: 45px;line-height: 22px;margin-bottom: 5px;cursor: pointer}
+ul.products li.product.first { }
+ul.products li.product {margin: 20px 10px 30px;padding: 0;position: relative;overflow: hidden}
+ul.products li.product h4 {background: none repeat scroll 0 0 transparent;border: 0 none;color: #006999;cursor: pointer;font-family: "HelveticaNeue-Light","Helvetica Neue Light","Helvetica Neue",sans-serif;font-size: 20px;font-weight: normal;line-height: 26px;margin: 0 0 10px;}
 ul.products li.product a {text-decoration: none;}
 ul.products li.product a img, div.product div.images img {box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.4);}
-ul.products li.product a img {box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.3);display: block;height: auto;margin: 0 0 8px;transition: all 0.2s ease-in-out 0s;width: 100%;}
+ul.products li.product a img {box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.3);display: block;height: auto;margin: 5px 15px 5px 5px;transition: all 0.2s ease-in-out 0s;float: left; width: 200px}
 
-ul.products li.product .price, ul.products li.product .price .amount, ul.products li.product .price ins {color: #C45200;font-size: 25px;font-weight: bold;}
-ul.products li.product .price {float: left;line-height: 1;color: #85AD74;display: block;font-weight: normal;margin-bottom: 0.5em;}
-ul.products li.product .add_to_cart_button{background-image: linear-gradient(bottom, #F7F6F7 47%, #DFDBDF 74%);
+ul.products li.product .price, ul.products li.product .price .amount, ul.products li.product .price ins {color: #85AD74;font-size: 25px;font-weight: bold;}
+ul.products li.product .price {line-height: 1;color: #85AD74;display: block;font-weight: normal;margin-bottom: 0.5em;}
+/*ul.products li.product .add_to_cart_button{background-image: linear-gradient(bottom, #F7F6F7 47%, #DFDBDF 74%);
 background-image: -o-linear-gradient(bottom, #F7F6F7 0%, #DFDBDF 100%);
 background-image: -moz-linear-gradient(bottom, #F7F6F7 0%, #DFDBDF 100%);
 background-image: -webkit-linear-gradient(bottom, #F7F6F7 0%, #DFDBDF 100%);
@@ -104,7 +108,14 @@ background-image: -moz-linear-gradient(bottom, #F7F6F7 0%, #D3CED3 100%);
 background-image: -webkit-linear-gradient(bottom, #F7F6F7 0%, #D3CED3 100%);
 background-image: -ms-linear-gradient(bottom, #F7F6F7 0%, #D3CED3 100%);
 background-image: -webkit-gradient(linear,left bottom,left top,color-stop(1, #F7F6F7),color-stop(1, #D3CED3));}
+*/
+ul.products li.product .product_footer{margin: 20px 0 0;overflow: hidden;}
+ul.products li.product .add_to_cart_button{background: none repeat scroll 0 0 #C45200;border: 0 none;box-shadow: 0 0 0;color: #FFFFFF;display: inline-block;float: right;font-size: 18px;font-weight: bold;height: auto;line-height: 1.4em;margin: 0;padding: 4px 15px;text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.6)}
+ul.products li.product .product_footer .product_demo_link{font-size: 16px;margin-top: 8px;}
 
+ul.products li.product .add_to_cart_button:hover{background: none repeat scroll 0 0 #D75A00;
+    box-shadow: 0 1px rgba(0, 0, 0, 0.2), 0 0 1px rgba(0, 0, 0, 0.4) inset;
+    color: #FFFFFF;}
 
 /* Admin bar Menu  */
 #wpadminbar .bp-media-settings-menu > .ab-item .ab-icon{background: url("../img/bpm-icon-16.png") no-repeat scroll -8px -7px transparent}
