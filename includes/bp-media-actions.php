@@ -55,10 +55,10 @@ function bp_media_handle_uploads() {
 					);
 				if(isset($_POST['is_multiple_upload'])&&$_POST['is_multiple_upload']=='true'){
 					$args['secondary_item_id'] = -999;
-					do_action('bp_media_album_updated');
+					do_action('bp_media_album_updated',$bp_media_entry->get_album_id());
 				}
 				$activity_id = bp_media_record_activity($args);
-			bp_activity_update_meta($activity_id, 'bp_media_show', false);
+				add_post_meta($bp_media_entry->get_id(),'bp_media_child_activity',$activity_id);
 			}
 		} else {
 			$bp->{BP_MEDIA_SLUG}->messages['error'][] = __('You did not specified a file to upload', 'bp-media');
@@ -110,7 +110,6 @@ function bp_media_enqueue_scripts_styles() {
 	wp_enqueue_style('bp-media-default', plugins_url('includes/css/bp-media-style.css', dirname(__FILE__)));
 
 }
-
 add_action('wp_enqueue_scripts', 'bp_media_enqueue_scripts_styles', 11);
 
 function bp_media_delete_activity_handler($args){
@@ -497,8 +496,50 @@ function bp_media_album_create_activity($album){
 }
 add_action('bp_media_after_add_album','bp_media_album_create_activity');
 
-function bp_media_album_activity_update(){
+function bp_media_album_activity_update($album_id){
 	//@todo implementation pending
+	$args = array(
+		'post_parent' => $album_id,
+		'numberposts'	=>	4,
+		'post_type'	=>	'attachment'
+	);
+	$attachments = get_children($args);
+	if(is_array($attachments)){
+		$content = '<ul>';
+		foreach($attachments as $media){
+			$bp_media = new BP_Media_Host_Wordpress($media->ID);
+			$content .= $bp_media->get_album_activity_content();
+		}
+		$content .= '</ul>';
+		$activity_id = get_post_meta($album_id, 'bp_media_child_activity');
+		if($activity_id){
+			$args = array(
+				'in' => $activity_id,
+			);
+
+			$activity = @bp_activity_get($args);
+			if(isset($activity['activities'][0]->id)){
+				$album = new BP_Media_Album($album_id);
+				$args = array(
+					'content'	=>	$content,
+					'id'	=>	$activity_id,
+					'type' => 'album_updated',
+					'primary_link' => $activity['activities'][0]->primary_link,
+					'user_id' => $activity['activities'][0]->user_id,
+					'action' => apply_filters( 'bp_media_filter_album_updated', sprintf( __( '%1$s added new media in album %2$s', 'bp-media'), bp_core_get_userlink( $activity['activities'][0]->user_id ), '<a href="' . $album->get_url() . '">' . $album->get_title() . '</a>' ) ),
+					'component' => BP_MEDIA_SLUG, // The name/ID of the component e.g. groups, profile, mycomponent
+					'primary_link' => $activity['activities'][0]->primary_link,
+					'item_id' => $activity['activities'][0]->item_id,
+					'secondary_item_id' => $activity['activities'][0]->secondary_item_id,
+					'recorded_time' => bp_core_current_time(),
+					'hide_sitewide' => $activity['activities'][0]->hide_sitewide
+				);
+				bp_media_record_activity($args);
+			}
+
+		}
+	}
 }
 add_action('bp_media_album_updated','bp_media_album_activity_update');
+
 ?>

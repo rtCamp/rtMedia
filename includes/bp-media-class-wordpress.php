@@ -12,6 +12,7 @@ class BP_Media_Host_Wordpress {
 		$owner,   //Owner of the entry
 		$delete_url, //The delete url for the media
 		$thumbnail_id, //The thumbnail's url
+		$album_id, //The album id to which the media belongs
 		$edit_url; //The edit page's url for the media
 
 	/**
@@ -46,6 +47,7 @@ class BP_Media_Host_Wordpress {
 		$this->description = $media->post_content;
 		$this->name = $media->post_title;
 		$this->owner = $media->post_author;
+		$this->album_id = $media->post_parent;
 		preg_match_all('/audio|video|image/i', $media->post_mime_type, $result);
 		if(isset($result[0][0]))
 			$this->type = $result[0][0];
@@ -82,6 +84,7 @@ class BP_Media_Host_Wordpress {
 	 * @since BP Media 2.0
 	 */
 	function add_media($name, $description, $album_id = 0, $group = 0) {
+		do_action('bp_media_before_add_media');
 		global $bp, $wpdb, $bp_media_count;
 		include_once(ABSPATH . 'wp-admin/includes/file.php');
 		include_once(ABSPATH . 'wp-admin/includes/image.php');
@@ -210,6 +213,7 @@ class BP_Media_Host_Wordpress {
 		$this->description = $description;
 		$this->type = $type;
 		$this->owner = get_current_user_id();
+		$this->album_id = $post_id;
 		switch ($this->type) {
 			case 'video' :
 				$this->url = trailingslashit(bp_core_get_user_domain($this->owner) . BP_MEDIA_VIDEOS_SLUG . '/' . $this->id);
@@ -238,6 +242,7 @@ class BP_Media_Host_Wordpress {
 		else
 			update_post_meta($attachment_id, 'bp-media-key', (-$group));
 		bp_update_user_meta(bp_loggedin_user_id(), 'bp_media_count', $bp_media_count);
+		do_action('bp_media_after_add_media',$this);
 	}
 
 	/**
@@ -551,6 +556,45 @@ class BP_Media_Host_Wordpress {
 	}
 
 	/**
+	 * Function to return the content to be placed in the activity of album
+	 */
+	function get_album_activity_content(){
+		$attachment = $this->id;
+		switch ($this->type) {
+			case 'video' :
+				if($this->thumbnail_id){
+					$medium_array = image_downsize($this->thumbnail_id, 'thumbnail');
+					$thumb_url = $medium_array[0];
+				}
+				else{
+					$thumb_url = plugins_url('img/video_thumb.png', __FILE__);
+				}
+				break;
+			case 'audio' :
+				if($this->thumbnail_id){
+					$medium_array = image_downsize($this->thumbnail_id, 'thumbnail');
+					$thumb_url = $medium_array[0];
+				}
+				else{
+					$thumb_url = plugins_url('img/audio_thumb.png', __FILE__);
+				}
+				break;
+			case 'image' :
+				$medium_array = image_downsize($attachment, 'thumbnail');
+				$thumb_url = $medium_array[0];
+				break;
+			default :
+				return false;
+		}
+		$content = '<li>';
+		$content .= '<a href="'.$this->url.'" title="'.$this->name.'">';
+		$content .= '<img src="'.$thumb_url.'" />';
+		$content .= '</a>';
+		$content .= '</li>';
+		return $content;
+	}
+
+	/**
 	 * Returns the description of the Media Entry
 	 */
 	function get_content() {
@@ -586,7 +630,7 @@ class BP_Media_Host_Wordpress {
 	}
 
 	/**
-	 *
+	 * Returns the type of activity
 	 */
 	function get_media_activity_type() {
 		switch($this->type){
@@ -599,6 +643,13 @@ class BP_Media_Host_Wordpress {
 			default:
 				return 'Media';
 		}
+	}
+
+	/**
+	 * Returns the album id
+	 */
+	function get_album_id(){
+		return $this->album_id;
 	}
 }
 ?>
