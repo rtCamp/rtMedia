@@ -1,6 +1,7 @@
 <?php
 function bp_media_activity_permalink_filter($link, $activity_obj = null) {
-	if ($activity_obj != null && in_array($activity_obj->type,array('media_upload','album_created'))) {
+	global $bp_media_activity_types;
+	if ($activity_obj != null && in_array($activity_obj->type,$bp_media_activity_types)) {
 		if($activity_obj->primary_link!=''){
 			try{
 				return $activity_obj->primary_link;

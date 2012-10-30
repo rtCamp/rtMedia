@@ -74,8 +74,7 @@ jQuery(document).ready(function(){
 			(err.file ? ', File: ' + err.file.name : '') +
 			'</p></div>'
 		);
-
-		up.refresh(); // Reposition Flash/Silverlight
+		up.refresh();
 	});
 
 	bp_media_uploader.bind('FileUploaded', function(up, file) {
@@ -104,7 +103,7 @@ jQuery(document).ready(function(){
 		if(new_location.search('/media/')>0){
 			new_location = new_location.replace('media','albums');
 			new_location = new_location.concat(bp_media_album_selected);
-			//window.location.replace(new_location);
+			window.location.replace(new_location);
 		}
 	});
 });

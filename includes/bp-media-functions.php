@@ -50,6 +50,9 @@ function bp_media_override_allowed_tags($activity_allowedtags) {
 	$activity_allowedtags['a'] = array();
 	$activity_allowedtags['a']['title'] = array();
 	$activity_allowedtags['a']['href'] = array();
+	$activity_allowedtags['ul'] = array();
+	$activity_allowedtags['li'] = array();
+
 	return $activity_allowedtags;
 }
 
@@ -70,7 +73,8 @@ function bp_media_show_formatted_error_message($messages, $type) {
 }
 
 function bp_media_conditional_override_allowed_tags($content, $activity=null) {
-	if ($activity != null && $activity->type == 'media_upload') {
+	global $bp_media_activity_types;
+	if ($activity != null && in_array($activity->type,$bp_media_activity_types)) {
 		add_filter('bp_activity_allowed_tags', 'bp_media_override_allowed_tags', 1);
 	}
 	return bp_activity_filter_kses($content);
@@ -87,7 +91,7 @@ add_action('bp_init', 'bp_media_swap_filters');
  */
 function bp_media_update_count() {
 	global $wpdb;
-	$query = 
+	$query =
 	"SELECT
 		post_author,
 		SUM(CASE WHEN post_mime_type LIKE 'image%' THEN 1 ELSE 0 END) as Images,
@@ -95,10 +99,10 @@ function bp_media_update_count() {
 		SUM(CASE WHEN post_mime_type LIKE 'video%' THEN 1 ELSE 0 END) as Videos,
 		SUM(CASE WHEN post_type LIKE 'bp_media_album' THEN 1 ELSE 0 END) as Albums,
 		COUNT(*) as Total
-	FROM  
+	FROM
 		$wpdb->posts RIGHT JOIN $wpdb->postmeta on wp_postmeta.post_id = wp_posts.id
-	WHERE 
-		`meta_key` = 'bp-media-key' AND 
+	WHERE
+		`meta_key` = 'bp-media-key' AND
 		`meta_value` > 0 AND
 		( post_mime_type LIKE 'image%' OR post_mime_type LIKE 'audio%' OR post_mime_type LIKE 'video%' OR post_type LIKE 'bp_media_album')
 	GROUP BY post_author";
