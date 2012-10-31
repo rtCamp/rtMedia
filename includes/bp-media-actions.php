@@ -319,7 +319,7 @@ function bp_media_albums_set_query() {
 function bp_media_albums_set_inner_query($album_id=0) {
 	global $bp, $bp_media_query;
 	$paged = 0;
-	$action_variables = $bp->canonical_stack['action_variables'];
+	$action_variables = isset($bp->canonical_stack['action_variables'])?$bp->canonical_stack['action_variables']:null;
 	if (isset($action_variables) && is_array($action_variables) && isset($action_variables[0])) {
 		if($action_variables[0] == 'page' && isset($action_variables[1]) && is_numeric($action_variables[1]))
 			$paged = $action_variables[1];
@@ -493,14 +493,12 @@ function bp_media_add_new_from_activity(){
 function bp_media_album_create_activity($album){
 	/* @var $album BP_Media_Album */
 	$args = array(
-		'action' => apply_filters( 'bp_media_album_created', sprintf( __( '%1$s created an album %2$s', 'bp-media'), bp_core_get_userlink( bp_loggedin_user_id() ), '<a href="' . $album->get_url() . '">' . $album->get_title() . '</a>' ) ),
-		'content' => '',
+		'action' => apply_filters( 'bp_media_album_created', sprintf( __( '%1$s created an album %2$s', 'bp-media'), bp_core_get_userlink( $album->get_owner() ), '<a href="' . $album->get_url() . '">' . $album->get_title() . '</a>' ) ),
 		'component' => BP_MEDIA_SLUG,
 		'type' => 'album_created',
 		'primary_link' => $album->get_url(),
-		'user_id' => get_current_user_id(),
-		'item_id' => $album->get_id(),
-		'recorded_time' => bp_core_current_time()
+		'user_id' => $album->get_owner(),
+		'item_id' => $album->get_id()
 	);
 	$activity_id = bp_media_record_activity($args);
 	update_post_meta($album->get_id(), 'bp_media_child_activity', $activity_id);
@@ -508,7 +506,6 @@ function bp_media_album_create_activity($album){
 add_action('bp_media_after_add_album','bp_media_album_create_activity');
 
 function bp_media_album_activity_update($album_id){
-	//@todo implementation pending
 	$args = array(
 		'post_parent' => $album_id,
 		'numberposts'	=>	4,
@@ -535,7 +532,6 @@ function bp_media_album_activity_update($album_id){
 					'content'	=>	$content,
 					'id'	=>	$activity_id,
 					'type' => 'album_updated',
-					'primary_link' => $activity['activities'][0]->primary_link,
 					'user_id' => $activity['activities'][0]->user_id,
 					'action' => apply_filters( 'bp_media_filter_album_updated', sprintf( __( '%1$s added new media in album %2$s', 'bp-media'), bp_core_get_userlink( $activity['activities'][0]->user_id ), '<a href="' . $album->get_url() . '">' . $album->get_title() . '</a>' ) ),
 					'component' => BP_MEDIA_SLUG, // The name/ID of the component e.g. groups, profile, mycomponent

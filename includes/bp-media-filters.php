@@ -92,9 +92,10 @@ function bp_media_items_count_filter ($title,$nav_item) {
 /**
  * To hide some activities of multiple uploads
  */
-add_filter('bp_activity_get_user_join_filter',function($query){
+function bp_media_activity_query_filter($query){
 	global $wpdb;
 	$query = preg_replace('/WHERE/i', 'WHERE a.secondary_item_id!=-999 AND ',$query);
-		return $query;
-},10);
+	return $query;
+}
+add_filter('bp_activity_get_user_join_filter','bp_media_activity_query_filter',10);
 ?>
