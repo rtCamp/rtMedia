@@ -113,6 +113,7 @@ function bp_media_enqueue_scripts_styles() {
 add_action('wp_enqueue_scripts', 'bp_media_enqueue_scripts_styles', 11);
 
 function bp_media_delete_activity_handler($args){
+	remove_action('bp_media_before_delete_media','bp_media_delete_media_handler');
 	global $bp_media_count,$wpdb;
 	if(!array_key_exists('id', $args))
 		return;
@@ -143,6 +144,14 @@ function bp_media_delete_activity_handler($args){
 	}
 }
 add_action('bp_before_activity_delete', 'bp_media_delete_activity_handler');
+
+function bp_media_delete_media_handler($media_id){
+	/* @var $media BP_Media_Host_Wordpress */
+	remove_action('bp_before_activity_delete', 'bp_media_delete_activity_handler');
+	$activity_id = get_post_meta($media_id,'bp_media_child_activity',true);
+	bp_activity_delete_by_activity_id($activity_id);
+}
+add_action('bp_media_before_delete_media','bp_media_delete_media_handler');
 
 /**
  * Called on bp_init by screen functions
@@ -424,6 +433,7 @@ add_action( 'wp_ajax_nopriv_bp_media_load_more', 'bp_media_load_more' );
 
 function bp_media_delete_attachment_handler($attachment_id){
 	if(get_post_meta($attachment_id,'bp-media-key')){
+		do_action('bp_media_before_delete_media',$attachment_id);
 		global $bp_media_count;
 		$attachment = get_post($attachment_id);
 		preg_match_all('/audio|video|image/i', $attachment->post_mime_type, $result);
@@ -447,6 +457,7 @@ function bp_media_delete_attachment_handler($attachment_id){
 				return false;
 		}
 		bp_update_user_meta($attachment->post_author, 'bp_media_count', $bp_media_count);
+		do_action('bp_media_after_delete_media',$attachment_id);
 		return true;
 	}
 }
@@ -476,7 +487,7 @@ add_action('wp_ajax_bp_media_add_album', 'bp_media_add_album');
 function bp_media_add_new_from_activity(){
 	 bp_media_show_upload_form_multiple_activity();
 }
-add_action('bp_after_activity_post_form','bp_media_add_new_from_activity');
+//add_action('bp_after_activity_post_form','bp_media_add_new_from_activity');
 
 
 function bp_media_album_create_activity($album){
@@ -536,7 +547,6 @@ function bp_media_album_activity_update($album_id){
 				);
 				bp_media_record_activity($args);
 			}
-
 		}
 	}
 }
