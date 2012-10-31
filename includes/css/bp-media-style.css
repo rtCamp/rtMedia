@@ -120,3 +120,10 @@ ul.products li.product .add_to_cart_button:hover{background: none repeat scroll 
 /* Admin bar Menu  */
 #wpadminbar .bp-media-settings-menu > .ab-item .ab-icon{background: url("../img/bpm-icon-16.png") no-repeat scroll -8px -7px transparent}
 #wpadminbar .bp-media-settings-menu:hover .ab-icon{background-position: -8px -41px}
+
+
+.bp-media-form li{margin-bottom: 10px}
+.bp-media-form .bp-media-label{ display: inline-block;margin-right: 10px;width: 150px;vertical-align: top}
+.bp-media-form .bp-media-input{background-color: #FFFFFF;border: 1px solid #DFDFDF;border-radius: 3px 3px 3px 3px;color: #333333;line-height: 16px;padding: 5px;width: 220px;}
+.bp-media-form .bp-media-textarea{background-color: #FFFFFF;border: 1px solid #DFDFDF;border-radius: 3px 3px 3px 3px;color: #333333;line-height: 16px;padding: 5px;width: 220px;}
+#normal-sortables .postbox .bp-media-form .submit{float: none; margin-left: 150px}

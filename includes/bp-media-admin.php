@@ -315,7 +315,7 @@ It supports many popular video formats. It makes use of Kaltura server to encode
 <?php }
 
 
-function bp_media_support(){ ?>
+function bp_media_support(){ global $current_user; ?>
     
     <div class="bp-media-support">
         <h2><?php _e('Need Help/Support?', 'bp-media');?></h2>
@@ -329,12 +329,34 @@ function bp_media_support(){ ?>
         <h2><?php _e('Hire Us!', 'bp-media');?></h2>
         
         <p><?php _e('We are available for customisation and premium support.', 'bp-media');?></p>
-        <ul class="support_list">
+<!--        <ul class="support_list">
             <li>
-                <a href="http://rtcamp.com" target="_blank" title="<?php _e('Premium support', 'bp-media');?>"><?php _e('Premium support', 'bp-media');?> </a> 
+                <a href="http://rtcamp.com" target="_blank" title="<?php // _e('Premium support', 'bp-media');?>"><?php //_e('Premium support', 'bp-media');?> </a> 
             </li>
-        </ul>
-        <br/>
+        </ul>-->
+         
+        <div class="bp-media-form" id="premium-support-form" >
+            <h4><?php _e('Please fill the form for premium support'); ?></h4>
+            <ul>
+                <li>
+                    <label class="bp-media-label" for="ur_name"><?php _e('Your Name:','bp-media');?></label><input class="bp-media-input" id="ur_name" type="text" name="premium_support[ur_name]" value="<?php echo (isset($_REQUEST['premium_support']['ur_name']))? $_REQUEST['premium_support']['ur_name'] : $current_user->user_login; ?>"/>
+                </li>
+                <li>
+                    <label class="bp-media-label" for="ur_email"><?php _e('Your Email-Id:','bp-media');?></label><input id="ur_email" class="bp-media-input" type="text" name="premium_support[ur_email]" value="<?php echo (isset($_REQUEST['premium_support']['ur_name']))? $_REQUEST['premium_support']['ur_name'] : get_option('admin_email'); ?>"/>
+                </li>
+                <li>
+                    <label class="bp-media-label" for="ur_query"><?php _e('Details:','bp-media');?></label><textarea id="ur_query" class="bp-media-textarea" type="text" name="premium_support[ur_query]"/><?php echo (isset($_REQUEST['premium_support']['ur_query']))? $_REQUEST['premium_support']['ur_query'] : ''; ?></textarea>
+                </li>
+                <li>
+                    <label class="bp-media-label" for="ur_budget"><?php _e('Your Budget:','bp-media');?></label><input id="ur_budget" class="bp-media-input" type="text" name="premium_support[ur_budget]" value="<?php echo (isset($_REQUEST['premium_support']['ur_budget']))? $_REQUEST['premium_support']['ur_budget'] : ''; ?>"/>
+                </li>                
+                <li>
+                    <label class="bp-media-label" for="ur_delivery_date"><?php _e('Expected Delivery Date:','bp-media');?></label><input id="ur_delivery_date" class="bp-media-input" type="text" name="premium_support[ur_delivery_date]" value="<?php echo (isset($_REQUEST['premium_support']['ur_delivery_date']))? $_REQUEST['premium_support']['ur_delivery_date'] : ''; ?>"/>
+                </li>                
+            </ul>
+            <p class="submit"><input type="submit" name="premium_form_submit" id="submit" class="button-primary" value="Submit"></p>   
+        </div><!-- .premium-support-form-->        
+        
         <br/>        
     </div>
     
@@ -455,7 +477,34 @@ add_action( 'admin_init', 'bp_media_admin_init_settings',1 );
 
 function bp_media_validate( $input ){
     
-    if(isset($_REQUEST['submit'])){
+    if(isset($_REQUEST['premium_form_submit'])){
+        
+        if(empty($_REQUEST['premium_support']['ur_name'])){
+            add_settings_error( 'enquire_name', 'enquire_name', __( 'Please enter your name', 'rtPanel' ), 'error' );
+        }
+        else if(empty($_REQUEST['premium_support']['ur_email']) || !is_email($_REQUEST['premium_support']['ur_email'])){
+            add_settings_error( 'enquire_name', 'enquire_name', __( 'Please enter valid email-Id', 'rtPanel' ), 'error' );
+        }
+        else{
+            $send_array = array();
+            $body = '';
+            $body = '<p>Name : '.  esc_attr(trim($_REQUEST['premium_support']['ur_name'])).'</p>';
+            $body .= '<p>Email Id : '.esc_attr(trim($_REQUEST['premium_support']['ur_email'])).'</p>';
+            if(!empty($_REQUEST['premium_support']['ur_query'])) $body .= '<p>Query : '.esc_attr(trim($_REQUEST['premium_support']['ur_query'])).'</p>';
+            if(!empty($_REQUEST['premium_support']['ur_budget'])) $body .= '<p>Budget :  '.esc_attr(trim($_REQUEST['premium_support']['ur_budget'])).'</p>';
+            if(!empty($_REQUEST['premium_support']['ur_delivery_date'])) $body .= '<p>Expected Delivery Date : '.esc_attr(trim($_REQUEST['premium_support']['ur_delivery_date'])).'</p>';
+            $send_array['task[body]'] = $body;
+            $send_array['ur_name'] = $_REQUEST['premium_support']['ur_name'];
+            
+            $return = bp_media_send_enquiry($send_array);
+            
+            if(!empty($return))
+                add_settings_error( 'form_submitted', 'form_submitted', __( 'Thanks for contacting us. We will get in touch with you soon.', 'rtPanel' ), 'updated' );
+            else 
+                add_settings_error( 'form_submitted', 'form_submitted', __( 'Sorry, your enquiry is not submitted', 'rtPanel' ), 'error' );
+        }
+        
+    }else if(isset($_REQUEST['submit'])){
 		
 		if(array_key_exists('remove_linkback', $_POST)){
 			if($input['remove_linkback']=='2'){
@@ -485,6 +534,67 @@ function bp_media_validate( $input ){
 			$input['download_enabled'] = false;}
 	}
     
-    return $input;
+    return $input;        
+}
+
+
+function bp_media_send_enquiry($new_ticket){
+    
+    $bp_media_request_activecollab = new bp_media_request_activecollab();
+    
+    /* Set Enquiry Name */
+    $task_name = !empty($new_ticket['ur_name']) ? __('New Premium Request from','bp-media').' '. $new_ticket['ur_name'] : __('New Premium Request','bp-media');
+    
+    $defaults = array(  'task[name]' => $task_name,                        
+                        'task[body]' => '',
+                        'task[label_id]' => BP_MEDIA_AC_API_LABEL_ID,
+                        'task[priority]' => BP_MEDIA_AC_API_PRIORITY,
+                        'task[assignee_id]' => BP_MEDIA_AC_API_ASSIGNEE_ID,
+                        'task[category_id]' => BP_MEDIA_AC_API_CATEGORY_ID,
+                        'submitted' => 'submitted' );
+    /* merge default array */
+    $new_ticket = wp_parse_args( $new_ticket, $defaults );
+    
+    /* send form submit request to active collabe */    
+    $result = $bp_media_request_activecollab->send_ticket($new_ticket);
+    
+    return $result;
+}
+
+
+class bp_media_request_activecollab{
+
+  	//ActiveCollab API variables
+	
+ 	var $acollab_projid = BP_MEDIA_AC_API_PROJECT_ID;	//The project ID we want to add a ticket to. You can find this in the URL of the project when you enter it. ex: /projects/16/  - 16 is the ID
+	var $acollab_token	= BP_MEDIA_AC_API_AUTH_TOKEN;	// API token. Different for each ActiveCollab user. Create a user fo the API, then grab the API Token under User Profile > Settings
+	var $acollab_url	= BP_MEDIA_AC_API_URL;	// Find it in the same place you find your API token.
+
+    // Errors
+	var $errorMsg = "";
+
+
+	function send_ticket($request){
+
+		$api_url = $this->acollab_url . '?path_info=projects/buddypress-media/tasks/add&auth_api_token='.$this->acollab_token;
+		/*  Send it  */
+		
+        $ch = curl_init();
+		
+		// ActivCollab wants the pathinfo and token in the URL, not in the POST info.
         
+		curl_setopt($ch, CURLOPT_URL, $api_url);
+		curl_setopt($ch, CURLOPT_POST,1);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+
+    	// The POST data
+		curl_setopt($ch, CURLOPT_POSTFIELDS, $request);
+
+		$result = curl_exec($ch);
+		
+        curl_close($ch);
+
+		return $result;
+
+	}
 }
