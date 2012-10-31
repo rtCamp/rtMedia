@@ -87,7 +87,7 @@ class BP_Media_Album{
 			add_post_meta($album_id, 'bp-media-key', $author_id);
 		}
 		$this->init($album_id);
-		$bp_media_count['albums'] = intval($bp_media_count['albums']) + 1;
+		$bp_media_count['albums'] = intval(isset($bp_media_count['albums'])?$bp_media_count['albums']:0) + 1;
 		bp_update_user_meta($author_id, 'bp_media_count', $bp_media_count);
 		do_action('bp_media_after_add_album',$this);
 		return $album_id;
@@ -181,6 +181,15 @@ class BP_Media_Album{
 	 */
 	function get_url(){
 		return $this->url;
+	}
+
+	/**
+	 * Returns the owner's id
+	 *
+	 * @since BP Media 2.2
+	 */
+	function get_owner(){
+		return $this->owner;
 	}
 }
 ?>

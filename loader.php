@@ -17,19 +17,16 @@ define('BP_MEDIA_VERSION', '2.1.5');
 /* A constant to be used as base for other URLs throughout the plugin */
 define('BP_MEDIA_PLUGIN_DIR', dirname(__FILE__));
 
-/* A constant to store the Database Version of the BP Media Plugin */
-define('BP_MEDIA_DB_VERSION', '1');
-
 /* A constant to store the required  */
-define('BP_MEDIA_REQUIRED_BP','1.5.5');
+define('BP_MEDIA_REQUIRED_BP','1.6');
 
 /**
  * Function to initialize the BP Media Plugin
- * 
+ *
  * It checks for the version minimum required version of buddypress before initializing.
- * 
+ *
  * @uses BP_VERSION to check if the plugin supports the BuddyPress version.
- * 
+ *
  * @since BP Media 2.0
  */
 function bp_media_init() {
@@ -43,13 +40,26 @@ add_action('bp_include', 'bp_media_init');
  * Function to do the tasks required to be done while activating the plugin
  */
 function bp_media_activate() {
-	update_option('bp_media_remove_linkback', '1');
+	if(get_option('bp_media_remove_linkback')===false)
+		update_option('bp_media_remove_linkback', '1');
+	if(get_option('bp_media_version')==false){
+		$bp_media_options = get_option('bp_media_options',array(
+			'videos_enabled'	=>	true,
+			'audio_enabled'		=>	true,
+			'images_enabled'	=>	true,
+			'require_upgrade'	=>	false
+		));
+		$bp_media_options['require_upgrade'] = true;
+		update_option('bp_media_options',$bp_media_options);
+	}
+	update_option('bp_media_version',BP_MEDIA_VERSION);
 }
+
 register_activation_hook(__FILE__, 'bp_media_activate');
 
 /**
  * Function to do the tasks during deactivation.
- * 
+ *
  * Will Make this function to do the db deletion and other things that might have been created with the plugin.
  */
 function bp_media_deactivate() {
