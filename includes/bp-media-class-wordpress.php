@@ -11,7 +11,7 @@ class BP_Media_Host_Wordpress {
 		$type, //Type of the entry (Video, Image or Audio)
 		$owner,   //Owner of the entry
 		$delete_url, //The delete url for the media
-		$thumbnail_id, //The thumbnail's url
+		$thumbnail_id, //The thumbnail's id
 		$album_id, //The album id to which the media belongs
 		$edit_url; //The edit page's url for the media
 
@@ -391,24 +391,13 @@ class BP_Media_Host_Wordpress {
 		}
 	}
 
-	function show_comment_form(){
+	function show_comment_form_wordpress(){
 		query_posts('attachment_id='.$this->id);
 		while(have_posts()): the_post();
 		add_action('comment_form', function() {
 			global $bp_media_current_entry;
 			echo '<input type="hidden" name="redirect_to" value="'.$bp_media_current_entry->get_url().'">' ;
 		});
-//		switch($this->type){
-//			case 'image' :
-//				add_filter('the_title', function() {return BP_MEDIA_IMAGES_LABEL_SINGULAR;});
-//				break;
-//			case 'audio' :
-//				add_filter('the_title', function() {return BP_MEDIA_AUDIO_LABEL_SINGULAR;});
-//				break;
-//			case 'video' :
-//				add_filter('the_title', function() {return BP_MEDIA_VIDEOS_LABEL_SINGULAR;});
-//				break;
-//		}
 		comments_template();
 		endwhile;
 	}
@@ -416,7 +405,7 @@ class BP_Media_Host_Wordpress {
 	/**
 	 * Outputs the comments and comment form in the single media entry page
 	 */
-	function show_comment_form_old() {
+	function show_comment_form() {
 		$activity_id = get_post_meta($this->id, 'bp_media_child_activity', true);
 		if (bp_has_activities(array(
 				'display_comments' => 'stream',
@@ -537,6 +526,7 @@ class BP_Media_Host_Wordpress {
 	 * Deletes the Media Entry
 	 */
 	function delete_media(){
+		do_action('bp_media_before_delete_media',$this->id);
 		global $bp_media_count;
 		bp_media_init_count($this->owner);
 		switch ($this->type) {
@@ -550,9 +540,9 @@ class BP_Media_Host_Wordpress {
 				$bp_media_count['audio'] = intval($bp_media_count['audio']) - 1;
 				break;
 		}
-
 		wp_delete_attachment($this->id,true);
 		bp_update_user_meta($this->owner, 'bp_media_count', $bp_media_count);
+		do_action('bp_media_after_delete_media',$this->id);
 	}
 
 	/**
@@ -650,6 +640,13 @@ class BP_Media_Host_Wordpress {
 	 */
 	function get_album_id(){
 		return $this->album_id;
+	}
+
+	/**
+	 * Returns the title of the media
+	 */
+	function get_title(){
+		return $this->name;
 	}
 }
 ?>

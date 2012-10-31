@@ -131,7 +131,7 @@ function bp_media_images_edit_screen() {
 		exit;
 	}
 	bp_media_check_user();
-	
+
 	//For saving the data if the form is submitted
 	if(array_key_exists('bp_media_title', $_POST)){
 		bp_media_update_media();
@@ -182,16 +182,16 @@ function bp_media_images_entry_screen_content() {
 	do_action('bp_media_before_content');
 	echo '<div class="bp-media-single bp-media-image">';
 	echo $bp_media_current_entry->get_media_single_content();
-	echo '<div class="bp-media-actions">';
-	echo '<a href="#comment" class="button acomment-reply bp-primary-action">Comment</a>';
-	if(bp_loggedin_user_id()==  bp_displayed_user_id()){
-		echo '<a href="'.$bp_media_current_entry->get_edit_url().'" class="button item-button bp-secondary-action edit-media">Edit</a>';
-		echo '<a href="'.$bp_media_current_entry->get_delete_url().'" class="button item-button bp-secondary-action delete-media confirm">Delete</a>';
-	}
-	if(isset($bp_media_options['download_enabled'])&&$bp_media_options['download_enabled']==true){
-		echo '<a href="'.$bp_media_current_entry->get_attachment_url().'" class="button item-button bp-secondary-action download-media">Download</a>';
-	}
-	echo '</div>';
+//	echo '<div class="bp-media-actions">';
+//	echo '<a href="#comment" class="button acomment-reply bp-primary-action">Comment</a>';
+//	if(bp_loggedin_user_id()==  bp_displayed_user_id()){
+//		echo '<a href="'.$bp_media_current_entry->get_edit_url().'" class="button item-button bp-secondary-action edit-media">Edit</a>';
+//		echo '<a href="'.$bp_media_current_entry->get_delete_url().'" class="button item-button bp-secondary-action delete-media confirm">Delete</a>';
+//	}
+//	if(isset($bp_media_options['download_enabled'])&&$bp_media_options['download_enabled']==true){
+//		echo '<a href="'.$bp_media_current_entry->get_attachment_url().'" class="button item-button bp-secondary-action download-media">Download</a>';
+//	}
+//	echo '</div>';
 	echo $bp_media_current_entry->show_comment_form();
 	echo '</div>';
 	do_action('bp_media_after_content');
@@ -280,7 +280,7 @@ function bp_media_videos_edit_screen() {
 		exit;
 	}
 	bp_media_check_user();
-	
+
 	//For saving the data if the form is submitted
 	if(array_key_exists('bp_media_title', $_POST)){
 		bp_media_update_media();
@@ -325,16 +325,16 @@ function bp_media_videos_entry_screen_content() {
 	do_action('bp_media_before_content');
 	echo '<div class="bp-media-single bp-media-video">';
 	echo $bp_media_current_entry->get_media_single_content();
-	echo '<div class="bp-media-actions">';
-	echo '<a href="#comment" class="button acomment-reply bp-primary-action">Comment</a>';
-	if(bp_loggedin_user_id()==  bp_displayed_user_id()){
-		echo '<a href="'.$bp_media_current_entry->get_edit_url().'" class="button item-button bp-secondary-action edit-media">Edit</a>';
-		echo '<a href="'.$bp_media_current_entry->get_delete_url().'" class="button item-button bp-secondary-action delete-media confirm">Delete</a>';
-	}
-	if(isset($bp_media_options['download_enabled'])&&$bp_media_options['download_enabled']==true){
-		echo '<a href="'.$bp_media_current_entry->get_attachment_url().'" class="button item-button bp-secondary-action download-media">Download</a>';
-	}
-	echo '</div>';
+//	echo '<div class="bp-media-actions">';
+//	echo '<a href="#comment" class="button acomment-reply bp-primary-action">Comment</a>';
+//	if(bp_loggedin_user_id()==  bp_displayed_user_id()){
+//		echo '<a href="'.$bp_media_current_entry->get_edit_url().'" class="button item-button bp-secondary-action edit-media">Edit</a>';
+//		echo '<a href="'.$bp_media_current_entry->get_delete_url().'" class="button item-button bp-secondary-action delete-media confirm">Delete</a>';
+//	}
+//	if(isset($bp_media_options['download_enabled'])&&$bp_media_options['download_enabled']==true){
+//		echo '<a href="'.$bp_media_current_entry->get_attachment_url().'" class="button item-button bp-secondary-action download-media">Download</a>';
+//	}
+//	echo '</div>';
 	echo $bp_media_current_entry->show_comment_form();
 	echo '</div>';
 	do_action('bp_media_after_content');
@@ -428,7 +428,7 @@ function bp_media_audio_edit_screen() {
 		exit;
 	}
 	bp_media_check_user();
-	
+
 	//For saving the data if the form is submitted
 	if(array_key_exists('bp_media_title', $_POST)){
 		bp_media_update_media();
@@ -473,16 +473,16 @@ function bp_media_audio_entry_screen_content() {
 	do_action('bp_media_before_content');
 	echo '<div class="bp-media-single bp-media-audio">';
 	echo $bp_media_current_entry->get_media_single_content();
-	echo '<div class="bp-media-actions">';
-	echo '<a href="#comment" class="button acomment-reply bp-primary-action">Comment</a>';
-	if(bp_loggedin_user_id()==  bp_displayed_user_id()){
-		echo '<a href="'.$bp_media_current_entry->get_edit_url().'" class="button item-button bp-secondary-action edit-media">Edit</a>';
-		echo '<a href="'.$bp_media_current_entry->get_delete_url().'" class="button item-button bp-secondary-action delete-media confirm">Delete</a>';
-	}
-	if(isset($bp_media_options['download_enabled'])&&$bp_media_options['download_enabled']==true){
-		echo '<a href="'.$bp_media_current_entry->get_attachment_url().'" class="button item-button bp-secondary-action download-media">Download</a>';
-	}
-	echo '</div>';
+//	echo '<div class="bp-media-actions">';
+//	echo '<a href="#comment" class="button acomment-reply bp-primary-action">Comment</a>';
+//	if(bp_loggedin_user_id()==  bp_displayed_user_id()){
+//		echo '<a href="'.$bp_media_current_entry->get_edit_url().'" class="button item-button bp-secondary-action edit-media">Edit</a>';
+//		echo '<a href="'.$bp_media_current_entry->get_delete_url().'" class="button item-button bp-secondary-action delete-media confirm">Delete</a>';
+//	}
+//	if(isset($bp_media_options['download_enabled'])&&$bp_media_options['download_enabled']==true){
+//		echo '<a href="'.$bp_media_current_entry->get_attachment_url().'" class="button item-button bp-secondary-action download-media">Download</a>';
+//	}
+//	echo '</div>';
 	echo $bp_media_current_entry->show_comment_form();
 	echo '</div>';
 	do_action('bp_media_after_content');
@@ -516,10 +516,10 @@ function bp_media_entry_delete() {
 	}
 	$post_id = $bp_media_current_entry->get_id();
 	$activity_id=get_post_meta($post_id,'bp_media_child_activity',true);
-	
+
 	bp_activity_delete_by_activity_id($activity_id);
 	$bp_media_current_entry->delete_media();
-	
+
 	@setcookie('bp-message', __('Media deleted successfully','bp-media'), time() + 60 * 60 * 24, COOKIEPATH);
 	@setcookie('bp-message-type', 'success', time() + 60 * 60 * 24, COOKIEPATH);
 	wp_redirect(trailingslashit(bp_displayed_user_domain() . BP_MEDIA_IMAGES_SLUG));
@@ -607,7 +607,7 @@ function bp_media_albums_edit_screen() {
 		exit;
 	}
 	bp_media_check_user();
-	
+
 	//For saving the data if the form is submitted
 	if(array_key_exists('bp_media_title', $_POST)){
 		bp_media_update_media();
