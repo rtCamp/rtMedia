@@ -45,6 +45,7 @@ function bp_media_upgrade_to_2_2(){
 				'action' => apply_filters( 'bp_media_added_media', sprintf( __( '%1$s added a %2$s', 'bp-media'), bp_core_get_userlink( $media_file->post_author ), '<a href="' . $bp_media->get_url() . '">' . $bp_media->get_media_activity_type() . '</a>' ) ),
 				'primary_link' => $bp_media->get_url(),
 				'item_id' => $attachment_id,
+				'recorded_time' => $activity->date_recorded,
 			);
 			$act_id = bp_media_record_activity($args);
 			bp_activity_delete_meta($child_activity, 'bp_media_parent_post');

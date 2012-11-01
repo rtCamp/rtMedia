@@ -12,12 +12,20 @@ function bp_media_activity_permalink_filter($link, $activity_obj = null) {
 		}
 	}
 	if ($activity_obj != null && 'activity_comment' == $activity_obj->type) {
+		global $bp_media_hidden_activity_cache;
+		remove_filter('bp_activity_get_user_join_filter','bp_media_activity_query_filter',10);
 		$parent = $activity_obj->item_id;
 		if ($parent) {
 			try{
-				$activities = bp_activity_get(array('in' => $parent));
-				if(isset($activities['activities'][0])){
-					return $activities['activities'][0]->primary_link;
+				if(isset($bp_media_hidden_activity_cache[$parent])){
+					return $bp_media_hidden_activity_cache[$parent]->primary_link;
+				}
+				else{
+					$activities = bp_activity_get(array('in' => $parent));
+					if(isset($activities['activities'][0])){
+						$bp_media_hidden_activity_cache[$parent] = $activities['activities'][0];
+						return $activities['activities'][0]->primary_link;
+					}
 				}
 			}
 			catch(Exception $e){
@@ -29,35 +37,47 @@ function bp_media_activity_permalink_filter($link, $activity_obj = null) {
 }
 add_filter('bp_activity_get_permalink', 'bp_media_activity_permalink_filter', 10, 2);
 
-function bp_media_activity_action_filter($activity_action, $activity_obj = null) {
-	if ($activity_obj != null && 'media_upload' == $activity_obj->type) {
-		add_shortcode('bp_media_action', 'bp_media_shortcode_action');
-		$activity_action = do_shortcode($activity_action);
-		remove_shortcode('bp_media_action');
+function bp_media_activity_parent_content_filter($activity_content) {
+	global $activities_template;
+	$defaults = array(
+		'hide_user' => false
+	);
+	if ( !$parent_id = $activities_template->activity->item_id )
+		return false;
+	if(!isset($bp_media_hidden_activity_cache[$parent_id])){
+		$activities = bp_activity_get(array('in' => $parent_id));
+		if(isset($activities['activities'][0])){
+			$bp_media_hidden_activity_cache[$parent_id] = $activities['activities'][0];
+		}
 	}
-	return $activity_action;
-}
-add_filter('bp_get_activity_action', 'bp_media_activity_action_filter', 10, 2);
+	if ( empty( $bp_media_hidden_activity_cache[$parent_id] ) )
+		return false;
 
-function bp_media_activity_content_filter($activity_content, $activity_obj = null ) {
-	if ($activity_obj != null && 'media_upload' == $activity_obj->type) {
-		add_shortcode('bp_media_content', 'bp_media_shortcode_content');
-		$activity_content = do_shortcode($activity_content);
-		remove_shortcode('bp_media_content');
-	}
+	if ( empty( $bp_media_hidden_activity_cache[$parent_id]->content ) )
+		$content = $bp_media_hidden_activity_cache[$parent_id]->action;
+	else
+		$content = $bp_media_hidden_activity_cache[$parent_id]->action . ' ' . $bp_media_hidden_activity_cache[$parent_id]->content;
+
+	// Remove the time since content for backwards compatibility
+	$content = str_replace( '<span class="time-since">%s</span>', '', $content );
+
+	// Remove images
+	$content = preg_replace( '/<img[^>]*>/Ui', '', $content );
+
+	return $content;
 	return $activity_content;
 }
-add_filter('bp_get_activity_content_body', 'bp_media_activity_content_filter', 10, 2);
+//add_filter('bp_get_activity_parent_content', 'bp_media_activity_parent_content_filter', 1);
 
-function bp_media_activity_parent_content_filter($content) {
-	add_shortcode('bp_media_action', 'bp_media_shortcode_action');
-	add_shortcode('bp_media_content', 'bp_media_shortcode_content');
-	$content=do_shortcode($content);
-	remove_shortcode('bp_media_action');
-	remove_shortcode('bp_media_content');
-	return $content;
-}
-add_filter('bp_get_activity_parent_content', 'bp_media_activity_parent_content_filter');
+//function bp_media_activity_parent__content_filter($content) {
+//	add_shortcode('bp_media_action', 'bp_media_shortcode_action');
+//	add_shortcode('bp_media_content', 'bp_media_shortcode_content');
+//	$content=do_shortcode($content);
+//	remove_shortcode('bp_media_action');
+//	remove_shortcode('bp_media_content');
+//	return $content;
+//}
+//add_filter('bp_get_activity_parent_content', 'bp_media_activity_parent_content_filter');
 
 function bp_media_delete_button_handler($link) {
 	if(bp_current_component()=='media')
