@@ -20,6 +20,9 @@ define('BP_MEDIA_PLUGIN_DIR', dirname(__FILE__));
 /* A constant to store the required  */
 define('BP_MEDIA_REQUIRED_BP','1.6');
 
+/* A constatnt to store database version */
+define('BP_MEDIA_DB_VERSION','2.0');
+
 /* A constant to Active Collab API URL */
 define('BP_MEDIA_AC_API_URL','http://git2.rtcamp.info/public/api.php');
 
@@ -65,7 +68,6 @@ function bp_media_activate() {
 		'audio_enabled'		=>	true,
 		'images_enabled'	=>	true,
 		'remove_linkback'	=>	'1',
-		'require_upgrade'	=>	false,
 		'download_enabled'	=>	true,
 	));
 	$previous_linkback_status = get_option('bp_media_remove_linkback');
@@ -75,12 +77,7 @@ function bp_media_activate() {
 		$bp_media_options['remove_linkback'] = $previous_linkback_status;
 		delete_option('bp_media_remove_linkback');
 	}
-	if(get_option('bp_media_db_version')==false)
-		$bp_media_options['require_upgrade'] = true;
-
 	update_option('bp_media_options',$bp_media_options);
-	update_option('bp_media_version',BP_MEDIA_VERSION);
-	
 }
 
 register_activation_hook(__FILE__, 'bp_media_activate');

@@ -4,28 +4,36 @@ function bp_media_upgrade_to_2_2(){
 	global $wpdb;
 	remove_filter('bp_activity_get_user_join_filter','bp_media_activity_query_filter',10);
 	/* @var $wpdb wpdb */
-	$users = get_users();
-	foreach($users as $user){
-		$wall_posts_id = $wpdb->get_var( "SELECT ID FROM $wpdb->posts WHERE post_title = 'Wall Posts' AND post_author = '".  $user->ID."' AND post_type='bp_media_album'");
-		if($wall_posts_id==null){
-			$album = new BP_Media_Album();
-			$album->add_album('Wall Posts',$user->ID);
-			$wall_posts_id = $album->get_id();
-		}
-		if(!$wall_posts_id){
-			continue;
-		}
-
-		$query = "SELECT * FROM $wpdb->posts WHERE post_type = 'bp_media' AND post_author=$user->ID";
-		$media_files = $wpdb->get_results($query);
+	$media_files = new WP_Query(array(
+		'post_type'	=>	'bp_media',
+		'posts_per_page' => -1
+	));
+	$media_files = $media_files->posts;
+	$wall_posts_album_ids=array();
+	if(is_array($media_files)&&count($media_files)){
 		foreach($media_files as $media_file){
 			$attachment_id = get_post_meta($media_file->ID,'bp_media_child_attachment',true);
 			$child_activity = get_post_meta($media_file->ID,'bp_media_child_activity',true);
-			$status = update_post_meta($attachment_id, 'bp_media_child_activity', $child_activity);
+			update_post_meta($attachment_id, 'bp_media_child_activity', $child_activity);
 			$attachment = get_post($attachment_id , ARRAY_A);
+			if(isset($wall_posts_album_ids[$media_file->post_author])){
+				$wall_posts_id = $wall_posts_album_ids[$media_file->post_author];
+			}
+			else{
+				$wall_posts_id = $wpdb->get_var( "SELECT ID FROM $wpdb->posts WHERE post_title = 'Wall Posts' AND post_author = '".  $media_file->post_author."' AND post_type='bp_media_album'");
+				if($wall_posts_id==null){
+					$album = new BP_Media_Album();
+					$album->add_album('Wall Posts',$media_file->post_author);
+					$wall_posts_id = $album->get_id();
+				}
+				if(!$wall_posts_id){
+					continue; //This condition should never be encountered
+				}
+				$wall_posts_album_ids[$media_file->post_author] = $wall_posts_id;
+			}
 			$attachment['post_parent'] = $wall_posts_id;
-			$result =  wp_update_post($attachment);
-			$status = update_post_meta($attachment_id,'bp-media-key',$user->ID);
+			wp_update_post($attachment);
+			update_post_meta($attachment_id,'bp-media-key',$media_file->post_author);
 			$activity = bp_activity_get(array('in'=>intval($child_activity)));
 			if(isset($activity['activities'][0]->id))
 				$activity = $activity['activities'][0];
@@ -43,14 +51,6 @@ function bp_media_upgrade_to_2_2(){
 			wp_delete_post($media_file->ID);
 		}
 	}
-	$bp_media_options = get_option('bp_media_options',array(
-		'videos_enabled'	=>	true,
-		'audio_enabled'		=>	true,
-		'images_enabled'	=>	true,
-		'require_upgrade'	=>	false
-	));
-	$bp_media_options['require_upgrade'] = false;
-	update_option('bp_media_options',$bp_media_options);
+	update_option('bp_media_db_version',BP_MEDIA_DB_VERSION);
 }
-
 ?>

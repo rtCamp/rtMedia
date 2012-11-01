@@ -198,16 +198,21 @@ function bp_media_set_query() {
 /**
  * Adds a download button and edit button on single entry pages of media files.
  *
+ * @uses $bp_media_options Global variable
+ *
  * @since BP Media 2.0
  */
 function bp_media_action_buttons() {
 	if(!in_array('bp_media_current_entry', $GLOBALS))
 		return false;
-	global $bp_media_current_entry;
-	if($bp_media_current_entry!=NULL){
-		if(bp_displayed_user_id()==  bp_loggedin_user_id())	echo '<a href="'.$bp_media_current_entry->get_edit_url().'" class="button item-button bp-secondary-action bp-media-edit" title="Edit Media">Edit</a>';
-		echo '<a href="'.$bp_media_current_entry->get_attachment_url().'" class="button item-button bp-secondary-action bp-media-download" title="Download">Download</a>';
+	global $bp_media_current_entry,$bp_media_options;
 
+	if($bp_media_current_entry!=NULL){
+		if(bp_displayed_user_id()==  bp_loggedin_user_id())
+			echo '<a href="'.$bp_media_current_entry->get_edit_url().'" class="button item-button bp-secondary-action bp-media-edit" title="Edit Media">Edit</a>';
+
+		if($bp_media_options['download_enabled']==true)
+			echo '<a href="'.$bp_media_current_entry->get_attachment_url().'" class="button item-button bp-secondary-action bp-media-download" title="Download">Download</a>';
 	}
 }
 add_action('bp_activity_entry_meta', 'bp_media_action_buttons');
