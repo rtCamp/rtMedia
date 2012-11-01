@@ -1,11 +1,13 @@
 <?php
 if(version_compare('2.0',get_option('bp_media_db_version','1.0'),'>')){
-	add_action('admin_notices', 'bp_media_upgrade_db_notice');
+	$query = new WP_Query(array('post_type'=>'bp_media','posts_per_page'=>1));
+	if($query->found_posts>0)
+		add_action('admin_notices', 'bp_media_upgrade_db_notice');
 }
 
 add_action('wp_loaded','bp_media_upgrade_script');
 function bp_media_upgrade_script(){
-	if(array_key_exists('bp_media_upgrade_db', $_GET) && empty($_REQUEST['settings-updated'])){
+	if(isset($_GET['bp_media_upgrade_db']) && empty($_REQUEST['settings-updated'])){
 		check_admin_referer('bp_media_upgrade_db','wp_nonce');
 		require_once('bp-media-upgrade-script.php');
 		bp_media_upgrade_to_2_2();
