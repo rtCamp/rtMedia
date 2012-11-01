@@ -306,7 +306,7 @@ function bp_media_addons_list(){ ?>
 
             <li class="product first">
                 <a href="http://rtcamp.com/store/buddypress-media-kaltura/"  title="BuddyPress - Media Kaltura Add-on">
-                    <img width="240" height="184" title="BuddyPress - Media Kaltura Add-on" alt="BuddyPress - Media Kaltura Add-on" class="attachment-shop_catalog wp-post-image" src="http://rtcamp.com/files/2012/10/new-buddypress-media-kaltura-logo-240x184.png">
+                    <img width="240" height="184" title="BuddyPress - Media Kaltura Add-on" alt="BuddyPress - Media Kaltura Add-on" src="http://cdn.rtcamp.com/files/2012/10/new-buddypress-media-kaltura-logo-240x184.png">
                 </a>
                 <h4><a href="http://rtcamp.com/store/buddypress-media-kaltura/"  title="BuddyPress - Media Kaltura Add-on">BuddyPress &ndash; Media Kaltura Add-on</a></h4>
                 <span class="price"><span class="amount">$99</span></span>
@@ -323,7 +323,7 @@ It supports many popular video formats. It makes use of Kaltura server to encode
 
             <li class="product last">
                 <a href="http://rtcamp.com/store/buddypress-media-ffmpeg-converter/" title="BuddyPress-Media FFMPEG Converter Plugin" >
-                    <img width="240" height="184" title="BuddyPress-Media FFMPEG Converter Plugin" alt="BuddyPress-Media FFMPEG Converter Plugin" class="attachment-shop_catalog wp-post-image" src="http://rtcamp.com/files/2012/09/ffmpeg-logo-240x184.png">
+                    <img width="240" height="184" title="BuddyPress-Media FFMPEG Converter Plugin" alt="BuddyPress-Media FFMPEG Converter Plugin" src="http://cdn.rtcamp.com/files/2012/09/ffmpeg-logo-240x184.png">
                 </a>
                 <h4><a href="http://rtcamp.com/store/buddypress-media-ffmpeg-converter/" title="BuddyPress-Media FFMPEG Converter Plugin" >BuddyPress-Media FFMPEG Converter Plugin</a></h4>
                 <span class="price"><span class="amount">$49</span></span>
