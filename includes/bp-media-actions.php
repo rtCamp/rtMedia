@@ -260,7 +260,9 @@ function bp_media_footer() { ?>
 	<div id="bp-media-footer"><p>Using <a title="BuddyPress Media adds photos, video and audio upload/management feature" href="http://rtcamp.com/buddypress-media/">BuddyPress Media</a>.</p></div>
 	<?php
 }
-if(get_option('bp_media_remove_linkback')!='1')
+
+global $bp_media_options;
+if($bp_media_options['remove_linkback']!='1')
 	add_action('bp_footer','bp_media_footer');
 
 function bp_media_upload_enqueue(){
