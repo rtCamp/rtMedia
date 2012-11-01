@@ -23,15 +23,6 @@ define('BP_MEDIA_REQUIRED_BP','1.6');
 /* A constatnt to store database version */
 define('BP_MEDIA_DB_VERSION','2.0');
 
-/* A constant to Active Collab API URL */
-define('BP_MEDIA_AC_API_URL','http://git2.rtcamp.info/public/api.php');
-
-/* A constant to Active Collab API AUTH TOKEN */
-define('BP_MEDIA_AC_API_AUTH_TOKEN','5-9B8qSK0sCpjX3cX0L8Empt19fDJ86l74N4jvChN5');
-
-/* A constant to Active Collab API PROJECT ID */
-define('BP_MEDIA_AC_API_PROJECT_ID','5-9B8qSK0sCpjX3cX0L8Empt19fDJ86l74N4jvChN5');
-
 /* A constant to Active Collab API Assignee ID */
 define('BP_MEDIA_AC_API_ASSIGNEE_ID','5');
 
