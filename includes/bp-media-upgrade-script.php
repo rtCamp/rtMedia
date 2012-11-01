@@ -42,7 +42,7 @@ function bp_media_upgrade_to_2_2(){
 				'content'	=>	$bp_media->get_media_activity_content(),
 				'id'	=>	$child_activity,
 				'type' => 'media_upload',
-				'action' => apply_filters( 'bp_media_added_media', sprintf( __( '%1$s added a %2$s', 'bp-media'), bp_core_get_userlink( $user->ID ), '<a href="' . $bp_media->get_url() . '">' . $bp_media->get_media_activity_type() . '</a>' ) ),
+				'action' => apply_filters( 'bp_media_added_media', sprintf( __( '%1$s added a %2$s', 'bp-media'), bp_core_get_userlink( $media_file->post_author ), '<a href="' . $bp_media->get_url() . '">' . $bp_media->get_media_activity_type() . '</a>' ) ),
 				'primary_link' => $bp_media->get_url(),
 				'item_id' => $attachment_id,
 			);
@@ -52,5 +52,8 @@ function bp_media_upgrade_to_2_2(){
 		}
 	}
 	update_option('bp_media_db_version',BP_MEDIA_DB_VERSION);
+	add_action('admin_notices',function (){echo '<div class="updated"><p>
+		<b>BuddyPress Media</b> Database upgraded successfully.
+	</p></div>';});
 }
 ?>

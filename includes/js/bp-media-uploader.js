@@ -102,7 +102,10 @@ jQuery(document).ready(function(){
 		var new_location = window.location.href;
 		if(new_location.search('/media/')>0){
 			new_location = new_location.replace('media','albums');
-			new_location = new_location.concat(bp_media_album_selected);
+			if(bp_media_album_selected>0)
+				new_location = new_location.concat(bp_media_album_selected);
+			else
+				new_location = new_location.concat('0/');
 			window.location.replace(new_location);
 		}
 	});

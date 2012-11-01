@@ -20,7 +20,7 @@ function bp_media_show_upload_form() {
 	}
 	$allowed = apply_filters('bp_media_allowed_filter',$allowed);
 	$accept = implode(',',$allowed['accept']);
-	
+
 	?>
 	<form method="post" enctype="multipart/form-data" class="standard-form" id="bp-media-upload-form">
 		<label for="bp-media-upload-input-title"><?php _e('Media Title', 'bp-media'); ?></label><input id="bp-media-upload-input-title" type="text" name="bp_media_title" class="settings-input" maxlength="<?php echo max(array($bp_media_default_excerpts['single_entry_title'],$bp_media_default_excerpts['activity_entry_title'])) ?>" />
@@ -33,22 +33,27 @@ function bp_media_show_upload_form() {
 }
 
 function bp_media_show_upload_form_multiple() {
-	global $bp,$bp_media_default_excerpts;	
+	global $bp,$bp_media_default_excerpts;
 	?>
-<div id="bp-media-album-prompt" title="Select Album"><select id="bp-media-selected-album"><?php 
+<div id="bp-media-album-prompt" title="Select Album"><select id="bp-media-selected-album"><?php
 	$albums = new WP_Query(array(
 		'post_type'	=>	'bp_media_album',
 		'posts_per_page'=> -1,
 		'author'=>  get_current_user_id()
 	));
 	if(isset($albums->posts)&& is_array($albums->posts)&& count($albums->posts)>0){
-		foreach ($albums->posts as $album){ 
+		foreach ($albums->posts as $album){
 			if($album->post_title == 'Wall Posts')
 				echo '<option value="'.$album->ID.'" selected="selected">'.$album->post_title.'</option>' ;
 			else
 				echo '<option value="'.$album->ID.'">'.$album->post_title.'</option>' ;
 		};
-	}?></select></div>
+	}else{
+		$album = new BP_Media_Album();
+		$album->add_album('Wall Posts',  bp_loggedin_user_id());
+		echo '<option value="'.$album->get_id().'" selected="selected">'.$album->get_title().'</option>' ;
+	}
+	?></select></div>
 <div id="bp-media-album-new" title="Create New Album"><label for="bp_media_album_name">Album Name</label><input id="bp_media_album_name" type="text" name="bp_media_album_name" /></div>
 <div id="bp-media-upload-ui" class="hide-if-no-js drag-drop">
 	<div id="drag-drop-area">
@@ -86,9 +91,9 @@ function bp_media_show_pagination($type = 'top' , $inner = false) {
 			$current = BP_MEDIA_LABEL;
 			$current_single = BP_MEDIA_LABEL_SINGULAR;
 	}
-	
-	
-	
+
+
+
 	if($bp->current_action == BP_MEDIA_ALBUMS_SLUG && !$inner){
 		$args = array(
 			'base' => trailingslashit(bp_displayed_user_domain() . $bp->current_action . '/') . '%_%',
@@ -220,18 +225,18 @@ function bp_media_display_show_more(){
 }
 
 function bp_media_show_upload_form_multiple_activity() {
-	global $bp,$bp_media_default_excerpts;	
+	global $bp,$bp_media_default_excerpts;
 	if($bp->current_component!='activity')
 		return;
 	?>
-<div id="bp-media-album-prompt" title="Select Album"><select id="bp-media-selected-album"><?php 
+<div id="bp-media-album-prompt" title="Select Album"><select id="bp-media-selected-album"><?php
 	$albums = new WP_Query(array(
 		'post_type'	=>	'bp_media_album',
 		'posts_per_page'=> -1,
 		'author'=>  get_current_user_id()
 	));
 	if(isset($albums->posts)&& is_array($albums->posts)&& count($albums->posts)>0){
-		foreach ($albums->posts as $album){ 
+		foreach ($albums->posts as $album){
 			if($album->post_title == 'Wall Posts')
 				echo '<option value="'.$album->ID.'" selected="selected">'.$album->post_title.'</option>' ;
 			else
