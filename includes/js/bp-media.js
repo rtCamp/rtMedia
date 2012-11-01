@@ -1,9 +1,9 @@
-/* 
+/*
  * BuddyPress Media Default JS
  */
 
 function bp_media_create_element(id){
-	jQuery('#'+id).mediaelementplayer({ 
+	jQuery('#'+id).mediaelementplayer({
 		enableKeyboard: false,
 		startVolume: 1,
 		success: function(mediaElement,domElement){
@@ -25,15 +25,7 @@ jQuery(document).ready(function(){
     if(bp_media_recent_tabs.length>0){
         jQuery(bp_media_recent_tabs).tabs();
     }
-<<<<<<< HEAD
-    var bp_media_popular_tabs = jQuery('#popular-media-tabs');
-    if(bp_media_popular_tabs.length>0){
-        jQuery( bp_media_popular_tabs ).tabs();
-    }
-	jQuery('#bp-media-show-more').click(function(event){
-		event.preventDefault();
-=======
-    
+
 //    var bp_media_popular_tabs = jQuery('#popular-media-tabs');
 //    if(bp_media_popular_tabs.length>0){
 //        jQuery( bp_media_popular_tabs ).tabs();
@@ -41,7 +33,7 @@ jQuery(document).ready(function(){
 
     var tallest = 0;
     jQuery('#recent-media-tabs .bp-media-tab-panel').each(function() {
-            
+
                 var thisHeight = jQuery(this).height();
                 console.log(thisHeight);
                 if(thisHeight > tallest) {
@@ -49,9 +41,8 @@ jQuery(document).ready(function(){
                 }
     }).height(tallest);
 
-    
+
 	jQuery('#pag-bottom').click(function(){
->>>>>>> origin/feature-widget
 		var data = {
 			action: 'bp_media_load_more',
 			page:++bp_media_vars.page,

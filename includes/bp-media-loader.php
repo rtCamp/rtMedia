@@ -91,17 +91,13 @@ $bp_media_default_excerpts=array(
 	'activity_entry_description'=>	500
 );
 
+global $bp_media_options;
 $bp_media_options = get_option('bp_media_options',array(
 	'videos_enabled'	=>	true,
 	'audio_enabled'		=>	true,
 	'images_enabled'	=>	true,
-	'require_upgrade'	=>	false
+	'download_enabled'	=>	true
 ));
-
-if($bp_media_options['require_upgrade']==true){
-	require_once('bp-media-upgrade-script.php');
-	add_action('shutdown','bp_media_upgrade_to_2_2');
-}
 
 global $bp_media_activity_types;
 $bp_media_activity_types = array('media_upload','album_updated','album_created');
