@@ -102,6 +102,9 @@ $bp_media_options = get_option('bp_media_options',array(
 global $bp_media_activity_types;
 $bp_media_activity_types = array('media_upload','album_updated','album_created');
 
+global $bp_media_hidden_activity_cache;
+$bp_media_hidden_activity_cache = array();
+
 /* To set the language according to the locale selected and availability of the language file. */
 if (file_exists(BP_MEDIA_PLUGIN_DIR . '/languages/' . get_locale() . '.mo'))
 	load_textdomain('bp-media', BP_MEDIA_PLUGIN_DIR . '/languages/' . get_locale() . '.mo');

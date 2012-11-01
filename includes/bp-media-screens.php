@@ -39,6 +39,7 @@ function bp_media_upload_screen_content() {
  */
 function bp_media_images_screen() {
 	global $bp;
+	remove_filter('bp_activity_get_user_join_filter','bp_media_activity_query_filter',10);
 	if (isset($bp->action_variables[0])) {
 		switch ($bp->action_variables[0]) {
 			case BP_MEDIA_IMAGES_EDIT_SLUG :
@@ -202,6 +203,7 @@ function bp_media_images_entry_screen_content() {
  */
 function bp_media_videos_screen() {
 	global $bp;
+	remove_filter('bp_activity_get_user_join_filter','bp_media_activity_query_filter',10);
 	if (isset($bp->action_variables[0])) {
 		switch ($bp->action_variables[0]) {
 			case BP_MEDIA_VIDEOS_EDIT_SLUG :
@@ -345,6 +347,7 @@ function bp_media_videos_entry_screen_content() {
  */
 function bp_media_audio_screen() {
 	global $bp;
+	remove_filter('bp_activity_get_user_join_filter','bp_media_activity_query_filter',10);
 	if (isset($bp->action_variables[0])) {
 		switch ($bp->action_variables[0]) {
 			case BP_MEDIA_AUDIO_EDIT_SLUG :
