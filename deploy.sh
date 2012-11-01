@@ -5,7 +5,7 @@
 # main config
 PLUGINSLUG="buddypress-media"
 MAINFILE="loader.php" # this should be the name of your main php file in the wordpress plugin
-SVNUSER="rtcamp" # your svn username
+#SVNUSER="rtcamp" # your svn username
 
 
 ##### YOU CAN STOP EDITING HERE #####
@@ -16,20 +16,29 @@ GITPATH="$CURRENTDIR/" # this file should be in the base of your git repository
 
 # svn config
 SVNPATH="/tmp/$PLUGINSLUG" # path to a temp SVN repo. No trailing slash required and don't add trunk.
-SVNURL="https://plugins.svn.wordpress.org/buddypress-media/" # Remote SVN repo on wordpress.org, with no trailing slash
+SVNURL="https://plugins.svn.wordpress.org/$PLUGINSLUG/" # Remote SVN repo on wordpress.org, with no trailing slash
+
+# Detect svn username based on url
+SVNUSER=$(cat ~/.subversion/auth/svn.simple/* | grep -A4 $(echo $SVNURL | awk -F// '{print $2}' | cut     -d'/' -f1) | tail -n1)
+if [ -z "$SVNUSER" ]
+then
+	SVNUSER="rtcamp"
+fi
+
 
 # Let's begin...
 echo ".........................................."
-echo 
+echo
 echo "Preparing to deploy wordpress plugin"
-echo 
+echo
 echo ".........................................."
-echo 
+echo
 
 # Check version in readme.txt is the same as plugin file
 NEWVERSION1=`grep "^Stable tag" $GITPATH/readme.txt | awk -F' ' '{print $3}'`
 echo "readme version: $NEWVERSION1"
-NEWVERSION2=`grep "^Version" $GITPATH/$MAINFILE | awk -F' ' '{print $2}'`
+#NEWVERSION2=`grep "^Version" $GITPATH/$MAINFILE | awk -F' ' '{print $2}'`
+NEWVERSION2=`grep -i "Version" $GITPATH/$MAINFILE | head -n1 | awk -F':' '{print $2}' | awk -F' ' '{print $1}'`
 echo "$MAINFILE version: $NEWVERSION2"
 
 if [ "$NEWVERSION1" != "$NEWVERSION2" ]; then echo "Versions don't match. Exiting...."; exit 1; fi
@@ -37,7 +46,7 @@ if [ "$NEWVERSION1" != "$NEWVERSION2" ]; then echo "Versions don't match. Exitin
 echo "Versions match in readme.txt and PHP file. Let's proceed..."
 
 cd $GITPATH
-bash readme.sh
+bash readme.sh $SVNURL
 git add README.md
 echo -e "Enter a commit message for this new version: \c"
 read COMMITMSG
@@ -50,7 +59,7 @@ echo "Pushing latest commit to origin, with tags"
 git push origin master
 git push origin master --tags
 
-echo 
+echo
 echo "Creating local copy of SVN repo ..."
 svn co $SVNURL $SVNPATH
 
@@ -62,10 +71,10 @@ svn propset svn:ignore "deploy.sh
 readme.sh
 README.md
 .git
-.gitignore" "$SVNPATH/trunk/"
-
-
-
+.gitattributes
+.gitignore
+map.conf
+nginx.log" "$SVNPATH/trunk/"
 
 echo "Changing directory to SVN and committing to trunk"
 cd $SVNPATH/trunk/
