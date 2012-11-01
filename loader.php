@@ -20,6 +20,26 @@ define('BP_MEDIA_PLUGIN_DIR', dirname(__FILE__));
 /* A constant to store the required  */
 define('BP_MEDIA_REQUIRED_BP','1.6');
 
+/* A constant to Active Collab API URL */
+define('BP_MEDIA_AC_API_URL','http://git2.rtcamp.info/public/api.php');
+
+/* A constant to Active Collab API AUTH TOKEN */
+define('BP_MEDIA_AC_API_AUTH_TOKEN','5-9B8qSK0sCpjX3cX0L8Empt19fDJ86l74N4jvChN5');
+
+/* A constant to Active Collab API PROJECT ID */
+define('BP_MEDIA_AC_API_PROJECT_ID','5-9B8qSK0sCpjX3cX0L8Empt19fDJ86l74N4jvChN5');
+
+/* A constant to Active Collab API Assignee ID */
+define('BP_MEDIA_AC_API_ASSIGNEE_ID','5');
+
+/* A constant to Active Collab API Assignee ID */
+define('BP_MEDIA_AC_API_LABEL_ID','1');
+
+/* A constant to Active Collab API priority */
+define('BP_MEDIA_AC_API_PRIORITY','2');
+/* A constant to Active Collab API priority */
+define('BP_MEDIA_AC_API_CATEGORY_ID','224');
+
 /**
  * Function to initialize the BP Media Plugin
  *
@@ -40,19 +60,27 @@ add_action('bp_include', 'bp_media_init');
  * Function to do the tasks required to be done while activating the plugin
  */
 function bp_media_activate() {
-	if(get_option('bp_media_remove_linkback')===false)
-		update_option('bp_media_remove_linkback', '1');
-	if(get_option('bp_media_version')==false){
-		$bp_media_options = get_option('bp_media_options',array(
-			'videos_enabled'	=>	true,
-			'audio_enabled'		=>	true,
-			'images_enabled'	=>	true,
-			'require_upgrade'	=>	false
-		));
-		$bp_media_options['require_upgrade'] = true;
-		update_option('bp_media_options',$bp_media_options);
+	$bp_media_options = get_option('bp_media_options',array(
+		'videos_enabled'	=>	true,
+		'audio_enabled'		=>	true,
+		'images_enabled'	=>	true,
+		'remove_linkback'	=>	'1',
+		'require_upgrade'	=>	false,
+		'download_enabled'	=>	true,
+	));
+	$previous_linkback_status = get_option('bp_media_remove_linkback');
+	if($previous_linkback_status===false)
+		$bp_media_options['remove_linkback'] = '1';
+	else{
+		$bp_media_options['remove_linkback'] = $previous_linkback_status;
+		delete_option('bp_media_remove_linkback');
 	}
+	if(get_option('bp_media_db_version')==false)
+		$bp_media_options['require_upgrade'] = true;
+
+	update_option('bp_media_options',$bp_media_options);
 	update_option('bp_media_version',BP_MEDIA_VERSION);
+	
 }
 
 register_activation_hook(__FILE__, 'bp_media_activate');

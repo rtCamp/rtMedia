@@ -1,20 +1,161 @@
 <?php
-global $bp_media_admin_is_current;
-$bp_media_admin_is_current = false;
+
 /**
  * Add the BuddyPress Media's options menu in the BuddyPress' options subnavigation.
  * 
  * @since BP Media 2.0
  */
 function bp_media_add_admin_menu() {
+    
 	global $bp;
 	if (!is_super_admin())
         return false;
 	
-	$page = add_menu_page( 'BP Media Component', 'BP Media', 'manage_options', 'bp-media-settings', 'bp_media_admin_menu' );
-	add_action('admin_print_styles-' . $page, 'bp_media_admin_enqueue');
+	add_menu_page( 'BP Media Component', 'BP Media', 'manage_options', 'bp-media-settings', 'bp_media_settings_page' );
+	add_submenu_page( 'bp-media-settings', __( 'BP-Media Settings', 'bp-media' ), __( 'Settings', 'bp-media' ), 'manage_options', 'bp-media-settings', "bp_media_settings_page" );
+	add_submenu_page( 'bp-media-settings', __( 'BP-Media Addons', 'bp-media' ), __( 'Addons', 'bp-media' ), 'manage_options', 'bp-media-addons', "bp_media_settings_page" );
+	add_submenu_page( 'bp-media-settings', __( 'BP-Media Support', 'bp-media' ), __( 'Support ', 'bp-media' ), 'manage_options', 'bp-media-support', "bp_media_settings_page" );
+	
+    $tab = isset( $_GET['page'] )  ? $_GET['page'] : "bp-media-settings";
+    add_action('admin_print_styles-' . $tab, 'bp_media_admin_enqueue');
 }
+
 add_action(bp_core_admin_hook(), 'bp_media_add_admin_menu');
+
+add_action('admin_init','bp_media_on_load_page');
+
+/**
+*   Applies WordPress metabox funtionality to metaboxes
+*
+* 
+*/
+function bp_media_on_load_page() {
+
+    /* Javascripts loaded to allow drag/drop, expand/collapse and hide/show of boxes. */
+    wp_enqueue_script( 'common' );
+    wp_enqueue_script( 'wp-lists' );
+    wp_enqueue_script( 'postbox' );
+
+    // Check to see which tab we are on
+    $tab = isset( $_GET['page'] )  ? $_GET['page'] : "bp-media-settings";
+
+    switch ( $tab ) {
+        case 'bp-media-addons' :
+            // All metaboxes registered during load page can be switched off/on at "Screen Options" automatically, nothing special to do therefore
+            add_meta_box('bp-media-addons-list_metabox',__('BuddyPress Media Addons','bp-media'),'bp_media_addons_list','bp-media-settings', 'normal', 'core' );
+            break;
+        case 'bp-media-support' :
+            // All metaboxes registered during load page can be switched off/on at "Screen Options" automatically, nothing special to do therefore
+            add_meta_box( 'post_summaries_options_metabox', __('BuddyPress Media Support', 'rtPanel'), 'bp_media_support', 'bp-media-settings', 'normal', 'core' );                                
+            break;
+        case $tab :
+            // All metaboxes registered during load page can be switched off/on at "Screen Options" automatically, nothing special to do therefore
+            add_meta_box( 'bp_media_settings_metabox', __('BuddyPress Media Settings', 'rtPanel'), 'bp_media_admin_menu', 'bp-media-settings', 'normal', 'core' );                
+            add_meta_box( 'bp_media_options_metabox', __('Spread the word', 'rtPanel'), 'bp_media_settings_options', 'bp-media-settings', 'normal', 'core' );                
+            add_meta_box( 'bp_media_other_options_metabox', __('BuddyPress Media Other options', 'rtPanel'), 'bp_media_settings_other_options', 'bp-media-settings', 'normal', 'core' );               
+            break;
+    }
+}
+    
+    
+function bp_media_settings_page(){
+    
+    $tab = isset( $_GET['page'] )  ? $_GET['page'] : "bp-media-settings";
+    
+    ?>
+    <div class="wrap bp-media-admin">
+        <?php //screen_icon( 'buddypress' ); ?>
+        <div id="icon-buddypress" class="icon32"><br></div>
+        <h2 class="nav-tab-wrapper"><?php bp_core_admin_tabs( __( 'Media', 'bp-media' ) ); ?></h2>        
+        <div class="metabox-holder columns-2"><?php 
+            
+            if(array_key_exists('bp_media_refresh_count', $_GET) && empty($_REQUEST['settings-updated'])){
+                check_admin_referer('bp_media_refresh_count','wp_nonce');
+                if(!bp_media_update_count())
+                    $bp_media_errors[]="Recounting Failed";
+                else
+                    $bp_media_messages[]="Recounting of media files done successfully";
+                
+                if(isset($bp_media_errors) && count($bp_media_errors)) { ?>
+                    <div class="error"><p><?php foreach($bp_media_errors as $error) echo $error.'<br/>'; ?></p></div><?php                     
+                } if(isset($bp_media_messages) && count($bp_media_messages)){  ?>
+                    <div class="updated"><p><?php foreach($bp_media_messages as $message) echo $message.'<br/>'; ?></p></div><?php                 
+                }
+            }else{
+                settings_errors(); 
+            }?>
+                    
+            <div class="bp-media-settings-tabs"><?php
+                // Check to see which tab we are on
+               if(current_user_can('manage_options')){
+                    $tabs_html    = '';
+                    $idle_class   = 'media-nav-tab';
+                    $active_class = 'media-nav-tab media-nav-tab-active';
+                    $tabs = array();
+
+                    // Check to see which tab we are on
+                    $tab = isset( $_GET['page'] )  ? $_GET['page'] : "bp-media-settings";
+                    /* BP Media */
+                    $tabs[] = array(
+                        'href' => bp_get_admin_url( add_query_arg( array( 'page' => 'bp-media-settings'  ), 'admin.php' ) ),
+                        'title' => __( 'BP Media Settings', 'bp-media' ),
+                        'name' => __( 'Settings', 'bp-media' ),
+                        'class' => ($tab == 'bp-media-settings') ? $active_class : $idle_class. ' first_tab'
+                    );
+                    
+                    $tabs[] = array(
+                        'href' => bp_get_admin_url( add_query_arg( array( 'page' => 'bp-media-addons'  ), 'admin.php' ) ),
+                        'title' => __( 'BP Media Addons', 'bp-media' ),
+                        'name' => __( 'Addons', 'bp-media' ),
+                        'class' => ($tab == 'bp-media-addons') ? $active_class : $idle_class        
+                    );
+                    
+                    $tabs[] = array(
+                        'href' => bp_get_admin_url( add_query_arg( array( 'page' => 'bp-media-support'  ), 'admin.php' ) ),
+                        'title' => __( 'BP Media Support', 'bp-media' ),
+                        'name' => __( 'Support', 'bp-media' ),
+                        'class' => ($tab == 'bp-media-support') ? $active_class : $idle_class. ' last_tab'
+                    );
+                    
+                    $pipe = '|' ;
+                    $i = '1';
+                    foreach($tabs as $tab){
+                        if($i!=1) $tabs_html.=$pipe;
+                        $tabs_html.= '<a title=""' . $tab['title'] . '" " href="' . $tab['href'] . '" class="' . $tab['class'] . '">' . $tab['name'] . '</a>';
+                        $i++;
+                    }
+                    echo $tabs_html;	
+                }?>
+            </div>
+            
+            <div id="bp-media-settings-boxes">
+                
+                <form id="bp_media_settings_form" name="bp_media_settings_form" action="options.php" method="post" enctype="multipart/form-data">
+                    <?php   
+                    
+                    settings_fields( 'bp_media_options_settings');
+                    do_settings_fields( 'bp_media_options_settings','' );                        
+                    do_meta_boxes( 'bp-media-settings', 'normal', '' ); ?>
+                    
+                    <script type="text/javascript">
+                        //<![CDATA[
+                        jQuery(document).ready( function($) {
+                            // close postboxes that should be closed
+                            $('.if-js-closed').removeClass('if-js-closed').addClass('closed');
+                            // postboxes setup
+                            postboxes.add_postbox_toggles('bp-media-settings');
+                        });
+                        //]]>
+                    </script>
+                </form>
+            </div><!-- .bp-media-settings-boxes -->
+            <div class="metabox-fixed metabox-holder alignright bp-media-metabox-holder">
+                    <?php bp_media_default_admin_sidebar(); ?>
+            </div>
+        </div><!-- .metabox-holder -->
+    </div><!-- .bp-media-admin --><?php
+}
+    
 
 /**
  * Displays and updates the options menu of BuddyPress Media
@@ -22,183 +163,223 @@ add_action(bp_core_admin_hook(), 'bp_media_add_admin_menu');
  * @since BP Media 2.0
  */
 function bp_media_admin_menu() {
+    
 	$bp_media_errors=array();
 	$bp_media_messages=array();
+    
 	global $bp_media_options;
 	$bp_media_options = get_option('bp_media_options',array(
 		'videos_enabled'	=>	true,
 		'audio_enabled'		=>	true,
 		'images_enabled'	=>	true,
 	));
-	if(array_key_exists('bp_media_refresh_count', $_GET)){
-		check_admin_referer('bp_media_refresh_count','wp_nonce');
-		if(!bp_media_update_count())
-			$bp_media_errors[]="Recounting Failed";
-		else
-			$bp_media_messages[]="Recounting of media files done successfully";
-	}
-	if(array_key_exists('submit', $_POST)){
-		
-		if(array_key_exists('remove_linkback', $_POST)){
-			if($_POST['remove_linkback']=='2'&&update_option('bp_media_remove_linkback', '2')){
-				$bp_media_messages[0]="<b>Settings saved.</b>";
-			}
-			else if(update_option('bp_media_remove_linkback', '1')){
-				$bp_media_messages[0]="<b>Settings saved.</b>";
-			}
-		}
-		if(array_key_exists('enable_videos',$_POST)){
-			$bp_media_options['videos_enabled'] = true;
-		}
-		else
-		{
-			$bp_media_options['videos_enabled'] = false;
-		}
-		if(array_key_exists('enable_audio',$_POST)){
-			$bp_media_options['audio_enabled'] = true;
-		}
-		else
-		{
-			$bp_media_options['audio_enabled'] = false;
-		}
-		if(array_key_exists('enable_images',$_POST)){
-			$bp_media_options['images_enabled'] = true;
-		}
-		else
-		{
-			$bp_media_options['images_enabled'] = false;
-		}
-		if(update_option('bp_media_options', $bp_media_options)){
-			$bp_media_messages[0]="<b>Settings saved.</b>";
-		}
-		do_action('bp_media_save_options');
-		$bp_media_messages = apply_filters('bp_media_settings_messages',$bp_media_messages);
-		$bp_media_errors = apply_filters('bp_media_settings_errors',$bp_media_errors);
-	}
-	global $bp_media_admin_is_current;
-	$bp_media_admin_is_current = true;
-		?>
-	
-	<div class="wrap bp-media-admin">
-		<?php //screen_icon( 'buddypress' ); ?>
-		<div id="icon-buddypress" class="icon32"><br></div>
-		<h2 class="nav-tab-wrapper"><?php bp_core_admin_tabs( __( 'Media', 'bp-media' ) ); ?></h2>
-		
-		<?php if(count($bp_media_errors)) { ?>
-		<div class="error"><p><?php foreach($bp_media_errors as $error) echo $error.'<br/>'; ?></p></div>
-		<?php } if(count($bp_media_messages)){?>
-		<div class="updated"><p><?php foreach($bp_media_messages as $message) echo $message.'<br/>'; ?></p></div>
-		<?php }?>
-                <div class="metabox-holder columns-2">
-                <div id="bp-media-settings-boxes">
-		<form method="post" action="?page=bp-media-settings">
-			 <?php wp_nonce_field( 'bp_media_update_options' ); ?>
-                    <div class="postbox">
-                        <div class="handlediv" title="Click to toggle"><br></div>
-                        <h3 class="hndle"><span>Media Types Enabled</span></h3>
-                        <div class="inside">
-			<table class="form-table ">
-				<tbody>
-					<tr valign="top">
-						<th scope="row"><label for="enable_videos">Videos</label></th>
-						<td>
-							<fieldset>
-								<legend class="screen-reader-text"><span>Enable Videos</span></legend>
-								<label for="enable_videos"><input name="enable_videos" type="checkbox" id="enable_videos" value="1" <?php global $bp_media_options;checked($bp_media_options['videos_enabled'],true) ?>> (Check to enable video upload functionality)</label>
-							</fieldset>
-						</td>
-					</tr>
-					<tr valign="top">
-						<th scope="row"><label for="enable_audio">Audio</label></th>
-						<td>
-							<fieldset>
-								<legend class="screen-reader-text"><span>Enable Audio</span></legend>
-								<label for="enable_audio"><input name="enable_audio" type="checkbox" id="enable_audio" value="1" <?php checked($bp_media_options['audio_enabled'],true) ?>> (Check to enable audio upload functionality)</label>
-							</fieldset>
-						</td>
-					</tr>
-					<tr valign="top">
-						<th scope="row"><label for="enable_images">Images</label></th>
-						<td>
-							<fieldset>
-								<legend class="screen-reader-text"><span>Enable Images</span></legend>
-								<label for="enable_images"><input name="enable_images" type="checkbox" id="enable_images" value="1" <?php checked($bp_media_options['images_enabled'],true) ?>> (Check to enable images upload functionality)</label>
-							</fieldset>
-						</td>
-					</tr>
-				</tbody>
-			</table>
-                        </div>
-                    </div>
-                    <div class="postbox">
-                        <div class="handlediv" title="Click to toggle"><br></div>
-                        <h3 class="hndle"><span>Spread the word</span></h3>
-                        <div class="inside">
-			<table class="form-table ">
-				<tbody>
-					<tr valign="top">
-						<th scope="row"><label for="remove_linkback">Spread the word</label></th>
-						<td>
-							<fieldset>
-								<legend class="screen-reader-text"><span>Yes, I want to support BuddyPress Media</span></legend>
-								<label for="remove_linkback_yes"><input name="remove_linkback" type="radio" id="remove_linkback_yes" value="2" <?php if(get_option('bp_media_remove_linkback')=='2') echo 'checked="checked"' ?>> Yes, we support BuddyPress Media</label>
-								<br/>
-								<legend class="screen-reader-text"><span>No, I don't want to support BuddyPress Media</span></legend>
-								<label for="remove_linkback_no"><input name="remove_linkback" type="radio" id="remove_linkback_no" value="1" <?php if(get_option('bp_media_remove_linkback')=='1') echo 'checked="checked"' ?>> No, we don't support BuddyPress Media</label>
-							</fieldset>
-						</td>
-					</tr>
-				</tbody>
-			</table>
-                            </div>
-                    </div>
-			<?php do_action('bp_media_extension_options'); ?>
-                        <p class="submit"><input type="submit" name="submit" id="submit" class="button-primary" value="Save Changes"></p>
-                            </form>
-			
-                    <div class="postbox">
-                        <div class="handlediv" title="Click to toggle"><br></div>
-                        <h3 class="hndle"><span>Other Options</span></h3>
-                <div class="inside">
-			<table class="form-table">
-				<tbody>
-					<tr valign="top">
-						<th scope="row"><label for="refresh_media_count">Re-Count Media Entries</label></th>
-						<td> <fieldset>
-								<a id="refresh_media_count" href ="?page=bp-media-settings&bp_media_refresh_count=1&wp_nonce=<?php echo wp_create_nonce( 'bp_media_refresh_count' ); ?>" class="button" title="<?php printf(__('It will re-count all media entries of all users and correct any discrepancies.')); ?>">Re-Count</a>
-							</fieldset></td>
-					</tr>
-				</tbody>
-			</table>
-                        </div>
-                    </div>
-	</div>
-                <div class="metabox-fixed metabox-holder alignright">
-		<?php bp_media_default_admin_sidebar(); ?>
-	</div>
-                </div>
-        </div>
-        
-	<?php
+    
+    $bp_media_options = get_option('bp_media_options');?>
+
+    <?php if(count($bp_media_errors)) { ?>
+    <div class="error"><p><?php foreach($bp_media_errors as $error) echo $error.'<br/>'; ?></p></div>
+    <?php } if(count($bp_media_messages)){  ?>
+    <div class="updated"><p><?php foreach($bp_media_messages as $message) echo $message.'<br/>'; ?></p></div>
+    <?php } ?>
+    <table class="form-table ">
+        <tbody>
+            <tr valign="top">
+                <th scope="row"><label for="enable_videos">Videos</label></th>
+                <td>
+                    <fieldset>
+                        <legend class="screen-reader-text"><span>Enable Videos</span></legend>
+                        <label for="videos_enabled"><input name="bp_media_options[videos_enabled]" type="checkbox" id="videos_enabled" value="1" <?php global $bp_media_options;checked($bp_media_options['videos_enabled'],true) ?>> (Check to enable video upload functionality)</label>
+                    </fieldset>
+                </td>
+            </tr>
+            <tr valign="top">
+                <th scope="row"><label for="enable_audio">Audio</label></th>
+                <td>
+                    <fieldset>
+                        <legend class="screen-reader-text"><span>Enable Audio</span></legend>
+                        <label for="audio_enabled"><input name="bp_media_options[audio_enabled]" type="checkbox" id="audio_enabled" value="1" <?php checked($bp_media_options['audio_enabled'],true) ?>> (Check to enable audio upload functionality)</label>
+                    </fieldset>
+                </td>
+            </tr>
+            <tr valign="top">
+                <th scope="row"><label for="enable_images">Images</label></th>
+                <td>
+                    <fieldset>
+                        <legend class="screen-reader-text"><span>Enable Images</span></legend>
+                        <label for="images_enabled"><input name="bp_media_options[images_enabled]" type="checkbox" id="images_enabled" value="1" <?php checked($bp_media_options['images_enabled'],true) ?>> (Check to enable images upload functionality)</label>
+                    </fieldset>
+                </td>
+            </tr>
+            <tr valign="top">
+                <th scope="row"><label for="download_enabled">Download</label></th>
+                <td>
+                    <fieldset>
+                        <legend class="screen-reader-text"><span>Enable Download</span></legend>
+                        <label for="download_enabled"><input name="bp_media_options[download_enabled]" type="checkbox" id="download_enabled" value="1" <?php checked($bp_media_options['download_enabled'],true) ?>> (Check to enable download functionality)</label>
+                    </fieldset>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <?php do_action('bp_media_extension_options'); ?>
+
+    <p class="submit"><input type="submit" name="submit" id="submit" class="button-primary" value="Save Changes"></p>   
+    <div class="clear"></div><?php
 }
+
+function bp_media_settings_other_options(){ ?>
+    
+        <table class="form-table">
+            <tbody>
+                <tr valign="top">
+                    <th scope="row"><label for="refresh_media_count">Re-Count Media Entries</label></th>
+                    <td> <fieldset>
+                            <a id="refresh_media_count" href ="?page=bp-media-settings&bp_media_refresh_count=1&wp_nonce=<?php echo wp_create_nonce( 'bp_media_refresh_count' ); ?>" class="button" title="<?php printf(__('It will re-count all media entries of all users and correct any discrepancies.')); ?>">Re-Count</a>
+                        </fieldset>
+                    </td>
+                </tr>
+            </tbody>
+        </table> 
+        <div class="clear"></div>
+    
+<?php }
+
+function bp_media_settings_options(){ 
+    $bp_media_options = get_option('bp_media_options');        
+    ?>
+    <table class="form-table ">
+        <tbody>
+            <tr valign="top">
+                <th scope="row"><label for="remove_linkback">Spread the word</label></th>
+                <td>
+                    <fieldset>
+                        <legend class="screen-reader-text"><span>Yes, I want to support BuddyPress Media</span></legend>
+                        <label for="remove_linkback_yes"><input name="bp_media_options[remove_linkback]" type="radio" id="remove_linkback_yes" value="2" <?php checked($bp_media_options['remove_linkback'], '2' ); ?>> Yes, we support BuddyPress Media</label>
+                        <br/>
+                        <legend class="screen-reader-text"><span>No, I don't want to support BuddyPress Media</span></legend>
+                        <label for="remove_linkback_no"><input name="bp_media_options[remove_linkback]" type="radio" id="remove_linkback_no" value="1" <?php checked($bp_media_options['remove_linkback'], '1' ); ?>> No, we don't support BuddyPress Media</label>
+                    </fieldset>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <p class="submit"><input type="submit" name="submit" id="submit" class="button-primary" value="Save Changes"></p>   
+    <div class="clear"></div>    
+<?php }
+
+
+
+
+function bp_media_addons_list(){ ?>
+    
+    <div class="addon-list">
+        <ul class="products">
+
+            <li class="product first">
+                <a href="http://rtcamp.com/store/buddypress-media-kaltura/" target="_blank" title="BuddyPress - Media Kaltura Add-on">
+                    <img width="240" height="184" title="BuddyPress - Media Kaltura Add-on" alt="BuddyPress - Media Kaltura Add-on" class="attachment-shop_catalog wp-post-image" src="http://rtcamp.com/files/2012/10/new-buddypress-media-kaltura-logo-240x184.png">
+                </a>    
+                <h4><a href="http://rtcamp.com/store/buddypress-media-kaltura/" target="_blank" title="BuddyPress - Media Kaltura Add-on">BuddyPress &ndash; Media Kaltura Add-on</a></h4>		
+                <span class="price"><span class="amount">$99</span></span>
+                <div class="product_desc">
+                    <p>This plugins add automatic video conversion support for BuddyPress media plugin.
+It supports many popular video formats. It makes use of Kaltura server to encode various video formats to HTML5 supported MP4 file.</p>
+                    
+                </div>  
+                <div class="product_footer">
+                    <a class="alignleft product_demo_link" target="_blank" href="http://demo.rtcamp.com/bpm-kaltura/" title="BuddyPress Media Kaltura Add-on">Live Demo</a>
+                    <a class="add_to_cart_button  product_type_simple" target="_blank" data-product_id="15446" rel="nofollow" href="http://rtcamp.com/store/?add-to-cart=15446"><?php _e('Buy Now', 'bp-media'); ?></a>
+                </div><!-- .product_footer -->
+            </li>
+
+            <li class="product last">
+                <a href="http://rtcamp.com/store/buddypress-media-ffmpeg-converter/" title="BuddyPress-Media FFMPEG Converter Plugin" target="_blank">
+                    <img width="240" height="184" title="BuddyPress-Media FFMPEG Converter Plugin" alt="BuddyPress-Media FFMPEG Converter Plugin" class="attachment-shop_catalog wp-post-image" src="http://rtcamp.com/files/2012/09/ffmpeg-logo-240x184.png">
+                </a>
+                <h4><a href="http://rtcamp.com/store/buddypress-media-ffmpeg-converter/" title="BuddyPress-Media FFMPEG Converter Plugin" target="_blank">BuddyPress-Media FFMPEG Converter Plugin</a></h4>
+                <span class="price"><span class="amount">$49</span></span>
+                <div class="product_desc">
+                    <p>This plugins add automatic video conversion support for BuddyPress media plugin.</p>                    
+                    <p>It supports many popular audio & video formats. It is also capable of handling queues, multiple processor for encoding on your server.</p>
+                </div>                
+                <div class="product_footer">
+                    <a class="alignleft product_demo_link" href="http://demo.rtcamp.com/bpm-media" title="BuddyPress Media FFMPEG Add-on">Live Demo</a>
+                    <a class="add_to_cart_button  product_type_simple" target="_blank" data-product_id="13677" rel="nofollow" href="http://rtcamp.com/store/?add-to-cart=13677"><?php _e('Buy Now', 'bp-media'); ?></a>
+                </div><!-- .product_footer -->
+            </li>
+
+        </ul><!-- .products -->
+    </div><!-- .addon-list -->
+            
+<?php }
+
+
+function bp_media_support(){ global $current_user; ?>
+    
+    <div class="bp-media-support">
+        <h2><?php _e('Need Help/Support?', 'bp-media');?></h2>
+        <ul class="support_list">
+            <li><a href="http://rtcamp.com/buddypress-media/faq/" target="_blank" title="<?php _e('Read FAQ', 'bp-media');?>"><?php _e('Read FAQ', 'bp-media');?></a> </li>
+            <li><a href="http://rtcamp.com/support/forum/buddypress-media/" target="_blank" title="<?php _e('Free Support Forum', 'bp-media');?>"><?php _e('Free Support Forum', 'bp-media');?></a></li>
+            <li><a href="https://github.com/rtCamp/buddypress-media/issues/" target="_blank" title="<?php _e('Github Issue Tracker', 'bp-media');?>"><?php _e('Github Issue Tracker', 'bp-media');?> </a> </li>        
+        </ul>
+        <br/>
+             
+        <h2><?php _e('Hire Us!', 'bp-media');?></h2>
+        
+        <p><?php _e('We are available for customisation and premium support.', 'bp-media');?></p>
+<!--        <ul class="support_list">
+            <li>
+                <a href="http://rtcamp.com" target="_blank" title="<?php // _e('Premium support', 'bp-media');?>"><?php //_e('Premium support', 'bp-media');?> </a> 
+            </li>
+        </ul>-->
+         
+        <div class="bp-media-form" id="premium-support-form" >
+            <h4><?php _e('Please fill the form for premium support'); ?></h4>
+            <ul>
+                <li>
+                    <label class="bp-media-label" for="ur_name"><?php _e('Your Name:','bp-media');?></label><input class="bp-media-input" id="ur_name" type="text" name="premium_support[ur_name]" value="<?php echo (isset($_REQUEST['premium_support']['ur_name']))? $_REQUEST['premium_support']['ur_name'] : $current_user->user_login; ?>"/>
+                </li>
+                <li>
+                    <label class="bp-media-label" for="ur_email"><?php _e('Your Email-Id:','bp-media');?></label><input id="ur_email" class="bp-media-input" type="text" name="premium_support[ur_email]" value="<?php echo (isset($_REQUEST['premium_support']['ur_name']))? $_REQUEST['premium_support']['ur_name'] : get_option('admin_email'); ?>"/>
+                </li>
+                <li>
+                    <label class="bp-media-label" for="ur_query"><?php _e('Details:','bp-media');?></label><textarea id="ur_query" class="bp-media-textarea" type="text" name="premium_support[ur_query]"/><?php echo (isset($_REQUEST['premium_support']['ur_query']))? $_REQUEST['premium_support']['ur_query'] : ''; ?></textarea>
+                </li>
+                <li>
+                    <label class="bp-media-label" for="ur_budget"><?php _e('Your Budget:','bp-media');?></label><input id="ur_budget" class="bp-media-input" type="text" name="premium_support[ur_budget]" value="<?php echo (isset($_REQUEST['premium_support']['ur_budget']))? $_REQUEST['premium_support']['ur_budget'] : ''; ?>"/>
+                </li>                
+                <li>
+                    <label class="bp-media-label" for="ur_delivery_date"><?php _e('Expected Delivery Date:','bp-media');?></label><input id="ur_delivery_date" class="bp-media-input" type="text" name="premium_support[ur_delivery_date]" value="<?php echo (isset($_REQUEST['premium_support']['ur_delivery_date']))? $_REQUEST['premium_support']['ur_delivery_date'] : ''; ?>"/>
+                </li>                
+            </ul>
+            <p class="submit"><input type="submit" name="premium_form_submit" id="submit" class="button-primary" value="Submit"></p>   
+        </div><!-- .premium-support-form-->        
+        
+        <br/>        
+    </div>
+    
+<?php } 
+
 
 /**
  * Default BuddyPress Media admin sidebar with metabox styling
  * 
  * @since BP Media 2.0
  */
-function bp_media_default_admin_sidebar() {
-	?>
-        <div class="rtmetabox postbox" id="branding">
-            <div class="inside">
-        	<a href="http://rtcamp.com" title="Empowering The Web With WordPress" id="logo"><img src="<?php echo plugins_url( '/img/rtcamp-logo.png', __FILE__ ); ?>" alt="rtCamp" /></a>
-                <ul id="social">
-                    <li><a href="<?php printf('%s', 'http://www.facebook.com/rtCamp.solutions/'); ?>" target="_blank" title="<?php _e('Become a fan on Facebook', 'bp-media'); ?>" class="bp-media-facebook bp-media-social"><?php _e('Facebook', 'bp-media'); ?></a></li>
-                    <li><a href="<?php printf('%s', 'https://twitter.com/rtcamp/'); ?>" target="_blank" title="<?php _e('Follow us on Twitter', 'bp-media'); ?>" class="bp-media-twitter bp-media-social"><?php _e('Twitter', 'bp-media'); ?></a></li>
-                    <li><a href="<?php printf('%s', 'http://feeds.feedburner.com/rtcamp/'); ?>" target="_blank" title="<?php _e('Subscribe to our feeds', 'bp-media'); ?>" class="bp-media-rss bp-media-social"><?php _e('RSS Feed', 'bp-media'); ?></a></li>
-                </ul>
-            </div>
+function bp_media_default_admin_sidebar() {	?>
+    
+    <div class="rtmetabox postbox" id="branding">
+        <div class="inside">
+        <a href="http://rtcamp.com" title="Empowering The Web With WordPress" id="logo"><img src="<?php echo plugins_url( '/img/rtcamp-logo.png', __FILE__ ); ?>" alt="rtCamp" /></a>
+            <ul id="social">
+                <li><a href="<?php printf('%s', 'http://www.facebook.com/rtCamp.solutions/'); ?>" target="_blank" title="<?php _e('Become a fan on Facebook', 'bp-media'); ?>" class="bp-media-facebook bp-media-social"><?php _e('Facebook', 'bp-media'); ?></a></li>
+                <li><a href="<?php printf('%s', 'https://twitter.com/rtcamp/'); ?>" target="_blank" title="<?php _e('Follow us on Twitter', 'bp-media'); ?>" class="bp-media-twitter bp-media-social"><?php _e('Twitter', 'bp-media'); ?></a></li>
+                <li><a href="<?php printf('%s', 'http://feeds.feedburner.com/rtcamp/'); ?>" target="_blank" title="<?php _e('Subscribe to our feeds', 'bp-media'); ?>" class="bp-media-rss bp-media-social"><?php _e('RSS Feed', 'bp-media'); ?></a></li>
+            </ul>
         </div>
+    </div>
 
 	<div class="rtmetabox postbox" id="support">
 		
@@ -226,64 +407,194 @@ function bp_media_default_admin_sidebar() {
 	</div><?php
 }
 
+
+
 /**
  * Enqueues the scripts and stylesheets needed for the BuddyPress Media's options page
  */
 function bp_media_admin_enqueue() {
-    $current_screen=get_current_screen();
-		$admin_js = trailingslashit(site_url()).'?bp_media_get_feeds=1';
-		wp_enqueue_script('bp-media-js',plugins_url('includes/js/bp-media.js', dirname(__FILE__)));
-		wp_localize_script('bp-media-js','bp_media_news_url',$admin_js);
-		wp_enqueue_style('bp-media-admin-style', plugins_url('includes/css/bp-media-style.css', dirname(__FILE__)));
-                if(isset($current_screen->base)&&$current_screen->base=='toplevel_page_bp-media-settings'){
-                    wp_enqueue_script('dashboard');
-                }
+    $current_screen = get_current_screen();
+    $admin_js = trailingslashit(site_url()).'?bp_media_get_feeds=1';
+    wp_enqueue_script('bp-media-js',plugins_url('includes/js/bp-media.js', dirname(__FILE__)));
+    wp_localize_script('bp-media-js','bp_media_news_url',$admin_js);
+    wp_enqueue_style('bp-media-admin-style', plugins_url('includes/css/bp-media-style.css', dirname(__FILE__)));
+
 }
 add_action('admin_enqueue_scripts', 'bp_media_admin_enqueue');
 
+
+
 /**
  * Adds a tab for Media settings in the BuddyPress settings page
+ * 
+ * 
  */
 function bp_media_admin_tab() {
-	$tabs_html    = '';
-	$idle_class   = 'nav-tab';
-	$active_class = 'nav-tab nav-tab-active';
-	$tab = array(
-			'href' => bp_get_admin_url( add_query_arg( array( 'page' => 'bp-media-settings'  ), 'admin.php' ) ),
-			'name' => __( 'BuddyPress Media', 'bp-media' )
-		);
-	global $bp_media_admin_is_current;
-	$tab_class  = $bp_media_admin_is_current ? $active_class : $idle_class;
-	$tabs_html	= '<a id="bp-media" href="' . $tab['href'] . '" class="' . $tab_class . '">' . $tab['name'] . '</a>';
-	echo $tabs_html;
-	
+    
+    if(current_user_can('manage_options')){
+        $tabs_html    = '';
+        $idle_class   = 'nav-tab';
+        $active_class = 'nav-tab nav-tab-active';
+        $tabs = array();
+
+        // Check to see which tab we are on
+        $tab = isset( $_GET['page'] )  ? $_GET['page'] : "bp-media-settings";
+        /* BP Media */
+        $tabs[] = array(
+            'href' => bp_get_admin_url( add_query_arg( array( 'page' => 'bp-media-settings'  ), 'admin.php' ) ),
+            'title' => __( 'BP Media', 'bp-media' ),
+            'name' => __( 'BP Media', 'bp-media' ),
+            'class' => ($tab == 'bp-media-settings' || $tab == 'bp-media-addons' || $tab == 'bp-media-support') ? $active_class : $idle_class        
+        );
+        
+        foreach($tabs as $tab){
+            $tabs_html.= '<a id="bp-media" title= "' . $tab['title'] . '"  href="' . $tab['href'] . '" class="' . $tab['class'] . '">' . $tab['name'] . '</a>';
+        }
+        echo $tabs_html;	
+    }
 }
+
 add_action('bp_admin_tabs','bp_media_admin_tab');
 
-/**
- * Adds which function to execute when bp-media settings page is called
- */
-function bp_media_add_menu() {
-	global $bp;
-	
-	if ( !is_super_admin() )
-		return false;
-	
-	$page  = bp_core_do_network_admin()  ? 'settings.php' : 'options-general.php';
-	
-	$hook = add_submenu_page( $page, __( 'Media', 'bp-media' ), __( 'Media', 'bp-media' ), 'manage_options', 'bp-media-settings', "bp_media_admin_menu" );
-
-	// Fudge the highlighted subnav item when on the BuddyPress Forums admin page
-	add_action( "admin_head-$hook", 'bp_core_modify_admin_menu_highlight' );
-}
-add_action( bp_core_admin_hook(), 'bp_media_add_menu' );
 
 /**
- * Removes the Media submenu item from the settings/options-general page so that there will only be one BuddyPress option
+ * Registers BP Media Settings options
+ *
+ * 
  */
-function bp_media_modify_admin_menu() {
- 	$page  = bp_core_do_network_admin()  ? 'settings.php' : 'options-general.php';
-	remove_submenu_page( $page, 'bp-media-settings');
+function bp_media_admin_init_settings() {
+    register_setting( 'bp_media_options_settings', 'bp_media_options', 'bp_media_validate' );
 }
-add_action( 'admin_head', 'bp_media_modify_admin_menu', 999 );
-?>
+add_action( 'admin_init', 'bp_media_admin_init_settings',1 );
+
+
+
+/** 
+ * Validate bp_media_settings options
+ * 
+ * @param type $input Validate 
+ */
+
+function bp_media_validate( $input ){
+    
+    if(isset($_REQUEST['premium_form_submit'])){
+        
+        if(empty($_REQUEST['premium_support']['ur_name'])){
+            add_settings_error( 'enquire_name', 'enquire_name', __( 'Please enter your name', 'rtPanel' ), 'error' );
+        }
+        else if(empty($_REQUEST['premium_support']['ur_email']) || !is_email($_REQUEST['premium_support']['ur_email'])){
+            add_settings_error( 'enquire_name', 'enquire_name', __( 'Please enter valid email-Id', 'rtPanel' ), 'error' );
+        }
+        else{
+            $send_array = array();
+            $body = '';
+            $body = '<p>Name : '.  esc_attr(trim($_REQUEST['premium_support']['ur_name'])).'</p>';
+            $body .= '<p>Email Id : '.esc_attr(trim($_REQUEST['premium_support']['ur_email'])).'</p>';
+            if(!empty($_REQUEST['premium_support']['ur_query'])) $body .= '<p>Query : '.esc_attr(trim($_REQUEST['premium_support']['ur_query'])).'</p>';
+            if(!empty($_REQUEST['premium_support']['ur_budget'])) $body .= '<p>Budget :  '.esc_attr(trim($_REQUEST['premium_support']['ur_budget'])).'</p>';
+            if(!empty($_REQUEST['premium_support']['ur_delivery_date'])) $body .= '<p>Expected Delivery Date : '.esc_attr(trim($_REQUEST['premium_support']['ur_delivery_date'])).'</p>';
+            $send_array['task[body]'] = $body;
+            $send_array['ur_name'] = $_REQUEST['premium_support']['ur_name'];
+            
+            $return = bp_media_send_enquiry($send_array);
+            
+            if(!empty($return))
+                add_settings_error( 'form_submitted', 'form_submitted', __( 'Thanks for contacting us. We will get in touch with you soon.', 'rtPanel' ), 'updated' );
+            else 
+                add_settings_error( 'form_submitted', 'form_submitted', __( 'Sorry, your enquiry is not submitted', 'rtPanel' ), 'error' );
+        }
+        
+    }else if(isset($_REQUEST['submit'])){
+		
+		if(array_key_exists('remove_linkback', $_POST)){
+			if($input['remove_linkback']=='2'){
+                update_option('bp_media_remove_linkback', '2');				
+			}
+			else {
+				update_option('bp_media_remove_linkback', '1');
+			}
+		}
+        
+		if(isset($input['videos_enabled'])){
+			$input['videos_enabled'] = true;}
+		else{
+			$input['videos_enabled'] = false;}
+		if(isset($input['audio_enabled'])){
+			$input['audio_enabled'] = true;}
+		else{
+			$input['audio_enabled'] = false;}
+		if(isset($input['images_enabled'])){
+			$input['images_enabled'] = true;}
+		else{
+			$input['images_enabled'] = false;}
+            
+		if(isset($input['download_enabled'])){
+			$input['download_enabled'] = true;}
+		else{
+			$input['download_enabled'] = false;}
+	}
+    
+    return $input;        
+}
+
+
+function bp_media_send_enquiry($new_ticket){
+    
+    $bp_media_request_activecollab = new bp_media_request_activecollab();
+    
+    /* Set Enquiry Name */
+    $task_name = !empty($new_ticket['ur_name']) ? __('New Premium Request from','bp-media').' '. $new_ticket['ur_name'] : __('New Premium Request','bp-media');
+    
+    $defaults = array(  'task[name]' => $task_name,                        
+                        'task[body]' => '',
+                        'task[label_id]' => BP_MEDIA_AC_API_LABEL_ID,
+                        'task[priority]' => BP_MEDIA_AC_API_PRIORITY,
+                        'task[assignee_id]' => BP_MEDIA_AC_API_ASSIGNEE_ID,
+                        'task[category_id]' => BP_MEDIA_AC_API_CATEGORY_ID,
+                        'submitted' => 'submitted' );
+    /* merge default array */
+    $new_ticket = wp_parse_args( $new_ticket, $defaults );
+    
+    /* send form submit request to active collabe */    
+    $result = $bp_media_request_activecollab->send_ticket($new_ticket);
+    
+    return $result;
+}
+
+
+class bp_media_request_activecollab{
+
+  	//ActiveCollab API variables
+	
+ 	var $acollab_projid = BP_MEDIA_AC_API_PROJECT_ID;	//The project ID we want to add a ticket to. You can find this in the URL of the project when you enter it. ex: /projects/16/  - 16 is the ID
+	var $acollab_token	= BP_MEDIA_AC_API_AUTH_TOKEN;	// API token. Different for each ActiveCollab user. Create a user fo the API, then grab the API Token under User Profile > Settings
+	var $acollab_url	= BP_MEDIA_AC_API_URL;	// Find it in the same place you find your API token.
+
+    // Errors
+	var $errorMsg = "";
+
+
+	function send_ticket($request){
+
+		$api_url = $this->acollab_url . '?path_info=projects/buddypress-media/tasks/add&auth_api_token='.$this->acollab_token;
+		/*  Send it  */
+		
+        $ch = curl_init();
+		
+		// ActivCollab wants the pathinfo and token in the URL, not in the POST info.
+        
+		curl_setopt($ch, CURLOPT_URL, $api_url);
+		curl_setopt($ch, CURLOPT_POST,1);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+
+    	// The POST data
+		curl_setopt($ch, CURLOPT_POSTFIELDS, $request);
+
+		$result = curl_exec($ch);
+		
+        curl_close($ch);
+
+		return $result;
+
+	}
+}

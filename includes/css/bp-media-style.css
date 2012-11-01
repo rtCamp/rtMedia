@@ -17,8 +17,17 @@ li.media div.activity-content div.activity-inner p{display:none;}
 div.bp_media_title{margin-bottom:10px;}
 #bp-media-footer {color: #4D4D4D;text-align: center;text-shadow: #FAFAFA 1px 1px 0;}
 #wpbody-content div.metabox-fixed{width: 280px;margin-right: -300px;float: right;}
+<<<<<<< HEAD
 #wpbody-content div.wrap.bp-media-admin .columns-2{margin-right:300px;}
+=======
+#wpbody-content div.wrap.bp-media-admin .columns-2{margin-right:300px;padding-top: 0;margin-top: 15px;width: 600px}
+#wpbody-content .bp-media-settings-tabs{margin-bottom: 15px}
+#wpbody-content .bp-media-settings-tabs .media-nav-tab{margin: 0 10px; text-decoration: underline; text-transform: capitalize}
+#wpbody-content .bp-media-settings-tabs .media-nav-tab.media-nav-tab-active{font-weight: bold}
+>>>>>>> origin/feature-widget
 
+
+#wpbody-content .wrap  div.bp-media-metabox-holder{padding-top: 0}
 .bp-media-social{background: url('../img/bp_media_social.png');height: 35px;width: 35px;display: inline-block;font-size: 0px;margin-right:5px;}
 .bp-media-facebook{background-position: 0px 0px;}
 .bp-media-facebook:hover{background-position: 0px 36px;}
@@ -40,22 +49,31 @@ div.bp_media_title{margin-bottom:10px;}
 .bp-media-single div.bp_media_content{text-align:center;}
 .bp-media-single .bp_media_content .mejs-container{margin-left:auto;margin-right:auto;}
 
+.bp-media-support .support_list{ margin-left: 25px}
+.bp-media-support .support_list li{list-style: disc;margin-bottom: 10px}
+
 .media-tabs-container .ui-tabs-panel{}
 .media-tabs-container .ui-tabs-hide{display: none}
 
-.media-tabs-container .ui-tabs-nav{display: block; margin: 0 0 10px; clear: both;overflow: hidden}
+.media-tabs-container .ui-tabs-nav{clear: both;display: block;margin: 0 0 15px;overflow: hidden;}
 .media-tabs-container .ui-state-default{border-left: 1px solid;float: left;line-height: 110%;padding: 0 5px;}
 .media-tabs-container .ui-state-default:first-child{margin-left: 0px;border: 0; padding-left: 0}
 
 .media-tabs-container .ui-state-default a{text-decoration: none}
 .media-tabs-container .ui-state-default.ui-state-active a{text-decoration: underline}
+
+.media-tabs-container .widget-item-listing li{margin-top: 10px;overflow: hidden;min-height: 52px}
+.media-tabs-container .widget-item-listing li img{max-width:52px; margin-right: 10px; float: left; display: block }
+.media-tabs-container .widget-item-listing li h3 {margin: 0}
+.media-tabs-container .widget-item-listing li h3 a{font-size: 13px;font-weight: normal;word-wrap: break-word; }
+
 .bp-media-actions{margin:20px 0;}
 .bp-media-actions a{display:inline-block;}
 
 
-#adminmenu li.toplevel_page_bp-media-settings .wp-menu-image a{background:url('../img/bpm-icon-16.png') center -34px no-repeat;}
+#adminmenu li.toplevel_page_bp-media-settings .wp-menu-image a{background:url('../img/bpm-icon-16.png') center 1px no-repeat;}
 #adminmenu li.toplevel_page_bp-media-settings:hover .wp-menu-image a,
-#adminmenu li.current.toplevel_page_bp-media-settings .wp-menu-image a{background-position: center 0;}
+#adminmenu li.current.toplevel_page_bp-media-settings .wp-menu-image a{background-position: center 1px;}
 #adminmenu li.toplevel_page_bp-media-settings .wp-menu-image a img{display:none;}
 #bp-media-settings-boxes{overflow: hidden;width: 100%;float: left;}
 .nav-tab-wrapper a#bp-media{background:url('../img/bpm-icon-32.png') transparent no-repeat; padding-left:32px;}
@@ -64,7 +82,59 @@ div.bp_media_title{margin-bottom:10px;}
 #branding #logo{text-align:center;padding: 10px 0;display:block;}
 ul#social{display:block;text-align:center;margin:0;}
 ul#social li{display:inline;}
+<<<<<<< HEAD
 #bp-media-show-more{width: 200px;margin-left: auto;margin-right: auto;display: block;height: 30px;line-height: 30px;font-size: 20px;}
 #bp-media-upload-ui.activity-component{margin-left: 74px;margin-top: 10px;}
 ul#activity-stream li.media.album_updated ul{}
 ul#activity-stream li.media.album_updated ul li{float: left;margin-right:2%}
+=======
+
+
+/* Addons page Styling */
+#bp-media-addons-list_metabox {background: #ffffff}
+.products ul:after, ul.products:after {clear: both;content: "";display: block;}
+.products ul, ul.products {clear: both;list-style: none outside none;margin: 0 0 14px;padding: 0;}
+.products {margin: 0;}
+ul.products li.product.first { }
+ul.products li.product {margin: 20px 10px 30px;padding: 0;position: relative;overflow: hidden}
+ul.products li.product h4 {background: none repeat scroll 0 0 transparent;border: 0 none;color: #006999;cursor: pointer;font-family: "HelveticaNeue-Light","Helvetica Neue Light","Helvetica Neue",sans-serif;font-size: 20px;font-weight: normal;line-height: 26px;margin: 0 0 10px;}
+ul.products li.product a {text-decoration: none;}
+ul.products li.product a img, div.product div.images img {box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.4);}
+ul.products li.product a img {box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.3);display: block;height: auto;margin: 5px 15px 5px 5px;transition: all 0.2s ease-in-out 0s;float: left; width: 200px}
+
+ul.products li.product .price, ul.products li.product .price .amount, ul.products li.product .price ins {color: #85AD74;font-size: 25px;font-weight: bold;}
+ul.products li.product .price {line-height: 1;color: #85AD74;display: block;font-weight: normal;margin-bottom: 0.5em;}
+/*ul.products li.product .add_to_cart_button{background-image: linear-gradient(bottom, #F7F6F7 47%, #DFDBDF 74%);
+background-image: -o-linear-gradient(bottom, #F7F6F7 0%, #DFDBDF 100%);
+background-image: -moz-linear-gradient(bottom, #F7F6F7 0%, #DFDBDF 100%);
+background-image: -webkit-linear-gradient(bottom, #F7F6F7 0%, #DFDBDF 100%);
+background-image: -ms-linear-gradient(bottom, #F7F6F7 0%, #DFDBDF 100%);
+background-image: -webkit-gradient(linear,left bottom,left top,color-stop(0, #F7F6F7),color-stop(1, #DFDBDF));
+border: 1px solid #C7C0C7;border-radius: 2px 2px 2px 2px;box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.075) inset, 0 1px 0 rgba(255, 255, 255, 0.3) inset, 0 1px 2px rgba(0, 0, 0, 0.1);color: #5E5E5E;cursor: pointer;font-family: inherit;font-size: 14px;font-weight: bold;float: right;left: auto;margin: 0;overflow: visible;padding: 6px 10px;position: relative;text-shadow: 0 1px 0 rgba(255, 255, 255, 0.8);font-family: "HelveticaNeue-Light","Helvetica Neue Light","Helvetica Neue",sans-serif;}
+
+ul.products li.product .add_to_cart_button:hover{background-image: linear-gradient(bottom, #F7F6F7 47%, #DFDBDF 74%);
+background-image: -o-linear-gradient(bottom, #F7F6F7 0%, #D3CED3 100%);
+background-image: -moz-linear-gradient(bottom, #F7F6F7 0%, #D3CED3 100%);
+background-image: -webkit-linear-gradient(bottom, #F7F6F7 0%, #D3CED3 100%);
+background-image: -ms-linear-gradient(bottom, #F7F6F7 0%, #D3CED3 100%);
+background-image: -webkit-gradient(linear,left bottom,left top,color-stop(1, #F7F6F7),color-stop(1, #D3CED3));}
+*/
+ul.products li.product .product_footer{margin: 20px 0 0;overflow: hidden;}
+ul.products li.product .add_to_cart_button{background: none repeat scroll 0 0 #C45200;border: 0 none;box-shadow: 0 0 0;color: #FFFFFF;display: inline-block;float: right;font-size: 18px;font-weight: bold;height: auto;line-height: 1.4em;margin: 0;padding: 4px 15px;text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.6)}
+ul.products li.product .product_footer .product_demo_link{font-size: 16px;margin-top: 8px;}
+
+ul.products li.product .add_to_cart_button:hover{background: none repeat scroll 0 0 #D75A00;
+    box-shadow: 0 1px rgba(0, 0, 0, 0.2), 0 0 1px rgba(0, 0, 0, 0.4) inset;
+    color: #FFFFFF;}
+
+/* Admin bar Menu  */
+#wpadminbar .bp-media-settings-menu > .ab-item .ab-icon{background: url("../img/bpm-icon-16.png") no-repeat scroll -8px -7px transparent}
+#wpadminbar .bp-media-settings-menu:hover .ab-icon{background-position: -8px -41px}
+
+
+.bp-media-form li{margin-bottom: 10px}
+.bp-media-form .bp-media-label{ display: inline-block;margin-right: 10px;width: 150px;vertical-align: top}
+.bp-media-form .bp-media-input{background-color: #FFFFFF;border: 1px solid #DFDFDF;border-radius: 3px 3px 3px 3px;color: #333333;line-height: 16px;padding: 5px;width: 220px;}
+.bp-media-form .bp-media-textarea{background-color: #FFFFFF;border: 1px solid #DFDFDF;border-radius: 3px 3px 3px 3px;color: #333333;line-height: 16px;padding: 5px;width: 220px;}
+#normal-sortables .postbox .bp-media-form .submit{float: none; margin-left: 150px}
+>>>>>>> origin/feature-widget
