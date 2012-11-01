@@ -1,10 +1,12 @@
+![alt text](https://plugins.svn.wordpress.org/buddypress-media/assets/banner-772x250.jpg)
+
 # BuddyPress Media #
 
 * **Contributors:** [rtcamp] (http://profiles.wordpress.org/rtcamp),
 
 * **License:** [GPL v2 or later] ( http://www.gnu.org/licenses/gpl-2.0.html)
 
-* **Donate link:** https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=9488824
+* **Donate Link:** https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=9488824
 
 Adds multimedia features to your BuddyPress based social network. Support mobile devices.& audio/video conversion.
 
