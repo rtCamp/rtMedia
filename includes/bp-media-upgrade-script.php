@@ -56,5 +56,6 @@ function bp_media_upgrade_to_2_2(){
 	add_action('admin_notices',function (){echo '<div class="updated"><p>
 		<b>BuddyPress Media</b> Database upgraded successfully.
 	</p></div>';});
+	wp_cache_flush();
 }
 ?>

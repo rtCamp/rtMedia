@@ -21,7 +21,7 @@ function bp_media_upgrade_script(){
  */
 function bp_media_upgrade_db_notice() {
 	?>
-	<div class="error"><p>
+	<div class="updated rt-success"><p>
 		Please click upgrade to upgrade the database of BuddyPress Media <a class="button" id="refresh_media_count" href ="?page=bp-media-settings&bp_media_upgrade_db=1&wp_nonce=<?php echo wp_create_nonce( 'bp_media_upgrade_db' ); ?>" class="button" title="<?php printf(__('It will migrate your BuddyPress Media\'s earlier database to new database.')); ?>">Upgrade</a>
 	</p></div>
 	<?php
