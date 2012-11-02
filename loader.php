@@ -3,7 +3,7 @@
 Plugin Name: BuddyPress Media
 Plugin URI: http://rtcamp.com/buddypress-media/
 Description: This plugin adds missing media rich features like photos, videos and audios uploading to BuddyPress which are essential if you are building social network, seriously!
-Version: 2.1.5
+Version: 2.2
 Author: rtCamp
 Author URI: http://rtcamp.com
 */
@@ -12,7 +12,7 @@ Author URI: http://rtcamp.com
 define('BP_MEDIA_IS_INSTALLED', 1);
 
 /* Constant to store the current version of the BP Media Plugin. */
-define('BP_MEDIA_VERSION', '2.1.5');
+define('BP_MEDIA_VERSION', '2.2');
 
 /* A constant to be used as base for other URLs throughout the plugin */
 define('BP_MEDIA_PLUGIN_DIR', dirname(__FILE__));
@@ -23,15 +23,6 @@ define('BP_MEDIA_REQUIRED_BP','1.6');
 /* A constatnt to store database version */
 define('BP_MEDIA_DB_VERSION','2.0');
 
-/* A constant to Active Collab API URL */
-define('BP_MEDIA_AC_API_URL','http://git2.rtcamp.info/public/api.php');
-
-/* A constant to Active Collab API AUTH TOKEN */
-define('BP_MEDIA_AC_API_AUTH_TOKEN','5-9B8qSK0sCpjX3cX0L8Empt19fDJ86l74N4jvChN5');
-
-/* A constant to Active Collab API PROJECT ID */
-define('BP_MEDIA_AC_API_PROJECT_ID','5-9B8qSK0sCpjX3cX0L8Empt19fDJ86l74N4jvChN5');
-
 /* A constant to Active Collab API Assignee ID */
 define('BP_MEDIA_AC_API_ASSIGNEE_ID','5');
 
@@ -40,6 +31,7 @@ define('BP_MEDIA_AC_API_LABEL_ID','1');
 
 /* A constant to Active Collab API priority */
 define('BP_MEDIA_AC_API_PRIORITY','2');
+
 /* A constant to Active Collab API priority */
 define('BP_MEDIA_AC_API_CATEGORY_ID','224');
 
