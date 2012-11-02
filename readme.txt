@@ -1,12 +1,12 @@
 === BuddyPress Media ===
 Contributors: rtcamp
-Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=9488824
+Donate link: https://rtcamp.com/donate
 Tags: BuddyPress, media, multimedia, audio, video, photo, images, upload, share, MediaElement.js, ffmpeg, kaltura
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires at least: 3.3.2
 Tested up to: 3.4.2
-Stable tag: 2.1.5
+Stable tag: 2.2
 
 Adds multimedia features to your BuddyPress based social network. Support mobile devices.& audio/video conversion.
 
@@ -18,10 +18,12 @@ BuddyPress Media adds multimedia features to your BuddyPress based social networ
 * Images, Audio and Video Support
 * Uploading Photos/Videos via mobile (Tested on iPhone running iOS6)
 * HTML5 player (with fall back to flash/silverlight player support)
-* Automatic conversion of common audio & video formats to mp3/mp4. via [Premium Add-On](http://rtcamp.com/store/buddypress-media-ffmpeg-converter/ "Visit rtCamp's Store")
+* Automatic conversion of common audio & video formats to mp3/mp4. via [FFMPEG Premium Add-On](http://rtcamp.com/store/buddypress-media-ffmpeg-converter/ "Visit rtCamp's Store")
 
 = Roadmap =
-* Kaltura Integration (work already started).
+
+* Group Albums.
+* Activity-update form media upload
 * Paid membership plans, i.e. "Upload Quota" for buddypress members  (in planning stage).
 
 == Installation ==
@@ -56,6 +58,13 @@ Please visit [BuddyPress Media's Features page](http://rtcamp.com/buddypress-med
 
 == Changelog ==
 
+= 2.2 =
+* Album Support for Users
+* Ajaxified pagination to make it easy to view large albums.
+* Multiple file uploads with progress bar
+* Easy access to the backend admin-options
+* Admin-option to disable download button below media files.
+ 
 = 2.1.5 =
 * Fixed the postmeta box bug
 
