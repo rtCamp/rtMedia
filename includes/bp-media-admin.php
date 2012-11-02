@@ -69,7 +69,7 @@ function bp_media_on_load_page() {
     switch ( $tab ) {
         case 'bp-media-addons' :
             // All metaboxes registered during load page can be switched off/on at "Screen Options" automatically, nothing special to do therefore
-            add_meta_box('bp-media-addons-list_metabox',__('BuddyPress Media Addons','bp-media'),'bp_media_addons_list','bp-media-settings', 'normal', 'core' );
+            add_meta_box('bp-media-addons-list_metabox',__('BuddyPress Media Addons for Audio/Video Conversion','bp-media'),'bp_media_addons_list','bp-media-settings', 'normal', 'core' );
             break;
         case 'bp-media-support' :
             // All metaboxes registered during load page can be switched off/on at "Screen Options" automatically, nothing special to do therefore
@@ -305,35 +305,33 @@ function bp_media_addons_list(){ ?>
         <ul class="products">
 
             <li class="product first">
-                <a href="http://rtcamp.com/store/buddypress-media-kaltura/" target="_blank" title="BuddyPress - Media Kaltura Add-on">
-                    <img width="240" height="184" title="BuddyPress - Media Kaltura Add-on" alt="BuddyPress - Media Kaltura Add-on" class="attachment-shop_catalog wp-post-image" src="http://rtcamp.com/files/2012/10/new-buddypress-media-kaltura-logo-240x184.png">
+                <a href="http://rtcamp.com/store/buddypress-media-kaltura/"  title="BuddyPress - Media Kaltura Add-on">
+                    <img width="240" height="184" title="BuddyPress - Media Kaltura Add-on" alt="BuddyPress - Media Kaltura Add-on" src="http://cdn.rtcamp.com/files/2012/10/new-buddypress-media-kaltura-logo-240x184.png">
                 </a>
-                <h4><a href="http://rtcamp.com/store/buddypress-media-kaltura/" target="_blank" title="BuddyPress - Media Kaltura Add-on">BuddyPress &ndash; Media Kaltura Add-on</a></h4>
-                <span class="price"><span class="amount">$99</span></span>
+                <h4><a href="http://rtcamp.com/store/buddypress-media-kaltura/"  title="BuddyPress - Media Kaltura Add-on">BuddyPress-Media Kaltura Add-on</a></h4>
                 <div class="product_desc">
-                    <p>This plugins add automatic video conversion support for BuddyPress media plugin.
-It supports many popular video formats. It makes use of Kaltura server to encode various video formats to HTML5 supported MP4 file.</p>
-
+                    <p>Add support for more video formats using Kaltura video solution.</p>
+		    <p>Works with Kaltura.com, self-hosted Kaltura-CE and Kaltura-on-premise.</p> 
                 </div>
-                <div class="product_footer">
-                    <a class="alignleft product_demo_link" target="_blank" href="http://demo.rtcamp.com/bpm-kaltura/" title="BuddyPress Media Kaltura Add-on">Live Demo</a>
-                    <a class="add_to_cart_button  product_type_simple" target="_blank" data-product_id="15446" rel="nofollow" href="http://rtcamp.com/store/?add-to-cart=15446"><?php _e('Buy Now', 'bp-media'); ?></a>
-                </div><!-- .product_footer -->
+		<div class="product_footer">
+                	<span class="price alignleft"><span class="amount">$99</span></span>
+                    	<a class="add_to_cart_button  alignright product_type_simple"  href="http://rtcamp.com/store/?add-to-cart=15446"><?php _e('Buy Now', 'bp-media'); ?></a>     
+	    		<a class="alignleft product_demo_link"  href="http://demo.rtcamp.com/bpm-kaltura/" title="BuddyPress Media Kaltura Add-on">Live Demo</a>
+		 </div><!-- .product_footer -->
             </li>
-
             <li class="product last">
-                <a href="http://rtcamp.com/store/buddypress-media-ffmpeg-converter/" title="BuddyPress-Media FFMPEG Converter Plugin" target="_blank">
-                    <img width="240" height="184" title="BuddyPress-Media FFMPEG Converter Plugin" alt="BuddyPress-Media FFMPEG Converter Plugin" class="attachment-shop_catalog wp-post-image" src="http://rtcamp.com/files/2012/09/ffmpeg-logo-240x184.png">
+                <a href="http://rtcamp.com/store/buddypress-media-ffmpeg-converter/" title="BuddyPress-Media FFMPEG Converter Plugin" >
+                    <img width="240" height="184" title="BuddyPress-Media FFMPEG Converter Plugin" alt="BuddyPress-Media FFMPEG Converter Plugin" src="http://cdn.rtcamp.com/files/2012/09/ffmpeg-logo-240x184.png">
                 </a>
-                <h4><a href="http://rtcamp.com/store/buddypress-media-ffmpeg-converter/" title="BuddyPress-Media FFMPEG Converter Plugin" target="_blank">BuddyPress-Media FFMPEG Converter Plugin</a></h4>
-                <span class="price"><span class="amount">$49</span></span>
+                <h4><a href="http://rtcamp.com/store/buddypress-media-ffmpeg-converter/" title="BuddyPress-Media FFMPEG Converter Plugin" >BuddyPress-Media FFMPEG Add-on</a></h4>
                 <div class="product_desc">
-                    <p>This plugins add automatic video conversion support for BuddyPress media plugin.</p>
-                    <p>It supports many popular audio & video formats. It is also capable of handling queues, multiple processor for encoding on your server.</p>
+                    <p>Add supports for more audio &amp; video formats using open-source <a href="https://github.com/rtCamp/media-node">media-node</a>.</p>
+                    <p>Media node comes with automated setup script for Ubuntu/Debian.</p>
                 </div>
                 <div class="product_footer">
-                    <a class="alignleft product_demo_link" href="http://demo.rtcamp.com/bpm-media" title="BuddyPress Media FFMPEG Add-on">Live Demo</a>
-                    <a class="add_to_cart_button  product_type_simple" target="_blank" data-product_id="13677" rel="nofollow" href="http://rtcamp.com/store/?add-to-cart=13677"><?php _e('Buy Now', 'bp-media'); ?></a>
+		    <span class="price alignleft"><span class="amount">$49</span></span>	
+                    <a class="add_to_cart_button alignright  product_type_simple"  href="http://rtcamp.com/store/?add-to-cart=13677"><?php _e('Buy Now', 'bp-media'); ?></a>
+    		<a class="alignleft product_demo_link" href="http://demo.rtcamp.com/bpm-media" title="BuddyPress Media FFMPEG Add-on">Live Demo</a>
                 </div><!-- .product_footer -->
             </li>
 
@@ -348,21 +346,16 @@ function bp_media_support(){ global $current_user; ?>
     <div class="bp-media-support">
         <h2><?php _e('Need Help/Support?', 'bp-media');?></h2>
         <ul class="support_list">
-            <li><a href="http://rtcamp.com/buddypress-media/faq/" target="_blank" title="<?php _e('Read FAQ', 'bp-media');?>"><?php _e('Read FAQ', 'bp-media');?></a> </li>
-            <li><a href="http://rtcamp.com/support/forum/buddypress-media/" target="_blank" title="<?php _e('Free Support Forum', 'bp-media');?>"><?php _e('Free Support Forum', 'bp-media');?></a></li>
-            <li><a href="https://github.com/rtCamp/buddypress-media/issues/" target="_blank" title="<?php _e('Github Issue Tracker', 'bp-media');?>"><?php _e('Github Issue Tracker', 'bp-media');?> </a> </li>
+            <li><a href="http://rtcamp.com/buddypress-media/faq/"  title="<?php _e('Read FAQ', 'bp-media');?>"><?php _e('Read FAQ', 'bp-media');?></a> </li>
+            <li><a href="http://rtcamp.com/support/forum/buddypress-media/"  title="<?php _e('Free Support Forum', 'bp-media');?>"><?php _e('Free Support Forum', 'bp-media');?></a></li>
+            <li><a href="https://github.com/rtCamp/buddypress-media/issues/"  title="<?php _e('Github Issue Tracker', 'bp-media');?>"><?php _e('Github Issue Tracker', 'bp-media');?> </a> </li>
         </ul>
         <br/>
 
         <h2><?php _e('Hire Us!', 'bp-media');?></h2>
 
-        <p><?php _e('We are available for customisation and premium support.', 'bp-media');?></p>
-<!--        <ul class="support_list">
-            <li>
-                <a href="http://rtcamp.com" target="_blank" title="<?php // _e('Premium support', 'bp-media');?>"><?php //_e('Premium support', 'bp-media');?> </a>
-            </li>
-        </ul>-->
-
+        <h4><a href="http://rtcamp.com/contact/?purpose=hire"><?php _e('We are available for customisation and premium support. Get on touch with us. :-)', 'bp-media');?></a></h4>
+<!--
         <div class="bp-media-form" id="premium-support-form" >
             <h4><?php _e('Please fill the form for premium support'); ?></h4>
             <ul>
@@ -384,7 +377,6 @@ function bp_media_support(){ global $current_user; ?>
             </ul>
             <p class="submit"><input type="submit" name="premium_form_submit" id="submit" class="button-primary" value="Submit"></p>
         </div><!-- .premium-support-form-->
-
         <br/>
     </div>
 
@@ -402,9 +394,9 @@ function bp_media_default_admin_sidebar() {	?>
         <div class="inside">
         <a href="http://rtcamp.com" title="Empowering The Web With WordPress" id="logo"><img src="<?php echo plugins_url( '/img/rtcamp-logo.png', __FILE__ ); ?>" alt="rtCamp" /></a>
             <ul id="social">
-                <li><a href="<?php printf('%s', 'http://www.facebook.com/rtCamp.solutions/'); ?>" target="_blank" title="<?php _e('Become a fan on Facebook', 'bp-media'); ?>" class="bp-media-facebook bp-media-social"><?php _e('Facebook', 'bp-media'); ?></a></li>
-                <li><a href="<?php printf('%s', 'https://twitter.com/rtcamp/'); ?>" target="_blank" title="<?php _e('Follow us on Twitter', 'bp-media'); ?>" class="bp-media-twitter bp-media-social"><?php _e('Twitter', 'bp-media'); ?></a></li>
-                <li><a href="<?php printf('%s', 'http://feeds.feedburner.com/rtcamp/'); ?>" target="_blank" title="<?php _e('Subscribe to our feeds', 'bp-media'); ?>" class="bp-media-rss bp-media-social"><?php _e('RSS Feed', 'bp-media'); ?></a></li>
+                <li><a href="<?php printf('%s', 'http://www.facebook.com/rtCamp.solutions/'); ?>"  title="<?php _e('Become a fan on Facebook', 'bp-media'); ?>" class="bp-media-facebook bp-media-social"><?php _e('Facebook', 'bp-media'); ?></a></li>
+                <li><a href="<?php printf('%s', 'https://twitter.com/rtcamp/'); ?>"  title="<?php _e('Follow us on Twitter', 'bp-media'); ?>" class="bp-media-twitter bp-media-social"><?php _e('Twitter', 'bp-media'); ?></a></li>
+                <li><a href="<?php printf('%s', 'http://feeds.feedburner.com/rtcamp/'); ?>"  title="<?php _e('Subscribe to our feeds', 'bp-media'); ?>" class="bp-media-rss bp-media-social"><?php _e('RSS Feed', 'bp-media'); ?></a></li>
             </ul>
         </div>
     </div>
@@ -421,6 +413,7 @@ function bp_media_default_admin_sidebar() {	?>
 		<h3 class="hndle"><span><?php _e('Premium Addons', 'bp-media'); ?></span></h3>
 		<div class="inside">
 			<ul>
+ <li><a href="http://rtcamp.com/store/buddypress-media-kaltura/" title="BuddyPress Media Kaltura">BPM-Kaltura</a> - add support for Kaltura.com/Kaltura-CE based video conversion support</li>
 				<li><a href="http://rtcamp.com/store/buddy-press-media-ffmpeg/" title="BuddyPress Media FFMPEG">BPM-FFMPEG</a> - add FFMEG-based audio/video conversion support</li>
 			</ul>
 			<h4><?php printf(__('Are you a developer?','bp-media')) ?></h4>
