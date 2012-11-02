@@ -407,6 +407,8 @@ class BP_Media_Host_Wordpress {
 	 */
 	function show_comment_form() {
 		$activity_id = get_post_meta($this->id, 'bp_media_child_activity', true);
+		if(!$activity_id || !function_exists(bp_has_activities()))
+			return false;
 		if (bp_has_activities(array(
 				'display_comments' => 'stream',
 				'include' => $activity_id,
