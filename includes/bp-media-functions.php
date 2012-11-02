@@ -179,4 +179,49 @@ function bp_media_get_feeds($feed_url = 'http://rtcamp.com/tag/buddypress/feed/'
 	</ul><?php
 }
 
+function bp_media_update_album_activity($album,$current_time = true,$delete_media_id = null){
+	if(!is_object($album)){
+		$album = new BP_Media_Album($album);
+	}
+	$args = array(
+		'post_parent' => $album->get_id(),
+		'numberposts'	=>	4,
+		'post_type'	=>	'attachment',
+	);
+	if($delete_media_id)
+		$args['exclude'] = $delete_media_id;
+	$attachments = get_posts($args);
+	if(is_array($attachments)){
+		$content = '<ul>';
+		foreach($attachments as $media){
+			$bp_media = new BP_Media_Host_Wordpress($media->ID);
+			$content .= $bp_media->get_album_activity_content();
+		}
+		$content .= '</ul>';
+		$activity_id = get_post_meta($album->get_id(), 'bp_media_child_activity');
+		if($activity_id){
+			$args = array(
+				'in' => $activity_id,
+			);
+
+			$activity = @bp_activity_get($args);
+			if(isset($activity['activities'][0]->id)){
+				$args = array(
+					'content'	=>	$content,
+					'id'	=>	$activity_id,
+					'type' => 'album_updated',
+					'user_id' => $activity['activities'][0]->user_id,
+					'action' => apply_filters( 'bp_media_filter_album_updated', sprintf( __( '%1$s added new media in album %2$s', 'bp-media'), bp_core_get_userlink( $activity['activities'][0]->user_id ), '<a href="' . $album->get_url() . '">' . $album->get_title() . '</a>' ) ),
+					'component' => BP_MEDIA_SLUG, // The name/ID of the component e.g. groups, profile, mycomponent
+					'primary_link' => $activity['activities'][0]->primary_link,
+					'item_id' => $activity['activities'][0]->item_id,
+					'secondary_item_id' => $activity['activities'][0]->secondary_item_id,
+					'recorded_time' => $current_time? bp_core_current_time(): $activity['activities'][0]->date_recorded,
+					'hide_sitewide' => $activity['activities'][0]->hide_sitewide
+				);
+				bp_media_record_activity($args);
+			}
+		}
+	}
+}
 ?>
