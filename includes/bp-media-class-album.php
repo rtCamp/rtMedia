@@ -103,7 +103,12 @@ class BP_Media_Album{
 		foreach($this->media_entries as $entry){
 			wp_delete_attachment($entry->ID,true);
 		}
+		$author_id = $this->owner;
+		bp_media_init_count($author_id);
 		wp_delete_post($this->id,true);
+		global $bp_media_count;
+		$bp_media_count['albums'] = intval(isset($bp_media_count['albums'])?$bp_media_count['albums']:0) - 1;
+		bp_update_user_meta($author_id, 'bp_media_count', $bp_media_count);
 		do_action('bp_media_after_delete_album', $this);
 	}
 

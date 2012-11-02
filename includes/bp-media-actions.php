@@ -513,46 +513,13 @@ function bp_media_album_create_activity($album){
 add_action('bp_media_after_add_album','bp_media_album_create_activity');
 
 function bp_media_album_activity_update($album_id){
-	$args = array(
-		'post_parent' => $album_id,
-		'numberposts'	=>	4,
-		'post_type'	=>	'attachment'
-	);
-	$attachments = get_children($args);
-	if(is_array($attachments)){
-		$content = '<ul>';
-		foreach($attachments as $media){
-			$bp_media = new BP_Media_Host_Wordpress($media->ID);
-			$content .= $bp_media->get_album_activity_content();
-		}
-		$content .= '</ul>';
-		$activity_id = get_post_meta($album_id, 'bp_media_child_activity');
-		if($activity_id){
-			$args = array(
-				'in' => $activity_id,
-			);
-
-			$activity = @bp_activity_get($args);
-			if(isset($activity['activities'][0]->id)){
-				$album = new BP_Media_Album($album_id);
-				$args = array(
-					'content'	=>	$content,
-					'id'	=>	$activity_id,
-					'type' => 'album_updated',
-					'user_id' => $activity['activities'][0]->user_id,
-					'action' => apply_filters( 'bp_media_filter_album_updated', sprintf( __( '%1$s added new media in album %2$s', 'bp-media'), bp_core_get_userlink( $activity['activities'][0]->user_id ), '<a href="' . $album->get_url() . '">' . $album->get_title() . '</a>' ) ),
-					'component' => BP_MEDIA_SLUG, // The name/ID of the component e.g. groups, profile, mycomponent
-					'primary_link' => $activity['activities'][0]->primary_link,
-					'item_id' => $activity['activities'][0]->item_id,
-					'secondary_item_id' => $activity['activities'][0]->secondary_item_id,
-					'recorded_time' => bp_core_current_time(),
-					'hide_sitewide' => $activity['activities'][0]->hide_sitewide
-				);
-				bp_media_record_activity($args);
-			}
-		}
-	}
+	bp_media_update_album_activity($album_id);
 }
 add_action('bp_media_album_updated','bp_media_album_activity_update');
 
+function bp_media_album_activity_sync($media_id){
+	$album_id = wp_get_post_parent_id($media_id);
+	bp_media_update_album_activity($album_id,false,$media_id);
+}
+add_action('bp_media_after_delete_media','bp_media_album_activity_sync');
 ?>

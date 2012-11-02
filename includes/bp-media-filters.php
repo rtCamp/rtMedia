@@ -12,18 +12,18 @@ function bp_media_activity_permalink_filter($link, $activity_obj = null) {
 		}
 	}
 	if ($activity_obj != null && 'activity_comment' == $activity_obj->type) {
-		global $bp_media_hidden_activity_cache;
+		global $activities_template;
 		remove_filter('bp_activity_get_user_join_filter','bp_media_activity_query_filter',10);
 		$parent = $activity_obj->item_id;
 		if ($parent) {
 			try{
-				if(isset($bp_media_hidden_activity_cache[$parent])){
-					return $bp_media_hidden_activity_cache[$parent]->primary_link;
+				if(isset($activities_template->activity_parents[$parent])){
+					return $activities_template->activity_parents[$parent]->primary_link;
 				}
 				else{
 					$activities = bp_activity_get(array('in' => $parent));
 					if(isset($activities['activities'][0])){
-						$bp_media_hidden_activity_cache[$parent] = $activities['activities'][0];
+						$activities_template->activity_parents[$parent] = $activities['activities'][0];
 						return $activities['activities'][0]->primary_link;
 					}
 				}
