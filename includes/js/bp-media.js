@@ -42,7 +42,8 @@ jQuery(document).ready(function(){
     }).height(tallest);
 
 
-	jQuery('#pag-bottom').click(function(){
+	jQuery('#bp-media-show-more').click(function(e){
+		e.preventDefault();
 		var data = {
 			action: 'bp_media_load_more',
 			page:++bp_media_vars.page,
