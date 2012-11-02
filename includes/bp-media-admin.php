@@ -21,7 +21,7 @@ function bp_media_upgrade_script(){
  */
 function bp_media_upgrade_db_notice() {
 	?>
-	<div class="updated rt-success"><p>
+	<div class="error"><p>
 		Please click upgrade to upgrade the database of BuddyPress Media <a class="button" id="refresh_media_count" href ="?page=bp-media-settings&bp_media_upgrade_db=1&wp_nonce=<?php echo wp_create_nonce( 'bp_media_upgrade_db' ); ?>" class="button" title="<?php printf(__('It will migrate your BuddyPress Media\'s earlier database to new database.')); ?>">Upgrade</a>
 	</p></div>
 	<?php
@@ -408,6 +408,13 @@ function bp_media_default_admin_sidebar() {	?>
 		<a href="%s">Hire us!</a> To get professional customisation/setup service.', 'bp-media'), 'http://rtcamp.com/support/forum/buddypress-media/','http://rtcamp.com/buddypress-media/hire/'); ?>.</p></div>
 	</div>
 
+	<div class="rtmetabox postbox" id="donate">
+
+		<h3 class="hndle"><span><?php _e('Donate', 'bp-media'); ?></span></h3>
+		<span><a href="http://rtcamp.com/donate/" title="Help the development keep going."><img class="bp-media-donation-image" src ="<?php echo plugins_url( '/img/donate.gif', __FILE__ ); ?>"   /></a></span>
+		<div class="inside"><p><?php printf(__('Help us release more amazing features faster. Consider making a donation to our consistent efforts.', 'bp-media')); ?>.</p></div>
+	</div>
+
 	<div class="rtmetabox postbox" id="bp-media-premium-addons">
 
 		<h3 class="hndle"><span><?php _e('Premium Addons', 'bp-media'); ?></span></h3>
@@ -619,3 +626,5 @@ class bp_media_request_activecollab{
 
 	}
 }
+
+?>
