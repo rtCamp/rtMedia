@@ -53,7 +53,7 @@ function bp_media_upgrade_to_2_2(){
 		}
 	}
 	update_option('bp_media_db_version',BP_MEDIA_DB_VERSION);
-	add_action('admin_notices',function (){echo '<div class="updated"><p>
+	add_action('admin_notices',function (){echo '<div class="updated rt-success"><p>
 		<b>BuddyPress Media</b> Database upgraded successfully.
 	</p></div>';});
 	wp_cache_flush();
