@@ -69,6 +69,12 @@ function bp_media_conditional_override_allowed_tags($content, $activity=null) {
 	return bp_activity_filter_kses($content);
 }
 
+function bp_media_swap_filters() {
+	add_filter('bp_get_activity_content_body', 'bp_media_conditional_override_allowed_tags', 1, 2);
+	remove_filter('bp_get_activity_content_body', 'bp_activity_filter_kses', 1);
+}
+add_action('bp_init', 'bp_media_swap_filters');
+
 /**
  * Updates the media count of all users.
  */
@@ -217,134 +223,5 @@ function bp_media_update_album_activity($album,$current_time = true,$delete_medi
 			}
 		}
 	}
-}
-
-/**
- *  Set BP Media dashboard  widget
- *
- */
-//add_action('wp_dashboard_setup','bp_media_dashboard_widgets');
-
-function bp_media_dashboard_widgets(){
-    global $wp_meta_boxes;
-    // Buddypress Media
-//	if ( is_user_admin() )
-		wp_add_dashboard_widget( 'dashboard_media_widget', __( 'BuddPress Media' ), 'bp_media_dashboard_media' );
-
-    global $wp_meta_boxes;
-
-	// Get the regular dashboard widgets array
-	// (which has our new widget already but at the end)
-
-	$normal_dashboard = $wp_meta_boxes['dashboard']['normal']['core'];
-
-	// Backup and delete our new dashbaord widget from the end of the array
-
-	$example_widget_backup = array('dashboard_media_widget' => $normal_dashboard['dashboard_media_widget']);
-	unset($normal_dashboard['dashboard_media_widget']);
-
-	// Merge the two arrays together so our widget is at the beginning
-
-	$sorted_dashboard = array_merge($example_widget_backup, $normal_dashboard);
-
-	// Save the sorted array back into the original metaboxes
-
-	$wp_meta_boxes['dashboard']['normal']['core'] = $sorted_dashboard;
-
-}
-
-function bp_media_dashboard_media(){
-
-    /* Single user media counts */
-    $photos_count = bp_media_admin_total_count('photo');
-    $videos_count = bp_media_admin_total_count('video');
-    $audio_count  = bp_media_admin_total_count('audio');
-    $albums_count = bp_media_admin_total_count('album');
-
-    /* Group media counts */
-    $g_photos_count = bp_media_admin_group_total_count('photo');
-    $g_videos_count = bp_media_admin_group_total_count('video');
-    $g_audio_count  = bp_media_admin_group_total_count('audio');
-    $g_albums_count = bp_media_admin_group_total_count('album');
-
-    ?>
-    <div class="bp-media-dashboard">
-        <h3 class="sub"><?php _e('Users','bp-media');?> </h3>
-        <div class="table table_user">
-            <div class=""><span class="media-cnt"><?php echo $photos_count; ?></span><span class="media-label"><?php _e('Total Photos','bp-media'); ?></span></div>
-            <div class=""><span class="media-cnt"><?php echo $videos_count; ?></span><span class="media-label"><?php _e('Total Videos','bp-media'); ?></span></div>
-            <div class=""><span class="media-cnt"><?php echo $audio_count; ?></span><span class="media-label"><?php _e('Total Audio','bp-media'); ?></span></div>
-            <div class=""><span class="media-cnt"><?php echo $albums_count; ?></span><span class="media-label"><?php _e('Total Albums','bp-media'); ?></span></div>
-        </div><!-- .table_user -->
-        <h3 class="sub"><?php _e('Groups','bp-media');?> </h3>
-        <div class="table table_group">
-
-        </div><!-- .table_group -->
-    </div><!-- .bp-media-dashboard-->
-
-<?php
-}
-
-function bp_media_admin_total_count($media_type){
-
-    switch($media_type){
-        case 'photo':
-            return bp_media_total_count_media('image');
-
-        case 'video':
-            return bp_media_total_count_media('video');
-
-        case 'audio':
-            return bp_media_total_count_media('audio');
-
-        case 'album':
-            return bp_media_total_count_albums();
-    }
-}
-
-function bp_media_admin_group_total_count($media_type){
-
-    switch($media_type){
-        case 'photo':
-            return bp_media_total_count_media('image');
-
-        case 'video':
-            return bp_media_total_count_media('video');
-
-        case 'audio':
-            return bp_media_total_count_media('audio');
-
-        case 'album':
-            return bp_media_total_count_albums();
-    }
-}
-
-
-function bp_media_total_count_media($type){
-    global $wpdb;
-
-    $query = "SELECT COUNT(*) AS total
-            FROM  wp_posts RIGHT JOIN wp_postmeta on wp_postmeta.post_id = wp_posts.id
-            WHERE wp_postmeta.meta_key = 'bp-media-key' AND wp_postmeta.meta_value > 0 AND ( wp_posts.post_mime_type LIKE '$type%')";
-
-    $result = $wpdb->get_var( ( $query ) );
-
-    if(isset($result )) return $result;
-        else return false;
-}
-
-
-function bp_media_total_count_albums(){
-    global $wpdb;
-
-    $query = "SELECT COUNT(*) AS total
-            FROM  wp_posts RIGHT JOIN wp_postmeta on wp_postmeta.post_id = wp_posts.id
-            WHERE wp_postmeta.meta_key = 'bp-media-key' AND wp_postmeta.meta_value < 0 ";
-
-    $result = $wpdb->get_var( ( $query ) );
-
-    if(isset($result )) return $result;
-        else return false;
-
 }
 ?>
