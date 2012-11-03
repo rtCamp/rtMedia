@@ -29,6 +29,11 @@ BuddyPress Media adds Photos, Music, Videos & Albums to your BuddyPress. Support
 * Activity-update form media upload
 * Paid membership plans, i.e. "Upload Quota" for buddypress members  (in planning stage).
 
+= Demo =
+* [BuddyPress-Media Demo](http://demo.rtcamp.com/buddypress-media) (Stand-alone)
+* [BuddyPress-Media + Kaltura Add-on](http://demo.rtcamp.com/bpm-kaltura)
+* [BuddyPress-Media + FFMPEG Add-on](http://demo.rtcamp.com/bpm-ffmpeg)
+
 == Installation ==
 
 = BuddyPress Media Plugin =
@@ -44,7 +49,7 @@ BuddyPress Media adds Photos, Music, Videos & Albums to your BuddyPress. Support
 * It also supports many video formats including *.avi, *.mkv, *.asf, *.flv, *.wmv, *.rm, *.mpg.
 * You can use Kaltura.com/Kaltura On-Prem or self-hosted Kaltura-CE server with this.
 
-You can purchase it from [here]
+You can purchase it from [here](http://rtcamp.com/store/buddypress-media-kaltura/ "BuddyPress Media Kaltura Addon for Kaltura.com/Kaltura-CE/Kaltura On-Prem version")
 
 --
 
@@ -119,4 +124,4 @@ Please visit [BuddyPress Media's Roadmap page](http://rtcamp.com/buddypress-medi
 * HTML5 Video Tag Support (with fallback)
 
 == Upgrade Notice ==
-Fixed file uploading via iPhone.
+Added album support for user-profile. Important update with plenty of new features.
