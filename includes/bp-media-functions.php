@@ -224,4 +224,9 @@ function bp_media_update_album_activity($album,$current_time = true,$delete_medi
 		}
 	}
 }
+
+function bp_media_wp_comment_form_mod() {
+	global $bp_media_current_entry;
+	echo '<input type="hidden" name="redirect_to" value="'.$bp_media_current_entry->get_url().'">' ;
+}
 ?>

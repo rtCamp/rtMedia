@@ -394,10 +394,7 @@ class BP_Media_Host_Wordpress {
 	function show_comment_form_wordpress(){
 		query_posts('attachment_id='.$this->id);
 		while(have_posts()): the_post();
-		add_action('comment_form', function() {
-			global $bp_media_current_entry;
-			echo '<input type="hidden" name="redirect_to" value="'.$bp_media_current_entry->get_url().'">' ;
-		});
+		add_action('comment_form','bp_media_wp_comment_form_mod');
 		comments_template();
 		endwhile;
 	}
