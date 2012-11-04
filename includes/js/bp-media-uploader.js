@@ -101,7 +101,7 @@ jQuery(document).ready(function(){
 	bp_media_uploader.bind('UploadComplete',function(){
 		var new_location = window.location.href;
 		if(new_location.search('/media/')>0){
-			new_location = new_location.replace('media','albums');
+			new_location = new_location.replace('/media/','/albums/');
 			if(bp_media_album_selected>0)
 				new_location = new_location.concat(bp_media_album_selected);
 			else
