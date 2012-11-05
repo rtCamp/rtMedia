@@ -73,6 +73,9 @@ Please visit [BuddyPress Media's Features page](http://rtcamp.com/buddypress-med
 
 Please visit [BuddyPress Media's Roadmap page](http://rtcamp.com/buddypress-media/roadmap/ "Visit BuddyPress Media's Features page") to get some details about fuure releases.
 
+#### 2.2.2 ####
+Fixed the Notice that was generated on the albums page
+
 #### 2.2.1 ####
 * Removed anonymous function since its not supported in PHP versions < 5.3
 
