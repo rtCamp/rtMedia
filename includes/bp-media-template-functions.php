@@ -217,11 +217,24 @@ function bp_media_album_the_content($id = 0) {
 		echo '';
 	}
 }
-function bp_media_display_show_more(){
-	global $bp_media_query;
-	//found_posts
-	if($bp_media_query->found_posts>10)
+function bp_media_display_show_more($type='media'){
+	$showmore = false;
+	switch($type){
+		case 'media':
+			global $bp_media_query;
+			//found_posts
+			if(isset($bp_media_query->found_posts)&&$bp_media_query->found_posts>10)
+				$showmore = true;
+			break;
+		case 'albums':
+			global $bp_media_albums_query;
+			if(isset($bp_media_query->found_posts)&&$bp_media_query->found_posts>10)
+				$showmore = true;
+			break;
+	}
+	if($showmore){
 		echo '<div class="bp-media-actions"><a href="#" class="button" id="bp-media-show-more">Show More</a></div>';
+	}
 }
 
 function bp_media_show_upload_form_multiple_activity() {

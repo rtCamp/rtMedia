@@ -272,7 +272,7 @@ function bp_media_upload_enqueue(){
 		'browse_button'	=>	'bp-media-upload-browse-button',
 		'container'	=>	'bp-media-upload-ui',
 		'drop_element' =>	'drag-drop-area',
-		'filters'	=>	array(array('title' => "Media Files",'extensions'=> "mp4,jpg,png,jpeg,gif,mp3")),
+		'filters'	=>	array(array('title' => "Media Files",'extensions'=> "mp4,jpg,png,jpeg,gif,mp3,mov")),
 		'max_file_size'	=>	'100mb',
 		'multipart'           => true,
 		'urlstream_upload'    => true,
