@@ -584,7 +584,7 @@ function bp_media_albums_screen_content() {
 			bp_media_album_the_content();
 		endwhile;
 		echo '</ul>';
-		bp_media_display_show_more();
+		bp_media_display_show_more('albums');
 		do_action('bp_media_after_content');
 	else:
 		bp_media_show_formatted_error_message(__('Sorry, no albums were found.', 'bp-media'), 'info');
