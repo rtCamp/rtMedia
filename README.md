@@ -6,7 +6,7 @@
 
 * **License:** [GPL v2 or later] ( http://www.gnu.org/licenses/gpl-2.0.html)
 
-* **Donate Link:** https://rtcamp.com/donate
+* **Donate Link:** http://rtcamp.com/donate
 
 Adds Photos, Music, Videos & Albums to your BuddyPress. Supports mobile devices (iPhone/iPad, etc) and automatic audio/video conversion.
 
@@ -18,7 +18,7 @@ BuddyPress Media adds Photos, Music, Videos & Albums to your BuddyPress. Support
 
 * Images, Music, Videos Upload
 * User-Albums Support
-* Multiple files upload with Darg-n-Drop
+* Multiple files upload with Drag-n-Drop
 * Uploading Photos/Videos via mobile (Tested on iPhone running iOS6)
 * HTML5 player (with fall back to flash/silverlight player support)
 * Automatic conversion of common audio & video formats to mp3/mp4. via [Kaltura Add-On](http://rtcamp.com/store/buddypress-media-kaltura/ "BuddyPress Media Kaltura Addon for Kaltura.com/Kaltura-CE/Kaltura On-Prem version") and [FFMPEG Add-On](http://rtcamp.com/store/buddypress-media-ffmpeg-converter/ "BuddyPress Media FFMPEG Addon")
@@ -73,8 +73,13 @@ Please visit [BuddyPress Media's Features page](http://rtcamp.com/buddypress-med
 
 Please visit [BuddyPress Media's Roadmap page](http://rtcamp.com/buddypress-media/roadmap/ "Visit BuddyPress Media's Features page") to get some details about fuure releases.
 
+#### 2.2.3 ####
+* Added more verification to check whether the object being used is available or not.
+* Added custom message on delete activity action.
+* Modified the upgrade loop to handle the sites with large number of media files.
+
 #### 2.2.2 ####
-Fixed the Notice that was generated on the albums page
+* Fixed the Notice that was generated on the albums page.
 
 #### 2.2.1 ####
 * Removed anonymous function since its not supported in PHP versions < 5.3
