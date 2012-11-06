@@ -18,7 +18,7 @@ BuddyPress Media adds Photos, Music, Videos & Albums to your BuddyPress. Support
 
 * Images, Music, Videos Upload
 * User-Albums Support
-* Multiple files upload with Darg-n-Drop
+* Multiple files upload with Drag-n-Drop
 * Uploading Photos/Videos via mobile (Tested on iPhone running iOS6)
 * HTML5 player (with fall back to flash/silverlight player support)
 * Automatic conversion of common audio & video formats to mp3/mp4. via [Kaltura Add-On](http://rtcamp.com/store/buddypress-media-kaltura/ "BuddyPress Media Kaltura Addon for Kaltura.com/Kaltura-CE/Kaltura On-Prem version") and [FFMPEG Add-On](http://rtcamp.com/store/buddypress-media-ffmpeg-converter/ "BuddyPress Media FFMPEG Addon")
