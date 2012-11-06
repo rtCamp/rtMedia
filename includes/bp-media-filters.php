@@ -88,6 +88,12 @@ add_filter('bp_get_activity_delete_link','bp_media_delete_button_handler');
 
 function bp_media_items_count_filter ($title,$nav_item) {
 	global $bp_media_count;
+	$bp_media_count = wp_parse_args($bp_media_count,array(
+		'images'	=>	0,
+		'videos'	=>	0,
+		'audio'		=>	0,
+		'albums'	=>	0
+	));
 	switch($nav_item['slug']){
 		case BP_MEDIA_SLUG	:
 			$count=  intval($bp_media_count['images'])+intval($bp_media_count['videos'])+intval($bp_media_count['audio']);
