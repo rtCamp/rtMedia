@@ -126,6 +126,8 @@ function bp_media_delete_activity_handler($args){
 	$post_id=$result[0]->post_id;
 	try{
 		$post = get_post($post_id);
+		if(!isset($post->post_type))
+			return false;
 		switch($post->post_type){
 			case 'attachment':
 				$media = new BP_Media_Host_Wordpress($post_id);
@@ -149,6 +151,8 @@ function bp_media_delete_media_handler($media_id){
 	/* @var $media BP_Media_Host_Wordpress */
 	remove_action('bp_before_activity_delete', 'bp_media_delete_activity_handler');
 	$activity_id = get_post_meta($media_id,'bp_media_child_activity',true);
+	if($activity_id==NULL)
+		return false;
 	bp_activity_delete_by_activity_id($activity_id);
 }
 add_action('bp_media_before_delete_media','bp_media_delete_media_handler');
@@ -234,7 +238,7 @@ function bp_media_init_count($user = null) {
 	}
 	$count = bp_get_user_meta($user, 'bp_media_count', true);
 	if (!$count) {
-		$bp_media_count = array('images' => 0, 'videos' => 0, 'audio' => 0);
+		$bp_media_count = array('images' => 0, 'videos' => 0, 'audio' => 0, 'albums' => 0);
 		bp_update_user_meta($user, 'bp_media_count', $bp_media_count);
 	} else {
 		$bp_media_count = $count;
@@ -272,7 +276,7 @@ function bp_media_upload_enqueue(){
 		'browse_button'	=>	'bp-media-upload-browse-button',
 		'container'	=>	'bp-media-upload-ui',
 		'drop_element' =>	'drag-drop-area',
-		'filters'	=>	array(array('title' => "Media Files",'extensions'=> "mp4,jpg,png,jpeg,gif,mp3")),
+		'filters'	=>	apply_filters('bp_media_plupload_files_filter',array(array('title' => "Media Files",'extensions'=> "mp4,jpg,png,jpeg,gif,mp3"))),
 		'max_file_size'	=>	min(array(ini_get('upload_max_filesize'),ini_get('post_max_size'))),
 		'multipart'           => true,
 		'urlstream_upload'    => true,
