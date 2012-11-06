@@ -1,6 +1,6 @@
 === BuddyPress Media ===
 Contributors: rtcamp, rahul286, gagan0123, umeshnevase
-Donate link: https://rtcamp.com/donate
+Donate link: http://rtcamp.com/donate
 Tags: BuddyPress, media, multimedia, album, audio, songs, music, video, photo, image, upload, share, MediaElement.js, ffmpeg, kaltura, media-node
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
