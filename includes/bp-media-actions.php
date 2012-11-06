@@ -154,6 +154,7 @@ function bp_media_delete_media_handler($media_id){
 	if($activity_id==NULL)
 		return false;
 	bp_activity_delete_by_activity_id($activity_id);
+	echo "This was called for $media_id";
 }
 add_action('bp_media_before_delete_media','bp_media_delete_media_handler');
 

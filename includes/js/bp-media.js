@@ -61,4 +61,16 @@ jQuery(document).ready(function(){
 				jQuery('#bp-media-list').append(response);
 		});
 	});
+	setTimeout(function(){
+		jQuery('.media album_updated .delete-activity,.media_upload .delete-activity').unbind('click').click(function(e){
+			if(confirm('Are you sure you want to delete this activity and associated media?')){
+				return true;
+			}
+			else{
+				return false;
+			}
+		});
+
+	},1000);
+
 });
