@@ -210,7 +210,7 @@ class BP_Media_Popular_Media extends WP_Widget {
 	function widget($args, $instance) {
 		extract( $args );
         
-        $title = apply_filters('widget_title', empty($instance['title']) ? __('Recent Media', 'bp-media') : $instance['title'], $instance, $this->id_base);
+        $title = apply_filters('widget_title', empty($instance['title']) ? __('Popular Media', 'bp-media') : $instance['title'], $instance, $this->id_base);
 		
         if ( empty( $instance['number'] ) || ! $number = absint( $instance['number'] ) )
  			$number = 10;
