@@ -6,7 +6,7 @@ License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires at least: 3.3.2
 Tested up to: 3.4.2
-Stable tag: 2.2.2
+Stable tag: 2.2.3
 
 Adds Photos, Music, Videos & Albums to your BuddyPress. Supports mobile devices (iPhone/iPad, etc) and automatic audio/video conversion.
 
@@ -73,8 +73,13 @@ Please visit [BuddyPress Media's Features page](http://rtcamp.com/buddypress-med
 
 Please visit [BuddyPress Media's Roadmap page](http://rtcamp.com/buddypress-media/roadmap/ "Visit BuddyPress Media's Features page") to get some details about fuure releases.
 
+= 2.2.3 =
+* Added more verification to check whether the object being used is available or not.
+* Added custom message on delete activity action.
+* Modified the upgrade loop to handle the sites with large number of media files.
+
 = 2.2.2 =
-* Fixed the Notice that was generated on the albums page
+* Fixed the Notice that was generated on the albums page.
 
 = 2.2.1 =
 * Removed anonymous function since its not supported in PHP versions < 5.3
