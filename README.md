@@ -73,6 +73,9 @@ Please visit [BuddyPress Media's Features page](http://rtcamp.com/buddypress-med
 
 Please visit [BuddyPress Media's Roadmap page](http://rtcamp.com/buddypress-media/roadmap/ "Visit BuddyPress Media's Features page") to get some details about future releases.
 
+#### 2.2.5 ####
+* Fixed a bug in upgrade script
+
 #### 2.2.4 ####
 * Added support for media-count on albums
 * fixes bbPress conflict in_array() expects parameter 2
