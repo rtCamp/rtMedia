@@ -1,6 +1,6 @@
 <?php
 
-function bp_media_upgrade_to_2_2(){
+function bp_media_upgrade_from_1_0_to_2_1(){
 	global $wpdb;
 	remove_filter('bp_activity_get_user_join_filter','bp_media_activity_query_filter',10);
 	/* @var $wpdb wpdb */
@@ -47,6 +47,7 @@ function bp_media_upgrade_to_2_2(){
 					'primary_link' => $bp_media->get_url(),
 					'item_id' => $attachment_id,
 					'recorded_time' => $activity->date_recorded,
+					'user_id' => $bp_media->get_author()
 				);
 				$act_id = bp_media_record_activity($args);
 				bp_activity_delete_meta($child_activity, 'bp_media_parent_post');
@@ -64,4 +65,51 @@ function bp_media_upgrade_to_2_2(){
 function bp_media_database_updated_notice(){echo '<div class="updated rt-success"><p>
 		<b>BuddyPress Media</b> Database upgraded successfully.
 	</p></div>';}
+function bp_media_upgrade_from_2_0_to_2_1(){
+	$page = 0;
+	while($media_entries = bp_media_return_query_posts(array(
+		'post_type' => 'attachment',
+		'post_status'	=>	'any',
+		'meta_key' => 'bp-media-key',
+		'meta_value' => 0,
+		'meta_compare' => '>',
+		'paged' => ++$page,
+		'postsperpage' => 10
+	))){
+		foreach($media_entries as $media){
+			try{
+				$bp_media = new BP_Media_Host_Wordpress($media_entry->ID);
+			} catch (exception $e){
+				continue;
+			}
+			$child_activity = get_post_meta($media_entry->ID,'bp_media_child_activity',true);
+			if($child_activity){
+				$activity = bp_activity_get(array('in'=>intval($child_activity)));
+				if(isset($activity['activities'][0]->id))
+					$activity = $activity['activities'][0];
+				else
+					continue;
+				$args = array(
+					'content'	=>	$bp_media->get_media_activity_content(),
+					'id'	=>	$child_activity,
+					'type' => 'media_upload',
+					'action' => apply_filters( 'bp_media_added_media', sprintf( __( '%1$s added a %2$s', 'bp-media'), bp_core_get_userlink( $bp_media->get_author() ), '<a href="' . $bp_media->get_url() . '">' . $bp_media->get_media_activity_type() . '</a>' ) ),
+					'primary_link' => $bp_media->get_url(),
+					'item_id' => $activity->item_id,
+					'recorded_time' => $activity->date_recorded,
+					'user_id' => $bp_media->get_author()
+				);
+				bp_media_record_activity($args);
+			}
+		}
+	}
+	update_option('bp_media_db_version',BP_MEDIA_DB_VERSION);
+	add_action('admin_notices','bp_media_database_updated_notice');
+	wp_cache_flush();
+}
+
+function bp_media_return_query_posts($args){
+	$bp_media_query = new WP_Query($args);
+	return $bp_media_query->posts;
+}
 ?>

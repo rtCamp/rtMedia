@@ -21,7 +21,7 @@ define('BP_MEDIA_PLUGIN_DIR', dirname(__FILE__));
 define('BP_MEDIA_REQUIRED_BP','1.6');
 
 /* A constatnt to store database version */
-define('BP_MEDIA_DB_VERSION','2.0');
+define('BP_MEDIA_DB_VERSION','2.1');
 
 /* A constant to Active Collab API Assignee ID */
 define('BP_MEDIA_AC_API_ASSIGNEE_ID','5');
