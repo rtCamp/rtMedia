@@ -102,10 +102,7 @@ function bp_media_upgrade_from_2_0_to_2_1(){
 					'recorded_time' => $activity->date_recorded,
 					'user_id' => $bp_media->get_author()
 				);
-				$status = bp_media_record_activity($args);
-				echo '<pre>';
-				var_dump($status);
-				echo '</pre>';
+				bp_media_record_activity($args);
 			}
 		}
 	}
