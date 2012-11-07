@@ -79,19 +79,16 @@ function bp_media_upgrade_from_2_0_to_2_1(){
 		foreach($media_entries as $media){
 			try{
 				$bp_media = new BP_Media_Host_Wordpress($media->ID);
-				echo "for activity ".$bp_media->get_id();
 			} catch (exception $e){
 				continue;
 			}
 			$child_activity = get_post_meta($media->ID,'bp_media_child_activity',true);
 			if($child_activity){
-				echo "child found ".$child_activity;
 				$activity = bp_activity_get(array('in'=>intval($child_activity)));
 				if(isset($activity['activities'][0]->id))
 					$activity = $activity['activities'][0];
 				else
 					continue;
-				echo 'activity fetched';
 				$args = array(
 					'content'	=>	$bp_media->get_media_activity_content(),
 					'id'	=>	$child_activity,
