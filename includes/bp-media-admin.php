@@ -1,5 +1,5 @@
 <?php
-if(version_compare('2.0',get_option('bp_media_db_version','1.0'),'>')){
+if(version_compare(BP_MEDIA_DB_VERSION,get_option('bp_media_db_version','1.0'),'>')){
 		add_action('admin_notices', 'bp_media_upgrade_db_notice');
 }
 
@@ -8,7 +8,11 @@ function bp_media_upgrade_script(){
 	if(isset($_GET['bp_media_upgrade_db']) && empty($_REQUEST['settings-updated'])){
 		check_admin_referer('bp_media_upgrade_db','wp_nonce');
 		require_once('bp-media-upgrade-script.php');
-		bp_media_upgrade_to_2_2();
+		$current_version = get_option('bp_media_db_version','1.0');
+		if($current_version == '2.0')
+			bp_media_upgrade_from_2_0_to_2_1();
+		else
+			bp_media_upgrade_from_1_0_to_2_1();
 		remove_action('admin_notices', 'bp_media_upgrade_db_notice');
 	}
 }
