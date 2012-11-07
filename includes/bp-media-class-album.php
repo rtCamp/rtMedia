@@ -142,7 +142,7 @@ class BP_Media_Album{
 			<a href="<?php echo $this->url ?>" title="<?php echo $this->description ?>">
 				<?php echo $this->thumbnail; ?>
 			</a>
-			<h3 title="<?php echo $this->name ?>"><a href="<?php echo $this->url ?>" title="<?php echo $this->description ?>"><?php echo $this->name ?></a></h3>
+			<h3 title="<?php echo $this->name ?>"><a href="<?php echo $this->url ?>" title="<?php echo $this->description ?>"><?php echo $this->name.'('.count($this->media_entries).')';?></a></h3>
 		</li><?php
 	}
 
