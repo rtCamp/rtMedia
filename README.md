@@ -71,7 +71,11 @@ Please visit [BuddyPress Media's Features page](http://rtcamp.com/buddypress-med
 
 ## Changelog ##
 
-Please visit [BuddyPress Media's Roadmap page](http://rtcamp.com/buddypress-media/roadmap/ "Visit BuddyPress Media's Features page") to get some details about fuure releases.
+Please visit [BuddyPress Media's Roadmap page](http://rtcamp.com/buddypress-media/roadmap/ "Visit BuddyPress Media's Features page") to get some details about future releases.
+
+#### 2.2.4 ####
+* Added support for media-count on albums
+* fixes bbPress conflict in_array() expects parameter 2
 
 #### 2.2.3 ####
 * Added more verification to check whether the object being used is available or not.
