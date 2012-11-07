@@ -1,7 +1,5 @@
 <?php
 if(version_compare('2.0',get_option('bp_media_db_version','1.0'),'>')){
-	$query = new WP_Query(array('post_type'=>'bp_media','posts_per_page'=>1));
-	if($query->found_posts>0)
 		add_action('admin_notices', 'bp_media_upgrade_db_notice');
 }
 

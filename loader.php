@@ -70,6 +70,16 @@ function bp_media_activate() {
 		delete_option('bp_media_remove_linkback');
 	}
 	update_option('bp_media_options',$bp_media_options);
+
+
+      $bpmquery = new WP_Query(array('post_type'=>'bp_media','posts_per_page'=>1));
+      if($bpmquery->found_posts > 0){
+		update_option('bp_media_db_version', '1.0');
+	}else{
+		update_option('bp_media_db_version',BP_MEDIA_DB_VERSION);
+	}
+
+
 }
 
 register_activation_hook(__FILE__, 'bp_media_activate');
