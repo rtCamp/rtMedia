@@ -131,6 +131,7 @@ ul.products li.product .add_to_cart_button:hover{background: none repeat scroll 
 .bp-media-form .bp-media-input{background-color: #FFFFFF;border: 1px solid #DFDFDF;border-radius: 3px 3px 3px 3px;color: #333333;line-height: 16px;padding: 5px;width: 220px;}
 .bp-media-form .bp-media-textarea{background-color: #FFFFFF;border: 1px solid #DFDFDF;border-radius: 3px 3px 3px 3px;color: #333333;line-height: 16px;padding: 5px;width: 220px;}
 #normal-sortables .postbox .bp-media-form .submit{float: none; margin-left: 150px}
-div.rt-success{background-color: #E1FFDF;border-color: #2ACF2A;}
+.rt-success{background-color: #E1FFDF;border-color: #2ACF2A;}
+.rt-update{background-color: #FFEAA6;border-color:#E1CA82;}
 img.bp-media-donation-image{display:block;margin: 10px auto;}
 
