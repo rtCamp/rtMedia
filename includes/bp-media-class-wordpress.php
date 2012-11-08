@@ -311,20 +311,18 @@ class BP_Media_Host_Wordpress {
 			case 'video' :
 				if($this->thumbnail_id){
 					$image_array = image_downsize($this->thumbnail_id, 'bp_media_single_image');
-					$content.='<video poster="'.$image_array[0].'" src="' . wp_get_attachment_url($this->id) . '" width="' . $bp_media_default_sizes['single_video']['width'] . '" height="' . ($bp_media_default_sizes['single_video']['height'] == 0 ? 'auto' : $bp_media_default_sizes['single_video']['height']) . '" type="video/mp4" id="bp_media_video_' . $this->id . '" controls="controls" preload="none"></video><script>bp_media_create_element("bp_media_video_' . $this->id . '");</script>';
+					$content.=apply_filters('bp_media_single_content_filter', '<video poster="'.$image_array[0].'" src="' . wp_get_attachment_url($this->id) . '" width="' . $bp_media_default_sizes['single_video']['width'] . '" height="' . ($bp_media_default_sizes['single_video']['height'] == 0 ? 'auto' : $bp_media_default_sizes['single_video']['height']) . '" type="video/mp4" id="bp_media_video_' . $this->id . '" controls="controls" preload="none"></video><script>bp_media_create_element("bp_media_video_' . $this->id . '");</script>',$this);
 				}
 				else{
-					$content.='<video src="' . wp_get_attachment_url($this->id) . '" width="' . $bp_media_default_sizes['single_video']['width'] . '" height="' . ($bp_media_default_sizes['single_video']['height'] == 0 ? 'auto' : $bp_media_default_sizes['single_video']['height']) . '" type="video/mp4" id="bp_media_video_' . $this->id . '" controls="controls" preload="none"></video><script>bp_media_create_element("bp_media_video_' . $this->id . '");</script>';
+					$content.=apply_filters('bp_media_single_content_filter', '<video src="' . wp_get_attachment_url($this->id) . '" width="' . $bp_media_default_sizes['single_video']['width'] . '" height="' . ($bp_media_default_sizes['single_video']['height'] == 0 ? 'auto' : $bp_media_default_sizes['single_video']['height']) . '" type="video/mp4" id="bp_media_video_' . $this->id . '" controls="controls" preload="none"></video><script>bp_media_create_element("bp_media_video_' . $this->id . '");</script>',$this);
 				}
 				break;
 			case 'audio' :
-				$content.='<audio src="' . wp_get_attachment_url($this->id) . '" width="' . $bp_media_default_sizes['single_audio']['width'] . '" type="audio/mp3" id="bp_media_audio_' . $this->id . '" controls="controls" preload="none" ></audio><script>bp_media_create_element("bp_media_audio_' . $this->id . '");</script>';
-				$type = 'audio';
+				$content.=apply_filters('bp_media_single_content_filter', '<audio src="' . wp_get_attachment_url($this->id) . '" width="' . $bp_media_default_sizes['single_audio']['width'] . '" type="audio/mp3" id="bp_media_audio_' . $this->id . '" controls="controls" preload="none" ></audio><script>bp_media_create_element("bp_media_audio_' . $this->id . '");</script>',$this);
 				break;
 			case 'image' :
 				$image_array = image_downsize($this->id, 'bp_media_single_image');
-				$content.='<img src="' . $image_array[0] . '" id="bp_media_image_' . $this->id . '" />';
-				$type = 'image';
+				$content.=apply_filters('bp_media_single_content_filter', '<img src="' . $image_array[0] . '" id="bp_media_image_' . $this->id . '" />',$this);
 				break;
 			default :
 				return false;
@@ -646,6 +644,13 @@ class BP_Media_Host_Wordpress {
 	 */
 	function get_title(){
 		return $this->name;
+	}
+
+	/**
+	 * Returns the type of media
+	 */
+	function get_type(){
+		return $this->type;
 	}
 }
 ?>
