@@ -69,16 +69,6 @@ function bp_media_activity_parent_content_filter($activity_content) {
 }
 //add_filter('bp_get_activity_parent_content', 'bp_media_activity_parent_content_filter', 1);
 
-//function bp_media_activity_parent__content_filter($content) {
-//	add_shortcode('bp_media_action', 'bp_media_shortcode_action');
-//	add_shortcode('bp_media_content', 'bp_media_shortcode_content');
-//	$content=do_shortcode($content);
-//	remove_shortcode('bp_media_action');
-//	remove_shortcode('bp_media_content');
-//	return $content;
-//}
-//add_filter('bp_get_activity_parent_content', 'bp_media_activity_parent_content_filter');
-
 function bp_media_delete_button_handler($link) {
 	if(bp_current_component()=='media')
 		$link=str_replace('delete-activity ', 'delete-activity-single ', $link);
