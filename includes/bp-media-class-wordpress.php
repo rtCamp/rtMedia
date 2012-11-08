@@ -83,7 +83,7 @@ class BP_Media_Host_Wordpress {
 	 *
 	 * @since BP Media 2.0
 	 */
-	function add_media($name, $description, $album_id = 0, $group = 0) {
+	function add_media($name, $description, $album_id = 0, $group = 0, $is_multiple = false) {
 		do_action('bp_media_before_add_media');
 		global $bp, $wpdb, $bp_media_count;
 		include_once(ABSPATH . 'wp-admin/includes/file.php');
@@ -242,7 +242,7 @@ class BP_Media_Host_Wordpress {
 		else
 			update_post_meta($attachment_id, 'bp-media-key', (-$group));
 		bp_update_user_meta(bp_loggedin_user_id(), 'bp_media_count', $bp_media_count);
-		do_action('bp_media_after_add_media',$this);
+		do_action('bp_media_after_add_media',$this,$is_multiple);
 	}
 
 	/**
