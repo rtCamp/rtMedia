@@ -38,7 +38,12 @@ function bp_media_upgrade_from_1_0_to_2_1(){
 				$activity = bp_activity_get(array('in'=>intval($child_activity)));
 				if(isset($activity['activities'][0]->id))
 					$activity = $activity['activities'][0];
-				$bp_media = new BP_Media_Host_Wordpress($attachment_id);
+				try{
+					$bp_media = new BP_Media_Host_Wordpress($attachment_id);
+				}
+				catch(exception $e){
+					continue;
+				}
 				$args = array(
 					'content'	=>	$bp_media->get_media_activity_content(),
 					'id'	=>	$child_activity,
