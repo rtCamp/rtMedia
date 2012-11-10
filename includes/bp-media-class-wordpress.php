@@ -302,11 +302,11 @@ class BP_Media_Host_Wordpress {
 	}
 
 	/**
-	 * Returns the content of the single entry page of the Media Entry
+	 * Returns the HTML for content of the single entry page of the Media Entry
 	 */
 	function get_media_single_content() {
 		global $bp_media_default_sizes, $bp_media_default_excerpts;
-		$content = '<div class="bp_media_title">' . wp_html_excerpt($this->name, $bp_media_default_excerpts['single_entry_title']) . '</div><div class="bp_media_content">';
+		$content = '<div class="bp_media_content">';
 		switch ($this->type) {
 			case 'video' :
 				if($this->thumbnail_id){
@@ -329,6 +329,14 @@ class BP_Media_Host_Wordpress {
 		}
 		$content .= '</div>';
 		$content .= '<div class="bp_media_description">' . wp_html_excerpt($this->description, $bp_media_default_excerpts['single_entry_description']) . '</div>';
+		return $content;
+	}
+
+	/**
+	 * Returns the HTML for title of the single entry page of the Media Entry
+	 */
+	function get_media_single_title(){
+		$content = '<div class="bp_media_title">' . wp_html_excerpt($this->name, $bp_media_default_excerpts['single_entry_title']) . '</div>;';
 		return $content;
 	}
 

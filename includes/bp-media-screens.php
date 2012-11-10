@@ -67,6 +67,7 @@ function bp_media_images_screen() {
 					wp_redirect(trailingslashit(bp_displayed_user_domain() . BP_MEDIA_IMAGES_SLUG));
 					exit;
 				}
+				add_action('bp_template_title', 'bp_media_images_entry_screen_title');
 				add_action('bp_template_content', 'bp_media_images_entry_screen_content');
 				break;
 			case BP_MEDIA_DELETE_SLUG :
@@ -173,6 +174,10 @@ function bp_media_images_entry_screen() {
 }
 
 function bp_media_images_entry_screen_title() {
+	global $bp_media_current_entry;
+	/** @var $bp_media_current_entry BP_Media_Host_Wordpress */
+	if(is_object($bp_media_current_entry))
+		echo $bp_media_current_entry->get_media_single_title();
 	_e('Images Entry Page');
 }
 
@@ -183,16 +188,6 @@ function bp_media_images_entry_screen_content() {
 	do_action('bp_media_before_content');
 	echo '<div class="bp-media-single bp-media-image">';
 	echo $bp_media_current_entry->get_media_single_content();
-//	echo '<div class="bp-media-actions">';
-//	echo '<a href="#comment" class="button acomment-reply bp-primary-action">Comment</a>';
-//	if(bp_loggedin_user_id()==  bp_displayed_user_id()){
-//		echo '<a href="'.$bp_media_current_entry->get_edit_url().'" class="button item-button bp-secondary-action edit-media">Edit</a>';
-//		echo '<a href="'.$bp_media_current_entry->get_delete_url().'" class="button item-button bp-secondary-action delete-media confirm">Delete</a>';
-//	}
-//	if(isset($bp_media_options['download_enabled'])&&$bp_media_options['download_enabled']==true){
-//		echo '<a href="'.$bp_media_current_entry->get_attachment_url().'" class="button item-button bp-secondary-action download-media">Download</a>';
-//	}
-//	echo '</div>';
 	echo $bp_media_current_entry->show_comment_form();
 	echo '</div>';
 	do_action('bp_media_after_content');
