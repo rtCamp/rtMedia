@@ -193,7 +193,7 @@ add_action( 'admin_bar_menu', 'bp_media_my_account_menu', 1 );
 function bp_media_adminbar_settings_menu() {
     global $wp_admin_bar;
 
-    if( current_user_can('manage_options') ){
+    if( current_user_can('manage_options') && is_super_admin() ){
 
         $bp_media_admin_nav = array();
         $title = '<span class="ab-icon"></span><span class="ab-label">' . _x( 'BP Media', 'admin bar menu group label' ) . '</span>';
