@@ -63,7 +63,7 @@ function bp_media_upgrade_from_1_0_to_2_1(){
 			break;
 		}
 	}while(1);
-	update_option('bp_media_db_version',BP_MEDIA_DB_VERSION);
+	update_site_option('bp_media_db_version',BP_MEDIA_DB_VERSION);
 	add_action('admin_notices','bp_media_database_updated_notice');
 	wp_cache_flush();
 }
@@ -108,7 +108,7 @@ function bp_media_upgrade_from_2_0_to_2_1(){
 			}
 		}
 	}
-	update_option('bp_media_db_version',BP_MEDIA_DB_VERSION);
+	update_site_option('bp_media_db_version',BP_MEDIA_DB_VERSION);
 	add_action('admin_notices','bp_media_database_updated_notice');
 	wp_cache_flush();
 }
