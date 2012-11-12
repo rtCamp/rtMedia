@@ -36,9 +36,62 @@ function bp_media_upgrade_db_notice() {
  */
 function bp_media_add_admin_menu() {
 
-	global $bp;
+	global $bp,$bp_media_errors,$bp_media_messages;
 	if (!is_super_admin())
         return false;
+	$bp_media_errors=array();
+	$bp_media_messages=array();
+	global $bp_media_options;
+	$bp_media_options = get_site_option('bp_media_options',array(
+		'videos_enabled'	=>	true,
+		'audio_enabled'		=>	true,
+		'images_enabled'	=>	true,
+		'download_enabled'	=>	true,
+		'remove_linkback'	=>	1,
+	));
+	if(isset($_POST['submit'])){
+		if(isset($_POST['bp_media_options'])){
+			foreach($bp_media_options as $option=>$value){
+				if(isset($_POST['bp_media_options'][$option])){
+					switch($_POST['bp_media_options'][$option]){
+						case 'true'	:
+							$bp_media_options[$option] = true;
+							break;
+						case '1'	:
+							$bp_media_options[$option] = 1;
+							break;
+						case '2'	:
+							$bp_media_options[$option] = 2;
+							break;
+						default		:
+							$bp_media_options[$option] = false;
+					}
+				}
+				else{
+					$bp_media_options[$option] = false;
+				}
+			}
+			if(update_site_option('bp_media_options', $bp_media_options)){
+				$bp_media_messages[0]="<b>Settings saved.</b>";
+			}
+		}
+		do_action('bp_media_save_options');
+		$bp_media_messages = apply_filters('bp_media_settings_messages',$bp_media_messages);
+		$bp_media_errors = apply_filters('bp_media_settings_errors',$bp_media_errors);
+	}
+	else if(isset($_GET['bp_media_refresh_count'])){
+		check_admin_referer('bp_media_refresh_count','wp_nonce');
+		if(!bp_media_update_count())
+			$bp_media_errors[]="<b>Recounting Failed</b>";
+		else
+			$bp_media_messages[]="<b>Recounting of media files done successfully</b>";
+	}
+
+	if(isset($bp_media_errors) && count($bp_media_errors)) { ?>
+		<div class="error"><p><?php foreach($bp_media_errors as $error) echo $error.'<br/>'; ?></p></div><?php
+	} if(isset($bp_media_messages) && count($bp_media_messages)){  ?>
+		<div class="updated"><p><?php foreach($bp_media_messages as $message) echo $message.'<br/>'; ?></p></div><?php
+	}
 
 	add_menu_page( 'BP Media Component', 'BP Media', 'manage_options', 'bp-media-settings', 'bp_media_settings_page' );
 	add_submenu_page( 'bp-media-settings', __( 'BP-Media Settings', 'bp-media' ), __( 'Settings', 'bp-media' ), 'manage_options', 'bp-media-settings', "bp_media_settings_page" );
@@ -88,7 +141,7 @@ function bp_media_on_load_page() {
 
 
 function bp_media_settings_page(){
-
+	global $bp_media_errors,$bp_media_messages;
     $tab = isset( $_GET['page'] )  ? $_GET['page'] : "bp-media-settings";
 
     ?>
@@ -96,25 +149,7 @@ function bp_media_settings_page(){
         <?php //screen_icon( 'buddypress' ); ?>
         <div id="icon-buddypress" class="icon32"><br></div>
         <h2 class="nav-tab-wrapper"><?php bp_core_admin_tabs( __( 'Media', 'bp-media' ) ); ?></h2>
-        <div class="metabox-holder columns-2"><?php
-
-            if(array_key_exists('bp_media_refresh_count', $_GET) && empty($_REQUEST['settings-updated'])){
-                check_admin_referer('bp_media_refresh_count','wp_nonce');
-                if(!bp_media_update_count())
-                    $bp_media_errors[]="Recounting Failed";
-                else
-                    $bp_media_messages[]="Recounting of media files done successfully";
-
-                if(isset($bp_media_errors) && count($bp_media_errors)) { ?>
-                    <div class="error"><p><?php foreach($bp_media_errors as $error) echo $error.'<br/>'; ?></p></div><?php
-                } if(isset($bp_media_messages) && count($bp_media_messages)){  ?>
-                    <div class="updated"><p><?php foreach($bp_media_messages as $message) echo $message.'<br/>'; ?></p></div><?php
-                }
-            }
-			else{
-                settings_errors();
-            }?>
-
+        <div class="metabox-holder columns-2">
             <div class="bp-media-settings-tabs"><?php
                 // Check to see which tab we are on
                if(current_user_can('manage_options')){
@@ -203,6 +238,7 @@ function bp_media_admin_menu() {
 		'audio_enabled'		=>	true,
 		'images_enabled'	=>	true,
 		'download_enabled'	=>	true,
+		'remove_linkback'	=>	1,
 	));
 	?>
 
@@ -214,29 +250,29 @@ function bp_media_admin_menu() {
     <table class="form-table ">
         <tbody>
             <tr valign="top">
-                <th scope="row"><label for="enable_videos">Videos</label></th>
+                <th scope="row"><label for="videos_enabled">Videos</label></th>
                 <td>
                     <fieldset>
                         <legend class="screen-reader-text"><span>Enable Videos</span></legend>
-                        <label for="videos_enabled"><input name="bp_media_options[videos_enabled]" type="checkbox" id="videos_enabled" value="1" <?php global $bp_media_options;checked($bp_media_options['videos_enabled'],true) ?>> (Check to enable video upload functionality)</label>
+                        <label for="videos_enabled"><input name="bp_media_options[videos_enabled]" type="checkbox" id="videos_enabled" value="true" <?php global $bp_media_options;checked($bp_media_options['videos_enabled'],true) ?>> (Check to enable video upload functionality)</label>
                     </fieldset>
                 </td>
             </tr>
             <tr valign="top">
-                <th scope="row"><label for="enable_audio">Audio</label></th>
+                <th scope="row"><label for="audio_enabled">Audio</label></th>
                 <td>
                     <fieldset>
                         <legend class="screen-reader-text"><span>Enable Audio</span></legend>
-                        <label for="audio_enabled"><input name="bp_media_options[audio_enabled]" type="checkbox" id="audio_enabled" value="1" <?php checked($bp_media_options['audio_enabled'],true) ?>> (Check to enable audio upload functionality)</label>
+                        <label for="audio_enabled"><input name="bp_media_options[audio_enabled]" type="checkbox" id="audio_enabled" value="true" <?php checked($bp_media_options['audio_enabled'],true) ?>> (Check to enable audio upload functionality)</label>
                     </fieldset>
                 </td>
             </tr>
             <tr valign="top">
-                <th scope="row"><label for="enable_images">Images</label></th>
+                <th scope="row"><label for="images_enabled">Images</label></th>
                 <td>
                     <fieldset>
                         <legend class="screen-reader-text"><span>Enable Images</span></legend>
-                        <label for="images_enabled"><input name="bp_media_options[images_enabled]" type="checkbox" id="images_enabled" value="1" <?php checked($bp_media_options['images_enabled'],true) ?>> (Check to enable images upload functionality)</label>
+                        <label for="images_enabled"><input name="bp_media_options[images_enabled]" type="checkbox" id="images_enabled" value="true" <?php checked($bp_media_options['images_enabled'],true) ?>> (Check to enable images upload functionality)</label>
                     </fieldset>
                 </td>
             </tr>
@@ -245,7 +281,7 @@ function bp_media_admin_menu() {
                 <td>
                     <fieldset>
                         <legend class="screen-reader-text"><span>Enable Download</span></legend>
-                        <label for="download_enabled"><input name="bp_media_options[download_enabled]" type="checkbox" id="download_enabled" value="1" <?php checked($bp_media_options['download_enabled'],true) ?>> (Check to enable download functionality)</label>
+                        <label for="download_enabled"><input name="bp_media_options[download_enabled]" type="checkbox" id="download_enabled" value="true" <?php checked($bp_media_options['download_enabled'],true) ?>> (Check to enable download functionality)</label>
                     </fieldset>
                 </td>
             </tr>
@@ -276,7 +312,14 @@ function bp_media_settings_other_options(){ ?>
 <?php }
 
 function bp_media_settings_options(){
-    $bp_media_options = get_site_option('bp_media_options');
+	global $bp_media_options;
+    $bp_media_options = get_site_option('bp_media_options',array(
+		'videos_enabled'	=>	true,
+		'audio_enabled'		=>	true,
+		'images_enabled'	=>	true,
+		'download_enabled'	=>	true,
+		'remove_linkback'	=>	1,
+	));
     ?>
     <table class="form-table ">
         <tbody>
@@ -456,8 +499,6 @@ add_action('admin_enqueue_scripts', 'bp_media_admin_enqueue');
 
 /**
  * Adds a tab for Media settings in the BuddyPress settings page
- *
- *
  */
 function bp_media_admin_tab() {
 
@@ -485,148 +526,5 @@ function bp_media_admin_tab() {
 }
 
 add_action('bp_admin_tabs','bp_media_admin_tab');
-
-
-/**
- * Registers BP Media Settings options
- *
- *
- */
-function bp_media_admin_init_settings() {
-    register_setting( 'bp_media_options_settings', 'bp_media_options', 'bp_media_validate' );
-}
-add_action( 'admin_init', 'bp_media_admin_init_settings',1 );
-
-
-
-/**
- * Validate bp_media_settings options
- *
- * @param type $input Validate
- */
-
-function bp_media_validate( $input ){
-
-    if(isset($_REQUEST['premium_form_submit'])){
-		$input = get_site_option('bp_media_options');
-        if(empty($_REQUEST['premium_support']['ur_name'])){
-            add_settings_error( 'enquire_name', 'enquire_name', __( 'Please enter your name', 'rtPanel' ), 'error' );
-        }
-        else if(empty($_REQUEST['premium_support']['ur_email']) || !is_email($_REQUEST['premium_support']['ur_email'])){
-            add_settings_error( 'enquire_name', 'enquire_name', __( 'Please enter valid email-Id', 'rtPanel' ), 'error' );
-        }
-        else{
-            $send_array = array();
-            $body = '';
-            $body = '<p>Name : '.  esc_attr(trim($_REQUEST['premium_support']['ur_name'])).'</p>';
-            $body .= '<p>Email Id : '.esc_attr(trim($_REQUEST['premium_support']['ur_email'])).'</p>';
-            if(!empty($_REQUEST['premium_support']['ur_query'])) $body .= '<p>Query : '.esc_attr(trim($_REQUEST['premium_support']['ur_query'])).'</p>';
-            if(!empty($_REQUEST['premium_support']['ur_budget'])) $body .= '<p>Budget :  '.esc_attr(trim($_REQUEST['premium_support']['ur_budget'])).'</p>';
-            if(!empty($_REQUEST['premium_support']['ur_delivery_date'])) $body .= '<p>Expected Delivery Date : '.esc_attr(trim($_REQUEST['premium_support']['ur_delivery_date'])).'</p>';
-            $send_array['task[body]'] = $body;
-            $send_array['ur_name'] = $_REQUEST['premium_support']['ur_name'];
-
-            $return = bp_media_send_enquiry($send_array);
-
-            if(!empty($return))
-                add_settings_error( 'form_submitted', 'form_submitted', __( 'Thanks for contacting us. We will get in touch with you soon.', 'rtPanel' ), 'updated' );
-            else
-                add_settings_error( 'form_submitted', 'form_submitted', __( 'Sorry, your enquiry is not submitted', 'rtPanel' ), 'error' );
-        }
-
-    }else if(isset($_REQUEST['submit'])){
-
-		if(array_key_exists('remove_linkback', $_POST)){
-			if($input['remove_linkback']=='2'){
-                update_site_option('bp_media_remove_linkback', '2');
-			}
-			else {
-				update_site_option('bp_media_remove_linkback', '1');
-			}
-		}
-
-		if(isset($input['videos_enabled'])){
-			$input['videos_enabled'] = true;}
-		else{
-			$input['videos_enabled'] = false;}
-		if(isset($input['audio_enabled'])){
-			$input['audio_enabled'] = true;}
-		else{
-			$input['audio_enabled'] = false;}
-		if(isset($input['images_enabled'])){
-			$input['images_enabled'] = true;}
-		else{
-			$input['images_enabled'] = false;}
-
-		if(isset($input['download_enabled'])){
-			$input['download_enabled'] = true;}
-		else{
-			$input['download_enabled'] = false;}
-	}
-
-    return $input;
-}
-
-
-function bp_media_send_enquiry($new_ticket){
-
-    $bp_media_request_activecollab = new bp_media_request_activecollab();
-
-    /* Set Enquiry Name */
-    $task_name = !empty($new_ticket['ur_name']) ? __('New Premium Request from','bp-media').' '. $new_ticket['ur_name'] : __('New Premium Request','bp-media');
-
-    $defaults = array(  'task[name]' => $task_name,
-                        'task[body]' => '',
-                        'task[label_id]' => BP_MEDIA_AC_API_LABEL_ID,
-                        'task[priority]' => BP_MEDIA_AC_API_PRIORITY,
-                        'task[assignee_id]' => BP_MEDIA_AC_API_ASSIGNEE_ID,
-                        'task[category_id]' => BP_MEDIA_AC_API_CATEGORY_ID,
-                        'submitted' => 'submitted' );
-    /* merge default array */
-    $new_ticket = wp_parse_args( $new_ticket, $defaults );
-
-    /* send form submit request to active collabe */
-    $result = $bp_media_request_activecollab->send_ticket($new_ticket);
-
-    return $result;
-}
-
-
-class bp_media_request_activecollab{
-
-  	//ActiveCollab API variables
-
- 	var $acollab_projid = BP_MEDIA_AC_API_PROJECT_ID;	//The project ID we want to add a ticket to. You can find this in the URL of the project when you enter it. ex: /projects/16/  - 16 is the ID
-	var $acollab_token	= BP_MEDIA_AC_API_AUTH_TOKEN;	// API token. Different for each ActiveCollab user. Create a user fo the API, then grab the API Token under User Profile > Settings
-	var $acollab_url	= BP_MEDIA_AC_API_URL;	// Find it in the same place you find your API token.
-
-    // Errors
-	var $errorMsg = "";
-
-
-	function send_ticket($request){
-
-		$api_url = $this->acollab_url . '?path_info=projects/buddypress-media/tasks/add&auth_api_token='.$this->acollab_token;
-		/*  Send it  */
-
-        $ch = curl_init();
-
-		// ActivCollab wants the pathinfo and token in the URL, not in the POST info.
-
-		curl_setopt($ch, CURLOPT_URL, $api_url);
-		curl_setopt($ch, CURLOPT_POST,1);
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-
-    	// The POST data
-		curl_setopt($ch, CURLOPT_POSTFIELDS, $request);
-
-		$result = curl_exec($ch);
-
-        curl_close($ch);
-
-		return $result;
-
-	}
-}
 
 ?>
