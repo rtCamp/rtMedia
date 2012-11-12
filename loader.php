@@ -55,32 +55,32 @@ add_action('bp_include', 'bp_media_init');
  * Function to do the tasks required to be done while activating the plugin
  */
 function bp_media_activate() {
-	$bp_media_options = get_option('bp_media_options',array(
+	$bp_media_options = get_site_option('bp_media_options',array(
 		'videos_enabled'	=>	true,
 		'audio_enabled'		=>	true,
 		'images_enabled'	=>	true,
 		'remove_linkback'	=>	'1',
 		'download_enabled'	=>	true,
 	));
-	$previous_linkback_status = get_option('bp_media_remove_linkback');
+	$previous_linkback_status = get_site_option('bp_media_remove_linkback');
 	if($previous_linkback_status===false)
 		$bp_media_options['remove_linkback'] = '1';
 	else{
 		$bp_media_options['remove_linkback'] = $previous_linkback_status;
 		delete_option('bp_media_remove_linkback');
 	}
-	update_option('bp_media_options',$bp_media_options);
+	update_site_option('bp_media_options',$bp_media_options);
 
 
 	$bpmquery = new WP_Query(array('post_type'=>'bp_media','posts_per_page'=>1));
 	if($bpmquery->found_posts > 0){
-		update_option('bp_media_db_version', '1.0');
+		update_site_option('bp_media_db_version', '1.0');
 	}else{
-		switch(get_option('bp_media_db_version')){
+		switch(get_site_option('bp_media_db_version',false,false)){
 			case '2.0':
 				break;
 			default:
-				update_option('bp_media_db_version',BP_MEDIA_DB_VERSION);
+				update_site_option('bp_media_db_version',BP_MEDIA_DB_VERSION);
 		}
 	}
 }

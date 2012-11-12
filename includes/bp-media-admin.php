@@ -1,5 +1,5 @@
 <?php
-if(version_compare(BP_MEDIA_DB_VERSION,get_option('bp_media_db_version','1.0'),'>')){
+if(version_compare(BP_MEDIA_DB_VERSION,get_site_option('bp_media_db_version','1.0'),'>')){
 		add_action('admin_notices', 'bp_media_upgrade_db_notice');
 }
 
@@ -8,7 +8,7 @@ function bp_media_upgrade_script(){
 	if(isset($_GET['bp_media_upgrade_db']) && empty($_REQUEST['settings-updated'])){
 		check_admin_referer('bp_media_upgrade_db','wp_nonce');
 		require_once('bp-media-upgrade-script.php');
-		$current_version = get_option('bp_media_db_version','1.0');
+		$current_version = get_site_option('bp_media_db_version','1.0');
 		if($current_version == '2.0')
 			bp_media_upgrade_from_2_0_to_2_1();
 		else
@@ -160,7 +160,7 @@ function bp_media_settings_page(){
 
             <div id="bp-media-settings-boxes">
 
-                <form id="bp_media_settings_form" name="bp_media_settings_form" action="options.php" method="post" enctype="multipart/form-data">
+                <form id="bp_media_settings_form" name="bp_media_settings_form" action="" method="post" enctype="multipart/form-data">
                     <?php
 
                     settings_fields( 'bp_media_options_settings');
@@ -198,13 +198,13 @@ function bp_media_admin_menu() {
 	$bp_media_messages=array();
 
 	global $bp_media_options;
-	$bp_media_options = get_option('bp_media_options',array(
+	$bp_media_options = get_site_option('bp_media_options',array(
 		'videos_enabled'	=>	true,
 		'audio_enabled'		=>	true,
 		'images_enabled'	=>	true,
+		'download_enabled'	=>	true,
 	));
-
-    $bp_media_options = get_option('bp_media_options');?>
+	?>
 
     <?php if(count($bp_media_errors)) { ?>
     <div class="error"><p><?php foreach($bp_media_errors as $error) echo $error.'<br/>'; ?></p></div>
@@ -276,7 +276,7 @@ function bp_media_settings_other_options(){ ?>
 <?php }
 
 function bp_media_settings_options(){
-    $bp_media_options = get_option('bp_media_options');
+    $bp_media_options = get_site_option('bp_media_options');
     ?>
     <table class="form-table ">
         <tbody>
@@ -508,7 +508,7 @@ add_action( 'admin_init', 'bp_media_admin_init_settings',1 );
 function bp_media_validate( $input ){
 
     if(isset($_REQUEST['premium_form_submit'])){
-		$input = get_option('bp_media_options');
+		$input = get_site_option('bp_media_options');
         if(empty($_REQUEST['premium_support']['ur_name'])){
             add_settings_error( 'enquire_name', 'enquire_name', __( 'Please enter your name', 'rtPanel' ), 'error' );
         }
@@ -538,10 +538,10 @@ function bp_media_validate( $input ){
 
 		if(array_key_exists('remove_linkback', $_POST)){
 			if($input['remove_linkback']=='2'){
-                update_option('bp_media_remove_linkback', '2');
+                update_site_option('bp_media_remove_linkback', '2');
 			}
 			else {
-				update_option('bp_media_remove_linkback', '1');
+				update_site_option('bp_media_remove_linkback', '1');
 			}
 		}
 

@@ -6,7 +6,7 @@
  */
 function bp_media_handle_uploads() {
 	global $bp,$bp_media_options;
-	$bp_media_options = get_option('bp_media_options',array(
+	$bp_media_options = get_site_option('bp_media_options',array(
 		'videos_enabled'	=>	true,
 		'audio_enabled'		=>	true,
 		'images_enabled'	=>	true,
