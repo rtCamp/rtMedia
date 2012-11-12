@@ -550,5 +550,5 @@ function bp_media_activity_create_after_add_media($media,$hidden=false){
 		add_post_meta($media->get_id(),'bp_media_child_activity',$activity_id);
 	}
 }
-add_action('bp_media_after_add_media','bp_media_activity_create_after_add_media',10,2)
+add_action('bp_media_after_add_media','bp_media_activity_create_after_add_media',10,2);
 ?>

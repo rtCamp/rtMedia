@@ -46,6 +46,7 @@ define('BP_MEDIA_AC_API_CATEGORY_ID','224');
  */
 function bp_media_init() {
 	if (defined('BP_VERSION')&&version_compare(BP_VERSION, BP_MEDIA_REQUIRED_BP, '>')) {
+		add_filter( 'plugin_action_links', 'bp_media_settings_link', 10, 2 );
 		require( BP_MEDIA_PLUGIN_DIR . '/includes/bp-media-loader.php' );
 	}
 }
@@ -128,13 +129,26 @@ add_action('admin_notices', 'bp_media_admin_notice');
 function bp_media_settings_link($links, $file) {
 	/* create link */
 	$plugin_name  = plugin_basename( __FILE__ );
+	$admin_link = bp_media_get_admin_url( add_query_arg( array( 'page' => 'bp-media-settings'  ), 'admin.php' ) );
 	if ( $file == $plugin_name ) {
 		array_unshift(
 			$links,
-			sprintf( '<a href="options-general.php?page=%s">%s</a>', 'bp-media-settings', __('Settings') )
+			sprintf( '<a href="%s">%s</a>', $admin_link, __('Settings') )
 		);
 	}
 	return $links;
 }
-add_filter( 'plugin_action_links', 'bp_media_settings_link', 10, 2 );
+
+function bp_media_get_admin_url( $path = '', $scheme = 'admin' ) {
+
+	// Links belong in network admin
+	if (is_multisite() )
+		$url = network_admin_url( $path, $scheme );
+
+	// Links belong in site admin
+	else
+		$url = admin_url( $path, $scheme );
+
+	return $url;
+}
 ?>
