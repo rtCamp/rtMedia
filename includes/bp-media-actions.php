@@ -263,7 +263,7 @@ function bp_media_footer() { ?>
 }
 
 global $bp_media_options;
-if($bp_media_options['remove_linkback']!='1')
+if(isset($bp_media_options['remove_linkback'])&&$bp_media_options['remove_linkback']!='1')
 	add_action('bp_footer','bp_media_footer');
 
 function bp_media_upload_enqueue(){
