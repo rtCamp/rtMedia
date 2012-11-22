@@ -66,17 +66,7 @@ class BP_Media_Group_Extension extends BP_Group_Extension {
     }
 
     function display() {
-		global $bp_media_group_sub_nav;
-		?>
-
-        <div class="item-list-tabs no-ajax checkins-type-tabs" id="subnav">
-			<ul>
-				<li><a>Photos</a></li>
-				<li><a>Videos</a></li>
-				<li><a>Music</a></li>
-			</ul>
-		</div>
-		<?php
+		bp_media_groups_display_screen();
     }
 
     function widget_display() { ?>
@@ -124,23 +114,48 @@ function bp_media_group_custom_nav(){
 }
 add_action('bp_actions','bp_media_group_custom_nav',999);
 
+/**
+ * This loop creates dummy classes for images, videos, audio and albums so that the url structuring
+ * can be uniform as it is in the members section.
+ */
 foreach(array('IMAGES','VIDEOS','AUDIO','ALBUMS') as $item){
 	eval('
 		class BP_Media_Group_Extension_'.constant('BP_MEDIA_'.$item.'_SLUG').' extends BP_Group_Extension{
 			function __construct(){
 				$this->name = BP_MEDIA_'.$item.'_LABEL;
 				$this->slug = BP_MEDIA_'.$item.'_SLUG;
-				$this->create_step_position = 21;
-				$this->nav_item_position = 31;
 				$enable_create_step = false;
 				$enable_nav_item = false;
 				$enable_edit_item = false;
 			}
+			function display(){bp_media_groups_display_screen();}
 			function widget_display(){}
 			function edit_screen_save(){}
 			function create_screen_save(){}
 		}
 		bp_register_group_extension("BP_Media_Group_Extension_'.constant('BP_MEDIA_'.$item.'_SLUG').'" );
 	');
+}
+
+function bp_media_groups_display_screen(){
+	global $bp_media_group_sub_nav,$bp;
+	?>
+	<div class="item-list-tabs no-ajax checkins-type-tabs" id="subnav">
+		<ul>
+			<?php
+
+			?>
+			<li><a>Photos</a></li>
+			<li><a>Videos</a></li>
+			<li><a>Music</a></li>
+		</ul>
+	</div>
+	<?php
+	echo '<pre>';
+	var_dump($bp->current_action);
+	echo '</pre>';
+	echo '<pre>';
+	var_dump($bp->action_variables);
+	echo '</pre>';
 }
 ?>
