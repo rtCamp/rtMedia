@@ -6,7 +6,7 @@ License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires at least: 3.3.2
 Tested up to: 3.4.2
-Stable tag: 2.2.6
+Stable tag: 2.2.7
 
 Adds Photos, Music, Videos & Albums to your BuddyPress. Supports mobile devices (iPhone/iPad, etc) and automatic audio/video conversion.
 
@@ -72,6 +72,9 @@ Please visit [BuddyPress Media's Features page](http://rtcamp.com/buddypress-med
 == Changelog ==
 
 Please visit [BuddyPress Media's Roadmap page](http://rtcamp.com/buddypress-media/roadmap/ "Visit BuddyPress Media's Features page") to get some details about future releases.
+
+= 2.2.7 =
+* Fixed the "Upgrade" button issue
 
 = 2.2.6  =
 * Fixed the Multisite issue for the options page.
