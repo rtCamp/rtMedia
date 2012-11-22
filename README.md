@@ -73,6 +73,9 @@ Please visit [BuddyPress Media's Features page](http://rtcamp.com/buddypress-med
 
 Please visit [BuddyPress Media's Roadmap page](http://rtcamp.com/buddypress-media/roadmap/ "Visit BuddyPress Media's Features page") to get some details about future releases.
 
+#### 2.2.7 ####
+* Fixed the "Upgrade" button issue
+
 #### 2.2.6  ####
 * Fixed the Multisite issue for the options page.
 
