@@ -24,7 +24,7 @@ function bp_media_upgrade_script(){
 function bp_media_upgrade_db_notice() {
 	?>
 	<div class="error"><p>
-		Please click upgrade to upgrade the database of BuddyPress Media <a class="button" id="refresh_media_count" href ="?<?php bp_media_get_admin_url( add_query_arg( array( 'page' => 'bp-media-settings', 'bp_media_upgrade_db' => 1 ,'wp_nonce' => wp_create_nonce( 'bp_media_upgrade_db' ) ), 'admin.php' ) ) ?>" class="button" title="<?php printf(__('It will migrate your BuddyPress Media\'s earlier database to new database.')); ?>">Upgrade</a>
+		Please click upgrade to upgrade the database of BuddyPress Media <a class="button" id="refresh_media_count" href ="<?php echo bp_media_get_admin_url( add_query_arg( array( 'page' => 'bp-media-settings', 'bp_media_upgrade_db' => 1 ,'wp_nonce' => wp_create_nonce( 'bp_media_upgrade_db' ) ), 'admin.php' ) ) ?>" class="button" title="<?php printf(__('It will migrate your BuddyPress Media\'s earlier database to new database.')); ?>">Upgrade</a>
 	</p></div>
 	<?php
 }
