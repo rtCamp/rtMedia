@@ -6,8 +6,8 @@ function bp_media_record_activity($args = '') {
 	$defaults = array(
 		'component' => BP_MEDIA_SLUG, // The name/ID of the component e.g. groups, profile, mycomponent
 	);
-	add_filter('bp_activity_allowed_tags', 'bp_media_override_allowed_tags');
-	$r = wp_parse_args($args, $defaults);
+	add_filter('bp_activity_allowed_tags', 'bp_media_override_allowed_tags');        
+	$r = wp_parse_args($args, $defaults);        
 	$activity_id = bp_activity_add($r);
 	return $activity_id;
 }
@@ -115,6 +115,7 @@ function bp_media_update_count() {
 function bp_media_update_media(){
 	global $bp_media_current_entry;
 	if($bp_media_current_entry->update_media(array('description'=> esc_html($_POST['bp_media_description']),'name'=>esc_html($_POST['bp_media_title'])))){
+                $bp_media_current_entry->update_media_activity();
 		@setcookie('bp-message', 'The media has been updated' , time() + 60 * 60 * 24, COOKIEPATH);
 		@setcookie('bp-message-type', 'success' , time() + 60 * 60 * 24, COOKIEPATH);
 		wp_redirect($bp_media_current_entry->get_url());
