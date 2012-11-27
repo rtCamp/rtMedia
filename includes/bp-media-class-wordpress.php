@@ -336,7 +336,8 @@ class BP_Media_Host_Wordpress {
 	 * Returns the HTML for title of the single entry page of the Media Entry
 	 */
 	function get_media_single_title(){
-		$content = '<div class="bp_media_title">' . wp_html_excerpt($this->name, $bp_media_default_excerpts['single_entry_title']) . '</div>;';
+		global $bp_media_default_excerpts;
+		$content = '<div class="bp_media_title">' . wp_html_excerpt($this->name, $bp_media_default_excerpts['single_entry_title']) . '</div>';
 		return $content;
 	}
 
