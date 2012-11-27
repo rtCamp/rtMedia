@@ -3,7 +3,7 @@
 global $bp_media_group_sub_nav;
 $bp_media_group_sub_nav = array();
 
-class BP_Media_Group_Extension extends BP_Group_Extension {
+class BP_Media_Groups_Extension extends BP_Group_Extension {
 
     function __construct() {
 		global $bp;
@@ -80,9 +80,9 @@ class BP_Media_Group_Extension extends BP_Group_Extension {
         <?php
     }
 }
-bp_register_group_extension( 'BP_Media_Group_Extension' );
+bp_register_group_extension( 'BP_Media_Groups_Extension' );
 
-function bp_media_group_custom_nav(){
+function bp_media_groups_custom_nav(){
 	global $bp;
 	$current_group = isset($bp->groups->current_group->slug)?$bp->groups->current_group->slug:null;
 
@@ -112,7 +112,7 @@ function bp_media_group_custom_nav(){
 		}
 	}
 }
-add_action('bp_actions','bp_media_group_custom_nav',999);
+add_action('bp_actions','bp_media_groups_custom_nav',999);
 
 /**
  * This loop creates dummy classes for images, videos, audio and albums so that the url structuring
@@ -139,23 +139,77 @@ foreach(array('IMAGES','VIDEOS','AUDIO','ALBUMS') as $item){
 
 function bp_media_groups_display_screen(){
 	global $bp_media_group_sub_nav,$bp;
+	bp_media_groups_display_navigation_menu();
+	if(isset($bp->action_variables[0])){
+		switch($bp->action_variables[0]){
+
+		}
+	}
+	else{
+		bp_media_upload_screen_content();
+	}
+}
+
+/**
+ * Displays the navigation available to the group media tab for the
+ * logged in user.
+ *
+ * @uses $bp Global Variable set by BuddyPress
+ */
+function bp_media_groups_display_navigation_menu(){
+	global $bp;
+
+	if(!isset($bp->current_action)||$bp->current_action!=BP_MEDIA_SLUG)
+		return false;
+	$current_tab = bp_media_groups_can_upload()?BP_MEDIA_UPLOAD_SLUG:BP_MEDIA_IMAGES_SLUG;
+	if(isset($bp->action_variables[0])){
+		$current_tab = $bp->action_variables[0];
+	}
+
+	/** This variable will be used to display the tabs in group component */
+	$bp_media_group_tabs = apply_filters('bp_media_group_tabs', array(
+		BP_MEDIA_UPLOAD_SLUG => array(
+			'url'	=> trailingslashit(bp_get_group_permalink( $bp->groups->current_group )).BP_MEDIA_SLUG,
+			'label'	=>	BP_MEDIA_UPLOAD_LABEL,
+		),
+		BP_MEDIA_IMAGES_SLUG => array(
+			'url'	=> trailingslashit(bp_get_group_permalink( $bp->groups->current_group )).BP_MEDIA_IMAGES_SLUG,
+			'label'	=>	BP_MEDIA_IMAGES_LABEL,
+		),
+		BP_MEDIA_VIDEOS_SLUG =>	array(
+			'url'	=> trailingslashit(bp_get_group_permalink( $bp->groups->current_group )).BP_MEDIA_VIDEOS_SLUG,
+			'label'	=>	BP_MEDIA_VIDEOS_LABEL,
+		),
+		BP_MEDIA_AUDIO_SLUG => array(
+			'url'	=> trailingslashit(bp_get_group_permalink( $bp->groups->current_group )).BP_MEDIA_AUDIO_SLUG,
+			'label'	=>	BP_MEDIA_AUDIO_LABEL,
+		),
+		BP_MEDIA_ALBUMS_SLUG => array(
+			'url'	=> trailingslashit(bp_get_group_permalink( $bp->groups->current_group )).BP_MEDIA_ALBUMS_SLUG,
+			'label'	=>	BP_MEDIA_ALBUMS_LABEL,
+		),
+	),$current_tab);
 	?>
-	<div class="item-list-tabs no-ajax checkins-type-tabs" id="subnav">
+	<div class="item-list-tabs no-ajax bp-media-group-navigation" id="subnav">
 		<ul>
 			<?php
-
+				foreach($bp_media_group_tabs as $tab_slug=>$tab_info){
+					echo '<li id="'.$tab_slug.'-group-li" '.($current_tab==$tab_slug?'class="current selected"':'').'><a id="'.$tab_slug.'" href="'.$tab_info['url'].'" title="'.$tab_info['label'].'">'.$tab_info['label'].'</a></li>';
+				}
 			?>
-			<li><a>Photos</a></li>
-			<li><a>Videos</a></li>
-			<li><a>Music</a></li>
 		</ul>
 	</div>
 	<?php
-	echo '<pre>';
-	var_dump($bp->current_action);
-	echo '</pre>';
-	echo '<pre>';
-	var_dump($bp->action_variables);
-	echo '</pre>';
+}
+
+/**
+ * Checks whether the current logged in user has the ability to upload on
+ * the given group or not
+ *
+ *
+ */
+function bp_media_groups_can_upload(){
+	/** @todo Implementation Pending */
+	return true;
 }
 ?>
