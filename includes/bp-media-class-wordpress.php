@@ -531,27 +531,30 @@ class BP_Media_Host_Wordpress {
          * Updates activity content's title and description sync with the editing of Media
 	 *	 
 	 */
-        function update_media_activity(){            
-            $user_id = bp_displayed_user_id();
-            $activities_template = new BP_Activity_Template(array(
-                'max' => TRUE,
-                'user_id' => $user_id
-            ));            
-            foreach ($activities_template->activities as $activity){
-                if($this->id == $activity->item_id){                    
-                    $args = array(
-                            'content' => $this->get_media_activity_content(),
-                            'id' => $activity->id,
-                            'type' => 'media_upload',
-                            'action' => apply_filters( 'bp_media_added_media', sprintf( __( '%1$s added a %2$s', 'bp-media'), bp_core_get_userlink( $this->get_author() ), '<a href="' . $this->get_url() . '">' . $this->get_media_activity_type() . '</a>' ) ),
-                            'primary_link' => $this->get_url(),
-                            'item_id' => $this->get_id(),
-                            'recorded_time' => $activity->date_recorded,
-                            'user_id' => $this->get_author()
-                    );
+        function update_media_activity(){
+            global $wpdb, $bp, $current_user;            
+            $q = $wpdb->prepare( "SELECT id FROM {$bp->activity->table_name} WHERE type = %s AND item_id = %d", 'media_upload', $this->id);
+            $activities = $wpdb->get_results($q);            
+            if(isset($activities) && count($activities) > 0){                
+                    $activities_template = new BP_Activity_Template(array(
+                    'max' => TRUE,
+                    'user_id' => $current_user,
+                    'in' => $activities[0]->id
+                ));
+                foreach ($activities_template->activities as $activity){                
+                        $args = array(
+                                'content' => $this->get_media_activity_content(),
+                                'id' => $activity->id,
+                                'type' => 'media_upload',
+                                'action' => apply_filters( 'bp_media_added_media', sprintf( __( '%1$s added a %2$s', 'bp-media'), bp_core_get_userlink( $this->get_author() ), '<a href="' . $this->get_url() . '">' . $this->get_media_activity_type() . '</a>' ) ),
+                                'primary_link' => $this->get_url(),
+                                'item_id' => $this->get_id(),
+                                'recorded_time' => $activity->date_recorded,
+                                'user_id' => $this->get_author()
+                        );
                     $activity_id = bp_media_record_activity($args);
-                }                
-            }               
+                }            
+            }
         }
 
 	/**
