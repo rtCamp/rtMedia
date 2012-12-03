@@ -209,12 +209,19 @@ function bp_media_action_buttons() {
 	global $bp_media_current_entry,$bp_media_options;
 
 	if($bp_media_current_entry!=NULL){
+            $featured_post = get_post_meta($bp_media_current_entry->get_id(),'featured',true);
+            
 		if(bp_displayed_user_id()==  bp_loggedin_user_id())
 			echo '<a href="'.$bp_media_current_entry->get_edit_url().'" class="button item-button bp-secondary-action bp-media-edit" title="Edit Media">Edit</a>';
-
+                
 		if($bp_media_options['download_enabled']==true)
 			echo '<a href="'.$bp_media_current_entry->get_attachment_url().'" class="button item-button bp-secondary-action bp-media-download" title="Download">Download</a>';
-	}
+                
+		if(bp_displayed_user_id()==  bp_loggedin_user_id() && $featured_post == '')  
+                        echo '<a href="'.$bp_media_current_entry->get_album_id().'" rel="" data-album-id="'.$bp_media_current_entry->get_album_id().'"  data-post-id="'.$bp_media_current_entry->get_id().'" class="button item-button bp-secondary-action bp-media-featured" title="Featured Media">Featured</a>';
+		else
+                        echo '<a href="'.$bp_media_current_entry->get_album_id().'" rel="" data-remove-featured="1"   data-album-id="'.$bp_media_current_entry->get_album_id().'" data-post-id="'.$bp_media_current_entry->get_id().'" class="button item-button bp-secondary-action bp-media-featured" title="Featured Media">Remove Featured</a>';
+       }
 }
 add_action('bp_activity_entry_meta', 'bp_media_action_buttons');
 
