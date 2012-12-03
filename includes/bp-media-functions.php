@@ -234,4 +234,17 @@ function bp_media_wp_comment_form_mod() {
 	global $bp_media_current_entry;
 	echo '<input type="hidden" name="redirect_to" value="'.$bp_media_current_entry->get_url().'">' ;
 }
+
+function implement_featured_ajax() {
+    if(isset($_POST['post_id'])) {
+        if(isset($_POST['post_date']) && $_POST['remove_featured'] == 0){
+            update_post_meta($_POST['post_id'], 'featured', date('Y-m-d H:i:s', strtotime($_POST['post_date'])) );
+        } else {
+            update_post_meta($_POST['post_id'], 'featured', FALSE);
+        }
+         die(1);
+    }
+}
+add_action('wp_ajax_my_featured_action', 'implement_featured_ajax');
+add_action('wp_ajax_nopriv_my_featured_action', 'implement_featured_ajax');
 ?>
