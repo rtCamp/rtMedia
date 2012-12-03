@@ -72,5 +72,37 @@ jQuery(document).ready(function(){
 		});
 
 	},1000);
+	
+	        /* Add Featured Image */
+        
+        jQuery('.bp-media-featured').live('click',function(e){
+        e.preventDefault();        
+        var post_id = jQuery(this).attr('data-post-id');
+        var post_date = new Date();
+        var date = post_date.getFullYear()+'-'+(post_date.getMonth() + 1) +'-'+post_date.getDate()+' '+ post_date.getHours()+':'+(post_date.getMinutes() + 1)+':'+(post_date.getSeconds()+1);
+       // var post_date = d.getTime();
+        var curr_obj = jQuery(this);
+        var remove_featured = 0;
+        if(jQuery(this).attr('data-remove-featured')){
+            remove_featured = jQuery(this).attr('data-remove-featured');
+        }        
+        jQuery.ajax({
+            url:"/wp-admin/admin-ajax.php",
+            type:'POST',
+            data:'action=my_featured_action&post_id='+post_id+'&remove_featured='+remove_featured+'&post_date='+date,
+            success:function( results )
+            {
+                if(remove_featured == 1){
+                    curr_obj.text('Featured');
+                    curr_obj.attr('data-remove-featured','0');
+                } else {
+                    curr_obj.text('Remove Featured');
+                    curr_obj.attr('data-remove-featured','1');
+                }
+                
+            }
+        });
+    });
+
 
 });
