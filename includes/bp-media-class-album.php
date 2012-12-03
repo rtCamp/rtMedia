@@ -46,10 +46,30 @@ class BP_Media_Album{
 		$this->url = trailingslashit(bp_core_get_user_domain($this->owner) . BP_MEDIA_ALBUMS_SLUG . '/' . $this->id);
 		$this->edit_url = trailingslashit(bp_core_get_user_domain($this->owner) . BP_MEDIA_ALBUMS_SLUG . '/' . BP_MEDIA_ALBUMS_EDIT_SLUG . '/' . $this->id);
 		$this->delete_url = trailingslashit(bp_core_get_user_domain($this->owner) . BP_MEDIA_ALBUMS_SLUG . '/' . BP_MEDIA_DELETE_SLUG . '/' . $this->id);
-		if(has_post_thumbnail($this->id)){
-			$this->thumbnail = get_the_post_thumbnail($this->id, 'thumbnail');
-		}
-		else{
+		 $attachments = get_children(array(
+                    'numberposts' => 1,
+                    'order'=> 'DESC',
+                    'post_mime_type' => 'image',
+			'post_parent' => $this->id,
+			'post_type'	=>	'attachment'
+		));
+                 $attachments_featured = get_children(array(
+                    'numberposts' => 1,
+                    'meta_key' => 'featured',
+                    'orderby' => 'meta_value',
+                    'post_mime_type' => 'image',
+                    'post_parent' => $this->id,
+                    'post_type'	=>	'attachment',                    
+		));
+		if($attachments_featured) {
+                        foreach($attachments_featured as $attachment) {
+                                $this->thumbnail = '<span><img src="'.wp_get_attachment_thumb_url( $attachment->ID ).'"></span>';			
+                        }
+                }elseif ($attachments) {
+                        foreach($attachments as $attachment) {
+                                $this->thumbnail = '<span><img src="'.wp_get_attachment_thumb_url( $attachment->ID ).'"></span>';			
+                        }
+                }else{
 			$this->thumbnail = '<img src = '.plugins_url('img/image_thumb.png', __FILE__) .' />';
 		}
 		$this->media_entries = get_children(array(
