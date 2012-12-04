@@ -102,10 +102,27 @@ class BP_Media_Host_Wordpress {
 			$create_new_album_flag = true;
 		}
 		if($create_new_album_flag){
-			$post_id = $wpdb->get_var( "SELECT ID FROM $wpdb->posts WHERE post_title = 'Wall Posts' AND post_author = '".  get_current_user_id()."' AND post_type='bp_media_album'");
+			if($group == 0)
+				$post_id = $wpdb->get_var(
+						"SELECT ID
+						FROM $wpdb->posts
+						WHERE
+							post_title = 'Wall Posts'
+							AND post_author = '".  get_current_user_id()."'
+							AND post_type='bp_media_album'"
+						);
+			else
+				$post_id = $wpdb->get_var(
+						"SELECT wp_posts.ID
+						FROM $wpdb->posts
+						INNER JOIN $wpdb->postmeta ON $wpdb->posts.ID = $wpdb->postmeta.post_id
+							AND $wpdb->postmeta.meta_key =  'bp-media-key'
+							AND $wpdb->postmeta.meta_value = -$group
+							AND $wpdb->posts.post_author = ".  get_current_user_id()."
+							AND $wpdb->posts.post_title =  'Wall Posts'" );
 			if($post_id==null){
 				$album = new BP_Media_Album();
-				$album->add_album('Wall Posts');
+				$album->add_album('Wall Posts',  get_current_user_id(), $group);
 				$post_id = $album->get_id();
 			}
 		}
@@ -250,7 +267,7 @@ class BP_Media_Host_Wordpress {
 	 *
 	 */
 	function get_media_activity_content() {
-		global $bp_media_counter, $bp_media_default_excerpts;                
+		global $bp_media_counter, $bp_media_default_excerpts;
 		$attachment_id = $this->id;
 		$activity_content = '<div class="bp_media_title"><a href="' . $this->url . '" title="' . $this->description . '">' . wp_html_excerpt($this->name, $bp_media_default_excerpts['activity_entry_title']) . '</a></div>';
 		$activity_content .='<div class="bp_media_content">';
@@ -271,13 +288,13 @@ class BP_Media_Host_Wordpress {
 			case 'image' :
 				$image_array = image_downsize($attachment_id, 'bp_media_activity_image');
 				$activity_content.='<a href="' . $this->url . '" title="' . $this->name . '"><img src="' . $image_array[0] . '" id="bp_media_image_' . $this->id . '_' . $bp_media_counter++ . '" alt="' . $this->name . '" /></a>';
-				$type = 'image';                                
+				$type = 'image';
 				break;
 			default :
 				return false;
 		}
 		$activity_content .= '</div>';
-		$activity_content .= '<div class="bp_media_description">' . wp_html_excerpt($this->description, $bp_media_default_excerpts['activity_entry_description']) . '</div>';                                
+		$activity_content .= '<div class="bp_media_description">' . wp_html_excerpt($this->description, $bp_media_default_excerpts['activity_entry_description']) . '</div>';
 		return $activity_content;
 	}
 
@@ -512,7 +529,7 @@ class BP_Media_Host_Wordpress {
 	 *
 	 * @return bool True when the update is successful, False when the update fails
 	 */
-	function update_media($args=array()){                
+	function update_media($args=array()){
 		$defaults=array(
 			'name'	=>	$this->name,
 			'description'	=>	$this->description,
@@ -527,22 +544,22 @@ class BP_Media_Host_Wordpress {
 		$this->init($this->id);
 		return $result;
 	}
-        
-        /**	 
+
+        /**
          * Updates activity content's title and description sync with the editing of Media
-	 *	 
+	 *
 	 */
         function update_media_activity(){
-            global $wpdb, $bp, $current_user;            
+            global $wpdb, $bp, $current_user;
             $q = $wpdb->prepare( "SELECT id FROM {$bp->activity->table_name} WHERE type = %s AND item_id = %d", 'media_upload', $this->id);
-            $activities = $wpdb->get_results($q);            
-            if(isset($activities) && count($activities) > 0){                
+            $activities = $wpdb->get_results($q);
+            if(isset($activities) && count($activities) > 0){
                     $activities_template = new BP_Activity_Template(array(
                     'max' => TRUE,
                     'user_id' => $current_user,
                     'in' => $activities[0]->id
                 ));
-                foreach ($activities_template->activities as $activity){                
+                foreach ($activities_template->activities as $activity){
                         $args = array(
                                 'content' => $this->get_media_activity_content(),
                                 'id' => $activity->id,
@@ -554,7 +571,7 @@ class BP_Media_Host_Wordpress {
                                 'user_id' => $this->get_author()
                         );
                     $activity_id = bp_media_record_activity($args);
-                }            
+                }
             }
         }
 

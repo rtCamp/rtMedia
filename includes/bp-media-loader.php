@@ -163,6 +163,9 @@ class BP_Media_Component extends BP_Component {
 			'includes/bp-media-shortcodes.php',
 			'includes/bp-media-widgets.php',
 			'includes/bp-media-class-album.php',
+			'includes/bp-media-groups-loader.php',
+			'includes/bp-media-groups-actions.php',
+			'includes/bp-media-groups-screens.php'
 		);
 		if (is_admin() || is_network_admin()) {
 			$includes[] = 'includes/bp-media-admin.php';

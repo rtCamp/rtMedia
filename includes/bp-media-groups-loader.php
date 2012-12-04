@@ -2,9 +2,15 @@
 
 global $bp_media_group_sub_nav;
 $bp_media_group_sub_nav = array();
-
 class BP_Media_Groups_Extension extends BP_Group_Extension {
 
+	/**
+	 * Constructor for the BP_Group_Extension adding values to the variables defined
+	 *
+	 * @uses global $bp
+	 *
+	 * @since BP Media 2.3
+	 */
     function __construct() {
 		global $bp;
         $this->name = BP_MEDIA_LABEL;
@@ -65,9 +71,15 @@ class BP_Media_Groups_Extension extends BP_Group_Extension {
         bp_core_redirect( bp_get_group_permalink( $bp->groups->current_group ) . '/admin/' . $this->slug );
     }
 
+	/**
+	 * The display method for the extension
+	 *
+	 * @since BP Media 2.3
+	 */
     function display() {
 		bp_media_groups_display_screen();
     }
+
 
     function widget_display() { ?>
         <div class="info-group">
@@ -82,6 +94,13 @@ class BP_Media_Groups_Extension extends BP_Group_Extension {
 }
 bp_register_group_extension( 'BP_Media_Groups_Extension' );
 
+/**
+ * Handles the custom navigation structure of the BuddyPress Group Extension Media
+ *
+ * @uses global $bp
+ *
+ * @since BP Media 2.3
+ */
 function bp_media_groups_custom_nav(){
 	global $bp;
 	$current_group = isset($bp->groups->current_group->slug)?$bp->groups->current_group->slug:null;
@@ -137,24 +156,34 @@ foreach(array('IMAGES','VIDEOS','AUDIO','ALBUMS') as $item){
 	');
 }
 
-function bp_media_groups_display_screen(){
-	global $bp_media_group_sub_nav,$bp;
-	bp_media_groups_display_navigation_menu();
-	if(isset($bp->action_variables[0])){
-		switch($bp->action_variables[0]){
-
+/**
+ * Adds the current group id as parameter for plupload
+ *
+ * @param Array $multipart_params Array of Multipart Parameters to be passed on to plupload script
+ *
+ * @since BP Media 2.3
+ */
+function bp_media_groups_multipart_params_handler($multipart_params){
+	if(is_array($multipart_params)){
+		global $bp;
+		if(isset($bp->current_action)&&$bp->current_action==BP_MEDIA_SLUG
+				&&isset($bp->action_variables)&&empty($bp->action_variables)
+				&&isset($bp->current_component)&&$bp->current_component=='groups'
+				&&isset($bp->groups->current_group->id)){
+			$multipart_params['bp_media_group_id']=$bp->groups->current_group->id;
 		}
 	}
-	else{
-		bp_media_upload_screen_content();
-	}
+	return $multipart_params;
 }
+add_filter('bp_media_multipart_params_filter','bp_media_groups_multipart_params_handler');
 
 /**
  * Displays the navigation available to the group media tab for the
  * logged in user.
  *
  * @uses $bp Global Variable set by BuddyPress
+ *
+ * @since BP Media 2.3
  */
 function bp_media_groups_display_navigation_menu(){
 	global $bp;
@@ -206,7 +235,7 @@ function bp_media_groups_display_navigation_menu(){
  * Checks whether the current logged in user has the ability to upload on
  * the given group or not
  *
- *
+ * @since BP Media 2.3
  */
 function bp_media_groups_can_upload(){
 	/** @todo Implementation Pending */

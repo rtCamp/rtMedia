@@ -288,7 +288,7 @@ function bp_media_upload_enqueue(){
 		'silverlight_xap_url' => includes_url( 'js/plupload/plupload.silverlight.xap' ),
 		'file_data_name'      => 'bp_media_file', // key passed to $_FILE.
 		'multi_selection'		=> true,
-		'multipart_params'	=> array('action'=>'wp_handle_upload')
+		'multipart_params'	=> apply_filters('bp_media_multipart_params_filter',array('action'=>'wp_handle_upload'))
 	);
 	wp_enqueue_script('bp-media-uploader',plugins_url('js/bp-media-uploader.js',__FILE__),array('plupload', 'plupload-html5', 'plupload-flash', 'plupload-silverlight', 'plupload-html4','plupload-handlers','jquery-ui-core','jquery-ui-widget','jquery-ui-position','jquery-ui-dialog'));
 	wp_localize_script('bp-media-uploader','bp_media_uploader_params',$params);
