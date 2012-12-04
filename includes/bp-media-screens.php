@@ -447,6 +447,10 @@ function bp_media_audio_entry_screen() {
 
 function bp_media_audio_entry_screen_content() {
 	global $bp, $bp_media_current_entry, $bp_media_options;
+	if($bp_media_current_entry==null){
+		echo 'Entry not found';
+	}
+
 	if (!$bp->action_variables[0] == BP_MEDIA_AUDIO_ENTRY_SLUG)
 		return false;
 	do_action('bp_media_before_content');

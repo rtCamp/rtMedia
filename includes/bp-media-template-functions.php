@@ -92,8 +92,6 @@ function bp_media_show_pagination($type = 'top' , $inner = false) {
 			$current_single = BP_MEDIA_LABEL_SINGULAR;
 	}
 
-
-
 	if($bp->current_action == BP_MEDIA_ALBUMS_SLUG && !$inner){
 		$args = array(
 			'base' => trailingslashit(bp_displayed_user_domain() . $bp->current_action . '/') . '%_%',
@@ -166,13 +164,13 @@ function bp_media_get_permalink($id = 0) {
 		return false;
 	switch (get_post_meta($media->ID, 'bp_media_type', true)) {
 		case 'video' :
-			return trailingslashit(bp_displayed_user_domain() . BP_MEDIA_VIDEOS_SLUG . '/watch/' . $media->ID);
+			return trailingslashit(bp_displayed_user_domain() . BP_MEDIA_VIDEOS_SLUG . '/' . BP_MEDIA_VIDEOS_ENTRY_SLUG . '/' . $media->ID);
 			break;
 		case 'audio' :
-			return trailingslashit(bp_displayed_user_domain() . BP_MEDIA_AUDIO_SLUG . '/listen/' . $media->ID);
+			return trailingslashit(bp_displayed_user_domain() . BP_MEDIA_AUDIO_SLUG . '/' . BP_MEDIA_AUDIO_ENTRY_SLUG . '/' . $media->ID);
 			break;
 		case 'image' :
-			return trailingslashit(bp_displayed_user_domain() . BP_MEDIA_IMAGES_SLUG . '/view/' . $media->ID);
+			return trailingslashit(bp_displayed_user_domain() . BP_MEDIA_IMAGES_SLUG . '/' . BP_MEDIA_IMAGES_ENTRY_SLUG . '/' . $media->ID);
 			break;
 		default :
 			return false;

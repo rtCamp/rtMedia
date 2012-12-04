@@ -48,7 +48,7 @@ function bp_media_init() {
 	if (defined('BP_VERSION')&&version_compare(BP_VERSION, BP_MEDIA_REQUIRED_BP, '>')) {
 		add_filter( 'plugin_action_links', 'bp_media_settings_link', 10, 2 );
 		require( BP_MEDIA_PLUGIN_DIR . '/includes/bp-media-loader.php' );
-		require( BP_MEDIA_PLUGIN_DIR . '/includes/bp-media-groups-loader.php');
+		//require( BP_MEDIA_PLUGIN_DIR . '/includes/bp-media-groups-loader.php');
 	}
 }
 add_action('bp_include', 'bp_media_init');
