@@ -43,10 +43,35 @@ class BP_Media_Groups_Extension extends BP_Group_Extension {
         if ( !bp_is_group_admin_screen( $this->slug ) )
             return false; ?>
 
-        <h2><?php echo esc_attr( $this->name ) ?></h2>
-
-        <p>Edit steps here</p>
-        <input type=&quot;submit&quot; name=&quot;save&quot; value=&quot;Save&quot; />
+        <h4>Album Creation Control</h4>
+		<p>Who can create Albums in this group?</p>
+		<div class="radio">
+			<label>
+				<input name="bp_album_creation_control" type="radio" id="bp_media_group_level_admin">
+				<strong>Admin Only</strong>
+				<ul>
+					<li>Admin will be able to to create Albums</li>
+					<li>Moderators and Group Members will not be able to create albums</li>
+				</ul>
+			</label>
+			<label>
+				<input name="bp_album_creation_control" type="radio" id="bp_media_group_level_moderators">
+				<strong>Moderators</strong>
+				<ul>
+					<li>Admin and Moderators will be able to to create Albums</li>
+					<li>Group Members will not be able to create albums</li>
+				</ul>
+			</label>
+			<label>
+				<input name="bp_album_creation_control" type="radio" id="bp_media_group_level_moderators">
+				<strong>Group Members</strong>
+				<ul>
+					<li>Admin, Moderators and Group Members will be able to to create Albums</li>
+				</ul>
+			</label>
+		</div>
+		<hr>
+        <input type="submit" name="save" value="Save Changes" />
 
         <?php
         wp_nonce_field( 'groups_edit_save_' . $this->slug );
@@ -104,7 +129,6 @@ bp_register_group_extension( 'BP_Media_Groups_Extension' );
 function bp_media_groups_custom_nav(){
 	global $bp;
 	$current_group = isset($bp->groups->current_group->slug)?$bp->groups->current_group->slug:null;
-
 	if(!$current_group)
 		return;
 	if(!(isset($bp->bp_options_nav[$current_group])&&  is_array($bp->bp_options_nav[$current_group])))
@@ -116,6 +140,7 @@ function bp_media_groups_custom_nav(){
 			case BP_MEDIA_AUDIO_SLUG:
 			case BP_MEDIA_ALBUMS_SLUG:
 				unset($bp->bp_options_nav[$current_group][$key]);
+
 		}
 		switch($bp->current_action){
 			case BP_MEDIA_IMAGES_SLUG:
@@ -140,6 +165,7 @@ add_action('bp_actions','bp_media_groups_custom_nav',999);
 foreach(array('IMAGES','VIDEOS','AUDIO','ALBUMS') as $item){
 	eval('
 		class BP_Media_Group_Extension_'.constant('BP_MEDIA_'.$item.'_SLUG').' extends BP_Group_Extension{
+			var $enable_edit_item = false;
 			function __construct(){
 				$this->name = BP_MEDIA_'.$item.'_LABEL;
 				$this->slug = BP_MEDIA_'.$item.'_SLUG;
@@ -241,4 +267,26 @@ function bp_media_groups_can_upload(){
 	/** @todo Implementation Pending */
 	return true;
 }
+
+/**
+ * Adds the Media Settings menu for groups in the admin bar
+ *
+ * @uses global $bp,$wp_admin_bar
+ *
+ * @since BP Media 2.3
+ */
+function bp_media_groups_adminbar(){
+	global $wp_admin_bar, $bp;
+	$wp_admin_bar->add_menu( array(
+		'parent' => $bp->group_admin_menu_id,
+		'id'     => 'bp-media-group',
+		'title'  => __( 'Media Settings', 'buddypress' ),
+		'href'   =>  bp_get_groups_action_link( 'admin/media' )
+	) );
+
+}
+//add_action('admin_bar_menu','bp_media_groups_adminbar',99);
+/* This will need some handling for checking if its a single group page or not, also whether the person can
+ * edit media settings or not
+ */
 ?>
