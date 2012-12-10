@@ -23,8 +23,22 @@ class BP_Media_Groups_Extension extends BP_Group_Extension {
         if ( !bp_is_group_creation_step( $this->slug ) )
             return false;
         ?>
-
-        <p>The HTML for my creation step goes here.</p>
+		<h4>Album Creation Control</h4>
+		<p>Who can create Albums in this group?</p>
+		<div class="radio">
+			<label>
+				<input name="bp_album_creation_control" type="radio" id="bp_media_group_level_moderators" checked="checked" value="all">
+				<strong>All Group Members</strong>
+			</label>
+			<label>
+				<input name="bp_album_creation_control" type="radio" id="bp_media_group_level_moderators" value="moderators">
+				<strong>Group Admins and Mods only</strong>
+			</label>
+			<label>
+				<input name="bp_album_creation_control" type="radio" id="bp_media_group_level_admin" value="admin">
+				<strong>Group Admin only</strong>
+			</label>
+		</div>
 
         <?php
         wp_nonce_field( 'groups_create_save_' . $this->slug );
@@ -36,43 +50,34 @@ class BP_Media_Groups_Extension extends BP_Group_Extension {
         check_admin_referer( 'groups_create_save_' . $this->slug );
 
         /* Save any details submitted here */
-        groups_update_groupmeta( $bp->groups->new_group_id, 'my_meta_name', 'value' );
+		if(isset($_POST['bp_album_creation_control'])&&$_POST['bp_album_creation_control']!='')
+			groups_update_groupmeta( $bp->groups->new_group_id, 'bp_media_group_control_level', $_POST['bp_album_creation_control'] );
     }
 
     function edit_screen() {
         if ( !bp_is_group_admin_screen( $this->slug ) )
-            return false; ?>
+            return false;
+		$current_level = groups_get_groupmeta(bp_get_current_group_id(),'bp_media_group_control_level');
+		?>
 
         <h4>Album Creation Control</h4>
 		<p>Who can create Albums in this group?</p>
 		<div class="radio">
 			<label>
-				<input name="bp_album_creation_control" type="radio" id="bp_media_group_level_admin">
-				<strong>Admin Only</strong>
-				<ul>
-					<li>Admin will be able to to create Albums</li>
-					<li>Moderators and Group Members will not be able to create albums</li>
-				</ul>
+				<input name="bp_album_creation_control" type="radio" id="bp_media_group_level_moderators"  value="all"<?php checked($current_level, 'all', true) ?>>
+				<strong>All Group Members</strong>
 			</label>
 			<label>
-				<input name="bp_album_creation_control" type="radio" id="bp_media_group_level_moderators">
-				<strong>Moderators</strong>
-				<ul>
-					<li>Admin and Moderators will be able to to create Albums</li>
-					<li>Group Members will not be able to create albums</li>
-				</ul>
+				<input name="bp_album_creation_control" type="radio" id="bp_media_group_level_moderators" value="moderators" <?php checked($current_level, 'moderators', true) ?>>
+				<strong>Group Admins and Mods only</strong>
 			</label>
 			<label>
-				<input name="bp_album_creation_control" type="radio" id="bp_media_group_level_moderators">
-				<strong>Group Members</strong>
-				<ul>
-					<li>Admin, Moderators and Group Members will be able to to create Albums</li>
-				</ul>
+				<input name="bp_album_creation_control" type="radio" id="bp_media_group_level_admin" value="admin" <?php checked($current_level, 'admin', true) ?>>
+				<strong>Group Admin only</strong>
 			</label>
 		</div>
 		<hr>
         <input type="submit" name="save" value="Save Changes" />
-
         <?php
         wp_nonce_field( 'groups_edit_save_' . $this->slug );
     }
@@ -85,7 +90,10 @@ class BP_Media_Groups_Extension extends BP_Group_Extension {
 
         check_admin_referer( 'groups_edit_save_' . $this->slug );
 
-        /* Insert your edit screen save code here */
+        if(isset($_POST['bp_album_creation_control'])&&$_POST['bp_album_creation_control']!='')
+			$success = groups_update_groupmeta(bp_get_current_group_id(), 'bp_media_group_control_level', $_POST['bp_album_creation_control'] );
+		else
+			$success = false;
 
         /* To post an error/success message to the screen, use the following */
         if ( !$success )
@@ -166,17 +174,15 @@ foreach(array('IMAGES','VIDEOS','AUDIO','ALBUMS') as $item){
 	eval('
 		class BP_Media_Group_Extension_'.constant('BP_MEDIA_'.$item.'_SLUG').' extends BP_Group_Extension{
 			var $enable_edit_item = false;
+			var $enable_create_step = false;
 			function __construct(){
 				$this->name = BP_MEDIA_'.$item.'_LABEL;
 				$this->slug = BP_MEDIA_'.$item.'_SLUG;
 				$enable_create_step = false;
-				$enable_nav_item = false;
 				$enable_edit_item = false;
 			}
 			function display(){bp_media_groups_display_screen();}
 			function widget_display(){}
-			function edit_screen_save(){}
-			function create_screen_save(){}
 		}
 		bp_register_group_extension("BP_Media_Group_Extension_'.constant('BP_MEDIA_'.$item.'_SLUG').'" );
 	');
@@ -283,7 +289,6 @@ function bp_media_groups_adminbar(){
 		'title'  => __( 'Media Settings', 'buddypress' ),
 		'href'   =>  bp_get_groups_action_link( 'admin/media' )
 	) );
-
 }
 //add_action('admin_bar_menu','bp_media_groups_adminbar',99);
 /* This will need some handling for checking if its a single group page or not, also whether the person can
