@@ -118,31 +118,4 @@ function bp_media_groups_display_screen(){
 }
 
 
-/**
- * Called on bp_init by screen functions
- * Initializes the albums query for groups
- *
- * @uses global $bp, $bp_media_albums_query
- *
- * @since BP Media 2.2
- */
-function bp_media_groups_albums_set_query() {
-	global $bp, $bp_media_albums_query;
-	if (isset($bp->action_variables) && isset($bp->action_variables[1]) && $bp->action_variables[1] == 'page' && isset($bp->action_variables[2]) && is_numeric($bp->action_variables[2])) {
-		$paged = $bp->action_variables[2];
-	} else {
-		$paged = 1;
-	}
-
-	if (isset($bp->action_variables[0])&&$bp->action_variables[0] == BP_MEDIA_ALBUMS_SLUG) {
-		$args = array(
-			'post_type' => 'bp_media_album',
-			'paged' => $paged,
-			'meta_key' => 'bp-media-key',
-			'meta_value' => -bp_get_current_group_id(),
-			'meta_compare' => '='
-		);
-		$bp_media_albums_query = new WP_Query($args);
-	}
-}
 ?>

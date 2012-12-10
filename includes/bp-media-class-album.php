@@ -54,10 +54,11 @@ class BP_Media_Album{
 		 */
 		$this->group_id = $meta_key<0?-$meta_key:0;
 		if($this->group_id>0){
-			/** Working to change the URL on the groups page */
-			$this->url = trailingslashit(bp_core_get_user_domain($this->owner) . BP_MEDIA_ALBUMS_SLUG . '/' . $this->id);
-			$this->edit_url = trailingslashit(bp_core_get_user_domain($this->owner) . BP_MEDIA_ALBUMS_SLUG . '/' . BP_MEDIA_ALBUMS_EDIT_SLUG . '/' . $this->id);
-			$this->delete_url = trailingslashit(bp_core_get_user_domain($this->owner) . BP_MEDIA_ALBUMS_SLUG . '/' . BP_MEDIA_DELETE_SLUG . '/' . $this->id);
+			$current_group = new BP_Groups_Group($this->group_id);
+			$group_url = bp_get_group_permalink($current_group);
+			$this->url = trailingslashit($group_url . BP_MEDIA_ALBUMS_SLUG . '/' . $this->id);
+			$this->edit_url = trailingslashit($group_url . BP_MEDIA_ALBUMS_SLUG . '/' . BP_MEDIA_ALBUMS_EDIT_SLUG . '/' . $this->id);
+			$this->delete_url = trailingslashit($group_url . BP_MEDIA_ALBUMS_SLUG . '/' . BP_MEDIA_DELETE_SLUG . '/' . $this->id);
 		}
 		else{
 			$this->url = trailingslashit(bp_core_get_user_domain($this->owner) . BP_MEDIA_ALBUMS_SLUG . '/' . $this->id);
@@ -65,19 +66,19 @@ class BP_Media_Album{
 			$this->delete_url = trailingslashit(bp_core_get_user_domain($this->owner) . BP_MEDIA_ALBUMS_SLUG . '/' . BP_MEDIA_DELETE_SLUG . '/' . $this->id);
 		}
 		$attachments = get_children(array(
-                    'numberposts' => 1,
-                    'order'=> 'DESC',
-                    'post_mime_type' => 'image',
+			'numberposts' => 1,
+			'order'=> 'DESC',
+			'post_mime_type' => 'image',
 			'post_parent' => $this->id,
 			'post_type'	=>	'attachment'
 		));
-                 $attachments_featured = get_children(array(
-                    'numberposts' => 1,
-                    'meta_key' => 'featured',
-                    'orderby' => 'meta_value',
-                    'post_mime_type' => 'image',
-                    'post_parent' => $this->id,
-                    'post_type'	=>	'attachment',
+		$attachments_featured = get_children(array(
+			'numberposts' => 1,
+			'meta_key' => 'featured',
+			'orderby' => 'meta_value',
+			'post_mime_type' => 'image',
+			'post_parent' => $this->id,
+			'post_type'	=>	'attachment',
 		));
 		if($attachments_featured) {
                         foreach($attachments_featured as $attachment) {

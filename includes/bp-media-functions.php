@@ -6,8 +6,8 @@ function bp_media_record_activity($args = '') {
 	$defaults = array(
 		'component' => BP_MEDIA_SLUG, // The name/ID of the component e.g. groups, profile, mycomponent
 	);
-	add_filter('bp_activity_allowed_tags', 'bp_media_override_allowed_tags');        
-	$r = wp_parse_args($args, $defaults);        
+	add_filter('bp_activity_allowed_tags', 'bp_media_override_allowed_tags');
+	$r = wp_parse_args($args, $defaults);
 	$activity_id = bp_activity_add($r);
 	return $activity_id;
 }
@@ -247,4 +247,19 @@ function implement_featured_ajax() {
 }
 add_action('wp_ajax_my_featured_action', 'implement_featured_ajax');
 add_action('wp_ajax_nopriv_my_featured_action', 'implement_featured_ajax');
+
+/**
+ * Redirects the user to the location given in the parameter as well as set the message
+ * and context of redirect
+ *
+ * @param $location String The URL to redirect to
+ * @param $message String The message to show on the page where redirected
+ * @param $type String Type of message(updated, success, error, warning), works only if message is set
+ * @param $status String The HTTP status header for the redirection page.
+ */
+function bp_media_redirect($location,$message = '',$type='updated',$status='302'){
+	if($message!='')
+		bp_core_add_message( $message, 'error' );
+	bp_core_redirect($location, $status);
+}
 ?>
