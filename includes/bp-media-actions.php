@@ -99,10 +99,11 @@ function bp_media_enqueue_scripts_styles() {
 	$bp_media_vars = array(
 		'ajaxurl' => admin_url( 'admin-ajax.php'),
 		'page'	=> 1,
-		'current_action' => isset($bp->current_action)?$bp->current_action:false,
+		'current_action' => bp_get_current_group_id()?bp_action_variable(0):(isset($bp->current_action)?$bp->current_action:false),
 		'action_variables' =>	isset($bp->action_variables)?$bp->action_variables:false,
 		'displayed_user' => bp_displayed_user_id(),
-		'loggedin_user'	=> bp_loggedin_user_id()
+		'loggedin_user'	=> bp_loggedin_user_id(),
+		'current_group'	=> bp_get_current_group_id()
 	);
 	wp_localize_script( 'bp-media-default', 'bp_media_vars', $bp_media_vars );
     wp_enqueue_style('bp-media-mecss', plugins_url('includes/media-element/mediaelementplayer.min.css', dirname(__FILE__)));
@@ -369,7 +370,8 @@ function bp_media_load_more() {
 	$action_variables = isset($_POST['action_variables'])?$_POST['action_variables']:null;
 	$displayed_user = isset($_POST['displayed_user'])?$_POST['displayed_user']:null;
 	$loggedin_user = isset($_POST['loggedin_user'])?$_POST['loggedin_user']:null;
-	if(!$displayed_user||intval($displayed_user)==0){
+	$current_group = isset($_POST['current_group'])?$_POST['current_group']:null;
+	if((!$displayed_user||intval($displayed_user)==0)&&(!$current_group||intval($current_group)==0)){
 		die();
 	}
 	switch($current_action){
@@ -378,10 +380,9 @@ function bp_media_load_more() {
 				'post_type' => 'attachment',
 				'post_status'	=>	'any',
 				'post_mime_type' =>	'image',
-				'author' => $bp->displayed_user->id,
 				'meta_key' => 'bp-media-key',
-				'meta_value' => $bp->displayed_user->id,
-				'meta_compare' => 'LIKE',
+				'meta_value' => $current_group>0?-$current_group:$bp->displayed_user->id,
+				'meta_compare' => '=',
 				'paged' => $page,
 				'posts_per_page' => $bp_media_posts_per_page
 			);
@@ -393,8 +394,8 @@ function bp_media_load_more() {
 				'post_mime_type' =>	'audio',
 				'author' => $bp->displayed_user->id,
 				'meta_key' => 'bp-media-key',
-				'meta_value' => $bp->displayed_user->id,
-				'meta_compare' => 'LIKE',
+				'meta_value' => $current_group>0?-$current_group:$bp->displayed_user->id,
+				'meta_compare' => '=',
 				'paged' => $page,
 				'posts_per_page' => $bp_media_posts_per_page
 			);
@@ -406,8 +407,8 @@ function bp_media_load_more() {
 				'post_mime_type' =>	'video',
 				'author' => $bp->displayed_user->id,
 				'meta_key' => 'bp-media-key',
-				'meta_value' => $bp->displayed_user->id,
-				'meta_compare' => 'LIKE',
+				'meta_value' => $current_group>0?-$current_group:$bp->displayed_user->id,
+				'meta_compare' => '=',
 				'paged' => $page,
 				'posts_per_page' => $bp_media_posts_per_page
 			);

@@ -63,23 +63,30 @@ class BP_Media_Host_Wordpress {
 			$this->type = $result[0][0];
 		else
 			return false;
+		if($this->group_id>0){
+			$current_group = new BP_Groups_Group($this->group_id);
+			$pre_url = bp_get_group_permalink($current_group);
+		}
+		else{
+			$pre_url = bp_core_get_user_domain($this->owner);
+		}
 		switch ($this->type) {
 			case 'video' :
-				$this->url = trailingslashit(bp_core_get_user_domain($this->owner) . BP_MEDIA_VIDEOS_SLUG . '/' . $this->id);
-				$this->edit_url = trailingslashit(bp_core_get_user_domain($this->owner) . BP_MEDIA_VIDEOS_SLUG . '/' . BP_MEDIA_VIDEOS_EDIT_SLUG . '/' . $this->id);
-				$this->delete_url = trailingslashit(bp_core_get_user_domain($this->owner) . BP_MEDIA_VIDEOS_SLUG . '/' . BP_MEDIA_DELETE_SLUG . '/' . $this->id);
+				$this->url = trailingslashit( $pre_url . BP_MEDIA_VIDEOS_SLUG . '/' . $this->id);
+				$this->edit_url = trailingslashit( $pre_url . BP_MEDIA_VIDEOS_SLUG . '/' . BP_MEDIA_VIDEOS_EDIT_SLUG . '/' . $this->id);
+				$this->delete_url = trailingslashit( $pre_url . BP_MEDIA_VIDEOS_SLUG . '/' . BP_MEDIA_DELETE_SLUG . '/' . $this->id);
 				$this->thumbnail_id = get_post_meta($this->id, 'bp_media_thumbnail',true);
 				break;
 			case 'audio' :
-				$this->url = trailingslashit(bp_core_get_user_domain($this->owner) . BP_MEDIA_AUDIO_SLUG . '/' . $this->id);
-				$this->edit_url = trailingslashit(bp_core_get_user_domain($this->owner) . BP_MEDIA_AUDIO_SLUG . '/' . BP_MEDIA_AUDIO_EDIT_SLUG . '/' . $this->id);
-				$this->delete_url = trailingslashit(bp_core_get_user_domain($this->owner) . BP_MEDIA_AUDIO_SLUG . '/' . BP_MEDIA_DELETE_SLUG . '/' . $this->id);
+				$this->url = trailingslashit( $pre_url . BP_MEDIA_AUDIO_SLUG . '/' . $this->id);
+				$this->edit_url = trailingslashit( $pre_url . BP_MEDIA_AUDIO_SLUG . '/' . BP_MEDIA_AUDIO_EDIT_SLUG . '/' . $this->id);
+				$this->delete_url = trailingslashit( $pre_url . BP_MEDIA_AUDIO_SLUG . '/' . BP_MEDIA_DELETE_SLUG . '/' . $this->id);
 				$this->thumbnail_id = get_post_meta($this->id, 'bp_media_thumbnail',true);
 				break;
 			case 'image' :
-				$this->url = trailingslashit(bp_core_get_user_domain($this->owner) . BP_MEDIA_IMAGES_SLUG . '/' . $this->id);
-				$this->edit_url = trailingslashit(bp_core_get_user_domain($this->owner) . BP_MEDIA_IMAGES_SLUG . '/' . BP_MEDIA_IMAGES_EDIT_SLUG . '/' . $this->id);
-				$this->delete_url = trailingslashit(bp_core_get_user_domain($this->owner) . BP_MEDIA_IMAGES_SLUG . '/' . BP_MEDIA_DELETE_SLUG . '/' . $this->id);
+				$this->url = trailingslashit( $pre_url . BP_MEDIA_IMAGES_SLUG . '/' . $this->id);
+				$this->edit_url = trailingslashit( $pre_url . BP_MEDIA_IMAGES_SLUG . '/' . BP_MEDIA_IMAGES_EDIT_SLUG . '/' . $this->id);
+				$this->delete_url = trailingslashit( $pre_url . BP_MEDIA_IMAGES_SLUG . '/' . BP_MEDIA_DELETE_SLUG . '/' . $this->id);
 				$image_array = image_downsize($this->id, 'bp_media_single_image');
 				$this->thumbnail_id = $this->id;
 				break;
