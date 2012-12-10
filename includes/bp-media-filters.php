@@ -120,7 +120,6 @@ add_filter('bp_activity_get_user_join_filter','bp_media_activity_query_filter',1
  *
  * @global type $wp_admin_bar
  */
-
 function bp_media_my_account_menu() {
     global $wp_admin_bar;
 
@@ -189,7 +188,6 @@ add_action( 'admin_bar_menu', 'bp_media_my_account_menu', 1 );
  *
  * @global type $wp_admin_bar
  */
-
 function bp_media_adminbar_settings_menu() {
     global $wp_admin_bar;
 

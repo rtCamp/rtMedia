@@ -12,6 +12,9 @@ function bp_media_handle_uploads() {
 		'images_enabled'	=>	true,
 	));
 	if (isset($_POST['action']) && $_POST['action'] == 'wp_handle_upload') {
+		if(isset($_POST['bp_media_group_id'])&&intval($_POST['bp_media_group_id']))
+			remove_action('bp_media_after_add_media','bp_media_activity_create_after_add_media',10,2);
+
 		/* @var $bp_media_entry BP_Media_Host_Wordpress */
 		if (isset($_FILES) && is_array($_FILES) && array_key_exists('bp_media_file', $_FILES) && $_FILES['bp_media_file']['name'] != '') {
 			if(!preg_match('/audio|video|image/i',$_FILES['bp_media_file']['type'],$result)||!isset($result[0])){
@@ -188,7 +191,7 @@ function bp_media_set_query() {
 			'author' => $bp->displayed_user->id,
 			'meta_key' => 'bp-media-key',
 			'meta_value' => $bp->displayed_user->id,
-			'meta_compare' => 'LIKE',
+			'meta_compare' => '=',
 			'paged' => $paged,
 			'posts_per_page' => $bp_media_posts_per_page
 		);

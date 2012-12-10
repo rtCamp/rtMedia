@@ -13,7 +13,8 @@ class BP_Media_Host_Wordpress {
 		$delete_url, //The delete url for the media
 		$thumbnail_id, //The thumbnail's id
 		$album_id, //The album id to which the media belongs
-		$edit_url; //The edit page's url for the media
+		$edit_url, //The edit page's url for the media
+		$group_id; //The group id of the current media file if it belongs to a group
 
 	/**
 	 * Constructs a new BP_Media_Host_Wordpress element
@@ -48,6 +49,15 @@ class BP_Media_Host_Wordpress {
 		$this->name = $media->post_title;
 		$this->owner = $media->post_author;
 		$this->album_id = $media->post_parent;
+		$meta_key = get_post_meta($this->id, 'bp-media-key', true);
+		/**
+		 * We use bp-media-key to distinguish if the entry belongs to a group or not
+		 * if the value is less than 0 it means it the group id to which the media belongs
+		 * and if its greater than 0 then it means its the author id of the uploader
+		 * But for use in the class, we use group_id as positive integer even though
+		 * we use it as negative value in the bp-media-key meta key
+		 */
+		$this->group_id = $meta_key<0?-$meta_key:0;
 		preg_match_all('/audio|video|image/i', $media->post_mime_type, $result);
 		if(isset($result[0][0]))
 			$this->type = $result[0][0];
@@ -101,8 +111,11 @@ class BP_Media_Host_Wordpress {
 		else{
 			$create_new_album_flag = true;
 		}
+		echo 'creating new attachment';
+		echo $post_id;
+		echo $album_id;
 		if($create_new_album_flag){
-			if($group == 0)
+			if($group == 0){
 				$post_id = $wpdb->get_var(
 						"SELECT ID
 						FROM $wpdb->posts
@@ -111,7 +124,9 @@ class BP_Media_Host_Wordpress {
 							AND post_author = '".  get_current_user_id()."'
 							AND post_type='bp_media_album'"
 						);
-			else
+				echo 'getting from if';
+			}
+			else{
 				$post_id = $wpdb->get_var(
 						"SELECT wp_posts.ID
 						FROM $wpdb->posts
@@ -120,9 +135,17 @@ class BP_Media_Host_Wordpress {
 							AND $wpdb->postmeta.meta_value = -$group
 							AND $wpdb->posts.post_author = ".  get_current_user_id()."
 							AND $wpdb->posts.post_title =  'Wall Posts'" );
+				echo 'getting from else';
+			}
 			if($post_id==null){
+				echo 'creating new album';
 				$album = new BP_Media_Album();
-				$album->add_album('Wall Posts',  get_current_user_id(), $group);
+				if($group == 0 )
+					$album->add_album('Wall Posts',  get_current_user_id(), $group);
+				else{
+					$current_user = wp_get_current_user();
+					$album->add_album($current_user->display_name.'\'s Album',  get_current_user_id(), $group);
+				}
 				$post_id = $album->get_id();
 			}
 		}
