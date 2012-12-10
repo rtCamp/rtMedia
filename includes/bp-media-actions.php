@@ -322,6 +322,9 @@ function bp_media_albums_set_query() {
 			'post_type' => 'bp_media_album',
 			'author' => $bp->displayed_user->id,
 			'paged' => $paged,
+			'meta_key'	=>	'bp-media-key',
+			'meta_value'	=>	$bp->displayed_user->id,
+			'meta_compare'	=>	'='
 		);
 		$bp_media_albums_query = new WP_Query($args);
 	}

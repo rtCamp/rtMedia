@@ -227,29 +227,25 @@ function bp_media_groups_display_navigation_menu(){
 		$current_tab = $bp->action_variables[0];
 	}
 
-	/** This variable will be used to display the tabs in group component */
-	$bp_media_group_tabs = apply_filters('bp_media_group_tabs', array(
-		BP_MEDIA_UPLOAD_SLUG => array(
+	if(bp_media_groups_can_upload()){
+		$bp_media_nav[BP_MEDIA_UPLOAD_SLUG] = array(
 			'url'	=> trailingslashit(bp_get_group_permalink( $bp->groups->current_group )).BP_MEDIA_SLUG,
 			'label'	=>	BP_MEDIA_UPLOAD_LABEL,
-		),
-		BP_MEDIA_IMAGES_SLUG => array(
-			'url'	=> trailingslashit(bp_get_group_permalink( $bp->groups->current_group )).BP_MEDIA_IMAGES_SLUG,
-			'label'	=>	BP_MEDIA_IMAGES_LABEL,
-		),
-		BP_MEDIA_VIDEOS_SLUG =>	array(
-			'url'	=> trailingslashit(bp_get_group_permalink( $bp->groups->current_group )).BP_MEDIA_VIDEOS_SLUG,
-			'label'	=>	BP_MEDIA_VIDEOS_LABEL,
-		),
-		BP_MEDIA_AUDIO_SLUG => array(
-			'url'	=> trailingslashit(bp_get_group_permalink( $bp->groups->current_group )).BP_MEDIA_AUDIO_SLUG,
-			'label'	=>	BP_MEDIA_AUDIO_LABEL,
-		),
-		BP_MEDIA_ALBUMS_SLUG => array(
-			'url'	=> trailingslashit(bp_get_group_permalink( $bp->groups->current_group )).BP_MEDIA_ALBUMS_SLUG,
-			'label'	=>	BP_MEDIA_ALBUMS_LABEL,
-		),
-	),$current_tab);
+		);
+	}
+	else{
+		$bp_media_nav = array();
+	}
+
+	foreach(array('IMAGES','VIDEOS','AUDIO','ALBUMS') as $type){
+		$bp_media_nav[constant('BP_MEDIA_' . $type . '_SLUG')] = array(
+			'url'	=> trailingslashit(bp_get_group_permalink( $bp->groups->current_group )).constant('BP_MEDIA_' . $type . '_SLUG'),
+			'label'	=>	constant('BP_MEDIA_' . $type . '_LABEL'),
+		);
+	}
+
+	/** This variable will be used to display the tabs in group component */
+	$bp_media_group_tabs = apply_filters('bp_media_group_tabs', $bp_media_nav,$current_tab);
 	?>
 	<div class="item-list-tabs no-ajax bp-media-group-navigation" id="subnav">
 		<ul>
@@ -271,6 +267,14 @@ function bp_media_groups_display_navigation_menu(){
  */
 function bp_media_groups_can_upload(){
 	/** @todo Implementation Pending */
+	global $bp;
+	if(isset($bp->loggedin_user->id)&&is_numeric($bp->loggedin_user->id)){
+		return groups_is_user_member($bp->loggedin_user->id, bp_get_current_group_id());
+	}
+	else{
+		return false;
+	}
+
 	return true;
 }
 
