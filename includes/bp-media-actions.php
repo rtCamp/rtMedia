@@ -345,7 +345,7 @@ function bp_media_albums_set_inner_query($album_id=0) {
 	if (isset($action_variables) && is_array($action_variables) && isset($action_variables[0])) {
 		if($action_variables[0] == 'page' && isset($action_variables[1]) && is_numeric($action_variables[1]))
 			$paged = $action_variables[1];
-		else if($action_variables[1] == 'page' && isset($action_variables[2]) && is_numeric($action_variables[2]))
+		else if(isset($action_variables[1]) && $action_variables[1] == 'page' && isset($action_variables[2]) && is_numeric($action_variables[2]))
 			$paged = $action_variables[2];
 	}
 	if(!$paged)
@@ -353,7 +353,6 @@ function bp_media_albums_set_inner_query($album_id=0) {
 	$args = array(
 		'post_type' => 'attachment',
 		'post_status'	=>	'any',
-		'author' => $bp->displayed_user->id,
 		'post_parent'=>$album_id,
 		'paged' => $paged
 	);

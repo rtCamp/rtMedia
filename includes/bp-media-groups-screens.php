@@ -11,17 +11,11 @@ function bp_media_groups_display_screen(){
 	global $bp_media_group_sub_nav,$bp;
 	bp_media_groups_set_query();
 	bp_media_groups_display_navigation_menu();
-	echo '<br/>current component:'.$bp->current_component;
-	echo '<br/>current action: '. $bp->current_action;
-	echo '<br/>action variables:';
-	echo '<pre>';
-	var_dump($bp->action_variables);
-	echo '</pre>';
-	if(isset($bp->action_variables[0])){
-		switch($bp->action_variables[0]){
+	if(bp_action_variable(0)){
+		switch(bp_action_variable(0)){
 			case BP_MEDIA_IMAGES_SLUG:
-				if(isset($bp->action_variables[1])){
-					switch($bp->action_variables[1]){
+				if(bp_action_variable(1)){
+					switch(bp_action_variable(1)){
 						case BP_MEDIA_IMAGES_EDIT_SLUG:
 							//Edit screen for image
 							break;
@@ -29,8 +23,21 @@ function bp_media_groups_display_screen(){
 							//Delete function for media file
 							break;
 						default:
-							if(intval($bp->action_variables[1])>0){
-								//Single entry page
+							if(intval(bp_action_variable(1))>0){
+								global $bp_media_current_entry;
+								try {
+									$bp_media_current_entry = new BP_Media_Host_Wordpress(bp_action_variable(1));
+									if($bp_media_current_entry->get_group_id()!= bp_get_current_group_id())
+										throw new Exception(__('Sorry, the requested media does not belong to the group'));
+								} catch (Exception $e) {
+									/** Error Handling when media not present or not belong to the group */
+									echo '<div id="message" class="error">';
+									echo '<p>'.$e->getMessage().'</p>';
+									echo '</div>';
+									return;
+								}
+								bp_media_images_entry_screen_content();
+								break;
 							}
 							else{
 								/** @todo display 404 */
@@ -50,8 +57,21 @@ function bp_media_groups_display_screen(){
 							//Delete function for media file
 							break;
 						default:
-							if(intval($bp->action_variables[1])>0){
-								//Single entry page
+							if(intval(bp_action_variable(1))>0){
+								global $bp_media_current_entry;
+								try {
+									$bp_media_current_entry = new BP_Media_Host_Wordpress(bp_action_variable(1));
+									if($bp_media_current_entry->get_group_id()!= bp_get_current_group_id())
+										throw new Exception(__('Sorry, the requested media does not belong to the group'));
+								} catch (Exception $e) {
+									/** Error Handling when media not present or not belong to the group */
+									echo '<div id="message" class="error">';
+									echo '<p>'.$e->getMessage().'</p>';
+									echo '</div>';
+									return;
+								}
+								bp_media_videos_entry_screen_content();
+								break;
 							}
 							else{
 								/** @todo display 404 */
@@ -71,8 +91,21 @@ function bp_media_groups_display_screen(){
 							//Delete function for media file
 							break;
 						default:
-							if(intval($bp->action_variables[1])>0){
-								//Single entry page
+							if(intval(bp_action_variable(1))>0){
+								global $bp_media_current_entry;
+								try {
+									$bp_media_current_entry = new BP_Media_Host_Wordpress(bp_action_variable(1));
+									if($bp_media_current_entry->get_group_id()!= bp_get_current_group_id())
+										throw new Exception(__('Sorry, the requested media does not belong to the group'));
+								} catch (Exception $e) {
+									/** Error Handling when media not present or not belong to the group */
+									echo '<div id="message" class="error">';
+									echo '<p>'.$e->getMessage().'</p>';
+									echo '</div>';
+									return;
+								}
+								bp_media_audio_entry_screen_content();
+								break;
 							}
 							else{
 								/** @todo display 404 */
@@ -92,11 +125,24 @@ function bp_media_groups_display_screen(){
 							//Delete function for media file
 							break;
 						default:
-							if(intval($bp->action_variables[1])>0){
-								//Single entry page
+							if(intval(bp_action_variable(1))>0){
+								global $bp_media_current_album;
+								try {
+									$bp_media_current_album = new BP_Media_Host_Wordpress(bp_action_variable(1));
+									if($bp_media_current_album->get_group_id()!= bp_get_current_group_id())
+										throw new Exception(__('Sorry, the requested album does not belong to the group'));
+								} catch (Exception $e) {
+									/** Error Handling when media not present or not belong to the group */
+									echo '<div id="message" class="error">';
+									echo '<p>'.$e->getMessage().'</p>';
+									echo '</div>';
+									return;
+								}
+								bp_media_albums_entry_screen_content();
+								break;
 							}
 							else{
-								/** 404 page */
+								/** @todo display 404 */
 							}
 					}
 				}else{
