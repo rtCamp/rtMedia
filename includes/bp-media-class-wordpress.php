@@ -738,4 +738,11 @@ class BP_Media_Host_Wordpress {
 	function get_type(){
 		return $this->type;
 	}
+
+	/**
+	 * Returns the group id of the media, 0 if it does not belong to a group
+	 */
+	function get_group_id(){
+		return $this->group_id;
+	}
 } ?>

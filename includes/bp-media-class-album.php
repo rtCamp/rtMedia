@@ -238,5 +238,12 @@ class BP_Media_Album{
 	function get_owner(){
 		return $this->owner;
 	}
+
+	/**
+	 * Returns the group id to which the media belongs, 0 if it does not belong to any group
+	 */
+	function get_group_id(){
+		return $this->group_id;
+	}
 }
 ?>
