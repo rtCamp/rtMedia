@@ -63,36 +63,7 @@ class BP_Media_Host_Wordpress {
 			$this->type = $result[0][0];
 		else
 			return false;
-		if($this->group_id>0){
-			$current_group = new BP_Groups_Group($this->group_id);
-			$pre_url = bp_get_group_permalink($current_group);
-		}
-		else{
-			$pre_url = bp_core_get_user_domain($this->owner);
-		}
-		switch ($this->type) {
-			case 'video' :
-				$this->url = trailingslashit( $pre_url . BP_MEDIA_VIDEOS_SLUG . '/' . $this->id);
-				$this->edit_url = trailingslashit( $pre_url . BP_MEDIA_VIDEOS_SLUG . '/' . BP_MEDIA_VIDEOS_EDIT_SLUG . '/' . $this->id);
-				$this->delete_url = trailingslashit( $pre_url . BP_MEDIA_VIDEOS_SLUG . '/' . BP_MEDIA_DELETE_SLUG . '/' . $this->id);
-				$this->thumbnail_id = get_post_meta($this->id, 'bp_media_thumbnail',true);
-				break;
-			case 'audio' :
-				$this->url = trailingslashit( $pre_url . BP_MEDIA_AUDIO_SLUG . '/' . $this->id);
-				$this->edit_url = trailingslashit( $pre_url . BP_MEDIA_AUDIO_SLUG . '/' . BP_MEDIA_AUDIO_EDIT_SLUG . '/' . $this->id);
-				$this->delete_url = trailingslashit( $pre_url . BP_MEDIA_AUDIO_SLUG . '/' . BP_MEDIA_DELETE_SLUG . '/' . $this->id);
-				$this->thumbnail_id = get_post_meta($this->id, 'bp_media_thumbnail',true);
-				break;
-			case 'image' :
-				$this->url = trailingslashit( $pre_url . BP_MEDIA_IMAGES_SLUG . '/' . $this->id);
-				$this->edit_url = trailingslashit( $pre_url . BP_MEDIA_IMAGES_SLUG . '/' . BP_MEDIA_IMAGES_EDIT_SLUG . '/' . $this->id);
-				$this->delete_url = trailingslashit( $pre_url . BP_MEDIA_IMAGES_SLUG . '/' . BP_MEDIA_DELETE_SLUG . '/' . $this->id);
-				$image_array = image_downsize($this->id, 'bp_media_single_image');
-				$this->thumbnail_id = $this->id;
-				break;
-			default :
-				return false;
-		}
+		$this->set_permalinks();
 	}
 
 	/**
@@ -118,9 +89,6 @@ class BP_Media_Host_Wordpress {
 		else{
 			$create_new_album_flag = true;
 		}
-		echo 'creating new attachment';
-		echo $post_id;
-		echo $album_id;
 		if($create_new_album_flag){
 			if($group == 0){
 				$post_id = $wpdb->get_var(
@@ -131,7 +99,6 @@ class BP_Media_Host_Wordpress {
 							AND post_author = '".  get_current_user_id()."'
 							AND post_type='bp_media_album'"
 						);
-				echo 'getting from if';
 			}
 			else{
 				$post_id = $wpdb->get_var(
@@ -142,10 +109,8 @@ class BP_Media_Host_Wordpress {
 							AND $wpdb->postmeta.meta_value = -$group
 							AND $wpdb->posts.post_author = ".  get_current_user_id()."
 							AND $wpdb->posts.post_title =  'Wall Posts'" );
-				echo 'getting from else';
 			}
 			if($post_id==null){
-				echo 'creating new album';
 				$album = new BP_Media_Album();
 				if($group == 0 )
 					$album->add_album('Wall Posts',  get_current_user_id(), $group);
@@ -261,34 +226,15 @@ class BP_Media_Host_Wordpress {
 		$this->type = $type;
 		$this->owner = get_current_user_id();
 		$this->album_id = $post_id;
-		switch ($this->type) {
-			case 'video' :
-				$this->url = trailingslashit(bp_core_get_user_domain($this->owner) . BP_MEDIA_VIDEOS_SLUG . '/' . $this->id);
-				$this->edit_url = trailingslashit(bp_core_get_user_domain($this->owner) . BP_MEDIA_VIDEOS_SLUG . '/' . BP_MEDIA_VIDEOS_EDIT_SLUG . '/' . $this->id);
-				$this->delete_url = trailingslashit(bp_core_get_user_domain($this->owner) . BP_MEDIA_VIDEOS_SLUG . '/' . BP_MEDIA_DELETE_SLUG . '/' . $this->id);
-				$this->thumbnail_id = get_post_meta($this->id, 'bp_media_thumbnail',true);
-				break;
-			case 'audio' :
-				$this->url = trailingslashit(bp_core_get_user_domain($this->owner) . BP_MEDIA_AUDIO_SLUG . '/' . $this->id);
-				$this->edit_url = trailingslashit(bp_core_get_user_domain($this->owner) . BP_MEDIA_AUDIO_SLUG . '/' . BP_MEDIA_AUDIO_EDIT_SLUG . '/' . $this->id);
-				$this->delete_url = trailingslashit(bp_core_get_user_domain($this->owner) . BP_MEDIA_AUDIO_SLUG . '/' . BP_MEDIA_DELETE_SLUG . '/' . $this->id);
-				$this->thumbnail_id = get_post_meta($this->id, 'bp_media_thumbnail',true);
-				break;
-			case 'image' :
-				$this->url = trailingslashit(bp_core_get_user_domain($this->owner) . BP_MEDIA_IMAGES_SLUG . '/' . $this->id);
-				$this->edit_url = trailingslashit(bp_core_get_user_domain($this->owner) . BP_MEDIA_IMAGES_SLUG . '/' . BP_MEDIA_IMAGES_EDIT_SLUG . '/' . $this->id);
-				$this->delete_url = trailingslashit(bp_core_get_user_domain($this->owner) . BP_MEDIA_IMAGES_SLUG . '/' . BP_MEDIA_DELETE_SLUG . '/' . $this->id);
-				$image_array = image_downsize($this->id, 'bp_media_single_image');
-				$this->thumbnail_id = $this->id;
-				break;
-			default :
-				//return false;
-		}
-		if($group == 0)
+		$this->group_id = $group;
+		$this->set_permalinks();
+		if($group == 0){
 			update_post_meta($attachment_id, 'bp-media-key', get_current_user_id());
-		else
+			bp_update_user_meta(bp_loggedin_user_id(), 'bp_media_count', $bp_media_count);
+		}
+		else{
 			update_post_meta($attachment_id, 'bp-media-key', (-$group));
-		bp_update_user_meta(bp_loggedin_user_id(), 'bp_media_count', $bp_media_count);
+		}
 		do_action('bp_media_after_add_media',$this,$is_multiple);
 	}
 
@@ -744,5 +690,43 @@ class BP_Media_Host_Wordpress {
 	 */
 	function get_group_id(){
 		return $this->group_id;
+	}
+
+	/**
+	 * Sets the permalinks of the media depending upon whether its in member directory
+	 * or group and acording to the media type
+	 */
+	function set_permalinks(){
+		if($this->group_id>0){
+			$current_group = new BP_Groups_Group($this->group_id);
+			$pre_url = bp_get_group_permalink($current_group);
+		}
+		else{
+			$pre_url = bp_core_get_user_domain($this->owner);
+		}
+		switch ($this->type) {
+			case 'video' :
+				$this->url = trailingslashit( $pre_url . BP_MEDIA_VIDEOS_SLUG . '/' . $this->id);
+				$this->edit_url = trailingslashit( $pre_url . BP_MEDIA_VIDEOS_SLUG . '/' . BP_MEDIA_VIDEOS_EDIT_SLUG . '/' . $this->id);
+				$this->delete_url = trailingslashit( $pre_url . BP_MEDIA_VIDEOS_SLUG . '/' . BP_MEDIA_DELETE_SLUG . '/' . $this->id);
+				$this->thumbnail_id = get_post_meta($this->id, 'bp_media_thumbnail',true);
+				break;
+			case 'audio' :
+				$this->url = trailingslashit( $pre_url . BP_MEDIA_AUDIO_SLUG . '/' . $this->id);
+				$this->edit_url = trailingslashit( $pre_url . BP_MEDIA_AUDIO_SLUG . '/' . BP_MEDIA_AUDIO_EDIT_SLUG . '/' . $this->id);
+				$this->delete_url = trailingslashit( $pre_url . BP_MEDIA_AUDIO_SLUG . '/' . BP_MEDIA_DELETE_SLUG . '/' . $this->id);
+				$this->thumbnail_id = get_post_meta($this->id, 'bp_media_thumbnail',true);
+				break;
+			case 'image' :
+				$this->url = trailingslashit( $pre_url . BP_MEDIA_IMAGES_SLUG . '/' . $this->id);
+				$this->edit_url = trailingslashit( $pre_url . BP_MEDIA_IMAGES_SLUG . '/' . BP_MEDIA_IMAGES_EDIT_SLUG . '/' . $this->id);
+				$this->delete_url = trailingslashit( $pre_url . BP_MEDIA_IMAGES_SLUG . '/' . BP_MEDIA_DELETE_SLUG . '/' . $this->id);
+				$image_array = image_downsize($this->id, 'bp_media_single_image');
+				$this->thumbnail_id = $this->id;
+				break;
+			default :
+				return false;
+		}
+		return true;
 	}
 } ?>

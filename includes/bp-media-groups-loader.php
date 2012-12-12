@@ -141,6 +141,10 @@ function bp_media_groups_custom_nav(){
 		return;
 	if(!(isset($bp->bp_options_nav[$current_group])&&  is_array($bp->bp_options_nav[$current_group])))
 		return;
+
+	/** This line might break a thing or two in custom themes and widgets */
+	remove_filter('bp_activity_get_user_join_filter','bp_media_activity_query_filter',10);
+
 	foreach ($bp->bp_options_nav[$current_group] as $key => $nav_item) {
 		switch($nav_item['slug']){
 			case BP_MEDIA_IMAGES_SLUG:
