@@ -98,12 +98,11 @@ function bp_media_enqueue_scripts_styles() {
     wp_enqueue_script('bp-media-mejs', plugins_url('includes/media-element/mediaelement-and-player.min.js', dirname(__FILE__)));
 	wp_enqueue_script('bp-media-default', plugins_url('includes/js/bp-media.js', dirname(__FILE__)));
 	global $bp;
-
 	$bp_media_vars = array(
 		'ajaxurl' => admin_url( 'admin-ajax.php'),
 		'page'	=> 1,
-		'current_action' => bp_get_current_group_id()?bp_action_variable(0):(isset($bp->current_action)?$bp->current_action:false),
-		'action_variables' =>	isset($bp->action_variables)?$bp->action_variables:false,
+		'current_action' => bp_get_current_group_id()?(empty($bp->action_variables)?BP_MEDIA_IMAGES_SLUG:$bp->action_variables):(isset($bp->current_action)?$bp->current_action:false),
+		'action_variables' =>	isset($bp->action_variables)?(empty($bp->action_variables)?array(BP_MEDIA_IMAGES_SLUG):$bp->action_variables):array(BP_MEDIA_IMAGES_SLUG),
 		'displayed_user' => bp_displayed_user_id(),
 		'loggedin_user'	=> bp_loggedin_user_id(),
 		'current_group'	=> bp_get_current_group_id()

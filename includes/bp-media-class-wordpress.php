@@ -79,7 +79,7 @@ class BP_Media_Host_Wordpress {
 		$create_new_album_flag = false;
 		if($album_id!=0){
 			$album = get_post($album_id);
-			if($album->post_author!=  get_current_user_id()){
+			if($album->post_author!=  get_current_user_id() && $group == 0){
 				$create_new_album_flag = true;
 			}
 			else{
@@ -107,7 +107,6 @@ class BP_Media_Host_Wordpress {
 						INNER JOIN $wpdb->postmeta ON $wpdb->posts.ID = $wpdb->postmeta.post_id
 							AND $wpdb->postmeta.meta_key =  'bp-media-key'
 							AND $wpdb->postmeta.meta_value = -$group
-							AND $wpdb->posts.post_author = ".  get_current_user_id()."
 							AND $wpdb->posts.post_title =  'Wall Posts'" );
 			}
 			if($post_id==null){
@@ -299,7 +298,12 @@ class BP_Media_Host_Wordpress {
 	 */
 	function get_media_single_content() {
 		global $bp_media_default_sizes, $bp_media_default_excerpts;
-		$content = '<div class="bp_media_content">';
+		$content = '';
+		if($this->group_id>0){
+
+			$content .= '<div class="bp_media_author">Uploaded by '. bp_core_get_userlink($this->owner).'</div>';
+		}
+		$content .= '<div class="bp_media_content">';
 		switch ($this->type) {
 			case 'video' :
 				if($this->thumbnail_id){
