@@ -305,6 +305,11 @@ function bp_media_groups_adminbar(){
 
 /**
  * Checks whether a user can create an album in the given group or not
+ *
+ * @param string $group_id The group id to check against
+ * @param string $user_id The user to be checked for permission
+ *
+ * @return boolean True if the user can create an album in the group, false if not
  */
 function bp_media_groups_user_can_create_album($group_id, $user_id = 0){
 	if($user_id == 0)
