@@ -12,9 +12,12 @@ function bp_media_handle_uploads() {
 		'images_enabled'	=>	true,
 	));
 	if (isset($_POST['action']) && $_POST['action'] == 'wp_handle_upload') {
-		if(isset($_POST['bp_media_group_id'])&&intval($_POST['bp_media_group_id']))
+		/** This section can help in the group activity handling */
+		if(isset($_POST['bp_media_group_id'])&&intval($_POST['bp_media_group_id'])){
 			remove_action('bp_media_after_add_media','bp_media_activity_create_after_add_media',10,2);
-
+			add_action('bp_media_after_add_media','bp_media_groups_activity_create_after_add_media',10,2);
+			add_filter('bp_media_force_hide_activity','bp_media_groups_force_hide_activity');
+		}
 		/* @var $bp_media_entry BP_Media_Host_Wordpress */
 		if (isset($_FILES) && is_array($_FILES) && array_key_exists('bp_media_file', $_FILES) && $_FILES['bp_media_file']['name'] != '') {
 			if(!preg_match('/audio|video|image/i',$_FILES['bp_media_file']['type'],$result)||!isset($result[0])){
@@ -555,6 +558,7 @@ function bp_media_activity_create_after_add_media($media,$hidden=false){
 				'type' => 'media_upload',
 				'user_id' =>	$media->get_author()
 			);
+		$hidden = apply_filters('bp_media_force_hide_activity',$hidden);
 		if($hidden){
 			$args['secondary_item_id'] = -999;
 			do_action('bp_media_album_updated',$media->get_album_id());

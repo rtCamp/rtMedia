@@ -75,4 +75,44 @@ function bp_media_groups_albums_set_query() {
 	}
 }
 
+function bp_media_groups_activity_create_after_add_media($media,$hidden=false){
+	if(function_exists('bp_activity_add')){
+		if(!is_object($media)){
+			try{
+				$media = new BP_Media_Host_Wordpress($media);
+			}catch(exception $e){
+				return false;
+			}
+		}
+		$args = array(
+				'action' => apply_filters( 'bp_media_added_media', sprintf( __( '%1$s added a %2$s', 'bp-media'), bp_core_get_userlink( $media->get_author() ), '<a href="' . $media->get_url() . '">' . $media->get_media_activity_type() . '</a>' ) ),
+				'content' => $media->get_media_activity_content(),
+				'primary_link' => $media->get_url(),
+				'item_id' => $media->get_id(),
+				'type' => 'media_upload',
+				'user_id' =>	$media->get_author()
+			);
+		$hidden = apply_filters('bp_media_force_hide_activity',$hidden);
+		if($hidden){
+			$args['secondary_item_id'] = -999;
+			//do_action('bp_media_album_updated',$media->get_album_id());
+		}
+		$activity_id = bp_media_record_activity($args);
+		add_post_meta($media->get_id(),'bp_media_child_activity',$activity_id);
+	}
+}
+//add_action('bp_media_groups_after_add_media','bp_media_groups_activity_create_after_add_media',10,2);
+
+function bp_media_groups_redirection_handler(){
+	global $bp;
+	echo '<pre>';
+	var_dump($bp);
+	echo '</pre>';
+	die();
+}
+//add_action('bp_media_init','bp_media_groups_redirection_handler');
+
+function bp_media_groups_force_hide_activity(){
+	return true;
+}
 ?>
