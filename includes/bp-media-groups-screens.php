@@ -158,7 +158,7 @@ function bp_media_groups_display_screen(){
 		if(bp_media_groups_can_upload())
 			bp_media_upload_screen_content();
 		else{
-
+			/** @todo write the error message or something that user cannot upload media */
 		}
 	}
 }
