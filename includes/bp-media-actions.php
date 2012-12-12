@@ -494,12 +494,29 @@ add_action('delete_attachment','bp_media_delete_attachment_handler');
 function bp_media_add_album() {
 	if(isset($_POST['bp_media_album_name'])&&$_POST['bp_media_album_name']!=''){
 		$album = new BP_Media_Album();
-		try{
-			$album -> add_album($_POST['bp_media_album_name']);
-			echo $album->get_id();
+		if(isset($_POST['bp_media_group_id'])&&intval($_POST['bp_media_group_id'])>0){
+			$group_id = intval($_POST['bp_media_group_id']);
+			if(bp_media_groups_user_can_create_album($group_id, get_current_user_id())){
+				try{
+					$album -> add_album($_POST['bp_media_album_name'], 0 ,$group_id);
+					echo $album->get_id();
+				}
+				catch(exception $e){
+					echo '0';
+				}
+			}
+			else{
+				echo '0';
+			}
 		}
-		catch(exception $e){
-			echo '0';
+		else{
+			try{
+				$album -> add_album($_POST['bp_media_album_name']);
+				echo $album->get_id();
+			}
+			catch(exception $e){
+				echo '0';
+			}
 		}
 	}
 	else{

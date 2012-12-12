@@ -302,4 +302,27 @@ function bp_media_groups_adminbar(){
 /* This will need some handling for checking if its a single group page or not, also whether the person can
  * edit media settings or not
  */
+
+/**
+ * Checks whether a user can create an album in the given group or not
+ */
+function bp_media_groups_user_can_create_album($group_id, $user_id = 0){
+	if($user_id == 0)
+		$user_id = get_current_user_id ();
+	$current_level = groups_get_groupmeta($group_id,'bp_media_group_control_level');
+	switch($current_level){
+		case 'all':
+			return groups_is_user_member($user_id, $group_id);
+			break;
+		case 'moderators':
+			return groups_is_user_mod($user_id, $group_id);
+			break;
+		case 'admin':
+			return groups_is_user_admin($user_id, $group_id);
+			break;
+		default :
+			return false;
+	}
+	return false;
+}
 ?>
