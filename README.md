@@ -73,6 +73,10 @@ Please visit [BuddyPress Media's Features page](http://rtcamp.com/buddypress-med
 
 Please visit [BuddyPress Media's Roadmap page](http://rtcamp.com/buddypress-media/roadmap/ "Visit BuddyPress Media's Features page") to get some details about future releases.
 
+#### 2.3 ####
+* Groups Media feature added
+* Featured image selection in albums
+
 #### 2.2.8 ####
 * Fixed some screen functions
 
