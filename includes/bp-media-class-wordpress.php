@@ -4,7 +4,7 @@ class BP_Media_Host_Wordpress {
 	/**
 	 * Private variables not to be accessible outside this class' member functions
 	 */
-	private $id, //id of the entry
+	protected $id, //id of the entry
 		$name, //Name of the entry
 		$description, //Description of the entry
 		$url, //URL of the entry
@@ -76,50 +76,9 @@ class BP_Media_Host_Wordpress {
 		global $bp, $wpdb, $bp_media_count;
 		include_once(ABSPATH . 'wp-admin/includes/file.php');
 		include_once(ABSPATH . 'wp-admin/includes/image.php');
-		$create_new_album_flag = false;
-		if($album_id!=0){
-			$album = get_post($album_id);
-			if($album->post_author!=  get_current_user_id() && $group == 0){
-				$create_new_album_flag = true;
-			}
-			else{
-				$post_id = $album->ID;
-			}
-		}
-		else{
-			$create_new_album_flag = true;
-		}
-		if($create_new_album_flag){
-			if($group == 0){
-				$post_id = $wpdb->get_var(
-						"SELECT ID
-						FROM $wpdb->posts
-						WHERE
-							post_title = 'Wall Posts'
-							AND post_author = '".  get_current_user_id()."'
-							AND post_type='bp_media_album'"
-						);
-			}
-			else{
-				$post_id = $wpdb->get_var(
-						"SELECT wp_posts.ID
-						FROM $wpdb->posts
-						INNER JOIN $wpdb->postmeta ON $wpdb->posts.ID = $wpdb->postmeta.post_id
-							AND $wpdb->postmeta.meta_key =  'bp-media-key'
-							AND $wpdb->postmeta.meta_value = -$group
-							AND $wpdb->posts.post_title =  'Wall Posts'" );
-			}
-			if($post_id==null){
-				$album = new BP_Media_Album();
-				if($group == 0 )
-					$album->add_album('Wall Posts',  get_current_user_id(), $group);
-				else{
-					$current_user = wp_get_current_user();
-					$album->add_album($current_user->display_name.'\'s Album',  get_current_user_id(), $group);
-				}
-				$post_id = $album->get_id();
-			}
-		}
+
+		$post_id = $this->check_and_create_album($album_id,$group);
+
 		$file = wp_handle_upload($_FILES['bp_media_file']);
 		if (isset($file['error']) || $file === null) {
 			throw new Exception(__('Error Uploading File', 'bp-media'));
@@ -700,7 +659,7 @@ class BP_Media_Host_Wordpress {
 	 * Sets the permalinks of the media depending upon whether its in member directory
 	 * or group and acording to the media type
 	 */
-	function set_permalinks(){
+	protected function set_permalinks(){
 		if($this->group_id>0){
 			$current_group = new BP_Groups_Group($this->group_id);
 			$pre_url = bp_get_group_permalink($current_group);
@@ -732,5 +691,57 @@ class BP_Media_Host_Wordpress {
 				return false;
 		}
 		return true;
+	}
+
+	/**
+	 * Checks if the album given exists if not, creates a new one according to context
+	 */
+	function check_and_create_album($album_id,$group){
+		global $wpdb;
+		$create_new_album_flag = false;
+		if($album_id!=0){
+			$album = get_post($album_id);
+			if($album->post_author!=  get_current_user_id() && $group == 0){
+				$create_new_album_flag = true;
+			}
+			else{
+				$post_id = $album->ID;
+			}
+		}
+		else{
+			$create_new_album_flag = true;
+		}
+		if($create_new_album_flag){
+			if($group == 0){
+				$post_id = $wpdb->get_var(
+						"SELECT ID
+						FROM $wpdb->posts
+						WHERE
+							post_title = 'Wall Posts'
+							AND post_author = '".  get_current_user_id()."'
+							AND post_type='bp_media_album'"
+						);
+			}
+			else{
+				$post_id = $wpdb->get_var(
+						"SELECT wp_posts.ID
+						FROM $wpdb->posts
+						INNER JOIN $wpdb->postmeta ON $wpdb->posts.ID = $wpdb->postmeta.post_id
+							AND $wpdb->postmeta.meta_key =  'bp-media-key'
+							AND $wpdb->postmeta.meta_value = -$group
+							AND $wpdb->posts.post_title =  'Wall Posts'" );
+			}
+			if($post_id==null){
+				$album = new BP_Media_Album();
+				if($group == 0 )
+					$album->add_album('Wall Posts',  get_current_user_id(), $group);
+				else{
+					$current_user = wp_get_current_user();
+					$album->add_album($current_user->display_name.'\'s Album',  get_current_user_id(), $group);
+				}
+				$post_id = $album->get_id();
+			}
+		}
+		return $post_id;
 	}
 } ?>
