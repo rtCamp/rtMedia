@@ -41,7 +41,7 @@ jQuery(document).ready(function(){
 								jQuery.post(bp_media_vars.ajaxurl,data,function(response){
 									var album = parseInt(response);
 									if(album == 0){
-										alert('There was some error creating album');
+										alert('Sorry you cannot create albums in this group');
 									}
 									else{
 										jQuery('#bp-media-selected-album').append('<option value='+album+' selected="selected">'+jQuery('#bp_media_album_name').val()+'</option>')
