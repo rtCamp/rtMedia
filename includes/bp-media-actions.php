@@ -121,30 +121,32 @@ function bp_media_delete_activity_handler($args){
 		return;
 
 	$activity_id=$args['id'];
-	$query="SELECT post_id from $wpdb->postmeta WHERE meta_key='bp_media_child_activity' AND meta_value=$activity_id";
-	$result=$wpdb->get_results($query);
-	if(!(is_array($result)&& count($result)==1 ))
-		return;
-	$post_id=$result[0]->post_id;
-	try{
-		$post = get_post($post_id);
-		if(!isset($post->post_type))
-			return false;
-		switch($post->post_type){
-			case 'attachment':
-				$media = new BP_Media_Host_Wordpress($post_id);
-				$media->delete_media();
-				break;
-			case 'bp_media_album':
-				$album = new BP_Media_Album($post_id);
-				$album->delete_album();
-				break;
-			default:
-				wp_delete_post($post_id);
+	if(intval($activity_id)){
+		$query="SELECT post_id from $wpdb->postmeta WHERE meta_key='bp_media_child_activity' AND meta_value={$activity_id}";
+		$result=$wpdb->get_results($query);
+		if(!(is_array($result)&& count($result)==1 ))
+			return;
+		$post_id=$result[0]->post_id;
+		try{
+			$post = get_post($post_id);
+			if(!isset($post->post_type))
+				return false;
+			switch($post->post_type){
+				case 'attachment':
+					$media = new BP_Media_Host_Wordpress($post_id);
+					$media->delete_media();
+					break;
+				case 'bp_media_album':
+					$album = new BP_Media_Album($post_id);
+					$album->delete_album();
+					break;
+				default:
+					wp_delete_post($post_id);
+			}
 		}
-	}
-	catch(Exception $e){
-		error_log('Media tried to delete was already deleted');
+		catch(Exception $e){
+			error_log('Media tried to delete was already deleted');
+		}
 	}
 }
 add_action('bp_before_activity_delete', 'bp_media_delete_activity_handler');

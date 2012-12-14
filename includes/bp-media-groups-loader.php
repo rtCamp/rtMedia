@@ -317,16 +317,16 @@ function bp_media_groups_user_can_create_album($group_id, $user_id = 0){
 	$current_level = groups_get_groupmeta($group_id,'bp_media_group_control_level');
 	switch($current_level){
 		case 'all':
-			return groups_is_user_member($user_id, $group_id);
+			return groups_is_user_member($user_id, $group_id)||groups_is_user_mod($user_id, $group_id)||groups_is_user_admin($user_id, $group_id);
 			break;
 		case 'moderators':
-			return groups_is_user_mod($user_id, $group_id);
+			return groups_is_user_mod($user_id, $group_id)||groups_is_user_admin($user_id, $group_id);
 			break;
 		case 'admin':
 			return groups_is_user_admin($user_id, $group_id);
 			break;
 		default :
-			return false;
+			return groups_is_user_admin($user_id, $group_id);
 	}
 	return false;
 }
