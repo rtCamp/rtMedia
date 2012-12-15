@@ -18,7 +18,7 @@ jQuery(document).ready(function(){
 				'<div id="bp-media-progress-'+file.id+'" class="bp-media-progressbar"><div class="bp-media-progress-text">' +
 				file.name + ' (' + plupload.formatSize(file.size) + ')(<b></b>)</div><div class="bp-media-progress-completed"></div></div>');
 		});
-		if(bp_media_album_selected == false&&bp_media_is_multiple_upload==true){
+		if(bp_media_album_selected == false){
 			bp_media_album_select.dialog('option','buttons',{
 					'Select': function() {
 						bp_media_album_selected = jQuery('#bp-media-selected-album').val();
