@@ -1,12 +1,12 @@
 === BuddyPress Media ===
-Contributors: rtcamp, rahul286, gagan0123, umeshnevase, suhasgirgaonkar, neerukoul
+Contributors: rtcamp, rahul286, gagan0123, umesh.nevase, suhasgirgaonkar, neerukoul
 Donate link: http://rtcamp.com/donate
 Tags: BuddyPress, media, multimedia, album, audio, songs, music, video, photo, image, upload, share, MediaElement.js, ffmpeg, kaltura, media-node
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires at least: 3.3.2
 Tested up to: 3.4.2
-Stable tag: 2.3.1
+Stable tag: 2.3.2
 
 Adds Photos, Music, Videos & Albums to your BuddyPress. Supports mobile devices (iPhone/iPad, etc) and automatic audio/video conversion.
 
@@ -72,6 +72,10 @@ Please visit [BuddyPress Media's Features page](http://rtcamp.com/buddypress-med
 == Changelog ==
 
 Please visit [BuddyPress Media's Roadmap page](http://rtcamp.com/buddypress-media/roadmap/ "Visit BuddyPress Media's Features page") to get some details about future releases.
+
+= 2.3.2 =
+* Album creation on a single file upload.
+* Fixed Version number constant.
 
 = 2.3.1 =
 * Default permission for album creation in groups set to admin.
