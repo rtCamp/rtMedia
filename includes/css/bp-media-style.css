@@ -126,11 +126,25 @@ ul.products li.product .add_to_cart_button:hover{background: none repeat scroll 
 #wpadminbar .bp-media-settings-menu > .ab-item .ab-icon{background: url("../img/bpm-icon-16.png") no-repeat scroll -8px -7px transparent}
 #wpadminbar .bp-media-settings-menu:hover .ab-icon{background-position: -8px -41px}
 
-
+/* Buddypress media admin support form styling */
+.bp-media-updated, .bp-media-error{border-radius: 3px; padding: 0 7px; margin: 5px 0 15px; border: 1px solid}
+.bp-media-updated p, .bp-media-error p{margin: 0.5em 0;padding: 2px;}
+.bp-media-updated{background-color: #FFFFE0;border-color: #E6DB55;}
+.bp-media-error{background-color: #FFEBE8;border-color: #CC0000;}
 .bp-media-form li{margin-bottom: 10px}
-.bp-media-form .bp-media-label{ display: inline-block;margin-right: 10px;width: 150px;vertical-align: top}
+.bp-media-form .bp-media-label{display: inline-block;margin-right: 10px;width: 150px;vertical-align: top; }
 .bp-media-form .bp-media-input{background-color: #FFFFFF;border: 1px solid #DFDFDF;border-radius: 3px 3px 3px 3px;color: #333333;line-height: 16px;padding: 5px;width: 220px;}
-.bp-media-form .bp-media-textarea{background-color: #FFFFFF;border: 1px solid #DFDFDF;border-radius: 3px 3px 3px 3px;color: #333333;line-height: 16px;padding: 5px;width: 220px;}
+.bp-media-form .bp-media-checkbox{margin-right: 10px; margin-left: 160px}
+.bp-media-form .bp-media-textarea{background-color: #FFFFFF;border: 1px solid #DFDFDF;border-radius: 3px 3px 3px 3px;color: #333333;height: 175px;line-height: 16px;padding: 5px;width: 400px;}
+.bp-media-form .bp-media-select{margin: 0;max-width: 400px;}
+.bp-media-support-attachment label{float: left}
+.bp-media-support-attachment .more-attachment{margin-left: 160px; margin-top: 10px}
+.bp-media-support-attachment .more-attachment:first-child{margin-top: 0px}
+.bp-media-support-attachment .add-more-attachment-btn{clear: both;display: inline-block;margin-left: 160px;margin-top: 10px;}
+.template_select_label{float: left}
+.template_select_container{overflow-x:scroll; width:405px;float: left}
+#bp_media_settings_form .support_form_laoder{height: 100px; width: 200px; background:  url("../img/loader.gif") no-repeat }
+/* Miscellinus */
 #normal-sortables .postbox .bp-media-form .submit{float: none; margin-left: 150px}
 .rt-success{background-color: #E1FFDF;border-color: #2ACF2A;}
 .rt-update{background-color: #FFEAA6;border-color:#E1CA82;}
