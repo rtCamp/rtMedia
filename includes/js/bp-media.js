@@ -104,6 +104,53 @@ jQuery(document).ready(function(){
             }
         });
     });
+    
+    
+    /* Admin side Js for Ajax and loader, form selection */
+    
+    /* Add more attachment link */
+    jQuery( '.add-more-attachment-btn' ).live('click', function(event){        
+        event.preventDefault();        
+        jQuery(this).prev().after('<div class="more-attachment"><input class="bp-media-input" type="file" name="ur_attachment[]" /></div>');        
+    })
+    
+    
+    /* Check Cancel request */
+    jQuery('#cancel_request').live('click', function(){
+        if(jQuery(this).val()){
+            jQuery('#bp_media_settings_form .bp-media-metabox-holder').html()
+            jQuery('#bp_media_settings_form .bp-media-metabox-holder').html('<div class="support_form_laoder"></div>');        
+            var data = {
+                action: 'bp_media_cancel_request'                
+            };
+
+            // since 2.8 ajaxurl is always defined in the admin header and points to admin-ajax.php
+            jQuery.post(ajaxurl, data, function(response) {
+                jQuery('#bp_media_settings_form .bp-media-metabox-holder').html()
+                jQuery('#bp_media_settings_form .bp-media-metabox-holder').html(response).fadeIn('slow');
+                postboxes.add_postbox_toggles('bp-media-settings');
+            });
+        }
+    })
+    
+    /* Check support request */
+    jQuery('#request_type_select').live('change', function(){
+        if(jQuery(this).val()){
+            jQuery('#bp_media_settings_form .bp-media-metabox-holder').html()
+            jQuery('#bp_media_settings_form .bp-media-metabox-holder').html('<div class="support_form_laoder"></div>');        
+            var data = {
+                action: 'bp_media_request_type',
+                request_type: jQuery(this).val()
+            };
+
+            // since 2.8 ajaxurl is always defined in the admin header and points to admin-ajax.php
+            jQuery.post(ajaxurl, data, function(response) {
+                jQuery('#bp_media_settings_form .bp-media-metabox-holder').html()
+                jQuery('#bp_media_settings_form .bp-media-metabox-holder').html(response).fadeIn('slow');
+                postboxes.add_postbox_toggles('bp-media-settings');
+            });
+        }
+    })
 
 
 });
