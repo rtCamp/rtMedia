@@ -7,6 +7,9 @@
  * @author Gagandeep Singh <gagandeep.singh@rtcamp.com>
  * @author Joshua Abenazer <joshua.abenazer@rtcamp.com>
  */
+if ( ! defined( 'ABSPATH' ) )
+	exit;
+
 class BPMedia {
 
 	public $text_domain = 'bp-media';
@@ -29,7 +32,7 @@ class BPMedia {
 			define( 'BP_MEDIA_IS_INSTALLED', 1 );
 
 		/* Constant to store the current version of the BP Media Plugin. */
-		if ( ! defined( 'BP_MEDIA_IS_INSTALLED' ) )
+		if ( ! defined( 'BP_MEDIA_VERSION' ) )
 			define( 'BP_MEDIA_VERSION', '2.3.2' );
 
 		/* A constant to be used as base for other URLs throughout the plugin */
