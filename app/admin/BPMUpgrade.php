@@ -22,7 +22,7 @@ class BPMUpgrade {
      * 
      * @global string $bp_media->text_domain
      */
-    private function upgrade_db() {
+    public function upgrade_db() {
         global $bp_media;
         ?>
         <div class="error"><p><?php
@@ -35,7 +35,7 @@ class BPMUpgrade {
     /**
      * Upgrade Script
      */
-    private function upgrade() {
+    public function upgrade() {
         if (isset($_GET['bp_media_upgrade_db']) && empty($_REQUEST['settings-updated'])) {
             check_admin_referer('bp_media_upgrade_db', 'wp_nonce');
             require_once('bp-media-upgrade-script.php');
@@ -53,7 +53,7 @@ class BPMUpgrade {
      * @global wpdb $wpdb
      * @global string $bp_media->text_domain
      */
-    private function upgrade_1_0_to_2_1() {
+    public function upgrade_1_0_to_2_1() {
         global $wpdb, $bp_media;
         remove_filter('bp_activity_get_user_join_filter', 'bp_media_activity_query_filter', 10);
         /* @var $wpdb wpdb */
@@ -123,7 +123,7 @@ class BPMUpgrade {
      * 
      * @global string $bp_media->text_domain
      */
-    private function upgrade_2_0_to_2_1() {
+    public function upgrade_2_0_to_2_1() {
         global $bp_media;
         $page = 0;
         while ($media_entries = bp_media_return_query_posts(array(
