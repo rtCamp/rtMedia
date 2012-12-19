@@ -23,7 +23,7 @@ function buddypress_media_autoloader( $class_name ) {
 	);
 	foreach ( $rtlibpath as $i => $path ) {
 		if ( file_exists( $path ) ) {
-			include $path;
+			include BP_MEDIA_PATH.$path;
 			break;
 		}
 	}
