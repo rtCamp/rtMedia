@@ -21,7 +21,7 @@ class BPMSettings {
      * 
      * @global string $bp_media->text_domain
      */
-    private function settings() {
+    public function settings() {
         global $bp_media;
         add_settings_section('bpm-settings', __('BuddyPress Media Settings', $bp_media->text_domain), array($this, 'section'), 'bp-media-settings');
         add_settings_field('bpm-video', __('Video', $bp_media->text_domain), array($this, 'checkbox'), 'bp-media-settings', 'bpm-settings', array( 'option' => 'videos_enabled', 'desc' => __('Check to enable video upload functionality', $bp_media->text_domain) ) );
@@ -63,7 +63,7 @@ class BPMSettings {
      * 
      * @global string $bp_media->text_domain
      */
-    private function metaboxes() {
+    public function metaboxes() {
         global $bp_media;
         /* Javascripts loaded to allow drag/drop, expand/collapse and hide/show of boxes. */
         wp_enqueue_script('common');

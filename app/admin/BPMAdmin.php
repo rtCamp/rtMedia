@@ -20,7 +20,7 @@ class BPMAdmin {
      * 
      * @param string $hook
      */
-    private function ui($hook) {
+    public function ui($hook) {
         $admin_js = trailingslashit(site_url()) . '?bp_media_get_feeds=1';
         wp_enqueue_script('bp-media-js', plugins_url('includes/js/bp-media.js', dirname(__FILE__)));
         wp_localize_script('bp-media-js', 'bp_media_news_url', $admin_js);
@@ -32,7 +32,7 @@ class BPMAdmin {
      * 
      * @global string $bp_media->text_domain
      */
-    private function menu() {
+    public function menu() {
         global $bp_media;
         add_menu_page(__('Buddypress Media Component', $bp_media->text_domain), __('BP Media', $bp_media->text_domain), 'manage_options', 'bp-media-settings', array($this, 'render_page'));
         add_submenu_page('bp-media-settings', __('Buddypress Media Settings', $bp_media->text_domain), __('Settings', $bp_media->text_domain), 'manage_options', 'bp-media-settings', array($this, 'redener_page'));
@@ -45,7 +45,7 @@ class BPMAdmin {
      * 
      * @global string $bp_media->text_domain
      */
-    private function render_page() {
+    public function render_page() {
         global $bp_media;
         $tab = isset($_GET['page']) ? $_GET['page'] : "bp-media-settings";
         ?>
