@@ -17,7 +17,7 @@ class BPMAdmin {
             add_action('admin_enqueue_scripts', array($this, 'ui'));
             add_action(bp_core_admin_hook(), array($this, 'menu'));
             add_action('admin_init', array($this, 'metaboxes'));
-            add_action('admin_init', array(&$this, 'settings'));
+            add_action( 'admin_init', array( &$this, 'settings' ) );
         }
     }
 
@@ -187,8 +187,8 @@ class BPMAdmin {
         add_submenu_page('bp-media-settings', __('Buddypress Media Addons', $bp_text_domain), __('Addons', $bp_text_domain), 'manage_options', 'bp-media-addons', array($this, 'redener_settings'));
         add_submenu_page('bp-media-settings', __('Buddypress Media Support', $bp_text_domain), __('Support ', $bp_text_domain), 'manage_options', 'bp-media-support', array($this, 'redener_settings'));
     }
-
-    private function settings() {
+    
+    private function settings(){
         
     }
 
