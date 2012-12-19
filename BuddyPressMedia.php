@@ -10,22 +10,16 @@
 if ( ! defined( 'ABSPATH' ) )
 	exit;
 
-class BPMedia {
+class BuddyPressMedia {
 
 	public $text_domain = 'bp-media';
 
 	public function __construct() {
-		global $bp_text_domain;
-		$bp_text_domain = $this->text_domain;
+		global $bpm_text_domain;
+		$bpm_text_domain = $this->text_domain;
 	}
 
 	public function constants() {
-
-		if ( ! defined( 'BP_MEDIA_PATH' ) )
-			define( 'BP_MEDIA_PATH', plugin_dir_path( __FILE__ ) );
-
-		if ( ! defined( 'BP_MEDIA_URL' ) )
-			define( 'BP_MEDIA_URL', plugin_dir_url( __FILE__ ) );
 
 		/* A constant that can be checked to see if the BP Media is installed or not. */
 		if ( ! defined( 'BP_MEDIA_IS_INSTALLED' ) )
@@ -64,19 +58,6 @@ class BPMedia {
 			define( 'BP_MEDIA_AC_API_CATEGORY_ID', '224' );
 	}
 
-	function __autoload( $class_name ) {
-		$rtlibpath = array(
-			BP_MEDIA_PATH . 'rtlib/' . $class_name . '.php',
-			BP_MEDIA_PATH . 'admin/' . $class_name . '.php',
-			BP_MEDIA_PATH . 'includes/' . $class_name . '.php',
-		);
-		foreach ( $rtlibpath as $i => $path ) {
-			if ( file_exists( $path ) ) {
-				include $path;
-				break;
-			}
-		}
-	}
 
 	private function init() {
 
@@ -90,8 +71,10 @@ class BPMedia {
 
 	}
 
+	public function autoload_js_css(){
+		
+	}
+
 }
 
-global $bp_media;
-$bp_media = new BPMedia();
 ?>
