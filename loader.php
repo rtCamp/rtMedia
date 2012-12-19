@@ -66,6 +66,7 @@ function bp_media_activate() {
 	}
 	update_site_option('bp_media_options',$bp_media_options);
 
+	
 
 	$bpmquery = new WP_Query(array('post_type'=>'bp_media','posts_per_page'=>1));
 	if($bpmquery->found_posts > 0){

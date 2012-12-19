@@ -1,12 +1,13 @@
 <?php
+
 /*
-Plugin Name: BuddyPress Media
-Plugin URI: http://rtcamp.com/buddypress-media/
-Description: This plugin adds missing media rich features like photos, videos and audios uploading to BuddyPress which are essential if you are building social network, seriously!
-Version: 2.3.2
-Author: rtCamp
-Author URI: http://rtcamp.com
-*/
+  Plugin Name: BuddyPress Media
+  Plugin URI: http://rtcamp.com/buddypress-media/
+  Description: This plugin adds missing media rich features like photos, videos and audios uploading to BuddyPress which are essential if you are building social network, seriously!
+  Version: 2.3.2
+  Author: rtCamp
+  Author URI: http://rtcamp.com
+ */
 
 if ( ! defined( 'BP_MEDIA_PATH' ) )
 	define( 'BP_MEDIA_PATH', plugin_dir_path( __FILE__ ) );
@@ -22,7 +23,7 @@ function buddypress_media_autoloader( $class_name ) {
 		'lib/rtlib/' . $class_name . '.php',
 	);
 	foreach ( $rtlibpath as $i => $path ) {
-		$path = BP_MEDIA_PATH.$path;
+		$path = BP_MEDIA_PATH . $path;
 		if ( file_exists( $path ) ) {
 			include $path;
 			break;
@@ -30,9 +31,13 @@ function buddypress_media_autoloader( $class_name ) {
 	}
 }
 
-spl_autoload_register('buddypress_media_autoloader');
+spl_autoload_register( 'buddypress_media_autoloader' );
 
-global $bp_media;
+function load_bp_media() {
+	global $bp_media;
 
-$bp_media = new BuddyPressMedia();
+	$bp_media = new BuddyPressMedia();
+}
+
+add_action( 'bp_include', load_bp_media );
 ?>
