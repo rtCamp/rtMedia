@@ -28,16 +28,17 @@ class BuddyPressMedia {
     public $hidden_activity_cache = array();
 
     public function __construct() {
-        $this->get_option();
         $this->constants();
 
-        add_action('bp_include', array($this, 'init'));
+		$this->get_option();
 
+		$this->init();
         if (file_exists(BP_MEDIA_PATH . '/languages/' . get_locale() . '.mo'))
             load_textdomain('bp-media', BP_MEDIA_PATH . '/languages/' . get_locale() . '.mo');
 
         global $bp_admin;
         $bp_admin = new BPMAdmin();
+
     }
 
     public function get_option() {
@@ -227,15 +228,15 @@ class BuddyPressMedia {
     }
 
     private function activate() {
-        
+
     }
 
     private function deactivate() {
-        
+
     }
 
     public function autoload_js_css() {
-        
+
     }
 
 }
