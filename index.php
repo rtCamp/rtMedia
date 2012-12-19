@@ -32,7 +32,7 @@ function buddypress_media_autoloader( $class_name ) {
 
 spl_autoload_register('buddypress_media_autoloader');
 
-global $bp_media, $bp_admin;
-$bp_admin = new BPMAdmin();
+global $bp_media;
+
 $bp_media = new BuddyPressMedia();
 ?>
