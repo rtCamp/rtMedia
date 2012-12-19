@@ -20,13 +20,13 @@ class BPMUpgrade {
     /**
      * Displays admin notice to upgrade BuddyPress Media Database
      * 
-     * @global string $bpm_text_domain
+     * @global string $bp_media->text_domain
      */
     private function upgrade_db() {
-        global $bpm_text_domain;
+        global $bp_media;
         ?>
         <div class="error"><p><?php
-        printf(__('Please click upgrade to upgrade the database of BuddyPress Media <a class="button" id="refresh_media_count" href ="%s" class="button" title="It will migrate your BuddyPress Media\'s earlier database to new database.">Upgrade</a>', $bpm_text_domain), bp_media_get_admin_url(add_query_arg(array('page' => 'bp-media-settings', 'bp_media_upgrade_db' => 1, 'wp_nonce' => wp_create_nonce('bp_media_upgrade_db')), 'admin.php')))
+        printf(__('Please click upgrade to upgrade the database of BuddyPress Media <a class="button" id="refresh_media_count" href ="%s" class="button" title="It will migrate your BuddyPress Media\'s earlier database to new database.">Upgrade</a>', $bp_media->text_domain), bp_media_get_admin_url(add_query_arg(array('page' => 'bp-media-settings', 'bp_media_upgrade_db' => 1, 'wp_nonce' => wp_create_nonce('bp_media_upgrade_db')), 'admin.php')))
         ?>
             </p></div>
         <?php
@@ -51,10 +51,10 @@ class BPMUpgrade {
     /**
      * Upgrade from BuddyPress Media 1.0 to 2.1
      * @global wpdb $wpdb
-     * @global string $bpm_text_domain
+     * @global string $bp_media->text_domain
      */
     private function upgrade_1_0_to_2_1() {
-        global $wpdb, $bpm_text_domain;
+        global $wpdb, $bp_media;
         remove_filter('bp_activity_get_user_join_filter', 'bp_media_activity_query_filter', 10);
         /* @var $wpdb wpdb */
         $wall_posts_album_ids = array();
@@ -99,7 +99,7 @@ class BPMUpgrade {
                         'content' => $bp_media->get_media_activity_content(),
                         'id' => $child_activity,
                         'type' => 'media_upload',
-                        'action' => apply_filters('bp_media_added_media', sprintf(__('%1$s added a %2$s', $bpm_text_domain), bp_core_get_userlink($media_file->post_author), '<a href="' . $bp_media->get_url() . '">' . $bp_media->get_media_activity_type() . '</a>')),
+                        'action' => apply_filters('bp_media_added_media', sprintf(__('%1$s added a %2$s', $bp_media->text_domain), bp_core_get_userlink($media_file->post_author), '<a href="' . $bp_media->get_url() . '">' . $bp_media->get_media_activity_type() . '</a>')),
                         'primary_link' => $bp_media->get_url(),
                         'item_id' => $attachment_id,
                         'recorded_time' => $activity->date_recorded,
@@ -121,10 +121,10 @@ class BPMUpgrade {
     /**
      * Upgrade from BuddyPress Media 2.0 to 2.1
      * 
-     * @global string $bpm_text_domain
+     * @global string $bp_media->text_domain
      */
     private function upgrade_2_0_to_2_1() {
-        global $bpm_text_domain;
+        global $bp_media;
         $page = 0;
         while ($media_entries = bp_media_return_query_posts(array(
     'post_type' => 'attachment',
@@ -152,7 +152,7 @@ class BPMUpgrade {
                         'content' => $bp_media->get_media_activity_content(),
                         'id' => $child_activity,
                         'type' => 'media_upload',
-                        'action' => apply_filters('bp_media_added_media', sprintf(__('%1$s added a %2$s', $bpm_text_domain), bp_core_get_userlink($bp_media->get_author()), '<a href="' . $bp_media->get_url() . '">' . $bp_media->get_media_activity_type() . '</a>')),
+                        'action' => apply_filters('bp_media_added_media', sprintf(__('%1$s added a %2$s', $bp_media->text_domain), bp_core_get_userlink($bp_media->get_author()), '<a href="' . $bp_media->get_url() . '">' . $bp_media->get_media_activity_type() . '</a>')),
                         'primary_link' => $bp_media->get_url(),
                         'item_id' => $activity->item_id,
                         'recorded_time' => $activity->date_recorded,

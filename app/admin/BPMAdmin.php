@@ -12,8 +12,6 @@ class BPMAdmin {
         if (is_admin()) {
             add_action('admin_enqueue_scripts', array($this, 'ui'));
             add_action(bp_core_admin_hook(), array($this, 'menu'));
-            add_action('admin_init', array($this, 'metaboxes'));
-            add_action( 'admin_init', array( &$this, 'settings' ) );
         }
     }
 
@@ -32,42 +30,30 @@ class BPMAdmin {
     /**
      * Admin Menu
      * 
-     * @global string $bpm_text_domain
+     * @global string $bp_media->text_domain
      */
     private function menu() {
-        global $bpm_text_domain;
-        add_menu_page(__('Buddypress Media Component', $bpm_text_domain), __('BP Media', $bpm_text_domain), 'manage_options', 'bp-media-settings', array($this, 'render_settings'));
-        add_submenu_page('bp-media-settings', __('Buddypress Media Settings', $bpm_text_domain), __('Settings', $bpm_text_domain), 'manage_options', 'bp-media-settings', array($this, 'redener_settings'));
-        add_submenu_page('bp-media-settings', __('Buddypress Media Addons', $bpm_text_domain), __('Addons', $bpm_text_domain), 'manage_options', 'bp-media-addons', array($this, 'redener_settings'));
-        add_submenu_page('bp-media-settings', __('Buddypress Media Support', $bpm_text_domain), __('Support ', $bpm_text_domain), 'manage_options', 'bp-media-support', array($this, 'redener_settings'));
-    }
-    
-    /**
-     * Register Settings
-     * 
-     * @global string $bpm_text_domain
-     */    
-    private function settings(){
-        global $bpm_text_domain;
-        add_settings_section( 'bpm-settings', __( 'BuddyPress Media Settings', $bpm_text_domain ), array( $this, 'section' ), 'bp-media-settings' );
- 	add_settings_field( 'bpm-video', __( 'Video', $bpm_text_domain ), array( $this, 'checkbox' ), 'bp-media-settings', 'bpm-settings' );
-        register_setting( 'bp_media', 'bp_media_options' );
+        global $bp_media;
+        add_menu_page(__('Buddypress Media Component', $bp_media->text_domain), __('BP Media', $bp_media->text_domain), 'manage_options', 'bp-media-settings', array($this, 'render_page'));
+        add_submenu_page('bp-media-settings', __('Buddypress Media Settings', $bp_media->text_domain), __('Settings', $bp_media->text_domain), 'manage_options', 'bp-media-settings', array($this, 'redener_page'));
+        add_submenu_page('bp-media-settings', __('Buddypress Media Addons', $bp_media->text_domain), __('Addons', $bp_media->text_domain), 'manage_options', 'bp-media-addons', array($this, 'redener_page'));
+        add_submenu_page('bp-media-settings', __('Buddypress Media Support', $bp_media->text_domain), __('Support ', $bp_media->text_domain), 'manage_options', 'bp-media-support', array($this, 'redener_page'));
     }
 
     /**
      * Render BPMedia Settings
      * 
-     * @global string $bpm_text_domain
+     * @global string $bp_media->text_domain
      */
-    private function render_settings() {
-        global $bpm_text_domain;
+    private function render_page() {
+        global $bp_media;
         $tab = isset($_GET['page']) ? $_GET['page'] : "bp-media-settings";
         ?>
 
         <div class="wrap bp-media-admin">
             <?php //screen_icon( 'buddypress' );    ?>
             <div id="icon-buddypress" class="icon32"><br></div>
-            <h2 class="nav-tab-wrapper"><?php bp_core_admin_tabs(__('Media', $bpm_text_domain)); ?></h2>
+            <h2 class="nav-tab-wrapper"><?php bp_core_admin_tabs(__('Media', $bp_media->text_domain)); ?></h2>
             <div class="metabox-holder columns-2">
                 <div class="bp-media-settings-tabs"><?php
         // Check to see which tab we are on
@@ -82,22 +68,22 @@ class BPMAdmin {
             /* BP Media */
             $tabs[] = array(
                 'href' => bp_get_admin_url(add_query_arg(array('page' => 'bp-media-settings'), 'admin.php')),
-                'title' => __('Buddypress Media Settings', $bpm_text_domain),
-                'name' => __('Settings', $bpm_text_domain),
+                'title' => __('Buddypress Media Settings', $bp_media->text_domain),
+                'name' => __('Settings', $bp_media->text_domain),
                 'class' => ($tab == 'bp-media-settings') ? $active_class : $idle_class . ' first_tab'
             );
 
             $tabs[] = array(
                 'href' => bp_get_admin_url(add_query_arg(array('page' => 'bp-media-addons'), 'admin.php')),
-                'title' => __('Buddypress Media Addons', $bpm_text_domain),
-                'name' => __('Addons', $bpm_text_domain),
+                'title' => __('Buddypress Media Addons', $bp_media->text_domain),
+                'name' => __('Addons', $bp_media->text_domain),
                 'class' => ($tab == 'bp-media-addons') ? $active_class : $idle_class
             );
 
             $tabs[] = array(
                 'href' => bp_get_admin_url(add_query_arg(array('page' => 'bp-media-support'), 'admin.php')),
-                'title' => __('Buddypress Media Support', $bpm_text_domain),
-                'name' => __('Support', $bpm_text_domain),
+                'title' => __('Buddypress Media Support', $bp_media->text_domain),
+                'name' => __('Support', $bp_media->text_domain),
                 'class' => ($tab == 'bp-media-support') ? $active_class : $idle_class . ' last_tab'
             );
 
@@ -148,40 +134,6 @@ class BPMAdmin {
                 </div>
             </div><!-- .metabox-holder -->
         </div><!-- .bp-media-admin --><?php
-        }
-
-        /**
-         * Load the metaboxes
-         * 
-         * @global string $bpm_text_domain
-         */
-        private function metaboxes() {
-            global $bpm_text_domain;
-            /* Javascripts loaded to allow drag/drop, expand/collapse and hide/show of boxes. */
-            wp_enqueue_script('common');
-            wp_enqueue_script('wp-lists');
-            wp_enqueue_script('postbox');
-
-// Check to see which tab we are on
-            $tab = isset($_GET['page']) ? $_GET['page'] : "bp-media-settings";
-
-            switch ($tab) {
-                case 'bp-media-addons' :
-// All metaboxes registered during load page can be switched off/on at "Screen Options" automatically, nothing special to do therefore
-                    add_meta_box('bp_media_addons_list_metabox', __('BuddyPress Media Addons for Audio/Video Conversion', $bpm_text_domain), 'bp_media_addons_list', 'bp-media-settings', 'normal', 'core');
-                    break;
-                case 'bp-media-support' :
-// All metaboxes registered during load page can be switched off/on at "Screen Options" automatically, nothing special to do therefore
-                    add_meta_box('bp_media_support_metabox', __('BuddyPress Media Support', $bpm_text_domain), 'bp_media_support', 'bp-media-settings', 'normal', 'core');
-                    add_meta_box('bp_media_form_report_metabox', __('Submit a request form', $bpm_text_domain), 'bp_media_send_request', 'bp-media-settings', 'normal', 'core');
-                    break;
-                case $tab :
-// All metaboxes registered during load page can be switched off/on at "Screen Options" automatically, nothing special to do therefore
-                    add_meta_box('bp_media_settings_metabox', __('BuddyPress Media Settings', $bpm_text_domain), 'bp_media_admin_menu', 'bp-media-settings', 'normal', 'core');
-                    add_meta_box('bp_media_options_metabox', __('Spread the word', $bpm_text_domain), 'bp_media_settings_options', 'bp-media-settings', 'normal', 'core');
-                    add_meta_box('bp_media_other_options_metabox', __('BuddyPress Media Other options', $bpm_text_domain), 'bp_media_settings_other_options', 'bp-media-settings', 'normal', 'core');
-                    break;
-            }
         }
 
     }
