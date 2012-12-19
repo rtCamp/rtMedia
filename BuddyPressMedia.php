@@ -17,6 +17,8 @@ class BuddyPressMedia {
 	public function __construct() {
 		global $bpm_text_domain;
 		$bpm_text_domain = $this->text_domain;
+		$this->constants();
+		add_action( 'bp_include', array( $this, 'init' ) );
 	}
 
 	public function constants() {
@@ -58,9 +60,24 @@ class BuddyPressMedia {
 			define( 'BP_MEDIA_AC_API_CATEGORY_ID', '224' );
 	}
 
+	function init() {
+		if ( defined( 'BP_VERSION' ) && version_compare( BP_VERSION, BP_MEDIA_REQUIRED_BP, '>' ) ) {
+			add_filter( 'plugin_action_links', array( $this, 'settings_link' ), 10, 2 );
+			require( BP_MEDIA_PATH . 'includes/bp-media-loader.php' );
+			//require( BP_MEDIA_PLUGIN_DIR . '/includes/bp-media-groups-loader.php');
+		}
+	}
 
-	private function init() {
-
+	function settings_link( $links, $file ) {
+		/* create link */
+		$plugin_name = plugin_basename( __FILE__ );
+		$admin_link = bp_media_get_admin_url( add_query_arg( array( 'page' => 'bp-media-settings' ), 'admin.php' ) );
+		if ( $file == $plugin_name ) {
+			array_unshift(
+					$links, sprintf( '<a href="%s">%s</a>', $admin_link, __( 'Settings' ) )
+			);
+		}
+		return $links;
 	}
 
 	private function activate() {
@@ -71,8 +88,8 @@ class BuddyPressMedia {
 
 	}
 
-	public function autoload_js_css(){
-		
+	public function autoload_js_css() {
+
 	}
 
 }
