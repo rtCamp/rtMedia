@@ -39,5 +39,8 @@ function load_bp_media() {
 	$bp_media = new BuddyPressMedia();
 }
 
+global $bp_media;
+register_activation_hook( __FILE__, array( $bp_media, 'activate' ) );
+
 add_action( 'bp_include', load_bp_media );
 ?>
