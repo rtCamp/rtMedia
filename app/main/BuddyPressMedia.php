@@ -26,19 +26,11 @@ class BuddyPressMedia {
 		'album_created'
 	);
 	public $hidden_activity_cache = array( );
+	public $loader;
 
 	public function __construct() {
+
 		$this->constants();
-
-		$this->get_option();
-
-		$this->init();
-		if ( file_exists( BP_MEDIA_PATH . '/languages/' . get_locale() . '.mo' ) )
-			load_textdomain( 'bp-media', BP_MEDIA_PATH . '/languages/' . get_locale() . '.mo' );
-
-		add_action('admin_notices', array($this,'admin_notice'));
-		global $bp_admin;
-		$bp_admin = new BPMAdmin();
 	}
 
 	public function get_option() {
@@ -53,7 +45,7 @@ class BuddyPressMedia {
 
 		/* Current Version. */
 		if ( ! defined( 'BP_MEDIA_VERSION' ) )
-			define( 'BP_MEDIA_VERSION', '2.3.2' );
+			define( 'BP_MEDIA_VERSION', '2.4' );
 
 		/* Required Version  */
 		if ( ! defined( 'BP_MEDIA_REQUIRED_BP' ) )
@@ -168,17 +160,26 @@ class BuddyPressMedia {
 	}
 
 	function init() {
-		if ( defined( 'BP_VERSION' ) && version_compare( BP_VERSION, BP_MEDIA_REQUIRED_BP, '>' ) ) {
+		$this->get_option();
+
+		if ( defined( 'BP_VERSION' ) && version_compare( BP_VERSION, BP_MEDIA_REQUIRED_BP, '>=' ) ) {
 			add_filter( 'plugin_action_links', array( $this, 'settings_link' ), 10, 2 );
 			$this->loader = new BPMediaLoader();
-//require( BP_MEDIA_PLUGIN_DIR . '/includes/bp-media-groups-loader.php');
+//require( BP_MEDIA_PATH . '/includes/bp-media-groups-loader.php');
 		}
+
+		if ( file_exists( BP_MEDIA_PATH . '/languages/' . get_locale() . '.mo' ) )
+			load_textdomain( 'bp-media', BP_MEDIA_PATH . '/languages/' . get_locale() . '.mo' );
+
+		add_action( 'admin_notices', array( $this, 'admin_notice' ) );
+		global $bp_admin;
+		$bp_admin = new BPMAdmin();
 	}
 
 	function settings_link( $links, $file ) {
 		/* create link */
 		$plugin_name = plugin_basename( __FILE__ );
-		$admin_link = bp_media_get_admin_url( add_query_arg( array( 'page' => 'bp-media-settings' ), 'admin.php' ) );
+		$admin_link = $this->get_admin_url( add_query_arg( array( 'page' => 'bp-media-settings' ), 'admin.php' ) );
 		if ( $file == $plugin_name ) {
 			array_unshift(
 					$links, sprintf( '<a href="%s">%s</a>', $admin_link, __( 'Settings' ) )
@@ -249,7 +250,6 @@ class BuddyPressMedia {
 		}
 	}
 
-
 	public function activate() {
 		$bpmquery = new WP_Query( array( 'post_type' => 'bp_media', 'posts_per_page' => 1 ) );
 		if ( $bpmquery->found_posts > 0 ) {
@@ -262,6 +262,19 @@ class BuddyPressMedia {
 					update_site_option( 'bp_media_db_version', BP_MEDIA_DB_VERSION );
 			}
 		}
+	}
+
+	function get_admin_url( $path = '', $scheme = 'admin' ) {
+
+		// Links belong in network admin
+		if ( is_multisite() )
+			$url = network_admin_url( $path, $scheme );
+
+		// Links belong in site admin
+		else
+			$url = admin_url( $path, $scheme );
+
+		return $url;
 	}
 
 	private function deactivate() {
