@@ -30,7 +30,7 @@ class BPMediaComponent extends BP_Component {
 	 */
 	function __construct() {
 		global $bp;
-		parent::start( BP_MEDIA_SLUG, BP_MEDIA_LABEL, BP_MEDIA_PLUGIN_DIR );
+		parent::start( BP_MEDIA_SLUG, BP_MEDIA_LABEL, BP_MEDIA_PATH );
 		$this->includes();
 		$bp->active_components[ $this->id ] = '1';
 		add_action( 'init', array( &$this, 'register_post_types' ) );
@@ -42,20 +42,21 @@ class BPMediaComponent extends BP_Component {
 	 * @since BP Media 2.0
 	 */
 	function includes() {
+		$inc_path_prefix = 'app/main/includes/';
 		$includes = array(
-			'includes/bp-media-screens.php',
-			'includes/bp-media-functions.php',
-			'includes/bp-media-filters.php',
-			'includes/bp-media-template-functions.php',
-			'includes/bp-media-actions.php',
-			'includes/bp-media-interface.php',
-			'includes/bp-media-class-wordpress.php',
-			'includes/bp-media-shortcodes.php',
-			'includes/bp-media-widgets.php',
-			'includes/bp-media-class-album.php',
-			'includes/bp-media-groups-loader.php',
-			'includes/bp-media-groups-actions.php',
-			'includes/bp-media-groups-screens.php'
+			$inc_path_prefix.'bp-media-screens.php',
+			$inc_path_prefix.'bp-media-functions.php',
+			$inc_path_prefix.'bp-media-filters.php',
+			$inc_path_prefix.'bp-media-template-functions.php',
+			$inc_path_prefix.'bp-media-actions.php',
+			$inc_path_prefix.'bp-media-interface.php',
+			$inc_path_prefix.'bp-media-class-wordpress.php',
+			$inc_path_prefix.'bp-media-shortcodes.php',
+			$inc_path_prefix.'bp-media-widgets.php',
+			$inc_path_prefix.'bp-media-class-album.php',
+			$inc_path_prefix.'bp-media-groups-loader.php',
+			$inc_path_prefix.'bp-media-groups-actions.php',
+			$inc_path_prefix.'bp-media-groups-screens.php'
 		);
 		parent::includes( $includes );
 		do_action( 'bp_media_init' );
