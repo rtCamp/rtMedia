@@ -78,7 +78,10 @@ class BPMediaComponent extends BP_Component {
 
 	function setup_nav() {
 		/* Add 'Media' to the main navigation */
-		global $bp;
+		global $bp, $bp_media;
+		$bp_media_upload = new BPMediaUploadScreen(__('Upload Media',$bp_media->text_domain),BP_MEDIA_UPLOAD_SLUG);
+
+		$bp_media_image = new BPMediaImageScreen(__('Images List Page',$bp_media->text_domain),BP_MEDIA_IMAGES_SLUG);
 		switch ( $bp->current_component ) {
 			case BP_MEDIA_IMAGES_SLUG:
 				if ( is_numeric( $bp->current_action ) ) {
@@ -111,7 +114,7 @@ class BPMediaComponent extends BP_Component {
 				'name' => BP_MEDIA_LABEL,
 				'slug' => BP_MEDIA_SLUG,
 				'position' => 80,
-				'screen_function' => 'bp_media_upload_screen',
+				'screen_function' => array($bp_media_upload,'ui'),
 				'default_subnav_slug' => BP_MEDIA_UPLOAD_SLUG
 			);
 		} else {
@@ -119,7 +122,7 @@ class BPMediaComponent extends BP_Component {
 				'name' => BP_MEDIA_LABEL,
 				'slug' => BP_MEDIA_SLUG,
 				'position' => 80,
-				'screen_function' => 'bp_media_images_screen',
+				'screen_function' => array($bp_media_image,'ui'),
 				'default_subnav_slug' => BP_MEDIA_IMAGES_SLUG
 			);
 		}
@@ -128,7 +131,7 @@ class BPMediaComponent extends BP_Component {
 			'slug' => BP_MEDIA_UPLOAD_SLUG,
 			'parent_url' => trailingslashit( bp_loggedin_user_domain() . BP_MEDIA_SLUG ),
 			'parent_slug' => BP_MEDIA_SLUG,
-			'screen_function' => 'bp_media_upload_screen',
+			'screen_function' => array($bp_media_upload,'screen'),
 			'position' => 10,
 			'user_has_access' => bp_is_my_profile()
 		);
