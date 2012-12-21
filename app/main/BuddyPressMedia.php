@@ -182,7 +182,7 @@ class BuddyPressMedia {
 		$admin_link = $this->get_admin_url( add_query_arg( array( 'page' => 'bp-media-settings' ), 'admin.php' ) );
 		if ( $file == $plugin_name ) {
 			array_unshift(
-					$links, sprintf( '<a href="%s">%s</a>', $admin_link, __( 'Settings' ) )
+					$links, sprintf( '<a href="%s">%s</a>', $admin_link, __( 'Settings', $this->text_domain ) )
 			);
 		}
 		return $links;
@@ -239,12 +239,12 @@ class BuddyPressMedia {
 			if ( defined( 'BP_VERSION' ) ) {
 				if ( version_compare( BP_VERSION, BP_MEDIA_REQUIRED_BP, '<' ) ) {
 					echo '<div class="error"><p>';
-					printf( __( 'The BuddyPress version installed is an older version and is not supported, please update BuddyPress to use BuddyPress Media Plugin.<a class="alignright" href="%1$s">X</a>' ), '?bp_media_nag_ignore=0' );
+					printf( __( 'The BuddyPress version installed is an older version and is not supported, please update BuddyPress to use BuddyPress Media Plugin.<a class="alignright" href="%1$s">X</a>', $this->text_domain ), '?bp_media_nag_ignore=0' );
 					echo "</p></div>";
 				}
 			} else {
 				echo '<div class="error"><p>';
-				printf( __( 'You have not installed BuddyPress. Please install latest version of BuddyPress to use BuddyPress Media plugin.<a class="alignright" href="%1$s">X</a>' ), '?bp_media_nag_ignore=0' );
+				printf( __( 'You have not installed BuddyPress. Please install latest version of BuddyPress to use BuddyPress Media plugin.<a class="alignright" href="%1$s">X</a>', $this->text_domain ), '?bp_media_nag_ignore=0' );
 				echo "</p></div>";
 			}
 		}

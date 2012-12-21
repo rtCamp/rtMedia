@@ -107,7 +107,7 @@ jQuery(document).ready(function(){
 				new_location = new_location.concat(bp_media_album_selected);
 			else
 				new_location = new_location.concat('0/');
-			window.location.replace(new_location);
+			//window.location.replace(new_location);
 		}
 	});
 });
