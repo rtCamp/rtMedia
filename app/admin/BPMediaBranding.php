@@ -1,14 +1,14 @@
 <?php
 
 /**
- * Description of RTBranding
+ * Description of BPMediaBranding
  *
  * @author Gagandeep Singh <gagandeep.singh@rtcamp.com>
  * @author Joshua Abenazer <joshua.abenazer@rtcamp.com>
  */
-if (!class_exists('RTBranding')) {
+if (!class_exists('BPMediaBranding')) {
 
-    class RTBranding {
+    class BPMediaBranding {
 
         public function __construct() {
             ;
