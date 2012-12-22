@@ -65,7 +65,7 @@ class BPMediaLoader {
 	public function thumbnail() {
 		global $bp_media;
 
-		$default_sizes = $bp_media->media_sizes;
+		$default_sizes = $bp_media->media_sizes();
 
 		add_image_size( 'bp_media_activity_image', $default_sizes[ 'activity_image' ][ 'width' ], $default_sizes[ 'activity_image' ][ 'height' ], true );
 		add_image_size( 'bp_media_single_image', $default_sizes[ 'single_image' ][ 'width' ], $default_sizes[ 'single_image' ][ 'height' ], true );
