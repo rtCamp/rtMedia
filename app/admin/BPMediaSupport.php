@@ -1,14 +1,14 @@
 <?php
 
 /**
- * Description of RTAddons
+ * Description of BPMediaSupport
  *
  * @author Gagandeep Singh <gagandeep.singh@rtcamp.com>
  * @author Joshua Abenazer <joshua.abenazer@rtcamp.com>
  */
-if (!class_exists('RTAddons')) {
+if (!class_exists('BPMediaSupport')) {
 
-    class RTAddons {
+    class RTSupport {
 
         public function __construct() {
             ;
