@@ -7,12 +7,18 @@
  * @author Joshua Abenazer <joshua.abenazer@rtcamp.com>
  */
 class BPMAdmin {
+    
+    public $bpm_upgrade;
+    public $bpm_settings;
 
     public function __construct() {
         if (is_admin()) {
             add_action('admin_enqueue_scripts', array($this, 'ui'));
             add_action(bp_core_admin_hook(), array($this, 'menu'));
+            add_action('bp_admin_tabs', array($this, 'tab'));
         }
+        $this->bp_media_upgrade = new BPMUpgrade();
+        $this->bp_media_settings = new BPMSettings();
     }
 
     /**
@@ -21,6 +27,7 @@ class BPMAdmin {
      * @param string $hook
      */
     public function ui($hook) {
+        echo $hook;
         $admin_js = trailingslashit(site_url()) . '?bp_media_get_feeds=1';
         wp_enqueue_script('bp-media-js', plugins_url('includes/js/bp-media.js', dirname(__FILE__)));
         wp_localize_script('bp-media-js', 'bp_media_news_url', $admin_js);
@@ -102,9 +109,8 @@ class BPMAdmin {
 
                 <div id="bp-media-settings-boxes">
 
-                    <form id="bp_media_settings_form" name="bp_media_settings_form" action="" method="post" enctype="multipart/form-data"><?php
-            settings_fields('bp_media_options_settings');
-            do_settings_fields('bp_media_options_settings', '');
+                    <form id="bp_media_settings_form" name="bp_media_settings_form" action="options.php" method="post" enctype="multipart/form-data"><?php
+            settings_fields('bp_media');
             echo '<div class="bp-media-metabox-holder">';
 
             if (isset($_REQUEST['request_type'])) {
@@ -134,6 +140,34 @@ class BPMAdmin {
                 </div>
             </div><!-- .metabox-holder -->
         </div><!-- .bp-media-admin --><?php
+        }
+
+        /**
+         * Adds a tab for Media settings in the BuddyPress settings page
+         */
+        public function tab() {
+
+            if (current_user_can('manage_options')) {
+                $tabs_html = '';
+                $idle_class = 'nav-tab';
+                $active_class = 'nav-tab nav-tab-active';
+                $tabs = array();
+
+                // Check to see which tab we are on
+                $tab = isset($_GET['page']) ? $_GET['page'] : "bp-media-settings";
+                /* BP Media */
+                $tabs[] = array(
+                    'href' => bp_get_admin_url(add_query_arg(array('page' => 'bp-media-settings'), 'admin.php')),
+                    'title' => __('Buddypress Media', 'bp-media'),
+                    'name' => __('Buddypress Media', 'bp-media'),
+                    'class' => ($tab == 'bp-media-settings' || $tab == 'bp-media-addons' || $tab == 'bp-media-support') ? $active_class : $idle_class
+                );
+
+                foreach ($tabs as $tab) {
+                    $tabs_html.= '<a id="bp-media" title= "' . $tab['title'] . '"  href="' . $tab['href'] . '" class="' . $tab['class'] . '">' . $tab['name'] . '</a>';
+                }
+                echo $tabs_html;
+            }
         }
 
     }
