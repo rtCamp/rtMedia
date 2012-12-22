@@ -173,7 +173,7 @@ class BuddyPressMedia {
 
 		add_action( 'admin_notices', array( $this, 'admin_notice' ) );
 		global $bp_admin;
-		$bp_admin = new BPMAdmin();
+		$bp_admin = new BPMediaAdmin();
 	}
 
 	function settings_link( $links, $file ) {
