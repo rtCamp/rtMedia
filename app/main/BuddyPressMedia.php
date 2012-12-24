@@ -176,8 +176,8 @@ class BuddyPressMedia {
 			load_textdomain( 'bp-media', BP_MEDIA_PATH . '/languages/' . get_locale() . '.mo' );
 
 		add_action( 'admin_notices', array( $this, 'admin_notice' ) );
-		global $bp_admin;
-		$bp_admin = new BPMediaAdmin();
+		global $bp_media_admin;
+		$bp_media_admin = new BPMediaAdmin();
 	}
 
 	function settings_link( $links, $file ) {
