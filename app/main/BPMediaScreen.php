@@ -25,9 +25,9 @@ class BPMediaScreen {
 
 	public function medias( $media_type ) {
 		$this->media( $media_type );
-		$media = strtoupper( $this->media_type );
+		$media = strtolower( $this->media_type );
 		if ( $media != 'audio' ) {
-			$media = $media . 's';
+			$media .= 's';
 		}
 		$this->medias_type = $media;
 	}
@@ -61,14 +61,11 @@ class BPMediaScreen {
 	}
 
 	public function screen() {
-
-		global $bp;
-
 		$editslug = 'BP_MEDIA_' . $this->media_const . '_EDIT_SLUG';
 		$entryslug = 'BP_MEDIA_' . $this->media_const . '_ENTRY_SLUG';
 
-		echo $editslug. '<br>';
-		echo $entryslug. '<br>';
+		global $bp;
+
 		remove_filter( 'bp_activity_get_user_join_filter', 'bp_media_activity_query_filter', 10 );
 		if ( isset( $bp->action_variables[ 0 ] ) ) {
 			switch ( $bp->action_variables[ 0 ] ) {
@@ -85,24 +82,24 @@ class BPMediaScreen {
 					$this->entry_delete();
 					break;
 				default:
-					bp_media_set_query();
+					$this->set_query();
 					add_action( 'bp_template_content', array( $this, 'screen_content' ) );
 			}
 		} else {
-			bp_media_set_query();
+			$this->set_query();
 			add_action( 'bp_template_content', array( $this, 'screen_content' ) );
 		}
 		$this->template_loader();
 	}
 
 	function screen_content() {
-		global $bp_media_query, $bp_media;
+		global $bp_media;
+		$bp_media_query = $this->set_query();
 		$this->hook_before();
 		if ( $bp_media_query && $bp_media_query->have_posts() ):
-
 			echo '<ul id="bp-media-list" class="bp-media-gallery item-list">';
 			while ( $bp_media_query->have_posts() ) : $bp_media_query->the_post();
-				bp_media_the_content();
+				$this->the_content();
 			endwhile;
 			echo '</ul>';
 			bp_media_display_show_more();
@@ -215,7 +212,7 @@ class BPMediaScreen {
 			exit;
 		}
 		if ( ! isset( $bp->action_variables[ 1 ] ) ) {
-			@setcookie( 'bp-message',  __( 'The requested url does not exist', $bp_media->text_domain ), time() + 60 * 60 * 24, COOKIEPATH );
+			@setcookie( 'bp-message', __( 'The requested url does not exist', $bp_media->text_domain ), time() + 60 * 60 * 24, COOKIEPATH );
 			@setcookie( 'bp-message-type', 'error', time() + 60 * 60 * 24, COOKIEPATH );
 			$this->template_redirect();
 			exit;
@@ -248,7 +245,7 @@ class BPMediaScreen {
 	}
 
 	function template_redirect() {
-		wp_redirect( trailingslashit( bp_displayed_user_domain() . constant( 'BP_MEDIA_' . $this->media_const . '_SLUG' ) ) );
+		bp_core_redirect( trailingslashit( bp_displayed_user_domain() . constant( 'BP_MEDIA_' . $this->media_const . '_SLUG' ) ) );
 	}
 
 	function template_loader() {
@@ -348,6 +345,82 @@ class BPMediaScreen {
 		wp_enqueue_style( 'bp-media-default', plugins_url( 'css/bp-media-style.css', __FILE__ ) );
 //	wp_enqueue_style("wp-jquery-ui-dialog"); //Its not styling the Dialog box as it should so using different styling
 		wp_enqueue_style( 'jquery-style', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/themes/smoothness/jquery-ui.css' );
+	}
+
+	public function set_query() {
+		global $bp, $bp_media_posts_per_page;
+		switch ( $bp->current_action ) {
+			case BP_MEDIA_IMAGES_SLUG:
+				$type = 'image';
+				break;
+			case BP_MEDIA_AUDIO_SLUG:
+				$type = 'audio';
+				break;
+			case BP_MEDIA_VIDEOS_SLUG:
+				$type = 'video';
+				break;
+			case BP_MEDIA_ALBUMS_SLUG:
+				$type = 'album';
+				break;
+			default :
+				$type = null;
+		}
+		if ( isset( $bp->action_variables ) && is_array( $bp->action_variables ) && isset( $bp->action_variables[ 0 ] ) && $bp->action_variables[ 0 ] == 'page' && isset( $bp->action_variables[ 1 ] ) && is_numeric( $bp->action_variables[ 1 ] ) ) {
+			$paged = $bp->action_variables[ 1 ];
+		} else {
+			$paged = 1;
+		}
+		if ( $type ) {
+			$args = array(
+				'post_type' => 'attachment',
+				'post_status' => 'any',
+				'post_mime_type' => $type,
+				'author' => $bp->displayed_user->id,
+				'meta_key' => 'bp-media-key',
+				'meta_value' => $bp->displayed_user->id,
+				'meta_compare' => '=',
+				'paged' => $paged,
+				'posts_per_page' => $bp_media_posts_per_page
+			);
+			if ( $type == 'album' ) {
+				$args[ 'post_type' ] = 'bp_media_album';
+				$args[ 'post_mime_type' ] = '';
+			}
+
+			$bp_media_query = new WP_Query( $args );
+			return $bp_media_query;
+		}
+	}
+
+	function the_content( $id = 0) {
+		if ( is_object( $id ) ) {
+			$media = $id;
+		} else {
+			$media = &get_post( $id );
+		}
+		if ( empty( $media->ID ) )
+			return false;
+		if ( !(($media->post_type == 'bp_media' || 'bp_media_album')) )
+			return false;
+
+		switch ( $media->post_type ) {
+			case 'bp_media_album':
+				try {
+					$album = new BP_Media_Album( $album->ID );
+					echo $album->get_album_gallery_content();
+				} catch ( Exception $e ) {
+					echo '';
+				}
+				break;
+			default:
+				try {
+					$media = new BP_Media_Host_Wordpress( $media->ID );
+					echo $media->get_media_gallery_content();
+				} catch ( Exception $e ) {
+					echo '';
+				}
+				break;
+		}
 	}
 
 }
