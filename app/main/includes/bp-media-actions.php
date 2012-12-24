@@ -283,7 +283,7 @@ if(isset($bp_media_options['remove_linkback'])&&$bp_media_options['remove_linkba
 
 function bp_media_upload_enqueue(){
 	$params=array(
-		'url'=>plugins_url('bp-media-upload-handler.php',__FILE__),
+		'url'=>BP_MEDIA_URL.'bp-media-upload-handler.php',
 		'runtimes'	=>	'gears,html5,flash,silverlight,browserplus',
 		'browse_button'	=>	'bp-media-upload-browse-button',
 		'container'	=>	'bp-media-upload-ui',
