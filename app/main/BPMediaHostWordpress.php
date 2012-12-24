@@ -1,5 +1,5 @@
 <?php
-class BP_Media_Host_Wordpress {
+class BPMediaHostWordpress {
 
 	/**
 	 * Private variables not to be accessible outside this class' member functions

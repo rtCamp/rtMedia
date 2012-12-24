@@ -1,6 +1,6 @@
 <?php
 
-class BP_Media_Album{
+class BPMediaAlbum{
 	private $id,
 		$name,
 		$description,
