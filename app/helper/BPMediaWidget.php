@@ -1,9 +1,4 @@
 <?php
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
  * Description of BPMediaWidget
  *
@@ -13,17 +8,18 @@
 if (!class_exists('BPMediaWidget')) {
 
     class BPMediaWidget {
+
         public function __construct($id = NULL, $title = NULL, $content = NULL) {
             global $bp_media;
-            if ( $id ) {
-            ?>
-            <div class="postbox" id="<?php echo $id; ?>"><?php if ($title) { ?>
-                    <h3 class="hndle"><span><?php echo $title; ?></span></h3><?php }
-            ?>
-                <div class="inside"><?php echo $content; ?></div>
-            </div><?php
+            if ($id) {
+                ?>
+                <div class="postbox" id="<?php echo $id; ?>"><?php if ($title) { ?>
+                        <h3 class="hndle"><span><?php echo $title; ?></span></h3><?php }
+                ?>
+                    <div class="inside"><?php echo $content; ?></div>
+                </div><?php
             } else {
-                trigger_error(__( 'Argument missing. id is required.', $bp_media->text_domain ));
+                trigger_error(__('Argument missing. id is required.', $bp_media->text_domain));
             }
         }
 
