@@ -27,7 +27,8 @@ class BuddyPressMedia {
 	);
 	public $hidden_activity_cache = array( );
 	public $loader;
-
+        public $group_loader;
+        
 	public function __construct() {
 
 		$this->constants();
@@ -166,6 +167,9 @@ class BuddyPressMedia {
 			add_filter( 'plugin_action_links', array( $this, 'settings_link' ), 10, 2 );
 			$this->loader = new BPMediaLoader();
 //require( BP_MEDIA_PATH . '/includes/bp-media-groups-loader.php');
+                       $this->group_loader= new BPMediaGroup();
+                        
+                        
 		}
 
 		if ( file_exists( BP_MEDIA_PATH . '/languages/' . get_locale() . '.mo' ) )
@@ -173,7 +177,7 @@ class BuddyPressMedia {
 
 		add_action( 'admin_notices', array( $this, 'admin_notice' ) );
 		global $bp_admin;
-		$bp_admin = new BPMAdmin();
+		$bp_admin = new BPMediaAdmin();
 	}
 
 	function settings_link( $links, $file ) {
