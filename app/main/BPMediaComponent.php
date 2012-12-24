@@ -44,19 +44,19 @@ class BPMediaComponent extends BP_Component {
 	function includes() {
 		$inc_path_prefix = 'app/main/includes/';
 		$includes = array(
-			$inc_path_prefix.'bp-media-screens.php',
-			$inc_path_prefix.'bp-media-functions.php',
-			$inc_path_prefix.'bp-media-filters.php',
-			$inc_path_prefix.'bp-media-template-functions.php',
-			$inc_path_prefix.'bp-media-actions.php',
-			$inc_path_prefix.'bp-media-interface.php',
-			$inc_path_prefix.'bp-media-class-wordpress.php',
-			$inc_path_prefix.'bp-media-shortcodes.php',
-			$inc_path_prefix.'bp-media-widgets.php',
-			$inc_path_prefix.'bp-media-class-album.php',
-			$inc_path_prefix.'bp-media-groups-loader.php',
-			$inc_path_prefix.'bp-media-groups-actions.php',
-			$inc_path_prefix.'bp-media-groups-screens.php'
+			$inc_path_prefix . 'bp-media-screens.php',
+			$inc_path_prefix . 'bp-media-functions.php',
+			$inc_path_prefix . 'bp-media-filters.php',
+			$inc_path_prefix . 'bp-media-template-functions.php',
+			$inc_path_prefix . 'bp-media-actions.php',
+			$inc_path_prefix . 'bp-media-interface.php',
+			$inc_path_prefix . 'bp-media-class-wordpress.php',
+			$inc_path_prefix . 'bp-media-shortcodes.php',
+			$inc_path_prefix . 'bp-media-widgets.php',
+			$inc_path_prefix . 'bp-media-class-album.php',
+			$inc_path_prefix . 'bp-media-groups-loader.php',
+			$inc_path_prefix . 'bp-media-groups-actions.php',
+			$inc_path_prefix . 'bp-media-groups-screens.php'
 		);
 		parent::includes( $includes );
 		do_action( 'bp_media_init' );
@@ -79,11 +79,13 @@ class BPMediaComponent extends BP_Component {
 	function setup_nav() {
 		/* Add 'Media' to the main navigation */
 		global $bp, $bp_media;
-		$bp_media_upload = new BPMediaScreen(BP_MEDIA_UPLOAD_SLUG, 'upload');
+		$bp_media_upload = new BPMediaScreen( 'upload', BP_MEDIA_UPLOAD_SLUG );
 
-		$bp_media_image = new BPMediaScreen(BP_MEDIA_IMAGES_SLUG, 'image');
-		$bp_media_video = new BPMediaScreen(BP_MEDIA_VIDEOS_SLUG, 'video');
-		$bp_media_audio = new BPMediaScreen(BP_MEDIA_AUDIO_SLUG, 'audio');
+		$bp_media_image = new BPMediaScreen( 'image', BP_MEDIA_IMAGES_SLUG );
+		$bp_media_video = new BPMediaScreen( 'video', BP_MEDIA_VIDEOS_SLUG );
+		$bp_media_audio = new BPMediaScreen( 'audio', BP_MEDIA_AUDIO_SLUG );
+
+		$bp_media_album = new BPMediaScreen( 'album', BP_MEDIA_ALBUMS_SLUG );
 		switch ( $bp->current_component ) {
 			case BP_MEDIA_IMAGES_SLUG:
 				if ( is_numeric( $bp->current_action ) ) {
@@ -116,7 +118,7 @@ class BPMediaComponent extends BP_Component {
 				'name' => BP_MEDIA_LABEL,
 				'slug' => BP_MEDIA_SLUG,
 				'position' => 80,
-				'screen_function' => array($bp_media_upload,'upload_screen'),
+				'screen_function' => array( $bp_media_upload, 'upload_screen' ),
 				'default_subnav_slug' => BP_MEDIA_UPLOAD_SLUG
 			);
 		} else {
@@ -124,7 +126,7 @@ class BPMediaComponent extends BP_Component {
 				'name' => BP_MEDIA_LABEL,
 				'slug' => BP_MEDIA_SLUG,
 				'position' => 80,
-				'screen_function' => array($bp_media_image,'screen'),
+				'screen_function' => array( $bp_media_image, 'screen' ),
 				'default_subnav_slug' => BP_MEDIA_IMAGES_SLUG
 			);
 		}
@@ -133,7 +135,7 @@ class BPMediaComponent extends BP_Component {
 			'slug' => BP_MEDIA_UPLOAD_SLUG,
 			'parent_url' => trailingslashit( bp_loggedin_user_domain() . BP_MEDIA_SLUG ),
 			'parent_slug' => BP_MEDIA_SLUG,
-			'screen_function' => array($bp_media_upload,'upload_screen'),
+			'screen_function' => array( $bp_media_upload, 'upload_screen' ),
 			'position' => 10,
 			'user_has_access' => bp_is_my_profile()
 		);
@@ -142,7 +144,7 @@ class BPMediaComponent extends BP_Component {
 		bp_core_new_nav_item( array(
 			'name' => BP_MEDIA_IMAGES_LABEL,
 			'slug' => BP_MEDIA_IMAGES_SLUG,
-			'screen_function' => array($bp_media_image,'screen'),
+			'screen_function' => array( $bp_media_image, 'screen' ),
 		) );
 
 		bp_core_new_subnav_item( array(
@@ -151,7 +153,7 @@ class BPMediaComponent extends BP_Component {
 			'parent_slug' => BP_MEDIA_IMAGES_SLUG, /* URL slug of the parent nav item */
 			'parent_url' => trailingslashit( bp_loggedin_user_domain() . BP_MEDIA_IMAGES_SLUG ), /* URL of the parent item */
 			'position' => 90, /* Index of where this nav item should be positioned */
-			'screen_function' => array($bp_media_image, 'screen'), /* The name of the function to run when clicked */
+			'screen_function' => array( $bp_media_image, 'screen' ), /* The name of the function to run when clicked */
 		) );
 
 		bp_core_new_subnav_item( array(
@@ -160,7 +162,7 @@ class BPMediaComponent extends BP_Component {
 			'parent_slug' => BP_MEDIA_IMAGES_SLUG, /* URL slug of the parent nav item */
 			'parent_url' => trailingslashit( bp_loggedin_user_domain() . BP_MEDIA_IMAGES_SLUG ), /* URL of the parent item */
 			'position' => 90, /* Index of where this nav item should be positioned */
-			'screen_function' => array($bp_media_image, 'edit_screen'), /* The name of the function to run when clicked */
+			'screen_function' => array( $bp_media_image, 'edit_screen' ), /* The name of the function to run when clicked */
 		) );
 
 		bp_core_new_subnav_item( array(
@@ -169,7 +171,7 @@ class BPMediaComponent extends BP_Component {
 			'parent_slug' => BP_MEDIA_IMAGES_SLUG, /* URL slug of the parent nav item */
 			'parent_url' => trailingslashit( bp_loggedin_user_domain() . BP_MEDIA_IMAGES_SLUG ), /* URL of the parent item */
 			'position' => 90, /* Index of where this nav item should be positioned */
-			'screen_function' => array($bp_media_image, 'screen'), /* The name of the function to run when clicked */
+			'screen_function' => array( $bp_media_image, 'screen' ), /* The name of the function to run when clicked */
 		) );
 
 		bp_core_new_subnav_item( array(
@@ -178,14 +180,14 @@ class BPMediaComponent extends BP_Component {
 			'parent_slug' => BP_MEDIA_IMAGES_SLUG, /* URL slug of the parent nav item */
 			'parent_url' => trailingslashit( bp_loggedin_user_domain() . BP_MEDIA_IMAGES_SLUG ), /* URL of the parent item */
 			'position' => 90, /* Index of where this nav item should be positioned */
-			'screen_function' => array($bp_media_image, 'screen'), /* The name of the function to run when clicked */
+			'screen_function' => array( $bp_media_image, 'screen' ), /* The name of the function to run when clicked */
 		) );
 
 
 		bp_core_new_nav_item( array(
 			'name' => BP_MEDIA_VIDEOS_LABEL,
 			'slug' => BP_MEDIA_VIDEOS_SLUG,
-			'screen_function' => array($bp_media_video, 'screen')
+			'screen_function' => array( $bp_media_video, 'screen' )
 		) );
 
 		bp_core_new_subnav_item( array(
@@ -194,7 +196,7 @@ class BPMediaComponent extends BP_Component {
 			'parent_slug' => BP_MEDIA_VIDEOS_SLUG, /* URL slug of the parent nav item */
 			'parent_url' => trailingslashit( bp_loggedin_user_domain() . BP_MEDIA_VIDEOS_SLUG ), /* URL of the parent item */
 			'position' => 90, /* Index of where this nav item should be positioned */
-			'screen_function' => array($bp_media_video, 'screen'), /* The name of the function to run when clicked */
+			'screen_function' => array( $bp_media_video, 'screen' ), /* The name of the function to run when clicked */
 		) );
 
 		bp_core_new_subnav_item( array(
@@ -203,7 +205,7 @@ class BPMediaComponent extends BP_Component {
 			'parent_slug' => BP_MEDIA_VIDEOS_SLUG, /* URL slug of the parent nav item */
 			'parent_url' => trailingslashit( bp_loggedin_user_domain() . BP_MEDIA_VIDEOS_SLUG ), /* URL of the parent item */
 			'position' => 90, /* Index of where this nav item should be positioned */
-			'screen_function' => array($bp_media_video, 'edit_screen'), /* The name of the function to run when clicked */
+			'screen_function' => array( $bp_media_video, 'edit_screen' ), /* The name of the function to run when clicked */
 		) );
 
 		bp_core_new_subnav_item( array(
@@ -212,7 +214,7 @@ class BPMediaComponent extends BP_Component {
 			'parent_slug' => BP_MEDIA_VIDEOS_SLUG, /* URL slug of the parent nav item */
 			'parent_url' => trailingslashit( bp_loggedin_user_domain() . BP_MEDIA_VIDEOS_SLUG ), /* URL of the parent item */
 			'position' => 90, /* Index of where this nav item should be positioned */
-			'screen_function' => array($bp_media_video, 'screen'), /* The name of the function to run when clicked */
+			'screen_function' => array( $bp_media_video, 'screen' ), /* The name of the function to run when clicked */
 		) );
 
 		bp_core_new_subnav_item( array(
@@ -221,14 +223,14 @@ class BPMediaComponent extends BP_Component {
 			'parent_slug' => BP_MEDIA_VIDEOS_SLUG, /* URL slug of the parent nav item */
 			'parent_url' => trailingslashit( bp_loggedin_user_domain() . BP_MEDIA_VIDEOS_SLUG ), /* URL of the parent item */
 			'position' => 90, /* Index of where this nav item should be positioned */
-			'screen_function' => array($bp_media_video, 'screen'), /* The name of the function to run when clicked */
+			'screen_function' => array( $bp_media_video, 'screen' ), /* The name of the function to run when clicked */
 		) );
 
 
 		bp_core_new_nav_item( array(
 			'name' => BP_MEDIA_AUDIO_LABEL,
 			'slug' => BP_MEDIA_AUDIO_SLUG,
-			'screen_function' => array($bp_media_audio, 'screen')
+			'screen_function' => array( $bp_media_audio, 'screen' )
 		) );
 
 		bp_core_new_subnav_item( array(
@@ -237,7 +239,7 @@ class BPMediaComponent extends BP_Component {
 			'parent_slug' => BP_MEDIA_AUDIO_SLUG, /* URL slug of the parent nav item */
 			'parent_url' => trailingslashit( bp_loggedin_user_domain() . BP_MEDIA_AUDIO_SLUG ), /* URL of the parent item */
 			'position' => 90, /* Index of where this nav item should be positioned */
-			'screen_function' => array($bp_media_audio, 'screen'), /* The name of the function to run when clicked */
+			'screen_function' => array( $bp_media_audio, 'screen' ), /* The name of the function to run when clicked */
 		) );
 
 		bp_core_new_subnav_item( array(
@@ -246,7 +248,7 @@ class BPMediaComponent extends BP_Component {
 			'parent_slug' => BP_MEDIA_AUDIO_SLUG, /* URL slug of the parent nav item */
 			'parent_url' => trailingslashit( bp_loggedin_user_domain() . BP_MEDIA_AUDIO_SLUG ), /* URL of the parent item */
 			'position' => 90, /* Index of where this nav item should be positioned */
-			'screen_function' => array($bp_media_audio, 'edit_screen'), /* The name of the function to run when clicked */
+			'screen_function' => array( $bp_media_audio, 'edit_screen' ), /* The name of the function to run when clicked */
 		) );
 
 		bp_core_new_subnav_item( array(
@@ -255,7 +257,7 @@ class BPMediaComponent extends BP_Component {
 			'parent_slug' => BP_MEDIA_AUDIO_SLUG, /* URL slug of the parent nav item */
 			'parent_url' => trailingslashit( bp_loggedin_user_domain() . BP_MEDIA_AUDIO_SLUG ), /* URL of the parent item */
 			'position' => 90, /* Index of where this nav item should be positioned */
-			'screen_function' => array($bp_media_audio, 'screen'), /* The name of the function to run when clicked */
+			'screen_function' => array( $bp_media_audio, 'screen' ), /* The name of the function to run when clicked */
 		) );
 
 		bp_core_new_subnav_item( array(
@@ -264,14 +266,14 @@ class BPMediaComponent extends BP_Component {
 			'parent_slug' => BP_MEDIA_AUDIO_SLUG, /* URL slug of the parent nav item */
 			'parent_url' => trailingslashit( bp_loggedin_user_domain() . BP_MEDIA_AUDIO_SLUG ), /* URL of the parent item */
 			'position' => 90, /* Index of where this nav item should be positioned */
-			'screen_function' => array($bp_media_audio, 'screen'), /* The name of the function to run when clicked */
+			'screen_function' => array( $bp_media_audio, 'screen' ), /* The name of the function to run when clicked */
 		) );
 
 
 		bp_core_new_nav_item( array(
 			'name' => BP_MEDIA_ALBUMS_LABEL,
 			'slug' => BP_MEDIA_ALBUMS_SLUG,
-			'screen_function' => 'bp_media_albums_screen'
+			'screen_function' => array( $bp_media_album, 'screen' ),
 		) );
 
 		bp_core_new_subnav_item( array(
@@ -280,7 +282,7 @@ class BPMediaComponent extends BP_Component {
 			'parent_slug' => BP_MEDIA_ALBUMS_SLUG, /* URL slug of the parent nav item */
 			'parent_url' => trailingslashit( bp_loggedin_user_domain() . BP_MEDIA_ALBUMS_SLUG ), /* URL of the parent item */
 			'position' => 90, /* Index of where this nav item should be positioned */
-			'screen_function' => 'bp_media_albums_screen', /* The name of the function to run when clicked */
+			'screen_function' => array( $bp_media_album, 'screen' ), /* The name of the function to run when clicked */
 		) );
 
 		bp_core_new_subnav_item( array(
@@ -289,7 +291,7 @@ class BPMediaComponent extends BP_Component {
 			'parent_slug' => BP_MEDIA_ALBUMS_SLUG, /* URL slug of the parent nav item */
 			'parent_url' => trailingslashit( bp_loggedin_user_domain() . BP_MEDIA_ALBUMS_SLUG ), /* URL of the parent item */
 			'position' => 90, /* Index of where this nav item should be positioned */
-			'screen_function' => 'bp_media_albums_edit_screen', /* The name of the function to run when clicked */
+			'screen_function' => array( $bp_media_album, 'edit_screen' ), /* The name of the function to run when clicked */
 		) );
 
 		bp_core_new_subnav_item( array(
@@ -298,7 +300,7 @@ class BPMediaComponent extends BP_Component {
 			'parent_slug' => BP_MEDIA_ALBUMS_SLUG, /* URL slug of the parent nav item */
 			'parent_url' => trailingslashit( bp_loggedin_user_domain() . BP_MEDIA_ALBUMS_SLUG ), /* URL of the parent item */
 			'position' => 90, /* Index of where this nav item should be positioned */
-			'screen_function' => 'bp_media_albums_screen', /* The name of the function to run when clicked */
+			'screen_function' => array( $bp_media_album, 'screen' ), /* The name of the function to run when clicked */
 		) );
 
 		bp_core_new_subnav_item( array(
@@ -307,7 +309,7 @@ class BPMediaComponent extends BP_Component {
 			'parent_slug' => BP_MEDIA_ALBUMS_SLUG, /* URL slug of the parent nav item */
 			'parent_url' => trailingslashit( bp_loggedin_user_domain() . BP_MEDIA_ALBUMS_SLUG ), /* URL of the parent item */
 			'position' => 90, /* Index of where this nav item should be positioned */
-			'screen_function' => 'bp_media_albums_screen', /* The name of the function to run when clicked */
+			'screen_function' => array( $bp_media_album, 'screen' ), /* The name of the function to run when clicked */
 		) );
 	}
 
