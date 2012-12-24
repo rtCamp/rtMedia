@@ -27,7 +27,7 @@ if (!class_exists('BPMediaAdmin')) {
 
         /**
          * Generates the Admin UI
-         * 
+         *
          * @param string $hook
          */
         public function ui($hook) {
@@ -48,7 +48,7 @@ if (!class_exists('BPMediaAdmin')) {
 
         /**
          * Admin Menu
-         * 
+         *
          * @global string $bp_media->text_domain
          */
         public function menu() {
@@ -82,7 +82,7 @@ if (!class_exists('BPMediaAdmin')) {
 
         /**
          * Render BPMedia Settings
-         * 
+         *
          * @global string $bp_media->text_domain
          */
         public function render_page($page, $is_settings = false) {
@@ -131,7 +131,7 @@ if (!class_exists('BPMediaAdmin')) {
 
         /**
          * Adds a tab for Media settings in the BuddyPress settings page
-         * 
+         *
          * @global type $bp_media
          */
         public function tab() {
@@ -160,7 +160,7 @@ if (!class_exists('BPMediaAdmin')) {
 
         /**
          * Adds a sub tabs to the BuddyPress Media settings page
-         * 
+         *
          * @global type $bp_media
          */
         public function sub_tabs() {
