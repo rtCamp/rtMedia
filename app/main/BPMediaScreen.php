@@ -127,7 +127,7 @@ class BPMediaScreen {
 			$this->page_not_exist();
 		}
 		try {
-			$bp_media_current_entry = new BP_Media_Host_Wordpress( $bp->action_variables[ 1 ] );
+			$bp_media_current_entry = new BPMediaHostWordpress( $bp->action_variables[ 1 ] );
 			if ( $bp_media_current_entry->get_author() != bp_displayed_user_id() )
 				throw new Exception( __( 'Sorry, the requested media does not belong to the user', $bp_media->text_domain ) );
 		} catch ( Exception $e ) {
@@ -152,7 +152,7 @@ class BPMediaScreen {
 		}
 		//Creating global bp_media_current_entry for later use
 		try {
-			$bp_media_current_entry = new BP_Media_Host_Wordpress( $bp->action_variables[ 1 ] );
+			$bp_media_current_entry = new BPMediaHostWordpress( $bp->action_variables[ 1 ] );
 		} catch ( Exception $e ) {
 			/* Send the values to the cookie for page reload display */
 			@setcookie( 'bp-message', $e->getMessage(), time() + 60 * 60 * 24, COOKIEPATH );
@@ -392,7 +392,7 @@ class BPMediaScreen {
 		}
 	}
 
-	function the_content( $id = 0) {
+	function the_content( $id = 0 ) {
 		if ( is_object( $id ) ) {
 			$media = $id;
 		} else {
@@ -400,13 +400,13 @@ class BPMediaScreen {
 		}
 		if ( empty( $media->ID ) )
 			return false;
-		if ( !(($media->post_type == 'bp_media' || 'bp_media_album')) )
+		if ( ! (($media->post_type == 'bp_media' || 'bp_media_album')) )
 			return false;
 
 		switch ( $media->post_type ) {
 			case 'bp_media_album':
 				try {
-					$album = new BP_Media_Album( $album->ID );
+					$album = new BPMediaAlbum( $media->ID );
 					echo $album->get_album_gallery_content();
 				} catch ( Exception $e ) {
 					echo '';
@@ -414,12 +414,32 @@ class BPMediaScreen {
 				break;
 			default:
 				try {
-					$media = new BP_Media_Host_Wordpress( $media->ID );
+					$media = new BPMediaHostWordpress( $media->ID );
 					echo $media->get_media_gallery_content();
 				} catch ( Exception $e ) {
 					echo '';
 				}
 				break;
+		}
+	}
+
+	function show_more( $type = 'media' ) {
+		$showmore = false;
+		switch ( $type ) {
+			case 'media':
+				global $bp_media_query;
+				//found_posts
+				if ( isset( $bp_media_query->found_posts ) && $bp_media_query->found_posts > 10 )
+					$showmore = true;
+				break;
+			case 'albums':
+				global $bp_media_albums_query;
+				if ( isset( $bp_media_query->found_posts ) && $bp_media_query->found_posts > 10 )
+					$showmore = true;
+				break;
+		}
+		if ( $showmore ) {
+			echo '<div class="bp-media-actions"><a href="#" class="button" id="bp-media-show-more">Show More</a></div>';
 		}
 	}
 
