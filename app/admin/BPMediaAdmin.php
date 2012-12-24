@@ -11,10 +11,11 @@ if (!class_exists('BPMediaAdmin')) {
 
         public $bp_media_upgrade;
         public $bp_media_settings;
+        public $bp_media_feed;
 
         public function __construct() {
-            global $bp_media;
-            add_action('init', array( $this, 'feed'));
+            $bp_media_feed =  new BPMediaFeed();
+            add_action( 'wp_ajax_bp_media_fetch_feed', array($bp_media_feed, 'fetch_feed'), 1);
             if (is_admin()) {
                 add_action('admin_enqueue_scripts', array($this, 'ui'));
                 add_action(bp_core_admin_hook(), array($this, 'menu'));
@@ -27,28 +28,19 @@ if (!class_exists('BPMediaAdmin')) {
 
         /**
          * Generates the Admin UI
-         *
+         * 
          * @param string $hook
          */
         public function ui($hook) {
-            $bp_media_news_url = trailingslashit(site_url()) . '?bp_media_get_feeds=1';
-            wp_enqueue_script('bp-media-admin', BP_MEDIA_URL.'app/assets/js/main.js');
-            wp_localize_script('bp-media-admin', 'bp_media_news_url', $bp_media_news_url);
-            wp_enqueue_style('bp-media-admin', BP_MEDIA_URL.'app/assets/css/main.css');
-        }
-        
-        
-        /**
-         * Get BuddyPress Media Feed from rtCamp.com
-         */
-        public function fetch_feed( $feed_url = 'http://rtcamp.com/tag/buddypress/feed/' ){
-                    bp_media_get_feeds();
-            }
+            $admin_ajax = admin_url('admin-ajax.php');
+            wp_enqueue_script('bp-media-admin', BP_MEDIA_URL . 'app/assets/js/main.js');
+            wp_localize_script('bp-media-admin', 'bp_media_admin_ajax', $admin_ajax);
+            wp_enqueue_style('bp-media-admin', BP_MEDIA_URL . 'app/assets/css/main.css');
         }
 
         /**
          * Admin Menu
-         *
+         * 
          * @global string $bp_media->text_domain
          */
         public function menu() {
@@ -82,7 +74,7 @@ if (!class_exists('BPMediaAdmin')) {
 
         /**
          * Render BPMedia Settings
-         *
+         * 
          * @global string $bp_media->text_domain
          */
         public function render_page($page, $is_settings = false) {
@@ -131,7 +123,7 @@ if (!class_exists('BPMediaAdmin')) {
 
         /**
          * Adds a tab for Media settings in the BuddyPress settings page
-         *
+         * 
          * @global type $bp_media
          */
         public function tab() {
@@ -160,7 +152,7 @@ if (!class_exists('BPMediaAdmin')) {
 
         /**
          * Adds a sub tabs to the BuddyPress Media settings page
-         *
+         * 
          * @global type $bp_media
          */
         public function sub_tabs() {

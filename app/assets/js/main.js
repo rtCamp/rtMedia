@@ -17,8 +17,11 @@ function bp_media_create_element(id){
 jQuery(document).ready(function(){
 	var bp_media_news_section = jQuery('#latest-news');
 	if(bp_media_news_section.length>0){
-		jQuery.get(bp_media_news_url,function(data){
-			bp_media_news_section.find('.inside').html(data);
+            var data = {
+		action: 'bp_media_fetch_feed'
+            };
+		jQuery.post(bp_media_admin_ajax,data,function(response){
+			bp_media_news_section.find('.inside').html(response);
 		});
 	}
     var bp_media_recent_tabs = jQuery('#recent-media-tabs');
