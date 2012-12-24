@@ -1,5 +1,4 @@
 <?php
-
 /*
   Plugin Name: BuddyPress Media
   Plugin URI: http://rtcamp.com/buddypress-media/

@@ -497,7 +497,7 @@ function bp_media_add_album() {
 		$album = new BP_Media_Album();
 		if(isset($_POST['bp_media_group_id'])&&intval($_POST['bp_media_group_id'])>0){
 			$group_id = intval($_POST['bp_media_group_id']);
-			if(bp_media_groups_user_can_create_album($group_id, get_current_user_id())){
+			if(BPMediaGroup::bp_media_groups_user_can_create_album($group_id, get_current_user_id())){
 				try{
 					$album -> add_album($_POST['bp_media_album_name'], 0 ,$group_id);
 					echo $album->get_id();
