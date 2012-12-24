@@ -24,7 +24,7 @@ if (!class_exists('BPMediaSettings')) {
          * @global string $bp_media->text_domain
          */
         public function settings() {
-            global $bp_media;
+            global $bp_media, $bp_media_addon;
             add_settings_section('bpm-settings', __('BuddyPress Media Settings', $bp_media->text_domain), '', 'bp-media-settings');
             add_settings_field('bpm-video', __('Video', $bp_media->text_domain), array($this, 'checkbox'), 'bp-media-settings', 'bpm-settings', array('option' => 'videos_enabled', 'desc' => __('Check to enable video upload functionality', $bp_media->text_domain)));
             add_settings_field('bpm-audio', __('Audio', $bp_media->text_domain), array($this, 'checkbox'), 'bp-media-settings', 'bpm-settings', array('option' => 'audio_enabled', 'desc' => __('Check to enable audio upload functionality', $bp_media->text_domain)));
@@ -34,28 +34,8 @@ if (!class_exists('BPMediaSettings')) {
             add_settings_field('bpm-spread-the-word-settings', __('Spread the Word', $bp_media->text_domain), array($this, 'radio'), 'bp-media-settings', 'bpm-spread-the-word', array('option' => 'remove_linkback', 'radios' => array(2 => __('Yes, I support BuddyPress Media', $bp_media->text_domain), 1 => __('No, I don\'t want to support BuddyPress Media', $bp_media->text_domain)), 'default' => 2));
             add_settings_section('bpm-other', __('BuddyPress Media Other Options', $bp_media->text_domain), '', 'bp-media-settings');
             add_settings_field('bpm-other-settings', __('Re-Count Media Entries', $bp_media->text_domain), array($this, 'button'), 'bp-media-settings', 'bpm-other', array('option' => 'refresh_media_count', 'link' => bp_get_admin_url(add_query_arg(array('page' => 'bp-media-settings', 'bpm_refresh_count' => true, 'wp_nonce' => wp_create_nonce('bpm_refresh_count')), 'admin.php')), 'desc' => __('It will re-count all media entries of all users and correct any discrepancies.', $bp_media->text_domain)));
-            add_settings_section('bpm-addons', __('BuddyPress Media Addons for Audio/Video Conversion', $bp_media->text_domain), '', 'bp-media-addons');
-            $kaltura = array(
-                'title' => 'BuddyPress-Media Kaltura Add-on',
-                'img_src' => 'http://cdn.rtcamp.com/files/2012/10/new-buddypress-media-kaltura-logo-240x184.png',
-                'product_link' => 'http://rtcamp.com/store/buddypress-media-kaltura/',
-                'desc' => '<p>Add support for more video formats using Kaltura video solution.</p>
-                <p>Works with Kaltura.com, self-hosted Kaltura-CE and Kaltura-on-premise.</p>',
-                'price' => '$99',
-                'demo_link' => 'http://demo.rtcamp.com/bpm-kaltura/',
-                'buy_now' => 'http://rtcamp.com/store/?add-to-cart=15446'
-            );
-            add_settings_field('bpm-video', __('Video', $bp_media->text_domain), array($this, 'checkbox'), 'bp-media-addon', 'bpm-addons', array('option' => 'videos_enabled', 'desc' => __('Check to enable video upload functionality', $bp_media->text_domain)));
-            add_settings_field('bpm-addons-box', '', array($this,'addon'), 'bp-media-addons', 'bpm-addons', $kaltura);
-//            $ffmpeg = array(
-//                'BuddyPress-Media Kaltura Add-on',
-//                'http://cdn.rtcamp.com/files/2012/10/new-buddypress-media-kaltura-logo-240x184.png',
-//                $product_link,
-//                $desc,
-//                $price,
-//                $demo_link,
-//                $buy_now
-//            );
+            $bp_media_addon = new BPMediaAddon();
+            add_settings_section('bpm-addons', __('BuddyPress Media Addons for Audio/Video Conversion', $bp_media->text_domain), array( $bp_media_addon, 'get_addons' ), 'bp-media-addons');
             register_setting('bp_media', 'bp_media_options');
         }
 
@@ -145,17 +125,6 @@ if (!class_exists('BPMediaSettings')) {
             <a id="<?php echo $option; ?>" href="<?php echo $link; ?>" class="button" title="<?php echo $desc; ?>">Re-Count</a><?php if (!empty($desc)) { ?>
                 <span class="description"><?php echo $desc; ?></a><?php
             }
-        }
-
-        /**
-         * Outputs a BuddyPress Addon
-         * 
-         * @param array $args
-         */
-        public function addon($args) {
-            print_r($args);
-            echo "hi";
-            new BPMediaAddon($args);
         }
 
     }

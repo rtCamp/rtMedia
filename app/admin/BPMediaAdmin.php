@@ -59,7 +59,7 @@ if (!class_exists('BPMediaAdmin')) {
          * Render the BuddyPress Media Addons page
          */
         public function addons_page() {
-            $this->render_page('bp-media-addon');
+            $this->render_page('bp-media-addons');
         }
 
         /**
