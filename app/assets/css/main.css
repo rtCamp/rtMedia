@@ -89,17 +89,17 @@ ul#activity-stream li.media.album_updated ul li{float: left;margin-right:2%}
 #bp-media-addons-list_metabox {background: #ffffff}
 .products ul:after, ul.products:after {clear: both;content: "";display: block;}
 .products ul, ul.products {clear: both;list-style: none outside none;margin: 0 0 14px;padding: 0;}
-.products {margin: 0;}
-ul.products li.product.first { }
-ul.products li.product {margin: 20px 10px 30px;padding: 0;position: relative;overflow: hidden}
-ul.products li.product h4 {background: none repeat scroll 0 0 transparent;border: 0 none;color: #006999;cursor: pointer;font-family: "HelveticaNeue-Light","Helvetica Neue Light","Helvetica Neue",sans-serif;font-size: 20px;font-weight: normal;line-height: 26px;margin: 0 0 10px;}
-ul.products li.product a {text-decoration: none;}
-ul.products li.product a img, div.product div.images img {box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.4);}
-ul.products li.product a img {box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.3);display: block;height: auto;margin: 5px 15px 5px 5px;transition: all 0.2s ease-in-out 0s;float: left; width: 200px}
+.bp-media-addon {margin: 0;}
+.bp-media-addon.first { }
+.bp-media-addon {margin: 20px 10px 30px;padding: 0;position: relative;overflow: hidden}
+.bp-media-addon h4 {background: none repeat scroll 0 0 transparent;border: 0 none;color: #006999;cursor: pointer;font-family: "HelveticaNeue-Light","Helvetica Neue Light","Helvetica Neue",sans-serif;font-size: 20px;font-weight: normal;line-height: 26px;margin: 0 0 10px;}
+.bp-media-addon a {text-decoration: none;}
+.bp-media-addon a img, div.product div.images img {box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.4);}
+.bp-media-addon a img {box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.3);display: block;height: auto;margin: 5px 15px 5px 5px;transition: all 0.2s ease-in-out 0s;float: left; width: 200px}
 
-ul.products li.product .price, ul.products li.product .price .amount, ul.products li.product .price ins {color: #85AD74;font-size: 25px;font-weight: bold;}
-ul.products li.product .price {line-height: 1.4em;color: #85AD74;display: block;font-weight: normal;margin-bottom: 0.5em;}
-/*ul.products li.product .add_to_cart_button{background-image: linear-gradient(bottom, #F7F6F7 47%, #DFDBDF 74%);
+.bp-media-addon .price, .bp-media-addon .price .amount, .bp-media-addon .price ins {color: #85AD74;font-size: 25px;font-weight: bold;}
+.bp-media-addon .price {line-height: 1.4em;color: #85AD74;display: block;font-weight: normal;margin-bottom: 0.5em;}
+/*.bp-media-addon .add_to_cart_button{background-image: linear-gradient(bottom, #F7F6F7 47%, #DFDBDF 74%);
 background-image: -o-linear-gradient(bottom, #F7F6F7 0%, #DFDBDF 100%);
 background-image: -moz-linear-gradient(bottom, #F7F6F7 0%, #DFDBDF 100%);
 background-image: -webkit-linear-gradient(bottom, #F7F6F7 0%, #DFDBDF 100%);
@@ -107,18 +107,18 @@ background-image: -ms-linear-gradient(bottom, #F7F6F7 0%, #DFDBDF 100%);
 background-image: -webkit-gradient(linear,left bottom,left top,color-stop(0, #F7F6F7),color-stop(1, #DFDBDF));
 border: 1px solid #C7C0C7;border-radius: 2px 2px 2px 2px;box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.075) inset, 0 1px 0 rgba(255, 255, 255, 0.3) inset, 0 1px 2px rgba(0, 0, 0, 0.1);color: #5E5E5E;cursor: pointer;font-family: inherit;font-size: 14px;font-weight: bold;float: right;left: auto;margin: 0;overflow: visible;padding: 6px 10px;position: relative;text-shadow: 0 1px 0 rgba(255, 255, 255, 0.8);font-family: "HelveticaNeue-Light","Helvetica Neue Light","Helvetica Neue",sans-serif;}
 
-ul.products li.product .add_to_cart_button:hover{background-image: linear-gradient(bottom, #F7F6F7 47%, #DFDBDF 74%);
+.bp-media-addon .add_to_cart_button:hover{background-image: linear-gradient(bottom, #F7F6F7 47%, #DFDBDF 74%);
 background-image: -o-linear-gradient(bottom, #F7F6F7 0%, #D3CED3 100%);
 background-image: -moz-linear-gradient(bottom, #F7F6F7 0%, #D3CED3 100%);
 background-image: -webkit-linear-gradient(bottom, #F7F6F7 0%, #D3CED3 100%);
 background-image: -ms-linear-gradient(bottom, #F7F6F7 0%, #D3CED3 100%);
 background-image: -webkit-gradient(linear,left bottom,left top,color-stop(1, #F7F6F7),color-stop(1, #D3CED3));}
 */
-ul.products li.product .product_footer{margin: 20px 0 0;overflow: hidden;}
-ul.products li.product .add_to_cart_button{background: #C45200; color: #FFFFFF;display: inline-block;font-size: 18px;font-weight: bold; line-height: 1.4em; margin: 0 20px; padding: 4px 15px;text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.6)}
-ul.products li.product .product_footer .product_demo_link{font-size: 16px;margin: 8px 20px; font-weight: bold}
+.bp-media-addon .product_footer{margin: 20px 0 0;overflow: hidden;}
+.bp-media-addon .add_to_cart_button{background: #C45200; color: #FFFFFF;display: inline-block;font-size: 18px;font-weight: bold; line-height: 1.4em; margin: 0 20px; padding: 4px 15px;text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.6)}
+.bp-media-addon .product_footer .product_demo_link{font-size: 16px;margin: 8px 20px; font-weight: bold}
 
-ul.products li.product .add_to_cart_button:hover{background: none repeat scroll 0 0 #D75A00;
+.bp-media-addon .add_to_cart_button:hover{background: none repeat scroll 0 0 #D75A00;
     box-shadow: 0 1px rgba(0, 0, 0, 0.2), 0 0 1px rgba(0, 0, 0, 0.4) inset;
     color: #FFFFFF;}
 
