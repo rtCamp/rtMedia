@@ -1,9 +1,4 @@
 <?php
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
  * Description of BPMediaSettings
  *
@@ -33,10 +28,26 @@ if (!class_exists('BPMediaSettings')) {
             add_settings_section('bpm-spread-the-word', __('Spread the Word', $bp_media->text_domain), '', 'bp-media-settings');
             add_settings_field('bpm-spread-the-word-settings', __('Spread the Word', $bp_media->text_domain), array($this, 'radio'), 'bp-media-settings', 'bpm-spread-the-word', array('option' => 'remove_linkback', 'radios' => array(2 => __('Yes, I support BuddyPress Media', $bp_media->text_domain), 1 => __('No, I don\'t want to support BuddyPress Media', $bp_media->text_domain)), 'default' => 2));
             add_settings_section('bpm-other', __('BuddyPress Media Other Options', $bp_media->text_domain), '', 'bp-media-settings');
-            add_settings_field('bpm-other-settings', __('Re-Count Media Entries', $bp_media->text_domain), array($this, 'button'), 'bp-media-settings', 'bpm-other', array('option' => 'refresh_media_count', 'link' => bp_get_admin_url(add_query_arg(array('page' => 'bp-media-settings', 'bpm_refresh_count' => true, 'wp_nonce' => wp_create_nonce('bpm_refresh_count')), 'admin.php')), 'desc' => __('It will re-count all media entries of all users and correct any discrepancies.', $bp_media->text_domain)));
+            add_settings_field('bpm-other-settings', __('Re-Count Media Entries', $bp_media->text_domain), array($this, 'button'), 'bp-media-settings', 'bpm-other', array('option' => 'refresh-count', 'name' => 'Re-Count', 'desc' => __('It will re-count all media entries of all users and correct any discrepancies.', $bp_media->text_domain)));
             $bp_media_addon = new BPMediaAddon();
-            add_settings_section('bpm-addons', __('BuddyPress Media Addons for Audio/Video Conversion', $bp_media->text_domain), array( $bp_media_addon, 'get_addons' ), 'bp-media-addons');
-            register_setting('bp_media', 'bp_media_options');
+            add_settings_section('bpm-addons', __('BuddyPress Media Addons for Audio/Video Conversion', $bp_media->text_domain), array($bp_media_addon, 'get_addons'), 'bp-media-addons');
+            add_settings_section('bpm-support', __('Submit a request form', $bp_media->text_domain), '', 'bp-media-support');
+            add_settings_field('bpm-request', __('Request Type', $bp_media->text_domain), array($this, 'dropdown'), 'bp-media-support', 'bpm-support', array('option' => 'select-request', 'none' => false, 'values' => array('premium_support' => 'Premium Support', 'new_feature' => 'Suggest a New Feature', 'bug_report' => 'Submit a Bug Report')));
+            register_setting('bp_media', 'bp_media_options', array($this, 'sanitize'));
+        }
+
+        /**
+         * Sanitizes the settings
+         */
+        public function sanitize($input) {
+            global $bp_media, $bp_media_admin;
+            if (isset($_POST['refresh-count'])) {
+                if ($bp_media_admin->update_count())
+                    add_settings_error('Recount Success', 'recount-success', __('Recounting of media files done successfully', $bp_media->text_domain), 'updated');
+                else
+                    add_settings_error('Recount Fail', 'recount-fail', __('Recounting Failed', $bp_media->text_domain));
+            }
+            return $input;
         }
 
         /**
@@ -91,12 +102,47 @@ if (!class_exists('BPMediaSettings')) {
                 return;
             }
             if (empty($options[$option])) {
-                $options[$option] = $default;
+                $options[$option] = $defaults;
             }
             foreach ($radios as $value => $desc) {
                     ?>
                 <label for="<?php echo sanitize_title($desc); ?>"><input<?php checked($options[$option], $value); ?> value='<?php echo $value; ?>' name='bp_media_options[<?php echo $option; ?>]' id="<?php echo sanitize_title($desc); ?>" type='radio' /><?php echo $desc; ?></label><br /><?php
             }
+        }
+
+        /**
+         * Outputs Dropdown
+         * 
+         * @global type $bp_media
+         * @param array $args
+         */
+        public function dropdown($args) {
+            global $bp_media;
+            $options = $bp_media->options;
+            global $bp_media;
+            $defaults = array(
+                'option' => '',
+                'none' => true,
+                'values' => ''
+            );
+            $args = wp_parse_args($args, $defaults);
+            extract($args);
+            if (empty($option) || empty($values)) {
+                if (empty($option))
+                    trigger_error(__('Please provide "option" value ( required ) in the argument. Pass argument to add_settings_field in the follwoing format array( \'option\' => \'option_name\' )', $bp_media->text_domain));
+                if (empty($values))
+                    trigger_error(__('Please provide some values to populate the dropdown. Format : array( \'value\' => \'option\' )', $bp_media->text_domain));
+                return;
+            }
+                ?>
+            <select name="<?php echo $option; ?>" id="<?php echo $option; ?>"><?php if ($none) { ?>
+                    <option><?php __e('None', $bp_media->text_domain); ?></option><?php
+            }
+            foreach ($values as $value => $text) {
+                    ?>
+                    <option value="<?php echo $value; ?>"><?php echo $text; ?></option><?php }
+                ?>
+            </select><?php
         }
 
         /**
@@ -109,20 +155,18 @@ if (!class_exists('BPMediaSettings')) {
             global $bp_media;
             $defaults = array(
                 'option' => '',
-                'link' => '',
+                'name' => 'Save Changes',
                 'desc' => '',
             );
             $args = wp_parse_args($args, $defaults);
             extract($args);
-            if (empty($option) || ( empty($link) )) {
-                if (empty($option))
-                    trigger_error('Please provide "option" value ( Required ) in the argument. Pass argument to add_settings_field in the follwoing format array( \'option\' => \'option_name\', \'link\' => \'linkurl\' )');
-                if (empty($link))
-                    trigger_error('Need to specify a link in the argument ( Required )');
+            if (empty($option)) {
+                trigger_error('Please provide "option" value ( Required ) in the argument. Pass argument to add_settings_field in the follwoing format array( \'option\' => \'option_name\', \'link\' => \'linkurl\' )');
                 return;
             }
-                ?>
-            <a id="<?php echo $option; ?>" href="<?php echo $link; ?>" class="button" title="<?php echo $desc; ?>">Re-Count</a><?php if (!empty($desc)) { ?>
+            submit_button($name, '', $option, false);
+            if (!empty($desc)) {
+                    ?>
                 <span class="description"><?php echo $desc; ?></a><?php
             }
         }

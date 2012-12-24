@@ -9,10 +9,12 @@ if (!class_exists('BPMediaAdmin')) {
 
     class BPMediaAdmin {
 
-        public $bpm_upgrade;
-        public $bpm_settaings;
+        public $bp_media_upgrade;
+        public $bp_media_settings;
 
         public function __construct() {
+            global $bp_media;
+            add_action('init', array( $this, 'feed'));
             if (is_admin()) {
                 add_action('admin_enqueue_scripts', array($this, 'ui'));
                 add_action(bp_core_admin_hook(), array($this, 'menu'));
@@ -29,10 +31,19 @@ if (!class_exists('BPMediaAdmin')) {
          * @param string $hook
          */
         public function ui($hook) {
-            $admin_js = trailingslashit(site_url()) . '?bp_media_get_feeds=1';
-            wp_enqueue_script('bp-media-js', plugins_url('includes/js/bp-media.js', dirname(__FILE__)));
-            wp_localize_script('bp-media-js', 'bp_media_news_url', $admin_js);
-            wp_enqueue_style('bp-media-admin-style', plugins_url('includes/css/bp-media-style.css', dirname(__FILE__)));
+            $bp_media_news_url = trailingslashit(site_url()) . '?bp_media_get_feeds=1';
+            wp_enqueue_script('bp-media-admin', BP_MEDIA_URL.'app/assets/js/main.js');
+            wp_localize_script('bp-media-admin', 'bp_media_news_url', $bp_media_news_url);
+            wp_enqueue_style('bp-media-admin', BP_MEDIA_URL.'app/assets/css/main.css');
+        }
+        
+        
+        /**
+         * Get BuddyPress Media Feed from rtCamp.com
+         */
+        public function fetch_feed( $feed_url = 'http://rtcamp.com/tag/buddypress/feed/' ){
+                    bp_media_get_feeds();
+            }
         }
 
         /**
@@ -52,7 +63,7 @@ if (!class_exists('BPMediaAdmin')) {
          * Render the BuddyPress Media Settings page
          */
         public function settings_page() {
-            $this->render_page('bp-media-settings');
+            $this->render_page('bp-media-settings', true);
         }
 
         /**
@@ -81,12 +92,13 @@ if (!class_exists('BPMediaAdmin')) {
             <div class="wrap bp-media-admin">
                 <div id="icon-buddypress" class="icon32"><br></div>
                 <h2 class="nav-tab-wrapper"><?php bp_core_admin_tabs(__('Media', $bp_media->text_domain)); ?></h2>
+                <?php settings_errors(); ?>
                 <div class="metabox-holder columns-2">
                     <div class="bp-media-settings-tabs"><?php
             // Check to see which tab we are on
             if (current_user_can('manage_options'))
                 $this->sub_tabs();
-            ?>
+                ?>
                     </div>
 
                     <div id="bp-media-settings-boxes">
@@ -106,7 +118,7 @@ if (!class_exists('BPMediaAdmin')) {
             }
 
             echo '</div>';
-            ?>
+                ?>
 
                         </form>
                     </div><!-- .bp-media-settings-boxes -->
@@ -193,6 +205,44 @@ if (!class_exists('BPMediaAdmin')) {
             echo $tabs_html;
         }
 
+        /*
+         * Updates the media count of all users.
+         */
+
+        public function update_count() {
+            global $wpdb;
+            $query =
+                    "SELECT
+		post_author,
+		SUM(CASE WHEN post_mime_type LIKE 'image%' THEN 1 ELSE 0 END) as Images,
+		SUM(CASE WHEN post_mime_type LIKE 'audio%' THEN 1 ELSE 0 END) as Audio,
+		SUM(CASE WHEN post_mime_type LIKE 'video%' THEN 1 ELSE 0 END) as Videos,
+		SUM(CASE WHEN post_type LIKE 'bp_media_album' THEN 1 ELSE 0 END) as Albums,
+		COUNT(*) as Total
+	FROM
+		$wpdb->posts RIGHT JOIN $wpdb->postmeta on wp_postmeta.post_id = wp_posts.id
+	WHERE
+		`meta_key` = 'bp-media-key' AND
+		`meta_value` > 0 AND
+		( post_mime_type LIKE 'image%' OR post_mime_type LIKE 'audio%' OR post_mime_type LIKE 'video%' OR post_type LIKE 'bp_media_album')
+	GROUP BY post_author";
+            $result = $wpdb->get_results($query);
+            if (!is_array($result))
+                return false;
+
+            foreach ($result as $obj) {
+
+                $count = array(
+                    'images' => isset($obj->Images) ? $obj->Images : 0,
+                    'videos' => isset($obj->Videos) ? $obj->Videos : 0,
+                    'audio' => isset($obj->Audio) ? $obj->Audio : 0,
+                    'albums' => isset($obj->Albums) ? $obj->Albums : 0
+                );
+                bp_update_user_meta($obj->post_author, 'bp_media_count', $count);
+            }
+            return true;
+        }
+
         public function admin_sidebar() {
             global $bp_media;
             $branding = '<a href="http://rtcamp.com" title="' . __('Empowering The Web With WordPress', $bp_media->text_domain) . '" id="logo"><img src="' . BP_MEDIA_URL . 'app/assets/img/rtcamp-logo.png" alt="' . __('rtCamp', $bp_media->text_domain) . '" /></a>
@@ -203,10 +253,12 @@ if (!class_exists('BPMediaAdmin')) {
                         </ul>';
             new BPMediaWidget('branding', '', $branding);
 
-            $support = '<p>' . sprintf(__(' Please use our <a href="%s">free support forum</a>.<br/>
-                        <span class="bpm-aligncenter">OR</span><br/>
-                        <a href="%s">Hire us!</a> To get professional customisation/setup service.', $bp_media->text_domain), 'http://rtcamp.com/support/forum/buddypress-media/', 'http://rtcamp.com/buddypress-media/hire/') . '
-                        </p>';
+            $support = '<p><ul>
+            <li>' . sprintf(__('<a href="%s">Read FAQ</a>', $bp_media->text_domain), 'http://rtcamp.com/buddypress-media/faq/') . '</li>
+            <li>' . sprintf(__('<a href="%s">Free Support Forum</a>', $bp_media->text_domain), 'http://rtcamp.com/support/forum/buddypress-media/') . '</li>
+            <li>' . sprintf(__('<a href="%s">Github Issue Tracker</a>', $bp_media->text_domain), 'https://github.com/rtCamp/buddypress-media/issues/') . '</li>
+            <li>' . sprintf(__('<a href="%s">Hire us!</a> To get professional customisation/setup service.', $bp_media->text_domain), 'http://rtcamp.com/buddypress-media/hire/') . '</li>
+            </ul></p>';
             new BPMediaWidget('support', __('Need Help?', $bp_media->text_domain), $support);
 
             $donate = '<span><a href="http://rtcamp.com/donate/" title="' . __('Help the development keep going.', $bp_media->text_domain) . '"><img class="bp-media-donation-image" src ="' . BP_MEDIA_URL . 'app/assets/img/donate.gif" /></a></span>
