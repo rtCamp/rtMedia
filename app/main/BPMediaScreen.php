@@ -1,5 +1,4 @@
 <?php
-
 if ( ! defined( 'ABSPATH' ) )
 	exit;
 
@@ -103,12 +102,11 @@ class BPMediaScreen {
 			wp_redirect( trailingslashit( bp_displayed_user_domain() . constant( 'BP_MEDIA_' . $this->media_type . '_SLUG' ) ) );
 			exit;
 		}
-		add_action( 'bp_template_title', array( $this, 'entry_screen_title' ) );
-		add_action( 'bp_template_content', array( $this, 'entry_screen_content' ) );
+		$this->template_actions('entry_screen');
 	}
 
 	function media_screen_content() {
-		global $bp_media_query;
+		global $bp_media_query, $bp_media;
 		$this->hook_before();
 		if ( $bp_media_query && $bp_media_query->have_posts() ):
 
@@ -119,7 +117,7 @@ class BPMediaScreen {
 			echo '</ul>';
 			bp_media_display_show_more();
 		else:
-			bp_media_show_formatted_error_message( __( 'Sorry, no images were found.', 'bp-media' ), 'info' );
+			bp_media_show_formatted_error_message( sprintf(__( 'Sorry, no %s were found.', $bp_media->text_domain ),$this->media_type), 'info' );
 		endif;
 		$this->hook_after();
 	}
@@ -145,9 +143,45 @@ class BPMediaScreen {
 		if ( array_key_exists( 'bp_media_title', $_POST ) ) {
 			bp_media_update_media();
 		}
-		add_action( 'bp_template_title', array( $this, 'edit_screen_title' ) );
-		add_action( 'bp_template_content', array( $this, 'edit_screen_content' ) );
+		$this->template_actions('edit_screen');
 		bp_core_load_template( apply_filters( 'bp_core_template_plugin', 'members/single/plugins' ) );
+	}
+
+	function edit_screen_content() {
+		global $bp, $bp_media_current_entry, $bp_media_default_excerpts, $bp_media;
+		?>
+		<form method="post" class="standard-form" id="bp-media-upload-form">
+			<label for="bp-media-upload-input-title">
+				<?php printf( __( '%s Title', $bp_media->text_domain ), ucfirst( $this->media_type ) ); ?>
+			</label>
+			<input id="bp-media-upload-input-title" type="text" name="bp_media_title" class="settings-input"
+				   maxlength="<?php echo max( array( $bp_media_default_excerpts[ 'single_entry_title' ], $bp_media_default_excerpts[ 'activity_entry_title' ] ) ) ?>"
+				   value="<?php echo $bp_media_current_entry->get_title(); ?>" />
+			<label for="bp-media-upload-input-description">
+				<?php printf( __( '%s Description', $bp_media->text_domain ), ucfirst( $this->media_type ) ); ?>
+			</label>
+			<input id="bp-media-upload-input-description" type="text" name="bp_media_description" class="settings-input"
+				   maxlength="<?php echo max( array( $bp_media_default_excerpts[ 'single_entry_description' ], $bp_media_default_excerpts[ 'activity_entry_description' ] ) ) ?>"
+				   value="<?php echo $bp_media_current_entry->get_content(); ?>" />
+			<div class="submit">
+				<input type="submit" class="auto" value="<?php _e( 'Update', $bp_media->text_domain ); ?>" />
+				<a href="<?php echo $bp_media_current_entry->get_url(); ?>" class="button" title="<?php _e( 'Back to Media File', $bp_media->text_domain ); ?>">
+					<?php _e( 'Back to Media', $bp_media->text_domain ); ?>
+				</a>
+			</div>
+		</form>
+		<?php
+	}
+
+	function media_entry_screen() {
+		$this->template_actions('entry_screen');
+		bp_core_load_template( apply_filters( 'bp_core_template_plugin', 'members/single/plugins' ) );
+	}
+
+	function template_actions($action){
+		add_action( 'bp_template_title', array( $this, $action.'_title' ) );
+		add_action( 'bp_template_content', array( $this, $action.'_content' ) );
+
 	}
 
 	function generate_ui() {
@@ -171,5 +205,4 @@ class BPMediaScreen {
 	}
 
 }
-
 ?>
