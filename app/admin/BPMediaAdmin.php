@@ -45,7 +45,7 @@ if (!class_exists('BPMediaAdmin')) {
          */
         public function menu() {
             global $bp_media;
-            add_menu_page(__('Buddypress Media Component', $bp_media->text_domain), __('BP Media', $bp_media->text_domain), 'manage_options', 'bp-media-settings', array($this, 'settings_page'));
+            add_menu_page(__('Buddypress Media Component', $bp_media->text_domain), __('BuddyPress Media', $bp_media->text_domain), 'manage_options', 'bp-media-settings', array($this, 'settings_page'));
             add_submenu_page('bp-media-settings', __('Buddypress Media Settings', $bp_media->text_domain), __('Settings', $bp_media->text_domain), 'manage_options', 'bp-media-settings', array($this, 'settings_page'));
             add_submenu_page('bp-media-settings', __('Buddypress Media Addons', $bp_media->text_domain), __('Addons', $bp_media->text_domain), 'manage_options', 'bp-media-addons', array($this, 'addons_page'));
             add_submenu_page('bp-media-settings', __('Buddypress Media Support', $bp_media->text_domain), __('Support ', $bp_media->text_domain), 'manage_options', 'bp-media-support', array($this, 'support_page'));
