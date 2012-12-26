@@ -137,13 +137,13 @@ jQuery(document).ready(function(){
     })
     
     /* Check support request */
-    jQuery('#request_type_select').live('change', function(){
+    jQuery('#select-request').live('change', function(){
         if(jQuery(this).val()){
             jQuery('#bp_media_settings_form .bp-media-metabox-holder').html()
             jQuery('#bp_media_settings_form .bp-media-metabox-holder').html('<div class="support_form_laoder"></div>');        
             var data = {
-                action: 'bp_media_request_type',
-                request_type: jQuery(this).val()
+                action: 'bp_media_request_form',
+                form: jQuery(this).val()
             };
 
             // since 2.8 ajaxurl is always defined in the admin header and points to admin-ajax.php
