@@ -16,6 +16,9 @@ if (!class_exists('BPMediaAdmin')) {
         public function __construct() {
             $bp_media_feed =  new BPMediaFeed();
             add_action( 'wp_ajax_bp_media_fetch_feed', array($bp_media_feed, 'fetch_feed'), 1);
+            $bp_media_support =  new BPMediaSupport();
+            add_action('wp_ajax_bp_media_request_form', array($bp_media_support, 'get_form'), 1);
+            add_action( 'wp_ajax_bp_media_fetch_feed', array($bp_media_feed, 'fetch_feed'), 1);
             if (is_admin()) {
                 add_action('admin_enqueue_scripts', array($this, 'ui'));
                 add_action(bp_core_admin_hook(), array($this, 'menu'));
