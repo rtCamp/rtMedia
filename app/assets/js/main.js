@@ -17,8 +17,11 @@ function bp_media_create_element(id){
 jQuery(document).ready(function(){
 	var bp_media_news_section = jQuery('#latest-news');
 	if(bp_media_news_section.length>0){
-		jQuery.get(bp_media_news_url,function(data){
-			bp_media_news_section.find('.inside').html(data);
+            var data = {
+		action: 'bp_media_fetch_feed'
+            };
+		jQuery.post(bp_media_admin_ajax,data,function(response){
+			bp_media_news_section.find('.inside').html(response);
 		});
 	}
     var bp_media_recent_tabs = jQuery('#recent-media-tabs');
@@ -134,13 +137,13 @@ jQuery(document).ready(function(){
     })
     
     /* Check support request */
-    jQuery('#request_type_select').live('change', function(){
+    jQuery('#select-request').live('change', function(){
         if(jQuery(this).val()){
             jQuery('#bp_media_settings_form .bp-media-metabox-holder').html()
             jQuery('#bp_media_settings_form .bp-media-metabox-holder').html('<div class="support_form_laoder"></div>');        
             var data = {
-                action: 'bp_media_request_type',
-                request_type: jQuery(this).val()
+                action: 'bp_media_request_form',
+                form: jQuery(this).val()
             };
 
             // since 2.8 ajaxurl is always defined in the admin header and points to admin-ajax.php
