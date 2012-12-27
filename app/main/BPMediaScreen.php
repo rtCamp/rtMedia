@@ -273,7 +273,7 @@ class BPMediaScreen {
 	}
 
 	function upload_form_multiple() {
-		global $bp;
+		global $bp,$bp_media;
 		?>
 		<div id="bp-media-album-prompt" title="Select Album"><select id="bp-media-selected-album"><?php
 		if ( bp_is_current_component( 'groups' ) ) {
@@ -294,9 +294,9 @@ class BPMediaScreen {
 		if ( isset( $albums->posts ) && is_array( $albums->posts ) && count( $albums->posts ) > 0 ) {
 			foreach ( $albums->posts as $album ) {
 				if ( $album->post_title == 'Wall Posts' )
-					echo '<option value="' . $album->ID . '" selected="selected">' . $album->post_title . '</option>';
+					echo '<option value="' . $album->ID . '" selected="selected">' . __($album->post_title,$bp_media->text_domain) . '</option>';
 				else
-					echo '<option value="' . $album->ID . '">' . $album->post_title . '</option>';
+					echo '<option value="' . $album->ID . '">' . __($album->post_title,$bp_media->text_domain) . '</option>';
 			};
 		}else {
 			$album = new BP_Media_Album();
@@ -309,13 +309,13 @@ class BPMediaScreen {
 			echo '<option value="' . $album->get_id() . '" selected="selected">' . $album->get_title() . '</option>';
 		}
 		?></select></div>
-		<div id="bp-media-album-new" title="Create New Album"><label for="bp_media_album_name">Album Name</label><input id="bp_media_album_name" type="text" name="bp_media_album_name" /></div>
+		<div id="bp-media-album-new" title="Create New Album"><label for="bp_media_album_name"><?php _e("Album Name",$bp_media->text_domain); ?></label><input id="bp_media_album_name" type="text" name="bp_media_album_name" /></div>
 		<div id="bp-media-upload-ui" class="hide-if-no-js drag-drop">
 			<div id="drag-drop-area">
 				<div class="drag-drop-inside">
-					<p class="drag-drop-info">Drop files here</p>
-					<p>or</p>
-					<p class="drag-drop-buttons"><input id="bp-media-upload-browse-button" type="button" value="Select Files" class="button" /></p>
+					<p class="drag-drop-info"><?php _e("Drop files",$bp_media->text_domain);?> here</p>
+					<p><?php _e("or",$bp_media->text_domain);?></p>
+					<p class="drag-drop-buttons"><input id="bp-media-upload-browse-button" type="button" value="<?php _e("Select Files",$bp_media->text_domain);?>" class="button" /></p>
 				</div>
 			</div>
 		</div>
@@ -424,7 +424,8 @@ class BPMediaScreen {
 	}
 
 	function show_more( $type = 'media' ) {
-		$showmore = false;
+            global $bp_media;
+            $showmore = false;
 		switch ( $type ) {
 			case 'media':
 				global $bp_media_query;
@@ -439,7 +440,7 @@ class BPMediaScreen {
 				break;
 		}
 		if ( $showmore ) {
-			echo '<div class="bp-media-actions"><a href="#" class="button" id="bp-media-show-more">Show More</a></div>';
+			echo '<div class="bp-media-actions"><a href="#" class="button" id="bp-media-show-more">' . __("Show More",$bp_media->text_domain) . '</a></div>';
 		}
 	}
 
