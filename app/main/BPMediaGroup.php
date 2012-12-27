@@ -105,7 +105,7 @@ class BPMediaGroup {
 	 * @since BP Media 2.3
 	 */
 	static function bp_media_groups_display_navigation_menu(){
-		global $bp;
+		global $bp,$bp_media;
 
 		if(!isset($bp->current_action)||$bp->current_action!=BP_MEDIA_SLUG)
 			return false;
@@ -138,7 +138,7 @@ class BPMediaGroup {
 			<ul>
 				<?php
 					foreach($bp_media_group_tabs as $tab_slug=>$tab_info){
-						echo '<li id="'.$tab_slug.'-group-li" '.($current_tab==$tab_slug?'class="current selected"':'').'><a id="'.$tab_slug.'" href="'.$tab_info['url'].'" title="'.$tab_info['label'].'">'.$tab_info['label'].'</a></li>';
+						echo '<li id="'.$tab_slug.'-group-li" '.($current_tab==$tab_slug?'class="current selected"':'').'><a id="'.$tab_slug.'" href="'.$tab_info['url'].'" title="'.__($tab_info['label'],$bp_media->text_domain).'">'.__($tab_info['label'],$bp_media->text_domain).'</a></li>';
 					}
 				?>
 			</ul>
@@ -213,7 +213,7 @@ class BPMediaGroup {
 		return false;
 	}
 	function bp_media_groups_display_screen() {
-        global $bp_media_group_sub_nav, $bp;
+        global $bp_media_group_sub_nav, $bp,$bp_media;
         BPMediaGroupAction::bp_media_groups_set_query();
         BPMediaGroup::bp_media_groups_display_navigation_menu();
         if (bp_action_variable(0)) {
@@ -236,12 +236,10 @@ class BPMediaGroup {
                                     try {
                                         $bp_media_current_entry = new BP_Media_Host_Wordpress(bp_action_variable(1));
                                         if ($bp_media_current_entry->get_group_id() != bp_get_current_group_id())
-                                            throw new Exception(__('Sorry, the requested media does not belong to the group'));
+                                            throw new Exception(__('Sorry, the requested media does not belong to the group',$bp_media->text_domain));
                                     } catch (Exception $e) {
                                         /** Error Handling when media not present or not belong to the group */
-                                        echo '<div id="message" class="error">';
-                                        echo '<p>' . $e->getMessage() . '</p>';
-                                        echo '</div>';
+                                        BPMediaGroup::bp_media_display_error($e->getMessage());
                                         return;
                                     }
                                     bp_media_videos_entry_screen_content();
@@ -269,12 +267,10 @@ class BPMediaGroup {
                                     try {
                                         $bp_media_current_entry = new BP_Media_Host_Wordpress(bp_action_variable(1));
                                         if ($bp_media_current_entry->get_group_id() != bp_get_current_group_id())
-                                            throw new Exception(__('Sorry, the requested media does not belong to the group'));
+                                            throw new Exception(__('Sorry, the requested media does not belong to the group',$bp_media->text_domain));
                                     } catch (Exception $e) {
                                         /** Error Handling when media not present or not belong to the group */
-                                        echo '<div id="message" class="error">';
-                                        echo '<p>' . $e->getMessage() . '</p>';
-                                        echo '</div>';
+                                        BPMediaGroup::bp_media_display_error($e->getMessage());
                                         return;
                                     }
                                     bp_media_audio_entry_screen_content();
@@ -302,12 +298,10 @@ class BPMediaGroup {
                                     try {
                                         $bp_media_current_album = new BP_Media_Host_Wordpress(bp_action_variable(1));
                                         if ($bp_media_current_album->get_group_id() != bp_get_current_group_id())
-                                            throw new Exception(__('Sorry, the requested album does not belong to the group'));
+                                            throw new Exception(__('Sorry, the requested album does not belong to the group',$bp_media->text_domain));
                                     } catch (Exception $e) {
                                         /** Error Handling when media not present or not belong to the group */
-                                        echo '<div id="message" class="error">';
-                                        echo '<p>' . $e->getMessage() . '</p>';
-                                        echo '</div>';
+                                        BPMediaGroup::bp_media_display_error($e->getMessage());
                                         return;
                                     }
                                     bp_media_albums_entry_screen_content();
@@ -351,12 +345,10 @@ class BPMediaGroup {
                         try {
                             $bp_media_current_entry = new BP_Media_Host_Wordpress(bp_action_variable(1));
                             if ($bp_media_current_entry->get_group_id() != bp_get_current_group_id())
-                                throw new Exception(__('Sorry, the requested media does not belong to the group'));
+                                throw new Exception(__('Sorry, the requested media does not belong to the group',$bp_media->text_domain));
                         } catch (Exception $e) {
                             /** Error Handling when media not present or not belong to the group */
-                            echo '<div id="message" class="error">';
-                            echo '<p>' . $e->getMessage() . '</p>';
-                            echo '</div>';
+                            BPMediaGroup::bp_media_display_error($e->getMessage());
                             return;
                         }
                         bp_media_images_entry_screen_content();
@@ -369,5 +361,14 @@ class BPMediaGroup {
             bp_media_images_screen_content();
         }
     }
-
+    static function  bp_media_display_error($errorMessage){ 
+        global $bp_media;
+        ?>
+        <div id="message" class="error">
+            <p>
+                <?php  _e($errorMessage,$bp_media->text_domain) ;?> 
+            </p>
+       </div>
+    <?php
+    }
 }

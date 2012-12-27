@@ -73,7 +73,7 @@ class BPMediaHostWordpress {
 	 */
 	function add_media($name, $description, $album_id = 0, $group = 0, $is_multiple = false) {
 		do_action('bp_media_before_add_media');
-		global $bp, $wpdb, $bp_media_count;
+		global $bp, $wpdb, $bp_media_count,$bp_media;
 		include_once(ABSPATH . 'wp-admin/includes/file.php');
 		include_once(ABSPATH . 'wp-admin/includes/image.php');
 
@@ -81,7 +81,7 @@ class BPMediaHostWordpress {
 
 		$file = wp_handle_upload($_FILES['bp_media_file']);
 		if (isset($file['error']) || $file === null) {
-			throw new Exception(__('Error Uploading File', 'bp-media'));
+			throw new Exception(__('Error Uploading File', $bp_media->text_domain));
 		}
 
 		$attachment = array();
@@ -109,24 +109,24 @@ class BPMediaHostWordpress {
 				} catch (Exception $e) {
 					unlink($file);
 					$activity_content = false;
-					throw new Exception(__('MP4 file you have uploaded is currupt.', 'bp-media'));
+					throw new Exception(__('MP4 file you have uploaded is currupt.', $bp_media->text_domain));
 				}
 				if (is_array($vid_info)) {
 					if (!array_key_exists('error',$vid_info)&& array_key_exists('fileformat', $vid_info) && array_key_exists('video', $vid_info)&&array_key_exists('fourcc',$vid_info['video'])) {
 						if (!($vid_info['fileformat']=='mp4'&&$vid_info['video']['fourcc']=='avc1')) {
 							unlink($file);
 							$activity_content = false;
-							throw new Exception(__('The MP4 file you have uploaded is using an unsupported video codec. Supported video codec is H.264.', 'bp-media'));
+							throw new Exception(__('The MP4 file you have uploaded is using an unsupported video codec. Supported video codec is H.264.', $bp_media->text_domain));
 						}
 					} else {
 						unlink($file);
 						$activity_content = false;
-						throw new Exception(__('The MP4 file you have uploaded is using an unsupported video codec. Supported video codec is H.264.', 'bp-media'));
+						throw new Exception(__('The MP4 file you have uploaded is using an unsupported video codec. Supported video codec is H.264.', $bp_media->text_domain));
 					}
 				} else {
 					unlink($file);
 					$activity_content = false;
-					throw new Exception(__('The MP4 file you have uploaded is not a video file.', 'bp-media'));
+					throw new Exception(__('The MP4 file you have uploaded is not a video file.', $bp_media->text_domain));
 				}
 				$bp_media_count['videos'] = intval($bp_media_count['videos']) + 1;
 				break;
@@ -138,24 +138,24 @@ class BPMediaHostWordpress {
 				} catch (Exception $e) {
 					unlink($file);
 					$activity_content = false;
-					throw new Exception(__('MP3 file you have uploaded is currupt.', 'bp-media'));
+					throw new Exception(__('MP3 file you have uploaded is currupt.', $bp_media->text_domain));
 				}
 				if (is_array($file_info)) {
 					if (!array_key_exists('error',$file_info)&& array_key_exists('fileformat', $file_info) && array_key_exists('audio', $file_info)&&array_key_exists('dataformat',$file_info['audio'])) {
 						if (!($file_info['fileformat']=='mp3'&&$file_info['audio']['dataformat']=='mp3')) {
 							unlink($file);
 							$activity_content = false;
-							throw new Exception(__('The MP3 file you have uploaded is using an unsupported audio format. Supported audio format is MP3.', 'bp-media'));
+							throw new Exception(__('The MP3 file you have uploaded is using an unsupported audio format. Supported audio format is MP3.', $bp_media->text_domain));
 						}
 					} else {
 						unlink($file);
 						$activity_content = false;
-						throw new Exception(__('The MP3 file you have uploaded is using an unsupported audio format. Supported audio format is MP3.', 'bp-media'));
+						throw new Exception(__('The MP3 file you have uploaded is using an unsupported audio format. Supported audio format is MP3.', $bp_media->text_domain));
 					}
 				} else {
 					unlink($file);
 					$activity_content = false;
-					throw new Exception(__('The MP3 file you have uploaded is not an audio file.', 'bp-media'));
+					throw new Exception(__('The MP3 file you have uploaded is not an audio file.', $bp_media->text_domain));
 				}
 				$type = 'audio';
 				$bp_media_count['audio'] = intval($bp_media_count['audio']) + 1;
@@ -169,14 +169,14 @@ class BPMediaHostWordpress {
 			default :
 				unlink($file);
 				$activity_content = false;
-				throw new Exception(__('Media File you have tried to upload is not supported. Supported media files are .jpg, .png, .gif, .mp3, .mov and .mp4.', 'bp-media'));
+				throw new Exception(__('Media File you have tried to upload is not supported. Supported media files are .jpg, .png, .gif, .mp3, .mov and .mp4.', $bp_media->text_domain));
 		}
 		$attachment_id = wp_insert_attachment($attachment, $file, $post_id);
 		if (!is_wp_error($attachment_id)) {
 			wp_update_attachment_metadata($attachment_id, wp_generate_attachment_metadata($attachment_id, $file));
 		} else {
 			unlink($file);
-			throw new Exception(__('Error creating attachment for the media file, please try again', 'bp-media'));
+			throw new Exception(__('Error creating attachment for the media file, please try again', $bp_media->text_domain));
 		}
 		$this->id = $attachment_id;
 		$this->name = $name;
@@ -201,9 +201,9 @@ class BPMediaHostWordpress {
 	 *
 	 */
 	function get_media_activity_content() {
-		global $bp_media_counter, $bp_media_default_excerpts;
+		global $bp_media_counter, $bp_media_default_excerpts,$bp_media;
 		$attachment_id = $this->id;
-		$activity_content = '<div class="bp_media_title"><a href="' . $this->url . '" title="' . $this->description . '">' . wp_html_excerpt($this->name, $bp_media_default_excerpts['activity_entry_title']) . '</a></div>';
+		$activity_content = '<div class="bp_media_title"><a href="' . $this->url . '" title="' . __($this->description,$bp_media->text_domain) . '">' . __(wp_html_excerpt($this->name, $bp_media_default_excerpts['activity_entry_title']),$bp_media->text_domain) . '</a></div>';
 		$activity_content .='<div class="bp_media_content">';
 		switch ($this->type) {
 			case 'video' :
@@ -221,14 +221,14 @@ class BPMediaHostWordpress {
 				break;
 			case 'image' :
 				$image_array = image_downsize($attachment_id, 'bp_media_activity_image');
-				$activity_content.='<a href="' . $this->url . '" title="' . $this->name . '"><img src="' . $image_array[0] . '" id="bp_media_image_' . $this->id . '_' . $bp_media_counter++ . '" alt="' . $this->name . '" /></a>';
+				$activity_content.='<a href="' . $this->url . '" title="' . __($this->name,$bp_media->text_domain) . '"><img src="' . $image_array[0] . '" id="bp_media_image_' . $this->id . '_' . $bp_media_counter++ . '" alt="' . __($this->name,$bp_media->text_domain) . '" /></a>';
 				$type = 'image';
 				break;
 			default :
 				return false;
 		}
 		$activity_content .= '</div>';
-		$activity_content .= '<div class="bp_media_description">' . wp_html_excerpt($this->description, $bp_media_default_excerpts['activity_entry_description']) . '</div>';
+		$activity_content .= '<div class="bp_media_description">' . __(wp_html_excerpt($this->description, $bp_media_default_excerpts['activity_entry_description']),$bp_media->text_domain) . '</div>';
 		return $activity_content;
 	}
 
@@ -246,9 +246,10 @@ class BPMediaHostWordpress {
 	 * Returns the media activity's action text
 	 */
 	function get_media_activity_action() {
-		if (!bp_is_activity_component())
+            global  $bp_media;
+            if (!bp_is_activity_component())
 			return false;
-		$activity_action = sprintf(__("%s uploaded a media."), bp_core_get_userlink($this->owner));
+		$activity_action = sprintf(__("%s uploaded a media.",$bp_media->text_domain), bp_core_get_userlink($this->owner));
 		return $activity_action;
 	}
 
@@ -256,11 +257,11 @@ class BPMediaHostWordpress {
 	 * Returns the HTML for content of the single entry page of the Media Entry
 	 */
 	function get_media_single_content() {
-		global $bp_media_default_sizes, $bp_media_default_excerpts;
+		global $bp_media_default_sizes, $bp_media_default_excerpts,$bp_media;
 		$content = '';
 		if($this->group_id>0){
 
-			$content .= '<div class="bp_media_author">Uploaded by '. bp_core_get_userlink($this->owner).'</div>';
+			$content .= '<div class="bp_media_author">' . __("Uploaded by ", $bp_media->text_domain) . bp_core_get_userlink($this->owner).'</div>';
 		}
 		$content .= '<div class="bp_media_content">';
 		switch ($this->type) {
@@ -284,7 +285,7 @@ class BPMediaHostWordpress {
 				return false;
 		}
 		$content .= '</div>';
-		$content .= '<div class="bp_media_description">' . wp_html_excerpt($this->description, $bp_media_default_excerpts['single_entry_description']) . '</div>';
+		$content .= '<div class="bp_media_description">' . __(wp_html_excerpt($this->description, $bp_media_default_excerpts['single_entry_description']),$bp_media->text_domain) . '</div>';
 		return $content;
 	}
 
@@ -292,8 +293,8 @@ class BPMediaHostWordpress {
 	 * Returns the HTML for title of the single entry page of the Media Entry
 	 */
 	function get_media_single_title(){
-		global $bp_media_default_excerpts;
-		$content = '<div class="bp_media_title">' . wp_html_excerpt($this->name, $bp_media_default_excerpts['single_entry_title']) . '</div>';
+		global $bp_media_default_excerpts,$bp_media;
+		$content = '<div class="bp_media_title">' . __(wp_html_excerpt($this->name, $bp_media_default_excerpts['single_entry_title']),$bp_media->text_domain) . '</div>';
 		return $content;
 	}
 
@@ -301,7 +302,8 @@ class BPMediaHostWordpress {
 	 * Returns the HTML for a media entry to be shown in the listing/gallery page
 	 */
 	function get_media_gallery_content() {
-		$attachment = $this->id;
+            global  $bp_media;
+            $attachment = $this->id;
 		switch ($this->type) {
 			case 'video' :
 				if($this->thumbnail_id){
@@ -313,10 +315,10 @@ class BPMediaHostWordpress {
 				}
 				?>
 				<li>
-					<a href="<?php echo $this->url ?>" title="<?php echo $this->description ?>">
+					<a href="<?php echo $this->url ?>" title="<?php _e($this->description,$bp_media->text_domain); ?>">
 						<img src="<?php echo $thumb_url; ?>" />
 					</a>
-					<h3 title="<?php echo $this->name ?>"><a href="<?php echo $this->url ?>" title="<?php echo $this->description ?>"><?php echo $this->name ?></a></h3>
+					<h3 title="<?php echo $this->name; ?>"><a href="<?php echo $this->url ?>" title="<?php _e($this->description,$bp_media->text_domain); ?>"><?php echo $this->name; ?></a></h3>
 				</li>
 				<?php
 				break;
@@ -330,10 +332,10 @@ class BPMediaHostWordpress {
 				}
 				?>
 				<li>
-					<a href="<?php echo $this->url ?>" title="<?php echo $this->description ?>">
+					<a href="<?php echo $this->url ?>" title="<?php _e($this->description,$bp_media->text_domain); ?>">
 						<img src="<?php echo $thumb_url ?>" />
 					</a>
-					<h3 title="<?php echo $this->name ?>"><a href="<?php echo $this->url ?>" title="<?php echo $this->description ?>"><?php echo $this->name ?></a></h3>
+					<h3 title="<?php echo $this->name; ?>"><a href="<?php echo $this->url ?>" title="<?php _e($this->description,$bp_media->text_domain); ?>"><?php echo $this->name ?></a></h3>
 				</li>
 				<?php
 				break;
@@ -345,7 +347,7 @@ class BPMediaHostWordpress {
 					<a href="<?php echo $this->url ?>" title="<?php echo $this->description ?>">
 						<img src="<?php echo $medium_path ?>" />
 					</a>
-					<h3 title="<?php echo $this->name ?>"><a href="<?php echo $this->url ?>" title="<?php echo $this->description ?>"><?php echo $this->name ?></a></h3>
+					<h3 title="<?php echo $this->name ?>"><a href="<?php echo $this->url ?>" title="<?php _e($this->description,$bp_media->text_domain); ?>"><?php echo $this->name ?></a></h3>
 				</li>
 				<?php
 				break;
@@ -366,6 +368,7 @@ class BPMediaHostWordpress {
 	 * Outputs the comments and comment form in the single media entry page
 	 */
 	function show_comment_form() {
+                global  $bp_media;
 		$activity_id = get_post_meta($this->id, 'bp_media_child_activity', true);
 		if(!$activity_id || !function_exists('bp_has_activities'))
 			return false;
@@ -385,13 +388,13 @@ class BPMediaHostWordpress {
 								<?php if (is_user_logged_in()) : ?>
 									<div class="activity-meta no-ajax">
 										<?php if (bp_activity_can_comment()) : ?>
-											<a href="<?php bp_get_activity_comment_link(); ?>" class="button acomment-reply bp-primary-action" id="acomment-comment-<?php bp_activity_id(); ?>"><?php printf(__('Comment <span>%s</span>', 'buddypress'), bp_activity_get_comment_count()); ?></a>
+											<a href="<?php bp_get_activity_comment_link(); ?>" class="button acomment-reply bp-primary-action" id="acomment-comment-<?php bp_activity_id(); ?>"><?php printf(__('Comment <span>%s</span>', $bp_media->text_domain), bp_activity_get_comment_count()); ?></a>
 										<?php endif; ?>
 										<?php if (bp_activity_can_favorite()) : ?>
 											<?php if (!bp_get_activity_is_favorite()) : ?>
-												<a href="<?php bp_activity_favorite_link(); ?>" class="button fav bp-secondary-action" title="<?php esc_attr_e('Mark as Favorite', 'buddypress'); ?>"><?php _e('Favorite', 'buddypress') ?></a>
+												<a href="<?php bp_activity_favorite_link(); ?>" class="button fav bp-secondary-action" title="<?php esc_attr_e('Mark as Favorite', 'buddypress'); ?>"><?php _e('Favorite', $bp_media->text_domain) ?></a>
 											<?php else : ?>
-												<a href="<?php bp_activity_unfavorite_link(); ?>" class="button unfav bp-secondary-action" title="<?php esc_attr_e('Remove Favorite', 'buddypress'); ?>"><?php _e('Remove Favorite', 'buddypress') ?></a>
+												<a href="<?php bp_activity_unfavorite_link(); ?>" class="button unfav bp-secondary-action" title="<?php esc_attr_e('Remove Favorite', 'buddypress'); ?>"><?php _e('Remove Favorite', $bp_media->text_domain) ?></a>
 											<?php endif; ?>
 										<?php endif; ?>
 										<?php if (bp_activity_user_can_delete()) bp_activity_delete_link(); ?>
@@ -410,7 +413,7 @@ class BPMediaHostWordpress {
 												<div class="ac-textarea">
 													<textarea id="ac-input-<?php bp_activity_id(); ?>" class="ac-input" name="ac_input_<?php bp_activity_id(); ?>"></textarea>
 												</div>
-												<input type="submit" name="ac_form_submit" value="<?php _e('Post', 'buddypress'); ?>" /> &nbsp; <?php _e('or press esc to cancel.', 'buddypress'); ?>
+												<input type="submit" name="ac_form_submit" value="<?php _e('Post', 'buddypress'); ?>" /> &nbsp; <?php _e('or press esc to cancel.', $bp_media->text_domain); ?>
 												<input type="hidden" name="comment_form_id" value="<?php bp_activity_id(); ?>" />
 											</div>
 											<?php do_action('bp_activity_entry_comments'); ?>
@@ -433,7 +436,7 @@ class BPMediaHostWordpress {
 								<?php do_action('bp_activity_entry_content'); ?>
 								<?php if (is_user_logged_in()) : ?>
 									<div class="activity-meta no-ajax">
-										<a href="<?php echo $this->get_delete_url(); ?>" class="button item-button bp-secondary-action delete-activity-single confirm" rel="nofollow">Delete</a>
+										<a href="<?php echo $this->get_delete_url(); ?>" class="button item-button bp-secondary-action delete-activity-single confirm" rel="nofollow"><?php _e("Delete",$bp_media->text_domain); ?></a>
 									</div>
 								<?php endif; ?>
 							</div>
@@ -489,7 +492,7 @@ class BPMediaHostWordpress {
 	 *
 	 */
         function update_media_activity(){
-            global $wpdb, $bp, $current_user;
+            global $wpdb, $bp, $current_user,$bp_media;
             $q = $wpdb->prepare( "SELECT id FROM {$bp->activity->table_name} WHERE type = %s AND item_id = %d", 'media_upload', $this->id);
             $activities = $wpdb->get_results($q);
             if(isset($activities) && count($activities) > 0){
@@ -503,7 +506,7 @@ class BPMediaHostWordpress {
                                 'content' => $this->get_media_activity_content(),
                                 'id' => $activity->id,
                                 'type' => 'media_upload',
-                                'action' => apply_filters( 'bp_media_added_media', sprintf( __( '%1$s added a %2$s', 'bp-media'), bp_core_get_userlink( $this->get_author() ), '<a href="' . $this->get_url() . '">' . $this->get_media_activity_type() . '</a>' ) ),
+                                'action' => apply_filters( 'bp_media_added_media', sprintf( __( '%1$s added a %2$s', $bp_media->text_domain), bp_core_get_userlink( $this->get_author() ), '<a href="' . $this->get_url() . '">' . $this->get_media_activity_type() . '</a>' ) ),
                                 'primary_link' => $this->get_url(),
                                 'item_id' => $this->get_id(),
                                 'recorded_time' => $activity->date_recorded,

@@ -23,23 +23,24 @@
 	    }
 
 	    function create_screen() {
+                global $bp_media;
 	        if ( !bp_is_group_creation_step( $this->slug ) )
 	            return false;
 	        ?>
-			<h4>Album Creation Control</h4>
-			<p>Who can create Albums in this group?</p>
+			<h4><?php _e("Album Creation Control",$bp_media->text_domain);?></h4>
+			<p><?php _e("Who can create Albums in this group?",$bp_media->text_domain);?></p>
 			<div class="radio">
 				<label>
 					<input name="bp_album_creation_control" type="radio" id="bp_media_group_level_moderators" checked="checked" value="all">
-					<strong>All Group Members</strong>
+					<strong><?php _e("All Group Members",$bp_media->text_domain);?></strong>
 				</label>
 				<label>
 					<input name="bp_album_creation_control" type="radio" id="bp_media_group_level_moderators" value="moderators">
-					<strong>Group Admins and Mods only</strong>
+					<strong><?php _e("Group Admins and Mods only",$bp_media->text_domain);?></strong>
 				</label>
 				<label>
 					<input name="bp_album_creation_control" type="radio" id="bp_media_group_level_admin" value="admin">
-					<strong>Group Admin only</strong>
+					<strong><?php _e("Group Admin only",$bp_media->text_domain);?></strong>
 				</label>
 			</div>
 
@@ -58,35 +59,36 @@
 	    }
 
 	    function edit_screen() {
+                global $bp_media;
 	        if ( !bp_is_group_admin_screen( $this->slug ) )
 	            return false;
 			$current_level = groups_get_groupmeta(bp_get_current_group_id(),'bp_media_group_control_level');
 			?>
 
-	        <h4>Album Creation Control</h4>
-			<p>Who can create Albums in this group?</p>
+	        <h4><?php _e("Album Creation Control",$bp_media->text_domain);?></h4>
+			<p><?php _e("Who can create Albums in this group?",$bp_media->text_domain);?></p>
 			<div class="radio">
 				<label>
 					<input name="bp_album_creation_control" type="radio" id="bp_media_group_level_moderators"  value="all"<?php checked($current_level, 'all', true) ?>>
-					<strong>All Group Members</strong>
+					<strong><?php _e("All Group Members",$bp_media->text_domain);?></strong>
 				</label>
 				<label>
 					<input name="bp_album_creation_control" type="radio" id="bp_media_group_level_moderators" value="moderators" <?php checked($current_level, 'moderators', true) ?>>
-					<strong>Group Admins and Mods only</strong>
+					<strong><?php _e("Group Admins and Mods only",$bp_media->text_domain);?></strong>
 				</label>
 				<label>
 					<input name="bp_album_creation_control" type="radio" id="bp_media_group_level_admin" value="admin" <?php checked($current_level, 'admin', true) ?>>
-					<strong>Group Admin only</strong>
+					<strong><?php _e("Group Admin only",$bp_media->text_domain);?></strong>
 				</label>
 			</div>
 			<hr>
-	        <input type="submit" name="save" value="Save Changes" />
+	        <input type="submit" name="save" value="<?php _e("Save Changes",$bp_media->text_domain);?> />
 	        <?php
 	        wp_nonce_field( 'groups_edit_save_' . $this->slug );
 	    }
 
 	    function edit_screen_save() {
-	        global $bp;
+	        global $bp,$bp_media;
 
 	        if ( !isset( $_POST['save'] ) )
 	            return false;
@@ -100,9 +102,9 @@
 
 	        /* To post an error/success message to the screen, use the following */
 	        if ( !$success )
-	            bp_core_add_message( __( 'There was an error saving, please try again', 'buddypress' ), 'error' );
+	            bp_core_add_message( __( 'There was an error saving, please try again', $bp_media->text_domain ), 'error' );
 	        else
-	            bp_core_add_message( __( 'Settings saved successfully', 'buddypress' ) );
+	            bp_core_add_message( __( 'Settings saved successfully', $bp_media->text_domain ) );
 
 	        bp_core_redirect( bp_get_group_permalink( $bp->groups->current_group ) . '/admin/' . $this->slug );
 	    }
@@ -117,12 +119,14 @@
 	    }
 
 
-	    function widget_display() { ?>
-	        <div class="info-group">
+	    function widget_display() { 
+                global $bp_media;
+                ?>
+                 <div class="info-group" >
 	            <h4><?php echo esc_attr( $this->name ) ?></h4>
 	            <p>
-	                You could display a small snippet of information from your group extension here. It will show on the group
-	                home screen.
+	                <?php _e("You could display a small snippet of information from your group extension here. It will show on the group
+	                home screen.",$bp_media->text_domain);?>
 	            </p>
 	        </div>
 	        <?php
