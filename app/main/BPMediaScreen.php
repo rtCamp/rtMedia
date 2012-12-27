@@ -93,8 +93,9 @@ class BPMediaScreen {
 	}
 
 	function screen_content() {
-		global $bp_media;
-		$bp_media_query = $this->set_query();
+		global $bp_media, $bp_media_query, $bp_media_albums_query;
+		$this->set_query();
+
 		$this->hook_before();
 		if ( $bp_media_query && $bp_media_query->have_posts() ):
 			echo '<ul id="bp-media-list" class="bp-media-gallery item-list">';
@@ -110,6 +111,20 @@ class BPMediaScreen {
 	}
 
 	function entry_screen() {
+		global $bp_media_current_entry;
+		$entryslug = 'BP_MEDIA_' . $this->media_const . '_ENTRY_SLUG';
+		if ( ! $bp->action_variables[ 0 ] == constant( $entryslug ) )
+			return false;
+		try {
+			$bp_media_current_entry = new BPMediaHostWordpress( $bp->action_variables[ 1 ] );
+		} catch ( Exception $e ) {
+			/* Send the values to the cookie for page reload display */
+			@setcookie( 'bp-message', $_COOKIE[ 'bp-message' ], time() + 60 * 60 * 24, COOKIEPATH );
+			@setcookie( 'bp-message-type', $_COOKIE[ 'bp-message-type' ], time() + 60 * 60 * 24, COOKIEPATH );
+			$this->template_redirect();
+			exit;
+		}
+		print_r($bp_media_current_entry);
 		$this->template_actions( 'entry_screen' );
 		$this->template_loader();
 	}
@@ -348,7 +363,7 @@ class BPMediaScreen {
 	}
 
 	public function set_query() {
-		global $bp, $bp_media_posts_per_page;
+		global $bp, $bp_media_posts_per_page, $bp_media_query;
 		switch ( $bp->current_action ) {
 			case BP_MEDIA_IMAGES_SLUG:
 				$type = 'image';
@@ -358,9 +373,6 @@ class BPMediaScreen {
 				break;
 			case BP_MEDIA_VIDEOS_SLUG:
 				$type = 'video';
-				break;
-			case BP_MEDIA_ALBUMS_SLUG:
-				$type = 'album';
 				break;
 			default :
 				$type = null;
@@ -382,13 +394,8 @@ class BPMediaScreen {
 				'paged' => $paged,
 				'posts_per_page' => $bp_media_posts_per_page
 			);
-			if ( $type == 'album' ) {
-				$args[ 'post_type' ] = 'bp_media_album';
-				$args[ 'post_mime_type' ] = '';
-			}
 
 			$bp_media_query = new WP_Query( $args );
-			return $bp_media_query;
 		}
 	}
 
@@ -434,7 +441,7 @@ class BPMediaScreen {
 				break;
 			case 'albums':
 				global $bp_media_albums_query;
-				if ( isset( $bp_media_query->found_posts ) && $bp_media_query->found_posts > 10 )
+				if ( isset( $bp_media_albums_query->found_posts ) && $bp_media_albums_query->found_posts > 10 )
 					$showmore = true;
 				break;
 		}
