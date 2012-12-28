@@ -82,7 +82,7 @@ class BPMediaComponent extends BP_Component {
 		$bp_media_video = new BPMediaScreen( 'video', BP_MEDIA_VIDEOS_SLUG );
 		$bp_media_audio = new BPMediaScreen( 'audio', BP_MEDIA_AUDIO_SLUG );
 
-		$bp_media_album = new BPMediaScreen( 'album', BP_MEDIA_ALBUMS_SLUG );
+		$bp_media_album = new BPMediaAlbumScreen( 'album', BP_MEDIA_ALBUMS_SLUG );
 		switch ( $bp->current_component ) {
 			case BP_MEDIA_IMAGES_SLUG:
 				if ( is_numeric( $bp->current_action ) ) {
