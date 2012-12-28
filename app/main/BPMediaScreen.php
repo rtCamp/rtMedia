@@ -332,7 +332,7 @@ class BPMediaScreen {
 
 	function upload_enqueue() {
 		$params = array(
-			'url' => plugins_url( 'includes/bp-media-upload-handler.php', __FILE__ ),
+			'url' => BP_MEDIA_URL.'app/main/includes/bp-media-upload-handler.php',
 			'runtimes' => 'gears,html5,flash,silverlight,browserplus',
 			'browse_button' => 'bp-media-upload-browse-button',
 			'container' => 'bp-media-upload-ui',
