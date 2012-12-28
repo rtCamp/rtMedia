@@ -111,11 +111,13 @@ class BPMediaScreen {
 	}
 
 	function entry_screen() {
-		global $bp_media_current_entry;
+
+		global $bp, $bp_media_current_entry;
 		$entryslug = 'BP_MEDIA_' . $this->media_const . '_ENTRY_SLUG';
 		if ( ! $bp->action_variables[ 0 ] == constant( $entryslug ) )
 			return false;
 		try {
+
 			$bp_media_current_entry = new BPMediaHostWordpress( $bp->action_variables[ 1 ] );
 		} catch ( Exception $e ) {
 			/* Send the values to the cookie for page reload display */
@@ -124,12 +126,13 @@ class BPMediaScreen {
 			$this->template_redirect();
 			exit;
 		}
-		print_r($bp_media_current_entry);
+
 		$this->template_actions( 'entry_screen' );
 		$this->template_loader();
 	}
 
 	function entry_screen_title() {
+
 		global $bp_media_current_entry;
 		/** @var $bp_media_current_entry BP_Media_Host_Wordpress */
 		if ( is_object( $bp_media_current_entry ) )
@@ -137,27 +140,16 @@ class BPMediaScreen {
 	}
 
 	function entry_screen_content() {
-		global $bp, $bp_media, $bp_media_current_entry;
-		if ( ! isset( $bp->action_variables[ 1 ] ) ) {
-			$this->page_not_exist();
-		}
-		try {
-			$bp_media_current_entry = new BPMediaHostWordpress( $bp->action_variables[ 1 ] );
-			if ( $bp_media_current_entry->get_author() != bp_displayed_user_id() )
-				throw new Exception( __( 'Sorry, the requested media does not belong to the user', $bp_media->text_domain ) );
-		} catch ( Exception $e ) {
-			/* Send the values to the cookie for page reload display */
-			if ( isset( $_COOKIE[ 'bp-message' ] ) && $_COOKIE[ 'bp-message' ] != '' ) {
-				@setcookie( 'bp-message', $_COOKIE[ 'bp-message' ], time() + 60 * 60 * 24, COOKIEPATH );
-				@setcookie( 'bp-message-type', $_COOKIE[ 'bp-message-type' ], time() + 60 * 60 * 24, COOKIEPATH );
-			} else {
-				@setcookie( 'bp-message', $e->getMessage(), time() + 60 * 60 * 24, COOKIEPATH );
-				@setcookie( 'bp-message-type', 'error', time() + 60 * 60 * 24, COOKIEPATH );
-			}
-			$this->template_redirect();
-			exit;
-		}
-		$this->template_actions( 'entry_screen' );
+		global $bp, $bp_media_current_entry;
+		$entryslug = 'BP_MEDIA_' . $this->media_const . '_ENTRY_SLUG';
+		if ( ! $bp->action_variables[ 0 ] == constant( $entryslug ) )
+			return false;
+		do_action( 'bp_media_before_content' );
+		echo '<div class="bp-media-single bp-media-image">';
+		echo $bp_media_current_entry->get_media_single_content();
+		echo $bp_media_current_entry->show_comment_form();
+		echo '</div>';
+		do_action( 'bp_media_after_content' );
 	}
 
 	function edit_screen() {

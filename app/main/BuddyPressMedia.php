@@ -28,10 +28,11 @@ class BuddyPressMedia {
 	public $hidden_activity_cache = array( );
 	public $loader;
         public $group_loader;
-        
+
 	public function __construct() {
 
 		$this->constants();
+		$this->excerpt_lengths();
 	}
 
 	public function get_option() {
@@ -168,8 +169,8 @@ class BuddyPressMedia {
 			$this->loader = new BPMediaLoader();
 //require( BP_MEDIA_PATH . '/includes/bp-media-groups-loader.php');
                        $this->group_loader= new BPMediaGroup();
-                        
-                        
+
+
 		}
 
 		if ( file_exists( BP_MEDIA_PATH . '/languages/' . get_locale() . '.mo' ) )
@@ -222,6 +223,7 @@ class BuddyPressMedia {
 	}
 
 	function excerpt_lengths() {
+		global $bp_media_default_excerpts;
 		$def_excerpt = array(
 			'single_entry_title' => 100,
 			'single_entry_description' => 500,
@@ -229,7 +231,7 @@ class BuddyPressMedia {
 			'activity_entry_description' => 500
 		);
 
-		return apply_filters( 'bpm_excerpt_lengths', $def_excerpt );
+		$bp_media_default_excerpts = apply_filters( 'bpm_excerpt_lengths', $def_excerpt );
 	}
 
 	public function admin_notice() {
