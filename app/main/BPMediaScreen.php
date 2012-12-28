@@ -93,8 +93,9 @@ class BPMediaScreen {
 	}
 
 	function screen_content() {
-		global $bp_media;
-		$bp_media_query = $this->set_query();
+		global $bp_media, $bp_media_query, $bp_media_albums_query;
+		$this->set_query();
+
 		$this->hook_before();
 		if ( $bp_media_query && $bp_media_query->have_posts() ):
 			echo '<ul id="bp-media-list" class="bp-media-gallery item-list">';
@@ -110,11 +111,28 @@ class BPMediaScreen {
 	}
 
 	function entry_screen() {
+
+		global $bp, $bp_media_current_entry;
+		$entryslug = 'BP_MEDIA_' . $this->media_const . '_ENTRY_SLUG';
+		if ( ! $bp->action_variables[ 0 ] == constant( $entryslug ) )
+			return false;
+		try {
+
+			$bp_media_current_entry = new BPMediaHostWordpress( $bp->action_variables[ 1 ] );
+		} catch ( Exception $e ) {
+			/* Send the values to the cookie for page reload display */
+			@setcookie( 'bp-message', $_COOKIE[ 'bp-message' ], time() + 60 * 60 * 24, COOKIEPATH );
+			@setcookie( 'bp-message-type', $_COOKIE[ 'bp-message-type' ], time() + 60 * 60 * 24, COOKIEPATH );
+			$this->template_redirect();
+			exit;
+		}
+
 		$this->template_actions( 'entry_screen' );
 		$this->template_loader();
 	}
 
 	function entry_screen_title() {
+
 		global $bp_media_current_entry;
 		/** @var $bp_media_current_entry BP_Media_Host_Wordpress */
 		if ( is_object( $bp_media_current_entry ) )
@@ -122,27 +140,16 @@ class BPMediaScreen {
 	}
 
 	function entry_screen_content() {
-		global $bp, $bp_media, $bp_media_current_entry;
-		if ( ! isset( $bp->action_variables[ 1 ] ) ) {
-			$this->page_not_exist();
-		}
-		try {
-			$bp_media_current_entry = new BPMediaHostWordpress( $bp->action_variables[ 1 ] );
-			if ( $bp_media_current_entry->get_author() != bp_displayed_user_id() )
-				throw new Exception( __( 'Sorry, the requested media does not belong to the user', $bp_media->text_domain ) );
-		} catch ( Exception $e ) {
-			/* Send the values to the cookie for page reload display */
-			if ( isset( $_COOKIE[ 'bp-message' ] ) && $_COOKIE[ 'bp-message' ] != '' ) {
-				@setcookie( 'bp-message', $_COOKIE[ 'bp-message' ], time() + 60 * 60 * 24, COOKIEPATH );
-				@setcookie( 'bp-message-type', $_COOKIE[ 'bp-message-type' ], time() + 60 * 60 * 24, COOKIEPATH );
-			} else {
-				@setcookie( 'bp-message', $e->getMessage(), time() + 60 * 60 * 24, COOKIEPATH );
-				@setcookie( 'bp-message-type', 'error', time() + 60 * 60 * 24, COOKIEPATH );
-			}
-			$this->template_redirect();
-			exit;
-		}
-		$this->template_actions( 'entry_screen' );
+		global $bp, $bp_media_current_entry;
+		$entryslug = 'BP_MEDIA_' . $this->media_const . '_ENTRY_SLUG';
+		if ( ! $bp->action_variables[ 0 ] == constant( $entryslug ) )
+			return false;
+		do_action( 'bp_media_before_content' );
+		echo '<div class="bp-media-single bp-media-image">';
+		echo $bp_media_current_entry->get_media_single_content();
+		echo $bp_media_current_entry->show_comment_form();
+		echo '</div>';
+		do_action( 'bp_media_after_content' );
 	}
 
 	function edit_screen() {
@@ -348,7 +355,7 @@ class BPMediaScreen {
 	}
 
 	public function set_query() {
-		global $bp, $bp_media_posts_per_page;
+		global $bp, $bp_media_posts_per_page, $bp_media_query;
 		switch ( $bp->current_action ) {
 			case BP_MEDIA_IMAGES_SLUG:
 				$type = 'image';
@@ -358,9 +365,6 @@ class BPMediaScreen {
 				break;
 			case BP_MEDIA_VIDEOS_SLUG:
 				$type = 'video';
-				break;
-			case BP_MEDIA_ALBUMS_SLUG:
-				$type = 'album';
 				break;
 			default :
 				$type = null;
@@ -382,13 +386,8 @@ class BPMediaScreen {
 				'paged' => $paged,
 				'posts_per_page' => $bp_media_posts_per_page
 			);
-			if ( $type == 'album' ) {
-				$args[ 'post_type' ] = 'bp_media_album';
-				$args[ 'post_mime_type' ] = '';
-			}
 
 			$bp_media_query = new WP_Query( $args );
-			return $bp_media_query;
 		}
 	}
 
@@ -435,7 +434,7 @@ class BPMediaScreen {
 				break;
 			case 'albums':
 				global $bp_media_albums_query;
-				if ( isset( $bp_media_query->found_posts ) && $bp_media_query->found_posts > 10 )
+				if ( isset( $bp_media_albums_query->found_posts ) && $bp_media_albums_query->found_posts > 10 )
 					$showmore = true;
 				break;
 		}
