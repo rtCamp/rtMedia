@@ -48,7 +48,7 @@ function bp_media_handle_uploads() {
 					$bp->{BP_MEDIA_SLUG}->messages['error'][] = __('File uploaded is not supported');
 					return;
 			}
-			$class_name = apply_filters('bp_media_transcoder','BP_Media_Host_Wordpress',$type);
+			$class_name = apply_filters('bp_media_transcoder','BPMediaHostWordpress',$type);
 			$bp_media_entry = new $class_name();
 			try {
 				$title = isset($_POST['bp_media_title']) ? ($_POST['bp_media_title'] != "") ? $_POST['bp_media_title'] : pathinfo($_FILES['bp_media_file']['name'], PATHINFO_FILENAME) : pathinfo($_FILES['bp_media_file']['name'], PATHINFO_FILENAME);
@@ -95,8 +95,8 @@ add_action('bp_media_before_content', 'bp_media_show_messages');
 function bp_media_enqueue_scripts_styles() {
 
 	wp_enqueue_script('jquery-ui-tabs');
-    wp_enqueue_script('bp-media-mejs', plugins_url('includes/media-element/mediaelement-and-player.min.js', dirname(__FILE__)));
-	wp_enqueue_script('bp-media-default', plugins_url('includes/js/bp-media.js', dirname(__FILE__)));
+    wp_enqueue_script('bp-media-mejs', BP_MEDIA_URL.'app/main/includes/media-element/mediaelement-and-player.min.js');
+	wp_enqueue_script('bp-media-default', BP_MEDIA_URL.'app/assets/js/bp-media.js');
 	global $bp;
 	$bp_media_vars = array(
 		'ajaxurl' => admin_url( 'admin-ajax.php'),
@@ -108,8 +108,8 @@ function bp_media_enqueue_scripts_styles() {
 		'current_group'	=> bp_get_current_group_id()
 	);
 	wp_localize_script( 'bp-media-default', 'bp_media_vars', $bp_media_vars );
-    wp_enqueue_style('bp-media-mecss', plugins_url('includes/media-element/mediaelementplayer.min.css', dirname(__FILE__)));
-	wp_enqueue_style('bp-media-default', plugins_url('includes/css/bp-media-style.css', dirname(__FILE__)));
+    wp_enqueue_style('bp-media-mecss', BP_MEDIA_URL.'app/main/includes/media-element/mediaelementplayer.min.css');
+	wp_enqueue_style('bp-media-default', BP_MEDIA_URL.'app/assets/css/main.css');
 
 }
 add_action('wp_enqueue_scripts', 'bp_media_enqueue_scripts_styles', 11);
@@ -298,9 +298,9 @@ function bp_media_upload_enqueue(){
 		'multi_selection'		=> true,
 		'multipart_params'	=> apply_filters('bp_media_multipart_params_filter',array('action'=>'wp_handle_upload'))
 	);
-	wp_enqueue_script('bp-media-uploader',plugins_url('js/bp-media-uploader.js',__FILE__),array('plupload', 'plupload-html5', 'plupload-flash', 'plupload-silverlight', 'plupload-html4','plupload-handlers','jquery-ui-core','jquery-ui-widget','jquery-ui-position','jquery-ui-dialog'));
+	wp_enqueue_script('bp-media-uploader',BP_MEDIA_URL.'app/assets/js/bp-media-uploader.js',array('plupload', 'plupload-html5', 'plupload-flash', 'plupload-silverlight', 'plupload-html4','plupload-handlers','jquery-ui-core','jquery-ui-widget','jquery-ui-position','jquery-ui-dialog'));
 	wp_localize_script('bp-media-uploader','bp_media_uploader_params',$params);
-	wp_enqueue_style('bp-media-default',plugins_url('css/bp-media-style.css',__FILE__));
+	wp_enqueue_style('bp-media-default',BP_MEDIA_URL.'app/assets/css/main.css');
 //	wp_enqueue_style("wp-jquery-ui-dialog"); //Its not styling the Dialog box as it should so using different styling
 	wp_enqueue_style('jquery-style', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/themes/smoothness/jquery-ui.css');
 }
@@ -333,34 +333,6 @@ function bp_media_albums_set_query() {
 		);
 		$bp_media_albums_query = new WP_Query($args);
 	}
-}
-
-/**
- * Called on bp_init by screen functions
- *
- * @uses global $bp, $bp_media_query
- *
- * @since BP Media 2.2
- */
-function bp_media_albums_set_inner_query($album_id=0) {
-	global $bp, $bp_media_query;
-	$paged = 0;
-	$action_variables = isset($bp->canonical_stack['action_variables'])?$bp->canonical_stack['action_variables']:null;
-	if (isset($action_variables) && is_array($action_variables) && isset($action_variables[0])) {
-		if($action_variables[0] == 'page' && isset($action_variables[1]) && is_numeric($action_variables[1]))
-			$paged = $action_variables[1];
-		else if(isset($action_variables[1]) && $action_variables[1] == 'page' && isset($action_variables[2]) && is_numeric($action_variables[2]))
-			$paged = $action_variables[2];
-	}
-	if(!$paged)
-		$paged = 1;
-	$args = array(
-		'post_type' => 'attachment',
-		'post_status'	=>	'any',
-		'post_parent'=>$album_id,
-		'paged' => $paged
-	);
-	$bp_media_query = new WP_Query($args);
 }
 
 /**

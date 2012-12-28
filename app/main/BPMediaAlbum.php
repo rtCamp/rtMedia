@@ -89,7 +89,7 @@ class BPMediaAlbum{
                                 $this->thumbnail = '<span><img src="'.wp_get_attachment_thumb_url( $attachment->ID ).'"></span>';
                         }
                 }else{
-			$this->thumbnail = '<img src = '.plugins_url('img/image_thumb.png', __FILE__) .' />';
+			$this->thumbnail = '<img src ="'.BP_MEDIA_URL.'app/assets/img/image_thumb.png">';
 		}
 		$this->media_entries = get_children(array(
 			'post_parent' => $this->id,

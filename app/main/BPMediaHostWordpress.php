@@ -311,7 +311,7 @@ class BPMediaHostWordpress {
 					$thumb_url = $medium_array[0];
 				}
 				else{
-					$thumb_url = plugins_url('img/video_thumb.png', __FILE__);
+					$thumb_url = BP_MEDIA_URL.'app/assets/img/video_thumb.png';
 				}
 				?>
 				<li>
@@ -328,7 +328,7 @@ class BPMediaHostWordpress {
 					$thumb_url = $medium_array[0];
 				}
 				else{
-					$thumb_url = plugins_url('img/audio_thumb.png', __FILE__);
+					$thumb_url = BP_MEDIA_URL.'app/assets/img/audio_thumb.png';
 				}
 				?>
 				<li>
@@ -552,7 +552,7 @@ class BPMediaHostWordpress {
 					$thumb_url = $medium_array[0];
 				}
 				else{
-					$thumb_url = plugins_url('img/video_thumb.png', __FILE__);
+					$thumb_url = BP_MEDIA_URL.'app/assets/img/video_thumb.png';
 				}
 				break;
 			case 'audio' :
@@ -561,7 +561,7 @@ class BPMediaHostWordpress {
 					$thumb_url = $medium_array[0];
 				}
 				else{
-					$thumb_url = plugins_url('img/audio_thumb.png', __FILE__);
+					$thumb_url = BP_MEDIA_URL.'app/assets/img/audio_thumb.png';
 				}
 				break;
 			case 'image' :

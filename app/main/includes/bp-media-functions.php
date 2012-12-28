@@ -62,8 +62,8 @@ function bp_media_show_formatted_error_message($messages, $type) {
 }
 
 function bp_media_conditional_override_allowed_tags($content, $activity=null) {
-	global $bp_media_activity_types;
-	if ($activity != null && in_array($activity->type,$bp_media_activity_types)) {
+	global $bp_media;
+	if ($activity != null && in_array($activity->type,$bp_media->activity_types)) {
 		add_filter('bp_activity_allowed_tags', 'bp_media_override_allowed_tags', 1);
 	}
 	return bp_activity_filter_kses($content);
