@@ -1,6 +1,6 @@
 <?php
 /**
- * Description of BPMediaGroupLoader
+ * Description of BPMediaGroup
  *
  * @author faishal
  */
@@ -212,155 +212,117 @@ class BPMediaGroup {
 		}
 		return false;
 	}
-	function bp_media_groups_display_screen() {
+    static function bp_media_groups_display_screen() {
         global $bp_media_group_sub_nav, $bp,$bp_media;
         BPMediaGroupAction::bp_media_groups_set_query();
         BPMediaGroup::bp_media_groups_display_navigation_menu();
         if (bp_action_variable(0)) {
+            $media_type="";
+            $slug="";
             switch (bp_action_variable(0)) {
                 case BP_MEDIA_IMAGES_SLUG:
+                    $media_type="image";
+                    $slug= BP_MEDIA_VIDEOS_SLUG;
                     BPMediaGroup::bp_media_groups_images_screen();
                     break;
                 case BP_MEDIA_VIDEOS_SLUG:
-                    if (isset($bp->action_variables[1])) {
-                        switch ($bp->action_variables[1]) {
-                            case BP_MEDIA_VIDEOS_EDIT_SLUG:
-                                //Edit screen for image
-                                break;
-                            case BP_MEDIA_DELETE_SLUG:
-                                //Delete function for media file
-                                break;
-                            default:
-                                if (intval(bp_action_variable(1)) > 0) {
-                                    global $bp_media_current_entry;
-                                    try {
-                                        $bp_media_current_entry = new BP_Media_Host_Wordpress(bp_action_variable(1));
-                                        if ($bp_media_current_entry->get_group_id() != bp_get_current_group_id())
-                                            throw new Exception(__('Sorry, the requested media does not belong to the group',$bp_media->text_domain));
-                                    } catch (Exception $e) {
-                                        /** Error Handling when media not present or not belong to the group */
-                                        BPMediaGroup::bp_media_display_error($e->getMessage());
-                                        return;
-                                    }
-                                    bp_media_videos_entry_screen_content();
-                                    break;
-                                } else {
-                                    /** @todo display 404 */
-                                }
-                        }
-                    } else {
-                        bp_media_videos_screen_content();
-                    }
+                    $media_type="video";
+                    $slug= BP_MEDIA_VIDEOS_SLUG;
                     break;
                 case BP_MEDIA_AUDIO_SLUG:
-                    if (isset($bp->action_variables[1])) {
-                        switch ($bp->action_variables[1]) {
-                            case BP_MEDIA_AUDIO_EDIT_SLUG:
-                                //Edit screen for image
-                                break;
-                            case BP_MEDIA_DELETE_SLUG:
-                                //Delete function for media file
-                                break;
-                            default:
-                                if (intval(bp_action_variable(1)) > 0) {
-                                    global $bp_media_current_entry;
-                                    try {
-                                        $bp_media_current_entry = new BP_Media_Host_Wordpress(bp_action_variable(1));
-                                        if ($bp_media_current_entry->get_group_id() != bp_get_current_group_id())
-                                            throw new Exception(__('Sorry, the requested media does not belong to the group',$bp_media->text_domain));
-                                    } catch (Exception $e) {
-                                        /** Error Handling when media not present or not belong to the group */
-                                        BPMediaGroup::bp_media_display_error($e->getMessage());
-                                        return;
-                                    }
-                                    bp_media_audio_entry_screen_content();
-                                    break;
-                                } else {
-                                    /** @todo display 404 */
-                                }
-                        }
-                    } else {
-                        bp_media_audio_screen_content();
-                    }
+                    $media_type="audio";
+                    $slug= BP_MEDIA_AUDIO_SLUG;
                     break;
                 case BP_MEDIA_ALBUMS_SLUG:
-                    if (isset($bp->action_variables[1])) {
-                        switch ($bp->action_variables[1]) {
-                            case BP_MEDIA_ALBUMS_EDIT_SLUG:
-                                //Edit screen for image
-                                break;
-                            case BP_MEDIA_DELETE_SLUG:
-                                //Delete function for media file
-                                break;
-                            default:
-                                if (intval(bp_action_variable(1)) > 0) {
-                                    global $bp_media_current_album;
-                                    try {
-                                        $bp_media_current_album = new BP_Media_Host_Wordpress(bp_action_variable(1));
-                                        if ($bp_media_current_album->get_group_id() != bp_get_current_group_id())
-                                            throw new Exception(__('Sorry, the requested album does not belong to the group',$bp_media->text_domain));
-                                    } catch (Exception $e) {
-                                        /** Error Handling when media not present or not belong to the group */
-                                        BPMediaGroup::bp_media_display_error($e->getMessage());
-                                        return;
-                                    }
-                                    bp_media_albums_entry_screen_content();
-                                    break;
-                                } else {
-                                    /** @todo display 404 */
-                                }
-                        }
-                    } else {
-                        BPMediaGroupAction::bp_media_groups_albums_set_query();
-                        bp_media_albums_screen_content();
-                    }
+                    $media_type="album";
+                    $slug= BP_MEDIA_ALBUMS_SLUG;
                     break;
                 default:
                 /** @todo Error is to be displayed for 404 */
             }
+             if ($slug != "" && $media_type != "") {
+                if (isset($bp->action_variables[1])) {
+                    switch ($bp->action_variables[1]) {
+                        case 'edit':
+                            //Edit screen for image
+                            break;
+                        case 'delete':
+                            //Delete function for media file
+                            break;
+                        default:
+                            if (intval(bp_action_variable(1)) > 0) {
+                                global $bp_media_current_entry;
+                                try {
+                                    $bp_media_current_entry = new BPMediaHostWordpress(bp_action_variable(1));
+                                    if ($bp_media_current_entry->get_group_id() != bp_get_current_group_id())
+                                        throw new Exception(__('Sorry, the requested media does not belong to the group', $bp_media->text_domain));
+                                } catch (Exception $e) {
+                                    /** Error Handling when media not present or not belong to the group */
+                                    BPMediaGroup::bp_media_display_error($e->getMessage());
+                                    return;
+                                }
+                                $bp_media_content = new BPMediaScreen($media_type, $slug);
+                                $bp_media_content->entry_screen_content();
+                                break;
+                            } else {
+                                /** @todo display 404 */
+                            }
+                    }
+                } else {
+                    if($media_type=="album")
+                        BPMediaGroupAction::bp_media_groups_albums_set_query ();
+                    $bp_media_content = new BPMediaScreen($media_type, $slug);
+                    $bp_media_content->screen_content();
+                }
+            }
         } else {
-            if (BPMediaGroup::bp_media_groups_can_upload())
-                bp_media_upload_screen_content();
+            if (BPMediaGroup::bp_media_groups_can_upload()){
+                $bp_media_upload = new BPMediaScreen( 'upload', BP_MEDIA_UPLOAD_SLUG );
+                $bp_media_upload->upload_screen_content();
+            }
             else {
                 $bp->action_variables[0] = BP_MEDIA_IMAGES_SLUG;
                 BPMediaGroupAction::bp_media_groups_set_query();
-                BPMediaGroup::bp_media_groups_images_screen();
+                BPMediaGroup::bp_media_groups_display_screen();
             }
         }
     }
 
-    static function bp_media_groups_images_screen() {
-        global $bp_media_current_entry;
-        if (bp_action_variable(1)) {
-            switch (bp_action_variable(1)) {
-                case BP_MEDIA_IMAGES_EDIT_SLUG:
-                    //Edit screen for image
-                    break;
-                case BP_MEDIA_DELETE_SLUG:
-                    //Delete function for media file
-                    break;
-                default:
-                    if (intval(bp_action_variable(1)) > 0) {
-                        global $bp_media_current_entry;
-                        try {
-                            $bp_media_current_entry = new BP_Media_Host_Wordpress(bp_action_variable(1));
-                            if ($bp_media_current_entry->get_group_id() != bp_get_current_group_id())
-                                throw new Exception(__('Sorry, the requested media does not belong to the group',$bp_media->text_domain));
-                        } catch (Exception $e) {
-                            /** Error Handling when media not present or not belong to the group */
-                            BPMediaGroup::bp_media_display_error($e->getMessage());
-                            return;
-                        }
-                        bp_media_images_entry_screen_content();
-                        break;
-                    } else {
-                        /** @todo display 404 */
-                    }
-            }
-        } else {
-            bp_media_images_screen_content();
-        }
-    }
+//    static function bp_media_groups_images_screen() {
+//        global $bp_media_current_entry,$bp_media;
+//        if (bp_action_variable(1)) {
+//            switch (bp_action_variable(1)) {
+//                case BP_MEDIA_IMAGES_EDIT_SLUG:
+//                    //Edit screen for image
+//                    break;
+//                case BP_MEDIA_DELETE_SLUG:
+//                    //Delete function for media file
+//                    break;
+//                default:
+//                    if (intval(bp_action_variable(1)) > 0) {
+//                        global $bp_media_current_entry;
+//                        try {
+//                            $bp_media_current_entry = new BP_Media_Host_Wordpress(bp_action_variable(1));
+//                            if ($bp_media_current_entry->get_group_id() != bp_get_current_group_id())
+//                                throw new Exception(__('Sorry, the requested media does not belong to the group',$bp_media->text_domain));
+//                        } catch (Exception $e) {
+//                            /** Error Handling when media not present or not belong to the group */
+//                            BPMediaGroup::bp_media_display_error($e->getMessage());
+//                            return;
+//                        }
+//                        $bp_media_image = new BPMediaScreen( 'image', BP_MEDIA_IMAGES_SLUG );
+//                        $bp_media_image->edit_screen_content();
+//                        break;
+//                    } else {
+//                        /** @todo display 404 */
+//                    }
+//            }
+//        } else {
+//            $bp_media_image = new BPMediaScreen( 'image', BP_MEDIA_IMAGES_SLUG );
+//            $bp_media_image->screen_content();
+//            
+//        }
+//    }
     static function  bp_media_display_error($errorMessage){ 
         global $bp_media;
         ?>
