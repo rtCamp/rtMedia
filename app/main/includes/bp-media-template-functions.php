@@ -205,7 +205,7 @@ function bp_media_the_content($id = 0) {
 		$media = &get_post($id);
 	if (empty($media->ID))
 		return false;
-	if (!$media->post_type == 'bp_media')
+	if ($media->post_type != 'bp_media')
 		return false;
 	try{
 		$media = new BP_Media_Host_Wordpress($media->ID);

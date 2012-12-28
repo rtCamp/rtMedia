@@ -1,5 +1,5 @@
 <?php
-class BP_Media_Host_Wordpress {
+class BPMediaHostWordpress {
 
 	/**
 	 * Private variables not to be accessible outside this class' member functions
@@ -102,7 +102,7 @@ class BP_Media_Host_Wordpress {
 			case 'video/mp4' :
 			case 'video/quicktime' :
 				$type = 'video';
-				include_once(trailingslashit(BP_MEDIA_PLUGIN_DIR) . 'includes/lib/getid3/getid3.php');
+				include_once(trailingslashit(BP_MEDIA_PATH) . 'includes/lib/getid3/getid3.php');
 				try {
 					$getID3 = new getID3;
 					$vid_info = $getID3->analyze($file);
@@ -131,7 +131,7 @@ class BP_Media_Host_Wordpress {
 				$bp_media_count['videos'] = intval($bp_media_count['videos']) + 1;
 				break;
 			case 'audio/mpeg' :
-				include_once(trailingslashit(BP_MEDIA_PLUGIN_DIR) . 'includes/lib/getid3/getid3.php');
+				include_once(trailingslashit(BP_MEDIA_PATH) . 'includes/lib/getid3/getid3.php');
 				try {
 					$getID3 = new getID3;
 					$file_info = $getID3->analyze($file);

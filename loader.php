@@ -1,12 +1,5 @@
 <?php
-/*
-Plugin Name: BuddyPress Media
-Plugin URI: http://rtcamp.com/buddypress-media/
-Description: This plugin adds missing media rich features like photos, videos and audios uploading to BuddyPress which are essential if you are building social network, seriously!
-Version: 2.3.2
-Author: rtCamp
-Author URI: http://rtcamp.com
-*/
+
 
 /* A constant that can be checked to see if the BP Media is installed or not. */
 define('BP_MEDIA_IS_INSTALLED', 1);
@@ -15,7 +8,7 @@ define('BP_MEDIA_IS_INSTALLED', 1);
 define('BP_MEDIA_VERSION', '2.3.2');
 
 /* A constant to be used as base for other URLs throughout the plugin */
-define('BP_MEDIA_PLUGIN_DIR', dirname(__FILE__));
+define('BP_MEDIA_PATH', dirname(__FILE__));
 
 /* A constant to store the required  */
 define('BP_MEDIA_REQUIRED_BP','1.6');
@@ -47,8 +40,8 @@ define('BP_MEDIA_AC_API_CATEGORY_ID','224');
 function bp_media_init() {
 	if (defined('BP_VERSION')&&version_compare(BP_VERSION, BP_MEDIA_REQUIRED_BP, '>')) {
 		add_filter( 'plugin_action_links', 'bp_media_settings_link', 10, 2 );
-		require( BP_MEDIA_PLUGIN_DIR . '/includes/bp-media-loader.php' );
-		//require( BP_MEDIA_PLUGIN_DIR . '/includes/bp-media-groups-loader.php');
+		require( BP_MEDIA_PATH . '/includes/bp-media-loader.php' );
+		//require( BP_MEDIA_PATH . '/includes/bp-media-groups-loader.php');
 	}
 }
 add_action('bp_include', 'bp_media_init');
@@ -73,6 +66,7 @@ function bp_media_activate() {
 	}
 	update_site_option('bp_media_options',$bp_media_options);
 
+	
 
 	$bpmquery = new WP_Query(array('post_type'=>'bp_media','posts_per_page'=>1));
 	if($bpmquery->found_posts > 0){
