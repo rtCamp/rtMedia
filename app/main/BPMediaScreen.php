@@ -332,7 +332,7 @@ class BPMediaScreen {
 
 	function upload_enqueue() {
 		$params = array(
-			'url' => plugins_url( 'includes/bp-media-upload-handler.php', __FILE__ ),
+			'url' => BP_MEDIA_URL.'app/main/includes/bp-media-upload-handler.php',
 			'runtimes' => 'gears,html5,flash,silverlight,browserplus',
 			'browse_button' => 'bp-media-upload-browse-button',
 			'container' => 'bp-media-upload-ui',
@@ -347,9 +347,9 @@ class BPMediaScreen {
 			'multi_selection' => true,
 			'multipart_params' => apply_filters( 'bp_media_multipart_params_filter', array( 'action' => 'wp_handle_upload' ) )
 		);
-		wp_enqueue_script( 'bp-media-uploader', plugins_url( 'js/bp-media-uploader.js', __FILE__ ), array( 'plupload', 'plupload-html5', 'plupload-flash', 'plupload-silverlight', 'plupload-html4', 'plupload-handlers', 'jquery-ui-core', 'jquery-ui-widget', 'jquery-ui-position', 'jquery-ui-dialog' ) );
+		wp_enqueue_script( 'bp-media-uploader', BP_MEDIA_URL. 'app/assets/js/bp-media-uploader.js', array( 'plupload', 'plupload-html5', 'plupload-flash', 'plupload-silverlight', 'plupload-html4', 'plupload-handlers', 'jquery-ui-core', 'jquery-ui-widget', 'jquery-ui-position', 'jquery-ui-dialog' ) );
 		wp_localize_script( 'bp-media-uploader', 'bp_media_uploader_params', $params );
-		wp_enqueue_style( 'bp-media-default', plugins_url( 'css/bp-media-style.css', __FILE__ ) );
+		wp_enqueue_style( 'bp-media-default', BP_MEDIA_URL.'app/assets/css/bp-media-style.css' );
 //	wp_enqueue_style("wp-jquery-ui-dialog"); //Its not styling the Dialog box as it should so using different styling
 		wp_enqueue_style( 'jquery-style', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/themes/smoothness/jquery-ui.css' );
 	}
