@@ -95,8 +95,8 @@ add_action('bp_media_before_content', 'bp_media_show_messages');
 function bp_media_enqueue_scripts_styles() {
 
 	wp_enqueue_script('jquery-ui-tabs');
-    wp_enqueue_script('bp-media-mejs', plugins_url('includes/media-element/mediaelement-and-player.min.js', dirname(__FILE__)));
-	wp_enqueue_script('bp-media-default', plugins_url('includes/js/bp-media.js', dirname(__FILE__)));
+    wp_enqueue_script('bp-media-mejs', BP_MEDIA_URL.'app/main/includes/media-element/mediaelement-and-player.min.js');
+	wp_enqueue_script('bp-media-default', BP_MEDIA_URL.'app/assets/js/bp-media.js');
 	global $bp;
 	$bp_media_vars = array(
 		'ajaxurl' => admin_url( 'admin-ajax.php'),
@@ -108,8 +108,8 @@ function bp_media_enqueue_scripts_styles() {
 		'current_group'	=> bp_get_current_group_id()
 	);
 	wp_localize_script( 'bp-media-default', 'bp_media_vars', $bp_media_vars );
-    wp_enqueue_style('bp-media-mecss', plugins_url('includes/media-element/mediaelementplayer.min.css', dirname(__FILE__)));
-	wp_enqueue_style('bp-media-default', plugins_url('includes/css/bp-media-style.css', dirname(__FILE__)));
+    wp_enqueue_style('bp-media-mecss', BP_MEDIA_URL.'app/main/includes/media-element/mediaelementplayer.min.css');
+	wp_enqueue_style('bp-media-default', BP_MEDIA_URL.'app/assets/css/main.css');
 
 }
 add_action('wp_enqueue_scripts', 'bp_media_enqueue_scripts_styles', 11);
@@ -298,9 +298,9 @@ function bp_media_upload_enqueue(){
 		'multi_selection'		=> true,
 		'multipart_params'	=> apply_filters('bp_media_multipart_params_filter',array('action'=>'wp_handle_upload'))
 	);
-	wp_enqueue_script('bp-media-uploader',plugins_url('js/bp-media-uploader.js',__FILE__),array('plupload', 'plupload-html5', 'plupload-flash', 'plupload-silverlight', 'plupload-html4','plupload-handlers','jquery-ui-core','jquery-ui-widget','jquery-ui-position','jquery-ui-dialog'));
+	wp_enqueue_script('bp-media-uploader',BP_MEDIA_URL.'app/assets/js/bp-media-uploader.js',array('plupload', 'plupload-html5', 'plupload-flash', 'plupload-silverlight', 'plupload-html4','plupload-handlers','jquery-ui-core','jquery-ui-widget','jquery-ui-position','jquery-ui-dialog'));
 	wp_localize_script('bp-media-uploader','bp_media_uploader_params',$params);
-	wp_enqueue_style('bp-media-default',plugins_url('css/bp-media-style.css',__FILE__));
+	wp_enqueue_style('bp-media-default',BP_MEDIA_URL.'app/assets/css/main.css');
 //	wp_enqueue_style("wp-jquery-ui-dialog"); //Its not styling the Dialog box as it should so using different styling
 	wp_enqueue_style('jquery-style', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/themes/smoothness/jquery-ui.css');
 }
