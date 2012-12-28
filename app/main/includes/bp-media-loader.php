@@ -112,8 +112,8 @@ global $bp_media_hidden_activity_cache;
 $bp_media_hidden_activity_cache = array();
 
 /* To set the language according to the locale selected and availability of the language file. */
-if (file_exists(BP_MEDIA_PLUGIN_DIR . '/languages/' . get_locale() . '.mo'))
-	load_textdomain('bp-media', BP_MEDIA_PLUGIN_DIR . '/languages/' . get_locale() . '.mo');
+if (file_exists(BP_MEDIA_PATH . '/languages/' . get_locale() . '.mo'))
+	load_textdomain('bp-media', BP_MEDIA_PATH . '/languages/' . get_locale() . '.mo');
 
 /**
  * BP Media Class, extends BP_Component
@@ -143,7 +143,7 @@ class BP_Media_Component extends BP_Component {
 	 */
 	function __construct() {
 		global $bp;
-		parent::start(BP_MEDIA_SLUG, BP_MEDIA_LABEL, BP_MEDIA_PLUGIN_DIR);
+		parent::start(BP_MEDIA_SLUG, BP_MEDIA_LABEL, BP_MEDIA_PATH);
 		$this->includes();
 		$bp->active_components[$this->id] = '1';
 		add_action('init', array(&$this, 'register_post_types'));
