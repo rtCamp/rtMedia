@@ -235,7 +235,6 @@ if (!class_exists('BPMediaAdmin')) {
         }
 
         public function admin_sidebar() {
-            global $bp_media;
             $branding = '<a href="http://rtcamp.com" title="' . __('Empowering The Web With WordPress', BP_MEDIA_TXT_DOMAIN) . '" id="logo"><img src="' . BP_MEDIA_URL . 'app/assets/img/rtcamp-logo.png" alt="' . __('rtCamp', BP_MEDIA_TXT_DOMAIN) . '" /></a>
                         <ul id="social">
                             <li><a href="' . sprintf('%s', 'http://www.facebook.com/rtCamp.solutions/') . '"  title="' . __('Become a fan on Facebook', BP_MEDIA_TXT_DOMAIN) . '" class="bp-media-facebook bp-media-social">' . __('Facebook', BP_MEDIA_TXT_DOMAIN) . '</a></li>

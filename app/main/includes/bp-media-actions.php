@@ -96,7 +96,7 @@ function bp_media_enqueue_scripts_styles() {
 
 	wp_enqueue_script('jquery-ui-tabs');
     wp_enqueue_script('bp-media-mejs', BP_MEDIA_URL.'lib/media-element/mediaelement-and-player.min.js');
-	wp_enqueue_script('bp-media-default', BP_MEDIA_URL.'app/assets/js/bp-media.js');
+	wp_enqueue_script('bp-media-default', BP_MEDIA_URL.'app/assets/js/main.js');
 	global $bp;
 	$bp_media_vars = array(
 		'ajaxurl' => admin_url( 'admin-ajax.php'),

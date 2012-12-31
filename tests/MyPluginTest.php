@@ -2,7 +2,7 @@
 /**
  * MyPlugin Tests
  */
-class MyPluginTest extends WP_UnitTestCase {
+class BuddyPressMediaTest extends WP_UnitTestCase {
     public $plugin_slug = 'buddypress-media';
 
     public function setUp() {
