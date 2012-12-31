@@ -75,8 +75,8 @@ class BPMediaComponent extends BP_Component {
 
 	function setup_nav() {
 		/* Add 'Media' to the main navigation */
-		global $bp, $bp_media;
-		$bp_media_upload = new BPMediaScreen( 'upload', BP_MEDIA_UPLOAD_SLUG );
+		global $bp;
+		$bp_media_upload = new BPMediaUploadScreen( 'upload', BP_MEDIA_UPLOAD_SLUG );
 
 		$bp_media_image = new BPMediaScreen( 'image', BP_MEDIA_IMAGES_SLUG );
 		$bp_media_video = new BPMediaScreen( 'video', BP_MEDIA_VIDEOS_SLUG );

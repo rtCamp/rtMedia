@@ -20,41 +20,41 @@ jQuery(document).ready(function(){
 		});
 		if(bp_media_album_selected == false){
 			bp_media_album_select.dialog('option','buttons',{
-					'Select': function() {
-						bp_media_album_selected = jQuery('#bp-media-selected-album').val();
-						bp_media_uploader.start();
-						jQuery(this).dialog("close");
-					},
-					'Create New': function(){
-						bp_media_new_album.dialog('option','buttons',{
-							'Create' : function(){
-								var album_name = jQuery('#bp_media_album_name').val();
-								if(album_name.length==0){
-									alert('You have not filled the album name');
-									return false;
-								}
-								var data = {
-									action: 'bp_media_add_album',
-									bp_media_album_name : album_name,
-									bp_media_group_id : bp_media_uploader_params.multipart_params.bp_media_group_id
-								};
-								jQuery.post(bp_media_vars.ajaxurl,data,function(response){
-									var album = parseInt(response);
-									if(album == 0){
-										alert('Sorry you cannot create albums in this group');
-									}
-									else{
-										jQuery('#bp-media-selected-album').append('<option value='+album+' selected="selected">'+jQuery('#bp_media_album_name').val()+'</option>')
-										bp_media_new_album.dialog('close');
-										bp_media_album_selected = jQuery('#bp-media-selected-album').val();
-										bp_media_album_select.dialog('close');
-										bp_media_uploader.start();
-									}
-								});
+				'Select': function() {
+					bp_media_album_selected = jQuery('#bp-media-selected-album').val();
+					bp_media_uploader.start();
+					jQuery(this).dialog("close");
+				},
+				'Create New': function(){
+					bp_media_new_album.dialog('option','buttons',{
+						'Create' : function(){
+							var album_name = jQuery('#bp_media_album_name').val();
+							if(album_name.length==0){
+								alert('You have not filled the album name');
+								return false;
 							}
-						});
-						bp_media_new_album.dialog('open');
-					}
+							var data = {
+								action: 'bp_media_add_album',
+								bp_media_album_name : album_name,
+								bp_media_group_id : bp_media_uploader_params.multipart_params.bp_media_group_id
+							};
+							jQuery.post(bp_media_vars.ajaxurl,data,function(response){
+								var album = parseInt(response);
+								if(album == 0){
+									alert('Sorry you cannot create albums in this group');
+								}
+								else{
+									jQuery('#bp-media-selected-album').append('<option value='+album+' selected="selected">'+jQuery('#bp_media_album_name').val()+'</option>')
+									bp_media_new_album.dialog('close');
+									bp_media_album_selected = jQuery('#bp-media-selected-album').val();
+									bp_media_album_select.dialog('close');
+									bp_media_uploader.start();
+								}
+							});
+						}
+					});
+					bp_media_new_album.dialog('open');
+				}
 			});
 			bp_media_album_select.dialog('open');
 		}
@@ -74,7 +74,7 @@ jQuery(document).ready(function(){
 			', Message: ' + err.message +
 			(err.file ? ', File: ' + err.file.name : '') +
 			'</p></div>'
-		);
+			);
 		up.refresh();
 	});
 
@@ -107,7 +107,7 @@ jQuery(document).ready(function(){
 				new_location = new_location.concat(bp_media_album_selected);
 			else
 				new_location = new_location.concat('0/');
-			//window.location.replace(new_location);
+			window.location.replace(new_location);
 		}
 	});
 });

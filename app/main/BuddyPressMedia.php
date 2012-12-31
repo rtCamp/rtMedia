@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) )
 
 class BuddyPressMedia {
 
-	public $text_domain = 'bp-media';
+	public $text_domain = 'buddypress-media';
 	public $options;
 	public $support_email = 'support@rtcamp.com';
 	public $query;
@@ -27,12 +27,13 @@ class BuddyPressMedia {
 	);
 	public $hidden_activity_cache = array( );
 	public $loader;
-        public $group_loader;
+	public $group_loader;
 
 	public function __construct() {
 
 		$this->constants();
 		$this->excerpt_lengths();
+		add_action( 'widgets_init', array( $this, 'widgets_init' ), 1 );
 	}
 
 	public function get_option() {
@@ -40,6 +41,9 @@ class BuddyPressMedia {
 	}
 
 	public function constants() {
+		/* Text domain */
+		if ( ! defined( 'BP_MEDIA_TXT_DOMAIN' ) )
+			define( 'BP_MEDIA_TXT_DOMAIN', $this->text_domain );
 
 		/* If the plugin is installed. */
 		if ( ! defined( 'BP_MEDIA_IS_INSTALLED' ) )
@@ -168,9 +172,7 @@ class BuddyPressMedia {
 			add_filter( 'plugin_action_links', array( $this, 'settings_link' ), 10, 2 );
 			$this->loader = new BPMediaLoader();
 //require( BP_MEDIA_PATH . '/includes/bp-media-groups-loader.php');
-                       $this->group_loader= new BPMediaGroup();
-
-
+			$this->group_loader = new BPMediaGroup();
 		}
 
 		if ( file_exists( BP_MEDIA_PATH . '/languages/' . get_locale() . '.mo' ) )
@@ -283,12 +285,9 @@ class BuddyPressMedia {
 		return $url;
 	}
 
-	private function deactivate() {
-
-	}
-
-	public function autoload_js_css() {
-
+	function widgets_init() {
+		register_widget( 'BPMediaRecentMedia' );
+		register_widget( 'BPMediaPopularMedia' );
 	}
 
 }
