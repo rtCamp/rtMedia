@@ -19,7 +19,6 @@ class BPMediaAlbumScreen extends BPMediaScreen {
 	function screen() {
 		global $bp;
 		if ( isset( $bp->action_variables[ 0 ] ) ) {
-			print_r( $bp->action_variables );
 			switch ( $bp->action_variables[ 0 ] ) {
 				case BP_MEDIA_ALBUMS_EDIT_SLUG :
 					$this->edit_screen();
@@ -42,22 +41,22 @@ class BPMediaAlbumScreen extends BPMediaScreen {
 			$this->set_query();
 			$this->template_actions( 'screen' );
 		}
-		$this->template_loader();
+		$this->template->loader();
 	}
 
 	function screen_content() {
-		global $bp_media, $bp_media_albums_query;
+		global $bp_media_albums_query;
 
 		$this->hook_before();
 		if ( $bp_media_albums_query && $bp_media_albums_query->have_posts() ):
 			echo '<ul id="bp-media-list" class="bp-media-gallery item-list">';
 			while ( $bp_media_albums_query->have_posts() ) : $bp_media_albums_query->the_post();
-				$this->album_content();
+				$this->template->the_album_content();
 			endwhile;
 			echo '</ul>';
-			$this->show_more();
+			$this->template->show_more();
 		else:
-			bp_media_show_formatted_error_message( sprintf( __( 'Sorry, no %s were found.', $bp_media->text_domain ), $this->slug ), 'info' );
+			bp_media_show_formatted_error_message( sprintf( __( 'Sorry, no %s were found.', BP_MEDIA_TXT_DOMAIN ), $this->slug ), 'info' );
 		endif;
 		$this->hook_after();
 	}
@@ -72,7 +71,7 @@ class BPMediaAlbumScreen extends BPMediaScreen {
 			/* Send the values to the cookie for page reload display */
 			@setcookie( 'bp-message', $_COOKIE[ 'bp-message' ], time() + 60 * 60 * 24, COOKIEPATH );
 			@setcookie( 'bp-message-type', $_COOKIE[ 'bp-message-type' ], time() + 60 * 60 * 24, COOKIEPATH );
-			$this->template_redirect();
+			$this->template->redirect($this->media_const);
 			exit;
 		}
 	}
@@ -83,18 +82,18 @@ class BPMediaAlbumScreen extends BPMediaScreen {
 			return false;
 		echo '<div class="bp_media_title">' . $bp_media_current_album->get_title() . '</div>';
 		$this->inner_query( $bp_media_current_album->get_id() );
+		$this->hook_before();
 		if ( $bp_media_current_album && $bp_media_query->have_posts() ):
-			do_action( 'bp_media_before_content' );
 			echo '<ul id="bp-media-list" class="bp-media-gallery item-list">';
 			while ( $bp_media_query->have_posts() ) : $bp_media_query->the_post();
-				$this->the_content();
+				$this->template->the_content();
 			endwhile;
 			echo '</ul>';
-			$this->show_more();
-			do_action( 'bp_media_after_content' );
+			$this->template->show_more();
 		else:
 			bp_media_show_formatted_error_message( __( 'Sorry, no media items were found in this album.', 'bp-media' ), 'info' );
 		endif;
+		$this->hook_after();
 	}
 
 	function set_query() {
@@ -117,22 +116,6 @@ class BPMediaAlbumScreen extends BPMediaScreen {
 		}
 	}
 
-	function album_content( $id = 0 ) {
-		if ( is_object( $id ) )
-			$album = $id;
-		else
-			$album = &get_post( $id );
-		if ( empty( $album->ID ) )
-			return false;
-		if ( ! $album->post_type == 'bp_media_album' )
-			return false;
-		try {
-			$album = new BPMediaAlbum( $album->ID );
-			echo $album->get_album_gallery_content();
-		} catch ( Exception $e ) {
-			echo '';
-		}
-	}
 
 	function template_actions( $action ) {
 		add_action( 'bp_template_content', array( $this, $action . '_content' ) );
