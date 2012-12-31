@@ -19,7 +19,7 @@ if (!class_exists('BPMediaWidget')) {
                     <div class="inside"><?php echo $content; ?></div>
                 </div><?php
             } else {
-                trigger_error(__('Argument missing. id is required.', $bp_media->text_domain));
+                trigger_error(__('Argument missing. id is required.', BP_MEDIA_TXT_DOMAIN));
             }
         }
 

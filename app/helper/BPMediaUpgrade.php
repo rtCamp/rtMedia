@@ -21,13 +21,13 @@ if (!class_exists('BPMediaUpgrade')) {
         /**
          * Displays admin notice to upgrade BuddyPress Media Database
          * 
-         * @global string $bp_media->text_domain
+         * @global string BP_MEDIA_TXT_DOMAIN
          */
         public function upgrade_db() {
             global $bp_media;
             ?>
             <div class="error"><p><?php
-            printf(__('Please click upgrade to upgrade the database of BuddyPress Media <a class="button" id="refresh_media_count" href ="%s" class="button" title="It will migrate your BuddyPress Media\'s earlier database to new database.">Upgrade</a>', $bp_media->text_domain), bp_media_get_admin_url(add_query_arg(array('page' => 'bp-media-settings', 'bp_media_upgrade_db' => 1, 'wp_nonce' => wp_create_nonce('bp_media_upgrade_db')), 'admin.php')))
+            printf(__('Please click upgrade to upgrade the database of BuddyPress Media <a class="button" id="refresh_media_count" href ="%s" class="button" title="It will migrate your BuddyPress Media\'s earlier database to new database.">Upgrade</a>', BP_MEDIA_TXT_DOMAIN), bp_media_get_admin_url(add_query_arg(array('page' => 'bp-media-settings', 'bp_media_upgrade_db' => 1, 'wp_nonce' => wp_create_nonce('bp_media_upgrade_db')), 'admin.php')))
             ?>
                 </p></div>
             <?php
@@ -52,7 +52,7 @@ if (!class_exists('BPMediaUpgrade')) {
         /**
          * Upgrade from BuddyPress Media 1.0 to 2.1
          * @global wpdb $wpdb
-         * @global string $bp_media->text_domain
+         * @global string BP_MEDIA_TXT_DOMAIN
          */
         public function upgrade_1_0_to_2_1() {
             global $wpdb, $bp_media;
@@ -100,7 +100,7 @@ if (!class_exists('BPMediaUpgrade')) {
                             'content' => $bp_media->get_media_activity_content(),
                             'id' => $child_activity,
                             'type' => 'media_upload',
-                            'action' => apply_filters('bp_media_added_media', sprintf(__('%1$s added a %2$s', $bp_media->text_domain), bp_core_get_userlink($media_file->post_author), '<a href="' . $bp_media->get_url() . '">' . $bp_media->get_media_activity_type() . '</a>')),
+                            'action' => apply_filters('bp_media_added_media', sprintf(__('%1$s added a %2$s', BP_MEDIA_TXT_DOMAIN), bp_core_get_userlink($media_file->post_author), '<a href="' . $bp_media->get_url() . '">' . $bp_media->get_media_activity_type() . '</a>')),
                             'primary_link' => $bp_media->get_url(),
                             'item_id' => $attachment_id,
                             'recorded_time' => $activity->date_recorded,
@@ -122,7 +122,7 @@ if (!class_exists('BPMediaUpgrade')) {
         /**
          * Upgrade from BuddyPress Media 2.0 to 2.1
          * 
-         * @global string $bp_media->text_domain
+         * @global string BP_MEDIA_TXT_DOMAIN
          */
         public function upgrade_2_0_to_2_1() {
             global $bp_media;
@@ -153,7 +153,7 @@ if (!class_exists('BPMediaUpgrade')) {
                             'content' => $bp_media->get_media_activity_content(),
                             'id' => $child_activity,
                             'type' => 'media_upload',
-                            'action' => apply_filters('bp_media_added_media', sprintf(__('%1$s added a %2$s', $bp_media->text_domain), bp_core_get_userlink($bp_media->get_author()), '<a href="' . $bp_media->get_url() . '">' . $bp_media->get_media_activity_type() . '</a>')),
+                            'action' => apply_filters('bp_media_added_media', sprintf(__('%1$s added a %2$s', BP_MEDIA_TXT_DOMAIN), bp_core_get_userlink($bp_media->get_author()), '<a href="' . $bp_media->get_url() . '">' . $bp_media->get_media_activity_type() . '</a>')),
                             'primary_link' => $bp_media->get_url(),
                             'item_id' => $activity->item_id,
                             'recorded_time' => $activity->date_recorded,
