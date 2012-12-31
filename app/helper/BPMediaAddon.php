@@ -62,8 +62,8 @@ if (!class_exists('BPMediaAddon')) {
                 </div>
                 <div class="product_footer">
                     <span class="price alignleft"><span class="amount">' . $price . '</span></span>
-                    <a class="add_to_cart_button  alignright product_type_simple"  href="' . $buy_now . '">' . __('Buy Now', $bp_media->text_domain) . '</a>
-                    <a class="alignleft product_demo_link"  href="' . $demo_link . '" title="' . $title . '">' . __('Live Demo', $bp_media->text_domain) . '</a>
+                    <a class="add_to_cart_button  alignright product_type_simple"  href="' . $buy_now . '">' . __('Buy Now', BP_MEDIA_TXT_DOMAIN) . '</a>
+                    <a class="alignleft product_demo_link"  href="' . $demo_link . '" title="' . $title . '">' . __('Live Demo', BP_MEDIA_TXT_DOMAIN) . '</a>
                 </div>
             </div>';
             echo $addon;

@@ -6,6 +6,7 @@
   Version: 2.4
   Author: rtCamp
   Author URI: http://rtcamp.com
+  Text domain: buddypress-media
  */
 
 if ( ! defined( 'BP_MEDIA_PATH' ) )
