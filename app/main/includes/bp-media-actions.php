@@ -95,7 +95,7 @@ add_action('bp_media_before_content', 'bp_media_show_messages');
 function bp_media_enqueue_scripts_styles() {
 
 	wp_enqueue_script('jquery-ui-tabs');
-    wp_enqueue_script('bp-media-mejs', BP_MEDIA_URL.'app/main/includes/media-element/mediaelement-and-player.min.js');
+    wp_enqueue_script('bp-media-mejs', BP_MEDIA_URL.'lib/media-element/mediaelement-and-player.min.js');
 	wp_enqueue_script('bp-media-default', BP_MEDIA_URL.'app/assets/js/bp-media.js');
 	global $bp;
 	$bp_media_vars = array(
@@ -108,7 +108,7 @@ function bp_media_enqueue_scripts_styles() {
 		'current_group'	=> bp_get_current_group_id()
 	);
 	wp_localize_script( 'bp-media-default', 'bp_media_vars', $bp_media_vars );
-    wp_enqueue_style('bp-media-mecss', BP_MEDIA_URL.'app/main/includes/media-element/mediaelementplayer.min.css');
+    wp_enqueue_style('bp-media-mecss', BP_MEDIA_URL.'lib/media-element/mediaelementplayer.min.css');
 	wp_enqueue_style('bp-media-default', BP_MEDIA_URL.'app/assets/css/main.css');
 
 }
