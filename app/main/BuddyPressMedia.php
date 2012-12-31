@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) )
 
 class BuddyPressMedia {
 
-	public $text_domain = 'bp-media';
+	public $text_domain = 'buddypress-media';
 	public $options;
 	public $support_email = 'support@rtcamp.com';
 	public $query;
@@ -40,6 +40,9 @@ class BuddyPressMedia {
 	}
 
 	public function constants() {
+		/* Text domain */
+		if ( ! defined( 'BP_MEDIA_TXT_DOMAIN' ) )
+			define( 'BP_MEDIA_TXT_DOMAIN', $this->text_domain );
 
 		/* If the plugin is installed. */
 		if ( ! defined( 'BP_MEDIA_IS_INSTALLED' ) )
