@@ -12,7 +12,7 @@
 class BPMediaPopularMedia extends WP_Widget {
 
 	function __construct() {
-		$widget_ops = array( 'classname' => 'BP_Media_Popular_Media', 'description' => __( "The most popular media on your site", BP_MEDIA_TXT_DOMAIN ) );
+		$widget_ops = array( 'classname' => 'BPMediaPopularMedia', 'description' => __( "The most popular media on your site", BP_MEDIA_TXT_DOMAIN ) );
 		parent::__construct( 'popular-media', __( 'Popular Media', BP_MEDIA_TXT_DOMAIN ), $widget_ops );
 	}
 
@@ -51,7 +51,7 @@ class BPMediaPopularMedia extends WP_Widget {
 			while ( $bp_media_widget_query->have_posts() ) {
 				$bp_media_widget_query->the_post();
 
-				$entry = new BP_Media_Host_Wordpress( get_the_ID() );
+				$entry = new BPMediaHostWordpress( get_the_ID() );
 						?>
 
 				<?php echo $entry->get_media_gallery_content(); ?><?php }
