@@ -95,7 +95,7 @@ add_action('bp_media_before_content', 'bp_media_show_messages');
 function bp_media_enqueue_scripts_styles() {
 
 	wp_enqueue_script('jquery-ui-tabs');
-    wp_enqueue_script('bp-media-mejs', BP_MEDIA_URL.'app/main/includes/media-element/mediaelement-and-player.min.js');
+    wp_enqueue_script('bp-media-mejs', BP_MEDIA_URL.'lib/media-element/mediaelement-and-player.min.js');
 	wp_enqueue_script('bp-media-default', BP_MEDIA_URL.'app/assets/js/bp-media.js');
 	global $bp;
 	$bp_media_vars = array(
@@ -108,7 +108,7 @@ function bp_media_enqueue_scripts_styles() {
 		'current_group'	=> bp_get_current_group_id()
 	);
 	wp_localize_script( 'bp-media-default', 'bp_media_vars', $bp_media_vars );
-    wp_enqueue_style('bp-media-mecss', BP_MEDIA_URL.'app/main/includes/media-element/mediaelementplayer.min.css');
+    wp_enqueue_style('bp-media-mecss', BP_MEDIA_URL.'lib/media-element/mediaelementplayer.min.css');
 	wp_enqueue_style('bp-media-default', BP_MEDIA_URL.'app/assets/css/main.css');
 
 }
@@ -481,7 +481,7 @@ function bp_media_add_album() {
 		$album = new BP_Media_Album();
 		if(isset($_POST['bp_media_group_id'])&&intval($_POST['bp_media_group_id'])>0){
 			$group_id = intval($_POST['bp_media_group_id']);
-			if(BPMediaGroup::bp_media_groups_user_can_create_album($group_id, get_current_user_id())){
+			if(BPMediaGroup::user_can_create_album($group_id, get_current_user_id())){
 				try{
 					$album -> add_album($_POST['bp_media_album_name'], 0 ,$group_id);
 					echo $album->get_id();
