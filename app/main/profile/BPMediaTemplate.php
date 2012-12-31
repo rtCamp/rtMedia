@@ -52,7 +52,7 @@ class BPMediaTemplate {
 			<div id="drag-drop-area">
 				<div class="drag-drop-inside">
 					<p class="drag-drop-info"><?php _e( 'Drop files here', BP_MEDIA_TXT_DOMAIN ); ?></p>
-					<p><?php _e( 'or', BP_MEDIA_TXT_DOMAIN ); ?></p>
+					<p><?php _e( ' or ', BP_MEDIA_TXT_DOMAIN ); ?></p>
 					<p class="drag-drop-buttons"><input id="bp-media-upload-browse-button" type="button" value="<?php _e( 'Select Files', BP_MEDIA_TXT_DOMAIN ); ?>" class="button" /></p>
 				</div>
 			</div>

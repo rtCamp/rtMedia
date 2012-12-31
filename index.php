@@ -20,7 +20,10 @@ function buddypress_media_autoloader( $class_name ) {
 		'app/helper/' . $class_name . '.php',
 		'app/admin/' . $class_name . '.php',
 		'app/main/' . $class_name . '.php',
-		'lib/rtlib/' . $class_name . '.php',
+		'app/main/profile/' . $class_name . '.php',
+		'app/main/group/' . $class_name . '.php',
+		'app/main/includes/' . $class_name . '.php',
+		'app/main/widgets/' . $class_name . '.php',
 	);
 	foreach ( $rtlibpath as $i => $path ) {
 		$path = BP_MEDIA_PATH . $path;
