@@ -5,7 +5,7 @@
  * @author faishal
  */
  if ( class_exists( 'BP_Group_Extension' ) ) :// Recommended, to prevent problems during upgrade or when Groups are disabled
-	class BPMediaGroupsExtension extends BP_Group_Extension {
+	class BPMediaGroupsExtension extends BPMediaGroupElementExtension {
 
 		/**
 		 * Constructor for the BP_Group_Extension adding values to the variables defined
@@ -114,12 +114,7 @@
 		 *
 		 * @since BP Media 2.3
 		 */
-	    function display() {
-			BPMediaGroup::display_screen();
-	    }
-
-
-	    function widget_display() { 
+             function widget_display() { 
                 global $bp_media;
                 ?>
                  <div class="info-group" >
