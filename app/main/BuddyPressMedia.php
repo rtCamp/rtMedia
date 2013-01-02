@@ -173,6 +173,9 @@ class BuddyPressMedia {
 			$this->loader = new BPMediaLoader();
 //require( BP_MEDIA_PATH . '/includes/bp-media-groups-loader.php');
 			$this->group_loader = new BPMediaGroup();
+                       // require( BP_MEDIA_PATH . 'includes/BPMediaFilters.php');
+                        new BPMediaFilters();
+                        new BPMediaActions();
 		}
 
 		if ( file_exists( BP_MEDIA_PATH . '/languages/' . get_locale() . '.mo' ) )
