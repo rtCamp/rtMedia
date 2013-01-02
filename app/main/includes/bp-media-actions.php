@@ -95,8 +95,8 @@ add_action('bp_media_before_content', 'bp_media_show_messages');
 function bp_media_enqueue_scripts_styles() {
 
 	wp_enqueue_script('jquery-ui-tabs');
-    wp_enqueue_script('bp-media-mejs', BP_MEDIA_URL.'app/main/includes/media-element/mediaelement-and-player.min.js');
-	wp_enqueue_script('bp-media-default', BP_MEDIA_URL.'app/assets/js/bp-media.js');
+    wp_enqueue_script('bp-media-mejs', BP_MEDIA_URL.'lib/media-element/mediaelement-and-player.min.js');
+	wp_enqueue_script('bp-media-default', BP_MEDIA_URL.'app/assets/js/main.js');
 	global $bp;
 	$bp_media_vars = array(
 		'ajaxurl' => admin_url( 'admin-ajax.php'),
@@ -108,7 +108,7 @@ function bp_media_enqueue_scripts_styles() {
 		'current_group'	=> bp_get_current_group_id()
 	);
 	wp_localize_script( 'bp-media-default', 'bp_media_vars', $bp_media_vars );
-    wp_enqueue_style('bp-media-mecss', BP_MEDIA_URL.'app/main/includes/media-element/mediaelementplayer.min.css');
+    wp_enqueue_style('bp-media-mecss', BP_MEDIA_URL.'lib/media-element/mediaelementplayer.min.css');
 	wp_enqueue_style('bp-media-default', BP_MEDIA_URL.'app/assets/css/main.css');
 
 }
@@ -212,6 +212,7 @@ function bp_media_set_query() {
  * @since BP Media 2.0
  */
 function bp_media_action_buttons() {
+	global $bp_media;
 	if(!in_array('bp_media_current_entry', $GLOBALS))
 		return false;
 	global $bp_media_current_entry,$bp_media_options;
@@ -220,15 +221,26 @@ function bp_media_action_buttons() {
             $featured_post = get_post_meta($bp_media_current_entry->get_id(),'featured',true);
 
 		if(bp_displayed_user_id()==  bp_loggedin_user_id())
-			echo '<a href="'.$bp_media_current_entry->get_edit_url().'" class="button item-button bp-secondary-action bp-media-edit" title="Edit Media">Edit</a>';
+			echo '<a href="'.$bp_media_current_entry->get_edit_url()
+				.'" class="button item-button bp-secondary-action bp-media-edit" title="'
+				.__('Edit Media', BP_MEDIA_TXT_DOMAIN).'">'.__('Edit', BP_MEDIA_TXT_DOMAIN).'</a>';
 
 		if($bp_media_options['download_enabled']==true)
-			echo '<a href="'.$bp_media_current_entry->get_attachment_url().'" class="button item-button bp-secondary-action bp-media-download" title="Download">Download</a>';
+			echo '<a href="'.$bp_media_current_entry->get_attachment_url()
+				.'" class="button item-button bp-secondary-action bp-media-download" title="'
+				.__('Download', BP_MEDIA_TXT_DOMAIN).'">'.__('Download', BP_MEDIA_TXT_DOMAIN).'</a>';
 
 		if(bp_displayed_user_id()==  bp_loggedin_user_id() && $featured_post == '')
-                        echo '<a href="'.$bp_media_current_entry->get_album_id().'" rel="" data-album-id="'.$bp_media_current_entry->get_album_id().'"  data-post-id="'.$bp_media_current_entry->get_id().'" class="button item-button bp-secondary-action bp-media-featured" title="Featured Media">Featured</a>';
+                        echo '<a href="'.$bp_media_current_entry->get_album_id()
+				.'" rel="" data-album-id="'.$bp_media_current_entry->get_album_id()
+				.'"  data-post-id="'.$bp_media_current_entry->get_id()
+				.'" class="button item-button bp-secondary-action bp-media-featured" title="'
+				.__('Featured Media', BP_MEDIA_TXT_DOMAIN).'">'.__('Featured', BP_MEDIA_TXT_DOMAIN).'</a>';
 		else
-                        echo '<a href="'.$bp_media_current_entry->get_album_id().'" rel="" data-remove-featured="1"   data-album-id="'.$bp_media_current_entry->get_album_id().'" data-post-id="'.$bp_media_current_entry->get_id().'" class="button item-button bp-secondary-action bp-media-featured" title="Featured Media">Remove Featured</a>';
+                        echo '<a href="'.$bp_media_current_entry->get_album_id().'" rel="" data-remove-featured="1"   data-album-id="'
+				.$bp_media_current_entry->get_album_id().'" data-post-id="'.$bp_media_current_entry->get_id()
+				.'" class="button item-button bp-secondary-action bp-media-featured" title="'
+				.__('Featured Media', BP_MEDIA_TXT_DOMAIN).'">'.__('Remove Featured', BP_MEDIA_TXT_DOMAIN).'</a>';
        }
 }
 add_action('bp_activity_entry_meta', 'bp_media_action_buttons');
@@ -469,7 +481,7 @@ function bp_media_add_album() {
 		$album = new BP_Media_Album();
 		if(isset($_POST['bp_media_group_id'])&&intval($_POST['bp_media_group_id'])>0){
 			$group_id = intval($_POST['bp_media_group_id']);
-			if(BPMediaGroup::bp_media_groups_user_can_create_album($group_id, get_current_user_id())){
+			if(BPMediaGroup::user_can_create_album($group_id, get_current_user_id())){
 				try{
 					$album -> add_album($_POST['bp_media_album_name'], 0 ,$group_id);
 					echo $album->get_id();

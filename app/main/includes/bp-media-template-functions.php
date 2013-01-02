@@ -33,7 +33,7 @@ function bp_media_show_upload_form() {
 }
 
 function bp_media_show_upload_form_multiple() {
-	global $bp,$bp_media_default_excerpts;
+	global $bp,$bp_media;
 	?>
 <div id="bp-media-album-prompt" title="Select Album"><select id="bp-media-selected-album"><?php
 	if(bp_is_current_component('groups')){

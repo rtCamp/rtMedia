@@ -35,13 +35,13 @@ class BPMediaFeed {
         ?>
         <ul><?php
         if ($maxitems == 0) {
-            echo '<li>' . __('No items', $bp_media->text_domain) . '.</li>';
+            echo '<li>' . __('No items', BP_MEDIA_TXT_DOMAIN) . '.</li>';
         } else {
             // Loop through each feed item and display each item as a hyperlink.
             foreach ($rss_items as $item) {
                 ?>
                     <li>
-                        <a href='<?php echo $item->get_permalink(); ?>' title='<?php echo __('Posted ', $bp_media->text_domain) . $item->get_date('j F Y | g:i a'); ?>'><?php echo $item->get_title(); ?></a>
+                        <a href='<?php echo $item->get_permalink(); ?>' title='<?php echo __('Posted ', BP_MEDIA_TXT_DOMAIN) . $item->get_date('j F Y | g:i a'); ?>'><?php echo $item->get_title(); ?></a>
                     </li><?php
             }
         }

@@ -1,7 +1,7 @@
 <?php
 ignore_user_abort(true);
 
-require_once('lib/bootstrap.php');
+require_once(BP_MEDIA_PATH.'lib/bootstrap.php');
 
 // Check for rights
 if ( !is_user_logged_in() )

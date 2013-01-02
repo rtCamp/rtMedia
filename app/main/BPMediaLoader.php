@@ -18,7 +18,6 @@ class BPMediaLoader {
 		add_action( 'bp_loaded', array( $this, 'load_component' ) );
 		add_action( 'bp_setup_nav', array( $this, 'custom_nav' ), 999 );
 		add_action( 'after_setup_theme', array( $this, 'thumbnail' ) );
-		add_action( 'init', array( $this, 'fetch_feeds' ) );
 	}
 
 	public function load_component() {
@@ -69,13 +68,6 @@ class BPMediaLoader {
 
 		add_image_size( 'bp_media_activity_image', $default_sizes[ 'activity_image' ][ 'width' ], $default_sizes[ 'activity_image' ][ 'height' ], true );
 		add_image_size( 'bp_media_single_image', $default_sizes[ 'single_image' ][ 'width' ], $default_sizes[ 'single_image' ][ 'height' ], true );
-	}
-
-	function fetch_feeds() {
-		if ( isset( $_GET[ 'bp_media_get_feeds' ] ) && $_GET[ 'bp_media_get_feeds' ] == '1' ) {
-			bp_media_get_feeds();
-			die();
-		}
 	}
 
 }
