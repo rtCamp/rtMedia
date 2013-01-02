@@ -45,15 +45,11 @@ class BPMediaComponent extends BP_Component {
 		$inc_path_prefix = 'app/main/includes/';
 		$includes = array(
 			$inc_path_prefix . 'bp-media-functions.php',
-			$inc_path_prefix . 'bp-media-filters.php',
 			$inc_path_prefix . 'bp-media-template-functions.php',
-			$inc_path_prefix . 'bp-media-actions.php',
 			$inc_path_prefix . 'bp-media-interface.php',
 			$inc_path_prefix . 'bp-media-shortcodes.php',
-			$inc_path_prefix . 'bp-media-widgets.php',
-			$inc_path_prefix . 'bp-media-groups-loader.php',
-			$inc_path_prefix . 'bp-media-groups-actions.php',
-			$inc_path_prefix . 'bp-media-groups-screens.php'
+			$inc_path_prefix . 'bp-media-widgets.php'
+                        //$inc_path_prefix . 'BPMediaFilter.php',
 		);
 		parent::includes( $includes );
 		do_action( 'bp_media_init' );
