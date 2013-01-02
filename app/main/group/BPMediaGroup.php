@@ -24,15 +24,15 @@ class BPMediaGroup {
 								$enable_create_step = false;
 								$enable_edit_item = false;
 							}
-							function display(){BPMediaGroup::bp_media_groups_display_screen();}
+							function display(){BPMediaGroup::display_screen();}
 							function widget_display(){}
 						}
 						bp_register_group_extension("BP_Media_Group_Extension_' . constant('BP_MEDIA_' . $item . '_SLUG') . '" );
 					');
 				}
 			endif;
-			add_action('bp_actions',array($this,'bp_media_groups_custom_nav'),999);
-			add_filter('bp_media_multipart_params_filter',array($this,'bp_media_groups_multipart_params_handler'));
+			add_action('bp_actions',array($this,'custom_nav'),999);
+			add_filter('bp_media_multipart_params_filter',array($this,'multipart_params_handler'));
 		}
 	}
 
@@ -43,7 +43,7 @@ class BPMediaGroup {
 	 *
 	 * @since BP Media 2.3
 	 */
-	function bp_media_groups_custom_nav(){
+	function custom_nav(){
 		global $bp;
 		$current_group = isset($bp->groups->current_group->slug)?$bp->groups->current_group->slug:null;
 		if(!$current_group)
@@ -84,7 +84,7 @@ class BPMediaGroup {
 	 *
 	 * @since BP Media 2.3
 	 */
-	function bp_media_groups_multipart_params_handler($multipart_params){
+	function multipart_params_handler($multipart_params){
 		if(is_array($multipart_params)){
 			global $bp;
 			if(isset($bp->current_action)&&$bp->current_action==BP_MEDIA_SLUG
@@ -109,12 +109,12 @@ class BPMediaGroup {
 
 		if(!isset($bp->current_action)||$bp->current_action!=BP_MEDIA_SLUG)
 			return false;
-		$current_tab = BPMediaGroup::bp_media_groups_can_upload()?BP_MEDIA_UPLOAD_SLUG:BP_MEDIA_IMAGES_SLUG;
+		$current_tab = BPMediaGroup::can_upload()?BP_MEDIA_UPLOAD_SLUG:BP_MEDIA_IMAGES_SLUG;
 		if(isset($bp->action_variables[0])){
 			$current_tab = $bp->action_variables[0];
 		}
 
-		if(BPMediaGroup::bp_media_groups_can_upload()){
+		if(BPMediaGroup::can_upload()){
 			$bp_media_nav[BP_MEDIA_UPLOAD_SLUG] = array(
 				'url'	=> trailingslashit(bp_get_group_permalink( $bp->groups->current_group )).BP_MEDIA_SLUG,
 				'label'	=>	BP_MEDIA_UPLOAD_LABEL,
@@ -151,7 +151,7 @@ class BPMediaGroup {
 	 *
 	 * @since BP Media 2.3
 	 */
-	static function bp_media_groups_can_upload(){
+	static function can_upload(){
 		/** @todo Implementation Pending */
 		global $bp;
 		if(isset($bp->loggedin_user->id)&&is_numeric($bp->loggedin_user->id)){
@@ -171,7 +171,7 @@ class BPMediaGroup {
 	 *
 	 * @since BP Media 2.3
 	 */
-	function bp_media_groups_adminbar(){
+	function admin_bar(){
 		global $wp_admin_bar, $bp;
 		$wp_admin_bar->add_menu( array(
 			'parent' => $bp->group_admin_menu_id,
@@ -180,7 +180,7 @@ class BPMediaGroup {
 			'href'   =>  bp_get_groups_action_link( 'admin/media' )
 		) );
 	}
-	//add_action('admin_bar_menu','bp_media_groups_adminbar',99);
+	//add_action('admin_bar_menu','admin_bar',99);
 	/* This will need some handling for checking if its a single group page or not, also whether the person can
 	 * edit media settings or not
 	 */
@@ -193,7 +193,7 @@ class BPMediaGroup {
 	 *
 	 * @return boolean True if the user can create an album in the group, false if not
 	 */
-	static function bp_media_groups_user_can_create_album($group_id, $user_id = 0){
+	static function user_can_create_album($group_id, $user_id = 0){
 		if($user_id == 0)
 			$user_id = get_current_user_id ();
 		$current_level = groups_get_groupmeta($group_id,'bp_media_group_control_level');
@@ -215,7 +215,7 @@ class BPMediaGroup {
     static function bp_media_groups_display_screen() {
         global $bp_media_group_sub_nav, $bp,$bp_media;
         BPMediaGroupAction::bp_media_groups_set_query();
-        BPMediaGroup::bp_media_groups_display_navigation_menu();
+        BPMediaGroup::navigation_menu();
         if (bp_action_variable(0)) {
             $media_type="";
             $slug="";

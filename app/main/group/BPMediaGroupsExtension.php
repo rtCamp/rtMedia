@@ -115,7 +115,7 @@
 		 * @since BP Media 2.3
 		 */
 	    function display() {
-			BPMediaGroup::bp_media_groups_display_screen();
+			BPMediaGroup::display_screen();
 	    }
 
 

@@ -31,7 +31,7 @@ if (!class_exists('BPMediaAdmin')) {
 
         /**
          * Generates the Admin UI
-         * 
+         *
          * @param string $hook
          */
         public function ui($hook) {
@@ -43,15 +43,14 @@ if (!class_exists('BPMediaAdmin')) {
 
         /**
          * Admin Menu
-         * 
-         * @global string $bp_media->text_domain
+         *
+         * @global string BP_MEDIA_TXT_DOMAIN
          */
         public function menu() {
-            global $bp_media;
-            add_menu_page(__('Buddypress Media Component', $bp_media->text_domain), __('BuddyPress Media', $bp_media->text_domain), 'manage_options', 'bp-media-settings', array($this, 'settings_page'));
-            add_submenu_page('bp-media-settings', __('Buddypress Media Settings', $bp_media->text_domain), __('Settings', $bp_media->text_domain), 'manage_options', 'bp-media-settings', array($this, 'settings_page'));
-            add_submenu_page('bp-media-settings', __('Buddypress Media Addons', $bp_media->text_domain), __('Addons', $bp_media->text_domain), 'manage_options', 'bp-media-addons', array($this, 'addons_page'));
-            add_submenu_page('bp-media-settings', __('Buddypress Media Support', $bp_media->text_domain), __('Support ', $bp_media->text_domain), 'manage_options', 'bp-media-support', array($this, 'support_page'));
+            add_menu_page(__('Buddypress Media Component', BP_MEDIA_TXT_DOMAIN), __('BuddyPress Media', BP_MEDIA_TXT_DOMAIN), 'manage_options', 'bp-media-settings', array($this, 'settings_page'));
+            add_submenu_page('bp-media-settings', __('Buddypress Media Settings', BP_MEDIA_TXT_DOMAIN), __('Settings', BP_MEDIA_TXT_DOMAIN), 'manage_options', 'bp-media-settings', array($this, 'settings_page'));
+            add_submenu_page('bp-media-settings', __('Buddypress Media Addons', BP_MEDIA_TXT_DOMAIN), __('Addons', BP_MEDIA_TXT_DOMAIN), 'manage_options', 'bp-media-addons', array($this, 'addons_page'));
+            add_submenu_page('bp-media-settings', __('Buddypress Media Support', BP_MEDIA_TXT_DOMAIN), __('Support ', BP_MEDIA_TXT_DOMAIN), 'manage_options', 'bp-media-support', array($this, 'support_page'));
         }
 
         /**
@@ -77,16 +76,15 @@ if (!class_exists('BPMediaAdmin')) {
 
         /**
          * Render BPMedia Settings
-         * 
-         * @global string $bp_media->text_domain
+         *
+         * @global string BP_MEDIA_TXT_DOMAIN
          */
         public function render_page($page, $is_settings = false) {
-            global $bp_media;
             ?>
 
             <div class="wrap bp-media-admin">
                 <div id="icon-buddypress" class="icon32"><br></div>
-                <h2 class="nav-tab-wrapper"><?php bp_core_admin_tabs(__('Media', $bp_media->text_domain)); ?></h2>
+                <h2 class="nav-tab-wrapper"><?php bp_core_admin_tabs(__('Media', BP_MEDIA_TXT_DOMAIN)); ?></h2>
                 <?php settings_errors(); ?>
                 <div class="metabox-holder columns-2">
                     <div class="bp-media-settings-tabs"><?php
@@ -126,12 +124,11 @@ if (!class_exists('BPMediaAdmin')) {
 
         /**
          * Adds a tab for Media settings in the BuddyPress settings page
-         * 
+         *
          * @global type $bp_media
          */
         public function tab() {
 
-            global $bp_media;
             $tabs_html = '';
             $idle_class = 'nav-tab';
             $active_class = 'nav-tab nav-tab-active';
@@ -142,8 +139,8 @@ if (!class_exists('BPMediaAdmin')) {
             /* BP Media */
             $tabs[] = array(
                 'href' => bp_get_admin_url(add_query_arg(array('page' => 'bp-media-settings'), 'admin.php')),
-                'title' => __('Buddypress Media', $bp_media->text_domain),
-                'name' => __('Buddypress Media', $bp_media->text_domain),
+                'title' => __('Buddypress Media', BP_MEDIA_TXT_DOMAIN),
+                'name' => __('Buddypress Media', BP_MEDIA_TXT_DOMAIN),
                 'class' => ($tab == 'bp-media-settings' || $tab == 'bp-media-addons' || $tab == 'bp-media-support') ? $active_class : $idle_class
             );
 
@@ -155,11 +152,10 @@ if (!class_exists('BPMediaAdmin')) {
 
         /**
          * Adds a sub tabs to the BuddyPress Media settings page
-         * 
+         *
          * @global type $bp_media
          */
         public function sub_tabs() {
-            global $bp_media;
             $tabs_html = '';
             $idle_class = 'media-nav-tab';
             $active_class = 'media-nav-tab media-nav-tab-active';
@@ -170,22 +166,22 @@ if (!class_exists('BPMediaAdmin')) {
             /* BP Media */
             $tabs[] = array(
                 'href' => bp_get_admin_url(add_query_arg(array('page' => 'bp-media-settings'), 'admin.php')),
-                'title' => __('Buddypress Media Settings', $bp_media->text_domain),
-                'name' => __('Settings', $bp_media->text_domain),
+                'title' => __('Buddypress Media Settings', BP_MEDIA_TXT_DOMAIN),
+                'name' => __('Settings', BP_MEDIA_TXT_DOMAIN),
                 'class' => ($tab == 'bp-media-settings') ? $active_class : $idle_class . ' first_tab'
             );
 
             $tabs[] = array(
                 'href' => bp_get_admin_url(add_query_arg(array('page' => 'bp-media-addons'), 'admin.php')),
-                'title' => __('Buddypress Media Addons', $bp_media->text_domain),
-                'name' => __('Addons', $bp_media->text_domain),
+                'title' => __('Buddypress Media Addons', BP_MEDIA_TXT_DOMAIN),
+                'name' => __('Addons', BP_MEDIA_TXT_DOMAIN),
                 'class' => ($tab == 'bp-media-addons') ? $active_class : $idle_class
             );
 
             $tabs[] = array(
                 'href' => bp_get_admin_url(add_query_arg(array('page' => 'bp-media-support'), 'admin.php')),
-                'title' => __('Buddypress Media Support', $bp_media->text_domain),
-                'name' => __('Support', $bp_media->text_domain),
+                'title' => __('Buddypress Media Support', BP_MEDIA_TXT_DOMAIN),
+                'name' => __('Support', BP_MEDIA_TXT_DOMAIN),
                 'class' => ($tab == 'bp-media-support') ? $active_class : $idle_class . ' last_tab'
             );
 
@@ -236,12 +232,11 @@ if (!class_exists('BPMediaAdmin')) {
         }
 
         public function admin_sidebar() {
-            global $bp_media;
-            $branding = '<a href="http://rtcamp.com" title="' . __('Empowering The Web With WordPress', $bp_media->text_domain) . '" id="logo"><img src="' . BP_MEDIA_URL . 'app/assets/img/rtcamp-logo.png" alt="' . __('rtCamp', $bp_media->text_domain) . '" /></a>
+            $branding = '<a href="http://rtcamp.com" title="' . __('Empowering The Web With WordPress', BP_MEDIA_TXT_DOMAIN) . '" id="logo"><img src="' . BP_MEDIA_URL . 'app/assets/img/rtcamp-logo.png" alt="' . __('rtCamp', BP_MEDIA_TXT_DOMAIN) . '" /></a>
                         <ul id="social">
-                            <li><a href="' . sprintf('%s', 'http://www.facebook.com/rtCamp.solutions/') . '"  title="' . __('Become a fan on Facebook', $bp_media->text_domain) . '" class="bp-media-facebook bp-media-social">' . __('Facebook', $bp_media->text_domain) . '</a></li>
-                            <li><a href="' . sprintf('%s', 'https://twitter.com/rtcamp/') . '"  title="' . __('Follow us on Twitter', $bp_media->text_domain) . '" class="bp-media-twitter bp-media-social">' . __('Twitter', $bp_media->text_domain) . '</a></li>
-                            <li><a href="' . sprintf('%s', 'http://feeds.feedburner.com/rtcamp/') . '"  title="' . __('Subscribe to our feeds', $bp_media->text_domain) . '" class="bp-media-rss bp-media-social">' . __('RSS Feed', $bp_media->text_domain) . '</a></li>
+                            <li><a href="' . sprintf('%s', 'http://www.facebook.com/rtCamp.solutions/') . '"  title="' . __('Become a fan on Facebook', BP_MEDIA_TXT_DOMAIN) . '" class="bp-media-facebook bp-media-social">' . __('Facebook', BP_MEDIA_TXT_DOMAIN) . '</a></li>
+                            <li><a href="' . sprintf('%s', 'https://twitter.com/rtcamp/') . '"  title="' . __('Follow us on Twitter', BP_MEDIA_TXT_DOMAIN) . '" class="bp-media-twitter bp-media-social">' . __('Twitter', BP_MEDIA_TXT_DOMAIN) . '</a></li>
+                            <li><a href="' . sprintf('%s', 'http://feeds.feedburner.com/rtcamp/') . '"  title="' . __('Subscribe to our feeds', BP_MEDIA_TXT_DOMAIN) . '" class="bp-media-rss bp-media-social">' . __('RSS Feed', BP_MEDIA_TXT_DOMAIN) . '</a></li>
                         </ul>';
             new BPMediaWidget('branding', '', $branding);
 
@@ -251,22 +246,22 @@ if (!class_exists('BPMediaAdmin')) {
             <li>' . sprintf('<a href="%s">' . __("Github Issue Tracker",$bp_media->text_domain) .'</a>', 'https://github.com/rtCamp/buddypress-media/issues/') . '</li>
             <li>' . sprintf('<a href="%s">' . __("Hire us!",$bp_media->text_domain).'</a> ' . __("To get professional customisation/setup service.",$bp_media->text_domain), 'http://rtcamp.com/buddypress-media/hire/') . '</li>
             </ul></p>';
-            new BPMediaWidget('support', __('Need Help?', $bp_media->text_domain), $support);
+            new BPMediaWidget('support', __('Need Help?', BP_MEDIA_TXT_DOMAIN), $support);
 
-            $donate = '<span><a href="http://rtcamp.com/donate/" title="' . __('Help the development keep going.', $bp_media->text_domain) . '"><img class="bp-media-donation-image" src ="' . BP_MEDIA_URL . 'app/assets/img/donate.gif" /></a></span>
-                        <p>' . sprintf(__('Help us release more amazing features faster. Consider making a donation to our consistent efforts.', $bp_media->text_domain)) . '</p>';
-            new BPMediaWidget('donate', __('Donate', $bp_media->text_domain), $donate);
+            $donate = '<span><a href="http://rtcamp.com/donate/" title="' . __('Help the development keep going.', BP_MEDIA_TXT_DOMAIN) . '"><img class="bp-media-donation-image" src ="' . BP_MEDIA_URL . 'app/assets/img/donate.gif" /></a></span>
+                        <p>' . sprintf(__('Help us release more amazing features faster. Consider making a donation to our consistent efforts.', BP_MEDIA_TXT_DOMAIN)) . '</p>';
+            new BPMediaWidget('donate', __('Donate', BP_MEDIA_TXT_DOMAIN), $donate);
 
             $addons = '<ul>
-                            <li><a href="http://rtcamp.com/store/buddypress-media-kaltura/" title="' . __('BuddyPress Media Kaltura', $bp_media->text_domain) . '">' . __('BPM-Kaltura', $bp_media->text_domain) . '</a> - ' . __('Add support for Kaltura.com/Kaltura-CE based video conversion support', $bp_media->text_domain) . '</li>
-                            <li><a href="http://rtcamp.com/store/buddy-press-media-ffmpeg/" title="' . __('BuddyPress Media FFMPEG', $bp_media->text_domain) . '">' . __('BPM-FFMPEG', $bp_media->text_domain) . '</a> - ' . __('Add FFMEG-based audio/video conversion support', $bp_media->text_domain) . '</li>
+                            <li><a href="http://rtcamp.com/store/buddypress-media-kaltura/" title="' . __('BuddyPress Media Kaltura', BP_MEDIA_TXT_DOMAIN) . '">' . __('BPM-Kaltura', BP_MEDIA_TXT_DOMAIN) . '</a> - ' . __('Add support for Kaltura.com/Kaltura-CE based video conversion support', BP_MEDIA_TXT_DOMAIN) . '</li>
+                            <li><a href="http://rtcamp.com/store/buddy-press-media-ffmpeg/" title="' . __('BuddyPress Media FFMPEG', BP_MEDIA_TXT_DOMAIN) . '">' . __('BPM-FFMPEG', BP_MEDIA_TXT_DOMAIN) . '</a> - ' . __('Add FFMEG-based audio/video conversion support', BP_MEDIA_TXT_DOMAIN) . '</li>
 			</ul>
-			<h4>' . sprintf(__('Are you a developer?', $bp_media->text_domain)) . '</h4>
-			<p>' . sprintf(__('If you are developing a BuddyPress Media addon we would like to include it in above list. We can also help you sell them. <a href="%s">More info!</a>', $bp_media->text_domain), 'http://rtcamp.com/contact/') . '</p></h4>';
-            new BPMediaWidget('premium-addons', __('Premium Addons', $bp_media->text_domain), $addons);
+			<h4>' . sprintf(__('Are you a developer?', BP_MEDIA_TXT_DOMAIN)) . '</h4>
+			<p>' . sprintf(__('If you are developing a BuddyPress Media addon we would like to include it in above list. We can also help you sell them. <a href="%s">More info!</a>', BP_MEDIA_TXT_DOMAIN), 'http://rtcamp.com/contact/') . '</p></h4>';
+            new BPMediaWidget('premium-addons', __('Premium Addons', BP_MEDIA_TXT_DOMAIN), $addons);
 
             $news = '<img src ="' . admin_url('/images/wpspin_light.gif') . '" /> Loading...';
-            new BPMediaWidget('latest-news', __('Latest News', $bp_media->text_domain), $news);
+            new BPMediaWidget('latest-news', __('Latest News', BP_MEDIA_TXT_DOMAIN), $news);
         }
 
     }
