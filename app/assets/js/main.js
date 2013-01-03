@@ -119,7 +119,7 @@ jQuery(document).ready(function(){
     
     
     /* Check Cancel request */
-    jQuery('#cancel_request').live('click', function(){
+    jQuery('#cancel-request').live('click', function(){
         if(jQuery(this).val()){
             jQuery('#bp_media_settings_form .bp-media-metabox-holder').html()
             jQuery('#bp_media_settings_form .bp-media-metabox-holder').html('<div class="support_form_laoder"></div>');        
