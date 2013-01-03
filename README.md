@@ -74,7 +74,7 @@ Please visit [BuddyPress Media's Features page](http://rtcamp.com/buddypress-med
 Please visit [BuddyPress Media's Roadmap page](http://rtcamp.com/buddypress-media/roadmap/ "Visit BuddyPress Media's Features page") to get some details about future releases.
 
 #### 2.3.2 ####
-* Album creation on a single file upload.
+* Album creation on a single file upload. Thanks to [Josh Levinson](http://profiles.wordpress.org/joshlevinson/) for providing the fix.
 * Fixed Version number constant.
 
 #### 2.3.1 ####
