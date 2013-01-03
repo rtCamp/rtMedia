@@ -124,7 +124,7 @@ class BPMediaRecentMedia extends WP_Widget {
 			while ( $bp_media_widget_query->have_posts() ) {
 				$bp_media_widget_query->the_post();
 
-				$entry = new BP_Media_Host_Wordpress( get_the_ID() );
+				$entry = new BPMediaHostWordpress( get_the_ID() );
 				?>
 
 						<?php echo $entry->get_media_gallery_content(); ?><?php }
@@ -159,7 +159,7 @@ class BPMediaRecentMedia extends WP_Widget {
 					while ( $bp_media_widget_query->have_posts() ) {
 						$bp_media_widget_query->the_post();
 
-						$entry = new BP_Media_Host_Wordpress( get_the_ID() );
+						$entry = new BPMediaHostWordpress( get_the_ID() );
 						?>
 
 						<?php echo $entry->get_media_gallery_content(); ?><?php }
