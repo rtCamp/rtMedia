@@ -176,6 +176,8 @@ class BuddyPressMedia {
                        // require( BP_MEDIA_PATH . 'includes/BPMediaFilters.php');
                         new BPMediaFilters();
                         new BPMediaActions();
+                        new BPMediaUtils();
+                        new BPMediaFunction();
 		}
 
 		if ( file_exists( BP_MEDIA_PATH . '/languages/' . get_locale() . '.mo' ) )

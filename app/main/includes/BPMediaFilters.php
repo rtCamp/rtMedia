@@ -90,7 +90,7 @@ class BPMediaFilters {
         return $link;
     }
 
-    function bp_media_items_count_filter($title, $nav_item) {
+    static function bp_media_items_count_filter($title, $nav_item) {
         global $bp_media_count;
         $bp_media_count = wp_parse_args($bp_media_count, array(
             'images' => 0,
@@ -253,7 +253,7 @@ class BPMediaFilters {
         global $wp_meta_boxes;
         // Buddypress Media
         //	if ( is_user_admin() )
-        wp_add_dashboard_widget('dashboard_media_widget', __('BuddPress Media'), 'bp_media_dashboard_media');
+        wp_add_dashboard_widget('dashboard_media_widget', __('BuddPress Media'), array($this,'bp_media_dashboard_media'));
 
         global $wp_meta_boxes;
 
@@ -279,16 +279,16 @@ class BPMediaFilters {
     function bp_media_dashboard_media() {
 
         /* Single user media counts */
-        $photos_count = bp_media_admin_total_count('photo');
-        $videos_count = bp_media_admin_total_count('video');
-        $audio_count = bp_media_admin_total_count('audio');
-        $albums_count = bp_media_admin_total_count('album');
+        $photos_count = $this->bp_media_admin_total_count('photo');
+        $videos_count = $this->bp_media_admin_total_count('video');
+        $audio_count = $this->bp_media_admin_total_count('audio');
+        $albums_count = $this->bp_media_admin_total_count('album');
 
         /* Group media counts */
-        $g_photos_count = bp_media_admin_group_total_count('photo');
-        $g_videos_count = bp_media_admin_group_total_count('video');
-        $g_audio_count = bp_media_admin_group_total_count('audio');
-        $g_albums_count = bp_media_admin_group_total_count('album');
+        $g_photos_count = $this->bp_media_admin_group_total_count('photo');
+        $g_videos_count = $this->bp_media_admin_group_total_count('video');
+        $g_audio_count = $this->bp_media_admin_group_total_count('audio');
+        $g_albums_count = $this->bp_media_admin_group_total_count('album');
         ?>
         <div class="bp-media-dashboard">
             <h3 class="sub"><?php _e('Users', 'bp-media'); ?> </h3>
@@ -311,16 +311,16 @@ class BPMediaFilters {
 
         switch ($media_type) {
             case 'photo':
-                return bp_media_total_count_media('image');
+                return $this->bp_media_total_count_media('image');
 
             case 'video':
-                return bp_media_total_count_media('video');
+                return $this->bp_media_total_count_media('video');
 
             case 'audio':
-                return bp_media_total_count_media('audio');
+                return $this->bp_media_total_count_media('audio');
 
             case 'album':
-                return bp_media_total_count_albums();
+                return $this->bp_media_total_count_albums();
         }
     }
 
@@ -328,16 +328,16 @@ class BPMediaFilters {
 
         switch ($media_type) {
             case 'photo':
-                return bp_media_total_count_media('image');
+                return $this->bp_media_total_count_media('image');
 
             case 'video':
-                return bp_media_total_count_media('video');
+                return $this->bp_media_total_count_media('video');
 
             case 'audio':
-                return bp_media_total_count_media('audio');
+                return $this->bp_media_total_count_media('audio');
 
             case 'album':
-                return bp_media_total_count_albums();
+                return $this->bp_media_total_count_albums();
         }
     }
 
