@@ -17,7 +17,7 @@ if (!class_exists('BPMediaSupport')) {
         public function get_form( $form ) {
             if ( empty($form) )
                 $form = (isset($_POST['form'])) ? $_POST['form'] : '';
-            bp_media_bug_report_form($form);
+           BPMediaUtils::bp_media_bug_report_form($form);
         }
 
     }
