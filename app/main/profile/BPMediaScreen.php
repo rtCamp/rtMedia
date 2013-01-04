@@ -11,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) )
  * @author Saurabh Shukla <saurabh.sahukla@rtcamp.com>
  * @author Gagandeep Singh <gagandeep.singh@rtcamp.com>
  */
-if ( ! class_exists( BPMediaScreen ) ) {
+if ( ! class_exists( 'BPMediaScreen' ) ) {
 
 	class BPMediaScreen {
 
