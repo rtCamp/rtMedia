@@ -116,7 +116,7 @@ class BPMediaAlbum{
 				'post_type'	=>	'bp_media_album',
 				'post_author'=> $author_id
 			);
-		bp_media_init_count($author_id);
+		BPMediaActions::bp_media_init_count($author_id);
 		global $bp_media_count;
 		$album_id = wp_insert_post($post_vars);
 		if($group_id){
@@ -140,13 +140,13 @@ class BPMediaAlbum{
 	function delete_album(){
 		do_action('bp_media_before_delete_album',  $this);
 		foreach($this->media_entries as $entry){
-			bp_media_delete_media_handler($entry->ID);
+			BPMediaActions::bp_media_delete_media_handler($entry->ID);
 			//do_action('bp_media_before_delete_media',$entry->ID); //Not working for some reason so called the required function directly
 			wp_delete_attachment($entry->ID,true);
 			do_action('bp_media_after_delete_media',$entry->ID);
 		}
 		$author_id = $this->owner;
-		bp_media_init_count($author_id);
+		BPMediaActions::bp_media_init_count($author_id);
 		wp_delete_post($this->id,true);
 		global $bp_media_count;
 		$bp_media_count['albums'] = intval(isset($bp_media_count['albums'])?$bp_media_count['albums']:0) - 1;
@@ -177,11 +177,12 @@ class BPMediaAlbum{
 	}
 
 	function get_album_gallery_content(){
+            global $bp_media
 		?><li>
-			<a href="<?php echo $this->url ?>" title="<?php echo $this->description ?>">
+			<a href="<?php echo $this->url ?>" title="<?php _e($this->description,$bp_media->text_domain); ?>">
 				<?php echo $this->thumbnail; ?>
 			</a>
-			<h3 title="<?php echo $this->name ?>"><a href="<?php echo $this->url ?>" title="<?php echo $this->description ?>"><?php echo $this->name;?></a><?php echo ' ('.count($this->media_entries).')'; ?></h3>
+			<h3 title="<?php echo $this->name ?>"><a href="<?php echo $this->url ?>" title="<?php _e($this->description,$bp_media->text_domain); ?>"><?php echo $this->name;?></a><?php echo ' ('.count($this->media_entries).')'; ?></h3>
 		</li><?php
 	}
 
