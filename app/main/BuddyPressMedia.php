@@ -176,7 +176,7 @@ class BuddyPressMedia {
                        // require( BP_MEDIA_PATH . 'includes/BPMediaFilters.php');
                         new BPMediaFilters();
                         new BPMediaActions();
-                        new BPMediaUtils();
+                        //new BPMediaUtils();
                         new BPMediaFunction();
 		}
 
