@@ -15,6 +15,8 @@ class BPMediaFilters {
         add_action('admin_bar_menu', array($this, 'bp_media_my_account_menu'), 1);
         // and we hook our function via wp_before_admin_bar_render
         add_action('wp_before_admin_bar_render', array($this, 'bp_media_adminbar_settings_menu'));
+        global $bp_media_activity_types;
+        $bp_media_activity_types = array('media_upload', 'album_updated', 'album_created');
     }
 
     function bp_media_activity_permalink_filter($link, $activity_obj = null) {

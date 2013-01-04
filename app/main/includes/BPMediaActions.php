@@ -109,7 +109,7 @@ class BPMediaActions {
             $types = array('error', 'updated', 'info');
             foreach ($types as $type) {
                 if (count($bp->{BP_MEDIA_SLUG}->messages[$type]) > 0) {
-                    BPMediaFilters::bp_media_show_formatted_error_message($bp->{BP_MEDIA_SLUG}->messages[$type], $type);
+                    BPMediaFunction::bp_media_show_formatted_error_message($bp->{BP_MEDIA_SLUG}->messages[$type], $type);
                 }
             }
         }
