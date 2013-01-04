@@ -173,7 +173,7 @@ if ( ! class_exists( BPMediaScreen ) ) {
 				echo '</ul>';
 				$this->template->show_more();
 			else:
-				bp_media_show_formatted_error_message( sprintf( __( 'Sorry, no %s were found.', BP_MEDIA_TXT_DOMAIN ), $this->slug ), 'info' );
+				BPMediaFunction::bp_media_show_formatted_error_message( sprintf( __( 'Sorry, no %s were found.', BP_MEDIA_TXT_DOMAIN ), $this->slug ), 'info' );
 			endif;
 			$this->hook_after();
 		}
@@ -212,7 +212,7 @@ if ( ! class_exists( BPMediaScreen ) ) {
 		function entry_screen_title() {
 
 			global $bp_media_current_entry;
-			/** @var $bp_media_current_entry BP_Media_Host_Wordpress */
+			/** @var $bp_media_current_entry BPMediaHostWordpress */
 			if ( is_object( $bp_media_current_entry ) )
 				echo $bp_media_current_entry->get_media_single_title();
 		}
@@ -256,11 +256,11 @@ if ( ! class_exists( BPMediaScreen ) ) {
 				$this->template->redirect($this->media_const);
 				exit;
 			}
-			bp_media_check_user();
+			BPMediaFunction::bp_media_check_user();
 
 			//For saving the data if the form is submitted
 			if ( array_key_exists( 'bp_media_title', $_POST ) ) {
-				bp_media_update_media();
+				BPMediaFunction::bp_media_update_media();
 			}
 			$this->template_actions( 'edit_screen' );
 			$this->template->loader();
@@ -331,7 +331,7 @@ if ( ! class_exists( BPMediaScreen ) ) {
 			}
 			global $bp_media_current_entry;
 			try {
-				$bp_media_current_entry = new BP_Media_Host_Wordpress( $bp->action_variables[ 1 ] );
+				$bp_media_current_entry = new BPMediaHostWordpress( $bp->action_variables[ 1 ] );
 			} catch ( Exception $e ) {
 				/* Send the values to the cookie for page reload display */
 				@setcookie( 'bp-message', $e->getMessage(), time() + 60 * 60 * 24, COOKIEPATH );
