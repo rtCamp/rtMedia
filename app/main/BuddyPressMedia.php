@@ -30,7 +30,6 @@ class BuddyPressMedia {
 	public $group_loader;
 
 	public function __construct() {
-
 		$this->constants();
 		$this->excerpt_lengths();
 		add_action( 'widgets_init', array( $this, 'widgets_init' ), 1 );
