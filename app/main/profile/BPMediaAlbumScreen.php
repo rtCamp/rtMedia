@@ -78,7 +78,7 @@ class BPMediaAlbumScreen extends BPMediaScreen {
 
 	function entry_screen_content() {
 		global $bp, $bp_media_current_album, $bp_media_query;
-		if ( ! $bp->action_variables[ 0 ] == BP_MEDIA_ALBUMS_ENTRY_SLUG )
+                if ( ! $bp->action_variables[ 0 ] == BP_MEDIA_ALBUMS_ENTRY_SLUG )
 			return false;
 		echo '<div class="bp_media_title">' . $bp_media_current_album->get_title() . '</div>';
 		$this->inner_query( $bp_media_current_album->get_id() );

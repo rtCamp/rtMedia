@@ -33,7 +33,7 @@ class BPMediaComponent extends BP_Component {
 		parent::start( BP_MEDIA_SLUG, BP_MEDIA_LABEL, BP_MEDIA_PATH );
 		$this->includes();
 		$bp->active_components[ $this->id ] = '1';
-		add_action( 'init', array( &$this, 'register_post_types' ));
+		add_action( 'init', array( &$this, 'register_post_types' ),10);
 	}
 
 	/**

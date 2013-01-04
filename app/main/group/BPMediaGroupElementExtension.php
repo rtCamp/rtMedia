@@ -19,8 +19,8 @@ if (class_exists('BP_Group_Extension')) :
         function display() {
             global $bp, $bp_media;
             BPMediaGroupAction::bp_media_groups_set_query();
-            BPMediaGroup::navigation_menu();
             if (bp_action_variable(0)) {
+                BPMediaGroup::navigation_menu();
                 $media_type = "";
                 $slug = "";
                 switch (bp_action_variable(0)) {
@@ -68,6 +68,7 @@ if (class_exists('BP_Group_Extension')) :
                                     if ($media_type == "album") {
                                         $bp_media_content = new BPMediaAlbumScreen($media_type, BP_MEDIA_ALBUMS_ENTRY_SLUG);
                                         $bp->action_variables[ 0 ]= BP_MEDIA_ALBUMS_ENTRY_SLUG;
+                                        $bp_media_content->entry_screen();
                                     } else {
                                         $bp_media_content = new BPMediaScreen($media_type, $slug);
                                     }
@@ -91,6 +92,7 @@ if (class_exists('BP_Group_Extension')) :
             } else {
 
                 if (BPMediaGroup::can_upload()) {
+                    BPMediaGroup::navigation_menu();
                     $bp_media_upload = new BPMediaUploadScreen('upload', BP_MEDIA_UPLOAD_SLUG);
                     $bp_media_upload->upload_screen_content();
                 } else {

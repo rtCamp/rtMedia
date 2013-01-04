@@ -7,8 +7,8 @@
 class BPMediaActions {
 
     function __construct() {
-        add_action('bp_media_before_content', array($this,'bp_media_show_messages'));
-        add_action('wp_enqueue_scripts', array($this,'bp_media_enqueue_scripts_styles', 11));
+        add_action('bp_media_before_content', 'BPMediaActions::bp_media_show_messages'); 
+        add_action('wp_enqueue_scripts', array($this,'bp_media_enqueue_scripts_styles'), 11);
         add_action('bp_before_activity_delete', 'BPMediaActions::bp_media_delete_activity_handler');
         add_action('wp_enqueue_scripts', array($this,'bp_media_upload_enqueue'));
         add_action('init', 'BPMediaActions::bp_media_init_count');
