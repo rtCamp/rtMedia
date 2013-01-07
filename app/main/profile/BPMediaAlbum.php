@@ -39,7 +39,7 @@ class BPMediaAlbum{
 			$album = &get_post($album_id);
 		}
 		if (empty($album->ID))
-			throw new Exception(__('Sorry, the requested album does not exist.', 'bp-media'));
+			throw new Exception(__('Sorry, the requested album does not exist.', BP_MEDIA_TXT_DOMAIN));
 		$this->id = $album->ID;
 		$this->description = $album->post_content;
 		$this->name = $album->post_title;

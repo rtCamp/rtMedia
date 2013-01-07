@@ -186,7 +186,7 @@ class BPMediaFunction {
                         'id' => $activity_id,
                         'type' => 'album_updated',
                         'user_id' => $activity['activities'][0]->user_id,
-                        'action' => apply_filters('bp_media_filter_album_updated', sprintf(__('%1$s added new media in album %2$s', 'bp-media'), bp_core_get_userlink($activity['activities'][0]->user_id), '<a href="' . $album->get_url() . '">' . $album->get_title() . '</a>')),
+                        'action' => apply_filters('bp_media_filter_album_updated', sprintf(__('%1$s added new media in album %2$s', BP_MEDIA_TXT_DOMAIN), bp_core_get_userlink($activity['activities'][0]->user_id), '<a href="' . $album->get_url() . '">' . $album->get_title() . '</a>')),
                         'component' => BP_MEDIA_SLUG, // The name/ID of the component e.g. groups, profile, mycomponent
                         'primary_link' => $activity['activities'][0]->primary_link,
                         'item_id' => $activity['activities'][0]->item_id,
