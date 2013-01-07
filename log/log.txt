@@ -1,0 +1,3 @@
+06:26:31  IST: Poedit did not find any files in scanned directories.
+06:26:31  IST: Entries in the catalog are probably incorrect.
+06:26:31  IST: Updating the catalog failed. Click on 'More>>' for details.
