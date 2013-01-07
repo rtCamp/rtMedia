@@ -131,13 +131,13 @@ class BPMediaUtils {
                 $str_title = ($request_type == 'bug_report') ? 'Bug Report' : 'New Feature Request';
                 switch ($request_type) {
                     case "bug_report":
-                        $str_title = __('Bug Report', 'bp-media');
+                        $str_title = __('Bug Report', BP_MEDIA_TXT_DOMAIN);
                         break;
                     case "new_feature":
-                        $str_title = __('New Feature Request', 'bp-media');
+                        $str_title = __('New Feature Request', BP_MEDIA_TXT_DOMAIN);
                         break;
                     case "premium_support":
-                        $str_title = __('Premium Support Request', 'bp-media');
+                        $str_title = __('Premium Support Request', BP_MEDIA_TXT_DOMAIN);
                         break;
                 }
                 $str_message .= "<h3><strong>$str_title</strong></h3>";
@@ -280,13 +280,13 @@ class BPMediaUtils {
                 if ($flgSend) {
                     switch ($request_type) {
                         case "bug_report":
-                            $succ_msg = __('Thank you, Your bug report sent successfully.', 'bp-media');
+                            $succ_msg = __('Thank you, Your bug report sent successfully.', BP_MEDIA_TXT_DOMAIN);
                             break;
                         case "new_feature":
-                            $succ_msg = __('Thank you, Your new feature request sent successfully.', 'bp-media');
+                            $succ_msg = __('Thank you, Your new feature request sent successfully.', BP_MEDIA_TXT_DOMAIN);
                             break;
                         case "premium_support":
-                            $succ_msg = __('Thank you, Your premium support request sent successfully, We will contact you soon.', 'bp-media');
+                            $succ_msg = __('Thank you, Your premium support request sent successfully, We will contact you soon.', BP_MEDIA_TXT_DOMAIN);
                             break;
                     }
                     $bp_media_messages[] = '<strong>' . $succ_msg . '</strong>';
@@ -306,9 +306,9 @@ class BPMediaUtils {
         }
 
         add_menu_page('Buddypress Media Component', 'BP Media', 'manage_options', 'bp-media-settings', array($this,'bp_media_settings_page'));
-        add_submenu_page('bp-media-settings', __('Buddypress Media Settings', 'bp-media'), __('Settings', 'bp-media'), 'manage_options', 'bp-media-settings', array($this,"bp_media_settings_page"));
-        add_submenu_page('bp-media-settings', __('Buddypress Media Addons', 'bp-media'), __('Addons', 'bp-media'), 'manage_options', 'bp-media-addons', array($this,"bp_media_settings_page"));
-        add_submenu_page('bp-media-settings', __('Buddypress Media Support', 'bp-media'), __('Support ', 'bp-media'), 'manage_options', 'bp-media-support', array($this,"bp_media_settings_page"));
+        add_submenu_page('bp-media-settings', __('Buddypress Media Settings', BP_MEDIA_TXT_DOMAIN), __('Settings', BP_MEDIA_TXT_DOMAIN), 'manage_options', 'bp-media-settings', array($this,"bp_media_settings_page"));
+        add_submenu_page('bp-media-settings', __('Buddypress Media Addons', BP_MEDIA_TXT_DOMAIN), __('Addons', BP_MEDIA_TXT_DOMAIN), 'manage_options', 'bp-media-addons', array($this,"bp_media_settings_page"));
+        add_submenu_page('bp-media-settings', __('Buddypress Media Support', BP_MEDIA_TXT_DOMAIN), __('Support ', BP_MEDIA_TXT_DOMAIN), 'manage_options', 'bp-media-support', array($this,"bp_media_settings_page"));
 
         $tab = isset($_GET['page']) ? $_GET['page'] : "bp-media-settings";
         add_action('admin_print_styles-' . $tab, array($this,'bp_media_admin_enqueue'));
@@ -332,7 +332,7 @@ class BPMediaUtils {
         switch ($tab) {
             case 'bp-media-addons' :
                 // All metaboxes registered during load page can be switched off/on at "Screen Options" automatically, nothing special to do therefore
-                add_meta_box('bp_media_addons_list_metabox', __('BuddyPress Media Addons for Audio/Video Conversion', 'bp-media'), array($this,'bp_media_addons_list'), 'bp-media-settings', 'normal', 'core');
+                add_meta_box('bp_media_addons_list_metabox', __('BuddyPress Media Addons for Audio/Video Conversion', BP_MEDIA_TXT_DOMAIN), array($this,'bp_media_addons_list'), 'bp-media-settings', 'normal', 'core');
                 break;
             case 'bp-media-support' :
                 // All metaboxes registered during load page can be switched off/on at "Screen Options" automatically, nothing special to do therefore
@@ -356,7 +356,7 @@ class BPMediaUtils {
         <div class="wrap bp-media-admin">
         <?php //screen_icon( 'buddypress' ); ?>
             <div id="icon-buddypress" class="icon32"><br></div>
-            <h2 class="nav-tab-wrapper"><?php bp_core_admin_tabs(__('Media', 'bp-media')); ?></h2>
+            <h2 class="nav-tab-wrapper"><?php bp_core_admin_tabs(__('Media', BP_MEDIA_TXT_DOMAIN)); ?></h2>
             <div class="metabox-holder columns-2">
                 <div class="bp-media-settings-tabs"><?php
         // Check to see which tab we are on
@@ -371,22 +371,22 @@ class BPMediaUtils {
             /* BP Media */
             $tabs[] = array(
                 'href' => bp_get_admin_url(add_query_arg(array('page' => 'bp-media-settings'), 'admin.php')),
-                'title' => __('Buddypress Media Settings', 'bp-media'),
-                'name' => __('Settings', 'bp-media'),
+                'title' => __('Buddypress Media Settings', BP_MEDIA_TXT_DOMAIN),
+                'name' => __('Settings', BP_MEDIA_TXT_DOMAIN),
                 'class' => ($tab == 'bp-media-settings') ? $active_class : $idle_class . ' first_tab'
             );
 
             $tabs[] = array(
                 'href' => bp_get_admin_url(add_query_arg(array('page' => 'bp-media-addons'), 'admin.php')),
-                'title' => __('Buddypress Media Addons', 'bp-media'),
-                'name' => __('Addons', 'bp-media'),
+                'title' => __('Buddypress Media Addons', BP_MEDIA_TXT_DOMAIN),
+                'name' => __('Addons', BP_MEDIA_TXT_DOMAIN),
                 'class' => ($tab == 'bp-media-addons') ? $active_class : $idle_class
             );
 
             $tabs[] = array(
                 'href' => bp_get_admin_url(add_query_arg(array('page' => 'bp-media-support'), 'admin.php')),
-                'title' => __('Buddypress Media Support', 'bp-media'),
-                'name' => __('Support', 'bp-media'),
+                'title' => __('Buddypress Media Support', BP_MEDIA_TXT_DOMAIN),
+                'name' => __('Support', BP_MEDIA_TXT_DOMAIN),
                 'class' => ($tab == 'bp-media-support') ? $active_class : $idle_class . ' last_tab'
             );
 
@@ -580,7 +580,7 @@ class BPMediaUtils {
                     </div>
                     <div class="product_footer">
                         <span class="price alignleft"><span class="amount">$99</span></span>
-                        <a class="add_to_cart_button  alignright product_type_simple"  href="http://rtcamp.com/store/?add-to-cart=15446"><?php _e('Buy Now', 'bp-media'); ?></a>
+                        <a class="add_to_cart_button  alignright product_type_simple"  href="http://rtcamp.com/store/?add-to-cart=15446"><?php _e('Buy Now', BP_MEDIA_TXT_DOMAIN); ?></a>
                         <a class="alignleft product_demo_link"  href="http://demo.rtcamp.com/bpm-kaltura/" title="BuddyPress Media Kaltura Add-on">Live Demo</a>
                     </div><!-- .product_footer -->
                 </li>
@@ -595,7 +595,7 @@ class BPMediaUtils {
                     </div>
                     <div class="product_footer">
                         <span class="price alignleft"><span class="amount">$49</span></span>
-                        <a class="add_to_cart_button alignright  product_type_simple"  href="http://rtcamp.com/store/?add-to-cart=13677"><?php _e('Buy Now', 'bp-media'); ?></a>
+                        <a class="add_to_cart_button alignright  product_type_simple"  href="http://rtcamp.com/store/?add-to-cart=13677"><?php _e('Buy Now', BP_MEDIA_TXT_DOMAIN); ?></a>
                         <a class="alignleft product_demo_link" href="http://demo.rtcamp.com/bpm-media" title="BuddyPress Media FFMPEG Add-on">Live Demo</a>
                     </div><!-- .product_footer -->
                 </li>
@@ -609,16 +609,16 @@ class BPMediaUtils {
         ?>
 
         <div class="bp-media-support">
-            <h2><?php _e('Need Help/Support?', 'bp-media'); ?></h2>
+            <h2><?php _e('Need Help/Support?', BP_MEDIA_TXT_DOMAIN); ?></h2>
             <ul class="support_list">
-                <li><a href="http://rtcamp.com/buddypress-media/faq/"  title="<?php _e('Read FAQ', 'bp-media'); ?>"><?php _e('Read FAQ', 'bp-media'); ?></a> </li>
-                <li><a href="http://rtcamp.com/support/forum/buddypress-media/"  title="<?php _e('Free Support Forum', 'bp-media'); ?>"><?php _e('Free Support Forum', 'bp-media'); ?></a></li>
-                <li><a href="https://github.com/rtCamp/buddypress-media/issues/"  title="<?php _e('Github Issue Tracker', 'bp-media'); ?>"><?php _e('Github Issue Tracker', 'bp-media'); ?> </a> </li>
+                <li><a href="http://rtcamp.com/buddypress-media/faq/"  title="<?php _e('Read FAQ', BP_MEDIA_TXT_DOMAIN); ?>"><?php _e('Read FAQ', BP_MEDIA_TXT_DOMAIN); ?></a> </li>
+                <li><a href="http://rtcamp.com/support/forum/buddypress-media/"  title="<?php _e('Free Support Forum', BP_MEDIA_TXT_DOMAIN); ?>"><?php _e('Free Support Forum', BP_MEDIA_TXT_DOMAIN); ?></a></li>
+                <li><a href="https://github.com/rtCamp/buddypress-media/issues/"  title="<?php _e('Github Issue Tracker', BP_MEDIA_TXT_DOMAIN); ?>"><?php _e('Github Issue Tracker', BP_MEDIA_TXT_DOMAIN); ?> </a> </li>
             </ul>
             <br/>
 
-            <h2><?php _e('Hire Us!', 'bp-media'); ?></h2>
-            <h4><a href="http://rtcamp.com/contact/?purpose=hire"><?php _e('We are available for customisation and premium support. Get on touch with us. :-)', 'bp-media'); ?></a></h4>
+            <h2><?php _e('Hire Us!', BP_MEDIA_TXT_DOMAIN); ?></h2>
+            <h4><a href="http://rtcamp.com/contact/?purpose=hire"><?php _e('We are available for customisation and premium support. Get on touch with us. :-)', BP_MEDIA_TXT_DOMAIN); ?></a></h4>
             <br/>
         </div>
 
@@ -634,11 +634,11 @@ class BPMediaUtils {
     function bp_media_cancel_request() {
         ?>
         <div class="postbox ">
-            <div title="Click to toggle" class="handlediv"><br></div><h3 class="hndle"><span><?php _e('BuddyPress Media Support', 'bp-media'); ?></span></h3>
+            <div title="Click to toggle" class="handlediv"><br></div><h3 class="hndle"><span><?php _e('BuddyPress Media Support', BP_MEDIA_TXT_DOMAIN); ?></span></h3>
             <div class="inside"><?php $this->bp_media_support(); ?></div>
         </div>
         <div class="postbox ">    
-            <div title="Click to toggle" class="handlediv"><br></div><h3 class="hndle"><span><?php _e('Submit a request form', 'bp-media'); ?></span></h3>
+            <div title="Click to toggle" class="handlediv"><br></div><h3 class="hndle"><span><?php _e('Submit a request form', BP_MEDIA_TXT_DOMAIN); ?></span></h3>
             <div class="inside"><?php $this->bp_media_send_request(); ?></div>
         </div><?php
         die();
@@ -649,12 +649,12 @@ class BPMediaUtils {
         <div id="support-form" class="bp-media-form">        
             <ul>
                 <li>
-                    <label class="bp-media-label" for="bp-media-request"><?php _e('Request type:', 'bp-media'); ?></label>
+                    <label class="bp-media-label" for="bp-media-request"><?php _e('Request type:', BP_MEDIA_TXT_DOMAIN); ?></label>
                     <select class="bp-media-select" id="request_type_select">
-                        <option value=""><?php _e('-- Choose Type --', 'bp-media'); ?></option>
-                        <option value="premium_support"><?php _e('Premium Support', 'bp-media'); ?></option>                    
-                        <option value="new_feature"><?php _e('Suggest a New Feature', 'bp-media'); ?></option>
-                        <option value="bug_report"><?php _e('Submit a Bug Report', 'bp-media'); ?></option>                    
+                        <option value=""><?php _e('-- Choose Type --', BP_MEDIA_TXT_DOMAIN); ?></option>
+                        <option value="premium_support"><?php _e('Premium Support', BP_MEDIA_TXT_DOMAIN); ?></option>                    
+                        <option value="new_feature"><?php _e('Suggest a New Feature', BP_MEDIA_TXT_DOMAIN); ?></option>
+                        <option value="bug_report"><?php _e('Submit a Bug Report', BP_MEDIA_TXT_DOMAIN); ?></option>                    
                     </select>
                 </li>
             </ul>
@@ -668,13 +668,13 @@ class BPMediaUtils {
         <div class="postbox " id="bp_media_bug_report_metabox"><?php
         switch ($request_type) {
             case "bug_report":
-                $meta_title = __('Submit a Bug Report', 'bp-media');
+                $meta_title = __('Submit a Bug Report', BP_MEDIA_TXT_DOMAIN);
                 break;
             case "new_feature":
-                $meta_title = __('Submit a New Feature Request', 'bp-media');
+                $meta_title = __('Submit a New Feature Request', BP_MEDIA_TXT_DOMAIN);
                 break;
             case "premium_support":
-                $meta_title = __('Submit a Premium Support Request', 'bp-media');
+                $meta_title = __('Submit a Premium Support Request', BP_MEDIA_TXT_DOMAIN);
                 break;
         }
         ?>
@@ -683,22 +683,22 @@ class BPMediaUtils {
                 <div id="support-form" class="bp-media-form">               
                     <ul>
                         <li>
-                            <label class="bp-media-label" for="ur_name"><?php _e('Your Name:', 'bp-media'); ?></label><input class="bp-media-input" id="ur_name" type="text" name="ur_name" value="<?php echo (isset($_REQUEST['ur_name'])) ? esc_attr(stripslashes(trim($_REQUEST['ur_name']))) : $current_user->user_login; ?>"/>
+                            <label class="bp-media-label" for="ur_name"><?php _e('Your Name:', BP_MEDIA_TXT_DOMAIN); ?></label><input class="bp-media-input" id="ur_name" type="text" name="ur_name" value="<?php echo (isset($_REQUEST['ur_name'])) ? esc_attr(stripslashes(trim($_REQUEST['ur_name']))) : $current_user->user_login; ?>"/>
                         </li>
                         <li>
-                            <label class="bp-media-label" for="ur_email"><?php _e('Your Email-Id:', 'bp-media'); ?></label><input id="ur_email" class="bp-media-input" type="text" name="ur_email" value="<?php echo (isset($_REQUEST['ur_email'])) ? esc_attr(stripslashes(trim($_REQUEST['ur_email']))) : get_option('admin_email'); ?>"/>
+                            <label class="bp-media-label" for="ur_email"><?php _e('Your Email-Id:', BP_MEDIA_TXT_DOMAIN); ?></label><input id="ur_email" class="bp-media-input" type="text" name="ur_email" value="<?php echo (isset($_REQUEST['ur_email'])) ? esc_attr(stripslashes(trim($_REQUEST['ur_email']))) : get_option('admin_email'); ?>"/>
                         </li>
                         <li>
-                            <label class="bp-media-label" for="ur_site_url"><?php _e('Your Site Url:', 'bp-media'); ?></label><input id="ur_site_url" class="bp-media-input" type="text" name="ur_site_url" value="<?php echo (isset($_REQUEST['ur_site_url'])) ? esc_attr(stripslashes(trim($_REQUEST['ur_site_url']))) : get_bloginfo('url'); ?>"/>
+                            <label class="bp-media-label" for="ur_site_url"><?php _e('Your Site Url:', BP_MEDIA_TXT_DOMAIN); ?></label><input id="ur_site_url" class="bp-media-input" type="text" name="ur_site_url" value="<?php echo (isset($_REQUEST['ur_site_url'])) ? esc_attr(stripslashes(trim($_REQUEST['ur_site_url']))) : get_bloginfo('url'); ?>"/>
                         </li>
                         <li>
-                            <label class="bp-media-label" for="ur_phone"><?php _e('Your Phone:', 'bp-media'); ?></label><input class="bp-media-input" id="ur_phone" type="text" name="ur_phone" value="<?php echo (isset($_REQUEST['ur_phone'])) ? esc_attr(stripslashes(trim($_REQUEST['ur_phone']))) : ''; ?>"/>
+                            <label class="bp-media-label" for="ur_phone"><?php _e('Your Phone:', BP_MEDIA_TXT_DOMAIN); ?></label><input class="bp-media-input" id="ur_phone" type="text" name="ur_phone" value="<?php echo (isset($_REQUEST['ur_phone'])) ? esc_attr(stripslashes(trim($_REQUEST['ur_phone']))) : ''; ?>"/>
                         </li>
                         <li>
-                            <label class="bp-media-label" for="ur_subject"><?php _e('Subject:', 'bp-media'); ?></label><input id="ur_subject" class="bp-media-input" type="text" name="ur_subject" value="<?php echo (isset($_REQUEST['ur_subject'])) ? esc_attr(stripslashes(trim($_REQUEST['ur_subject']))) : ''; ?>"/>
+                            <label class="bp-media-label" for="ur_subject"><?php _e('Subject:', BP_MEDIA_TXT_DOMAIN); ?></label><input id="ur_subject" class="bp-media-input" type="text" name="ur_subject" value="<?php echo (isset($_REQUEST['ur_subject'])) ? esc_attr(stripslashes(trim($_REQUEST['ur_subject']))) : ''; ?>"/>
                         </li>
                         <li>
-                            <label class="bp-media-label" for="ur_query"><?php _e('Details:', 'bp-media'); ?></label><textarea id="ur_query" class="bp-media-textarea" type="text" name="ur_query"/><?php echo (isset($_REQUEST['ur_query'])) ? esc_textarea(stripslashes(trim($_REQUEST['ur_query']))) : ''; ?></textarea>
+                            <label class="bp-media-label" for="ur_query"><?php _e('Details:', BP_MEDIA_TXT_DOMAIN); ?></label><textarea id="ur_query" class="bp-media-textarea" type="text" name="ur_query"/><?php echo (isset($_REQUEST['ur_query'])) ? esc_textarea(stripslashes(trim($_REQUEST['ur_query']))) : ''; ?></textarea>
                         </li><?php
                 if ($request_type == 'bug_report') {
                     /*    $templates = array();
@@ -718,9 +718,9 @@ class BPMediaUtils {
                                 </div>
                                                     </li>-->
                             <li class="bp-media-support-attachment">
-                                <label class="bp-media-label" for="ur_attachment"><?php _e('Attachment:', 'bp-media'); ?></label>
+                                <label class="bp-media-label" for="ur_attachment"><?php _e('Attachment:', BP_MEDIA_TXT_DOMAIN); ?></label>
                                 <div class="more-attachment"><input id="ur_attachment-0" class="bp-media-input" type="file" name="ur_attachment[]" value="<?php echo (isset($_REQUEST['bug_report']['ur_attachment'])) ? $_REQUEST['bug_report']['ur_attachment'] : ''; ?>"/></div>
-                                <a href="#" class="add-more-attachment-btn"><?php _e('Add more attachment', 'bp-media'); ?></a>
+                                <a href="#" class="add-more-attachment-btn"><?php _e('Add more attachment', BP_MEDIA_TXT_DOMAIN); ?></a>
                             </li><?php }
         ?>
                         <input type="hidden" name="request_type" value="<?php echo $request_type; ?>"/>
@@ -741,22 +741,22 @@ class BPMediaUtils {
                         <ul>
 
                             <li>
-                                <label class="bp-media-label" for="ur_wp_admin_login"><?php _e('Your WP Admin Login:', 'bp-media'); ?></label><input class="bp-media-input" id="ur_wp_admin_login" type="text" name="ur_wp_admin_login" value="<?php echo (isset($_REQUEST['ur_wp_admin_login'])) ? esc_attr(stripslashes(trim($_REQUEST['ur_wp_admin_login']))) : ''; ?>"/>
+                                <label class="bp-media-label" for="ur_wp_admin_login"><?php _e('Your WP Admin Login:', BP_MEDIA_TXT_DOMAIN); ?></label><input class="bp-media-input" id="ur_wp_admin_login" type="text" name="ur_wp_admin_login" value="<?php echo (isset($_REQUEST['ur_wp_admin_login'])) ? esc_attr(stripslashes(trim($_REQUEST['ur_wp_admin_login']))) : ''; ?>"/>
                             </li>
                             <li>
-                                <label class="bp-media-label" for="ur_wp_admin_pwd"><?php _e('Your WP Admin password:', 'bp-media'); ?></label><input class="bp-media-input" id="ur_wp_admin_pwd" type="text" name="ur_wp_admin_pwd" value="<?php echo (isset($_REQUEST['ur_wp_admin_pwd'])) ? esc_attr(stripslashes(trim($_REQUEST['ur_wp_admin_pwd']))) : ''; ?>"/>
+                                <label class="bp-media-label" for="ur_wp_admin_pwd"><?php _e('Your WP Admin password:', BP_MEDIA_TXT_DOMAIN); ?></label><input class="bp-media-input" id="ur_wp_admin_pwd" type="text" name="ur_wp_admin_pwd" value="<?php echo (isset($_REQUEST['ur_wp_admin_pwd'])) ? esc_attr(stripslashes(trim($_REQUEST['ur_wp_admin_pwd']))) : ''; ?>"/>
                             </li>
                             <li>
-                                <label class="bp-media-label" for="ur_ssh_ftp_host"><?php _e('Your SSH / FTP host:', 'bp-media'); ?></label><input class="bp-media-input" id="ur_ssh_ftp_host" type="text" name="ur_ssh_ftp_host" value="<?php echo (isset($_REQUEST['ur_ssh_ftp_host'])) ? esc_attr(stripslashes(trim($_REQUEST['ur_ssh_ftp_host']))) : ''; ?>"/>
+                                <label class="bp-media-label" for="ur_ssh_ftp_host"><?php _e('Your SSH / FTP host:', BP_MEDIA_TXT_DOMAIN); ?></label><input class="bp-media-input" id="ur_ssh_ftp_host" type="text" name="ur_ssh_ftp_host" value="<?php echo (isset($_REQUEST['ur_ssh_ftp_host'])) ? esc_attr(stripslashes(trim($_REQUEST['ur_ssh_ftp_host']))) : ''; ?>"/>
                             </li>
                             <li>
-                                <label class="bp-media-label" for="ur_ssh_ftp_login"><?php _e('Your SSH / FTP login:', 'bp-media'); ?></label><input class="bp-media-input" id="ur_ssh_ftp_login" type="text" name="ur_ssh_ftp_login" value="<?php echo (isset($_REQUEST['ur_ssh_ftp_login'])) ? esc_attr(stripslashes(trim($_REQUEST['ur_ssh_ftp_login']))) : ''; ?>"/>
+                                <label class="bp-media-label" for="ur_ssh_ftp_login"><?php _e('Your SSH / FTP login:', BP_MEDIA_TXT_DOMAIN); ?></label><input class="bp-media-input" id="ur_ssh_ftp_login" type="text" name="ur_ssh_ftp_login" value="<?php echo (isset($_REQUEST['ur_ssh_ftp_login'])) ? esc_attr(stripslashes(trim($_REQUEST['ur_ssh_ftp_login']))) : ''; ?>"/>
                             </li>
                             <li>
-                                <label class="bp-media-label" for="ur_ssh_ftp_pwd"><?php _e('Your SSH / FTP password:', 'bp-media'); ?></label><input class="bp-media-input" id="ur_ssh_ftp_pwd" type="text" name="ur_ssh_ftp_pwd" value="<?php echo (isset($_REQUEST['ur_ssh_ftp_pwd'])) ? esc_attr(stripslashes(trim($_REQUEST['ur_ssh_ftp_pwd']))) : ''; ?>"/>
+                                <label class="bp-media-label" for="ur_ssh_ftp_pwd"><?php _e('Your SSH / FTP password:', BP_MEDIA_TXT_DOMAIN); ?></label><input class="bp-media-input" id="ur_ssh_ftp_pwd" type="text" name="ur_ssh_ftp_pwd" value="<?php echo (isset($_REQUEST['ur_ssh_ftp_pwd'])) ? esc_attr(stripslashes(trim($_REQUEST['ur_ssh_ftp_pwd']))) : ''; ?>"/>
                             </li>
                             <li>
-                                <input class="bp-media-checkbox" id="ur_send_phpinfo" type="checkbox" name="ur_send_phpinfo" <?php if (isset($_REQUEST['ur_send_phpinfo'])) checked('true', $_REQUEST['ur_send_phpinfo'], true); ?> value="true"/><label class="bp-media-label" for="ur_send_phpinfo"><?php _e('Send PHP Info', 'bp-media'); ?></label>
+                                <input class="bp-media-checkbox" id="ur_send_phpinfo" type="checkbox" name="ur_send_phpinfo" <?php if (isset($_REQUEST['ur_send_phpinfo'])) checked('true', $_REQUEST['ur_send_phpinfo'], true); ?> value="true"/><label class="bp-media-label" for="ur_send_phpinfo"><?php _e('Send PHP Info', BP_MEDIA_TXT_DOMAIN); ?></label>
                             </li>
                         </ul>
                     </div><!-- .submit-bug-box -->
@@ -781,43 +781,43 @@ class BPMediaUtils {
             <div class="inside">
                 <a href="http://rtcamp.com" title="Empowering The Web With WordPress" id="logo"><img src="<?php echo plugins_url('/img/rtcamp-logo.png', __FILE__); ?>" alt="rtCamp" /></a>
                 <ul id="social">
-                    <li><a href="<?php printf('%s', 'http://www.facebook.com/rtCamp.solutions/'); ?>"  title="<?php _e('Become a fan on Facebook', 'bp-media'); ?>" class="bp-media-facebook bp-media-social"><?php _e('Facebook', 'bp-media'); ?></a></li>
-                    <li><a href="<?php printf('%s', 'https://twitter.com/rtcamp/'); ?>"  title="<?php _e('Follow us on Twitter', 'bp-media'); ?>" class="bp-media-twitter bp-media-social"><?php _e('Twitter', 'bp-media'); ?></a></li>
-                    <li><a href="<?php printf('%s', 'http://feeds.feedburner.com/rtcamp/'); ?>"  title="<?php _e('Subscribe to our feeds', 'bp-media'); ?>" class="bp-media-rss bp-media-social"><?php _e('RSS Feed', 'bp-media'); ?></a></li>
+                    <li><a href="<?php printf('%s', 'http://www.facebook.com/rtCamp.solutions/'); ?>"  title="<?php _e('Become a fan on Facebook', BP_MEDIA_TXT_DOMAIN); ?>" class="bp-media-facebook bp-media-social"><?php _e('Facebook', BP_MEDIA_TXT_DOMAIN); ?></a></li>
+                    <li><a href="<?php printf('%s', 'https://twitter.com/rtcamp/'); ?>"  title="<?php _e('Follow us on Twitter', BP_MEDIA_TXT_DOMAIN); ?>" class="bp-media-twitter bp-media-social"><?php _e('Twitter', BP_MEDIA_TXT_DOMAIN); ?></a></li>
+                    <li><a href="<?php printf('%s', 'http://feeds.feedburner.com/rtcamp/'); ?>"  title="<?php _e('Subscribe to our feeds', BP_MEDIA_TXT_DOMAIN); ?>" class="bp-media-rss bp-media-social"><?php _e('RSS Feed', BP_MEDIA_TXT_DOMAIN); ?></a></li>
                 </ul>
             </div>
         </div>
 
         <div class="rtmetabox postbox" id="support">
 
-            <h3 class="hndle"><span><?php _e('Need Help?', 'bp-media'); ?></span></h3>
+            <h3 class="hndle"><span><?php _e('Need Help?', BP_MEDIA_TXT_DOMAIN); ?></span></h3>
             <div class="inside"><p><?php printf(__(' Please use our <a href="%s">free support forum</a>.<br/><span class="bpm-aligncenter">OR</span><br/>
-		<a href="%s">Hire us!</a> To get professional customisation/setup service.', 'bp-media'), 'http://rtcamp.com/support/forum/buddypress-media/', 'http://rtcamp.com/buddypress-media/hire/'); ?>.</p></div>
+		<a href="%s">Hire us!</a> To get professional customisation/setup service.', BP_MEDIA_TXT_DOMAIN), 'http://rtcamp.com/support/forum/buddypress-media/', 'http://rtcamp.com/buddypress-media/hire/'); ?>.</p></div>
         </div>
 
         <div class="rtmetabox postbox" id="donate">
 
-            <h3 class="hndle"><span><?php _e('Donate', 'bp-media'); ?></span></h3>
+            <h3 class="hndle"><span><?php _e('Donate', BP_MEDIA_TXT_DOMAIN); ?></span></h3>
             <span><a href="http://rtcamp.com/donate/" title="Help the development keep going."><img class="bp-media-donation-image" src ="<?php echo plugins_url('/img/donate.gif', __FILE__); ?>"   /></a></span>
-            <div class="inside"><p><?php printf(__('Help us release more amazing features faster. Consider making a donation to our consistent efforts.', 'bp-media')); ?>.</p></div>
+            <div class="inside"><p><?php printf(__('Help us release more amazing features faster. Consider making a donation to our consistent efforts.', BP_MEDIA_TXT_DOMAIN)); ?>.</p></div>
         </div>
 
         <div class="rtmetabox postbox" id="bp-media-premium-addons">
 
-            <h3 class="hndle"><span><?php _e('Premium Addons', 'bp-media'); ?></span></h3>
+            <h3 class="hndle"><span><?php _e('Premium Addons', BP_MEDIA_TXT_DOMAIN); ?></span></h3>
             <div class="inside">
                 <ul>
                     <li><a href="http://rtcamp.com/store/buddypress-media-kaltura/" title="BuddyPress Media Kaltura">BPM-Kaltura</a> - add support for Kaltura.com/Kaltura-CE based video conversion support</li>
                     <li><a href="http://rtcamp.com/store/buddy-press-media-ffmpeg/" title="BuddyPress Media FFMPEG">BPM-FFMPEG</a> - add FFMEG-based audio/video conversion support</li>
                 </ul>
-                <h4><?php printf(__('Are you a developer?', 'bp-media')) ?></h4>
-                <p><?php printf(__('If you are developing a BuddyPress Media addon we would like to include it in above list. We can also help you sell them. <a href="%s">More info!</a>', 'bp-media'), 'http://rtcamp.com/contact/') ?></p></h4>
+                <h4><?php printf(__('Are you a developer?', BP_MEDIA_TXT_DOMAIN)) ?></h4>
+                <p><?php printf(__('If you are developing a BuddyPress Media addon we would like to include it in above list. We can also help you sell them. <a href="%s">More info!</a>', BP_MEDIA_TXT_DOMAIN), 'http://rtcamp.com/contact/') ?></p></h4>
             </div>
         </div>
 
         <div class="rtmetabox postbox" id="bp_media_latest_news">
 
-            <h3 class="hndle"><span><?php _e('Latest News', 'bp-media'); ?></span></h3>
+            <h3 class="hndle"><span><?php _e('Latest News', BP_MEDIA_TXT_DOMAIN); ?></span></h3>
             <div class="inside"><img src ="<?php echo admin_url(); ?>/images/wpspin_light.gif" /> Loading...</div>
         </div><?php
     }
@@ -849,8 +849,8 @@ class BPMediaUtils {
             /* BP Media */
             $tabs[] = array(
                 'href' => bp_get_admin_url(add_query_arg(array('page' => 'bp-media-settings'), 'admin.php')),
-                'title' => __('Buddypress Media', 'bp-media'),
-                'name' => __('Buddypress Media', 'bp-media'),
+                'title' => __('Buddypress Media', BP_MEDIA_TXT_DOMAIN),
+                'name' => __('Buddypress Media', BP_MEDIA_TXT_DOMAIN),
                 'class' => ($tab == 'bp-media-settings' || $tab == 'bp-media-addons' || $tab == 'bp-media-support') ? $active_class : $idle_class
             );
 
