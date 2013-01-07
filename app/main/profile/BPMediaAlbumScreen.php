@@ -91,7 +91,7 @@ class BPMediaAlbumScreen extends BPMediaScreen {
 			echo '</ul>';
 			$this->template->show_more();
 		else:
-			BPMediaFunction::bp_media_show_formatted_error_message( __( 'Sorry, no media items were found in this album.', 'bp-media' ), 'info' );
+			BPMediaFunction::bp_media_show_formatted_error_message( __( 'Sorry, no media items were found in this album.', BP_MEDIA_TXT_DOMAIN ), 'info' );
 		endif;
 		$this->hook_after();
 	}

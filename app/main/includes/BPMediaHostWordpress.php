@@ -43,7 +43,7 @@ class BPMediaHostWordpress {
 			$media = &get_post($media_id);
 		}
 		if (empty($media->ID))
-			throw new Exception(__('Sorry, the requested media does not exist.', 'bp-media'));
+			throw new Exception(__('Sorry, the requested media does not exist.', BP_MEDIA_TXT_DOMAIN));
 		$this->id = $media->ID;
 		$this->description = $media->post_content;
 		$this->name = $media->post_title;

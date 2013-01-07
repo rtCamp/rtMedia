@@ -7,7 +7,7 @@
 class BPMediaActions {
 
     function __construct() {
-        add_action('bp_media_before_content', 'BPMediaActions::bp_media_show_messages'); 
+        add_action('bp_media_before_content', 'BPMediaActions::bp_media_show_messages');
         add_action('wp_enqueue_scripts', array($this,'bp_media_enqueue_scripts_styles'), 11);
         add_action('bp_before_activity_delete', 'BPMediaActions::bp_media_delete_activity_handler');
         add_action('wp_enqueue_scripts', array($this,'bp_media_upload_enqueue'));
@@ -86,12 +86,12 @@ class BPMediaActions {
                     $group_id = isset($_POST['bp_media_group_id']) ? intval($_POST['bp_media_group_id']) : 0;
                     $entry = $bp_media_entry->add_media($title, $description, $album_id, $group_id, $is_multiple);
                     if (!isset($bp->{BP_MEDIA_SLUG}->messages['updated'][0]))
-                        $bp->{BP_MEDIA_SLUG}->messages['updated'][0] = __('Upload Successful', 'bp-media');
+                        $bp->{BP_MEDIA_SLUG}->messages['updated'][0] = __('Upload Successful', BP_MEDIA_TXT_DOMAIN);
                 } catch (Exception $e) {
                     $bp->{BP_MEDIA_SLUG}->messages['error'][] = $e->getMessage();
                 }
             } else {
-                $bp->{BP_MEDIA_SLUG}->messages['error'][] = __('You did not specified a file to upload', 'bp-media');
+                $bp->{BP_MEDIA_SLUG}->messages['error'][] = __('You did not specified a file to upload', BP_MEDIA_TXT_DOMAIN);
             }
         }
     }
@@ -317,7 +317,7 @@ class BPMediaActions {
 
     function bp_media_upload_enqueue() {
         $params = array(
-            'url' => BP_MEDIA_URL . 'bp-media-upload-handler.php',
+            'url' => BP_MEDIA_URL . 'app/main/includes/bp-media-upload-handler.php',
             'runtimes' => 'gears,html5,flash,silverlight,browserplus',
             'browse_button' => 'bp-media-upload-browse-button',
             'container' => 'bp-media-upload-ui',
@@ -332,11 +332,11 @@ class BPMediaActions {
             'multi_selection' => true,
             'multipart_params' => apply_filters('bp_media_multipart_params_filter', array('action' => 'wp_handle_upload'))
         );
-        wp_enqueue_script('bp-media-uploader', BP_MEDIA_URL . 'app/assets/js/bp-media-uploader.js', array('plupload', 'plupload-html5', 'plupload-flash', 'plupload-silverlight', 'plupload-html4', 'plupload-handlers', 'jquery-ui-core', 'jquery-ui-widget', 'jquery-ui-position', 'jquery-ui-dialog'));
+        wp_enqueue_script('bp-media-uploader', BP_MEDIA_URL . 'app/assets/js/bp-media-uploader.js', array('plupload', 'plupload-html5', 'plupload-flash', 'plupload-silverlight', 'plupload-html4', 'plupload-handlers'));
         wp_localize_script('bp-media-uploader', 'bp_media_uploader_params', $params);
         wp_enqueue_style('bp-media-default', BP_MEDIA_URL . 'app/assets/css/main.css');
 //	wp_enqueue_style("wp-jquery-ui-dialog"); //Its not styling the Dialog box as it should so using different styling
-        wp_enqueue_style('jquery-style', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/themes/smoothness/jquery-ui.css');
+        //wp_enqueue_style('jquery-style', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/themes/smoothness/jquery-ui.css');
     }
 
 //This is used only on the uploads page so its added as action in the screens function of upload page.
@@ -530,7 +530,7 @@ class BPMediaActions {
     function bp_media_album_create_activity($album) {
         /* @var $album BP_Media_Album */
         $args = array(
-            'action' => apply_filters('bp_media_album_created', sprintf(__('%1$s created an album %2$s', 'bp-media'), bp_core_get_userlink($album->get_owner()), '<a href="' . $album->get_url() . '">' . $album->get_title() . '</a>')),
+            'action' => apply_filters('bp_media_album_created', sprintf(__('%1$s created an album %2$s', BP_MEDIA_TXT_DOMAIN), bp_core_get_userlink($album->get_owner()), '<a href="' . $album->get_url() . '">' . $album->get_title() . '</a>')),
             'component' => BP_MEDIA_SLUG,
             'type' => 'album_created',
             'primary_link' => $album->get_url(),
@@ -560,7 +560,7 @@ class BPMediaActions {
                 }
             }
             $args = array(
-                'action' => apply_filters('bp_media_added_media', sprintf(__('%1$s added a %2$s', 'bp-media'), bp_core_get_userlink($media->get_author()), '<a href="' . $media->get_url() . '">' . $media->get_media_activity_type() . '</a>')),
+                'action' => apply_filters('bp_media_added_media', sprintf(__('%1$s added a %2$s', BP_MEDIA_TXT_DOMAIN), bp_core_get_userlink($media->get_author()), '<a href="' . $media->get_url() . '">' . $media->get_media_activity_type() . '</a>')),
                 'content' => $media->get_media_activity_content(),
                 'primary_link' => $media->get_url(),
                 'item_id' => $media->get_id(),
