@@ -180,7 +180,7 @@ class BuddyPressMedia {
 		}
 
 		if ( file_exists( BP_MEDIA_PATH . '/languages/' . get_locale() . '.mo' ) )
-			load_textdomain( 'bp-media', BP_MEDIA_PATH . '/languages/' . get_locale() . '.mo' );
+			load_textdomain( BP_MEDIA_TXT_DOMAIN, BP_MEDIA_PATH . '/languages/' . get_locale() . '.mo' );
 
 		add_action( 'admin_notices', array( $this, 'admin_notice' ) );
 		global $bp_media_admin;
