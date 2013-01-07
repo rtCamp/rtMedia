@@ -4,57 +4,61 @@
  */
 
 jQuery(document).ready(function(){
-    jQuery('#bp-media-album-prompt').hide();    /* Hide the media album selection box */
-    jQuery('#bp-media-album-new').hide();
-    jQuery('body').append('<div id="custom-overlay" style="background: none #333;width: 100%; height: 100%; z-index: 1001; opacity: 0.3;position:absolute;top:0;left:0;"></div>');
-    jQuery('#custom-overlay').hide();
-    jQuery('#bp-media-close').click(function(){
-        jQuery('#bp-media-album-prompt').hide();
-        jQuery('#custom-overlay').hide();
-        jQuery('#bp-media-uploaded-files div').remove();
-    });
-    jQuery('#selected-btn').click(function() {
-        bp_media_album_selected = jQuery('#bp-media-selected-album').val();
-        bp_media_uploader.start();
-        jQuery('#bp-media-close').click();
-    });
-    jQuery('#create-btn').click(function() {
-        jQuery('#bp-media-album-new').css({left: (jQuery('body').width()/2)-60, top: (jQuery('body').height()/2)-200});
-        jQuery('#custom-overlay').css('z-index', 1015);
-        jQuery('#bp-media-album-new').show();
-    });
-    jQuery('#bp-media-create-album-close').click(function() {
-        jQuery('#bp-media-album-new').hide();
-        jQuery('#custom-overlay').css('z-index', 1005);
-    });
-    jQuery('#create-album').click(function() {
-        var album_name = jQuery('#bp_media_album_name').val();
-            if(album_name.length==0){
-                alert('You have not filled the album name');
-                return false;
-            }
-            var data = {
-                action: 'bp_media_add_album',
-                bp_media_album_name : album_name,
-                bp_media_group_id : bp_media_uploader_params.multipart_params.bp_media_group_id
-            };
-            jQuery.post(bp_media_vars.ajaxurl,data,function(response){
-                var album = parseInt(response);
-                if(album == 0){
-                    alert('Sorry you cannot create albums in this group');
-                }
-                else{
-                    jQuery('#bp-media-selected-album').append('<option value='+album+' selected="selected">'+jQuery('#bp_media_album_name').val()+'</option>')
-                    jQuery('#bp-media-album-new').hide();
-                    bp_media_album_selected = jQuery('#bp-media-selected-album').val();
-                    jQuery('#bp-media-album-prompt').hide();
-                    jQuery('#custom-overlay').hide();
-                    bp_media_uploader.start();
-                }
-            });
-    });
-    
-    	var bp_media_is_multiple_upload = false;
+	jQuery('#bp-media-album-prompt').hide();    /* Hide the media album selection box */
+	jQuery('#bp-media-album-new').hide();
+	jQuery('body').append('<div id="custom-overlay" style="background: none #333;width: 100%; height: 100%; z-index: 1001; opacity: 0.3;position:absolute;top:0;left:0;"></div>');
+	jQuery('#custom-overlay').hide();
+	jQuery('#bp-media-close').click(function(){
+		jQuery('#bp-media-album-prompt').hide();
+		jQuery('#custom-overlay').hide();
+		jQuery('#bp-media-uploaded-files div').remove();
+	});
+	jQuery('#selected-btn').click(function() {
+		bp_media_album_selected = jQuery('#bp-media-selected-album').val();
+		jQuery('#bp-media-album-prompt').hide();
+		jQuery('#custom-overlay').hide();
+		bp_media_uploader.start();
+	});
+	jQuery('#create-btn').click(function() {
+		jQuery('#bp-media-album-new').css({
+			left: (jQuery('body').width()/2)-60,
+			top: (jQuery('body').height()/2)-200
+			});
+		jQuery('#custom-overlay').css('z-index', 1015);
+		jQuery('#bp-media-album-new').show();
+	});
+	jQuery('#bp-media-create-album-close').click(function() {
+		jQuery('#bp-media-album-new').hide();
+		jQuery('#custom-overlay').css('z-index', 1005);
+	});
+	jQuery('#create-album').click(function() {
+		var album_name = jQuery('#bp_media_album_name').val();
+		if(album_name.length==0){
+			alert('You have not filled the album name');
+			return false;
+		}
+		var data = {
+			action: 'bp_media_add_album',
+			bp_media_album_name : album_name,
+			bp_media_group_id : bp_media_uploader_params.multipart_params.bp_media_group_id
+		};
+		jQuery.post(bp_media_vars.ajaxurl,data,function(response){
+			var album = parseInt(response);
+			if(album == 0){
+				alert('Sorry you cannot create albums in this group');
+			}
+			else{
+				jQuery('#bp-media-selected-album').append('<option value='+album+' selected="selected">'+jQuery('#bp_media_album_name').val()+'</option>')
+				jQuery('#bp-media-album-new').hide();
+				bp_media_album_selected = jQuery('#bp-media-selected-album').val();
+				jQuery('#bp-media-album-prompt').hide();
+				jQuery('#custom-overlay').hide();
+				bp_media_uploader.start();
+			}
+		});
+	});
+
+	var bp_media_is_multiple_upload = false;
 	if(jQuery('#'+bp_media_uploader_params.container).length==0)
 		return false;
 	var bp_media_uploader=new plupload.Uploader(bp_media_uploader_params);
@@ -69,11 +73,14 @@ jQuery(document).ready(function(){
 				file.name + ' (' + plupload.formatSize(file.size) + ')(<b></b>)</div><div class="bp-media-progress-completed"></div></div>');
 		});
 		if(bp_media_album_selected == false){
-                    jQuery('#bp-media-album-prompt').css({left: (jQuery('body').width()/2)-100, top: (jQuery('body').height()/2)-200});
-                    jQuery('#custom-overlay').height(jQuery('body').height()+50);
-                    jQuery('#custom-overlay').show();
-                    jQuery('#bp-media-album-prompt').show();
-                } else {
+			jQuery('#bp-media-album-prompt').css({
+				left: (jQuery('body').width()/2)-100,
+				top: (jQuery('body').height()/2)-200
+				});
+			jQuery('#custom-overlay').height(jQuery('body').height()+50);
+			jQuery('#custom-overlay').show();
+			jQuery('#bp-media-album-prompt').show();
+		} else {
 			bp_media_album_selected = jQuery('#bp-media-selected-album').val();
 			bp_media_uploader.start();
 		}
@@ -108,7 +115,7 @@ jQuery(document).ready(function(){
 				new_location = new_location.concat(bp_media_album_selected);
 			else
 				new_location = new_location.concat('0/');
-			//window.location.replace(new_location);
+		window.location.replace(new_location);
 		}
 	});
 });

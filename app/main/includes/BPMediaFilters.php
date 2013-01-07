@@ -144,7 +144,7 @@ class BPMediaFilters {
         $bp_media_admin_nav[] = array(
             'parent' => 'my-account-buddypress',
             'id' => 'my-account-bpmedia',
-            'title' => __('Media', 'bp-media'),
+            'title' => __('Media', BP_MEDIA_TXT_DOMAIN),
             'href' => trailingslashit(bp_loggedin_user_domain() . BP_MEDIA_SLUG),
             'meta' => array(
                 'class' => 'menupop')
@@ -154,7 +154,7 @@ class BPMediaFilters {
         /* $bp_media_admin_nav[] = array(
           'parent' => 'my-account-bpmedia',
           'id'     => 'my-account-upload-media',
-          'title'  => __('Upload Media','bp-media'),
+          'title'  => __('Upload Media',BP_MEDIA_TXT_DOMAIN),
           'href'   => trailingslashit(bp_loggedin_user_domain() . BP_MEDIA_SLUG),
           ); */
 
@@ -162,7 +162,7 @@ class BPMediaFilters {
         $bp_media_admin_nav[] = array(
             'parent' => 'my-account-bpmedia',
             'id' => 'my-account-photos',
-            'title' => __('Photos', 'bp-media'),
+            'title' => __('Photos', BP_MEDIA_TXT_DOMAIN),
             'href' => trailingslashit(bp_loggedin_user_domain() . BP_MEDIA_IMAGES_SLUG)
         );
 
@@ -170,7 +170,7 @@ class BPMediaFilters {
         $bp_media_admin_nav[] = array(
             'parent' => 'my-account-bpmedia',
             'id' => 'my-account-videos',
-            'title' => __('Videos', 'bp-media'),
+            'title' => __('Videos', BP_MEDIA_TXT_DOMAIN),
             'href' => trailingslashit(bp_loggedin_user_domain() . BP_MEDIA_VIDEOS_SLUG)
         );
 
@@ -178,7 +178,7 @@ class BPMediaFilters {
         $bp_media_admin_nav[] = array(
             'parent' => 'my-account-bpmedia',
             'id' => 'my-account-audio',
-            'title' => __('Audio', 'bp-media'),
+            'title' => __('Audio', BP_MEDIA_TXT_DOMAIN),
             'href' => trailingslashit(bp_loggedin_user_domain() . BP_MEDIA_AUDIO_SLUG)
         );
 
@@ -186,7 +186,7 @@ class BPMediaFilters {
         $bp_media_admin_nav[] = array(
             'parent' => 'my-account-bpmedia',
             'id' => 'my-account-album',
-            'title' => __('Albums', 'bp-media'),
+            'title' => __('Albums', BP_MEDIA_TXT_DOMAIN),
             'href' => trailingslashit(bp_loggedin_user_domain() . BP_MEDIA_ALBUMS_SLUG)
         );
 
@@ -220,7 +220,7 @@ class BPMediaFilters {
             $bp_media_admin_nav[] = array(
                 'parent' => 'bp-media-menu',
                 'id' => 'bp-media-settings',
-                'title' => __('Settings', 'bp-media'),
+                'title' => __('Settings', BP_MEDIA_TXT_DOMAIN),
                 'href' => bp_get_admin_url(add_query_arg(array('page' => 'bp-media-settings'), 'admin.php'))
             );
 
@@ -228,7 +228,7 @@ class BPMediaFilters {
             $bp_media_admin_nav[] = array(
                 'parent' => 'bp-media-menu',
                 'id' => 'my-account-addons',
-                'title' => __('Addons', 'bp-media'),
+                'title' => __('Addons', BP_MEDIA_TXT_DOMAIN),
                 'href' => bp_get_admin_url(add_query_arg(array('page' => 'bp-media-addons'), 'admin.php'))
             );
 
@@ -236,7 +236,7 @@ class BPMediaFilters {
             $bp_media_admin_nav[] = array(
                 'parent' => 'bp-media-menu',
                 'id' => 'my-account-support',
-                'title' => __('Support', 'bp-media'),
+                'title' => __('Support', BP_MEDIA_TXT_DOMAIN),
                 'href' => bp_get_admin_url(add_query_arg(array('page' => 'bp-media-support'), 'admin.php'))
             );
 
@@ -293,14 +293,14 @@ class BPMediaFilters {
         $g_albums_count = $this->bp_media_admin_group_total_count('album');
         ?>
         <div class="bp-media-dashboard">
-            <h3 class="sub"><?php _e('Users', 'bp-media'); ?> </h3>
+            <h3 class="sub"><?php _e('Users', BP_MEDIA_TXT_DOMAIN); ?> </h3>
             <div class="table table_user">
-                <div class=""><span class="media-cnt"><?php echo $photos_count; ?></span><span class="media-label"><?php _e('Total Photos', 'bp-media'); ?></span></div>
-                <div class=""><span class="media-cnt"><?php echo $videos_count; ?></span><span class="media-label"><?php _e('Total Videos', 'bp-media'); ?></span></div>
-                <div class=""><span class="media-cnt"><?php echo $audio_count; ?></span><span class="media-label"><?php _e('Total Audio', 'bp-media'); ?></span></div>
-                <div class=""><span class="media-cnt"><?php echo $albums_count; ?></span><span class="media-label"><?php _e('Total Albums', 'bp-media'); ?></span></div>
+                <div class=""><span class="media-cnt"><?php echo $photos_count; ?></span><span class="media-label"><?php _e('Total Photos', BP_MEDIA_TXT_DOMAIN); ?></span></div>
+                <div class=""><span class="media-cnt"><?php echo $videos_count; ?></span><span class="media-label"><?php _e('Total Videos', BP_MEDIA_TXT_DOMAIN); ?></span></div>
+                <div class=""><span class="media-cnt"><?php echo $audio_count; ?></span><span class="media-label"><?php _e('Total Audio', BP_MEDIA_TXT_DOMAIN); ?></span></div>
+                <div class=""><span class="media-cnt"><?php echo $albums_count; ?></span><span class="media-label"><?php _e('Total Albums', BP_MEDIA_TXT_DOMAIN); ?></span></div>
             </div><!-- .table_user -->
-            <h3 class="sub"><?php _e('Groups', 'bp-media'); ?> </h3>
+            <h3 class="sub"><?php _e('Groups', BP_MEDIA_TXT_DOMAIN); ?> </h3>
             <div class="table table_group">
 
             </div><!-- .table_group -->
