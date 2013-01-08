@@ -43,7 +43,7 @@ class BPMediaTemplate {
 					echo '<option value="' . $album->ID . '">' . $album->post_title . '</option>';
 			};
 		}else {
-			$album = new BP_Media_Album();
+			$album = new BPMediaAlbum();
 			if ( bp_is_current_component( 'groups' ) ) {
 				$current_group = new BP_Groups_Group( bp_get_current_group_id() );
 				$album->add_album( 'Wall Posts', $current_group->creator_id, bp_get_current_group_id() );
