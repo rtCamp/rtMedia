@@ -22,6 +22,7 @@ class BPMediaActions {
         add_action('wp_ajax_nopriv_bp_media_load_more', array($this,'bp_media_load_more'));
         add_action('delete_attachment', array($this,'bp_media_delete_attachment_handler'));
         add_action('wp_ajax_bp_media_add_album', array($this,'bp_media_add_album'));
+        add_action('wp_ajax_nopriv_bp_media_add_album', array($this,'bp_media_add_album'));
         global $bp_media_options;
         if (isset($bp_media_options['remove_linkback']) && $bp_media_options['remove_linkback'] != '1')
             add_action('bp_footer', array($this,'bp_media_footer'));
