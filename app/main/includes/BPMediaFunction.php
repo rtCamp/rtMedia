@@ -156,7 +156,7 @@ class BPMediaFunction {
 
     static function bp_media_update_album_activity($album, $current_time = true, $delete_media_id = null) {
         if (!is_object($album)) {
-            $album = new BP_Media_Album($album);
+            $album = new BPMediaAlbum($album);
         }
         $args = array(
             'post_parent' => $album->get_id(),

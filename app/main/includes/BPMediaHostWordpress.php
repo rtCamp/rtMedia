@@ -735,7 +735,7 @@ class BPMediaHostWordpress {
 							AND $wpdb->posts.post_title =  'Wall Posts'" );
 			}
 			if($post_id==null){
-				$album = new BP_Media_Album();
+				$album = new BPMediaAlbum();
 				if($group == 0 )
 					$album->add_album('Wall Posts',  get_current_user_id(), $group);
 				else{
