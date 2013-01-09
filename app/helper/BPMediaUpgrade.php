@@ -76,7 +76,7 @@ if (!class_exists('BPMediaUpgrade')) {
                         } else {
                             $wall_posts_id = $wpdb->get_var("SELECT ID FROM $wpdb->posts WHERE post_title = 'Wall Posts' AND post_author = '" . $media_file->post_author . "' AND post_type='bp_media_album'");
                             if ($wall_posts_id == null) {
-                                $album = new BP_Media_Album();
+                                $album = new BPMediaAlbum();
                                 $album->add_album('Wall Posts', $media_file->post_author);
                                 $wall_posts_id = $album->get_id();
                             }
