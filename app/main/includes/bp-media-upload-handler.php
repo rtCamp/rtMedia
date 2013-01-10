@@ -10,6 +10,6 @@ require_once($bootstrap);
 if ( !is_user_logged_in() )
 	wp_die(__("You are not allowed to be here"));
 
-BPMediaActions::bp_media_handle_uploads();
+BPMediaActions::handle_uploads();
 
 ?>
