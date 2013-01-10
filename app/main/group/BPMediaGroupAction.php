@@ -12,7 +12,7 @@ class BPMediaGroupAction {
      *
      * @uses global $bp, $bp_media_query
      *
-     * @since BP Media 2.0
+     * @since BuddyPress Media 2.0
      */
     static function bp_media_groups_set_query() {
         global $bp, $bp_media_query, $bp_media_posts_per_page;
@@ -59,7 +59,7 @@ class BPMediaGroupAction {
      *
      * @uses global $bp, $bp_media_albums_query
      *
-     * @since BP Media 2.2
+     * @since BuddyPress Media 2.2
      */
     static function bp_media_groups_albums_set_query() {
         global $bp, $bp_media_albums_query;
