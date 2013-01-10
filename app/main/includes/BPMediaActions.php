@@ -7,13 +7,13 @@
 class BPMediaActions {
 
     function __construct() {
-        add_action('bp_media_before_content', 'BPMediaActions::bp_media_show_messages');
-        add_action('wp_enqueue_scripts', array($this,'bp_media_enqueue_scripts_styles'), 11);
-        add_action('bp_before_activity_delete', 'BPMediaActions::bp_media_delete_activity_handler');
+        add_action('bp_media_before_content', 'BPMediaActions::show_messages');
+        add_action('wp_enqueue_scripts', array($this,'enqueue_scripts_styles'), 11);
+        add_action('bp_before_activity_delete', 'BPMediaActions::delete_activity_handler');
         add_action('wp_enqueue_scripts', array($this,'bp_media_upload_enqueue'));
         add_action('init', 'BPMediaActions::bp_media_init_count');
-        add_action('bp_activity_entry_meta', array($this,'bp_media_action_buttons'));
-        add_action('bp_media_before_delete_media', 'BPMediaActions::bp_media_delete_media_handler');
+        add_action('bp_activity_entry_meta', array($this,'action_buttons'));
+        add_action('bp_media_before_delete_media', 'BPMediaActions::delete_media_handler');
         add_action('bp_media_after_add_album', array($this,'bp_media_album_create_activity'));
         add_action('bp_media_album_updated', array($this,'bp_media_album_activity_update'));
         add_action('bp_media_after_delete_media', array($this,'bp_media_album_activity_sync'));
@@ -32,7 +32,7 @@ class BPMediaActions {
      *
      * @since BP Media 2.0
      */
-    static function bp_media_handle_uploads() {
+    static function handle_uploads() {
         global $bp, $bp_media_options;
         $bp_media_options = get_site_option('bp_media_options', array(
             'videos_enabled' => true,
@@ -96,14 +96,14 @@ class BPMediaActions {
         }
     }
 
-//add_action('bp_init', 'bp_media_handle_uploads');
+//add_action('bp_init', 'handle_uploads');
 
     /**
      * Displays the messages that other functions/methods creates according to the BuddyPress' formating
      *
      * @since BP Media 2.0
      */
-    static function bp_media_show_messages() {
+    static function show_messages() {
         global $bp;
         if (is_array($bp->{BP_MEDIA_SLUG}->messages)) {
             $types = array('error', 'updated', 'info');
@@ -120,7 +120,7 @@ class BPMediaActions {
      *
      * @since BP Media 2.0
      */
-    function bp_media_enqueue_scripts_styles() {
+    function enqueue_scripts_styles() {
 
         wp_enqueue_script('jquery-ui-tabs');
         wp_enqueue_script('bp-media-mejs', BP_MEDIA_URL . 'lib/media-element/mediaelement-and-player.min.js');
@@ -144,8 +144,8 @@ class BPMediaActions {
         wp_enqueue_style('bp-media-default', BP_MEDIA_URL . 'app/assets/css/main.css');
     }
 
-    static function bp_media_delete_activity_handler($args) {
-        remove_action('bp_media_before_delete_media', 'BPMediaActions::bp_media_delete_media_handler');
+    static function delete_activity_handler($args) {
+        remove_action('bp_media_before_delete_media', 'BPMediaActions::delete_media_handler');
         global $bp_media_count, $wpdb;
         if (!array_key_exists('id', $args))
             return;
@@ -179,9 +179,9 @@ class BPMediaActions {
         }
     }
 
-    static function bp_media_delete_media_handler($media_id) {
+    static function delete_media_handler($media_id) {
         /* @var $media BPMediaHostWordpress */
-        remove_action('bp_before_activity_delete','BPMediaActions::bp_media_delete_activity_handler');
+        remove_action('bp_before_activity_delete','BPMediaActions::delete_activity_handler');
         $activity_id = get_post_meta($media_id, 'bp_media_child_activity', true);
         if ($activity_id == NULL)
             return false;
@@ -195,7 +195,7 @@ class BPMediaActions {
      *
      * @since BP Media 2.0
      */
-    function bp_media_set_query() {
+    function set_query() {
         global $bp, $bp_media_query, $bp_media_posts_per_page;
         switch ($bp->current_action) {
             case BP_MEDIA_IMAGES_SLUG:
@@ -238,7 +238,7 @@ class BPMediaActions {
      *
      * @since BP Media 2.0
      */
-    function bp_media_action_buttons() {
+    function action_buttons() {
         global $bp_media;
         if (!in_array('bp_media_current_entry', $GLOBALS))
             return false;
