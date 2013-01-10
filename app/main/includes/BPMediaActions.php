@@ -10,7 +10,7 @@ class BPMediaActions {
         add_action('bp_media_before_content', 'BPMediaActions::show_messages');
         add_action('wp_enqueue_scripts', array($this,'enqueue_scripts_styles'), 11);
         add_action('bp_before_activity_delete', 'BPMediaActions::delete_activity_handler');
-        add_action('wp_enqueue_scripts', array($this,'bp_media_upload_enqueue'));
+        add_action('wp_enqueue_scripts', array($this,'upload_enqueue'));
         add_action('init', 'BPMediaActions::bp_media_init_count');
         add_action('bp_activity_entry_meta', array($this,'action_buttons'));
         add_action('bp_media_before_delete_media', 'BPMediaActions::delete_media_handler');
@@ -18,13 +18,14 @@ class BPMediaActions {
         add_action('bp_media_album_updated', array($this,'bp_media_album_activity_update'));
         add_action('bp_media_after_delete_media', array($this,'bp_media_album_activity_sync'));
         add_action('bp_media_after_add_media', 'BPMediaActions::bp_media_activity_create_after_add_media', 10, 2);
-        add_action('wp_ajax_bp_media_load_more', array($this,'bp_media_load_more'));
-        add_action('wp_ajax_nopriv_bp_media_load_more', array($this,'bp_media_load_more'));
-        add_action('delete_attachment', array($this,'bp_media_delete_attachment_handler'));
-        add_action('wp_ajax_bp_media_add_album', array($this,'bp_media_add_album'));
+        add_action('wp_ajax_bp_media_load_more', array($this,'load_more'));
+        add_action('wp_ajax_nopriv_bp_media_load_more', array($this,'load_more'));
+        add_action('delete_attachment', array($this,'delete_attachment_handler'));
+        add_action('wp_ajax_bp_media_add_album', array($this,'add_album'));
+        add_action('wp_ajax_nopriv_bp_media_add_album', array($this,'add_album'));
         global $bp_media_options;
         if (isset($bp_media_options['remove_linkback']) && $bp_media_options['remove_linkback'] != '1')
-            add_action('bp_footer', array($this,'bp_media_footer'));
+            add_action('bp_footer', array($this,'footer'));
     }
 
     /**
@@ -309,13 +310,13 @@ class BPMediaActions {
      *
      * @since BP Media 2.0
      */
-    function bp_media_footer() {
+    function footer() {
         ?>
         <div id="bp-media-footer"><p>Using <a title="BuddyPress Media adds photos, video and audio upload/management feature" href="http://rtcamp.com/buddypress-media/">BuddyPress Media</a>.</p></div>
         <?php
     }
 
-    function bp_media_upload_enqueue() {
+    function upload_enqueue() {
         $params = array(
             'url' => BP_MEDIA_URL . 'app/main/includes/bp-media-upload-handler.php',
             'runtimes' => 'gears,html5,flash,silverlight,browserplus',
@@ -348,7 +349,7 @@ class BPMediaActions {
      *
      * @since BP Media 2.2
      */
-    function bp_media_albums_set_query() {
+    function albums_set_query() {
         global $bp, $bp_media_albums_query;
         if (isset($bp->action_variables) && is_array($bp->action_variables) && isset($bp->action_variables[0]) && $bp->action_variables[0] == 'page' && isset($bp->action_variables[1]) && is_numeric($bp->action_variables[1])) {
             $paged = $bp->action_variables[1];
@@ -371,7 +372,7 @@ class BPMediaActions {
     /**
      * Function to return the media for the ajax requests
      */
-    function bp_media_load_more() {
+    function load_more() {
         global $bp, $bp_media_query, $bp_media_posts_per_page;
         $page = isset($_POST['page']) ? $_POST['page'] : die();
         $current_action = isset($_POST['current_action']) ? $_POST['current_action'] : null;
@@ -457,7 +458,7 @@ class BPMediaActions {
         die();
     }
 
-    function bp_media_delete_attachment_handler($attachment_id) {
+    function delete_attachment_handler($attachment_id) {
         if (get_post_meta($attachment_id, 'bp-media-key')) {
             do_action('bp_media_before_delete_media', $attachment_id);
             global $bp_media_count;
@@ -491,7 +492,7 @@ class BPMediaActions {
     /**
      * Function to create new album called via ajax request
      */
-    function bp_media_add_album() {
+    function add_album() {
         if (isset($_POST['bp_media_album_name']) && $_POST['bp_media_album_name'] != '') {
             $album = new BPMediaAlbum();
             if (isset($_POST['bp_media_group_id']) && intval($_POST['bp_media_group_id']) > 0) {
@@ -520,11 +521,11 @@ class BPMediaActions {
         die();
     }
 
-    function bp_media_add_new_from_activity() {
+    function add_new_from_activity() {
         BPMediaTemplateFunctions::bp_media_show_upload_form_multiple_activity();
     }
 
-//add_action('bp_after_activity_post_form','bp_media_add_new_from_activity');
+//add_action('bp_after_activity_post_form','add_new_from_activity');
 
 
     function bp_media_album_create_activity($album) {
