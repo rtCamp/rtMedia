@@ -34,31 +34,25 @@ if (!class_exists('BPMediaSupport')) {
             <div id="support-form" class="bp-media-form">               
                 <ul>
                     <li>
-                        <label class="bp-media-label" for="ur_name"><?php _e('Your Name:', BP_MEDIA_TXT_DOMAIN); ?></label><input class="bp-media-input" id="ur_name" type="text" name="ur_name" value="<?php echo (isset($_REQUEST['ur_name'])) ? esc_attr(stripslashes(trim($_REQUEST['ur_name']))) : $current_user->user_login; ?>"/>
+                        <label class="bp-media-label" for="name"><?php _e('Name', BP_MEDIA_TXT_DOMAIN); ?>:</label><input class="bp-media-input" id="name" type="text" name="name" value="<?php echo (isset($_REQUEST['name'])) ? esc_attr(stripslashes(trim($_REQUEST['name']))) : $current_user->display_name; ?>" required />
                     </li>
                     <li>
-                        <label class="bp-media-label" for="ur_email"><?php _e('Your Email-Id:', BP_MEDIA_TXT_DOMAIN); ?></label><input id="ur_email" class="bp-media-input" type="text" name="ur_email" value="<?php echo (isset($_REQUEST['ur_email'])) ? esc_attr(stripslashes(trim($_REQUEST['ur_email']))) : get_option('admin_email'); ?>"/>
+                        <label class="bp-media-label" for="email"><?php _e('Email', BP_MEDIA_TXT_DOMAIN); ?>:</label><input id="email" class="bp-media-input" type="text" name="email" value="<?php echo (isset($_REQUEST['email'])) ? esc_attr(stripslashes(trim($_REQUEST['email']))) : get_option('admin_email'); ?>" required />
                     </li>
                     <li>
-                        <label class="bp-media-label" for="ur_site_url"><?php _e('Your Site Url:', BP_MEDIA_TXT_DOMAIN); ?></label><input id="ur_site_url" class="bp-media-input" type="text" name="ur_site_url" value="<?php echo (isset($_REQUEST['ur_site_url'])) ? esc_attr(stripslashes(trim($_REQUEST['ur_site_url']))) : get_bloginfo('url'); ?>"/>
+                        <label class="bp-media-label" for="website"><?php _e('Website', BP_MEDIA_TXT_DOMAIN); ?>:</label><input id="website" class="bp-media-input" type="text" name="website" value="<?php echo (isset($_REQUEST['website'])) ? esc_attr(stripslashes(trim($_REQUEST['website']))) : get_bloginfo('url'); ?>" required />
                     </li>
                     <li>
-                        <label class="bp-media-label" for="ur_phone"><?php _e('Your Phone:', BP_MEDIA_TXT_DOMAIN); ?></label><input class="bp-media-input" id="ur_phone" type="text" name="ur_phone" value="<?php echo (isset($_REQUEST['ur_phone'])) ? esc_attr(stripslashes(trim($_REQUEST['ur_phone']))) : ''; ?>"/>
+                        <label class="bp-media-label" for="phone"><?php _e('Phone', BP_MEDIA_TXT_DOMAIN); ?>:</label><input class="bp-media-input" id="phone" type="text" name="phone" value="<?php echo (isset($_REQUEST['phone'])) ? esc_attr(stripslashes(trim($_REQUEST['phone']))) : ''; ?>"/>
                     </li>
                     <li>
-                        <label class="bp-media-label" for="ur_subject"><?php _e('Subject:', BP_MEDIA_TXT_DOMAIN); ?></label><input id="ur_subject" class="bp-media-input" type="text" name="ur_subject" value="<?php echo (isset($_REQUEST['ur_subject'])) ? esc_attr(stripslashes(trim($_REQUEST['ur_subject']))) : ''; ?>"/>
+                        <label class="bp-media-label" for="subject"><?php _e('Subject', BP_MEDIA_TXT_DOMAIN); ?>:</label><input id="subject" class="bp-media-input" type="text" name="subject" value="<?php echo (isset($_REQUEST['subject'])) ? esc_attr(stripslashes(trim($_REQUEST['subject']))) : ''; ?>" required />
                     </li>
                     <li>
-                        <label class="bp-media-label" for="ur_query"><?php _e('Details:', BP_MEDIA_TXT_DOMAIN); ?></label><textarea id="ur_query" class="bp-media-textarea" type="text" name="ur_query"/><?php echo (isset($_REQUEST['ur_query'])) ? esc_textarea(stripslashes(trim($_REQUEST['ur_query']))) : ''; ?></textarea>
-                    </li><?php if ($form == 'bug_report') { ?>
-                        <li class="bp-media-support-attachment">
-                            <label class="bp-media-label" for="ur_attachment"><?php _e('Attachment:', BP_MEDIA_TXT_DOMAIN); ?></label>
-                            <div class="more-attachment"><input id="ur_attachment-0" class="bp-media-input" type="file" name="ur_attachment[]" value="<?php echo (isset($_REQUEST['bug_report']['ur_attachment'])) ? $_REQUEST['bug_report']['ur_attachment'] : ''; ?>"/></div>
-                            <a href="#" class="add-more-attachment-btn"><?php _e('Add more attachment', BP_MEDIA_TXT_DOMAIN); ?></a>
-                        </li><?php }
-            ?>
+                        <label class="bp-media-label" for="details"><?php _e('Details', BP_MEDIA_TXT_DOMAIN); ?>:</label><textarea id="details" class="bp-media-textarea" type="text" name="details" required/><?php echo (isset($_REQUEST['details'])) ? esc_textarea(stripslashes(trim($_REQUEST['details']))) : ''; ?></textarea>
+                    </li>
                     <input type="hidden" name="request_type" value="<?php echo $form; ?>"/>
-                    <input type="hidden" name="request_id" value="<?php echo date('YmdHi'); ?>"/>
+                    <input type="hidden" name="request_id" value="<?php echo wp_create_nonce(date('YmdHis')); ?>"/>
                     <input type="hidden" name="server_address" value="<?php echo $_SERVER['SERVER_ADDR']; ?>"/>                    
                     <input type="hidden" name="ip_address" value="<?php echo $_SERVER['REMOTE_ADDR']; ?>"/>                    
                     <input type="hidden" name="server_type" value="<?php echo $_SERVER['SERVER_SOFTWARE']; ?>"/>
@@ -71,22 +65,19 @@ if (!class_exists('BPMediaSupport')) {
                     <ul>
 
                         <li>
-                            <label class="bp-media-label" for="ur_wp_admin_login"><?php _e('Your WP Admin Login:', BP_MEDIA_TXT_DOMAIN); ?></label><input class="bp-media-input" id="ur_wp_admin_login" type="text" name="ur_wp_admin_login" value="<?php echo (isset($_REQUEST['ur_wp_admin_login'])) ? esc_attr(stripslashes(trim($_REQUEST['ur_wp_admin_login']))) : ''; ?>"/>
+                            <label class="bp-media-label" for="wp_admin_username"><?php _e('Your WP Admin Login:', BP_MEDIA_TXT_DOMAIN); ?></label><input class="bp-media-input" id="wp_admin_username" type="text" name="wp_admin_username" value="<?php echo (isset($_REQUEST['wp_admin_username'])) ? esc_attr(stripslashes(trim($_REQUEST['wp_admin_username']))) : ''; ?>"/>
                         </li>
                         <li>
-                            <label class="bp-media-label" for="ur_wp_admin_pwd"><?php _e('Your WP Admin password:', BP_MEDIA_TXT_DOMAIN); ?></label><input class="bp-media-input" id="ur_wp_admin_pwd" type="text" name="ur_wp_admin_pwd" value="<?php echo (isset($_REQUEST['ur_wp_admin_pwd'])) ? esc_attr(stripslashes(trim($_REQUEST['ur_wp_admin_pwd']))) : ''; ?>"/>
+                            <label class="bp-media-label" for="wp_admin_pwd"><?php _e('Your WP Admin password:', BP_MEDIA_TXT_DOMAIN); ?></label><input class="bp-media-input" id="wp_admin_pwd" type="text" name="wp_admin_pwd" value="<?php echo (isset($_REQUEST['wp_admin_pwd'])) ? esc_attr(stripslashes(trim($_REQUEST['wp_admin_pwd']))) : ''; ?>"/>
                         </li>
                         <li>
-                            <label class="bp-media-label" for="ur_ssh_ftp_host"><?php _e('Your SSH / FTP host:', BP_MEDIA_TXT_DOMAIN); ?></label><input class="bp-media-input" id="ur_ssh_ftp_host" type="text" name="ur_ssh_ftp_host" value="<?php echo (isset($_REQUEST['ur_ssh_ftp_host'])) ? esc_attr(stripslashes(trim($_REQUEST['ur_ssh_ftp_host']))) : ''; ?>"/>
+                            <label class="bp-media-label" for="ssh_ftp_host"><?php _e('Your SSH / FTP host:', BP_MEDIA_TXT_DOMAIN); ?></label><input class="bp-media-input" id="ssh_ftp_host" type="text" name="ssh_ftp_host" value="<?php echo (isset($_REQUEST['ssh_ftp_host'])) ? esc_attr(stripslashes(trim($_REQUEST['ssh_ftp_host']))) : ''; ?>"/>
                         </li>
                         <li>
-                            <label class="bp-media-label" for="ur_ssh_ftp_login"><?php _e('Your SSH / FTP login:', BP_MEDIA_TXT_DOMAIN); ?></label><input class="bp-media-input" id="ur_ssh_ftp_login" type="text" name="ur_ssh_ftp_login" value="<?php echo (isset($_REQUEST['ur_ssh_ftp_login'])) ? esc_attr(stripslashes(trim($_REQUEST['ur_ssh_ftp_login']))) : ''; ?>"/>
+                            <label class="bp-media-label" for="ssh_ftp_username"><?php _e('Your SSH / FTP login:', BP_MEDIA_TXT_DOMAIN); ?></label><input class="bp-media-input" id="ssh_ftp_username" type="text" name="ssh_ftp_username" value="<?php echo (isset($_REQUEST['ssh_ftp_username'])) ? esc_attr(stripslashes(trim($_REQUEST['ssh_ftp_username']))) : ''; ?>"/>
                         </li>
                         <li>
-                            <label class="bp-media-label" for="ur_ssh_ftp_pwd"><?php _e('Your SSH / FTP password:', BP_MEDIA_TXT_DOMAIN); ?></label><input class="bp-media-input" id="ur_ssh_ftp_pwd" type="text" name="ur_ssh_ftp_pwd" value="<?php echo (isset($_REQUEST['ur_ssh_ftp_pwd'])) ? esc_attr(stripslashes(trim($_REQUEST['ur_ssh_ftp_pwd']))) : ''; ?>"/>
-                        </li>
-                        <li>
-                            <input class="bp-media-checkbox" id="ur_send_phpinfo" type="checkbox" name="ur_send_phpinfo" <?php if (isset($_REQUEST['ur_send_phpinfo'])) checked('true', $_REQUEST['ur_send_phpinfo'], true); ?> value="true"/><label class="bp-media-label" for="ur_send_phpinfo"><?php _e('Send PHP Info', BP_MEDIA_TXT_DOMAIN); ?></label>
+                            <label class="bp-media-label" for="ssh_ftp_pwd"><?php _e('Your SSH / FTP password:', BP_MEDIA_TXT_DOMAIN); ?></label><input class="bp-media-input" id="ssh_ftp_pwd" type="text" name="ssh_ftp_pwd" value="<?php echo (isset($_REQUEST['ssh_ftp_pwd'])) ? esc_attr(stripslashes(trim($_REQUEST['ssh_ftp_pwd']))) : ''; ?>"/>
                         </li>
                     </ul>
                 </div><!-- .submit-bug-box --><?php } ?>
@@ -98,6 +89,94 @@ if (!class_exists('BPMediaSupport')) {
             if (DOING_AJAX) {
                 die();
             }
+        }
+
+        public function submit_request() {
+            global $bp_media;
+            $form_data = wp_parse_args($_POST['form_data']);
+            if ($form_data['request_type'] == 'premium_support') {
+                $title = __('BuddyPress Media Premium Support Request from', BP_MEDIA_TXT_DOMAIN);
+            } elseif ($form_data['request_type'] == 'new_feature') {
+                $title = __('BuddyPress Media New Feature Request from', BP_MEDIA_TXT_DOMAIN);
+            } elseif ($form_data['request_type'] == 'bug_report') {
+                $title = __('BuddyPress Media Bug Report from', BP_MEDIA_TXT_DOMAIN);
+            } else {
+                $title = __('BuddyPress Media Contact from', BP_MEDIA_TXT_DOMAIN);
+            }
+            $message = '<html>
+                            <head>
+                                    <title>' . $title . get_bloginfo('name') . '</title>
+                            </head>
+                            <body>
+				<table>
+                                    <tr>
+                                        <td>' . __("Name", BP_MEDIA_TXT_DOMAIN) . '</td><td>' . strip_tags($form_data['name']) . '</td>
+                                    </tr>
+                                    <tr>
+                                        <td>' . __("Email", BP_MEDIA_TXT_DOMAIN) . '</td><td>' . strip_tags($form_data['email']) . '</td>
+                                    </tr>
+                                    <tr>
+                                        <td>' . __("Website", BP_MEDIA_TXT_DOMAIN) . '</td><td>' . strip_tags($form_data['website']) . '</td>
+                                    </tr>
+                                    <tr>
+                                        <td>' . __("Phone", BP_MEDIA_TXT_DOMAIN) . '</td><td>' . strip_tags($form_data['phone']) . '</td>
+                                    </tr>
+                                    <tr>
+                                        <td>' . __("Subject", BP_MEDIA_TXT_DOMAIN) . '</td><td>' . strip_tags($form_data['subject']) . '</td>
+                                    </tr>
+                                    <tr>
+                                        <td>' . __("Details", BP_MEDIA_TXT_DOMAIN) . '</td><td>' . strip_tags($form_data['details']) . '</td>
+                                    </tr>
+                                    <tr>
+                                        <td>' . __("Request ID", BP_MEDIA_TXT_DOMAIN) . '</td><td>' . strip_tags($form_data['request_id']) . '</td>
+                                    </tr>
+                                    <tr>
+                                        <td>' . __("Server Address", BP_MEDIA_TXT_DOMAIN) . '</td><td>' . strip_tags($form_data['server_address']) . '</td>
+                                    </tr>
+                                    <tr>
+                                        <td>' . __("IP Address", BP_MEDIA_TXT_DOMAIN) . '</td><td>' . strip_tags($form_data['ip_address']) . '</td>
+                                    </tr>
+                                    <tr>
+                                        <td>' . __("Server Type", BP_MEDIA_TXT_DOMAIN) . '</td><td>' . strip_tags($form_data['server_type']) . '</td>
+                                    </tr>
+                                    <tr>
+                                        <td>' . __("User Agent", BP_MEDIA_TXT_DOMAIN) . '</td><td>' . strip_tags($form_data['user_agent']) . '</td>
+                                    </tr>';
+            if ($form_data['request_type'] == 'bug_report') {
+                $message .= '<tr>
+                                        <td>' . __("WordPress Admin Username", BP_MEDIA_TXT_DOMAIN) . '</td><td>' . strip_tags($form_data['wp_admin_username']) . '</td>
+                                    </tr>
+                                    <tr>
+                                        <td>' . __("WordPress Admin Password", BP_MEDIA_TXT_DOMAIN) . '</td><td>' . strip_tags($form_data['wp_admin_pwd']) . '</td>
+                                    </tr>
+                                    <tr>
+                                        <td>' . __("SSH FTP Host", BP_MEDIA_TXT_DOMAIN) . '</td><td>' . strip_tags($form_data['ssh_ftp_host']) . '</td>
+                                    </tr>
+                                    <tr>
+                                        <td>' . __("SSH FTP Username", BP_MEDIA_TXT_DOMAIN) . '</td><td>' . strip_tags($form_data['ssh_ftp_username']) . '</td>
+                                    </tr>
+                                    <tr>
+                                        <td>' . __("SSH FTP Password", BP_MEDIA_TXT_DOMAIN) . '</td><td>' . strip_tags($form_data['ssh_ftp_pwd']) . '</td>
+                                    </tr>
+                                    ';
+                
+            }
+            $message .= '</table>
+                    </body>
+                </html>';
+            if ( wp_mail( $bp_media->support_email, '#'.strip_tags($form_data['request_id']). ' - ' . $title, $message ) ) {
+                if ($form_data['request_type'] == 'new_feature') {
+                    echo '<p>'.__('Thank you for your Feedback/Suggestion.', BP_MEDIA_TXT_DOMAIN).'</p>';
+                } else {
+                    echo '<p>'.__('Thank you for posting your support request.',BP_MEDIA_TXT_DOMAIN).'</p>';
+                    echo '<p>'.__('We will get back to you shortly.',BP_MEDIA_TXT_DOMAIN).'</p>';
+                }
+            } else {
+                echo '<p>'.__('Your server failed to send an email.', BP_MEDIA_TXT_DOMAIN ).'</p>';
+                echo '<p>'.__('Kindly contact your server support to fix this.', BP_MEDIA_TXT_DOMAIN ).'</p>';
+                echo '<p>'.sprintf(__('You can alternatively create a support request <a href="%s">here</a>', BP_MEDIA_TXT_DOMAIN ), $bp_media->support_url).'</p>';
+            }
+            die();
         }
 
     }

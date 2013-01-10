@@ -19,7 +19,7 @@ if (!class_exists('BPMediaSettings')) {
          * @global string BP_MEDIA_TXT_DOMAIN
          */
         public function settings() {
-            global $bp_media, $bp_media_addon;
+            global $bp_media_addon;
             add_settings_section('bpm-settings', __('BuddyPress Media Settings', BP_MEDIA_TXT_DOMAIN), '', 'bp-media-settings');
             add_settings_field('bpm-video', __('Video', BP_MEDIA_TXT_DOMAIN), array($this, 'checkbox'), 'bp-media-settings', 'bpm-settings', array(
                 'option' => 'videos_enabled',
@@ -67,7 +67,7 @@ if (!class_exists('BPMediaSettings')) {
          * Sanitizes the settings
          */
         public function sanitize($input) {
-            global $bp_media, $bp_media_admin;
+            global $bp_media_admin;
             if (isset($_POST['refresh-count'])) {
                 if ($bp_media_admin->update_count())
                     add_settings_error('Recount Success', 'recount-success', __('Recounting of media files done successfully', BP_MEDIA_TXT_DOMAIN), 'updated');
@@ -144,9 +144,6 @@ if (!class_exists('BPMediaSettings')) {
          * @param array $args
          */
         public function dropdown($args) {
-            global $bp_media;
-            $options = $bp_media->options;
-            global $bp_media;
             $defaults = array(
                 'option' => '',
                 'none' => true,
@@ -179,7 +176,6 @@ if (!class_exists('BPMediaSettings')) {
          * @param array $args
          */
         public function button($args) {
-            global $bp_media;
             $defaults = array(
                 'option' => '',
                 'name' => 'Save Changes',
