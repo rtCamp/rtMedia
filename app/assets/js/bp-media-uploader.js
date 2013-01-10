@@ -4,9 +4,7 @@
  */
 
 jQuery(document).ready(function(){
-	jQuery('#bp-media-album-prompt').hide();    /* Hide the media album selection box */
-	jQuery('#bp-media-album-new').hide();
-	jQuery('body').append('<div id="custom-overlay" style="background: none #333;width: 100%; height: 100%; z-index: 1001; opacity: 0.3;position:absolute;top:0;left:0;"></div>');
+	jQuery('body').append('<div id="custom-overlay"></div>');
 	jQuery('#custom-overlay').hide();
 	jQuery('#bp-media-close').click(function(){
 		jQuery('#bp-media-album-prompt').hide();
@@ -20,17 +18,27 @@ jQuery(document).ready(function(){
 		bp_media_uploader.start();
 	});
 	jQuery('#create-btn').click(function() {
-		jQuery('#bp-media-album-new').css({
-			left: (jQuery('body').width()/2)-60,
-			top: (jQuery('body').height()/2)-200
-			});
-		jQuery('#custom-overlay').css('z-index', 1015);
+		jQuery('#custom-overlay').css('z-index', 115000);
 		jQuery('#bp-media-album-new').show();
+                jQuery('#bp-media-album-new').css({
+                        left: ((jQuery(window).width()-jQuery('#bp-media-album-new').width())/2),
+                        top: ((jQuery(window).height()-jQuery('#bp-media-album-new').height())/2)
+                });
 	});
 	jQuery('#bp-media-create-album-close').click(function() {
 		jQuery('#bp-media-album-new').hide();
-		jQuery('#custom-overlay').css('z-index', 1005);
+		jQuery('#custom-overlay').css('z-index', 105000);
 	});
+        jQuery(window).resize(function(){
+            jQuery('#bp-media-album-prompt').css({
+                    left: ((jQuery(window).width()-jQuery('#bp-media-album-prompt').width())/2),
+                    top: ((jQuery(window).height()-jQuery('#bp-media-album-prompt').height())/2)
+            });
+            jQuery('#bp-media-album-new').css({
+                    left: ((jQuery(window).width()-jQuery('#bp-media-album-new').width())/2),
+                    top: ((jQuery(window).height()-jQuery('#bp-media-album-new').height())/2)
+            });
+        });
 	jQuery('#create-album').click(function() {
 		var album_name = jQuery('#bp_media_album_name').val();
 		if(album_name.length==0){
@@ -74,10 +82,9 @@ jQuery(document).ready(function(){
 		});
 		if(bp_media_album_selected == false){
 			jQuery('#bp-media-album-prompt').css({
-				left: (jQuery('body').width()/2)-100,
-				top: (jQuery('body').height()/2)-200
-				});
-			jQuery('#custom-overlay').height(jQuery('body').height()+50);
+				left: ((jQuery(window).width()-jQuery('#bp-media-album-prompt').width())/2),
+				top: ((jQuery(window).height()-jQuery('#bp-media-album-prompt').height())/2)
+                        });
 			jQuery('#custom-overlay').show();
 			jQuery('#bp-media-album-prompt').show();
 		} else {
