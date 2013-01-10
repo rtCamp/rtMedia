@@ -159,23 +159,23 @@ if (!class_exists('BPMediaSupport')) {
                                         <td>' . __("SSH FTP Password", BP_MEDIA_TXT_DOMAIN) . '</td><td>' . strip_tags($form_data['ssh_ftp_pwd']) . '</td>
                                     </tr>
                                     ';
-                
             }
             $message .= '</table>
                     </body>
                 </html>';
-            add_filter('wp_mail_content_type',create_function('', 'return "text/html";'));
-            if ( wp_mail( $bp_media->support_email, '#'.strip_tags($form_data['request_id']). ' - ' . $title, $message ) ) {
+            add_filter('wp_mail_content_type', create_function('', 'return "text/html";'));
+            $headers = 'From: ' . $form_data['name'] . ' <' . $form_data['email'] . '>' . "\r\n";
+            if (wp_mail($bp_media->support_email, '[buddypress-media] Bug Report | Premium Support from '.str_replace( array('http://', 'https://'), '', $form_data['website']), $message, $headers)) {
                 if ($form_data['request_type'] == 'new_feature') {
-                    echo '<p>'.__('Thank you for your Feedback/Suggestion.', BP_MEDIA_TXT_DOMAIN).'</p>';
+                    echo '<p>' . __('Thank you for your Feedback/Suggestion.', BP_MEDIA_TXT_DOMAIN) . '</p>';
                 } else {
-                    echo '<p>'.__('Thank you for posting your support request.',BP_MEDIA_TXT_DOMAIN).'</p>';
-                    echo '<p>'.__('We will get back to you shortly.',BP_MEDIA_TXT_DOMAIN).'</p>';
+                    echo '<p>' . __('Thank you for posting your support request.', BP_MEDIA_TXT_DOMAIN) . '</p>';
+                    echo '<p>' . __('We will get back to you shortly.', BP_MEDIA_TXT_DOMAIN) . '</p>';
                 }
             } else {
-                echo '<p>'.__('Your server failed to send an email.', BP_MEDIA_TXT_DOMAIN ).'</p>';
-                echo '<p>'.__('Kindly contact your server support to fix this.', BP_MEDIA_TXT_DOMAIN ).'</p>';
-                echo '<p>'.sprintf(__('You can alternatively create a support request <a href="%s">here</a>', BP_MEDIA_TXT_DOMAIN ), $bp_media->support_url).'</p>';
+                echo '<p>' . __('Your server failed to send an email.', BP_MEDIA_TXT_DOMAIN) . '</p>';
+                echo '<p>' . __('Kindly contact your server support to fix this.', BP_MEDIA_TXT_DOMAIN) . '</p>';
+                echo '<p>' . sprintf(__('You can alternatively create a support request <a href="%s">here</a>', BP_MEDIA_TXT_DOMAIN), $bp_media->support_url) . '</p>';
             }
             die();
         }
