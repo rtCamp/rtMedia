@@ -61,7 +61,7 @@ class BPMediaRecentMedia extends WP_Widget {
 
 					</ul><!-- .widget-item-listing --><?php
 		}else
-			_e( 'No rescent media found', BP_MEDIA_TXT_DOMAIN );
+			_e( 'No recent media found', BP_MEDIA_TXT_DOMAIN );
 
 		wp_reset_query();
 		?>
