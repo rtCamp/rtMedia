@@ -15,7 +15,7 @@ function bp_media_create_element(id){
 }
 
 jQuery(document).ready(function(){
-    
+
     var bp_media_recent_tabs = jQuery('#recent-media-tabs');
     if(bp_media_recent_tabs.length>0){
         jQuery(bp_media_recent_tabs).tabs();
@@ -98,5 +98,5 @@ jQuery(document).ready(function(){
             }
         });
     });
-    
+
 });
