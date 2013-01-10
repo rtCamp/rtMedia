@@ -310,7 +310,7 @@ class BPMediaUtils {
         add_submenu_page('bp-media-settings', __('Buddypress Media Addons', BP_MEDIA_TXT_DOMAIN), __('Addons', BP_MEDIA_TXT_DOMAIN), 'manage_options', 'bp-media-addons', array($this,"bp_media_settings_page"));
         add_submenu_page('bp-media-settings', __('Buddypress Media Support', BP_MEDIA_TXT_DOMAIN), __('Support ', BP_MEDIA_TXT_DOMAIN), 'manage_options', 'bp-media-support', array($this,"bp_media_settings_page"));
 
-        $tab = isset($_GET['page']) ? $_GET['page'] : "bp-media-settings";
+        $tab = BPMediaAdmin::get_current_tab();
         add_action('admin_print_styles-' . $tab, array($this,'bp_media_admin_enqueue'));
     }
 
@@ -327,7 +327,7 @@ class BPMediaUtils {
         wp_enqueue_script('postbox');
 
         // Check to see which tab we are on
-        $tab = isset($_GET['page']) ? $_GET['page'] : "bp-media-settings";
+        $tab = BPMediaAdmin::get_current_tab();
 
         switch ($tab) {
             case 'bp-media-addons' :
@@ -350,7 +350,7 @@ class BPMediaUtils {
 
     function bp_media_settings_page() {
 
-        $tab = isset($_GET['page']) ? $_GET['page'] : "bp-media-settings";
+        $tab = BPMediaAdmin::get_current_tab();
         ?>
 
         <div class="wrap bp-media-admin">
@@ -367,7 +367,7 @@ class BPMediaUtils {
             $tabs = array();
 
             // Check to see which tab we are on
-            $tab = isset($_GET['page']) ? $_GET['page'] : "bp-media-settings";
+            $tab = BPMediaAdmin::get_current_tab();
             /* BP Media */
             $tabs[] = array(
                 'href' => bp_get_admin_url(add_query_arg(array('page' => 'bp-media-settings'), 'admin.php')),
@@ -606,13 +606,14 @@ class BPMediaUtils {
     <?php }
 
     function bp_media_support() {
+        global $bp_media;
         ?>
 
         <div class="bp-media-support">
             <h2><?php _e('Need Help/Support?', BP_MEDIA_TXT_DOMAIN); ?></h2>
             <ul class="support_list">
                 <li><a href="http://rtcamp.com/buddypress-media/faq/"  title="<?php _e('Read FAQ', BP_MEDIA_TXT_DOMAIN); ?>"><?php _e('Read FAQ', BP_MEDIA_TXT_DOMAIN); ?></a> </li>
-                <li><a href="http://rtcamp.com/support/forum/buddypress-media/"  title="<?php _e('Free Support Forum', BP_MEDIA_TXT_DOMAIN); ?>"><?php _e('Free Support Forum', BP_MEDIA_TXT_DOMAIN); ?></a></li>
+                <li><a href="<?php $bp_media->support_url; ?>"  title="<?php _e('Free Support Forum', BP_MEDIA_TXT_DOMAIN); ?>"><?php _e('Free Support Forum', BP_MEDIA_TXT_DOMAIN); ?></a></li>
                 <li><a href="https://github.com/rtCamp/buddypress-media/issues/"  title="<?php _e('Github Issue Tracker', BP_MEDIA_TXT_DOMAIN); ?>"><?php _e('Github Issue Tracker', BP_MEDIA_TXT_DOMAIN); ?> </a> </li>
             </ul>
             <br/>
@@ -668,6 +669,7 @@ class BPMediaUtils {
      * @since BP Media 2.0
      */
     function bp_media_default_admin_sidebar() {
+        global $bp_media;
         ?>
 
         <div class="rtmetabox postbox" id="branding">
@@ -685,7 +687,7 @@ class BPMediaUtils {
 
             <h3 class="hndle"><span><?php _e('Need Help?', BP_MEDIA_TXT_DOMAIN); ?></span></h3>
             <div class="inside"><p><?php printf(__(' Please use our <a href="%s">free support forum</a>.<br/><span class="bpm-aligncenter">OR</span><br/>
-		<a href="%s">Hire us!</a> To get professional customisation/setup service.', BP_MEDIA_TXT_DOMAIN), 'http://rtcamp.com/support/forum/buddypress-media/', 'http://rtcamp.com/buddypress-media/hire/'); ?>.</p></div>
+		<a href="%s">Hire us!</a> To get professional customisation/setup service.', BP_MEDIA_TXT_DOMAIN), $bp_media->support_url, 'http://rtcamp.com/buddypress-media/hire/'); ?>.</p></div>
         </div>
 
         <div class="rtmetabox postbox" id="donate">
@@ -738,7 +740,7 @@ class BPMediaUtils {
             $tabs = array();
 
             // Check to see which tab we are on
-            $tab = isset($_GET['page']) ? $_GET['page'] : "bp-media-settings";
+            $tab = BPMediaAdmin::get_current_tab();
             /* BP Media */
             $tabs[] = array(
                 'href' => bp_get_admin_url(add_query_arg(array('page' => 'bp-media-settings'), 'admin.php')),

@@ -14,7 +14,8 @@ class BuddyPressMedia {
 
 	public $text_domain = 'buddypress-media';
 	public $options;
-	public $support_email = 'support@rtcamp.com';
+	public $support_email = 'joshua.abenazer@rtcamp.com';
+	public $support_url = 'http://rtcamp.com/support/forum/buddypress-media/';
 	public $query;
 	public $albums_query;
 	public $counter = 0;
