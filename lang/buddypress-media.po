@@ -109,12 +109,12 @@ msgid "Recounting Failed"
 msgstr ""
 
 #: app/helper/BPMediaSettings.php:69
-msgid "Please provide \"option\" value ( required ) in the argument. Pass argument to add_settings_field in the follwoing format array( 'option' => 'option_name' ) "
+msgid "Please provide \"option\" value ( required ) in the argument. Pass argument to add_settings_field in the following format array( 'option' => 'option_name' ) "
 msgstr ""
 
 #: app/helper/BPMediaSettings.php:99
 #: app/helper/BPMediaSettings.php:132
-msgid "Please provide \"option\" value ( required ) in the argument. Pass argument to add_settings_field in the follwoing format array( 'option' => 'option_name' )"
+msgid "Please provide \"option\" value ( required ) in the argument. Pass argument to add_settings_field in the following format array( 'option' => 'option_name' )"
 msgstr ""
 
 #: app/helper/BPMediaSettings.php:101

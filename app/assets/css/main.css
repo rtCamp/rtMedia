@@ -17,9 +17,9 @@ ul.bp-media-gallery li span img{height: 150px;}
 li.media div.activity-content div.activity-inner p{display:none;}
 div.bp_media_title{margin-bottom:10px;}
 #bp-media-footer {color: #4D4D4D;text-align: center;text-shadow: #FAFAFA 1px 1px 0;}
- #wpbody-content div.metabox-fixed{width: 280px;margin-right: -300px;float: right;}
+#wpbody-content div.metabox-fixed{width: 280px;margin-right: -300px;float: right;}
 #wpbody-content div.wrap.bp-media-admin .columns-2{margin-right:300px;padding-top: 0;margin-top: 15px;width: 600px}
-#wpbody-content .bp-media-settings-tabs{margin-bottom: 15px}
+#wpbody-content .bp-media-settings-tabs{margin-bottom: 0; }
 #wpbody-content .bp-media-settings-tabs .media-nav-tab{margin: 0 10px; text-decoration: underline; text-transform: capitalize}
 #wpbody-content .bp-media-settings-tabs .media-nav-tab.media-nav-tab-active{font-weight: bold}
 
@@ -72,7 +72,7 @@ div.bp_media_title{margin-bottom:10px;}
 #adminmenu li.toplevel_page_bp-media-settings:hover .wp-menu-image a,
 #adminmenu li.current.toplevel_page_bp-media-settings .wp-menu-image a{background-position: center 1px;}
 #adminmenu li.toplevel_page_bp-media-settings .wp-menu-image a img{display:none;}
-#bp-media-settings-boxes{overflow: hidden;width: 100%;float: left;}
+#bp-media-settings-boxes{border:1px solid #CCC; overflow: hidden; padding: 10px; -webkit-border-bottom-left-radius:3px;border-bottom-left-radius:3px;-webkit-border-top-right-radius:3px;border-top-right-radius:3px;-webkit-border-bottom-right-radius:3px;border-bottom-right-radius:3px; float: left; width: 98%;}
 .nav-tab-wrapper a#bp-media{background:url('../img/bpm-icon-32.png') transparent no-repeat; padding-left:32px;}
 .nav-tab-wrapper a#bp-media:hover,.nav-tab-wrapper a#bp-media.nav-tab-active{background-position:left -32px;}
 .metabox-holder .postbox#bp_media_latest_news .inside ul li{background: transparent url('../img/rtCamp-bullet.png') left top no-repeat; padding-left: 19px;}
@@ -119,8 +119,8 @@ background-image: -webkit-gradient(linear,left bottom,left top,color-stop(1, #F7
 .bp-media-addon .product_footer .product_demo_link{font-size: 16px;margin: 8px 20px; font-weight: bold}
 
 .bp-media-addon .add_to_cart_button:hover{background: none repeat scroll 0 0 #D75A00;
-    box-shadow: 0 1px rgba(0, 0, 0, 0.2), 0 0 1px rgba(0, 0, 0, 0.4) inset;
-    color: #FFFFFF;}
+                                          box-shadow: 0 1px rgba(0, 0, 0, 0.2), 0 0 1px rgba(0, 0, 0, 0.4) inset;
+                                          color: #FFFFFF;}
 
 /* Admin bar Menu  */
 #wpadminbar .bp-media-settings-menu > .ab-item .ab-icon{background: url("../img/bpm-icon-16.png") no-repeat scroll -8px -7px transparent}
