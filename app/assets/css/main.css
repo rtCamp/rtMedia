@@ -151,8 +151,8 @@ background-image: -webkit-gradient(linear,left bottom,left top,color-stop(1, #F7
 img.bp-media-donation-image{display:block;margin: 10px auto;}
 
 /* Buddypress Media Image Uploader album selection */
-#bp-media-album-prompt, #bp-media-album-new { background: none repeat scroll 0 0 #FFFFFF;border: 1px solid #AAAAAA;border-radius: 5px 5px 5px 5px;display: block;padding: 3px;position: absolute;z-index: 1010; }
-#bp-media-album-new { z-index: 1020; }
+#bp-media-album-prompt, #bp-media-album-new { background: none repeat scroll 0 0 #FFFFFF;border: 1px solid #AAAAAA;border-radius: 5px 5px 5px 5px;display: none;padding: 3px;z-index: 110000;left: 40%;position: fixed;top: 35%;width: 300px; }
+#bp-media-album-new { z-index: 120000; }
     .bp-media-album-title { background: url("../img/Popup-title-bg.png") repeat-x scroll 50% 50% #CCCCCC;border: 1px solid #AAAAAA;border-radius: 5px 5px 5px 5px;color: #222222;display: block;font-weight: bold;padding: 0;margin-bottom: 10px; }
         .bp-media-album-title span { background: none repeat scroll 0 0 transparent;display: block;font-size: 16px;padding: 10px; }
         #bp-media-create-album-close, #bp-media-create-album-close:active, #bp-media-close, #bp-media-close:active { border-radius: 3px 3px 3px 3px;cursor: pointer;display: block;padding: 0 7px 2px;position: absolute;right: 8px;top: 11px;z-index: 10; }
@@ -163,3 +163,5 @@ img.bp-media-donation-image{display:block;margin: 10px auto;}
     .select-btn-div { border-top: 1px solid #AAAAAA;margin: 15px 0 0;padding: 5px 5px 5px 30px;text-align: right; }
         .select-btn-div .btn { float: right;font-size: 14px;margin: 5px;padding: 10px 25px; }
     #bp-media-album-new > label { font-size: 14px; }
+    #bp-media-album-new input[type="text"] { width: 98%; }
+    #custom-overlay { background: none repeat scroll 0 0 #000000;bottom: 0;left: 0;min-height: 360px;opacity: 0.7;position: fixed;right: 0;top: 0;z-index: 105000; }
