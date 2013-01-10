@@ -140,7 +140,7 @@ class BPMediaAlbum{
 	function delete_album(){
 		do_action('bp_media_before_delete_album',  $this);
 		foreach($this->media_entries as $entry){
-			BPMediaActions::bp_media_delete_media_handler($entry->ID);
+			BPMediaActions::delete_media_handler($entry->ID);
 			//do_action('bp_media_before_delete_media',$entry->ID); //Not working for some reason so called the required function directly
 			wp_delete_attachment($entry->ID,true);
 			do_action('bp_media_after_delete_media',$entry->ID);
