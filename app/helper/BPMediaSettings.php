@@ -93,7 +93,7 @@ if (!class_exists('BPMediaSettings')) {
             $args = wp_parse_args($args, $defaults);
             extract($args);
             if (empty($option)) {
-                trigger_error(__('Please provide "option" value ( required ) in the argument. Pass argument to add_settings_field in the follwoing format array( \'option\' => \'option_name\' ) ', BP_MEDIA_TXT_DOMAIN));
+                trigger_error(__('Please provide "option" value ( required ) in the argument. Pass argument to add_settings_field in the following format array( \'option\' => \'option_name\' ) ', BP_MEDIA_TXT_DOMAIN));
                 return;
             }
             if (!isset($options[$option]))
@@ -123,7 +123,7 @@ if (!class_exists('BPMediaSettings')) {
             extract($args);
             if (empty($option) || ( 2 > count($radios) )) {
                 if (empty($option))
-                    trigger_error(__('Please provide "option" value ( required ) in the argument. Pass argument to add_settings_field in the follwoing format array( \'option\' => \'option_name\' )', BP_MEDIA_TXT_DOMAIN));
+                    trigger_error(__('Please provide "option" value ( required ) in the argument. Pass argument to add_settings_field in the following format array( \'option\' => \'option_name\' )', BP_MEDIA_TXT_DOMAIN));
                 if (2 > count($radios))
                     trigger_error(__('Need to specify atleast to radios else use a checkbox instead', BP_MEDIA_TXT_DOMAIN));
                 return;
@@ -156,7 +156,7 @@ if (!class_exists('BPMediaSettings')) {
             extract($args);
             if (empty($option) || empty($values)) {
                 if (empty($option))
-                    trigger_error(__('Please provide "option" value ( required ) in the argument. Pass argument to add_settings_field in the follwoing format array( \'option\' => \'option_name\' )', BP_MEDIA_TXT_DOMAIN));
+                    trigger_error(__('Please provide "option" value ( required ) in the argument. Pass argument to add_settings_field in the following format array( \'option\' => \'option_name\' )', BP_MEDIA_TXT_DOMAIN));
                 if (empty($values))
                     trigger_error(__('Please provide some values to populate the dropdown. Format : array( \'value\' => \'option\' )', BP_MEDIA_TXT_DOMAIN));
                 return;
@@ -188,7 +188,7 @@ if (!class_exists('BPMediaSettings')) {
             $args = wp_parse_args($args, $defaults);
             extract($args);
             if (empty($option)) {
-                trigger_error('Please provide "option" value ( Required ) in the argument. Pass argument to add_settings_field in the follwoing format array( \'option\' => \'option_name\', \'link\' => \'linkurl\' )');
+                trigger_error('Please provide "option" value ( Required ) in the argument. Pass argument to add_settings_field in the following format array( \'option\' => \'option_name\', \'link\' => \'linkurl\' )');
                 return;
             }
             submit_button($name, '', $option, false);
