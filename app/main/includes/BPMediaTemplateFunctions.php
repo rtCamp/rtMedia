@@ -61,7 +61,7 @@ class BPMediaTemplateFunctions {
                     echo '<option value="' . $album->ID . '">' . $album->post_title . '</option>';
             };
         }else {
-            $album = new BP_Media_Album();
+            $album = new BPMediaAlbum();
             if (bp_is_current_component('groups')) {
                 $current_group = new BP_Groups_Group(bp_get_current_group_id());
                 $album->add_album('Wall Posts', $current_group->creator_id, bp_get_current_group_id());
@@ -224,7 +224,7 @@ class BPMediaTemplateFunctions {
         if (!$album->post_type == 'bp_media_album')
             return false;
         try {
-            $album = new BP_Media_Album($album->ID);
+            $album = new BPMediaAlbum($album->ID);
             echo $album->get_album_gallery_content();
         } catch (Exception $e) {
             echo '';

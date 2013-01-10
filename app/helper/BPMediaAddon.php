@@ -14,21 +14,21 @@ if (!class_exists('BPMediaAddon')) {
             global $bp_media;
             $addons = array(
                 array(
-                    'title' => __('BuddyPress-Media Kaltura Add-on',$bp_media->text_domain),
+                    'title' => __('BuddyPress-Media Kaltura Add-on', $bp_media->text_domain),
                     'img_src' => 'http://cdn.rtcamp.com/files/2012/10/new-buddypress-media-kaltura-logo-240x184.png',
                     'product_link' => 'http://rtcamp.com/store/buddypress-media-kaltura/',
-                    'desc' => '<p>' . __('Add support for more video formats using Kaltura video solution.',$bp_media->text_domain).'</p>
-                    <p>'. __('Works with Kaltura.com, self-hosted Kaltura-CE and Kaltura-on-premise.',$bp_media->text_domain).'</p>',
+                    'desc' => '<p>' . __('Add support for more video formats using Kaltura video solution.', $bp_media->text_domain) . '</p>
+                    <p>' . __('Works with Kaltura.com, self-hosted Kaltura-CE and Kaltura-on-premise.', $bp_media->text_domain) . '</p>',
                     'price' => '$99',
                     'demo_link' => 'http://demo.rtcamp.com/bpm-kaltura/',
                     'buy_now' => 'http://rtcamp.com/store/?add-to-cart=15446'
                 ),
                 array(
-                    'title' => __('BuddyPress-Media FFMPEG Add-on',$bp_media->text_domain),
+                    'title' => __('BuddyPress-Media FFMPEG Add-on', $bp_media->text_domain),
                     'img_src' => 'http://cdn.rtcamp.com/files/2012/09/ffmpeg-logo-240x184.png',
                     'product_link' => 'http://rtcamp.com/store/buddypress-media-ffmpeg-converter/',
-                    'desc' => '<p>'.__('Add supports for more audio & video formats using open-source media-node.',$bp_media->text_domain).'</p>
-                        <p>'.__('Media node comes with automated setup script for Ubuntu/Debian.',$bp_media->text_domain).'</p>',
+                    'desc' => '<p>' . __('Add supports for more audio & video formats using open-source media-node.', $bp_media->text_domain) . '</p>
+                        <p>' . __('Media node comes with automated setup script for Ubuntu/Debian.', $bp_media->text_domain) . '</p>',
                     'price' => '$49',
                     'demo_link' => 'http://demo.rtcamp.com/bpm-media',
                     'buy_now' => 'http://rtcamp.com/store/?add-to-cart=13677'
