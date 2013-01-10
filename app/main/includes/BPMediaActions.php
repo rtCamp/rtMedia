@@ -31,7 +31,7 @@ class BPMediaActions {
     /**
      * Handles the uploads and creates respective posts for the upload
      *
-     * @since BP Media 2.0
+     * @since BuddyPress Media 2.0
      */
     static function handle_uploads() {
         global $bp, $bp_media_options;
@@ -102,7 +102,7 @@ class BPMediaActions {
     /**
      * Displays the messages that other functions/methods creates according to the BuddyPress' formating
      *
-     * @since BP Media 2.0
+     * @since BuddyPress Media 2.0
      */
     static function show_messages() {
         global $bp;
@@ -119,7 +119,7 @@ class BPMediaActions {
     /**
      * Enqueues all the required scripts and stylesheets for the proper working of BuddyPress Media.
      *
-     * @since BP Media 2.0
+     * @since BuddyPress Media 2.0
      */
     function enqueue_scripts_styles() {
 
@@ -194,7 +194,7 @@ class BPMediaActions {
      *
      * @uses global $bp, $bp_media_query
      *
-     * @since BP Media 2.0
+     * @since BuddyPress Media 2.0
      */
     function set_query() {
         global $bp, $bp_media_query, $bp_media_posts_per_page;
@@ -237,7 +237,7 @@ class BPMediaActions {
      *
      * @uses $bp_media_options Global variable
      *
-     * @since BP Media 2.0
+     * @since BuddyPress Media 2.0
      */
     function action_buttons() {
         global $bp_media;
@@ -277,7 +277,7 @@ class BPMediaActions {
     /**
      * Shows the media count of a user in the tabs
      *
-     * @since BP Media 2.0
+     * @since BuddyPress Media 2.0
      */
     static function bp_media_init_count($user = null) {
         global $bp_media_count;
@@ -306,9 +306,9 @@ class BPMediaActions {
     }
 
     /**
-     * Displays the footer of the BP Media Plugin if enabled through the dashboard options page
+     * Displays the footer of the BuddyPress Media Plugin if enabled through the dashboard options page
      *
-     * @since BP Media 2.0
+     * @since BuddyPress Media 2.0
      */
     function footer() {
         ?>
@@ -347,7 +347,7 @@ class BPMediaActions {
      *
      * @uses global $bp, $bp_media_albums_query
      *
-     * @since BP Media 2.2
+     * @since BuddyPress Media 2.2
      */
     function albums_set_query() {
         global $bp, $bp_media_albums_query;

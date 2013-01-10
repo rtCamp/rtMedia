@@ -15,7 +15,7 @@ class BPMediaComponent extends BP_Component {
 	/**
 	 * Hold the messages generated during initialization process and will be shown on the screen functions
 	 *
-	 * @since BP Media 2.0
+	 * @since BuddyPress Media 2.0
 	 */
 	var $messages = array(
 		'error' => array( ),
@@ -26,7 +26,7 @@ class BPMediaComponent extends BP_Component {
 	/**
 	 * Constructor for the BuddyPress Media
 	 *
-	 * @since BP Media 2.0
+	 * @since BuddyPress Media 2.0
 	 */
 	function __construct() {
 		global $bp;
@@ -39,7 +39,7 @@ class BPMediaComponent extends BP_Component {
 	/**
 	 * Includes the files required for the BuddyPress Media and calls the parent class' includes function
 	 *
-	 * @since BP Media 2.0
+	 * @since BuddyPress Media 2.0
 	 */
 	function includes() {
 		$inc_path_prefix = 'app/main/includes/';
