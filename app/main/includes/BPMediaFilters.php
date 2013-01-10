@@ -255,7 +255,7 @@ class BPMediaFilters {
         global $wp_meta_boxes;
         // Buddypress Media
         //	if ( is_user_admin() )
-        wp_add_dashboard_widget('dashboard_media_widget', __('BuddPress Media'), array($this,'bp_media_dashboard_media'));
+        wp_add_dashboard_widget('dashboard_media_widget', __('BuddyPress Media'), array($this,'bp_media_dashboard_media'));
 
         global $wp_meta_boxes;
 

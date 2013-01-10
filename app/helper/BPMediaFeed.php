@@ -7,11 +7,11 @@
  * @author Joshua Abenazer <joshua.abenazer@rtcamp.com>
  */
 class BPMediaFeed {
-    
+
     public $feed_url = 'http://rtcamp.com/tag/buddypress/feed/';
-    
-    public function __construct( $feed_url = '' ) {
-        if ( $feed_url )
+
+    public function __construct($feed_url = '') {
+        if ($feed_url)
             $this->feed_url = $feed_url;
     }
 
