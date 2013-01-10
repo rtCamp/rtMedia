@@ -239,11 +239,11 @@ if (!class_exists('BPMediaAdmin')) {
                         </ul>';
                         new BPMediaWidget('branding', '', $branding);
 
-                        $support = '<p><ul>
-            <li>' . sprintf(__('<a href="%s">Read FAQ</a>', BP_MEDIA_TXT_DOMAIN), 'http://rtcamp.com/buddypress-media/faq/') . '</li>
-            <li>' . sprintf(__('<a href="%s">Free Support Forum</a>', BP_MEDIA_TXT_DOMAIN), 'http://rtcamp.com/support/forum/buddypress-media/') . '</li>
-            <li>' . sprintf(__('<a href="%s">Github Issue Tracker</a>', BP_MEDIA_TXT_DOMAIN), 'https://github.com/rtCamp/buddypress-media/issues/') . '</li>
-            <li>' . sprintf(__('<a href="%s">Hire us!</a> To get professional customisation/setup service.', BP_MEDIA_TXT_DOMAIN), 'http://rtcamp.com/buddypress-media/hire/') . '</li>
+            $support = '<p><ul>
+            <li>' . sprintf('<a href="%s">' . __("Read FAQ",$bp_media->text_domain) .'</a>', 'http://rtcamp.com/buddypress-media/faq/') . '</li>
+            <li>' . sprintf('<a href="%s">' . __("Free Support Forum",$bp_media->text_domain) .'</a>', 'http://rtcamp.com/support/forum/buddypress-media/') . '</li>
+            <li>' . sprintf('<a href="%s">' . __("Github Issue Tracker",$bp_media->text_domain) .'</a>', 'https://github.com/rtCamp/buddypress-media/issues/') . '</li>
+            <li>' . sprintf('<a href="%s">' . __("Hire us!",$bp_media->text_domain).'</a> ' . __("To get professional customisation/setup service.",$bp_media->text_domain), 'http://rtcamp.com/buddypress-media/hire/') . '</li>
             </ul></p>';
                         new BPMediaWidget('support', __('Need Help?', BP_MEDIA_TXT_DOMAIN), $support);
 
@@ -265,5 +265,5 @@ if (!class_exists('BPMediaAdmin')) {
 
                 }
 
-            }
-            ?>
+}
+?>

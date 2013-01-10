@@ -76,7 +76,7 @@ if (!class_exists('BPMediaUpgrade')) {
                         } else {
                             $wall_posts_id = $wpdb->get_var("SELECT ID FROM $wpdb->posts WHERE post_title = 'Wall Posts' AND post_author = '" . $media_file->post_author . "' AND post_type='bp_media_album'");
                             if ($wall_posts_id == null) {
-                                $album = new BP_Media_Album();
+                                $album = new BPMediaAlbum();
                                 $album->add_album('Wall Posts', $media_file->post_author);
                                 $wall_posts_id = $album->get_id();
                             }
@@ -92,7 +92,7 @@ if (!class_exists('BPMediaUpgrade')) {
                         if (isset($activity['activities'][0]->id))
                             $activity = $activity['activities'][0];
                         try {
-                            $bp_media = new BP_Media_Host_Wordpress($attachment_id);
+                            $bp_media = new BPMediaHostWordpress($attachment_id);
                         } catch (exception $e) {
                             continue;
                         }
@@ -106,7 +106,7 @@ if (!class_exists('BPMediaUpgrade')) {
                             'recorded_time' => $activity->date_recorded,
                             'user_id' => $bp_media->get_author()
                         );
-                        $act_id = bp_media_record_activity($args);
+                        $act_id = BPMediaFunction::bp_media_record_activity($args);
                         bp_activity_delete_meta($child_activity, 'bp_media_parent_post');
                         wp_delete_post($media_file->ID);
                     }
@@ -115,7 +115,7 @@ if (!class_exists('BPMediaUpgrade')) {
                 }
             } while (1);
             update_site_option('bp_media_db_version', BP_MEDIA_DB_VERSION);
-            add_action('admin_notices', 'bp_media_database_updated_notice');
+            add_action('admin_notices', 'BPMediaUpgradeScript::bp_media_database_updated_notice');
             wp_cache_flush();
         }
 
@@ -127,7 +127,7 @@ if (!class_exists('BPMediaUpgrade')) {
         public function upgrade_2_0_to_2_1() {
             global $bp_media;
             $page = 0;
-            while ($media_entries = bp_media_return_query_posts(array(
+            while ($media_entries = BPMediaUpgradeScript::bp_media_return_query_posts(array(
         'post_type' => 'attachment',
         'post_status' => 'any',
         'meta_key' => 'bp-media-key',
@@ -138,7 +138,7 @@ if (!class_exists('BPMediaUpgrade')) {
             ))) {
                 foreach ($media_entries as $media) {
                     try {
-                        $bp_media = new BP_Media_Host_Wordpress($media->ID);
+                        $bp_media = new BPMediaHostWordpress($media->ID);
                     } catch (exception $e) {
                         continue;
                     }
@@ -159,12 +159,12 @@ if (!class_exists('BPMediaUpgrade')) {
                             'recorded_time' => $activity->date_recorded,
                             'user_id' => $bp_media->get_author()
                         );
-                        bp_media_record_activity($args);
+                        BPMediaFunction::bp_media_record_activity($args);
                     }
                 }
             }
             update_site_option('bp_media_db_version', BP_MEDIA_DB_VERSION);
-            add_action('admin_notices', 'bp_media_database_updated_notice');
+            add_action('admin_notices', 'BPMediaUpgradeScript::bp_media_database_updated_notice');
             wp_cache_flush();
         }
 

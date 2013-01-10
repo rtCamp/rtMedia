@@ -56,7 +56,7 @@ class BPMediaAlbumScreen extends BPMediaScreen {
 			echo '</ul>';
 			$this->template->show_more();
 		else:
-			bp_media_show_formatted_error_message( sprintf( __( 'Sorry, no %s were found.', BP_MEDIA_TXT_DOMAIN ), $this->slug ), 'info' );
+			BPMediaFunction::bp_media_show_formatted_error_message( sprintf( __( 'Sorry, no %s were found.', BP_MEDIA_TXT_DOMAIN ), $this->slug ), 'info' );
 		endif;
 		$this->hook_after();
 	}
@@ -78,7 +78,7 @@ class BPMediaAlbumScreen extends BPMediaScreen {
 
 	function entry_screen_content() {
 		global $bp, $bp_media_current_album, $bp_media_query;
-		if ( ! $bp->action_variables[ 0 ] == BP_MEDIA_ALBUMS_ENTRY_SLUG )
+                if ( ! $bp->action_variables[ 0 ] == BP_MEDIA_ALBUMS_ENTRY_SLUG )
 			return false;
 		echo '<div class="bp_media_title">' . $bp_media_current_album->get_title() . '</div>';
 		$this->inner_query( $bp_media_current_album->get_id() );
@@ -91,7 +91,7 @@ class BPMediaAlbumScreen extends BPMediaScreen {
 			echo '</ul>';
 			$this->template->show_more();
 		else:
-			bp_media_show_formatted_error_message( __( 'Sorry, no media items were found in this album.', 'bp-media' ), 'info' );
+			BPMediaFunction::bp_media_show_formatted_error_message( __( 'Sorry, no media items were found in this album.', BP_MEDIA_TXT_DOMAIN ), 'info' );
 		endif;
 		$this->hook_after();
 	}

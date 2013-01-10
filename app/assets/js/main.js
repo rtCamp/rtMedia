@@ -38,7 +38,6 @@ jQuery(document).ready(function(){
     jQuery('#recent-media-tabs .bp-media-tab-panel').each(function() {
 
                 var thisHeight = jQuery(this).height();
-                console.log(thisHeight);
                 if(thisHeight > tallest) {
                         tallest = thisHeight;
                 }
@@ -107,24 +106,24 @@ jQuery(document).ready(function(){
             }
         });
     });
-    
-    
+
+
     /* Admin side Js for Ajax and loader, form selection */
-    
+
     /* Add more attachment link */
-    jQuery( '.add-more-attachment-btn' ).live('click', function(event){        
-        event.preventDefault();        
-        jQuery(this).prev().after('<div class="more-attachment"><input class="bp-media-input" type="file" name="ur_attachment[]" /></div>');        
+    jQuery( '.add-more-attachment-btn' ).live('click', function(event){
+        event.preventDefault();
+        jQuery(this).prev().after('<div class="more-attachment"><input class="bp-media-input" type="file" name="ur_attachment[]" /></div>');
     })
-    
-    
+
+
     /* Check Cancel request */
     jQuery('#cancel-request').live('click', function(){
         if(jQuery(this).val()){
             jQuery('#bp_media_settings_form .bp-media-metabox-holder').html()
-            jQuery('#bp_media_settings_form .bp-media-metabox-holder').html('<div class="support_form_laoder"></div>');        
+            jQuery('#bp_media_settings_form .bp-media-metabox-holder').html('<div class="support_form_laoder"></div>');
             var data = {
-                action: 'bp_media_cancel_request'                
+                action: 'bp_media_cancel_request'
             };
 
             // since 2.8 ajaxurl is always defined in the admin header and points to admin-ajax.php
@@ -135,12 +134,12 @@ jQuery(document).ready(function(){
             });
         }
     })
-    
+
     /* Check support request */
     jQuery('#select-request').live('change', function(){
         if(jQuery(this).val()){
             jQuery('#bp_media_settings_form .bp-media-metabox-holder').html()
-            jQuery('#bp_media_settings_form .bp-media-metabox-holder').html('<div class="support_form_laoder"></div>');        
+            jQuery('#bp_media_settings_form .bp-media-metabox-holder').html('<div class="support_form_laoder"></div>');
             var data = {
                 action: 'bp_media_request_form',
                 form: jQuery(this).val()

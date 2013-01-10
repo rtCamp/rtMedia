@@ -30,7 +30,6 @@ class BuddyPressMedia {
 	public $group_loader;
 
 	public function __construct() {
-
 		$this->constants();
 		$this->excerpt_lengths();
 		add_action( 'widgets_init', array( $this, 'widgets_init' ), 1 );
@@ -173,10 +172,15 @@ class BuddyPressMedia {
 			$this->loader = new BPMediaLoader();
 //require( BP_MEDIA_PATH . '/includes/bp-media-groups-loader.php');
 			$this->group_loader = new BPMediaGroup();
+                       // require( BP_MEDIA_PATH . 'includes/BPMediaFilters.php');
+                        new BPMediaFilters();
+                        new BPMediaActions();
+                        //new BPMediaUtils();
+                        new BPMediaFunction();
 		}
 
 		if ( file_exists( BP_MEDIA_PATH . '/languages/' . get_locale() . '.mo' ) )
-			load_textdomain( 'bp-media', BP_MEDIA_PATH . '/languages/' . get_locale() . '.mo' );
+			load_textdomain( BP_MEDIA_TXT_DOMAIN, BP_MEDIA_PATH . '/languages/' . get_locale() . '.mo' );
 
 		add_action( 'admin_notices', array( $this, 'admin_notice' ) );
 		global $bp_media_admin;
