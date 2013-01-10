@@ -78,6 +78,7 @@ class BPMediaGroupAction {
                 'meta_compare' => '='
             );
             $bp_media_albums_query = new WP_Query($args);
+            
         }
     }
 
@@ -85,13 +86,13 @@ class BPMediaGroupAction {
         if (function_exists('bp_activity_add')) {
             if (!is_object($media)) {
                 try {
-                    $media = new BP_Media_Host_Wordpress($media);
+                    $media = new BPMediaHostWordpress($media);
                 } catch (exception $e) {
                     return false;
                 }
             }
             $args = array(
-                'action' => apply_filters('bp_media_added_media', sprintf(__('%1$s added a %2$s', 'bp-media'), bp_core_get_userlink($media->get_author()), '<a href="' . $media->get_url() . '">' . $media->get_media_activity_type() . '</a>')),
+                'action' => apply_filters('bp_media_added_media', sprintf(__('%1$s added a %2$s', BP_MEDIA_TXT_DOMAIN), bp_core_get_userlink($media->get_author()), '<a href="' . $media->get_url() . '">' . $media->get_media_activity_type() . '</a>')),
                 'content' => $media->get_media_activity_content(),
                 'primary_link' => $media->get_url(),
                 'item_id' => $media->get_id(),
@@ -103,7 +104,7 @@ class BPMediaGroupAction {
                 $args['secondary_item_id'] = -999;
                 //do_action('bp_media_album_updated',$media->get_album_id());
             }
-            $activity_id = bp_media_record_activity($args);
+            $activity_id = BPMediaFunction::bp_media_record_activity($args);
             add_post_meta($media->get_id(), 'bp_media_child_activity', $activity_id);
         }
     }

@@ -33,7 +33,7 @@ class BPMediaComponent extends BP_Component {
 		parent::start( BP_MEDIA_SLUG, BP_MEDIA_LABEL, BP_MEDIA_PATH );
 		$this->includes();
 		$bp->active_components[ $this->id ] = '1';
-		add_action( 'init', array( &$this, 'register_post_types' ) );
+		add_action( 'init', array( &$this, 'register_post_types' ),10);
 	}
 
 	/**
@@ -45,15 +45,11 @@ class BPMediaComponent extends BP_Component {
 		$inc_path_prefix = 'app/main/includes/';
 		$includes = array(
 			$inc_path_prefix . 'bp-media-functions.php',
-			$inc_path_prefix . 'bp-media-filters.php',
 			$inc_path_prefix . 'bp-media-template-functions.php',
-			$inc_path_prefix . 'bp-media-actions.php',
 			$inc_path_prefix . 'bp-media-interface.php',
 			$inc_path_prefix . 'bp-media-shortcodes.php',
-			$inc_path_prefix . 'bp-media-widgets.php',
-			$inc_path_prefix . 'bp-media-groups-loader.php',
-			$inc_path_prefix . 'bp-media-groups-actions.php',
-			$inc_path_prefix . 'bp-media-groups-screens.php'
+			$inc_path_prefix . 'bp-media-widgets.php'
+                        //$inc_path_prefix . 'BPMediaFilter.php',
 		);
 		parent::includes( $includes );
 		do_action( 'bp_media_init' );
@@ -68,7 +64,7 @@ class BPMediaComponent extends BP_Component {
 			'slug' => BP_MEDIA_SLUG,
 			'root_slug' => isset( $bp->pages->{$this->id}->slug ) ? $bp->pages->{$this->id}->slug : BP_MEDIA_SLUG,
 			/* 'has_directory'         => true, /* Set to false if not required */
-			'search_string' => __( 'Search Media...', 'bp-media' ),
+			'search_string' => __( 'Search Media...', BP_MEDIA_TXT_DOMAIN ),
 		);
 		parent::setup_globals( $globals );
 	}
@@ -315,19 +311,19 @@ class BPMediaComponent extends BP_Component {
 	 */
 	function register_post_types() {
 		$labels = array(
-			'name' => __( 'Albums', 'bp-media' ),
-			'singular_name' => __( 'Album', 'bp-media' ),
-			'add_new' => __( 'Create', 'bp-media' ),
-			'add_new_item' => __( 'Create Album', 'bp-media' ),
-			'edit_item' => __( 'Edit Album', 'bp-media' ),
-			'new_item' => __( 'New Album', 'bp-media' ),
-			'all_items' => __( 'All Albums', 'bp-media' ),
-			'view_item' => __( 'View Album', 'bp-media' ),
-			'search_items' => __( 'Search Albums', 'bp-media' ),
-			'not_found' => __( 'No album found', 'bp-media' ),
-			'not_found_in_trash' => __( 'No album found in Trash', 'bp-media' ),
+			'name' => __( 'Albums', BP_MEDIA_TXT_DOMAIN ),
+			'singular_name' => __( 'Album', BP_MEDIA_TXT_DOMAIN ),
+			'add_new' => __( 'Create', BP_MEDIA_TXT_DOMAIN ),
+			'add_new_item' => __( 'Create Album', BP_MEDIA_TXT_DOMAIN ),
+			'edit_item' => __( 'Edit Album', BP_MEDIA_TXT_DOMAIN ),
+			'new_item' => __( 'New Album', BP_MEDIA_TXT_DOMAIN ),
+			'all_items' => __( 'All Albums', BP_MEDIA_TXT_DOMAIN ),
+			'view_item' => __( 'View Album', BP_MEDIA_TXT_DOMAIN ),
+			'search_items' => __( 'Search Albums', BP_MEDIA_TXT_DOMAIN ),
+			'not_found' => __( 'No album found', BP_MEDIA_TXT_DOMAIN ),
+			'not_found_in_trash' => __( 'No album found in Trash', BP_MEDIA_TXT_DOMAIN ),
 			'parent_item_colon' => '',
-			'menu_name' => __( 'Albums', 'bp-media' )
+			'menu_name' => __( 'Albums', BP_MEDIA_TXT_DOMAIN )
 		);
 
 		$args = array(
@@ -344,19 +340,19 @@ class BPMediaComponent extends BP_Component {
 			'supports' => array( 'title', 'author', 'thumbnail', 'excerpt', 'comments' )
 		);
 		register_post_type( 'bp_media_album', $args );
-
+                global $bp_media;
 		/* Set up labels for the post type */
 		$labels = array(
-			'name' => __( 'Media', 'bp-media' ),
-			'singular' => __( 'Media', 'bp-media' ),
-			'add_new' => __( 'Add New Media', 'bp-media' )
+			'name' => __( 'Media', $bp_media->text_domain),
+			'singular' => __( 'Media', $bp_media->text_domain ),
+			'add_new' => __( 'Add New Media', $bp_media->text_domain )
 		);
 
 		/* Set up the argument array for register_post_type() */
 		$args = array(
-			'label' => __( 'Media', 'bp-media' ),
+			'label' => __( 'Media', $bp_media->text_domain ),
 			'labels' => $labels,
-			'description' => 'BuddyPress Media\'s Media Files',
+			'description' => __('BuddyPress Media\'s Media Files',$bp_media->text_domain),
 			'public' => true,
 			'show_ui' => false,
 			'supports' => array( 'title', 'editor', 'excerpt', 'author', 'thumbnail', 'custom-fields' )

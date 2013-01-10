@@ -52,11 +52,11 @@ class BPMediaUploadScreen extends BPMediaScreen {
 			'multi_selection' => true,
 			'multipart_params' => apply_filters( 'bp_media_multipart_params_filter', array( 'action' => 'wp_handle_upload' ) )
 		);
-		wp_enqueue_script( 'bp-media-uploader', BP_MEDIA_URL . 'app/assets/js/bp-media-uploader.js', array( 'plupload', 'plupload-html5', 'plupload-flash', 'plupload-silverlight', 'plupload-html4', 'plupload-handlers', 'jquery-ui-core', 'jquery-ui-widget', 'jquery-ui-position', 'jquery-ui-dialog' ) );
+		wp_enqueue_script( 'bp-media-uploader', BP_MEDIA_URL . 'app/assets/js/bp-media-uploader.js', array( 'plupload', 'plupload-html5', 'plupload-flash', 'plupload-silverlight', 'plupload-html4', 'plupload-handlers' ) );
 		wp_localize_script( 'bp-media-uploader', 'bp_media_uploader_params', $params );
 		wp_enqueue_style( 'bp-media-default', BP_MEDIA_URL . 'app/assets/css/bp-media-style.css' );
 		//wp_enqueue_style("wp-jquery-ui-dialog"); //Its not styling the Dialog box as it should so using different styling
-		wp_enqueue_style( 'jquery-style', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/themes/smoothness/jquery-ui.css' );
+		//wp_enqueue_style( 'jquery-style', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/themes/smoothness/jquery-ui.css' );
 	}
 
 	function upload_handler() {
@@ -81,11 +81,11 @@ class BPMediaUploadScreen extends BPMediaScreen {
 		if ( isset( $_POST[ 'action' ] ) && $_POST[ 'action' ] == 'wp_handle_upload' ) {
 			/** This section can help in the group activity handling */
 			if ( isset( $_POST[ 'bp_media_group_id' ] ) && intval( $_POST[ 'bp_media_group_id' ] ) ) {
-				remove_action( 'bp_media_after_add_media', 'bp_media_activity_create_after_add_media', 10, 2 );
-				add_action( 'bp_media_after_add_media', 'bp_media_groups_activity_create_after_add_media', 10, 2 );
+				remove_action( 'bp_media_after_add_media', 'BPMediaActions::p_media_activity_create_after_add_media', 10, 2 );
+				add_action( 'bp_media_after_add_media', 'BPMediaGroupAction::bp_media_groups_activity_create_after_add_media', 10, 2 );
 				add_filter( 'bp_media_force_hide_activity', 'bp_media_groups_force_hide_activity' );
 			}
-			/* @var $bp_media_entry BP_Media_Host_Wordpress */
+			/* @var $bp_media_entry BPMediaHostWordpress */
 			if ( isset( $_FILES ) && is_array( $_FILES ) && array_key_exists( 'bp_media_file', $_FILES ) && $_FILES[ 'bp_media_file' ][ 'name' ] != '' ) {
 				if ( ! preg_match( '/audio|video|image/i', $_FILES[ 'bp_media_file' ][ 'type' ], $result ) || ! isset( $result[ 0 ] ) ) {
 					$bp->{BP_MEDIA_SLUG}->messages[ 'error' ][ ] = __( 'File uploaded is not supported' );
