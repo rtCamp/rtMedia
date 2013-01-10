@@ -13,7 +13,7 @@ if (class_exists('BP_Group_Extension')) :// Recommended, to prevent problems dur
          *
          * @uses global $bp
          *
-         * @since BP Media 2.3
+         * @since BuddyPress Media 2.3
          */
         function __construct() {
             global $bp;
@@ -113,7 +113,7 @@ if (class_exists('BP_Group_Extension')) :// Recommended, to prevent problems dur
         /**
          * The display method for the extension
          *
-         * @since BP Media 2.3
+         * @since BuddyPress Media 2.3
          */
         function widget_display() {
             global $bp_media;

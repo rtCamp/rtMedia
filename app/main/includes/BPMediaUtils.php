@@ -42,7 +42,7 @@ class BPMediaUtils {
     /**
      * Add the BuddyPress Media's options menu in the BuddyPress' options subnavigation.
      *
-     * @since BP Media 2.0
+     * @since BuddyPress Media 2.0
      */
     function bp_media_add_admin_menu() {
 
@@ -305,7 +305,7 @@ class BPMediaUtils {
                 echo $message . '<br/>'; ?></p></div><?php
         }
 
-        add_menu_page('Buddypress Media Component', 'BP Media', 'manage_options', 'bp-media-settings', array($this,'bp_media_settings_page'));
+        add_menu_page('Buddypress Media Component', 'BuddyPress Media', 'manage_options', 'bp-media-settings', array($this,'bp_media_settings_page'));
         add_submenu_page('bp-media-settings', __('Buddypress Media Settings', BP_MEDIA_TXT_DOMAIN), __('Settings', BP_MEDIA_TXT_DOMAIN), 'manage_options', 'bp-media-settings', array($this,"bp_media_settings_page"));
         add_submenu_page('bp-media-settings', __('Buddypress Media Addons', BP_MEDIA_TXT_DOMAIN), __('Addons', BP_MEDIA_TXT_DOMAIN), 'manage_options', 'bp-media-addons', array($this,"bp_media_settings_page"));
         add_submenu_page('bp-media-settings', __('Buddypress Media Support', BP_MEDIA_TXT_DOMAIN), __('Support ', BP_MEDIA_TXT_DOMAIN), 'manage_options', 'bp-media-support', array($this,"bp_media_settings_page"));
@@ -368,7 +368,7 @@ class BPMediaUtils {
 
             // Check to see which tab we are on
             $tab = BPMediaAdmin::get_current_tab();
-            /* BP Media */
+            /* BuddyPress Media */
             $tabs[] = array(
                 'href' => bp_get_admin_url(add_query_arg(array('page' => 'bp-media-settings'), 'admin.php')),
                 'title' => __('Buddypress Media Settings', BP_MEDIA_TXT_DOMAIN),
@@ -442,7 +442,7 @@ class BPMediaUtils {
                 /**
                  * Displays and updates the options menu of BuddyPress Media
                  *
-                 * @since BP Media 2.0
+                 * @since BuddyPress Media 2.0
                  */
                 function bp_media_admin_menu() {
 
@@ -666,7 +666,7 @@ class BPMediaUtils {
     /**
      * Default BuddyPress Media admin sidebar with metabox styling
      *
-     * @since BP Media 2.0
+     * @since BuddyPress Media 2.0
      */
     function bp_media_default_admin_sidebar() {
         global $bp_media;
@@ -741,7 +741,7 @@ class BPMediaUtils {
 
             // Check to see which tab we are on
             $tab = BPMediaAdmin::get_current_tab();
-            /* BP Media */
+            /* BuddyPress Media */
             $tabs[] = array(
                 'href' => bp_get_admin_url(add_query_arg(array('page' => 'bp-media-settings'), 'admin.php')),
                 'title' => __('Buddypress Media', BP_MEDIA_TXT_DOMAIN),
