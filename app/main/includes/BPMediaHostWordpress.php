@@ -97,7 +97,7 @@ class BPMediaHostWordpress {
 			'post_content' => $content,
 			'post_parent' => $post_id,
 		);
-		BPMediaActions::bp_media_init_count(bp_loggedin_user_id());
+		BPMediaActions::init_count(bp_loggedin_user_id());
 		switch ($type) {
 			case 'video/mp4' :
 			case 'video/quicktime' :
@@ -523,7 +523,7 @@ class BPMediaHostWordpress {
 	function delete_media(){
 		do_action('bp_media_before_delete_media',$this->id);
 		global $bp_media_count;
-		BPMediaActions::bp_media_init_count($this->owner);
+		BPMediaActions::init_count($this->owner);
 		switch ($this->type) {
 			case 'image':
 				$bp_media_count['images'] = intval($bp_media_count['images']) - 1;

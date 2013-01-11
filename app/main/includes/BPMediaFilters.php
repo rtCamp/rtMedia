@@ -8,8 +8,8 @@
 class BPMediaFilters {
 
     function __construct() {
-        add_filter('bp_activity_get_permalink', array($this, 'bp_media_activity_permalink_filter'), 10, 2);
-        add_filter('bp_get_activity_delete_link', array($this, 'bp_media_delete_button_handler'));
+        add_filter('bp_activity_get_permalink', array($this, 'activity_permalink_filter'), 10, 2);
+        add_filter('bp_get_activity_delete_link', array($this, 'delete_button_handler'));
         add_filter('bp_activity_get_user_join_filter', array($this, 'bp_media_activity_query_filter'), 10);
         // and we hook our function via wp_before_admin_bar_render
         add_action('admin_bar_menu', array($this, 'bp_media_my_account_menu'), 1);
@@ -19,7 +19,7 @@ class BPMediaFilters {
         $bp_media_activity_types = array('media_upload', 'album_updated', 'album_created');
     }
 
-    function bp_media_activity_permalink_filter($link, $activity_obj = null) {
+    function activity_permalink_filter($link, $activity_obj = null) {
         global $bp_media_activity_types;
         if ($activity_obj != null && in_array($activity_obj->type, $bp_media_activity_types)) {
             if ($activity_obj->primary_link != '') {
@@ -53,7 +53,7 @@ class BPMediaFilters {
         return $link;
     }
 
-    function bp_media_activity_parent_content_filter($activity_content) {
+    function activity_parent_content_filter($activity_content) {
         global $activities_template;
         $defaults = array(
             'hide_user' => false
@@ -84,9 +84,9 @@ class BPMediaFilters {
         return $activity_content;
     }
 
-    //add_filter('bp_get_activity_parent_content', 'bp_media_activity_parent_content_filter', 1);
+    //add_filter('bp_get_activity_parent_content', 'activity_parent_content_filter', 1);
 
-    function bp_media_delete_button_handler($link) {
+    function delete_button_handler($link) {
         if (bp_current_component() == 'media')
             $link = str_replace('delete-activity ', 'delete-activity-single ', $link);
         return $link;
