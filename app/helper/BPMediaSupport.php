@@ -65,10 +65,10 @@ if (!class_exists('BPMediaSupport')) {
                     <ul>
 
                         <li>
-                            <label class="bp-media-label" for="wp_admin_username"><?php _e('Your WP Admin Login:', BP_MEDIA_TXT_DOMAIN); ?></label><input class="bp-media-input" id="wp_admin_username" type="text" name="wp_admin_username" value="<?php echo (isset($_REQUEST['wp_admin_username'])) ? esc_attr(stripslashes(trim($_REQUEST['wp_admin_username']))) : ''; ?>"/>
+                            <label class="bp-media-label" for="wp_admin_username"><?php _e('Your WP Admin Login:', BP_MEDIA_TXT_DOMAIN); ?></label><input class="bp-media-input" id="wp_admin_username" type="text" name="wp_admin_username" value="<?php echo (isset($_REQUEST['wp_admin_username'])) ? esc_attr(stripslashes(trim($_REQUEST['wp_admin_username']))) : $current_user->user_login; ?>"/>
                         </li>
                         <li>
-                            <label class="bp-media-label" for="wp_admin_pwd"><?php _e('Your WP Admin password:', BP_MEDIA_TXT_DOMAIN); ?></label><input class="bp-media-input" id="wp_admin_pwd" type="text" name="wp_admin_pwd" value="<?php echo (isset($_REQUEST['wp_admin_pwd'])) ? esc_attr(stripslashes(trim($_REQUEST['wp_admin_pwd']))) : ''; ?>"/>
+                            <label class="bp-media-label" for="wp_admin_pwd"><?php _e('Your WP Admin password:', BP_MEDIA_TXT_DOMAIN); ?></label><input class="bp-media-input" id="wp_admin_pwd" type="password" name="wp_admin_pwd" value="<?php echo (isset($_REQUEST['wp_admin_pwd'])) ? esc_attr(stripslashes(trim($_REQUEST['wp_admin_pwd']))) : ''; ?>"/>
                         </li>
                         <li>
                             <label class="bp-media-label" for="ssh_ftp_host"><?php _e('Your SSH / FTP host:', BP_MEDIA_TXT_DOMAIN); ?></label><input class="bp-media-input" id="ssh_ftp_host" type="text" name="ssh_ftp_host" value="<?php echo (isset($_REQUEST['ssh_ftp_host'])) ? esc_attr(stripslashes(trim($_REQUEST['ssh_ftp_host']))) : ''; ?>"/>
@@ -77,7 +77,7 @@ if (!class_exists('BPMediaSupport')) {
                             <label class="bp-media-label" for="ssh_ftp_username"><?php _e('Your SSH / FTP login:', BP_MEDIA_TXT_DOMAIN); ?></label><input class="bp-media-input" id="ssh_ftp_username" type="text" name="ssh_ftp_username" value="<?php echo (isset($_REQUEST['ssh_ftp_username'])) ? esc_attr(stripslashes(trim($_REQUEST['ssh_ftp_username']))) : ''; ?>"/>
                         </li>
                         <li>
-                            <label class="bp-media-label" for="ssh_ftp_pwd"><?php _e('Your SSH / FTP password:', BP_MEDIA_TXT_DOMAIN); ?></label><input class="bp-media-input" id="ssh_ftp_pwd" type="text" name="ssh_ftp_pwd" value="<?php echo (isset($_REQUEST['ssh_ftp_pwd'])) ? esc_attr(stripslashes(trim($_REQUEST['ssh_ftp_pwd']))) : ''; ?>"/>
+                            <label class="bp-media-label" for="ssh_ftp_pwd"><?php _e('Your SSH / FTP password:', BP_MEDIA_TXT_DOMAIN); ?></label><input class="bp-media-input" id="ssh_ftp_pwd" type="password" name="ssh_ftp_pwd" value="<?php echo (isset($_REQUEST['ssh_ftp_pwd'])) ? esc_attr(stripslashes(trim($_REQUEST['ssh_ftp_pwd']))) : ''; ?>"/>
                         </li>
                     </ul>
                 </div><!-- .submit-bug-box --><?php } ?>
@@ -159,22 +159,23 @@ if (!class_exists('BPMediaSupport')) {
                                         <td>' . __("SSH FTP Password", BP_MEDIA_TXT_DOMAIN) . '</td><td>' . strip_tags($form_data['ssh_ftp_pwd']) . '</td>
                                     </tr>
                                     ';
-                
             }
             $message .= '</table>
                     </body>
                 </html>';
-            if ( wp_mail( $bp_media->support_email, '#'.strip_tags($form_data['request_id']). ' - ' . $title, $message ) ) {
+            add_filter('wp_mail_content_type', create_function('', 'return "text/html";'));
+            $headers = 'From: ' . $form_data['name'] . ' <' . $form_data['email'] . '>' . "\r\n";
+            if (wp_mail($bp_media->support_email, '[buddypress-media] Bug Report | Premium Support from '.str_replace( array('http://', 'https://'), '', $form_data['website']), $message, $headers)) {
                 if ($form_data['request_type'] == 'new_feature') {
-                    echo '<p>'.__('Thank you for your Feedback/Suggestion.', BP_MEDIA_TXT_DOMAIN).'</p>';
+                    echo '<p>' . __('Thank you for your Feedback/Suggestion.', BP_MEDIA_TXT_DOMAIN) . '</p>';
                 } else {
-                    echo '<p>'.__('Thank you for posting your support request.',BP_MEDIA_TXT_DOMAIN).'</p>';
-                    echo '<p>'.__('We will get back to you shortly.',BP_MEDIA_TXT_DOMAIN).'</p>';
+                    echo '<p>' . __('Thank you for posting your support request.', BP_MEDIA_TXT_DOMAIN) . '</p>';
+                    echo '<p>' . __('We will get back to you shortly.', BP_MEDIA_TXT_DOMAIN) . '</p>';
                 }
             } else {
-                echo '<p>'.__('Your server failed to send an email.', BP_MEDIA_TXT_DOMAIN ).'</p>';
-                echo '<p>'.__('Kindly contact your server support to fix this.', BP_MEDIA_TXT_DOMAIN ).'</p>';
-                echo '<p>'.sprintf(__('You can alternatively create a support request <a href="%s">here</a>', BP_MEDIA_TXT_DOMAIN ), $bp_media->support_url).'</p>';
+                echo '<p>' . __('Your server failed to send an email.', BP_MEDIA_TXT_DOMAIN) . '</p>';
+                echo '<p>' . __('Kindly contact your server support to fix this.', BP_MEDIA_TXT_DOMAIN) . '</p>';
+                echo '<p>' . sprintf(__('You can alternatively create a support request <a href="%s">here</a>', BP_MEDIA_TXT_DOMAIN), $bp_media->support_url) . '</p>';
             }
             die();
         }

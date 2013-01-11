@@ -142,7 +142,7 @@ if (!class_exists('BPMediaAdmin')) {
 
             // Check to see which tab we are on
             $tab = $this->get_current_tab();
-            /* BP Media */
+            /* BuddyPress Media */
             $tabs[] = array(
                 'href' => bp_get_admin_url(add_query_arg(array('page' => 'bp-media-settings'), 'admin.php')),
                 'title' => __('Buddypress Media', BP_MEDIA_TXT_DOMAIN),
@@ -169,7 +169,7 @@ if (!class_exists('BPMediaAdmin')) {
 
             // Check to see which tab we are on
             $tab = $this->get_current_tab();
-            /* BP Media */
+            /* BuddyPress Media */
             $tabs[] = array(
                 'href' => bp_get_admin_url(add_query_arg(array('page' => 'bp-media-settings'), 'admin.php')),
                 'title' => __('Buddypress Media Settings', BP_MEDIA_TXT_DOMAIN),
