@@ -56,7 +56,7 @@ class BPMediaAlbumScreen extends BPMediaScreen {
 			echo '</ul>';
 			$this->template->show_more();
 		else:
-			BPMediaFunction::bp_media_show_formatted_error_message( sprintf( __( 'Sorry, no %s were found.', BP_MEDIA_TXT_DOMAIN ), $this->slug ), 'info' );
+			BPMediaFunction::show_formatted_error_message( sprintf( __( 'Sorry, no %s were found.', BP_MEDIA_TXT_DOMAIN ), $this->slug ), 'info' );
 		endif;
 		$this->hook_after();
 	}
@@ -91,7 +91,7 @@ class BPMediaAlbumScreen extends BPMediaScreen {
 			echo '</ul>';
 			$this->template->show_more();
 		else:
-			BPMediaFunction::bp_media_show_formatted_error_message( __( 'Sorry, no media items were found in this album.', BP_MEDIA_TXT_DOMAIN ), 'info' );
+			BPMediaFunction::show_formatted_error_message( __( 'Sorry, no media items were found in this album.', BP_MEDIA_TXT_DOMAIN ), 'info' );
 		endif;
 		$this->hook_after();
 	}

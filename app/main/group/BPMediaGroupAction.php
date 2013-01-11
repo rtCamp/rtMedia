@@ -104,7 +104,7 @@ class BPMediaGroupAction {
                 $args['secondary_item_id'] = -999;
                 //do_action('bp_media_album_updated',$media->get_album_id());
             }
-            $activity_id = BPMediaFunction::bp_media_record_activity($args);
+            $activity_id = BPMediaFunction::record_activity($args);
             add_post_meta($media->get_id(), 'bp_media_child_activity', $activity_id);
         }
     }

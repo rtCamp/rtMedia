@@ -56,7 +56,7 @@ if (!class_exists('BPMediaUpgrade')) {
          */
         public function upgrade_1_0_to_2_1() {
             global $wpdb, $bp_media;
-            remove_filter('bp_activity_get_user_join_filter', 'bp_media_activity_query_filter', 10);
+            remove_filter('bp_activity_get_user_join_filter', 'activity_query_filter', 10);
             /* @var $wpdb wpdb */
             $wall_posts_album_ids = array();
             do {
@@ -106,7 +106,7 @@ if (!class_exists('BPMediaUpgrade')) {
                             'recorded_time' => $activity->date_recorded,
                             'user_id' => $bp_media->get_author()
                         );
-                        $act_id = BPMediaFunction::bp_media_record_activity($args);
+                        $act_id = BPMediaFunction::record_activity($args);
                         bp_activity_delete_meta($child_activity, 'bp_media_parent_post');
                         wp_delete_post($media_file->ID);
                     }
@@ -115,7 +115,7 @@ if (!class_exists('BPMediaUpgrade')) {
                 }
             } while (1);
             update_site_option('bp_media_db_version', BP_MEDIA_DB_VERSION);
-            add_action('admin_notices', 'BPMediaUpgradeScript::bp_media_database_updated_notice');
+            add_action('admin_notices', 'BPMediaUpgradeScript::database_updated_notice');
             wp_cache_flush();
         }
 
@@ -127,7 +127,7 @@ if (!class_exists('BPMediaUpgrade')) {
         public function upgrade_2_0_to_2_1() {
             global $bp_media;
             $page = 0;
-            while ($media_entries = BPMediaUpgradeScript::bp_media_return_query_posts(array(
+            while ($media_entries = BPMediaUpgradeScript::return_query_posts(array(
         'post_type' => 'attachment',
         'post_status' => 'any',
         'meta_key' => 'bp-media-key',
@@ -159,12 +159,12 @@ if (!class_exists('BPMediaUpgrade')) {
                             'recorded_time' => $activity->date_recorded,
                             'user_id' => $bp_media->get_author()
                         );
-                        BPMediaFunction::bp_media_record_activity($args);
+                        BPMediaFunction::record_activity($args);
                     }
                 }
             }
             update_site_option('bp_media_db_version', BP_MEDIA_DB_VERSION);
-            add_action('admin_notices', 'BPMediaUpgradeScript::bp_media_database_updated_notice');
+            add_action('admin_notices', 'BPMediaUpgradeScript::database_updated_notice');
             wp_cache_flush();
         }
 
