@@ -140,7 +140,7 @@ class BPMediaFilters {
 
         $bp_media_admin_nav = array();
 
-        // Added Main menu for BP Media
+        // Added Main menu for BuddyPress Media
         $bp_media_admin_nav[] = array(
             'parent' => 'my-account-buddypress',
             'id' => 'my-account-bpmedia',
@@ -205,9 +205,9 @@ class BPMediaFilters {
         if (current_user_can('manage_options') && is_super_admin()) {
 
             $bp_media_admin_nav = array();
-            $title = '<span class="ab-icon"></span><span class="ab-label">' . _x('BP Media', 'admin bar menu group label') . '</span>';
+            $title = '<span class="ab-icon"></span><span class="ab-label">' . _x('BuddyPress Media', 'admin bar menu group label') . '</span>';
 
-            // Added Main menu for BP Media
+            // Added Main menu for BuddyPress Media
             $bp_media_admin_nav[] = array(
                 'id' => 'bp-media-menu',
                 'title' => $title,
@@ -246,7 +246,7 @@ class BPMediaFilters {
     }
 
     /**
-     *  Set BP Media dashboard  widget
+     *  Set BuddyPress Media dashboard  widget
      *
      */
     //add_action('wp_dashboard_setup','bp_media_dashboard_widgets');

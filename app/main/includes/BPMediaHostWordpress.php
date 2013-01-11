@@ -21,7 +21,7 @@ class BPMediaHostWordpress {
 	 *
 	 * @param mixed $media_id optional Media ID of the element to be initialized if not defined, returns an empty element.
 	 *
-	 * @since BP Media 2.0
+	 * @since BuddyPress Media 2.0
 	 */
 	function __construct($media_id = '') {
 		if (!$media_id == '') {
@@ -34,7 +34,7 @@ class BPMediaHostWordpress {
 	 *
 	 * @param mixed $media_id Media ID of the element to be initialized. Can be the ID or the object of the Media
 	 *
-	 * @since BP Media 2.0
+	 * @since BuddyPress Media 2.0
 	 */
 	function init($media_id = '') {
 		if (is_object($media_id)) {
@@ -69,7 +69,7 @@ class BPMediaHostWordpress {
 	/**
 	 * Handles the uploaded media file and creates attachment post for the file.
 	 *
-	 * @since BP Media 2.0
+	 * @since BuddyPress Media 2.0
 	 */
 	function add_media($name, $description, $album_id = 0, $group = 0, $is_multiple = false) {
 		do_action('bp_media_before_add_media');

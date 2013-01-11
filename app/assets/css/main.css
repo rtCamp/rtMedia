@@ -75,7 +75,7 @@ div.bp_media_title{margin-bottom:10px;}
 #bp-media-settings-boxes{border:1px solid #CCC; overflow: hidden; padding: 10px; -webkit-border-bottom-left-radius:3px;border-bottom-left-radius:3px;-webkit-border-top-right-radius:3px;border-top-right-radius:3px;-webkit-border-bottom-right-radius:3px;border-bottom-right-radius:3px; float: left; width: 98%;}
 .nav-tab-wrapper a#bp-media{background:url('../img/bpm-icon-32.png') transparent no-repeat; padding-left:32px;}
 .nav-tab-wrapper a#bp-media:hover,.nav-tab-wrapper a#bp-media.nav-tab-active{background-position:left -32px;}
-.metabox-holder .postbox#bp_media_latest_news .inside ul li{background: transparent url('../img/rtCamp-bullet.png') left top no-repeat; padding-left: 19px;}
+.metabox-holder .postbox#latest-news .inside ul li{background: transparent url('../img/rtCamp-bullet.png') left top no-repeat; padding-left: 19px;}
 #branding #logo{text-align:center;padding: 10px 0;display:block;}
 ul#social{display:block;text-align:center;margin:0;}
 ul#social li{display:inline;}
@@ -99,6 +99,7 @@ ul#activity-stream li.media.album_updated ul li{float: left;margin-right:2%}
 
 .bp-media-addon .price, .bp-media-addon .price .amount, .bp-media-addon .price ins {color: #85AD74;font-size: 25px;font-weight: bold;}
 .bp-media-addon .price {line-height: 1.4em;color: #85AD74;display: block;font-weight: normal;margin-bottom: 0.5em;}
+.coming-soon { background: url("../img/coming-soon.png"); opacity: 0.7; z-index: -99999; border: 1px solid #CCC; padding: 5px; }
 /*.bp-media-addon .add_to_cart_button{background-image: linear-gradient(bottom, #F7F6F7 47%, #DFDBDF 74%);
 background-image: -o-linear-gradient(bottom, #F7F6F7 0%, #DFDBDF 100%);
 background-image: -moz-linear-gradient(bottom, #F7F6F7 0%, #DFDBDF 100%);
@@ -153,15 +154,15 @@ img.bp-media-donation-image{display:block;margin: 10px auto;}
 /* Buddypress Media Image Uploader album selection */
 #bp-media-album-prompt, #bp-media-album-new { background: none repeat scroll 0 0 #FFFFFF;border: 1px solid #AAAAAA;border-radius: 5px 5px 5px 5px;display: none;padding: 3px;z-index: 110000;left: 40%;position: fixed;top: 35%;width: 300px; }
 #bp-media-album-new { z-index: 120000; }
-    .bp-media-album-title { background: url("../img/Popup-title-bg.png") repeat-x scroll 50% 50% #CCCCCC;border: 1px solid #AAAAAA;border-radius: 5px 5px 5px 5px;color: #222222;display: block;font-weight: bold;padding: 0;margin-bottom: 10px; }
-        .bp-media-album-title span { background: none repeat scroll 0 0 transparent;display: block;font-size: 16px;padding: 10px; }
-        #bp-media-create-album-close, #bp-media-create-album-close:active, #bp-media-close, #bp-media-close:active { border-radius: 3px 3px 3px 3px;cursor: pointer;display: block;padding: 0 7px 2px;position: absolute;right: 8px;top: 11px;z-index: 10; }
-        #bp-media-create-album-close:hover, #bp-media-create-album-close:focus, #bp-media-close:hover, #bp-media-close:focus { background: none repeat scroll 0 0 #545454;color: #CFCFCF; }
-    .bp-media-album-content { display: block;padding: 5px; }
-    .bp-media-album-content label { display: block;font-size: 14px;margin: 0 0 0 3px; }
-    #bp-media-album-prompt select { min-width: 140px; }
-    .select-btn-div { border-top: 1px solid #AAAAAA;margin: 15px 0 0;padding: 5px 5px 5px 30px;text-align: right; }
-        .select-btn-div .btn { float: right;font-size: 14px;margin: 5px;padding: 10px 25px; }
-    #bp-media-album-new > label { font-size: 14px; }
-    #bp-media-album-new input[type="text"] { width: 98%; }
-    #custom-overlay { background: none repeat scroll 0 0 #000000;bottom: 0;left: 0;min-height: 360px;opacity: 0.7;position: fixed;right: 0;top: 0;z-index: 105000; }
+.bp-media-album-title { background: url("../img/Popup-title-bg.png") repeat-x scroll 50% 50% #CCCCCC;border: 1px solid #AAAAAA;border-radius: 5px 5px 5px 5px;color: #222222;display: block;font-weight: bold;padding: 0;margin-bottom: 10px; }
+.bp-media-album-title span { background: none repeat scroll 0 0 transparent;display: block;font-size: 16px;padding: 10px; }
+#bp-media-create-album-close, #bp-media-create-album-close:active, #bp-media-close, #bp-media-close:active { border-radius: 3px 3px 3px 3px;cursor: pointer;display: block;padding: 0 7px 2px;position: absolute;right: 8px;top: 11px;z-index: 10; }
+#bp-media-create-album-close:hover, #bp-media-create-album-close:focus, #bp-media-close:hover, #bp-media-close:focus { background: none repeat scroll 0 0 #545454;color: #CFCFCF; }
+.bp-media-album-content { display: block;padding: 5px; }
+.bp-media-album-content label { display: block;font-size: 14px;margin: 0 0 0 3px; }
+#bp-media-album-prompt select { min-width: 140px; }
+.select-btn-div { border-top: 1px solid #AAAAAA;margin: 15px 0 0;padding: 5px 5px 5px 30px;text-align: right; }
+.select-btn-div .btn { float: right;font-size: 14px;margin: 5px;padding: 10px 25px; }
+#bp-media-album-new > label { font-size: 14px; }
+#bp-media-album-new input[type="text"] { width: 98%; }
+#custom-overlay { background: none repeat scroll 0 0 #000000;bottom: 0;left: 0;min-height: 360px;opacity: 0.7;position: fixed;right: 0;top: 0;z-index: 105000; }
