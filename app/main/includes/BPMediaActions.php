@@ -110,7 +110,7 @@ class BPMediaActions {
             $types = array('error', 'updated', 'info');
             foreach ($types as $type) {
                 if (count($bp->{BP_MEDIA_SLUG}->messages[$type]) > 0) {
-                    BPMediaFunction::bp_media_show_formatted_error_message($bp->{BP_MEDIA_SLUG}->messages[$type], $type);
+                    BPMediaFunction::show_formatted_error_message($bp->{BP_MEDIA_SLUG}->messages[$type], $type);
                 }
             }
         }
@@ -294,13 +294,13 @@ class BPMediaActions {
         } else {
             $bp_media_count = $count;
         }
-        add_filter('bp_get_displayed_user_nav_' . BP_MEDIA_SLUG, 'BPMediaFilters::bp_media_items_count_filter', 10, 2);
+        add_filter('bp_get_displayed_user_nav_' . BP_MEDIA_SLUG, 'BPMediaFilters::items_count_filter', 10, 2);
 
         if (bp_current_component() == BP_MEDIA_SLUG) {
-            add_filter('bp_get_options_nav_' . BP_MEDIA_IMAGES_SLUG, 'BPMediaFilters::bp_media_items_count_filter', 10, 2);
-            add_filter('bp_get_options_nav_' . BP_MEDIA_VIDEOS_SLUG, 'BPMediaFilters::bp_media_items_count_filter', 10, 2);
-            add_filter('bp_get_options_nav_' . BP_MEDIA_AUDIO_SLUG, 'BPMediaFilters::bp_media_items_count_filter', 10, 2);
-            add_filter('bp_get_options_nav_' . BP_MEDIA_ALBUMS_SLUG, 'BPMediaFilters::bp_media_items_count_filter', 10, 2);
+            add_filter('bp_get_options_nav_' . BP_MEDIA_IMAGES_SLUG, 'BPMediaFilters::items_count_filter', 10, 2);
+            add_filter('bp_get_options_nav_' . BP_MEDIA_VIDEOS_SLUG, 'BPMediaFilters::items_count_filter', 10, 2);
+            add_filter('bp_get_options_nav_' . BP_MEDIA_AUDIO_SLUG, 'BPMediaFilters::items_count_filter', 10, 2);
+            add_filter('bp_get_options_nav_' . BP_MEDIA_ALBUMS_SLUG, 'BPMediaFilters::items_count_filter', 10, 2);
         }
         return true;
     }
@@ -522,7 +522,7 @@ class BPMediaActions {
     }
 
     function add_new_from_activity() {
-        BPMediaTemplateFunctions::bp_media_show_upload_form_multiple_activity();
+        BPMediaTemplateFunctions::show_upload_form_multiple_activity();
     }
 
 //add_action('bp_after_activity_post_form','add_new_from_activity');
@@ -538,17 +538,17 @@ class BPMediaActions {
             'user_id' => $album->get_owner(),
             'item_id' => $album->get_id()
         );
-        $activity_id = BPMediaFunction::bp_media_record_activity($args);
+        $activity_id = BPMediaFunction::record_activity($args);
         update_post_meta($album->get_id(), 'bp_media_child_activity', $activity_id);
     }
 
     function album_activity_update($album_id) {
-        BPMediaFunction::bp_media_update_album_activity($album_id);
+        BPMediaFunction::update_album_activity($album_id);
     }
 
     function album_activity_sync($media_id) {
         $album_id = wp_get_post_parent_id($media_id);
-        BPMediaFunction::bp_media_update_album_activity($album_id, false, $media_id);
+        BPMediaFunction::update_album_activity($album_id, false, $media_id);
     }
 
     static function activity_create_after_add_media($media, $hidden = false) {
@@ -573,7 +573,7 @@ class BPMediaActions {
                 $args['secondary_item_id'] = -999;
                 do_action('bp_media_album_updated', $media->get_album_id());
             }
-            $activity_id = BPMediaFunction::bp_media_record_activity($args);
+            $activity_id = BPMediaFunction::record_activity($args);
             add_post_meta($media->get_id(), 'bp_media_child_activity', $activity_id);
         }
     }

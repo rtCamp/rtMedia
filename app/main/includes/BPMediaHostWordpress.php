@@ -359,7 +359,7 @@ class BPMediaHostWordpress {
 	function show_comment_form_wordpress(){
 		query_posts('attachment_id='.$this->id);
 		while(have_posts()): the_post();
-		add_action('comment_form','BPMediaFunction::bp_media_wp_comment_form_mod');
+		add_action('comment_form','BPMediaFunction::wp_comment_form_mod');
 		comments_template();
 		endwhile;
 	}
@@ -512,7 +512,7 @@ class BPMediaHostWordpress {
                                 'recorded_time' => $activity->date_recorded,
                                 'user_id' => $this->get_author()
                         );
-                    $activity_id = BPMediaFunction::bp_media_record_activity($args);
+                    $activity_id = BPMediaFunction::record_activity($args);
                 }
             }
         }

@@ -111,7 +111,7 @@ class BPMediaTemplate {
 	}
 
 	function the_permalink() {
-		echo apply_filters( 'bp_media_the_permalink', array( $this, 'get_permalink' ) );
+		echo apply_filters( 'the_permalink', array( $this, 'get_permalink' ) );
 	}
 
 	function the_content( $id = 0 ) {
