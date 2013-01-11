@@ -116,7 +116,7 @@ class BPMediaAlbum{
 				'post_type'	=>	'bp_media_album',
 				'post_author'=> $author_id
 			);
-		BPMediaActions::bp_media_init_count($author_id);
+		BPMediaActions::init_count($author_id);
 		global $bp_media_count;
 		$album_id = wp_insert_post($post_vars);
 		if($group_id){
@@ -146,7 +146,7 @@ class BPMediaAlbum{
 			do_action('bp_media_after_delete_media',$entry->ID);
 		}
 		$author_id = $this->owner;
-		BPMediaActions::bp_media_init_count($author_id);
+		BPMediaActions::init_count($author_id);
 		wp_delete_post($this->id,true);
 		global $bp_media_count;
 		$bp_media_count['albums'] = intval(isset($bp_media_count['albums'])?$bp_media_count['albums']:0) - 1;

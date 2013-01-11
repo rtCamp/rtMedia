@@ -97,7 +97,7 @@ class BPMediaHostWordpress {
 			'post_content' => $content,
 			'post_parent' => $post_id,
 		);
-		BPMediaActions::bp_media_init_count(bp_loggedin_user_id());
+		BPMediaActions::init_count(bp_loggedin_user_id());
 		switch ($type) {
 			case 'video/mp4' :
 			case 'video/quicktime' :
@@ -359,7 +359,7 @@ class BPMediaHostWordpress {
 	function show_comment_form_wordpress(){
 		query_posts('attachment_id='.$this->id);
 		while(have_posts()): the_post();
-		add_action('comment_form','BPMediaFunction::bp_media_wp_comment_form_mod');
+		add_action('comment_form','BPMediaFunction::wp_comment_form_mod');
 		comments_template();
 		endwhile;
 	}
@@ -512,7 +512,7 @@ class BPMediaHostWordpress {
                                 'recorded_time' => $activity->date_recorded,
                                 'user_id' => $this->get_author()
                         );
-                    $activity_id = BPMediaFunction::bp_media_record_activity($args);
+                    $activity_id = BPMediaFunction::record_activity($args);
                 }
             }
         }
@@ -523,7 +523,7 @@ class BPMediaHostWordpress {
 	function delete_media(){
 		do_action('bp_media_before_delete_media',$this->id);
 		global $bp_media_count;
-		BPMediaActions::bp_media_init_count($this->owner);
+		BPMediaActions::init_count($this->owner);
 		switch ($this->type) {
 			case 'image':
 				$bp_media_count['images'] = intval($bp_media_count['images']) - 1;

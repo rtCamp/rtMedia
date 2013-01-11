@@ -2,7 +2,7 @@
 
 class BPMediaTemplateFunctions {
 
-    function bp_media_show_upload_form() {
+    function show_upload_form() {
         global $bp, $bp_media_default_excerpts, $bp_media_options;
         $allowed = array(
             'type' => array(),
@@ -34,7 +34,7 @@ class BPMediaTemplateFunctions {
         <?php
     }
 
-    function bp_media_show_upload_form_multiple() {
+    function show_upload_form_multiple() {
         global $bp, $bp_media;
         ?>
         <div id="bp-media-album-prompt" title="Select Album"><select id="bp-media-selected-album"><?php
@@ -85,7 +85,7 @@ class BPMediaTemplateFunctions {
         <?php
     }
 
-    function bp_media_show_pagination($type = 'top', $inner = false) {
+    function show_pagination($type = 'top', $inner = false) {
         global $bp, $bp_media_paginated_links, $bp_media_query, $bp_media_albums_query;
         switch ($bp->current_action) {
             case BP_MEDIA_IMAGES_SLUG :
@@ -169,7 +169,7 @@ class BPMediaTemplateFunctions {
         <?php
     }
 
-    function bp_media_get_permalink($id = 0) {
+    function get_permalink($id = 0) {
         if (is_object($id))
             $media = $id;
         else
@@ -193,11 +193,11 @@ class BPMediaTemplateFunctions {
         }
     }
 
-    function bp_media_the_permalink() {
-        echo apply_filters('bp_media_the_permalink', $this->bp_media_get_permalink());
+    function the_permalink() {
+        echo apply_filters('the_permalink', $this->get_permalink());
     }
 
-    function bp_media_the_content($id = 0) {
+    function the_content($id = 0) {
         if (is_object($id))
             $media = $id;
         else
@@ -214,7 +214,7 @@ class BPMediaTemplateFunctions {
         }
     }
 
-    function bp_media_album_the_content($id = 0) {
+    function album_the_content($id = 0) {
         if (is_object($id))
             $album = $id;
         else
@@ -231,7 +231,7 @@ class BPMediaTemplateFunctions {
         }
     }
 
-    function bp_media_display_show_more($type = 'media') {
+    function display_show_more($type = 'media') {
         $showmore = false;
         switch ($type) {
             case 'media':
@@ -251,7 +251,7 @@ class BPMediaTemplateFunctions {
         }
     }
 
-    static function bp_media_show_upload_form_multiple_activity() {
+    static function show_upload_form_multiple_activity() {
         global $bp, $bp_media_default_excerpts;
         if ($bp->current_component != 'activity')
             return;
