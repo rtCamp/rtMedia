@@ -128,7 +128,7 @@ if ( ! class_exists( 'BPMediaScreen' ) ) {
 
 			global $bp;
 
-			remove_filter( 'bp_activity_get_user_join_filter', 'bp_media_activity_query_filter', 10 );
+			remove_filter( 'bp_activity_get_user_join_filter', 'activity_query_filter', 10 );
 			if ( isset( $bp->action_variables[ 0 ] ) ) {
 				switch ( $bp->action_variables[ 0 ] ) {
 					case constant( $editslug ) :
@@ -173,7 +173,7 @@ if ( ! class_exists( 'BPMediaScreen' ) ) {
 				echo '</ul>';
 				$this->template->show_more();
 			else:
-				BPMediaFunction::bp_media_show_formatted_error_message( sprintf( __( 'Sorry, no %s were found.', BP_MEDIA_TXT_DOMAIN ), $this->slug ), 'info' );
+				BPMediaFunction::show_formatted_error_message( sprintf( __( 'Sorry, no %s were found.', BP_MEDIA_TXT_DOMAIN ), $this->slug ), 'info' );
 			endif;
 			$this->hook_after();
 		}
@@ -256,11 +256,11 @@ if ( ! class_exists( 'BPMediaScreen' ) ) {
 				$this->template->redirect($this->media_const);
 				exit;
 			}
-			BPMediaFunction::bp_media_check_user();
+			BPMediaFunction::check_user();
 
 			//For saving the data if the form is submitted
 			if ( array_key_exists( 'bp_media_title', $_POST ) ) {
-				BPMediaFunction::bp_media_update_media();
+				BPMediaFunction::update_media();
 			}
 			$this->template_actions( 'edit_screen' );
 			$this->template->loader();
