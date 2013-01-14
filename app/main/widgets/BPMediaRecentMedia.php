@@ -70,7 +70,7 @@ class BPMediaRecentMedia extends WP_Widget {
 
 			<div id="recent-media-tabs-photos" class="bp-media-tab-panel">
 				<?php
-				// Rescent photos
+				// Recent photos
 				$args = array( 'post_type' => 'attachment',
 					'post_status' => 'any',
 					'post_mime_type' => 'image',
@@ -97,7 +97,7 @@ class BPMediaRecentMedia extends WP_Widget {
 
 					</ul><!-- .widget-item-listing --><?php
 		}else
-			_e( 'No rescent photo found', BP_MEDIA_TXT_DOMAIN );
+			_e( 'No recent photo found', BP_MEDIA_TXT_DOMAIN );
 
 		wp_reset_query();
 		?>
@@ -106,7 +106,7 @@ class BPMediaRecentMedia extends WP_Widget {
 
 			<div id="recent-media-tabs-music" class="bp-media-tab-panel">
 				<?php
-				// Rescent Audio
+				// Recent Audio
 				$args = array( 'post_type' => 'attachment',
 					'post_status' => 'any',
 					'post_mime_type' => 'audio',
@@ -132,7 +132,7 @@ class BPMediaRecentMedia extends WP_Widget {
 
 					</ul><!-- .widget-item-listing --><?php
 		}else
-			_e( 'No rescent audio found', BP_MEDIA_TXT_DOMAIN );
+			_e( 'No recent audio found', BP_MEDIA_TXT_DOMAIN );
 
 		wp_reset_query();
 				?>
@@ -141,7 +141,7 @@ class BPMediaRecentMedia extends WP_Widget {
 
 			<div id="recent-media-tabs-videos" class="bp-media-tab-panel">
 				<?php
-				// Rescent Video
+				// Recent Video
 				$args = array( 'post_type' => 'attachment',
 					'post_status' => 'any',
 					'post_mime_type' => 'video',
