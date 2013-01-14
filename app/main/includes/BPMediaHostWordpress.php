@@ -109,7 +109,7 @@ class BPMediaHostWordpress {
 				} catch (Exception $e) {
 					unlink($file);
 					$activity_content = false;
-					throw new Exception(__('MP4 file you have uploaded is currupt.', $bp_media->text_domain));
+					throw new Exception(__('MP4 file you have uploaded is corrupt.', $bp_media->text_domain));
 				}
 				if (is_array($vid_info)) {
 					if (!array_key_exists('error',$vid_info)&& array_key_exists('fileformat', $vid_info) && array_key_exists('video', $vid_info)&&array_key_exists('fourcc',$vid_info['video'])) {
