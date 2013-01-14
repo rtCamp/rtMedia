@@ -17,9 +17,9 @@ ul.bp-media-gallery li span img{height: 150px;}
 li.media div.activity-content div.activity-inner p{display:none;}
 div.bp_media_title{margin-bottom:10px;}
 #bp-media-footer {color: #4D4D4D;text-align: center;text-shadow: #FAFAFA 1px 1px 0;}
- #wpbody-content div.metabox-fixed{width: 280px;margin-right: -300px;float: right;}
+#wpbody-content div.metabox-fixed{width: 280px;margin-right: -300px;float: right;}
 #wpbody-content div.wrap.bp-media-admin .columns-2{margin-right:300px;padding-top: 0;margin-top: 15px;width: 600px}
-#wpbody-content .bp-media-settings-tabs{margin-bottom: 15px}
+#wpbody-content .bp-media-settings-tabs{margin-bottom: 0; }
 #wpbody-content .bp-media-settings-tabs .media-nav-tab{margin: 0 10px; text-decoration: underline; text-transform: capitalize}
 #wpbody-content .bp-media-settings-tabs .media-nav-tab.media-nav-tab-active{font-weight: bold}
 
@@ -72,10 +72,10 @@ div.bp_media_title{margin-bottom:10px;}
 #adminmenu li.toplevel_page_bp-media-settings:hover .wp-menu-image a,
 #adminmenu li.current.toplevel_page_bp-media-settings .wp-menu-image a{background-position: center 1px;}
 #adminmenu li.toplevel_page_bp-media-settings .wp-menu-image a img{display:none;}
-#bp-media-settings-boxes{overflow: hidden;width: 100%;float: left;}
+#bp-media-settings-boxes{border:1px solid #CCC; overflow: hidden; padding: 10px; -webkit-border-bottom-left-radius:3px;border-bottom-left-radius:3px;-webkit-border-top-right-radius:3px;border-top-right-radius:3px;-webkit-border-bottom-right-radius:3px;border-bottom-right-radius:3px; float: left; width: 98%;}
 .nav-tab-wrapper a#bp-media{background:url('../img/bpm-icon-32.png') transparent no-repeat; padding-left:32px;}
 .nav-tab-wrapper a#bp-media:hover,.nav-tab-wrapper a#bp-media.nav-tab-active{background-position:left -32px;}
-.metabox-holder .postbox#bp_media_latest_news .inside ul li{background: transparent url('../img/rtCamp-bullet.png') left top no-repeat; padding-left: 19px;}
+.metabox-holder .postbox#latest-news .inside ul li{background: transparent url('../img/rtCamp-bullet.png') left top no-repeat; padding-left: 19px;}
 #branding #logo{text-align:center;padding: 10px 0;display:block;}
 ul#social{display:block;text-align:center;margin:0;}
 ul#social li{display:inline;}
@@ -91,14 +91,18 @@ ul#activity-stream li.media.album_updated ul li{float: left;margin-right:2%}
 .products ul, ul.products {clear: both;list-style: none outside none;margin: 0 0 14px;padding: 0;}
 .bp-media-addon {margin: 0;}
 .bp-media-addon.first { }
-.bp-media-addon {margin: 20px 10px 30px;padding: 0;position: relative;overflow: hidden}
+.bp-media-addon {margin: 20px 10px 30px;padding: 5px;position: relative;border: 1px solid #ccc;}
 .bp-media-addon h4 {background: none repeat scroll 0 0 transparent;border: 0 none;color: #006999;cursor: pointer;font-family: "HelveticaNeue-Light","Helvetica Neue Light","Helvetica Neue",sans-serif;font-size: 20px;font-weight: normal;line-height: 26px;margin: 0 0 10px;}
 .bp-media-addon a {text-decoration: none;}
 .bp-media-addon a img, div.product div.images img {box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.4);}
-.bp-media-addon a img {box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.3);display: block;height: auto;margin: 5px 15px 5px 5px;transition: all 0.2s ease-in-out 0s;float: left; width: 200px}
+.bp-media-addon a img {display: block;height: auto;margin: 5px 15px 5px 5px;transition: all 0.2s ease-in-out 0s;float: left; width: 200px}
 
 .bp-media-addon .price, .bp-media-addon .price .amount, .bp-media-addon .price ins {color: #85AD74;font-size: 25px;font-weight: bold;}
 .bp-media-addon .price {line-height: 1.4em;color: #85AD74;display: block;font-weight: normal;margin-bottom: 0.5em;}
+.coming-soon { background: url("../img/coming-soon.png"); z-index: 5; position:absolute;height:191px; opacity:0.9;}
+.coming-soon.coming-soon-l { background-position: 0 0; width:250px; top:-12px; left:-18px;}
+.coming-soon.coming-soon-r { background-position: 347px 0; width:174px; bottom:-14px; right:-12px;}
+.coming-soon.coming-soon-r:hover{background-position: 175px 0;}
 /*.bp-media-addon .add_to_cart_button{background-image: linear-gradient(bottom, #F7F6F7 47%, #DFDBDF 74%);
 background-image: -o-linear-gradient(bottom, #F7F6F7 0%, #DFDBDF 100%);
 background-image: -moz-linear-gradient(bottom, #F7F6F7 0%, #DFDBDF 100%);
@@ -119,8 +123,8 @@ background-image: -webkit-gradient(linear,left bottom,left top,color-stop(1, #F7
 .bp-media-addon .product_footer .product_demo_link{font-size: 16px;margin: 8px 20px; font-weight: bold}
 
 .bp-media-addon .add_to_cart_button:hover{background: none repeat scroll 0 0 #D75A00;
-    box-shadow: 0 1px rgba(0, 0, 0, 0.2), 0 0 1px rgba(0, 0, 0, 0.4) inset;
-    color: #FFFFFF;}
+                                          box-shadow: 0 1px rgba(0, 0, 0, 0.2), 0 0 1px rgba(0, 0, 0, 0.4) inset;
+                                          color: #FFFFFF;}
 
 /* Admin bar Menu  */
 #wpadminbar .bp-media-settings-menu > .ab-item .ab-icon{background: url("../img/bpm-icon-16.png") no-repeat scroll -8px -7px transparent}
@@ -151,15 +155,17 @@ background-image: -webkit-gradient(linear,left bottom,left top,color-stop(1, #F7
 img.bp-media-donation-image{display:block;margin: 10px auto;}
 
 /* Buddypress Media Image Uploader album selection */
-#bp-media-album-prompt, #bp-media-album-new { background: none repeat scroll 0 0 #FFFFFF;border: 1px solid #AAAAAA;border-radius: 5px 5px 5px 5px;display: block;padding: 3px;position: absolute;z-index: 1010; }
-#bp-media-album-new { z-index: 1020; }
-    .bp-media-album-title { background: url("../img/Popup-title-bg.png") repeat-x scroll 50% 50% #CCCCCC;border: 1px solid #AAAAAA;border-radius: 5px 5px 5px 5px;color: #222222;display: block;font-weight: bold;padding: 0;margin-bottom: 10px; }
-        .bp-media-album-title span { background: none repeat scroll 0 0 transparent;display: block;font-size: 16px;padding: 10px; }
-        #bp-media-create-album-close, #bp-media-create-album-close:active, #bp-media-close, #bp-media-close:active { border-radius: 3px 3px 3px 3px;cursor: pointer;display: block;padding: 0 7px 2px;position: absolute;right: 8px;top: 11px;z-index: 10; }
-        #bp-media-create-album-close:hover, #bp-media-create-album-close:focus, #bp-media-close:hover, #bp-media-close:focus { background: none repeat scroll 0 0 #545454;color: #CFCFCF; }
-    .bp-media-album-content { display: block;padding: 5px; }
-    .bp-media-album-content label { display: block;font-size: 14px;margin: 0 0 0 3px; }
-    #bp-media-album-prompt select { min-width: 140px; }
-    .select-btn-div { border-top: 1px solid #AAAAAA;margin: 15px 0 0;padding: 5px 5px 5px 30px;text-align: right; }
-        .select-btn-div .btn { float: right;font-size: 14px;margin: 5px;padding: 10px 25px; }
-    #bp-media-album-new > label { font-size: 14px; }
+#bp-media-album-prompt, #bp-media-album-new { background: none repeat scroll 0 0 #FFFFFF;border: 1px solid #AAAAAA;border-radius: 5px 5px 5px 5px;display: none;padding: 3px;z-index: 110000;left: 40%;position: fixed;top: 35%;width: 300px; }
+#bp-media-album-new { z-index: 120000; }
+.bp-media-album-title { background: url("../img/Popup-title-bg.png") repeat-x scroll 50% 50% #CCCCCC;border: 1px solid #AAAAAA;border-radius: 5px 5px 5px 5px;color: #222222;display: block;font-weight: bold;padding: 0;margin-bottom: 10px; }
+.bp-media-album-title span { background: none repeat scroll 0 0 transparent;display: block;font-size: 16px;padding: 10px; }
+#bp-media-create-album-close, #bp-media-create-album-close:active, #bp-media-close, #bp-media-close:active { border-radius: 3px 3px 3px 3px;cursor: pointer;display: block;padding: 0 7px 2px;position: absolute;right: 8px;top: 11px;z-index: 10; }
+#bp-media-create-album-close:hover, #bp-media-create-album-close:focus, #bp-media-close:hover, #bp-media-close:focus { background: none repeat scroll 0 0 #545454;color: #CFCFCF; }
+.bp-media-album-content { display: block;padding: 5px; }
+.bp-media-album-content label { display: block;font-size: 14px;margin: 0 0 0 3px; }
+#bp-media-album-prompt select { min-width: 140px; }
+.select-btn-div { border-top: 1px solid #AAAAAA;margin: 15px 0 0;padding: 5px 5px 5px 30px;text-align: right; }
+.select-btn-div .btn { float: right;font-size: 14px;margin: 5px;padding: 10px 25px; }
+#bp-media-album-new > label { font-size: 14px; }
+#bp-media-album-new input[type="text"] { width: 98%; }
+#custom-overlay { background: none repeat scroll 0 0 #000000;bottom: 0;left: 0;min-height: 360px;opacity: 0.7;position: fixed;right: 0;top: 0;z-index: 105000; }
