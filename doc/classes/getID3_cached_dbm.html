@@ -1,0 +1,880 @@
+<!DOCTYPE html><html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+<meta charset="utf-8">
+<title>buddypress-media » \getID3_cached_dbm</title>
+<meta name="author" content="Mike van Riel">
+<meta name="description" content="">
+<link href="../css/template.css" rel="stylesheet" media="all">
+<script src="../js/jquery-1.7.1.min.js" type="text/javascript"></script><script src="../js/jquery-ui-1.8.2.custom.min.js" type="text/javascript"></script><script src="../js/jquery.mousewheel.min.js" type="text/javascript"></script><script src="../js/bootstrap.js" type="text/javascript"></script><script src="../js/template.js" type="text/javascript"></script><script src="../js/prettify/prettify.min.js" type="text/javascript"></script><link rel="shortcut icon" href="../img/favicon.ico">
+<link rel="apple-touch-icon" href="../img/apple-touch-icon.png">
+<link rel="apple-touch-icon" sizes="72x72" href="../img/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="114x114" href="../img/apple-touch-icon-114x114.png">
+</head>
+<body>
+<div class="navbar navbar-fixed-top">
+<div class="navbar-inner"><div class="container">
+<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></a><a class="brand" href="../index.html">buddypress-media</a><div class="nav-collapse"><ul class="nav">
+<li class="dropdown">
+<a href="#api" class="dropdown-toggle" data-toggle="dropdown">
+                                    API Documentation <b class="caret"></b></a><ul class="dropdown-menu"></ul>
+</li>
+<li class="dropdown" id="charts-menu">
+<a href="#charts" class="dropdown-toggle" data-toggle="dropdown">
+                                    Charts <b class="caret"></b></a><ul class="dropdown-menu"><li><a href="../graph_class.html"><i class="icon-list-alt"></i> Class hierarchy diagram</a></li></ul>
+</li>
+<li class="dropdown" id="reports-menu">
+<a href="#reports" class="dropdown-toggle" data-toggle="dropdown">
+                                    Reports <b class="caret"></b></a><ul class="dropdown-menu">
+<li><a href="../errors.html"><i class="icon-remove-sign"></i> Errors 
+                <span class="label label-info">1030</span></a></li>
+<li><a href="../markers.html"><i class="icon-map-marker"></i> Markers 
+                <ul><li>todo 
+                <span class="label label-info">1</span>
+</li></ul></a></li>
+<li><a href="../deprecated.html"><i class="icon-stop"></i> Deprecated elements 
+                <span class="label label-info">0</span></a></li>
+</ul>
+</li>
+</ul></div>
+</div></div>
+<div class="go_to_top"><a href="#___" style="color: inherit">Back to top  <i class="icon-upload icon-white"></i></a></div>
+</div>
+<div id="___" class="container">
+<noscript><div class="alert alert-warning">
+                            Javascript is disabled; several features are only available
+                            if Javascript is enabled.
+                        </div></noscript>
+<div class="row">
+<div class="span4">
+<span class="btn-group visibility" data-toggle="buttons-checkbox"><button class="btn public active" title="Show public elements">Public</button><button class="btn protected" title="Show protected elements">Protected</button><button class="btn private" title="Show private elements">Private</button><button class="btn inherited active" title="Show inherited elements">Inherited</button></span><div class="btn-group view pull-right" data-toggle="buttons-radio">
+<button class="btn details" title="Show descriptions and method names"><i class="icon-list"></i></button><button class="btn simple" title="Show only method names"><i class="icon-align-justify"></i></button>
+</div>
+<ul class="side-nav nav nav-list">
+<li class="nav-header">
+<i class="icon-custom icon-method"></i> Methods
+                    <ul>
+<li class="method public inherited"><a href="#method_CalculateCompressionRatioAudio" title="CalculateCompressionRatioAudio :: "><span class="description">CalculateCompressionRatioAudio()
+        </span><pre>CalculateCompressionRatioAudio()</pre></a></li>
+<li class="method public inherited"><a href="#method_CalculateCompressionRatioVideo" title="CalculateCompressionRatioVideo :: "><span class="description">CalculateCompressionRatioVideo()
+        </span><pre>CalculateCompressionRatioVideo()</pre></a></li>
+<li class="method public inherited"><a href="#method_CalculateReplayGain" title="CalculateReplayGain :: "><span class="description">CalculateReplayGain()
+        </span><pre>CalculateReplayGain()</pre></a></li>
+<li class="method public inherited"><a href="#method_ChannelsBitratePlaytimeCalculations" title="ChannelsBitratePlaytimeCalculations :: "><span class="description">ChannelsBitratePlaytimeCalculations()
+        </span><pre>ChannelsBitratePlaytimeCalculations()</pre></a></li>
+<li class="method public inherited"><a href="#method_CharConvert" title="CharConvert :: "><span class="description">CharConvert()
+        </span><pre>CharConvert()</pre></a></li>
+<li class="method public inherited"><a href="#method_CleanUp" title="CleanUp :: "><span class="description">CleanUp()
+        </span><pre>CleanUp()</pre></a></li>
+<li class="method public inherited"><a href="#method_GetFileFormat" title="GetFileFormat :: "><span class="description">GetFileFormat()
+        </span><pre>GetFileFormat()</pre></a></li>
+<li class="method public inherited"><a href="#method_GetFileFormatArray" title="GetFileFormatArray :: "><span class="description">GetFileFormatArray()
+        </span><pre>GetFileFormatArray()</pre></a></li>
+<li class="method public inherited"><a href="#method_HandleAllTags" title="HandleAllTags :: "><span class="description">HandleAllTags()
+        </span><pre>HandleAllTags()</pre></a></li>
+<li class="method public inherited"><a href="#method_ProcessAudioStreams" title="ProcessAudioStreams :: "><span class="description">ProcessAudioStreams()
+        </span><pre>ProcessAudioStreams()</pre></a></li>
+<li class="method public inherited"><a href="#method___construct" title="__construct :: "><span class="description">__construct()
+        </span><pre>__construct()</pre></a></li>
+<li class="method public "><a href="#method___destruct" title="__destruct :: "><span class="description">__destruct()
+        </span><pre>__destruct()</pre></a></li>
+<li class="method public "><a href="#method_analyze" title="analyze :: "><span class="description">analyze()
+        </span><pre>analyze()</pre></a></li>
+<li class="method public "><a href="#method_clear_cache" title="clear_cache :: "><span class="description">clear_cache()
+        </span><pre>clear_cache()</pre></a></li>
+<li class="method public inherited"><a href="#method_error" title="error :: "><span class="description">error()
+        </span><pre>error()</pre></a></li>
+<li class="method public inherited"><a href="#method_fread_buffer_size" title="fread_buffer_size :: "><span class="description">fread_buffer_size()
+        </span><pre>fread_buffer_size()</pre></a></li>
+<li class="method public inherited"><a href="#method_getHashdata" title="getHashdata :: "><span class="description">getHashdata()
+        </span><pre>getHashdata()</pre></a></li>
+<li class="method public "><a href="#method_getID3_cached_dbm" title="getID3_cached_dbm :: "><span class="description">getID3_cached_dbm()
+        </span><pre>getID3_cached_dbm()</pre></a></li>
+<li class="method public inherited"><a href="#method_getid3_tempnam" title="getid3_tempnam :: "><span class="description">getid3_tempnam()
+        </span><pre>getid3_tempnam()</pre></a></li>
+<li class="method public inherited"><a href="#method_include_module" title="include_module :: "><span class="description">include_module()
+        </span><pre>include_module()</pre></a></li>
+<li class="method public inherited"><a href="#method_openfile" title="openfile :: "><span class="description">openfile()
+        </span><pre>openfile()</pre></a></li>
+<li class="method public inherited"><a href="#method_saveAttachment" title="saveAttachment :: "><span class="description">saveAttachment()
+        </span><pre>saveAttachment()</pre></a></li>
+<li class="method public inherited"><a href="#method_setOption" title="setOption :: "><span class="description">setOption()
+        </span><pre>setOption()</pre></a></li>
+<li class="method public inherited"><a href="#method_version" title="version :: "><span class="description">version()
+        </span><pre>version()</pre></a></li>
+<li class="method public inherited"><a href="#method_warning" title="warning :: "><span class="description">warning()
+        </span><pre>warning()</pre></a></li>
+</ul>
+</li>
+<li class="nav-header">
+<i class="icon-custom icon-property"></i> Properties
+                    <ul>
+<li class="property public inherited"><a href="#property_encoding" title="$encoding :: "><span class="description"></span><pre>$encoding</pre></a></li>
+<li class="property public inherited"><a href="#property_encoding_id3v1" title="$encoding_id3v1 :: "><span class="description"></span><pre>$encoding_id3v1</pre></a></li>
+<li class="property public inherited"><a href="#property_filename" title="$filename :: "><span class="description"></span><pre>$filename</pre></a></li>
+<li class="property public inherited"><a href="#property_fp" title="$fp :: "><span class="description"></span><pre>$fp</pre></a></li>
+<li class="property public inherited"><a href="#property_info" title="$info :: "><span class="description"></span><pre>$info</pre></a></li>
+<li class="property public inherited"><a href="#property_option_extra_info" title="$option_extra_info :: "><span class="description"></span><pre>$option_extra_info</pre></a></li>
+<li class="property public inherited"><a href="#property_option_fread_buffer_size" title="$option_fread_buffer_size :: "><span class="description"></span><pre>$option_fread_buffer_size</pre></a></li>
+<li class="property public inherited"><a href="#property_option_max_2gb_check" title="$option_max_2gb_check :: "><span class="description"></span><pre>$option_max_2gb_check</pre></a></li>
+<li class="property public inherited"><a href="#property_option_md5_data" title="$option_md5_data :: "><span class="description"></span><pre>$option_md5_data</pre></a></li>
+<li class="property public inherited"><a href="#property_option_md5_data_source" title="$option_md5_data_source :: "><span class="description"></span><pre>$option_md5_data_source</pre></a></li>
+<li class="property public inherited"><a href="#property_option_save_attachments" title="$option_save_attachments :: "><span class="description"></span><pre>$option_save_attachments</pre></a></li>
+<li class="property public inherited"><a href="#property_option_sha1_data" title="$option_sha1_data :: "><span class="description"></span><pre>$option_sha1_data</pre></a></li>
+<li class="property public inherited"><a href="#property_option_tag_apetag" title="$option_tag_apetag :: "><span class="description"></span><pre>$option_tag_apetag</pre></a></li>
+<li class="property public inherited"><a href="#property_option_tag_id3v1" title="$option_tag_id3v1 :: "><span class="description"></span><pre>$option_tag_id3v1</pre></a></li>
+<li class="property public inherited"><a href="#property_option_tag_id3v2" title="$option_tag_id3v2 :: "><span class="description"></span><pre>$option_tag_id3v2</pre></a></li>
+<li class="property public inherited"><a href="#property_option_tag_lyrics3" title="$option_tag_lyrics3 :: "><span class="description"></span><pre>$option_tag_lyrics3</pre></a></li>
+<li class="property public inherited"><a href="#property_option_tags_html" title="$option_tags_html :: "><span class="description"></span><pre>$option_tags_html</pre></a></li>
+<li class="property public inherited"><a href="#property_option_tags_process" title="$option_tags_process :: "><span class="description"></span><pre>$option_tags_process</pre></a></li>
+<li class="property public inherited"><a href="#property_tempdir" title="$tempdir :: "><span class="description"></span><pre>$tempdir</pre></a></li>
+</ul>
+</li>
+<li class="nav-header protected">» Protected
+                    <ul>
+<li class="property protected inherited"><a href="#property_memory_limit" title="$memory_limit :: "><span class="description"></span><pre>$memory_limit</pre></a></li>
+<li class="property protected inherited"><a href="#property_startup_error" title="$startup_error :: "><span class="description"></span><pre>$startup_error</pre></a></li>
+<li class="property protected inherited"><a href="#property_startup_warning" title="$startup_warning :: "><span class="description"></span><pre>$startup_warning</pre></a></li>
+</ul>
+</li>
+<li class="nav-header">
+<i class="icon-custom icon-constant"></i> Constants
+                    <ul>
+<li class="constant  inherited"><a href="#constant_ATTACHMENTS_INLINE" title="ATTACHMENTS_INLINE :: "><span class="description">ATTACHMENTS_INLINE</span><pre>ATTACHMENTS_INLINE</pre></a></li>
+<li class="constant  inherited"><a href="#constant_ATTACHMENTS_NONE" title="ATTACHMENTS_NONE :: "><span class="description">ATTACHMENTS_NONE</span><pre>ATTACHMENTS_NONE</pre></a></li>
+<li class="constant  inherited"><a href="#constant_FREAD_BUFFER_SIZE" title="FREAD_BUFFER_SIZE :: "><span class="description">FREAD_BUFFER_SIZE</span><pre>FREAD_BUFFER_SIZE</pre></a></li>
+<li class="constant  inherited"><a href="#constant_VERSION" title="VERSION :: "><span class="description">VERSION</span><pre>VERSION</pre></a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="span8">
+<a id="\getID3_cached_dbm"></a><ul class="breadcrumb">
+<li>
+<a href="../index.html"><i class="icon-custom icon-class"></i></a><span class="divider">\</span>
+</li>
+<li><a href="../namespaces/global.html">global</a></li>
+<li class="active">
+<span class="divider">\</span><a href="../classes/getID3_cached_dbm.html">getID3_cached_dbm</a>
+</li>
+</ul>
+<div class="element class">
+<p class="short_description">This is a caching extension for getID3().</p>
+<div class="details">
+<div class="long_description"><p>It works the exact same
+way as the getID3 class, but return cached information very fast</p>
+
+<p>Example:</p>
+
+<p>Normal getID3 usage (example):</p>
+
+<pre><code>  require_once 'getid3/getid3.php';
+  $getID3 = new getID3;
+  $getID3-&gt;encoding = 'UTF-8';
+  $info1 = $getID3-&gt;analyze('file1.flac');
+  $info2 = $getID3-&gt;analyze('file2.wv');
+</code></pre>
+
+<p>getID3_cached usage:</p>
+
+<pre><code>  require_once 'getid3/getid3.php';
+  require_once 'getid3/getid3/extension.cache.dbm.php';
+  $getID3 = new getID3_cached('db3', '/tmp/getid3_cache.dbm',
+                                     '/tmp/getid3_cache.lock');
+  $getID3-&gt;encoding = 'UTF-8';
+  $info1 = $getID3-&gt;analyze('file1.flac');
+  $info2 = $getID3-&gt;analyze('file2.wv');
+</code></pre>
+
+<p>Supported Cache Types</p>
+
+<p>SQL Databases:          (use extension.cache.mysql)</p>
+
+<p>cache_type          cache_options</p>
+
+<hr />
+
+<p>mysql               host, database, username, password</p>
+
+<p>DBM-Style Databases:    (this extension)</p>
+
+<p>cache_type          cache_options</p>
+
+<hr />
+
+<p>gdbm                dbm_filename, lock_filename
+  ndbm                dbm_filename, lock_filename
+  db2                 dbm_filename, lock_filename
+  db3                 dbm_filename, lock_filename
+  db4                 dbm_filename, lock_filename  (PHP5 required)</p>
+
+<p>PHP must have write access to both dbm_filename and lock_filename.</p>
+
+<p>Recommended Cache Types</p>
+
+<p>Infrequent updates, many reads      any DBM
+  Frequent updates                    mysql</p></div>
+<h3>
+<i class="icon-custom icon-method"></i> Methods</h3>
+<a id="method_CalculateCompressionRatioAudio"></a><div class="element clickable method public method_CalculateCompressionRatioAudio" data-toggle="collapse" data-target=".method_CalculateCompressionRatioAudio .collapse">
+<h2>CalculateCompressionRatioAudio()
+        </h2>
+<pre>CalculateCompressionRatioAudio() </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\getID3::CalculateCompressionRatioAudio()</td>
+</tr></table>
+</div></div>
+</div>
+<a id="method_CalculateCompressionRatioVideo"></a><div class="element clickable method public method_CalculateCompressionRatioVideo" data-toggle="collapse" data-target=".method_CalculateCompressionRatioVideo .collapse">
+<h2>CalculateCompressionRatioVideo()
+        </h2>
+<pre>CalculateCompressionRatioVideo() </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\getID3::CalculateCompressionRatioVideo()</td>
+</tr></table>
+</div></div>
+</div>
+<a id="method_CalculateReplayGain"></a><div class="element clickable method public method_CalculateReplayGain" data-toggle="collapse" data-target=".method_CalculateReplayGain .collapse">
+<h2>CalculateReplayGain()
+        </h2>
+<pre>CalculateReplayGain() </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\getID3::CalculateReplayGain()</td>
+</tr></table>
+</div></div>
+</div>
+<a id="method_ChannelsBitratePlaytimeCalculations"></a><div class="element clickable method public method_ChannelsBitratePlaytimeCalculations" data-toggle="collapse" data-target=".method_ChannelsBitratePlaytimeCalculations .collapse">
+<h2>ChannelsBitratePlaytimeCalculations()
+        </h2>
+<pre>ChannelsBitratePlaytimeCalculations() </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\getID3::ChannelsBitratePlaytimeCalculations()</td>
+</tr></table>
+</div></div>
+</div>
+<a id="method_CharConvert"></a><div class="element clickable method public method_CharConvert" data-toggle="collapse" data-target=".method_CharConvert .collapse">
+<h2>CharConvert()
+        </h2>
+<pre>CharConvert($array, $encoding) </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\getID3::CharConvert()</td>
+</tr></table>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$array</h4></div>
+<div class="subelement argument"><h4>$encoding</h4></div>
+</div></div>
+</div>
+<a id="method_CleanUp"></a><div class="element clickable method public method_CleanUp" data-toggle="collapse" data-target=".method_CleanUp .collapse">
+<h2>CleanUp()
+        </h2>
+<pre>CleanUp() </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\getID3::CleanUp()</td>
+</tr></table>
+</div></div>
+</div>
+<a id="method_GetFileFormat"></a><div class="element clickable method public method_GetFileFormat" data-toggle="collapse" data-target=".method_GetFileFormat .collapse">
+<h2>GetFileFormat()
+        </h2>
+<pre>GetFileFormat($filedata, $filename) </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\getID3::GetFileFormat()</td>
+</tr></table>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$filedata</h4></div>
+<div class="subelement argument"><h4>$filename</h4></div>
+</div></div>
+</div>
+<a id="method_GetFileFormatArray"></a><div class="element clickable method public method_GetFileFormatArray" data-toggle="collapse" data-target=".method_GetFileFormatArray .collapse">
+<h2>GetFileFormatArray()
+        </h2>
+<pre>GetFileFormatArray() </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\getID3::GetFileFormatArray()</td>
+</tr></table>
+</div></div>
+</div>
+<a id="method_HandleAllTags"></a><div class="element clickable method public method_HandleAllTags" data-toggle="collapse" data-target=".method_HandleAllTags .collapse">
+<h2>HandleAllTags()
+        </h2>
+<pre>HandleAllTags() </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\getID3::HandleAllTags()</td>
+</tr></table>
+</div></div>
+</div>
+<a id="method_ProcessAudioStreams"></a><div class="element clickable method public method_ProcessAudioStreams" data-toggle="collapse" data-target=".method_ProcessAudioStreams .collapse">
+<h2>ProcessAudioStreams()
+        </h2>
+<pre>ProcessAudioStreams() </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\getID3::ProcessAudioStreams()</td>
+</tr></table>
+</div></div>
+</div>
+<a id="method___construct"></a><div class="element clickable method public method___construct" data-toggle="collapse" data-target=".method___construct .collapse">
+<h2>__construct()
+        </h2>
+<pre>__construct() </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\getID3::__construct()</td>
+</tr></table>
+</div></div>
+</div>
+<a id="method___destruct"></a><div class="element clickable method public method___destruct" data-toggle="collapse" data-target=".method___destruct .collapse">
+<h2>__destruct()
+        </h2>
+<pre>__destruct() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="method_analyze"></a><div class="element clickable method public method_analyze" data-toggle="collapse" data-target=".method_analyze .collapse">
+<h2>analyze()
+        </h2>
+<pre>analyze($filename) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$filename</h4></div>
+</div></div>
+</div>
+<a id="method_clear_cache"></a><div class="element clickable method public method_clear_cache" data-toggle="collapse" data-target=".method_clear_cache .collapse">
+<h2>clear_cache()
+        </h2>
+<pre>clear_cache() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="method_error"></a><div class="element clickable method public method_error" data-toggle="collapse" data-target=".method_error .collapse">
+<h2>error()
+        </h2>
+<pre>error($message) </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\getID3::error()</td>
+</tr></table>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$message</h4></div>
+</div></div>
+</div>
+<a id="method_fread_buffer_size"></a><div class="element clickable method public method_fread_buffer_size" data-toggle="collapse" data-target=".method_fread_buffer_size .collapse">
+<h2>fread_buffer_size()
+        </h2>
+<pre>fread_buffer_size() </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\getID3::fread_buffer_size()</td>
+</tr></table>
+</div></div>
+</div>
+<a id="method_getHashdata"></a><div class="element clickable method public method_getHashdata" data-toggle="collapse" data-target=".method_getHashdata .collapse">
+<h2>getHashdata()
+        </h2>
+<pre>getHashdata($algorithm) </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\getID3::getHashdata()</td>
+</tr></table>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$algorithm</h4></div>
+</div></div>
+</div>
+<a id="method_getID3_cached_dbm"></a><div class="element clickable method public method_getID3_cached_dbm" data-toggle="collapse" data-target=".method_getID3_cached_dbm .collapse">
+<h2>getID3_cached_dbm()
+        </h2>
+<pre>getID3_cached_dbm($cache_type, $dbm_filename, $lock_filename) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$cache_type</h4></div>
+<div class="subelement argument"><h4>$dbm_filename</h4></div>
+<div class="subelement argument"><h4>$lock_filename</h4></div>
+</div></div>
+</div>
+<a id="method_getid3_tempnam"></a><div class="element clickable method public method_getid3_tempnam" data-toggle="collapse" data-target=".method_getid3_tempnam .collapse">
+<h2>getid3_tempnam()
+        </h2>
+<pre>getid3_tempnam() </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\getID3::getid3_tempnam()</td>
+</tr></table>
+</div></div>
+</div>
+<a id="method_include_module"></a><div class="element clickable method public method_include_module" data-toggle="collapse" data-target=".method_include_module .collapse">
+<h2>include_module()
+        </h2>
+<pre>include_module($name) </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\getID3::include_module()</td>
+</tr></table>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$name</h4></div>
+</div></div>
+</div>
+<a id="method_openfile"></a><div class="element clickable method public method_openfile" data-toggle="collapse" data-target=".method_openfile .collapse">
+<h2>openfile()
+        </h2>
+<pre>openfile($filename) </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\getID3::openfile()</td>
+</tr></table>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$filename</h4></div>
+</div></div>
+</div>
+<a id="method_saveAttachment"></a><div class="element clickable method public method_saveAttachment" data-toggle="collapse" data-target=".method_saveAttachment .collapse">
+<h2>saveAttachment()
+        </h2>
+<pre>saveAttachment($ThisFileInfoIndex, $filename, $offset, $length) </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\getID3::saveAttachment()</td>
+</tr></table>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$ThisFileInfoIndex</h4></div>
+<div class="subelement argument"><h4>$filename</h4></div>
+<div class="subelement argument"><h4>$offset</h4></div>
+<div class="subelement argument"><h4>$length</h4></div>
+</div></div>
+</div>
+<a id="method_setOption"></a><div class="element clickable method public method_setOption" data-toggle="collapse" data-target=".method_setOption .collapse">
+<h2>setOption()
+        </h2>
+<pre>setOption($optArray) </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\getID3::setOption()</td>
+</tr></table>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$optArray</h4></div>
+</div></div>
+</div>
+<a id="method_version"></a><div class="element clickable method public method_version" data-toggle="collapse" data-target=".method_version .collapse">
+<h2>version()
+        </h2>
+<pre>version() </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\getID3::version()</td>
+</tr></table>
+</div></div>
+</div>
+<a id="method_warning"></a><div class="element clickable method public method_warning" data-toggle="collapse" data-target=".method_warning .collapse">
+<h2>warning()
+        </h2>
+<pre>warning($message) </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\getID3::warning()</td>
+</tr></table>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$message</h4></div>
+</div></div>
+</div>
+<h3>
+<i class="icon-custom icon-property"></i> Properties</h3>
+<a id="property_encoding"> </a><div class="element clickable property public property_encoding" data-toggle="collapse" data-target=".property_encoding .collapse">
+<h2></h2>
+<pre>$encoding </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\getID3::$$encoding</td>
+</tr></table>
+</div></div>
+</div>
+<a id="property_encoding_id3v1"> </a><div class="element clickable property public property_encoding_id3v1" data-toggle="collapse" data-target=".property_encoding_id3v1 .collapse">
+<h2></h2>
+<pre>$encoding_id3v1 </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\getID3::$$encoding_id3v1</td>
+</tr></table>
+</div></div>
+</div>
+<a id="property_filename"> </a><div class="element clickable property public property_filename" data-toggle="collapse" data-target=".property_filename .collapse">
+<h2></h2>
+<pre>$filename </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\getID3::$$filename</td>
+</tr></table>
+</div></div>
+</div>
+<a id="property_fp"> </a><div class="element clickable property public property_fp" data-toggle="collapse" data-target=".property_fp .collapse">
+<h2></h2>
+<pre>$fp </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\getID3::$$fp</td>
+</tr></table>
+</div></div>
+</div>
+<a id="property_info"> </a><div class="element clickable property public property_info" data-toggle="collapse" data-target=".property_info .collapse">
+<h2></h2>
+<pre>$info </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\getID3::$$info</td>
+</tr></table>
+</div></div>
+</div>
+<a id="property_option_extra_info"> </a><div class="element clickable property public property_option_extra_info" data-toggle="collapse" data-target=".property_option_extra_info .collapse">
+<h2></h2>
+<pre>$option_extra_info </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\getID3::$$option_extra_info</td>
+</tr></table>
+</div></div>
+</div>
+<a id="property_option_fread_buffer_size"> </a><div class="element clickable property public property_option_fread_buffer_size" data-toggle="collapse" data-target=".property_option_fread_buffer_size .collapse">
+<h2></h2>
+<pre>$option_fread_buffer_size </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\getID3::$$option_fread_buffer_size</td>
+</tr></table>
+</div></div>
+</div>
+<a id="property_option_max_2gb_check"> </a><div class="element clickable property public property_option_max_2gb_check" data-toggle="collapse" data-target=".property_option_max_2gb_check .collapse">
+<h2></h2>
+<pre>$option_max_2gb_check </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\getID3::$$option_max_2gb_check</td>
+</tr></table>
+</div></div>
+</div>
+<a id="property_option_md5_data"> </a><div class="element clickable property public property_option_md5_data" data-toggle="collapse" data-target=".property_option_md5_data .collapse">
+<h2></h2>
+<pre>$option_md5_data </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\getID3::$$option_md5_data</td>
+</tr></table>
+</div></div>
+</div>
+<a id="property_option_md5_data_source"> </a><div class="element clickable property public property_option_md5_data_source" data-toggle="collapse" data-target=".property_option_md5_data_source .collapse">
+<h2></h2>
+<pre>$option_md5_data_source </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\getID3::$$option_md5_data_source</td>
+</tr></table>
+</div></div>
+</div>
+<a id="property_option_save_attachments"> </a><div class="element clickable property public property_option_save_attachments" data-toggle="collapse" data-target=".property_option_save_attachments .collapse">
+<h2></h2>
+<pre>$option_save_attachments </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\getID3::$$option_save_attachments</td>
+</tr></table>
+</div></div>
+</div>
+<a id="property_option_sha1_data"> </a><div class="element clickable property public property_option_sha1_data" data-toggle="collapse" data-target=".property_option_sha1_data .collapse">
+<h2></h2>
+<pre>$option_sha1_data </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\getID3::$$option_sha1_data</td>
+</tr></table>
+</div></div>
+</div>
+<a id="property_option_tag_apetag"> </a><div class="element clickable property public property_option_tag_apetag" data-toggle="collapse" data-target=".property_option_tag_apetag .collapse">
+<h2></h2>
+<pre>$option_tag_apetag </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\getID3::$$option_tag_apetag</td>
+</tr></table>
+</div></div>
+</div>
+<a id="property_option_tag_id3v1"> </a><div class="element clickable property public property_option_tag_id3v1" data-toggle="collapse" data-target=".property_option_tag_id3v1 .collapse">
+<h2></h2>
+<pre>$option_tag_id3v1 </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\getID3::$$option_tag_id3v1</td>
+</tr></table>
+</div></div>
+</div>
+<a id="property_option_tag_id3v2"> </a><div class="element clickable property public property_option_tag_id3v2" data-toggle="collapse" data-target=".property_option_tag_id3v2 .collapse">
+<h2></h2>
+<pre>$option_tag_id3v2 </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\getID3::$$option_tag_id3v2</td>
+</tr></table>
+</div></div>
+</div>
+<a id="property_option_tag_lyrics3"> </a><div class="element clickable property public property_option_tag_lyrics3" data-toggle="collapse" data-target=".property_option_tag_lyrics3 .collapse">
+<h2></h2>
+<pre>$option_tag_lyrics3 </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\getID3::$$option_tag_lyrics3</td>
+</tr></table>
+</div></div>
+</div>
+<a id="property_option_tags_html"> </a><div class="element clickable property public property_option_tags_html" data-toggle="collapse" data-target=".property_option_tags_html .collapse">
+<h2></h2>
+<pre>$option_tags_html </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\getID3::$$option_tags_html</td>
+</tr></table>
+</div></div>
+</div>
+<a id="property_option_tags_process"> </a><div class="element clickable property public property_option_tags_process" data-toggle="collapse" data-target=".property_option_tags_process .collapse">
+<h2></h2>
+<pre>$option_tags_process </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\getID3::$$option_tags_process</td>
+</tr></table>
+</div></div>
+</div>
+<a id="property_tempdir"> </a><div class="element clickable property public property_tempdir" data-toggle="collapse" data-target=".property_tempdir .collapse">
+<h2></h2>
+<pre>$tempdir </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\getID3::$$tempdir</td>
+</tr></table>
+</div></div>
+</div>
+<a id="property_memory_limit"> </a><div class="element clickable property protected property_memory_limit" data-toggle="collapse" data-target=".property_memory_limit .collapse">
+<h2></h2>
+<pre>$memory_limit </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\getID3::$$memory_limit</td>
+</tr></table>
+</div></div>
+</div>
+<a id="property_startup_error"> </a><div class="element clickable property protected property_startup_error" data-toggle="collapse" data-target=".property_startup_error .collapse">
+<h2></h2>
+<pre>$startup_error </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\getID3::$$startup_error</td>
+</tr></table>
+</div></div>
+</div>
+<a id="property_startup_warning"> </a><div class="element clickable property protected property_startup_warning" data-toggle="collapse" data-target=".property_startup_warning .collapse">
+<h2></h2>
+<pre>$startup_warning </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\getID3::$$startup_warning</td>
+</tr></table>
+</div></div>
+</div>
+<h3>
+<i class="icon-custom icon-constant"></i> Constants</h3>
+<a id="constant_ATTACHMENTS_INLINE"> </a><div class="element clickable constant  constant_ATTACHMENTS_INLINE" data-toggle="collapse" data-target=".constant_ATTACHMENTS_INLINE .collapse">
+<h2>ATTACHMENTS_INLINE</h2>
+<pre>ATTACHMENTS_INLINE </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\getID3::ATTACHMENTS_INLINE</td>
+</tr></table>
+</div></div>
+</div>
+<a id="constant_ATTACHMENTS_NONE"> </a><div class="element clickable constant  constant_ATTACHMENTS_NONE" data-toggle="collapse" data-target=".constant_ATTACHMENTS_NONE .collapse">
+<h2>ATTACHMENTS_NONE</h2>
+<pre>ATTACHMENTS_NONE </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\getID3::ATTACHMENTS_NONE</td>
+</tr></table>
+</div></div>
+</div>
+<a id="constant_FREAD_BUFFER_SIZE"> </a><div class="element clickable constant  constant_FREAD_BUFFER_SIZE" data-toggle="collapse" data-target=".constant_FREAD_BUFFER_SIZE .collapse">
+<h2>FREAD_BUFFER_SIZE</h2>
+<pre>FREAD_BUFFER_SIZE </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\getID3::FREAD_BUFFER_SIZE</td>
+</tr></table>
+</div></div>
+</div>
+<a id="constant_VERSION"> </a><div class="element clickable constant  constant_VERSION" data-toggle="collapse" data-target=".constant_VERSION .collapse">
+<h2>VERSION</h2>
+<pre>VERSION </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\getID3::VERSION</td>
+</tr></table>
+</div></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="row"><footer class="span12">
+            Template is built using <a href="http://twitter.github.com/bootstrap/">Twitter Bootstrap 2</a> and icons provided by <a href="http://glyphicons.com/">Glyphicons</a>.<br>
+            Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor 2.0.0a12</a> and<br>
+            generated on 2013-01-14T11:36:45+05:30.<br></footer></div>
+</div>
+</body>
+</html>

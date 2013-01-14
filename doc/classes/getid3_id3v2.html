@@ -1,0 +1,575 @@
+<!DOCTYPE html><html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+<meta charset="utf-8">
+<title>buddypress-media » \getid3_id3v2</title>
+<meta name="author" content="Mike van Riel">
+<meta name="description" content="">
+<link href="../css/template.css" rel="stylesheet" media="all">
+<script src="../js/jquery-1.7.1.min.js" type="text/javascript"></script><script src="../js/jquery-ui-1.8.2.custom.min.js" type="text/javascript"></script><script src="../js/jquery.mousewheel.min.js" type="text/javascript"></script><script src="../js/bootstrap.js" type="text/javascript"></script><script src="../js/template.js" type="text/javascript"></script><script src="../js/prettify/prettify.min.js" type="text/javascript"></script><link rel="shortcut icon" href="../img/favicon.ico">
+<link rel="apple-touch-icon" href="../img/apple-touch-icon.png">
+<link rel="apple-touch-icon" sizes="72x72" href="../img/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="114x114" href="../img/apple-touch-icon-114x114.png">
+</head>
+<body>
+<div class="navbar navbar-fixed-top">
+<div class="navbar-inner"><div class="container">
+<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></a><a class="brand" href="../index.html">buddypress-media</a><div class="nav-collapse"><ul class="nav">
+<li class="dropdown">
+<a href="#api" class="dropdown-toggle" data-toggle="dropdown">
+                                    API Documentation <b class="caret"></b></a><ul class="dropdown-menu"></ul>
+</li>
+<li class="dropdown" id="charts-menu">
+<a href="#charts" class="dropdown-toggle" data-toggle="dropdown">
+                                    Charts <b class="caret"></b></a><ul class="dropdown-menu"><li><a href="../graph_class.html"><i class="icon-list-alt"></i> Class hierarchy diagram</a></li></ul>
+</li>
+<li class="dropdown" id="reports-menu">
+<a href="#reports" class="dropdown-toggle" data-toggle="dropdown">
+                                    Reports <b class="caret"></b></a><ul class="dropdown-menu">
+<li><a href="../errors.html"><i class="icon-remove-sign"></i> Errors 
+                <span class="label label-info">1030</span></a></li>
+<li><a href="../markers.html"><i class="icon-map-marker"></i> Markers 
+                <ul><li>todo 
+                <span class="label label-info">1</span>
+</li></ul></a></li>
+<li><a href="../deprecated.html"><i class="icon-stop"></i> Deprecated elements 
+                <span class="label label-info">0</span></a></li>
+</ul>
+</li>
+</ul></div>
+</div></div>
+<div class="go_to_top"><a href="#___" style="color: inherit">Back to top  <i class="icon-upload icon-white"></i></a></div>
+</div>
+<div id="___" class="container">
+<noscript><div class="alert alert-warning">
+                            Javascript is disabled; several features are only available
+                            if Javascript is enabled.
+                        </div></noscript>
+<div class="row">
+<div class="span4">
+<span class="btn-group visibility" data-toggle="buttons-checkbox"><button class="btn public active" title="Show public elements">Public</button><button class="btn protected" title="Show protected elements">Protected</button><button class="btn private" title="Show private elements">Private</button><button class="btn inherited active" title="Show inherited elements">Inherited</button></span><div class="btn-group view pull-right" data-toggle="buttons-radio">
+<button class="btn details" title="Show descriptions and method names"><i class="icon-list"></i></button><button class="btn simple" title="Show only method names"><i class="icon-align-justify"></i></button>
+</div>
+<ul class="side-nav nav nav-list">
+<li class="nav-header">
+<i class="icon-custom icon-method"></i> Methods
+                    <ul>
+<li class="method public "><a href="#method_APICPictureTypeLookup" title="APICPictureTypeLookup :: "><span class="description">APICPictureTypeLookup()
+        </span><pre>APICPictureTypeLookup()</pre></a></li>
+<li class="method public "><a href="#method_Analyze" title="Analyze :: "><span class="description">Analyze()
+        </span><pre>Analyze()</pre></a></li>
+<li class="method public inherited"><a href="#method_AnalyzeString" title="AnalyzeString :: "><span class="description">AnalyzeString()
+        </span><pre>AnalyzeString()</pre></a></li>
+<li class="method public "><a href="#method_COMRReceivedAsLookup" title="COMRReceivedAsLookup :: "><span class="description">COMRReceivedAsLookup()
+        </span><pre>COMRReceivedAsLookup()</pre></a></li>
+<li class="method public "><a href="#method_DeUnsynchronise" title="DeUnsynchronise :: "><span class="description">DeUnsynchronise()
+        </span><pre>DeUnsynchronise()</pre></a></li>
+<li class="method public "><a href="#method_ETCOEventLookup" title="ETCOEventLookup :: "><span class="description">ETCOEventLookup()
+        </span><pre>ETCOEventLookup()</pre></a></li>
+<li class="method public "><a href="#method_FrameNameLongLookup" title="FrameNameLongLookup :: "><span class="description">FrameNameLongLookup()
+        </span><pre>FrameNameLongLookup()</pre></a></li>
+<li class="method public "><a href="#method_FrameNameShortLookup" title="FrameNameShortLookup :: "><span class="description">FrameNameShortLookup()
+        </span><pre>FrameNameShortLookup()</pre></a></li>
+<li class="method public "><a href="#method_ID3v2HeaderLength" title="ID3v2HeaderLength :: "><span class="description">ID3v2HeaderLength()
+        </span><pre>ID3v2HeaderLength()</pre></a></li>
+<li class="method public "><a href="#method_IsANumber" title="IsANumber :: "><span class="description">IsANumber()
+        </span><pre>IsANumber()</pre></a></li>
+<li class="method public "><a href="#method_IsValidDateStampString" title="IsValidDateStampString :: "><span class="description">IsValidDateStampString()
+        </span><pre>IsValidDateStampString()</pre></a></li>
+<li class="method public "><a href="#method_IsValidID3v2FrameName" title="IsValidID3v2FrameName :: "><span class="description">IsValidID3v2FrameName()
+        </span><pre>IsValidID3v2FrameName()</pre></a></li>
+<li class="method public "><a href="#method_LanguageLookup" title="LanguageLookup :: "><span class="description">LanguageLookup()
+        </span><pre>LanguageLookup()</pre></a></li>
+<li class="method public "><a href="#method_LookupCurrencyCountry" title="LookupCurrencyCountry :: "><span class="description">LookupCurrencyCountry()
+        </span><pre>LookupCurrencyCountry()</pre></a></li>
+<li class="method public "><a href="#method_LookupCurrencyUnits" title="LookupCurrencyUnits :: "><span class="description">LookupCurrencyUnits()
+        </span><pre>LookupCurrencyUnits()</pre></a></li>
+<li class="method public "><a href="#method_LookupExtendedHeaderRestrictionsImageEncoding" title="LookupExtendedHeaderRestrictionsImageEncoding :: "><span class="description">LookupExtendedHeaderRestrictionsImageEncoding()
+        </span><pre>LookupExtendedHeaderRestrictionsImageEncoding()</pre></a></li>
+<li class="method public "><a href="#method_LookupExtendedHeaderRestrictionsImageSizeSize" title="LookupExtendedHeaderRestrictionsImageSizeSize :: "><span class="description">LookupExtendedHeaderRestrictionsImageSizeSize()
+        </span><pre>LookupExtendedHeaderRestrictionsImageSizeSize()</pre></a></li>
+<li class="method public "><a href="#method_LookupExtendedHeaderRestrictionsTagSizeLimits" title="LookupExtendedHeaderRestrictionsTagSizeLimits :: "><span class="description">LookupExtendedHeaderRestrictionsTagSizeLimits()
+        </span><pre>LookupExtendedHeaderRestrictionsTagSizeLimits()</pre></a></li>
+<li class="method public "><a href="#method_LookupExtendedHeaderRestrictionsTextEncodings" title="LookupExtendedHeaderRestrictionsTextEncodings :: "><span class="description">LookupExtendedHeaderRestrictionsTextEncodings()
+        </span><pre>LookupExtendedHeaderRestrictionsTextEncodings()</pre></a></li>
+<li class="method public "><a href="#method_LookupExtendedHeaderRestrictionsTextFieldSize" title="LookupExtendedHeaderRestrictionsTextFieldSize :: "><span class="description">LookupExtendedHeaderRestrictionsTextFieldSize()
+        </span><pre>LookupExtendedHeaderRestrictionsTextFieldSize()</pre></a></li>
+<li class="method public "><a href="#method_ParseID3v2Frame" title="ParseID3v2Frame :: "><span class="description">ParseID3v2Frame()
+        </span><pre>ParseID3v2Frame()</pre></a></li>
+<li class="method public "><a href="#method_ParseID3v2GenreString" title="ParseID3v2GenreString :: "><span class="description">ParseID3v2GenreString()
+        </span><pre>ParseID3v2GenreString()</pre></a></li>
+<li class="method public "><a href="#method_RVA2ChannelTypeLookup" title="RVA2ChannelTypeLookup :: "><span class="description">RVA2ChannelTypeLookup()
+        </span><pre>RVA2ChannelTypeLookup()</pre></a></li>
+<li class="method public "><a href="#method_SYTLContentTypeLookup" title="SYTLContentTypeLookup :: "><span class="description">SYTLContentTypeLookup()
+        </span><pre>SYTLContentTypeLookup()</pre></a></li>
+<li class="method public "><a href="#method_TextEncodingNameLookup" title="TextEncodingNameLookup :: "><span class="description">TextEncodingNameLookup()
+        </span><pre>TextEncodingNameLookup()</pre></a></li>
+<li class="method public "><a href="#method_TextEncodingTerminatorLookup" title="TextEncodingTerminatorLookup :: "><span class="description">TextEncodingTerminatorLookup()
+        </span><pre>TextEncodingTerminatorLookup()</pre></a></li>
+<li class="method public inherited"><a href="#method___construct" title="__construct :: "><span class="description">__construct()
+        </span><pre>__construct()</pre></a></li>
+</ul>
+</li>
+<li class="nav-header protected">» Protected
+                    <ul>
+<li class="method protected inherited"><a href="#method_fread" title="fread :: "><span class="description">fread()
+        </span><pre>fread()</pre></a></li>
+<li class="method protected inherited"><a href="#method_fseek" title="fseek :: "><span class="description">fseek()
+        </span><pre>fseek()</pre></a></li>
+<li class="method protected inherited"><a href="#method_ftell" title="ftell :: "><span class="description">ftell()
+        </span><pre>ftell()</pre></a></li>
+</ul>
+</li>
+<li class="nav-header">
+<i class="icon-custom icon-property"></i> Properties
+                    <ul>
+<li class="property public "><a href="#property_StartingOffset" title="$StartingOffset :: "><span class="description"></span><pre>$StartingOffset</pre></a></li>
+<li class="property public "><a href="#property_inline_attachments" title="$inline_attachments :: "><span class="description"></span><pre>$inline_attachments</pre></a></li>
+</ul>
+</li>
+<li class="nav-header protected">» Protected
+                    <ul>
+<li class="property protected inherited"><a href="#property_data_string" title="$data_string :: "><span class="description"></span><pre>$data_string</pre></a></li>
+<li class="property protected inherited"><a href="#property_data_string_flag" title="$data_string_flag :: "><span class="description"></span><pre>$data_string_flag</pre></a></li>
+<li class="property protected inherited"><a href="#property_data_string_position" title="$data_string_position :: "><span class="description"></span><pre>$data_string_position</pre></a></li>
+<li class="property protected inherited"><a href="#property_getid3" title="$getid3 :: "><span class="description"></span><pre>$getid3</pre></a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="span8">
+<a id="\getid3_id3v2"></a><ul class="breadcrumb">
+<li>
+<a href="../index.html"><i class="icon-custom icon-class"></i></a><span class="divider">\</span>
+</li>
+<li><a href="../namespaces/global.html">global</a></li>
+<li class="active">
+<span class="divider">\</span><a href="../classes/getid3_id3v2.html">getid3_id3v2</a>
+</li>
+</ul>
+<div class="element class"><div class="details">
+<h3>
+<i class="icon-custom icon-method"></i> Methods</h3>
+<a id="method_APICPictureTypeLookup"></a><div class="element clickable method public method_APICPictureTypeLookup" data-toggle="collapse" data-target=".method_APICPictureTypeLookup .collapse">
+<h2>APICPictureTypeLookup()
+        </h2>
+<pre>APICPictureTypeLookup($index, $returnarray) </pre>
+<div class="labels"><span class="label">Static</span></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$index</h4></div>
+<div class="subelement argument"><h4>$returnarray</h4></div>
+</div></div>
+</div>
+<a id="method_Analyze"></a><div class="element clickable method public method_Analyze" data-toggle="collapse" data-target=".method_Analyze .collapse">
+<h2>Analyze()
+        </h2>
+<pre>Analyze() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="method_AnalyzeString"></a><div class="element clickable method public method_AnalyzeString" data-toggle="collapse" data-target=".method_AnalyzeString .collapse">
+<h2>AnalyzeString()
+        </h2>
+<pre>AnalyzeString($string) </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\getid3_handler::AnalyzeString()</td>
+</tr></table>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$string</h4></div>
+</div></div>
+</div>
+<a id="method_COMRReceivedAsLookup"></a><div class="element clickable method public method_COMRReceivedAsLookup" data-toggle="collapse" data-target=".method_COMRReceivedAsLookup .collapse">
+<h2>COMRReceivedAsLookup()
+        </h2>
+<pre>COMRReceivedAsLookup($index) </pre>
+<div class="labels"><span class="label">Static</span></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$index</h4></div>
+</div></div>
+</div>
+<a id="method_DeUnsynchronise"></a><div class="element clickable method public method_DeUnsynchronise" data-toggle="collapse" data-target=".method_DeUnsynchronise .collapse">
+<h2>DeUnsynchronise()
+        </h2>
+<pre>DeUnsynchronise($data) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$data</h4></div>
+</div></div>
+</div>
+<a id="method_ETCOEventLookup"></a><div class="element clickable method public method_ETCOEventLookup" data-toggle="collapse" data-target=".method_ETCOEventLookup .collapse">
+<h2>ETCOEventLookup()
+        </h2>
+<pre>ETCOEventLookup($index) </pre>
+<div class="labels"><span class="label">Static</span></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$index</h4></div>
+</div></div>
+</div>
+<a id="method_FrameNameLongLookup"></a><div class="element clickable method public method_FrameNameLongLookup" data-toggle="collapse" data-target=".method_FrameNameLongLookup .collapse">
+<h2>FrameNameLongLookup()
+        </h2>
+<pre>FrameNameLongLookup($framename) </pre>
+<div class="labels"><span class="label">Static</span></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$framename</h4></div>
+</div></div>
+</div>
+<a id="method_FrameNameShortLookup"></a><div class="element clickable method public method_FrameNameShortLookup" data-toggle="collapse" data-target=".method_FrameNameShortLookup .collapse">
+<h2>FrameNameShortLookup()
+        </h2>
+<pre>FrameNameShortLookup($framename) </pre>
+<div class="labels"><span class="label">Static</span></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$framename</h4></div>
+</div></div>
+</div>
+<a id="method_ID3v2HeaderLength"></a><div class="element clickable method public method_ID3v2HeaderLength" data-toggle="collapse" data-target=".method_ID3v2HeaderLength .collapse">
+<h2>ID3v2HeaderLength()
+        </h2>
+<pre>ID3v2HeaderLength($majorversion) </pre>
+<div class="labels"><span class="label">Static</span></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$majorversion</h4></div>
+</div></div>
+</div>
+<a id="method_IsANumber"></a><div class="element clickable method public method_IsANumber" data-toggle="collapse" data-target=".method_IsANumber .collapse">
+<h2>IsANumber()
+        </h2>
+<pre>IsANumber($numberstring, $allowdecimal, $allownegative) </pre>
+<div class="labels"><span class="label">Static</span></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$numberstring</h4></div>
+<div class="subelement argument"><h4>$allowdecimal</h4></div>
+<div class="subelement argument"><h4>$allownegative</h4></div>
+</div></div>
+</div>
+<a id="method_IsValidDateStampString"></a><div class="element clickable method public method_IsValidDateStampString" data-toggle="collapse" data-target=".method_IsValidDateStampString .collapse">
+<h2>IsValidDateStampString()
+        </h2>
+<pre>IsValidDateStampString($datestamp) </pre>
+<div class="labels"><span class="label">Static</span></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$datestamp</h4></div>
+</div></div>
+</div>
+<a id="method_IsValidID3v2FrameName"></a><div class="element clickable method public method_IsValidID3v2FrameName" data-toggle="collapse" data-target=".method_IsValidID3v2FrameName .collapse">
+<h2>IsValidID3v2FrameName()
+        </h2>
+<pre>IsValidID3v2FrameName($framename, $id3v2majorversion) </pre>
+<div class="labels"><span class="label">Static</span></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$framename</h4></div>
+<div class="subelement argument"><h4>$id3v2majorversion</h4></div>
+</div></div>
+</div>
+<a id="method_LanguageLookup"></a><div class="element clickable method public method_LanguageLookup" data-toggle="collapse" data-target=".method_LanguageLookup .collapse">
+<h2>LanguageLookup()
+        </h2>
+<pre>LanguageLookup($languagecode, $casesensitive) </pre>
+<div class="labels"><span class="label">Static</span></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$languagecode</h4></div>
+<div class="subelement argument"><h4>$casesensitive</h4></div>
+</div></div>
+</div>
+<a id="method_LookupCurrencyCountry"></a><div class="element clickable method public method_LookupCurrencyCountry" data-toggle="collapse" data-target=".method_LookupCurrencyCountry .collapse">
+<h2>LookupCurrencyCountry()
+        </h2>
+<pre>LookupCurrencyCountry($currencyid) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$currencyid</h4></div>
+</div></div>
+</div>
+<a id="method_LookupCurrencyUnits"></a><div class="element clickable method public method_LookupCurrencyUnits" data-toggle="collapse" data-target=".method_LookupCurrencyUnits .collapse">
+<h2>LookupCurrencyUnits()
+        </h2>
+<pre>LookupCurrencyUnits($currencyid) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$currencyid</h4></div>
+</div></div>
+</div>
+<a id="method_LookupExtendedHeaderRestrictionsImageEncoding"></a><div class="element clickable method public method_LookupExtendedHeaderRestrictionsImageEncoding" data-toggle="collapse" data-target=".method_LookupExtendedHeaderRestrictionsImageEncoding .collapse">
+<h2>LookupExtendedHeaderRestrictionsImageEncoding()
+        </h2>
+<pre>LookupExtendedHeaderRestrictionsImageEncoding($index) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$index</h4></div>
+</div></div>
+</div>
+<a id="method_LookupExtendedHeaderRestrictionsImageSizeSize"></a><div class="element clickable method public method_LookupExtendedHeaderRestrictionsImageSizeSize" data-toggle="collapse" data-target=".method_LookupExtendedHeaderRestrictionsImageSizeSize .collapse">
+<h2>LookupExtendedHeaderRestrictionsImageSizeSize()
+        </h2>
+<pre>LookupExtendedHeaderRestrictionsImageSizeSize($index) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$index</h4></div>
+</div></div>
+</div>
+<a id="method_LookupExtendedHeaderRestrictionsTagSizeLimits"></a><div class="element clickable method public method_LookupExtendedHeaderRestrictionsTagSizeLimits" data-toggle="collapse" data-target=".method_LookupExtendedHeaderRestrictionsTagSizeLimits .collapse">
+<h2>LookupExtendedHeaderRestrictionsTagSizeLimits()
+        </h2>
+<pre>LookupExtendedHeaderRestrictionsTagSizeLimits($index) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$index</h4></div>
+</div></div>
+</div>
+<a id="method_LookupExtendedHeaderRestrictionsTextEncodings"></a><div class="element clickable method public method_LookupExtendedHeaderRestrictionsTextEncodings" data-toggle="collapse" data-target=".method_LookupExtendedHeaderRestrictionsTextEncodings .collapse">
+<h2>LookupExtendedHeaderRestrictionsTextEncodings()
+        </h2>
+<pre>LookupExtendedHeaderRestrictionsTextEncodings($index) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$index</h4></div>
+</div></div>
+</div>
+<a id="method_LookupExtendedHeaderRestrictionsTextFieldSize"></a><div class="element clickable method public method_LookupExtendedHeaderRestrictionsTextFieldSize" data-toggle="collapse" data-target=".method_LookupExtendedHeaderRestrictionsTextFieldSize .collapse">
+<h2>LookupExtendedHeaderRestrictionsTextFieldSize()
+        </h2>
+<pre>LookupExtendedHeaderRestrictionsTextFieldSize($index) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$index</h4></div>
+</div></div>
+</div>
+<a id="method_ParseID3v2Frame"></a><div class="element clickable method public method_ParseID3v2Frame" data-toggle="collapse" data-target=".method_ParseID3v2Frame .collapse">
+<h2>ParseID3v2Frame()
+        </h2>
+<pre>ParseID3v2Frame($parsedFrame) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$parsedFrame</h4></div>
+</div></div>
+</div>
+<a id="method_ParseID3v2GenreString"></a><div class="element clickable method public method_ParseID3v2GenreString" data-toggle="collapse" data-target=".method_ParseID3v2GenreString .collapse">
+<h2>ParseID3v2GenreString()
+        </h2>
+<pre>ParseID3v2GenreString($genrestring) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$genrestring</h4></div>
+</div></div>
+</div>
+<a id="method_RVA2ChannelTypeLookup"></a><div class="element clickable method public method_RVA2ChannelTypeLookup" data-toggle="collapse" data-target=".method_RVA2ChannelTypeLookup .collapse">
+<h2>RVA2ChannelTypeLookup()
+        </h2>
+<pre>RVA2ChannelTypeLookup($index) </pre>
+<div class="labels"><span class="label">Static</span></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$index</h4></div>
+</div></div>
+</div>
+<a id="method_SYTLContentTypeLookup"></a><div class="element clickable method public method_SYTLContentTypeLookup" data-toggle="collapse" data-target=".method_SYTLContentTypeLookup .collapse">
+<h2>SYTLContentTypeLookup()
+        </h2>
+<pre>SYTLContentTypeLookup($index) </pre>
+<div class="labels"><span class="label">Static</span></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$index</h4></div>
+</div></div>
+</div>
+<a id="method_TextEncodingNameLookup"></a><div class="element clickable method public method_TextEncodingNameLookup" data-toggle="collapse" data-target=".method_TextEncodingNameLookup .collapse">
+<h2>TextEncodingNameLookup()
+        </h2>
+<pre>TextEncodingNameLookup($encoding) </pre>
+<div class="labels"><span class="label">Static</span></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$encoding</h4></div>
+</div></div>
+</div>
+<a id="method_TextEncodingTerminatorLookup"></a><div class="element clickable method public method_TextEncodingTerminatorLookup" data-toggle="collapse" data-target=".method_TextEncodingTerminatorLookup .collapse">
+<h2>TextEncodingTerminatorLookup()
+        </h2>
+<pre>TextEncodingTerminatorLookup($encoding) </pre>
+<div class="labels"><span class="label">Static</span></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$encoding</h4></div>
+</div></div>
+</div>
+<a id="method___construct"></a><div class="element clickable method public method___construct" data-toggle="collapse" data-target=".method___construct .collapse">
+<h2>__construct()
+        </h2>
+<pre>__construct(\getID3 $getid3) </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\getid3_handler::__construct()</td>
+</tr></table>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$getid3</h4></div>
+</div></div>
+</div>
+<a id="method_fread"></a><div class="element clickable method protected method_fread" data-toggle="collapse" data-target=".method_fread .collapse">
+<h2>fread()
+        </h2>
+<pre>fread($bytes) </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\getid3_handler::fread()</td>
+</tr></table>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$bytes</h4></div>
+</div></div>
+</div>
+<a id="method_fseek"></a><div class="element clickable method protected method_fseek" data-toggle="collapse" data-target=".method_fseek .collapse">
+<h2>fseek()
+        </h2>
+<pre>fseek($bytes, $whence) </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\getid3_handler::fseek()</td>
+</tr></table>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$bytes</h4></div>
+<div class="subelement argument"><h4>$whence</h4></div>
+</div></div>
+</div>
+<a id="method_ftell"></a><div class="element clickable method protected method_ftell" data-toggle="collapse" data-target=".method_ftell .collapse">
+<h2>ftell()
+        </h2>
+<pre>ftell() </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\getid3_handler::ftell()</td>
+</tr></table>
+</div></div>
+</div>
+<h3>
+<i class="icon-custom icon-property"></i> Properties</h3>
+<a id="property_StartingOffset"> </a><div class="element clickable property public property_StartingOffset" data-toggle="collapse" data-target=".property_StartingOffset .collapse">
+<h2></h2>
+<pre>$StartingOffset </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="property_inline_attachments"> </a><div class="element clickable property public property_inline_attachments" data-toggle="collapse" data-target=".property_inline_attachments .collapse">
+<h2></h2>
+<pre>$inline_attachments </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="property_data_string"> </a><div class="element clickable property protected property_data_string" data-toggle="collapse" data-target=".property_data_string .collapse">
+<h2></h2>
+<pre>$data_string </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\getid3_handler::$$data_string</td>
+</tr></table>
+</div></div>
+</div>
+<a id="property_data_string_flag"> </a><div class="element clickable property protected property_data_string_flag" data-toggle="collapse" data-target=".property_data_string_flag .collapse">
+<h2></h2>
+<pre>$data_string_flag </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\getid3_handler::$$data_string_flag</td>
+</tr></table>
+</div></div>
+</div>
+<a id="property_data_string_position"> </a><div class="element clickable property protected property_data_string_position" data-toggle="collapse" data-target=".property_data_string_position .collapse">
+<h2></h2>
+<pre>$data_string_position </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\getid3_handler::$$data_string_position</td>
+</tr></table>
+</div></div>
+</div>
+<a id="property_getid3"> </a><div class="element clickable property protected property_getid3" data-toggle="collapse" data-target=".property_getid3 .collapse">
+<h2></h2>
+<pre>$getid3 </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\getid3_handler::$$getid3</td>
+</tr></table>
+</div></div>
+</div>
+</div></div>
+</div>
+</div>
+<div class="row"><footer class="span12">
+            Template is built using <a href="http://twitter.github.com/bootstrap/">Twitter Bootstrap 2</a> and icons provided by <a href="http://glyphicons.com/">Glyphicons</a>.<br>
+            Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor 2.0.0a12</a> and<br>
+            generated on 2013-01-14T11:36:45+05:30.<br></footer></div>
+</div>
+</body>
+</html>

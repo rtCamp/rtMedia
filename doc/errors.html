@@ -1,0 +1,6903 @@
+<!DOCTYPE html><html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+<meta charset="utf-8">
+<title>buddypress-media</title>
+<meta name="author" content="Mike van Riel">
+<meta name="description" content="">
+<link href="css/template.css" rel="stylesheet" media="all">
+<script src="js/jquery-1.7.1.min.js" type="text/javascript"></script><script src="js/jquery-ui-1.8.2.custom.min.js" type="text/javascript"></script><script src="js/jquery.mousewheel.min.js" type="text/javascript"></script><script src="js/bootstrap.js" type="text/javascript"></script><script src="js/template.js" type="text/javascript"></script><script src="js/prettify/prettify.min.js" type="text/javascript"></script><link rel="shortcut icon" href="img/favicon.ico">
+<link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+<link rel="apple-touch-icon" sizes="72x72" href="img/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="114x114" href="img/apple-touch-icon-114x114.png">
+</head>
+<body>
+<div class="navbar navbar-fixed-top">
+<div class="navbar-inner"><div class="container">
+<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></a><a class="brand" href="index.html">buddypress-media</a><div class="nav-collapse"><ul class="nav">
+<li class="dropdown">
+<a href="#api" class="dropdown-toggle" data-toggle="dropdown">
+                                    API Documentation <b class="caret"></b></a><ul class="dropdown-menu"></ul>
+</li>
+<li class="dropdown" id="charts-menu">
+<a href="#charts" class="dropdown-toggle" data-toggle="dropdown">
+                                    Charts <b class="caret"></b></a><ul class="dropdown-menu"><li><a href="graph_class.html"><i class="icon-list-alt"></i> Class hierarchy diagram</a></li></ul>
+</li>
+<li class="dropdown" id="reports-menu">
+<a href="#reports" class="dropdown-toggle" data-toggle="dropdown">
+                                    Reports <b class="caret"></b></a><ul class="dropdown-menu">
+<li><a href="errors.html"><i class="icon-remove-sign"></i> Errors 
+                <span class="label label-info">1030</span></a></li>
+<li><a href="markers.html"><i class="icon-map-marker"></i> Markers 
+                <ul><li>todo 
+                <span class="label label-info">1</span>
+</li></ul></a></li>
+<li><a href="deprecated.html"><i class="icon-stop"></i> Deprecated elements 
+                <span class="label label-info">0</span></a></li>
+</ul>
+</li>
+</ul></div>
+</div></div>
+<div class="go_to_top"><a href="#___" style="color: inherit">Back to top  <i class="icon-upload icon-white"></i></a></div>
+</div>
+<div id="___" class="container">
+<noscript><div class="alert alert-warning">
+                            Javascript is disabled; several features are only available
+                            if Javascript is enabled.
+                        </div></noscript>
+<div class="row">
+<div class="span4"><ul class="side-nav nav nav-list">
+<li class="nav-header">Filter type</li>
+<li><div class="btn-group type-filter" data-toggle="buttons-checkbox">
+<button class="btn critical">Critical</button><button class="btn error">Error</button><button class="btn notice">Notice</button>
+</div></li>
+<li class="nav-header">Navigation</li>
+<li><a href="#log/index.php"><i class="icon-file"></i>log/index.php</a></li>
+<li><a href="#lib/index.php"><i class="icon-file"></i>lib/index.php</a></li>
+<li><a href="#lib/getid3/module.audio-video.swf.php"><i class="icon-file"></i>lib/getid3/module.audio-video.swf.php</a></li>
+<li><a href="#lib/getid3/extension.cache.mysql.php"><i class="icon-file"></i>lib/getid3/extension.cache.mysql.php</a></li>
+<li><a href="#lib/getid3/module.misc.exe.php"><i class="icon-file"></i>lib/getid3/module.misc.exe.php</a></li>
+<li><a href="#lib/getid3/module.audio.midi.php"><i class="icon-file"></i>lib/getid3/module.audio.midi.php</a></li>
+<li><a href="#lib/getid3/module.audio.mpc.php"><i class="icon-file"></i>lib/getid3/module.audio.mpc.php</a></li>
+<li><a href="#lib/getid3/module.audio.lpac.php"><i class="icon-file"></i>lib/getid3/module.audio.lpac.php</a></li>
+<li><a href="#lib/getid3/module.audio.wavpack.php"><i class="icon-file"></i>lib/getid3/module.audio.wavpack.php</a></li>
+<li><a href="#lib/getid3/module.audio.aac.php"><i class="icon-file"></i>lib/getid3/module.audio.aac.php</a></li>
+<li><a href="#lib/getid3/module.audio.tta.php"><i class="icon-file"></i>lib/getid3/module.audio.tta.php</a></li>
+<li><a href="#lib/getid3/write.php"><i class="icon-file"></i>lib/getid3/write.php</a></li>
+<li><a href="#lib/getid3/module.archive.tar.php"><i class="icon-file"></i>lib/getid3/module.archive.tar.php</a></li>
+<li><a href="#lib/getid3/write.apetag.php"><i class="icon-file"></i>lib/getid3/write.apetag.php</a></li>
+<li><a href="#lib/getid3/module.audio.flac.php"><i class="icon-file"></i>lib/getid3/module.audio.flac.php</a></li>
+<li><a href="#lib/getid3/module.audio-video.quicktime.php"><i class="icon-file"></i>lib/getid3/module.audio-video.quicktime.php</a></li>
+<li><a href="#lib/getid3/module.audio.la.php"><i class="icon-file"></i>lib/getid3/module.audio.la.php</a></li>
+<li><a href="#lib/getid3/write.id3v1.php"><i class="icon-file"></i>lib/getid3/write.id3v1.php</a></li>
+<li><a href="#lib/getid3/module.audio-video.riff.php"><i class="icon-file"></i>lib/getid3/module.audio-video.riff.php</a></li>
+<li><a href="#lib/getid3/module.graphic.jpg.php"><i class="icon-file"></i>lib/getid3/module.graphic.jpg.php</a></li>
+<li><a href="#lib/getid3/module.audio.dss.php"><i class="icon-file"></i>lib/getid3/module.audio.dss.php</a></li>
+<li><a href="#lib/getid3/module.audio.aa.php"><i class="icon-file"></i>lib/getid3/module.audio.aa.php</a></li>
+<li><a href="#lib/getid3/module.archive.gzip.php"><i class="icon-file"></i>lib/getid3/module.archive.gzip.php</a></li>
+<li><a href="#lib/getid3/write.metaflac.php"><i class="icon-file"></i>lib/getid3/write.metaflac.php</a></li>
+<li><a href="#lib/getid3/module.audio-video.nsv.php"><i class="icon-file"></i>lib/getid3/module.audio-video.nsv.php</a></li>
+<li><a href="#lib/getid3/module.misc.iso.php"><i class="icon-file"></i>lib/getid3/module.misc.iso.php</a></li>
+<li><a href="#lib/getid3/module.audio-video.bink.php"><i class="icon-file"></i>lib/getid3/module.audio-video.bink.php</a></li>
+<li><a href="#lib/getid3/module.archive.szip.php"><i class="icon-file"></i>lib/getid3/module.archive.szip.php</a></li>
+<li><a href="#lib/getid3/module.audio.voc.php"><i class="icon-file"></i>lib/getid3/module.audio.voc.php</a></li>
+<li><a href="#lib/getid3/module.audio-video.asf.php"><i class="icon-file"></i>lib/getid3/module.audio-video.asf.php</a></li>
+<li><a href="#lib/getid3/module.audio.avr.php"><i class="icon-file"></i>lib/getid3/module.audio.avr.php</a></li>
+<li><a href="#lib/getid3/module.audio.ogg.php"><i class="icon-file"></i>lib/getid3/module.audio.ogg.php</a></li>
+<li><a href="#lib/getid3/module.audio.monkey.php"><i class="icon-file"></i>lib/getid3/module.audio.monkey.php</a></li>
+<li><a href="#lib/getid3/module.graphic.tiff.php"><i class="icon-file"></i>lib/getid3/module.graphic.tiff.php</a></li>
+<li><a href="#lib/getid3/module.tag.lyrics3.php"><i class="icon-file"></i>lib/getid3/module.tag.lyrics3.php</a></li>
+<li><a href="#lib/getid3/module.audio.mp3.php"><i class="icon-file"></i>lib/getid3/module.audio.mp3.php</a></li>
+<li><a href="#lib/getid3/write.lyrics3.php"><i class="icon-file"></i>lib/getid3/write.lyrics3.php</a></li>
+<li><a href="#lib/getid3/module.audio.au.php"><i class="icon-file"></i>lib/getid3/module.audio.au.php</a></li>
+<li><a href="#lib/getid3/getid3.php"><i class="icon-file"></i>lib/getid3/getid3.php</a></li>
+<li><a href="#lib/getid3/module.audio.mod.php"><i class="icon-file"></i>lib/getid3/module.audio.mod.php</a></li>
+<li><a href="#lib/getid3/module.tag.id3v1.php"><i class="icon-file"></i>lib/getid3/module.tag.id3v1.php</a></li>
+<li><a href="#lib/getid3/module.audio.dts.php"><i class="icon-file"></i>lib/getid3/module.audio.dts.php</a></li>
+<li><a href="#lib/getid3/module.audio-video.real.php"><i class="icon-file"></i>lib/getid3/module.audio-video.real.php</a></li>
+<li><a href="#lib/getid3/getid3.lib.php"><i class="icon-file"></i>lib/getid3/getid3.lib.php</a></li>
+<li><a href="#lib/getid3/module.audio.optimfrog.php"><i class="icon-file"></i>lib/getid3/module.audio.optimfrog.php</a></li>
+<li><a href="#lib/getid3/extension.cache.dbm.php"><i class="icon-file"></i>lib/getid3/extension.cache.dbm.php</a></li>
+<li><a href="#lib/getid3/module.misc.cue.php"><i class="icon-file"></i>lib/getid3/module.misc.cue.php</a></li>
+<li><a href="#lib/getid3/module.graphic.svg.php"><i class="icon-file"></i>lib/getid3/module.graphic.svg.php</a></li>
+<li><a href="#lib/getid3/write.id3v2.php"><i class="icon-file"></i>lib/getid3/write.id3v2.php</a></li>
+<li><a href="#lib/getid3/module.tag.id3v2.php"><i class="icon-file"></i>lib/getid3/module.tag.id3v2.php</a></li>
+<li><a href="#lib/getid3/module.audio-video.flv.php"><i class="icon-file"></i>lib/getid3/module.audio-video.flv.php</a></li>
+<li><a href="#lib/getid3/module.graphic.pcd.php"><i class="icon-file"></i>lib/getid3/module.graphic.pcd.php</a></li>
+<li><a href="#lib/getid3/module.archive.zip.php"><i class="icon-file"></i>lib/getid3/module.archive.zip.php</a></li>
+<li><a href="#lib/getid3/module.audio-video.mpeg.php"><i class="icon-file"></i>lib/getid3/module.audio-video.mpeg.php</a></li>
+<li><a href="#lib/getid3/write.vorbiscomment.php"><i class="icon-file"></i>lib/getid3/write.vorbiscomment.php</a></li>
+<li><a href="#lib/getid3/module.audio-video.matroska.php"><i class="icon-file"></i>lib/getid3/module.audio-video.matroska.php</a></li>
+<li><a href="#lib/getid3/module.misc.pdf.php"><i class="icon-file"></i>lib/getid3/module.misc.pdf.php</a></li>
+<li><a href="#lib/getid3/module.graphic.bmp.php"><i class="icon-file"></i>lib/getid3/module.graphic.bmp.php</a></li>
+<li><a href="#lib/getid3/module.archive.rar.php"><i class="icon-file"></i>lib/getid3/module.archive.rar.php</a></li>
+<li><a href="#lib/getid3/module.audio.vqf.php"><i class="icon-file"></i>lib/getid3/module.audio.vqf.php</a></li>
+<li><a href="#lib/getid3/module.tag.xmp.php"><i class="icon-file"></i>lib/getid3/module.tag.xmp.php</a></li>
+<li><a href="#lib/getid3/module.graphic.gif.php"><i class="icon-file"></i>lib/getid3/module.graphic.gif.php</a></li>
+<li><a href="#lib/getid3/module.graphic.efax.php"><i class="icon-file"></i>lib/getid3/module.graphic.efax.php</a></li>
+<li><a href="#lib/getid3/module.graphic.png.php"><i class="icon-file"></i>lib/getid3/module.graphic.png.php</a></li>
+<li><a href="#lib/getid3/write.real.php"><i class="icon-file"></i>lib/getid3/write.real.php</a></li>
+<li><a href="#lib/getid3/module.audio.rkau.php"><i class="icon-file"></i>lib/getid3/module.audio.rkau.php</a></li>
+<li><a href="#lib/getid3/module.audio.shorten.php"><i class="icon-file"></i>lib/getid3/module.audio.shorten.php</a></li>
+<li><a href="#lib/getid3/module.audio.bonk.php"><i class="icon-file"></i>lib/getid3/module.audio.bonk.php</a></li>
+<li><a href="#lib/getid3/module.tag.apetag.php"><i class="icon-file"></i>lib/getid3/module.tag.apetag.php</a></li>
+<li><a href="#lib/getid3/module.misc.par2.php"><i class="icon-file"></i>lib/getid3/module.misc.par2.php</a></li>
+<li><a href="#lib/getid3/module.audio.ac3.php"><i class="icon-file"></i>lib/getid3/module.audio.ac3.php</a></li>
+<li><a href="#lib/getid3/module.misc.msoffice.php"><i class="icon-file"></i>lib/getid3/module.misc.msoffice.php</a></li>
+<li><a href="#doc/index.php"><i class="icon-file"></i>doc/index.php</a></li>
+<li><a href="#index.php"><i class="icon-file"></i>index.php</a></li>
+<li><a href="#app/helper/BPMediaBranding.php"><i class="icon-file"></i>app/helper/BPMediaBranding.php</a></li>
+<li><a href="#app/helper/BPMediaWidget.php"><i class="icon-file"></i>app/helper/BPMediaWidget.php</a></li>
+<li><a href="#app/helper/BPMediaFeed.php"><i class="icon-file"></i>app/helper/BPMediaFeed.php</a></li>
+<li><a href="#app/helper/BPMediaLog.php"><i class="icon-file"></i>app/helper/BPMediaLog.php</a></li>
+<li><a href="#app/helper/BPMediaSettings.php"><i class="icon-file"></i>app/helper/BPMediaSettings.php</a></li>
+<li><a href="#app/helper/BPMediaSupport.php"><i class="icon-file"></i>app/helper/BPMediaSupport.php</a></li>
+<li><a href="#app/helper/BPMediaAddon.php"><i class="icon-file"></i>app/helper/BPMediaAddon.php</a></li>
+<li><a href="#app/helper/BPMediaUpgrade.php"><i class="icon-file"></i>app/helper/BPMediaUpgrade.php</a></li>
+<li><a href="#app/admin/BPMediaAdmin.php"><i class="icon-file"></i>app/admin/BPMediaAdmin.php</a></li>
+<li><a href="#app/main/profile/BPMediaTemplate.php"><i class="icon-file"></i>app/main/profile/BPMediaTemplate.php</a></li>
+<li><a href="#app/main/profile/BPMediaScreen.php"><i class="icon-file"></i>app/main/profile/BPMediaScreen.php</a></li>
+<li><a href="#app/main/profile/BPMediaUploadScreen.php"><i class="icon-file"></i>app/main/profile/BPMediaUploadScreen.php</a></li>
+<li><a href="#app/main/profile/BPMediaAlbumScreen.php"><i class="icon-file"></i>app/main/profile/BPMediaAlbumScreen.php</a></li>
+<li><a href="#app/main/profile/BPMediaAlbum.php"><i class="icon-file"></i>app/main/profile/BPMediaAlbum.php</a></li>
+<li><a href="#app/main/group/BPMediaGroupElementExtension.php"><i class="icon-file"></i>app/main/group/BPMediaGroupElementExtension.php</a></li>
+<li><a href="#app/main/group/BPMediaGroupAction.php"><i class="icon-file"></i>app/main/group/BPMediaGroupAction.php</a></li>
+<li><a href="#app/main/group/BPMediaGroupImage.php"><i class="icon-file"></i>app/main/group/BPMediaGroupImage.php</a></li>
+<li><a href="#app/main/group/BPMediaGroup.php"><i class="icon-file"></i>app/main/group/BPMediaGroup.php</a></li>
+<li><a href="#app/main/group/BPMediaGroupMusic.php"><i class="icon-file"></i>app/main/group/BPMediaGroupMusic.php</a></li>
+<li><a href="#app/main/group/BPMediaGroupAlbum.php"><i class="icon-file"></i>app/main/group/BPMediaGroupAlbum.php</a></li>
+<li><a href="#app/main/group/BPMediaGroupScreen.php"><i class="icon-file"></i>app/main/group/BPMediaGroupScreen.php</a></li>
+<li><a href="#app/main/group/BPMediaGroupVideo.php"><i class="icon-file"></i>app/main/group/BPMediaGroupVideo.php</a></li>
+<li><a href="#app/main/group/BPMediaGroupsExtension.php"><i class="icon-file"></i>app/main/group/BPMediaGroupsExtension.php</a></li>
+<li><a href="#app/main/BuddyPressMedia.php"><i class="icon-file"></i>app/main/BuddyPressMedia.php</a></li>
+<li><a href="#app/main/BPMediaLoader.php"><i class="icon-file"></i>app/main/BPMediaLoader.php</a></li>
+<li><a href="#app/main/widgets/BPMediaPopularMedia.php"><i class="icon-file"></i>app/main/widgets/BPMediaPopularMedia.php</a></li>
+<li><a href="#app/main/widgets/BPMediaRecentMedia.php"><i class="icon-file"></i>app/main/widgets/BPMediaRecentMedia.php</a></li>
+<li><a href="#app/main/includes/BPMediaHostWordpress.php"><i class="icon-file"></i>app/main/includes/BPMediaHostWordpress.php</a></li>
+<li><a href="#app/main/includes/BPMediaUtils.php"><i class="icon-file"></i>app/main/includes/BPMediaUtils.php</a></li>
+<li><a href="#app/main/includes/BPMediaTemplateFunctions.php"><i class="icon-file"></i>app/main/includes/BPMediaTemplateFunctions.php</a></li>
+<li><a href="#app/main/includes/BPMediaComponent.php"><i class="icon-file"></i>app/main/includes/BPMediaComponent.php</a></li>
+<li><a href="#app/main/includes/BPMediaUpgradeScript.php"><i class="icon-file"></i>app/main/includes/BPMediaUpgradeScript.php</a></li>
+<li><a href="#app/main/includes/BPMediaFunction.php"><i class="icon-file"></i>app/main/includes/BPMediaFunction.php</a></li>
+<li><a href="#app/main/includes/BPMediaFilters.php"><i class="icon-file"></i>app/main/includes/BPMediaFilters.php</a></li>
+<li><a href="#app/main/includes/bp-media-upload-handler.php"><i class="icon-file"></i>app/main/includes/bp-media-upload-handler.php</a></li>
+<li><a href="#app/main/includes/BPMediaActions.php"><i class="icon-file"></i>app/main/includes/BPMediaActions.php</a></li>
+<li><a href="#config/index.php"><i class="icon-file"></i>config/index.php</a></li>
+<li><a href="#tests/MyPluginTest.php"><i class="icon-file"></i>tests/MyPluginTest.php</a></li>
+<li><a href="#tests/bootstrap.php"><i class="icon-file"></i>tests/bootstrap.php</a></li>
+</ul></div>
+<div class="span8">
+<ul class="breadcrumb">
+<li>
+<a href=""><i class="icon-remove-sign"></i></a><span class="divider">\</span>
+</li>
+<li>Compilation Errors</li>
+</ul>
+<div class="package-contents">
+<a name="log/index.php" id="log/index.php"></a><h3>
+<i class="icon-file"></i>log/index.php<small style="float: right;padding-right: 10px;">1</small>
+</h3>
+<div><table class="table markers table-bordered">
+<thead><tr>
+<th>Type</th>
+<th>Line</th>
+<th>Description</th>
+</tr></thead>
+<tbody><tr class="error">
+<td>error</td>
+<td>0</td>
+<td>No page-level DocBlock was found in file log/index.php</td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="package-contents">
+<a name="lib/index.php" id="lib/index.php"></a><h3>
+<i class="icon-file"></i>lib/index.php<small style="float: right;padding-right: 10px;">1</small>
+</h3>
+<div><table class="table markers table-bordered">
+<thead><tr>
+<th>Type</th>
+<th>Line</th>
+<th>Description</th>
+</tr></thead>
+<tbody><tr class="error">
+<td>error</td>
+<td>0</td>
+<td>No page-level DocBlock was found in file lib/index.php</td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="package-contents">
+<a name="lib/getid3/module.audio-video.swf.php" id="lib/getid3/module.audio-video.swf.php"></a><h3>
+<i class="icon-file"></i>lib/getid3/module.audio-video.swf.php<small style="float: right;padding-right: 10px;">4</small>
+</h3>
+<div><table class="table markers table-bordered">
+<thead><tr>
+<th>Type</th>
+<th>Line</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="error">
+<td>error</td>
+<td>0</td>
+<td>No page-level DocBlock was found in file lib/getid3/module.audio-video.swf.php</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>17</td>
+<td>No DocBlock was found for \getid3_swf</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>19</td>
+<td>No DocBlock was found for property $ReturnAllTagData</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>21</td>
+<td>No DocBlock was found for method Analyze()</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="package-contents">
+<a name="lib/getid3/extension.cache.mysql.php" id="lib/getid3/extension.cache.mysql.php"></a><h3>
+<i class="icon-file"></i>lib/getid3/extension.cache.mysql.php<small style="float: right;padding-right: 10px;">7</small>
+</h3>
+<div><table class="table markers table-bordered">
+<thead><tr>
+<th>Type</th>
+<th>Line</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="error">
+<td>error</td>
+<td>0</td>
+<td>No page-level DocBlock was found in file lib/getid3/extension.cache.mysql.php</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>77</td>
+<td>No DocBlock was found for property $cursor</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>78</td>
+<td>No DocBlock was found for property $connection</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>82</td>
+<td>No DocBlock was found for method getID3_cached_mysql()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>121</td>
+<td>No DocBlock was found for method clear_cache()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>130</td>
+<td>No DocBlock was found for method analyze()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>160</td>
+<td>No DocBlock was found for method create_table()</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="package-contents">
+<a name="lib/getid3/module.misc.exe.php" id="lib/getid3/module.misc.exe.php"></a><h3>
+<i class="icon-file"></i>lib/getid3/module.misc.exe.php<small style="float: right;padding-right: 10px;">3</small>
+</h3>
+<div><table class="table markers table-bordered">
+<thead><tr>
+<th>Type</th>
+<th>Line</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="error">
+<td>error</td>
+<td>0</td>
+<td>No page-level DocBlock was found in file lib/getid3/module.misc.exe.php</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>17</td>
+<td>No DocBlock was found for \getid3_exe</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>20</td>
+<td>No DocBlock was found for method Analyze()</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="package-contents">
+<a name="lib/getid3/module.audio.midi.php" id="lib/getid3/module.audio.midi.php"></a><h3>
+<i class="icon-file"></i>lib/getid3/module.audio.midi.php<small style="float: right;padding-right: 10px;">6</small>
+</h3>
+<div><table class="table markers table-bordered">
+<thead><tr>
+<th>Type</th>
+<th>Line</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="error">
+<td>error</td>
+<td>0</td>
+<td>No page-level DocBlock was found in file lib/getid3/module.audio.midi.php</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>19</td>
+<td>No DocBlock was found for \getid3_midi</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>21</td>
+<td>No DocBlock was found for property $scanwholefile</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>23</td>
+<td>No DocBlock was found for method Analyze()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>325</td>
+<td>No DocBlock was found for method GeneralMIDIinstrumentLookup()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>465</td>
+<td>No DocBlock was found for method GeneralMIDIpercussionLookup()</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="package-contents">
+<a name="lib/getid3/module.audio.mpc.php" id="lib/getid3/module.audio.mpc.php"></a><h3>
+<i class="icon-file"></i>lib/getid3/module.audio.mpc.php<small style="float: right;padding-right: 10px;">12</small>
+</h3>
+<div><table class="table markers table-bordered">
+<thead><tr>
+<th>Type</th>
+<th>Line</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="error">
+<td>error</td>
+<td>0</td>
+<td>No page-level DocBlock was found in file lib/getid3/module.audio.mpc.php</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>17</td>
+<td>No DocBlock was found for \getid3_mpc</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>20</td>
+<td>No DocBlock was found for method Analyze()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>62</td>
+<td>No DocBlock was found for method ParseMPCsv8()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>210</td>
+<td>No DocBlock was found for method ParseMPCsv7()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>324</td>
+<td>No DocBlock was found for method ParseMPCsv6()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>400</td>
+<td>No DocBlock was found for method MPCprofileNameLookup()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>422</td>
+<td>No DocBlock was found for method MPCfrequencyLookup()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>432</td>
+<td>No DocBlock was found for method MPCpeakDBLookup()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>439</td>
+<td>No DocBlock was found for method MPCencoderVersionLookup()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>466</td>
+<td>No DocBlock was found for method SV8variableLengthInteger()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>490</td>
+<td>No DocBlock was found for method MPCsv8PacketName()</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="package-contents">
+<a name="lib/getid3/module.audio.lpac.php" id="lib/getid3/module.audio.lpac.php"></a><h3>
+<i class="icon-file"></i>lib/getid3/module.audio.lpac.php<small style="float: right;padding-right: 10px;">3</small>
+</h3>
+<div><table class="table markers table-bordered">
+<thead><tr>
+<th>Type</th>
+<th>Line</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="error">
+<td>error</td>
+<td>0</td>
+<td>No page-level DocBlock was found in file lib/getid3/module.audio.lpac.php</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>18</td>
+<td>No DocBlock was found for \getid3_lpac</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>21</td>
+<td>No DocBlock was found for method Analyze()</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="package-contents">
+<a name="lib/getid3/module.audio.wavpack.php" id="lib/getid3/module.audio.wavpack.php"></a><h3>
+<i class="icon-file"></i>lib/getid3/module.audio.wavpack.php<small style="float: right;padding-right: 10px;">4</small>
+</h3>
+<div><table class="table markers table-bordered">
+<thead><tr>
+<th>Type</th>
+<th>Line</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="error">
+<td>error</td>
+<td>0</td>
+<td>No page-level DocBlock was found in file lib/getid3/module.audio.wavpack.php</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>17</td>
+<td>No DocBlock was found for \getid3_wavpack</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>20</td>
+<td>No DocBlock was found for method Analyze()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>371</td>
+<td>No DocBlock was found for method WavPackMetablockNameLookup()</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="package-contents">
+<a name="lib/getid3/module.audio.aac.php" id="lib/getid3/module.audio.aac.php"></a><h3>
+<i class="icon-file"></i>lib/getid3/module.audio.aac.php<small style="float: right;padding-right: 10px;">8</small>
+</h3>
+<div><table class="table markers table-bordered">
+<thead><tr>
+<th>Type</th>
+<th>Line</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="error">
+<td>error</td>
+<td>0</td>
+<td>No page-level DocBlock was found in file lib/getid3/module.audio.aac.php</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>17</td>
+<td>No DocBlock was found for \getid3_aac</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>19</td>
+<td>No DocBlock was found for method Analyze()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>32</td>
+<td>No DocBlock was found for method getAACADIFheaderFilepointer()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>260</td>
+<td>No DocBlock was found for method getAACADTSheaderFilepointer()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>445</td>
+<td>No DocBlock was found for method AACsampleRateLookup()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>468</td>
+<td>No DocBlock was found for method AACprofileLookup()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>483</td>
+<td>No DocBlock was found for method AACchannelCountCalculate()</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="package-contents">
+<a name="lib/getid3/module.audio.tta.php" id="lib/getid3/module.audio.tta.php"></a><h3>
+<i class="icon-file"></i>lib/getid3/module.audio.tta.php<small style="float: right;padding-right: 10px;">3</small>
+</h3>
+<div><table class="table markers table-bordered">
+<thead><tr>
+<th>Type</th>
+<th>Line</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="error">
+<td>error</td>
+<td>0</td>
+<td>No page-level DocBlock was found in file lib/getid3/module.audio.tta.php</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>17</td>
+<td>No DocBlock was found for \getid3_tta</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>20</td>
+<td>No DocBlock was found for method Analyze()</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="package-contents">
+<a name="lib/getid3/write.php" id="lib/getid3/write.php"></a><h3>
+<i class="icon-file"></i>lib/getid3/write.php<small style="float: right;padding-right: 10px;">23</small>
+</h3>
+<div><table class="table markers table-bordered">
+<thead><tr>
+<th>Type</th>
+<th>Line</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="error">
+<td>error</td>
+<td>0</td>
+<td>No page-level DocBlock was found in file lib/getid3/write.php</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>47</td>
+<td>No DocBlock was found for \getid3_writetags</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>50</td>
+<td>No DocBlock was found for property $filename</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>51</td>
+<td>No DocBlock was found for property $tagformats</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>52</td>
+<td>No DocBlock was found for property $tag_data</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>53</td>
+<td>No DocBlock was found for property $tag_encoding</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>54</td>
+<td>No DocBlock was found for property $overwrite_tags</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>55</td>
+<td>No DocBlock was found for property $remove_other_tags</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>57</td>
+<td>No DocBlock was found for property $id3v2_tag_language</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>58</td>
+<td>No DocBlock was found for property $id3v2_paddedlength</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>60</td>
+<td>No DocBlock was found for property $warnings</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>61</td>
+<td>No DocBlock was found for property $errors</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>64</td>
+<td>No DocBlock was found for property $ThisFileInfo</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>66</td>
+<td>No DocBlock was found for method getid3_writetags()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>71</td>
+<td>No DocBlock was found for method WriteTags()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>344</td>
+<td>No DocBlock was found for method DeleteTags()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>417</td>
+<td>No DocBlock was found for method MergeExistingTagData()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>431</td>
+<td>No DocBlock was found for method FormatDataForAPE()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>458</td>
+<td>No DocBlock was found for method FormatDataForID3v1()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>482</td>
+<td>No DocBlock was found for method FormatDataForID3v2()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>568</td>
+<td>No DocBlock was found for method FormatDataForVorbisComment()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>597</td>
+<td>No DocBlock was found for method FormatDataForMetaFLAC()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>603</td>
+<td>No DocBlock was found for method FormatDataForReal()</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="package-contents">
+<a name="lib/getid3/module.archive.tar.php" id="lib/getid3/module.archive.tar.php"></a><h3>
+<i class="icon-file"></i>lib/getid3/module.archive.tar.php<small style="float: right;padding-right: 10px;">5</small>
+</h3>
+<div><table class="table markers table-bordered">
+<thead><tr>
+<th>Type</th>
+<th>Line</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="error">
+<td>error</td>
+<td>0</td>
+<td>No page-level DocBlock was found in file lib/getid3/module.archive.tar.php</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>22</td>
+<td>No DocBlock was found for \getid3_tar</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>25</td>
+<td>No DocBlock was found for method Analyze()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>120</td>
+<td>No DocBlock was found for method display_perms()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>155</td>
+<td>No DocBlock was found for method get_flag_type()</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="package-contents">
+<a name="lib/getid3/write.apetag.php" id="lib/getid3/write.apetag.php"></a><h3>
+<i class="icon-file"></i>lib/getid3/write.apetag.php<small style="float: right;padding-right: 10px;">14</small>
+</h3>
+<div><table class="table markers table-bordered">
+<thead><tr>
+<th>Type</th>
+<th>Line</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="error">
+<td>error</td>
+<td>0</td>
+<td>No page-level DocBlock was found in file lib/getid3/write.apetag.php</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>19</td>
+<td>No DocBlock was found for \getid3_write_apetag</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>22</td>
+<td>No DocBlock was found for property $filename</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>23</td>
+<td>No DocBlock was found for property $tag_data</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>24</td>
+<td>No DocBlock was found for property $always_preserve_replaygain</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>25</td>
+<td>No DocBlock was found for property $warnings</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>26</td>
+<td>No DocBlock was found for property $errors</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>28</td>
+<td>No DocBlock was found for method getid3_write_apetag()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>32</td>
+<td>No DocBlock was found for method WriteAPEtag()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>94</td>
+<td>No DocBlock was found for method DeleteAPEtag()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>128</td>
+<td>No DocBlock was found for method GenerateAPEtag()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>162</td>
+<td>No DocBlock was found for method GenerateAPEtagHeaderFooter()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>178</td>
+<td>No DocBlock was found for method GenerateAPEtagFlags()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>203</td>
+<td>No DocBlock was found for method CleanAPEtagItemKey()</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="package-contents">
+<a name="lib/getid3/module.audio.flac.php" id="lib/getid3/module.audio.flac.php"></a><h3>
+<i class="icon-file"></i>lib/getid3/module.audio.flac.php<small style="float: right;padding-right: 10px;">13</small>
+</h3>
+<div><table class="table markers table-bordered">
+<thead><tr>
+<th>Type</th>
+<th>Line</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="error">
+<td>error</td>
+<td>0</td>
+<td>No page-level DocBlock was found in file lib/getid3/module.audio.flac.php</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>19</td>
+<td>No DocBlock was found for \getid3_flac</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>21</td>
+<td>No DocBlock was found for property $inline_attachments</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>23</td>
+<td>No DocBlock was found for method Analyze()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>44</td>
+<td>No DocBlock was found for method FLACparseMETAdata()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>194</td>
+<td>No DocBlock was found for method FLACmetaBlockTypeLookup()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>208</td>
+<td>No DocBlock was found for method FLACapplicationIDLookup()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>218</td>
+<td>No DocBlock was found for method FLACpictureTypeLookup()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>245</td>
+<td>No DocBlock was found for method FLACparseSTREAMINFO()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>288</td>
+<td>No DocBlock was found for method FLACparseAPPLICATION()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>303</td>
+<td>No DocBlock was found for method FLACparseSEEKTABLE()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>334</td>
+<td>No DocBlock was found for method FLACparseCUESHEET()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>388</td>
+<td>No DocBlock was found for method FLACparsePICTURE()</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="package-contents">
+<a name="lib/getid3/module.audio-video.quicktime.php" id="lib/getid3/module.audio-video.quicktime.php"></a><h3>
+<i class="icon-file"></i>lib/getid3/module.audio-video.quicktime.php<small style="float: right;padding-right: 10px;">23</small>
+</h3>
+<div><table class="table markers table-bordered">
+<thead><tr>
+<th>Type</th>
+<th>Line</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="error">
+<td>error</td>
+<td>0</td>
+<td>No page-level DocBlock was found in file lib/getid3/module.audio-video.quicktime.php</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>18</td>
+<td>No DocBlock was found for \getid3_quicktime</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>21</td>
+<td>No DocBlock was found for property $ReturnAtomData</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>22</td>
+<td>No DocBlock was found for property $ParseAllPossibleAtoms</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>24</td>
+<td>No DocBlock was found for method Analyze()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>168</td>
+<td>No DocBlock was found for method QuicktimeParseAtom()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1339</td>
+<td>No DocBlock was found for method QuicktimeParseContainerAtom()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1367</td>
+<td>No DocBlock was found for method quicktime_read_mp4_descr_length()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1379</td>
+<td>No DocBlock was found for method QuicktimeLanguageLookup()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1496</td>
+<td>No DocBlock was found for method QuicktimeVideoCodecLookup()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1555</td>
+<td>No DocBlock was found for method QuicktimeAudioCodecLookup()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1600</td>
+<td>No DocBlock was found for method QuicktimeDCOMLookup()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1609</td>
+<td>No DocBlock was found for method QuicktimeColorNameLookup()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1627</td>
+<td>No DocBlock was found for method QuicktimeSTIKLookup()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1644</td>
+<td>No DocBlock was found for method QuicktimeIODSaudioProfileName()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1704</td>
+<td>No DocBlock was found for method QuicktimeIODSvideoProfileName()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1776</td>
+<td>No DocBlock was found for method QuicktimeContentRatingLookup()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1786</td>
+<td>No DocBlock was found for method QuicktimeStoreAccountTypeLookup()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1795</td>
+<td>No DocBlock was found for method QuicktimeStoreFrontCodeLookup()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1824</td>
+<td>No DocBlock was found for method QuicktimeParseNikonNCTG()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>2003</td>
+<td>No DocBlock was found for method CopyToAppropriateCommentsSection()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>2119</td>
+<td>No DocBlock was found for method NoNullString()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>2127</td>
+<td>No DocBlock was found for method Pascal2String()</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="package-contents">
+<a name="lib/getid3/module.audio.la.php" id="lib/getid3/module.audio.la.php"></a><h3>
+<i class="icon-file"></i>lib/getid3/module.audio.la.php<small style="float: right;padding-right: 10px;">3</small>
+</h3>
+<div><table class="table markers table-bordered">
+<thead><tr>
+<th>Type</th>
+<th>Line</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="error">
+<td>error</td>
+<td>0</td>
+<td>No page-level DocBlock was found in file lib/getid3/module.audio.la.php</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>18</td>
+<td>No DocBlock was found for \getid3_la</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>21</td>
+<td>No DocBlock was found for method Analyze()</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="package-contents">
+<a name="lib/getid3/write.id3v1.php" id="lib/getid3/write.id3v1.php"></a><h3>
+<i class="icon-file"></i>lib/getid3/write.id3v1.php<small style="float: right;padding-right: 10px;">12</small>
+</h3>
+<div><table class="table markers table-bordered">
+<thead><tr>
+<th>Type</th>
+<th>Line</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="error">
+<td>error</td>
+<td>0</td>
+<td>No page-level DocBlock was found in file lib/getid3/write.id3v1.php</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>18</td>
+<td>No DocBlock was found for \getid3_write_id3v1</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>20</td>
+<td>No DocBlock was found for property $filename</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>21</td>
+<td>No DocBlock was found for property $filesize</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>22</td>
+<td>No DocBlock was found for property $tag_data</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>23</td>
+<td>No DocBlock was found for property $warnings</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>24</td>
+<td>No DocBlock was found for property $errors</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>26</td>
+<td>No DocBlock was found for method getid3_write_id3v1()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>30</td>
+<td>No DocBlock was found for method WriteID3v1()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>68</td>
+<td>No DocBlock was found for method FixID3v1Padding()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>90</td>
+<td>No DocBlock was found for method RemoveID3v1()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>118</td>
+<td>No DocBlock was found for method setRealFileSize()</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="package-contents">
+<a name="lib/getid3/module.audio-video.riff.php" id="lib/getid3/module.audio-video.riff.php"></a><h3>
+<i class="icon-file"></i>lib/getid3/module.audio-video.riff.php<small style="float: right;padding-right: 10px;">14</small>
+</h3>
+<div><table class="table markers table-bordered">
+<thead><tr>
+<th>Type</th>
+<th>Line</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="error">
+<td>error</td>
+<td>0</td>
+<td>No page-level DocBlock was found in file lib/getid3/module.audio-video.riff.php</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>22</td>
+<td>No DocBlock was found for \getid3_riff</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>25</td>
+<td>No DocBlock was found for method Analyze()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1224</td>
+<td>No DocBlock was found for method RIFFcommentsParse()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1282</td>
+<td>No DocBlock was found for method ParseRIFF()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1609</td>
+<td>No DocBlock was found for method ParseRIFFdata()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1647</td>
+<td>No DocBlock was found for method RIFFparseWAVEFORMATex()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1672</td>
+<td>No DocBlock was found for method RIFFparseWavPackHeader()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1733</td>
+<td>No DocBlock was found for method ParseBITMAPINFOHEADER()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1751</td>
+<td>No DocBlock was found for method ParseDIVXTAG()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1811</td>
+<td>No DocBlock was found for method RIFFwaveSNDMtagLookup()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1834</td>
+<td>No DocBlock was found for method RIFFwFormatTagLookup()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>2005</td>
+<td>No DocBlock was found for method RIFFfourccLookup()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>2400</td>
+<td>No DocBlock was found for method EitherEndian2Int()</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="package-contents">
+<a name="lib/getid3/module.graphic.jpg.php" id="lib/getid3/module.graphic.jpg.php"></a><h3>
+<i class="icon-file"></i>lib/getid3/module.graphic.jpg.php<small style="float: right;padding-right: 10px;">6</small>
+</h3>
+<div><table class="table markers table-bordered">
+<thead><tr>
+<th>Type</th>
+<th>Line</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="error">
+<td>error</td>
+<td>0</td>
+<td>No page-level DocBlock was found in file lib/getid3/module.graphic.jpg.php</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>18</td>
+<td>No DocBlock was found for \getid3_jpg</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>22</td>
+<td>No DocBlock was found for method Analyze()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>166</td>
+<td>No DocBlock was found for method CastAsAppropriate()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>180</td>
+<td>No DocBlock was found for method IPTCrecordName()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>197</td>
+<td>No DocBlock was found for method IPTCrecordTagName()</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="package-contents">
+<a name="lib/getid3/module.audio.dss.php" id="lib/getid3/module.audio.dss.php"></a><h3>
+<i class="icon-file"></i>lib/getid3/module.audio.dss.php<small style="float: right;padding-right: 10px;">4</small>
+</h3>
+<div><table class="table markers table-bordered">
+<thead><tr>
+<th>Type</th>
+<th>Line</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="error">
+<td>error</td>
+<td>0</td>
+<td>No page-level DocBlock was found in file lib/getid3/module.audio.dss.php</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>17</td>
+<td>No DocBlock was found for \getid3_dss</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>20</td>
+<td>No DocBlock was found for method Analyze()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>61</td>
+<td>No DocBlock was found for method DSSdateStringToUnixDate()</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="package-contents">
+<a name="lib/getid3/module.audio.aa.php" id="lib/getid3/module.audio.aa.php"></a><h3>
+<i class="icon-file"></i>lib/getid3/module.audio.aa.php<small style="float: right;padding-right: 10px;">3</small>
+</h3>
+<div><table class="table markers table-bordered">
+<thead><tr>
+<th>Type</th>
+<th>Line</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="error">
+<td>error</td>
+<td>0</td>
+<td>No page-level DocBlock was found in file lib/getid3/module.audio.aa.php</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>17</td>
+<td>No DocBlock was found for \getid3_aa</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>20</td>
+<td>No DocBlock was found for method Analyze()</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="package-contents">
+<a name="lib/getid3/module.archive.gzip.php" id="lib/getid3/module.archive.gzip.php"></a><h3>
+<i class="icon-file"></i>lib/getid3/module.archive.gzip.php<small style="float: right;padding-right: 10px;">6</small>
+</h3>
+<div><table class="table markers table-bordered">
+<thead><tr>
+<th>Type</th>
+<th>Line</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="error">
+<td>error</td>
+<td>0</td>
+<td>No page-level DocBlock was found in file lib/getid3/module.archive.gzip.php</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>22</td>
+<td>No DocBlock was found for \getid3_gzip</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>25</td>
+<td>No DocBlock was found for property $option_gzip_parse_contents</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>27</td>
+<td>No DocBlock was found for method Analyze()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>248</td>
+<td>No DocBlock was found for method get_os_type()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>270</td>
+<td>No DocBlock was found for method get_xflag_type()</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="package-contents">
+<a name="lib/getid3/write.metaflac.php" id="lib/getid3/write.metaflac.php"></a><h3>
+<i class="icon-file"></i>lib/getid3/write.metaflac.php<small style="float: right;padding-right: 10px;">10</small>
+</h3>
+<div><table class="table markers table-bordered">
+<thead><tr>
+<th>Type</th>
+<th>Line</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="error">
+<td>error</td>
+<td>0</td>
+<td>No page-level DocBlock was found in file lib/getid3/write.metaflac.php</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>17</td>
+<td>No DocBlock was found for \getid3_write_metaflac</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>20</td>
+<td>No DocBlock was found for property $filename</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>21</td>
+<td>No DocBlock was found for property $tag_data</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>22</td>
+<td>No DocBlock was found for property $warnings</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>23</td>
+<td>No DocBlock was found for property $errors</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>25</td>
+<td>No DocBlock was found for method getid3_write_metaflac()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>29</td>
+<td>No DocBlock was found for method WriteMetaFLAC()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>103</td>
+<td>No DocBlock was found for method DeleteMetaFLAC()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>149</td>
+<td>No DocBlock was found for method CleanmetaflacName()</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="package-contents">
+<a name="lib/getid3/module.audio-video.nsv.php" id="lib/getid3/module.audio-video.nsv.php"></a><h3>
+<i class="icon-file"></i>lib/getid3/module.audio-video.nsv.php<small style="float: right;padding-right: 10px;">6</small>
+</h3>
+<div><table class="table markers table-bordered">
+<thead><tr>
+<th>Type</th>
+<th>Line</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="error">
+<td>error</td>
+<td>0</td>
+<td>No page-level DocBlock was found in file lib/getid3/module.audio-video.nsv.php</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>17</td>
+<td>No DocBlock was found for \getid3_nsv</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>20</td>
+<td>No DocBlock was found for method Analyze()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>61</td>
+<td>No DocBlock was found for method getNSVsHeaderFilepointer()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>134</td>
+<td>No DocBlock was found for method getNSVfHeaderFilepointer()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>208</td>
+<td>No DocBlock was found for method NSVframerateLookup()</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="package-contents">
+<a name="lib/getid3/module.misc.iso.php" id="lib/getid3/module.misc.iso.php"></a><h3>
+<i class="icon-file"></i>lib/getid3/module.misc.iso.php<small style="float: right;padding-right: 10px;">11</small>
+</h3>
+<div><table class="table markers table-bordered">
+<thead><tr>
+<th>Type</th>
+<th>Line</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="error">
+<td>error</td>
+<td>0</td>
+<td>No page-level DocBlock was found in file lib/getid3/module.misc.iso.php</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>17</td>
+<td>No DocBlock was found for \getid3_iso</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>20</td>
+<td>No DocBlock was found for method Analyze()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>58</td>
+<td>No DocBlock was found for method ParsePrimaryVolumeDescriptor()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>132</td>
+<td>No DocBlock was found for method ParseSupplementaryVolumeDescriptor()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>211</td>
+<td>No DocBlock was found for method ParsePathTable()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>270</td>
+<td>No DocBlock was found for method ParseDirectoryRecord()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>323</td>
+<td>No DocBlock was found for method ISOstripFilenameVersion()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>332</td>
+<td>No DocBlock was found for method ISOtimeText2UNIXtime()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>347</td>
+<td>No DocBlock was found for method ISOtime2UNIXtime()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>368</td>
+<td>No DocBlock was found for method TwosCompliment2Decimal()</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="package-contents">
+<a name="lib/getid3/module.audio-video.bink.php" id="lib/getid3/module.audio-video.bink.php"></a><h3>
+<i class="icon-file"></i>lib/getid3/module.audio-video.bink.php<small style="float: right;padding-right: 10px;">5</small>
+</h3>
+<div><table class="table markers table-bordered">
+<thead><tr>
+<th>Type</th>
+<th>Line</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="error">
+<td>error</td>
+<td>0</td>
+<td>No page-level DocBlock was found in file lib/getid3/module.audio-video.bink.php</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>17</td>
+<td>No DocBlock was found for \getid3_bink</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>20</td>
+<td>No DocBlock was found for method Analyze()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>46</td>
+<td>No DocBlock was found for method ParseBink()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>63</td>
+<td>No DocBlock was found for method ParseSmacker()</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="package-contents">
+<a name="lib/getid3/module.archive.szip.php" id="lib/getid3/module.archive.szip.php"></a><h3>
+<i class="icon-file"></i>lib/getid3/module.archive.szip.php<small style="float: right;padding-right: 10px;">3</small>
+</h3>
+<div><table class="table markers table-bordered">
+<thead><tr>
+<th>Type</th>
+<th>Line</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="error">
+<td>error</td>
+<td>0</td>
+<td>No page-level DocBlock was found in file lib/getid3/module.archive.szip.php</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>17</td>
+<td>No DocBlock was found for \getid3_szip</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>20</td>
+<td>No DocBlock was found for method Analyze()</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="package-contents">
+<a name="lib/getid3/module.audio.voc.php" id="lib/getid3/module.audio.voc.php"></a><h3>
+<i class="icon-file"></i>lib/getid3/module.audio.voc.php<small style="float: right;padding-right: 10px;">6</small>
+</h3>
+<div><table class="table markers table-bordered">
+<thead><tr>
+<th>Type</th>
+<th>Line</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="error">
+<td>error</td>
+<td>0</td>
+<td>No page-level DocBlock was found in file lib/getid3/module.audio.voc.php</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>17</td>
+<td>No DocBlock was found for \getid3_voc</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>20</td>
+<td>No DocBlock was found for method Analyze()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>166</td>
+<td>No DocBlock was found for method VOCcompressionTypeLookup()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>176</td>
+<td>No DocBlock was found for method VOCwFormatLookup()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>190</td>
+<td>No DocBlock was found for method VOCwFormatActualBitsPerSampleLookup()</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="package-contents">
+<a name="lib/getid3/module.audio-video.asf.php" id="lib/getid3/module.audio-video.asf.php"></a><h3>
+<i class="icon-file"></i>lib/getid3/module.audio-video.asf.php<small style="float: right;padding-right: 10px;">17</small>
+</h3>
+<div><table class="table markers table-bordered">
+<thead><tr>
+<th>Type</th>
+<th>Line</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="error">
+<td>error</td>
+<td>0</td>
+<td>No page-level DocBlock was found in file lib/getid3/module.audio-video.asf.php</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>18</td>
+<td>No DocBlock was found for \getid3_asf</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>21</td>
+<td>No DocBlock was found for method __construct()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>33</td>
+<td>No DocBlock was found for method Analyze()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1454</td>
+<td>No DocBlock was found for method ASFCodecListObjectTypeLookup()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1465</td>
+<td>No DocBlock was found for method KnownGUIDs()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1579</td>
+<td>No DocBlock was found for method GUIDname()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1587</td>
+<td>No DocBlock was found for method ASFIndexObjectIndexTypeLookup()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1597</td>
+<td>No DocBlock was found for method GUIDtoBytestring()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1632</td>
+<td>No DocBlock was found for method BytestringToGUID()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1657</td>
+<td>No DocBlock was found for method FILETIMEtoUNIXtime()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1668</td>
+<td>No DocBlock was found for method WMpictureTypeLookup()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1693</td>
+<td>No DocBlock was found for method ASF_HeaderExtensionObjectDataParse()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1940</td>
+<td>No DocBlock was found for method ASFmetadataLibraryObjectDataTypeLookup()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1953</td>
+<td>No DocBlock was found for method ASF_WMpicture()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>2005</td>
+<td>No DocBlock was found for method TrimConvert()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>2011</td>
+<td>No DocBlock was found for method TrimTerm()</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="package-contents">
+<a name="lib/getid3/module.audio.avr.php" id="lib/getid3/module.audio.avr.php"></a><h3>
+<i class="icon-file"></i>lib/getid3/module.audio.avr.php<small style="float: right;padding-right: 10px;">3</small>
+</h3>
+<div><table class="table markers table-bordered">
+<thead><tr>
+<th>Type</th>
+<th>Line</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="error">
+<td>error</td>
+<td>0</td>
+<td>No page-level DocBlock was found in file lib/getid3/module.audio.avr.php</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>17</td>
+<td>No DocBlock was found for \getid3_avr</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>20</td>
+<td>No DocBlock was found for method Analyze()</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="package-contents">
+<a name="lib/getid3/module.audio.ogg.php" id="lib/getid3/module.audio.ogg.php"></a><h3>
+<i class="icon-file"></i>lib/getid3/module.audio.ogg.php<small style="float: right;padding-right: 10px;">10</small>
+</h3>
+<div><table class="table markers table-bordered">
+<thead><tr>
+<th>Type</th>
+<th>Line</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="error">
+<td>error</td>
+<td>0</td>
+<td>No page-level DocBlock was found in file lib/getid3/module.audio.ogg.php</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>18</td>
+<td>No DocBlock was found for \getid3_ogg</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>20</td>
+<td>No DocBlock was found for property $inline_attachments</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>22</td>
+<td>No DocBlock was found for method Analyze()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>308</td>
+<td>No DocBlock was found for method ParseVorbisPageHeader()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>356</td>
+<td>No DocBlock was found for method ParseOggPageHeader()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>408</td>
+<td>No DocBlock was found for method ParseVorbisCommentsFilepointer()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>655</td>
+<td>No DocBlock was found for method SpeexBandModeLookup()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>666</td>
+<td>No DocBlock was found for method OggPageSegmentLength()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>680</td>
+<td>No DocBlock was found for method get_quality_from_nominal_bitrate()</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="package-contents">
+<a name="lib/getid3/module.audio.monkey.php" id="lib/getid3/module.audio.monkey.php"></a><h3>
+<i class="icon-file"></i>lib/getid3/module.audio.monkey.php<small style="float: right;padding-right: 10px;">5</small>
+</h3>
+<div><table class="table markers table-bordered">
+<thead><tr>
+<th>Type</th>
+<th>Line</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="error">
+<td>error</td>
+<td>0</td>
+<td>No page-level DocBlock was found in file lib/getid3/module.audio.monkey.php</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>17</td>
+<td>No DocBlock was found for \getid3_monkey</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>20</td>
+<td>No DocBlock was found for method Analyze()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>179</td>
+<td>No DocBlock was found for method MonkeyCompressionLevelNameLookup()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>191</td>
+<td>No DocBlock was found for method MonkeySamplesPerFrame()</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="package-contents">
+<a name="lib/getid3/module.graphic.tiff.php" id="lib/getid3/module.graphic.tiff.php"></a><h3>
+<i class="icon-file"></i>lib/getid3/module.graphic.tiff.php<small style="float: right;padding-right: 10px;">6</small>
+</h3>
+<div><table class="table markers table-bordered">
+<thead><tr>
+<th>Type</th>
+<th>Line</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="error">
+<td>error</td>
+<td>0</td>
+<td>No page-level DocBlock was found in file lib/getid3/module.graphic.tiff.php</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>17</td>
+<td>No DocBlock was found for \getid3_tiff</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>20</td>
+<td>No DocBlock was found for method Analyze()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>185</td>
+<td>No DocBlock was found for method TIFFendian2Int()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>194</td>
+<td>No DocBlock was found for method TIFFcompressionMethod()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>208</td>
+<td>No DocBlock was found for method TIFFcommentName()</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="package-contents">
+<a name="lib/getid3/module.tag.lyrics3.php" id="lib/getid3/module.tag.lyrics3.php"></a><h3>
+<i class="icon-file"></i>lib/getid3/module.tag.lyrics3.php<small style="float: right;padding-right: 10px;">7</small>
+</h3>
+<div><table class="table markers table-bordered">
+<thead><tr>
+<th>Type</th>
+<th>Line</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="error">
+<td>error</td>
+<td>0</td>
+<td>No page-level DocBlock was found in file lib/getid3/module.tag.lyrics3.php</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>17</td>
+<td>No DocBlock was found for \getid3_lyrics3</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>20</td>
+<td>No DocBlock was found for method Analyze()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>125</td>
+<td>No DocBlock was found for method getLyrics3Data()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>249</td>
+<td>No DocBlock was found for method Lyrics3Timestamp2Seconds()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>256</td>
+<td>No DocBlock was found for method Lyrics3LyricsTimestampParse()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>286</td>
+<td>No DocBlock was found for method IntString2Bool()</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="package-contents">
+<a name="lib/getid3/module.audio.mp3.php" id="lib/getid3/module.audio.mp3.php"></a><h3>
+<i class="icon-file"></i>lib/getid3/module.audio.mp3.php<small style="float: right;padding-right: 10px;">28</small>
+</h3>
+<div><table class="table markers table-bordered">
+<thead><tr>
+<th>Type</th>
+<th>Line</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="error">
+<td>error</td>
+<td>0</td>
+<td>No page-level DocBlock was found in file lib/getid3/module.audio.mp3.php</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>24</td>
+<td>No DocBlock was found for \getid3_mp3</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>27</td>
+<td>No DocBlock was found for property $allow_bruteforce</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>29</td>
+<td>No DocBlock was found for method Analyze()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>163</td>
+<td>No DocBlock was found for method GuessEncoderOptions()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>407</td>
+<td>No DocBlock was found for method decodeMPEGaudioHeader()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1072</td>
+<td>No DocBlock was found for method RecursiveFrameScanning()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1118</td>
+<td>No DocBlock was found for method FreeFormatFrameLength()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1195</td>
+<td>No DocBlock was found for method getOnlyMPEGaudioInfoBruteForce()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1343</td>
+<td>No DocBlock was found for method getOnlyMPEGaudioInfo()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1623</td>
+<td>No DocBlock was found for method MPEGaudioVersionArray()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1628</td>
+<td>No DocBlock was found for method MPEGaudioLayerArray()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1633</td>
+<td>No DocBlock was found for method MPEGaudioBitrateArray()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1652</td>
+<td>No DocBlock was found for method MPEGaudioFrequencyArray()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1664</td>
+<td>No DocBlock was found for method MPEGaudioChannelModeArray()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1669</td>
+<td>No DocBlock was found for method MPEGaudioModeExtensionArray()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1681</td>
+<td>No DocBlock was found for method MPEGaudioEmphasisArray()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1686</td>
+<td>No DocBlock was found for method MPEGaudioHeaderBytesValid()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1690</td>
+<td>No DocBlock was found for method MPEGaudioHeaderValid()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1762</td>
+<td>No DocBlock was found for method MPEGaudioHeaderDecode()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1799</td>
+<td>No DocBlock was found for method MPEGaudioFrameLength()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1860</td>
+<td>No DocBlock was found for method ClosestStandardMP3Bitrate()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1880</td>
+<td>No DocBlock was found for method XingVBRidOffset()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1906</td>
+<td>No DocBlock was found for method LAMEvbrMethodLookup()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1922</td>
+<td>No DocBlock was found for method LAMEmiscStereoModeLookup()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1936</td>
+<td>No DocBlock was found for method LAMEmiscSourceSampleFrequencyLookup()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1946</td>
+<td>No DocBlock was found for method LAMEsurroundInfoLookup()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1956</td>
+<td>No DocBlock was found for method LAMEpresetUsedLookup()</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="package-contents">
+<a name="lib/getid3/write.lyrics3.php" id="lib/getid3/write.lyrics3.php"></a><h3>
+<i class="icon-file"></i>lib/getid3/write.lyrics3.php<small style="float: right;padding-right: 10px;">9</small>
+</h3>
+<div><table class="table markers table-bordered">
+<thead><tr>
+<th>Type</th>
+<th>Line</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="error">
+<td>error</td>
+<td>0</td>
+<td>No page-level DocBlock was found in file lib/getid3/write.lyrics3.php</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>17</td>
+<td>No DocBlock was found for \getid3_write_lyrics3</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>19</td>
+<td>No DocBlock was found for property $filename</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>20</td>
+<td>No DocBlock was found for property $tag_data</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>22</td>
+<td>No DocBlock was found for property $warnings</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>23</td>
+<td>No DocBlock was found for property $errors</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>25</td>
+<td>No DocBlock was found for method getid3_write_lyrics3()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>29</td>
+<td>No DocBlock was found for method WriteLyrics3()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>33</td>
+<td>No DocBlock was found for method DeleteLyrics3()</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="package-contents">
+<a name="lib/getid3/module.audio.au.php" id="lib/getid3/module.audio.au.php"></a><h3>
+<i class="icon-file"></i>lib/getid3/module.audio.au.php<small style="float: right;padding-right: 10px;">6</small>
+</h3>
+<div><table class="table markers table-bordered">
+<thead><tr>
+<th>Type</th>
+<th>Line</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="error">
+<td>error</td>
+<td>0</td>
+<td>No page-level DocBlock was found in file lib/getid3/module.audio.au.php</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>17</td>
+<td>No DocBlock was found for \getid3_au</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>20</td>
+<td>No DocBlock was found for method Analyze()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>72</td>
+<td>No DocBlock was found for method AUdataFormatNameLookup()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>106</td>
+<td>No DocBlock was found for method AUdataFormatBitsPerSampleLookup()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>134</td>
+<td>No DocBlock was found for method AUdataFormatUsedBitsPerSampleLookup()</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="package-contents">
+<a name="lib/getid3/getid3.php" id="lib/getid3/getid3.php"></a><h3>
+<i class="icon-file"></i>lib/getid3/getid3.php<small style="float: right;padding-right: 10px;">59</small>
+</h3>
+<div><table class="table markers table-bordered">
+<thead><tr>
+<th>Type</th>
+<th>Line</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="error">
+<td>error</td>
+<td>0</td>
+<td>No page-level DocBlock was found in file lib/getid3/getid3.php</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>77</td>
+<td>No DocBlock was found for \getID3</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>80</td>
+<td>No DocBlock was found for property $encoding</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>81</td>
+<td>No DocBlock was found for property $encoding_id3v1</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>84</td>
+<td>No DocBlock was found for property $option_tag_id3v1</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>85</td>
+<td>No DocBlock was found for property $option_tag_id3v2</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>86</td>
+<td>No DocBlock was found for property $option_tag_lyrics3</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>87</td>
+<td>No DocBlock was found for property $option_tag_apetag</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>88</td>
+<td>No DocBlock was found for property $option_tags_process</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>89</td>
+<td>No DocBlock was found for property $option_tags_html</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>92</td>
+<td>No DocBlock was found for property $option_extra_info</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>95</td>
+<td>No DocBlock was found for property $option_save_attachments</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>98</td>
+<td>No DocBlock was found for property $option_md5_data</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>99</td>
+<td>No DocBlock was found for property $option_md5_data_source</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>100</td>
+<td>No DocBlock was found for property $option_sha1_data</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>101</td>
+<td>No DocBlock was found for property $option_max_2gb_check</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>104</td>
+<td>No DocBlock was found for property $option_fread_buffer_size</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>107</td>
+<td>No DocBlock was found for property $filename</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>108</td>
+<td>No DocBlock was found for property $fp</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>109</td>
+<td>No DocBlock was found for property $info</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>112</td>
+<td>No DocBlock was found for property $startup_error</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>113</td>
+<td>No DocBlock was found for property $startup_warning</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>114</td>
+<td>No DocBlock was found for property $memory_limit</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>118</td>
+<td>No DocBlock was found for property $tempdir</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>124</td>
+<td>No DocBlock was found for method __construct()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>227</td>
+<td>No DocBlock was found for method version()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>231</td>
+<td>No DocBlock was found for method fread_buffer_size()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>237</td>
+<td>No DocBlock was found for method setOption()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>251</td>
+<td>No DocBlock was found for method openfile()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>346</td>
+<td>No DocBlock was found for method analyze()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>507</td>
+<td>No DocBlock was found for method error()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>518</td>
+<td>No DocBlock was found for method warning()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>525</td>
+<td>No DocBlock was found for method CleanUp()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>573</td>
+<td>No DocBlock was found for method GetFileFormatArray()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1105</td>
+<td>No DocBlock was found for method GetFileFormat()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1144</td>
+<td>No DocBlock was found for method CharConvert()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1167</td>
+<td>No DocBlock was found for method HandleAllTags()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1287</td>
+<td>No DocBlock was found for method getHashdata()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1411</td>
+<td>No DocBlock was found for method ChannelsBitratePlaytimeCalculations()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1476</td>
+<td>No DocBlock was found for method CalculateCompressionRatioVideo()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1524</td>
+<td>No DocBlock was found for method CalculateCompressionRatioAudio()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1541</td>
+<td>No DocBlock was found for method CalculateReplayGain()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1563</td>
+<td>No DocBlock was found for method ProcessAudioStreams()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1576</td>
+<td>No DocBlock was found for method getid3_tempnam()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1581</td>
+<td>No DocBlock was found for method saveAttachment()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1642</td>
+<td>No DocBlock was found for method include_module()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1654</td>
+<td>No DocBlock was found for \getid3_handler</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1656</td>
+<td>No DocBlock was found for property $getid3</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1658</td>
+<td>No DocBlock was found for property $data_string_flag</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1659</td>
+<td>No DocBlock was found for property $data_string</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1660</td>
+<td>No DocBlock was found for property $data_string_position</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1663</td>
+<td>No DocBlock was found for method __construct()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1669</td>
+<td>No DocBlock was found for method Analyze()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1673</td>
+<td>No DocBlock was found for method AnalyzeString()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1700</td>
+<td>No DocBlock was found for method ftell()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1708</td>
+<td>No DocBlock was found for method fread()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1717</td>
+<td>No DocBlock was found for method fseek()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1739</td>
+<td>No DocBlock was found for \getid3_exception</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1741</td>
+<td>No DocBlock was found for property $message</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="package-contents">
+<a name="lib/getid3/module.audio.mod.php" id="lib/getid3/module.audio.mod.php"></a><h3>
+<i class="icon-file"></i>lib/getid3/module.audio.mod.php<small style="float: right;padding-right: 10px;">7</small>
+</h3>
+<div><table class="table markers table-bordered">
+<thead><tr>
+<th>Type</th>
+<th>Line</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="error">
+<td>error</td>
+<td>0</td>
+<td>No page-level DocBlock was found in file lib/getid3/module.audio.mod.php</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>17</td>
+<td>No DocBlock was found for \getid3_mod</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>20</td>
+<td>No DocBlock was found for method Analyze()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>38</td>
+<td>No DocBlock was found for method getMODheaderFilepointer()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>53</td>
+<td>No DocBlock was found for method getXMheaderFilepointer()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>68</td>
+<td>No DocBlock was found for method getS3MheaderFilepointer()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>83</td>
+<td>No DocBlock was found for method getITheaderFilepointer()</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="package-contents">
+<a name="lib/getid3/module.tag.id3v1.php" id="lib/getid3/module.tag.id3v1.php"></a><h3>
+<i class="icon-file"></i>lib/getid3/module.tag.id3v1.php<small style="float: right;padding-right: 10px;">9</small>
+</h3>
+<div><table class="table markers table-bordered">
+<thead><tr>
+<th>Type</th>
+<th>Line</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="error">
+<td>error</td>
+<td>0</td>
+<td>No page-level DocBlock was found in file lib/getid3/module.tag.id3v1.php</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>17</td>
+<td>No DocBlock was found for \getid3_id3v1</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>20</td>
+<td>No DocBlock was found for method Analyze()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>105</td>
+<td>No DocBlock was found for method cutfield()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>109</td>
+<td>No DocBlock was found for method ArrayOfGenres()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>293</td>
+<td>No DocBlock was found for method LookupGenreName()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>309</td>
+<td>No DocBlock was found for method LookupGenreID()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>320</td>
+<td>No DocBlock was found for method StandardiseID3v1GenreName()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>327</td>
+<td>No DocBlock was found for method GenerateID3v1Tag()</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="package-contents">
+<a name="lib/getid3/module.audio.dts.php" id="lib/getid3/module.audio.dts.php"></a><h3>
+<i class="icon-file"></i>lib/getid3/module.audio.dts.php<small style="float: right;padding-right: 10px;">10</small>
+</h3>
+<div><table class="table markers table-bordered">
+<thead><tr>
+<th>Type</th>
+<th>Line</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="error">
+<td>error</td>
+<td>0</td>
+<td>No page-level DocBlock was found in file lib/getid3/module.audio.dts.php</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>17</td>
+<td>No DocBlock was found for \getid3_dts</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>20</td>
+<td>No DocBlock was found for method Analyze()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>96</td>
+<td>No DocBlock was found for method readBinData()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>102</td>
+<td>No DocBlock was found for method DTSbitrateLookup()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>140</td>
+<td>No DocBlock was found for method DTSsampleRateLookup()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>162</td>
+<td>No DocBlock was found for method DTSbitPerSampleLookup()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>172</td>
+<td>No DocBlock was found for method DTSnumChannelsLookup()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>210</td>
+<td>No DocBlock was found for method DTSchannelArrangementLookup()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>232</td>
+<td>No DocBlock was found for method DTSdialogNormalization()</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="package-contents">
+<a name="lib/getid3/module.audio-video.real.php" id="lib/getid3/module.audio-video.real.php"></a><h3>
+<i class="icon-file"></i>lib/getid3/module.audio-video.real.php<small style="float: right;padding-right: 10px;">5</small>
+</h3>
+<div><table class="table markers table-bordered">
+<thead><tr>
+<th>Type</th>
+<th>Line</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="error">
+<td>error</td>
+<td>0</td>
+<td>No page-level DocBlock was found in file lib/getid3/module.audio-video.real.php</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>18</td>
+<td>No DocBlock was found for \getid3_real</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>21</td>
+<td>No DocBlock was found for method Analyze()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>373</td>
+<td>No DocBlock was found for method ParseOldRAheader()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>487</td>
+<td>No DocBlock was found for method RealAudioCodecFourCClookup()</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="package-contents">
+<a name="lib/getid3/getid3.lib.php" id="lib/getid3/getid3.lib.php"></a><h3>
+<i class="icon-file"></i>lib/getid3/getid3.lib.php<small style="float: right;padding-right: 10px;">66</small>
+</h3>
+<div><table class="table markers table-bordered">
+<thead><tr>
+<th>Type</th>
+<th>Line</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="error">
+<td>error</td>
+<td>0</td>
+<td>No page-level DocBlock was found in file lib/getid3/getid3.lib.php</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>14</td>
+<td>No DocBlock was found for \getid3_lib</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>17</td>
+<td>No DocBlock was found for method PrintHexBytes()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>38</td>
+<td>No DocBlock was found for method trunc()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>55</td>
+<td>No DocBlock was found for method safe_inc()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>64</td>
+<td>No DocBlock was found for method CastAsInt()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>79</td>
+<td>No DocBlock was found for method intValueSupported()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>95</td>
+<td>No DocBlock was found for method DecimalizeFraction()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>101</td>
+<td>No DocBlock was found for method DecimalBinary2Float()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>108</td>
+<td>No DocBlock was found for method NormalizeBinaryPoint()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>132</td>
+<td>No DocBlock was found for method Float2BinaryDecimal()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>148</td>
+<td>No DocBlock was found for method Float2String()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>179</td>
+<td>No DocBlock was found for method LittleEndian2Float()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>184</td>
+<td>No DocBlock was found for method BigEndian2Float()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>262</td>
+<td>No DocBlock was found for method BigEndian2Int()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>292</td>
+<td>No DocBlock was found for method LittleEndian2Int()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>297</td>
+<td>No DocBlock was found for method BigEndian2Bin()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>307</td>
+<td>No DocBlock was found for method BigEndian2String()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>328</td>
+<td>No DocBlock was found for method Dec2Bin()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>342</td>
+<td>No DocBlock was found for method Bin2Dec()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>358</td>
+<td>No DocBlock was found for method Bin2String()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>369</td>
+<td>No DocBlock was found for method LittleEndian2String()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>384</td>
+<td>No DocBlock was found for method array_merge_clobber()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>402</td>
+<td>No DocBlock was found for method array_merge_noclobber()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>418</td>
+<td>No DocBlock was found for method ksort_recursive()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>428</td>
+<td>No DocBlock was found for method fileextension()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>444</td>
+<td>No DocBlock was found for method PlaytimeString()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>454</td>
+<td>No DocBlock was found for method DateMac2Unix()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>461</td>
+<td>No DocBlock was found for method FixedPoint8_8()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>466</td>
+<td>No DocBlock was found for method FixedPoint16_16()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>471</td>
+<td>No DocBlock was found for method FixedPoint2_30()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>477</td>
+<td>No DocBlock was found for method CreateDeepArray()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>495</td>
+<td>No DocBlock was found for method array_max()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>509</td>
+<td>No DocBlock was found for method array_min()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>523</td>
+<td>No DocBlock was found for method XML2array()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>533</td>
+<td>No DocBlock was found for method SimpleXMLelement2array()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>547</td>
+<td>No DocBlock was found for method hash_data()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>633</td>
+<td>No DocBlock was found for method CopyFileParts()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>660</td>
+<td>No DocBlock was found for method iconv_fallback_int_utf8()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>684</td>
+<td>No DocBlock was found for method iconv_fallback_iso88591_utf8()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>701</td>
+<td>No DocBlock was found for method iconv_fallback_iso88591_utf16be()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>713</td>
+<td>No DocBlock was found for method iconv_fallback_iso88591_utf16le()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>725</td>
+<td>No DocBlock was found for method iconv_fallback_iso88591_utf16()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>730</td>
+<td>No DocBlock was found for method iconv_fallback_utf8_iso88591()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>774</td>
+<td>No DocBlock was found for method iconv_fallback_utf8_utf16be()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>817</td>
+<td>No DocBlock was found for method iconv_fallback_utf8_utf16le()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>860</td>
+<td>No DocBlock was found for method iconv_fallback_utf8_utf16()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>865</td>
+<td>No DocBlock was found for method iconv_fallback_utf16be_utf8()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>879</td>
+<td>No DocBlock was found for method iconv_fallback_utf16le_utf8()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>893</td>
+<td>No DocBlock was found for method iconv_fallback_utf16be_iso88591()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>907</td>
+<td>No DocBlock was found for method iconv_fallback_utf16le_iso88591()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>921</td>
+<td>No DocBlock was found for method iconv_fallback_utf16_iso88591()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>932</td>
+<td>No DocBlock was found for method iconv_fallback_utf16_utf8()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>942</td>
+<td>No DocBlock was found for method iconv_fallback()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>991</td>
+<td>No DocBlock was found for method MultiByteCharString2HTML()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1085</td>
+<td>No DocBlock was found for method RGADnameLookup()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1097</td>
+<td>No DocBlock was found for method RGADoriginatorLookup()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1110</td>
+<td>No DocBlock was found for method RGADadjustmentLookup()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1119</td>
+<td>No DocBlock was found for method RGADgainString()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1134</td>
+<td>No DocBlock was found for method RGADamplitude2dB()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1139</td>
+<td>No DocBlock was found for method GetDataImageSize()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1160</td>
+<td>No DocBlock was found for method ImageTypesLookup()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1181</td>
+<td>No DocBlock was found for method CopyTagsToComments()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1245</td>
+<td>No DocBlock was found for method EmbeddedLookup()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1291</td>
+<td>No DocBlock was found for method IncludeDependency()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1311</td>
+<td>No DocBlock was found for method trimNullByte()</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="package-contents">
+<a name="lib/getid3/module.audio.optimfrog.php" id="lib/getid3/module.audio.optimfrog.php"></a><h3>
+<i class="icon-file"></i>lib/getid3/module.audio.optimfrog.php<small style="float: right;padding-right: 10px;">12</small>
+</h3>
+<div><table class="table markers table-bordered">
+<thead><tr>
+<th>Type</th>
+<th>Line</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="error">
+<td>error</td>
+<td>0</td>
+<td>No page-level DocBlock was found in file lib/getid3/module.audio.optimfrog.php</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>18</td>
+<td>No DocBlock was found for \getid3_optimfrog</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>21</td>
+<td>No DocBlock was found for method Analyze()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>47</td>
+<td>No DocBlock was found for method ParseOptimFROGheader42()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>94</td>
+<td>No DocBlock was found for method ParseOptimFROGheader45()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>316</td>
+<td>No DocBlock was found for method OptimFROGsampleTypeLookup()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>333</td>
+<td>No DocBlock was found for method OptimFROGbitsPerSampleTypeLookup()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>350</td>
+<td>No DocBlock was found for method OptimFROGchannelConfigurationLookup()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>358</td>
+<td>No DocBlock was found for method OptimFROGchannelConfigNumChannelsLookup()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>374</td>
+<td>No DocBlock was found for method OptimFROGencoderNameLookup()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>389</td>
+<td>No DocBlock was found for method OptimFROGcompressionLookup()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>411</td>
+<td>No DocBlock was found for method OptimFROGspeedupLookup()</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="package-contents">
+<a name="lib/getid3/extension.cache.dbm.php" id="lib/getid3/extension.cache.dbm.php"></a><h3>
+<i class="icon-file"></i>lib/getid3/extension.cache.dbm.php<small style="float: right;padding-right: 10px;">5</small>
+</h3>
+<div><table class="table markers table-bordered">
+<thead><tr>
+<th>Type</th>
+<th>Line</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="error">
+<td>error</td>
+<td>0</td>
+<td>No page-level DocBlock was found in file lib/getid3/extension.cache.dbm.php</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>76</td>
+<td>No DocBlock was found for method getID3_cached_dbm()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>144</td>
+<td>No DocBlock was found for method __destruct()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>159</td>
+<td>No DocBlock was found for method clear_cache()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>181</td>
+<td>No DocBlock was found for method analyze()</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="package-contents">
+<a name="lib/getid3/module.misc.cue.php" id="lib/getid3/module.misc.cue.php"></a><h3>
+<i class="icon-file"></i>lib/getid3/module.misc.cue.php<small style="float: right;padding-right: 10px;">7</small>
+</h3>
+<div><table class="table markers table-bordered">
+<thead><tr>
+<th>Type</th>
+<th>Line</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="error">
+<td>error</td>
+<td>0</td>
+<td>No page-level DocBlock was found in file lib/getid3/module.misc.cue.php</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>35</td>
+<td>No DocBlock was found for property $cuesheet</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>37</td>
+<td>No DocBlock was found for method Analyze()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>48</td>
+<td>No DocBlock was found for method readCueSheetFilename()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>53</td>
+<td>Name of argument $filedata does not match with the DocBlock's name $filename in readCueSheet()</td>
+</tr>
+<tr class="notice">
+<td>notice</td>
+<td>53</td>
+<td>Parameter $filename could not be found in readCueSheet()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>263</td>
+<td>No DocBlock was found for method parseString()</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="package-contents">
+<a name="lib/getid3/module.graphic.svg.php" id="lib/getid3/module.graphic.svg.php"></a><h3>
+<i class="icon-file"></i>lib/getid3/module.graphic.svg.php<small style="float: right;padding-right: 10px;">3</small>
+</h3>
+<div><table class="table markers table-bordered">
+<thead><tr>
+<th>Type</th>
+<th>Line</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="error">
+<td>error</td>
+<td>0</td>
+<td>No page-level DocBlock was found in file lib/getid3/module.graphic.svg.php</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>17</td>
+<td>No DocBlock was found for \getid3_svg</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>21</td>
+<td>No DocBlock was found for method Analyze()</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="package-contents">
+<a name="lib/getid3/write.id3v2.php" id="lib/getid3/write.id3v2.php"></a><h3>
+<i class="icon-file"></i>lib/getid3/write.id3v2.php<small style="float: right;padding-right: 10px;">41</small>
+</h3>
+<div><table class="table markers table-bordered">
+<thead><tr>
+<th>Type</th>
+<th>Line</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="error">
+<td>error</td>
+<td>0</td>
+<td>No page-level DocBlock was found in file lib/getid3/write.id3v2.php</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>18</td>
+<td>No DocBlock was found for \getid3_write_id3v2</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>20</td>
+<td>No DocBlock was found for property $filename</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>21</td>
+<td>No DocBlock was found for property $tag_data</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>22</td>
+<td>No DocBlock was found for property $fread_buffer_size</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>23</td>
+<td>No DocBlock was found for property $paddedlength</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>24</td>
+<td>No DocBlock was found for property $majorversion</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>25</td>
+<td>No DocBlock was found for property $minorversion</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>26</td>
+<td>No DocBlock was found for property $merge_existing_data</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>27</td>
+<td>No DocBlock was found for property $id3v2_default_encodingid</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>28</td>
+<td>No DocBlock was found for property $id3v2_use_unsynchronisation</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>29</td>
+<td>No DocBlock was found for property $warnings</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>30</td>
+<td>No DocBlock was found for property $errors</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>32</td>
+<td>No DocBlock was found for method getid3_write_id3v2()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>36</td>
+<td>No DocBlock was found for method WriteID3v2()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>136</td>
+<td>No DocBlock was found for method RemoveID3v2()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>228</td>
+<td>No DocBlock was found for method GenerateID3v2TagFlags()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>262</td>
+<td>No DocBlock was found for method GenerateID3v2FrameFlags()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>302</td>
+<td>No DocBlock was found for method GenerateID3v2FrameData()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1176</td>
+<td>No DocBlock was found for method ID3v2FrameIsAllowed()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1533</td>
+<td>No DocBlock was found for method GenerateID3v2Tag()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1644</td>
+<td>No DocBlock was found for method ID3v2IsValidPriceString()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1653</td>
+<td>No DocBlock was found for method ID3v2FrameFlagsLookupTagAlter()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1665</td>
+<td>No DocBlock was found for method ID3v2FrameFlagsLookupFileAlter()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1678</td>
+<td>No DocBlock was found for method ID3v2IsValidETCOevent()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1698</td>
+<td>No DocBlock was found for method ID3v2IsValidSYLTtype()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1707</td>
+<td>No DocBlock was found for method ID3v2IsValidRVA2channeltype()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1714</td>
+<td>No DocBlock was found for method ID3v2IsValidAPICpicturetype()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1721</td>
+<td>No DocBlock was found for method ID3v2IsValidAPICimageformat()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1736</td>
+<td>No DocBlock was found for method ID3v2IsValidCOMRreceivedAs()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1743</td>
+<td>No DocBlock was found for method ID3v2IsValidRGADname()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1750</td>
+<td>No DocBlock was found for method ID3v2IsValidRGADoriginator()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1757</td>
+<td>No DocBlock was found for method ID3v2IsValidTextEncoding()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1765</td>
+<td>No DocBlock was found for method Unsynchronise()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1795</td>
+<td>No DocBlock was found for method is_hash()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1810</td>
+<td>No DocBlock was found for method array_join_merge()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1834</td>
+<td>No DocBlock was found for method IsValidMIMEstring()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1841</td>
+<td>No DocBlock was found for method IsWithinBitRange()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1854</td>
+<td>No DocBlock was found for method safe_parse_url()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1865</td>
+<td>No DocBlock was found for method IsValidURL()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1896</td>
+<td>No DocBlock was found for method ID3v2ShortFrameNameLookup()</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="package-contents">
+<a name="lib/getid3/module.tag.id3v2.php" id="lib/getid3/module.tag.id3v2.php"></a><h3>
+<i class="icon-file"></i>lib/getid3/module.tag.id3v2.php<small style="float: right;padding-right: 10px;">29</small>
+</h3>
+<div><table class="table markers table-bordered">
+<thead><tr>
+<th>Type</th>
+<th>Line</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="error">
+<td>error</td>
+<td>0</td>
+<td>No page-level DocBlock was found in file lib/getid3/module.tag.id3v2.php</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>18</td>
+<td>No DocBlock was found for \getid3_id3v2</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>20</td>
+<td>No DocBlock was found for property $inline_attachments</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>21</td>
+<td>No DocBlock was found for property $StartingOffset</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>23</td>
+<td>No DocBlock was found for method Analyze()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>498</td>
+<td>No DocBlock was found for method ParseID3v2GenreString()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>521</td>
+<td>No DocBlock was found for method ParseID3v2Frame()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1854</td>
+<td>No DocBlock was found for method DeUnsynchronise()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1858</td>
+<td>No DocBlock was found for method LookupExtendedHeaderRestrictionsTagSizeLimits()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1868</td>
+<td>No DocBlock was found for method LookupExtendedHeaderRestrictionsTextEncodings()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1876</td>
+<td>No DocBlock was found for method LookupExtendedHeaderRestrictionsTextFieldSize()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1886</td>
+<td>No DocBlock was found for method LookupExtendedHeaderRestrictionsImageEncoding()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1894</td>
+<td>No DocBlock was found for method LookupExtendedHeaderRestrictionsImageSizeSize()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1904</td>
+<td>No DocBlock was found for method LookupCurrencyUnits()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>2101</td>
+<td>No DocBlock was found for method LookupCurrencyCountry()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>2298</td>
+<td>No DocBlock was found for method LanguageLookup()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>2754</td>
+<td>No DocBlock was found for method ETCOEventLookup()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>2797</td>
+<td>No DocBlock was found for method SYTLContentTypeLookup()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>2813</td>
+<td>No DocBlock was found for method APICPictureTypeLookup()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>2843</td>
+<td>No DocBlock was found for method COMRReceivedAsLookup()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>2859</td>
+<td>No DocBlock was found for method RVA2ChannelTypeLookup()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>2875</td>
+<td>No DocBlock was found for method FrameNameLongLookup()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>3059</td>
+<td>No DocBlock was found for method FrameNameShortLookup()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>3238</td>
+<td>No DocBlock was found for method TextEncodingTerminatorLookup()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>3251</td>
+<td>No DocBlock was found for method TextEncodingNameLookup()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>3264</td>
+<td>No DocBlock was found for method IsValidID3v2FrameName()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>3278</td>
+<td>No DocBlock was found for method IsANumber()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>3293</td>
+<td>No DocBlock was found for method IsValidDateStampString()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>3321</td>
+<td>No DocBlock was found for method ID3v2HeaderLength()</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="package-contents">
+<a name="lib/getid3/module.audio-video.flv.php" id="lib/getid3/module.audio-video.flv.php"></a><h3>
+<i class="icon-file"></i>lib/getid3/module.audio-video.flv.php<small style="float: right;padding-right: 10px;">55</small>
+</h3>
+<div><table class="table markers table-bordered">
+<thead><tr>
+<th>Type</th>
+<th>Line</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="error">
+<td>error</td>
+<td>0</td>
+<td>No page-level DocBlock was found in file lib/getid3/module.audio-video.flv.php</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>70</td>
+<td>No DocBlock was found for \getid3_flv</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>72</td>
+<td>No DocBlock was found for property $max_frames</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>74</td>
+<td>No DocBlock was found for method Analyze()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>320</td>
+<td>No DocBlock was found for method FLVaudioFormat()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>342</td>
+<td>No DocBlock was found for method FLVaudioRate()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>352</td>
+<td>No DocBlock was found for method FLVaudioBitDepth()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>360</td>
+<td>No DocBlock was found for method FLVvideoCodec()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>373</td>
+<td>No DocBlock was found for \AMFStream</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>374</td>
+<td>No DocBlock was found for property $bytes</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>375</td>
+<td>No DocBlock was found for property $pos</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>377</td>
+<td>No DocBlock was found for method AMFStream()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>382</td>
+<td>No DocBlock was found for method readByte()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>386</td>
+<td>No DocBlock was found for method readInt()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>390</td>
+<td>No DocBlock was found for method readLong()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>394</td>
+<td>No DocBlock was found for method readDouble()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>398</td>
+<td>No DocBlock was found for method readUTF()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>403</td>
+<td>No DocBlock was found for method readLongUTF()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>408</td>
+<td>No DocBlock was found for method read()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>414</td>
+<td>No DocBlock was found for method peekByte()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>421</td>
+<td>No DocBlock was found for method peekInt()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>428</td>
+<td>No DocBlock was found for method peekLong()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>435</td>
+<td>No DocBlock was found for method peekDouble()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>442</td>
+<td>No DocBlock was found for method peekUTF()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>449</td>
+<td>No DocBlock was found for method peekLongUTF()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>457</td>
+<td>No DocBlock was found for \AMFReader</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>458</td>
+<td>No DocBlock was found for property $stream</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>460</td>
+<td>No DocBlock was found for method AMFReader()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>464</td>
+<td>No DocBlock was found for method readData()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>534</td>
+<td>No DocBlock was found for method readDouble()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>538</td>
+<td>No DocBlock was found for method readBoolean()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>542</td>
+<td>No DocBlock was found for method readString()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>546</td>
+<td>No DocBlock was found for method readObject()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>563</td>
+<td>No DocBlock was found for method readMixedArray()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>584</td>
+<td>No DocBlock was found for method readArray()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>594</td>
+<td>No DocBlock was found for method readDate()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>600</td>
+<td>No DocBlock was found for method readLongString()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>604</td>
+<td>No DocBlock was found for method readXML()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>608</td>
+<td>No DocBlock was found for method readTypedObject()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>614</td>
+<td>No DocBlock was found for \AVCSequenceParameterSetReader</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>615</td>
+<td>No DocBlock was found for property $sps</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>616</td>
+<td>No DocBlock was found for property $start</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>617</td>
+<td>No DocBlock was found for property $currentBytes</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>618</td>
+<td>No DocBlock was found for property $currentBits</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>619</td>
+<td>No DocBlock was found for property $width</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>620</td>
+<td>No DocBlock was found for property $height</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>622</td>
+<td>No DocBlock was found for method AVCSequenceParameterSetReader()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>626</td>
+<td>No DocBlock was found for method readData()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>678</td>
+<td>No DocBlock was found for method skipBits()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>684</td>
+<td>No DocBlock was found for method getBit()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>690</td>
+<td>No DocBlock was found for method getBits()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>698</td>
+<td>No DocBlock was found for method expGolombUe()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>713</td>
+<td>No DocBlock was found for method expGolombSe()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>722</td>
+<td>No DocBlock was found for method getWidth()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>726</td>
+<td>No DocBlock was found for method getHeight()</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="package-contents">
+<a name="lib/getid3/module.graphic.pcd.php" id="lib/getid3/module.graphic.pcd.php"></a><h3>
+<i class="icon-file"></i>lib/getid3/module.graphic.pcd.php<small style="float: right;padding-right: 10px;">5</small>
+</h3>
+<div><table class="table markers table-bordered">
+<thead><tr>
+<th>Type</th>
+<th>Line</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="error">
+<td>error</td>
+<td>0</td>
+<td>No page-level DocBlock was found in file lib/getid3/module.graphic.pcd.php</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>17</td>
+<td>No DocBlock was found for \getid3_pcd</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>19</td>
+<td>No DocBlock was found for property $ExtractData</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>21</td>
+<td>No DocBlock was found for method Analyze()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>101</td>
+<td>No DocBlock was found for method YCbCr2RGB()</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="package-contents">
+<a name="lib/getid3/module.archive.zip.php" id="lib/getid3/module.archive.zip.php"></a><h3>
+<i class="icon-file"></i>lib/getid3/module.archive.zip.php<small style="float: right;padding-right: 10px;">12</small>
+</h3>
+<div><table class="table markers table-bordered">
+<thead><tr>
+<th>Type</th>
+<th>Line</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="error">
+<td>error</td>
+<td>0</td>
+<td>No page-level DocBlock was found in file lib/getid3/module.archive.zip.php</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>17</td>
+<td>No DocBlock was found for \getid3_zip</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>20</td>
+<td>No DocBlock was found for method Analyze()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>110</td>
+<td>No DocBlock was found for method getZIPHeaderFilepointerTopDown()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>156</td>
+<td>No DocBlock was found for method getZIPentriesFilepointer()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>179</td>
+<td>No DocBlock was found for method ZIPparseLocalFileHeader()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>236</td>
+<td>No DocBlock was found for method ZIPparseCentralDirectory()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>292</td>
+<td>No DocBlock was found for method ZIPparseEndOfCentralDirectory()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>319</td>
+<td>No DocBlock was found for method ZIPparseGeneralPurposeFlags()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>352</td>
+<td>No DocBlock was found for method ZIPversionOSLookup()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>377</td>
+<td>No DocBlock was found for method ZIPcompressionMethodLookup()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>395</td>
+<td>No DocBlock was found for method DOStime2UNIXtime()</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="package-contents">
+<a name="lib/getid3/module.audio-video.mpeg.php" id="lib/getid3/module.audio-video.mpeg.php"></a><h3>
+<i class="icon-file"></i>lib/getid3/module.audio-video.mpeg.php<small style="float: right;padding-right: 10px;">7</small>
+</h3>
+<div><table class="table markers table-bordered">
+<thead><tr>
+<th>Type</th>
+<th>Line</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="error">
+<td>error</td>
+<td>0</td>
+<td>No page-level DocBlock was found in file lib/getid3/module.audio-video.mpeg.php</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>28</td>
+<td>No DocBlock was found for \getid3_mpeg</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>31</td>
+<td>No DocBlock was found for method Analyze()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>229</td>
+<td>No DocBlock was found for method MPEGsystemNonOverheadPercentage()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>281</td>
+<td>No DocBlock was found for method MPEGvideoFramerateLookup()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>286</td>
+<td>No DocBlock was found for method MPEGvideoAspectRatioLookup()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>291</td>
+<td>No DocBlock was found for method MPEGvideoAspectRatioTextLookup()</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="package-contents">
+<a name="lib/getid3/write.vorbiscomment.php" id="lib/getid3/write.vorbiscomment.php"></a><h3>
+<i class="icon-file"></i>lib/getid3/write.vorbiscomment.php<small style="float: right;padding-right: 10px;">10</small>
+</h3>
+<div><table class="table markers table-bordered">
+<thead><tr>
+<th>Type</th>
+<th>Line</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="error">
+<td>error</td>
+<td>0</td>
+<td>No page-level DocBlock was found in file lib/getid3/write.vorbiscomment.php</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>17</td>
+<td>No DocBlock was found for \getid3_write_vorbiscomment</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>20</td>
+<td>No DocBlock was found for property $filename</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>21</td>
+<td>No DocBlock was found for property $tag_data</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>22</td>
+<td>No DocBlock was found for property $warnings</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>23</td>
+<td>No DocBlock was found for property $errors</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>25</td>
+<td>No DocBlock was found for method getid3_write_vorbiscomment()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>29</td>
+<td>No DocBlock was found for method WriteVorbisComment()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>102</td>
+<td>No DocBlock was found for method DeleteVorbisComment()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>107</td>
+<td>No DocBlock was found for method CleanVorbisCommentName()</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="package-contents">
+<a name="lib/getid3/module.audio-video.matroska.php" id="lib/getid3/module.audio-video.matroska.php"></a><h3>
+<i class="icon-file"></i>lib/getid3/module.audio-video.matroska.php<small style="float: right;padding-right: 10px;">26</small>
+</h3>
+<div><table class="table markers table-bordered">
+<thead><tr>
+<th>Type</th>
+<th>Line</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="error">
+<td>error</td>
+<td>0</td>
+<td>No page-level DocBlock was found in file lib/getid3/module.audio-video.matroska.php</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>209</td>
+<td>No DocBlock was found for \getid3_matroska</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>212</td>
+<td>No DocBlock was found for property $hide_clusters</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>213</td>
+<td>No DocBlock was found for property $parse_whole_file</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>216</td>
+<td>No DocBlock was found for property $EBMLbuffer</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>217</td>
+<td>No DocBlock was found for property $EBMLbuffer_offset</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>218</td>
+<td>No DocBlock was found for property $EBMLbuffer_length</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>219</td>
+<td>No DocBlock was found for property $current_offset</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>220</td>
+<td>No DocBlock was found for property $unuseful_elements</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>222</td>
+<td>No DocBlock was found for method Analyze()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>470</td>
+<td>No DocBlock was found for method parseEBML()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1165</td>
+<td>No DocBlock was found for method EnsureBufferHasEnoughData()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1188</td>
+<td>No DocBlock was found for method readEBMLint()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1221</td>
+<td>No DocBlock was found for method readEBMLelementData()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1229</td>
+<td>No DocBlock was found for method getEBMLelement()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1266</td>
+<td>No DocBlock was found for method unhandledElement()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1279</td>
+<td>No DocBlock was found for method ExtractCommentsSimpleTag()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1295</td>
+<td>No DocBlock was found for method HandleEMBLSimpleTag()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1325</td>
+<td>No DocBlock was found for method HandleEMBLClusterBlock()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1379</td>
+<td>No DocBlock was found for method EBML2Int()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1421</td>
+<td>No DocBlock was found for method EBMLdate2unix()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1427</td>
+<td>No DocBlock was found for method MatroskaTargetTypeValue()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1442</td>
+<td>No DocBlock was found for method MatroskaBlockLacingType()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1454</td>
+<td>No DocBlock was found for method MatroskaCodecIDtoCommonName()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1489</td>
+<td>No DocBlock was found for method EBMLidName()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>1686</td>
+<td>No DocBlock was found for method getDefaultStreamInfo()</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="package-contents">
+<a name="lib/getid3/module.misc.pdf.php" id="lib/getid3/module.misc.pdf.php"></a><h3>
+<i class="icon-file"></i>lib/getid3/module.misc.pdf.php<small style="float: right;padding-right: 10px;">3</small>
+</h3>
+<div><table class="table markers table-bordered">
+<thead><tr>
+<th>Type</th>
+<th>Line</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="error">
+<td>error</td>
+<td>0</td>
+<td>No page-level DocBlock was found in file lib/getid3/module.misc.pdf.php</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>17</td>
+<td>No DocBlock was found for \getid3_pdf</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>20</td>
+<td>No DocBlock was found for method Analyze()</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="package-contents">
+<a name="lib/getid3/module.graphic.bmp.php" id="lib/getid3/module.graphic.bmp.php"></a><h3>
+<i class="icon-file"></i>lib/getid3/module.graphic.bmp.php<small style="float: right;padding-right: 10px;">8</small>
+</h3>
+<div><table class="table markers table-bordered">
+<thead><tr>
+<th>Type</th>
+<th>Line</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="error">
+<td>error</td>
+<td>0</td>
+<td>No page-level DocBlock was found in file lib/getid3/module.graphic.bmp.php</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>17</td>
+<td>No DocBlock was found for \getid3_bmp</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>19</td>
+<td>No DocBlock was found for property $ExtractPalette</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>20</td>
+<td>No DocBlock was found for property $ExtractData</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>22</td>
+<td>No DocBlock was found for method Analyze()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>628</td>
+<td>No DocBlock was found for method PlotBMP()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>664</td>
+<td>No DocBlock was found for method BMPcompressionWindowsLookup()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>676</td>
+<td>No DocBlock was found for method BMPcompressionOS2Lookup()</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="package-contents">
+<a name="lib/getid3/module.archive.rar.php" id="lib/getid3/module.archive.rar.php"></a><h3>
+<i class="icon-file"></i>lib/getid3/module.archive.rar.php<small style="float: right;padding-right: 10px;">4</small>
+</h3>
+<div><table class="table markers table-bordered">
+<thead><tr>
+<th>Type</th>
+<th>Line</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="error">
+<td>error</td>
+<td>0</td>
+<td>No page-level DocBlock was found in file lib/getid3/module.archive.rar.php</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>17</td>
+<td>No DocBlock was found for \getid3_rar</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>20</td>
+<td>No DocBlock was found for property $option_use_rar_extension</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>22</td>
+<td>No DocBlock was found for method Analyze()</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="package-contents">
+<a name="lib/getid3/module.audio.vqf.php" id="lib/getid3/module.audio.vqf.php"></a><h3>
+<i class="icon-file"></i>lib/getid3/module.audio.vqf.php<small style="float: right;padding-right: 10px;">5</small>
+</h3>
+<div><table class="table markers table-bordered">
+<thead><tr>
+<th>Type</th>
+<th>Line</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="error">
+<td>error</td>
+<td>0</td>
+<td>No page-level DocBlock was found in file lib/getid3/module.audio.vqf.php</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>17</td>
+<td>No DocBlock was found for \getid3_vqf</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>19</td>
+<td>No DocBlock was found for method Analyze()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>138</td>
+<td>No DocBlock was found for method VQFchannelFrequencyLookup()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>147</td>
+<td>No DocBlock was found for method VQFcommentNiceNameLookup()</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="package-contents">
+<a name="lib/getid3/module.tag.xmp.php" id="lib/getid3/module.tag.xmp.php"></a><h3>
+<i class="icon-file"></i>lib/getid3/module.tag.xmp.php<small style="float: right;padding-right: 10px;">4</small>
+</h3>
+<div><table class="table markers table-bordered">
+<thead><tr>
+<th>Type</th>
+<th>Line</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="error">
+<td>error</td>
+<td>0</td>
+<td>No page-level DocBlock was found in file lib/getid3/module.tag.xmp.php</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>33</td>
+<td>No DocBlock was found for \Image_XMP</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>221</td>
+<td>Name of argument $xmltext does not match with the DocBlock's name $xml_text in read_XMP_array_from_text()</td>
+</tr>
+<tr class="notice">
+<td>notice</td>
+<td>221</td>
+<td>Parameter $xml_text could not be found in read_XMP_array_from_text()</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="package-contents">
+<a name="lib/getid3/module.graphic.gif.php" id="lib/getid3/module.graphic.gif.php"></a><h3>
+<i class="icon-file"></i>lib/getid3/module.graphic.gif.php<small style="float: right;padding-right: 10px;">4</small>
+</h3>
+<div><table class="table markers table-bordered">
+<thead><tr>
+<th>Type</th>
+<th>Line</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="error">
+<td>error</td>
+<td>0</td>
+<td>No page-level DocBlock was found in file lib/getid3/module.graphic.gif.php</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>17</td>
+<td>No DocBlock was found for \getid3_gif</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>20</td>
+<td>No DocBlock was found for method Analyze()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>170</td>
+<td>No DocBlock was found for method GetLSBits()</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="package-contents">
+<a name="lib/getid3/module.graphic.efax.php" id="lib/getid3/module.graphic.efax.php"></a><h3>
+<i class="icon-file"></i>lib/getid3/module.graphic.efax.php<small style="float: right;padding-right: 10px;">3</small>
+</h3>
+<div><table class="table markers table-bordered">
+<thead><tr>
+<th>Type</th>
+<th>Line</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="error">
+<td>error</td>
+<td>0</td>
+<td>No page-level DocBlock was found in file lib/getid3/module.graphic.efax.php</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>17</td>
+<td>No DocBlock was found for \getid3_efax</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>20</td>
+<td>No DocBlock was found for method Analyze()</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="package-contents">
+<a name="lib/getid3/module.graphic.png.php" id="lib/getid3/module.graphic.png.php"></a><h3>
+<i class="icon-file"></i>lib/getid3/module.graphic.png.php<small style="float: right;padding-right: 10px;">10</small>
+</h3>
+<div><table class="table markers table-bordered">
+<thead><tr>
+<th>Type</th>
+<th>Line</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="error">
+<td>error</td>
+<td>0</td>
+<td>No page-level DocBlock was found in file lib/getid3/module.graphic.png.php</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>17</td>
+<td>No DocBlock was found for \getid3_png</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>20</td>
+<td>No DocBlock was found for method Analyze()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>441</td>
+<td>No DocBlock was found for method PNGsRGBintentLookup()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>451</td>
+<td>No DocBlock was found for method PNGcompressionMethodLookup()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>458</td>
+<td>No DocBlock was found for method PNGpHYsUnitLookup()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>466</td>
+<td>No DocBlock was found for method PNGoFFsUnitLookup()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>474</td>
+<td>No DocBlock was found for method PNGpCALequationTypeLookup()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>484</td>
+<td>No DocBlock was found for method PNGsCALUnitLookup()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>492</td>
+<td>No DocBlock was found for method IHDRcalculateBitsPerSample()</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="package-contents">
+<a name="lib/getid3/write.real.php" id="lib/getid3/write.real.php"></a><h3>
+<i class="icon-file"></i>lib/getid3/write.real.php<small style="float: right;padding-right: 10px;">14</small>
+</h3>
+<div><table class="table markers table-bordered">
+<thead><tr>
+<th>Type</th>
+<th>Line</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="error">
+<td>error</td>
+<td>0</td>
+<td>No page-level DocBlock was found in file lib/getid3/write.real.php</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>16</td>
+<td>No DocBlock was found for \getid3_write_real</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>18</td>
+<td>No DocBlock was found for property $filename</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>19</td>
+<td>No DocBlock was found for property $tag_data</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>20</td>
+<td>No DocBlock was found for property $fread_buffer_size</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>21</td>
+<td>No DocBlock was found for property $warnings</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>22</td>
+<td>No DocBlock was found for property $errors</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>23</td>
+<td>No DocBlock was found for property $paddedlength</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>25</td>
+<td>No DocBlock was found for method getid3_write_real()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>29</td>
+<td>No DocBlock was found for method WriteReal()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>129</td>
+<td>No DocBlock was found for method GenerateRMFchunk()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>147</td>
+<td>No DocBlock was found for method GeneratePROPchunk()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>184</td>
+<td>No DocBlock was found for method GenerateCONTchunk()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>213</td>
+<td>No DocBlock was found for method RemoveReal()</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="package-contents">
+<a name="lib/getid3/module.audio.rkau.php" id="lib/getid3/module.audio.rkau.php"></a><h3>
+<i class="icon-file"></i>lib/getid3/module.audio.rkau.php<small style="float: right;padding-right: 10px;">4</small>
+</h3>
+<div><table class="table markers table-bordered">
+<thead><tr>
+<th>Type</th>
+<th>Line</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="error">
+<td>error</td>
+<td>0</td>
+<td>No page-level DocBlock was found in file lib/getid3/module.audio.rkau.php</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>17</td>
+<td>No DocBlock was found for \getid3_rkau</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>20</td>
+<td>No DocBlock was found for method Analyze()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>79</td>
+<td>No DocBlock was found for method RKAUqualityLookup()</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="package-contents">
+<a name="lib/getid3/module.audio.shorten.php" id="lib/getid3/module.audio.shorten.php"></a><h3>
+<i class="icon-file"></i>lib/getid3/module.audio.shorten.php<small style="float: right;padding-right: 10px;">3</small>
+</h3>
+<div><table class="table markers table-bordered">
+<thead><tr>
+<th>Type</th>
+<th>Line</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="error">
+<td>error</td>
+<td>0</td>
+<td>No page-level DocBlock was found in file lib/getid3/module.audio.shorten.php</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>17</td>
+<td>No DocBlock was found for \getid3_shorten</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>20</td>
+<td>No DocBlock was found for method Analyze()</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="package-contents">
+<a name="lib/getid3/module.audio.bonk.php" id="lib/getid3/module.audio.bonk.php"></a><h3>
+<i class="icon-file"></i>lib/getid3/module.audio.bonk.php<small style="float: right;padding-right: 10px;">5</small>
+</h3>
+<div><table class="table markers table-bordered">
+<thead><tr>
+<th>Type</th>
+<th>Line</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="error">
+<td>error</td>
+<td>0</td>
+<td>No page-level DocBlock was found in file lib/getid3/module.audio.bonk.php</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>17</td>
+<td>No DocBlock was found for \getid3_bonk</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>19</td>
+<td>No DocBlock was found for method Analyze()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>116</td>
+<td>No DocBlock was found for method HandleBonkTags()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>215</td>
+<td>No DocBlock was found for method BonkIsValidTagName()</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="package-contents">
+<a name="lib/getid3/module.tag.apetag.php" id="lib/getid3/module.tag.apetag.php"></a><h3>
+<i class="icon-file"></i>lib/getid3/module.tag.apetag.php<small style="float: right;padding-right: 10px;">9</small>
+</h3>
+<div><table class="table markers table-bordered">
+<thead><tr>
+<th>Type</th>
+<th>Line</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="error">
+<td>error</td>
+<td>0</td>
+<td>No page-level DocBlock was found in file lib/getid3/module.tag.apetag.php</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>16</td>
+<td>No DocBlock was found for \getid3_apetag</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>18</td>
+<td>No DocBlock was found for property $inline_attachments</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>19</td>
+<td>No DocBlock was found for property $overrideendoffset</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>21</td>
+<td>No DocBlock was found for method Analyze()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>292</td>
+<td>No DocBlock was found for method parseAPEheaderFooter()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>316</td>
+<td>No DocBlock was found for method parseAPEtagFlags()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>331</td>
+<td>No DocBlock was found for method APEcontentTypeFlagLookup()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>341</td>
+<td>No DocBlock was found for method APEtagItemIsUTF8Lookup()</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="package-contents">
+<a name="lib/getid3/module.misc.par2.php" id="lib/getid3/module.misc.par2.php"></a><h3>
+<i class="icon-file"></i>lib/getid3/module.misc.par2.php<small style="float: right;padding-right: 10px;">3</small>
+</h3>
+<div><table class="table markers table-bordered">
+<thead><tr>
+<th>Type</th>
+<th>Line</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="error">
+<td>error</td>
+<td>0</td>
+<td>No page-level DocBlock was found in file lib/getid3/module.misc.par2.php</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>17</td>
+<td>No DocBlock was found for \getid3_par2</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>20</td>
+<td>No DocBlock was found for method Analyze()</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="package-contents">
+<a name="lib/getid3/module.audio.ac3.php" id="lib/getid3/module.audio.ac3.php"></a><h3>
+<i class="icon-file"></i>lib/getid3/module.audio.ac3.php<small style="float: right;padding-right: 10px;">17</small>
+</h3>
+<div><table class="table markers table-bordered">
+<thead><tr>
+<th>Type</th>
+<th>Line</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="error">
+<td>error</td>
+<td>0</td>
+<td>No page-level DocBlock was found in file lib/getid3/module.audio.ac3.php</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>17</td>
+<td>No DocBlock was found for \getid3_ac3</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>19</td>
+<td>No DocBlock was found for property $AC3header</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>20</td>
+<td>No DocBlock was found for property $BSIoffset</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>23</td>
+<td>No DocBlock was found for method Analyze()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>231</td>
+<td>No DocBlock was found for method readHeaderBSI()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>238</td>
+<td>No DocBlock was found for method AC3sampleRateCodeLookup()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>248</td>
+<td>No DocBlock was found for method AC3serviceTypeLookup()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>269</td>
+<td>No DocBlock was found for method AC3audioCodingModeLookup()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>287</td>
+<td>No DocBlock was found for method AC3centerMixLevelLookup()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>300</td>
+<td>No DocBlock was found for method AC3surroundMixLevelLookup()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>313</td>
+<td>No DocBlock was found for method AC3dolbySurroundModeLookup()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>323</td>
+<td>No DocBlock was found for method AC3channelsEnabledLookup()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>348</td>
+<td>No DocBlock was found for method AC3heavyCompression()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>398</td>
+<td>No DocBlock was found for method AC3roomTypeLookup()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>408</td>
+<td>No DocBlock was found for method AC3frameSizeLookup()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>443</td>
+<td>No DocBlock was found for method AC3bitrateLookup()</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="package-contents">
+<a name="lib/getid3/module.misc.msoffice.php" id="lib/getid3/module.misc.msoffice.php"></a><h3>
+<i class="icon-file"></i>lib/getid3/module.misc.msoffice.php<small style="float: right;padding-right: 10px;">3</small>
+</h3>
+<div><table class="table markers table-bordered">
+<thead><tr>
+<th>Type</th>
+<th>Line</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="error">
+<td>error</td>
+<td>0</td>
+<td>No page-level DocBlock was found in file lib/getid3/module.misc.msoffice.php</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>17</td>
+<td>No DocBlock was found for \getid3_msoffice</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>20</td>
+<td>No DocBlock was found for method Analyze()</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="package-contents">
+<a name="doc/index.php" id="doc/index.php"></a><h3>
+<i class="icon-file"></i>doc/index.php<small style="float: right;padding-right: 10px;">1</small>
+</h3>
+<div><table class="table markers table-bordered">
+<thead><tr>
+<th>Type</th>
+<th>Line</th>
+<th>Description</th>
+</tr></thead>
+<tbody><tr class="error">
+<td>error</td>
+<td>0</td>
+<td>No page-level DocBlock was found in file doc/index.php</td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="package-contents">
+<a name="index.php" id="index.php"></a><h3>
+<i class="icon-file"></i>index.php<small style="float: right;padding-right: 10px;">2</small>
+</h3>
+<div><table class="table markers table-bordered">
+<thead><tr>
+<th>Type</th>
+<th>Line</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="error">
+<td>error</td>
+<td>0</td>
+<td>No page-level DocBlock was found in file index.php</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>25</td>
+<td>No DocBlock was found for function \buddypress_media_autoloader()</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="package-contents">
+<a name="app/helper/BPMediaBranding.php" id="app/helper/BPMediaBranding.php"></a><h3>
+<i class="icon-file"></i>app/helper/BPMediaBranding.php<small style="float: right;padding-right: 10px;">2</small>
+</h3>
+<div><table class="table markers table-bordered">
+<thead><tr>
+<th>Type</th>
+<th>Line</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="error">
+<td>error</td>
+<td>11</td>
+<td>No DocBlock was found for \BPMediaBranding</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>13</td>
+<td>No DocBlock was found for method __construct()</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="package-contents">
+<a name="app/helper/BPMediaWidget.php" id="app/helper/BPMediaWidget.php"></a><h3>
+<i class="icon-file"></i>app/helper/BPMediaWidget.php<small style="float: right;padding-right: 10px;">2</small>
+</h3>
+<div><table class="table markers table-bordered">
+<thead><tr>
+<th>Type</th>
+<th>Line</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="error">
+<td>error</td>
+<td>10</td>
+<td>No DocBlock was found for \BPMediaWidget</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>12</td>
+<td>No DocBlock was found for method __construct()</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="package-contents">
+<a name="app/helper/BPMediaFeed.php" id="app/helper/BPMediaFeed.php"></a><h3>
+<i class="icon-file"></i>app/helper/BPMediaFeed.php<small style="float: right;padding-right: 10px;">3</small>
+</h3>
+<div><table class="table markers table-bordered">
+<thead><tr>
+<th>Type</th>
+<th>Line</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="error">
+<td>error</td>
+<td>0</td>
+<td>No page-level DocBlock was found in file app/helper/BPMediaFeed.php</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>11</td>
+<td>No DocBlock was found for property $feed_url</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>13</td>
+<td>No DocBlock was found for method __construct()</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="package-contents">
+<a name="app/helper/BPMediaLog.php" id="app/helper/BPMediaLog.php"></a><h3>
+<i class="icon-file"></i>app/helper/BPMediaLog.php<small style="float: right;padding-right: 10px;">2</small>
+</h3>
+<div><table class="table markers table-bordered">
+<thead><tr>
+<th>Type</th>
+<th>Line</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="error">
+<td>error</td>
+<td>10</td>
+<td>No DocBlock was found for \BPMediaLog</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>12</td>
+<td>No DocBlock was found for method __construct()</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="package-contents">
+<a name="app/helper/BPMediaSettings.php" id="app/helper/BPMediaSettings.php"></a><h3>
+<i class="icon-file"></i>app/helper/BPMediaSettings.php<small style="float: right;padding-right: 10px;">3</small>
+</h3>
+<div><table class="table markers table-bordered">
+<thead><tr>
+<th>Type</th>
+<th>Line</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="error">
+<td>error</td>
+<td>10</td>
+<td>No DocBlock was found for \BPMediaSettings</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>12</td>
+<td>No DocBlock was found for method __construct()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>66</td>
+<td>Argument $input is missing from the Docblock of sanitize()</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="package-contents">
+<a name="app/helper/BPMediaSupport.php" id="app/helper/BPMediaSupport.php"></a><h3>
+<i class="icon-file"></i>app/helper/BPMediaSupport.php<small style="float: right;padding-right: 10px;">4</small>
+</h3>
+<div><table class="table markers table-bordered">
+<thead><tr>
+<th>Type</th>
+<th>Line</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="error">
+<td>error</td>
+<td>10</td>
+<td>No DocBlock was found for \BPMediaSupport</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>12</td>
+<td>No DocBlock was found for method __construct()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>16</td>
+<td>No DocBlock was found for method get_form()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>94</td>
+<td>No DocBlock was found for method submit_request()</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="package-contents">
+<a name="app/helper/BPMediaAddon.php" id="app/helper/BPMediaAddon.php"></a><h3>
+<i class="icon-file"></i>app/helper/BPMediaAddon.php<small style="float: right;padding-right: 10px;">5</small>
+</h3>
+<div><table class="table markers table-bordered">
+<thead><tr>
+<th>Type</th>
+<th>Line</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="error">
+<td>error</td>
+<td>11</td>
+<td>No DocBlock was found for \BPMediaAddon</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>13</td>
+<td>No DocBlock was found for property $enquiry_link</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>15</td>
+<td>No DocBlock was found for method coming_soon_div()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>23</td>
+<td>No DocBlock was found for method get_addons()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>53</td>
+<td>No DocBlock was found for method addon()</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="package-contents">
+<a name="app/helper/BPMediaUpgrade.php" id="app/helper/BPMediaUpgrade.php"></a><h3>
+<i class="icon-file"></i>app/helper/BPMediaUpgrade.php<small style="float: right;padding-right: 10px;">2</small>
+</h3>
+<div><table class="table markers table-bordered">
+<thead><tr>
+<th>Type</th>
+<th>Line</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="error">
+<td>error</td>
+<td>10</td>
+<td>No DocBlock was found for \BPMediaUpgrade</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>12</td>
+<td>No DocBlock was found for method __construct()</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="package-contents">
+<a name="app/admin/BPMediaAdmin.php" id="app/admin/BPMediaAdmin.php"></a><h3>
+<i class="icon-file"></i>app/admin/BPMediaAdmin.php<small style="float: right;padding-right: 10px;">11</small>
+</h3>
+<div><table class="table markers table-bordered">
+<thead><tr>
+<th>Type</th>
+<th>Line</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="error">
+<td>error</td>
+<td>10</td>
+<td>No DocBlock was found for \BPMediaAdmin</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>12</td>
+<td>No DocBlock was found for property $bp_media_upgrade</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>13</td>
+<td>No DocBlock was found for property $bp_media_settings</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>14</td>
+<td>No DocBlock was found for property $bp_media_feed</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>16</td>
+<td>No DocBlock was found for method __construct()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>81</td>
+<td>No DocBlock was found for method get_current_tab()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>85</td>
+<td>Argument $page is missing from the Docblock of render_page()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>85</td>
+<td>Argument $is_settings is missing from the Docblock of render_page()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>206</td>
+<td>No DocBlock was found for method update_count()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>242</td>
+<td>No DocBlock was found for method save_multisite_options()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>255</td>
+<td>No DocBlock was found for method admin_sidebar()</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="package-contents">
+<a name="app/main/profile/BPMediaTemplate.php" id="app/main/profile/BPMediaTemplate.php"></a><h3>
+<i class="icon-file"></i>app/main/profile/BPMediaTemplate.php<small style="float: right;padding-right: 10px;">11</small>
+</h3>
+<div><table class="table markers table-bordered">
+<thead><tr>
+<th>Type</th>
+<th>Line</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="error">
+<td>error</td>
+<td>0</td>
+<td>No page-level DocBlock was found in file app/main/profile/BPMediaTemplate.php</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>14</td>
+<td>No DocBlock was found for method upload_form_multiple()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>89</td>
+<td>No DocBlock was found for method get_permalink()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>113</td>
+<td>No DocBlock was found for method the_permalink()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>117</td>
+<td>No DocBlock was found for method the_content()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>134</td>
+<td>No DocBlock was found for method the_album_content()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>151</td>
+<td>No DocBlock was found for method show_more()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>171</td>
+<td>No short description for method redirect()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>171</td>
+<td>Argument $mediaconst is missing from the Docblock of redirect()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>178</td>
+<td>No short description for method loader()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>185</td>
+<td>No DocBlock was found for method upload_form_multiple_activity()</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="package-contents">
+<a name="app/main/profile/BPMediaScreen.php" id="app/main/profile/BPMediaScreen.php"></a><h3>
+<i class="icon-file"></i>app/main/profile/BPMediaScreen.php<small style="float: right;padding-right: 10px;">18</small>
+</h3>
+<div><table class="table markers table-bordered">
+<thead><tr>
+<th>Type</th>
+<th>Line</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="error">
+<td>error</td>
+<td>16</td>
+<td>No DocBlock was found for \BPMediaScreen</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>42</td>
+<td>No DocBlock was found for property $template</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>77</td>
+<td>No short description for method media_constant()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>86</td>
+<td>No short description for method hook_before()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>94</td>
+<td>No short description for method hook_after()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>102</td>
+<td>No short description for method page_not_exist()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>113</td>
+<td>No short description for method screen_title()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>121</td>
+<td>No short description for method screen()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>157</td>
+<td>No short description for method screen_content()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>181</td>
+<td>No short description for method entry_screen()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>208</td>
+<td>No short description for method entry_screen_title()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>220</td>
+<td>No short description for method entry_screen_content()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>239</td>
+<td>No short description for method edit_screen()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>269</td>
+<td>No short description for method edit_screen_title()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>277</td>
+<td>No short description for method edit_screen_content()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>310</td>
+<td>No short description for method entry_delete()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>354</td>
+<td>No short description for method template_actions()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>365</td>
+<td>No short description for method set_query()</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="package-contents">
+<a name="app/main/profile/BPMediaUploadScreen.php" id="app/main/profile/BPMediaUploadScreen.php"></a><h3>
+<i class="icon-file"></i>app/main/profile/BPMediaUploadScreen.php<small style="float: right;padding-right: 10px;">8</small>
+</h3>
+<div><table class="table markers table-bordered">
+<thead><tr>
+<th>Type</th>
+<th>Line</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="error">
+<td>error</td>
+<td>0</td>
+<td>No page-level DocBlock was found in file app/main/profile/BPMediaUploadScreen.php</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>15</td>
+<td>No DocBlock was found for method __construct()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>19</td>
+<td>No DocBlock was found for method upload_screen()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>26</td>
+<td>No DocBlock was found for method upload_screen_title()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>30</td>
+<td>No DocBlock was found for method upload_screen_content()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>38</td>
+<td>No DocBlock was found for method upload_enqueue()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>62</td>
+<td>No DocBlock was found for method upload_handler()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>72</td>
+<td>No DocBlock was found for method upload_media()</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="package-contents">
+<a name="app/main/profile/BPMediaAlbumScreen.php" id="app/main/profile/BPMediaAlbumScreen.php"></a><h3>
+<i class="icon-file"></i>app/main/profile/BPMediaAlbumScreen.php<small style="float: right;padding-right: 10px;">9</small>
+</h3>
+<div><table class="table markers table-bordered">
+<thead><tr>
+<th>Type</th>
+<th>Line</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="error">
+<td>error</td>
+<td>0</td>
+<td>No page-level DocBlock was found in file app/main/profile/BPMediaAlbumScreen.php</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>15</td>
+<td>No DocBlock was found for method __construct()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>19</td>
+<td>No DocBlock was found for method screen()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>47</td>
+<td>No DocBlock was found for method screen_content()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>64</td>
+<td>No DocBlock was found for method entry_screen()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>79</td>
+<td>No DocBlock was found for method entry_screen_content()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>99</td>
+<td>No DocBlock was found for method set_query()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>120</td>
+<td>No DocBlock was found for method template_actions()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>124</td>
+<td>No DocBlock was found for method inner_query()</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="package-contents">
+<a name="app/main/profile/BPMediaAlbum.php" id="app/main/profile/BPMediaAlbum.php"></a><h3>
+<i class="icon-file"></i>app/main/profile/BPMediaAlbum.php<small style="float: right;padding-right: 10px;">14</small>
+</h3>
+<div><table class="table markers table-bordered">
+<thead><tr>
+<th>Type</th>
+<th>Line</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="error">
+<td>error</td>
+<td>0</td>
+<td>No page-level DocBlock was found in file app/main/profile/BPMediaAlbum.php</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>3</td>
+<td>No DocBlock was found for \BPMediaAlbum</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>4</td>
+<td>No DocBlock was found for property $id</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>5</td>
+<td>No DocBlock was found for property $name</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>6</td>
+<td>No DocBlock was found for property $description</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>7</td>
+<td>No DocBlock was found for property $url</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>8</td>
+<td>No DocBlock was found for property $owner</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>9</td>
+<td>No DocBlock was found for property $delete_url</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>10</td>
+<td>No DocBlock was found for property $thumbnail</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>11</td>
+<td>No DocBlock was found for property $edit_url</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>12</td>
+<td>No DocBlock was found for property $media_entries</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>13</td>
+<td>No DocBlock was found for property $group_id</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>157</td>
+<td>No DocBlock was found for method edit_album()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>179</td>
+<td>No DocBlock was found for method get_album_gallery_content()</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="package-contents">
+<a name="app/main/group/BPMediaGroupElementExtension.php" id="app/main/group/BPMediaGroupElementExtension.php"></a><h3>
+<i class="icon-file"></i>app/main/group/BPMediaGroupElementExtension.php<small style="float: right;padding-right: 10px;">7</small>
+</h3>
+<div><table class="table markers table-bordered">
+<thead><tr>
+<th>Type</th>
+<th>Line</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="error">
+<td>error</td>
+<td>9</td>
+<td>No DocBlock was found for \BPMediaGroupElementExtension</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>11</td>
+<td>No DocBlock was found for property $enable_edit_item</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>12</td>
+<td>No DocBlock was found for property $enable_create_step</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>14</td>
+<td>No DocBlock was found for method __construct()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>19</td>
+<td>No DocBlock was found for method display()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>106</td>
+<td>No DocBlock was found for method widget_display()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>110</td>
+<td>No DocBlock was found for method bp_media_display_error()</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="package-contents">
+<a name="app/main/group/BPMediaGroupAction.php" id="app/main/group/BPMediaGroupAction.php"></a><h3>
+<i class="icon-file"></i>app/main/group/BPMediaGroupAction.php<small style="float: right;padding-right: 10px;">4</small>
+</h3>
+<div><table class="table markers table-bordered">
+<thead><tr>
+<th>Type</th>
+<th>Line</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="error">
+<td>error</td>
+<td>0</td>
+<td>No page-level DocBlock was found in file app/main/group/BPMediaGroupAction.php</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>85</td>
+<td>No DocBlock was found for method bp_media_groups_activity_create_after_add_media()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>114</td>
+<td>No DocBlock was found for method bp_media_groups_redirection_handler()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>124</td>
+<td>No DocBlock was found for method bp_media_groups_force_hide_activity()</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="package-contents">
+<a name="app/main/group/BPMediaGroupImage.php" id="app/main/group/BPMediaGroupImage.php"></a><h3>
+<i class="icon-file"></i>app/main/group/BPMediaGroupImage.php<small style="float: right;padding-right: 10px;">2</small>
+</h3>
+<div><table class="table markers table-bordered">
+<thead><tr>
+<th>Type</th>
+<th>Line</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="error">
+<td>error</td>
+<td>8</td>
+<td>No DocBlock was found for \BPMediaGroupImage</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>10</td>
+<td>No DocBlock was found for method __construct()</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="package-contents">
+<a name="app/main/group/BPMediaGroup.php" id="app/main/group/BPMediaGroup.php"></a><h3>
+<i class="icon-file"></i>app/main/group/BPMediaGroup.php<small style="float: right;padding-right: 10px;">3</small>
+</h3>
+<div><table class="table markers table-bordered">
+<thead><tr>
+<th>Type</th>
+<th>Line</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="error">
+<td>error</td>
+<td>0</td>
+<td>No page-level DocBlock was found in file app/main/group/BPMediaGroup.php</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>10</td>
+<td>No DocBlock was found for method __construct()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>205</td>
+<td>No DocBlock was found for method bp_media_display_error()</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="package-contents">
+<a name="app/main/group/BPMediaGroupMusic.php" id="app/main/group/BPMediaGroupMusic.php"></a><h3>
+<i class="icon-file"></i>app/main/group/BPMediaGroupMusic.php<small style="float: right;padding-right: 10px;">2</small>
+</h3>
+<div><table class="table markers table-bordered">
+<thead><tr>
+<th>Type</th>
+<th>Line</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="error">
+<td>error</td>
+<td>8</td>
+<td>No DocBlock was found for \BPMediaGroupMusic</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>10</td>
+<td>No DocBlock was found for method __construct()</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="package-contents">
+<a name="app/main/group/BPMediaGroupAlbum.php" id="app/main/group/BPMediaGroupAlbum.php"></a><h3>
+<i class="icon-file"></i>app/main/group/BPMediaGroupAlbum.php<small style="float: right;padding-right: 10px;">2</small>
+</h3>
+<div><table class="table markers table-bordered">
+<thead><tr>
+<th>Type</th>
+<th>Line</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="error">
+<td>error</td>
+<td>8</td>
+<td>No DocBlock was found for \BPMediaGroupAlbum</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>10</td>
+<td>No DocBlock was found for method __construct()</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="package-contents">
+<a name="app/main/group/BPMediaGroupScreen.php" id="app/main/group/BPMediaGroupScreen.php"></a><h3>
+<i class="icon-file"></i>app/main/group/BPMediaGroupScreen.php<small style="float: right;padding-right: 10px;">1</small>
+</h3>
+<div><table class="table markers table-bordered">
+<thead><tr>
+<th>Type</th>
+<th>Line</th>
+<th>Description</th>
+</tr></thead>
+<tbody><tr class="error">
+<td>error</td>
+<td>0</td>
+<td>No page-level DocBlock was found in file app/main/group/BPMediaGroupScreen.php</td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="package-contents">
+<a name="app/main/group/BPMediaGroupVideo.php" id="app/main/group/BPMediaGroupVideo.php"></a><h3>
+<i class="icon-file"></i>app/main/group/BPMediaGroupVideo.php<small style="float: right;padding-right: 10px;">2</small>
+</h3>
+<div><table class="table markers table-bordered">
+<thead><tr>
+<th>Type</th>
+<th>Line</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="error">
+<td>error</td>
+<td>8</td>
+<td>No DocBlock was found for \BPMediaGroupVideo</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>10</td>
+<td>No DocBlock was found for method __construct()</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="package-contents">
+<a name="app/main/group/BPMediaGroupsExtension.php" id="app/main/group/BPMediaGroupsExtension.php"></a><h3>
+<i class="icon-file"></i>app/main/group/BPMediaGroupsExtension.php<small style="float: right;padding-right: 10px;">5</small>
+</h3>
+<div><table class="table markers table-bordered">
+<thead><tr>
+<th>Type</th>
+<th>Line</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="error">
+<td>error</td>
+<td>9</td>
+<td>No DocBlock was found for \BPMediaGroupsExtension</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>26</td>
+<td>No DocBlock was found for method create_screen()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>52</td>
+<td>No DocBlock was found for method create_screen_save()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>62</td>
+<td>No DocBlock was found for method edit_screen()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>91</td>
+<td>No DocBlock was found for method edit_screen_save()</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="package-contents">
+<a name="app/main/BuddyPressMedia.php" id="app/main/BuddyPressMedia.php"></a><h3>
+<i class="icon-file"></i>app/main/BuddyPressMedia.php<small style="float: right;padding-right: 10px;">25</small>
+</h3>
+<div><table class="table markers table-bordered">
+<thead><tr>
+<th>Type</th>
+<th>Line</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="error">
+<td>error</td>
+<td>12</td>
+<td>No DocBlock was found for \BuddyPressMedia</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>14</td>
+<td>No DocBlock was found for property $text_domain</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>15</td>
+<td>No DocBlock was found for property $options</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>16</td>
+<td>No DocBlock was found for property $support_email</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>17</td>
+<td>No DocBlock was found for property $support_url</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>18</td>
+<td>No DocBlock was found for property $query</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>19</td>
+<td>No DocBlock was found for property $albums_query</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>20</td>
+<td>No DocBlock was found for property $counter</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>21</td>
+<td>No DocBlock was found for property $count</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>22</td>
+<td>No DocBlock was found for property $posts_per_page</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>23</td>
+<td>No DocBlock was found for property $activity_types</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>28</td>
+<td>No DocBlock was found for property $hidden_activity_cache</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>29</td>
+<td>No DocBlock was found for property $loader</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>30</td>
+<td>No DocBlock was found for property $group_loader</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>32</td>
+<td>No DocBlock was found for method __construct()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>38</td>
+<td>No DocBlock was found for method get_option()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>42</td>
+<td>No DocBlock was found for method constants()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>167</td>
+<td>No DocBlock was found for method init()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>190</td>
+<td>No DocBlock was found for method settings_link()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>202</td>
+<td>No DocBlock was found for method media_sizes()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>231</td>
+<td>No DocBlock was found for method excerpt_lengths()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>243</td>
+<td>No DocBlock was found for method admin_notice()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>265</td>
+<td>No DocBlock was found for method activate()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>279</td>
+<td>No DocBlock was found for method get_admin_url()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>292</td>
+<td>No DocBlock was found for method widgets_init()</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="package-contents">
+<a name="app/main/BPMediaLoader.php" id="app/main/BPMediaLoader.php"></a><h3>
+<i class="icon-file"></i>app/main/BPMediaLoader.php<small style="float: right;padding-right: 10px;">5</small>
+</h3>
+<div><table class="table markers table-bordered">
+<thead><tr>
+<th>Type</th>
+<th>Line</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="error">
+<td>error</td>
+<td>0</td>
+<td>No page-level DocBlock was found in file app/main/BPMediaLoader.php</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>14</td>
+<td>No DocBlock was found for method __construct()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>20</td>
+<td>No DocBlock was found for method load_component()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>25</td>
+<td>No DocBlock was found for method custom_nav()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>61</td>
+<td>No DocBlock was found for method thumbnail()</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="package-contents">
+<a name="app/main/widgets/BPMediaPopularMedia.php" id="app/main/widgets/BPMediaPopularMedia.php"></a><h3>
+<i class="icon-file"></i>app/main/widgets/BPMediaPopularMedia.php<small style="float: right;padding-right: 10px;">5</small>
+</h3>
+<div><table class="table markers table-bordered">
+<thead><tr>
+<th>Type</th>
+<th>Line</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="error">
+<td>error</td>
+<td>0</td>
+<td>No page-level DocBlock was found in file app/main/widgets/BPMediaPopularMedia.php</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>14</td>
+<td>No DocBlock was found for method __construct()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>19</td>
+<td>No DocBlock was found for method widget()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>73</td>
+<td>No DocBlock was found for method update()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>80</td>
+<td>No DocBlock was found for method form()</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="package-contents">
+<a name="app/main/widgets/BPMediaRecentMedia.php" id="app/main/widgets/BPMediaRecentMedia.php"></a><h3>
+<i class="icon-file"></i>app/main/widgets/BPMediaRecentMedia.php<small style="float: right;padding-right: 10px;">5</small>
+</h3>
+<div><table class="table markers table-bordered">
+<thead><tr>
+<th>Type</th>
+<th>Line</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="error">
+<td>error</td>
+<td>0</td>
+<td>No page-level DocBlock was found in file app/main/widgets/BPMediaRecentMedia.php</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>14</td>
+<td>No DocBlock was found for method __construct()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>19</td>
+<td>No DocBlock was found for method widget()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>182</td>
+<td>No DocBlock was found for method update()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>189</td>
+<td>No DocBlock was found for method form()</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="package-contents">
+<a name="app/main/includes/BPMediaHostWordpress.php" id="app/main/includes/BPMediaHostWordpress.php"></a><h3>
+<i class="icon-file"></i>app/main/includes/BPMediaHostWordpress.php<small style="float: right;padding-right: 10px;">10</small>
+</h3>
+<div><table class="table markers table-bordered">
+<thead><tr>
+<th>Type</th>
+<th>Line</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="error">
+<td>error</td>
+<td>0</td>
+<td>No page-level DocBlock was found in file app/main/includes/BPMediaHostWordpress.php</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>2</td>
+<td>No DocBlock was found for \BPMediaHostWordpress</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>69</td>
+<td>Argument $name is missing from the Docblock of add_media()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>69</td>
+<td>Argument $description is missing from the Docblock of add_media()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>69</td>
+<td>Argument $album_id is missing from the Docblock of add_media()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>69</td>
+<td>Argument $group is missing from the Docblock of add_media()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>69</td>
+<td>Argument $is_multiple is missing from the Docblock of add_media()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>359</td>
+<td>No DocBlock was found for method show_comment_form_wordpress()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>699</td>
+<td>Argument $album_id is missing from the Docblock of check_and_create_album()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>699</td>
+<td>Argument $group is missing from the Docblock of check_and_create_album()</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="package-contents">
+<a name="app/main/includes/BPMediaUtils.php" id="app/main/includes/BPMediaUtils.php"></a><h3>
+<i class="icon-file"></i>app/main/includes/BPMediaUtils.php<small style="float: right;padding-right: 10px;">13</small>
+</h3>
+<div><table class="table markers table-bordered">
+<thead><tr>
+<th>Type</th>
+<th>Line</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="error">
+<td>error</td>
+<td>0</td>
+<td>No page-level DocBlock was found in file app/main/includes/BPMediaUtils.php</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>3</td>
+<td>No DocBlock was found for \BPMediaUtils</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>5</td>
+<td>No DocBlock was found for method __construct()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>18</td>
+<td>No DocBlock was found for method upgrade_script()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>351</td>
+<td>No DocBlock was found for method settings_page()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>517</td>
+<td>No DocBlock was found for method settings_other_options()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>536</td>
+<td>No DocBlock was found for method settings_options()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>566</td>
+<td>No DocBlock was found for method addons_list()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>608</td>
+<td>No DocBlock was found for method support()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>629</td>
+<td>No DocBlock was found for method handle_request_type()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>635</td>
+<td>No DocBlock was found for method cancel_request()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>648</td>
+<td>No DocBlock was found for method send_request()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>759</td>
+<td>No DocBlock was found for method get_server_info()</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="package-contents">
+<a name="app/main/includes/BPMediaTemplateFunctions.php" id="app/main/includes/BPMediaTemplateFunctions.php"></a><h3>
+<i class="icon-file"></i>app/main/includes/BPMediaTemplateFunctions.php<small style="float: right;padding-right: 10px;">11</small>
+</h3>
+<div><table class="table markers table-bordered">
+<thead><tr>
+<th>Type</th>
+<th>Line</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="error">
+<td>error</td>
+<td>0</td>
+<td>No page-level DocBlock was found in file app/main/includes/BPMediaTemplateFunctions.php</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>3</td>
+<td>No DocBlock was found for \BPMediaTemplateFunctions</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>5</td>
+<td>No DocBlock was found for method show_upload_form()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>37</td>
+<td>No DocBlock was found for method show_upload_form_multiple()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>88</td>
+<td>No DocBlock was found for method show_pagination()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>172</td>
+<td>No DocBlock was found for method get_permalink()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>196</td>
+<td>No DocBlock was found for method the_permalink()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>200</td>
+<td>No DocBlock was found for method the_content()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>217</td>
+<td>No DocBlock was found for method album_the_content()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>234</td>
+<td>No DocBlock was found for method display_show_more()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>254</td>
+<td>No DocBlock was found for method show_upload_form_multiple_activity()</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="package-contents">
+<a name="app/main/includes/BPMediaComponent.php" id="app/main/includes/BPMediaComponent.php"></a><h3>
+<i class="icon-file"></i>app/main/includes/BPMediaComponent.php<small style="float: right;padding-right: 10px;">2</small>
+</h3>
+<div><table class="table markers table-bordered">
+<thead><tr>
+<th>Type</th>
+<th>Line</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="error">
+<td>error</td>
+<td>0</td>
+<td>No page-level DocBlock was found in file app/main/includes/BPMediaComponent.php</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>72</td>
+<td>No DocBlock was found for method setup_nav()</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="package-contents">
+<a name="app/main/includes/BPMediaUpgradeScript.php" id="app/main/includes/BPMediaUpgradeScript.php"></a><h3>
+<i class="icon-file"></i>app/main/includes/BPMediaUpgradeScript.php<small style="float: right;padding-right: 10px;">6</small>
+</h3>
+<div><table class="table markers table-bordered">
+<thead><tr>
+<th>Type</th>
+<th>Line</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="error">
+<td>error</td>
+<td>0</td>
+<td>No page-level DocBlock was found in file app/main/includes/BPMediaUpgradeScript.php</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>2</td>
+<td>No DocBlock was found for \BPMediaUpgradeScript</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>4</td>
+<td>No DocBlock was found for method upgrade_from_1_0_to_2_1()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>72</td>
+<td>No DocBlock was found for method database_updated_notice()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>77</td>
+<td>No DocBlock was found for method upgrade_from_2_0_to_2_1()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>120</td>
+<td>No DocBlock was found for method return_query_posts()</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="package-contents">
+<a name="app/main/includes/BPMediaFunction.php" id="app/main/includes/BPMediaFunction.php"></a><h3>
+<i class="icon-file"></i>app/main/includes/BPMediaFunction.php<small style="float: right;padding-right: 10px;">14</small>
+</h3>
+<div><table class="table markers table-bordered">
+<thead><tr>
+<th>Type</th>
+<th>Line</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="error">
+<td>error</td>
+<td>0</td>
+<td>No page-level DocBlock was found in file app/main/includes/BPMediaFunction.php</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>3</td>
+<td>No DocBlock was found for \BPMediaFunction</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>5</td>
+<td>No DocBlock was found for method __construct()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>11</td>
+<td>No DocBlock was found for method record_activity()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>24</td>
+<td>No DocBlock was found for method override_allowed_tags()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>57</td>
+<td>No DocBlock was found for method show_formatted_error_message()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>73</td>
+<td>No DocBlock was found for method conditional_override_allowed_tags()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>81</td>
+<td>No DocBlock was found for method swap_filters()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>123</td>
+<td>No DocBlock was found for method update_media()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>139</td>
+<td>No DocBlock was found for method check_user()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>150</td>
+<td>No DocBlock was found for method page_not_exist()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>157</td>
+<td>No DocBlock was found for method update_album_activity()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>203</td>
+<td>No DocBlock was found for method wp_comment_form_mod()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>208</td>
+<td>No DocBlock was found for method implement_featured_ajax()</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="package-contents">
+<a name="app/main/includes/BPMediaFilters.php" id="app/main/includes/BPMediaFilters.php"></a><h3>
+<i class="icon-file"></i>app/main/includes/BPMediaFilters.php<small style="float: right;padding-right: 10px;">13</small>
+</h3>
+<div><table class="table markers table-bordered">
+<thead><tr>
+<th>Type</th>
+<th>Line</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="error">
+<td>error</td>
+<td>0</td>
+<td>No page-level DocBlock was found in file app/main/includes/BPMediaFilters.php</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>10</td>
+<td>No DocBlock was found for method __construct()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>22</td>
+<td>No DocBlock was found for method activity_permalink_filter()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>56</td>
+<td>No DocBlock was found for method activity_parent_content_filter()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>89</td>
+<td>No DocBlock was found for method delete_button_handler()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>95</td>
+<td>No DocBlock was found for method items_count_filter()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>124</td>
+<td>Argument $query is missing from the Docblock of activity_query_filter()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>254</td>
+<td>No DocBlock was found for method dashboard_widgets()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>281</td>
+<td>No DocBlock was found for method dashboard_media()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>312</td>
+<td>No DocBlock was found for method admin_total_count()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>329</td>
+<td>No DocBlock was found for method group_total_count()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>346</td>
+<td>No DocBlock was found for method total_count_media()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>361</td>
+<td>No DocBlock was found for method total_count_albums()</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="package-contents">
+<a name="app/main/includes/bp-media-upload-handler.php" id="app/main/includes/bp-media-upload-handler.php"></a><h3>
+<i class="icon-file"></i>app/main/includes/bp-media-upload-handler.php<small style="float: right;padding-right: 10px;">1</small>
+</h3>
+<div><table class="table markers table-bordered">
+<thead><tr>
+<th>Type</th>
+<th>Line</th>
+<th>Description</th>
+</tr></thead>
+<tbody><tr class="error">
+<td>error</td>
+<td>0</td>
+<td>No page-level DocBlock was found in file app/main/includes/bp-media-upload-handler.php</td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="package-contents">
+<a name="app/main/includes/BPMediaActions.php" id="app/main/includes/BPMediaActions.php"></a><h3>
+<i class="icon-file"></i>app/main/includes/BPMediaActions.php<small style="float: right;padding-right: 10px;">12</small>
+</h3>
+<div><table class="table markers table-bordered">
+<thead><tr>
+<th>Type</th>
+<th>Line</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="error">
+<td>error</td>
+<td>0</td>
+<td>No page-level DocBlock was found in file app/main/includes/BPMediaActions.php</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>9</td>
+<td>No DocBlock was found for method __construct()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>148</td>
+<td>No DocBlock was found for method delete_activity_handler()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>183</td>
+<td>No DocBlock was found for method delete_media_handler()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>277</td>
+<td>Argument $user is missing from the Docblock of init_count()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>319</td>
+<td>No DocBlock was found for method upload_enqueue()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>461</td>
+<td>No DocBlock was found for method delete_attachment_handler()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>524</td>
+<td>No DocBlock was found for method add_new_from_activity()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>531</td>
+<td>No DocBlock was found for method album_create_activity()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>545</td>
+<td>No DocBlock was found for method album_activity_update()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>549</td>
+<td>No DocBlock was found for method album_activity_sync()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>554</td>
+<td>No DocBlock was found for method activity_create_after_add_media()</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="package-contents">
+<a name="config/index.php" id="config/index.php"></a><h3>
+<i class="icon-file"></i>config/index.php<small style="float: right;padding-right: 10px;">1</small>
+</h3>
+<div><table class="table markers table-bordered">
+<thead><tr>
+<th>Type</th>
+<th>Line</th>
+<th>Description</th>
+</tr></thead>
+<tbody><tr class="error">
+<td>error</td>
+<td>0</td>
+<td>No page-level DocBlock was found in file config/index.php</td>
+</tr></tbody>
+</table></div>
+</div>
+<div class="package-contents">
+<a name="tests/MyPluginTest.php" id="tests/MyPluginTest.php"></a><h3>
+<i class="icon-file"></i>tests/MyPluginTest.php<small style="float: right;padding-right: 10px;">4</small>
+</h3>
+<div><table class="table markers table-bordered">
+<thead><tr>
+<th>Type</th>
+<th>Line</th>
+<th>Description</th>
+</tr></thead>
+<tbody>
+<tr class="error">
+<td>error</td>
+<td>0</td>
+<td>No page-level DocBlock was found in file tests/MyPluginTest.php</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>6</td>
+<td>No DocBlock was found for property $plugin_slug</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>8</td>
+<td>No DocBlock was found for method setUp()</td>
+</tr>
+<tr class="error">
+<td>error</td>
+<td>13</td>
+<td>No DocBlock was found for method testTrueStillEqualsTrue()</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="package-contents">
+<a name="tests/bootstrap.php" id="tests/bootstrap.php"></a><h3>
+<i class="icon-file"></i>tests/bootstrap.php<small style="float: right;padding-right: 10px;">1</small>
+</h3>
+<div><table class="table markers table-bordered">
+<thead><tr>
+<th>Type</th>
+<th>Line</th>
+<th>Description</th>
+</tr></thead>
+<tbody><tr class="error">
+<td>error</td>
+<td>0</td>
+<td>No page-level DocBlock was found in file tests/bootstrap.php</td>
+</tr></tbody>
+</table></div>
+</div>
+</div>
+</div>
+<div class="row"><footer class="span12">
+            Template is built using <a href="http://twitter.github.com/bootstrap/">Twitter Bootstrap 2</a> and icons provided by <a href="http://glyphicons.com/">Glyphicons</a>.<br>
+            Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor 2.0.0a12</a> and<br>
+            generated on 2013-01-14T11:36:45+05:30.<br></footer></div>
+</div>
+</body>
+</html>

@@ -1,0 +1,247 @@
+<!DOCTYPE html><html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+<meta charset="utf-8">
+<title>buddypress-media » \BPMediaAdmin</title>
+<meta name="author" content="Mike van Riel">
+<meta name="description" content="">
+<link href="../css/template.css" rel="stylesheet" media="all">
+<script src="../js/jquery-1.7.1.min.js" type="text/javascript"></script><script src="../js/jquery-ui-1.8.2.custom.min.js" type="text/javascript"></script><script src="../js/jquery.mousewheel.min.js" type="text/javascript"></script><script src="../js/bootstrap.js" type="text/javascript"></script><script src="../js/template.js" type="text/javascript"></script><script src="../js/prettify/prettify.min.js" type="text/javascript"></script><link rel="shortcut icon" href="../img/favicon.ico">
+<link rel="apple-touch-icon" href="../img/apple-touch-icon.png">
+<link rel="apple-touch-icon" sizes="72x72" href="../img/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="114x114" href="../img/apple-touch-icon-114x114.png">
+</head>
+<body>
+<div class="navbar navbar-fixed-top">
+<div class="navbar-inner"><div class="container">
+<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></a><a class="brand" href="../index.html">buddypress-media</a><div class="nav-collapse"><ul class="nav">
+<li class="dropdown">
+<a href="#api" class="dropdown-toggle" data-toggle="dropdown">
+                                    API Documentation <b class="caret"></b></a><ul class="dropdown-menu"></ul>
+</li>
+<li class="dropdown" id="charts-menu">
+<a href="#charts" class="dropdown-toggle" data-toggle="dropdown">
+                                    Charts <b class="caret"></b></a><ul class="dropdown-menu"><li><a href="../graph_class.html"><i class="icon-list-alt"></i> Class hierarchy diagram</a></li></ul>
+</li>
+<li class="dropdown" id="reports-menu">
+<a href="#reports" class="dropdown-toggle" data-toggle="dropdown">
+                                    Reports <b class="caret"></b></a><ul class="dropdown-menu">
+<li><a href="../errors.html"><i class="icon-remove-sign"></i> Errors 
+                <span class="label label-info">1030</span></a></li>
+<li><a href="../markers.html"><i class="icon-map-marker"></i> Markers 
+                <ul><li>todo 
+                <span class="label label-info">1</span>
+</li></ul></a></li>
+<li><a href="../deprecated.html"><i class="icon-stop"></i> Deprecated elements 
+                <span class="label label-info">0</span></a></li>
+</ul>
+</li>
+</ul></div>
+</div></div>
+<div class="go_to_top"><a href="#___" style="color: inherit">Back to top  <i class="icon-upload icon-white"></i></a></div>
+</div>
+<div id="___" class="container">
+<noscript><div class="alert alert-warning">
+                            Javascript is disabled; several features are only available
+                            if Javascript is enabled.
+                        </div></noscript>
+<div class="row">
+<div class="span4">
+<span class="btn-group visibility" data-toggle="buttons-checkbox"><button class="btn public active" title="Show public elements">Public</button><button class="btn protected" title="Show protected elements">Protected</button><button class="btn private" title="Show private elements">Private</button><button class="btn inherited active" title="Show inherited elements">Inherited</button></span><div class="btn-group view pull-right" data-toggle="buttons-radio">
+<button class="btn details" title="Show descriptions and method names"><i class="icon-list"></i></button><button class="btn simple" title="Show only method names"><i class="icon-align-justify"></i></button>
+</div>
+<ul class="side-nav nav nav-list">
+<li class="nav-header">
+<i class="icon-custom icon-method"></i> Methods
+                    <ul>
+<li class="method public "><a href="#method___construct" title="__construct :: "><span class="description">__construct()
+        </span><pre>__construct()</pre></a></li>
+<li class="method public "><a href="#method_addons_page" title="addons_page :: Render the BuddyPress Media Addons page"><span class="description">Render the BuddyPress Media Addons page</span><pre>addons_page()</pre></a></li>
+<li class="method public "><a href="#method_admin_sidebar" title="admin_sidebar :: "><span class="description">admin_sidebar()
+        </span><pre>admin_sidebar()</pre></a></li>
+<li class="method public "><a href="#method_get_current_tab" title="get_current_tab :: "><span class="description">get_current_tab()
+        </span><pre>get_current_tab()</pre></a></li>
+<li class="method public "><a href="#method_menu" title="menu :: Admin Menu"><span class="description">Admin Menu</span><pre>menu()</pre></a></li>
+<li class="method public "><a href="#method_render_page" title="render_page :: Render BPMedia Settings"><span class="description">Render BPMedia Settings</span><pre>render_page()</pre></a></li>
+<li class="method public "><a href="#method_save_multisite_options" title="save_multisite_options :: "><span class="description">save_multisite_options()
+        </span><pre>save_multisite_options()</pre></a></li>
+<li class="method public "><a href="#method_settings_page" title="settings_page :: Render the BuddyPress Media Settings page"><span class="description">Render the BuddyPress Media Settings page</span><pre>settings_page()</pre></a></li>
+<li class="method public "><a href="#method_sub_tabs" title="sub_tabs :: Adds a sub tabs to the BuddyPress Media settings page"><span class="description">Adds a sub tabs to the BuddyPress Media settings page</span><pre>sub_tabs()</pre></a></li>
+<li class="method public "><a href="#method_support_page" title="support_page :: Render the BuddyPress Media Support page"><span class="description">Render the BuddyPress Media Support page</span><pre>support_page()</pre></a></li>
+<li class="method public "><a href="#method_tab" title="tab :: Adds a tab for Media settings in the BuddyPress settings page"><span class="description">Adds a tab for Media settings in the BuddyPress settings page</span><pre>tab()</pre></a></li>
+<li class="method public "><a href="#method_ui" title="ui :: Generates the Admin UI"><span class="description">Generates the Admin UI</span><pre>ui()</pre></a></li>
+<li class="method public "><a href="#method_update_count" title="update_count :: "><span class="description">update_count()
+        </span><pre>update_count()</pre></a></li>
+</ul>
+</li>
+<li class="nav-header">
+<i class="icon-custom icon-property"></i> Properties
+                    <ul>
+<li class="property public "><a href="#property_bp_media_feed" title="$bp_media_feed :: "><span class="description"></span><pre>$bp_media_feed</pre></a></li>
+<li class="property public "><a href="#property_bp_media_settings" title="$bp_media_settings :: "><span class="description"></span><pre>$bp_media_settings</pre></a></li>
+<li class="property public "><a href="#property_bp_media_upgrade" title="$bp_media_upgrade :: "><span class="description"></span><pre>$bp_media_upgrade</pre></a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="span8">
+<a id="\BPMediaAdmin"></a><ul class="breadcrumb">
+<li>
+<a href="../index.html"><i class="icon-custom icon-class"></i></a><span class="divider">\</span>
+</li>
+<li><a href="../namespaces/global.html">global</a></li>
+<li class="active">
+<span class="divider">\</span><a href="../classes/BPMediaAdmin.html">BPMediaAdmin</a>
+</li>
+</ul>
+<div class="element class"><div class="details">
+<h3>
+<i class="icon-custom icon-method"></i> Methods</h3>
+<a id="method___construct"></a><div class="element clickable method public method___construct" data-toggle="collapse" data-target=".method___construct .collapse">
+<h2>__construct()
+        </h2>
+<pre>__construct() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="method_addons_page"></a><div class="element clickable method public method_addons_page" data-toggle="collapse" data-target=".method_addons_page .collapse">
+<h2>Render the BuddyPress Media Addons page</h2>
+<pre>addons_page() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="method_admin_sidebar"></a><div class="element clickable method public method_admin_sidebar" data-toggle="collapse" data-target=".method_admin_sidebar .collapse">
+<h2>admin_sidebar()
+        </h2>
+<pre>admin_sidebar() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="method_get_current_tab"></a><div class="element clickable method public method_get_current_tab" data-toggle="collapse" data-target=".method_get_current_tab .collapse">
+<h2>get_current_tab()
+        </h2>
+<pre>get_current_tab() </pre>
+<div class="labels"><span class="label">Static</span></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="method_menu"></a><div class="element clickable method public method_menu" data-toggle="collapse" data-target=".method_menu .collapse">
+<h2>Admin Menu</h2>
+<pre>menu() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<table class="table table-bordered"><tr>
+<th>global</th>
+<td>string BP_MEDIA_TXT_DOMAIN</td>
+</tr></table>
+</div></div>
+</div>
+<a id="method_render_page"></a><div class="element clickable method public method_render_page" data-toggle="collapse" data-target=".method_render_page .collapse">
+<h2>Render BPMedia Settings</h2>
+<pre>render_page($page, $is_settings) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<table class="table table-bordered"><tr>
+<th>global</th>
+<td>string BP_MEDIA_TXT_DOMAIN</td>
+</tr></table>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$page</h4></div>
+<div class="subelement argument"><h4>$is_settings</h4></div>
+</div></div>
+</div>
+<a id="method_save_multisite_options"></a><div class="element clickable method public method_save_multisite_options" data-toggle="collapse" data-target=".method_save_multisite_options .collapse">
+<h2>save_multisite_options()
+        </h2>
+<pre>save_multisite_options() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="method_settings_page"></a><div class="element clickable method public method_settings_page" data-toggle="collapse" data-target=".method_settings_page .collapse">
+<h2>Render the BuddyPress Media Settings page</h2>
+<pre>settings_page() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="method_sub_tabs"></a><div class="element clickable method public method_sub_tabs" data-toggle="collapse" data-target=".method_sub_tabs .collapse">
+<h2>Adds a sub tabs to the BuddyPress Media settings page</h2>
+<pre>sub_tabs() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<table class="table table-bordered"><tr>
+<th>global</th>
+<td>type $bp_media</td>
+</tr></table>
+</div></div>
+</div>
+<a id="method_support_page"></a><div class="element clickable method public method_support_page" data-toggle="collapse" data-target=".method_support_page .collapse">
+<h2>Render the BuddyPress Media Support page</h2>
+<pre>support_page() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="method_tab"></a><div class="element clickable method public method_tab" data-toggle="collapse" data-target=".method_tab .collapse">
+<h2>Adds a tab for Media settings in the BuddyPress settings page</h2>
+<pre>tab() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<table class="table table-bordered"><tr>
+<th>global</th>
+<td>type $bp_media</td>
+</tr></table>
+</div></div>
+</div>
+<a id="method_ui"></a><div class="element clickable method public method_ui" data-toggle="collapse" data-target=".method_ui .collapse">
+<h2>Generates the Admin UI</h2>
+<pre>ui(string $hook) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$hook</h4>
+<code>string</code>
+</div>
+</div></div>
+</div>
+<a id="method_update_count"></a><div class="element clickable method public method_update_count" data-toggle="collapse" data-target=".method_update_count .collapse">
+<h2>update_count()
+        </h2>
+<pre>update_count() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<h3>
+<i class="icon-custom icon-property"></i> Properties</h3>
+<a id="property_bp_media_feed"> </a><div class="element clickable property public property_bp_media_feed" data-toggle="collapse" data-target=".property_bp_media_feed .collapse">
+<h2></h2>
+<pre>$bp_media_feed </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="property_bp_media_settings"> </a><div class="element clickable property public property_bp_media_settings" data-toggle="collapse" data-target=".property_bp_media_settings .collapse">
+<h2></h2>
+<pre>$bp_media_settings </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="property_bp_media_upgrade"> </a><div class="element clickable property public property_bp_media_upgrade" data-toggle="collapse" data-target=".property_bp_media_upgrade .collapse">
+<h2></h2>
+<pre>$bp_media_upgrade </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+</div></div>
+</div>
+</div>
+<div class="row"><footer class="span12">
+            Template is built using <a href="http://twitter.github.com/bootstrap/">Twitter Bootstrap 2</a> and icons provided by <a href="http://glyphicons.com/">Glyphicons</a>.<br>
+            Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor 2.0.0a12</a> and<br>
+            generated on 2013-01-14T11:36:45+05:30.<br></footer></div>
+</div>
+</body>
+</html>

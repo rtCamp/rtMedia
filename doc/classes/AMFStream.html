@@ -1,0 +1,239 @@
+<!DOCTYPE html><html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+<meta charset="utf-8">
+<title>buddypress-media » \AMFStream</title>
+<meta name="author" content="Mike van Riel">
+<meta name="description" content="">
+<link href="../css/template.css" rel="stylesheet" media="all">
+<script src="../js/jquery-1.7.1.min.js" type="text/javascript"></script><script src="../js/jquery-ui-1.8.2.custom.min.js" type="text/javascript"></script><script src="../js/jquery.mousewheel.min.js" type="text/javascript"></script><script src="../js/bootstrap.js" type="text/javascript"></script><script src="../js/template.js" type="text/javascript"></script><script src="../js/prettify/prettify.min.js" type="text/javascript"></script><link rel="shortcut icon" href="../img/favicon.ico">
+<link rel="apple-touch-icon" href="../img/apple-touch-icon.png">
+<link rel="apple-touch-icon" sizes="72x72" href="../img/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="114x114" href="../img/apple-touch-icon-114x114.png">
+</head>
+<body>
+<div class="navbar navbar-fixed-top">
+<div class="navbar-inner"><div class="container">
+<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></a><a class="brand" href="../index.html">buddypress-media</a><div class="nav-collapse"><ul class="nav">
+<li class="dropdown">
+<a href="#api" class="dropdown-toggle" data-toggle="dropdown">
+                                    API Documentation <b class="caret"></b></a><ul class="dropdown-menu"></ul>
+</li>
+<li class="dropdown" id="charts-menu">
+<a href="#charts" class="dropdown-toggle" data-toggle="dropdown">
+                                    Charts <b class="caret"></b></a><ul class="dropdown-menu"><li><a href="../graph_class.html"><i class="icon-list-alt"></i> Class hierarchy diagram</a></li></ul>
+</li>
+<li class="dropdown" id="reports-menu">
+<a href="#reports" class="dropdown-toggle" data-toggle="dropdown">
+                                    Reports <b class="caret"></b></a><ul class="dropdown-menu">
+<li><a href="../errors.html"><i class="icon-remove-sign"></i> Errors 
+                <span class="label label-info">1030</span></a></li>
+<li><a href="../markers.html"><i class="icon-map-marker"></i> Markers 
+                <ul><li>todo 
+                <span class="label label-info">1</span>
+</li></ul></a></li>
+<li><a href="../deprecated.html"><i class="icon-stop"></i> Deprecated elements 
+                <span class="label label-info">0</span></a></li>
+</ul>
+</li>
+</ul></div>
+</div></div>
+<div class="go_to_top"><a href="#___" style="color: inherit">Back to top  <i class="icon-upload icon-white"></i></a></div>
+</div>
+<div id="___" class="container">
+<noscript><div class="alert alert-warning">
+                            Javascript is disabled; several features are only available
+                            if Javascript is enabled.
+                        </div></noscript>
+<div class="row">
+<div class="span4">
+<span class="btn-group visibility" data-toggle="buttons-checkbox"><button class="btn public active" title="Show public elements">Public</button><button class="btn protected" title="Show protected elements">Protected</button><button class="btn private" title="Show private elements">Private</button><button class="btn inherited active" title="Show inherited elements">Inherited</button></span><div class="btn-group view pull-right" data-toggle="buttons-radio">
+<button class="btn details" title="Show descriptions and method names"><i class="icon-list"></i></button><button class="btn simple" title="Show only method names"><i class="icon-align-justify"></i></button>
+</div>
+<ul class="side-nav nav nav-list">
+<li class="nav-header">
+<i class="icon-custom icon-method"></i> Methods
+                    <ul>
+<li class="method public "><a href="#method_AMFStream" title="AMFStream :: "><span class="description">AMFStream()
+        </span><pre>AMFStream()</pre></a></li>
+<li class="method public "><a href="#method_peekByte" title="peekByte :: "><span class="description">peekByte()
+        </span><pre>peekByte()</pre></a></li>
+<li class="method public "><a href="#method_peekDouble" title="peekDouble :: "><span class="description">peekDouble()
+        </span><pre>peekDouble()</pre></a></li>
+<li class="method public "><a href="#method_peekInt" title="peekInt :: "><span class="description">peekInt()
+        </span><pre>peekInt()</pre></a></li>
+<li class="method public "><a href="#method_peekLong" title="peekLong :: "><span class="description">peekLong()
+        </span><pre>peekLong()</pre></a></li>
+<li class="method public "><a href="#method_peekLongUTF" title="peekLongUTF :: "><span class="description">peekLongUTF()
+        </span><pre>peekLongUTF()</pre></a></li>
+<li class="method public "><a href="#method_peekUTF" title="peekUTF :: "><span class="description">peekUTF()
+        </span><pre>peekUTF()</pre></a></li>
+<li class="method public "><a href="#method_read" title="read :: "><span class="description">read()
+        </span><pre>read()</pre></a></li>
+<li class="method public "><a href="#method_readByte" title="readByte :: "><span class="description">readByte()
+        </span><pre>readByte()</pre></a></li>
+<li class="method public "><a href="#method_readDouble" title="readDouble :: "><span class="description">readDouble()
+        </span><pre>readDouble()</pre></a></li>
+<li class="method public "><a href="#method_readInt" title="readInt :: "><span class="description">readInt()
+        </span><pre>readInt()</pre></a></li>
+<li class="method public "><a href="#method_readLong" title="readLong :: "><span class="description">readLong()
+        </span><pre>readLong()</pre></a></li>
+<li class="method public "><a href="#method_readLongUTF" title="readLongUTF :: "><span class="description">readLongUTF()
+        </span><pre>readLongUTF()</pre></a></li>
+<li class="method public "><a href="#method_readUTF" title="readUTF :: "><span class="description">readUTF()
+        </span><pre>readUTF()</pre></a></li>
+</ul>
+</li>
+<li class="nav-header">
+<i class="icon-custom icon-property"></i> Properties
+                    <ul>
+<li class="property public "><a href="#property_bytes" title="$bytes :: "><span class="description"></span><pre>$bytes</pre></a></li>
+<li class="property public "><a href="#property_pos" title="$pos :: "><span class="description"></span><pre>$pos</pre></a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="span8">
+<a id="\AMFStream"></a><ul class="breadcrumb">
+<li>
+<a href="../index.html"><i class="icon-custom icon-class"></i></a><span class="divider">\</span>
+</li>
+<li><a href="../namespaces/global.html">global</a></li>
+<li class="active">
+<span class="divider">\</span><a href="../classes/AMFStream.html">AMFStream</a>
+</li>
+</ul>
+<div class="element class"><div class="details">
+<h3>
+<i class="icon-custom icon-method"></i> Methods</h3>
+<a id="method_AMFStream"></a><div class="element clickable method public method_AMFStream" data-toggle="collapse" data-target=".method_AMFStream .collapse">
+<h2>AMFStream()
+        </h2>
+<pre>AMFStream($bytes) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$bytes</h4></div>
+</div></div>
+</div>
+<a id="method_peekByte"></a><div class="element clickable method public method_peekByte" data-toggle="collapse" data-target=".method_peekByte .collapse">
+<h2>peekByte()
+        </h2>
+<pre>peekByte() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="method_peekDouble"></a><div class="element clickable method public method_peekDouble" data-toggle="collapse" data-target=".method_peekDouble .collapse">
+<h2>peekDouble()
+        </h2>
+<pre>peekDouble() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="method_peekInt"></a><div class="element clickable method public method_peekInt" data-toggle="collapse" data-target=".method_peekInt .collapse">
+<h2>peekInt()
+        </h2>
+<pre>peekInt() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="method_peekLong"></a><div class="element clickable method public method_peekLong" data-toggle="collapse" data-target=".method_peekLong .collapse">
+<h2>peekLong()
+        </h2>
+<pre>peekLong() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="method_peekLongUTF"></a><div class="element clickable method public method_peekLongUTF" data-toggle="collapse" data-target=".method_peekLongUTF .collapse">
+<h2>peekLongUTF()
+        </h2>
+<pre>peekLongUTF() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="method_peekUTF"></a><div class="element clickable method public method_peekUTF" data-toggle="collapse" data-target=".method_peekUTF .collapse">
+<h2>peekUTF()
+        </h2>
+<pre>peekUTF() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="method_read"></a><div class="element clickable method public method_read" data-toggle="collapse" data-target=".method_read .collapse">
+<h2>read()
+        </h2>
+<pre>read($length) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$length</h4></div>
+</div></div>
+</div>
+<a id="method_readByte"></a><div class="element clickable method public method_readByte" data-toggle="collapse" data-target=".method_readByte .collapse">
+<h2>readByte()
+        </h2>
+<pre>readByte() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="method_readDouble"></a><div class="element clickable method public method_readDouble" data-toggle="collapse" data-target=".method_readDouble .collapse">
+<h2>readDouble()
+        </h2>
+<pre>readDouble() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="method_readInt"></a><div class="element clickable method public method_readInt" data-toggle="collapse" data-target=".method_readInt .collapse">
+<h2>readInt()
+        </h2>
+<pre>readInt() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="method_readLong"></a><div class="element clickable method public method_readLong" data-toggle="collapse" data-target=".method_readLong .collapse">
+<h2>readLong()
+        </h2>
+<pre>readLong() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="method_readLongUTF"></a><div class="element clickable method public method_readLongUTF" data-toggle="collapse" data-target=".method_readLongUTF .collapse">
+<h2>readLongUTF()
+        </h2>
+<pre>readLongUTF() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="method_readUTF"></a><div class="element clickable method public method_readUTF" data-toggle="collapse" data-target=".method_readUTF .collapse">
+<h2>readUTF()
+        </h2>
+<pre>readUTF() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<h3>
+<i class="icon-custom icon-property"></i> Properties</h3>
+<a id="property_bytes"> </a><div class="element clickable property public property_bytes" data-toggle="collapse" data-target=".property_bytes .collapse">
+<h2></h2>
+<pre>$bytes </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="property_pos"> </a><div class="element clickable property public property_pos" data-toggle="collapse" data-target=".property_pos .collapse">
+<h2></h2>
+<pre>$pos </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+</div></div>
+</div>
+</div>
+<div class="row"><footer class="span12">
+            Template is built using <a href="http://twitter.github.com/bootstrap/">Twitter Bootstrap 2</a> and icons provided by <a href="http://glyphicons.com/">Glyphicons</a>.<br>
+            Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor 2.0.0a12</a> and<br>
+            generated on 2013-01-14T11:36:45+05:30.<br></footer></div>
+</div>
+</body>
+</html>
