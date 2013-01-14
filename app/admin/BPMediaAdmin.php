@@ -14,16 +14,20 @@ if (!class_exists('BPMediaAdmin')) {
         public $bp_media_feed;
 
         public function __construct() {
-            $bp_media_feed =  new BPMediaFeed();
-            add_action( 'wp_ajax_bp_media_fetch_feed', array($bp_media_feed, 'fetch_feed'), 1);
-            $bp_media_support =  new BPMediaSupport();
-            add_action('wp_ajax_bp_media_request_form', array($bp_media_support, 'get_form'), 1);
-            add_action( 'wp_ajax_bp_media_fetch_feed', array($bp_media_feed, 'fetch_feed'), 1);
+            $bp_media_feed = new BPMediaFeed();
+            add_action('wp_ajax_bp_media_fetch_feed', array($bp_media_feed, 'fetch_feed'), 1);
+            $bp_media_support = new BPMediaSupport();
+            add_action('wp_ajax_bp_media_select_request', array($bp_media_support, 'get_form'), 1);
+            add_action('wp_ajax_cancel_request', create_function('', 'do_settings_sections("bp-media-support"); die();'), 1);
+            add_action('wp_ajax_bp_media_submit_request', array($bp_media_support, 'submit_request'), 1);
+            add_action('wp_ajax_bp_media_fetch_feed', array($bp_media_feed, 'fetch_feed'), 1);
             if (is_admin()) {
                 add_action('admin_enqueue_scripts', array($this, 'ui'));
                 add_action(bp_core_admin_hook(), array($this, 'menu'));
                 if (current_user_can('manage_options'))
                     add_action('bp_admin_tabs', array($this, 'tab'));
+                if (is_multisite())
+                    add_action('network_admin_edit_bp_media_options', array($this, 'save_multisite_options'));
             }
             $this->bp_media_upgrade = new BPMediaUpgrade();
             $this->bp_media_settings = new BPMediaSettings();
@@ -36,7 +40,7 @@ if (!class_exists('BPMediaAdmin')) {
          */
         public function ui($hook) {
             $admin_ajax = admin_url('admin-ajax.php');
-            wp_enqueue_script('bp-media-admin', BP_MEDIA_URL . 'app/assets/js/main.js');
+            wp_enqueue_script('bp-media-admin', BP_MEDIA_URL . 'app/assets/js/admin.js');
             wp_localize_script('bp-media-admin', 'bp_media_admin_ajax', $admin_ajax);
             wp_enqueue_style('bp-media-admin', BP_MEDIA_URL . 'app/assets/css/main.css');
         }
@@ -74,6 +78,10 @@ if (!class_exists('BPMediaAdmin')) {
             $this->render_page('bp-media-support');
         }
 
+        static function get_current_tab() {
+            return isset($_GET['page']) ? $_GET['page'] : "bp-media-settings";
+        }
+
         /**
          * Render BPMedia Settings
          *
@@ -82,23 +90,22 @@ if (!class_exists('BPMediaAdmin')) {
         public function render_page($page, $is_settings = false) {
             ?>
 
-            <div class="wrap bp-media-admin">
+            <div class="wrap bp-media-admin <?php echo $this->get_current_tab(); ?>">
                 <div id="icon-buddypress" class="icon32"><br></div>
                 <h2 class="nav-tab-wrapper"><?php bp_core_admin_tabs(__('Media', BP_MEDIA_TXT_DOMAIN)); ?></h2>
                 <?php settings_errors(); ?>
-                <div class="metabox-holder columns-2">
-                    <div class="bp-media-settings-tabs"><?php
-            // Check to see which tab we are on
-            if (current_user_can('manage_options'))
-                $this->sub_tabs();
+                <div class="columns-2">
+                    <h3 class="bp-media-settings-tabs"><?php
+            $this->sub_tabs();
                 ?>
-                    </div>
+                    </h3>
 
                     <div id="bp-media-settings-boxes">
-
-                        <form id="bp_media_settings_form" name="bp_media_settings_form" action="options.php" method="post" enctype="multipart/form-data"><?php
-            echo '<div class="bp-media-metabox-holder">';
-
+                        <?php
+                        $settings_url = ( is_multisite() ) ? network_admin_url('network/edit.php?action=bp_media_options') : 'options.php';
+                        ?>
+                        <form id="bp_media_settings_form" name="bp_media_settings_form" action="<?php echo $settings_url; ?>" method="post" enctype="multipart/form-data">
+                            <div class="bp-media-metabox-holder"><?php
 //            if (isset($_REQUEST['request_type'])) {
 //                bp_media_bug_report_form($_REQUEST['request_type']);
 //            } else {
@@ -109,9 +116,8 @@ if (!class_exists('BPMediaAdmin')) {
             } else {
                 do_settings_sections($page);
             }
-
-            echo '</div>';
-                ?>
+                        ?>
+                            </div>
 
                         </form>
                     </div><!-- .bp-media-settings-boxes -->
@@ -135,8 +141,8 @@ if (!class_exists('BPMediaAdmin')) {
             $tabs = array();
 
             // Check to see which tab we are on
-            $tab = isset($_GET['page']) ? $_GET['page'] : "bp-media-settings";
-            /* BP Media */
+            $tab = $this->get_current_tab();
+            /* BuddyPress Media */
             $tabs[] = array(
                 'href' => bp_get_admin_url(add_query_arg(array('page' => 'bp-media-settings'), 'admin.php')),
                 'title' => __('Buddypress Media', BP_MEDIA_TXT_DOMAIN),
@@ -157,13 +163,13 @@ if (!class_exists('BPMediaAdmin')) {
          */
         public function sub_tabs() {
             $tabs_html = '';
-            $idle_class = 'media-nav-tab';
-            $active_class = 'media-nav-tab media-nav-tab-active';
+            $idle_class = 'nav-tab';
+            $active_class = 'nav-tab nav-tab-active';
             $tabs = array();
 
             // Check to see which tab we are on
-            $tab = isset($_GET['page']) ? $_GET['page'] : "bp-media-settings";
-            /* BP Media */
+            $tab = $this->get_current_tab();
+            /* BuddyPress Media */
             $tabs[] = array(
                 'href' => bp_get_admin_url(add_query_arg(array('page' => 'bp-media-settings'), 'admin.php')),
                 'title' => __('Buddypress Media Settings', BP_MEDIA_TXT_DOMAIN),
@@ -185,10 +191,10 @@ if (!class_exists('BPMediaAdmin')) {
                 'class' => ($tab == 'bp-media-support') ? $active_class : $idle_class . ' last_tab'
             );
 
-            $pipe = '';
+            $i = '1';
             foreach ($tabs as $tab) {
-                $tabs_html.= $pipe . '<a title=""' . $tab['title'] . '" " href="' . $tab['href'] . '" class="' . $tab['class'] . '">' . $tab['name'] . '</a>';
-                $pipe = '|';
+                $tabs_html.= '<a title="' . $tab['title'] . '" href="' . $tab['href'] . '" class="' . $tab['class'] . '">' . $tab['name'] . '</a>';
+                $i++;
             }
             echo $tabs_html;
         }
@@ -231,7 +237,23 @@ if (!class_exists('BPMediaAdmin')) {
             return true;
         }
 
+        /* Multisite Save Options - http://wordpress.stackexchange.com/questions/64968/settings-api-in-multisite-missing-update-message#answer-72503 */
+
+        public function save_multisite_options() {
+            update_site_option('bp_media_options', $_POST['bp_media_options']);
+            // redirect to settings page in network
+            wp_redirect(
+                    add_query_arg(
+                            array('page' => 'bp-media-settings', 'updated' => 'true'), (is_multisite() ? network_admin_url('admin.php') : admin_url('admin.php'))
+                    )
+            );
+            exit;
+        }
+
+        /* Admin Sidebar */
+
         public function admin_sidebar() {
+            global $bp_media;
             $branding = '<a href="http://rtcamp.com" title="' . __('Empowering The Web With WordPress', BP_MEDIA_TXT_DOMAIN) . '" id="logo"><img src="' . BP_MEDIA_URL . 'app/assets/img/rtcamp-logo.png" alt="' . __('rtCamp', BP_MEDIA_TXT_DOMAIN) . '" /></a>
                         <ul id="social">
                             <li><a href="' . sprintf('%s', 'http://www.facebook.com/rtCamp.solutions/') . '"  title="' . __('Become a fan on Facebook', BP_MEDIA_TXT_DOMAIN) . '" class="bp-media-facebook bp-media-social">' . __('Facebook', BP_MEDIA_TXT_DOMAIN) . '</a></li>
@@ -241,10 +263,10 @@ if (!class_exists('BPMediaAdmin')) {
             new BPMediaWidget('branding', '', $branding);
 
             $support = '<p><ul>
-            <li>' . sprintf('<a href="%s">' . __("Read FAQ",$bp_media->text_domain) .'</a>', 'http://rtcamp.com/buddypress-media/faq/') . '</li>
-            <li>' . sprintf('<a href="%s">' . __("Free Support Forum",$bp_media->text_domain) .'</a>', 'http://rtcamp.com/support/forum/buddypress-media/') . '</li>
-            <li>' . sprintf('<a href="%s">' . __("Github Issue Tracker",$bp_media->text_domain) .'</a>', 'https://github.com/rtCamp/buddypress-media/issues/') . '</li>
-            <li>' . sprintf('<a href="%s">' . __("Hire us!",$bp_media->text_domain).'</a> ' . __("To get professional customisation/setup service.",$bp_media->text_domain), 'http://rtcamp.com/buddypress-media/hire/') . '</li>
+            <li>' . sprintf('<a href="%s">' . __("Read FAQ", BP_MEDIA_TXT_DOMAIN) . '</a>', 'http://rtcamp.com/buddypress-media/faq/') . '</li>
+            <li>' . sprintf('<a href="%s">' . __("Free Support Forum", BP_MEDIA_TXT_DOMAIN) . '</a>', $bp_media->support_url) . '</li>
+            <li>' . sprintf('<a href="%s">' . __("Github Issue Tracker", BP_MEDIA_TXT_DOMAIN) . '</a>', 'https://github.com/rtCamp/buddypress-media/issues/') . '</li>
+            <li>' . sprintf('<a href="%s">' . __("Hire us!", BP_MEDIA_TXT_DOMAIN) . '</a> ' . __("To get professional customisation/setup service.", BP_MEDIA_TXT_DOMAIN), 'http://rtcamp.com/buddypress-media/hire/') . '</li>
             </ul></p>';
             new BPMediaWidget('support', __('Need Help?', BP_MEDIA_TXT_DOMAIN), $support);
 
@@ -267,4 +289,4 @@ if (!class_exists('BPMediaAdmin')) {
     }
 
 }
-?>
+            ?>

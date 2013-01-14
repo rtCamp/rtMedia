@@ -17,7 +17,7 @@ class BPMediaAlbum{
 	 *
 	 * @param mixed $album_id optional Album ID of the element to be initialized if not defined, returns an empty element.
 	 *
-	 * @since BP Media 2.2
+	 * @since BuddyPress Media 2.2
 	 */
 	function __construct($album_id = '') {
 		if (!$album_id == '') {
@@ -30,7 +30,7 @@ class BPMediaAlbum{
 	 *
 	 * @param mixed $album_id Album ID of the element to be initialized. Can be the ID or the object of the Album
 	 *
-	 * @since BP Media 2.2
+	 * @since BuddyPress Media 2.2
 	 */
 	function init($album_id){
 		if (is_object($album_id)) {
@@ -104,7 +104,7 @@ class BPMediaAlbum{
 	 * @param string $author_id Optional The author id, defaults to zero in which case takes the logged in user id.
 	 * @param string $group_id Optional The group id to which the album belongs, defaults to 0 meaning its not attached with a group.
 	 *
-	 * @since BP Media 2.2
+	 * @since BuddyPress Media 2.2
 	 */
 	function add_album($title,$author_id = 0, $group_id = 0){
 		do_action('bp_media_before_add_album');
@@ -116,7 +116,7 @@ class BPMediaAlbum{
 				'post_type'	=>	'bp_media_album',
 				'post_author'=> $author_id
 			);
-		BPMediaActions::bp_media_init_count($author_id);
+		BPMediaActions::init_count($author_id);
 		global $bp_media_count;
 		$album_id = wp_insert_post($post_vars);
 		if($group_id){
@@ -135,18 +135,18 @@ class BPMediaAlbum{
 	/**
 	 * Deletes the album and all associated attachments
 	 *
-	 * @since BP Media 2.2
+	 * @since BuddyPress Media 2.2
 	 */
 	function delete_album(){
 		do_action('bp_media_before_delete_album',  $this);
 		foreach($this->media_entries as $entry){
-			BPMediaActions::bp_media_delete_media_handler($entry->ID);
+			BPMediaActions::delete_media_handler($entry->ID);
 			//do_action('bp_media_before_delete_media',$entry->ID); //Not working for some reason so called the required function directly
 			wp_delete_attachment($entry->ID,true);
 			do_action('bp_media_after_delete_media',$entry->ID);
 		}
 		$author_id = $this->owner;
-		BPMediaActions::bp_media_init_count($author_id);
+		BPMediaActions::init_count($author_id);
 		wp_delete_post($this->id,true);
 		global $bp_media_count;
 		$bp_media_count['albums'] = intval(isset($bp_media_count['albums'])?$bp_media_count['albums']:0) - 1;
@@ -189,7 +189,7 @@ class BPMediaAlbum{
 	/**
 	 * Returns the attachments linked with the albume
 	 *
-	 * @since BP Media 2.2
+	 * @since BuddyPress Media 2.2
 	 */
 	function get_entries(){
 		return $this->media_entries;
@@ -198,7 +198,7 @@ class BPMediaAlbum{
 	/**
 	 * Returns the title of the album
 	 *
-	 * @since BP Media 2.2
+	 * @since BuddyPress Media 2.2
 	 */
 	function get_title(){
 		return $this->name;
@@ -207,7 +207,7 @@ class BPMediaAlbum{
 	/**
 	 * Echoes the title of the album
 	 *
-	 * @since BP Media 2.2
+	 * @since BuddyPress Media 2.2
 	 */
 	function the_title(){
 		echo $this->name;
@@ -216,7 +216,7 @@ class BPMediaAlbum{
 	/**
 	 * Returns the id of the album
 	 *
-	 * @since BP Media 2.2
+	 * @since BuddyPress Media 2.2
 	 */
 	function get_id(){
 		return $this->id;
@@ -225,7 +225,7 @@ class BPMediaAlbum{
 	/**
 	 * Returns the url of the album
 	 *
-	 * @since BP Media 2.2
+	 * @since BuddyPress Media 2.2
 	 */
 	function get_url(){
 		return $this->url;
@@ -234,7 +234,7 @@ class BPMediaAlbum{
 	/**
 	 * Returns the owner's id
 	 *
-	 * @since BP Media 2.2
+	 * @since BuddyPress Media 2.2
 	 */
 	function get_owner(){
 		return $this->owner;

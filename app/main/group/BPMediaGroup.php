@@ -30,7 +30,7 @@ class BPMediaGroup {
      *
      * @uses global $bp
      *
-     * @since BP Media 2.3
+     * @since BuddyPress Media 2.3
      */
     function custom_nav() {
         global $bp;
@@ -41,7 +41,7 @@ class BPMediaGroup {
             return;
 
         /** This line might break a thing or two in custom themes and widgets */
-        remove_filter('bp_activity_get_user_join_filter', 'bp_media_activity_query_filter', 10);
+        remove_filter('bp_activity_get_user_join_filter', 'activity_query_filter', 10);
 
         foreach ($bp->bp_options_nav[$current_group] as $key => $nav_item) {
             switch ($nav_item['slug']) {
@@ -71,7 +71,7 @@ class BPMediaGroup {
      *
      * @param Array $multipart_params Array of Multipart Parameters to be passed on to plupload script
      *
-     * @since BP Media 2.3
+     * @since BuddyPress Media 2.3
      */
     function multipart_params_handler($multipart_params) {
         if (is_array($multipart_params)) {
@@ -92,7 +92,7 @@ class BPMediaGroup {
      *
      * @uses $bp Global Variable set by BuddyPress
      *
-     * @since BP Media 2.3
+     * @since BuddyPress Media 2.3
      */
     static function navigation_menu() {
         global $bp, $bp_media;
@@ -138,7 +138,7 @@ class BPMediaGroup {
      * Checks whether the current logged in user has the ability to upload on
      * the given group or not
      *
-     * @since BP Media 2.3
+     * @since BuddyPress Media 2.3
      */
     static function can_upload() {
         /** @todo Implementation Pending */
@@ -157,7 +157,7 @@ class BPMediaGroup {
      *
      * @uses global $bp,$wp_admin_bar
      *
-     * @since BP Media 2.3
+     * @since BuddyPress Media 2.3
      */
     function admin_bar() {
         global $wp_admin_bar, $bp;
