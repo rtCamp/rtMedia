@@ -70,17 +70,17 @@ if ( ! class_exists( 'BPMediaAddon' ) ) {
 
 			$coming_soon_div = ($coming_soon) ? $this->coming_soon_div() : '';
 			$addon = '<div class="bp-media-addon">
-                <a href="' . $product_link . '"  title="' . $title . '">
+                <a href="' . $product_link . '"  title="' . $title . '" target="_blank">
                     <img width="240" height="184" title="' . $title . '" alt="' . $title . '" src="' . $img_src . '">
                 </a>
-                <h4><a href="' . $product_link . '"  title="' . $title . '">' . $title . '</a></h4>
+                <h4><a href="' . $product_link . '"  title="' . $title . '" target="_blank">' . $title . '</a></h4>
                 <div class="product_desc">
                     ' . $desc . '
                 </div>
                 <div class="product_footer">
                     <span class="price alignleft"><span class="amount">' . $price . '</span></span>
-                    <a class="add_to_cart_button  alignright product_type_simple"  href="' . $buy_now . '">' . __( 'Buy Now', BP_MEDIA_TXT_DOMAIN ) . '</a>
-                    <a class="alignleft product_demo_link"  href="' . $demo_link . '" title="' . $title . '">' . __( 'Live Demo', BP_MEDIA_TXT_DOMAIN ) . '</a>
+                    <a class="add_to_cart_button  alignright product_type_simple"  href="' . $buy_now . '" target="_blank">' . __( 'Buy Now', BP_MEDIA_TXT_DOMAIN ) . '</a>
+                    <a class="alignleft product_demo_link"  href="' . $demo_link . '" title="' . $title . '" target="_blank">' . __( 'Live Demo', BP_MEDIA_TXT_DOMAIN ) . '</a>
                 </div>'
 					. $coming_soon_div .
 					'</div>';
