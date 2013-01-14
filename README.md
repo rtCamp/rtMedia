@@ -2,7 +2,7 @@
 
 # BuddyPress Media #
 
-* **Contributors:** [rtcamp] (http://profiles.wordpress.org/rtcamp), [rahul286] (http://profiles.wordpress.org/rahul286), [gagan0123] (http://profiles.wordpress.org/gagan0123), [umesh.nevase] (http://profiles.wordpress.org/umesh.nevase), [suhasgirgaonkar] (http://profiles.wordpress.org/suhasgirgaonkar), [neerukoul] (http://profiles.wordpress.org/neerukoul),
+* **Contributors:** [rtcamp] (http://profiles.wordpress.org/rtcamp), [rahul286] (http://profiles.wordpress.org/rahul286), [gagan0123] (http://profiles.wordpress.org/gagan0123), [umesh.nevase] (http://profiles.wordpress.org/umesh.nevase), [suhasgirgaonkar] (http://profiles.wordpress.org/suhasgirgaonkar), [neerukoul] (http://profiles.wordpress.org/neerukoul), [saurabhshukla] (http://profiles.wordpress.org/saurabhshukla), [JoshuaAbenazer] (http://profiles.wordpress.org/JoshuaAbenazer), [faishal] (http://profiles.wordpress.org/faishal), [hrishiv90] (http://profiles.wordpress.org/hrishiv90),
 
 * **License:** [GPL v2 or later] ( http://www.gnu.org/licenses/gpl-2.0.html)
 
@@ -18,6 +18,7 @@ BuddyPress Media adds Photos, Music, Videos & Albums to your BuddyPress. Support
 
 * Images, Music, Videos Upload
 * User-Albums Support
+* Group Media Support
 * Multiple files upload with Drag-n-Drop
 * Uploading Photos/Videos via mobile (Tested on iPhone running iOS6)
 * HTML5 player (with fall back to flash/silverlight player support)
@@ -25,7 +26,6 @@ BuddyPress Media adds Photos, Music, Videos & Albums to your BuddyPress. Support
 
 #### Roadmap ####
 
-* Group Albums
 * Activity-update form media upload
 * Paid membership plans, i.e. "Upload Quota" for buddypress members  (in planning stage).
 
@@ -73,8 +73,13 @@ Please visit [BuddyPress Media's Features page](http://rtcamp.com/buddypress-med
 
 Please visit [BuddyPress Media's Roadmap page](http://rtcamp.com/buddypress-media/roadmap/ "Visit BuddyPress Media's Features page") to get some details about future releases.
 
+#### 2.4 ####
+* Total code overhaul. Fixed a lot of bugs and optimised a lot of other code.
+* Added proper translation support!
+* Removed extra jQuery UI scripts and styles, for speed and optimisation
+
 #### 2.3.2 ####
-* Album creation on a single file upload.
+* Album creation on a single file upload. Thanks to [Josh Levinson](http://profiles.wordpress.org/joshlevinson/) for providing the fix.
 * Fixed Version number constant.
 
 #### 2.3.1 ####
@@ -162,3 +167,4 @@ Please visit [BuddyPress Media's Roadmap page](http://rtcamp.com/buddypress-medi
 * HTML5 Audio Tag Support (with fallback)
 * HTML5 Video Tag Support (with fallback)
 
+Total code refactor. Translation ready! Faster and more optimised.
