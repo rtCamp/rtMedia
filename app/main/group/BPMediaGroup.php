@@ -11,10 +11,6 @@ class BPMediaGroup {
         if ($initFlag) {
             if (class_exists('BPMediaGroupsExtension')) :
                 bp_register_group_extension('BPMediaGroupsExtension');
-                /**
-                 * This loop creates dummy classes for images, videos, audio and albums so that the url structuring
-                 * can be uniform as it is in the members section.
-                 */
                 new BPMediaGroupImage ();
                 new BPMediaGroupAlbum();
                 new BPMediaGroupMusic();
