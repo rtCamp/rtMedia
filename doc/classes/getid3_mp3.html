@@ -1,0 +1,541 @@
+<!DOCTYPE html><html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+<meta charset="utf-8">
+<title>buddypress-media » \getid3_mp3</title>
+<meta name="author" content="Mike van Riel">
+<meta name="description" content="">
+<link href="../css/template.css" rel="stylesheet" media="all">
+<script src="../js/jquery-1.7.1.min.js" type="text/javascript"></script><script src="../js/jquery-ui-1.8.2.custom.min.js" type="text/javascript"></script><script src="../js/jquery.mousewheel.min.js" type="text/javascript"></script><script src="../js/bootstrap.js" type="text/javascript"></script><script src="../js/template.js" type="text/javascript"></script><script src="../js/prettify/prettify.min.js" type="text/javascript"></script><link rel="shortcut icon" href="../img/favicon.ico">
+<link rel="apple-touch-icon" href="../img/apple-touch-icon.png">
+<link rel="apple-touch-icon" sizes="72x72" href="../img/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="114x114" href="../img/apple-touch-icon-114x114.png">
+</head>
+<body>
+<div class="navbar navbar-fixed-top">
+<div class="navbar-inner"><div class="container">
+<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></a><a class="brand" href="../index.html">buddypress-media</a><div class="nav-collapse"><ul class="nav">
+<li class="dropdown">
+<a href="#api" class="dropdown-toggle" data-toggle="dropdown">
+                                    API Documentation <b class="caret"></b></a><ul class="dropdown-menu"></ul>
+</li>
+<li class="dropdown" id="charts-menu">
+<a href="#charts" class="dropdown-toggle" data-toggle="dropdown">
+                                    Charts <b class="caret"></b></a><ul class="dropdown-menu"><li><a href="../graph_class.html"><i class="icon-list-alt"></i> Class hierarchy diagram</a></li></ul>
+</li>
+<li class="dropdown" id="reports-menu">
+<a href="#reports" class="dropdown-toggle" data-toggle="dropdown">
+                                    Reports <b class="caret"></b></a><ul class="dropdown-menu">
+<li><a href="../errors.html"><i class="icon-remove-sign"></i> Errors 
+                <span class="label label-info">1030</span></a></li>
+<li><a href="../markers.html"><i class="icon-map-marker"></i> Markers 
+                <ul><li>todo 
+                <span class="label label-info">1</span>
+</li></ul></a></li>
+<li><a href="../deprecated.html"><i class="icon-stop"></i> Deprecated elements 
+                <span class="label label-info">0</span></a></li>
+</ul>
+</li>
+</ul></div>
+</div></div>
+<div class="go_to_top"><a href="#___" style="color: inherit">Back to top  <i class="icon-upload icon-white"></i></a></div>
+</div>
+<div id="___" class="container">
+<noscript><div class="alert alert-warning">
+                            Javascript is disabled; several features are only available
+                            if Javascript is enabled.
+                        </div></noscript>
+<div class="row">
+<div class="span4">
+<span class="btn-group visibility" data-toggle="buttons-checkbox"><button class="btn public active" title="Show public elements">Public</button><button class="btn protected" title="Show protected elements">Protected</button><button class="btn private" title="Show private elements">Private</button><button class="btn inherited active" title="Show inherited elements">Inherited</button></span><div class="btn-group view pull-right" data-toggle="buttons-radio">
+<button class="btn details" title="Show descriptions and method names"><i class="icon-list"></i></button><button class="btn simple" title="Show only method names"><i class="icon-align-justify"></i></button>
+</div>
+<ul class="side-nav nav nav-list">
+<li class="nav-header">
+<i class="icon-custom icon-method"></i> Methods
+                    <ul>
+<li class="method public "><a href="#method_Analyze" title="Analyze :: "><span class="description">Analyze()
+        </span><pre>Analyze()</pre></a></li>
+<li class="method public inherited"><a href="#method_AnalyzeString" title="AnalyzeString :: "><span class="description">AnalyzeString()
+        </span><pre>AnalyzeString()</pre></a></li>
+<li class="method public "><a href="#method_ClosestStandardMP3Bitrate" title="ClosestStandardMP3Bitrate :: "><span class="description">ClosestStandardMP3Bitrate()
+        </span><pre>ClosestStandardMP3Bitrate()</pre></a></li>
+<li class="method public "><a href="#method_FreeFormatFrameLength" title="FreeFormatFrameLength :: "><span class="description">FreeFormatFrameLength()
+        </span><pre>FreeFormatFrameLength()</pre></a></li>
+<li class="method public "><a href="#method_GuessEncoderOptions" title="GuessEncoderOptions :: "><span class="description">GuessEncoderOptions()
+        </span><pre>GuessEncoderOptions()</pre></a></li>
+<li class="method public "><a href="#method_LAMEmiscSourceSampleFrequencyLookup" title="LAMEmiscSourceSampleFrequencyLookup :: "><span class="description">LAMEmiscSourceSampleFrequencyLookup()
+        </span><pre>LAMEmiscSourceSampleFrequencyLookup()</pre></a></li>
+<li class="method public "><a href="#method_LAMEmiscStereoModeLookup" title="LAMEmiscStereoModeLookup :: "><span class="description">LAMEmiscStereoModeLookup()
+        </span><pre>LAMEmiscStereoModeLookup()</pre></a></li>
+<li class="method public "><a href="#method_LAMEpresetUsedLookup" title="LAMEpresetUsedLookup :: "><span class="description">LAMEpresetUsedLookup()
+        </span><pre>LAMEpresetUsedLookup()</pre></a></li>
+<li class="method public "><a href="#method_LAMEsurroundInfoLookup" title="LAMEsurroundInfoLookup :: "><span class="description">LAMEsurroundInfoLookup()
+        </span><pre>LAMEsurroundInfoLookup()</pre></a></li>
+<li class="method public "><a href="#method_LAMEvbrMethodLookup" title="LAMEvbrMethodLookup :: "><span class="description">LAMEvbrMethodLookup()
+        </span><pre>LAMEvbrMethodLookup()</pre></a></li>
+<li class="method public "><a href="#method_MPEGaudioBitrateArray" title="MPEGaudioBitrateArray :: "><span class="description">MPEGaudioBitrateArray()
+        </span><pre>MPEGaudioBitrateArray()</pre></a></li>
+<li class="method public "><a href="#method_MPEGaudioChannelModeArray" title="MPEGaudioChannelModeArray :: "><span class="description">MPEGaudioChannelModeArray()
+        </span><pre>MPEGaudioChannelModeArray()</pre></a></li>
+<li class="method public "><a href="#method_MPEGaudioEmphasisArray" title="MPEGaudioEmphasisArray :: "><span class="description">MPEGaudioEmphasisArray()
+        </span><pre>MPEGaudioEmphasisArray()</pre></a></li>
+<li class="method public "><a href="#method_MPEGaudioFrameLength" title="MPEGaudioFrameLength :: "><span class="description">MPEGaudioFrameLength()
+        </span><pre>MPEGaudioFrameLength()</pre></a></li>
+<li class="method public "><a href="#method_MPEGaudioFrequencyArray" title="MPEGaudioFrequencyArray :: "><span class="description">MPEGaudioFrequencyArray()
+        </span><pre>MPEGaudioFrequencyArray()</pre></a></li>
+<li class="method public "><a href="#method_MPEGaudioHeaderBytesValid" title="MPEGaudioHeaderBytesValid :: "><span class="description">MPEGaudioHeaderBytesValid()
+        </span><pre>MPEGaudioHeaderBytesValid()</pre></a></li>
+<li class="method public "><a href="#method_MPEGaudioHeaderDecode" title="MPEGaudioHeaderDecode :: "><span class="description">MPEGaudioHeaderDecode()
+        </span><pre>MPEGaudioHeaderDecode()</pre></a></li>
+<li class="method public "><a href="#method_MPEGaudioHeaderValid" title="MPEGaudioHeaderValid :: "><span class="description">MPEGaudioHeaderValid()
+        </span><pre>MPEGaudioHeaderValid()</pre></a></li>
+<li class="method public "><a href="#method_MPEGaudioLayerArray" title="MPEGaudioLayerArray :: "><span class="description">MPEGaudioLayerArray()
+        </span><pre>MPEGaudioLayerArray()</pre></a></li>
+<li class="method public "><a href="#method_MPEGaudioModeExtensionArray" title="MPEGaudioModeExtensionArray :: "><span class="description">MPEGaudioModeExtensionArray()
+        </span><pre>MPEGaudioModeExtensionArray()</pre></a></li>
+<li class="method public "><a href="#method_MPEGaudioVersionArray" title="MPEGaudioVersionArray :: "><span class="description">MPEGaudioVersionArray()
+        </span><pre>MPEGaudioVersionArray()</pre></a></li>
+<li class="method public "><a href="#method_RecursiveFrameScanning" title="RecursiveFrameScanning :: "><span class="description">RecursiveFrameScanning()
+        </span><pre>RecursiveFrameScanning()</pre></a></li>
+<li class="method public "><a href="#method_XingVBRidOffset" title="XingVBRidOffset :: "><span class="description">XingVBRidOffset()
+        </span><pre>XingVBRidOffset()</pre></a></li>
+<li class="method public inherited"><a href="#method___construct" title="__construct :: "><span class="description">__construct()
+        </span><pre>__construct()</pre></a></li>
+<li class="method public "><a href="#method_decodeMPEGaudioHeader" title="decodeMPEGaudioHeader :: "><span class="description">decodeMPEGaudioHeader()
+        </span><pre>decodeMPEGaudioHeader()</pre></a></li>
+<li class="method public "><a href="#method_getOnlyMPEGaudioInfo" title="getOnlyMPEGaudioInfo :: "><span class="description">getOnlyMPEGaudioInfo()
+        </span><pre>getOnlyMPEGaudioInfo()</pre></a></li>
+<li class="method public "><a href="#method_getOnlyMPEGaudioInfoBruteForce" title="getOnlyMPEGaudioInfoBruteForce :: "><span class="description">getOnlyMPEGaudioInfoBruteForce()
+        </span><pre>getOnlyMPEGaudioInfoBruteForce()</pre></a></li>
+</ul>
+</li>
+<li class="nav-header protected">» Protected
+                    <ul>
+<li class="method protected inherited"><a href="#method_fread" title="fread :: "><span class="description">fread()
+        </span><pre>fread()</pre></a></li>
+<li class="method protected inherited"><a href="#method_fseek" title="fseek :: "><span class="description">fseek()
+        </span><pre>fseek()</pre></a></li>
+<li class="method protected inherited"><a href="#method_ftell" title="ftell :: "><span class="description">ftell()
+        </span><pre>ftell()</pre></a></li>
+</ul>
+</li>
+<li class="nav-header">
+<i class="icon-custom icon-property"></i> Properties
+                    <ul><li class="property public "><a href="#property_allow_bruteforce" title="$allow_bruteforce :: "><span class="description"></span><pre>$allow_bruteforce</pre></a></li></ul>
+</li>
+<li class="nav-header protected">» Protected
+                    <ul>
+<li class="property protected inherited"><a href="#property_data_string" title="$data_string :: "><span class="description"></span><pre>$data_string</pre></a></li>
+<li class="property protected inherited"><a href="#property_data_string_flag" title="$data_string_flag :: "><span class="description"></span><pre>$data_string_flag</pre></a></li>
+<li class="property protected inherited"><a href="#property_data_string_position" title="$data_string_position :: "><span class="description"></span><pre>$data_string_position</pre></a></li>
+<li class="property protected inherited"><a href="#property_getid3" title="$getid3 :: "><span class="description"></span><pre>$getid3</pre></a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="span8">
+<a id="\getid3_mp3"></a><ul class="breadcrumb">
+<li>
+<a href="../index.html"><i class="icon-custom icon-class"></i></a><span class="divider">\</span>
+</li>
+<li><a href="../namespaces/global.html">global</a></li>
+<li class="active">
+<span class="divider">\</span><a href="../classes/getid3_mp3.html">getid3_mp3</a>
+</li>
+</ul>
+<div class="element class"><div class="details">
+<h3>
+<i class="icon-custom icon-method"></i> Methods</h3>
+<a id="method_Analyze"></a><div class="element clickable method public method_Analyze" data-toggle="collapse" data-target=".method_Analyze .collapse">
+<h2>Analyze()
+        </h2>
+<pre>Analyze() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="method_AnalyzeString"></a><div class="element clickable method public method_AnalyzeString" data-toggle="collapse" data-target=".method_AnalyzeString .collapse">
+<h2>AnalyzeString()
+        </h2>
+<pre>AnalyzeString($string) </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\getid3_handler::AnalyzeString()</td>
+</tr></table>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$string</h4></div>
+</div></div>
+</div>
+<a id="method_ClosestStandardMP3Bitrate"></a><div class="element clickable method public method_ClosestStandardMP3Bitrate" data-toggle="collapse" data-target=".method_ClosestStandardMP3Bitrate .collapse">
+<h2>ClosestStandardMP3Bitrate()
+        </h2>
+<pre>ClosestStandardMP3Bitrate($bit_rate) </pre>
+<div class="labels"><span class="label">Static</span></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$bit_rate</h4></div>
+</div></div>
+</div>
+<a id="method_FreeFormatFrameLength"></a><div class="element clickable method public method_FreeFormatFrameLength" data-toggle="collapse" data-target=".method_FreeFormatFrameLength .collapse">
+<h2>FreeFormatFrameLength()
+        </h2>
+<pre>FreeFormatFrameLength($offset, $deepscan) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$offset</h4></div>
+<div class="subelement argument"><h4>$deepscan</h4></div>
+</div></div>
+</div>
+<a id="method_GuessEncoderOptions"></a><div class="element clickable method public method_GuessEncoderOptions" data-toggle="collapse" data-target=".method_GuessEncoderOptions .collapse">
+<h2>GuessEncoderOptions()
+        </h2>
+<pre>GuessEncoderOptions() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="method_LAMEmiscSourceSampleFrequencyLookup"></a><div class="element clickable method public method_LAMEmiscSourceSampleFrequencyLookup" data-toggle="collapse" data-target=".method_LAMEmiscSourceSampleFrequencyLookup .collapse">
+<h2>LAMEmiscSourceSampleFrequencyLookup()
+        </h2>
+<pre>LAMEmiscSourceSampleFrequencyLookup($SourceSampleFrequencyID) </pre>
+<div class="labels"><span class="label">Static</span></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$SourceSampleFrequencyID</h4></div>
+</div></div>
+</div>
+<a id="method_LAMEmiscStereoModeLookup"></a><div class="element clickable method public method_LAMEmiscStereoModeLookup" data-toggle="collapse" data-target=".method_LAMEmiscStereoModeLookup .collapse">
+<h2>LAMEmiscStereoModeLookup()
+        </h2>
+<pre>LAMEmiscStereoModeLookup($StereoModeID) </pre>
+<div class="labels"><span class="label">Static</span></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$StereoModeID</h4></div>
+</div></div>
+</div>
+<a id="method_LAMEpresetUsedLookup"></a><div class="element clickable method public method_LAMEpresetUsedLookup" data-toggle="collapse" data-target=".method_LAMEpresetUsedLookup .collapse">
+<h2>LAMEpresetUsedLookup()
+        </h2>
+<pre>LAMEpresetUsedLookup($LAMEtag) </pre>
+<div class="labels"><span class="label">Static</span></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$LAMEtag</h4></div>
+</div></div>
+</div>
+<a id="method_LAMEsurroundInfoLookup"></a><div class="element clickable method public method_LAMEsurroundInfoLookup" data-toggle="collapse" data-target=".method_LAMEsurroundInfoLookup .collapse">
+<h2>LAMEsurroundInfoLookup()
+        </h2>
+<pre>LAMEsurroundInfoLookup($SurroundInfoID) </pre>
+<div class="labels"><span class="label">Static</span></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$SurroundInfoID</h4></div>
+</div></div>
+</div>
+<a id="method_LAMEvbrMethodLookup"></a><div class="element clickable method public method_LAMEvbrMethodLookup" data-toggle="collapse" data-target=".method_LAMEvbrMethodLookup .collapse">
+<h2>LAMEvbrMethodLookup()
+        </h2>
+<pre>LAMEvbrMethodLookup($VBRmethodID) </pre>
+<div class="labels"><span class="label">Static</span></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$VBRmethodID</h4></div>
+</div></div>
+</div>
+<a id="method_MPEGaudioBitrateArray"></a><div class="element clickable method public method_MPEGaudioBitrateArray" data-toggle="collapse" data-target=".method_MPEGaudioBitrateArray .collapse">
+<h2>MPEGaudioBitrateArray()
+        </h2>
+<pre>MPEGaudioBitrateArray() </pre>
+<div class="labels"><span class="label">Static</span></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="method_MPEGaudioChannelModeArray"></a><div class="element clickable method public method_MPEGaudioChannelModeArray" data-toggle="collapse" data-target=".method_MPEGaudioChannelModeArray .collapse">
+<h2>MPEGaudioChannelModeArray()
+        </h2>
+<pre>MPEGaudioChannelModeArray() </pre>
+<div class="labels"><span class="label">Static</span></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="method_MPEGaudioEmphasisArray"></a><div class="element clickable method public method_MPEGaudioEmphasisArray" data-toggle="collapse" data-target=".method_MPEGaudioEmphasisArray .collapse">
+<h2>MPEGaudioEmphasisArray()
+        </h2>
+<pre>MPEGaudioEmphasisArray() </pre>
+<div class="labels"><span class="label">Static</span></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="method_MPEGaudioFrameLength"></a><div class="element clickable method public method_MPEGaudioFrameLength" data-toggle="collapse" data-target=".method_MPEGaudioFrameLength .collapse">
+<h2>MPEGaudioFrameLength()
+        </h2>
+<pre>MPEGaudioFrameLength($bitrate, $version, $layer, $padding, $samplerate) </pre>
+<div class="labels"><span class="label">Static</span></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$bitrate</h4></div>
+<div class="subelement argument"><h4>$version</h4></div>
+<div class="subelement argument"><h4>$layer</h4></div>
+<div class="subelement argument"><h4>$padding</h4></div>
+<div class="subelement argument"><h4>$samplerate</h4></div>
+</div></div>
+</div>
+<a id="method_MPEGaudioFrequencyArray"></a><div class="element clickable method public method_MPEGaudioFrequencyArray" data-toggle="collapse" data-target=".method_MPEGaudioFrequencyArray .collapse">
+<h2>MPEGaudioFrequencyArray()
+        </h2>
+<pre>MPEGaudioFrequencyArray() </pre>
+<div class="labels"><span class="label">Static</span></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="method_MPEGaudioHeaderBytesValid"></a><div class="element clickable method public method_MPEGaudioHeaderBytesValid" data-toggle="collapse" data-target=".method_MPEGaudioHeaderBytesValid .collapse">
+<h2>MPEGaudioHeaderBytesValid()
+        </h2>
+<pre>MPEGaudioHeaderBytesValid($head4, $allowBitrate15) </pre>
+<div class="labels"><span class="label">Static</span></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$head4</h4></div>
+<div class="subelement argument"><h4>$allowBitrate15</h4></div>
+</div></div>
+</div>
+<a id="method_MPEGaudioHeaderDecode"></a><div class="element clickable method public method_MPEGaudioHeaderDecode" data-toggle="collapse" data-target=".method_MPEGaudioHeaderDecode .collapse">
+<h2>MPEGaudioHeaderDecode()
+        </h2>
+<pre>MPEGaudioHeaderDecode($Header4Bytes) </pre>
+<div class="labels"><span class="label">Static</span></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$Header4Bytes</h4></div>
+</div></div>
+</div>
+<a id="method_MPEGaudioHeaderValid"></a><div class="element clickable method public method_MPEGaudioHeaderValid" data-toggle="collapse" data-target=".method_MPEGaudioHeaderValid .collapse">
+<h2>MPEGaudioHeaderValid()
+        </h2>
+<pre>MPEGaudioHeaderValid($rawarray, $echoerrors, $allowBitrate15) </pre>
+<div class="labels"><span class="label">Static</span></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$rawarray</h4></div>
+<div class="subelement argument"><h4>$echoerrors</h4></div>
+<div class="subelement argument"><h4>$allowBitrate15</h4></div>
+</div></div>
+</div>
+<a id="method_MPEGaudioLayerArray"></a><div class="element clickable method public method_MPEGaudioLayerArray" data-toggle="collapse" data-target=".method_MPEGaudioLayerArray .collapse">
+<h2>MPEGaudioLayerArray()
+        </h2>
+<pre>MPEGaudioLayerArray() </pre>
+<div class="labels"><span class="label">Static</span></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="method_MPEGaudioModeExtensionArray"></a><div class="element clickable method public method_MPEGaudioModeExtensionArray" data-toggle="collapse" data-target=".method_MPEGaudioModeExtensionArray .collapse">
+<h2>MPEGaudioModeExtensionArray()
+        </h2>
+<pre>MPEGaudioModeExtensionArray() </pre>
+<div class="labels"><span class="label">Static</span></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="method_MPEGaudioVersionArray"></a><div class="element clickable method public method_MPEGaudioVersionArray" data-toggle="collapse" data-target=".method_MPEGaudioVersionArray .collapse">
+<h2>MPEGaudioVersionArray()
+        </h2>
+<pre>MPEGaudioVersionArray() </pre>
+<div class="labels"><span class="label">Static</span></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="method_RecursiveFrameScanning"></a><div class="element clickable method public method_RecursiveFrameScanning" data-toggle="collapse" data-target=".method_RecursiveFrameScanning .collapse">
+<h2>RecursiveFrameScanning()
+        </h2>
+<pre>RecursiveFrameScanning($offset, $nextframetestoffset, $ScanAsCBR) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$offset</h4></div>
+<div class="subelement argument"><h4>$nextframetestoffset</h4></div>
+<div class="subelement argument"><h4>$ScanAsCBR</h4></div>
+</div></div>
+</div>
+<a id="method_XingVBRidOffset"></a><div class="element clickable method public method_XingVBRidOffset" data-toggle="collapse" data-target=".method_XingVBRidOffset .collapse">
+<h2>XingVBRidOffset()
+        </h2>
+<pre>XingVBRidOffset($version, $channelmode) </pre>
+<div class="labels"><span class="label">Static</span></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$version</h4></div>
+<div class="subelement argument"><h4>$channelmode</h4></div>
+</div></div>
+</div>
+<a id="method___construct"></a><div class="element clickable method public method___construct" data-toggle="collapse" data-target=".method___construct .collapse">
+<h2>__construct()
+        </h2>
+<pre>__construct(\getID3 $getid3) </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\getid3_handler::__construct()</td>
+</tr></table>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$getid3</h4></div>
+</div></div>
+</div>
+<a id="method_decodeMPEGaudioHeader"></a><div class="element clickable method public method_decodeMPEGaudioHeader" data-toggle="collapse" data-target=".method_decodeMPEGaudioHeader .collapse">
+<h2>decodeMPEGaudioHeader()
+        </h2>
+<pre>decodeMPEGaudioHeader($offset, $info, $recursivesearch, $ScanAsCBR, $FastMPEGheaderScan) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$offset</h4></div>
+<div class="subelement argument"><h4>$info</h4></div>
+<div class="subelement argument"><h4>$recursivesearch</h4></div>
+<div class="subelement argument"><h4>$ScanAsCBR</h4></div>
+<div class="subelement argument"><h4>$FastMPEGheaderScan</h4></div>
+</div></div>
+</div>
+<a id="method_getOnlyMPEGaudioInfo"></a><div class="element clickable method public method_getOnlyMPEGaudioInfo" data-toggle="collapse" data-target=".method_getOnlyMPEGaudioInfo .collapse">
+<h2>getOnlyMPEGaudioInfo()
+        </h2>
+<pre>getOnlyMPEGaudioInfo($avdataoffset, $BitrateHistogram) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$avdataoffset</h4></div>
+<div class="subelement argument"><h4>$BitrateHistogram</h4></div>
+</div></div>
+</div>
+<a id="method_getOnlyMPEGaudioInfoBruteForce"></a><div class="element clickable method public method_getOnlyMPEGaudioInfoBruteForce" data-toggle="collapse" data-target=".method_getOnlyMPEGaudioInfoBruteForce .collapse">
+<h2>getOnlyMPEGaudioInfoBruteForce()
+        </h2>
+<pre>getOnlyMPEGaudioInfoBruteForce() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="method_fread"></a><div class="element clickable method protected method_fread" data-toggle="collapse" data-target=".method_fread .collapse">
+<h2>fread()
+        </h2>
+<pre>fread($bytes) </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\getid3_handler::fread()</td>
+</tr></table>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$bytes</h4></div>
+</div></div>
+</div>
+<a id="method_fseek"></a><div class="element clickable method protected method_fseek" data-toggle="collapse" data-target=".method_fseek .collapse">
+<h2>fseek()
+        </h2>
+<pre>fseek($bytes, $whence) </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\getid3_handler::fseek()</td>
+</tr></table>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$bytes</h4></div>
+<div class="subelement argument"><h4>$whence</h4></div>
+</div></div>
+</div>
+<a id="method_ftell"></a><div class="element clickable method protected method_ftell" data-toggle="collapse" data-target=".method_ftell .collapse">
+<h2>ftell()
+        </h2>
+<pre>ftell() </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\getid3_handler::ftell()</td>
+</tr></table>
+</div></div>
+</div>
+<h3>
+<i class="icon-custom icon-property"></i> Properties</h3>
+<a id="property_allow_bruteforce"> </a><div class="element clickable property public property_allow_bruteforce" data-toggle="collapse" data-target=".property_allow_bruteforce .collapse">
+<h2></h2>
+<pre>$allow_bruteforce </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="property_data_string"> </a><div class="element clickable property protected property_data_string" data-toggle="collapse" data-target=".property_data_string .collapse">
+<h2></h2>
+<pre>$data_string </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\getid3_handler::$$data_string</td>
+</tr></table>
+</div></div>
+</div>
+<a id="property_data_string_flag"> </a><div class="element clickable property protected property_data_string_flag" data-toggle="collapse" data-target=".property_data_string_flag .collapse">
+<h2></h2>
+<pre>$data_string_flag </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\getid3_handler::$$data_string_flag</td>
+</tr></table>
+</div></div>
+</div>
+<a id="property_data_string_position"> </a><div class="element clickable property protected property_data_string_position" data-toggle="collapse" data-target=".property_data_string_position .collapse">
+<h2></h2>
+<pre>$data_string_position </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\getid3_handler::$$data_string_position</td>
+</tr></table>
+</div></div>
+</div>
+<a id="property_getid3"> </a><div class="element clickable property protected property_getid3" data-toggle="collapse" data-target=".property_getid3 .collapse">
+<h2></h2>
+<pre>$getid3 </pre>
+<div class="labels"><span class="label">Inherited</span></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<table class="table table-bordered"><tr>
+<th>inherited_from</th>
+<td>\getid3_handler::$$getid3</td>
+</tr></table>
+</div></div>
+</div>
+</div></div>
+</div>
+</div>
+<div class="row"><footer class="span12">
+            Template is built using <a href="http://twitter.github.com/bootstrap/">Twitter Bootstrap 2</a> and icons provided by <a href="http://glyphicons.com/">Glyphicons</a>.<br>
+            Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor 2.0.0a12</a> and<br>
+            generated on 2013-01-14T11:36:44+05:30.<br></footer></div>
+</div>
+</body>
+</html>

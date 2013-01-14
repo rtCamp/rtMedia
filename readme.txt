@@ -72,8 +72,11 @@ Please visit [BuddyPress Media's Features page](http://rtcamp.com/buddypress-med
 == Changelog ==
 
 Please visit [BuddyPress Media's Roadmap page](http://rtcamp.com/buddypress-media/roadmap/ "Visit BuddyPress Media's Features page") to get some details about future releases.
+
 = 2.4 =
-* 
+* Total code overhaul. Fixed a lot of bugs and optimised a lot of other code.
+* Added proper translation support!
+* Removed extra jQuery UI scripts and styles, for speed and optimisation
 
 = 2.3.2 =
 * Album creation on a single file upload. Thanks to [Josh Levinson](http://profiles.wordpress.org/joshlevinson/) for providing the fix.
@@ -165,4 +168,5 @@ Please visit [BuddyPress Media's Roadmap page](http://rtcamp.com/buddypress-medi
 * HTML5 Video Tag Support (with fallback)
 
 == Upgrade Notice ==
-Added album support for user-profile. Important update with plenty of new features.
+=2.4=
+Total code refactor. Translation ready! Faster and more optimised.
