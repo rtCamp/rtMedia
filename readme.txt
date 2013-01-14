@@ -18,6 +18,7 @@ BuddyPress Media adds Photos, Music, Videos & Albums to your BuddyPress. Support
 
 * Images, Music, Videos Upload
 * User-Albums Support
+* Group Media Support
 * Multiple files upload with Drag-n-Drop
 * Uploading Photos/Videos via mobile (Tested on iPhone running iOS6)
 * HTML5 player (with fall back to flash/silverlight player support)
@@ -25,7 +26,6 @@ BuddyPress Media adds Photos, Music, Videos & Albums to your BuddyPress. Support
 
 = Roadmap =
 
-* Group Albums
 * Activity-update form media upload
 * Paid membership plans, i.e. "Upload Quota" for buddypress members  (in planning stage).
 
