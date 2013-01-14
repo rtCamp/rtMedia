@@ -139,7 +139,7 @@ class BPMediaFunction {
     static function check_user() {
         if (bp_loggedin_user_id() != bp_displayed_user_id()) {
             bp_core_no_access(array(
-                'message' => __('You do not have access to this page.', 'buddypress'),
+                'message' => __('You do not have access to this page.', BP_MEDIA_TXT_DOMAIN),
                 'root' => bp_displayed_user_domain(),
                 'redirect' => false
             ));
