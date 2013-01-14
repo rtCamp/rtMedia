@@ -257,7 +257,9 @@ class BPMediaHostWordpress {
 	 * Returns the HTML for content of the single entry page of the Media Entry
 	 */
 	function get_media_single_content() {
-		global $bp_media_default_sizes, $bp_media_default_excerpts,$bp_media;
+		global $bp_media_default_excerpts,$bp_media;
+
+		$default_sizes = $bp_media->media_sizes();
 		$content = '';
 		if($this->group_id>0){
 
@@ -268,14 +270,14 @@ class BPMediaHostWordpress {
 			case 'video' :
 				if($this->thumbnail_id){
 					$image_array = image_downsize($this->thumbnail_id, 'bp_media_single_image');
-					$content.=apply_filters('bp_media_single_content_filter', '<video poster="'.$image_array[0].'" src="' . wp_get_attachment_url($this->id) . '" width="' . $bp_media_default_sizes['single_video']['width'] . '" height="' . ($bp_media_default_sizes['single_video']['height'] == 0 ? 'auto' : $bp_media_default_sizes['single_video']['height']) . '" type="video/mp4" id="bp_media_video_' . $this->id . '" controls="controls" preload="none"></video><script>bp_media_create_element("bp_media_video_' . $this->id . '");</script>',$this);
+					$content.=apply_filters('bp_media_single_content_filter', '<video poster="'.$image_array[0].'" src="' . wp_get_attachment_url($this->id) . '" width="' . $default_sizes['single_video']['width'] . '" height="' . ($default_sizes['single_video']['height'] == 0 ? 'auto' : $default_sizes['single_video']['height']) . '" type="video/mp4" id="bp_media_video_' . $this->id . '" controls="controls" preload="none"></video><script>bp_media_create_element("bp_media_video_' . $this->id . '");</script>',$this);
 				}
 				else{
-					$content.=apply_filters('bp_media_single_content_filter', '<video src="' . wp_get_attachment_url($this->id) . '" width="' . $bp_media_default_sizes['single_video']['width'] . '" height="' . ($bp_media_default_sizes['single_video']['height'] == 0 ? 'auto' : $bp_media_default_sizes['single_video']['height']) . '" type="video/mp4" id="bp_media_video_' . $this->id . '" controls="controls" preload="none"></video><script>bp_media_create_element("bp_media_video_' . $this->id . '");</script>',$this);
+					$content.=apply_filters('bp_media_single_content_filter', '<video src="' . wp_get_attachment_url($this->id) . '" width="' . $default_sizes['single_video']['width'] . '" height="' . ($default_sizes['single_video']['height'] == 0 ? 'auto' : $default_sizes['single_video']['height']) . '" type="video/mp4" id="bp_media_video_' . $this->id . '" controls="controls" preload="none"></video><script>bp_media_create_element("bp_media_video_' . $this->id . '");</script>',$this);
 				}
 				break;
 			case 'audio' :
-				$content.=apply_filters('bp_media_single_content_filter', '<audio src="' . wp_get_attachment_url($this->id) . '" width="' . $bp_media_default_sizes['single_audio']['width'] . '" type="audio/mp3" id="bp_media_audio_' . $this->id . '" controls="controls" preload="none" ></audio><script>bp_media_create_element("bp_media_audio_' . $this->id . '");</script>',$this);
+				$content.=apply_filters('bp_media_single_content_filter', '<audio src="' . wp_get_attachment_url($this->id) . '" width="' . $default_sizes['single_audio']['width'] . '" type="audio/mp3" id="bp_media_audio_' . $this->id . '" controls="controls" preload="none" ></audio><script>bp_media_create_element("bp_media_audio_' . $this->id . '");</script>',$this);
 				break;
 			case 'image' :
 				$image_array = image_downsize($this->id, 'bp_media_single_image');
