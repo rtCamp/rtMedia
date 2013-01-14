@@ -56,15 +56,15 @@ class BPMediaRecentMedia extends WP_Widget {
 				$entry = new BPMediaHostWordpress( get_the_ID() );
 						?>
 
-				<?php echo $entry->get_media_gallery_content(); ?><?php }
-			?>
+							<?php echo $entry->get_media_gallery_content(); ?><?php }
+						?>
 
 					</ul><!-- .widget-item-listing --><?php
 		}else
 			_e( 'No recent media found', BP_MEDIA_TXT_DOMAIN );
 
 		wp_reset_query();
-		?>
+					?>
 
 			</div><!-- #recent-media-tabs-all -->
 
@@ -86,21 +86,21 @@ class BPMediaRecentMedia extends WP_Widget {
 					?>
 
 					<ul class="widget-item-listing"><?php
-					while ( $bp_media_widget_query->have_posts() ) {
-						$bp_media_widget_query->the_post();
+			while ( $bp_media_widget_query->have_posts() ) {
+				$bp_media_widget_query->the_post();
 
-						$entry = new BPMediaHostWordpress( get_the_ID() );
+				$entry = new BPMediaHostWordpress( get_the_ID() );
 						?>
 
-						<?php echo $entry->get_media_gallery_content(); ?><?php }
-					?>
+							<?php echo $entry->get_media_gallery_content(); ?><?php }
+						?>
 
 					</ul><!-- .widget-item-listing --><?php
 		}else
 			_e( 'No recent photo found', BP_MEDIA_TXT_DOMAIN );
 
 		wp_reset_query();
-		?>
+					?>
 
 			</div><!-- #media-tabs-photos -->
 
@@ -120,15 +120,15 @@ class BPMediaRecentMedia extends WP_Widget {
 				if ( $bp_media_widget_query->have_posts() ) {
 					?>
 
-					<ul class="widget-item-listing"><?php
-			while ( $bp_media_widget_query->have_posts() ) {
-				$bp_media_widget_query->the_post();
+					<ul class="widget-item-listing">
+						<?php
+						while ( $bp_media_widget_query->have_posts() ) {
+							$bp_media_widget_query->the_post();
 
-				$entry = new BPMediaHostWordpress( get_the_ID() );
-				?>
-
-						<?php echo $entry->get_media_gallery_content(); ?><?php }
-					?>
+							$entry = new BPMediaHostWordpress( get_the_ID() );
+							echo $entry->get_media_gallery_content();
+						}
+						?>
 
 					</ul><!-- .widget-item-listing --><?php
 		}else
@@ -156,21 +156,21 @@ class BPMediaRecentMedia extends WP_Widget {
 					?>
 
 					<ul class="widget-item-listing"><?php
-					while ( $bp_media_widget_query->have_posts() ) {
-						$bp_media_widget_query->the_post();
+			while ( $bp_media_widget_query->have_posts() ) {
+				$bp_media_widget_query->the_post();
 
-						$entry = new BPMediaHostWordpress( get_the_ID() );
+				$entry = new BPMediaHostWordpress( get_the_ID() );
 						?>
 
-						<?php echo $entry->get_media_gallery_content(); ?><?php }
-					?>
+							<?php echo $entry->get_media_gallery_content(); ?><?php }
+						?>
 
 					</ul><!-- .widget-item-listing --><?php
 		}else
-			_e( 'No rescent video found', BP_MEDIA_TXT_DOMAIN );
+			_e( 'No recent video found', BP_MEDIA_TXT_DOMAIN );
 
 		wp_reset_query();
-				?>
+					?>
 
 			</div><!-- #media-tabs-videos -->
 
