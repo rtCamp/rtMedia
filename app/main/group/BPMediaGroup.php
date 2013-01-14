@@ -11,10 +11,6 @@ class BPMediaGroup {
         if ($initFlag) {
             if (class_exists('BPMediaGroupsExtension')) :
                 bp_register_group_extension('BPMediaGroupsExtension');
-                /**
-                 * This loop creates dummy classes for images, videos, audio and albums so that the url structuring
-                 * can be uniform as it is in the members section.
-                 */
                 new BPMediaGroupImage ();
                 new BPMediaGroupAlbum();
                 new BPMediaGroupMusic();
@@ -95,7 +91,7 @@ class BPMediaGroup {
      * @since BuddyPress Media 2.3
      */
     static function navigation_menu() {
-        global $bp, $bp_media;
+        global $bp;
         if (!isset($bp->current_action) || $bp->current_action != BP_MEDIA_SLUG)
             return false;
         $current_tab = BPMediaGroup::can_upload() ? BP_MEDIA_UPLOAD_SLUG : BP_MEDIA_IMAGES_SLUG;
@@ -126,7 +122,7 @@ class BPMediaGroup {
             <ul>
                 <?php
                 foreach ($bp_media_group_tabs as $tab_slug => $tab_info) {
-                    echo '<li id="' . $tab_slug . '-group-li" ' . ($current_tab == $tab_slug ? 'class="current selected"' : '') . '><a id="' . $tab_slug . '" href="' . $tab_info['url'] . '" title="' . __($tab_info['label'], $bp_media->text_domain) . '">' . __($tab_info['label'], $bp_media->text_domain) . '</a></li>';
+                    echo '<li id="' . $tab_slug . '-group-li" ' . ($current_tab == $tab_slug ? 'class="current selected"' : '') . '><a id="' . $tab_slug . '" href="' . $tab_info['url'] . '" title="' . __($tab_info['label'], BP_MEDIA_TXT_DOMAIN) . '">' . __($tab_info['label'], BP_MEDIA_TXT_DOMAIN) . '</a></li>';
                 }
                 ?>
             </ul>
@@ -203,11 +199,10 @@ class BPMediaGroup {
     }
 
     static function bp_media_display_error($errorMessage) {
-        global $bp_media;
         ?>
         <div id="message" class="error">
             <p>
-        <?php _e($errorMessage, $bp_media->text_domain); ?> 
+        <?php _e($errorMessage, BP_MEDIA_TXT_DOMAIN); ?>
             </p>
         </div>
         <?php
