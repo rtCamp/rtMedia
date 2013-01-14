@@ -29,6 +29,7 @@ function buddypress_media_autoloader( $class_name ) {
 		'app/main/' . $class_name . '.php',
 		'app/main/profile/' . $class_name . '.php',
 		'app/main/group/' . $class_name . '.php',
+		'app/main/group/dummy/' . $class_name . '.php',
 		'app/main/includes/' . $class_name . '.php',
 		'app/main/widgets/' . $class_name . '.php',
 	);
