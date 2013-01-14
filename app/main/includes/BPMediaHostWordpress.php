@@ -392,9 +392,9 @@ class BPMediaHostWordpress {
 										<?php endif; ?>
 										<?php if (bp_activity_can_favorite()) : ?>
 											<?php if (!bp_get_activity_is_favorite()) : ?>
-												<a href="<?php bp_activity_favorite_link(); ?>" class="button fav bp-secondary-action" title="<?php esc_attr_e('Mark as Favorite', 'buddypress'); ?>"><?php _e('Favorite', BP_MEDIA_TXT_DOMAIN) ?></a>
+												<a href="<?php bp_activity_favorite_link(); ?>" class="button fav bp-secondary-action" title="<?php esc_attr_e('Mark as Favorite', BP_MEDIA_TXT_DOMAIN); ?>"><?php _e('Favorite', BP_MEDIA_TXT_DOMAIN) ?></a>
 											<?php else : ?>
-												<a href="<?php bp_activity_unfavorite_link(); ?>" class="button unfav bp-secondary-action" title="<?php esc_attr_e('Remove Favorite', 'buddypress'); ?>"><?php _e('Remove Favorite', BP_MEDIA_TXT_DOMAIN) ?></a>
+												<a href="<?php bp_activity_unfavorite_link(); ?>" class="button unfav bp-secondary-action" title="<?php esc_attr_e('Remove Favorite', BP_MEDIA_TXT_DOMAIN); ?>"><?php _e('Remove Favorite', BP_MEDIA_TXT_DOMAIN) ?></a>
 											<?php endif; ?>
 										<?php endif; ?>
 										<?php if (bp_activity_user_can_delete()) bp_activity_delete_link(); ?>
@@ -413,7 +413,7 @@ class BPMediaHostWordpress {
 												<div class="ac-textarea">
 													<textarea id="ac-input-<?php bp_activity_id(); ?>" class="ac-input" name="ac_input_<?php bp_activity_id(); ?>"></textarea>
 												</div>
-												<input type="submit" name="ac_form_submit" value="<?php _e('Post', 'buddypress'); ?>" /> &nbsp; <?php _e('or press esc to cancel.', BP_MEDIA_TXT_DOMAIN); ?>
+												<input type="submit" name="ac_form_submit" value="<?php _e('Post', BP_MEDIA_TXT_DOMAIN); ?>" /> &nbsp; <?php _e('or press esc to cancel.', BP_MEDIA_TXT_DOMAIN); ?>
 												<input type="hidden" name="comment_form_id" value="<?php bp_activity_id(); ?>" />
 											</div>
 											<?php do_action('bp_activity_entry_comments'); ?>
