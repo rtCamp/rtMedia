@@ -194,18 +194,12 @@ class BuddyPressMedia {
      */
     function include_class_file($dir) {
         if ($dh = opendir($dir)) {
-            $files = Array();
-            $inner_files = Array();
             while ($file = readdir($dh)) {
                 if ($file != "." && $file != ".." && $file[0] != '.') {
                     if (is_dir($dir . "/" . $file)) {
-                        $inner_files = ListFiles($dir . "/" . $file);
-                        if (is_array($inner_files))
-                            $files = array_merge($files, $inner_files);
+                        ListFiles($dir . "/" . $file);
                     } else {
-
                         $file_path_parts = pathinfo($dir . "/" . $file);
-                        //include_once $dir . "/" . $file;
                         if ($file_path_parts["filename"] == "bp-media-upload-handler")
                             continue;
                         if (class_exists($file_path_parts["filename"])) {
@@ -215,7 +209,7 @@ class BuddyPressMedia {
                 }
             }
             closedir($dh);
-            return $files;
+            return 0;
         }
     }
 
