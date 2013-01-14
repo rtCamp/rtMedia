@@ -160,7 +160,7 @@ class BPMediaGroup {
         $wp_admin_bar->add_menu(array(
             'parent' => $bp->group_admin_menu_id,
             'id' => 'bp-media-group',
-            'title' => __('Media Settings', 'buddypress'),
+            'title' => __('Media Settings', BP_MEDIA_TXT_DOMAIN),
             'href' => bp_get_groups_action_link('admin/media')
         ));
     }
