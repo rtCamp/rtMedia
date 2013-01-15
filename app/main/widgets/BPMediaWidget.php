@@ -30,38 +30,38 @@ class BPMediaWidget extends WP_Widget {
          }else {
             $orderby='date';
          }
-                    
+         $widgetid=$args['widget_id'];            
         if (!($allowAudio || $allowVideo || $allowImage)) {
             ?>
             <p><?php printf(__('Please configure this widget <a href="%s" target="_blank" title="Configure BuddyPress Media Widget">here</a>.', 'rtPanel'), admin_url('/widgets.php')); ?></p><?php } else {
             ?>
 
-            <div id="recent-media-tabs" class="media-tabs-container">
+            <div id="<?php echo $wdType; ?>-media-tabs" class="media-tabs-container">
                 <ul>
-                    <li><a href="#recent-media-tabs-all"><?php _e('All', BP_MEDIA_TXT_DOMAIN); ?></a></li>
+                    <li><a href="#<?php echo $wdType; ?>-media-tabs-all-<?php echo $widgetid; ?>"><?php _e('All', BP_MEDIA_TXT_DOMAIN); ?></a></li>
                     <?php
                     if ($allowImage) {
                         array_push($allowMimeType, "image");
                         ?>
-                        <li><a href="#recent-media-tabs-photos"><?php _e('Photos', BP_MEDIA_TXT_DOMAIN); ?></a></li>
+                        <li><a href="#<?php echo $wdType; ?>-media-tabs-photos-<?php echo $widgetid; ?>"><?php _e('Photos', BP_MEDIA_TXT_DOMAIN); ?></a></li>
                         <?php
                     }
 
                     if ($allowAudio) {
                         array_push($allowMimeType, "audio");
                         ?>
-                        <li><a href="#recent-media-tabs-music"><?php _e('Music', BP_MEDIA_TXT_DOMAIN); ?></a></li>
+                        <li><a href="#<?php echo $wdType; ?>-media-tabs-music-<?php echo $widgetid; ?>"><?php _e('Music', BP_MEDIA_TXT_DOMAIN); ?></a></li>
                         <?php
                     }
 
                     if ($allowVideo) {
                         array_push($allowMimeType, "video");
                         ?>
-                        <li><a href="#recent-media-tabs-videos"><?php _e('Videos', BP_MEDIA_TXT_DOMAIN); ?></a></li>
+                        <li><a href="#<?php echo $wdType; ?>-media-tabs-videos-<?php echo $widgetid; ?>"><?php _e('Videos', BP_MEDIA_TXT_DOMAIN); ?></a></li>
                     <?php }
                     ?>
                 </ul>
-                <div id="recent-media-tabs-all" class="bp-media-tab-panel">
+                <div id="<?php echo $wdType; ?>-media-tabs-all-<?php echo $widgetid; ?>" class="bp-media-tab-panel">
                     <?php
                     // All Media
                     $args = array('post_type' => 'attachment',
@@ -99,7 +99,7 @@ class BPMediaWidget extends WP_Widget {
 
                 </div><!-- #recent-media-tabs-all -->
                 <?php if ($allowImage) { ?>     
-                    <div id="recent-media-tabs-photos" class="bp-media-tab-panel">
+                    <div id="<?php echo $wdType; ?>-media-tabs-photos-<?php echo $widgetid; ?>" class="bp-media-tab-panel">
                         <?php
                         // Recent photos
                         $args = array('post_type' => 'attachment',
@@ -139,7 +139,7 @@ class BPMediaWidget extends WP_Widget {
                 if ($allowAudio) {
                     ?>
 
-                    <div id="recent-media-tabs-music" class="bp-media-tab-panel">
+                    <div id="<?php echo $wdType; ?>-media-tabs-music-<?php echo $widgetid; ?>" class="bp-media-tab-panel">
                         <?php
                         // Recent Audio
                         $args = array('post_type' => 'attachment',
@@ -178,7 +178,7 @@ class BPMediaWidget extends WP_Widget {
                 <?php }
                 if ($allowVideo) {
                     ?>
-                    <div id="recent-media-tabs-videos" class="bp-media-tab-panel">
+                    <div id="<?php echo $wdType; ?>-media-tabs-videos-<?php echo $widgetid; ?>" class="bp-media-tab-panel">
                         <?php
                         // Recent Video
                         $args = array('post_type' => 'attachment',
