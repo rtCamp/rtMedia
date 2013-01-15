@@ -9,7 +9,7 @@ class BPMediaWidget extends WP_Widget {
 
     function __construct() {
         $widget_ops = array('classname' => 'buddypress-media-widget', 'description' => __("The most recent/popular media uploaded on your site", BP_MEDIA_TXT_DOMAIN));
-        parent::__construct('buddypress-media-wid', __('BuddyPressMedia', BP_MEDIA_TXT_DOMAIN), $widget_ops);
+        parent::__construct('buddypress-media-wid', __('BuddyPressMedia Widget', BP_MEDIA_TXT_DOMAIN), $widget_ops);
     }
 
     function widget($args, $instance) {
