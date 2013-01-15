@@ -10,17 +10,37 @@
   Text domain: buddypress-media
  */
 
-/*
- * Base constants that provide the plugin's path and directory
+/**
+ * Main file, contains the plugin metadata and activation processes
+ *
+ * @package BuddyPressMedia
+ * @subpackage Main
  */
-if ( ! defined( 'BP_MEDIA_PATH' ) )
+
+if ( ! defined( 'BP_MEDIA_PATH' ) ){
+
+	/**
+	 *  The server file system path to the plugin directory
+	 *
+	 */
 	define( 'BP_MEDIA_PATH', plugin_dir_path( __FILE__ ) );
+}
 
-if ( ! defined( 'BP_MEDIA_URL' ) )
+if ( ! defined( 'BP_MEDIA_URL' ) ){
+
+	/**
+	 * The url to the plugin directory
+	 *
+	 */
 	define( 'BP_MEDIA_URL', plugin_dir_url( __FILE__ ) );
+}
 
-/*
- * Autoloads classes on instantiation.
+/**
+ * Auto Loader Function
+ *
+ * Autoloads classes on instantiation. Used by spl_autoload_register.
+ *
+ * @param string $class_name The name of the class to autoload
  */
 function buddypress_media_autoloader( $class_name ) {
 	$rtlibpath = array(
@@ -42,23 +62,23 @@ function buddypress_media_autoloader( $class_name ) {
 	}
 }
 
-/*
+/**
  * Register the autoloader function into spl_autoload
  */
 spl_autoload_register( 'buddypress_media_autoloader' );
 
-/*
+/**
  * Instantiate the BuddyPressMedia class.
  */
 global $bp_media;
 $bp_media = new BuddyPressMedia();
 
-/*
+/**
  * Activating the plugin!
  */
 register_activation_hook( __FILE__, array( $bp_media, 'activate' ) );
 
-/*
+/**
  * And hooking it to BuddyPress
  */
 add_action( 'bp_include', array($bp_media, 'init') );
