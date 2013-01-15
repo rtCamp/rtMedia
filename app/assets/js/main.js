@@ -16,7 +16,7 @@ function bp_media_create_element(id){
 
 jQuery(document).ready(function(){
 
-    var bp_media_recent_tabs = jQuery('#recent-media-tabs');
+    var bp_media_recent_tabs = jQuery('.media-tabs-container');
     if(bp_media_recent_tabs.length>0){
         jQuery(bp_media_recent_tabs).tabs();
     }
