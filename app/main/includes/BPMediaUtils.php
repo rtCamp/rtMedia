@@ -354,7 +354,6 @@ class BPMediaUtils {
         ?>
 
         <div class="wrap bp-media-admin">
-        <?php //screen_icon( 'buddypress' ); ?>
             <div id="icon-buddypress" class="icon32"><br></div>
             <h2 class="nav-tab-wrapper"><?php bp_core_admin_tabs(__('Media', BP_MEDIA_TXT_DOMAIN)); ?></h2>
             <div class="metabox-holder columns-2">
