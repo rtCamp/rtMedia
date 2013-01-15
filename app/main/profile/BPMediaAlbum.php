@@ -1,5 +1,14 @@
 <?php
-
+/**
+ * Adds the album screens and functionality
+ *
+ * @package BuddyPressMedia
+ * @subpackage Profile
+ *
+ * @author Saurabh Shukla <saurabh.shukla@rtcamp.com>
+ * @author Gagandeep Singh <gagandeep.singh@rtcamp.com>
+ *
+ */
 class BPMediaAlbum{
 	private $id,
 		$name,
@@ -13,6 +22,10 @@ class BPMediaAlbum{
 		$group_id;
 
 	/**
+	 *
+	 * @param type $album_id
+	 */
+	/**
 	 * Constructs a new BP_Media_Album
 	 *
 	 * @param mixed $album_id optional Album ID of the element to be initialized if not defined, returns an empty element.
@@ -25,6 +38,11 @@ class BPMediaAlbum{
 		}
 	}
 
+	/**
+	 *
+	 * @param type $album_id
+	 * @throws Exception
+	 */
 	/**
 	 * Initializes the object
 	 *
@@ -176,8 +194,11 @@ class BPMediaAlbum{
 		do_action('bp_media_after_edit_album',$this);
 	}
 
+	/**
+	 *
+	 * @global type $bp_media
+	 */
 	function get_album_gallery_content(){
-            global $bp_media
 		?><li>
 			<a href="<?php echo $this->url ?>" title="<?php _e($this->description,BP_MEDIA_TXT_DOMAIN); ?>">
 				<?php echo $this->thumbnail; ?>

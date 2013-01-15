@@ -1,27 +1,54 @@
 <?php
 
-if ( ! defined( 'ABSPATH' ) )
-	exit;
-
 /**
- * Description of BPMediaLoader
+ * BuddyPress Media Loader
+ * 
+ * Hooks BuddyPress Media properly into BuddyPress, so we can load BuddyPress Media
+ *
+ * @package BuddyPressMedia
+ * @subpackage Main
  *
  * @author Saurabh Shukla <saurabh.shukla@rtcamp.com>
  * @author Gagandeep Singh <gagandeep.singh@rtcamp.com>
  */
 class BPMediaLoader {
 
+	/**
+	 * Hooks into BuddyPress
+	 *
+	 * Hooks into bp_loaded to load itself
+	 * Hooks into bp_setup_nav to add tabs to the profile and group navigation
+	 * Hooks into after_setup_theme to add its thumbnail sizes
+	 *
+	 * @uses bp_loaded
+	 * @uses bp_setup_nav
+	 * @uses after_setup_theme
+	 */
 	public function __construct() {
 		add_action( 'bp_loaded', array( $this, 'load_component' ) );
 		add_action( 'bp_setup_nav', array( $this, 'custom_nav' ), 999 );
 		add_action( 'after_setup_theme', array( $this, 'thumbnail' ) );
 	}
 
+	/**
+	 * BuddyPress Media Loader
+	 *
+	 * Loads and adds it to the BuddyPress global object
+	 *
+	 * @global object $bp BuddyPress object
+	 */
 	public function load_component() {
 		global $bp;
 		$bp->{BP_MEDIA_SLUG} = new BPMediaComponent();
 	}
 
+	/**
+	 * Navigation Loader
+	 *
+	 * Loads BuddyPress Media's navigation
+	 *
+	 * @global object $bp BuddyPress object
+	 */
 	public function custom_nav() {
 		global $bp;
 		foreach ( $bp->bp_nav as $key => $nav_item ) {
@@ -57,7 +84,13 @@ class BPMediaLoader {
 			}
 		}
 	}
-
+	/**
+	 * Custom Thumbnail Sizes
+	 *
+	 * Adds image sizes required by the plugin to existing WordPress sizes
+	 *
+	 * @global object $bp_media
+	 */
 	public function thumbnail() {
 		global $bp_media;
 
