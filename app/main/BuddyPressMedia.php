@@ -170,12 +170,10 @@ class BuddyPressMedia {
         if (defined('BP_VERSION') && version_compare(BP_VERSION, BP_MEDIA_REQUIRED_BP, '>=')) {
             add_filter('plugin_action_links', array($this, 'settings_link'), 10, 2);
             $this->loader = new BPMediaLoader();
-            //require( BP_MEDIA_PATH . '/includes/bp-media-groups-loader.php');
             $this->group_loader = new BPMediaGroup();
-            // require( BP_MEDIA_PATH . 'includes/BPMediaFilters.php');
-            $media_path = plugin_dir_path(__FILE__);
-            $this->include_class_file($media_path . "includes"); //include all file and if class then create is object
-           
+            new BPMediaFilters();
+            new BPMediaActions();
+            new BPMediaFunction();
         }
 
         if (file_exists(BP_MEDIA_PATH . '/languages/' . get_locale() . '.mo'))
@@ -185,33 +183,7 @@ class BuddyPressMedia {
         global $bp_media_admin;
         $bp_media_admin = new BPMediaAdmin();
     }
-
-    /**
-     *  instantiate all class
-     * @param type $dir
-     * @return type
-     */
-    function include_class_file($dir) {
-        if ($dh = opendir($dir)) {
-            while ($file = readdir($dh)) {
-                if ($file != "." && $file != ".." && $file[0] != '.') {
-                    if (is_dir($dir . "/" . $file)) {
-                        ListFiles($dir . "/" . $file);
-                    } else {
-                        $file_path_parts = pathinfo($dir . "/" . $file);
-                        if ($file_path_parts["filename"] == "bp-media-upload-handler")
-                            continue;
-                        if (class_exists($file_path_parts["filename"])) {
-                            new $file_path_parts["filename"]();
-                        }
-                    }
-                }
-            }
-            closedir($dh);
-            return 0;
-        }
-    }
-
+  
     function settings_link($links, $file) {
         /* create link */
         $plugin_name = plugin_basename(__FILE__);
