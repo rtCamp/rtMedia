@@ -5,9 +5,9 @@
  * @author Gagandeep Singh <gagandeep.singh@rtcamp.com>
  * @author Joshua Abenazer <joshua.abenazer@rtcamp.com>
  */
-if (!class_exists('BPMediaWidget')) {
+if (!class_exists('BPMediaAdminWidget')) {
 
-    class BPMediaWidget {
+    class BPMediaAdminWidget {
 
         public function __construct($id = NULL, $title = NULL, $content = NULL) {
             global $bp_media;
