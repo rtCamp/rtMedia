@@ -56,21 +56,21 @@ class BPMediaRecentMedia extends WP_Widget {
 				$entry = new BPMediaHostWordpress( get_the_ID() );
 						?>
 
-				<?php echo $entry->get_media_gallery_content(); ?><?php }
-			?>
+							<?php echo $entry->get_media_gallery_content(); ?><?php }
+						?>
 
 					</ul><!-- .widget-item-listing --><?php
 		}else
 			_e( 'No recent media found', BP_MEDIA_TXT_DOMAIN );
 
 		wp_reset_query();
-		?>
+					?>
 
 			</div><!-- #recent-media-tabs-all -->
 
 			<div id="recent-media-tabs-photos" class="bp-media-tab-panel">
 				<?php
-				// Rescent photos
+				// Recent photos
 				$args = array( 'post_type' => 'attachment',
 					'post_status' => 'any',
 					'post_mime_type' => 'image',
@@ -86,30 +86,65 @@ class BPMediaRecentMedia extends WP_Widget {
 					?>
 
 					<ul class="widget-item-listing"><?php
-					while ( $bp_media_widget_query->have_posts() ) {
-						$bp_media_widget_query->the_post();
+			while ( $bp_media_widget_query->have_posts() ) {
+				$bp_media_widget_query->the_post();
 
-						$entry = new BPMediaHostWordpress( get_the_ID() );
+				$entry = new BPMediaHostWordpress( get_the_ID() );
 						?>
 
-						<?php echo $entry->get_media_gallery_content(); ?><?php }
-					?>
+							<?php echo $entry->get_media_gallery_content(); ?><?php }
+						?>
 
 					</ul><!-- .widget-item-listing --><?php
 		}else
-			_e( 'No rescent photo found', BP_MEDIA_TXT_DOMAIN );
+			_e( 'No recent photo found', BP_MEDIA_TXT_DOMAIN );
 
 		wp_reset_query();
-		?>
+					?>
 
 			</div><!-- #media-tabs-photos -->
 
 			<div id="recent-media-tabs-music" class="bp-media-tab-panel">
 				<?php
-				// Rescent Audio
+				// Recent Audio
 				$args = array( 'post_type' => 'attachment',
 					'post_status' => 'any',
 					'post_mime_type' => 'audio',
+					'posts_per_page' => $number,
+					'meta_key' => 'bp-media-key',
+					'meta_value' => 0,
+					'meta_compare' => '>' );
+
+				$bp_media_widget_query = new WP_Query( $args );
+
+				if ( $bp_media_widget_query->have_posts() ) {
+					?>
+
+					<ul class="widget-item-listing">
+						<?php
+						while ( $bp_media_widget_query->have_posts() ) {
+							$bp_media_widget_query->the_post();
+
+							$entry = new BPMediaHostWordpress( get_the_ID() );
+							echo $entry->get_media_gallery_content();
+						}
+						?>
+
+					</ul><!-- .widget-item-listing --><?php
+		}else
+			_e( 'No recent audio found', BP_MEDIA_TXT_DOMAIN );
+
+		wp_reset_query();
+				?>
+
+			</div><!-- #recent-media-tabs-music -->
+
+			<div id="recent-media-tabs-videos" class="bp-media-tab-panel">
+				<?php
+				// Recent Video
+				$args = array( 'post_type' => 'attachment',
+					'post_status' => 'any',
+					'post_mime_type' => 'video',
 					'posts_per_page' => $number,
 					'meta_key' => 'bp-media-key',
 					'meta_value' => 0,
@@ -125,52 +160,17 @@ class BPMediaRecentMedia extends WP_Widget {
 				$bp_media_widget_query->the_post();
 
 				$entry = new BPMediaHostWordpress( get_the_ID() );
-				?>
-
-						<?php echo $entry->get_media_gallery_content(); ?><?php }
-					?>
-
-					</ul><!-- .widget-item-listing --><?php
-		}else
-			_e( 'No rescent audio found', BP_MEDIA_TXT_DOMAIN );
-
-		wp_reset_query();
-				?>
-
-			</div><!-- #recent-media-tabs-music -->
-
-			<div id="recent-media-tabs-videos" class="bp-media-tab-panel">
-				<?php
-				// Rescent Video
-				$args = array( 'post_type' => 'attachment',
-					'post_status' => 'any',
-					'post_mime_type' => 'video',
-					'posts_per_page' => $number,
-					'meta_key' => 'bp-media-key',
-					'meta_value' => 0,
-					'meta_compare' => '>' );
-
-				$bp_media_widget_query = new WP_Query( $args );
-
-				if ( $bp_media_widget_query->have_posts() ) {
-					?>
-
-					<ul class="widget-item-listing"><?php
-					while ( $bp_media_widget_query->have_posts() ) {
-						$bp_media_widget_query->the_post();
-
-						$entry = new BPMediaHostWordpress( get_the_ID() );
 						?>
 
-						<?php echo $entry->get_media_gallery_content(); ?><?php }
-					?>
+							<?php echo $entry->get_media_gallery_content(); ?><?php }
+						?>
 
 					</ul><!-- .widget-item-listing --><?php
 		}else
-			_e( 'No rescent video found', BP_MEDIA_TXT_DOMAIN );
+			_e( 'No recent video found', BP_MEDIA_TXT_DOMAIN );
 
 		wp_reset_query();
-				?>
+					?>
 
 			</div><!-- #media-tabs-videos -->
 

@@ -4,7 +4,7 @@
 
 # main config
 export PLUGINSLUG="buddypress-media"  #must match with wordpress.org plugin slug
-export MAINFILE="loader.php" # this should be the name of your main php file in the wordpress plugin
+export MAINFILE="index.php" # this should be the name of your main php file in the wordpress plugin
 #SVNUSER="rtcamp" # your svn username
 
 ##### YOU CAN STOP EDITING HERE #####

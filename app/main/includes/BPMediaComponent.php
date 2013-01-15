@@ -343,16 +343,16 @@ class BPMediaComponent extends BP_Component {
                 global $bp_media;
 		/* Set up labels for the post type */
 		$labels = array(
-			'name' => __( 'Media', $bp_media->text_domain),
-			'singular' => __( 'Media', $bp_media->text_domain ),
-			'add_new' => __( 'Add New Media', $bp_media->text_domain )
+			'name' => __( 'Media', BP_MEDIA_TXT_DOMAIN),
+			'singular' => __( 'Media', BP_MEDIA_TXT_DOMAIN ),
+			'add_new' => __( 'Add New Media', BP_MEDIA_TXT_DOMAIN )
 		);
 
 		/* Set up the argument array for register_post_type() */
 		$args = array(
-			'label' => __( 'Media', $bp_media->text_domain ),
+			'label' => __( 'Media', BP_MEDIA_TXT_DOMAIN ),
 			'labels' => $labels,
-			'description' => __('BuddyPress Media\'s Media Files',$bp_media->text_domain),
+			'description' => __('BuddyPress Media\'s Media Files',BP_MEDIA_TXT_DOMAIN),
 			'public' => true,
 			'show_ui' => false,
 			'supports' => array( 'title', 'editor', 'excerpt', 'author', 'thumbnail', 'custom-fields' )
