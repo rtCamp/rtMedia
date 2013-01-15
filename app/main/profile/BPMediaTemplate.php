@@ -1,13 +1,12 @@
 <?php
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
- * Description of BPMediaTemplate
+ * Contains methods for template functions
  *
- * @author saurabh
+ * @package BuddyPressMedia
+ * @subpackage Profile
+ *
+ * @author Saurabh Shukla <saurabh.shukla@rtcamp.com>
+ * @author Gagandeep Singh <gagandeep.singh@rtcamp.com>
  */
 class BPMediaTemplate {
 
