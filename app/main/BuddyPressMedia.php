@@ -317,6 +317,7 @@ class BuddyPressMedia {
     function widgets_init() {
         register_widget('BPMediaRecentMedia');
         register_widget('BPMediaPopularMedia');
+        register_widget('BPMediaWidget');
     }
 
 }
