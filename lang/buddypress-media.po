@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Buddypress Media\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-12-31 17:50+0530\n"
-"PO-Revision-Date: 2012-12-31 17:52+0530\n"
+"POT-Creation-Date: 2013-01-14 17:03+0530\n"
+"PO-Revision-Date: 2013-01-14 17:03+0530\n"
 "Last-Translator: Saurabh Shukla <saurabh.shukla@rtcamp.com>\n"
 "Language-Team: rtCamp <info@rtcamp.com>\n"
 "Language: \n"
@@ -11,11 +11,10 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-KeywordsList: _;gettext;gettext_noop;__;_e\n"
-"X-Poedit-Basepath: .\n"
+"X-Poedit-Basepath: ../.\n"
 "X-Poedit-SearchPath-0: .\n"
 
 #: app/helper/BPMediaWidget.php:22
-#, fuzzy
 msgid "Argument missing. id is required."
 msgstr ""
 
@@ -35,101 +34,268 @@ msgstr ""
 msgid "Video"
 msgstr ""
 
-#: app/helper/BPMediaSettings.php:24
+#: app/helper/BPMediaSettings.php:26
 msgid "Check to enable video upload functionality"
 msgstr ""
 
-#: app/helper/BPMediaSettings.php:25
+#: app/helper/BPMediaSettings.php:28
 msgid "Audio"
 msgstr ""
 
-#: app/helper/BPMediaSettings.php:25
+#: app/helper/BPMediaSettings.php:30
 msgid "Check to enable audio upload functionality"
 msgstr ""
 
-#: app/helper/BPMediaSettings.php:26
+#: app/helper/BPMediaSettings.php:32
 msgid "Images"
 msgstr ""
 
-#: app/helper/BPMediaSettings.php:26
+#: app/helper/BPMediaSettings.php:34
 msgid "Check to enable images upload functionality"
 msgstr ""
 
-#: app/helper/BPMediaSettings.php:27
+#: app/helper/BPMediaSettings.php:36
 msgid "Download"
 msgstr ""
 
-#: app/helper/BPMediaSettings.php:27
+#: app/helper/BPMediaSettings.php:38
 msgid "Check to enable download functionality"
 msgstr ""
 
-#: app/helper/BPMediaSettings.php:28
-#: app/helper/BPMediaSettings.php:29
+#: app/helper/BPMediaSettings.php:40
+#: app/helper/BPMediaSettings.php:41
 msgid "Spread the Word"
 msgstr ""
 
-#: app/helper/BPMediaSettings.php:29
+#: app/helper/BPMediaSettings.php:44
 msgid "Yes, I support BuddyPress Media"
 msgstr ""
 
-#: app/helper/BPMediaSettings.php:29
+#: app/helper/BPMediaSettings.php:45
 msgid "No, I don't want to support BuddyPress Media"
 msgstr ""
 
-#: app/helper/BPMediaSettings.php:30
+#: app/helper/BPMediaSettings.php:48
 msgid "BuddyPress Media Other Options"
 msgstr ""
 
-#: app/helper/BPMediaSettings.php:31
+#: app/helper/BPMediaSettings.php:49
 msgid "Re-Count Media Entries"
 msgstr ""
 
-#: app/helper/BPMediaSettings.php:31
+#: app/helper/BPMediaSettings.php:52
 msgid "It will re-count all media entries of all users and correct any discrepancies."
 msgstr ""
 
-#: app/helper/BPMediaSettings.php:33
+#: app/helper/BPMediaSettings.php:55
 msgid "BuddyPress Media Addons for Audio/Video Conversion"
 msgstr ""
 
-#: app/helper/BPMediaSettings.php:34
+#: app/helper/BPMediaSettings.php:56
 msgid "Submit a request form"
 msgstr ""
 
-#: app/helper/BPMediaSettings.php:35
+#: app/helper/BPMediaSettings.php:57
 msgid "Request Type"
 msgstr ""
 
-#: app/helper/BPMediaSettings.php:46
+#: app/helper/BPMediaSettings.php:73
 msgid "Recounting of media files done successfully"
 msgstr ""
 
-#: app/helper/BPMediaSettings.php:48
+#: app/helper/BPMediaSettings.php:75
 msgid "Recounting Failed"
 msgstr ""
 
-#: app/helper/BPMediaSettings.php:69
+#: app/helper/BPMediaSettings.php:96
 msgid "Please provide \"option\" value ( required ) in the argument. Pass argument to add_settings_field in the following format array( 'option' => 'option_name' ) "
 msgstr ""
 
-#: app/helper/BPMediaSettings.php:99
-#: app/helper/BPMediaSettings.php:132
+#: app/helper/BPMediaSettings.php:126
+#: app/helper/BPMediaSettings.php:156
 msgid "Please provide \"option\" value ( required ) in the argument. Pass argument to add_settings_field in the following format array( 'option' => 'option_name' )"
 msgstr ""
 
-#: app/helper/BPMediaSettings.php:101
+#: app/helper/BPMediaSettings.php:128
 msgid "Need to specify atleast to radios else use a checkbox instead"
 msgstr ""
 
-#: app/helper/BPMediaSettings.php:134
+#: app/helper/BPMediaSettings.php:158
 msgid "Please provide some values to populate the dropdown. Format : array( 'value' => 'option' )"
 msgstr ""
 
-#: app/helper/BPMediaAddon.php:65
+#: app/helper/BPMediaSupport.php:23
+msgid "Submit a Bug Report"
+msgstr ""
+
+#: app/helper/BPMediaSupport.php:26
+msgid "Submit a New Feature Request"
+msgstr ""
+
+#: app/helper/BPMediaSupport.php:29
+msgid "Submit a Premium Support Request"
+msgstr ""
+
+#: app/helper/BPMediaSupport.php:37
+#: app/helper/BPMediaSupport.php:113
+msgid "Name"
+msgstr ""
+
+#: app/helper/BPMediaSupport.php:40
+#: app/helper/BPMediaSupport.php:116
+msgid "Email"
+msgstr ""
+
+#: app/helper/BPMediaSupport.php:43
+#: app/helper/BPMediaSupport.php:119
+msgid "Website"
+msgstr ""
+
+#: app/helper/BPMediaSupport.php:46
+#: app/helper/BPMediaSupport.php:122
+msgid "Phone"
+msgstr ""
+
+#: app/helper/BPMediaSupport.php:49
+#: app/helper/BPMediaSupport.php:125
+msgid "Subject"
+msgstr ""
+
+#: app/helper/BPMediaSupport.php:52
+#: app/helper/BPMediaSupport.php:128
+msgid "Details"
+msgstr ""
+
+#: app/helper/BPMediaSupport.php:68
+msgid "Your WP Admin Login:"
+msgstr ""
+
+#: app/helper/BPMediaSupport.php:71
+msgid "Your WP Admin password:"
+msgstr ""
+
+#: app/helper/BPMediaSupport.php:74
+msgid "Your SSH / FTP host:"
+msgstr ""
+
+#: app/helper/BPMediaSupport.php:77
+msgid "Your SSH / FTP login:"
+msgstr ""
+
+#: app/helper/BPMediaSupport.php:80
+msgid "Your SSH / FTP password:"
+msgstr ""
+
+#: app/helper/BPMediaSupport.php:98
+msgid "BuddyPress Media Premium Support Request from"
+msgstr ""
+
+#: app/helper/BPMediaSupport.php:100
+msgid "BuddyPress Media New Feature Request from"
+msgstr ""
+
+#: app/helper/BPMediaSupport.php:102
+msgid "BuddyPress Media Bug Report from"
+msgstr ""
+
+#: app/helper/BPMediaSupport.php:104
+msgid "BuddyPress Media Contact from"
+msgstr ""
+
+#: app/helper/BPMediaSupport.php:131
+msgid "Request ID"
+msgstr ""
+
+#: app/helper/BPMediaSupport.php:134
+msgid "Server Address"
+msgstr ""
+
+#: app/helper/BPMediaSupport.php:137
+msgid "IP Address"
+msgstr ""
+
+#: app/helper/BPMediaSupport.php:140
+msgid "Server Type"
+msgstr ""
+
+#: app/helper/BPMediaSupport.php:143
+msgid "User Agent"
+msgstr ""
+
+#: app/helper/BPMediaSupport.php:147
+msgid "WordPress Admin Username"
+msgstr ""
+
+#: app/helper/BPMediaSupport.php:150
+msgid "WordPress Admin Password"
+msgstr ""
+
+#: app/helper/BPMediaSupport.php:153
+msgid "SSH FTP Host"
+msgstr ""
+
+#: app/helper/BPMediaSupport.php:156
+msgid "SSH FTP Username"
+msgstr ""
+
+#: app/helper/BPMediaSupport.php:159
+msgid "SSH FTP Password"
+msgstr ""
+
+#: app/helper/BPMediaSupport.php:170
+msgid "Thank you for your Feedback/Suggestion."
+msgstr ""
+
+#: app/helper/BPMediaSupport.php:172
+msgid "Thank you for posting your support request."
+msgstr ""
+
+#: app/helper/BPMediaSupport.php:173
+msgid "We will get back to you shortly."
+msgstr ""
+
+#: app/helper/BPMediaSupport.php:176
+msgid "Your server failed to send an email."
+msgstr ""
+
+#: app/helper/BPMediaSupport.php:177
+msgid "Kindly contact your server support to fix this."
+msgstr ""
+
+#: app/helper/BPMediaSupport.php:178
+#, php-format
+msgid "You can alternatively create a support request <a href=\"%s\">here</a>"
+msgstr ""
+
+#: app/helper/BPMediaAddon.php:26
+msgid "BuddyPress-Media FFMPEG Add-on"
+msgstr ""
+
+#: app/helper/BPMediaAddon.php:29
+msgid "Add supports for more audio & video formats using open-source media-node."
+msgstr ""
+
+#: app/helper/BPMediaAddon.php:30
+msgid "Media node comes with automated setup script for Ubuntu/Debian."
+msgstr ""
+
+#: app/helper/BPMediaAddon.php:36
+msgid "BuddyPress-Media Kaltura Add-on"
+msgstr ""
+
+#: app/helper/BPMediaAddon.php:39
+msgid "Add support for more video formats using Kaltura video solution."
+msgstr ""
+
+#: app/helper/BPMediaAddon.php:40
+msgid "Works with Kaltura.com, self-hosted Kaltura-CE and Kaltura-on-premise."
+msgstr ""
+
+#: app/helper/BPMediaAddon.php:82
 msgid "Buy Now"
 msgstr ""
 
-#: app/helper/BPMediaAddon.php:66
+#: app/helper/BPMediaAddon.php:83
 msgid "Live Demo"
 msgstr ""
 
@@ -140,221 +306,238 @@ msgstr ""
 
 #: app/helper/BPMediaUpgrade.php:103
 #: app/helper/BPMediaUpgrade.php:156
-#: app/main/group/BPMediaGroupAction.php:94
+#: app/main/group/BPMediaGroupAction.php:95
 #, php-format
 msgid "%1$s added a %2$s"
 msgstr ""
 
-#: app/admin/BPMediaAdmin.php:50
+#: app/admin/BPMediaAdmin.php:54
 msgid "Buddypress Media Component"
 msgstr ""
 
-#: app/admin/BPMediaAdmin.php:50
+#: app/admin/BPMediaAdmin.php:54
 msgid "BuddyPress Media"
 msgstr ""
 
-#: app/admin/BPMediaAdmin.php:51
-#: app/admin/BPMediaAdmin.php:169
+#: app/admin/BPMediaAdmin.php:55
+#: app/admin/BPMediaAdmin.php:175
 msgid "Buddypress Media Settings"
 msgstr ""
 
-#: app/admin/BPMediaAdmin.php:51
-#: app/admin/BPMediaAdmin.php:170
-#: app/main/BuddyPressMedia.php:192
+#: app/admin/BPMediaAdmin.php:55
+#: app/admin/BPMediaAdmin.php:176
+#: app/main/BuddyPressMedia.php:193
 msgid "Settings"
 msgstr ""
 
-#: app/admin/BPMediaAdmin.php:52
-#: app/admin/BPMediaAdmin.php:176
+#: app/admin/BPMediaAdmin.php:56
+#: app/admin/BPMediaAdmin.php:182
 msgid "Buddypress Media Addons"
 msgstr ""
 
-#: app/admin/BPMediaAdmin.php:52
-#: app/admin/BPMediaAdmin.php:177
+#: app/admin/BPMediaAdmin.php:56
+#: app/admin/BPMediaAdmin.php:183
 msgid "Addons"
 msgstr ""
 
-#: app/admin/BPMediaAdmin.php:53
-#: app/admin/BPMediaAdmin.php:183
+#: app/admin/BPMediaAdmin.php:57
+#: app/admin/BPMediaAdmin.php:189
 msgid "Buddypress Media Support"
 msgstr ""
 
-#: app/admin/BPMediaAdmin.php:53
+#: app/admin/BPMediaAdmin.php:57
 msgid "Support "
 msgstr ""
 
-#: app/admin/BPMediaAdmin.php:87
-#: app/main/BuddyPressMedia.php:129
-#: app/main/BuddyPressMedia.php:132
+#: app/admin/BPMediaAdmin.php:95
+#: app/main/BuddyPressMedia.php:128
+#: app/main/BuddyPressMedia.php:131
 msgid "Media"
 msgstr ""
 
-#: app/admin/BPMediaAdmin.php:142
-#: app/admin/BPMediaAdmin.php:143
+#: app/admin/BPMediaAdmin.php:148
+#: app/admin/BPMediaAdmin.php:149
 msgid "Buddypress Media"
 msgstr ""
 
-#: app/admin/BPMediaAdmin.php:184
+#: app/admin/BPMediaAdmin.php:190
 msgid "Support"
 msgstr ""
 
-#: app/admin/BPMediaAdmin.php:238
+#: app/admin/BPMediaAdmin.php:257
 msgid "Empowering The Web With WordPress"
 msgstr ""
 
-#: app/admin/BPMediaAdmin.php:238
+#: app/admin/BPMediaAdmin.php:257
 msgid "rtCamp"
 msgstr ""
 
-#: app/admin/BPMediaAdmin.php:240
+#: app/admin/BPMediaAdmin.php:259
 msgid "Become a fan on Facebook"
 msgstr ""
 
-#: app/admin/BPMediaAdmin.php:240
+#: app/admin/BPMediaAdmin.php:259
 msgid "Facebook"
 msgstr ""
 
-#: app/admin/BPMediaAdmin.php:241
+#: app/admin/BPMediaAdmin.php:260
 msgid "Follow us on Twitter"
 msgstr ""
 
-#: app/admin/BPMediaAdmin.php:241
+#: app/admin/BPMediaAdmin.php:260
 msgid "Twitter"
 msgstr ""
 
-#: app/admin/BPMediaAdmin.php:242
+#: app/admin/BPMediaAdmin.php:261
 msgid "Subscribe to our feeds"
 msgstr ""
 
-#: app/admin/BPMediaAdmin.php:242
+#: app/admin/BPMediaAdmin.php:261
 msgid "RSS Feed"
 msgstr ""
 
-#: app/admin/BPMediaAdmin.php:247
-#, php-format
-msgid "<a href=\"%s\">Read FAQ</a>"
+#: app/admin/BPMediaAdmin.php:266
+msgid "Read FAQ"
 msgstr ""
 
-#: app/admin/BPMediaAdmin.php:248
-#, php-format
-msgid "<a href=\"%s\">Free Support Forum</a>"
+#: app/admin/BPMediaAdmin.php:267
+msgid "Free Support Forum"
 msgstr ""
 
-#: app/admin/BPMediaAdmin.php:249
-#, php-format
-msgid "<a href=\"%s\">Github Issue Tracker</a>"
+#: app/admin/BPMediaAdmin.php:268
+msgid "Github Issue Tracker"
 msgstr ""
 
-#: app/admin/BPMediaAdmin.php:250
-#, php-format
-msgid "<a href=\"%s\">Hire us!</a> To get professional customisation/setup service."
+#: app/admin/BPMediaAdmin.php:269
+msgid "Hire us!"
 msgstr ""
 
-#: app/admin/BPMediaAdmin.php:252
+#: app/admin/BPMediaAdmin.php:269
+msgid "To get professional customisation/setup service."
+msgstr ""
+
+#: app/admin/BPMediaAdmin.php:271
 msgid "Need Help?"
 msgstr ""
 
-#: app/admin/BPMediaAdmin.php:254
+#: app/admin/BPMediaAdmin.php:273
 msgid "Help the development keep going."
 msgstr ""
 
-#: app/admin/BPMediaAdmin.php:255
+#: app/admin/BPMediaAdmin.php:274
 msgid "Help us release more amazing features faster. Consider making a donation to our consistent efforts."
 msgstr ""
 
-#: app/admin/BPMediaAdmin.php:256
+#: app/admin/BPMediaAdmin.php:275
 msgid "Donate"
 msgstr ""
 
-#: app/admin/BPMediaAdmin.php:259
+#: app/admin/BPMediaAdmin.php:278
 msgid "BuddyPress Media Kaltura"
 msgstr ""
 
-#: app/admin/BPMediaAdmin.php:259
+#: app/admin/BPMediaAdmin.php:278
 msgid "BPM-Kaltura"
 msgstr ""
 
-#: app/admin/BPMediaAdmin.php:259
+#: app/admin/BPMediaAdmin.php:278
 msgid "Add support for Kaltura.com/Kaltura-CE based video conversion support"
 msgstr ""
 
-#: app/admin/BPMediaAdmin.php:260
+#: app/admin/BPMediaAdmin.php:279
 msgid "BuddyPress Media FFMPEG"
 msgstr ""
 
-#: app/admin/BPMediaAdmin.php:260
+#: app/admin/BPMediaAdmin.php:279
 msgid "BPM-FFMPEG"
 msgstr ""
 
-#: app/admin/BPMediaAdmin.php:260
+#: app/admin/BPMediaAdmin.php:279
 msgid "Add FFMEG-based audio/video conversion support"
 msgstr ""
 
-#: app/admin/BPMediaAdmin.php:262
+#: app/admin/BPMediaAdmin.php:281
 msgid "Are you a developer?"
 msgstr ""
 
-#: app/admin/BPMediaAdmin.php:263
+#: app/admin/BPMediaAdmin.php:282
 #, php-format
 msgid "If you are developing a BuddyPress Media addon we would like to include it in above list. We can also help you sell them. <a href=\"%s\">More info!</a>"
 msgstr ""
 
-#: app/admin/BPMediaAdmin.php:264
+#: app/admin/BPMediaAdmin.php:283
 msgid "Premium Addons"
 msgstr ""
 
-#: app/admin/BPMediaAdmin.php:267
+#: app/admin/BPMediaAdmin.php:286
 msgid "Latest News"
 msgstr ""
 
-#: app/main/BuddyPressMedia.php:135
+#: app/main/BuddyPressMedia.php:134
 msgid "Photos"
 msgstr ""
 
-#: app/main/BuddyPressMedia.php:138
+#: app/main/BuddyPressMedia.php:137
 msgid "Photo"
 msgstr ""
 
-#: app/main/BuddyPressMedia.php:141
+#: app/main/BuddyPressMedia.php:140
 msgid "Videos"
 msgstr ""
 
-#: app/main/BuddyPressMedia.php:147
-#: app/main/BuddyPressMedia.php:150
+#: app/main/BuddyPressMedia.php:146
+#: app/main/BuddyPressMedia.php:149
 msgid "Music"
 msgstr ""
 
-#: app/main/BuddyPressMedia.php:153
+#: app/main/BuddyPressMedia.php:152
 msgid "Albums"
 msgstr ""
 
-#: app/main/BuddyPressMedia.php:156
+#: app/main/BuddyPressMedia.php:155
 msgid "Album"
 msgstr ""
 
-#: app/main/BuddyPressMedia.php:159
+#: app/main/BuddyPressMedia.php:158
 msgid "Upload"
 msgstr ""
 
-#: app/main/BuddyPressMedia.php:250
+#: app/main/BuddyPressMedia.php:251
 #, php-format
 msgid "The BuddyPress version installed is an older version and is not supported, please update BuddyPress to use BuddyPress Media Plugin.<a class=\"alignright\" href=\"%1$s\">X</a>"
 msgstr ""
 
-#: app/main/BuddyPressMedia.php:255
+#: app/main/BuddyPressMedia.php:256
 #, php-format
 msgid "You have not installed BuddyPress. Please install latest version of BuddyPress to use BuddyPress Media plugin.<a class=\"alignright\" href=\"%1$s\">X</a>"
 msgstr ""
 
-#: app/main/profile/BPMediaTemplate.php:54
+#: app/main/profile/BPMediaTemplate.php:18
+msgid "Select Album"
+msgstr ""
+
+#: app/main/profile/BPMediaTemplate.php:19
+#: app/main/profile/BPMediaTemplate.php:66
+msgid "x"
+msgstr ""
+
+#: app/main/profile/BPMediaTemplate.php:65
+msgid "Create Album"
+msgstr ""
+
+#: app/main/profile/BPMediaTemplate.php:69
+msgid "Album Name"
+msgstr ""
+
+#: app/main/profile/BPMediaTemplate.php:79
 msgid "Drop files here"
 msgstr ""
 
-#: app/main/profile/BPMediaTemplate.php:55
+#: app/main/profile/BPMediaTemplate.php:80
 msgid " or "
 msgstr ""
 
-#: app/main/profile/BPMediaTemplate.php:56
+#: app/main/profile/BPMediaTemplate.php:81
 msgid "Select Files"
 msgstr ""
 
@@ -450,26 +633,55 @@ msgstr ""
 msgid "Sorry, the requested album does not exist."
 msgstr ""
 
-#: app/main/group/BPMediaGroup.php:179
-msgid "Media Settings"
-msgstr ""
-
-#: app/main/group/BPMediaGroup.php:239
-#: app/main/group/BPMediaGroup.php:272
-#: app/main/group/BPMediaGroup.php:354
+#: app/main/group/BPMediaGroupElementExtension.php:62
 msgid "Sorry, the requested media does not belong to the group"
 msgstr ""
 
-#: app/main/group/BPMediaGroup.php:305
-msgid "Sorry, the requested album does not belong to the group"
+#: app/main/group/BPMediaGroup.php:163
+msgid "Media Settings"
 msgstr ""
 
-#: app/main/group/BPMediaGroupsExtension.php:103
+#: app/main/group/BPMediaGroupsExtension.php:31
+#: app/main/group/BPMediaGroupsExtension.php:69
+msgid "Album Creation Control"
+msgstr ""
+
+#: app/main/group/BPMediaGroupsExtension.php:32
+#: app/main/group/BPMediaGroupsExtension.php:70
+msgid "Who can create Albums in this group?"
+msgstr ""
+
+#: app/main/group/BPMediaGroupsExtension.php:36
+#: app/main/group/BPMediaGroupsExtension.php:74
+msgid "All Group Members"
+msgstr ""
+
+#: app/main/group/BPMediaGroupsExtension.php:40
+#: app/main/group/BPMediaGroupsExtension.php:78
+msgid "Group Admins and Mods only"
+msgstr ""
+
+#: app/main/group/BPMediaGroupsExtension.php:44
+#: app/main/group/BPMediaGroupsExtension.php:82
+msgid "Group Admin only"
+msgstr ""
+
+#: app/main/group/BPMediaGroupsExtension.php:86
+msgid "Save Changes"
+msgstr ""
+
+#: app/main/group/BPMediaGroupsExtension.php:106
 msgid "There was an error saving, please try again"
 msgstr ""
 
-#: app/main/group/BPMediaGroupsExtension.php:105
+#: app/main/group/BPMediaGroupsExtension.php:108
 msgid "Settings saved successfully"
+msgstr ""
+
+#: app/main/group/BPMediaGroupsExtension.php:124
+msgid ""
+"You could display a small snippet of information from your group extension here. It will show on the group\n"
+"\t                home screen."
 msgstr ""
 
 #: app/main/widgets/BPMediaPopularMedia.php:15
@@ -494,10 +706,12 @@ msgid "No popular media found"
 msgstr ""
 
 #: app/main/widgets/BPMediaPopularMedia.php:84
+#: app/main/widgets/BPMediaRecentMedia.php:193
 msgid "Title:"
 msgstr ""
 
 #: app/main/widgets/BPMediaPopularMedia.php:87
+#: app/main/widgets/BPMediaRecentMedia.php:196
 msgid "Number of posts to show:"
 msgstr ""
 
@@ -515,19 +729,19 @@ msgid "All"
 msgstr ""
 
 #: app/main/widgets/BPMediaRecentMedia.php:64
-msgid "No rescent media found"
+msgid "No recent media found"
 msgstr ""
 
 #: app/main/widgets/BPMediaRecentMedia.php:100
-msgid "No rescent photo found"
+msgid "No recent photo found"
 msgstr ""
 
 #: app/main/widgets/BPMediaRecentMedia.php:135
-msgid "No rescent audio found"
+msgid "No recent audio found"
 msgstr ""
 
 #: app/main/widgets/BPMediaRecentMedia.php:170
-msgid "No rescent video found"
+msgid "No recent video found"
 msgstr ""
 
 #: app/main/includes/BPMediaHostWordpress.php:46
@@ -539,7 +753,7 @@ msgid "Error Uploading File"
 msgstr ""
 
 #: app/main/includes/BPMediaHostWordpress.php:112
-msgid "MP4 file you have uploaded is currupt."
+msgid "MP4 file you have uploaded is corrupt."
 msgstr ""
 
 #: app/main/includes/BPMediaHostWordpress.php:119
@@ -572,301 +786,224 @@ msgstr ""
 msgid "Error creating attachment for the media file, please try again"
 msgstr ""
 
-#: app/main/includes/BPMediaHostWordpress.php:251
+#: app/main/includes/BPMediaHostWordpress.php:252
 #, php-format
 msgid "%s uploaded a media."
 msgstr ""
 
-#: app/main/includes/BPMediaHostWordpress.php:388
+#: app/main/includes/BPMediaHostWordpress.php:266
+msgid "Uploaded by "
+msgstr ""
+
+#: app/main/includes/BPMediaHostWordpress.php:393
 #, php-format
 msgid "Comment <span>%s</span>"
 msgstr ""
 
-#: app/main/includes/BPMediaHostWordpress.php:392
+#: app/main/includes/BPMediaHostWordpress.php:397
 msgid "Favorite"
 msgstr ""
 
-#: app/main/includes/BPMediaHostWordpress.php:394
+#: app/main/includes/BPMediaHostWordpress.php:399
 msgid "Remove Favorite"
 msgstr ""
 
-#: app/main/includes/BPMediaHostWordpress.php:413
+#: app/main/includes/BPMediaHostWordpress.php:418
 msgid "Post"
 msgstr ""
 
-#: app/main/includes/BPMediaHostWordpress.php:413
+#: app/main/includes/BPMediaHostWordpress.php:418
 msgid "or press esc to cancel."
 msgstr ""
 
-#: app/main/includes/bp-media-actions.php:226
-msgid "Edit Media"
+#: app/main/includes/BPMediaHostWordpress.php:441
+msgid "Delete"
 msgstr ""
 
-#: app/main/includes/bp-media-actions.php:226
-msgid "Edit"
-msgstr ""
-
-#: app/main/includes/bp-media-actions.php:238
-#: app/main/includes/bp-media-actions.php:243
-msgid "Featured Media"
-msgstr ""
-
-#: app/main/includes/bp-media-actions.php:238
-msgid "Featured"
-msgstr ""
-
-#: app/main/includes/bp-media-actions.php:243
-msgid "Remove Featured"
-msgstr ""
-
-#: app/main/includes/bp-media-actions.php:523
-#, php-format
-msgid "%1$s created an album %2$s"
-msgstr ""
-
-#: app/main/includes/bp-media-template-functions.php:26
-msgid "Media Title"
-msgstr ""
-
-#: app/main/includes/bp-media-template-functions.php:27
-msgid "Media Description"
-msgstr ""
-
-#: app/main/includes/bp-media-template-functions.php:28
-msgid "Select Media File"
-msgstr ""
-
-#: app/main/includes/bp-media-admin.php:27
+#: app/main/includes/BPMediaUtils.php:37
 msgid "It will migrate your BuddyPress Media's earlier database to new database."
 msgstr ""
 
-#: app/main/includes/bp-media-admin.php:127
+#: app/main/includes/BPMediaUtils.php:134
 msgid "Bug Report"
 msgstr ""
 
-#: app/main/includes/bp-media-admin.php:130
+#: app/main/includes/BPMediaUtils.php:137
 msgid "New Feature Request"
 msgstr ""
 
-#: app/main/includes/bp-media-admin.php:133
+#: app/main/includes/BPMediaUtils.php:140
 msgid "Premium Support Request"
 msgstr ""
 
-#: app/main/includes/bp-media-admin.php:275
+#: app/main/includes/BPMediaUtils.php:283
 msgid "Thank you, Your bug report sent successfully."
 msgstr ""
 
-#: app/main/includes/bp-media-admin.php:278
+#: app/main/includes/BPMediaUtils.php:286
 msgid "Thank you, Your new feature request sent successfully."
 msgstr ""
 
-#: app/main/includes/bp-media-admin.php:281
+#: app/main/includes/BPMediaUtils.php:289
 msgid "Thank you, Your premium support request sent successfully, We will contact you soon."
 msgstr ""
 
-#: app/main/includes/bp-media-admin.php:333
-#: app/main/includes/bp-media-admin.php:627
+#: app/main/includes/BPMediaUtils.php:339
+#: app/main/includes/BPMediaUtils.php:637
 msgid "BuddyPress Media Support"
 msgstr ""
 
-#: app/main/includes/bp-media-admin.php:339
+#: app/main/includes/BPMediaUtils.php:345
 msgid "Spread the word"
 msgstr ""
 
-#: app/main/includes/bp-media-admin.php:340
+#: app/main/includes/BPMediaUtils.php:346
 msgid "BuddyPress Media Other options"
 msgstr ""
 
-#: app/main/includes/bp-media-admin.php:602
+#: app/main/includes/BPMediaUtils.php:612
 msgid "Need Help/Support?"
 msgstr ""
 
-#: app/main/includes/bp-media-admin.php:604
-msgid "Read FAQ"
-msgstr ""
-
-#: app/main/includes/bp-media-admin.php:605
-msgid "Free Support Forum"
-msgstr ""
-
-#: app/main/includes/bp-media-admin.php:606
-msgid "Github Issue Tracker"
-msgstr ""
-
-#: app/main/includes/bp-media-admin.php:610
+#: app/main/includes/BPMediaUtils.php:620
 msgid "Hire Us!"
 msgstr ""
 
-#: app/main/includes/bp-media-admin.php:611
+#: app/main/includes/BPMediaUtils.php:621
 msgid "We are available for customisation and premium support. Get on touch with us. :-)"
 msgstr ""
 
-#: app/main/includes/bp-media-admin.php:641
+#: app/main/includes/BPMediaUtils.php:652
 msgid "Request type:"
 msgstr ""
 
-#: app/main/includes/bp-media-admin.php:643
+#: app/main/includes/BPMediaUtils.php:654
 msgid "-- Choose Type --"
 msgstr ""
 
-#: app/main/includes/bp-media-admin.php:644
+#: app/main/includes/BPMediaUtils.php:655
 msgid "Premium Support"
 msgstr ""
 
-#: app/main/includes/bp-media-admin.php:645
+#: app/main/includes/BPMediaUtils.php:656
 msgid "Suggest a New Feature"
 msgstr ""
 
-#: app/main/includes/bp-media-admin.php:646
-#: app/main/includes/bp-media-admin.php:658
-msgid "Submit a Bug Report"
-msgstr ""
-
-#: app/main/includes/bp-media-admin.php:661
-msgid "Submit a New Feature Request"
-msgstr ""
-
-#: app/main/includes/bp-media-admin.php:664
-msgid "Submit a Premium Support Request"
-msgstr ""
-
-#: app/main/includes/bp-media-admin.php:672
-msgid "Your Name:"
-msgstr ""
-
-#: app/main/includes/bp-media-admin.php:675
-msgid "Your Email-Id:"
-msgstr ""
-
-#: app/main/includes/bp-media-admin.php:678
-msgid "Your Site Url:"
-msgstr ""
-
-#: app/main/includes/bp-media-admin.php:681
-msgid "Your Phone:"
-msgstr ""
-
-#: app/main/includes/bp-media-admin.php:684
-msgid "Subject:"
-msgstr ""
-
-#: app/main/includes/bp-media-admin.php:687
-msgid "Details:"
-msgstr ""
-
-#: app/main/includes/bp-media-admin.php:706
-msgid "Attachment:"
-msgstr ""
-
-#: app/main/includes/bp-media-admin.php:708
-msgid "Add more attachment"
-msgstr ""
-
-#: app/main/includes/bp-media-admin.php:731
-msgid "Your WP Admin Login:"
-msgstr ""
-
-#: app/main/includes/bp-media-admin.php:734
-msgid "Your WP Admin password:"
-msgstr ""
-
-#: app/main/includes/bp-media-admin.php:737
-msgid "Your SSH / FTP host:"
-msgstr ""
-
-#: app/main/includes/bp-media-admin.php:740
-msgid "Your SSH / FTP login:"
-msgstr ""
-
-#: app/main/includes/bp-media-admin.php:743
-msgid "Your SSH / FTP password:"
-msgstr ""
-
-#: app/main/includes/bp-media-admin.php:746
-msgid "Send PHP Info"
-msgstr ""
-
-#: app/main/includes/bp-media-admin.php:780
+#: app/main/includes/BPMediaUtils.php:688
 #, php-format
 msgid ""
 " Please use our <a href=\"%s\">free support forum</a>.<br/><span class=\"bpm-aligncenter\">OR</span><br/>\n"
 "\t\t<a href=\"%s\">Hire us!</a> To get professional customisation/setup service."
 msgstr ""
 
-#: app/main/includes/BPMediaComponent.php:71
+#: app/main/includes/BPMediaTemplateFunctions.php:28
+msgid "Media Title"
+msgstr ""
+
+#: app/main/includes/BPMediaTemplateFunctions.php:29
+msgid "Media Description"
+msgstr ""
+
+#: app/main/includes/BPMediaTemplateFunctions.php:30
+msgid "Select Media File"
+msgstr ""
+
+#: app/main/includes/BPMediaComponent.php:67
 msgid "Search Media..."
 msgstr ""
 
-#: app/main/includes/BPMediaComponent.php:320
+#: app/main/includes/BPMediaComponent.php:316
 msgid "Create"
 msgstr ""
 
-#: app/main/includes/BPMediaComponent.php:321
-msgid "Create Album"
-msgstr ""
-
-#: app/main/includes/BPMediaComponent.php:322
+#: app/main/includes/BPMediaComponent.php:318
 msgid "Edit Album"
 msgstr ""
 
-#: app/main/includes/BPMediaComponent.php:323
+#: app/main/includes/BPMediaComponent.php:319
 msgid "New Album"
 msgstr ""
 
-#: app/main/includes/BPMediaComponent.php:324
+#: app/main/includes/BPMediaComponent.php:320
 msgid "All Albums"
 msgstr ""
 
-#: app/main/includes/BPMediaComponent.php:325
+#: app/main/includes/BPMediaComponent.php:321
 msgid "View Album"
 msgstr ""
 
-#: app/main/includes/BPMediaComponent.php:326
+#: app/main/includes/BPMediaComponent.php:322
 msgid "Search Albums"
 msgstr ""
 
-#: app/main/includes/BPMediaComponent.php:327
+#: app/main/includes/BPMediaComponent.php:323
 msgid "No album found"
 msgstr ""
 
-#: app/main/includes/BPMediaComponent.php:328
+#: app/main/includes/BPMediaComponent.php:324
 msgid "No album found in Trash"
 msgstr ""
 
-#: app/main/includes/BPMediaComponent.php:352
+#: app/main/includes/BPMediaComponent.php:348
 msgid "Add New Media"
 msgstr ""
 
-#: app/main/includes/bp-media-functions.php:182
+#: app/main/includes/BPMediaComponent.php:355
+msgid "BuddyPress Media's Media Files"
+msgstr ""
+
+#: app/main/includes/BPMediaFunction.php:189
 #, php-format
 msgid "%1$s added new media in album %2$s"
 msgstr ""
 
-#: app/main/includes/bp-media-filters.php:251
-msgid "BuddPress Media"
-msgstr ""
-
-#: app/main/includes/bp-media-filters.php:291
+#: app/main/includes/BPMediaFilters.php:296
 msgid "Users"
 msgstr ""
 
-#: app/main/includes/bp-media-filters.php:293
+#: app/main/includes/BPMediaFilters.php:298
 msgid "Total Photos"
 msgstr ""
 
-#: app/main/includes/bp-media-filters.php:294
+#: app/main/includes/BPMediaFilters.php:299
 msgid "Total Videos"
 msgstr ""
 
-#: app/main/includes/bp-media-filters.php:295
+#: app/main/includes/BPMediaFilters.php:300
 msgid "Total Audio"
 msgstr ""
 
-#: app/main/includes/bp-media-filters.php:296
+#: app/main/includes/BPMediaFilters.php:301
 msgid "Total Albums"
 msgstr ""
 
-#: app/main/includes/bp-media-filters.php:298
+#: app/main/includes/BPMediaFilters.php:303
 msgid "Groups"
+msgstr ""
+
+#: app/main/includes/BPMediaActions.php:254
+msgid "Edit Media"
+msgstr ""
+
+#: app/main/includes/BPMediaActions.php:254
+msgid "Edit"
+msgstr ""
+
+#: app/main/includes/BPMediaActions.php:266
+#: app/main/includes/BPMediaActions.php:271
+msgid "Featured Media"
+msgstr ""
+
+#: app/main/includes/BPMediaActions.php:266
+msgid "Featured"
+msgstr ""
+
+#: app/main/includes/BPMediaActions.php:271
+msgid "Remove Featured"
+msgstr ""
+
+#: app/main/includes/BPMediaActions.php:534
+#, php-format
+msgid "%1$s created an album %2$s"
 msgstr ""
 
