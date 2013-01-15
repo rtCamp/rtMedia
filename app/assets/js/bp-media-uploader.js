@@ -4,8 +4,12 @@
  */
 
 jQuery(document).ready(function(){
-	jQuery('body').append('<div id="custom-overlay"></div>');
+        jQuery('body').append('<div id="custom-overlay"></div>');
 	jQuery('#custom-overlay').hide();
+	jQuery('body').append('<div id="bp-media-album-prompt">'+jQuery('#bp-media-album-prompt').html()+'</div>');
+        jQuery('body').append('<div id="bp-media-album-new">'+jQuery('#bp-media-album-new').html()+'</div>');
+        jQuery('#content #bp-media-album-prompt').remove();
+        jQuery('#content #bp-media-album-new').remove();
 	jQuery('#bp-media-close').click(function(){
 		jQuery('#bp-media-album-prompt').hide();
 		jQuery('#custom-overlay').hide();
