@@ -14,10 +14,11 @@ class BPMediaPopularMedia extends WP_Widget {
 	function __construct() {
 		$widget_ops = array( 'classname' => 'BPMediaPopularMedia', 'description' => __( "The most popular media on your site", BP_MEDIA_TXT_DOMAIN ) );
 		parent::__construct( 'popular-media', __( 'Popular Media', BP_MEDIA_TXT_DOMAIN ), $widget_ops );
+                trigger_error( sprintf( __('%1$s will be <strong>deprecated</strong> from version %2$s! Use %3$s instead.'), "Popular Media Widget", "2.5", "BuddyPressMedia Widget" ) );
 	}
 
 	function widget( $args, $instance ) {
-		extract( $args );
+            	extract( $args );
 
 		$title = apply_filters( 'widget_title', empty( $instance[ 'title' ] ) ? __( 'Popular Media', BP_MEDIA_TXT_DOMAIN ) : $instance[ 'title' ], $instance, $this->id_base );
 
@@ -78,7 +79,7 @@ class BPMediaPopularMedia extends WP_Widget {
 	}
 
 	function form( $instance ) {
-		$title = isset( $instance[ 'title' ] ) ? esc_attr( $instance[ 'title' ] ) : '';
+                $title = isset( $instance[ 'title' ] ) ? esc_attr( $instance[ 'title' ] ) : '';
 		$number = isset( $instance[ 'number' ] ) ? absint( $instance[ 'number' ] ) : 10;
 		?>
 		<p><label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:', BP_MEDIA_TXT_DOMAIN ); ?></label>

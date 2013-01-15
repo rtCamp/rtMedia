@@ -260,7 +260,7 @@ if (!class_exists('BPMediaAdmin')) {
                             <li><a href="' . sprintf('%s', 'https://twitter.com/rtcamp/') . '"  title="' . __('Follow us on Twitter', BP_MEDIA_TXT_DOMAIN) . '" class="bp-media-twitter bp-media-social">' . __('Twitter', BP_MEDIA_TXT_DOMAIN) . '</a></li>
                             <li><a href="' . sprintf('%s', 'http://feeds.feedburner.com/rtcamp/') . '"  title="' . __('Subscribe to our feeds', BP_MEDIA_TXT_DOMAIN) . '" class="bp-media-rss bp-media-social">' . __('RSS Feed', BP_MEDIA_TXT_DOMAIN) . '</a></li>
                         </ul>';
-            new BPMediaWidget('branding', '', $branding);
+            new BPMediaAdminWidget('branding', '', $branding);
 
             $support = '<p><ul>
             <li>' . sprintf('<a href="%s">' . __("Read FAQ", BP_MEDIA_TXT_DOMAIN) . '</a>', 'http://rtcamp.com/buddypress-media/faq/') . '</li>
@@ -268,11 +268,11 @@ if (!class_exists('BPMediaAdmin')) {
             <li>' . sprintf('<a href="%s">' . __("Github Issue Tracker", BP_MEDIA_TXT_DOMAIN) . '</a>', 'https://github.com/rtCamp/buddypress-media/issues/') . '</li>
             <li>' . sprintf('<a href="%s">' . __("Hire us!", BP_MEDIA_TXT_DOMAIN) . '</a> ' . __("To get professional customisation/setup service.", BP_MEDIA_TXT_DOMAIN), 'http://rtcamp.com/buddypress-media/hire/') . '</li>
             </ul></p>';
-            new BPMediaWidget('support', __('Need Help?', BP_MEDIA_TXT_DOMAIN), $support);
+            new BPMediaAdminWidget('support', __('Need Help?', BP_MEDIA_TXT_DOMAIN), $support);
 
             $donate = '<span><a href="http://rtcamp.com/donate/" title="' . __('Help the development keep going.', BP_MEDIA_TXT_DOMAIN) . '"><img class="bp-media-donation-image" src ="' . BP_MEDIA_URL . 'app/assets/img/donate.gif" /></a></span>
                         <p>' . sprintf(__('Help us release more amazing features faster. Consider making a donation to our consistent efforts.', BP_MEDIA_TXT_DOMAIN)) . '</p>';
-            new BPMediaWidget('donate', __('Donate', BP_MEDIA_TXT_DOMAIN), $donate);
+            new BPMediaAdminWidget('donate', __('Donate', BP_MEDIA_TXT_DOMAIN), $donate);
 
             $addons = '<ul>
                             <li><a href="http://rtcamp.com/store/buddypress-media-kaltura/" title="' . __('BuddyPress Media Kaltura', BP_MEDIA_TXT_DOMAIN) . '">' . __('BPM-Kaltura', BP_MEDIA_TXT_DOMAIN) . '</a> - ' . __('Add support for Kaltura.com/Kaltura-CE based video conversion support', BP_MEDIA_TXT_DOMAIN) . '</li>
@@ -280,10 +280,10 @@ if (!class_exists('BPMediaAdmin')) {
 			</ul>
 			<h4>' . sprintf(__('Are you a developer?', BP_MEDIA_TXT_DOMAIN)) . '</h4>
 			<p>' . sprintf(__('If you are developing a BuddyPress Media addon we would like to include it in above list. We can also help you sell them. <a href="%s">More info!</a>', BP_MEDIA_TXT_DOMAIN), 'http://rtcamp.com/contact/') . '</p></h4>';
-            new BPMediaWidget('premium-addons', __('Premium Addons', BP_MEDIA_TXT_DOMAIN), $addons);
+            new BPMediaAdminWidget('premium-addons', __('Premium Addons', BP_MEDIA_TXT_DOMAIN), $addons);
 
             $news = '<img src ="' . admin_url('/images/wpspin_light.gif') . '" /> Loading...';
-            new BPMediaWidget('latest-news', __('Latest News', BP_MEDIA_TXT_DOMAIN), $news);
+            new BPMediaAdminWidget('latest-news', __('Latest News', BP_MEDIA_TXT_DOMAIN), $news);
         }
 
     }
