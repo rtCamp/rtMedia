@@ -80,7 +80,7 @@ if (!class_exists('BPMediaSettings')) {
         /**
          * Output a checkbox
          * 
-         * @global type $bp_media
+         * @global array $bp_media
          * @param array $args
          */
         public function checkbox($args) {
@@ -108,7 +108,7 @@ if (!class_exists('BPMediaSettings')) {
         /**
          * Outputs Radio Buttons
          * 
-         * @global type $bp_media
+         * @global array $bp_media
          * @param array $args
          */
         public function radio($args) {
@@ -128,19 +128,49 @@ if (!class_exists('BPMediaSettings')) {
                     trigger_error(__('Need to specify atleast to radios else use a checkbox instead', BP_MEDIA_TXT_DOMAIN));
                 return;
             }
-            if (empty($options[$option])) {
-                $options[$option] = $defaults;
+            if ((isset($options[$option]) && empty($options[$option])) || !isset($options[$option])) {
+                $options[$option] = $default;
             }
             foreach ($radios as $value => $desc) {
                     ?>
-                <label for="<?php echo sanitize_title($desc); ?>"><input<?php checked($options[$option], $value); ?> value='<?php echo $value; ?>' name='bp_media_options[<?php echo $option; ?>]' id="<?php echo sanitize_title($desc); ?>" type='radio' /><?php echo $desc; ?></label><br /><?php
+                <label for="<?php echo sanitize_title($desc); ?>"><input<?php checked($options[$option], $value); ?> value="<?php echo $value; ?>" name="bp_media_options[<?php echo $option; ?>]" id="<?php echo sanitize_title($desc); ?>" type="radio" /><?php echo $desc; ?></label><br /><?php
             }
+        }
+
+        /**
+         * Outputs Textbox
+         * 
+         * @global array $bp_media
+         * @param array $args
+         */
+        public function textbox($args) {
+            global $bp_media;
+            $options = $bp_media->options;
+            $defaults = array(
+                'option' => '',
+                'desc' => '',
+            );
+            $args = wp_parse_args($args, $defaults);
+            extract($args);
+            if (empty($option)) {
+                trigger_error(__('Please provide "option" value ( required ) in the argument. Pass argument to add_settings_field in the following format array( \'option\' => \'option_name\' )', BP_MEDIA_TXT_DOMAIN));
+                return;
+            }
+            if ((isset($options[$option]) && empty($options[$option])) || !isset($options[$option])) {
+                $options[$option] = '';
+            }
+                ?>
+            <label for="<?php echo sanitize_title($option); ?>"><input value="<?php echo $options[$option]; ?>" name="bp_media_options[<?php echo $option; ?>]" id="<?php echo sanitize_title($option); ?>" type="text" /><?php
+            if (!empty($desc)) {
+                echo '<br /><span class="description">' . $desc . '</span>';
+            }
+                ?></label><br /><?php
         }
 
         /**
          * Outputs Dropdown
          * 
-         * @global type $bp_media
+         * @global array $bp_media
          * @param array $args
          */
         public function dropdown($args) {
@@ -158,7 +188,7 @@ if (!class_exists('BPMediaSettings')) {
                     trigger_error(__('Please provide some values to populate the dropdown. Format : array( \'value\' => \'option\' )', BP_MEDIA_TXT_DOMAIN));
                 return;
             }
-                ?>
+            ?>
             <select name="<?php echo $option; ?>" id="<?php echo $option; ?>"><?php if ($none) { ?>
                     <option><?php __e('None', BP_MEDIA_TXT_DOMAIN); ?></option><?php
             }
@@ -172,7 +202,7 @@ if (!class_exists('BPMediaSettings')) {
         /**
          * Outputs a Button
          * 
-         * @global type $bp_media
+         * @global array $bp_media
          * @param array $args
          */
         public function button($args) {
