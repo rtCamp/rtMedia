@@ -1,6 +1,11 @@
 <?php
 /**
- * Description of BPMedia
+ * BuddyPress Media
+ *
+ * The main BuddyPress Media Class. This is where everything starts.
+ *
+ * @package BuddyPressMedia
+ * @subpackage Main
  *
  * @author Saurabh Shukla <saurabh.shukla@rtcamp.com>
  * @author Gagandeep Singh <gagandeep.singh@rtcamp.com>
@@ -183,7 +188,7 @@ class BuddyPressMedia {
         global $bp_media_admin;
         $bp_media_admin = new BPMediaAdmin();
     }
-  
+
     function settings_link($links, $file) {
         /* create link */
         $plugin_name = plugin_basename(__FILE__);
