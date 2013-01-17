@@ -13,10 +13,20 @@ class BPMediaRecentMedia extends WP_Widget {
 
 	function __construct() {
 		$widget_ops = array( 'classname' => 'widget_recent_media', 'description' => __( "The most recent media uploaded on your site", BP_MEDIA_TXT_DOMAIN ) );
-		parent::__construct( 'recent-media', __( 'Recent Media', BP_MEDIA_TXT_DOMAIN ), $widget_ops );
+		parent::__construct( 'recent-media', __( 'Recent BuddyPress Media', BP_MEDIA_TXT_DOMAIN ), $widget_ops );
                 trigger_error( sprintf( __('%1$s will be <strong>deprecated</strong> from version %2$s! Use %3$s instead.'), "Recent Media Widget", "2.5", "BuddyPressMedia Widget" ) );
+                if ( is_active_widget( false, false, "recent-media", true ) ) {
+                    add_action('admin_notices', array($this,'depricated_notice'));
+                    add_action('wp_head', array($this,'depricated_notice'));
+                }
 	}
-
+        function depricated_notice(){
+            if (current_user_can('edit_theme_options')) {
+                echo '<div class="error"><p>';
+                echo sprintf( __('%1$s will be <strong>deprecated</strong> from version %2$s! Use %3$s instead.'), "Recent BuddyPress Media Widget", "2.5", "BuddyPressMedia Widget" );
+                echo '</div>';
+           }
+        }
 	function widget( $args, $instance ) {
                 extract( $args );
                 
@@ -28,7 +38,7 @@ class BPMediaRecentMedia extends WP_Widget {
 		echo $before_widget;
 		echo $before_title . $title . $after_title;
 		?>
-		<div id="recent-media-tabs" class="media-tabs-container">
+		<div id="recent-media-tabs" class="media-tabs-container media-tabs-container-tabs">
 			<ul>
 				<li><a href="#recent-media-tabs-all"><?php _e( 'All', BP_MEDIA_TXT_DOMAIN ); ?></a></li>
 				<li><a href="#recent-media-tabs-photos"><?php _e( 'Photos', BP_MEDIA_TXT_DOMAIN ); ?></a></li>
