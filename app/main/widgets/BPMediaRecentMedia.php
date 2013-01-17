@@ -14,11 +14,17 @@ class BPMediaRecentMedia extends WP_Widget {
 	function __construct() {
 		$widget_ops = array( 'classname' => 'widget_recent_media', 'description' => __( "The most recent media uploaded on your site", BP_MEDIA_TXT_DOMAIN ) );
 		parent::__construct( 'recent-media', __( 'Recent BuddyPress Media', BP_MEDIA_TXT_DOMAIN ), $widget_ops );
-                trigger_error( sprintf( __('%1$s will be <strong>deprecated</strong> from version %2$s! Use %3$s instead.'), "Recent Media Widget", "2.5", "BuddyPressMedia Widget" ) );
                 if ( is_active_widget( false, false, "recent-media", true ) ) {
-                    add_action('admin_notices', array($this,'depricated_notice'));
-                    add_action('wp_head', array($this,'depricated_notice'));
-                }
+                    if (defined('WP_DEBUG')){
+                        if(WP_DEBUG)
+                            trigger_error( sprintf( __('%1$s will be <strong>deprecated</strong> from version %2$s! Use %3$s instead.'), "Recent Media Widget", "2.5", "BuddyPress Media Widget" ) );
+                        else 
+                            add_action('admin_notices', array($this,'depricated_notice'));
+                            
+                    }else{
+                        add_action('admin_notices', array($this,'depricated_notice'));
+                    }
+                 }
 	}
         function depricated_notice(){
             if (current_user_can('edit_theme_options')) {
