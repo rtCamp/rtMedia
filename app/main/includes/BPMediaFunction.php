@@ -69,18 +69,26 @@ class BPMediaFunction {
         }
         echo '</div>';
     }
-
-    static function conditional_override_allowed_tags($content, $activity = null) {
-        global $bp_media;
+	/*
+	function remove_kses_filter(){
+		global $bp_media;
         if ($activity != null && in_array($activity->type, $bp_media->activity_types)) {
+			remove_filter('bp_get_activity_content_body', 'bp_activity_filter_kses', 1);
+		}
+	}
+	 *
+	 */
+    static function conditional_override_allowed_tags($content, $activity = null) {
+		global $bp_media;
+        if ($activity != null && in_array($activity->type, $bp_media->activity_types)) {
+
             add_filter('bp_activity_allowed_tags', 'BPMediaFunction::override_allowed_tags', 1);
-        }
-        return bp_activity_filter_kses($content);
+		}
+		return $content;
     }
 
     function swap_filters() {
         add_filter('bp_get_activity_content_body', 'BPMediaFunction::conditional_override_allowed_tags', 1, 2);
-        remove_filter('bp_get_activity_content_body', 'bp_activity_filter_kses', 1);
     }
 
     /**
