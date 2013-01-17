@@ -36,9 +36,18 @@ class BuddyPressMedia {
     public $group_loader;
 
     public function __construct() {
-        add_action('admin_notices', array($this, 'bp_exists'));
         $this->constants();
         $this->excerpt_lengths();
+        add_action('admin_notices', array($this, 'bp_exists'));
+        /**
+         * Activating the plugin!
+         */
+        register_activation_hook(__FILE__, array($this, 'activate'));
+
+        /**
+         * And hooking it to BuddyPress
+         */
+        add_action('bp_include', array($this, 'init'));
         add_action('widgets_init', array($this, 'widgets_init'), 1);
     }
 
