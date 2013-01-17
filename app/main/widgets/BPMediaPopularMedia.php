@@ -11,101 +11,98 @@
  */
 class BPMediaPopularMedia extends WP_Widget {
 
-	function __construct() {
-		$widget_ops = array( 'classname' => 'BPMediaPopularMedia', 'description' => __( "The most popular media on your site", BP_MEDIA_TXT_DOMAIN ) );
-		parent::__construct( 'popular-media', __( 'Popular BuddyPress Media', BP_MEDIA_TXT_DOMAIN ), $widget_ops );
-                if ( is_active_widget( false, false, "popular-media", true ) ) {
-                    if (defined('WP_DEBUG')){
-                        if(WP_DEBUG)
-                            trigger_error( sprintf( __('%1$s will be <strong>deprecated</strong> from version %2$s! Use %3$s instead.'), "Popular BuddyPress Media Widget", "2.5", "BuddyPress Media Widget" ));
-                        else 
-                            add_action('admin_notices', array($this,'depricated_notice'));
-                            
-                    }else{
-                        add_action('admin_notices', array($this,'depricated_notice'));
-                    }
-                    
-                 }
-	}
-        function depricated_notice(){
-            if (current_user_can('edit_theme_options')) {
-                echo '<div class="error"><p>';
-                echo sprintf( __('%1$s will be <strong>deprecated</strong> from version %2$s! Use %3$s instead.'), "Popular BuddyPress Media Widget", "2.5", "BuddyPress Media Widget" );
-                echo '</div>';
-           }
+    function __construct() {
+        $widget_ops = array('classname' => 'BPMediaPopularMedia', 'description' => __("The most popular media on your site", BP_MEDIA_TXT_DOMAIN));
+        parent::__construct('popular-media', __('Popular BuddyPress Media', BP_MEDIA_TXT_DOMAIN), $widget_ops);
+        if (is_active_widget(false, false, "popular-media", true)) {
+            if (defined('WP_DEBUG') && WP_DEBUG)
+                trigger_error(sprintf(__('%1$s will be <strong>deprecated</strong> from version %2$s! Use %3$s instead.'), "Popular BuddyPress Media Widget", "2.5", "BuddyPress Media Widget"));
+            else
+                add_action('admin_notices', array($this, 'deprecated_notice'));
         }
-	function widget( $args, $instance ) {
-            	extract( $args );
-  
-		$title = apply_filters( 'widget_title', empty( $instance[ 'title' ] ) ? __( 'Popular Media', BP_MEDIA_TXT_DOMAIN ) : $instance[ 'title' ], $instance, $this->id_base );
+    }
 
-		if ( empty( $instance[ 'number' ] ) || ! $number = absint( $instance[ 'number' ] ) )
-			$number = 10;
+    function deprecated_notice() {
+        if (current_user_can('edit_theme_options')) {
+            echo '<div class="error"><p>';
+            echo sprintf(__('%1$s will be <strong>deprecated</strong> from version %2$s! Use %3$s instead.'), "Popular BuddyPress Media Widget", "2.5", "BuddyPress Media Widget");
+            echo '</div>';
+        }
+    }
 
-		echo $before_widget;
-		echo $before_title . $title . $after_title;
-		?>
-		<div id="popular-media-tabs" class="media-tabs-container">
-			<!--                <ul>
-								<li><a href="#popular-media-tabs-comments"><?php _e( 'comments', BP_MEDIA_TXT_DOMAIN ); ?></a></li>
-								<li><a href="#popular-media-tabs-views"><?php _e( 'Views', BP_MEDIA_TXT_DOMAIN ); ?></a></li>
-							</ul>-->
-			<div id="popular-media-tabs-comments" class="bp-media-tab-panel">
-				<?php
-				$args = array( 'post_type' => 'attachment',
-					'post_status' => 'any',
-					'posts_per_page' => $number,
-					'meta_key' => 'bp-media-key',
-					'meta_value' => 0,
-					'meta_compare' => '>',
-					'orderby' => 'comment_count' );
+    function widget($args, $instance) {
+        extract($args);
 
-				$bp_media_widget_query = new WP_Query( $args );
+        $title = apply_filters('widget_title', empty($instance['title']) ? __('Popular Media', BP_MEDIA_TXT_DOMAIN) : $instance['title'], $instance, $this->id_base);
 
-				if ( $bp_media_widget_query->have_posts() ) {
-					?>
+        if (empty($instance['number']) || !$number = absint($instance['number']))
+            $number = 10;
 
-					<ul class="widget-item-listing"><?php
-			while ( $bp_media_widget_query->have_posts() ) {
-				$bp_media_widget_query->the_post();
+        echo $before_widget;
+        echo $before_title . $title . $after_title;
+        ?>
+        <div id="popular-media-tabs" class="media-tabs-container">
+            <!--                <ul>
+                                                    <li><a href="#popular-media-tabs-comments"><?php _e('comments', BP_MEDIA_TXT_DOMAIN); ?></a></li>
+                                                    <li><a href="#popular-media-tabs-views"><?php _e('Views', BP_MEDIA_TXT_DOMAIN); ?></a></li>
+                                            </ul>-->
+            <div id="popular-media-tabs-comments" class="bp-media-tab-panel">
+                <?php
+                $args = array('post_type' => 'attachment',
+                    'post_status' => 'any',
+                    'posts_per_page' => $number,
+                    'meta_key' => 'bp-media-key',
+                    'meta_value' => 0,
+                    'meta_compare' => '>',
+                    'orderby' => 'comment_count');
 
-				$entry = new BPMediaHostWordpress( get_the_ID() );
-						?>
+                $bp_media_widget_query = new WP_Query($args);
 
-				<?php echo $entry->get_media_gallery_content(); ?><?php }
-			?>
+                if ($bp_media_widget_query->have_posts()) {
+                    ?>
 
-					</ul><!-- .widget-item-listing --><?php
-		}else
-			_e( 'No popular media found', BP_MEDIA_TXT_DOMAIN );
+                    <ul class="widget-item-listing"><?php
+                    while ($bp_media_widget_query->have_posts()) {
+                        $bp_media_widget_query->the_post();
 
-		wp_reset_query();
-		?>
+                        $entry = new BPMediaHostWordpress(get_the_ID());
+                        ?>
 
-			</div><!-- #popular-media-tabs-comments -->
-		</div>
-		<?php
-		echo $after_widget;
-	}
+                <?php echo $entry->get_media_gallery_content(); ?><?php }
+            ?>
 
-	function update( $new_instance, $old_instance ) {
-		$instance = $old_instance;
-		$instance[ 'title' ] = strip_tags( $new_instance[ 'title' ] );
-		$instance[ 'number' ] = (int) $new_instance[ 'number' ];
-		return $instance;
-	}
+                    </ul><!-- .widget-item-listing --><?php
+        }
+        else
+            _e('No popular media found', BP_MEDIA_TXT_DOMAIN);
 
-	function form( $instance ) {
-                $title = isset( $instance[ 'title' ] ) ? esc_attr( $instance[ 'title' ] ) : '';
-		$number = isset( $instance[ 'number' ] ) ? absint( $instance[ 'number' ] ) : 10;
-		?>
-		<p><label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:', BP_MEDIA_TXT_DOMAIN ); ?></label>
-			<input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo $title; ?>" /></p>
+        wp_reset_query();
+        ?>
 
-		<p><label for="<?php echo $this->get_field_id( 'number' ); ?>"><?php _e( 'Number of posts to show:', BP_MEDIA_TXT_DOMAIN ); ?></label>
-			<input id="<?php echo $this->get_field_id( 'number' ); ?>" name="<?php echo $this->get_field_name( 'number' ); ?>" type="text" value="<?php echo $number; ?>" size="3" /></p>
-		<?php
-	}
+            </div><!-- #popular-media-tabs-comments -->
+        </div>
+        <?php
+        echo $after_widget;
+    }
+
+    function update($new_instance, $old_instance) {
+        $instance = $old_instance;
+        $instance['title'] = strip_tags($new_instance['title']);
+        $instance['number'] = (int) $new_instance['number'];
+        return $instance;
+    }
+
+    function form($instance) {
+        $title = isset($instance['title']) ? esc_attr($instance['title']) : '';
+        $number = isset($instance['number']) ? absint($instance['number']) : 10;
+        ?>
+        <p><label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title:', BP_MEDIA_TXT_DOMAIN); ?></label>
+            <input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo $title; ?>" /></p>
+
+        <p><label for="<?php echo $this->get_field_id('number'); ?>"><?php _e('Number of posts to show:', BP_MEDIA_TXT_DOMAIN); ?></label>
+            <input id="<?php echo $this->get_field_id('number'); ?>" name="<?php echo $this->get_field_name('number'); ?>" type="text" value="<?php echo $number; ?>" size="3" /></p>
+        <?php
+    }
 
 }
 ?>
