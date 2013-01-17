@@ -82,7 +82,7 @@ jQuery(document).ready(function(){
             remove_featured = jQuery(this).attr('data-remove-featured');
         }
         jQuery.ajax({
-            url:"/wp-admin/admin-ajax.php",
+            url:bp_media_vars.ajax_url,
             type:'POST',
             data:'action=my_featured_action&post_id='+post_id+'&remove_featured='+remove_featured+'&post_date='+date,
             success:function( results )

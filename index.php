@@ -73,16 +73,6 @@ spl_autoload_register( 'buddypress_media_autoloader' );
 global $bp_media;
 $bp_media = new BuddyPressMedia();
 
-/**
- * Activating the plugin!
- */
-register_activation_hook( __FILE__, array( $bp_media, 'activate' ) );
-
-/**
- * And hooking it to BuddyPress
- */
-add_action( 'bp_include', array($bp_media, 'init') );
-
 /*
  * Look Ma! Very few includes!
  */
