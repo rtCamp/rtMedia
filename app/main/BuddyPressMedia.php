@@ -36,9 +36,19 @@ class BuddyPressMedia {
     public $group_loader;
 
     public function __construct() {
+        add_action('admin_notices', array($this, 'bp_exists'));
         $this->constants();
         $this->excerpt_lengths();
         add_action('widgets_init', array($this, 'widgets_init'), 1);
+    }
+
+    public function bp_exists() {
+        if (!class_exists('BuddyPress')) {
+            echo '<div class="error">
+       <p><strong>' . __('BuddyPress is not installed.', $this->text_domain) . '</strong></p>
+       <p>' . sprintf(__('To use BuddyPress Media, <a href="%s" target="_blank">BuddyPress</a> must be installed first.', $this->text_domain), 'http://wordpress.org/extend/plugins/buddypress/') . '</p>
+    </div>';
+        }
     }
 
     public function get_option() {
