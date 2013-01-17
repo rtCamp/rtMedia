@@ -15,14 +15,22 @@ class BPMediaPopularMedia extends WP_Widget {
 		$widget_ops = array( 'classname' => 'BPMediaPopularMedia', 'description' => __( "The most popular media on your site", BP_MEDIA_TXT_DOMAIN ) );
 		parent::__construct( 'popular-media', __( 'Popular BuddyPress Media', BP_MEDIA_TXT_DOMAIN ), $widget_ops );
                 if ( is_active_widget( false, false, "popular-media", true ) ) {
-                    add_action('admin_notices', array($this,'depricated_notice'));
-                    add_action('wp_head', array($this,'depricated_notice'));
-                }
+                    if (defined('WP_DEBUG')){
+                        if(WP_DEBUG)
+                            trigger_error( sprintf( __('%1$s will be <strong>deprecated</strong> from version %2$s! Use %3$s instead.'), "Popular BuddyPress Media Widget", "2.5", "BuddyPress Media Widget" ));
+                        else 
+                            add_action('admin_notices', array($this,'depricated_notice'));
+                            
+                    }else{
+                        add_action('admin_notices', array($this,'depricated_notice'));
+                    }
+                    
+                 }
 	}
         function depricated_notice(){
             if (current_user_can('edit_theme_options')) {
                 echo '<div class="error"><p>';
-                echo sprintf( __('%1$s will be <strong>deprecated</strong> from version %2$s! Use %3$s instead.'), "Popular BuddyPress Media Widget", "2.5", "BuddyPressMedia Widget" );
+                echo sprintf( __('%1$s will be <strong>deprecated</strong> from version %2$s! Use %3$s instead.'), "Popular BuddyPress Media Widget", "2.5", "BuddyPress Media Widget" );
                 echo '</div>';
            }
         }
