@@ -71,11 +71,14 @@ class BPMediaFunction {
     }
 
     static function conditional_override_allowed_tags($content, $activity = null) {
-        global $bp_media;
+		global $bp_media;
         if ($activity != null && in_array($activity->type, $bp_media->activity_types)) {
+
             add_filter('bp_activity_allowed_tags', 'BPMediaFunction::override_allowed_tags', 1);
-        }
-        return bp_activity_filter_kses($content);
+			return bp_activity_filter_kses($content);
+        }else{
+			return $content;
+		}
     }
 
     function swap_filters() {
