@@ -23,7 +23,6 @@ class BuddyPressMedia {
     public $support_url = 'http://rtcamp.com/support/forum/buddypress-media/';
     public $query;
     public $albums_query;
-    public $counter = 0;
     public $count = null;
     public $posts_per_page = 10;
     public $activity_types = array(
@@ -49,6 +48,8 @@ class BuddyPressMedia {
          */
         add_action('bp_include', array($this, 'init'));
         add_action('widgets_init', array($this, 'widgets_init'), 1);
+		global $bp_media_counter;
+		$bp_media_counter = 0;
     }
 
     public function bp_exists() {
