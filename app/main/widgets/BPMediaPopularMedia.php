@@ -13,13 +13,22 @@ class BPMediaPopularMedia extends WP_Widget {
 
 	function __construct() {
 		$widget_ops = array( 'classname' => 'BPMediaPopularMedia', 'description' => __( "The most popular media on your site", BP_MEDIA_TXT_DOMAIN ) );
-		parent::__construct( 'popular-media', __( 'Popular Media', BP_MEDIA_TXT_DOMAIN ), $widget_ops );
-                trigger_error( sprintf( __('%1$s will be <strong>deprecated</strong> from version %2$s! Use %3$s instead.'), "Popular Media Widget", "2.5", "BuddyPressMedia Widget" ) );
+		parent::__construct( 'popular-media', __( 'Popular BuddyPress Media', BP_MEDIA_TXT_DOMAIN ), $widget_ops );
+                if ( is_active_widget( false, false, "popular-media", true ) ) {
+                    add_action('admin_notices', array($this,'depricated_notice'));
+                    add_action('wp_head', array($this,'depricated_notice'));
+                }
 	}
-
+        function depricated_notice(){
+            if (current_user_can('edit_theme_options')) {
+                echo '<div class="error"><p>';
+                echo sprintf( __('%1$s will be <strong>deprecated</strong> from version %2$s! Use %3$s instead.'), "Popular BuddyPress Media Widget", "2.5", "BuddyPressMedia Widget" );
+                echo '</div>';
+           }
+        }
 	function widget( $args, $instance ) {
             	extract( $args );
-
+  
 		$title = apply_filters( 'widget_title', empty( $instance[ 'title' ] ) ? __( 'Popular Media', BP_MEDIA_TXT_DOMAIN ) : $instance[ 'title' ], $instance, $this->id_base );
 
 		if ( empty( $instance[ 'number' ] ) || ! $number = absint( $instance[ 'number' ] ) )

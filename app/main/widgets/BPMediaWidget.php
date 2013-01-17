@@ -1,17 +1,17 @@
 <?php
 
 /**
- * Description of BPMediaRecentMediaWidget
+ * Description of BPMediaMediaWidget
  *
- * @author saurabh
+ * @author faishal
  */
 class BPMediaWidget extends WP_Widget {
 
     function __construct() {
         $widget_ops = array('classname' => 'buddypress-media-widget', 'description' => __("The most recent/popular media uploaded on your site", BP_MEDIA_TXT_DOMAIN));
-        parent::__construct('buddypress-media-wid', __('BuddyPressMedia Widget', BP_MEDIA_TXT_DOMAIN), $widget_ops);
-    }
-
+        parent::__construct('buddypress-media-wid', __('BuddyPress Media Widget', BP_MEDIA_TXT_DOMAIN), $widget_ops);
+     }
+       
     function widget($args, $instance) {
         extract($args);
         $title = apply_filters('widget_title', empty($instance['title']) ? __('BuddyPress Media', BP_MEDIA_TXT_DOMAIN) : $instance['title'], $instance, $this->id_base);
@@ -36,7 +36,7 @@ class BPMediaWidget extends WP_Widget {
             <p><?php printf(__('Please configure this widget <a href="%s" target="_blank" title="Configure BuddyPress Media Widget">here</a>.', 'rtPanel'), admin_url('/widgets.php')); ?></p><?php } else {
             ?>
 
-            <div id="<?php echo $wdType; ?>-media-tabs" class="media-tabs-container">
+            <div id="<?php echo $wdType; ?>-media-tabs" class="media-tabs-container media-tabs-container-tabs">
                 <ul>
                     <li><a href="#<?php echo $wdType; ?>-media-tabs-all-<?php echo $widgetid; ?>"><?php _e('All', BP_MEDIA_TXT_DOMAIN); ?></a></li>
                     <?php
