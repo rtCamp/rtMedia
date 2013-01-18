@@ -133,7 +133,7 @@ class BPMediaActions {
         $bp_media_vars = array(
             'ajaxurl' => admin_url('admin-ajax.php'),
             'page' => 1,
-            'current_action' => $cur_group_id ? (empty($bp->action_variables) ? BP_MEDIA_IMAGES_SLUG : $bp->action_variables) : (isset($bp->current_action) ? $bp->current_action : false),
+            'current_action' => $cur_group_id ? (empty($bp->action_variables) ? BP_MEDIA_IMAGES_SLUG : $bp->action_variables[0]) : (isset($bp->current_action) ? $bp->current_action : false),
             'action_variables' => isset($bp->action_variables) ? (empty($bp->action_variables) ? array(BP_MEDIA_IMAGES_SLUG) : $bp->action_variables) : array(BP_MEDIA_IMAGES_SLUG),
             'displayed_user' => bp_displayed_user_id(),
             'loggedin_user' => bp_loggedin_user_id(),
@@ -240,7 +240,6 @@ class BPMediaActions {
      * @since BuddyPress Media 2.0
      */
     function action_buttons() {
-        global $bp_media;
         if (!in_array('bp_media_current_entry', $GLOBALS))
             return false;
         global $bp_media_current_entry, $bp_media_options;
@@ -373,6 +372,7 @@ class BPMediaActions {
      * Function to return the media for the ajax requests
      */
     function load_more() {
+
         global $bp, $bp_media_query, $bp_media_posts_per_page;
         $page = isset($_POST['page']) ? $_POST['page'] : die();
         $current_action = isset($_POST['current_action']) ? $_POST['current_action'] : null;
