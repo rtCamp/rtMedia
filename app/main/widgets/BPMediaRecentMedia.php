@@ -40,6 +40,7 @@ class BPMediaRecentMedia extends WP_Widget {
 
         echo $before_widget;
         echo $before_title . $title . $after_title;
+        $this->deprecated_notice();
         ?>
         <div id="recent-media-tabs" class="media-tabs-container media-tabs-container-tabs">
             <ul>
