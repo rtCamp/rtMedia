@@ -292,6 +292,7 @@ class BPMediaScreen {
 			<input id="bp-media-upload-input-description" type="text" name="bp_media_description" class="settings-input"
 				   maxlength="<?php echo max( array( $bp_media_default_excerpts[ 'single_entry_description' ], $bp_media_default_excerpts[ 'activity_entry_description' ] ) ) ?>"
 				   value="<?php echo $bp_media_current_entry->get_content(); ?>" />
+                        <?php do_action('bp_media_add_media_fields', $this->media_type); ?>
 			<div class="submit">
 				<input type="submit" class="auto" value="<?php _e( 'Update', BP_MEDIA_TXT_DOMAIN ); ?>" />
 				<a href="<?php echo $bp_media_current_entry->get_url(); ?>" class="button" title="<?php _e( 'Back to Media File', BP_MEDIA_TXT_DOMAIN ); ?>">
