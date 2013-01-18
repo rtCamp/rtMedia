@@ -40,6 +40,7 @@ class BPMediaPopularMedia extends WP_Widget {
 
         echo $before_widget;
         echo $before_title . $title . $after_title;
+        $this->deprecated_notice();
         ?>
         <div id="popular-media-tabs" class="media-tabs-container">
             <!--                <ul>
