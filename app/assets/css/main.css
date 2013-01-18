@@ -169,3 +169,4 @@ img.bp-media-donation-image{display:block;margin: 10px auto;}
 #bp-media-album-new > label { font-size: 14px; }
 #bp-media-album-new input[type="text"] { width: 98%; }
 #custom-overlay { background: none repeat scroll 0 0 #000000;bottom: 0;left: 0;min-height: 360px;opacity: 0.7;position: fixed;right: 0;top: 0;z-index: 105000; }
+div.error{margin: 5px 0 15px; background-color: #ffebe8; border-color: #c00;padding: 0 .6em;-webkit-border-radius: 3px;border-radius: 3px;border-width: 1px;border-style: solid;}

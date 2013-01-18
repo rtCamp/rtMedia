@@ -27,7 +27,7 @@ if (!class_exists('BPMediaUpgrade')) {
             global $bp_media;
             ?>
             <div class="error"><p><?php
-            printf(__('Please click upgrade to upgrade the database of BuddyPress Media <a class="button" id="refresh_media_count" href ="%s" class="button" title="It will migrate your BuddyPress Media\'s earlier database to new database.">Upgrade</a>', BP_MEDIA_TXT_DOMAIN), bp_media_get_admin_url(add_query_arg(array('page' => 'bp-media-settings', 'bp_media_upgrade_db' => 1, 'wp_nonce' => wp_create_nonce('bp_media_upgrade_db')), 'admin.php')))
+            printf(__('Please click upgrade to upgrade the database of BuddyPress Media <a class="button" id="refresh_media_count" href ="%s" class="button" title="It will migrate your BuddyPress Media\'s earlier database to new database.">Upgrade</a>', BP_MEDIA_TXT_DOMAIN), bp_get_admin_url(add_query_arg(array('page' => 'bp-media-settings', 'bp_media_upgrade_db' => 1, 'wp_nonce' => wp_create_nonce('bp_media_upgrade_db')), 'admin.php')))
             ?>
                 </p></div>
             <?php
@@ -39,7 +39,6 @@ if (!class_exists('BPMediaUpgrade')) {
         public function upgrade() {
             if (isset($_GET['bp_media_upgrade_db']) && empty($_REQUEST['settings-updated'])) {
                 check_admin_referer('bp_media_upgrade_db', 'wp_nonce');
-                require_once('bp-media-upgrade-script.php');
                 $current_version = get_site_option('bp_media_db_version', '1.0');
                 if ($current_version == '2.0')
                     $this->upgrade_2_0_to_2_1();
