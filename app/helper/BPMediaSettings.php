@@ -70,10 +70,11 @@ if (!class_exists('BPMediaSettings')) {
             global $bp_media_admin;
             if (isset($_POST['refresh-count'])) {
                 if ($bp_media_admin->update_count())
-                    add_settings_error('Recount Success', 'recount-success', __('Recounting of media files done successfully', BP_MEDIA_TXT_DOMAIN), 'updated');
+                    add_settings_error(__('Recount Success', BP_MEDIA_TXT_DOMAIN), 'recount-success', __('Recounting of media files done successfully', BP_MEDIA_TXT_DOMAIN), 'updated');
                 else
-                    add_settings_error('Recount Fail', 'recount-fail', __('Recounting Failed', BP_MEDIA_TXT_DOMAIN));
+                    add_settings_error(__('Recount Fail', BP_MEDIA_TXT_DOMAIN), 'recount-fail', __('Recounting Failed', BP_MEDIA_TXT_DOMAIN));
             }
+            do_action('bp_media_sanitize_settings', $_POST, $input);
             return $input;
         }
 
