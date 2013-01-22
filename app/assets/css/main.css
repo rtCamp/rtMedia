@@ -14,7 +14,7 @@ ul.bp-media-gallery h3{max-width: 150px;overflow: hidden;text-align: center;font
 ul.bp-media-gallery a{width:150px;}
 ul.bp-media-gallery li span img{height: 150px;}
 .bp-media-single .activity-list .activity-content,.bp-media-single div.activity-comments{margin-left:0;}
-li.media div.activity-content div.activity-inner p{display:none;}
+/*li.media div.activity-content div.activity-inner p{display:none;}*/
 div.bp_media_title{margin-bottom:10px;}
 #bp-media-footer {color: #4D4D4D;text-align: center;text-shadow: #FAFAFA 1px 1px 0;}
 #wpbody-content div.metabox-fixed{width: 280px;margin-right: -300px;float: right;}
