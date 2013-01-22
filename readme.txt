@@ -81,7 +81,7 @@ Please visit [BuddyPress Media's Roadmap page](http://rtcamp.com/buddypress-medi
 = 2.4.1 =
 * New Widget added with more options!
 * Fixed 'Show More' action on Group Album thanks to [bowoolley](http://profiles.wordpress.org/bowoolley/)
-* Fixed conflicts with 'BuddyPress Activity Plus', thanks to [number_6] (http://profiles.wordpress.org/number_6/) and param-veer(https://github.com/param-veer)
+* Fixed conflicts with 'BuddyPress Activity Plus', thanks to [number_6](http://profiles.wordpress.org/number_6/) and [param-veer](https://github.com/param-veer)
 * Some more housekeeping, code cleanup and documentation.
 
 = 2.4 =

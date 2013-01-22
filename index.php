@@ -7,7 +7,6 @@
   Author: rtCamp
   Text Domain: buddypress-media
   Author URI: http://rtcamp.com
-  Text domain: buddypress-media
  */
 
 /**
