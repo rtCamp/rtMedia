@@ -79,9 +79,9 @@ class BPMediaUploadScreen extends BPMediaScreen {
 		if ( isset( $_POST[ 'action' ] ) && $_POST[ 'action' ] == 'wp_handle_upload' ) {
 			/** This section can help in the group activity handling */
 			if ( isset( $_POST[ 'bp_media_group_id' ] ) && intval( $_POST[ 'bp_media_group_id' ] ) ) {
-				remove_action( 'bp_media_after_add_media', 'BPMediaActions::p_media_activity_create_after_add_media', 10, 2 );
-				add_action( 'bp_media_after_add_media', 'BPMediaGroupAction::bp_media_groups_activity_create_after_add_media', 10, 2 );
-				add_filter( 'bp_media_force_hide_activity', 'bp_media_groups_force_hide_activity' );
+				remove_action( 'bp_media_after_add_media', 'BPMediaActions::activity_create_after_add_media', 10, 2 );
+				add_action( 'bp_media_after_add_media', 'BPMediaGroupAction::groups_activity_create_after_add_media', 10, 2 );
+				add_filter( 'bp_media_force_hide_activity', 'BPMediaGroupAction::bp_media_groups_force_hide_activity' );
 			}
 			/* @var $bp_media_entry BPMediaHostWordpress */
 			if ( isset( $_FILES ) && is_array( $_FILES ) && array_key_exists( 'bp_media_file', $_FILES ) && $_FILES[ 'bp_media_file' ][ 'name' ] != '' ) {
