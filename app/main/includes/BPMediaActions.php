@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Description of BPMediaActions
  *
@@ -8,24 +9,24 @@ class BPMediaActions {
 
     function __construct() {
         add_action('bp_media_before_content', 'BPMediaActions::show_messages');
-        add_action('wp_enqueue_scripts', array($this,'enqueue_scripts_styles'), 11);
+        add_action('wp_enqueue_scripts', array($this, 'enqueue_scripts_styles'), 11);
         add_action('bp_before_activity_delete', 'BPMediaActions::delete_activity_handler');
-        add_action('wp_enqueue_scripts', array($this,'upload_enqueue'));
+        add_action('wp_enqueue_scripts', array($this, 'upload_enqueue'));
         add_action('init', 'BPMediaActions::init_count');
-        add_action('bp_activity_entry_meta', array($this,'action_buttons'));
+        add_action('bp_activity_entry_meta', array($this, 'action_buttons'));
         add_action('bp_media_before_delete_media', 'BPMediaActions::delete_media_handler');
-        add_action('bp_media_after_add_album', array($this,'album_create_activity'));
-        add_action('bp_media_album_updated', array($this,'album_activity_update'));
-        add_action('bp_media_after_delete_media', array($this,'album_activity_sync'));
+        add_action('bp_media_after_add_album', array($this, 'album_create_activity'));
+        add_action('bp_media_album_updated', array($this, 'album_activity_update'));
+        add_action('bp_media_after_delete_media', array($this, 'album_activity_sync'));
         add_action('bp_media_after_add_media', 'BPMediaActions::activity_create_after_add_media', 10, 2);
-        add_action('wp_ajax_bp_media_load_more', array($this,'load_more'));
-        add_action('wp_ajax_nopriv_bp_media_load_more', array($this,'load_more'));
-        add_action('delete_attachment', array($this,'delete_attachment_handler'));
-        add_action('wp_ajax_bp_media_add_album', array($this,'add_album'));
-        add_action('wp_ajax_nopriv_bp_media_add_album', array($this,'add_album'));
+        add_action('wp_ajax_bp_media_load_more', array($this, 'load_more'));
+        add_action('wp_ajax_nopriv_bp_media_load_more', array($this, 'load_more'));
+        add_action('delete_attachment', array($this, 'delete_attachment_handler'));
+        add_action('wp_ajax_bp_media_add_album', array($this, 'add_album'));
+        add_action('wp_ajax_nopriv_bp_media_add_album', array($this, 'add_album'));
         global $bp_media_options;
         if (isset($bp_media_options['remove_linkback']) && $bp_media_options['remove_linkback'] != '1')
-            add_action('bp_footer', array($this,'footer'));
+            add_action('bp_footer', array($this, 'footer'));
     }
 
     /**
@@ -43,9 +44,9 @@ class BPMediaActions {
         if (isset($_POST['action']) && $_POST['action'] == 'wp_handle_upload') {
             /** This section can help in the group activity handling */
             if (isset($_POST['bp_media_group_id']) && intval($_POST['bp_media_group_id'])) {
-                remove_action('bp_media_after_add_media','BPMediaActions::activity_create_after_add_media', 10, 2);
-                add_action('bp_media_after_add_media', 'BPMediaGroupAction::bp_media_groups_activity_create_after_add_media', 10, 2);
-                add_filter('bp_media_force_hide_activity', 'bp_media_groups_force_hide_activity');
+                remove_action('bp_media_after_add_media', 'BPMediaActions::activity_create_after_add_media', 10, 2);
+                add_action('bp_media_after_add_media', 'BPMediaGroupAction::groups_activity_create_after_add_media', 10, 2);
+                add_filter('bp_media_force_hide_activity', 'BPMediaGroupAction::bp_media_groups_force_hide_activity');
             }
             /* @var $bp_media_entry BPMediaHostWordpress */
             if (isset($_FILES) && is_array($_FILES) && array_key_exists('bp_media_file', $_FILES) && $_FILES['bp_media_file']['name'] != '') {
@@ -182,7 +183,7 @@ class BPMediaActions {
 
     static function delete_media_handler($media_id) {
         /* @var $media BPMediaHostWordpress */
-        remove_action('bp_before_activity_delete','BPMediaActions::delete_activity_handler');
+        remove_action('bp_before_activity_delete', 'BPMediaActions::delete_activity_handler');
         $activity_id = get_post_meta($media_id, 'bp_media_child_activity', true);
         if ($activity_id == NULL)
             return false;

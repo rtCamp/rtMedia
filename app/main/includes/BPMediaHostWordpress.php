@@ -375,8 +375,8 @@ class BPMediaHostWordpress {
                     'display_comments' => 'stream',
                     'include' => $activity_id,
                     'max' => 1
-                ))) :
-            while (bp_activities()) : bp_the_activity();
+                ))) {
+            while (bp_activities()) { bp_the_activity();
                 do_action('bp_before_activity_entry');
                 ?>
                 <div class="activity">
@@ -426,8 +426,9 @@ class BPMediaHostWordpress {
                     </ul>
                 </div>
                 <?php
-            endwhile;
-        else:
+            }
+                }
+        else{
             ?>
             <div class="activity">
                 <ul id="activity-stream" class="activity-list item-list">
@@ -444,7 +445,7 @@ class BPMediaHostWordpress {
                 </ul>
             </div>
         <?php
-        endif;
+        }
     }
 
     /**
