@@ -81,7 +81,8 @@ Please visit [BuddyPress Media's Features page](http://rtcamp.com/buddypress-med
 
 Please visit [BuddyPress Media's Roadmap page](http://rtcamp.com/buddypress-media/roadmap/ "Visit BuddyPress Media's Features page") to get some details about future releases.
 = 2.4.2 =
-* Fixed bug where seetings weren't getting saved on multisites
+* Fixed bug where settings weren't getting saved on multisites.
+* Workaround for bug where the last activity wouldn't show up.
 * Fixed bug with iOS uploads.
 * Some minor code changes
 
