@@ -227,7 +227,7 @@ class BPMediaFilters {
             // Addons
             $bp_media_admin_nav[] = array(
                 'parent' => 'bp-media-menu',
-                'id' => 'my-account-addons',
+                'id' => 'bp-media-addons',
                 'title' => __('Addons', BP_MEDIA_TXT_DOMAIN),
                 'href' => bp_get_admin_url(add_query_arg(array('page' => 'bp-media-addons'), 'admin.php'))
             );
@@ -235,11 +235,13 @@ class BPMediaFilters {
             // Support
             $bp_media_admin_nav[] = array(
                 'parent' => 'bp-media-menu',
-                'id' => 'my-account-support',
+                'id' => 'bp-media-support',
                 'title' => __('Support', BP_MEDIA_TXT_DOMAIN),
                 'href' => bp_get_admin_url(add_query_arg(array('page' => 'bp-media-support'), 'admin.php'))
             );
-
+            
+            $bp_media_admin_nav = apply_filters('bp_media_add_admin_bar_item', $bp_media_admin_nav);
+            
             foreach ($bp_media_admin_nav as $admin_menu)
                 $wp_admin_bar->add_menu($admin_menu);
         }
