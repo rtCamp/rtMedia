@@ -3,7 +3,8 @@
 class BPMediaFunction {
 
     function __construct() {
-        add_action('bp_init', array($this,'swap_filters'));
+        //add_action('bp_init', array($this,'swap_filters'));
+		add_filter('bp_get_activity_content_body', array($this,'conditional_override_allowed_tags'), 1, 2);
         add_action('wp_ajax_my_featured_action', array($this,'implement_featured_ajax'));
         add_action('wp_ajax_nopriv_my_featured_action', array($this,'implement_featured_ajax'));
     }
@@ -78,17 +79,19 @@ class BPMediaFunction {
 	}
 	 *
 	 */
-    static function conditional_override_allowed_tags($content, $activity = null) {
+    function conditional_override_allowed_tags($content, $activity = null) {
 		global $bp_media;
-        if ($activity != null && in_array($activity->type, $bp_media->activity_types)) {
 
+        if ($activity != null && in_array($activity->type, $bp_media->activity_types)) {
             add_filter('bp_activity_allowed_tags', 'BPMediaFunction::override_allowed_tags', 1);
 		}
+
 		return $content;
+
     }
 
     function swap_filters() {
-        add_filter('bp_get_activity_content_body', 'BPMediaFunction::conditional_override_allowed_tags', 1, 2);
+        //add_filter('bp_get_activity_content_body', 'BPMediaFunction::conditional_override_allowed_tags', 2, 2);
     }
 
     /**

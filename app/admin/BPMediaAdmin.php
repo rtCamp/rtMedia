@@ -240,7 +240,8 @@ if (!class_exists('BPMediaAdmin')) {
 
         /* Multisite Save Options - http://wordpress.stackexchange.com/questions/64968/settings-api-in-multisite-missing-update-message#answer-72503 */
         public function save_multisite_options() {
-            bp_update_option('bp_media_options', $_POST['bp_media_options']);
+			bp_update_option('bp_media_options', $_POST['bp_media_options']);
+
             // redirect to settings page in network
             wp_redirect(
                     add_query_arg(
