@@ -22,23 +22,28 @@ if (!class_exists('BPMediaSettings')) {
             global $bp_media_addon;
             add_settings_section('bpm-settings', __('BuddyPress Media Settings', BP_MEDIA_TXT_DOMAIN), '', 'bp-media-settings');
             add_settings_field('bpm-video', __('Video', BP_MEDIA_TXT_DOMAIN), array($this, 'checkbox'), 'bp-media-settings', 'bpm-settings', array(
+                'setting' => 'bp_media_options',
                 'option' => 'videos_enabled',
                 'desc' => __('Check to enable video upload functionality', BP_MEDIA_TXT_DOMAIN)
             ));
             add_settings_field('bpm-audio', __('Audio', BP_MEDIA_TXT_DOMAIN), array($this, 'checkbox'), 'bp-media-settings', 'bpm-settings', array(
+                'setting' => 'bp_media_options',
                 'option' => 'audio_enabled',
                 'desc' => __('Check to enable audio upload functionality', BP_MEDIA_TXT_DOMAIN)
             ));
             add_settings_field('bpm-image', __('Images', BP_MEDIA_TXT_DOMAIN), array($this, 'checkbox'), 'bp-media-settings', 'bpm-settings', array(
+                'setting' => 'bp_media_options',
                 'option' => 'images_enabled',
                 'desc' => __('Check to enable images upload functionality', BP_MEDIA_TXT_DOMAIN)
             ));
             add_settings_field('bpm-download', __('Download', BP_MEDIA_TXT_DOMAIN), array($this, 'checkbox'), 'bp-media-settings', 'bpm-settings', array(
+                'setting' => 'bp_media_options',
                 'option' => 'download_enabled',
                 'desc' => __('Check to enable download functionality', BP_MEDIA_TXT_DOMAIN)
             ));
             add_settings_section('bpm-spread-the-word', __('Spread the Word', BP_MEDIA_TXT_DOMAIN), '', 'bp-media-settings');
             add_settings_field('bpm-spread-the-word-settings', __('Spread the Word', BP_MEDIA_TXT_DOMAIN), array($this, 'radio'), 'bp-media-settings', 'bpm-spread-the-word', array(
+                'setting' => 'bp_media_options',
                 'option' => 'remove_linkback',
                 'radios' => array(
                     2 => __('Yes, I support BuddyPress Media', BP_MEDIA_TXT_DOMAIN),
@@ -70,10 +75,11 @@ if (!class_exists('BPMediaSettings')) {
             global $bp_media_admin;
             if (isset($_POST['refresh-count'])) {
                 if ($bp_media_admin->update_count())
-                    add_settings_error('Recount Success', 'recount-success', __('Recounting of media files done successfully', BP_MEDIA_TXT_DOMAIN), 'updated');
+                    add_settings_error(__('Recount Success', BP_MEDIA_TXT_DOMAIN), 'recount-success', __('Recounting of media files done successfully', BP_MEDIA_TXT_DOMAIN), 'updated');
                 else
-                    add_settings_error('Recount Fail', 'recount-fail', __('Recounting Failed', BP_MEDIA_TXT_DOMAIN));
+                    add_settings_error(__('Recount Fail', BP_MEDIA_TXT_DOMAIN), 'recount-fail', __('Recounting Failed', BP_MEDIA_TXT_DOMAIN));
             }
+            do_action('bp_media_sanitize_settings', $_POST, $input);
             return $input;
         }
 
@@ -87,6 +93,7 @@ if (!class_exists('BPMediaSettings')) {
             global $bp_media;
             $options = $bp_media->options;
             $defaults = array(
+                'setting' => '',
                 'option' => '',
                 'desc' => '',
             );
@@ -96,11 +103,18 @@ if (!class_exists('BPMediaSettings')) {
                 trigger_error(__('Please provide "option" value ( required ) in the argument. Pass argument to add_settings_field in the following format array( \'option\' => \'option_name\' ) ', BP_MEDIA_TXT_DOMAIN));
                 return;
             }
+
+            if (!empty($setting)) {
+                $name = $setting . '[' . $option . ']';
+                $options = bp_get_option($setting);
+            } else
+                $name = $option;
+
             if (!isset($options[$option]))
                 $options[$option] = '';
             ?>
             <label for="<?php echo $option; ?>">
-                <input<?php checked($options[$option]); ?> name="bp_media_options[<?php echo $option; ?>]" id="<?php echo $option; ?>" value="1" type="checkbox" />
+                <input<?php checked($options[$option]); ?> name="<?php echo $name; ?>" id="<?php echo $option; ?>" value="1" type="checkbox" />
                 <?php echo $desc; ?>
             </label><?php
         }
@@ -115,6 +129,7 @@ if (!class_exists('BPMediaSettings')) {
             global $bp_media;
             $options = $bp_media->options;
             $defaults = array(
+                'setting' => '',
                 'option' => '',
                 'radios' => array(),
                 'default' => '',
@@ -128,12 +143,20 @@ if (!class_exists('BPMediaSettings')) {
                     trigger_error(__('Need to specify atleast to radios else use a checkbox instead', BP_MEDIA_TXT_DOMAIN));
                 return;
             }
+
+            if (!empty($setting)) {
+                $name = $setting . '[' . $option . ']';
+                $options = bp_get_option($setting);
+            } else
+                $name = $option;
+
             if ((isset($options[$option]) && empty($options[$option])) || !isset($options[$option])) {
                 $options[$option] = $default;
             }
+
             foreach ($radios as $value => $desc) {
                     ?>
-                <label for="<?php echo sanitize_title($desc); ?>"><input<?php checked($options[$option], $value); ?> value="<?php echo $value; ?>" name="bp_media_options[<?php echo $option; ?>]" id="<?php echo sanitize_title($desc); ?>" type="radio" /><?php echo $desc; ?></label><br /><?php
+                <label for="<?php echo sanitize_title($desc); ?>"><input<?php checked($options[$option], $value); ?> value="<?php echo $value; ?>" name="<?php echo $name; ?>" id="<?php echo sanitize_title($desc); ?>" type="radio" /><?php echo $desc; ?></label><br /><?php
             }
         }
 
@@ -147,6 +170,7 @@ if (!class_exists('BPMediaSettings')) {
             global $bp_media;
             $options = $bp_media->options;
             $defaults = array(
+                'setting' => '',
                 'option' => '',
                 'desc' => '',
             );
@@ -156,11 +180,18 @@ if (!class_exists('BPMediaSettings')) {
                 trigger_error(__('Please provide "option" value ( required ) in the argument. Pass argument to add_settings_field in the following format array( \'option\' => \'option_name\' )', BP_MEDIA_TXT_DOMAIN));
                 return;
             }
+
+            if (!empty($setting)) {
+                $name = $setting . '[' . $option . ']';
+                $options = bp_get_option($setting);
+            } else
+                $name = $option;
+            
             if ((isset($options[$option]) && empty($options[$option])) || !isset($options[$option])) {
                 $options[$option] = '';
             }
                 ?>
-            <label for="<?php echo sanitize_title($option); ?>"><input value="<?php echo $options[$option]; ?>" name="bp_media_options[<?php echo $option; ?>]" id="<?php echo sanitize_title($option); ?>" type="text" /><?php
+            <label for="<?php echo sanitize_title($option); ?>"><input value="<?php echo $options[$option]; ?>" name="<?php echo $name; ?>" id="<?php echo sanitize_title($option); ?>" type="text" /><?php
             if (!empty($desc)) {
                 echo '<br /><span class="description">' . $desc . '</span>';
             }
@@ -175,6 +206,7 @@ if (!class_exists('BPMediaSettings')) {
          */
         public function dropdown($args) {
             $defaults = array(
+                'setting' => '',
                 'option' => '',
                 'none' => true,
                 'values' => ''
@@ -188,14 +220,24 @@ if (!class_exists('BPMediaSettings')) {
                     trigger_error(__('Please provide some values to populate the dropdown. Format : array( \'value\' => \'option\' )', BP_MEDIA_TXT_DOMAIN));
                 return;
             }
-            ?>
-            <select name="<?php echo $option; ?>" id="<?php echo $option; ?>"><?php if ($none) { ?>
+
+            if (!empty($setting)) {
+                $name = $setting . '[' . $option . ']';
+                $options = bp_get_option($setting);
+            } else
+                $name = $option;
+
+            if ((isset($options[$option]) && empty($options[$option])) || !isset($options[$option])) {
+                $options[$option] = '';
+            }
+                ?>
+            <select name="<?php echo $name; ?>" id="<?php echo $option; ?>"><?php if ($none) { ?>
                     <option><?php __e('None', BP_MEDIA_TXT_DOMAIN); ?></option><?php
             }
             foreach ($values as $value => $text) {
                     ?>
-                    <option value="<?php echo $value; ?>"><?php echo $text; ?></option><?php }
-                ?>
+                    <option<?php selected($options[$option], $value); ?> value="<?php echo $value; ?>"><?php echo $text; ?></option><?php }
+            ?>
             </select><?php
         }
 
@@ -207,6 +249,7 @@ if (!class_exists('BPMediaSettings')) {
          */
         public function button($args) {
             $defaults = array(
+                'setting' => '',
                 'option' => '',
                 'name' => 'Save Changes',
                 'desc' => '',
@@ -217,7 +260,11 @@ if (!class_exists('BPMediaSettings')) {
                 trigger_error('Please provide "option" value ( Required ) in the argument. Pass argument to add_settings_field in the following format array( \'option\' => \'option_name\', \'link\' => \'linkurl\' )');
                 return;
             }
-            submit_button($name, '', $option, false);
+            if (!empty($setting)) {
+                $button = $setting . '[' . $option . ']';
+            } else
+                $button = $option;
+            submit_button($name, '', $button, false);
             if (!empty($desc)) {
                     ?>
                 <span class="description"><?php echo $desc; ?></a><?php
