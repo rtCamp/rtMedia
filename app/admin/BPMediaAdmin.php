@@ -64,7 +64,7 @@ if (!class_exists('BPMediaAdmin')) {
          * Render the BuddyPress Media Settings page
          */
         public function settings_page() {
-            $this->render_page('bp-media-settings', true);
+            $this->render_page('bp-media-settings', 'bp_media');
         }
 
         /**
@@ -90,7 +90,7 @@ if (!class_exists('BPMediaAdmin')) {
          *
          * @global string BP_MEDIA_TXT_DOMAIN
          */
-        public function render_page($page, $is_settings = false) {
+        public function render_page($page, $option_group = NULL) {
             ?>
 
             <div class="wrap bp-media-admin <?php echo $this->get_current_tab(); ?>">
@@ -105,15 +105,15 @@ if (!class_exists('BPMediaAdmin')) {
 
                     <div id="bp-media-settings-boxes">
                         <?php
-                        $settings_url = ( is_multisite() ) ? network_admin_url('network/edit.php?action=bp_media_options') : 'options.php';
+                        $settings_url = ( is_multisite() ) ? network_admin_url('edit.php?action=bp_media_options') : 'options.php';
                         ?>
                         <form id="bp_media_settings_form" name="bp_media_settings_form" action="<?php echo $settings_url; ?>" method="post" enctype="multipart/form-data">
                             <div class="bp-media-metabox-holder"><?php
 //            if (isset($_REQUEST['request_type'])) {
 //                bp_media_bug_report_form($_REQUEST['request_type']);
 //            } else {
-            if ($is_settings) {
-                settings_fields('bp_media');
+            if ($option_group) {
+                settings_fields($option_group);
                 do_settings_sections($page);
                 submit_button();
             } else {
@@ -193,11 +193,9 @@ if (!class_exists('BPMediaAdmin')) {
                 'name' => __('Support', BP_MEDIA_TXT_DOMAIN),
                 'class' => ($tab == 'bp-media-support') ? $active_class : $idle_class . ' last_tab'
             );
-
-            $i = '1';
+            $tabs = apply_filters('bp_media_add_sub_tabs', $tabs, $tab);
             foreach ($tabs as $tab) {
                 $tabs_html.= '<a title="' . $tab['title'] . '" href="' . $tab['href'] . '" class="' . $tab['class'] . '">' . $tab['name'] . '</a>';
-                $i++;
             }
             echo $tabs_html;
         }
@@ -241,9 +239,16 @@ if (!class_exists('BPMediaAdmin')) {
         }
 
         /* Multisite Save Options - http://wordpress.stackexchange.com/questions/64968/settings-api-in-multisite-missing-update-message#answer-72503 */
-
         public function save_multisite_options() {
-            update_site_option('bp_media_options', $_POST['bp_media_options']);
+            
+            global $bp_media_admin;
+            if (isset($_POST['refresh-count'])) {
+                $bp_media_admin->update_count();
+            }
+            do_action('bp_media_sanitize_settings', $_POST);
+            
+            bp_update_option('bp_media_options', $_POST['bp_media_options']);
+            
             // redirect to settings page in network
             wp_redirect(
                     add_query_arg(

@@ -95,12 +95,16 @@ if (!class_exists('BPMediaSupport')) {
             global $bp_media;
             $form_data = wp_parse_args($_POST['form_data']);
             if ($form_data['request_type'] == 'premium_support') {
+                $mail_type = 'Premium Support';
                 $title = __('BuddyPress Media Premium Support Request from', BP_MEDIA_TXT_DOMAIN);
             } elseif ($form_data['request_type'] == 'new_feature') {
+                $mail_type = 'New Feature Request';
                 $title = __('BuddyPress Media New Feature Request from', BP_MEDIA_TXT_DOMAIN);
             } elseif ($form_data['request_type'] == 'bug_report') {
+                $mail_type = 'Bug Report';
                 $title = __('BuddyPress Media Bug Report from', BP_MEDIA_TXT_DOMAIN);
             } else {
+                $mail_type = 'Bug Report';
                 $title = __('BuddyPress Media Contact from', BP_MEDIA_TXT_DOMAIN);
             }
             $message = '<html>
@@ -165,7 +169,7 @@ if (!class_exists('BPMediaSupport')) {
                 </html>';
             add_filter('wp_mail_content_type', create_function('', 'return "text/html";'));
             $headers = 'From: ' . $form_data['name'] . ' <' . $form_data['email'] . '>' . "\r\n";
-            if (wp_mail($bp_media->support_email, '[buddypress-media] Bug Report | Premium Support from '.str_replace( array('http://', 'https://'), '', $form_data['website']), $message, $headers)) {
+            if (wp_mail($bp_media->support_email, '[buddypress-media] ' . $mail_type . ' from ' . str_replace(array('http://', 'https://'), '', $form_data['website']), $message, $headers)) {
                 if ($form_data['request_type'] == 'new_feature') {
                     echo '<p>' . __('Thank you for your Feedback/Suggestion.', BP_MEDIA_TXT_DOMAIN) . '</p>';
                 } else {
