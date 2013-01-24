@@ -34,56 +34,7 @@ class BPMediaTemplateFunctions {
         <?php
     }
 
-    function show_upload_form_multiple() {
-        global $bp, $bp_media;
-        ?>
-        <div id="bp-media-album-prompt" title="Select Album"><select id="bp-media-selected-album"><?php
-        if (bp_is_current_component('groups')) {
-            $albums = new WP_Query(array(
-                        'post_type' => 'bp_media_album',
-                        'posts_per_page' => -1,
-                        'meta_key' => 'bp-media-key',
-                        'meta_value' => -bp_get_current_group_id(),
-                        'meta_compare' => '='
-                    ));
-        } else {
-            $albums = new WP_Query(array(
-                        'post_type' => 'bp_media_album',
-                        'posts_per_page' => -1,
-                        'author' => get_current_user_id()
-                    ));
-        }
-        if (isset($albums->posts) && is_array($albums->posts) && count($albums->posts) > 0) {
-            foreach ($albums->posts as $album) {
-                if ($album->post_title == 'Wall Posts')
-                    echo '<option value="' . $album->ID . '" selected="selected">' . $album->post_title . '</option>';
-                else
-                    echo '<option value="' . $album->ID . '">' . $album->post_title . '</option>';
-            };
-        }else {
-            $album = new BPMediaAlbum();
-            if (bp_is_current_component('groups')) {
-                $current_group = new BP_Groups_Group(bp_get_current_group_id());
-                $album->add_album('Wall Posts', $current_group->creator_id, bp_get_current_group_id());
-            } else {
-                $album->add_album('Wall Posts', bp_loggedin_user_id());
-            }
-            echo '<option value="' . $album->get_id() . '" selected="selected">' . $album->get_title() . '</option>';
-        }
-        ?></select></div>
-        <div id="bp-media-album-new" title="Create New Album"><label for="bp_media_album_name">Album Name</label><input id="bp_media_album_name" type="text" name="bp_media_album_name" /></div>
-        <div id="bp-media-upload-ui" class="hide-if-no-js drag-drop">
-            <div id="drag-drop-area">
-                <div class="drag-drop-inside">
-                    <p class="drag-drop-info">Drop files here</p>
-                    <p>or</p>
-                    <p class="drag-drop-buttons"><input id="bp-media-upload-browse-button" type="button" value="Select Files" class="button" /></p>
-                </div>
-            </div>
-        </div>
-        <div id="bp-media-uploaded-files"></div>
-        <?php
-    }
+    //------------- Function removed show_upload_form_multiple() ------------
 
     function show_pagination($type = 'top', $inner = false) {
         global $bp, $bp_media_paginated_links, $bp_media_query, $bp_media_albums_query;
@@ -251,33 +202,8 @@ class BPMediaTemplateFunctions {
         }
     }
 
-    static function show_upload_form_multiple_activity() {
-        global $bp, $bp_media_default_excerpts;
-        if ($bp->current_component != 'activity')
-            return;
-        ?>
-        <div id="bp-media-album-prompt" title="Select Album"><select id="bp-media-selected-album"><?php
-        $albums = new WP_Query(array(
-                    'post_type' => 'bp_media_album',
-                    'posts_per_page' => -1,
-                    'author' => get_current_user_id()
-                ));
-        if (isset($albums->posts) && is_array($albums->posts) && count($albums->posts) > 0) {
-            foreach ($albums->posts as $album) {
-                if ($album->post_title == 'Wall Posts')
-                    echo '<option value="' . $album->ID . '" selected="selected">' . $album->post_title . '</option>';
-                else
-                    echo '<option value="' . $album->ID . '">' . $album->post_title . '</option>';
-            };
-        }
-        ?></select></div>
-        <div id="bp-media-album-new" title="Create New Album"><label for="bp_media_album_name">Album Name</label><input id="bp_media_album_name" type="text" name="bp_media_album_name" /></div>
-        <div id="bp-media-upload-ui" class="hide-if-no-js drag-drop activity-component">
-            <p class="drag-drop-buttons"><input id="bp-media-upload-browse-button" type="button" value="Add Media" class="button" /></p>
-        </div>
-        <div id="bp-media-uploaded-files"></div>
-        <?php
-    }
+    //----------- show_upload_form_multiple_activity() -------------
+        
 
 }
 ?>
