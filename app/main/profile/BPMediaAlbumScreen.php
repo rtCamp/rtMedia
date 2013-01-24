@@ -92,6 +92,13 @@ class BPMediaAlbumScreen extends BPMediaScreen {
 		else:
 			BPMediaFunction::show_formatted_error_message( __( 'Sorry, no media items were found in this album.', BP_MEDIA_TXT_DOMAIN ), 'info' );
 		endif;
+//                if ( $bp->loggedin_user->id == $bp_media_current_album->get_owner() ) {
+                if ( bp_displayed_user_id() == bp_loggedin_user_id() ) {
+                        echo '<div class="activity-meta">';
+                        
+                            echo '<a href="' . $bp_media_current_album->get_edit_url() . '" class="button item-button bp-secondary-action bp-media-edit" title="' . __('Edit Media', BP_MEDIA_TXT_DOMAIN) . '">' . __('Edit Album', BP_MEDIA_TXT_DOMAIN) . '</a>';
+                        echo '</div>';
+                }
 		$this->hook_after();
 	}
 
