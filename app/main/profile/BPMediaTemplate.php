@@ -186,7 +186,13 @@ class BPMediaTemplate {
 		if ( $bp->current_component != 'activity' )
 			return;
 		?>
-		<div id="bp-media-album-prompt" title="Select Album"><select id="bp-media-selected-album"><?php
+		<div id="bp-media-album-prompt" title="Select Album">
+                    <div class="bp-media-album-title">
+                        <span><?php _e( 'Select Album', BP_MEDIA_TXT_DOMAIN ); ?></span>
+                        <span id="bp-media-close"><?php _e( 'x', BP_MEDIA_TXT_DOMAIN ); ?></span>
+                    </div>
+                    <div class="bp-media-album-content">
+                        <select id="bp-media-selected-album"><?php
 		$albums = new WP_Query( array(
 					'post_type' => 'bp_media_album',
 					'posts_per_page' => -1,
@@ -200,8 +206,27 @@ class BPMediaTemplate {
 					echo '<option value="' . $album->ID . '">' . $album->post_title . '</option>';
 			};
 		}
-		?></select></div>
-		<div id="bp-media-album-new" title="Create New Album"><label for="bp_media_album_name">Album Name</label><input id="bp_media_album_name" type="text" name="bp_media_album_name" /></div>
+		?></select>
+                    </div>
+                    <div class="select-btn-div">
+                        <input id="selected-btn" type="button" class="btn" value="Select" />
+                        <input id="create-btn" type="button" class="btn" value="Create Album" />
+                        <div style="clear: both;"></div>
+                    </div>
+                </div>
+		<div id="bp-media-album-new" title="Create New Album">
+                    <div class="bp-media-album-title">
+                        <span><?php _e( 'Create Album', BP_MEDIA_TXT_DOMAIN ); ?></span>
+                        <span id="bp-media-create-album-close"><?php _e( 'x', BP_MEDIA_TXT_DOMAIN ); ?></span>
+                    </div>
+                    <div class="bp-media-album-content">
+                        <label for="bp_media_album_name"><?php _e( 'Album Name', BP_MEDIA_TXT_DOMAIN ); ?></label>
+                        <input id="bp_media_album_name" type="text" name="bp_media_album_name" />
+                    </div>
+                    <div class="select-btn-div">
+                        <input id="create-album" type="button" class="btn" value="Create" />
+                    </div>
+                </div>
 		<div id="bp-media-upload-ui" class="hide-if-no-js drag-drop activity-component">
 			<p class="drag-drop-buttons"><input id="bp-media-upload-browse-button" type="button" value="Add Media" class="button" /></p>
 		</div>

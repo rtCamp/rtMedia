@@ -268,6 +268,13 @@ class BPMediaAlbum{
 		return $this->edit_url;
 	}
         
+        /**
+	 * Returns the delete url of the album
+	 */
+	function get_delete_url(){
+		return $this->delete_url;
+	}
+        
 	/**
 	 * Returns the group id to which the media belongs, 0 if it does not belong to any group
 	 */

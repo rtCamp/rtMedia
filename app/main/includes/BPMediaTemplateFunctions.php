@@ -202,7 +202,7 @@ class BPMediaTemplateFunctions {
         }
     }
 
-    //----------- show_upload_form_multiple_activity() -------------
+    //----------- Function removed show_upload_form_multiple_activity() -------------
         
 
 }
