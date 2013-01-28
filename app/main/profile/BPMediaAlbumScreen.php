@@ -48,7 +48,7 @@ class BPMediaAlbumScreen extends BPMediaScreen {
 
 		$this->hook_before();
 		if ( $bp_media_albums_query && $bp_media_albums_query->have_posts() ):
-			echo '<ul id="bp-media-list" class="bp-media-gallery item-list">';
+			echo '<ul id="bp-media-list" class="bp-media-gallery item-list extra-albums-list">';
 			while ( $bp_media_albums_query->have_posts() ) : $bp_media_albums_query->the_post();
 				$this->template->the_album_content();
 			endwhile;
@@ -80,10 +80,17 @@ class BPMediaAlbumScreen extends BPMediaScreen {
                 if ( ! $bp->action_variables[ 0 ] == BP_MEDIA_ALBUMS_ENTRY_SLUG )
 			return false;
 		echo '<div class="bp_media_title">' . $bp_media_current_album->get_title() . '</div>';
+//                if ( $bp->loggedin_user->id == $bp_media_current_album->get_owner() ) {
+                if ( bp_displayed_user_id() == bp_loggedin_user_id() ) {
+                        echo '<div class="activity-meta">';
+                            echo '<a href="' . $bp_media_current_album->get_edit_url() . '" class="button item-button bp-secondary-action bp-media-edit bp-media-edit-album" title="' . __('Rename Album', BP_MEDIA_TXT_DOMAIN) . '">' . __('Rename', BP_MEDIA_TXT_DOMAIN) . '</a>';
+                            echo '<a href="' . $bp_media_current_album->get_delete_url() . '" class="button item-button bp-secondary-action delete-activity-single confirm" rel="nofollow">' . __("Delete", BP_MEDIA_TXT_DOMAIN) . '</a>';
+                        echo '</div>';
+                }
 		$this->inner_query( $bp_media_current_album->get_id() );
 		$this->hook_before();
 		if ( $bp_media_current_album && $bp_media_query->have_posts() ):
-			echo '<ul id="bp-media-list" class="bp-media-gallery item-list">';
+			echo '<ul id="bp-media-list" class="bp-media-gallery item-list extra-album-img-list">';
 			while ( $bp_media_query->have_posts() ) : $bp_media_query->the_post();
 				$this->template->the_content();
 			endwhile;
@@ -92,14 +99,7 @@ class BPMediaAlbumScreen extends BPMediaScreen {
 		else:
 			BPMediaFunction::show_formatted_error_message( __( 'Sorry, no media items were found in this album.', BP_MEDIA_TXT_DOMAIN ), 'info' );
 		endif;
-//                if ( $bp->loggedin_user->id == $bp_media_current_album->get_owner() ) {
-                if ( bp_displayed_user_id() == bp_loggedin_user_id() ) {
-                        echo '<div class="activity-meta">';
-                        
-                            echo '<a href="' . $bp_media_current_album->get_edit_url() . '" class="button item-button bp-secondary-action bp-media-edit" title="' . __('Edit Media', BP_MEDIA_TXT_DOMAIN) . '">' . __('Edit Album', BP_MEDIA_TXT_DOMAIN) . '</a>';
-                        echo '</div>';
-                }
-		$this->hook_after();
+                $this->hook_after();
 	}
 
 	function set_query() {
