@@ -160,17 +160,33 @@ class BPMediaScreen {
 		$this->set_query();
 
 		$this->hook_before();
-		if ( $bp_media_query && $bp_media_query->have_posts() ):
-//                        BPMediaUploadScreen::upload_screen_content();
-			echo '<ul id="bp-media-list" class="bp-media-gallery item-list">';
+                $media_count = 0;
+                if ( $bp_media_query && $bp_media_query->have_posts() ):
+                        echo '<ul id="bp-media-list" class="bp-media-gallery item-list">';
 			while ( $bp_media_query->have_posts() ) : $bp_media_query->the_post();
 				$this->template->the_content();
-                                
+                                if ( $media_count == 3 ) {
+                                    if ( bp_displayed_user_id() == bp_loggedin_user_id() || BPMediaGroup::can_upload() ) {
+                                        echo '<li>';
+                                        BPMediaUploadScreen::upload_screen_content();
+                                        echo '</li>';
+                                    }
+                                }
+                                $media_count++;
 			endwhile;
+                        if ( $media_count < 4 ) {
+                            if ( bp_displayed_user_id() == bp_loggedin_user_id() || BPMediaGroup::can_upload() ) {
+                                echo '<li>';
+                                BPMediaUploadScreen::upload_screen_content();
+                                echo '</li>';
+                            }
+                        }
 			echo '</ul>';
 			$this->template->show_more();
 		else:
 			BPMediaFunction::show_formatted_error_message( sprintf( __( 'Sorry, no %s were found.', BP_MEDIA_TXT_DOMAIN ), $this->slug ), 'info' );
+                        if ( bp_displayed_user_id() == bp_loggedin_user_id() || BPMediaGroup::can_upload() )
+                                    echo '<li>'.BPMediaUploadScreen::upload_screen_content().'</li>';
 		endif;
 		$this->hook_after();
 	}
