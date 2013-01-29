@@ -47,7 +47,7 @@ class BPMediaAlbumScreen extends BPMediaScreen {
 		global $bp_media_albums_query;
 
 		$this->hook_before();
-                if ( bp_displayed_user_id() == bp_loggedin_user_id() || BPMediaGroup::can_upload() ) { ?>
+                if ( bp_displayed_user_id() == bp_loggedin_user_id() || BPMediaGroup::user_can_create_album(bp_get_current_group_id()) ) { ?>
                     <div class="alignright bp_media_create_album">
                         <input type="text" id="bp_media_album_name" class="" Placeholder="Create New Album" /><br/>
                         <input type="button" class="bp_media_button" value="Create Album" />
