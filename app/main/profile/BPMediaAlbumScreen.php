@@ -90,33 +90,22 @@ class BPMediaAlbumScreen extends BPMediaScreen {
                 
 		$this->inner_query( $bp_media_current_album->get_id() );
 		$this->hook_before();
-                $media_count = 0;
 		if ( $bp_media_current_album && $bp_media_query->have_posts() ):
 			echo '<ul id="bp-media-list" class="bp-media-gallery item-list">';
-			while ( $bp_media_query->have_posts() ) : $bp_media_query->the_post();
-				$this->template->the_content();
-                                if ( $media_count == 3 ) {
-                                    if ( bp_displayed_user_id() == bp_loggedin_user_id() || BPMediaGroup::can_upload() ) {
-                                        echo '<li>';
-                                        BPMediaUploadScreen::upload_screen_content();
-                                        echo '</li>';
-                                    }
-                                }
-                                $media_count++;
-			endwhile;
-                        if ( $media_count < 4 ) {
-                            if ( bp_displayed_user_id() == bp_loggedin_user_id() || BPMediaGroup::can_upload() ) {
+			if ( bp_is_my_profile() || BPMediaGroup::can_upload() ) {
                                 echo '<li>';
                                 BPMediaUploadScreen::upload_screen_content();
                                 echo '</li>';
-                            }
                         }
+                        while ( $bp_media_query->have_posts() ) : $bp_media_query->the_post();
+				$this->template->the_content();
+                        endwhile;
 			echo '</ul>';
 			$this->template->show_more();
 		else:
 			BPMediaFunction::show_formatted_error_message( __( 'Sorry, no media items were found in this album.', BP_MEDIA_TXT_DOMAIN ), 'info' );
-                        if ( bp_displayed_user_id() == bp_loggedin_user_id() || BPMediaGroup::can_upload() )
-                                    BPMediaUploadScreen::upload_screen_content();
+                        if ( bp_is_my_profile() || BPMediaGroup::can_upload() )
+                                BPMediaUploadScreen::upload_screen_content();
 		endif;
                 $this->hook_after();
 	}
