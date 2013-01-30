@@ -212,7 +212,7 @@ class BuddyPressMedia {
 
     function settings_link($links, $file) {
         /* create link */
-        $plugin_name = plugin_basename(__FILE__);
+        $plugin_name = plugin_basename(BP_MEDIA_PATH.'index.php');
         $admin_link = $this->get_admin_url(add_query_arg(array('page' => 'bp-media-settings'), 'admin.php'));
         if ($file == $plugin_name) {
             array_unshift(
