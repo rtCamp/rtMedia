@@ -123,19 +123,16 @@ class BPMediaComponent extends BP_Component {
 				'slug' => BP_MEDIA_SLUG,
 				'position' => 80,
 				'screen_function' => array( $bp_media_image, 'screen' ),
-				'default_subnav_slug' => BP_MEDIA_IMAGES_SLUG
+				'default_subnav_slug' => BP_MEDIA_IMAGES_SLUG   
 			);
 //		}
-		$sub_nav[ ] = array(
+		$sub_nav[ ] = array();
+                parent::setup_nav( $main_nav, $sub_nav );
+                bp_core_new_nav_item( array(
 			'name' => BP_MEDIA_IMAGES_LABEL,
 			'slug' => BP_MEDIA_IMAGES_SLUG,
-			'parent_url' => trailingslashit( bp_loggedin_user_domain() . BP_MEDIA_SLUG ),
-			'parent_slug' => BP_MEDIA_SLUG,
 			'screen_function' => array( $bp_media_image, 'screen' ),
-			'position' => 10,
-//			'user_has_access' => bp_is_my_profile()
-		);
-		parent::setup_nav( $main_nav, $sub_nav );
+		) );
 
 
 		bp_core_new_subnav_item( array(
