@@ -80,6 +80,11 @@ Please visit [BuddyPress Media's Features page](http://rtcamp.com/buddypress-med
 ## Changelog ##
 
 Please visit [BuddyPress Media's Roadmap page](http://rtcamp.com/buddypress-media/roadmap/ "Visit BuddyPress Media's Features page") to get some details about future releases.
+#### 2.4.3 ####
+* Fixed latest activity formatting.
+* Added auto-update for add-ons.
+* Made minor changes for add-on compatibility.
+
 #### 2.4.2 ####
 * Fixed bug where settings weren't getting saved on multisites.
 * Workaround for bug where the last activity wouldn't show up.
