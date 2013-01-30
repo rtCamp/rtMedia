@@ -74,7 +74,34 @@ jQuery(document).ready(function(){
 	var bp_media_uploader=new plupload.Uploader(bp_media_uploader_params);
 	var bp_media_album_selected = false;
 	bp_media_uploader.init();
-	bp_media_uploader.bind('FilesAdded', function(up, files) {
+        jQuery(document.body).bind("drop", function(e){
+            var url = window.location.href.substr(window.location.href.lastIndexOf('/') -6, 6);
+            if ( url == 'photos' ) {
+                            switch (extension) {
+                                case 'jpg': case 'png': case 'gif': case 'jpeg': case 'bmp':flag = 1;
+                                            jQuery('#bp-media-uploaded-files').append('<div id="bp-media-progress-'+file.id+'" class="bp-media-progressbar"><div class="bp-media-progress-text">' + file.name + ' (' + plupload.formatSize(file.size) + ')(<b>0%</b>)</div><div class="bp-media-progress-completed"></div></div>');
+                                            break;
+                                default:alert("Please select an Image with proper image format");
+                                        e.preventDefault();
+                                        return false;
+                                        break;
+                            }
+            }
+        });
+        bp_media_uploader.bind('PostInit', function(up, files) {
+            var url = window.location.href.substr(window.location.href.lastIndexOf('/') -6, 6);
+            alert(url);
+//            if ( url == 'photos' ) {
+//                            switch (extension) {
+//                                case 'jpg': case 'png': case 'gif': case 'jpeg': case 'bmp':flag = 1;
+//                                            jQuery('#bp-media-uploaded-files').append('<div id="bp-media-progress-'+file.id+'" class="bp-media-progressbar"><div class="bp-media-progress-text">' + file.name + ' (' + plupload.formatSize(file.size) + ')(<b>0%</b>)</div><div class="bp-media-progress-completed"></div></div>');
+//                                            break;
+//                                default:alert("Please select an Image with proper image format");
+//                                        break;
+//                            }
+//            }
+        });
+        bp_media_uploader.bind('FilesAdded', function(up, files) {
 		//bp_media_is_multiple_upload = files.length==1&&jQuery('.bp-media-progressbar').length==0?false:true;
 		bp_media_is_multiple_upload = files.length>1;
                 var url = window.location.href.substr(window.location.href.lastIndexOf('/') -6, 6);
@@ -83,7 +110,8 @@ jQuery(document).ready(function(){
                         var extension = file.name.substr( (file.name.lastIndexOf('.') +1) );
                         if ( url == 'photos' ) {
                             switch (extension) {
-                                case 'jpg': case 'png': case 'gif': case 'jpeg': case 'bmp':flag = 1;
+                                case 'jpg': case 'png': case 'gif': case 'jpeg': case 'bmp':
+                                            flag = 1;
                                             jQuery('#bp-media-uploaded-files').append('<div id="bp-media-progress-'+file.id+'" class="bp-media-progressbar"><div class="bp-media-progress-text">' + file.name + ' (' + plupload.formatSize(file.size) + ')(<b>0%</b>)</div><div class="bp-media-progress-completed"></div></div>');
                                             break;
                                 default:alert("Please select an Image with proper image format");
@@ -91,15 +119,17 @@ jQuery(document).ready(function(){
                             }
                         } else if ( url == 'videos' ) {
                             switch (extension) {
-                                case 'mp4': /*case 'wmv': case 'avi': case 'mov': case 'mpg': */flag = 1;
+                                case 'mp4': case 'wmv': case 'avi': case 'mkv': case 'mpg': case 'asf': case 'flv': case 'rm':
+                                            flag = 1;
                                             jQuery('#bp-media-uploaded-files').append('<div id="bp-media-progress-'+file.id+'" class="bp-media-progressbar"><div class="bp-media-progress-text">' + file.name + ' (' + plupload.formatSize(file.size) + ')(<b>0%</b>)</div><div class="bp-media-progress-completed"></div></div>');
                                             break;
                                 default:alert("Please select an Video of proper format");
                                          break;
                             }
-                        } else if ( url == 'music/' ) {
+                        } else if ( url == '/music' ) {
                             switch (extension) {
-                                case 'mp3':flag = 1;
+                                case 'mp3': case 'ogg': case 'wav': case 'aac': case 'm4a': case 'wma':
+                                            flag = 1;
                                             jQuery('#bp-media-uploaded-files').append('<div id="bp-media-progress-'+file.id+'" class="bp-media-progressbar"><div class="bp-media-progress-text">' + file.name + ' (' + plupload.formatSize(file.size) + ')(<b>0%</b>)</div><div class="bp-media-progress-completed"></div></div>');
                                             break;
                                 default:alert("Please select an Audio of proper format");
