@@ -21,7 +21,7 @@ if (!class_exists('BPMediaAdmin')) {
             add_action('wp_ajax_bp_media_fetch_feed', array($bp_media_feed, 'fetch_feed'), 1);
             $bp_media_support = new BPMediaSupport();
             add_action('wp_ajax_bp_media_select_request', array($bp_media_support, 'get_form'), 1);
-            add_action('wp_ajax_cancel_request', create_function('', 'do_settings_sections("bp-media-support"); die();'), 1);
+            add_action('wp_ajax_bp_media_cancel_request', create_function('', 'do_settings_sections("bp-media-support"); die();'), 1);
             add_action('wp_ajax_bp_media_submit_request', array($bp_media_support, 'submit_request'), 1);
             add_action('wp_ajax_bp_media_fetch_feed', array($bp_media_feed, 'fetch_feed'), 1);
             if (is_admin()) {

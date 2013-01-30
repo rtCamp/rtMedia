@@ -4,7 +4,7 @@ class BPMediaFunction {
 
     function __construct() {
         //add_action('bp_init', array($this,'swap_filters'));
-		add_filter('bp_get_activity_content_body', array($this,'conditional_override_allowed_tags'), 1, 2);
+        add_filter('bp_get_activity_action', array($this,'conditional_override_allowed_tags'), 1, 2);
         add_action('wp_ajax_my_featured_action', array($this,'implement_featured_ajax'));
         add_action('wp_ajax_nopriv_my_featured_action', array($this,'implement_featured_ajax'));
     }
@@ -43,6 +43,7 @@ class BPMediaFunction {
         $activity_allowedtags['audio']['title'] = array();
         $activity_allowedtags['script'] = array();
         $activity_allowedtags['script']['type'] = array();
+        $activity_allowedtags['script']['src'] = array();
         $activity_allowedtags['div'] = array();
         $activity_allowedtags['div']['id'] = array();
         $activity_allowedtags['div']['class'] = array();
