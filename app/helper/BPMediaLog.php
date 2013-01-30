@@ -1,19 +1,65 @@
 <?php
 
 /**
- * Description of BPMediaLog
+ * Logs a given message with an optional context string and timestamp
  *
- * @author Joshua Abenazer <joshua.abenazer@rtcamp.com>
+ * @author Saurabh Shukla <saurabh.shukla@rtcamp.com>
  */
-if (!class_exists('BPMediaLog')) {
+if ( ! class_exists( 'BPMediaLog' ) ) {
 
-    class BPMediaLog {
+	class BPMediaLog {
 
-        public function __construct() {
-            ;
-        }
+		/**
+		 * Formats and logs the error message
+		 *
+		 * @param any $msg The message to log
+		 * @param string $context The context string, optional
+		 * @return boolean True if successful
+		 */
+		public function __construct( $msg, $context = '', $log_file = '' ) {
+			$log_msg = $this->log_msg( $msg, $context = '' );
+			if ($log_file == ''){
+				$log_file = BP_MEDIA_PATH.'log/bpmedia.log';
+			}
+			return $this->log( $log_msg );
+		}
 
-    }
+		/**
+		 * Formats the message
+		 *
+		 * @param any $msg The message to format
+		 * @param string $context The context string, optional
+		 * @return string The formatted log entry
+		 */
+		function log_msg( $msg, $context = '' ) {
+			$logmsg = gmdate( "Y-m-d H:i:s " ) . " | ";
+			if ( $context ) {
+				$logmsg .= $context . " | ";
+			}
+			if ( ! is_string( $msg ) ) {
+				$msg = var_export( $msg, false );
+			}
+			$logmsg .= $msg;
+			return $logmsg;
+		}
+
+		/**
+		 * Logs the entry to the log file
+		 *
+		 * @param string $logmsg The formatted log entry
+		 * @param string $file The log file's path
+		 * @return boolean Success
+		 */
+		public function log( $logmsg, $file ) {
+			$fp = fopen( BP_MEDIA_PATH . 'plugin.log', "a+" );
+			if ( $fp ) {
+				fwrite( $fp, "\n" . $logmsg );
+				fclose( $fp );
+			}
+			return true;
+		}
+
+	}
 
 }
 ?>
