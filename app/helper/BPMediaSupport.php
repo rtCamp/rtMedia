@@ -60,7 +60,7 @@ if (!class_exists('BPMediaSupport')) {
 
                 </ul>
             </div><!-- .submit-bug-box --><?php if ($form == 'bug_report') { ?>   
-                <h3>Additional Information</h3>
+                <h3><?php _e('Additional Information', BP_MEDIA_TXT_DOMAIN); ?></h3>
                 <div id="support-form" class="bp-media-form">  
                     <ul>
 
