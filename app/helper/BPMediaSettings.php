@@ -173,6 +173,7 @@ if (!class_exists('BPMediaSettings')) {
                 'setting' => '',
                 'option' => '',
                 'desc' => '',
+                'password' => false,
             );
             $args = wp_parse_args($args, $defaults);
             extract($args);
@@ -186,12 +187,12 @@ if (!class_exists('BPMediaSettings')) {
                 $options = bp_get_option($setting);
             } else
                 $name = $option;
-            
+
             if ((isset($options[$option]) && empty($options[$option])) || !isset($options[$option])) {
                 $options[$option] = '';
             }
                 ?>
-            <label for="<?php echo sanitize_title($option); ?>"><input value="<?php echo $options[$option]; ?>" name="<?php echo $name; ?>" id="<?php echo sanitize_title($option); ?>" type="text" /><?php
+            <label for="<?php echo sanitize_title($option); ?>"><input value="<?php echo $options[$option]; ?>" name="<?php echo $name; ?>" id="<?php echo sanitize_title($option); ?>" type="<?php echo $password ? 'password' : 'text'; ?>" /><?php
             if (!empty($desc)) {
                 echo '<br /><span class="description">' . $desc . '</span>';
             }
@@ -237,7 +238,7 @@ if (!class_exists('BPMediaSettings')) {
             foreach ($values as $value => $text) {
                     ?>
                     <option<?php selected($options[$option], $value); ?> value="<?php echo $value; ?>"><?php echo $text; ?></option><?php }
-            ?>
+                ?>
             </select><?php
         }
 
