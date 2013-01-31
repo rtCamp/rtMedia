@@ -23,7 +23,6 @@ jQuery(document).ready(function(){
                             switch (extension) {
                                 case 'jpg': case 'png': case 'gif': case 'jpeg':
                                             flag = 1;
-                                            jQuery('#bp-media-uploaded-files').append('<div id="bp-media-progress-'+file.id+'" class="bp-media-progressbar"><div class="bp-media-progress-text">' + file.name + ' (' + plupload.formatSize(file.size) + ')(<b>0%</b>)</div><div class="bp-media-progress-completed"></div></div>');
                                             break;
                                 default:alert("Please select an Image with proper image format");
                                          break;
@@ -32,7 +31,6 @@ jQuery(document).ready(function(){
                             switch (extension) {
                                 case 'mp4': /* case 'wmv': case 'avi': case 'mkv': case 'mpg': case 'asf': case 'flv': case 'rm': */
                                             flag = 1;
-                                            jQuery('#bp-media-uploaded-files').append('<div id="bp-media-progress-'+file.id+'" class="bp-media-progressbar"><div class="bp-media-progress-text">' + file.name + ' (' + plupload.formatSize(file.size) + ')(<b>0%</b>)</div><div class="bp-media-progress-completed"></div></div>');
                                             break;
                                 default:alert("Please select an Video of proper format");
                                          break;
@@ -41,7 +39,6 @@ jQuery(document).ready(function(){
                             switch (extension) {
                                 case 'mp3': /* case 'ogg': case 'wav': case 'aac': case 'm4a': case 'wma': */
                                             flag = 1;
-                                            jQuery('#bp-media-uploaded-files').append('<div id="bp-media-progress-'+file.id+'" class="bp-media-progressbar"><div class="bp-media-progress-text">' + file.name + ' (' + plupload.formatSize(file.size) + ')(<b>0%</b>)</div><div class="bp-media-progress-completed"></div></div>');
                                             break;
                                 default:alert("Please select an Audio of proper format");
                                          break;
@@ -50,15 +47,15 @@ jQuery(document).ready(function(){
                             switch (extension) {
                                 case 'mp3': case 'mp4': case 'jpg': case 'png': case 'gif': case 'jpeg':
                                     flag = 1;
-                                    jQuery('#bp-media-uploaded-files').append('<div id="bp-media-progress-'+file.id+'" class="bp-media-progressbar"><div class="bp-media-progress-text">' + file.name + ' (' + plupload.formatSize(file.size) + ')(<b>0%</b>)</div><div class="bp-media-progress-completed"></div></div>');
                                     break;
-                                default: alert('Please Select Media file with "mp3, mp4, jpg, png, gif, jpeg" format');
+                                default: alert('Please Select Media file of "mp3, mp4, jpg, png, gif or jpeg" format');
                                         break;
                             }
                         }
 		});
                 if ( flag == 1 ) {
                     bp_media_album_selected = jQuery('#bp-media-selected-album').val();
+                    jQuery('#bp-media-uploaded-files').append('<div id="bp-media-progress-'+file.id+'" class="bp-media-progressbar"><div class="bp-media-progress-text">' + file.name + ' (' + plupload.formatSize(file.size) + ')(<b>0%</b>)</div><div class="bp-media-progress-completed"></div></div>');
                     bp_media_uploader.start();
                 }
                 up.refresh(); // Reposition Flash/Silverlight
