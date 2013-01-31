@@ -5,62 +5,76 @@
 
 jQuery(document).ready(function(){
 
-        var bp_media_is_multiple_upload = false;
-	if(jQuery('#'+bp_media_uploader_params.container).length==0)
+        var selected = jQuery('#bp-media-album-prompt select').val();
+        if(jQuery('#'+bp_media_uploader_params.container).length==0)
 		return false;
+	jQuery('#bp-media-album-prompt select').change(function() {
+
+            if ( jQuery(this).val() == 'create_new' ) {
+                jQuery('#bp_media_album_new').css({'width':jQuery('#bp-media-album-prompt select').width()+20});
+                jQuery('#bp-media-album-prompt select').hide();
+                jQuery('#bp-media-album-prompt span').hide();
+                jQuery('#bp-media-album-prompt div.hide').show();
+            } else
+                    selected = jQuery(this).val();
+        });
+        var new_album_flag = 0;
+        jQuery('#btn-create-new').click(function(){
+            if ( new_album_flag == 1 ) {
+                return false;
+            }
+            var new_album_name = jQuery('#bp_media_album_new').val();
+            if(new_album_name.length==0){
+                    alert('You have not filled the album name');
+                    return false;
+            } else {
+                new_album_flag = 1;
+                jQuery(this).val('Wait');
+                var data = {
+                        action: 'bp_media_add_album',
+                        bp_media_album_name : new_album_name,
+                        bp_media_group_id : bp_media_uploader_params.multipart_params.bp_media_group_id
+                };
+                jQuery.post(bp_media_vars.ajaxurl,data,function(response){
+                        var album = parseInt(response);
+                        if(album == 0){
+                                alert('Sorry you cannot create albums in this group');
+                        }
+                        else {
+                                jQuery('#bp-media-album-prompt select option').removeAttr('selected');
+                                jQuery('#bp-media-selected-album').prepend('<option value='+album+' selected="selected">'+new_album_name+'</option>');
+                                jQuery('#bp-media-album-prompt div.hide').hide();
+                                jQuery('#bp-media-album-prompt select').show();
+                                jQuery('#bp-media-album-prompt span').show();
+                        }
+                });
+            }
+        });
+        jQuery('#btn-create-cancel').click(function(){
+            jQuery('#bp-media-album-prompt div.hide').hide();
+            jQuery('#bp-media-album-prompt select option').removeAttr('selected');
+            jQuery('#bp-media-album-prompt select option[value=' + selected + ']').attr('selected', 'selected');
+            jQuery('#bp-media-album-prompt select').show();
+            jQuery('#bp-media-album-prompt span').show();
+        });
+        var bp_media_is_multiple_upload = false;
 	var bp_media_uploader=new plupload.Uploader(bp_media_uploader_params);
 	var bp_media_album_selected = false;
 	bp_media_uploader.init();
 
         bp_media_uploader.bind('FilesAdded', function(up, files) {
+                if ( jQuery('#bp-media-selected-album').val() == 'create_new' ) {
+                    alert("Please Select an Album !!");
+                    return false;
+                }
 		//bp_media_is_multiple_upload = files.length==1&&jQuery('.bp-media-progressbar').length==0?false:true;
 		bp_media_is_multiple_upload = files.length>1;
-                var url = window.location.href.substr(window.location.href.lastIndexOf('/') -6, 6);
-                var flag = 0;
                 jQuery.each(files, function(i, file) {
                         var extension = file.name.substr( (file.name.lastIndexOf('.') +1) );
-                        if ( url == 'photos' || url == '/media' ) {
-                            switch (extension) {
-                                case 'jpg': case 'png': case 'gif': case 'jpeg':
-                                            flag = 1;
-                                            jQuery('#bp-media-uploaded-files').append('<div id="bp-media-progress-'+file.id+'" class="bp-media-progressbar"><div class="bp-media-progress-text">' + file.name + ' (' + plupload.formatSize(file.size) + ')(<b>0%</b>)</div><div class="bp-media-progress-completed"></div></div>');
-                                            break;
-                                default:alert("Please select an Image with proper image format");
-                                         break;
-                            }
-                        } else if ( url == 'videos' ) {
-                            switch (extension) {
-                                case 'mp4': /* case 'wmv': case 'avi': case 'mkv': case 'mpg': case 'asf': case 'flv': case 'rm': */
-                                            flag = 1;
-                                            jQuery('#bp-media-uploaded-files').append('<div id="bp-media-progress-'+file.id+'" class="bp-media-progressbar"><div class="bp-media-progress-text">' + file.name + ' (' + plupload.formatSize(file.size) + ')(<b>0%</b>)</div><div class="bp-media-progress-completed"></div></div>');
-                                            break;
-                                default:alert("Please select an Video of proper format");
-                                         break;
-                            }
-                        } else if ( url == '/music' ) {
-                            switch (extension) {
-                                case 'mp3': /* case 'ogg': case 'wav': case 'aac': case 'm4a': case 'wma': */
-                                            flag = 1;
-                                            jQuery('#bp-media-uploaded-files').append('<div id="bp-media-progress-'+file.id+'" class="bp-media-progressbar"><div class="bp-media-progress-text">' + file.name + ' (' + plupload.formatSize(file.size) + ')(<b>0%</b>)</div><div class="bp-media-progress-completed"></div></div>');
-                                            break;
-                                default:alert("Please select an Audio of proper format");
-                                         break;
-                            }
-                        } else {
-                            switch (extension) {
-                                case 'mp3': case 'mp4': case 'jpg': case 'png': case 'gif': case 'jpeg':
-                                    flag = 1;
-                                    jQuery('#bp-media-uploaded-files').append('<div id="bp-media-progress-'+file.id+'" class="bp-media-progressbar"><div class="bp-media-progress-text">' + file.name + ' (' + plupload.formatSize(file.size) + ')(<b>0%</b>)</div><div class="bp-media-progress-completed"></div></div>');
-                                    break;
-                                default: alert('Please Select Media file of "mp3, mp4, jpg, png, gif or jpeg" format');
-                                        break;
-                            }
-                        }
+                        jQuery('#bp-media-uploaded-files').append('<div id="bp-media-progress-'+file.id+'" class="bp-media-progressbar"><div class="bp-media-progress-text">' + file.name + ' (' + plupload.formatSize(file.size) + ')(<b>0%</b>)</div><div class="bp-media-progress-completed"></div></div>');
 		});
-                if ( flag == 1 ) {
-                    bp_media_album_selected = jQuery('#bp-media-selected-album').val();
-                    bp_media_uploader.start();
-                }
+                bp_media_album_selected = jQuery('#bp-media-selected-album').val();
+                bp_media_uploader.start();
                 up.refresh(); // Reposition Flash/Silverlight
 	});
 	bp_media_uploader.bind('UploadProgress', function(up, file) {
