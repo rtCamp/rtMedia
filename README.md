@@ -7,7 +7,6 @@
 * **License:** [GPL v2 or later] ( http://www.gnu.org/licenses/gpl-2.0.html)
 
 * **Donate Link:** http://rtcamp.com/donate
-Text domain: buddypress-media
 
 Adds Photos, Music, Videos & Albums to your BuddyPress. Supports mobile devices (iPhone/iPad, etc) and automatic audio/video conversion.
 
@@ -18,6 +17,10 @@ BuddyPress Media adds Photos, Music, Videos & Albums to your BuddyPress. Support
 #### Important ####
 
 BuddyPress Media now includes [full translation support](https://rtcamp.com/tutorials/buddypress-media-translation/). Head over to the [translation project](http://rtcamp.com/translate/projects/buddypress-media/) to contribute your translations. If you don't see the language of your choice, let us know in the support forum, we'll add it.
+
+#### iOS6 Uploads ####
+
+There's a bug in iOS 6, due to which multiple image uploads won't work. It provides all images as image.jpeg which the WordPress uploader (plupload) doesn't like. It assumes that it's got duplicate images and will upload just one.
 
 #### Features ####
 
@@ -77,11 +80,21 @@ Please visit [BuddyPress Media's Features page](http://rtcamp.com/buddypress-med
 ## Changelog ##
 
 Please visit [BuddyPress Media's Roadmap page](http://rtcamp.com/buddypress-media/roadmap/ "Visit BuddyPress Media's Features page") to get some details about future releases.
+#### 2.4.3 ####
+* Fixed latest activity formatting.
+* Added auto-update for add-ons.
+* Made minor changes for add-on compatibility.
+
+#### 2.4.2 ####
+* Fixed bug where settings weren't getting saved on multisites.
+* Workaround for bug where the last activity wouldn't show up.
+* Fixed bug with iOS uploads.
+* Some minor code changes
 
 #### 2.4.1 ####
 * New Widget added with more options!
 * Fixed 'Show More' action on Group Album thanks to [bowoolley](http://profiles.wordpress.org/bowoolley/)
-* Fixed conflicts with 'BuddyPress Activity Plus', thanks to [number_6] (http://profiles.wordpress.org/number_6/) and param-veer(https://github.com/param-veer)
+* Fixed conflicts with 'BuddyPress Activity Plus', thanks to [number_6](http://profiles.wordpress.org/number_6/) and [param-veer](https://github.com/param-veer)
 * Some more housekeeping, code cleanup and documentation.
 
 #### 2.4 ####

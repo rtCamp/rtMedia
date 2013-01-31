@@ -82,7 +82,7 @@ class BPMediaGroupAction {
                 'meta_compare' => '='
             );
             $bp_media_albums_query = new WP_Query($args);
-            
+
         }
     }
 
