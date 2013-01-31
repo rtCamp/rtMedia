@@ -129,10 +129,10 @@ class BPMediaAlbum{
 		$author_id = $author_id?$author_id:get_current_user_id();
 		$post_vars = array(
 				'post_title'	=>	$title,
-				'post_name'		=>	$title,
-				'post_status'=>	'publish',
+				'post_name'	=>	$title,
+				'post_status'   =>	'publish',
 				'post_type'	=>	'bp_media_album',
-				'post_author'=> $author_id
+				'post_author'   =>      $author_id
 			);
 		BPMediaActions::init_count($author_id);
 		global $bp_media_count;
@@ -261,6 +261,20 @@ class BPMediaAlbum{
 		return $this->owner;
 	}
 
+	/**
+	 * Returns the edit url of the album
+	 */
+	function get_edit_url(){
+		return $this->edit_url;
+	}
+        
+        /**
+	 * Returns the delete url of the album
+	 */
+	function get_delete_url(){
+		return $this->delete_url;
+	}
+        
 	/**
 	 * Returns the group id to which the media belongs, 0 if it does not belong to any group
 	 */

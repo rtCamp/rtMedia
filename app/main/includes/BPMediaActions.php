@@ -317,6 +317,15 @@ class BPMediaActions {
     }
 
     function upload_enqueue() {
+//        if ( ( strpos($_SERVER['REQUEST_URI'], '/photos/') !== FALSE ) || ( strpos($_SERVER['REQUEST_URI'], '/media/') !== FALSE ) ) {
+//            $allowed_extension = "jpg,png,jpeg,gif";
+//        } else if ( ( strpos($_SERVER['REQUEST_URI'], '/videos/') !== FALSE ) ) {
+//            $allowed_extension = "mp4";
+//        } else if ( ( strpos($_SERVER['REQUEST_URI'], '/music/') !== FALSE ) ) {
+//            $allowed_extension = "mp3";
+//        } else {
+//            $allowed_extension = "mp4,jpg,png,jpeg,gif,mp3";
+//        }
         $params = array(
             'url' => BP_MEDIA_URL . 'app/main/includes/bp-media-upload-handler.php',
             'runtimes' => 'gears,html5,flash,silverlight,browserplus',

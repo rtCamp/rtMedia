@@ -59,8 +59,12 @@ class BPMediaHostWordpress {
          * But for use in the class, we use group_id as positive integer even though
          * we use it as negative value in the bp-media-key meta key
          */
+
         $this->group_id = $meta_key < 0 ? -$meta_key : 0;
-        preg_match_all('/audio|video|image/i', $media->post_mime_type, $result);
+        if ( !'bp_media_album' == $media->post_type || !empty($media->post_mime_type) )
+            preg_match_all('/audio|video|image/i', $media->post_mime_type, $result);
+        else
+            $result[0][0] = 'album';
         if (isset($result[0][0]))
             $this->type = $result[0][0];
         else
@@ -696,6 +700,12 @@ class BPMediaHostWordpress {
                 $this->delete_url = trailingslashit($pre_url . BP_MEDIA_IMAGES_SLUG . '/' . BP_MEDIA_DELETE_SLUG . '/' . $this->id);
                 $image_array = image_downsize($this->id, 'bp_media_single_image');
                 $this->thumbnail_id = $this->id;
+                break;
+            case 'album' :
+                $this->url = trailingslashit($pre_url . BP_MEDIA_ALBUMS_SLUG . '/' . $this->id);
+                $this->edit_url = trailingslashit($pre_url . BP_MEDIA_ALBUMS_SLUG . '/' . BP_MEDIA_ALBUMS_EDIT_SLUG . '/' . $this->id);
+                $this->delete_url = trailingslashit($pre_url . BP_MEDIA_ALBUMS_SLUG . '/' . BP_MEDIA_DELETE_SLUG . '/' . $this->id);
+//                $this->thumbnail_id = get_post_meta($this->id, 'bp_media_thumbnail', true);
                 break;
             default :
                 return false;
