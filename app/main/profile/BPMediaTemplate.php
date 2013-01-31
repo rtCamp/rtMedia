@@ -18,38 +18,40 @@ class BPMediaTemplate {
                             <span><?php _e( 'Select Album', BP_MEDIA_TXT_DOMAIN ); ?></span>
                         <div class="bp-media-album-content">
                             <select id="bp-media-selected-album"><?php
-                    if ( bp_is_current_component( 'groups' ) ) {
-                            $albums = new WP_Query( array(
-                                                    'post_type' => 'bp_media_album',
-                                                    'posts_per_page' => -1,
-                                                    'meta_key' => 'bp-media-key',
-                                                    'meta_value' => -bp_get_current_group_id(),
-                                                    'meta_compare' => '='
-                                                            ) );
-                    } else {
-                            $albums = new WP_Query( array(
-                                                    'post_type' => 'bp_media_album',
-                                                    'posts_per_page' => -1,
-                                                    'author' => get_current_user_id()
-                                                            ) );
-                    }
-                    if ( isset( $albums->posts ) && is_array( $albums->posts ) && count( $albums->posts ) > 0 ) {
-                            foreach ( $albums->posts as $album ) {
-                                    if ( $album->post_title == 'Wall Posts' )
-                                            echo '<option value="' . $album->ID . '" selected="selected">' . $album->post_title . '</option>';
-                                    else
-                                            echo '<option value="' . $album->ID . '">' . $album->post_title . '</option>';
-                            };
-                    }else {
-                            $album = new BPMediaAlbum();
-                            if ( bp_is_current_component( 'groups' ) ) {
-                                    $current_group = new BP_Groups_Group( bp_get_current_group_id() );
-                                    $album->add_album( 'Wall Posts', $current_group->creator_id, bp_get_current_group_id() );
-                            } else {
-                                    $album->add_album( 'Wall Posts', bp_loggedin_user_id() );
-                            }
-                            echo '<option value="' . $album->get_id() . '" selected="selected">' . $album->get_title() . '</option>';
-                    } ?>
+                                if ( bp_is_current_component( 'groups' ) ) {
+                                        $albums = new WP_Query( array(
+                                                                'post_type' => 'bp_media_album',
+                                                                'posts_per_page' => -1,
+                                                                'meta_key' => 'bp-media-key',
+                                                                'meta_value' => -bp_get_current_group_id(),
+                                                                'meta_compare' => '='
+                                                                        ) );
+                                } else {
+                                        $albums = new WP_Query( array(
+                                                                'post_type' => 'bp_media_album',
+                                                                'posts_per_page' => -1,
+                                                                'author' => get_current_user_id()
+                                                                        ) );
+                                }
+                                if ( isset( $albums->posts ) && is_array( $albums->posts ) && count( $albums->posts ) > 0 ) {
+                                        foreach ( $albums->posts as $album ) {
+                                                if ( $album->post_title == 'Wall Posts' )
+                                                        echo '<option value="' . $album->ID . '" selected="selected">' . $album->post_title . '</option>';
+                                                else
+                                                        echo '<option value="' . $album->ID . '">' . $album->post_title . '</option>';
+                                        };
+                                }else {
+                                        $album = new BPMediaAlbum();
+                                        if ( bp_is_current_component( 'groups' ) ) {
+                                                $current_group = new BP_Groups_Group( bp_get_current_group_id() );
+                                                $album->add_album( 'Wall Posts', $current_group->creator_id, bp_get_current_group_id() );
+                                        } else {
+                                                $album->add_album( 'Wall Posts', bp_loggedin_user_id() );
+                                        }
+                                        echo '<option value="' . $album->get_id() . '" selected="selected">' . $album->get_title() . '</option>';
+                                }
+//                                echo '<option id="create_new" >Create New Album</option>';
+                                ?>
                             </select>
                         </div>
                     </div><?php
