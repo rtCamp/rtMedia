@@ -175,7 +175,8 @@ class BPMediaScreen {
 		else:
 			BPMediaFunction::show_formatted_error_message( sprintf( __( 'Sorry, no %s were found.', BP_MEDIA_TXT_DOMAIN ), $this->slug ), 'info' );
                         if ( bp_is_my_profile() || BPMediaGroup::can_upload() ) {
-                                echo BPMediaUploadScreen::upload_screen_content();
+                                echo '<div class="bp-media-area-allocate"></div>';
+                                BPMediaUploadScreen::upload_screen_content();
                         }
 		endif;
 		$this->hook_after();

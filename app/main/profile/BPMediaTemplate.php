@@ -50,9 +50,14 @@ class BPMediaTemplate {
                                         }
                                         echo '<option value="' . $album->get_id() . '" selected="selected">' . $album->get_title() . '</option>';
                                 }
-//                                echo '<option id="create_new" >Create New Album</option>';
+                                echo '<option id="create-new" value="create_new" >+ Create New Album</option>';
                                 ?>
                             </select>
+                        </div>
+                        <div class="hide">
+                            <input type="text" id="bp_media_album_new" value="" />
+                            <input type="button" class="button" id="btn-create-new" value="Create"/>
+                            <input type="button" class="button" id="btn-create-cancel" value="Cancel"/>
                         </div>
                     </div><?php
                 } else { ?>
