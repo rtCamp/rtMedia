@@ -123,7 +123,7 @@ class BPMediaScreen {
 
 		global $bp;
 
-		remove_filter( 'bp_activity_get_user_join_filter', 'activity_query_filter', 10 );
+		remove_filter( 'bp_activity_get_user_join_filter', 'BPMediaFilters::activity_query_filter', 10 );
 		if ( isset( $bp->action_variables[ 0 ] ) ) {
 			switch ( $bp->action_variables[ 0 ] ) {
 				case constant( $editslug ) :
