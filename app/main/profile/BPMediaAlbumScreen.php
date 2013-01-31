@@ -104,8 +104,10 @@ class BPMediaAlbumScreen extends BPMediaScreen {
 			$this->template->show_more();
 		else:
 			BPMediaFunction::show_formatted_error_message( __( 'Sorry, no media items were found in this album.', BP_MEDIA_TXT_DOMAIN ), 'info' );
-                        if ( bp_is_my_profile() || BPMediaGroup::can_upload() )
+                        if ( bp_is_my_profile() || BPMediaGroup::can_upload() ) {
+                                echo '<div class="bp-media-area-allocate"></div>';
                                 BPMediaUploadScreen::upload_screen_content();
+                        }
 		endif;
                 $this->hook_after();
 	}
