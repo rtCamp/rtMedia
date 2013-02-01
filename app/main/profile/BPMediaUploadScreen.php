@@ -15,10 +15,13 @@ class BPMediaUploadScreen extends BPMediaScreen {
 	}
 
 	function upload_screen() {
-		add_action( 'wp_enqueue_scripts', array( $this, 'upload_enqueue' ) );
-		add_action( 'bp_template_title', array( $this, 'upload_screen_title' ) );
-		add_action( 'bp_template_content', array( $this, 'upload_screen_content' ) );
-		$this->template->loader();
+		if ( bp_is_my_profile() || BPMediaGroup::can_upload() ) {
+                    add_action( 'wp_enqueue_scripts', array( $this, 'upload_enqueue' ) );
+                    add_action( 'bp_template_title', array( $this, 'upload_screen_title' ) );
+                    add_action( 'bp_template_content', array( $this, 'upload_screen_content' ) );
+                    $this->template->loader();
+                } else
+                    bp_core_redirect( trailingslashit( bp_displayed_user_domain() . constant( 'BP_MEDIA_SLUG' ) ) );
 	}
 
 	function upload_screen_title() {
@@ -28,7 +31,7 @@ class BPMediaUploadScreen extends BPMediaScreen {
 	function upload_screen_content() {
 		$this->hook_before();
 
-		$this->template->upload_form_multiple();
+                $this->template->upload_form_multiple();
 
 		$this->hook_after();
 	}
