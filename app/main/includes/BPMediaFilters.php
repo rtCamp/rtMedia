@@ -10,7 +10,7 @@ class BPMediaFilters {
     function __construct() {
         add_filter('bp_activity_get_permalink', array($this, 'activity_permalink_filter'), 10, 2);
         add_filter('bp_get_activity_delete_link', array($this, 'delete_button_handler'));
-        add_filter('bp_activity_get_user_join_filter', array($this, 'activity_query_filter'), 10);
+        add_filter('bp_activity_get_user_join_filter', 'BPMediaFilters::activity_query_filter', 10);
         // and we hook our function via wp_before_admin_bar_render
         add_action('admin_bar_menu', array($this, 'my_account_menu'), 1);
         // and we hook our function via wp_before_admin_bar_render
@@ -32,7 +32,7 @@ class BPMediaFilters {
         }
         if ($activity_obj != null && 'activity_comment' == $activity_obj->type) {
             global $activities_template;
-            remove_filter('bp_activity_get_user_join_filter', 'activity_query_filter', 10);
+            remove_filter('bp_activity_get_user_join_filter', array($this, 'activity_query_filter'), 10);
             $parent = $activity_obj->item_id;
             if ($parent) {
                 try {
@@ -87,8 +87,30 @@ class BPMediaFilters {
     //add_filter('bp_get_activity_parent_content', 'activity_parent_content_filter', 1);
 
     function delete_button_handler($link) {
+        global $activities_template;
+        $media_label = NULL;
+
         if (bp_current_component() == 'media')
             $link = str_replace('delete-activity ', 'delete-activity-single ', $link);
+
+        if ('album_updated' == $activities_template->activity->type) {
+            $media_label = BP_MEDIA_ALBUMS_LABEL_SINGULAR;
+        } elseif ($activities_template->activity->item_id) {
+            $mime_type = get_post_field('post_mime_type', $activities_template->activity->item_id);
+            $media_type = explode('/', $mime_type);
+            switch ($media_type[0]) {
+                case 'image': $media_label = BP_MEDIA_IMAGES_LABEL_SINGULAR;
+                    break;
+                case 'audio': $media_label = BP_MEDIA_AUDIO_LABEL_SINGULAR;
+                    break;
+                case 'video': $media_label = BP_MEDIA_VIDEOS_LABEL_SINGULAR;
+                    break;
+            }
+        }
+
+        if ($media_label)
+            $link = str_replace('Delete', sprintf(__('Delete %s', BP_MEDIA_TXT_DOMAIN), $media_label), $link);
+
         return $link;
     }
 
@@ -124,7 +146,7 @@ class BPMediaFilters {
     /**
      * To hide some activities of multiple uploads
      */
-    function activity_query_filter($query) {
+    static function activity_query_filter($query) {
         global $wpdb;
         $query = preg_replace('/WHERE/i', 'WHERE a.secondary_item_id!=-999 AND ', $query);
         return $query;
@@ -239,9 +261,9 @@ class BPMediaFilters {
                 'title' => __('Support', BP_MEDIA_TXT_DOMAIN),
                 'href' => bp_get_admin_url(add_query_arg(array('page' => 'bp-media-support'), 'admin.php'))
             );
-            
+
             $bp_media_admin_nav = apply_filters('bp_media_add_admin_bar_item', $bp_media_admin_nav);
-            
+
             foreach ($bp_media_admin_nav as $admin_menu)
                 $wp_admin_bar->add_menu($admin_menu);
         }
@@ -257,7 +279,7 @@ class BPMediaFilters {
         global $wp_meta_boxes;
         // Buddypress Media
         //	if ( is_user_admin() )
-        wp_add_dashboard_widget('dashboard_media_widget', __('BuddyPress Media'), array($this,'dashboard_media'));
+        wp_add_dashboard_widget('dashboard_media_widget', __('BuddyPress Media'), array($this, 'dashboard_media'));
 
         global $wp_meta_boxes;
 
