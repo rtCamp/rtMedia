@@ -123,7 +123,7 @@ class BPMediaScreen {
 
 		global $bp;
 
-		remove_filter( 'bp_activity_get_user_join_filter', 'activity_query_filter', 10 );
+		remove_filter( 'bp_activity_get_user_join_filter', 'BPMediaFilters::activity_query_filter', 10 );
 		if ( isset( $bp->action_variables[ 0 ] ) ) {
 			switch ( $bp->action_variables[ 0 ] ) {
 				case constant( $editslug ) :
@@ -160,15 +160,24 @@ class BPMediaScreen {
 		$this->set_query();
 
 		$this->hook_before();
-		if ( $bp_media_query && $bp_media_query->have_posts() ):
-			echo '<ul id="bp-media-list" class="bp-media-gallery item-list">';
-			while ( $bp_media_query->have_posts() ) : $bp_media_query->the_post();
+                if ( $bp_media_query && $bp_media_query->have_posts() ):
+                        echo '<ul id="bp-media-list" class="bp-media-gallery item-list">';
+                        if ( bp_is_my_profile() || BPMediaGroup::can_upload() ) {
+                                echo '<li>';
+                                BPMediaUploadScreen::upload_screen_content();
+                                echo '</li>';
+                        }
+                        while ( $bp_media_query->have_posts() ) : $bp_media_query->the_post();
 				$this->template->the_content();
 			endwhile;
 			echo '</ul>';
 			$this->template->show_more();
 		else:
 			BPMediaFunction::show_formatted_error_message( sprintf( __( 'Sorry, no %s were found.', BP_MEDIA_TXT_DOMAIN ), $this->slug ), 'info' );
+                        if ( bp_is_my_profile() || BPMediaGroup::can_upload() ) {
+                                echo '<div class="bp-media-area-allocate"></div>';
+                                BPMediaUploadScreen::upload_screen_content();
+                        }
 		endif;
 		$this->hook_after();
 	}
@@ -286,13 +295,15 @@ class BPMediaScreen {
 			<input id="bp-media-upload-input-title" type="text" name="bp_media_title" class="settings-input"
 				   maxlength="<?php echo max( array( $bp_media_default_excerpts[ 'single_entry_title' ], $bp_media_default_excerpts[ 'activity_entry_title' ] ) ) ?>"
 				   value="<?php echo $bp_media_current_entry->get_title(); ?>" />
-			<label for="bp-media-upload-input-description">
+			<?php if ( $bp_media_current_entry->get_type() != 'album' ) { ?>
+                            <label for="bp-media-upload-input-description">
 				<?php printf( __( '%s Description', BP_MEDIA_TXT_DOMAIN ), ucfirst( $this->media_type ) ); ?>
-			</label>
-			<input id="bp-media-upload-input-description" type="text" name="bp_media_description" class="settings-input"
-				   maxlength="<?php echo max( array( $bp_media_default_excerpts[ 'single_entry_description' ], $bp_media_default_excerpts[ 'activity_entry_description' ] ) ) ?>"
-				   value="<?php echo $bp_media_current_entry->get_content(); ?>" />
-                        <?php do_action('bp_media_add_media_fields', $this->media_type); ?>
+                            </label>
+                            <input id="bp-media-upload-input-description" type="text" name="bp_media_description" class="settings-input"
+                                    maxlength="<?php echo max( array( $bp_media_default_excerpts[ 'single_entry_description' ], $bp_media_default_excerpts[ 'activity_entry_description' ] ) ) ?>"
+                                    value="<?php echo $bp_media_current_entry->get_content(); ?>" />
+                        <?php }
+                        do_action('bp_media_add_media_fields', $this->media_type); ?>
 			<div class="submit">
 				<input type="submit" class="auto" value="<?php _e( 'Update', BP_MEDIA_TXT_DOMAIN ); ?>" />
 				<a href="<?php echo $bp_media_current_entry->get_url(); ?>" class="button" title="<?php _e( 'Back to Media File', BP_MEDIA_TXT_DOMAIN ); ?>">
@@ -398,6 +409,5 @@ class BPMediaScreen {
 			$bp_media_query = new WP_Query( $args );
 		}
 	}
-
 }
 ?>

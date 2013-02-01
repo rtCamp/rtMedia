@@ -17,8 +17,12 @@ class BPMediaGroupAction {
     static function bp_media_groups_set_query() {
         global $bp, $bp_media_query, $bp_media_posts_per_page;
         if (isset($bp->current_action) && $bp->current_action == BP_MEDIA_SLUG) {
-            if (bp_action_variable(0)) {
-                switch (bp_action_variable(0)) {
+            $current_tab = BP_MEDIA_IMAGES_SLUG;
+            if (isset($bp->action_variables[0])) {
+                $current_tab = $bp->action_variables[0];
+            }
+            if ($current_tab) {
+                switch ($current_tab) {
                     case BP_MEDIA_IMAGES_SLUG:
                         $type = 'image';
                         break;

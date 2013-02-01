@@ -68,12 +68,26 @@ class BPMediaLoader {
 						'parent_url' => trailingslashit( bp_displayed_user_domain() )
 					);
 					unset( $bp->bp_nav[ $key ] );
+                                        break;
+                                case BP_MEDIA_UPLOAD_SLUG:
+					$bp->bp_options_nav[ BP_MEDIA_SLUG ][ ] = array(
+						'name' => $nav_item[ 'name' ],
+						'link' => (isset( $bp->displayed_user->domain ) ? $bp->displayed_user->domain : (isset( $bp->loggedin_user->domain ) ? $bp->loggedin_user->domain : '')) . $nav_item[ 'slug' ] . '/',
+						'slug' => $nav_item[ 'slug' ],
+						'css_id' => $nav_item[ 'css_id' ],
+						'position' => $nav_item[ 'position' ],
+						'screen_function' => $nav_item[ 'screen_function' ],
+						'user_has_access' => bp_is_my_profile(),
+						'parent_url' => trailingslashit( bp_displayed_user_domain() )
+					);
+					unset( $bp->bp_nav[ $key ] );
 			}
 			switch ( $bp->current_component ) {
 				case BP_MEDIA_IMAGES_SLUG:
 				case BP_MEDIA_VIDEOS_SLUG:
 				case BP_MEDIA_AUDIO_SLUG:
 				case BP_MEDIA_ALBUMS_SLUG:
+				case BP_MEDIA_UPLOAD_SLUG:
 					$count = count( $bp->action_variables );
 					for ( $i = $count; $i > 0; $i --  ) {
 						$bp->action_variables[ $i ] = $bp->action_variables[ $i - 1 ];

@@ -3,7 +3,7 @@ class BPMediaUpgradeScript{
 
 	static function upgrade_from_1_0_to_2_1(){
 		global $wpdb;
-		remove_filter('bp_activity_get_user_join_filter','activity_query_filter',10);
+		remove_filter('bp_activity_get_user_join_filter','BPMediaFilters::activity_query_filter',10);
 		/* @var $wpdb wpdb */
 		$wall_posts_album_ids=array();
 		do{
