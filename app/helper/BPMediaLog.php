@@ -21,7 +21,7 @@ if ( ! class_exists( 'BPMediaLog' ) ) {
 			if ($log_file == ''){
 				$log_file = BP_MEDIA_PATH.'log/bpmedia.log';
 			}
-			return $this->log( $log_msg );
+			return $this->log( $log_msg, $log_file );
 		}
 
 		/**
