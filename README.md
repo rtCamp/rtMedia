@@ -191,4 +191,4 @@ Please visit [BuddyPress Media's Roadmap page](http://rtcamp.com/buddypress-medi
 * HTML5 Audio Tag Support (with fallback)
 * HTML5 Video Tag Support (with fallback)
 
-New Widget and Bug Fixes.
+Fixed activity formatting and added support for addon updates.
