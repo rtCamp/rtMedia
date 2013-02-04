@@ -35,8 +35,8 @@ class BPMediaTemplate {
                                 }
                                 if ( isset( $albums->posts ) && is_array( $albums->posts ) && count( $albums->posts ) > 0 ) {
                                         foreach ( $albums->posts as $album ) {
-                                                if ( $album->post_title == __( 'Wall Posts', BP_MEDIA_TXT_DOMAIN ))
-                                                        echo '<option value="' . $album->ID . '" selected="selected">' .$album->post_title. '</option>';
+                                                if ( $album->post_title == 'Wall Posts')
+                                                        echo '<option value="' . $album->ID . '" selected="selected">' .__( $album->post_title, BP_MEDIA_TXT_DOMAIN ). '</option>';
                                                 else
                                                         echo '<option value="' . $album->ID . '">' .$album->post_title. '</option>';
                                         };
