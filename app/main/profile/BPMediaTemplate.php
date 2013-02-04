@@ -12,7 +12,7 @@ class BPMediaTemplate {
 
 	function upload_form_multiple() {
                 global $bp_media_current_album;
-
+                $post_wall = __( 'Wall Posts', BP_MEDIA_TXT_DOMAIN );
                 if ( !isset ( $bp_media_current_album ) ) { ?>
                     <div id="bp-media-album-prompt" title="Select Album">
                             <span><?php _e( 'Select Album', BP_MEDIA_TXT_DOMAIN ); ?></span>
@@ -35,8 +35,8 @@ class BPMediaTemplate {
                                 }
                                 if ( isset( $albums->posts ) && is_array( $albums->posts ) && count( $albums->posts ) > 0 ) {
                                         foreach ( $albums->posts as $album ) {
-                                                if ( $album->post_title == 'Wall Posts')
-                                                        echo '<option value="' . $album->ID . '" selected="selected">' .__( $album->post_title, BP_MEDIA_TXT_DOMAIN ). '</option>';
+                                                if ( $album->post_title ==  $post_wall )
+                                                        echo '<option value="' . $album->ID . '" selected="selected">' .$post_wall. '</option>';
                                                 else
                                                         echo '<option value="' . $album->ID . '">' .$album->post_title. '</option>';
                                         };
@@ -44,9 +44,9 @@ class BPMediaTemplate {
                                         $album = new BPMediaAlbum();
                                         if ( bp_is_current_component( 'groups' ) ) {
                                                 $current_group = new BP_Groups_Group( bp_get_current_group_id() );
-                                                $album->add_album( 'Wall Posts', $current_group->creator_id, bp_get_current_group_id() );
+                                                $album->add_album(  $post_wall, $current_group->creator_id, bp_get_current_group_id() );
                                         } else {
-                                                $album->add_album( 'Wall Posts', bp_loggedin_user_id() );
+                                                $album->add_album(  $post_wall, bp_loggedin_user_id() );
                                         }
                                         echo '<option value="' . $album->get_id() . '" selected="selected">' .$album->get_title() ->post_title. '</option>';
                                 }
@@ -154,7 +154,7 @@ class BPMediaTemplate {
 				break;
 		}
 		if ( $showmore ) {
-			echo '<div class="bp-media-actions"><a href="#" class="button" id="bp-media-show-more">Show More</a></div>';
+			echo '<div class="bp-media-actions"><a href="#" class="button" id="bp-media-show-more">'. __('Show More', BP_MEDIA_TXT_DOMAIN).'</a></div>';
 		}
 	}
 
@@ -191,7 +191,7 @@ class BPMediaTemplate {
 						) );
 		if ( isset( $albums->posts ) && is_array( $albums->posts ) && count( $albums->posts ) > 0 ) {
 			foreach ( $albums->posts as $album ) {
-				if ( $album->post_title == 'Wall Posts' )
+				if ( $album->post_title ==  $post_wall )
 					echo '<option value="' . $album->ID . '" selected="selected">' . $album->post_title. '</option>';
 				else
 					echo '<option value="' . $album->ID . '">' . $album->post_title, BP_MEDIA_TXT_DOMAIN . '</option>';
