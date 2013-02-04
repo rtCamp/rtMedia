@@ -30,7 +30,7 @@ if (!class_exists('BPMediaAdmin')) {
                 if (current_user_can('manage_options'))
                     add_action('bp_admin_tabs', array($this, 'tab'));
                 if (is_multisite())
-                    add_action('network_admin_edit_bp_media_options', array($this, 'save_multisite_options'));
+                    add_action('network_admin_edit_bp_media', array($this, 'save_multisite_options'));
             }
             $this->bp_media_upgrade = new BPMediaUpgrade();
             $this->bp_media_settings = new BPMediaSettings();
@@ -105,13 +105,10 @@ if (!class_exists('BPMediaAdmin')) {
 
                     <div id="bp-media-settings-boxes">
                         <?php
-                        $settings_url = ( is_multisite() ) ? network_admin_url('edit.php?action=bp_media_options') : 'options.php';
+                        $settings_url = ( is_multisite() ) ? network_admin_url('edit.php?action=' . $option_group) : 'options.php';
                         ?>
                         <form id="bp_media_settings_form" name="bp_media_settings_form" action="<?php echo $settings_url; ?>" method="post" enctype="multipart/form-data">
                             <div class="bp-media-metabox-holder"><?php
-//            if (isset($_REQUEST['request_type'])) {
-//                bp_media_bug_report_form($_REQUEST['request_type']);
-//            } else {
             if ($option_group) {
                 settings_fields($option_group);
                 do_settings_sections($page);
@@ -241,7 +238,6 @@ if (!class_exists('BPMediaAdmin')) {
         /* Multisite Save Options - http://wordpress.stackexchange.com/questions/64968/settings-api-in-multisite-missing-update-message#answer-72503 */
 
         public function save_multisite_options() {
-
             global $bp_media_admin;
             if (isset($_POST['refresh-count'])) {
                 $bp_media_admin->update_count();
