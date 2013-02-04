@@ -35,10 +35,10 @@ class BPMediaTemplate {
                                 }
                                 if ( isset( $albums->posts ) && is_array( $albums->posts ) && count( $albums->posts ) > 0 ) {
                                         foreach ( $albums->posts as $album ) {
-                                                if ( $album->post_title == 'Wall Posts' )
-                                                        echo '<option value="' . $album->ID . '" selected="selected">' . $album->post_title . '</option>';
+                                                if ( $album->post_title == 'Wall Posts')
+                                                        echo '<option value="' . $album->ID . '" selected="selected">' .__( $album->post_title, BP_MEDIA_TXT_DOMAIN ). '</option>';
                                                 else
-                                                        echo '<option value="' . $album->ID . '">' . $album->post_title . '</option>';
+                                                        echo '<option value="' . $album->ID . '">' .$album->post_title. '</option>';
                                         };
                                 }else {
                                         $album = new BPMediaAlbum();
@@ -48,16 +48,16 @@ class BPMediaTemplate {
                                         } else {
                                                 $album->add_album( 'Wall Posts', bp_loggedin_user_id() );
                                         }
-                                        echo '<option value="' . $album->get_id() . '" selected="selected">' . $album->get_title() . '</option>';
+                                        echo '<option value="' . $album->get_id() . '" selected="selected">' .$album->get_title() ->post_title. '</option>';
                                 }
-                                echo '<option id="create-new" value="create_new" >+ Create New Album</option>';
+                                echo '<option id="create-new" value="create_new" >' . __('+ Create New Album', BP_MEDIA_TXT_DOMAIN ). '</option>';
                                 ?>
                             </select>
                         </div>
                         <div class="hide">
                             <input type="text" id="bp_media_album_new" value="" />
-                            <input type="button" class="button" id="btn-create-new" value="Create"/>
-                            <input type="button" class="button" id="btn-create-cancel" value="Cancel"/>
+                            <input type="button" class="button" id="btn-create-new" value="<?php _e( 'Create', BP_MEDIA_TXT_DOMAIN ); ?>"/>
+                            <input type="button" class="button" id="btn-create-cancel" value="<?php _e( 'Cancel', BP_MEDIA_TXT_DOMAIN ); ?>"/>
                         </div>
                     </div><?php
                 } else { ?>
@@ -192,16 +192,16 @@ class BPMediaTemplate {
 		if ( isset( $albums->posts ) && is_array( $albums->posts ) && count( $albums->posts ) > 0 ) {
 			foreach ( $albums->posts as $album ) {
 				if ( $album->post_title == 'Wall Posts' )
-					echo '<option value="' . $album->ID . '" selected="selected">' . $album->post_title . '</option>';
+					echo '<option value="' . $album->ID . '" selected="selected">' . $album->post_title. '</option>';
 				else
-					echo '<option value="' . $album->ID . '">' . $album->post_title . '</option>';
+					echo '<option value="' . $album->ID . '">' . $album->post_title, BP_MEDIA_TXT_DOMAIN . '</option>';
 			};
 		}
 		?></select>
                     </div>
                     <div class="select-btn-div">
-                        <input id="selected-btn" type="button" class="btn" value="Select" />
-                        <input id="create-btn" type="button" class="btn" value="Create Album" />
+                        <input id="selected-btn" type="button" class="btn" value="<?php _e( 'Select', BP_MEDIA_TXT_DOMAIN ); ?>" />
+                        <input id="create-btn" type="button" class="btn" value="<?php _e( 'Create Album', BP_MEDIA_TXT_DOMAIN ); ?>" />
                         <div style="clear: both;"></div>
                     </div>
                 </div>
@@ -215,11 +215,11 @@ class BPMediaTemplate {
                         <input id="bp_media_album_name" type="text" name="bp_media_album_name" />
                     </div>
                     <div class="select-btn-div">
-                        <input id="create-album" type="button" class="btn" value="Create" />
+                        <input id="create-album" type="button" class="btn" value="<?php _e( 'Create', BP_MEDIA_TXT_DOMAIN ); ?>" />
                     </div>
                 </div>
 		<div id="bp-media-upload-ui" class="hide-if-no-js drag-drop activity-component">
-			<p class="drag-drop-buttons"><input id="bp-media-upload-browse-button" type="button" value="Add Media" class="button" /></p>
+			<p class="drag-drop-buttons"><input id="bp-media-upload-browse-button" type="button" value="<?php _e( 'Add Media', BP_MEDIA_TXT_DOMAIN ); ?>" class="button" /></p>
                         <div id="bp-media-uploaded-files"></div>
 		</div>
 		<?php
