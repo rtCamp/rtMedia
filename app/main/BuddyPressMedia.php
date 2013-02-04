@@ -148,7 +148,7 @@ class BuddyPressMedia {
             define('BP_MEDIA_ALBUMS_ENTRY_SLUG', 'list');
 
         if (!defined('BP_MEDIA_ALBUMS_EDIT_SLUG'))
-            define('BP_MEDIA_ALBUMS_EDIT_SLUG', 'edit');
+            define('BP_MEDIA_ALBUMS_EDIT_SLUG', __('edit', $this->text_domain));
 
         /* Labels loaded via text domain, can be translated */
         if (!defined('BP_MEDIA_LABEL'))
