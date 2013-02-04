@@ -35,10 +35,10 @@ class BPMediaTemplate {
                                 }
                                 if ( isset( $albums->posts ) && is_array( $albums->posts ) && count( $albums->posts ) > 0 ) {
                                         foreach ( $albums->posts as $album ) {
-                                                if ( $album->post_title == 'Wall Posts' )
-                                                        echo '<option value="' . $album->ID . '" selected="selected">' .__( $album->post_title, BP_MEDIA_TXT_DOMAIN ). '</option>';
+                                                if ( $album->post_title == __( 'Wall Posts', BP_MEDIA_TXT_DOMAIN ))
+                                                        echo '<option value="' . $album->ID . '" selected="selected">' .$album->post_title. '</option>';
                                                 else
-                                                        echo '<option value="' . $album->ID . '">' .__( $album->post_title, BP_MEDIA_TXT_DOMAIN ). '</option>';
+                                                        echo '<option value="' . $album->ID . '">' .$album->post_title. '</option>';
                                         };
                                 }else {
                                         $album = new BPMediaAlbum();
@@ -48,7 +48,7 @@ class BPMediaTemplate {
                                         } else {
                                                 $album->add_album( 'Wall Posts', bp_loggedin_user_id() );
                                         }
-                                        echo '<option value="' . $album->get_id() . '" selected="selected">' . __($album->get_title() ->post_title, BP_MEDIA_TXT_DOMAIN ). '</option>';
+                                        echo '<option value="' . $album->get_id() . '" selected="selected">' .$album->get_title() ->post_title. '</option>';
                                 }
                                 echo '<option id="create-new" value="create_new" >' . __('+ Create New Album', BP_MEDIA_TXT_DOMAIN ). '</option>';
                                 ?>
@@ -192,9 +192,9 @@ class BPMediaTemplate {
 		if ( isset( $albums->posts ) && is_array( $albums->posts ) && count( $albums->posts ) > 0 ) {
 			foreach ( $albums->posts as $album ) {
 				if ( $album->post_title == 'Wall Posts' )
-					echo '<option value="' . $album->ID . '" selected="selected">' . __( $album->post_title, BP_MEDIA_TXT_DOMAIN ) . '</option>';
+					echo '<option value="' . $album->ID . '" selected="selected">' . $album->post_title. '</option>';
 				else
-					echo '<option value="' . $album->ID . '">' . __( $album->post_title, BP_MEDIA_TXT_DOMAIN ). '</option>';
+					echo '<option value="' . $album->ID . '">' . $album->post_title, BP_MEDIA_TXT_DOMAIN . '</option>';
 			};
 		}
 		?></select>
