@@ -48,6 +48,7 @@ class BuddyPressMedia {
          */
         add_action('bp_include', array($this, 'init'));
         add_action('widgets_init', array($this, 'widgets_init'), 1);
+		add_action('plugins_loaded',array($this,'load_translation'));
 		global $bp_media_counter;
 		$bp_media_counter = 0;
     }
@@ -202,13 +203,15 @@ class BuddyPressMedia {
             new BPMediaFunction();
         }
 
-        if (file_exists(BP_MEDIA_PATH . '/languages/' . get_locale() . '.mo'))
-            load_textdomain(BP_MEDIA_TXT_DOMAIN, BP_MEDIA_PATH . '/languages/' . get_locale() . '.mo');
 
         add_action('admin_notices', array($this, 'admin_notice'));
         global $bp_media_admin;
         $bp_media_admin = new BPMediaAdmin();
     }
+
+	static function load_translation(){
+		load_plugin_textdomain(BP_MEDIA_TXT_DOMAIN, false,  basename(BP_MEDIA_PATH).'/languages/');
+	}
 
     function settings_link($links, $file) {
         /* create link */
