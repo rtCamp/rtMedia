@@ -277,7 +277,7 @@ if (!class_exists('BPMediaAdmin')) {
             <li>' . sprintf('<a href="%s">' . __("Read FAQ", BP_MEDIA_TXT_DOMAIN) . '</a>', 'http://rtcamp.com/buddypress-media/faq/') . '</li>
             <li>' . sprintf('<a href="%s">' . __("Free Support Forum", BP_MEDIA_TXT_DOMAIN) . '</a>', $bp_media->support_url) . '</li>
             <li>' . sprintf('<a href="%s">' . __("Github Issue Tracker", BP_MEDIA_TXT_DOMAIN) . '</a>', 'https://github.com/rtCamp/buddypress-media/issues/') . '</li>
-            <li>' . sprintf('<a href="%s">' . __("Hire us!", BP_MEDIA_TXT_DOMAIN) . '</a> ' . __("To get professional customisation/setup service.", BP_MEDIA_TXT_DOMAIN), 'http://rtcamp.com/buddypress-media/hire/') . '</li>
+            <li>' . sprintf('<a href="%s">' . __("Hire Us!", BP_MEDIA_TXT_DOMAIN) . '</a> ' . __("To get professional customisation/setup service.", BP_MEDIA_TXT_DOMAIN), 'http://rtcamp.com/buddypress-media/hire/') . '</li>
             </ul></p>';
             new BPMediaAdminWidget('support', __('Need Help?', BP_MEDIA_TXT_DOMAIN), $support);
 
