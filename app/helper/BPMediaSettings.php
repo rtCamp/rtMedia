@@ -53,17 +53,17 @@ if (!class_exists('BPMediaSettings')) {
             add_settings_section('bpm-other', __('BuddyPress Media Other Options', BP_MEDIA_TXT_DOMAIN), '', 'bp-media-settings');
             add_settings_field('bpm-other-settings', __('Re-Count Media Entries', BP_MEDIA_TXT_DOMAIN), array($this, 'button'), 'bp-media-settings', 'bpm-other', array(
                 'option' => 'refresh-count',
-                'name' => 'Re-Count',
+                'name' => __('Re-Count', BP_MEDIA_TXT_DOMAIN),
                 'desc' => __('It will re-count all media entries of all users and correct any discrepancies.', BP_MEDIA_TXT_DOMAIN)
             ));
             $bp_media_addon = new BPMediaAddon();
             add_settings_section('bpm-addons', __('BuddyPress Media Addons for Audio/Video Conversion', BP_MEDIA_TXT_DOMAIN), array($bp_media_addon, 'get_addons'), 'bp-media-addons');
             add_settings_section('bpm-support', __('Submit a request form', BP_MEDIA_TXT_DOMAIN), '', 'bp-media-support');
             add_settings_field('bpm-request', __('Request Type', BP_MEDIA_TXT_DOMAIN), array($this, 'dropdown'), 'bp-media-support', 'bpm-support', array('option' => 'select-request', 'none' => false, 'values' => array(
-                    '' => '--Select One--',
-                    'premium_support' => 'Premium Support',
-                    'new_feature' => 'Suggest a New Feature',
-                    'bug_report' => 'Submit a Bug Report')
+                    '' => '-- ' . __('Select One', BP_MEDIA_TXT_DOMAIN) . ' --',
+                    'premium_support' => __('Premium Support', BP_MEDIA_TXT_DOMAIN),
+                    'new_feature' => __('Suggest a New Feature', BP_MEDIA_TXT_DOMAIN),
+                    'bug_report' => __('Submit a Bug Report', BP_MEDIA_TXT_DOMAIN))
             ));
             register_setting('bp_media', 'bp_media_options', array($this, 'sanitize'));
         }
