@@ -11,192 +11,211 @@
  */
 class BPMediaRecentMedia extends WP_Widget {
 
-	function __construct() {
-		$widget_ops = array( 'classname' => 'widget_recent_media', 'description' => __( "The most recent media uploaded on your site", BP_MEDIA_TXT_DOMAIN ) );
-		parent::__construct( 'recent-media', __( 'Recent Media', BP_MEDIA_TXT_DOMAIN ), $widget_ops );
-	}
+    function __construct() {
+        $widget_ops = array('classname' => 'widget_recent_media', 'description' => __("The most recent media uploaded on your site", BP_MEDIA_TXT_DOMAIN));
+        parent::__construct('recent-media', __('Recent BuddyPress Media', BP_MEDIA_TXT_DOMAIN), $widget_ops);
+        if (is_active_widget(false, false, "recent-media", true)) {
+            if (defined('WP_DEBUG') && WP_DEBUG)
+                trigger_error(sprintf(__('%1$s will be <strong>deprecated</strong> from version %2$s! Use %3$s instead.'), "Recent Media Widget", "2.5", "BuddyPress Media Widget"));
+            else
+                add_action('admin_notices', array($this, 'deprecated_notice'));
+        }
+    }
 
-	function widget( $args, $instance ) {
-		extract( $args );
+    function deprecated_notice() {
+        if (current_user_can('edit_theme_options')) {
+            echo '<div class="error"><p>';
+            echo sprintf(__('%1$s will be <strong>deprecated</strong> from version %2$s! Use %3$s instead.'), "Recent BuddyPress Media Widget", "2.5", "BuddyPressMedia Widget");
+            echo '</div>';
+        }
+    }
 
-		$title = apply_filters( 'widget_title', empty( $instance[ 'title' ] ) ? __( 'Recent Media', BP_MEDIA_TXT_DOMAIN ) : $instance[ 'title' ], $instance, $this->id_base );
+    function widget($args, $instance) {
+        extract($args);
 
-		if ( empty( $instance[ 'number' ] ) || ! $number = absint( $instance[ 'number' ] ) )
-			$number = 10;
+        $title = apply_filters('widget_title', empty($instance['title']) ? __('Recent Media', BP_MEDIA_TXT_DOMAIN) : $instance['title'], $instance, $this->id_base);
 
-		echo $before_widget;
-		echo $before_title . $title . $after_title;
-		?>
-		<div id="recent-media-tabs" class="media-tabs-container">
-			<ul>
-				<li><a href="#recent-media-tabs-all"><?php _e( 'All', BP_MEDIA_TXT_DOMAIN ); ?></a></li>
-				<li><a href="#recent-media-tabs-photos"><?php _e( 'Photos', BP_MEDIA_TXT_DOMAIN ); ?></a></li>
-				<li><a href="#recent-media-tabs-music"><?php _e( 'Music', BP_MEDIA_TXT_DOMAIN ); ?></a></li>
-				<li><a href="#recent-media-tabs-videos"><?php _e( 'Videos', BP_MEDIA_TXT_DOMAIN ); ?></a></li>
-			</ul>
-			<div id="recent-media-tabs-all" class="bp-media-tab-panel">
-				<?php
-				// All Media
-				$args = array( 'post_type' => 'attachment',
-					'post_status' => 'any',
-					'posts_per_page' => $number,
-					'meta_key' => 'bp-media-key',
-					'meta_value' => 0,
-					'meta_compare' => '>' );
+        if (empty($instance['number']) || !$number = absint($instance['number']))
+            $number = 10;
 
-				$bp_media_widget_query = new WP_Query( $args );
+        echo $before_widget;
+        echo $before_title . $title . $after_title;
+        $this->deprecated_notice();
+        ?>
+        <div id="recent-media-tabs" class="media-tabs-container media-tabs-container-tabs">
+            <ul>
+                <li><a href="#recent-media-tabs-all"><?php _e('All', BP_MEDIA_TXT_DOMAIN); ?></a></li>
+                <li><a href="#recent-media-tabs-photos"><?php _e('Photos', BP_MEDIA_TXT_DOMAIN); ?></a></li>
+                <li><a href="#recent-media-tabs-music"><?php _e('Music', BP_MEDIA_TXT_DOMAIN); ?></a></li>
+                <li><a href="#recent-media-tabs-videos"><?php _e('Videos', BP_MEDIA_TXT_DOMAIN); ?></a></li>
+            </ul>
+            <div id="recent-media-tabs-all" class="bp-media-tab-panel">
+                <?php
+                // All Media
+                $args = array('post_type' => 'attachment',
+                    'post_status' => 'any',
+                    'posts_per_page' => $number,
+                    'meta_key' => 'bp-media-key',
+                    'meta_value' => 0,
+                    'meta_compare' => '>');
 
-				if ( $bp_media_widget_query->have_posts() ) {
-					?>
+                $bp_media_widget_query = new WP_Query($args);
 
-					<ul class="widget-item-listing"><?php
-			while ( $bp_media_widget_query->have_posts() ) {
-				$bp_media_widget_query->the_post();
+                if ($bp_media_widget_query->have_posts()) {
+                    ?>
 
-				$entry = new BPMediaHostWordpress( get_the_ID() );
-						?>
+                    <ul class="widget-item-listing"><?php
+                    while ($bp_media_widget_query->have_posts()) {
+                        $bp_media_widget_query->the_post();
 
-				<?php echo $entry->get_media_gallery_content(); ?><?php }
-			?>
+                        $entry = new BPMediaHostWordpress(get_the_ID());
+                        ?>
 
-					</ul><!-- .widget-item-listing --><?php
-		}else
-			_e( 'No rescent media found', BP_MEDIA_TXT_DOMAIN );
+                <?php echo $entry->get_media_gallery_content(); ?><?php }
+            ?>
 
-		wp_reset_query();
-		?>
+                    </ul><!-- .widget-item-listing --><?php
+        }
+        else
+            _e('No recent media found', BP_MEDIA_TXT_DOMAIN);
 
-			</div><!-- #recent-media-tabs-all -->
+        wp_reset_query();
+        ?>
 
-			<div id="recent-media-tabs-photos" class="bp-media-tab-panel">
-				<?php
-				// Rescent photos
-				$args = array( 'post_type' => 'attachment',
-					'post_status' => 'any',
-					'post_mime_type' => 'image',
-					'posts_per_page' => $number,
-					'meta_key' => 'bp-media-key',
-					'meta_value' => 0,
-					'meta_compare' => '>' );
+            </div><!-- #recent-media-tabs-all -->
+
+            <div id="recent-media-tabs-photos" class="bp-media-tab-panel">
+                <?php
+                // Recent photos
+                $args = array('post_type' => 'attachment',
+                    'post_status' => 'any',
+                    'post_mime_type' => 'image',
+                    'posts_per_page' => $number,
+                    'meta_key' => 'bp-media-key',
+                    'meta_value' => 0,
+                    'meta_compare' => '>');
 
 
-				$bp_media_widget_query = new WP_Query( $args );
+                $bp_media_widget_query = new WP_Query($args);
 
-				if ( $bp_media_widget_query->have_posts() ) {
-					?>
+                if ($bp_media_widget_query->have_posts()) {
+                    ?>
 
-					<ul class="widget-item-listing"><?php
-					while ( $bp_media_widget_query->have_posts() ) {
-						$bp_media_widget_query->the_post();
+                    <ul class="widget-item-listing"><?php
+            while ($bp_media_widget_query->have_posts()) {
+                $bp_media_widget_query->the_post();
 
-						$entry = new BPMediaHostWordpress( get_the_ID() );
-						?>
+                $entry = new BPMediaHostWordpress(get_the_ID());
+                        ?>
 
-						<?php echo $entry->get_media_gallery_content(); ?><?php }
-					?>
+                        <?php echo $entry->get_media_gallery_content(); ?><?php }
+                    ?>
 
-					</ul><!-- .widget-item-listing --><?php
-		}else
-			_e( 'No rescent photo found', BP_MEDIA_TXT_DOMAIN );
+                    </ul><!-- .widget-item-listing --><?php
+        }
+        else
+            _e('No recent photo found', BP_MEDIA_TXT_DOMAIN);
 
-		wp_reset_query();
-		?>
+        wp_reset_query();
+        ?>
 
-			</div><!-- #media-tabs-photos -->
+            </div><!-- #media-tabs-photos -->
 
-			<div id="recent-media-tabs-music" class="bp-media-tab-panel">
-				<?php
-				// Rescent Audio
-				$args = array( 'post_type' => 'attachment',
-					'post_status' => 'any',
-					'post_mime_type' => 'audio',
-					'posts_per_page' => $number,
-					'meta_key' => 'bp-media-key',
-					'meta_value' => 0,
-					'meta_compare' => '>' );
+            <div id="recent-media-tabs-music" class="bp-media-tab-panel">
+                <?php
+                // Recent Audio
+                $args = array('post_type' => 'attachment',
+                    'post_status' => 'any',
+                    'post_mime_type' => 'audio',
+                    'posts_per_page' => $number,
+                    'meta_key' => 'bp-media-key',
+                    'meta_value' => 0,
+                    'meta_compare' => '>');
 
-				$bp_media_widget_query = new WP_Query( $args );
+                $bp_media_widget_query = new WP_Query($args);
 
-				if ( $bp_media_widget_query->have_posts() ) {
-					?>
+                if ($bp_media_widget_query->have_posts()) {
+                    ?>
 
-					<ul class="widget-item-listing"><?php
-			while ( $bp_media_widget_query->have_posts() ) {
-				$bp_media_widget_query->the_post();
+                    <ul class="widget-item-listing">
+                        <?php
+                        while ($bp_media_widget_query->have_posts()) {
+                            $bp_media_widget_query->the_post();
 
-				$entry = new BPMediaHostWordpress( get_the_ID() );
-				?>
+                            $entry = new BPMediaHostWordpress(get_the_ID());
+                            echo $entry->get_media_gallery_content();
+                        }
+                        ?>
 
-						<?php echo $entry->get_media_gallery_content(); ?><?php }
-					?>
+                    </ul><!-- .widget-item-listing --><?php
+        }
+        else
+            _e('No recent audio found', BP_MEDIA_TXT_DOMAIN);
 
-					</ul><!-- .widget-item-listing --><?php
-		}else
-			_e( 'No rescent audio found', BP_MEDIA_TXT_DOMAIN );
+        wp_reset_query();
+                    ?>
 
-		wp_reset_query();
-				?>
+            </div><!-- #recent-media-tabs-music -->
 
-			</div><!-- #recent-media-tabs-music -->
+            <div id="recent-media-tabs-videos" class="bp-media-tab-panel">
+                <?php
+                // Recent Video
+                $args = array('post_type' => 'attachment',
+                    'post_status' => 'any',
+                    'post_mime_type' => 'video',
+                    'posts_per_page' => $number,
+                    'meta_key' => 'bp-media-key',
+                    'meta_value' => 0,
+                    'meta_compare' => '>');
 
-			<div id="recent-media-tabs-videos" class="bp-media-tab-panel">
-				<?php
-				// Rescent Video
-				$args = array( 'post_type' => 'attachment',
-					'post_status' => 'any',
-					'post_mime_type' => 'video',
-					'posts_per_page' => $number,
-					'meta_key' => 'bp-media-key',
-					'meta_value' => 0,
-					'meta_compare' => '>' );
+                $bp_media_widget_query = new WP_Query($args);
 
-				$bp_media_widget_query = new WP_Query( $args );
+                if ($bp_media_widget_query->have_posts()) {
+                    ?>
 
-				if ( $bp_media_widget_query->have_posts() ) {
-					?>
+                    <ul class="widget-item-listing"><?php
+            while ($bp_media_widget_query->have_posts()) {
+                $bp_media_widget_query->the_post();
 
-					<ul class="widget-item-listing"><?php
-					while ( $bp_media_widget_query->have_posts() ) {
-						$bp_media_widget_query->the_post();
+                $entry = new BPMediaHostWordpress(get_the_ID());
+                ?>
 
-						$entry = new BPMediaHostWordpress( get_the_ID() );
-						?>
+                        <?php echo $entry->get_media_gallery_content(); ?><?php }
+                    ?>
 
-						<?php echo $entry->get_media_gallery_content(); ?><?php }
-					?>
+                    </ul><!-- .widget-item-listing --><?php
+        }
+        else
+            _e('No recent video found', BP_MEDIA_TXT_DOMAIN);
 
-					</ul><!-- .widget-item-listing --><?php
-		}else
-			_e( 'No rescent video found', BP_MEDIA_TXT_DOMAIN );
+        wp_reset_query();
+                ?>
 
-		wp_reset_query();
-				?>
+            </div><!-- #media-tabs-videos -->
 
-			</div><!-- #media-tabs-videos -->
+        </div>
+        <?php
+        echo $after_widget;
+    }
 
-		</div>
-		<?php
-		echo $after_widget;
-	}
+    function update($new_instance, $old_instance) {
+        $instance = $old_instance;
+        $instance['title'] = strip_tags($new_instance['title']);
+        $instance['number'] = (int) $new_instance['number'];
+        return $instance;
+    }
 
-	function update( $new_instance, $old_instance ) {
-		$instance = $old_instance;
-		$instance[ 'title' ] = strip_tags( $new_instance[ 'title' ] );
-		$instance[ 'number' ] = (int) $new_instance[ 'number' ];
-		return $instance;
-	}
+    function form($instance) {
+        $title = isset($instance['title']) ? esc_attr($instance['title']) : '';
+        $number = isset($instance['number']) ? absint($instance['number']) : 10;
+        ?>
+        <p><label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title:', BP_MEDIA_TXT_DOMAIN); ?></label>
+            <input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo $title; ?>" /></p>
 
-	function form( $instance ) {
-		$title = isset( $instance[ 'title' ] ) ? esc_attr( $instance[ 'title' ] ) : '';
-		$number = isset( $instance[ 'number' ] ) ? absint( $instance[ 'number' ] ) : 10;
-		?>
-		<p><label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:', BP_MEDIA_TXT_DOMAIN ); ?></label>
-			<input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo $title; ?>" /></p>
-
-		<p><label for="<?php echo $this->get_field_id( 'number' ); ?>"><?php _e( 'Number of posts to show:', BP_MEDIA_TXT_DOMAIN ); ?></label>
-			<input id="<?php echo $this->get_field_id( 'number' ); ?>" name="<?php echo $this->get_field_name( 'number' ); ?>" type="text" value="<?php echo $number; ?>" size="3" /></p>
-		<?php
-	}
+        <p><label for="<?php echo $this->get_field_id('number'); ?>"><?php _e('Number of posts to show:', BP_MEDIA_TXT_DOMAIN); ?></label>
+            <input id="<?php echo $this->get_field_id('number'); ?>" name="<?php echo $this->get_field_name('number'); ?>" type="text" value="<?php echo $number; ?>" size="3" /></p>
+        <?php
+    }
 
 }
 ?>

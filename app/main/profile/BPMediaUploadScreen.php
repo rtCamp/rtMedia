@@ -1,12 +1,10 @@
 <?php
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
  * Description of BPMediaUploadScreen
+ *
+ * @package BuddyPressMedia
+ * @subpackage Profile
  *
  * @author saurabh
  */
@@ -17,10 +15,13 @@ class BPMediaUploadScreen extends BPMediaScreen {
 	}
 
 	function upload_screen() {
-		add_action( 'wp_enqueue_scripts', array( $this, 'upload_enqueue' ) );
-		add_action( 'bp_template_title', array( $this, 'upload_screen_title' ) );
-		add_action( 'bp_template_content', array( $this, 'upload_screen_content' ) );
-		$this->template->loader();
+		if ( bp_is_my_profile() || BPMediaGroup::can_upload() ) {
+                    add_action( 'wp_enqueue_scripts', array( $this, 'upload_enqueue' ) );
+                    add_action( 'bp_template_title', array( $this, 'upload_screen_title' ) );
+                    add_action( 'bp_template_content', array( $this, 'upload_screen_content' ) );
+                    $this->template->loader();
+                } else
+                    bp_core_redirect( trailingslashit( bp_displayed_user_domain() . constant( 'BP_MEDIA_SLUG' ) ) );
 	}
 
 	function upload_screen_title() {
@@ -30,7 +31,7 @@ class BPMediaUploadScreen extends BPMediaScreen {
 	function upload_screen_content() {
 		$this->hook_before();
 
-		$this->template->upload_form_multiple();
+                $this->template->upload_form_multiple();
 
 		$this->hook_after();
 	}
@@ -52,11 +53,11 @@ class BPMediaUploadScreen extends BPMediaScreen {
 			'multi_selection' => true,
 			'multipart_params' => apply_filters( 'bp_media_multipart_params_filter', array( 'action' => 'wp_handle_upload' ) )
 		);
-		wp_enqueue_script( 'bp-media-uploader', BP_MEDIA_URL . 'app/assets/js/bp-media-uploader.js', array( 'plupload', 'plupload-html5', 'plupload-flash', 'plupload-silverlight', 'plupload-html4', 'plupload-handlers', 'jquery-ui-core', 'jquery-ui-widget', 'jquery-ui-position', 'jquery-ui-dialog' ) );
+		wp_enqueue_script( 'bp-media-uploader', BP_MEDIA_URL . 'app/assets/js/bp-media-uploader.js', array( 'plupload', 'plupload-html5', 'plupload-flash', 'plupload-silverlight', 'plupload-html4', 'plupload-handlers' ) );
 		wp_localize_script( 'bp-media-uploader', 'bp_media_uploader_params', $params );
 		wp_enqueue_style( 'bp-media-default', BP_MEDIA_URL . 'app/assets/css/bp-media-style.css' );
 		//wp_enqueue_style("wp-jquery-ui-dialog"); //Its not styling the Dialog box as it should so using different styling
-		wp_enqueue_style( 'jquery-style', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/themes/smoothness/jquery-ui.css' );
+		//wp_enqueue_style( 'jquery-style', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/themes/smoothness/jquery-ui.css' );
 	}
 
 	function upload_handler() {
@@ -81,9 +82,9 @@ class BPMediaUploadScreen extends BPMediaScreen {
 		if ( isset( $_POST[ 'action' ] ) && $_POST[ 'action' ] == 'wp_handle_upload' ) {
 			/** This section can help in the group activity handling */
 			if ( isset( $_POST[ 'bp_media_group_id' ] ) && intval( $_POST[ 'bp_media_group_id' ] ) ) {
-				remove_action( 'bp_media_after_add_media', 'BPMediaActions::p_media_activity_create_after_add_media', 10, 2 );
+				remove_action( 'bp_media_after_add_media', 'BPMediaActions::activity_create_after_add_media', 10, 2 );
 				add_action( 'bp_media_after_add_media', 'BPMediaGroupAction::bp_media_groups_activity_create_after_add_media', 10, 2 );
-				add_filter( 'bp_media_force_hide_activity', 'bp_media_groups_force_hide_activity' );
+				add_filter( 'bp_media_force_hide_activity', 'BPMediaGroupAction::bp_media_groups_force_hide_activity' );
 			}
 			/* @var $bp_media_entry BPMediaHostWordpress */
 			if ( isset( $_FILES ) && is_array( $_FILES ) && array_key_exists( 'bp_media_file', $_FILES ) && $_FILES[ 'bp_media_file' ][ 'name' ] != '' ) {

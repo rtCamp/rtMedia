@@ -1,9 +1,9 @@
 <?php
 class BPMediaUpgradeScript{
 
-	static function bp_media_upgrade_from_1_0_to_2_1(){
+	static function upgrade_from_1_0_to_2_1(){
 		global $wpdb;
-		remove_filter('bp_activity_get_user_join_filter','bp_media_activity_query_filter',10);
+		remove_filter('bp_activity_get_user_join_filter','BPMediaFilters::activity_query_filter',10);
 		/* @var $wpdb wpdb */
 		$wall_posts_album_ids=array();
 		do{
@@ -24,7 +24,7 @@ class BPMediaUpgradeScript{
 					else{
 						$wall_posts_id = $wpdb->get_var( "SELECT ID FROM $wpdb->posts WHERE post_title = 'Wall Posts' AND post_author = '".  $media_file->post_author."' AND post_type='bp_media_album'");
 						if($wall_posts_id==null){
-							$album = new BP_Media_Album();
+							$album = new BPMediaAlbum();
 							$album->add_album('Wall Posts',$media_file->post_author);
 							$wall_posts_id = $album->get_id();
 						}
@@ -49,13 +49,13 @@ class BPMediaUpgradeScript{
 						'content'	=>	$bp_media->get_media_activity_content(),
 						'id'	=>	$child_activity,
 						'type' => 'media_upload',
-						'action' => apply_filters( 'bp_media_added_media', sprintf( __( '%1$s added a %2$s', 'bp-media'), bp_core_get_userlink( $media_file->post_author ), '<a href="' . $bp_media->get_url() . '">' . $bp_media->get_media_activity_type() . '</a>' ) ),
+						'action' => apply_filters( 'bp_media_added_media', sprintf( __( '%1$s added a %2$s', BP_MEDIA_TXT_DOMAIN), bp_core_get_userlink( $media_file->post_author ), '<a href="' . $bp_media->get_url() . '">' . $bp_media->get_media_activity_type() . '</a>' ) ),
 						'primary_link' => $bp_media->get_url(),
 						'item_id' => $attachment_id,
 						'recorded_time' => $activity->date_recorded,
 						'user_id' => $bp_media->get_author()
 					);
-					$act_id = BPMediaFunction::bp_media_record_activity($args);
+					$act_id = BPMediaFunction::record_activity($args);
 					bp_activity_delete_meta($child_activity, 'bp_media_parent_post');
 					wp_delete_post($media_file->ID);
 				}
@@ -65,18 +65,18 @@ class BPMediaUpgradeScript{
 			}
 		}while(1);
 		update_site_option('bp_media_db_version',BP_MEDIA_DB_VERSION);
-		add_action('admin_notices','BPMediaUpgradeScript::bp_media_database_updated_notice');
+		add_action('admin_notices','BPMediaUpgradeScript::database_updated_notice');
 		wp_cache_flush();
 	}
 
-	static function bp_media_database_updated_notice(){
+	static function database_updated_notice(){
 		echo '<div class="updated rt-success"><p>
 			<b>BuddyPress Media</b> Database upgraded successfully.
 		</p></div>';
 	}
-	static function bp_media_upgrade_from_2_0_to_2_1(){
+	static function upgrade_from_2_0_to_2_1(){
 		$page = 0;
-		while($media_entries = BPMediaUpgradeScript::bp_media_return_query_posts(array(
+		while($media_entries = BPMediaUpgradeScript::return_query_posts(array(
 			'post_type' => 'attachment',
 			'post_status'	=>	'any',
 			'meta_key' => 'bp-media-key',
@@ -102,22 +102,22 @@ class BPMediaUpgradeScript{
 						'content'	=>	$bp_media->get_media_activity_content(),
 						'id'	=>	$child_activity,
 						'type' => 'media_upload',
-						'action' => apply_filters( 'bp_media_added_media', sprintf( __( '%1$s added a %2$s', 'bp-media'), bp_core_get_userlink( $bp_media->get_author() ), '<a href="' . $bp_media->get_url() . '">' . $bp_media->get_media_activity_type() . '</a>' ) ),
+						'action' => apply_filters( 'bp_media_added_media', sprintf( __( '%1$s added a %2$s', BP_MEDIA_TXT_DOMAIN), bp_core_get_userlink( $bp_media->get_author() ), '<a href="' . $bp_media->get_url() . '">' . $bp_media->get_media_activity_type() . '</a>' ) ),
 						'primary_link' => $bp_media->get_url(),
 						'item_id' => $activity->item_id,
 						'recorded_time' => $activity->date_recorded,
 						'user_id' => $bp_media->get_author()
 					);
-					BPMediaFunction::bp_media_record_activity($args);
+					BPMediaFunction::record_activity($args);
 				}
 			}
 		}
 		update_site_option('bp_media_db_version',BP_MEDIA_DB_VERSION);
-		add_action('admin_notices','BPMediaUpgradeScript::bp_media_database_updated_notice');
+		add_action('admin_notices','BPMediaUpgradeScript::database_updated_notice');
 		wp_cache_flush();
 	}
 
-	static function bp_media_return_query_posts($args){
+	static function return_query_posts($args){
 		$bp_media_query = new WP_Query($args);
 		return $bp_media_query->posts;
 	}

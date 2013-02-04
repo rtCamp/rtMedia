@@ -11,14 +11,11 @@ class BPMediaGroup {
         if ($initFlag) {
             if (class_exists('BPMediaGroupsExtension')) :
                 bp_register_group_extension('BPMediaGroupsExtension');
-                /**
-                 * This loop creates dummy classes for images, videos, audio and albums so that the url structuring
-                 * can be uniform as it is in the members section.
-                 */
                 new BPMediaGroupImage ();
                 new BPMediaGroupAlbum();
                 new BPMediaGroupMusic();
                 new BPMediaGroupVideo();
+                new BPMediaGroupUpload();
             endif;
             add_action('bp_actions', array($this, 'custom_nav'), 999);
             add_filter('bp_media_multipart_params_filter', array($this, 'multipart_params_handler'));
@@ -30,7 +27,7 @@ class BPMediaGroup {
      *
      * @uses global $bp
      *
-     * @since BP Media 2.3
+     * @since BuddyPress Media 2.3
      */
     function custom_nav() {
         global $bp;
@@ -41,7 +38,7 @@ class BPMediaGroup {
             return;
 
         /** This line might break a thing or two in custom themes and widgets */
-        remove_filter('bp_activity_get_user_join_filter', 'bp_media_activity_query_filter', 10);
+        remove_filter('bp_activity_get_user_join_filter', 'BPMediaFilters::activity_query_filter', 10);
 
         foreach ($bp->bp_options_nav[$current_group] as $key => $nav_item) {
             switch ($nav_item['slug']) {
@@ -49,6 +46,7 @@ class BPMediaGroup {
                 case BP_MEDIA_VIDEOS_SLUG:
                 case BP_MEDIA_AUDIO_SLUG:
                 case BP_MEDIA_ALBUMS_SLUG:
+                case BP_MEDIA_UPLOAD_SLUG:
                     unset($bp->bp_options_nav[$current_group][$key]);
             }
             switch ($bp->current_action) {
@@ -56,6 +54,7 @@ class BPMediaGroup {
                 case BP_MEDIA_VIDEOS_SLUG:
                 case BP_MEDIA_AUDIO_SLUG:
                 case BP_MEDIA_ALBUMS_SLUG:
+                case BP_MEDIA_UPLOAD_SLUG:
                     $count = count($bp->action_variables);
                     for ($i = $count; $i > 0; $i--) {
                         $bp->action_variables[$i] = $bp->action_variables[$i - 1];
@@ -71,14 +70,13 @@ class BPMediaGroup {
      *
      * @param Array $multipart_params Array of Multipart Parameters to be passed on to plupload script
      *
-     * @since BP Media 2.3
+     * @since BuddyPress Media 2.3
      */
     function multipart_params_handler($multipart_params) {
         if (is_array($multipart_params)) {
             global $bp;
             if (isset($bp->current_action) && $bp->current_action == BP_MEDIA_SLUG
-                    && isset($bp->action_variables) && empty($bp->action_variables)
-                    && isset($bp->current_component) && $bp->current_component == 'groups'
+                    && isset($bp->action_variables) && isset($bp->current_component) && $bp->current_component == 'groups'
                     && isset($bp->groups->current_group->id)) {
                 $multipart_params['bp_media_group_id'] = $bp->groups->current_group->id;
             }
@@ -92,31 +90,46 @@ class BPMediaGroup {
      *
      * @uses $bp Global Variable set by BuddyPress
      *
-     * @since BP Media 2.3
+     * @since BuddyPress Media 2.3
      */
     static function navigation_menu() {
-        global $bp, $bp_media;
+        global $bp;
         if (!isset($bp->current_action) || $bp->current_action != BP_MEDIA_SLUG)
             return false;
-        $current_tab = BPMediaGroup::can_upload() ? BP_MEDIA_UPLOAD_SLUG : BP_MEDIA_IMAGES_SLUG;
+        $bp_media_upload = new BPMediaUploadScreen( 'upload', BP_MEDIA_UPLOAD_SLUG );
+        $bp_media_image = new BPMediaScreen( 'image', BP_MEDIA_IMAGES_SLUG );
+        $current_tab = BP_MEDIA_IMAGES_SLUG;
+
         if (isset($bp->action_variables[0])) {
             $current_tab = $bp->action_variables[0];
         }
 
-        if (BPMediaGroup::can_upload()) {
-            $bp_media_nav[BP_MEDIA_UPLOAD_SLUG] = array(
+//        if (BPMediaGroup::can_upload()) {
+            $bp_media_nav[BP_MEDIA_IMAGES_SLUG] = array(
                 'url' => trailingslashit(bp_get_group_permalink($bp->groups->current_group)) . BP_MEDIA_SLUG,
-                'label' => BP_MEDIA_UPLOAD_LABEL,
+                'label' => BP_MEDIA_IMAGES_LABEL,
+                'screen_function' => array( $bp_media_image, 'screen' )
             );
-        } else {
-            $bp_media_nav = array();
-        }
+//        } else {
+//            $bp_media_nav = array();
+//        }
 
-        foreach (array('IMAGES', 'VIDEOS', 'AUDIO', 'ALBUMS') as $type) {
-            $bp_media_nav[constant('BP_MEDIA_' . $type . '_SLUG')] = array(
-                'url' => trailingslashit(bp_get_group_permalink($bp->groups->current_group)) . constant('BP_MEDIA_' . $type . '_SLUG'),
-                'label' => constant('BP_MEDIA_' . $type . '_LABEL'),
-            );
+        foreach (array('VIDEOS', 'AUDIO', 'ALBUMS', 'UPLOAD') as $type) {
+            if ( $type == 'UPLOAD' ) {
+                if ( BPMediaGroup::can_upload() ) {
+                    $bp_media_nav[constant('BP_MEDIA_' . $type . '_SLUG')] = array(
+                        'url' => trailingslashit(bp_get_group_permalink($bp->groups->current_group)) . constant('BP_MEDIA_' . $type . '_SLUG'),
+                        'label' => constant('BP_MEDIA_' . $type . '_LABEL'),
+//                        'screen_function' => array( $bp_media_upload, 'upload_screen' ),
+                        'user_has_access' => BPMediaGroup::can_upload()
+                    );
+                }
+            } else {
+                $bp_media_nav[constant('BP_MEDIA_' . $type . '_SLUG')] = array(
+                    'url' => trailingslashit(bp_get_group_permalink($bp->groups->current_group)) . constant('BP_MEDIA_' . $type . '_SLUG'),
+                    'label' => constant('BP_MEDIA_' . $type . '_LABEL'),
+                );
+            }
         }
 
         /** This variable will be used to display the tabs in group component */
@@ -126,7 +139,7 @@ class BPMediaGroup {
             <ul>
                 <?php
                 foreach ($bp_media_group_tabs as $tab_slug => $tab_info) {
-                    echo '<li id="' . $tab_slug . '-group-li" ' . ($current_tab == $tab_slug ? 'class="current selected"' : '') . '><a id="' . $tab_slug . '" href="' . $tab_info['url'] . '" title="' . __($tab_info['label'], $bp_media->text_domain) . '">' . __($tab_info['label'], $bp_media->text_domain) . '</a></li>';
+                    echo '<li id="' . $tab_slug . '-group-li" ' . ($current_tab == $tab_slug ? 'class="current selected"' : '') . '><a id="' . $tab_slug . '" href="' . $tab_info['url'] . '" title="' . __($tab_info['label'], BP_MEDIA_TXT_DOMAIN) . '">' . __($tab_info['label'], BP_MEDIA_TXT_DOMAIN) . '</a></li>';
                 }
                 ?>
             </ul>
@@ -138,7 +151,7 @@ class BPMediaGroup {
      * Checks whether the current logged in user has the ability to upload on
      * the given group or not
      *
-     * @since BP Media 2.3
+     * @since BuddyPress Media 2.3
      */
     static function can_upload() {
         /** @todo Implementation Pending */
@@ -157,14 +170,14 @@ class BPMediaGroup {
      *
      * @uses global $bp,$wp_admin_bar
      *
-     * @since BP Media 2.3
+     * @since BuddyPress Media 2.3
      */
     function admin_bar() {
         global $wp_admin_bar, $bp;
         $wp_admin_bar->add_menu(array(
             'parent' => $bp->group_admin_menu_id,
             'id' => 'bp-media-group',
-            'title' => __('Media Settings', 'buddypress'),
+            'title' => __('Media Settings', BP_MEDIA_TXT_DOMAIN),
             'href' => bp_get_groups_action_link('admin/media')
         ));
     }
@@ -203,11 +216,10 @@ class BPMediaGroup {
     }
 
     static function bp_media_display_error($errorMessage) {
-        global $bp_media;
         ?>
         <div id="message" class="error">
             <p>
-        <?php _e($errorMessage, $bp_media->text_domain); ?> 
+        <?php _e($errorMessage, BP_MEDIA_TXT_DOMAIN); ?>
             </p>
         </div>
         <?php

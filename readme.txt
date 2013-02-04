@@ -1,12 +1,12 @@
 === BuddyPress Media ===
-Contributors: rtcamp, rahul286, gagan0123, umesh.nevase, suhasgirgaonkar, neerukoul
+Contributors: rtcamp, rahul286, gagan0123, umesh.nevase, suhasgirgaonkar, neerukoul, saurabhshukla, JoshuaAbenazer, faishal, hrishiv90
 Donate link: http://rtcamp.com/donate
 Tags: BuddyPress, media, multimedia, album, audio, songs, music, video, photo, image, upload, share, MediaElement.js, ffmpeg, kaltura, media-node
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
-Requires at least: 3.3.2
-Tested up to: 3.4.2
-Stable tag: 2.3.2
+Requires at least: 3.5
+Tested up to: 3.5
+Stable tag: 2.4.3
 
 Adds Photos, Music, Videos & Albums to your BuddyPress. Supports mobile devices (iPhone/iPad, etc) and automatic audio/video conversion.
 
@@ -14,10 +14,19 @@ Adds Photos, Music, Videos & Albums to your BuddyPress. Supports mobile devices 
 
 BuddyPress Media adds Photos, Music, Videos & Albums to your BuddyPress. Supports mobile devices (iPhone/iPad, etc) and automatic audio/video conversion.
 
+= Important =
+
+BuddyPress Media now includes [full translation support](https://rtcamp.com/tutorials/buddypress-media-translation/). Head over to the [translation project](http://rtcamp.com/translate/projects/buddypress-media/) to contribute your translations. If you don't see the language of your choice, let us know in the support forum, we'll add it.
+
+= iOS6 Uploads =
+
+There's a bug in iOS 6, due to which multiple image uploads won't work. It provides all images as image.jpeg which the WordPress uploader (plupload) doesn't like. It assumes that it's got duplicate images and will upload just one.
+
 = Features =
 
 * Images, Music, Videos Upload
 * User-Albums Support
+* Group Media Support
 * Multiple files upload with Drag-n-Drop
 * Uploading Photos/Videos via mobile (Tested on iPhone running iOS6)
 * HTML5 player (with fall back to flash/silverlight player support)
@@ -25,7 +34,6 @@ BuddyPress Media adds Photos, Music, Videos & Albums to your BuddyPress. Support
 
 = Roadmap =
 
-* Group Albums
 * Activity-update form media upload
 * Paid membership plans, i.e. "Upload Quota" for buddypress members  (in planning stage).
 
@@ -72,6 +80,27 @@ Please visit [BuddyPress Media's Features page](http://rtcamp.com/buddypress-med
 == Changelog ==
 
 Please visit [BuddyPress Media's Roadmap page](http://rtcamp.com/buddypress-media/roadmap/ "Visit BuddyPress Media's Features page") to get some details about future releases.
+= 2.4.3 =
+* Fixed latest activity formatting.
+* Added auto-update for add-ons.
+* Made minor changes for add-on compatibility.
+
+= 2.4.2 =
+* Fixed bug where settings weren't getting saved on multisites.
+* Workaround for bug where the last activity wouldn't show up.
+* Fixed bug with iOS uploads.
+* Some minor code changes
+
+= 2.4.1 =
+* New Widget added with more options!
+* Fixed 'Show More' action on Group Album thanks to [bowoolley](http://profiles.wordpress.org/bowoolley/)
+* Fixed conflicts with 'BuddyPress Activity Plus', thanks to [number_6](http://profiles.wordpress.org/number_6/) and [param-veer](https://github.com/param-veer)
+* Some more housekeeping, code cleanup and documentation.
+
+= 2.4 =
+* Total code overhaul. Fixed a lot of bugs and optimised a lot of other code.
+* Added proper translation support!
+* Removed extra jQuery UI scripts and styles, for speed and optimisation
 
 = 2.3.2 =
 * Album creation on a single file upload. Thanks to [Josh Levinson](http://profiles.wordpress.org/joshlevinson/) for providing the fix.
@@ -163,4 +192,5 @@ Please visit [BuddyPress Media's Roadmap page](http://rtcamp.com/buddypress-medi
 * HTML5 Video Tag Support (with fallback)
 
 == Upgrade Notice ==
-Added album support for user-profile. Important update with plenty of new features.
+=2.4.3=
+Fixed activity formatting and added support for addon updates.

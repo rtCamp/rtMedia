@@ -3,25 +3,26 @@
 class BPMediaFunction {
 
     function __construct() {
-        add_action('bp_init', array($this,'bp_media_swap_filters'));
-        add_action('wp_ajax_my_featured_action', array($this,'implement_featured_ajax'));
-        add_action('wp_ajax_nopriv_my_featured_action', array($this,'implement_featured_ajax'));
+        //add_action('bp_init', array($this,'swap_filters'));
+        add_filter('bp_get_activity_action', array($this, 'conditional_override_allowed_tags'), 1, 2);
+        add_action('wp_ajax_my_featured_action', array($this, 'implement_featured_ajax'));
+        add_action('wp_ajax_nopriv_my_featured_action', array($this, 'implement_featured_ajax'));
     }
 
-    static function bp_media_record_activity($args = '') {
+    static function record_activity($args = '') {
         global $bp;
         if (!function_exists('bp_activity_add'))
             return false;
         $defaults = array(
             'component' => BP_MEDIA_SLUG, // The name/ID of the component e.g. groups, profile, mycomponent
         );
-        add_filter('bp_activity_allowed_tags', 'BPMediaFunction::bp_media_override_allowed_tags');
+        add_filter('bp_activity_allowed_tags', 'BPMediaFunction::override_allowed_tags');
         $r = wp_parse_args($args, $defaults);
         $activity_id = bp_activity_add($r);
         return $activity_id;
     }
 
-    static function bp_media_override_allowed_tags($activity_allowedtags) {
+    static function override_allowed_tags($activity_allowedtags) {
         $activity_allowedtags['video'] = array();
         $activity_allowedtags['video']['id'] = array();
         $activity_allowedtags['video']['class'] = array();
@@ -42,6 +43,7 @@ class BPMediaFunction {
         $activity_allowedtags['audio']['title'] = array();
         $activity_allowedtags['script'] = array();
         $activity_allowedtags['script']['type'] = array();
+        $activity_allowedtags['script']['src'] = array();
         $activity_allowedtags['div'] = array();
         $activity_allowedtags['div']['id'] = array();
         $activity_allowedtags['div']['class'] = array();
@@ -54,7 +56,7 @@ class BPMediaFunction {
         return $activity_allowedtags;
     }
 
-    static function bp_media_show_formatted_error_message($messages, $type) {
+    static function show_formatted_error_message($messages, $type) {
         echo '<div id="message" class="' . $type . '">';
         if (is_array($messages)) {
             foreach ($messages as $key => $message) {
@@ -70,23 +72,34 @@ class BPMediaFunction {
         echo '</div>';
     }
 
-    static function bp_media_conditional_override_allowed_tags($content, $activity = null) {
+    /*
+      function remove_kses_filter(){
+      global $bp_media;
+      if ($activity != null && in_array($activity->type, $bp_media->activity_types)) {
+      remove_filter('bp_get_activity_content_body', 'bp_activity_filter_kses', 1);
+      }
+      }
+     *
+     */
+
+    function conditional_override_allowed_tags($content, $activity = null) {
         global $bp_media;
+
         if ($activity != null && in_array($activity->type, $bp_media->activity_types)) {
-            add_filter('bp_activity_allowed_tags', 'BPMediaFunction::bp_media_override_allowed_tags', 1);
+            add_filter('bp_activity_allowed_tags', 'BPMediaFunction::override_allowed_tags', 1);
         }
-        return bp_activity_filter_kses($content);
+
+        return $content;
     }
 
-    function bp_media_swap_filters() {
-        add_filter('bp_get_activity_content_body', 'BPMediaFunction::bp_media_conditional_override_allowed_tags', 1, 2);
-        remove_filter('bp_get_activity_content_body', 'bp_activity_filter_kses', 1);
+    function swap_filters() {
+        //add_filter('bp_get_activity_content_body', 'BPMediaFunction::conditional_override_allowed_tags', 2, 2);
     }
 
     /**
      * Updates the media count of all users.
      */
-    static function bp_media_update_count() {
+    static function update_count() {
         global $wpdb;
         $query =
                 "SELECT
@@ -120,7 +133,7 @@ class BPMediaFunction {
         return true;
     }
 
-    static function bp_media_update_media() {
+    static function update_media() {
         global $bp_media_current_entry;
         if ($bp_media_current_entry->update_media(array('description' => esc_html($_POST['bp_media_description']), 'name' => esc_html($_POST['bp_media_title'])))) {
             $bp_media_current_entry->update_media_activity();
@@ -136,10 +149,10 @@ class BPMediaFunction {
         }
     }
 
-    static function bp_media_check_user() {
+    static function check_user() {
         if (bp_loggedin_user_id() != bp_displayed_user_id()) {
             bp_core_no_access(array(
-                'message' => __('You do not have access to this page.', 'buddypress'),
+                'message' => __('You do not have access to this page.', BP_MEDIA_TXT_DOMAIN),
                 'root' => bp_displayed_user_domain(),
                 'redirect' => false
             ));
@@ -147,16 +160,16 @@ class BPMediaFunction {
         }
     }
 
-    function bp_media_page_not_exist() {
+    function page_not_exist() {
         @setcookie('bp-message', 'The requested url does not exist', time() + 60 * 60 * 24, COOKIEPATH);
         @setcookie('bp-message-type', 'error', time() + 60 * 60 * 24, COOKIEPATH);
         wp_redirect(trailingslashit(bp_displayed_user_domain() . BP_MEDIA_IMAGES_SLUG));
         exit;
     }
 
-    static function bp_media_update_album_activity($album, $current_time = true, $delete_media_id = null) {
+    static function update_album_activity($album, $current_time = true, $delete_media_id = null) {
         if (!is_object($album)) {
-            $album = new BP_Media_Album($album);
+            $album = new BPMediaAlbum($album);
         }
         $args = array(
             'post_parent' => $album->get_id(),
@@ -186,7 +199,7 @@ class BPMediaFunction {
                         'id' => $activity_id,
                         'type' => 'album_updated',
                         'user_id' => $activity['activities'][0]->user_id,
-                        'action' => apply_filters('bp_media_filter_album_updated', sprintf(__('%1$s added new media in album %2$s', 'bp-media'), bp_core_get_userlink($activity['activities'][0]->user_id), '<a href="' . $album->get_url() . '">' . $album->get_title() . '</a>')),
+                        'action' => apply_filters('bp_media_filter_album_updated', sprintf(__('%1$s added new media in album %2$s', BP_MEDIA_TXT_DOMAIN), bp_core_get_userlink($activity['activities'][0]->user_id), '<a href="' . $album->get_url() . '">' . $album->get_title() . '</a>')),
                         'component' => BP_MEDIA_SLUG, // The name/ID of the component e.g. groups, profile, mycomponent
                         'primary_link' => $activity['activities'][0]->primary_link,
                         'item_id' => $activity['activities'][0]->item_id,
@@ -194,13 +207,13 @@ class BPMediaFunction {
                         'recorded_time' => $current_time ? bp_core_current_time() : $activity['activities'][0]->date_recorded,
                         'hide_sitewide' => $activity['activities'][0]->hide_sitewide
                     );
-                    BPMediaFunction::bp_media_record_activity($args);
+                    BPMediaFunction::record_activity($args);
                 }
             }
         }
     }
 
-    static function bp_media_wp_comment_form_mod() {
+    static function wp_comment_form_mod() {
         global $bp_media_current_entry;
         echo '<input type="hidden" name="redirect_to" value="' . $bp_media_current_entry->get_url() . '">';
     }
@@ -225,7 +238,7 @@ class BPMediaFunction {
      * @param $type String Type of message(updated, success, error, warning), works only if message is set
      * @param $status String The HTTP status header for the redirection page.
      */
-    function bp_media_redirect($location, $message = '', $type = 'updated', $status = '302') {
+    function redirect($location, $message = '', $type = 'updated', $status = '302') {
         if ($message != '')
             bp_core_add_message($message, 'error');
         bp_core_redirect($location, $status);

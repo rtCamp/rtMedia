@@ -8,18 +8,18 @@
 class BPMediaFilters {
 
     function __construct() {
-        add_filter('bp_activity_get_permalink', array($this, 'bp_media_activity_permalink_filter'), 10, 2);
-        add_filter('bp_get_activity_delete_link', array($this, 'bp_media_delete_button_handler'));
-        add_filter('bp_activity_get_user_join_filter', array($this, 'bp_media_activity_query_filter'), 10);
+        add_filter('bp_activity_get_permalink', array($this, 'activity_permalink_filter'), 10, 2);
+        add_filter('bp_get_activity_delete_link', array($this, 'delete_button_handler'));
+        add_filter('bp_activity_get_user_join_filter', 'BPMediaFilters::activity_query_filter', 10);
         // and we hook our function via wp_before_admin_bar_render
-        add_action('admin_bar_menu', array($this, 'bp_media_my_account_menu'), 1);
+        add_action('admin_bar_menu', array($this, 'my_account_menu'), 1);
         // and we hook our function via wp_before_admin_bar_render
-        add_action('wp_before_admin_bar_render', array($this, 'bp_media_adminbar_settings_menu'));
+        add_action('wp_before_admin_bar_render', 'BPMediaFilters::adminbar_settings_menu');
         global $bp_media_activity_types;
         $bp_media_activity_types = array('media_upload', 'album_updated', 'album_created');
     }
 
-    function bp_media_activity_permalink_filter($link, $activity_obj = null) {
+    function activity_permalink_filter($link, $activity_obj = null) {
         global $bp_media_activity_types;
         if ($activity_obj != null && in_array($activity_obj->type, $bp_media_activity_types)) {
             if ($activity_obj->primary_link != '') {
@@ -32,7 +32,7 @@ class BPMediaFilters {
         }
         if ($activity_obj != null && 'activity_comment' == $activity_obj->type) {
             global $activities_template;
-            remove_filter('bp_activity_get_user_join_filter', 'bp_media_activity_query_filter', 10);
+            remove_filter('bp_activity_get_user_join_filter', array($this, 'activity_query_filter'), 10);
             $parent = $activity_obj->item_id;
             if ($parent) {
                 try {
@@ -53,7 +53,7 @@ class BPMediaFilters {
         return $link;
     }
 
-    function bp_media_activity_parent_content_filter($activity_content) {
+    function activity_parent_content_filter($activity_content) {
         global $activities_template;
         $defaults = array(
             'hide_user' => false
@@ -84,15 +84,37 @@ class BPMediaFilters {
         return $activity_content;
     }
 
-    //add_filter('bp_get_activity_parent_content', 'bp_media_activity_parent_content_filter', 1);
+    //add_filter('bp_get_activity_parent_content', 'activity_parent_content_filter', 1);
 
-    function bp_media_delete_button_handler($link) {
+    function delete_button_handler($link) {
+        global $activities_template;
+        $media_label = NULL;
+
         if (bp_current_component() == 'media')
             $link = str_replace('delete-activity ', 'delete-activity-single ', $link);
+
+        if ('album_updated' == $activities_template->activity->type) {
+            $media_label = BP_MEDIA_ALBUMS_LABEL_SINGULAR;
+        } elseif ($activities_template->activity->item_id) {
+            $mime_type = get_post_field('post_mime_type', $activities_template->activity->item_id);
+            $media_type = explode('/', $mime_type);
+            switch ($media_type[0]) {
+                case 'image': $media_label = BP_MEDIA_IMAGES_LABEL_SINGULAR;
+                    break;
+                case 'audio': $media_label = BP_MEDIA_AUDIO_LABEL_SINGULAR;
+                    break;
+                case 'video': $media_label = BP_MEDIA_VIDEOS_LABEL_SINGULAR;
+                    break;
+            }
+        }
+
+        if ($media_label)
+            $link = str_replace('Delete', sprintf(__('Delete %s', BP_MEDIA_TXT_DOMAIN), $media_label), $link);
+
         return $link;
     }
 
-    static function bp_media_items_count_filter($title, $nav_item) {
+    static function items_count_filter($title, $nav_item) {
         global $bp_media_count;
         $bp_media_count = wp_parse_args($bp_media_count, array(
             'images' => 0,
@@ -124,7 +146,7 @@ class BPMediaFilters {
     /**
      * To hide some activities of multiple uploads
      */
-    function bp_media_activity_query_filter($query) {
+    static function activity_query_filter($query) {
         global $wpdb;
         $query = preg_replace('/WHERE/i', 'WHERE a.secondary_item_id!=-999 AND ', $query);
         return $query;
@@ -135,16 +157,16 @@ class BPMediaFilters {
      *
      * @global type $wp_admin_bar
      */
-    function bp_media_my_account_menu() {
+    function my_account_menu() {
         global $wp_admin_bar;
 
         $bp_media_admin_nav = array();
 
-        // Added Main menu for BP Media
+        // Added Main menu for BuddyPress Media
         $bp_media_admin_nav[] = array(
             'parent' => 'my-account-buddypress',
             'id' => 'my-account-bpmedia',
-            'title' => __('Media', 'bp-media'),
+            'title' => __('Media', BP_MEDIA_TXT_DOMAIN),
             'href' => trailingslashit(bp_loggedin_user_domain() . BP_MEDIA_SLUG),
             'meta' => array(
                 'class' => 'menupop')
@@ -154,7 +176,7 @@ class BPMediaFilters {
         /* $bp_media_admin_nav[] = array(
           'parent' => 'my-account-bpmedia',
           'id'     => 'my-account-upload-media',
-          'title'  => __('Upload Media','bp-media'),
+          'title'  => __('Upload Media',BP_MEDIA_TXT_DOMAIN),
           'href'   => trailingslashit(bp_loggedin_user_domain() . BP_MEDIA_SLUG),
           ); */
 
@@ -162,7 +184,7 @@ class BPMediaFilters {
         $bp_media_admin_nav[] = array(
             'parent' => 'my-account-bpmedia',
             'id' => 'my-account-photos',
-            'title' => __('Photos', 'bp-media'),
+            'title' => __('Photos', BP_MEDIA_TXT_DOMAIN),
             'href' => trailingslashit(bp_loggedin_user_domain() . BP_MEDIA_IMAGES_SLUG)
         );
 
@@ -170,7 +192,7 @@ class BPMediaFilters {
         $bp_media_admin_nav[] = array(
             'parent' => 'my-account-bpmedia',
             'id' => 'my-account-videos',
-            'title' => __('Videos', 'bp-media'),
+            'title' => __('Videos', BP_MEDIA_TXT_DOMAIN),
             'href' => trailingslashit(bp_loggedin_user_domain() . BP_MEDIA_VIDEOS_SLUG)
         );
 
@@ -178,7 +200,7 @@ class BPMediaFilters {
         $bp_media_admin_nav[] = array(
             'parent' => 'my-account-bpmedia',
             'id' => 'my-account-audio',
-            'title' => __('Audio', 'bp-media'),
+            'title' => __('Audio', BP_MEDIA_TXT_DOMAIN),
             'href' => trailingslashit(bp_loggedin_user_domain() . BP_MEDIA_AUDIO_SLUG)
         );
 
@@ -186,7 +208,7 @@ class BPMediaFilters {
         $bp_media_admin_nav[] = array(
             'parent' => 'my-account-bpmedia',
             'id' => 'my-account-album',
-            'title' => __('Albums', 'bp-media'),
+            'title' => __('Albums', BP_MEDIA_TXT_DOMAIN),
             'href' => trailingslashit(bp_loggedin_user_domain() . BP_MEDIA_ALBUMS_SLUG)
         );
 
@@ -199,15 +221,15 @@ class BPMediaFilters {
      *
      * @global type $wp_admin_bar
      */
-    function bp_media_adminbar_settings_menu() {
+    function adminbar_settings_menu() {
         global $wp_admin_bar;
 
         if (current_user_can('manage_options') && is_super_admin()) {
 
             $bp_media_admin_nav = array();
-            $title = '<span class="ab-icon"></span><span class="ab-label">' . _x('BP Media', 'admin bar menu group label') . '</span>';
+            $title = '<span class="ab-icon"></span><span class="ab-label">' . _x('BuddyPress Media', 'admin bar menu group label') . '</span>';
 
-            // Added Main menu for BP Media
+            // Added Main menu for BuddyPress Media
             $bp_media_admin_nav[] = array(
                 'id' => 'bp-media-menu',
                 'title' => $title,
@@ -220,25 +242,27 @@ class BPMediaFilters {
             $bp_media_admin_nav[] = array(
                 'parent' => 'bp-media-menu',
                 'id' => 'bp-media-settings',
-                'title' => __('Settings', 'bp-media'),
+                'title' => __('Settings', BP_MEDIA_TXT_DOMAIN),
                 'href' => bp_get_admin_url(add_query_arg(array('page' => 'bp-media-settings'), 'admin.php'))
             );
 
             // Addons
             $bp_media_admin_nav[] = array(
                 'parent' => 'bp-media-menu',
-                'id' => 'my-account-addons',
-                'title' => __('Addons', 'bp-media'),
+                'id' => 'bp-media-addons',
+                'title' => __('Addons', BP_MEDIA_TXT_DOMAIN),
                 'href' => bp_get_admin_url(add_query_arg(array('page' => 'bp-media-addons'), 'admin.php'))
             );
 
             // Support
             $bp_media_admin_nav[] = array(
                 'parent' => 'bp-media-menu',
-                'id' => 'my-account-support',
-                'title' => __('Support', 'bp-media'),
+                'id' => 'bp-media-support',
+                'title' => __('Support', BP_MEDIA_TXT_DOMAIN),
                 'href' => bp_get_admin_url(add_query_arg(array('page' => 'bp-media-support'), 'admin.php'))
             );
+
+            $bp_media_admin_nav = apply_filters('bp_media_add_admin_bar_item', $bp_media_admin_nav);
 
             foreach ($bp_media_admin_nav as $admin_menu)
                 $wp_admin_bar->add_menu($admin_menu);
@@ -246,16 +270,16 @@ class BPMediaFilters {
     }
 
     /**
-     *  Set BP Media dashboard  widget
+     *  Set BuddyPress Media dashboard  widget
      *
      */
-    //add_action('wp_dashboard_setup','bp_media_dashboard_widgets');
+    //add_action('wp_dashboard_setup','dashboard_widgets');
 
-    function bp_media_dashboard_widgets() {
+    function dashboard_widgets() {
         global $wp_meta_boxes;
         // Buddypress Media
         //	if ( is_user_admin() )
-        wp_add_dashboard_widget('dashboard_media_widget', __('BuddPress Media'), array($this,'bp_media_dashboard_media'));
+        wp_add_dashboard_widget('dashboard_media_widget', __('BuddyPress Media'), array($this, 'dashboard_media'));
 
         global $wp_meta_boxes;
 
@@ -278,29 +302,29 @@ class BPMediaFilters {
         $wp_meta_boxes['dashboard']['normal']['core'] = $sorted_dashboard;
     }
 
-    function bp_media_dashboard_media() {
+    function dashboard_media() {
 
         /* Single user media counts */
-        $photos_count = $this->bp_media_admin_total_count('photo');
-        $videos_count = $this->bp_media_admin_total_count('video');
-        $audio_count = $this->bp_media_admin_total_count('audio');
-        $albums_count = $this->bp_media_admin_total_count('album');
+        $photos_count = $this->admin_total_count('photo');
+        $videos_count = $this->admin_total_count('video');
+        $audio_count = $this->admin_total_count('audio');
+        $albums_count = $this->admin_total_count('album');
 
         /* Group media counts */
-        $g_photos_count = $this->bp_media_admin_group_total_count('photo');
-        $g_videos_count = $this->bp_media_admin_group_total_count('video');
-        $g_audio_count = $this->bp_media_admin_group_total_count('audio');
-        $g_albums_count = $this->bp_media_admin_group_total_count('album');
+        $g_photos_count = $this->group_total_count('photo');
+        $g_videos_count = $this->group_total_count('video');
+        $g_audio_count = $this->group_total_count('audio');
+        $g_albums_count = $this->group_total_count('album');
         ?>
         <div class="bp-media-dashboard">
-            <h3 class="sub"><?php _e('Users', 'bp-media'); ?> </h3>
+            <h3 class="sub"><?php _e('Users', BP_MEDIA_TXT_DOMAIN); ?> </h3>
             <div class="table table_user">
-                <div class=""><span class="media-cnt"><?php echo $photos_count; ?></span><span class="media-label"><?php _e('Total Photos', 'bp-media'); ?></span></div>
-                <div class=""><span class="media-cnt"><?php echo $videos_count; ?></span><span class="media-label"><?php _e('Total Videos', 'bp-media'); ?></span></div>
-                <div class=""><span class="media-cnt"><?php echo $audio_count; ?></span><span class="media-label"><?php _e('Total Audio', 'bp-media'); ?></span></div>
-                <div class=""><span class="media-cnt"><?php echo $albums_count; ?></span><span class="media-label"><?php _e('Total Albums', 'bp-media'); ?></span></div>
+                <div class=""><span class="media-cnt"><?php echo $photos_count; ?></span><span class="media-label"><?php _e('Total Photos', BP_MEDIA_TXT_DOMAIN); ?></span></div>
+                <div class=""><span class="media-cnt"><?php echo $videos_count; ?></span><span class="media-label"><?php _e('Total Videos', BP_MEDIA_TXT_DOMAIN); ?></span></div>
+                <div class=""><span class="media-cnt"><?php echo $audio_count; ?></span><span class="media-label"><?php _e('Total Audio', BP_MEDIA_TXT_DOMAIN); ?></span></div>
+                <div class=""><span class="media-cnt"><?php echo $albums_count; ?></span><span class="media-label"><?php _e('Total Albums', BP_MEDIA_TXT_DOMAIN); ?></span></div>
             </div><!-- .table_user -->
-            <h3 class="sub"><?php _e('Groups', 'bp-media'); ?> </h3>
+            <h3 class="sub"><?php _e('Groups', BP_MEDIA_TXT_DOMAIN); ?> </h3>
             <div class="table table_group">
 
             </div><!-- .table_group -->
@@ -309,41 +333,41 @@ class BPMediaFilters {
         <?php
     }
 
-    function bp_media_admin_total_count($media_type) {
+    function admin_total_count($media_type) {
 
         switch ($media_type) {
             case 'photo':
-                return $this->bp_media_total_count_media('image');
+                return $this->total_count_media('image');
 
             case 'video':
-                return $this->bp_media_total_count_media('video');
+                return $this->total_count_media('video');
 
             case 'audio':
-                return $this->bp_media_total_count_media('audio');
+                return $this->total_count_media('audio');
 
             case 'album':
-                return $this->bp_media_total_count_albums();
+                return $this->total_count_albums();
         }
     }
 
-    function bp_media_admin_group_total_count($media_type) {
+    function group_total_count($media_type) {
 
         switch ($media_type) {
             case 'photo':
-                return $this->bp_media_total_count_media('image');
+                return $this->total_count_media('image');
 
             case 'video':
-                return $this->bp_media_total_count_media('video');
+                return $this->total_count_media('video');
 
             case 'audio':
-                return $this->bp_media_total_count_media('audio');
+                return $this->total_count_media('audio');
 
             case 'album':
-                return $this->bp_media_total_count_albums();
+                return $this->total_count_albums();
         }
     }
 
-    function bp_media_total_count_media($type) {
+    function total_count_media($type) {
         global $wpdb;
 
         $query = "SELECT COUNT(*) AS total
@@ -358,7 +382,7 @@ class BPMediaFilters {
             return false;
     }
 
-    function bp_media_total_count_albums() {
+    function total_count_albums() {
         global $wpdb;
 
         $query = "SELECT COUNT(*) AS total

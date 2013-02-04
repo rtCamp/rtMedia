@@ -15,7 +15,7 @@ class BPMediaComponent extends BP_Component {
 	/**
 	 * Hold the messages generated during initialization process and will be shown on the screen functions
 	 *
-	 * @since BP Media 2.0
+	 * @since BuddyPress Media 2.0
 	 */
 	var $messages = array(
 		'error' => array( ),
@@ -26,7 +26,7 @@ class BPMediaComponent extends BP_Component {
 	/**
 	 * Constructor for the BuddyPress Media
 	 *
-	 * @since BP Media 2.0
+	 * @since BuddyPress Media 2.0
 	 */
 	function __construct() {
 		global $bp;
@@ -39,7 +39,7 @@ class BPMediaComponent extends BP_Component {
 	/**
 	 * Includes the files required for the BuddyPress Media and calls the parent class' includes function
 	 *
-	 * @since BP Media 2.0
+	 * @since BuddyPress Media 2.0
 	 */
 	function includes() {
 		$inc_path_prefix = 'app/main/includes/';
@@ -64,7 +64,7 @@ class BPMediaComponent extends BP_Component {
 			'slug' => BP_MEDIA_SLUG,
 			'root_slug' => isset( $bp->pages->{$this->id}->slug ) ? $bp->pages->{$this->id}->slug : BP_MEDIA_SLUG,
 			/* 'has_directory'         => true, /* Set to false if not required */
-			'search_string' => __( 'Search Media...', 'bp-media' ),
+			'search_string' => __( 'Search Media...', BP_MEDIA_TXT_DOMAIN ),
 		);
 		parent::setup_globals( $globals );
 	}
@@ -106,39 +106,34 @@ class BPMediaComponent extends BP_Component {
 				break;
 		}
 
-		if ( bp_is_my_profile() ) {
-			$main_nav = array(
-				'name' => BP_MEDIA_LABEL,
-				'slug' => BP_MEDIA_SLUG,
-				'position' => 80,
-				'screen_function' => array( $bp_media_upload, 'upload_screen' ),
-				'default_subnav_slug' => BP_MEDIA_UPLOAD_SLUG
-			);
-		} else {
+
+
+                // -------------- Removed Upload as default tab ------------- //
+//		if ( bp_is_my_profile() ) {
+//			$main_nav = array(
+//				'name' => BP_MEDIA_LABEL,
+//				'slug' => BP_MEDIA_SLUG,
+//				'position' => 80,
+//				'screen_function' => array( $bp_media_upload, 'upload_screen' ),
+//				'default_subnav_slug' => BP_MEDIA_UPLOAD_SLUG
+//			);
+//		} else {
 			$main_nav = array(
 				'name' => BP_MEDIA_LABEL,
 				'slug' => BP_MEDIA_SLUG,
 				'position' => 80,
 				'screen_function' => array( $bp_media_image, 'screen' ),
-				'default_subnav_slug' => BP_MEDIA_IMAGES_SLUG
+				'default_subnav_slug' => BP_MEDIA_IMAGES_SLUG   
 			);
-		}
-		$sub_nav[ ] = array(
-			'name' => BP_MEDIA_UPLOAD_LABEL,
-			'slug' => BP_MEDIA_UPLOAD_SLUG,
-			'parent_url' => trailingslashit( bp_loggedin_user_domain() . BP_MEDIA_SLUG ),
-			'parent_slug' => BP_MEDIA_SLUG,
-			'screen_function' => array( $bp_media_upload, 'upload_screen' ),
-			'position' => 10,
-			'user_has_access' => bp_is_my_profile()
-		);
-		parent::setup_nav( $main_nav, $sub_nav );
-
-		bp_core_new_nav_item( array(
+//		}
+		$sub_nav[ ] = array();
+                parent::setup_nav( $main_nav, $sub_nav );
+                bp_core_new_nav_item( array(
 			'name' => BP_MEDIA_IMAGES_LABEL,
 			'slug' => BP_MEDIA_IMAGES_SLUG,
 			'screen_function' => array( $bp_media_image, 'screen' ),
 		) );
+
 
 		bp_core_new_subnav_item( array(
 			'name' => 'View', /* Display name for the nav item(It won't be shown anywhere) */
@@ -304,6 +299,12 @@ class BPMediaComponent extends BP_Component {
 			'position' => 90, /* Index of where this nav item should be positioned */
 			'screen_function' => array( $bp_media_album, 'screen' ), /* The name of the function to run when clicked */
 		) );
+                bp_core_new_nav_item( array(
+			'name' => BP_MEDIA_UPLOAD_LABEL,
+			'slug' => BP_MEDIA_UPLOAD_SLUG,
+			'screen_function' => array( $bp_media_upload, 'upload_screen' ),
+                        'user_has_access' => bp_is_my_profile()
+		) );
 	}
 
 	/**
@@ -311,19 +312,19 @@ class BPMediaComponent extends BP_Component {
 	 */
 	function register_post_types() {
 		$labels = array(
-			'name' => __( 'Albums', 'bp-media' ),
-			'singular_name' => __( 'Album', 'bp-media' ),
-			'add_new' => __( 'Create', 'bp-media' ),
-			'add_new_item' => __( 'Create Album', 'bp-media' ),
-			'edit_item' => __( 'Edit Album', 'bp-media' ),
-			'new_item' => __( 'New Album', 'bp-media' ),
-			'all_items' => __( 'All Albums', 'bp-media' ),
-			'view_item' => __( 'View Album', 'bp-media' ),
-			'search_items' => __( 'Search Albums', 'bp-media' ),
-			'not_found' => __( 'No album found', 'bp-media' ),
-			'not_found_in_trash' => __( 'No album found in Trash', 'bp-media' ),
+			'name' => __( 'Albums', BP_MEDIA_TXT_DOMAIN ),
+			'singular_name' => __( 'Album', BP_MEDIA_TXT_DOMAIN ),
+			'add_new' => __( 'Create', BP_MEDIA_TXT_DOMAIN ),
+			'add_new_item' => __( 'Create Album', BP_MEDIA_TXT_DOMAIN ),
+			'edit_item' => __( 'Edit Album', BP_MEDIA_TXT_DOMAIN ),
+			'new_item' => __( 'New Album', BP_MEDIA_TXT_DOMAIN ),
+			'all_items' => __( 'All Albums', BP_MEDIA_TXT_DOMAIN ),
+			'view_item' => __( 'View Album', BP_MEDIA_TXT_DOMAIN ),
+			'search_items' => __( 'Search Albums', BP_MEDIA_TXT_DOMAIN ),
+			'not_found' => __( 'No album found', BP_MEDIA_TXT_DOMAIN ),
+			'not_found_in_trash' => __( 'No album found in Trash', BP_MEDIA_TXT_DOMAIN ),
 			'parent_item_colon' => '',
-			'menu_name' => __( 'Albums', 'bp-media' )
+			'menu_name' => __( 'Albums', BP_MEDIA_TXT_DOMAIN )
 		);
 
 		$args = array(
@@ -343,16 +344,16 @@ class BPMediaComponent extends BP_Component {
                 global $bp_media;
 		/* Set up labels for the post type */
 		$labels = array(
-			'name' => __( 'Media', $bp_media->text_domain),
-			'singular' => __( 'Media', $bp_media->text_domain ),
-			'add_new' => __( 'Add New Media', $bp_media->text_domain )
+			'name' => __( 'Media', BP_MEDIA_TXT_DOMAIN),
+			'singular' => __( 'Media', BP_MEDIA_TXT_DOMAIN ),
+			'add_new' => __( 'Add New Media', BP_MEDIA_TXT_DOMAIN )
 		);
 
 		/* Set up the argument array for register_post_type() */
 		$args = array(
-			'label' => __( 'Media', $bp_media->text_domain ),
+			'label' => __( 'Media', BP_MEDIA_TXT_DOMAIN ),
 			'labels' => $labels,
-			'description' => __('BuddyPress Media\'s Media Files',$bp_media->text_domain),
+			'description' => __('BuddyPress Media\'s Media Files',BP_MEDIA_TXT_DOMAIN),
 			'public' => true,
 			'show_ui' => false,
 			'supports' => array( 'title', 'editor', 'excerpt', 'author', 'thumbnail', 'custom-fields' )
