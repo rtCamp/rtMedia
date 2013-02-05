@@ -147,7 +147,7 @@ background-image: -webkit-gradient(linear,left bottom,left top,color-stop(1, #F7
 #wpadminbar .bp-media-settings-menu > .ab-item .ab-icon{background: url("../img/bpm-icon-16.png") no-repeat scroll -8px -7px transparent}
 #wpadminbar .bp-media-settings-menu:hover .ab-icon{background-position: -8px -41px}
 
-/* Buddypress media admin support form styling */
+/* BuddyPress media admin support form styling */
 .bp-media-updated, .bp-media-error{border-radius: 3px; padding: 0 7px; margin: 5px 0 15px; border: 1px solid}
 .bp-media-updated p, .bp-media-error p{margin: 0.5em 0;padding: 2px;}
 .bp-media-updated{background-color: #FFFFE0;border-color: #E6DB55;}
@@ -171,7 +171,7 @@ background-image: -webkit-gradient(linear,left bottom,left top,color-stop(1, #F7
 .rt-update{background-color: #FFEAA6;border-color:#E1CA82;}
 img.bp-media-donation-image{display:block;margin: 10px auto;}
 
-/* Buddypress Media Image Uploader album selection */
+/* BuddyPress Media Image Uploader album selection */
 /*#bp-media-album-prompt, #bp-media-album-new { background: none repeat scroll 0 0 #FFFFFF;border: 1px solid #AAAAAA;border-radius: 5px 5px 5px 5px;display: none;padding: 3px;z-index: 110000;left: 40%;position: fixed;top: 35%;width: 300px; }
 #bp-media-album-new { z-index: 120000; }
 .bp-media-album-title { background: url("../img/Popup-title-bg.png") repeat-x scroll 50% 50% #CCCCCC;border: 1px solid #AAAAAA;border-radius: 5px 5px 5px 5px;color: #222222;display: block;font-weight: bold;padding: 0;margin-bottom: 10px; }
