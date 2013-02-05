@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: BuddyPress Media\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-02-05 16:08+0530\n"
-"PO-Revision-Date: 2013-02-05 16:08+0530\n"
+"POT-Creation-Date: 2013-02-05 17:32+0530\n"
+"PO-Revision-Date: 2013-02-05 17:32+0530\n"
 "Last-Translator: Saurabh Shukla <saurabh.shukla@rtcamp.com>\n"
 "Language-Team: rtCamp <info@rtcamp.com>\n"
 "Language: \n"
@@ -117,37 +117,43 @@ msgstr ""
 msgid "Submit a Bug Report"
 msgstr ""
 
-#: app/helper/BPMediaSettings.php:78
-msgid "Recount Success"
-msgstr ""
-
-#: app/helper/BPMediaSettings.php:78
+#: app/helper/BPMediaSettings.php:92
+#: app/helper/BPMediaSettings.php:94
 msgid "Recounting of media files done successfully"
 msgstr ""
 
-#: app/helper/BPMediaSettings.php:80
-msgid "Recount Fail"
+#: app/helper/BPMediaSettings.php:94
+msgid "Recount Success"
 msgstr ""
 
-#: app/helper/BPMediaSettings.php:80
+#: app/helper/BPMediaSettings.php:97
+#: app/helper/BPMediaSettings.php:99
 msgid "Recounting Failed"
 msgstr ""
 
+#: app/helper/BPMediaSettings.php:99
+msgid "Recount Fail"
+msgstr ""
+
 #: app/helper/BPMediaSettings.php:103
+msgid "Settings saved."
+msgstr ""
+
+#: app/helper/BPMediaSettings.php:125
 msgid "Please provide \"option\" value ( required ) in the argument. Pass argument to add_settings_field in the following format array( 'option' => 'option_name' ) "
 msgstr ""
 
-#: app/helper/BPMediaSettings.php:141
-#: app/helper/BPMediaSettings.php:181
-#: app/helper/BPMediaSettings.php:219
+#: app/helper/BPMediaSettings.php:163
+#: app/helper/BPMediaSettings.php:203
+#: app/helper/BPMediaSettings.php:241
 msgid "Please provide \"option\" value ( required ) in the argument. Pass argument to add_settings_field in the following format array( 'option' => 'option_name' )"
 msgstr ""
 
-#: app/helper/BPMediaSettings.php:143
+#: app/helper/BPMediaSettings.php:165
 msgid "Need to specify atleast to radios else use a checkbox instead"
 msgstr ""
 
-#: app/helper/BPMediaSettings.php:221
+#: app/helper/BPMediaSettings.php:243
 msgid "Please provide some values to populate the dropdown. Format : array( 'value' => 'option' )"
 msgstr ""
 
