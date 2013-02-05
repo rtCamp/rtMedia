@@ -36,6 +36,7 @@ div.bp_media_title{margin-bottom:10px;}
 
 
 #bp-media-upload-ui #drag-drop-area{border: 4px dashed #DDD;height: 150px;width: 150px;}
+.upload #bp-media-upload-ui #drag-drop-area{height: auto; width: 100%;}
 #bp-media-upload-ui .drag-drop-inside{margin:auto;width: 100%;}
 #bp-media-album-prompt{margin: 0;position: absolute;right: 0;text-align: right;top: 2px;min-width: 200px;}
 #bp-media-album-prompt span{float: left;line-height: 25px;margin-right: 15px;}
