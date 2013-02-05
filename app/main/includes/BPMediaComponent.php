@@ -123,13 +123,13 @@ class BPMediaComponent extends BP_Component {
 				'slug' => BP_MEDIA_SLUG,
 				'position' => 80,
 				'screen_function' => array( $bp_media_image, 'screen' ),
-				'default_subnav_slug' => BP_MEDIA_IMAGES_SLUG   
+				'default_subnav_slug' => BP_MEDIA_IMAGES_SLUG
 			);
 //		}
 		$sub_nav[ ] = array();
                 parent::setup_nav( $main_nav, $sub_nav );
                 bp_core_new_nav_item( array(
-			'name' => BP_MEDIA_IMAGES_LABEL,
+			'name' => __(BP_MEDIA_IMAGES_LABEL,BP_MEDIA_TXT_DOMAIN),
 			'slug' => BP_MEDIA_IMAGES_SLUG,
 			'screen_function' => array( $bp_media_image, 'screen' ),
 		) );
@@ -173,7 +173,7 @@ class BPMediaComponent extends BP_Component {
 
 
 		bp_core_new_nav_item( array(
-			'name' => BP_MEDIA_VIDEOS_LABEL,
+			'name' => __(BP_MEDIA_VIDEOS_LABEL,BP_MEDIA_TXT_DOMAIN),
 			'slug' => BP_MEDIA_VIDEOS_SLUG,
 			'screen_function' => array( $bp_media_video, 'screen' )
 		) );
@@ -216,7 +216,7 @@ class BPMediaComponent extends BP_Component {
 
 
 		bp_core_new_nav_item( array(
-			'name' => BP_MEDIA_AUDIO_LABEL,
+			'name' => __(BP_MEDIA_AUDIO_LABEL,BP_MEDIA_TXT_DOMAIN),
 			'slug' => BP_MEDIA_AUDIO_SLUG,
 			'screen_function' => array( $bp_media_audio, 'screen' )
 		) );
@@ -259,7 +259,7 @@ class BPMediaComponent extends BP_Component {
 
 
 		bp_core_new_nav_item( array(
-			'name' => BP_MEDIA_ALBUMS_LABEL,
+			'name' => __(BP_MEDIA_ALBUMS_LABEL,BP_MEDIA_TXT_DOMAIN),
 			'slug' => BP_MEDIA_ALBUMS_SLUG,
 			'screen_function' => array( $bp_media_album, 'screen' ),
 		) );
@@ -300,7 +300,7 @@ class BPMediaComponent extends BP_Component {
 			'screen_function' => array( $bp_media_album, 'screen' ), /* The name of the function to run when clicked */
 		) );
                 bp_core_new_nav_item( array(
-			'name' => BP_MEDIA_UPLOAD_LABEL,
+			'name' => __(BP_MEDIA_UPLOAD_LABEL,BP_MEDIA_TXT_DOMAIN),
 			'slug' => BP_MEDIA_UPLOAD_SLUG,
 			'screen_function' => array( $bp_media_upload, 'upload_screen' ),
                         'user_has_access' => bp_is_my_profile()
