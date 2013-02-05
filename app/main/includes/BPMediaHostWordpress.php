@@ -232,7 +232,7 @@ class BPMediaHostWordpress {
                 return false;
         }
         $activity_content .= '</div>';
-        $activity_content .= '<div class="bp_media_description">' . __(wp_html_excerpt($this->description, $bp_media_default_excerpts['activity_entry_description']), BP_MEDIA_TXT_DOMAIN) . '</div>';
+        $activity_content .= '<div class="bp_media_description">' . wp_html_excerpt($this->description, $bp_media_default_excerpts['activity_entry_description']). '</div>';
         return $activity_content;
     }
 
@@ -290,7 +290,7 @@ class BPMediaHostWordpress {
                 return false;
         }
         $content .= '</div>';
-        $content .= '<div class="bp_media_description">' . __(wp_html_excerpt($this->description, $bp_media_default_excerpts['single_entry_description']), BP_MEDIA_TXT_DOMAIN) . '</div>';
+        $content .= '<div class="bp_media_description">' .wp_html_excerpt($this->description, $bp_media_default_excerpts['single_entry_description']) . '</div>';
         return $content;
     }
 
@@ -299,7 +299,7 @@ class BPMediaHostWordpress {
      */
     function get_media_single_title() {
         global $bp_media_default_excerpts, $bp_media;
-        $content = '<div class="bp_media_title">' . __(wp_html_excerpt($this->name, $bp_media_default_excerpts['single_entry_title']), BP_MEDIA_TXT_DOMAIN) . '</div>';
+        $content = '<div class="bp_media_title">' . wp_html_excerpt($this->name, $bp_media_default_excerpts['single_entry_title']) . '</div>';
         return $content;
     }
 
