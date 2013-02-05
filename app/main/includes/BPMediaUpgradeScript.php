@@ -3,6 +3,7 @@ class BPMediaUpgradeScript{
 
 	static function upgrade_from_1_0_to_2_1(){
 		global $wpdb;
+                $post_wall =__( 'Wall Posts', BP_MEDIA_TXT_DOMAIN );
 		remove_filter('bp_activity_get_user_join_filter','BPMediaFilters::activity_query_filter',10);
 		/* @var $wpdb wpdb */
 		$wall_posts_album_ids=array();
@@ -22,10 +23,10 @@ class BPMediaUpgradeScript{
 						$wall_posts_id = $wall_posts_album_ids[$media_file->post_author];
 					}
 					else{
-						$wall_posts_id = $wpdb->get_var( "SELECT ID FROM $wpdb->posts WHERE post_title = 'Wall Posts' AND post_author = '".  $media_file->post_author."' AND post_type='bp_media_album'");
+						$wall_posts_id = $wpdb->get_var( "SELECT ID FROM $wpdb->posts WHERE post_title = $post_wall AND post_author = '".  $media_file->post_author."' AND post_type='bp_media_album'");
 						if($wall_posts_id==null){
 							$album = new BPMediaAlbum();
-							$album->add_album('Wall Posts',$media_file->post_author);
+							$album->add_album($post_wall,$media_file->post_author);
 							$wall_posts_id = $album->get_id();
 						}
 						if(!$wall_posts_id){
