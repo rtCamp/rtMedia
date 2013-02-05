@@ -119,7 +119,7 @@ class BPMediaComponent extends BP_Component {
 //			);
 //		} else {
 			$main_nav = array(
-				'name' => BP_MEDIA_LABEL,
+				'name' => __(BP_MEDIA_LABEL,BP_MEDIA_TXT_DOMAIN),
 				'slug' => BP_MEDIA_SLUG,
 				'position' => 80,
 				'screen_function' => array( $bp_media_image, 'screen' ),
