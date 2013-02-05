@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: BuddyPress Media\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-02-05 12:18+0530\n"
-"PO-Revision-Date: 2013-02-05 12:18+0530\n"
+"POT-Creation-Date: 2013-02-05 16:08+0530\n"
+"PO-Revision-Date: 2013-02-05 16:08+0530\n"
 "Last-Translator: Saurabh Shukla <saurabh.shukla@rtcamp.com>\n"
 "Language-Team: rtCamp <info@rtcamp.com>\n"
 "Language: \n"
@@ -335,8 +335,13 @@ msgstr ""
 msgid "Please click upgrade to upgrade the database of BuddyPress Media <a class=\"button\" id=\"refresh_media_count\" href =\"%s\" class=\"button\" title=\"It will migrate your BuddyPress Media's earlier database to new database.\">Upgrade</a>"
 msgstr ""
 
-#: app/helper/BPMediaUpgrade.php:102
-#: app/helper/BPMediaUpgrade.php:155
+#: app/helper/BPMediaUpgrade.php:58
+#: app/main/profile/BPMediaTemplate.php:15
+msgid "Wall Posts"
+msgstr ""
+
+#: app/helper/BPMediaUpgrade.php:103
+#: app/helper/BPMediaUpgrade.php:156
 #: app/main/group/BPMediaGroupAction.php:99
 #, php-format
 msgid "%1$s added a %2$s"
@@ -549,6 +554,19 @@ msgstr ""
 msgid "Select Album"
 msgstr ""
 
+#: app/main/profile/BPMediaTemplate.php:53
+msgid "+ Create New Album"
+msgstr ""
+
+#: app/main/profile/BPMediaTemplate.php:59
+#: app/main/profile/BPMediaTemplate.php:218
+msgid "Create"
+msgstr ""
+
+#: app/main/profile/BPMediaTemplate.php:60
+msgid "Cancel"
+msgstr ""
+
 #: app/main/profile/BPMediaTemplate.php:69
 msgid "Drop files here"
 msgstr ""
@@ -561,17 +579,30 @@ msgstr ""
 msgid "Select Files"
 msgstr ""
 
+#: app/main/profile/BPMediaTemplate.php:157
+msgid "Show More"
+msgstr ""
+
 #: app/main/profile/BPMediaTemplate.php:183
 #: app/main/profile/BPMediaTemplate.php:211
 msgid "x"
 msgstr ""
 
+#: app/main/profile/BPMediaTemplate.php:203
+msgid "Select"
+msgstr ""
+
+#: app/main/profile/BPMediaTemplate.php:204
 #: app/main/profile/BPMediaTemplate.php:210
 msgid "Create Album"
 msgstr ""
 
 #: app/main/profile/BPMediaTemplate.php:214
 msgid "Album Name"
+msgstr ""
+
+#: app/main/profile/BPMediaTemplate.php:222
+msgid "Add Media"
 msgstr ""
 
 #: app/main/profile/BPMediaScreen.php:102
@@ -936,10 +967,6 @@ msgstr ""
 msgid "Search Media..."
 msgstr ""
 
-#: app/main/includes/BPMediaComponent.php:317
-msgid "Create"
-msgstr ""
-
 #: app/main/includes/BPMediaComponent.php:319
 msgid "Edit Album"
 msgstr ""
@@ -1010,28 +1037,30 @@ msgstr ""
 msgid "Groups"
 msgstr ""
 
-#: app/main/includes/BPMediaActions.php:254
-msgid "Edit Media"
-msgstr ""
-
-#: app/main/includes/BPMediaActions.php:254
-msgid "Edit"
-msgstr ""
-
-#: app/main/includes/BPMediaActions.php:266
-#: app/main/includes/BPMediaActions.php:271
-msgid "Featured Media"
-msgstr ""
-
-#: app/main/includes/BPMediaActions.php:266
+#: app/main/includes/BPMediaActions.php:143
+#: app/main/includes/BPMediaActions.php:269
 msgid "Featured"
 msgstr ""
 
-#: app/main/includes/BPMediaActions.php:271
+#: app/main/includes/BPMediaActions.php:144
+#: app/main/includes/BPMediaActions.php:274
 msgid "Remove Featured"
 msgstr ""
 
-#: app/main/includes/BPMediaActions.php:535
+#: app/main/includes/BPMediaActions.php:257
+msgid "Edit Media"
+msgstr ""
+
+#: app/main/includes/BPMediaActions.php:257
+msgid "Edit"
+msgstr ""
+
+#: app/main/includes/BPMediaActions.php:269
+#: app/main/includes/BPMediaActions.php:274
+msgid "Featured Media"
+msgstr ""
+
+#: app/main/includes/BPMediaActions.php:538
 #, php-format
 msgid "%1$s created an album %2$s"
 msgstr ""
