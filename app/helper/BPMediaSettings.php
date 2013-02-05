@@ -20,7 +20,7 @@ if (!class_exists('BPMediaSettings')) {
          */
         public function settings() {
             global $bp_media_addon;
-            add_settings_section('bpm-settings', __('BuddyPress Media Settings', BP_MEDIA_TXT_DOMAIN), '', 'bp-media-settings');
+            add_settings_section('bpm-settings', __('BuddyPress Media Settings', BP_MEDIA_TXT_DOMAIN), is_multisite() ? array($this, 'network_notices') : '', 'bp-media-settings');
             add_settings_field('bpm-video', __('Video', BP_MEDIA_TXT_DOMAIN), array($this, 'checkbox'), 'bp-media-settings', 'bpm-settings', array(
                 'setting' => 'bp_media_options',
                 'option' => 'videos_enabled',
@@ -68,17 +68,39 @@ if (!class_exists('BPMediaSettings')) {
             register_setting('bp_media', 'bp_media_options', array($this, 'sanitize'));
         }
 
+        public function network_notices() {
+            if (get_site_option('bpm-recount-success', false)) {
+                echo '<div id="setting-error-bpm-recount-success" class="updated"><p><strong>' . get_site_option('bpm-recount-success') . '</strong></p></div>';
+                delete_site_option('bpm-recount-success');
+            } elseif (get_site_option('bpm-recount-fail', false)) {
+                echo '<div id="setting-error-bpm-recount-fail" class="error"><p><strong>' . get_site_option('bpm-recount-fail') . '</strong></p></div>';
+                delete_site_option('bpm-recount-fail');
+            } elseif (get_site_option('bpm-settings-saved')) {
+                echo '<div id="setting-error-bpm-settings-saved" class="updated"><p><strong>' . get_site_option('bpm-settings-saved') . '</strong></p></div>';
+            }
+            delete_site_option('bpm-settings-saved');
+        }
+
         /**
          * Sanitizes the settings
          */
         public function sanitize($input) {
             global $bp_media_admin;
             if (isset($_POST['refresh-count'])) {
-                if ($bp_media_admin->update_count())
-                    add_settings_error(__('Recount Success', BP_MEDIA_TXT_DOMAIN), 'recount-success', __('Recounting of media files done successfully', BP_MEDIA_TXT_DOMAIN), 'updated');
-                else
-                    add_settings_error(__('Recount Fail', BP_MEDIA_TXT_DOMAIN), 'recount-fail', __('Recounting Failed', BP_MEDIA_TXT_DOMAIN));
+                if ($bp_media_admin->update_count()) {
+                    if (is_multisite())
+                        update_site_option('bpm-recount-success', __('Recounting of media files done successfully', BP_MEDIA_TXT_DOMAIN));
+                    else
+                        add_settings_error(__('Recount Success', BP_MEDIA_TXT_DOMAIN), 'bpm-recount-success', __('Recounting of media files done successfully', BP_MEDIA_TXT_DOMAIN), 'updated');
+                } else {
+                    if (is_multisite())
+                        update_site_option('bpm-recount-fail', __('Recounting Failed', BP_MEDIA_TXT_DOMAIN));
+                    else
+                        add_settings_error(__('Recount Fail', BP_MEDIA_TXT_DOMAIN), 'bpm-recount-fail', __('Recounting Failed', BP_MEDIA_TXT_DOMAIN));
+                }
             }
+            if (is_multisite())
+                update_site_option('bpm-settings-saved', __('Settings saved.', BP_MEDIA_FFMPEG_TXT_DOMAIN));
             do_action('bp_media_sanitize_settings', $_POST, $input);
             return $input;
         }

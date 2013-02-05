@@ -54,10 +54,10 @@ if (!class_exists('BPMediaAdmin')) {
          * @global string BP_MEDIA_TXT_DOMAIN
          */
         public function menu() {
-            add_menu_page(__('Buddypress Media Component', BP_MEDIA_TXT_DOMAIN), __('BuddyPress Media', BP_MEDIA_TXT_DOMAIN), 'manage_options', 'bp-media-settings', array($this, 'settings_page'));
-            add_submenu_page('bp-media-settings', __('Buddypress Media Settings', BP_MEDIA_TXT_DOMAIN), __('Settings', BP_MEDIA_TXT_DOMAIN), 'manage_options', 'bp-media-settings', array($this, 'settings_page'));
-            add_submenu_page('bp-media-settings', __('Buddypress Media Addons', BP_MEDIA_TXT_DOMAIN), __('Addons', BP_MEDIA_TXT_DOMAIN), 'manage_options', 'bp-media-addons', array($this, 'addons_page'));
-            add_submenu_page('bp-media-settings', __('Buddypress Media Support', BP_MEDIA_TXT_DOMAIN), __('Support ', BP_MEDIA_TXT_DOMAIN), 'manage_options', 'bp-media-support', array($this, 'support_page'));
+            add_menu_page(__('BuddyPress Media Component', BP_MEDIA_TXT_DOMAIN), __('BuddyPress Media', BP_MEDIA_TXT_DOMAIN), 'manage_options', 'bp-media-settings', array($this, 'settings_page'));
+            add_submenu_page('bp-media-settings', __('BuddyPress Media Settings', BP_MEDIA_TXT_DOMAIN), __('Settings', BP_MEDIA_TXT_DOMAIN), 'manage_options', 'bp-media-settings', array($this, 'settings_page'));
+            add_submenu_page('bp-media-settings', __('BuddyPress Media Addons', BP_MEDIA_TXT_DOMAIN), __('Addons', BP_MEDIA_TXT_DOMAIN), 'manage_options', 'bp-media-addons', array($this, 'addons_page'));
+            add_submenu_page('bp-media-settings', __('BuddyPress Media Support', BP_MEDIA_TXT_DOMAIN), __('Support ', BP_MEDIA_TXT_DOMAIN), 'manage_options', 'bp-media-support', array($this, 'support_page'));
         }
 
         /**
@@ -145,8 +145,8 @@ if (!class_exists('BPMediaAdmin')) {
             /* BuddyPress Media */
             $tabs[] = array(
                 'href' => bp_get_admin_url(add_query_arg(array('page' => 'bp-media-settings'), 'admin.php')),
-                'title' => __('Buddypress Media', BP_MEDIA_TXT_DOMAIN),
-                'name' => __('Buddypress Media', BP_MEDIA_TXT_DOMAIN),
+                'title' => __('BuddyPress Media', BP_MEDIA_TXT_DOMAIN),
+                'name' => __('BuddyPress Media', BP_MEDIA_TXT_DOMAIN),
                 'class' => ($tab == 'bp-media-settings' || $tab == 'bp-media-addons' || $tab == 'bp-media-support') ? $active_class : $idle_class
             );
 
@@ -172,21 +172,21 @@ if (!class_exists('BPMediaAdmin')) {
             /* BuddyPress Media */
             $tabs[] = array(
                 'href' => bp_get_admin_url(add_query_arg(array('page' => 'bp-media-settings'), 'admin.php')),
-                'title' => __('Buddypress Media Settings', BP_MEDIA_TXT_DOMAIN),
+                'title' => __('BuddyPress Media Settings', BP_MEDIA_TXT_DOMAIN),
                 'name' => __('Settings', BP_MEDIA_TXT_DOMAIN),
                 'class' => ($tab == 'bp-media-settings') ? $active_class : $idle_class . ' first_tab'
             );
 
             $tabs[] = array(
                 'href' => bp_get_admin_url(add_query_arg(array('page' => 'bp-media-addons'), 'admin.php')),
-                'title' => __('Buddypress Media Addons', BP_MEDIA_TXT_DOMAIN),
+                'title' => __('BuddyPress Media Addons', BP_MEDIA_TXT_DOMAIN),
                 'name' => __('Addons', BP_MEDIA_TXT_DOMAIN),
                 'class' => ($tab == 'bp-media-addons') ? $active_class : $idle_class
             );
 
             $tabs[] = array(
                 'href' => bp_get_admin_url(add_query_arg(array('page' => 'bp-media-support'), 'admin.php')),
-                'title' => __('Buddypress Media Support', BP_MEDIA_TXT_DOMAIN),
+                'title' => __('BuddyPress Media Support', BP_MEDIA_TXT_DOMAIN),
                 'name' => __('Support', BP_MEDIA_TXT_DOMAIN),
                 'class' => ($tab == 'bp-media-support') ? $active_class : $idle_class . ' last_tab'
             );
@@ -273,7 +273,7 @@ if (!class_exists('BPMediaAdmin')) {
             <li>' . sprintf('<a href="%s">' . __("Read FAQ", BP_MEDIA_TXT_DOMAIN) . '</a>', 'http://rtcamp.com/buddypress-media/faq/') . '</li>
             <li>' . sprintf('<a href="%s">' . __("Free Support Forum", BP_MEDIA_TXT_DOMAIN) . '</a>', $bp_media->support_url) . '</li>
             <li>' . sprintf('<a href="%s">' . __("Github Issue Tracker", BP_MEDIA_TXT_DOMAIN) . '</a>', 'https://github.com/rtCamp/buddypress-media/issues/') . '</li>
-            <li>' . sprintf('<a href="%s">' . __("Hire us!", BP_MEDIA_TXT_DOMAIN) . '</a> ' . __("To get professional customisation/setup service.", BP_MEDIA_TXT_DOMAIN), 'http://rtcamp.com/buddypress-media/hire/') . '</li>
+            <li>' . sprintf('<a href="%s">' . __("Hire Us!", BP_MEDIA_TXT_DOMAIN) . '</a> ' . __("To get professional customisation/setup service.", BP_MEDIA_TXT_DOMAIN), 'http://rtcamp.com/buddypress-media/hire/') . '</li>
             </ul></p>';
             new BPMediaAdminWidget('support', __('Need Help?', BP_MEDIA_TXT_DOMAIN), $support);
 
