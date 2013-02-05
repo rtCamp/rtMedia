@@ -127,7 +127,7 @@ class BPMediaActions {
         wp_enqueue_script('jquery-ui-tabs');
         wp_enqueue_script('bp-media-mejs', BP_MEDIA_URL . 'lib/media-element/mediaelement-and-player.min.js');
         wp_enqueue_script('bp-media-default', BP_MEDIA_URL . 'app/assets/js/main.js');
-        
+
         global $bp;
         $cur_group_id = NULL;
         if (bp_is_active("groups"))
@@ -140,8 +140,8 @@ class BPMediaActions {
             'displayed_user' => bp_displayed_user_id(),
             'loggedin_user' => bp_loggedin_user_id(),
             'current_group' => $cur_group_id,
-            'feature' => __('Feature', BP_MEDIA_TXT_DOMAIN),
-            'removefeature' => __('Remove Feature', BP_MEDIA_TXT_DOMAIN)
+            'feature' => __('Featured', BP_MEDIA_TXT_DOMAIN),
+            'removefeature' => __('Remove Featured', BP_MEDIA_TXT_DOMAIN)
         );
 
         wp_localize_script('bp-media-default', 'bp_media_vars', $bp_media_vars);
