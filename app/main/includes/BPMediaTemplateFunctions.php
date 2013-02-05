@@ -198,7 +198,7 @@ class BPMediaTemplateFunctions {
                 break;
         }
         if ($showmore) {
-            echo '<div class="bp-media-actions"><a href="#" class="button" id="bp-media-show-more">Show More</a></div>';
+            echo '<div class="bp-media-actions"><a href="#" class="button" id="bp-media-show-more">'. __('Show More', BP_MEDIA_TXT_DOMAIN).'</a></div>';
         }
     }
 
