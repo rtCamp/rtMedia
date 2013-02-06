@@ -87,7 +87,7 @@ Please visit [BuddyPress Media's Features page](http://rtcamp.com/buddypress-med
 == Changelog ==
 
 Please visit [BuddyPress Media's Roadmap page](http://rtcamp.com/buddypress-media/roadmap/ "Visit BuddyPress Media's Features page") to get some details about future releases.
-= 2.4.5 =
+= 2.5 =
 * Bug fixes for admin notices on multisite installs.
 * Bug fixes for activity on multiple uploads.
 * Updated upload UI. Now uploads are possible from all tabs.

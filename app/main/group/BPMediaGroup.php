@@ -156,7 +156,7 @@ class BPMediaGroup {
     static function can_upload() {
         /** @todo Implementation Pending */
         global $bp;
-        if (isset($bp->loggedin_user->id) && is_numeric($bp->loggedin_user->id)) {
+        if (isset($bp->loggedin_user->id) && is_numeric($bp->loggedin_user->id) && class_exists( 'BP_Group_Extension' )) {
             return groups_is_user_member($bp->loggedin_user->id, bp_get_current_group_id());
         } else {
             return false;
