@@ -12,6 +12,11 @@ class BPMediaWidget extends WP_Widget {
         parent::__construct('buddypress-media-wid', __('BuddyPress Media Widget', BP_MEDIA_TXT_DOMAIN), $widget_ops);
     }
 
+    /**
+     * 
+     * @param type $args
+     * @param type $instance
+     */
     function widget($args, $instance) {
         extract($args);
         $title = apply_filters('widget_title', empty($instance['title']) ? __('BuddyPress Media', BP_MEDIA_TXT_DOMAIN) : $instance['title'], $instance, $this->id_base);
@@ -59,10 +64,10 @@ class BPMediaWidget extends WP_Widget {
                         array_push($allowMimeType, "video");
                         ?>
                         <li><a href="#<?php echo $wdType; ?>-media-tabs-videos-<?php echo $widgetid; ?>"><?php _e('Videos', BP_MEDIA_TXT_DOMAIN); ?></a></li>
-                    <?php }
-                    ?>
+                <?php }
+                ?>
                 </ul>
-                <?php if ($allowAll) { ?> 
+                    <?php if ($allowAll) { ?> 
                     <div id="<?php echo $wdType; ?>-media-tabs-all-<?php echo $widgetid; ?>" class="bp-media-tab-panel">
                         <?php
                         // All Media //'post_mime_type' => $allowMimeType,
@@ -81,14 +86,14 @@ class BPMediaWidget extends WP_Widget {
                             ?>
 
                             <ul class="widget-item-listing"><?php
-                    while ($bp_media_widget_query->have_posts()) {
-                        $bp_media_widget_query->the_post();
+                            while ($bp_media_widget_query->have_posts()) {
+                                $bp_media_widget_query->the_post();
 
-                        $entry = new BPMediaHostWordpress(get_the_ID());
+                                $entry = new BPMediaHostWordpress(get_the_ID());
                                 ?>
 
-                                    <?php echo $entry->get_media_gallery_content(); ?><?php }
-                                ?>
+                        <?php echo $entry->get_media_gallery_content(); ?><?php }
+                    ?>
 
                             </ul><?php
                 }
@@ -96,7 +101,7 @@ class BPMediaWidget extends WP_Widget {
                     _e('No ' . $wdType . ' media found', BP_MEDIA_TXT_DOMAIN);
 
                 wp_reset_query();
-                            ?>
+                ?>
 
                     </div>
                     <?php
@@ -121,14 +126,14 @@ class BPMediaWidget extends WP_Widget {
                             ?>
 
                             <ul class="widget-item-listing"><?php
-                    while ($bp_media_widget_query->have_posts()) {
-                        $bp_media_widget_query->the_post();
+                            while ($bp_media_widget_query->have_posts()) {
+                                $bp_media_widget_query->the_post();
 
-                        $entry = new BPMediaHostWordpress(get_the_ID());
+                                $entry = new BPMediaHostWordpress(get_the_ID());
                                 ?>
 
-                                    <?php echo $entry->get_media_gallery_content(); ?><?php }
-                                ?>
+                        <?php echo $entry->get_media_gallery_content(); ?><?php }
+                    ?>
 
                             </ul><!-- .widget-item-listing --><?php
                 }
@@ -136,7 +141,7 @@ class BPMediaWidget extends WP_Widget {
                     _e('No ' . $wdType . ' photo found', BP_MEDIA_TXT_DOMAIN);
 
                 wp_reset_query();
-                            ?>
+                ?>
 
                     </div>
                     <?php
@@ -171,11 +176,11 @@ class BPMediaWidget extends WP_Widget {
                                 ?>
 
                             </ul><?php
-                }
-                else
-                    _e('No ' . $wdType . ' audio found', BP_MEDIA_TXT_DOMAIN);
+                            }
+                            else
+                                _e('No ' . $wdType . ' audio found', BP_MEDIA_TXT_DOMAIN);
 
-                wp_reset_query();
+                            wp_reset_query();
                             ?>
 
                     </div>
@@ -201,14 +206,14 @@ class BPMediaWidget extends WP_Widget {
                             ?>
 
                             <ul class="widget-item-listing"><?php
-                    while ($bp_media_widget_query->have_posts()) {
-                        $bp_media_widget_query->the_post();
+                            while ($bp_media_widget_query->have_posts()) {
+                                $bp_media_widget_query->the_post();
 
-                        $entry = new BPMediaHostWordpress(get_the_ID());
+                                $entry = new BPMediaHostWordpress(get_the_ID());
                                 ?>
 
-                                    <?php echo $entry->get_media_gallery_content(); ?><?php }
-                                ?>
+                        <?php echo $entry->get_media_gallery_content(); ?><?php }
+                    ?>
 
                             </ul><?php
                 }
@@ -216,16 +221,22 @@ class BPMediaWidget extends WP_Widget {
                     _e('No ' . $wdType . ' video found', BP_MEDIA_TXT_DOMAIN);
 
                 wp_reset_query();
-                            ?>
+                ?>
 
                     </div>
-                <?php } ?>
+            <?php } ?>
             </div>
             <?php
         }
         echo $after_widget;
     }
 
+    /**
+     * 
+     * @param type $new_instance
+     * @param type $old_instance
+     * @return type
+     */
     function update($new_instance, $old_instance) {
         $instance = $old_instance;
         $instance['wdType'] = strip_tags($new_instance['wdType']);
@@ -239,6 +250,10 @@ class BPMediaWidget extends WP_Widget {
         return $instance;
     }
 
+    /**
+     * 
+     * @param type $instance
+     */
     function form($instance) {
         $wdType = isset($instance['wdType']) ? esc_attr($instance['wdType']) : '';
         $title = isset($instance['title']) ? esc_attr($instance['title']) : '';
