@@ -35,7 +35,7 @@ There's a bug in iOS 6, due to which multiple image uploads won't work. It provi
 = Translations =
 * [Brazilian Portuguese](https://rtcamp.com/translate/projects/buddypress-media/pt-br/default)  translation by [Jose Fabiosan](http://profiles.wordpress.org/josefabiosan/) and [doutorsocrates](http://profiles.wordpress.org/doutorsocrates/)
 * [Spanish](https://rtcamp.com/translate/projects/buddypress-media/es/default) translation by [Andrés Felipe](http://profiles.wordpress.org/naturalworldstm/)
-* [Japanese](https://rtcamp.com/translate/projects/buddypress-media/ja/default) translation by [Tetsu Yamaoka](http://twitter.com/ytetsu]
+* [Japanese](https://rtcamp.com/translate/projects/buddypress-media/ja/default) translation by [Tetsu Yamaoka](http://twitter.com/ytetsu)
 
 = Roadmap =
 
@@ -207,5 +207,5 @@ Please visit [BuddyPress Media's Roadmap page](http://rtcamp.com/buddypress-medi
 * HTML5 Video Tag Support (with fallback)
 
 == Upgrade Notice ==
-=2.4.3=
-Fixed activity formatting and added support for addon updates.
+=2.5=
+Album rename, delete. New languages. Better uploader.
