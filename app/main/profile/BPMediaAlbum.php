@@ -203,7 +203,7 @@ class BPMediaAlbum{
 			<a href="<?php echo $this->url ?>" title="<?php _e($this->description,BP_MEDIA_TXT_DOMAIN); ?>">
 				<?php echo $this->thumbnail; ?>
 			</a>
-			<h3 title="<?php echo $this->name ?>"><a href="<?php echo $this->url ?>" title="<?php _e($this->description,BP_MEDIA_TXT_DOMAIN); ?>"><?php echo $this->name;?></a><?php echo ' ('.count($this->media_entries).')'; ?></h3>
+			<h3 title="<?php echo $this->name ?>"><a href="<?php echo $this->url ?>" title="<?php _e($this->description,BP_MEDIA_TXT_DOMAIN); ?>"><?php echo ( ( strlen( $this->name ) > 14 ) ? substr( $this->name, 0, 14 ) . "&hellip;" : $this->name );?> </a><?php echo ' ('.count($this->media_entries).')'; ?></h3>
 		</li><?php
 	}
 
