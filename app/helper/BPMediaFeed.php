@@ -18,6 +18,11 @@ class BPMediaFeed {
     /**
      * Get BuddyPress Media Feed from rtCamp.com
      */
+
+    /**
+     * 
+     * @global type $bp_media
+     */
     public function fetch_feed() {
         global $bp_media;
         // Get RSS Feed(s)
