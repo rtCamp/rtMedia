@@ -87,7 +87,11 @@ Please visit [BuddyPress Media's Features page](http://rtcamp.com/buddypress-med
 ## Changelog ##
 
 Please visit [BuddyPress Media's Roadmap page](http://rtcamp.com/buddypress-media/roadmap/ "Visit BuddyPress Media's Features page") to get some details about future releases.
-#### 2.4.5 ####
+#### 2.5.1 ####
+* Fixed bug where when a user visits another member's media tab when groups are inactive, they'd get an error.
+* Improved long album title and count display.
+
+#### 2.5 ####
 * Bug fixes for admin notices on multisite installs.
 * Bug fixes for activity on multiple uploads.
 * Updated upload UI. Now uploads are possible from all tabs.
@@ -206,4 +210,4 @@ Please visit [BuddyPress Media's Roadmap page](http://rtcamp.com/buddypress-medi
 * HTML5 Audio Tag Support (with fallback)
 * HTML5 Video Tag Support (with fallback)
 
-Album rename, delete. New languages. Better uploader.
+Album title and count display fixed. Fixed bug with inactive groups.
