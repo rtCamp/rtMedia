@@ -17,7 +17,7 @@ if (class_exists('BP_Group_Extension')) :// Recommended, to prevent problems dur
          */
         function __construct() {
             global $bp;
-            $this->name = BP_MEDIA_LABEL;
+            $this->name = __(BP_MEDIA_LABEL,BP_MEDIA_TXT_DOMAIN);
             $this->slug = BP_MEDIA_SLUG;
             $this->create_step_position = 21;
             $this->nav_item_position = 31;
@@ -128,9 +128,9 @@ if (class_exists('BP_Group_Extension')) :// Recommended, to prevent problems dur
             <?php
         }
 
-        
+
 
     }
 
-    
+
 endif; // class_exists( 'BP_Group_Extension' )
