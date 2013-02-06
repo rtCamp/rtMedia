@@ -18,6 +18,11 @@ if (!class_exists('BPMediaSettings')) {
          * 
          * @global string BP_MEDIA_TXT_DOMAIN
          */
+
+        /**
+         * 
+         * @global BPMediaAddon $bp_media_addon
+         */
         public function settings() {
             global $bp_media_addon;
             add_settings_section('bpm-settings', __('BuddyPress Media Settings', BP_MEDIA_TXT_DOMAIN), is_multisite() ? array($this, 'network_notices') : '', 'bp-media-settings');
@@ -84,6 +89,13 @@ if (!class_exists('BPMediaSettings')) {
         /**
          * Sanitizes the settings
          */
+
+        /**
+         * 
+         * @global type $bp_media_admin
+         * @param type $input
+         * @return type
+         */
         public function sanitize($input) {
             global $bp_media_admin;
             if (isset($_POST['refresh-count'])) {
@@ -111,6 +123,13 @@ if (!class_exists('BPMediaSettings')) {
          * @global array $bp_media
          * @param array $args
          */
+
+        /**
+         * 
+         * @global array $bp_media
+         * @param type $args
+         * @return type
+         */
         public function checkbox($args) {
             global $bp_media;
             $options = $bp_media->options;
@@ -137,7 +156,7 @@ if (!class_exists('BPMediaSettings')) {
             ?>
             <label for="<?php echo $option; ?>">
                 <input<?php checked($options[$option]); ?> name="<?php echo $name; ?>" id="<?php echo $option; ?>" value="1" type="checkbox" />
-                <?php echo $desc; ?>
+            <?php echo $desc; ?>
             </label><?php
         }
 
@@ -146,6 +165,13 @@ if (!class_exists('BPMediaSettings')) {
          * 
          * @global array $bp_media
          * @param array $args
+         */
+
+        /**
+         * 
+         * @global array $bp_media
+         * @param type $args
+         * @return type
          */
         public function radio($args) {
             global $bp_media;
@@ -177,7 +203,7 @@ if (!class_exists('BPMediaSettings')) {
             }
 
             foreach ($radios as $value => $desc) {
-                    ?>
+                ?>
                 <label for="<?php echo sanitize_title($desc); ?>"><input<?php checked($options[$option], $value); ?> value="<?php echo $value; ?>" name="<?php echo $name; ?>" id="<?php echo sanitize_title($desc); ?>" type="radio" /><?php echo $desc; ?></label><br /><?php
             }
         }
@@ -187,6 +213,13 @@ if (!class_exists('BPMediaSettings')) {
          * 
          * @global array $bp_media
          * @param array $args
+         */
+
+        /**
+         * 
+         * @global array $bp_media
+         * @param type $args
+         * @return type
          */
         public function textbox($args) {
             global $bp_media;
@@ -213,12 +246,12 @@ if (!class_exists('BPMediaSettings')) {
             if ((isset($options[$option]) && empty($options[$option])) || !isset($options[$option])) {
                 $options[$option] = '';
             }
-                ?>
+            ?>
             <label for="<?php echo sanitize_title($option); ?>"><input value="<?php echo $options[$option]; ?>" name="<?php echo $name; ?>" id="<?php echo sanitize_title($option); ?>" type="<?php echo $password ? 'password' : 'text'; ?>" /><?php
             if (!empty($desc)) {
                 echo '<br /><span class="description">' . $desc . '</span>';
             }
-                ?></label><br /><?php
+            ?></label><br /><?php
         }
 
         /**
@@ -226,6 +259,12 @@ if (!class_exists('BPMediaSettings')) {
          * 
          * @global array $bp_media
          * @param array $args
+         */
+
+        /**
+         * 
+         * @param type $args
+         * @return type
          */
         public function dropdown($args) {
             $defaults = array(
@@ -253,14 +292,14 @@ if (!class_exists('BPMediaSettings')) {
             if ((isset($options[$option]) && empty($options[$option])) || !isset($options[$option])) {
                 $options[$option] = '';
             }
-                ?>
+            ?>
             <select name="<?php echo $name; ?>" id="<?php echo $option; ?>"><?php if ($none) { ?>
                     <option><?php __e('None', BP_MEDIA_TXT_DOMAIN); ?></option><?php
             }
             foreach ($values as $value => $text) {
-                    ?>
-                    <option<?php selected($options[$option], $value); ?> value="<?php echo $value; ?>"><?php echo $text; ?></option><?php }
                 ?>
+                    <option<?php selected($options[$option], $value); ?> value="<?php echo $value; ?>"><?php echo $text; ?></option><?php }
+            ?>
             </select><?php
         }
 
@@ -269,6 +308,12 @@ if (!class_exists('BPMediaSettings')) {
          * 
          * @global array $bp_media
          * @param array $args
+         */
+
+        /**
+         * 
+         * @param type $args
+         * @return type
          */
         public function button($args) {
             $defaults = array(
@@ -289,7 +334,7 @@ if (!class_exists('BPMediaSettings')) {
                 $button = $option;
             submit_button($name, '', $button, false);
             if (!empty($desc)) {
-                    ?>
+                ?>
                 <span class="description"><?php echo $desc; ?></a><?php
             }
         }
@@ -297,4 +342,4 @@ if (!class_exists('BPMediaSettings')) {
     }
 
 }
-    ?>
+?>
