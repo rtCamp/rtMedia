@@ -30,6 +30,11 @@ class BPMediaRecentMedia extends WP_Widget {
         }
     }
 
+    /**
+     * 
+     * @param type $args
+     * @param type $instance
+     */
     function widget($args, $instance) {
         extract($args);
 
@@ -65,14 +70,14 @@ class BPMediaRecentMedia extends WP_Widget {
                     ?>
 
                     <ul class="widget-item-listing"><?php
-                    while ($bp_media_widget_query->have_posts()) {
-                        $bp_media_widget_query->the_post();
+            while ($bp_media_widget_query->have_posts()) {
+                $bp_media_widget_query->the_post();
 
-                        $entry = new BPMediaHostWordpress(get_the_ID());
+                $entry = new BPMediaHostWordpress(get_the_ID());
                         ?>
 
-                <?php echo $entry->get_media_gallery_content(); ?><?php }
-            ?>
+                        <?php echo $entry->get_media_gallery_content(); ?><?php }
+                    ?>
 
                     </ul><!-- .widget-item-listing --><?php
         }
@@ -153,7 +158,7 @@ class BPMediaRecentMedia extends WP_Widget {
             _e('No recent audio found', BP_MEDIA_TXT_DOMAIN);
 
         wp_reset_query();
-                    ?>
+        ?>
 
             </div><!-- #recent-media-tabs-music -->
 
@@ -178,7 +183,7 @@ class BPMediaRecentMedia extends WP_Widget {
                 $bp_media_widget_query->the_post();
 
                 $entry = new BPMediaHostWordpress(get_the_ID());
-                ?>
+                        ?>
 
                         <?php echo $entry->get_media_gallery_content(); ?><?php }
                     ?>
@@ -189,7 +194,7 @@ class BPMediaRecentMedia extends WP_Widget {
             _e('No recent video found', BP_MEDIA_TXT_DOMAIN);
 
         wp_reset_query();
-                ?>
+        ?>
 
             </div><!-- #media-tabs-videos -->
 
@@ -198,6 +203,12 @@ class BPMediaRecentMedia extends WP_Widget {
         echo $after_widget;
     }
 
+    /**
+     * 
+     * @param type $new_instance
+     * @param type $old_instance
+     * @return type
+     */
     function update($new_instance, $old_instance) {
         $instance = $old_instance;
         $instance['title'] = strip_tags($new_instance['title']);
@@ -205,6 +216,10 @@ class BPMediaRecentMedia extends WP_Widget {
         return $instance;
     }
 
+    /**
+     * 
+     * @param type $instance
+     */
     function form($instance) {
         $title = isset($instance['title']) ? esc_attr($instance['title']) : '';
         $number = isset($instance['number']) ? absint($instance['number']) : 10;

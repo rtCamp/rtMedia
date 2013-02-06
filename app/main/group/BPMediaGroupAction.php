@@ -6,13 +6,19 @@
  * @author faishal
  */
 class BPMediaGroupAction {
-
     /**
      * Called on bp_init by screen functions
      *
      * @uses global $bp, $bp_media_query
      *
      * @since BuddyPress Media 2.0
+     */
+
+    /**
+     * 
+     * @global type $bp
+     * @global WP_Query $bp_media_query
+     * @global type $bp_media_posts_per_page
      */
     static function bp_media_groups_set_query() {
         global $bp, $bp_media_query, $bp_media_posts_per_page;
@@ -65,6 +71,12 @@ class BPMediaGroupAction {
      *
      * @since BuddyPress Media 2.2
      */
+
+    /**
+     * 
+     * @global type $bp
+     * @global WP_Query $bp_media_albums_query
+     */
     static function bp_media_groups_albums_set_query() {
         global $bp, $bp_media_albums_query;
         if (isset($bp->action_variables) && isset($bp->action_variables[1]) && $bp->action_variables[1] == 'page' && isset($bp->action_variables[2]) && is_numeric($bp->action_variables[2])) {
@@ -82,10 +94,15 @@ class BPMediaGroupAction {
                 'meta_compare' => '='
             );
             $bp_media_albums_query = new WP_Query($args);
-
         }
     }
 
+    /**
+     * 
+     * @param BPMediaHostWordpress $media
+     * @param type $hidden
+     * @return boolean
+     */
     static function bp_media_groups_activity_create_after_add_media($media, $hidden = false) {
         if (function_exists('bp_activity_add')) {
             if (!is_object($media)) {
@@ -114,7 +131,15 @@ class BPMediaGroupAction {
     }
 
     //add_action('bp_media_groups_after_add_media','bp_media_groups_activity_create_after_add_media',10,2);
+    /**
+     * 
+     * @global type $bp
+     */
 
+    /**
+     * 
+     * @global type $bp
+     */
     static function bp_media_groups_redirection_handler() {
         global $bp;
         echo '<pre>';
@@ -124,7 +149,10 @@ class BPMediaGroupAction {
     }
 
     //add_action('bp_media_init','bp_media_groups_redirection_handler');
-
+    /**
+     * 
+     * @return boolean
+     */
     static function bp_media_groups_force_hide_activity() {
         return true;
     }

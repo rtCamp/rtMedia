@@ -1,6 +1,9 @@
 <?php
 class BPMediaUpgradeScript{
-
+/**
+ * 
+ * @global wpdb $wpdb
+ */
 	static function upgrade_from_1_0_to_2_1(){
 		global $wpdb;
                 $post_wall =__( 'Wall Posts', BP_MEDIA_TXT_DOMAIN );
@@ -69,12 +72,12 @@ class BPMediaUpgradeScript{
 		add_action('admin_notices','BPMediaUpgradeScript::database_updated_notice');
 		wp_cache_flush();
 	}
-
 	static function database_updated_notice(){
 		echo '<div class="updated rt-success"><p>
 			<b>BuddyPress Media</b> Database upgraded successfully.
 		</p></div>';
 	}
+        
 	static function upgrade_from_2_0_to_2_1(){
 		$page = 0;
 		while($media_entries = BPMediaUpgradeScript::return_query_posts(array(
@@ -117,7 +120,11 @@ class BPMediaUpgradeScript{
 		add_action('admin_notices','BPMediaUpgradeScript::database_updated_notice');
 		wp_cache_flush();
 	}
-
+/**
+ * 
+ * @param type $args
+ * @return type
+ */
 	static function return_query_posts($args){
 		$bp_media_query = new WP_Query($args);
 		return $bp_media_query->posts;

@@ -11,11 +11,23 @@ if (class_exists('BP_Group_Extension')) :
         var $enable_edit_item = false;
         var $enable_create_step = false;
 
+        /**
+         * 
+         * @param type $name
+         * @param type $slug
+         */
         function __construct($name, $slug) {
             $this->name = $name;
             $this->slug = $slug;
         }
 
+        /**
+         * 
+         * @global type $bp
+         * @global BPMediaHostWordpress $bp_media_current_entry
+         * @return type
+         * @throws Exception
+         */
         function display() {
             global $bp;
             BPMediaGroupAction::bp_media_groups_set_query();
@@ -26,7 +38,7 @@ if (class_exists('BP_Group_Extension')) :
             BPMediaGroup::navigation_menu();
             $media_type = "";
             $slug = "";
-            switch ( $current_tab ) {
+            switch ($current_tab) {
                 case BP_MEDIA_IMAGES_SLUG:
                     $media_type = "image";
                     $slug = BP_MEDIA_IMAGES_SLUG;
@@ -73,7 +85,7 @@ if (class_exists('BP_Group_Extension')) :
                                 }
                                 if ($media_type == "album") {
                                     $bp_media_content = new BPMediaAlbumScreen($media_type, BP_MEDIA_ALBUMS_ENTRY_SLUG);
-                                    $bp->action_variables[ 0 ]= BP_MEDIA_ALBUMS_ENTRY_SLUG;
+                                    $bp->action_variables[0] = BP_MEDIA_ALBUMS_ENTRY_SLUG;
                                     $bp_media_content->entry_screen();
                                 } else {
                                     $bp_media_content = new BPMediaScreen($media_type, $slug);
@@ -90,7 +102,7 @@ if (class_exists('BP_Group_Extension')) :
                         BPMediaGroupAction::bp_media_groups_albums_set_query();
                         $bp_media_content = new BPMediaAlbumScreen($media_type, $slug);
                         $bp_media_content->screen_content();
-                    } else if ( $media_type == 'upload' ) {
+                    } else if ($media_type == 'upload') {
                         if (BPMediaGroup::can_upload()) {
                             $bp_media_upload = new BPMediaUploadScreen('upload', BP_MEDIA_UPLOAD_SLUG);
                             $bp_media_upload->upload_screen_content();
@@ -104,9 +116,13 @@ if (class_exists('BP_Group_Extension')) :
         }
 
         function widget_display() {
-
+            
         }
 
+        /**
+         * 
+         * @param type $errorMessage
+         */
         function bp_media_display_error($errorMessage) {
             ?>
             <div id="message" class="error">
