@@ -52,6 +52,11 @@ if (!class_exists('BPMediaAddon')) {
             }
         }
 
+        /**
+         * 
+         * @global type $bp_media
+         * @param type $args
+         */
         public function addon($args) {
             global $bp_media;
 

@@ -25,6 +25,10 @@ class BPMediaHostWordpress {
      * @since BuddyPress Media 2.0
      */
 
+    /**
+     * 
+     * @param type $media_id
+     */
     function __construct($media_id = '') {
         if (!$media_id == '') {
             $this->init($media_id);
@@ -37,6 +41,13 @@ class BPMediaHostWordpress {
      * @param mixed $media_id Media ID of the element to be initialized. Can be the ID or the object of the Media
      *
      * @since BuddyPress Media 2.0
+     */
+
+    /**
+     * 
+     * @param type $media_id
+     * @return boolean
+     * @throws Exception
      */
     function init($media_id = '') {
         if (is_object($media_id)) {
@@ -59,9 +70,8 @@ class BPMediaHostWordpress {
          * But for use in the class, we use group_id as positive integer even though
          * we use it as negative value in the bp-media-key meta key
          */
-
         $this->group_id = $meta_key < 0 ? -$meta_key : 0;
-        if ( !'bp_media_album' == $media->post_type || !empty($media->post_mime_type) )
+        if (!'bp_media_album' == $media->post_type || !empty($media->post_mime_type))
             preg_match_all('/audio|video|image/i', $media->post_mime_type, $result);
         else
             $result[0][0] = 'album';
@@ -76,6 +86,20 @@ class BPMediaHostWordpress {
      * Handles the uploaded media file and creates attachment post for the file.
      *
      * @since BuddyPress Media 2.0
+     */
+
+    /**
+     * 
+     * @global type $bp
+     * @global type $wpdb
+     * @global type $bp_media_count
+     * @global type $bp_media
+     * @param type $name
+     * @param type $description
+     * @param type $album_id
+     * @param type $group
+     * @param type $is_multiple
+     * @throws Exception
      */
     function add_media($name, $description, $album_id = 0, $group = 0, $is_multiple = false) {
         do_action('bp_media_before_add_media');
@@ -205,6 +229,14 @@ class BPMediaHostWordpress {
      * Fetches the content of the activity of media upload based on its type
      *
      */
+
+    /**
+     * 
+     * @global type $bp_media_counter
+     * @global type $bp_media_default_excerpts
+     * @global type $bp_media
+     * @return boolean|string
+     */
     function get_media_activity_content() {
         global $bp_media_counter, $bp_media_default_excerpts, $bp_media;
         $attachment_id = $this->id;
@@ -232,12 +264,17 @@ class BPMediaHostWordpress {
                 return false;
         }
         $activity_content .= '</div>';
-        $activity_content .= '<div class="bp_media_description">' . wp_html_excerpt($this->description, $bp_media_default_excerpts['activity_entry_description']). '</div>';
+        $activity_content .= '<div class="bp_media_description">' . wp_html_excerpt($this->description, $bp_media_default_excerpts['activity_entry_description']) . '</div>';
         return $activity_content;
     }
 
     /**
      * Returns the single media entry's URL
+     */
+
+    /**
+     * 
+     * @return boolean
      */
     function get_media_activity_url() {
         if (!bp_is_activity_component())
@@ -249,6 +286,12 @@ class BPMediaHostWordpress {
     /**
      * Returns the media activity's action text
      */
+
+    /**
+     * 
+     * @global type $bp_media
+     * @return boolean
+     */
     function get_media_activity_action() {
         global $bp_media;
         if (!bp_is_activity_component())
@@ -259,6 +302,13 @@ class BPMediaHostWordpress {
 
     /**
      * Returns the HTML for content of the single entry page of the Media Entry
+     */
+
+    /**
+     * 
+     * @global type $bp_media_default_excerpts
+     * @global type $bp_media
+     * @return boolean|string
      */
     function get_media_single_content() {
         global $bp_media_default_excerpts, $bp_media;
@@ -290,12 +340,19 @@ class BPMediaHostWordpress {
                 return false;
         }
         $content .= '</div>';
-        $content .= '<div class="bp_media_description">' .wp_html_excerpt($this->description, $bp_media_default_excerpts['single_entry_description']) . '</div>';
+        $content .= '<div class="bp_media_description">' . wp_html_excerpt($this->description, $bp_media_default_excerpts['single_entry_description']) . '</div>';
         return $content;
     }
 
     /**
      * Returns the HTML for title of the single entry page of the Media Entry
+     */
+
+    /**
+     * 
+     * @global type $bp_media_default_excerpts
+     * @global type $bp_media
+     * @return string
      */
     function get_media_single_title() {
         global $bp_media_default_excerpts, $bp_media;
@@ -305,6 +362,12 @@ class BPMediaHostWordpress {
 
     /**
      * Returns the HTML for a media entry to be shown in the listing/gallery page
+     */
+
+    /**
+     * 
+     * @global type $bp_media
+     * @return boolean
      */
     function get_media_gallery_content() {
         global $bp_media;
@@ -370,6 +433,12 @@ class BPMediaHostWordpress {
     /**
      * Outputs the comments and comment form in the single media entry page
      */
+
+    /**
+     * 
+     * @global type $bp_media
+     * @return boolean
+     */
     function show_comment_form() {
         global $bp_media;
         $activity_id = get_post_meta($this->id, 'bp_media_child_activity', true);
@@ -388,29 +457,29 @@ class BPMediaHostWordpress {
                     <ul id="activity-stream" class="activity-list item-list">
                         <li class="activity activity_update" id="activity-<?php echo $activity_id; ?>">
                             <div class="activity-content">
-                                <?php do_action('bp_activity_entry_content'); ?>
+                                    <?php do_action('bp_activity_entry_content'); ?>
                                     <?php if (is_user_logged_in()) : ?>
                                     <div class="activity-meta no-ajax">
                                         <?php if (bp_activity_can_comment()) : ?>
                                             <a href="<?php bp_get_activity_comment_link(); ?>" class="button acomment-reply bp-primary-action" id="acomment-comment-<?php bp_activity_id(); ?>"><?php printf(__('Comment <span>%s</span>', BP_MEDIA_TXT_DOMAIN), bp_activity_get_comment_count()); ?></a>
-                                        <?php endif; ?>
-                                        <?php if (bp_activity_can_favorite()) : ?>
-                                            <?php if (!bp_get_activity_is_favorite()) : ?>
+                                    <?php endif; ?>
+                                    <?php if (bp_activity_can_favorite()) : ?>
+                                    <?php if (!bp_get_activity_is_favorite()) : ?>
                                                 <a href="<?php bp_activity_favorite_link(); ?>" class="button fav bp-secondary-action" title="<?php esc_attr_e('Mark as Favorite', BP_MEDIA_TXT_DOMAIN); ?>"><?php _e('Favorite', BP_MEDIA_TXT_DOMAIN) ?></a>
-                                            <?php else : ?>
+                                    <?php else : ?>
                                                 <a href="<?php bp_activity_unfavorite_link(); ?>" class="button unfav bp-secondary-action" title="<?php esc_attr_e('Remove Favorite', BP_MEDIA_TXT_DOMAIN); ?>"><?php _e('Remove Favorite', BP_MEDIA_TXT_DOMAIN) ?></a>
-                                            <?php endif; ?>
                                         <?php endif; ?>
-                                        <?php if (bp_activity_user_can_delete()) bp_activity_delete_link(); ?>
-                                    <?php do_action('bp_activity_entry_meta'); ?>
+                                    <?php endif; ?>
+                    <?php if (bp_activity_user_can_delete()) bp_activity_delete_link(); ?>
+                    <?php do_action('bp_activity_entry_meta'); ?>
                                     </div>
-                            <?php endif; ?>
+                <?php endif; ?>
                             </div>
-                            <?php do_action('bp_before_activity_entry_comments'); ?>
-                                <?php if (( is_user_logged_in() && bp_activity_can_comment() ) || bp_activity_get_comment_count()) : ?>
+                <?php do_action('bp_before_activity_entry_comments'); ?>
+                <?php if (( is_user_logged_in() && bp_activity_can_comment() ) || bp_activity_get_comment_count()) : ?>
                                 <div class="activity-comments">
-                                    <?php bp_activity_comments(); ?>
-                    <?php if (is_user_logged_in()) : ?>
+                                        <?php bp_activity_comments(); ?>
+                                        <?php if (is_user_logged_in()) : ?>
                                         <form action="<?php bp_activity_comment_form_action(); ?>" method="post" id="ac-form-<?php bp_activity_id(); ?>" class="ac-form"<?php bp_activity_comment_form_nojs_display(); ?>>
                                             <div class="ac-reply-avatar"><?php bp_loggedin_user_avatar('width=' . BP_AVATAR_THUMB_WIDTH . '&height=' . BP_AVATAR_THUMB_HEIGHT); ?></div>
                                             <div class="ac-reply-content">
@@ -420,26 +489,26 @@ class BPMediaHostWordpress {
                                                 <input type="submit" name="ac_form_submit" value="<?php _e('Post', BP_MEDIA_TXT_DOMAIN); ?>" /> &nbsp; <?php _e('or press esc to cancel.', BP_MEDIA_TXT_DOMAIN); ?>
                                                 <input type="hidden" name="comment_form_id" value="<?php bp_activity_id(); ?>" />
                                             </div>
-                                            <?php do_action('bp_activity_entry_comments'); ?>
-                                        <?php wp_nonce_field('new_activity_comment', '_wpnonce_new_activity_comment'); ?>
+                        <?php do_action('bp_activity_entry_comments'); ?>
+                        <?php wp_nonce_field('new_activity_comment', '_wpnonce_new_activity_comment'); ?>
                                         </form>
-                                <?php endif; ?>
+                    <?php endif; ?>
                                 </div>
-                            <?php endif; ?>
+                <?php endif; ?>
                 <?php do_action('bp_after_activity_entry_comments'); ?>
                         </li>
                     </ul>
                 </div>
-                <?php
-            }
-        }
-        else {
-            ?>
+                                <?php
+                            }
+                        }
+                        else {
+                            ?>
             <div class="activity">
                 <ul id="activity-stream" class="activity-list item-list">
                     <li class="activity activity_update" id="activity-<?php echo $activity_id; ?>">
                         <div class="activity-content">
-                            <?php do_action('bp_activity_entry_content'); ?>
+            <?php do_action('bp_activity_entry_content'); ?>
             <?php if (is_user_logged_in()) : ?>
                                 <div class="activity-meta no-ajax">
                                     <a href="<?php echo $this->get_delete_url(); ?>" class="button item-button bp-secondary-action delete-activity-single confirm" rel="nofollow"><?php _e("Delete", BP_MEDIA_TXT_DOMAIN); ?></a>
@@ -456,12 +525,22 @@ class BPMediaHostWordpress {
     /**
      * Returns the URL of the single media entry page
      */
+
+    /**
+     * 
+     * @return type
+     */
     function get_url() {
         return $this->url;
     }
 
     /**
      * Returns the URL of the attached media file
+     */
+
+    /**
+     * 
+     * @return type
      */
     function get_attachment_url() {
         return wp_get_attachment_url($this->id);
@@ -476,6 +555,12 @@ class BPMediaHostWordpress {
      * 'owner'
      *
      * @return bool True when the update is successful, False when the update fails
+     */
+
+    /**
+     * 
+     * @param type $args
+     * @return type
      */
     function update_media($args = array()) {
         $defaults = array(
@@ -497,6 +582,14 @@ class BPMediaHostWordpress {
     /**
      * Updates activity content's title and description sync with the editing of Media
      *
+     */
+
+    /**
+     * 
+     * @global type $wpdb
+     * @global type $bp
+     * @global type $current_user
+     * @global type $bp_media
      */
     function update_media_activity() {
         global $wpdb, $bp, $current_user, $bp_media;
@@ -527,6 +620,11 @@ class BPMediaHostWordpress {
     /**
      * Deletes the Media Entry
      */
+
+    /**
+     * 
+     * @global type $bp_media_count
+     */
     function delete_media() {
         do_action('bp_media_before_delete_media', $this->id);
         global $bp_media_count;
@@ -549,6 +647,11 @@ class BPMediaHostWordpress {
 
     /**
      * Function to return the content to be placed in the activity of album
+     */
+
+    /**
+     * 
+     * @return boolean|string
      */
     function get_album_activity_content() {
         $attachment = $this->id;
@@ -587,12 +690,22 @@ class BPMediaHostWordpress {
     /**
      * Returns the description of the Media Entry
      */
+
+    /**
+     * 
+     * @return type
+     */
     function get_content() {
         return $this->description;
     }
 
     /**
      * Returns the owner id of the Media Entry
+     */
+
+    /**
+     * 
+     * @return type
      */
     function get_author() {
         return $this->owner;
@@ -601,12 +714,22 @@ class BPMediaHostWordpress {
     /**
      * Returns the id of the Media Entry
      */
+
+    /**
+     * 
+     * @return type
+     */
     function get_id() {
         return $this->id;
     }
 
     /**
      * Returns the edit url of the Media Entry
+     */
+
+    /**
+     * 
+     * @return type
      */
     function get_edit_url() {
         return $this->edit_url;
@@ -615,12 +738,22 @@ class BPMediaHostWordpress {
     /**
      * Returns the delete url of the Media Entry
      */
+
+    /**
+     * 
+     * @return type
+     */
     function get_delete_url() {
         return $this->delete_url;
     }
 
     /**
      * Returns the type of activity
+     */
+
+    /**
+     * 
+     * @return string
      */
     function get_media_activity_type() {
         switch ($this->type) {
@@ -638,6 +771,11 @@ class BPMediaHostWordpress {
     /**
      * Returns the album id
      */
+
+    /**
+     * 
+     * @return type
+     */
     function get_album_id() {
         return $this->album_id;
     }
@@ -645,12 +783,22 @@ class BPMediaHostWordpress {
     /**
      * Returns the title of the media
      */
+
+    /**
+     * 
+     * @return type
+     */
     function get_title() {
         return $this->name;
     }
 
     /**
      * Returns the type of media
+     */
+
+    /**
+     * 
+     * @return type
      */
     function get_type() {
         return $this->type;
@@ -666,6 +814,11 @@ class BPMediaHostWordpress {
     /**
      * Returns the group id of the media, 0 if it does not belong to a group
      */
+
+    /**
+     * 
+     * @return type
+     */
     function get_group_id() {
         return $this->group_id;
     }
@@ -673,6 +826,11 @@ class BPMediaHostWordpress {
     /**
      * Sets the permalinks of the media depending upon whether its in member directory
      * or group and acording to the media type
+     */
+
+    /**
+     * 
+     * @return boolean
      */
     protected function set_permalinks() {
         if ($this->group_id > 0) {
@@ -716,9 +874,17 @@ class BPMediaHostWordpress {
     /**
      * Checks if the album given exists if not, creates a new one according to context
      */
+
+    /**
+     * 
+     * @global type $wpdb
+     * @param type $album_id
+     * @param type $group
+     * @return type
+     */
     function check_and_create_album($album_id, $group) {
         global $wpdb;
-        $post_wall=__( 'Wall Posts', BP_MEDIA_TXT_DOMAIN );
+        $post_wall = __('Wall Posts', BP_MEDIA_TXT_DOMAIN);
         $create_new_album_flag = false;
         if ($album_id != 0) {
             $album = get_post($album_id);

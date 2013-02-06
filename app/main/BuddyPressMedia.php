@@ -48,9 +48,9 @@ class BuddyPressMedia {
          */
         add_action('bp_include', array($this, 'init'));
         add_action('widgets_init', array($this, 'widgets_init'), 1);
-		add_action('plugins_loaded',array($this,'load_translation'));
-		global $bp_media_counter;
-		$bp_media_counter = 0;
+        add_action('plugins_loaded', array($this, 'load_translation'));
+        global $bp_media_counter;
+        $bp_media_counter = 0;
     }
 
     public function bp_exists() {
@@ -191,6 +191,10 @@ class BuddyPressMedia {
             define('BP_MEDIA_SUPPORT_EMAIL', $this->support_email);
     }
 
+    /**
+     * 
+     * @global BPMediaAdmin $bp_media_admin
+     */
     function init() {
         $this->get_option();
 
@@ -209,13 +213,19 @@ class BuddyPressMedia {
         $bp_media_admin = new BPMediaAdmin();
     }
 
-	static function load_translation(){
-		load_plugin_textdomain(BP_MEDIA_TXT_DOMAIN, false,  basename(BP_MEDIA_PATH).'/languages/');
-	}
+    static function load_translation() {
+        load_plugin_textdomain(BP_MEDIA_TXT_DOMAIN, false, basename(BP_MEDIA_PATH) . '/languages/');
+    }
 
+    /**
+     * 
+     * @param type $links
+     * @param type $file
+     * @return type
+     */
     function settings_link($links, $file) {
         /* create link */
-        $plugin_name = plugin_basename(BP_MEDIA_PATH.'index.php');
+        $plugin_name = plugin_basename(BP_MEDIA_PATH . 'index.php');
         $admin_link = $this->get_admin_url(add_query_arg(array('page' => 'bp-media-settings'), 'admin.php'));
         if ($file == $plugin_name) {
             array_unshift(
@@ -225,6 +235,10 @@ class BuddyPressMedia {
         return $links;
     }
 
+    /**
+     * 
+     * @return type
+     */
     function media_sizes() {
         $def_sizes = array(
             'activity_image' => array(
@@ -254,6 +268,10 @@ class BuddyPressMedia {
         return apply_filters('bpm_media_sizes', $def_sizes);
     }
 
+    /**
+     * 
+     * @global type $bp_media_default_excerpts
+     */
     function excerpt_lengths() {
         global $bp_media_default_excerpts;
         $def_excerpt = array(
@@ -266,6 +284,10 @@ class BuddyPressMedia {
         $bp_media_default_excerpts = apply_filters('bpm_excerpt_lengths', $def_excerpt);
     }
 
+    /**
+     * 
+     * @global type $current_user
+     */
     public function admin_notice() {
         global $current_user;
         $user_id = $current_user->ID;
@@ -302,6 +324,12 @@ class BuddyPressMedia {
         }
     }
 
+    /**
+     * 
+     * @param type $path
+     * @param type $scheme
+     * @return type
+     */
     function get_admin_url($path = '', $scheme = 'admin') {
 
         // Links belong in network admin

@@ -29,6 +29,12 @@ class BPMediaGroup {
      *
      * @since BuddyPress Media 2.3
      */
+
+    /**
+     * 
+     * @global type $bp
+     * @return type
+     */
     function custom_nav() {
         global $bp;
         $current_group = isset($bp->groups->current_group->slug) ? $bp->groups->current_group->slug : null;
@@ -72,6 +78,13 @@ class BPMediaGroup {
      *
      * @since BuddyPress Media 2.3
      */
+
+    /**
+     * 
+     * @global type $bp
+     * @param type $multipart_params
+     * @return type
+     */
     function multipart_params_handler($multipart_params) {
         if (is_array($multipart_params)) {
             global $bp;
@@ -92,12 +105,18 @@ class BPMediaGroup {
      *
      * @since BuddyPress Media 2.3
      */
+
+    /**
+     * 
+     * @global type $bp
+     * @return boolean
+     */
     static function navigation_menu() {
         global $bp;
         if (!isset($bp->current_action) || $bp->current_action != BP_MEDIA_SLUG)
             return false;
-        $bp_media_upload = new BPMediaUploadScreen( 'upload', BP_MEDIA_UPLOAD_SLUG );
-        $bp_media_image = new BPMediaScreen( 'image', BP_MEDIA_IMAGES_SLUG );
+        $bp_media_upload = new BPMediaUploadScreen('upload', BP_MEDIA_UPLOAD_SLUG);
+        $bp_media_image = new BPMediaScreen('image', BP_MEDIA_IMAGES_SLUG);
         $current_tab = BP_MEDIA_IMAGES_SLUG;
 
         if (isset($bp->action_variables[0])) {
@@ -105,18 +124,18 @@ class BPMediaGroup {
         }
 
 //        if (BPMediaGroup::can_upload()) {
-            $bp_media_nav[BP_MEDIA_IMAGES_SLUG] = array(
-                'url' => trailingslashit(bp_get_group_permalink($bp->groups->current_group)) . BP_MEDIA_SLUG,
-                'label' => BP_MEDIA_IMAGES_LABEL,
-                'screen_function' => array( $bp_media_image, 'screen' )
-            );
+        $bp_media_nav[BP_MEDIA_IMAGES_SLUG] = array(
+            'url' => trailingslashit(bp_get_group_permalink($bp->groups->current_group)) . BP_MEDIA_SLUG,
+            'label' => BP_MEDIA_IMAGES_LABEL,
+            'screen_function' => array($bp_media_image, 'screen')
+        );
 //        } else {
 //            $bp_media_nav = array();
 //        }
 
         foreach (array('VIDEOS', 'AUDIO', 'ALBUMS', 'UPLOAD') as $type) {
-            if ( $type == 'UPLOAD' ) {
-                if ( BPMediaGroup::can_upload() ) {
+            if ($type == 'UPLOAD') {
+                if (BPMediaGroup::can_upload()) {
                     $bp_media_nav[constant('BP_MEDIA_' . $type . '_SLUG')] = array(
                         'url' => trailingslashit(bp_get_group_permalink($bp->groups->current_group)) . constant('BP_MEDIA_' . $type . '_SLUG'),
                         'label' => constant('BP_MEDIA_' . $type . '_LABEL'),
@@ -153,6 +172,12 @@ class BPMediaGroup {
      *
      * @since BuddyPress Media 2.3
      */
+
+    /**
+     * 
+     * @global type $bp
+     * @return boolean
+     */
     static function can_upload() {
         /** @todo Implementation Pending */
         global $bp;
@@ -171,6 +196,12 @@ class BPMediaGroup {
      * @uses global $bp,$wp_admin_bar
      *
      * @since BuddyPress Media 2.3
+     */
+
+    /**
+     * 
+     * @global type $wp_admin_bar
+     * @global type $bp
      */
     function admin_bar() {
         global $wp_admin_bar, $bp;
@@ -195,6 +226,13 @@ class BPMediaGroup {
      *
      * @return boolean True if the user can create an album in the group, false if not
      */
+
+    /**
+     * 
+     * @param type $group_id
+     * @param type $user_id
+     * @return boolean
+     */
     static function user_can_create_album($group_id, $user_id = 0) {
         if ($user_id == 0)
             $user_id = get_current_user_id();
@@ -215,11 +253,15 @@ class BPMediaGroup {
         return false;
     }
 
+    /**
+     * 
+     * @param type $errorMessage
+     */
     static function bp_media_display_error($errorMessage) {
         ?>
         <div id="message" class="error">
             <p>
-        <?php _e($errorMessage, BP_MEDIA_TXT_DOMAIN); ?>
+                <?php _e($errorMessage, BP_MEDIA_TXT_DOMAIN); ?>
             </p>
         </div>
         <?php
