@@ -7,6 +7,10 @@
  */
 class BPMediaFilters {
 
+    /**
+     *
+     * @global array $bp_media_activity_types
+     */
     function __construct() {
         add_filter('bp_activity_get_permalink', array($this, 'activity_permalink_filter'), 10, 2);
         add_filter('bp_get_activity_delete_link', array($this, 'delete_button_handler'));
@@ -19,6 +23,14 @@ class BPMediaFilters {
         $bp_media_activity_types = array('media_upload', 'album_updated', 'album_created');
     }
 
+    /**
+     *
+     * @global array $bp_media_activity_types
+     * @global type $activities_template
+     * @param type $link
+     * @param type $activity_obj
+     * @return type
+     */
     function activity_permalink_filter($link, $activity_obj = null) {
         global $bp_media_activity_types;
         if ($activity_obj != null && in_array($activity_obj->type, $bp_media_activity_types)) {
@@ -53,6 +65,12 @@ class BPMediaFilters {
         return $link;
     }
 
+    /**
+     *
+     * @global type $activities_template
+     * @param type $activity_content
+     * @return boolean
+     */
     function activity_parent_content_filter($activity_content) {
         global $activities_template;
         $defaults = array(
@@ -85,7 +103,12 @@ class BPMediaFilters {
     }
 
     //add_filter('bp_get_activity_parent_content', 'activity_parent_content_filter', 1);
-
+    /**
+     *
+     * @global type $activities_template
+     * @param type $link
+     * @return type
+     */
     function delete_button_handler($link) {
         global $activities_template;
         $media_label = NULL;
@@ -114,6 +137,13 @@ class BPMediaFilters {
         return $link;
     }
 
+    /**
+     *
+     * @global type $bp_media_count
+     * @param type $title
+     * @param type $nav_item
+     * @return type
+     */
     static function items_count_filter($title, $nav_item) {
         global $bp_media_count;
         $bp_media_count = wp_parse_args($bp_media_count, array(
@@ -146,6 +176,13 @@ class BPMediaFilters {
     /**
      * To hide some activities of multiple uploads
      */
+
+    /**
+     *
+     * @global type $wpdb
+     * @param type $query
+     * @return type
+     */
     static function activity_query_filter($query) {
         global $wpdb;
         $query = preg_replace('/WHERE/i', 'WHERE a.secondary_item_id!=-999 AND ', $query);
@@ -154,6 +191,11 @@ class BPMediaFilters {
 
     /**
      * Added menu under buddypress menu 'my account' in admin bar
+     *
+     * @global type $wp_admin_bar
+     */
+
+    /**
      *
      * @global type $wp_admin_bar
      */
@@ -221,7 +263,12 @@ class BPMediaFilters {
      *
      * @global type $wp_admin_bar
      */
-    function adminbar_settings_menu() {
+
+    /**
+     *
+     * @global type $wp_admin_bar
+     */
+    static function adminbar_settings_menu() {
         global $wp_admin_bar;
 
         if (current_user_can('manage_options') && is_super_admin()) {
@@ -274,7 +321,11 @@ class BPMediaFilters {
      *
      */
     //add_action('wp_dashboard_setup','dashboard_widgets');
-
+    /**
+     *
+     * @global array $wp_meta_boxes
+     * @global array $wp_meta_boxes
+     */
     function dashboard_widgets() {
         global $wp_meta_boxes;
         // BuddyPress Media
@@ -333,6 +384,11 @@ class BPMediaFilters {
         <?php
     }
 
+    /**
+     *
+     * @param type $media_type
+     * @return type
+     */
     function admin_total_count($media_type) {
 
         switch ($media_type) {
@@ -350,6 +406,11 @@ class BPMediaFilters {
         }
     }
 
+    /**
+     *
+     * @param type $media_type
+     * @return type
+     */
     function group_total_count($media_type) {
 
         switch ($media_type) {
@@ -367,6 +428,12 @@ class BPMediaFilters {
         }
     }
 
+    /**
+     *
+     * @global type $wpdb
+     * @param type $type
+     * @return boolean
+     */
     function total_count_media($type) {
         global $wpdb;
 
@@ -382,6 +449,11 @@ class BPMediaFilters {
             return false;
     }
 
+    /**
+     *
+     * @global type $wpdb
+     * @return boolean
+     */
     function total_count_albums() {
         global $wpdb;
 

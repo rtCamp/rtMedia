@@ -7,7 +7,6 @@
 if (class_exists('BP_Group_Extension')) :// Recommended, to prevent problems during upgrade or when Groups are disabled
 
     class BPMediaGroupsExtension extends BPMediaGroupElementExtension {
-
         /**
          * Constructor for the BP_Group_Extension adding values to the variables defined
          *
@@ -15,14 +14,24 @@ if (class_exists('BP_Group_Extension')) :// Recommended, to prevent problems dur
          *
          * @since BuddyPress Media 2.3
          */
+
+        /**
+         * 
+         * @global type $bp
+         */
         function __construct() {
             global $bp;
-            $this->name = __(BP_MEDIA_LABEL,BP_MEDIA_TXT_DOMAIN);
+            $this->name = __(BP_MEDIA_LABEL, BP_MEDIA_TXT_DOMAIN);
             $this->slug = BP_MEDIA_SLUG;
             $this->create_step_position = 21;
             $this->nav_item_position = 31;
-         }
+        }
 
+        /**
+         * 
+         * @global type $bp_media
+         * @return boolean
+         */
         function create_screen() {
             global $bp_media;
             if (!bp_is_group_creation_step($this->slug))
@@ -49,6 +58,10 @@ if (class_exists('BP_Group_Extension')) :// Recommended, to prevent problems dur
             wp_nonce_field('groups_create_save_' . $this->slug);
         }
 
+        /**
+         * 
+         * @global type $bp
+         */
         function create_screen_save() {
             global $bp;
 
@@ -59,6 +72,11 @@ if (class_exists('BP_Group_Extension')) :// Recommended, to prevent problems dur
                 groups_update_groupmeta($bp->groups->new_group_id, 'bp_media_group_control_level', $_POST['bp_album_creation_control']);
         }
 
+        /**
+         * 
+         * @global type $bp_media
+         * @return boolean
+         */
         function edit_screen() {
             global $bp_media;
             if (!bp_is_group_admin_screen($this->slug))
@@ -88,6 +106,12 @@ if (class_exists('BP_Group_Extension')) :// Recommended, to prevent problems dur
             wp_nonce_field('groups_edit_save_' . $this->slug);
         }
 
+        /**
+         * 
+         * @global type $bp
+         * @global type $bp_media
+         * @return boolean
+         */
         function edit_screen_save() {
             global $bp, $bp_media;
 
@@ -115,6 +139,11 @@ if (class_exists('BP_Group_Extension')) :// Recommended, to prevent problems dur
          *
          * @since BuddyPress Media 2.3
          */
+
+        /**
+         * 
+         * @global type $bp_media
+         */
         function widget_display() {
             global $bp_media;
             ?>
@@ -128,9 +157,11 @@ if (class_exists('BP_Group_Extension')) :// Recommended, to prevent problems dur
             <?php
         }
 
-
-
     }
+
+    
+
+    
 
 
 endif; // class_exists( 'BP_Group_Extension' )

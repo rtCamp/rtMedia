@@ -9,6 +9,13 @@ if (!class_exists('BPMediaAdminWidget')) {
 
     class BPMediaAdminWidget {
 
+        /**
+         * 
+         * @global type $bp_media
+         * @param type $id
+         * @param type $title
+         * @param type $content
+         */
         public function __construct($id = NULL, $title = NULL, $content = NULL) {
             global $bp_media;
             if ($id) {

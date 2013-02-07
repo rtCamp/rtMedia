@@ -23,6 +23,11 @@ if (!class_exists('BPMediaUpgrade')) {
          * 
          * @global string BP_MEDIA_TXT_DOMAIN
          */
+
+        /**
+         * 
+         * @global type $bp_media
+         */
         public function upgrade_db() {
             global $bp_media;
             ?>
@@ -53,9 +58,15 @@ if (!class_exists('BPMediaUpgrade')) {
          * @global wpdb $wpdb
          * @global string BP_MEDIA_TXT_DOMAIN
          */
+
+        /**
+         * 
+         * @global wpdb $wpdb
+         * @global type $bp_media
+         */
         public function upgrade_1_0_to_2_1() {
             global $wpdb, $bp_media;
-            $post_wall =__( 'Wall Posts', BP_MEDIA_TXT_DOMAIN );
+            $post_wall = __('Wall Posts', BP_MEDIA_TXT_DOMAIN);
             remove_filter('bp_activity_get_user_join_filter', 'BPMediaFilters::activity_query_filter', 10);
             /* @var $wpdb wpdb */
             $wall_posts_album_ids = array();
@@ -124,17 +135,22 @@ if (!class_exists('BPMediaUpgrade')) {
          * 
          * @global string BP_MEDIA_TXT_DOMAIN
          */
+
+        /**
+         * 
+         * @global type $bp_media
+         */
         public function upgrade_2_0_to_2_1() {
             global $bp_media;
             $page = 0;
             while ($media_entries = BPMediaUpgradeScript::return_query_posts(array(
-        'post_type' => 'attachment',
-        'post_status' => 'any',
-        'meta_key' => 'bp-media-key',
-        'meta_value' => 0,
-        'meta_compare' => '>',
-        'paged' => ++$page,
-        'postsperpage' => 10
+                'post_type' => 'attachment',
+                'post_status' => 'any',
+                'meta_key' => 'bp-media-key',
+                'meta_value' => 0,
+                'meta_compare' => '>',
+                'paged' => ++$page,
+                'postsperpage' => 10
             ))) {
                 foreach ($media_entries as $media) {
                     try {
