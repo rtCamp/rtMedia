@@ -7,6 +7,10 @@
  */
 class BPMediaActions {
 
+    /**
+     * 
+     * @global type $bp_media_options
+     */
     function __construct() {
         add_action('bp_media_before_content', 'BPMediaActions::show_messages');
         add_action('wp_enqueue_scripts', array($this, 'enqueue_scripts_styles'), 11);
@@ -33,6 +37,13 @@ class BPMediaActions {
      * Handles the uploads and creates respective posts for the upload
      *
      * @since BuddyPress Media 2.0
+     */
+
+    /**
+     * 
+     * @global type $bp
+     * @global type $bp_media_options
+     * @return type
      */
     static function handle_uploads() {
         global $bp, $bp_media_options;
@@ -105,6 +116,11 @@ class BPMediaActions {
      *
      * @since BuddyPress Media 2.0
      */
+
+    /**
+     * 
+     * @global type $bp
+     */
     static function show_messages() {
         global $bp;
         if (is_array($bp->{BP_MEDIA_SLUG}->messages)) {
@@ -121,6 +137,11 @@ class BPMediaActions {
      * Enqueues all the required scripts and stylesheets for the proper working of BuddyPress Media.
      *
      * @since BuddyPress Media 2.0
+     */
+
+    /**
+     * 
+     * @global type $bp
      */
     function enqueue_scripts_styles() {
 
@@ -149,6 +170,13 @@ class BPMediaActions {
         wp_enqueue_style('bp-media-default', BP_MEDIA_URL . 'app/assets/css/main.css');
     }
 
+    /**
+     * 
+     * @global type $bp_media_count
+     * @global type $wpdb
+     * @param type $args
+     * @return boolean
+     */
     static function delete_activity_handler($args) {
         remove_action('bp_media_before_delete_media', 'BPMediaActions::delete_media_handler');
         global $bp_media_count, $wpdb;
@@ -184,6 +212,11 @@ class BPMediaActions {
         }
     }
 
+    /**
+     * 
+     * @param type $media_id
+     * @return boolean
+     */
     static function delete_media_handler($media_id) {
         /* @var $media BPMediaHostWordpress */
         remove_action('bp_before_activity_delete', 'BPMediaActions::delete_activity_handler');
@@ -199,6 +232,13 @@ class BPMediaActions {
      * @uses global $bp, $bp_media_query
      *
      * @since BuddyPress Media 2.0
+     */
+
+    /**
+     * 
+     * @global type $bp
+     * @global WP_Query $bp_media_query
+     * @global type $bp_media_posts_per_page
      */
     function set_query() {
         global $bp, $bp_media_query, $bp_media_posts_per_page;
@@ -243,6 +283,13 @@ class BPMediaActions {
      *
      * @since BuddyPress Media 2.0
      */
+
+    /**
+     * 
+     * @global type $bp_media_current_entry
+     * @global type $bp_media_options
+     * @return boolean
+     */
     function action_buttons() {
         if (!in_array('bp_media_current_entry', $GLOBALS))
             return false;
@@ -281,6 +328,13 @@ class BPMediaActions {
      * Shows the media count of a user in the tabs
      *
      * @since BuddyPress Media 2.0
+     */
+
+    /**
+     * 
+     * @global type $bp_media_count
+     * @param type $user
+     * @return boolean
      */
     static function init_count($user = null) {
         global $bp_media_count;
@@ -352,6 +406,12 @@ class BPMediaActions {
      *
      * @since BuddyPress Media 2.2
      */
+
+    /**
+     * 
+     * @global type $bp
+     * @global WP_Query $bp_media_albums_query
+     */
     function albums_set_query() {
         global $bp, $bp_media_albums_query;
         if (isset($bp->action_variables) && is_array($bp->action_variables) && isset($bp->action_variables[0]) && $bp->action_variables[0] == 'page' && isset($bp->action_variables[1]) && is_numeric($bp->action_variables[1])) {
@@ -374,6 +434,13 @@ class BPMediaActions {
 
     /**
      * Function to return the media for the ajax requests
+     */
+
+    /**
+     * 
+     * @global type $bp
+     * @global WP_Query $bp_media_query
+     * @global type $bp_media_posts_per_page
      */
     function load_more() {
 
@@ -462,6 +529,12 @@ class BPMediaActions {
         die();
     }
 
+    /**
+     * 
+     * @global type $bp_media_count
+     * @param type $attachment_id
+     * @return boolean
+     */
     function delete_attachment_handler($attachment_id) {
         if (get_post_meta($attachment_id, 'bp-media-key')) {
             do_action('bp_media_before_delete_media', $attachment_id);
@@ -531,7 +604,10 @@ class BPMediaActions {
 
 //add_action('bp_after_activity_post_form','add_new_from_activity');
 
-
+    /**
+     * 
+     * @param type $album
+     */
     function album_create_activity($album) {
         /* @var $album BP_Media_Album */
         $args = array(
@@ -546,15 +622,29 @@ class BPMediaActions {
         update_post_meta($album->get_id(), 'bp_media_child_activity', $activity_id);
     }
 
+    /**
+     * 
+     * @param type $album_id
+     */
     function album_activity_update($album_id) {
         BPMediaFunction::update_album_activity($album_id);
     }
 
+    /**
+     * 
+     * @param type $media_id
+     */
     function album_activity_sync($media_id) {
         $album_id = wp_get_post_parent_id($media_id);
         BPMediaFunction::update_album_activity($album_id, false, $media_id);
     }
 
+    /**
+     * 
+     * @param BPMediaHostWordpress $media
+     * @param type $hidden
+     * @return boolean
+     */
     static function activity_create_after_add_media($media, $hidden = false) {
         if (function_exists('bp_activity_add')) {
             if (!is_object($media)) {
@@ -564,8 +654,8 @@ class BPMediaActions {
                     return false;
                 }
             }
-			$activity_content = $media->get_media_activity_content();
-			new BPMediaLog($activity_content);
+            $activity_content = $media->get_media_activity_content();
+            new BPMediaLog($activity_content);
             $args = array(
                 'action' => apply_filters('bp_media_added_media', sprintf(__('%1$s added a %2$s', BP_MEDIA_TXT_DOMAIN), bp_core_get_userlink($media->get_author()), '<a href="' . $media->get_url() . '">' . $media->get_media_activity_type() . '</a>')),
                 'content' => $activity_content,

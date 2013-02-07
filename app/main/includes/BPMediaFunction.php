@@ -1,5 +1,7 @@
 <?php
-
+/**
+ *
+ */
 class BPMediaFunction {
 
     function __construct() {
@@ -9,6 +11,12 @@ class BPMediaFunction {
         add_action('wp_ajax_nopriv_my_featured_action', array($this, 'implement_featured_ajax'));
     }
 
+    /**
+     * 
+     * @global type $bp
+     * @param type $args
+     * @return boolean
+     */
     static function record_activity($args = '') {
         global $bp;
         if (!function_exists('bp_activity_add'))
@@ -22,6 +30,11 @@ class BPMediaFunction {
         return $activity_id;
     }
 
+    /**
+     * 
+     * @param type $activity_allowedtags
+     * @return array
+     */
     static function override_allowed_tags($activity_allowedtags) {
         $activity_allowedtags['video'] = array();
         $activity_allowedtags['video']['id'] = array();
@@ -56,6 +69,11 @@ class BPMediaFunction {
         return $activity_allowedtags;
     }
 
+    /**
+     * 
+     * @param type $messages
+     * @param type $type
+     */
     static function show_formatted_error_message($messages, $type) {
         echo '<div id="message" class="' . $type . '">';
         if (is_array($messages)) {
@@ -82,6 +100,13 @@ class BPMediaFunction {
      *
      */
 
+    /**
+     * 
+     * @global type $bp_media
+     * @param type $content
+     * @param type $activity
+     * @return type
+     */
     function conditional_override_allowed_tags($content, $activity = null) {
         global $bp_media;
 
@@ -98,6 +123,12 @@ class BPMediaFunction {
 
     /**
      * Updates the media count of all users.
+     */
+
+    /**
+     * 
+     * @global type $wpdb
+     * @return boolean
      */
     static function update_count() {
         global $wpdb;
@@ -133,6 +164,10 @@ class BPMediaFunction {
         return true;
     }
 
+    /**
+     * 
+     * @global type $bp_media_current_entry
+     */
     static function update_media() {
         global $bp_media_current_entry;
         if ($bp_media_current_entry->update_media(array('description' => esc_html($_POST['bp_media_description']), 'name' => esc_html($_POST['bp_media_title'])))) {
@@ -167,6 +202,12 @@ class BPMediaFunction {
         exit;
     }
 
+    /**
+     * 
+     * @param BPMediaAlbum $album
+     * @param type $current_time
+     * @param type $delete_media_id
+     */
     static function update_album_activity($album, $current_time = true, $delete_media_id = null) {
         if (!is_object($album)) {
             $album = new BPMediaAlbum($album);
@@ -213,6 +254,10 @@ class BPMediaFunction {
         }
     }
 
+    /**
+     * 
+     * @global type $bp_media_current_entry
+     */
     static function wp_comment_form_mod() {
         global $bp_media_current_entry;
         echo '<input type="hidden" name="redirect_to" value="' . $bp_media_current_entry->get_url() . '">';
@@ -237,6 +282,14 @@ class BPMediaFunction {
      * @param $message String The message to show on the page where redirected
      * @param $type String Type of message(updated, success, error, warning), works only if message is set
      * @param $status String The HTTP status header for the redirection page.
+     */
+
+    /**
+     * 
+     * @param type $location
+     * @param type $message
+     * @param type $type
+     * @param type $status
      */
     function redirect($location, $message = '', $type = 'updated', $status = '302') {
         if ($message != '')

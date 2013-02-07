@@ -6,7 +6,7 @@ License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires at least: 3.5
 Tested up to: 3.5
-Stable tag: 2.5
+Stable tag: 2.5.2
 
 Adds Photos, Music, Videos & Albums to your BuddyPress. Supports mobile devices (iPhone/iPad, etc) and automatic audio/video conversion.
 
@@ -87,7 +87,14 @@ Please visit [BuddyPress Media's Features page](http://rtcamp.com/buddypress-med
 == Changelog ==
 
 Please visit [BuddyPress Media's Roadmap page](http://rtcamp.com/buddypress-media/roadmap/ "Visit BuddyPress Media's Features page") to get some details about future releases.
-= 2.4.5 =
+= 2.5.2 =
+* Fixes warning on admin side.
+
+= 2.5.1 =
+* Fixed bug where when a user visits another member's media tab when groups are inactive, they'd get an error.
+* Improved long album title and count display.
+
+= 2.5 =
 * Bug fixes for admin notices on multisite installs.
 * Bug fixes for activity on multiple uploads.
 * Updated upload UI. Now uploads are possible from all tabs.
@@ -207,5 +214,5 @@ Please visit [BuddyPress Media's Roadmap page](http://rtcamp.com/buddypress-medi
 * HTML5 Video Tag Support (with fallback)
 
 == Upgrade Notice ==
-=2.5=
-Album rename, delete. New languages. Better uploader.
+=2.5.2=
+Fixes warning shown on the admin side for some PHP versions.
