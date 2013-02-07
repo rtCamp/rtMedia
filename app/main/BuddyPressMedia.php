@@ -192,7 +192,7 @@ class BuddyPressMedia {
     }
 
     /**
-     * 
+     *
      * @global BPMediaAdmin $bp_media_admin
      */
     function init() {
@@ -218,7 +218,7 @@ class BuddyPressMedia {
     }
 
     /**
-     * 
+     *
      * @param type $links
      * @param type $file
      * @return type
@@ -236,7 +236,7 @@ class BuddyPressMedia {
     }
 
     /**
-     * 
+     *
      * @return type
      */
     function media_sizes() {
@@ -269,7 +269,7 @@ class BuddyPressMedia {
     }
 
     /**
-     * 
+     *
      * @global type $bp_media_default_excerpts
      */
     function excerpt_lengths() {
@@ -285,7 +285,7 @@ class BuddyPressMedia {
     }
 
     /**
-     * 
+     *
      * @global type $current_user
      */
     public function admin_notice() {
@@ -325,7 +325,7 @@ class BuddyPressMedia {
     }
 
     /**
-     * 
+     *
      * @param type $path
      * @param type $scheme
      * @return type
@@ -344,8 +344,6 @@ class BuddyPressMedia {
     }
 
     function widgets_init() {
-        register_widget('BPMediaRecentMedia');
-        register_widget('BPMediaPopularMedia');
         register_widget('BPMediaWidget');
     }
 
