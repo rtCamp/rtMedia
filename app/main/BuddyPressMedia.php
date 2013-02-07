@@ -198,6 +198,7 @@ class BuddyPressMedia {
             add_filter('plugin_action_links', array($this, 'settings_link'), 10, 2);
             $this->loader = new BPMediaLoader();
             $this->group_loader = new BPMediaGroup();
+            new BPMediaActivity();
             new BPMediaFilters();
             new BPMediaActions();
             new BPMediaFunction();
