@@ -15,12 +15,12 @@ if (!class_exists('BPMediaSettings')) {
 
         /**
          * Register Settings
-         * 
+         *
          * @global string BP_MEDIA_TXT_DOMAIN
          */
 
         /**
-         * 
+         *
          * @global BPMediaAddon $bp_media_addon
          */
         public function settings() {
@@ -61,6 +61,15 @@ if (!class_exists('BPMediaSettings')) {
                 'name' => __('Re-Count', BP_MEDIA_TXT_DOMAIN),
                 'desc' => __('It will re-count all media entries of all users and correct any discrepancies.', BP_MEDIA_TXT_DOMAIN)
             ));
+			/*add_settings_section('bpm-admin-bar-menu', __('Admin Bar Menu', BP_MEDIA_TXT_DOMAIN), '', 'bp-media-settings');
+            add_settings_field('bpm-admin-bar-menu', __('Spread the Word', BP_MEDIA_TXT_DOMAIN), array($this, 'radio'), 'bp-media-settings', 'bpm-spread-the-word', array(
+                'setting' => 'bp_media_options',
+                'option' => 'remove_linkback',
+                'radios' => array(
+                    2 => __('Yes, I support BuddyPress Media', BP_MEDIA_TXT_DOMAIN),
+                    1 => __('No, I don\'t want to support BuddyPress Media', BP_MEDIA_TXT_DOMAIN)),
+                'default' => 2)
+            );*/
             $bp_media_addon = new BPMediaAddon();
             add_settings_section('bpm-addons', __('BuddyPress Media Addons for Audio/Video Conversion', BP_MEDIA_TXT_DOMAIN), array($bp_media_addon, 'get_addons'), 'bp-media-addons');
             add_settings_section('bpm-support', __('Submit a request form', BP_MEDIA_TXT_DOMAIN), '', 'bp-media-support');
@@ -91,7 +100,7 @@ if (!class_exists('BPMediaSettings')) {
          */
 
         /**
-         * 
+         *
          * @global type $bp_media_admin
          * @param type $input
          * @return type
@@ -119,13 +128,13 @@ if (!class_exists('BPMediaSettings')) {
 
         /**
          * Output a checkbox
-         * 
+         *
          * @global array $bp_media
          * @param array $args
          */
 
         /**
-         * 
+         *
          * @global array $bp_media
          * @param type $args
          * @return type
@@ -162,13 +171,13 @@ if (!class_exists('BPMediaSettings')) {
 
         /**
          * Outputs Radio Buttons
-         * 
+         *
          * @global array $bp_media
          * @param array $args
          */
 
         /**
-         * 
+         *
          * @global array $bp_media
          * @param type $args
          * @return type
@@ -210,13 +219,13 @@ if (!class_exists('BPMediaSettings')) {
 
         /**
          * Outputs Textbox
-         * 
+         *
          * @global array $bp_media
          * @param array $args
          */
 
         /**
-         * 
+         *
          * @global array $bp_media
          * @param type $args
          * @return type
@@ -256,13 +265,13 @@ if (!class_exists('BPMediaSettings')) {
 
         /**
          * Outputs Dropdown
-         * 
+         *
          * @global array $bp_media
          * @param array $args
          */
 
         /**
-         * 
+         *
          * @param type $args
          * @return type
          */
@@ -305,13 +314,13 @@ if (!class_exists('BPMediaSettings')) {
 
         /**
          * Outputs a Button
-         * 
+         *
          * @global array $bp_media
          * @param array $args
          */
 
         /**
-         * 
+         *
          * @param type $args
          * @return type
          */
