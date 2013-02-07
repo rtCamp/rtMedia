@@ -8,7 +8,7 @@
 class BPMediaFilters {
 
     /**
-     * 
+     *
      * @global array $bp_media_activity_types
      */
     function __construct() {
@@ -24,7 +24,7 @@ class BPMediaFilters {
     }
 
     /**
-     * 
+     *
      * @global array $bp_media_activity_types
      * @global type $activities_template
      * @param type $link
@@ -66,7 +66,7 @@ class BPMediaFilters {
     }
 
     /**
-     * 
+     *
      * @global type $activities_template
      * @param type $activity_content
      * @return boolean
@@ -104,7 +104,7 @@ class BPMediaFilters {
 
     //add_filter('bp_get_activity_parent_content', 'activity_parent_content_filter', 1);
     /**
-     * 
+     *
      * @global type $activities_template
      * @param type $link
      * @return type
@@ -138,7 +138,7 @@ class BPMediaFilters {
     }
 
     /**
-     * 
+     *
      * @global type $bp_media_count
      * @param type $title
      * @param type $nav_item
@@ -178,7 +178,7 @@ class BPMediaFilters {
      */
 
     /**
-     * 
+     *
      * @global type $wpdb
      * @param type $query
      * @return type
@@ -196,7 +196,7 @@ class BPMediaFilters {
      */
 
     /**
-     * 
+     *
      * @global type $wp_admin_bar
      */
     function my_account_menu() {
@@ -265,10 +265,10 @@ class BPMediaFilters {
      */
 
     /**
-     * 
+     *
      * @global type $wp_admin_bar
      */
-    function adminbar_settings_menu() {
+    static function adminbar_settings_menu() {
         global $wp_admin_bar;
 
         if (current_user_can('manage_options') && is_super_admin()) {
@@ -322,7 +322,7 @@ class BPMediaFilters {
      */
     //add_action('wp_dashboard_setup','dashboard_widgets');
     /**
-     * 
+     *
      * @global array $wp_meta_boxes
      * @global array $wp_meta_boxes
      */
@@ -385,7 +385,7 @@ class BPMediaFilters {
     }
 
     /**
-     * 
+     *
      * @param type $media_type
      * @return type
      */
@@ -407,7 +407,7 @@ class BPMediaFilters {
     }
 
     /**
-     * 
+     *
      * @param type $media_type
      * @return type
      */
@@ -429,7 +429,7 @@ class BPMediaFilters {
     }
 
     /**
-     * 
+     *
      * @global type $wpdb
      * @param type $type
      * @return boolean
@@ -450,7 +450,7 @@ class BPMediaFilters {
     }
 
     /**
-     * 
+     *
      * @global type $wpdb
      * @return boolean
      */

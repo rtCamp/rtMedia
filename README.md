@@ -87,6 +87,9 @@ Please visit [BuddyPress Media's Features page](http://rtcamp.com/buddypress-med
 ## Changelog ##
 
 Please visit [BuddyPress Media's Roadmap page](http://rtcamp.com/buddypress-media/roadmap/ "Visit BuddyPress Media's Features page") to get some details about future releases.
+#### 2.5.2 ####
+* Fixes warning on admin side.
+
 #### 2.5.1 ####
 * Fixed bug where when a user visits another member's media tab when groups are inactive, they'd get an error.
 * Improved long album title and count display.
@@ -210,4 +213,4 @@ Please visit [BuddyPress Media's Roadmap page](http://rtcamp.com/buddypress-medi
 * HTML5 Audio Tag Support (with fallback)
 * HTML5 Video Tag Support (with fallback)
 
-Album title and count display fixed. Fixed bug with inactive groups.
+Fixes warning shown on the admin side for some PHP versions.
