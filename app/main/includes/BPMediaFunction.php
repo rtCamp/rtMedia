@@ -1,5 +1,7 @@
 <?php
-
+/**
+ *
+ */
 class BPMediaFunction {
 
     function __construct() {
