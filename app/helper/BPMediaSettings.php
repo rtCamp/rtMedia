@@ -46,6 +46,12 @@ if (!class_exists('BPMediaSettings')) {
                 'option' => 'download_enabled',
                 'desc' => __('Check to enable download functionality', BP_MEDIA_TXT_DOMAIN)
             ));
+			add_settings_field('bpm-admin-bar-menu', __('Admin bar menu', BP_MEDIA_TXT_DOMAIN), array($this, 'checkbox'), 'bp-media-settings', 'bpm-settings', array(
+                'setting' => 'bp_media_options',
+                'option' => 'show_admin_menu',
+                'desc' => __('Check to enable menu in WordPress admin bar', BP_MEDIA_TXT_DOMAIN)
+				)
+            );
             add_settings_section('bpm-spread-the-word', __('Spread the Word', BP_MEDIA_TXT_DOMAIN), '', 'bp-media-settings');
             add_settings_field('bpm-spread-the-word-settings', __('Spread the Word', BP_MEDIA_TXT_DOMAIN), array($this, 'radio'), 'bp-media-settings', 'bpm-spread-the-word', array(
                 'setting' => 'bp_media_options',
@@ -61,15 +67,8 @@ if (!class_exists('BPMediaSettings')) {
                 'name' => __('Re-Count', BP_MEDIA_TXT_DOMAIN),
                 'desc' => __('It will re-count all media entries of all users and correct any discrepancies.', BP_MEDIA_TXT_DOMAIN)
             ));
-			/*add_settings_section('bpm-admin-bar-menu', __('Admin Bar Menu', BP_MEDIA_TXT_DOMAIN), '', 'bp-media-settings');
-            add_settings_field('bpm-admin-bar-menu', __('Spread the Word', BP_MEDIA_TXT_DOMAIN), array($this, 'radio'), 'bp-media-settings', 'bpm-spread-the-word', array(
-                'setting' => 'bp_media_options',
-                'option' => 'remove_linkback',
-                'radios' => array(
-                    2 => __('Yes, I support BuddyPress Media', BP_MEDIA_TXT_DOMAIN),
-                    1 => __('No, I don\'t want to support BuddyPress Media', BP_MEDIA_TXT_DOMAIN)),
-                'default' => 2)
-            );*/
+
+
             $bp_media_addon = new BPMediaAddon();
             add_settings_section('bpm-addons', __('BuddyPress Media Addons for Audio/Video Conversion', BP_MEDIA_TXT_DOMAIN), array($bp_media_addon, 'get_addons'), 'bp-media-addons');
             add_settings_section('bpm-support', __('Submit a request form', BP_MEDIA_TXT_DOMAIN), '', 'bp-media-support');
