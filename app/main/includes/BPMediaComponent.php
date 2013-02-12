@@ -30,6 +30,7 @@ class BPMediaComponent extends BP_Component {
 	 * Add hook for plugins, themes, extensions to hook on to
 	 * Activates the component
 	 * Registers necessary post types
+	 *
      * @global object $bp The global BuddyPress object
      */
     function __construct() {
@@ -433,7 +434,9 @@ class BPMediaComponent extends BP_Component {
      * Register Custom Post Types required by BuddyPress Media
      */
     function register_post_types() {
-        $labels = array(
+
+		/* Set up Album labels */
+        $album_labels = array(
             'name'					=> __('Albums',
 					BP_MEDIA_TXT_DOMAIN),
             'singular_name'			=> __('Album',
@@ -461,8 +464,9 @@ class BPMediaComponent extends BP_Component {
 					BP_MEDIA_TXT_DOMAIN)
         );
 
-        $args = array(
-            'labels'				=> $labels,
+		/* Set up Album post type arguments */
+        $album_args = array(
+            'labels'				=> $album_labels,
             'public'				=> true,
             'publicly_queryable'	=> true,
             'show_ui'				=> false,
@@ -481,16 +485,18 @@ class BPMediaComponent extends BP_Component {
 									)
         );
 
-        register_post_type('bp_media_album', $args);
-        global $bp_media;
-        /* Set up labels for the post type */
+		/* register Album post type */
+        register_post_type('bp_media_album', $album_args);
+
+
+        /* Set up labels for Media post type */
         $labels = array(
             'name' => __('Media', BP_MEDIA_TXT_DOMAIN),
             'singular' => __('Media', BP_MEDIA_TXT_DOMAIN),
             'add_new' => __('Add New Media', BP_MEDIA_TXT_DOMAIN)
         );
 
-        /* Set up the argument array for register_post_type() */
+        /* Set up the arguments for Media post type */
         $args = array(
             'label' => __('Media', BP_MEDIA_TXT_DOMAIN),
             'labels' => $labels,
@@ -509,7 +515,11 @@ class BPMediaComponent extends BP_Component {
 				'custom-fields'
 				)
         );
+
+		/* Register Media post type */
         register_post_type('bp_media', $args);
+
+		/* Register parent's post types */
         parent::register_post_types();
     }
 
