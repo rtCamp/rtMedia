@@ -5,7 +5,6 @@
 class BPMediaFunction {
 
     function __construct() {
-        //add_action('bp_init', array($this,'swap_filters'));
         add_filter('bp_get_activity_action', array($this, 'conditional_override_allowed_tags'), 1, 2);
         add_action('wp_ajax_my_featured_action', array($this, 'implement_featured_ajax'));
         add_action('wp_ajax_nopriv_my_featured_action', array($this, 'implement_featured_ajax'));
@@ -90,16 +89,6 @@ class BPMediaFunction {
         echo '</div>';
     }
 
-    /*
-      function remove_kses_filter(){
-      global $bp_media;
-      if ($activity != null && in_array($activity->type, $bp_media->activity_types)) {
-      remove_filter('bp_get_activity_content_body', 'bp_activity_filter_kses', 1);
-      }
-      }
-     *
-     */
-
     /**
      * 
      * @global type $bp_media
@@ -117,15 +106,8 @@ class BPMediaFunction {
         return $content;
     }
 
-    function swap_filters() {
-        //add_filter('bp_get_activity_content_body', 'BPMediaFunction::conditional_override_allowed_tags', 2, 2);
-    }
-
     /**
      * Updates the media count of all users.
-     */
-
-    /**
      * 
      * @global type $wpdb
      * @return boolean
