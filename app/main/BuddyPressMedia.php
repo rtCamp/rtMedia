@@ -333,7 +333,12 @@ class BuddyPressMedia {
 			/**
 			 * Load BuddyPress Media for groups
 			 */
-			$this->group_loader = new BPMediaGroup();
+			if ( array_key_exists( 'enable_on_group', $this->options ) ) {
+			if ( $this->options[ 'enable_on_group' ] ) {
+				$this->group_loader = new BPMediaGroupLoader();
+			}
+		}
+
 
 			/**
 			 * Load accessory functions
