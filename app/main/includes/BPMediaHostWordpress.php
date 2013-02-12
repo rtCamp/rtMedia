@@ -26,7 +26,7 @@ class BPMediaHostWordpress {
      */
 
     /**
-     * 
+     *
      * @param type $media_id
      */
     function __construct($media_id = '') {
@@ -44,7 +44,7 @@ class BPMediaHostWordpress {
      */
 
     /**
-     * 
+     *
      * @param type $media_id
      * @return boolean
      * @throws Exception
@@ -89,7 +89,7 @@ class BPMediaHostWordpress {
      */
 
     /**
-     * 
+     *
      * @global type $bp
      * @global type $wpdb
      * @global type $bp_media_count
@@ -100,16 +100,24 @@ class BPMediaHostWordpress {
      * @param type $group
      * @param type $is_multiple
      * @throws Exception
+	 * @uses global var $_FILES
      */
-    function add_media($name, $description, $album_id = 0, $group = 0, $is_multiple = false, $is_activity = false) {
+    function add_media($name, $description, $album_id = 0, $group = 0, $is_multiple = false, $is_activity = false, $files= false) {
         do_action('bp_media_before_add_media');
+
         global $bp, $wpdb, $bp_media_count, $bp_media;
         include_once(ABSPATH . 'wp-admin/includes/file.php');
         include_once(ABSPATH . 'wp-admin/includes/image.php');
 
         $post_id = $this->check_and_create_album($album_id, $group);
 
-        $file = wp_handle_upload($_FILES['bp_media_file']);
+        if(!$files){
+			$files = $_FILES['bp_media_file'];
+			$file = wp_handle_upload($files);
+		}else{
+			$file = wp_handle_sideload($files);
+		}
+
         if (isset($file['error']) || $file === null) {
             throw new Exception(__('Error Uploading File', BP_MEDIA_TXT_DOMAIN));
         }
@@ -232,7 +240,7 @@ class BPMediaHostWordpress {
      */
 
     /**
-     * 
+     *
      * @global type $bp_media_counter
      * @global type $bp_media_default_excerpts
      * @global type $bp_media
@@ -274,7 +282,7 @@ class BPMediaHostWordpress {
      */
 
     /**
-     * 
+     *
      * @return boolean
      */
     function get_media_activity_url() {
@@ -289,7 +297,7 @@ class BPMediaHostWordpress {
      */
 
     /**
-     * 
+     *
      * @global type $bp_media
      * @return boolean
      */
@@ -306,7 +314,7 @@ class BPMediaHostWordpress {
      */
 
     /**
-     * 
+     *
      * @global type $bp_media_default_excerpts
      * @global type $bp_media
      * @return boolean|string
@@ -350,7 +358,7 @@ class BPMediaHostWordpress {
      */
 
     /**
-     * 
+     *
      * @global type $bp_media_default_excerpts
      * @global type $bp_media
      * @return string
@@ -366,7 +374,7 @@ class BPMediaHostWordpress {
      */
 
     /**
-     * 
+     *
      * @global type $bp_media
      * @return boolean
      */
@@ -436,7 +444,7 @@ class BPMediaHostWordpress {
      */
 
     /**
-     * 
+     *
      * @global type $bp_media
      * @return boolean
      */
@@ -528,7 +536,7 @@ class BPMediaHostWordpress {
      */
 
     /**
-     * 
+     *
      * @return type
      */
     function get_url() {
@@ -540,7 +548,7 @@ class BPMediaHostWordpress {
      */
 
     /**
-     * 
+     *
      * @return type
      */
     function get_attachment_url() {
@@ -559,7 +567,7 @@ class BPMediaHostWordpress {
      */
 
     /**
-     * 
+     *
      * @param type $args
      * @return type
      */
@@ -586,7 +594,7 @@ class BPMediaHostWordpress {
      */
 
     /**
-     * 
+     *
      * @global type $wpdb
      * @global type $bp
      * @global type $current_user
@@ -623,7 +631,7 @@ class BPMediaHostWordpress {
      */
 
     /**
-     * 
+     *
      * @global type $bp_media_count
      */
     function delete_media() {
@@ -651,7 +659,7 @@ class BPMediaHostWordpress {
      */
 
     /**
-     * 
+     *
      * @return boolean|string
      */
     function get_album_activity_content() {
@@ -693,7 +701,7 @@ class BPMediaHostWordpress {
      */
 
     /**
-     * 
+     *
      * @return type
      */
     function get_content() {
@@ -705,7 +713,7 @@ class BPMediaHostWordpress {
      */
 
     /**
-     * 
+     *
      * @return type
      */
     function get_author() {
@@ -717,7 +725,7 @@ class BPMediaHostWordpress {
      */
 
     /**
-     * 
+     *
      * @return type
      */
     function get_id() {
@@ -729,7 +737,7 @@ class BPMediaHostWordpress {
      */
 
     /**
-     * 
+     *
      * @return type
      */
     function get_edit_url() {
@@ -741,7 +749,7 @@ class BPMediaHostWordpress {
      */
 
     /**
-     * 
+     *
      * @return type
      */
     function get_delete_url() {
@@ -753,7 +761,7 @@ class BPMediaHostWordpress {
      */
 
     /**
-     * 
+     *
      * @return string
      */
     function get_media_activity_type() {
@@ -774,7 +782,7 @@ class BPMediaHostWordpress {
      */
 
     /**
-     * 
+     *
      * @return type
      */
     function get_album_id() {
@@ -786,7 +794,7 @@ class BPMediaHostWordpress {
      */
 
     /**
-     * 
+     *
      * @return type
      */
     function get_title() {
@@ -798,7 +806,7 @@ class BPMediaHostWordpress {
      */
 
     /**
-     * 
+     *
      * @return type
      */
     function get_type() {
@@ -817,7 +825,7 @@ class BPMediaHostWordpress {
      */
 
     /**
-     * 
+     *
      * @return type
      */
     function get_group_id() {
@@ -830,7 +838,7 @@ class BPMediaHostWordpress {
      */
 
     /**
-     * 
+     *
      * @return boolean
      */
     protected function set_permalinks() {
@@ -877,7 +885,7 @@ class BPMediaHostWordpress {
      */
 
     /**
-     * 
+     *
      * @global type $wpdb
      * @param type $album_id
      * @param type $group
