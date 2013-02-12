@@ -16,24 +16,82 @@ if (!defined('ABSPATH'))
     exit;
 
 class BuddyPressMedia {
+	/**
+	 *
+	 * @var string The text domain for loading translations
+	 */
 
     public $text_domain = 'buddypress-media';
-    public $options;
+
+	/**
+	 *
+	 * @var array BuddyPress Media settings
+	 */
+    public $options = array();
+
+	/**
+	 *
+	 * @var string Email address the admin support form should send to
+	 */
     public $support_email = 'support@rtcamp.com';
+
+	/**
+	 *
+	 * @var string Support forum url
+	 */
     public $support_url = 'http://rtcamp.com/support/forum/buddypress-media/';
+	/**
+	 *
+	 * @var object/array The query that fetches media (photos, video and audio)
+	 */
     public $query;
+
+	/**
+	 *
+	 * @var object/array The query that fetches albums
+	 */
+
     public $albums_query;
+	/**
+	 *
+	 * @var integer Count
+	 */
     public $count = null;
+	/**
+	 *
+	 * @var integer Number of media items to show in one view.
+	 */
     public $posts_per_page = 10;
+
+	/**
+	 *
+	 * @var array The types of activity BuddyPress Media creates
+	 */
     public $activity_types = array(
         'media_upload',
         'album_updated',
         'album_created'
     );
+	/**
+	 *
+	 * @var array A cache for activities that are hidden by BuddyPress Media
+	 */
     public $hidden_activity_cache = array();
+	/**
+	 *
+	 * @var type
+	 */
     public $loader;
+	/**
+	 *
+	 * @var type
+	 */
     public $group_loader;
 
+	/**
+	 *
+	 * @global int $bp_media_counter
+	 */
     public function __construct() {
         $this->constants();
         $this->excerpt_lengths();
@@ -53,6 +111,9 @@ class BuddyPressMedia {
         $bp_media_counter = 0;
     }
 
+	/**
+	 *
+	 */
     public function bp_exists() {
         if (!class_exists('BuddyPress')) {
             echo '<div class="error">
@@ -61,11 +122,16 @@ class BuddyPressMedia {
     </div>';
         }
     }
-
+	/**
+	 *
+	 */
     public function get_option() {
         $this->options = bp_get_option('bp_media_options');
     }
 
+	/**
+	 *
+	 */
     public function constants() {
         /* Text domain */
         if (!defined('BP_MEDIA_TXT_DOMAIN'))
