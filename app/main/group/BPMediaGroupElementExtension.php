@@ -12,7 +12,7 @@ if (class_exists('BP_Group_Extension')) :
         var $enable_create_step = false;
 
         /**
-         * 
+         *
          * @param type $name
          * @param type $slug
          */
@@ -22,7 +22,7 @@ if (class_exists('BP_Group_Extension')) :
         }
 
         /**
-         * 
+         *
          * @global type $bp
          * @global BPMediaHostWordpress $bp_media_current_entry
          * @return type
@@ -35,7 +35,7 @@ if (class_exists('BP_Group_Extension')) :
             if (isset($bp->action_variables[0])) {
                 $current_tab = $bp->action_variables[0];
             }
-            BPMediaGroup::navigation_menu();
+            BPMediaGroupLoader::navigation_menu();
             $media_type = "";
             $slug = "";
             switch ($current_tab) {
@@ -103,7 +103,7 @@ if (class_exists('BP_Group_Extension')) :
                         $bp_media_content = new BPMediaAlbumScreen($media_type, $slug);
                         $bp_media_content->screen_content();
                     } else if ($media_type == 'upload') {
-                        if (BPMediaGroup::can_upload()) {
+                        if (BPMediaGroupLoader::can_upload()) {
                             $bp_media_upload = new BPMediaUploadScreen('upload', BP_MEDIA_UPLOAD_SLUG);
                             $bp_media_upload->upload_screen_content();
                         }
@@ -116,11 +116,11 @@ if (class_exists('BP_Group_Extension')) :
         }
 
         function widget_display() {
-            
+
         }
 
         /**
-         * 
+         *
          * @param type $errorMessage
          */
         function bp_media_display_error($errorMessage) {

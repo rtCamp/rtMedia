@@ -46,6 +46,7 @@ function buddypress_media_autoloader( $class_name ) {
 		'app/helper/' . $class_name . '.php',
 		'app/admin/' . $class_name . '.php',
 		'app/main/' . $class_name . '.php',
+		'app/main/activity/' . $class_name . '.php',
 		'app/main/profile/' . $class_name . '.php',
 		'app/main/group/' . $class_name . '.php',
 		'app/main/group/dummy/' . $class_name . '.php',
@@ -73,10 +74,10 @@ spl_autoload_register( 'buddypress_media_autoloader' );
  */
 global $bp_media;
 $bp_media = new BuddyPressMedia();
-
+/*
 $bp_album_importer = new BPMediaBPAlbumImporter();
 $bp_album_importer->batch_import();
-
+*/
 /*
  * Look Ma! Very few includes! Next File: /app/main/BuddyPressMedia.php
  */
