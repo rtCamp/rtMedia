@@ -13,6 +13,11 @@ if (!class_exists('BPMediaSupport')) {
             ;
         }
 
+        /**
+         * 
+         * @global type $current_user
+         * @param type $form
+         */
         public function get_form($form) {
             if (empty($form))
                 $form = (isset($_POST['form'])) ? $_POST['form'] : '';
@@ -91,6 +96,10 @@ if (!class_exists('BPMediaSupport')) {
             }
         }
 
+        /**
+         * 
+         * @global type $bp_media
+         */
         public function submit_request() {
             global $bp_media;
             $form_data = wp_parse_args($_POST['form_data']);
