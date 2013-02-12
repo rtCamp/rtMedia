@@ -102,7 +102,7 @@ class BPMediaHostWordpress {
      * @throws Exception
 	 * @uses global var $_FILES
      */
-    function add_media($name, $description, $album_id = 0, $group = 0, $is_multiple = false, $files= false) {
+    function add_media($name, $description, $album_id = 0, $group = 0, $is_multiple = false, $is_activity = false, $files= false) {
         do_action('bp_media_before_add_media');
 
         global $bp, $wpdb, $bp_media_count, $bp_media;
@@ -209,7 +209,7 @@ class BPMediaHostWordpress {
                 $activity_content = false;
                 throw new Exception(__('Media File you have tried to upload is not supported. Supported media files are .jpg, .png, .gif, .mp3, .mov and .mp4.', BP_MEDIA_TXT_DOMAIN));
         }
-        $attachment_id = wp_insert_attachment($attachment, $file, $post_id);
+        echo $attachment_id = wp_insert_attachment($attachment, $file, $post_id);
         if (!is_wp_error($attachment_id)) {
             wp_update_attachment_metadata($attachment_id, wp_generate_attachment_metadata($attachment_id, $file));
         } else {
@@ -230,7 +230,8 @@ class BPMediaHostWordpress {
         } else {
             update_post_meta($attachment_id, 'bp-media-key', (-$group));
         }
-        do_action('bp_media_after_add_media', $this, $is_multiple);
+        do_action('bp_media_after_add_media', $this, $is_multiple, $is_activity);
+        return $attachment_id;
     }
 
     /**
@@ -248,7 +249,7 @@ class BPMediaHostWordpress {
     function get_media_activity_content() {
         global $bp_media_counter, $bp_media_default_excerpts, $bp_media;
         $attachment_id = $this->id;
-        $activity_content = '<div class="bp_media_title"><a href="' . $this->url . '" title="' . __($this->description, BP_MEDIA_TXT_DOMAIN) . '">' . __(wp_html_excerpt($this->name, $bp_media_default_excerpts['activity_entry_title']), BP_MEDIA_TXT_DOMAIN) . '</a></div>';
+        $activity_content = apply_filters( 'bp_media_single_activity_title', '<div class="bp_media_title"><a href="' . $this->url . '" title="' . __($this->description, BP_MEDIA_TXT_DOMAIN) . '">' . __(wp_html_excerpt($this->name, $bp_media_default_excerpts['activity_entry_title']), BP_MEDIA_TXT_DOMAIN) . '</a></div>');
         $activity_content .='<div class="bp_media_content">';
         switch ($this->type) {
             case 'video' :
@@ -272,7 +273,7 @@ class BPMediaHostWordpress {
                 return false;
         }
         $activity_content .= '</div>';
-        $activity_content .= '<div class="bp_media_description">' . wp_html_excerpt($this->description, $bp_media_default_excerpts['activity_entry_description']) . '</div>';
+        $activity_content .= apply_filters('bp_media_single_activity_description','<div class="bp_media_description">' . wp_html_excerpt($this->description, $bp_media_default_excerpts['activity_entry_description']) . '</div>');
         return $activity_content;
     }
 

@@ -20,10 +20,11 @@ class BPMediaActions {
         add_action('bp_activity_entry_meta', array($this, 'action_buttons'));
         add_action('bp_media_before_delete_media', 'BPMediaActions::delete_media_handler');
         add_action('bp_media_after_add_album', array($this, 'album_create_activity'));
-        add_action('bp_media_album_updated', array($this, 'album_activity_update'));
+        add_action('bp_media_album_updated', 'BPMediaActions::album_activity_update');
         add_action('bp_media_after_delete_media', array($this, 'album_activity_sync'));
-        add_action('bp_media_after_add_media', 'BPMediaActions::activity_create_after_add_media', 10, 2);
+        add_action('bp_media_after_add_media', 'BPMediaActions::activity_create_after_add_media', 10, 3);
         add_action('wp_ajax_bp_media_load_more', array($this, 'load_more'));
+//        add_action('wp_ajax_bp_media_get_attachment_html', array($this, 'fetch_feed'), 1);
         add_action('wp_ajax_nopriv_bp_media_load_more', array($this, 'load_more'));
         add_action('delete_attachment', array($this, 'delete_attachment_handler'));
         add_action('wp_ajax_bp_media_add_album', array($this, 'add_album'));
@@ -55,7 +56,7 @@ class BPMediaActions {
         if (isset($_POST['action']) && $_POST['action'] == 'wp_handle_upload') {
             /** This section can help in the group activity handling */
             if (isset($_POST['bp_media_group_id']) && intval($_POST['bp_media_group_id'])) {
-                remove_action('bp_media_after_add_media', 'BPMediaActions::activity_create_after_add_media', 10, 2);
+                remove_action('bp_media_after_add_media', 'BPMediaActions::activity_create_after_add_media', 10, 3);
                 add_action('bp_media_after_add_media', 'BPMediaGroupAction::bp_media_groups_activity_create_after_add_media', 10, 2);
                 add_filter('bp_media_force_hide_activity', 'BPMediaGroupAction::bp_media_groups_force_hide_activity');
             }
@@ -95,9 +96,10 @@ class BPMediaActions {
                     $title = isset($_POST['bp_media_title']) ? ($_POST['bp_media_title'] != "") ? $_POST['bp_media_title'] : pathinfo($_FILES['bp_media_file']['name'], PATHINFO_FILENAME)  : pathinfo($_FILES['bp_media_file']['name'], PATHINFO_FILENAME);
                     $album_id = isset($_POST['bp_media_album_id']) ? intval($_POST['bp_media_album_id']) : 0;
                     $is_multiple = isset($_POST['is_multiple_upload']) ? ($_POST['is_multiple_upload'] == 'true' ? true : false) : false;
+                    $is_activity = isset($_POST['is_activity']) ? ($_POST['is_activity'] == 'true' ? true : false) : false;
                     $description = isset($_POST['bp_media_description']) ? $_POST['bp_media_description'] : '';
                     $group_id = isset($_POST['bp_media_group_id']) ? intval($_POST['bp_media_group_id']) : 0;
-                    $entry = $bp_media_entry->add_media($title, $description, $album_id, $group_id, $is_multiple);
+                    $entry = $bp_media_entry->add_media($title, $description, $album_id, $group_id, $is_multiple, $is_activity);
                     if (!isset($bp->{BP_MEDIA_SLUG}->messages['updated'][0]))
                         $bp->{BP_MEDIA_SLUG}->messages['updated'][0] = __('Upload Successful', BP_MEDIA_TXT_DOMAIN);
                 } catch (Exception $e) {
@@ -178,6 +180,7 @@ class BPMediaActions {
      * @return boolean
      */
     static function delete_activity_handler($args) {
+        error_log('Delete delete :)');
         remove_action('bp_media_before_delete_media', 'BPMediaActions::delete_media_handler');
         global $bp_media_count, $wpdb;
         if (!array_key_exists('id', $args))
@@ -390,8 +393,26 @@ class BPMediaActions {
             'multi_selection' => true,
             'multipart_params' => apply_filters('bp_media_multipart_params_filter', array('action' => 'wp_handle_upload'))
         );
+        $activity_params = array(
+            'url' => BP_MEDIA_URL . 'app/main/includes/bp-media-upload-handler.php',
+            'runtimes' => 'gears,html5,flash,silverlight,browserplus',
+            'browse_button' => 'bp-media-activity-upload-browse-button',
+            'container' => 'bp-media-activity-upload-ui',
+            'drop_element' => 'drag-drop-area',
+            'filters' => apply_filters('bp_media_plupload_files_filter', array(array('title' => "Media Files", 'extensions' => "mp4,jpg,png,jpeg,gif,mp3"))),
+            'max_file_size' => min(array(ini_get('upload_max_filesize'), ini_get('post_max_size'))),
+            'multipart' => true,
+            'urlstream_upload' => true,
+            'flash_swf_url' => includes_url('js/plupload/plupload.flash.swf'),
+            'silverlight_xap_url' => includes_url('js/plupload/plupload.silverlight.xap'),
+            'file_data_name' => 'bp_media_file', // key passed to $_FILE.
+            'multi_selection' => true,
+            'multipart_params' => apply_filters('bp_media_multipart_params_filter', array('action' => 'wp_handle_upload'))
+        );
         wp_enqueue_script('bp-media-uploader', BP_MEDIA_URL . 'app/assets/js/bp-media-uploader.js', array('plupload', 'plupload-html5', 'plupload-flash', 'plupload-silverlight', 'plupload-html4', 'plupload-handlers'));
         wp_localize_script('bp-media-uploader', 'bp_media_uploader_params', $params);
+        wp_localize_script('bp-media-uploader', 'bp_media_activity_uploader_params', $activity_params);
+        wp_localize_script('bp-media-uploader', 'activity_ajax_url', admin_url('admin-ajax.php'));
         wp_enqueue_style('bp-media-default', BP_MEDIA_URL . 'app/assets/css/main.css');
 //	wp_enqueue_style("wp-jquery-ui-dialog"); //Its not styling the Dialog box as it should so using different styling
         //wp_enqueue_style('jquery-style', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/themes/smoothness/jquery-ui.css');
@@ -574,7 +595,7 @@ class BPMediaActions {
             $album = new BPMediaAlbum();
             if (isset($_POST['bp_media_group_id']) && intval($_POST['bp_media_group_id']) > 0) {
                 $group_id = intval($_POST['bp_media_group_id']);
-                if (BPMediaGroup::user_can_create_album($group_id, get_current_user_id())) {
+                if (BPMediaGroupLoader::user_can_create_album($group_id, get_current_user_id())) {
                     try {
                         $album->add_album($_POST['bp_media_album_name'], 0, $group_id);
                         echo $album->get_id();
@@ -645,7 +666,7 @@ class BPMediaActions {
      * @param type $hidden
      * @return boolean
      */
-    static function activity_create_after_add_media($media, $hidden = false) {
+    static function activity_create_after_add_media($media, $hidden = false, $activity = false, $content = false) {
         if (function_exists('bp_activity_add')) {
             if (!is_object($media)) {
                 try {
@@ -664,13 +685,22 @@ class BPMediaActions {
                 'type' => 'media_upload',
                 'user_id' => $media->get_author()
             );
+            if ($activity) {
+                $args['secondary_item_id'] = -999;
+            }
+            $update_activity_id = get_post_meta($media->get_id(), 'bp_media_child_activity', true);
+            if ($update_activity_id) {
+                $args['id'] = $update_activity_id;
+                $args['secondary_item_id'] = false;
+            }
             $hidden = apply_filters('bp_media_force_hide_activity', $hidden);
             if ($hidden) {
                 $args['secondary_item_id'] = -999;
                 do_action('bp_media_album_updated', $media->get_album_id());
             }
             $activity_id = BPMediaFunction::record_activity($args);
-            add_post_meta($media->get_id(), 'bp_media_child_activity', $activity_id);
+            if (!$update_activity_id)
+                add_post_meta($media->get_id(), 'bp_media_child_activity', $activity_id);
         }
     }
 

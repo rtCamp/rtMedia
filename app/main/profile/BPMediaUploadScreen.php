@@ -11,7 +11,7 @@
 class BPMediaUploadScreen extends BPMediaScreen {
 
     /**
-     * 
+     *
      * @param type $media_type
      * @param type $slug
      */
@@ -20,7 +20,7 @@ class BPMediaUploadScreen extends BPMediaScreen {
     }
 
     function upload_screen() {
-        if (bp_is_my_profile() || BPMediaGroup::can_upload()) {
+        if (bp_is_my_profile() || BPMediaGroupLoader::can_upload()) {
             add_action('wp_enqueue_scripts', array($this, 'upload_enqueue'));
             add_action('bp_template_title', array($this, 'upload_screen_title'));
             add_action('bp_template_content', array($this, 'upload_screen_content'));
@@ -76,7 +76,7 @@ class BPMediaUploadScreen extends BPMediaScreen {
     }
 
     /**
-     * 
+     *
      * @global type $bp
      * @global type $bp_media_options
      * @return type
