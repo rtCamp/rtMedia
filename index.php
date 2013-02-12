@@ -2,7 +2,7 @@
 /*
   Plugin Name: BuddyPress Media
   Plugin URI: http://rtcamp.com/buddypress-media/
-  Description: This plugin adds missing media rich features like photos, videos and audios uploading to BuddyPress which are essential if you are building social network, seriously!
+  Description: This plugin adds missing media rich features like photos, videosand audios uploading to BuddyPress which are essential if you are building social network, seriously!
   Version: 2.5.3
   Author: rtCamp
   Text Domain: buddypress-media
@@ -78,6 +78,6 @@ $bp_album_importer = new BPMediaBPAlbumImporter();
 $bp_album_importer->batch_import();
 
 /*
- * Look Ma! Very few includes!
+ * Look Ma! Very few includes! Next File: /app/main/BuddyPressMedia.php
  */
 ?>
