@@ -2,6 +2,12 @@
 
 class BPMediaTemplateFunctions {
 
+    /**
+     * 
+     * @global type $bp
+     * @global type $bp_media_default_excerpts
+     * @global type $bp_media_options
+     */
     function show_upload_form() {
         global $bp, $bp_media_default_excerpts, $bp_media_options;
         $allowed = array(
@@ -35,7 +41,15 @@ class BPMediaTemplateFunctions {
     }
 
     //------------- Function removed show_upload_form_multiple() ------------
-
+    /**
+     * 
+     * @global type $bp
+     * @global type $bp_media_paginated_links
+     * @global type $bp_media_query
+     * @global type $bp_media_albums_query
+     * @param type $type
+     * @param type $inner
+     */
     function show_pagination($type = 'top', $inner = false) {
         global $bp, $bp_media_paginated_links, $bp_media_query, $bp_media_albums_query;
         switch ($bp->current_action) {
@@ -111,15 +125,21 @@ class BPMediaTemplateFunctions {
                 Viewing <?php echo $current_single ?> <?php echo $from_num ?> to <?php echo $to_num ?> (of <?php echo $total; ?> <?php echo $current ?>)
             </div>
             <div class="pagination-links">
-        <?php if (is_array($bp_media_paginated_links)) : foreach ($bp_media_paginated_links as $link) : ?>
-                <?php echo $link; ?>
+                <?php if (is_array($bp_media_paginated_links)) : foreach ($bp_media_paginated_links as $link) : ?>
+                        <?php echo $link; ?>
                     <?php endforeach;
-                endif; ?>
+                endif;
+                ?>
             </div>
         </div>
         <?php
     }
 
+    /**
+     * 
+     * @param type $id
+     * @return boolean
+     */
     function get_permalink($id = 0) {
         if (is_object($id))
             $media = $id;
@@ -165,6 +185,11 @@ class BPMediaTemplateFunctions {
         }
     }
 
+    /**
+     * 
+     * @param type $id
+     * @return boolean
+     */
     function album_the_content($id = 0) {
         if (is_object($id))
             $album = $id;
@@ -182,6 +207,12 @@ class BPMediaTemplateFunctions {
         }
     }
 
+    /**
+     * 
+     * @global type $bp_media_query
+     * @global type $bp_media_albums_query
+     * @param type $type
+     */
     function display_show_more($type = 'media') {
         $showmore = false;
         switch ($type) {
@@ -198,12 +229,10 @@ class BPMediaTemplateFunctions {
                 break;
         }
         if ($showmore) {
-            echo '<div class="bp-media-actions"><a href="#" class="button" id="bp-media-show-more">'. __('Show More', BP_MEDIA_TXT_DOMAIN).'</a></div>';
+            echo '<div class="bp-media-actions"><a href="#" class="button" id="bp-media-show-more">' . __('Show More', BP_MEDIA_TXT_DOMAIN) . '</a></div>';
         }
     }
 
     //----------- Function removed show_upload_form_multiple_activity() -------------
-        
-
 }
 ?>
