@@ -6,7 +6,7 @@ License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires at least: 3.5
 Tested up to: 3.5
-Stable tag: 2.5.2
+Stable tag: 2.5.3
 
 Adds Photos, Music, Videos & Albums to your BuddyPress. Supports mobile devices (iPhone/iPad, etc) and automatic audio/video conversion.
 
@@ -16,7 +16,7 @@ BuddyPress Media adds Photos, Music, Videos & Albums to your BuddyPress. Support
 
 = Important =
 
-BuddyPress Media is now available in **Brazilian Portuguese**, **Spanish** and **Japanese**. BuddyPress Media includes [full translation support](https://rtcamp.com/tutorials/buddypress-media-translation/). Head over to the [translation project](http://rtcamp.com/translate/projects/buddypress-media/) to contribute your translations. If you don't see the language of your choice, let us know in the support forum, we'll add it.
+BuddyPress Media is now available in **Brazilian Portuguese**, **Spanish** and **Japanese**. Translations for German, Italian, French and Dutch are in progress. BuddyPress Media includes [full translation support](https://rtcamp.com/tutorials/buddypress-media-translation/). Head over to the [translation project](http://rtcamp.com/translate/projects/buddypress-media/) to contribute your translations. If you don't see the language of your choice, let us know in the support forum, we'll add it.
 
 = iOS6 Uploads =
 
@@ -87,6 +87,12 @@ Please visit [BuddyPress Media's Features page](http://rtcamp.com/buddypress-med
 == Changelog ==
 
 Please visit [BuddyPress Media's Roadmap page](http://rtcamp.com/buddypress-media/roadmap/ "Visit BuddyPress Media's Features page") to get some details about future releases.
+
+= 2.5.3 =
+* Added option to toggle BuddyPress Media menu in admin bar
+* Added incomplete translations for German, Italian, French and Dutch languages
+* A few bug fixes.
+
 = 2.5.2 =
 * Fixes warning on admin side.
 
@@ -215,4 +221,4 @@ Please visit [BuddyPress Media's Roadmap page](http://rtcamp.com/buddypress-medi
 
 == Upgrade Notice ==
 =2.5.2=
-Fixes warning shown on the admin side for some PHP versions.
+Adds option to toggle menu in admin bar. Added incomplete translations for German, Italian, French and Dutch.
