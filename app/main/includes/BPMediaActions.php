@@ -8,7 +8,7 @@
 class BPMediaActions {
 
     /**
-     * 
+     *
      * @global type $bp_media_options
      */
     function __construct() {
@@ -40,7 +40,7 @@ class BPMediaActions {
      */
 
     /**
-     * 
+     *
      * @global type $bp
      * @global type $bp_media_options
      * @return type
@@ -118,7 +118,7 @@ class BPMediaActions {
      */
 
     /**
-     * 
+     *
      * @global type $bp
      */
     static function show_messages() {
@@ -140,7 +140,7 @@ class BPMediaActions {
      */
 
     /**
-     * 
+     *
      * @global type $bp
      */
     function enqueue_scripts_styles() {
@@ -171,10 +171,10 @@ class BPMediaActions {
     }
 
     /**
-     * 
-     * @global type $bp_media_count
-     * @global type $wpdb
-     * @param type $args
+     *
+     * @global integer $bp_media_count
+     * @global object $wpdb
+     * @param array $args
      * @return boolean
      */
     static function delete_activity_handler($args) {
@@ -213,7 +213,7 @@ class BPMediaActions {
     }
 
     /**
-     * 
+     *
      * @param type $media_id
      * @return boolean
      */
@@ -235,7 +235,7 @@ class BPMediaActions {
      */
 
     /**
-     * 
+     *
      * @global type $bp
      * @global WP_Query $bp_media_query
      * @global type $bp_media_posts_per_page
@@ -285,7 +285,7 @@ class BPMediaActions {
      */
 
     /**
-     * 
+     *
      * @global type $bp_media_current_entry
      * @global type $bp_media_options
      * @return boolean
@@ -331,7 +331,7 @@ class BPMediaActions {
      */
 
     /**
-     * 
+     *
      * @global type $bp_media_count
      * @param type $user
      * @return boolean
@@ -408,7 +408,7 @@ class BPMediaActions {
      */
 
     /**
-     * 
+     *
      * @global type $bp
      * @global WP_Query $bp_media_albums_query
      */
@@ -437,7 +437,7 @@ class BPMediaActions {
      */
 
     /**
-     * 
+     *
      * @global type $bp
      * @global WP_Query $bp_media_query
      * @global type $bp_media_posts_per_page
@@ -530,7 +530,7 @@ class BPMediaActions {
     }
 
     /**
-     * 
+     *
      * @global type $bp_media_count
      * @param type $attachment_id
      * @return boolean
@@ -605,7 +605,7 @@ class BPMediaActions {
 //add_action('bp_after_activity_post_form','add_new_from_activity');
 
     /**
-     * 
+     *
      * @param type $album
      */
     function album_create_activity($album) {
@@ -623,7 +623,7 @@ class BPMediaActions {
     }
 
     /**
-     * 
+     *
      * @param type $album_id
      */
     function album_activity_update($album_id) {
@@ -631,7 +631,7 @@ class BPMediaActions {
     }
 
     /**
-     * 
+     *
      * @param type $media_id
      */
     function album_activity_sync($media_id) {
@@ -640,7 +640,7 @@ class BPMediaActions {
     }
 
     /**
-     * 
+     *
      * @param BPMediaHostWordpress $media
      * @param type $hidden
      * @return boolean
