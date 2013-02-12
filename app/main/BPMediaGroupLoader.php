@@ -1,14 +1,25 @@
 <?php
+/**
+ * Don't load this file directly!
+ */
+if ( ! defined( 'ABSPATH' ) )
+	exit;
 
 /**
- * Description of BPMediaGroup
+ * Loads Group Media functionality
  *
- * @author faishal
+ * @author Faishal Saiyed <faishal.saiyed@rtcamp.com>
+ * @author Gagandeep Singh <gagandeep.singh@rtcamp.com>
  */
-class BPMediaGroup {
+class BPMediaGroupLoader {
 
-    function __construct($initFlag = true) {
-        if ($initFlag) {
+	/**
+	 * Constructs all the group functionality
+	 * Loads dummy classes
+	 * Adds necessary navigation and tabs
+	 *
+	 */
+    function __construct() {
             if (class_exists('BPMediaGroupsExtension')) :
                 bp_register_group_extension('BPMediaGroupsExtension');
                 new BPMediaGroupImage ();
@@ -18,8 +29,9 @@ class BPMediaGroup {
                 new BPMediaGroupUpload();
             endif;
             add_action('bp_actions', array($this, 'custom_nav'), 999);
-            add_filter('bp_media_multipart_params_filter', array($this, 'multipart_params_handler'));
-        }
+            add_filter('bp_media_multipart_params_filter',
+					array($this, 'multipart_params_handler')
+					);
     }
 
     /**
@@ -31,20 +43,24 @@ class BPMediaGroup {
      */
 
     /**
-     * 
+     *
      * @global type $bp
      * @return type
      */
     function custom_nav() {
         global $bp;
-        $current_group = isset($bp->groups->current_group->slug) ? $bp->groups->current_group->slug : null;
+        $current_group = isset($bp->groups->current_group->slug) ?
+		$bp->groups->current_group->slug
+				: null;
         if (!$current_group)
             return;
-        if (!(isset($bp->bp_options_nav[$current_group]) && is_array($bp->bp_options_nav[$current_group])))
+        if (!(isset($bp->bp_options_nav[$current_group])
+				&& is_array($bp->bp_options_nav[$current_group])))
             return;
 
         /** This line might break a thing or two in custom themes and widgets */
-        remove_filter('bp_activity_get_user_join_filter', 'BPMediaFilters::activity_query_filter', 10);
+        remove_filter('bp_activity_get_user_join_filter',
+				'BPMediaFilters::activity_query_filter', 10);
 
         foreach ($bp->bp_options_nav[$current_group] as $key => $nav_item) {
             switch ($nav_item['slug']) {
@@ -80,7 +96,7 @@ class BPMediaGroup {
      */
 
     /**
-     * 
+     *
      * @global type $bp
      * @param type $multipart_params
      * @return type
@@ -89,7 +105,9 @@ class BPMediaGroup {
         if (is_array($multipart_params)) {
             global $bp;
             if (isset($bp->current_action) && $bp->current_action == BP_MEDIA_SLUG
-                    && isset($bp->action_variables) && isset($bp->current_component) && $bp->current_component == 'groups'
+                    && isset($bp->action_variables)
+					&& isset($bp->current_component)
+					&& $bp->current_component == 'groups'
                     && isset($bp->groups->current_group->id)) {
                 $multipart_params['bp_media_group_id'] = $bp->groups->current_group->id;
             }
@@ -107,7 +125,7 @@ class BPMediaGroup {
      */
 
     /**
-     * 
+     *
      * @global type $bp
      * @return boolean
      */
@@ -135,12 +153,12 @@ class BPMediaGroup {
 
         foreach (array('VIDEOS', 'AUDIO', 'ALBUMS', 'UPLOAD') as $type) {
             if ($type == 'UPLOAD') {
-                if (BPMediaGroup::can_upload()) {
+                if (BPMediaGroupLoader::can_upload()) {
                     $bp_media_nav[constant('BP_MEDIA_' . $type . '_SLUG')] = array(
                         'url' => trailingslashit(bp_get_group_permalink($bp->groups->current_group)) . constant('BP_MEDIA_' . $type . '_SLUG'),
                         'label' => constant('BP_MEDIA_' . $type . '_LABEL'),
 //                        'screen_function' => array( $bp_media_upload, 'upload_screen' ),
-                        'user_has_access' => BPMediaGroup::can_upload()
+                        'user_has_access' => BPMediaGroupLoader::can_upload()
                     );
                 }
             } else {
@@ -174,7 +192,7 @@ class BPMediaGroup {
      */
 
     /**
-     * 
+     *
      * @global type $bp
      * @return boolean
      */
@@ -199,7 +217,7 @@ class BPMediaGroup {
      */
 
     /**
-     * 
+     *
      * @global type $wp_admin_bar
      * @global type $bp
      */
@@ -228,7 +246,7 @@ class BPMediaGroup {
      */
 
     /**
-     * 
+     *
      * @param type $group_id
      * @param type $user_id
      * @return boolean
@@ -254,7 +272,7 @@ class BPMediaGroup {
     }
 
     /**
-     * 
+     *
      * @param type $errorMessage
      */
     static function bp_media_display_error($errorMessage) {

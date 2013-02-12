@@ -44,7 +44,7 @@ class BPMediaScreen {
      */
 
     /**
-     * 
+     *
      * @param type $media_type
      * @param type $slug
      */
@@ -60,7 +60,7 @@ class BPMediaScreen {
      */
 
     /**
-     * 
+     *
      * @param type $media_type
      */
     private function media($media_type) {
@@ -73,7 +73,7 @@ class BPMediaScreen {
      */
 
     /**
-     * 
+     *
      * @param type $media_type
      */
     private function medias($media_type) {
@@ -167,7 +167,7 @@ class BPMediaScreen {
      */
 
     /**
-     * 
+     *
      * @global type $bp_media_query
      * @global type $bp_media_albums_query
      */
@@ -178,7 +178,7 @@ class BPMediaScreen {
         $this->hook_before();
         if ($bp_media_query && $bp_media_query->have_posts()):
             echo '<ul id="bp-media-list" class="bp-media-gallery item-list">';
-            if (bp_is_my_profile() || BPMediaGroup::can_upload()) {
+            if (bp_is_my_profile() || BPMediaGroupLoader::can_upload()) {
                 echo '<li>';
                 BPMediaUploadScreen::upload_screen_content();
                 echo '</li>';
@@ -190,7 +190,7 @@ class BPMediaScreen {
             $this->template->show_more();
         else:
             BPMediaFunction::show_formatted_error_message(sprintf(__('Sorry, no %s were found.', BP_MEDIA_TXT_DOMAIN), $this->slug), 'info');
-            if (bp_is_my_profile() || BPMediaGroup::can_upload()) {
+            if (bp_is_my_profile() || BPMediaGroupLoader::can_upload()) {
                 echo '<div class="bp-media-area-allocate"></div>';
                 BPMediaUploadScreen::upload_screen_content();
             }
@@ -303,7 +303,7 @@ class BPMediaScreen {
      */
 
     /**
-     * 
+     *
      * @global BPMediaHostWordpress $bp_media_current_entry
      * @global type $bp_media_default_excerpts
      */
@@ -345,7 +345,7 @@ class BPMediaScreen {
      */
 
     /**
-     * 
+     *
      * @global type $bp
      * @global BPMediaHostWordpress $bp_media_current_entry
      */
@@ -393,7 +393,7 @@ class BPMediaScreen {
      */
 
     /**
-     * 
+     *
      * @param type $action
      */
     function template_actions($action) {
@@ -409,7 +409,7 @@ class BPMediaScreen {
      */
 
     /**
-     * 
+     *
      * @global type $bp
      * @global type $bp_media_posts_per_page
      * @global type $bp_media_query
