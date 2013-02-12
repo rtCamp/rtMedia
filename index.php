@@ -73,10 +73,10 @@ spl_autoload_register( 'buddypress_media_autoloader' );
  */
 global $bp_media;
 $bp_media = new BuddyPressMedia();
-
+/*
 $bp_album_importer = new BPMediaBPAlbumImporter();
 $bp_album_importer->batch_import();
-
+*/
 /*
  * Look Ma! Very few includes! Next File: /app/main/BuddyPressMedia.php
  */

@@ -574,7 +574,7 @@ class BPMediaActions {
             $album = new BPMediaAlbum();
             if (isset($_POST['bp_media_group_id']) && intval($_POST['bp_media_group_id']) > 0) {
                 $group_id = intval($_POST['bp_media_group_id']);
-                if (BPMediaGroup::user_can_create_album($group_id, get_current_user_id())) {
+                if (BPMediaGroupLoader::user_can_create_album($group_id, get_current_user_id())) {
                     try {
                         $album->add_album($_POST['bp_media_album_name'], 0, $group_id);
                         echo $album->get_id();
