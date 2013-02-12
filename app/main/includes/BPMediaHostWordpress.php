@@ -105,11 +105,14 @@ class BPMediaHostWordpress {
     function add_media($name, $description, $album_id = 0, $group = 0, $is_multiple = false, $is_activity = false, $files= false) {
         do_action('bp_media_before_add_media');
 
-        global $bp, $wpdb, $bp_media_count, $bp_media;
+        global $bp, $wpdb, $bp_media_count, $bp_media, $current_user;
+		get_currentuserinfo();
+
+
         include_once(ABSPATH . 'wp-admin/includes/file.php');
         include_once(ABSPATH . 'wp-admin/includes/image.php');
 
-        $post_id = $this->check_and_create_album($album_id, $group);
+        $post_id = $this->check_and_create_album($album_id, $group,$current_user->ID);
 
         if(!$files){
 			$files = $_FILES['bp_media_file'];
@@ -135,7 +138,7 @@ class BPMediaHostWordpress {
             'post_content' => $content,
             'post_parent' => $post_id,
         );
-        BPMediaActions::init_count(bp_loggedin_user_id());
+        BPMediaActions::init_count($current_user->ID);
         switch ($type) {
             case 'video/mp4' :
             case 'video/quicktime' :
@@ -216,17 +219,19 @@ class BPMediaHostWordpress {
             unlink($file);
             throw new Exception(__('Error creating attachment for the media file, please try again', BP_MEDIA_TXT_DOMAIN));
         }
+
+
         $this->id = $attachment_id;
         $this->name = $name;
         $this->description = $description;
         $this->type = $type;
-        $this->owner = get_current_user_id();
+        $this->owner = $current_user->ID;
         $this->album_id = $post_id;
         $this->group_id = $group;
         $this->set_permalinks();
         if ($group == 0) {
-            update_post_meta($attachment_id, 'bp-media-key', get_current_user_id());
-            bp_update_user_meta(bp_loggedin_user_id(), 'bp_media_count', $bp_media_count);
+            update_post_meta($attachment_id, 'bp-media-key', $current_user->ID);
+            bp_update_user_meta($current_user->ID, 'bp_media_count', $bp_media_count);
         } else {
             update_post_meta($attachment_id, 'bp-media-key', (-$group));
         }
@@ -891,13 +896,14 @@ class BPMediaHostWordpress {
      * @param type $group
      * @return type
      */
-    function check_and_create_album($album_id, $group) {
-        global $wpdb;
+    function check_and_create_album($album_id, $group, $user_id) {
+        global $wpdb, $current_user;
+		get_currentuserinfo();
         $post_wall = __('Wall Posts', BP_MEDIA_TXT_DOMAIN);
         $create_new_album_flag = false;
         if ($album_id != 0) {
             $album = get_post($album_id);
-            if ($album->post_author != get_current_user_id() && $group == 0) {
+            if ($album->post_author != $user_id && $group == 0) {
                 $create_new_album_flag = true;
             } else {
                 $post_id = $album->ID;
@@ -912,7 +918,7 @@ class BPMediaHostWordpress {
 						FROM $wpdb->posts
 						WHERE
 							post_title = $post_wall
-							AND post_author = '" . get_current_user_id() . "'
+							AND post_author = '" . $user_id . "'
 							AND post_type='bp_media_album'"
                 );
             } else {
@@ -927,10 +933,10 @@ class BPMediaHostWordpress {
             if ($post_id == null) {
                 $album = new BPMediaAlbum();
                 if ($group == 0)
-                    $album->add_album($post_wall, get_current_user_id(), $group);
+                    $album->add_album($post_wall, $user_id, $group);
                 else {
                     $current_user = wp_get_current_user();
-                    $album->add_album($current_user->display_name . '\'s Album', get_current_user_id(), $group);
+                    $album->add_album($current_user->display_name . '\'s Album', $user_id, $group);
                 }
                 $post_id = $album->get_id();
             }

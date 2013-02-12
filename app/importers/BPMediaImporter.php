@@ -49,7 +49,7 @@ class BPMediaImporter {
 			return -1;
 	}
 
-	function file_array($filepath){
+	static function file_array($filepath){
 
 		$path_info = pathinfo($filepath);
 
@@ -63,34 +63,49 @@ class BPMediaImporter {
 
 	}
 
-	function add_media($title='',$album_id=0,$is_multiple=false,$description='',$group_id=0,$filepath){
-		$file = $this->file_array($filepath);
-		$class_name = apply_filters('bp_media_transcoder', 'BPMediaHostWordpress', $type);
-		$bp_media_entry = new $class_name();
-		try {
-			$entry = $bp_media_entry->add_media($title, $description, $album_id, $group_id, $is_multiple,$file);
-			if (!isset($bp->{BP_MEDIA_SLUG}->messages['updated'][0]))
-				$bp->{BP_MEDIA_SLUG}->messages['updated'][0] = __('Upload Successful', BP_MEDIA_TXT_DOMAIN);
-		} catch (Exception $e) {
-			$bp->{BP_MEDIA_SLUG}->messages['error'][] = $e->getMessage();
+	function create_album($album_name = '',$author_id=1){
+
+		global $bp_media,$wpdb;
+
+		if(array_key_exists('bp_album_import_name',$bp_media->options)){
+			if($bp_media->options['bp_album_import_name']!=''){
+				$album_name = $bp_media->options['bp_album_import_name'];
+			}
 		}
+		$found_album = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}posts WHERE post_title='Wall Posts' AND post_type='bp_media_album'");
+
+		if(count($found_album)< 1){
+			$album = new BPMediaAlbum();
+			$album->add_album($album_name,$author_id);
+			$album_id = $album->get_id();
+		}else{
+			$album_id = $found_album[0]->ID;
+		}
+		return $album_id;
 	}
 
+	static function add_media($album_id, $title='',$description='',$filepath='',$privacy=0,$author_id=false){
 
-	function process_media($title='',$album_id=0,$is_multiple=false,$description='',$group_id=0,$filepath){
 
-		$this->import_privacy();
-		$this->add_media($title,$album_id,$is_multiple,$description,$group_id,$filepath);
-		$this->cleanup();
+		$files = BPMediaImporter::file_array($filepath);
 
+
+			$bp_imported_media =new BPMediaHostWordpress();
+
+			$imported_media_id = $bp_imported_media->add_media($title, $description, $album_id, 0, false, false, $files);
+
+			wp_update_post($args=array('ID'=>$imported_media_id,'post_author'=> $author_id));
+
+			$bp_album_privacy = $privacy;
+			if($bp_album_privacy == 10)
+				$bp_album_privacy = 6;
+
+			$privacy = new BPMediaPrivacy();
+			$privacy->save($bp_album_privacy,$imported_media_id);
 	}
+
 
 	function cleanup(){
-		return;
-
-	}
-
-	function import_privacy(){
 		return;
 
 	}

@@ -36,7 +36,7 @@ class BPMediaAlbum {
      */
 
     /**
-     * 
+     *
      * @param type $album_id
      */
     function __construct($album_id = '') {
@@ -59,7 +59,7 @@ class BPMediaAlbum {
      */
 
     /**
-     * 
+     *
      * @param type $album_id
      * @throws Exception
      */
@@ -138,7 +138,7 @@ class BPMediaAlbum {
      */
 
     /**
-     * 
+     *
      * @global array $bp_media_count
      * @param type $title
      * @param type $author_id
@@ -147,7 +147,9 @@ class BPMediaAlbum {
      */
     function add_album($title, $author_id = 0, $group_id = 0) {
         do_action('bp_media_before_add_album');
-        $author_id = $author_id ? $author_id : get_current_user_id();
+		global $current_user;
+		get_currentuserinfo();
+        $author_id = $author_id ? $author_id : $current_user->ID;
         $post_vars = array(
             'post_title' => $title,
             'post_name' => $title,
@@ -177,7 +179,7 @@ class BPMediaAlbum {
      */
 
     /**
-     * 
+     *
      * @global array $bp_media_count
      */
     function delete_album() {
@@ -198,7 +200,7 @@ class BPMediaAlbum {
     }
 
     /**
-     * 
+     *
      * @param type $title
      * @return boolean
      */
@@ -242,7 +244,7 @@ class BPMediaAlbum {
      */
 
     /**
-     * 
+     *
      * @return type
      */
     function get_entries() {
@@ -256,7 +258,7 @@ class BPMediaAlbum {
      */
 
     /**
-     * 
+     *
      * @return type
      */
     function get_title() {
@@ -279,7 +281,7 @@ class BPMediaAlbum {
      */
 
     /**
-     * 
+     *
      * @return type
      */
     function get_id() {
@@ -293,7 +295,7 @@ class BPMediaAlbum {
      */
 
     /**
-     * 
+     *
      * @return type
      */
     function get_url() {
@@ -307,7 +309,7 @@ class BPMediaAlbum {
      */
 
     /**
-     * 
+     *
      * @return type
      */
     function get_owner() {
@@ -319,7 +321,7 @@ class BPMediaAlbum {
      */
 
     /**
-     * 
+     *
      * @return type
      */
     function get_edit_url() {
@@ -331,7 +333,7 @@ class BPMediaAlbum {
      */
 
     /**
-     * 
+     *
      * @return type
      */
     function get_delete_url() {
@@ -343,7 +345,7 @@ class BPMediaAlbum {
      */
 
     /**
-     * 
+     *
      * @return type
      */
     function get_group_id() {
