@@ -41,40 +41,31 @@ if (!class_exists('BPMediaSettings')) {
                 'option' => 'images_enabled',
                 'desc' => __('Check to enable images upload functionality', BP_MEDIA_TXT_DOMAIN)
             ));
-            add_settings_field('bpm-download', __('Download', BP_MEDIA_TXT_DOMAIN), array($this, 'checkbox'), 'bp-media-settings', 'bpm-settings', array(
+            add_settings_section('bpm-miscellaneous', __('Miscellaneous Settings', BP_MEDIA_TXT_DOMAIN),'', 'bp-media-settings');
+            add_settings_field('bpm-download', __('Download', BP_MEDIA_TXT_DOMAIN), array($this, 'checkbox'), 'bp-media-settings', 'bpm-miscellaneous', array(
                 'setting' => 'bp_media_options',
                 'option' => 'download_enabled',
                 'desc' => __('Check to enable download functionality', BP_MEDIA_TXT_DOMAIN)
             ));
-			add_settings_field('bpm-admin-bar-menu', __('Admin bar menu', BP_MEDIA_TXT_DOMAIN), array($this, 'checkbox'), 'bp-media-settings', 'bpm-settings', array(
+	    add_settings_field('bpm-admin-bar-menu', __('Admin bar menu', BP_MEDIA_TXT_DOMAIN), array($this, 'checkbox'), 'bp-media-settings', 'bpm-miscellaneous', array(
                 'setting' => 'bp_media_options',
                 'option' => 'show_admin_menu',
                 'desc' => __('Check to enable menu in WordPress admin bar', BP_MEDIA_TXT_DOMAIN)
 				)
             );
-			add_settings_field('bpm-admin-profile', __('Enable Media on user profiles', BP_MEDIA_TXT_DOMAIN), array($this, 'checkbox'), 'bp-media-settings', 'bpm-settings', array(
+	    add_settings_field('bpm-admin-profile', __('Enable Media on user profiles', BP_MEDIA_TXT_DOMAIN), array($this, 'checkbox'), 'bp-media-settings', 'bpm-miscellaneous', array(
                 'setting' => 'bp_media_options',
                 'option' => 'enable_on_profile',
                 'desc' => __('Check to enable BuddyPress Media on User profiles', BP_MEDIA_TXT_DOMAIN)
 				)
             );
-			add_settings_field('bpm-admin-group', __('Enable Media in groups', BP_MEDIA_TXT_DOMAIN), array($this, 'checkbox'), 'bp-media-settings', 'bpm-settings', array(
+	    add_settings_field('bpm-admin-group', __('Enable Media in groups', BP_MEDIA_TXT_DOMAIN), array($this, 'checkbox'), 'bp-media-settings', 'bpm-miscellaneous', array(
                 'setting' => 'bp_media_options',
                 'option' => 'enable_on_group',
                 'desc' => __('Check to enable BuddyPress Media in Groups', BP_MEDIA_TXT_DOMAIN)
 				)
             );
-            add_settings_section('bpm-spread-the-word', __('Spread the Word', BP_MEDIA_TXT_DOMAIN), '', 'bp-media-settings');
-            add_settings_field('bpm-spread-the-word-settings', __('Spread the Word', BP_MEDIA_TXT_DOMAIN), array($this, 'radio'), 'bp-media-settings', 'bpm-spread-the-word', array(
-                'setting' => 'bp_media_options',
-                'option' => 'remove_linkback',
-                'radios' => array(
-                    2 => __('Yes, I support BuddyPress Media', BP_MEDIA_TXT_DOMAIN),
-                    1 => __('No, I don\'t want to support BuddyPress Media', BP_MEDIA_TXT_DOMAIN)),
-                'default' => 2)
-            );
-            add_settings_section('bpm-other', __('BuddyPress Media Other Options', BP_MEDIA_TXT_DOMAIN), '', 'bp-media-settings');
-            add_settings_field('bpm-other-settings', __('Re-Count Media Entries', BP_MEDIA_TXT_DOMAIN), array($this, 'button'), 'bp-media-settings', 'bpm-other', array(
+            add_settings_field('bpm-other-settings', __('Re-Count Media Entries', BP_MEDIA_TXT_DOMAIN), array($this, 'button'), 'bp-media-settings', 'bpm-miscellaneous', array(
                 'option' => 'refresh-count',
                 'name' => __('Re-Count', BP_MEDIA_TXT_DOMAIN),
                 'desc' => __('It will re-count all media entries of all users and correct any discrepancies.', BP_MEDIA_TXT_DOMAIN)
