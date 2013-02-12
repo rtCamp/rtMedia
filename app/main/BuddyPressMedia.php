@@ -1,10 +1,10 @@
 <?php
+
 /**
  * Don't load this file directly!
  */
 if ( ! defined( 'ABSPATH' ) )
 	exit;
-
 
 /**
  * BuddyPress Media
@@ -18,7 +18,6 @@ if ( ! defined( 'ABSPATH' ) )
  * @author Gagandeep Singh <gagandeep.singh@rtcamp.com>
  * @author Joshua Abenazer <joshua.abenazer@rtcamp.com>
  */
-
 class BuddyPressMedia {
 
 	/**
@@ -99,7 +98,8 @@ class BuddyPressMedia {
 
 	/**
 	 * Constructs the class
-	 * Defines constants and excerpt lengths, initiates admin notices, loads and initiates the plugin, loads translations.
+	 * Defines constants and excerpt lengths, initiates admin notices,
+	 * loads and initiates the plugin, loads translations.
 	 * Initialises media counter
 	 *
 	 * @global int $bp_media_counter Media counter
@@ -147,8 +147,22 @@ class BuddyPressMedia {
 	public function bp_exists() {
 		if ( ! class_exists( 'BuddyPress' ) ) {
 			echo '<div class="error">
-       <p><strong>' . __( 'BuddyPress is not installed.', $this->text_domain ) . '</strong></p>
-       <p>' . sprintf( __( 'To use BuddyPress Media, <a href="%s" target="_blank">BuddyPress</a> must be installed first.', $this->text_domain ), 'http://wordpress.org/extend/plugins/buddypress/' ) . '</p>
+       <p><strong>' . __(
+			   'BuddyPress is not installed.',
+			   $this->text_domain
+			   )
+			. '</strong></p>
+       <p>'
+			. sprintf(
+						__(
+						'To use BuddyPress Media,
+							<a href="%s" target="_blank">BuddyPress</a>
+							must be installed first.',
+						$this->text_domain
+						),
+					'http://wordpress.org/extend/plugins/buddypress/'
+					)
+			. '</p>
     </div>';
 		}
 	}
@@ -161,7 +175,8 @@ class BuddyPressMedia {
 	}
 
 	/**
-	 * Defines all the constants if undefined. Can be overridden by defining them elsewhere, say wp-config.php
+	 * Defines all the constants if undefined. Can be overridden by
+	 * defining them elsewhere, say wp-config.php
 	 */
 	public function constants() {
 		/* Text domain */
@@ -240,37 +255,48 @@ class BuddyPressMedia {
 
 		/* UI Labels loaded via text domain, can be translated */
 		if ( ! defined( 'BP_MEDIA_LABEL' ) )
-			define( 'BP_MEDIA_LABEL', __( 'Media', $this->text_domain ) );
+			define( 'BP_MEDIA_LABEL',
+					__( 'Media', $this->text_domain ) );
 
 		if ( ! defined( 'BP_MEDIA_LABEL_SINGULAR' ) )
-			define( 'BP_MEDIA_LABEL_SINGULAR', __( 'Media', $this->text_domain ) );
+			define( 'BP_MEDIA_LABEL_SINGULAR',
+					__( 'Media', $this->text_domain ) );
 
 		if ( ! defined( 'BP_MEDIA_IMAGES_LABEL' ) )
-			define( 'BP_MEDIA_IMAGES_LABEL', __( 'Photos', $this->text_domain ) );
+			define( 'BP_MEDIA_IMAGES_LABEL',
+					__( 'Photos', $this->text_domain ) );
 
 		if ( ! defined( 'BP_MEDIA_IMAGES_LABEL_SINGULAR' ) )
-			define( 'BP_MEDIA_IMAGES_LABEL_SINGULAR', __( 'Photo', $this->text_domain ) );
+			define( 'BP_MEDIA_IMAGES_LABEL_SINGULAR',
+					__( 'Photo', $this->text_domain ) );
 
 		if ( ! defined( 'BP_MEDIA_VIDEOS_LABEL' ) )
-			define( 'BP_MEDIA_VIDEOS_LABEL', __( 'Videos', $this->text_domain ) );
+			define( 'BP_MEDIA_VIDEOS_LABEL',
+					__( 'Videos', $this->text_domain ) );
 
 		if ( ! defined( 'BP_MEDIA_VIDEOS_LABEL_SINGULAR' ) )
-			define( 'BP_MEDIA_VIDEOS_LABEL_SINGULAR', __( 'Video', $this->text_domain ) );
+			define( 'BP_MEDIA_VIDEOS_LABEL_SINGULAR',
+					__( 'Video', $this->text_domain ) );
 
 		if ( ! defined( 'BP_MEDIA_AUDIO_LABEL' ) )
-			define( 'BP_MEDIA_AUDIO_LABEL', __( 'Music', $this->text_domain ) );
+			define( 'BP_MEDIA_AUDIO_LABEL',
+					__( 'Music', $this->text_domain ) );
 
 		if ( ! defined( 'BP_MEDIA_AUDIO_LABEL_SINGULAR' ) )
-			define( 'BP_MEDIA_AUDIO_LABEL_SINGULAR', __( 'Music', $this->text_domain ) );
+			define( 'BP_MEDIA_AUDIO_LABEL_SINGULAR',
+					__( 'Music', $this->text_domain ) );
 
 		if ( ! defined( 'BP_MEDIA_ALBUMS_LABEL' ) )
-			define( 'BP_MEDIA_ALBUMS_LABEL', __( 'Albums', $this->text_domain ) );
+			define( 'BP_MEDIA_ALBUMS_LABEL',
+					__( 'Albums', $this->text_domain ) );
 
 		if ( ! defined( 'BP_MEDIA_ALBUMS_LABEL_SINGULAR' ) )
-			define( 'BP_MEDIA_ALBUMS_LABEL_SINGULAR', __( 'Album', $this->text_domain ) );
+			define( 'BP_MEDIA_ALBUMS_LABEL_SINGULAR',
+					__( 'Album', $this->text_domain ) );
 
 		if ( ! defined( 'BP_MEDIAUPLOAD_LABEL' ) )
-			define( 'BP_MEDIA_UPLOAD_LABEL', __( 'Upload', $this->text_domain ) );
+			define( 'BP_MEDIA_UPLOAD_LABEL',
+					__( 'Upload', $this->text_domain ) );
 
 		/* Support Email constant */
 		if ( ! defined( 'BP_MEDIA_SUPPORT_EMAIL' ) )
@@ -279,7 +305,8 @@ class BuddyPressMedia {
 
 	/**
 	 * Hooks the plugin into BuddyPress via 'bp_include' action.
-	 * Initialises the plugin's functionalities, options, loads media for Profiles and Groups.
+	 * Initialises the plugin's functionalities, options,
+	 * loads media for Profiles and Groups.
 	 * Creates Admin panels
 	 * Loads accessory functions
 	 *
@@ -292,11 +319,13 @@ class BuddyPressMedia {
 		 */
 		$this->get_option();
 
-		if ( defined( 'BP_VERSION' ) && version_compare( BP_VERSION, BP_MEDIA_REQUIRED_BP, '>=' ) ) {
+		if ( defined( 'BP_VERSION' ) &&
+				version_compare( BP_VERSION, BP_MEDIA_REQUIRED_BP, '>=' ) ) {
 			/**
 			 * Add a settings link to the Plugin list screen
 			 */
-			add_filter( 'plugin_action_links', array( $this, 'settings_link' ), 10, 2 );
+			add_filter( 'plugin_action_links',
+					array( $this, 'settings_link' ), 10, 2 );
 			/**
 			 * Load BuddyPress Media for profiles
 			 */
@@ -329,11 +358,13 @@ class BuddyPressMedia {
 	 * Loads translations
 	 */
 	static function load_translation() {
-		load_plugin_textdomain( BP_MEDIA_TXT_DOMAIN, false, basename( BP_MEDIA_PATH ) . '/languages/' );
+		load_plugin_textdomain( BP_MEDIA_TXT_DOMAIN, false,
+				basename( BP_MEDIA_PATH ) . '/languages/' );
 	}
 
 	/**
-	 * Add a settings link to the BuddyPress Media entry in the list of active plugins screen
+	 * Add a settings link to the BuddyPress Media entry
+	 * in the list of active plugins screen
 	 *
 	 * @param array $links
 	 * @param string $file
@@ -342,10 +373,21 @@ class BuddyPressMedia {
 	function settings_link( $links, $file ) {
 		/* create link */
 		$plugin_name = plugin_basename( BP_MEDIA_PATH . 'index.php' );
-		$admin_link = $this->get_admin_url( add_query_arg( array( 'page' => 'bp-media-settings' ), 'admin.php' ) );
+		$admin_link = $this->get_admin_url(
+				add_query_arg(
+						array(
+							'page' => 'bp-media-settings' ),
+							'admin.php'
+						)
+				);
 		if ( $file == $plugin_name ) {
 			array_unshift(
-					$links, sprintf( '<a href="%s">%s</a>', $admin_link, __( 'Settings', $this->text_domain ) )
+					$links,
+					sprintf(
+							'<a href="%s">%s</a>',
+							$admin_link,
+							__( 'Settings', $this->text_domain )
+					)
 			);
 		}
 		return $links;
@@ -387,7 +429,8 @@ class BuddyPressMedia {
 	}
 
 	/**
-	 * Defines default length of strings and excerpts displayed in activities and media tabs
+	 * Defines default length of strings and excerpts displayed in activities
+	 * and media tabs
 	 *
 	 * @global array $bp_media_default_excerpts
 	 */
@@ -400,7 +443,9 @@ class BuddyPressMedia {
 			'activity_entry_description' => 500
 		);
 
-		$bp_media_default_excerpts = apply_filters( 'bpmedia_excerpt_lengths', $def_excerpt );
+		$bp_media_default_excerpts = apply_filters(
+				'bpmedia_excerpt_lengths', $def_excerpt
+		);
 	}
 
 	/**
@@ -411,7 +456,8 @@ class BuddyPressMedia {
 	public function admin_notice() {
 		global $current_user;
 		$user_id = $current_user->ID;
-		if ( isset( $_GET[ 'bp_media_nag_ignore' ] ) && '0' == $_GET[ 'bp_media_nag_ignore' ] ) {
+		if ( isset( $_GET[ 'bp_media_nag_ignore' ] )
+				&& '0' == $_GET[ 'bp_media_nag_ignore' ] ) {
 			add_user_meta( $user_id, 'bp_media_ignore_notice', 'true', true );
 		}
 		/* Check that the user hasn't already clicked to ignore the message */
@@ -419,12 +465,31 @@ class BuddyPressMedia {
 			if ( defined( 'BP_VERSION' ) ) {
 				if ( version_compare( BP_VERSION, BP_MEDIA_REQUIRED_BP, '<' ) ) {
 					echo '<div class="error"><p>';
-					printf( __( 'The BuddyPress version installed is an older version and is not supported, please update BuddyPress to use BuddyPress Media Plugin.<a class="alignright" href="%1$s">X</a>', $this->text_domain ), '?bp_media_nag_ignore=0' );
+					printf(
+							__(
+									'The BuddyPress version installed is an
+										older version and is not supported,
+										please update BuddyPress to use
+										BuddyPress Media Plugin.
+										<a class="alignright" href="%1$s">X</a>',
+									$this->text_domain
+									),
+							'?bp_media_nag_ignore=0'
+							);
 					echo "</p></div>";
 				}
 			} else {
 				echo '<div class="error"><p>';
-				printf( __( 'You have not installed BuddyPress. Please install latest version of BuddyPress to use BuddyPress Media plugin.<a class="alignright" href="%1$s">X</a>', $this->text_domain ), '?bp_media_nag_ignore=0' );
+				printf(
+						__(
+								'You have not installed BuddyPress.
+									Please install latest version of BuddyPress
+									to use BuddyPress Media plugin.
+									<a class="alignright" href="%1$s">X</a>',
+								$this->text_domain
+								),
+						'?bp_media_nag_ignore=0'
+						);
 				echo "</p></div>";
 			}
 		}
@@ -435,7 +500,12 @@ class BuddyPressMedia {
 	 *
 	 */
 	public function activate() {
-		$bpmquery = new WP_Query( array( 'post_type' => 'bp_media', 'posts_per_page' => 1 ) );
+		$bpmquery = new WP_Query(
+				array(
+					'post_type' => 'bp_media',
+					'posts_per_page' => 1
+					)
+				);
 		if ( $bpmquery->found_posts > 0 ) {
 			update_site_option( 'bp_media_db_version', '1.0' );
 		} else {
@@ -443,7 +513,10 @@ class BuddyPressMedia {
 				case '2.0':
 					break;
 				default:
-					update_site_option( 'bp_media_db_version', BP_MEDIA_DB_VERSION );
+					update_site_option(
+							'bp_media_db_version',
+							BP_MEDIA_DB_VERSION
+							);
 			}
 		}
 	}
@@ -467,15 +540,25 @@ class BuddyPressMedia {
 
 		return $url;
 	}
-	
+
 	/**
 	 * Registers and activates the BuddyPress Media Widgets
 	 */
-
 	function widgets_init() {
 		register_widget( 'BPMediaWidget' );
 	}
 
 }
 
+/**
+ * This wraps up the main BuddyPress Media class. Three important notes:
+ *
+ * 1. All the constants can be overridden.
+ *    So, you could use, 'portfolio' instead of 'media'
+ * 2. The default thumbnail and display sizes can be filtered
+ *    using 'bpmedia_media_sizes' hook
+ * 3. The excerpts and string sizes can be filtered
+ *    using 'bpmedia_excerpt_lengths' hook
+ *
+ */
 ?>

@@ -52,6 +52,18 @@ if (!class_exists('BPMediaSettings')) {
                 'desc' => __('Check to enable menu in WordPress admin bar', BP_MEDIA_TXT_DOMAIN)
 				)
             );
+			add_settings_field('bpm-admin-profile', __('Enable Media on user profiles', BP_MEDIA_TXT_DOMAIN), array($this, 'checkbox'), 'bp-media-settings', 'bpm-settings', array(
+                'setting' => 'bp_media_options',
+                'option' => 'enable_on_profile',
+                'desc' => __('Check to enable BuddyPress Media on User profiles', BP_MEDIA_TXT_DOMAIN)
+				)
+            );
+			add_settings_field('bpm-admin-group', __('Enable Media in groups', BP_MEDIA_TXT_DOMAIN), array($this, 'checkbox'), 'bp-media-settings', 'bpm-settings', array(
+                'setting' => 'bp_media_options',
+                'option' => 'enable_on_group',
+                'desc' => __('Check to enable BuddyPress Media in Groups', BP_MEDIA_TXT_DOMAIN)
+				)
+            );
             add_settings_section('bpm-spread-the-word', __('Spread the Word', BP_MEDIA_TXT_DOMAIN), '', 'bp-media-settings');
             add_settings_field('bpm-spread-the-word-settings', __('Spread the Word', BP_MEDIA_TXT_DOMAIN), array($this, 'radio'), 'bp-media-settings', 'bpm-spread-the-word', array(
                 'setting' => 'bp_media_options',
