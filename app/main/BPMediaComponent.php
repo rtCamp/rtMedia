@@ -71,51 +71,35 @@ class BPMediaComponent extends BP_Component {
         global $bp, $bp_media;
 
 		$enabled = $bp_media->enabled();
-		/* Upload Screen */
+		$default_tab = $bp_media->default_tab();
+		$defaults_tab = $bp_media->defaults_tab();
 
-		foreach ($enabled as $active){
-			$bp_media_upload = new BPMediaUploadScreen(
+		/* Upload Screen */
+		$bp_media_upload = new BPMediaUploadScreen(
 				'upload',
 				BP_MEDIA_UPLOAD_SLUG
 				);
-		}
-
-		$enabled = $bp_media->enabled();
 
 		/* Media Screens */
-
-		if($enabled['images']){
-			$bp_media_image = new BPMediaScreen(
-				'image',
-				BP_MEDIA_IMAGES_SLUG
+		foreach ($enabled as $tab=>$active){
+        if($active==true){
+			$tabs = $tab;
+			if($tabs!='audio'&&$tabs!='upload'){
+				$tabs .= 's';
+			}
+			if($tab!='upload'){
+			${'bp_media_'.$tab} = new BPMediaScreen(
+				$tab,
+				constant('BP_MEDIA_'.strtoupper($tabs).'_SLUG')
 				);
+			}
 		}
-		if($enabled['videos']){
-			$bp_media_video = new BPMediaScreen(
-				'video',
-				BP_MEDIA_VIDEOS_SLUG
-				);
 		}
-		if($enabled['audio']){
-			$bp_media_audio = new BPMediaScreen(
-				'audio',
-				BP_MEDIA_AUDIO_SLUG
-				);
-		}
-
-
-
-
-		/* Album Screen */
-        $bp_media_album = new BPMediaAlbumScreen(
-				'album',
-				BP_MEDIA_ALBUMS_SLUG
-				);
 
 		/* Switch between different screens depending on context */
         switch ($bp->current_component) {
             case BP_MEDIA_IMAGES_SLUG:
-                if ( $enabled['images'] && is_numeric($bp->current_action)) {
+                if ( $enabled['image'] && is_numeric($bp->current_action)) {
                     $bp->action_variables[0] = $bp->current_action;
                     $bp->current_action = BP_MEDIA_IMAGES_ENTRY_SLUG;
                 }
@@ -127,7 +111,7 @@ class BPMediaComponent extends BP_Component {
                 }
                 break;
             case BP_MEDIA_VIDEOS_SLUG:
-                if ($enabled['videos'] && is_numeric($bp->current_action)) {
+                if ($enabled['video'] && is_numeric($bp->current_action)) {
                     $bp->action_variables[0] = $bp->current_action;
                     $bp->current_action = BP_MEDIA_VIDEOS_ENTRY_SLUG;
                 }
@@ -145,8 +129,8 @@ class BPMediaComponent extends BP_Component {
             'name' => __(BP_MEDIA_LABEL, BP_MEDIA_TXT_DOMAIN),
             'slug' => BP_MEDIA_SLUG,
             'position' => 80,
-            'screen_function' => array($bp_media_image, 'screen'),
-            'default_subnav_slug' => BP_MEDIA_IMAGES_SLUG
+            'screen_function' => array(${'bp_media_'.$default_tab}, 'screen'),
+            'default_subnav_slug' => constant('BP_MEDIA_'.strtoupper($defaults_tab).'_SLUG')
         );
 
 		/* Create  an empty sub navigation */
@@ -156,7 +140,7 @@ class BPMediaComponent extends BP_Component {
         parent::setup_nav($main_nav, $sub_nav);
 
 		/* Set up individual screens for each nav/sub nav */
-		if($enabled['images']){
+		if($enabled['image']){
         bp_core_new_nav_item(array(
             'name' => __(BP_MEDIA_IMAGES_LABEL, BP_MEDIA_TXT_DOMAIN),
             'slug' => BP_MEDIA_IMAGES_SLUG,
@@ -230,7 +214,7 @@ class BPMediaComponent extends BP_Component {
         ));
 		}
 
-		if($enabled['videos']){
+		if($enabled['video']){
         bp_core_new_nav_item(array(
             'name' => __(BP_MEDIA_VIDEOS_LABEL, BP_MEDIA_TXT_DOMAIN),
             'slug' => BP_MEDIA_VIDEOS_SLUG,
