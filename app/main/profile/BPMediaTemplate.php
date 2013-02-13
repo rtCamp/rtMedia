@@ -78,8 +78,8 @@ class BPMediaTemplate {
                     <input type="hidden" id="bp-media-selected-album" value="<?php echo $bp_media_current_album->get_id(); ?>"/>
                 <?php } ?>
                 </div>
-                <div id="bp-media-uploaded-files"></div>
             </div>
+            <div id="bp-media-uploaded-files"></div>
         </div>
         <?php
     }
