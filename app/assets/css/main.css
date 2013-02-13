@@ -94,7 +94,7 @@ div.bp_media_create_album{text-align: right}
 #bp-media-settings-boxes{border:1px solid #CCC; overflow: hidden; padding: 10px; -webkit-border-bottom-left-radius:3px;border-bottom-left-radius:3px;-webkit-border-top-right-radius:3px;border-top-right-radius:3px;-webkit-border-bottom-right-radius:3px;border-bottom-right-radius:3px; float: left; width: 98%;}
 .nav-tab-wrapper a#bp-media{background:url('../img/bpm-icon-32.png') transparent no-repeat; padding-left:32px;}
 .nav-tab-wrapper a#bp-media:hover,.nav-tab-wrapper a#bp-media.nav-tab-active{background-position:left -32px;}
-.metabox-holder .postbox#latest-news .inside ul li{background: transparent url('../img/rtCamp-bullet.png') left top no-repeat; padding-left: 19px;}
+.metabox-holder .postbox#latest-news .inside ul li{background: transparent url('../img/rtCamp-bullet.png') left 4px no-repeat; padding-left: 26px;}
 #branding #logo{text-align:center;padding: 10px 0;display:block;}
 ul#social{display:block;text-align:center;margin:0;clear: both;}
 #branding #mc-embedded-subscribe-form{float: left;width: 100%;}
@@ -102,6 +102,11 @@ ul#social{display:block;text-align:center;margin:0;clear: both;}
 #branding #mc-embedded-subscribe{float: right;padding: 0 3px;}
 #branding #mce-EMAIL{float: left;}
 ul#social li{display:inline;}
+#premium-addons{text-align: center;}
+.wp-admin .button-tweet{background: #33ACE6; border-color: #3399DD #3399DD #2288CC;  color: #FFFFFF !important; text-shadow: -1px -1px 0 #3399DD;}
+.wp-admin .button-tweet:hover{background: #3399DD;border-color: #2288CC;box-shadow: 0 0 4px rgba(82, 168, 236, 0.75);}
+.wp-admin .button-rating{background: #8A8A8A; border-color: #222; color: #FFFFFF !important; text-shadow: -1px -1px 0 #444;}
+.wp-admin .button-rating:hover{background: #7E7E7E;border-color: #444;box-shadow: 0 0 4px rgba(128,128,128, 0.75);}
 #bp-media-show-more{width: 200px;margin-left: auto;margin-right: auto;display: block;height: 30px;line-height: 30px;font-size: 20px;}
 #bp-media-upload-ui.activity-component{margin-left: 74px;margin-top: 10px;}
 ul#activity-stream li.media.album_updated ul{}
