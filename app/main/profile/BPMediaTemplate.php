@@ -20,7 +20,6 @@ class BPMediaTemplate {
         $post_wall = __('Wall Posts', BP_MEDIA_TXT_DOMAIN); ?>
         <div id="bp-media-upload-ui" class="hide-if-no-js drag-drop">
             <div id="drag-drop-area">
-                <div class="drag-drop-space">
                 <div class="drag-drop-inside">
                     <p class="drag-drop-info"><?php _e('Drop files here', BP_MEDIA_TXT_DOMAIN); ?></p>
                     <p><?php _e(' or ', BP_MEDIA_TXT_DOMAIN); ?></p>
@@ -77,7 +76,6 @@ class BPMediaTemplate {
                     <?php } else { ?>
                     <input type="hidden" id="bp-media-selected-album" value="<?php echo $bp_media_current_album->get_id(); ?>"/>
                 <?php } ?>
-                </div>
             </div>
             <div id="bp-media-uploaded-files"></div>
         </div>
