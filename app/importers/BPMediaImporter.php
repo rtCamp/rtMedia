@@ -65,14 +65,14 @@ class BPMediaImporter {
 
 	function create_album($album_name = '',$author_id=1){
 
-		global $bp_media,$wpdb;
+		global $bp_media;
 
 		if(array_key_exists('bp_album_import_name',$bp_media->options)){
 			if($bp_media->options['bp_album_import_name']!=''){
 				$album_name = $bp_media->options['bp_album_import_name'];
 			}
 		}
-		$found_album = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}posts WHERE post_title='Wall Posts' AND post_type='bp_media_album'");
+		$found_album = BuddyPressMedia::get_wall_album();
 
 		if(count($found_album)< 1){
 			$album = new BPMediaAlbum();
