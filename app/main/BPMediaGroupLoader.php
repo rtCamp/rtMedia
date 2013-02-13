@@ -27,12 +27,12 @@ class BPMediaGroupLoader {
             if (class_exists('BPMediaGroupsExtension')) :
                 bp_register_group_extension('BPMediaGroupsExtension');
 			if($enabled['images'])
-                new BPMediaGroupImage ();
-                new BPMediaGroupAlbum();
+                new BPMediaGroupImages ();
+                new BPMediaGroupAlbums();
 			if($enabled['audio'])
-                new BPMediaGroupMusic();
+                new BPMediaGroupAudio();
 			if($enabled['videos'])
-                new BPMediaGroupVideo();
+                new BPMediaGroupVideos();
                 new BPMediaGroupUpload();
             endif;
             add_action('bp_actions', array($this, 'custom_nav'), 999);
