@@ -529,6 +529,8 @@ class BuddyPressMedia {
         register_widget('BPMediaWidget');
     }
 
+
+
 }
 
 /**

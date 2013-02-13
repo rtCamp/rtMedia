@@ -13,19 +13,13 @@
 class BPMediaPrivacy {
 
 	var $settings = array(
-		'private' => false,
-		'friends' => false,
-		'users' => false,
-		'public' => true
+		6	=>'private',
+		4	=>'friends',
+		2	=>'users',
+		0	=>'public'
 	);
 
 	var $enabled = false;
-
-	var $contexts = array(
-		'site'		=> false,
-		'group'		=> false,
-		'profile'	=> true
-	);
 
 
 	/**
@@ -39,35 +33,21 @@ class BPMediaPrivacy {
 
 	}
 
-	function save( $context = '', $settings = array( ), $object_id = false, $object_type = 'media' ) {
-		if ( empty( $settings ) )
+	function save( $level = 0, $object_id = false ) {
+
+		if(!array_key_exists($level,$this->settings))
 			return false;
 
-		$defaults = $this->settings;
-		$settings = wp_parse_args( $settings, $defaults );
-		return $this->save_by_object( $context, $settings, $object_id, $object_type );
+		return $this->save_by_object( $level, $object_id );
 	}
 
-	private function save_by_object( $context = '', $settings = array( ), $object_id = false, $object_type = 'media' ) {
+	private function save_by_object(  $level = 0, $object_id = false ) {
 		if($object_id==false)
 			return false;
 
-		$settings = apply_filters('bp_media_save_privacy', $settings);
+		$level = apply_filters('bp_media_save_privacy', $level);
 
-		switch ($object_type){
-			case 'media':
-				return update_post_meta($object_id,'bp_media_privacy',$settings);
-				break;
-			case 'profile':
-				return update_user_meta($object_id,'bp_media_privacy',$settings);
-				break;
-			case 'activity':
-				break;
-			case 'group':
-				break;
-
-		}
-		//do_action('bp_media_non_media_privacy',$object_id, $settings);
+		return update_post_meta($object_id,'bp_media_privacy',$level);
 
 	}
 	function check($object_id=false, $object_type='media'){
