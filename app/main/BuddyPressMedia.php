@@ -252,10 +252,12 @@ class BuddyPressMedia {
 
 		/* UI Labels loaded via text domain, can be translated */
 		if ( ! defined( 'BP_MEDIA_LABEL' ) )
-			define( 'BP_MEDIA_LABEL', __( 'Media', $this->text_domain ) );
+			define( 'BP_MEDIA_LABEL', __( 'Media',
+					$this->text_domain ) );
 
 		if ( ! defined( 'BP_MEDIA_LABEL_SINGULAR' ) )
-			define( 'BP_MEDIA_LABEL_SINGULAR', __( 'Media', $this->text_domain ) );
+			define( 'BP_MEDIA_LABEL_SINGULAR', __( 'Media',
+					$this->text_domain ) );
 
 		if ( ! defined( 'BP_MEDIA_IMAGES_LABEL' ) )
 			define( 'BP_MEDIA_IMAGES_LABEL', __( 'Photos', $this->text_domain ) );
@@ -535,15 +537,15 @@ class BuddyPressMedia {
 	function enabled() {
 		$options = $this->options;
 		$enabled = array(
-			'images' => false,
-			'videos' => false,
+			'image' => false,
+			'video' => false,
 			'audio' => false,
-			'albums' => true,
+			'album' => true,
 			'upload' => true
 		);
 		if ( array_key_exists( 'images_enabled', $options ) ) {
 			if ( $options[ 'images_enabled' ] == 1 )
-				$enabled[ 'images' ] = true;
+				$enabled[ 'image' ] = true;
 		}
 		if ( array_key_exists( 'videos_enabled', $options ) ) {
 			if ( $options[ 'videos_enabled' ] == 1 )
@@ -555,6 +557,25 @@ class BuddyPressMedia {
 		}
 
 		return $enabled;
+	}
+
+	function default_tab(){
+		$enabled = $this->enabled();
+		unset($enabled['upload']);
+		unset($enabled['album']);
+		foreach($enabled as $tab=>$value){
+			if($value==true){
+				return $tab;
+			}
+		}
+	}
+
+	function defaults_tab(){
+		$defaults_tab = $this->default_tab();
+		if($defaults_tab!='audio'){
+			$defaults_tab .= 's';
+		}
+		return $defaults_tab;
 	}
 
 	static function get_wall_album( $group_id = false ) {
