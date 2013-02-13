@@ -20,13 +20,22 @@ class BPMediaGroupLoader {
 	 *
 	 */
     function __construct() {
+		global $bp_media;
+		$enabled = $bp_media->enabled();
+
+
             if (class_exists('BPMediaGroupsExtension')) :
                 bp_register_group_extension('BPMediaGroupsExtension');
-                new BPMediaGroupImage ();
-                new BPMediaGroupAlbum();
-                new BPMediaGroupMusic();
-                new BPMediaGroupVideo();
-                new BPMediaGroupUpload();
+			 foreach (array('image','video', 'audio', 'album', 'upload') as $type){
+				 if($enabled[$type]){
+					 $types = $type;
+					 if($types!='audio'&&$types!='upload'){
+						 $types .= 's';
+					 }
+					 $grp_class = 'BPMediaGroup'.ucfirst($types);
+					 new $grp_class();
+				 }
+			 }
             endif;
             add_action('bp_actions', array($this, 'custom_nav'), 999);
             add_filter('bp_media_multipart_params_filter',
@@ -73,6 +82,7 @@ class BPMediaGroupLoader {
             }
             switch ($bp->current_action) {
                 case BP_MEDIA_IMAGES_SLUG:
+
                 case BP_MEDIA_VIDEOS_SLUG:
                 case BP_MEDIA_AUDIO_SLUG:
                 case BP_MEDIA_ALBUMS_SLUG:
@@ -130,42 +140,55 @@ class BPMediaGroupLoader {
      * @return boolean
      */
     static function navigation_menu() {
-        global $bp;
+        global $bp,$bp_media;
+		$enabled = $bp_media->enabled();
+		$default_tab = $bp_media->default_tab();
+		$defaults_tab = $bp_media->defaults_tab();
+		echo $default_tab;
+		$default_const = 'BP_MEDIA_'.strtoupper($defaults_tab).'_SLUG';
+
         if (!isset($bp->current_action) || $bp->current_action != BP_MEDIA_SLUG)
             return false;
-        $bp_media_upload = new BPMediaUploadScreen('upload', BP_MEDIA_UPLOAD_SLUG);
-        $bp_media_image = new BPMediaScreen('image', BP_MEDIA_IMAGES_SLUG);
-        $current_tab = BP_MEDIA_IMAGES_SLUG;
+		${'bp_media_'.$default_tab} = new BPMediaScreen($defaults_tab, constant($default_const));
+        $current_tab = constant($default_const);
 
-        if (isset($bp->action_variables[0])) {
-            $current_tab = $bp->action_variables[0];
-        }
+        //if (isset($bp->action_variables[0])) {
+            //$current_tab = $bp->action_variables[0];
+        //}
 
 //        if (BPMediaGroup::can_upload()) {
-        $bp_media_nav[BP_MEDIA_IMAGES_SLUG] = array(
+		echo($default_tab);
+        $bp_media_nav[constant($default_const)] = array(
             'url' => trailingslashit(bp_get_group_permalink($bp->groups->current_group)) . BP_MEDIA_SLUG,
-            'label' => BP_MEDIA_IMAGES_LABEL,
-            'screen_function' => array($bp_media_image, 'screen')
+            'label' => constant('BP_MEDIA_'.strtoupper($defaults_tab).'_LABEL'),
+            'screen_function' => array(${'bp_media_'.$default_tab}, 'screen')
         );
 //        } else {
 //            $bp_media_nav = array();
 //        }
 
-        foreach (array('VIDEOS', 'AUDIO', 'ALBUMS', 'UPLOAD') as $type) {
-            if ($type == 'UPLOAD') {
+        foreach (array('IMAGES','VIDEOS', 'AUDIO', 'ALBUMS', 'UPLOAD') as $types) {
+            if ($types == 'UPLOAD') {
+
                 if (BPMediaGroupLoader::can_upload()) {
-                    $bp_media_nav[constant('BP_MEDIA_' . $type . '_SLUG')] = array(
-                        'url' => trailingslashit(bp_get_group_permalink($bp->groups->current_group)) . constant('BP_MEDIA_' . $type . '_SLUG'),
-                        'label' => constant('BP_MEDIA_' . $type . '_LABEL'),
+                    $bp_media_nav[constant('BP_MEDIA_' . $types . '_SLUG')] = array(
+                        'url' => trailingslashit(bp_get_group_permalink($bp->groups->current_group)) . constant('BP_MEDIA_' . $types . '_SLUG'),
+                        'label' => constant('BP_MEDIA_' . $types . '_LABEL'),
 //                        'screen_function' => array( $bp_media_upload, 'upload_screen' ),
                         'user_has_access' => BPMediaGroupLoader::can_upload()
                     );
                 }
             } else {
-                $bp_media_nav[constant('BP_MEDIA_' . $type . '_SLUG')] = array(
-                    'url' => trailingslashit(bp_get_group_permalink($bp->groups->current_group)) . constant('BP_MEDIA_' . $type . '_SLUG'),
-                    'label' => constant('BP_MEDIA_' . $type . '_LABEL'),
+				$type = $types;
+				if($types!='AUDIO'){
+					$type = substr($types, 0, -1);
+				}
+				if($enabled[strtolower($type)] && $default_tab!=strtolower($type)){
+                $bp_media_nav[constant('BP_MEDIA_' . $types . '_SLUG')] = array(
+                    'url' => trailingslashit(bp_get_group_permalink($bp->groups->current_group)) . constant('BP_MEDIA_' . $types . '_SLUG'),
+                    'label' => constant('BP_MEDIA_' . $types . '_LABEL'),
                 );
+				}
             }
         }
 
