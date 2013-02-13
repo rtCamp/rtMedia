@@ -6,16 +6,15 @@
 jQuery(document).ready(function(){
     
     var selected = jQuery('#bp-media-album-prompt select').val();
+    var in_list = 0;
     if(jQuery('#'+bp_media_uploader_params.container).length==0)
         return false;
+    if ( jQuery('#bp-media-album-prompt p').css('display') == 'none' )
+        in_list = 1;
     jQuery('#bp-media-album-prompt select').change(function() {
-
         if ( jQuery(this).val() == 'create_new' ) {
-            jQuery('#bp_media_album_new').css({
-                'width':jQuery('#bp-media-album-prompt select').width()+20
-            });
             jQuery('#bp-media-album-prompt select').hide();
-            jQuery('#bp-media-album-prompt span').hide();
+            jQuery('#bp-media-album-prompt p').hide();
             jQuery('#bp-media-album-prompt div.hide').show();
         } else
             selected = jQuery(this).val();
@@ -47,7 +46,8 @@ jQuery(document).ready(function(){
                     jQuery('#bp-media-selected-album').prepend('<option value='+album+' selected="selected">'+new_album_name+'</option>');
                     jQuery('#bp-media-album-prompt div.hide').hide();
                     jQuery('#bp-media-album-prompt select').show();
-                    jQuery('#bp-media-album-prompt span').show();
+                    if ( in_list == 0 )
+                        jQuery('#bp-media-album-prompt p').show();
                 }
             });
         }
@@ -57,7 +57,8 @@ jQuery(document).ready(function(){
         jQuery('#bp-media-album-prompt select option').removeAttr('selected');
         jQuery('#bp-media-album-prompt select option[value=' + selected + ']').attr('selected', 'selected');
         jQuery('#bp-media-album-prompt select').show();
-        jQuery('#bp-media-album-prompt span').show();
+        if ( in_list == 0 )
+                jQuery('#bp-media-album-prompt p').show();
     });
         
     //Normal Uplaoder
