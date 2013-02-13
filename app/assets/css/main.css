@@ -40,7 +40,7 @@ div.bp_media_title{margin-bottom:10px;}
 .bp-media-area-allocate{height: 10px;width: 100%;display: block;}
 li #bp-media-upload-ui {padding: 0;max-width: 158px;}
 #bp-media-upload-ui #drag-drop-area{border: 4px dashed #DDD;min-height: 140px;text-align: center;background: url('../img/drag-drop-bg.png') repeat scroll 0 0 transparent;overflow: hidden;}
-li #bp-media-upload-ui #drag-drop-area{width: 100%;max-width: 150px;min-height: 150px;}
+li #bp-media-upload-ui #drag-drop-area{max-width: 150px;min-height: 150px;}
 #bp-media-upload-ui .drag-drop-space{margin: 18px auto 0;max-width: 400px;overflow: hidden;}
 #bp-media-upload-ui .drag-drop-inside{float: left;margin: 0 auto 15px;width: 47%;}
 .albums #bp-media-upload-ui .drag-drop-inside{float: none;width: auto;}
@@ -50,38 +50,20 @@ li #bp-media-upload-ui #bp-media-album-prompt{margin: 12px auto 0;max-width: 144
 #bp-media-upload-ui .drag-drop-inside p.drag-drop-info{font-size: 20px;line-height: 100%;}
 
 #bp-media-upload-ui .drag-drop-buttons input,#bp-media-album-prompt input.button{-moz-box-sizing: content-box;border-color: #BBBBBB;border-radius: 15px;border-style: solid;border-width: 1px;color: #464646;cursor: pointer;font-size: 13px !important;line-height: 13px;padding: 5px 10px;text-decoration: none;}
-#bp-media-album-prompt input.button{font-size: 12px !important;padding: 3px 4px;text-decoration: none;}
-#bp-media-selected-album{max-width: 140px;font-size: 14px;width: 100%;}
+li #bp-media-album-prompt input.button{font-size: 12px !important;padding: 3px;text-decoration: none;margin-top: 5px;}
+#bp-media-selected-album{max-width: 140px;font-size: 14px;width: 100%;margin: 10px 0;}
 li #bp-media-album-prompt > p,li #bp-media-upload-ui .drag-drop-space p{display: none;}
 li #bp-media-upload-ui .drag-drop-space p.drag-drop-buttons{display: block;}
 #bp-media-album-prompt div.hide{display: none;margin: 0;}
 #bp-media-album-prompt > p{font-size: 20px;}
 #bp-media-upload-ui .drag-drop-inside p,#bp-media-album-prompt #bp_media_album_new{margin-bottom: 12px;font-size: 14px;}
 #bp-media-album-prompt #bp_media_album_new{max-width: 90%;}
-li #bp-media-album-prompt #bp_media_album_new{margin: 0 0 5px;max-width: 134px;width: 94%;}
+li #bp-media-album-prompt #bp_media_album_new{margin: 0;max-width: 134px;width: 94%;}
 #bp-media-upload-ui .drag-drop-to{width: 22px;line-height: 22px;margin: 40px auto 0;float: left;}
 li #bp-media-upload-ui .drag-drop-to{width: 100%;line-height: 22px;margin: 0;float: none;}
 #bp-media-album-in{background-color: #333333;border-radius: 11px 11px 11px 11px;color: #FFFFFF;display: block;float: left;font-size: 14px;line-height: 22px;margin: 30px auto 0;width: 22px;}
 li #bp-media-album-in{background-color: #333333;border-radius: 11px 11px 11px 11px;color: #FFFFFF;display: block;float: none;font-size: 14px;line-height: 22px;margin: 0 auto;width: 22px;}
 #bp-media-album-prompt #create-new{background-color: #DF562C;color: #fff;}
-
-/*#bp-media-upload-ui #drag-drop-area{border: 4px dashed #DDD;height: 150px;width: 150px;}
-.upload #bp-media-upload-ui #drag-drop-area{height: auto; width: 100%;}
-#bp-media-upload-ui .drag-drop-inside{margin:auto;width: 100%;}
-#bp-media-album-prompt{margin: 0;position: absolute;right: 0;text-align: right;top: 2px;min-width: 200px;}
-#bp-media-album-prompt span{float: left;line-height: 25px;margin-right: 15px;}
-#bp-media-album-prompt .bp-media-album-content{float: left;}
-#bp-media-album-prompt #create-new{background-color: #DF562C;color: #fff;}
-#bp-media-album-prompt div.hide{display: none;position: absolute;right: 0;top: 0;z-index: 100;position: relative;}
-#bp-media-album-prompt #bp_media_album_new {width: 160px;}
-#bp-media-album-prompt input.button{height: 25px;margin-left: 5px;padding: 0 10px;position: relative;top: -1px;}
-div.bp-media-area-allocate{display: block;height: 15px;}
-div.bp_media_create_album{text-align: right}
-#bp_media_album_name{margin-bottom: 6px;}*/
-
-/*#bp-media-upload-ui .drag-drop-inside p{display: block;text-align: center;color: #AAA;margin: 12px 0;}
-#bp-media-upload-ui .drag-drop-info{font-size: 20px;}
-#bp-media-upload-ui .drag-drop-buttons input{border-color: #BBB;color: #464646;text-decoration: none;font-size: 12px!important;line-height: 13px;padding: 3px 8px;cursor: pointer;border-width: 1px;border-style: solid;-webkit-border-radius: 11px;border-radius: 11px;-moz-box-sizing: content-box;-webkit-box-sizing: content-box;box-sizing: content-box;}*/
 
 #bp-media-uploaded-files{background: none repeat scroll 0 0 #DDDDDD;left: 0;margin-top: 5px;position: absolute;top: 155px;width: 100%;}
 #bp-media-uploaded-files .error{padding: 5px;text-align: center;}
@@ -206,19 +188,27 @@ background-image: -webkit-gradient(linear,left bottom,left top,color-stop(1, #F7
 img.bp-media-donation-image{display:block;margin: 10px auto;}
 #donate form{text-align: center;}
 
-/* BuddyPress Media Image Uploader album selection */
-/*#bp-media-album-prompt, #bp-media-album-new { background: none repeat scroll 0 0 #FFFFFF;border: 1px solid #AAAAAA;border-radius: 5px 5px 5px 5px;display: none;padding: 3px;z-index: 110000;left: 40%;position: fixed;top: 35%;width: 300px; }
-#bp-media-album-new { z-index: 120000; }
-.bp-media-album-title { background: url("../img/Popup-title-bg.png") repeat-x scroll 50% 50% #CCCCCC;border: 1px solid #AAAAAA;border-radius: 5px 5px 5px 5px;color: #222222;display: block;font-weight: bold;padding: 0;margin-bottom: 10px; }
-.bp-media-album-title span { background: none repeat scroll 0 0 transparent;display: block;font-size: 16px;padding: 10px; }
-#bp-media-create-album-close, #bp-media-create-album-close:active, #bp-media-close, #bp-media-close:active { border-radius: 3px 3px 3px 3px;cursor: pointer;display: block;padding: 0 7px 2px;position: absolute;right: 8px;top: 11px;z-index: 10; }
-#bp-media-create-album-close:hover, #bp-media-create-album-close:focus, #bp-media-close:hover, #bp-media-close:focus { background: none repeat scroll 0 0 #545454;color: #CFCFCF; }
-.bp-media-album-content { display: block;padding: 5px; }
-.bp-media-album-content label { display: block;font-size: 14px;margin: 0 0 0 3px; }
-#bp-media-album-prompt select { min-width: 140px; }
-.select-btn-div { border-top: 1px solid #AAAAAA;margin: 15px 0 0;padding: 5px 5px 5px 30px;text-align: right; }
-.select-btn-div .btn { float: right;font-size: 14px;margin: 5px;padding: 10px 25px; }
-#bp-media-album-new > label { font-size: 14px; }
-#bp-media-album-new input[type="text"] { width: 98%; }
-#custom-overlay { background: none repeat scroll 0 0 #000000;bottom: 0;left: 0;min-height: 360px;opacity: 0.7;position: fixed;right: 0;top: 0;z-index: 105000; }
-div.error{margin: 5px 0 15px; background-color: #ffebe8; border-color: #c00;padding: 0 .6em;-webkit-border-radius: 3px;border-radius: 3px;border-width: 1px;border-style: solid;}*/
+@media (max-width: 980px) {
+    #item-body ul.bp-media-gallery li{width: 23%;}
+    li #bp-media-upload-ui #drag-drop-area{min-height: auto;}
+}
+@media (max-width: 850px) {
+    #item-body ul.bp-media-gallery li{width: 31%;}
+    
+}
+@media (max-width: 480px) {
+    #item-body ul.bp-media-gallery li{width: 48%;}
+    li #bp-media-upload-ui{max-width: 170px;}
+    ul.bp-media-gallery li img,li #bp-media-upload-ui #drag-drop-area{max-width: 170px;width: 100%;}
+    li #bp-media-upload-ui #drag-drop-area{max-width: 162px;}
+    #bp-media-upload-ui .drag-drop-space{margin: 23px auto 10px;}
+    li #bp-media-upload-ui .drag-drop-inside{margin: 0 auto 23px;}
+}
+@media (max-width: 379px) {
+    #bp-media-upload-ui{min-height: 190px;}
+    #item-body ul.bp-media-gallery li{width: 95%;}
+    #bp-media-upload-ui .drag-drop-inside{float: none;width: 100%;}
+    #bp-media-album-in{float: none;margin: 0 auto;}
+    #bp-media-upload-ui #bp-media-album-prompt{margin: 15px auto 15px;float: none;width: 100%}
+    #bp-media-upload-ui .drag-drop-inside p,#bp-media-album-prompt #bp_media_album_new{margin-bottom: 5px;}
+}
