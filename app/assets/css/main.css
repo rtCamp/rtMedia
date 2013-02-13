@@ -53,7 +53,7 @@ li #bp-media-upload-ui #bp-media-album-prompt{margin: 12px auto 0;max-width: 144
 li #bp-media-album-prompt input.button{font-size: 12px !important;padding: 3px;text-decoration: none;margin-top: 5px;}
 #bp-media-selected-album{max-width: 140px;font-size: 14px;width: 100%;margin: 10px 0;}
 li #bp-media-album-prompt > p,li #bp-media-upload-ui .drag-drop-space p{display: none;}
-.albums li #bp-media-album-prompt > p,li #bp-media-upload-ui .drag-drop-space p{display: block;}
+.albums li #bp-media-album-prompt > p,.albums li #bp-media-upload-ui .drag-drop-space p{display: block;}
 li #bp-media-upload-ui .drag-drop-space p.drag-drop-buttons{display: block;}
 #bp-media-album-prompt div.hide{display: none;margin: 0;}
 #bp-media-album-prompt > p{font-size: 20px;}
