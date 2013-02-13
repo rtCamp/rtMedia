@@ -593,7 +593,10 @@ class BuddyPressMedia {
 						array( '%d' )
 				);
 			}
+
+			wp_delete_post($album['ID'],true);
 		}
+
 	}
 
 }
