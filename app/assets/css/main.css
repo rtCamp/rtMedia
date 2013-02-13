@@ -39,22 +39,21 @@ div.bp_media_title{margin-bottom:10px;}
 
 .bp-media-area-allocate{height: 10px;width: 100%;display: block;}
 li #bp-media-upload-ui {padding: 0;max-width: 158px;}
-#bp-media-upload-ui #drag-drop-area{border: 4px dashed #DDD;min-height: 140px;text-align: center;background: url('../img/drag-drop-bg.png') repeat scroll 0 0 transparent;overflow: hidden;}
-li #bp-media-upload-ui #drag-drop-area{max-width: 150px;min-height: 150px;}
-#bp-media-upload-ui .drag-drop-space{margin: 18px auto 0;max-width: 400px;overflow: hidden;}
-#bp-media-upload-ui .drag-drop-inside{float: left;margin: 0 auto 15px;width: 47%;}
+#bp-media-upload-ui #drag-drop-area{border: 4px dashed #DDD;text-align: center;background: url('../img/drag-drop-bg.png') repeat scroll 0 0 transparent;overflow: hidden;padding: 20px 0 0;}
+li #bp-media-upload-ui #drag-drop-area{max-width: 150px;min-height: auto;padding-top: 15px;}
+.albums li #bp-media-upload-ui #drag-drop-area{padding: 20px 0 10px;}
+#bp-media-upload-ui .drag-drop-inside{float: left;margin: 0 auto 10px;width: 48%;}
 .albums #bp-media-upload-ui .drag-drop-inside{float: none;width: auto;}
-li #bp-media-upload-ui .drag-drop-inside,li #bp-media-upload-ui #bp-media-album-prompt{float: none;margin: 0 auto 15px;max-width: 100%;width: auto;}
-li #bp-media-upload-ui #bp-media-album-prompt{margin: 12px auto 0;max-width: 144px;}
-#bp-media-upload-ui #bp-media-album-prompt{float: right;margin: 12px auto 0;width: 45%;}
+li #bp-media-upload-ui .drag-drop-inside,li #bp-media-upload-ui #bp-media-album-prompt{float: none;margin: 0 auto 18px;max-width: 100%;width: auto;}
+li #bp-media-upload-ui #bp-media-album-prompt{margin: 8px auto 0;max-width: 144px;}
+#bp-media-upload-ui #bp-media-album-prompt{float: right;margin: 12px auto 0;width: 47%;}
 #bp-media-upload-ui .drag-drop-inside p.drag-drop-info{font-size: 20px;line-height: 100%;}
-
 #bp-media-upload-ui .drag-drop-buttons input,#bp-media-album-prompt input.button{-moz-box-sizing: content-box;border-color: #BBBBBB;border-radius: 15px;border-style: solid;border-width: 1px;color: #464646;cursor: pointer;font-size: 13px !important;line-height: 13px;padding: 5px 10px;text-decoration: none;}
-li #bp-media-album-prompt input.button{font-size: 12px !important;padding: 3px;text-decoration: none;margin-top: 5px;}
+li #bp-media-album-prompt input.button{font-size: 12px !important;padding: 3px 8px;text-decoration: none;margin-top: 5px;}
 #bp-media-selected-album{max-width: 140px;font-size: 14px;width: 100%;margin: 10px 0;}
-li #bp-media-album-prompt > p,li #bp-media-upload-ui .drag-drop-space p{display: none;}
-.albums li #bp-media-album-prompt > p,.albums li #bp-media-upload-ui .drag-drop-space p{display: block;}
-li #bp-media-upload-ui .drag-drop-space p.drag-drop-buttons{display: block;}
+li #bp-media-album-prompt > p,li #bp-media-upload-ui #drag-drop-area p{display: none;}
+.albums li #bp-media-album-prompt > p,.albums li #bp-media-upload-ui #drag-drop-area p{display: block;}
+li #bp-media-upload-ui #drag-drop-area p.drag-drop-buttons{display: block;}
 #bp-media-album-prompt div.hide{display: none;margin: 0;}
 #bp-media-album-prompt > p{font-size: 20px;}
 #bp-media-upload-ui .drag-drop-inside p,#bp-media-album-prompt #bp_media_album_new{margin-bottom: 12px;font-size: 14px;}
@@ -106,7 +105,7 @@ li #bp-media-uploaded-files{left: 0;position: absolute;top: 155px;}
 #bp-media-settings-boxes{border:1px solid #CCC; overflow: hidden; padding: 10px; -webkit-border-bottom-left-radius:3px;border-bottom-left-radius:3px;-webkit-border-top-right-radius:3px;border-top-right-radius:3px;-webkit-border-bottom-right-radius:3px;border-bottom-right-radius:3px; float: left; width: 98%;}
 .nav-tab-wrapper a#bp-media{background:url('../img/bpm-icon-32.png') transparent no-repeat; padding-left:32px;}
 .nav-tab-wrapper a#bp-media:hover,.nav-tab-wrapper a#bp-media.nav-tab-active{background-position:left -32px;}
-.metabox-holder .postbox#latest-news .inside ul li{background: transparent url('../img/rtCamp-bullet.png') left top no-repeat; padding-left: 19px;}
+.metabox-holder .postbox#latest-news .inside ul li{background: transparent url('../img/rtCamp-bullet.png') left 4px no-repeat; padding-left: 26px;}
 #branding #logo{text-align:center;padding: 10px 0;display:block;}
 ul#social{display:block;text-align:center;margin:0;clear: both;}
 #branding #mc-embedded-subscribe-form{float: left;width: 100%;}
@@ -114,6 +113,11 @@ ul#social{display:block;text-align:center;margin:0;clear: both;}
 #branding #mc-embedded-subscribe{float: right;padding: 0 3px;}
 #branding #mce-EMAIL{float: left;}
 ul#social li{display:inline;}
+#premium-addons{text-align: center;}
+.wp-admin .button-tweet{background: #33ACE6; border-color: #3399DD #3399DD #2288CC;  color: #FFFFFF !important; text-shadow: -1px -1px 0 #3399DD;}
+.wp-admin .button-tweet:hover{background: #3399DD;border-color: #2288CC;box-shadow: 0 0 4px rgba(82, 168, 236, 0.75);}
+.wp-admin .button-rating{background: #8A8A8A; border-color: #222; color: #FFFFFF !important; text-shadow: -1px -1px 0 #444;}
+.wp-admin .button-rating:hover{background: #7E7E7E;border-color: #444;box-shadow: 0 0 4px rgba(128,128,128, 0.75);}
 #bp-media-show-more{width: 200px;margin-left: auto;margin-right: auto;display: block;height: 30px;line-height: 30px;font-size: 20px;}
 #bp-media-upload-ui.activity-component{margin-left: 74px;margin-top: 10px;}
 ul#activity-stream li.media.album_updated ul{}
@@ -190,20 +194,28 @@ background-image: -webkit-gradient(linear,left bottom,left top,color-stop(1, #F7
 img.bp-media-donation-image{display:block;margin: 10px auto;}
 #donate form{text-align: center;}
 
+@media (min-width: 981px) and (max-width: 1096px) {
+    #bp-media-upload-ui .drag-drop-area{padding-top: 12px;}
+    li #bp-media-upload-ui .drag-drop-inside{margin: 0 auto 10px;}
+    li #bp-media-upload-ui #bp-media-album-prompt{margin-top: 0;}
+    li #bp-media-album-prompt input.button{padding: 3px;}
+    .albums li #bp-media-upload-ui #drag-drop-area{padding: 10px 0 0;}
+}
 @media (max-width: 980px) {
     #item-body ul.bp-media-gallery li{width: 23%;}
     li #bp-media-upload-ui #drag-drop-area{min-height: auto;}
 }
 @media (max-width: 850px) {
     #item-body ul.bp-media-gallery li{width: 31%;}
-    
+    #bp-media-upload-ui .drag-drop-inside{width: 47%;}
+    #bp-media-upload-ui #bp-media-album-prompt{width: 46%;}
 }
 @media (max-width: 480px) {
     #item-body ul.bp-media-gallery li{width: 48%;}
     li #bp-media-upload-ui{max-width: 170px;}
     ul.bp-media-gallery li img,li #bp-media-upload-ui #drag-drop-area{max-width: 170px;width: 100%;}
     li #bp-media-upload-ui #drag-drop-area{max-width: 162px;}
-    #bp-media-upload-ui .drag-drop-space{margin: 23px auto 10px;}
+    #bp-media-upload-ui .drag-drop-area{padding: 23px 0 10px;}
     li #bp-media-upload-ui .drag-drop-inside{margin: 0 auto 23px;}
 }
 @media (max-width: 379px) {
