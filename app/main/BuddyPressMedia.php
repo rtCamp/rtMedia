@@ -529,6 +529,33 @@ class BuddyPressMedia {
         register_widget('BPMediaWidget');
     }
 
+	/**
+	 *
+	 */
+	function enabled(){
+		$options = $this->options;
+		$enabled= array(
+			'images'	=> false,
+			'videos'	=> false,
+			'audio'		=> false,
+			'albums'	=> true
+		);
+		if(  array_key_exists( 'images_enabled', $options )){
+			if($options['images_enabled']==1 )
+				$enabled['images']=true;
+		}
+		if(  array_key_exists( 'videos_enabled', $options )){
+			if($options['videos_enabled']==1 )
+				$enabled['video']=true;
+		}
+		if(  array_key_exists( 'audio_enabled', $options )){
+			if($options['audio_enabled']==1 )
+				$enabled['audio']=true;
+		}
+
+		return $enabled;
+	}
+
 
 
 }

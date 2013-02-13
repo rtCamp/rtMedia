@@ -20,11 +20,18 @@ class BPMediaGroupLoader {
 	 *
 	 */
     function __construct() {
+		global $bp_media;
+		$enabled = $bp_media->enabled();
+
+
             if (class_exists('BPMediaGroupsExtension')) :
                 bp_register_group_extension('BPMediaGroupsExtension');
+			if($enabled['images'])
                 new BPMediaGroupImage ();
                 new BPMediaGroupAlbum();
+			if($enabled['audio'])
                 new BPMediaGroupMusic();
+			if($enabled['videos'])
                 new BPMediaGroupVideo();
                 new BPMediaGroupUpload();
             endif;
@@ -73,6 +80,7 @@ class BPMediaGroupLoader {
             }
             switch ($bp->current_action) {
                 case BP_MEDIA_IMAGES_SLUG:
+
                 case BP_MEDIA_VIDEOS_SLUG:
                 case BP_MEDIA_AUDIO_SLUG:
                 case BP_MEDIA_ALBUMS_SLUG:
@@ -130,7 +138,9 @@ class BPMediaGroupLoader {
      * @return boolean
      */
     static function navigation_menu() {
-        global $bp;
+        global $bp,$bp_media;
+		$enabled = $bp_media->enabled();
+
         if (!isset($bp->current_action) || $bp->current_action != BP_MEDIA_SLUG)
             return false;
         $bp_media_upload = new BPMediaUploadScreen('upload', BP_MEDIA_UPLOAD_SLUG);
@@ -142,6 +152,7 @@ class BPMediaGroupLoader {
         }
 
 //        if (BPMediaGroup::can_upload()) {
+
         $bp_media_nav[BP_MEDIA_IMAGES_SLUG] = array(
             'url' => trailingslashit(bp_get_group_permalink($bp->groups->current_group)) . BP_MEDIA_SLUG,
             'label' => BP_MEDIA_IMAGES_LABEL,
@@ -162,10 +173,12 @@ class BPMediaGroupLoader {
                     );
                 }
             } else {
+				if($enabled[strtolower($type)]){
                 $bp_media_nav[constant('BP_MEDIA_' . $type . '_SLUG')] = array(
                     'url' => trailingslashit(bp_get_group_permalink($bp->groups->current_group)) . constant('BP_MEDIA_' . $type . '_SLUG'),
                     'label' => constant('BP_MEDIA_' . $type . '_LABEL'),
                 );
+				}
             }
         }
 
