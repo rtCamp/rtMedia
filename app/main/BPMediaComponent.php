@@ -70,30 +70,18 @@ class BPMediaComponent extends BP_Component {
     function setup_nav() {
         global $bp, $bp_media;
 
-		$enabled= array(
-			'images'	=> false,
-			'videos'	=> false,
-			'audio'	=> false,
-		);
+		$enabled = $bp_media->enabled();
 		/* Upload Screen */
-        $bp_media_upload = new BPMediaUploadScreen(
+
+		foreach ($enabled as $active){
+			$bp_media_upload = new BPMediaUploadScreen(
 				'upload',
 				BP_MEDIA_UPLOAD_SLUG
 				);
-		$options = $bp_media->options;
+		}
 
-		if(  array_key_exists( 'images_enabled', $options )
-				&& $options['images_enabled']==1 ){
-			$enabled['images']=true;
-		}
-		if(  array_key_exists( 'videos_enabled', $options )
-				&& $options['videos_enabled']==1 ){
-			$enabled['videos']=true;
-		}
-		if(  array_key_exists( 'audio_enabled', $options )
-				&& $options['audio_enabled']==1 ){
-			$enabled['audio']=true;
-		}
+		$enabled = $bp_media->enabled();
+
 		/* Media Screens */
 
 		if($enabled['images']){

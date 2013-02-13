@@ -538,7 +538,8 @@ class BuddyPressMedia {
 			'images'	=> false,
 			'videos'	=> false,
 			'audio'		=> false,
-			'albums'	=> true
+			'albums'	=> true,
+			'upload'	=> true
 		);
 		if(  array_key_exists( 'images_enabled', $options )){
 			if($options['images_enabled']==1 )
