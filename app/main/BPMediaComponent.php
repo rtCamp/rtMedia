@@ -75,10 +75,7 @@ class BPMediaComponent extends BP_Component {
 		$defaults_tab = $bp_media->defaults_tab();
 
 		/* Upload Screen */
-		$bp_media_upload = new BPMediaUploadScreen(
-				'upload',
-				BP_MEDIA_UPLOAD_SLUG
-				);
+
 
 		/* Media Screens */
 		foreach ($enabled as $tab=>$active){
@@ -87,7 +84,17 @@ class BPMediaComponent extends BP_Component {
 			if($tabs!='audio'&&$tabs!='upload'){
 				$tabs .= 's';
 			}
-			if($tab!='upload'){
+			if($tab=='upload'){
+				${'bp_media_'.$tab} = new BPMediaUploadScreen(
+				$tab,
+				constant('BP_MEDIA_'.strtoupper($tabs).'_SLUG')
+				);
+			}elseif($tab=='album'){
+				$bp_media_album = new BPMediaAlbumScreen(
+						$tab,
+						constant('BP_MEDIA_'.strtoupper($tabs).'_SLUG')
+						);
+			}else{
 			${'bp_media_'.$tab} = new BPMediaScreen(
 				$tab,
 				constant('BP_MEDIA_'.strtoupper($tabs).'_SLUG')
