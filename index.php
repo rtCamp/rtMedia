@@ -74,9 +74,9 @@ spl_autoload_register( 'buddypress_media_autoloader' );
  */
 global $bp_media;
 $bp_media = new BuddyPressMedia();
+//add_action('init','BPMediaBPAlbumImporter');
 
-$bp_album_importer = new BPMediaBPAlbumImporter();
-$bp_album_importer->bpmedia_ajax_import_callback();
+//BPMediaBPAlbumImporter::bpmedia_ajax_import_callback();
 /*
  * Look Ma! Very few includes! Next File: /app/main/BuddyPressMedia.php
  */

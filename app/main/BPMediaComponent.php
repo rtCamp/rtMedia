@@ -68,27 +68,55 @@ class BPMediaComponent extends BP_Component {
      * @global object $bp The global BuddyPress object
      */
     function setup_nav() {
-        global $bp;
+        global $bp, $bp_media;
 
+		$enabled= array(
+			'images'	=> false,
+			'videos'	=> false,
+			'audio'	=> false,
+		);
 		/* Upload Screen */
         $bp_media_upload = new BPMediaUploadScreen(
 				'upload',
 				BP_MEDIA_UPLOAD_SLUG
 				);
+		$options = $bp_media->options;
 
+		if(  array_key_exists( 'images_enabled', $options )
+				&& $options['images_enabled']==1 ){
+			$enabled['images']=true;
+		}
+		if(  array_key_exists( 'videos_enabled', $options )
+				&& $options['videos_enabled']==1 ){
+			$enabled['videos']=true;
+		}
+		if(  array_key_exists( 'audio_enabled', $options )
+				&& $options['audio_enabled']==1 ){
+			$enabled['audio']=true;
+		}
 		/* Media Screens */
-        $bp_media_image = new BPMediaScreen(
+
+		if($enabled['images']){
+			$bp_media_image = new BPMediaScreen(
 				'image',
 				BP_MEDIA_IMAGES_SLUG
 				);
-        $bp_media_video = new BPMediaScreen(
+		}
+		if($enabled['videos']){
+			$bp_media_video = new BPMediaScreen(
 				'video',
 				BP_MEDIA_VIDEOS_SLUG
 				);
-        $bp_media_audio = new BPMediaScreen(
+		}
+		if($enabled['audio']){
+			$bp_media_audio = new BPMediaScreen(
 				'audio',
 				BP_MEDIA_AUDIO_SLUG
 				);
+		}
+
+
+
 
 		/* Album Screen */
         $bp_media_album = new BPMediaAlbumScreen(
@@ -99,19 +127,19 @@ class BPMediaComponent extends BP_Component {
 		/* Switch between different screens depending on context */
         switch ($bp->current_component) {
             case BP_MEDIA_IMAGES_SLUG:
-                if (is_numeric($bp->current_action)) {
+                if ( $enabled['images'] && is_numeric($bp->current_action)) {
                     $bp->action_variables[0] = $bp->current_action;
                     $bp->current_action = BP_MEDIA_IMAGES_ENTRY_SLUG;
                 }
                 break;
             case BP_MEDIA_AUDIO_SLUG:
-                if (is_numeric($bp->current_action)) {
+                if ($enabled['audio'] && is_numeric($bp->current_action)) {
                     $bp->action_variables[0] = $bp->current_action;
                     $bp->current_action = BP_MEDIA_AUDIO_ENTRY_SLUG;
                 }
                 break;
             case BP_MEDIA_VIDEOS_SLUG:
-                if (is_numeric($bp->current_action)) {
+                if ($enabled['videos'] && is_numeric($bp->current_action)) {
                     $bp->action_variables[0] = $bp->current_action;
                     $bp->current_action = BP_MEDIA_VIDEOS_ENTRY_SLUG;
                 }
@@ -140,12 +168,13 @@ class BPMediaComponent extends BP_Component {
         parent::setup_nav($main_nav, $sub_nav);
 
 		/* Set up individual screens for each nav/sub nav */
-
+		if($enabled['images']){
         bp_core_new_nav_item(array(
             'name' => __(BP_MEDIA_IMAGES_LABEL, BP_MEDIA_TXT_DOMAIN),
             'slug' => BP_MEDIA_IMAGES_SLUG,
             'screen_function' => array($bp_media_image, 'screen'),
         ));
+
 
 
         bp_core_new_subnav_item(array(
@@ -211,8 +240,9 @@ class BPMediaComponent extends BP_Component {
             'screen_function' => array($bp_media_image, 'screen'),
 			/* The name of the function to run when clicked */
         ));
+		}
 
-
+		if($enabled['videos']){
         bp_core_new_nav_item(array(
             'name' => __(BP_MEDIA_VIDEOS_LABEL, BP_MEDIA_TXT_DOMAIN),
             'slug' => BP_MEDIA_VIDEOS_SLUG,
@@ -282,8 +312,9 @@ class BPMediaComponent extends BP_Component {
             'screen_function' => array($bp_media_video, 'screen'),
 			/* The name of the function to run when clicked */
         ));
+		}
 
-
+		if($enabled['audio']){
         bp_core_new_nav_item(array(
             'name' => __(BP_MEDIA_AUDIO_LABEL, BP_MEDIA_TXT_DOMAIN),
             'slug' => BP_MEDIA_AUDIO_SLUG,
@@ -351,7 +382,7 @@ class BPMediaComponent extends BP_Component {
             'screen_function' => array($bp_media_audio, 'screen'),
 			/* The name of the function to run when clicked */
         ));
-
+		}
 
         bp_core_new_nav_item(array(
             'name' => __(BP_MEDIA_ALBUMS_LABEL, BP_MEDIA_TXT_DOMAIN),
