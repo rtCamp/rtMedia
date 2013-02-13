@@ -11,6 +11,10 @@ if (!class_exists('BPMediaSettings')) {
 
         public function __construct() {
             add_action('admin_init', array($this, 'settings'));
+             /**
+         * Add admin notice for enable atleast one media type
+         */
+        add_action('admin_notices', array($this, 'bpmedia_exists'));
         }
 
         /**
@@ -38,6 +42,7 @@ if (!class_exists('BPMediaSettings')) {
                 'desc' => __('Check to enable BuddyPress Media in Groups', BP_MEDIA_TXT_DOMAIN)
 				)
             );
+            
             add_settings_section('bpm-settings', __('Enable Media Types on', BP_MEDIA_TXT_DOMAIN), is_multisite() ? array($this, 'network_notices') : '', 'bp-media-settings');
             add_settings_field('bpm-video', __('Video', BP_MEDIA_TXT_DOMAIN), array($this, 'checkbox'), 'bp-media-settings', 'bpm-settings', array(
                 'setting' => 'bp_media_options',
@@ -54,6 +59,7 @@ if (!class_exists('BPMediaSettings')) {
                 'option' => 'images_enabled',
                 'desc' => __('Check to enable images upload functionality', BP_MEDIA_TXT_DOMAIN)
             ));
+            
             add_settings_section('bpm-miscellaneous', __('Miscellaneous Settings', BP_MEDIA_TXT_DOMAIN),'', 'bp-media-settings');
             add_settings_field('bpm-download', __('Download', BP_MEDIA_TXT_DOMAIN), array($this, 'checkbox'), 'bp-media-settings', 'bpm-miscellaneous', array(
                 'setting' => 'bp_media_options',
@@ -65,15 +71,13 @@ if (!class_exists('BPMediaSettings')) {
                 'option' => 'show_admin_menu',
                 'desc' => __('Check to enable menu in WordPress admin bar', BP_MEDIA_TXT_DOMAIN)
 				)
-            );
-            
+            );            
             add_settings_field('bpm-other-settings', __('Re-Count Media Entries', BP_MEDIA_TXT_DOMAIN), array($this, 'button'), 'bp-media-settings', 'bpm-miscellaneous', array(
                 'option' => 'refresh-count',
                 'name' => __('Re-Count', BP_MEDIA_TXT_DOMAIN),
                 'desc' => __('It will re-count all media entries of all users and correct any discrepancies.', BP_MEDIA_TXT_DOMAIN)
             ));
-
-
+            
             $bp_media_addon = new BPMediaAddon();
             add_settings_section('bpm-addons', __('BuddyPress Media Addons for Audio/Video Conversion', BP_MEDIA_TXT_DOMAIN), array($bp_media_addon, 'get_addons'), 'bp-media-addons');
             add_settings_section('bpm-support', __('Submit a request form', BP_MEDIA_TXT_DOMAIN), '', 'bp-media-support');
@@ -126,7 +130,7 @@ if (!class_exists('BPMediaSettings')) {
             }
             if (is_multisite())
                 update_site_option('bpm-settings-saved', __('Settings saved.', BP_MEDIA_FFMPEG_TXT_DOMAIN));
-            do_action('bp_media_sanitize_settings', $_POST, $input);
+                do_action('bp_media_sanitize_settings', $_POST, $input);
             return $input;
         }
 
@@ -168,7 +172,7 @@ if (!class_exists('BPMediaSettings')) {
                 $options[$option] = '';
             ?>
             <label for="<?php echo $option; ?>">
-                <input<?php checked($options[$option]); ?> name="<?php echo $name; ?>" id="<?php echo $option; ?>" value="1" type="checkbox" />
+                <input<?php checked($options[$option]); ?> name="<?php echo $name; ?>" id="<?php echo $option; ?>" value="1" type="checkbox" />               
             <?php echo $desc; ?>
             </label><?php
         }
@@ -351,6 +355,28 @@ if (!class_exists('BPMediaSettings')) {
                 <span class="description"><?php echo $desc; ?></a><?php
             }
         }
+        
+        /**
+     * Checks if enable atleast one media type!
+     */
+    public function bpmedia_exists() {
+         global $bp_media_options;
+         $option_group = NULL;
+         $settings_url = ( is_multisite() ) ? network_admin_url('edit.php?action=' . $option_group) : 'admin.php?page=bp-media-settings';
+         $bp_media_options = get_site_option('bp_media_options', array(
+            'videos_enabled' => true,
+            'audio_enabled' => true,
+            'images_enabled' => true,
+                ));
+        if ($bp_media_options['videos_enabled'] == false && $bp_media_options['audio_enabled'] == false && $bp_media_options['images_enabled'] == false) {
+            echo '<div class="error">
+       <p><strong>' . __(
+                    'Please enable atleast one media type <a href="'.$settings_url.'">here</a>'
+            )
+            . '</strong></p>       
+    </div>';
+        }
+    }
 
     }
 
