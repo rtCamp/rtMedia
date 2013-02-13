@@ -17,64 +17,66 @@ class BPMediaTemplate {
      */
     function upload_form_multiple() {
         global $bp_media_current_album;
-        $post_wall = __('Wall Posts', BP_MEDIA_TXT_DOMAIN);
-        if (!isset($bp_media_current_album)) {
-            ?>
-            <div id="bp-media-album-prompt" title="Select Album">
-                <span><?php _e('Select Album', BP_MEDIA_TXT_DOMAIN); ?></span>
-                <div class="bp-media-album-content">
-                    <select id="bp-media-selected-album"><?php
-            if (bp_is_current_component('groups')) {
-                $albums = new WP_Query(array(
-                            'post_type' => 'bp_media_album',
-                            'posts_per_page' => -1,
-                            'meta_key' => 'bp-media-key',
-                            'meta_value' => -bp_get_current_group_id(),
-                            'meta_compare' => '='
-                                ));
-            } else {
-                $albums = new WP_Query(array(
-                            'post_type' => 'bp_media_album',
-                            'posts_per_page' => -1,
-                            'author' => get_current_user_id()
-                                ));
-            }
-            if (isset($albums->posts) && is_array($albums->posts) && count($albums->posts) > 0) {
-                foreach ($albums->posts as $album) {
-                    if ($album->post_title == $post_wall)
-                        echo '<option value="' . $album->ID . '" selected="selected">' . $album->post_title . '</option>';
-                    else
-                        echo '<option value="' . $album->ID . '">' . $album->post_title . '</option>';
-                };
-            }else {
-                $album = new BPMediaAlbum();
-                if (bp_is_current_component('groups')) {
-                    $current_group = new BP_Groups_Group(bp_get_current_group_id());
-                    $album->add_album($post_wall, $current_group->creator_id, bp_get_current_group_id());
-                } else {
-                    $album->add_album($post_wall, bp_loggedin_user_id());
-                }
-                echo '<option value="' . $album->get_id() . '" selected="selected">' . $album->get_title()->post_title . '</option>';
-            }
-            echo '<option id="create-new" value="create_new" >' . __('+ Create New Album', BP_MEDIA_TXT_DOMAIN) . '</option>';
-            ?>
-                    </select>
-                </div>
-                <div class="hide">
-                    <input type="text" id="bp_media_album_new" value="" />
-                    <input type="button" class="button" id="btn-create-new" value="<?php _e('Create', BP_MEDIA_TXT_DOMAIN); ?>"/>
-                    <input type="button" class="button" id="btn-create-cancel" value="<?php _e('Cancel', BP_MEDIA_TXT_DOMAIN); ?>"/>
-                </div>
-            </div><?php } else {
-            ?>
-            <input type="hidden" id="bp-media-selected-album" value="<?php echo $bp_media_current_album->get_id(); ?>"/>
-        <?php } ?>
+        $post_wall = __('Wall Posts', BP_MEDIA_TXT_DOMAIN); ?>
         <div id="bp-media-upload-ui" class="hide-if-no-js drag-drop">
             <div id="drag-drop-area">
+                <div class="drag-drop-space">
                 <div class="drag-drop-inside">
                     <p class="drag-drop-info"><?php _e('Drop files here', BP_MEDIA_TXT_DOMAIN); ?></p>
                     <p><?php _e(' or ', BP_MEDIA_TXT_DOMAIN); ?></p>
-                    <p class="drag-drop-buttons"><input id="bp-media-upload-browse-button" type="button" value="<?php _e('Select Files', BP_MEDIA_TXT_DOMAIN); ?>" class="button" /></p>
+                    <p class="drag-drop-buttons"><input id="bp-media-upload-browse-button" type="button" value="<?php _e('Upload Media', BP_MEDIA_TXT_DOMAIN); ?>" class="button" /></p>
+                </div>
+                <?php if (!isset($bp_media_current_album)) { ?>
+                    <div id="bp-media-album-in"><span><?php _e('to', BP_MEDIA_TXT_DOMAIN); ?></span></div>
+                    <div id="bp-media-album-prompt" title="Album">
+                        <p><?php _e('Album', BP_MEDIA_TXT_DOMAIN); ?></p>
+                        <div class="bp-media-album-content">
+                            <select id="bp-media-selected-album"><?php
+                    if (bp_is_current_component('groups')) {
+                        $albums = new WP_Query(array(
+                                    'post_type' => 'bp_media_album',
+                                    'posts_per_page' => -1,
+                                    'meta_key' => 'bp-media-key',
+                                    'meta_value' => -bp_get_current_group_id(),
+                                    'meta_compare' => '='
+                                        ));
+                    } else {
+                        $albums = new WP_Query(array(
+                                    'post_type' => 'bp_media_album',
+                                    'posts_per_page' => -1,
+                                    'author' => get_current_user_id()
+                                        ));
+                    }
+                    if (isset($albums->posts) && is_array($albums->posts) && count($albums->posts) > 0) {
+                        foreach ($albums->posts as $album) {
+                            if ($album->post_title == $post_wall)
+                                echo '<option value="' . $album->ID . '" selected="selected">' . $album->post_title . '</option>';
+                            else
+                                echo '<option value="' . $album->ID . '">' . $album->post_title . '</option>';
+                        };
+                    }else {
+                        $album = new BPMediaAlbum();
+                        if (bp_is_current_component('groups')) {
+                            $current_group = new BP_Groups_Group(bp_get_current_group_id());
+                            $album->add_album($post_wall, $current_group->creator_id, bp_get_current_group_id());
+                        } else {
+                            $album->add_album($post_wall, bp_loggedin_user_id());
+                        }
+                        echo '<option value="' . $album->get_id() . '" selected="selected">' . $album->get_title()->post_title . '</option>';
+                    }
+                    echo '<option id="create-new" value="create_new" >' . __('+ Create New Album', BP_MEDIA_TXT_DOMAIN) . '</option>';
+                    ?>
+                            </select>
+                        </div>
+                        <div class="hide">
+                            <input type="text" id="bp_media_album_new" value="" placeholder="Album Name" /><br/>
+                            <input type="button" class="button" id="btn-create-new" value="<?php _e('Create', BP_MEDIA_TXT_DOMAIN); ?>"/>
+                            <input type="button" class="button" id="btn-create-cancel" value="<?php _e('Cancel', BP_MEDIA_TXT_DOMAIN); ?>"/>
+                        </div>
+                    </div>
+                    <?php } else { ?>
+                    <input type="hidden" id="bp-media-selected-album" value="<?php echo $bp_media_current_album->get_id(); ?>"/>
+                <?php } ?>
                 </div>
             </div>
             <div id="bp-media-uploaded-files"></div>
