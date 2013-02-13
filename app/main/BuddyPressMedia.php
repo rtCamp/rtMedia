@@ -561,11 +561,11 @@ class BuddyPressMedia {
 		global $wpdb;
 		$group_id = ( ! $group_id) ? '1' : $group_id;
 		$album_name = __( 'Wall Posts', BP_MEDIA_TXT_DOMAIN );
-		$query = "SELECT ID FROM {$wpdb->prefix}posts ps LEFT JOIN {$wpdb->prefix}postmeta pm ON ps.ID= pm.post_id WHERE ps.post_title LIKE '{$album_name}' AND ps.post_type='bp_media_album' AND pm.meta_key='bp-media-key' AND pm.meta_value ='{$group_id}'";
-		print_r( $query );
+		$query = "SELECT ID FROM {$wpdb->prefix}posts ps LEFT JOIN
+		{$wpdb->prefix}postmeta pm ON ps.ID= pm.post_id WHERE ps.post_title
+			LIKE '{$album_name}' AND ps.post_type='bp_media_album' AND
+				pm.meta_key='bp-media-key' AND pm.meta_value ='{$group_id}'";
 		$wall_albums = $wpdb->get_results( $query, ARRAY_A );
-		print_r( $wall_albums );
-		wp_die( 'yay' );
 
 		if ( count( $wall_albums ) > 1 ) {
 			return BuddyPressMedia::merge_duplicate_wall_albums( $wall_albums );
@@ -579,7 +579,8 @@ class BuddyPressMedia {
 		$album_id = $wall_albums[ 0 ][ 'ID' ];
 		unset( $wall_albums[ 0 ] );
 		foreach ( $wall_albums as $album ) {
-			$query = "SELECT ID FROM {$wpdb->prefix}posts WHERE post_parent={$album[ 'ID' ]} AND post_type='attachment'";
+			$query = "SELECT ID FROM {$wpdb->prefix}posts WHERE
+				post_parent={$album[ 'ID' ]} AND post_type='attachment'";
 			$media = $wpdb->get_results( $query, ARRAY_A );
 			foreach ( $media as $file ) {
 				$wpdb->update(
