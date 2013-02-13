@@ -125,13 +125,12 @@ class BPMediaComponent extends BP_Component {
         }
 
 		/* Create the main navigation on profile */
-		echo $default_tab;
         $main_nav = array(
             'name' => __(BP_MEDIA_LABEL, BP_MEDIA_TXT_DOMAIN),
             'slug' => BP_MEDIA_SLUG,
             'position' => 80,
             'screen_function' => array(${'bp_media_'.$default_tab}, 'screen'),
-            'default_subnav_slug' => constant('BP_MEDIA_'.strtoupper($default_tab).'_SLUG')
+            'default_subnav_slug' => constant('BP_MEDIA_'.strtoupper($defaults_tab).'_SLUG')
         );
 
 		/* Create  an empty sub navigation */
