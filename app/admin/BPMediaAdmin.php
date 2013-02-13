@@ -301,13 +301,13 @@ if (!class_exists('BPMediaAdmin')) {
             
              $message = "BuddyPress Media adds Photos, Music, Videos , Albums to your BuddyPress (http://wordpress.org/extend/plugins/buddypress-media/) by http://rtcamp.com/";
             $addons = '
-                            <form id="feedbackform">
-			<input type="checkbox" name="remove_linkback" value="1"/>
-                            <label>' . __('Check to support BuddyPress Media', BP_MEDIA_TXT_DOMAIN) . '</label>
+                            <form id="feedbackform" class="aligncenter">
+			    <input type="checkbox" name="remove_linkback" value="1" id="remove_linkback"/>
+                            &nbsp;<label for="remove_linkback">' . __('Add link to footer', BP_MEDIA_TXT_DOMAIN) . '</label>
                             </form>
                         <ul>
-                            <li><label>Tweet: </label>&nbsp;<a href="http://twitter.com/home/?status=' . $message . '" target= "_blank"><input type="button" value="Post to Twitter Now" class="button button-tweet"></a></li>
-                            <li><label>Rate: </label>&nbsp;&nbsp;&nbsp;<a href="http://wordpress.org/support/view/plugin-reviews/buddypress-media?rate=5#postform" target= "_blank"><input type="button" value="Vote &amp; Rate Now" class="button button-rating"></a></li>
+                            <li><a href="http://twitter.com/home/?status=' . $message . '" target= "_blank"><input type="button" value="Tweet" class="button button-tweet"></a></li>
+                            <li><a href="http://wordpress.org/support/view/plugin-reviews/buddypress-media?rate=5#postform" target= "_blank"><input type="button" value="Rate on WordPress.org" class="button button-rating"></a></li>
                         </ul>';
             new BPMediaAdminWidget('premium-addons', __('Spread the Word', BP_MEDIA_TXT_DOMAIN), $addons);
 
