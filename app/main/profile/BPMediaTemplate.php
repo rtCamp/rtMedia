@@ -69,7 +69,7 @@ class BPMediaTemplate {
                             </select>
                         </div>
                         <div class="hide">
-                            <input type="text" id="bp_media_album_new" value="" placeholder="Album Name" />
+                            <input type="text" id="bp_media_album_new" value="" placeholder="Album Name" /><br/>
                             <input type="button" class="button" id="btn-create-new" value="<?php _e('Create', BP_MEDIA_TXT_DOMAIN); ?>"/>
                             <input type="button" class="button" id="btn-create-cancel" value="<?php _e('Cancel', BP_MEDIA_TXT_DOMAIN); ?>"/>
                         </div>
@@ -78,8 +78,8 @@ class BPMediaTemplate {
                     <input type="hidden" id="bp-media-selected-album" value="<?php echo $bp_media_current_album->get_id(); ?>"/>
                 <?php } ?>
                 </div>
-                <div id="bp-media-uploaded-files"></div>
             </div>
+            <div id="bp-media-uploaded-files"></div>
         </div>
         <?php
     }
