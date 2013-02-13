@@ -29,21 +29,21 @@ class BPMediaLoader {
 	 * @uses bp_loaded
 	 * @uses bp_setup_nav
 	 * @uses after_setup_theme
-	 * @global type $bp_media
+	 * @global object $bp_media
 	 */
 	public function __construct() {
 		global $bp_media;
-		$options = $bp_media->options;
+		//$options = $bp_media->options;
 
 		add_action( 'bp_loaded', array( $this, 'load_component' ) );
 		add_action( 'bp_setup_nav', array( $this, 'custom_nav' ), 999 );
-		if ( array_key_exists( 'enable_on_profile', $options ) ) {
-			if ( $options[ 'enable_on_profile' ] ) {
+		//if ( array_key_exists( 'enable_on_profile', $options ) ) {
+		//	if ( $options[ 'enable_on_profile' ] ) {
 				// This is where the add actions should move
 				// after some refactoring,
 				// so it is loaded on profiles, only when the admin specifies
-			}
-		}
+		//	}
+		//}
 
 		add_action( 'after_setup_theme', array( $this, 'thumbnail' ) );
 	}
@@ -72,10 +72,6 @@ class BPMediaLoader {
 	 * @global object $bp BuddyPress object
 	 */
 
-	/**
-	 *
-	 * @global object $bp
-	 */
 	public function custom_nav() {
 		global $bp;
 		foreach ( $bp->bp_nav as $key => $nav_item ) {
