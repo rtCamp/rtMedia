@@ -569,7 +569,7 @@ class BuddyPressMedia {
 
 		if ( count( $wall_albums ) > 1 ) {
 			return BuddyPressMedia::merge_duplicate_wall_albums( $wall_albums );
-		} else {
+		} elseif($wall_albums) {
 			return $wall_albums[ 0 ][ 'ID' ];
 		}
 	}
