@@ -25,7 +25,20 @@ if (!class_exists('BPMediaSettings')) {
          */
         public function settings() {
             global $bp_media_addon;
-            add_settings_section('bpm-settings', __('BuddyPress Media Settings', BP_MEDIA_TXT_DOMAIN), is_multisite() ? array($this, 'network_notices') : '', 'bp-media-settings');
+            add_settings_section('bpm-media-type', __('Enable BuddyPress Media on', BP_MEDIA_TXT_DOMAIN),'', 'bp-media-settings');
+	    add_settings_field('bpm-admin-profile', __('User profiles', BP_MEDIA_TXT_DOMAIN), array($this, 'checkbox'), 'bp-media-settings', 'bpm-media-type', array(
+                'setting' => 'bp_media_options',
+                'option' => 'enable_on_profile',
+                'desc' => __('Check to enable BuddyPress Media on User profiles', BP_MEDIA_TXT_DOMAIN)
+				)
+            );
+	    add_settings_field('bpm-admin-group', __('Groups', BP_MEDIA_TXT_DOMAIN), array($this, 'checkbox'), 'bp-media-settings', 'bpm-media-type', array(
+                'setting' => 'bp_media_options',
+                'option' => 'enable_on_group',
+                'desc' => __('Check to enable BuddyPress Media in Groups', BP_MEDIA_TXT_DOMAIN)
+				)
+            );
+            add_settings_section('bpm-settings', __('Enable Media Types on', BP_MEDIA_TXT_DOMAIN), is_multisite() ? array($this, 'network_notices') : '', 'bp-media-settings');
             add_settings_field('bpm-video', __('Video', BP_MEDIA_TXT_DOMAIN), array($this, 'checkbox'), 'bp-media-settings', 'bpm-settings', array(
                 'setting' => 'bp_media_options',
                 'option' => 'videos_enabled',
@@ -53,18 +66,7 @@ if (!class_exists('BPMediaSettings')) {
                 'desc' => __('Check to enable menu in WordPress admin bar', BP_MEDIA_TXT_DOMAIN)
 				)
             );
-	    add_settings_field('bpm-admin-profile', __('Enable Media on user profiles', BP_MEDIA_TXT_DOMAIN), array($this, 'checkbox'), 'bp-media-settings', 'bpm-miscellaneous', array(
-                'setting' => 'bp_media_options',
-                'option' => 'enable_on_profile',
-                'desc' => __('Check to enable BuddyPress Media on User profiles', BP_MEDIA_TXT_DOMAIN)
-				)
-            );
-	    add_settings_field('bpm-admin-group', __('Enable Media in groups', BP_MEDIA_TXT_DOMAIN), array($this, 'checkbox'), 'bp-media-settings', 'bpm-miscellaneous', array(
-                'setting' => 'bp_media_options',
-                'option' => 'enable_on_group',
-                'desc' => __('Check to enable BuddyPress Media in Groups', BP_MEDIA_TXT_DOMAIN)
-				)
-            );
+            
             add_settings_field('bpm-other-settings', __('Re-Count Media Entries', BP_MEDIA_TXT_DOMAIN), array($this, 'button'), 'bp-media-settings', 'bpm-miscellaneous', array(
                 'option' => 'refresh-count',
                 'name' => __('Re-Count', BP_MEDIA_TXT_DOMAIN),
