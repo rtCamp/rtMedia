@@ -80,7 +80,7 @@ if (class_exists('BP_Group_Extension')) :
                                         throw new Exception(__('Sorry, the requested media does not belong to the group', BP_MEDIA_TXT_DOMAIN));
                                 } catch (Exception $e) {
                                     /** Error Handling when media not present or not belong to the group */
-                                    bp_media_display_error($e->getMessage());
+                                    $this->bp_media_display_error($e->getMessage());
                                     return;
                                 }
                                 if ($media_type == "album") {
