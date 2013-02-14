@@ -497,6 +497,14 @@ class BPMediaActions {
         $displayed_user = isset($_POST['displayed_user']) ? $_POST['displayed_user'] : null;
         $loggedin_user = isset($_POST['loggedin_user']) ? $_POST['loggedin_user'] : null;
         $current_group = isset($_POST['current_group']) ? $_POST['current_group'] : null;
+        $limit = 10;
+        if ( $loggedin_user == $displayed_user || groups_is_user_member($loggedin_user, $current_group)) {
+            $limit = get_option('posts_per_page');
+            $offset = $limit*($page-1)-1;
+        } else {
+            $limit = get_option('posts_per_page');
+            $offset = $limit*($page-1);
+        }
         if ((!$displayed_user || intval($displayed_user) == 0) && (!$current_group || intval($current_group) == 0)) {
             die();
         }
@@ -510,8 +518,10 @@ class BPMediaActions {
                     'post_status' => 'any',
                     'post_mime_type' => 'image',
                     'meta_key' => 'bp-media-key',
-                    'meta_value' => $current_group > 0 ? -$current_group : $bp->displayed_user->id,
+                    'meta_value' => $current_group > 0 ? -$current_group : $displayed_user,
                     'meta_compare' => '=',
+                    'offset' => $offset,
+                    'limit' => $limit,
                     'paged' => $page,
                     'posts_per_page' => $bp_media_posts_per_page
                 );
@@ -523,8 +533,10 @@ class BPMediaActions {
                     'post_mime_type' => 'audio',
                     'author' => $bp->displayed_user->id,
                     'meta_key' => 'bp-media-key',
-                    'meta_value' => $current_group > 0 ? -$current_group : $bp->displayed_user->id,
+                    'meta_value' => $current_group > 0 ? -$current_group : $displayed_user,
                     'meta_compare' => '=',
+                    'offset' => $offset,
+                    'limit' => $limit,
                     'paged' => $page,
                     'posts_per_page' => $bp_media_posts_per_page
                 );
@@ -536,8 +548,10 @@ class BPMediaActions {
                     'post_mime_type' => 'video',
                     'author' => $bp->displayed_user->id,
                     'meta_key' => 'bp-media-key',
-                    'meta_value' => $current_group > 0 ? -$current_group : $bp->displayed_user->id,
+                    'meta_value' => $current_group > 0 ? -$current_group : $displayed_user,
                     'meta_compare' => '=',
+                    'offset' => $offset,
+                    'limit' => $limit,
                     'paged' => $page,
                     'posts_per_page' => $bp_media_posts_per_page
                 );
@@ -549,6 +563,8 @@ class BPMediaActions {
                         'post_status' => 'any',
                         'author' => $displayed_user,
                         'post_parent' => $action_variables[1],
+                        'offset' => $offset,
+                        'limit' => $limit,
                         'paged' => $page,
                         'posts_per_page' => $bp_media_posts_per_page,
                         'post_mime_type' => $this->filter_entries(),
@@ -557,6 +573,8 @@ class BPMediaActions {
                     $args = array(
                         'post_type' => 'bp_media_album',
                         'author' => $displayed_user,
+                        'offset' => $offset,
+                        'limit' => $limit,
                         'paged' => $page,
                         'posts_per_page' => $bp_media_posts_per_page,
                         'post_mime_type' => $this->filter_entries(),
