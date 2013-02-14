@@ -68,6 +68,7 @@ class BPMediaGroupLoader {
 
         /** This line might break a thing or two in custom themes and widgets */
         remove_filter('bp_activity_get_user_join_filter', 'BPMediaFilters::activity_query_filter', 10);
+//        add_filter('bp_activity_get_user_join_filter', 'BPMediaFilters::group_activity_query_filter', 10);
 
         foreach ($bp->bp_options_nav[$current_group] as $key => $nav_item) {
             switch ($nav_item['slug']) {
@@ -147,11 +148,13 @@ class BPMediaGroupLoader {
         if (!isset($bp->current_action) || $bp->current_action != BP_MEDIA_SLUG)
             return false;
 		${'bp_media_'.$default_tab} = new BPMediaScreen($defaults_tab, constant($default_const));
-        $current_tab = constant($default_const);
 
-        //if (isset($bp->action_variables[0])) {
-            //$current_tab = $bp->action_variables[0];
-        //}
+
+        if (isset($bp->action_variables[0])) {
+            $current_tab = $bp->action_variables[0];
+        }else{
+			$current_tab = constant($default_const);
+		}
 
 //        if (BPMediaGroup::can_upload()) {
         $bp_media_nav[constant($default_const)] = array(
