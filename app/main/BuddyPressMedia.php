@@ -330,7 +330,7 @@ class BuddyPressMedia {
 			/**
 			 * Load accessory functions
 			 */
-			new BPMediaActivity();
+//			new BPMediaActivity();
 			new BPMediaFilters();
 			new BPMediaActions();
 			new BPMediaFunction();
