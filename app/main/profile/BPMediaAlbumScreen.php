@@ -121,7 +121,9 @@ class BPMediaAlbumScreen extends BPMediaScreen {
             echo '<a href="' . $bp_media_current_album->get_delete_url() . '" class="button item-button bp-secondary-action delete-activity-single confirm" rel="nofollow">' . __("Delete", BP_MEDIA_TXT_DOMAIN) . '</a>';
             echo '</div>';
         }
-
+        $total_post = 10;
+        $total_post = get_option('posts_per_page');
+        
         $this->inner_query($bp_media_current_album->get_id());
         $this->hook_before();
         if ($bp_media_current_album && $bp_media_query->have_posts()):
@@ -130,9 +132,11 @@ class BPMediaAlbumScreen extends BPMediaScreen {
                 echo '<li>';
                 BPMediaUploadScreen::upload_screen_content();
                 echo '</li>';
+                $total_post--;
             }
-            while ($bp_media_query->have_posts()) : $bp_media_query->the_post();
+            while ($bp_media_query->have_posts() && $total_post>0) : $bp_media_query->the_post();
                 $this->template->the_content();
+                $total_post--;
             endwhile;
             echo '</ul>';
             $this->template->show_more();

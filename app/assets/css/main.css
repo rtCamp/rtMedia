@@ -24,7 +24,6 @@ div.bp_media_title{margin-bottom:10px;}
 #wpbody-content .bp-media-settings-tabs .media-nav-tab{margin: 0 10px; text-decoration: underline; text-transform: capitalize}
 #wpbody-content .bp-media-settings-tabs .media-nav-tab.media-nav-tab-active{font-weight: bold}
 
-
 #wpbody-content .wrap  div.bp-media-metabox-holder{padding-top: 0}
 .bp-media-social{background: url('../img/bp_media_social.png');height: 35px;width: 35px;display: inline-block;font-size: 0px;margin-right:5px;}
 .bp-media-facebook{background-position: 0px 0px;}
@@ -38,7 +37,7 @@ div.bp_media_title{margin-bottom:10px;}
 #item-body{position: relative;}
 
 .bp-media-area-allocate{height: 10px;width: 100%;display: block;}
-li #bp-media-upload-ui {padding: 0;max-width: 158px;}
+li #bp-media-upload-ui {padding: 0;max-width: 158px;position: relative;}
 #bp-media-upload-ui #drag-drop-area{border: 4px dashed #DDD;text-align: center;background: url('../img/drag-drop-bg.png') repeat scroll 0 0 transparent;overflow: hidden;padding: 20px 0 0;}
 li #bp-media-upload-ui #drag-drop-area{max-width: 150px;min-height: auto;padding-top: 15px;}
 .albums li #bp-media-upload-ui #drag-drop-area{padding: 20px 0 10px;}
@@ -66,7 +65,7 @@ li #bp-media-album-in{background-color: #333333;border-radius: 11px 11px 11px 11
 #bp-media-album-prompt #create-new{background-color: #DF562C;color: #fff;}
 
 #bp-media-uploaded-files{background: none repeat scroll 0 0 #DDDDDD;margin-top: 5px;width: 100%;}
-li #bp-media-uploaded-files{left: 0;position: absolute;top: 155px;}
+li #bp-media-uploaded-files{left: 0;position: absolute;bottom: -25px;}
 #bp-media-uploaded-files .error{padding: 5px;text-align: center;}
 .bp-media-progressbar{height: 28px;margin: 6px 10px 0 0;line-height: 2em;padding: 0;overflow: hidden;margin-bottom: 2px;border: 1px solid #D1D1D1;background: white;background-image: linear-gradient(bottom,white 0,#F7F7F7 100%);background-image: -o-linear-gradient(bottom,white 0,#F7F7F7 100%);background-image: -moz-linear-gradient(bottom,white 0,#F7F7F7 100%);background-image: -webkit-linear-gradient(bottom,white 0,#F7F7F7 100%);background-image: -ms-linear-gradient(bottom,white 0,#F7F7F7 100%);-webkit-border-radius: 3px;border-radius: 3px;-webkit-box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.1);box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.1)}
 .bp-media-progress-text{z-index: 10;position: relative;width: 100%;padding: 0 8px;text-shadow: 0 1px 0 rgba(255, 255, 255, 0.4);color: rgba(0, 0, 0, 0.6);font-size:16px;line-height: 28px;height: 28px;}
