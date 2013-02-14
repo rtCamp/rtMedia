@@ -460,6 +460,22 @@ class BPMediaActions {
         }
     }
 
+	function filter_entries(){
+		global $bp_media;
+		$enabled = $bp_media->enabled();
+		if(isset($enabled['upload'])) unset($enabled['upload']);
+		if(isset($enabled['album'])) unset($enabled['album']);
+		foreach($enabled as $type=>$active){
+			if($active==true){
+				$filters[] = $type;
+			}
+
+		}
+
+		if(count($filters)==1) $filters = $filters[0];
+		return $filters;
+	}
+
     /**
      * Function to return the media for the ajax requests
      */
@@ -482,6 +498,9 @@ class BPMediaActions {
         if ((!$displayed_user || intval($displayed_user) == 0) && (!$current_group || intval($current_group) == 0)) {
             die();
         }
+		global $bp_media;
+		$enabled = $bp_media->enabled();
+
         switch ($current_action) {
             case BP_MEDIA_IMAGES_SLUG:
                 $args = array(
@@ -529,14 +548,16 @@ class BPMediaActions {
                         'author' => $displayed_user,
                         'post_parent' => $action_variables[1],
                         'paged' => $page,
-                        'posts_per_page' => $bp_media_posts_per_page
+                        'posts_per_page' => $bp_media_posts_per_page,
+						'post_mime_type'	=> $this->filter_entries(),
                     );
                 } else {
                     $args = array(
                         'post_type' => 'bp_media_album',
                         'author' => $displayed_user,
                         'paged' => $page,
-                        'posts_per_page' => $bp_media_posts_per_page
+                        'posts_per_page' => $bp_media_posts_per_page,
+						'post_mime_type'	=> $this->filter_entries(),
                     );
                 }
                 break;
