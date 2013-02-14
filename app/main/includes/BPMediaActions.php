@@ -29,8 +29,8 @@ class BPMediaActions {
         add_action('delete_attachment', array($this, 'delete_attachment_handler'));
         add_action('wp_ajax_bp_media_add_album', array($this, 'add_album'));
         add_action('wp_ajax_nopriv_bp_media_add_album', array($this, 'add_album'));
-        global $bp_media_options;
-        if (isset($bp_media_options['remove_linkback']) && $bp_media_options['remove_linkback'] != '1')
+        $linkback = bp_get_option('bp_media_add_linkback', false);
+        if ($linkback)
             add_action('bp_footer', array($this, 'footer'));
     }
 
@@ -402,7 +402,7 @@ class BPMediaActions {
             wp_enqueue_script('bp-media-activity-uploader', BP_MEDIA_URL . 'app/assets/js/bp-media-activity-uploader.js', array('plupload', 'plupload-html5', 'plupload-flash', 'plupload-silverlight', 'plupload-html4', 'plupload-handlers'));
             wp_localize_script('bp-media-activity-uploader', 'bp_media_uploader_params', $params);
             wp_localize_script('bp-media-activity-uploader', 'activity_ajax_url', admin_url('admin-ajax.php'));
-        } elseif (in_array(bp_current_action(), array(BP_MEDIA_IMAGES_SLUG, BP_MEDIA_VIDEOS_SLUG, BP_MEDIA_AUDIO_SLUG, BP_MEDIA_SLUG))) {
+        } elseif (in_array(bp_current_action(), array(BP_MEDIA_IMAGES_SLUG, BP_MEDIA_VIDEOS_SLUG, BP_MEDIA_AUDIO_SLUG, BP_MEDIA_SLUG, BP_MEDIA_ALBUMS_SLUG))) {
             $params = array(
                 'url' => BP_MEDIA_URL . 'app/main/includes/bp-media-upload-handler.php',
                 'runtimes' => 'gears,html5,flash,silverlight,browserplus',
@@ -460,21 +460,23 @@ class BPMediaActions {
         }
     }
 
-	function filter_entries(){
-		global $bp_media;
-		$enabled = $bp_media->enabled();
-		if(isset($enabled['upload'])) unset($enabled['upload']);
-		if(isset($enabled['album'])) unset($enabled['album']);
-		foreach($enabled as $type=>$active){
-			if($active==true){
-				$filters[] = $type;
-			}
+    function filter_entries() {
+        global $bp_media;
+        $enabled = $bp_media->enabled();
+        if (isset($enabled['upload']))
+            unset($enabled['upload']);
+        if (isset($enabled['album']))
+            unset($enabled['album']);
+        foreach ($enabled as $type => $active) {
+            if ($active == true) {
+                $filters[] = $type;
+            }
+        }
 
-		}
-
-		if(count($filters)==1) $filters = $filters[0];
-		return $filters;
-	}
+        if (count($filters) == 1)
+            $filters = $filters[0];
+        return $filters;
+    }
 
     /**
      * Function to return the media for the ajax requests
@@ -506,8 +508,8 @@ class BPMediaActions {
         if ((!$displayed_user || intval($displayed_user) == 0) && (!$current_group || intval($current_group) == 0)) {
             die();
         }
-		global $bp_media;
-		$enabled = $bp_media->enabled();
+        global $bp_media;
+        $enabled = $bp_media->enabled();
 
         switch ($current_action) {
             case BP_MEDIA_IMAGES_SLUG:
@@ -565,7 +567,7 @@ class BPMediaActions {
                         'limit' => $limit,
                         'paged' => $page,
                         'posts_per_page' => $bp_media_posts_per_page,
-                        'post_mime_type'    => $this->filter_entries(),
+                        'post_mime_type' => $this->filter_entries(),
                     );
                 } else {
                     $args = array(
@@ -575,7 +577,7 @@ class BPMediaActions {
                         'limit' => $limit,
                         'paged' => $page,
                         'posts_per_page' => $bp_media_posts_per_page,
-                        'post_mime_type'    => $this->filter_entries(),
+                        'post_mime_type' => $this->filter_entries(),
                     );
                 }
                 break;
@@ -731,9 +733,9 @@ class BPMediaActions {
                 'type' => 'media_upload',
                 'user_id' => $media->get_author()
             );
-            
+
             $hidden = apply_filters('bp_media_force_hide_activity', $hidden);
-            
+
             if ($activity || $hidden) {
                 $args['secondary_item_id'] = -999;
             } else {
@@ -743,23 +745,23 @@ class BPMediaActions {
                     $args['secondary_item_id'] = false;
                 }
             }
-            
+
             if ($hidden) {
                 do_action('bp_media_album_updated', $media->get_album_id());
             }
-            
+
             if ($group) {
                 $group_info = groups_get_group(array('group_id' => $group));
                 if ('public' != $group_info->status) {
                     $args['hide_sitewide'] = 1;
                 }
             }
-            
+
             $activity_id = BPMediaFunction::record_activity($args);
-            
+
             if ($group)
                 bp_activity_update_meta($activity_id, 'group_id', $group);
-            
+
             if (!$update_activity_id)
                 add_post_meta($media->get_id(), 'bp_media_child_activity', $activity_id);
         }

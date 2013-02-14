@@ -1,5 +1,15 @@
 jQuery(document).ready(function(){
 
+    /* Linkback */
+    jQuery('#spread-the-word').on('click','#bp-media-add-linkback',function(){
+        var data = {
+            action: 'bp_media_linkback',
+            linkback: jQuery('#bp-media-add-linkback:checked').length
+        };
+        jQuery.post(bp_media_admin_ajax,data,function(response){
+        });
+    })
+        
     /* Fetch Feed */
     var bp_media_news_section = jQuery('#latest-news');
     if(bp_media_news_section.length>0){
@@ -10,12 +20,6 @@ jQuery(document).ready(function(){
             bp_media_news_section.find('.inside').html(response);
         });
     }
-
-//    /* Add more attachment link */
-//    jQuery( '.add-more-attachment-btn' ).live('click', function(event){
-//        event.preventDefault();
-//        jQuery(this).prev().after('<div class="more-attachment"><input class="bp-media-input" type="file" name="attachment[]" /></div>');
-//    });
 
     /* Select Request */
     jQuery('#bp-media-settings-boxes').on('change', '#select-request', function(){
