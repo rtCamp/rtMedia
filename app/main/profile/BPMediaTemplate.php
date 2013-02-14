@@ -172,10 +172,10 @@ class BPMediaTemplate {
                 global $bp_media_query;
                 //found_posts
                 if ( bp_is_my_profile() || BPMediaGroupLoader::can_upload() ) {
-                    if (isset($bp_media_query->found_posts) && $bp_media_query->found_posts > 9)
+                    if (isset($bp_media_query->found_posts) && $bp_media_query->found_posts > (get_option('posts_per_page')-1) )
                         $showmore = true;
                 } else {
-                    if (isset($bp_media_query->found_posts) && $bp_media_query->found_posts > 10)
+                    if (isset($bp_media_query->found_posts) && $bp_media_query->found_posts > get_option('posts_per_page') )
                         $showmore = true;
                 }
                 break;
