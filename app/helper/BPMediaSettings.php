@@ -26,12 +26,12 @@ if (!class_exists('BPMediaSettings')) {
         public function settings() {
             global $bp_media_addon;
             add_settings_section('bpm-media-type', __('Enable BuddyPress Media on', BP_MEDIA_TXT_DOMAIN), '', 'bp-media-settings');
-            add_settings_field('bpm-admin-profile', __('User profiles', BP_MEDIA_TXT_DOMAIN), array($this, 'checkbox'), 'bp-media-settings', 'bpm-media-type', array(
-                'setting' => 'bp_media_options',
-                'option' => 'enable_on_profile',
-                'desc' => __('Check to enable BuddyPress Media on User profiles', BP_MEDIA_TXT_DOMAIN)
-                    )
-            );
+//            add_settings_field('bpm-admin-profile', __('User profiles', BP_MEDIA_TXT_DOMAIN), array($this, 'checkbox'), 'bp-media-settings', 'bpm-media-type', array(
+//                'setting' => 'bp_media_options',
+//                'option' => 'enable_on_profile',
+//                'desc' => __('Check to enable BuddyPress Media on User profiles', BP_MEDIA_TXT_DOMAIN)
+//                    )
+//            );
             add_settings_field('bpm-admin-group', __('Groups', BP_MEDIA_TXT_DOMAIN), array($this, 'checkbox'), 'bp-media-settings', 'bpm-media-type', array(
                 'setting' => 'bp_media_options',
                 'option' => 'enable_on_group',
@@ -198,7 +198,7 @@ if (!class_exists('BPMediaSettings')) {
                 $options[$option] = '';
             ?>
             <label for="<?php echo $option; ?>">
-                <input<?php checked($options[$option]); ?> name="<?php echo $name; ?>" id="<?php echo $option; ?>" value="1" type="checkbox" />               
+                <input<?php checked($options[$option]); ?> name="<?php echo $name; ?>" id="<?php echo $option; ?>" value="1" type="checkbox" />
                 <?php echo $desc; ?>
             </label><?php
         }
