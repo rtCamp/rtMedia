@@ -495,12 +495,11 @@ class BPMediaActions {
         $displayed_user = isset($_POST['displayed_user']) ? $_POST['displayed_user'] : null;
         $loggedin_user = isset($_POST['loggedin_user']) ? $_POST['loggedin_user'] : null;
         $current_group = isset($_POST['current_group']) ? $_POST['current_group'] : null;
+        $limit = 10;
         if ( $loggedin_user == $displayed_user || groups_is_user_member($loggedin_user, $current_group)) {
-            $limit = 10;
             $limit = get_option('posts_per_page');
             $offset = $limit*($page-1)-1;
         } else {
-            $limit = 10;
             $limit = get_option('posts_per_page');
             $offset = $limit*($page-1);
         }
@@ -521,6 +520,7 @@ class BPMediaActions {
                     'meta_compare' => '=',
                     'offset' => $offset,
                     'limit' => $limit,
+                    'paged' => $page,
                     'posts_per_page' => $bp_media_posts_per_page
                 );
                 break;
@@ -535,6 +535,7 @@ class BPMediaActions {
                     'meta_compare' => '=',
                     'offset' => $offset,
                     'limit' => $limit,
+                    'paged' => $page,
                     'posts_per_page' => $bp_media_posts_per_page
                 );
                 break;
@@ -549,6 +550,7 @@ class BPMediaActions {
                     'meta_compare' => '=',
                     'offset' => $offset,
                     'limit' => $limit,
+                    'paged' => $page,
                     'posts_per_page' => $bp_media_posts_per_page
                 );
                 break;
@@ -561,6 +563,7 @@ class BPMediaActions {
                         'post_parent' => $action_variables[1],
                         'offset' => $offset,
                         'limit' => $limit,
+                        'paged' => $page,
                         'posts_per_page' => $bp_media_posts_per_page,
                         'post_mime_type'    => $this->filter_entries(),
                     );
@@ -570,6 +573,7 @@ class BPMediaActions {
                         'author' => $displayed_user,
                         'offset' => $offset,
                         'limit' => $limit,
+                        'paged' => $page,
                         'posts_per_page' => $bp_media_posts_per_page,
                         'post_mime_type'    => $this->filter_entries(),
                     );
