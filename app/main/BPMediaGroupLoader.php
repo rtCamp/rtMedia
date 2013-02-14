@@ -147,11 +147,13 @@ class BPMediaGroupLoader {
         if (!isset($bp->current_action) || $bp->current_action != BP_MEDIA_SLUG)
             return false;
 		${'bp_media_'.$default_tab} = new BPMediaScreen($defaults_tab, constant($default_const));
-        $current_tab = constant($default_const);
 
-        //if (isset($bp->action_variables[0])) {
-            //$current_tab = $bp->action_variables[0];
-        //}
+
+        if (isset($bp->action_variables[0])) {
+            $current_tab = $bp->action_variables[0];
+        }else{
+			$current_tab = constant($default_const);
+		}
 
 //        if (BPMediaGroup::can_upload()) {
         $bp_media_nav[constant($default_const)] = array(
