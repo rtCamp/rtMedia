@@ -21,7 +21,8 @@ class BPMediaAlbum {
             $thumbnail,
             $edit_url,
             $media_entries,
-            $group_id;
+            $group_id,
+			$filters;
 
     /**
      *
@@ -121,10 +122,14 @@ class BPMediaAlbum {
         } else {
             $this->thumbnail = '<img src ="' . BP_MEDIA_URL . 'app/assets/img/image_thumb.png">';
         }
+		$this->filter_entries();
+		print_r($this->filters);
         $this->media_entries = get_children(array(
             'post_parent' => $this->id,
-            'post_type' => 'attachment'
+            'post_type' => 'attachment',
+			'post_mime_type'=> $this->filters
                 ));
+
     }
 
     /**
@@ -171,6 +176,7 @@ class BPMediaAlbum {
         do_action('bp_media_after_add_album', $this);
         return $album_id;
     }
+
 
     /**
      * Deletes the album and all associated attachments
@@ -250,6 +256,27 @@ class BPMediaAlbum {
     function get_entries() {
         return $this->media_entries;
     }
+
+	/**
+	 *
+	 * @global type $bp_media
+	 */
+	function filter_entries(){
+		global $bp_media;
+		$enabled = $bp_media->enabled();
+		if(isset($enabled['upload'])) unset($enabled['upload']);
+		if(isset($enabled['album'])) unset($enabled['album']);
+		foreach($enabled as $type=>$active){
+			if($active==true){
+				$filters[] = $type;
+			}
+
+		}
+
+		if(count($filters)==1) $filters = $filters[0];
+		$this->filters = $filters;
+	}
+
 
     /**
      * Returns the title of the album
