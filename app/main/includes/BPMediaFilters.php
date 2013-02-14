@@ -191,6 +191,20 @@ class BPMediaFilters {
         $query = preg_replace('/WHERE/i', 'WHERE a.secondary_item_id!=-999 AND ', $query);
         return $query;
     }
+    
+    /**
+     *
+     * @global type $wpdb
+     * @param type $query
+     * @return type
+     */
+    static function group_activity_query_filter($query) {
+        global $wpdb,$bp;
+        $activity_meta_table = $bp->activity->table_name_meta;
+        $query = preg_replace("/LEFT JOIN/i", "LEFT JOIN $activity_meta_table am ON a.id = am.activity_id LEFT JOIN", $query);
+        $query = preg_replace("/a.component IN \( 'groups' \) AND a.item_id IN \((.*)\)/i", "( ( a.component IN ( 'groups' ) AND a.item_id IN ( $1 ) ) OR ( a.component IN ( 'media' ) AND am.meta_key = 'group_id' AND am.meta_value IN ( $1 ) ) )", $query);
+        return $query;
+    }
 
     /**
      * Added menu under buddypress menu 'my account' in admin bar

@@ -22,7 +22,7 @@ class BPMediaActions {
         add_action('bp_media_after_add_album', array($this, 'album_create_activity'));
         add_action('bp_media_album_updated', 'BPMediaActions::album_activity_update');
         add_action('bp_media_after_delete_media', array($this, 'album_activity_sync'));
-        add_action('bp_media_after_add_media', 'BPMediaActions::activity_create_after_add_media', 10, 3);
+        add_action('bp_media_after_add_media', 'BPMediaActions::activity_create_after_add_media', 10, 4);
         add_action('wp_ajax_bp_media_load_more', array($this, 'load_more'));
 //        add_action('wp_ajax_bp_media_get_attachment_html', array($this, 'fetch_feed'), 1);
         add_action('wp_ajax_nopriv_bp_media_load_more', array($this, 'load_more'));
@@ -55,11 +55,11 @@ class BPMediaActions {
                 ));
         if (isset($_POST['action']) && $_POST['action'] == 'wp_handle_upload') {
             /** This section can help in the group activity handling */
-            if (isset($_POST['bp_media_group_id']) && intval($_POST['bp_media_group_id'])) {
-                remove_action('bp_media_after_add_media', 'BPMediaActions::activity_create_after_add_media', 10, 3);
-                add_action('bp_media_after_add_media', 'BPMediaGroupAction::bp_media_groups_activity_create_after_add_media', 10, 2);
-//                add_filter('bp_media_force_hide_activity', 'BPMediaGroupAction::bp_media_groups_force_hide_activity');
-            }
+//            if (isset($_POST['bp_media_group_id']) && intval($_POST['bp_media_group_id'])) {
+//                remove_action('bp_media_after_add_media', 'BPMediaActions::activity_create_after_add_media', 10, 3);
+//                add_action('bp_media_after_add_media', 'BPMediaGroupAction::bp_media_groups_activity_create_after_add_media', 10, 2);
+////                add_filter('bp_media_force_hide_activity', 'BPMediaGroupAction::bp_media_groups_force_hide_activity');
+//            }
             /* @var $bp_media_entry BPMediaHostWordpress */
             if (isset($_FILES) && is_array($_FILES) && array_key_exists('bp_media_file', $_FILES) && $_FILES['bp_media_file']['name'] != '') {
                 if (!preg_match('/audio|video|image/i', $_FILES['bp_media_file']['type'], $result) || !isset($result[0])) {
@@ -694,7 +694,7 @@ class BPMediaActions {
      * @param type $hidden
      * @return boolean
      */
-    static function activity_create_after_add_media($media, $hidden = false, $activity = false, $content = false) {
+    static function activity_create_after_add_media($media, $hidden = false, $activity = false, $group = false) {
         if (function_exists('bp_activity_add')) {
             if (!is_object($media)) {
                 try {
@@ -713,20 +713,35 @@ class BPMediaActions {
                 'type' => 'media_upload',
                 'user_id' => $media->get_author()
             );
-            if ($activity) {
-                $args['secondary_item_id'] = -999;
-            }
-            $update_activity_id = get_post_meta($media->get_id(), 'bp_media_child_activity', true);
-            if ($update_activity_id) {
-                $args['id'] = $update_activity_id;
-                $args['secondary_item_id'] = false;
-            }
+            
             $hidden = apply_filters('bp_media_force_hide_activity', $hidden);
-            if ($hidden) {
+            
+            if ($activity || $hidden) {
                 $args['secondary_item_id'] = -999;
+            } else {
+                $update_activity_id = get_post_meta($media->get_id(), 'bp_media_child_activity', true);
+                if ($update_activity_id) {
+                    $args['id'] = $update_activity_id;
+                    $args['secondary_item_id'] = false;
+                }
+            }
+            
+            if ($hidden) {
                 do_action('bp_media_album_updated', $media->get_album_id());
             }
+            
+            if ($group) {
+                $group_info = groups_get_group(array('group_id' => $group));
+                if ('public' != $group_info->status) {
+                    $args['hide_sitewide'] = 1;
+                }
+            }
+            
             $activity_id = BPMediaFunction::record_activity($args);
+            
+            if ($group)
+                bp_activity_update_meta($activity_id, 'group_id', $group);
+            
             if (!$update_activity_id)
                 add_post_meta($media->get_id(), 'bp_media_child_activity', $activity_id);
         }
