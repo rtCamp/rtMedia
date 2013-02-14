@@ -171,13 +171,23 @@ class BPMediaTemplate {
             case 'media':
                 global $bp_media_query;
                 //found_posts
-                if (isset($bp_media_query->found_posts) && $bp_media_query->found_posts > 10)
-                    $showmore = true;
+                if ( bp_is_my_profile() || BPMediaGroupLoader::can_upload() ) {
+                    if (isset($bp_media_query->found_posts) && $bp_media_query->found_posts > 9)
+                        $showmore = true;
+                } else {
+                    if (isset($bp_media_query->found_posts) && $bp_media_query->found_posts > 10)
+                        $showmore = true;
+                }
                 break;
             case 'albums':
                 global $bp_media_albums_query;
-                if (isset($bp_media_albums_query->found_posts) && $bp_media_albums_query->found_posts > 10)
-                    $showmore = true;
+                if ( bp_is_my_profile() || BPMediaGroupLoader::can_upload() ) {
+                    if (isset($bp_media_albums_query->found_posts) && $bp_media_albums_query->found_posts > 9)
+                        $showmore = true;
+                } else {
+                    if (isset($bp_media_albums_query->found_posts) && $bp_media_albums_query->found_posts > 10)
+                        $showmore = true;
+                }
                 break;
         }
         if ($showmore) {
