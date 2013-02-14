@@ -24,6 +24,7 @@ if (!class_exists('BPMediaAdmin')) {
             add_action('wp_ajax_bp_media_cancel_request', create_function('', 'do_settings_sections("bp-media-support"); die();'), 1);
             add_action('wp_ajax_bp_media_submit_request', array($bp_media_support, 'submit_request'), 1);
             add_action('wp_ajax_bp_media_fetch_feed', array($bp_media_feed, 'fetch_feed'), 1);
+            add_action('wp_ajax_bp_media_linkback', array($this, 'linkback'), 1);
             if (is_admin()) {
                 add_action('admin_enqueue_scripts', array($this, 'ui'));
                 add_action(bp_core_admin_hook(), array($this, 'menu'));
@@ -289,54 +290,40 @@ if (!class_exists('BPMediaAdmin')) {
          * @global type $bp_media
          */
         public function admin_sidebar() {
-            global $bp_media;
             $current_user = wp_get_current_user();
-             $support = '<p><ul>
-                                    <li>' . sprintf('<a href="%s">' . __("Read FAQ", BP_MEDIA_TXT_DOMAIN) . '</a>', 'http://rtcamp.com/buddypress-media/faq/') . '</li>
-                                    <li>' . sprintf('<a href="%s">' . __("Free Support Forum", BP_MEDIA_TXT_DOMAIN) . '</a>', $bp_media->support_url) . '</li>
-                                    <li>' . sprintf('<a href="%s">' . __("Github Issue Tracker", BP_MEDIA_TXT_DOMAIN) . '</a>', 'https://github.com/rtCamp/buddypress-media/issues/') . '</li>
-                                    <li>' . sprintf('<a href="%s">' . __("Hire Us!", BP_MEDIA_TXT_DOMAIN) . '</a> ' . __("To get professional customisation/setup service.", BP_MEDIA_TXT_DOMAIN), 'http://rtcamp.com/buddypress-media/hire/') . '</li>
-                                    </ul></p>';
-            // new BPMediaAdminWidget('support', __('Need Help?', BP_MEDIA_TXT_DOMAIN), $support);
-            
-             $message = "BuddyPress Media adds Photos, Music, Videos , Albums to your BuddyPress (http://wordpress.org/extend/plugins/buddypress-media/) by http://rtcamp.com/";
-            $addons = '
-                            <form id="feedbackform" class="aligncenter">
-			    <input type="checkbox" name="remove_linkback" value="1" id="remove_linkback"/>
-                            &nbsp;<label for="remove_linkback">' . __('Add link to footer', BP_MEDIA_TXT_DOMAIN) . '</label>
-                            </form>
-                        <ul>
-                            <li><a href="http://twitter.com/home/?status=' . $message . '" target= "_blank"><input type="button" value="Tweet" class="button button-tweet"></a></li>
-                            <li><a href="http://wordpress.org/support/view/plugin-reviews/buddypress-media?rate=5#postform" target= "_blank"><input type="button" value="Rate on WordPress.org" class="button button-rating"></a></li>
-                        </ul>';
-            new BPMediaAdminWidget('premium-addons', __('Spread the Word', BP_MEDIA_TXT_DOMAIN), $addons);
 
+            $message = sprintf(__('I use @buddypressmedia http://goo.gl/8Upmv on %s', BP_MEDIA_TXT_DOMAIN),home_url());
+            $addons = '<label for="bp-media-add-linkback"><input' . checked(bp_get_option('bp_media_add_linkback', false), true, false) . ' type="checkbox" name="bp-media-add-linkback" value="1" id="bp-media-add-linkback"/> ' . __('Add link to footer', BP_MEDIA_TXT_DOMAIN) . '</label>
+                       <ul>
+                           <li><a href="http://twitter.com/home/?status=' . $message . '" target= "_blank"><input type="button" value="' . __('Tweet', BP_MEDIA_TXT_DOMAIN) . '" class="button button-tweet"></a></li>
+                           <li><a href="http://wordpress.org/support/view/plugin-reviews/buddypress-media?rate=5#postform" target= "_blank"><input type="button" value="' . __('Rate on WordPress.org', BP_MEDIA_TXT_DOMAIN) . '" class="button button-rating"></a></li>
+                       </ul>';
+            new BPMediaAdminWidget('spread-the-word', __('Spread the Word', BP_MEDIA_TXT_DOMAIN), $addons);
 
             $donate = '<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
-                                    <!-- Identify your business so that you can collect the payments. -->
-                                    <input type="hidden" name="business"
-                                    value="paypal@rtcamp.com">
-                                    <!-- Specify a Donate button. -->
-                                    <input type="hidden" name="cmd" value="_donations">
-                                    <!-- Specify details about the contribution -->
-                                    <input type="hidden" name="item_name" value="BuddyPress Media">
-                                    <input type="hidden" name="on0" value="Amount">
-                                    <input type="text" name="amount" size="3">
-                                    <label><b>' . __('USD', BP_MEDIA_TXT_DOMAIN) . '</b></label>  <br/>                                   
-                                    <input type="hidden" name="currency_code" value="USD">
-                                    <!-- Display the payment button. -->
-                                    <input type="hidden" name="cpp_header_image" value="' . BP_MEDIA_URL . 'app/assets/img/rtcamp-logo.png">
-                                    <input type="image" name="submit" border="0"
-                                    src="https://www.paypal.com/en_US/i/btn/btn_donateCC_LG.gif"
-                                    alt="PayPal - The safer, easier way to pay online">
-                                    <img alt="" border="0" width="1" height="1"
-                                    src="https://www.paypal.com/en_US/i/scr/pixel.gif" >
-                                    </form>';
+                           <!-- Identify your business so that you can collect the payments. -->
+                           <input type="hidden" name="business"
+                           value="paypal@rtcamp.com">
+                           <!-- Specify a Donate button. -->
+                           <input type="hidden" name="cmd" value="_donations">
+                           <!-- Specify details about the contribution -->
+                           <input type="hidden" name="item_name" value="BuddyPress Media">
+                           <input type="text" name="amount" size="3">
+                           <label><b>' . __('USD', BP_MEDIA_TXT_DOMAIN) . '</b></label>  <br/>                                   
+                           <input type="hidden" name="currency_code" value="USD">
+                           <!-- Display the payment button. -->
+                           <input type="hidden" name="cpp_header_image" value="' . BP_MEDIA_URL . 'app/assets/img/rtcamp-logo.png">
+                           <input type="image" name="submit" border="0"
+                           src="https://www.paypal.com/en_US/i/btn/btn_donateCC_LG.gif"
+                           alt="PayPal - The safer, easier way to pay online">
+                           <img alt="" border="0" width="1" height="1"
+                           src="https://www.paypal.com/en_US/i/scr/pixel.gif" >
+                       </form>';
             new BPMediaAdminWidget('donate', __('Donate', BP_MEDIA_TXT_DOMAIN), $donate);
-            
+
             $branding = '<form action="http://rtcamp.us1.list-manage1.com/subscribe/post?u=85b65c9c71e2ba3fab8cb1950&amp;id=9e8ded4470" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
                                     <div class="mc-field-group">                                    
-                                    <input type="email" value="'.$current_user->user_email.'" name="EMAIL" placeholder="Email" class="required email" id="mce-EMAIL">
+                                    <input type="email" value="' . $current_user->user_email . '" name="EMAIL" placeholder="Email" class="required email" id="mce-EMAIL">
                                     <input style="display:none;" type="checkbox" checked="checked" value="1" name="group[1721][1]" id="mce-group[1721]-1721-0"><label for="mce-group[1721]-1721-0">
                                     <div id="mce-responses" class="clear">
                                     <div class="response" id="mce-error-response" style="display:none"></div>
@@ -351,9 +338,18 @@ if (!class_exists('BPMediaAdmin')) {
                             <li><a href="' . sprintf('%s', 'http://feeds.feedburner.com/rtcamp/') . '"  title="' . __('Subscribe to our feeds', BP_MEDIA_TXT_DOMAIN) . '" class="bp-media-rss bp-media-social">' . __('RSS Feed', BP_MEDIA_TXT_DOMAIN) . '</a></li>
                         </ul>';
             new BPMediaAdminWidget('branding', __('Subscribe', BP_MEDIA_TXT_DOMAIN), $branding);
-            
+
             $news = '<img src ="' . admin_url('/images/wpspin_light.gif') . '" /> Loading...';
             new BPMediaAdminWidget('latest-news', __('Latest News', BP_MEDIA_TXT_DOMAIN), $news);
+        }
+
+        public function linkback() {
+            if (isset($_POST['linkback']) && $_POST['linkback']) {
+                return bp_update_option('bp_media_add_linkback', true);
+            } else {
+                return bp_update_option('bp_media_add_linkback', false);
+            }
+            die;
         }
 
     }
