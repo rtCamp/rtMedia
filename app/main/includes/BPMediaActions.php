@@ -496,7 +496,7 @@ class BPMediaActions {
         $loggedin_user = isset($_POST['loggedin_user']) ? $_POST['loggedin_user'] : null;
         $current_group = isset($_POST['current_group']) ? $_POST['current_group'] : null;
         $limit = 10;
-        if ( $loggedin_user == $displayed_user || groups_is_user_member($loggedin_user, $current_group)) {
+        if ( bp_is_my_profile() || groups_is_user_member($loggedin_user, $current_group)) {
             $limit = get_option('posts_per_page');
             $offset = $limit*($page-1)-1;
         } else {
