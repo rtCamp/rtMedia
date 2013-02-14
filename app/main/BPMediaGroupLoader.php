@@ -142,7 +142,6 @@ class BPMediaGroupLoader {
 		$enabled = $bp_media->enabled();
 		$default_tab = $bp_media->default_tab();
 		$defaults_tab = $bp_media->defaults_tab();
-		echo $default_tab;
 		$default_const = 'BP_MEDIA_'.strtoupper($defaults_tab).'_SLUG';
 
         if (!isset($bp->current_action) || $bp->current_action != BP_MEDIA_SLUG)
@@ -155,7 +154,6 @@ class BPMediaGroupLoader {
         //}
 
 //        if (BPMediaGroup::can_upload()) {
-		echo($default_tab);
         $bp_media_nav[constant($default_const)] = array(
             'url' => trailingslashit(bp_get_group_permalink($bp->groups->current_group)) . BP_MEDIA_SLUG,
             'label' => constant('BP_MEDIA_'.strtoupper($defaults_tab).'_LABEL'),
@@ -308,4 +306,4 @@ class BPMediaGroupLoader {
 
         }
 
-        
+

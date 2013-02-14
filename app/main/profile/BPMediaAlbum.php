@@ -123,7 +123,6 @@ class BPMediaAlbum {
             $this->thumbnail = '<img src ="' . BP_MEDIA_URL . 'app/assets/img/image_thumb.png">';
         }
 		$this->filter_entries();
-		print_r($this->filters);
         $this->media_entries = get_children(array(
             'post_parent' => $this->id,
             'post_type' => 'attachment',

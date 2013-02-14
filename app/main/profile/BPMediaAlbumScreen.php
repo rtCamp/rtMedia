@@ -12,6 +12,8 @@
  */
 class BPMediaAlbumScreen extends BPMediaScreen {
 
+	var $filters;
+
     /**
      *
      * @param type $media_type
@@ -169,6 +171,8 @@ class BPMediaAlbumScreen extends BPMediaScreen {
         }
     }
 
+
+
     /**
      *
      * @param type $action
@@ -195,14 +199,32 @@ class BPMediaAlbumScreen extends BPMediaScreen {
         }
         if (!$paged)
             $paged = 1;
+		$this->filter_entries();
         $args = array(
             'post_type' => 'attachment',
             'post_status' => 'any',
             'post_parent' => $album_id,
-            'paged' => $paged
+            'paged' => $paged,
+			'post_mime_type'=>$this->filters
         );
         $bp_media_query = new WP_Query($args);
     }
+
+	function filter_entries(){
+		global $bp_media;
+		$enabled = $bp_media->enabled();
+		if(isset($enabled['upload'])) unset($enabled['upload']);
+		if(isset($enabled['album'])) unset($enabled['album']);
+		foreach($enabled as $type=>$active){
+			if($active==true){
+				$filters[] = $type;
+			}
+
+		}
+
+		if(count($filters)==1) $filters = $filters[0];
+		$this->filters = $filters;
+	}
 
 }
 
