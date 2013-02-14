@@ -15,15 +15,20 @@ class BPMediaGroupAction {
      */
 
     /**
-     * 
+     *
      * @global type $bp
      * @global WP_Query $bp_media_query
      * @global type $bp_media_posts_per_page
      */
     static function bp_media_groups_set_query() {
-        global $bp, $bp_media_query, $bp_media_posts_per_page;
+        global $bp, $bp_media, $bp_media_query, $bp_media_posts_per_page;
+		$enabled = $bp_media->enabled();
+		$default_tab = $bp_media->default_tab();
+		$defaults_tab= $default_tab;
+		if($default_tab!='audio') $defaults_tab.='s';
+
         if (isset($bp->current_action) && $bp->current_action == BP_MEDIA_SLUG) {
-            $current_tab = BP_MEDIA_IMAGES_SLUG;
+            $current_tab = constant('BP_MEDIA_'.strtoupper($defaults_tab).'_SLUG');
             if (isset($bp->action_variables[0])) {
                 $current_tab = $bp->action_variables[0];
             }
@@ -63,6 +68,22 @@ class BPMediaGroupAction {
         }
     }
 
+	static function filter_entries(){
+		global $bp_media;
+		$enabled = $bp_media->enabled();
+		if(isset($enabled['upload'])) unset($enabled['upload']);
+		if(isset($enabled['album'])) unset($enabled['album']);
+		foreach($enabled as $type=>$active){
+			if($active==true){
+				$filters[] = $type;
+			}
+
+		}
+
+		if(count($filters)==1) $filters = $filters[0];
+		return $filters;
+	}
+
     /**
      * Called on bp_init by screen functions
      * Initializes the albums query for groups
@@ -73,7 +94,7 @@ class BPMediaGroupAction {
      */
 
     /**
-     * 
+     *
      * @global type $bp
      * @global WP_Query $bp_media_albums_query
      */
@@ -98,7 +119,7 @@ class BPMediaGroupAction {
     }
 
     /**
-     * 
+     *
      * @param BPMediaHostWordpress $media
      * @param type $hidden
      * @return boolean
@@ -132,12 +153,12 @@ class BPMediaGroupAction {
 
     //add_action('bp_media_groups_after_add_media','bp_media_groups_activity_create_after_add_media',10,2);
     /**
-     * 
+     *
      * @global type $bp
      */
 
     /**
-     * 
+     *
      * @global type $bp
      */
     static function bp_media_groups_redirection_handler() {
@@ -150,7 +171,7 @@ class BPMediaGroupAction {
 
     //add_action('bp_media_init','bp_media_groups_redirection_handler');
     /**
-     * 
+     *
      * @return boolean
      */
     static function bp_media_groups_force_hide_activity() {
