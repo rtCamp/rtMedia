@@ -64,25 +64,17 @@ if (!class_exists('BPMediaSettings')) {
             ));
 
 			add_settings_section('bpm-privacy-levels', __('Default Privacy Levels', BP_MEDIA_TXT_DOMAIN), '', 'bp-media-settings');
-            add_settings_field('bpm-privacy-private-enabled', __('Private', BP_MEDIA_TXT_DOMAIN), array($this, 'checkbox'), 'bp-media-settings', 'bpm-privacy-levels', array(
+            add_settings_field('bpm-privacy-private-enabled', __('Private', BP_MEDIA_TXT_DOMAIN), array($this, 'radio'), 'bp-media-settings', 'bpm-privacy-levels', array(
                 'setting' => 'bp_media_options',
-                'option' => 'private_enabled',
-                'desc' => __('Check to set media uploaded by user as private, by default', BP_MEDIA_TXT_DOMAIN)
-            ));
-			add_settings_field('bpm-privacy-friends-enabled', __('Friends only', BP_MEDIA_TXT_DOMAIN), array($this, 'checkbox'), 'bp-media-settings', 'bpm-privacy-levels', array(
-                'setting' => 'bp_media_options',
-                'option' => 'friends_enabled',
-                'desc' => __('Check to set media uploaded by user as only visible to friends, by default', BP_MEDIA_TXT_DOMAIN)
-            ));
-			add_settings_field('bpm-privacy-users-enabled', __('Logged in Users only', BP_MEDIA_TXT_DOMAIN), array($this, 'checkbox'), 'bp-media-settings', 'bpm-privacy-levels', array(
-                'setting' => 'bp_media_options',
-                'option' => 'users_enabled',
-                'desc' => __('Check to set media uploaded by user as only visible to logged in users, by default', BP_MEDIA_TXT_DOMAIN)
-            ));
-			add_settings_field('bpm-privacy-public-enabled', __('Public', BP_MEDIA_TXT_DOMAIN), array($this, 'checkbox'), 'bp-media-settings', 'bpm-privacy-levels', array(
-                'setting' => 'bp_media_options',
-                'option' => 'public_enabled',
-                'desc' => __('Check to set media uploaded by user as public, by default', BP_MEDIA_TXT_DOMAIN)
+                'option' => 'default_privacy_level',
+                'radios' => array(
+					6 => __('Check to set media uploaded by user as private, by default', BP_MEDIA_TXT_DOMAIN),
+					4 => __('Check to set media uploaded by user as only visible to friends, by default', BP_MEDIA_TXT_DOMAIN),
+					2 => __('Check to set media uploaded by user as only visible to logged in users, by default', BP_MEDIA_TXT_DOMAIN),
+					0 => __('Check to set media uploaded by user as public, by default', BP_MEDIA_TXT_DOMAIN)
+
+				),
+                'default' => 0,
             ));
 
             add_settings_section('bpm-miscellaneous', __('Miscellaneous Settings', BP_MEDIA_TXT_DOMAIN), '', 'bp-media-settings');
