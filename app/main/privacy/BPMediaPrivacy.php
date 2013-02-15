@@ -109,6 +109,16 @@ class BPMediaPrivacy {
 		switch ( $object_type ) {
 			case 'media':
 				$privacy = get_post_meta( $object_id, 'bp_media_privacy',true );
+
+				if($privacy==false){
+					global $bp_media;
+					$options = $bp_media->options;
+					if(  array_key_exists( 'default_privacy_level', $options )){
+						$privacy = $options['default_privacy_level'];
+					}else{
+						$privacy==0;
+					}
+				}
 				return $privacy;
 
 				break;
