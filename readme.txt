@@ -6,7 +6,7 @@ License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires at least: 3.5
 Tested up to: 3.5
-Stable tag: 2.5.4
+Stable tag: 2.5.5
 
 Adds Photos, Music, Videos & Albums to your BuddyPress. Supports mobile devices (iPhone/iPad, etc) and automatic audio/video conversion.
 
@@ -87,6 +87,10 @@ Please visit [BuddyPress Media's Features page](http://rtcamp.com/buddypress-med
 == Changelog ==
 
 Please visit [BuddyPress Media's Roadmap page](http://rtcamp.com/buddypress-media/roadmap/ "Visit BuddyPress Media's Features page") to get some details about future releases.
+
+= 2.5.5 =
+* Fixes thumbnail appearance and height issues with some themes.
+* Other minor UI changes
 
 = 2.5.4 =
 * Added option to enable/disable BuddyPress Media on Groups. (Profile toggle, coming soon)
@@ -230,5 +234,5 @@ Please visit [BuddyPress Media's Roadmap page](http://rtcamp.com/buddypress-medi
 * HTML5 Video Tag Support (with fallback)
 
 == Upgrade Notice ==
-=2.5.4=
-Improved UI and better enable/disable media types.
+=2.5.5=
+Fixes css breaks on some themes.
