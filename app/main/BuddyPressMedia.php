@@ -168,7 +168,19 @@ class BuddyPressMedia {
 	 * Populates $options with saved settings
 	 */
 	public function get_option() {
-		$this->options = bp_get_option( 'bp_media_options' );
+		$options = bp_get_option( 'bp_media_options', false );
+                if ( !$options ) {
+                    $options = array(
+                        'enable_on_group' => 1,
+                        'videos_enabled' => 1,
+                        'audio_enabled' => 1,
+                        'images_enabled' => 1,
+                        'download_enabled' => 1,
+                        'show_admin_menu' => 1
+                    );
+                    bp_update_option( 'bp_media_options', $options );
+                }
+                $this->options = $options;
 	}
 
 	/**
