@@ -117,7 +117,7 @@ class BPMediaAlbumScreen extends BPMediaScreen {
         echo '<div class="bp_media_title">' . $bp_media_current_album->get_title() . '</div>';
         if (bp_displayed_user_id() == bp_loggedin_user_id()) {
             echo '<div class="activity-meta">';
-            echo '<a href="' . $bp_media_current_album->get_edit_url() . '" class="button item-button bp-secondary-action bp-media-edit bp-media-edit-album" title="' . __('Rename Album', BP_MEDIA_TXT_DOMAIN) . '">' . __('Rename', BP_MEDIA_TXT_DOMAIN) . '</a>';
+            echo '<a href="' . $bp_media_current_album->get_edit_url() . '" class="button item-button bp-secondary-action bp-media-edit bp-media-edit-album" title="' . __('Edit Album', BP_MEDIA_TXT_DOMAIN) . '">' . __('Edit', BP_MEDIA_TXT_DOMAIN) . '</a>';
             echo '<a href="' . $bp_media_current_album->get_delete_url() . '" class="button item-button bp-secondary-action delete-activity-single confirm" rel="nofollow">' . __("Delete", BP_MEDIA_TXT_DOMAIN) . '</a>';
             echo '</div>';
         }
