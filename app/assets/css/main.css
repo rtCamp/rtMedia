@@ -194,6 +194,10 @@ background-image: -webkit-gradient(linear,left bottom,left top,color-stop(1, #F7
 .rt-update{background-color: #FFEAA6;border-color:#E1CA82;}
 img.bp-media-donation-image{display:block;margin: 10px auto;}
 #donate form{text-align: center;}
+/* Privacy settings */
+#bp-media-upload-set-privacy li{margin: 10px 0;overflow: hidden;}
+#bp-media-upload-set-privacy .album-set-privacy-radio{float: left;}
+#bp-media-upload-set-privacy .album-set-privacy-label{margin: 0;font-weight: normal;float: left;}
 
 @media (min-width: 981px) and (max-width: 1096px) {
     li #bp-media-upload-ui #drag-drop-area{padding: 10px 0;}

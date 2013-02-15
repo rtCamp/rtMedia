@@ -529,7 +529,7 @@ class BPMediaActions {
                     'post_type' => 'attachment',
                     'post_status' => 'any',
                     'post_mime_type' => 'audio',
-                    'author' => $bp->displayed_user->id,
+                    'author' => $displayed_user,
                     'meta_key' => 'bp-media-key',
                     'meta_value' => $current_group > 0 ? -$current_group : $displayed_user,
                     'meta_compare' => '=',
@@ -542,7 +542,7 @@ class BPMediaActions {
                     'post_type' => 'attachment',
                     'post_status' => 'any',
                     'post_mime_type' => 'video',
-                    'author' => $bp->displayed_user->id,
+                    'author' => $displayed_user,
                     'meta_key' => 'bp-media-key',
                     'meta_value' => $current_group > 0 ? -$current_group : $displayed_user,
                     'meta_compare' => '=',
@@ -574,6 +574,7 @@ class BPMediaActions {
             default:
                 die();
         }
+        wp_reset_query();
         $bp_media_query = new WP_Query($args);
         if (isset($bp_media_query->posts) && is_array($bp_media_query->posts) && count($bp_media_query->posts)) {
             foreach ($bp_media_query->posts as $attachment) {
