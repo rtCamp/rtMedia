@@ -52,7 +52,6 @@ class BPMediaScreen {
         $this->slug = $slug;
         $this->media_constant($media_type);
         $this->template = new BPMediaTemplate();
-		$this->privacy = new BPMediaPrivacy($media_type);
     }
 
     /**

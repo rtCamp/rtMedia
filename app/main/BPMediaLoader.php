@@ -62,6 +62,8 @@ class BPMediaLoader {
 	public function load_component() {
 		global $bp;
 		$bp->{BP_MEDIA_SLUG} = new BPMediaComponent();
+		
+
 	}
 
 	/**
