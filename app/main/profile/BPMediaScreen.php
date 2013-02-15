@@ -52,6 +52,7 @@ class BPMediaScreen {
         $this->slug = $slug;
         $this->media_constant($media_type);
         $this->template = new BPMediaTemplate();
+		$this->privacy = new BPMediaPrivacy($media_type);
     }
 
     /**
@@ -178,6 +179,7 @@ class BPMediaScreen {
         $this->set_query();
 
         $this->hook_before();
+
         if ($bp_media_query && $bp_media_query->have_posts()):
             echo '<ul id="bp-media-list" class="bp-media-gallery item-list">';
             if (bp_is_my_profile() || BPMediaGroupLoader::can_upload()) {
