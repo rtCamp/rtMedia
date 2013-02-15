@@ -346,7 +346,7 @@ class BuddyPressMedia {
 			new BPMediaFilters();
 			new BPMediaActions();
 			new BPMediaFunction();
-                        if ( class_exists('BPMediaPrivacy') ) {
+			if ( class_exists('BPMediaPrivacy') ) {
                             new BPMediaPrivacy();
                         }
 		}

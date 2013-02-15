@@ -56,6 +56,35 @@ if (!class_exists('BPMediaSettings')) {
                 'desc' => __('Check to enable images upload functionality', BP_MEDIA_TXT_DOMAIN)
             ));
 
+			add_settings_section('bpm-privacy', __('Privacy', BP_MEDIA_TXT_DOMAIN), '', 'bp-media-settings');
+            add_settings_field('bpm-privacy-enabled', __('Enable Privacy', BP_MEDIA_TXT_DOMAIN), array($this, 'checkbox'), 'bp-media-settings', 'bpm-privacy', array(
+                'setting' => 'bp_media_options',
+                'option' => 'privacy_enabled',
+                'desc' => __('Check to enable privacy settings', BP_MEDIA_TXT_DOMAIN)
+            ));
+
+			add_settings_section('bpm-privacy-levels', __('Default Privacy Levels', BP_MEDIA_TXT_DOMAIN), '', 'bp-media-settings');
+            add_settings_field('bpm-privacy-private-enabled', __('Private', BP_MEDIA_TXT_DOMAIN), array($this, 'checkbox'), 'bp-media-settings', 'bpm-privacy-levels', array(
+                'setting' => 'bp_media_options',
+                'option' => 'private_enabled',
+                'desc' => __('Check to set media uploaded by user as private, by default', BP_MEDIA_TXT_DOMAIN)
+            ));
+			add_settings_field('bpm-privacy-friends-enabled', __('Friends only', BP_MEDIA_TXT_DOMAIN), array($this, 'checkbox'), 'bp-media-settings', 'bpm-privacy-levels', array(
+                'setting' => 'bp_media_options',
+                'option' => 'friends_enabled',
+                'desc' => __('Check to set media uploaded by user as only visible to friends, by default', BP_MEDIA_TXT_DOMAIN)
+            ));
+			add_settings_field('bpm-privacy-users-enabled', __('Logged in Users only', BP_MEDIA_TXT_DOMAIN), array($this, 'checkbox'), 'bp-media-settings', 'bpm-privacy-levels', array(
+                'setting' => 'bp_media_options',
+                'option' => 'users_enabled',
+                'desc' => __('Check to set media uploaded by user as only visible to logged in users, by default', BP_MEDIA_TXT_DOMAIN)
+            ));
+			add_settings_field('bpm-privacy-public-enabled', __('Public', BP_MEDIA_TXT_DOMAIN), array($this, 'checkbox'), 'bp-media-settings', 'bpm-privacy-levels', array(
+                'setting' => 'bp_media_options',
+                'option' => 'public_enabled',
+                'desc' => __('Check to set media uploaded by user as public, by default', BP_MEDIA_TXT_DOMAIN)
+            ));
+
             add_settings_section('bpm-miscellaneous', __('Miscellaneous Settings', BP_MEDIA_TXT_DOMAIN), '', 'bp-media-settings');
             add_settings_field('bpm-download', __('Download', BP_MEDIA_TXT_DOMAIN), array($this, 'checkbox'), 'bp-media-settings', 'bpm-miscellaneous', array(
                 'setting' => 'bp_media_options',

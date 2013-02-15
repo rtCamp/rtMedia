@@ -57,6 +57,40 @@ class BPMediaHostWordpress {
         }
         if (empty($media->ID))
             throw new Exception(__('Sorry, the requested media does not exist.', BP_MEDIA_TXT_DOMAIN));
+		if (!'bp_media_album' == $media->post_type || !empty($media->post_mime_type))
+            preg_match_all('/audio|video|image/i', $media->post_mime_type, $result);
+        else
+            $result[0][0] = 'album';
+        if (isset($result[0][0]))
+            $this->type = $result[0][0];
+        else
+            return false;
+		$privacy = BPMediaPrivacy::check($media->ID);
+
+		global $bp;
+		$messages = BPMediaPrivacy::get_messages( $this->type,$bp->displayed_user->fullname );
+		switch ($privacy){
+			case 0:
+				break;
+			case 2:
+				if(!is_user_logged_in()){
+					throw new Exception($messages[2]);
+				}
+				break;
+			case 4:
+				if(!bp_is_my_profile()){
+					$is_friend = friends_check_friendship_status( $bp->loggedin_user->id, $bp->displayed_user->id );
+					if($is_friend!='is_friend'){
+						throw new Exception($messages[4]);
+					}
+				}
+				break;
+			case 6:
+				if(!bp_is_my_profile()){
+					throw new Exception($messages[6]);
+				}
+				break;
+		}
         $this->id = $media->ID;
         $this->description = $media->post_content;
         $this->name = $media->post_title;
@@ -71,14 +105,7 @@ class BPMediaHostWordpress {
          * we use it as negative value in the bp-media-key meta key
          */
         $this->group_id = $meta_key < 0 ? -$meta_key : 0;
-        if (!'bp_media_album' == $media->post_type || !empty($media->post_mime_type))
-            preg_match_all('/audio|video|image/i', $media->post_mime_type, $result);
-        else
-            $result[0][0] = 'album';
-        if (isset($result[0][0]))
-            $this->type = $result[0][0];
-        else
-            return false;
+
         $this->set_permalinks();
     }
 

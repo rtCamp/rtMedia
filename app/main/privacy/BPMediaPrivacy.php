@@ -18,13 +18,25 @@ class BPMediaPrivacy {
 	/**
 	 *
 	 */
-	function __construct( $media_type ) {
-		$this->messages = $this->get_messages( $media_type );
-		$this->settings = $this->get_settings(  );
-		add_action( 'bp_media_add_media_fields', array( $this, 'ui' ) );
-		add_action( 'bp_media_after_update_media', array( $this, 'save_privacy' ), 10, 2 );
+	function __construct( ) {
+		if(BPMediaPrivacy::check_enabled() ==false ) return;
+			$this->settings = $this->get_settings(  );
+			add_action( 'bp_media_add_media_fields', array( $this, 'ui' ) );
+			add_action( 'bp_media_after_update_media', array( $this, 'save_privacy' ) );
 	}
 
+	static function check_enabled(){
+		global $bp_media;
+		$options = $bp_media->options;
+		if (  !array_key_exists( 'privacy_enabled', $options ) ){
+			return false;
+		}else{
+			if($options['privacy_enabled']!=true){
+				return false;
+			}
+		}
+		return true;
+	}
 	function get_settings() {
 		return array(
 			6 => array(
@@ -47,6 +59,7 @@ class BPMediaPrivacy {
 	}
 
 	function ui() {
+		if(BPMediaPrivacy::check_enabled() ==false ) return;
 		global $bp_media_current_entry;
 		$privacy_level = get_post_meta( $bp_media_current_entry->get_id(), 'bp_media_privacy', TRUE );
 		?>
@@ -56,7 +69,7 @@ class BPMediaPrivacy {
 			foreach ( $this->settings as $level => &$msg ) {
 				?>
 				<li>
-					<input type="radio" name="bp-media-privacy" class="set-privacy-radio" id="bp-media-privacy-friends" value="<?php echo $level; ?>" <?php checked( $level, $privacy_level, TRUE ); ?> >
+					<input type="radio" name="bp_media_privacy" class="set-privacy-radio" id="bp-media-privacy-<?php echo $msg[0]; ?>" value="<?php echo $level; ?>" <?php checked( $level, $privacy_level, TRUE ); ?> >
 					<label class="album-set-privacy-label" for="bp-media-privacy-<?php echo $msg[0]; ?>"><?php echo $msg[1]; ?></label>
 				</li>
 				<?php
@@ -66,7 +79,7 @@ class BPMediaPrivacy {
 		<?php
 	}
 
-	function save_privacy( $object_id, $media_type ) {
+	function save_privacy( $object_id ) {
 
 		$level = $_POST[ 'bp_media_privacy' ];
 		$this->save( $level, $object_id );
@@ -89,12 +102,15 @@ class BPMediaPrivacy {
 		return update_post_meta( $object_id, 'bp_media_privacy', $level );
 	}
 
-	function check( $object_id = false, $object_type = 'media' ) {
+	static function check( $object_id = false, $object_type = 'media' ) {
+		if(BPMediaPrivacy::check_enabled() ==false ) return;
 		if ( $object_id == false )
 			return;
 		switch ( $object_type ) {
 			case 'media':
-				$settings = get_post_meta( $object_id, 'bp_media_privacy' );
+				$privacy = get_post_meta( $object_id, 'bp_media_privacy',true );
+				return $privacy;
+
 				break;
 			case 'profile':
 				get_user_meta( $object_id, 'bp_media_privacy', $settings );
@@ -107,13 +123,12 @@ class BPMediaPrivacy {
 		}
 	}
 
-	function get_messages( $media_type ) {
-		global $bp;
-		$username = $bp->displayed_user->fullname;
+	static function get_messages( $media_type,$username ) {
+		if(BPMediaPrivacy::check_enabled() ==false ) return;
 		return array(
 			6 => sprintf( __( 'This %s is private', BP_MEDIA_TXT_DOMAIN ), $media_type ),
 			4 => sprintf( __( 'This %1s is visible only to %2s&rsquo;s friends', BP_MEDIA_TXT_DOMAIN ), $media_type, $username ),
-			2 => sprintf( __( 'This %1s is visible to logged in users, only', BP_MEDIA_TXT_DOMAIN ), $media_type ),
+			2 => sprintf( __( 'This %s is visible to logged in users, only', BP_MEDIA_TXT_DOMAIN ), $media_type ),
 		);
 	}
 

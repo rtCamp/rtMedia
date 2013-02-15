@@ -72,6 +72,32 @@ class BPMediaAlbum {
         }
         if (empty($album->ID))
             throw new Exception(__('Sorry, the requested album does not exist.', BP_MEDIA_TXT_DOMAIN));
+		$privacy = BPMediaPrivacy::check($album_id);
+
+		global $bp;
+		$messages = BPMediaPrivacy::get_messages( 'album',$bp->displayed_user->fullname );
+		switch ($privacy){
+			case 0:
+				break;
+			case 2:
+				if(!is_user_logged_in()){
+					throw new Exception($messages[2]);
+				}
+				break;
+			case 4:
+				if(!bp_is_my_profile()){
+					$is_friend = friends_check_friendship_status( $bp->loggedin_user->id, $bp->displayed_user->id );
+					if($is_friend!='is_friend'){
+						throw new Exception($messages[4]);
+					}
+				}
+				break;
+			case 6:
+				if(!bp_is_my_profile()){
+					throw new Exception($messages[6]);
+				}
+				break;
+		}
         $this->id = $album->ID;
         $this->description = $album->post_content;
         $this->name = $album->post_title;
