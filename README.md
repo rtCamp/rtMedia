@@ -88,6 +88,20 @@ Please visit [BuddyPress Media's Features page](http://rtcamp.com/buddypress-med
 
 Please visit [BuddyPress Media's Roadmap page](http://rtcamp.com/buddypress-media/roadmap/ "Visit BuddyPress Media's Features page") to get some details about future releases.
 
+#### 2.5.5 ####
+* Fixes thumbnail appearance and height issues with some themes.
+* Other minor UI changes
+
+#### 2.5.4 ####
+* Added option to enable/disable BuddyPress Media on Groups. (Profile toggle, coming soon)
+* Added Polish language.
+* Media tabs display now responds to admin settings
+* Improved Uploader UI.
+* Improved settings screen.
+* More code comments and documentation added.
+* Fixed gallery responsiveness.
+* A few bug fixes.
+
 #### 2.5.3 ####
 * Added option to toggle BuddyPress Media menu in admin bar
 * Added incomplete translations for German, Italian, French and Dutch languages
@@ -219,4 +233,4 @@ Please visit [BuddyPress Media's Roadmap page](http://rtcamp.com/buddypress-medi
 * HTML5 Audio Tag Support (with fallback)
 * HTML5 Video Tag Support (with fallback)
 
-Adds option to toggle menu in admin bar. Added incomplete translations for German, Italian, French and Dutch.
+Fixes css breaks on some themes.
