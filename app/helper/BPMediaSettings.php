@@ -56,11 +56,28 @@ if (!class_exists('BPMediaSettings')) {
                 'desc' => __('Check to enable images upload functionality', BP_MEDIA_TXT_DOMAIN)
             ));
 
+			add_settings_section('bpm-media-fine', __('Media Display', BP_MEDIA_TXT_DOMAIN), '', 'bp-media-settings');
+            add_settings_field('bpm-media-count', __('No. of media items per view', BP_MEDIA_TXT_DOMAIN), array($this, 'textbox'), 'bp-media-settings', 'bpm-media-fine', array(
+                'setting' => 'bp_media_options',
+                'option' => 'default_count',
+                'desc' => __('No. of media items displayed per view (defaults to 10)', BP_MEDIA_TXT_DOMAIN)
+            ));
+			add_settings_field('bpm-download', __('Download', BP_MEDIA_TXT_DOMAIN), array($this, 'checkbox'), 'bp-media-settings', 'bpm-media-fine', array(
+                'setting' => 'bp_media_options',
+                'option' => 'download_enabled',
+                'desc' => __('Check to display download button under media', BP_MEDIA_TXT_DOMAIN)
+            ));
+
 			add_settings_section('bpm-privacy', __('Privacy', BP_MEDIA_TXT_DOMAIN), '', 'bp-media-settings');
             add_settings_field('bpm-privacy-enabled', __('Enable Privacy', BP_MEDIA_TXT_DOMAIN), array($this, 'checkbox'), 'bp-media-settings', 'bpm-privacy', array(
                 'setting' => 'bp_media_options',
                 'option' => 'privacy_enabled',
                 'desc' => __('Check to enable privacy settings', BP_MEDIA_TXT_DOMAIN)
+            ));
+			add_settings_field('bpm-privacy-override-enabled', __('User Override', BP_MEDIA_TXT_DOMAIN), array($this, 'checkbox'), 'bp-media-settings', 'bpm-privacy', array(
+                'setting' => 'bp_media_options',
+                'option' => 'privacy_override_enabled',
+                'desc' => __('Check to let users set default privacy settings and override the ones below', BP_MEDIA_TXT_DOMAIN)
             ));
 
 			add_settings_section('bpm-privacy-levels', __('Default Privacy Levels', BP_MEDIA_TXT_DOMAIN), '', 'bp-media-settings');
@@ -78,11 +95,7 @@ if (!class_exists('BPMediaSettings')) {
             ));
 
             add_settings_section('bpm-miscellaneous', __('Miscellaneous Settings', BP_MEDIA_TXT_DOMAIN), '', 'bp-media-settings');
-            add_settings_field('bpm-download', __('Download', BP_MEDIA_TXT_DOMAIN), array($this, 'checkbox'), 'bp-media-settings', 'bpm-miscellaneous', array(
-                'setting' => 'bp_media_options',
-                'option' => 'download_enabled',
-                'desc' => __('Check to enable download functionality', BP_MEDIA_TXT_DOMAIN)
-            ));
+
             add_settings_field('bpm-admin-bar-menu', __('Admin bar menu', BP_MEDIA_TXT_DOMAIN), array($this, 'checkbox'), 'bp-media-settings', 'bpm-miscellaneous', array(
                 'setting' => 'bp_media_options',
                 'option' => 'show_admin_menu',

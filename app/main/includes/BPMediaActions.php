@@ -490,19 +490,17 @@ class BPMediaActions {
      */
     function load_more() {
 
-        global $bp, $bp_media_query;
+        global $bp, $bp_media_query,$bp_media;
         $page = isset($_POST['page']) ? $_POST['page'] : die();
         $current_action = isset($_POST['current_action']) ? $_POST['current_action'] : null;
         $action_variables = isset($_POST['action_variables']) ? $_POST['action_variables'] : null;
         $displayed_user = isset($_POST['displayed_user']) ? $_POST['displayed_user'] : null;
         $loggedin_user = isset($_POST['loggedin_user']) ? $_POST['loggedin_user'] : null;
         $current_group = isset($_POST['current_group']) ? $_POST['current_group'] : null;
-        $limit = 10;
+        $limit = $bp_media->default_count();
         if ( ($displayed_user == $loggedin_user && $current_group == 0) || groups_is_user_member($loggedin_user, $current_group)) {
-            $limit = get_option('posts_per_page');
             $offset = $limit*($page-1)-1;
         } else {
-            $limit = get_option('posts_per_page');
             $offset = $limit*($page-1);
         }
         if ((!$displayed_user || intval($displayed_user) == 0) && (!$current_group || intval($current_group) == 0)) {
