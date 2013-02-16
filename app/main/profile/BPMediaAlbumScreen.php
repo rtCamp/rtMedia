@@ -34,7 +34,7 @@ class BPMediaAlbumScreen extends BPMediaScreen {
                 case BP_MEDIA_ALBUMS_EDIT_SLUG :
                     $this->edit_screen();
                     break;
-                case BP_MEDIA_ALBUMS_ENTRY_SLUG:
+                case BP_MEDIA_ALBUMS_VIEW_SLUG:
                     $this->entry_screen();
                     $this->template_actions('entry_screen');
                     break;
@@ -123,7 +123,7 @@ class BPMediaAlbumScreen extends BPMediaScreen {
         }
         $total_post = 10;
         $total_post = get_option('posts_per_page');
-        
+
         $this->inner_query($bp_media_current_album->get_id());
         $this->hook_before();
         if ($bp_media_current_album && $bp_media_query->have_posts()):

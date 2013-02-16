@@ -69,6 +69,18 @@ class BPMediaHostWordpress {
 
 		global $bp;
 		$messages = BPMediaPrivacy::get_messages( $this->type,$bp->displayed_user->fullname );
+		$this->id = $media->ID;
+		$meta_key = get_post_meta($this->id, 'bp-media-key', true);
+
+        /**
+         * We use bp-media-key to distinguish if the entry belongs to a group or not
+         * if the value is less than 0 it means it the group id to which the media belongs
+         * and if its greater than 0 then it means its the author id of the uploader
+         * But for use in the class, we use group_id as positive integer even though
+         * we use it as negative value in the bp-media-key meta key
+         */
+        $this->group_id = $meta_key < 0 ? -$meta_key : 0;
+		if($this->group_id<=0){
 		switch ($privacy){
 			case 0:
 				break;
@@ -91,20 +103,13 @@ class BPMediaHostWordpress {
 				}
 				break;
 		}
-        $this->id = $media->ID;
+		}
+
         $this->description = $media->post_content;
         $this->name = $media->post_title;
         $this->owner = $media->post_author;
         $this->album_id = $media->post_parent;
-        $meta_key = get_post_meta($this->id, 'bp-media-key', true);
-        /**
-         * We use bp-media-key to distinguish if the entry belongs to a group or not
-         * if the value is less than 0 it means it the group id to which the media belongs
-         * and if its greater than 0 then it means its the author id of the uploader
-         * But for use in the class, we use group_id as positive integer even though
-         * we use it as negative value in the bp-media-key meta key
-         */
-        $this->group_id = $meta_key < 0 ? -$meta_key : 0;
+
 
         $this->set_permalinks();
     }
