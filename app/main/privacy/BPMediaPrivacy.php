@@ -37,7 +37,8 @@ class BPMediaPrivacy {
 		}
 		return true;
 	}
-	function get_settings() {
+
+	static function get_settings() {
 		return array(
 			6 => array(
 				'private',
@@ -62,11 +63,16 @@ class BPMediaPrivacy {
 		if(BPMediaPrivacy::check_enabled() ==false ) return;
 		global $bp_media_current_entry;
 		$privacy_level = get_post_meta( $bp_media_current_entry->get_id(), 'bp_media_privacy', TRUE );
+		BPMediaPrivacy::ui_html($privacy_level);
+	}
+
+	static function ui_html($privacy_level){
 		?>
 		<label for="bp-media-upload-set-privacy"><?php _e( 'Privacy Settings', BP_MEDIA_TXT_DOMAIN ); ?></label>
 		<ul id="bp-media-upload-set-privacy">
 			<?php
-			foreach ( $this->settings as $level => &$msg ) {
+			$settings = BPMediaPrivacy::get_settings();
+			foreach ( $settings as $level => &$msg ) {
 				?>
 				<li>
 					<input type="radio" name="bp_media_privacy" class="set-privacy-radio" id="bp-media-privacy-<?php echo $msg[0]; ?>" value="<?php echo $level; ?>" <?php checked( $level, $privacy_level, TRUE ); ?> >
@@ -102,15 +108,30 @@ class BPMediaPrivacy {
 		return update_post_meta( $object_id, 'bp_media_privacy', $level );
 	}
 
-	static function check( $object_id = false, $object_type = 'media' ) {
+	static function save_user_default($level = 0, $user_id=false){
+		if($user_id==false){
+			global $bp;
+			$user_id = $bp->loggedin_user->id;
+		}
+		return update_user_meta($user_id, 'bp_media_privacy', $level);
+	}
+
+	static function get_user_default($user_id=false){
+		if($user_id==false){
+			global $bp;
+			$user_id = $bp->loggedin_user->id;
+		}
+		return get_user_meta($user_id, 'bp_media_privacy', true);
+	}
+
+	static function check( $object_id = false ) {
 		if(BPMediaPrivacy::check_enabled() ==false ) return;
-		if ( $object_id == false )
-			return;
-		switch ( $object_type ) {
-			case 'media':
+		if ( $object_id == false ) return;
 				$privacy = get_post_meta( $object_id, 'bp_media_privacy',true );
 
 				if($privacy==false){
+					$privacy = BPMediaPrivacy::get_user_default();
+					if($privacy==false){
 					global $bp_media;
 					$options = $bp_media->options;
 					if(  array_key_exists( 'default_privacy_level', $options )){
@@ -118,19 +139,9 @@ class BPMediaPrivacy {
 					}else{
 						$privacy==0;
 					}
+					}
 				}
 				return $privacy;
-
-				break;
-			case 'profile':
-				get_user_meta( $object_id, 'bp_media_privacy', $settings );
-				return update_user_meta( $object_id, 'bp_media_privacy', $settings );
-				break;
-			case 'activity':
-				break;
-			case 'group':
-				break;
-		}
 	}
 
 	static function get_messages( $media_type,$username ) {
@@ -141,6 +152,7 @@ class BPMediaPrivacy {
 			2 => sprintf( __( 'This %s is visible to logged in users, only', BP_MEDIA_TXT_DOMAIN ), $media_type ),
 		);
 	}
+
 
 }
 ?>

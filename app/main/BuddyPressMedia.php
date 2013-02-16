@@ -226,8 +226,8 @@ class BuddyPressMedia {
 		if ( ! defined( 'BP_MEDIA_IMAGES_SLUG' ) )
 			define( 'BP_MEDIA_IMAGES_SLUG', 'photos' );
 
-		if ( ! defined( 'BP_MEDIA_IMAGES_ENTRY_SLUG' ) )
-			define( 'BP_MEDIA_IMAGES_ENTRY_SLUG', 'view' );
+		if ( ! defined( 'BP_MEDIA_IMAGES_VIEW_SLUG' ) )
+			define( 'BP_MEDIA_IMAGES_VIEW_SLUG', 'view' );
 
 		if ( ! defined( 'BP_MEDIA_IMAGES_EDIT_SLUG' ) )
 			define( 'BP_MEDIA_IMAGES_EDIT_SLUG', 'edit' );
@@ -236,8 +236,8 @@ class BuddyPressMedia {
 		if ( ! defined( 'BP_MEDIA_VIDEOS_SLUG' ) )
 			define( 'BP_MEDIA_VIDEOS_SLUG', 'videos' );
 
-		if ( ! defined( 'BP_MEDIA_VIDEOS_ENTRY_SLUG' ) )
-			define( 'BP_MEDIA_VIDEOS_ENTRY_SLUG', 'watch' );
+		if ( ! defined( 'BP_MEDIA_VIDEOS_VIEW_SLUG' ) )
+			define( 'BP_MEDIA_VIDEOS_VIEW_SLUG', 'watch' );
 
 		if ( ! defined( 'BP_MEDIA_VIDEOS_EDIT_SLUG' ) )
 			define( 'BP_MEDIA_VIDEOS_EDIT_SLUG', 'edit' );
@@ -246,8 +246,8 @@ class BuddyPressMedia {
 		if ( ! defined( 'BP_MEDIA_AUDIO_SLUG' ) )
 			define( 'BP_MEDIA_AUDIO_SLUG', 'music' );
 
-		if ( ! defined( 'BP_MEDIA_AUDIO_ENTRY_SLUG' ) )
-			define( 'BP_MEDIA_AUDIO_ENTRY_SLUG', 'listen' );
+		if ( ! defined( 'BP_MEDIA_AUDIO_VIEW_SLUG' ) )
+			define( 'BP_MEDIA_AUDIO_VIEW_SLUG', 'listen' );
 
 		if ( ! defined( 'BP_MEDIA_AUDIO_EDIT_SLUG' ) )
 			define( 'BP_MEDIA_AUDIO_EDIT_SLUG', 'edit' );
@@ -256,11 +256,15 @@ class BuddyPressMedia {
 		if ( ! defined( 'BP_MEDIA_ALBUMS_SLUG' ) )
 			define( 'BP_MEDIA_ALBUMS_SLUG', 'albums' );
 
-		if ( ! defined( 'BP_MEDIA_ALBUMS_ENTRY_SLUG' ) )
-			define( 'BP_MEDIA_ALBUMS_ENTRY_SLUG', 'list' );
+		if ( ! defined( 'BP_MEDIA_ALBUMS_VIEW_SLUG' ) )
+			define( 'BP_MEDIA_ALBUMS_VIEW_SLUG', 'list' );
 
 		if ( ! defined( 'BP_MEDIA_ALBUMS_EDIT_SLUG' ) )
 			define( 'BP_MEDIA_ALBUMS_EDIT_SLUG', 'edit' );
+
+		/* Settings slug */
+		if ( ! defined( 'BP_MEDIA_USER_SETTINGS_SLUG' ) )
+			define( 'BP_MEDIA_USER_SETTINGS_SLUG', 'settings' );
 
 		/* UI Labels loaded via text domain, can be translated */
 		if ( ! defined( 'BP_MEDIA_LABEL' ) )
@@ -269,6 +273,9 @@ class BuddyPressMedia {
 
 		if ( ! defined( 'BP_MEDIA_LABEL_SINGULAR' ) )
 			define( 'BP_MEDIA_LABEL_SINGULAR', __( 'Media',
+					$this->text_domain ) );
+		if ( ! defined( 'BP_MEDIA_USER_SETTINGS_LABEL' ) )
+			define( 'BP_MEDIA_USER_SETTINGS_LABEL', __( 'Settings',
 					$this->text_domain ) );
 
 		if ( ! defined( 'BP_MEDIA_IMAGES_LABEL' ) )
@@ -590,7 +597,7 @@ class BuddyPressMedia {
 	}
 
 	function default_count(){
-		$count = 10;
+		$count = $this->posts_per_page;
 		if(array_key_exists('default_count',$this->options)){
 			$count = $this->options['default_count'];
 		}

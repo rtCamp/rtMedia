@@ -129,7 +129,7 @@ class BPMediaScreen {
      */
     public function screen() {
         $editslug = 'BP_MEDIA_' . $this->media_const . '_EDIT_SLUG';
-        $entryslug = 'BP_MEDIA_' . $this->media_const . '_ENTRY_SLUG';
+        $entryslug = 'BP_MEDIA_' . $this->media_const . '_VIEW_SLUG';
 
         global $bp;
 
@@ -418,6 +418,7 @@ class BPMediaScreen {
      */
     public function set_query() {
         global $bp, $bp_media_posts_per_page, $bp_media_query;
+		$privacy = BPMediaPrivacy::check($media->ID);
         switch ($bp->current_action) {
             case BP_MEDIA_IMAGES_SLUG:
                 $type = 'image';
