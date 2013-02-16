@@ -172,9 +172,9 @@ class BPMediaScreen {
      * @global type $bp_media_albums_query
      */
     function screen_content() {
-        global $bp_media_query;
-        $total_post = 10;
-        $total_post = get_option('posts_per_page');
+        global $bp_media_query, $bp_media;
+
+		$total_post = $bp_media->default_count();
         $this->set_query();
 
         $this->hook_before();

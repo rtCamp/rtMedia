@@ -191,7 +191,7 @@ class BPMediaFilters {
         $query = preg_replace('/WHERE/i', 'WHERE a.secondary_item_id!=-999 AND ', $query);
         return $query;
     }
-    
+
     /**
      *
      * @global type $wpdb

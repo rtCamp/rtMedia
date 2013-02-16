@@ -343,12 +343,27 @@ class BuddyPressMedia {
 			 * Load accessory functions
 			 */
 //			new BPMediaActivity();
-			new BPMediaFilters();
-			new BPMediaActions();
-			new BPMediaFunction();
-			if ( class_exists('BPMediaPrivacy') ) {
-                            new BPMediaPrivacy();
-                        }
+			$class_construct = array(
+				//'activity',
+				'filters'	=> false,
+				'actions'	=> false,
+				'function'	=> false,
+				'privacy'	=>false,
+			);
+			$class_construct = apply_filters('bpmedia_class_construct',$class_construct);
+
+			foreach ( $class_construct as $classname=>$global_scope ) {
+				$class = 'BPMedia' . ucfirst( $classname );
+				if ( class_exists( $class ) ) {
+					if($global_scope==true){
+						global ${'bp_media_'.$classname};
+						${'bp_media_'.$classname} = new $class();
+					}else{
+						new $class();
+					}
+				}
+			}
+
 		}
 
 		/**
@@ -572,6 +587,14 @@ class BuddyPressMedia {
 		}
 
 		return $enabled;
+	}
+
+	function default_count(){
+		$count = 10;
+		if(array_key_exists('default_count',$this->options)){
+			$count = $this->options['default_count'];
+		}
+		return $count;
 	}
 
 	function default_tab(){
