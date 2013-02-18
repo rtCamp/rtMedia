@@ -15,7 +15,11 @@ class BPMediaQuery {
 	/**
 	 *
 	 */
-	function __construct() {
+	function __construct($args) {
+
+	}
+
+	function query(){
 
 	}
 

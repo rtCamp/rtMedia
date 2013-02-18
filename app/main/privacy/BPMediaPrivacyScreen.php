@@ -9,6 +9,10 @@
  * Description of BPMediaPrivacyScreen
  *
  * @author saurabh
+ * ****
+ * ****
+ * Need to add required privacy level vs current privacy level
+ * Right now there's only required privacy level
  */
 class BPMediaPrivacyScreen {
 
@@ -22,6 +26,7 @@ class BPMediaPrivacyScreen {
 	function ui(){
 		global $bp;
         add_action('bp_template_content', array($this, 'screen_content'));
+		add_action('bp_template_title', array($this, 'screen_title'));
         $this->template->loader();
 	}
 
@@ -48,6 +53,10 @@ class BPMediaPrivacyScreen {
 		_e( 'Save Changes', 'buddypress' );
 		echo '" id="submit" class="auto" /></div>';
 		echo '</form>';
+	}
+
+	function screen_title(){
+		_e( 'Privacy Settings', BP_MEDIA_TXT_DOMAIN );
 	}
 
 }

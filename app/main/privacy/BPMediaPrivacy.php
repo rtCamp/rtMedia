@@ -68,7 +68,7 @@ class BPMediaPrivacy {
 
 	static function ui_html($privacy_level){
 		?>
-		<label for="bp-media-upload-set-privacy"><?php _e( 'Privacy Settings', BP_MEDIA_TXT_DOMAIN ); ?></label>
+		<label for="bp-media-upload-set-privacy"><?php _e( 'Set default privacy levels for your media', BP_MEDIA_TXT_DOMAIN ); ?></label>
 		<ul id="bp-media-upload-set-privacy">
 			<?php
 			$settings = BPMediaPrivacy::get_settings();

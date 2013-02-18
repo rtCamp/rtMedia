@@ -151,13 +151,13 @@ class BPMediaTemplateFunctions {
             return false;
         switch (get_post_meta($media->ID, 'bp_media_type', true)) {
             case 'video' :
-                return trailingslashit(bp_displayed_user_domain() . BP_MEDIA_VIDEOS_SLUG . '/' . BP_MEDIA_VIDEOS_ENTRY_SLUG . '/' . $media->ID);
+                return trailingslashit(bp_displayed_user_domain() . BP_MEDIA_VIDEOS_SLUG . '/' . BP_MEDIA_VIDEOS_VIEW_SLUG . '/' . $media->ID);
                 break;
             case 'audio' :
-                return trailingslashit(bp_displayed_user_domain() . BP_MEDIA_AUDIO_SLUG . '/' . BP_MEDIA_AUDIO_ENTRY_SLUG . '/' . $media->ID);
+                return trailingslashit(bp_displayed_user_domain() . BP_MEDIA_AUDIO_SLUG . '/' . BP_MEDIA_AUDIO_VIEW_SLUG . '/' . $media->ID);
                 break;
             case 'image' :
-                return trailingslashit(bp_displayed_user_domain() . BP_MEDIA_IMAGES_SLUG . '/' . BP_MEDIA_IMAGES_ENTRY_SLUG . '/' . $media->ID);
+                return trailingslashit(bp_displayed_user_domain() . BP_MEDIA_IMAGES_SLUG . '/' . BP_MEDIA_IMAGES_VIEW_SLUG . '/' . $media->ID);
                 break;
             default :
                 return false;

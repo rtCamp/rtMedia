@@ -109,25 +109,25 @@ class BPMediaComponent extends BP_Component {
 			case BP_MEDIA_IMAGES_SLUG:
 				if ( $enabled[ 'image' ] && is_numeric( $bp->current_action ) ) {
 					$bp->action_variables[ 0 ] = $bp->current_action;
-					$bp->current_action = BP_MEDIA_IMAGES_ENTRY_SLUG;
+					$bp->current_action = BP_MEDIA_IMAGES_VIEW_SLUG;
 				}
 				break;
 			case BP_MEDIA_AUDIO_SLUG:
 				if ( $enabled[ 'audio' ] && is_numeric( $bp->current_action ) ) {
 					$bp->action_variables[ 0 ] = $bp->current_action;
-					$bp->current_action = BP_MEDIA_AUDIO_ENTRY_SLUG;
+					$bp->current_action = BP_MEDIA_AUDIO_VIEW_SLUG;
 				}
 				break;
 			case BP_MEDIA_VIDEOS_SLUG:
 				if ( $enabled[ 'video' ] && is_numeric( $bp->current_action ) ) {
 					$bp->action_variables[ 0 ] = $bp->current_action;
-					$bp->current_action = BP_MEDIA_VIDEOS_ENTRY_SLUG;
+					$bp->current_action = BP_MEDIA_VIDEOS_VIEW_SLUG;
 				}
 				break;
 			case BP_MEDIA_ALBUMS_SLUG:
 				if ( is_numeric( $bp->current_action ) ) {
 					$bp->action_variables[ 0 ] = $bp->current_action;
-					$bp->current_action = BP_MEDIA_ALBUMS_ENTRY_SLUG;
+					$bp->current_action = BP_MEDIA_ALBUMS_VIEW_SLUG;
 				}
 				break;
 		}
