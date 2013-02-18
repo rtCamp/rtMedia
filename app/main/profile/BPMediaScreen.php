@@ -150,11 +150,11 @@ class BPMediaScreen {
                     break;
                 default:
                     $this->set_query();
-                    add_action('bp_template_content', array($this, 'screen_content'));
+                    $this->template_actions('screen');
             }
         } else {
             $this->set_query();
-            add_action('bp_template_content', array($this, 'screen_content'));
+            $this->template_actions('screen');
         }
         $this->template->loader();
     }
@@ -212,7 +212,7 @@ class BPMediaScreen {
     function entry_screen() {
 
         global $bp, $bp_media_current_entry;
-        $entryslug = 'BP_MEDIA_' . $this->media_const . '_ENTRY_SLUG';
+        $entryslug = 'BP_MEDIA_' . $this->media_const . '_VIEW_SLUG';
         if (!$bp->action_variables[0] == constant($entryslug))
             return false;
         try {
@@ -250,7 +250,7 @@ class BPMediaScreen {
      */
     function entry_screen_content() {
         global $bp, $bp_media_current_entry;
-        $entryslug = 'BP_MEDIA_' . $this->media_const . '_ENTRY_SLUG';
+        $entryslug = 'BP_MEDIA_' . $this->media_const . '_VIEW_SLUG';
         $this->hook_before();
         if (!$bp->action_variables[0] == constant($entryslug))
             return false;
@@ -418,7 +418,6 @@ class BPMediaScreen {
      */
     public function set_query() {
         global $bp, $bp_media_posts_per_page, $bp_media_query;
-		$privacy = BPMediaPrivacy::check($media->ID);
         switch ($bp->current_action) {
             case BP_MEDIA_IMAGES_SLUG:
                 $type = 'image';

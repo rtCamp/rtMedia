@@ -84,8 +84,8 @@ if (class_exists('BP_Group_Extension')) :
                                     return;
                                 }
                                 if ($media_type == "album") {
-                                    $bp_media_content = new BPMediaAlbumScreen($media_type, BP_MEDIA_ALBUMS_ENTRY_SLUG);
-                                    $bp->action_variables[0] = BP_MEDIA_ALBUMS_ENTRY_SLUG;
+                                    $bp_media_content = new BPMediaAlbumScreen($media_type, BP_MEDIA_ALBUMS_VIEW_SLUG);
+                                    $bp->action_variables[0] = BP_MEDIA_ALBUMS_VIEW_SLUG;
                                     $bp_media_content->entry_screen();
                                 } else {
                                     $bp_media_content = new BPMediaScreen($media_type, $slug);

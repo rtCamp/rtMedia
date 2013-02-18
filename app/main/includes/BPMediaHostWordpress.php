@@ -397,7 +397,7 @@ class BPMediaHostWordpress {
      */
     function get_media_single_title() {
         global $bp_media_default_excerpts, $bp_media;
-        $content = '<div class="bp_media_title">' . wp_html_excerpt($this->name, $bp_media_default_excerpts['single_entry_title']) . '</div>';
+        $content =  wp_html_excerpt($this->name, $bp_media_default_excerpts['single_entry_title']);
         return $content;
     }
 
