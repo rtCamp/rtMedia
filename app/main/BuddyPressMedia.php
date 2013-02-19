@@ -602,7 +602,7 @@ class BuddyPressMedia {
 		if(array_key_exists('default_count',$this->options)){
 			$count = $this->options['default_count'];
 		}
-		return $count;
+		return (!$count)?10:$count;
 	}
 
 	function default_tab(){

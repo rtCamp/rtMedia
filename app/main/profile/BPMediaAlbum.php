@@ -72,37 +72,13 @@ class BPMediaAlbum {
         }
         if (empty($album->ID))
             throw new Exception(__('Sorry, the requested album does not exist.', BP_MEDIA_TXT_DOMAIN));
-		$privacy = BPMediaPrivacy::check($album_id);
+
+		$required_access = BPMediaPrivacy::required_access($album_id);
+		$has_access = BPMediaPrivacy::has_access($album_id);
 
 		global $bp;
 		$messages = BPMediaPrivacy::get_messages( 'album',$bp->displayed_user->fullname );
-		switch ($privacy){
-			case 0:
-				break;
-			case 2:
-				if(!is_user_logged_in()){
-					throw new Exception($messages[2]);
-				}
-				break;
-			case 4:
-				if(!bp_is_my_profile()){
-					$is_friend = friends_check_friendship_status( $bp->loggedin_user->id, $bp->displayed_user->id );
-					if($is_friend!='is_friend'){
-						throw new Exception($messages[4]);
-					}
-				}
-				break;
-			case 6:
-				if(!bp_is_my_profile()){
-					throw new Exception($messages[6]);
-				}
-				break;
-		}
-        $this->id = $album->ID;
-        $this->description = $album->post_content;
-        $this->name = $album->post_title;
-        $this->owner = $album->post_author;
-        $meta_key = get_post_meta($this->id, 'bp-media-key', true);
+		$meta_key = get_post_meta($this->id, 'bp-media-key', true);
         /**
          * We use bp-media-key to distinguish if the entry belongs to a group or not
          * if the value is less than 0 it means it the group id to which the media belongs
@@ -110,7 +86,18 @@ class BPMediaAlbum {
          * But for use in the class, we use group_id as positive integer even though
          * we use it as negative value in the bp-media-key meta key
          */
-        $this->group_id = $meta_key < 0 ? -$meta_key : 0;
+
+		$this->group_id = $meta_key < 0 ? -$meta_key : 0;
+		if($this->group_id<=0){
+			if(!$has_access){
+				throw new Exception($messages[$required_access]);
+			}
+		}
+
+        $this->id = $album->ID;
+        $this->description = $album->post_content;
+        $this->name = $album->post_title;
+        $this->owner = $album->post_author;
         if ($this->group_id > 0) {
             $current_group = new BP_Groups_Group($this->group_id);
             $group_url = bp_get_group_permalink($current_group);
