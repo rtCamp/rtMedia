@@ -119,8 +119,8 @@ class BPMediaScreen {
      *
      * @global type $bp_media
      */
-    private function screen_title() {
-        printf(__('%s List Page', BP_MEDIA_TXT_DOMAIN), $this->slug);
+    function screen_title() {
+        printf(__('All %s', BP_MEDIA_TXT_DOMAIN), ucfirst($this->slug));
     }
 
     /**
@@ -417,8 +417,13 @@ class BPMediaScreen {
      * @global type $bp_media_query
      */
     public function set_query() {
-        global $bp, $bp_media_posts_per_page, $bp_media_query;
-        switch ($bp->current_action) {
+        global $bp, $bp_media_query;
+		if(bp_is_current_component('groups')){
+			$type_var = isset($bp->action_variables[0])?$bp->action_variables[0]:'';
+		}else{
+			$type_var = $bp->current_action;
+		}
+        switch ($type_var) {
             case BP_MEDIA_IMAGES_SLUG:
                 $type = 'image';
                 break;
@@ -431,7 +436,7 @@ class BPMediaScreen {
             default :
                 $type = null;
         }
-        if (isset($bp->action_variables) && is_array($bp->action_variables) && isset($bp->action_variables[0]) && $bp->action_variables[0] == 'page' && isset($bp->action_variables[1]) && is_numeric($bp->action_variables[1])) {
+        /*if (isset($bp->action_variables) && is_array($bp->action_variables) && isset($bp->action_variables[0]) && $bp->action_variables[0] == 'page' && isset($bp->action_variables[1]) && is_numeric($bp->action_variables[1])) {
             $paged = $bp->action_variables[1];
         } else {
             $paged = 1;
@@ -448,9 +453,13 @@ class BPMediaScreen {
                 'paged' => $paged,
                 'posts_per_page' => $bp_media_posts_per_page
             );
+		 *
+		 */
 
-            $bp_media_query = new WP_Query($args);
-        }
+            $args = new BPMediaQuery();
+			$args = $args->init($type);
+			$bp_media_query = new WP_Query($args);
+        //}
     }
 
 }

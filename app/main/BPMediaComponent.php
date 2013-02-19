@@ -102,7 +102,10 @@ class BPMediaComponent extends BP_Component {
 				}
 			}
 		}
-		$bp_media_privacy_screen = new BPMediaPrivacyScreen();
+
+			if(array_key_exists('privacy_override_enabled',$bp_media->options))
+					if(checked($bp_media->options['privacy_override_enabled'],true,false))
+				$bp_media_privacy_screen = new BPMediaPrivacyScreen();
 
 		/* Switch between different screens depending on context */
 		switch ( $bp->current_component ) {
@@ -221,7 +224,9 @@ class BPMediaComponent extends BP_Component {
 			'screen_function' => array( $bp_media_upload, 'upload_screen' ),
 			'user_has_access' => bp_is_my_profile()
 		) );
-		bp_core_new_subnav_item( array(
+		if(array_key_exists('privacy_override_enabled',$bp_media->options))
+					if(checked($bp_media->options['privacy_override_enabled'],true,false))
+				bp_core_new_subnav_item( array(
 							'name' => __( BP_MEDIA_USER_SETTINGS_LABEL, BP_MEDIA_TXT_DOMAIN ),
 							/* Display name for the nav item(It won't be shown anywhere) */
 							'slug' => BP_MEDIA_USER_SETTINGS_SLUG,
