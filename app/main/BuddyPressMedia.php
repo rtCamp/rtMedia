@@ -351,11 +351,12 @@ class BuddyPressMedia {
 			 */
 //			new BPMediaActivity();
 			$class_construct = array(
-				//'activity',
+//				'activity'      => false,
 				'filters'	=> false,
 				'actions'	=> false,
 				'function'	=> false,
-				'privacy'	=>false,
+				'privacy'	=> false,
+//				'image'	        => false
 			);
 			$class_construct = apply_filters('bpmedia_class_construct',$class_construct);
 

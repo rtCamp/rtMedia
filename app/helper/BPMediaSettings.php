@@ -174,13 +174,13 @@ if (!class_exists('BPMediaSettings')) {
                         add_settings_error(__('Recount Fail', BP_MEDIA_TXT_DOMAIN), 'bpm-recount-fail', __('Recounting Failed', BP_MEDIA_TXT_DOMAIN));
                 }
             }
-            if (!isset($_POST['bp_media_options']['enable_on_profile']) && !isset($_POST['bp_media_options']['enable_on_group'])) {
-                if (is_multisite())
-                    update_site_option('bpm-media-enable', __('Enable BuddyPress Media on either User Profiles or Groups or both. Atleast one should be selected.', BP_MEDIA_TXT_DOMAIN));
-                else
-                    add_settings_error(__('Enable BuddyPress Media', BP_MEDIA_TXT_DOMAIN), 'bpm-media-enable', __('Enable BuddyPress Media on either User Profiles or Groups or both. Atleast one should be selected.', BP_MEDIA_TXT_DOMAIN));
-                $input['enable_on_profile'] = 1;
-            }
+//            if (!isset($_POST['bp_media_options']['enable_on_profile']) && !isset($_POST['bp_media_options']['enable_on_group'])) {
+//                if (is_multisite())
+//                    update_site_option('bpm-media-enable', __('Enable BuddyPress Media on either User Profiles or Groups or both. Atleast one should be selected.', BP_MEDIA_TXT_DOMAIN));
+//                else
+//                    add_settings_error(__('Enable BuddyPress Media', BP_MEDIA_TXT_DOMAIN), 'bpm-media-enable', __('Enable BuddyPress Media on either User Profiles or Groups or both. Atleast one should be selected.', BP_MEDIA_TXT_DOMAIN));
+//                $input['enable_on_profile'] = 1;
+//            }
             if (!isset($_POST['bp_media_options']['videos_enabled']) && !isset($_POST['bp_media_options']['audio_enabled']) && !isset($_POST['bp_media_options']['images_enabled'])) {
                 if (is_multisite())
                     update_site_option('bpm-media-type', __('Atleast one Media Type Must be selected', BP_MEDIA_TXT_DOMAIN));
