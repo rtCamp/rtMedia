@@ -49,6 +49,7 @@ function buddypress_media_autoloader( $class_name ) {
 		'app/main/activity/' . $class_name . '.php',
 		'app/main/profile/' . $class_name . '.php',
 		'app/main/group/' . $class_name . '.php',
+		'app/main/query/' . $class_name . '.php',
                 'app/main/privacy/' . $class_name . '.php',
 		'app/main/group/dummy/' . $class_name . '.php',
 		'app/main/includes/' . $class_name . '.php',
