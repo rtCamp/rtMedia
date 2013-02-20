@@ -139,8 +139,6 @@ class BuddyPressMedia {
 		 */
 		global $bp_media_counter;
 		$bp_media_counter = 0;
-		add_action( 'wp_ajax_bp_media_privacy_install', 'BPMediaPrivacy::install' );
-
 	}
 
 	/**
@@ -353,7 +351,7 @@ class BuddyPressMedia {
 			 */
 //			new BPMediaActivity();
 			$class_construct = array(
-				//'activity',
+//				'activity'      => false,
 				'filters'	=> false,
 				'actions'	=> false,
 				'function'	=> false,

@@ -296,7 +296,7 @@ class BPMediaActions {
     function action_buttons() {
         if (!in_array('bp_media_current_entry', $GLOBALS))
             return false;
-        global $bp_media_current_entry, $bp_media_options;
+        global $bp_media_current_entry, $bp_media;
 
         if ($bp_media_current_entry != NULL) {
             $featured_post = get_post_meta($bp_media_current_entry->get_id(), 'featured', true);
@@ -305,23 +305,24 @@ class BPMediaActions {
                 echo '<a href="' . $bp_media_current_entry->get_edit_url()
                 . '" class="button item-button bp-secondary-action bp-media-edit" title="'
                 . __('Edit Media', BP_MEDIA_TXT_DOMAIN) . '">' . __('Edit', BP_MEDIA_TXT_DOMAIN) . '</a>';
-
-            if ($bp_media_options['download_enabled'] == true)
+            if (isset($bp_media->options['download_enabled']))
                 echo '<a href="' . $bp_media_current_entry->get_attachment_url()
                 . '" class="button item-button bp-secondary-action bp-media-download" title="'
                 . __('Download', BP_MEDIA_TXT_DOMAIN) . '">' . __('Download', BP_MEDIA_TXT_DOMAIN) . '</a>';
 
-            if (bp_displayed_user_id() == bp_loggedin_user_id() && $featured_post == '')
+            if (bp_displayed_user_id() == bp_loggedin_user_id()) {
+                if ($featured_post == '')
                 echo '<a href="' . $bp_media_current_entry->get_album_id()
                 . '" rel="" data-album-id="' . $bp_media_current_entry->get_album_id()
                 . '"  data-post-id="' . $bp_media_current_entry->get_id()
                 . '" class="button item-button bp-secondary-action bp-media-featured" title="'
                 . __('Featured Media', BP_MEDIA_TXT_DOMAIN) . '">' . __('Featured', BP_MEDIA_TXT_DOMAIN) . '</a>';
-            else
+                else
                 echo '<a href="' . $bp_media_current_entry->get_album_id() . '" rel="" data-remove-featured="1"   data-album-id="'
                 . $bp_media_current_entry->get_album_id() . '" data-post-id="' . $bp_media_current_entry->get_id()
                 . '" class="button item-button bp-secondary-action bp-media-featured" title="'
                 . __('Featured Media', BP_MEDIA_TXT_DOMAIN) . '">' . __('Remove Featured', BP_MEDIA_TXT_DOMAIN) . '</a>';
+            }
         }
     }
 
