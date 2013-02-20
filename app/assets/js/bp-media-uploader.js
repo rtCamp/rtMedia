@@ -4,7 +4,7 @@
  */
 
 jQuery(document).ready(function(){
-    
+
     var selected = jQuery('#bp-media-album-prompt select').val();
     var in_list = 0;
     if(jQuery('#'+bp_media_uploader_params.container).length==0)
@@ -60,7 +60,7 @@ jQuery(document).ready(function(){
         if ( in_list == 0 )
                 jQuery('#bp-media-album-prompt p').show();
     });
-        
+
     //Normal Uplaoder
     var bp_media_is_multiple_upload = false;
     var bp_media_uploader=new plupload.Uploader(bp_media_uploader_params);
@@ -115,6 +115,6 @@ jQuery(document).ready(function(){
         } else
             location.reload(true);
     });
-        
-       
+
+
 });
