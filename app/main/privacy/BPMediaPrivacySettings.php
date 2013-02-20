@@ -70,19 +70,20 @@ class BPMediaPrivacySettings {
 		echo '<div id="rtprivacyinstaller">';
 
 		foreach($total as $type=>$count){
-			$types = $type;
 			echo '<div class="rtprivacytype" id="'.strtolower($type).'">';
-			echo '<strong>'.ucfirst($types).'</strong>: ';
-			echo $finished->$type .' / '.$count;
+			echo '<strong>'.ucfirst($type).'</strong>: ';
+			echo '<span class="finished">'.$finished->Finished .'</span> / <span class="total">'.$count.'</span>';
 			$progress =100;
 			if($count!=0){
-				$todo = $count-$finished->$type;
+				$todo = $count-$finished->Finished;
 				$steps = ceil($todo/20);
-				$progress = $this->progress->progress($finished->$type,$count);
-				echo '<input type="hidden" value="'.$finished->$type.'" name="finished"/>';
+				$laststep = $todo%20;
+				$progress = $this->progress->progress($finished->Finished,$count);
+				echo '<input type="hidden" value="'.$finished->Finished.'" name="finished"/>';
 				echo '<input type="hidden" value="'.$count.'" name="total"/>';
 				echo '<input type="hidden" value="'.$todo.'" name="todo"/>';
 				echo '<input type="hidden" value="'.$steps.'" name="steps"/>';
+				echo '<input type="hidden" value="'.$laststep.'" name="laststep"/>';
 
 			}
 			$this->progress->progress_ui($progress);

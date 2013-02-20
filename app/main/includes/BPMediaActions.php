@@ -498,83 +498,32 @@ class BPMediaActions {
         $displayed_user = isset($_POST['displayed_user']) ? $_POST['displayed_user'] : null;
         $loggedin_user = isset($_POST['loggedin_user']) ? $_POST['loggedin_user'] : null;
         $current_group = isset($_POST['current_group']) ? $_POST['current_group'] : null;
-        $limit = $bp_media->default_count();
-        if ( ($displayed_user == $loggedin_user && $current_group == 0) || groups_is_user_member($loggedin_user, $current_group)) {
-            $offset = $limit*($page-1)-1;
-        } else {
-            $offset = $limit*($page-1);
-        }
+		if($current_group){
+			$type_var = isset($action_variables[0])?$action_variables[0]:'';
+		}else{
+			$type_var = $current_action;
+		}
+
         if ((!$displayed_user || intval($displayed_user) == 0) && (!$current_group || intval($current_group) == 0)) {
             die();
         }
-        global $bp_media;
-        $enabled = $bp_media->enabled();
-
-        switch ($current_action) {
+        switch ($type_var) {
             case BP_MEDIA_IMAGES_SLUG:
-                $args = array(
-                    'post_type' => 'attachment',
-                    'post_status' => 'any',
-                    'post_mime_type' => 'image',
-                    'meta_key' => 'bp-media-key',
-                    'meta_value' => $current_group > 0 ? -$current_group : $displayed_user,
-                    'meta_compare' => '=',
-                    'offset' => $offset,
-                    'posts_per_page' => $limit
-                );
+                $type = 'image';
                 break;
             case BP_MEDIA_AUDIO_SLUG:
-                $args = array(
-                    'post_type' => 'attachment',
-                    'post_status' => 'any',
-                    'post_mime_type' => 'audio',
-                    'author' => $displayed_user,
-                    'meta_key' => 'bp-media-key',
-                    'meta_value' => $current_group > 0 ? -$current_group : $displayed_user,
-                    'meta_compare' => '=',
-                    'offset' => $offset,
-                    'posts_per_page' => $limit
-                );
+                $type = 'audio';
                 break;
             case BP_MEDIA_VIDEOS_SLUG:
-                $args = array(
-                    'post_type' => 'attachment',
-                    'post_status' => 'any',
-                    'post_mime_type' => 'video',
-                    'author' => $displayed_user,
-                    'meta_key' => 'bp-media-key',
-                    'meta_value' => $current_group > 0 ? -$current_group : $displayed_user,
-                    'meta_compare' => '=',
-                    'offset' => $offset,
-                    'posts_per_page' => $limit
-                );
+                $type = 'video';
                 break;
-            case BP_MEDIA_ALBUMS_SLUG:
-                if (isset($action_variables) && is_array($action_variables) && isset($action_variables[0]) && isset($action_variables[1])) {
-                    $args = array(
-                        'post_type' => 'attachment',
-                        'post_status' => 'any',
-                        'author' => $displayed_user,
-                        'post_parent' => $action_variables[1],
-                        'offset' => $offset,
-                        'posts_per_page' => $limit,
-                        'post_mime_type' => $this->filter_entries(),
-                    );
-                } else {
-                    $args = array(
-                        'post_type' => 'bp_media_album',
-                        'author' => $displayed_user,
-                        'offset' => $offset,
-                        'posts_per_page' => $limit,
-                        'post_mime_type' => $this->filter_entries(),
-                    );
-                }
-                break;
-            default:
-                die();
+            default :
+                $type = null;
         }
-        wp_reset_query();
-        $bp_media_query = new WP_Query($args);
+
+            $query = new BPMediaQuery();
+			$args = $query->init($type,$page);
+			$bp_media_query = new WP_Query($args);
         if (isset($bp_media_query->posts) && is_array($bp_media_query->posts) && count($bp_media_query->posts)) {
             foreach ($bp_media_query->posts as $attachment) {
                 try {

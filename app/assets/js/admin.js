@@ -7,7 +7,7 @@ jQuery(document).ready(function(){
 			linkback: jQuery('#bp-media-add-linkback:checked').length
 		};
 		jQuery.post(bp_media_admin_ajax,data,function(response){
-			});
+		});
 	})
 
 	/* Fetch Feed */
@@ -73,13 +73,17 @@ jQuery(document).ready(function(){
 
 	function fireRequest(data) {
 		return jQuery.post(ajaxurl, data, function(response){
+			console.log('====================================');
+			console.log('fired');
 			console.log(data);
+			console.log('====================================');
 			if(response != 0){
-				console.log(data.values['finished']);
-				console.log(data.values['total']);
 				var progw = Math.ceil((((parseInt(response)*20)+parseInt(data.values['finished']))/parseInt(data.values['total'])) *100);
+				console.log(progw);
 				if(progw>100){progw=100};
 				jQuery('#rtprogressbar>div').css('width',progw+'%');
+				finished = jQuery('#rtprivacyinstaller span.finished').html();
+				jQuery('#rtprivacyinstaller span.finished').html(parseInt(finished)+data.count);
 			} else {
 				jQuery('#map_progress_msgs').html('<div class="map_mapping_failure">Row '+response+' failed.</div>');
 			}
@@ -100,25 +104,30 @@ jQuery(document).ready(function(){
 				});
 				$data = {};
 				for(var i=1;i<=$values['steps'][0];i++ ){
+					$count=20;
+					if(i==$values['steps'][0]){
+						$count=parseInt($values['laststep'][0]);
+						if($count==0){$count=20};
+					}
 					newvals = {
 						'page':i,
 						'action':'bp_media_privacy_install',
-						'values': $values
-					}
-					$data[i] = newvals;
-				}
-				var $startingpoint = jQuery.Deferred();
-				$startingpoint.resolve();
-				jQuery.each($data, function(i, v){
-					$startingpoint = $startingpoint.pipe( function() {
-						console.log(v);
-						return fireRequest(v);
-					});
-				});
-
-
+						'count':$count,
+						'values':$values
+						}
+				$data[i] = newvals;
 			}
-		});
+			var $startingpoint = jQuery.Deferred();
+			$startingpoint.resolve();
+			jQuery.each($data, function(i, v){
+				$startingpoint = $startingpoint.pipe( function() {
+					return fireRequest(v);
+				});
+			});
+
+
+		}
 	});
+});
 
 });
