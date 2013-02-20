@@ -14,14 +14,13 @@ if ( ! defined( 'ABSPATH' ) )
 class BPMediaQuery {
 
 
-	function __construct( $type = false, $count = false ) {
-		$args = $this->prepare_args( $type, $count );
+	function init( $type = false, $page=false,$count = false ) {
+		$args = $this->prepare_args( $type,$page, $count );
 		return $this->return_result( $args, $count );
 	}
 
 	function privacy_query( ) {
 		$privacy = BPMediaPrivacy::current_access();
-		if($privacy==0)return;
 		return $meta_query = array(
 			'key' => 'bp_media_privacy',
 			'value' => $privacy,
@@ -54,7 +53,7 @@ class BPMediaQuery {
 		return $meta_query;
 	}
 
-	function prepare_args( $type = false, $count = false ) {
+	function prepare_args( $type = false,$page=false, $count = false ) {
 
 		global $bp, $bp_media;
 
@@ -79,10 +78,10 @@ class BPMediaQuery {
 			'meta_query' => $this->prepare_meta_query(),
 			'posts_per_page' => -1
 		);
+
 		if ( $count == false ) {
 			$args[ 'posts_per_page' ] = $bp_media->default_count();
-			$args[ 'paged' ] = $this->prepare_pagination();
-			$args[ 'offset' ] = $this->get_offset( $args[ 'posts_per_page' ], $args[ 'paged' ] );
+			$args[ 'offset' ] = $this->get_offset( $args[ 'posts_per_page' ], $this->prepare_pagination($page) );
 		}
 
 		return $args;
@@ -129,12 +128,12 @@ class BPMediaQuery {
 		return $mime_type;
 	}
 
-	function prepare_pagination() {
+	function prepare_pagination($page) {
 		global $bp;
 		if ( isset( $bp->action_variables ) && is_array( $bp->action_variables ) && isset( $bp->action_variables[ 0 ] ) && $bp->action_variables[ 0 ] == 'page' && isset( $bp->action_variables[ 1 ] ) && is_numeric( $bp->action_variables[ 1 ] ) ) {
 			$paged = $bp->action_variables[ 1 ];
 		} else {
-			$paged = 1;
+			$paged = ($page)?$page:1;
 		}
 		return $paged;
 	}
@@ -149,7 +148,7 @@ class BPMediaQuery {
 
 	function query( $args ) {
 		$query = new WP_Query( $args );
-		//print_r($query);wp_die();
+		return $query;
 	}
 
 	function get_count( $args ) {

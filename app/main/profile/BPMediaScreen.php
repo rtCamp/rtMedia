@@ -436,29 +436,10 @@ class BPMediaScreen {
             default :
                 $type = null;
         }
-        /*if (isset($bp->action_variables) && is_array($bp->action_variables) && isset($bp->action_variables[0]) && $bp->action_variables[0] == 'page' && isset($bp->action_variables[1]) && is_numeric($bp->action_variables[1])) {
-            $paged = $bp->action_variables[1];
-        } else {
-            $paged = 1;
-        }
-        if ($type) {
-            $args = array(
-                'post_type' => 'attachment',
-                'post_status' => 'any',
-                'post_mime_type' => $type,
-                'author' => $bp->displayed_user->id,
-                'meta_key' => 'bp-media-key',
-                'meta_value' => $bp->displayed_user->id,
-                'meta_compare' => '=',
-                'paged' => $paged,
-                'posts_per_page' => $bp_media_posts_per_page
-            );
-		 *
-		 */
 
-            $args = new BPMediaQuery($type);
+            $query = new BPMediaQuery();
+			$args = $query->init($type);
 			$bp_media_query = new WP_Query($args);
-        //}
     }
 
 }
