@@ -456,8 +456,7 @@ class BPMediaScreen {
 		 *
 		 */
 
-            $args = new BPMediaQuery();
-			$args = $args->init($type);
+            $args = new BPMediaQuery($type);
 			$bp_media_query = new WP_Query($args);
         //}
     }

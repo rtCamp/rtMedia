@@ -139,6 +139,8 @@ class BuddyPressMedia {
 		 */
 		global $bp_media_counter;
 		$bp_media_counter = 0;
+		add_action( 'wp_ajax_bp_media_privacy_install', 'BPMediaPrivacy::install' );
+
 	}
 
 	/**
@@ -540,6 +542,8 @@ class BuddyPressMedia {
 					);
 			}
 		}
+
+		BPMediaPrivacy::install();
 	}
 
 	/**
@@ -582,16 +586,19 @@ class BuddyPressMedia {
 			'upload' => true
 		);
 		if ( array_key_exists( 'images_enabled', $options ) ) {
-			if ( $options[ 'images_enabled' ] == 1 )
+			if ( $options[ 'images_enabled' ] == 1 ){
 				$enabled[ 'image' ] = true;
+			}
 		}
 		if ( array_key_exists( 'videos_enabled', $options ) ) {
-			if ( $options[ 'videos_enabled' ] == 1 )
+			if ( $options[ 'videos_enabled' ] == 1 ){
 				$enabled[ 'video' ] = true;
+			}
 		}
 		if ( array_key_exists( 'audio_enabled', $options ) ) {
-			if ( $options[ 'audio_enabled' ] == 1 )
+			if ( $options[ 'audio_enabled' ] == 1 ){
 				$enabled[ 'audio' ] = true;
+			}
 		}
 
 		return $enabled;
@@ -633,7 +640,6 @@ class BuddyPressMedia {
 			LIKE '{$album_name}' AND ps.post_type='bp_media_album' AND
 				pm.meta_key='bp-media-key' AND pm.meta_value ='{$group_id}'";
 		$wall_albums = $wpdb->get_results( $query, ARRAY_A );
-
 		if ( count( $wall_albums ) > 1 ) {
 			return BuddyPressMedia::merge_duplicate_wall_albums( $wall_albums );
 		} elseif($wall_albums) {

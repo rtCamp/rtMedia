@@ -19,14 +19,15 @@ class BPMediaPrivacy {
 	 *
 	 */
 	function __construct() {
-		if ( BPMediaPrivacy::check_enabled() == false )
+		if ( BPMediaPrivacy::is_enabled() == false )
 			return;
 		$this->settings = $this->get_settings();
 		add_action( 'bp_media_add_media_fields', array( $this, 'ui' ) );
 		add_action( 'bp_media_after_update_media', array( $this, 'save_privacy' ) );
 	}
 
-	static function check_enabled() {
+	static function is_enabled() {
+		if(BPMediaPrivacy::install_status()==false)return false;
 		global $bp_media;
 		$options = $bp_media->options;
 		if ( ! array_key_exists( 'privacy_enabled', $options ) ) {
@@ -37,6 +38,37 @@ class BPMediaPrivacy {
 			}
 		}
 		return true;
+	}
+
+	static function is_installed(){
+		global $bp_media;
+		$options = $bp_media->options;
+		$option_exists = true;
+		$option_exists=BPMediaPrivacy::install_status();
+
+		if ( ! array_key_exists( 'privacy_installed', $options ) ) {
+			$option_exists = false;
+		} else {
+			if ( $options[ 'privacy_installed' ] != true ) {
+				$option_exists = false;
+			}
+		}
+		return $option_exists;
+	}
+
+	static function install_status(){
+		$settings = new BPMediaPrivacySettings();
+		$total = $settings->get_total_count();
+		$total = $total[0]->Total;
+		$finished = $settings->get_completed_count();
+		$finished = $finished[0]->Finished;
+		if($total===$finished){
+			global $bp_media;
+			$options = $bp_media->options;
+			$options['privacy_installed']=true;
+			return update_option('bp_media_options',$options);
+		}
+		return false;
 	}
 
 	static function default_privacy() {
@@ -76,7 +108,7 @@ class BPMediaPrivacy {
 	}
 
 	function ui() {
-		if ( BPMediaPrivacy::check_enabled() == false )
+		if ( BPMediaPrivacy::is_enabled() == false )
 			return;
 		global $bp_media_current_entry;
 		$privacy_level = get_post_meta( $bp_media_current_entry->get_id(), 'bp_media_privacy', TRUE );
@@ -142,7 +174,7 @@ class BPMediaPrivacy {
 	}
 
 	static function required_access( $object_id = false ) {
-		if ( BPMediaPrivacy::check_enabled() == false )
+		if ( BPMediaPrivacy::is_enabled() == false )
 			return;
 		if ( $object_id == false )
 			return;
@@ -194,13 +226,33 @@ class BPMediaPrivacy {
 	}
 
 	static function get_messages( $media_type, $username ) {
-		if ( BPMediaPrivacy::check_enabled() == false )
+		if ( BPMediaPrivacy::is_enabled() == false )
 			return;
 		return array(
 			6 => sprintf( __( 'This %s is private', BP_MEDIA_TXT_DOMAIN ), $media_type ),
 			4 => sprintf( __( 'This %1s is visible only to %2s&rsquo;s friends', BP_MEDIA_TXT_DOMAIN ), $media_type, $username ),
 			2 => sprintf( __( 'This %s is visible to logged in users, only', BP_MEDIA_TXT_DOMAIN ), $media_type ),
 		);
+	}
+
+	static function install() {
+		$page = $_POST['page'];
+		($page) ? $page : 1;
+		$args = array(
+			'post_type' => array(
+				'attachment',
+				'bp_media_album'
+			),
+			'post_status' => 'any',
+			'posts_per_page' => 20,
+			'paged' => $page,
+			'meta_key'=>'bp-media-key'
+		);
+		$all_media = new WP_Query( $args );
+		foreach ( $all_media->posts as $media ) {
+			update_post_meta( $media->ID, 'bp_media_privacy', 0 );
+		}
+		wp_die($page);
 	}
 
 }

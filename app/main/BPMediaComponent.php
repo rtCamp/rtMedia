@@ -152,6 +152,7 @@ class BPMediaComponent extends BP_Component {
 
 		/* Set up individual screens for each nav/sub nav */
 		foreach ( $enabled as $type => $status ) {
+			if(!$status) break;
 			$screen_array[ ] = array(
 				'type' => $type,
 				'status' => $status,
