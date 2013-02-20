@@ -125,7 +125,7 @@ ul#social li{display:inline;}
 ul#activity-stream li.media.album_updated ul{}
 ul#activity-stream li.media.album_updated ul li{float: left;margin-right:2%}
 
-
+.wrap.bp-media-admin .bp-media-settings-tabs a.nav-tab{padding-left:20px;background:url('../img/tab-icon.png')}
 /* Addons page Styling */
 #bp-media-addons-list_metabox {background: #ffffff}
 .products ul:after, ul.products:after {clear: both;content: "";display: block;}
