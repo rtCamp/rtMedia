@@ -73,13 +73,8 @@ jQuery(document).ready(function(){
 
 	function fireRequest(data) {
 		return jQuery.post(ajaxurl, data, function(response){
-			console.log('====================================');
-			console.log('fired');
-			console.log(data);
-			console.log('====================================');
 			if(response != 0){
 				var progw = Math.ceil((((parseInt(response)*20)+parseInt(data.values['finished']))/parseInt(data.values['total'])) *100);
-				console.log(progw);
 				if(progw>100){progw=100};
 				jQuery('#rtprogressbar>div').css('width',progw+'%');
 				finished = jQuery('#rtprivacyinstaller span.finished').html();
