@@ -78,6 +78,7 @@ class BPMediaComponent extends BP_Component {
 
 
 		/* Media Screens */
+
 		foreach ( $enabled as $tab => $active ) {
 			if ( $active == true ) {
 				$tabs = $tab;
@@ -149,18 +150,17 @@ class BPMediaComponent extends BP_Component {
 
 		/* Set up navigation */
 		parent::setup_nav( $main_nav, $sub_nav );
-
 		/* Set up individual screens for each nav/sub nav */
 		foreach ( $enabled as $type => $status ) {
-			if(!$status) break;
+			if($status){
 			$screen_array[ ] = array(
 				'type' => $type,
 				'status' => $status,
 				'subscreens' => true
 			);
+			}
 		}
 		$screen_array = apply_filters( 'bpmedia_media_screens', $screen_array );
-
 		foreach ( $screen_array as $screen ) {
 			$type = $screen[ 'type' ];
 			$status = $screen[ 'status' ];
