@@ -35,6 +35,7 @@ if (!class_exists('BPMediaAdmin')) {
             }
             $this->bp_media_upgrade = new BPMediaUpgrade();
             $this->bp_media_settings = new BPMediaSettings();
+
         }
 
         /**
@@ -62,8 +63,10 @@ if (!class_exists('BPMediaAdmin')) {
         public function menu() {
             add_menu_page(__('BuddyPress Media Component', BP_MEDIA_TXT_DOMAIN), __('BuddyPress Media', BP_MEDIA_TXT_DOMAIN), 'manage_options', 'bp-media-settings', array($this, 'settings_page'));
             add_submenu_page('bp-media-settings', __('BuddyPress Media Settings', BP_MEDIA_TXT_DOMAIN), __('Settings', BP_MEDIA_TXT_DOMAIN), 'manage_options', 'bp-media-settings', array($this, 'settings_page'));
-			add_submenu_page('bp-media-settings', __('BuddyPress Media Privacy', BP_MEDIA_TXT_DOMAIN), __('Privacy', BP_MEDIA_TXT_DOMAIN), 'manage_options', 'bp-media-privacy', array($this, 'privacy_page'));
-            add_submenu_page('bp-media-settings', __('BuddyPress Media Addons', BP_MEDIA_TXT_DOMAIN), __('Addons', BP_MEDIA_TXT_DOMAIN), 'manage_options', 'bp-media-addons', array($this, 'addons_page'));
+			if(!BPMediaPrivacy::is_installed()){
+				add_submenu_page('bp-media-settings', __('BuddyPress Media Privacy', BP_MEDIA_TXT_DOMAIN), __('Privacy Installer', BP_MEDIA_TXT_DOMAIN), 'manage_options', 'bp-media-privacy', array($this, 'privacy_page'));
+			}
+			add_submenu_page('bp-media-settings', __('BuddyPress Media Addons', BP_MEDIA_TXT_DOMAIN), __('Addons', BP_MEDIA_TXT_DOMAIN), 'manage_options', 'bp-media-addons', array($this, 'addons_page'));
             add_submenu_page('bp-media-settings', __('BuddyPress Media Support', BP_MEDIA_TXT_DOMAIN), __('Support ', BP_MEDIA_TXT_DOMAIN), 'manage_options', 'bp-media-support', array($this, 'support_page'));
         }
 
@@ -213,12 +216,7 @@ if (!class_exists('BPMediaAdmin')) {
                 'name' => __('Support', BP_MEDIA_TXT_DOMAIN),
                 'class' => ($tab == 'bp-media-support') ? $active_class : $idle_class . ' last_tab'
             );
-			$tabs[] = array(
-                'href' => bp_get_admin_url(add_query_arg(array('page' => 'bp-media-privacy'), 'admin.php')),
-                'title' => __('BuddyPress Media Privacy Installer', BP_MEDIA_TXT_DOMAIN),
-                'name' => __('Privacy Installer', BP_MEDIA_TXT_DOMAIN),
-                'class' => ($tab == 'bp-media-privacy') ? $active_class : $idle_class
-            );
+
             $tabs = apply_filters('bp_media_add_sub_tabs', $tabs, $tab);
             foreach ($tabs as $tab) {
                 $tabs_html.= '<a title="' . $tab['title'] . '" href="' . $tab['href'] . '" class="' . $tab['class'] .' '.sanitize_title($tab['name']). '">' . $tab['name'] . '</a>';

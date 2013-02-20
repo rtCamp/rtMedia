@@ -139,6 +139,7 @@ class BuddyPressMedia {
 		 */
 		global $bp_media_counter;
 		$bp_media_counter = 0;
+		add_action( 'wp_ajax_bp_media_privacy_install', 'BPMediaPrivacy::install' );
 
 	}
 
@@ -356,7 +357,7 @@ class BuddyPressMedia {
 				'filters'	=> false,
 				'actions'	=> false,
 				'function'	=> false,
-				'privacy'	=>false,
+				//'privacy'	=>false,
 			);
 			$class_construct = apply_filters('bpmedia_class_construct',$class_construct);
 
@@ -584,16 +585,19 @@ class BuddyPressMedia {
 			'upload' => true
 		);
 		if ( array_key_exists( 'images_enabled', $options ) ) {
-			if ( $options[ 'images_enabled' ] == 1 )
+			if ( $options[ 'images_enabled' ] == 1 ){
 				$enabled[ 'image' ] = true;
+			}
 		}
 		if ( array_key_exists( 'videos_enabled', $options ) ) {
-			if ( $options[ 'videos_enabled' ] == 1 )
+			if ( $options[ 'videos_enabled' ] == 1 ){
 				$enabled[ 'video' ] = true;
+			}
 		}
 		if ( array_key_exists( 'audio_enabled', $options ) ) {
-			if ( $options[ 'audio_enabled' ] == 1 )
+			if ( $options[ 'audio_enabled' ] == 1 ){
 				$enabled[ 'audio' ] = true;
+			}
 		}
 
 		return $enabled;
