@@ -116,18 +116,8 @@ class BPMediaAlbum {
             'post_parent' => $this->id,
             'post_type' => 'attachment'
                 ));
-        $attachments_featured = get_children(array(
-            'numberposts' => 1,
-            'meta_key' => 'featured',
-            'orderby' => 'meta_value',
-            'post_mime_type' => 'image',
-            'post_parent' => $this->id,
-            'post_type' => 'attachment',
-                ));
-        if ($attachments_featured) {
-            foreach ($attachments_featured as $attachment) {
-                $this->thumbnail = '<span><img src="' . wp_get_attachment_thumb_url($attachment->ID) . '"></span>';
-            }
+        if ($thumbnail_id = get_post_thumbnail_id($this->id)) {
+                $this->thumbnail = '<span><img src="' . wp_get_attachment_thumb_url($thumbnail_id) . '"></span>';
         } elseif ($attachments) {
             foreach ($attachments as $attachment) {
                 $this->thumbnail = '<span><img src="' . wp_get_attachment_thumb_url($attachment->ID) . '"></span>';
