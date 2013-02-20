@@ -2,7 +2,7 @@
 
 /**
  * Description of rtUpdateCheker
- * A custom plugin update checker. 
+ * A custom plugin update checker.
  *
  * @author faishal
  */
@@ -20,16 +20,16 @@ class rtPluginUpdateChecker {
 
     /**
      * Class constructor.
-     * 
+     *
      * @param string $metadataUrl The URL of the plugin's metadata file.
      * @param string $pluginFile Fully qualified path to the main plugin file.
      * @param string $slug The plugin's 'slug'. If not specified, the filename part of $pluginFile sans '.php' will be used as the slug.
      * @param integer $checkPeriod How often to check for updates (in hours). Defaults to checking every 12 hours. Set to 0 to disable automatic update checks.
-     * @param string $optionName Where to store book-keeping info about update checks. Defaults to 'external_updates-$slug'. 
+     * @param string $optionName Where to store book-keeping info about update checks. Defaults to 'external_updates-$slug'.
      */
 
     /**
-     * 
+     *
      * @param type $metadataUrl
      * @param type $pluginFile
      * @param type $slug
@@ -58,9 +58,9 @@ class rtPluginUpdateChecker {
     }
 
     /**
-     * Install the hooks required to run periodic update checks and inject update info 
-     * into WP data structures. 
-     * 
+     * Install the hooks required to run periodic update checks and inject update info
+     * into WP data structures.
+     *
      * @return void
      */
     protected function installHooks() {
@@ -89,8 +89,8 @@ class rtPluginUpdateChecker {
 
             register_deactivation_hook($this->pluginFile, array($this, '_removeUpdaterCron'));
 
-            //In case Cron is disabled or unreliable, we also manually trigger 
-            //the periodic checks while the user is browsing the Dashboard. 
+            //In case Cron is disabled or unreliable, we also manually trigger
+            //the periodic checks while the user is browsing the Dashboard.
             add_action('admin_init', array($this, 'maybeCheckForUpdates'));
         } else {
             //Periodic checks are disabled.
@@ -102,13 +102,13 @@ class rtPluginUpdateChecker {
 
     /**
      * Add our custom schedule to the array of Cron schedules used by WP.
-     * 
+     *
      * @param array $schedules
      * @return array
      */
 
     /**
-     * 
+     *
      * @param type $schedules
      * @return type
      */
@@ -139,7 +139,7 @@ class rtPluginUpdateChecker {
      */
 
     /**
-     * 
+     *
      * @return type
      */
     public function getCronHookName() {
@@ -148,15 +148,15 @@ class rtPluginUpdateChecker {
 
     /**
      * Retrieve plugin info from the configured API endpoint.
-     * 
+     *
      * @uses wp_remote_get()
-     * 
+     *
      * @param array $queryArgs Additional query arguments to append to the request. Optional.
      * @return PluginInfo
      */
 
     /**
-     * 
+     *
      * @param type $queryArgs
      * @return type
      */
@@ -207,18 +207,18 @@ class rtPluginUpdateChecker {
 
     /**
      * Retrieve the latest update (if any) from the configured API endpoint.
-     * 
+     *
      * @uses PluginUpdateChecker::requestInfo()
-     * 
+     *
      * @return PluginUpdate An instance of PluginUpdate, or NULL when no updates are available.
      */
 
     /**
-     * 
+     *
      * @return null
      */
     public function requestUpdate() {
-        //For the sake of simplicity, this function just calls requestInfo() 
+        //For the sake of simplicity, this function just calls requestInfo()
         //and transforms the result accordingly.
         $pluginInfo = $this->requestInfo(array('checking_for_updates' => '1'));
         if ($pluginInfo == null) {
@@ -229,12 +229,12 @@ class rtPluginUpdateChecker {
 
     /**
      * Get the currently installed version of the plugin.
-     * 
+     *
      * @return string Version number.
      */
 
     /**
-     * 
+     *
      * @return null
      */
     public function getInstalledVersion() {
@@ -263,14 +263,14 @@ class rtPluginUpdateChecker {
     }
 
     /**
-     * Check for plugin updates. 
+     * Check for plugin updates.
      * The results are stored in the DB option specified in $optionName.
-     * 
+     *
      * @return PluginUpdate|null
      */
 
     /**
-     * 
+     *
      * @return null
      */
     public function checkForUpdates() {
@@ -295,7 +295,7 @@ class rtPluginUpdateChecker {
 
         $state->lastCheck = time();
         $state->checkedVersion = $installedVersion;
-        $this->setUpdateState($state); //Save before checking in case something goes wrong 
+        $this->setUpdateState($state); //Save before checking in case something goes wrong
 
         $state->update = $this->requestUpdate();
         $this->setUpdateState($state);
@@ -305,12 +305,12 @@ class rtPluginUpdateChecker {
 
     /**
      * Check for updates only if the configured check interval has already elapsed.
-     * 
+     *
      * @return void
      */
 
     /**
-     * 
+     *
      * @return type
      */
     public function maybeCheckForUpdates() {
@@ -331,12 +331,12 @@ class rtPluginUpdateChecker {
 
     /**
      * Load the update checker state from the DB.
-     *  
+     *
      * @return StdClass|null
      */
 
     /**
-     * 
+     *
      * @return null
      */
     public function getUpdateState() {
@@ -353,13 +353,13 @@ class rtPluginUpdateChecker {
 
     /**
      * Persist the update checker state to the DB.
-     * 
+     *
      * @param StdClass $state
      * @return void
      */
 
     /**
-     * 
+     *
      * @param type $state
      */
     private function setUpdateState($state) {
@@ -381,11 +381,11 @@ class rtPluginUpdateChecker {
     }
 
     /**
-     * Intercept plugins_api() calls that request information about our plugin and 
-     * use the configured API endpoint to satisfy them. 
-     * 
+     * Intercept plugins_api() calls that request information about our plugin and
+     * use the configured API endpoint to satisfy them.
+     *
      * @see plugins_api()
-     * 
+     *
      * @param mixed $result
      * @param string $action
      * @param array|object $args
@@ -393,7 +393,7 @@ class rtPluginUpdateChecker {
      */
 
     /**
-     * 
+     *
      * @param type $result
      * @param type $action
      * @param type $args
@@ -416,13 +416,13 @@ class rtPluginUpdateChecker {
 
     /**
      * Insert the latest update (if any) into the update list maintained by WP.
-     * 
+     *
      * @param StdClass $updates Update list.
      * @return StdClass Modified update list.
      */
 
     /**
-     * 
+     *
      * @param StdClass $updates
      * @return \StdClass
      */
@@ -457,7 +457,7 @@ class rtPluginUpdateChecker {
      */
 
     /**
-     * 
+     *
      * @return null
      */
     public function getUpdate() {
@@ -489,7 +489,7 @@ class rtPluginUpdateChecker {
      */
 
     /**
-     * 
+     *
      * @param type $pluginMeta
      * @param type $pluginFile
      * @param type $pluginData
@@ -563,19 +563,19 @@ class rtPluginUpdateChecker {
     }
 
     /**
-     * Register a callback for filtering query arguments. 
-     * 
+     * Register a callback for filtering query arguments.
+     *
      * The callback function should take one argument - an associative array of query arguments.
      * It should return a modified array of query arguments.
-     * 
+     *
      * @uses add_filter() This method is a convenience wrapper for add_filter().
-     * 
+     *
      * @param callable $callback
      * @return void
      */
 
     /**
-     * 
+     *
      * @param type $callback
      */
     public function addQueryArgFilter($callback) {
@@ -584,19 +584,19 @@ class rtPluginUpdateChecker {
 
     /**
      * Register a callback for filtering arguments passed to wp_remote_get().
-     * 
+     *
      * The callback function should take one argument - an associative array of arguments -
      * and return a modified array or arguments. See the WP documentation on wp_remote_get()
-     * for details on what arguments are available and how they work. 
-     * 
+     * for details on what arguments are available and how they work.
+     *
      * @uses add_filter() This method is a convenience wrapper for add_filter().
-     * 
+     *
      * @param callable $callback
      * @return void
      */
 
     /**
-     * 
+     *
      * @param type $callback
      */
     public function addHttpRequestArgFilter($callback) {
@@ -605,22 +605,22 @@ class rtPluginUpdateChecker {
 
     /**
      * Register a callback for filtering the plugin info retrieved from the external API.
-     * 
-     * The callback function should take two arguments. If the plugin info was retrieved 
-     * successfully, the first argument passed will be an instance of  PluginInfo. Otherwise, 
-     * it will be NULL. The second argument will be the corresponding return value of 
+     *
+     * The callback function should take two arguments. If the plugin info was retrieved
+     * successfully, the first argument passed will be an instance of  PluginInfo. Otherwise,
+     * it will be NULL. The second argument will be the corresponding return value of
      * wp_remote_get (see WP docs for details).
-     *  
+     *
      * The callback function should return a new or modified instance of PluginInfo or NULL.
-     * 
+     *
      * @uses add_filter() This method is a convenience wrapper for add_filter().
-     * 
+     *
      * @param callable $callback
      * @return void
      */
 
     /**
-     * 
+     *
      * @param type $callback
      */
     public function addResultFilter($callback) {
@@ -641,7 +641,7 @@ class rtPluginUpdateChecker {
      */
 
     /**
-     * 
+     *
      * @param type $tag
      * @param type $callback
      * @param type $priority
