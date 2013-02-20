@@ -7,7 +7,6 @@ class BPMediaFunction {
     function __construct() {
         add_filter('bp_get_activity_action', array($this, 'conditional_override_allowed_tags'), 1, 2);
         add_action('wp_ajax_my_featured_action', array($this, 'implement_featured_ajax'));
-        add_action('wp_ajax_nopriv_my_featured_action', array($this, 'implement_featured_ajax'));
     }
 
     /**
