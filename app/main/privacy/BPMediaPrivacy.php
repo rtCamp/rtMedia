@@ -24,6 +24,7 @@ class BPMediaPrivacy {
 		$this->settings = $this->get_settings();
 		add_action( 'bp_media_add_media_fields', array( $this, 'ui' ) );
 		add_action( 'bp_media_after_update_media', array( $this, 'save_privacy' ) );
+		add_action( 'wp_ajax_bp_media_privacy_install', 'BPMediaPrivacy::install' );
 	}
 
 	static function check_enabled() {
@@ -201,6 +202,26 @@ class BPMediaPrivacy {
 			4 => sprintf( __( 'This %1s is visible only to %2s&rsquo;s friends', BP_MEDIA_TXT_DOMAIN ), $media_type, $username ),
 			2 => sprintf( __( 'This %s is visible to logged in users, only', BP_MEDIA_TXT_DOMAIN ), $media_type ),
 		);
+	}
+
+	static function install() {
+		$page = $_POST['page'];
+		($page) ? $page : 1;
+		$args = array(
+			'post_type' => array(
+				'attachment',
+				'bp_media_album'
+			),
+			'post_status' => 'any',
+			'posts_per_page' => 20,
+			'paged' => $page,
+			'meta_key'=>'bp-media-key'
+		);
+		$all_media = new WP_Query( $args );
+		foreach ( $all_media->posts as $media ) {
+			update_post_meta( $media->ID, 'bp_media_privacy', 0 );
+		}
+		wp_die($page);
 	}
 
 }

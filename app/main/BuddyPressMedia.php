@@ -139,6 +139,7 @@ class BuddyPressMedia {
 		 */
 		global $bp_media_counter;
 		$bp_media_counter = 0;
+
 	}
 
 	/**
@@ -539,6 +540,8 @@ class BuddyPressMedia {
 					);
 			}
 		}
+
+		BPMediaPrivacy::install();
 	}
 
 	/**
@@ -632,7 +635,6 @@ class BuddyPressMedia {
 			LIKE '{$album_name}' AND ps.post_type='bp_media_album' AND
 				pm.meta_key='bp-media-key' AND pm.meta_value ='{$group_id}'";
 		$wall_albums = $wpdb->get_results( $query, ARRAY_A );
-
 		if ( count( $wall_albums ) > 1 ) {
 			return BuddyPressMedia::merge_duplicate_wall_albums( $wall_albums );
 		} elseif($wall_albums) {

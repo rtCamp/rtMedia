@@ -13,21 +13,20 @@ if ( ! defined( 'ABSPATH' ) )
  */
 class BPMediaQuery {
 
-	/**
-	 *
-	 */
-	var $newfck;
 
-	function init( $type = false, $count = false ) {
+	function __construct( $type = false, $count = false ) {
 		$args = $this->prepare_args( $type, $count );
 		return $this->return_result( $args, $count );
 	}
 
-	function privacy_query( $privacy = 0 ) {
-
+	function privacy_query( ) {
+		$privacy = BPMediaPrivacy::current_access();
+		if($privacy==0)return;
 		return $meta_query = array(
-			'meta_key' => 'bp_media_privacy',
-			'meta_value' => $privacy,
+			'key' => 'bp_media_privacy',
+			'value' => $privacy,
+			'compare'=>'<=',
+			'type'	=> 'NUMERIC'
 		);
 	}
 
@@ -72,10 +71,9 @@ class BPMediaQuery {
 		$post_type = $this->prepare_post_type( $type );
 
 		$mime_type = $this->prepare_mime_type( $type );
-
 		$args = array(
 			'post_type' => $post_type,
-			//'author' => $bp->displayed_user->id,
+			'author' => $bp->displayed_user->id,
 			'post_status' => 'any',
 			'post_mime_type' => $mime_type,
 			'meta_query' => $this->prepare_meta_query(),
@@ -93,8 +91,11 @@ class BPMediaQuery {
 	function get_offset( $limit, $page ) {
 		global $bp;
 		if ( ( bp_is_my_profile() && bp_get_current_group_id() == 0) || groups_is_user_member( $bp->loggedin_user->id, bp_get_current_group_id() ) ) {
-
-			$offset = $limit * ($page - 1) - 1;
+			if($page>1){
+				$offset = $limit * ($page - 1) - 1;
+			}else{
+				$offset = 0;
+			}
 		} else {
 			$offset = $limit * ($page - 1);
 		}

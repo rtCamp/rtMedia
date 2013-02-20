@@ -44,7 +44,7 @@ if (!class_exists('BPMediaAdmin')) {
          */
 
         /**
-         * 
+         *
          * @param type $hook
          */
         public function ui($hook) {
@@ -62,6 +62,7 @@ if (!class_exists('BPMediaAdmin')) {
         public function menu() {
             add_menu_page(__('BuddyPress Media Component', BP_MEDIA_TXT_DOMAIN), __('BuddyPress Media', BP_MEDIA_TXT_DOMAIN), 'manage_options', 'bp-media-settings', array($this, 'settings_page'));
             add_submenu_page('bp-media-settings', __('BuddyPress Media Settings', BP_MEDIA_TXT_DOMAIN), __('Settings', BP_MEDIA_TXT_DOMAIN), 'manage_options', 'bp-media-settings', array($this, 'settings_page'));
+			add_submenu_page('bp-media-settings', __('BuddyPress Media Privacy', BP_MEDIA_TXT_DOMAIN), __('Privacy', BP_MEDIA_TXT_DOMAIN), 'manage_options', 'bp-media-privacy', array($this, 'privacy_page'));
             add_submenu_page('bp-media-settings', __('BuddyPress Media Addons', BP_MEDIA_TXT_DOMAIN), __('Addons', BP_MEDIA_TXT_DOMAIN), 'manage_options', 'bp-media-addons', array($this, 'addons_page'));
             add_submenu_page('bp-media-settings', __('BuddyPress Media Support', BP_MEDIA_TXT_DOMAIN), __('Support ', BP_MEDIA_TXT_DOMAIN), 'manage_options', 'bp-media-support', array($this, 'support_page'));
         }
@@ -71,6 +72,10 @@ if (!class_exists('BPMediaAdmin')) {
          */
         public function settings_page() {
             $this->render_page('bp-media-settings', 'bp_media');
+        }
+
+		public function privacy_page() {
+            $this->render_page('bp-media-privacy', 'bp_media_privacy');
         }
 
         /**
@@ -88,7 +93,7 @@ if (!class_exists('BPMediaAdmin')) {
         }
 
         /**
-         * 
+         *
          * @return type
          */
         static function get_current_tab() {
@@ -102,7 +107,7 @@ if (!class_exists('BPMediaAdmin')) {
          */
 
         /**
-         * 
+         *
          * @param type $page
          * @param type $option_group
          */
@@ -122,7 +127,7 @@ if (!class_exists('BPMediaAdmin')) {
                     <div id="bp-media-settings-boxes">
                         <?php
                         $settings_url = ( is_multisite() ) ? network_admin_url('edit.php?action=' . $option_group) : 'options.php';
-                        ?>
+						?>
                         <form id="bp_media_settings_form" name="bp_media_settings_form" action="<?php echo $settings_url; ?>" method="post" enctype="multipart/form-data">
                             <div class="bp-media-metabox-holder"><?php
             if ($option_group) {
@@ -167,6 +172,7 @@ if (!class_exists('BPMediaAdmin')) {
                 'class' => ($tab == 'bp-media-settings' || $tab == 'bp-media-addons' || $tab == 'bp-media-support') ? $active_class : $idle_class
             );
 
+
             foreach ($tabs as $tab) {
                 $tabs_html.= '<a id="bp-media" title= "' . $tab['title'] . '"  href="' . $tab['href'] . '" class="' . $tab['class'] . '">' . $tab['name'] . '</a>';
             }
@@ -207,9 +213,15 @@ if (!class_exists('BPMediaAdmin')) {
                 'name' => __('Support', BP_MEDIA_TXT_DOMAIN),
                 'class' => ($tab == 'bp-media-support') ? $active_class : $idle_class . ' last_tab'
             );
+			$tabs[] = array(
+                'href' => bp_get_admin_url(add_query_arg(array('page' => 'bp-media-privacy'), 'admin.php')),
+                'title' => __('BuddyPress Media Privacy Installer', BP_MEDIA_TXT_DOMAIN),
+                'name' => __('Privacy Installer', BP_MEDIA_TXT_DOMAIN),
+                'class' => ($tab == 'bp-media-privacy') ? $active_class : $idle_class
+            );
             $tabs = apply_filters('bp_media_add_sub_tabs', $tabs, $tab);
             foreach ($tabs as $tab) {
-                $tabs_html.= '<a title="' . $tab['title'] . '" href="' . $tab['href'] . '" class="' . $tab['class'] . '">' . $tab['name'] . '</a>';
+                $tabs_html.= '<a title="' . $tab['title'] . '" href="' . $tab['href'] . '" class="' . $tab['class'] .' '.sanitize_title($tab['name']). '">' . $tab['name'] . '</a>';
             }
             echo $tabs_html;
         }
@@ -219,12 +231,13 @@ if (!class_exists('BPMediaAdmin')) {
          */
 
         /**
-         * 
+         *
          * @global type $wpdb
          * @return boolean
          */
         public function update_count() {
             global $wpdb;
+
             $query =
                     "SELECT
 		post_author,
@@ -260,7 +273,7 @@ if (!class_exists('BPMediaAdmin')) {
         /* Multisite Save Options - http://wordpress.stackexchange.com/questions/64968/settings-api-in-multisite-missing-update-message#answer-72503 */
 
         /**
-         * 
+         *
          * @global type $bp_media_admin
          */
         public function save_multisite_options() {
@@ -286,7 +299,7 @@ if (!class_exists('BPMediaAdmin')) {
         /* Admin Sidebar */
 
         /**
-         * 
+         *
          * @global type $bp_media
          */
         public function admin_sidebar() {
@@ -309,7 +322,7 @@ if (!class_exists('BPMediaAdmin')) {
                            <!-- Specify details about the contribution -->
                            <input type="hidden" name="item_name" value="BuddyPress Media">
                            <input type="text" name="amount" size="3">
-                           <label><b>' . __('USD', BP_MEDIA_TXT_DOMAIN) . '</b></label>  <br/>                                   
+                           <label><b>' . __('USD', BP_MEDIA_TXT_DOMAIN) . '</b></label>  <br/>
                            <input type="hidden" name="currency_code" value="USD">
                            <!-- Display the payment button. -->
                            <input type="hidden" name="cpp_header_image" value="' . BP_MEDIA_URL . 'app/assets/img/rtcamp-logo.png">
@@ -322,7 +335,7 @@ if (!class_exists('BPMediaAdmin')) {
             new BPMediaAdminWidget('donate', __('Donate', BP_MEDIA_TXT_DOMAIN), $donate);
 
             $branding = '<form action="http://rtcamp.us1.list-manage1.com/subscribe/post?u=85b65c9c71e2ba3fab8cb1950&amp;id=9e8ded4470" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
-                                    <div class="mc-field-group">                                    
+                                    <div class="mc-field-group">
                                     <input type="email" value="' . $current_user->user_email . '" name="EMAIL" placeholder="Email" class="required email" id="mce-EMAIL">
                                     <input style="display:none;" type="checkbox" checked="checked" value="1" name="group[1721][1]" id="mce-group[1721]-1721-0"><label for="mce-group[1721]-1721-0">
                                     <div id="mce-responses" class="clear">

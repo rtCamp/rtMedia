@@ -201,6 +201,19 @@ img.bp-media-donation-image{display:block;margin: 10px auto;}
 #bp-media-upload-set-privacy .album-set-privacy-radio{}
 #bp-media-upload-set-privacy .album-set-privacy-label{margin: 0;font-weight: normal;}
 
+#rtprogressbar {
+  background-color: #444;
+  border-radius: 13px;
+  padding: 3px;
+}
+
+#rtprogressbar div {
+   background-color: #fb6003;
+   width: 0;
+   height: 20px;
+   border-radius: 10px;
+}
+
 @media (min-width: 981px) and (max-width: 1096px) {
     li #bp-media-upload-ui #drag-drop-area{padding: 10px 0;}
 /*    li #bp-media-upload-ui .drag-drop-inside{margin: 0 auto;}*/
