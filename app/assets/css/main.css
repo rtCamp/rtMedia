@@ -125,8 +125,15 @@ ul#social li{display:inline;}
 ul#activity-stream li.media.album_updated ul{}
 ul#activity-stream li.media.album_updated ul li{float: left;margin-right:2%}
 
-.wrap.bp-media-admin .bp-media-settings-tabs a.nav-tab{padding-left:20px;background:url('../img/tab-icon.png')}
+.wrap.bp-media-admin .bp-media-settings-tabs a.nav-tab{padding-left:20px;background:url('../img/tab-icon.png') 3px -4px no-repeat;}
+.wrap.bp-media-admin .bp-media-settings-tabs a.nav-tab.addons{background-position-y:-34px;}
+.wrap.bp-media-admin .bp-media-settings-tabs a.nav-tab.support{background-position-y:-64px;}
+.wrap.bp-media-admin .bp-media-settings-tabs a.nav-tab.privacy-installer{background-position-y:-94px;}
 /* Addons page Styling */
+
+ul#admin-menu li#toplevel_page_bp-media-settings a.toplevel_page_bp-media-settings div.wp-menu-image{
+	background:url('../img/tab-icon.png') left top no-repeat;
+}
 #bp-media-addons-list_metabox {background: #ffffff}
 .products ul:after, ul.products:after {clear: both;content: "";display: block;}
 .products ul, ul.products {clear: both;list-style: none outside none;margin: 0 0 14px;padding: 0;}
