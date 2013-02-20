@@ -357,7 +357,7 @@ class BuddyPressMedia {
 				'filters'	=> false,
 				'actions'	=> false,
 				'function'	=> false,
-				//'privacy'	=>false,
+				'privacy'	=>false,
 			);
 			$class_construct = apply_filters('bpmedia_class_construct',$class_construct);
 

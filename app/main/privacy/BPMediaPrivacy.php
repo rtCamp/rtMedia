@@ -66,9 +66,12 @@ class BPMediaPrivacy {
 			global $bp_media;
 			$options = $bp_media->options;
 			$options['privacy_installed']=true;
-			return update_option('bp_media_options',$options);
+		}else{
+			$options['privacy_installed']=false;
 		}
-		return false;
+
+		update_option('bp_media_options',$options);
+		return $options['privacy_installed'];
 	}
 
 	static function default_privacy() {
