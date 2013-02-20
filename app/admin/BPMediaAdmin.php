@@ -283,8 +283,8 @@ if (!class_exists('BPMediaAdmin')) {
 
             if (isset($_POST['bp_media_options'])) {
                 bp_update_option('bp_media_options', $_POST['bp_media_options']);
-
-                // redirect to settings page in network
+//
+//                // redirect to settings page in network
                 wp_redirect(
                         add_query_arg(
                                 array('page' => 'bp-media-settings', 'updated' => 'true'), (is_multisite() ? network_admin_url('admin.php') : admin_url('admin.php'))

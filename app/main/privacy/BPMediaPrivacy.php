@@ -62,15 +62,15 @@ class BPMediaPrivacy {
 		$total = $total[0]->Total;
 		$finished = $settings->get_completed_count();
 		$finished = $finished[0]->Finished;
-		if($total===$finished){
-			global $bp_media;
+		global $bp_media;
 			$options = $bp_media->options;
+		if($total===$finished){
 			$options['privacy_installed']=true;
 		}else{
 			$options['privacy_installed']=false;
 		}
 
-		update_option('bp_media_options',$options);
+		bp_update_option('bp_media_options',$options);
 		return $options['privacy_installed'];
 	}
 
@@ -247,9 +247,18 @@ class BPMediaPrivacy {
 				'bp_media_album'
 			),
 			'post_status' => 'any',
-			'posts_per_page' => 20,
-			'paged' => $page,
-			'meta_key'=>'bp-media-key'
+			'posts_per_page' => $_POST['count'],
+			'meta_query'=> array(
+				'relation'=>'AND',
+				array(
+					'key'=>'bp-media-key',
+					'compare'=>'EXISTS'
+				),
+				array(
+					'key'=>'bp_media_privacy',
+					'compare'=>'NOT EXISTS'
+				),
+			),
 		);
 		$all_media = new WP_Query( $args );
 		foreach ( $all_media->posts as $media ) {
