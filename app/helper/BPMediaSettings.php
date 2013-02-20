@@ -116,14 +116,15 @@ if ( ! class_exists( 'BPMediaSettings' ) ) {
 					'new_feature' => __( 'Suggest a New Feature', BP_MEDIA_TXT_DOMAIN ),
 					'bug_report' => __( 'Submit a Bug Report', BP_MEDIA_TXT_DOMAIN ) )
 			) );
-			register_setting( 'bp_media', 'bp_media_options', array( $this, 'sanitize' ) );
-			//print_r(BPMediaPrivacy::is_installed());
 			if ( ! BPMediaPrivacy::is_installed() ) {
 				$bp_media_privacy = new BPMediaPrivacySettings();
 				add_filter( 'bp_media_add_sub_tabs', array( $bp_media_privacy, 'ui' ), 99, 2 );
 				add_settings_section( 'bpm-privacy', __( 'BuddyPress Media Privacy Settings', BP_MEDIA_TXT_DOMAIN ), array( $bp_media_privacy, 'init' ), 'bp-media-privacy' );
 				register_setting( 'bp_media_privacy', 'bp_media_privacy_options');
 			}
+			register_setting( 'bp_media', 'bp_media_options', array( $this, 'sanitize' ) );
+			//print_r(BPMediaPrivacy::is_installed());
+
 		}
 
 		public function network_notices() {
@@ -230,12 +231,12 @@ if ( ! class_exists( 'BPMediaSettings' ) ) {
 
 			if ( ! empty( $setting ) ) {
 				$name = $setting . '[' . $option . ']';
-				$options = bp_get_option( $setting );
 			} else
 				$name = $option;
 
 			if ( ! isset( $options[ $option ] ) )
 				$options[ $option ] = '';
+
 			?>
 			<label for="<?php echo $option; ?>">
 				<input<?php checked( $options[ $option ] ); ?> name="<?php echo $name; ?>" id="<?php echo $option; ?>" value="1" type="checkbox" />
@@ -277,7 +278,6 @@ if ( ! class_exists( 'BPMediaSettings' ) ) {
 
 			if ( ! empty( $setting ) ) {
 				$name = $setting . '[' . $option . ']';
-				$options = bp_get_option( $setting );
 			} else
 				$name = $option;
 
@@ -322,7 +322,6 @@ if ( ! class_exists( 'BPMediaSettings' ) ) {
 
 			if ( ! empty( $setting ) ) {
 				$name = $setting . '[' . $option . ']';
-				$options = bp_get_option( $setting );
 			} else
 				$name = $option;
 
@@ -368,7 +367,6 @@ if ( ! class_exists( 'BPMediaSettings' ) ) {
 
 			if ( ! empty( $setting ) ) {
 				$name = $setting . '[' . $option . ']';
-				$options = bp_get_option( $setting );
 			} else
 				$name = $option;
 
