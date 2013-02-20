@@ -74,11 +74,18 @@ jQuery(document).ready(function(){
 	function fireRequest(data) {
 		return jQuery.post(ajaxurl, data, function(response){
 			if(response != 0){
+                                var redirect = false;
 				var progw = Math.ceil((((parseInt(response)*20)+parseInt(data.values['finished']))/parseInt(data.values['total'])) *100);
-				if(progw>100){progw=100};
+				console.log(progw);
+				if(progw>100){progw=100;redirect=true};
 				jQuery('#rtprogressbar>div').css('width',progw+'%');
 				finished = jQuery('#rtprivacyinstaller span.finished').html();
 				jQuery('#rtprivacyinstaller span.finished').html(parseInt(finished)+data.count);
+                                if ( redirect ) {
+                                    jQuery.post(ajaxurl, { action: 'bp_media_privacy_redirect' }, function(response){
+                                        window.location = settings_url;
+                                    });
+                                }
 			} else {
 				jQuery('#map_progress_msgs').html('<div class="map_mapping_failure">Row '+response+' failed.</div>');
 			}

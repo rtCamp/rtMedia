@@ -131,9 +131,18 @@ ul#activity-stream li.media.album_updated ul li{float: left;margin-right:2%}
 .wrap.bp-media-admin .bp-media-settings-tabs a.nav-tab.privacy-installer{background-position-y:-94px;}
 /* Addons page Styling */
 
-ul#admin-menu li#toplevel_page_bp-media-settings a.toplevel_page_bp-media-settings div.wp-menu-image{
-	background:url('../img/tab-icon.png') left top no-repeat;
+a.toplevel_page_bp-media-settings div.wp-menu-image{
+	background:url('../img/admin-menu.png') 0 -32px no-repeat;
 }
+
+#adminmenu .menu-icon-generic.toplevel_page_bp-media-settings div.wp-menu-image{
+	background-position: 0 -32px;
+}
+#adminmenu .menu-icon-generic.wp-has-current-submenu.toplevel_page_bp-media-settings div.wp-menu-image,
+#adminmenu .menu-icon-generic.toplevel_page_bp-media-settings:hover div.wp-menu-image{
+	background-position-y:0;
+}
+
 #bp-media-addons-list_metabox {background: #ffffff}
 .products ul:after, ul.products:after {clear: both;content: "";display: block;}
 .products ul, ul.products {clear: both;list-style: none outside none;margin: 0 0 14px;padding: 0;}
