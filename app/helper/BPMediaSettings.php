@@ -67,32 +67,32 @@ if ( ! class_exists( 'BPMediaSettings' ) ) {
 				'option' => 'download_enabled',
 				'desc' => __( 'Check to display download button under media', BP_MEDIA_TXT_DOMAIN )
 			) );
+			if ( BPMediaPrivacy::is_installed() ) {
+				add_settings_section( 'bpm-privacy', __( 'Privacy', BP_MEDIA_TXT_DOMAIN ), '', 'bp-media-settings' );
+				add_settings_field( 'bpm-privacy-enabled', __( 'Enable Privacy', BP_MEDIA_TXT_DOMAIN ), array( $this, 'checkbox' ), 'bp-media-settings', 'bpm-privacy', array(
+					'setting' => 'bp_media_options',
+					'option' => 'privacy_enabled',
+					'desc' => __( 'Check to enable privacy settings', BP_MEDIA_TXT_DOMAIN )
+				) );
+				add_settings_field( 'bpm-privacy-override-enabled', __( 'User Override', BP_MEDIA_TXT_DOMAIN ), array( $this, 'checkbox' ), 'bp-media-settings', 'bpm-privacy', array(
+					'setting' => 'bp_media_options',
+					'option' => 'privacy_override_enabled',
+					'desc' => __( 'Check to let users set default privacy settings and override the ones below', BP_MEDIA_TXT_DOMAIN )
+				) );
 
-			add_settings_section( 'bpm-privacy', __( 'Privacy', BP_MEDIA_TXT_DOMAIN ), '', 'bp-media-settings' );
-			add_settings_field( 'bpm-privacy-enabled', __( 'Enable Privacy', BP_MEDIA_TXT_DOMAIN ), array( $this, 'checkbox' ), 'bp-media-settings', 'bpm-privacy', array(
-				'setting' => 'bp_media_options',
-				'option' => 'privacy_enabled',
-				'desc' => __( 'Check to enable privacy settings', BP_MEDIA_TXT_DOMAIN )
-			) );
-			add_settings_field( 'bpm-privacy-override-enabled', __( 'User Override', BP_MEDIA_TXT_DOMAIN ), array( $this, 'checkbox' ), 'bp-media-settings', 'bpm-privacy', array(
-				'setting' => 'bp_media_options',
-				'option' => 'privacy_override_enabled',
-				'desc' => __( 'Check to let users set default privacy settings and override the ones below', BP_MEDIA_TXT_DOMAIN )
-			) );
-
-			add_settings_section( 'bpm-privacy-levels', __( 'Default Privacy Levels', BP_MEDIA_TXT_DOMAIN ), '', 'bp-media-settings' );
-			add_settings_field( 'bpm-privacy-private-enabled', __( 'Private', BP_MEDIA_TXT_DOMAIN ), array( $this, 'radio' ), 'bp-media-settings', 'bpm-privacy-levels', array(
-				'setting' => 'bp_media_options',
-				'option' => 'default_privacy_level',
-				'radios' => array(
-					6 => __( 'Check to set media uploaded by user as private, by default', BP_MEDIA_TXT_DOMAIN ),
-					4 => __( 'Check to set media uploaded by user as only visible to friends, by default', BP_MEDIA_TXT_DOMAIN ),
-					2 => __( 'Check to set media uploaded by user as only visible to logged in users, by default', BP_MEDIA_TXT_DOMAIN ),
-					0 => __( 'Check to set media uploaded by user as public, by default', BP_MEDIA_TXT_DOMAIN )
-				),
-				'default' => 0,
-			) );
-
+				add_settings_section( 'bpm-privacy-levels', __( 'Default Privacy Levels', BP_MEDIA_TXT_DOMAIN ), '', 'bp-media-settings' );
+				add_settings_field( 'bpm-privacy-private-enabled', __( 'Private', BP_MEDIA_TXT_DOMAIN ), array( $this, 'radio' ), 'bp-media-settings', 'bpm-privacy-levels', array(
+					'setting' => 'bp_media_options',
+					'option' => 'default_privacy_level',
+					'radios' => array(
+						6 => __( 'Check to set media uploaded by user as private, by default', BP_MEDIA_TXT_DOMAIN ),
+						4 => __( 'Check to set media uploaded by user as only visible to friends, by default', BP_MEDIA_TXT_DOMAIN ),
+						2 => __( 'Check to set media uploaded by user as only visible to logged in users, by default', BP_MEDIA_TXT_DOMAIN ),
+						0 => __( 'Check to set media uploaded by user as public, by default', BP_MEDIA_TXT_DOMAIN )
+					),
+					'default' => 0,
+				) );
+			}
 			add_settings_section( 'bpm-miscellaneous', __( 'Miscellaneous Settings', BP_MEDIA_TXT_DOMAIN ), '', 'bp-media-settings' );
 
 			add_settings_field( 'bpm-admin-bar-menu', __( 'Admin bar menu', BP_MEDIA_TXT_DOMAIN ), array( $this, 'checkbox' ), 'bp-media-settings', 'bpm-miscellaneous', array(
@@ -117,10 +117,13 @@ if ( ! class_exists( 'BPMediaSettings' ) ) {
 					'bug_report' => __( 'Submit a Bug Report', BP_MEDIA_TXT_DOMAIN ) )
 			) );
 			register_setting( 'bp_media', 'bp_media_options', array( $this, 'sanitize' ) );
-
-			$bp_media_privacy = new BPMediaPrivacySettings();
-			add_settings_section( 'bpm-privacy', __( 'BuddyPress Media Privacy Settings', BP_MEDIA_TXT_DOMAIN ), array( $bp_media_privacy, 'init' ), 'bp-media-privacy' );
-			register_setting( 'bp_media', 'bp_media_privacy_options', array( $this, 'sanitize' ) );
+			//print_r(BPMediaPrivacy::is_installed());
+			if ( ! BPMediaPrivacy::is_installed() ) {
+				$bp_media_privacy = new BPMediaPrivacySettings();
+				add_filter( 'bp_media_add_sub_tabs', array( $bp_media_privacy, 'ui' ), 99, 2 );
+				add_settings_section( 'bpm-privacy', __( 'BuddyPress Media Privacy Settings', BP_MEDIA_TXT_DOMAIN ), array( $bp_media_privacy, 'init' ), 'bp-media-privacy' );
+				register_setting( 'bp_media_privacy', 'bp_media_privacy_options');
+			}
 		}
 
 		public function network_notices() {
@@ -192,7 +195,7 @@ if ( ! class_exists( 'BPMediaSettings' ) ) {
 				$input[ 'images_enabled' ] = 1;
 			}
 			if ( is_multisite() )
-				update_site_option( 'bpm-settings-saved', __( 'Settings saved.', BP_MEDIA_FFMPEG_TXT_DOMAIN ) );
+				update_site_option( 'bpm-settings-saved', __( 'Settings saved.', BP_MEDIA_TXT_DOMAIN ) );
 			do_action( 'bp_media_sanitize_settings', $_POST, $input );
 			return $input;
 		}
@@ -238,51 +241,51 @@ if ( ! class_exists( 'BPMediaSettings' ) ) {
 				<input<?php checked( $options[ $option ] ); ?> name="<?php echo $name; ?>" id="<?php echo $option; ?>" value="1" type="checkbox" />
 				<?php echo $desc; ?>
 			</label><?php
+		}
+
+		/**
+		 * Outputs Radio Buttons
+		 *
+		 * @global array $bp_media
+		 * @param array $args
+		 */
+
+		/**
+		 *
+		 * @global array $bp_media
+		 * @param type $args
+		 * @return type
+		 */
+		public function radio( $args ) {
+			global $bp_media;
+			$options = $bp_media->options;
+			$defaults = array(
+				'setting' => '',
+				'option' => '',
+				'radios' => array( ),
+				'default' => '',
+			);
+			$args = wp_parse_args( $args, $defaults );
+			extract( $args );
+			if ( empty( $option ) || ( 2 > count( $radios ) ) ) {
+				if ( empty( $option ) )
+					trigger_error( __( 'Please provide "option" value ( required ) in the argument. Pass argument to add_settings_field in the following format array( \'option\' => \'option_name\' )', BP_MEDIA_TXT_DOMAIN ) );
+				if ( 2 > count( $radios ) )
+					trigger_error( __( 'Need to specify atleast to radios else use a checkbox instead', BP_MEDIA_TXT_DOMAIN ) );
+				return;
 			}
 
-			/**
-			 * Outputs Radio Buttons
-			 *
-			 * @global array $bp_media
-			 * @param array $args
-			 */
+			if ( ! empty( $setting ) ) {
+				$name = $setting . '[' . $option . ']';
+				$options = bp_get_option( $setting );
+			} else
+				$name = $option;
 
-			/**
-			 *
-			 * @global array $bp_media
-			 * @param type $args
-			 * @return type
-			 */
-			public function radio( $args ) {
-				global $bp_media;
-				$options = $bp_media->options;
-				$defaults = array(
-					'setting' => '',
-					'option' => '',
-					'radios' => array( ),
-					'default' => '',
-				);
-				$args = wp_parse_args( $args, $defaults );
-				extract( $args );
-				if ( empty( $option ) || ( 2 > count( $radios ) ) ) {
-					if ( empty( $option ) )
-						trigger_error( __( 'Please provide "option" value ( required ) in the argument. Pass argument to add_settings_field in the following format array( \'option\' => \'option_name\' )', BP_MEDIA_TXT_DOMAIN ) );
-					if ( 2 > count( $radios ) )
-						trigger_error( __( 'Need to specify atleast to radios else use a checkbox instead', BP_MEDIA_TXT_DOMAIN ) );
-					return;
-				}
+			if ( (isset( $options[ $option ] ) && empty( $options[ $option ] )) || ! isset( $options[ $option ] ) ) {
+				$options[ $option ] = $default;
+			}
 
-				if ( ! empty( $setting ) ) {
-					$name = $setting . '[' . $option . ']';
-					$options = bp_get_option( $setting );
-				} else
-					$name = $option;
-
-				if ( (isset( $options[ $option ] ) && empty( $options[ $option ] )) || ! isset( $options[ $option ] ) ) {
-					$options[ $option ] = $default;
-				}
-
-				foreach ( $radios as $value => $desc ) {
+			foreach ( $radios as $value => $desc ) {
 					?>
 				<label for="<?php echo sanitize_title( $desc ); ?>"><input<?php checked( $options[ $option ], $value ); ?> value="<?php echo $value; ?>" name="<?php echo $name; ?>" id="<?php echo sanitize_title( $desc ); ?>" type="radio" /><?php echo $desc; ?></label><br /><?php
 			}
@@ -379,7 +382,7 @@ if ( ! class_exists( 'BPMediaSettings' ) ) {
 			foreach ( $values as $value => $text ) {
 					?>
 					<option<?php selected( $options[ $option ], $value ); ?> value="<?php echo $value; ?>"><?php echo $text; ?></option><?php }
-			?>
+				?>
 			</select><?php
 		}
 
@@ -420,7 +423,6 @@ if ( ! class_exists( 'BPMediaSettings' ) ) {
 		}
 
 		public function ajax_progress_ui() {
-
 
 		}
 
