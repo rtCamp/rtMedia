@@ -47,12 +47,8 @@ class BPMediaActions {
      * @return type
      */
     static function handle_uploads() {
-        global $bp, $bp_media_options;
-        $bp_media_options = get_site_option('bp_media_options', array(
-            'videos_enabled' => true,
-            'audio_enabled' => true,
-            'images_enabled' => true,
-                ));
+        global $bp, $bp_media;
+        $bp_media_options = $bp_media->options;
         if (isset($_POST['action']) && $_POST['action'] == 'wp_handle_upload') {
             /** This section can help in the group activity handling */
 //            if (isset($_POST['bp_media_group_id']) && intval($_POST['bp_media_group_id'])) {
