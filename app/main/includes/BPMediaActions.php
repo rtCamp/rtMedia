@@ -308,12 +308,12 @@ class BPMediaActions {
                     echo '<a href="#" data-album-id="' . $bp_media_current_entry->get_album_id()
                     . '"  data-post-id="' . $bp_media_current_entry->get_id()
                     . '" class="button item-button bp-secondary-action bp-media-featured" title="'
-                    . __('Set Featured', BP_MEDIA_TXT_DOMAIN) . '">' . __('Set Featured', BP_MEDIA_TXT_DOMAIN) . '</a>';
+                    . __('Set as Album Cover', BP_MEDIA_TXT_DOMAIN) . '">' . __('Set as Album Cover', BP_MEDIA_TXT_DOMAIN) . '</a>';
                 else
                     echo '<a href="#" data-album-id="'
                     . $bp_media_current_entry->get_album_id() . '" data-post-id="' . $bp_media_current_entry->get_id()
                     . '" class="button item-button bp-secondary-action bp-media-featured" title="'
-                    . __('Remove Featured', BP_MEDIA_TXT_DOMAIN) . '">' . __('Remove Featured', BP_MEDIA_TXT_DOMAIN) . '</a>';
+                    . __('Unset as Album Cover', BP_MEDIA_TXT_DOMAIN) . '">' . __('Unset as Album Cover', BP_MEDIA_TXT_DOMAIN) . '</a>';
             }
         }
     }
@@ -705,10 +705,10 @@ class BPMediaActions {
         $text = NULL;
         if ($album_cover && ($album_cover == $id)) {
             delete_post_thumbnail($album_id);
-            $text = __('Set Featured', BP_MEDIA_TXT_DOMAIN);
+            $text = __('Set as Album Cover', BP_MEDIA_TXT_DOMAIN);
         } else {
             set_post_thumbnail($album_id, $id);
-            $text = __('Remove Featured', BP_MEDIA_TXT_DOMAIN);
+            $text = __('Unset as Album Cover', BP_MEDIA_TXT_DOMAIN);
         }
         echo $text;
         die;
