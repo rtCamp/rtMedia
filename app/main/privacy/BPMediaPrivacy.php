@@ -30,6 +30,7 @@ class BPMediaPrivacy {
 
 	public function set_option_redirect() {
 		bp_update_option( 'bp_media_privacy_installed', true );
+		do_action('bp_media_after_privacy_install');
 		echo true;
 		die();
 	}
