@@ -134,7 +134,8 @@ ul#activity-stream li.media.album_updated ul li{float: left;margin-right:2%}
 a.toplevel_page_bp-media-settings div.wp-menu-image{
 	background:url('../img/admin-menu.png') 0 -32px no-repeat;
 }
-
+.media ul#bp-media-upload-set-privacy li input[type="radio"]{float:left;}
+#rt-donate-button{vertical-align: middle;}
 #adminmenu .menu-icon-generic.toplevel_page_bp-media-settings div.wp-menu-image{
 	background-position: 0 -32px;
 }

@@ -324,16 +324,14 @@ if (!class_exists('BPMediaAdmin')) {
                            <input type="hidden" name="cmd" value="_donations">
                            <!-- Specify details about the contribution -->
                            <input type="hidden" name="item_name" value="BuddyPress Media">
-                           <input type="text" name="amount" size="3">
-                           <label><b>' . __('USD', BP_MEDIA_TXT_DOMAIN) . '</b></label>  <br/>
+                           <label><b>' . __('USD', BP_MEDIA_TXT_DOMAIN) . '</b></label>
+						   <input type="text" name="amount" size="3">
                            <input type="hidden" name="currency_code" value="USD">
                            <!-- Display the payment button. -->
                            <input type="hidden" name="cpp_header_image" value="' . BP_MEDIA_URL . 'app/assets/img/rtcamp-logo.png">
-                           <input type="image" name="submit" border="0"
-                           src="https://www.paypal.com/en_US/i/btn/btn_donateCC_LG.gif"
+                           <input type="image" id="rt-donate-button" name="submit" border="0"
+                           src="' . BP_MEDIA_URL . 'app/assets/img/paypal-donate-button.png"
                            alt="PayPal - The safer, easier way to pay online">
-                           <img alt="" border="0" width="1" height="1"
-                           src="https://www.paypal.com/en_US/i/scr/pixel.gif" >
                        </form>';
             new BPMediaAdminWidget('donate', __('Donate', BP_MEDIA_TXT_DOMAIN), $donate);
 
