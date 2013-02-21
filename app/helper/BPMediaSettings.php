@@ -81,14 +81,14 @@ if (!class_exists('BPMediaSettings')) {
                 ));
 
                 add_settings_section('bpm-privacy-levels', __('Default Privacy Levels', BP_MEDIA_TXT_DOMAIN), '', 'bp-media-settings');
-                add_settings_field('bpm-privacy-private-enabled', __('Private', BP_MEDIA_TXT_DOMAIN), array($this, 'radio'), 'bp-media-settings', 'bpm-privacy-levels', array(
+                add_settings_field('bpm-privacy-private-enabled', __('Check to set default privacy', BP_MEDIA_TXT_DOMAIN), array($this, 'radio'), 'bp-media-settings', 'bpm-privacy-levels', array(
                     'setting' => 'bp_media_options',
                     'option' => 'default_privacy_level',
                     'radios' => array(
-                        6 => __('Check to set media uploaded by user as private, by default', BP_MEDIA_TXT_DOMAIN),
-                        4 => __('Check to set media uploaded by user as only visible to friends, by default', BP_MEDIA_TXT_DOMAIN),
-                        2 => __('Check to set media uploaded by user as only visible to logged in users, by default', BP_MEDIA_TXT_DOMAIN),
-                        0 => __('Check to set media uploaded by user as public, by default', BP_MEDIA_TXT_DOMAIN)
+                        6 => __('<strong>Private</strong>, Visible only to the user', BP_MEDIA_TXT_DOMAIN),
+                        4 => __('<strong>Friends</strong>, Visible to user\'s friends', BP_MEDIA_TXT_DOMAIN),
+                        2 => __('<strong>Users</strong>, Visible to registered users', BP_MEDIA_TXT_DOMAIN),
+                        0 => __('<strong>Public</strong>, Visible to the world', BP_MEDIA_TXT_DOMAIN)
                     ),
                     'default' => 0,
                 ));
@@ -180,13 +180,13 @@ if (!class_exists('BPMediaSettings')) {
                         add_settings_error(__('Recount Fail', BP_MEDIA_TXT_DOMAIN), 'bpm-recount-fail', __('Recounting Failed', BP_MEDIA_TXT_DOMAIN));
                 }
             }
-            if (!isset($_POST['bp_media_options']['enable_on_profile']) && !isset($_POST['bp_media_options']['enable_on_group'])) {
-                if (is_multisite())
-                    update_site_option('bpm-media-enable', __('Enable BuddyPress Media on either User Profiles or Groups or both. Atleast one should be selected.', BP_MEDIA_TXT_DOMAIN));
-                else
-                    add_settings_error(__('Enable BuddyPress Media', BP_MEDIA_TXT_DOMAIN), 'bpm-media-enable', __('Enable BuddyPress Media on either User Profiles or Groups or both. Atleast one should be selected.', BP_MEDIA_TXT_DOMAIN));
-                $input['enable_on_profile'] = 1;
-            }
+//            if (!isset($_POST['bp_media_options']['enable_on_profile']) && !isset($_POST['bp_media_options']['enable_on_group'])) {
+//                if (is_multisite())
+//                    update_site_option('bpm-media-enable', __('Enable BuddyPress Media on either User Profiles or Groups or both. Atleast one should be selected.', BP_MEDIA_TXT_DOMAIN));
+//                else
+//                    add_settings_error(__('Enable BuddyPress Media', BP_MEDIA_TXT_DOMAIN), 'bpm-media-enable', __('Enable BuddyPress Media on either User Profiles or Groups or both. Atleast one should be selected.', BP_MEDIA_TXT_DOMAIN));
+//                $input['enable_on_profile'] = 1;
+//            }
             if (!isset($_POST['bp_media_options']['videos_enabled']) && !isset($_POST['bp_media_options']['audio_enabled']) && !isset($_POST['bp_media_options']['images_enabled'])) {
                 if (is_multisite())
                     update_site_option('bpm-media-type', __('Atleast one Media Type Must be selected', BP_MEDIA_TXT_DOMAIN));
@@ -420,7 +420,7 @@ if (!class_exists('BPMediaSettings')) {
         }
 
         public function ajax_progress_ui() {
-            
+
         }
 
     }
