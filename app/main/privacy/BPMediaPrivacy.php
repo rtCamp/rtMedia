@@ -97,19 +97,19 @@ class BPMediaPrivacy {
 		return array(
 			6 => array(
 				'private',
-				__( 'Private, Visible only to myself', BP_MEDIA_TXT_DOMAIN )
+				__( '<strong>Private</strong>, Visible only to myself', BP_MEDIA_TXT_DOMAIN )
 			),
 			4 => array(
 				'friends',
-				__( 'Visible to my friends', BP_MEDIA_TXT_DOMAIN )
+				__( '<strong>Friends</strong>, Visible to my friends', BP_MEDIA_TXT_DOMAIN )
 			),
 			2 => array(
 				'users',
-				__( 'Visible to all registered members', BP_MEDIA_TXT_DOMAIN )
+				__( '<strong>Users</strong>, Visible to registered users', BP_MEDIA_TXT_DOMAIN )
 			),
 			0 => array(
 				'public',
-				__( 'Visible to everyone', BP_MEDIA_TXT_DOMAIN )
+				__( '<strong>Public</strong>, Visible to the world', BP_MEDIA_TXT_DOMAIN )
 			)
 		);
 	}
