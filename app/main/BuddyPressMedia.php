@@ -264,7 +264,7 @@ class BuddyPressMedia {
 
 		/* Settings slug */
 		if ( ! defined( 'BP_MEDIA_USER_SETTINGS_SLUG' ) )
-			define( 'BP_MEDIA_USER_SETTINGS_SLUG', 'settings' );
+			define( 'BP_MEDIA_USER_SETTINGS_SLUG', 'privacy' );
 
 		/* UI Labels loaded via text domain, can be translated */
 		if ( ! defined( 'BP_MEDIA_LABEL' ) )
@@ -275,7 +275,7 @@ class BuddyPressMedia {
 			define( 'BP_MEDIA_LABEL_SINGULAR', __( 'Media',
 					$this->text_domain ) );
 		if ( ! defined( 'BP_MEDIA_USER_SETTINGS_LABEL' ) )
-			define( 'BP_MEDIA_USER_SETTINGS_LABEL', __( 'Settings',
+			define( 'BP_MEDIA_USER_SETTINGS_LABEL', __( 'Privacy',
 					$this->text_domain ) );
 
 		if ( ! defined( 'BP_MEDIA_IMAGES_LABEL' ) )
@@ -644,7 +644,7 @@ class BuddyPressMedia {
 			return $wall_albums[ 0 ][ 'ID' ];
 		}
 	}
-	 * 
+	 *
 	 */
 
 	static function merge_duplicate_wall_albums( $wall_albums ) {

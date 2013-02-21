@@ -6,21 +6,19 @@ License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires at least: 3.5
 Tested up to: 3.5
-Stable tag: 2.5.5
+Stable tag: 2.6
 
 Adds Photos, Music, Videos & Albums to your BuddyPress. Supports mobile devices (iPhone/iPad, etc) and automatic audio/video conversion.
 
 == Description ==
 
-BuddyPress Media adds Photos, Music, Videos & Albums to your BuddyPress. Supports mobile devices (iPhone/iPad, etc) and automatic audio/video conversion.
+BuddyPress Media adds advanced multimedia functionality to your BuddyPress powered social network. Users can upload and share photos, music and videos and organise them into albums.
+
+All uploads are shown and added to the
 
 = Important =
 
 BuddyPress Media is now available in **Brazilian Portuguese**, **Spanish** and **Japanese**. Translations for German, Italian, French and Dutch are in progress. BuddyPress Media includes [full translation support](https://rtcamp.com/tutorials/buddypress-media-translation/). Head over to the [translation project](http://rtcamp.com/translate/projects/buddypress-media/) to contribute your translations. If you don't see the language of your choice, let us know in the support forum, we'll add it.
-
-= iOS6 Uploads =
-
-There's a bug in iOS 6, due to which multiple image uploads won't work. It provides all images as image.jpeg which the WordPress uploader (plupload) doesn't like. It assumes that it's got duplicate images and will upload just one.
 
 = Features =
 

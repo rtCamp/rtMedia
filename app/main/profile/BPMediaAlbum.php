@@ -164,8 +164,6 @@ class BPMediaAlbum {
             'post_type' => 'bp_media_album',
             'post_author' => $author_id
         );
-        BPMediaActions::init_count($author_id);
-        global $bp_media_count;
         $album_id = wp_insert_post($post_vars);
         if ($group_id) {
             add_post_meta($album_id, 'bp-media-key', (-$group_id));
@@ -173,8 +171,6 @@ class BPMediaAlbum {
             add_post_meta($album_id, 'bp-media-key', $author_id);
         }
         $this->init($album_id);
-        $bp_media_count['albums'] = intval(isset($bp_media_count['albums']) ? $bp_media_count['albums'] : 0) + 1;
-        bp_update_user_meta($author_id, 'bp_media_count', $bp_media_count);
         do_action('bp_media_after_add_album', $this);
         return $album_id;
     }
