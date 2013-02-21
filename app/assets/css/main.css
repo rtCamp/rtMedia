@@ -129,8 +129,8 @@ ul#activity-stream li.media.album_updated ul li{float: left;margin-right:2%}
 .wrap.bp-media-admin .bp-media-settings-tabs a.nav-tab.addons{background-position-y:-34px;}
 .wrap.bp-media-admin .bp-media-settings-tabs a.nav-tab.support{background-position-y:-64px;}
 .wrap.bp-media-admin .bp-media-settings-tabs a.nav-tab.privacy-installer{background-position-y:-94px;}
-.wrap.bp-media-admin .bp-media-settings-tabs a.nav-tab.ffmpeg{background-position-y:-124px;}
-.wrap.bp-media-admin .bp-media-settings-tabs a.nav-tab.kaltura{background-position-y:-154px;}
+.wrap.bp-media-admin .bp-media-settings-tabs a.nav-tab.ffmpeg{background-position-y:-154px;}
+.wrap.bp-media-admin .bp-media-settings-tabs a.nav-tab.kaltura{background-position-y:-184px;}
 /* Addons page Styling */
 
 a.toplevel_page_bp-media-settings div.wp-menu-image{
