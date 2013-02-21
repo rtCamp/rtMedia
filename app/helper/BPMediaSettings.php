@@ -233,6 +233,7 @@ if (!class_exists('BPMediaSettings')) {
 
             if (!empty($setting)) {
                 $name = $setting . '[' . $option . ']';
+                $options = bp_get_option($setting);
             } else
                 $name = $option;
 
@@ -279,6 +280,7 @@ if (!class_exists('BPMediaSettings')) {
 
             if (!empty($setting)) {
                 $name = $setting . '[' . $option . ']';
+                $options = bp_get_option($setting);
             } else
                 $name = $option;
 
@@ -324,6 +326,7 @@ if (!class_exists('BPMediaSettings')) {
 
             if (!empty($setting)) {
                 $name = $setting . '[' . $option . ']';
+                $options = bp_get_option($setting);
             } else
                 $name = $option;
 
@@ -369,6 +372,7 @@ if (!class_exists('BPMediaSettings')) {
 
             if (!empty($setting)) {
                 $name = $setting . '[' . $option . ']';
+                $options = bp_get_option($setting);
             } else
                 $name = $option;
 
