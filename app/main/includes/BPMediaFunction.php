@@ -1,4 +1,5 @@
 <?php
+
 /**
  *
  */
@@ -6,7 +7,6 @@ class BPMediaFunction {
 
     function __construct() {
         add_filter('bp_get_activity_action', array($this, 'conditional_override_allowed_tags'), 1, 2);
-        add_action('wp_ajax_my_featured_action', array($this, 'implement_featured_ajax'));
     }
 
     /**
@@ -242,17 +242,6 @@ class BPMediaFunction {
     static function wp_comment_form_mod() {
         global $bp_media_current_entry;
         echo '<input type="hidden" name="redirect_to" value="' . $bp_media_current_entry->get_url() . '">';
-    }
-
-    function implement_featured_ajax() {
-        if (isset($_POST['post_id'])) {
-            if (isset($_POST['post_date']) && $_POST['remove_featured'] == 0) {
-                update_post_meta($_POST['post_id'], 'featured', date('Y-m-d H:i:s', strtotime($_POST['post_date'])));
-            } else {
-                update_post_meta($_POST['post_id'], 'featured', FALSE);
-            }
-            die(1);
-        }
     }
 
     /**
