@@ -24,11 +24,10 @@ class BPMediaActions {
         add_action('bp_media_after_delete_media', array($this, 'album_activity_sync'));
         add_action('bp_media_after_add_media', 'BPMediaActions::activity_create_after_add_media', 10, 4);
         add_action('wp_ajax_bp_media_load_more', array($this, 'load_more'));
-//        add_action('wp_ajax_bp_media_get_attachment_html', array($this, 'fetch_feed'), 1);
         add_action('wp_ajax_nopriv_bp_media_load_more', array($this, 'load_more'));
+        add_action('wp_ajax_bp_media_set_album_cover', array($this, 'set_album_cover'));
         add_action('delete_attachment', array($this, 'delete_attachment_handler'));
         add_action('wp_ajax_bp_media_add_album', array($this, 'add_album'));
-        add_action('wp_ajax_nopriv_bp_media_add_album', array($this, 'add_album'));
         $linkback = bp_get_option('bp_media_add_linkback', false);
         if ($linkback)
             add_action('bp_footer', array($this, 'footer'));
@@ -159,8 +158,6 @@ class BPMediaActions {
             'displayed_user' => bp_displayed_user_id(),
             'loggedin_user' => bp_loggedin_user_id(),
             'current_group' => $cur_group_id,
-            'feature' => __('Featured', BP_MEDIA_TXT_DOMAIN),
-            'removefeature' => __('Remove Featured', BP_MEDIA_TXT_DOMAIN)
         );
 
         wp_localize_script('bp-media-default', 'bp_media_vars', $bp_media_vars);
@@ -307,17 +304,16 @@ class BPMediaActions {
                 . __('Download', BP_MEDIA_TXT_DOMAIN) . '">' . __('Download', BP_MEDIA_TXT_DOMAIN) . '</a>';
 
             if (bp_displayed_user_id() == bp_loggedin_user_id()) {
-                if ($featured_post == '')
-                echo '<a href="' . $bp_media_current_entry->get_album_id()
-                . '" rel="" data-album-id="' . $bp_media_current_entry->get_album_id()
-                . '"  data-post-id="' . $bp_media_current_entry->get_id()
-                . '" class="button item-button bp-secondary-action bp-media-featured" title="'
-                . __('Featured Media', BP_MEDIA_TXT_DOMAIN) . '">' . __('Featured', BP_MEDIA_TXT_DOMAIN) . '</a>';
+                if (get_post_thumbnail_id($bp_media_current_entry->get_album_id()) != $bp_media_current_entry->get_id())
+                    echo '<a href="#" data-album-id="' . $bp_media_current_entry->get_album_id()
+                    . '"  data-post-id="' . $bp_media_current_entry->get_id()
+                    . '" class="button item-button bp-secondary-action bp-media-featured" title="'
+                    . __('Set Featured', BP_MEDIA_TXT_DOMAIN) . '">' . __('Set Featured', BP_MEDIA_TXT_DOMAIN) . '</a>';
                 else
-                echo '<a href="' . $bp_media_current_entry->get_album_id() . '" rel="" data-remove-featured="1"   data-album-id="'
-                . $bp_media_current_entry->get_album_id() . '" data-post-id="' . $bp_media_current_entry->get_id()
-                . '" class="button item-button bp-secondary-action bp-media-featured" title="'
-                . __('Featured Media', BP_MEDIA_TXT_DOMAIN) . '">' . __('Remove Featured', BP_MEDIA_TXT_DOMAIN) . '</a>';
+                    echo '<a href="#" data-album-id="'
+                    . $bp_media_current_entry->get_album_id() . '" data-post-id="' . $bp_media_current_entry->get_id()
+                    . '" class="button item-button bp-secondary-action bp-media-featured" title="'
+                    . __('Remove Featured', BP_MEDIA_TXT_DOMAIN) . '">' . __('Remove Featured', BP_MEDIA_TXT_DOMAIN) . '</a>';
             }
         }
     }
@@ -487,18 +483,18 @@ class BPMediaActions {
      */
     function load_more() {
 
-        global $bp, $bp_media_query,$bp_media;
+        global $bp, $bp_media_query, $bp_media;
         $page = isset($_POST['page']) ? $_POST['page'] : die();
         $current_action = isset($_POST['current_action']) ? $_POST['current_action'] : null;
         $action_variables = isset($_POST['action_variables']) ? $_POST['action_variables'] : null;
         $displayed_user = isset($_POST['displayed_user']) ? $_POST['displayed_user'] : null;
         $loggedin_user = isset($_POST['loggedin_user']) ? $_POST['loggedin_user'] : null;
         $current_group = isset($_POST['current_group']) ? $_POST['current_group'] : null;
-		if($current_group){
-			$type_var = isset($action_variables[0])?$action_variables[0]:'';
-		}else{
-			$type_var = $current_action;
-		}
+        if ($current_group) {
+            $type_var = isset($action_variables[0]) ? $action_variables[0] : '';
+        } else {
+            $type_var = $current_action;
+        }
 
         if ((!$displayed_user || intval($displayed_user) == 0) && (!$current_group || intval($current_group) == 0)) {
             die();
@@ -517,9 +513,9 @@ class BPMediaActions {
                 $type = null;
         }
 
-            $query = new BPMediaQuery();
-			$args = $query->init($type,$page);
-			$bp_media_query = new WP_Query($args);
+        $query = new BPMediaQuery();
+        $args = $query->init($type, $page);
+        $bp_media_query = new WP_Query($args);
         if (isset($bp_media_query->posts) && is_array($bp_media_query->posts) && count($bp_media_query->posts)) {
             foreach ($bp_media_query->posts as $attachment) {
                 try {
@@ -700,6 +696,22 @@ class BPMediaActions {
             if (!$update_activity_id)
                 add_post_meta($media->get_id(), 'bp_media_child_activity', $activity_id);
         }
+    }
+
+    public function set_album_cover() {
+        $id = $_POST['post_id'];
+        $album_id = $_POST['album_id'];
+        $album_cover = get_post_thumbnail_id($album_id);
+        $text = NULL;
+        if ($album_cover && ($album_cover == $id)) {
+            delete_post_thumbnail($album_id);
+            $text = __('Set Featured', BP_MEDIA_TXT_DOMAIN);
+        } else {
+            set_post_thumbnail($album_id, $id);
+            $text = __('Remove Featured', BP_MEDIA_TXT_DOMAIN);
+        }
+        echo $text;
+        die;
     }
 
 }
