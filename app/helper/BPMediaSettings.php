@@ -11,6 +11,11 @@ if (!class_exists('BPMediaSettings')) {
 
         public function __construct() {
             add_action('admin_init', array($this, 'settings'));
+			if(is_multisite()){
+				add_action('network_admin_notices',array($this,'privacy_notice'));
+			}else{
+				add_action('admin_notices',array($this,'privacy_notice'));
+			}
         }
 
         /**
@@ -119,11 +124,9 @@ if (!class_exists('BPMediaSettings')) {
             if (!BPMediaPrivacy::is_installed()) {
                 $bp_media_privacy = new BPMediaPrivacySettings();
                 add_filter('bp_media_add_sub_tabs', array($bp_media_privacy, 'ui'), 99, 2);
-                add_settings_section('bpm-privacy', __('BuddyPress Media Privacy Settings', BP_MEDIA_TXT_DOMAIN), array($bp_media_privacy, 'init'), 'bp-media-privacy');
-                register_setting('bp_media_privacy', 'bp_media_privacy_options');
+                add_settings_section('bpm-privacy', __('Update Database', BP_MEDIA_TXT_DOMAIN), array($bp_media_privacy, 'init'), 'bp-media-privacy');
             }
             register_setting('bp_media', 'bp_media_options', array($this, 'sanitize'));
-            //print_r(BPMediaPrivacy::is_installed());
         }
 
         public function network_notices() {
@@ -419,8 +422,19 @@ if (!class_exists('BPMediaSettings')) {
             }
         }
 
-        public function ajax_progress_ui() {
+        public function privacy_notice() {
+			if(BPMediaPrivacy::is_installed()) return;
+			$url = add_query_arg(
+                                array('page' => 'bp-media-privacy'), (is_multisite() ? network_admin_url('admin.php') : admin_url('admin.php'))
+                        );
 
+			$notice= '
+				<div class="error">
+				<p>'.__('BuddyPress Media 2.6 requires a database upgrade. ',BP_MEDIA_TXT_DOMAIN)
+					.'<a href="'.$url.'">'.__('Update Database',BP_MEDIA_TXT_DOMAIN).'.</a></p>
+				</div>
+				';
+			echo $notice;
         }
 
     }

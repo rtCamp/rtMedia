@@ -22,6 +22,7 @@ class BPMediaPrivacy {
 		add_action( 'bp_media_no_object_after_add_media', array( $this, 'save_privacy' ), 99, 2 );
 		add_action( 'wp_ajax_bp_media_privacy_install', 'BPMediaPrivacy::install' );
 		add_action( 'wp_ajax_bp_media_privacy_redirect', array( $this, 'set_option_redirect' ) );
+		add_action( 'bp_has_activities', array( $this, 'activity' ), 10, 2 );
 		if ( BPMediaPrivacy::is_enabled() == false )
 			return;
 		$this->settings = $this->get_settings();
@@ -124,6 +125,7 @@ class BPMediaPrivacy {
 
 	static function ui_html( $privacy_level ) {
 		?>
+		<div id="bp-media-upload-privacy-wrap">
 		<label for="bp-media-upload-set-privacy"><?php _e( 'Set default privacy levels for your media', BP_MEDIA_TXT_DOMAIN ); ?></label>
 		<ul id="bp-media-upload-set-privacy">
 			<?php
@@ -138,6 +140,7 @@ class BPMediaPrivacy {
 			}
 			?>
 		</ul>
+		</div>
 		<?php
 	}
 
@@ -179,6 +182,27 @@ class BPMediaPrivacy {
 		$level = apply_filters( 'bp_media_save_privacy', $level );
 
 		return update_post_meta( $object_id, 'bp_media_privacy', $level );
+	}
+
+	function activity( $a, $activities ) {
+		global $bp_media;
+
+		foreach ( $activities->activities as $key => $activity ) {
+			if ( $activity != null && in_array( $activity->type, $bp_media->activity_types ) ) {
+				$has_access = BPMediaPrivacy::has_access($activity->item_id);
+				if ( !$has_access ) {
+
+					unset( $activities->activities[ $key ] );
+					$activities->activity_count = $activities->activity_count - 1;
+					$activities->total_activity_count = $activities->total_activity_count - 1;
+					$activities->pag_num = $activities->pag_num - 1;
+				}
+			}
+		}
+		$activities_new = array_values( $activities->activities );
+		$activities->activities = $activities_new;
+
+		return $activities;
 	}
 
 	static function save_user_default( $level = 0, $user_id = false ) {

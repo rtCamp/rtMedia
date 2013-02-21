@@ -26,7 +26,7 @@ class BPMediaPrivacySettings {
 		$tabs[] = array(
                 'href' => bp_get_admin_url(add_query_arg(array('page' => 'bp-media-privacy'), 'admin.php')),
                 'title' => __('BuddyPress Media Privacy Installer', BP_MEDIA_TXT_DOMAIN),
-                'name' => __('Privacy Installer', BP_MEDIA_TXT_DOMAIN),
+                'name' => __('Update Database', BP_MEDIA_TXT_DOMAIN),
                 'class' => ($tab == 'bp-media-privacy') ? $active_class : $idle_class
             );
 		return $tabs;
@@ -66,13 +66,15 @@ class BPMediaPrivacySettings {
 		$total = $total[0];
 		$finished = $this->get_completed_count();
 		$finished = $finished[0];
+		
 
 		echo '<div id="rtprivacyinstaller">';
 
 		foreach($total as $type=>$count){
 			echo '<div class="rtprivacytype" id="'.strtolower($type).'">';
-			echo '<strong>'.ucfirst($type).'</strong>: ';
+			echo '<strong>';
 			echo '<span class="finished">'.$finished->Finished .'</span> / <span class="total">'.$count.'</span>';
+			echo '</strong>';
 			$progress =100;
 			if($count!=0){
 				$todo = $count-$finished->Finished;
@@ -90,7 +92,9 @@ class BPMediaPrivacySettings {
 			echo "<br>";
 			echo '</div>';
 		}
-		echo '<button id="rtprivacyinstall" class="button button-primary">Install Privacy</button>';
+		echo '<button id="rtprivacyinstall" class="button button-primary">';
+		_e('Start',BP_MEDIA_TXT_DOMAIN);
+		echo '</button>';
 		echo '</div>';
 	}
 }
