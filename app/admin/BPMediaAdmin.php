@@ -144,7 +144,7 @@ if (!class_exists('BPMediaAdmin')) {
                 do_settings_sections($page);
             }
                         ?>
-                                <div class="rt-link alignright"><?php _e('By', BP_MEDIA_TXT_DOMAIN); ?> <a href="http://rtcamp.com" title="<?php _e('Empowering The Web With WordPress', BP_MEDIA_TXT_DOMAIN); ?>"><?php _e('rtCamp', BP_MEDIA_TXT_DOMAIN); ?></a></div>
+                                <div class="rt-link alignright"><?php _e('By', BP_MEDIA_TXT_DOMAIN); ?> <a href="http://rtcamp.com" title="<?php _e('Empowering The Web With WordPress', BP_MEDIA_TXT_DOMAIN); ?>"><img style="vertical-align:middle" src="<?php echo BP_MEDIA_URL; ?>app/assets/img/rtcamp-logo.png"></a></div>
                             </div>
 
                         </form>
