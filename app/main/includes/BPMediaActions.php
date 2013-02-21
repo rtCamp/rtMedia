@@ -29,6 +29,9 @@ class BPMediaActions {
         add_action('delete_attachment', array($this, 'delete_attachment_handler'));
         add_action('wp_ajax_bp_media_add_album', array($this, 'add_album'));
         add_action('wp_ajax_nopriv_bp_media_add_album', array($this, 'add_album'));
+		add_action('bp_media_no_object_after_add_media', array($this,'update_count'), 99,2);
+		add_action('bp_media_after_update_media', array($this,'update_count'), 99,2);
+		add_action('bp_media_after_delete_media', array($this,'update_count'), 99,1);
         $linkback = bp_get_option('bp_media_add_linkback', false);
         if ($linkback)
             add_action('bp_footer', array($this, 'footer'));
@@ -337,7 +340,9 @@ class BPMediaActions {
      * @return boolean
      */
     static function init_count($user = null) {
-        global $bp_media_count;
+        global $bp_media_count,$bp_media;
+		$enabled = $bp_media->enabled();
+		$current_access = BPMediaPrivacy::current_access();
         if (!$user)
             $user = bp_displayed_user_id();
         if ($user < 1) {
@@ -346,10 +351,37 @@ class BPMediaActions {
         }
         $count = bp_get_user_meta($user, 'bp_media_count', true);
         if (!$count) {
-            $bp_media_count = array('images' => 0, 'videos' => 0, 'audio' => 0, 'albums' => 0);
+            $bp_media_count = array(array('images' => 0, 'videos' => 0, 'audio' => 0, 'albums' => 0));
             bp_update_user_meta($user, 'bp_media_count', $bp_media_count);
         } else {
-            $bp_media_count = $count;
+			$total = array(
+				'images' => 0,
+				'videos' => 0,
+				'audio' => 0,
+				'albums' => 0,
+				'total' => 0
+			);
+			$total_count = 0;
+
+			foreach($count as $level=>$counts){
+				if($level<=$current_access){
+					foreach($counts as $media=>$number){
+						if(array_key_exists($media,$enabled)||array_key_exists($media.'s',$enabled)){
+							if($enabled[$media]){
+								$medias = $media;
+								if($media!='audio')$medias .='s';
+								$total[$medias] = $total[$medias] + $number;
+								if($media!='album'){
+								$total_count = $total_count+$total[$medias];
+								}
+							}
+						}
+					}
+					$total['total']= $total_count;
+				}
+			}
+
+            $bp_media_count = $total;
         }
         add_filter('bp_get_displayed_user_nav_' . BP_MEDIA_SLUG, 'BPMediaFilters::items_count_filter', 10, 2);
 
@@ -361,6 +393,42 @@ class BPMediaActions {
         }
         return true;
     }
+
+	public function update_count() {
+		global $bp;
+		$user_id = $bp->loggedin_user->id;
+            global $wpdb;
+
+            $query =
+                    "SELECT
+		SUM(CASE WHEN post_mime_type LIKE 'image%' THEN 1 ELSE 0 END) as Images,
+		SUM(CASE WHEN post_mime_type LIKE 'audio%' THEN 1 ELSE 0 END) as Audio,
+		SUM(CASE WHEN post_mime_type LIKE 'video%' THEN 1 ELSE 0 END) as Videos,
+		SUM(CASE WHEN post_type LIKE 'bp_media_album' THEN 1 ELSE 0 END) as Albums
+	FROM
+		$wpdb->posts p inner join $wpdb->postmeta  pm on pm.post_id = p.id INNER JOIN $wpdb->postmeta pmp
+		on pmp.post_id = p.id  WHERE
+		p.post_author = $user_id AND
+		pm.meta_key = 'bp-media-key' AND
+		pm.meta_value > 0 AND
+		pmp.meta_key = 'bp_media_privacy' AND
+		( post_mime_type LIKE 'image%' OR post_mime_type LIKE 'audio%' OR post_mime_type LIKE 'video%' OR post_type LIKE 'bp_media_album')
+	GROUP BY pmp.meta_value";
+            $result = $wpdb->get_results($query);
+			 if (!is_array($result))
+                return false;
+            foreach ($result as $level=>$obj) {
+				$formatted[$level] = array(
+					'image'=>$obj->Images,
+					'video'=>$obj->Videos,
+					'audio'=>$obj->Audio,
+					'album'=>$obj->Albums,
+				);
+			}
+            bp_update_user_meta($user_id, 'bp_media_count', $formatted);
+            return true;
+        }
+
 
     /**
      * Displays the footer of the BuddyPress Media Plugin if enabled through the dashboard options page

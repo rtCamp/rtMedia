@@ -18,8 +18,8 @@ class BPMediaPrivacy {
 	 *
 	 */
 	function __construct() {
-		add_action( 'bp_media_after_update_media', array( $this, 'save_privacy' ) );
-		add_action( 'bp_media_after_add_media', array( $this, 'add_privacy' ),99,4 );
+		add_action( 'bp_media_after_update_media', array( $this, 'save_privacy' ), 99, 2 );
+		add_action( 'bp_media_no_object_after_add_media', array( $this, 'save_privacy' ), 99, 2 );
 		add_action( 'wp_ajax_bp_media_privacy_install', 'BPMediaPrivacy::install' );
 		add_action( 'wp_ajax_bp_media_privacy_redirect', array( $this, 'set_option_redirect' ) );
 		if ( BPMediaPrivacy::is_enabled() == false )
@@ -71,9 +71,9 @@ class BPMediaPrivacy {
 		global $bp_media;
 		$options = $bp_media->options;
 		if ( array_key_exists( 'privacy_enabled', $options ) ) {
-			if ( array_key_exists( 'default_privacy_level', $options ) ){
-						$site_privacy = $options['default_privacy_level'];
-					}
+			if ( array_key_exists( 'default_privacy_level', $options ) ) {
+				$site_privacy = $options[ 'default_privacy_level' ];
+			}
 		}
 		return $site_privacy;
 	}
@@ -83,9 +83,9 @@ class BPMediaPrivacy {
 		$options = $bp_media->options;
 		$default_privacy = false;
 		$default_privacy = BPMediaPrivacy::get_site_default();
-		if(array_key_exists( 'privacy_override_enabled', $options )){
+		if ( array_key_exists( 'privacy_override_enabled', $options ) ) {
 			$user_default_privacy = BPMediaPrivacy::get_user_default();
-			if($user_default_privacy!==false){
+			if ( $user_default_privacy !== false ) {
 				$default_privacy = $user_default_privacy;
 			}
 		}
@@ -140,18 +140,27 @@ class BPMediaPrivacy {
 		<?php
 	}
 
-	function add_privacy($object,$is_multiple, $is_activity, $group){
-		$id = $object->get_id();
-		$this->save_privacy($id);
-	}
+	function save_privacy( $object_id, $type ) {
 
-	function save_privacy( $object_id ) {
-
-		$level = isset($_POST[ 'bp_media_privacy' ])?$_POST[ 'bp_media_privacy' ]:false;
+		$level = isset( $_POST[ 'bp_media_privacy' ] ) ? $_POST[ 'bp_media_privacy' ] : false;
 		if ( ! $level ) {
 			$level = BPMediaPrivacy::default_privacy();
 		}
 		$this->save( $level, $object_id );
+		if($type=='album'){
+			$args = array(
+				'post_type'=> 'attachment',
+				'post_parent'=> $object_id,
+				'post_status'=> 'any',
+				'posts_per_page'=> -1
+			);
+
+			$child_query = new WP_Query($args);
+			$children = $child_query->posts;
+			foreach($children as $child){
+				$this->save( $level, $child->ID );
+			}
+		}
 	}
 
 	function save( $level = 0, $object_id = false ) {
@@ -185,11 +194,10 @@ class BPMediaPrivacy {
 			$user_id = $bp->loggedin_user->id;
 		}
 		$user_privacy = get_user_meta( $user_id, 'bp_media_privacy', true );
-		if($user_privacy===false){
+		if ( $user_privacy === false ) {
 
 		}
 		return $user_privacy;
-
 	}
 
 	static function required_access( $object_id = false ) {
@@ -198,17 +206,14 @@ class BPMediaPrivacy {
 		if ( $object_id == false )
 			return;
 		$privacy = get_post_meta( $object_id, 'bp_media_privacy', true );
+		$parent = get_post_field( 'post_parent', $object_id, 'raw' );
+		$parent_privacy = get_post_meta( $parent, 'bp_media_privacy', true );
 
-		if ( $privacy == false ) {
-			$privacy = BPMediaPrivacy::get_user_default();
-			if ( $privacy == false ) {
-				global $bp_media;
-				$options = $bp_media->options;
-				if ( array_key_exists( 'default_privacy_level', $options ) ) {
-					$privacy = $options[ 'default_privacy_level' ];
-				} else {
-					$privacy == 0;
-				}
+		if ( $privacy === false ) {
+			if($parent_privacy!==false){
+				$privacy = $parent_privacy;
+			}else{
+				$privacy = BPMediaPrivacy::default_privacy();
 			}
 		}
 		return $privacy;
@@ -223,13 +228,13 @@ class BPMediaPrivacy {
 			if ( bp_is_my_profile() ) {
 				$current_privacy = 6;
 			}
-
-			if ( ! (bp_is_my_profile()) && bp_get_current_group_id() == 0 ) {
-				$is_friend = friends_check_friendship_status( $bp->loggedin_user->id, $bp->displayed_user->id );
-				if ( $is_friend != 'is_friend' ) {
-					$current_privacy = 4;
+			if ( isset( $bp->displayed_user->id ) )
+				if ( ! (bp_is_my_profile()) && bp_get_current_group_id() == 0 ) {
+					$is_friend = friends_check_friendship_status( $bp->loggedin_user->id, $bp->displayed_user->id );
+					if ( $is_friend != 'is_friend' ) {
+						$current_privacy = 4;
+					}
 				}
-			}
 		}
 
 		return $current_privacy;

@@ -241,32 +241,34 @@ if (!class_exists('BPMediaAdmin')) {
 
             $query =
                     "SELECT
-		post_author,
+		p.post_author,pmp.meta_value,
 		SUM(CASE WHEN post_mime_type LIKE 'image%' THEN 1 ELSE 0 END) as Images,
 		SUM(CASE WHEN post_mime_type LIKE 'audio%' THEN 1 ELSE 0 END) as Audio,
 		SUM(CASE WHEN post_mime_type LIKE 'video%' THEN 1 ELSE 0 END) as Videos,
-		SUM(CASE WHEN post_type LIKE 'bp_media_album' THEN 1 ELSE 0 END) as Albums,
-		COUNT(*) as Total
+		SUM(CASE WHEN post_type LIKE 'bp_media_album' THEN 1 ELSE 0 END) as Albums
 	FROM
-		$wpdb->posts RIGHT JOIN $wpdb->postmeta on wp_postmeta.post_id = wp_posts.id
-	WHERE
-		`meta_key` = 'bp-media-key' AND
-		`meta_value` > 0 AND
+		$wpdb->posts p inner join $wpdb->postmeta  pm on pm.post_id = p.id INNER JOIN $wpdb->postmeta pmp
+	on pmp.post_id = p.id  WHERE
+		pm.meta_key = 'bp-media-key' AND
+		pm.meta_value > 0 AND
+		pmp.meta_key = 'bp_media_privacy' AND
 		( post_mime_type LIKE 'image%' OR post_mime_type LIKE 'audio%' OR post_mime_type LIKE 'video%' OR post_type LIKE 'bp_media_album')
-	GROUP BY post_author";
+	GROUP BY p.post_author,pmp.meta_value order by p.post_author";
             $result = $wpdb->get_results($query);
-            if (!is_array($result))
+			 if (!is_array($result))
                 return false;
-
+			 $formatted = array();
             foreach ($result as $obj) {
+				$formatted[$obj->post_author][$obj->meta_value] = array(
+					'image'=>$obj->Images,
+					'video'=>$obj->Videos,
+					'audio'=>$obj->Audio,
+					'album'=>$obj->Albums,
+				);
+			}
 
-                $count = array(
-                    'images' => isset($obj->Images) ? $obj->Images : 0,
-                    'videos' => isset($obj->Videos) ? $obj->Videos : 0,
-                    'audio' => isset($obj->Audio) ? $obj->Audio : 0,
-                    'albums' => isset($obj->Albums) ? $obj->Albums : 0
-                );
-                bp_update_user_meta($obj->post_author, 'bp_media_count', $count);
+            foreach ($formatted as $user=>$obj) {
+                bp_update_user_meta($user, 'bp_media_count', $obj);
             }
             return true;
         }
