@@ -628,6 +628,7 @@ class BuddyPressMedia {
 		return $defaults_tab;
 	}
 
+	/*
 	static function get_wall_album( $group_id = false ) {
 		global $wpdb;
 		$group_id = ( ! $group_id) ? '1' : $group_id;
@@ -643,6 +644,8 @@ class BuddyPressMedia {
 			return $wall_albums[ 0 ][ 'ID' ];
 		}
 	}
+	 * 
+	 */
 
 	static function merge_duplicate_wall_albums( $wall_albums ) {
 		global $wpdb;

@@ -150,7 +150,6 @@ class BPMediaHostWordpress {
             'post_content' => $content,
             'post_parent' => $post_id,
         );
-        BPMediaActions::init_count(bp_loggedin_user_id());
         switch ($type) {
             case 'video/mp4' :
             case 'video/quicktime' :
@@ -181,7 +180,6 @@ class BPMediaHostWordpress {
                     $activity_content = false;
                     throw new Exception(__('The MP4 file you have uploaded is not a video file.', BP_MEDIA_TXT_DOMAIN));
                 }
-                $bp_media_count['videos'] = intval($bp_media_count['videos']) + 1;
                 break;
             case 'audio/mpeg' :
                 include_once(trailingslashit(BP_MEDIA_PATH) . 'lib/getid3/getid3.php');
@@ -211,13 +209,11 @@ class BPMediaHostWordpress {
                     throw new Exception(__('The MP3 file you have uploaded is not an audio file.', BP_MEDIA_TXT_DOMAIN));
                 }
                 $type = 'audio';
-                $bp_media_count['audio'] = intval($bp_media_count['audio']) + 1;
                 break;
             case 'image/gif' :
             case 'image/jpeg' :
             case 'image/png' :
                 $type = 'image';
-                $bp_media_count['images'] = intval($bp_media_count['images']) + 1;
                 break;
             default :
                 unlink($file);
@@ -241,11 +237,11 @@ class BPMediaHostWordpress {
         $this->set_permalinks();
         if ($group == 0) {
             update_post_meta($attachment_id, 'bp-media-key', get_current_user_id());
-            bp_update_user_meta(bp_loggedin_user_id(), 'bp_media_count', $bp_media_count);
         } else {
             update_post_meta($attachment_id, 'bp-media-key', (-$group));
         }
         do_action('bp_media_after_add_media', $this, $is_multiple, $is_activity, $group);
+		do_action('bp_media_no_object_after_add_media', $this->id, $this->type);
         return $attachment_id;
     }
 
@@ -651,21 +647,7 @@ class BPMediaHostWordpress {
      */
     function delete_media() {
         do_action('bp_media_before_delete_media', $this->id);
-        global $bp_media_count;
-        BPMediaActions::init_count($this->owner);
-        switch ($this->type) {
-            case 'image':
-                $bp_media_count['images'] = intval($bp_media_count['images']) - 1;
-                break;
-            case 'video':
-                $bp_media_count['videos'] = intval($bp_media_count['videos']) - 1;
-                break;
-            case 'audio':
-                $bp_media_count['audio'] = intval($bp_media_count['audio']) - 1;
-                break;
-        }
         wp_delete_attachment($this->id, true);
-        bp_update_user_meta($this->owner, 'bp_media_count', $bp_media_count);
         do_action('bp_media_after_delete_media', $this->id);
     }
 

@@ -72,12 +72,15 @@ class BPMediaQuery {
 		$mime_type = $this->prepare_mime_type( $type );
 		$args = array(
 			'post_type' => $post_type,
-			'author' => $bp->displayed_user->id,
 			'post_status' => 'any',
 			'post_mime_type' => $mime_type,
 			'meta_query' => $this->prepare_meta_query(),
 			'posts_per_page' => -1
 		);
+
+		if(!bp_is_groups_component()){
+			$args['author'] = $bp->displayed_user->id;
+		}
 
 		if ( $count == false ) {
 			$args[ 'posts_per_page' ] = $bp_media->default_count();
