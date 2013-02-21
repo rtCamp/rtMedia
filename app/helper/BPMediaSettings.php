@@ -25,7 +25,7 @@ if (!class_exists('BPMediaSettings')) {
          */
         public function settings() {
             global $bp_media_addon;
-            add_settings_section('bpm-media-type', __('Enable BuddyPress Media on', BP_MEDIA_TXT_DOMAIN), '', 'bp-media-settings');
+            add_settings_section('bpm-media-type', __('Activate BuddyPress Media', BP_MEDIA_TXT_DOMAIN), '', 'bp-media-settings');
 //            add_settings_field('bpm-admin-profile', __('User profiles', BP_MEDIA_TXT_DOMAIN), array($this, 'checkbox'), 'bp-media-settings', 'bpm-media-type', array(
 //                'setting' => 'bp_media_options',
 //                'option' => 'enable_on_profile',
@@ -35,25 +35,25 @@ if (!class_exists('BPMediaSettings')) {
             add_settings_field('bpm-admin-group', __('Groups', BP_MEDIA_TXT_DOMAIN), array($this, 'checkbox'), 'bp-media-settings', 'bpm-media-type', array(
                 'setting' => 'bp_media_options',
                 'option' => 'enable_on_group',
-                'desc' => __('Check to enable BuddyPress Media in Groups', BP_MEDIA_TXT_DOMAIN)
+                'desc' => __('Enable BuddyPress Media in Groups', BP_MEDIA_TXT_DOMAIN)
                     )
             );
 
-            add_settings_section('bpm-settings', __('Enable Media Types on', BP_MEDIA_TXT_DOMAIN), is_multisite() ? array($this, 'network_notices') : '', 'bp-media-settings');
+            add_settings_section('bpm-settings', __('Enabled Media Types', BP_MEDIA_TXT_DOMAIN), is_multisite() ? array($this, 'network_notices') : '', 'bp-media-settings');
             add_settings_field('bpm-video', __('Video', BP_MEDIA_TXT_DOMAIN), array($this, 'checkbox'), 'bp-media-settings', 'bpm-settings', array(
                 'setting' => 'bp_media_options',
                 'option' => 'videos_enabled',
-                'desc' => __('Check to enable video upload functionality', BP_MEDIA_TXT_DOMAIN)
+                'desc' => __('Enable videos', BP_MEDIA_TXT_DOMAIN)
             ));
             add_settings_field('bpm-audio', __('Audio', BP_MEDIA_TXT_DOMAIN), array($this, 'checkbox'), 'bp-media-settings', 'bpm-settings', array(
                 'setting' => 'bp_media_options',
                 'option' => 'audio_enabled',
-                'desc' => __('Check to enable audio upload functionality', BP_MEDIA_TXT_DOMAIN)
+                'desc' => __('Enable audio', BP_MEDIA_TXT_DOMAIN)
             ));
             add_settings_field('bpm-image', __('Images', BP_MEDIA_TXT_DOMAIN), array($this, 'checkbox'), 'bp-media-settings', 'bpm-settings', array(
                 'setting' => 'bp_media_options',
                 'option' => 'images_enabled',
-                'desc' => __('Check to enable images upload functionality', BP_MEDIA_TXT_DOMAIN)
+                'desc' => __('Enable images', BP_MEDIA_TXT_DOMAIN)
             ));
 
             add_settings_section('bpm-media-fine', __('Media Display', BP_MEDIA_TXT_DOMAIN), '', 'bp-media-settings');
@@ -62,26 +62,26 @@ if (!class_exists('BPMediaSettings')) {
                 'option' => 'default_count',
                 'desc' => __('No. of media items displayed per view (defaults to 10)', BP_MEDIA_TXT_DOMAIN)
             ));
-            add_settings_field('bpm-download', __('Download', BP_MEDIA_TXT_DOMAIN), array($this, 'checkbox'), 'bp-media-settings', 'bpm-media-fine', array(
+            add_settings_field('bpm-download', __('Download Button', BP_MEDIA_TXT_DOMAIN), array($this, 'checkbox'), 'bp-media-settings', 'bpm-media-fine', array(
                 'setting' => 'bp_media_options',
                 'option' => 'download_enabled',
-                'desc' => __('Check to display download button under media', BP_MEDIA_TXT_DOMAIN)
+                'desc' => __('Display download button under media', BP_MEDIA_TXT_DOMAIN)
             ));
             if (BPMediaPrivacy::is_installed()) {
                 add_settings_section('bpm-privacy', __('Privacy', BP_MEDIA_TXT_DOMAIN), '', 'bp-media-settings');
                 add_settings_field('bpm-privacy-enabled', __('Enable Privacy', BP_MEDIA_TXT_DOMAIN), array($this, 'checkbox'), 'bp-media-settings', 'bpm-privacy', array(
                     'setting' => 'bp_media_options',
                     'option' => 'privacy_enabled',
-                    'desc' => __('Check to enable privacy settings', BP_MEDIA_TXT_DOMAIN)
-                ));
-                add_settings_field('bpm-privacy-override-enabled', __('User Override', BP_MEDIA_TXT_DOMAIN), array($this, 'checkbox'), 'bp-media-settings', 'bpm-privacy', array(
-                    'setting' => 'bp_media_options',
-                    'option' => 'privacy_override_enabled',
-                    'desc' => __('Check to let users set default privacy settings and override the ones below', BP_MEDIA_TXT_DOMAIN)
+                    'desc' => __('Enable privacy', BP_MEDIA_TXT_DOMAIN)
                 ));
 
                 add_settings_section('bpm-privacy-levels', __('Default Privacy Levels', BP_MEDIA_TXT_DOMAIN), '', 'bp-media-settings');
-                add_settings_field('bpm-privacy-private-enabled', __('Check to set default privacy', BP_MEDIA_TXT_DOMAIN), array($this, 'radio'), 'bp-media-settings', 'bpm-privacy-levels', array(
+                add_settings_field('bpm-privacy-override-enabled', __('User Override', BP_MEDIA_TXT_DOMAIN), array($this, 'checkbox'), 'bp-media-settings', 'bpm-privacy-levels', array(
+                    'setting' => 'bp_media_options',
+                    'option' => 'privacy_override_enabled',
+                    'desc' => __('Allow users to set privacy and override the defaults', BP_MEDIA_TXT_DOMAIN)
+                ));
+				add_settings_field('bpm-privacy-private-enabled', __('Default Privacy', BP_MEDIA_TXT_DOMAIN), array($this, 'radio'), 'bp-media-settings', 'bpm-privacy-levels', array(
                     'setting' => 'bp_media_options',
                     'option' => 'default_privacy_level',
                     'radios' => array(
@@ -98,7 +98,7 @@ if (!class_exists('BPMediaSettings')) {
             add_settings_field('bpm-admin-bar-menu', __('Admin bar menu', BP_MEDIA_TXT_DOMAIN), array($this, 'checkbox'), 'bp-media-settings', 'bpm-miscellaneous', array(
                 'setting' => 'bp_media_options',
                 'option' => 'show_admin_menu',
-                'desc' => __('Check to enable menu in WordPress admin bar', BP_MEDIA_TXT_DOMAIN)
+                'desc' => __('Enable menu in WordPress admin bar', BP_MEDIA_TXT_DOMAIN)
                     )
             );
             add_settings_field('bpm-other-settings', __('Re-Count Media Entries', BP_MEDIA_TXT_DOMAIN), array($this, 'button'), 'bp-media-settings', 'bpm-miscellaneous', array(
