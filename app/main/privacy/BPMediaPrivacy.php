@@ -256,7 +256,7 @@ class BPMediaPrivacy {
 			if ( isset( $bp->displayed_user->id ) )
 				if ( ! (bp_is_my_profile()) && bp_get_current_group_id() == 0 ) {
 					$is_friend = friends_check_friendship_status( $bp->loggedin_user->id, $bp->displayed_user->id );
-					if ( $is_friend != 'is_friend' ) {
+					if ( $is_friend == 'is_friend' ) {
 						$current_privacy = 4;
 					}
 				}
