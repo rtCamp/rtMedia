@@ -25,7 +25,7 @@ class BPMediaPrivacySettings {
         $active_class = 'nav-tab nav-tab-active';
 		$tabs[] = array(
                 'href' => bp_get_admin_url(add_query_arg(array('page' => 'bp-media-privacy'), 'admin.php')),
-                'title' => __('BuddyPress Media Privacy Installer', BP_MEDIA_TXT_DOMAIN),
+                'title' => __('Update BuddyPress Media Database', BP_MEDIA_TXT_DOMAIN),
                 'name' => __('Update Database', BP_MEDIA_TXT_DOMAIN),
                 'class' => ($tab == 'bp-media-privacy') ? $active_class : $idle_class
             );
@@ -66,7 +66,7 @@ class BPMediaPrivacySettings {
 		$total = $total[0];
 		$finished = $this->get_completed_count();
 		$finished = $finished[0];
-		
+
 
 		echo '<div id="rtprivacyinstaller">';
 

@@ -66,8 +66,8 @@ if (!class_exists('BPMediaAdmin')) {
         public function menu() {
             add_menu_page(__('BuddyPress Media Component', BP_MEDIA_TXT_DOMAIN), __('BuddyPress Media', BP_MEDIA_TXT_DOMAIN), 'manage_options', 'bp-media-settings', array($this, 'settings_page'));
             add_submenu_page('bp-media-settings', __('BuddyPress Media Settings', BP_MEDIA_TXT_DOMAIN), __('Settings', BP_MEDIA_TXT_DOMAIN), 'manage_options', 'bp-media-settings', array($this, 'settings_page'));
-            if (!BPMediaPrivacy::is_installed()) {
-                add_submenu_page('bp-media-settings', __('BuddyPress Media Privacy', BP_MEDIA_TXT_DOMAIN), __('Privacy Installer', BP_MEDIA_TXT_DOMAIN), 'manage_options', 'bp-media-privacy', array($this, 'privacy_page'));
+            if ( ! BPMediaPrivacy::is_installed() ) {
+                    add_submenu_page('bp-media-settings', __('BuddyPress Media Database Update', BP_MEDIA_TXT_DOMAIN), __('Update Database', BP_MEDIA_TXT_DOMAIN), 'manage_options', 'bp-media-privacy', array($this, 'privacy_page'));
             }
             add_submenu_page('bp-media-settings', __('BuddyPress Media Addons', BP_MEDIA_TXT_DOMAIN), __('Addons', BP_MEDIA_TXT_DOMAIN), 'manage_options', 'bp-media-addons', array($this, 'addons_page'));
             add_submenu_page('bp-media-settings', __('BuddyPress Media Support', BP_MEDIA_TXT_DOMAIN), __('Support ', BP_MEDIA_TXT_DOMAIN), 'manage_options', 'bp-media-support', array($this, 'support_page'));
