@@ -137,6 +137,7 @@ if (!class_exists('BPMediaSettings')) {
             get_currentuserinfo();
             ?>
             <div id="video-transcoding-main-container">
+            <h2>Survey</h2>
             <p class="para-blockquote">We are planning an encoding service where you can convert videos without having to install/configure anything on your server.</p>
             <h3>Would you be interested?</h3>
             <label><input class="interested" name="interested" type="radio" value="Yes" required="required" /> Yes</label>&nbsp;&nbsp;&nbsp;
