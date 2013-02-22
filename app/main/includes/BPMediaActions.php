@@ -307,7 +307,7 @@ class BPMediaActions {
                 . '" class="button item-button bp-secondary-action bp-media-download" title="'
                 . __('Download', BP_MEDIA_TXT_DOMAIN) . '">' . __('Download', BP_MEDIA_TXT_DOMAIN) . '</a>';
 
-            if (bp_displayed_user_id() == bp_loggedin_user_id()) {
+            if ((bp_displayed_user_id() == bp_loggedin_user_id()) && ($bp_media_current_entry->get_type() == 'image')) {
                 if (get_post_thumbnail_id($bp_media_current_entry->get_album_id()) != $bp_media_current_entry->get_id())
                     echo '<a href="#" data-album-id="' . $bp_media_current_entry->get_album_id()
                     . '"  data-post-id="' . $bp_media_current_entry->get_id()
