@@ -30,212 +30,103 @@ if ( ! class_exists( 'BPMediaWidget' ) ) {
 		function widget( $args, $instance ) {
 			extract( $args );
 			$title = apply_filters( 'widget_title', empty( $instance[ 'title' ] ) ? __( 'BuddyPress Media', BP_MEDIA_TXT_DOMAIN ) : $instance[ 'title' ], $instance, $this->id_base );
-
-			if ( empty( $instance[ 'number' ] ) || ! $number = absint( $instance[ 'number' ] ) )
+			$allow= array();
+			$allowed = array( );
+			if ( empty( $instance[ 'number' ] ) || ! $number = absint( $instance[ 'number' ] ) ) {
 				$number = 10;
+			}
 			$wdType = isset( $instance[ 'wdType' ] ) ? esc_attr( $instance[ 'wdType' ] ) : 'recent';
-			$allowAudio = isset( $instance[ 'allow_audio' ] ) ? (bool) $instance[ 'allow_audio' ] : true;
-			$allowVideo = isset( $instance[ 'allow_video' ] ) ? (bool) $instance[ 'allow_video' ] : true;
-			$allowImage = isset( $instance[ 'allow_image' ] ) ? (bool) $instance[ 'allow_image' ] : true;
-			$allowAll = isset( $instance[ 'allow_all' ] ) ? (bool) $instance[ 'allow_all' ] : true;
-			$allowMimeType = array( );
-			echo $before_widget;
+			if(isset( $instance[ 'allow_all' ] ) && (bool)$instance[ 'allow_all' ]===true)$allow[]='all';
+			if(isset( $instance[ 'allow_image' ] ) && (bool)$instance[ 'allow_image' ]===true)$allow[]='image';
+			if(isset( $instance[ 'allow_audio' ] ) && (bool)$instance[ 'allow_audio' ]===true)$allow[]='audio';
+			if(isset( $instance[ 'allow_video' ] ) && (bool)$instance[ 'allow_video' ]===true)$allow[]='video';
+
+			global $bp_media;
+			$enabled = $bp_media->enabled();
+			unset($enabled['album']);unset($enabled['upload']);
+			foreach($allow as $type){
+
+				if($type!='all'){
+					echo '<br>';
+					if($enabled[$type]){
+						$allowed[]= $type;
+					}
+				}else{
+					$allowed[]=$type;
+				}
+			}
 			echo $before_title . $title . $after_title;
 			if ( $wdType == "popular" ) {
 				$orderby = 'comment_count';
 			} else {
 				$orderby = 'date';
 			}
+
+			$strings = array(
+				'all' => __( 'All', BP_MEDIA_TXT_DOMAIN ),
+				'audio' => __( 'Music', BP_MEDIA_TXT_DOMAIN ),
+				'video' => __( 'Videos', BP_MEDIA_TXT_DOMAIN ),
+				'image' => __( 'Photos', BP_MEDIA_TXT_DOMAIN )
+			);
 			$widgetid = $args[ 'widget_id' ];
-			if ( ! ($allowAll || $allowAudio || $allowVideo || $allowImage) ) {
-				?>
-				<p><?php printf( __( 'Please configure this widget <a href="%s" target="_blank" title="Configure BuddyPress Media Widget">here</a>.', 'rtPanel' ), admin_url( '/widgets.php' ) ); ?></p><?php } else {
-				?>
-
-				<div id="<?php echo $wdType; ?>-media-tabs" class="media-tabs-container media-tabs-container-tabs">
-					<ul>
-						<?php if ( $allowAll ) { ?>
-							<li><a href="#<?php echo $wdType; ?>-media-tabs-all-<?php echo $widgetid; ?>"><?php _e( 'All', BP_MEDIA_TXT_DOMAIN ); ?></a></li>
-							<?php
-						}
-						if ( $allowImage ) {
-							array_push( $allowMimeType, "image" );
-							?>
-							<li><a href="#<?php echo $wdType; ?>-media-tabs-photos-<?php echo $widgetid; ?>"><?php _e( 'Photos', BP_MEDIA_TXT_DOMAIN ); ?></a></li>
-							<?php
-						}
-						if ( $allowAudio ) {
-							array_push( $allowMimeType, "audio" );
-							?>
-							<li><a href="#<?php echo $wdType; ?>-media-tabs-music-<?php echo $widgetid; ?>"><?php _e( 'Music', BP_MEDIA_TXT_DOMAIN ); ?></a></li>
-							<?php
-						}
-						if ( $allowVideo ) {
-							array_push( $allowMimeType, "video" );
-							?>
-							<li><a href="#<?php echo $wdType; ?>-media-tabs-videos-<?php echo $widgetid; ?>"><?php _e( 'Videos', BP_MEDIA_TXT_DOMAIN ); ?></a></li>
-						<?php }
-						?>
-					</ul>
-					<?php if ( $allowAll ) { ?>
-						<div id="<?php echo $wdType; ?>-media-tabs-all-<?php echo $widgetid; ?>" class="bp-media-tab-panel">
-							<?php
-							$args = array( 'post_type' => 'attachment',
-								'post_status' => 'any',
-								'posts_per_page' => $number,
-								'meta_key' => 'bp-media-key',
-								'meta_value' => 0,
-								'meta_compare' => '>',
-								'orderby' => $orderby
-							);
-
-							$bp_media_widget_query = new WP_Query( $args );
-
-							if ( $bp_media_widget_query->have_posts() ) {
-								?>
-
-								<ul class="widget-item-listing"><?php
+			if ( ! is_array( $allowed ) || count( $allowed ) < 1 ) {
+				echo '<p>';
+				printf(
+						__(
+								'Please configure this widget
+									<a href="%s" target="_blank"
+									title="Configure BuddyPress Media Widget">
+									here</a>.', 'rtPanel'
+						), admin_url( '/widgets.php' )
+				);
+				echo '</p>';
+			} else {
+				if ( count( $allowed ) > 3 ) {
+					unset( $allowed[ 'all' ] );
+				}
+				$allowMimeType = array();
+				echo '<div id="' . $wdType . '-media-tabs" class="media-tabs-container media-tabs-container-tabs">';
+				echo'<ul>';
+				foreach ( $allowed as $type ) {
+					if ( $type != 'all' ) {
+						array_push( $allowMimeType, $type );
+					}
+					echo '<li><a href="#' . $wdType . '-media-tabs-' . $type . '-' . $widgetid . '">';
+					echo $strings[ $type ];
+					echo '</a></li>';
+				}
+				echo '</ul>';
+				foreach ( $allowed as $type ) {
+					echo '<div id="' . $wdType . '-media-tabs-' . $type . '-' . $widgetid . '" class="bp-media-tab-panel">';
+					$query_type = $type;
+					if ( $type === 'all' )
+						$query_type = false;
+					$query = new BPMediaQuery();
+					$args = $query->init( $query_type );
+					$bp_media_widget_query = new WP_Query( $args );
+					if ( $bp_media_widget_query->have_posts() ) {
+						echo '<ul class="widget-item-listing">';
 						while ( $bp_media_widget_query->have_posts() ) {
 							$bp_media_widget_query->the_post();
 
 							$entry = new BPMediaHostWordpress( get_the_ID() );
-									?>
 
-										<?php echo $entry->get_media_gallery_content(); ?><?php }
-									?>
-
-								</ul><?php
+							echo $entry->get_media_gallery_content();
+						}
+						echo '</ul>';
+					} else {
+						$media_string = $type;
+						if ( $type === 'all' ) {
+							$media_string = 'media';
+						}
+						_e( 'No ' . $wdType . ' ' . $media_string . ' found', BP_MEDIA_TXT_DOMAIN );
 					}
-					else
-						_e( 'No ' . $wdType . ' media found', BP_MEDIA_TXT_DOMAIN );
-
 					wp_reset_query();
-								?>
 
-						</div>
-						<?php
-					}
-					if ( $allowImage ) {
-						?>
-						<div id="<?php echo $wdType; ?>-media-tabs-photos-<?php echo $widgetid; ?>" class="bp-media-tab-panel">
-							<?php
-							//  photos
-							$args = array( 'post_type' => 'attachment',
-								'post_status' => 'any',
-								'post_mime_type' => 'image',
-								'posts_per_page' => $number,
-								'meta_key' => 'bp-media-key',
-								'meta_value' => 0,
-								'meta_compare' => '>',
-								'orderby' => $orderby );
+					echo '</div>';
+				}
 
-							$bp_media_widget_query = new WP_Query( $args );
-
-							if ( $bp_media_widget_query->have_posts() ) {
-								?>
-
-								<ul class="widget-item-listing"><?php
-						while ( $bp_media_widget_query->have_posts() ) {
-							$bp_media_widget_query->the_post();
-
-							$entry = new BPMediaHostWordpress( get_the_ID() );
-									?>
-
-										<?php echo $entry->get_media_gallery_content(); ?><?php }
-									?>
-
-								</ul><!-- .widget-item-listing --><?php
-					}
-					else
-						_e( 'No ' . $wdType . ' photo found', BP_MEDIA_TXT_DOMAIN );
-
-					wp_reset_query();
-								?>
-
-						</div>
-						<?php
-					}
-					if ( $allowAudio ) {
-						?>
-
-						<div id="<?php echo $wdType; ?>-media-tabs-music-<?php echo $widgetid; ?>" class="bp-media-tab-panel">
-							<?php
-							// Audio
-							$args = array( 'post_type' => 'attachment',
-								'post_status' => 'any',
-								'post_mime_type' => 'audio',
-								'posts_per_page' => $number,
-								'meta_key' => 'bp-media-key',
-								'meta_value' => 0,
-								'meta_compare' => '>',
-								'orderby' => $orderby );
-							$bp_media_widget_query = new WP_Query( $args );
-
-							if ( $bp_media_widget_query->have_posts() ) {
-								?>
-
-								<ul class="widget-item-listing">
-									<?php
-									while ( $bp_media_widget_query->have_posts() ) {
-										$bp_media_widget_query->the_post();
-
-										$entry = new BPMediaHostWordpress( get_the_ID() );
-										echo $entry->get_media_gallery_content();
-									}
-									?>
-
-								</ul><?php
-					}
-					else
-						_e( 'No ' . $wdType . ' audio found', BP_MEDIA_TXT_DOMAIN );
-
-					wp_reset_query();
-								?>
-
-						</div>
-
-						<?php
-					}
-					if ( $allowVideo ) {
-						?>
-						<div id="<?php echo $wdType; ?>-media-tabs-videos-<?php echo $widgetid; ?>" class="bp-media-tab-panel">
-							<?php
-							//Video
-							$args = array( 'post_type' => 'attachment',
-								'post_status' => 'any',
-								'post_mime_type' => 'video',
-								'posts_per_page' => $number,
-								'meta_key' => 'bp-media-key',
-								'meta_value' => 0,
-								'meta_compare' => '>',
-								'orderby' => $orderby );
-							$bp_media_widget_query = new WP_Query( $args );
-
-							if ( $bp_media_widget_query->have_posts() ) {
-								?>
-
-								<ul class="widget-item-listing"><?php
-						while ( $bp_media_widget_query->have_posts() ) {
-							$bp_media_widget_query->the_post();
-
-							$entry = new BPMediaHostWordpress( get_the_ID() );
-									?>
-
-										<?php echo $entry->get_media_gallery_content(); ?><?php }
-									?>
-
-								</ul><?php
-					}
-					else
-						_e( 'No ' . $wdType . ' video found', BP_MEDIA_TXT_DOMAIN );
-
-					wp_reset_query();
-								?>
-
-						</div>
-					<?php } ?>
-				</div>
-				<?php
+				echo '</div>';
 			}
 			echo $after_widget;
 		}

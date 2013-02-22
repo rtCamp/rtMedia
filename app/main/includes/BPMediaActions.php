@@ -554,6 +554,7 @@ class BPMediaActions {
 
         global $bp, $bp_media_query, $bp_media;
         $page = isset($_POST['page']) ? $_POST['page'] : die();
+		$album_id = isset($_POST['album_id']) ? $_POST['album_id'] : false;
         $current_action = isset($_POST['current_action']) ? $_POST['current_action'] : null;
         $action_variables = isset($_POST['action_variables']) ? $_POST['action_variables'] : null;
         $displayed_user = isset($_POST['displayed_user']) ? $_POST['displayed_user'] : null;
@@ -583,7 +584,7 @@ class BPMediaActions {
         }
 
         $query = new BPMediaQuery();
-        $args = $query->init($type, $page);
+        $args = $query->init($type,$album_id, $page);
         $bp_media_query = new WP_Query($args);
         if (isset($bp_media_query->posts) && is_array($bp_media_query->posts) && count($bp_media_query->posts)) {
             foreach ($bp_media_query->posts as $attachment) {

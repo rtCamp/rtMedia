@@ -14,8 +14,8 @@ if ( ! defined( 'ABSPATH' ) )
 class BPMediaQuery {
 
 
-	function init( $type = false, $page=false,$count = false ) {
-		$args = $this->prepare_args( $type,$page, $count );
+	function init( $type = false, $album_id=false, $page=false,$count = false ) {
+		$args = $this->prepare_args( $type,$album_id,$page, $count );
 		return $this->return_result( $args, $count );
 	}
 
@@ -53,7 +53,7 @@ class BPMediaQuery {
 		return $meta_query;
 	}
 
-	function prepare_args( $type = false,$page=false, $count = false ) {
+	function prepare_args( $type = false,$album_id=false, $page=false, $count = false ) {
 
 		global $bp, $bp_media;
 
@@ -77,7 +77,9 @@ class BPMediaQuery {
 			'meta_query' => $this->prepare_meta_query(),
 			'posts_per_page' => -1
 		);
-
+		if($album_id){
+			$args['post_parent'] = $album_id;
+		}
 		if(!bp_is_groups_component()){
 			$args['author'] = $bp->displayed_user->id;
 		}
