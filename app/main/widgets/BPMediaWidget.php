@@ -30,17 +30,31 @@ if ( ! class_exists( 'BPMediaWidget' ) ) {
 		function widget( $args, $instance ) {
 			extract( $args );
 			$title = apply_filters( 'widget_title', empty( $instance[ 'title' ] ) ? __( 'BuddyPress Media', BP_MEDIA_TXT_DOMAIN ) : $instance[ 'title' ], $instance, $this->id_base );
+			$allow= array();
 			$allowed = array( );
 			if ( empty( $instance[ 'number' ] ) || ! $number = absint( $instance[ 'number' ] ) ) {
 				$number = 10;
 			}
 			$wdType = isset( $instance[ 'wdType' ] ) ? esc_attr( $instance[ 'wdType' ] ) : 'recent';
-			if(isset( $instance[ 'allow_all' ] ) && (bool)$instance[ 'allow_all' ]===true)$allowed[]='all';
-			if(isset( $instance[ 'allow_image' ] ) && (bool)$instance[ 'allow_image' ]===true)$allowed[]='image';
-			if(isset( $instance[ 'allow_audio' ] ) && (bool)$instance[ 'allow_audio' ]===true)$allowed[]='audio';
-			if(isset( $instance[ 'allow_video' ] ) && (bool)$instance[ 'allow_video' ]===true)$allowed[]='video';
-			$allowMimeType = array( );
-			echo $before_widget;
+			if(isset( $instance[ 'allow_all' ] ) && (bool)$instance[ 'allow_all' ]===true)$allow[]='all';
+			if(isset( $instance[ 'allow_image' ] ) && (bool)$instance[ 'allow_image' ]===true)$allow[]='image';
+			if(isset( $instance[ 'allow_audio' ] ) && (bool)$instance[ 'allow_audio' ]===true)$allow[]='audio';
+			if(isset( $instance[ 'allow_video' ] ) && (bool)$instance[ 'allow_video' ]===true)$allow[]='video';
+
+			global $bp_media;
+			$enabled = $bp_media->enabled();
+			unset($enabled['album']);unset($enabled['upload']);
+			foreach($allow as $type){
+
+				if($type!='all'){
+					echo '<br>';
+					if($enabled[$type]){
+						$allowed[]= $type;
+					}
+				}else{
+					$allowed[]=$type;
+				}
+			}
 			echo $before_title . $title . $after_title;
 			if ( $wdType == "popular" ) {
 				$orderby = 'comment_count';
@@ -70,7 +84,7 @@ if ( ! class_exists( 'BPMediaWidget' ) ) {
 				if ( count( $allowed ) > 3 ) {
 					unset( $allowed[ 'all' ] );
 				}
-
+				$allowMimeType = array();
 				echo '<div id="' . $wdType . '-media-tabs" class="media-tabs-container media-tabs-container-tabs">';
 				echo'<ul>';
 				foreach ( $allowed as $type ) {
