@@ -17,6 +17,7 @@ if (!class_exists('BPMediaAdmin')) {
         public $bp_media_feed;
 
         public function __construct() {
+            add_action('init',array($this, 'video_transcoding_survey_response'));
             $bp_media_feed = new BPMediaFeed();
             add_action('wp_ajax_bp_media_fetch_feed', array($bp_media_feed, 'fetch_feed'), 1);
             $bp_media_support = new BPMediaSupport();
@@ -71,7 +72,9 @@ if (!class_exists('BPMediaAdmin')) {
             }
             add_submenu_page('bp-media-settings', __('BuddyPress Media Addons', BP_MEDIA_TXT_DOMAIN), __('Addons', BP_MEDIA_TXT_DOMAIN), 'manage_options', 'bp-media-addons', array($this, 'addons_page'));
             add_submenu_page('bp-media-settings', __('BuddyPress Media Support', BP_MEDIA_TXT_DOMAIN), __('Support ', BP_MEDIA_TXT_DOMAIN), 'manage_options', 'bp-media-support', array($this, 'support_page'));
-            add_submenu_page('bp-media-settings', __('BuddyPress Media Convert Videos', BP_MEDIA_TXT_DOMAIN), __('Convert Videos', BP_MEDIA_TXT_DOMAIN), 'manage_options', 'bp-media-convert-videos', array($this, 'convert_videos_page'));
+            if ( bp_get_option('bp-media-survey', true) ) {
+                add_submenu_page('bp-media-settings', __('BuddyPress Media Convert Videos', BP_MEDIA_TXT_DOMAIN), __('Convert Videos', BP_MEDIA_TXT_DOMAIN), 'manage_options', 'bp-media-convert-videos', array($this, 'convert_videos_page'));
+            }
         }
 
         /**
@@ -224,13 +227,15 @@ if (!class_exists('BPMediaAdmin')) {
                             'name' => __('Support', BP_MEDIA_TXT_DOMAIN),
                             'class' => ($tab == 'bp-media-support') ? $active_class : $idle_class . ' last_tab'
                         );
-
-                        $tabs[] = array(
-                            'href' => bp_get_admin_url(add_query_arg(array('page' => 'bp-media-convert-videos'), 'admin.php')),
-                            'title' => __('BuddyPress Media Covert Videos', BP_MEDIA_TXT_DOMAIN),
-                            'name' => __('Convert Videos', BP_MEDIA_TXT_DOMAIN),
-                            'class' => ($tab == 'bp-media-convert-videos') ? $active_class : $idle_class . ' last_tab'
-                        );
+                        
+                        if ( bp_get_option('bp-media-survey', true) ) {
+                            $tabs[] = array(
+                                'href' => bp_get_admin_url(add_query_arg(array('page' => 'bp-media-convert-videos'), 'admin.php')),
+                                'title' => __('BuddyPress Media Covert Videos', BP_MEDIA_TXT_DOMAIN),
+                                'name' => __('Convert Videos', BP_MEDIA_TXT_DOMAIN),
+                                'class' => ($tab == 'bp-media-convert-videos') ? $active_class : $idle_class . ' last_tab'
+                            );
+                        }
 
                         $tabs = apply_filters('bp_media_add_sub_tabs', $tabs, $tab);
                         foreach ($tabs as $tab) {
@@ -381,11 +386,17 @@ if (!class_exists('BPMediaAdmin')) {
                     public function convert_videos_mailchimp_send() {
                         if ($_POST['interested'] == 'Yes' && !empty($_POST['choice'])) {
                             wp_remote_get(add_query_arg( array('bp-media-convert-videos-form' => 1, 'choice' => $_POST['choice'], 'url'=> urlencode($_POST['url']), 'email' => $_POST['email']),'http://rtcamp.com/'));
-                            echo 'Thank you for your time. Please check your email.';
                         } else {
-                            echo 'Thank you for your time.';
+                            bp_update_option('bp-media-survey', 0);
                         }
+                        echo 'Thank you for your time.';
                         die;
+                    }
+                    
+                    public function video_transcoding_survey_response(){
+                        if ( isset($_GET['survey-done']) && ($_GET['survey-done'] == md5('survey-done')) ) {
+                            bp_update_option('bp-media-survey', 0);
+                        }
                     }
 
                 }
