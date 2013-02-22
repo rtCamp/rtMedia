@@ -101,6 +101,13 @@ Please visit [BuddyPress Media's FAQ page](http://rtcamp.com/buddypress-media/fa
 
 Please visit [BuddyPress Media's Features page](http://rtcamp.com/buddypress-media/#features "Visit BuddyPress Media's Features page").
 
+1.
+2.
+3.
+4.
+5.
+6. 
+
 == Changelog ==
 
 Please visit [BuddyPress Media's Roadmap page](http://rtcamp.com/buddypress-media/roadmap/ "Visit BuddyPress Media's Features page") to get some details about future releases.
