@@ -141,7 +141,7 @@ jQuery('#bp-media-settings-boxes').on('click','.not-interested',function(){
     jQuery('.choice-free').removeAttr('required');
 });
 
-jQuery('#bp-media-settings-boxes').on('click','.video-transcoding-survey',function(e){
+jQuery('#video-transcoding-main-container').on('click','.video-transcoding-survey',function(e){
     e.preventDefault();
     var data = {
         action: 'bp_media_convert_videos_form',
@@ -151,7 +151,7 @@ jQuery('#bp-media-settings-boxes').on('click','.video-transcoding-survey',functi
         interested: jQuery('input[name="interested"]:checked').val()
     }
     jQuery.post(ajaxurl, data, function(response){
-        jQuery('.video-transcoding-survey').parent().html('<p>'+response+'</p>');
+        jQuery('#video-transcoding-main-container').html('<p><strong>'+response+'</strong></p>');
     });
     return false;
 });
