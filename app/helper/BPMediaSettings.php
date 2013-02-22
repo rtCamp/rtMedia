@@ -11,11 +11,11 @@ if (!class_exists('BPMediaSettings')) {
 
         public function __construct() {
             add_action('admin_init', array($this, 'settings'));
-			if(is_multisite()){
-				add_action('network_admin_notices',array($this,'privacy_notice'));
-			}else{
-				add_action('admin_notices',array($this,'privacy_notice'));
-			}
+            if (is_multisite()) {
+                add_action('network_admin_notices', array($this, 'privacy_notice'));
+            } else {
+                add_action('admin_notices', array($this, 'privacy_notice'));
+            }
         }
 
         /**
@@ -86,7 +86,7 @@ if (!class_exists('BPMediaSettings')) {
                     'option' => 'privacy_override_enabled',
                     'desc' => __('Allow users to set privacy and override the defaults', BP_MEDIA_TXT_DOMAIN)
                 ));
-				add_settings_field('bpm-privacy-private-enabled', __('Default Privacy', BP_MEDIA_TXT_DOMAIN), array($this, 'radio'), 'bp-media-settings', 'bpm-privacy-levels', array(
+                add_settings_field('bpm-privacy-private-enabled', __('Default Privacy', BP_MEDIA_TXT_DOMAIN), array($this, 'radio'), 'bp-media-settings', 'bpm-privacy-levels', array(
                     'setting' => 'bp_media_options',
                     'option' => 'default_privacy_level',
                     'radios' => array(
@@ -126,9 +126,37 @@ if (!class_exists('BPMediaSettings')) {
                 add_filter('bp_media_add_sub_tabs', array($bp_media_privacy, 'ui'), 99, 2);
                 add_settings_section('bpm-privacy', __('Update Database', BP_MEDIA_TXT_DOMAIN), array($bp_media_privacy, 'init'), 'bp-media-privacy');
             }
+
+            add_settings_section('bpm-convert-videos', '', array($this, 'convert_videos_form'), 'bp-media-convert-videos');
+
             register_setting('bp_media', 'bp_media_options', array($this, 'sanitize'));
         }
 
+        public function convert_videos_form() {
+            global $current_user;
+            get_currentuserinfo();
+            ?>
+            <p class="para-blockquote">We are planning an encoding service where you can convert videos without having to install/configure anything on your server.</p>
+            <h3>Would you be interested?</h3>
+            <label><input class="interested" name="interested" type="radio" value="Yes" required="required" /> Yes</label>&nbsp;&nbsp;&nbsp;
+            <label><input class="not-interested" name="interested" type="radio" value="No" required="required" /> No</label>
+            <div class="interested-container hidden">
+                <p class="para-blockquote">Glad to see your interest.<br />
+                Please provide a little more information to help us plan this service better.</p>
+                <label><h3>Email</h3> <input class="email" type="email" name="email" size="35" value="<?php echo $current_user->user_email; ?>" placeholder="Email" /></label>
+
+                <h3>How would you use this feature?</h3>
+                <ul>
+                    <li><label><input class="choice-free" type="radio" name="choice" value="Free" /> Free-only. I will use free-encoding quota only.</label></li>
+                    <li><label><input type="radio" name="choice" value="$9" /> I am ready to pay $9 per month for generous encoding quota.</label></li>
+                    <li><label><input type="radio" name="choice" value="$99" /> I am ready to pay $99 per month for unlimited video encoding!</label></li>
+            </div>
+            <input class="url" type="hidden" name="url" value="<?php echo home_url(); ?>" />
+            <br />
+            <br />
+            <input class="button button-primary video-transcoding-survey" type="submit" value="Submit" /><?php
+        }
+        
         public function network_notices() {
             $flag = 1;
             if (get_site_option('bpm-media-enable', false)) {
@@ -427,18 +455,19 @@ if (!class_exists('BPMediaSettings')) {
         }
 
         public function privacy_notice() {
-			if(BPMediaPrivacy::is_installed()) return;
-			$url = add_query_arg(
-                                array('page' => 'bp-media-privacy'), (is_multisite() ? network_admin_url('admin.php') : admin_url('admin.php'))
-                        );
+            if (BPMediaPrivacy::is_installed())
+                return;
+            $url = add_query_arg(
+                    array('page' => 'bp-media-privacy'), (is_multisite() ? network_admin_url('admin.php') : admin_url('admin.php'))
+            );
 
-			$notice= '
+            $notice = '
 				<div class="error">
-				<p>'.__('BuddyPress Media 2.6 requires a database upgrade. ',BP_MEDIA_TXT_DOMAIN)
-					.'<a href="'.$url.'">'.__('Update Database',BP_MEDIA_TXT_DOMAIN).'.</a></p>
+				<p>' . __('BuddyPress Media 2.6 requires a database upgrade. ', BP_MEDIA_TXT_DOMAIN)
+                    . '<a href="' . $url . '">' . __('Update Database', BP_MEDIA_TXT_DOMAIN) . '.</a></p>
 				</div>
 				';
-			echo $notice;
+            echo $notice;
         }
 
     }

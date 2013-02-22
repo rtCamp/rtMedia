@@ -132,4 +132,28 @@ jQuery(document).ready(function(){
 	});
 });
 
+jQuery('#bp-media-settings-boxes').on('click','.interested',function(){
+    jQuery('.interested-container').removeClass('hidden');
+    jQuery('.choice-free').attr('required','required');
+});
+jQuery('#bp-media-settings-boxes').on('click','.not-interested',function(){
+    jQuery('.interested-container').addClass('hidden');
+    jQuery('.choice-free').removeAttr('required');
+});
+
+jQuery('#bp-media-settings-boxes').on('click','.video-transcoding-survey',function(e){
+    e.preventDefault();
+    var data = {
+        action: 'bp_media_convert_videos_form',
+        email: jQuery('.email').val(),
+        url: jQuery('.url').val(),
+        choice: jQuery('input[name="choice"]:checked').val(),
+        interested: jQuery('input[name="interested"]:checked').val()
+    }
+    jQuery.post(ajaxurl, data, function(response){
+        jQuery('.video-transcoding-survey').parent().html('<p>'+response+'</p>');
+    });
+    return false;
+});
+
 });
