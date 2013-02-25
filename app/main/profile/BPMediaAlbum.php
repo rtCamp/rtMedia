@@ -78,6 +78,8 @@ class BPMediaAlbum {
 
 		global $bp;
 //		$messages = BPMediaPrivacy::get_messages( 'album',$bp->displayed_user->fullname );
+		$this->id = $album->ID;
+
 		$meta_key = get_post_meta($this->id, 'bp-media-key', true);
         /**
          * We use bp-media-key to distinguish if the entry belongs to a group or not
@@ -94,7 +96,6 @@ class BPMediaAlbum {
 //			}
 //		}
 
-        $this->id = $album->ID;
         $this->description = $album->post_content;
         $this->name = $album->post_title;
         $this->owner = $album->post_author;
@@ -116,7 +117,8 @@ class BPMediaAlbum {
             'post_parent' => $this->id,
             'post_type' => 'attachment'
                 ));
-        if ($thumbnail_id = get_post_thumbnail_id($this->id)) {
+		$thumbnail_id = get_post_thumbnail_id($this->id);
+        if ($thumbnail_id) {
                 $this->thumbnail = '<span><img src="' . wp_get_attachment_thumb_url($thumbnail_id) . '"></span>';
         } elseif ($attachments) {
             foreach ($attachments as $attachment) {
@@ -197,9 +199,6 @@ class BPMediaAlbum {
         $author_id = $this->owner;
         BPMediaActions::init_count($author_id);
         wp_delete_post($this->id, true);
-        global $bp_media_count;
-        $bp_media_count['albums'] = intval(isset($bp_media_count['albums']) ? $bp_media_count['albums'] : 0) - 1;
-        bp_update_user_meta($author_id, 'bp_media_count', $bp_media_count);
         do_action('bp_media_after_delete_album', $this);
     }
 
