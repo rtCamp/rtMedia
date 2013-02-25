@@ -125,6 +125,7 @@ Please visit [BuddyPress Media's Roadmap page](http://rtcamp.com/buddypress-medi
 * Renamed 'Featured' to 'Set as Album Cover' in the UI for clarity
 * Fixed featured functionality
 * Fixed download functionality
+* Rewritten query functions
 * Improved css and js
 * Major code refactoring
 
