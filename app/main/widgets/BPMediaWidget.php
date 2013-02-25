@@ -102,7 +102,7 @@ if ( ! class_exists( 'BPMediaWidget' ) ) {
 					if ( $type === 'all' )
 						$query_type = false;
 					$query = new BPMediaQuery();
-					$args = $query->init( $query_type );
+					$args = $query->init( $query_type,false,$number );
 					$bp_media_widget_query = new WP_Query( $args );
 					if ( $bp_media_widget_query->have_posts() ) {
 						echo '<ul class="widget-item-listing">';

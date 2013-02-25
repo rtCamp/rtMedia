@@ -14,9 +14,9 @@ if ( ! defined( 'ABSPATH' ) )
 class BPMediaQuery {
 
 
-	function init( $type = false, $album_id=false, $page=false,$count = false ) {
-		$args = $this->prepare_args( $type,$album_id,$page, $count );
-		return $this->return_result( $args, $count );
+	function init( $type = false, $album_id=false, $count=false, $page=false,$docount = false ) {
+		$args = $this->prepare_args( $type,$album_id,$page, $docount,$count );
+		return $this->return_result( $args, $docount );
 	}
 
 	function privacy_query( ) {
@@ -31,8 +31,12 @@ class BPMediaQuery {
 
 	function group_query( $group = false ) {
 		global $bp;
+		$group_id = null;
+
 		if ( $group == false ) {
+			if(isset($bp->displayed_user->id)){
 			$group_id = $bp->displayed_user->id;
+			}
 		} else {
 			if ( ! class_exists( 'BPMediaGroupsExtension' ) )
 				return array( );
@@ -53,7 +57,7 @@ class BPMediaQuery {
 		return $meta_query;
 	}
 
-	function prepare_args( $type = false,$album_id=false, $page=false, $count = false ) {
+	function prepare_args( $type = false,$album_id=false, $page=false, $docount = false,$count=false ) {
 
 		global $bp, $bp_media;
 
@@ -81,11 +85,16 @@ class BPMediaQuery {
 			$args['post_parent'] = $album_id;
 		}
 		if(!bp_is_groups_component()){
-			$args['author'] = $bp->displayed_user->id;
+			if(isset($bp->displayed_user->id)){
+				$args['author'] = $bp->displayed_user->id;
+			}
 		}
 
-		if ( $count == false ) {
-			$args[ 'posts_per_page' ] = $bp_media->default_count();
+		if ( $docount == false ) {
+			if($count==false){
+				$count = $bp_media->default_count();
+			}
+			$args[ 'posts_per_page' ] = $count;
 			$args[ 'offset' ] = $this->get_offset( $args[ 'posts_per_page' ], $this->prepare_pagination($page) );
 		}
 
