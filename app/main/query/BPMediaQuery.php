@@ -50,10 +50,10 @@ class BPMediaQuery {
 
 	function prepare_meta_query() {
 		$group = bp_is_current_component( 'groups' );
-		$meta_query = array(
-			$this->privacy_query(),
-			$this->group_query( $group )
-		);
+		if(!bp_is_groups_component()){
+			$meta_query[] = $this->privacy_query();
+		}
+		$meta_query[] = $this->group_query( $group );
 		return $meta_query;
 	}
 
