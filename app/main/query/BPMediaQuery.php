@@ -94,25 +94,31 @@ class BPMediaQuery {
 			if($count==false){
 				$count = $bp_media->default_count();
 			}
-			$args[ 'posts_per_page' ] = $count;
-			$args[ 'offset' ] = $this->get_offset( $args[ 'posts_per_page' ], $this->prepare_pagination($page) );
+			$limit_offset = $this->get_limit_offset( $args[ 'posts_per_page' ], $this->prepare_pagination($page) );
+			$args[ 'posts_per_page' ] = $limit_offset[0];
+			$args[ 'offset' ] = $limit_offset[1];
 		}
 
 		return $args;
 	}
 
-	function get_offset( $limit, $page ) {
+
+	function get_limit_offset( $limit, $page ) {
+		if (check_count_condition($page)){
+
+		}
 		global $bp;
 		if ( ( bp_is_my_profile() && bp_get_current_group_id() == 0) || groups_is_user_member( $bp->loggedin_user->id, bp_get_current_group_id() ) ) {
 			if($page>1){
 				$offset = $limit * ($page - 1) - 1;
 			}else{
 				$offset = 0;
+				$limit = $limit -1;
 			}
 		} else {
 			$offset = $limit * ($page - 1);
 		}
-		return $offset;
+		return array($limit,$offset);
 	}
 
 	function prepare_post_type( $type ) {

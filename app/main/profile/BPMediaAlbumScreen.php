@@ -197,7 +197,7 @@ class BPMediaAlbumScreen extends BPMediaScreen {
 		}
         if ($bp->current_action == BP_MEDIA_ALBUMS_SLUG) {
             $query = new BPMediaQuery();
-			$args = $query->init(false,$album_id,false);
+			$args = $query->init(false,$album_id,false,$paged);
 			$bp_media_query = new WP_Query($args);
         }
     }
