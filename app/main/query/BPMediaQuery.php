@@ -94,7 +94,7 @@ class BPMediaQuery {
 			if($count==false){
 				$count = $bp_media->default_count();
 			}
-			$limit_offset = $this->get_limit_offset( $args[ 'posts_per_page' ], $this->prepare_pagination($page) );
+			$limit_offset = $this->get_limit_offset( $count, $this->prepare_pagination($page) );
 			$args[ 'posts_per_page' ] = $limit_offset[0];
 			$args[ 'offset' ] = $limit_offset[1];
 		}
