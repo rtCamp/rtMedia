@@ -12,7 +12,7 @@
 class BPMediaTemplate {
 
     /**
-     * 
+     *
      * @global type $bp_media_current_album
      */
     function upload_form_multiple() {
@@ -83,7 +83,7 @@ class BPMediaTemplate {
     }
 
     /**
-     * 
+     *
      * @param type $id
      * @return boolean
      */
@@ -116,7 +116,7 @@ class BPMediaTemplate {
     }
 
     /**
-     * 
+     *
      * @param type $id
      * @return boolean
      */
@@ -138,7 +138,7 @@ class BPMediaTemplate {
     }
 
     /**
-     * 
+     *
      * @param type $id
      * @return boolean
      */
@@ -160,32 +160,34 @@ class BPMediaTemplate {
     }
 
     /**
-     * 
+     *
      * @global type $bp_media_query
      * @global type $bp_media_albums_query
      * @param type $type
      */
     function show_more($type = 'media') {
         $showmore = false;
+		global $bp_media;
+		$count = $bp_media->default_count();
         switch ($type) {
             case 'media':
                 global $bp_media_query;
                 //found_posts
                 if ( bp_is_my_profile() || BPMediaGroupLoader::can_upload() ) {
-                    if (isset($bp_media_query->found_posts) && $bp_media_query->found_posts > (get_option('posts_per_page')-1) )
+                    if (isset($bp_media_query->found_posts) && $bp_media_query->found_posts > ($count-1) )
                         $showmore = true;
                 } else {
-                    if (isset($bp_media_query->found_posts) && $bp_media_query->found_posts > get_option('posts_per_page') )
+                    if (isset($bp_media_query->found_posts) && $bp_media_query->found_posts > $count )
                         $showmore = true;
                 }
                 break;
             case 'albums':
                 global $bp_media_albums_query;
                 if ( bp_is_my_profile() || BPMediaGroupLoader::can_upload() ) {
-                    if (isset($bp_media_albums_query->found_posts) && $bp_media_albums_query->found_posts > (get_option('posts_per_page')-1) )
+                    if (isset($bp_media_albums_query->found_posts) && $bp_media_albums_query->found_posts > ($count-1) )
                         $showmore = true;
                 } else {
-                    if (isset($bp_media_albums_query->found_posts) && $bp_media_albums_query->found_posts > get_option('posts_per_page') )
+                    if (isset($bp_media_albums_query->found_posts) && $bp_media_albums_query->found_posts > $count )
                         $showmore = true;
                 }
                 break;
@@ -200,7 +202,7 @@ class BPMediaTemplate {
      */
 
     /**
-     * 
+     *
      * @param type $mediaconst
      */
     function redirect($mediaconst) {
@@ -212,7 +214,7 @@ class BPMediaTemplate {
     }
 
     /**
-     * 
+     *
      * @global type $bp
      * @global type $bp_media_default_excerpts
      * @return type
