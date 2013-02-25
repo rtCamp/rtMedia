@@ -174,7 +174,6 @@ class BPMediaScreen {
     function screen_content() {
         global $bp_media_query, $bp_media;
 
-		$total_post = $bp_media->default_count();
         $this->set_query();
 
         $this->hook_before();
@@ -185,11 +184,9 @@ class BPMediaScreen {
                 echo '<li>';
                 BPMediaUploadScreen::upload_screen_content();
                 echo '</li>';
-                $total_post--;
             }
-            while ($bp_media_query->have_posts() && $total_post>0) : $bp_media_query->the_post();
+            while ($bp_media_query->have_posts() ) : $bp_media_query->the_post();
                 $this->template->the_content();
-                $total_post--;
             endwhile;
             echo '</ul>';
             $this->template->show_more();

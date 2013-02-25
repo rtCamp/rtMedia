@@ -26,7 +26,7 @@ class BPMediaGroupAction {
 		$default_tab = $bp_media->default_tab();
 		$defaults_tab= $default_tab;
 		if($default_tab!='audio') $defaults_tab.='s';
-
+                $album_id = false;
         if (isset($bp->current_action) && $bp->current_action == BP_MEDIA_SLUG) {
             $current_tab = constant('BP_MEDIA_'.strtoupper($defaults_tab).'_SLUG');
             if (isset($bp->action_variables[0])) {
@@ -43,6 +43,9 @@ class BPMediaGroupAction {
                     case BP_MEDIA_VIDEOS_SLUG:
                         $type = 'video';
                         break;
+                    case BP_MEDIA_ALBUMS_SLUG:
+                        $type = 'bp_media_album';
+                        break;
                     default :
                         $type = null;
                 }
@@ -53,8 +56,11 @@ class BPMediaGroupAction {
                 }
                 $query = new BPMediaQuery();
 
-                $album_id = isset($bp->action_variables[1])?$bp->action_variables[1]:false;
-                
+                if ( isset($bp->action_variables[1]) ) {
+                    $album_id = $bp->action_variables[1];
+                    $type = null;
+                }
+
                 $args = $query->init($type,$album_id,false,$paged);
                 $bp_media_query = new WP_Query($args);
             }
