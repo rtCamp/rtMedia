@@ -73,11 +73,11 @@ class BPMediaAlbum {
         if (empty($album->ID))
             throw new Exception(__('Sorry, the requested album does not exist.', BP_MEDIA_TXT_DOMAIN));
 
-		$required_access = BPMediaPrivacy::required_access($album_id);
-		$has_access = BPMediaPrivacy::has_access($album_id);
+//		$required_access = BPMediaPrivacy::required_access($album_id);
+//		$has_access = BPMediaPrivacy::has_access($album_id);
 
 		global $bp;
-		$messages = BPMediaPrivacy::get_messages( 'album',$bp->displayed_user->fullname );
+//		$messages = BPMediaPrivacy::get_messages( 'album',$bp->displayed_user->fullname );
 		$meta_key = get_post_meta($this->id, 'bp-media-key', true);
         /**
          * We use bp-media-key to distinguish if the entry belongs to a group or not
@@ -88,11 +88,11 @@ class BPMediaAlbum {
          */
 
 		$this->group_id = $meta_key < 0 ? -$meta_key : 0;
-		if($this->group_id<=0){
-			if(!$has_access){
-				throw new Exception($messages[$required_access]);
-			}
-		}
+//		if($this->group_id<=0){
+//			if(!$has_access){
+//				throw new Exception($messages[$required_access]);
+//			}
+//		}
 
         $this->id = $album->ID;
         $this->description = $album->post_content;
