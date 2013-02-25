@@ -51,19 +51,12 @@ class BPMediaGroupAction {
                 } else {
                     $paged = 1;
                 }
-                if ($type) {
-                    $args = array(
-                        'post_type' => 'attachment',
-                        'post_status' => 'any',
-                        'post_mime_type' => $type,
-                        'meta_key' => 'bp-media-key',
-                        'meta_value' => -bp_get_current_group_id(),
-                        'meta_compare' => '=',
-                        'paged' => $paged,
-                        'posts_per_page' => $bp_media_posts_per_page
-                    );
-                    $bp_media_query = new WP_Query($args);
-                }
+                $query = new BPMediaQuery();
+
+                $album_id = isset($bp->action_variables[1])?$bp->action_variables[1]:false;
+                
+                $args = $query->init($type,$album_id,false,$paged);
+                $bp_media_query = new WP_Query($args);
             }
         }
     }
