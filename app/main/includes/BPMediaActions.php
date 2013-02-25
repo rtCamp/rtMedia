@@ -571,8 +571,11 @@ class BPMediaActions {
         }
 
 		if($current_action=='albums'){
+			if(isset($action_variables[1])){
 			$album_id= $action_variables[1];
+			}
 		}
+	
         if ((!$displayed_user || intval($displayed_user) == 0) && (!$current_group || intval($current_group) == 0)) {
             die();
         }
