@@ -104,9 +104,6 @@ class BPMediaQuery {
 
 
 	function get_limit_offset( $limit, $page ) {
-		if (check_count_condition($page)){
-
-		}
 		global $bp;
 		if ( ( bp_is_my_profile() && bp_get_current_group_id() == 0) || groups_is_user_member( $bp->loggedin_user->id, bp_get_current_group_id() ) ) {
 			if($page>1){
