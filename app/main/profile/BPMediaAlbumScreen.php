@@ -112,6 +112,7 @@ class BPMediaAlbumScreen extends BPMediaScreen {
      */
     function entry_screen_content() {
         global $bp, $bp_media_current_album, $bp_media_query;
+		print_r($bp->action_variables[0]);
         if (!$bp->action_variables[0] == BP_MEDIA_ALBUMS_VIEW_SLUG)
             return false;
         if (bp_displayed_user_id() == bp_loggedin_user_id()) {
@@ -120,9 +121,6 @@ class BPMediaAlbumScreen extends BPMediaScreen {
             echo '<a href="' . $bp_media_current_album->get_delete_url() . '" class="button item-button bp-secondary-action delete-activity-single confirm" rel="nofollow">' . __("Delete", BP_MEDIA_TXT_DOMAIN) . '</a>';
             echo '</div>';
         }
-        $total_post = 10;
-        $total_post = get_option('posts_per_page');
-
         $this->inner_query($bp_media_current_album->get_id());
         $this->hook_before();
         if ($bp_media_current_album && $bp_media_query->have_posts()):
@@ -131,11 +129,9 @@ class BPMediaAlbumScreen extends BPMediaScreen {
                 echo '<li>';
                 BPMediaUploadScreen::upload_screen_content();
                 echo '</li>';
-                $total_post--;
             }
-            while ($bp_media_query->have_posts() && $total_post>0) : $bp_media_query->the_post();
+            while ($bp_media_query->have_posts()) : $bp_media_query->the_post();
                 $this->template->the_content();
-                $total_post--;
             endwhile;
             echo '</ul>';
             $this->template->show_more();
@@ -169,6 +165,7 @@ class BPMediaAlbumScreen extends BPMediaScreen {
         } else {
             $paged = 1;
         }
+		print_r($bp->current_action);
         if ($bp->current_action == BP_MEDIA_ALBUMS_SLUG) {
             $query = new BPMediaQuery();
 			$args = $query->init('album');
@@ -197,9 +194,12 @@ class BPMediaAlbumScreen extends BPMediaScreen {
         if (!$paged)
             $paged = 1;
 		$this->filter_entries();
+		if($bp->current_component=='groups'){
+		 echo 'This is a group';
+		}
         if ($bp->current_action == BP_MEDIA_ALBUMS_SLUG) {
             $query = new BPMediaQuery();
-			$args = $query->init(false,$album_id);
+			$args = $query->init(false,$album_id,false);
 			$bp_media_query = new WP_Query($args);
         }
     }

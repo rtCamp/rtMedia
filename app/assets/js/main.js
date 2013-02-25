@@ -68,7 +68,7 @@ jQuery(document).ready(function(){
         e.preventDefault();
         var post_id = jQuery(this).attr('data-post-id');
         var album_id = jQuery(this).attr('data-album-id');
-        var curr_obj = jQuery(this);    
+        var curr_obj = jQuery(this);
         var data = {
             action: 'bp_media_set_album_cover',
             post_id:post_id,
