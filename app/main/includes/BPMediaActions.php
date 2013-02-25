@@ -558,18 +558,21 @@ class BPMediaActions {
 
         global $bp, $bp_media_query, $bp_media;
         $page = isset($_POST['page']) ? $_POST['page'] : die();
-		$album_id = isset($_POST['album_id']) ? $_POST['album_id'] : false;
         $current_action = isset($_POST['current_action']) ? $_POST['current_action'] : null;
         $action_variables = isset($_POST['action_variables']) ? $_POST['action_variables'] : null;
         $displayed_user = isset($_POST['displayed_user']) ? $_POST['displayed_user'] : null;
         $loggedin_user = isset($_POST['loggedin_user']) ? $_POST['loggedin_user'] : null;
         $current_group = isset($_POST['current_group']) ? $_POST['current_group'] : null;
+		$album_id = isset($_POST['album_id']) ? $_POST['album_id'] : false;
         if ($current_group) {
             $type_var = isset($action_variables[0]) ? $action_variables[0] : '';
         } else {
             $type_var = $current_action;
         }
 
+		if($current_action=='albums'){
+			$album_id= $action_variables[1];
+		}
         if ((!$displayed_user || intval($displayed_user) == 0) && (!$current_group || intval($current_group) == 0)) {
             die();
         }
