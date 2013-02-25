@@ -584,7 +584,7 @@ class BPMediaActions {
         }
 
         $query = new BPMediaQuery();
-        $args = $query->init($type,$album_id, $page);
+        $args = $query->init($type,$album_id,false, $page);
         $bp_media_query = new WP_Query($args);
         if (isset($bp_media_query->posts) && is_array($bp_media_query->posts) && count($bp_media_query->posts)) {
             foreach ($bp_media_query->posts as $attachment) {
