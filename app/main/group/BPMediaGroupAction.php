@@ -21,7 +21,7 @@ class BPMediaGroupAction {
      * @global type $bp_media_posts_per_page
      */
     static function bp_media_groups_set_query() {
-        global $bp, $bp_media, $bp_media_query, $bp_media_posts_per_page;
+        global $bp, $bp_media, $bp_media_query;
 		$enabled = $bp_media->enabled();
 		$default_tab = $bp_media->default_tab();
 		$defaults_tab= $default_tab;
