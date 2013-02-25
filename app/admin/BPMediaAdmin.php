@@ -40,7 +40,7 @@ if (!class_exists('BPMediaAdmin')) {
         }
 
         /**
-         * Generates the Admin UI
+         * Generates the Admin UI.
          *
          * @param string $hook
          */
