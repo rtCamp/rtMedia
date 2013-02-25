@@ -223,7 +223,6 @@ class BPMediaTemplateFunctions {
                     $showmore = true;
                 break;
             case 'albums':
-                global $bp_media_albums_query;
                 if (isset($bp_media_query->found_posts) && $bp_media_query->found_posts > 10)
                     $showmore = true;
                 break;
