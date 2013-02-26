@@ -117,6 +117,9 @@ Please visit [BuddyPress Media's Features page](http://rtcamp.com/buddypress-med
 
 Please visit [BuddyPress Media's Roadmap page](http://rtcamp.com/buddypress-media/roadmap/ "Visit BuddyPress Media's Features page") to get some details about future releases.
 
+#### 2.6.3 ####
+* Refactored database update checker to fix bugs
+
 #### 2.6.2 ####
 * Fixed database upgrade issues due to js and css caching
 
