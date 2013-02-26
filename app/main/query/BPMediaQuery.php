@@ -108,7 +108,7 @@ class BPMediaQuery {
 			if ( bp_get_current_group_id() == 0 ) {
 				$my_profile = true;
 			}
-		} else if ( class_exists ) {
+		} else if ( class_exists('BP_Group_Extension') ) {
 			if ( groups_is_user_member( $bp->loggedin_user->id, bp_get_current_group_id() ) ) {
 				$my_profile = true;
 			}
