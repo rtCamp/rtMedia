@@ -117,6 +117,9 @@ Please visit [BuddyPress Media's Features page](http://rtcamp.com/buddypress-med
 
 Please visit [BuddyPress Media's Roadmap page](http://rtcamp.com/buddypress-media/roadmap/ "Visit BuddyPress Media's Features page") to get some details about future releases.
 
+#### 2.6.1 ####
+* Fixed warnings that appeared on non-upgrade of database.
+
 #### 2.6 ####
 * Added Privacy for Media.
 * Added crude support for activity privacy (due for revision)
