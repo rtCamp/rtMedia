@@ -156,6 +156,9 @@ class BPMediaPrivacy {
 		if ( ! $level ) {
 			$level = BPMediaPrivacy::default_privacy();
 		}
+		if(!$level){
+			$level = '0';
+		}
 		$this->save( $level, $object_id );
 		if ( $type == 'album' ) {
 			$args = array(
@@ -175,8 +178,9 @@ class BPMediaPrivacy {
 
 	function save( $level = 0, $object_id = false ) {
 
-		if ( ! array_key_exists( $level, $this->settings ) )
+		if ( ! array_key_exists( $level, $this->get_settings() ) )
 			return false;
+
 
 		return $this->save_by_object( $level, $object_id );
 	}
