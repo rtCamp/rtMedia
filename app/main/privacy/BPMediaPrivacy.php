@@ -52,9 +52,6 @@ class BPMediaPrivacy {
 	}
 
 	static function is_installed() {
-		if ( bp_get_option( 'bp_media_privacy_installed', false ) )
-			return true;
-
 		$settings = new BPMediaPrivacySettings();
 		$total = $settings->get_total_count();
 		$total = $total[ 0 ]->Total;
