@@ -31,7 +31,7 @@ class BPMediaPrivacy {
 
 	public function set_option_redirect() {
 		bp_update_option( 'bp_media_privacy_installed', true );
-		do_action('bp_media_after_privacy_install');
+		do_action( 'bp_media_after_privacy_install' );
 		echo true;
 		die();
 	}
@@ -54,15 +54,15 @@ class BPMediaPrivacy {
 	static function is_installed() {
 		$settings = new BPMediaPrivacySettings();
 		$total = $settings->get_total_count();
-		if(is_array($total) && !empty($total)){
+		if ( is_array( $total ) && ! empty( $total ) ) {
 			$total = $total[ 0 ]->Total;
-		}else{
+		} else {
 			$total = 0;
 		}
 		$finished = $settings->get_completed_count();
-		if(is_array($finished) && !empty($finished)){
+		if ( is_array( $finished ) && ! empty( $finished ) ) {
 			$finished = $finished[ 0 ]->Finished;
-		}else{
+		} else {
 			$finished = 0;
 		}
 		if ( $total === $finished )
@@ -132,20 +132,20 @@ class BPMediaPrivacy {
 	static function ui_html( $privacy_level ) {
 		?>
 		<div id="bp-media-upload-privacy-wrap">
-		<label for="bp-media-upload-set-privacy"><?php _e( 'Set default privacy levels for your media', BP_MEDIA_TXT_DOMAIN ); ?></label>
-		<ul id="bp-media-upload-set-privacy">
-			<?php
-			$settings = BPMediaPrivacy::get_settings();
-			foreach ( $settings as $level => &$msg ) {
-				?>
-				<li>
-					<input type="radio" name="bp_media_privacy" class="set-privacy-radio" id="bp-media-privacy-<?php echo $msg[ 0 ]; ?>" value="<?php echo $level; ?>" <?php checked( $level, $privacy_level, TRUE ); ?> >
-					<label class="album-set-privacy-label" for="bp-media-privacy-<?php echo $msg[ 0 ]; ?>"><?php echo $msg[ 1 ]; ?></label>
-				</li>
+			<label for="bp-media-upload-set-privacy"><?php _e( 'Set default privacy levels for your media', BP_MEDIA_TXT_DOMAIN ); ?></label>
+			<ul id="bp-media-upload-set-privacy">
 				<?php
-			}
-			?>
-		</ul>
+				$settings = BPMediaPrivacy::get_settings();
+				foreach ( $settings as $level => &$msg ) {
+					?>
+					<li>
+						<input type="radio" name="bp_media_privacy" class="set-privacy-radio" id="bp-media-privacy-<?php echo $msg[ 0 ]; ?>" value="<?php echo $level; ?>" <?php checked( $level, $privacy_level, TRUE ); ?> >
+						<label class="album-set-privacy-label" for="bp-media-privacy-<?php echo $msg[ 0 ]; ?>"><?php echo $msg[ 1 ]; ?></label>
+					</li>
+					<?php
+				}
+				?>
+			</ul>
 		</div>
 		<?php
 	}
@@ -157,17 +157,17 @@ class BPMediaPrivacy {
 			$level = BPMediaPrivacy::default_privacy();
 		}
 		$this->save( $level, $object_id );
-		if($type=='album'){
+		if ( $type == 'album' ) {
 			$args = array(
-				'post_type'=> 'attachment',
-				'post_parent'=> $object_id,
-				'post_status'=> 'any',
-				'posts_per_page'=> -1
+				'post_type' => 'attachment',
+				'post_parent' => $object_id,
+				'post_status' => 'any',
+				'posts_per_page' => -1
 			);
 
-			$child_query = new WP_Query($args);
+			$child_query = new WP_Query( $args );
 			$children = $child_query->posts;
-			foreach($children as $child){
+			foreach ( $children as $child ) {
 				$this->save( $level, $child->ID );
 			}
 		}
@@ -195,8 +195,8 @@ class BPMediaPrivacy {
 
 		foreach ( $activities->activities as $key => $activity ) {
 			if ( $activity != null && in_array( $activity->type, $bp_media->activity_types ) ) {
-				$has_access = BPMediaPrivacy::has_access($activity->item_id);
-				if ( !$has_access ) {
+				$has_access = BPMediaPrivacy::has_access( $activity->item_id );
+				if ( ! $has_access ) {
 
 					unset( $activities->activities[ $key ] );
 					$activities->activity_count = $activities->activity_count - 1;
@@ -241,9 +241,9 @@ class BPMediaPrivacy {
 		$parent_privacy = get_post_meta( $parent, 'bp_media_privacy', true );
 
 		if ( $privacy === false ) {
-			if($parent_privacy!==false){
+			if ( $parent_privacy !== false ) {
 				$privacy = $parent_privacy;
-			}else{
+			} else {
 				$privacy = BPMediaPrivacy::default_privacy();
 			}
 		}
@@ -260,14 +260,14 @@ class BPMediaPrivacy {
 				$current_privacy = 6;
 			}
 			if ( isset( $bp->displayed_user->id ) )
-				if ( ! (bp_is_my_profile())){
-					if(class_exists('BP_Group_Extension')){
-					if(bp_get_current_group_id() == 0 ) {
-					$is_friend = friends_check_friendship_status( $bp->loggedin_user->id, $bp->displayed_user->id );
-					if ( $is_friend == 'is_friend' ) {
-						$current_privacy = 4;
-					}
-					}
+				if ( ! (bp_is_my_profile()) ) {
+					if ( class_exists( 'BP_Group_Extension' ) ) {
+						if ( bp_get_current_group_id() == 0 ) {
+							$is_friend = friends_check_friendship_status( $bp->loggedin_user->id, $bp->displayed_user->id );
+							if ( $is_friend == 'is_friend' ) {
+								$current_privacy = 4;
+							}
+						}
 					}
 				}
 		}
