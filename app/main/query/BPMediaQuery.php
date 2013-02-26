@@ -13,7 +13,6 @@ if ( ! defined( 'ABSPATH' ) )
  */
 class BPMediaQuery {
 
-
 	function init( $type = false, $album_id=false, $count=false, $page=false,$docount = false ) {
 		$args = $this->prepare_args( $type,$album_id,$page, $docount,$count );
 		return $this->return_result( $args, $docount );
