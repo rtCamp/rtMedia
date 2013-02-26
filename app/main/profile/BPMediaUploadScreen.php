@@ -58,7 +58,7 @@ class BPMediaUploadScreen extends BPMediaScreen {
             'multi_selection' => true,
             'multipart_params' => apply_filters('bp_media_multipart_params_filter', array('action' => 'wp_handle_upload'))
         );
-        wp_enqueue_script('bp-media-uploader', BP_MEDIA_URL . 'app/assets/js/bp-media-uploader.js', array('plupload', 'plupload-html5', 'plupload-flash', 'plupload-silverlight', 'plupload-html4', 'plupload-handlers'));
+        wp_enqueue_script('bp-media-uploader', BP_MEDIA_URL . 'app/assets/js/bp-media-uploader.js', array('plupload', 'plupload-html5', 'plupload-flash', 'plupload-silverlight', 'plupload-html4', 'plupload-handlers'), '2.6.2');
         wp_localize_script('bp-media-uploader', 'bp_media_uploader_params', $params);
         wp_enqueue_style('bp-media-default', BP_MEDIA_URL . 'app/assets/css/bp-media-style.css');
         //wp_enqueue_style("wp-jquery-ui-dialog"); //Its not styling the Dialog box as it should so using different styling
