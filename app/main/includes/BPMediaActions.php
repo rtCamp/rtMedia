@@ -354,6 +354,7 @@ class BPMediaActions {
 		if ( ! $count ) {
 			$bp_media_count = array( array( 'images' => 0, 'videos' => 0, 'audio' => 0, 'albums' => 0 ) );
 			bp_update_user_meta( $user, 'bp_media_count', $bp_media_count );
+			$count = bp_get_user_meta( $user, 'bp_media_count', true );
 		} else {
 			$total = array(
 				'images' => 0,
