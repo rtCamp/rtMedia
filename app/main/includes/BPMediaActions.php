@@ -352,39 +352,21 @@ class BPMediaActions {
 		}
 		$count = bp_get_user_meta( $user, 'bp_media_count', true );
 		if ( ! $count ) {
-			$bp_media_count = array( array( 'images' => 0, 'videos' => 0, 'audio' => 0, 'albums' => 0 ) );
+			$bp_media_count = array(
+				0=>array('images' => 0, 'videos' => 0, 'audio' => 0, 'albums' => 0 ),
+				2=>array('images' => 0, 'videos' => 0, 'audio' => 0, 'albums' => 0 ),
+				4=>array('images' => 0, 'videos' => 0, 'audio' => 0, 'albums' => 0 ),
+				6=>array('images' => 0, 'videos' => 0, 'audio' => 0, 'albums' => 0 ),
+					);
 			bp_update_user_meta( $user, 'bp_media_count', $bp_media_count );
 			$bp_media_count = bp_get_user_meta( $user, 'bp_media_count', true );
 		} else {
 			$total = array(
-				0 => array(
 					'images' => 0,
 					'videos' => 0,
 					'audio' => 0,
 					'albums' => 0,
 					'total' => 0
-				),
-				2 => array(
-					'images' => 0,
-					'videos' => 0,
-					'audio' => 0,
-					'albums' => 0,
-					'total' => 0
-				),
-				4 => array(
-					'images' => 0,
-					'videos' => 0,
-					'audio' => 0,
-					'albums' => 0,
-					'total' => 0
-				),
-				6 => array(
-					'images' => 0,
-					'videos' => 0,
-					'audio' => 0,
-					'albums' => 0,
-					'total' => 0
-				),
 			);
 			$total_count = 0;
 			if ( isset( $count ) && is_array( $count ) && count( $count ) > 0 ) {
