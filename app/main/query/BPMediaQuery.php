@@ -48,7 +48,7 @@ class BPMediaQuery {
 	}
 
 	function prepare_meta_query() {
-		if ( class_exists( 'BP_Group_Extension' ) ) {
+		if ( bp_is_active('groups') && class_exists( 'BP_Group_Extension' ) ) {
 			$group = bp_is_current_component( 'groups' );
 			$meta_query[ ] = $this->group_query( $group );
 		}
@@ -106,7 +106,7 @@ class BPMediaQuery {
 	function get_limit_offset( $limit, $page ) {
 		global $bp;
 		$my_profile = false;
-		if ( class_exists( 'BP_Group_Extension' ) ) {
+		if ( bp_is_active('groups') && class_exists( 'BP_Group_Extension' ) ) {
 				if ( bp_get_current_group_id() == 0 ) {
 					$my_profile = true;
 				}

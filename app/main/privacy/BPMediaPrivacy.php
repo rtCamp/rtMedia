@@ -265,7 +265,7 @@ class BPMediaPrivacy {
 			}
 			if ( isset( $bp->displayed_user->id ) )
 				if ( ! (bp_is_my_profile()) ) {
-					if ( class_exists( 'BP_Group_Extension' ) ) {
+					if ( bp_is_active('groups') &&  class_exists( 'BP_Group_Extension' ) ) {
 						if ( bp_get_current_group_id() == 0 ) {
 							$is_friend = friends_check_friendship_status( $bp->loggedin_user->id, $bp->displayed_user->id );
 							if ( $is_friend == 'is_friend' ) {
