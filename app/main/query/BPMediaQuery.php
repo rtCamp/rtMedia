@@ -13,18 +13,18 @@ if ( ! defined( 'ABSPATH' ) )
  */
 class BPMediaQuery {
 
-	function init( $type = false, $album_id=false, $count=false, $page=false,$docount = false ) {
-		$args = $this->prepare_args( $type,$album_id,$page, $docount,$count );
+	function init( $type = false, $album_id = false, $count = false, $page = false, $docount = false ) {
+		$args = $this->prepare_args( $type, $album_id, $page, $docount, $count );
 		return $this->return_result( $args, $docount );
 	}
 
-	function privacy_query( ) {
+	function privacy_query() {
 		$privacy = BPMediaPrivacy::current_access();
 		return $meta_query = array(
 			'key' => 'bp_media_privacy',
 			'value' => $privacy,
-			'compare'=>'<=',
-			'type'	=> 'NUMERIC'
+			'compare' => '<=',
+			'type' => 'NUMERIC'
 		);
 	}
 
@@ -33,8 +33,8 @@ class BPMediaQuery {
 		$group_id = null;
 
 		if ( $group == false ) {
-			if(isset($bp->displayed_user->id)){
-			$group_id = $bp->displayed_user->id;
+			if ( isset( $bp->displayed_user->id ) ) {
+				$group_id = $bp->displayed_user->id;
 			}
 		} else {
 			if ( ! class_exists( 'BPMediaGroupsExtension' ) )
@@ -49,14 +49,14 @@ class BPMediaQuery {
 
 	function prepare_meta_query() {
 		$group = bp_is_current_component( 'groups' );
-		if(!bp_is_groups_component()){
-			$meta_query[] = $this->privacy_query();
+		if ( ! bp_is_groups_component() ) {
+			$meta_query[ ] = $this->privacy_query();
 		}
-		$meta_query[] = $this->group_query( $group );
+		$meta_query[ ] = $this->group_query( $group );
 		return $meta_query;
 	}
 
-	function prepare_args( $type = false,$album_id=false, $page=false, $docount = false,$count=false ) {
+	function prepare_args( $type = false, $album_id = false, $page = false, $docount = false, $count = false ) {
 
 		global $bp, $bp_media;
 
@@ -80,41 +80,50 @@ class BPMediaQuery {
 			'meta_query' => $this->prepare_meta_query(),
 			'posts_per_page' => -1
 		);
-		if($album_id){
-			$args['post_parent'] = $album_id;
+		if ( $album_id ) {
+			$args[ 'post_parent' ] = $album_id;
 		}
-		if(!bp_is_groups_component()){
-			if(isset($bp->displayed_user->id)){
-				$args['author'] = $bp->displayed_user->id;
+		if ( ! bp_is_groups_component() ) {
+			if ( isset( $bp->displayed_user->id ) ) {
+				$args[ 'author' ] = $bp->displayed_user->id;
 			}
 		}
 
 		if ( $docount == false ) {
-			if($count==false){
+			if ( $count == false ) {
 				$count = $bp_media->default_count();
 			}
-			$limit_offset = $this->get_limit_offset( $count, $this->prepare_pagination($page) );
-			$args[ 'posts_per_page' ] = $limit_offset[0];
-			$args[ 'offset' ] = $limit_offset[1];
+			$limit_offset = $this->get_limit_offset( $count, $this->prepare_pagination( $page ) );
+			$args[ 'posts_per_page' ] = $limit_offset[ 0 ];
+			$args[ 'offset' ] = $limit_offset[ 1 ];
 		}
 
 		return $args;
 	}
 
-
 	function get_limit_offset( $limit, $page ) {
 		global $bp;
-		if ( ( bp_is_my_profile() && bp_get_current_group_id() == 0) || groups_is_user_member( $bp->loggedin_user->id, bp_get_current_group_id() ) ) {
-			if($page>1){
+		$my_profile = false;
+		if ( bp_is_my_profile() ) {
+			if ( bp_get_current_group_id() == 0 ) {
+				$my_profile = true;
+			}
+		} else if ( class_exists ) {
+			if ( groups_is_user_member( $bp->loggedin_user->id, bp_get_current_group_id() ) ) {
+				$my_profile = true;
+			}
+		}
+		if ( $my_profile === true ) {
+			if ( $page > 1 ) {
 				$offset = $limit * ($page - 1) - 1;
-			}else{
+			} else {
 				$offset = 0;
-				$limit = $limit -1;
+				$limit = $limit - 1;
 			}
 		} else {
 			$offset = $limit * ($page - 1);
 		}
-		return array($limit,$offset);
+		return array( $limit, $offset );
 	}
 
 	function prepare_post_type( $type ) {
@@ -144,12 +153,12 @@ class BPMediaQuery {
 		return $mime_type;
 	}
 
-	function prepare_pagination($page) {
+	function prepare_pagination( $page ) {
 		global $bp;
 		if ( isset( $bp->action_variables ) && is_array( $bp->action_variables ) && isset( $bp->action_variables[ 0 ] ) && $bp->action_variables[ 0 ] == 'page' && isset( $bp->action_variables[ 1 ] ) && is_numeric( $bp->action_variables[ 1 ] ) ) {
 			$paged = $bp->action_variables[ 1 ];
 		} else {
-			$paged = ($page)?$page:1;
+			$paged = ($page) ? $page : 1;
 		}
 		return $paged;
 	}
