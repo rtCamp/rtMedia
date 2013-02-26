@@ -117,6 +117,9 @@ Please visit [BuddyPress Media's Features page](http://rtcamp.com/buddypress-med
 
 Please visit [BuddyPress Media's Roadmap page](http://rtcamp.com/buddypress-media/roadmap/ "Visit BuddyPress Media's Features page") to get some details about future releases.
 
+#### 2.6.2 ####
+* Fixed database upgrade issues due to js and css caching
+
 #### 2.6.1 ####
 * Fixed warnings that appeared on non-upgrade of database.
 
@@ -277,4 +280,4 @@ Please visit [BuddyPress Media's Roadmap page](http://rtcamp.com/buddypress-medi
 * HTML5 Audio Tag Support (with fallback)
 * HTML5 Video Tag Support (with fallback)
 
-Adds privacy support and a couple of other fixes
+Fixes cache induced js and css errors
