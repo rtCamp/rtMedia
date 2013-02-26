@@ -106,14 +106,15 @@ class BPMediaQuery {
 	function get_limit_offset( $limit, $page ) {
 		global $bp;
 		$my_profile = false;
-		if ( bp_is_my_profile() ) {
-			if ( class_exists( 'BP_Group_Extension' ) ) {
+		if ( class_exists( 'BP_Group_Extension' ) ) {
 				if ( bp_get_current_group_id() == 0 ) {
 					$my_profile = true;
 				}
-			}
-		} else if ( class_exists( 'BP_Group_Extension' ) ) {
 			if ( groups_is_user_member( $bp->loggedin_user->id, bp_get_current_group_id() ) ) {
+				$my_profile = true;
+			}
+		}else{
+			if ( bp_is_my_profile() ) {
 				$my_profile = true;
 			}
 		}
