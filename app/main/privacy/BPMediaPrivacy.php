@@ -76,6 +76,7 @@ class BPMediaPrivacy {
 
 	static function get_site_default() {
 		global $bp_media;
+		$site_privacy = false;
 		$options = $bp_media->options;
 		if ( array_key_exists( 'privacy_enabled', $options ) ) {
 			if ( array_key_exists( 'default_privacy_level', $options ) ) {
@@ -259,10 +260,14 @@ class BPMediaPrivacy {
 				$current_privacy = 6;
 			}
 			if ( isset( $bp->displayed_user->id ) )
-				if ( ! (bp_is_my_profile()) && bp_get_current_group_id() == 0 ) {
+				if ( ! (bp_is_my_profile())){
+					if(class_exists('BP_Group_Extension')){
+					if(bp_get_current_group_id() == 0 ) {
 					$is_friend = friends_check_friendship_status( $bp->loggedin_user->id, $bp->displayed_user->id );
 					if ( $is_friend == 'is_friend' ) {
 						$current_privacy = 4;
+					}
+					}
 					}
 				}
 		}
