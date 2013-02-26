@@ -6,66 +6,6 @@
  * @author faishal
  */
 class BPMediaGroupAction {
-    /**
-     * Called on bp_init by screen functions
-     *
-     * @uses global $bp, $bp_media_query
-     *
-     * @since BuddyPress Media 2.0
-     */
-
-    /**
-     *
-     * @global type $bp
-     * @global WP_Query $bp_media_query
-     * @global type $bp_media_posts_per_page
-     */
-    static function bp_media_groups_set_query() {
-        global $bp, $bp_media, $bp_media_query;
-		$enabled = $bp_media->enabled();
-		$default_tab = $bp_media->default_tab();
-		$defaults_tab= $default_tab;
-		if($default_tab!='audio') $defaults_tab.='s';
-                $album_id = false;
-        if (isset($bp->current_action) && $bp->current_action == BP_MEDIA_SLUG) {
-            $current_tab = constant('BP_MEDIA_'.strtoupper($defaults_tab).'_SLUG');
-            if (isset($bp->action_variables[0])) {
-                $current_tab = $bp->action_variables[0];
-            }
-            if ($current_tab) {
-                switch ($current_tab) {
-                    case BP_MEDIA_IMAGES_SLUG:
-                        $type = 'image';
-                        break;
-                    case BP_MEDIA_AUDIO_SLUG:
-                        $type = 'audio';
-                        break;
-                    case BP_MEDIA_VIDEOS_SLUG:
-                        $type = 'video';
-                        break;
-                    case BP_MEDIA_ALBUMS_SLUG:
-                        $type = 'bp_media_album';
-                        break;
-                    default :
-                        $type = null;
-                }
-                if (bp_action_variable(1) == 'page' && is_numeric(bp_action_variable(2))) {
-                    $paged = bp_action_variable(2);
-                } else {
-                    $paged = 1;
-                }
-                $query = new BPMediaQuery();
-
-                if ( isset($bp->action_variables[1]) ) {
-                    $album_id = $bp->action_variables[1];
-                    $type = null;
-                }
-
-                $args = $query->init($type,$album_id,false,$paged);
-                $bp_media_query = new WP_Query($args);
-            }
-        }
-    }
 
 	static function filter_entries(){
 		global $bp_media;

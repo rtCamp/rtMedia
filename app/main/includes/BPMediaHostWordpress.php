@@ -92,6 +92,7 @@ class BPMediaHostWordpress {
         $this->name = $media->post_title;
         $this->owner = $media->post_author;
         $this->album_id = $media->post_parent;
+		$this->mime_type = $media->post_mime_type;
 
 
         $this->set_permalinks();
