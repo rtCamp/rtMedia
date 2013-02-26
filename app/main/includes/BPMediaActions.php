@@ -364,7 +364,7 @@ class BPMediaActions {
 				'total' => 0
 			);
 			$total_count = 0;
-			if ( isset( $count ) && is_array( $count ) && count($count>0)) {
+			if ( isset( $count ) && is_array( $count ) && count($count)>0) {
 				foreach ( $count as $level => $counts ) {
 					if ( $level <= $current_access ) {
 						foreach ( $counts as $media => $number ) {
