@@ -51,12 +51,12 @@ if (!class_exists('BPMediaAdmin')) {
          */
         public function ui($hook) {
             $admin_ajax = admin_url('admin-ajax.php');
-            wp_enqueue_script('bp-media-admin', BP_MEDIA_URL . 'app/assets/js/admin.js');
+            wp_enqueue_script('bp-media-admin', BP_MEDIA_URL . 'app/assets/js/admin.js', '', '2.6.2');
             wp_localize_script('bp-media-admin', 'bp_media_admin_ajax', $admin_ajax);
             wp_localize_script('bp-media-admin', 'settings_url', add_query_arg(
                             array('page' => 'bp-media-settings'), (is_multisite() ? network_admin_url('admin.php') : admin_url('admin.php'))
                     ) . '#privacy_enabled');
-            wp_enqueue_style('bp-media-admin', BP_MEDIA_URL . 'app/assets/css/main.css');
+            wp_enqueue_style('bp-media-admin', BP_MEDIA_URL . 'app/assets/css/main.css', '', '2.6.2');
         }
 
         /**
