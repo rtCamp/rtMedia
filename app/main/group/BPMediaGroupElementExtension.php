@@ -30,7 +30,6 @@ if (class_exists('BP_Group_Extension')) :
          */
         function display() {
             global $bp;
-            BPMediaGroupAction::bp_media_groups_set_query();
             $current_tab = BP_MEDIA_IMAGES_SLUG;
             if (isset($bp->action_variables[0])) {
                 $current_tab = $bp->action_variables[0];

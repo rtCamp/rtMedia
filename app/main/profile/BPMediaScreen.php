@@ -174,7 +174,9 @@ class BPMediaScreen {
     function screen_content() {
         global $bp_media_query, $bp_media;
 
+
         $this->set_query();
+
 
         $this->hook_before();
 
@@ -416,8 +418,11 @@ class BPMediaScreen {
     public function set_query() {
         global $bp, $bp_media_query;
 		if(bp_is_current_component('groups')){
-			$type_var = isset($bp->action_variables[0])?$bp->action_variables[0]:'';
+			global $bp_media;
+			$def_tab=$bp_media->defaults_tab();
+			$type_var = isset($bp->action_variables[0])?$bp->action_variables[0]:constant('BP_MEDIA_'.strtoupper($def_tab).'_SLUG');
 		}else{
+
 			$type_var = $bp->current_action;
 		}
         switch ($type_var) {
