@@ -54,9 +54,17 @@ class BPMediaPrivacy {
 	static function is_installed() {
 		$settings = new BPMediaPrivacySettings();
 		$total = $settings->get_total_count();
-		$total = $total[ 0 ]->Total;
+		if(is_array($total) && !empty($total)){
+			$total = $total[ 0 ]->Total;
+		}else{
+			$total = 0;
+		}
 		$finished = $settings->get_completed_count();
-		$finished = $finished[ 0 ]->Finished;
+		if(is_array($finished) && !empty($finished)){
+			$finished = $finished[ 0 ]->Finished;
+		}else{
+			$finished = 0;
+		}
 		if ( $total === $finished )
 			$installed = true;
 		else
