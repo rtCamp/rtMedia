@@ -3,7 +3,7 @@
   Plugin Name: BuddyPress Media
   Plugin URI: http://rtcamp.com/buddypress-media/
   Description: This plugin adds missing media rich features like photos, videosand audios uploading to BuddyPress which are essential if you are building social network, seriously!
-  Version: 2.6.3
+  Version: 2.6.4
   Author: rtCamp
   Text Domain: buddypress-media
   Author URI: http://rtcamp.com
