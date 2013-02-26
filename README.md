@@ -117,6 +117,11 @@ Please visit [BuddyPress Media's Features page](http://rtcamp.com/buddypress-med
 
 Please visit [BuddyPress Media's Roadmap page](http://rtcamp.com/buddypress-media/roadmap/ "Visit BuddyPress Media's Features page") to get some details about future releases.
 
+
+#### 2.6.5 ####
+* Fixed all warnings and errors with 2.6 thanks to [dzapata79](http://wordpress.org/support/profile/dzapata79), [Scott](http://wordpress.org/support/profile/davidsons).
+* Special thanks are due to [Stephan Oberlander](http://rtcamp.com/support/users/stephan/) who let us use his site for testing and reproducing the errors!
+
 #### 2.6.4 ####
 * Improved group compatibility
 
@@ -286,4 +291,4 @@ Please visit [BuddyPress Media's Roadmap page](http://rtcamp.com/buddypress-medi
 * HTML5 Audio Tag Support (with fallback)
 * HTML5 Video Tag Support (with fallback)
 
-Fixes cache induced js and css errors
+Bug fixes
