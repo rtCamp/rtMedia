@@ -312,6 +312,19 @@ class BPMediaAlbum {
     function get_id() {
         return $this->id;
     }
+	/**
+     * Returns the id of the album
+     *
+     * @since BuddyPress Media 2.2
+     */
+
+    /**
+     *
+     * @return type
+     */
+    function get_type() {
+        return $this->type;
+    }
 
     /**
      * Returns the url of the album
