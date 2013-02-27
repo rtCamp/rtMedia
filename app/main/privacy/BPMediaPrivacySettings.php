@@ -58,27 +58,14 @@ class BPMediaPrivacySettings {
 		return $result;
 	}
 
-	function query(){
-		$args = array(
-			'post_type'=>array(
-				'attachment',
-				'bp_media_album'
-				),
-			'post_status'=>'any',
-			'meta_key'=> 'bp-media-'
-		);
-		$q = new WP_Query($args);
-		print_r($q);
-	}
 
 	function init(){
 		$total = $this->get_total_count();
 		$finished = $this->get_completed_count();
 		$total = $total[0];
 		$finished = $finished[0];
-		//$this->query();
 
-		//if(isset($total) && isset($finished) && is_array($total) && is_array($finished)){
+		//(isset($total) && isset($finished) && is_array($total) && is_array($finished)){
 		echo '<div id="rtprivacyinstaller">';
 		foreach($total as $type=>$count){
 			echo '<div class="rtprivacytype" id="'.strtolower($type).'">';
