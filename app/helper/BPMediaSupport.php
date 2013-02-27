@@ -10,7 +10,63 @@ if (!class_exists('BPMediaSupport')) {
     class BPMediaSupport {
 
         public function __construct() {
-            ;
+            add_action('bp_media_admin_page_append', array($this, 'debug_info'));
+        }
+
+        public function debug_info($page) {
+            if ('bp-media-support' == $page) {
+                global $wpdb, $wp_version, $bp;
+                ?>
+                <div id="debug-info">
+                    <h3><?php _e('Debug Info', BP_MEDIA_TXT_DOMAIN); ?></h3>
+                    <table class="form-table">
+                        <tbody>
+                            <tr valign="top">
+                                <th scope="row">PHP</th>
+                                <td><?php echo PHP_VERSION; ?></td>
+                            </tr>
+                            <tr valign="top">
+                                <th scope="row">MYSQL</th>
+                                <td><?php echo $wpdb->db_version(); ?></td>
+                            </tr>
+                            <tr valign="top">
+                                <th scope="row">WordPress</th>
+                                <td><?php echo $wp_version; ?></td>
+                            </tr>
+                            <tr valign="top">
+                                <th scope="row">BuddyPress</th>
+                                <td><?php echo $bp->version; ?></td>
+                            </tr>
+                            <tr valign="top">
+                                <th scope="row">BuddyPress Media</th>
+                                <td><?php echo BP_MEDIA_VERSION; ?></td>
+                            </tr>
+                            <tr valign="top">
+                                <th scope="row">OS</th>
+                                <td><?php echo PHP_OS; ?></td>
+                            </tr>
+                            <tr valign="top">
+                                <th scope="row">Imagick</th><?php
+                                if (extension_loaded('imagick')) {
+                                    $imagick = Imagick::getVersion();
+                                } else {
+                                    $imagick['versionString'] = 'Not Installed';
+                                } ?>
+                                <td><?php echo $imagick['versionString']; ?></td>
+                            </tr>
+                            <tr valign="top">
+                                <th scope="row">GD</th><?php
+                                if (extension_loaded('gd')) {
+                                    $gd = gd_info();
+                                } else {
+                                    $gd['GD Version'] = 'Not Installed';
+                                } ?>
+                                <td><?php echo $gd['GD Version']; ?></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div><?php
+            }
         }
 
         /**

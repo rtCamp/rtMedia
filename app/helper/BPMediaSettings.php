@@ -29,7 +29,7 @@ if (!class_exists('BPMediaSettings')) {
          * @global BPMediaAddon $bp_media_addon
          */
         public function settings() {
-            global $bp_media_addon;
+            global $bp_media, $bp_media_addon;
             add_settings_section('bpm-media-type', __('Activate BuddyPress Media', BP_MEDIA_TXT_DOMAIN), '', 'bp-media-settings');
 //            add_settings_field('bpm-admin-profile', __('User profiles', BP_MEDIA_TXT_DOMAIN), array($this, 'checkbox'), 'bp-media-settings', 'bpm-media-type', array(
 //                'setting' => 'bp_media_options',
@@ -72,6 +72,7 @@ if (!class_exists('BPMediaSettings')) {
                 'option' => 'download_enabled',
                 'desc' => __('Display download button under media', BP_MEDIA_TXT_DOMAIN)
             ));
+
             if (BPMediaPrivacy::is_installed()) {
                 add_settings_section('bpm-privacy', __('Privacy', BP_MEDIA_TXT_DOMAIN), '', 'bp-media-settings');
                 add_settings_field('bpm-privacy-enabled', __('Enable Privacy', BP_MEDIA_TXT_DOMAIN), array($this, 'checkbox'), 'bp-media-settings', 'bpm-privacy', array(
@@ -188,7 +189,7 @@ if (!class_exists('BPMediaSettings')) {
             }
             delete_site_option('bpm-settings-saved');
         }
-
+        
         /**
          * Sanitizes the settings
          */

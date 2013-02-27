@@ -14,16 +14,17 @@ if (!class_exists('BPMediaAdmin')) {
 
         public $bp_media_upgrade;
         public $bp_media_settings;
+        public $bp_media_support;
         public $bp_media_feed;
 
         public function __construct() {
             add_action('init',array($this, 'video_transcoding_survey_response'));
             $bp_media_feed = new BPMediaFeed();
             add_action('wp_ajax_bp_media_fetch_feed', array($bp_media_feed, 'fetch_feed'), 1);
-            $bp_media_support = new BPMediaSupport();
-            add_action('wp_ajax_bp_media_select_request', array($bp_media_support, 'get_form'), 1);
+            $this->bp_media_support = new BPMediaSupport();
+            add_action('wp_ajax_bp_media_select_request', array($this->bp_media_support, 'get_form'), 1);
             add_action('wp_ajax_bp_media_cancel_request', create_function('', 'do_settings_sections("bp-media-support"); die();'), 1);
-            add_action('wp_ajax_bp_media_submit_request', array($bp_media_support, 'submit_request'), 1);
+            add_action('wp_ajax_bp_media_submit_request', array($this->bp_media_support, 'submit_request'), 1);
             add_action('wp_ajax_bp_media_fetch_feed', array($bp_media_feed, 'fetch_feed'), 1);
             add_action('wp_ajax_bp_media_linkback', array($this, 'linkback'), 1);
             add_action('wp_ajax_bp_media_convert_videos_form', array($this, 'convert_videos_mailchimp_send'), 1);
@@ -162,6 +163,7 @@ if (!class_exists('BPMediaAdmin')) {
                     </div>
                 </div><!-- .metabox-holder -->
             </div><!-- .bp-media-admin --><?php
+            do_action( 'bp_media_admin_page_append', $page );
                     }
 
                     /**
