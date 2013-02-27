@@ -20,11 +20,11 @@ class BPMediaActions {
 		add_action( 'bp_activity_entry_meta', array( $this, 'action_buttons' ) );
 		add_action( 'bp_media_before_delete_media', 'BPMediaActions::delete_media_handler' );
 		add_action( 'bp_media_after_add_album', array( $this, 'album_create_activity' ) );
-		add_action( 'bp_media_after_add_album', array( $this, 'update_count' ) );
+		add_action( 'bp_media_after_add_album', array( $this, 'update_count' ) ,999 );
 		add_action( 'bp_media_album_updated', 'BPMediaActions::album_activity_update' );
-		add_action( 'bp_media_album_updated', array( $this, 'update_count' ) );
-		add_action( 'bp_media_after_edit_album', array( $this, 'update_count' ) );
-		add_action( 'bp_media_after_delete_album', array( $this, 'update_count' ) );
+		add_action( 'bp_media_album_updated', array( $this, 'update_count' ) ,999 );
+		add_action( 'bp_media_after_edit_album', array( $this, 'update_count' ) ,999 );
+		add_action( 'bp_media_after_delete_album', array( $this, 'update_count' ) ,999 );
 		add_action( 'bp_media_after_delete_media', array( $this, 'album_activity_sync' ) );
 		add_action( 'bp_media_after_add_media', 'BPMediaActions::activity_create_after_add_media', 10, 4 );
 		add_action( 'wp_ajax_bp_media_load_more', array( $this, 'load_more' ) );
@@ -32,10 +32,10 @@ class BPMediaActions {
 		add_action( 'wp_ajax_bp_media_set_album_cover', array( $this, 'set_album_cover' ) );
 		add_action( 'delete_attachment', array( $this, 'delete_attachment_handler' ) );
 		add_action( 'wp_ajax_bp_media_add_album', array( $this, 'add_album' ) );
-		add_action( 'bp_media_after_privacy_install', array( $this, 'update_count' ) );
-		add_action( 'bp_media_after_add_media', array( $this, 'update_count' ) );
-		add_action( 'bp_media_after_update_media', array( $this, 'update_count' ) );
-		add_action( 'bp_media_after_delete_media', array( $this, 'update_count' ));
+		add_action( 'bp_media_after_privacy_install', array( $this, 'update_count' ) ,999 );
+		add_action( 'bp_media_after_add_media', array( $this, 'update_count' ) ,999 );
+		add_action( 'bp_media_after_update_media', array( $this, 'update_count' ) ,999 );
+		add_action( 'bp_media_after_delete_media', array( $this, 'update_count' ) ,999);
 		$linkback = bp_get_option( 'bp_media_add_linkback', false );
 		if ( $linkback )
 			add_action( 'bp_footer', array( $this, 'footer' ) );
@@ -436,6 +436,7 @@ class BPMediaActions {
 				'album' => $obj->Albums,
 			);
 		}
+		print_r($formatted);
 		bp_update_user_meta( $user_id, 'bp_media_count', $formatted );
 		return true;
 	}
