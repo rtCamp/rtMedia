@@ -16,7 +16,7 @@ if (class_exists('BP_Group_Extension')) :// Recommended, to prevent problems dur
          */
 
         /**
-         * 
+         *
          * @global type $bp
          */
         function __construct() {
@@ -28,7 +28,7 @@ if (class_exists('BP_Group_Extension')) :// Recommended, to prevent problems dur
         }
 
         /**
-         * 
+         *
          * @global type $bp_media
          * @return boolean
          */
@@ -59,7 +59,7 @@ if (class_exists('BP_Group_Extension')) :// Recommended, to prevent problems dur
         }
 
         /**
-         * 
+         *
          * @global type $bp
          */
         function create_screen_save() {
@@ -73,7 +73,7 @@ if (class_exists('BP_Group_Extension')) :// Recommended, to prevent problems dur
         }
 
         /**
-         * 
+         *
          * @global type $bp_media
          * @return boolean
          */
@@ -107,7 +107,7 @@ if (class_exists('BP_Group_Extension')) :// Recommended, to prevent problems dur
         }
 
         /**
-         * 
+         *
          * @global type $bp
          * @global type $bp_media
          * @return boolean
@@ -141,7 +141,7 @@ if (class_exists('BP_Group_Extension')) :// Recommended, to prevent problems dur
          */
 
         /**
-         * 
+         *
          * @global type $bp_media
          */
         function widget_display() {
@@ -159,9 +159,9 @@ if (class_exists('BP_Group_Extension')) :// Recommended, to prevent problems dur
 
     }
 
-    
 
-    
+
+
 
 
 endif; // class_exists( 'BP_Group_Extension' )
