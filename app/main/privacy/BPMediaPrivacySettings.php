@@ -37,11 +37,12 @@ class BPMediaPrivacySettings {
 		$query =
                     "SELECT	COUNT(*) as Finished
 	FROM
-		$wpdb->posts RIGHT JOIN $wpdb->postmeta on wp_postmeta.post_id = wp_posts.id
+		$wpdb->posts RIGHT JOIN $wpdb->postmeta ON $wpdb->postmeta.post_id = $wpdb->posts.id
 	WHERE
-		`meta_key` = 'bp_media_privacy' AND
-		( post_mime_type LIKE 'image%' OR post_mime_type LIKE 'audio%' OR post_mime_type LIKE 'video%' OR post_type LIKE 'bp_media_album')";
-            return $result = $wpdb->get_results($query);
+		$wpdb->postmeta.meta_key = 'bp_media_privacy' AND
+		( $wpdb->posts.post_type LIKE 'attachment' OR $wpdb->posts.post_type LIKE 'bp_media_album')";
+            $result = $wpdb->get_results($query);
+			return $result;
 	}
 
 	function get_total_count(){
@@ -49,27 +50,36 @@ class BPMediaPrivacySettings {
 		$query =
                     "SELECT	COUNT(*) as Total
 	FROM
-		$wpdb->posts RIGHT JOIN $wpdb->postmeta on wp_postmeta.post_id = wp_posts.id
+		$wpdb->posts RIGHT JOIN $wpdb->postmeta ON $wpdb->postmeta.post_id = $wpdb->posts.id
 	WHERE
-		`meta_key` = 'bp-media-key' AND
-		( post_mime_type LIKE 'image%' OR post_mime_type LIKE 'audio%' OR post_mime_type LIKE 'video%' OR post_type LIKE 'bp_media_album')";
-            $result = $wpdb->get_results($query);
+		$wpdb->postmeta.meta_key = 'bp-media-key' AND
+		( $wpdb->posts.post_type LIKE 'attachment' OR $wpdb->posts.post_type LIKE 'bp_media_album')";
+		$result = $wpdb->get_results($query);
 		return $result;
 	}
 
 	function query(){
-
+		$args = array(
+			'post_type'=>array(
+				'attachment',
+				'bp_media_album'
+				),
+			'post_status'=>'any',
+			'meta_key'=> 'bp-media-'
+		);
+		$q = new WP_Query($args);
+		print_r($q);
 	}
 
 	function init(){
 		$total = $this->get_total_count();
-		$total = $total[0];
 		$finished = $this->get_completed_count();
+		$total = $total[0];
 		$finished = $finished[0];
+		//$this->query();
 
-
+		//if(isset($total) && isset($finished) && is_array($total) && is_array($finished)){
 		echo '<div id="rtprivacyinstaller">';
-
 		foreach($total as $type=>$count){
 			echo '<div class="rtprivacytype" id="'.strtolower($type).'">';
 			echo '<strong>';
@@ -96,7 +106,8 @@ class BPMediaPrivacySettings {
 		_e('Start',BP_MEDIA_TXT_DOMAIN);
 		echo '</button>';
 		echo '</div>';
-	}
+		}
+	//}
 }
 
 ?>

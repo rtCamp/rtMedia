@@ -18,8 +18,10 @@ class BPMediaPrivacy {
 	 *
 	 */
 	function __construct() {
-		add_action( 'bp_media_after_update_media', array( $this, 'save_privacy' ), 99, 2 );
-		add_action( 'bp_media_no_object_after_add_media', array( $this, 'save_privacy' ), 99, 2 );
+		add_action( 'bp_media_after_update_media', array( $this, 'save_privacy_by_object' ) );
+		add_action( 'bp_media_after_add_media', array( $this, 'save_privacy_by_object' ) );
+		add_action( 'bp_media_after_add_album', array( $this, 'save_privacy_by_object' ) );
+		add_action( 'bp_media_after_edit_album', array( $this, 'save_privacy_by_object' ) );
 		add_action( 'wp_ajax_bp_media_privacy_install', 'BPMediaPrivacy::install' );
 		add_action( 'wp_ajax_bp_media_privacy_redirect', array( $this, 'set_option_redirect' ) );
 		add_action( 'bp_has_activities', array( $this, 'activity' ), 10, 2 );
@@ -74,6 +76,10 @@ class BPMediaPrivacy {
 		return $installed;
 	}
 
+	static function get_privacy($id){
+		return get_post_meta( $id, 'bp_media_privacy', TRUE );
+	}
+
 	static function get_site_default() {
 		global $bp_media;
 		$site_privacy = false;
@@ -125,7 +131,7 @@ class BPMediaPrivacy {
 		if ( BPMediaPrivacy::is_enabled() == false )
 			return;
 		global $bp_media_current_entry;
-		$privacy_level = get_post_meta( $bp_media_current_entry->get_id(), 'bp_media_privacy', TRUE );
+		$privacy_level = BPMediaPrivacy::get_privacy( $bp_media_current_entry->get_id());
 		BPMediaPrivacy::ui_html( $privacy_level );
 	}
 
@@ -150,15 +156,8 @@ class BPMediaPrivacy {
 		<?php
 	}
 
-	function save_privacy( $object_id, $type ) {
+	function save_privacy( $level, $object_id, $type ) {
 
-		$level = isset( $_POST[ 'bp_media_privacy' ] ) ? $_POST[ 'bp_media_privacy' ] : false;
-		if ( ! $level ) {
-			$level = BPMediaPrivacy::default_privacy();
-		}
-		if(!$level){
-			$level = '0';
-		}
 		$this->save( $level, $object_id );
 		if ( $type == 'album' ) {
 			$args = array(
@@ -176,18 +175,28 @@ class BPMediaPrivacy {
 		}
 	}
 
-	function save( $level = 0, $object_id = false ) {
+	function save_privacy_by_object( $object ) {
+		$level = isset( $_POST[ 'bp_media_privacy' ] ) ? $_POST[ 'bp_media_privacy' ] : false;
 
-		if ( ! array_key_exists( $level, $this->get_settings() ) )
+		if ( ! is_object( $object ) ) {
 			return false;
+		}
+		if($level==false){
+			$album_id = $object->get_album_id();
+			$level = BPMediaPrivacy::get_privacy($album_id);
 
+		}
 
-		return $this->save_by_object( $level, $object_id );
+		$media_id = $object->get_id();
+		$type = $object->get_type();
+		return $this->save_privacy( $level, $media_id, $type );
 	}
 
-	private function save_by_object( $level = 0, $object_id = false ) {
+	function save( $level = 0, $object_id = false ) {
 		if ( $object_id == false )
 			return false;
+		if ( ! array_key_exists( $level, BPMediaPrivacy::get_settings() ) )
+			$level = 0;
 
 		$level = apply_filters( 'bp_media_save_privacy', $level );
 
@@ -240,9 +249,9 @@ class BPMediaPrivacy {
 			return;
 		if ( $object_id == false )
 			return;
-		$privacy = get_post_meta( $object_id, 'bp_media_privacy', true );
+		$privacy = BPMediaPrivacy::get_privacy( $object_id);
 		$parent = get_post_field( 'post_parent', $object_id, 'raw' );
-		$parent_privacy = get_post_meta( $parent, 'bp_media_privacy', true );
+		$parent_privacy = BPMediaPrivacy::get_privacy( $parent );
 
 		if ( $privacy === false ) {
 			if ( $parent_privacy !== false ) {
@@ -253,6 +262,7 @@ class BPMediaPrivacy {
 		}
 		return $privacy;
 	}
+
 
 	static function current_access() {
 		global $bp;
@@ -265,7 +275,7 @@ class BPMediaPrivacy {
 			}
 			if ( isset( $bp->displayed_user->id ) )
 				if ( ! (bp_is_my_profile()) ) {
-					if ( bp_is_active('groups') &&  class_exists( 'BP_Group_Extension' ) ) {
+					if ( bp_is_active( 'groups' ) && class_exists( 'BP_Group_Extension' ) ) {
 						if ( bp_get_current_group_id() == 0 ) {
 							$is_friend = friends_check_friendship_status( $bp->loggedin_user->id, $bp->displayed_user->id );
 							if ( $is_friend == 'is_friend' ) {
@@ -326,6 +336,5 @@ class BPMediaPrivacy {
 		}
 		die( $page );
 	}
-
 }
 ?>
