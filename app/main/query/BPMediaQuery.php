@@ -95,7 +95,11 @@ class BPMediaQuery {
 			if ( $count == false ) {
 				$count = $bp_media->default_count();
 			}
-			$limit_offset = $this->get_limit_offset( $count, $this->prepare_pagination( $page ) );
+			$is_album=false;
+			if($type=='album'){
+				$is_album = true;
+			}
+			$limit_offset = $this->get_limit_offset( $count, $this->prepare_pagination( $page ),$is_album );
 			$args[ 'posts_per_page' ] = $limit_offset[ 0 ];
 			$args[ 'offset' ] = $limit_offset[ 1 ];
 		}
@@ -103,7 +107,7 @@ class BPMediaQuery {
 		return $args;
 	}
 
-	function get_limit_offset( $limit, $page ) {
+	function get_limit_offset( $limit, $page,$album=false ) {
 		global $bp;
 		$my_profile = false;
 		if ( bp_is_active('groups') && class_exists( 'BP_Group_Extension' ) ) {
@@ -118,7 +122,7 @@ class BPMediaQuery {
 				$my_profile = true;
 			}
 		}
-		if ( $my_profile === true ) {
+		if ( ($my_profile === true) && ($album==false) ) {
 			if ( $page > 1 ) {
 				$offset = $limit * ($page - 1) - 1;
 			} else {
