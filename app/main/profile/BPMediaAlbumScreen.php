@@ -193,7 +193,9 @@ class BPMediaAlbumScreen extends BPMediaScreen {
             $paged = 1;
 		$this->filter_entries();
 		if($bp->current_component=='groups'){
-                    // do something
+             $query = new BPMediaQuery();
+			$args = $query->init(false,$album_id,false,$paged);
+			$bp_media_query = new WP_Query($args);
 		}
         if ($bp->current_action == BP_MEDIA_ALBUMS_SLUG) {
             $query = new BPMediaQuery();
