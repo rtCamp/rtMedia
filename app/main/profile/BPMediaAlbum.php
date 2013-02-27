@@ -128,6 +128,7 @@ class BPMediaAlbum {
             $this->thumbnail = '<img src ="' . BP_MEDIA_URL . 'app/assets/img/image_thumb.png">';
         }
 		$this->filter_entries();
+		$this->type = 'album';
         $this->media_entries = get_children(array(
             'post_parent' => $this->id,
             'post_type' => 'attachment',
@@ -310,6 +311,19 @@ class BPMediaAlbum {
      */
     function get_id() {
         return $this->id;
+    }
+	/**
+     * Returns the id of the album
+     *
+     * @since BuddyPress Media 2.2
+     */
+
+    /**
+     *
+     * @return type
+     */
+    function get_type() {
+        return $this->type;
     }
 
     /**
