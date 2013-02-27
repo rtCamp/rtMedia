@@ -632,7 +632,7 @@ class BuddyPressMedia {
 	static function get_wall_album( $group_id = false ) {
 		global $wpdb;
 		$group_id = ( ! $group_id) ? '1' : $group_id;
-		$album_name = __( 'Wall Posts', BP_MEDIA_TXT_DOMAIN );
+		$album_name = __( 'Wall Posts', BP_MEDclaIA_TXT_DOMAIN );
 		$query = "SELECT ID FROM {$wpdb->prefix}posts ps LEFT JOIN
 		{$wpdb->prefix}postmeta pm ON ps.ID= pm.post_id WHERE ps.post_title
 			LIKE '{$album_name}' AND ps.post_type='bp_media_album' AND

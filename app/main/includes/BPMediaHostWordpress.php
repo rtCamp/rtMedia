@@ -840,7 +840,8 @@ class BPMediaHostWordpress {
 	 * @return boolean
 	 */
 	protected function set_permalinks() {
-		if ( class_exists( 'BP_Group_Extension' ) ) {
+
+		if ( bp_is_active('groups') && class_exists( 'BP_Group_Extension' ) ) {
 			if ( $this->group_id > 0 ) {
 				$current_group = new BP_Groups_Group( $this->group_id );
 				$pre_url = bp_get_group_permalink( $current_group );
