@@ -436,7 +436,6 @@ class BPMediaActions {
 				'album' => $obj->Albums,
 			);
 		}
-		print_r($formatted);
 		bp_update_user_meta( $user_id, 'bp_media_count', $formatted );
 		return true;
 	}
