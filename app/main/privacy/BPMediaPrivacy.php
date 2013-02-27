@@ -182,8 +182,10 @@ class BPMediaPrivacy {
 			return false;
 		}
 		if($level==false){
+			if($object->get_type()!='album'){
 			$album_id = $object->get_album_id();
 			$level = BPMediaPrivacy::get_privacy($album_id);
+			}
 
 		}
 
