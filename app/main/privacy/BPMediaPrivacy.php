@@ -18,8 +18,10 @@ class BPMediaPrivacy {
 	 *
 	 */
 	function __construct() {
-		add_action( 'bp_media_after_update_media', array( $this, 'save_privacy' ), 99, 2 );
-		add_action( 'bp_media_no_object_after_add_media', array( $this, 'save_privacy' ), 99, 2 );
+		add_action( 'bp_media_after_update_media', array( $this, 'save_privacy_by_object' ) );
+		add_action( 'bp_media_no_object_after_add_media', array( $this, 'save_privacy_by_object' ) );
+		add_action( 'bp_media_after_add_album', array( $this, 'save_privacy_by_object' ) );
+		add_action( 'bp_media_after_edit_album', array( $this, 'save_privacy_by_object' ) );
 		add_action( 'wp_ajax_bp_media_privacy_install', 'BPMediaPrivacy::install' );
 		add_action( 'wp_ajax_bp_media_privacy_redirect', array( $this, 'set_option_redirect' ) );
 		add_action( 'bp_has_activities', array( $this, 'activity' ), 10, 2 );
@@ -150,15 +152,8 @@ class BPMediaPrivacy {
 		<?php
 	}
 
-	function save_privacy( $object_id, $type ) {
+	function save_privacy( $level, $object_id, $type ) {
 
-		$level = isset( $_POST[ 'bp_media_privacy' ] ) ? $_POST[ 'bp_media_privacy' ] : false;
-		if ( ! $level ) {
-			$level = BPMediaPrivacy::default_privacy();
-		}
-		if(!$level){
-			$level = '0';
-		}
 		$this->save( $level, $object_id );
 		if ( $type == 'album' ) {
 			$args = array(
@@ -176,18 +171,21 @@ class BPMediaPrivacy {
 		}
 	}
 
-	function save( $level = 0, $object_id = false ) {
-
-		if ( ! array_key_exists( $level, $this->get_settings() ) )
+	function save_privacy_by_object( $object ) {
+		$level = isset( $_POST[ 'bp_media_privacy' ] ) ? $_POST[ 'bp_media_privacy' ] : false;
+		if ( ! is_object( $object ) ) {
 			return false;
-
-
-		return $this->save_by_object( $level, $object_id );
+		}
+		$media_id = $object->id;
+		$type = $object->type;
+		return $this->save_privacy( $level, $media_id, $type );
 	}
 
-	private function save_by_object( $level = 0, $object_id = false ) {
+	private function save( $level = 0, $object_id = false ) {
 		if ( $object_id == false )
 			return false;
+		if ( ! array_key_exists( $level, BPMediaPrivacy::get_settings() ) )
+			$level = 0;
 
 		$level = apply_filters( 'bp_media_save_privacy', $level );
 
@@ -265,7 +263,7 @@ class BPMediaPrivacy {
 			}
 			if ( isset( $bp->displayed_user->id ) )
 				if ( ! (bp_is_my_profile()) ) {
-					if ( bp_is_active('groups') &&  class_exists( 'BP_Group_Extension' ) ) {
+					if ( bp_is_active( 'groups' ) && class_exists( 'BP_Group_Extension' ) ) {
 						if ( bp_get_current_group_id() == 0 ) {
 							$is_friend = friends_check_friendship_status( $bp->loggedin_user->id, $bp->displayed_user->id );
 							if ( $is_friend == 'is_friend' ) {

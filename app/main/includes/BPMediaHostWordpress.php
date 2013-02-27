@@ -242,7 +242,6 @@ class BPMediaHostWordpress {
 			update_post_meta( $attachment_id, 'bp-media-key', (-$group ) );
 		}
 		do_action( 'bp_media_after_add_media', $this, $is_multiple, $is_activity, $group );
-		do_action( 'bp_media_no_object_after_add_media', $this->id, $this->type );
 		return $attachment_id;
 	}
 
@@ -596,7 +595,7 @@ class BPMediaHostWordpress {
 		$post[ 'post_author' ] = $args[ 'owner' ];
 		$result = wp_update_post( $post );
 		$this->init( $this->id );
-		do_action( 'bp_media_after_update_media', $this->id, $this->type );
+		do_action( 'bp_media_after_update_media', $this );
 		return $result;
 	}
 
