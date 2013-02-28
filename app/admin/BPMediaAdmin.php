@@ -36,7 +36,6 @@ if (!class_exists('BPMediaAdmin')) {
                 if (is_multisite())
                     add_action('network_admin_edit_bp_media', array($this, 'save_multisite_options'));
             }
-            $this->bp_media_upgrade = new BPMediaUpgrade();
             $this->bp_media_settings = new BPMediaSettings();
         }
 
