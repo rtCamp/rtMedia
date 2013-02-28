@@ -42,7 +42,7 @@ class BuddyPressMedia {
      *
      * @var string Support forum url
      */
-    public $support_url = 'http://rtcamp.com/support/forum/buddypress-media/';
+    public $support_url = 'http://rtcamp.com/support/forum/buddypress-media/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media';
 
     /**
      *

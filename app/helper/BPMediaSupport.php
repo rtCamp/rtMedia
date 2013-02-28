@@ -70,7 +70,7 @@ if (!class_exists('BPMediaSupport')) {
         }
 
         /**
-         * 
+         *
          * @global type $current_user
          * @param type $form
          */
@@ -92,7 +92,7 @@ if (!class_exists('BPMediaSupport')) {
             }
             ?>
             <h3><?php echo $meta_title; ?></h3>
-            <div id="support-form" class="bp-media-form">               
+            <div id="support-form" class="bp-media-form">
                 <ul>
                     <li>
                         <label class="bp-media-label" for="name"><?php _e('Name', BP_MEDIA_TXT_DOMAIN); ?>:</label><input class="bp-media-input" id="name" type="text" name="name" value="<?php echo (isset($_REQUEST['name'])) ? esc_attr(stripslashes(trim($_REQUEST['name']))) : $current_user->display_name; ?>" required />
@@ -114,15 +114,15 @@ if (!class_exists('BPMediaSupport')) {
                     </li>
                     <input type="hidden" name="request_type" value="<?php echo $form; ?>"/>
                     <input type="hidden" name="request_id" value="<?php echo wp_create_nonce(date('YmdHis')); ?>"/>
-                    <input type="hidden" name="server_address" value="<?php echo $_SERVER['SERVER_ADDR']; ?>"/>                    
-                    <input type="hidden" name="ip_address" value="<?php echo $_SERVER['REMOTE_ADDR']; ?>"/>                    
+                    <input type="hidden" name="server_address" value="<?php echo $_SERVER['SERVER_ADDR']; ?>"/>
+                    <input type="hidden" name="ip_address" value="<?php echo $_SERVER['REMOTE_ADDR']; ?>"/>
                     <input type="hidden" name="server_type" value="<?php echo $_SERVER['SERVER_SOFTWARE']; ?>"/>
                     <input type="hidden" name="user_agent" value="<?php echo $_SERVER['HTTP_USER_AGENT']; ?>"/>
 
                 </ul>
-            </div><!-- .submit-bug-box --><?php if ($form == 'bug_report') { ?>   
+            </div><!-- .submit-bug-box --><?php if ($form == 'bug_report') { ?>
                 <h3><?php _e('Additional Information', BP_MEDIA_TXT_DOMAIN); ?></h3>
-                <div id="support-form" class="bp-media-form">  
+                <div id="support-form" class="bp-media-form">
                     <ul>
 
                         <li>
@@ -153,7 +153,7 @@ if (!class_exists('BPMediaSupport')) {
         }
 
         /**
-         * 
+         *
          * @global type $bp_media
          */
         public function submit_request() {
