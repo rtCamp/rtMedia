@@ -447,7 +447,7 @@ class BPMediaActions {
 	 */
 	function footer() {
 		?>
-		<div id="bp-media-footer"><p>Using <a title="BuddyPress Media adds photos, video and audio upload/management feature" href="http://rtcamp.com/buddypress-media/">BuddyPress Media</a>.</p></div>
+		<div id="bp-media-footer"><p>Using <a title="BuddyPress Media adds photos, video and audio upload/management feature" href="http://rtcamp.com/buddypress-media/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media">BuddyPress Media</a>.</p></div>
 		<?php
 	}
 
