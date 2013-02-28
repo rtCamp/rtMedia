@@ -54,8 +54,8 @@ class BPMediaPrivacySettings {
 	WHERE
 		$wpdb->postmeta.meta_key = 'bp-media-key' AND
 		( $wpdb->posts.post_type LIKE 'attachment' OR $wpdb->posts.post_type LIKE 'bp_media_album')";
-		$result = $wpdb->get_results($query);
-		return $result;
+			$result = $wpdb->get_results($query);
+			return $result;
 	}
 
 
