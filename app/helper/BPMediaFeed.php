@@ -8,7 +8,7 @@
  */
 class BPMediaFeed {
 
-    public $feed_url = 'http://rtcamp.com/tag/buddypress/feed/';
+    public $feed_url = 'http://rtcamp.com/tag/buddypress/feed/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media';
 
     public function __construct($feed_url = '') {
         if ($feed_url)
@@ -20,7 +20,7 @@ class BPMediaFeed {
      */
 
     /**
-     * 
+     *
      * @global type $bp_media
      */
     public function fetch_feed() {
