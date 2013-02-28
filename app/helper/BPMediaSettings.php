@@ -413,7 +413,7 @@ if (!class_exists('BPMediaSettings')) {
             }
             ?>
             <select name="<?php echo $name; ?>" id="<?php echo $option; ?>"><?php if ($none) { ?>
-                    <option><?php __e('None', BP_MEDIA_TXT_DOMAIN); ?></option><?php
+                    <option><?php _e('None', BP_MEDIA_TXT_DOMAIN); ?></option><?php
             }
             foreach ($values as $value => $text) {
                 ?>
