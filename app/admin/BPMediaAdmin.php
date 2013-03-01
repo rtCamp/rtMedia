@@ -328,10 +328,8 @@ if (!class_exists('BPMediaAdmin')) {
 
                         $message = sprintf(__('I use @buddypressmedia http://goo.gl/8Upmv on %s', BP_MEDIA_TXT_DOMAIN), home_url());
                         $addons = '<label for="bp-media-add-linkback"><input' . checked(bp_get_option('bp_media_add_linkback', false), true, false) . ' type="checkbox" name="bp-media-add-linkback" value="1" id="bp-media-add-linkback"/> ' . __('Add link to footer', BP_MEDIA_TXT_DOMAIN) . '</label>
-                       <ul>
-                           <li><a href="http://twitter.com/home/?status=' . $message . '" target= "_blank"><input type="button" value="' . __('Tweet', BP_MEDIA_TXT_DOMAIN) . '" class="button button-tweet"></a></li>
-                           <li><a href="http://wordpress.org/support/view/plugin-reviews/buddypress-media?rate=5#postform" target= "_blank"><input type="button" value="' . __('Rate on WordPress.org', BP_MEDIA_TXT_DOMAIN) . '" class="button button-rating"></a></li>
-                       </ul>';
+						<a href="http://twitter.com/home/?status=' . $message . '" class="button button-tweet" target= "_blank">'. __('Tweet', BP_MEDIA_TXT_DOMAIN).'</a>
+						<a href="http://wordpress.org/support/view/plugin-reviews/buddypress-media?rate=5#postform" class="button button-rating" target= "_blank">' . __('Rate on WordPress.org', BP_MEDIA_TXT_DOMAIN) . '</a>';
                         new BPMediaAdminWidget('spread-the-word', __('Spread the Word', BP_MEDIA_TXT_DOMAIN), $addons);
 
                         $donate = '<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
