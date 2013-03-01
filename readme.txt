@@ -118,7 +118,11 @@ Please visit [BuddyPress Media's Features page](http://rtcamp.com/buddypress-med
 Please visit [BuddyPress Media's Roadmap page](http://rtcamp.com/buddypress-media/roadmap/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "Visit BuddyPress Media's Features page") to get some details about future releases.
 
 = 2.6.7 =
-* Fixes fatal error on sites where friends component is disabled. Thanks to [Cat555](http://rtcamp.com/support/users/cat555/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media) for reporting this.
+* Fixes modular compatibility with friends component. Thanks to [Cat555](http://rtcamp.com/support/users/cat555/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media) for reporting this.
+* Fixes modular compatibility with friends component.
+* Fixes default privacy levels.
+* Minor Admin UI revisions.
+* Fixes load more on albums.
 
 = 2.6.6 =
 * Fixes automatic count update.
@@ -299,4 +303,4 @@ Please visit [BuddyPress Media's Roadmap page](http://rtcamp.com/buddypress-medi
 
 == Upgrade Notice ==
 = 2.6.7 =
-Bug fixes
+Important bug fixes
