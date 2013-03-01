@@ -29,6 +29,7 @@ if ( ! class_exists( 'BPMediaWidget' ) ) {
 		 */
 		function widget( $args, $instance ) {
 			extract( $args );
+			echo $before_widget;
 			$title = apply_filters( 'widget_title', empty( $instance[ 'title' ] ) ? __( 'BuddyPress Media', BP_MEDIA_TXT_DOMAIN ) : $instance[ 'title' ], $instance, $this->id_base );
 			$allow= array();
 			$allowed = array( );
