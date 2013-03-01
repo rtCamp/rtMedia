@@ -136,6 +136,8 @@ ul#activity-stream li.media.album_updated ul li{float: left;margin-right:2%}
 .wrap.bp-media-admin .bp-media-settings-tabs a.nav-tab.ffmpeg{background-position-y:-154px;}
 .wrap.bp-media-admin .bp-media-settings-tabs a.nav-tab.kaltura{background-position-y:-184px;}
 .wrap.bp-media-admin .bp-media-settings-tabs a.nav-tab.convert-videos{background-position-y:-214px;}
+.wrap.bp-media-admin .bp-media-settings-tabs a.nav-tab.insta{background-position-y:-244px;}
+.wrap.bp-media-admin .bp-media-settings-tabs a.nav-tab.watermark{background-position-y:-274px;}
 /* Addons page Styling */
 
 a.toplevel_page_bp-media-settings div.wp-menu-image{
