@@ -107,7 +107,7 @@ class BPMediaPrivacy {
 	}
 
 	static function get_settings() {
-		return array(
+		$settings = array(
 			6 => array(
 				'private',
 				__( '<strong>Private</strong>, Visible only to myself', BP_MEDIA_TXT_DOMAIN )
@@ -125,6 +125,10 @@ class BPMediaPrivacy {
 				__( '<strong>Public</strong>, Visible to the world', BP_MEDIA_TXT_DOMAIN )
 			)
 		);
+		if(!bp_is_active('friends')){
+			unset($settings[4]);
+		}
+		return $settings;
 	}
 
 	function ui() {
@@ -188,6 +192,11 @@ class BPMediaPrivacy {
 			}
 		}
 
+		$default_level= BPMediaPrivacy::default_privacy();
+		if($level == false){
+			$level = $default_level;
+		}
+
 		$media_id = $object->get_id();
 		$type = $object->get_type();
 		return $this->save_privacy( $level, $media_id, $type );
@@ -196,6 +205,7 @@ class BPMediaPrivacy {
 	function save( $level = 0, $object_id = false ) {
 		if ( $object_id == false )
 			return false;
+		if(!$level)$level = 0;
 		if ( ! array_key_exists( $level, BPMediaPrivacy::get_settings() ) )
 			$level = 0;
 
