@@ -183,11 +183,7 @@ class BPMediaTemplate {
                 break;
             case 'albums':
                 global $bp_media_albums_query;
-                if ( bp_is_my_profile() || BPMediaGroupLoader::can_upload() ) {
-                    if (isset($bp_media_albums_query->found_posts) && $bp_media_albums_query->found_posts > ($count-1) )
-                        $showmore = true;
-                } else {
-                    if (isset($bp_media_albums_query->found_posts) && $bp_media_albums_query->found_posts > $count )
+                if (isset($bp_media_albums_query->found_posts) && $bp_media_albums_query->found_posts > $count ){
                         $showmore = true;
                 }
                 break;

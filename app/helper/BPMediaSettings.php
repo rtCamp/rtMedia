@@ -84,23 +84,22 @@ if ( ! class_exists( 'BPMediaSettings' ) ) {
 					'desc' => __( 'Enable privacy', BP_MEDIA_TXT_DOMAIN )
 				) );
 
-				add_settings_section( 'bpm-privacy-levels', __( 'Default Privacy Levels', BP_MEDIA_TXT_DOMAIN ), '', 'bp-media-settings' );
 				$settings = array(
-					6 => __( '<strong>Private</strong>, Visible only to the user', BP_MEDIA_TXT_DOMAIN ),
-					4 => __( '<strong>Friends</strong>, Visible to user\'s friends', BP_MEDIA_TXT_DOMAIN ),
-					2 => __( '<strong>Users</strong>, Visible to registered users', BP_MEDIA_TXT_DOMAIN ),
-					0 => __( '<strong>Public</strong>, Visible to the world', BP_MEDIA_TXT_DOMAIN )
+					6 => __( '<strong>Private</strong> - Visible only to the user', BP_MEDIA_TXT_DOMAIN ),
+					4 => __( '<strong>Friends</strong> - Visible to user\'s friends', BP_MEDIA_TXT_DOMAIN ),
+					2 => __( '<strong>Users</strong> - Visible to registered users', BP_MEDIA_TXT_DOMAIN ),
+					0 => __( '<strong>Public</strong> - Visible to the world', BP_MEDIA_TXT_DOMAIN )
 				);
 				if ( ! bp_is_active( 'friends' ) ) {
 					unset( $settings[ 4 ] );
 				}
-				add_settings_field( 'bpm-privacy-private-enabled', __( 'Default Privacy', BP_MEDIA_TXT_DOMAIN ), array( $this, 'radio' ), 'bp-media-settings', 'bpm-privacy-levels', array(
+				add_settings_field( 'bpm-privacy-private-enabled', __( 'Default Privacy', BP_MEDIA_TXT_DOMAIN ), array( $this, 'radio' ), 'bp-media-settings', 'bpm-privacy', array(
 					'setting' => 'bp_media_options',
 					'option' => 'default_privacy_level',
 					'radios' => $settings,
 					'default' => 0,
 				) );
-				add_settings_field( 'bpm-privacy-override-enabled', __( 'User Override', BP_MEDIA_TXT_DOMAIN ), array( $this, 'checkbox' ), 'bp-media-settings', 'bpm-privacy-levels', array(
+				add_settings_field( 'bpm-privacy-override-enabled', __( 'User Override', BP_MEDIA_TXT_DOMAIN ), array( $this, 'checkbox' ), 'bp-media-settings', 'bpm-privacy', array(
 					'setting' => 'bp_media_options',
 					'option' => 'privacy_override_enabled',
 					'desc' => __( 'Allow users to override admin defaults (<em>Recommended</em>)', BP_MEDIA_TXT_DOMAIN )
@@ -329,7 +328,7 @@ if ( ! class_exists( 'BPMediaSettings' ) ) {
 
 			foreach ( $radios as $value => $desc ) {
 					?>
-				<label for="<?php echo sanitize_title( $desc ); ?>"><input<?php checked( $options[ $option ], $value ); ?> value="<?php echo $value; ?>" name="<?php echo $name; ?>" id="<?php echo sanitize_title( $desc ); ?>" type="radio" /><?php echo $desc; ?></label><br /><?php
+				<label for="<?php echo sanitize_title( $desc ); ?>"><input<?php checked( $options[ $option ], $value ); ?> value="<?php echo $value; ?>" name="<?php echo $name; ?>" id="<?php echo sanitize_title( $desc ); ?>" type="radio" />&nbsp;<?php echo $desc; ?></label><br /><?php
 			}
 		}
 
