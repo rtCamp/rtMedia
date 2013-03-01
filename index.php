@@ -76,6 +76,7 @@ spl_autoload_register( 'buddypress_media_autoloader' );
  */
 global $bp_media;
 $bp_media = new BuddyPressMedia();
+
 //add_action('init','BPMediaBPAlbumImporter');
 
 //BPMediaBPAlbumImporter::bpmedia_ajax_import_callback();
