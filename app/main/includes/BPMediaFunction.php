@@ -10,15 +10,15 @@ class BPMediaFunction {
     }
 
     /**
-     * 
+     *
      * @global type $bp
      * @param type $args
      * @return boolean
      */
     static function record_activity($args = '') {
         global $bp;
-        if (!function_exists('bp_activity_add'))
-            return false;
+		if(!bp_is_active('activity'))
+			return false;
         $defaults = array(
             'component' => BP_MEDIA_SLUG, // The name/ID of the component e.g. groups, profile, mycomponent
         );
@@ -29,7 +29,7 @@ class BPMediaFunction {
     }
 
     /**
-     * 
+     *
      * @param type $activity_allowedtags
      * @return array
      */
@@ -68,7 +68,7 @@ class BPMediaFunction {
     }
 
     /**
-     * 
+     *
      * @param type $messages
      * @param type $type
      */
@@ -89,7 +89,7 @@ class BPMediaFunction {
     }
 
     /**
-     * 
+     *
      * @global type $bp_media
      * @param type $content
      * @param type $activity
@@ -107,7 +107,7 @@ class BPMediaFunction {
 
     /**
      * Updates the media count of all users.
-     * 
+     *
      * @global type $wpdb
      * @return boolean
      */
@@ -146,7 +146,7 @@ class BPMediaFunction {
     }
 
     /**
-     * 
+     *
      * @global type $bp_media_current_entry
      */
     static function update_media() {
@@ -184,7 +184,7 @@ class BPMediaFunction {
     }
 
     /**
-     * 
+     *
      * @param BPMediaAlbum $album
      * @param type $current_time
      * @param type $delete_media_id
@@ -236,7 +236,7 @@ class BPMediaFunction {
     }
 
     /**
-     * 
+     *
      * @global type $bp_media_current_entry
      */
     static function wp_comment_form_mod() {
@@ -255,7 +255,7 @@ class BPMediaFunction {
      */
 
     /**
-     * 
+     *
      * @param type $location
      * @param type $message
      * @param type $type

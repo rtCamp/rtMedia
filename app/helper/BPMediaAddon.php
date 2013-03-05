@@ -13,7 +13,7 @@ if (!class_exists('BPMediaAddon')) {
 
     class BPMediaAddon {
 
-        public $enquiry_link = 'http://rtcamp.com/contact';
+        public $enquiry_link = 'http://rtcamp.com/contact/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media';
 
         public function coming_soon_div() {
             return
@@ -28,22 +28,22 @@ if (!class_exists('BPMediaAddon')) {
                 array(
                     'title' => __('BuddyPress-Media Kaltura Add-on', BP_MEDIA_TXT_DOMAIN),
                     'img_src' => 'http://cdn.rtcamp.com/files/2012/10/new-buddypress-media-kaltura-logo-240x184.png',
-                    'product_link' => 'http://rtcamp.com/store/buddypress-media-kaltura/',
+                    'product_link' => 'http://rtcamp.com/store/buddypress-media-kaltura/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media',
                     'desc' => '<p>' . __('Add support for more video formats using Kaltura video solution.', BP_MEDIA_TXT_DOMAIN) . '</p>
                     <p>' . __('Works with Kaltura.com, self-hosted Kaltura-CE and Kaltura-on-premise.', BP_MEDIA_TXT_DOMAIN) . '</p>',
                     'price' => '$99',
-                    'demo_link' => 'http://demo.rtcamp.com/bpm-kaltura/',
-                    'buy_now' => 'http://rtcamp.com/store/?add-to-cart=15446'
+                    'demo_link' => 'http://demo.rtcamp.com/bpm-kaltura/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media',
+                    'buy_now' => 'http://rtcamp.com/store/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media&add-to-cart=15446'
                 ),
                 array(
                     'title' => __('BuddyPress-Media FFMPEG Add-on', BP_MEDIA_TXT_DOMAIN),
                     'img_src' => 'http://cdn.rtcamp.com/files/2012/09/ffmpeg-logo-240x184.png',
-                    'product_link' => 'http://rtcamp.com/store/buddypress-media-ffmpeg-converter/',
+                    'product_link' => 'http://rtcamp.com/store/buddypress-media-ffmpeg-converter/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media',
                     'desc' => '<p>' . __('Add supports for more audio & video formats using open-source media-node.', BP_MEDIA_TXT_DOMAIN) . '</p>
                         <p>' . __('Media node comes with automated setup script for Ubuntu/Debian.', BP_MEDIA_TXT_DOMAIN) . '</p>',
                     'price' => '$49',
-                    'demo_link' => 'http://demo.rtcamp.com/bpm-media',
-                    'buy_now' => 'http://rtcamp.com/store/?add-to-cart=13677'
+                    'demo_link' => 'http://demo.rtcamp.com/bpm-media/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media',
+                    'buy_now' => 'http://rtcamp.com/store/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media&add-to-cart=13677'
                 )
             );
             $addons = apply_filters('bp_media_addons', $addons);
@@ -53,7 +53,7 @@ if (!class_exists('BPMediaAddon')) {
         }
 
         /**
-         * 
+         *
          * @global type $bp_media
          * @param type $args
          */

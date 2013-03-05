@@ -75,7 +75,7 @@ class BPMediaAlbumScreen extends BPMediaScreen {
                 $this->template->the_album_content();
             endwhile;
             echo '</ul>';
-            $this->template->show_more();
+            $this->template->show_more('albums');
         else:
             BPMediaFunction::show_formatted_error_message(sprintf(__('Sorry, no %s were found.', BP_MEDIA_TXT_DOMAIN), $this->slug), 'info');
         endif;
