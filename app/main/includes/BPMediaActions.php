@@ -409,7 +409,7 @@ class BPMediaActions {
 		global $bp;
 		$user_id = $bp->loggedin_user->id;
 		global $wpdb;
-
+                $formatted = array();
 		$query =
 				"SELECT
 		SUM(CASE WHEN post_mime_type LIKE 'image%' THEN 1 ELSE 0 END) as Images,
