@@ -177,7 +177,6 @@ class BPMediaScreen {
 
         $this->set_query();
 
-
         $this->hook_before();
 
         if ($bp_media_query && $bp_media_query->have_posts()):
@@ -377,9 +376,10 @@ class BPMediaScreen {
             exit;
         }
         $post_id = $bp_media_current_entry->get_id();
-        $activity_id = get_post_meta($post_id, 'bp_media_child_activity', true);
-
-        bp_activity_delete_by_activity_id($activity_id);
+		if(bp_is_active('activity')){
+			$activity_id = get_post_meta($post_id, 'bp_media_child_activity', true);
+			bp_activity_delete_by_activity_id($activity_id);
+		}
         $bp_media_current_entry->delete_media();
 
         @setcookie('bp-message', __('Media deleted successfully', BP_MEDIA_TXT_DOMAIN), time() + 60 * 60 * 24, COOKIEPATH);

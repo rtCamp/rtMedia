@@ -1,12 +1,12 @@
 <?php
 /*
   Plugin Name: BuddyPress Media
-  Plugin URI: http://rtcamp.com/buddypress-media/
+  Plugin URI: http://rtcamp.com/buddypress-media/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media
   Description: This plugin adds missing media rich features like photos, videosand audios uploading to BuddyPress which are essential if you are building social network, seriously!
-  Version: 2.6.6
+  Version: 2.6.7
   Author: rtCamp
   Text Domain: buddypress-media
-  Author URI: http://rtcamp.com
+  Author URI: http://rtcamp.com/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media
  */
 
 /**
@@ -76,6 +76,7 @@ spl_autoload_register( 'buddypress_media_autoloader' );
  */
 global $bp_media;
 $bp_media = new BuddyPressMedia();
+
 //add_action('init','BPMediaBPAlbumImporter');
 
 //BPMediaBPAlbumImporter::bpmedia_ajax_import_callback();

@@ -18,10 +18,10 @@ class BPMediaPrivacy {
 	 *
 	 */
 	function __construct() {
-		add_action( 'bp_media_after_update_media', array( $this, 'save_privacy_by_object' ),99 );
-		add_action( 'bp_media_after_add_media', array( $this, 'save_privacy_by_object' ),99 );
-		add_action( 'bp_media_after_add_album', array( $this, 'save_privacy_by_object' ),99 );
-		add_action( 'bp_media_after_edit_album', array( $this, 'save_privacy_by_object' ),99 );
+		add_action( 'bp_media_after_update_media', array( $this, 'save_privacy_by_object' ), 99 );
+		add_action( 'bp_media_after_add_media', array( $this, 'save_privacy_by_object' ), 99 );
+		add_action( 'bp_media_after_add_album', array( $this, 'save_privacy_by_object' ), 99 );
+		add_action( 'bp_media_after_edit_album', array( $this, 'save_privacy_by_object' ), 99 );
 		add_action( 'wp_ajax_bp_media_privacy_install', 'BPMediaPrivacy::install' );
 		add_action( 'wp_ajax_bp_media_privacy_redirect', array( $this, 'set_option_redirect' ) );
 		add_action( 'bp_has_activities', array( $this, 'activity' ), 10, 2 );
@@ -76,7 +76,7 @@ class BPMediaPrivacy {
 		return $installed;
 	}
 
-	static function get_privacy($id){
+	static function get_privacy( $id ) {
 		return get_post_meta( $id, 'bp_media_privacy', TRUE );
 	}
 
@@ -107,7 +107,7 @@ class BPMediaPrivacy {
 	}
 
 	static function get_settings() {
-		return array(
+		$settings = array(
 			6 => array(
 				'private',
 				__( '<strong>Private</strong>, Visible only to myself', BP_MEDIA_TXT_DOMAIN )
@@ -125,13 +125,17 @@ class BPMediaPrivacy {
 				__( '<strong>Public</strong>, Visible to the world', BP_MEDIA_TXT_DOMAIN )
 			)
 		);
+		if(!bp_is_active('friends')){
+			unset($settings[4]);
+		}
+		return $settings;
 	}
 
 	function ui() {
 		if ( BPMediaPrivacy::is_enabled() == false )
 			return;
 		global $bp_media_current_entry;
-		$privacy_level = BPMediaPrivacy::get_privacy( $bp_media_current_entry->get_id());
+		$privacy_level = BPMediaPrivacy::get_privacy( $bp_media_current_entry->get_id() );
 		BPMediaPrivacy::ui_html( $privacy_level );
 	}
 
@@ -181,12 +185,16 @@ class BPMediaPrivacy {
 		if ( ! is_object( $object ) ) {
 			return false;
 		}
-		if($level==false){
-			if($object->get_type()!='album'){
-			$album_id = $object->get_album_id();
-			$level = BPMediaPrivacy::get_privacy($album_id);
+		if ( $level == false ) {
+			if ( $object->get_type() != 'album' ) {
+				$album_id = $object->get_album_id();
+				$level = BPMediaPrivacy::get_privacy( $album_id );
 			}
+		}
 
+		$default_level= BPMediaPrivacy::default_privacy();
+		if($level == false){
+			$level = $default_level;
 		}
 
 		$media_id = $object->get_id();
@@ -197,6 +205,7 @@ class BPMediaPrivacy {
 	function save( $level = 0, $object_id = false ) {
 		if ( $object_id == false )
 			return false;
+		if(!$level)$level = 0;
 		if ( ! array_key_exists( $level, BPMediaPrivacy::get_settings() ) )
 			$level = 0;
 
@@ -251,7 +260,7 @@ class BPMediaPrivacy {
 			return;
 		if ( $object_id == false )
 			return;
-		$privacy = BPMediaPrivacy::get_privacy( $object_id);
+		$privacy = BPMediaPrivacy::get_privacy( $object_id );
 		$parent = get_post_field( 'post_parent', $object_id, 'raw' );
 		$parent_privacy = BPMediaPrivacy::get_privacy( $parent );
 
@@ -264,7 +273,6 @@ class BPMediaPrivacy {
 		}
 		return $privacy;
 	}
-
 
 	static function current_access() {
 		global $bp;
@@ -279,9 +287,11 @@ class BPMediaPrivacy {
 				if ( ! (bp_is_my_profile()) ) {
 					if ( bp_is_active( 'groups' ) && class_exists( 'BP_Group_Extension' ) ) {
 						if ( bp_get_current_group_id() == 0 ) {
-							$is_friend = friends_check_friendship_status( $bp->loggedin_user->id, $bp->displayed_user->id );
-							if ( $is_friend == 'is_friend' ) {
-								$current_privacy = 4;
+							if ( bp_is_active( 'friends' ) ) {
+								$is_friend = friends_check_friendship_status( $bp->loggedin_user->id, $bp->displayed_user->id );
+								if ( $is_friend == 'is_friend' ) {
+									$current_privacy = 4;
+								}
 							}
 						}
 					}
@@ -338,5 +348,6 @@ class BPMediaPrivacy {
 		}
 		die( $page );
 	}
+
 }
 ?>

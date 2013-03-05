@@ -447,7 +447,7 @@ class BPMediaActions {
 	 */
 	function footer() {
 		?>
-		<div id="bp-media-footer"><p>Using <a title="BuddyPress Media adds photos, video and audio upload/management feature" href="http://rtcamp.com/buddypress-media/">BuddyPress Media</a>.</p></div>
+		<div id="bp-media-footer"><p>Using <a title="BuddyPress Media adds photos, video and audio upload/management feature" href="http://rtcamp.com/buddypress-media/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media">BuddyPress Media</a>.</p></div>
 		<?php
 	}
 
@@ -565,7 +565,7 @@ class BPMediaActions {
 	 */
 	function load_more() {
 
-		global $bp, $bp_media_query, $bp_media;
+		global $bp, $bp_media_query, $bp_media, $bp_media_albums_query;
 		$page = isset( $_POST[ 'page' ] ) ? $_POST[ 'page' ] : die();
 		$current_action = isset( $_POST[ 'current_action' ] ) ? $_POST[ 'current_action' ] : null;
 		$action_variables = isset( $_POST[ 'action_variables' ] ) ? $_POST[ 'action_variables' ] : null;
@@ -598,13 +598,29 @@ class BPMediaActions {
 			case BP_MEDIA_VIDEOS_SLUG:
 				$type = 'video';
 				break;
+			case BP_MEDIA_ALBUMS_SLUG:
+				$type = 'album';
+				break;
 			default :
 				$type = null;
 		}
 
 		$query = new BPMediaQuery();
 		$args = $query->init( $type, $album_id, false, $page );
-		$bp_media_query = new WP_Query( $args );
+		if($type=='album'){
+			$bp_media_albums_query = new WP_Query( $args );
+			if ( isset( $bp_media_albums_query->posts ) && is_array( $bp_media_albums_query->posts ) && count( $bp_media_albums_query->posts ) ) {
+			foreach ( $bp_media_albums_query->posts as $attachment ) {
+				try {
+					$media = new BPMediaAlbum( $attachment->ID );
+					echo $media->get_album_gallery_content();
+				} catch ( exception $e ) {
+					die();
+				}
+			}
+		}
+		}else{
+			$bp_media_query = new WP_Query( $args );
 		if ( isset( $bp_media_query->posts ) && is_array( $bp_media_query->posts ) && count( $bp_media_query->posts ) ) {
 			foreach ( $bp_media_query->posts as $attachment ) {
 				try {
@@ -614,6 +630,7 @@ class BPMediaActions {
 					die();
 				}
 			}
+		}
 		}
 		die();
 	}
