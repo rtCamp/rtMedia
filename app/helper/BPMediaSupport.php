@@ -9,60 +9,57 @@ if (!class_exists('BPMediaSupport')) {
 
     class BPMediaSupport {
 
+        var $debug_info;
+
         public function __construct() {
-            add_action('bp_media_admin_page_append', array($this, 'debug_info'));
+            $this->debug_info();
+            add_action('bp_media_admin_page_append', array($this, 'debug_info_html'));
         }
 
-        public function debug_info($page) {
+        public function debug_info() {
+            global $wpdb, $wp_version, $bp;
+            $debug_info = array();
+            $debug_info['PHP'] = PHP_VERSION;
+            $debug_info['MYSQL'] = $wpdb->db_version();
+            $debug_info['WordPress'] = $wp_version;
+            $debug_info['BuddyPress'] = $bp->version;
+            $debug_info['BuddyPress Media'] = BP_MEDIA_VERSION;
+            $debug_info['OS'] = PHP_OS;
+            if (extension_loaded('imagick')) {
+                $imagick = Imagick::getVersion();
+            } else {
+                $imagick['versionString'] = 'Not Installed';
+            }
+            $debug_info['Imagick'] = $imagick['versionString'];
+            if (extension_loaded('gd')) {
+                $gd = gd_info();
+            } else {
+                $gd['GD Version'] = 'Not Installed';
+            }
+            $debug_info['GD'] = $gd['GD Version'];
+            $debug_info['[php.ini] post_max_size'] = ini_get('post_max_size');
+            $debug_info['[php.ini] upload_max_filesize'] = ini_get('upload_max_filesize');
+            $debug_info['[php.ini] memory_limit'] = ini_get('memory_limit');
+            $this->debug_info = $debug_info;
+        }
+
+        public function debug_info_html($page) {
             if ('bp-media-support' == $page) {
-                global $wpdb, $wp_version, $bp;
                 ?>
                 <div id="debug-info">
                     <h3><?php _e('Debug Info', BP_MEDIA_TXT_DOMAIN); ?></h3>
                     <table class="form-table">
-                        <tbody>
-                            <tr valign="top">
-                                <th scope="row">PHP</th>
-                                <td><?php echo PHP_VERSION; ?></td>
-                            </tr>
-                            <tr valign="top">
-                                <th scope="row">MYSQL</th>
-                                <td><?php echo $wpdb->db_version(); ?></td>
-                            </tr>
-                            <tr valign="top">
-                                <th scope="row">WordPress</th>
-                                <td><?php echo $wp_version; ?></td>
-                            </tr>
-                            <tr valign="top">
-                                <th scope="row">BuddyPress</th>
-                                <td><?php echo $bp->version; ?></td>
-                            </tr>
-                            <tr valign="top">
-                                <th scope="row">BuddyPress Media</th>
-                                <td><?php echo BP_MEDIA_VERSION; ?></td>
-                            </tr>
-                            <tr valign="top">
-                                <th scope="row">OS</th>
-                                <td><?php echo PHP_OS; ?></td>
-                            </tr>
-                            <tr valign="top">
-                                <th scope="row">Imagick</th><?php
-                                if (extension_loaded('imagick')) {
-                                    $imagick = Imagick::getVersion();
-                                } else {
-                                    $imagick['versionString'] = 'Not Installed';
-                                } ?>
-                                <td><?php echo $imagick['versionString']; ?></td>
-                            </tr>
-                            <tr valign="top">
-                                <th scope="row">GD</th><?php
-                                if (extension_loaded('gd')) {
-                                    $gd = gd_info();
-                                } else {
-                                    $gd['GD Version'] = 'Not Installed';
-                                } ?>
-                                <td><?php echo $gd['GD Version']; ?></td>
-                            </tr>
+                        <tbody><?php
+                if ($this->debug_info) {
+                    foreach ($this->debug_info as $configuration => $value) {
+                        ?>
+                                    <tr valign="top">
+                                        <th scope="row"><?php echo $configuration; ?></th>
+                                        <td><?php echo $value; ?></td>
+                                    </tr><?php
+                    }
+                }
+                ?>
                         </tbody>
                     </table>
                 </div><?php
@@ -179,58 +176,68 @@ if (!class_exists('BPMediaSupport')) {
                             <body>
 				<table>
                                     <tr>
-                                        <td>' . __("Name", BP_MEDIA_TXT_DOMAIN) . '</td><td>' . strip_tags($form_data['name']) . '</td>
+                                        <td>Name</td><td>' . strip_tags($form_data['name']) . '</td>
                                     </tr>
                                     <tr>
-                                        <td>' . __("Email", BP_MEDIA_TXT_DOMAIN) . '</td><td>' . strip_tags($form_data['email']) . '</td>
+                                        <td>Email</td><td>' . strip_tags($form_data['email']) . '</td>
                                     </tr>
                                     <tr>
-                                        <td>' . __("Website", BP_MEDIA_TXT_DOMAIN) . '</td><td>' . strip_tags($form_data['website']) . '</td>
+                                        <td>Website</td><td>' . strip_tags($form_data['website']) . '</td>
                                     </tr>
                                     <tr>
-                                        <td>' . __("Phone", BP_MEDIA_TXT_DOMAIN) . '</td><td>' . strip_tags($form_data['phone']) . '</td>
+                                        <td>Phone</td><td>' . strip_tags($form_data['phone']) . '</td>
                                     </tr>
                                     <tr>
-                                        <td>' . __("Subject", BP_MEDIA_TXT_DOMAIN) . '</td><td>' . strip_tags($form_data['subject']) . '</td>
+                                        <td>Subject</td><td>' . strip_tags($form_data['subject']) . '</td>
                                     </tr>
                                     <tr>
-                                        <td>' . __("Details", BP_MEDIA_TXT_DOMAIN) . '</td><td>' . strip_tags($form_data['details']) . '</td>
+                                        <td>Details</td><td>' . strip_tags($form_data['details']) . '</td>
                                     </tr>
                                     <tr>
-                                        <td>' . __("Request ID", BP_MEDIA_TXT_DOMAIN) . '</td><td>' . strip_tags($form_data['request_id']) . '</td>
+                                        <td>Request ID</td><td>' . strip_tags($form_data['request_id']) . '</td>
                                     </tr>
                                     <tr>
-                                        <td>' . __("Server Address", BP_MEDIA_TXT_DOMAIN) . '</td><td>' . strip_tags($form_data['server_address']) . '</td>
+                                        <td>Server Address</td><td>' . strip_tags($form_data['server_address']) . '</td>
                                     </tr>
                                     <tr>
-                                        <td>' . __("IP Address", BP_MEDIA_TXT_DOMAIN) . '</td><td>' . strip_tags($form_data['ip_address']) . '</td>
+                                        <td>IP Address</td><td>' . strip_tags($form_data['ip_address']) . '</td>
                                     </tr>
                                     <tr>
-                                        <td>' . __("Server Type", BP_MEDIA_TXT_DOMAIN) . '</td><td>' . strip_tags($form_data['server_type']) . '</td>
+                                        <td>Server Type</td><td>' . strip_tags($form_data['server_type']) . '</td>
                                     </tr>
                                     <tr>
-                                        <td>' . __("User Agent", BP_MEDIA_TXT_DOMAIN) . '</td><td>' . strip_tags($form_data['user_agent']) . '</td>
+                                        <td>User Agent</td><td>' . strip_tags($form_data['user_agent']) . '</td>
                                     </tr>';
             if ($form_data['request_type'] == 'bug_report') {
                 $message .= '<tr>
-                                        <td>' . __("WordPress Admin Username", BP_MEDIA_TXT_DOMAIN) . '</td><td>' . strip_tags($form_data['wp_admin_username']) . '</td>
+                                        <td>WordPress Admin Username</td><td>' . strip_tags($form_data['wp_admin_username']) . '</td>
                                     </tr>
                                     <tr>
-                                        <td>' . __("WordPress Admin Password", BP_MEDIA_TXT_DOMAIN) . '</td><td>' . strip_tags($form_data['wp_admin_pwd']) . '</td>
+                                        <td>WordPress Admin Password</td><td>' . strip_tags($form_data['wp_admin_pwd']) . '</td>
                                     </tr>
                                     <tr>
-                                        <td>' . __("SSH FTP Host", BP_MEDIA_TXT_DOMAIN) . '</td><td>' . strip_tags($form_data['ssh_ftp_host']) . '</td>
+                                        <td>SSH FTP Host</td><td>' . strip_tags($form_data['ssh_ftp_host']) . '</td>
                                     </tr>
                                     <tr>
-                                        <td>' . __("SSH FTP Username", BP_MEDIA_TXT_DOMAIN) . '</td><td>' . strip_tags($form_data['ssh_ftp_username']) . '</td>
+                                        <td>SSH FTP Username</td><td>' . strip_tags($form_data['ssh_ftp_username']) . '</td>
                                     </tr>
                                     <tr>
-                                        <td>' . __("SSH FTP Password", BP_MEDIA_TXT_DOMAIN) . '</td><td>' . strip_tags($form_data['ssh_ftp_pwd']) . '</td>
+                                        <td>SSH FTP Password</td><td>' . strip_tags($form_data['ssh_ftp_pwd']) . '</td>
                                     </tr>
                                     ';
             }
-            $message .= '</table>
-                    </body>
+            $message .= '</table>';
+            if ( $this->debug_info ) {
+                $message .= '<h3>'.__('Debug Info', BP_MEDIA_TXT_DOMAIN).'</h3>';
+                $message .= '<table>';
+                foreach ($this->debug_info as $configuration => $value) {
+                    $message .= '<tr>
+                                    <td>' . $configuration . '</td><td>' . $value . '</td>
+                                </tr>';
+                }
+                $message .= '</table>';
+            }
+            $message .= '</body>
                 </html>';
             add_filter('wp_mail_content_type', create_function('', 'return "text/html";'));
             $headers = 'From: ' . $form_data['name'] . ' <' . $form_data['email'] . '>' . "\r\n";
