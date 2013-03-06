@@ -181,7 +181,6 @@ class BPMediaActions {
 	 * @return boolean
 	 */
 	static function delete_activity_handler( $args ) {
-		error_log( 'Delete delete :)' );
 		remove_action( 'bp_media_before_delete_media', 'BPMediaActions::delete_media_handler' );
 		global $bp_media_count, $wpdb;
 		if ( ! array_key_exists( 'id', $args ) )
