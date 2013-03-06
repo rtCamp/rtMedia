@@ -169,9 +169,9 @@ class BPMediaAlbum {
         );
         $album_id = wp_insert_post($post_vars);
         if ($group_id) {
-            add_post_meta($album_id, 'bp-media-key', (-$group_id));
+            update_post_meta($album_id, 'bp-media-key', (-$group_id));
         } else {
-            add_post_meta($album_id, 'bp-media-key', $author_id);
+            update_post_meta($album_id, 'bp-media-key', $author_id);
         }
         $this->init($album_id);
         do_action('bp_media_after_add_album', $this);

@@ -4,8 +4,8 @@ Donate link: http://rtcamp.com/donate
 Tags: BuddyPress, media, multimedia, album, audio, songs, music, video, photo, image, upload, share, MediaElement.js, ffmpeg, kaltura, media-node
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
-Requires at least: 3.5
-Tested up to: 3.5
+Requires at least: WordPress 3.5 + BuddyPress 1.6
+Tested up to: WordPress 3.5 + BuddyPress 1.6
 Stable tag: 2.6.7
 
 Adds Photos, Music, Videos & Albums to BuddyPress. Supports mobile devices (iPhone/iPad, etc) and automatic audio/video conversion.

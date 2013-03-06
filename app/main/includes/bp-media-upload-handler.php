@@ -4,7 +4,6 @@
 header( "Cache-Control: no-cache, must-revalidate" ); //HTTP 1.1
 header( "Pragma: no-cache" ); //HTTP 1.0
 header( "Expires: Sat, 26 Jul 1997 05:00:00 GMT" ); // Date in the past
-
 ignore_user_abort( true );
 /** Define the server path to the file wp-config here, if you placed WP-CONTENT outside the classic file structure */
 $path = '/'; // It should be end with a trailing slash
@@ -31,6 +30,6 @@ require_once( WP_LOAD_PATH . 'wp-load.php');
 // Check for rights
 if ( ! is_user_logged_in() )
 	wp_die( __( "You are not allowed to be here" ) );
-
+@ini_set('memory_limit','1024M');
 BPMediaActions::handle_uploads();
 ?>
