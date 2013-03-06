@@ -753,6 +753,7 @@ class BPMediaActions {
 	 */
 	static function activity_create_after_add_media( $media, $hidden = false, $activity = false, $group = false ) {
 		if ( function_exists( 'bp_activity_add' ) ) {
+                        $update_activity_id = false;
 			if ( ! is_object( $media ) ) {
 				try {
 					$media = new BPMediaHostWordpress( $media );
