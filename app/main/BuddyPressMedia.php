@@ -348,7 +348,7 @@ class BuddyPressMedia {
              */
 //			new BPMediaActivity();
             $class_construct = array(
-//				'activity'      => false,
+				'activity'      => false,
                 'filters' => false,
                 'actions' => false,
                 'function' => false,

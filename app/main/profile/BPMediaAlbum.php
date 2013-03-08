@@ -99,7 +99,7 @@ class BPMediaAlbum {
         $this->description = $album->post_content;
         $this->name = $album->post_title;
         $this->owner = $album->post_author;
-        if ($this->group_id > 0) {
+        if ($this->group_id > 0 && bp_is_active('groups')) {
             $current_group = new BP_Groups_Group($this->group_id);
             $group_url = bp_get_group_permalink($current_group);
             $this->url = trailingslashit($group_url . BP_MEDIA_ALBUMS_SLUG . '/' . $this->id);

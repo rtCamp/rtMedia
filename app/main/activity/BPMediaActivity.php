@@ -14,17 +14,27 @@ if (!class_exists('BPMediaActivity')) {
         var $media_count = 1;
 
         public function __construct() {
-            add_action('bp_after_activity_post_form', array($this, 'activity_uploader'));
-            add_action('wp_ajax_bp_media_post_update', array($this, 'post_update'));
+			global $bp_media;
+			$options = $bp_media->options;
+			if(isset($options['activity_upload']) && $options['activity_upload']!=0){
+				add_action('bp_after_activity_post_form', array($this, 'activity_uploader'));
+				add_action('wp_ajax_bp_media_post_update', array($this, 'post_update'));
+				add_action('init', array($this,'scripts'));
+			}
         }
 
+		function scripts(){
+			wp_enqueue_script('json2');
+		}
         public function activity_uploader() {
             ?>
+			<input type ="hidden" id="bp-media-update-text" />
+			<input type ="hidden" id="bp-media-update-json" />
             <div id="bp-media-activity-upload-ui" class="hide-if-no-js drag-drop">
-                <input id="bp-media-activity-upload-browse-button" type="button" value="<?php _e('Insert Media', BP_MEDIA_TXT_DOMAIN); ?>" class="button" />
+                <input id="bp-media-activity-upload-browse-button" type="button" value="<?php _e('Attach Media', BP_MEDIA_TXT_DOMAIN); ?>" class="button" />
                 <div id="bp-media-activity-uploaded-files"></div>
             </div>
-            <div id="bp-media-activity-post-update-append" style="display:none"></div><?php
+            <?php
         }
 
         public function post_update() {
@@ -102,7 +112,7 @@ if (!class_exists('BPMediaActivity')) {
         }
 
         /**
-         * 
+         *
          * @param BPMediaAlbum $album
          * @param type $current_time
          * @param type $delete_media_id
