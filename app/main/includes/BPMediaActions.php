@@ -761,7 +761,6 @@ class BPMediaActions {
 				}
 			}
 			$activity_content = $media->get_media_activity_content();
-			new BPMediaLog( $activity_content );
 			$args = array(
 				'action' => apply_filters( 'bp_media_added_media', sprintf( __( '%1$s added a %2$s', BP_MEDIA_TXT_DOMAIN ), bp_core_get_userlink( $media->get_author() ), '<a href="' . $media->get_url() . '">' . $media->get_media_activity_type() . '</a>' ) ),
 				'content' => $activity_content,

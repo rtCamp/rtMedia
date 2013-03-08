@@ -46,6 +46,15 @@ if ( ! class_exists( 'BPMediaSettings' ) ) {
 				'option' => 'audio_enabled',
 				'desc' => __( 'Enable Audio', BP_MEDIA_TXT_DOMAIN )
 			) );
+			if(bp_is_active('activity')){
+				add_settings_section( 'bpm-activity-upload', __( 'Activity Upload', BP_MEDIA_TXT_DOMAIN ), '', 'bp-media-settings' );
+            add_settings_field('bpm-activity', __('Activity Uploads', BP_MEDIA_TXT_DOMAIN), array($this, 'checkbox'), 'bp-media-settings', 'bpm-activity-upload', array(
+                'setting' => 'bp_media_options',
+                'option' => 'activity_upload',
+                'desc' => __('Enable Activity Uploading', BP_MEDIA_TXT_DOMAIN)
+                    )
+            );
+			}
 
 			if ( bp_is_active( 'groups' ) ) {
 				add_settings_section( 'bpm-media-type', __( 'Groups Integration', BP_MEDIA_TXT_DOMAIN ), '', 'bp-media-settings' );
