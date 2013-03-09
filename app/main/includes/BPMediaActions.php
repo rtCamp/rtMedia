@@ -17,6 +17,7 @@ class BPMediaActions {
 		add_action( 'bp_before_activity_delete', 'BPMediaActions::delete_activity_handler' );
 		add_action( 'wp_enqueue_scripts', array( $this, 'upload_enqueue' ) );
 		add_action( 'init', 'BPMediaActions::init_count' );
+                add_action('init', array($this, 'set_default_user_album'));
 		add_action( 'bp_activity_entry_meta', array( $this, 'action_buttons' ) );
 		add_action( 'bp_media_before_delete_media', 'BPMediaActions::delete_media_handler' );
 		add_action( 'bp_media_after_add_album', array( $this, 'album_create_activity' ) );
@@ -848,6 +849,24 @@ class BPMediaActions {
 		echo $content;wp_die();
 
 	}
+        
+        public function set_default_user_album() {
+            if (is_user_logged_in()) {
+                $current_user_id = get_current_user_id();
+                $default_album = get_user_meta($current_user_id, 'bp-media-default-album', true);
+                if (!$default_album) {
+                    $album_id = 0;
+                    $query = new WP_Query(array('post_type' => 'bp_media_album', 'author' => $current_user_id, 'name' => sanitize_title('Wall Posts'), 'order' => 'ASC'));
+                    wp_reset_postdata();
+                    if (isset($query->posts) && isset($query->posts[0])) {
+                        $album_id = $query->posts[0]->ID;
+                    }
+                    if ($album_id) {
+                        update_user_meta($current_user_id, 'bp-media-default-album', $album_id);
+                    }
+                }
+            }
+        }
 
 }
 ?>

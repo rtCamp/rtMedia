@@ -350,8 +350,8 @@ if (!class_exists('BPMediaAdmin')) {
                            src="' . BP_MEDIA_URL . 'app/assets/img/paypal-donate-button.png"
                            alt="PayPal - The safer, easier way to pay online">
                        </form><br />
-                       <center><b>'.__('OR',BP_MEDIA_TXT_DOMAIN).'</b></center><br />
-                       <center>'.__('Use <a href="https://rtcamp.com/store/product-category/buddypress/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media">premium add-ons</a> starting from $9', BP_MEDIA_TXT_DOMAIN).'</center>';
+                       <center><b>' . __('OR', BP_MEDIA_TXT_DOMAIN) . '</b></center><br />
+                       <center>' . __('Use <a href="https://rtcamp.com/store/product-category/buddypress/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media">premium add-ons</a> starting from $9', BP_MEDIA_TXT_DOMAIN) . '</center>';
             ;
             new BPMediaAdminWidget('donate', __('Donate', BP_MEDIA_TXT_DOMAIN), $donate);
 
