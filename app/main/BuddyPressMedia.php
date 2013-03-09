@@ -146,19 +146,19 @@ class BuddyPressMedia {
      */
     public function bp_exists() {
         if (!class_exists('BuddyPress')) {
+            $plugins = get_plugins();
+            if (array_key_exists('buddypress/bp-loader.php', $plugins)) {
+                $install_link = wp_nonce_url(admin_url('plugins.php?action=activate&amp;plugin=buddypress%2Fbp-loader.php'), 'activate-plugin_buddypress/bp-loader.php');
+            } else {
+                include_once ABSPATH . 'wp-admin/includes/plugin-install.php';
+                $info = plugins_api('plugin_information', array('slug' => 'buddypress'));
+                $install_link = wp_nonce_url(self_admin_url('update.php?action=install-plugin&plugin=buddypress'), 'install-plugin_buddypress');
+            }
             echo '<div class="error">
-       <p><strong>' . __(
-                    'BuddyPress is not installed.', $this->text_domain
-            )
-            . '</strong></p>
+       <p><strong>' . __('BuddyPress is not installed.', $this->text_domain) . '</strong></p>
        <p>'
-            . sprintf(
-                    __(
-                            'To use BuddyPress Media,
-							<a href="%s" target="_blank">BuddyPress</a>
-							must be installed first.', $this->text_domain
-                    ), 'http://wordpress.org/extend/plugins/buddypress/'
-            )
+            . __('To use BuddyPress Media, BuddyPress must be installed first.', $this->text_domain) .
+            ' ' . sprintf(__('<a href="%s">Install BuddyPress now</a>', $this->text_domain), $install_link)
             . '</p>
     </div>';
         }
@@ -348,7 +348,7 @@ class BuddyPressMedia {
              */
 //			new BPMediaActivity();
             $class_construct = array(
-				'activity'      => false,
+                'activity' => false,
                 'filters' => false,
                 'actions' => false,
                 'function' => false,
@@ -602,7 +602,7 @@ class BuddyPressMedia {
         if (array_key_exists('default_count', $this->options)) {
             $count = $this->options['default_count'];
         }
-		$count =( !is_int( $count ))?0:$count;
+        $count = (!is_int($count)) ? 0 : $count;
         return (!$count) ? 10 : $count;
     }
 
@@ -664,9 +664,9 @@ class BuddyPressMedia {
         }
     }
 
-    static function plugin_get_version($path=NULL) {
-        require_once(ABSPATH.'wp-admin/includes/plugin.php');
-        $path = ($path) ? $path : BP_MEDIA_PATH.'index.php';
+    static function plugin_get_version($path = NULL) {
+        require_once(ABSPATH . 'wp-admin/includes/plugin.php');
+        $path = ($path) ? $path : BP_MEDIA_PATH . 'index.php';
         $plugin_data = get_plugin_data($path);
         $plugin_version = $plugin_data['Version'];
         return $plugin_version;

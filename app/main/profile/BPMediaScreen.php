@@ -186,7 +186,7 @@ class BPMediaScreen {
                 BPMediaUploadScreen::upload_screen_content();
                 echo '</li>';
             }
-            while ($bp_media_query->have_posts() ) : $bp_media_query->the_post();
+            while ($bp_media_query->have_posts()) : $bp_media_query->the_post();
                 $this->template->the_content();
             endwhile;
             echo '</ul>';
@@ -315,22 +315,22 @@ class BPMediaScreen {
         ?>
         <form method="post" class="standard-form" id="bp-media-upload-form">
             <label for="bp-media-upload-input-title">
-                   <?php printf(__('%s Title', BP_MEDIA_TXT_DOMAIN), ucfirst($this->media_type)); ?>
+                <?php printf(__('%s Title', BP_MEDIA_TXT_DOMAIN), ucfirst($this->media_type)); ?>
             </label>
             <input id="bp-media-upload-input-title" type="text" name="bp_media_title" class="settings-input"
                    maxlength="<?php echo max(array($bp_media_default_excerpts['single_entry_title'], $bp_media_default_excerpts['activity_entry_title'])) ?>"
                    value="<?php echo $bp_media_current_entry->get_title(); ?>" />
             <label for="bp-media-upload-input-description">
-                    <?php printf(__('%s Description', BP_MEDIA_TXT_DOMAIN), ucfirst($this->media_type)); ?>
+                <?php printf(__('%s Description', BP_MEDIA_TXT_DOMAIN), ucfirst($this->media_type)); ?>
             </label>
-            <input id="bp-media-upload-input-description" type="text" name="bp_media_description" class="settings-input"
-                    maxlength="<?php echo max(array($bp_media_default_excerpts['single_entry_description'], $bp_media_default_excerpts['activity_entry_description'])) ?>"
-                    value="<?php echo $bp_media_current_entry->get_content(); ?>" />
-            <?php do_action('bp_media_add_media_fields', $this->media_type); ?>
+            <textarea id="bp-media-upload-input-description" name="bp_media_description" class="settings-input"
+                      maxlength="<?php echo max(array($bp_media_default_excerpts['single_entry_description'], $bp_media_default_excerpts['activity_entry_description'])) ?>"
+                      ><?php echo $bp_media_current_entry->get_content(); ?></textarea>
+                      <?php do_action('bp_media_add_media_fields', $this->media_type); ?>
             <div class="submit">
                 <input type="submit" class="auto" value="<?php _e('Update', BP_MEDIA_TXT_DOMAIN); ?>" />
                 <a href="<?php echo $bp_media_current_entry->get_url(); ?>" class="button" title="<?php _e('Back to Media File', BP_MEDIA_TXT_DOMAIN); ?>">
-        <?php _e('Back to Media', BP_MEDIA_TXT_DOMAIN); ?>
+                    <?php _e('Back to Media', BP_MEDIA_TXT_DOMAIN); ?>
                 </a>
             </div>
         </form>
@@ -376,10 +376,10 @@ class BPMediaScreen {
             exit;
         }
         $post_id = $bp_media_current_entry->get_id();
-		if(bp_is_active('activity')){
-			$activity_id = get_post_meta($post_id, 'bp_media_child_activity', true);
-			bp_activity_delete_by_activity_id($activity_id);
-		}
+        if (bp_is_active('activity')) {
+            $activity_id = get_post_meta($post_id, 'bp_media_child_activity', true);
+            bp_activity_delete_by_activity_id($activity_id);
+        }
         $bp_media_current_entry->delete_media();
 
         @setcookie('bp-message', __('Media deleted successfully', BP_MEDIA_TXT_DOMAIN), time() + 60 * 60 * 24, COOKIEPATH);
@@ -417,14 +417,14 @@ class BPMediaScreen {
      */
     public function set_query() {
         global $bp, $bp_media_query;
-		if(bp_is_current_component('groups')){
-			global $bp_media;
-			$def_tab=$bp_media->defaults_tab();
-			$type_var = isset($bp->action_variables[0])?$bp->action_variables[0]:constant('BP_MEDIA_'.strtoupper($def_tab).'_SLUG');
-		}else{
+        if (bp_is_current_component('groups')) {
+            global $bp_media;
+            $def_tab = $bp_media->defaults_tab();
+            $type_var = isset($bp->action_variables[0]) ? $bp->action_variables[0] : constant('BP_MEDIA_' . strtoupper($def_tab) . '_SLUG');
+        } else {
 
-			$type_var = $bp->current_action;
-		}
+            $type_var = $bp->current_action;
+        }
         switch ($type_var) {
             case BP_MEDIA_IMAGES_SLUG:
                 $type = 'image';
@@ -439,9 +439,9 @@ class BPMediaScreen {
                 $type = null;
         }
 
-            $query = new BPMediaQuery();
-			$args = $query->init($type);
-			$bp_media_query = new WP_Query($args);
+        $query = new BPMediaQuery();
+        $args = $query->init($type);
+        $bp_media_query = new WP_Query($args);
     }
 
 }
