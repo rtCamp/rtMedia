@@ -8,7 +8,7 @@
  */
 class BPMediaFeed {
 
-    public $feed_url = 'http://rtcamp.com/tag/buddypress/feed/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media';
+    public $feed_url = 'http://rtcamp.com/tag/buddypress/feed/';
 
     public function __construct($feed_url = '') {
         if ($feed_url)
@@ -46,7 +46,7 @@ class BPMediaFeed {
             foreach ($rss_items as $item) {
                 ?>
                     <li>
-                        <a href='<?php echo $item->get_permalink(); ?>' title='<?php echo __('Posted ', BP_MEDIA_TXT_DOMAIN) . $item->get_date('j F Y | g:i a'); ?>'><?php echo $item->get_title(); ?></a>
+                        <a href='<?php echo $item->get_permalink(); ?>?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media' title='<?php echo __('Posted ', BP_MEDIA_TXT_DOMAIN) . $item->get_date('j F Y | g:i a'); ?>'><?php echo $item->get_title(); ?></a>
                     </li><?php
             }
         }

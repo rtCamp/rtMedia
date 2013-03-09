@@ -26,7 +26,7 @@ if (!class_exists('BPMediaSupport')) {
             $debug_info['BuddyPress Media'] = BP_MEDIA_VERSION;
             $debug_info['OS'] = PHP_OS;
             if (extension_loaded('imagick')) {
-                $imagick = Imagick::getVersion();
+                $imagick = $message = preg_replace(" #((http|https|ftp)://(\S*?\.\S*?))(\s|\;|\)|\]|\[|\{|\}|,|\"|'|:|\<|$|\.\s)#ie", "'<a href=\"$1\" target=\"_blank\">$3</a>$4'", Imagick::getVersion() );
             } else {
                 $imagick['versionString'] = 'Not Installed';
             }
@@ -47,7 +47,7 @@ if (!class_exists('BPMediaSupport')) {
             if ('bp-media-support' == $page) {
                 ?>
                 <div id="debug-info">
-                    <h3><?php _e('Debug Info', BP_MEDIA_TXT_DOMAIN); ?></h3>
+                    <h3><?php _e('Debug info', BP_MEDIA_TXT_DOMAIN); ?></h3>
                     <table class="form-table">
                         <tbody><?php
                 if ($this->debug_info) {

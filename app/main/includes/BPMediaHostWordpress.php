@@ -360,7 +360,7 @@ class BPMediaHostWordpress {
 				return false;
 		}
 		$content .= '</div>';
-		$content .= '<div class="bp_media_description">' . wp_html_excerpt( $this->description, $bp_media_default_excerpts[ 'single_entry_description' ] ) . '</div>';
+		$content .= '<div class="bp_media_description">' . nl2br($this->description) . '</div>';
 		return $content;
 	}
 
