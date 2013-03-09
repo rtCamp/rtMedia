@@ -17,7 +17,7 @@ if ( ! class_exists( 'BPMediaActivity' ) ) {
 			global $bp_media;
 			$options = $bp_media->options;
 			if ( isset( $options[ 'activity_upload' ] ) && $options[ 'activity_upload' ] != 0 ) {
-				add_action( 'bp_after_activity_post_form', array( $this, 'activity_uploader' ) );
+				add_action( 'bp_activity_post_form_options', array( $this, 'activity_uploader' ) );
 				add_filter( 'bp_activity_new_update_content', array( $this, 'override_update' ) );
 				add_filter( 'bp_activity_latest_update_content', array( $this, 'override_update' ) );
 				add_filter( 'bp_get_activity_latest_update', array( $this, 'latest_update' ) );
@@ -31,12 +31,14 @@ if ( ! class_exists( 'BPMediaActivity' ) ) {
 
 		public function scripts() {
 			wp_enqueue_script( 'json2' );
+			wp_enqueue_script( 'bp-media-activity-uploader', BP_MEDIA_URL . 'app/assets/js/bp-media-activity-uploader.js', array( 'plupload', 'plupload-html5', 'plupload-flash', 'plupload-silverlight', 'plupload-html4', 'plupload-handlers' ), BP_MEDIA_VERSION );
 		}
 
 		public function activity_uploader() {
 			?>
 			<input type ="hidden" id="bp-media-update-text" />
 			<input type ="hidden" id="bp-media-update-json" />
+			<input type ="hidden" id="bp-media-latest-update" />
 			<div id="bp-media-activity-upload-ui" class="hide-if-no-js drag-drop">
 				<input id="bp-media-activity-upload-browse-button" type="button" value="<?php _e( 'Attach Media', BP_MEDIA_TXT_DOMAIN ); ?>" class="button" />
 				<div id="bp-media-activity-uploaded-files"></div>
@@ -59,7 +61,7 @@ if ( ! class_exists( 'BPMediaActivity' ) ) {
 
 		public function get_text($content){
 			$activity_json	= $this->decode($content);
-			$activity_text	= '<p>' . $activity_json[ 'update_txt' ] . '</p>';
+			$activity_text	= $activity_json[ 'update_txt' ];
 			return $activity_text;
 		}
 
@@ -90,7 +92,7 @@ if ( ! class_exists( 'BPMediaActivity' ) ) {
 		public function override_update( $content ) {
 
 			$activity_media = $this->get_media($content);
-			$newcontent = $this->get_text($content);
+			$newcontent = '<p>' . $this->get_text($content) . '</p>';
 			if ( isset( $activity_media ) ) {
 				if ( ! is_array( $activity_media ) ) {
 					$activity_media[ ] = $activity_media;

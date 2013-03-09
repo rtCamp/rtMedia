@@ -44,7 +44,7 @@ jQuery(document).ready(function(){
 			up.refresh(); // Reposition Flash/Silverlight
 		});
 		$bp_media_activity_uploader.bind('UploadProgress', function(up, file) {
-			jQuery('input#aw-whats-new-submit').prop('disabled',true);
+			jQuery('input#aw-whats-new-submit').prop('disabled',true).addClass('loading');
 			jQuery('#bp-media-activity-progress-'+file.id+' .bp-media-progress-completed').width(file.percent+'%');
 			jQuery('#bp-media-activity-progress-'+file.id+' .bp-media-progress-text b').html(file.percent+'%');
 		});
@@ -67,7 +67,7 @@ jQuery(document).ready(function(){
 			$album_arr.push(parseInt(response.response));
 			$album_json =JSON.stringify($album_arr);
 			jQuery('#bp-media-update-json').val($album_json).change();
-			jQuery('#aw-whats-new-submit').prop('disabled',false);
+			jQuery('#aw-whats-new-submit').prop('disabled',false).removeClass('loading');
 
 		});
 		$bp_media_activity_uploader.bind('BeforeUpload',function(up){
@@ -87,20 +87,22 @@ jQuery(document).ready(function(){
 			jQuery("#bp-media-activity-uploaded-files").empty();
 			if($val!=''){
 				$album_arr= JSON.parse($val);
-				$media_id = $album_arr[$album_arr-1];
+				$lastid = parseInt($album_arr.length) - 1;
+				$media_id = $album_arr[parseInt($lastid)];
 				var data = {
 					action: 'bp_media_get_thumbnail',
 					media_id : $media_id
 				};
 				jQuery.post(ajaxurl,data,function(response){
 					$latest = response;
-					jQuery('#latest-update').html(jQuery('#latest-update').html+$latest);
+					jQuery('#bp-media-latest-update').val($latest).trigger('change');
 				});
 			}
-
-
-
 		});
+		jQuery('#bp-media-latest-update').on('change',function(){
+			jQuery('#latest-update').html($this.val());
+		});
+
 		$bp_media_activity_uploader.bind('UploadComplete',function(response){
 
 			});
