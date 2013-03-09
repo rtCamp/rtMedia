@@ -8,15 +8,9 @@ jQuery(document).ready(function(){
 		$dummy_update_box = jQuery('<textarea id="bp-media-dummy-update"></textarea>');
 		$update_container = jQuery('#whats-new-textarea');
 		$update_container.append($dummy_update_box);
-		//overlay_dummy();
+		overlay_dummy();
 		jQuery('#bp-media-dummy-update').focus( function(){
-			jQuery("#whats-new-options").animate({
-				height:'40px'
-			});
-			jQuery("#whats-new-form textarea").animate({
-				height:'50px'
-			});
-			jQuery("#aw-whats-new-submit").prop("disabled", false);
+			do_bp_jazz();
 		});
 
 		jQuery('#bp-media-dummy-update').on('keyup',function(){
@@ -25,11 +19,9 @@ jQuery(document).ready(function(){
 			$that.val($this.val()).change();
 		});
 		jQuery('#bp-media-update-text').on('change',function(){
-			console.log('tay');
 			bp_media_overwrite();
 		});
 		jQuery('#bp-media-update-json').on('change',function(){
-			console.log('jay');
 			bp_media_overwrite();
 		});
 
@@ -48,6 +40,7 @@ jQuery(document).ready(function(){
 			//                bp_media_activity_album_selected = jQuery('#bp-media-activity-selected-album').val();
 			$bp_media_activity_album_selected = '535';
 			$bp_media_activity_uploader.start();
+			do_bp_jazz();
 			up.refresh(); // Reposition Flash/Silverlight
 		});
 		$bp_media_activity_uploader.bind('UploadProgress', function(up, file) {
@@ -71,14 +64,9 @@ jQuery(document).ready(function(){
 			if($val!=''){
 				$album_arr= JSON.parse($val);
 			}
-			console.log($album_arr);
-			$album_arr.push(response.response);
-			console.log($album_arr);
+			$album_arr.push(parseInt(response.response));
 			$album_json =JSON.stringify($album_arr);
-			console.log($album_json);
 			jQuery('#bp-media-update-json').val($album_json).change();
-			//$album_arr.append('%'+response.response+'%');
-
 			jQuery('#aw-whats-new-submit').prop('disabled',false);
 
 		});
@@ -86,6 +74,32 @@ jQuery(document).ready(function(){
 			up.settings.multipart_params.is_multiple_upload = $bp_media_activity_is_multiple_upload;
 			up.settings.multipart_params.bp_media_album_id = $bp_media_activity_album_selected;
 			up.settings.multipart_params.is_activity = true;
+		});
+		//jQuery("#aw-whats-new-submit").off( 'click');
+
+		jQuery("#aw-whats-new-submit").on( 'click', function() {
+			$latest = '';
+			$val = jQuery('#bp-media-update-json').val();
+
+			jQuery("#bp-media-dummy-update").val('');
+			jQuery("#bp-media-update-json").val('');
+			jQuery("#bp-media-update-txt").val('');
+			jQuery("#bp-media-activity-uploaded-files").empty();
+			if($val!=''){
+				$album_arr= JSON.parse($val);
+				$media_id = $album_arr[$album_arr-1];
+				var data = {
+					action: 'bp_media_get_thumbnail',
+					media_id : $media_id
+				};
+				jQuery.post(ajaxurl,data,function(response){
+					$latest = response;
+					jQuery('#latest-update').html(jQuery('#latest-update').html+$latest);
+				});
+			}
+
+
+
 		});
 		$bp_media_activity_uploader.bind('UploadComplete',function(response){
 
@@ -98,6 +112,7 @@ jQuery(document).ready(function(){
 		$dummy_update_box.css({
 			'position'	: 'absolute',
 			'top'		: $position.top,
+			'left'		: $position.left,
 			'width'		: $update_box.width(),
 			'height'	: $update_box.height()
 		});
@@ -106,192 +121,20 @@ jQuery(document).ready(function(){
 	function bp_media_overwrite(){
 		$album_json = jQuery('#bp-media-update-json').val();
 		$update_txt = jQuery('#bp-media-update-text').val();
-		jQuery('#whats-new').val($album_json+$update_txt);
+		$activity = {
+			'media':$album_json,
+			'update_txt':$update_txt
+		};
+		jQuery('#whats-new').val(JSON.stringify($activity));
 	}
-//    if ( jQuery('#bp-media-activity-upload-ui').length > 0 ) {
-//        //Activity Uploader
 
-//
-//        /* New posts */
-//        jQuery('#whats-new-submit').on('click', 'input#aw-whats-new-submit', function() {
-//            var button = jQuery(this);
-//            var form = button.parent().parent().parent().parent();
-//
-//            form.children().each( function() {
-//                if ( jQuery.nodeName(this, "textarea") || jQuery.nodeName(this, "input") )
-//                    jQuery(this).prop( 'disabled', true );
-//            });
-//
-//            /* Remove any errors */
-//            jQuery('div.error').remove();
-//            button.addClass('loading');
-//            button.prop('disabled', true);
-//
-//            /* Default POST values */
-//            var object = '';
-//            var item_id = jQuery("#whats-new-post-in").val();
-//            var content = jQuery("textarea#whats-new").val();
-//
-//            /* Set object for non-profile posts */
-//            if ( item_id > 0 ) {
-//                object = jQuery("#whats-new-post-object").val();
-//            }
-//
-//            jQuery.post( ajaxurl, {
-//                action: 'post_update',
-//                'cookie': encodeURIComponent(document.cookie),
-//                '_wpnonce_post_update': jQuery("input#_wpnonce_post_update").val(),
-//                'content': content,
-//                'object': object,
-//                'item_id': item_id,
-//                '_bp_as_nonce': jQuery('#_bp_as_nonce').val() || ''
-//            },
-//            function(response) {
-//
-//                form.children().each( function() {
-//                    if ( jQuery.nodeName(this, "textarea") || jQuery.nodeName(this, "input") ) {
-//                        jQuery(this).prop( 'disabled', false );
-//                    }
-//                });
-//
-//                /* Check for errors and append if found. */
-//                if ( response[0] + response[1] == '-1' ) {
-//                    form.prepend( response.substr( 2, response.length ) );
-//                    jQuery( 'form#' + form.attr('id') + ' div.error').hide().fadeIn( 200 );
-//                } else {
-//                    if ( 0 == jQuery("ul.activity-list").length ) {
-//                        jQuery("div.error").slideUp(100).remove();
-//                        jQuery("div#message").slideUp(100).remove();
-//                        jQuery("div.activity").append( '<ul id="activity-stream" class="activity-list item-list">' );
-//                    }
-//
-//                    jQuery("ul#activity-stream").prepend(response);
-//                    jQuery("ul#activity-stream li:first").addClass('new-update');
-//
-//                    if ( 0 != jQuery("#latest-update").length ) {
-//                        var l = jQuery("ul#activity-stream li.new-update .activity-content .activity-inner p").html();
-//                        var v = jQuery("ul#activity-stream li.new-update .activity-content .activity-header p a.view").attr('href');
-//
-//                        var ltext = jQuery("ul#activity-stream li.new-update .activity-content .activity-inner p").text();
-//
-//                        var u = '';
-//                        if ( ltext != '' )
-//                            u = l + ' ';
-//
-//                        u += '<a href="' + v + '" rel="nofollow">' + BP_DTheme.view + '</a>';
-//
-//                        jQuery("#latest-update").slideUp(300,function(){
-//                            jQuery("#latest-update").html( u );
-//                            jQuery("#latest-update").slideDown(300);
-//                        });
-//                    }
-//
-//                    jQuery("li.new-update").hide().slideDown( 300 );
-//                    jQuery("li.new-update").removeClass( 'new-update' );
-//                    jQuery("textarea#whats-new").val('');
-//                }
-//
-//                jQuery("#whats-new-options").animate({
-//                    height:'0px'
-//                });
-//                jQuery("form#whats-new-form textarea").animate({
-//                    height:'20px'
-//                });
-//                jQuery("#aw-whats-new-submit").prop("disabled", true).removeClass('loading');
-//            });
-//
-//            return false;
-//        });
-//
-//        jQuery('#whats-new-submit').on('click', '#bp-media-aw-whats-new-submit', function(e){
-//            var button = jQuery(this);
-//            button.addClass('loading');
-//            var form = button.parent().parent().parent().parent();
-//            /* Default POST values */
-//            var object = '';
-//            var item_id = jQuery("#whats-new-post-in").val();
-//
-//            /* Set object for non-profile posts */
-//            if ( item_id > 0 ) {
-//                object = jQuery("#whats-new-post-object").val();
-//            }
-//            var media_id = false;
-//            var multiple = 0;
-//            jQuery('#bp-media-activity-post-update-append span').each(function(){
-//                if (media_id){
-//                    media_id=media_id+'-'+jQuery(this).text();
-//                    multiple = 1;
-//                }else{
-//                    media_id=jQuery(this).text();
-//                }
-//            });
-//            var data = {
-//                action: 'bp_media_post_update',
-//                '_wpnonce_post_update': jQuery("input#_wpnonce_post_update").val(),
-//                'content': jQuery('#whats-new').val(),
-//                'object': object,
-//                'item_id': item_id,
-//                'media_id': media_id,
-//                'multiple': multiple,
-//                '_bp_as_nonce': jQuery('#_bp_as_nonce').val() || ''
-//            };
-//            jQuery.post(activity_ajax_url,data, function (response) {
-//                jQuery('#bp-media-activity-uploaded-files').html('');
-//                jQuery('#bp-media-activity-post-update-append').html('');
-//                jQuery('#bp-media-aw-whats-new-submit').after('<input type="submit" name="aw-whats-new-submit" id="aw-whats-new-submit" value="Post Update">').remove();
-//                form.children().each( function() {
-//                    if ( jQuery.nodeName(this, "textarea") || jQuery.nodeName(this, "input") ) {
-//                        jQuery(this).prop( 'disabled', false );
-//                    }
-//                });
-//
-//                /* Check for errors and append if found. */
-//                if ( response[0] + response[1] == '-1' ) {
-//                    form.prepend( response.substr( 2, response.length ) );
-//                    jQuery( 'form#' + form.attr('id') + ' div.error').hide().fadeIn( 200 );
-//                } else {
-//                    if ( 0 == jQuery("ul.activity-list").length ) {
-//                        jQuery("div.error").slideUp(100).remove();
-//                        jQuery("div#message").slideUp(100).remove();
-//                        jQuery("div.activity").append( '<ul id="activity-stream" class="activity-list item-list">' );
-//                    }
-//
-//                    jQuery("ul#activity-stream").prepend(response);
-//                    jQuery("ul#activity-stream li:first").addClass('new-update');
-//
-//                    if ( 0 != jQuery("#latest-update").length ) {
-//                        var l = jQuery("ul#activity-stream li.new-update .activity-content .activity-inner p").html();
-//                        var v = jQuery("ul#activity-stream li.new-update .activity-content .activity-header p a.view").attr('href');
-//
-//                        var ltext = jQuery("ul#activity-stream li.new-update .activity-content .activity-inner p").text();
-//
-//                        var u = '';
-//                        if ( ltext != '' )
-//                            u = l + ' ';
-//
-//                        u += '<a href="' + v + '" rel="nofollow">' + BP_DTheme.view + '</a>';
-//
-//                        jQuery("#latest-update").slideUp(300,function(){
-//                            jQuery("#latest-update").html( u );
-//                            jQuery("#latest-update").slideDown(300);
-//                        });
-//                    }
-//
-//                    jQuery("li.new-update").hide().slideDown( 300 );
-//                    jQuery("li.new-update").removeClass( 'new-update' );
-//                    jQuery("textarea#whats-new").val('');
-//                }
-//
-//                jQuery("#whats-new-options").animate({
-//                    height:'0px'
-//                });
-//                jQuery("form#whats-new-form textarea").animate({
-//                    height:'20px'
-//                });
-//                jQuery("#aw-whats-new-submit").prop("disabled", true).removeClass('loading');
-//                jQuery("input#aw-whats-new-submit").bind('click');
-//            });
-//            e.preventDefault();
-//        });
-//    }
+	function do_bp_jazz(){
+		jQuery("#whats-new-options").animate({
+			height:'40px'
+		});
+		jQuery("#whats-new-form textarea").animate({
+			height:'50px'
+		});
+		jQuery("#aw-whats-new-submit").prop("disabled", false);
+	}
 });

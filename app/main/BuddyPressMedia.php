@@ -421,6 +421,17 @@ class BuddyPressMedia {
      */
     function media_sizes() {
         $def_sizes = array(
+			'tiny_image' => array(
+                'width' => 80,
+                'height' => 60
+            ),
+            'tiny_video' => array(
+                'width' => 80,
+                'height' => 60
+            ),
+            'tiny_audio' => array(
+                'width' => 80,
+            ),
             'activity_image' => array(
                 'width' => 320,
                 'height' => 240
