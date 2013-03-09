@@ -682,6 +682,15 @@ class BuddyPressMedia {
         $plugin_version = $plugin_data['Version'];
         return $plugin_version;
     }
+    
+    static function get_current_user_default_album(){
+        if ( is_user_logged_in() ) {
+            $current_user_id = get_current_user_id();
+            $album_id = get_user_meta($current_user_id, 'bp-media-default-album', true);
+            return $album_id;
+        }
+        return false;
+    }
 
 }
 
