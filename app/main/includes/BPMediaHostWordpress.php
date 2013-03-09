@@ -245,6 +245,22 @@ class BPMediaHostWordpress {
 		return $attachment_id;
 	}
 
+	function get_media_thumbnail($size='thumbnail'){
+		$thumb = '';
+		if(in_array($this->type, array('image','video','audio'))){
+				if ( $this->thumbnail_id ) {
+					$medium_array = image_downsize( $this->thumbnail_id, $size );
+					$thumb_url = $medium_array[ 0 ];
+				} else {
+					$thumb_url = BP_MEDIA_URL . 'app/assets/img/'.$this->type.'_thumb.png';
+				}
+				$thumb = apply_filters( 'bp_media_video_thumb', $thumb_url, $this->thumbnail_id, $this->type );
+				return $thumb;
+		}
+		return false;
+
+	}
+
 	/**
 	 * Fetches the content of the activity of media upload based on its type
 	 *
@@ -390,7 +406,6 @@ class BPMediaHostWordpress {
 	 * @return boolean
 	 */
 	function get_media_gallery_content() {
-		global $bp_media;
 		$attachment = $this->id;
 		switch ( $this->type ) {
 			case 'video' :
