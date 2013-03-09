@@ -213,7 +213,7 @@ img.bp-media-donation-image{display:block;margin: 10px auto;}
 #bp-media-upload-set-privacy .album-set-privacy-label{margin: 0;font-weight: normal;}
 /*Transcoding Teaser*/
 .para-blockquote { background: #E5E5E5; padding: 10px; font-style: italic; }
-
+#latest-update img{display:block;}
 #rtprogressbar {
   background-color: #444;
   border-radius: 13px;

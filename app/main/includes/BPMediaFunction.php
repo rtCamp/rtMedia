@@ -62,6 +62,7 @@ class BPMediaFunction {
         $activity_allowedtags['a']['title'] = array();
         $activity_allowedtags['a']['href'] = array();
         $activity_allowedtags['ul'] = array();
+		$activity_allowedtags['ul']['class'] = array();
         $activity_allowedtags['li'] = array();
 
         return $activity_allowedtags;
@@ -202,7 +203,7 @@ class BPMediaFunction {
             $args['exclude'] = $delete_media_id;
         $attachments = get_posts($args);
         if (is_array($attachments)) {
-            $content = '<ul>';
+            $content = '<ul class="bp-media-list-media">';
             foreach ($attachments as $media) {
                 $bp_media = new BPMediaHostWordpress($media->ID);
                 $content .= $bp_media->get_album_activity_content();
