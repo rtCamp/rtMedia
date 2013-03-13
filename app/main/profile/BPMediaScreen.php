@@ -223,7 +223,6 @@ class BPMediaScreen {
             $this->template->redirect($this->media_const);
             exit;
         }
-
         $this->template_actions('entry_screen');
         $this->template->loader();
     }

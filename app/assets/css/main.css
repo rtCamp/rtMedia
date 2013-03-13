@@ -37,6 +37,7 @@ ul.bp-media-gallery li span img{height: 150px;}
 #item-body:after,ul.bp-media-gallery.item-list:after{content: " ";clear: both;display: block;text-indent: -9999em;}
 #item-body{position: relative;}
 
+#bp-media-activity-upload-ui { width: 50%;}
 .bp-media-area-allocate{height: 10px;width: 100%;display: block;}
 li #bp-media-upload-ui {padding: 0;max-width: 158px;position: relative;}
 #bp-media-upload-ui #drag-drop-area{border: 4px dashed #DDD;text-align: center;background: url('../img/drag-drop-bg.png') repeat scroll 0 0 transparent;overflow: hidden;padding: 15px 0;}
