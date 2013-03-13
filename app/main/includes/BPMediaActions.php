@@ -33,11 +33,13 @@ class BPMediaActions {
 		add_action( 'wp_ajax_bp_media_set_album_cover', array( $this, 'set_album_cover' ) );
 		add_action( 'delete_attachment', array( $this, 'delete_attachment_handler' ) );
 		add_action( 'wp_ajax_bp_media_add_album', array( $this, 'add_album' ) );
+		add_action( 'wp_ajax_bp-media-load-single', array( $this, 'load_single' ) );
 		add_action( 'wp_ajax_bp_media_get_thumbnail', array( $this, 'get_thumbnail' ) );
 		add_action( 'bp_media_after_privacy_install', array( $this, 'update_count' ) ,999 );
 		add_action( 'bp_media_after_add_media', array( $this, 'update_count' ) ,999 );
 		add_action( 'bp_media_after_update_media', array( $this, 'update_count' ) ,999 );
 		add_action( 'bp_media_after_delete_media', array( $this, 'update_count' ) ,999);
+
 		$linkback = bp_get_option( 'bp_media_add_linkback', false );
 		if ( $linkback )
 			add_action( 'bp_footer', array( $this, 'footer' ) );
@@ -155,7 +157,8 @@ class BPMediaActions {
         wp_enqueue_script('jquery-ui-tabs');
         wp_enqueue_script('bp-media-mejs', BP_MEDIA_URL . 'lib/media-element/mediaelement-and-player.min.js', '', BP_MEDIA_VERSION);
         wp_enqueue_script('bp-media-default', BP_MEDIA_URL . 'app/assets/js/main.js', '', BP_MEDIA_VERSION);
-
+		wp_enqueue_script('bp-media-fancybox', BP_MEDIA_URL . 'app/lib/fancybox/jquery.fancybox-1.3.4.pack.js', '', BP_MEDIA_VERSION);
+		wp_enqueue_style('bp-media-fancybox', BP_MEDIA_URL . 'app/lib/fancybox/jquery.fancybox-1.3.4.css', '', BP_MEDIA_VERSION);
         global $bp;
         $cur_group_id = NULL;
         if (bp_is_active("groups"))
@@ -637,6 +640,28 @@ class BPMediaActions {
         die();
     }
 
+	function load_single($current_id=false, $nav_action='now'){
+		if($_GET['action']== 'bp-media-load-single'){
+
+			if(!$current_id){
+				$current_id = $_GET['media_id'];
+			}
+
+			if(!$current_id) return false;
+
+			if(!$nav_action){
+				$nav_action = $_GET('nav_action');
+			}
+
+			$bp_media_current_entry = new BPMediaHostWordpress($current_id);
+			echo '<div class="bp-media-single-ajax">';
+			echo $bp_media_current_entry->get_media_single_content();
+			echo $bp_media_current_entry->show_comment_form();
+			echo '</div>';
+			wp_die();
+		}
+	}
+
     /**
      *
      * @global type $bp_media_count
@@ -849,7 +874,7 @@ class BPMediaActions {
 		echo $content;wp_die();
 
 	}
-        
+
         public function set_default_user_album() {
             if (is_user_logged_in()) {
                 $current_user_id = get_current_user_id();
