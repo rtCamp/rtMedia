@@ -81,5 +81,27 @@ jQuery(document).ready(function(){
         }
         );
     });
+	jQuery('#bp-media-list li a').fancybox();
+
+	jQuery('#bp-media-list').on('click', 'li a', function(e){
+		e.preventDefault();
+		$media_id_txt = jQuery(this).closest('li').attr('id');
+		$media_id = $media_id_txt.replace('bp-media-item-','');
+		$args = {
+			'action': 'bp-media-load-single',
+			'media_id': $media_id,
+			'nav_action': 'now'
+		}
+		jQuery(this).fancybox({
+			content :'$view'
+		});
+		$view = jQuery.get(ajaxurl,$args,function(response){
+			return response;
+		});
+		jQuery(this).fancybox({
+			content :$view
+		});
+
+	});
 
 });
