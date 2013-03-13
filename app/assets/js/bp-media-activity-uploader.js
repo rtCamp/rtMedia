@@ -38,7 +38,7 @@ jQuery(document).ready(function(){
 				jQuery('#bp-media-activity-uploaded-files').append('<div id="bp-media-activity-progress-'+file.id+'" class="bp-media-progressbar"><div class="bp-media-progress-text">' + file.name + ' (' + plupload.formatSize(file.size) + ')(<b>0%</b>)</div><div class="bp-media-progress-completed"></div></div>');
 			});
 			//                bp_media_activity_album_selected = jQuery('#bp-media-activity-selected-album').val();
-			$bp_media_activity_album_selected = '535';
+			$bp_media_activity_album_selected = default_album;
 			$bp_media_activity_uploader.start();
 			do_bp_jazz();
 			up.refresh(); // Reposition Flash/Silverlight
@@ -131,9 +131,7 @@ jQuery(document).ready(function(){
 	}
 
 	function do_bp_jazz(){
-		jQuery("#whats-new-options").animate({
-			height:'40px'
-		});
+		jQuery("#whats-new-options").css('height','auto');
 		jQuery("#whats-new-form textarea").animate({
 			height:'50px'
 		});

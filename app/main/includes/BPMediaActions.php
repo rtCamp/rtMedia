@@ -17,7 +17,7 @@ class BPMediaActions {
 		add_action( 'bp_before_activity_delete', 'BPMediaActions::delete_activity_handler' );
 		add_action( 'wp_enqueue_scripts', array( $this, 'upload_enqueue' ) );
 		add_action( 'init', 'BPMediaActions::init_count' );
-                add_action('init', array($this, 'set_default_user_album'));
+                add_action('init', array($this, 'default_user_album'));
 		add_action( 'bp_activity_entry_meta', array( $this, 'action_buttons' ) );
 		add_action( 'bp_media_before_delete_media', 'BPMediaActions::delete_media_handler' );
 		add_action( 'bp_media_after_add_album', array( $this, 'album_create_activity' ) );
@@ -479,6 +479,7 @@ class BPMediaActions {
             wp_enqueue_script('bp-media-activity-uploader', BP_MEDIA_URL . 'app/assets/js/bp-media-activity-uploader.js', array('plupload', 'plupload-html5', 'plupload-flash', 'plupload-silverlight', 'plupload-html4', 'plupload-handlers'), BP_MEDIA_VERSION);
             wp_localize_script('bp-media-activity-uploader', 'bp_media_uploader_params', $params);
             wp_localize_script('bp-media-activity-uploader', 'activity_ajax_url', admin_url('admin-ajax.php'));
+            wp_localize_script('bp-media-activity-uploader', 'default_album', $this->default_user_album());
         } elseif (in_array(bp_current_action(), array(BP_MEDIA_IMAGES_SLUG, BP_MEDIA_VIDEOS_SLUG, BP_MEDIA_AUDIO_SLUG, BP_MEDIA_SLUG, BP_MEDIA_ALBUMS_SLUG))) {
             $params = array(
                 'url' => BP_MEDIA_URL . 'app/main/includes/bp-media-upload-handler.php',
@@ -850,12 +851,12 @@ class BPMediaActions {
 
 	}
         
-        public function set_default_user_album() {
+        public function default_user_album() {
+            $album_id = 0;
             if (is_user_logged_in()) {
                 $current_user_id = get_current_user_id();
-                $default_album = get_user_meta($current_user_id, 'bp-media-default-album', true);
-                if (!$default_album) {
-                    $album_id = 0;
+                $album_id = get_user_meta($current_user_id, 'bp-media-default-album', true);
+                if (!$album_id) {
                     $query = new WP_Query(array('post_type' => 'bp_media_album', 'author' => $current_user_id, 'name' => sanitize_title('Wall Posts'), 'order' => 'ASC'));
                     wp_reset_postdata();
                     if (isset($query->posts) && isset($query->posts[0])) {
@@ -865,6 +866,7 @@ class BPMediaActions {
                         update_user_meta($current_user_id, 'bp-media-default-album', $album_id);
                     }
                 }
+                return $album_id;
             }
         }
 
