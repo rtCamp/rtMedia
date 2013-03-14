@@ -81,27 +81,25 @@ jQuery(document).ready(function(){
         }
         );
     });
-	jQuery('#bp-media-list li a').fancybox();
+			$media_id_txt = [];
+			$media_id = [];
+	jQuery('#bp-media-list li a').each(function(i,e){
 
-	jQuery('#bp-media-list').on('click', 'li a', function(e){
-		e.preventDefault();
-		$media_id_txt = jQuery(this).closest('li').attr('id');
-		$media_id = $media_id_txt.replace('bp-media-item-','');
-		$args = {
-			'action': 'bp-media-load-single',
-			'media_id': $media_id,
-			'nav_action': 'now'
+			$media_id_txt[i] = jQuery(this).closest('li').attr('id');
+			$media_id[i] = $media_id_txt[i].replace('bp-media-item-','');
+			jQuery(this).attr('href','');
+		jQuery(this).fancybox({
+		onStart: function(){
+			$args = {
+				'action': 'bp-media-load-single',
+				'media_id': $media_id[i],
+				'nav_action': 'now'
+			}
+			jQuery.get(ajaxurl,$args,function(response){
+				jQuery('#fancybox-content div').html(response);
+			});
 		}
-		jQuery(this).fancybox({
-			content :'$view'
-		});
-		$view = jQuery.get(ajaxurl,$args,function(response){
-			return response;
-		});
-		jQuery(this).fancybox({
-			content :$view
-		});
-
+	});
 	});
 
 });
