@@ -37,6 +37,7 @@ ul.bp-media-gallery li span img{height: 150px;}
 #item-body:after,ul.bp-media-gallery.item-list:after{content: " ";clear: both;display: block;text-indent: -9999em;}
 #item-body{position: relative;}
 
+#bp-media-activity-upload-ui { width: 50%;}
 .bp-media-area-allocate{height: 10px;width: 100%;display: block;}
 li #bp-media-upload-ui {padding: 0;max-width: 158px;position: relative;}
 #bp-media-upload-ui #drag-drop-area{border: 4px dashed #DDD;text-align: center;background: url('../img/drag-drop-bg.png') repeat scroll 0 0 transparent;overflow: hidden;padding: 15px 0;}
@@ -226,10 +227,81 @@ img.bp-media-donation-image{display:block;margin: 10px auto;}
    height: 20px;
    border-radius: 10px;
 }
-.bp-media-single-ajax{
-	width:auto;
-	min-width:800px;
+.simplemodal-overlay{
+	background:#333 none;
+	z-index: 100000;
 }
+.simplemodal-container{
+	background:#fff none;
+}
+.bp-media-mod-title{
+	display:none;
+}
+
+.bp-media-ajax-single{
+	width:1000px;
+	padding:0;
+}
+.simplemodal-container .simplemodal-close{
+	background: url("../img/close.png") no-repeat;
+	width:24px;
+	height:24px;
+	display:block;
+	position:absolute;
+	right:-8px;
+	top:-8px;
+	cursor: pointer;
+}
+.simplemodal-container a.modal-prev,
+.simplemodal-container a.modal-next{
+	position:absolute;
+	height:100%;
+	width:70px;
+	top:0;
+	cursor: pointer;
+}
+.simplemodal-container a.modal-prev:hover,
+.simplemodal-container a.modal-next:hover{
+	background:url("../img/") no-repeat;
+}
+.simplemodal-container a.modal-prev{
+	left: 0px;
+}
+.simplemodal-container a.modal-next{
+	right: 0px;
+}
+.bp-media-ajax-single .bp-media-mod-title{
+	display:block;
+}
+.bp-media-ajax-single .bp_media_content img{
+	width:100%;
+	max-width: 100%;
+}
+.bp-media-ajax-single .bp_media_author{
+	position:absolute;
+	top:0;
+	left:0;
+}
+.bp-media-ajax-single .bp-media-content-wrap{
+	float:left;
+	width:800px;
+	margin:0;
+	position:relative;
+	overflow:hidden;
+}
+.bp-media-ajax-single .bp-media-meta-content-wrap{
+	float:left;
+	width:200px;
+	margin:0;
+}
+/*.bp-media-ajax-single .bp-media-meta-content-wrap div.activity-meta a {
+padding: 0;
+float:left;
+}*/
+.bp-media-ajax-preloader{
+	display:none;
+}
+
 
 @media (min-width: 981px) and (max-width: 1096px) {
     li #bp-media-upload-ui #drag-drop-area{padding: 10px 0;}

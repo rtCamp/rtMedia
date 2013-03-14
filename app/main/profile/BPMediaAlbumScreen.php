@@ -70,7 +70,7 @@ class BPMediaAlbumScreen extends BPMediaScreen {
         $this->hook_before();
 
         if ($bp_media_albums_query && $bp_media_albums_query->have_posts()):
-            echo '<ul id="bp-media-list" class="bp-media-gallery item-list">';
+            echo '<ul id="bp-album-list" class="bp-media-gallery item-list">';
             while ($bp_media_albums_query->have_posts()) : $bp_media_albums_query->the_post();
                 $this->template->the_album_content();
             endwhile;
