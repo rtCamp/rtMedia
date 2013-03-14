@@ -421,6 +421,7 @@ class BPMediaHostWordpress {
 						<img src="<?php echo apply_filters( 'bp_media_video_thumb', $thumb_url, $attachment, $this->type ); ?>" />
 					</a>
 					<h3 title="<?php echo $this->name; ?>"><a href="<?php echo $this->url ?>" title="<?php _e( $this->description, BP_MEDIA_TXT_DOMAIN ); ?>"><?php echo $this->name; ?></a></h3>
+					<div class="bp-media-ajax-preloader"></div>
 				</li>
 				<?php
 				break;
@@ -437,6 +438,7 @@ class BPMediaHostWordpress {
 						<img src="<?php echo $thumb_url ?>" />
 					</a>
 					<h3 title="<?php echo $this->name; ?>"><a href="<?php echo $this->url ?>" title="<?php _e( $this->description, BP_MEDIA_TXT_DOMAIN ); ?>"><?php echo $this->name ?></a></h3>
+					<div class="bp-media-ajax-preloader"></div>
 				</li>
 				<?php
 				break;
@@ -449,6 +451,7 @@ class BPMediaHostWordpress {
 						<img src="<?php echo $medium_path ?>" />
 					</a>
 					<h3 title="<?php echo $this->name ?>"><a href="<?php echo $this->url ?>" title="<?php _e( $this->description, BP_MEDIA_TXT_DOMAIN ); ?>"><?php echo $this->name ?></a></h3>
+					<div class="bp-media-ajax-preloader"></div>
 				</li>
 				<?php
 				break;
