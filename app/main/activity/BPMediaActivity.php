@@ -21,6 +21,7 @@ if (!class_exists('BPMediaActivity')) {
                 add_action('bp_groups_posted_update', array($this, 'override_media_album_id'), '', 4);
                 add_filter('bp_activity_new_update_content', array($this, 'override_update'));
                 add_filter('bp_activity_latest_update_content', array($this, 'override_update'));
+                add_filter('bp_get_member_latest_update', array($this, 'latest_update'));
                 add_filter('bp_get_activity_latest_update', array($this, 'latest_update'));
 
                 add_filter('groups_activity_new_update_content', array($this, 'override_update'));
@@ -91,7 +92,7 @@ if (!class_exists('BPMediaActivity')) {
         }
 
         public function override_update($content) {
-
+            $this->content = $content;
             $activity_media = $this->get_media($content);
             $newcontent = '<p>' . $this->get_text($content) . '</p>';
             if (isset($activity_media)) {
@@ -108,6 +109,7 @@ if (!class_exists('BPMediaActivity')) {
                     if (count($activity_media) > 1) {
                         $newcontent .= $media->get_album_activity_content();
                     } else {
+                        add_filter('bp_media_single_activity_title',  create_function('', 'return;'));
                         $newcontent .= $media->get_media_activity_content();
                     }
                 }
@@ -119,6 +121,7 @@ if (!class_exists('BPMediaActivity')) {
         }
 
         public function override_media_album_id($content, $user_id, $group_id, $activity_id) {
+            global $bp;
             $activity_media = $this->get_media($content);
             if (isset($activity_media)) {
                 if (!is_array($activity_media)) {
@@ -130,6 +133,14 @@ if (!class_exists('BPMediaActivity')) {
                     $attachment = get_post($media_id);
                     $attachment->post_parent = groups_get_groupmeta($group_id, 'bp_media_default_album');
                     wp_update_post($attachment);
+                    $activity_id = groups_record_activity(array(
+                        'id' => $activity_id,
+                        'user_id' => $user_id,
+                        'action' => sprintf(__('%1$s posted an update in the group %2$s', 'buddypress'), bp_core_get_userlink($user_id), '<a href="' . bp_get_group_permalink($bp->groups->current_group) . '">' . esc_attr($bp->groups->current_group->name) . '</a>'),
+                        'content' => $this->override_update($this->content),
+                        'type' => 'activity_update',
+                        'item_id' => $group_id
+                            ));
                 }
             }
         }
