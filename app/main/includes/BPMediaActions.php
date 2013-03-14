@@ -581,8 +581,10 @@ class BPMediaActions {
         $loggedin_user = isset($_POST['loggedin_user']) ? $_POST['loggedin_user'] : null;
         $current_group = isset($_POST['current_group']) ? $_POST['current_group'] : null;
         $album_id = isset($_POST['album_id']) ? $_POST['album_id'] : false;
-        if ($current_group) {
-            $type_var = isset($action_variables[0]) ? $action_variables[0] : '';
+        if ( $current_group && isset($action_variables[1]) ) {
+            $type_var = 'list';
+        } elseif ( (isset($action_variables[0]) && $action_variables[0]) ) {
+            $type_var = $action_variables[0];
         } else {
             $type_var = $current_action;
         }
@@ -592,7 +594,7 @@ class BPMediaActions {
                 $album_id = $action_variables[1];
             }
         }
-
+        
         if ((!$displayed_user || intval($displayed_user) == 0) && (!$current_group || intval($current_group) == 0)) {
             die();
         }
@@ -615,6 +617,8 @@ class BPMediaActions {
 
         $query = new BPMediaQuery();
         $args = $query->init($type, $album_id, false, $page);
+        error_log($type_var);
+        error_log(var_export($args,true));
         if ($type == 'album') {
             $bp_media_albums_query = new WP_Query($args);
             if (isset($bp_media_albums_query->posts) && is_array($bp_media_albums_query->posts) && count($bp_media_albums_query->posts)) {
