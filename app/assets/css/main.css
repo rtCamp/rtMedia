@@ -226,6 +226,10 @@ img.bp-media-donation-image{display:block;margin: 10px auto;}
    height: 20px;
    border-radius: 10px;
 }
+.bp-media-single-ajax{
+	width:auto;
+	min-width:800px;
+}
 
 @media (min-width: 981px) and (max-width: 1096px) {
     li #bp-media-upload-ui #drag-drop-area{padding: 10px 0;}

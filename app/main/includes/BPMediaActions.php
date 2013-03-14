@@ -157,8 +157,8 @@ class BPMediaActions {
         wp_enqueue_script('jquery-ui-tabs');
         wp_enqueue_script('bp-media-mejs', BP_MEDIA_URL . 'lib/media-element/mediaelement-and-player.min.js', '', BP_MEDIA_VERSION);
         wp_enqueue_script('bp-media-default', BP_MEDIA_URL . 'app/assets/js/main.js', '', BP_MEDIA_VERSION);
-		wp_enqueue_script('bp-media-fancybox', BP_MEDIA_URL . 'app/lib/fancybox/jquery.fancybox-1.3.4.pack.js', '', BP_MEDIA_VERSION);
-		wp_enqueue_style('bp-media-fancybox', BP_MEDIA_URL . 'app/lib/fancybox/jquery.fancybox-1.3.4.css', '', BP_MEDIA_VERSION);
+		wp_enqueue_script('bp-media-fancybox', BP_MEDIA_URL . 'lib/fancybox/jquery.fancybox-1.3.4.pack.js', '', BP_MEDIA_VERSION);
+		wp_enqueue_style('bp-media-fancybox', BP_MEDIA_URL . 'lib/fancybox/jquery.fancybox-1.3.4.css', '', BP_MEDIA_VERSION);
         global $bp;
         $cur_group_id = NULL;
         if (bp_is_active("groups"))
@@ -658,7 +658,7 @@ class BPMediaActions {
 			echo $bp_media_current_entry->get_media_single_content();
 			echo $bp_media_current_entry->show_comment_form();
 			echo '</div>';
-			wp_die();
+			die();
 		}
 	}
 
