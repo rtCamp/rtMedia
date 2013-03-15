@@ -958,5 +958,9 @@ class BPMediaHostWordpress {
 		return $post_id;
 	}
 
+	function get_description(){
+		return $this->description;
+	}
+
 }
 ?>
