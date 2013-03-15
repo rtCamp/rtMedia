@@ -162,8 +162,13 @@ class BPMediaActions {
         $cur_group_id = NULL;
         if (bp_is_active("groups"))
             $cur_group_id = bp_get_current_group_id();
+		 if(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == "on") {
+			$schema = 'https';
+		} else {
+			$schema = 'http';
+		}
         $bp_media_vars = array(
-            'ajaxurl' => admin_url('admin-ajax.php'),
+            'ajaxurl' => admin_url('admin-ajax.php',$schema),
             'page' => 1,
             'current_action' => $cur_group_id ? (empty($bp->action_variables) ? BP_MEDIA_IMAGES_SLUG : $bp->action_variables[0]) : (isset($bp->current_action) ? $bp->current_action : false),
             'action_variables' => isset($bp->action_variables) ? (empty($bp->action_variables) ? array(BP_MEDIA_IMAGES_SLUG) : $bp->action_variables) : array(BP_MEDIA_IMAGES_SLUG),
@@ -325,7 +330,7 @@ class BPMediaActions {
 
             if (isset($bp_media->options['download_enabled']))
                 echo '<a href="' . $bp_media_current_entry->get_attachment_url()
-                . '" class="button item-button bp-secondary-action bp-media-download" title="'
+                . '" target="_blank" class="button item-button bp-secondary-action bp-media-download" title="'
                 . __('Download', BP_MEDIA_TXT_DOMAIN) . '">' . __('Download', BP_MEDIA_TXT_DOMAIN) . '</a>';
         }
     }
@@ -575,13 +580,13 @@ class BPMediaActions {
     function load_more() {
 
         global $bp, $bp_media_query, $bp_media, $bp_media_albums_query;
-        $page = isset($_POST['page']) ? $_POST['page'] : die();
-        $current_action = isset($_POST['current_action']) ? $_POST['current_action'] : null;
-        $action_variables = isset($_POST['action_variables']) ? $_POST['action_variables'] : null;
-        $displayed_user = isset($_POST['displayed_user']) ? $_POST['displayed_user'] : null;
-        $loggedin_user = isset($_POST['loggedin_user']) ? $_POST['loggedin_user'] : null;
-        $current_group = isset($_POST['current_group']) ? $_POST['current_group'] : null;
-        $album_id = isset($_POST['album_id']) ? $_POST['album_id'] : false;
+        $page = isset($_GET['page']) ? $_GET['page'] : die();
+        $current_action = isset($_GET['current_action']) ? $_GET['current_action'] : null;
+        $action_variables = isset($_GET['action_variables']) ? $_GET['action_variables'] : null;
+        $displayed_user = isset($_GET['displayed_user']) ? $_GET['displayed_user'] : null;
+        $loggedin_user = isset($_GET['loggedin_user']) ? $_GET['loggedin_user'] : null;
+        $current_group = isset($_GET['current_group']) ? $_GET['current_group'] : null;
+        $album_id = isset($_GET['album_id']) ? $_GET['album_id'] : false;
         if ($current_group) {
             $type_var = isset($action_variables[0]) ? $action_variables[0] : '';
         } else {
@@ -835,8 +840,8 @@ class BPMediaActions {
     }
 
     public function set_album_cover() {
-        $id = $_POST['post_id'];
-        $album_id = $_POST['album_id'];
+        $id = $_GET['post_id'];
+        $album_id = $_GET['album_id'];
         $album_cover = get_post_thumbnail_id($album_id);
         $text = NULL;
         if ($album_cover && ($album_cover == $id)) {
