@@ -32,6 +32,7 @@ class BPMediaActions {
         add_action('wp_ajax_bp_media_load_more', array($this, 'load_more'));
         add_action('wp_ajax_nopriv_bp_media_load_more', array($this, 'load_more'));
         add_action('wp_ajax_bp_media_set_album_cover', array($this, 'set_album_cover'));
+		add_action( 'wp_ajax_bp-media-load-single', array( $this, 'load_single' ) );
         add_action('delete_attachment', array($this, 'delete_attachment_handler'));
         add_action('wp_ajax_bp_media_add_album', array($this, 'add_album'));
         add_action('wp_ajax_bp_media_get_thumbnail', array($this, 'get_thumbnail'));
@@ -156,13 +157,18 @@ class BPMediaActions {
         wp_enqueue_script('jquery-ui-tabs');
         wp_enqueue_script('bp-media-mejs', BP_MEDIA_URL . 'lib/media-element/mediaelement-and-player.min.js', '', BP_MEDIA_VERSION);
         wp_enqueue_script('bp-media-default', BP_MEDIA_URL . 'app/assets/js/main.js', '', BP_MEDIA_VERSION);
-
-        global $bp;
+		wp_enqueue_script('bp-media-modal', BP_MEDIA_URL . 'lib/simplemodal/jquery.simplemodal-1.4.4.js', '', BP_MEDIA_VERSION);
+		global $bp;
         $cur_group_id = NULL;
         if (bp_is_active("groups"))
             $cur_group_id = bp_get_current_group_id();
+		 if(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == "on") {
+			$schema = 'https';
+		} else {
+			$schema = 'http';
+		}
         $bp_media_vars = array(
-            'ajaxurl' => admin_url('admin-ajax.php'),
+            'ajaxurl' => admin_url('admin-ajax.php',$schema),
             'page' => 1,
             'current_action' => $cur_group_id ? (empty($bp->action_variables) ? BP_MEDIA_IMAGES_SLUG : $bp->action_variables[0]) : (isset($bp->current_action) ? $bp->current_action : false),
             'action_variables' => isset($bp->action_variables) ? (empty($bp->action_variables) ? array(BP_MEDIA_IMAGES_SLUG) : $bp->action_variables) : array(BP_MEDIA_IMAGES_SLUG),
@@ -324,7 +330,7 @@ class BPMediaActions {
 
             if (isset($bp_media->options['download_enabled']))
                 echo '<a href="' . $bp_media_current_entry->get_attachment_url()
-                . '" class="button item-button bp-secondary-action bp-media-download" title="'
+                . '" target="_blank" class="button item-button bp-secondary-action bp-media-download" title="'
                 . __('Download', BP_MEDIA_TXT_DOMAIN) . '">' . __('Download', BP_MEDIA_TXT_DOMAIN) . '</a>';
         }
     }
@@ -647,6 +653,27 @@ class BPMediaActions {
         die();
     }
 
+	function load_single($current_id=false, $nav_action='now'){
+		if($_GET['action']== 'bp-media-load-single'){
+
+			if(!$current_id){
+				$current_id = $_GET['media_id'];
+			}
+
+			if(!$current_id) return false;
+
+			if(!$nav_action){
+				$nav_action = $_GET('nav_action');
+			}
+
+			$bp_media_current_entry = new BPMediaHostWordpress($current_id);
+			echo '<div class="bp-media-single-ajax">';
+			echo $bp_media_current_entry->get_media_single_content();
+			echo '</div>';
+			die();
+		}
+	}
+
     /**
      *
      * @global type $bp_media_count
@@ -828,8 +855,8 @@ class BPMediaActions {
     }
 
     public function set_album_cover() {
-        $id = $_POST['post_id'];
-        $album_id = $_POST['album_id'];
+        $id = $_GET['post_id'];
+        $album_id = $_GET['album_id'];
         $album_cover = get_post_thumbnail_id($album_id);
         $text = NULL;
         if ($album_cover && ($album_cover == $id)) {
