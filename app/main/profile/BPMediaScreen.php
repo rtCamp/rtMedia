@@ -252,8 +252,18 @@ class BPMediaScreen {
         if (!$bp->action_variables[0] == constant($entryslug))
             return false;
         echo '<div class="bp-media-single bp-media-image">';
+		echo '<div class="bp-media-content-wrap">';
         echo $bp_media_current_entry->get_media_single_content();
+		echo '</div>';
+		echo '<div class="bp-media-meta-content-wrap">';
+		echo '<div class="bp-media-mod-title">';
+		echo '<h2>';
+		$this->entry_screen_title();
+		echo '</h2>';
+		echo '<p>'.nl2br($bp_media_current_entry->get_description()).'</p>';
+		echo '</div>';
         echo $bp_media_current_entry->show_comment_form();
+		echo '</div>';
         echo '</div>';
         $this->hook_after();
     }
