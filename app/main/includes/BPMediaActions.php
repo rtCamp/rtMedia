@@ -728,13 +728,22 @@ class BPMediaActions {
      */
     function album_create_activity($album) {
         /* @var $album BP_Media_Album */
+        global $bp;
+        if ($album->group_id > 0 && bp_is_active('groups')) {
+            $component = $bp->groups->id;
+            $item_id = $album->group_id;
+        }else {
+            $component = $bp->activity->id;
+            $item_id = 0;
+        }
+        
         $args = array(
             'action' => apply_filters('bp_media_album_created', sprintf(__('%1$s created an album %2$s', BP_MEDIA_TXT_DOMAIN), bp_core_get_userlink($album->get_owner()), '<a href="' . $album->get_url() . '">' . $album->get_title() . '</a>')),
-            'component' => BP_MEDIA_SLUG,
-            'type' => 'album_created',
+            'component' => $component,
+            'type' => 'activity_update',
             'primary_link' => $album->get_url(),
             'user_id' => $album->get_owner(),
-            'item_id' => $album->get_id()
+            'item_id' => $item_id
         );
         $activity_id = BPMediaFunction::record_activity($args);
         update_post_meta($album->get_id(), 'bp_media_child_activity', $activity_id);
@@ -779,7 +788,7 @@ class BPMediaActions {
                 'content' => $activity_content,
                 'primary_link' => $media->get_url(),
                 'item_id' => $media->get_id(),
-                'type' => 'media_upload',
+                'type' => 'activity_update',
                 'user_id' => $media->get_author()
             );
 
@@ -801,6 +810,8 @@ class BPMediaActions {
 
             if ($group) {
                 $group_info = groups_get_group(array('group_id' => $group));
+                $args['component'] = $bp->groups->id;
+                $args['item_id'] = $group;
                 if ('public' != $group_info->status) {
                     $args['hide_sitewide'] = 1;
                 }

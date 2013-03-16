@@ -111,6 +111,7 @@ static function bp_media_groups_set_query() {
      * @return boolean
      */
     static function bp_media_groups_activity_create_after_add_media($media, $hidden = false) {
+        global $bp;
         if (function_exists('bp_activity_add')) {
             if (!is_object($media)) {
                 try {
@@ -123,8 +124,9 @@ static function bp_media_groups_set_query() {
                 'action' => apply_filters('bp_media_added_media', sprintf(__('%1$s added a %2$s', BP_MEDIA_TXT_DOMAIN), bp_core_get_userlink($media->get_author()), '<a href="' . $media->get_url() . '">' . $media->get_media_activity_type() . '</a>')),
                 'content' => $media->get_media_activity_content(),
                 'primary_link' => $media->get_url(),
-                'item_id' => $media->get_id(),
-                'type' => 'media_upload',
+                'component' => $bp->groups->id,
+                'item_id' => $media->group_id,
+                'type' => 'activity_update',
                 'user_id' => $media->get_author()
             );
             $hidden = apply_filters('bp_media_force_hide_activity', $hidden);
