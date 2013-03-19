@@ -64,7 +64,7 @@ class BPMediaTemplate {
                         } else {
                             $album->add_album($post_wall, bp_loggedin_user_id());
                         }
-                        echo '<option value="' . $album->get_id() . '" selected="selected">' . $album->get_title()->post_title . '</option>';
+                        echo '<option value="' . $album->get_id() . '" selected="selected">' . $album->get_title() . '</option>';
                     }
                     echo '<option id="create-new" value="create_new" >' . __('+ Create New Album', BP_MEDIA_TXT_DOMAIN) . '</option>';
                     ?>

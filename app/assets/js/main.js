@@ -38,7 +38,7 @@ jQuery(document).ready(function(){
 			if(response.length==0)
 				jQuery('#bp-media-show-more').parent().remove();
 			else
-				jQuery('#bp-media-list').append(response);
+				jQuery('.bp-media-gallery').append(response);
 		});
 	});
 	setTimeout(function(){
@@ -198,7 +198,7 @@ jQuery(document).ready(function(){
 	/**** Activity Comments *******************************************************/
 
 	/* Hide all activity comment forms */
-	jQuery('form.ac-form').show();
+	jQuery('form.ac-form').hide();
 
 	/* Hide excess comments */
 //	if ( jQuery('.activity-comments').length )
