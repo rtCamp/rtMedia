@@ -64,7 +64,6 @@ li #bp-media-uploaded-files{left: 0;position: absolute;top: 155px;}
 #bp-media-premium-addons ul,#bp-media-premium-addons li{list-style:disc;margin-left:10px;}
 .bp-media-single div.bp_media_content{text-align:center;width: auto;
 margin: 0 auto;
-display: block;
 position: relative;}
 .bp-media-single .bp_media_content .mejs-container{margin-left:auto;margin-right:auto;}
 
@@ -84,7 +83,7 @@ ul#activity-stream li.media.album_updated ul li{float: left;margin-right:2%}
 #bp-media-upload-set-privacy .album-set-privacy-radio{}
 #bp-media-upload-set-privacy .album-set-privacy-label{margin: 0;font-weight: normal;}
 
-.bp-media-single .delete-activity-single{
+.bp-media-single .delete-activity-single,.bp-media-single .delete-activity{
 	color: #ff0000;
 	font-weight:bold;
 }
@@ -175,6 +174,7 @@ ul#activity-stream li.media.album_updated ul li{float: left;margin-right:2%}
 	margin:0 auto;
 	vertical-align: middle;
 	background:#fff none;
+	max-height:600px;
 }
 .bp-media-ajax-single .bp_media_author{
 	position:absolute;
