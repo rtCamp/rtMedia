@@ -461,11 +461,7 @@ class BPMediaActions {
     }
 
     function upload_enqueue() {
-//        echo 'action=' . bp_current_action();
-//        echo '<br />';
-//        echo 'activity=' . bp_is_activity_component();
-//        echo '<br />';
-//        echo 'group=' . bp_is_group_home();
+		if(  is_user_logged_in()){
         if (bp_is_activity_component() || bp_is_group_home()) {
             $params = array(
                 'url' => BP_MEDIA_URL . 'app/main/includes/bp-media-upload-handler.php',
@@ -511,7 +507,9 @@ class BPMediaActions {
             wp_enqueue_script('bp-media-uploader', BP_MEDIA_URL . 'app/assets/js/bp-media-uploader.js', array('plupload', 'plupload-html5', 'plupload-flash', 'plupload-silverlight', 'plupload-html4', 'plupload-handlers'), BP_MEDIA_VERSION);
             wp_localize_script('bp-media-uploader', 'bp_media_uploader_params', $params);
         }
+		}
         wp_enqueue_style('bp-media-default', BP_MEDIA_URL . 'app/assets/css/main.css', '', BP_MEDIA_VERSION);
+		wp_enqueue_style('bp-media-admin', BP_MEDIA_URL . 'app/assets/css/admin.css', '', BP_MEDIA_VERSION);
     }
 
 //This is used only on the uploads page so its added as action in the screens function of upload page.
