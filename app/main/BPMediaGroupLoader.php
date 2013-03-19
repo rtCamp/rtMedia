@@ -67,7 +67,7 @@ class BPMediaGroupLoader {
             return;
 
         /** This line might break a thing or two in custom themes and widgets */
-        remove_filter('bp_activity_get_user_join_filter', 'BPMediaFilters::activity_query_filter', 10);
+//        remove_filter('bp_activity_get_user_join_filter', 'BPMediaFilters::activity_query_filter', 10);
 //        add_filter('bp_activity_get_user_join_filter', 'BPMediaFilters::group_activity_query_filter', 10);
 
         foreach ($bp->bp_options_nav[$current_group] as $key => $nav_item) {
