@@ -201,8 +201,8 @@ jQuery(document).ready(function(){
 	jQuery('form.ac-form').hide();
 
 	/* Hide excess comments */
-	if ( jQuery('.activity-comments').length )
-		bp_legacy_theme_hide_comments();
+//	if ( jQuery('.activity-comments').length )
+//		bp_legacy_theme_hide_comments();
 
 	/* Activity list event delegation */
 	jQuery('body').on( 'click', '.bp-media-ajax-single div.activity',function(event) {

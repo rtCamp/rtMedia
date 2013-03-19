@@ -1,7 +1,7 @@
 /*
  *	Default stylesheet for BuddyPress Media
 */
-.bp_media_content img{max-width:98%;}
+.bp_media_content img{max-width:100%;}
 .bp_media_content .mejs-poster img{max-width: 100%;}
 .media.albums .album-edit{display:inline;}
 .media h3 {display:block;font-size:20px;font-weight:bold;}
@@ -76,7 +76,10 @@ li #bp-media-uploaded-files{left: 0;position: absolute;top: 155px;}
 .bp-media-progress-completed{z-index: 9;width: 0;height: 35px;margin-top: -35px;background-color: #83B4D8;background-image: linear-gradient(bottom,#72A7CF 0,#90C5EE 100%);background-image: -o-linear-gradient(bottom,#72A7CF 0,#90C5EE 100%);background-image: -moz-linear-gradient(bottom,#72A7CF 0,#90C5EE 100%);background-image: -webkit-linear-gradient(bottom,#72A7CF 0,#90C5EE 100%);background-image: -ms-linear-gradient(bottom,#72A7CF 0,#90C5EE 100%);-webkit-border-radius: 3px;border-radius: 3px;-webkit-box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);}
 .bpm-aligncenter{display: inline-block;text-align: center;width: 100%;}
 #bp-media-premium-addons ul,#bp-media-premium-addons li{list-style:disc;margin-left:10px;}
-.bp-media-single div.bp_media_content{text-align:center;}
+.bp-media-single div.bp_media_content{text-align:center;width: auto;
+margin: 0 auto;
+display: block;
+position: relative;}
 .bp-media-single .bp_media_content .mejs-container{margin-left:auto;margin-right:auto;}
 
 .bp-media-support .support_list{ margin-left: 25px}
@@ -226,6 +229,11 @@ img.bp-media-donation-image{display:block;margin: 10px auto;}
    width: 0;
    height: 20px;
    border-radius: 10px;
+}
+
+.bp-media-single .delete-activity-single{
+	color: #ff0000;
+	font-weight:bold;
 }
 .simplemodal-overlay{
 	background:#333 none;
