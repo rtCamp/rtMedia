@@ -84,7 +84,7 @@ static function bp_media_groups_set_query() {
      * @global WP_Query $bp_media_albums_query
      */
     static function bp_media_groups_albums_set_query() {
-        global $bp, $bp_media_albums_query;
+        global $bp, $bp_media, $bp_media_albums_query;
         if (isset($bp->action_variables) && isset($bp->action_variables[1]) && $bp->action_variables[1] == 'page' && isset($bp->action_variables[2]) && is_numeric($bp->action_variables[2])) {
             $paged = $bp->action_variables[2];
         } else {
@@ -97,7 +97,8 @@ static function bp_media_groups_set_query() {
                 'paged' => $paged,
                 'meta_key' => 'bp-media-key',
                 'meta_value' => -bp_get_current_group_id(),
-                'meta_compare' => '='
+                'meta_compare' => '=',
+                'posts_per_page' => $bp_media->default_count()
             );
             $bp_media_albums_query = new WP_Query($args);
         }
