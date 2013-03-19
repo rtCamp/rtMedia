@@ -508,8 +508,8 @@ class BPMediaHostWordpress {
 												<a href="<?php bp_activity_unfavorite_link(); ?>" class="button unfav bp-secondary-action" title="<?php esc_attr_e( 'Remove Favorite', BP_MEDIA_TXT_DOMAIN ); ?>"><?php _e( 'Remove Favorite', BP_MEDIA_TXT_DOMAIN ) ?></a>
 											<?php endif; ?>
 										<?php endif; ?>
-										<?php if ( bp_activity_user_can_delete() ) bp_activity_delete_link(); ?>
 										<?php do_action( 'bp_activity_entry_meta' ); ?>
+										<?php if ( bp_activity_user_can_delete() ) bp_activity_delete_link(); ?>
 									</div>
 								<?php endif; ?>
 							</div>
