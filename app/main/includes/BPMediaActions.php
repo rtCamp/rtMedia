@@ -173,6 +173,9 @@ class BPMediaActions {
         wp_localize_script('bp-media-default', 'bp_media_vars', $bp_media_vars);
         wp_enqueue_style('bp-media-mecss', BP_MEDIA_URL . 'lib/media-element/mediaelementplayer.min.css', '', BP_MEDIA_VERSION);
         wp_enqueue_style('bp-media-default', BP_MEDIA_URL . 'app/assets/css/main.css', '', BP_MEDIA_VERSION);
+        if (is_admin()) {
+            wp_enqueue_style('bp-media-default', BP_MEDIA_URL . 'app/assets/css/admin.css', '', BP_MEDIA_VERSION);
+        }
     }
 
     /**
@@ -487,7 +490,7 @@ class BPMediaActions {
                 $default_album = $this->default_group_album();
             else
                 $default_album = $this->default_user_album();
-            wp_localize_script('bp-media-activity-uploader', 'default_album', $default_album?$default_album:0);
+            wp_localize_script('bp-media-activity-uploader', 'default_album', $default_album ? $default_album : 0);
         } elseif (in_array(bp_current_action(), array(BP_MEDIA_IMAGES_SLUG, BP_MEDIA_VIDEOS_SLUG, BP_MEDIA_AUDIO_SLUG, BP_MEDIA_SLUG, BP_MEDIA_ALBUMS_SLUG))) {
             $params = array(
                 'url' => BP_MEDIA_URL . 'app/main/includes/bp-media-upload-handler.php',
