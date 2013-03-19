@@ -70,7 +70,7 @@ if (!class_exists('BPMediaActivity')) {
 
         public function latest_update($content) {
             global $bp;
-            if (!$update = bp_get_user_meta($bp->loggedin_user->id, 'bp_latest_update', true))
+            if (!$update = bp_get_user_meta($bp->displayed_user->id, 'bp_latest_update', true))
                 return $content;
             $content = $update['content'];
             //$activity_id = $update[''];

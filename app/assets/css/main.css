@@ -70,6 +70,20 @@ position: relative;}
 .bp-media-actions{margin:20px 0;}
 .bp-media-actions a{display:inline-block;}
 
+.media-tabs-container .ui-tabs-panel{}
+.media-tabs-container .ui-tabs-hide{display: none}
+
+.media-tabs-container .ui-tabs-nav{clear: both;display: block;margin: 0 0 15px;overflow: hidden;}
+.media-tabs-container .ui-state-default{border-left: 1px solid;float: left;line-height: 110%;padding: 0 5px;}
+.media-tabs-container .ui-state-default:first-child{margin-left: 0px;border: 0; padding-left: 0}
+
+.media-tabs-container .ui-state-default a{text-decoration: none}
+.media-tabs-container .ui-state-default.ui-state-active a{text-decoration: underline}
+
+.media-tabs-container .widget-item-listing li{margin-top: 10px;overflow: hidden;min-height: 52px}
+.media-tabs-container .widget-item-listing li img{max-width:52px; margin-right: 10px; float: left; display: block }
+.media-tabs-container .widget-item-listing li h3 {margin: 0}
+.media-tabs-container .widget-item-listing li h3 a{font-size: 13px;font-weight: normal;word-wrap: break-word; }
 
 #bp-media-show-more{width: 200px;margin-left: auto;margin-right: auto;display: block;height: 30px;line-height: 30px;font-size: 20px;}
 #bp-media-upload-ui.activity-component{margin-left: 74px;margin-top: 10px;}

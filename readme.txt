@@ -26,6 +26,8 @@ BuddyPress Media adds Photos, Music, Videos & Albums to your BuddyPress powered 
 [BuddyPress Media's Features page](http://rtcamp.com/buddypress-media/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "Visit BuddyPress Media's Features page")
 
 * **Media uploads**: Users can upload images, music and video straight from their profiles.
+* **Activity uploads** [*new*]: Users can attach media to their status updates.
+* **Lightbox** [*new*]: Browsing media becomes simpler with a lightbox that includes previous/next navigation.
 * **Drag and drop**/ **Multiple** file uploader
 * **Mobile** uploads: Media can be uploaded on major mobile platforms (Android/iOS)
 * **Social**: All uploads show up in the activity streams. Other users can favourite and comment upon media.
@@ -39,7 +41,6 @@ BuddyPress Media adds Photos, Music, Videos & Albums to your BuddyPress powered 
 
 [BuddyPress Media's Roadmap page](http://rtcamp.com/buddypress-media/roadmap/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "Visit BuddyPress Media's Roadmap page")
 
-* **Activity uploads**: Users will be able to upload media straight from within an activity update
 * **Importers**: Site admins will be able to import media from other media plugins for BuddyPress
 * **Video conversion service** integration [*new*]: Videos can be converted via a service without installing or configuring anything on your server.
 * **External media** support: Users will be able to add external media using url
@@ -65,6 +66,7 @@ Available [here](http://rtcamp.com/store/buddypress-media-ffmpeg-converter/?utm_
 **Coming Soon**
 
 * **Instagram filters** [*new*] (*premium*): Users will be able to apply Instagram like effects to uploaded images.
+* **Photo tagging** [*new*] (*premium*): Users will be able to tag themselves and friends on the uploaded images.
 * **Membership Addon** (*premium*): Users can be given controlled upload quotas and media type access on their profiles and groups.
 
 = Support =
