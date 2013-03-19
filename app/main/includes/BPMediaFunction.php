@@ -17,8 +17,8 @@ class BPMediaFunction {
      */
     static function record_activity($args = '') {
         global $bp;
-		if(!bp_is_active('activity'))
-			return false;
+        if (!bp_is_active('activity'))
+            return false;
         $defaults = array(
             'component' => $bp->activity->id, // The name/ID of the component e.g. groups, profile, mycomponent
         );
@@ -62,7 +62,7 @@ class BPMediaFunction {
         $activity_allowedtags['a']['title'] = array();
         $activity_allowedtags['a']['href'] = array();
         $activity_allowedtags['ul'] = array();
-		$activity_allowedtags['ul']['class'] = array();
+        $activity_allowedtags['ul']['class'] = array();
         $activity_allowedtags['li'] = array();
 
         return $activity_allowedtags;
@@ -210,7 +210,7 @@ class BPMediaFunction {
                 $content .= $bp_media->get_album_activity_content();
             }
             $content .= '</ul>';
-            $activity_id = get_post_meta($album->get_id(), 'bp_media_child_activity');
+            $activity_id = get_post_meta($album->get_id(), 'bp_media_child_activity',true);
             if ($activity_id) {
                 $args = array(
                     'in' => $activity_id,
@@ -219,12 +219,12 @@ class BPMediaFunction {
                 $activity = @bp_activity_get($args);
                 if (isset($activity['activities'][0]->id)) {
                     if (isset($_POST['bp_media_group_id'])) {
-                            $component = $bp->groups->id;
-                            $item_id = $_POST['bp_media_group_id'];
-                        } else {
-                            $component = $bp->activity->id;
-                            $item_id = $activity['activities'][0]->item_id;
-                        }
+                        $component = $bp->groups->id;
+                        $item_id = $_POST['bp_media_group_id'];
+                    } else {
+                        $component = $bp->activity->id;
+                        $item_id = $activity['activities'][0]->item_id;
+                    }
                     $args = array(
                         'content' => $content,
                         'id' => $activity_id,

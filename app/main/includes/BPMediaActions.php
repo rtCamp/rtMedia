@@ -487,7 +487,7 @@ class BPMediaActions {
                 $default_album = $this->default_group_album();
             else
                 $default_album = $this->default_user_album();
-            wp_localize_script('bp-media-activity-uploader', 'default_album', $default_album);
+            wp_localize_script('bp-media-activity-uploader', 'default_album', $default_album?$default_album:0);
         } elseif (in_array(bp_current_action(), array(BP_MEDIA_IMAGES_SLUG, BP_MEDIA_VIDEOS_SLUG, BP_MEDIA_AUDIO_SLUG, BP_MEDIA_SLUG, BP_MEDIA_ALBUMS_SLUG))) {
             $params = array(
                 'url' => BP_MEDIA_URL . 'app/main/includes/bp-media-upload-handler.php',
@@ -729,9 +729,10 @@ class BPMediaActions {
     function album_create_activity($album) {
         /* @var $album BP_Media_Album */
         global $bp;
-        if ($album->group_id > 0 && bp_is_active('groups')) {
+        $album_info = new BPMediaHostWordpress($album->get_id());
+        if ($album_info->get_group_id() > 0 && bp_is_active('groups')) {
             $component = $bp->groups->id;
-            $item_id = $album->group_id;
+            $item_id = $album_info->get_group_id();
         } else {
             $component = $bp->activity->id;
             $item_id = 0;
@@ -805,7 +806,7 @@ class BPMediaActions {
                 }
             }
 
-            if ($hidden) {
+            if ($hidden && !$activity) {
                 do_action('bp_media_album_updated', $media->get_album_id());
             }
 
