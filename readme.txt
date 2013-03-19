@@ -23,7 +23,7 @@ BuddyPress Media adds Photos, Music, Videos & Albums to your BuddyPress powered 
 
 = Features =
 
-[BuddyPress Media's Features page](http://rtcamp.com/buddypress-media/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media) "Visit BuddyPress Media's Features page")
+[BuddyPress Media's Features page](http://rtcamp.com/buddypress-media/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "Visit BuddyPress Media's Features page")
 
 * **Media uploads**: Users can upload images, music and video straight from their profiles.
 * **Drag and drop**/ **Multiple** file uploader
@@ -39,7 +39,7 @@ BuddyPress Media adds Photos, Music, Videos & Albums to your BuddyPress powered 
 
 [BuddyPress Media's Roadmap page](http://rtcamp.com/buddypress-media/roadmap/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "Visit BuddyPress Media's Roadmap page")
 
-* **Activity uploads**: Users wil be able to upload media straight from within an activity update
+* **Activity uploads**: Users will be able to upload media straight from within an activity update
 * **Importers**: Site admins will be able to import media from other media plugins for BuddyPress
 * **Video conversion service** integration [*new*]: Videos can be converted via a service without installing or configuring anything on your server.
 * **External media** support: Users will be able to add external media using url
