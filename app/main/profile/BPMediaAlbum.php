@@ -175,7 +175,6 @@ class BPMediaAlbum {
         }
         $this->init($album_id);
         do_action('bp_media_after_add_album', $this);
-        return $album_id;
     }
 
 
