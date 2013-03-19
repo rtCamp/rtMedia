@@ -640,13 +640,20 @@ class BPMediaHostWordpress {
 						'in' => $activities[ 0 ]->id
 					) );
 			foreach ( $activities_template->activities as $activity ) {
+                            if (isset($_POST['bp_media_group_id'])) {
+                            $component = $bp->groups->id;
+                            $item_id = $_POST['bp_media_group_id'];
+                        } else {
+                            $component = $bp->activity->id;
+                            $item_id = $this->get_id();
+                        }
 				$args = array(
 					'content' => $this->get_media_activity_content(),
 					'id' => $activity->id,
-					'type' => 'media_upload',
+					'type' => $component,
 					'action' => apply_filters( 'bp_media_added_media', sprintf( __( '%1$s added a %2$s', BP_MEDIA_TXT_DOMAIN ), bp_core_get_userlink( $this->get_author() ), '<a href="' . $this->get_url() . '">' . $this->get_media_activity_type() . '</a>' ) ),
 					'primary_link' => $this->get_url(),
-					'item_id' => $this->get_id(),
+					'item_id' => $item_id,
 					'recorded_time' => $activity->date_recorded,
 					'user_id' => $this->get_author()
 				);
