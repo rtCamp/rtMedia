@@ -23,7 +23,7 @@ if (!class_exists('BPMediaActivity')) {
                 add_filter('bp_activity_latest_update_content', array($this, 'override_update'));
                 add_filter('bp_get_member_latest_update', array($this, 'latest_update'));
                 add_filter('bp_get_activity_latest_update', array($this, 'latest_update'));
-
+                add_action('wp_ajax_bp_media_get_thumbnail', array($this, 'latest_update'));
                 add_filter('groups_activity_new_update_content', array($this, 'override_update'));
 
                 add_filter('bp_activity_allowed_tags', 'BPMediaFunction::override_allowed_tags', 1);
@@ -70,9 +70,15 @@ if (!class_exists('BPMediaActivity')) {
 
         public function latest_update($content) {
             global $bp;
-            if (!$update = bp_get_user_meta($bp->displayed_user->id, 'bp_latest_update', true))
-                return $content;
-            $content = $update['content'];
+            
+            if( isset($_GET['content'] ) ) {
+                $content = $_GET['content'];
+            }else{
+                if (!$update = bp_get_user_meta($bp->displayed_user->id, 'bp_latest_update', true))
+                    return $content;
+            
+                $content = $update['content'];
+            }
             //$activity_id = $update[''];
             $activity_media = $this->get_media($content);
             $newcontent = $this->get_text($content);
@@ -87,8 +93,12 @@ if (!class_exists('BPMediaActivity')) {
 						</a>';
             }
             $newcontent .= ' <a href="' . bp_get_root_domain() . '/' . bp_get_activity_root_slug() . '/p/' . $update['id'] . '/"> ' . __('View', 'buddypress') . '</a>';
-
-            return $newcontent;
+            if (isset($_GET['content'])) {
+                echo $newcontent;
+                die;
+            } else {
+                return $newcontent;
+            }
         }
 
         public function override_update($content) {

@@ -79,8 +79,7 @@ jQuery(document).ready(function(){
 
 		jQuery("#aw-whats-new-submit").on( 'click', function() {
 			$latest = '';
-			$val = jQuery('#bp-media-update-json').val();
-
+			$val = bp_media_stringify();
 			jQuery("#bp-media-dummy-update").val('');
 			jQuery("#bp-media-update-json").val('');
 			jQuery("#bp-media-update-txt").val('');
@@ -91,16 +90,13 @@ jQuery(document).ready(function(){
 				$media_id = $album_arr[parseInt($lastid)];
 				var data = {
 					action: 'bp_media_get_thumbnail',
-					media_id : $media_id
+					content : $val
 				};
-				jQuery.post(ajaxurl,data,function(response){
+				jQuery.get(ajaxurl,data,function(response){
 					$latest = response;
-					jQuery('#bp-media-latest-update').val($latest).trigger('change');
+                                        setTimeout(function(){ jQuery('#latest-update').html($latest)},1000);
 				});
 			}
-		});
-		jQuery('#bp-media-latest-update').on('change',function(){
-			jQuery('#latest-update').html($this.val());
 		});
 
 		$bp_media_activity_uploader.bind('UploadComplete',function(response){
@@ -119,15 +115,19 @@ jQuery(document).ready(function(){
 			'height'	: $update_box.height()
 		});
 	}
-
+        
+        function bp_media_stringify(){
+            $album_json = jQuery('#bp-media-update-json').val();
+            $update_txt = jQuery('#bp-media-update-text').val();
+            $activity = {
+                    'media':$album_json,
+                    'update_txt':$update_txt
+            };
+            return JSON.stringify($activity);
+        }
+        
 	function bp_media_overwrite(){
-		$album_json = jQuery('#bp-media-update-json').val();
-		$update_txt = jQuery('#bp-media-update-text').val();
-		$activity = {
-			'media':$album_json,
-			'update_txt':$update_txt
-		};
-		jQuery('#whats-new').val(JSON.stringify($activity));
+		jQuery('#whats-new').val(bp_media_stringify());
 	}
 
 	function do_bp_jazz(){

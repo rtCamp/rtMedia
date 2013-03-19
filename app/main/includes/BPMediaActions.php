@@ -34,7 +34,6 @@ class BPMediaActions {
         add_action('wp_ajax_bp_media_set_album_cover', array($this, 'set_album_cover'));
         add_action('delete_attachment', array($this, 'delete_attachment_handler'));
         add_action('wp_ajax_bp_media_add_album', array($this, 'add_album'));
-        add_action('wp_ajax_bp_media_get_thumbnail', array($this, 'get_thumbnail'));
         add_action('bp_media_after_privacy_install', array($this, 'update_count'), 999);
         add_action('bp_media_after_add_media', array($this, 'update_count'), 999);
         add_action('bp_media_after_update_media', array($this, 'update_count'), 999);
@@ -871,7 +870,7 @@ class BPMediaActions {
         }
 
         echo $content;
-        wp_die();
+        die();
     }
 
     public function default_user_album() {
