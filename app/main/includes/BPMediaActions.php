@@ -61,12 +61,6 @@ class BPMediaActions {
         global $bp, $bp_media;
         $bp_media_options = $bp_media->options;
         if (isset($_POST['action']) && $_POST['action'] == 'wp_handle_upload') {
-            /** This section can help in the group activity handling */
-//            if (isset($_POST['bp_media_group_id']) && intval($_POST['bp_media_group_id'])) {
-//                remove_action('bp_media_after_add_media', 'BPMediaActions::activity_create_after_add_media', 10, 3);
-//                add_action('bp_media_after_add_media', 'BPMediaGroupAction::bp_media_groups_activity_create_after_add_media', 10, 2);
-////                add_filter('bp_media_force_hide_activity', 'BPMediaGroupAction::bp_media_groups_force_hide_activity');
-//            }
             /* @var $bp_media_entry BPMediaHostWordpress */
             if (isset($_FILES) && is_array($_FILES) && array_key_exists('bp_media_file', $_FILES) && $_FILES['bp_media_file']['name'] != '') {
                 if (!preg_match('/audio|video|image/i', $_FILES['bp_media_file']['type'], $result) || !isset($result[0])) {
@@ -578,15 +572,14 @@ class BPMediaActions {
      * @global type $bp_media_posts_per_page
      */
     function load_more() {
-
         global $bp, $bp_media_query, $bp_media, $bp_media_albums_query;
-        $page = isset($_POST['page']) ? $_POST['page'] : die();
-        $current_action = isset($_POST['current_action']) ? $_POST['current_action'] : null;
-        $action_variables = isset($_POST['action_variables']) ? $_POST['action_variables'] : null;
-        $displayed_user = isset($_POST['displayed_user']) ? $_POST['displayed_user'] : null;
-        $loggedin_user = isset($_POST['loggedin_user']) ? $_POST['loggedin_user'] : null;
-        $current_group = isset($_POST['current_group']) ? $_POST['current_group'] : null;
-        $album_id = isset($_POST['album_id']) ? $_POST['album_id'] : false;
+        $page = isset($_GET['page']) ? $_GET['page'] : die();
+        $current_action = isset($_GET['current_action']) ? $_GET['current_action'] : null;
+        $action_variables = isset($_GET['action_variables']) ? $_GET['action_variables'] : null;
+        $displayed_user = isset($_GET['displayed_user']) ? $_GET['displayed_user'] : null;
+        $loggedin_user = isset($_GET['loggedin_user']) ? $_GET['loggedin_user'] : null;
+        $current_group = isset($_GET['current_group']) ? $_GET['current_group'] : null;
+        $album_id = isset($_GET['album_id']) ? $_GET['album_id'] : false;
         if ( $current_group && isset($action_variables[1]) ) {
             $type_var = 'list';
         } elseif ( (isset($action_variables[0]) && $action_variables[0]) ) {
@@ -623,8 +616,6 @@ class BPMediaActions {
 
         $query = new BPMediaQuery();
         $args = $query->init($type, $album_id, false, $page);
-        error_log($type_var);
-        error_log(var_export($args,true));
         if ($type == 'album') {
             $bp_media_albums_query = new WP_Query($args);
             if (isset($bp_media_albums_query->posts) && is_array($bp_media_albums_query->posts) && count($bp_media_albums_query->posts)) {
@@ -800,6 +791,7 @@ class BPMediaActions {
      * @return boolean
      */
     static function activity_create_after_add_media($media, $hidden = false, $activity = false, $group = false) {
+        global $bp;
         if (function_exists('bp_activity_add')) {
             $update_activity_id = false;
             if (!is_object($media)) {
