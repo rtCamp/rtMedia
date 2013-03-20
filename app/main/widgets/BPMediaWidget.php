@@ -85,36 +85,36 @@ if ( ! class_exists( 'BPMediaWidget' ) ) {
 				if ( count( $allowed ) > 3 ) {
 					unset( $allowed[ 'all' ] );
 				}
-				$allowMimeType = array();
-				echo '<div id="' . $wdType . '-media-tabs" class="media-tabs-container media-tabs-container-tabs">';
-				echo'<ul>';
+				$allowMimeType = array(); ?>
+				<div id="<?php echo $wdType; ?>-media-tabs" class="media-tabs-container media-tabs-container-tabs">
+				<ul><?php
 				foreach ( $allowed as $type ) {
 					if ( $type != 'all' ) {
 						array_push( $allowMimeType, $type );
-					}
-					echo '<li><a href="#' . $wdType . '-media-tabs-' . $type . '-' . $widgetid . '">';
-					echo $strings[ $type ];
-					echo '</a></li>';
-				}
-				echo '</ul>';
-				foreach ( $allowed as $type ) {
-					echo '<div id="' . $wdType . '-media-tabs-' . $type . '-' . $widgetid . '" class="bp-media-tab-panel">';
+					} ?>
+					<li><a href="#<?php echo $wdType; ?>-media-tabs-<?php echo $type; ?>-<?php echo $widgetid; ?>">
+					<?php echo $strings[ $type ]; ?>
+					</a></li><?php
+				} ?>
+				</ul><?php
+				foreach ( $allowed as $type ) { ?>
+					<div id="<?php echo $wdType; ?>-media-tabs-<?php echo $type; ?>-<?php echo $widgetid; ?>" class="bp-media-tab-panel"><?php
 					$query_type = $type;
 					if ( $type === 'all' )
 						$query_type = false;
 					$query = new BPMediaQuery();
 					$args = $query->init( $query_type,false,$number );
 					$bp_media_widget_query = new WP_Query( $args );
-					if ( $bp_media_widget_query->have_posts() ) {
-						echo '<ul class="widget-item-listing">';
+					if ( $bp_media_widget_query->have_posts() ) { ?>
+						<ul class="widget-item-listing"><?php
 						while ( $bp_media_widget_query->have_posts() ) {
 							$bp_media_widget_query->the_post();
 
 							$entry = new BPMediaHostWordpress( get_the_ID() );
 
 							echo $entry->get_media_gallery_content();
-						}
-						echo '</ul>';
+						} ?>
+						</ul><?php
 					} else {
 						$media_string = $type;
 						if ( $type === 'all' ) {
@@ -122,12 +122,12 @@ if ( ! class_exists( 'BPMediaWidget' ) ) {
 						}
 						_e( 'No ' . $wdType . ' ' . $media_string . ' found', BP_MEDIA_TXT_DOMAIN );
 					}
-					wp_reset_query();
+					wp_reset_query(); ?>
 
-					echo '</div>';
-				}
+					</div><?php
+				} ?>
 
-				echo '</div>';
+				</div><?php
 			}
 			echo $after_widget;
 		}

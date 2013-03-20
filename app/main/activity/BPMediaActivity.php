@@ -23,7 +23,7 @@ if (!class_exists('BPMediaActivity')) {
                 add_filter('bp_activity_latest_update_content', array($this, 'override_update'));
                 add_filter('bp_get_member_latest_update', array($this, 'latest_update'));
                 add_filter('bp_get_activity_latest_update', array($this, 'latest_update'));
-                add_action('wp_ajax_bp_media_get_thumbnail', array($this, 'latest_update'));
+                add_action('wp_ajax_bp_media_get_latest_activity', array($this, 'latest_update'));
                 add_filter('groups_activity_new_update_content', array($this, 'override_update'));
 
                 add_filter('bp_activity_allowed_tags', 'BPMediaFunction::override_allowed_tags', 1);
@@ -70,14 +70,17 @@ if (!class_exists('BPMediaActivity')) {
 
         public function latest_update($content) {
             global $bp;
-
             if( isset($_GET['content'] ) ) {
                 $update_id = $_GET['id'];
                 $content = $_GET['content'];
             }else{
-                if (!$update = bp_get_user_meta($bp->displayed_user->id, 'bp_latest_update', true))
+                if ( bp_displayed_user_id() )
+                    $user_id = bp_displayed_user_id();
+                else
+                    $user_id = bp_get_member_user_id();
+                if (!$update = bp_get_user_meta($user_id, 'bp_latest_update', true))
                     return $content;
-				$update_id = $update['id'];
+                $update_id = $update['id'];
                 $content = $update['content'];
             }
             //$activity_id = $update[''];
