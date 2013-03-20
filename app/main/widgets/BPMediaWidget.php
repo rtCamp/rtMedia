@@ -119,10 +119,16 @@ if ( ! class_exists( 'BPMediaWidget' ) ) {
 						<ul class="widget-item-listing"><?php
 						while ( $bp_media_widget_query->have_posts() ) {
 							$bp_media_widget_query->the_post();
-
+							try{
 							$entry = new BPMediaHostWordpress( get_the_ID() );
-
 							echo $entry->get_media_gallery_content();
+							}catch (Exception $e){
+								echo '<li>';
+							echo $e->getMessage();
+							echo '<h3><a>Private</a></h3>';
+							echo '</li>';
+							}
+
 						} ?>
 						</ul><?php
 					} else {

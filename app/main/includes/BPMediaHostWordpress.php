@@ -84,7 +84,7 @@ class BPMediaHostWordpress {
 		$this->group_id = $meta_key < 0 ? -$meta_key : 0;
 		if($this->group_id<=0){
 			if(!$has_access){
-				throw new Exception($messages[$required_access]);
+				throw new Exception('<img src="'.BP_MEDIA_URL.'app/assets/img/private.png" title="'. $messages[$required_access] . '" />');
 			}
 		}
 
@@ -421,7 +421,6 @@ class BPMediaHostWordpress {
 						<img src="<?php echo apply_filters( 'bp_media_video_thumb', $thumb_url, $attachment, $this->type ); ?>" />
 					</a>
 					<h3 title="<?php echo $this->name; ?>"><a href="<?php echo $this->url ?>" title="<?php _e( $this->description, BP_MEDIA_TXT_DOMAIN ); ?>"><?php echo $this->name; ?></a></h3>
-					<div class="bp-media-ajax-preloader"></div>
 				</li>
 				<?php
 				break;
