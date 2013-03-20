@@ -149,14 +149,14 @@ ul#activity-stream li.media.album_updated ul li,ul.bp-media-list-media li{float:
 	background: url("../img/bp-media-modal.png") left bottom no-repeat;
 }
 .simplemodal-container a.modal-next span.img-icon{
-	background-position-x: center;
+	background-position: center bottom;
 	margin:39px 10px 39px auto;
 }
-.simplemodal-container a.modal-ctrl:hover span.img-icon{
-	background-position-y: top;
+.simplemodal-container a.modal-prev:hover span.img-icon{
+	background-position: left top;
 }
 .simplemodal-container a.modal-next:hover span.img-icon{
-
+	background-position: center top;
 }
 .simplemodal-container a.modal-prev:hover,
 .simplemodal-container a.modal-next:hover{
