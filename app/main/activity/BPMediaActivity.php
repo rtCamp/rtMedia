@@ -91,10 +91,15 @@ if (!class_exists('BPMediaActivity')) {
                     $activity_media[] = $activity_media;
                 }
                 $media_id = $activity_media[count($activity_media) - 1];
-                $media = new BPMediaHostWordpress($media_id);
-                $newcontent .= '<a href="' . $media->get_url() . '">
+				try{
+					$media = new BPMediaHostWordpress($media_id);
+					$newcontent .= '<a href="' . $media->get_url() . '">
 					<img src="' . $media->get_media_thumbnail() . '"/>
 						</a>';
+				}catch (Exception $e) {
+					echo $e->getMessage();
+				}
+
             }
 
             $newcontent .= ' <a href="' . bp_get_root_domain() . '/' . bp_get_activity_root_slug() . '/p/' . $update_id . '/"> ' . __('View', 'buddypress') . '</a>';
