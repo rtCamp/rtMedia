@@ -99,17 +99,10 @@ if ( ! class_exists( 'BPMediaWidget' ) ) {
 				</ul><?php
 				foreach ( $allowed as $type ) { ?>
 					<div id="<?php echo $wdType; ?>-media-tabs-<?php echo $type; ?>-<?php echo $widgetid; ?>" class="bp-media-tab-panel"><?php
-                                        $privacy = BPMediaPrivacy::current_access();
-                                        $meta_query = array(
-                                                'key' => 'bp_media_privacy',
-                                                'value' => 0,
-                                                'compare' => '<=',
-                                                'type' => 'NUMERIC'
-                                        );
+
                                         $args = array(
                                             'post_type' => 'attachment',
                                             'post_status' => 'any',
-                                            'meta_query' => $meta_query,
                                             'posts_per_page' => $number
                                         );
                                         if ( $type != 'all' )
