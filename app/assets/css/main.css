@@ -88,7 +88,7 @@ position: relative;}
 #bp-media-show-more{width: 200px;margin-left: auto;margin-right: auto;display: block;height: 30px;line-height: 30px;font-size: 20px;}
 #bp-media-upload-ui.activity-component{margin-left: 74px;margin-top: 10px;}
 ul#activity-stream li.media.album_updated ul{}
-ul#activity-stream li.media.album_updated ul li{float: left;margin-right:2%}
+ul#activity-stream li.media.album_updated ul li,ul.bp-media-list-media li{float: left;margin-right:2%}
 
 
 .media ul#bp-media-upload-set-privacy li input[type="radio"]{float:left;}

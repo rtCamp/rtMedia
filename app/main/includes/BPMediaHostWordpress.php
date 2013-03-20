@@ -29,9 +29,9 @@ class BPMediaHostWordpress {
 	 *
 	 * @param type $media_id
 	 */
-	function __construct( $media_id = '' ) {
+	function __construct( $media_id = '',$privacy=true ) {
 		if ( ! $media_id == '' ) {
-			$this->init( $media_id );
+			$this->init( $media_id,$privacy );
 		}
 	}
 
@@ -49,7 +49,7 @@ class BPMediaHostWordpress {
 	 * @return boolean
 	 * @throws Exception
 	 */
-	function init( $media_id = '' ) {
+	function init( $media_id = '' ,$privacy) {
 		if ( is_object( $media_id ) ) {
 			$media = $media_id;
 		} else {
@@ -65,9 +65,14 @@ class BPMediaHostWordpress {
 			$this->type = $result[ 0 ][ 0 ];
 		else
 			return false;
-		$required_access = BPMediaPrivacy::required_access($media->ID);
-		$current_access = BPMediaPrivacy::current_access($media->ID);
-		$has_access = BPMediaPrivacy::has_access($media->ID);
+
+		if($privacy===true){
+			$required_access = BPMediaPrivacy::required_access($media->ID);
+			$current_access = BPMediaPrivacy::current_access($media->ID);
+			$has_access = BPMediaPrivacy::has_access($media->ID);
+		}else{
+			$has_access = true;
+		}
 
 		global $bp;
 		$messages = BPMediaPrivacy::get_messages( $this->type,$bp->displayed_user->fullname );
