@@ -29,9 +29,9 @@ class BPMediaHostWordpress {
 	 *
 	 * @param type $media_id
 	 */
-	function __construct( $media_id = '',$privacy=true ) {
+	function __construct( $media_id = '' ) {
 		if ( ! $media_id == '' ) {
-			$this->init( $media_id,$privacy );
+			$this->init( $media_id );
 		}
 	}
 
@@ -49,7 +49,7 @@ class BPMediaHostWordpress {
 	 * @return boolean
 	 * @throws Exception
 	 */
-	function init( $media_id = '' ,$privacy) {
+	function init( $media_id = '') {
 		if ( is_object( $media_id ) ) {
 			$media = $media_id;
 		} else {
@@ -66,13 +66,10 @@ class BPMediaHostWordpress {
 		else
 			return false;
 
-		if($privacy===true){
 			$required_access = BPMediaPrivacy::required_access($media->ID);
 			$current_access = BPMediaPrivacy::current_access($media->ID);
 			$has_access = BPMediaPrivacy::has_access($media->ID);
-		}else{
-			$has_access = true;
-		}
+
 
 		global $bp;
 		$messages = BPMediaPrivacy::get_messages( $this->type,$bp->displayed_user->fullname );
