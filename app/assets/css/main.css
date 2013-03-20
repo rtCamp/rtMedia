@@ -202,7 +202,7 @@ ul#activity-stream li.media.album_updated ul li,ul.bp-media-list-media li{float:
 	margin:0;
 	position:relative;
 	overflow:hidden;
-	min-height:480px;
+	height:480px;
 	min-width:640px;
 	background: #333 none;
 	display:table;
