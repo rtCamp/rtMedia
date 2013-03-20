@@ -102,7 +102,7 @@ if ( ! class_exists( 'BPMediaWidget' ) ) {
                                         $privacy = BPMediaPrivacy::current_access();
                                         $meta_query = array(
                                                 'key' => 'bp_media_privacy',
-                                                'value' => $privacy,
+                                                'value' => 0,
                                                 'compare' => '<=',
                                                 'type' => 'NUMERIC'
                                         );
@@ -120,12 +120,12 @@ if ( ! class_exists( 'BPMediaWidget' ) ) {
 						while ( $bp_media_widget_query->have_posts() ) {
 							$bp_media_widget_query->the_post();
 							try{
-							$entry = new BPMediaHostWordpress( get_the_ID() );
+							$entry = new BPMediaHostWordpress( get_the_ID(), false );
 							echo $entry->get_media_gallery_content();
 							}catch (Exception $e){
 								echo '<li>';
 							echo $e->getMessage();
-							echo '<h3><a>Private</a></h3>';
+							echo '<h3><a>Private</h3>';
 							echo '</li>';
 							}
 
