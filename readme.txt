@@ -115,6 +115,7 @@ Please visit [BuddyPress Media's Features page](http://rtcamp.com/buddypress-med
 9. Media Edit View
 10. Media Activity
 11. Media Widget
+12. Lightbox
 
 == Changelog ==
 
