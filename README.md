@@ -23,23 +23,24 @@ BuddyPress Media adds Photos, Music, Videos & Albums to your BuddyPress powered 
 
 #### Features ####
 
-[BuddyPress Media's Features page](http://rtcamp.com/buddypress-media/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media) "Visit BuddyPress Media's Features page")
+[BuddyPress Media's Features page](http://rtcamp.com/buddypress-media/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "Visit BuddyPress Media's Features page")
 
 * **Media uploads**: Users can upload images, music and video straight from their profiles.
+* **Activity uploads** [*new*]: Users can attach media to their status updates.
+* **Lightbox** [*new*]: Browsing media becomes simpler with a lightbox that includes previous/next navigation.
 * **Drag and drop**/ **Multiple** file uploader
 * **Mobile** uploads: Media can be uploaded on major mobile platforms (Android/iOS)
 * **Social**: All uploads show up in the activity streams. Other users can favourite and comment upon media.
 * User **albums**: Uploaded media can be organised into albums
 * **Groups** Supported: Users can upload media on Groups, as well!
 * **HTML5 playback**: with fall back to flash/silverlight player support
-* **Privacy** [*new*]: Users can control access to their uploaded media
+* **Privacy**: Users can control access to their uploaded media
 * **Automatic conversion** (*premium*): of common audio & video formats to mp3/mp4 via [Kaltura Add-On](http://rtcamp.com/store/buddypress-media-kaltura/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "BuddyPress Media Kaltura Addon for Kaltura.com/Kaltura-CE/Kaltura On-Prem version"), and [FFMPEG Add-On](http://rtcamp.com/store/buddypress-media-ffmpeg/ "BuddyPress Media FFMPEG Addon")
 
 #### Roadmap ####
 
 [BuddyPress Media's Roadmap page](http://rtcamp.com/buddypress-media/roadmap/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "Visit BuddyPress Media's Roadmap page")
 
-* **Activity uploads**: Users wil be able to upload media straight from within an activity update
 * **Importers**: Site admins will be able to import media from other media plugins for BuddyPress
 * **Video conversion service** integration [*new*]: Videos can be converted via a service without installing or configuring anything on your server.
 * **External media** support: Users will be able to add external media using url
@@ -65,6 +66,7 @@ Available [here](http://rtcamp.com/store/buddypress-media-ffmpeg-converter/?utm_
 **Coming Soon**
 
 * **Instagram filters** [*new*] (*premium*): Users will be able to apply Instagram like effects to uploaded images.
+* **Photo tagging** [*new*] (*premium*): Users will be able to tag themselves and friends on the uploaded images.
 * **Membership Addon** (*premium*): Users can be given controlled upload quotas and media type access on their profiles and groups.
 
 #### Support ####
@@ -86,6 +88,7 @@ BuddyPress Media is now available in *Brazilian Portuguese*, *Spanish*, *Japanes
 * [Japanese](https://rtcamp.com/translate/projects/buddypress-media/ja/default) translation by [Tetsu Yamaoka](http://twitter.com/ytetsu)
 * [Polish](https://rtcamp.com/translate/projects/buddypress-media/pl/default) translation by [czemubynie](http://profiles.wordpress.org/czemubyniegmailcom/)
 * [Serbian](https://rtcamp.com/translate/projects/buddypress-media/sr/default) translation by [nikolakica](http://profiles.wordpress.org/nikolakica/)
+* [German](https://rtcamp.com/translate/projects/buddypress-media/de/defaul) translation by [hannes.muc]
 
 ## Installation ##
 
@@ -112,10 +115,17 @@ Please visit [BuddyPress Media's Features page](http://rtcamp.com/buddypress-med
 9. Media Edit View
 10. Media Activity
 11. Media Widget
+12. Lightbox
 
 ## Changelog ##
 
 Please visit [BuddyPress Media's Roadmap page](http://rtcamp.com/buddypress-media/roadmap/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "Visit BuddyPress Media's Features page") to get some details about future releases.
+#### 2.7 ####
+* Added activity uploader
+* Added lightbox
+* Fixed bug in friends' privacy
+* Fixed bug due to which edit/delete buttons would show up
+* Refactored code and styling
 
 #### 2.6.7 ####
 * Fixes modular compatibility with friends component. Thanks to [Cat555](http://rtcamp.com/support/users/cat555/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media) for reporting this.
@@ -301,4 +311,4 @@ Please visit [BuddyPress Media's Roadmap page](http://rtcamp.com/buddypress-medi
 * HTML5 Audio Tag Support (with fallback)
 * HTML5 Video Tag Support (with fallback)
 
-Important bug fixes
+Activity Uploader and lightbox
