@@ -92,7 +92,7 @@ jQuery(document).ready(function(){
                                 $activity = (jQuery('#activity-stream').find('li').first().attr('id')).split('-');
                                 $activity_id = $activity[1];
 				var data = {
-					action: 'bp_media_get_thumbnail',
+					action: 'bp_media_get_latest_activity',
 					content : $val,
 					id: $activity_id
 				};
