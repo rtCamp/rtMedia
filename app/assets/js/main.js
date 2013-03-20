@@ -110,7 +110,7 @@ jQuery(document).ready(function(){
 	});
 	jQuery('body').on('click','a.modal-prev', function(e){
 		e.preventDefault();
-		if($current.closest('li').prev().find('#bp-media-upload-ui').length<1){
+		if($current.closest('li').prev().length>0 && $current.closest('li').prev().find('#bp-media-upload-ui').length<1 ){
 			$current = $current.closest('li').prev().find('a');
 
 			transit_media($current);
@@ -159,8 +159,10 @@ jQuery(document).ready(function(){
 			jQuery.modal.update($dimensions[0],$dimensions[1]);
 		}
 		$form = $medialoaded.find('form.ac-form');
-		$form.find('.ac-reply-avatar').remove();
-		$form.html($form.html().replace('&nbsp; or press esc to cancel.',''));
+		if($form.length>0){
+			$form.find('.ac-reply-avatar').remove();
+			$form.html($form.html().replace('&nbsp; or press esc to cancel.',''));
+		}
 		$image.load(function(){
 			$dimensions = adjust_dimensions($image);
 			adjust_comment_div($dimensions[0]);
