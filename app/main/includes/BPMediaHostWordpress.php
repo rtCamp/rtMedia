@@ -65,12 +65,12 @@ class BPMediaHostWordpress {
 			$this->type = $result[ 0 ][ 0 ];
 		else
 			return false;
-//		$required_access = BPMediaPrivacy::required_access($media->ID);
-//		$current_access = BPMediaPrivacy::current_access($media->ID);
-//		$has_access = BPMediaPrivacy::has_access($media->ID);
+		$required_access = BPMediaPrivacy::required_access($media->ID);
+		$current_access = BPMediaPrivacy::current_access($media->ID);
+		$has_access = BPMediaPrivacy::has_access($media->ID);
 
 		global $bp;
-//		$messages = BPMediaPrivacy::get_messages( $this->type,$bp->displayed_user->fullname );
+		$messages = BPMediaPrivacy::get_messages( $this->type,$bp->displayed_user->fullname );
 		$this->id = $media->ID;
 		$meta_key = get_post_meta( $this->id, 'bp-media-key', true );
 
@@ -82,11 +82,11 @@ class BPMediaHostWordpress {
 		 * we use it as negative value in the bp-media-key meta key
 		 */
 		$this->group_id = $meta_key < 0 ? -$meta_key : 0;
-//		if($this->group_id<=0){
-//			if(!$has_access){
-//				//throw new Exception($messages[$required_access]);
-//			}
-//		}
+		if($this->group_id<=0){
+			if(!$has_access){
+				throw new Exception($messages[$required_access]);
+			}
+		}
 
 		$this->description = $media->post_content;
 		$this->name = $media->post_title;
