@@ -89,10 +89,12 @@ jQuery(document).ready(function(){
 				$album_arr= JSON.parse($val);
 				$lastid = parseInt($album_arr.length) - 1;
 				$media_id = $album_arr[parseInt($lastid)];
+                                $activity = (jQuery('#activity-stream').find('li').first().attr('id')).split('-');
+                                $activity_id = $activity[1];
 				var data = {
 					action: 'bp_media_get_thumbnail',
 					content : $val,
-					id: (jQuery('#activity-stream').find('li').first().attr('id')).replace('activity-')
+					id: $activity_id
 				};
 				jQuery.get(ajaxurl,data,function(response){
 					$latest = response;

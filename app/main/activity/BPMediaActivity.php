@@ -72,7 +72,7 @@ if (!class_exists('BPMediaActivity')) {
             global $bp;
 
             if( isset($_GET['content'] ) ) {
-				$update_id = $_GET['id'];
+                $update_id = $_GET['id'];
                 $content = $_GET['content'];
             }else{
                 if (!$update = bp_get_user_meta($bp->displayed_user->id, 'bp_latest_update', true))
