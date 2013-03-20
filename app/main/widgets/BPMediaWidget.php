@@ -103,6 +103,8 @@ if ( ! class_exists( 'BPMediaWidget' ) ) {
                                         $args = array(
                                             'post_type' => 'attachment',
                                             'post_status' => 'any',
+                                            'meta_key' => 'bp_media_privacy',
+											'meta_value'	=> 0,
                                             'posts_per_page' => $number
                                         );
                                         if ( $type != 'all' )
@@ -113,7 +115,7 @@ if ( ! class_exists( 'BPMediaWidget' ) ) {
 						while ( $bp_media_widget_query->have_posts() ) {
 							$bp_media_widget_query->the_post();
 							try{
-							$entry = new BPMediaHostWordpress( get_the_ID(), false );
+							$entry = new BPMediaHostWordpress( get_the_ID() );
 							echo $entry->get_media_gallery_content();
 							}catch (Exception $e){
 								echo '<li>';
