@@ -6,7 +6,7 @@ License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires at least: WordPress 3.5 + BuddyPress 1.6
 Tested up to: WordPress 3.5 + BuddyPress 1.6
-Stable tag: 2.6.7
+Stable tag: 2.7
 
 Adds Photos, Music, Videos & Albums to BuddyPress. Supports mobile devices (iPhone/iPad, etc) and automatic audio/video conversion.
 
@@ -34,7 +34,7 @@ BuddyPress Media adds Photos, Music, Videos & Albums to your BuddyPress powered 
 * User **albums**: Uploaded media can be organised into albums
 * **Groups** Supported: Users can upload media on Groups, as well!
 * **HTML5 playback**: with fall back to flash/silverlight player support
-* **Privacy** [*new*]: Users can control access to their uploaded media
+* **Privacy**: Users can control access to their uploaded media
 * **Automatic conversion** (*premium*): of common audio & video formats to mp3/mp4 via [Kaltura Add-On](http://rtcamp.com/store/buddypress-media-kaltura/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "BuddyPress Media Kaltura Addon for Kaltura.com/Kaltura-CE/Kaltura On-Prem version"), and [FFMPEG Add-On](http://rtcamp.com/store/buddypress-media-ffmpeg/ "BuddyPress Media FFMPEG Addon")
 
 = Roadmap =
@@ -118,6 +118,12 @@ Please visit [BuddyPress Media's Features page](http://rtcamp.com/buddypress-med
 == Changelog ==
 
 Please visit [BuddyPress Media's Roadmap page](http://rtcamp.com/buddypress-media/roadmap/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "Visit BuddyPress Media's Features page") to get some details about future releases.
+= 2.7 =
+* Added activity uploader
+* Added lightbox
+* Fixed bug in friends' privacy
+* Fixed bug due to which edit/delete buttons would show up
+* Refactored code and styling
 
 = 2.6.7 =
 * Fixes modular compatibility with friends component. Thanks to [Cat555](http://rtcamp.com/support/users/cat555/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media) for reporting this.
@@ -304,5 +310,5 @@ Please visit [BuddyPress Media's Roadmap page](http://rtcamp.com/buddypress-medi
 * HTML5 Video Tag Support (with fallback)
 
 == Upgrade Notice ==
-= 2.6.7 =
-Important bug fixes
+= 2.7 =
+Activity Uploader and lightbox
