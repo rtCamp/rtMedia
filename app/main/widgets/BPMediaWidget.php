@@ -99,11 +99,21 @@ if ( ! class_exists( 'BPMediaWidget' ) ) {
 				</ul><?php
 				foreach ( $allowed as $type ) { ?>
 					<div id="<?php echo $wdType; ?>-media-tabs-<?php echo $type; ?>-<?php echo $widgetid; ?>" class="bp-media-tab-panel"><?php
-					$query_type = $type;
-					if ( $type === 'all' )
-						$query_type = false;
-					$query = new BPMediaQuery();
-					$args = $query->init( $query_type,false,$number );
+                                        $privacy = BPMediaPrivacy::current_access();
+                                        $meta_query = array(
+                                                'key' => 'bp_media_privacy',
+                                                'value' => $privacy,
+                                                'compare' => '<=',
+                                                'type' => 'NUMERIC'
+                                        );
+                                        $args = array(
+                                            'post_type' => 'attachment',
+                                            'post_status' => 'any',
+                                            'meta_query' => $meta_query,
+                                            'posts_per_page' => $number
+                                        );
+                                        if ( $type != 'all' )
+                                            $args['post_mime_type'] = $type;
 					$bp_media_widget_query = new WP_Query( $args );
 					if ( $bp_media_widget_query->have_posts() ) { ?>
 						<ul class="widget-item-listing"><?php
