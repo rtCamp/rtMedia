@@ -70,13 +70,14 @@ if (!class_exists('BPMediaActivity')) {
 
         public function latest_update($content) {
             global $bp;
-            
+
             if( isset($_GET['content'] ) ) {
+				$update_id = $_GET['id'];
                 $content = $_GET['content'];
             }else{
                 if (!$update = bp_get_user_meta($bp->displayed_user->id, 'bp_latest_update', true))
                     return $content;
-            
+				$update_id = $update['id'];
                 $content = $update['content'];
             }
             //$activity_id = $update[''];
@@ -92,7 +93,8 @@ if (!class_exists('BPMediaActivity')) {
 					<img src="' . $media->get_media_thumbnail() . '"/>
 						</a>';
             }
-            $newcontent .= ' <a href="' . bp_get_root_domain() . '/' . bp_get_activity_root_slug() . '/p/' . $update['id'] . '/"> ' . __('View', 'buddypress') . '</a>';
+
+            $newcontent .= ' <a href="' . bp_get_root_domain() . '/' . bp_get_activity_root_slug() . '/p/' . $update_id . '/"> ' . __('View', 'buddypress') . '</a>';
             if (isset($_GET['content'])) {
                 echo $newcontent;
                 die;
