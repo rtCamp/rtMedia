@@ -219,7 +219,7 @@ class BPMediaPrivacy {
 		global $bp_media;
 
 		foreach ( $activities->activities as $key => $activity ) {
-			if ( $activity != null && in_array( $activity->type, $bp_media->activity_types ) ) {
+			//if ( $activity != null && in_array( $activity->type, $bp_media->activity_types ) ) {
 				$has_access = BPMediaPrivacy::has_access( $activity->item_id );
 				if ( ! $has_access ) {
 
@@ -228,7 +228,7 @@ class BPMediaPrivacy {
 					$activities->total_activity_count = $activities->total_activity_count - 1;
 					$activities->pag_num = $activities->pag_num - 1;
 				}
-			}
+			//}
 		}
 		$activities_new = array_values( $activities->activities );
 		$activities->activities = $activities_new;
