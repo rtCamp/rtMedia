@@ -84,19 +84,22 @@ jQuery(document).ready(function(){
 			jQuery("#bp-media-update-json").val('');
 			jQuery("#bp-media-update-txt").val('');
 			jQuery("#bp-media-activity-uploaded-files").empty();
+			setTimeout(function(){
 			if($val!=''){
 				$album_arr= JSON.parse($val);
 				$lastid = parseInt($album_arr.length) - 1;
 				$media_id = $album_arr[parseInt($lastid)];
 				var data = {
 					action: 'bp_media_get_thumbnail',
-					content : $val
+					content : $val,
+					id: (jQuery('#activity-stream').find('li').first().attr('id')).replace('activity-')
 				};
 				jQuery.get(ajaxurl,data,function(response){
 					$latest = response;
-                                        setTimeout(function(){ jQuery('#latest-update').html($latest)},1000);
+                    jQuery('#latest-update').html($latest);
 				});
 			}
+			},1000);
 		});
 
 		$bp_media_activity_uploader.bind('UploadComplete',function(response){
@@ -115,7 +118,7 @@ jQuery(document).ready(function(){
 			'height'	: $update_box.height()
 		});
 	}
-        
+
         function bp_media_stringify(){
             $album_json = jQuery('#bp-media-update-json').val();
             $update_txt = jQuery('#bp-media-update-text').val();
@@ -125,7 +128,7 @@ jQuery(document).ready(function(){
             };
             return JSON.stringify($activity);
         }
-        
+
 	function bp_media_overwrite(){
 		jQuery('#whats-new').val(bp_media_stringify());
 	}
