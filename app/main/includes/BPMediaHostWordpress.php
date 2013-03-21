@@ -121,10 +121,6 @@ class BPMediaHostWordpress {
 
 		if ( ! $files ) {
 			$files = $_FILES[ 'bp_media_file' ];
-			$type = $file[ 'type' ];
-			if(in_array($type ,array('image/gif','image/jpeg','image/png'))){
-				$file = $this->exif($file);
-			}
 			$file = wp_handle_upload( $files );
 		} else {
 			$file = wp_handle_sideload( $files );
@@ -133,10 +129,14 @@ class BPMediaHostWordpress {
 		if ( isset( $file[ 'error' ] ) || $file === null ) {
 			throw new Exception( __( 'Error Uploading File', BP_MEDIA_TXT_DOMAIN ) );
 		}
+                
+                $type = $file[ 'type' ];
+                if(in_array($type ,array('image/gif','image/jpeg','image/png'))){
+                        $file['file'] = $this->exif($file['file']);
+                }
 
 		$attachment = array( );
 		$url = $file[ 'url' ];
-		$type = $file[ 'type' ];
 		$file = $file[ 'file' ];
 		$title = $name;
 		$content = $description;
