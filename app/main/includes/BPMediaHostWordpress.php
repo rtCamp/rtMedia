@@ -66,13 +66,8 @@ class BPMediaHostWordpress {
 		else
 			return false;
 
-			$required_access = BPMediaPrivacy::required_access($media->ID);
-			$current_access = BPMediaPrivacy::current_access($media->ID);
-			$has_access = BPMediaPrivacy::has_access($media->ID);
-
 
 		global $bp;
-		$messages = BPMediaPrivacy::get_messages( $this->type,$bp->displayed_user->fullname );
 		$this->id = $media->ID;
 		$meta_key = get_post_meta( $this->id, 'bp-media-key', true );
 
@@ -84,11 +79,6 @@ class BPMediaHostWordpress {
 		 * we use it as negative value in the bp-media-key meta key
 		 */
 		$this->group_id = $meta_key < 0 ? -$meta_key : 0;
-		if($this->group_id<=0){
-			if(!$has_access){
-				throw new Exception('<img src="'.BP_MEDIA_URL.'app/assets/img/private.png" title="'. $messages[$required_access] . '" />');
-			}
-		}
 
 		$this->description = $media->post_content;
 		$this->name = $media->post_title;
@@ -131,6 +121,10 @@ class BPMediaHostWordpress {
 
 		if ( ! $files ) {
 			$files = $_FILES[ 'bp_media_file' ];
+			$type = $file[ 'type' ];
+			if(in_array($type ,array('image/gif','image/jpeg','image/png'))){
+				$file = $this->exif($file);
+			}
 			$file = wp_handle_upload( $files );
 		} else {
 			$file = wp_handle_sideload( $files );
@@ -381,6 +375,37 @@ class BPMediaHostWordpress {
 		$content .= '<div class="bp_media_description">' . nl2br($this->description) . '</div>';
 		return $content;
 	}
+
+	public function exif( $file ) {
+			$exif = read_exif_data( $file );
+			$exif_orient = $exif[ 'Orientation' ];
+
+			if ( 0 != $exif_orient || 1 != $exif_orient || 2 != $exif_orient || 4 != $exif_orient || 5 != $exif_orient || 7 != $exif_orient ) {
+
+				if ( 6 == $exif_orient ) {
+					$rotateImage = 90;
+					$imageOrientation = 1;
+				} elseif ( 3 == $exif_orient ) {
+					$rotateImage = 180;
+					$imageOrientation = 1;
+				} elseif ( 8 == $exif_orient ) {
+					$rotateImage = 270;
+					$imageOrientation = 1;
+				}
+				if(class_exists('Imagick')){
+					$imagick = new \Imagick();
+					$imagick->readImage( $file );
+					$imagick->rotateImage( new \ImagickPixel(), $rotateImage );
+					$imagick->setImageOrientation( $imageOrientation );
+					$imagick->writeImage( $file );
+					$imagick->clear();
+					$imagick->destroy();
+				}else{
+					$rotate = imagerotate($file, $rotateImage, 0) ;
+				}
+			}
+			return $file;
+		}
 
 	/**
 	 * Returns the HTML for title of the single entry page of the Media Entry
