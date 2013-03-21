@@ -122,16 +122,7 @@ class BPMediaQuery {
 				$my_profile = true;
 			}
 		}
-		if ( ($my_profile === true) && ($album==false) ) {
-			if ( $page > 1 ) {
-				$offset = $limit * ($page - 1) - 1;
-			} else {
-				$offset = 0;
-				$limit = $limit - 1;
-			}
-		} else {
-			$offset = $limit * ($page - 1);
-		}
+                $offset = $limit * ($page - 1);
 		return array( $limit, $offset );
 	}
 

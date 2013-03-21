@@ -39,12 +39,12 @@ if (!class_exists('BPMediaSettings')) {
             add_settings_field('bpm-video', __('Video', BP_MEDIA_TXT_DOMAIN), array($this, 'checkbox'), 'bp-media-settings', 'bpm-settings', array(
                 'setting' => 'bp_media_options',
                 'option' => 'videos_enabled',
-                'desc' => __('Enable Video', BP_MEDIA_TXT_DOMAIN)
+                'desc' => __('Enable Video (mp4)', BP_MEDIA_TXT_DOMAIN)
             ));
             add_settings_field('bpm-audio', __('Audio', BP_MEDIA_TXT_DOMAIN), array($this, 'checkbox'), 'bp-media-settings', 'bpm-settings', array(
                 'setting' => 'bp_media_options',
                 'option' => 'audio_enabled',
-                'desc' => __('Enable Audio', BP_MEDIA_TXT_DOMAIN)
+                'desc' => __('Enable Audio (mp3)', BP_MEDIA_TXT_DOMAIN)
             ));
             if (bp_is_active('activity')) {
                 add_settings_section('bpm-activity-upload', __('Activity Upload', BP_MEDIA_TXT_DOMAIN), '', 'bp-media-settings');

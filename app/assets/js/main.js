@@ -16,6 +16,17 @@ function bp_media_create_element(id){
 var $current;
 jQuery(document).ready(function(){
 
+        jQuery('#item-body').on('click','#bp-media-upload-button', function(){
+           jQuery(this).next().slideToggle();
+        });
+
+        jQuery('#bp-media-upload-ui').bind('dragover', function(e){
+            jQuery(this).addClass('hover');return 0;
+        });
+        jQuery('#bp-media-upload-ui').bind('dragleave', function(e){
+            jQuery(this).removeClass('hover');return 0;
+        });
+
 	var bp_media_recent_tabs = jQuery('.media-tabs-container-tabs');
 	if(bp_media_recent_tabs.length>0){
 		jQuery(bp_media_recent_tabs).tabs();
@@ -139,6 +150,7 @@ jQuery(document).ready(function(){
 	}
 	function transit_media($current){
 		$medialoaded = jQuery('.bp-media-ajax-single');
+		$medialoaded.empty();
 		$medialoaded.append( jQuery('<div class="lightbox-spinner" />'));
 		jQuery.get($current.attr('href'),function(response){
 			$mediacontent = jQuery(response).find('.bp-media-single');
