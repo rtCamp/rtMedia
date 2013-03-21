@@ -20,6 +20,13 @@ jQuery(document).ready(function(){
            jQuery(this).next().slideToggle(); 
         });
         
+        jQuery('#bp-media-upload-ui').bind('dragover', function(e){
+            jQuery(this).addClass('hover');return 0;
+        });
+        jQuery('#bp-media-upload-ui').bind('dragleave', function(e){
+            jQuery(this).removeClass('hover');return 0;
+        });
+        
 	var bp_media_recent_tabs = jQuery('.media-tabs-container-tabs');
 	if(bp_media_recent_tabs.length>0){
 		jQuery(bp_media_recent_tabs).tabs();

@@ -164,6 +164,7 @@ ul.bp-media-gallery li span img{height: 150px;}
 li #bp-media-upload-ui {padding: 0;max-width: 158px;position: relative;}
 #bp-media-upload-ui {margin-top: 10px;}
 #bp-media-upload-ui #drag-drop-area{border: 4px dashed #DDD;text-align: center;background: #fafafa;overflow: hidden;padding: 15px 0;}
+#bp-media-upload-ui.hover #drag-drop-area {border-color: #83b4d8;}
 li #bp-media-upload-ui #drag-drop-area{max-width: 150px;min-height: auto;}
 /*.albums li #bp-media-upload-ui #drag-drop-area{padding: 20px 0 10px;}*/
 #bp-media-upload-ui .drag-drop-inside{float: left;width: 48%;}
