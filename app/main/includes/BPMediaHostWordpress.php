@@ -49,7 +49,7 @@ class BPMediaHostWordpress {
 	 * @return boolean
 	 * @throws Exception
 	 */
-	function init( $media_id = '') {
+	function init( $media_id = '' ) {
 		if ( is_object( $media_id ) ) {
 			$media = $media_id;
 		} else {
@@ -129,11 +129,11 @@ class BPMediaHostWordpress {
 		if ( isset( $file[ 'error' ] ) || $file === null ) {
 			throw new Exception( __( 'Error Uploading File', BP_MEDIA_TXT_DOMAIN ) );
 		}
-                
-                $type = $file[ 'type' ];
-                if(in_array($type ,array('image/gif','image/jpeg','image/png'))){
-                        $file['file'] = $this->exif($file['file']);
-                }
+
+		$type = $file[ 'type' ];
+		if ( in_array( $type, array( 'image/gif', 'image/jpeg', 'image/png' ) ) ) {
+			$file = $this->exif( $file );
+		}
 
 		$attachment = array( );
 		$url = $file[ 'url' ];
@@ -241,20 +241,19 @@ class BPMediaHostWordpress {
 		return $attachment_id;
 	}
 
-	function get_media_thumbnail($size='thumbnail'){
+	function get_media_thumbnail( $size = 'thumbnail' ) {
 		$thumb = '';
-		if(in_array($this->type, array('image','video','audio'))){
-				if ( $this->thumbnail_id ) {
-					$medium_array = image_downsize( $this->thumbnail_id, $size );
-					$thumb_url = $medium_array[ 0 ];
-				} else {
-					$thumb_url = BP_MEDIA_URL . 'app/assets/img/'.$this->type.'_thumb.png';
-				}
-				$thumb = apply_filters( 'bp_media_video_thumb', $thumb_url, $this->thumbnail_id, $this->type );
-				return $thumb;
+		if ( in_array( $this->type, array( 'image', 'video', 'audio' ) ) ) {
+			if ( $this->thumbnail_id ) {
+				$medium_array = image_downsize( $this->thumbnail_id, $size );
+				$thumb_url = $medium_array[ 0 ];
+			} else {
+				$thumb_url = BP_MEDIA_URL . 'app/assets/img/' . $this->type . '_thumb.png';
+			}
+			$thumb = apply_filters( 'bp_media_video_thumb', $thumb_url, $this->thumbnail_id, $this->type );
+			return $thumb;
 		}
 		return false;
-
 	}
 
 	/**
@@ -372,40 +371,60 @@ class BPMediaHostWordpress {
 				return false;
 		}
 		$content .= '</div>';
-		$content .= '<div class="bp_media_description">' . nl2br($this->description) . '</div>';
+		$content .= '<div class="bp_media_description">' . nl2br( $this->description ) . '</div>';
 		return $content;
 	}
 
 	public function exif( $file ) {
-			$exif = read_exif_data( $file );
-			$exif_orient = $exif[ 'Orientation' ];
+		$exif = read_exif_data( $file[ 'file' ] );
+		$exif_orient = $exif[ 'Orientation' ];
 
-			if ( 0 != $exif_orient || 1 != $exif_orient || 2 != $exif_orient || 4 != $exif_orient || 5 != $exif_orient || 7 != $exif_orient ) {
+		if ( 0 != $exif_orient || 1 != $exif_orient || 2 != $exif_orient || 4 != $exif_orient || 5 != $exif_orient || 7 != $exif_orient ) {
 
-				if ( 6 == $exif_orient ) {
-					$rotateImage = 90;
-					$imageOrientation = 1;
-				} elseif ( 3 == $exif_orient ) {
-					$rotateImage = 180;
-					$imageOrientation = 1;
-				} elseif ( 8 == $exif_orient ) {
-					$rotateImage = 270;
-					$imageOrientation = 1;
-				}
-				if(class_exists('Imagick')){
-					$imagick = new \Imagick();
-					$imagick->readImage( $file );
-					$imagick->rotateImage( new \ImagickPixel(), $rotateImage );
-					$imagick->setImageOrientation( $imageOrientation );
-					$imagick->writeImage( $file );
-					$imagick->clear();
-					$imagick->destroy();
-				}else{
-					$rotate = imagerotate($file, $rotateImage, 0) ;
+			if ( 6 == $exif_orient ) {
+				$rotateImage = 90;
+				$imageOrientation = 1;
+			} elseif ( 3 == $exif_orient ) {
+				$rotateImage = 180;
+				$imageOrientation = 1;
+			} elseif ( 8 == $exif_orient ) {
+				$rotateImage = 270;
+				$imageOrientation = 1;
+			}
+			if ( class_exists( 'Imagick' ) ) {
+				$imagick = new \Imagick();
+				$imagick->readImage( $file[ 'file' ] );
+				$imagick->rotateImage( new \ImagickPixel(), $rotateImage );
+				$imagick->setImageOrientation( $imageOrientation );
+				$imagick->writeImage( $file[ 'file' ] );
+				$imagick->clear();
+				$imagick->destroy();
+			} else {
+				$rotateImage = -$rotateImage;
+
+				switch($file['type']){
+					case 'image/jpeg':
+						$source = imagecreatefromjpeg( $file['file'] );
+						$rotate = imagerotate( $source, $rotateImage, 0 );
+						imagejpeg( $rotate,$file['file'] );
+						break;
+					case 'image/png':
+						$source = imagecreatefrompng( $file['file'] );
+						$rotate = imagerotate( $source, $rotateImage, 0 );
+						imagepng( $rotate,$file['file'] );
+						break;
+					case 'image/gif':
+						$source = imagecreatefromgif( $file['file'] );
+						$rotate = imagerotate( $source, $rotateImage, 0 );
+						imagegif( $rotate,$file['file'] );
+						break;
+					default:
+						break;
 				}
 			}
-			return $file;
 		}
+		return $file;
+	}
 
 	/**
 	 * Returns the HTML for title of the single entry page of the Media Entry
@@ -443,7 +462,7 @@ class BPMediaHostWordpress {
 					$thumb_url = BP_MEDIA_URL . 'app/assets/img/video_thumb.png';
 				}
 				?>
-				<li id="bp-media-item-<?php echo $this->id?>">
+				<li id="bp-media-item-<?php echo $this->id ?>">
 					<a href="<?php echo $this->url ?>" title="<?php _e( $this->description, BP_MEDIA_TXT_DOMAIN ); ?>">
 						<img src="<?php echo apply_filters( 'bp_media_video_thumb', $thumb_url, $attachment, $this->type ); ?>" />
 					</a>
@@ -459,7 +478,7 @@ class BPMediaHostWordpress {
 					$thumb_url = BP_MEDIA_URL . 'app/assets/img/audio_thumb.png';
 				}
 				?>
-				<li id="bp-media-item-<?php echo $this->id?>">
+				<li id="bp-media-item-<?php echo $this->id ?>">
 					<a href="<?php echo $this->url ?>" title="<?php _e( $this->description, BP_MEDIA_TXT_DOMAIN ); ?>">
 						<img src="<?php echo $thumb_url ?>" />
 					</a>
@@ -472,7 +491,7 @@ class BPMediaHostWordpress {
 				$medium_array = image_downsize( $attachment, 'thumbnail' );
 				$medium_path = $medium_array[ 0 ];
 				?>
-				<li id="bp-media-item-<?php echo $this->id?>">
+				<li id="bp-media-item-<?php echo $this->id ?>">
 					<a href="<?php echo $this->url ?>" title="<?php echo $this->description ?>">
 						<img src="<?php echo $medium_path ?>" />
 					</a>
@@ -664,15 +683,15 @@ class BPMediaHostWordpress {
 						'max' => TRUE,
 						'user_id' => $current_user,
 						'in' => $activities[ 0 ]->id
-					) );
+							) );
 			foreach ( $activities_template->activities as $activity ) {
-                            if (isset($_POST['bp_media_group_id'])) {
-                            $component = $bp->groups->id;
-                            $item_id = $_POST['bp_media_group_id'];
-                        } else {
-                            $component = $bp->activity->id;
-                            $item_id = $this->get_id();
-                        }
+				if ( isset( $_POST[ 'bp_media_group_id' ] ) ) {
+					$component = $bp->groups->id;
+					$item_id = $_POST[ 'bp_media_group_id' ];
+				} else {
+					$component = $bp->activity->id;
+					$item_id = $this->get_id();
+				}
 				$args = array(
 					'content' => $this->get_media_activity_content(),
 					'id' => $activity->id,
@@ -891,7 +910,7 @@ class BPMediaHostWordpress {
 	 */
 	protected function set_permalinks() {
 
-		if ( bp_is_active('groups') && class_exists( 'BP_Group_Extension' ) ) {
+		if ( bp_is_active( 'groups' ) && class_exists( 'BP_Group_Extension' ) ) {
 			if ( $this->group_id > 0 ) {
 				$current_group = new BP_Groups_Group( $this->group_id );
 				$pre_url = bp_get_group_permalink( $current_group );
@@ -991,7 +1010,7 @@ class BPMediaHostWordpress {
 		return $post_id;
 	}
 
-	function get_description(){
+	function get_description() {
 		return $this->description;
 	}
 
