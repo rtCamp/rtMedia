@@ -138,13 +138,14 @@ jQuery(document).ready(function(){
 		});
 	}
 	function transit_media($current){
+		$medialoaded = jQuery('.bp-media-ajax-single');
+		$medialoaded.append( jQuery('<div class="lightbox-spinner" />'));
 		jQuery.get($current.attr('href'),function(response){
 			$mediacontent = jQuery(response).find('.bp-media-single');
 			$medialoaded = jQuery('.bp-media-ajax-single');
 			$medialoaded.empty();
 			$medialoaded.append($mediacontent);
 			do_fixes($medialoaded);
-
 		});
 	}
 
@@ -171,11 +172,13 @@ jQuery(document).ready(function(){
 	}
 
 	function adjust_dimensions($image){
-
 		$height = ($image.height()>480)?$image.height():480;
 		$width = ($image.width()>640)?$image.width():640;
 		$width = $width +280;
+		$image.hide();
+		$image.show();
 		return [$height,$width];
+
 	}
 
 	function adjust_comment_div($height){

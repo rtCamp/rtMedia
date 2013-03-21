@@ -172,9 +172,8 @@ class BPMediaActions {
         wp_localize_script('bp-media-default', 'bp_media_vars', $bp_media_vars);
         wp_enqueue_style('bp-media-mecss', BP_MEDIA_URL . 'lib/media-element/mediaelementplayer.min.css', '', BP_MEDIA_VERSION);
         wp_enqueue_style('bp-media-default', BP_MEDIA_URL . 'app/assets/css/main.css', '', BP_MEDIA_VERSION);
-        if (is_admin()) {
-            wp_enqueue_style('bp-media-default', BP_MEDIA_URL . 'app/assets/css/admin.css', '', BP_MEDIA_VERSION);
-        }
+        wp_enqueue_style('bp-media-admin', BP_MEDIA_URL . 'app/assets/css/admin.css', '', BP_MEDIA_VERSION);
+
     }
 
     /**
