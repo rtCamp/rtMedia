@@ -15,7 +15,11 @@ function bp_media_create_element(id){
 }
 var $current;
 jQuery(document).ready(function(){
-
+        
+        jQuery('#item-body').on('click','#bp-media-upload-button', function(){
+           jQuery(this).next().slideToggle(); 
+        });
+        
 	var bp_media_recent_tabs = jQuery('.media-tabs-container-tabs');
 	if(bp_media_recent_tabs.length>0){
 		jQuery(bp_media_recent_tabs).tabs();
