@@ -26,14 +26,16 @@ ul.bp-media-gallery li span img{height: 150px;}
 #bp-media-activity-upload-ui { width: 50%;}
 .bp-media-area-allocate{height: 10px;width: 100%;display: block;}
 li #bp-media-upload-ui {padding: 0;max-width: 158px;position: relative;}
-#bp-media-upload-ui #drag-drop-area{border: 4px dashed #DDD;text-align: center;background: url('../img/drag-drop-bg.png') repeat scroll 0 0 transparent;overflow: hidden;padding: 15px 0;}
+#bp-media-upload-ui {margin-top: 10px;}
+#bp-media-upload-ui #drag-drop-area{border: 4px dashed #DDD;text-align: center;background: #fafafa;overflow: hidden;padding: 15px 0;}
 li #bp-media-upload-ui #drag-drop-area{max-width: 150px;min-height: auto;}
 /*.albums li #bp-media-upload-ui #drag-drop-area{padding: 20px 0 10px;}*/
 #bp-media-upload-ui .drag-drop-inside{float: left;width: 48%;}
 .albums #bp-media-upload-ui .drag-drop-inside{float: none;width: auto;}
 li #bp-media-upload-ui .drag-drop-inside,li #bp-media-upload-ui #bp-media-album-prompt{float: none;max-width: 100%;width: auto;}
 li #bp-media-upload-ui #bp-media-album-prompt{margin: 8px auto 0;max-width: 144px;}
-#bp-media-upload-ui #bp-media-album-prompt{float: right;margin: 12px auto 0;width: 47%;}
+#bp-media-upload-ui #bp-media-album-prompt{float: left;width: 47%;}
+#bp-media-upload-ui .drag-drop-info{font-size:16px;}
 #bp-media-upload-ui .drag-drop-inside p.drag-drop-info{font-size: 20px;line-height: 100%;}
 #bp-media-upload-ui .drag-drop-buttons input,#bp-media-album-prompt input.button{-moz-box-sizing: content-box;border-color: #BBBBBB;border-radius: 15px;border-style: solid;border-width: 1px;color: #464646;cursor: pointer;font-size: 13px !important;line-height: 13px;padding: 5px 10px;text-decoration: none;}
 li #bp-media-album-prompt input.button{font-size: 12px !important;padding: 3px 8px;text-decoration: none;margin-top: 5px;}
@@ -42,14 +44,14 @@ li #bp-media-album-prompt > p,li #bp-media-upload-ui #drag-drop-area p{display: 
 .albums li #bp-media-album-prompt > p,.albums li #bp-media-upload-ui #drag-drop-area p{display: block;}
 li #bp-media-upload-ui #drag-drop-area p.drag-drop-buttons{display: block;}
 #bp-media-album-prompt div.hide{display: none;margin: 0;}
-#bp-media-album-prompt > p{font-size: 20px;}
+#bp-media-album-prompt > span{font-size: 16px;}
+.bp-media-album-content { display: inline }
 /*#bp-media-upload-ui .drag-drop-inside p,#bp-media-album-prompt #bp_media_album_new{font-size: 14px;margin: 0;}*/
 #bp-media-album-prompt #bp_media_album_new{max-width: 90%;}
 li #bp-media-album-prompt #bp_media_album_new{margin: 0;max-width: 134px;width: 94%;}
 #bp-media-upload-ui .drag-drop-to{width: 22px;line-height: 22px;margin: 40px auto 0;float: left;}
 li #bp-media-upload-ui .drag-drop-to{width: 100%;line-height: 22px;margin: 0;float: none;}
-#bp-media-album-in, .albums #bp-media-album-or{background-color: #333333;border-radius: 11px 11px 11px 11px;color: #FFFFFF;display: block;float: left;font-size: 14px;line-height: 22px;margin: 30px auto;width: 22px;}
-.albums #bp-media-album-or{float: none;margin: 20px auto;font-size: 14px;}
+#bp-media-album-in {background-color: #333333;border-radius: 11px 11px 11px 11px;color: #FFFFFF;display: block;float: left;font-size: 14px;line-height: 22px;width: 22px;}
 .upload #bp-media-album-or{font-size: 14px;}
 li #bp-media-album-in, .albums li #bp-media-album-or{float: none;margin: 20px auto;}
 #bp-media-album-prompt #create-new{background-color: #DF562C;color: #fff;}

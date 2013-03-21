@@ -179,25 +179,24 @@ class BPMediaScreen {
 
         $this->hook_before();
 
-        if ($bp_media_query && $bp_media_query->have_posts()):
-            echo '<ul id="bp-media-list" class="bp-media-gallery item-list">';
+        if ($bp_media_query && $bp_media_query->have_posts()) {
             if (bp_is_my_profile() || BPMediaGroupLoader::can_upload()) {
-                echo '<li>';
                 BPMediaUploadScreen::upload_screen_content();
-                echo '</li>';
             }
-            while ($bp_media_query->have_posts()) : $bp_media_query->the_post();
+            echo '<ul id="bp-media-list" class="bp-media-gallery item-list">';
+            while ($bp_media_query->have_posts()) {
+                $bp_media_query->the_post();
                 $this->template->the_content();
-            endwhile;
+            }
             echo '</ul>';
             $this->template->show_more();
-        else:
+        } else {
             BPMediaFunction::show_formatted_error_message(sprintf(__('Sorry, no %s were found.', BP_MEDIA_TXT_DOMAIN), $this->slug), 'info');
             if (bp_is_my_profile() || BPMediaGroupLoader::can_upload()) {
                 echo '<div class="bp-media-area-allocate"></div>';
                 BPMediaUploadScreen::upload_screen_content();
             }
-        endif;
+        }
         $this->hook_after();
     }
 
@@ -251,19 +250,19 @@ class BPMediaScreen {
         $this->hook_before();
         if (!$bp->action_variables[0] == constant($entryslug))
             return false;
-        echo '<div class="bp-media-single bp-media-image" id="bp-media-id-'.$bp_media_current_entry->get_id().'">';
-		echo '<div class="bp-media-content-wrap" id="bp-media-content-wrap">';
+        echo '<div class="bp-media-single bp-media-image" id="bp-media-id-' . $bp_media_current_entry->get_id() . '">';
+        echo '<div class="bp-media-content-wrap" id="bp-media-content-wrap">';
         echo $bp_media_current_entry->get_media_single_content();
-		echo '</div>';
-		echo '<div class="bp-media-meta-content-wrap">';
-		echo '<div class="bp-media-mod-title">';
-		echo '<h2>';
-		$this->entry_screen_title();
-		echo '</h2>';
-		echo '<p>'.nl2br($bp_media_current_entry->get_description()).'</p>';
-		echo '</div>';
+        echo '</div>';
+        echo '<div class="bp-media-meta-content-wrap">';
+        echo '<div class="bp-media-mod-title">';
+        echo '<h2>';
+        $this->entry_screen_title();
+        echo '</h2>';
+        echo '<p>' . nl2br($bp_media_current_entry->get_description()) . '</p>';
+        echo '</div>';
         echo $bp_media_current_entry->show_comment_form();
-		echo '</div>';
+        echo '</div>';
         echo '</div>';
         $this->hook_after();
     }
