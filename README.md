@@ -120,6 +120,12 @@ Please visit [BuddyPress Media's Features page](http://rtcamp.com/buddypress-med
 ## Changelog ##
 
 Please visit [BuddyPress Media's Roadmap page](http://rtcamp.com/buddypress-media/roadmap/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "Visit BuddyPress Media's Features page") to get some details about future releases.
+#### 2.7.1 ####
+* Fixes bug related to group ids.
+* Fixes bug with stylesheet loading
+* Adds ajax loader to lightbox
+* Revamped uploader UI
+
 #### 2.7 ####
 * Added activity uploader
 * Added lightbox
