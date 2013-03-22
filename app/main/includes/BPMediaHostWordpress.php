@@ -377,7 +377,7 @@ class BPMediaHostWordpress {
 
     public function exif($file) {
         $exif = read_exif_data($file['file']);
-        $exif_orient = $exif['Orientation'];
+        $exif_orient = isset($exif['Orientation'])?$exif['Orientation']:0;
         $rotateImage = 0;
 
         if (6 == $exif_orient) {
