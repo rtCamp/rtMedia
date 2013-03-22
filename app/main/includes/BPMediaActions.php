@@ -38,7 +38,7 @@ class BPMediaActions {
         add_action('bp_media_after_add_media', array($this, 'update_count'), 999);
         add_action('bp_media_after_update_media', array($this, 'update_count'), 999);
         add_action('bp_media_after_delete_media', array($this, 'update_count'), 999);
-        add_action('groups_group_create_complete', array($this, 'group_create_default_album'));
+        add_action('bp_before_group_settings_creation_step', array($this, 'group_create_default_album'));
         $linkback = bp_get_option('bp_media_add_linkback', false);
         if ($linkback)
             add_action('bp_footer', array($this, 'footer'));
