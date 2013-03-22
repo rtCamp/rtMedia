@@ -114,7 +114,7 @@ class BPMediaFilters {
      */
     function delete_button_handler($link) {
         global $activities_template;
-        $media_label = __( 'Activity', BP_MEDIA_TXT_DOMAIN );
+        $media_label = NULL;
         $link = str_replace('delete-activity ', 'delete-activity-single ', $link);
         $activity_type = bp_get_activity_type();
         $activity_id = bp_get_activity_id();
