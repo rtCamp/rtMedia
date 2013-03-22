@@ -92,52 +92,54 @@ jQuery(document).ready(function(){
 		load_media($current);
 	});
 	jQuery('#activity-stream').on('click',
-	'ul#activity-stream li.media.album_updated ul li a,	ul.bp-media-list-media li a, ul#activity-stream li.activity-item div.bp_media_content a'
-	,function(e){
-		e.preventDefault();
-		$current = jQuery(this);
-		load_media($current);
-	});
+		'ul#activity-stream li.media.album_updated ul li a,	ul.bp-media-list-media li a, li.activity-item div.activity-content div.activity-inner div.bp_media_content a',function(e){
+			e.preventDefault();
+			$current = jQuery(this);
+			load_media($current);
+		});
 	jQuery('body').on('click','a.modal-next', function(e){
 		e.preventDefault();
-		$next_current = $current.closest('li').next().find('a');
-		console.log(jQuery('#bp-media-show-more').length);
-		if($next_current.length<1){
-			if(jQuery('#bp-media-show-more').length>0){
-				var args = load_more_data();
-				var request = jQuery.get(bp_media_vars.ajaxurl, args);
-				chained = request.then(function( data ) {
-					if(data.length==0){
-						jQuery('#bp-media-show-more').parent().remove();
-						return false;
-					}else{
-						jQuery('#bp-media-list').append(data);
-						return true;
-					}
-				});
+		if(!$current.parent().hasClass('bp_media_content')){
+			$next_current = $current.closest('li').next().find('a');
+			console.log(jQuery('#bp-media-show-more').length);
+			if($next_current.length<1){
+				if(jQuery('#bp-media-show-more').length>0){
+					var args = load_more_data();
+					var request = jQuery.get(bp_media_vars.ajaxurl, args);
+					chained = request.then(function( data ) {
+						if(data.length==0){
+							jQuery('#bp-media-show-more').parent().remove();
+							return false;
+						}else{
+							jQuery('#bp-media-list').append(data);
+							return true;
+						}
+					});
 
-				chained.done(function( truth ) {
-					if(truth!=false){
-						$next_current = $current.closest('li').next().find('a');
-						$current = $next_current;
-						transit_media($current);
-					}
-				});
+					chained.done(function( truth ) {
+						if(truth!=false){
+							$next_current = $current.closest('li').next().find('a');
+							$current = $next_current;
+							transit_media($current);
+						}
+					});
+				}
+			}else{
+				$current = $next_current;
+				transit_media($next_current);
 			}
-		}else{
-			$current = $next_current;
-			transit_media($next_current);
 		}
-
 
 
 	});
 	jQuery('body').on('click','a.modal-prev', function(e){
 		e.preventDefault();
+		if(!$current.parent().hasClass('bp_media_content')){
 		if($current.closest('li').prev().length>0 && $current.closest('li').prev().find('#bp-media-upload-ui').length<1 ){
 			$current = $current.closest('li').prev().find('a');
 
 			transit_media($current);
+		}
 		}
 	});
 	jQuery(document.documentElement).keyup(function (event) {
