@@ -353,6 +353,7 @@ class BuddyPressMedia {
                 'actions' => false,
                 'function' => false,
                 'privacy' => false,
+				'download' => false
             );
             $class_construct = apply_filters('bpmedia_class_construct', $class_construct);
 
@@ -682,7 +683,7 @@ class BuddyPressMedia {
         $plugin_version = $plugin_data['Version'];
         return $plugin_version;
     }
-    
+
     static function get_current_user_default_album(){
         if ( is_user_logged_in() ) {
             $current_user_id = get_current_user_id();
