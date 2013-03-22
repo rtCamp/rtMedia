@@ -30,7 +30,7 @@ class BPMediaHostWordpress {
 	 * @param type $media_id
 	 */
 	function __construct( $media_id = '' ) {
-		if ( ! $media_id == '' ) {
+		if ( $media_id != '' ) {
 			$this->init( $media_id );
 		}
 	}
@@ -977,6 +977,7 @@ class BPMediaHostWordpress {
 		} else {
 			$create_new_album_flag = true;
 		}
+                $current_user = wp_get_current_user();
 		if ( $create_new_album_flag ) {
 			if ( $group == 0 ) {
 				$post_id = $wpdb->get_var(
@@ -994,14 +995,13 @@ class BPMediaHostWordpress {
 						INNER JOIN $wpdb->postmeta ON $wpdb->posts.ID = $wpdb->postmeta.post_id
 							AND $wpdb->postmeta.meta_key =  'bp-media-key'
 							AND $wpdb->postmeta.meta_value = -$group
-							AND $wpdb->posts.post_title = $post_wall" );
+							AND $wpdb->posts.post_title = '$current_user->display_name\'s Album'" );
 			}
 			if ( $post_id == null ) {
 				$album = new BPMediaAlbum();
 				if ( $group == 0 )
 					$album->add_album( $post_wall, get_current_user_id(), $group );
 				else {
-					$current_user = wp_get_current_user();
 					$album->add_album( $current_user->display_name . '\'s Album', get_current_user_id(), $group );
 				}
 				$post_id = $album->get_id();
