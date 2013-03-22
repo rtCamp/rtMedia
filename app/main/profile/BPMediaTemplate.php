@@ -56,7 +56,11 @@ class BPMediaTemplate {
                 $albums = new WP_Query(array(
                             'post_type' => 'bp_media_album',
                             'posts_per_page' => -1,
-                            'author' => get_current_user_id()
+                            'author' => get_current_user_id(),
+                            'meta_key' => 'bp-media-key',
+                            'meta_value' => get_current_user_id(),
+                            'meta_compare' => '='
+                    
                         ));
             }
             if (isset($albums->posts) && is_array($albums->posts) && count($albums->posts) > 0) {

@@ -38,6 +38,8 @@ class BPMediaActions {
         add_action('bp_media_after_add_media', array($this, 'update_count'), 999);
         add_action('bp_media_after_update_media', array($this, 'update_count'), 999);
         add_action('bp_media_after_delete_media', array($this, 'update_count'), 999);
+//        add_action('bp_before_group_settings_creation_step', array($this, 'default_group_album'));
+        add_action('bp_before_group_settings_creation_step', array($this, 'group_create_default_album'));
         $linkback = bp_get_option('bp_media_add_linkback', false);
         if ($linkback)
             add_action('bp_footer', array($this, 'footer'));
@@ -479,10 +481,10 @@ class BPMediaActions {
                 wp_localize_script('bp-media-activity-uploader', 'bp_media_uploader_params', $params);
                 wp_localize_script('bp-media-activity-uploader', 'activity_ajax_url', admin_url('admin-ajax.php'));
                 if (bp_is_active('groups') && bp_get_current_group_id())
-                    $default_album = $this->default_group_album();
+                    $default_album = (string)$this->default_group_album();
                 else
-                    $default_album = $this->default_user_album();
-                wp_localize_script('bp-media-activity-uploader', 'default_album', $default_album ? $default_album : 0);
+                    $default_album = (string)$this->default_user_album();
+                wp_localize_script('bp-media-activity-uploader', 'default_album', $default_album ? $default_album : '0');
             } elseif (in_array(bp_current_action(), array(BP_MEDIA_IMAGES_SLUG, BP_MEDIA_VIDEOS_SLUG, BP_MEDIA_AUDIO_SLUG, BP_MEDIA_SLUG, BP_MEDIA_ALBUMS_SLUG))) {
                 $params = array(
                     'url' => BP_MEDIA_URL . 'app/main/includes/bp-media-upload-handler.php',
@@ -914,6 +916,11 @@ class BPMediaActions {
             }
         }
         return $album_id;
+    }
+
+    function group_create_default_album() {
+        $bp_album = new BPMediaHostWordpress();
+        $bp_album->check_and_create_album(0, bp_get_new_group_id());
     }
 
 }
