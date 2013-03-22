@@ -279,11 +279,11 @@ class BPMediaHostWordpress {
 					$image_array = image_downsize( $this->thumbnail_id, 'bp_media_activity_image' );
 					$activity_content.=apply_filters( 'bp_media_single_activity_filter', '<video poster="' . $image_array[ 0 ] . '" src="' . wp_get_attachment_url( $attachment_id ) . '" width="320" height="240" type="video/mp4" id="bp_media_video_' . $this->id . '_' . $bp_media_counter . '" controls="controls" preload="none"></video></span><script>bp_media_create_element("bp_media_video_' . $this->id . '_' . $bp_media_counter . '");</script>', $this, true );
 				} else {
-					$activity_content.=apply_filters( 'bp_media_single_activity_filter', '<video src="' . wp_get_attachment_url( $attachment_id ) . '" width="320" height="240" type="video/mp4" id="bp_media_video_' . $this->id . '_' . $bp_media_counter . '" controls="controls" preload="none"></video></span><script>bp_media_create_element("bp_media_video_' . $this->id . '_' . $bp_media_counter . '");</script>', $this, true );
+					$activity_content.=apply_filters( 'bp_media_single_activity_filter', '<video src="' . wp_get_attachment_url( $attachment_id ) . '" width="320" height="240" type="video/mp4" id="bp_media_video_' . $this->id . '_' . $bp_media_counter . '" controls="controls" preload="none"></video></span>', $this, true );
 				}
 				break;
 			case 'audio' :
-				$activity_content.=apply_filters( 'bp_media_single_activity_filter', '<audio src="' . wp_get_attachment_url( $attachment_id ) . '" width="320" type="audio/mp3" id="bp_media_audio_' . $this->id . '_' . $bp_media_counter . '" controls="controls" preload="none" ></audio></span><script>bp_media_create_element("bp_media_audio_' . $this->id . '_' . $bp_media_counter . '");</script>', $this, true );
+				$activity_content.=apply_filters( 'bp_media_single_activity_filter', '<audio src="' . wp_get_attachment_url( $attachment_id ) . '" width="320" type="audio/mp3" id="bp_media_audio_' . $this->id . '_' . $bp_media_counter . '" controls="controls" preload="none" ></audio></span>', $this, true );
 				$type = 'audio';
 				break;
 			case 'image' :
