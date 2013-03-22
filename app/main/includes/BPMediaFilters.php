@@ -18,10 +18,10 @@ class BPMediaFilters {
         // and we hook our function via wp_before_admin_bar_render
         add_action('admin_bar_menu', array($this, 'my_account_menu'), 1);
         // and we hook our function via wp_before_admin_bar_render
-		global $bp_media;
-		if(isset($bp_media->options['show_admin_menu']) && ($bp_media->options['show_admin_menu']==true)){
-			add_action('wp_before_admin_bar_render', 'BPMediaFilters::adminbar_settings_menu');
-		}
+        global $bp_media;
+        if (isset($bp_media->options['show_admin_menu']) && ($bp_media->options['show_admin_menu'] == true)) {
+            add_action('wp_before_admin_bar_render', 'BPMediaFilters::adminbar_settings_menu');
+        }
         global $bp_media_activity_types;
         $bp_media_activity_types = array('media_upload', 'album_updated', 'album_created');
     }
@@ -114,29 +114,33 @@ class BPMediaFilters {
      */
     function delete_button_handler($link) {
         global $activities_template;
-        $media_label = NULL;
+        $media_label = __( 'Activity', BP_MEDIA_TXT_DOMAIN );
+        $link = str_replace('delete-activity ', 'delete-activity-single ', $link);
+        $activity_type = bp_get_activity_type();
+        $activity_id = bp_get_activity_id();
+        $activity_item_id = bp_get_activity_item_id();
 
-        if (bp_current_component() == 'media')
-            $link = str_replace('delete-activity ', 'delete-activity-single ', $link);
-
-        if ('album_updated' == $activities_template->activity->type) {
+        if ('album_updated' == $activity_type) {
             $media_label = BP_MEDIA_ALBUMS_LABEL_SINGULAR;
-        } elseif ($activities_template->activity->item_id) {
-            $mime_type = get_post_field('post_mime_type', $activities_template->activity->item_id);
-            $media_type = explode('/', $mime_type);
-            switch ($media_type[0]) {
-                case 'image': $media_label = BP_MEDIA_IMAGES_LABEL_SINGULAR;
-                    break;
-                case 'audio': $media_label = BP_MEDIA_AUDIO_LABEL_SINGULAR;
-                    break;
-                case 'video': $media_label = BP_MEDIA_VIDEOS_LABEL_SINGULAR;
-                    break;
+        } elseif ($activity_id) {
+            $query = new WP_Query(array('post_type' => 'attachment', 'post_status' => 'inherit', 'id' => $activity_item_id, 'meta_key' => 'bp_media_child_activity', 'meta_value' => "$activity_id"));
+            wp_reset_postdata();
+            wp_reset_query();
+            if ($query->found_posts) {
+                $mime_type = get_post_field('post_mime_type', bp_get_activity_item_id());
+                $media_type = explode('/', $mime_type);
+                switch ($media_type[0]) {
+                    case 'image': $media_label = BP_MEDIA_IMAGES_LABEL_SINGULAR;
+                        break;
+                    case 'audio': $media_label = BP_MEDIA_AUDIO_LABEL_SINGULAR;
+                        break;
+                    case 'video': $media_label = BP_MEDIA_VIDEOS_LABEL_SINGULAR;
+                        break;
+                }
             }
         }
-
         if ($media_label)
             $link = str_replace('Delete', sprintf(__('Delete %s', BP_MEDIA_TXT_DOMAIN), $media_label), $link);
-
         return $link;
     }
 
@@ -199,7 +203,7 @@ class BPMediaFilters {
      * @return type
      */
     static function group_activity_query_filter($query) {
-        global $wpdb,$bp;
+        global $wpdb, $bp;
         $activity_meta_table = $bp->activity->table_name_meta;
         $query = preg_replace("/LEFT JOIN/i", "LEFT JOIN $activity_meta_table am ON a.id = am.activity_id LEFT JOIN", $query);
         $query = preg_replace("/a.component IN \( 'groups' \) AND a.item_id IN \((.*)\)/i", "( ( a.component IN ( 'groups' ) AND a.item_id IN ( $1 ) ) OR ( a.component IN ( 'media' ) AND am.meta_key = 'group_id' AND am.meta_value IN ( $1 ) ) )", $query);
