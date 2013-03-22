@@ -1,20 +1,30 @@
 /*
  * BuddyPress Media Default JS
  */
-
+//Legacy media element for old activities
 function bp_media_create_element(id){
-	jQuery('#'+id).mediaelementplayer({
-		enableKeyboard: false,
-		startVolume: 1,
-		success: function(mediaElement,domElement){
-			var $thisMediaElement = (mediaElement.id) ? jQuery("#"+mediaElement.id) : jQuery(mediaElement);
-			$thisMediaElement.parents('.mejs-container').find(".mejs-volume-current").css("top","8px");
-			$thisMediaElement.parents('.mejs-container').find(".mejs-volume-handle").css("top","5px");
-		}
-	});
+	return false;
 }
 var $current;
 jQuery(document).ready(function(){
+
+	jQuery('ul#activity-stream').on('mediapreview','video,audio', function(){
+		jQuery(this).mediaelementplayer({
+			enableKeyboard: false,
+			startVolume: 1,
+			success: function(mediaElement,domElement){
+				var $thisMediaElement = (mediaElement.id) ? jQuery("#"+mediaElement.id) : jQuery(mediaElement);
+				$thisMediaElement.parents('.mejs-container').find(".mejs-volume-current").css("top","8px");
+				$thisMediaElement.parents('.mejs-container').find(".mejs-volume-handle").css("top","5px");
+			}
+		});
+	});
+	jQuery('ul#activity-stream audio,ul#activity-stream video').trigger('mediapreview');
+
+	jQuery('ul#activity-stream').on('DOMNodeInserted', function(){
+		jQuery('ul#activity-stream audio,ul#activity-stream video').trigger('mediapreview');
+	})
+
 
 	jQuery('#item-body').on('click','#bp-media-upload-button', function(){
 		jQuery(this).next().slideToggle();
@@ -91,8 +101,8 @@ jQuery(document).ready(function(){
 		$current = jQuery(this);
 		load_media($current);
 	});
-	jQuery('#activity-stream').on('click',
-		'ul#activity-stream li.media.album_updated ul li a,	ul.bp-media-list-media li a, li.activity-item div.activity-content div.activity-inner div.bp_media_content a',function(e){
+	jQuery('ul#activity-stream').on('click',
+		'li.media.album_updated ul li a,	ul.bp-media-list-media li a, li.activity-item div.activity-content div.activity-inner div.bp_media_content a',function(e){
 			e.preventDefault();
 			$current = jQuery(this);
 			load_media($current);
@@ -135,11 +145,11 @@ jQuery(document).ready(function(){
 	jQuery('body').on('click','a.modal-prev', function(e){
 		e.preventDefault();
 		if(!$current.parent().hasClass('bp_media_content')){
-		if($current.closest('li').prev().length>0 && $current.closest('li').prev().find('#bp-media-upload-ui').length<1 ){
-			$current = $current.closest('li').prev().find('a');
+			if($current.closest('li').prev().length>0 && $current.closest('li').prev().find('#bp-media-upload-ui').length<1 ){
+				$current = $current.closest('li').prev().find('a');
 
-			transit_media($current);
-		}
+				transit_media($current);
+			}
 		}
 	});
 	jQuery(document.documentElement).keyup(function (event) {
