@@ -120,6 +120,17 @@ Please visit [BuddyPress Media's Features page](http://rtcamp.com/buddypress-med
 ## Changelog ##
 
 Please visit [BuddyPress Media's Roadmap page](http://rtcamp.com/buddypress-media/roadmap/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "Visit BuddyPress Media's Features page") to get some details about future releases.
+
+#### 2.7.2 ####
+* Fixes warning related to scalar variables
+* Improves Group Wall Post handling
+* Adds lightbox to activity media
+* Fixes mediaelement display
+* Implements forced download for media
+* Fixes image rotation on upload
+* Fixes broken spinner image
+* Fixes some styling
+
 #### 2.7.1 ####
 * Fixes bug related to group ids.
 * Fixes bug with stylesheet loading
@@ -317,4 +328,4 @@ Please visit [BuddyPress Media's Roadmap page](http://rtcamp.com/buddypress-medi
 * HTML5 Audio Tag Support (with fallback)
 * HTML5 Video Tag Support (with fallback)
 
-Activity Uploader and lightbox
+Activity Uploader and lightbox, Bug fixes
