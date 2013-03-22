@@ -246,6 +246,7 @@ jQuery(document).ready(function(){
 			);
 		}
 
+
 		/* Favoriting activity stream items */
 		if ( target.hasClass('fav') || target.hasClass('unfav') ) {
 			console.log('hua');

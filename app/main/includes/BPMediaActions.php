@@ -303,7 +303,7 @@ class BPMediaActions {
         if ($bp_media_current_entry != NULL) {
 
             if (isset($bp_media->options['download_enabled']))
-                $action_buttons[] = '<a href="' . $bp_media_current_entry->get_attachment_url()
+                $action_buttons[] = '<a href="' . admin_url('admin-ajax.php').'?action=bp_media_download&file='.$bp_media_current_entry->get_attachment_url()
                         . '" target="_blank" class="button item-button bp-secondary-action bp-media-download" title="'
                         . __('Download', BP_MEDIA_TXT_DOMAIN) . '">' . __('Download', BP_MEDIA_TXT_DOMAIN) . '</a>';
 
