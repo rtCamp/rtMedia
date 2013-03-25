@@ -6,7 +6,7 @@ License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires at least: WordPress 3.5 + BuddyPress 1.6
 Tested up to: WordPress 3.5 + BuddyPress 1.6
-Stable tag: 2.7.2
+Stable tag: 2.7.3
 
 Adds Photos, Music, Videos & Albums to BuddyPress. Supports mobile devices (iPhone/iPad, etc) and automatic audio/video conversion.
 
@@ -120,6 +120,10 @@ Please visit [BuddyPress Media's Features page](http://rtcamp.com/buddypress-med
 == Changelog ==
 
 Please visit [BuddyPress Media's Roadmap page](http://rtcamp.com/buddypress-media/roadmap/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "Visit BuddyPress Media's Features page") to get some details about future releases.
+
+= 2.7.3 =
+* Added option to toggle lightbox functionality to prevent theme conflicts
+* Minor code revision
 
 = 2.7.2 =
 * Fixes warning related to scalar variables
@@ -329,5 +333,5 @@ Please visit [BuddyPress Media's Roadmap page](http://rtcamp.com/buddypress-medi
 * HTML5 Video Tag Support (with fallback)
 
 == Upgrade Notice ==
-= 2.7.2 =
-Activity Uploader and lightbox, Bug fixes
+= 2.7.3 =
+Lightbox toggle added

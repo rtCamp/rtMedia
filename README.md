@@ -121,6 +121,10 @@ Please visit [BuddyPress Media's Features page](http://rtcamp.com/buddypress-med
 
 Please visit [BuddyPress Media's Roadmap page](http://rtcamp.com/buddypress-media/roadmap/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "Visit BuddyPress Media's Features page") to get some details about future releases.
 
+#### 2.7.3 ####
+* Added option to toggle lightbox functionality to prevent theme conflicts
+* Minor code revision
+
 #### 2.7.2 ####
 * Fixes warning related to scalar variables
 * Improves Group Wall Post handling
@@ -328,4 +332,4 @@ Please visit [BuddyPress Media's Roadmap page](http://rtcamp.com/buddypress-medi
 * HTML5 Audio Tag Support (with fallback)
 * HTML5 Video Tag Support (with fallback)
 
-Activity Uploader and lightbox, Bug fixes
+Lightbox toggle added
