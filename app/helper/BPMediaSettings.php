@@ -55,7 +55,15 @@ if (!class_exists('BPMediaSettings')) {
                         )
                 );
             }
-
+            
+            add_settings_section('bpm-media-lightbox', __('Lightbox Integration', BP_MEDIA_TXT_DOMAIN), '', 'bp-media-settings');
+            add_settings_field('bpm-media-lightbox-option', __('Lightbox', BP_MEDIA_TXT_DOMAIN), array($this, 'checkbox'), 'bp-media-settings', 'bpm-media-lightbox', array(
+                    'setting' => 'bp_media_options',
+                    'option' => 'enable_lightbox',
+                    'desc' => __('Enable Lighbox on Media', BP_MEDIA_TXT_DOMAIN)
+                        )
+                );
+            
             if (bp_is_active('groups')) {
                 add_settings_section('bpm-media-type', __('Groups Integration', BP_MEDIA_TXT_DOMAIN), '', 'bp-media-settings');
 //            add_settings_field('bpm-admin-profile', __('User profiles', BP_MEDIA_TXT_DOMAIN), array($this, 'checkbox'), 'bp-media-settings', 'bpm-media-type', array(
