@@ -146,12 +146,13 @@ class BPMediaActions {
      * @global type $bp
      */
     function enqueue_scripts_styles() {
-
+        global $bp_media, $bp;
         wp_enqueue_script('jquery-ui-tabs');
         wp_enqueue_script('bp-media-mejs', BP_MEDIA_URL . 'lib/media-element/mediaelement-and-player.min.js', '', BP_MEDIA_VERSION);
         wp_enqueue_script('bp-media-default', BP_MEDIA_URL . 'app/assets/js/main.js', '', BP_MEDIA_VERSION);
-        wp_enqueue_script('bp-media-modal', BP_MEDIA_URL . 'lib/simplemodal/jquery.simplemodal-1.4.4.js', '', BP_MEDIA_VERSION);
-        global $bp;
+        $lightbox = isset($bp_media->options['enable_lightbox'])?$bp_media->options['enable_lightbox']:0;
+        if ( $lightbox )
+            wp_enqueue_script('bp-media-modal', BP_MEDIA_URL . 'lib/simplemodal/jquery.simplemodal-1.4.4.js', '', BP_MEDIA_VERSION);
         $cur_group_id = NULL;
         if (bp_is_active("groups"))
             $cur_group_id = bp_get_current_group_id();
@@ -168,6 +169,7 @@ class BPMediaActions {
             'displayed_user' => bp_displayed_user_id(),
             'loggedin_user' => bp_loggedin_user_id(),
             'current_group' => $cur_group_id,
+            'lightbox' => $lightbox,
         );
 
         wp_localize_script('bp-media-default', 'bp_media_vars', $bp_media_vars);

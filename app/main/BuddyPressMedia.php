@@ -172,6 +172,7 @@ class BuddyPressMedia {
         if (!$options) {
             $options = array(
                 'enable_on_group' => 1,
+                'enable_lightbox' => 1,
                 'videos_enabled' => 1,
                 'audio_enabled' => 1,
                 'images_enabled' => 1,
@@ -179,6 +180,12 @@ class BuddyPressMedia {
                 'show_admin_menu' => 1
             );
             bp_update_option('bp_media_options', $options);
+        }
+        $lightbox = bp_get_option('bp_media_lightbox', false);
+        if ( !$lightbox ) {
+            $options['enable_lightbox'] = 1;
+            bp_update_option('bp_media_options', $options);
+            bp_update_option('bp_media_lightbox', 1);
         }
         $this->options = $options;
     }
