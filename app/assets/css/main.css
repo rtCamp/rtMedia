@@ -230,6 +230,7 @@ ul#activity-stream li.media.album_updated ul{}
 ul#activity-stream li.media.album_updated ul li,ul.bp-media-list-media li{float: left;margin-right:2%}
 
 
+body.media {overflow:auto;}
 .media ul#bp-media-upload-set-privacy li input[type="radio"]{float:left;}
 /* Privacy settings */
 #bp-media-upload-set-privacy li{margin: 10px 0;overflow: hidden;}

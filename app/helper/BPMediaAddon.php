@@ -26,6 +26,16 @@ if (!class_exists('BPMediaAddon')) {
         public function get_addons() {
             $addons = array(
                 array(
+                    'title' => __('BuddyPress-Media Instagram', BP_MEDIA_TXT_DOMAIN),
+                    'img_src' => 'http://cdn.rtcamp.com/wp-content/uploads/2013/03/BuddyPressMedia-Instagram.png',
+                    'product_link' => 'http://rtcamp.com/store/buddypress-media-instagram/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media',
+                    'desc' => '<p>' . __('BuddyPress Media Instagram adds Instagram like filters to images uploaded with BuddyPress Media.', BP_MEDIA_TXT_DOMAIN) . '</p>
+                    <p><strong>' . __('Important', BP_MEDIA_TXT_DOMAIN) . ':</strong> ' . __('You need to have ImageMagick installed on your server for this addon to work.', BP_MEDIA_TXT_DOMAIN) . '</p>',
+                    'price' => '$19',
+                    'demo_link' => 'http://demo.rtcamp.com/buddypress-media/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media',
+                    'buy_now' => 'http://rtcamp.com/store/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media&add-to-cart=34379'
+                ),
+                array(
                     'title' => __('BuddyPress-Media Kaltura Add-on', BP_MEDIA_TXT_DOMAIN),
                     'img_src' => 'http://cdn.rtcamp.com/files/2012/10/new-buddypress-media-kaltura-logo-240x184.png',
                     'product_link' => 'http://rtcamp.com/store/buddypress-media-kaltura/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media',
