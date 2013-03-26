@@ -123,8 +123,10 @@ class BPMediaHostWordpress {
             $files = $_FILES['bp_media_file'];
             $file = wp_handle_upload($files);
         } else {
-            $file = wp_handle_sideload($files);
+            $file = wp_handle_sideload($files,array('test_form' => false));
         }
+        
+        print_r($file);
 
         if (isset($file['error']) || $file === null) {
             throw new Exception(__('Error Uploading File', BP_MEDIA_TXT_DOMAIN));
