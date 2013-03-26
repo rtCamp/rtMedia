@@ -6,7 +6,7 @@ License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires at least: WordPress 3.5 + BuddyPress 1.6
 Tested up to: WordPress 3.5 + BuddyPress 1.6
-Stable tag: 2.7.3
+Stable tag: 2.7.4
 
 Adds Photos, Music, Videos & Albums to BuddyPress. Supports mobile devices (iPhone/iPad, etc) and automatic audio/video conversion.
 
@@ -88,7 +88,8 @@ BuddyPress Media is now available in *Brazilian Portuguese*, *Spanish*, *Japanes
 * [Japanese](https://rtcamp.com/translate/projects/buddypress-media/ja/default) translation by [Tetsu Yamaoka](http://twitter.com/ytetsu)
 * [Polish](https://rtcamp.com/translate/projects/buddypress-media/pl/default) translation by [czemubynie](http://profiles.wordpress.org/czemubyniegmailcom/)
 * [Serbian](https://rtcamp.com/translate/projects/buddypress-media/sr/default) translation by [nikolakica](http://profiles.wordpress.org/nikolakica/)
-* [German](https://rtcamp.com/translate/projects/buddypress-media/de/defaul) translation by [hannes.muc]
+* [German](https://rtcamp.com/translate/projects/buddypress-media/de/default) translation by [hannes.muc]
+* [French](https://rtcamp.com/translate/projects/buddypress-media/fr/default) translation by [Peter Lewit](http://profiles.wordpress.org/deegan)
 
 == Installation ==
 
@@ -121,8 +122,13 @@ Please visit [BuddyPress Media's Features page](http://rtcamp.com/buddypress-med
 
 Please visit [BuddyPress Media's Roadmap page](http://rtcamp.com/buddypress-media/roadmap/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "Visit BuddyPress Media's Features page") to get some details about future releases.
 
+= 2.7.4 =
+* Added french translation
+* Fixed Widget privacy
+
 = 2.7.3 =
 * Added option to toggle lightbox functionality to prevent theme conflicts
+* Fixed conflict with Bottstrap based themes
 * Minor code revision
 
 = 2.7.2 =
