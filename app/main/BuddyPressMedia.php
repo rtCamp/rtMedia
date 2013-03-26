@@ -356,11 +356,12 @@ class BuddyPressMedia {
 //			new BPMediaActivity();
             $class_construct = array(
                 'activity' => false,
-                'filters' => false,
-                'actions' => false,
+                'filters'  => false,
+                'actions'  => false,
                 'function' => false,
-                'privacy' => false,
-				'download' => false
+                'privacy'  => false,
+                'download' => false,
+                'albumimporter'    => false
             );
             $class_construct = apply_filters('bpmedia_class_construct', $class_construct);
 

@@ -50,7 +50,7 @@ function buddypress_media_autoloader( $class_name ) {
 		'app/main/profile/' . $class_name . '.php',
 		'app/main/group/' . $class_name . '.php',
 		'app/main/query/' . $class_name . '.php',
-        'app/main/privacy/' . $class_name . '.php',
+                'app/main/privacy/' . $class_name . '.php',
 		'app/main/group/dummy/' . $class_name . '.php',
 		'app/main/includes/' . $class_name . '.php',
 		'app/main/widgets/' . $class_name . '.php',
@@ -77,9 +77,6 @@ spl_autoload_register( 'buddypress_media_autoloader' );
 global $bp_media;
 $bp_media = new BuddyPressMedia();
 
-//add_action('init','BPMediaBPAlbumImporter');
-
-//BPMediaBPAlbumImporter::bpmedia_ajax_import_callback();
 /*
  * Look Ma! Very few includes! Next File: /app/main/BuddyPressMedia.php
  */
