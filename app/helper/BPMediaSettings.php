@@ -151,6 +151,13 @@ if (!class_exists('BPMediaSettings')) {
                 add_filter('bp_media_add_sub_tabs', array($bp_media_privacy, 'ui'), 99, 2);
                 add_settings_section('bpm-privacy', __('Update Database', BP_MEDIA_TXT_DOMAIN), array($bp_media_privacy, 'init'), 'bp-media-privacy');
             }
+            
+            $bp_album_active = BPMediaImporter::_active('bp-album/loader.php');
+            if ($bp_album_active!=-1) {
+                $bp_media_album_importer = new BPMediaAlbumimporter();
+                add_filter('bp_media_add_sub_tabs', array($bp_media_album_importer, 'tab'), 99, 2);
+                add_settings_section('bpm-bp-album-importer', __('BP Album Importer', BP_MEDIA_TXT_DOMAIN), array($bp_media_album_importer, 'ui'), 'bp-media-bp-album-importer');
+            }
 
             add_settings_section('bpm-convert-videos', '', array($this, 'convert_videos_form'), 'bp-media-convert-videos');
 
