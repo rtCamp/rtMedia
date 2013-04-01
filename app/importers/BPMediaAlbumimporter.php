@@ -62,6 +62,9 @@ class BPMediaAlbumimporter extends BPMediaImporter {
         if ( !$total ) {
             echo '<p><strong>' . __('You have nothing to import') . '</strong></p>';
         } elseif ($this->active != 1) {
+			echo '<p class="warning">';
+			_e('This process is irreversible. Please take a backup of your database and files, before proceeding.' , BP_MEDIA_TXT_DOMAIN);
+			echo '</p>';
             echo '<strong>';
             echo '<span class="finished">' . $finished . '</span> / <span class="total">' . $total . '</span>';
             echo '</strong>';

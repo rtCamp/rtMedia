@@ -64,7 +64,7 @@ if ( ! class_exists( 'BPMediaActivity' ) ) {
 
 		public function get_text( $content ) {
 			$activity_json = $this->decode( $content );
-			$activity_text = $activity_json[ 'update_txt' ];
+			$activity_text = rawurldecode($activity_json[ 'update_txt' ]);
 			return $activity_text;
 		}
 
