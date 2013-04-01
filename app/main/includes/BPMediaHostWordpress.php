@@ -378,51 +378,55 @@ class BPMediaHostWordpress {
     public function exif($file) {
         if (!function_exists('read_exif_data'))
             return $file;
-        $exif = read_exif_data($file['file']);
-        $exif_orient = isset($exif['Orientation']) ? $exif['Orientation'] : 0;
-        $rotateImage = 0;
 
-        if (6 == $exif_orient) {
-            $rotateImage = 90;
-            $imageOrientation = 1;
-        } elseif (3 == $exif_orient) {
-            $rotateImage = 180;
-            $imageOrientation = 1;
-        } elseif (8 == $exif_orient) {
-            $rotateImage = 270;
-            $imageOrientation = 1;
-        }
+        $file_parts = pathinfo($file['file']);
+        if (in_array(strtolower($file_parts['extension']), array('jpg', 'jpeg', 'tiff'))) {
+            $exif = read_exif_data($file['file']);
+            $exif_orient = isset($exif['Orientation']) ? $exif['Orientation'] : 0;
+            $rotateImage = 0;
 
-        if ($rotateImage) {
-            if (class_exists('Imagick')) {
-                $imagick = new Imagick();
-                $imagick->readImage($file['file']);
-                $imagick->rotateImage(new ImagickPixel(), $rotateImage);
-                $imagick->setImageOrientation($imageOrientation);
-                $imagick->writeImage($file['file']);
-                $imagick->clear();
-                $imagick->destroy();
-            } else {
-                $rotateImage = -$rotateImage;
+            if (6 == $exif_orient) {
+                $rotateImage = 90;
+                $imageOrientation = 1;
+            } elseif (3 == $exif_orient) {
+                $rotateImage = 180;
+                $imageOrientation = 1;
+            } elseif (8 == $exif_orient) {
+                $rotateImage = 270;
+                $imageOrientation = 1;
+            }
 
-                switch ($file['type']) {
-                    case 'image/jpeg':
-                        $source = imagecreatefromjpeg($file['file']);
-                        $rotate = imagerotate($source, $rotateImage, 0);
-                        imagejpeg($rotate, $file['file']);
-                        break;
-                    case 'image/png':
-                        $source = imagecreatefrompng($file['file']);
-                        $rotate = imagerotate($source, $rotateImage, 0);
-                        imagepng($rotate, $file['file']);
-                        break;
-                    case 'image/gif':
-                        $source = imagecreatefromgif($file['file']);
-                        $rotate = imagerotate($source, $rotateImage, 0);
-                        imagegif($rotate, $file['file']);
-                        break;
-                    default:
-                        break;
+            if ($rotateImage) {
+                if (class_exists('Imagick')) {
+                    $imagick = new Imagick();
+                    $imagick->readImage($file['file']);
+                    $imagick->rotateImage(new ImagickPixel(), $rotateImage);
+                    $imagick->setImageOrientation($imageOrientation);
+                    $imagick->writeImage($file['file']);
+                    $imagick->clear();
+                    $imagick->destroy();
+                } else {
+                    $rotateImage = -$rotateImage;
+
+                    switch ($file['type']) {
+                        case 'image/jpeg':
+                            $source = imagecreatefromjpeg($file['file']);
+                            $rotate = imagerotate($source, $rotateImage, 0);
+                            imagejpeg($rotate, $file['file']);
+                            break;
+                        case 'image/png':
+                            $source = imagecreatefrompng($file['file']);
+                            $rotate = imagerotate($source, $rotateImage, 0);
+                            imagepng($rotate, $file['file']);
+                            break;
+                        case 'image/gif':
+                            $source = imagecreatefromgif($file['file']);
+                            $rotate = imagerotate($source, $rotateImage, 0);
+                            imagegif($rotate, $file['file']);
+                            break;
+                        default:
+                            break;
+                    }
                 }
             }
         }
@@ -544,7 +548,7 @@ class BPMediaHostWordpress {
                         <li class="activity activity_update" id="activity-<?php echo $activity_id; ?>">
                             <div class="activity-content">
                                 <?php do_action('bp_activity_entry_content'); ?>
-                                    <?php if (is_user_logged_in()) : ?>
+                                <?php if (is_user_logged_in()) : ?>
                                     <div class="activity-meta no-ajax">
                                         <?php if (bp_activity_can_comment()) : ?>
                                             <a href="<?php bp_get_activity_comment_link(); ?>" class="button acomment-reply bp-primary-action" id="acomment-comment-<?php bp_activity_id(); ?>"><?php printf(__('Comment <span>%s</span>', BP_MEDIA_TXT_DOMAIN), bp_activity_get_comment_count()); ?></a>
@@ -557,15 +561,15 @@ class BPMediaHostWordpress {
                                             <?php endif; ?>
                                         <?php endif; ?>
                                         <?php do_action('bp_activity_entry_meta'); ?>
-                                    <?php if (bp_activity_user_can_delete()) bp_activity_delete_link(); ?>
+                                        <?php if (bp_activity_user_can_delete()) bp_activity_delete_link(); ?>
                                     </div>
-                            <?php endif; ?>
+                                <?php endif; ?>
                             </div>
                             <?php do_action('bp_before_activity_entry_comments'); ?>
-                                <?php if (( is_user_logged_in() && bp_activity_can_comment() ) || bp_activity_get_comment_count()) : ?>
+                            <?php if (( is_user_logged_in() && bp_activity_can_comment() ) || bp_activity_get_comment_count()) : ?>
                                 <div class="activity-comments">
                                     <?php bp_activity_comments(); ?>
-                    <?php if (is_user_logged_in()) : ?>
+                                    <?php if (is_user_logged_in()) : ?>
                                         <form action="<?php bp_activity_comment_form_action(); ?>" method="post" id="ac-form-<?php bp_activity_id(); ?>" class="ac-form"<?php bp_activity_comment_form_nojs_display(); ?>>
                                             <div class="ac-reply-avatar"><?php bp_loggedin_user_avatar('width=' . BP_AVATAR_THUMB_WIDTH . '&height=' . BP_AVATAR_THUMB_HEIGHT); ?></div>
                                             <div class="ac-reply-content">
@@ -576,12 +580,12 @@ class BPMediaHostWordpress {
                                                 <input type="hidden" name="comment_form_id" value="<?php bp_activity_id(); ?>" />
                                             </div>
                                             <?php do_action('bp_activity_entry_comments'); ?>
-                                        <?php wp_nonce_field('new_activity_comment', '_wpnonce_new_activity_comment'); ?>
+                                            <?php wp_nonce_field('new_activity_comment', '_wpnonce_new_activity_comment'); ?>
                                         </form>
-                                <?php endif; ?>
+                                    <?php endif; ?>
                                 </div>
                             <?php endif; ?>
-                <?php do_action('bp_after_activity_entry_comments'); ?>
+                            <?php do_action('bp_after_activity_entry_comments'); ?>
                         </li>
                     </ul>
                 </div>
@@ -595,11 +599,11 @@ class BPMediaHostWordpress {
                     <li class="activity activity_update" id="activity-<?php echo $activity_id; ?>">
                         <div class="activity-content">
                             <?php do_action('bp_activity_entry_content'); ?>
-            <?php if (is_user_logged_in()) : ?>
+                            <?php if (is_user_logged_in()) : ?>
                                 <div class="activity-meta no-ajax">
                                     <a href="<?php echo $this->get_delete_url(); ?>" class="button item-button bp-secondary-action delete-activity-single confirm" rel="nofollow"><?php _e("Delete", BP_MEDIA_TXT_DOMAIN); ?></a>
                                 </div>
-            <?php endif; ?>
+                            <?php endif; ?>
                         </div>
                     </li>
                 </ul>

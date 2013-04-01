@@ -29,7 +29,7 @@ if (!class_exists('BPMediaSettings')) {
          * @global BPMediaAddon $bp_media_addon
          */
         public function settings() {
-            global $bp_media, $bp_media_addon;
+            global $bp_media, $bp_media_addon, $wpdb;
             add_settings_section('bpm-settings', __('Enabled Media Types', BP_MEDIA_TXT_DOMAIN), is_multisite() ? array($this, 'network_notices') : '', 'bp-media-settings');
             add_settings_field('bpm-image', __('Photos', BP_MEDIA_TXT_DOMAIN), array($this, 'checkbox'), 'bp-media-settings', 'bpm-settings', array(
                 'setting' => 'bp_media_options',
@@ -153,7 +153,8 @@ if (!class_exists('BPMediaSettings')) {
             }
             
             $bp_album_active = BPMediaImporter::_active('bp-album/loader.php');
-            if ($bp_album_active!=-1) {
+            $table = "{$wpdb->base_prefix}bp_album";
+            if (BPMediaImporter::table_exists($table) && $bp_album_active!=-1) {
                 $bp_media_album_importer = new BPMediaAlbumimporter();
                 add_filter('bp_media_add_sub_tabs', array($bp_media_album_importer, 'tab'), 99, 2);
                 add_settings_section('bpm-bp-album-importer', __('BP Album Importer', BP_MEDIA_TXT_DOMAIN), array($bp_media_album_importer, 'ui'), 'bp-media-bp-album-importer');
