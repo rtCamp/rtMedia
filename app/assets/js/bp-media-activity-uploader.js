@@ -117,7 +117,8 @@ jQuery(document).ready(function(){
 			'top'		: $position.top,
 			'left'		: $position.left,
 			'width'		: $update_box.width(),
-			'height'	: $update_box.height()
+			'height'	: $update_box.height(),
+			'visibility': 'visible'
 		});
 	}
 
@@ -126,7 +127,7 @@ jQuery(document).ready(function(){
             $update_txt = jQuery('#bp-media-update-text').val();
             $activity = {
                     'media':$album_json,
-                    'update_txt':$update_txt
+                    'update_txt':encodeURIComponent($update_txt)
             };
             return JSON.stringify($activity);
         }
