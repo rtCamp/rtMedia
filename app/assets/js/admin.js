@@ -141,10 +141,10 @@ jQuery(document).ready(function(){
 
     function fireimportRequest(data) {
         return jQuery.post(ajaxurl, data, function(response){
+            cleanup = false;
             if(response != 0){
                 var redirect = false;
                 var progw = Math.ceil((((parseInt(response)*20)+parseInt(data.values['finished']))/parseInt(data.values['total'])) *100);
-                console.log(progw);
                 if(progw>100){
                     progw=100;
                     cleanup=true
@@ -153,7 +153,7 @@ jQuery(document).ready(function(){
                 finished = jQuery('#bpmedia-bpalbumimport span.finished').html();
                 jQuery('#bpmedia-bpalbumimport span.finished').html(parseInt(finished)+data.count);
                 if ( cleanup ) {
-                        window.location = window.location.pathname;
+                        window.location = document.URL;
                 }
             } else {
                 jQuery('#map_progress_msgs').html('<div class="map_mapping_failure">Row '+response+' failed.</div>');

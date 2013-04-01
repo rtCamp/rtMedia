@@ -71,13 +71,15 @@ if (!class_exists('BPMediaAdmin')) {
          * @global string BP_MEDIA_TXT_DOMAIN
          */
         public function menu() {
+            global $wpdb;
             add_menu_page(__('BuddyPress Media Component', BP_MEDIA_TXT_DOMAIN), __('BuddyPress Media', BP_MEDIA_TXT_DOMAIN), 'manage_options', 'bp-media-settings', array($this, 'settings_page'));
             add_submenu_page('bp-media-settings', __('BuddyPress Media Settings', BP_MEDIA_TXT_DOMAIN), __('Settings', BP_MEDIA_TXT_DOMAIN), 'manage_options', 'bp-media-settings', array($this, 'settings_page'));
             if (!BPMediaPrivacy::is_installed()) {
                 add_submenu_page('bp-media-settings', __('BuddyPress Media Database Update', BP_MEDIA_TXT_DOMAIN), __('Update Database', BP_MEDIA_TXT_DOMAIN), 'manage_options', 'bp-media-privacy', array($this, 'privacy_page'));
             }
             $bp_album_active = BPMediaImporter::_active('bp-album/loader.php');
-            if ($bp_album_active!=-1) {
+            $table = "{$wpdb->base_prefix}bp_album";
+            if (BPMediaImporter::table_exists($table) && $bp_album_active!=-1) {
                 add_submenu_page('bp-media-settings', __('BP Album Import', BP_MEDIA_TXT_DOMAIN), __('BP Album Importer', BP_MEDIA_TXT_DOMAIN), 'manage_options', 'bp-media-bp-album-importer', array($this, 'bp_album_importer_page'));
             }
             add_submenu_page('bp-media-settings', __('BuddyPress Media Addons', BP_MEDIA_TXT_DOMAIN), __('Addons', BP_MEDIA_TXT_DOMAIN), 'manage_options', 'bp-media-addons', array($this, 'addons_page'));
