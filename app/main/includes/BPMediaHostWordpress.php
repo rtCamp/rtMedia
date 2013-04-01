@@ -123,7 +123,7 @@ class BPMediaHostWordpress {
             $files = $_FILES['bp_media_file'];
             $file = wp_handle_upload($files);
         } else {
-            $file = wp_handle_sideload($files,array('test_form' => false));
+            $file = wp_handle_sideload($files, array('test_form' => false));
         }
 
         if (isset($file['error']) || $file === null) {
@@ -376,9 +376,10 @@ class BPMediaHostWordpress {
     }
 
     public function exif($file) {
-		if(!function_exists('read_exif_data')) return $file;
+        if (!function_exists('read_exif_data'))
+            return $file;
         $exif = read_exif_data($file['file']);
-        $exif_orient = isset($exif['Orientation'])?$exif['Orientation']:0;
+        $exif_orient = isset($exif['Orientation']) ? $exif['Orientation'] : 0;
         $rotateImage = 0;
 
         if (6 == $exif_orient) {
@@ -543,7 +544,7 @@ class BPMediaHostWordpress {
                         <li class="activity activity_update" id="activity-<?php echo $activity_id; ?>">
                             <div class="activity-content">
                                 <?php do_action('bp_activity_entry_content'); ?>
-                                <?php if (is_user_logged_in()) : ?>
+                                    <?php if (is_user_logged_in()) : ?>
                                     <div class="activity-meta no-ajax">
                                         <?php if (bp_activity_can_comment()) : ?>
                                             <a href="<?php bp_get_activity_comment_link(); ?>" class="button acomment-reply bp-primary-action" id="acomment-comment-<?php bp_activity_id(); ?>"><?php printf(__('Comment <span>%s</span>', BP_MEDIA_TXT_DOMAIN), bp_activity_get_comment_count()); ?></a>
@@ -556,15 +557,15 @@ class BPMediaHostWordpress {
                                             <?php endif; ?>
                                         <?php endif; ?>
                                         <?php do_action('bp_activity_entry_meta'); ?>
-                                        <?php if (bp_activity_user_can_delete()) bp_activity_delete_link(); ?>
+                                    <?php if (bp_activity_user_can_delete()) bp_activity_delete_link(); ?>
                                     </div>
-                                <?php endif; ?>
+                            <?php endif; ?>
                             </div>
                             <?php do_action('bp_before_activity_entry_comments'); ?>
-                            <?php if (( is_user_logged_in() && bp_activity_can_comment() ) || bp_activity_get_comment_count()) : ?>
+                                <?php if (( is_user_logged_in() && bp_activity_can_comment() ) || bp_activity_get_comment_count()) : ?>
                                 <div class="activity-comments">
                                     <?php bp_activity_comments(); ?>
-                                    <?php if (is_user_logged_in()) : ?>
+                    <?php if (is_user_logged_in()) : ?>
                                         <form action="<?php bp_activity_comment_form_action(); ?>" method="post" id="ac-form-<?php bp_activity_id(); ?>" class="ac-form"<?php bp_activity_comment_form_nojs_display(); ?>>
                                             <div class="ac-reply-avatar"><?php bp_loggedin_user_avatar('width=' . BP_AVATAR_THUMB_WIDTH . '&height=' . BP_AVATAR_THUMB_HEIGHT); ?></div>
                                             <div class="ac-reply-content">
@@ -575,12 +576,12 @@ class BPMediaHostWordpress {
                                                 <input type="hidden" name="comment_form_id" value="<?php bp_activity_id(); ?>" />
                                             </div>
                                             <?php do_action('bp_activity_entry_comments'); ?>
-                                            <?php wp_nonce_field('new_activity_comment', '_wpnonce_new_activity_comment'); ?>
+                                        <?php wp_nonce_field('new_activity_comment', '_wpnonce_new_activity_comment'); ?>
                                         </form>
-                                    <?php endif; ?>
+                                <?php endif; ?>
                                 </div>
                             <?php endif; ?>
-                            <?php do_action('bp_after_activity_entry_comments'); ?>
+                <?php do_action('bp_after_activity_entry_comments'); ?>
                         </li>
                     </ul>
                 </div>
@@ -594,11 +595,11 @@ class BPMediaHostWordpress {
                     <li class="activity activity_update" id="activity-<?php echo $activity_id; ?>">
                         <div class="activity-content">
                             <?php do_action('bp_activity_entry_content'); ?>
-                            <?php if (is_user_logged_in()) : ?>
+            <?php if (is_user_logged_in()) : ?>
                                 <div class="activity-meta no-ajax">
                                     <a href="<?php echo $this->get_delete_url(); ?>" class="button item-button bp-secondary-action delete-activity-single confirm" rel="nofollow"><?php _e("Delete", BP_MEDIA_TXT_DOMAIN); ?></a>
                                 </div>
-                            <?php endif; ?>
+            <?php endif; ?>
                         </div>
                     </li>
                 </ul>
@@ -685,7 +686,7 @@ class BPMediaHostWordpress {
                         'max' => TRUE,
                         'user_id' => $current_user,
                         'in' => $activities[0]->id
-                            ));
+                    ));
             foreach ($activities_template->activities as $activity) {
                 if (isset($_POST['bp_media_group_id'])) {
                     $component = $bp->groups->id;
@@ -947,74 +948,74 @@ class BPMediaHostWordpress {
                 $this->edit_url = trailingslashit($pre_url . BP_MEDIA_ALBUMS_SLUG . '/' . BP_MEDIA_ALBUMS_EDIT_SLUG . '/' . $this->id);
                 $this->delete_url = trailingslashit($pre_url . BP_MEDIA_ALBUMS_SLUG . '/' . BP_MEDIA_DELETE_SLUG . '/' . $this->id);
 //                $this->thumbnail_id = get_post_meta($this->id, 'bp_media_thumbnail', true);
-				break;
-			default :
-				return false;
-		}
-		return true;
-	}
+                break;
+            default :
+                return false;
+        }
+        return true;
+    }
 
-	/**
-	 * Checks if the album given exists if not, creates a new one according to context
-	 */
+    /**
+     * Checks if the album given exists if not, creates a new one according to context
+     */
 
-	/**
-	 *
-	 * @global type $wpdb
-	 * @param type $album_id
-	 * @param type $group
-	 * @return type
-	 */
-	function check_and_create_album( $album_id, $group ) {
-		global $wpdb;
-		$post_wall = __( 'Wall Posts', BP_MEDIA_TXT_DOMAIN );
-		$create_new_album_flag = false;
-		if ( $album_id != 0 ) {
-			$album = get_post( $album_id );
-			if ( $album->post_author != get_current_user_id() && $group == 0 ) {
-				$create_new_album_flag = true;
-			} else {
-				$post_id = $album->ID;
-			}
-		} else {
-			$create_new_album_flag = true;
-		}
-		$current_user = wp_get_current_user();
-		if ( $create_new_album_flag ) {
-			if ( $group == 0 ) {
-				$post_id = $wpdb->get_var(
-						"SELECT ID
+    /**
+     *
+     * @global type $wpdb
+     * @param type $album_id
+     * @param type $group
+     * @return type
+     */
+    function check_and_create_album($album_id, $group) {
+        global $wpdb;
+        $post_wall = __('Wall Posts', BP_MEDIA_TXT_DOMAIN);
+        $create_new_album_flag = false;
+        if ($album_id != 0) {
+            $album = get_post($album_id);
+            if ($album->post_author != get_current_user_id() && $group == 0) {
+                $create_new_album_flag = true;
+            } else {
+                $post_id = $album->ID;
+            }
+        } else {
+            $create_new_album_flag = true;
+        }
+        $current_user = wp_get_current_user();
+        if ($create_new_album_flag) {
+            if ($group == 0) {
+                $post_id = $wpdb->get_var(
+                        "SELECT ID
 						FROM $wpdb->posts
 						WHERE
 							post_title = $post_wall
 							AND post_author = '" . get_current_user_id() . "'
 							AND post_type='bp_media_album'"
-				);
-			} else {
-				$post_id = $wpdb->get_var(
-						"SELECT wp_posts.ID
+                );
+            } else {
+                $post_id = $wpdb->get_var(
+                        "SELECT wp_posts.ID
 						FROM $wpdb->posts
 						INNER JOIN $wpdb->postmeta ON $wpdb->posts.ID = $wpdb->postmeta.post_id
 							AND $wpdb->postmeta.meta_key =  'bp-media-key'
 							AND $wpdb->postmeta.meta_value = -$group
-							AND $wpdb->posts.post_title = '$current_user->display_name\'s Album'" );
-			}
-			if ( $post_id == null ) {
-				$album = new BPMediaAlbum();
-				if ( $group == 0 )
-					$album->add_album( $post_wall, get_current_user_id(), $group );
-				else {
-					$album->add_album( $current_user->display_name . '\'s Album', get_current_user_id(), $group );
-				}
-				$post_id = $album->get_id();
-			}
-		}
-		return $post_id;
-	}
+							AND $wpdb->posts.post_title = '$current_user->display_name\'s Album'");
+            }
+            if ($post_id == null) {
+                $album = new BPMediaAlbum();
+                if ($group == 0)
+                    $album->add_album($post_wall, get_current_user_id(), $group);
+                else {
+                    $album->add_album($current_user->display_name . '\'s Album', get_current_user_id(), $group);
+                }
+                $post_id = $album->get_id();
+            }
+        }
+        return $post_id;
+    }
 
-	function get_description() {
-		return $this->description;
-	}
+    function get_description() {
+        return $this->description;
+    }
 
 }
 ?>

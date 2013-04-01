@@ -478,7 +478,7 @@ class BPMediaActions {
                     'multi_selection' => true,
                     'multipart_params' => apply_filters('bp_media_multipart_params_filter', array('action' => 'wp_handle_upload'))
                 );
-                wp_enqueue_script('bp-media-activity-uploader', BP_MEDIA_URL . 'app/assets/js/bp-media-activity-uploader.js', array('plupload', 'plupload-html5', 'plupload-flash', 'plupload-silverlight', 'plupload-html4', 'plupload-handlers'), BP_MEDIA_VERSION);
+                wp_enqueue_script('bp-media-activity-uploader', BP_MEDIA_URL . 'app/assets/js/bp-media-activity-uploader.js', array('plupload', 'plupload-html5', 'plupload-flash', 'plupload-silverlight', 'plupload-html4', 'plupload-handlers'), BP_MEDIA_VERSION, true);
                 wp_localize_script('bp-media-activity-uploader', 'bp_media_uploader_params', $params);
                 wp_localize_script('bp-media-activity-uploader', 'activity_ajax_url', admin_url('admin-ajax.php'));
                 if (bp_is_active('groups') && bp_get_current_group_id())
@@ -503,7 +503,7 @@ class BPMediaActions {
                     'multi_selection' => true,
                     'multipart_params' => apply_filters('bp_media_multipart_params_filter', array('action' => 'wp_handle_upload'))
                 );
-                wp_enqueue_script('bp-media-uploader', BP_MEDIA_URL . 'app/assets/js/bp-media-uploader.js', array('plupload', 'plupload-html5', 'plupload-flash', 'plupload-silverlight', 'plupload-html4', 'plupload-handlers'), BP_MEDIA_VERSION);
+                wp_enqueue_script('bp-media-uploader', BP_MEDIA_URL . 'app/assets/js/bp-media-uploader.js', array('plupload', 'plupload-html5', 'plupload-flash', 'plupload-silverlight', 'plupload-html4', 'plupload-handlers'), BP_MEDIA_VERSION, true);
                 wp_localize_script('bp-media-uploader', 'bp_media_uploader_params', $params);
             }
         }

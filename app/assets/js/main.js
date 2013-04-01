@@ -6,8 +6,11 @@ function bp_media_create_element(id){
     return false;
 }
 var $current;
-jQuery(document).ready(function(){
 
+//window.onbeforeunload= function() { return "Custom message here"; };
+
+jQuery(document).ready(function(){
+    
     jQuery('ul#activity-stream').on('mediapreview','video,audio', function(){
         jQuery(this).mediaelementplayer({
             enableKeyboard: false,
