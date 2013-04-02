@@ -97,12 +97,7 @@ class BPMediaFunction {
      * @return type
      */
     function conditional_override_allowed_tags($content, $activity = null) {
-        global $bp_media;
-
-        if ($activity != null && in_array($activity->type, $bp_media->activity_types)) {
-            add_filter('bp_activity_allowed_tags', 'BPMediaFunction::override_allowed_tags', 1);
-        }
-
+        add_filter('bp_activity_allowed_tags', 'BPMediaFunction::override_allowed_tags', 1);
         return $content;
     }
 
