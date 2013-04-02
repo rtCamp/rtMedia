@@ -64,9 +64,8 @@ class BPMediaAlbumimporter extends BPMediaImporter {
             if (!$total) {
                 echo '<p><strong>' . __('You have nothing to import') . '</strong></p>';
             } elseif ($this->active != 1) {
-                echo '<p class="warning">';
-                _e('This process is irreversible. Please take a backup of your database and files, before proceeding.', BP_MEDIA_TXT_DOMAIN);
-                echo '</p>';
+                echo '<div id="setting-error-bp-album-importer" class="error settings-error below-h2">
+<p><strong>' . __('This process is irreversible. Please take a backup of your database and files, before proceeding.', BP_MEDIA_TXT_DOMAIN) . '</strong></p></div>';
                 echo '<strong>';
                 echo '<span class="finished">' . $finished . '</span> / <span class="total">' . $total . '</span>';
                 echo '</strong>';
@@ -95,9 +94,8 @@ class BPMediaAlbumimporter extends BPMediaImporter {
             echo '<p class="info">';
             _e('All media from BP Album has been imported. However, there are a lot of extra files and a database table eating up your resources. Would you like to delete them now?', BP_MEDIA_TXT_DOMAIN);
             echo '</p>';
-            echo '<p class="warning">';
-            _e('This process is irreversible. Please take a backup of your database and files, before proceeding', BP_MEDIA_TXT_DOMAIN);
-            echo '</p>';
+            echo '<div id="setting-error-bp-album-importer" class="error settings-error below-h2"> 
+<p><strong>' . __('This process is irreversible. Please take a backup of your database and files, before proceeding.', BP_MEDIA_TXT_DOMAIN) . '</strong></p></div>';
             echo '<button id="bpmedia-bpalbumimport-cleanup" class="button button-primary">';
             _e('Clean Up', BP_MEDIA_TXT_DOMAIN);
             echo '</button>';
@@ -123,6 +121,8 @@ class BPMediaAlbumimporter extends BPMediaImporter {
         } else {
             $album_id = $result[0]->ID;
         }
+        $wpdb->update($wpdb->prefix . 'bp_activity', array('secondary_item_id' => -999), array('id' => get_post_meta($album_id, 'bp_media_child_activity', true)));
+
         return $album_id;
     }
 
@@ -172,7 +172,7 @@ class BPMediaAlbumimporter extends BPMediaImporter {
                             $album_id, $bp_album_item->title, $bp_album_item->description, $bp_album_item->pic_org_path, $bp_album_item->privacy, $bp_album_item->owner_id
             );
             $wpdb->update($table, array('import_status' => $imported_media_id), array('id' => $bp_album_item->id), array('%d'), array('%d'));
-            BPMediaAlbumimporter::update_recorded_time($imported_media_id, $bp_album_item->id, "{$wpdb->base_prefix}bp_album");
+            BPMediaAlbumimporter::update_recorded_time_and_comments($imported_media_id, $bp_album_item->id, "{$wpdb->base_prefix}bp_album");
         }
 
         echo $page;
@@ -187,7 +187,7 @@ class BPMediaAlbumimporter extends BPMediaImporter {
         die();
     }
 
-    static function update_recorded_time($media, $bp_album_id, $table) {
+    static function update_recorded_time_and_comments($media, $bp_album_id, $table) {
         global $wpdb;
         if (function_exists('bp_activity_add')) {
             if (!is_object($media)) {
@@ -201,10 +201,14 @@ class BPMediaAlbumimporter extends BPMediaImporter {
 
             if ($activity_id) {
                 $date_uploaded = $wpdb->get_var("SELECT date_uploaded from $table WHERE id = $bp_album_id");
-                $old_activity_id = $wpdb->get_var("SELECT id from {$wpdb->prefix}bp_activity WHERE item_id = $bp_album_id");
-                $comments = $wpdb->get_results("SELECT id from {$wpdb->prefix}bp_activity WHERE item_id = $old_activity_id");
-                foreach($comments as $comment) {
-                    $wpdb->update($wpdb->prefix . 'bp_activity', array('item_id' => $activity_id, 'secondary_item_id' => $activity_id), array('id' => $comment->id));
+                $old_activity_id = $wpdb->get_var("SELECT id from {$wpdb->prefix}bp_activity WHERE component = 'album' AND type = 'bp_album_picture' AND item_id = $bp_album_id");
+                $comments = $wpdb->get_results("SELECT id,secondary_item_id from {$wpdb->prefix}bp_activity WHERE component = 'activity' AND type = 'activity_comment' AND item_id = $old_activity_id");
+                foreach ($comments as $comment) {
+                    $update = array('item_id' => $activity_id);
+                    if ($comment->secondary_item_id == $old_activity_id) {
+                        $update['secondary_item_id'] = $activity_id;
+                    }
+                    $wpdb->update($wpdb->prefix . 'bp_activity', $update, array('id' => $comment->id));
                 }
                 $wpdb->update($wpdb->prefix . 'bp_activity', array('date_recorded' => $date_uploaded), array('id' => $activity_id));
             }
