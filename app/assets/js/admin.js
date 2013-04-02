@@ -166,7 +166,7 @@ jQuery(document).ready(function(){
 		jQuery.post(ajaxurl, {
                         action: 'bp_media_bp_album_cleanup'
                     }, function(response){
-						window.location = settings_url;
+						window.location = settings_bp_album_import_url;
 					});
 
 	});
