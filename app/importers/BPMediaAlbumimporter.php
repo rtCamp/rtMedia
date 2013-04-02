@@ -209,6 +209,7 @@ class BPMediaAlbumimporter extends BPMediaImporter {
                         $update['secondary_item_id'] = $activity_id;
                     }
                     $wpdb->update($wpdb->prefix . 'bp_activity', $update, array('id' => $comment->id));
+                    BP_Activity_Activity::rebuild_activity_comment_tree($activity_id);
                 }
                 $wpdb->update($wpdb->prefix . 'bp_activity', array('date_recorded' => $date_uploaded), array('id' => $activity_id));
             }
