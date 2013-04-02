@@ -6,7 +6,7 @@ License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires at least: WordPress 3.5 + BuddyPress 1.6
 Tested up to: WordPress 3.5 + BuddyPress 1.6
-Stable tag: 2.7.5
+Stable tag: 2.8
 
 Adds Photos, Music, Videos & Albums to BuddyPress. Supports mobile devices (iPhone/iPad, etc) and automatic audio/video conversion.
 
@@ -121,6 +121,13 @@ Please visit [BuddyPress Media's Features page](http://rtcamp.com/buddypress-med
 == Changelog ==
 
 Please visit [BuddyPress Media's Roadmap page](http://rtcamp.com/buddypress-media/roadmap/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "Visit BuddyPress Media's Features page") to get some details about future releases.
+
+= 2.8 =
+* Adds Importer for BP Album with comments
+* Activity Uploader rewritten
+* Fixes errors due to absence of EXIF
+* More bug fixes
+* Fixes a few js and css issues
 
 = 2.7.5 =
 * Fixes image rotation for PHP < 5.3 that caused upload failure
