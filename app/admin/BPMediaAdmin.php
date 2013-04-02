@@ -61,7 +61,7 @@ if (!class_exists('BPMediaAdmin')) {
                     ) . '#privacy_enabled');
 			wp_localize_script('bp-media-admin', 'settings_bp_album_import_url', add_query_arg(
                             array('page' => 'bp-media-settings'), (is_multisite() ? network_admin_url('admin.php') : admin_url('admin.php'))
-                    ) . '#privacy_enabled');
+                    ));
             wp_enqueue_style('bp-media-admin', BP_MEDIA_URL . 'app/assets/css/main.css', '', BP_MEDIA_VERSION);
         }
 
