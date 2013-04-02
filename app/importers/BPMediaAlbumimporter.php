@@ -40,18 +40,6 @@ class BPMediaAlbumimporter extends BPMediaImporter {
         );
     }
 
-    function tab($tabs, $tab) {
-        $idle_class = 'nav-tab';
-        $active_class = 'nav-tab nav-tab-active';
-        $tabs[] = array(
-            'href' => bp_get_admin_url(add_query_arg(array('page' => 'bp-media-bp-album-importer'), 'admin.php')),
-            'title' => __('Import BP-Album', BP_MEDIA_TXT_DOMAIN),
-            'name' => __('Import BP-Album', BP_MEDIA_TXT_DOMAIN),
-            'class' => ($tab == 'bp-media-bp-album-importer') ? $active_class : $idle_class
-        );
-        return $tabs;
-    }
-
     function ui() {
         $this->progress = new rtProgress();
         $total = $this->get_total_count();
@@ -103,7 +91,7 @@ class BPMediaAlbumimporter extends BPMediaImporter {
         echo '</div>';
     }
 
-    function create_album($author_id, $album_name = 'BP Album') {
+    function create_album($author_id, $album_name = 'Imported Media') {
         global $bp_media, $wpdb;
 
         if (array_key_exists('bp_album_import_name', $bp_media->options)) {
@@ -121,7 +109,7 @@ class BPMediaAlbumimporter extends BPMediaImporter {
         } else {
             $album_id = $result[0]->ID;
         }
-        $wpdb->update($wpdb->prefix . 'bp_activity', array('secondary_item_id' => -999), array('id' => get_post_meta($album_id, 'bp_media_child_activity', true)));
+        $wpdb->update($wpdb->base_prefix . 'bp_activity', array('secondary_item_id' => -999), array('id' => get_post_meta($album_id, 'bp_media_child_activity', true)));
 
         return $album_id;
     }
@@ -167,7 +155,7 @@ class BPMediaAlbumimporter extends BPMediaImporter {
                 $base_path = pathinfo($bp_album_item->pic_org_path);
                 update_site_option('bp_media_bp_album_importer_base_path', $base_path['dirname']);
             }
-            $album_id = BPMediaAlbumimporter::create_album($bp_album_item->owner_id, 'BP Album');
+            $album_id = BPMediaAlbumimporter::create_album($bp_album_item->owner_id, 'Imported Media');
             $imported_media_id = BPMediaImporter::add_media(
                             $album_id, $bp_album_item->title, $bp_album_item->description, $bp_album_item->pic_org_path, $bp_album_item->privacy, $bp_album_item->owner_id
             );
@@ -201,17 +189,17 @@ class BPMediaAlbumimporter extends BPMediaImporter {
 
             if ($activity_id) {
                 $date_uploaded = $wpdb->get_var("SELECT date_uploaded from $table WHERE id = $bp_album_id");
-                $old_activity_id = $wpdb->get_var("SELECT id from {$wpdb->prefix}bp_activity WHERE component = 'album' AND type = 'bp_album_picture' AND item_id = $bp_album_id");
-                $comments = $wpdb->get_results("SELECT id,secondary_item_id from {$wpdb->prefix}bp_activity WHERE component = 'activity' AND type = 'activity_comment' AND item_id = $old_activity_id");
+                $old_activity_id = $wpdb->get_var("SELECT id from {$wpdb->base_prefix}bp_activity WHERE component = 'album' AND type = 'bp_album_picture' AND item_id = $bp_album_id");
+                $comments = $wpdb->get_results("SELECT id,secondary_item_id from {$wpdb->base_prefix}bp_activity WHERE component = 'activity' AND type = 'activity_comment' AND item_id = $old_activity_id");
                 foreach ($comments as $comment) {
                     $update = array('item_id' => $activity_id);
                     if ($comment->secondary_item_id == $old_activity_id) {
                         $update['secondary_item_id'] = $activity_id;
                     }
-                    $wpdb->update($wpdb->prefix . 'bp_activity', $update, array('id' => $comment->id));
+                    $wpdb->update($wpdb->base_prefix . 'bp_activity', $update, array('id' => $comment->id));
                     BP_Activity_Activity::rebuild_activity_comment_tree($activity_id);
                 }
-                $wpdb->update($wpdb->prefix . 'bp_activity', array('date_recorded' => $date_uploaded), array('id' => $activity_id));
+                $wpdb->update($wpdb->base_prefix . 'bp_activity', array('date_recorded' => $date_uploaded), array('id' => $activity_id));
             }
         }
     }
