@@ -157,7 +157,7 @@ class BPMediaAlbumimporter extends BPMediaImporter {
             }
             $album_id = BPMediaAlbumimporter::create_album($bp_album_item->owner_id, 'Imported Media');
             $imported_media_id = BPMediaImporter::add_media(
-                            $album_id, $bp_album_item->title, $bp_album_item->description, $bp_album_item->pic_org_path, $bp_album_item->privacy, $bp_album_item->owner_id
+                            $album_id, $bp_album_item->title, $bp_album_item->description, $bp_album_item->pic_org_path, $bp_album_item->privacy, $bp_album_item->owner_id, 'Imported Media'
             );
             $wpdb->update($table, array('import_status' => $imported_media_id), array('id' => $bp_album_item->id), array('%d'), array('%d'));
             BPMediaAlbumimporter::update_recorded_time_and_comments($imported_media_id, $bp_album_item->id, "{$wpdb->base_prefix}bp_album");
