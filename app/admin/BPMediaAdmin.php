@@ -28,7 +28,7 @@ if (!class_exists('BPMediaAdmin')) {
             add_action('wp_ajax_bp_media_fetch_feed', array($bp_media_feed, 'fetch_feed'), 1);
             add_action('wp_ajax_bp_media_linkback', array($this, 'linkback'), 1);
             add_action('wp_ajax_bp_media_bp_album_import', 'BPMediaAlbumimporter::bpmedia_ajax_import_callback', 1);
-			add_action('wp_ajax_bp_media_bp_album_cleanup', 'BPMediaAlbumimporter::cleanup_after_install');
+            add_action('wp_ajax_bp_media_bp_album_cleanup', 'BPMediaAlbumimporter::cleanup_after_install');
             add_action('wp_ajax_bp_media_convert_videos_form', array($this, 'convert_videos_mailchimp_send'), 1);
             add_filter('plugin_row_meta', array($this, 'plugin_meta_premium_addon_link'), 1, 4);
             if (is_admin()) {
@@ -59,7 +59,7 @@ if (!class_exists('BPMediaAdmin')) {
             wp_localize_script('bp-media-admin', 'settings_url', add_query_arg(
                             array('page' => 'bp-media-settings'), (is_multisite() ? network_admin_url('admin.php') : admin_url('admin.php'))
                     ) . '#privacy_enabled');
-			wp_localize_script('bp-media-admin', 'settings_bp_album_import_url', add_query_arg(
+            wp_localize_script('bp-media-admin', 'settings_bp_album_import_url', add_query_arg(
                             array('page' => 'bp-media-settings'), (is_multisite() ? network_admin_url('admin.php') : admin_url('admin.php'))
                     ));
             wp_enqueue_style('bp-media-admin', BP_MEDIA_URL . 'app/assets/css/main.css', '', BP_MEDIA_VERSION);
@@ -79,8 +79,8 @@ if (!class_exists('BPMediaAdmin')) {
             }
             $bp_album_active = BPMediaImporter::_active('bp-album/loader.php');
             $table = "{$wpdb->base_prefix}bp_album";
-            if (BPMediaImporter::table_exists($table) && $bp_album_active!=-1) {
-                add_submenu_page('bp-media-settings', __('BP Album Import', BP_MEDIA_TXT_DOMAIN), __('BP Album Importer', BP_MEDIA_TXT_DOMAIN), 'manage_options', 'bp-media-bp-album-importer', array($this, 'bp_album_importer_page'));
+            if (BPMediaImporter::table_exists($table) && $bp_album_active != -1) {
+                add_submenu_page('bp-media-settings', __('Importer', BP_MEDIA_TXT_DOMAIN), __('Importer', BP_MEDIA_TXT_DOMAIN), 'manage_options', 'bp-media-importer', array($this, 'bp_importer_page'));
             }
             add_submenu_page('bp-media-settings', __('BuddyPress Media Addons', BP_MEDIA_TXT_DOMAIN), __('Addons', BP_MEDIA_TXT_DOMAIN), 'manage_options', 'bp-media-addons', array($this, 'addons_page'));
             add_submenu_page('bp-media-settings', __('BuddyPress Media Support', BP_MEDIA_TXT_DOMAIN), __('Support ', BP_MEDIA_TXT_DOMAIN), 'manage_options', 'bp-media-support', array($this, 'support_page'));
@@ -100,8 +100,8 @@ if (!class_exists('BPMediaAdmin')) {
             $this->render_page('bp-media-privacy');
         }
 
-        public function bp_album_importer_page() {
-            $this->render_page('bp-media-bp-album-importer');
+        public function bp_importer_page() {
+            $this->render_page('bp-media-importer');
         }
 
         public function convert_videos_page() {
@@ -251,6 +251,18 @@ if (!class_exists('BPMediaAdmin')) {
                     'title' => __('BuddyPress Media Covert Videos', BP_MEDIA_TXT_DOMAIN),
                     'name' => __('Convert Videos', BP_MEDIA_TXT_DOMAIN),
                     'class' => ($tab == 'bp-media-convert-videos') ? $active_class : $idle_class . ' last_tab'
+                );
+            }
+            
+            global $wpdb;
+            $bp_album_active = BPMediaImporter::_active('bp-album/loader.php');
+            $table = "{$wpdb->base_prefix}bp_album";
+            if (BPMediaImporter::table_exists($table) && $bp_album_active!=-1) {
+                $tabs[] = array(
+                    'href' => bp_get_admin_url(add_query_arg(array('page' => 'bp-media-importer'), 'admin.php')),
+                    'title' => __('Importer', BP_MEDIA_TXT_DOMAIN),
+                    'name' => __('Importer', BP_MEDIA_TXT_DOMAIN),
+                    'class' => ($tab == 'bp-media-importer') ? $active_class : $idle_class
                 );
             }
 
