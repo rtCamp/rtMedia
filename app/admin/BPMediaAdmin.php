@@ -27,8 +27,8 @@ if (!class_exists('BPMediaAdmin')) {
             add_action('wp_ajax_bp_media_submit_request', array($this->bp_media_support, 'submit_request'), 1);
             add_action('wp_ajax_bp_media_fetch_feed', array($bp_media_feed, 'fetch_feed'), 1);
             add_action('wp_ajax_bp_media_linkback', array($this, 'linkback'), 1);
-            add_action('wp_ajax_bp_media_bp_album_import', 'BPMediaAlbumimporter::bpmedia_ajax_import_callback', 1);
-			add_action('wp_ajax_bp_media_bp_album_cleanup', 'BPMediaAlbumimporter::cleanup_after_install');
+//            add_action('wp_ajax_bp_media_bp_album_import', 'BPMediaAlbumimporter::bpmedia_ajax_import_callback', 1);
+//			add_action('wp_ajax_bp_media_bp_album_cleanup', 'BPMediaAlbumimporter::cleanup_after_install');
             add_action('wp_ajax_bp_media_convert_videos_form', array($this, 'convert_videos_mailchimp_send'), 1);
             add_filter('plugin_row_meta', array($this, 'plugin_meta_premium_addon_link'), 1, 4);
             if (is_admin()) {

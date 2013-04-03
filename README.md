@@ -122,6 +122,12 @@ Please visit [BuddyPress Media's Features page](http://rtcamp.com/buddypress-med
 
 Please visit [BuddyPress Media's Roadmap page](http://rtcamp.com/buddypress-media/roadmap/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "Visit BuddyPress Media's Features page") to get some details about future releases.
 
+#### 2.7.6 ####
+* Fixes errors due to absence of EXIF
+* Fixes duplicate comment box on lightbox
+* Fixes multimedia display on single media view
+* Rewrites activity uploader to fix a lot of issues with themes
+
 #### 2.7.5 ####
 * Fixes image rotation for PHP < 5.3 that caused upload failure
 
@@ -341,4 +347,4 @@ Please visit [BuddyPress Media's Roadmap page](http://rtcamp.com/buddypress-medi
 * HTML5 Audio Tag Support (with fallback)
 * HTML5 Video Tag Support (with fallback)
 
-Bug fix for PHP < 5.3 fixes image uploads
+Fixes bugs and improves activity uploader
