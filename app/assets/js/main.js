@@ -339,7 +339,7 @@ jQuery(document).ready(function(){
 
                 var a_id = ids[2]
                 var c_id = target.attr('href').substr( 10, target.attr('href').length );
-                var form = jQuery( '#ac-form-' + a_id );
+                var form = jQuery( '.bp-media-ajax-single #ac-form-' + a_id );
 
                 form.css( 'display', 'none' );
                 form.removeClass('root');
