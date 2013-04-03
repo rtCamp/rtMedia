@@ -111,6 +111,10 @@ class BPMediaHostWordpress {
      * @uses global var $_FILES
      */
     function add_media($name, $description, $album_id = 0, $group = 0, $is_multiple = false, $is_activity = false, $files = false, $author_id = false, $album_name = false) {
+        echo $this->insert_media($name, $description, $album_id = 0, $group = 0, $is_multiple, $is_activity, $files, $author_id, $album_name);
+    }
+    
+    function insert_media($name, $description, $album_id = 0, $group = 0, $is_multiple = false, $is_activity = false, $files = false, $author_id = false, $album_name = false){
         do_action('bp_media_before_add_media');
 
         global $bp, $wpdb, $bp_media;
@@ -220,7 +224,7 @@ class BPMediaHostWordpress {
                 $activity_content = false;
                 throw new Exception(__('Media File you have tried to upload is not supported. Supported media files are .jpg, .png, .gif, .mp3, .mov and .mp4.', BP_MEDIA_TXT_DOMAIN));
         }
-        echo $attachment_id = wp_insert_attachment($attachment, $file, $post_id);
+        $attachment_id = wp_insert_attachment($attachment, $file, $post_id);
         if (!is_wp_error($attachment_id)) {
             wp_update_attachment_metadata($attachment_id, wp_generate_attachment_metadata($attachment_id, $file));
         } else {
@@ -358,13 +362,13 @@ class BPMediaHostWordpress {
             case 'video' :
                 if ($this->thumbnail_id) {
                     $image_array = image_downsize($this->thumbnail_id, 'bp_media_single_image');
-                    $content.=apply_filters('bp_media_single_content_filter', '<video poster="' . $image_array[0] . '" src="' . wp_get_attachment_url($this->id) . '" width="' . $default_sizes['single_video']['width'] . '" height="' . ($default_sizes['single_video']['height'] == 0 ? 'auto' : $default_sizes['single_video']['height']) . '" type="video/mp4" id="bp_media_video_' . $this->id . '" controls="controls" preload="none"></video><script>bp_media_create_element("bp_media_video_' . $this->id . '");</script>', $this);
+                    $content.=apply_filters('bp_media_single_content_filter', '<video poster="' . $image_array[0] . '" src="' . wp_get_attachment_url($this->id) . '" width="' . $default_sizes['single_video']['width'] . '" height="' . ($default_sizes['single_video']['height'] == 0 ? 'auto' : $default_sizes['single_video']['height']) . '" type="video/mp4" id="bp_media_video_' . $this->id . '" controls="controls" preload="none"></video>', $this);
                 } else {
-                    $content.=apply_filters('bp_media_single_content_filter', '<video src="' . wp_get_attachment_url($this->id) . '" width="' . $default_sizes['single_video']['width'] . '" height="' . ($default_sizes['single_video']['height'] == 0 ? 'auto' : $default_sizes['single_video']['height']) . '" type="video/mp4" id="bp_media_video_' . $this->id . '" controls="controls" preload="none"></video><script>bp_media_create_element("bp_media_video_' . $this->id . '");</script>', $this);
+                    $content.=apply_filters('bp_media_single_content_filter', '<video src="' . wp_get_attachment_url($this->id) . '" width="' . $default_sizes['single_video']['width'] . '" height="' . ($default_sizes['single_video']['height'] == 0 ? 'auto' : $default_sizes['single_video']['height']) . '" type="video/mp4" id="bp_media_video_' . $this->id . '" controls="controls" preload="none"></video>', $this);
                 }
                 break;
             case 'audio' :
-                $content.=apply_filters('bp_media_single_content_filter', '<audio src="' . wp_get_attachment_url($this->id) . '" width="' . $default_sizes['single_audio']['width'] . '" type="audio/mp3" id="bp_media_audio_' . $this->id . '" controls="controls" preload="none" ></audio><script>bp_media_create_element("bp_media_audio_' . $this->id . '");</script>', $this);
+                $content.=apply_filters('bp_media_single_content_filter', '<audio src="' . wp_get_attachment_url($this->id) . '" width="' . $default_sizes['single_audio']['width'] . '" type="audio/mp3" id="bp_media_audio_' . $this->id . '" controls="controls" preload="none" ></audio>', $this);
                 break;
             case 'image' :
                 $image_array = image_downsize($this->id, 'bp_media_single_image');
