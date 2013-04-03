@@ -19,10 +19,14 @@ class BPMediaImporter {
     var $import_steps;
 
     function __construct() {
-        
+
     }
 
     function table_exists($table) {
+
+		//for 2.7.6 please remove for 2.8
+		return false;
+
         global $wpdb;
 
         if ($wpdb->query("SHOW TABLES LIKE '" . $table . "'") == 1) {
@@ -33,6 +37,10 @@ class BPMediaImporter {
     }
 
     static function _active($path) {
+
+		//for 2.7.6 please remove for 2.8
+		return -1;
+
         if (!function_exists('is_plugin_inactive')) {
             require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
         }
