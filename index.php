@@ -6,6 +6,7 @@
   Version: 2.7.6
   Author: rtCamp
   Text Domain: buddypress-media
+  Domain Path: /languages/
   Author URI: http://rtcamp.com/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media
  */
 

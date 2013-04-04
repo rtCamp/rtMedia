@@ -100,7 +100,7 @@ if ( ! class_exists( 'BPMediaActivity' ) ) {
 				}
 			}
 
-			$newcontent .= ' <a href="' . bp_get_root_domain() . '/' . bp_get_activity_root_slug() . '/p/' . $update_id . '/"> ' . __( 'View', 'buddypress' ) . '</a>';
+			$newcontent .= ' <a href="' . bp_get_root_domain() . '/' . bp_get_activity_root_slug() . '/p/' . $update_id . '/"> ' . __( 'View', BP_MEDIA_TXT_DOMAIN ) . '</a>';
 			if ( isset( $_GET[ 'content' ] ) ) {
 				echo $newcontent;
 				die;
@@ -158,7 +158,7 @@ if ( ! class_exists( 'BPMediaActivity' ) ) {
 					$activity_id = groups_record_activity( array(
 						'id' => $activity_id,
 						'user_id' => $user_id,
-						'action' => sprintf( __( '%1$s posted an update in the group %2$s', 'buddypress' ), bp_core_get_userlink( $user_id ), '<a href="' . bp_get_group_permalink( $bp->groups->current_group ) . '">' . esc_attr( $bp->groups->current_group->name ) . '</a>' ),
+						'action' => sprintf( __( '%1$s posted an update in the group %2$s', BP_MEDIA_TXT_DOMAIN ), bp_core_get_userlink( $user_id ), '<a href="' . bp_get_group_permalink( $bp->groups->current_group ) . '">' . esc_attr( $bp->groups->current_group->name ) . '</a>' ),
 						'content' => $this->override_update( $this->content ),
 						'type' => 'activity_update',
 						'item_id' => $group_id

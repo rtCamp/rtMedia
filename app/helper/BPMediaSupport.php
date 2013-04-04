@@ -140,8 +140,8 @@ if (!class_exists('BPMediaSupport')) {
                     </ul>
                 </div><!-- .submit-bug-box --><?php } ?>
 
-            <?php submit_button('Submit', 'primary', 'submit-request', false); ?>
-            <?php submit_button('Cancel', 'secondary', 'cancel-request', false); ?>
+            <?php submit_button( __( 'Submit', BP_MEDIA_TXT_DOMAIN ), 'primary', 'submit-request', false); ?>
+            <?php submit_button( __( 'Cancel', BP_MEDIA_TXT_DOMAIN ), 'secondary', 'cancel-request', false); ?>
 
             <?php
             if (DOING_AJAX) {

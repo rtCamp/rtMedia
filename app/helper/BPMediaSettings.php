@@ -170,26 +170,26 @@ if (!class_exists('BPMediaSettings')) {
             get_currentuserinfo();
             ?>
             <div id="video-transcoding-main-container">
-                <h2>Survey</h2>
-                <p class="para-blockquote">We are planning an encoding service where you can convert videos without having to install/configure anything on your server.</p>
-                <h3>Would you be interested?</h3>
-                <label><input class="interested" name="interested" type="radio" value="Yes" required="required" /> Yes</label>&nbsp;&nbsp;&nbsp;
-                <label><input class="not-interested" name="interested" type="radio" value="No" required="required" /> No</label>
+                <h2><?php _e( 'Survey', BP_MEDIA_TXT_DOMAIN ); ?></h2>
+                <p class="para-blockquote"><?php _e( 'We are planning an encoding service where you can convert videos without having to install/configure anything on your server.', BP_MEDIA_TXT_DOMAIN ); ?></p>
+                <h3><?php _e( 'Would you be interested?', BP_MEDIA_TXT_DOMAIN ); ?></h3>
+                <label><input class="interested" name="interested" type="radio" value="Yes" required="required" /> <?php _e( 'Yes', BP_MEDIA_TXT_DOMAIN ); ?></label>&nbsp;&nbsp;&nbsp;
+                <label><input class="not-interested" name="interested" type="radio" value="No" required="required" /> <?php _e( 'No', BP_MEDIA_TXT_DOMAIN ); ?></label>
                 <div class="interested-container hidden">
-                    <p class="para-blockquote">Glad to see your interest.<br />
-                        Please provide a little more information to help us plan this service better.</p>
-                    <label><h3>Email</h3> <input class="email" type="email" name="email" size="35" value="<?php echo $current_user->user_email; ?>" placeholder="Email" /></label>
+                    <p class="para-blockquote"><?php _e( 'Glad to see your interest.', BP_MEDIA_TXT_DOMAIN ); ?><br />
+                        <?php _e( 'Please provide a little more information to help us plan this service better.', BP_MEDIA_TXT_DOMAIN ); ?></p>
+                    <label><h3><?php _e( 'Email', BP_MEDIA_TXT_DOMAIN ); ?></h3> <input class="email" type="email" name="email" size="35" value="<?php echo $current_user->user_email; ?>" placeholder="<?php echo _x( 'Email', 'placeholder string', BP_MEDIA_TXT_DOMAIN ); ?>" /></label>
 
                     <h3>How would you use this feature?</h3>
                     <ul>
-                        <li><label><input class="choice-free" type="radio" name="choice" value="Free" /> Free-only. I will use free-encoding quota only.</label></li>
-                        <li><label><input type="radio" name="choice" value="$9" /> I am ready to pay $9 per month for generous encoding quota.</label></li>
-                        <li><label><input type="radio" name="choice" value="$99" /> I am ready to pay $99 per month for unlimited video encoding!</label></li>
+                        <li><label><input class="choice-free" type="radio" name="choice" value="Free" /> <?php _e( 'Free-only. I will use free-encoding quota only.', BP_MEDIA_TXT_DOMAIN ); ?></label></li>
+                        <li><label><input type="radio" name="choice" value="$9" /> <?php _e( 'I am ready to pay $9 per month for generous encoding quota.', BP_MEDIA_TXT_DOMAIN ); ?></label></li>
+                        <li><label><input type="radio" name="choice" value="$99" /> <?php _e( 'I am ready to pay $99 per month for unlimited video encoding!', BP_MEDIA_TXT_DOMAIN ); ?></label></li>
                 </div>
                 <input class="url" type="hidden" name="url" value="<?php echo home_url(); ?>" />
                 <br />
                 <br />
-                <input class="button button-primary video-transcoding-survey" type="submit" value="Submit" />
+                <input class="button button-primary video-transcoding-survey" type="submit" value="<?php _e( 'Submit', BP_MEDIA_TXT_DOMAIN ); ?>" />
             </div><?php
         }
 
@@ -305,7 +305,7 @@ if (!class_exists('BPMediaSettings')) {
             $args = wp_parse_args($args, $defaults);
             extract($args);
             if (empty($option)) {
-                trigger_error(__('Please provide "option" value ( required ) in the argument. Pass argument to add_settings_field in the following format array( \'option\' => \'option_name\' ) ', BP_MEDIA_TXT_DOMAIN));
+                trigger_error( sprintf( __( 'Please provide %s value (required) in the argument. Pass argument to %s in the following format %s ', BP_MEDIA_TXT_DOMAIN ), '<code>"option"</code>', '<code>add_settings_field</code>', '<code>array( \'option\' => \'option_name\' )</code>' ) );
                 return;
             }
 
