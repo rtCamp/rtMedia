@@ -111,7 +111,7 @@ class BPMediaHostWordpress {
      * @uses global var $_FILES
      */
     function add_media($name, $description, $album_id = 0, $group = 0, $is_multiple = false, $is_activity = false, $files = false, $author_id = false, $album_name = false) {
-        echo $this->insert_media($name, $description, $album_id = 0, $group = 0, $is_multiple, $is_activity, $files, $author_id, $album_name);
+        echo $this->insert_media($name, $description, $album_id, $group, $is_multiple, $is_activity, $files, $author_id, $album_name);
     }
     
     function insert_media($name, $description, $album_id = 0, $group = 0, $is_multiple = false, $is_activity = false, $files = false, $author_id = false, $album_name = false){

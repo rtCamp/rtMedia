@@ -42,24 +42,25 @@ class BPMediaAlbumimporter extends BPMediaImporter {
         $this->progress = new rtProgress();
         $total = BPMediaAlbumimporter::get_total_count();
         $remaining_comments = $this->get_remaining_comments();
-        $finished = BPMediaAlbumimporter::get_completed_count();
+        $finished = BPMediaAlbumimporter::get_completed_media($total);
+        $finished_users = BPMediaAlbumimporter::get_completed_users();
         $finished_comments = $this->get_finished_comments();
         $total_comments = (int) $finished_comments + (int) $remaining_comments;
 
         //(isset($total) && isset($finished) && is_array($total) && is_array($finished)){
         echo '<div id="bpmedia-bpalbumimporter">';
         if ($finished[0]->media != $total[0]->media) {
-            if (!$total) {
+            if (!$total[0]->media) {
                 echo '<p><strong>' . __('You have nothing to import') . '</strong></p>';
             } elseif (BPMediaAlbumimporter::_active('bp-album/loader.php') != 1) {
                 echo '<div id="setting-error-bp-album-importer" class="error settings-error below-h2">
 <p><strong>' . __('This process is irreversible. Please take a backup of your database and files, before proceeding.', BP_MEDIA_TXT_DOMAIN) . '</strong></p></div>';
                 echo '<div class="bp-album-users">';
                 echo '<strong>';
-                echo __('Users', BP_MEDIA_TXT_DOMAIN) . ': <span class="finished">' . $finished[0]->users . '</span> / <span class="total">' . $total[0]->users . '</span>';
+                echo __('Users', BP_MEDIA_TXT_DOMAIN) . ': <span class="finished">' . $finished_users[0]->users . '</span> / <span class="total">' . $total[0]->users . '</span>';
                 echo '</strong>';
                 if ($total[0]->users != 0) {
-                    $users_progress = $this->progress->progress($finished[0]->users, $total[0]->users);
+                    $users_progress = $this->progress->progress($finished_users[0]->users, $total[0]->users);
                     $this->progress->progress_ui($users_progress);
                 }
                 echo '</div>';
@@ -71,10 +72,8 @@ class BPMediaAlbumimporter extends BPMediaImporter {
                 $progress = 100;
                 if ($total[0]->media != 0) {
                     $todo = $total[0]->media - $finished[0]->media;
-//                    $steps = ceil($todo / 20);
-//                    $laststep = $todo % 20;
-                    $steps = ceil($todo / 1);
-                    $laststep = $todo % 1;
+                    $steps = ceil($todo / 5);
+                    $laststep = $todo % 5;
                     $progress = $this->progress->progress($finished[0]->media, $total[0]->media);
                     echo '<input type="hidden" value="' . $finished[0]->media . '" name="finished"/>';
                     echo '<input type="hidden" value="' . $total[0]->media . '" name="total"/>';
@@ -85,16 +84,20 @@ class BPMediaAlbumimporter extends BPMediaImporter {
                 }
                 echo '</div>';
                 echo "<br>";
-                echo '<div class="bp-album-comments">';
-                echo '<strong>';
-                echo __('Comments', BP_MEDIA_TXT_DOMAIN) . ': <span class="finished">' . $finished_comments . '</span> / <span class="total">' . $total_comments . '</span>';
-                echo '</strong>';
                 if ($total_comments != 0) {
+
+                    echo '<div class="bp-album-comments">';
+                    echo '<strong>';
+                    echo __('Comments', BP_MEDIA_TXT_DOMAIN) . ': <span class="finished">' . $finished_comments . '</span> / <span class="total">' . $total_comments . '</span>';
+                    echo '</strong>';
                     $comments_progress = $this->progress->progress($finished_comments, $total_comments);
                     $this->progress->progress_ui($comments_progress);
+                    echo '</div>';
+                    echo '<br />';
+                } else {
+                    echo '<p><strong>'.__('Comments: 0/0 (No comments to import)',BP_MEDIA_TXT_DOMAIN).'</strong></p>';
                 }
-                echo '</div>';
-                echo '<br />';
+                echo '<div class="error below-h2 bp-album-import-accept"><p><strong><label for="bp-album-import-accept"><input type="checkbox" value="accept" name="bp-album-import-accept" id="bp-album-import-accept" /> '.__('I understand the risks and take full accountability.',BP_MEDIA_TXT_DOMAIN).'</label></strong></p></div>';
                 echo '<button id="bpmedia-bpalbumimport" class="button button-primary">';
                 _e('Start', BP_MEDIA_TXT_DOMAIN);
                 echo '</button>';
@@ -142,33 +145,7 @@ class BPMediaAlbumimporter extends BPMediaImporter {
         global $wpdb;
         $table = $wpdb->base_prefix . 'bp_album';
         if (BPMediaAlbumimporter::table_exists($table) && BPMediaAlbumimporter::_active('bp-album/loader.php') != -1) {
-            return $wpdb->get_results("SELECT COUNT(distinct owner_id) as users, COUNT(id) as media FROM $table");
-        }
-        return 0;
-    }
-    
-    static function get_total_users() {
-        global $wpdb;
-        $table = $wpdb->base_prefix . 'bp_album';
-        if (BPMediaAlbumimporter::table_exists($table) && BPMediaAlbumimporter::_active('bp-album/loader.php') != -1) {
-            return $wpdb->get_var("SELECT COUNT( DISTINCT owner_id ) FROM $table");
-        }
-        return 0;
-    }
-
-    static function get_finished_users() {
-        global $wpdb;
-        $table = $wpdb->base_prefix . 'bp_album';
-        $users = $this->get_users();
-        $count = 0;
-        if (BPMediaImporter::table_exists($table) && BPMediaAlbumimporter::_active('bp-album/loader.php') != -1) {
-            foreach ($users as $user) {
-                $user_status = $wpdb->get_var("SELECT COUNT( id ) FROM $table WHERE import_status=0 AND owner_id = $user->owner_id");
-                if (!$user_status) {
-                    $count++;
-                }
-            }
-            return $count;
+            return $wpdb->get_results("SELECT COUNT(DISTINCT owner_id) as users, COUNT(id) as media FROM $table");
         }
         return 0;
     }
@@ -211,16 +188,33 @@ class BPMediaAlbumimporter extends BPMediaImporter {
         return 0;
     }
 
-    static function get_completed_count() {
+    static function get_completed_users() {
         global $wpdb;
         $table = $wpdb->base_prefix . 'bp_album';
         if (BPMediaAlbumimporter::table_exists($table) && BPMediaAlbumimporter::_active('bp-album/loader.php') != -1) {
-            return $wpdb->get_results("SELECT COUNT(distinct owner_id) as users, COUNT(id) as media FROM $table WHERE import_status!=0");
+            return $wpdb->get_results("SELECT COUNT( DISTINCT owner_id ) AS users
+                                            FROM $table
+                                            WHERE owner_id NOT 
+                                            IN (
+                                                SELECT a.owner_id
+                                                FROM $table a
+                                                WHERE a.import_status =0
+                                            )
+                                        ");
         }
         return 0;
     }
 
-    static function batch_import($count = 20) {
+    static function get_completed_media() {
+        global $wpdb;
+        $table = $wpdb->base_prefix . 'bp_album';
+        if (BPMediaAlbumimporter::table_exists($table) && BPMediaAlbumimporter::_active('bp-album/loader.php') != -1) {
+            return $wpdb->get_results("SELECT COUNT(id) as media FROM $table WHERE import_status!=0");
+        }
+        return 0;
+    }
+
+    static function batch_import($count = 5) {
         global $wpdb;
         $table = $wpdb->base_prefix . 'bp_album';
         $bp_album_data = $wpdb->get_results("SELECT * FROM $table WHERE import_status = 0 ORDER BY owner_id LIMIT $count");
@@ -230,10 +224,7 @@ class BPMediaAlbumimporter extends BPMediaImporter {
     static function bpmedia_ajax_import_callback() {
 
         $page = isset($_GET['page']) ? $_GET['page'] : 1;
-//        $count = isset($_GET['count']) ? $_GET['count'] : 20;
-//        $offset = ($page > 1) ? (($page - 1) * 20 + $count) : 0;
-        $count = isset($_GET['count']) ? $_GET['count'] : 1;
-//        $offset = ($page > 1) ? (($page - 2) * 1 + $count) : 0;
+        $count = isset($_GET['count']) ? $_GET['count'] : 5;
         $bp_album_data = BPMediaAlbumimporter::batch_import($count);
         global $wpdb;
         $table = $wpdb->base_prefix . 'bp_album';
@@ -244,6 +235,8 @@ class BPMediaAlbumimporter extends BPMediaImporter {
                 $base_path = pathinfo($bp_album_item->pic_org_path);
                 update_site_option('bp_media_bp_album_importer_base_path', $base_path['dirname']);
             }
+            $bpm_host_wp = new BPMediaHostWordpress();
+            $bpm_host_wp->check_and_create_album(0, 0, $bp_album_item->owner_id);
             $album_id = BPMediaAlbumimporter::create_album($bp_album_item->owner_id, 'Imported Media');
             $imported_media_id = BPMediaImporter::add_media(
                             $album_id, $bp_album_item->title, $bp_album_item->description, $bp_album_item->pic_org_path, $bp_album_item->privacy, $bp_album_item->owner_id, 'Imported Media'
@@ -251,9 +244,9 @@ class BPMediaAlbumimporter extends BPMediaImporter {
             $comments += (int) BPMediaAlbumimporter::update_recorded_time_and_comments($imported_media_id, $bp_album_item->id, "{$wpdb->base_prefix}bp_album");
             $wpdb->update($table, array('import_status' => $imported_media_id), array('id' => $bp_album_item->id), array('%d'), array('%d'));
         }
-        
-        $finished_users = BPMediaAlbumimporter::get_completed_count();
-        
+
+        $finished_users = BPMediaAlbumimporter::get_completed_users();
+
         echo json_encode(array('page' => $page, 'users' => $finished_users[0]->users, 'comments' => $comments));
         die();
     }
@@ -277,12 +270,10 @@ class BPMediaAlbumimporter extends BPMediaImporter {
                 }
             }
             $activity_id = get_post_meta($media->get_id(), 'bp_media_child_activity', true);
-            error_log('check=' . $activity_id);
             if ($activity_id) {
                 $date_uploaded = $wpdb->get_var("SELECT date_uploaded from $table WHERE id = $bp_album_id");
                 $old_activity_id = $wpdb->get_var("SELECT id from {$wpdb->base_prefix}bp_activity WHERE component = 'album' AND type = 'bp_album_picture' AND item_id = $bp_album_id");
                 $comments = $wpdb->get_results("SELECT id,secondary_item_id from {$wpdb->base_prefix}bp_activity WHERE component = 'activity' AND type = 'activity_comment' AND item_id = $old_activity_id");
-                error_log(var_export($comments, true));
                 foreach ($comments as $comment) {
                     $update = array('item_id' => $activity_id);
                     if ($comment->secondary_item_id == $old_activity_id) {
