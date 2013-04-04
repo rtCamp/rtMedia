@@ -99,31 +99,31 @@ class BPMediaUploadScreen extends BPMediaScreen {
             /* @var $bp_media_entry BPMediaHostWordpress */
             if (isset($_FILES) && is_array($_FILES) && array_key_exists('bp_media_file', $_FILES) && $_FILES['bp_media_file']['name'] != '') {
                 if (!preg_match('/audio|video|image/i', $_FILES['bp_media_file']['type'], $result) || !isset($result[0])) {
-                    $bp->{BP_MEDIA_SLUG}->messages['error'][] = __('File uploaded is not supported');
+                    $bp->{BP_MEDIA_SLUG}->messages['error'][] = __( 'File uploaded is not supported', BP_MEDIA_TXT_DOMAIN );
                     return;
                 }
                 $type = $result[0];
                 switch ($result[0]) {
                     case 'image' :
                         if ($bp_media_options['images_enabled'] == false) {
-                            $bp->{BP_MEDIA_SLUG}->messages['error'][] = __('Image uploads are disabled', BP_MEDIA_TXT_DOMAIN);
+                            $bp->{BP_MEDIA_SLUG}->messages['error'][] = __( 'Image uploads are disabled', BP_MEDIA_TXT_DOMAIN );
                             return;
                         }
                         break;
                     case 'video' :
                         if ($bp_media_options['videos_enabled'] == false) {
-                            $bp->{BP_MEDIA_SLUG}->messages['error'][] = __('Video uploads are disabled', BP_MEDIA_TXT_DOMAIN);
+                            $bp->{BP_MEDIA_SLUG}->messages['error'][] = __( 'Video uploads are disabled', BP_MEDIA_TXT_DOMAIN );
                             return;
                         }
                         break;
                     case 'audio' :
                         if ($bp_media_options['audio_enabled'] == false) {
-                            $bp->{BP_MEDIA_SLUG}->messages['error'][] = __('Audio uploads are disabled', BP_MEDIA_TXT_DOMAIN);
+                            $bp->{BP_MEDIA_SLUG}->messages['error'][] = __( 'Audio uploads are disabled', BP_MEDIA_TXT_DOMAIN );
                             return;
                         }
                         break;
                     default :
-                        $bp->{BP_MEDIA_SLUG}->messages['error'][] = __('File uploaded is not supported', BP_MEDIA_TXT_DOMAIN);
+                        $bp->{BP_MEDIA_SLUG}->messages['error'][] = __( 'File uploaded is not supported', BP_MEDIA_TXT_DOMAIN );
                         return;
                 }
                 $class_name = apply_filters('bp_media_transcoder', 'BPMediaHostWordpress', $type);

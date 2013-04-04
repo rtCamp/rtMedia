@@ -29,7 +29,7 @@ require_once( WP_LOAD_PATH . 'wp-load.php');
 //require_once( WP_LOAD_PATH . 'wp-admin/admin.php');
 // Check for rights
 if ( ! is_user_logged_in() )
-	wp_die( __( "You are not allowed to be here" ) );
+	wp_die( __( 'You are not allowed to be here', BP_MEDIA_TXT_DOMAIN ) );
 @ini_set('memory_limit','1024M');
 BPMediaActions::handle_uploads();
 ?>

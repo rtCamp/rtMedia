@@ -101,7 +101,7 @@ if (class_exists('BP_Group_Extension')) :// Recommended, to prevent problems dur
                 </label>
             </div>
             <hr>
-            <input type="submit" name="save" value="<?php _e("Save Changes", BP_MEDIA_TXT_DOMAIN); ?> />
+            <input type="submit" name="save" value="<?php _e( 'Save Changes', BP_MEDIA_TXT_DOMAIN ); ?> />
             <?php
             wp_nonce_field('groups_edit_save_' . $this->slug);
         }

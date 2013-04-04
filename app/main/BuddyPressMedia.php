@@ -197,7 +197,7 @@ class BuddyPressMedia {
     public function constants() {
         /* Text domain */
         if (!defined('BP_MEDIA_TXT_DOMAIN'))
-            define('BP_MEDIA_TXT_DOMAIN', $this->text_domain);
+            define('BP_MEDIA_TXT_DOMAIN', $this->text_domain ); //'buddypress-media'
 
         /* If the plugin is installed. */
         if (!defined('BP_MEDIA_IS_INSTALLED'))

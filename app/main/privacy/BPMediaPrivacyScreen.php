@@ -39,7 +39,7 @@ class BPMediaPrivacyScreen {
 		BPMediaPrivacy::save_user_default($new_privacy_default);
 
 		?>
-<div id="message" class="updated"><p><?php _e('Default privacy level for your media has been updated',BP_MEDIA_TXT_DOMAIN); ?></p></div>
+<div id="message" class="updated"><p><?php _e( 'Default privacy level for your media has been updated',BP_MEDIA_TXT_DOMAIN ); ?></p></div>
 <?php
 		}
 		$privacy_level = BPMediaPrivacy::get_user_default();
@@ -50,7 +50,7 @@ class BPMediaPrivacyScreen {
 		wp_nonce_field( 'bpmedia_user_privacy_settings' );
 		echo'<div class="submit">'.
 						'<input type="submit" name="submit" value="';
-		_e( 'Save Changes', 'buddypress' );
+		_e( 'Save Changes', BP_MEDIA_TXT_DOMAIN );
 		echo '" id="submit" class="auto" /></div>';
 		echo '</form>';
 	}

@@ -78,12 +78,8 @@ if ( ! class_exists( 'BPMediaWidget' ) ) {
 			if ( ! is_array( $allowed ) || count( $allowed ) < 1 ) {
 				echo '<p>';
 				printf(
-						__(
-								'Please configure this widget
-									<a href="%s" target="_blank"
-									title="Configure BuddyPress Media Widget">
-									here</a>.', 'rtPanel'
-						), admin_url( '/widgets.php' )
+					__( 'Please configure this widget <a href="%s" target="_blank" title="Configure BuddyPress Media Widget">here</a>.', BP_MEDIA_TXT_DOMAIN ),
+					admin_url( '/widgets.php')
 				);
 				echo '</p>';
 			} else {
@@ -147,7 +143,7 @@ if ( ! class_exists( 'BPMediaWidget' ) ) {
 						if ( $type === 'all' ) {
 							$media_string = 'media';
 						}
-						_e( 'No ' . $wdType . ' ' . $media_string . ' found', BP_MEDIA_TXT_DOMAIN );
+						echo sprintf( __( 'No %s found', BP_MEDIA_TXT_DOMAIN ), $wdType . ' ' . $media_string );
 					}
 					wp_reset_query();
 							?>

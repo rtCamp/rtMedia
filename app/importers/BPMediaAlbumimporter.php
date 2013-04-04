@@ -62,7 +62,7 @@ class BPMediaAlbumimporter extends BPMediaImporter {
         echo '<div id="bpmedia-bpalbumimporter">';
         if ($finished != $total) {
             if (!$total) {
-                echo '<p><strong>' . __('You have nothing to import') . '</strong></p>';
+                echo '<p><strong>' . __( 'You have nothing to import', BP_MEDIA_TXT_DOMAIN ) . '</strong></p>';
             } elseif ($this->active != 1) {
                 echo '<div id="setting-error-bp-album-importer" class="error settings-error below-h2">
 <p><strong>' . __('This process is irreversible. Please take a backup of your database and files, before proceeding.', BP_MEDIA_TXT_DOMAIN) . '</strong></p></div>';

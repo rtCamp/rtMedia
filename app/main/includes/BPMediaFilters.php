@@ -295,7 +295,7 @@ class BPMediaFilters {
         if (current_user_can('manage_options') && is_super_admin()) {
 
             $bp_media_admin_nav = array();
-            $title = '<span class="ab-icon"></span><span class="ab-label">' . _x('BuddyPress Media', 'admin bar menu group label') . '</span>';
+            $title = '<span class="ab-icon"></span><span class="ab-label">' . _x( 'BuddyPress Media', 'admin bar menu group label', BP_MEDIA_TXT_DOMAIN ) . '</span>';
 
             // Added Main menu for BuddyPress Media
             $bp_media_admin_nav[] = array(
@@ -351,7 +351,7 @@ class BPMediaFilters {
         global $wp_meta_boxes;
         // BuddyPress Media
         //	if ( is_user_admin() )
-        wp_add_dashboard_widget('dashboard_media_widget', __('BuddyPress Media'), array($this, 'dashboard_media'));
+        wp_add_dashboard_widget('dashboard_media_widget', __( 'BuddyPress Media', BP_MEDIA_TXT_DOMAIN ), array($this, 'dashboard_media'));
 
         global $wp_meta_boxes;
 
