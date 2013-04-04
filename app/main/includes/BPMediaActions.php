@@ -150,8 +150,8 @@ class BPMediaActions {
         wp_enqueue_script('jquery-ui-tabs');
         wp_enqueue_script('bp-media-mejs', BP_MEDIA_URL . 'lib/media-element/mediaelement-and-player.min.js', '', BP_MEDIA_VERSION);
         wp_enqueue_script('bp-media-default', BP_MEDIA_URL . 'app/assets/js/main.js', '', BP_MEDIA_VERSION);
-        $lightbox = isset($bp_media->options['enable_lightbox'])?$bp_media->options['enable_lightbox']:0;
-        if ( $lightbox )
+        $lightbox = isset($bp_media->options['enable_lightbox']) ? $bp_media->options['enable_lightbox'] : 0;
+        if ($lightbox)
             wp_enqueue_script('bp-media-modal', BP_MEDIA_URL . 'lib/simplemodal/jquery.simplemodal-1.4.4.js', '', BP_MEDIA_VERSION);
         $cur_group_id = NULL;
         if (bp_is_active("groups"))
@@ -306,7 +306,7 @@ class BPMediaActions {
         if ($bp_media_current_entry != NULL) {
 
             if (isset($bp_media->options['download_enabled']))
-                $action_buttons[] = '<a href="' . admin_url('admin-ajax.php').'?action=bp_media_download&file='.$bp_media_current_entry->get_attachment_url()
+                $action_buttons[] = '<a href="' . admin_url('admin-ajax.php') . '?action=bp_media_download&file=' . $bp_media_current_entry->get_attachment_url()
                         . '" target="_blank" class="button item-button bp-secondary-action bp-media-download" title="'
                         . __('Download', BP_MEDIA_TXT_DOMAIN) . '">' . __('Download', BP_MEDIA_TXT_DOMAIN) . '</a>';
 
@@ -482,9 +482,9 @@ class BPMediaActions {
                 wp_localize_script('bp-media-activity-uploader', 'bp_media_uploader_params', $params);
                 wp_localize_script('bp-media-activity-uploader', 'activity_ajax_url', admin_url('admin-ajax.php'));
                 if (bp_is_active('groups') && bp_get_current_group_id())
-                    $default_album = (string)$this->default_group_album();
+                    $default_album = (string) $this->default_group_album();
                 else
-                    $default_album = (string)$this->default_user_album();
+                    $default_album = (string) $this->default_user_album();
                 wp_localize_script('bp-media-activity-uploader', 'default_album', $default_album ? $default_album : '0');
             } elseif (in_array(bp_current_action(), array(BP_MEDIA_IMAGES_SLUG, BP_MEDIA_VIDEOS_SLUG, BP_MEDIA_AUDIO_SLUG, BP_MEDIA_SLUG, BP_MEDIA_ALBUMS_SLUG))) {
                 $params = array(
@@ -886,6 +886,14 @@ class BPMediaActions {
                 if ($album_id) {
                     update_user_meta($current_user_id, 'bp-media-default-album', $album_id);
                 }
+            } else {
+                global $wpdb;
+                $exists = $wpdb->get_var("SELECT ID FROM $wpdb->posts WHERE ID = $album_id");
+                if (!$exists) {
+                    $bpm_host_wp = new BPMediaHostWordpress();
+                    $album_id = $bpm_host_wp->check_and_create_album(0, 0, $current_user_id);
+                    update_user_meta($current_user_id, 'bp-media-default-album', $album_id);
+                }
             }
             return $album_id;
         }
@@ -911,6 +919,14 @@ class BPMediaActions {
                         $album_id = $query->posts[0]->ID;
                     }
                     if ($album_id) {
+                        groups_update_groupmeta($group_id, 'bp_media_default_album', $album_id);
+                    }
+                } else {
+                    global $wpdb;
+                    $exists = $wpdb->get_var("SELECT ID FROM $wpdb->posts WHERE ID = $album_id");
+                    if (!$exists) {
+                        $bp_album = new BPMediaHostWordpress();
+                        $album_id = $bp_album->check_and_create_album(0, bp_get_current_group_id());
                         groups_update_groupmeta($group_id, 'bp_media_default_album', $album_id);
                     }
                 }

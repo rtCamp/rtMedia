@@ -42,7 +42,11 @@ class BPMediaAlbumScreen extends BPMediaScreen {
                     if (!isset($bp->action_variables[1])) {
                         $this->page_not_exist();
                     }
-                    $this->entry_delete();
+                    $media_actions = new BPMediaActions();
+                    if ( $media_actions->default_user_album() != $bp->action_variables[1])
+                        $this->entry_delete();
+                    else
+                        $this->page_not_exist();
                     break;
                 default:
                     $this->set_query();
@@ -133,7 +137,9 @@ class BPMediaAlbumScreen extends BPMediaScreen {
             if ($allowed_edit != false) {
                 echo '<div class="album-edit">';
                 echo '<a href="' . $bp_media_current_album->get_edit_url() . '" class="button item-button bp-secondary-action bp-media-edit bp-media-edit-album" title="' . __('Edit Album', BP_MEDIA_TXT_DOMAIN) . '">' . __('Edit', BP_MEDIA_TXT_DOMAIN) . '</a>';
-                echo '<a href="' . $bp_media_current_album->get_delete_url() . '" class="button item-button bp-secondary-action delete-activity-single confirm" rel="nofollow">' . __("Delete", BP_MEDIA_TXT_DOMAIN) . '</a>';
+                $media_actions = new BPMediaActions();
+                if ( $media_actions->default_user_album() != $bp_media_current_album->get_id())
+                    echo '<a href="' . $bp_media_current_album->get_delete_url() . '" class="button item-button bp-secondary-action delete-activity-single confirm" rel="nofollow">' . __("Delete", BP_MEDIA_TXT_DOMAIN) . '</a>';
                 echo '</div>';
             }
         }
