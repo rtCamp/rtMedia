@@ -156,7 +156,7 @@ if (!class_exists('BPMediaSettings')) {
             $table = "{$wpdb->base_prefix}bp_album";
             if (BPMediaImporter::table_exists($table) && $bp_album_active!=-1) {
                 $bp_media_album_importer = new BPMediaAlbumimporter();
-                add_settings_section('bpm-bp-album-importer', __('BP Album Importer', BP_MEDIA_TXT_DOMAIN), array($bp_media_album_importer, 'ui'), 'bp-media-importer');
+                add_settings_section('bpm-bp-album-importer', __('BP-Album Importer', BP_MEDIA_TXT_DOMAIN), array($bp_media_album_importer, 'ui'), 'bp-media-importer');
             }
 
             add_settings_section('bpm-convert-videos', '', array($this, 'convert_videos_form'), 'bp-media-convert-videos');

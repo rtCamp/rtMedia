@@ -98,6 +98,7 @@ jQuery(document).ready(function(){
     
     jQuery('#bpmedia-bpalbumimporter').on('change','#bp-album-import-accept',function(){
         jQuery('.bp-album-import-accept').toggleClass('i-accept');
+        jQuery('.bp-album-importer-wizard').slideToggle();
     });
 
     jQuery('#rtprivacyinstall').click(function(e){
@@ -203,8 +204,13 @@ jQuery(document).ready(function(){
                 }, x);
             }());
             return;
+        } else {
+            jQuery(this).prop('disabled', true);
         }
-        jQuery(this).after(' <img src="../../../../../wp-admin/images/wpspin_light.gif" />');
+        if (!jQuery('.bpm-ajax-loader').length)
+            jQuery(this).after(' <img class="bpm-ajax-loader" src="../../../../../wp-admin/images/wpspin_light.gif" />');
+        
+        
         $progress_parent = jQuery('#bpmedia-bpalbumimport');
         $values=[];
         jQuery(this).parent().find('input').each(function(){

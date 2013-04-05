@@ -38,8 +38,8 @@ ul#social li{display:inline;}
 #spread-the-word .button{display:inline-block; margin: 9px 5px 0 5px;}
 #spread-the-word label{display:block;}
 #spread-the-word .inside{text-align: center;}
-#spread-the-word .button-tweet{background: #33ACE6; border-color: #3399DD #3399DD #2288CC;  color: #FFFFFF !important; text-shadow: -1px -1px 0 #3399DD;}
-#spread-the-word .button-tweet:hover{background: #3399DD;border-color: #2288CC;box-shadow: 0 0 4px rgba(82, 168, 236, 0.75);}
+#spread-the-word .button-tweet, #bpmedia-bpalbumimporter .button-import-tweet{background: #33ACE6; border-color: #3399DD #3399DD #2288CC;  color: #FFFFFF !important; text-shadow: -1px -1px 0 #3399DD;}
+#spread-the-word .button-tweet:hover, #bpmedia-bpalbumimporter .button-import-tweet:hover{background: #3399DD;border-color: #2288CC;box-shadow: 0 0 4px rgba(82, 168, 236, 0.75);}
 #spread-the-word .button-rating{background: #8A8A8A; border-color: #222; color: #FFFFFF !important; text-shadow: -1px -1px 0 #444;}
 #spread-the-word .button-rating:hover{background: #7E7E7E;border-color: #444;box-shadow: 0 0 4px rgba(128,128,128, 0.75);}
 .wrap.bp-media-admin .bp-media-settings-tabs a.nav-tab{padding-left:20px;background:url('../img/tab-icon.png') 3px -4px no-repeat;}
@@ -92,7 +92,39 @@ a.toplevel_page_bp-media-settings div.wp-menu-image{
                                           box-shadow: 0 1px rgba(0, 0, 0, 0.2), 0 0 1px rgba(0, 0, 0, 0.4) inset;
                                           color: #FFFFFF;}
 
-div.i-accept{  background-color: #dff0d8 !important; border-color:#468847; }
+div.i-accept{ background-color: #dff0d8 !important; }
+div.bp-album-import-accept{ padding: 1px 2px; margin-bottom: 15px; }
+.bp-album-importer-wizard { display: none; margin-top: 15px; }
+#setting-error-bp-album-importer { line-height: 1.8em; }
+.wp-core-ui .btn-warning {
+  color: #ffffff;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+  background-color: #faa732;
+  *background-color: #f89406;
+  background-image: -moz-linear-gradient(top, #fbb450, #f89406);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#fbb450), to(#f89406));
+  background-image: -webkit-linear-gradient(top, #fbb450, #f89406);
+  background-image: -o-linear-gradient(top, #fbb450, #f89406);
+  background-image: linear-gradient(to bottom, #fbb450, #f89406);
+  background-repeat: repeat-x;
+  border-color: #f89406 #f89406 #ad6704;
+  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fffbb450', endColorstr='#fff89406', GradientType=0);
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+}
+
+.wp-core-ui .btn-warning:hover,
+.wp-core-ui .btn-warning:focus,
+.wp-core-ui .btn-warning:active,
+.wp-core-ui .btn-warning.active,
+.wp-core-ui .btn-warning.disabled,
+.wp-core-ui .btn-warning[disabled] {
+  color: #ffffff;
+  background: #f89406;
+  background-color: #f89406;
+  *background: #df8505;
+  *background-color: #df8505;
+}
 
 /* Admin bar Menu  */
 #wpadminbar .bp-media-settings-menu > .ab-item .ab-icon{background: url("../img/bpm-icon-16.png") no-repeat scroll -8px -7px transparent}

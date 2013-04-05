@@ -54,7 +54,12 @@ class BPMediaAlbumimporter extends BPMediaImporter {
                 echo '<p><strong>' . __('You have nothing to import') . '</strong></p>';
             } elseif (BPMediaAlbumimporter::_active('bp-album/loader.php') != 1) {
                 echo '<div id="setting-error-bp-album-importer" class="error settings-error below-h2">
-<p><strong>' . __('This process is irreversible. Please take a backup of your database and files, before proceeding.', BP_MEDIA_TXT_DOMAIN) . '</strong></p></div>';
+<p><strong>' . __('Warning!', BP_MEDIA_TXT_DOMAIN) . '</strong> ' . sprintf(__('This import process is irreversible. Although everything is tested, please take a <a target="_blank" href="http://codex.wordpress.org/WordPress_Backups">backup of your database and files</a>, before proceeding. If you don\'t know your way around databases and files, consider <a target="_blank" href="%s">hiring us</a>, or another professional.', BP_MEDIA_TXT_DOMAIN), 'http://rtcamp.com/contact/?purpose=buddypress&utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media') . '</p></div>';
+                echo '<div class="bp-album-import-accept"><p><strong><label for="bp-album-import-accept"><input type="checkbox" value="accept" name="bp-album-import-accept" id="bp-album-import-accept" /> ' . __('I have taken a backup of the database and files of this site.', BP_MEDIA_TXT_DOMAIN) . '</label></strong></p></div>';
+                echo '<button id="bpmedia-bpalbumimport" class="button button-primary">';
+                _e('Start Import', BP_MEDIA_TXT_DOMAIN);
+                echo '</button>';
+                echo '<div class="bp-album-importer-wizard">';
                 echo '<div class="bp-album-users">';
                 echo '<strong>';
                 echo __('Users', BP_MEDIA_TXT_DOMAIN) . ': <span class="finished">' . $finished_users[0]->users . '</span> / <span class="total">' . $total[0]->users . '</span>';
@@ -95,25 +100,33 @@ class BPMediaAlbumimporter extends BPMediaImporter {
                     echo '</div>';
                     echo '<br />';
                 } else {
-                    echo '<p><strong>'.__('Comments: 0/0 (No comments to import)',BP_MEDIA_TXT_DOMAIN).'</strong></p>';
+                    echo '<p><strong>' . __('Comments: 0/0 (No comments to import)', BP_MEDIA_TXT_DOMAIN) . '</strong></p>';
                 }
-                echo '<div class="error below-h2 bp-album-import-accept"><p><strong><label for="bp-album-import-accept"><input type="checkbox" value="accept" name="bp-album-import-accept" id="bp-album-import-accept" /> '.__('I understand the risks and take full accountability.',BP_MEDIA_TXT_DOMAIN).'</label></strong></p></div>';
-                echo '<button id="bpmedia-bpalbumimport" class="button button-primary">';
-                _e('Start', BP_MEDIA_TXT_DOMAIN);
-                echo '</button>';
+                echo '</div>';
             } else {
-                $install_link = wp_nonce_url(admin_url('plugins.php?action=deactivate&amp;plugin=' . urlencode($this->path)), 'deactivate-plugin_' . $this->path);
-                echo '<p>' . sprintf(__('Please <a class="deactivate-bp-album" href="%s">deactivate</a> BP-Album first.', BP_MEDIA_TXT_DOMAIN), $install_link) . '</p>';
+                $deactivate_link = wp_nonce_url(admin_url('plugins.php?action=deactivate&amp;plugin=' . urlencode($this->path)), 'deactivate-plugin_' . $this->path);
+                echo '<p>' . __('BP-Album is active on your site and will cause problems with the import.', BP_MEDIA_TXT_DOMAIN) . '</p>';
+                echo '<p><a class="button button-primary deactivate-bp-album" href="' . $deactivate_link . '">' . __('Click here to deactivate BP-Album and continue importing', BP_MEDIA_TXT_DOMAIN) . '</a></p>';
             }
         } else {
+            echo '<div class="bp-album-import-accept i-accept">';
             echo '<p class="info">';
-            _e('All media from BP Album has been imported. However, there are a lot of extra files and a database table eating up your resources. Would you like to delete them now?', BP_MEDIA_TXT_DOMAIN);
+            $message = sprintf(__('I just imported bp-album to @buddypressmedia http://goo.gl/8Upmv on %s', BP_MEDIA_TXT_DOMAIN), home_url());
+            echo '<strong>'.__('Congratulations!',BP_MEDIA_TXT_DOMAIN).'</strong> '. __('All media from BP Album has been imported.',BP_MEDIA_TXT_DOMAIN); 
+            echo ' <a href="http://twitter.com/home/?status='.$message.'" class="button button-import-tweet" target= "_blank">' . __('Tweet this', BP_MEDIA_TXT_DOMAIN) . '</a>';
             echo '</p>';
-            echo '<div id="setting-error-bp-album-importer" class="error settings-error below-h2"> 
-<p><strong>' . __('This process is irreversible. Please take a backup of your database and files, before proceeding.', BP_MEDIA_TXT_DOMAIN) . '</strong></p></div>';
-            echo '<button id="bpmedia-bpalbumimport-cleanup" class="button button-primary">';
-            _e('Clean Up', BP_MEDIA_TXT_DOMAIN);
+            echo '</div>';
+            echo '<p>'.__('However, a lot of unnecessary files and a database table are still eating up your resources. If everything seems fine, you can clean this data up.', BP_MEDIA_TXT_DOMAIN);
+            echo '<br />';
+            echo '<br />';
+            echo '<button id="bpmedia-bpalbumimport-cleanup" class="button btn-warning">';
+            _e('Clean up Now', BP_MEDIA_TXT_DOMAIN);
             echo '</button>';
+            echo ' <a href="'.add_query_arg(
+                            array('page' => 'bp-media-settings'), (is_multisite() ? network_admin_url('admin.php') : admin_url('admin.php'))
+                    ).'" id="bpmedia-bpalbumimport-cleanup-later" class="button">';
+            _e('Clean up Later', BP_MEDIA_TXT_DOMAIN);
+            echo '</a>';
         }
         echo '</div>';
     }
