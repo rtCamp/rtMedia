@@ -10,8 +10,8 @@ var $current;
 //window.onbeforeunload= function() { return "Custom message here"; };
 
 jQuery(document).ready(function(){
-    
-    jQuery('ul#activity-stream').on('mediapreview','video,audio', function(){
+
+    jQuery('body').on('mediapreview','.bp_media_content video,.bp_media_content audio', function(){
         jQuery(this).mediaelementplayer({
             enableKeyboard: false,
             startVolume: 1,
@@ -22,10 +22,10 @@ jQuery(document).ready(function(){
             }
         });
     });
-    jQuery('ul#activity-stream audio,ul#activity-stream video').trigger('mediapreview');
+    jQuery('.bp_media_content video,.bp_media_content audio').trigger('mediapreview');
 
     jQuery('ul#activity-stream').on('DOMNodeInserted', function(){
-        jQuery('ul#activity-stream audio,ul#activity-stream video').trigger('mediapreview');
+        jQuery('ul#activity-stream .bp_media_content video,ul#activity-stream .bp_media_content audio').trigger('mediapreview');
     })
 
 
@@ -97,7 +97,7 @@ jQuery(document).ready(function(){
         }
         );
     });
-        
+
     if ( bp_media_vars.lightbox > 0 ) {
         jQuery('#bp-media-list').on('click','li a',function(e){
             e.preventDefault();
@@ -174,6 +174,7 @@ jQuery(document).ready(function(){
                     'opacity': 90
                 });
                 do_fixes($medialoaded);
+				jQuery('.bp_media_content video,.bp_media_content audio').trigger('mediapreview');
             });
         }
         function transit_media($current){
@@ -186,6 +187,7 @@ jQuery(document).ready(function(){
                 $medialoaded.empty();
                 $medialoaded.append($mediacontent);
                 do_fixes($medialoaded);
+				jQuery('.bp_media_content video,.bp_media_content audio').trigger('mediapreview');
             });
         }
 
@@ -337,7 +339,7 @@ jQuery(document).ready(function(){
 
                 var a_id = ids[2]
                 var c_id = target.attr('href').substr( 10, target.attr('href').length );
-                var form = jQuery( '#ac-form-' + a_id );
+                var form = jQuery( '.bp-media-ajax-single #ac-form-' + a_id );
 
                 form.css( 'display', 'none' );
                 form.removeClass('root');

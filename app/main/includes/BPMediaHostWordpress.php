@@ -139,7 +139,10 @@ class BPMediaHostWordpress {
 
         $type = $file['type'];
         if (in_array($type, array('image/gif', 'image/jpeg', 'image/png'))) {
-            $file = $this->exif($file);
+			if (function_exists('read_exif_data')){
+				$file = $this->exif($file);
+			}
+
         }
 
         $attachment = array();
@@ -383,8 +386,6 @@ class BPMediaHostWordpress {
     }
 
     public function exif($file) {
-        if (!function_exists('read_exif_data'))
-            return $file;
 
         $file_parts = pathinfo($file['file']);
         if (in_array(strtolower($file_parts['extension']), array('jpg', 'jpeg', 'tiff'))) {

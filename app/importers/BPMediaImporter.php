@@ -19,7 +19,7 @@ class BPMediaImporter {
     var $import_steps;
 
     function __construct() {
-        
+
     }
 
     static function table_exists($table) {
@@ -33,6 +33,10 @@ class BPMediaImporter {
     }
 
     static function _active($path) {
+
+		//for 2.7.6 please remove for 2.8
+		return -1;
+
         if (!function_exists('is_plugin_inactive')) {
             require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
         }
