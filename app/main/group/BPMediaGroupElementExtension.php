@@ -64,7 +64,15 @@ if (class_exists('BP_Group_Extension')) :
                 default:
                 /** @todo Error is to be displayed for 404 */
             }
-            $bp_media_content = new BPMediaAlbumScreen($media_type, BP_MEDIA_ALBUMS_VIEW_SLUG);
+            if ($media_type == "album") {
+                        $bp_media_content = new BPMediaAlbumScreen($media_type, $slug);
+                    } else if ($media_type == 'upload') {
+                        if (BPMediaGroupLoader::can_upload()) {
+                            $bp_media_content = new BPMediaUploadScreen('upload', BP_MEDIA_UPLOAD_SLUG);
+                        }
+                    } else {
+                        $bp_media_content = new BPMediaScreen($media_type, $slug);
+                    }
             if ($slug != "" && $media_type != "") {
                 if (isset($bp->action_variables[1])) {
                     switch ($bp->action_variables[1]) {
@@ -105,8 +113,7 @@ if (class_exists('BP_Group_Extension')) :
                         $bp_media_content->screen_content();
                     } else if ($media_type == 'upload') {
                         if (BPMediaGroupLoader::can_upload()) {
-                            $bp_media_upload = new BPMediaUploadScreen('upload', BP_MEDIA_UPLOAD_SLUG);
-                            $bp_media_upload->upload_screen_content();
+                            $bp_media_content->upload_screen_content();
                         }
                     } else {
                         $bp_media_content->screen_content();
