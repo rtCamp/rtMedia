@@ -16,6 +16,7 @@ class BPMediaActions {
         add_action('wp_enqueue_scripts', array($this, 'enqueue_scripts_styles'), 11);
         add_action('bp_before_activity_delete', 'BPMediaActions::delete_activity_handler');
         add_action('wp_enqueue_scripts', array($this, 'upload_enqueue'));
+        add_action('bp_core_pre_load_template', array($this, 'save_group_album_data'));
         add_action('init', 'BPMediaActions::init_count');
         add_action('init', array($this, 'default_user_album'));
         add_action('bp_init', array($this, 'default_group_album'));
@@ -938,6 +939,20 @@ class BPMediaActions {
     function group_create_default_album() {
         $bp_album = new BPMediaHostWordpress();
         $bp_album->check_and_create_album(0, bp_get_new_group_id());
+    }
+
+    function save_group_album_data() {
+        if (bp_action_variable(2)) {
+            $bp_media_current_entry = new BPMediaHostWordpress(bp_action_variable(2));
+            if (array_key_exists('bp_media_title', $_POST)) {
+                if ($bp_media_current_entry->update_media(array('description' => esc_html($_POST['bp_media_description']), 'name' => esc_html($_POST['bp_media_title'])))) {
+                    $bp_media_current_entry->update_media_activity();
+                    wp_redirect($bp_media_current_entry->get_url());
+                } else {
+                    wp_redirect($bp_media_current_entry->get_edit_url());
+}
+            }
+        }
     }
 
 }
