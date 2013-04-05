@@ -145,7 +145,7 @@ jQuery(document).ready(function(){
 
     function fireimportRequest(data) {
         return jQuery.getJSON(ajaxurl, data, function(response){
-            cleanup = false;
+            favorites = false;
             if(response){
                 var redirect = false;
                 var media_progw = Math.ceil((((parseInt(response.page)*5)+parseInt(data.values['finished']))/parseInt(data.values['total'])) *100);
@@ -157,7 +157,7 @@ jQuery(document).ready(function(){
                 var users_progw = Math.ceil((parseInt(response.users)/parseInt(users_total)) *100);
                 if(media_progw>100 || media_progw==100 ){
                     media_progw=100;
-                    cleanup=true
+                    favorites=true
                 };
                 jQuery('.bp-album-media #rtprogressbar>div').css('width',media_progw+'%');
                 jQuery('.bp-album-comments #rtprogressbar>div').css('width',comments_progw+'%');
@@ -166,12 +166,66 @@ jQuery(document).ready(function(){
                 jQuery('#bpmedia-bpalbumimporter .bp-album-media span.finished').html(parseInt(media_finished)+data.count);
                 jQuery('#bpmedia-bpalbumimporter .bp-album-comments span.finished').html(parseInt(response.comments)+parseInt(comments_finished));
                 jQuery('#bpmedia-bpalbumimporter .bp-album-users span.finished').html(parseInt(response.users));
-                if ( cleanup ) {
-                    window.location = document.URL;
+                if ( favorites ) {
+                    favorite_data = {
+                        'action':'bp_media_bp_album_import_favorites'
+                    }
+                    jQuery.post(ajaxurl,favorite_data,function(response){
+                        if(response.favorites!==0||response.favorites!=='0'){
+                            jQuery('.bp-album-comments').after('<br /><div class="bp-album-favorites"><strong>User\'s Favorites: <span class="finished">0</span> / <span class="total">'+response.users+'</span></strong><div id="rtprogressbar"><div style="width:0%"></div></div></div>');
+                            $favorites = {};
+                            for(var i=1;i<=response.users;i++ ){
+                                $count=1;
+                                if(i==response.users){
+                                    $count=parseInt(response.users % $count);
+                                    if($count==0){
+                                        $count=1;
+                                    }
+                                }
+                                newvals = {
+                                    'action':'bp_media_bp_album_import_step_favorites',
+                                    'offset':(i-1)*1,
+                                    'redirect':i==response.users
+                                }
+                                $favorites[i] = newvals;
+                            }
+                            var $startingpoint = jQuery.Deferred();
+                            $startingpoint.resolve();
+                            jQuery.each($favorites, function(i, v){
+                                $startingpoint = $startingpoint.pipe( function() {
+                                    return fireimportfavoriteRequest(v);
+                                });
+                            });
+                            
+                        } else {
+                            window.location = document.URL;
+                        }
+                    },'json');
                 }
+            //                if ( cleanup ) {
+            //                    window.location = document.URL;
+            //                }
             } else {
                 jQuery('#map_progress_msgs').html('<div class="map_mapping_failure">Row '+response.page+' failed.</div>');
             }
+        });
+    }
+
+    function fireimportfavoriteRequest(data) {
+        return jQuery.post(ajaxurl, data, function(response){
+            redirect=false;
+            favorites_total = jQuery('#bpmedia-bpalbumimporter .bp-album-favorites span.total').html();
+            favorites_finished = jQuery('#bpmedia-bpalbumimporter .bp-album-favorites span.finished').html();
+            jQuery('#bpmedia-bpalbumimporter .bp-album-favorites span.finished').html(parseInt(favorites_finished)+1);
+            var favorites_progw = Math.ceil((parseInt(favorites_finished+1)/parseInt(favorites_total)) *100);
+            if(favorites_progw>100 || favorites_progw==100 ){
+                    favorites_progw=100;
+                    redirect=true;
+            }
+            jQuery('.bp-album-favorites #rtprogressbar>div').css('width',favorites_progw+'%');
+            if(redirect){
+                window.location = document.URL;
+            } 
         });
     }
 
