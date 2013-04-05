@@ -29,7 +29,10 @@ if (class_exists('BP_Group_Extension')) :
          * @throws Exception
          */
         function display() {
-            global $bp;
+            global $bp,$bp_media_current_entry;
+            //For saving the data if the form is submitted
+            if ( bp_action_variable(2) )
+                $bp_media_current_entry = new BPMediaHostWordpress(bp_action_variable(2));
             $current_tab = BP_MEDIA_IMAGES_SLUG;
             if (isset($bp->action_variables[0])) {
                 $current_tab = $bp->action_variables[0];
@@ -61,11 +64,12 @@ if (class_exists('BP_Group_Extension')) :
                 default:
                 /** @todo Error is to be displayed for 404 */
             }
+            $bp_media_content = new BPMediaAlbumScreen($media_type, BP_MEDIA_ALBUMS_VIEW_SLUG);
             if ($slug != "" && $media_type != "") {
                 if (isset($bp->action_variables[1])) {
                     switch ($bp->action_variables[1]) {
                         case 'edit':
-                            //Edit screen for image
+                            $bp_media_content->edit_screen_content();
                             break;
                         case 'delete':
                             //Delete function for media file
@@ -83,11 +87,10 @@ if (class_exists('BP_Group_Extension')) :
                                     return;
                                 }
                                 if ($media_type == "album") {
-                                    $bp_media_content = new BPMediaAlbumScreen($media_type, BP_MEDIA_ALBUMS_VIEW_SLUG);
                                     $bp->action_variables[0] = BP_MEDIA_ALBUMS_VIEW_SLUG;
+                                    echo '<h3>'.get_the_title($bp->action_variables[1]).'</h3>';
                                     $bp_media_content->entry_screen();
                                 } else {
-                                    $bp_media_content = new BPMediaScreen($media_type, $slug);
                                 }
                                 $bp_media_content->entry_screen_content();
 
@@ -99,7 +102,6 @@ if (class_exists('BP_Group_Extension')) :
                 } else {
                     if ($media_type == "album") {
                         BPMediaGroupAction::bp_media_groups_albums_set_query();
-                        $bp_media_content = new BPMediaAlbumScreen($media_type, $slug);
                         $bp_media_content->screen_content();
                     } else if ($media_type == 'upload') {
                         if (BPMediaGroupLoader::can_upload()) {
@@ -107,7 +109,6 @@ if (class_exists('BP_Group_Extension')) :
                             $bp_media_upload->upload_screen_content();
                         }
                     } else {
-                        $bp_media_content = new BPMediaScreen($media_type, $slug);
                         $bp_media_content->screen_content();
                     }
                 }

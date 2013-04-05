@@ -22,11 +22,7 @@ class BPMediaImporter {
 
     }
 
-    function table_exists($table) {
-
-		//for 2.7.6 please remove for 2.8
-		return false;
-
+    static function table_exists($table) {
         global $wpdb;
 
         if ($wpdb->query("SHOW TABLES LIKE '" . $table . "'") == 1) {
@@ -101,18 +97,18 @@ class BPMediaImporter {
         return $album_id;
     }
 
-    static function add_media($album_id, $title = '', $description = '', $filepath = '', $privacy = 0, $author_id = false) {
+    static function add_media($album_id, $title = '', $description = '', $filepath = '', $privacy = 0, $author_id = false, $album_name = false) {
 
 
         $files = BPMediaImporter::make_copy($filepath);
         if ($files) {
-
+            global $wpdb;
             $bp_imported_media = new BPMediaHostWordpress();
 //            add_filter('bp_media_force_hide_activity', create_function('', 'return true;'));
-            $imported_media_id = $bp_imported_media->add_media($title, $description, $album_id, 0, false, false, $files);
-
+            $imported_media_id = $bp_imported_media->insert_media($title, $description, $album_id, 0, false, false, $files, $author_id, $album_name);
+            
             wp_update_post($args = array('ID' => $imported_media_id, 'post_author' => $author_id));
-
+            
             $bp_album_privacy = $privacy;
             if ($bp_album_privacy == 10)
                 $bp_album_privacy = 6;
