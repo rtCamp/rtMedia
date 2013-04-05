@@ -26,8 +26,11 @@ class BPMediaAlbumimporter extends BPMediaImporter {
             return;
         global $wpdb;
         return $wpdb->query(
-                        "ALTER TABLE {$wpdb->base_prefix}bp_album ADD COLUMN
-					import_status TINYINT (1) NOT NULL DEFAULT 0"
+                        "ALTER TABLE {$wpdb->base_prefix}bp_album 
+                            ADD COLUMN import_status BIGINT (20) NOT NULL DEFAULT 0,
+                            ADD COLUMN old_activity_id BIGINT (20) NOT NULL DEFAULT 0,
+                            ADD COLUMN new_activity_id BIGINT (20) NOT NULL DEFAULT 0,
+                            ADD COLUMN favorites TINYINT (1) NOT NULL DEFAULT 0"
         );
     }
 
@@ -112,19 +115,19 @@ class BPMediaAlbumimporter extends BPMediaImporter {
             echo '<div class="bp-album-import-accept i-accept">';
             echo '<p class="info">';
             $message = sprintf(__('I just imported bp-album to @buddypressmedia http://goo.gl/8Upmv on %s', BP_MEDIA_TXT_DOMAIN), home_url());
-            echo '<strong>'.__('Congratulations!',BP_MEDIA_TXT_DOMAIN).'</strong> '. __('All media from BP Album has been imported.',BP_MEDIA_TXT_DOMAIN); 
-            echo ' <a href="http://twitter.com/home/?status='.$message.'" class="button button-import-tweet" target= "_blank">' . __('Tweet this', BP_MEDIA_TXT_DOMAIN) . '</a>';
+            echo '<strong>' . __('Congratulations!', BP_MEDIA_TXT_DOMAIN) . '</strong> ' . __('All media from BP Album has been imported.', BP_MEDIA_TXT_DOMAIN);
+            echo ' <a href="http://twitter.com/home/?status=' . $message . '" class="button button-import-tweet" target= "_blank">' . __('Tweet this', BP_MEDIA_TXT_DOMAIN) . '</a>';
             echo '</p>';
             echo '</div>';
-            echo '<p>'.__('However, a lot of unnecessary files and a database table are still eating up your resources. If everything seems fine, you can clean this data up.', BP_MEDIA_TXT_DOMAIN);
+            echo '<p>' . __('However, a lot of unnecessary files and a database table are still eating up your resources. If everything seems fine, you can clean this data up.', BP_MEDIA_TXT_DOMAIN);
             echo '<br />';
             echo '<br />';
             echo '<button id="bpmedia-bpalbumimport-cleanup" class="button btn-warning">';
             _e('Clean up Now', BP_MEDIA_TXT_DOMAIN);
             echo '</button>';
-            echo ' <a href="'.add_query_arg(
-                            array('page' => 'bp-media-settings'), (is_multisite() ? network_admin_url('admin.php') : admin_url('admin.php'))
-                    ).'" id="bpmedia-bpalbumimport-cleanup-later" class="button">';
+            echo ' <a href="' . add_query_arg(
+                    array('page' => 'bp-media-settings'), (is_multisite() ? network_admin_url('admin.php') : admin_url('admin.php'))
+            ) . '" id="bpmedia-bpalbumimport-cleanup-later" class="button">';
             _e('Clean up Later', BP_MEDIA_TXT_DOMAIN);
             echo '</a>';
         }
@@ -241,6 +244,8 @@ class BPMediaAlbumimporter extends BPMediaImporter {
         $bp_album_data = BPMediaAlbumimporter::batch_import($count);
         global $wpdb;
         $table = $wpdb->base_prefix . 'bp_album';
+        $activity_table = $wpdb->base_prefix . 'bp_activity';
+        $activity_meta_table = $wpdb->base_prefix . 'bp_activity_meta';
         $comments = 0;
         foreach ($bp_album_data as &$bp_album_item) {
 
@@ -256,11 +261,49 @@ class BPMediaAlbumimporter extends BPMediaImporter {
             );
             $comments += (int) BPMediaAlbumimporter::update_recorded_time_and_comments($imported_media_id, $bp_album_item->id, "{$wpdb->base_prefix}bp_album");
             $wpdb->update($table, array('import_status' => $imported_media_id), array('id' => $bp_album_item->id), array('%d'), array('%d'));
+            $bp_album_media_id = $wpdb->get_var("SELECT activity.id from $activity_table as activity INNER JOIN $table as album ON ( activity.item_id = album.id ) WHERE activity.item_id = $bp_album_item->id AND activity.component = 'album' AND activity.type='bp_album_picture'");
+            $wpdb->update($table, array('old_activity_id' => $bp_album_media_id), array('id' => $bp_album_item->id), array('%d'), array('%d'));
+            $bp_new_activity_id = $wpdb->get_var("SELECT id from $activity_table WHERE item_id = $imported_media_id AND component = 'activity' AND type='activity_update' AND secondary_item_id=0");
+            $wpdb->update($table, array('new_activity_id' => $bp_new_activity_id), array('id' => $bp_album_item->id), array('%d'), array('%d'));
+            if ($wpdb->update($activity_meta_table, array('activity_id' => $bp_new_activity_id), array('activity_id' => $bp_album_media_id, 'meta_key' => 'favorite_count'), array('%d'), array('%d'))) {
+                $wpdb->update($table, array('favorites' => 1), array('id' => $bp_album_item->id), array('%d'), array('%d'));
+            }
         }
 
         $finished_users = BPMediaAlbumimporter::get_completed_users();
 
         echo json_encode(array('page' => $page, 'users' => $finished_users[0]->users, 'comments' => $comments));
+        die();
+    }
+
+    static function bpmedia_ajax_import_favorites() {
+        global $wpdb;
+        $table = $wpdb->base_prefix . 'bp_album';
+        $users = count_users();
+        echo json_encode(array('favorites'=>$wpdb->get_var("SELECT COUNT(id) from $table WHERE favorites != 0"), 'users'=>$users['total_users'] ));
+        die();
+    }
+
+    static function bpmedia_ajax_import_step_favorites() {
+        $offset = isset($_POST['offset']) ? $_POST['offset'] : 0;
+        $redirect = isset($_POST['redirect']) ? $_POST['redirect'] : FALSE;
+        global $wpdb;
+        $table = $wpdb->base_prefix . 'bp_album';
+        $blogusers = get_users(array('meta_key' => 'bp_favorite_activities', 'offset' => $offset, 'number' => 20));
+        if ($blogusers) {
+            foreach ($blogusers as $user) {
+                $favorite_activities = get_user_meta($user->ID, 'bp_favorite_activities', true);
+                if ($favorite_activities) {
+                    $new_favorite_activities = $favorite_activities;
+                    foreach ($favorite_activities as $key => $favorite) {
+                        if ($new_act = $wpdb->get_var("SELECT new_activity_id from $table WHERE old_activity_id = $favorite"))
+                            $new_favorite_activities[$key] = $new_act;
+                    }
+                    update_user_meta($user->ID, 'bp_favorite_activities', $new_favorite_activities);
+                }
+            }
+        }
+        echo $redirect;
         die();
     }
 
