@@ -92,6 +92,8 @@ a.toplevel_page_bp-media-settings div.wp-menu-image{
                                           box-shadow: 0 1px rgba(0, 0, 0, 0.2), 0 0 1px rgba(0, 0, 0, 0.4) inset;
                                           color: #FFFFFF;}
 
+div.i-accept{  background-color: #dff0d8 !important; border-color:#468847; }
+
 /* Admin bar Menu  */
 #wpadminbar .bp-media-settings-menu > .ab-item .ab-icon{background: url("../img/bpm-icon-16.png") no-repeat scroll -8px -7px transparent}
 #wpadminbar .bp-media-settings-menu:hover .ab-icon{background-position: -8px -41px}

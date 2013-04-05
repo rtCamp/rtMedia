@@ -76,7 +76,6 @@ jQuery(document).ready(function(){
             if(response != 0){
                 var redirect = false;
                 var progw = Math.ceil((((parseInt(response)*20)+parseInt(data.values['finished']))/parseInt(data.values['total'])) *100);
-                console.log(progw);
                 if(progw>100){
                     progw=100;
                     redirect=true
@@ -96,6 +95,10 @@ jQuery(document).ready(function(){
             }
         });
     }
+    
+    jQuery('#bpmedia-bpalbumimporter').on('change','#bp-album-import-accept',function(){
+        jQuery('.bp-album-import-accept').toggleClass('i-accept');
+    });
 
     jQuery('#rtprivacyinstall').click(function(e){
         e.preventDefault();
@@ -140,54 +143,82 @@ jQuery(document).ready(function(){
     });
 
     function fireimportRequest(data) {
-        return jQuery.post(ajaxurl, data, function(response){
+        return jQuery.getJSON(ajaxurl, data, function(response){
             cleanup = false;
-            if(response != 0){
+            if(response){
                 var redirect = false;
-                var progw = Math.ceil((((parseInt(response)*20)+parseInt(data.values['finished']))/parseInt(data.values['total'])) *100);
-                if(progw>100){
-                    progw=100;
+                var media_progw = Math.ceil((((parseInt(response.page)*5)+parseInt(data.values['finished']))/parseInt(data.values['total'])) *100);
+                comments_total = jQuery('#bpmedia-bpalbumimporter .bp-album-comments span.total').html();
+                users_total = jQuery('#bpmedia-bpalbumimporter .bp-album-users span.total').html();
+                comments_finished = jQuery('#bpmedia-bpalbumimporter .bp-album-comments span.finished').html();
+                users_finished = jQuery('#bpmedia-bpalbumimporter .bp-album-users span.finished').html();
+                var comments_progw = Math.ceil((((parseInt(response.comments))+parseInt(comments_finished))/parseInt(comments_total)) *100);
+                var users_progw = Math.ceil((parseInt(response.users)/parseInt(users_total)) *100);
+                if(media_progw>100 || media_progw==100 ){
+                    media_progw=100;
                     cleanup=true
                 };
-                jQuery('#rtprogressbar>div').css('width',progw+'%');
-                finished = jQuery('#bpmedia-bpalbumimport span.finished').html();
-                jQuery('#bpmedia-bpalbumimport span.finished').html(parseInt(finished)+data.count);
+                jQuery('.bp-album-media #rtprogressbar>div').css('width',media_progw+'%');
+                jQuery('.bp-album-comments #rtprogressbar>div').css('width',comments_progw+'%');
+                jQuery('.bp-album-users #rtprogressbar>div').css('width',users_progw+'%');
+                media_finished = jQuery('#bpmedia-bpalbumimporter .bp-album-media span.finished').html();
+                jQuery('#bpmedia-bpalbumimporter .bp-album-media span.finished').html(parseInt(media_finished)+data.count);
+                jQuery('#bpmedia-bpalbumimporter .bp-album-comments span.finished').html(parseInt(response.comments)+parseInt(comments_finished));
+                jQuery('#bpmedia-bpalbumimporter .bp-album-users span.finished').html(parseInt(response.users));
                 if ( cleanup ) {
-                        window.location = document.URL;
+                    window.location = document.URL;
                 }
             } else {
-                jQuery('#map_progress_msgs').html('<div class="map_mapping_failure">Row '+response+' failed.</div>');
+                jQuery('#map_progress_msgs').html('<div class="map_mapping_failure">Row '+response.page+' failed.</div>');
             }
         });
     }
 
-	jQuery('#bpmedia-bpalbumimport-cleanup').click(function(e){
-		e.preventDefault();
-		jQuery.post(ajaxurl, {
-                        action: 'bp_media_bp_album_cleanup'
-                    }, function(response){
-						window.location = settings_bp_album_import_url;
-					});
-
-	});
-
-    jQuery('#bpmedia-bpalbumimport').click(function(e){
+    jQuery('#bpmedia-bpalbumimport-cleanup').click(function(e){
         e.preventDefault();
+        jQuery.post(ajaxurl, {
+            action: 'bp_media_bp_album_cleanup'
+        }, function(response){
+            window.location = settings_bp_album_import_url;
+        });
+
+    });
+
+    jQuery('#bpmedia-bpalbumimporter').on('click','#bpmedia-bpalbumimport',function(e){
+        e.preventDefault();
+        if(!jQuery('#bp-album-import-accept').prop('checked')){
+            jQuery('html, body').animate({
+                scrollTop: jQuery( '#bp-album-import-accept' ).offset().top
+            }, 500);
+            var $el = jQuery('.bp-album-import-accept'),
+            x = 500,
+            originalColor = '#FFEBE8',
+            i = 3; //counter
+
+            (function loop() { //recurisve IIFE
+                $el.css("background-color", "#EE0000");    
+                setTimeout(function () {
+                    $el.css("background-color", originalColor);
+                    if (--i) setTimeout(loop, x); //restart loop
+                }, x);
+            }());
+            return;
+        }
+        jQuery(this).after(' <img src="../../../../../wp-admin/images/wpspin_light.gif" />');
         $progress_parent = jQuery('#bpmedia-bpalbumimport');
         $values=[];
         jQuery(this).parent().find('input').each(function(){
             $values [jQuery(this).attr('name')]=[jQuery(this).val()];
 
         });
-        console.log($values);
 
         $data = {};
         for(var i=1;i<=$values['steps'][0];i++ ){
-            $count=20;
+            $count=5;
             if(i==$values['steps'][0]){
                 $count=parseInt($values['laststep'][0]);
                 if($count==0){
-                    $count=20
+                    $count=5
                 };
             }
             newvals = {
@@ -198,7 +229,6 @@ jQuery(document).ready(function(){
             }
             $data[i] = newvals;
         }
-		console.log($data);
         var $startingpoint = jQuery.Deferred();
         $startingpoint.resolve();
         jQuery.each($data, function(i, v){
@@ -232,6 +262,20 @@ jQuery(document).ready(function(){
             jQuery('#video-transcoding-main-container').html('<p><strong>'+response+'</strong></p>');
         });
         return false;
+    });
+    
+    jQuery('#bpmedia-bpalbumimporter').on('click','.deactivate-bp-album',function(e){
+        e.preventDefault();
+        $bpalbum = jQuery(this);
+        var data = {
+            action: 'bp_media_bp_album_deactivate'
+        }
+        jQuery.get(ajaxurl, data, function(response) {
+            if(response)
+                location.reload();
+            else
+                $bpalbum.parent().after('<p>Something went wronng. Please <a href onclick="location.reload();">refresh</a> page.</p>');
+        });
     });
 
 

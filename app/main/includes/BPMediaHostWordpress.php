@@ -110,14 +110,21 @@ class BPMediaHostWordpress {
      * @throws Exception
      * @uses global var $_FILES
      */
-    function add_media($name, $description, $album_id = 0, $group = 0, $is_multiple = false, $is_activity = false, $files = false) {
+    function add_media($name, $description, $album_id = 0, $group = 0, $is_multiple = false, $is_activity = false, $files = false, $author_id = false, $album_name = false) {
+        echo $this->insert_media($name, $description, $album_id, $group, $is_multiple, $is_activity, $files, $author_id, $album_name);
+    }
+    
+    function insert_media($name, $description, $album_id = 0, $group = 0, $is_multiple = false, $is_activity = false, $files = false, $author_id = false, $album_name = false){
         do_action('bp_media_before_add_media');
 
         global $bp, $wpdb, $bp_media;
         include_once(ABSPATH . 'wp-admin/includes/file.php');
         include_once(ABSPATH . 'wp-admin/includes/image.php');
-
-        $post_id = $this->check_and_create_album($album_id, $group);
+        
+        if ( !$author_id )
+            $author_id = get_current_user_id ();
+        
+        $post_id = $this->check_and_create_album($album_id, $group, $author_id, $album_name);
 
         if (!$files) {
             $files = $_FILES['bp_media_file'];
@@ -220,7 +227,7 @@ class BPMediaHostWordpress {
                 $activity_content = false;
                 throw new Exception(__('Media File you have tried to upload is not supported. Supported media files are .jpg, .png, .gif, .mp3, .mov and .mp4.', BP_MEDIA_TXT_DOMAIN));
         }
-        echo $attachment_id = wp_insert_attachment($attachment, $file, $post_id);
+        $attachment_id = wp_insert_attachment($attachment, $file, $post_id);
         if (!is_wp_error($attachment_id)) {
             wp_update_attachment_metadata($attachment_id, wp_generate_attachment_metadata($attachment_id, $file));
         } else {
@@ -231,12 +238,12 @@ class BPMediaHostWordpress {
         $this->name = $name;
         $this->description = $description;
         $this->type = $type;
-        $this->owner = get_current_user_id();
+        $this->owner = $author_id;
         $this->album_id = $post_id;
         $this->group_id = $group;
         $this->set_permalinks();
         if ($group == 0) {
-            update_post_meta($attachment_id, 'bp-media-key', get_current_user_id());
+            update_post_meta($attachment_id, 'bp-media-key', $author_id);
         } else {
             update_post_meta($attachment_id, 'bp-media-key', (-$group));
         }
@@ -358,13 +365,13 @@ class BPMediaHostWordpress {
             case 'video' :
                 if ($this->thumbnail_id) {
                     $image_array = image_downsize($this->thumbnail_id, 'bp_media_single_image');
-                    $content.=apply_filters('bp_media_single_content_filter', '<video poster="' . $image_array[0] . '" src="' . wp_get_attachment_url($this->id) . '" width="' . $default_sizes['single_video']['width'] . '" height="' . ($default_sizes['single_video']['height'] == 0 ? 'auto' : $default_sizes['single_video']['height']) . '" type="video/mp4" id="bp_media_video_' . $this->id . '" controls="controls" preload="none"></video><script>bp_media_create_element("bp_media_video_' . $this->id . '");</script>', $this);
+                    $content.=apply_filters('bp_media_single_content_filter', '<video poster="' . $image_array[0] . '" src="' . wp_get_attachment_url($this->id) . '" width="' . $default_sizes['single_video']['width'] . '" height="' . ($default_sizes['single_video']['height'] == 0 ? 'auto' : $default_sizes['single_video']['height']) . '" type="video/mp4" id="bp_media_video_' . $this->id . '" controls="controls" preload="none"></video>', $this);
                 } else {
-                    $content.=apply_filters('bp_media_single_content_filter', '<video src="' . wp_get_attachment_url($this->id) . '" width="' . $default_sizes['single_video']['width'] . '" height="' . ($default_sizes['single_video']['height'] == 0 ? 'auto' : $default_sizes['single_video']['height']) . '" type="video/mp4" id="bp_media_video_' . $this->id . '" controls="controls" preload="none"></video><script>bp_media_create_element("bp_media_video_' . $this->id . '");</script>', $this);
+                    $content.=apply_filters('bp_media_single_content_filter', '<video src="' . wp_get_attachment_url($this->id) . '" width="' . $default_sizes['single_video']['width'] . '" height="' . ($default_sizes['single_video']['height'] == 0 ? 'auto' : $default_sizes['single_video']['height']) . '" type="video/mp4" id="bp_media_video_' . $this->id . '" controls="controls" preload="none"></video>', $this);
                 }
                 break;
             case 'audio' :
-                $content.=apply_filters('bp_media_single_content_filter', '<audio src="' . wp_get_attachment_url($this->id) . '" width="' . $default_sizes['single_audio']['width'] . '" type="audio/mp3" id="bp_media_audio_' . $this->id . '" controls="controls" preload="none" ></audio><script>bp_media_create_element("bp_media_audio_' . $this->id . '");</script>', $this);
+                $content.=apply_filters('bp_media_single_content_filter', '<audio src="' . wp_get_attachment_url($this->id) . '" width="' . $default_sizes['single_audio']['width'] . '" type="audio/mp3" id="bp_media_audio_' . $this->id . '" controls="controls" preload="none" ></audio>', $this);
                 break;
             case 'image' :
                 $image_array = image_downsize($this->id, 'bp_media_single_image');
@@ -971,13 +978,14 @@ class BPMediaHostWordpress {
      * @param type $group
      * @return type
      */
-    function check_and_create_album($album_id, $group) {
+    function check_and_create_album($album_id, $group, $author_id = false, $album_name = false) {
         global $wpdb;
-        $post_wall = __('Wall Posts', BP_MEDIA_TXT_DOMAIN);
+        if (!$album_name)
+            $album_name = __('Wall Posts', BP_MEDIA_TXT_DOMAIN);
         $create_new_album_flag = false;
         if ($album_id != 0) {
             $album = get_post($album_id);
-            if ($album->post_author != get_current_user_id() && $group == 0) {
+            if ($album->post_author != $author_id && $group == 0) {
                 $create_new_album_flag = true;
             } else {
                 $post_id = $album->ID;
@@ -992,13 +1000,13 @@ class BPMediaHostWordpress {
                         "SELECT ID
 						FROM $wpdb->posts
 						WHERE
-							post_title = $post_wall
-							AND post_author = '" . get_current_user_id() . "'
+							post_title = '$album_name'
+							AND post_author = '" . $author_id . "'
 							AND post_type='bp_media_album'"
                 );
             } else {
                 $post_id = $wpdb->get_var(
-                        "SELECT wp_posts.ID
+                        "SELECT $wpdb->posts.ID
 						FROM $wpdb->posts
 						INNER JOIN $wpdb->postmeta ON $wpdb->posts.ID = $wpdb->postmeta.post_id
 							AND $wpdb->postmeta.meta_key =  'bp-media-key'
@@ -1008,9 +1016,9 @@ class BPMediaHostWordpress {
             if ($post_id == null) {
                 $album = new BPMediaAlbum();
                 if ($group == 0)
-                    $album->add_album($post_wall, get_current_user_id(), $group);
+                    $album->add_album($album_name, $author_id, $group);
                 else {
-                    $album->add_album($current_user->display_name . '\'s Album', get_current_user_id(), $group);
+                    $album->add_album($current_user->display_name . '\'s Album', $author_id, $group);
                 }
                 $post_id = $album->get_id();
             }

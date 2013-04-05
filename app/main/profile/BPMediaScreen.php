@@ -108,7 +108,7 @@ class BPMediaScreen {
      *
      * @global type $bp_media
      */
-    private function page_not_exist() {
+    public function page_not_exist() {
         @setcookie('bp-message', __('The requested url does not exist', BP_MEDIA_TXT_DOMAIN), time() + 60 * 60 * 24, COOKIEPATH);
         @setcookie('bp-message-type', 'error', time() + 60 * 60 * 24, COOKIEPATH);
         $this->template->redirect($this->media_const);
