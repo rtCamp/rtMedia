@@ -77,7 +77,7 @@ if (class_exists('BP_Group_Extension')) :
                 if (isset($bp->action_variables[1])) {
                     switch ($bp->action_variables[1]) {
                         case 'edit':
-                            $bp_media_content->edit_screen_content();
+                            //$bp_media_content->edit_screen_content();
                             break;
                         case 'delete':
                             //Delete function for media file
