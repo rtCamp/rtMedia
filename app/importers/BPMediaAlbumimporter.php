@@ -129,7 +129,7 @@ class BPMediaAlbumimporter extends BPMediaImporter {
                 echo '<p>' . sprintf(__('The following %d BP Album Media id\'s could not be imported', BP_MEDIA_TXT_DOMAIN), count($corrupt_media)) . ': </p>';
                 $corrupt_prefix_path = str_replace('/wp-content','',WP_CONTENT_URL);
                 foreach ($corrupt_media as $corrupt) {
-                    echo '<p>'.$corrupt->id.' => <a href="'.$corrupt_prefix_path.$corrupt->pic_org_url.'">'.$corrupt_prefix_path.$corrupt->pic_org_url.'</a></p>';
+                    echo '<p>'.$corrupt->id.' => <a href="'.$corrupt_prefix_path.$corrupt->pic_org_url.'">'.$corrupt->title.'</a></p>';
                 }
                 echo '</div>';
             } else {
@@ -255,7 +255,7 @@ class BPMediaAlbumimporter extends BPMediaImporter {
         global $wpdb;
         $table = $wpdb->base_prefix . 'bp_album';
         if (BPMediaAlbumimporter::table_exists($table) && BPMediaAlbumimporter::_active('bp-album/loader.php') != -1) {
-            return $wpdb->get_results("SELECT id,pic_org_url FROM $table WHERE import_status=-1");
+            return $wpdb->get_results("SELECT id,title,pic_org_url FROM $table WHERE import_status=-1");
         }
         return 0;
     }
