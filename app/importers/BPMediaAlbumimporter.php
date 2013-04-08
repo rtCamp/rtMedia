@@ -49,10 +49,10 @@ class BPMediaAlbumimporter extends BPMediaImporter {
         $finished_users = BPMediaAlbumimporter::get_completed_users();
         $finished_comments = $this->get_finished_comments();
         $total_comments = (int) $finished_comments + (int) $remaining_comments;
-
-        //(isset($total) && isset($finished) && is_array($total) && is_array($finished)){
+        $completed_users_favorites = (int) get_site_option('bp_media_bp_album_favorite_import_status', 0);
+        $users = count_users();
         echo '<div id="bpmedia-bpalbumimporter">';
-        if ($finished[0]->media != $total[0]->media) {
+        if (($finished[0]->media != $total[0]->media) || ( $users['total_users'] > $completed_users_favorites )) {
             if (!$total[0]->media) {
                 echo '<p><strong>' . __('You have nothing to import') . '</strong></p>';
             } elseif (BPMediaAlbumimporter::_active('bp-album/loader.php') != 1) {
@@ -92,18 +92,27 @@ class BPMediaAlbumimporter extends BPMediaImporter {
                 }
                 echo '</div>';
                 echo "<br>";
+                echo '<div class="bp-album-comments">';
                 if ($total_comments != 0) {
-
-                    echo '<div class="bp-album-comments">';
                     echo '<strong>';
                     echo __('Comments', BP_MEDIA_TXT_DOMAIN) . ': <span class="finished">' . $finished_comments . '</span> / <span class="total">' . $total_comments . '</span>';
                     echo '</strong>';
                     $comments_progress = $this->progress->progress($finished_comments, $total_comments);
                     $this->progress->progress_ui($comments_progress);
-                    echo '</div>';
                     echo '<br />';
                 } else {
                     echo '<p><strong>' . __('Comments: 0/0 (No comments to import)', BP_MEDIA_TXT_DOMAIN) . '</strong></p>';
+                }
+                echo '</div>';
+                if ($completed_users_favorites != 0) {
+                    echo '<br />';
+                    echo '<div class="bp-album-favorites">';
+                    echo '<strong>';
+                    echo __('User\'s Favorites', BP_MEDIA_TXT_DOMAIN) . ': <span class="finished">' . $completed_users_favorites . '</span> / <span class="total">' . $users['total_users'] . '</span>';
+                    echo '</strong>';
+                    $favorites_progress = $this->progress->progress($completed_users_favorites, $users['total_users']);
+                    $this->progress->progress_ui($favorites_progress);
+                    echo '</div>';
                 }
                 echo '</div>';
             } else {
@@ -280,7 +289,7 @@ class BPMediaAlbumimporter extends BPMediaImporter {
         global $wpdb;
         $table = $wpdb->base_prefix . 'bp_album';
         $users = count_users();
-        echo json_encode(array('favorites'=>$wpdb->get_var("SELECT COUNT(id) from $table WHERE favorites != 0"), 'users'=>$users['total_users'] ));
+        echo json_encode(array('favorites' => $wpdb->get_var("SELECT COUNT(id) from $table WHERE favorites != 0"), 'users' => $users['total_users'], 'offset' => (int) get_site_option('bp_media_bp_album_favorite_import_status', 0)));
         die();
     }
 
@@ -289,7 +298,7 @@ class BPMediaAlbumimporter extends BPMediaImporter {
         $redirect = isset($_POST['redirect']) ? $_POST['redirect'] : FALSE;
         global $wpdb;
         $table = $wpdb->base_prefix . 'bp_album';
-        $blogusers = get_users(array('meta_key' => 'bp_favorite_activities', 'offset' => $offset, 'number' => 20));
+        $blogusers = get_users(array('meta_key' => 'bp_favorite_activities', 'offset' => $offset, 'number' => 1));
         if ($blogusers) {
             foreach ($blogusers as $user) {
                 $favorite_activities = get_user_meta($user->ID, 'bp_favorite_activities', true);
@@ -301,6 +310,8 @@ class BPMediaAlbumimporter extends BPMediaImporter {
                     }
                     update_user_meta($user->ID, 'bp_favorite_activities', $new_favorite_activities);
                 }
+                $completed_users_favorites = (int) get_site_option('bp_media_bp_album_favorite_import_status', 0) + 1;
+                update_site_option('bp_media_bp_album_favorite_import_status', $completed_users_favorites);
             }
         }
         echo $redirect;

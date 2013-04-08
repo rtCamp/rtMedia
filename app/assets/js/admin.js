@@ -151,6 +151,7 @@ jQuery(document).ready(function(){
                 var media_progw = Math.ceil((((parseInt(response.page)*5)+parseInt(data.values['finished']))/parseInt(data.values['total'])) *100);
                 comments_total = jQuery('#bpmedia-bpalbumimporter .bp-album-comments span.total').html();
                 users_total = jQuery('#bpmedia-bpalbumimporter .bp-album-users span.total').html();
+                media_total = jQuery('#bpmedia-bpalbumimporter .bp-album-media span.total').html();
                 comments_finished = jQuery('#bpmedia-bpalbumimporter .bp-album-comments span.finished').html();
                 users_finished = jQuery('#bpmedia-bpalbumimporter .bp-album-users span.finished').html();
                 var comments_progw = Math.ceil((((parseInt(response.comments))+parseInt(comments_finished))/parseInt(comments_total)) *100);
@@ -163,7 +164,8 @@ jQuery(document).ready(function(){
                 jQuery('.bp-album-comments #rtprogressbar>div').css('width',comments_progw+'%');
                 jQuery('.bp-album-users #rtprogressbar>div').css('width',users_progw+'%');
                 media_finished = jQuery('#bpmedia-bpalbumimporter .bp-album-media span.finished').html();
-                jQuery('#bpmedia-bpalbumimporter .bp-album-media span.finished').html(parseInt(media_finished)+data.count);
+                if (parseInt(media_finished)<parseInt(media_total))
+                    jQuery('#bpmedia-bpalbumimporter .bp-album-media span.finished').html(parseInt(media_finished)+data.count);
                 jQuery('#bpmedia-bpalbumimporter .bp-album-comments span.finished').html(parseInt(response.comments)+parseInt(comments_finished));
                 jQuery('#bpmedia-bpalbumimporter .bp-album-users span.finished').html(parseInt(response.users));
                 if ( favorites ) {
@@ -172,9 +174,14 @@ jQuery(document).ready(function(){
                     }
                     jQuery.post(ajaxurl,favorite_data,function(response){
                         if(response.favorites!==0||response.favorites!=='0'){
-                            jQuery('.bp-album-comments').after('<br /><div class="bp-album-favorites"><strong>User\'s Favorites: <span class="finished">0</span> / <span class="total">'+response.users+'</span></strong><div id="rtprogressbar"><div style="width:0%"></div></div></div>');
+                            if(!jQuery('.bp-album-favorites').length)
+                                jQuery('.bp-album-comments').after('<br /><div class="bp-album-favorites"><strong>User\'s Favorites: <span class="finished">0</span> / <span class="total">'+response.users+'</span></strong><div id="rtprogressbar"><div style="width:0%"></div></div></div>');
                             $favorites = {};
-                            for(var i=1;i<=response.users;i++ ){
+                            if (response.offset != 0 || response.offset != '0')
+                                start = response.offset*1+1;
+                            else
+                                start = 1
+                            for(var i=start;i<=response.users;i++ ){
                                 $count=1;
                                 if(i==response.users){
                                     $count=parseInt(response.users % $count);
@@ -182,6 +189,7 @@ jQuery(document).ready(function(){
                                         $count=1;
                                     }
                                 }
+                                
                                 newvals = {
                                     'action':'bp_media_bp_album_import_step_favorites',
                                     'offset':(i-1)*1,
@@ -198,13 +206,10 @@ jQuery(document).ready(function(){
                             });
                             
                         } else {
-                            window.location = document.URL;
+                            window.setTimeout(reload_url, 2000);
                         }
                     },'json');
                 }
-            //                if ( cleanup ) {
-            //                    window.location = document.URL;
-            //                }
             } else {
                 jQuery('#map_progress_msgs').html('<div class="map_mapping_failure">Row '+response.page+' failed.</div>');
             }
@@ -219,14 +224,18 @@ jQuery(document).ready(function(){
             jQuery('#bpmedia-bpalbumimporter .bp-album-favorites span.finished').html(parseInt(favorites_finished)+1);
             var favorites_progw = Math.ceil((parseInt(favorites_finished+1)/parseInt(favorites_total)) *100);
             if(favorites_progw>100 || favorites_progw==100 ){
-                    favorites_progw=100;
-                    redirect=true;
+                favorites_progw=100;
+                redirect=true;
             }
             jQuery('.bp-album-favorites #rtprogressbar>div').css('width',favorites_progw+'%');
             if(redirect){
-                window.location = document.URL;
+                window.setTimeout(reload_url, 2000);
             } 
         });
+    }
+    
+    function reload_url(){
+        window.location = document.URL;
     }
 
     jQuery('#bpmedia-bpalbumimport-cleanup').click(function(e){
@@ -262,7 +271,7 @@ jQuery(document).ready(function(){
             jQuery(this).prop('disabled', true);
         }
         if (!jQuery('.bpm-ajax-loader').length)
-            jQuery(this).after(' <img class="bpm-ajax-loader" src="../../../../../wp-admin/images/wpspin_light.gif" />');
+            jQuery(this).after(' <img class="bpm-ajax-loader" src="../../../../../wp-admin/images/wpspin_light.gif" /> <strong>Please don not refresh this page.</strong>');
         
         
         $progress_parent = jQuery('#bpmedia-bpalbumimport');
@@ -271,6 +280,9 @@ jQuery(document).ready(function(){
             $values [jQuery(this).attr('name')]=[jQuery(this).val()];
 
         });
+        
+        if ( $values['steps'][0] == 0 )
+            $values['steps'][0]=1;
 
         $data = {};
         for(var i=1;i<=$values['steps'][0];i++ ){
