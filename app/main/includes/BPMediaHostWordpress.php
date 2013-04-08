@@ -281,7 +281,7 @@ class BPMediaHostWordpress {
     function get_media_activity_content() {
         global $bp_media_counter, $bp_media_default_excerpts, $bp_media;
         $attachment_id = $this->id;
-        $activity_content = apply_filters('bp_media_single_activity_title', '<div class="bp_media_title"><a href="' . $this->url . '" title="' . __($this->description, BP_MEDIA_TXT_DOMAIN) . '">' . __(wp_html_excerpt($this->name, $bp_media_default_excerpts['activity_entry_title']), BP_MEDIA_TXT_DOMAIN) . '</a></div>');
+        $activity_content = apply_filters('bp_media_single_activity_title', '<div class="bp_media_title"><a href="' . $this->url . '" title="' . __($this->name, BP_MEDIA_TXT_DOMAIN) . '">' . __(wp_html_excerpt($this->name, $bp_media_default_excerpts['activity_entry_title']), BP_MEDIA_TXT_DOMAIN) . '</a></div>');
         $activity_content .='<div class="bp_media_content">';
         switch ($this->type) {
             case 'video' :

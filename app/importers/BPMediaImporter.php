@@ -67,9 +67,12 @@ class BPMediaImporter {
         if (!is_dir($tmp_dir)) {
             wp_mkdir_p($tmp_dir);
         }
-        if (copy($filepath, $newpath)) {
-            return BPMediaImporter::file_array($newpath);
+        if(file_exists($filepath)) {
+            if (copy($filepath, $newpath)) {
+                return BPMediaImporter::file_array($newpath);
+            }
         }
+        return 0;
     }
 
     function create_album($album_name = '', $author_id = 1) {

@@ -122,15 +122,26 @@ class BPMediaAlbumimporter extends BPMediaImporter {
                 echo '<p><a class="button button-primary deactivate-bp-album" href="' . $deactivate_link . '">' . __('Click here to deactivate BP-Album and continue importing', BP_MEDIA_TXT_DOMAIN) . '</a></p>';
             }
         } else {
-            echo '<div class="bp-album-import-accept i-accept">';
-            echo '<p class="info">';
-            $message = sprintf(__('I just imported bp-album to @buddypressmedia http://goo.gl/8Upmv on %s', BP_MEDIA_TXT_DOMAIN), home_url());
-            echo '<strong>' . __('Congratulations!', BP_MEDIA_TXT_DOMAIN) . '</strong> ' . __('All media from BP Album has been imported.', BP_MEDIA_TXT_DOMAIN);
-            echo ' <a href="http://twitter.com/home/?status=' . $message . '" class="button button-import-tweet" target= "_blank">' . __('Tweet this', BP_MEDIA_TXT_DOMAIN) . '</a>';
-            echo '</p>';
-            echo '</div>';
-            echo '<p>' . __('However, a lot of unnecessary files and a database table are still eating up your resources. If everything seems fine, you can clean this data up.', BP_MEDIA_TXT_DOMAIN);
-            echo '<br />';
+            $corrupt_media = BPMediaAlbumimporter::get_corrupt_media();
+            if ($corrupt_media) {
+                echo '<div class="error below-h2">';
+                echo '<p><strong>' . __('Some of the media failed to import. The file might be corrupt or deleted.', BP_MEDIA_TXT_DOMAIN) . '</strong></p>';
+                echo '<p>' . sprintf(__('The following %d BP Album Media id\'s could not be imported', BP_MEDIA_TXT_DOMAIN), count($corrupt_media)) . ': </p>';
+                $corrupt_prefix_path = str_replace('/wp-content','',WP_CONTENT_URL);
+                foreach ($corrupt_media as $corrupt) {
+                    echo '<p>'.$corrupt->id.' => <a href="'.$corrupt_prefix_path.$corrupt->pic_org_url.'">'.$corrupt_prefix_path.$corrupt->pic_org_url.'</a></p>';
+                }
+                echo '</div>';
+            } else {
+                echo '<div class="bp-album-import-accept i-accept">';
+                echo '<p class="info">';
+                $message = sprintf(__('I just imported bp-album to @buddypressmedia http://goo.gl/8Upmv on %s', BP_MEDIA_TXT_DOMAIN), home_url());
+                echo '<strong>' . __('Congratulations!', BP_MEDIA_TXT_DOMAIN) . '</strong> ' . __('All media from BP Album has been imported.', BP_MEDIA_TXT_DOMAIN);
+                echo ' <a href="http://twitter.com/home/?status=' . $message . '" class="button button-import-tweet" target= "_blank">' . __('Tweet this', BP_MEDIA_TXT_DOMAIN) . '</a>';
+                echo '</p>';
+                echo '</div>';
+            }
+            echo '<p>' . __('However, a lot of unnecessary files and a database table are still eating up your resources. If everything seems fine, you can clean this data up.', BP_MEDIA_TXT_DOMAIN) . '</p>';
             echo '<br />';
             echo '<button id="bpmedia-bpalbumimport-cleanup" class="button btn-warning">';
             _e('Clean up Now', BP_MEDIA_TXT_DOMAIN);
@@ -240,6 +251,15 @@ class BPMediaAlbumimporter extends BPMediaImporter {
         return 0;
     }
 
+    static function get_corrupt_media() {
+        global $wpdb;
+        $table = $wpdb->base_prefix . 'bp_album';
+        if (BPMediaAlbumimporter::table_exists($table) && BPMediaAlbumimporter::_active('bp-album/loader.php') != -1) {
+            return $wpdb->get_results("SELECT id,pic_org_url FROM $table WHERE import_status=-1");
+        }
+        return 0;
+    }
+
     static function batch_import($count = 5) {
         global $wpdb;
         $table = $wpdb->base_prefix . 'bp_album';
@@ -269,14 +289,16 @@ class BPMediaAlbumimporter extends BPMediaImporter {
             $imported_media_id = BPMediaImporter::add_media(
                             $album_id, $bp_album_item->title, $bp_album_item->description, $bp_album_item->pic_org_path, $bp_album_item->privacy, $bp_album_item->owner_id, 'Imported Media'
             );
-            $comments += (int) BPMediaAlbumimporter::update_recorded_time_and_comments($imported_media_id, $bp_album_item->id, "{$wpdb->base_prefix}bp_album");
-            $wpdb->update($table, array('import_status' => $imported_media_id), array('id' => $bp_album_item->id), array('%d'), array('%d'));
-            $bp_album_media_id = $wpdb->get_var("SELECT activity.id from $activity_table as activity INNER JOIN $table as album ON ( activity.item_id = album.id ) WHERE activity.item_id = $bp_album_item->id AND activity.component = 'album' AND activity.type='bp_album_picture'");
-            $wpdb->update($table, array('old_activity_id' => $bp_album_media_id), array('id' => $bp_album_item->id), array('%d'), array('%d'));
-            $bp_new_activity_id = $wpdb->get_var("SELECT id from $activity_table WHERE item_id = $imported_media_id AND component = 'activity' AND type='activity_update' AND secondary_item_id=0");
-            $wpdb->update($table, array('new_activity_id' => $bp_new_activity_id), array('id' => $bp_album_item->id), array('%d'), array('%d'));
-            if ($wpdb->update($activity_meta_table, array('activity_id' => $bp_new_activity_id), array('activity_id' => $bp_album_media_id, 'meta_key' => 'favorite_count'), array('%d'), array('%d'))) {
-                $wpdb->update($table, array('favorites' => 1), array('id' => $bp_album_item->id), array('%d'), array('%d'));
+            $wpdb->update($table, array('import_status' => ($imported_media_id) ? $imported_media_id : -1), array('id' => $bp_album_item->id), array('%d'), array('%d'));
+            if ($imported_media_id) {
+                $comments += (int) BPMediaAlbumimporter::update_recorded_time_and_comments($imported_media_id, $bp_album_item->id, "{$wpdb->base_prefix}bp_album");
+                $bp_album_media_id = $wpdb->get_var("SELECT activity.id from $activity_table as activity INNER JOIN $table as album ON ( activity.item_id = album.id ) WHERE activity.item_id = $bp_album_item->id AND activity.component = 'album' AND activity.type='bp_album_picture'");
+                $wpdb->update($table, array('old_activity_id' => $bp_album_media_id), array('id' => $bp_album_item->id), array('%d'), array('%d'));
+                $bp_new_activity_id = $wpdb->get_var("SELECT id from $activity_table WHERE item_id = $imported_media_id AND component = 'activity' AND type='activity_update' AND secondary_item_id=0");
+                $wpdb->update($table, array('new_activity_id' => $bp_new_activity_id), array('id' => $bp_album_item->id), array('%d'), array('%d'));
+                if ($wpdb->update($activity_meta_table, array('activity_id' => $bp_new_activity_id), array('activity_id' => $bp_album_media_id, 'meta_key' => 'favorite_count'), array('%d'), array('%d'))) {
+                    $wpdb->update($table, array('favorites' => 1), array('id' => $bp_album_item->id), array('%d'), array('%d'));
+                }
             }
         }
 
@@ -341,14 +363,16 @@ class BPMediaAlbumimporter extends BPMediaImporter {
             if ($activity_id) {
                 $date_uploaded = $wpdb->get_var("SELECT date_uploaded from $table WHERE id = $bp_album_id");
                 $old_activity_id = $wpdb->get_var("SELECT id from {$wpdb->base_prefix}bp_activity WHERE component = 'album' AND type = 'bp_album_picture' AND item_id = $bp_album_id");
-                $comments = $wpdb->get_results("SELECT id,secondary_item_id from {$wpdb->base_prefix}bp_activity WHERE component = 'activity' AND type = 'activity_comment' AND item_id = $old_activity_id");
-                foreach ($comments as $comment) {
-                    $update = array('item_id' => $activity_id);
-                    if ($comment->secondary_item_id == $old_activity_id) {
-                        $update['secondary_item_id'] = $activity_id;
+                if ($old_activity_id) {
+                    $comments = $wpdb->get_results("SELECT id,secondary_item_id from {$wpdb->base_prefix}bp_activity WHERE component = 'activity' AND type = 'activity_comment' AND item_id = $old_activity_id");
+                    foreach ($comments as $comment) {
+                        $update = array('item_id' => $activity_id);
+                        if ($comment->secondary_item_id == $old_activity_id) {
+                            $update['secondary_item_id'] = $activity_id;
+                        }
+                        $wpdb->update($wpdb->base_prefix . 'bp_activity', $update, array('id' => $comment->id));
+                        BP_Activity_Activity::rebuild_activity_comment_tree($activity_id);
                     }
-                    $wpdb->update($wpdb->base_prefix . 'bp_activity', $update, array('id' => $comment->id));
-                    BP_Activity_Activity::rebuild_activity_comment_tree($activity_id);
                 }
                 $wpdb->update($wpdb->base_prefix . 'bp_activity', array('date_recorded' => $date_uploaded), array('id' => $activity_id));
                 return count($comments);
