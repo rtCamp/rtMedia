@@ -270,8 +270,9 @@ jQuery(document).ready(function(){
         } else {
             jQuery(this).prop('disabled', true);
         }
+        wp_admin_url = ajaxurl.replace('admin-ajax.php','');
         if (!jQuery('.bpm-ajax-loader').length)
-            jQuery(this).after(' <img class="bpm-ajax-loader" src="../../../../../wp-admin/images/wpspin_light.gif" /> <strong>Please don not refresh this page.</strong>');
+            jQuery(this).after(' <img class="bpm-ajax-loader" src="'+wp_admin_url+'images/wpspin_light.gif" /> <strong>Please do not refresh this page.</strong>');
         
         
         $progress_parent = jQuery('#bpmedia-bpalbumimport');
