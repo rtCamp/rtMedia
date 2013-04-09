@@ -81,7 +81,7 @@ class BPMediaAlbumScreen extends BPMediaScreen {
             echo '</ul>';
             $this->template->show_more('albums');
         else:
-            BPMediaFunction::show_formatted_error_message(sprintf(__('Sorry, no %s were found.', BP_MEDIA_TXT_DOMAIN), $this->slug), 'info');
+            BPMediaFunction::show_formatted_error_message(sprintf(__('Sorry, no %s were found.', 'buddypress-media'), $this->slug), 'info');
         endif;
         $this->hook_after();
     }
@@ -136,10 +136,10 @@ class BPMediaAlbumScreen extends BPMediaScreen {
 
             if ($allowed_edit != false) {
                 echo '<div class="album-edit">';
-                echo '<a href="' . $bp_media_current_album->get_edit_url() . '" class="button item-button bp-secondary-action bp-media-edit bp-media-edit-album" title="' . __('Edit Album', BP_MEDIA_TXT_DOMAIN) . '">' . __('Edit', BP_MEDIA_TXT_DOMAIN) . '</a>';
+                echo '<a href="' . $bp_media_current_album->get_edit_url() . '" class="button item-button bp-secondary-action bp-media-edit bp-media-edit-album" title="' . __('Edit Album', 'buddypress-media') . '">' . __('Edit', 'buddypress-media') . '</a>';
                 $media_actions = new BPMediaActions();
                 if ( $media_actions->default_user_album() != $bp_media_current_album->get_id())
-                    echo '<a href="' . $bp_media_current_album->get_delete_url() . '" class="button item-button bp-secondary-action delete-activity-single confirm" rel="nofollow">' . __("Delete", BP_MEDIA_TXT_DOMAIN) . '</a>';
+                    echo '<a href="' . $bp_media_current_album->get_delete_url() . '" class="button item-button bp-secondary-action delete-activity-single confirm" rel="nofollow">' . __("Delete", 'buddypress-media') . '</a>';
                 echo '</div>';
             }
         }
@@ -158,7 +158,7 @@ class BPMediaAlbumScreen extends BPMediaScreen {
             echo '</ul>';
             $this->template->show_more();
         } else {
-            BPMediaFunction::show_formatted_error_message(__('Sorry, no media items were found in this album.', BP_MEDIA_TXT_DOMAIN), 'info');
+            BPMediaFunction::show_formatted_error_message(__('Sorry, no media items were found in this album.', 'buddypress-media'), 'info');
             if (bp_is_my_profile() || BPMediaGroupLoader::can_upload()) {
                 echo '<div class="bp-media-area-allocate"></div>';
                 BPMediaUploadScreen::upload_screen_content();

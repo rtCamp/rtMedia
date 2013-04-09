@@ -21,7 +21,7 @@ if (class_exists('BP_Group_Extension')) :// Recommended, to prevent problems dur
          */
         function __construct() {
             global $bp;
-            $this->name = __(BP_MEDIA_LABEL, BP_MEDIA_TXT_DOMAIN);
+            $this->name = __(BP_MEDIA_LABEL, 'buddypress-media');
             $this->slug = BP_MEDIA_SLUG;
             $this->create_step_position = 21;
             $this->nav_item_position = 31;
@@ -37,20 +37,20 @@ if (class_exists('BP_Group_Extension')) :// Recommended, to prevent problems dur
             if (!bp_is_group_creation_step($this->slug))
                 return false;
             ?>
-            <h4><?php _e("Album Creation Control", BP_MEDIA_TXT_DOMAIN); ?></h4>
-            <p><?php _e("Who can create Albums in this group?", BP_MEDIA_TXT_DOMAIN); ?></p>
+            <h4><?php _e("Album Creation Control", 'buddypress-media'); ?></h4>
+            <p><?php _e("Who can create Albums in this group?", 'buddypress-media'); ?></p>
             <div class="radio">
                 <label>
                     <input name="bp_album_creation_control" type="radio" id="bp_media_group_level_moderators" checked="checked" value="all">
-                    <strong><?php _e("All Group Members", BP_MEDIA_TXT_DOMAIN); ?></strong>
+                    <strong><?php _e("All Group Members", 'buddypress-media'); ?></strong>
                 </label>
                 <label>
                     <input name="bp_album_creation_control" type="radio" id="bp_media_group_level_moderators" value="moderators">
-                    <strong><?php _e("Group Admins and Mods only", BP_MEDIA_TXT_DOMAIN); ?></strong>
+                    <strong><?php _e("Group Admins and Mods only", 'buddypress-media'); ?></strong>
                 </label>
                 <label>
                     <input name="bp_album_creation_control" type="radio" id="bp_media_group_level_admin" value="admin">
-                    <strong><?php _e("Group Admin only", BP_MEDIA_TXT_DOMAIN); ?></strong>
+                    <strong><?php _e("Group Admin only", 'buddypress-media'); ?></strong>
                 </label>
             </div>
 
@@ -84,24 +84,24 @@ if (class_exists('BP_Group_Extension')) :// Recommended, to prevent problems dur
             $current_level = groups_get_groupmeta(bp_get_current_group_id(), 'bp_media_group_control_level');
             ?>
 
-            <h4><?php _e("Album Creation Control", BP_MEDIA_TXT_DOMAIN); ?></h4>
-            <p><?php _e("Who can create Albums in this group?", BP_MEDIA_TXT_DOMAIN); ?></p>
+            <h4><?php _e("Album Creation Control", 'buddypress-media'); ?></h4>
+            <p><?php _e("Who can create Albums in this group?", 'buddypress-media'); ?></p>
             <div class="radio">
                 <label>
                     <input name="bp_album_creation_control" type="radio" id="bp_media_group_level_moderators"  value="all"<?php checked($current_level, 'all', true) ?>>
-                    <strong><?php _e("All Group Members", BP_MEDIA_TXT_DOMAIN); ?></strong>
+                    <strong><?php _e("All Group Members", 'buddypress-media'); ?></strong>
                 </label>
                 <label>
                     <input name="bp_album_creation_control" type="radio" id="bp_media_group_level_moderators" value="moderators" <?php checked($current_level, 'moderators', true) ?>>
-                    <strong><?php _e("Group Admins and Mods only", BP_MEDIA_TXT_DOMAIN); ?></strong>
+                    <strong><?php _e("Group Admins and Mods only", 'buddypress-media'); ?></strong>
                 </label>
                 <label>
                     <input name="bp_album_creation_control" type="radio" id="bp_media_group_level_admin" value="admin" <?php checked($current_level, 'admin', true) ?>>
-                    <strong><?php _e("Group Admin only", BP_MEDIA_TXT_DOMAIN); ?></strong>
+                    <strong><?php _e("Group Admin only", 'buddypress-media'); ?></strong>
                 </label>
             </div>
             <hr>
-            <input type="submit" name="save" value="<?php _e("Save Changes", BP_MEDIA_TXT_DOMAIN); ?> />
+            <input type="submit" name="save" value="<?php _e("Save Changes", 'buddypress-media'); ?> />
             <?php
             wp_nonce_field('groups_edit_save_' . $this->slug);
         }
@@ -127,9 +127,9 @@ if (class_exists('BP_Group_Extension')) :// Recommended, to prevent problems dur
 
             /* To post an error/success message to the screen, use the following */
             if (!$success)
-                bp_core_add_message(__('There was an error saving, please try again', BP_MEDIA_TXT_DOMAIN), 'error');
+                bp_core_add_message(__('There was an error saving, please try again', 'buddypress-media'), 'error');
             else
-                bp_core_add_message(__('Settings saved successfully', BP_MEDIA_TXT_DOMAIN));
+                bp_core_add_message(__('Settings saved successfully', 'buddypress-media'));
 
             bp_core_redirect(bp_get_group_permalink($bp->groups->current_group) . '/admin/' . $this->slug);
         }
@@ -151,7 +151,7 @@ if (class_exists('BP_Group_Extension')) :// Recommended, to prevent problems dur
                    <h4><?php echo esc_attr($this->name) ?></h4>
             <p>
                 <?php _e("You could display a small snippet of information from your group extension here. It will show on the group
-	                home screen.", BP_MEDIA_TXT_DOMAIN); ?>
+	                home screen.", 'buddypress-media'); ?>
             </p>
             </div>
             <?php

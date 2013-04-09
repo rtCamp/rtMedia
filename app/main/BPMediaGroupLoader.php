@@ -199,7 +199,7 @@ class BPMediaGroupLoader {
             <ul>
         <?php
         foreach ($bp_media_group_tabs as $tab_slug => $tab_info) {
-            echo '<li id="' . $tab_slug . '-group-li" ' . ($current_tab == $tab_slug ? 'class="current selected"' : '') . '><a id="' . $tab_slug . '" href="' . $tab_info['url'] . '" title="' . __($tab_info['label'], BP_MEDIA_TXT_DOMAIN) . '">' . __($tab_info['label'], BP_MEDIA_TXT_DOMAIN) . '</a></li>';
+            echo '<li id="' . $tab_slug . '-group-li" ' . ($current_tab == $tab_slug ? 'class="current selected"' : '') . '><a id="' . $tab_slug . '" href="' . $tab_info['url'] . '" title="' . __($tab_info['label'], 'buddypress-media') . '">' . __($tab_info['label'], 'buddypress-media') . '</a></li>';
         }
         ?>
             </ul>
@@ -249,7 +249,7 @@ class BPMediaGroupLoader {
                 $wp_admin_bar->add_menu(array(
                     'parent' => $bp->group_admin_menu_id,
                     'id' => 'bp-media-group',
-                    'title' => __('Media Settings', BP_MEDIA_TXT_DOMAIN),
+                    'title' => __('Media Settings', 'buddypress-media'),
                     'href' => bp_get_groups_action_link('admin/media')
                 ));
             }
@@ -302,7 +302,7 @@ class BPMediaGroupLoader {
                 ?>
         <div id="message" class="error">
             <p>
-        <?php _e($errorMessage, BP_MEDIA_TXT_DOMAIN); ?>
+        <?php _e($errorMessage, 'buddypress-media'); ?>
             </p>
         </div>
                 <?php

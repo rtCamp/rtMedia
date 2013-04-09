@@ -57,7 +57,7 @@ class BPMediaComponent extends BP_Component {
 					$bp->pages->{$this->id}->slug ) ?
 					$bp->pages->{$this->id}->slug : BP_MEDIA_SLUG,
 			// 'has_directory'         => true, // Set to false if not required
-			'search_string' => __( 'Search Media...', BP_MEDIA_TXT_DOMAIN ),
+			'search_string' => __( 'Search Media...', 'buddypress-media' ),
 		);
 		parent::setup_globals( $globals );
 	}
@@ -138,7 +138,7 @@ class BPMediaComponent extends BP_Component {
 
 		/* Create the main navigation on profile */
 		$main_nav = array(
-			'name' => __( BP_MEDIA_LABEL, BP_MEDIA_TXT_DOMAIN ),
+			'name' => __( BP_MEDIA_LABEL, 'buddypress-media' ),
 			'slug' => BP_MEDIA_SLUG,
 			'position' => 80,
 			'screen_function' => array( ${'bp_media_' . $default_tab}, 'screen' ),
@@ -171,7 +171,7 @@ class BPMediaComponent extends BP_Component {
 					$types .='s';
 				}
 				bp_core_new_nav_item( array(
-					'name' => __( constant( 'BP_MEDIA_' . strtoupper( $types ) . '_LABEL' ), BP_MEDIA_TXT_DOMAIN ),
+					'name' => __( constant( 'BP_MEDIA_' . strtoupper( $types ) . '_LABEL' ), 'buddypress-media' ),
 					'slug' => constant( 'BP_MEDIA_' . strtoupper( $types ) . '_SLUG' ),
 					'screen_function' => array( ${'bp_media_' . $type}, 'screen' ),
 				) );
@@ -220,7 +220,7 @@ class BPMediaComponent extends BP_Component {
 
 
 		bp_core_new_nav_item( array(
-			'name' => __( BP_MEDIA_UPLOAD_LABEL, BP_MEDIA_TXT_DOMAIN ),
+			'name' => __( BP_MEDIA_UPLOAD_LABEL, 'buddypress-media' ),
 			'slug' => BP_MEDIA_UPLOAD_SLUG,
 			'screen_function' => array( $bp_media_upload, 'upload_screen' ),
 			'user_has_access' => bp_is_my_profile()
@@ -228,7 +228,7 @@ class BPMediaComponent extends BP_Component {
 		if(array_key_exists('privacy_override_enabled',$bp_media->options))
 					if(checked($bp_media->options['privacy_override_enabled'],true,false))
 				bp_core_new_subnav_item( array(
-							'name' => __( BP_MEDIA_USER_SETTINGS_LABEL, BP_MEDIA_TXT_DOMAIN ),
+							'name' => __( BP_MEDIA_USER_SETTINGS_LABEL, 'buddypress-media' ),
 							/* Display name for the nav item(It won't be shown anywhere) */
 							'slug' => BP_MEDIA_USER_SETTINGS_SLUG,
 							/* URL slug for the nav item */
@@ -252,19 +252,19 @@ class BPMediaComponent extends BP_Component {
 
 		/* Set up Album labels */
 		$album_labels = array(
-			'name' => __( 'Albums', BP_MEDIA_TXT_DOMAIN ),
-			'singular_name' => __( 'Album', BP_MEDIA_TXT_DOMAIN ),
-			'add_new' => __( 'Create', BP_MEDIA_TXT_DOMAIN ),
-			'add_new_item' => __( 'Create Album', BP_MEDIA_TXT_DOMAIN ),
-			'edit_item' => __( 'Edit Album', BP_MEDIA_TXT_DOMAIN ),
-			'new_item' => __( 'New Album', BP_MEDIA_TXT_DOMAIN ),
-			'all_items' => __( 'All Albums', BP_MEDIA_TXT_DOMAIN ),
-			'view_item' => __( 'View Album', BP_MEDIA_TXT_DOMAIN ),
-			'search_items' => __( 'Search Albums', BP_MEDIA_TXT_DOMAIN ),
-			'not_found' => __( 'No album found', BP_MEDIA_TXT_DOMAIN ),
-			'not_found_in_trash' => __( 'No album found in Trash', BP_MEDIA_TXT_DOMAIN ),
+			'name' => __( 'Albums', 'buddypress-media' ),
+			'singular_name' => __( 'Album', 'buddypress-media' ),
+			'add_new' => __( 'Create', 'buddypress-media' ),
+			'add_new_item' => __( 'Create Album', 'buddypress-media' ),
+			'edit_item' => __( 'Edit Album', 'buddypress-media' ),
+			'new_item' => __( 'New Album', 'buddypress-media' ),
+			'all_items' => __( 'All Albums', 'buddypress-media' ),
+			'view_item' => __( 'View Album', 'buddypress-media' ),
+			'search_items' => __( 'Search Albums', 'buddypress-media' ),
+			'not_found' => __( 'No album found', 'buddypress-media' ),
+			'not_found_in_trash' => __( 'No album found in Trash', 'buddypress-media' ),
 			'parent_item_colon' => '',
-			'menu_name' => __( 'Albums', BP_MEDIA_TXT_DOMAIN )
+			'menu_name' => __( 'Albums', 'buddypress-media' )
 		);
 
 		/* Set up Album post type arguments */
@@ -294,17 +294,17 @@ class BPMediaComponent extends BP_Component {
 
 		/* Set up labels for Media post type */
 		$labels = array(
-			'name' => __( 'Media', BP_MEDIA_TXT_DOMAIN ),
-			'singular' => __( 'Media', BP_MEDIA_TXT_DOMAIN ),
-			'add_new' => __( 'Add New Media', BP_MEDIA_TXT_DOMAIN )
+			'name' => __( 'Media', 'buddypress-media' ),
+			'singular' => __( 'Media', 'buddypress-media' ),
+			'add_new' => __( 'Add New Media', 'buddypress-media' )
 		);
 
 		/* Set up the arguments for Media post type */
 		$args = array(
-			'label' => __( 'Media', BP_MEDIA_TXT_DOMAIN ),
+			'label' => __( 'Media', 'buddypress-media' ),
 			'labels' => $labels,
 			'description' => __(
-					'BuddyPress Media\'s Media Files', BP_MEDIA_TXT_DOMAIN
+					'BuddyPress Media\'s Media Files', 'buddypress-media'
 			),
 			'public' => true,
 			'show_ui' => false,

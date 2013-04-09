@@ -110,19 +110,19 @@ class BPMediaPrivacy {
 		$settings = array(
 			6 => array(
 				'private',
-				__( '<strong>Private</strong>, Visible only to myself', BP_MEDIA_TXT_DOMAIN )
+				__( '<strong>Private</strong>, Visible only to myself', 'buddypress-media' )
 			),
 			4 => array(
 				'friends',
-				__( '<strong>Friends</strong>, Visible to my friends', BP_MEDIA_TXT_DOMAIN )
+				__( '<strong>Friends</strong>, Visible to my friends', 'buddypress-media' )
 			),
 			2 => array(
 				'users',
-				__( '<strong>Users</strong>, Visible to registered users', BP_MEDIA_TXT_DOMAIN )
+				__( '<strong>Users</strong>, Visible to registered users', 'buddypress-media' )
 			),
 			0 => array(
 				'public',
-				__( '<strong>Public</strong>, Visible to the world', BP_MEDIA_TXT_DOMAIN )
+				__( '<strong>Public</strong>, Visible to the world', 'buddypress-media' )
 			)
 		);
 		if ( ! bp_is_active( 'friends' ) ) {
@@ -142,7 +142,7 @@ class BPMediaPrivacy {
 	static function ui_html( $privacy_level ) {
 		?>
 		<div id="bp-media-upload-privacy-wrap">
-			<label for="bp-media-upload-set-privacy"><?php _e( 'Set default privacy levels for your media', BP_MEDIA_TXT_DOMAIN ); ?></label>
+			<label for="bp-media-upload-set-privacy"><?php _e( 'Set default privacy levels for your media', 'buddypress-media' ); ?></label>
 			<ul id="bp-media-upload-set-privacy">
 				<?php
 				$settings = BPMediaPrivacy::get_settings();
@@ -323,9 +323,9 @@ class BPMediaPrivacy {
 		if ( BPMediaPrivacy::is_enabled() == false )
 			return;
 		return array(
-			6 => sprintf( __( 'This %s is private', BP_MEDIA_TXT_DOMAIN ), $media_type ),
-			4 => sprintf( __( 'This %1s is visible only to %2s&rsquo;s friends', BP_MEDIA_TXT_DOMAIN ), $media_type, $username ),
-			2 => sprintf( __( 'This %s is visible to logged in users, only', BP_MEDIA_TXT_DOMAIN ), $media_type ),
+			6 => sprintf( __( 'This %s is private', 'buddypress-media' ), $media_type ),
+			4 => sprintf( __( 'This %1s is visible only to %2s&rsquo;s friends', 'buddypress-media' ), $media_type, $username ),
+			2 => sprintf( __( 'This %s is visible to logged in users, only', 'buddypress-media' ), $media_type ),
 		);
 	}
 

@@ -71,7 +71,7 @@ class BPMediaAlbum {
             $album = &get_post($album_id);
         }
         if (empty($album->ID))
-            throw new Exception(__('Sorry, the requested album does not exist.', BP_MEDIA_TXT_DOMAIN));
+            throw new Exception(__('Sorry, the requested album does not exist.', 'buddypress-media'));
 
 //		$required_access = BPMediaPrivacy::required_access($album_id);
 //		$has_access = BPMediaPrivacy::has_access($album_id);
@@ -233,10 +233,10 @@ class BPMediaAlbum {
      */
     function get_album_gallery_content() {
         ?><li>
-            <a href="<?php echo $this->url ?>" title="<?php _e($this->description, BP_MEDIA_TXT_DOMAIN); ?>">
+            <a href="<?php echo $this->url ?>" title="<?php _e($this->description, 'buddypress-media'); ?>">
         <?php echo $this->thumbnail; ?>
             </a>
-            <h3 title="<?php echo $this->name ?>"><a href="<?php echo $this->url ?>" title="<?php _e($this->description, BP_MEDIA_TXT_DOMAIN); ?>"><?php echo ( ( strlen($this->name) > 14 ) ? substr($this->name, 0, 14) . "&hellip;" : $this->name ); ?> </a><?php echo ' (' . count($this->media_entries) . ')'; ?></h3>
+            <h3 title="<?php echo $this->name ?>"><a href="<?php echo $this->url ?>" title="<?php _e($this->description, 'buddypress-media'); ?>"><?php echo ( ( strlen($this->name) > 14 ) ? substr($this->name, 0, 14) . "&hellip;" : $this->name ); ?> </a><?php echo ' (' . count($this->media_entries) . ')'; ?></h3>
         </li><?php
     }
 

@@ -140,7 +140,7 @@ class BPMediaFilters {
             }
         }
         if ($media_label)
-            $link = str_replace('Delete', sprintf(__('Delete %s', BP_MEDIA_TXT_DOMAIN), $media_label), $link);
+            $link = str_replace('Delete', sprintf(__('Delete %s', 'buddypress-media'), $media_label), $link);
         return $link;
     }
 
@@ -229,7 +229,7 @@ class BPMediaFilters {
         $bp_media_admin_nav[] = array(
             'parent' => 'my-account-buddypress',
             'id' => 'my-account-bpmedia',
-            'title' => __('Media', BP_MEDIA_TXT_DOMAIN),
+            'title' => __('Media', 'buddypress-media'),
             'href' => trailingslashit(bp_loggedin_user_domain() . BP_MEDIA_SLUG),
             'meta' => array(
                 'class' => 'menupop')
@@ -239,7 +239,7 @@ class BPMediaFilters {
         /* $bp_media_admin_nav[] = array(
           'parent' => 'my-account-bpmedia',
           'id'     => 'my-account-upload-media',
-          'title'  => __('Upload Media',BP_MEDIA_TXT_DOMAIN),
+          'title'  => __('Upload Media','buddypress-media'),
           'href'   => trailingslashit(bp_loggedin_user_domain() . BP_MEDIA_SLUG),
           ); */
 
@@ -247,7 +247,7 @@ class BPMediaFilters {
         $bp_media_admin_nav[] = array(
             'parent' => 'my-account-bpmedia',
             'id' => 'my-account-photos',
-            'title' => __('Photos', BP_MEDIA_TXT_DOMAIN),
+            'title' => __('Photos', 'buddypress-media'),
             'href' => trailingslashit(bp_loggedin_user_domain() . BP_MEDIA_IMAGES_SLUG)
         );
 
@@ -255,7 +255,7 @@ class BPMediaFilters {
         $bp_media_admin_nav[] = array(
             'parent' => 'my-account-bpmedia',
             'id' => 'my-account-videos',
-            'title' => __('Videos', BP_MEDIA_TXT_DOMAIN),
+            'title' => __('Videos', 'buddypress-media'),
             'href' => trailingslashit(bp_loggedin_user_domain() . BP_MEDIA_VIDEOS_SLUG)
         );
 
@@ -263,7 +263,7 @@ class BPMediaFilters {
         $bp_media_admin_nav[] = array(
             'parent' => 'my-account-bpmedia',
             'id' => 'my-account-audio',
-            'title' => __('Audio', BP_MEDIA_TXT_DOMAIN),
+            'title' => __('Audio', 'buddypress-media'),
             'href' => trailingslashit(bp_loggedin_user_domain() . BP_MEDIA_AUDIO_SLUG)
         );
 
@@ -271,7 +271,7 @@ class BPMediaFilters {
         $bp_media_admin_nav[] = array(
             'parent' => 'my-account-bpmedia',
             'id' => 'my-account-album',
-            'title' => __('Albums', BP_MEDIA_TXT_DOMAIN),
+            'title' => __('Albums', 'buddypress-media'),
             'href' => trailingslashit(bp_loggedin_user_domain() . BP_MEDIA_ALBUMS_SLUG)
         );
 
@@ -310,7 +310,7 @@ class BPMediaFilters {
             $bp_media_admin_nav[] = array(
                 'parent' => 'bp-media-menu',
                 'id' => 'bp-media-settings',
-                'title' => __('Settings', BP_MEDIA_TXT_DOMAIN),
+                'title' => __('Settings', 'buddypress-media'),
                 'href' => bp_get_admin_url(add_query_arg(array('page' => 'bp-media-settings'), 'admin.php'))
             );
 
@@ -318,7 +318,7 @@ class BPMediaFilters {
             $bp_media_admin_nav[] = array(
                 'parent' => 'bp-media-menu',
                 'id' => 'bp-media-addons',
-                'title' => __('Addons', BP_MEDIA_TXT_DOMAIN),
+                'title' => __('Addons', 'buddypress-media'),
                 'href' => bp_get_admin_url(add_query_arg(array('page' => 'bp-media-addons'), 'admin.php'))
             );
 
@@ -326,7 +326,7 @@ class BPMediaFilters {
             $bp_media_admin_nav[] = array(
                 'parent' => 'bp-media-menu',
                 'id' => 'bp-media-support',
-                'title' => __('Support', BP_MEDIA_TXT_DOMAIN),
+                'title' => __('Support', 'buddypress-media'),
                 'href' => bp_get_admin_url(add_query_arg(array('page' => 'bp-media-support'), 'admin.php'))
             );
 
@@ -389,14 +389,14 @@ class BPMediaFilters {
         $g_albums_count = $this->group_total_count('album');
         ?>
         <div class="bp-media-dashboard">
-            <h3 class="sub"><?php _e('Users', BP_MEDIA_TXT_DOMAIN); ?> </h3>
+            <h3 class="sub"><?php _e('Users', 'buddypress-media'); ?> </h3>
             <div class="table table_user">
-                <div class=""><span class="media-cnt"><?php echo $photos_count; ?></span><span class="media-label"><?php _e('Total Photos', BP_MEDIA_TXT_DOMAIN); ?></span></div>
-                <div class=""><span class="media-cnt"><?php echo $videos_count; ?></span><span class="media-label"><?php _e('Total Videos', BP_MEDIA_TXT_DOMAIN); ?></span></div>
-                <div class=""><span class="media-cnt"><?php echo $audio_count; ?></span><span class="media-label"><?php _e('Total Audio', BP_MEDIA_TXT_DOMAIN); ?></span></div>
-                <div class=""><span class="media-cnt"><?php echo $albums_count; ?></span><span class="media-label"><?php _e('Total Albums', BP_MEDIA_TXT_DOMAIN); ?></span></div>
+                <div class=""><span class="media-cnt"><?php echo $photos_count; ?></span><span class="media-label"><?php _e('Total Photos', 'buddypress-media'); ?></span></div>
+                <div class=""><span class="media-cnt"><?php echo $videos_count; ?></span><span class="media-label"><?php _e('Total Videos', 'buddypress-media'); ?></span></div>
+                <div class=""><span class="media-cnt"><?php echo $audio_count; ?></span><span class="media-label"><?php _e('Total Audio', 'buddypress-media'); ?></span></div>
+                <div class=""><span class="media-cnt"><?php echo $albums_count; ?></span><span class="media-label"><?php _e('Total Albums', 'buddypress-media'); ?></span></div>
             </div><!-- .table_user -->
-            <h3 class="sub"><?php _e('Groups', BP_MEDIA_TXT_DOMAIN); ?> </h3>
+            <h3 class="sub"><?php _e('Groups', 'buddypress-media'); ?> </h3>
             <div class="table table_group">
 
             </div><!-- .table_group -->

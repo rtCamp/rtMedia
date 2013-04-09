@@ -26,7 +26,7 @@ if (!class_exists('BPMediaAdminWidget')) {
                     <div class="inside"><?php echo $content; ?></div>
                 </div><?php
             } else {
-                trigger_error(__('Argument missing. id is required.', BP_MEDIA_TXT_DOMAIN));
+                trigger_error(__('Argument missing. id is required.', 'buddypress-media'));
             }
         }
 

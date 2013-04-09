@@ -26,7 +26,7 @@ class BPMediaTemplate {
         } else {
             $size_limit = $upload_max_filesize;
         }
-        $post_wall = __('Wall Posts', BP_MEDIA_TXT_DOMAIN);
+        $post_wall = __('Wall Posts', 'buddypress-media');
         if ($bp_media_query && $bp_media_query->have_posts()) {
             $hidden = ' style="display:none;"';
             ?>
@@ -41,7 +41,7 @@ class BPMediaTemplate {
                     <input type="hidden" id="bp-media-selected-album" value="<?php echo $bp_media_current_album->get_id(); ?>"/>
         <?php } else { ?>
                     <div id="bp-media-album-prompt" title="Album">
-                        <span><?php _e('Select Album: ', BP_MEDIA_TXT_DOMAIN); ?></span>
+                        <span><?php _e('Select Album: ', 'buddypress-media'); ?></span>
                         <span class="bp-media-album-content">
                             <select id="bp-media-selected-album"><?php
             if (bp_is_current_component('groups')) {
@@ -80,22 +80,22 @@ class BPMediaTemplate {
                 }
                 echo '<option value="' . $album->get_id() . '" selected="selected">' . $album->get_title() . '</option>';
             }
-            echo '<option id="create-new" value="create_new" >' . __('+ Create New Album', BP_MEDIA_TXT_DOMAIN) . '</option>';
+            echo '<option id="create-new" value="create_new" >' . __('+ Create New Album', 'buddypress-media') . '</option>';
             ?>
                             </select>
                         </span>
                         <div class="hide">
                             <input type="text" id="bp_media_album_new" value="" placeholder="Album Name" /><br/>
-                            <input type="button" class="button" id="btn-create-new" value="<?php _e('Create', BP_MEDIA_TXT_DOMAIN); ?>"/>
-                            <input type="button" class="button" id="btn-create-cancel" value="<?php _e('Cancel', BP_MEDIA_TXT_DOMAIN); ?>"/>
+                            <input type="button" class="button" id="btn-create-new" value="<?php _e('Create', 'buddypress-media'); ?>"/>
+                            <input type="button" class="button" id="btn-create-cancel" value="<?php _e('Cancel', 'buddypress-media'); ?>"/>
                         </div>
                     </div>
-                    <div id="bp-media-album-in"><span><?php _e('&', BP_MEDIA_TXT_DOMAIN); ?></span></div>    
+                    <div id="bp-media-album-in"><span><?php _e('&', 'buddypress-media'); ?></span></div>    
         <?php } ?>
                 <div class="drag-drop-inside">
-                    <span class="drag-drop-info"><?php _e('Drop files here', BP_MEDIA_TXT_DOMAIN); ?></span> 
-                    <span id="bp-media-album-or"><?php _e(' or ', BP_MEDIA_TXT_DOMAIN); ?></span> 
-                    <span class="drag-drop-buttons"><input id="bp-media-upload-browse-button" type="button" value="<?php _e('Upload Media', BP_MEDIA_TXT_DOMAIN); ?>" class="button" />(<?php _e('Max Upload Size', BP_MEDIA_TXT_DOMAIN);echo ': '.$size_limit; ?>)</span>
+                    <span class="drag-drop-info"><?php _e('Drop files here', 'buddypress-media'); ?></span> 
+                    <span id="bp-media-album-or"><?php _e(' or ', 'buddypress-media'); ?></span> 
+                    <span class="drag-drop-buttons"><input id="bp-media-upload-browse-button" type="button" value="<?php _e('Upload Media', 'buddypress-media'); ?>" class="button" />(<?php _e('Max Upload Size', 'buddypress-media');echo ': '.$size_limit; ?>)</span>
                 </div>
             </div>
             <div id="bp-media-uploaded-files"></div>
@@ -210,7 +210,7 @@ class BPMediaTemplate {
                 break;
         }
         if ($showmore) {
-            echo '<div class="bp-media-actions"><a href="#" class="button" id="bp-media-show-more">' . __('Show More', BP_MEDIA_TXT_DOMAIN) . '</a></div>';
+            echo '<div class="bp-media-actions"><a href="#" class="button" id="bp-media-show-more">' . __('Show More', 'buddypress-media') . '</a></div>';
         }
     }
 
@@ -243,8 +243,8 @@ class BPMediaTemplate {
         ?>
         <div id="bp-media-album-prompt" title="Select Album">
             <div class="bp-media-album-title">
-                <span><?php _e('Select Album', BP_MEDIA_TXT_DOMAIN); ?></span>
-                <span id="bp-media-close"><?php _e('x', BP_MEDIA_TXT_DOMAIN); ?></span>
+                <span><?php _e('Select Album', 'buddypress-media'); ?></span>
+                <span id="bp-media-close"><?php _e('x', 'buddypress-media'); ?></span>
             </div>
             <div class="bp-media-album-content">
                 <select id="bp-media-selected-album"><?php
@@ -258,32 +258,32 @@ class BPMediaTemplate {
                 if ($album->post_title == $post_wall)
                     echo '<option value="' . $album->ID . '" selected="selected">' . $album->post_title . '</option>';
                 else
-                    echo '<option value="' . $album->ID . '">' . $album->post_title, BP_MEDIA_TXT_DOMAIN . '</option>';
+                    echo '<option value="' . $album->ID . '">' . $album->post_title, 'buddypress-media' . '</option>';
             };
         }
         ?></select>
             </div>
             <div class="select-btn-div">
-                <input id="selected-btn" type="button" class="btn" value="<?php _e('Select', BP_MEDIA_TXT_DOMAIN); ?>" />
-                <input id="create-btn" type="button" class="btn" value="<?php _e('Create Album', BP_MEDIA_TXT_DOMAIN); ?>" />
+                <input id="selected-btn" type="button" class="btn" value="<?php _e('Select', 'buddypress-media'); ?>" />
+                <input id="create-btn" type="button" class="btn" value="<?php _e('Create Album', 'buddypress-media'); ?>" />
                 <div style="clear: both;"></div>
             </div>
         </div>
         <div id="bp-media-album-new" title="Create New Album">
             <div class="bp-media-album-title">
-                <span><?php _e('Create Album', BP_MEDIA_TXT_DOMAIN); ?></span>
-                <span id="bp-media-create-album-close"><?php _e('x', BP_MEDIA_TXT_DOMAIN); ?></span>
+                <span><?php _e('Create Album', 'buddypress-media'); ?></span>
+                <span id="bp-media-create-album-close"><?php _e('x', 'buddypress-media'); ?></span>
             </div>
             <div class="bp-media-album-content">
-                <label for="bp_media_album_name"><?php _e('Album Name', BP_MEDIA_TXT_DOMAIN); ?></label>
+                <label for="bp_media_album_name"><?php _e('Album Name', 'buddypress-media'); ?></label>
                 <input id="bp_media_album_name" type="text" name="bp_media_album_name" />
             </div>
             <div class="select-btn-div">
-                <input id="create-album" type="button" class="btn" value="<?php _e('Create', BP_MEDIA_TXT_DOMAIN); ?>" />
+                <input id="create-album" type="button" class="btn" value="<?php _e('Create', 'buddypress-media'); ?>" />
             </div>
         </div>
         <div id="bp-media-upload-ui" class="hide-if-no-js drag-drop activity-component">
-            <p class="drag-drop-buttons"><input id="bp-media-upload-browse-button" type="button" value="<?php _e('Add Media', BP_MEDIA_TXT_DOMAIN); ?>" class="button" /></p>
+            <p class="drag-drop-buttons"><input id="bp-media-upload-browse-button" type="button" value="<?php _e('Add Media', 'buddypress-media'); ?>" class="button" /></p>
             <div id="bp-media-uploaded-files"></div>
         </div>
         <?php

@@ -25,8 +25,8 @@ class BPMediaPrivacySettings {
         $active_class = 'nav-tab nav-tab-active';
 		$tabs[] = array(
                 'href' => bp_get_admin_url(add_query_arg(array('page' => 'bp-media-privacy'), 'admin.php')),
-                'title' => __('Update BuddyPress Media Database', BP_MEDIA_TXT_DOMAIN),
-                'name' => __('Update Database', BP_MEDIA_TXT_DOMAIN),
+                'title' => __('Update BuddyPress Media Database', 'buddypress-media'),
+                'name' => __('Update Database', 'buddypress-media'),
                 'class' => ($tab == 'bp-media-privacy') ? $active_class : $idle_class
             );
 		return $tabs;
@@ -90,7 +90,7 @@ class BPMediaPrivacySettings {
 			echo '</div>';
 		}
 		echo '<button id="rtprivacyinstall" class="button button-primary">';
-		_e('Start',BP_MEDIA_TXT_DOMAIN);
+		_e('Start','buddypress-media');
 		echo '</button>';
 		echo '</div>';
 		}

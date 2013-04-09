@@ -56,7 +56,7 @@ class BPMediaHostWordpress {
             $media = &get_post($media_id);
         }
         if (empty($media->ID))
-            throw new Exception(__('Sorry, the requested media does not exist.', BP_MEDIA_TXT_DOMAIN));
+            throw new Exception(__('Sorry, the requested media does not exist.', 'buddypress-media'));
         if (!'bp_media_album' == $media->post_type || !empty($media->post_mime_type))
             preg_match_all('/audio|video|image/i', $media->post_mime_type, $result);
         else
@@ -134,7 +134,7 @@ class BPMediaHostWordpress {
         }
 
         if (isset($file['error']) || $file === null) {
-            throw new Exception(__('Error Uploading File', BP_MEDIA_TXT_DOMAIN));
+            throw new Exception(__('Error Uploading File', 'buddypress-media'));
         }
 
         $type = $file['type'];
@@ -168,24 +168,24 @@ class BPMediaHostWordpress {
                 } catch (Exception $e) {
                     unlink($file);
                     $activity_content = false;
-                    throw new Exception(__('MP4 file you have uploaded is corrupt.', BP_MEDIA_TXT_DOMAIN));
+                    throw new Exception(__('MP4 file you have uploaded is corrupt.', 'buddypress-media'));
                 }
                 if (is_array($vid_info)) {
                     if (!array_key_exists('error', $vid_info) && array_key_exists('fileformat', $vid_info) && array_key_exists('video', $vid_info) && array_key_exists('fourcc', $vid_info['video'])) {
                         if (!($vid_info['fileformat'] == 'mp4' && $vid_info['video']['fourcc'] == 'avc1')) {
                             unlink($file);
                             $activity_content = false;
-                            throw new Exception(__('The MP4 file you have uploaded is using an unsupported video codec. Supported video codec is H.264.', BP_MEDIA_TXT_DOMAIN));
+                            throw new Exception(__('The MP4 file you have uploaded is using an unsupported video codec. Supported video codec is H.264.', 'buddypress-media'));
                         }
                     } else {
                         unlink($file);
                         $activity_content = false;
-                        throw new Exception(__('The MP4 file you have uploaded is using an unsupported video codec. Supported video codec is H.264.', BP_MEDIA_TXT_DOMAIN));
+                        throw new Exception(__('The MP4 file you have uploaded is using an unsupported video codec. Supported video codec is H.264.', 'buddypress-media'));
                     }
                 } else {
                     unlink($file);
                     $activity_content = false;
-                    throw new Exception(__('The MP4 file you have uploaded is not a video file.', BP_MEDIA_TXT_DOMAIN));
+                    throw new Exception(__('The MP4 file you have uploaded is not a video file.', 'buddypress-media'));
                 }
                 break;
             case 'audio/mpeg' :
@@ -196,24 +196,24 @@ class BPMediaHostWordpress {
                 } catch (Exception $e) {
                     unlink($file);
                     $activity_content = false;
-                    throw new Exception(__('MP3 file you have uploaded is currupt.', BP_MEDIA_TXT_DOMAIN));
+                    throw new Exception(__('MP3 file you have uploaded is currupt.', 'buddypress-media'));
                 }
                 if (is_array($file_info)) {
                     if (!array_key_exists('error', $file_info) && array_key_exists('fileformat', $file_info) && array_key_exists('audio', $file_info) && array_key_exists('dataformat', $file_info['audio'])) {
                         if (!($file_info['fileformat'] == 'mp3' && $file_info['audio']['dataformat'] == 'mp3')) {
                             unlink($file);
                             $activity_content = false;
-                            throw new Exception(__('The MP3 file you have uploaded is using an unsupported audio format. Supported audio format is MP3.', BP_MEDIA_TXT_DOMAIN));
+                            throw new Exception(__('The MP3 file you have uploaded is using an unsupported audio format. Supported audio format is MP3.', 'buddypress-media'));
                         }
                     } else {
                         unlink($file);
                         $activity_content = false;
-                        throw new Exception(__('The MP3 file you have uploaded is using an unsupported audio format. Supported audio format is MP3.', BP_MEDIA_TXT_DOMAIN));
+                        throw new Exception(__('The MP3 file you have uploaded is using an unsupported audio format. Supported audio format is MP3.', 'buddypress-media'));
                     }
                 } else {
                     unlink($file);
                     $activity_content = false;
-                    throw new Exception(__('The MP3 file you have uploaded is not an audio file.', BP_MEDIA_TXT_DOMAIN));
+                    throw new Exception(__('The MP3 file you have uploaded is not an audio file.', 'buddypress-media'));
                 }
                 $type = 'audio';
                 break;
@@ -225,14 +225,14 @@ class BPMediaHostWordpress {
             default :
                 unlink($file);
                 $activity_content = false;
-                throw new Exception(__('Media File you have tried to upload is not supported. Supported media files are .jpg, .png, .gif, .mp3, .mov and .mp4.', BP_MEDIA_TXT_DOMAIN));
+                throw new Exception(__('Media File you have tried to upload is not supported. Supported media files are .jpg, .png, .gif, .mp3, .mov and .mp4.', 'buddypress-media'));
         }
         $attachment_id = wp_insert_attachment($attachment, $file, $post_id);
         if (!is_wp_error($attachment_id)) {
             wp_update_attachment_metadata($attachment_id, wp_generate_attachment_metadata($attachment_id, $file));
         } else {
             unlink($file);
-            throw new Exception(__('Error creating attachment for the media file, please try again', BP_MEDIA_TXT_DOMAIN));
+            throw new Exception(__('Error creating attachment for the media file, please try again', 'buddypress-media'));
         }
         $this->id = $attachment_id;
         $this->name = $name;
@@ -281,7 +281,7 @@ class BPMediaHostWordpress {
     function get_media_activity_content() {
         global $bp_media_counter, $bp_media_default_excerpts, $bp_media;
         $attachment_id = $this->id;
-        $activity_content = apply_filters('bp_media_single_activity_title', '<div class="bp_media_title"><a href="' . $this->url . '" title="' . __($this->name, BP_MEDIA_TXT_DOMAIN) . '">' . __(wp_html_excerpt($this->name, $bp_media_default_excerpts['activity_entry_title']), BP_MEDIA_TXT_DOMAIN) . '</a></div>');
+        $activity_content = apply_filters('bp_media_single_activity_title', '<div class="bp_media_title"><a href="' . $this->url . '" title="' . __($this->name, 'buddypress-media') . '">' . __(wp_html_excerpt($this->name, $bp_media_default_excerpts['activity_entry_title']), 'buddypress-media') . '</a></div>');
         $activity_content .='<div class="bp_media_content">';
         switch ($this->type) {
             case 'video' :
@@ -298,7 +298,7 @@ class BPMediaHostWordpress {
                 break;
             case 'image' :
                 $image_array = image_downsize($attachment_id, 'bp_media_activity_image');
-                $activity_content.=apply_filters('bp_media_single_activity_filter', '<a href="' . $this->url . '" title="' . __($this->name, BP_MEDIA_TXT_DOMAIN) . '"><img src="' . $image_array[0] . '" id="bp_media_image_' . $this->id . '_' . $bp_media_counter++ . '" alt="' . __($this->name, BP_MEDIA_TXT_DOMAIN) . '" /></a>', $this, true);
+                $activity_content.=apply_filters('bp_media_single_activity_filter', '<a href="' . $this->url . '" title="' . __($this->name, 'buddypress-media') . '"><img src="' . $image_array[0] . '" id="bp_media_image_' . $this->id . '_' . $bp_media_counter++ . '" alt="' . __($this->name, 'buddypress-media') . '" /></a>', $this, true);
                 $type = 'image';
                 break;
             default :
@@ -337,7 +337,7 @@ class BPMediaHostWordpress {
         global $bp_media;
         if (!bp_is_activity_component())
             return false;
-        $activity_action = sprintf(__("%s uploaded a media.", BP_MEDIA_TXT_DOMAIN), bp_core_get_userlink($this->owner));
+        $activity_action = sprintf(__("%s uploaded a media.", 'buddypress-media'), bp_core_get_userlink($this->owner));
         return $activity_action;
     }
 
@@ -358,7 +358,7 @@ class BPMediaHostWordpress {
         $content = '';
         if ($this->group_id > 0) {
 
-            $content .= '<div class="bp_media_author">' . __("Uploaded by ", BP_MEDIA_TXT_DOMAIN) . bp_core_get_userlink($this->owner) . '</div>';
+            $content .= '<div class="bp_media_author">' . __("Uploaded by ", 'buddypress-media') . bp_core_get_userlink($this->owner) . '</div>';
         }
         $content .= '<div class="bp_media_content">';
         switch ($this->type) {
@@ -478,10 +478,10 @@ class BPMediaHostWordpress {
                 }
                 ?>
                 <li id="bp-media-item-<?php echo $this->id ?>">
-                    <a href="<?php echo $this->url ?>" title="<?php _e($this->description, BP_MEDIA_TXT_DOMAIN); ?>">
+                    <a href="<?php echo $this->url ?>" title="<?php _e($this->description, 'buddypress-media'); ?>">
                         <img src="<?php echo apply_filters('bp_media_video_thumb', $thumb_url, $attachment, $this->type); ?>" />
                     </a>
-                    <h3 title="<?php echo $this->name; ?>"><a href="<?php echo $this->url ?>" title="<?php _e($this->description, BP_MEDIA_TXT_DOMAIN); ?>"><?php echo $this->name; ?></a></h3>
+                    <h3 title="<?php echo $this->name; ?>"><a href="<?php echo $this->url ?>" title="<?php _e($this->description, 'buddypress-media'); ?>"><?php echo $this->name; ?></a></h3>
                 </li>
                 <?php
                 break;
@@ -494,10 +494,10 @@ class BPMediaHostWordpress {
                 }
                 ?>
                 <li id="bp-media-item-<?php echo $this->id ?>">
-                    <a href="<?php echo $this->url ?>" title="<?php _e($this->description, BP_MEDIA_TXT_DOMAIN); ?>">
+                    <a href="<?php echo $this->url ?>" title="<?php _e($this->description, 'buddypress-media'); ?>">
                         <img src="<?php echo $thumb_url ?>" />
                     </a>
-                    <h3 title="<?php echo $this->name; ?>"><a href="<?php echo $this->url ?>" title="<?php _e($this->description, BP_MEDIA_TXT_DOMAIN); ?>"><?php echo $this->name ?></a></h3>
+                    <h3 title="<?php echo $this->name; ?>"><a href="<?php echo $this->url ?>" title="<?php _e($this->description, 'buddypress-media'); ?>"><?php echo $this->name ?></a></h3>
                     <div class="bp-media-ajax-preloader"></div>
                 </li>
                 <?php
@@ -510,7 +510,7 @@ class BPMediaHostWordpress {
                     <a href="<?php echo $this->url ?>" title="<?php echo $this->description ?>">
                         <img src="<?php echo $medium_path ?>" />
                     </a>
-                    <h3 title="<?php echo $this->name ?>"><a href="<?php echo $this->url ?>" title="<?php _e($this->description, BP_MEDIA_TXT_DOMAIN); ?>"><?php echo $this->name ?></a></h3>
+                    <h3 title="<?php echo $this->name ?>"><a href="<?php echo $this->url ?>" title="<?php _e($this->description, 'buddypress-media'); ?>"><?php echo $this->name ?></a></h3>
                     <div class="bp-media-ajax-preloader"></div>
                 </li>
                 <?php
@@ -559,13 +559,13 @@ class BPMediaHostWordpress {
                                 <?php if (is_user_logged_in()) : ?>
                                     <div class="activity-meta no-ajax">
                                         <?php if (bp_activity_can_comment()) : ?>
-                                            <a href="<?php bp_get_activity_comment_link(); ?>" class="button acomment-reply bp-primary-action" id="acomment-comment-<?php bp_activity_id(); ?>"><?php printf(__('Comment <span>%s</span>', BP_MEDIA_TXT_DOMAIN), bp_activity_get_comment_count()); ?></a>
+                                            <a href="<?php bp_get_activity_comment_link(); ?>" class="button acomment-reply bp-primary-action" id="acomment-comment-<?php bp_activity_id(); ?>"><?php printf(__('Comment <span>%s</span>', 'buddypress-media'), bp_activity_get_comment_count()); ?></a>
                                         <?php endif; ?>
                                         <?php if (bp_activity_can_favorite()) : ?>
                                             <?php if (!bp_get_activity_is_favorite()) : ?>
-                                                <a href="<?php bp_activity_favorite_link(); ?>" class="button fav bp-secondary-action" title="<?php esc_attr_e('Mark as Favorite', BP_MEDIA_TXT_DOMAIN); ?>"><?php _e('Favorite', BP_MEDIA_TXT_DOMAIN) ?></a>
+                                                <a href="<?php bp_activity_favorite_link(); ?>" class="button fav bp-secondary-action" title="<?php esc_attr_e('Mark as Favorite', 'buddypress-media'); ?>"><?php _e('Favorite', 'buddypress-media') ?></a>
                                             <?php else : ?>
-                                                <a href="<?php bp_activity_unfavorite_link(); ?>" class="button unfav bp-secondary-action" title="<?php esc_attr_e('Remove Favorite', BP_MEDIA_TXT_DOMAIN); ?>"><?php _e('Remove Favorite', BP_MEDIA_TXT_DOMAIN) ?></a>
+                                                <a href="<?php bp_activity_unfavorite_link(); ?>" class="button unfav bp-secondary-action" title="<?php esc_attr_e('Remove Favorite', 'buddypress-media'); ?>"><?php _e('Remove Favorite', 'buddypress-media') ?></a>
                                             <?php endif; ?>
                                         <?php endif; ?>
                                         <?php do_action('bp_activity_entry_meta'); ?>
@@ -584,7 +584,7 @@ class BPMediaHostWordpress {
                                                 <div class="ac-textarea">
                                                     <textarea id="ac-input-<?php bp_activity_id(); ?>" class="ac-input" name="ac_input_<?php bp_activity_id(); ?>"></textarea>
                                                 </div>
-                                                <input type="submit" name="ac_form_submit" value="<?php _e('Post', BP_MEDIA_TXT_DOMAIN); ?>" /> &nbsp; <?php _e('or press esc to cancel.', BP_MEDIA_TXT_DOMAIN); ?>
+                                                <input type="submit" name="ac_form_submit" value="<?php _e('Post', 'buddypress-media'); ?>" /> &nbsp; <?php _e('or press esc to cancel.', 'buddypress-media'); ?>
                                                 <input type="hidden" name="comment_form_id" value="<?php bp_activity_id(); ?>" />
                                             </div>
                                             <?php do_action('bp_activity_entry_comments'); ?>
@@ -609,7 +609,7 @@ class BPMediaHostWordpress {
                             <?php do_action('bp_activity_entry_content'); ?>
                             <?php if (is_user_logged_in()) : ?>
                                 <div class="activity-meta no-ajax">
-                                    <a href="<?php echo $this->get_delete_url(); ?>" class="button item-button bp-secondary-action delete-activity-single confirm" rel="nofollow"><?php _e("Delete", BP_MEDIA_TXT_DOMAIN); ?></a>
+                                    <a href="<?php echo $this->get_delete_url(); ?>" class="button item-button bp-secondary-action delete-activity-single confirm" rel="nofollow"><?php _e("Delete", 'buddypress-media'); ?></a>
                                 </div>
                             <?php endif; ?>
                         </div>
@@ -711,7 +711,7 @@ class BPMediaHostWordpress {
                     'content' => $this->get_media_activity_content(),
                     'id' => $activity->id,
                     'type' => $component,
-                    'action' => apply_filters('bp_media_added_media', sprintf(__('%1$s added a %2$s', BP_MEDIA_TXT_DOMAIN), bp_core_get_userlink($this->get_author()), '<a href="' . $this->get_url() . '">' . $this->get_media_activity_type() . '</a>')),
+                    'action' => apply_filters('bp_media_added_media', sprintf(__('%1$s added a %2$s', 'buddypress-media'), bp_core_get_userlink($this->get_author()), '<a href="' . $this->get_url() . '">' . $this->get_media_activity_type() . '</a>')),
                     'primary_link' => $this->get_url(),
                     'item_id' => $item_id,
                     'recorded_time' => $activity->date_recorded,
@@ -981,7 +981,7 @@ class BPMediaHostWordpress {
     function check_and_create_album($album_id, $group, $author_id = false, $album_name = false) {
         global $wpdb;
         if (!$album_name)
-            $album_name = __('Wall Posts', BP_MEDIA_TXT_DOMAIN);
+            $album_name = __('Wall Posts', 'buddypress-media');
         $create_new_album_flag = false;
         if ($album_id != 0) {
             $album = get_post($album_id);

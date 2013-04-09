@@ -31,9 +31,9 @@ class BPMediaTemplateFunctions {
         $accept = implode(',', $allowed['accept']);
         ?>
         <form method="post" enctype="multipart/form-data" class="standard-form" id="bp-media-upload-form">
-            <label for="bp-media-upload-input-title"><?php _e('Media Title', BP_MEDIA_TXT_DOMAIN); ?></label><input id="bp-media-upload-input-title" type="text" name="bp_media_title" class="settings-input" maxlength="<?php echo max(array($bp_media_default_excerpts['single_entry_title'], $bp_media_default_excerpts['activity_entry_title'])) ?>" />
-            <label for="bp-media-upload-input-description"><?php _e('Media Description', BP_MEDIA_TXT_DOMAIN); ?></label><input id="bp-media-upload-input-description" type="text" name="bp_media_description" class="settings-input" maxlength="<?php echo max(array($bp_media_default_excerpts['single_entry_description'], $bp_media_default_excerpts['activity_entry_description'])) ?>" />
-            <label for="bp-media-upload-file"><?php _e('Select Media File', BP_MEDIA_TXT_DOMAIN) ?> (Max File Size:<?php echo min(array(ini_get('upload_max_filesize'), ini_get('post_max_size'))); ?> , Allowed types: <?php echo implode(', ', $allowed['type']) ?>)</label><input type="file" name="bp_media_file" id="bp-media-upload-file" accept="<?php echo $accept ?>" />
+            <label for="bp-media-upload-input-title"><?php _e('Media Title', 'buddypress-media'); ?></label><input id="bp-media-upload-input-title" type="text" name="bp_media_title" class="settings-input" maxlength="<?php echo max(array($bp_media_default_excerpts['single_entry_title'], $bp_media_default_excerpts['activity_entry_title'])) ?>" />
+            <label for="bp-media-upload-input-description"><?php _e('Media Description', 'buddypress-media'); ?></label><input id="bp-media-upload-input-description" type="text" name="bp_media_description" class="settings-input" maxlength="<?php echo max(array($bp_media_default_excerpts['single_entry_description'], $bp_media_default_excerpts['activity_entry_description'])) ?>" />
+            <label for="bp-media-upload-file"><?php _e('Select Media File', 'buddypress-media') ?> (Max File Size:<?php echo min(array(ini_get('upload_max_filesize'), ini_get('post_max_size'))); ?> , Allowed types: <?php echo implode(', ', $allowed['type']) ?>)</label><input type="file" name="bp_media_file" id="bp-media-upload-file" accept="<?php echo $accept ?>" />
             <input type="hidden" name="action" value="wp_handle_upload" />
             <div class="submit"><input type="submit" class="auto" value="Upload" /></div>
         </form>
@@ -228,7 +228,7 @@ class BPMediaTemplateFunctions {
                 break;
         }
         if ($showmore) {
-            echo '<div class="bp-media-actions"><a href="#" class="button" id="bp-media-show-more">' . __('Show More', BP_MEDIA_TXT_DOMAIN) . '</a></div>';
+            echo '<div class="bp-media-actions"><a href="#" class="button" id="bp-media-show-more">' . __('Show More', 'buddypress-media') . '</a></div>';
         }
     }
 

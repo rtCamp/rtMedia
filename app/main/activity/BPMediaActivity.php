@@ -43,7 +43,7 @@ if ( ! class_exists( 'BPMediaActivity' ) ) {
 			<input type ="hidden" id="bp-media-update-json" />
 			<input type ="hidden" id="bp-media-latest-update" />
 			<div id="bp-media-activity-upload-ui" class="hide-if-no-js drag-drop">
-				<input id="bp-media-activity-upload-browse-button" type="button" value="<?php _e( 'Attach Media', BP_MEDIA_TXT_DOMAIN ); ?>" class="button" />
+				<input id="bp-media-activity-upload-browse-button" type="button" value="<?php _e( 'Attach Media', 'buddypress-media' ); ?>" class="button" />
 				<div id="bp-media-activity-uploaded-files"></div>
 			</div>
 			<?php
