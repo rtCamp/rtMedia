@@ -26,31 +26,31 @@ if (!class_exists('BPMediaAddon')) {
         public function get_addons() {
             $addons = array(
                 array(
-                    'title' => __('BuddyPress-Media Instagram', BP_MEDIA_TXT_DOMAIN),
+                    'title' => __('BuddyPress-Media Instagram', 'buddypress-media'),
                     'img_src' => 'http://cdn.rtcamp.com/wp-content/uploads/2013/03/BuddyPressMedia-Instagram.png',
                     'product_link' => 'http://rtcamp.com/store/buddypress-media-instagram/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media',
-                    'desc' => '<p>' . __('BuddyPress Media Instagram adds Instagram like filters to images uploaded with BuddyPress Media.', BP_MEDIA_TXT_DOMAIN) . '</p>
-                    <p><strong>' . __('Important', BP_MEDIA_TXT_DOMAIN) . ':</strong> ' . __('You need to have ImageMagick installed on your server for this addon to work.', BP_MEDIA_TXT_DOMAIN) . '</p>',
+                    'desc' => '<p>' . __('BuddyPress Media Instagram adds Instagram like filters to images uploaded with BuddyPress Media.', 'buddypress-media') . '</p>
+                    <p><strong>' . __('Important', 'buddypress-media') . ':</strong> ' . __('You need to have ImageMagick installed on your server for this addon to work.', 'buddypress-media') . '</p>',
                     'price' => '$19',
                     'demo_link' => 'http://demo.rtcamp.com/buddypress-media/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media',
                     'buy_now' => 'http://rtcamp.com/store/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media&add-to-cart=34379'
                 ),
                 array(
-                    'title' => __('BuddyPress-Media Kaltura Add-on', BP_MEDIA_TXT_DOMAIN),
+                    'title' => __('BuddyPress-Media Kaltura Add-on', 'buddypress-media'),
                     'img_src' => 'http://cdn.rtcamp.com/files/2012/10/new-buddypress-media-kaltura-logo-240x184.png',
                     'product_link' => 'http://rtcamp.com/store/buddypress-media-kaltura/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media',
-                    'desc' => '<p>' . __('Add support for more video formats using Kaltura video solution.', BP_MEDIA_TXT_DOMAIN) . '</p>
-                    <p>' . __('Works with Kaltura.com, self-hosted Kaltura-CE and Kaltura-on-premise.', BP_MEDIA_TXT_DOMAIN) . '</p>',
+                    'desc' => '<p>' . __('Add support for more video formats using Kaltura video solution.', 'buddypress-media') . '</p>
+                    <p>' . __('Works with Kaltura.com, self-hosted Kaltura-CE and Kaltura-on-premise.', 'buddypress-media') . '</p>',
                     'price' => '$99',
                     'demo_link' => 'http://demo.rtcamp.com/bpm-kaltura/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media',
                     'buy_now' => 'http://rtcamp.com/store/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media&add-to-cart=15446'
                 ),
                 array(
-                    'title' => __('BuddyPress-Media FFMPEG Add-on', BP_MEDIA_TXT_DOMAIN),
+                    'title' => __('BuddyPress-Media FFMPEG Add-on', 'buddypress-media'),
                     'img_src' => 'http://cdn.rtcamp.com/files/2012/09/ffmpeg-logo-240x184.png',
                     'product_link' => 'http://rtcamp.com/store/buddypress-media-ffmpeg-converter/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media',
-                    'desc' => '<p>' . __('Add supports for more audio & video formats using open-source media-node.', BP_MEDIA_TXT_DOMAIN) . '</p>
-                        <p>' . __('Media node comes with automated setup script for Ubuntu/Debian.', BP_MEDIA_TXT_DOMAIN) . '</p>',
+                    'desc' => '<p>' . __('Add supports for more audio & video formats using open-source media-node.', 'buddypress-media') . '</p>
+                        <p>' . __('Media node comes with automated setup script for Ubuntu/Debian.', 'buddypress-media') . '</p>',
                     'price' => '$49',
                     'demo_link' => 'http://demo.rtcamp.com/bpm-media/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media',
                     'buy_now' => 'http://rtcamp.com/store/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media&add-to-cart=13677'
@@ -96,8 +96,8 @@ if (!class_exists('BPMediaAddon')) {
                 </div>
                 <div class="product_footer">
                     <span class="price alignleft"><span class="amount">' . $price . '</span></span>
-                    <a class="add_to_cart_button  alignright product_type_simple"  href="' . $buy_now . '" target="_blank">' . __('Buy Now', BP_MEDIA_TXT_DOMAIN) . '</a>
-                    <a class="alignleft product_demo_link"  href="' . $demo_link . '" title="' . $title . '" target="_blank">' . __('Live Demo', BP_MEDIA_TXT_DOMAIN) . '</a>
+                    <a class="add_to_cart_button  alignright product_type_simple"  href="' . $buy_now . '" target="_blank">' . __('Buy Now', 'buddypress-media') . '</a>
+                    <a class="alignleft product_demo_link"  href="' . $demo_link . '" title="' . $title . '" target="_blank">' . __('Live Demo', 'buddypress-media') . '</a>
                 </div>'
                     . $coming_soon_div .
                     '</div>';

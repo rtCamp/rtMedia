@@ -17,8 +17,8 @@ if ( ! class_exists( 'BPMediaWidget' ) ) {
 		 * Constructs the BPMedia Widget as a child of WP_Widget
 		 */
 		function __construct() {
-			$widget_ops = array( 'classname' => 'buddypress-media-widget', 'description' => __( "The most recent/popular media uploaded on your site", BP_MEDIA_TXT_DOMAIN ) );
-			parent::__construct( 'buddypress-media-wid', __( 'BuddyPress Media Widget', BP_MEDIA_TXT_DOMAIN ), $widget_ops );
+			$widget_ops = array( 'classname' => 'buddypress-media-widget', 'description' => __( "The most recent/popular media uploaded on your site", 'buddypress-media' ) );
+			parent::__construct( 'buddypress-media-wid', __( 'BuddyPress Media Widget', 'buddypress-media' ), $widget_ops );
 		}
 
 		/**
@@ -30,7 +30,7 @@ if ( ! class_exists( 'BPMediaWidget' ) ) {
 		function widget( $args, $instance ) {
 			extract( $args );
 			echo $before_widget;
-			$title = apply_filters( 'widget_title', empty( $instance[ 'title' ] ) ? __( 'BuddyPress Media', BP_MEDIA_TXT_DOMAIN ) : $instance[ 'title' ], $instance, $this->id_base );
+			$title = apply_filters( 'widget_title', empty( $instance[ 'title' ] ) ? __( 'BuddyPress Media', 'buddypress-media' ) : $instance[ 'title' ], $instance, $this->id_base );
 			$allow = array( );
 			$allowed = array( );
 			if ( empty( $instance[ 'number' ] ) || ! $number = absint( $instance[ 'number' ] ) ) {
@@ -69,10 +69,10 @@ if ( ! class_exists( 'BPMediaWidget' ) ) {
 			}
 
 			$strings = array(
-				'all' => __( 'All', BP_MEDIA_TXT_DOMAIN ),
-				'audio' => __( 'Music', BP_MEDIA_TXT_DOMAIN ),
-				'video' => __( 'Videos', BP_MEDIA_TXT_DOMAIN ),
-				'image' => __( 'Photos', BP_MEDIA_TXT_DOMAIN )
+				'all' => __( 'All', 'buddypress-media' ),
+				'audio' => __( 'Music', 'buddypress-media' ),
+				'video' => __( 'Videos', 'buddypress-media' ),
+				'image' => __( 'Photos', 'buddypress-media' )
 			);
 			$widgetid = $args[ 'widget_id' ];
 			if ( ! is_array( $allowed ) || count( $allowed ) < 1 ) {
@@ -147,7 +147,7 @@ if ( ! class_exists( 'BPMediaWidget' ) ) {
 						if ( $type === 'all' ) {
 							$media_string = 'media';
 						}
-						_e( 'No ' . $wdType . ' ' . $media_string . ' found', BP_MEDIA_TXT_DOMAIN );
+						_e( 'No ' . $wdType . ' ' . $media_string . ' found', 'buddypress-media' );
 					}
 					wp_reset_query();
 							?>
@@ -194,30 +194,30 @@ if ( ! class_exists( 'BPMediaWidget' ) ) {
 			$allowImage = isset( $instance[ 'allow_image' ] ) ? (bool) $instance[ 'allow_image' ] : true;
 			$allowAll = isset( $instance[ 'allow_all' ] ) ? (bool) $instance[ 'allow_all' ] : true;
 			?>
-			<p><label for="<?php echo $this->get_field_id( 'wdType' ); ?>"><?php _e( 'Widget Type:', BP_MEDIA_TXT_DOMAIN ); ?></label>
+			<p><label for="<?php echo $this->get_field_id( 'wdType' ); ?>"><?php _e( 'Widget Type:', 'buddypress-media' ); ?></label>
 				<select  class="widefat" id="<?php echo $this->get_field_id( 'wdType' ); ?>" name="<?php echo $this->get_field_name( 'wdType' ); ?>">
-					<option value="recent" <?php if ( $wdType == "recent" ) echo 'selected="selected"'; ?>><?php _e( 'Recent Media', BP_MEDIA_TXT_DOMAIN ); ?></option>
-					<option value="popular" <?php if ( $wdType == "popular" ) echo 'selected="selected"'; ?>><?php _e( 'Popular Media', BP_MEDIA_TXT_DOMAIN ); ?></option>
+					<option value="recent" <?php if ( $wdType == "recent" ) echo 'selected="selected"'; ?>><?php _e( 'Recent Media', 'buddypress-media' ); ?></option>
+					<option value="popular" <?php if ( $wdType == "popular" ) echo 'selected="selected"'; ?>><?php _e( 'Popular Media', 'buddypress-media' ); ?></option>
 				</select>
 			</p>
-			<p><label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:', BP_MEDIA_TXT_DOMAIN ); ?></label>
+			<p><label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:', 'buddypress-media' ); ?></label>
 				<input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo $title; ?>" /></p>
 
-			<p><label for="<?php echo $this->get_field_id( 'number' ); ?>"><?php _e( 'Number of posts to show:', BP_MEDIA_TXT_DOMAIN ); ?></label>
+			<p><label for="<?php echo $this->get_field_id( 'number' ); ?>"><?php _e( 'Number of posts to show:', 'buddypress-media' ); ?></label>
 				<input id="<?php echo $this->get_field_id( 'number' ); ?>" name="<?php echo $this->get_field_name( 'number' ); ?>" type="text" value="<?php echo $number; ?>" size="3" /></p>
 
 			<p>
-				<input role="checkbox" type="checkbox" name="<?php echo $this->get_field_name( 'allow_all' ); ?>" id="<?php echo $this->get_field_id( 'allow_all' ); ?>" <?php checked( $allowAll ); ?> /><label for="<?php echo $this->get_field_id( 'allow_all' ); ?>"><?php _e( 'Show All', BP_MEDIA_TXT_DOMAIN ); ?></label>
+				<input role="checkbox" type="checkbox" name="<?php echo $this->get_field_name( 'allow_all' ); ?>" id="<?php echo $this->get_field_id( 'allow_all' ); ?>" <?php checked( $allowAll ); ?> /><label for="<?php echo $this->get_field_id( 'allow_all' ); ?>"><?php _e( 'Show All', 'buddypress-media' ); ?></label>
 			</p>
 			<p>
-				<input role="checkbox" type="checkbox" name="<?php echo $this->get_field_name( 'allow_image' ); ?>" id="<?php echo $this->get_field_id( 'allow_image' ); ?>" <?php checked( $allowImage ); ?> /><label for="<?php echo $this->get_field_id( 'allow_image' ); ?>"><?php _e( 'Show Photos', BP_MEDIA_TXT_DOMAIN ); ?></label>
+				<input role="checkbox" type="checkbox" name="<?php echo $this->get_field_name( 'allow_image' ); ?>" id="<?php echo $this->get_field_id( 'allow_image' ); ?>" <?php checked( $allowImage ); ?> /><label for="<?php echo $this->get_field_id( 'allow_image' ); ?>"><?php _e( 'Show Photos', 'buddypress-media' ); ?></label>
 			</p>
 			<p>
-				<input role="checkbox" type="checkbox" name="<?php echo $this->get_field_name( 'allow_audio' ); ?>" id="<?php echo $this->get_field_id( 'allow_audio' ); ?>" <?php checked( $allowAudio ); ?> /> <label for="<?php echo $this->get_field_id( 'allow_audio' ); ?>"><?php _e( 'Show Music', BP_MEDIA_TXT_DOMAIN ); ?></label>
+				<input role="checkbox" type="checkbox" name="<?php echo $this->get_field_name( 'allow_audio' ); ?>" id="<?php echo $this->get_field_id( 'allow_audio' ); ?>" <?php checked( $allowAudio ); ?> /> <label for="<?php echo $this->get_field_id( 'allow_audio' ); ?>"><?php _e( 'Show Music', 'buddypress-media' ); ?></label>
 			</p>
 			<p>
 				<input role="checkbox" type="checkbox" name="<?php echo $this->get_field_name( 'allow_video' ); ?>" id="<?php echo $this->get_field_id( 'allow_video' ); ?>" <?php checked( $allowVideo ); ?> />
-				<label for="<?php echo $this->get_field_id( 'allow_video' ); ?>"><?php _e( 'Show Videos', BP_MEDIA_TXT_DOMAIN ); ?></label>
+				<label for="<?php echo $this->get_field_id( 'allow_video' ); ?>"><?php _e( 'Show Videos', 'buddypress-media' ); ?></label>
 			</p>
 
 			<?php

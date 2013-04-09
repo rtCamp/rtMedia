@@ -88,7 +88,7 @@ if (class_exists('BP_Group_Extension')) :
                                 try {
                                     $bp_media_current_entry = new BPMediaHostWordpress(bp_action_variable(1));
                                     if ($bp_media_current_entry->get_group_id() != bp_get_current_group_id())
-                                        throw new Exception(__('Sorry, the requested media does not belong to the group', BP_MEDIA_TXT_DOMAIN));
+                                        throw new Exception(__('Sorry, the requested media does not belong to the group', 'buddypress-media'));
                                 } catch (Exception $e) {
                                     /** Error Handling when media not present or not belong to the group */
                                     $this->bp_media_display_error($e->getMessage());
@@ -134,7 +134,7 @@ if (class_exists('BP_Group_Extension')) :
             ?>
             <div id="message" class="error">
                 <p>
-                    <?php _e($errorMessage, BP_MEDIA_TXT_DOMAIN); ?>
+                    <?php _e($errorMessage, 'buddypress-media'); ?>
                 </p>
             </div>
             <?php

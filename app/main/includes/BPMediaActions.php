@@ -101,12 +101,12 @@ class BPMediaActions {
                     $group_id = isset($_POST['bp_media_group_id']) ? intval($_POST['bp_media_group_id']) : 0;
                     $entry = $bp_media_entry->add_media($title, $description, $album_id, $group_id, $is_multiple, $is_activity);
                     if (!isset($bp->{BP_MEDIA_SLUG}->messages['updated'][0]))
-                        $bp->{BP_MEDIA_SLUG}->messages['updated'][0] = __('Upload Successful', BP_MEDIA_TXT_DOMAIN);
+                        $bp->{BP_MEDIA_SLUG}->messages['updated'][0] = __('Upload Successful', 'buddypress-media');
                 } catch (Exception $e) {
                     $bp->{BP_MEDIA_SLUG}->messages['error'][] = $e->getMessage();
                 }
             } else {
-                $bp->{BP_MEDIA_SLUG}->messages['error'][] = __('You did not specified a file to upload', BP_MEDIA_TXT_DOMAIN);
+                $bp->{BP_MEDIA_SLUG}->messages['error'][] = __('You did not specified a file to upload', 'buddypress-media');
             }
         }
     }
@@ -308,25 +308,25 @@ class BPMediaActions {
             if (isset($bp_media->options['download_enabled']))
                 $action_buttons[] = '<a href="' . admin_url('admin-ajax.php') . '?action=bp_media_download&file=' . $bp_media_current_entry->get_attachment_url()
                         . '" target="_blank" class="button item-button bp-secondary-action bp-media-download" title="'
-                        . __('Download', BP_MEDIA_TXT_DOMAIN) . '">' . __('Download', BP_MEDIA_TXT_DOMAIN) . '</a>';
+                        . __('Download', 'buddypress-media') . '">' . __('Download', 'buddypress-media') . '</a>';
 
             if ((bp_displayed_user_id() == bp_loggedin_user_id()) && ($bp_media_current_entry->get_type() == 'image')) {
                 if (get_post_thumbnail_id($bp_media_current_entry->get_album_id()) != $bp_media_current_entry->get_id())
                     $action_buttons[] = '<a href="#" data-album-id="' . $bp_media_current_entry->get_album_id()
                             . '"  data-post-id="' . $bp_media_current_entry->get_id()
                             . '" class="button item-button bp-secondary-action bp-media-featured" title="'
-                            . __('Set as Album Cover', BP_MEDIA_TXT_DOMAIN) . '">' . __('Set as Album Cover', BP_MEDIA_TXT_DOMAIN) . '</a>';
+                            . __('Set as Album Cover', 'buddypress-media') . '">' . __('Set as Album Cover', 'buddypress-media') . '</a>';
                 else
                     $action_buttons[] = '<a href="#" data-album-id="'
                             . $bp_media_current_entry->get_album_id() . '" data-post-id="' . $bp_media_current_entry->get_id()
                             . '" class="button item-button bp-secondary-action bp-media-featured" title="'
-                            . __('Unset as Album Cover', BP_MEDIA_TXT_DOMAIN) . '">' . __('Unset as Album Cover', BP_MEDIA_TXT_DOMAIN) . '</a>';
+                            . __('Unset as Album Cover', 'buddypress-media') . '">' . __('Unset as Album Cover', 'buddypress-media') . '</a>';
             }
 
             if (bp_displayed_user_id() == bp_loggedin_user_id())
                 $action_buttons[] = '<a href="' . $bp_media_current_entry->get_edit_url()
                         . '" class="button item-button bp-secondary-action bp-media-edit" title="'
-                        . __('Edit Media', BP_MEDIA_TXT_DOMAIN) . '">' . __('Edit', BP_MEDIA_TXT_DOMAIN) . '</a>';
+                        . __('Edit Media', 'buddypress-media') . '">' . __('Edit', 'buddypress-media') . '</a>';
         }
         $action_buttons = apply_filters('bp_media_action_buttons', $action_buttons);
         foreach ($action_buttons as $action_button) {
@@ -738,7 +738,7 @@ class BPMediaActions {
         }
 
         $args = array(
-            'action' => apply_filters('bp_media_album_created', sprintf(__('%1$s created an album %2$s', BP_MEDIA_TXT_DOMAIN), bp_core_get_userlink($album->get_owner()), '<a href="' . $album->get_url() . '">' . $album->get_title() . '</a>')),
+            'action' => apply_filters('bp_media_album_created', sprintf(__('%1$s created an album %2$s', 'buddypress-media'), bp_core_get_userlink($album->get_owner()), '<a href="' . $album->get_url() . '">' . $album->get_title() . '</a>')),
             'component' => $component,
             'type' => 'activity_update',
             'primary_link' => $album->get_url(),
@@ -785,7 +785,7 @@ class BPMediaActions {
             }
             $activity_content = $media->get_media_activity_content();
             $args = array(
-                'action' => apply_filters('bp_media_added_media', sprintf(__('%1$s added a %2$s', BP_MEDIA_TXT_DOMAIN), bp_core_get_userlink($media->get_author()), '<a href="' . $media->get_url() . '">' . $media->get_media_activity_type() . '</a>')),
+                'action' => apply_filters('bp_media_added_media', sprintf(__('%1$s added a %2$s', 'buddypress-media'), bp_core_get_userlink($media->get_author()), '<a href="' . $media->get_url() . '">' . $media->get_media_activity_type() . '</a>')),
                 'content' => $activity_content,
                 'primary_link' => $media->get_url(),
                 'item_id' => $media->get_id(),
@@ -835,10 +835,10 @@ class BPMediaActions {
         $text = NULL;
         if ($album_cover && ($album_cover == $id)) {
             delete_post_thumbnail($album_id);
-            $text = __('Set as Album Cover', BP_MEDIA_TXT_DOMAIN);
+            $text = __('Set as Album Cover', 'buddypress-media');
         } else {
             set_post_thumbnail($album_id, $id);
-            $text = __('Unset as Album Cover', BP_MEDIA_TXT_DOMAIN);
+            $text = __('Unset as Album Cover', 'buddypress-media');
         }
         echo $text;
         die;

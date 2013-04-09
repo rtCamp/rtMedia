@@ -195,9 +195,6 @@ class BuddyPressMedia {
      * defining them elsewhere, say wp-config.php
      */
     public function constants() {
-        /* Text domain */
-        if (!defined('BP_MEDIA_TXT_DOMAIN'))
-            define('BP_MEDIA_TXT_DOMAIN', $this->text_domain);
 
         /* If the plugin is installed. */
         if (!defined('BP_MEDIA_IS_INSTALLED'))
@@ -393,7 +390,7 @@ class BuddyPressMedia {
      * Loads translations
      */
     static function load_translation() {
-        load_plugin_textdomain(BP_MEDIA_TXT_DOMAIN, false, basename(BP_MEDIA_PATH) . '/languages/');
+        load_plugin_textdomain('buddypress-media', false, basename(BP_MEDIA_PATH) . '/languages/');
     }
 
     /**

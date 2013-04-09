@@ -164,7 +164,7 @@ class BPMediaFunction {
     static function check_user() {
         if (bp_loggedin_user_id() != bp_displayed_user_id()) {
             bp_core_no_access(array(
-                'message' => __('You do not have access to this page.', BP_MEDIA_TXT_DOMAIN),
+                'message' => __('You do not have access to this page.', 'buddypress-media'),
                 'root' => bp_displayed_user_domain(),
                 'redirect' => false
             ));
@@ -225,7 +225,7 @@ class BPMediaFunction {
                         'id' => $activity_id,
                         'type' => 'album_updated',
                         'user_id' => $activity['activities'][0]->user_id,
-                        'action' => apply_filters('bp_media_filter_album_updated', sprintf(__('%1$s added new media in album %2$s', BP_MEDIA_TXT_DOMAIN), bp_core_get_userlink($activity['activities'][0]->user_id), '<a href="' . $album->get_url() . '">' . $album->get_title() . '</a>')),
+                        'action' => apply_filters('bp_media_filter_album_updated', sprintf(__('%1$s added new media in album %2$s', 'buddypress-media'), bp_core_get_userlink($activity['activities'][0]->user_id), '<a href="' . $album->get_url() . '">' . $album->get_title() . '</a>')),
                         'component' => $component, // The name/ID of the component e.g. groups, profile, mycomponent
                         'primary_link' => $activity['activities'][0]->primary_link,
                         'item_id' => $item_id,

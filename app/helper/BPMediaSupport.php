@@ -47,7 +47,7 @@ if (!class_exists('BPMediaSupport')) {
             if ('bp-media-support' == $page) {
                 ?>
                 <div id="debug-info">
-                    <h3><?php _e('Debug info', BP_MEDIA_TXT_DOMAIN); ?></h3>
+                    <h3><?php _e('Debug info', 'buddypress-media'); ?></h3>
                     <table class="form-table">
                         <tbody><?php
                 if ($this->debug_info) {
@@ -78,13 +78,13 @@ if (!class_exists('BPMediaSupport')) {
             global $current_user;
             switch ($form) {
                 case "bug_report":
-                    $meta_title = __('Submit a Bug Report', BP_MEDIA_TXT_DOMAIN);
+                    $meta_title = __('Submit a Bug Report', 'buddypress-media');
                     break;
                 case "new_feature":
-                    $meta_title = __('Submit a New Feature Request', BP_MEDIA_TXT_DOMAIN);
+                    $meta_title = __('Submit a New Feature Request', 'buddypress-media');
                     break;
                 case "premium_support":
-                    $meta_title = __('Submit a Premium Support Request', BP_MEDIA_TXT_DOMAIN);
+                    $meta_title = __('Submit a Premium Support Request', 'buddypress-media');
                     break;
             }
             ?>
@@ -92,22 +92,22 @@ if (!class_exists('BPMediaSupport')) {
             <div id="support-form" class="bp-media-form">
                 <ul>
                     <li>
-                        <label class="bp-media-label" for="name"><?php _e('Name', BP_MEDIA_TXT_DOMAIN); ?>:</label><input class="bp-media-input" id="name" type="text" name="name" value="<?php echo (isset($_REQUEST['name'])) ? esc_attr(stripslashes(trim($_REQUEST['name']))) : $current_user->display_name; ?>" required />
+                        <label class="bp-media-label" for="name"><?php _e('Name', 'buddypress-media'); ?>:</label><input class="bp-media-input" id="name" type="text" name="name" value="<?php echo (isset($_REQUEST['name'])) ? esc_attr(stripslashes(trim($_REQUEST['name']))) : $current_user->display_name; ?>" required />
                     </li>
                     <li>
-                        <label class="bp-media-label" for="email"><?php _e('Email', BP_MEDIA_TXT_DOMAIN); ?>:</label><input id="email" class="bp-media-input" type="text" name="email" value="<?php echo (isset($_REQUEST['email'])) ? esc_attr(stripslashes(trim($_REQUEST['email']))) : get_option('admin_email'); ?>" required />
+                        <label class="bp-media-label" for="email"><?php _e('Email', 'buddypress-media'); ?>:</label><input id="email" class="bp-media-input" type="text" name="email" value="<?php echo (isset($_REQUEST['email'])) ? esc_attr(stripslashes(trim($_REQUEST['email']))) : get_option('admin_email'); ?>" required />
                     </li>
                     <li>
-                        <label class="bp-media-label" for="website"><?php _e('Website', BP_MEDIA_TXT_DOMAIN); ?>:</label><input id="website" class="bp-media-input" type="text" name="website" value="<?php echo (isset($_REQUEST['website'])) ? esc_attr(stripslashes(trim($_REQUEST['website']))) : get_bloginfo('url'); ?>" required />
+                        <label class="bp-media-label" for="website"><?php _e('Website', 'buddypress-media'); ?>:</label><input id="website" class="bp-media-input" type="text" name="website" value="<?php echo (isset($_REQUEST['website'])) ? esc_attr(stripslashes(trim($_REQUEST['website']))) : get_bloginfo('url'); ?>" required />
                     </li>
                     <li>
-                        <label class="bp-media-label" for="phone"><?php _e('Phone', BP_MEDIA_TXT_DOMAIN); ?>:</label><input class="bp-media-input" id="phone" type="text" name="phone" value="<?php echo (isset($_REQUEST['phone'])) ? esc_attr(stripslashes(trim($_REQUEST['phone']))) : ''; ?>"/>
+                        <label class="bp-media-label" for="phone"><?php _e('Phone', 'buddypress-media'); ?>:</label><input class="bp-media-input" id="phone" type="text" name="phone" value="<?php echo (isset($_REQUEST['phone'])) ? esc_attr(stripslashes(trim($_REQUEST['phone']))) : ''; ?>"/>
                     </li>
                     <li>
-                        <label class="bp-media-label" for="subject"><?php _e('Subject', BP_MEDIA_TXT_DOMAIN); ?>:</label><input id="subject" class="bp-media-input" type="text" name="subject" value="<?php echo (isset($_REQUEST['subject'])) ? esc_attr(stripslashes(trim($_REQUEST['subject']))) : ''; ?>" required />
+                        <label class="bp-media-label" for="subject"><?php _e('Subject', 'buddypress-media'); ?>:</label><input id="subject" class="bp-media-input" type="text" name="subject" value="<?php echo (isset($_REQUEST['subject'])) ? esc_attr(stripslashes(trim($_REQUEST['subject']))) : ''; ?>" required />
                     </li>
                     <li>
-                        <label class="bp-media-label" for="details"><?php _e('Details', BP_MEDIA_TXT_DOMAIN); ?>:</label><textarea id="details" class="bp-media-textarea" type="text" name="details" required/><?php echo (isset($_REQUEST['details'])) ? esc_textarea(stripslashes(trim($_REQUEST['details']))) : ''; ?></textarea>
+                        <label class="bp-media-label" for="details"><?php _e('Details', 'buddypress-media'); ?>:</label><textarea id="details" class="bp-media-textarea" type="text" name="details" required/><?php echo (isset($_REQUEST['details'])) ? esc_textarea(stripslashes(trim($_REQUEST['details']))) : ''; ?></textarea>
                     </li>
                     <input type="hidden" name="request_type" value="<?php echo $form; ?>"/>
                     <input type="hidden" name="request_id" value="<?php echo wp_create_nonce(date('YmdHis')); ?>"/>
@@ -118,24 +118,24 @@ if (!class_exists('BPMediaSupport')) {
 
                 </ul>
             </div><!-- .submit-bug-box --><?php if ($form == 'bug_report') { ?>
-                <h3><?php _e('Additional Information', BP_MEDIA_TXT_DOMAIN); ?></h3>
+                <h3><?php _e('Additional Information', 'buddypress-media'); ?></h3>
                 <div id="support-form" class="bp-media-form">
                     <ul>
 
                         <li>
-                            <label class="bp-media-label" for="wp_admin_username"><?php _e('Your WP Admin Login:', BP_MEDIA_TXT_DOMAIN); ?></label><input class="bp-media-input" id="wp_admin_username" type="text" name="wp_admin_username" value="<?php echo (isset($_REQUEST['wp_admin_username'])) ? esc_attr(stripslashes(trim($_REQUEST['wp_admin_username']))) : $current_user->user_login; ?>"/>
+                            <label class="bp-media-label" for="wp_admin_username"><?php _e('Your WP Admin Login:', 'buddypress-media'); ?></label><input class="bp-media-input" id="wp_admin_username" type="text" name="wp_admin_username" value="<?php echo (isset($_REQUEST['wp_admin_username'])) ? esc_attr(stripslashes(trim($_REQUEST['wp_admin_username']))) : $current_user->user_login; ?>"/>
                         </li>
                         <li>
-                            <label class="bp-media-label" for="wp_admin_pwd"><?php _e('Your WP Admin password:', BP_MEDIA_TXT_DOMAIN); ?></label><input class="bp-media-input" id="wp_admin_pwd" type="password" name="wp_admin_pwd" value="<?php echo (isset($_REQUEST['wp_admin_pwd'])) ? esc_attr(stripslashes(trim($_REQUEST['wp_admin_pwd']))) : ''; ?>"/>
+                            <label class="bp-media-label" for="wp_admin_pwd"><?php _e('Your WP Admin password:', 'buddypress-media'); ?></label><input class="bp-media-input" id="wp_admin_pwd" type="password" name="wp_admin_pwd" value="<?php echo (isset($_REQUEST['wp_admin_pwd'])) ? esc_attr(stripslashes(trim($_REQUEST['wp_admin_pwd']))) : ''; ?>"/>
                         </li>
                         <li>
-                            <label class="bp-media-label" for="ssh_ftp_host"><?php _e('Your SSH / FTP host:', BP_MEDIA_TXT_DOMAIN); ?></label><input class="bp-media-input" id="ssh_ftp_host" type="text" name="ssh_ftp_host" value="<?php echo (isset($_REQUEST['ssh_ftp_host'])) ? esc_attr(stripslashes(trim($_REQUEST['ssh_ftp_host']))) : ''; ?>"/>
+                            <label class="bp-media-label" for="ssh_ftp_host"><?php _e('Your SSH / FTP host:', 'buddypress-media'); ?></label><input class="bp-media-input" id="ssh_ftp_host" type="text" name="ssh_ftp_host" value="<?php echo (isset($_REQUEST['ssh_ftp_host'])) ? esc_attr(stripslashes(trim($_REQUEST['ssh_ftp_host']))) : ''; ?>"/>
                         </li>
                         <li>
-                            <label class="bp-media-label" for="ssh_ftp_username"><?php _e('Your SSH / FTP login:', BP_MEDIA_TXT_DOMAIN); ?></label><input class="bp-media-input" id="ssh_ftp_username" type="text" name="ssh_ftp_username" value="<?php echo (isset($_REQUEST['ssh_ftp_username'])) ? esc_attr(stripslashes(trim($_REQUEST['ssh_ftp_username']))) : ''; ?>"/>
+                            <label class="bp-media-label" for="ssh_ftp_username"><?php _e('Your SSH / FTP login:', 'buddypress-media'); ?></label><input class="bp-media-input" id="ssh_ftp_username" type="text" name="ssh_ftp_username" value="<?php echo (isset($_REQUEST['ssh_ftp_username'])) ? esc_attr(stripslashes(trim($_REQUEST['ssh_ftp_username']))) : ''; ?>"/>
                         </li>
                         <li>
-                            <label class="bp-media-label" for="ssh_ftp_pwd"><?php _e('Your SSH / FTP password:', BP_MEDIA_TXT_DOMAIN); ?></label><input class="bp-media-input" id="ssh_ftp_pwd" type="password" name="ssh_ftp_pwd" value="<?php echo (isset($_REQUEST['ssh_ftp_pwd'])) ? esc_attr(stripslashes(trim($_REQUEST['ssh_ftp_pwd']))) : ''; ?>"/>
+                            <label class="bp-media-label" for="ssh_ftp_pwd"><?php _e('Your SSH / FTP password:', 'buddypress-media'); ?></label><input class="bp-media-input" id="ssh_ftp_pwd" type="password" name="ssh_ftp_pwd" value="<?php echo (isset($_REQUEST['ssh_ftp_pwd'])) ? esc_attr(stripslashes(trim($_REQUEST['ssh_ftp_pwd']))) : ''; ?>"/>
                         </li>
                     </ul>
                 </div><!-- .submit-bug-box --><?php } ?>
@@ -158,16 +158,16 @@ if (!class_exists('BPMediaSupport')) {
             $form_data = wp_parse_args($_POST['form_data']);
             if ($form_data['request_type'] == 'premium_support') {
                 $mail_type = 'Premium Support';
-                $title = __('BuddyPress Media Premium Support Request from', BP_MEDIA_TXT_DOMAIN);
+                $title = __('BuddyPress Media Premium Support Request from', 'buddypress-media');
             } elseif ($form_data['request_type'] == 'new_feature') {
                 $mail_type = 'New Feature Request';
-                $title = __('BuddyPress Media New Feature Request from', BP_MEDIA_TXT_DOMAIN);
+                $title = __('BuddyPress Media New Feature Request from', 'buddypress-media');
             } elseif ($form_data['request_type'] == 'bug_report') {
                 $mail_type = 'Bug Report';
-                $title = __('BuddyPress Media Bug Report from', BP_MEDIA_TXT_DOMAIN);
+                $title = __('BuddyPress Media Bug Report from', 'buddypress-media');
             } else {
                 $mail_type = 'Bug Report';
-                $title = __('BuddyPress Media Contact from', BP_MEDIA_TXT_DOMAIN);
+                $title = __('BuddyPress Media Contact from', 'buddypress-media');
             }
             $message = '<html>
                             <head>
@@ -228,7 +228,7 @@ if (!class_exists('BPMediaSupport')) {
             }
             $message .= '</table>';
             if ( $this->debug_info ) {
-                $message .= '<h3>'.__('Debug Info', BP_MEDIA_TXT_DOMAIN).'</h3>';
+                $message .= '<h3>'.__('Debug Info', 'buddypress-media').'</h3>';
                 $message .= '<table>';
                 foreach ($this->debug_info as $configuration => $value) {
                     $message .= '<tr>
@@ -243,15 +243,15 @@ if (!class_exists('BPMediaSupport')) {
             $headers = 'From: ' . $form_data['name'] . ' <' . $form_data['email'] . '>' . "\r\n";
             if (wp_mail($bp_media->support_email, '[buddypress-media] ' . $mail_type . ' from ' . str_replace(array('http://', 'https://'), '', $form_data['website']), $message, $headers)) {
                 if ($form_data['request_type'] == 'new_feature') {
-                    echo '<p>' . __('Thank you for your Feedback/Suggestion.', BP_MEDIA_TXT_DOMAIN) . '</p>';
+                    echo '<p>' . __('Thank you for your Feedback/Suggestion.', 'buddypress-media') . '</p>';
                 } else {
-                    echo '<p>' . __('Thank you for posting your support request.', BP_MEDIA_TXT_DOMAIN) . '</p>';
-                    echo '<p>' . __('We will get back to you shortly.', BP_MEDIA_TXT_DOMAIN) . '</p>';
+                    echo '<p>' . __('Thank you for posting your support request.', 'buddypress-media') . '</p>';
+                    echo '<p>' . __('We will get back to you shortly.', 'buddypress-media') . '</p>';
                 }
             } else {
-                echo '<p>' . __('Your server failed to send an email.', BP_MEDIA_TXT_DOMAIN) . '</p>';
-                echo '<p>' . __('Kindly contact your server support to fix this.', BP_MEDIA_TXT_DOMAIN) . '</p>';
-                echo '<p>' . sprintf(__('You can alternatively create a support request <a href="%s">here</a>', BP_MEDIA_TXT_DOMAIN), $bp_media->support_url) . '</p>';
+                echo '<p>' . __('Your server failed to send an email.', 'buddypress-media') . '</p>';
+                echo '<p>' . __('Kindly contact your server support to fix this.', 'buddypress-media') . '</p>';
+                echo '<p>' . sprintf(__('You can alternatively create a support request <a href="%s">here</a>', 'buddypress-media'), $bp_media->support_url) . '</p>';
             }
             die();
         }

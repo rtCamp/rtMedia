@@ -42,117 +42,151 @@ class BPMediaAlbumimporter extends BPMediaImporter {
     }
 
     function ui() {
-        $this->progress = new rtProgress();
-        $total = BPMediaAlbumimporter::get_total_count();
-        $remaining_comments = $this->get_remaining_comments();
-        $finished = BPMediaAlbumimporter::get_completed_media($total);
-        $finished_users = BPMediaAlbumimporter::get_completed_users();
-        $finished_comments = $this->get_finished_comments();
-        $total_comments = (int) $finished_comments + (int) $remaining_comments;
-        $completed_users_favorites = (int) get_site_option('bp_media_bp_album_favorite_import_status', 0);
-        $users = count_users();
-        echo '<div id="bpmedia-bpalbumimporter">';
-        if (($finished[0]->media != $total[0]->media) || ( $users['total_users'] > $completed_users_favorites )) {
-            if (!$total[0]->media) {
-                echo '<p><strong>' . __('You have nothing to import') . '</strong></p>';
-            } elseif (BPMediaAlbumimporter::_active('bp-album/loader.php') != 1) {
-                echo '<div id="setting-error-bp-album-importer" class="error settings-error below-h2">
-                        <p><strong>' . __('Warning!', BP_MEDIA_TXT_DOMAIN) . '</strong> ' . sprintf(__('This import process is irreversible. Although everything is tested, please take a <a target="_blank" href="http://codex.wordpress.org/WordPress_Backups">backup of your database and files</a>, before proceeding. If you don\'t know your way around databases and files, consider <a target="_blank" href="%s">hiring us</a>, or another professional.', BP_MEDIA_TXT_DOMAIN), 'http://rtcamp.com/contact/?purpose=buddypress&utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media') . '</p>';
-                echo '<p>' . __('If you have set "WP_DEBUG" in you wp-config.php file, please make sure it is set to "false", so that it doesn\'t conflict with the import process.', BP_MEDIA_TXT_DOMAIN) . '</p></div>';
-                echo '<div class="bp-album-import-accept"><p><strong><label for="bp-album-import-accept"><input type="checkbox" value="accept" name="bp-album-import-accept" id="bp-album-import-accept" /> ' . __('I have taken a backup of the database and files of this site.', BP_MEDIA_TXT_DOMAIN) . '</label></strong></p></div>';
-                echo '<button id="bpmedia-bpalbumimport" class="button button-primary">';
-                _e('Start Import', BP_MEDIA_TXT_DOMAIN);
-                echo '</button>';
-                echo '<div class="bp-album-importer-wizard">';
-                echo '<div class="bp-album-users">';
-                echo '<strong>';
-                echo __('Users', BP_MEDIA_TXT_DOMAIN) . ': <span class="finished">' . $finished_users[0]->users . '</span> / <span class="total">' . $total[0]->users . '</span>';
-                echo '</strong>';
-                if ($total[0]->users != 0) {
-                    $users_progress = $this->progress->progress($finished_users[0]->users, $total[0]->users);
-                    $this->progress->progress_ui($users_progress);
-                }
-                echo '</div>';
-                echo '<br />';
-                echo '<div class="bp-album-media">';
-                echo '<strong>';
-                echo __('Media', BP_MEDIA_TXT_DOMAIN) . ': <span class="finished">' . $finished[0]->media . '</span> / <span class="total">' . $total[0]->media . '</span>';
-                echo '</strong>';
-                $progress = 100;
-                if ($total[0]->media != 0) {
-                    $todo = $total[0]->media - $finished[0]->media;
-                    $steps = ceil($todo / 5);
-                    $laststep = $todo % 5;
-                    $progress = $this->progress->progress($finished[0]->media, $total[0]->media);
-                    echo '<input type="hidden" value="' . $finished[0]->media . '" name="finished"/>';
-                    echo '<input type="hidden" value="' . $total[0]->media . '" name="total"/>';
-                    echo '<input type="hidden" value="' . $todo . '" name="todo"/>';
-                    echo '<input type="hidden" value="' . $steps . '" name="steps"/>';
-                    echo '<input type="hidden" value="' . $laststep . '" name="laststep"/>';
-                    $this->progress->progress_ui($progress);
-                }
-                echo '</div>';
-                echo "<br>";
-                echo '<div class="bp-album-comments">';
-                if ($total_comments != 0) {
+        global $wpdb;
+        $bp_album_active = BPMediaImporter::_active('bp-album/loader.php');
+        $table = "{$wpdb->base_prefix}bp_album";
+        if (BPMediaImporter::table_exists($table)) {
+
+            $this->progress = new rtProgress();
+            $total = BPMediaAlbumimporter::get_total_count();
+//            print_r($total);
+            $remaining_comments = $this->get_remaining_comments();
+//            print_r($remaining_comments);
+            $finished = BPMediaAlbumimporter::get_completed_media($total);
+//            print_r($finished);
+            $finished_users = BPMediaAlbumimporter::get_completed_users();
+//            print_R($finished_users);
+            $finished_comments = $this->get_finished_comments();
+//            print_r($finished_comments);
+            $total_comments = (int) $finished_comments + (int) $remaining_comments;
+//            print_r($total_comments);
+            $completed_users_favorites = (int) get_site_option('bp_media_bp_album_favorite_import_status', 0);
+//            print_r($completed_users_favorites);
+            $users = count_users();
+//            print_r($users);
+
+            echo '<div id="bpmedia-bpalbumimporter">';
+            if (($finished[0]->media != $total[0]->media) || ( $users['total_users'] > $completed_users_favorites )) {
+                if ($bp_album_active != 1) {
+                    echo '<div id="setting-error-bp-album-importer" class="error settings-error below-h2">
+                        <p><strong>' . __('Warning!', 'buddypress-media') . '</strong> ' . sprintf(__('This import process is irreversible. Although everything is tested, please take a <a target="_blank" href="http://codex.wordpress.org/WordPress_Backups">backup of your database and files</a>, before proceeding. If you don\'t know your way around databases and files, consider <a target="_blank" href="%s">hiring us</a>, or another professional.', 'buddypress-media'), 'http://rtcamp.com/contact/?purpose=buddypress&utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media') . '</p>';
+                    echo '<p>' . __('If you have set "WP_DEBUG" in you wp-config.php file, please make sure it is set to "false", so that it doesn\'t conflict with the import process.', 'buddypress-media') . '</p></div>';
+                    echo '<div class="bp-album-import-accept"><p><strong><label for="bp-album-import-accept"><input type="checkbox" value="accept" name="bp-album-import-accept" id="bp-album-import-accept" /> ' . __('I have taken a backup of the database and files of this site.', 'buddypress-media') . '</label></strong></p></div>';
+                    echo '<button id="bpmedia-bpalbumimport" class="button button-primary">';
+                    _e('Start Import', 'buddypress-media');
+                    echo '</button>';
+                    echo '<div class="bp-album-importer-wizard">';
+                    echo '<div class="bp-album-users">';
                     echo '<strong>';
-                    echo __('Comments', BP_MEDIA_TXT_DOMAIN) . ': <span class="finished">' . $finished_comments . '</span> / <span class="total">' . $total_comments . '</span>';
+                    echo __('Users', 'buddypress-media') . ': <span class="finished">' . $finished_users[0]->users . '</span> / <span class="total">' . $total[0]->users . '</span>';
                     echo '</strong>';
-                    $comments_progress = $this->progress->progress($finished_comments, $total_comments);
-                    $this->progress->progress_ui($comments_progress);
+                    if ($total[0]->users != 0) {
+                        $users_progress = $this->progress->progress($finished_users[0]->users, $total[0]->users);
+                        $this->progress->progress_ui($users_progress);
+                    }
+                    echo '</div>';
                     echo '<br />';
+                    echo '<div class="bp-album-media">';
+                    echo '<strong>';
+                    echo __('Media', 'buddypress-media') . ': <span class="finished">' . $finished[0]->media . '</span> / <span class="total">' . $total[0]->media . '</span>';
+                    echo '</strong>';
+                    $progress = 100;
+                    if ($total[0]->media != 0) {
+                        $todo = $total[0]->media - $finished[0]->media;
+                        $steps = ceil($todo / 5);
+                        $laststep = $todo % 5;
+                        $progress = $this->progress->progress($finished[0]->media, $total[0]->media);
+                        echo '<input type="hidden" value="' . $finished[0]->media . '" name="finished"/>';
+                        echo '<input type="hidden" value="' . $total[0]->media . '" name="total"/>';
+                        echo '<input type="hidden" value="' . $todo . '" name="todo"/>';
+                        echo '<input type="hidden" value="' . $steps . '" name="steps"/>';
+                        echo '<input type="hidden" value="' . $laststep . '" name="laststep"/>';
+                        $this->progress->progress_ui($progress);
+                    }
+                    echo '</div>';
+                    echo "<br>";
+                    echo '<div class="bp-album-comments">';
+                    if ($total_comments != 0) {
+                        echo '<strong>';
+                        echo __('Comments', 'buddypress-media') . ': <span class="finished">' . $finished_comments . '</span> / <span class="total">' . $total_comments . '</span>';
+                        echo '</strong>';
+                        $comments_progress = $this->progress->progress($finished_comments, $total_comments);
+                        $this->progress->progress_ui($comments_progress);
+                        echo '<br />';
+                    } else {
+                        echo '<p><strong>' . __('Comments: 0/0 (No comments to import)', 'buddypress-media') . '</strong></p>';
+                    }
+                    echo '</div>';
+                    if ($completed_users_favorites != 0) {
+                        echo '<br />';
+                        echo '<div class="bp-album-favorites">';
+                        echo '<strong>';
+                        echo __('User\'s Favorites', 'buddypress-media') . ': <span class="finished">' . $completed_users_favorites . '</span> / <span class="total">' . $users['total_users'] . '</span>';
+                        echo '</strong>';
+                        $favorites_progress = $this->progress->progress($completed_users_favorites, $users['total_users']);
+                        $this->progress->progress_ui($favorites_progress);
+                        echo '</div>';
+                    }
+                    echo '</div>';
                 } else {
-                    echo '<p><strong>' . __('Comments: 0/0 (No comments to import)', BP_MEDIA_TXT_DOMAIN) . '</strong></p>';
+                    $deactivate_link = wp_nonce_url(admin_url('plugins.php?action=deactivate&amp;plugin=' . urlencode($this->path)), 'deactivate-plugin_' . $this->path);
+                    echo '<p>' . __('BP-Album is active on your site and will cause problems with the import.', 'buddypress-media') . '</p>';
+                    echo '<p><a class="button button-primary deactivate-bp-album" href="' . $deactivate_link . '">' . __('Click here to deactivate BP-Album and continue importing', 'buddypress-media') . '</a></p>';
                 }
-                echo '</div>';
-                if ($completed_users_favorites != 0) {
-                    echo '<br />';
-                    echo '<div class="bp-album-favorites">';
-                    echo '<strong>';
-                    echo __('User\'s Favorites', BP_MEDIA_TXT_DOMAIN) . ': <span class="finished">' . $completed_users_favorites . '</span> / <span class="total">' . $users['total_users'] . '</span>';
-                    echo '</strong>';
-                    $favorites_progress = $this->progress->progress($completed_users_favorites, $users['total_users']);
-                    $this->progress->progress_ui($favorites_progress);
+            } else {
+                $corrupt_media = BPMediaAlbumimporter::get_corrupt_media();
+                if ($corrupt_media) {
+                    echo '<div class="error below-h2">';
+                    echo '<p><strong>' . __('Some of the media failed to import. The file might be corrupt or deleted.', 'buddypress-media') . '</strong></p>';
+                    echo '<p>' . sprintf(__('The following %d BP Album Media id\'s could not be imported', 'buddypress-media'), count($corrupt_media)) . ': </p>';
+                    $corrupt_prefix_path = str_replace('/wp-content', '', WP_CONTENT_URL);
+                    foreach ($corrupt_media as $corrupt) {
+                        echo '<p>' . $corrupt->id . ' => <a href="' . $corrupt_prefix_path . $corrupt->pic_org_url . '">' . $corrupt->title . '</a></p>';
+                    }
+                    echo '</div>';
+                } else {
+                    echo '<div class="bp-album-import-accept i-accept">';
+                    echo '<p class="info">';
+                    $message = sprintf(__('I just imported bp-album to @buddypressmedia http://goo.gl/8Upmv on %s', 'buddypress-media'), home_url());
+                    echo '<strong>' . __('Congratulations!', 'buddypress-media') . '</strong> ' . __('All media from BP Album has been imported.', 'buddypress-media');
+                    echo ' <a href="http://twitter.com/home/?status=' . $message . '" class="button button-import-tweet" target= "_blank">' . __('Tweet this', 'buddypress-media') . '</a>';
+                    echo '</p>';
                     echo '</div>';
                 }
-                echo '</div>';
-            } else {
-                $deactivate_link = wp_nonce_url(admin_url('plugins.php?action=deactivate&amp;plugin=' . urlencode($this->path)), 'deactivate-plugin_' . $this->path);
-                echo '<p>' . __('BP-Album is active on your site and will cause problems with the import.', BP_MEDIA_TXT_DOMAIN) . '</p>';
-                echo '<p><a class="button button-primary deactivate-bp-album" href="' . $deactivate_link . '">' . __('Click here to deactivate BP-Album and continue importing', BP_MEDIA_TXT_DOMAIN) . '</a></p>';
+                echo '<p>' . __('However, a lot of unnecessary files and a database table are still eating up your resources. If everything seems fine, you can clean this data up.', 'buddypress-media') . '</p>';
+                echo '<br />';
+                echo '<button id="bpmedia-bpalbumimport-cleanup" class="button btn-warning">';
+                _e('Clean up Now', 'buddypress-media');
+                echo '</button>';
+                echo ' <a href="' . add_query_arg(
+                        array('page' => 'bp-media-settings'), (is_multisite() ? network_admin_url('admin.php') : admin_url('admin.php'))
+                ) . '" id="bpmedia-bpalbumimport-cleanup-later" class="button">';
+                _e('Clean up Later', 'buddypress-media');
+                echo '</a>';
+                echo '<br />';
+                echo '<br />';
+                echo '<br />';
+                echo '<strong>' . __('Why don\'t you try adding some instagram like effects to your images?', 'buddypress-media') . '</strong>';
+                echo '<div class="bp-media-addon">
+                <a href="http://rtcamp.com/store/buddypress-media-instagram/?utm_source=dashboard&amp;utm_medium=plugin&amp;utm_campaign=buddypress-media&amp;utm_content=bp-album-importer" title="BuddyPress-Media Instagram" target="_blank">
+                    <img width="240" height="184" title="BuddyPress-Media Instagram" alt="BuddyPress-Media Instagram" src="http://rtcamp.com/wp-content/uploads/2013/03/BuddyPressMedia-Instagram.png?ref=bp-album-importer">
+                </a>
+                <h4><a href="http://rtcamp.com/store/buddypress-media-instagram/?utm_source=dashboard&amp;utm_medium=plugin&amp;utm_campaign=buddypress-media&amp;utm_content=bp-album-importer" title="BuddyPress-Media Instagram" target="_blank">BuddyPress-Media Instagram</a></h4>
+                <div class="product_desc">
+                    <p>'.__('BuddyPress Media Instagram adds Instagram like filters to images uploaded with BuddyPress Media.', 'buddypress-media').'</p>
+                    <p><strong>'.__('Important','buddypress-media').':</strong> '.__('You need to have ImageMagick installed on your server for this addon to work.','buddypress-media').'</p>
+                </div>
+                <div class="product_footer">
+                    <span class="price alignleft"><span class="amount">$19</span></span>
+                    <a class="add_to_cart_button  alignright product_type_simple" href="http://rtcamp.com/store/?utm_source=dashboard&amp;utm_medium=plugin&amp;utm_campaign=buddypress-media&amp;utm_content=bp-album-importer&amp;add-to-cart=34379" target="_blank">'.__('Buy Now','buddypress-media').'</a>
+                    <a class="alignleft product_demo_link" href="http://demo.rtcamp.com/buddypress-media/?utm_source=dashboard&amp;utm_medium=plugin&amp;utm_campaign=buddypress-media&amp;utm_content=bp-album-importer" title="BuddyPress-Media Instagram" target="_blank">'.__('Live Demo','buddypress-media').'</a>
+                </div></div>';
             }
+            echo '</div>';
         } else {
-            $corrupt_media = BPMediaAlbumimporter::get_corrupt_media();
-            if ($corrupt_media) {
-                echo '<div class="error below-h2">';
-                echo '<p><strong>' . __('Some of the media failed to import. The file might be corrupt or deleted.', BP_MEDIA_TXT_DOMAIN) . '</strong></p>';
-                echo '<p>' . sprintf(__('The following %d BP Album Media id\'s could not be imported', BP_MEDIA_TXT_DOMAIN), count($corrupt_media)) . ': </p>';
-                $corrupt_prefix_path = str_replace('/wp-content','',WP_CONTENT_URL);
-                foreach ($corrupt_media as $corrupt) {
-                    echo '<p>'.$corrupt->id.' => <a href="'.$corrupt_prefix_path.$corrupt->pic_org_url.'">'.$corrupt->title.'</a></p>';
-                }
-                echo '</div>';
-            } else {
-                echo '<div class="bp-album-import-accept i-accept">';
-                echo '<p class="info">';
-                $message = sprintf(__('I just imported bp-album to @buddypressmedia http://goo.gl/8Upmv on %s', BP_MEDIA_TXT_DOMAIN), home_url());
-                echo '<strong>' . __('Congratulations!', BP_MEDIA_TXT_DOMAIN) . '</strong> ' . __('All media from BP Album has been imported.', BP_MEDIA_TXT_DOMAIN);
-                echo ' <a href="http://twitter.com/home/?status=' . $message . '" class="button button-import-tweet" target= "_blank">' . __('Tweet this', BP_MEDIA_TXT_DOMAIN) . '</a>';
-                echo '</p>';
-                echo '</div>';
-            }
-            echo '<p>' . __('However, a lot of unnecessary files and a database table are still eating up your resources. If everything seems fine, you can clean this data up.', BP_MEDIA_TXT_DOMAIN) . '</p>';
-            echo '<br />';
-            echo '<button id="bpmedia-bpalbumimport-cleanup" class="button btn-warning">';
-            _e('Clean up Now', BP_MEDIA_TXT_DOMAIN);
-            echo '</button>';
-            echo ' <a href="' . add_query_arg(
-                    array('page' => 'bp-media-settings'), (is_multisite() ? network_admin_url('admin.php') : admin_url('admin.php'))
-            ) . '" id="bpmedia-bpalbumimport-cleanup-later" class="button">';
-            _e('Clean up Later', BP_MEDIA_TXT_DOMAIN);
-            echo '</a>';
+            echo '<p>'.__('Looks like you don\'t use BP Album. Is there any other BuddyPress Plugin you want an importer for?').'</p>';
+            echo '<p>'.sprintf(__('<a href="%s">Create an issue</a> on GitHub requesting the same.','buddypress-media'),'https://github.com/rtCamp/buddypress-media/issues/new').'</p>';
         }
-        echo '</div>';
     }
 
     function create_album($author_id, $album_name = 'Imported Media') {
@@ -181,7 +215,7 @@ class BPMediaAlbumimporter extends BPMediaImporter {
     static function get_total_count() {
         global $wpdb;
         $table = $wpdb->base_prefix . 'bp_album';
-        if (BPMediaAlbumimporter::table_exists($table) && BPMediaAlbumimporter::_active('bp-album/loader.php') != -1) {
+        if (BPMediaAlbumimporter::table_exists($table)) {
             return $wpdb->get_results("SELECT COUNT(DISTINCT owner_id) as users, COUNT(id) as media FROM $table");
         }
         return 0;
@@ -191,7 +225,7 @@ class BPMediaAlbumimporter extends BPMediaImporter {
         global $wpdb;
         $bp_album_table = $wpdb->base_prefix . 'bp_album';
         $activity_table = $wpdb->base_prefix . 'bp_activity';
-        if ($this->table_exists($bp_album_table) && BPMediaAlbumimporter::_active('bp-album/loader.php') != -1) {
+        if ($this->table_exists($bp_album_table)) {
             return $wpdb->get_var("SELECT SUM( b.count ) AS total
                                         FROM (
                                             SELECT (
@@ -215,7 +249,7 @@ class BPMediaAlbumimporter extends BPMediaImporter {
         global $wpdb;
         $bp_album_table = $wpdb->base_prefix . 'bp_album';
         $activity_table = $wpdb->base_prefix . 'bp_activity';
-        if ($this->table_exists($bp_album_table) && BPMediaAlbumimporter::_active('bp-album/loader.php') != -1) {
+        if ($this->table_exists($bp_album_table)) {
             return $wpdb->get_var("SELECT COUNT( activity.id ) AS count
                                         FROM $activity_table AS activity
                                         INNER JOIN $bp_album_table AS album ON ( activity.item_id = album.import_status ) 
@@ -228,7 +262,7 @@ class BPMediaAlbumimporter extends BPMediaImporter {
     static function get_completed_users() {
         global $wpdb;
         $table = $wpdb->base_prefix . 'bp_album';
-        if (BPMediaAlbumimporter::table_exists($table) && BPMediaAlbumimporter::_active('bp-album/loader.php') != -1) {
+        if (BPMediaAlbumimporter::table_exists($table)) {
             return $wpdb->get_results("SELECT COUNT( DISTINCT owner_id ) AS users
                                             FROM $table
                                             WHERE owner_id NOT 
@@ -245,7 +279,7 @@ class BPMediaAlbumimporter extends BPMediaImporter {
     static function get_completed_media() {
         global $wpdb;
         $table = $wpdb->base_prefix . 'bp_album';
-        if (BPMediaAlbumimporter::table_exists($table) && BPMediaAlbumimporter::_active('bp-album/loader.php') != -1) {
+        if (BPMediaAlbumimporter::table_exists($table)) {
             return $wpdb->get_results("SELECT COUNT(id) as media FROM $table WHERE import_status!=0");
         }
         return 0;
@@ -254,7 +288,7 @@ class BPMediaAlbumimporter extends BPMediaImporter {
     static function get_corrupt_media() {
         global $wpdb;
         $table = $wpdb->base_prefix . 'bp_album';
-        if (BPMediaAlbumimporter::table_exists($table) && BPMediaAlbumimporter::_active('bp-album/loader.php') != -1) {
+        if (BPMediaAlbumimporter::table_exists($table)) {
             return $wpdb->get_results("SELECT id,title,pic_org_url FROM $table WHERE import_status=-1");
         }
         return 0;

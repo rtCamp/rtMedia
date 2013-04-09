@@ -109,7 +109,7 @@ class BPMediaScreen {
      * @global type $bp_media
      */
     public function page_not_exist() {
-        @setcookie('bp-message', __('The requested url does not exist', BP_MEDIA_TXT_DOMAIN), time() + 60 * 60 * 24, COOKIEPATH);
+        @setcookie('bp-message', __('The requested url does not exist', 'buddypress-media'), time() + 60 * 60 * 24, COOKIEPATH);
         @setcookie('bp-message-type', 'error', time() + 60 * 60 * 24, COOKIEPATH);
         $this->template->redirect($this->media_const);
         exit;
@@ -120,7 +120,7 @@ class BPMediaScreen {
      * @global type $bp_media
      */
     function screen_title() {
-        printf(__('All %s', BP_MEDIA_TXT_DOMAIN), ucfirst($this->slug));
+        printf(__('All %s', 'buddypress-media'), ucfirst($this->slug));
     }
 
     /**
@@ -191,7 +191,7 @@ class BPMediaScreen {
             echo '</ul>';
             $this->template->show_more();
         } else {
-            BPMediaFunction::show_formatted_error_message(sprintf(__('Sorry, no %s were found.', BP_MEDIA_TXT_DOMAIN), $this->slug), 'info');
+            BPMediaFunction::show_formatted_error_message(sprintf(__('Sorry, no %s were found.', 'buddypress-media'), $this->slug), 'info');
             if (bp_is_my_profile() || BPMediaGroupLoader::can_upload()) {
                 echo '<div class="bp-media-area-allocate"></div>';
                 BPMediaUploadScreen::upload_screen_content();
@@ -302,7 +302,7 @@ class BPMediaScreen {
      * @global type $bp_media
      */
     function edit_screen_title() {
-        printf(__('Edit %s', BP_MEDIA_TXT_DOMAIN), $this->slug);
+        printf(__('Edit %s', 'buddypress-media'), $this->slug);
     }
 
     /**
@@ -323,22 +323,22 @@ class BPMediaScreen {
         ?>
         <form method="post" class="standard-form" id="bp-media-upload-form">
             <label for="bp-media-upload-input-title">
-                <?php printf(__('%s Title', BP_MEDIA_TXT_DOMAIN), ucfirst($this->media_type)); ?>
+                <?php printf(__('%s Title', 'buddypress-media'), ucfirst($this->media_type)); ?>
             </label>
             <input id="bp-media-upload-input-title" type="text" name="bp_media_title" class="settings-input"
                    maxlength="<?php echo max(array($bp_media_default_excerpts['single_entry_title'], $bp_media_default_excerpts['activity_entry_title'])) ?>"
                    value="<?php echo $bp_media_current_entry->get_title(); ?>" />
             <label for="bp-media-upload-input-description">
-                <?php printf(__('%s Description', BP_MEDIA_TXT_DOMAIN), ucfirst($this->media_type)); ?>
+                <?php printf(__('%s Description', 'buddypress-media'), ucfirst($this->media_type)); ?>
             </label>
             <textarea id="bp-media-upload-input-description" name="bp_media_description" class="settings-input"
                       maxlength="<?php echo max(array($bp_media_default_excerpts['single_entry_description'], $bp_media_default_excerpts['activity_entry_description'])) ?>"
                       ><?php echo $bp_media_current_entry->get_content(); ?></textarea>
                       <?php do_action('bp_media_add_media_fields', $this->media_type); ?>
             <div class="submit">
-                <input type="submit" class="auto" value="<?php _e('Update', BP_MEDIA_TXT_DOMAIN); ?>" />
-                <a href="<?php echo $bp_media_current_entry->get_url(); ?>" class="button" title="<?php _e('Back to Media File', BP_MEDIA_TXT_DOMAIN); ?>">
-                    <?php _e('Back to Media', BP_MEDIA_TXT_DOMAIN); ?>
+                <input type="submit" class="auto" value="<?php _e('Update', 'buddypress-media'); ?>" />
+                <a href="<?php echo $bp_media_current_entry->get_url(); ?>" class="button" title="<?php _e('Back to Media File', 'buddypress-media'); ?>">
+                    <?php _e('Back to Media', 'buddypress-media'); ?>
                 </a>
             </div>
         </form>
@@ -361,14 +361,14 @@ class BPMediaScreen {
         global $bp;
         if (bp_loggedin_user_id() != bp_displayed_user_id()) {
             bp_core_no_access(array(
-                'message' => __('You do not have access to this page.', BP_MEDIA_TXT_DOMAIN),
+                'message' => __('You do not have access to this page.', 'buddypress-media'),
                 'root' => bp_displayed_user_domain(),
                 'redirect' => false
             ));
             exit;
         }
         if (!isset($bp->action_variables[1])) {
-            @setcookie('bp-message', __('The requested url does not exist', BP_MEDIA_TXT_DOMAIN), time() + 60 * 60 * 24, COOKIEPATH);
+            @setcookie('bp-message', __('The requested url does not exist', 'buddypress-media'), time() + 60 * 60 * 24, COOKIEPATH);
             @setcookie('bp-message-type', 'error', time() + 60 * 60 * 24, COOKIEPATH);
             $this->template->redirect($this->media_const);
             exit;
@@ -390,7 +390,7 @@ class BPMediaScreen {
         }
         $bp_media_current_entry->delete_media();
 
-        @setcookie('bp-message', __('Media deleted successfully', BP_MEDIA_TXT_DOMAIN), time() + 60 * 60 * 24, COOKIEPATH);
+        @setcookie('bp-message', __('Media deleted successfully', 'buddypress-media'), time() + 60 * 60 * 24, COOKIEPATH);
         @setcookie('bp-message-type', 'success', time() + 60 * 60 * 24, COOKIEPATH);
         $this->template->redirect($this->media_const);
         exit;

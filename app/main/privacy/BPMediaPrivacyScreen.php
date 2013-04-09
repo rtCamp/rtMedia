@@ -39,7 +39,7 @@ class BPMediaPrivacyScreen {
 		BPMediaPrivacy::save_user_default($new_privacy_default);
 
 		?>
-<div id="message" class="updated"><p><?php _e('Default privacy level for your media has been updated',BP_MEDIA_TXT_DOMAIN); ?></p></div>
+<div id="message" class="updated"><p><?php _e('Default privacy level for your media has been updated','buddypress-media'); ?></p></div>
 <?php
 		}
 		$privacy_level = BPMediaPrivacy::get_user_default();
@@ -56,7 +56,7 @@ class BPMediaPrivacyScreen {
 	}
 
 	function screen_title(){
-		_e( 'Privacy Settings', BP_MEDIA_TXT_DOMAIN );
+		_e( 'Privacy Settings', 'buddypress-media' );
 	}
 
 }

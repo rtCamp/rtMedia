@@ -30,7 +30,7 @@ class BPMediaUploadScreen extends BPMediaScreen {
     }
 
     function upload_screen_title() {
-        _e('Upload Media', BP_MEDIA_TXT_DOMAIN);
+        _e('Upload Media', 'buddypress-media');
     }
 
     function upload_screen_content() {
@@ -72,7 +72,7 @@ class BPMediaUploadScreen extends BPMediaScreen {
 
         // Check for rights
         if (!is_user_logged_in())
-            wp_die(__("You are not allowed to be here", BP_MEDIA_TXT_DOMAIN));
+            wp_die(__("You are not allowed to be here", 'buddypress-media'));
     }
 
     /**
@@ -106,24 +106,24 @@ class BPMediaUploadScreen extends BPMediaScreen {
                 switch ($result[0]) {
                     case 'image' :
                         if ($bp_media_options['images_enabled'] == false) {
-                            $bp->{BP_MEDIA_SLUG}->messages['error'][] = __('Image uploads are disabled', BP_MEDIA_TXT_DOMAIN);
+                            $bp->{BP_MEDIA_SLUG}->messages['error'][] = __('Image uploads are disabled', 'buddypress-media');
                             return;
                         }
                         break;
                     case 'video' :
                         if ($bp_media_options['videos_enabled'] == false) {
-                            $bp->{BP_MEDIA_SLUG}->messages['error'][] = __('Video uploads are disabled', BP_MEDIA_TXT_DOMAIN);
+                            $bp->{BP_MEDIA_SLUG}->messages['error'][] = __('Video uploads are disabled', 'buddypress-media');
                             return;
                         }
                         break;
                     case 'audio' :
                         if ($bp_media_options['audio_enabled'] == false) {
-                            $bp->{BP_MEDIA_SLUG}->messages['error'][] = __('Audio uploads are disabled', BP_MEDIA_TXT_DOMAIN);
+                            $bp->{BP_MEDIA_SLUG}->messages['error'][] = __('Audio uploads are disabled', 'buddypress-media');
                             return;
                         }
                         break;
                     default :
-                        $bp->{BP_MEDIA_SLUG}->messages['error'][] = __('File uploaded is not supported', BP_MEDIA_TXT_DOMAIN);
+                        $bp->{BP_MEDIA_SLUG}->messages['error'][] = __('File uploaded is not supported', 'buddypress-media');
                         return;
                 }
                 $class_name = apply_filters('bp_media_transcoder', 'BPMediaHostWordpress', $type);
@@ -136,12 +136,12 @@ class BPMediaUploadScreen extends BPMediaScreen {
                     $group_id = isset($_POST['bp_media_group_id']) ? intval($_POST['bp_media_group_id']) : 0;
                     $entry = $bp_media_entry->add_media($title, $description, $album_id, $group_id, $is_multiple);
                     if (!isset($bp->{BP_MEDIA_SLUG}->messages['updated'][0]))
-                        $bp->{BP_MEDIA_SLUG}->messages['updated'][0] = __('Upload Successful', BP_MEDIA_TXT_DOMAIN);
+                        $bp->{BP_MEDIA_SLUG}->messages['updated'][0] = __('Upload Successful', 'buddypress-media');
                 } catch (Exception $e) {
                     $bp->{BP_MEDIA_SLUG}->messages['error'][] = $e->getMessage();
                 }
             } else {
-                $bp->{BP_MEDIA_SLUG}->messages['error'][] = __('You did not specified a file to upload', BP_MEDIA_TXT_DOMAIN);
+                $bp->{BP_MEDIA_SLUG}->messages['error'][] = __('You did not specified a file to upload', 'buddypress-media');
             }
         }
     }
