@@ -122,6 +122,11 @@ Please visit [BuddyPress Media's Features page](http://rtcamp.com/buddypress-med
 
 Please visit [BuddyPress Media's Roadmap page](http://rtcamp.com/buddypress-media/roadmap/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "Visit BuddyPress Media's Features page") to get some details about future releases.
 
+#### 2.8 ####
+* Adds importer for BP Album
+* Tested with [reallifescrapped](http://reallifescrapped), an aswesome social network for scrapbookers by [Meg](http://profiles.wordpress.org/oceanwidedesigns)
+* Other minor bug fixes, especially for Groups
+
 #### 2.7.6 ####
 * Fixes errors due to absence of EXIF
 * Fixes duplicate comment box on lightbox
@@ -347,4 +352,4 @@ Please visit [BuddyPress Media's Roadmap page](http://rtcamp.com/buddypress-medi
 * HTML5 Audio Tag Support (with fallback)
 * HTML5 Video Tag Support (with fallback)
 
-Fixes bugs and improves activity uploader
+BP-Media Importer added
