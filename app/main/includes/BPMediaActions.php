@@ -844,34 +844,6 @@ class BPMediaActions {
         die;
     }
 
-    public function get_thumbnail() {
-        $id = $_POST['media_id'];
-        $content = '';
-        $media = new BPMediaHostWordpress($id);
-        switch ($media->get_type()) {
-            case 'video' :
-                if ($media->get_thumbnail_id()) {
-                    $image_array = image_downsize($media->get_thumbnail_id(), 'thumbnail');
-                    $content.=apply_filters('bp_media_ajax_thumbnail_filter', '<video poster="' . $image_array[0] . '" src="' . wp_get_attachment_url($media->get_id()) . '" width="' . $default_sizes['single_video']['width'] . '" height="' . ($default_sizes['single_video']['height'] == 0 ? 'auto' : $default_sizes['single_video']['height']) . '" type="video/mp4" id="bp_media_video_' . $media->get_id() . '" controls="controls" preload="none"></video><script>bp_media_create_element("bp_media_video_' . $media->get_id() . '");</script>', $media);
-                } else {
-                    $content.=apply_filters('bp_media_ajax_thumbnail_filter', '<video src="' . wp_get_attachment_url($media->get_id()) . '" width="' . $default_sizes['single_video']['width'] . '" height="' . ($default_sizes['single_video']['height'] == 0 ? 'auto' : $default_sizes['single_video']['height']) . '" type="video/mp4" id="bp_media_video_' . $media->get_id() . '" controls="controls" preload="none"></video><script>bp_media_create_element("bp_media_video_' . $media->get_id() . '");</script>', $media);
-                }
-                break;
-            case 'audio' :
-                $content.=apply_filters('bp_media_ajax_thumbnail_filter', '<audio src="' . wp_get_attachment_url($media->get_id()) . '" width="' . $default_sizes['single_audio']['width'] . '" type="audio/mp3" id="bp_media_audio_' . $media->get_id() . '" controls="controls" preload="none" ></audio><script>bp_media_create_element("bp_media_audio_' . $media->get_id() . '");</script>', $media);
-                break;
-            case 'image' :
-                $image_array = image_downsize($media->get_id(), 'thumbnail');
-                $content.=apply_filters('bp_media_ajax_thumbnail_filter', '<img src="' . $image_array[0] . '" id="bp_media_image_' . $media->get_id() . '" />', $media);
-                break;
-            default :
-                return false;
-        }
-
-        echo $content;
-        die();
-    }
-
     public function default_user_album() {
         $album_id = 0;
         if (is_user_logged_in()) {

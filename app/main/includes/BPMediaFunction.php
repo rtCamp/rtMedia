@@ -48,6 +48,7 @@ class BPMediaFunction {
         $activity_allowedtags['audio']['id'] = array();
         $activity_allowedtags['audio']['class'] = array();
         $activity_allowedtags['audio']['src'] = array();
+        $activity_allowedtags['audio']['width'] = array();
         $activity_allowedtags['audio']['controls'] = array();
         $activity_allowedtags['audio']['preload'] = array();
         $activity_allowedtags['audio']['alt'] = array();
