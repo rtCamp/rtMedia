@@ -230,7 +230,7 @@ class BPMediaHostWordpress {
         $attachment_id = wp_insert_attachment($attachment, $file, $post_id);
         if (!is_wp_error($attachment_id)) {
             $this->add_image_sizes();
-            //add_filter('intermediate_image_sizes', array($this, 'bp_media_image_sizes'));
+            add_filter('intermediate_image_sizes', array($this, 'bp_media_image_sizes'));
             wp_update_attachment_metadata($attachment_id, wp_generate_attachment_metadata($attachment_id, $file));
         } else {
             unlink($file);
