@@ -119,10 +119,14 @@ class BPMediaAlbum {
                 ));
 		$thumbnail_id = get_post_thumbnail_id($this->id);
         if ($thumbnail_id) {
-                $this->thumbnail = '<span><img src="' . wp_get_attachment_thumb_url($thumbnail_id) . '"></span>';
+            $metadata = wp_get_attachment_metadata($thumbnail_id);
+            $wpattachsize = isset($metadata['sizes']['bp_media_thumbnail'])?'bp_media_thumbnail':'thumbnail';
+            $this->thumbnail = wp_get_attachment_image($thumbnail_id, $wpattachsize);
         } elseif ($attachments) {
             foreach ($attachments as $attachment) {
-                $this->thumbnail = '<span><img src="' . wp_get_attachment_thumb_url($attachment->ID) . '"></span>';
+                $metadata = wp_get_attachment_metadata($attachment->ID);
+                $wpattachsize = isset($metadata['sizes']['bp_media_thumbnail'])?'bp_media_thumbnail':'thumbnail';
+                $this->thumbnail = wp_get_attachment_image($attachment->ID, $wpattachsize);
             }
         } else {
             $this->thumbnail = '<img src ="' . BP_MEDIA_URL . 'app/assets/img/image_thumb.png">';

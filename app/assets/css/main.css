@@ -247,7 +247,7 @@ position: relative;}
 .media-tabs-container .ui-tabs-hide{display: none}
 
 .media-tabs-container .ui-tabs-nav{clear: both;display: block;margin: 0 0 15px;overflow: hidden;}
-.media-tabs-container .ui-state-default{border-left: 1px solid;float: left;line-height: 110%;padding: 0 5px;}
+.media-tabs-container .ui-state-default{border-left: 1px solid;float: left;line-height: 110%;padding: 0 5px; list-style: none;}
 .media-tabs-container .ui-state-default:first-child{margin-left: 0px;border: 0; padding-left: 0}
 
 .media-tabs-container .ui-state-default a{text-decoration: none}

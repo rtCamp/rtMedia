@@ -113,17 +113,17 @@ class BPMediaHostWordpress {
     function add_media($name, $description, $album_id = 0, $group = 0, $is_multiple = false, $is_activity = false, $files = false, $author_id = false, $album_name = false) {
         echo $this->insert_media($name, $description, $album_id, $group, $is_multiple, $is_activity, $files, $author_id, $album_name);
     }
-    
-    function insert_media($name, $description, $album_id = 0, $group = 0, $is_multiple = false, $is_activity = false, $files = false, $author_id = false, $album_name = false){
+
+    function insert_media($name, $description, $album_id = 0, $group = 0, $is_multiple = false, $is_activity = false, $files = false, $author_id = false, $album_name = false) {
         do_action('bp_media_before_add_media');
 
         global $bp, $wpdb, $bp_media;
         include_once(ABSPATH . 'wp-admin/includes/file.php');
         include_once(ABSPATH . 'wp-admin/includes/image.php');
-        
-        if ( !$author_id )
-            $author_id = get_current_user_id ();
-        
+
+        if (!$author_id)
+            $author_id = get_current_user_id();
+
         $post_id = $this->check_and_create_album($album_id, $group, $author_id, $album_name);
 
         if (!$files) {
@@ -139,10 +139,9 @@ class BPMediaHostWordpress {
 
         $type = $file['type'];
         if (in_array($type, array('image/gif', 'image/jpeg', 'image/png'))) {
-			if (function_exists('read_exif_data')){
-				$file = $this->exif($file);
-			}
-
+            if (function_exists('read_exif_data')) {
+                $file = $this->exif($file);
+            }
         }
 
         $attachment = array();
@@ -227,8 +226,11 @@ class BPMediaHostWordpress {
                 $activity_content = false;
                 throw new Exception(__('Media File you have tried to upload is not supported. Supported media files are .jpg, .png, .gif, .mp3, .mov and .mp4.', 'buddypress-media'));
         }
+
         $attachment_id = wp_insert_attachment($attachment, $file, $post_id);
         if (!is_wp_error($attachment_id)) {
+            $this->add_image_sizes();
+            //add_filter('intermediate_image_sizes', array($this, 'bp_media_image_sizes'));
             wp_update_attachment_metadata($attachment_id, wp_generate_attachment_metadata($attachment_id, $file));
         } else {
             unlink($file);
@@ -251,11 +253,40 @@ class BPMediaHostWordpress {
         return $attachment_id;
     }
 
-    function get_media_thumbnail($size = 'thumbnail') {
+    function bp_media_image_sizes($sizes) {
+        return array('bp_media_thumbnail', 'bp_media_activity_image', 'bp_media_single_image');
+    }
+    
+
+    /**
+     * Add image sizes required by the plugin to existing WordPress sizes.
+     * This can be filtered
+     *
+     * @global object $bp_media
+     */
+    public function add_image_sizes() {
+        global $bp_media;
+
+        $default_sizes = $bp_media->media_sizes();
+        $image_sizes = $default_sizes['image'];
+        add_image_size(
+                'bp_media_thumbnail', $image_sizes['thumbnail']['width'], $image_sizes['thumbnail']['height'], $image_sizes['thumbnail']['crop']
+        );
+        add_image_size(
+                'bp_media_activity_image', $image_sizes['medium']['width'], $image_sizes['medium']['height'], $image_sizes['medium']['crop']
+        );
+        add_image_size(
+                'bp_media_single_image', $image_sizes['large']['width'], $image_sizes['large']['height'], $image_sizes['large']['crop']
+        );
+    }
+    
+    function get_media_thumbnail($size = 'bp_media_thumbnail') {
         $thumb = '';
         if (in_array($this->type, array('image', 'video', 'audio'))) {
             if ($this->thumbnail_id) {
-                $medium_array = image_downsize($this->thumbnail_id, $size);
+                $metadata = wp_get_attachment_metadata($this->thumbnail_id);
+                $wpattachsize = isset($metadata['sizes']['bp_media_thumbnail'])?'bp_media_thumbnail':'thumbnail';
+                $medium_array = image_downsize($this->thumbnail_id, $wpattachsize);
                 $thumb_url = $medium_array[0];
             } else {
                 $thumb_url = BP_MEDIA_URL . 'app/assets/img/' . $this->type . '_thumb.png';
@@ -280,6 +311,7 @@ class BPMediaHostWordpress {
      */
     function get_media_activity_content() {
         global $bp_media_counter, $bp_media_default_excerpts, $bp_media;
+        $default_size = $bp_media->media_sizes();
         $attachment_id = $this->id;
         $activity_content = apply_filters('bp_media_single_activity_title', '<div class="bp_media_title"><a href="' . $this->url . '" title="' . __($this->name, 'buddypress-media') . '">' . __(wp_html_excerpt($this->name, $bp_media_default_excerpts['activity_entry_title']), 'buddypress-media') . '</a></div>');
         $activity_content .='<div class="bp_media_content">';
@@ -287,19 +319,17 @@ class BPMediaHostWordpress {
             case 'video' :
                 if ($this->thumbnail_id) {
                     $image_array = image_downsize($this->thumbnail_id, 'bp_media_activity_image');
-                    $activity_content.=apply_filters('bp_media_single_activity_filter', '<video poster="' . $image_array[0] . '" src="' . wp_get_attachment_url($attachment_id) . '" width="320" height="240" type="video/mp4" id="bp_media_video_' . $this->id . '_' . $bp_media_counter . '" controls="controls" preload="none"></video></span>', $this, true);
+                    $activity_content.=apply_filters('bp_media_single_activity_filter', '<video poster="' . $image_array[0] . '" src="' . wp_get_attachment_url($attachment_id) . '" width="'.$default_size['video']['medium']['width'].'" height="'.$default_size['video']['medium']['height'].'" type="video/mp4" id="bp_media_video_' . $this->id . '_' . $bp_media_counter . '" controls="controls" preload="none"></video></span>', $this, true);
                 } else {
-                    $activity_content.=apply_filters('bp_media_single_activity_filter', '<video src="' . wp_get_attachment_url($attachment_id) . '" width="320" height="240" type="video/mp4" id="bp_media_video_' . $this->id . '_' . $bp_media_counter . '" controls="controls" preload="none"></video></span>', $this, true);
+                    $activity_content.=apply_filters('bp_media_single_activity_filter', '<video src="' . wp_get_attachment_url($attachment_id) . '" width="'.$default_size['video']['medium']['width'].'" height="'.$default_size['video']['medium']['height'].'" type="video/mp4" id="bp_media_video_' . $this->id . '_' . $bp_media_counter . '" controls="controls" preload="none"></video></span>', $this, true);
                 }
                 break;
             case 'audio' :
-                $activity_content.=apply_filters('bp_media_single_activity_filter', '<audio src="' . wp_get_attachment_url($attachment_id) . '" width="320" type="audio/mp3" id="bp_media_audio_' . $this->id . '_' . $bp_media_counter . '" controls="controls" preload="none" ></audio></span>', $this, true);
-                $type = 'audio';
+                $activity_content.=apply_filters('bp_media_single_activity_filter', '<audio src="' . wp_get_attachment_url($attachment_id) . '" width="'.$default_size['audio']['medium']['width'].'" type="audio/mp3" id="bp_media_audio_' . $this->id . '_' . $bp_media_counter . '" controls="controls" preload="none" ></audio></span>', $this, true);
                 break;
             case 'image' :
                 $image_array = image_downsize($attachment_id, 'bp_media_activity_image');
                 $activity_content.=apply_filters('bp_media_single_activity_filter', '<a href="' . $this->url . '" title="' . __($this->name, 'buddypress-media') . '"><img src="' . $image_array[0] . '" id="bp_media_image_' . $this->id . '_' . $bp_media_counter++ . '" alt="' . __($this->name, 'buddypress-media') . '" /></a>', $this, true);
-                $type = 'image';
                 break;
             default :
                 return false;
@@ -354,7 +384,7 @@ class BPMediaHostWordpress {
     function get_media_single_content() {
         global $bp_media_default_excerpts, $bp_media;
 
-        $default_sizes = $bp_media->media_sizes();
+        $default_size = $bp_media->media_sizes();
         $content = '';
         if ($this->group_id > 0) {
 
@@ -365,13 +395,13 @@ class BPMediaHostWordpress {
             case 'video' :
                 if ($this->thumbnail_id) {
                     $image_array = image_downsize($this->thumbnail_id, 'bp_media_single_image');
-                    $content.=apply_filters('bp_media_single_content_filter', '<video poster="' . $image_array[0] . '" src="' . wp_get_attachment_url($this->id) . '" width="' . $default_sizes['single_video']['width'] . '" height="' . ($default_sizes['single_video']['height'] == 0 ? 'auto' : $default_sizes['single_video']['height']) . '" type="video/mp4" id="bp_media_video_' . $this->id . '" controls="controls" preload="none"></video>', $this);
+                    $content.=apply_filters('bp_media_single_content_filter', '<video poster="' . $image_array[0] . '" src="' . wp_get_attachment_url($this->id) . '" width="' . $default_size['video']['large']['width'] . '" height="' . ($default_size['video']['large']['height'] == 0 ? 'auto' : $default_size['video']['large']['height']) . '" type="video/mp4" id="bp_media_video_' . $this->id . '" controls="controls" preload="none"></video>', $this);
                 } else {
-                    $content.=apply_filters('bp_media_single_content_filter', '<video src="' . wp_get_attachment_url($this->id) . '" width="' . $default_sizes['single_video']['width'] . '" height="' . ($default_sizes['single_video']['height'] == 0 ? 'auto' : $default_sizes['single_video']['height']) . '" type="video/mp4" id="bp_media_video_' . $this->id . '" controls="controls" preload="none"></video>', $this);
+                    $content.=apply_filters('bp_media_single_content_filter', '<video src="' . wp_get_attachment_url($this->id) . '" width="' . $default_size['video']['large']['width'] . '" height="' . ($default_size['video']['large']['height'] == 0 ? 'auto' : $default_size['video']['large']['height']) . '" type="video/mp4" id="bp_media_video_' . $this->id . '" controls="controls" preload="none"></video>', $this);
                 }
                 break;
             case 'audio' :
-                $content.=apply_filters('bp_media_single_content_filter', '<audio src="' . wp_get_attachment_url($this->id) . '" width="' . $default_sizes['single_audio']['width'] . '" type="audio/mp3" id="bp_media_audio_' . $this->id . '" controls="controls" preload="none" ></audio>', $this);
+                $content.=apply_filters('bp_media_single_content_filter', '<audio src="' . wp_get_attachment_url($this->id) . '" width="' . $default_size['audio']['large']['width'] . '" type="audio/mp3" id="bp_media_audio_' . $this->id . '" controls="controls" preload="none" ></audio>', $this);
                 break;
             case 'image' :
                 $image_array = image_downsize($this->id, 'bp_media_single_image');
@@ -471,7 +501,9 @@ class BPMediaHostWordpress {
         switch ($this->type) {
             case 'video' :
                 if ($this->thumbnail_id) {
-                    $medium_array = image_downsize($this->thumbnail_id, 'thumbnail');
+                    $metadata = wp_get_attachment_metadata($this->thumbnail_id);
+                    $wpattachsize = isset($metadata['sizes']['bp_media_thumbnail'])?'bp_media_thumbnail':'thumbnail';
+                    $medium_array = image_downsize($this->thumbnail_id, $wpattachsize);
                     $thumb_url = $medium_array[0];
                 } else {
                     $thumb_url = BP_MEDIA_URL . 'app/assets/img/video_thumb.png';
@@ -487,7 +519,9 @@ class BPMediaHostWordpress {
                 break;
             case 'audio' :
                 if ($this->thumbnail_id) {
-                    $medium_array = image_downsize($this->thumbnail_id, 'thumbnail');
+                    $metadata = wp_get_attachment_metadata($this->thumbnail_id);
+                    $wpattachsize = isset($metadata['sizes']['bp_media_thumbnail'])?'bp_media_thumbnail':'thumbnail';
+                    $medium_array = image_downsize($this->thumbnail_id, $wpattachsize);
                     $thumb_url = $medium_array[0];
                 } else {
                     $thumb_url = BP_MEDIA_URL . 'app/assets/img/audio_thumb.png';
@@ -503,7 +537,9 @@ class BPMediaHostWordpress {
                 <?php
                 break;
             case 'image' :
-                $medium_array = image_downsize($attachment, 'thumbnail');
+                $metadata = wp_get_attachment_metadata($attachment);
+                $wpattachsize = isset($metadata['sizes']['bp_media_thumbnail'])?'bp_media_thumbnail':'thumbnail';
+                $medium_array = image_downsize($attachment, $wpattachsize);
                 $medium_path = $medium_array[0];
                 ?>
                 <li id="bp-media-item-<?php echo $this->id ?>">
@@ -749,7 +785,9 @@ class BPMediaHostWordpress {
         switch ($this->type) {
             case 'video' :
                 if ($this->thumbnail_id) {
-                    $medium_array = image_downsize($this->thumbnail_id, 'thumbnail');
+                    $metadata = wp_get_attachment_metadata($this->thumbnail_id);
+                    $wpattachsize = isset($metadata['sizes']['bp_media_thumbnail'])?'bp_media_thumbnail':'thumbnail';
+                    $medium_array = image_downsize($this->thumbnail_id, $wpattachsize);
                     $thumb_url = $medium_array[0];
                 } else {
                     $thumb_url = BP_MEDIA_URL . 'app/assets/img/video_thumb.png';
@@ -757,14 +795,18 @@ class BPMediaHostWordpress {
                 break;
             case 'audio' :
                 if ($this->thumbnail_id) {
-                    $medium_array = image_downsize($this->thumbnail_id, 'thumbnail');
+                    $metadata = wp_get_attachment_metadata($this->thumbnail_id);
+                    $wpattachsize = isset($metadata['sizes']['bp_media_thumbnail'])?'bp_media_thumbnail':'thumbnail';
+                    $medium_array = image_downsize($this->thumbnail_id, $wpattachsize);
                     $thumb_url = $medium_array[0];
                 } else {
                     $thumb_url = BP_MEDIA_URL . 'app/assets/img/audio_thumb.png';
                 }
                 break;
             case 'image' :
-                $medium_array = image_downsize($attachment, 'thumbnail');
+                $metadata = wp_get_attachment_metadata($attachment);
+                $wpattachsize = isset($metadata['sizes']['bp_media_thumbnail'])?'bp_media_thumbnail':'thumbnail';
+                $medium_array = image_downsize($attachment, $wpattachsize);
                 $thumb_url = $medium_array[0];
                 break;
             default :
@@ -952,7 +994,6 @@ class BPMediaHostWordpress {
                 $this->url = trailingslashit($pre_url . BP_MEDIA_IMAGES_SLUG . '/' . $this->id);
                 $this->edit_url = trailingslashit($pre_url . BP_MEDIA_IMAGES_SLUG . '/' . BP_MEDIA_IMAGES_EDIT_SLUG . '/' . $this->id);
                 $this->delete_url = trailingslashit($pre_url . BP_MEDIA_IMAGES_SLUG . '/' . BP_MEDIA_DELETE_SLUG . '/' . $this->id);
-                $image_array = image_downsize($this->id, 'bp_media_single_image');
                 $this->thumbnail_id = $this->id;
                 break;
             case 'album' :

@@ -173,6 +173,21 @@ class BuddyPressMedia {
             $options = array(
                 'enable_on_group' => 1,
                 'enable_lightbox' => 1,
+                'sizes' => array(
+                    'image' => array(
+                        'thumbnail' => array('width' => 150, 'height' => 150, 'crop' => 1),
+                        'medium' => array('width' => 320, 'height' => 240, 'crop' => 1),
+                        'large' => array('width' => 800, 'height' => 0, 'crop' => 1)
+                    ),
+                    'video' => array(
+                        'medium' => array('width' => 320, 'height' => 240),
+                        'large' => array('width' => 640, 'height' => 480)
+                    ),
+                    'audio' => array(
+                        'medium' => array('width' => 320),
+                        'large' => array('width' => 640)
+                    )
+                ),
                 'videos_enabled' => 1,
                 'audio_enabled' => 1,
                 'images_enabled' => 1,
@@ -180,13 +195,24 @@ class BuddyPressMedia {
                 'show_admin_menu' => 1
             );
             bp_update_option('bp_media_options', $options);
-        }
-        $lightbox = bp_get_option('bp_media_lightbox', false);
-        if ( !$lightbox ) {
-            $options['enable_lightbox'] = 1;
+        } elseif (!isset($options['sizes'])) {
+            $options['sizes'] = array(
+                'image' => array(
+                    'thumbnail' => array('width' => 150, 'height' => 150, 'crop' => 1),
+                    'medium' => array('width' => 320, 'height' => 240, 'crop' => 1),
+                    'large' => array('width' => 800, 'height' => 0, 'crop' => 1)
+                ),
+                'video' => array(
+                    'medium' => array('width' => 320, 'height' => 240),
+                    'large' => array('width' => 640, 'height' => 480)
+                ),
+                'audio' => array(
+                    'medium' => array('width' => 320),
+                    'large' => array('width' => 640)
+                    ));
             bp_update_option('bp_media_options', $options);
-            bp_update_option('bp_media_lightbox', 1);
         }
+
         $this->options = $options;
     }
 
@@ -353,12 +379,12 @@ class BuddyPressMedia {
 //			new BPMediaActivity();
             $class_construct = array(
                 'activity' => false,
-                'filters'  => false,
-                'actions'  => false,
+                'filters' => false,
+                'actions' => false,
                 'function' => false,
-                'privacy'  => false,
+                'privacy' => false,
                 'download' => false,
-                'albumimporter'    => false
+                'albumimporter' => false
             );
             $class_construct = apply_filters('bpmedia_class_construct', $class_construct);
 
@@ -426,33 +452,10 @@ class BuddyPressMedia {
      * @return array
      */
     function media_sizes() {
+        $options = $this->options;
         $def_sizes = array(
-			'tiny_image' => array(
-                'width' => 80,
-                'height' => 60
-            ),
-            'tiny_video' => array(
-                'width' => 80,
-                'height' => 60
-            ),
-            'tiny_audio' => array(
-                'width' => 80,
-            ),
-            'activity_image' => array(
-                'width' => 320,
-                'height' => 240
-            ),
-            'activity_video' => array(
-                'width' => 320,
-                'height' => 240
-            ),
-            'activity_audio' => array(
-                'width' => 320,
-            ),
-            'single_image' => array(
-                'width' => 800,
-                'height' => 0
-            ),
+            
+            //legacy array
             'single_video' => array(
                 'width' => 640,
                 'height' => 480
@@ -460,10 +463,45 @@ class BuddyPressMedia {
             'single_audio' => array(
                 'width' => 640,
             ),
+            
+            'image' => array(
+                'thumbnail' => array(
+                    'width' => $options['sizes']['image']['thumbnail']['width'],
+                    'height' => $options['sizes']['image']['thumbnail']['height'],
+                    'crop' => $options['sizes']['image']['thumbnail']['crop']
+                ),
+                'medium' => array(
+                    'width' => $options['sizes']['image']['medium']['width'],
+                    'height' => $options['sizes']['image']['medium']['height'],
+                    'crop' => $options['sizes']['image']['medium']['crop'],
+                ),
+                'large' => array(
+                    'width' => $options['sizes']['image']['large']['width'],
+                    'height' => $options['sizes']['image']['large']['height'],
+                    'crop' => $options['sizes']['image']['large']['crop'],
+                )
+            ),
+            'video' => array(
+                'medium' => array(
+                    'width' => $options['sizes']['video']['medium']['width'],
+                    'height' => $options['sizes']['video']['medium']['height'],
+                ),
+                'large' => array(
+                    'width' => $options['sizes']['video']['large']['width'],
+                    'height' => $options['sizes']['video']['large']['height'],
+                )
+            ),
+            'audio' => array(
+                'medium' => array(
+                    'width' => $options['sizes']['audio']['medium']['width'],
+                ),
+                'large' => array(
+                    'width' => $options['sizes']['audio']['large']['width'],
+                )
+            )
         );
 
-        /** Can be filtered by a theme or an extension/plugin */
-        return apply_filters('bpmedia_media_sizes', $def_sizes);
+        return $def_sizes;
     }
 
     /**
@@ -689,8 +727,8 @@ class BuddyPressMedia {
         return $plugin_version;
     }
 
-    static function get_current_user_default_album(){
-        if ( is_user_logged_in() ) {
+    static function get_current_user_default_album() {
+        if (is_user_logged_in()) {
             $current_user_id = get_current_user_id();
             $album_id = get_user_meta($current_user_id, 'bp-media-default-album', true);
             return $album_id;
