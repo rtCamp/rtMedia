@@ -46,7 +46,7 @@ class BPMediaLoader {
         //	}
         //}
 
-//        add_action('after_setup_theme', array($this, 'add_image_sizes'));
+        add_action('after_setup_theme', array($this, 'add_image_sizes'));
     }
 
     /**
@@ -141,6 +141,30 @@ class BPMediaLoader {
                     $bp->current_component = BP_MEDIA_SLUG;
             }
         }
+    }
+    
+        
+
+    /**
+     * Add image sizes required by the plugin to existing WordPress sizes.
+     * This can be filtered
+     *
+     * @global object $bp_media
+     */
+    public function add_image_sizes() {
+        global $bp_media;
+
+        $default_sizes = $bp_media->media_sizes();
+        $image_sizes = $default_sizes['image'];
+        add_image_size(
+                'bp_media_thumbnail', $image_sizes['thumbnail']['width'], $image_sizes['thumbnail']['height'], $image_sizes['thumbnail']['crop']
+        );
+        add_image_size(
+                'bp_media_activity_image', $image_sizes['medium']['width'], $image_sizes['medium']['height'], $image_sizes['medium']['crop']
+        );
+        add_image_size(
+                'bp_media_single_image', $image_sizes['large']['width'], $image_sizes['large']['height'], $image_sizes['large']['crop']
+        );
     }
 
 }

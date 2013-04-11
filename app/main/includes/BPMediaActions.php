@@ -39,6 +39,7 @@ class BPMediaActions {
         add_action('bp_media_after_update_media', array($this, 'update_count'), 999);
         add_action('bp_media_after_delete_media', array($this, 'update_count'), 999);
         add_action('bp_before_group_settings_creation_step', array($this, 'group_create_default_album'));
+        add_filter('intermediate_image_sizes_advanced', array($this, 'filter_image_sizes'));
         $linkback = bp_get_option('bp_media_add_linkback', false);
         if ($linkback)
             add_action('bp_footer', array($this, 'footer'));
@@ -910,6 +911,41 @@ class BPMediaActions {
     function group_create_default_album() {
         $bp_album = new BPMediaHostWordpress();
         $bp_album->check_and_create_album(0, bp_get_new_group_id());
+    }
+
+    function filter_image_sizes($sizes) {
+        if (isset($_REQUEST['post_id'])) {
+            $sizes = $this->unset_bp_media_image_sizes($sizes);
+        } elseif (isset($_REQUEST['id'])) { //For regeneration of thumbnails
+            if ($parent_id = get_post_field('post_parent', $_REQUEST['id'])) {
+                $post_type = get_post_field('post_type', $parent_id);
+                if ($post_type == 'bp_media_album') {
+                    global $bp_media;
+                    $bp_media_sizes = $bp_media->media_sizes();
+                    $sizes = array(
+                        'bp_media_thumbnail' => $bp_media_sizes['image']['thumbnail'],
+                        'bp_media_activity_image' => $bp_media_sizes['image']['medium'],
+                        'bp_media_single_image' => $bp_media_sizes['image']['large']
+                    );
+                } else {
+                    $sizes = $this->unset_bp_media_image_sizes($sizes);
+                }
+            } else {
+                $sizes = $this->unset_bp_media_image_sizes($sizes);
+            }
+        }
+
+        return $sizes;
+    }
+
+    function unset_bp_media_image_sizes($sizes) {
+        if (isset($sizes['bp_media_thumbnail']))
+            unset($sizes['bp_media_thumbnail']);
+        if (isset($sizes['bp_media_activity_image']))
+            unset($sizes['bp_media_activity_image']);
+        if (isset($sizes['bp_media_single_image']))
+            unset($sizes['bp_media_single_image']);
+        return $sizes;
     }
 
 }

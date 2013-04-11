@@ -47,40 +47,43 @@ if (!class_exists('BPMediaSettings')) {
                 'desc' => __('Enable Audio (mp3)', 'buddypress-media')
             ));
 
-            add_settings_section('bpm-image-settings', __('Image Settings', 'buddypress-media'), is_multisite() ? array($this, 'network_notices') : '', 'bp-media-settings');
+            add_settings_section('bpm-image-settings', __('Image Settings', 'buddypress-media'), is_multisite() ? array($this, 'network_notices') : array($this, 'image_settings_intro'), 'bp-media-settings');
             add_settings_field('bpm-image-thumbnail', __('Thumbnail Size', 'buddypress-media'), array($this, 'dimensions'), 'bp-media-settings', 'bpm-image-settings', array(
                 'type' => 'image',
                 'size' => 'thumbnail',
-                'crop' => true
+                'crop' => true,
+                'desc' => __('Used in albums, sidebar media widget acitvity stream', 'buddypress-media')
             ));
             add_settings_field('bpm-image-medium', __('Medium Size', 'buddypress-media'), array($this, 'dimensions'), 'bp-media-settings', 'bpm-image-settings', array(
                 'type' => 'image',
                 'size' => 'medium',
-                'crop' => true
+                'crop' => true,
+                'desc' => __('Used in activity stream for single media uploads', 'buddypress-media')
             ));
             add_settings_field('bpm-image-large', __('Large Size', 'buddypress-media'), array($this, 'dimensions'), 'bp-media-settings', 'bpm-image-settings', array(
                 'type' => 'image',
                 'size' => 'large',
-                'crop' => true
+                'crop' => true,
+                'desc' => __('Used in single media and thickbox', 'buddypress-media')
             ));
-            
-            add_settings_section('bpm-video-settings', __('Video Settings', 'buddypress-media'), is_multisite() ? array($this, 'network_notices') : '', 'bp-media-settings');
-            add_settings_field('bpm-video-medium', __('Medium Size', 'buddypress-media'), array($this, 'dimensions'), 'bp-media-settings', 'bpm-video-settings', array(
+
+            add_settings_section('bpm-video-settings', __('Video Payer Settings', 'buddypress-media'), is_multisite() ? array($this, 'network_notices') : '', 'bp-media-settings');
+            add_settings_field('bpm-video-medium', __('Activity Player Size', 'buddypress-media'), array($this, 'dimensions'), 'bp-media-settings', 'bpm-video-settings', array(
                 'type' => 'video',
                 'size' => 'medium'
             ));
-            add_settings_field('bpm-video-large', __('Large Size', 'buddypress-media'), array($this, 'dimensions'), 'bp-media-settings', 'bpm-video-settings', array(
+            add_settings_field('bpm-video-large', __('Single Player Size', 'buddypress-media'), array($this, 'dimensions'), 'bp-media-settings', 'bpm-video-settings', array(
                 'type' => 'video',
                 'size' => 'large'
             ));
-            
-            add_settings_section('bpm-audio-settings', __('Audio Settings', 'buddypress-media'), is_multisite() ? array($this, 'network_notices') : '', 'bp-media-settings');
-            add_settings_field('bpm-audio-medium', __('Medium Size', 'buddypress-media'), array($this, 'dimensions'), 'bp-media-settings', 'bpm-audio-settings', array(
+
+            add_settings_section('bpm-audio-settings', __('Audio Player Settings', 'buddypress-media'), is_multisite() ? array($this, 'network_notices') : '', 'bp-media-settings');
+            add_settings_field('bpm-audio-medium', __('Activity Player Size', 'buddypress-media'), array($this, 'dimensions'), 'bp-media-settings', 'bpm-audio-settings', array(
                 'type' => 'audio',
                 'size' => 'medium',
                 'height' => false
             ));
-            add_settings_field('bpm-audio-large', __('Large Size', 'buddypress-media'), array($this, 'dimensions'), 'bp-media-settings', 'bpm-audio-settings', array(
+            add_settings_field('bpm-audio-large', __('Single Player Size', 'buddypress-media'), array($this, 'dimensions'), 'bp-media-settings', 'bpm-audio-settings', array(
                 'type' => 'audio',
                 'size' => 'large',
                 'height' => false
@@ -314,6 +317,17 @@ if (!class_exists('BPMediaSettings')) {
             return $input;
         }
 
+        public function image_settings_intro() {
+            if (is_plugin_active('regenerate-thumbnails/regenerate-thumbnails.php')) {
+                $regenerate_link = admin_url('/tools.php?page=regenerate-thumbnails');
+            } elseif (array_key_exists('regenerate-thumbnails/regenerate-thumbnails.php', get_plugins())) {
+                $regenerate_link = admin_url('/plugins.php#regenerate-thumbnails');
+            } else {
+                $regenerate_link = wp_nonce_url(admin_url('update.php?action=install-plugin&plugin=regenerate-thumbnails'), 'install-plugin_regenerate-thumbnails');
+            }
+            echo '<span class="description">' . sprintf(__('If you make changes to width, height or crop settings, you must use "<a href="%s">Regenerate Thumbnail Plugin</a>" to regenerate old images."','buddypress-media'),$regenerate_link) . '</span>';
+        }
+
         /**
          * Output a checkbox
          *
@@ -466,20 +480,25 @@ if (!class_exists('BPMediaSettings')) {
                 'size' => 'thumbnail',
                 'height' => true,
                 'crop' => false,
+                'desc' => ''
             );
             $args = wp_parse_args($args, $defaults);
             extract($args);
-            
+
             $options = bp_get_option('bp_media_options');
-            
+
             $w = $options['sizes'][$type][$size]['width'];
-            if ( $height ) { $h = $options['sizes'][$type][$size]['height']; }
-            if ( $crop ) { $c = $options['sizes'][$type][$size]['crop']; }
-            
+            if ($height) {
+                $h = $options['sizes'][$type][$size]['height'];
+            }
+            if ($crop) {
+                $c = $options['sizes'][$type][$size]['crop'];
+            }
                 ?>
             <label for="<?php echo sanitize_title("{$type}_{$size}_w"); ?>"><?php _e('Width', 'buddypress-media'); ?> <input value="<?php echo $w; ?>" name="<?php echo "bp_media_options[sizes][$type][$size][width]"; ?>" id="<?php echo sanitize_title("{$type}_{$size}_w"); ?>" type="number" class="small-text" /></label>
-            <?php if ($height) { ?><label for="<?php echo sanitize_title("{$type}_{$size}_h"); ?>"><?php _e('Height', 'buddypress-media'); ?> <input value="<?php echo $h; ?>" name="<?php echo "bp_media_options[sizes][$type][$size][height]"; ?>" id="<?php echo sanitize_title("{$type}_{$size}_h"); ?>" type="number" class="small-text" /></label><?php } ?>
-            <?php if ($crop) { ?><label for="<?php echo sanitize_title("{$type}_{$size}_c"); ?>"><?php _e('Crop', 'buddypress-media'); ?> <input value="1"<?php checked($c?$c:0, 1); ?> name="<?php echo "bp_media_options[sizes][$type][$size][crop]"; ?>" id="<?php echo sanitize_title("{$type}_{$size}_c"); ?>" type="checkbox" /></label><?php
+            <?php if ($height) { ?><label for="<?php echo sanitize_title("{$type}_{$size}_h"); ?>"><?php _e('Height', 'buddypress-media'); ?> <input value="<?php echo $h; ?>" name="<?php echo "bp_media_options[sizes][$type][$size][height]"; ?>" id="<?php echo sanitize_title("{$type}_{$size}_h"); ?>" type="number" class="small-text" /></label> <?php } ?>
+            <?php if ($crop) { ?><label for="<?php echo sanitize_title("{$type}_{$size}_c"); ?>"> <input value="1"<?php checked($c ? $c : 0, 1); ?> name="<?php echo "bp_media_options[sizes][$type][$size][crop]"; ?>" id="<?php echo sanitize_title("{$type}_{$size}_c"); ?>" type="checkbox" /> <?php _e('Crop', 'buddypress-media'); ?></label><?php } ?>
+            <?php if ($desc) { ?><br /><span class="description"><?php echo $desc; ?></span><?php
             }
         }
 
