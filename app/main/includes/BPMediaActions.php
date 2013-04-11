@@ -327,8 +327,9 @@ class BPMediaActions {
             if (bp_displayed_user_id() == bp_loggedin_user_id())
                 $action_buttons[] = '<a href="' . $bp_media_current_entry->get_edit_url()
                         . '" class="button item-button bp-secondary-action bp-media-edit" title="'
-                        . __('Edit Media', 'buddypress-media') . '">' . __('Edit', 'buddypress-media') . '</a>';
+                        . __('Edit Media', BP_MEDIA_TXT_DOMAIN) . '">' . __('Edit', BP_MEDIA_TXT_DOMAIN) . '</a>';
         }
+
         $action_buttons = apply_filters('bp_media_action_buttons', $action_buttons);
         foreach ($action_buttons as $action_button) {
             echo $action_button;
@@ -496,6 +497,7 @@ class BPMediaActions {
                     'drop_element' => 'drag-drop-area',
                     'filters' => apply_filters('bp_media_plupload_files_filter', array(array('title' => "Media Files", 'extensions' => "mp4,jpg,png,jpeg,gif,mp3"))),
                     'max_file_size' => min(array(ini_get('upload_max_filesize'), ini_get('post_max_size'))),
+                    'chunk_size' => '1mb',
                     'multipart' => true,
                     'urlstream_upload' => true,
                     'flash_swf_url' => includes_url('js/plupload/plupload.flash.swf'),

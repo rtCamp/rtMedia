@@ -384,7 +384,8 @@ class BuddyPressMedia {
                 'function' => false,
                 'privacy' => false,
                 'download' => false,
-                'albumimporter' => false
+                'albumimporter' => false,
+                'image' => false
             );
             $class_construct = apply_filters('bpmedia_class_construct', $class_construct);
 

@@ -434,7 +434,6 @@ float:left;
 	display:none;
 }
 
-
 @media (min-width: 981px) and (max-width: 1096px) {
     li #bp-media-upload-ui #drag-drop-area{padding: 10px 0;}
 /*    li #bp-media-upload-ui .drag-drop-inside{margin: 0 auto;}*/
