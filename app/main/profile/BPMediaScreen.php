@@ -335,29 +335,6 @@ class BPMediaScreen {
                       maxlength="<?php echo max(array($bp_media_default_excerpts['single_entry_description'], $bp_media_default_excerpts['activity_entry_description'])) ?>"
                       ><?php echo $bp_media_current_entry->get_content(); ?></textarea>
                       <?php do_action('bp_media_add_media_fields', $this->media_type); ?>
-            <?php
-
-		if ( !empty( $_FILES ) && isset( $_POST['upload'] ) ) {
-			// Normally we would check a nonce here, but the group save nonce is used instead
-
-			// Pass the file to the avatar upload handler
-			if ( bp_core_avatar_handle_upload( $_FILES, 'groups_avatar_upload_dir' ) ) {
-				$bp->avatar_admin->step = 'crop-image';
-
-				// Make sure we include the jQuery jCrop file for image cropping
-				add_action( 'wp_print_scripts', 'bp_core_add_jquery_cropper' );
-			}
-		}
-
-		// If the image cropping is done, crop the image and save a full/thumb version
-		if ( isset( $_POST['avatar-crop-submit'] ) && isset( $_POST['upload'] ) ) {
-			// Normally we would check a nonce here, but the group save nonce is used instead
-
-			if ( !bp_core_avatar_handle_crop( array( 'object' => 'group', 'avatar_dir' => 'group-avatars', 'item_id' => $bp->groups->current_group->id, 'original_file' => $_POST['image_src'], 'crop_x' => $_POST['x'], 'crop_y' => $_POST['y'], 'crop_w' => $_POST['w'], 'crop_h' => $_POST['h'] ) ) )
-				bp_core_add_message( __( 'There was an error saving the group avatar, please try uploading again.', 'buddypress' ), 'error' );
-			else
-				bp_core_add_message( __( 'The group avatar was uploaded successfully!', 'buddypress' ) );
-		} ?>
             
             <div class="submit">
                 <input type="submit" class="auto" value="<?php _e('Update', 'buddypress-media'); ?>" />

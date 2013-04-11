@@ -104,6 +104,11 @@ jQuery(document).ready(function(){
             $current = jQuery(this);
             load_media($current);
         });
+        jQuery('.widget-item-listing').on('click','li a',function(e){
+            e.preventDefault();
+            $current = jQuery(this);
+            load_media($current);
+        });
         jQuery('ul#activity-stream').on('click',
             'li.media.album_updated ul li a,	ul.bp-media-list-media li a, li.activity-item div.activity-content div.activity-inner div.bp_media_content a',function(e){
                 e.preventDefault();
@@ -250,7 +255,13 @@ jQuery(document).ready(function(){
         /* Hide excess comments */
         //	if ( jQuery('.activity-comments').length )
         //		bp_legacy_theme_hide_comments();
-
+        
+        if (jQuery('.imgedit-wrap').length > 0) {
+            $id = jQuery('.image-editor').attr('id').replace('image-editor-','');
+//            jQuery('#imgedit-y-'+$id).after('<input type="checkbox" style="display:none;" checked="checked" name="imgedit-target-'+$id+'" value="all">');
+//            jQuery('#imgedit-y-'+$id).after('<input type="hidden" style="display:none;" id="imgedit-save-target-'+$id+'" value="all">');
+        }
+        
         /* Activity list event delegation */
         jQuery('body').on( 'click', '.bp-media-ajax-single div.activity',function(event) {
             var target = jQuery(event.target);

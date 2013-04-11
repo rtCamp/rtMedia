@@ -137,7 +137,6 @@ jQuery(document).ready(function(){
             //                bp_media_activity_album_selected = jQuery('#bp-media-activity-selected-album').val();
             $bp_media_activity_album_selected = default_album;
             $bp_media_activity_uploader.start();
-            do_bp_jazz();
             up.refresh(); // Reposition Flash/Silverlight
         });
         $bp_media_activity_uploader.bind('UploadProgress', function(up, file) {
