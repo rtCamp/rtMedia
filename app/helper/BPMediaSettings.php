@@ -47,7 +47,7 @@ if (!class_exists('BPMediaSettings')) {
                 'desc' => __('Enable Audio (mp3)', 'buddypress-media')
             ));
 
-            add_settings_section('bpm-image-settings', __('Image Settings', 'buddypress-media'), is_multisite() ? array($this, 'network_notices') : array($this, 'image_settings_intro'), 'bp-media-settings');
+            add_settings_section('bpm-image-settings', __('Image Settings', 'buddypress-media'), array($this, 'image_settings_intro'), 'bp-media-settings');
             add_settings_field('bpm-image-thumbnail', __('Thumbnail Size', 'buddypress-media'), array($this, 'dimensions'), 'bp-media-settings', 'bpm-image-settings', array(
                 'type' => 'image',
                 'size' => 'thumbnail',
@@ -230,37 +230,37 @@ if (!class_exists('BPMediaSettings')) {
         }
 
         public function network_notices() {
-            $flag = 1;
-            if (get_site_option('bpm-media-enable', false)) {
-                echo '<div id="setting-error-bpm-media-enable" class="error"><p><strong>' . get_site_option('bpm-media-enable') . '</strong></p></div>';
-                delete_site_option('bpm-media-enable');
-                $flag = 0;
-            }
-            if (get_site_option('bpm-media-type', false)) {
-                echo '<div id="setting-error-bpm-media-type" class="error"><p><strong>' . get_site_option('bpm-media-type') . '</strong></p></div>';
-                delete_site_option('bpm-media-type');
-                $flag = 0;
-            }
-            if (get_site_option('bpm-media-default-count', false)) {
-                echo '<div id="setting-error-bpm-media-default-count" class="error"><p><strong>' . get_site_option('bpm-media-default-count') . '</strong></p></div>';
-                delete_site_option('bpm-media-default-count');
-                $flag = 0;
-            }
+                $flag = 1;
+                if (get_site_option('bpm-media-enable', false)) {
+                    echo '<div id="setting-error-bpm-media-enable" class="error"><p><strong>' . get_site_option('bpm-media-enable') . '</strong></p></div>';
+                    delete_site_option('bpm-media-enable');
+                    $flag = 0;
+                }
+                if (get_site_option('bpm-media-type', false)) {
+                    echo '<div id="setting-error-bpm-media-type" class="error"><p><strong>' . get_site_option('bpm-media-type') . '</strong></p></div>';
+                    delete_site_option('bpm-media-type');
+                    $flag = 0;
+                }
+                if (get_site_option('bpm-media-default-count', false)) {
+                    echo '<div id="setting-error-bpm-media-default-count" class="error"><p><strong>' . get_site_option('bpm-media-default-count') . '</strong></p></div>';
+                    delete_site_option('bpm-media-default-count');
+                    $flag = 0;
+                }
 
-            if (get_site_option('bpm-recount-success', false)) {
-                echo '<div id="setting-error-bpm-recount-success" class="updated"><p><strong>' . get_site_option('bpm-recount-success') . '</strong></p></div>';
-                delete_site_option('bpm-recount-success');
-                $flag = 0;
-            } elseif (get_site_option('bpm-recount-fail', false)) {
-                echo '<div id="setting-error-bpm-recount-fail" class="error"><p><strong>' . get_site_option('bpm-recount-fail') . '</strong></p></div>';
-                delete_site_option('bpm-recount-fail');
-                $flag = 0;
-            }
+                if (get_site_option('bpm-recount-success', false)) {
+                    echo '<div id="setting-error-bpm-recount-success" class="updated"><p><strong>' . get_site_option('bpm-recount-success') . '</strong></p></div>';
+                    delete_site_option('bpm-recount-success');
+                    $flag = 0;
+                } elseif (get_site_option('bpm-recount-fail', false)) {
+                    echo '<div id="setting-error-bpm-recount-fail" class="error"><p><strong>' . get_site_option('bpm-recount-fail') . '</strong></p></div>';
+                    delete_site_option('bpm-recount-fail');
+                    $flag = 0;
+                }
 
-            if (get_site_option('bpm-settings-saved') && $flag) {
-                echo '<div id="setting-error-bpm-settings-saved" class="updated"><p><strong>' . get_site_option('bpm-settings-saved') . '</strong></p></div>';
-            }
-            delete_site_option('bpm-settings-saved');
+                if (get_site_option('bpm-settings-saved') && $flag) {
+                    echo '<div id="setting-error-bpm-settings-saved" class="updated"><p><strong>' . get_site_option('bpm-settings-saved') . '</strong></p></div>';
+                }
+                delete_site_option('bpm-settings-saved');
         }
 
         /**
@@ -325,7 +325,7 @@ if (!class_exists('BPMediaSettings')) {
             } else {
                 $regenerate_link = wp_nonce_url(admin_url('update.php?action=install-plugin&plugin=regenerate-thumbnails'), 'install-plugin_regenerate-thumbnails');
             }
-            echo '<span class="description">' . sprintf(__('If you make changes to width, height or crop settings, you must use "<a href="%s">Regenerate Thumbnail Plugin</a>" to regenerate old images."','buddypress-media'),$regenerate_link) . '</span>';
+            echo '<span class="description">' . sprintf(__('If you make changes to width, height or crop settings, you must use "<a href="%s">Regenerate Thumbnail Plugin</a>" to regenerate old images."', 'buddypress-media'), $regenerate_link) . '</span>';
         }
 
         /**

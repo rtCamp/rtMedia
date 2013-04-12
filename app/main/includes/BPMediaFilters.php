@@ -17,6 +17,21 @@ class BPMediaFilters {
         add_filter('bp_activity_get_user_join_filter', 'BPMediaFilters::activity_query_filter', 10);
         // and we hook our function via wp_before_admin_bar_render
         add_action('admin_bar_menu', array($this, 'my_account_menu'), 1);
+        
+        //WordPress Edit Image ( For applying edit image changes to custom sizes hack )
+        global $bp_media;
+        $media_sizes = $bp_media->media_sizes();
+        $image_size = $media_sizes['image'];
+        add_filter( 'pre_option_bp_media_thumbnail_size_w', create_function('','return '.$image_size['thumbnail']['width'].';') );
+        add_filter( 'pre_option_bp_media_thumbnail_size_h', create_function('','return '. $image_size['thumbnail']['height'].';') );
+        add_filter( 'pre_option_bp_media_thumbnail_crop', create_function('','return '. $image_size['thumbnail']['crop'].';') );
+        add_filter( 'pre_option_bp_media_activity_image_size_w', create_function('','return '.$image_size['medium']['width'].';') );
+        add_filter( 'pre_option_bp_media_activity_image_size_h', create_function('','return '. $image_size['medium']['height'].';') );
+        add_filter( 'pre_option_bp_media_activity_image_crop', create_function('','return '. $image_size['medium']['crop'].';') );
+        add_filter( 'pre_option_bp_media_single_image_size_w', create_function('','return '. $image_size['large']['width'].';') );
+        add_filter( 'pre_option_bp_media_single_image_size_h', create_function('','return '. $image_size['large']['height'].';') );
+        add_filter( 'pre_option_bp_media_single_image_crop', create_function('','return '. $image_size['large']['crop'].';') );
+        
         // and we hook our function via wp_before_admin_bar_render
         global $bp_media;
         if (isset($bp_media->options['show_admin_menu']) && ($bp_media->options['show_admin_menu'] == true)) {

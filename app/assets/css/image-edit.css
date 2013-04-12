@@ -677,3 +677,25 @@ span.imgedit-scale-warn {
 	filter: alpha(opacity=50);
 	opacity: 0.5;
 }
+
+/*------------------------------------------------------------------------------
+  Custom Styles
+------------------------------------------------------------------------------*/
+
+.bp-media-image-editor-cotnainer { margin-top : 35px; }
+.wp_attachment_image .bp-media-image-edit { float: left; }
+.wp_attachment_image .thumbnail { max-width: 300px; }
+.wp_attachment_image .spinner { display: none; }
+.bp-media-image-editor-cotnainer .hidden { display: none; }
+.bp-media-image-editor-cotnainer div.updated { 
+    margin: 5px 0 15px;
+    background-color: #ffffe0;
+    border-color: #e6db55;
+    padding: 0 .6em;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    border-width: 1px;
+    border-style: solid;
+}
+ 
+.bp-media-image-editor-cotnainer div.updated p { margin: .5em 0;padding: 2px; }

@@ -179,7 +179,7 @@ jQuery(document).ready(function(){
                     'opacity': 90
                 });
                 do_fixes($medialoaded);
-				jQuery('.bp_media_content video,.bp_media_content audio').trigger('mediapreview');
+                jQuery('.bp_media_content video,.bp_media_content audio').trigger('mediapreview');
             });
         }
         function transit_media($current){
@@ -192,7 +192,7 @@ jQuery(document).ready(function(){
                 $medialoaded.empty();
                 $medialoaded.append($mediacontent);
                 do_fixes($medialoaded);
-				jQuery('.bp_media_content video,.bp_media_content audio').trigger('mediapreview');
+                jQuery('.bp_media_content video,.bp_media_content audio').trigger('mediapreview');
             });
         }
 
@@ -256,12 +256,13 @@ jQuery(document).ready(function(){
         //	if ( jQuery('.activity-comments').length )
         //		bp_legacy_theme_hide_comments();
         
-        if (jQuery('.imgedit-wrap').length > 0) {
-            $id = jQuery('.image-editor').attr('id').replace('image-editor-','');
-//            jQuery('#imgedit-y-'+$id).after('<input type="checkbox" style="display:none;" checked="checked" name="imgedit-target-'+$id+'" value="all">');
-//            jQuery('#imgedit-y-'+$id).after('<input type="hidden" style="display:none;" id="imgedit-save-target-'+$id+'" value="all">');
-        }
-        
+        jQuery('.bp-media-image-editor').bind('DOMNodeInserted DOMNodeRemoved', function(event) {
+            $id = jQuery('.bp-media-image-editor').attr('id').replace('image-editor-','');
+            if (!jQuery('#imgedit-save-target-'+$id).length){
+                jQuery('#imgedit-y-'+$id).after('<p id="imgedit-save-target-'+$id+'" style="display: none;"><input type="checkbox" style="display:none;" checked="checked" name="imgedit-target-'+$id+'" value="all"></p>');
+            }
+        });
+
         /* Activity list event delegation */
         jQuery('body').on( 'click', '.bp-media-ajax-single div.activity',function(event) {
             var target = jQuery(event.target);
