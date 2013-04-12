@@ -1002,7 +1002,7 @@ class BPMediaHostWordpress {
         $create_new_album_flag = false;
         if ($album_id != 0) {
             $album = get_post($album_id);
-            if ($album->post_author != $author_id && $group == 0) {
+            if ( $author_id && $album->post_author != $author_id && $group == 0) {
                 $create_new_album_flag = true;
             } else {
                 $post_id = $album->ID;

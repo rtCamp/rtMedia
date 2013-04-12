@@ -39,7 +39,8 @@ class BPMediaActions {
         add_action('bp_media_after_update_media', array($this, 'update_count'), 999);
         add_action('bp_media_after_delete_media', array($this, 'update_count'), 999);
         add_action('bp_before_group_settings_creation_step', array($this, 'group_create_default_album'));
-        add_filter('intermediate_image_sizes_advanced', array($this, 'filter_image_sizes'));
+        add_filter('intermediate_image_sizes_advanced', array($this, 'filter_image_sizes_details'));
+        add_filter( 'intermediate_image_sizes', array($this,'filter_image_sizes') );
         $linkback = bp_get_option('bp_media_add_linkback', false);
         if ($linkback)
             add_action('bp_footer', array($this, 'footer'));
@@ -497,7 +498,6 @@ class BPMediaActions {
                     'drop_element' => 'drag-drop-area',
                     'filters' => apply_filters('bp_media_plupload_files_filter', array(array('title' => "Media Files", 'extensions' => "mp4,jpg,png,jpeg,gif,mp3"))),
                     'max_file_size' => min(array(ini_get('upload_max_filesize'), ini_get('post_max_size'))),
-                    'chunk_size' => '1mb',
                     'multipart' => true,
                     'urlstream_upload' => true,
                     'flash_swf_url' => includes_url('js/plupload/plupload.flash.swf'),
@@ -915,10 +915,10 @@ class BPMediaActions {
         $bp_album->check_and_create_album(0, bp_get_new_group_id());
     }
 
-    function filter_image_sizes($sizes) {
+    function filter_image_sizes_details($sizes) {
         if (isset($_REQUEST['post_id'])) {
-            $sizes = $this->unset_bp_media_image_sizes($sizes);
-        } elseif (isset($_REQUEST['id'])) { //For regeneration of thumbnails
+            $sizes = $this->unset_bp_media_image_sizes_details($sizes);
+        } elseif (isset($_REQUEST['id'])) { //For Regenerate Thumbnails Plugin
             if ($parent_id = get_post_field('post_parent', $_REQUEST['id'])) {
                 $post_type = get_post_field('post_type', $parent_id);
                 if ($post_type == 'bp_media_album') {
@@ -928,6 +928,25 @@ class BPMediaActions {
                         'bp_media_thumbnail' => $bp_media_sizes['image']['thumbnail'],
                         'bp_media_activity_image' => $bp_media_sizes['image']['medium'],
                         'bp_media_single_image' => $bp_media_sizes['image']['large']
+                    );
+                } else {
+                    $sizes = $this->unset_bp_media_image_sizes_details($sizes);
+                }
+            } else {
+                $sizes = $this->unset_bp_media_image_sizes_details($sizes);
+            }
+        }
+
+        return $sizes;
+    }
+    
+    function filter_image_sizes($sizes) {
+        if (isset($_REQUEST['postid'])) { //For Regenerate Thumbnails Plugin
+            if ($parent_id = get_post_field('post_parent', $_REQUEST['postid'])) {
+                $post_type = get_post_field('post_type', $parent_id);
+                if ($post_type == 'bp_media_album') {
+                    $sizes = array(
+                        'bp_media_thumbnail', 'bp_media_activity_image', 'bp_media_single_image'
                     );
                 } else {
                     $sizes = $this->unset_bp_media_image_sizes($sizes);
@@ -940,13 +959,23 @@ class BPMediaActions {
         return $sizes;
     }
 
-    function unset_bp_media_image_sizes($sizes) {
+    function unset_bp_media_image_sizes_details($sizes) {
         if (isset($sizes['bp_media_thumbnail']))
             unset($sizes['bp_media_thumbnail']);
         if (isset($sizes['bp_media_activity_image']))
             unset($sizes['bp_media_activity_image']);
         if (isset($sizes['bp_media_single_image']))
             unset($sizes['bp_media_single_image']);
+        return $sizes;
+    }
+    
+    function unset_bp_media_image_sizes($sizes) {
+        if(($key = array_search('bp_media_thumbnail', $sizes)) !== false)
+            unset($sizes[$key]);
+        if(($key = array_search('bp_media_activity_image', $sizes)) !== false)
+            unset($sizes[$key]);
+        if(($key = array_search('bp_media_single_image', $sizes)) !== false)
+            unset($sizes[$key]);
         return $sizes;
     }
 
