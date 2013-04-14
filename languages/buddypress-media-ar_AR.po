@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: BuddyPress Media\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-04-09 12:48+0530\n"
-"PO-Revision-Date: 2013-04-14 02:13+0300\n"
+"PO-Revision-Date: 2013-04-14 15:03+0300\n"
 "Last-Translator: @muneera_salah <muneera.salah@gmail.com>\n"
 "Language-Team: @Muneera_salah <muneera.salah@gmail.com>\n"
 "Language: Arabic -عربي\n"
@@ -17,7 +17,7 @@ msgstr ""
 
 #: app/helper/BPMediaAddon.php:29
 msgid "BuddyPress-Media Instagram"
-msgstr ""
+msgstr "BuddyPress-وسائط انستقرام"
 
 #: app/helper/BPMediaAddon.php:32
 msgid ""
@@ -27,7 +27,7 @@ msgstr ""
 
 #: app/helper/BPMediaAddon.php:33
 msgid "Important"
-msgstr ""
+msgstr "مهم"
 
 #: app/helper/BPMediaAddon.php:33
 msgid ""
@@ -109,7 +109,7 @@ msgstr "التفاصيل"
 
 #: app/helper/BPMediaSupport.php:121
 msgid "Additional Information"
-msgstr ""
+msgstr "معلومات إضافية"
 
 #: app/helper/BPMediaSupport.php:126
 msgid "Your WP Admin Login:"
@@ -153,19 +153,19 @@ msgstr ""
 
 #: app/helper/BPMediaSupport.php:246
 msgid "Thank you for your Feedback/Suggestion."
-msgstr ""
+msgstr "شكرا ً على المقترح / التغذية الرجعية "
 
 #: app/helper/BPMediaSupport.php:248
 msgid "Thank you for posting your support request."
-msgstr ""
+msgstr "شكرا لإرسالك طلب الدعم ."
 
 #: app/helper/BPMediaSupport.php:249
 msgid "We will get back to you shortly."
-msgstr ""
+msgstr "سنعود قريبا ً"
 
 #: app/helper/BPMediaSupport.php:252
 msgid "Your server failed to send an email."
-msgstr ""
+msgstr "فشل الخادم في إرسال البريد الإلكتروني"
 
 #: app/helper/BPMediaSupport.php:253
 msgid "Kindly contact your server support to fix this."
@@ -178,11 +178,11 @@ msgstr ""
 
 #: app/helper/BPMediaFeed.php:43
 msgid "No items"
-msgstr ""
+msgstr "لا يوجد أي عنصر"
 
 #: app/helper/BPMediaFeed.php:49
 msgid "Posted "
-msgstr ""
+msgstr "تم النشر"
 
 #: app/helper/BPMediaAdminWidget.php:29
 msgid "Argument missing. id is required."
@@ -190,7 +190,7 @@ msgstr ""
 
 #: app/helper/BPMediaSettings.php:33
 msgid "Enabled Media Types"
-msgstr ""
+msgstr " تمكين أنواع الوسائط "
 
 #: app/helper/BPMediaSettings.php:34 app/main/BuddyPressMedia.php:283
 msgid "Photos"
@@ -198,7 +198,7 @@ msgstr "الصور"
 
 #: app/helper/BPMediaSettings.php:37
 msgid "Enable Photos"
-msgstr ""
+msgstr "تمكين الصور"
 
 #: app/helper/BPMediaSettings.php:39 app/main/BuddyPressMedia.php:292
 msgid "Video"
@@ -206,7 +206,7 @@ msgstr "مقاطع الفيديو"
 
 #: app/helper/BPMediaSettings.php:42
 msgid "Enable Video (mp4)"
-msgstr ""
+msgstr "تمكين مقاطع الفيديو بصيغة  (mp4)"
 
 #: app/helper/BPMediaSettings.php:44
 msgid "Audio"
@@ -214,15 +214,15 @@ msgstr "مقاطع الصوت"
 
 #: app/helper/BPMediaSettings.php:47
 msgid "Enable Audio (mp3)"
-msgstr ""
+msgstr "تمكين مقاطع الصوت (mp3)"
 
 #: app/helper/BPMediaSettings.php:50
 msgid "Activity Upload"
-msgstr ""
+msgstr "نشاطات الرفع"
 
 #: app/helper/BPMediaSettings.php:51
 msgid "Activity Uploads"
-msgstr ""
+msgstr "نشاطات الرفع"
 
 #: app/helper/BPMediaSettings.php:54
 msgid "Enable Activity Uploading"
@@ -271,11 +271,11 @@ msgstr ""
 #: app/helper/BPMediaSettings.php:98
 #: app/main/privacy/BPMediaPrivacyScreen.php:59
 msgid "Privacy Settings"
-msgstr ""
+msgstr "إعدادت الخصوصية"
 
 #: app/helper/BPMediaSettings.php:99
 msgid "Enable Privacy"
-msgstr ""
+msgstr "تمكين الخصوصية "
 
 #: app/helper/BPMediaSettings.php:102
 msgid "Enable privacy"
@@ -283,27 +283,27 @@ msgstr ""
 
 #: app/helper/BPMediaSettings.php:106
 msgid "<strong>Private</strong> - Visible only to the user"
-msgstr ""
+msgstr "<strong>خاص </strong> - مرئي فقط للمستخدمين"
 
 #: app/helper/BPMediaSettings.php:107
 msgid "<strong>Friends</strong> - Visible to user's friends"
-msgstr ""
+msgstr "<strong>أصدقاء</strong> -مرئي فقط لأصدقاء المستخدم "
 
 #: app/helper/BPMediaSettings.php:108
 msgid "<strong>Users</strong> - Visible to registered users"
-msgstr ""
+msgstr "<strong>المستخدمين</strong> - مرئي فقط للمسجلين"
 
 #: app/helper/BPMediaSettings.php:109
 msgid "<strong>Public</strong> - Visible to the world"
-msgstr ""
+msgstr "<strong>عام</strong> - مرئي للعامة"
 
 #: app/helper/BPMediaSettings.php:114
 msgid "Default Privacy"
-msgstr ""
+msgstr "خصوصية افتراضية"
 
 #: app/helper/BPMediaSettings.php:120
 msgid "User Override"
-msgstr ""
+msgstr "تجاهل المستخدم"
 
 #: app/helper/BPMediaSettings.php:123
 msgid "Allow users to override admin defaults (<em>Recommended</em>)"
@@ -443,12 +443,12 @@ msgstr ""
 
 #: app/admin/BPMediaAdmin.php:79 app/admin/BPMediaAdmin.php:230
 msgid "BuddyPress Media Settings"
-msgstr ""
+msgstr "إعدادت وسائط BuddyPress "
 
 #: app/admin/BPMediaAdmin.php:79 app/admin/BPMediaAdmin.php:231
 #: app/main/BuddyPressMedia.php:416
 msgid "Settings"
-msgstr ""
+msgstr "إعدادت"
 
 #: app/admin/BPMediaAdmin.php:81
 msgid "BuddyPress Media Database Update"
@@ -481,18 +481,18 @@ msgstr ""
 
 #: app/admin/BPMediaAdmin.php:89 app/admin/BPMediaAdmin.php:253
 msgid "Convert Videos"
-msgstr ""
+msgstr "تحويل مقاطع الفيديو"
 
 #: app/admin/BPMediaAdmin.php:150 app/importers/BPMediaAlbumimporter.php:91
 #: app/main/BuddyPressMedia.php:275 app/main/BuddyPressMedia.php:278
 #: app/main/BPMediaComponent.php:297 app/main/BPMediaComponent.php:298
 #: app/main/BPMediaComponent.php:304
 msgid "Media"
-msgstr ""
+msgstr "الوسائط"
 
 #: app/admin/BPMediaAdmin.php:172
 msgid "By"
-msgstr ""
+msgstr "بواسطة"
 
 #: app/admin/BPMediaAdmin.php:172
 msgid "Empowering The Web With WordPress"
@@ -727,11 +727,11 @@ msgstr ""
 
 #: app/main/BuddyPressMedia.php:304 app/main/BPMediaComponent.php:256
 msgid "Album"
-msgstr ""
+msgstr "الألبوم"
 
 #: app/main/BuddyPressMedia.php:307
 msgid "Upload"
-msgstr ""
+msgstr "رفع"
 
 #: app/main/BuddyPressMedia.php:508
 #, php-format
@@ -754,47 +754,47 @@ msgstr ""
 
 #: app/main/BPMediaComponent.php:60
 msgid "Search Media..."
-msgstr ""
+msgstr "بحث في الوسائط"
 
 #: app/main/BPMediaComponent.php:257
 msgid "Create"
-msgstr ""
+msgstr "إنشاء"
 
 #: app/main/BPMediaComponent.php:258
 msgid "Create Album"
-msgstr ""
+msgstr "‘نشاء ألبوم"
 
 #: app/main/BPMediaComponent.php:259
 msgid "Edit Album"
-msgstr ""
+msgstr "تعديل الألبوم"
 
 #: app/main/BPMediaComponent.php:260
 msgid "New Album"
-msgstr ""
+msgstr "ألبوم جديد"
 
 #: app/main/BPMediaComponent.php:261
 msgid "All Albums"
-msgstr ""
+msgstr "كل الألبومات"
 
 #: app/main/BPMediaComponent.php:262
 msgid "View Album"
-msgstr ""
+msgstr "مشاهدة الألبوم"
 
 #: app/main/BPMediaComponent.php:263
 msgid "Search Albums"
-msgstr ""
+msgstr "البحث في الألبوم"
 
 #: app/main/BPMediaComponent.php:264
 msgid "No album found"
-msgstr ""
+msgstr "لا يوجد أي البوم"
 
 #: app/main/BPMediaComponent.php:265
 msgid "No album found in Trash"
-msgstr ""
+msgstr "لم يتم العثور على الألبوم في سلة المهملات"
 
 #: app/main/BPMediaComponent.php:299
 msgid "Add New Media"
-msgstr ""
+msgstr "إضافة وسائط جديدة"
 
 #: app/main/BPMediaComponent.php:307
 msgid "BuddyPress Media's Media Files"
@@ -810,27 +810,27 @@ msgstr "البدء"
 
 #: app/main/privacy/BPMediaPrivacyScreen.php:42
 msgid "Default privacy level for your media has been updated"
-msgstr ""
+msgstr "مستوى الخصوصية الافتراضي لوسائطك تم تحديثها "
 
 #: app/main/privacy/BPMediaPrivacyScreen.php:53
 msgid "Save Changes"
-msgstr ""
+msgstr "حفظ التغييرات"
 
 #: app/main/privacy/BPMediaPrivacy.php:113
 msgid "<strong>Private</strong>, Visible only to myself"
-msgstr ""
+msgstr "<strong>خاص</strong>, مرئي لي أنا فقط"
 
 #: app/main/privacy/BPMediaPrivacy.php:117
 msgid "<strong>Friends</strong>, Visible to my friends"
-msgstr ""
+msgstr "<strong>الأصدقاء</strong>, مرئي لأصدقائي"
 
 #: app/main/privacy/BPMediaPrivacy.php:121
 msgid "<strong>Users</strong>, Visible to registered users"
-msgstr ""
+msgstr "<strong>المستخدمين</strong>, مرئي للمستخدمين المسجلين"
 
 #: app/main/privacy/BPMediaPrivacy.php:125
 msgid "<strong>Public</strong>, Visible to the world"
-msgstr ""
+msgstr "<strong> عام </strong> , مرئي للعامة "
 
 #: app/main/privacy/BPMediaPrivacy.php:145
 msgid "Set default privacy levels for your media"
@@ -839,62 +839,62 @@ msgstr ""
 #: app/main/privacy/BPMediaPrivacy.php:326
 #, php-format
 msgid "This %s is private"
-msgstr ""
+msgstr "%s خاص"
 
 #: app/main/privacy/BPMediaPrivacy.php:327
 #, php-format
 msgid "This %1s is visible only to %2s&rsquo;s friends"
-msgstr ""
+msgstr "هذا %1s مرئي فقط ل %2s&rsquo;s الأصدقاء"
 
 #: app/main/privacy/BPMediaPrivacy.php:328
 #, php-format
 msgid "This %s is visible to logged in users, only"
-msgstr ""
+msgstr "This %s مرئي فقط للمسجلين, فقط"
 
 #: app/main/includes/BPMediaFilters.php:143
 #, php-format
 msgid "Delete %s"
-msgstr ""
+msgstr "حذف %s"
 
 #: app/main/includes/BPMediaFilters.php:394
 msgid "Total Photos"
-msgstr ""
+msgstr "عدد الصور"
 
 #: app/main/includes/BPMediaFilters.php:395
 msgid "Total Videos"
-msgstr ""
+msgstr "عدد مقاطع الفيديو"
 
 #: app/main/includes/BPMediaFilters.php:396
 msgid "Total Audio"
-msgstr ""
+msgstr "مجموع مقاطع الصوت"
 
 #: app/main/includes/BPMediaFilters.php:397
 msgid "Total Albums"
-msgstr ""
+msgstr "مجموع الألبومات"
 
 #: app/main/includes/BPMediaTemplateFunctions.php:34
 msgid "Media Title"
-msgstr ""
+msgstr "عنوان الوسائط"
 
 #: app/main/includes/BPMediaTemplateFunctions.php:35
 msgid "Media Description"
-msgstr ""
+msgstr "وصف الوسائط"
 
 #: app/main/includes/BPMediaTemplateFunctions.php:36
 msgid "Select Media File"
-msgstr ""
+msgstr "اختيار ملف الوسائط"
 
 #: app/main/includes/BPMediaTemplateFunctions.php:231
 msgid "Show More"
-msgstr ""
+msgstr "عرض أكثر"
 
 #: app/main/includes/BPMediaHostWordpress.php:59
 msgid "Sorry, the requested media does not exist."
-msgstr ""
+msgstr "عذراً ، الوسائط المطلوبة غير موجودة ."
 
 #: app/main/includes/BPMediaHostWordpress.php:137
 msgid "Error Uploading File"
-msgstr ""
+msgstr "خطأ في رفع الملف"
 
 #: app/main/includes/BPMediaHostWordpress.php:171
 msgid "MP4 file you have uploaded is corrupt."
@@ -934,21 +934,21 @@ msgstr ""
 
 #: app/main/includes/BPMediaHostWordpress.php:235
 msgid "Error creating attachment for the media file, please try again"
-msgstr ""
+msgstr "خطأ في إنشاء مرفق لملف الوسائط ، الرجاء أعد المحاولة مرة آخرى ."
 
 #: app/main/includes/BPMediaHostWordpress.php:340
 #, php-format
 msgid "%s uploaded a media."
-msgstr ""
+msgstr "%s تم رفع الوسائط"
 
 #: app/main/includes/BPMediaHostWordpress.php:361
 msgid "Uploaded by "
-msgstr ""
+msgstr "تم الرفع بواسطة"
 
 #: app/main/includes/BPMediaHostWordpress.php:562
 #, php-format
 msgid "Comment <span>%s</span>"
-msgstr ""
+msgstr "تعليق <span>%s</span>"
 
 #: app/main/includes/BPMediaHostWordpress.php:566
 msgid "Favorite"
@@ -960,11 +960,11 @@ msgstr "إزل من المفضلة"
 
 #: app/main/includes/BPMediaHostWordpress.php:587
 msgid "Post"
-msgstr ""
+msgstr "منشور"
 
 #: app/main/includes/BPMediaHostWordpress.php:587
 msgid "or press esc to cancel."
-msgstr ""
+msgstr "أو إضغط على زر esc للإلغاء"
 
 #: app/main/includes/BPMediaHostWordpress.php:612
 msgid "Delete"
@@ -975,7 +975,7 @@ msgstr "حذف"
 #: app/main/group/BPMediaGroupAction.php:124
 #, php-format
 msgid "%1$s added a %2$s"
-msgstr ""
+msgstr "%1$s تم إضافة %2$s"
 
 #: app/main/includes/BPMediaHostWordpress.php:984
 msgid "Wall Posts"
@@ -984,19 +984,19 @@ msgstr "حائط المنشورات"
 #: app/main/includes/BPMediaActions.php:66
 #: app/main/includes/BPMediaActions.php:90
 msgid "File uploaded is not supported"
-msgstr ""
+msgstr "الملف المرفوع غير مدعم"
 
 #: app/main/includes/BPMediaActions.php:73
 msgid "Image uploads are disabled"
-msgstr ""
+msgstr "الصورة المرفوعة معطلة"
 
 #: app/main/includes/BPMediaActions.php:79
 msgid "Video uploads are disabled"
-msgstr ""
+msgstr "مقطع الفيديو المرفوع معطل"
 
 #: app/main/includes/BPMediaActions.php:85
 msgid "Audio uploads are disabled"
-msgstr ""
+msgstr "مقطع الصوت المرفوع معطل"
 
 #: app/main/includes/BPMediaActions.php:104
 msgid "Upload Successful"
@@ -1004,7 +1004,7 @@ msgstr "تم الرفع بنجاح"
 
 #: app/main/includes/BPMediaActions.php:109
 msgid "You did not specified a file to upload"
-msgstr ""
+msgstr "لم يتم تحديد الملف المخصص للرفع"
 
 #: app/main/includes/BPMediaActions.php:311
 msgid "Download"
@@ -1013,12 +1013,12 @@ msgstr "تحميل"
 #: app/main/includes/BPMediaActions.php:318
 #: app/main/includes/BPMediaActions.php:838
 msgid "Set as Album Cover"
-msgstr ""
+msgstr "تعيين كغلاف للألبوم"
 
 #: app/main/includes/BPMediaActions.php:323
 #: app/main/includes/BPMediaActions.php:841
 msgid "Unset as Album Cover"
-msgstr ""
+msgstr "عدم تعيين كغلاف للألبوم"
 
 #: app/main/includes/BPMediaActions.php:329
 msgid "Edit Media"
@@ -1031,24 +1031,24 @@ msgstr "تحرير"
 #: app/main/includes/BPMediaActions.php:741
 #, php-format
 msgid "%1$s created an album %2$s"
-msgstr ""
+msgstr "%1$s تم إنشاء ألبوم%2$s"
 
 #: app/main/includes/bp-media-upload-handler.php:32
 msgid "You are not allowed to be here"
-msgstr ""
+msgstr "غير مسموح لك لتكون هنا "
 
 #: app/main/includes/BPMediaFunction.php:167
 msgid "You do not have access to this page."
-msgstr ""
+msgstr "لا يمكن الوصول لهذه الصفحة"
 
 #: app/main/includes/BPMediaFunction.php:228
 #, php-format
 msgid "%1$s added new media in album %2$s"
-msgstr ""
+msgstr "%1$s تم إضافة وسائط جديدة في الألبوم %2$s"
 
 #: app/main/widgets/BPMediaWidget.php:20
 msgid "The most recent/popular media uploaded on your site"
-msgstr ""
+msgstr "أكثر الوسائط الحالية / المشهورة تم رفعها على موقعك"
 
 #: app/main/widgets/BPMediaWidget.php:21
 msgid "BuddyPress Media Widget"
@@ -1077,11 +1077,11 @@ msgstr ""
 
 #: app/main/widgets/BPMediaWidget.php:199
 msgid "Recent Media"
-msgstr ""
+msgstr "الوسائط الحالية"
 
 #: app/main/widgets/BPMediaWidget.php:200
 msgid "Popular Media"
-msgstr ""
+msgstr "الوسائط المشهورة"
 
 #: app/main/widgets/BPMediaWidget.php:203
 msgid "Title:"
@@ -1089,7 +1089,7 @@ msgstr "العنوان :"
 
 #: app/main/widgets/BPMediaWidget.php:206
 msgid "Number of posts to show:"
-msgstr ""
+msgstr "عدد المنشورات للعرض"
 
 #: app/main/widgets/BPMediaWidget.php:210
 msgid "Show All"
@@ -1109,17 +1109,17 @@ msgstr "عرض مقاطع الفيديو"
 
 #: app/main/group/BPMediaGroupElementExtension.php:91
 msgid "Sorry, the requested media does not belong to the group"
-msgstr ""
+msgstr "عذراً ، الوسائط المطلوبة لا تنتمي للمجموعة"
 
 #: app/main/group/BPMediaGroupsExtension.php:40
 #: app/main/group/BPMediaGroupsExtension.php:87
 msgid "Album Creation Control"
-msgstr ""
+msgstr "تحكم بإنشاء الألبوم"
 
 #: app/main/group/BPMediaGroupsExtension.php:41
 #: app/main/group/BPMediaGroupsExtension.php:88
 msgid "Who can create Albums in this group?"
-msgstr ""
+msgstr "من هو الذي يستطيع إنشاء ألبوم في هذه المجموعة ؟"
 
 #: app/main/group/BPMediaGroupsExtension.php:45
 #: app/main/group/BPMediaGroupsExtension.php:92
@@ -1129,20 +1129,20 @@ msgstr "كل أعضاء المجموعة"
 #: app/main/group/BPMediaGroupsExtension.php:49
 #: app/main/group/BPMediaGroupsExtension.php:96
 msgid "Group Admins and Mods only"
-msgstr ""
+msgstr "مدير المجموعة و المشرفين فقط"
 
 #: app/main/group/BPMediaGroupsExtension.php:53
 #: app/main/group/BPMediaGroupsExtension.php:100
 msgid "Group Admin only"
-msgstr ""
+msgstr "مدير المجموعة فقط"
 
 #: app/main/group/BPMediaGroupsExtension.php:130
 msgid "There was an error saving, please try again"
-msgstr ""
+msgstr "يوجد خطأ في الحفظ ، الرجاء أعد المحاولة مرة آخرى"
 
 #: app/main/group/BPMediaGroupsExtension.php:132
 msgid "Settings saved successfully"
-msgstr ""
+msgstr "تم حفظ الإعدادات بنجاح"
 
 #: app/main/group/BPMediaGroupsExtension.php:153
 msgid ""
@@ -1209,36 +1209,36 @@ msgstr "إضافة وسائط"
 #: app/main/profile/BPMediaScreen.php:194
 #, php-format
 msgid "Sorry, no %s were found."
-msgstr ""
+msgstr "عذراً , لا %s يوجد ."
 
 #: app/main/profile/BPMediaAlbumScreen.php:161
 msgid "Sorry, no media items were found in this album."
-msgstr ""
+msgstr " عذرا ً ، لا يوجد وسائط في هذا الألبوم"
 
 #: app/main/profile/BPMediaScreen.php:112
 #: app/main/profile/BPMediaScreen.php:371
 msgid "The requested url does not exist"
-msgstr ""
+msgstr "عنوان الرابط  URL المطلوب غير موجود ."
 
 #: app/main/profile/BPMediaScreen.php:123
 #, php-format
 msgid "All %s"
-msgstr ""
+msgstr "كل %s"
 
 #: app/main/profile/BPMediaScreen.php:305
 #, php-format
 msgid "Edit %s"
-msgstr ""
+msgstr "تعديل %s"
 
 #: app/main/profile/BPMediaScreen.php:326
 #, php-format
 msgid "%s Title"
-msgstr ""
+msgstr "%s العنوان"
 
 #: app/main/profile/BPMediaScreen.php:332
 #, php-format
 msgid "%s Description"
-msgstr ""
+msgstr "%s وصف"
 
 #: app/main/profile/BPMediaScreen.php:339
 msgid "Update"
@@ -1246,7 +1246,7 @@ msgstr "تحديث"
 
 #: app/main/profile/BPMediaScreen.php:340
 msgid "Back to Media File"
-msgstr ""
+msgstr "الرجوع إلى ملف الوسائط"
 
 #: app/main/profile/BPMediaScreen.php:341
 msgid "Back to Media"
@@ -1254,15 +1254,15 @@ msgstr "الرجوع إلى الوسائط"
 
 #: app/main/profile/BPMediaScreen.php:393
 msgid "Media deleted successfully"
-msgstr ""
+msgstr "تم حذف الوسائط بنجاح"
 
 #: app/main/profile/BPMediaAlbum.php:74
 msgid "Sorry, the requested album does not exist."
-msgstr ""
+msgstr "عذراً ، الألبوم المطلوب غير موجود ."
 
 #: app/main/activity/BPMediaActivity.php:46
 msgid "Attach Media"
-msgstr ""
+msgstr "أرفق وسائط"
 
 #: app/main/activity/BPMediaActivity.php:103
 msgid "View"
@@ -1271,4 +1271,4 @@ msgstr "عرض"
 #: app/main/activity/BPMediaActivity.php:161
 #, php-format
 msgid "%1$s posted an update in the group %2$s"
-msgstr ""
+msgstr "%1$s تم نشر تحديث في المجموعة %2$s"
