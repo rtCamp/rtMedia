@@ -180,13 +180,9 @@ if (!class_exists('BPMediaSettings')) {
 
             $bp_media_addon = new BPMediaAddon();
             add_settings_section('bpm-addons', __('BuddyPress Media Addons for Audio/Video Conversion', 'buddypress-media'), array($bp_media_addon, 'get_addons'), 'bp-media-addons');
-            add_settings_section('bpm-support', __('Submit a request form', 'buddypress-media'), '', 'bp-media-support');
-            add_settings_field('bpm-request', __('Request Type', 'buddypress-media'), array($this, 'dropdown'), 'bp-media-support', 'bpm-support', array('option' => 'select-request', 'none' => false, 'values' => array(
-                    '' => '-- ' . __('Select One', 'buddypress-media') . ' --',
-                    'premium_support' => __('Premium Support', 'buddypress-media'),
-                    'new_feature' => __('Suggest a New Feature', 'buddypress-media'),
-                    'bug_report' => __('Submit a Bug Report', 'buddypress-media'))
-            ));
+            
+            add_settings_section('bpm-support', __('Support', 'buddypress-media'), array($this,'bp_media_support_intro'), 'bp-media-support');
+            
             if (!BPMediaPrivacy::is_installed()) {
                 $bp_media_privacy = new BPMediaPrivacySettings();
                 add_filter('bp_media_add_sub_tabs', array($bp_media_privacy, 'ui'), 99, 2);
@@ -601,6 +597,11 @@ if (!class_exists('BPMediaSettings')) {
 				</div>
 				';
             echo $notice;
+        }
+        
+        public function bp_media_support_intro(){
+            echo '<p>'.__('If your site has some issues due to BuddyPress Media and you want one on one support then you can create a support topic on the <a target="_blank" href="http://rtcamp.com/support/forum/buddypress-media/technical-support/">rtCamp Support Forum</a>.','buddypress-media').'</p>';
+            echo '<p>'.__('If you have any suggestions, enhancements or bug reports, then you can open a new issue on <a target="_blank" href="https://github.com/rtCamp/buddypress-media/issues/new">GitHub</a>.','buddypress-media').'</p>';
         }
 
     }

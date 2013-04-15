@@ -40,7 +40,8 @@ class BPMediaActions {
         add_action('bp_media_after_delete_media', array($this, 'update_count'), 999);
         add_action('bp_before_group_settings_creation_step', array($this, 'group_create_default_album'));
         add_filter('intermediate_image_sizes_advanced', array($this, 'filter_image_sizes_details'));
-        add_filter( 'intermediate_image_sizes', array($this,'filter_image_sizes') );
+        add_filter('intermediate_image_sizes', array($this, 'filter_image_sizes'));
+//        add_shortcode('bpmedia', array($this, 'bpmedia_shortcode'));
         $linkback = bp_get_option('bp_media_add_linkback', false);
         if ($linkback)
             add_action('bp_footer', array($this, 'footer'));
@@ -939,7 +940,7 @@ class BPMediaActions {
 
         return $sizes;
     }
-    
+
     function filter_image_sizes($sizes) {
         if (isset($_REQUEST['postid'])) { //For Regenerate Thumbnails Plugin
             if ($parent_id = get_post_field('post_parent', $_REQUEST['postid'])) {
@@ -968,15 +969,69 @@ class BPMediaActions {
             unset($sizes['bp_media_single_image']);
         return $sizes;
     }
-    
+
     function unset_bp_media_image_sizes($sizes) {
-        if(($key = array_search('bp_media_thumbnail', $sizes)) !== false)
+        if (($key = array_search('bp_media_thumbnail', $sizes)) !== false)
             unset($sizes[$key]);
-        if(($key = array_search('bp_media_activity_image', $sizes)) !== false)
+        if (($key = array_search('bp_media_activity_image', $sizes)) !== false)
             unset($sizes[$key]);
-        if(($key = array_search('bp_media_single_image', $sizes)) !== false)
+        if (($key = array_search('bp_media_single_image', $sizes)) !== false)
             unset($sizes[$key]);
         return $sizes;
+    }
+
+    function bpmedia_shortcode($atts) {
+        extract(shortcode_atts(array(
+                    'media' => 'all',
+                    'count' => '10',
+                        ), $atts));
+
+        $value = 0;
+        if (is_user_logged_in()) {
+            $value = 2;
+        }
+        $privacy_query = array(
+            array(
+                'key' => 'bp_media_privacy',
+                'value' => $value,
+                'compare' => '<='
+            )
+        );
+        $args = array(
+            'post_type' => 'attachment',
+            'post_status' => 'any',
+            'meta_query' => $privacy_query,
+            'posts_per_page' => $count
+        );
+        if ($media != 'all')
+            $args['post_mime_type'] = $media;
+        $query = new WP_Query($args);
+        if ($query->have_posts()) {
+            ?>
+            <div id="item-body"><ul class="bp-media-gallery item-list"><?php
+            while ($query->have_posts()) {
+                $query->the_post();
+                try {
+                    $entry = new BPMediaHostWordpress(get_the_ID());
+                    echo $entry->get_media_gallery_content();
+                } catch (Exception $e) {
+                    echo '<li>';
+                    echo $e->getMessage();
+                    echo '<h3><a>Private</h3>';
+                    echo '</li>';
+                }
+            }
+            ?>
+                </ul></div>
+            <div class="bp-media-actions"><a href="#" class="button" id="bp-media-show-more">Show More</a></div><?php
+        } else {
+            $media_string = $type;
+            if ($type === 'all') {
+                $media_string = 'media';
+            }
+            _e('No ' . $wdType . ' ' . $media_string . ' found', 'buddypress-media');
+        }
+        wp_reset_query();
     }
 
 }
