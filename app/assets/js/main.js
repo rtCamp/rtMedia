@@ -67,6 +67,27 @@ jQuery(document).ready(function(){
                 jQuery('.bp-media-gallery').append(response);
         });
     });
+    
+    jQuery('#bp-media-show-more-sc').click(function(e){
+        e.preventDefault();
+        $this = jQuery(this);
+        $this.prop("disabled", true);
+        var data = {
+                action: 'bp_media_load_more_sc',
+                page: parseInt($this.attr('data-page'))+1,
+                media:$this.attr('data-media'),
+                count:$this.attr('data-count')
+            };
+        jQuery.get(bp_media_vars.ajaxurl, data, function(response) {
+            if(response.length==0) {
+                jQuery('#bp-media-show-more-sc').parent().remove();
+            }else{
+                $this.prop("disabled", false);
+                $this.attr('data-page',parseInt($this.attr('data-page'))+1);
+                jQuery('.bp-media-gallery').append(response);
+            }
+        });
+    });
     setTimeout(function(){
         jQuery('.media album_updated .delete-activity,.media_upload .delete-activity').unbind('click').click(function(e){
             if(confirm('Are you sure you want to delete this activity and associated media?')){

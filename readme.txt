@@ -5,7 +5,7 @@ Tags: BuddyPress, media, multimedia, album, audio, songs, music, video, photo, i
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires at least: WordPress 3.5 + BuddyPress 1.6
-Tested up to: WordPress 3.5 + BuddyPress 1.6
+Tested up to: WordPress 3.5 + BuddyPress 1.7
 Stable tag: 2.9
 
 Adds Photos, Music, Videos & Albums to BuddyPress. Supports mobile devices (iPhone/iPad, etc) and automatic audio/video conversion.
@@ -128,7 +128,7 @@ Please visit [BuddyPress Media's Roadmap page](http://rtcamp.com/buddypress-medi
 * Creates only required image sizes ( Rather than all registered image sizes )
 * Adds thickbox to BuddyPress Media Widget
 * Fixes bug in js
-* Adds framework for shotcode support ( Functionality will be added in the next release )
+* Adds framework for shortcode support ( Functionality will be added in the next release )
 
 = 2.8.1 =
 * Improved i18n support, thanks to [David Decker](http://profiles.wordpress.org/daveshine/)

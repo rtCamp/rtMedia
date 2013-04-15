@@ -31,6 +31,8 @@ class BPMediaActions {
         add_action('bp_media_after_add_media', 'BPMediaActions::activity_create_after_add_media', 10, 4);
         add_action('wp_ajax_bp_media_load_more', array($this, 'load_more'));
         add_action('wp_ajax_nopriv_bp_media_load_more', array($this, 'load_more'));
+        add_action('wp_ajax_bp_media_load_more_sc', array($this, 'load_more_sc'));
+        add_action('wp_ajax_nopriv_bp_media_load_more_sc', array($this, 'load_more_sc'));
         add_action('wp_ajax_bp_media_set_album_cover', array($this, 'set_album_cover'));
         add_action('delete_attachment', array($this, 'delete_attachment_handler'));
         add_action('wp_ajax_bp_media_add_album', array($this, 'add_album'));
@@ -41,7 +43,7 @@ class BPMediaActions {
         add_action('bp_before_group_settings_creation_step', array($this, 'group_create_default_album'));
         add_filter('intermediate_image_sizes_advanced', array($this, 'filter_image_sizes_details'));
         add_filter('intermediate_image_sizes', array($this, 'filter_image_sizes'));
-//        add_shortcode('bpmedia', array($this, 'bpmedia_shortcode'));
+        add_shortcode('bpmedia', array($this, 'bpmedia_shortcode'));
         $linkback = bp_get_option('bp_media_add_linkback', false);
         if ($linkback)
             add_action('bp_footer', array($this, 'footer'));
@@ -650,6 +652,52 @@ class BPMediaActions {
         die();
     }
 
+    function load_more_sc() {
+        global $bp, $bp_media_query, $bp_media, $bp_media_albums_query;
+        $page = isset($_GET['page']) ? $_GET['page'] : die();
+        $type = isset($_GET['media']) ? $_GET['media'] : 'all';
+        $count = isset($_GET['count']) ? $_GET['count'] : 1;
+
+        $value = 0;
+        if (is_user_logged_in()) {
+            $value = 2;
+        }
+        $privacy_query = array(
+            array(
+                'key' => 'bp_media_privacy',
+                'value' => $value,
+                'compare' => '<='
+            )
+        );
+
+        $args = array(
+            'paged' => $page,
+            'post_type' => 'attachment',
+            'post_status' => 'any',
+            'meta_query' => $privacy_query,
+            'posts_per_page' => $count
+        );
+        if ($type != 'all')
+            $args['post_mime_type'] = $type;
+        $bp_media_widget_query = new WP_Query($args);
+        if ($bp_media_widget_query->have_posts()) {
+            while ($bp_media_widget_query->have_posts()) {
+                $bp_media_widget_query->the_post();
+                try {
+                    $entry = new BPMediaHostWordpress(get_the_ID());
+                    echo $entry->get_media_gallery_content();
+                } catch (Exception $e) {
+                    echo '<li>';
+                    echo $e->getMessage();
+                    echo '<h3><a>Private</h3>';
+                    echo '</li>';
+                }
+            }
+        }
+
+        die();
+    }
+
     /**
      *
      * @global type $bp_media_count
@@ -997,7 +1045,12 @@ class BPMediaActions {
                 'compare' => '<='
             )
         );
+
+        $paged = get_query_var('paged') ? get_query_var('paged') : 1;
+
         $args = array(
+            'paged' => $paged,
+            'post_type' => 'attachment',
             'post_type' => 'attachment',
             'post_status' => 'any',
             'meta_query' => $privacy_query,
@@ -1017,13 +1070,13 @@ class BPMediaActions {
                 } catch (Exception $e) {
                     echo '<li>';
                     echo $e->getMessage();
-                    echo '<h3><a>Private</h3>';
+                    echo '<h3>Private</h3>';
                     echo '</li>';
                 }
             }
             ?>
                 </ul></div>
-            <div class="bp-media-actions"><a href="#" class="button" id="bp-media-show-more">Show More</a></div><?php
+            <div class="bp-media-actions"><button data-media="<?php echo $media; ?>" data-count="<?php echo $count; ?>" data-page="<?php echo $count; ?>" class="button" id="bp-media-show-more-sc">Show More</button></div><?php
         } else {
             $media_string = $type;
             if ($type === 'all') {
