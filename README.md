@@ -122,9 +122,17 @@ Please visit [BuddyPress Media's Features page](http://rtcamp.com/buddypress-med
 
 Please visit [BuddyPress Media's Roadmap page](http://rtcamp.com/buddypress-media/roadmap/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "Visit BuddyPress Media's Features page") to get some details about future releases.
 
+#### 2.9 ####
+* Adds options to specify Media Sizes
+* Adds options to modify the image ( Crop, Rotate, Flip & Scale )
+* Creates only required image sizes ( Rather than all registered image sizes )
+* Adds thickbox to BuddyPress Media Widget
+* Fixes bug in js
+* Adds framework for shotcode support ( Functionality will be added in the next release )
+
 #### 2.8.1 ####
-*  Improved i18n support, thanks to [David Decker](http://profiles.wordpress.org/daveshine/)
-*  Updated translations
+* Improved i18n support, thanks to [David Decker](http://profiles.wordpress.org/daveshine/)
+* Updated translations
 
 #### 2.8 ####
 * Adds importer for BP Album
@@ -356,4 +364,4 @@ Please visit [BuddyPress Media's Roadmap page](http://rtcamp.com/buddypress-medi
 * HTML5 Audio Tag Support (with fallback)
 * HTML5 Video Tag Support (with fallback)
 
-BP-Media Importer added and Translations Updated
+Adds Image Editor

@@ -6,7 +6,7 @@ License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires at least: WordPress 3.5 + BuddyPress 1.6
 Tested up to: WordPress 3.5 + BuddyPress 1.6
-Stable tag: 2.8.1
+Stable tag: 2.9
 
 Adds Photos, Music, Videos & Albums to BuddyPress. Supports mobile devices (iPhone/iPad, etc) and automatic audio/video conversion.
 
@@ -122,9 +122,17 @@ Please visit [BuddyPress Media's Features page](http://rtcamp.com/buddypress-med
 
 Please visit [BuddyPress Media's Roadmap page](http://rtcamp.com/buddypress-media/roadmap/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "Visit BuddyPress Media's Features page") to get some details about future releases.
 
+= 2.9 =
+* Adds options to specify Media Sizes
+* Adds options to modify the image ( Crop, Rotate, Flip & Scale )
+* Creates only required image sizes ( Rather than all registered image sizes )
+* Adds thickbox to BuddyPress Media Widget
+* Fixes bug in js
+* Adds framework for shotcode support ( Functionality will be added in the next release )
+
 = 2.8.1 =
-*  Improved i18n support, thanks to [David Decker](http://profiles.wordpress.org/daveshine/)
-*  Updated translations
+* Improved i18n support, thanks to [David Decker](http://profiles.wordpress.org/daveshine/)
+* Updated translations
 
 = 2.8 =
 * Adds importer for BP Album
@@ -357,5 +365,5 @@ Please visit [BuddyPress Media's Roadmap page](http://rtcamp.com/buddypress-medi
 * HTML5 Video Tag Support (with fallback)
 
 == Upgrade Notice ==
-= 2.8.1 =
-BP-Media Importer added and Translations Updated
+= 2.9 =
+Adds Image Editor
