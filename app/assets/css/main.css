@@ -260,6 +260,7 @@ position: relative;}
 .media-tabs-container .widget-item-listing li h3 a{font-size: 13px;font-weight: normal;word-wrap: break-word; }
 
 #bp-media-show-more{width: 200px;margin-left: auto;margin-right: auto;display: block;height: 30px;line-height: 30px;font-size: 20px;}
+#bp-media-show-more-sc {display:block; margin: 0 auto;}
 #bp-media-upload-ui.activity-component{margin-left: 74px;margin-top: 10px;}
 ul#activity-stream li.media.album_updated ul{}
 ul#activity-stream li.media.album_updated ul li,ul.bp-media-list-media li{float: left;margin-right:2%}
