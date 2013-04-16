@@ -98,7 +98,6 @@ if (class_exists('BP_Group_Extension')) :
                                     $bp->action_variables[0] = BP_MEDIA_ALBUMS_VIEW_SLUG;
                                     echo '<h3>'.get_the_title($bp->action_variables[1]).'</h3>';
                                     $bp_media_content->entry_screen();
-                                } else {
                                 }
                                 $bp_media_content->entry_screen_content();
 

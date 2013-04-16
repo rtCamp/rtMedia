@@ -301,6 +301,14 @@ class BPMediaAlbum {
     function the_title() {
         echo $this->name;
     }
+    
+    /**
+     *
+     * @return type
+     */
+    function get_description() {
+        return $this->description;
+    }
 
     /**
      * Returns the id of the album

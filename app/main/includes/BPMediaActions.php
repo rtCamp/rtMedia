@@ -33,6 +33,9 @@ class BPMediaActions {
         add_action('wp_ajax_nopriv_bp_media_load_more', array($this, 'load_more'));
         add_action('wp_ajax_bp_media_load_more_sc', array($this, 'load_more_sc'));
         add_action('wp_ajax_nopriv_bp_media_load_more_sc', array($this, 'load_more_sc'));
+        add_action('wp_ajax_bp_media_move_selected_media', array($this, 'move_selected_media'));
+        add_action('wp_ajax_bp_media_delete_selected_media', array($this, 'delete_selected_media'));
+        add_action('wp_ajax_bp_media_merge_album', array($this, 'merge_album'));
         add_action('wp_ajax_bp_media_set_album_cover', array($this, 'set_album_cover'));
         add_action('delete_attachment', array($this, 'delete_attachment_handler'));
         add_action('wp_ajax_bp_media_add_album', array($this, 'add_album'));
@@ -587,6 +590,7 @@ class BPMediaActions {
         $displayed_user = isset($_GET['displayed_user']) ? $_GET['displayed_user'] : null;
         $loggedin_user = isset($_GET['loggedin_user']) ? $_GET['loggedin_user'] : null;
         $current_group = isset($_GET['current_group']) ? $_GET['current_group'] : null;
+        $move = isset($_GET['move']) ? $_GET['move'] : null;
         $album_id = isset($_GET['album_id']) ? $_GET['album_id'] : false;
         if ($current_group && isset($action_variables[1])) {
             $type_var = 'list';
@@ -630,7 +634,7 @@ class BPMediaActions {
                 foreach ($bp_media_albums_query->posts as $attachment) {
                     try {
                         $media = new BPMediaAlbum($attachment->ID);
-                        echo $media->get_album_gallery_content();
+                        echo $media->get_album_gallery_content($move);
                     } catch (exception $e) {
                         die();
                     }
@@ -642,7 +646,7 @@ class BPMediaActions {
                 foreach ($bp_media_query->posts as $attachment) {
                     try {
                         $media = new BPMediaHostWordpress($attachment->ID);
-                        echo $media->get_media_gallery_content();
+                        echo $media->get_media_gallery_content($move);
                     } catch (exception $e) {
                         die();
                     }
@@ -695,6 +699,53 @@ class BPMediaActions {
             }
         }
 
+        die();
+    }
+
+    function move_selected_media() {
+        $media = isset($_POST['media']) ? $_POST['media'] : array();
+        $parent = isset($_POST['parent']) ? $_POST['parent'] : 0;
+        if (!empty($media)) {
+            foreach ($media as $item) {
+                $post['ID'] = $item;
+                $post['post_parent'] = $parent;
+                wp_update_post($post);
+            }
+            echo true;
+        }
+        die();
+    }
+
+    function delete_selected_media() {
+        $media = isset($_POST['media']) ? $_POST['media'] : array();
+        if (!empty($media)) {
+            foreach ($media as $item) {
+                $delete_handler = new BPMediaHostWordpress($item);
+                $delete_handler->delete_media();
+            }
+            echo true;
+        }
+        die();
+    }
+
+    function merge_album() {
+        $to = isset($_POST['to']) ? $_POST['to'] : null;
+        $from = isset($_POST['from']) ? $_POST['from'] : null;
+        if ($to && $from) {
+            global $wpdb;
+            $results = $wpdb->get_results("SELECT ID FROM $wpdb->posts WHERE post_parent = $from");
+            if ($results) {
+                foreach ($results as $media) {
+                    $post['ID'] = $media->ID;
+                    $post['post_parent'] = $to;
+                    wp_update_post($post);
+                }
+                $delete_handler = new BPMediaAlbum($from);
+                $delete_handler->delete_album();
+            }
+
+            echo true;
+        }
         die();
     }
 
