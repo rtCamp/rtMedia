@@ -34,11 +34,7 @@ class BPMediaUploadScreen extends BPMediaScreen {
     }
 
     function upload_screen_content() {
-        $this->hook_before();
-
         $this->template->upload_form_multiple();
-
-        $this->hook_after();
     }
 
     function upload_enqueue() {

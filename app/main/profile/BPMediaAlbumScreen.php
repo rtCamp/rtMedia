@@ -43,7 +43,7 @@ class BPMediaAlbumScreen extends BPMediaScreen {
                         $this->page_not_exist();
                     }
                     $media_actions = new BPMediaActions();
-                    if ( $media_actions->default_user_album() != $bp->action_variables[1])
+                    if ($media_actions->default_user_album() != $bp->action_variables[1])
                         $this->entry_delete();
                     else
                         $this->page_not_exist();
@@ -70,9 +70,7 @@ class BPMediaAlbumScreen extends BPMediaScreen {
      */
     function screen_content() {
         global $bp_media_albums_query;
-
         $this->hook_before();
-
         if ($bp_media_albums_query && $bp_media_albums_query->have_posts()):
             echo '<ul id="bp-album-list" class="bp-media-gallery item-list">';
             while ($bp_media_albums_query->have_posts()) : $bp_media_albums_query->the_post();
@@ -118,37 +116,12 @@ class BPMediaAlbumScreen extends BPMediaScreen {
         global $bp, $bp_media_current_album, $bp_media_query;
         if (!$bp->action_variables[0] == BP_MEDIA_ALBUMS_VIEW_SLUG)
             return false;
-        $allowed_edit = false;
-        if (is_user_logged_in()) {
-            if (!bp_is_user()) {
-                if (bp_is_active('groups')) {
-                    if (groups_is_user_admin(bp_loggedin_user_id(), $bp->groups->current_group->id)) {
-                        $allowed_edit = true;
-                    } elseif (bp_displayed_user_id() == bp_loggedin_user_id()) {
-                        $allowed_edit = true;
-                    }
-                }
-            } else {
-                if (bp_displayed_user_id() == bp_loggedin_user_id()) {
-                    $allowed_edit = true;
-                }
-            }
-
-            if ($allowed_edit != false) {
-                echo '<div class="album-edit">';
-                echo '<a href="' . $bp_media_current_album->get_edit_url() . '" class="button item-button bp-secondary-action bp-media-edit bp-media-edit-album" title="' . __('Edit Album', 'buddypress-media') . '">' . __('Edit', 'buddypress-media') . '</a>';
-                $media_actions = new BPMediaActions();
-                if ( $media_actions->default_user_album() != $bp_media_current_album->get_id())
-                    echo '<a href="' . $bp_media_current_album->get_delete_url() . '" class="button item-button bp-secondary-action delete-activity-single confirm" rel="nofollow">' . __("Delete", 'buddypress-media') . '</a>';
-                echo '</div>';
-            }
-        }
         $this->inner_query($bp_media_current_album->get_id());
+        add_action('bp_media_before_' . $this->slug, array($this, 'album_actions'));
         $this->hook_before();
+        if ($bp_media_current_album->get_description())
+            echo '<p class="bp-media-album-description">' . nl2br($bp_media_current_album->get_description()) . '</p>';
         if ($bp_media_current_album && $bp_media_query->have_posts()) {
-            if (bp_is_my_profile() || BPMediaGroupLoader::can_upload()) {
-                BPMediaUploadScreen::upload_screen_content();
-            }
             echo '<ul id="bp-media-list" class="bp-media-gallery albums item-list">';
 
             while ($bp_media_query->have_posts()) {
@@ -241,6 +214,95 @@ class BPMediaAlbumScreen extends BPMediaScreen {
         if (count($filters) == 1)
             $filters = $filters[0];
         $this->filters = $filters;
+    }
+
+    public function album_actions() {
+        global $bp, $bp_media_current_album, $bp_media_query;
+        if (!$bp->action_variables[0] == BP_MEDIA_ALBUMS_VIEW_SLUG)
+            return false;
+        $allowed_edit = false;
+        if (is_user_logged_in()) {
+            echo '<div class="bp-media-album-actions">';
+            if (!bp_is_user()) {
+                if (bp_is_active('groups')) {
+                    if (groups_is_user_admin(bp_loggedin_user_id(), $bp->groups->current_group->id)) {
+                        $allowed_edit = true;
+                    } elseif (bp_displayed_user_id() == bp_loggedin_user_id()) {
+                        $allowed_edit = true;
+                    }
+                }
+            } else {
+                if (bp_displayed_user_id() == bp_loggedin_user_id()) {
+                    $allowed_edit = true;
+                }
+            }
+
+            if ($allowed_edit != false && is_object($bp_media_current_album)) {
+                echo '<div class="album-edit">';
+                echo '<a href="' . $bp_media_current_album->get_edit_url() . '" class="button item-button bp-secondary-action bp-media-edit bp-media-edit-album" title="' . __('Edit Album', 'buddypress-media') . '">' . __('Edit', 'buddypress-media') . '</a>';
+                $media_actions = new BPMediaActions();
+                if ($media_actions->default_user_album() != $bp_media_current_album->get_id())
+                    echo '<a href="' . $bp_media_current_album->get_delete_url() . '" class="button item-button bp-secondary-action delete-activity-single confirm" rel="nofollow">' . __("Delete", 'buddypress-media') . '</a>';
+                echo '</div>';
+            }
+            if ($bp_media_current_album && $bp_media_query->have_posts()) {
+                if (bp_is_my_profile() || BPMediaGroupLoader::can_upload()) {
+                    BPMediaUploadScreen::upload_screen_content();
+                    if (bp_is_active('groups') && bp_get_current_group_id())
+                        $default_album = groups_get_groupmeta(bp_get_current_group_id(), 'bp_media_default_album');
+                    else
+                        $default_album = get_user_meta (get_current_user_id(), 'bp-media-default-album', true);
+                    
+                    $album_selector = '';
+
+                    if (bp_is_current_component('groups')) {
+                        $albums = new WP_Query(array(
+                                    'post_type' => 'bp_media_album',
+                                    'posts_per_page' => -1,
+                                    'meta_key' => 'bp-media-key',
+                                    'meta_value' => -bp_get_current_group_id(),
+                                    'meta_compare' => '=',
+                                    'post__not_in' => array($bp_media_current_album->get_id())
+                                ));
+                    } else {
+                        $albums = new WP_Query(array(
+                                    'post_type' => 'bp_media_album',
+                                    'posts_per_page' => -1,
+                                    'author' => get_current_user_id(),
+                                    'meta_key' => 'bp-media-key',
+                                    'meta_value' => get_current_user_id(),
+                                    'meta_compare' => '=',
+                                    'post__not_in' => array($bp_media_current_album->get_id())
+                                ));
+                    }
+                    if (isset($albums->posts) && is_array($albums->posts) && count($albums->posts) > 0) {
+                        foreach ($albums->posts as $album) {
+                            if ($album->post_title == $post_wall)
+                                $album_selector .= '<option value="' . $album->ID . '" selected="selected">' . $album->post_title . '</option>';
+                            else
+                                $album_selector .= '<option value="' . $album->ID . '">' . $album->post_title . '</option>';
+                        };
+                    }
+
+
+                    echo '<input id="bp-media-bulk-button" type="button" value="' . __('Bulk Actions', 'buddypress-media') . '" class="button">';
+                    echo '<div id="bp-media-bulk-ui">
+                            <a class="select-all" href="#">' . __('Select All', 'buddypress-media') . '</a> | 
+                            <a class="unselect-all" href="#">' . __('Unselect All', 'buddypress-media') . '</a> | 
+                            <select id="bp-media-bulk-select"><option>' . __('Select bulk action', 'buddypress-media') . '</option>' . ($album_selector ? '<option value="move">' . __('Move', 'buddypress-media') . '</option>' : '') . '<option value="delete">' . __('Delete', 'buddypress-media') . '</option></select>'
+                    . ($album_selector ? '<span class="bulk-move">' . __('Move selected to', 'buddypress-media') . ':&nbsp;&nbsp;<select class="bp-media-selected-album-move">' . $album_selector . '</select>&nbsp;&nbsp;<input id="bp-media-move-selected-media" type="button" value="' . __('Move', 'buddypress-media') . '" /></span>' : '') .
+                    '<span class="bulk-delete"><input id="bp-media-delete-selected-media" type="button" value="' . __('Delete Media', 'buddypress-media') . '" /></span>
+                        </div>';
+                    if ( $album_selector && ($default_album!=bp_action_variable(1)) ) {
+                        echo '<input id="bp-media-merge-button" type="button" value="' . __('Merge', 'buddypress-media') . '" class="button">';
+                        echo __('into', 'buddypress-media');
+                        echo '<select id="bp-media-selected-album-merge">' . $album_selector . '</select>';
+                    }
+                }
+            }
+            do_action('bp_media_album_actions');
+            echo '</div>';
+        }
     }
 
 }

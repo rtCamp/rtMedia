@@ -173,11 +173,18 @@ img.bp-media-donation-image{display:block;margin: 10px auto;}
 
 .bp_media_content img{max-width:100%;}
 .bp_media_content .mejs-poster img{max-width: 100%;}
-.media.albums .album-edit{display:inline;}
+.media .album-edit{display:inline;}
+.media #item-body h3 {float: left;}
+.media #item-body .bp-media-gallery h3 { float:none; }
+.media .bp-media-album-actions {float: left; margin-left: 15px;}
+.media .bulk-move, .media .bulk-delete {display: none;}
 .media h3 {display:block;font-size:20px;font-weight:bold;}
 ul.bp-media-gallery{overflow: hidden}
 .bp_media_description {display:block;margin-top:20px;}
-ul.bp-media-gallery.item-list{overflow:visible;margin: 1% 0;width: auto;}
+#bp-media-upload-form, #message, .bp-media-bulk-wrapper, #bp-media-user-privacy {clear:left;}
+#bp-media-bulk-ui { display:none; }
+.bp-media-album-description {clear:left;font-size:1.2em}
+ul.bp-media-gallery.item-list{clear:left;overflow:visible;margin: 1% 0;width: auto;}
 #item-body ul.bp-media-gallery li{float: left;margin: 1% 1% 0;width: 18%;border-bottom: none;padding: 0;position: static;height:auto; display:block;}
 ul.bp-media-gallery li img{max-width:150px;width:100%;height:auto;-moz-box-shadow: 1px 1px 10px #a0a0a0;-webkit-box-shadow: 1px 1px 10px #a0a0a0;box-shadow: 1px 1px 10px #a0a0a0;-moz-transition: box-shadow 0.2s linear;-webkit-transition: box-shadow 0.2s linear;transition: box-shadow 0.2s linear;}
 ul.bp-media-gallery li img:hover{-moz-box-shadow: 1px 1px 10px #333;-webkit-box-shadow: 1px 1px 10px #333;box-shadow: 1px 1px 10px #333;}
@@ -196,7 +203,7 @@ ul.bp-media-gallery li span img{height: 150px;}
 #bp-media-activity-upload-ui { width: 50%;}
 .bp-media-area-allocate{height: 10px;width: 100%;display: block;}
 li #bp-media-upload-ui {padding: 0;max-width: 158px;position: relative;}
-#bp-media-upload-ui {margin-top: 10px;}
+#bp-media-upload-ui {margin-top: 10px; clear: left;}
 #bp-media-upload-ui #drag-drop-area{border: 4px dashed #DDD;text-align: center;background: #fafafa;overflow: hidden;padding: 15px 0;}
 #bp-media-upload-ui.hover #drag-drop-area {border-color: #83b4d8;}
 li #bp-media-upload-ui #drag-drop-area{max-width: 150px;min-height: auto;}
