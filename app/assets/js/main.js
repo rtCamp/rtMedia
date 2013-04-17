@@ -114,7 +114,7 @@ jQuery(document).ready(function(){
                 };
                 jQuery.post(bp_media_vars.ajaxurl, data, function(response) {
                     if(response.length==0) {
-                        jQuery('.item-list-tabs:last').after('<div id="message" class="error"><p>Something went wrong. Please try again.</p></div>');
+                        jQuery('.item-list-tabs:last').after('<div id="message" class="error"><p>'+bp_media_main_strings.something_went_wrong+'</p></div>');
                     } else {
                         location.reload();
                     }
@@ -137,8 +137,8 @@ jQuery(document).ready(function(){
         jQuery(this).siblings('.bp-media-ajax-spinner').show();
         jQuery(this).prop('disabled',true);
         jQuery(this).addClass('disabled');
-        if(confirm('Are you sure you wnat to merge this album?')){
-            if(confirm('Would you like to delete this album after the merge?')){
+        if(confirm(bp_media_main_strings.merge_confirmation)){
+            if(confirm(bp_media_main_strings.delete_after_merge)){
                 $delete_album = true;
             } else {
                 $delete_album = false;
@@ -154,7 +154,7 @@ jQuery(document).ready(function(){
                 };
                 jQuery.post(bp_media_vars.ajaxurl, data, function(response) {
                     if(response.length==0) {
-                        jQuery('.item-list-tabs:last').after('<div id="message" class="error"><p>Something went wrong. Please try again.</p></div>');
+                        jQuery('.item-list-tabs:last').after('<div id="message" class="error"><p>'+bp_media_main_strings.something_went_wrong+'</p></div>');
                     } else if( response == 'redirect' ) {
                         window.location = window.location.href.replace($from,$to);
                     } else {
@@ -181,14 +181,14 @@ jQuery(document).ready(function(){
             $media.push(jQuery(this).val());
         });
         if ($media.length) {
-            if(confirm('Are you sure you want to delete the selected media?')){
+            if(confirm(bp_media_main_strings.delete_selected_media)){
                 var data = {
                     action: 'bp_media_delete_selected_media',
                     media: $media
                 };
                 jQuery.post(bp_media_vars.ajaxurl, data, function(response) {
                     if(response.length==0) {
-                        jQuery('.item-list-tabs:last').after('<div id="message" class="error"><p>Something went wrong. Please try again.</p></div>');
+                        jQuery('.item-list-tabs:last').after('<div id="message" class="error"><p>'+bp_media_main_strings.something_went_wrong+'</p></div>');
                     } else {
                         location.reload();
                     }
@@ -263,7 +263,7 @@ jQuery(document).ready(function(){
     });
     setTimeout(function(){
         jQuery('.media album_updated .delete-activity,.media_upload .delete-activity').unbind('click').click(function(e){
-            if(confirm('Are you sure you want to delete this activity and associated media?')){
+            if(confirm(bp_media_main_strings.delete_activity_media)){
                 return true;
             }
             else{

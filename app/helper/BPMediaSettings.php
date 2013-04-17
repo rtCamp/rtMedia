@@ -30,7 +30,7 @@ if (!class_exists('BPMediaSettings')) {
          */
         public function settings() {
             global $bp_media, $bp_media_addon, $wpdb;
-            add_settings_section('bpm-settings', __('Enabled Media Types', 'buddypress-media'), is_multisite() ? array($this, 'network_notices') : '', 'bp-media-settings');
+            add_settings_section('bpm-settings', __('Enabled Media Types', 'buddypress-media'), is_multisite() ? array($this, 'allowed_types') : '', 'bp-media-settings');
             add_settings_field('bpm-image', __('Photos', 'buddypress-media'), array($this, 'checkbox'), 'bp-media-settings', 'bpm-settings', array(
                 'setting' => 'bp_media_options',
                 'option' => 'images_enabled',
@@ -257,6 +257,13 @@ if (!class_exists('BPMediaSettings')) {
                     echo '<div id="setting-error-bpm-settings-saved" class="updated"><p><strong>' . get_site_option('bpm-settings-saved') . '</strong></p></div>';
                 }
                 delete_site_option('bpm-settings-saved');
+        }
+        
+        public function allowed_types(){
+            $allowed_types = get_site_option('upload_filetypes', 'jpg jpeg png gif');
+            $allowed_types = explode(' ',$allowed_types);
+            $allowed_types = implode(', ',$allowed_types);
+            echo '<span class="description">'.sprintf(__('Currently your network allows uploading of the following file types. You can change the settings <a href="%s">here</a>.<br /><code>%s</code></span>','buddypress-media'),network_admin_url('settings.php#upload_filetypes'),$allowed_types);
         }
 
         /**

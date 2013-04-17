@@ -179,8 +179,16 @@ class BPMediaActions {
             'current_group' => $cur_group_id,
             'lightbox' => $lightbox,
         );
+        $bp_media_main_strings = array(
+            'something_went_wrong' => __('Something went wrong. Please try again.', 'buddypress-media'),
+            'merge_confirmation' => __('Are you sure you wnat to merge this album?', 'buddypress-media'),
+            'delete_after_merge' => __('Would you like to delete this album after the merge?', 'buddypress-media'),
+            'delete_selected_media' => __('Are you sure you want to delete the selected media?', 'buddypress-media'),
+            'delete_activity_media' => __('Are you sure you want to delete this activity and associated media?', 'buddypress-media')
+        );
 
         wp_localize_script('bp-media-default', 'bp_media_vars', $bp_media_vars);
+        wp_localize_script('bp-media-default', 'bp_media_main_strings', $bp_media_main_strings);
         wp_enqueue_style('bp-media-mecss', BP_MEDIA_URL . 'lib/media-element/mediaelementplayer.min.css', '', BP_MEDIA_VERSION);
         wp_enqueue_style('bp-media-default', BP_MEDIA_URL . 'app/assets/css/main.css', '', BP_MEDIA_VERSION);
     }
@@ -514,6 +522,12 @@ class BPMediaActions {
                 );
                 wp_enqueue_script('bp-media-uploader', BP_MEDIA_URL . 'app/assets/js/bp-media-uploader.js', array('plupload', 'plupload-html5', 'plupload-flash', 'plupload-silverlight', 'plupload-html4', 'plupload-handlers'), BP_MEDIA_VERSION, true);
                 wp_localize_script('bp-media-uploader', 'bp_media_uploader_params', $params);
+                $bp_media_uploader_strings = array(
+                    'no_name' => __('You have not filled the album name', 'buddypress-media'),
+                    'cant_upload_group_album' => __('Sorry you cannot create albums in this group', 'buddypress-media'),
+                    'select_album' => __('Please Select an Album !!', 'buddypress-media'),
+                );
+                wp_localize_script('bp-media-uploader', 'bp_media_uploader_strings', $bp_media_uploader_strings);
             }
         }
         wp_enqueue_style('bp-media-default', BP_MEDIA_URL . 'app/assets/css/main.css', '', BP_MEDIA_VERSION);
@@ -742,9 +756,9 @@ class BPMediaActions {
                     wp_update_post($post);
                 }
                 $activity_id = get_post_meta($from, 'bp_media_child_activity', true);
-                if ( $delete == 'true' ) {
+                if ($delete == 'true') {
                     if (bp_is_active('activity')) {
-                        if ( $activity_id ) {
+                        if ($activity_id) {
                             bp_activity_delete_by_activity_id($activity_id);
                         } else {
                             $delete_handler = new BPMediaAlbum($from);
@@ -753,7 +767,7 @@ class BPMediaActions {
                     }
                     echo 'redirect';
                     die();
-                } elseif ( $activity_id ) {
+                } elseif ($activity_id) {
                     BPMediaFunction::update_album_activity($from);
                 }
             }
@@ -1125,7 +1139,8 @@ class BPMediaActions {
         $query = new WP_Query($args);
         if ($query->have_posts()) {
             ?>
-            <div id="item-body"><ul class="bp-media-gallery item-list"><?php
+            <div id="item-body">
+                <ul class="bp-media-gallery item-list"><?php
             while ($query->have_posts()) {
                 $query->the_post();
                 try {
@@ -1134,19 +1149,16 @@ class BPMediaActions {
                 } catch (Exception $e) {
                     echo '<li>';
                     echo $e->getMessage();
-                    echo '<h3>Private</h3>';
+                    echo '<h3>'.__('Private','buddypress-media').'</h3>';
                     echo '</li>';
                 }
             }
             ?>
-                </ul></div>
+                </ul>
+            </div>
             <div class="bp-media-actions"><button data-media="<?php echo $media; ?>" data-count="<?php echo $count; ?>" data-page="<?php echo $count; ?>" class="button" id="bp-media-show-more-sc">Show More</button></div><?php
         } else {
-            $media_string = $type;
-            if ($type === 'all') {
-                $media_string = 'media';
-            }
-            _e('No ' . $wdType . ' ' . $media_string . ' found', 'buddypress-media');
+            _e('No media found', 'buddypress-media');
         }
         wp_reset_query();
     }
