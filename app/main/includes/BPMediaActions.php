@@ -731,6 +731,7 @@ class BPMediaActions {
     function merge_album() {
         $to = isset($_POST['to']) ? $_POST['to'] : null;
         $from = isset($_POST['from']) ? $_POST['from'] : null;
+        $delete = isset($_POST['delete_album']) ? $_POST['delete_album'] : null;
         if ($to && $from) {
             global $wpdb;
             $results = $wpdb->get_results("SELECT ID FROM $wpdb->posts WHERE post_parent = $from");
@@ -740,10 +741,22 @@ class BPMediaActions {
                     $post['post_parent'] = $to;
                     wp_update_post($post);
                 }
-                $delete_handler = new BPMediaAlbum($from);
-                $delete_handler->delete_album();
+                $activity_id = get_post_meta($from, 'bp_media_child_activity', true);
+                if ( $delete == 'true' ) {
+                    if (bp_is_active('activity')) {
+                        if ( $activity_id ) {
+                            bp_activity_delete_by_activity_id($activity_id);
+                        } else {
+                            $delete_handler = new BPMediaAlbum($from);
+                            $delete_handler->delete_album();
+                        }
+                    }
+                    echo 'redirect';
+                    die();
+                } elseif ( $activity_id ) {
+                    BPMediaFunction::update_album_activity($from);
+                }
             }
-
             echo true;
         }
         die();

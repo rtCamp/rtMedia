@@ -200,6 +200,8 @@ ul.bp-media-gallery li span img{height: 150px;}
 #item-body:after,ul.bp-media-gallery.item-list:after{content: " ";clear: both;display: block;text-indent: -9999em;}
 #item-body{position: relative;}
 
+
+.bp-media-ajax-spinner { display: none; vertical-align: -3px;}
 #bp-media-activity-upload-ui { width: 50%;}
 .bp-media-area-allocate{height: 10px;width: 100%;display: block;}
 li #bp-media-upload-ui {padding: 0;max-width: 158px;position: relative;}

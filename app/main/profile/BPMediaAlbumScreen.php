@@ -290,13 +290,13 @@ class BPMediaAlbumScreen extends BPMediaScreen {
                             <a class="select-all" href="#">' . __('Select All', 'buddypress-media') . '</a> | 
                             <a class="unselect-all" href="#">' . __('Unselect All', 'buddypress-media') . '</a> | 
                             <select id="bp-media-bulk-select"><option>' . __('Select bulk action', 'buddypress-media') . '</option>' . ($album_selector ? '<option value="move">' . __('Move', 'buddypress-media') . '</option>' : '') . '<option value="delete">' . __('Delete', 'buddypress-media') . '</option></select>'
-                    . ($album_selector ? '<span class="bulk-move">' . __('Move selected to', 'buddypress-media') . ':&nbsp;&nbsp;<select class="bp-media-selected-album-move">' . $album_selector . '</select>&nbsp;&nbsp;<input id="bp-media-move-selected-media" type="button" value="' . __('Move', 'buddypress-media') . '" /></span>' : '') .
+                    . ($album_selector ? '&nbsp;<span class="bulk-move">' . __('selected to', 'buddypress-media') . ':&nbsp;&nbsp;<select class="bp-media-selected-album-move">' . $album_selector . '</select>&nbsp;&nbsp;<input id="bp-media-move-selected-media" type="button" value="' . __('Move', 'buddypress-media') . '" /></span>' : '') .
                     '<span class="bulk-delete"><input id="bp-media-delete-selected-media" type="button" value="' . __('Delete Media', 'buddypress-media') . '" /></span>
-                        </div>';
+                        <img class="bp-media-ajax-spinner" src="'.admin_url('images/wpspin_light.gif').'" /></div>';
                     if ( $album_selector && ($default_album!=bp_action_variable(1)) ) {
                         echo '<input id="bp-media-merge-button" type="button" value="' . __('Merge', 'buddypress-media') . '" class="button">';
                         echo __('into', 'buddypress-media');
-                        echo '<select id="bp-media-selected-album-merge">' . $album_selector . '</select>';
+                        echo '<select id="bp-media-selected-album-merge">' . $album_selector . '</select><img class="bp-media-ajax-spinner" src="'.admin_url('images/wpspin_light.gif').'" />';
                     }
                 }
             }
