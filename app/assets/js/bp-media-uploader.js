@@ -26,7 +26,7 @@ jQuery(document).ready(function(){
         }
         var new_album_name = jQuery('#bp_media_album_new').val();
         if(new_album_name.length==0){
-            alert('You have not filled the album name');
+            alert(bp_media_uploader_strings.no_name);
             return false;
         } else {
             new_album_flag = 1;
@@ -39,9 +39,8 @@ jQuery(document).ready(function(){
             jQuery.post(bp_media_vars.ajaxurl,data,function(response){
                 var album = parseInt(response);
                 if(album == 0){
-                    alert('Sorry you cannot create albums in this group');
-                }
-                else {
+                    alert(bp_media_uploader_strings.cant_upload_group_album);
+                } else {
                     jQuery('#bp-media-album-prompt select option').removeAttr('selected');
                     jQuery('#bp-media-selected-album').prepend('<option value='+album+' selected="selected">'+new_album_name+'</option>');
                     jQuery('#bp-media-album-prompt div.hide').hide();
@@ -69,7 +68,7 @@ jQuery(document).ready(function(){
 
     bp_media_uploader.bind('FilesAdded', function(up, files) {
         if ( jQuery('#bp-media-selected-album').val() == 'create_new' ) {
-            alert("Please Select an Album !!");
+            alert(bp_media_uploader_strings.select_album);
             return false;
         }
         //bp_media_is_multiple_upload = files.length==1&&jQuery('.bp-media-progressbar').length==0?false:true;
@@ -112,7 +111,7 @@ jQuery(document).ready(function(){
             else
                 new_location = new_location.concat('0/');
             window.location.replace(new_location);
-        } else
+        } else            
             location.reload(true);
     });
 

@@ -19,6 +19,10 @@ if (!class_exists('BPMediaAdmin')) {
 
         public function __construct() {
             add_action('init', array($this, 'video_transcoding_survey_response'));
+            if (is_multisite()) {
+                add_action('network_admin_notices', array($this, 'upload_filetypes_error'));
+                add_action('admin_notices', array($this, 'upload_filetypes_error'));
+            }
             $bp_media_feed = new BPMediaFeed();
             add_action('wp_ajax_bp_media_fetch_feed', array($bp_media_feed, 'fetch_feed'), 1);
             $this->bp_media_support = new BPMediaSupport();
@@ -33,6 +37,7 @@ if (!class_exists('BPMediaAdmin')) {
             add_action('wp_ajax_bp_media_bp_album_import_step_favorites', 'BPMediaAlbumimporter::bpmedia_ajax_import_step_favorites', 1);
             add_action('wp_ajax_bp_media_bp_album_cleanup', 'BPMediaAlbumimporter::cleanup_after_install');
             add_action('wp_ajax_bp_media_convert_videos_form', array($this, 'convert_videos_mailchimp_send'), 1);
+            add_action('wp_ajax_bp_media_correct_upload_filetypes', array($this, 'correct_upload_filetypes'), 1);
             add_filter('plugin_row_meta', array($this, 'plugin_meta_premium_addon_link'), 1, 4);
             if (is_admin()) {
                 add_action('admin_enqueue_scripts', array($this, 'ui'));
@@ -59,6 +64,11 @@ if (!class_exists('BPMediaAdmin')) {
             $admin_ajax = admin_url('admin-ajax.php');
             wp_enqueue_script('bp-media-admin', BP_MEDIA_URL . 'app/assets/js/admin.js', '', BP_MEDIA_VERSION);
             wp_localize_script('bp-media-admin', 'bp_media_admin_ajax', $admin_ajax);
+            $bp_media_admin_strings = array(
+                'no_refresh' => __('Please do not refresh this page.', 'buddypress-media'),
+                'something_went_wrong' => __('Something went wronng. Please <a href onclick="location.reload();">refresh</a> page.', 'buddypress-media')
+            );
+            wp_localize_script('bp-media-admin', 'bp_media_admin_strings', $bp_media_admin_strings);
             wp_localize_script('bp-media-admin', 'settings_url', add_query_arg(
                             array('page' => 'bp-media-settings'), (is_multisite() ? network_admin_url('admin.php') : admin_url('admin.php'))
                     ) . '#privacy_enabled');
@@ -80,9 +90,9 @@ if (!class_exists('BPMediaAdmin')) {
             if (!BPMediaPrivacy::is_installed()) {
                 add_submenu_page('bp-media-settings', __('BuddyPress Media Database Update', 'buddypress-media'), __('Update Database', 'buddypress-media'), 'manage_options', 'bp-media-privacy', array($this, 'privacy_page'));
             }
-            
+
             add_submenu_page('bp-media-settings', __('Importer', 'buddypress-media'), __('Importer', 'buddypress-media'), 'manage_options', 'bp-media-importer', array($this, 'bp_importer_page'));
-            
+
             add_submenu_page('bp-media-settings', __('BuddyPress Media Addons', 'buddypress-media'), __('Addons', 'buddypress-media'), 'manage_options', 'bp-media-addons', array($this, 'addons_page'));
             add_submenu_page('bp-media-settings', __('BuddyPress Media Support', 'buddypress-media'), __('Support ', 'buddypress-media'), 'manage_options', 'bp-media-support', array($this, 'support_page'));
             if (bp_get_option('bp-media-survey', true)) {
@@ -254,7 +264,7 @@ if (!class_exists('BPMediaAdmin')) {
                     'class' => ($tab == 'bp-media-convert-videos') ? $active_class : $idle_class . ' last_tab'
                 );
             }
-            
+
             $tabs[] = array(
                 'href' => bp_get_admin_url(add_query_arg(array('page' => 'bp-media-importer'), 'admin.php')),
                 'title' => __('Importer', 'buddypress-media'),
@@ -429,6 +439,93 @@ if (!class_exists('BPMediaAdmin')) {
             if (plugin_basename(BP_MEDIA_PATH . 'index.php') == $plugin_file)
                 $plugin_meta[] = '<a href="https://rtcamp.com/store/product-category/buddypress/?utm_source=dashboard&#038;utm_medium=plugin&#038;utm_campaign=buddypress-media" title="Premium Add-ons">Premium Add-ons</a>';
             return $plugin_meta;
+        }
+
+        public function upload_filetypes_error() {
+            global $bp_media;
+            $upload_filetypes = get_site_option('upload_filetypes', 'jpg jpeg png gif');
+            $upload_filetypes = explode(' ', $upload_filetypes);
+            $flag = false;
+            if (isset($bp_media->options['images_enabled']) && $bp_media->options['images_enabled']) {
+                $not_supported_image = array_diff(array('jpg', 'jpeg', 'png', 'gif'), $upload_filetypes);
+                if (!empty($not_supported_image)) {
+                    echo '<div class="error upload-filetype-network-settings-error">
+                        <p>
+                        ' . sprintf(__('You have images enabled on BuddyPress Media but your network allowed filetypes does not allow uploading of %s. Click <a href="%s">here</a> to change your settings manually.', 'buddypress-media'), implode(', ', $not_supported_image), network_admin_url('settings.php#upload_filetypes')) . '
+                            <br /><strong>' . __('Recommended', 'buddypress-media') . ':</strong> <input type="button" class="button update-network-settings-upload-filetypes" class="button" value="' . __('Update Network Settings Automatically', 'buddypress-media') . '"> <img style="display:none;" src="' . admin_url('images/wpspin_light.gif') . '" />
+                        </p>
+                        </div>';
+                    $flag = true;
+                }
+            }
+            if (isset($bp_media->options['videos_enabled']) && $bp_media->options['videos_enabled']) {
+                if (!in_array('mp4', $upload_filetypes)) {
+                    echo '<div class="error upload-filetype-network-settings-error">
+                        <p>
+                        ' . sprintf(__('You have video enabled on BuddyPress Media but your network allowed filetypes does not allow uploading of mp4. Click <a href="%s">here</a> to change your settings manually.', 'buddypress-media'), network_admin_url('settings.php#upload_filetypes')) . '
+                            <br /><strong>' . __('Recommended', 'buddypress-media') . ':</strong> <input type="button" class="button update-network-settings-upload-filetypes" class="button" value="' . __('Update Network Settings Automatically', 'buddypress-media') . '"> <img style="display:none;" src="' . admin_url('images/wpspin_light.gif') . '" />
+                        </p>
+                        </div>';
+                    $flag = true;
+                }
+            }
+            if (isset($bp_media->options['audio_enabled']) && $bp_media->options['audio_enabled']) {
+                if (!in_array('mp3', $upload_filetypes)) {
+                    echo '<div class="error upload-filetype-network-settings-error"><p>' . sprintf(__('You have audio enabled on BuddyPress Media but your network allowed filetypes does not allow uploading of mp3. Click <a href="%s">here</a> to change your settings manually.', 'buddypress-media'), network_admin_url('settings.php#upload_filetypes')) . '
+                            <br /><strong>' . __('Recommended', 'buddypress-media') . ':</strong> <input type="button" class="button update-network-settings-upload-filetypes" class="button" value="' . __('Update Network Settings Automatically', 'buddypress-media') . '"> <img style="display:none;" src="' . admin_url('images/wpspin_light.gif') . '" />
+                        </p>
+                        </div>';
+                    $flag = true;
+                }
+            }
+            if ($flag) {
+                            ?>
+                <script type="text/javascript">
+                    jQuery('.upload-filetype-network-settings-error').on('click','.update-network-settings-upload-filetypes', function(){
+                        jQuery('.update-network-settings-upload-filetypes').siblings('img').show();
+                        jQuery('.update-network-settings-upload-filetypes').prop('disabled',true);
+                        jQuery.post(ajaxurl,{action: 'bp_media_correct_upload_filetypes'}, function(response){
+                            if(response){
+                                jQuery('.upload-filetype-network-settings-error:first').after('<div style="display: none;" class="updated bp-media-network-settings-updated-successfully"><p><?php _e('Network settings updated successfully.', 'buddypress-media'); ?></p></div>')
+                                jQuery('.upload-filetype-network-settings-error').remove();
+                                jQuery('.bp-media-network-settings-updated-successfully').show();
+                            }
+                        });
+                    }); </script><?php
+            }
+        }
+
+        public function correct_upload_filetypes() {
+            global $bp_media;
+            $upload_filetypes_orig = $upload_filetypes = get_site_option('upload_filetypes', 'jpg jpeg png gif');
+            $upload_filetypes = explode(' ', $upload_filetypes);
+            if (isset($bp_media->options['images_enabled']) && $bp_media->options['images_enabled']) {
+                $not_supported_image = array_diff(array('jpg', 'jpeg', 'png', 'gif'), $upload_filetypes);
+                if (!empty($not_supported_image)) {
+                    $update_image_support = NULL;
+                    foreach ($not_supported_image as $ns) {
+                        $update_image_support .= ' ' . $ns;
+                    }
+                    if ($update_image_support) {
+                        $upload_filetypes_orig .= $update_image_support;
+                        update_site_option('upload_filetypes', $upload_filetypes_orig);
+                    }
+                }
+            }
+            if (isset($bp_media->options['videos_enabled']) && $bp_media->options['videos_enabled']) {
+                if (!in_array('mp4', $upload_filetypes)) {
+                    $upload_filetypes_orig .= ' mp4';
+                    update_site_option('upload_filetypes', $upload_filetypes_orig);
+                }
+            }
+            if (isset($bp_media->options['audio_enabled']) && $bp_media->options['audio_enabled']) {
+                if (!in_array('mp3', $upload_filetypes)) {
+                    $upload_filetypes_orig .= ' mp3';
+                    update_site_option('upload_filetypes', $upload_filetypes_orig);
+                }
+            }
+            echo true;
+            die();
         }
 
     }

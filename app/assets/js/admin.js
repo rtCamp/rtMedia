@@ -25,7 +25,7 @@ jQuery(document).ready(function(){
     jQuery('#bp-media-settings-boxes').on('change', '#select-request', function(){
         if(jQuery(this).val()){
             jQuery('#bp_media_settings_form .bp-media-metabox-holder').html()
-            jQuery('#bp_media_settings_form .bp-media-metabox-holder').html('<div class="support_form_laoder"></div>');
+            jQuery('#bp_media_settings_form .bp-media-metabox-holder').html('<div class="support_form_loader"></div>');
             var data = {
                 action: 'bp_media_select_request',
                 form: jQuery(this).val()
@@ -43,7 +43,7 @@ jQuery(document).ready(function(){
     jQuery('#bp-media-settings-boxes').on('click', '#cancel-request', function(){
         if(jQuery(this).val()){
             jQuery('#bp_media_settings_form .bp-media-metabox-holder').html()
-            jQuery('#bp_media_settings_form .bp-media-metabox-holder').html('<div class="support_form_laoder"></div>');
+            jQuery('#bp_media_settings_form .bp-media-metabox-holder').html('<div class="support_form_loader"></div>');
             var data = {
                 action: 'bp_media_cancel_request'
             };
@@ -70,7 +70,7 @@ jQuery(document).ready(function(){
             jQuery('#bp_media_settings_form .bp-media-metabox-holder').html(response).fadeIn('slow');
         });
     });
-
+    
     function fireRequest(data) {
         return jQuery.post(ajaxurl, data, function(response){
             if(response != 0){
@@ -272,7 +272,7 @@ jQuery(document).ready(function(){
         }
         wp_admin_url = ajaxurl.replace('admin-ajax.php','');
         if (!jQuery('.bpm-ajax-loader').length)
-            jQuery(this).after(' <img class="bpm-ajax-loader" src="'+wp_admin_url+'images/wpspin_light.gif" /> <strong>Please do not refresh this page.</strong>');
+            jQuery(this).after(' <img class="bpm-ajax-loader" src="'+wp_admin_url+'images/wpspin_light.gif" /> <strong>'+bp_media_admin_strings.no_refresh+'</strong>');
         
         
         $progress_parent = jQuery('#bpmedia-bpalbumimport');
@@ -347,7 +347,7 @@ jQuery(document).ready(function(){
             if(response)
                 location.reload();
             else
-                $bpalbum.parent().after('<p>Something went wronng. Please <a href onclick="location.reload();">refresh</a> page.</p>');
+                $bpalbum.parent().after('<p>'+bp_media_admin_strings.something_went_wrong+'</p>');
         });
     });
 
