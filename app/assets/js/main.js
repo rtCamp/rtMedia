@@ -98,76 +98,112 @@ jQuery(document).ready(function(){
     });
 
     jQuery('#bp-media-bulk-ui').on('click','#bp-media-move-selected-media',function(){
-        //        e.preventDefault();
-        $media = new Array();
-        jQuery('input:checkbox[name="move"]:checked').each(function(){
-            $media.push(jQuery(this).val());
-        });
-        if ($media.length) {
-            var data = {
-                action: 'bp_media_move_selected_media',
-                media: $media,
-                parent: jQuery('.bp-media-selected-album-move option:checked').val()
-            };
-            jQuery.post(bp_media_vars.ajaxurl, data, function(response) {
-                if(response.length==0) {
-                //                    jQuery('#bp-media-show-more').parent().remove();
-                } else {
-                    location.reload();
-                }
+        jQuery(this).parent().siblings('.bp-media-ajax-spinner').show();
+        jQuery(this).prop('disabled',true);
+        jQuery(this).addClass('disabled');
+        if(confirm('Are you sure?')){
+            $media = new Array();
+            jQuery('input:checkbox[name="move"]:checked').each(function(){
+                $media.push(jQuery(this).val());
             });
-        }   
+            if ($media.length) {
+                var data = {
+                    action: 'bp_media_move_selected_media',
+                    media: $media,
+                    parent: jQuery('.bp-media-selected-album-move option:checked').val()
+                };
+                jQuery.post(bp_media_vars.ajaxurl, data, function(response) {
+                    if(response.length==0) {
+                        jQuery('.item-list-tabs:last').after('<div id="message" class="error"><p>Something went wrong. Please try again.</p></div>');
+                    } else {
+                        location.reload();
+                    }
+                });
+            } else {
+                jQuery(this).parent().siblings('.bp-media-ajax-spinner').hide();
+                jQuery(this).prop('disabled',false);
+                jQuery(this).removeClass('disabled');
+            }
+        } else {
+            jQuery(this).parent().siblings('.bp-media-ajax-spinner').hide();
+            jQuery(this).prop('disabled',false);
+            jQuery(this).removeClass('disabled');
+            return false;
+        }
             
     });
     
     jQuery('.bp-media-album-actions').on('click','#bp-media-merge-button',function(){
-        $from = jQuery('#bp-media-selected-album').val();
-        $to = jQuery('#bp-media-selected-album-merge option:checked').val();
-        console.log($from);
-        console.log($to);
-        if ( $from && $to ) {
-            var data = {
-                action: 'bp_media_merge_album',
-                from: $from,
-                to: $to
-            };
-            jQuery.post(bp_media_vars.ajaxurl, data, function(response) {
-                if(response.length==0) {
-                //                    jQuery('#bp-media-show-more').parent().remove();
-                } else {
-                    location.reload();
-                }
-            });
+        jQuery(this).siblings('.bp-media-ajax-spinner').show();
+        jQuery(this).prop('disabled',true);
+        jQuery(this).addClass('disabled');
+        if(confirm('Are you sure you wnat to merge this album?')){
+            if(confirm('Would you like to delete this album after the merge?')){
+                $delete_album = true;
+            } else {
+                $delete_album = false;
+            }
+            $from = jQuery('#bp-media-selected-album').val();
+            $to = jQuery('#bp-media-selected-album-merge option:checked').val();
+            if ( $from && $to ) {
+                var data = {
+                    action: 'bp_media_merge_album',
+                    from: $from,
+                    to: $to,
+                    delete_album: $delete_album
+                };
+                jQuery.post(bp_media_vars.ajaxurl, data, function(response) {
+                    if(response.length==0) {
+                        jQuery('.item-list-tabs:last').after('<div id="message" class="error"><p>Something went wrong. Please try again.</p></div>');
+                    } else if( response == 'redirect' ) {
+                        window.location = window.location.href.replace($from,$to);
+                    } else {
+                        location.reload();
+                    }
+                });
+            }
+        } else {
+            jQuery(this).siblings('.bp-media-ajax-spinner').hide();
+            jQuery(this).prop('disabled',false);
+            jQuery(this).removeClass('disabled');
+            return false;
         }
             
     });
     
     jQuery('#bp-media-bulk-ui').on('click','#bp-media-delete-selected-media',function(){
         //        e.preventDefault();
+        jQuery(this).parent().siblings('.bp-media-ajax-spinner').show();
+        jQuery(this).prop('disabled',true);
+        jQuery(this).addClass('disabled');
         $media = new Array();
         jQuery('input:checkbox[name="move"]:checked').each(function(){
             $media.push(jQuery(this).val());
         });
         if ($media.length) {
             if(confirm('Are you sure you want to delete the selected media?')){
-
                 var data = {
                     action: 'bp_media_delete_selected_media',
                     media: $media
                 };
                 jQuery.post(bp_media_vars.ajaxurl, data, function(response) {
                     if(response.length==0) {
-                    //                    jQuery('#bp-media-show-more').parent().remove();
+                        jQuery('.item-list-tabs:last').after('<div id="message" class="error"><p>Something went wrong. Please try again.</p></div>');
                     } else {
                         location.reload();
                     }
                 });
             } else {
+                jQuery(this).parent().siblings('.bp-media-ajax-spinner').hide();
+                jQuery(this).prop('disabled',false);
+                jQuery(this).removeClass('disabled');
                 return false;
             }
+        } else {
+            jQuery(this).parent().siblings('.bp-media-ajax-spinner').hide();
+            jQuery(this).prop('disabled',false);
+            jQuery(this).removeClass('disabled');
         }
-        
-            
     });
 
     jQuery('#bp-media-upload-ui').bind('dragover', function(e){
@@ -277,7 +313,6 @@ jQuery(document).ready(function(){
             e.preventDefault();
             if(!$current.parent().hasClass('bp_media_content')){
                 $next_current = $current.closest('li').next().find('a');
-                console.log(jQuery('#bp-media-show-more').length);
                 if($next_current.length<1){
                     if(jQuery('#bp-media-show-more').length>0){
                         var args = load_more_data();
@@ -451,10 +486,8 @@ jQuery(document).ready(function(){
                 );
             }
 
-
             /* Favoriting activity stream items */
             if ( target.hasClass('fav') || target.hasClass('unfav') ) {
-                console.log('hua');
                 event.preventDefault();
                 var type = target.hasClass('fav') ? 'fav' : 'unfav';
                 var parent = target.closest('.activity_update');
