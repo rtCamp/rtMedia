@@ -6,7 +6,7 @@ License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires at least: WordPress 3.5 + BuddyPress 1.6
 Tested up to: WordPress 3.5 + BuddyPress 1.7
-Stable tag: 2.9
+Stable tag: 2.10
 
 Adds Photos, Music, Videos & Albums to BuddyPress. Supports mobile devices (iPhone/iPad, etc) and automatic audio/video conversion.
 
@@ -35,6 +35,7 @@ BuddyPress Media adds Photos, Music, Videos & Albums to your BuddyPress powered 
 * **Groups** Supported: Users can upload media on Groups, as well!
 * **HTML5 playback**: with fall back to flash/silverlight player support
 * **Privacy**: Users can control access to their uploaded media
+* **Shortcode**: Display public media of all the users on the site
 * **Automatic conversion** (*premium*): of common audio & video formats to mp3/mp4 via [Kaltura Add-On](http://rtcamp.com/store/buddypress-media-kaltura/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "BuddyPress Media Kaltura Addon for Kaltura.com/Kaltura-CE/Kaltura On-Prem version"), and [FFMPEG Add-On](http://rtcamp.com/store/buddypress-media-ffmpeg/ "BuddyPress Media FFMPEG Addon")
 
 = Roadmap =
@@ -91,6 +92,8 @@ BuddyPress Media is now available in *Brazilian Portuguese*, *Spanish*, *Japanes
 * [German](https://rtcamp.com/translate/projects/buddypress-media/de/default) translation by [hannes.muc]
 * [French](https://rtcamp.com/translate/projects/buddypress-media/fr/default) translation by [Peter Lewit](http://profiles.wordpress.org/deegan)
 
+(**Note**: Credits are given for translations that are at least 50% complete.)
+
 == Installation ==
 
 * Install the plugin from the 'Plugins' section in your dashboard (Go to `Plugins > Add New > Search` and search for BuddyPress Media).
@@ -121,6 +124,12 @@ Please visit [BuddyPress Media's Features page](http://rtcamp.com/buddypress-med
 == Changelog ==
 
 Please visit [BuddyPress Media's Roadmap page](http://rtcamp.com/buddypress-media/roadmap/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "Visit BuddyPress Media's Features page") to get some details about future releases.
+
+= 2.10 =
+* Adds album management options (Merge/Move/Delete)
+* Adds shortcode to display media [bpmedia]
+* Adds localization to JS
+* Added partial Arabic and Persion translations
 
 = 2.9 =
 * Adds options to specify Media Sizes
@@ -365,5 +374,5 @@ Please visit [BuddyPress Media's Roadmap page](http://rtcamp.com/buddypress-medi
 * HTML5 Video Tag Support (with fallback)
 
 == Upgrade Notice ==
-= 2.9 =
-Adds Image Editor
+= 2.10 =
+Adds album management options (Merge/Move/Delete), shortcode to display media
