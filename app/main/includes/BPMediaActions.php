@@ -1112,7 +1112,7 @@ class BPMediaActions {
     function bpmedia_shortcode($atts) {
         global $bp_media;
         extract(shortcode_atts(array(
-                    'media' => 'all',
+                    'type' => 'all',
                     'count' => $bp_media->options['default_count'] ? $bp_media->options['default_count'] : 10,
                     'loadmore' => true
                         ), $atts));
@@ -1139,10 +1139,10 @@ class BPMediaActions {
             'posts_per_page' => $count
         );
         
-        $media = str_replace(array('music', 'photos'),array('audio','image'),$media);
+        $type = str_replace(array('music', 'photos'),array('audio','image'),$type);
         
-        if ($media != 'all')
-            $args['post_mime_type'] = $media;
+        if ($type != 'all')
+            $args['post_mime_type'] = $type;
         $query = new WP_Query($args);
         if ($query->have_posts()) {
             ?>
@@ -1165,7 +1165,7 @@ class BPMediaActions {
             </div><?php
             $loadmore = strtolower($loadmore);
             if ( $loadmore != 'false' && $loadmore != '0' && $loadmore != 'no' ) { ?>
-                <div class="bp-media-actions"><button data-media="<?php echo $media; ?>" data-count="<?php echo $count; ?>" data-page="<?php echo $count; ?>" class="button" id="bp-media-show-more-sc">Show More</button></div><?php
+                <div class="bp-media-actions"><button data-media="<?php echo $type; ?>" data-count="<?php echo $count; ?>" data-page="<?php echo $count; ?>" class="button" id="bp-media-show-more-sc">Show More</button></div><?php
             }
         } else {
             _e('No media found', 'buddypress-media');
