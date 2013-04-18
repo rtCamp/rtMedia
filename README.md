@@ -35,6 +35,7 @@ BuddyPress Media adds Photos, Music, Videos & Albums to your BuddyPress powered 
 * **Groups** Supported: Users can upload media on Groups, as well!
 * **HTML5 playback**: with fall back to flash/silverlight player support
 * **Privacy**: Users can control access to their uploaded media
+* **Shortcode**: Display public media of all the users on the site
 * **Automatic conversion** (*premium*): of common audio & video formats to mp3/mp4 via [Kaltura Add-On](http://rtcamp.com/store/buddypress-media-kaltura/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "BuddyPress Media Kaltura Addon for Kaltura.com/Kaltura-CE/Kaltura On-Prem version"), and [FFMPEG Add-On](http://rtcamp.com/store/buddypress-media-ffmpeg/ "BuddyPress Media FFMPEG Addon")
 
 #### Roadmap ####
@@ -91,6 +92,8 @@ BuddyPress Media is now available in *Brazilian Portuguese*, *Spanish*, *Japanes
 * [German](https://rtcamp.com/translate/projects/buddypress-media/de/default) translation by [hannes.muc]
 * [French](https://rtcamp.com/translate/projects/buddypress-media/fr/default) translation by [Peter Lewit](http://profiles.wordpress.org/deegan)
 
+(**Note**: Credits are given for translations that are at least 50% complete.)
+
 ## Installation ##
 
 * Install the plugin from the 'Plugins' section in your dashboard (Go to `Plugins > Add New > Search` and search for BuddyPress Media).
@@ -122,13 +125,19 @@ Please visit [BuddyPress Media's Features page](http://rtcamp.com/buddypress-med
 
 Please visit [BuddyPress Media's Roadmap page](http://rtcamp.com/buddypress-media/roadmap/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "Visit BuddyPress Media's Features page") to get some details about future releases.
 
+#### 2.10 ####
+* Adds album management options (Merge/Move/Delete)
+* Adds shortcode to display media [bpmedia]
+* Adds localization to JS
+* Added partial Arabic and Persion translations
+
 #### 2.9 ####
 * Adds options to specify Media Sizes
 * Adds options to modify the image ( Crop, Rotate, Flip & Scale )
 * Creates only required image sizes ( Rather than all registered image sizes )
 * Adds thickbox to BuddyPress Media Widget
 * Fixes bug in js
-* Adds framework for shotcode support ( Functionality will be added in the next release )
+* Adds framework for shortcode support ( Functionality will be added in the next release )
 
 #### 2.8.1 ####
 * Improved i18n support, thanks to [David Decker](http://profiles.wordpress.org/daveshine/)
@@ -364,4 +373,4 @@ Please visit [BuddyPress Media's Roadmap page](http://rtcamp.com/buddypress-medi
 * HTML5 Audio Tag Support (with fallback)
 * HTML5 Video Tag Support (with fallback)
 
-Adds Image Editor
+Adds album management options (Merge/Move/Delete), shortcode to display media
