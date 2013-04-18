@@ -223,6 +223,10 @@ class BPMediaAlbumScreen extends BPMediaScreen {
         $allowed_edit = false;
         if (is_user_logged_in()) {
             echo '<div class="bp-media-album-actions">';
+            if (bp_is_active('groups') && bp_get_current_group_id())
+                $default_album = groups_get_groupmeta(bp_get_current_group_id(), 'bp_media_default_album');
+            else
+                $default_album = get_user_meta(get_current_user_id(), 'bp-media-default-album', true);
             if (!bp_is_user()) {
                 if (bp_is_active('groups')) {
                     if (groups_is_user_admin(bp_loggedin_user_id(), $bp->groups->current_group->id)) {
@@ -241,62 +245,65 @@ class BPMediaAlbumScreen extends BPMediaScreen {
                 echo '<div class="album-edit">';
                 echo '<a href="' . $bp_media_current_album->get_edit_url() . '" class="button item-button bp-secondary-action bp-media-edit bp-media-edit-album" title="' . __('Edit Album', 'buddypress-media') . '">' . __('Edit', 'buddypress-media') . '</a>';
                 $media_actions = new BPMediaActions();
-                if ($media_actions->default_user_album() != $bp_media_current_album->get_id())
-                    echo '<a href="' . $bp_media_current_album->get_delete_url() . '" class="button item-button bp-secondary-action delete-activity-single confirm" rel="nofollow">' . __("Delete", 'buddypress-media') . '</a>';
-                echo '</div>';
-            }
-            if ($bp_media_current_album && $bp_media_query->have_posts()) {
-                if (bp_is_my_profile() || BPMediaGroupLoader::can_upload()) {
-                    BPMediaUploadScreen::upload_screen_content();
-                    if (bp_is_active('groups') && bp_get_current_group_id())
-                        $default_album = groups_get_groupmeta(bp_get_current_group_id(), 'bp_media_default_album');
-                    else
-                        $default_album = get_user_meta (get_current_user_id(), 'bp-media-default-album', true);
-                    
-                    $album_selector = '';
-
-                    if (bp_is_current_component('groups')) {
-                        $albums = new WP_Query(array(
-                                    'post_type' => 'bp_media_album',
-                                    'posts_per_page' => -1,
-                                    'meta_key' => 'bp-media-key',
-                                    'meta_value' => -bp_get_current_group_id(),
-                                    'meta_compare' => '=',
-                                    'post__not_in' => array($bp_media_current_album->get_id())
-                                ));
+                if ($default_album != $bp_media_current_album->get_id() || $bp_media_query->have_posts()) {
+                    if (!$bp_media_query->have_posts()) {
+                        echo '<a href="' . $bp_media_current_album->get_delete_url() . '" class="btn-danger button bp-media-can-delete item-button bp-secondary-action delete-activity-single confirm" rel="nofollow">' . __("Delete Album", 'buddypress-media') . '</a>';
                     } else {
-                        $albums = new WP_Query(array(
-                                    'post_type' => 'bp_media_album',
-                                    'posts_per_page' => -1,
-                                    'author' => get_current_user_id(),
-                                    'meta_key' => 'bp-media-key',
-                                    'meta_value' => get_current_user_id(),
-                                    'meta_compare' => '=',
-                                    'post__not_in' => array($bp_media_current_album->get_id())
-                                ));
+                        echo '<input id="bp-media-delete-button" type="button" value="' . __('Delete', 'buddypress-media') . '" class="button">';
+                        echo '<div class="bp-media-album-action-ui" id="bp-media-delete-ui">
+                                <a class="select-all" href="#">' . __('Select All Visible', 'buddypress-media') . '</a> | 
+                                <a class="unselect-all" href="#">' . __('Unselect All Visible', 'buddypress-media') . '</a> | 
+                                <input id="bp-media-delete-media" type="button" value="' . __('Delete Selected Media', 'buddypress-media') . '" />';
+                        if ($default_album != $bp_media_current_album->get_id())
+                            echo '&nbsp;<a href="' . $bp_media_current_album->get_delete_url() . '" class="btn-danger button bp-media-can-delete item-button bp-secondary-action delete-activity-single confirm" rel="nofollow">' . __("Delete Album", 'buddypress-media') . '</a>';
+                        echo '<img class="bp-media-ajax-spinner" src="' . admin_url('images/wpspin_light.gif') . '" /></div>';
                     }
-                    if (isset($albums->posts) && is_array($albums->posts) && count($albums->posts) > 0) {
-                        foreach ($albums->posts as $album) {
-                            if ($album->post_title == $post_wall)
-                                $album_selector .= '<option value="' . $album->ID . '" selected="selected">' . $album->post_title . '</option>';
-                            else
-                                $album_selector .= '<option value="' . $album->ID . '">' . $album->post_title . '</option>';
-                        };
-                    }
+                }
+                echo '</div>';
+                if ($bp_media_query->have_posts()) {
+                    if (bp_is_my_profile() || BPMediaGroupLoader::can_upload()) {
+                        BPMediaUploadScreen::upload_screen_content();
+                        $album_selector = '';
 
+                        if (bp_is_current_component('groups')) {
+                            $albums = new WP_Query(array(
+                                        'post_type' => 'bp_media_album',
+                                        'posts_per_page' => -1,
+                                        'meta_key' => 'bp-media-key',
+                                        'meta_value' => -bp_get_current_group_id(),
+                                        'meta_compare' => '=',
+                                        'post__not_in' => array($bp_media_current_album->get_id())
+                                    ));
+                        } else {
+                            $albums = new WP_Query(array(
+                                        'post_type' => 'bp_media_album',
+                                        'posts_per_page' => -1,
+                                        'author' => get_current_user_id(),
+                                        'meta_key' => 'bp-media-key',
+                                        'meta_value' => get_current_user_id(),
+                                        'meta_compare' => '=',
+                                        'post__not_in' => array($bp_media_current_album->get_id())
+                                    ));
+                        }
+                        if (isset($albums->posts) && is_array($albums->posts) && count($albums->posts) > 0) {
+                            foreach ($albums->posts as $album) {
+                                if ($album->post_title == $post_wall)
+                                    $album_selector .= '<option value="' . $album->ID . '" selected="selected">' . $album->post_title . '</option>';
+                                else
+                                    $album_selector .= '<option value="' . $album->ID . '">' . $album->post_title . '</option>';
+                            };
+                        }
 
-                    echo '<input id="bp-media-bulk-button" type="button" value="' . __('Bulk Actions', 'buddypress-media') . '" class="button">';
-                    echo '<div id="bp-media-bulk-ui">
-                            <a class="select-all" href="#">' . __('Select All', 'buddypress-media') . '</a> | 
-                            <a class="unselect-all" href="#">' . __('Unselect All', 'buddypress-media') . '</a> | 
-                            <select id="bp-media-bulk-select"><option>' . __('Select bulk action', 'buddypress-media') . '</option>' . ($album_selector ? '<option value="move">' . __('Move', 'buddypress-media') . '</option>' : '') . '<option value="delete">' . __('Delete', 'buddypress-media') . '</option></select>'
-                    . ($album_selector ? '&nbsp;<span class="bulk-move">' . __('selected to', 'buddypress-media') . ':&nbsp;&nbsp;<select class="bp-media-selected-album-move">' . $album_selector . '</select>&nbsp;&nbsp;<input id="bp-media-move-selected-media" type="button" value="' . __('Move', 'buddypress-media') . '" /></span>' : '') .
-                    '<span class="bulk-delete"><input id="bp-media-delete-selected-media" type="button" value="' . __('Delete Media', 'buddypress-media') . '" /></span>
-                        <img class="bp-media-ajax-spinner" src="'.admin_url('images/wpspin_light.gif').'" /></div>';
-                    if ( $album_selector && ($default_album!=bp_action_variable(1)) ) {
-                        echo '<input id="bp-media-merge-button" type="button" value="' . __('Merge', 'buddypress-media') . '" class="button">';
-                        echo __('into', 'buddypress-media');
-                        echo '<select id="bp-media-selected-album-merge">' . $album_selector . '</select><img class="bp-media-ajax-spinner" src="'.admin_url('images/wpspin_light.gif').'" />';
+                        if ($album_selector) {
+                            echo '<input id="bp-media-move-merge-button" type="button" value="' . __('Move', 'buddypress-media') . '" class="button">';
+                            echo '<div class="bp-media-album-action-ui" id="bp-media-move-merge-ui">
+                            <span class="bp-media-move-selected-checks"><a class="select-all" href="#">' . __('Select All Visible', 'buddypress-media') . '</a> | 
+                            <a class="unselect-all" href="#">' . __('Unselect All Visible', 'buddypress-media') . '</a> | </span>
+                            <select id="bp-media-move-merge-select"><option value="move">' . __('Move selected', 'buddypress-media') . '</option>' . '<option value="merge">' . __('Move all', 'buddypress-media') . '</option></select>'
+                            . ' ' . __('to', 'buddypress-media') . '&nbsp;&nbsp;<select class="bp-media-selected-album-move-merge">' . $album_selector . '</select>&nbsp;&nbsp;<input id="bp-media-move-merge-media" type="button" value="' . __('Submit', 'buddypress-media') . '" />
+                        <img class="bp-media-ajax-spinner" src="' . admin_url('images/wpspin_light.gif') . '" /></div>';
+                            //                    '<span class="bulk-delete"><input id="bp-media-delete-selected-media" type="button" value="' . __('Delete Media', 'buddypress-media') . '" /></span>
+                        }
                     }
                 }
             }

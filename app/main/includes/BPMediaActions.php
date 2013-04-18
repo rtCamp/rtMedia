@@ -181,10 +181,13 @@ class BPMediaActions {
         );
         $bp_media_main_strings = array(
             'something_went_wrong' => __('Something went wrong. Please try again.', 'buddypress-media'),
-            'merge_confirmation' => __('Are you sure you wnat to merge this album?', 'buddypress-media'),
+            'merge_confirmation' => __('Are you sure you want to merge this album?', 'buddypress-media'),
             'delete_after_merge' => __('Would you like to delete this album after the merge?', 'buddypress-media'),
             'delete_selected_media' => __('Are you sure you want to delete the selected media?', 'buddypress-media'),
-            'delete_activity_media' => __('Are you sure you want to delete this activity and associated media?', 'buddypress-media')
+            'delete_activity_media' => __('Are you sure you want to delete this activity and associated media?', 'buddypress-media'),
+            'are_you_sure' => __('Are you sure?', 'buddypress-media'),
+            'select_media' => __('Please select media.', 'buddypress-media'),
+            'select_action' => __('Please select an action.', 'buddypress-media')
         );
 
         wp_localize_script('bp-media-default', 'bp_media_vars', $bp_media_vars);
@@ -1107,11 +1110,12 @@ class BPMediaActions {
     }
 
     function bpmedia_shortcode($atts) {
+        global $bp_media;
         extract(shortcode_atts(array(
                     'media' => 'all',
-                    'count' => '10',
+                    'count' => $bp_media->options['default_count'] ? $bp_media->options['default_count'] : 10,
+                    'loadmore' => true
                         ), $atts));
-
         $value = 0;
         if (is_user_logged_in()) {
             $value = 2;
@@ -1134,12 +1138,15 @@ class BPMediaActions {
             'meta_query' => $privacy_query,
             'posts_per_page' => $count
         );
+        
+        $media = str_replace(array('music', 'photos'),array('audio','image'),$media);
+        
         if ($media != 'all')
             $args['post_mime_type'] = $media;
         $query = new WP_Query($args);
         if ($query->have_posts()) {
             ?>
-            <div id="item-body">
+            <div id="item-body" class="bp-media-sc-list">
                 <ul class="bp-media-gallery item-list"><?php
             while ($query->have_posts()) {
                 $query->the_post();
@@ -1149,14 +1156,17 @@ class BPMediaActions {
                 } catch (Exception $e) {
                     echo '<li>';
                     echo $e->getMessage();
-                    echo '<h3>'.__('Private','buddypress-media').'</h3>';
+                    echo '<h3>' . __('Private', 'buddypress-media') . '</h3>';
                     echo '</li>';
                 }
             }
             ?>
                 </ul>
-            </div>
-            <div class="bp-media-actions"><button data-media="<?php echo $media; ?>" data-count="<?php echo $count; ?>" data-page="<?php echo $count; ?>" class="button" id="bp-media-show-more-sc">Show More</button></div><?php
+            </div><?php
+            $loadmore = strtolower($loadmore);
+            if ( $loadmore != 'false' && $loadmore != '0' && $loadmore != 'no' ) { ?>
+                <div class="bp-media-actions"><button data-media="<?php echo $media; ?>" data-count="<?php echo $count; ?>" data-page="<?php echo $count; ?>" class="button" id="bp-media-show-more-sc">Show More</button></div><?php
+            }
         } else {
             _e('No media found', 'buddypress-media');
         }
