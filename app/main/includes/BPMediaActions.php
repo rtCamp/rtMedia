@@ -1128,10 +1128,8 @@ class BPMediaActions {
             )
         );
 
-        $paged = get_query_var('paged') ? get_query_var('paged') : 1;
 
         $args = array(
-            'paged' => $paged,
             'post_type' => 'attachment',
             'post_type' => 'attachment',
             'post_status' => 'any',
@@ -1139,38 +1137,45 @@ class BPMediaActions {
             'posts_per_page' => $count
         );
         
-        $type = str_replace(array('music', 'photos'),array('audio','image'),$type);
+        if ($count != -1) {
+            $paged = get_query_var('paged') ? get_query_var('paged') : 1;
+            $args['paged'] = $paged;
+        }
         
+
+        $type = str_replace(array('music', 'photos'), array('audio', 'image'), $type);
+
         if ($type != 'all')
             $args['post_mime_type'] = $type;
         $query = new WP_Query($args);
+        $markup = '';
         if ($query->have_posts()) {
-            ?>
-            <div id="item-body" class="bp-media-sc-list">
-                <ul class="bp-media-gallery item-list"><?php
+            $markup .= '<div id="item-body" class="bp-media-sc-list">';
+            $markup .= '<ul class="bp-media-gallery item-list">';
             while ($query->have_posts()) {
                 $query->the_post();
                 try {
                     $entry = new BPMediaHostWordpress(get_the_ID());
-                    echo $entry->get_media_gallery_content();
+                    $markup .= $entry->get_media_gallery_content(false, false);
                 } catch (Exception $e) {
-                    echo '<li>';
-                    echo $e->getMessage();
-                    echo '<h3>' . __('Private', 'buddypress-media') . '</h3>';
-                    echo '</li>';
+                    $markup .= '<li>';
+                    $markup .= $e->getMessage();
+                    $markup .= '<h3>' . __('Private', 'buddypress-media') . '</h3>';
+                    $markup .= '</li>';
                 }
             }
-            ?>
-                </ul>
-            </div><?php
+
+            $markup .= '</ul>';
+            $markup .= '</div>';
             $loadmore = strtolower($loadmore);
-            if ( $loadmore != 'false' && $loadmore != '0' && $loadmore != 'no' ) { ?>
-                <div class="bp-media-actions"><button data-media="<?php echo $type; ?>" data-count="<?php echo $count; ?>" data-page="<?php echo $count; ?>" class="button" id="bp-media-show-more-sc">Show More</button></div><?php
+            if ($loadmore != 'false' && $loadmore != '0' && $loadmore != 'no' && $count != -1) {
+                $markup .= '<div class="bp-media-actions"><button data-media="' . $type . '" data-count="' . $count . '" data-page="' . $paged . '" class="button" id="bp-media-show-more-sc">Show More</button></div>';
             }
         } else {
-            _e('No media found', 'buddypress-media');
+            $markup .= __('No media found', 'buddypress-media');
         }
         wp_reset_query();
+        return $markup;
     }
 
 }
