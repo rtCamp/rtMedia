@@ -30,35 +30,41 @@ jQuery(document).ready(function(){
 
 
     jQuery('#item-body').on('click','#bp-media-upload-button', function(){
+        jQuery('#bp-media-move-merge-ui').slideUp();
+        jQuery('#bp-media-delete-ui').slideUp();
+        jQuery('#bp-media-list input').remove();
+        jQuery('#bp-media-show-more').attr('data-move',0);
         $parent = jQuery('.bp-media-album-actions');
         $wrapper = jQuery('.bp-media-upload-wrapper');
         $description = jQuery('.bp-media-album-description');
         if($parent.length>0 && $wrapper.length<=0 ){
             if($description.length>0)
-                $description.after('<div class="bp-media-upload-wrapper"></div>');
+                $description.after('<div class="bp-media-action-wrapper bp-media-upload-wrapper"></div>');
             else
-                $parent.after('<div class="bp-media-upload-wrapper"></div>');
+                $parent.after('<div class="bp-media-action-wrapper bp-media-upload-wrapper"></div>');
             jQuery('#bp-media-upload-ui').appendTo('.bp-media-upload-wrapper');
         }
         jQuery('#bp-media-upload-ui').slideToggle();
     });
     
-    jQuery('#item-body').on('click','#bp-media-bulk-button', function(){
+    jQuery('#item-body').on('click','#bp-media-move-merge-button', function(){
+        jQuery('#bp-media-upload-ui').slideUp();
+        jQuery('#bp-media-delete-ui').slideUp();
         $parent = jQuery('.bp-media-album-actions');
-        $wrapper = jQuery('.bp-media-bulk-wrapper');
+        $wrapper = jQuery('.bp-media-move-merge-wrapper');
         $description = jQuery('.bp-media-album-description');
         if($parent.length>0 && $wrapper.length<=0 ){
             if($description.length>0)
-                $description.after('<div class="bp-media-bulk-wrapper"></div>');
+                $description.after('<div class="bp-media-action-wrapper bp-media-move-merge-wrapper"></div>');
             else
-                $parent.after('<div class="bp-media-bulk-wrapper"></div>');
-            jQuery('#bp-media-bulk-ui').appendTo('.bp-media-bulk-wrapper');
+                $parent.after('<div class="bp-media-action-wrapper bp-media-move-merge-wrapper"></div>');
+            jQuery('#bp-media-move-merge-ui').appendTo('.bp-media-move-merge-wrapper');
         }
-        jQuery('#bp-media-bulk-ui').slideToggle('slow',function(){
-            if(jQuery(this).css('display') == 'none') {
+        jQuery('#bp-media-move-merge-ui').slideToggle('slow',function(){
+            if(jQuery(this).css('display') == 'none' || jQuery('#bp-media-move-merge-select option:checked').val() == 'merge') {
                 jQuery('#bp-media-list input').remove();
                 jQuery('#bp-media-show-more').attr('data-move',0);
-            } else {
+            } else if ( !jQuery('#bp-media-list input').length ) {
                 jQuery('#bp-media-show-more').attr('data-move',1);
                 jQuery('#bp-media-list h3').each(function(){
                     $media_id = jQuery(this).parent().attr('id').replace('bp-media-item-','');
@@ -68,101 +74,134 @@ jQuery(document).ready(function(){
         });
     });
     
-    jQuery('#bp-media-bulk-ui').on('click','.select-all', function(e){
+    jQuery('#item-body').on('click','#bp-media-delete-button', function(){
+        jQuery('#bp-media-upload-ui').slideUp();
+        jQuery('#bp-media-move-merge-ui').slideUp();
+        $parent = jQuery('.bp-media-album-actions');
+        $wrapper = jQuery('.bp-media-delete-wrapper');
+        $description = jQuery('.bp-media-album-description');
+        if($parent.length>0 && $wrapper.length<=0 ){
+            if($description.length>0)
+                $description.after('<div class="bp-media-action-wrapper bp-media-delete-wrapper"></div>');
+            else
+                $parent.after('<div class="bp-media-action-wrapper bp-media-delete-wrapper"></div>');
+            jQuery('#bp-media-delete-ui').appendTo('.bp-media-delete-wrapper');
+        }
+        jQuery('#bp-media-delete-ui').slideToggle('slow',function(){
+            if(jQuery(this).css('display') == 'none') {
+                jQuery('#bp-media-list input').remove();
+                jQuery('#bp-media-show-more').attr('data-move',0);
+            } else if ( !jQuery('#bp-media-list input').length ) {
+                jQuery('#bp-media-show-more').attr('data-move',1);
+                jQuery('#bp-media-list h3').each(function(){
+                    $media_id = jQuery(this).parent().attr('id').replace('bp-media-item-','');
+                    jQuery(this).prepend('<input type="checkbox" name="move" value="'+$media_id+'" />');
+                });
+            }
+        });
+    });
+    
+    jQuery('#bp-media-move-merge-ui,#bp-media-delete-ui').on('click','.select-all', function(e){
         e.preventDefault();
         jQuery('#bp-media-list input').each(function(){
             jQuery(this).prop('checked',true);
         });
     });
     
-    jQuery('#bp-media-bulk-ui').on('click','.unselect-all', function(e){
+    jQuery('#bp-media-move-merge-ui,#bp-media-delete-ui').on('click','.unselect-all', function(e){
         e.preventDefault();
         jQuery('#bp-media-list input').each(function(){
             jQuery(this).prop('checked',false);
         });
     });
     
-    jQuery('#bp-media-bulk-ui').on('change','#bp-media-bulk-select', function(e){
-        e.preventDefault();
-        $val = jQuery('#bp-media-bulk-select option:checked').val();
-        if ($val == 'move') {
-            jQuery('.bulk-delete').hide();
-            jQuery('.bulk-move').show();
-        } else if ($val == 'delete') {
-            jQuery('.bulk-move').hide();
-            jQuery('.bulk-delete').show();
-        } else {
-            jQuery('.bulk-move').hide();
-            jQuery('.bulk-delete').hide();
+    jQuery('#bp-media-move-merge-ui').on('change','#bp-media-move-merge-select', function(){
+        $this = jQuery(this);
+        if ( $this.val() == 'move' ) {
+            if ( !jQuery('#bp-media-list input').length ) {
+                jQuery('#bp-media-list h3').each(function(){
+                    $media_id = jQuery(this).parent().attr('id').replace('bp-media-item-','');
+                    jQuery(this).prepend('<input type="checkbox" name="move" value="'+$media_id+'" />');
+                });
+            }
+            jQuery('#bp-media-show-more').attr('data-move',1);
+            jQuery('.bp-media-move-selected-checks').fadeIn();
+        } else if ( $this.val() == 'merge' ) {           
+            jQuery('.bp-media-move-selected-checks').fadeOut();
+            jQuery('#bp-media-list input').remove();
+            jQuery('#bp-media-show-more').attr('data-move',0)
         }
     });
-
-    jQuery('#bp-media-bulk-ui').on('click','#bp-media-move-selected-media',function(){
-        jQuery(this).parent().siblings('.bp-media-ajax-spinner').show();
+    
+    jQuery('#bp-media-move-merge-ui').on('click','#bp-media-move-merge-media',function(){
+        jQuery(this).siblings('.bp-media-ajax-spinner').show();
         jQuery(this).prop('disabled',true);
         jQuery(this).addClass('disabled');
-        if(confirm('Are you sure?')){
+        $val = jQuery('#bp-media-move-merge-select option:checked').val();
+        if ( $val == 'merge' ) {
+            if(confirm(bp_media_main_strings.merge_confirmation)){
+                $delete_album = false;
+                //                if ( jQuery('.bp-media-can-delete').length ) {
+                //                    if(confirm(bp_media_main_strings.delete_after_merge))
+                //                        $delete_album = true;
+                //                }
+                $from = jQuery('#bp-media-selected-album').val();
+                $to = jQuery('.bp-media-selected-album-move-merge option:checked').val();
+                if ( $from && $to ) {
+                    var data = {
+                        action: 'bp_media_merge_album',
+                        from: $from,
+                        to: $to,
+                        delete_album: $delete_album
+                    };
+                    jQuery.post(bp_media_vars.ajaxurl, data, function(response) {
+                        if(response.length==0) {
+                            jQuery('.item-list-tabs:last').after('<div id="message" class="error"><p>'+bp_media_main_strings.something_went_wrong+'</p></div>');
+                        } else if( response == 'redirect' ) {
+                            window.location = window.location.href.replace($from,$to);
+                        } else {
+                            location.reload();
+                        }
+                    });
+                }
+            } else {
+                jQuery(this).siblings('.bp-media-ajax-spinner').hide();
+                jQuery(this).prop('disabled',false);
+                jQuery(this).removeClass('disabled');
+                return false;
+            }
+        } else if( $val == 'move' ) {
             $media = new Array();
             jQuery('input:checkbox[name="move"]:checked').each(function(){
                 $media.push(jQuery(this).val());
             });
             if ($media.length) {
-                var data = {
-                    action: 'bp_media_move_selected_media',
-                    media: $media,
-                    parent: jQuery('.bp-media-selected-album-move option:checked').val()
-                };
-                jQuery.post(bp_media_vars.ajaxurl, data, function(response) {
-                    if(response.length==0) {
-                        jQuery('.item-list-tabs:last').after('<div id="message" class="error"><p>'+bp_media_main_strings.something_went_wrong+'</p></div>');
-                    } else {
-                        location.reload();
-                    }
-                });
+                if(confirm(bp_media_main_strings.are_you_sure)){
+                    var data = {
+                        action: 'bp_media_move_selected_media',
+                        media: $media,
+                        parent: jQuery('.bp-media-selected-album-move-merge option:checked').val()
+                    };
+                    jQuery.post(bp_media_vars.ajaxurl, data, function(response) {
+                        if(response.length==0) {
+                            jQuery('.item-list-tabs:last').after('<div id="message" class="error"><p>'+bp_media_main_strings.something_went_wrong+'</p></div>');
+                        } else {
+                            location.reload();
+                        }
+                    });
+                } else {
+                    jQuery(this).siblings('.bp-media-ajax-spinner').hide();
+                    jQuery(this).prop('disabled',false);
+                    jQuery(this).removeClass('disabled');
+                }
             } else {
-                jQuery(this).parent().siblings('.bp-media-ajax-spinner').hide();
+                alert(bp_media_main_strings.select_media);
+                jQuery(this).siblings('.bp-media-ajax-spinner').hide();
                 jQuery(this).prop('disabled',false);
                 jQuery(this).removeClass('disabled');
             }
         } else {
-            jQuery(this).parent().siblings('.bp-media-ajax-spinner').hide();
-            jQuery(this).prop('disabled',false);
-            jQuery(this).removeClass('disabled');
-            return false;
-        }
-            
-    });
-    
-    jQuery('.bp-media-album-actions').on('click','#bp-media-merge-button',function(){
-        jQuery(this).siblings('.bp-media-ajax-spinner').show();
-        jQuery(this).prop('disabled',true);
-        jQuery(this).addClass('disabled');
-        if(confirm(bp_media_main_strings.merge_confirmation)){
-            if(confirm(bp_media_main_strings.delete_after_merge)){
-                $delete_album = true;
-            } else {
-                $delete_album = false;
-            }
-            $from = jQuery('#bp-media-selected-album').val();
-            $to = jQuery('#bp-media-selected-album-merge option:checked').val();
-            if ( $from && $to ) {
-                var data = {
-                    action: 'bp_media_merge_album',
-                    from: $from,
-                    to: $to,
-                    delete_album: $delete_album
-                };
-                jQuery.post(bp_media_vars.ajaxurl, data, function(response) {
-                    if(response.length==0) {
-                        jQuery('.item-list-tabs:last').after('<div id="message" class="error"><p>'+bp_media_main_strings.something_went_wrong+'</p></div>');
-                    } else if( response == 'redirect' ) {
-                        window.location = window.location.href.replace($from,$to);
-                    } else {
-                        location.reload();
-                    }
-                });
-            }
-        } else {
+            alert(bp_media_main_strings.select_action);
             jQuery(this).siblings('.bp-media-ajax-spinner').hide();
             jQuery(this).prop('disabled',false);
             jQuery(this).removeClass('disabled');
@@ -171,9 +210,8 @@ jQuery(document).ready(function(){
             
     });
     
-    jQuery('#bp-media-bulk-ui').on('click','#bp-media-delete-selected-media',function(){
-        //        e.preventDefault();
-        jQuery(this).parent().siblings('.bp-media-ajax-spinner').show();
+    jQuery('#bp-media-delete-ui').on('click','#bp-media-delete-media',function(){
+        jQuery(this).siblings('.bp-media-ajax-spinner').show();
         jQuery(this).prop('disabled',true);
         jQuery(this).addClass('disabled');
         $media = new Array();
@@ -194,13 +232,14 @@ jQuery(document).ready(function(){
                     }
                 });
             } else {
-                jQuery(this).parent().siblings('.bp-media-ajax-spinner').hide();
+                jQuery(this).siblings('.bp-media-ajax-spinner').hide();
                 jQuery(this).prop('disabled',false);
                 jQuery(this).removeClass('disabled');
                 return false;
             }
         } else {
-            jQuery(this).parent().siblings('.bp-media-ajax-spinner').hide();
+            alert(bp_media_main_strings.select_media);
+            jQuery(this).siblings('.bp-media-ajax-spinner').hide();
             jQuery(this).prop('disabled',false);
             jQuery(this).removeClass('disabled');
         }
@@ -293,12 +332,7 @@ jQuery(document).ready(function(){
     });
 
     if ( bp_media_vars.lightbox > 0 ) {
-        jQuery('#bp-media-list').on('click','li a',function(e){
-            e.preventDefault();
-            $current = jQuery(this);
-            load_media($current);
-        });
-        jQuery('.widget-item-listing').on('click','li a',function(e){
+        jQuery('#bp-media-list,.widget-item-listing,.bp-media-sc-list').on('click','li a',function(e){
             e.preventDefault();
             $current = jQuery(this);
             load_media($current);

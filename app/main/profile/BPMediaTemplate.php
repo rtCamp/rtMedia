@@ -30,7 +30,7 @@ class BPMediaTemplate {
         if ($bp_media_query && $bp_media_query->have_posts()) {
             $hidden = ' style="display:none;"';
             ?>
-            <input id="bp-media-upload-button" type="button" value="Upload" class="button"><?php
+            &nbsp;<input id="bp-media-upload-button" type="button" value="Upload" class="button"><?php
         } else {
             $hidden = '';
         }
