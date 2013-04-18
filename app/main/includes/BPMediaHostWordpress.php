@@ -261,7 +261,7 @@ class BPMediaHostWordpress {
         if (in_array($this->type, array('image', 'video', 'audio'))) {
             if ($this->thumbnail_id) {
                 $metadata = wp_get_attachment_metadata($this->thumbnail_id);
-                $wpattachsize = isset($metadata['sizes']['bp_media_thumbnail'])?'bp_media_thumbnail':'thumbnail';
+                $wpattachsize = isset($metadata['sizes']['bp_media_thumbnail']) ? 'bp_media_thumbnail' : 'thumbnail';
                 $medium_array = image_downsize($this->thumbnail_id, $wpattachsize);
                 $thumb_url = $medium_array[0];
             } else {
@@ -295,13 +295,13 @@ class BPMediaHostWordpress {
             case 'video' :
                 if ($this->thumbnail_id) {
                     $image_array = image_downsize($this->thumbnail_id, 'bp_media_activity_image');
-                    $activity_content.=apply_filters('bp_media_single_activity_filter', '<video poster="' . $image_array[0] . '" src="' . wp_get_attachment_url($attachment_id) . '" width="'.$default_size['video']['medium']['width'].'" height="'.$default_size['video']['medium']['height'].'" type="video/mp4" id="bp_media_video_' . $this->id . '_' . $bp_media_counter . '" controls="controls" preload="none"></video></span>', $this, true);
+                    $activity_content.=apply_filters('bp_media_single_activity_filter', '<video poster="' . $image_array[0] . '" src="' . wp_get_attachment_url($attachment_id) . '" width="' . $default_size['video']['medium']['width'] . '" height="' . $default_size['video']['medium']['height'] . '" type="video/mp4" id="bp_media_video_' . $this->id . '_' . $bp_media_counter . '" controls="controls" preload="none"></video></span>', $this, true);
                 } else {
-                    $activity_content.=apply_filters('bp_media_single_activity_filter', '<video src="' . wp_get_attachment_url($attachment_id) . '" width="'.$default_size['video']['medium']['width'].'" height="'.$default_size['video']['medium']['height'].'" type="video/mp4" id="bp_media_video_' . $this->id . '_' . $bp_media_counter . '" controls="controls" preload="none"></video></span>', $this, true);
+                    $activity_content.=apply_filters('bp_media_single_activity_filter', '<video src="' . wp_get_attachment_url($attachment_id) . '" width="' . $default_size['video']['medium']['width'] . '" height="' . $default_size['video']['medium']['height'] . '" type="video/mp4" id="bp_media_video_' . $this->id . '_' . $bp_media_counter . '" controls="controls" preload="none"></video></span>', $this, true);
                 }
                 break;
             case 'audio' :
-                $activity_content.=apply_filters('bp_media_single_activity_filter', '<audio src="' . wp_get_attachment_url($attachment_id) . '" width="'.$default_size['audio']['medium']['width'].'" type="audio/mp3" id="bp_media_audio_' . $this->id . '_' . $bp_media_counter . '" controls="controls" preload="none" ></audio></span>', $this, true);
+                $activity_content.=apply_filters('bp_media_single_activity_filter', '<audio src="' . wp_get_attachment_url($attachment_id) . '" width="' . $default_size['audio']['medium']['width'] . '" type="audio/mp3" id="bp_media_audio_' . $this->id . '_' . $bp_media_counter . '" controls="controls" preload="none" ></audio></span>', $this, true);
                 break;
             case 'image' :
                 $image_array = image_downsize($attachment_id, 'bp_media_activity_image');
@@ -472,82 +472,80 @@ class BPMediaHostWordpress {
      * @global type $bp_media
      * @return boolean
      */
-    function get_media_gallery_content($move=false) {
+    function get_media_gallery_content($move = false, $echo = true) {
         $attachment = $this->id;
+        $markup = '';
         switch ($this->type) {
             case 'video' :
                 if ($this->thumbnail_id) {
                     $metadata = wp_get_attachment_metadata($this->thumbnail_id);
-                    $wpattachsize = isset($metadata['sizes']['bp_media_thumbnail'])?'bp_media_thumbnail':'thumbnail';
+                    $wpattachsize = isset($metadata['sizes']['bp_media_thumbnail']) ? 'bp_media_thumbnail' : 'thumbnail';
                     $medium_array = image_downsize($this->thumbnail_id, $wpattachsize);
                     $thumb_url = $medium_array[0];
                 } else {
                     $thumb_url = BP_MEDIA_URL . 'app/assets/img/video_thumb.png';
                 }
-                ?>
-                <li id="bp-media-item-<?php echo $this->id ?>">
-                    <a href="<?php echo $this->url ?>" title="<?php _e($this->description, 'buddypress-media'); ?>">
-                        <img src="<?php echo apply_filters('bp_media_video_thumb', $thumb_url, $attachment, $this->type); ?>" />
-                    </a>
-                    <h3 title="<?php echo $this->name; ?>"><?php
-                    if ( $move ) {
-                        echo '<input type="checkbox" name="move" value="'.$this->id.'" />';
-                    }
-                    ?>
-                        <a href="<?php echo $this->url ?>" title="<?php _e($this->description, 'buddypress-media'); ?>"><?php echo $this->name; ?></a>
-                    </h3>
-                </li>
-                <?php
+                $markup .= '<li id="bp-media-item-' . $this->id . '">';
+                $markup .= '<a href="' . $this->url . '" title="' . $this->description . '">';
+                $markup .= '<img src="' . apply_filters("bp_media_video_thumb", $thumb_url, $attachment, $this->type) . '" />';
+                $markup .= '</a>';
+                $markup .= '<h3 title="' . $this->name . '">';
+                if ($move) {
+                    $markup .= '<input type="checkbox" name="move" value="' . $this->id . '" />';
+                }
+                $markup .= '<a href="' . $this->url . '" title="' . $this->description . '">' . $this->name . '</a>';
+                $markup .= '</h3>';
+                $markup .= '</li>';
                 break;
             case 'audio' :
                 if ($this->thumbnail_id) {
                     $metadata = wp_get_attachment_metadata($this->thumbnail_id);
-                    $wpattachsize = isset($metadata['sizes']['bp_media_thumbnail'])?'bp_media_thumbnail':'thumbnail';
+                    $wpattachsize = isset($metadata['sizes']['bp_media_thumbnail']) ? 'bp_media_thumbnail' : 'thumbnail';
                     $medium_array = image_downsize($this->thumbnail_id, $wpattachsize);
                     $thumb_url = $medium_array[0];
                 } else {
                     $thumb_url = BP_MEDIA_URL . 'app/assets/img/audio_thumb.png';
                 }
-                ?>
-                <li id="bp-media-item-<?php echo $this->id; ?>">
-                    <a href="<?php echo $this->url ?>" title="<?php _e($this->description, 'buddypress-media'); ?>">
-                        <img src="<?php echo $thumb_url ?>" />
-                    </a>
-                    <h3 title="<?php echo $this->name; ?>"><?php
-                    if ( $move ) {
-                        echo '<input type="checkbox" name="move" value="'.$this->id.'" />';
-                    }
-                    ?>
-                        <a href="<?php echo $this->url ?>" title="<?php _e($this->description, 'buddypress-media'); ?>"><?php echo $this->name ?></a>
-                    </h3>
-                    <div class="bp-media-ajax-preloader"></div>
-                </li>
-                <?php
+
+                $markup .= '<li id="bp-media-item-' . $this->id . '">';
+                $markup .= '<a href="' . $this->url . '" title="' . $this->description . '">';
+                $markup .= '<img src="' . $thumb_url . '" />';
+                $markup .= '</a>';
+                $markup .= '<h3 title="' . $this->name . '">';
+                if ($move) {
+                    $markup .= '<input type="checkbox" name="move" value="' . $this->id . '" />';
+                }
+                $markup .= '<a href="' . $this->url . '" title="' . $this->description . '">' . $this->name . '</a>';
+                $markup .= '</h3>';
+                $markup .= '<div class="bp-media-ajax-preloader"></div>';
+                $markup .= '</li>';
                 break;
             case 'image' :
                 $metadata = wp_get_attachment_metadata($attachment);
-                $wpattachsize = isset($metadata['sizes']['bp_media_thumbnail'])?'bp_media_thumbnail':'thumbnail';
+                $wpattachsize = isset($metadata['sizes']['bp_media_thumbnail']) ? 'bp_media_thumbnail' : 'thumbnail';
                 $medium_array = image_downsize($attachment, $wpattachsize);
                 $medium_path = $medium_array[0];
-                ?>
-                <li id="bp-media-item-<?php echo $this->id ?>">
-                    <a href="<?php echo $this->url ?>" title="<?php echo $this->description ?>">
-                        <img src="<?php echo $medium_path ?>" />
-                    </a>
-                    <h3 title="<?php echo $this->name ?>"><?php
-                    if ( $move ) {
-                        echo '<input type="checkbox" name="move" value="'.$this->id.'" />';
-                    }
-                    ?>
-                        <a href="<?php echo $this->url ?>" title="<?php _e($this->description, 'buddypress-media'); ?>"><?php echo $this->name ?></a>
-                    </h3>
-                    <div class="bp-media-ajax-preloader"></div>
-                </li>
-                <?php
+
+                $markup .= '<li id="bp-media-item-' . $this->id . '">';
+                $markup .= '<a href="' . $this->url . '" title="' . $this->description . '">';
+                $markup .= '<img src="' . $medium_path . '" />';
+                $markup .= '</a>';
+                $markup .= '<h3 title="' . $this->name . '">';
+                if ($move) {
+                    $markup .= '<input type="checkbox" name="move" value="' . $this->id . '" />';
+                }
+                $markup .= '<a href="' . $this->url . '" title="' . $this->description . '">' . $this->name . '</a>';
+                $markup .= '</h3>';
+                $markup .= '<div class="bp-media-ajax-preloader"></div>';
+                $markup .= '</li>';
                 break;
             default :
-                return false;
+                $markup .= false;
         }
+        if ($echo)
+            echo $markup;
+        else
+            return $markup;
     }
 
     function show_comment_form_wordpress() {
@@ -780,7 +778,7 @@ class BPMediaHostWordpress {
             case 'video' :
                 if ($this->thumbnail_id) {
                     $metadata = wp_get_attachment_metadata($this->thumbnail_id);
-                    $wpattachsize = isset($metadata['sizes']['bp_media_thumbnail'])?'bp_media_thumbnail':'thumbnail';
+                    $wpattachsize = isset($metadata['sizes']['bp_media_thumbnail']) ? 'bp_media_thumbnail' : 'thumbnail';
                     $medium_array = image_downsize($this->thumbnail_id, $wpattachsize);
                     $thumb_url = $medium_array[0];
                 } else {
@@ -790,7 +788,7 @@ class BPMediaHostWordpress {
             case 'audio' :
                 if ($this->thumbnail_id) {
                     $metadata = wp_get_attachment_metadata($this->thumbnail_id);
-                    $wpattachsize = isset($metadata['sizes']['bp_media_thumbnail'])?'bp_media_thumbnail':'thumbnail';
+                    $wpattachsize = isset($metadata['sizes']['bp_media_thumbnail']) ? 'bp_media_thumbnail' : 'thumbnail';
                     $medium_array = image_downsize($this->thumbnail_id, $wpattachsize);
                     $thumb_url = $medium_array[0];
                 } else {
@@ -799,7 +797,7 @@ class BPMediaHostWordpress {
                 break;
             case 'image' :
                 $metadata = wp_get_attachment_metadata($attachment);
-                $wpattachsize = isset($metadata['sizes']['bp_media_thumbnail'])?'bp_media_thumbnail':'thumbnail';
+                $wpattachsize = isset($metadata['sizes']['bp_media_thumbnail']) ? 'bp_media_thumbnail' : 'thumbnail';
                 $medium_array = image_downsize($attachment, $wpattachsize);
                 $thumb_url = $medium_array[0];
                 break;
@@ -1020,7 +1018,7 @@ class BPMediaHostWordpress {
         $create_new_album_flag = false;
         if ($album_id != 0) {
             $album = get_post($album_id);
-            if ( $author_id && $album->post_author != $author_id && $group == 0) {
+            if ($author_id && $album->post_author != $author_id && $group == 0) {
                 $create_new_album_flag = true;
             } else {
                 $post_id = $album->ID;
