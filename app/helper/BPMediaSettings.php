@@ -180,9 +180,9 @@ if (!class_exists('BPMediaSettings')) {
 
             $bp_media_addon = new BPMediaAddon();
             add_settings_section('bpm-addons', __('BuddyPress Media Addons for Audio/Video Conversion', 'buddypress-media'), array($bp_media_addon, 'get_addons'), 'bp-media-addons');
-            
-            add_settings_section('bpm-support', __('Support', 'buddypress-media'), array($this,'bp_media_support_intro'), 'bp-media-support');
-            
+
+            add_settings_section('bpm-support', __('Support', 'buddypress-media'), array($this, 'bp_media_support_intro'), 'bp-media-support');
+
             if (!BPMediaPrivacy::is_installed()) {
                 $bp_media_privacy = new BPMediaPrivacySettings();
                 add_filter('bp_media_add_sub_tabs', array($bp_media_privacy, 'ui'), 99, 2);
@@ -226,44 +226,44 @@ if (!class_exists('BPMediaSettings')) {
         }
 
         public function network_notices() {
-                $flag = 1;
-                if (get_site_option('bpm-media-enable', false)) {
-                    echo '<div id="setting-error-bpm-media-enable" class="error"><p><strong>' . get_site_option('bpm-media-enable') . '</strong></p></div>';
-                    delete_site_option('bpm-media-enable');
-                    $flag = 0;
-                }
-                if (get_site_option('bpm-media-type', false)) {
-                    echo '<div id="setting-error-bpm-media-type" class="error"><p><strong>' . get_site_option('bpm-media-type') . '</strong></p></div>';
-                    delete_site_option('bpm-media-type');
-                    $flag = 0;
-                }
-                if (get_site_option('bpm-media-default-count', false)) {
-                    echo '<div id="setting-error-bpm-media-default-count" class="error"><p><strong>' . get_site_option('bpm-media-default-count') . '</strong></p></div>';
-                    delete_site_option('bpm-media-default-count');
-                    $flag = 0;
-                }
+            $flag = 1;
+            if (get_site_option('bpm-media-enable', false)) {
+                echo '<div id="setting-error-bpm-media-enable" class="error"><p><strong>' . get_site_option('bpm-media-enable') . '</strong></p></div>';
+                delete_site_option('bpm-media-enable');
+                $flag = 0;
+            }
+            if (get_site_option('bpm-media-type', false)) {
+                echo '<div id="setting-error-bpm-media-type" class="error"><p><strong>' . get_site_option('bpm-media-type') . '</strong></p></div>';
+                delete_site_option('bpm-media-type');
+                $flag = 0;
+            }
+            if (get_site_option('bpm-media-default-count', false)) {
+                echo '<div id="setting-error-bpm-media-default-count" class="error"><p><strong>' . get_site_option('bpm-media-default-count') . '</strong></p></div>';
+                delete_site_option('bpm-media-default-count');
+                $flag = 0;
+            }
 
-                if (get_site_option('bpm-recount-success', false)) {
-                    echo '<div id="setting-error-bpm-recount-success" class="updated"><p><strong>' . get_site_option('bpm-recount-success') . '</strong></p></div>';
-                    delete_site_option('bpm-recount-success');
-                    $flag = 0;
-                } elseif (get_site_option('bpm-recount-fail', false)) {
-                    echo '<div id="setting-error-bpm-recount-fail" class="error"><p><strong>' . get_site_option('bpm-recount-fail') . '</strong></p></div>';
-                    delete_site_option('bpm-recount-fail');
-                    $flag = 0;
-                }
+            if (get_site_option('bpm-recount-success', false)) {
+                echo '<div id="setting-error-bpm-recount-success" class="updated"><p><strong>' . get_site_option('bpm-recount-success') . '</strong></p></div>';
+                delete_site_option('bpm-recount-success');
+                $flag = 0;
+            } elseif (get_site_option('bpm-recount-fail', false)) {
+                echo '<div id="setting-error-bpm-recount-fail" class="error"><p><strong>' . get_site_option('bpm-recount-fail') . '</strong></p></div>';
+                delete_site_option('bpm-recount-fail');
+                $flag = 0;
+            }
 
-                if (get_site_option('bpm-settings-saved') && $flag) {
-                    echo '<div id="setting-error-bpm-settings-saved" class="updated"><p><strong>' . get_site_option('bpm-settings-saved') . '</strong></p></div>';
-                }
-                delete_site_option('bpm-settings-saved');
+            if (get_site_option('bpm-settings-saved') && $flag) {
+                echo '<div id="setting-error-bpm-settings-saved" class="updated"><p><strong>' . get_site_option('bpm-settings-saved') . '</strong></p></div>';
+            }
+            delete_site_option('bpm-settings-saved');
         }
-        
-        public function allowed_types(){
+
+        public function allowed_types() {
             $allowed_types = get_site_option('upload_filetypes', 'jpg jpeg png gif');
-            $allowed_types = explode(' ',$allowed_types);
-            $allowed_types = implode(', ',$allowed_types);
-            echo '<span class="description">'.sprintf(__('Currently your network allows uploading of the following file types. You can change the settings <a href="%s">here</a>.<br /><code>%s</code></span>','buddypress-media'),network_admin_url('settings.php#upload_filetypes'),$allowed_types);
+            $allowed_types = explode(' ', $allowed_types);
+            $allowed_types = implode(', ', $allowed_types);
+            echo '<span class="description">' . sprintf(__('Currently your network allows uploading of the following file types. You can change the settings <a href="%s">here</a>.<br /><code>%s</code></span>', 'buddypress-media'), network_admin_url('settings.php#upload_filetypes'), $allowed_types);
         }
 
         /**
@@ -591,24 +591,26 @@ if (!class_exists('BPMediaSettings')) {
         }
 
         public function privacy_notice() {
-            if (BPMediaPrivacy::is_installed())
-                return;
-            $url = add_query_arg(
-                    array('page' => 'bp-media-privacy'), (is_multisite() ? network_admin_url('admin.php') : admin_url('admin.php'))
-            );
+            if (current_user_can('create_users')) {
+                if (BPMediaPrivacy::is_installed())
+                    return;
+                $url = add_query_arg(
+                        array('page' => 'bp-media-privacy'), (is_multisite() ? network_admin_url('admin.php') : admin_url('admin.php'))
+                );
 
-            $notice = '
+                $notice = '
 				<div class="error">
 				<p>' . __('BuddyPress Media 2.6 requires a database upgrade. ', 'buddypress-media')
-                    . '<a href="' . $url . '">' . __('Update Database', 'buddypress-media') . '.</a></p>
+                        . '<a href="' . $url . '">' . __('Update Database', 'buddypress-media') . '.</a></p>
 				</div>
 				';
-            echo $notice;
+                echo $notice;
+            }
         }
-        
-        public function bp_media_support_intro(){
-            echo '<p>'.__('If your site has some issues due to BuddyPress Media and you want one on one support then you can create a support topic on the <a target="_blank" href="http://rtcamp.com/support/forum/buddypress-media/technical-support/">rtCamp Support Forum</a>.','buddypress-media').'</p>';
-            echo '<p>'.__('If you have any suggestions, enhancements or bug reports, then you can open a new issue on <a target="_blank" href="https://github.com/rtCamp/buddypress-media/issues/new">GitHub</a>.','buddypress-media').'</p>';
+
+        public function bp_media_support_intro() {
+            echo '<p>' . __('If your site has some issues due to BuddyPress Media and you want one on one support then you can create a support topic on the <a target="_blank" href="http://rtcamp.com/support/forum/buddypress-media/technical-support/">rtCamp Support Forum</a>.', 'buddypress-media') . '</p>';
+            echo '<p>' . __('If you have any suggestions, enhancements or bug reports, then you can open a new issue on <a target="_blank" href="https://github.com/rtCamp/buddypress-media/issues/new">GitHub</a>.', 'buddypress-media') . '</p>';
         }
 
     }
