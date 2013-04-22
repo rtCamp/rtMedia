@@ -345,7 +345,7 @@ class BPMediaActions {
             if (bp_displayed_user_id() == bp_loggedin_user_id())
                 $action_buttons[] = '<a href="' . $bp_media_current_entry->get_edit_url()
                         . '" class="button item-button bp-secondary-action bp-media-edit" title="'
-                        . __('Edit Media', buddypress-media) . '">' . __('Edit', buddypress-media) . '</a>';
+                        . __('Edit Media', 'buddypress-media') . '">' . __('Edit', 'buddypress-media') . '</a>';
         }
 
         $action_buttons = apply_filters('bp_media_action_buttons', $action_buttons);
@@ -1136,12 +1136,12 @@ class BPMediaActions {
             'meta_query' => $privacy_query,
             'posts_per_page' => $count
         );
-        
+
         if ($count != -1) {
             $paged = get_query_var('paged') ? get_query_var('paged') : 1;
             $args['paged'] = $paged;
         }
-        
+
 
         $type = str_replace(array('music', 'photos'), array('audio', 'image'), $type);
 
