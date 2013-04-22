@@ -345,7 +345,7 @@ class BPMediaActions {
             if (bp_displayed_user_id() == bp_loggedin_user_id())
                 $action_buttons[] = '<a href="' . $bp_media_current_entry->get_edit_url()
                         . '" class="button item-button bp-secondary-action bp-media-edit" title="'
-                        . __('Edit Media', BP_MEDIA_TXT_DOMAIN) . '">' . __('Edit', BP_MEDIA_TXT_DOMAIN) . '</a>';
+                        . __('Edit Media', buddypress-media) . '">' . __('Edit', buddypress-media) . '</a>';
         }
 
         $action_buttons = apply_filters('bp_media_action_buttons', $action_buttons);
