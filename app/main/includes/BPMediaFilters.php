@@ -328,7 +328,6 @@ class BPMediaFilters {
                 'title' => __('Settings', 'buddypress-media'),
                 'href' => bp_get_admin_url(add_query_arg(array('page' => 'bp-media-settings'), 'admin.php'))
             );
-
 			
             // Addons
             $bp_media_admin_nav[] = array(

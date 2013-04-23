@@ -43,6 +43,7 @@ if ( ! defined( 'BP_MEDIA_URL' ) ){
  */
 function buddypress_media_autoloader( $class_name ) {
 	$rtlibpath = array(
+		'app/services/' . $class_name . '.php',
 		'app/helper/' . $class_name . '.php',
 		'app/admin/' . $class_name . '.php',
 		'app/main/' . $class_name . '.php',

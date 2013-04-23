@@ -48,6 +48,7 @@ if (!class_exists('BPMediaAdmin')) {
                     add_action('network_admin_edit_bp_media', array($this, 'save_multisite_options'));
             }
             $this->bp_media_settings = new BPMediaSettings();
+            new BPMediaEncoding();
         }
 
         /**
