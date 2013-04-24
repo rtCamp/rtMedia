@@ -287,10 +287,7 @@ class BPMediaAlbumScreen extends BPMediaScreen {
                         }
                         if (isset($albums->posts) && is_array($albums->posts) && count($albums->posts) > 0) {
                             foreach ($albums->posts as $album) {
-                                if ($album->post_title == $post_wall)
-                                    $album_selector .= '<option value="' . $album->ID . '" selected="selected">' . $album->post_title . '</option>';
-                                else
-                                    $album_selector .= '<option value="' . $album->ID . '">' . $album->post_title . '</option>';
+                                $album_selector .= '<option value="' . $album->ID . '">' . $album->post_title . '</option>';
                             };
                         }
 
