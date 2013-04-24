@@ -609,7 +609,7 @@ if (!class_exists('BPMediaSettings')) {
         }
 
         public function bp_media_support_intro() {
-            echo '<p>' . __('If your site has some issues due to BuddyPress Media and you want one on one support then you can create a support topic on the <a target="_blank" href="http://rtcamp.com/support/forum/buddypress-media/technical-support/">rtCamp Support Forum</a>.', 'buddypress-media') . '</p>';
+            echo '<p>' . __('If your site has some issues due to BuddyPress Media and you want one on one support then you can create a support topic on the <a target="_blank" href="http://rtcamp.com/groups/buddypress-media/forum/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media">rtCamp Support Forum</a>.', 'buddypress-media') . '</p>';
             echo '<p>' . __('If you have any suggestions, enhancements or bug reports, then you can open a new issue on <a target="_blank" href="https://github.com/rtCamp/buddypress-media/issues/new">GitHub</a>.', 'buddypress-media') . '</p>';
         }
 

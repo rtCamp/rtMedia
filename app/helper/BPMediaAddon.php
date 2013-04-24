@@ -25,6 +25,16 @@ if (!class_exists('BPMediaAddon')) {
 
         public function get_addons() {
             $addons = array(
+				 array(
+                    'title' => __('BuddyPress-Media Photo Tagging', 'buddypress-media'),
+                    'img_src' => 'http://rtcamp.com/wp-content/uploads/2013/04/bpm-photo-tagging.png',
+                    'product_link' => 'http://rtcamp.com/store/buddypress-media-photo-tagging/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media',
+                    'desc' => '<p>' . __('BuddyPress Media Instagram adds Instagram like filters to images uploaded with BuddyPress Media.', 'buddypress-media') . '</p>
+                    <p><strong>' . __('Important', 'buddypress-media') . ':</strong> ' . __('You need to have ImageMagick installed on your server for this addon to work.', 'buddypress-media') . '</p>',
+                    'price' => '$19',
+                    'demo_link' => 'http://demo.rtcamp.com/buddypress-media/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media',
+                    'buy_now' => 'http://rtcamp.com/store/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media&add-to-cart=37506'
+                ),
                 array(
                     'title' => __('BuddyPress-Media Instagram', 'buddypress-media'),
                     'img_src' => 'http://cdn.rtcamp.com/wp-content/uploads/2013/03/BuddyPressMedia-Instagram.png',
