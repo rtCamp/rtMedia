@@ -209,6 +209,10 @@ img.bp-media-donation-image{display:block;margin: 10px auto;}
     border-radius: 10px;
 }
 
+.encoding-used,
+.encoding-remaining { display: inline-block; width: 10px; height: 10px; margin-right: 5px;}
+.encoding-used { background : #fb6003; }
+.encoding-remaining { background: #444; }
 
 .bp_media_content img{max-width:100%;}
 .bp_media_content .mejs-poster img{max-width: 100%;}
