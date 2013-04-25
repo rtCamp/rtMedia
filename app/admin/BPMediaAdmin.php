@@ -14,6 +14,7 @@ if (!class_exists('BPMediaAdmin')) {
 
         public $bp_media_upgrade;
         public $bp_media_settings;
+        public $bp_media_encoding;
         public $bp_media_support;
         public $bp_media_feed;
 
@@ -48,7 +49,7 @@ if (!class_exists('BPMediaAdmin')) {
                     add_action('network_admin_edit_bp_media', array($this, 'save_multisite_options'));
             }
             $this->bp_media_settings = new BPMediaSettings();
-            new BPMediaEncoding();
+            $this->bp_media_encoding = new BPMediaEncoding();
         }
 
         /**

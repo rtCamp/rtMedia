@@ -5,9 +5,9 @@
  * the file to the rtCamp Transcoding server instead of making it as attachment.
  */
 class BPMediaEncodingTranscoder extends BPMediaHostWordpress {
-    
+
     public $encoding_url = 'http://api.rtcamp.info/job/new/';
-    
+
     public function insert_media($name, $description, $album_id = 0, $group = 0, $is_multiple = false, $is_activity = false, $files = false, $author_id = false, $album_name = false) {
         do_action('bp_media_before_add_media');
 
@@ -29,7 +29,7 @@ class BPMediaEncodingTranscoder extends BPMediaHostWordpress {
         if (isset($file['error']) || $file === null) {
             throw new Exception(__('Error Uploading File', 'buddypress-media'));
         }
-        
+
 
         $type = $file['type'];
         if (in_array($type, array('image/gif', 'image/jpeg', 'image/png'))) {
@@ -50,7 +50,7 @@ class BPMediaEncodingTranscoder extends BPMediaHostWordpress {
             'post_content' => $content,
             'post_parent' => $post_id,
         );
-        
+
         switch ($type) {
             case 'video/mp4' :
             case 'video/quicktime' :
@@ -121,7 +121,7 @@ class BPMediaEncodingTranscoder extends BPMediaHostWordpress {
                 $activity_content = false;
                 throw new Exception(__('Media File you have tried to upload is not supported. Supported media files are .jpg, .png, .gif, .mp3, .mov and .mp4.', 'buddypress-media'));
         }
-        
+
         $attachment_id = wp_insert_attachment($attachment, $file, $post_id);
         if (!is_wp_error($attachment_id)) {
             add_filter('intermediate_image_sizes', array($this, 'bp_media_image_sizes'), 99);
@@ -143,35 +143,34 @@ class BPMediaEncodingTranscoder extends BPMediaHostWordpress {
         } else {
             update_post_meta($attachment_id, 'bp-media-key', (-$group));
         }
-        
+
         $api_key = bp_get_option('bp-media-encoding-api-key');
-        
+
         $query_args = array('url' => urlencode($url),
-            'callbackurl' =>urlencode(home_url()),
+            'callbackurl' => urlencode(home_url()),
             'force' => 0,
             'size' => filesize($file),
             'formats' => 'mp4');
-        $upload_url = add_query_arg($query_args,$this->encoding_url.$api_key);
+        $upload_url = add_query_arg($query_args, $this->encoding_url . $api_key);
         error_log($upload_url);
-        $upload_page = wp_remote_get($upload_url,array('timeout'=>20));
-        if ( !is_wp_error($upload_page) ) {
+        $upload_page = wp_remote_get($upload_url, array('timeout' => 20));
+        if (!is_wp_error($upload_page)) {
             $upload_info = json_decode($upload_page['body']);
-            if ( $upload_info->status ) {
+            if ($upload_info->status) {
                 update_post_meta($attachment_id, 'bp-media-encoding-job-id', $upload_info->job_id);
             } else {
                 throw new Exception($upload_info->message);
             }
         }
-        
+
 //        update_post_meta( $attachment_id, 'bp_media_privacy', 6 );
 //        $this->pre_update_count();
         do_action('bp_media_after_add_media', $this, $is_multiple, $is_activity, $group);
 
         return $attachment_id;
-
     }
-    
-    function pre_update_count(){
+
+    function pre_update_count() {
         global $bp;
         $user_id = $bp->loggedin_user->id;
         global $wpdb;
