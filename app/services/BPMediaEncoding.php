@@ -25,11 +25,11 @@ class BPMediaEncoding {
         if ($this->api_key) {
             $usage_info = bp_get_option('bp-media-encoding-usage');
             if ($usage_info) {
-                if (isset($usage_info[$this->api_key]['status']) && $usage_info[$this->api_key]['status']) {
-                    if (isset($usage_info[$this->api_key]['remaining']) && $usage_info[$this->api_key]['remaining'] > 0) {
-                        if ($usage_info->remaining < 524288000 && !bp_get_option('bp-media-encoding-usage-limit-mail'))
+                if (isset($usage_info[$this->api_key]->status) && $usage_info[$this->api_key]->status) {
+                    if (isset($usage_info[$this->api_key]->remaining) && $usage_info[$this->api_key]->remaining > 0) {
+                        if ($usage_info[$this->api_key]->remaining < 524288000 && !bp_get_option('bp-media-encoding-usage-limit-mail'))
                             $this->nearing_usage_limit($usage_info);
-                        elseif ($usage_info->remaining > 524288000 && bp_get_option('bp-media-encoding-usage-limit-mail'))
+                        elseif ($usage_info[$this->api_key]->remaining > 524288000 && bp_get_option('bp-media-encoding-usage-limit-mail'))
                             bp_update_option('bp-media-encoding-usage-limit-mail', 0);
                         add_action('bp_init', array($this, 'handle_callback'), 20);
                         add_filter('bp_media_transcoder', array($this, 'enqueue'), 10, 2);
@@ -121,19 +121,31 @@ class BPMediaEncoding {
 
     public function nearing_usage_limit($usage_details) {
         $subject = __('BuddyPress Media Encoding: Nearing quota limit.', 'buddypress-media');
-        $message = __('Your are nearing the quota limit for your BuddyPress Media encoding service.
-            Following are the details: 
-        Used: %s
-        Remaining: %s
-        Total: %s', 'buddypress-media');
+        $message = __('<p>You are nearing the quota limit for your BuddyPress Media encoding service.</p><p>Following are the details:</p><p><strong>Used:</strong> %s</p><p><strong>Remaining</strong>: %s</p><p><strong>Total:</strong> %s</p>', 'buddypress-media');
         $users = get_users(array('role' => 'administrator'));
         if ($users) {
             foreach ($users AS $user)
-                ;
-            $admin_email_ids[] = $user->user_email;
-            wp_mail($admin_email_ids, $subject, sprintf($message, size_format($usage_details->used, 2), size_format($usage_details->remaining, 2), size_format($usage_details->total, 2)));
+                $admin_email_ids[] = $user->user_email;
+            add_filter('wp_mail_content_type', create_function('', 'return "text/html";'));
+            wp_mail($admin_email_ids, $subject, sprintf($message, size_format($usage_details[$this->api_key]->used, 2), size_format($usage_details[$this->api_key]->remaining, 2), size_format($usage_details[$this->api_key]->total, 2)));
         }
         bp_update_option('bp-media-encoding-usage-limit-mail', 1);
+    }
+
+    public function usage_quota_over() {
+        $usage_details = bp_get_option('bp-media-encoding-usage');
+        if (!$usage_details[$this->api_key]->remaining) {
+            $subject = __('BuddyPress Media Encoding: Usage quota over.', 'buddypress-media');
+            $message = __('<p>Your usage quota is over. Upgrade your plan</p><p>Following are the details:</p><p><strong>Used:</strong> %s</p><p><strong>Remaining</strong>: %s</p><p><strong>Total:</strong> %s</p>', 'buddypress-media');
+            $users = get_users(array('role' => 'administrator'));
+            if ($users) {
+                foreach ($users AS $user)
+                    $admin_email_ids[] = $user->user_email;
+                add_filter('wp_mail_content_type', create_function('', 'return "text/html";'));
+                wp_mail($admin_email_ids, $subject, sprintf($message, size_format($usage_details[$this->api_key]->used, 2), 0, size_format($usage_details[$this->api_key]->total, 2)));
+            }
+            bp_update_option('bp-media-encoding-usage-limit-mail', 1);
+        }
     }
 
     public function save_api_key() {
@@ -146,6 +158,7 @@ class BPMediaEncoding {
     }
 
     public function allowed_types($types) {
+//        $this->update_usage($this->api_key);
         $types = array(); //Allow all types of file to be uploded
         return $types;
     }
@@ -191,18 +204,19 @@ class BPMediaEncoding {
     }
 
     public function usage_widget() {
+        $this->update_usage($this->api_key);
         $usage_details = bp_get_option('bp-media-encoding-usage');
         $content = '';
-        if ($usage_details && isset($usage_details[$this->api_key]['status']) && $usage_details[$this->api_key]['status']) {
-            if (isset($usage_details[$this->api_key]['used']))
-                $content .= '<p><span class="encoding-used"></span>' . __('Used', 'buddypress-media') . ': ' . (($used_size = size_format($usage_details[$this->api_key]['used'], 2)) ? $used_size : '0MB') . '</p>';
-            if (isset($usage_details[$this->api_key]['remaining']))
-                $content .= '<p><span class="encoding-remaining"></span>' . __('Remaining', 'buddypress-media') . ': ' . (($remaining_size = size_format($usage_details[$this->api_key]['remaining'], 2)) ? $remaining_size : '0MB') . '</p>';
-            if (isset($usage_details[$this->api_key]['total']))
-                $content .= '<p>' . __('Total', 'buddypress-media') . ': ' . size_format($usage_details[$this->api_key]['total'], 2) . '</p>';
+        if ($usage_details && isset($usage_details[$this->api_key]->status) && $usage_details[$this->api_key]->status) {
+            if (isset($usage_details[$this->api_key]->used))
+                $content .= '<p><span class="encoding-used"></span>' . __('Used', 'buddypress-media') . ': ' . (($used_size = size_format($usage_details[$this->api_key]->used, 2)) ? $used_size : '0MB') . '</p>';
+            if (isset($usage_details[$this->api_key]->remaining))
+                $content .= '<p><span class="encoding-remaining"></span>' . __('Remaining', 'buddypress-media') . ': ' . (($remaining_size = size_format($usage_details[$this->api_key]->remaining, 2)) ? $remaining_size : '0MB') . '</p>';
+            if (isset($usage_details[$this->api_key]->total))
+                $content .= '<p>' . __('Total', 'buddypress-media') . ': ' . size_format($usage_details[$this->api_key]->total, 2) . '</p>';
             $usage = new rtProgress();
-            $content .= $usage->progress_ui($usage->progress($usage_details[$this->api_key]['used'], $usage_details[$this->api_key]['total']), false);
-            if ($usage_details[$this->api_key]['remaining'] <= 0)
+            $content .= $usage->progress_ui($usage->progress($usage_details[$this->api_key]->used, $usage_details[$this->api_key]->total), false);
+            if ($usage_details[$this->api_key]->remaining <= 0)
                 $content .= '<div class="error below-h2"><p>' . __('Your usage limit has been reached. Upgrade your plan.', 'buddypress-media') . '</p></div>';
         } else {
             $content .= '<div class="error below-h2"><p>' . __('Your API key is not valid or is expired.', 'buddypress-media') . '</p></div>';
@@ -311,15 +325,15 @@ class BPMediaEncoding {
                 if ($file_bits) {
                     unlink(get_attached_file($attachment_id));
                     $upload_info = wp_upload_bits($new_wp_attached_file_pathinfo['basename'], null, $file_bits);
-                    $this->update($wpdb->posts, array('guid' => $upload_info['url']), array('ID' => $attachment_id));
+                    $wpdb->update($wpdb->posts, array('guid' => $upload_info['url'], 'post_mime_type' => 'video/mp4'), array('ID' => $attachment_id));
                     $old_wp_attached_file = get_post_meta($attachment_id, '_wp_attached_file', true);
                     $old_wp_attached_file_pathinfo = pathinfo($old_wp_attached_file);
                     update_post_meta($attachment_id, '_wp_attached_file', str_replace($old_wp_attached_file_pathinfo['basename'], $new_wp_attached_file_pathinfo['basename'], $old_wp_attached_file));
                 } else {
-                    error_log('Could not read file.', 'buddypress-media');
+                    error_log(__('Could not read file.', 'buddypress-media'));
                 }
             } else {
-                error_log('Something went wrong.', 'buddypress-media');
+                error_log(__('Something went wrong. The required attachment id does not exists. It must have been deleted.', 'buddypress-media'));
             }
 
             $this->update_usage($this->api_key);
