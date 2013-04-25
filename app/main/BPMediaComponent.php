@@ -58,6 +58,7 @@ class BPMediaComponent extends BP_Component {
 					$bp->pages->{$this->id}->slug : BP_MEDIA_SLUG,
 			// 'has_directory'         => true, // Set to false if not required
 			'search_string' => __( 'Search Media...', 'buddypress-media' ),
+			'notification_callback' => 'bp_media_notifications_callback'
 		);
 		parent::setup_globals( $globals );
 	}
@@ -325,6 +326,19 @@ class BPMediaComponent extends BP_Component {
 		parent::register_post_types();
 	}
 
+}
+
+//needs to be a bloody singleton because BuddyPress does a function_exists!
+function bp_media_notifications_callback($action, $media_id, $initiator_id, $total_items){
+	$params = array(
+			'action'		=> $action,
+			'media_id'		=> $media_id,
+			'initiator_id'	=> $initiator_id,
+			'total_items'	=> $total_items
+		);
+	print_r($params);
+
+		return apply_filters('bp_media_notifications',$params);
 }
 
 ?>
