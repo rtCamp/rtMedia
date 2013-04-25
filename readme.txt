@@ -6,7 +6,7 @@ License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires at least: WordPress 3.5 + BuddyPress 1.6
 Tested up to: WordPress 3.5 + BuddyPress 1.7
-Stable tag: 2.10.1
+Stable tag: 2.10.2
 
 Adds Photos, Music, Videos & Albums to BuddyPress. Supports mobile devices (iPhone/iPad, etc) and automatic audio/video conversion.
 
@@ -15,11 +15,12 @@ Adds Photos, Music, Videos & Albums to BuddyPress. Supports mobile devices (iPho
 BuddyPress Media adds Photos, Music, Videos & Albums to your BuddyPress powered social network. Supports mobile devices (Android/iPhone/iPad, etc) and automatic audio/video conversion.
 
 = Demo & Code =
-* [BuddyPress Media **Demo**](http://demo.rtcamp.com/buddypress-media/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media) (Stand-alone)
- * [BuddyPress Media Kaltura Add-on](http://demo.rtcamp.com/bpm-kaltura/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media)
- * [BuddyPress Media FFMPEG Add-on](http://demo.rtcamp.com/bpm-media/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media)
+* [BuddyPress Media **Demo**](http://demo.rtcamp.com/buddypress-media/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media) (Stand-alone, includes Instagram and Photo tagging addon)
+* [BuddyPress Media Kaltura Add-on](http://demo.rtcamp.com/bpm-kaltura/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media)
+* [BuddyPress Media FFMPEG Add-on](http://demo.rtcamp.com/bpm-media/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media)
 
-* [Fork BuddyPress Media on **GitHub**](http://github.com/rtCamp/buddypress-media/)
+
+[Fork BuddyPress Media on **GitHub**](http://github.com/rtCamp/buddypress-media/)
 
 = Features =
 
@@ -36,6 +37,8 @@ BuddyPress Media adds Photos, Music, Videos & Albums to your BuddyPress powered 
 * **HTML5 playback**: with fall back to flash/silverlight player support
 * **Privacy**: Users can control access to their uploaded media
 * **Shortcode**: Display public media of all the users on the site
+* **Enhanced media management**: including sorting, moving media between albums, etc
+* **Advanced Image Editor**: Use the Dashboard media editor on the front-end!
 * **Automatic conversion** (*premium*): of common audio & video formats to mp3/mp4 via [Kaltura Add-On](http://rtcamp.com/store/buddypress-media-kaltura/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "BuddyPress Media Kaltura Addon for Kaltura.com/Kaltura-CE/Kaltura On-Prem version"), and [FFMPEG Add-On](http://rtcamp.com/store/buddypress-media-ffmpeg/ "BuddyPress Media FFMPEG Addon")
 
 = Roadmap =
@@ -43,31 +46,20 @@ BuddyPress Media adds Photos, Music, Videos & Albums to your BuddyPress powered 
 [BuddyPress Media's Roadmap page](http://rtcamp.com/buddypress-media/roadmap/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "Visit BuddyPress Media's Roadmap page")
 
 * **Importers**: Site admins will be able to import media from other media plugins for BuddyPress
-* **Video conversion service** integration [*new*]: Videos can be converted via a service without installing or configuring anything on your server.
 * **External media** support: Users will be able to add external media using url
 * **Flagging** and **report abuse**: To auto moderate spam/inappropriate media
-* **Enhanced media management**: including sorting, moving media between albums, etc
 
-= Addons (Premium) =
+= Premium Addons =
 
-[**BuddyPress-Media Kaltura addon**](http://rtcamp.com/store/buddypress-media-kaltura/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "BuddyPress Media Kaltura Addon for Kaltura.com/Kaltura-CE/Kaltura On-Prem version")
-
-* Adds support for additional video formats including *.avi, *.mkv, *.asf, *.flv, *.wmv, *.rm, *.mpg.
-* You can use Kaltura.com/Kaltura On-Prem or self-hosted Kaltura-CE server with this.
-
-Available [here](http://rtcamp.com/store/buddypress-media-kaltura/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "BuddyPress Media Kaltura Addon for Kaltura.com/Kaltura-CE/Kaltura On-Prem version")
-
-[**BuddyPress-Media FFMPEG addon**](http://rtcamp.com/store/buddypress-media-ffmpeg-converter/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "BuddyPress Media FFMPEG Addon").
-
-* Adds support for additional video formats including *.avi, *.mkv, *.asf, *.flv, *.wmv, *.rm, *.mpg.
-* Adds support for additional audio formats including *.mp3, *.ogg, *.wav, *.aac, *.m4a, *.wma.
-
-Available [here](http://rtcamp.com/store/buddypress-media-ffmpeg-converter/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "BuddyPress Media FFMPEG Addon").
+* [**BuddyPress-Media Kaltura addon**](http://rtcamp.com/store/buddypress-media-kaltura/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "BuddyPress Media Kaltura Addon for Kaltura.com/Kaltura-CE/Kaltura On-Prem version"): Adds support for additional browser-unsupported audio/video formats via Kaltura.com/Kaltura On-Prem or self-hosted Kaltura-CE servers.
+* [**BuddyPress-Media FFMPEG addon**](http://rtcamp.com/store/buddypress-media-ffmpeg-converter/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "BuddyPress Media FFMPEG Addon"): Adds support for additional browser-unsupported audio/video formats via self hosted FFMPEG
+* [**BuddyPress-Media Instagram**](http://rtcamp.com/store/buddypress-media-instagram/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "BuddyPress Media FFMPEG Addon"): Adds Instagram like filters to photos.
+* [**BuddyPress-Media Photo Tagging**](http://rtcamp.com/store/buddypress-media-photo-tagging/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "BuddyPress Media FFMPEG Addon"): Adds user tagging to photos.
 
 **Coming Soon**
 
-* **Instagram filters** [*new*] (*premium*): Users will be able to apply Instagram like effects to uploaded images.
-* **Photo tagging** [*new*] (*premium*): Users will be able to tag themselves and friends on the uploaded images.
+* **Encoding Service** [*new*] (*premium*): Site owners will be able to get unsupported formats converted via this service, even on a shared hosting, without installing any additional software.
+* **Watermark Addon** [*new*] (*premium*): Adds advanced, customised watermarks to photos.
 * **Membership Addon** (*premium*): Users can be given controlled upload quotas and media type access on their profiles and groups.
 
 = Support =
@@ -75,14 +67,14 @@ Available [here](http://rtcamp.com/store/buddypress-media-ffmpeg-converter/?utm_
 **Important:** Please provide a **URL** of the site/web page when requesting support.
 
 * If you find something wrong on your site and feel it is due to BuddyPress Media:
- * [**rtCamp** Support Forum](http://rtcamp.com/support/forum/buddypress-media/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media)
+ * [**rtCamp** Support Forum](http://rtcamp.com/groups/buddypress-media/forum/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media)
 
 * If you are a developer and/or tester or would like to request a new feature:
  * [**GitHub** development issue log](http://github.com/rtCamp/buddypress-media/issues)
 
 = Translation =
 
-BuddyPress Media is now available in *Brazilian Portuguese*, *Spanish*, *Japanese*, *Polish* and *Serbian*. Translations for German, Italian, French and Dutch are in progress. BuddyPress Media includes [full translation support](https://rtcamp.com/tutorials/buddypress-media-translation/). Head over to the [translation project](http://rtcamp.com/translate/projects/buddypress-media/) to contribute your translations. If you don't see the language of your choice, let us know in the support forum, we'll add it.
+BuddyPress Media includes [full translation support](https://rtcamp.com/tutorials/buddypress-media-translation/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media). Head over to the [translation project](http://rtcamp.com/translate/projects/buddypress-media/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media) to contribute your translations. If you don't see the language of your choice, let us know in the support forum, we'll add it.
 
 * [Brazilian Portuguese](https://rtcamp.com/translate/projects/buddypress-media/pt-br/default)  translation by [Jose Fabiosan](http://profiles.wordpress.org/josefabiosan/) and [doutorsocrates](http://profiles.wordpress.org/doutorsocrates/)
 * [Spanish](https://rtcamp.com/translate/projects/buddypress-media/es/default) translation by [Andrés Felipe](http://profiles.wordpress.org/naturalworldstm/)
@@ -91,6 +83,8 @@ BuddyPress Media is now available in *Brazilian Portuguese*, *Spanish*, *Japanes
 * [Serbian](https://rtcamp.com/translate/projects/buddypress-media/sr/default) translation by [nikolakica](http://profiles.wordpress.org/nikolakica/)
 * [German](https://rtcamp.com/translate/projects/buddypress-media/de/default) translation by [hannes.muc]
 * [French](https://rtcamp.com/translate/projects/buddypress-media/fr/default) translation by [Peter Lewit](http://profiles.wordpress.org/deegan)
+* [Persian](https://rtcamp.com/translate/projects/buddypress-media/fa/default) translation by [mahdiar](http://profiles.wordpress.org/mahdiar/)
+
 
 (**Note**: Credits are given for translations that are at least 50% complete.)
 
@@ -124,6 +118,13 @@ Please visit [BuddyPress Media's Features page](http://rtcamp.com/buddypress-med
 == Changelog ==
 
 Please visit [BuddyPress Media's Roadmap page](http://rtcamp.com/buddypress-media/roadmap/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "Visit BuddyPress Media's Features page") to get some details about future releases.
+
+= 2.10.2 =
+* Fixes a [bug in admin](https://github.com/rtCamp/buddypress-media/issues/264)
+* Fixes text-domain issues
+* Adds framework for notifications
+* Adds support for Tagging Addon
+* Updated translations, especially German and Persian
 
 = 2.10.1 =
 * Fixes bug in shortcode
@@ -377,5 +378,5 @@ Please visit [BuddyPress Media's Roadmap page](http://rtcamp.com/buddypress-medi
 * HTML5 Video Tag Support (with fallback)
 
 == Upgrade Notice ==
-= 2.10.1 =
-Adds album management options (Merge/Move/Delete), shortcode to display media
+= 2.10.2 =
+Adds album management options (Merge/Move/Delete), shortcode to display media. Bug fixes.
