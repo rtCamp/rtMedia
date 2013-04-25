@@ -1,0 +1,1408 @@
+# Translation of BuddyPress Media in Persian
+# This file is distributed under the same license as the BuddyPress Media package.
+msgid ""
+msgstr ""
+"PO-Revision-Date: 2013-04-25 07:32:08+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: GlotPress/0.1\n"
+"Project-Id-Version: BuddyPress Media\n"
+
+#: app/helper/BPMediaSettings.php:612
+msgid "If your site has some issues due to BuddyPress Media and you want one on one support then you can create a support topic on the <a target=\"_blank\" href=\"http://rtcamp.com/groups/buddypress-media/forum/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media\">rtCamp Support Forum</a>."
+msgstr ""
+
+#: app/helper/BPMediaAddon.php:29
+msgid "BuddyPress-Media Photo Tagging"
+msgstr ""
+
+#: app/main/profile/BPMediaAlbumScreen.php:300
+msgid "Submit"
+msgstr "ارسال"
+
+#: app/main/includes/BPMediaActions.php:531
+msgid "Please Select an Album !!"
+msgstr "لطفا یک آلبوم را انتخاب نمایید ."
+
+#: app/main/includes/BPMediaActions.php:1163
+msgid "Private"
+msgstr "خصوصی"
+
+#: app/main/includes/BPMediaActions.php:1175
+msgid "No media found"
+msgstr "هیچ رسانه ای پیدا نشد ."
+
+#: app/main/profile/BPMediaAlbumScreen.php:250
+#: app/main/profile/BPMediaAlbumScreen.php:258
+msgid "Delete Album"
+msgstr "حذف آلبوم"
+
+#: app/main/profile/BPMediaAlbumScreen.php:254
+#: app/main/profile/BPMediaAlbumScreen.php:297
+msgid "Select All Visible"
+msgstr "انتخاب تمام قابل مشاهده ها"
+
+#: app/main/profile/BPMediaAlbumScreen.php:255
+#: app/main/profile/BPMediaAlbumScreen.php:298
+msgid "Unselect All Visible"
+msgstr "عدم انتخاب تمام قابل مشاهده ها"
+
+#: app/main/profile/BPMediaAlbumScreen.php:256
+msgid "Delete Selected Media"
+msgstr "حذف رسانه های انتخاب شده"
+
+#: app/main/profile/BPMediaAlbumScreen.php:295
+msgid "Move"
+msgstr "انتقال"
+
+#: app/main/profile/BPMediaAlbumScreen.php:299
+msgid "Move selected"
+msgstr "انتقال انتخاب شده ها"
+
+#: app/main/profile/BPMediaAlbumScreen.php:299
+msgid "Move all"
+msgstr "انتقال همه"
+
+#: app/main/includes/BPMediaActions.php:183
+msgid "Something went wrong. Please try again."
+msgstr "خطایی رخ داد . لطفا دوباره تلاش نمایید ."
+
+#: app/main/includes/BPMediaActions.php:184
+msgid "Are you sure you want to merge this album?"
+msgstr "آیا مطمئنید که می خواهید این آلبوم را ترکیب کنید ؟ "
+
+#: app/main/includes/BPMediaActions.php:185
+msgid "Would you like to delete this album after the merge?"
+msgstr "آیا مایلید پس از ترکیب این آلبوم حذف شود ؟"
+
+#: app/main/includes/BPMediaActions.php:186
+msgid "Are you sure you want to delete the selected media?"
+msgstr "آیا مطمئنید که می خواهید رسانه های انتخاب شده را حذف نمایید ؟"
+
+#: app/main/includes/BPMediaActions.php:187
+msgid "Are you sure you want to delete this activity and associated media?"
+msgstr "آیا مطمئنید که می خواهید این فعالیت را به همراه رسانه اش حذف نمایید ؟"
+
+#: app/main/includes/BPMediaActions.php:188
+msgid "Are you sure?"
+msgstr "آیا مطمئن هستید؟"
+
+#: app/main/includes/BPMediaActions.php:189
+msgid "Please select media."
+msgstr "لطفا رسانه خود را انتخاب نمایید ."
+
+#: app/main/includes/BPMediaActions.php:190
+msgid "Please select an action."
+msgstr "لطفا عمل مورد نظر خود را انتخاب نمایید ."
+
+#: app/main/includes/BPMediaActions.php:529
+msgid "You have not filled the album name"
+msgstr "شما نام آلبوم را وارد نکرده اید ."
+
+#: app/main/includes/BPMediaActions.php:530
+msgid "Sorry you cannot create albums in this group"
+msgstr "با عرض پوزش ! شما قادر به ایجاد آلبوم در این گروه نیستید ."
+
+#: app/admin/BPMediaAdmin.php:455 app/admin/BPMediaAdmin.php:466
+#: app/admin/BPMediaAdmin.php:475
+msgid "Update Network Settings Automatically"
+msgstr "تنظیمات شبکه را به طور خودکار به روز کن ."
+
+#: app/admin/BPMediaAdmin.php:465
+msgid "You have video enabled on BuddyPress Media but your network allowed filetypes does not allow uploading of mp4. Click <a href=\"%s\">here</a> to change your settings manually."
+msgstr ""
+
+#: app/admin/BPMediaAdmin.php:474
+msgid "You have audio enabled on BuddyPress Media but your network allowed filetypes does not allow uploading of mp3. Click <a href=\"%s\">here</a> to change your settings manually."
+msgstr ""
+
+#: app/admin/BPMediaAdmin.php:489
+msgid "Network settings updated successfully."
+msgstr "تنظیمات شبکه با موفقیت به روز شد ."
+
+#: app/admin/BPMediaAdmin.php:454
+msgid "You have images enabled on BuddyPress Media but your network allowed filetypes does not allow uploading of %s. Click <a href=\"%s\">here</a> to change your settings manually."
+msgstr ""
+
+#: app/admin/BPMediaAdmin.php:455 app/admin/BPMediaAdmin.php:466
+#: app/admin/BPMediaAdmin.php:475
+msgid "Recommended"
+msgstr "پیشنهاد می شود"
+
+#: app/helper/BPMediaSettings.php:331
+msgid "If you make changes to width, height or crop settings, you must use \"<a href=\"%s\">Regenerate Thumbnail Plugin</a>\" to regenerate old images.\""
+msgstr ""
+
+#: app/helper/BPMediaSettings.php:501
+msgid "Width"
+msgstr "عرض"
+
+#: app/helper/BPMediaSettings.php:502
+msgid "Height"
+msgstr "ارتفاع"
+
+#: app/helper/BPMediaSettings.php:503
+msgid "Crop"
+msgstr "برش"
+
+#: app/helper/BPMediaSettings.php:613
+msgid "If you have any suggestions, enhancements or bug reports, then you can open a new issue on <a target=\"_blank\" href=\"https://github.com/rtCamp/buddypress-media/issues/new\">GitHub</a>."
+msgstr ""
+
+#: app/admin/BPMediaAdmin.php:68
+msgid "Please do not refresh this page."
+msgstr "لطفا این صفحه را رفرش نکنید"
+
+#: app/admin/BPMediaAdmin.php:69
+msgid "Something went wronng. Please <a href onclick=\"location.reload();\">refresh</a> page."
+msgstr ""
+
+#: app/helper/BPMediaSettings.php:266
+msgid "Currently your network allows uploading of the following file types. You can change the settings <a href=\"%s\">here</a>.<br /><code>%s</code></span>"
+msgstr ""
+
+#: app/helper/BPMediaSettings.php:50
+msgid "Image Settings"
+msgstr "تنظیمات تصویر"
+
+#: app/helper/BPMediaSettings.php:51
+msgid "Thumbnail Size"
+msgstr "اندازه تصویر بندانگشتی"
+
+#: app/helper/BPMediaSettings.php:55
+msgid "Used in albums, sidebar media widget acitvity stream"
+msgstr "استفاده شده در آلبوم ها ابزارک کناری رسانه در فعالیت"
+
+#: app/helper/BPMediaSettings.php:57
+msgid "Medium Size"
+msgstr "سایز متوسط"
+
+#: app/helper/BPMediaSettings.php:61
+msgid "Used in activity stream for single media uploads"
+msgstr "استفاده شده در فعالیت برای آپلود یک رسانه"
+
+#: app/helper/BPMediaSettings.php:63
+msgid "Large Size"
+msgstr "سایز بزرگ"
+
+#: app/helper/BPMediaSettings.php:67
+msgid "Used in single media and thickbox"
+msgstr "استفاده شده در رسانه تنها"
+
+#: app/helper/BPMediaSettings.php:70
+msgid "Video Payer Settings"
+msgstr "تنظیمات پخش کننده ویدیو"
+
+#: app/helper/BPMediaSettings.php:71 app/helper/BPMediaSettings.php:81
+msgid "Activity Player Size"
+msgstr "اندازه پخش کننده فعالیت"
+
+#: app/helper/BPMediaSettings.php:75 app/helper/BPMediaSettings.php:86
+msgid "Single Player Size"
+msgstr "اندازه پخش کننده تنها"
+
+#: app/helper/BPMediaSettings.php:80
+msgid "Audio Player Settings"
+msgstr "اندازه پخش کننده صوت"
+
+#: app/main/profile/BPMediaTemplate.php:98
+msgid "Max Upload Size"
+msgstr "حداکثر حجم آپلود"
+
+#: app/main/profile/BPMediaTemplate.php:44
+msgid "Select Album: "
+msgstr "انتخاب آلبوم"
+
+#: app/main/profile/BPMediaTemplate.php:93
+msgid "&"
+msgstr " و "
+
+#: app/importers/BPMediaAlbumimporter.php:141
+msgid "The following %d BP Album Media id's could not be imported"
+msgstr "شماره های %d از آلبوم بادی پرس را نمی توان وارد کرد ."
+
+#: app/importers/BPMediaAlbumimporter.php:150
+msgid "I just imported bp-album to @buddypressmedia http://goo.gl/8Upmv on %s"
+msgstr "من bp-album را به  @buddypressmedia http://goo.gl/8Upmv  در  %s اضافه کردم  ."
+
+#: app/importers/BPMediaAlbumimporter.php:151
+msgid "Congratulations!"
+msgstr "!تبریک"
+
+#: app/importers/BPMediaAlbumimporter.php:151
+msgid "All media from BP Album has been imported."
+msgstr "تمام فایل ها از BP Album منتقل شدند."
+
+#: app/importers/BPMediaAlbumimporter.php:152
+msgid "Tweet this"
+msgstr "این را توییت کن"
+
+#: app/importers/BPMediaAlbumimporter.php:156
+msgid "However, a lot of unnecessary files and a database table are still eating up your resources. If everything seems fine, you can clean this data up."
+msgstr "در حال حاضر یک سری فایل ها و جداول پایگاه داده غیر ضروری از منابع شما استفاده می کنند . اگر مشکلی نیست شما می توانید این اطلاعات را پاک نمایید ."
+
+#: app/importers/BPMediaAlbumimporter.php:159
+msgid "Clean up Now"
+msgstr "همین حالا پاک کن"
+
+#: app/importers/BPMediaAlbumimporter.php:164
+msgid "Clean up Later"
+msgstr "بعدا پاک کن"
+
+#: app/importers/BPMediaAlbumimporter.php:169
+msgid "Why don't you try adding some instagram like effects to your images?"
+msgstr "چرا افکت هایی مثل اینستاگرام به تصاویر خود اضافه نمی کنید ؟"
+
+#: app/importers/BPMediaAlbumimporter.php:187
+msgid "Looks like you don't use BP Album. Is there any other BuddyPress Plugin you want an importer for?"
+msgstr "به نظر میرسه شما از BP Album استفاده نمی کنید . آیا می خواهید از افزونه دیگری اطلاعات را وارد کنید ؟"
+
+#: app/importers/BPMediaAlbumimporter.php:188
+msgid "<a href=\"%s\">Create an issue</a> on GitHub requesting the same."
+msgstr "<a href=\"%s\">ایجاد یک موضوع </a> در GitHub چیزی مشابه را تقاضا می کند ."
+
+#: app/importers/BPMediaAlbumimporter.php:72
+msgid "Warning!"
+msgstr "هشدار"
+
+#: app/importers/BPMediaAlbumimporter.php:72
+msgid "This import process is irreversible. Although everything is tested, please take a <a target=\"_blank\" href=\"http://codex.wordpress.org/WordPress_Backups\">backup of your database and files</a>, before proceeding. If you don't know your way around databases and files, consider <a target=\"_blank\" href=\"%s\">hiring us</a>, or another professional."
+msgstr "این واردسازی غیرقابل بازگشت می باشد . اگرچه همه چیز تست شده است ولی لطفا قبل از ادامه <a target=\"_blank\" href=\"http://codex.wordpress.org/WordPress_Backups\">آموزش پشتیبان گیری</a> یک پشتیبان از پایگاه داده و اطلاعات خود بگیرید .اگر نمی دانید چطور این کار را انجام دهید می توانید <a target=\"_blank\" href=\"%s\"> ما را استخدام کنید </a> یا به یک فرد متخصص اطلاع دهید ."
+
+#: app/importers/BPMediaAlbumimporter.php:73
+msgid "If you have set \"WP_DEBUG\" in you wp-config.php file, please make sure it is set to \"false\", so that it doesn't conflict with the import process."
+msgstr "اگر شما \"WP_DEBUG\"  را در فایل wp-config.php تنظیم کرده اید  لطفا قبل از مراحل واردکردن اطلاعات آن را به مقدار \"false\" تغییر دهید تا تداخلی ایجاد نشود ."
+
+#: app/importers/BPMediaAlbumimporter.php:74
+msgid "I have taken a backup of the database and files of this site."
+msgstr "من یک پشتیبان از فایل ها وو پایگاه داده این سایت تهیه کرده ام ."
+
+#: app/importers/BPMediaAlbumimporter.php:76
+msgid "Start Import"
+msgstr "شروع انتقال"
+
+#: app/importers/BPMediaAlbumimporter.php:111
+msgid "Comments"
+msgstr "دیدگاه ها"
+
+#: app/importers/BPMediaAlbumimporter.php:117
+msgid "Comments: 0/0 (No comments to import)"
+msgstr "دیدگاه ها : ۰/۰ (هیچ دیدگاهی برای انتقال وجود ندارد )"
+
+#: app/importers/BPMediaAlbumimporter.php:124
+msgid "User's Favorites"
+msgstr "علاقه مندی های کاربر"
+
+#: app/importers/BPMediaAlbumimporter.php:133
+msgid "BP-Album is active on your site and will cause problems with the import."
+msgstr "BP-Album در سایت شما فعال می باشد و باعث ایجاد مشکل در روند انتقال خواهد شد ."
+
+#: app/importers/BPMediaAlbumimporter.php:134
+msgid "Click here to deactivate BP-Album and continue importing"
+msgstr "بر روی اینجا کلیک کنید تا BP-Album غیر فعال شده و روند انتقال ادامه پیدا کند"
+
+#: app/importers/BPMediaAlbumimporter.php:140
+msgid "Some of the media failed to import. The file might be corrupt or deleted."
+msgstr "بعضی از رسانه ها منتقل نشده اند . ممکن است خراب و یا پاک شده باشند ."
+
+#: app/admin/BPMediaAdmin.php:94 app/admin/BPMediaAdmin.php:270
+#: app/admin/BPMediaAdmin.php:271
+msgid "Importer"
+msgstr "وارد کننده"
+
+#: app/helper/BPMediaSettings.php:193
+msgid "BP-Album Importer"
+msgstr "وارد کننده BP-Album"
+
+#: app/helper/BPMediaSettings.php:47
+msgid "Enable Audio (mp3)"
+msgstr "فعال سازی صدا (mp3)"
+
+#: app/helper/BPMediaSettings.php:102
+msgid "Lightbox Integration"
+msgstr "ترکیب با Lightbox"
+
+#: app/helper/BPMediaSettings.php:103
+msgid "Lightbox"
+msgstr "Lightbox"
+
+#: app/helper/BPMediaSettings.php:106
+msgid "Enable Lighbox on Media"
+msgstr "Lightbox را برای رسانه ها فعال کن"
+
+#: app/helper/BPMediaAddon.php:33 app/helper/BPMediaAddon.php:43
+#: app/importers/BPMediaAlbumimporter.php:177
+msgid "You need to have ImageMagick installed on your server for this addon to work."
+msgstr "برای استفاده از این افزونه نیاز است تا شما ImageMagick را بر روی سرور خود نصب کرده باشید ."
+
+#: app/helper/BPMediaSettings.php:42
+msgid "Enable Video (mp4)"
+msgstr "فعال سازی ویدیو (mp4)"
+
+#: app/helper/BPMediaAddon.php:39
+msgid "BuddyPress-Media Instagram"
+msgstr "BuddyPress-Media Instagram"
+
+#: app/helper/BPMediaAddon.php:32 app/helper/BPMediaAddon.php:42
+#: app/importers/BPMediaAlbumimporter.php:176
+msgid "BuddyPress Media Instagram adds Instagram like filters to images uploaded with BuddyPress Media."
+msgstr "BuddyPress-Media Instagram به تصاویر شما افکت های اینستاگرام را اضافه می کند ."
+
+#: app/helper/BPMediaAddon.php:33 app/helper/BPMediaAddon.php:43
+#: app/importers/BPMediaAlbumimporter.php:177
+msgid "Important"
+msgstr "مهم"
+
+#: app/main/activity/BPMediaActivity.php:46
+msgid "Attach Media"
+msgstr "افزودن رسانه"
+
+#: app/main/activity/BPMediaActivity.php:103
+msgid "View"
+msgstr "نمایش"
+
+#: app/main/activity/BPMediaActivity.php:161
+msgid "%1$s posted an update in the group %2$s"
+msgstr "%1$s یک به روز رسانی در گروه %2$s ارسال کرد"
+
+#: app/main/BuddyPressMedia.php:160
+msgid "To use BuddyPress Media, BuddyPress must be installed first."
+msgstr "برای استفاده از رسانه بادی پرس ابتدا شما بایتس بادی پرس را نصب نمایید ."
+
+#: app/main/BuddyPressMedia.php:161
+msgid "<a href=\"%s\">Install BuddyPress now</a>"
+msgstr "<a href=\"%s\">نصب بادی پرس</a>"
+
+#: app/admin/BPMediaAdmin.php:386
+msgid "OR"
+msgstr "یا"
+
+#: app/admin/BPMediaAdmin.php:387
+msgid "Use <a href=\"https://rtcamp.com/store/product-category/buddypress/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media\">premium add-ons</a> starting from $9"
+msgstr "از <a href=\"https://rtcamp.com/store/product-category/buddypress/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media\"> افزونه های پریموم </a> استفاده کنید . از $9 شروع می شود ."
+
+#: app/helper/BPMediaSupport.php:231
+msgid "Debug Info"
+msgstr "اطلاعات اشکال زدایی"
+
+#: app/helper/BPMediaSettings.php:312 app/helper/BPMediaSettings.php:314
+msgid "\"Number of media\" count value should be numeric and greater than 0."
+msgstr "\"تعداد رسانه ها \" بایستی عدد و بزرگتر از صفر باشد ."
+
+#: app/helper/BPMediaSettings.php:314
+msgid "Default Count"
+msgstr "تعداد پیش فرض"
+
+#: app/helper/BPMediaSettings.php:548
+msgid "None"
+msgstr "هیچ کدام"
+
+#: app/helper/BPMediaSupport.php:50
+msgid "Debug info"
+msgstr "اطلاعات اشکال زدایی"
+
+#: app/helper/BPMediaSettings.php:178
+msgid "Repair media counts"
+msgstr "اصلاح تعداد رسانه "
+
+#: app/helper/BPMediaSettings.php:164
+msgid "Allow users to override admin defaults (<em>Recommended</em>)"
+msgstr "به کاربران اجازه بده تا تنظیمات پیش فرض خود را داشته باشند (<em>پیشنهاد می شود</em>)"
+
+#: app/helper/BPMediaSettings.php:167
+msgid "Other Settings"
+msgstr "تنظیامت دیگر"
+
+#: app/helper/BPMediaSettings.php:175 app/helper/BPMediaSettings.php:177
+msgid "Recount"
+msgstr "شمارش دوباره"
+
+#: app/helper/BPMediaSettings.php:148
+msgid "<strong>Friends</strong> - Visible to user's friends"
+msgstr "<strong>دوستان</strong>  - برای دوستان من نمایش بده"
+
+#: app/helper/BPMediaSettings.php:149
+msgid "<strong>Users</strong> - Visible to registered users"
+msgstr "<strong>کاربران</strong> - به کاربران عضو نشان بده"
+
+#: app/helper/BPMediaSettings.php:150
+msgid "<strong>Public</strong> - Visible to the world"
+msgstr "<strong>عمومی </strong> - به همه نشان بده"
+
+#: app/helper/BPMediaSettings.php:147
+msgid "<strong>Private</strong> - Visible only to the user"
+msgstr "<strong>خصوصی </strong> - تنها به کاربر نشان بده"
+
+#: app/helper/BPMediaSettings.php:93
+msgid "Activity Upload"
+msgstr "بارگذاری فعالیت"
+
+#: app/helper/BPMediaSettings.php:94
+msgid "Activity Uploads"
+msgstr "بارگذاری های فعالیت"
+
+#: app/helper/BPMediaSettings.php:97
+msgid "Enable Activity Uploading"
+msgstr "فعال سازی امکان بارگذاری برای فعالیت"
+
+#: app/helper/BPMediaSettings.php:111
+msgid "Groups Integration"
+msgstr "ادغام با گروه ها"
+
+#: app/helper/BPMediaSettings.php:121
+msgid "Allow Media in Groups"
+msgstr "اجازه ارسال رسانه در گروه ها را بده"
+
+#: app/helper/BPMediaSettings.php:126
+msgid "Display Settings"
+msgstr "نمایش تنظیمات"
+
+#: app/helper/BPMediaSettings.php:127
+msgid "Number of media"
+msgstr "تعداد رسانه"
+
+#: app/helper/BPMediaSettings.php:37
+msgid "Enable Photos"
+msgstr "فعال سازی تصاویر"
+
+#: app/main/includes/BPMediaActions.php:337
+#: app/main/includes/BPMediaActions.php:971
+msgid "Set as Album Cover"
+msgstr "به عنوان جلد آلبوم قرار بده"
+
+#: app/main/includes/BPMediaActions.php:342
+#: app/main/includes/BPMediaActions.php:974
+msgid "Unset as Album Cover"
+msgstr "جلد آلبوم را بردار"
+
+#: app/helper/BPMediaSettings.php:139
+msgid "Privacy Settings"
+msgstr "تنظیمات حریم خصوصی"
+
+#: app/main/privacy/BPMediaPrivacySettings.php:28
+msgid "Update BuddyPress Media Database"
+msgstr "به روز رسانی پایگاه داده رسانه بادی پرس"
+
+#: app/main/privacy/BPMediaPrivacySettings.php:93
+msgid "Start"
+msgstr "شروع"
+
+#: app/main/privacy/BPMediaPrivacy.php:113
+msgid "<strong>Private</strong>, Visible only to myself"
+msgstr "<strong>خصوصی </strong> فقط به خودم نشان بده"
+
+#: app/main/privacy/BPMediaPrivacy.php:117
+msgid "<strong>Friends</strong>, Visible to my friends"
+msgstr "<strong>دوستان</strong> به دوستانم نشان بده"
+
+#: app/main/privacy/BPMediaPrivacy.php:145
+msgid "Set default privacy levels for your media"
+msgstr "سطح پیش فرض حریم خصوصی خود را تعیین کنید . "
+
+#: app/main/privacy/BPMediaPrivacy.php:326
+msgid "This %s is private"
+msgstr " %s خصوصی است ."
+
+#: app/main/privacy/BPMediaPrivacy.php:327
+msgid "This %1s is visible only to %2s&rsquo;s friends"
+msgstr "%1s تنها برای دوستان %2s&rsquo;s نمایش داده می شود ."
+
+#: app/main/privacy/BPMediaPrivacy.php:328
+msgid "This %s is visible to logged in users, only"
+msgstr "%s تنها برای کاربران وارد شده نمایش داده می شود ."
+
+#: app/main/privacy/BPMediaPrivacyScreen.php:42
+msgid "Default privacy level for your media has been updated"
+msgstr "سطح پیش فرض حریم خصوصی شما به روز شد ."
+
+#: app/main/widgets/BPMediaWidget.php:82
+msgid ""
+"Please configure this widget\n"
+"\t\t\t\t\t\t\t\t\t<a href=\"%s\" target=\"_blank\"\n"
+"\t\t\t\t\t\t\t\t\ttitle=\"Configure BuddyPress Media Widget\">\n"
+"\t\t\t\t\t\t\t\t\there</a>."
+msgstr ""
+"لطفا این ابزارک را تنظیم کنید\n"
+"→\t→\t→\t→\t→\t→\t→\t→\t→\t<a href=\"%s\" target=\"_blank\"\n"
+"→\t→\t→\t→\t→\t→\t→\t→\t→\ttitle=\"تنظیم ابزارک رسانه بادی پرس\">\n"
+"→\t→\t→\t→\t→\t→\t→\t→\t→\tاینجا</a>."
+
+#: app/main/profile/BPMediaAlbumScreen.php:300
+msgid "to"
+msgstr "به"
+
+#: app/main/profile/BPMediaScreen.php:125
+msgid "All %s"
+msgstr "همه %s"
+
+#: app/main/BuddyPressMedia.php:547
+msgid ""
+"The BuddyPress version installed is an\n"
+"\t\t\t\t\t\t\t\t\t\tolder version and is not supported,\n"
+"\t\t\t\t\t\t\t\t\t\tplease update BuddyPress to use\n"
+"\t\t\t\t\t\t\t\t\t\tBuddyPress Media Plugin.\n"
+"\t\t\t\t\t\t\t\t\t\t<a class=\"alignright\" href=\"%1$s\">X</a>"
+msgstr ""
+"نسخه بادی پرس نصب شده \n"
+"         نسخه قدیمی است و پشتیبانی نمی شود .\n"
+"          برای استفاده بادی پرس خود را به روز کنید .\n"
+"          افزونه رسانه بادی پرس\n"
+"           <a class=\"alignright\" href=\"%1$s\">X</a>"
+
+#: app/main/BuddyPressMedia.php:560
+msgid ""
+"You have not installed BuddyPress.\n"
+"\t\t\t\t\t\t\t\t\tPlease install latest version of BuddyPress\n"
+"\t\t\t\t\t\t\t\t\tto use BuddyPress Media plugin.\n"
+"\t\t\t\t\t\t\t\t\t<a class=\"alignright\" href=\"%1$s\">X</a>"
+msgstr ""
+"شما بادی پرس را نصب نکرده اید .\n"
+"          لطفا آخرین نسخه بادی پرس را نصب نمایید\n"
+"          برای استفاده از افزونه رسانه بادی پرس\n"
+"          <a class=\"alignright\" href=\"%1$s\">X</a>"
+
+#: app/admin/BPMediaAdmin.php:363
+msgid "I use @buddypressmedia http://goo.gl/8Upmv on %s"
+msgstr "من از buddypressmedia http://goo.gl/8Upmv در %s استفاده می کنم"
+
+#: app/admin/BPMediaAdmin.php:364
+msgid "Add link to footer"
+msgstr "افزودن پیوند به پانوشت"
+
+#: app/admin/BPMediaAdmin.php:365
+msgid "Tweet"
+msgstr "توییت"
+
+#: app/admin/BPMediaAdmin.php:366
+msgid "Rate on WordPress.org"
+msgstr "در سایت WordPress.org امتیاز بدهید"
+
+#: app/admin/BPMediaAdmin.php:377
+msgid "USD"
+msgstr "USD"
+
+#: app/admin/BPMediaAdmin.php:407
+msgid "Subscribe"
+msgstr "آبونه شدن"
+
+#: app/admin/BPMediaAdmin.php:99
+msgid "BuddyPress Media Convert Videos"
+msgstr "رسانه بادی پرس تبدیل کردن ویدیو"
+
+#: app/admin/BPMediaAdmin.php:99 app/admin/BPMediaAdmin.php:263
+msgid "Convert Videos"
+msgstr "تبدیل کردن ویدیو ها"
+
+#: app/admin/BPMediaAdmin.php:182
+msgid "By"
+msgstr "توسط"
+
+#: app/admin/BPMediaAdmin.php:262
+msgid "BuddyPress Media Covert Videos"
+msgstr "تبدیل ویدیو های رسانه بادی پرس"
+
+#: app/helper/BPMediaSettings.php:303 app/helper/BPMediaSettings.php:305
+msgid "Atleast one Media Type Must be selected"
+msgstr "حداقل یکی از انواع رسانه باید انتخاب شده باشند"
+
+#: app/helper/BPMediaSettings.php:305
+msgid "Media Type"
+msgstr "نوع رسانه"
+
+#: app/helper/BPMediaSettings.php:603
+msgid "BuddyPress Media 2.6 requires a database upgrade. "
+msgstr "رسانه بادی پرس ۲.۶ نیاز به به روز رسانی پایگاه داده دارد ."
+
+#: app/admin/BPMediaAdmin.php:91
+msgid "BuddyPress Media Database Update"
+msgstr "به روز رسانی پایگاه داده رسانه بادی پرس"
+
+#: app/main/privacy/BPMediaPrivacy.php:121
+msgid "<strong>Users</strong>, Visible to registered users"
+msgstr "<strong>کاربران</strong> به کاربران عضو نشان بده"
+
+#: app/main/privacy/BPMediaPrivacy.php:125
+msgid "<strong>Public</strong>, Visible to the world"
+msgstr "<strong>عمومی</strong> به همه نشان بده"
+
+#: app/helper/BPMediaSettings.php:172
+msgid "Enable menu in WordPress admin bar"
+msgstr "منو را در میله مدیریت وردپرس فعال کن"
+
+#: app/helper/BPMediaSettings.php:189 app/helper/BPMediaSettings.php:604
+msgid "Update Database"
+msgstr "به روز رسانی پایگاه داده"
+
+#: app/helper/BPMediaSettings.php:132
+msgid "Download Button"
+msgstr "دکمه دانلود"
+
+#: app/helper/BPMediaSettings.php:135
+msgid "Display download button under media"
+msgstr "دکمه دانلود را در زیر رسانه نشان بده"
+
+#: app/main/BuddyPressMedia.php:306
+msgid "Privacy"
+msgstr "حریم خصوصی"
+
+#: app/helper/BPMediaSettings.php:140
+msgid "Enable Privacy"
+msgstr "حریم خصوصی را فعال کن"
+
+#: app/helper/BPMediaSettings.php:143
+msgid "Enable privacy"
+msgstr "حریم خصوصی را فعال کن"
+
+#: app/helper/BPMediaSettings.php:161
+msgid "User Override"
+msgstr "برتر بودن تنظیمات کاربر"
+
+#: app/helper/BPMediaSettings.php:155
+msgid "Default Privacy"
+msgstr "حریم خصوصی پیش فرض"
+
+#: app/helper/BPMediaSettings.php:33
+msgid "Enabled Media Types"
+msgstr "انواع رسانه فعال"
+
+#: app/helper/BPMediaSettings.php:169
+msgid "Admin bar menu"
+msgstr "منو میله مدیر"
+
+#: app/helper/BPMediaSettings.php:318
+msgid "Settings saved."
+msgstr "تنظیمات ذخیره شدند ."
+
+#: app/main/profile/BPMediaTemplate.php:29
+msgid "Wall Posts"
+msgstr "ارسال های دیوار"
+
+#: app/main/profile/BPMediaTemplate.php:83
+msgid "+ Create New Album"
+msgstr "+ ایجاد یک آلبوم جدید"
+
+#: app/main/profile/BPMediaTemplate.php:90
+msgid "Cancel"
+msgstr "لغو"
+
+#: app/main/profile/BPMediaTemplate.php:213
+msgid "Show More"
+msgstr "نمایش بیشتر"
+
+#: app/main/profile/BPMediaTemplate.php:267
+msgid "Select"
+msgstr "انتخاب"
+
+#: app/main/profile/BPMediaTemplate.php:286
+msgid "Add Media"
+msgstr "افزودن رسانه"
+
+#: app/main/includes/BPMediaFilters.php:158
+msgid "Delete %s"
+msgstr "حذف %s "
+
+#: app/main/widgets/BPMediaWidget.php:197
+msgid "Widget Type:"
+msgstr "نوع ابزارک :"
+
+#: app/main/widgets/BPMediaWidget.php:210
+msgid "Show All"
+msgstr "نمایش همه"
+
+#: app/main/widgets/BPMediaWidget.php:213
+msgid "Show Photos"
+msgstr "نمایش تصاویر"
+
+#: app/main/widgets/BPMediaWidget.php:216
+msgid "Show Music"
+msgstr "نمایش موسیقی ها"
+
+#: app/main/widgets/BPMediaWidget.php:220
+msgid "Show Videos"
+msgstr "نمایش ویدیوها"
+
+#: app/main/widgets/BPMediaWidget.php:20
+msgid "The most recent/popular media uploaded on your site"
+msgstr "جدیدترین و محبوب ترین رسانه های ارسال شده در سایت شما "
+
+#: app/main/widgets/BPMediaWidget.php:21
+msgid "BuddyPress Media Widget"
+msgstr "ابزارک رسانه بادی پرس"
+
+#: app/main/widgets/BPMediaWidget.php:150
+msgid "No "
+msgstr "خیر"
+
+#: app/main/BuddyPressMedia.php:158
+msgid "BuddyPress is not installed."
+msgstr "بادی پرس نصب نشده است ."
+
+#: app/admin/BPMediaAdmin.php:96 app/admin/BPMediaAdmin.php:247
+msgid "BuddyPress Media Addons"
+msgstr "افزونه های رسانه بادی پرس"
+
+#: app/admin/BPMediaAdmin.php:88
+msgid "BuddyPress Media Component"
+msgstr "کامپوننت رسانه بادی پرس"
+
+#: app/helper/BPMediaSupport.php:121
+msgid "Additional Information"
+msgstr "اطلاعات اضافی"
+
+#: app/helper/BPMediaSettings.php:286
+msgid "Recount Success"
+msgstr "موفقیت بازشماری"
+
+#: app/helper/BPMediaSettings.php:291
+msgid "Recount Fail"
+msgstr "عدم موفقیت بازشماری"
+
+#: app/main/includes/BPMediaHostWordpress.php:170
+msgid "MP4 file you have uploaded is corrupt."
+msgstr "فایل MP4 که شما ارسال کردید خراب می باشد ."
+
+#: app/helper/BPMediaSupport.php:246
+msgid "Thank you for your Feedback/Suggestion."
+msgstr "با تشکر از ارسال نظرتان"
+
+#: app/helper/BPMediaSupport.php:248
+msgid "Thank you for posting your support request."
+msgstr "با تشکر از ارسال تقاضای پشتیبانی شما"
+
+#: app/helper/BPMediaSupport.php:249
+msgid "We will get back to you shortly."
+msgstr "ما به زودی برمی گردیم"
+
+#: app/helper/BPMediaSupport.php:252
+msgid "Your server failed to send an email."
+msgstr "سرور شما نتوانست ایمیلی ارسال کند ."
+
+#: app/helper/BPMediaSupport.php:253
+msgid "Kindly contact your server support to fix this."
+msgstr "با پشتیبانی سرور خود تماس بگیرید تا این مشکل را برطرف نمایند ."
+
+#: app/helper/BPMediaSupport.php:254
+msgid "You can alternatively create a support request <a href=\"%s\">here</a>"
+msgstr "هم چنین شما می توانید در <a href=\"%s\">اینجا</a> نیز تقاضا پشتیبانی خود را ارسال نمایید."
+
+#: app/helper/BPMediaSupport.php:95
+msgid "Name"
+msgstr "نام"
+
+#: app/helper/BPMediaSupport.php:98
+msgid "Email"
+msgstr "ایمیل"
+
+#: app/helper/BPMediaSupport.php:101
+msgid "Website"
+msgstr "وب سایت"
+
+#: app/helper/BPMediaSupport.php:104
+msgid "Phone"
+msgstr "شماره تماس"
+
+#: app/helper/BPMediaSupport.php:107
+msgid "Subject"
+msgstr "موضوع"
+
+#: app/helper/BPMediaSupport.php:110
+msgid "Details"
+msgstr "جزییات"
+
+#: app/helper/BPMediaSupport.php:161
+msgid "BuddyPress Media Premium Support Request from"
+msgstr "فرم تقاضای پشتیبانی پریموم رسانه بادی پرس"
+
+#: app/helper/BPMediaSupport.php:164
+msgid "BuddyPress Media New Feature Request from"
+msgstr "فرم تقاضای قابلیت جدید برای رسانه بادی پرس"
+
+#: app/helper/BPMediaSupport.php:167
+msgid "BuddyPress Media Bug Report from"
+msgstr "فرم گزارش خطا در رسانه بادی پرس"
+
+#: app/helper/BPMediaSupport.php:170
+msgid "BuddyPress Media Contact from"
+msgstr "فرم تماس با رسانه بادی پرس"
+
+#: app/helper/BPMediaSettings.php:358
+msgid "Please provide \"option\" value ( required ) in the argument. Pass argument to add_settings_field in the following format array( 'option' => 'option_name' ) "
+msgstr "Please provide \"option\" value ( required ) in the argument. Pass argument to add_settings_field in the following format array( 'option' => 'option_name' ) "
+
+#: app/helper/BPMediaSettings.php:403 app/helper/BPMediaSettings.php:452
+#: app/helper/BPMediaSettings.php:531
+msgid "Please provide \"option\" value ( required ) in the argument. Pass argument to add_settings_field in the following format array( 'option' => 'option_name' )"
+msgstr "Please provide \"option\" value ( required ) in the argument. Pass argument to add_settings_field in the following format array( 'option' => 'option_name' )"
+
+#: app/main/includes/BPMediaActions.php:874
+msgid "%1$s created an album %2$s"
+msgstr "%1$s آلبوم  %2$s را ایجاد کرد"
+
+#: app/main/BPMediaComponent.php:262
+msgid "All Albums"
+msgstr "همه آلبوم ها"
+
+#: app/main/BPMediaComponent.php:263
+msgid "View Album"
+msgstr "نمایش آلبوم"
+
+#: app/main/BPMediaComponent.php:264
+msgid "Search Albums"
+msgstr "جستجو در آلبوم ها"
+
+#: app/main/BPMediaComponent.php:265
+msgid "No album found"
+msgstr "هیچ آلبومی پیدا نشد"
+
+#: app/main/BPMediaComponent.php:266
+msgid "No album found in Trash"
+msgstr "هیچ آلبومی در سطل زباله پیدا نشد"
+
+#: app/main/BPMediaComponent.php:300
+msgid "Add New Media"
+msgstr "افزودن یک رسانه تازه"
+
+#: app/main/BPMediaComponent.php:308
+msgid "BuddyPress Media's Media Files"
+msgstr "فایل های رسانه ی رسانه بادی پرس"
+
+#: app/main/includes/BPMediaFunction.php:229
+msgid "%1$s added new media in album %2$s"
+msgstr "%1$s یک رسانه جدید در آلبوم %2$s اضافه کرد"
+
+#: app/importers/BPMediaAlbumimporter.php:81
+msgid "Users"
+msgstr "کاربران"
+
+#: app/main/includes/BPMediaFilters.php:410
+msgid "Total Photos"
+msgstr "تمام تصاویر"
+
+#: app/main/includes/BPMediaFilters.php:411
+msgid "Total Videos"
+msgstr "تمام ویدیو ها"
+
+#: app/main/includes/BPMediaFilters.php:412
+msgid "Total Audio"
+msgstr "تمام صوت ها"
+
+#: app/main/includes/BPMediaFilters.php:413
+msgid "Total Albums"
+msgstr "تمام آلبوم ها"
+
+#: app/helper/BPMediaSettings.php:118
+msgid "Groups"
+msgstr "گروه ها"
+
+#: app/main/includes/BPMediaActions.php:348
+msgid "Edit Media"
+msgstr "ویرایش رسانه"
+
+#: app/main/profile/BPMediaAlbumScreen.php:246
+msgid "Edit"
+msgstr "ویرایش"
+
+#: app/main/BPMediaComponent.php:258 app/main/profile/BPMediaTemplate.php:89
+#: app/main/profile/BPMediaTemplate.php:282
+msgid "Create"
+msgstr "ایجاد"
+
+#: app/main/BPMediaComponent.php:260
+#: app/main/profile/BPMediaAlbumScreen.php:246
+msgid "Edit Album"
+msgstr "ویرایش آلبوم"
+
+#: app/main/BPMediaComponent.php:261
+msgid "New Album"
+msgstr "آلبوم تازه"
+
+#: app/helper/BPMediaSupport.php:126
+msgid "Your WP Admin Login:"
+msgstr "نام کاربری مدیریت وردپرس شما :"
+
+#: app/helper/BPMediaSupport.php:129
+msgid "Your WP Admin password:"
+msgstr "رمز عبور مدیریت وردپرس شما :"
+
+#: app/helper/BPMediaSupport.php:132
+msgid "Your SSH / FTP host:"
+msgstr "هاست SSH / FTP شما :"
+
+#: app/helper/BPMediaSupport.php:135
+msgid "Your SSH / FTP login:"
+msgstr "نام کاربری SSH / FTP شما :"
+
+#: app/helper/BPMediaSupport.php:138
+msgid "Your SSH / FTP password:"
+msgstr "رمز عبور SSH / FTP شما :"
+
+#: app/main/includes/BPMediaTemplateFunctions.php:34
+msgid "Media Title"
+msgstr "عنوان رسانه"
+
+#: app/main/includes/BPMediaTemplateFunctions.php:35
+msgid "Media Description"
+msgstr "توضیحات رسانه"
+
+#: app/main/includes/BPMediaTemplateFunctions.php:36
+msgid "Select Media File"
+msgstr "انتخاب فایل رسانه"
+
+#: app/main/BPMediaComponent.php:60
+msgid "Search Media..."
+msgstr "جستجو رسانه ..."
+
+#: app/admin/BPMediaAdmin.php:97 app/admin/BPMediaAdmin.php:254
+msgid "BuddyPress Media Support"
+msgstr "پشتیبانی رسانه بادی پرس"
+
+#: app/helper/BPMediaSupport.php:81
+msgid "Submit a Bug Report"
+msgstr "ارسال گزارش خطا"
+
+#: app/helper/BPMediaSupport.php:84
+msgid "Submit a New Feature Request"
+msgstr "ارسال تقاضای یک ویژگی جدید"
+
+#: app/helper/BPMediaSupport.php:87
+msgid "Submit a Premium Support Request"
+msgstr "ارسال تقاضای پشتیبانی پریموم "
+
+#: app/main/includes/BPMediaHostWordpress.php:615
+msgid "Post"
+msgstr "ارسال"
+
+#: app/main/includes/BPMediaHostWordpress.php:615
+msgid "or press esc to cancel."
+msgstr "یا دکمه Esc را بزنید تا لغو شود"
+
+#: app/main/profile/BPMediaAlbumScreen.php:252
+msgid "Delete"
+msgstr "حذف"
+
+#: app/main/includes/BPMediaHostWordpress.php:59
+msgid "Sorry, the requested media does not exist."
+msgstr "رسانه مورد نظر شما پیدا نشد ."
+
+#: app/main/includes/BPMediaHostWordpress.php:137
+msgid "Error Uploading File"
+msgstr "خطا در بارگذاری فایل"
+
+#: app/main/includes/BPMediaHostWordpress.php:177
+#: app/main/includes/BPMediaHostWordpress.php:182
+msgid "The MP4 file you have uploaded is using an unsupported video codec. Supported video codec is H.264."
+msgstr "فایل MP4 ارسالی شما از کدکی استفاده می کند که پشتیبانی نمی شود . کدکی که پشتیبانی می شود H.264 می باشد ."
+
+#: app/main/includes/BPMediaHostWordpress.php:187
+msgid "The MP4 file you have uploaded is not a video file."
+msgstr "فایل H.264 ارسالی شما یک فایل ویدیویی نمی باشد "
+
+#: app/main/includes/BPMediaHostWordpress.php:198
+msgid "MP3 file you have uploaded is currupt."
+msgstr "فایل MP3 که شما بارگذاری نمودید خراب می باشد"
+
+#: app/main/includes/BPMediaHostWordpress.php:205
+#: app/main/includes/BPMediaHostWordpress.php:210
+msgid "The MP3 file you have uploaded is using an unsupported audio format. Supported audio format is MP3."
+msgstr "فایل  که شما بارگذاری کردید از یک فرمت صوتی پشتیبانی نشده استفاده می نماید . فرمت پشتیبانی شده MP3 می باشد ."
+
+#: app/main/includes/BPMediaHostWordpress.php:215
+msgid "The MP3 file you have uploaded is not an audio file."
+msgstr "فایل MP3 که شما بارگذاری نمودید یک فایل صوتی نمی باشد ."
+
+#: app/main/includes/BPMediaHostWordpress.php:227
+msgid "Media File you have tried to upload is not supported. Supported media files are .jpg, .png, .gif, .mp3, .mov and .mp4."
+msgstr "فایل رسانه ای که شما مایل به ارسال هستید پشتیبانی نمی شود . فرمت هایی که پشتیبانی میشود عبارتند از : .jpg, .png, .gif, .mp3, .mov و .mp4."
+
+#: app/main/includes/BPMediaHostWordpress.php:236
+msgid "Error creating attachment for the media file, please try again"
+msgstr "خطا در ایجاد ضمیمه برای فایل رسانه لطفا دوباره تلاش نمایید"
+
+#: app/main/includes/BPMediaHostWordpress.php:346
+msgid "%s uploaded a media."
+msgstr "%s یک رسانه ارسال کرد."
+
+#: app/main/includes/BPMediaHostWordpress.php:367
+msgid "Uploaded by "
+msgstr "ارسال شده توسط "
+
+#: app/main/includes/BPMediaHostWordpress.php:590
+msgid "Comment <span>%s</span>"
+msgstr " دیدگاه  <span>%s</span>"
+
+#: app/main/includes/BPMediaHostWordpress.php:594
+msgid "Favorite"
+msgstr "افزودن به علاقمندی ها"
+
+#: app/main/includes/BPMediaHostWordpress.php:596
+msgid "Remove Favorite"
+msgstr "حذف از علاقه مندی ها"
+
+#: app/main/widgets/BPMediaWidget.php:203
+msgid "Title:"
+msgstr "عنوان"
+
+#: app/main/widgets/BPMediaWidget.php:206
+msgid "Number of posts to show:"
+msgstr "تعداد ارسال هایی که نمایش داده می شوند :"
+
+#: app/main/widgets/BPMediaWidget.php:199
+msgid "Recent Media"
+msgstr "رسانه اخیر"
+
+#: app/main/widgets/BPMediaWidget.php:72
+msgid "All"
+msgstr "همه"
+
+#: app/main/group/BPMediaGroupsExtension.php:41
+#: app/main/group/BPMediaGroupsExtension.php:88
+msgid "Who can create Albums in this group?"
+msgstr "چه کسی می تواند در این گروه آلبوم ایجاد نماید ؟"
+
+#: app/main/group/BPMediaGroupsExtension.php:45
+#: app/main/group/BPMediaGroupsExtension.php:92
+msgid "All Group Members"
+msgstr "تمام اعضای گروه"
+
+#: app/main/group/BPMediaGroupsExtension.php:49
+#: app/main/group/BPMediaGroupsExtension.php:96
+msgid "Group Admins and Mods only"
+msgstr "فقط مدیران و ویرایشگران گروه"
+
+#: app/main/group/BPMediaGroupsExtension.php:53
+#: app/main/group/BPMediaGroupsExtension.php:100
+msgid "Group Admin only"
+msgstr "فقط مدیر گروه"
+
+#: app/main/group/BPMediaGroupsExtension.php:104
+#: app/main/privacy/BPMediaPrivacyScreen.php:53
+msgid "Save Changes"
+msgstr "ذخیره تنظیمات"
+
+#: app/main/group/BPMediaGroupsExtension.php:130
+msgid "There was an error saving, please try again"
+msgstr "خطا در ذخیره تنظمیات لطفا دوباره تلاش کنید ."
+
+#: app/main/group/BPMediaGroupsExtension.php:132
+msgid "Settings saved successfully"
+msgstr "تنظیمات با موفقیت ذخیره شدند ."
+
+#: app/main/group/BPMediaGroupsExtension.php:153
+msgid ""
+"You could display a small snippet of information from your group extension here. It will show on the group\n"
+"\t                home screen."
+msgstr "شما می توانید یک اطلاعات کوچک از گروه اکتنشن خود را در اینجا نمایش دهید . این در گروه نمایش پیدا می کند ."
+
+#: app/main/widgets/BPMediaWidget.php:200
+msgid "Popular Media"
+msgstr "رسانه محبوب"
+
+#: app/main/profile/BPMediaScreen.php:396
+msgid "Media deleted successfully"
+msgstr "رسانه با موفقیت حذف گردید"
+
+#: app/main/profile/BPMediaTemplate.php:98
+#: app/main/profile/BPMediaUploadScreen.php:33
+msgid "Upload Media"
+msgstr "بارگذاری رسانه"
+
+#: app/main/profile/BPMediaUploadScreen.php:71
+msgid "You are not allowed to be here"
+msgstr "شما مجاز نیستید که در اینجا باشید ."
+
+#: app/main/profile/BPMediaUploadScreen.php:98
+#: app/main/profile/BPMediaUploadScreen.php:122
+msgid "File uploaded is not supported"
+msgstr "فایل ارسال شده پشتیبانی نمی شود ."
+
+#: app/main/profile/BPMediaUploadScreen.php:105
+msgid "Image uploads are disabled"
+msgstr "ارسال تصویر غیر فعال شده است ."
+
+#: app/main/profile/BPMediaUploadScreen.php:111
+msgid "Video uploads are disabled"
+msgstr "ارسال ویدیو غیر فعال شده است ."
+
+#: app/main/profile/BPMediaUploadScreen.php:117
+msgid "Audio uploads are disabled"
+msgstr "ارسال صوت غیر فعال شده است ."
+
+#: app/main/profile/BPMediaUploadScreen.php:135
+msgid "Upload Successful"
+msgstr "با موفقیت بارگذاری شد ."
+
+#: app/main/profile/BPMediaUploadScreen.php:140
+msgid "You did not specified a file to upload"
+msgstr "شما هیچ فایلی را برای بارگذاری انتخاب نکردید ."
+
+#: app/main/profile/BPMediaAlbumScreen.php:134
+msgid "Sorry, no media items were found in this album."
+msgstr "هیچ مورد رسانه ای در این آلبوم پیدا نشد ."
+
+#: app/main/profile/BPMediaAlbum.php:74
+msgid "Sorry, the requested album does not exist."
+msgstr "آلبوم مورد نظر شما پیدا نشد ."
+
+#: app/main/group/BPMediaGroupElementExtension.php:91
+msgid "Sorry, the requested media does not belong to the group"
+msgstr "رسانه مورد نظر متعلق به گروه نمی باشد."
+
+#: app/main/BPMediaGroupLoader.php:252
+msgid "Media Settings"
+msgstr "تنظیمات رسانه"
+
+#: app/main/group/BPMediaGroupsExtension.php:40
+#: app/main/group/BPMediaGroupsExtension.php:87
+msgid "Album Creation Control"
+msgstr "کنترل ایجاد آلبوم"
+
+#: app/main/profile/BPMediaScreen.php:114
+#: app/main/profile/BPMediaScreen.php:374
+msgid "The requested url does not exist"
+msgstr "url مورد نظر شما وجود ندارد"
+
+#: app/main/profile/BPMediaScreen.php:196
+#: app/main/profile/BPMediaAlbumScreen.php:82
+msgid "Sorry, no %s were found."
+msgstr "هیچ %s پیدا نشد"
+
+#: app/main/profile/BPMediaScreen.php:307
+msgid "Edit %s"
+msgstr "ویرایش %s"
+
+#: app/main/profile/BPMediaScreen.php:328
+msgid "%s Title"
+msgstr "عنوان %s"
+
+#: app/main/profile/BPMediaScreen.php:334
+msgid "%s Description"
+msgstr "توضیحات %s"
+
+#: app/main/profile/BPMediaScreen.php:342
+msgid "Update"
+msgstr "به روز رسانی"
+
+#: app/main/profile/BPMediaScreen.php:343
+msgid "Back to Media File"
+msgstr "بازگشت به فایل رسانه"
+
+#: app/main/profile/BPMediaScreen.php:344
+msgid "Back to Media"
+msgstr "بازگشت به رسانه"
+
+#: app/main/profile/BPMediaScreen.php:367
+msgid "You do not have access to this page."
+msgstr "شما مجاز به دسترسی به این صفحه نیستید ."
+
+#: app/main/BPMediaComponent.php:256 app/main/BPMediaComponent.php:268
+#: app/main/BuddyPressMedia.php:327
+msgid "Albums"
+msgstr "آلبوم ها"
+
+#: app/main/BPMediaComponent.php:257 app/main/BuddyPressMedia.php:330
+msgid "Album"
+msgstr "آلبوم"
+
+#: app/main/BuddyPressMedia.php:333
+msgid "Upload"
+msgstr "بارگذاری"
+
+#: app/main/profile/BPMediaTemplate.php:246
+msgid "Select Album"
+msgstr "انتخاب آلبوم"
+
+#: app/main/profile/BPMediaTemplate.php:247
+#: app/main/profile/BPMediaTemplate.php:275
+msgid "x"
+msgstr "x"
+
+#: app/main/BPMediaComponent.php:259 app/main/profile/BPMediaTemplate.php:268
+#: app/main/profile/BPMediaTemplate.php:274
+msgid "Create Album"
+msgstr "ایجاد آلبوم"
+
+#: app/main/profile/BPMediaTemplate.php:278
+msgid "Album Name"
+msgstr "نام آلبوم"
+
+#: app/main/profile/BPMediaTemplate.php:96
+msgid "Drop files here"
+msgstr "فایل ها را اینجا بندازید"
+
+#: app/main/profile/BPMediaTemplate.php:97
+msgid " or "
+msgstr "یا"
+
+#: app/admin/BPMediaAdmin.php:410
+msgid "Latest News"
+msgstr "آخرین اخبار"
+
+#: app/helper/BPMediaSettings.php:34
+msgid "Photos"
+msgstr "تصاویر"
+
+#: app/main/BuddyPressMedia.php:312
+msgid "Photo"
+msgstr "تصویر"
+
+#: app/main/BuddyPressMedia.php:315
+msgid "Videos"
+msgstr "ویدیو"
+
+#: app/main/BuddyPressMedia.php:321 app/main/BuddyPressMedia.php:324
+msgid "Music"
+msgstr "موسیقی"
+
+#: app/admin/BPMediaAdmin.php:389
+msgid "Donate"
+msgstr "اهدا"
+
+#: app/admin/BPMediaAdmin.php:405
+msgid "RSS Feed"
+msgstr "RSS Feed"
+
+#: app/admin/BPMediaAdmin.php:403
+msgid "Facebook"
+msgstr "فیس بوک"
+
+#: app/admin/BPMediaAdmin.php:404
+msgid "Follow us on Twitter"
+msgstr "ما را در توییتر دنبال کنید"
+
+#: app/admin/BPMediaAdmin.php:404
+msgid "Twitter"
+msgstr "توییتر"
+
+#: app/admin/BPMediaAdmin.php:405
+msgid "Subscribe to our feeds"
+msgstr "آبونه شدن در خوراک ما"
+
+#: app/admin/BPMediaAdmin.php:96 app/admin/BPMediaAdmin.php:248
+msgid "Addons"
+msgstr "افزونه ها"
+
+#: app/admin/BPMediaAdmin.php:97
+msgid "Support "
+msgstr "پشتیبانی"
+
+#: app/admin/BPMediaAdmin.php:160 app/importers/BPMediaAlbumimporter.php:91
+#: app/main/BPMediaComponent.php:298 app/main/BPMediaComponent.php:299
+#: app/main/BPMediaComponent.php:305 app/main/BuddyPressMedia.php:301
+#: app/main/BuddyPressMedia.php:304
+msgid "Media"
+msgstr "رسانه"
+
+#: app/helper/BPMediaSettings.php:184
+msgid "Support"
+msgstr "پشتیبانی"
+
+#: app/admin/BPMediaAdmin.php:182
+msgid "Empowering The Web With WordPress"
+msgstr "وب را با وردپرس قدرتمند کنید"
+
+#: app/admin/BPMediaAdmin.php:403
+msgid "Become a fan on Facebook"
+msgstr "ما را در فیس بوک دنبال کنید"
+
+#: app/helper/BPMediaSettings.php:182
+msgid "BuddyPress Media Addons for Audio/Video Conversion"
+msgstr "افزونه رسانه بادی پرس برای تبدیل فایل های صوتی و تصویری"
+
+#: app/helper/BPMediaSettings.php:284 app/helper/BPMediaSettings.php:286
+msgid "Recounting of media files done successfully"
+msgstr "شماره دوباره فایل های رسانه با موفقیت به اتمام رسید"
+
+#: app/helper/BPMediaSettings.php:289 app/helper/BPMediaSettings.php:291
+msgid "Recounting Failed"
+msgstr "شمارش دوباره با مشکل روبرو شد ."
+
+#: app/helper/BPMediaSettings.php:405
+msgid "Need to specify atleast to radios else use a checkbox instead"
+msgstr "نیاز است حداقل شما دکمه رادیویی را تعیین کنید یا از چک باکس استفاده کنید"
+
+#: app/helper/BPMediaSettings.php:533
+msgid "Please provide some values to populate the dropdown. Format : array( 'value' => 'option' )"
+msgstr ""
+"لطفا یک مقدار برای نوار افتادنی انتخاب کنید .\n"
+"فرمت : array( 'value' => 'option' )"
+
+#: app/helper/BPMediaAddon.php:49
+msgid "BuddyPress-Media Kaltura Add-on"
+msgstr "افزونه Kaltura رسانه بادی پرس"
+
+#: app/helper/BPMediaAddon.php:52
+msgid "Add support for more video formats using Kaltura video solution."
+msgstr "افزودن پشتیبانی از دیگر فرمت های تصویری و صوتی توسط  Kaltura"
+
+#: app/helper/BPMediaAddon.php:53
+msgid "Works with Kaltura.com, self-hosted Kaltura-CE and Kaltura-on-premise."
+msgstr "Works with Kaltura.com, self-hosted Kaltura-CE and Kaltura-on-premise."
+
+#: app/helper/BPMediaAddon.php:59
+msgid "BuddyPress-Media FFMPEG Add-on"
+msgstr "افزونه FFMPEG برای رسانه بادی پرس"
+
+#: app/helper/BPMediaAddon.php:62
+msgid "Add supports for more audio & video formats using open-source media-node."
+msgstr "افزودن پشتیبانی از دیگر فرمت های تصویری و صوتی توسط متن بازها "
+
+#: app/helper/BPMediaAddon.php:63
+msgid "Media node comes with automated setup script for Ubuntu/Debian."
+msgstr "Media node  به همراه نصب خودکار برای اوبونتو/دبیان"
+
+#: app/helper/BPMediaAddon.php:109 app/importers/BPMediaAlbumimporter.php:181
+msgid "Buy Now"
+msgstr "همین حالا بخرید"
+
+#: app/helper/BPMediaAddon.php:110 app/importers/BPMediaAlbumimporter.php:182
+msgid "Live Demo"
+msgstr "پیش نمایش آنلاین"
+
+#: app/main/group/BPMediaGroupAction.php:124
+#: app/main/includes/BPMediaHostWordpress.php:742
+msgid "%1$s added a %2$s"
+msgstr "%1$s یک %2$s اضافه کرد"
+
+#: app/admin/BPMediaAdmin.php:88 app/admin/BPMediaAdmin.php:212
+#: app/admin/BPMediaAdmin.php:213
+msgid "BuddyPress Media"
+msgstr "رسانه بادی پرس"
+
+#: app/admin/BPMediaAdmin.php:89 app/admin/BPMediaAdmin.php:241
+#: app/main/BuddyPressMedia.php:443
+msgid "Settings"
+msgstr "تنظیمات"
+
+#: app/helper/BPMediaFeed.php:43
+msgid "No items"
+msgstr "هیچ موردی پیدا نشد"
+
+#: app/helper/BPMediaFeed.php:49
+msgid "Posted "
+msgstr "ارسال شده"
+
+#: app/admin/BPMediaAdmin.php:89 app/admin/BPMediaAdmin.php:240
+msgid "BuddyPress Media Settings"
+msgstr "تنظیمات رسانه بادی پرس"
+
+#: app/helper/BPMediaSettings.php:39
+msgid "Video"
+msgstr "ویدیو"
+
+#: app/helper/BPMediaSettings.php:44
+msgid "Audio"
+msgstr "صوت"
+
+#: app/main/includes/BPMediaActions.php:330
+msgid "Download"
+msgstr "دانلود"
+
+#: app/admin/BPMediaAdmin.php:367
+msgid "Spread the Word"
+msgstr "گسترش کلام"
+
+#: app/helper/BPMediaAdminWidget.php:29
+msgid "Argument missing. id is required."
+msgstr "برهان گم شده است . شماره ضروری است ."
