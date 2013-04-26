@@ -6,7 +6,6 @@
  */
 class BPMediaEncodingTranscoder extends BPMediaHostWordpress {
 
-    public $encoding_url = 'http://api.rtcamp.com/job/new/';
 
     public function insert_media($name, $description, $album_id = 0, $group = 0, $is_multiple = false, $is_activity = false, $files = false, $author_id = false, $album_name = false) {
         do_action('bp_media_before_add_media');
@@ -50,11 +49,13 @@ class BPMediaEncodingTranscoder extends BPMediaHostWordpress {
             'force' => 0,
             'size' => filesize($file),
             'formats' => ($result[0] == 'video')?'mp4':'mp3');
-        $upload_url = add_query_arg($query_args, $this->encoding_url . $api_key);
+        $encoding_url = 'http://api.rtcamp.com/job/new/';
+
+        $upload_url = add_query_arg($query_args, $encoding_url . $api_key);
         error_log($upload_url);
-        $upload_page = wp_remote_get($upload_url, array('timeout' => 120));
+        $upload_page = wp_remote_get($upload_url,array('timeout'=>20));
         error_log(var_export($upload_page,true));
-        if (!is_wp_error($upload_page) && ($upload_page['headers']['status'] == 200)) {
+        if (!is_wp_error($upload_page) && (!isset($upload_page['headers']['status']) || (isset($upload_page['headers']['status']) && ($upload_page['headers']['status'] == 200)))) {
             $upload_info = json_decode($upload_page['body']);
             if (isset($upload_info->status) && $upload_info->status && isset($upload_info->job_id)&&$upload_info->job_id) {
                 $job_id = $upload_info->job_id;
@@ -89,7 +90,7 @@ class BPMediaEncodingTranscoder extends BPMediaHostWordpress {
         $this->id = $attachment_id;
         $this->name = $name;
         $this->description = $description;
-        $this->type = $type;
+        $this->type = $result[0];
         $this->owner = $author_id;
         $this->album_id = $post_id;
         $this->group_id = $group;
