@@ -89,16 +89,11 @@ if (!class_exists('BPMediaAdmin')) {
             global $wpdb;
             add_menu_page(__('BuddyPress Media Component', 'buddypress-media'), __('BuddyPress Media', 'buddypress-media'), 'manage_options', 'bp-media-settings', array($this, 'settings_page'));
             add_submenu_page('bp-media-settings', __('BuddyPress Media Settings', 'buddypress-media'), __('Settings', 'buddypress-media'), 'manage_options', 'bp-media-settings', array($this, 'settings_page'));
-            if (!BPMediaPrivacy::is_installed()) {
-                add_submenu_page('bp-media-settings', __('BuddyPress Media Database Update', 'buddypress-media'), __('Update Database', 'buddypress-media'), 'manage_options', 'bp-media-privacy', array($this, 'privacy_page'));
-            }
-
-            add_submenu_page('bp-media-settings', __('Importer', 'buddypress-media'), __('Importer', 'buddypress-media'), 'manage_options', 'bp-media-importer', array($this, 'bp_importer_page'));
-
             add_submenu_page('bp-media-settings', __('BuddyPress Media Addons', 'buddypress-media'), __('Addons', 'buddypress-media'), 'manage_options', 'bp-media-addons', array($this, 'addons_page'));
             add_submenu_page('bp-media-settings', __('BuddyPress Media Support', 'buddypress-media'), __('Support ', 'buddypress-media'), 'manage_options', 'bp-media-support', array($this, 'support_page'));
-            if (bp_get_option('bp-media-survey', true)) {
-                add_submenu_page('bp-media-settings', __('BuddyPress Media Convert Videos', 'buddypress-media'), __('Convert Videos', 'buddypress-media'), 'manage_options', 'bp-media-convert-videos', array($this, 'convert_videos_page'));
+            add_submenu_page('bp-media-settings', __('Importer', 'buddypress-media'), __('Importer', 'buddypress-media'), 'manage_options', 'bp-media-importer', array($this, 'bp_importer_page'));
+            if (!BPMediaPrivacy::is_installed()) {
+                add_submenu_page('bp-media-settings', __('BuddyPress Media Database Update', 'buddypress-media'), __('Update Database', 'buddypress-media'), 'manage_options', 'bp-media-privacy', array($this, 'privacy_page'));
             }
         }
 
@@ -260,15 +255,6 @@ if (!class_exists('BPMediaAdmin')) {
                             'name' => __('Support', 'buddypress-media'),
                             'class' => ($tab == 'bp-media-support') ? $active_class : $idle_class . ' last_tab'
                         );
-
-                        if (bp_get_option('bp-media-survey', true)) {
-                            $tabs[] = array(
-                                'href' => bp_get_admin_url(add_query_arg(array('page' => 'bp-media-convert-videos'), 'admin.php')),
-                                'title' => __('BuddyPress Media Covert Videos', 'buddypress-media'),
-                                'name' => __('Convert Videos', 'buddypress-media'),
-                                'class' => ($tab == 'bp-media-convert-videos') ? $active_class : $idle_class . ' last_tab'
-                            );
-                        }
 
                         $tabs[] = array(
                             'href' => bp_get_admin_url(add_query_arg(array('page' => 'bp-media-importer'), 'admin.php')),

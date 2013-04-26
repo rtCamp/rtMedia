@@ -71,6 +71,24 @@ jQuery(document).ready(function(){
         });
     });
     
+    jQuery('#encoding-try-now-form').on('click','.encoding-try-now',function(e){
+        e.preventDefault();
+        var data = {
+            action: 'bp_media_free_encoding_subscribe',
+            form_data: jQuery('#encoding-try-now-form').serialize()
+        };
+
+        // since 2.8 ajaxurl is always defined in the admin header and points to admin-ajax.php
+        jQuery.getJSON(ajaxurl, data, function(response) {
+            if(response.error===undefined && response.apikey){
+                document.location.href = document.URL+'&apikey='+response.apikey;
+            }else{
+                jQuery('#settings-error-encoding-error').remove();
+                jQuery('h2:first').after('<div class="error" id="settings-error-encoding-error"><p>'+response.error+'</p></div>');
+            }
+        });
+    });
+    
     function fireRequest(data) {
         return jQuery.post(ajaxurl, data, function(response){
             if(response != 0){
@@ -353,3 +371,4 @@ jQuery(document).ready(function(){
 
 
 });
+

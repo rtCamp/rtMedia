@@ -31,13 +31,14 @@ class BPMediaEncoding {
                             $this->nearing_usage_limit($usage_info);
                         elseif ($usage_info[$this->api_key]->remaining > 524288000 && bp_get_option('bp-media-encoding-usage-limit-mail'))
                             bp_update_option('bp-media-encoding-usage-limit-mail', 0);
-                        add_action('bp_init', array($this, 'handle_callback'), 20);
                         add_filter('bp_media_transcoder', array($this, 'enqueue'), 10, 2);
                         add_filter('bp_media_plupload_files_filter', array($this, 'allowed_types'));
                     }
                 }
             }
         }
+        add_action('bp_init', array($this, 'handle_callback'), 20);
+        add_action('wp_ajax_bp_media_free_encoding_subscribe', array($this, 'free_encoding_subscribe'));
     }
 
     function enqueue($class, $type) {
@@ -52,6 +53,10 @@ class BPMediaEncoding {
 
     public function menu() {
         add_submenu_page('bp-media-settings', __('BuddyPress Media Audio/Video Encoding Service', 'buddypress-media'), __('Audio/Video Encoding', 'buddypress-media'), 'manage_options', 'bp-media-encoding', array($this, 'encoding_page'));
+        global $submenu;
+        $menu = $submenu['bp-media-settings'];
+        $encoding_menu = array_pop($menu);
+        $submenu['bp-media-settings'] = array_merge(array_slice($menu, 0, 1), array($encoding_menu), array_slice($menu, 1));
     }
 
     /**
@@ -86,14 +91,20 @@ class BPMediaEncoding {
     }
 
     public function admin_bar_menu($bp_media_admin_nav) {
-        // Encoding Service
-        $bp_media_admin_nav[] = array(
+// Encoding Service
+        $admin_nav = array(
             'parent' => 'bp-media-menu',
             'id' => 'bp-media-encoding',
             'title' => __('Audio/Video Encoding', 'buddypress-media'),
             'href' => bp_get_admin_url(add_query_arg(array('page' => 'bp-media-encoding'), 'admin.php'))
         );
-        return $bp_media_admin_nav;
+        $reordered_admin_nav = NULL;
+        foreach ($bp_media_admin_nav as $key => $nav) {
+            if ($key == 2)
+                $reordered_admin_nav[] = $admin_nav;
+            $reordered_admin_nav[] = $nav;
+        }
+        return $reordered_admin_nav;
     }
 
     public function is_valid_key($key) {
@@ -124,7 +135,7 @@ class BPMediaEncoding {
         $message = __('<p>You are nearing the quota limit for your BuddyPress Media encoding service.</p><p>Following are the details:</p><p><strong>Used:</strong> %s</p><p><strong>Remaining</strong>: %s</p><p><strong>Total:</strong> %s</p>', 'buddypress-media');
         $users = get_users(array('role' => 'administrator'));
         if ($users) {
-            foreach ($users AS $user)
+            foreach ($users as $user)
                 $admin_email_ids[] = $user->user_email;
             add_filter('wp_mail_content_type', create_function('', 'return "text/html";'));
             wp_mail($admin_email_ids, $subject, sprintf($message, size_format($usage_details[$this->api_key]->used, 2), size_format($usage_details[$this->api_key]->remaining, 2), size_format($usage_details[$this->api_key]->total, 2)));
@@ -139,7 +150,7 @@ class BPMediaEncoding {
             $message = __('<p>Your usage quota is over. Upgrade your plan</p><p>Following are the details:</p><p><strong>Used:</strong> %s</p><p><strong>Remaining</strong>: %s</p><p><strong>Total:</strong> %s</p>', 'buddypress-media');
             $users = get_users(array('role' => 'administrator'));
             if ($users) {
-                foreach ($users AS $user)
+                foreach ($users as $user)
                     $admin_email_ids[] = $user->user_email;
                 add_filter('wp_mail_content_type', create_function('', 'return "text/html";'));
                 wp_mail($admin_email_ids, $subject, sprintf($message, size_format($usage_details[$this->api_key]->used, 2), 0, size_format($usage_details[$this->api_key]->total, 2)));
@@ -166,7 +177,12 @@ class BPMediaEncoding {
     public function encoding_subscription_form($name = 'No Name', $price = '0') {
         $action = $this->sandbox_testing ? 'https://sandbox.paypal.com/cgi-bin/webscr' : 'https://paypal.com/cgi-bin/webscr';
         $return_page = add_query_arg(array('page' => 'bp-media-encoding'), (is_multisite() ? network_admin_url('admin.php') : admin_url('admin.php')));
-        $form = '<form method="post" action="' . $action . '" class="paypal-button" target="_top">
+
+        $usage_details = bp_get_option('bp-media-encoding-usage');
+        if (isset($usage_details[$this->api_key]->plan->name) && ($usage_details[$this->api_key]->plan->name == $name)) {
+            $form = '<button disabled="disabled" type="submit" class="button">' . __('Current Plan', 'buddypress-media') . '</button>';
+        } else {
+            $form = '<form method="post" action="' . $action . '" class="paypal-button" target="_top">
                         <input type="hidden" name="button" value="subscribe">
                         <input type="hidden" name="item_name" value="' . $name . '">
 
@@ -197,9 +213,10 @@ class BPMediaEncoding {
 
                         <input type="hidden" name="src" value="1">
                         <input type="hidden" name="sra" value="1">
-
-                        <button type="submit" class="button paypal-button large">' . __('Subscribe', 'buddypress-media') . '</button>
+                        
+                        <input type="image" src="http://www.paypal.com/en_US/i/btn/btn_subscribe_SM.gif" border="0" name="submit" alt="Make payments with PayPal - it\'s fast, free and secure!">
                     </form>';
+        }
         return $form;
     }
 
@@ -208,12 +225,14 @@ class BPMediaEncoding {
         $usage_details = bp_get_option('bp-media-encoding-usage');
         $content = '';
         if ($usage_details && isset($usage_details[$this->api_key]->status) && $usage_details[$this->api_key]->status) {
+            if (isset($usage_details[$this->api_key]->plan->name))
+                $content .= '<p><strong>' . __('Current Plan', 'buddypress-media') . ':</strong> ' . $usage_details[$this->api_key]->plan->name . '</p>';
             if (isset($usage_details[$this->api_key]->used))
-                $content .= '<p><span class="encoding-used"></span>' . __('Used', 'buddypress-media') . ': ' . (($used_size = size_format($usage_details[$this->api_key]->used, 2)) ? $used_size : '0MB') . '</p>';
+                $content .= '<p><span class="encoding-used"></span><strong>' . __('Used', 'buddypress-media') . ':</strong> ' . (($used_size = size_format($usage_details[$this->api_key]->used, 2)) ? $used_size : '0MB') . '</p>';
             if (isset($usage_details[$this->api_key]->remaining))
-                $content .= '<p><span class="encoding-remaining"></span>' . __('Remaining', 'buddypress-media') . ': ' . (($remaining_size = size_format($usage_details[$this->api_key]->remaining, 2)) ? $remaining_size : '0MB') . '</p>';
+                $content .= '<p><span class="encoding-remaining"></span><strong>' . __('Remaining', 'buddypress-media') . ':</strong> ' . (($remaining_size = size_format($usage_details[$this->api_key]->remaining, 2)) ? $remaining_size : '0MB') . '</p>';
             if (isset($usage_details[$this->api_key]->total))
-                $content .= '<p>' . __('Total', 'buddypress-media') . ': ' . size_format($usage_details[$this->api_key]->total, 2) . '</p>';
+                $content .= '<p><strong>' . __('Total', 'buddypress-media') . ':</strong> ' . size_format($usage_details[$this->api_key]->total, 2) . '</p>';
             $usage = new rtProgress();
             $content .= $usage->progress_ui($usage->progress($usage_details[$this->api_key]->used, $usage_details[$this->api_key]->total), false);
             if ($usage_details[$this->api_key]->remaining <= 0)
@@ -238,7 +257,7 @@ class BPMediaEncoding {
 //            </table>';
         ?>
         <p><?php _e('BuddyPress Media team has started offering an audio/video encoding service.', 'buddypress-media'); ?></p>
-        <table  class="widefat fixed" cellspacing="0">
+        <table  class="bp-media-encoding-table widefat fixed" cellspacing="0">
             <tbody>
                 <!-- Results table headers -->
             <thead>
@@ -259,27 +278,31 @@ class BPMediaEncoding {
             </tr>
             <tr>
                 <th><?php _e('Bandwidth (monthly)', 'buddypress-media'); ?></th>
-                <td>10GB</td>
+                <td>1GB</td>
                 <td>100GB</td>
                 <td>1TB</td>
                 <td>10TB</td>
             </tr>
             <tr>
                 <th><?php _e('Overage Bandwidth', 'buddypress-media'); ?></th>
-                <td><?php echo '<img src="' . admin_url('/images/no.png') . '" />'; ?></td>
+                <td><?php _e('Not Available', 'buddypress-media'); ?></td>
                 <td>$0.10 per GB</td>
                 <td>$0.08 per GB</td>
                 <td>$0.05 per GB</td>
             </tr>
             <tr>
                 <th><?php _e('Amazon S3 Support', 'buddypress-media'); ?></th>
-                <td><?php echo '<img src="' . admin_url('/images/no.png') . '" />'; ?></td>
+                <td><?php _e('Not Available', 'buddypress-media'); ?></td>
                 <td colspan="3" class="column-posts"><?php _e('Coming Soon', 'buddypress-media'); ?></td>
             </tr>
             <tr>
                 <th><?php _e('HD Profile', 'buddypress-media'); ?></th>
-                <td><?php echo '<img src="' . admin_url('/images/no.png') . '" />'; ?></td>
+                <td><?php _e('Not Available', 'buddypress-media'); ?></td>
                 <td colspan="3" class="column-posts"><?php _e('Coming Soon', 'buddypress-media'); ?></td>
+            </tr>
+            <tr>
+                <th><?php _e('Webcam Recording', 'buddypress-media'); ?></th>
+                <td colspan="4" class="column-posts"><?php _e('Coming Soon', 'buddypress-media'); ?></td>
             </tr>
             <tr>
                 <th><?php _e('Pricing', 'buddypress-media'); ?></th>
@@ -290,10 +313,17 @@ class BPMediaEncoding {
             </tr>
             <tr>
                 <th></th>
-                <td>
-                    <form method="post" action="<?php echo trailingslashit($this->api_url) . ''; ?>">
-                        <button type="submit" class="button"><?php _e('Try Now', 'buddypress-media'); ?></button>
-                    </form>
+                <td><?php
+        $usage_details = bp_get_option('bp-media-encoding-usage');
+        if (isset($usage_details[$this->api_key]->plan->name) && ($usage_details[$this->api_key]->plan->name == 'free')) {
+            echo '<button disabled="disabled" type="submit" class="encoding-try-now button">' . __('Current Plan', 'buddypress-media') . '</button>';
+        } else {
+            ?>
+                        <form id="encoding-try-now-form" method="get" action="">
+                            <input type="hidden" name="email" value="<?php echo bp_get_option('admin_email'); ?>" />
+                            <button type="submit" class="encoding-try-now button"><?php _e('Try Now', 'buddypress-media'); ?></button>
+                        </form><?php }
+        ?>
                 </td>
                 <td><?php echo $this->encoding_subscription_form('silver', 9.0) ?></td>
                 <td><?php echo $this->encoding_subscription_form('gold', 99.0) ?></td>
@@ -321,14 +351,27 @@ class BPMediaEncoding {
                 $attachment_id = $result[0]->post_id;
 
                 $new_wp_attached_file_pathinfo = pathinfo($_GET['download_url']);
+                $post_mime_type = $new_wp_attached_file_pathinfo['extension'] == 'mp4' ? 'video/mp4' : 'audio/mp3';
                 $file_bits = file_get_contents($_GET['download_url']);
                 if ($file_bits) {
                     unlink(get_attached_file($attachment_id));
                     $upload_info = wp_upload_bits($new_wp_attached_file_pathinfo['basename'], null, $file_bits);
-                    $wpdb->update($wpdb->posts, array('guid' => $upload_info['url'], 'post_mime_type' => 'video/mp4'), array('ID' => $attachment_id));
+                    $wpdb->update($wpdb->posts, array('guid' => $upload_info['url'], 'post_mime_type' => $post_mime_type), array('ID' => $attachment_id));
                     $old_wp_attached_file = get_post_meta($attachment_id, '_wp_attached_file', true);
                     $old_wp_attached_file_pathinfo = pathinfo($old_wp_attached_file);
                     update_post_meta($attachment_id, '_wp_attached_file', str_replace($old_wp_attached_file_pathinfo['basename'], $new_wp_attached_file_pathinfo['basename'], $old_wp_attached_file));
+                    $media_entry = new BPMediaHostWordpress($attachment_id);
+                    $activity_content = str_replace($old_wp_attached_file_pathinfo['basename'], $new_wp_attached_file_pathinfo['basename'], $media_entry->get_media_activity_content());
+                    $wpdb->update($wpdb->prefix . 'bp_activity', array('content' => $activity_content), array('id' => get_post_meta($attachment_id, 'bp_media_child_activity', true)));
+//                    $subject = __('BuddyPress Media Encoding: Nearing quota limit.', 'buddypress-media');
+//                    $message = __('<p>You are nearing the quota limit for your BuddyPress Media encoding service.</p><p>Following are the details:</p><p><strong>Used:</strong> %s</p><p><strong>Remaining</strong>: %s</p><p><strong>Total:</strong> %s</p>', 'buddypress-media');
+//                    $users = get_users(array('role' => 'administrator'));
+//                    if ($users) {
+//                        foreach ($users as $user)
+//                            $admin_email_ids[] = $user->user_email;
+//                        add_filter('wp_mail_content_type', create_function('', 'return "text/html";'));
+//                        wp_mail($admin_email_ids, $subject, sprintf($message, size_format($usage_details[$this->api_key]->used, 2), size_format($usage_details[$this->api_key]->remaining, 2), size_format($usage_details[$this->api_key]->total, 2)));
+//                    }
                 } else {
                     error_log(__('Could not read file.', 'buddypress-media'));
                 }
@@ -340,6 +383,27 @@ class BPMediaEncoding {
 
             die();
         }
+    }
+
+    public function free_encoding_subscribe() {
+        $form_data = wp_parse_args($_GET['form_data']);
+        if (isset($form_data['email']) && $form_data['email']) {
+            $free_subscription_url = add_query_arg(array('email' => urlencode($form_data['email'])), trailingslashit($this->api_url) . 'api/free/');
+            error_log($free_subscription_url);
+            $free_subscribe_page = wp_remote_get($free_subscription_url, array('timeout' => 120));
+            error_log(var_export($free_subscribe_page, true));
+            if (!is_wp_error($free_subscribe_page) && (!isset($free_subscribe_page['headers']['status']) || (isset($free_subscribe_page['headers']['status']) && ($free_subscribe_page['headers']['status'] == 200)))) {
+                $subscription_info = json_decode($free_subscribe_page['body']);
+                if (isset($subscription_info->status) && $subscription_info->status) {
+                    echo json_encode(array('apikey' => $subscription_info->apikey));
+                } else {
+                    echo json_encode(array('error' => $subscription_info->message));
+                }
+            } else {
+                echo json_encode(array('error' => 'Something went wrong please try again.'));
+            }
+        }
+        die();
     }
 
 }

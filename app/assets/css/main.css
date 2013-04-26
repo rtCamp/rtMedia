@@ -51,6 +51,19 @@ ul#social li{display:inline;}
 .wrap.bp-media-admin .bp-media-settings-tabs a.nav-tab.convert-videos{background-position-y:-214px;}
 .wrap.bp-media-admin .bp-media-settings-tabs a.nav-tab.insta{background-position-y:-244px;}
 .wrap.bp-media-admin .bp-media-settings-tabs a.nav-tab.watermark{background-position-y:-274px;}
+
+table.bp-media-encoding-table td, table.bp-media-encoding-table th {
+    border-left-color: #fff;
+    border-right-color: #dfdfdf;
+    border-width: 1px;
+    vertical-align: middle;
+    text-align: center;
+    font-family: sans-serif;
+}
+table.bp-media-encoding-table th {
+    font-weight: bold;
+}
+
 /* Addons page Styling */
 
 a.toplevel_page_bp-media-settings div.wp-menu-image{
