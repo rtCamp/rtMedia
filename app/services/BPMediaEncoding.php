@@ -246,17 +246,6 @@ class BPMediaEncoding {
     }
 
     public function encoding_service_intro() {
-//        $api_key = bp_get_option('bp-media-encoding-api-key');
-//        if ( !$api_key )
-//            echo '<div class="updated" id="bp-media-no-api-key"><p>'.__('You would need an API key to use this service.','buddypress-media').'</p></div>';
-//        echo '<table class="form-table">
-//                <tbody>
-//                    <tr valign="top">
-//                        <th scope="row">'.__('API Key','buddypress-media').'</th>
-//                        <td><label for="bp-media-encoding-api-key"><input value="'.$api_key.'" name="bp-media-encoding-api-key" id="bp-media-encoding-api-key" type="text"></label></td>
-//                    </tr>
-//                </tbody>
-//            </table>';
         ?>
         <p><?php _e('BuddyPress Media team has started offering an audio/video encoding service.', 'buddypress-media'); ?></p>
         <table  class="bp-media-encoding-table widefat fixed" cellspacing="0">
@@ -333,80 +322,78 @@ class BPMediaEncoding {
             </tr>
         </tbody>
         </table><br /><?php
-    }
+        }
 
-    /**
-     * Function to handle the callback request by the FFMPEG encoding server
-     *
-     * @since 1.0
-     */
-    public function handle_callback() {
-        if (isset($_GET['job_id']) && isset($_GET['download_url'])) {
-            global $wpdb;
-            $query_string =
-                    "SELECT $wpdb->postmeta.post_id
+        /**
+         * Function to handle the callback request by the FFMPEG encoding server
+         *
+         * @since 1.0
+         */
+        public function handle_callback() {
+            if (isset($_GET['job_id']) && isset($_GET['download_url'])) {
+                global $wpdb,$bp_media_counter;
+                $query_string =
+                        "SELECT $wpdb->postmeta.post_id
 					FROM $wpdb->postmeta
 					WHERE $wpdb->postmeta.meta_key = 'bp-media-encoding-job-id'
 						AND $wpdb->postmeta.meta_value='" . $_GET['job_id'] . "' ";
-            $result = $wpdb->get_results($query_string);
-            if (is_array($result) && count($result) == 1) {
-                $attachment_id = $result[0]->post_id;
-                $download_url = urldecode($_GET['download_url']);
-                $new_wp_attached_file_pathinfo = pathinfo($download_url);
-                $post_mime_type = $new_wp_attached_file_pathinfo['extension'] == 'mp4' ? 'video/mp4' : 'audio/mp3';
-                $file_bits = file_get_contents($download_url);
-                if ($file_bits) {
-                    unlink(get_attached_file($attachment_id));
-                    $upload_info = wp_upload_bits($new_wp_attached_file_pathinfo['basename'], null, $file_bits);
-                    $wpdb->update($wpdb->posts, array('guid' => $upload_info['url'], 'post_mime_type' => $post_mime_type), array('ID' => $attachment_id));
-                    $old_wp_attached_file = get_post_meta($attachment_id, '_wp_attached_file', true);
-                    $old_wp_attached_file_pathinfo = pathinfo($old_wp_attached_file);
-                    update_post_meta($attachment_id, '_wp_attached_file', str_replace($old_wp_attached_file_pathinfo['basename'], $new_wp_attached_file_pathinfo['basename'], $old_wp_attached_file));
-                    $media_entry = new BPMediaHostWordpress($attachment_id);
-                    $activity_content = str_replace($old_wp_attached_file_pathinfo['basename'], $new_wp_attached_file_pathinfo['basename'], $media_entry->get_media_activity_content());
-                    $wpdb->update($wpdb->prefix . 'bp_activity', array('content' => $activity_content), array('id' => get_post_meta($attachment_id, 'bp_media_child_activity', true)));
-//                    $subject = __('BuddyPress Media Encoding: Nearing quota limit.', 'buddypress-media');
-//                    $message = __('<p>You are nearing the quota limit for your BuddyPress Media encoding service.</p><p>Following are the details:</p><p><strong>Used:</strong> %s</p><p><strong>Remaining</strong>: %s</p><p><strong>Total:</strong> %s</p>', 'buddypress-media');
-//                    $users = get_users(array('role' => 'administrator'));
-//                    if ($users) {
-//                        foreach ($users as $user)
-//                            $admin_email_ids[] = $user->user_email;
-//                        add_filter('wp_mail_content_type', create_function('', 'return "text/html";'));
-//                        wp_mail($admin_email_ids, $subject, sprintf($message, size_format($usage_details[$this->api_key]->used, 2), size_format($usage_details[$this->api_key]->remaining, 2), size_format($usage_details[$this->api_key]->total, 2)));
-//                    }
+                $result = $wpdb->get_results($query_string);
+                if (is_array($result) && count($result) == 1) {
+                    $attachment_id = $result[0]->post_id;
+                    $download_url = urldecode($_GET['download_url']);
+                    $new_wp_attached_file_pathinfo = pathinfo($download_url);
+                    $post_mime_type = $new_wp_attached_file_pathinfo['extension'] == 'mp4' ? 'video/mp4' : 'audio/mp3';
+                    $file_bits = file_get_contents($download_url);
+                    if ($file_bits) {
+                        unlink(get_attached_file($attachment_id));
+                        $upload_info = wp_upload_bits($new_wp_attached_file_pathinfo['basename'], null, $file_bits);
+                        $wpdb->update($wpdb->posts, array('guid' => $upload_info['url'], 'post_mime_type' => $post_mime_type), array('ID' => $attachment_id));
+                        $old_wp_attached_file = get_post_meta($attachment_id, '_wp_attached_file', true);
+                        $old_wp_attached_file_pathinfo = pathinfo($old_wp_attached_file);
+                        update_post_meta($attachment_id, '_wp_attached_file', str_replace($old_wp_attached_file_pathinfo['basename'], $new_wp_attached_file_pathinfo['basename'], $old_wp_attached_file));
+                        $media_entry = new BPMediaHostWordpress($attachment_id);
+                        $activity_content = str_replace($old_wp_attached_file_pathinfo['basename'], $new_wp_attached_file_pathinfo['basename'], $media_entry->get_media_activity_content());
+                        $wpdb->update($wpdb->prefix . 'bp_activity', array('content' => $activity_content), array('id' => get_post_meta($attachment_id, 'bp_media_child_activity', true)));
+                        // Check if uplaod is through activity upload
+                        $activity_id = get_post_meta($attachment_id, 'bp-media-activity-upload-id', true);
+                        if ($activity_id) {
+                            $content = $wpdb->get_var("SELECT content FROM {$wpdb->prefix}bp_activity WHERE id = $activity_id");
+                            $activity_content = str_replace($old_wp_attached_file_pathinfo['basename'], $new_wp_attached_file_pathinfo['basename'], $content);
+                            $wpdb->update($wpdb->prefix . 'bp_activity', array('content' => $activity_content), array('id' => $activity_id));
+                        }
+                    } else {
+                        error_log(__('Could not read file.', 'buddypress-media'));
+                    }
                 } else {
-                    error_log(__('Could not read file.', 'buddypress-media'));
+                    error_log(__('Something went wrong. The required attachment id does not exists. It must have been deleted.', 'buddypress-media'));
                 }
-            } else {
-                error_log(__('Something went wrong. The required attachment id does not exists. It must have been deleted.', 'buddypress-media'));
+
+                $this->update_usage($this->api_key);
+
+                die();
             }
+        }
 
-            $this->update_usage($this->api_key);
-
+        public function free_encoding_subscribe() {
+            $form_data = wp_parse_args($_GET['form_data']);
+            if (isset($form_data['email']) && $form_data['email']) {
+                $free_subscription_url = add_query_arg(array('email' => urlencode($form_data['email'])), trailingslashit($this->api_url) . 'api/free/');
+                error_log($free_subscription_url);
+                $free_subscribe_page = wp_remote_get($free_subscription_url, array('timeout' => 120));
+                error_log(var_export($free_subscribe_page, true));
+                if (!is_wp_error($free_subscribe_page) && (!isset($free_subscribe_page['headers']['status']) || (isset($free_subscribe_page['headers']['status']) && ($free_subscribe_page['headers']['status'] == 200)))) {
+                    $subscription_info = json_decode($free_subscribe_page['body']);
+                    if (isset($subscription_info->status) && $subscription_info->status) {
+                        echo json_encode(array('apikey' => $subscription_info->apikey));
+                    } else {
+                        echo json_encode(array('error' => $subscription_info->message));
+                    }
+                } else {
+                    echo json_encode(array('error' => 'Something went wrong please try again.'));
+                }
+            }
             die();
         }
-    }
 
-    public function free_encoding_subscribe() {
-        $form_data = wp_parse_args($_GET['form_data']);
-        if (isset($form_data['email']) && $form_data['email']) {
-            $free_subscription_url = add_query_arg(array('email' => urlencode($form_data['email'])), trailingslashit($this->api_url) . 'api/free/');
-            error_log($free_subscription_url);
-            $free_subscribe_page = wp_remote_get($free_subscription_url, array('timeout' => 120));
-            error_log(var_export($free_subscribe_page, true));
-            if (!is_wp_error($free_subscribe_page) && (!isset($free_subscribe_page['headers']['status']) || (isset($free_subscribe_page['headers']['status']) && ($free_subscribe_page['headers']['status'] == 200)))) {
-                $subscription_info = json_decode($free_subscribe_page['body']);
-                if (isset($subscription_info->status) && $subscription_info->status) {
-                    echo json_encode(array('apikey' => $subscription_info->apikey));
-                } else {
-                    echo json_encode(array('error' => $subscription_info->message));
-                }
-            } else {
-                echo json_encode(array('error' => 'Something went wrong please try again.'));
-            }
-        }
-        die();
     }
-
-}
 ?>
