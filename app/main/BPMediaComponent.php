@@ -336,7 +336,6 @@ function bp_media_notifications_callback($action, $media_id, $initiator_id, $tot
 			'initiator_id'	=> $initiator_id,
 			'total_items'	=> $total_items
 		);
-	print_r($params);
 
 		return apply_filters('bp_media_notifications',$params);
 }

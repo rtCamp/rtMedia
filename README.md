@@ -119,6 +119,10 @@ Please visit [BuddyPress Media's Features page](http://rtcamp.com/buddypress-med
 
 Please visit [BuddyPress Media's Roadmap page](http://rtcamp.com/buddypress-media/roadmap/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "Visit BuddyPress Media's Features page") to get some details about future releases.
 
+#### 2.10.3 ####
+* Removes lightbox from mobile devices
+* Fixes a few bugs related to notifications
+
 #### 2.10.2 ####
 * Fixes a [bug in admin](https://github.com/rtCamp/buddypress-media/issues/264)
 * Fixes text-domain issues
@@ -377,4 +381,4 @@ Please visit [BuddyPress Media's Roadmap page](http://rtcamp.com/buddypress-medi
 * HTML5 Audio Tag Support (with fallback)
 * HTML5 Video Tag Support (with fallback)
 
-Adds album management options (Merge/Move/Delete), shortcode to display media. Bug fixes.
+Removes lightbox automatically on mobile devices. Bug fixes.
