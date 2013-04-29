@@ -8,8 +8,8 @@
 class BPMediaEncoding {
 
     protected $api_url = 'http://api.rtcamp.com/';
-    protected $sandbox_testing = 1;
-    protected $merchant_id = 'SA8CC3GSCMB2U';
+    protected $sandbox_testing = 0;
+    protected $merchant_id = 'paypal@rtcamp.com';
 
     public function __construct() {
         $this->api_key = bp_get_option('bp-media-encoding-api-key');
@@ -175,7 +175,7 @@ class BPMediaEncoding {
     }
 
     public function encoding_subscription_form($name = 'No Name', $price = '0') {
-        $action = $this->sandbox_testing ? 'https://sandbox.paypal.com/cgi-bin/webscr' : 'https://paypal.com/cgi-bin/webscr';
+        $action = $this->sandbox_testing ? 'https://sandbox.paypal.com/cgi-bin/webscr' : 'https://www.paypal.com/cgi-bin/webscr';
         $return_page = add_query_arg(array('page' => 'bp-media-encoding'), (is_multisite() ? network_admin_url('admin.php') : admin_url('admin.php')));
 
         $usage_details = bp_get_option('bp-media-encoding-usage');
@@ -184,7 +184,7 @@ class BPMediaEncoding {
         } else {
             $form = '<form method="post" action="' . $action . '" class="paypal-button" target="_top">
                         <input type="hidden" name="button" value="subscribe">
-                        <input type="hidden" name="item_name" value="' . $name . '">
+                        <input type="hidden" name="item_name" value="' . ucfirst($name) . '">
 
                         <input type="hidden" name="currency_code" value="USD">
 
@@ -203,6 +203,8 @@ class BPMediaEncoding {
 
                         <!-- Flag to no shipping -->
                         <input type="hidden" name="no_shipping" value="1">
+                        
+                        <input type="hidden" name="notify_url" value="' . trailingslashit($this->api_url) . 'subscribe/paypal">
 
                         <!-- Flag to post payment return url -->
                         <input type="hidden" name="return" value="' . trailingslashit($this->api_url) . 'payment/process">
