@@ -52,18 +52,14 @@ class BPMediaEncodingTranscoder extends BPMediaHostWordpress {
         $encoding_url = 'http://api.rtcamp.com/job/new/';
 
         $upload_url = add_query_arg($query_args, $encoding_url . $api_key);
-        error_log($upload_url);
         $upload_page = wp_remote_get($upload_url,array('timeout'=>20));
-        error_log(var_export($upload_page,true));
         if (!is_wp_error($upload_page) && (!isset($upload_page['headers']['status']) || (isset($upload_page['headers']['status']) && ($upload_page['headers']['status'] == 200)))) {
             $upload_info = json_decode($upload_page['body']);
             if (isset($upload_info->status) && $upload_info->status && isset($upload_info->job_id)&&$upload_info->job_id) {
                 $job_id = $upload_info->job_id;
             } else {
-//                unlink($file);
                 $bp_media_admin->bp_media_encoding->update_usage($bp_media_admin->bp_media_encoding->api_key);
                 $bp_media_admin->bp_media_encoding->usage_quota_over();
-                error_log($upload_info->message);
                 remove_filter('bp_media_plupload_files_filter', array($bp_media_admin->bp_media_encoding, 'allowed_types'));
                 parent::insert_media($name, $description, $album_id, $group, $is_multiple, $is_activity, $parent_fallback_files, $author_id, $album_name);
                 return;
