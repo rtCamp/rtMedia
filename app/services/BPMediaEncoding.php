@@ -179,7 +179,7 @@ class BPMediaEncoding {
         $return_page = add_query_arg(array('page' => 'bp-media-encoding'), (is_multisite() ? network_admin_url('admin.php') : admin_url('admin.php')));
 
         $usage_details = bp_get_option('bp-media-encoding-usage');
-        if (isset($usage_details[$this->api_key]->plan->name) && ($usage_details[$this->api_key]->plan->name == $name)) {
+        if (isset($usage_details[$this->api_key]->plan->name) && (strtolower($usage_details[$this->api_key]->plan->name) == strtolower($name))) {
             $form = '<button disabled="disabled" type="submit" class="button">' . __('Current Plan', 'buddypress-media') . '</button>';
         } else {
             $form = '<form method="post" action="' . $action . '" class="paypal-button" target="_top">
@@ -315,7 +315,7 @@ class BPMediaEncoding {
                 <th></th>
                 <td><?php
         $usage_details = bp_get_option('bp-media-encoding-usage');
-        if (isset($usage_details[$this->api_key]->plan->name) && ($usage_details[$this->api_key]->plan->name == 'free')) {
+        if (isset($usage_details[$this->api_key]->plan->name) && (strtolower($usage_details[$this->api_key]->plan->name) == 'free')) {
             echo '<button disabled="disabled" type="submit" class="encoding-try-now button">' . __('Current Plan', 'buddypress-media') . '</button>';
         } else {
             ?>
@@ -349,10 +349,10 @@ class BPMediaEncoding {
             $result = $wpdb->get_results($query_string);
             if (is_array($result) && count($result) == 1) {
                 $attachment_id = $result[0]->post_id;
-
-                $new_wp_attached_file_pathinfo = pathinfo($_GET['download_url']);
+                $download_url = urldecode($_GET['download_url']);
+                $new_wp_attached_file_pathinfo = pathinfo($download_url);
                 $post_mime_type = $new_wp_attached_file_pathinfo['extension'] == 'mp4' ? 'video/mp4' : 'audio/mp3';
-                $file_bits = file_get_contents($_GET['download_url']);
+                $file_bits = file_get_contents($download_url);
                 if ($file_bits) {
                     unlink(get_attached_file($attachment_id));
                     $upload_info = wp_upload_bits($new_wp_attached_file_pathinfo['basename'], null, $file_bits);
