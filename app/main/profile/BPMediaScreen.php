@@ -95,14 +95,14 @@ class BPMediaScreen {
     }
 
     public function hook_before() {
-		global $bp;
+        global $bp;
         do_action('bp_media_before_content');
-        do_action('bp_media_before_' . $this->slug,$bp->action_variables[1]);
+        do_action('bp_media_before_' . $this->slug, $bp->action_variables[1]);
     }
 
     public function hook_after() {
-		global $bp;
-        do_action('bp_media_after_' . $this->slug,$bp->action_variables[1]);
+        global $bp;
+        do_action('bp_media_after_' . $this->slug, $bp->action_variables[1]);
         do_action('bp_media_after_content');
     }
 
@@ -134,7 +134,6 @@ class BPMediaScreen {
         $entryslug = 'BP_MEDIA_' . $this->media_const . '_VIEW_SLUG';
 
         global $bp;
-
         remove_filter('bp_activity_get_user_join_filter', 'BPMediaFilters::activity_query_filter', 10);
         if (isset($bp->action_variables[0])) {
             switch ($bp->action_variables[0]) {
@@ -263,7 +262,11 @@ class BPMediaScreen {
         echo '</h2>';
         echo '<p>' . nl2br($bp_media_current_entry->get_description()) . '</p>';
         echo '</div>';
-        echo $bp_media_current_entry->show_comment_form();
+        if (!bp_is_active('activity')|| !get_post_meta($bp_media_current_entry->get_id(),'bp_media_child_activity')) {
+            do_action('bp_media_no_activity_entry_meta');
+        } else {
+            echo $bp_media_current_entry->show_comment_form();
+        }
         echo '</div>';
         echo '</div>';
         $this->hook_after();
@@ -361,7 +364,7 @@ class BPMediaScreen {
      * @global BPMediaHostWordpress $bp_media_current_entry
      */
     function entry_delete() {
-        global $bp;
+        global $bp,$wpdb;
         if (bp_loggedin_user_id() != bp_displayed_user_id()) {
             bp_core_no_access(array(
                 'message' => __('You do not have access to this page.', 'buddypress-media'),
@@ -387,11 +390,30 @@ class BPMediaScreen {
             exit;
         }
         $post_id = $bp_media_current_entry->get_id();
-        if (bp_is_active('activity')) {
-            $activity_id = get_post_meta($post_id, 'bp_media_child_activity', true);
-            bp_activity_delete_by_activity_id($activity_id);
+        
+        if (!isset($_GET['_wpnonce'])|| ($_GET['_wpnonce']!= wp_create_nonce('bp-media-delete-'.$post_id))) {
+            @setcookie('bp-message', __('Something went wrong', 'buddypress-media'), time() + 60 * 60 * 24, COOKIEPATH);
+            @setcookie('bp-message-type', 'error', time() + 60 * 60 * 24, COOKIEPATH);
+            $this->template->redirect($this->media_const);
+            exit;
         }
-        $bp_media_current_entry->delete_media();
+        
+        $activity_id = get_post_meta($post_id, 'bp_media_child_activity', true);
+        
+        if (bp_is_active('activity')&&$activity_id) {
+            bp_activity_delete_by_activity_id($activity_id);
+        } elseif($activity_id) {
+            $wpdb->query( $wpdb->prepare("DELETE FROM {$wpdb->prefix}bp_activity
+		 WHERE id = %d",
+	        $activity_id ));
+        }
+        
+        if ( 'album' == $bp_media_current_entry->get_type()){
+            $delete_handler = new BPMediaAlbum($post_id);
+            $delete_handler->delete_album();
+        } else {
+            $bp_media_current_entry->delete_media();
+        }
 
         @setcookie('bp-message', __('Media deleted successfully', 'buddypress-media'), time() + 60 * 60 * 24, COOKIEPATH);
         @setcookie('bp-message-type', 'success', time() + 60 * 60 * 24, COOKIEPATH);
