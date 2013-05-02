@@ -104,11 +104,11 @@ class BPMediaAlbum {
             $group_url = bp_get_group_permalink($current_group);
             $this->url = trailingslashit($group_url . BP_MEDIA_ALBUMS_SLUG . '/' . $this->id);
             $this->edit_url = trailingslashit($group_url . BP_MEDIA_ALBUMS_SLUG . '/' . BP_MEDIA_ALBUMS_EDIT_SLUG . '/' . $this->id);
-            $this->delete_url = trailingslashit($group_url . BP_MEDIA_ALBUMS_SLUG . '/' . BP_MEDIA_DELETE_SLUG . '/' . $this->id);
+            $this->delete_url = wp_nonce_url(trailingslashit($group_url . BP_MEDIA_ALBUMS_SLUG . '/' . BP_MEDIA_DELETE_SLUG . '/' . $this->id),'bp-media-delete-'.$this->id);
         } else {
             $this->url = trailingslashit(bp_core_get_user_domain($this->owner) . BP_MEDIA_ALBUMS_SLUG . '/' . $this->id);
             $this->edit_url = trailingslashit(bp_core_get_user_domain($this->owner) . BP_MEDIA_ALBUMS_SLUG . '/' . BP_MEDIA_ALBUMS_EDIT_SLUG . '/' . $this->id);
-            $this->delete_url = trailingslashit(bp_core_get_user_domain($this->owner) . BP_MEDIA_ALBUMS_SLUG . '/' . BP_MEDIA_DELETE_SLUG . '/' . $this->id);
+            $this->delete_url = wp_nonce_url(trailingslashit(bp_core_get_user_domain($this->owner) . BP_MEDIA_ALBUMS_SLUG . '/' . BP_MEDIA_DELETE_SLUG . '/' . $this->id),'bp-media-delete-'.$this->id);
         }
         $attachments = get_children(array(
             'numberposts' => 1,
