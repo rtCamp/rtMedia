@@ -205,7 +205,7 @@ class BPMediaActions {
      * @return boolean
      */
     static function delete_activity_handler($args) {
-        if ( !bp_is_active('activity') )
+        if (!bp_is_active('activity'))
             return;
         remove_action('bp_media_before_delete_media', 'BPMediaActions::delete_media_handler');
         global $bp_media_count, $wpdb;
@@ -248,7 +248,7 @@ class BPMediaActions {
      */
     static function delete_media_handler($media_id) {
         /* @var $media BPMediaHostWordpress */
-        if ( bp_is_active('activity') ) {
+        if (bp_is_active('activity')) {
             remove_action('bp_before_activity_delete', 'BPMediaActions::delete_activity_handler');
             $activity_id = get_post_meta($media_id, 'bp_media_child_activity', true);
             if ($activity_id == NULL)
@@ -351,15 +351,15 @@ class BPMediaActions {
                 $action_buttons[] = '<a href="' . $bp_media_current_entry->get_edit_url()
                         . '" class="button item-button bp-secondary-action bp-media-edit" title="'
                         . __('Edit Media', 'buddypress-media') . '">' . __('Edit', 'buddypress-media') . '</a>';
+
+            if (!bp_is_active('activity') || !get_post_meta($bp_media_current_entry->get_id(), 'bp_media_child_activity')) {
+                $action_buttons[] = '<a href="' . $bp_media_current_entry->get_delete_url()
+                        . '" class="button item-button bp-secondary-action delete-activity-single confirm" title="'
+                        . __('Delete Media', 'buddypress-media') . '">' . __('Delete', 'buddypress-media') . '</a>';
+            }
         }
 
         $action_buttons = apply_filters('bp_media_action_buttons', $action_buttons);
-
-        if (!bp_is_active('activity')) {
-            $action_buttons[] = '<a href="' . $bp_media_current_entry->get_delete_url()
-                    . '" class="button item-button bp-secondary-action delete-activity-single confirm" title="'
-                    . __('Delete Media', 'buddypress-media') . '">' . __('Delete', 'buddypress-media') . '</a>';
-        }
 
         foreach ($action_buttons as $action_button) {
             echo $action_button;
@@ -749,13 +749,8 @@ class BPMediaActions {
         $media = isset($_POST['media']) ? $_POST['media'] : array();
         if (!empty($media)) {
             foreach ($media as $item) {
-                if (bp_is_active('activity')){
                 $delete_handler = new BPMediaHostWordpress($item);
                 $delete_handler->delete_media();
-                } else {
-                    remove_action('delete_attachment', array($this, 'delete_attachment_handler'));
-                    wp_delete_attachment($item, true);
-                }
             }
             echo true;
         }
@@ -912,6 +907,8 @@ class BPMediaActions {
      * @param type $media_id
      */
     function album_activity_sync($media_id) {
+        if (!bp_is_active('activity'))
+            return;
         $album_id = wp_get_post_parent_id($media_id);
         BPMediaFunction::update_album_activity($album_id, false, $media_id);
     }

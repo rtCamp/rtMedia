@@ -147,7 +147,6 @@ class BPMediaScreen {
                     if (!isset($bp->action_variables[1])) {
                         $this->page_not_exist();
                     }
-                    error_log('asdasd');
                     $this->entry_delete();
                     break;
                 default:
@@ -263,7 +262,7 @@ class BPMediaScreen {
         echo '</h2>';
         echo '<p>' . nl2br($bp_media_current_entry->get_description()) . '</p>';
         echo '</div>';
-        if (!bp_is_active('activity')) {
+        if (!bp_is_active('activity')|| !get_post_meta($bp_media_current_entry->get_id(),'bp_media_child_activity')) {
             do_action('bp_media_no_activity_entry_meta');
         } else {
             echo $bp_media_current_entry->show_comment_form();
@@ -365,7 +364,7 @@ class BPMediaScreen {
      * @global BPMediaHostWordpress $bp_media_current_entry
      */
     function entry_delete() {
-        global $bp;
+        global $bp,$wpdb;
         if (bp_loggedin_user_id() != bp_displayed_user_id()) {
             bp_core_no_access(array(
                 'message' => __('You do not have access to this page.', 'buddypress-media'),
@@ -391,11 +390,30 @@ class BPMediaScreen {
             exit;
         }
         $post_id = $bp_media_current_entry->get_id();
-        if (bp_is_active('activity')) {
-            $activity_id = get_post_meta($post_id, 'bp_media_child_activity', true);
-            bp_activity_delete_by_activity_id($activity_id);
+        
+        if (!isset($_GET['_wpnonce'])|| ($_GET['_wpnonce']!= wp_create_nonce('bp-media-delete-'.$post_id))) {
+            @setcookie('bp-message', __('Something went wrong', 'buddypress-media'), time() + 60 * 60 * 24, COOKIEPATH);
+            @setcookie('bp-message-type', 'error', time() + 60 * 60 * 24, COOKIEPATH);
+            $this->template->redirect($this->media_const);
+            exit;
         }
-        $bp_media_current_entry->delete_media();
+        
+        $activity_id = get_post_meta($post_id, 'bp_media_child_activity', true);
+        
+        if (bp_is_active('activity')&&$activity_id) {
+            bp_activity_delete_by_activity_id($activity_id);
+        } elseif($activity_id) {
+            $wpdb->query( $wpdb->prepare("DELETE FROM {$wpdb->prefix}bp_activity
+		 WHERE id = %d",
+	        $activity_id ));
+        }
+        
+        if ( 'album' == $bp_media_current_entry->get_type()){
+            $delete_handler = new BPMediaAlbum($post_id);
+            $delete_handler->delete_album();
+        } else {
+            $bp_media_current_entry->delete_media();
+        }
 
         @setcookie('bp-message', __('Media deleted successfully', 'buddypress-media'), time() + 60 * 60 * 24, COOKIEPATH);
         @setcookie('bp-message-type', 'success', time() + 60 * 60 * 24, COOKIEPATH);
