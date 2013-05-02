@@ -95,14 +95,14 @@ class BPMediaScreen {
     }
 
     public function hook_before() {
-		global $bp;
+        global $bp;
         do_action('bp_media_before_content');
-        do_action('bp_media_before_' . $this->slug,$bp->action_variables[1]);
+        do_action('bp_media_before_' . $this->slug, $bp->action_variables[1]);
     }
 
     public function hook_after() {
-		global $bp;
-        do_action('bp_media_after_' . $this->slug,$bp->action_variables[1]);
+        global $bp;
+        do_action('bp_media_after_' . $this->slug, $bp->action_variables[1]);
         do_action('bp_media_after_content');
     }
 
@@ -134,7 +134,6 @@ class BPMediaScreen {
         $entryslug = 'BP_MEDIA_' . $this->media_const . '_VIEW_SLUG';
 
         global $bp;
-
         remove_filter('bp_activity_get_user_join_filter', 'BPMediaFilters::activity_query_filter', 10);
         if (isset($bp->action_variables[0])) {
             switch ($bp->action_variables[0]) {
@@ -148,6 +147,7 @@ class BPMediaScreen {
                     if (!isset($bp->action_variables[1])) {
                         $this->page_not_exist();
                     }
+                    error_log('asdasd');
                     $this->entry_delete();
                     break;
                 default:
@@ -263,7 +263,11 @@ class BPMediaScreen {
         echo '</h2>';
         echo '<p>' . nl2br($bp_media_current_entry->get_description()) . '</p>';
         echo '</div>';
-        echo $bp_media_current_entry->show_comment_form();
+        if (!bp_is_active('activity')) {
+            do_action('bp_media_no_activity_entry_meta');
+        } else {
+            echo $bp_media_current_entry->show_comment_form();
+        }
         echo '</div>';
         echo '</div>';
         $this->hook_after();
