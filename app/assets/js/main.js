@@ -313,7 +313,7 @@ jQuery(document).ready(function(){
     },1000);
 
     /* Add Featured Image */
-    jQuery('.activity-meta').on('click','.bp-media-featured',function(e){
+    jQuery('.bp-media-image').on('click','.bp-media-featured',function(e){
         e.preventDefault();
         var post_id = jQuery(this).attr('data-post-id');
         var album_id = jQuery(this).attr('data-album-id');
@@ -593,11 +593,12 @@ jQuery(document).ready(function(){
                     if ( jQuery(this).hasClass( 'error' ) )
                         jQuery(this).hide();
                 });
+                
 
                 if ( ids[1] != 'comment' ) {
-                    jQuery('#acomment-' + c_id).append( form );
+                    jQuery('.bp-media-ajax-single #acomment-' + c_id).append( form );
                 } else {
-                    jQuery('#activity-' + a_id + ' .activity-comments').append( form );
+                    jQuery('.bp-media-ajax-single #activity-' + a_id + ' .activity-comments').append( form );
                 }
 
                 if ( form.parent().hasClass( 'activity-comments' ) )
@@ -608,14 +609,14 @@ jQuery(document).ready(function(){
                     offset:-100,
                     easing:'easeOutQuad'
                 } );
-                jQuery('#ac-form-' + ids[2] + ' textarea').focus();
+                jQuery('.bp-media-ajax-single #ac-form-' + ids[2] + ' textarea').focus();
 
                 return false;
             }
 
             /* Activity comment posting */
             if ( target.attr('name') == 'ac_form_submit' ) {
-                var form = target.parents( 'form' );
+                var form = target.closest( 'form' );
                 var form_parent = form.parent();
                 var form_id = form.attr('id').split('-');
 
@@ -626,10 +627,11 @@ jQuery(document).ready(function(){
                     var comment_id = form_id[2];
                 }
 
-                var content = jQuery( '#' + form.attr('id') + ' textarea' );
+                var content = jQuery( target.closest('.ac-reply-content').find('textarea') );
+//                var content = jQuery( target.closest())'#' + form.attr('id') + ' textarea' );
 
                 /* Hide any error messages */
-                jQuery( '#' + form.attr('id') + ' div.error').hide();
+                jQuery( '.bp-media-ajax-single #' + form.attr('id') + ' div.error').hide();
                 target.addClass('loading').prop('disabled', true);
                 content.addClass('loading').prop('disabled', true);
 
@@ -657,25 +659,29 @@ jQuery(document).ready(function(){
                         form.append( jQuery( response.substr( 2, response.length ) ).hide().fadeIn( 200 ) );
                     } else {
                         form.fadeOut( 200, function() {
+                            form_parent_id = jQuery('#' + form.parent().attr('id'));
                             if ( 0 == form.parent().children('ul').length ) {
                                 if ( form.parent().hasClass('activity-comments') ) {
-                                    form.parent().prepend('<ul></ul>');
+                                    form_parent_id.prepend('<ul></ul>');
                                 } else {
-                                    form.parent().append('<ul></ul>');
+                                    form_parent_id.parent().append('<ul></ul>');
                                 }
                             }
 
                             /* Preceeding whitespace breaks output with jQuery 1.9.0 */
                             var the_comment = jQuery.trim( response );
+                            //var addnl_comment = jQuery.trim( response );
 
-                            form.parent().children('ul').append( jQuery( the_comment ).hide().fadeIn( 200 ) );
+                            //form.parent().children('ul').append( jQuery( the_comment ).hide().fadeIn( 200 ) );
+                            form_parent_id.children('ul').append( jQuery( the_comment ).hide().fadeIn( 200 ) );
+                            
                             form.children('textarea').val('');
                             form.parent().parent().addClass('has-comments');
                         } );
-                        jQuery( '#' + form.attr('id') + ' textarea').val('');
+                        jQuery( '.bp-media-ajax-single #' + form.attr('id') + ' textarea').val('');
 
                         /* Increase the "Reply (X)" button count */
-                        jQuery('#activity-' + form_id[2] + ' a.acomment-reply span').html( Number( jQuery('#activity-' + form_id[2] + ' a.acomment-reply span').html() ) + 1 );
+                        jQuery('.bp-media-ajax-single #activity-' + form_id[2] + ' a.acomment-reply span').html( Number( jQuery('#activity-' + form_id[2] + ' a.acomment-reply span').html() ) + 1 );
                     }
 
                     jQuery(target).prop("disabled", false);
