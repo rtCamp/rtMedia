@@ -313,7 +313,7 @@ jQuery(document).ready(function(){
     },1000);
 
     /* Add Featured Image */
-    jQuery('.activity-meta').on('click','.bp-media-featured',function(e){
+    jQuery('.bp-media-image').on('click','.bp-media-featured',function(e){
         e.preventDefault();
         var post_id = jQuery(this).attr('data-post-id');
         var album_id = jQuery(this).attr('data-album-id');
