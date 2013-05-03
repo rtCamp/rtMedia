@@ -285,7 +285,7 @@ li #bp-media-uploaded-files{left: 0;position: absolute;top: 155px;}
 #bp-media-premium-addons ul,#bp-media-premium-addons li{list-style:disc;margin-left:10px;}
 .bp-media-single div.bp_media_content{text-align:center;width: auto;
                                       margin: 0 auto;
-                                      position: relative;}
+                                      position: relative; clear: both; }
 .bp-media-single .bp_media_content .mejs-container{margin-left:auto;margin-right:auto;}
 
 .bp-media-actions{margin:20px 0;}
