@@ -48,18 +48,6 @@ class BPMediaFeatured {
 		$this->settings = $settings;
 	}
 
-	function latest_update(){
-		if($this->settings['latest_update']==true){
-			add_filter( 'bp_activity_latest_update_content', array( $this, 'override_update' ) );
-		}
-	}
-
-	function override_update($content){
-		$featured_id = $this->featured;
-		$featured_content = get_featured_content($featured_id);
-		return $featured_content;
-
-	}
 
 	function valid_type($type){
 
@@ -68,10 +56,6 @@ class BPMediaFeatured {
 	function add_button(){
 
 	}
-
-
-
-
 
 	function featured_object(){
 
