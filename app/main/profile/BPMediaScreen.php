@@ -262,8 +262,17 @@ class BPMediaScreen {
         echo '</h2>';
         echo '<p>' . nl2br($bp_media_current_entry->get_description()) . '</p>';
         echo '</div>';
-        if (!bp_is_active('activity')|| !get_post_meta($bp_media_current_entry->get_id(),'bp_media_child_activity')) {
+        if (!bp_is_active('activity') || !get_post_meta($bp_media_current_entry->get_id(), 'bp_media_child_activity')) {
+            echo '<div class="activity">';
+            echo '<ul id="activity-stream" class="activity-list item-list">';
+            echo '<li class="activity activity_update">';
+            echo '<div class="activity-content">';
+            echo '<div class="activity-meta no-ajax">';
             do_action('bp_media_no_activity_entry_meta');
+            echo '</div>';
+            echo '</li>';
+            echo '</ul>';
+            echo '</div>';
         } else {
             echo $bp_media_current_entry->show_comment_form();
         }
