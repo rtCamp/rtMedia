@@ -28,7 +28,7 @@ class BPMediaFeatured {
 			$user = $user_id;
 		}
 		$this->user = $user_id;
-		$this->get_featured();
+		$this->get();
 		$this->settings();
 	}
 
@@ -43,22 +43,11 @@ class BPMediaFeatured {
 	}
 
 	function settings(){
-		$settings = array();
-
-		$this->settings = $settings;
-	}
-
-	function latest_update(){
-		if($this->settings['latest_update']==true){
-			add_filter( 'bp_activity_latest_update_content', array( $this, 'override_update' ) );
-		}
-	}
-
-	function override_update($content){
-		$featured_id = $this->featured;
-		$featured_content = get_featured_content($featured_id);
-		return $featured_content;
-
+            global $bp_media;
+            $this->settings['image'] = isset($bp_media->options['featured_image'])?1:0;
+            $this->settings['video'] = isset($bp_media->options['featured_video'])?1:0;
+            $this->settings['audio'] = isset($bp_media->options['featured_audio'])?1:0;
+            $this->settings['size'] = isset($bp_media->options['sizes']['media']['featured'])?$bp_media->options['sizes']['media']['featured']:array('width'=>100,'height'=>100, 'crop'=>1);
 	}
 
 	function valid_type($type){

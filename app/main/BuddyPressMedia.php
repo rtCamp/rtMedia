@@ -186,6 +186,9 @@ class BuddyPressMedia {
                     'audio' => array(
                         'medium' => array('width' => 320),
                         'large' => array('width' => 640)
+                    ),
+                    'media' => array(
+                        'featured' => array('width' => 100,'height'=>100,'crop'=>1)
                     )
                 ),
                 'videos_enabled' => 1,
@@ -209,7 +212,15 @@ class BuddyPressMedia {
                 'audio' => array(
                     'medium' => array('width' => 320),
                     'large' => array('width' => 640)
+                    ),
+                'media' => array(
+                        'featured' => array('width' => 100,'height'=>100,'crop'=>1)
                     ));
+            bp_update_option('bp_media_options', $options);
+        } elseif (!isset($options['sizes']['media'])) {
+            $options['sizes']['media'] = array(
+                        'featured' => array('width' => 100,'height'=>100,'crop'=>1)
+                    );
             bp_update_option('bp_media_options', $options);
         }
 
