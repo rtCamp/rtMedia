@@ -539,7 +539,7 @@ class BPMediaActions {
                 $bp_media_uploader_strings = array(
                     'no_name' => __('You have not filled the album name', 'buddypress-media'),
                     'cant_upload_group_album' => __('Sorry you cannot create albums in this group', 'buddypress-media'),
-                    'select_album' => __('Please Select an Album !!', 'buddypress-media'),
+                    'select_album' => __('Please Select an Album!', 'buddypress-media')
                 );
                 wp_localize_script('bp-media-uploader', 'bp_media_uploader_strings', $bp_media_uploader_strings);
             }
