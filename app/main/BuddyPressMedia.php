@@ -126,6 +126,11 @@ class BuddyPressMedia {
          * Hook it to BuddyPress
          */
         add_action('bp_include', array($this, 'init'));
+
+		/**
+         * Hook admin to wp init
+         */
+        add_action('bp_init', array($this, 'admin_init'));
         /**
          * Add the widget
          */
@@ -418,12 +423,15 @@ class BuddyPressMedia {
          * Add admin notices
          */
         add_action('admin_notices', array($this, 'admin_notice'));
-        /**
+    }
+
+	function admin_init(){
+		       /**
          * Initialise Admin Panels
          */
         global $bp_media_admin;
         $bp_media_admin = new BPMediaAdmin();
-    }
+	}
 
     /**
      * Loads translations
