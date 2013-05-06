@@ -39,6 +39,13 @@ class BPMediaFeatured {
 	function filter(){
 		add_filter( 'bp_media_action_buttons', array( $this, 'add_button' ) );
 		add_filter( 'wp_ajax_bp_set_featured', array( $this, 'set_featured' ) );
+		add_action('wp_head', array($this, 'testingsome'));
+	}
+
+	function testingsome(){
+		echo '<textarea style="width:100%">';
+		print_r($GLOBALS);
+		echo '</textarea>';
 	}
 
 	function init( $user_id = false ) {
@@ -143,7 +150,7 @@ class BPMediaFeatured {
 				break;
 			case 'image' :
 				$image_array = image_downsize( $this->featured, 'bp-media-featured' );
-				$content = '<img src="' . $image_array[ 0 ] . '" alt="' . __( $this->name, 'buddypress-media' ) . '" />';
+				$content = '<img src="' . $image_array[ 0 ] . '" alt="' . $this->name . '" />';
 				break;
 			default :
 				return false;
