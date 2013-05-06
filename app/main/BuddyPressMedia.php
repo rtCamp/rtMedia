@@ -196,6 +196,9 @@ class BuddyPressMedia {
                         'featured' => array('width' => 100,'height'=>100,'crop'=>1)
                     )
                 ),
+				'featured_image' => 0,
+				'featured_video' => 0,
+				'featured_audio' => 0,
                 'videos_enabled' => 1,
                 'audio_enabled' => 1,
                 'images_enabled' => 1,

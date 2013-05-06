@@ -86,7 +86,7 @@ class BPMediaFeatured {
 	}
 
 	function valid_type( $type ) {
-		if ( $this->settings[ $type ] > 0 ) {
+		if ( isset($this->settings[ $type ])&&$this->settings[ $type ] > 0 ) {
 			return true;
 		}
 		return false;
