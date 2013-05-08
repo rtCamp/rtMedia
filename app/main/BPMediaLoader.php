@@ -142,8 +142,8 @@ class BPMediaLoader {
             }
         }
     }
-    
-        
+
+
 
     /**
      * Add image sizes required by the plugin to existing WordPress sizes.

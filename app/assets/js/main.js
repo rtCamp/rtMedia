@@ -11,7 +11,7 @@ var $current;
 
 jQuery(document).ready(function(){
 
-    jQuery('body').on('mediapreview','.bp_media_content video,.bp_media_content audio', function(){
+    jQuery('body').on('mediapreview','.bp_media_content video,.bp_media_content audio, video.bp-media-featured-media, audio.bp-media-featured-media', function(){
         jQuery(this).mediaelementplayer({
             enableKeyboard: false,
             startVolume: 1,
@@ -22,11 +22,27 @@ jQuery(document).ready(function(){
             }
         });
     });
-    jQuery('.bp_media_content video,.bp_media_content audio').trigger('mediapreview');
+    jQuery('.bp_media_content video,.bp_media_content audio, video.bp-media-featured-media, audio.bp-media-featured-media').trigger('mediapreview');
 
     jQuery('ul#activity-stream').on('DOMNodeInserted', function(){
         jQuery('ul#activity-stream .bp_media_content video,ul#activity-stream .bp_media_content audio').trigger('mediapreview');
-    })
+    });
+	var $id, $idtxt;
+
+	jQuery('body').on('click','.bp-media-featured-media-button',function(e){
+		e.preventDefault();
+		$idtxt = jQuery(this).closest('.bp-media-image').attr('id');
+		$id = $idtxt.replace('bp-media-id-','');
+		data = {
+			'media_id'	: $id,
+			'action'	: 'bp_set_featured'
+		}
+		jQuery.get(ajaxurl,data, function(response){
+			if ($id == response){
+				jQuery('#'+$idtxt).find('.bp-media-featured-media-button').remove();
+			}
+		});
+	})
 
 
     jQuery('#item-body').on('click','#bp-media-upload-button', function(){
@@ -593,7 +609,7 @@ jQuery(document).ready(function(){
                     if ( jQuery(this).hasClass( 'error' ) )
                         jQuery(this).hide();
                 });
-                
+
 
                 if ( ids[1] != 'comment' ) {
                     jQuery('.bp-media-ajax-single #acomment-' + c_id).append( form );
@@ -674,7 +690,7 @@ jQuery(document).ready(function(){
 
                             //form.parent().children('ul').append( jQuery( the_comment ).hide().fadeIn( 200 ) );
                             form_parent_id.children('ul').append( jQuery( the_comment ).hide().fadeIn( 200 ) );
-                            
+
                             form.children('textarea').val('');
                             form.parent().parent().addClass('has-comments');
                         } );
