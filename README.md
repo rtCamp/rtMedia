@@ -118,6 +118,11 @@ Please visit [BuddyPress Media's Features page](http://rtcamp.com/buddypress-med
 ## Changelog ##
 
 Please visit [BuddyPress Media's Roadmap page](http://rtcamp.com/buddypress-media/roadmap/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "Visit BuddyPress Media's Features page") to get some details about future releases.
+
+#### 2.12.1 ####
+* Fixes bug in featured media that occurred when the featured media was deleted
+* Optimises db queries for privacy
+
 #### 2.12 ####
 * Lets users add a featured image/video/audio for their profiles. Can be used to create "Cover Photos" or videos for each user using a template tag.
 * Feature sponsored by [Henry Wright](http://profiles.wordpress.org/henrywright-1)
