@@ -122,7 +122,19 @@ class BPMediaFeatured {
 		}
 	}
 
+	function media_exists($id){
+		global $wpdb;
+		$post_exists = $wpdb->get_row("SELECT * FROM $wpdb->posts WHERE id = '" . $id . "'", 'ARRAY_A');
+		if ($post_exists)
+			return true;
+		else
+			return false;
+	}
+
 	function content() {
+		if(!$this->media_exists($this->featured)){
+			return false;
+		}
 		$featured = new BPMediaHostWordpress( $this->featured );
 		$type = $featured->get_type();
 		if ( ! $this->valid_type( $type ) ) {

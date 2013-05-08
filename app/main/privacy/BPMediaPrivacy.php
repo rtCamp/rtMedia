@@ -71,8 +71,7 @@ class BPMediaPrivacy {
 			$installed = true;
 		else
 			$installed = false;
-
-		bp_update_option( 'bp_media_privacy_installed', $installed );
+		
 		return $installed;
 	}
 
