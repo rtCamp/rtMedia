@@ -73,6 +73,7 @@ jQuery(document).ready(function(){
     
     jQuery('#encoding-try-now-form').on('click','.encoding-try-now',function(e){
         e.preventDefault();
+        jQuery(this).after('<img style="margin: 0 0 0 10px" src="../../../../../../wp-admin/images/wpspin_light.gif" />')
         var data = {
             action: 'bp_media_free_encoding_subscribe',
             form_data: jQuery('#encoding-try-now-form').serialize()
@@ -83,6 +84,7 @@ jQuery(document).ready(function(){
             if(response.error===undefined && response.apikey){
                 document.location.href = document.URL+'&apikey='+response.apikey;
             }else{
+                jQuery('.encoding-try-now').next().remove();
                 jQuery('#settings-error-encoding-error').remove();
                 jQuery('h2:first').after('<div class="error" id="settings-error-encoding-error"><p>'+response.error+'</p></div>');
             }
@@ -367,6 +369,18 @@ jQuery(document).ready(function(){
             else
                 $bpalbum.parent().after('<p>'+bp_media_admin_strings.something_went_wrong+'</p>');
         });
+    });
+    
+    jQuery('.updated').on('click','.bpm-hide-encoding-notice',function(){
+        jQuery(this).after('<img style="margin: 0 0 0 10px" src="../../../../../../wp-admin/images/wpspin_light.gif" />');
+       var data ={
+           action: 'bp_media_hide_encoding_notice'
+       }
+       jQuery.post(ajaxurl,data,function(response){ 
+           if ( response ) {
+            jQuery('.bpm-hide-encoding-notice').closest('.updated').remove();
+           }
+       });
     });
 
 
