@@ -358,27 +358,27 @@ if (!class_exists('BPMediaAdmin')) {
 						<a href="http://wordpress.org/support/view/plugin-reviews/buddypress-media?rate=5#postform" class="button button-rating" target= "_blank">' . __('Rate on WordPress.org', 'buddypress-media') . '</a>';
                         new BPMediaAdminWidget('spread-the-word', __('Spread the Word', 'buddypress-media'), $addons);
 
-                        $donate = '<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
-                           <!-- Identify your business so that you can collect the payments. -->
-                           <input type="hidden" name="business"
-                           value="paypal@rtcamp.com">
-                           <!-- Specify a Donate button. -->
-                           <input type="hidden" name="cmd" value="_donations">
-                           <!-- Specify details about the contribution -->
-                           <input type="hidden" name="item_name" value="BuddyPress Media">
-                           <label><b>' . __('USD', 'buddypress-media') . '</b></label>
-						   <input type="text" name="amount" size="3">
-                           <input type="hidden" name="currency_code" value="USD">
-                           <!-- Display the payment button. -->
-                           <input type="hidden" name="cpp_header_image" value="' . BP_MEDIA_URL . 'app/assets/img/rtcamp-logo.png">
-                           <input type="image" id="rt-donate-button" name="submit" border="0"
-                           src="' . BP_MEDIA_URL . 'app/assets/img/paypal-donate-button.png"
-                           alt="PayPal - The safer, easier way to pay online">
-                       </form><br />
-                       <center><b>' . __('OR', 'buddypress-media') . '</b></center><br />
-                       <center>' . __('Use <a href="https://rtcamp.com/store/product-category/buddypress/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media">premium add-ons</a> starting from $9', 'buddypress-media') . '</center>';
-                        ;
-                        new BPMediaAdminWidget('donate', __('Donate', 'buddypress-media'), $donate);
+//                        $donate = '<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+//                           <!-- Identify your business so that you can collect the payments. -->
+//                           <input type="hidden" name="business"
+//                           value="paypal@rtcamp.com">
+//                           <!-- Specify a Donate button. -->
+//                           <input type="hidden" name="cmd" value="_donations">
+//                           <!-- Specify details about the contribution -->
+//                           <input type="hidden" name="item_name" value="BuddyPress Media">
+//                           <label><b>' . __('USD', 'buddypress-media') . '</b></label>
+//						   <input type="text" name="amount" size="3">
+//                           <input type="hidden" name="currency_code" value="USD">
+//                           <!-- Display the payment button. -->
+//                           <input type="hidden" name="cpp_header_image" value="' . BP_MEDIA_URL . 'app/assets/img/rtcamp-logo.png">
+//                           <input type="image" id="rt-donate-button" name="submit" border="0"
+//                           src="' . BP_MEDIA_URL . 'app/assets/img/paypal-donate-button.png"
+//                           alt="PayPal - The safer, easier way to pay online">
+//                       </form><br />
+//                       <center><b>' . __('OR', 'buddypress-media') . '</b></center><br />
+//                       <center>' . __('Use <a href="https://rtcamp.com/store/product-category/buddypress/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media">premium add-ons</a> starting from $9', 'buddypress-media') . '</center>';
+//                        ;
+//                        new BPMediaAdminWidget('donate', __('Donate', 'buddypress-media'), $donate);
 
                         $branding = '<form action="http://rtcamp.us1.list-manage1.com/subscribe/post?u=85b65c9c71e2ba3fab8cb1950&amp;id=9e8ded4470" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
                                     <div class="mc-field-group">
