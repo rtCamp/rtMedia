@@ -20,7 +20,7 @@ class BPMediaEncoding {
             if ($this->api_key)
                 add_action('bp_media_before_default_admin_widgets', array($this, 'usage_widget'));
         }
-        add_action('init', array($this, 'save_api_key'));
+        add_action('admin_init', array($this, 'save_api_key'), 1);
         add_filter('bp_media_add_admin_bar_item', array($this, 'admin_bar_menu'));
         if ($this->api_key) {
             $usage_info = bp_get_option('bp-media-encoding-usage');
@@ -37,8 +37,15 @@ class BPMediaEncoding {
                 }
             }
         }
+        if (!bp_get_option('bpmedia_encoding_service_notice') && current_user_can('administrator')) {
+            if (is_multisite()) {
+                add_action('network_admin_notices', array($this, 'encoding_service_notice'));
+            }
+            add_action('admin_notices', array($this, 'encoding_service_notice'));
+        }
         add_action('bp_init', array($this, 'handle_callback'), 20);
         add_action('wp_ajax_bp_media_free_encoding_subscribe', array($this, 'free_encoding_subscribe'));
+        add_action('wp_ajax_bp_media_hide_encoding_notice', array($this, 'hide_encoding_notice'), 1);
     }
 
     function enqueue($class, $type) {
@@ -174,6 +181,16 @@ class BPMediaEncoding {
         return $types;
     }
 
+    public function encoding_service_notice() {
+        $link = add_query_arg(
+                array('page' => 'bp-media-encoding'), (is_multisite() ? network_admin_url('admin.php') : admin_url('admin.php'))
+                )
+        ?>
+        <div class="updated">
+            <p><?php printf(__('We have launched a new Audio/Video encoding service for BuddyPress Media. You can <a href="%s">activate it for free</a>.', 'buddypress-media'), $link); ?> <button class="bpm-hide-encoding-notice button-secondary" type="button" ><?php _e('Hide Message', 'buddypress-media') ?></button></p>
+        </div><?php
+    }
+
     public function encoding_subscription_form($name = 'No Name', $price = '0') {
         $action = $this->sandbox_testing ? 'https://sandbox.paypal.com/cgi-bin/webscr' : 'https://www.paypal.com/cgi-bin/webscr';
         $return_page = add_query_arg(array('page' => 'bp-media-encoding'), (is_multisite() ? network_admin_url('admin.php') : admin_url('admin.php')));
@@ -307,12 +324,12 @@ class BPMediaEncoding {
                 <td><?php
         $usage_details = bp_get_option('bp-media-encoding-usage');
         if (isset($usage_details[$this->api_key]->plan->name) && (strtolower($usage_details[$this->api_key]->plan->name) == 'free')) {
-            echo '<button disabled="disabled" type="submit" class="encoding-try-now button">' . __('Current Plan', 'buddypress-media') . '</button>';
+            echo '<button disabled="disabled" type="submit" class="encoding-try-now button button-primary">' . __('Current Plan', 'buddypress-media') . '</button>';
         } else {
             ?>
                         <form id="encoding-try-now-form" method="get" action="">
                             <input type="hidden" name="email" value="<?php echo bp_get_option('admin_email'); ?>" />
-                            <button type="submit" class="encoding-try-now button"><?php _e('Try Now', 'buddypress-media'); ?></button>
+                            <button type="submit" class="encoding-try-now button button-primary"><?php _e('Try Now', 'buddypress-media'); ?></button>
                         </form><?php }
         ?>
                 </td>
@@ -331,19 +348,25 @@ class BPMediaEncoding {
          */
         public function handle_callback() {
             if (isset($_GET['job_id']) && isset($_GET['download_url'])) {
-                global $wpdb,$bp_media_counter;
+                $flag = false;
+                global $wpdb, $bp_media_counter;
                 $query_string =
                         "SELECT $wpdb->postmeta.post_id
 					FROM $wpdb->postmeta
 					WHERE $wpdb->postmeta.meta_key = 'bp-media-encoding-job-id'
-						AND $wpdb->postmeta.meta_value='" . $_GET['job_id'] . "' ";
+						AND $wpdb->postmeta.meta_value='" . $_GET['job_id'] . "' ORDER BY post_id";
                 $result = $wpdb->get_results($query_string);
-                if (is_array($result) && count($result) == 1) {
+                if (is_array($result) && count($result) > 0) {
                     $attachment_id = $result[0]->post_id;
                     $download_url = urldecode($_GET['download_url']);
                     $new_wp_attached_file_pathinfo = pathinfo($download_url);
                     $post_mime_type = $new_wp_attached_file_pathinfo['extension'] == 'mp4' ? 'video/mp4' : 'audio/mp3';
-                    $file_bits = file_get_contents($download_url);
+                    try {
+                        $file_bits = file_get_contents($download_url);
+                    } catch (Exception $e) {
+                        $flag = $e->getMessage();
+                        error_log($flag);
+                    }
                     if ($file_bits) {
                         unlink(get_attached_file($attachment_id));
                         $upload_info = wp_upload_bits($new_wp_attached_file_pathinfo['basename'], null, $file_bits);
@@ -362,14 +385,40 @@ class BPMediaEncoding {
                             $wpdb->update($wpdb->prefix . 'bp_activity', array('content' => $activity_content), array('id' => $activity_id));
                         }
                     } else {
-                        error_log(__('Could not read file.', 'buddypress-media'));
+                        $flag = __('Could not read file.', 'buddypress-media');
+                        error_log($flag);
                     }
                 } else {
-                    error_log(__('Something went wrong. The required attachment id does not exists. It must have been deleted.', 'buddypress-media'));
+                    $flag = __('Something went wrong. The required attachment id does not exists. It must have been deleted.', 'buddypress-media');
+                    error_log($flag);
                 }
+
 
                 $this->update_usage($this->api_key);
 
+                if ( isset($_SERVER['REMOTE_ADDR']) && ($_SERVER['REMOTE_ADDR'] == '4.30.110.155') ) {
+                    $mail = true;
+                } else {
+                    $mail = false;
+                }
+                
+                if ($flag && $mail) {
+                    $download_link = add_query_arg(array('job_id' => $_GET['job_id'], 'download_url' => $_GET['download_url']), home_url());
+                    $subject = __('BuddyPress Media Encoding: Download Failed.', 'buddypress-media');
+                    $message = sprintf(__('<p>Your server could not download the encoded media, related to <a href="%s">this</a> due to the following reason:</p><p><code>%s</code></p><p>You can trigger the download once again <a href="%s">here</a>.</p>', 'buddypress-media'), get_edit_post_link($attachment_id), $flag, $download_link);
+                    $users = get_users(array('role' => 'administrator'));
+                    if ($users) {
+                        foreach ($users as $user)
+                            $admin_email_ids[] = $user->user_email;
+                        add_filter('wp_mail_content_type', create_function('', 'return "text/html";'));
+                        wp_mail($admin_email_ids, $subject, $message);
+                    }
+                    _e($flag);
+                } elseif ($flag) {
+                    _e($flag);
+                } else {
+                    _e("Done", 'buddypress-media');
+                }
                 die();
             }
         }
@@ -392,6 +441,12 @@ class BPMediaEncoding {
                     echo json_encode(array('error' => 'Something went wrong please try again.'));
                 }
             }
+            die();
+        }
+
+        public function hide_encoding_notice() {
+            bp_update_option('bpmedia_encoding_service_notice', true);
+            echo true;
             die();
         }
 
