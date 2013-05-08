@@ -187,7 +187,7 @@ class BPMediaEncoding {
                 )
         ?>
         <div class="updated">
-            <p><?php printf(__('We have launched a new Audio/Video encoding service for BuddyPress Media. You can <a href="%s">activate it for free</a>.', 'buddypress-media'), $link); ?> <button class="bpm-hide-encoding-notice button-secondary" type="button" ><?php _e('Hide Message', 'buddypress-media') ?></button></p>
+            <p><?php printf(__('We have launched a new Audio/Video encoding service for BuddyPress Media. You can <a href="%s">activate it for free</a>.', 'buddypress-media'), $link); ?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button class="bpm-hide-encoding-notice button-secondary" type="button" ><?php _e('Hide Message', 'buddypress-media') ?></button></p>
         </div><?php
     }
 
@@ -396,12 +396,12 @@ class BPMediaEncoding {
 
                 $this->update_usage($this->api_key);
 
-                if ( isset($_SERVER['REMOTE_ADDR']) && ($_SERVER['REMOTE_ADDR'] == '4.30.110.155') ) {
+                if (isset($_SERVER['REMOTE_ADDR']) && ($_SERVER['REMOTE_ADDR'] == '4.30.110.155')) {
                     $mail = true;
                 } else {
                     $mail = false;
                 }
-                
+
                 if ($flag && $mail) {
                     $download_link = add_query_arg(array('job_id' => $_GET['job_id'], 'download_url' => $_GET['download_url']), home_url());
                     $subject = __('BuddyPress Media Encoding: Download Failed.', 'buddypress-media');

@@ -19,9 +19,15 @@ class BPMediaEncodingTranscoder extends BPMediaHostWordpress {
         $post_id = $this->check_and_create_album($album_id, $group, $author_id, $album_name);
         if (!$files) {
             $files = $parent_fallback_files = $_FILES['bp_media_file'];
+            if ( in_array($_FILES['bp_media_file']['type'],array('audio/mp3','video/mp4') )){
+                return parent::insert_media($name, $description, $album_id, $group, $is_multiple, $is_activity, $parent_fallback_files, $author_id, $album_name);
+            }
             $file = wp_handle_upload($files);
         } else {
             $parent_fallback_files = $files;
+            if ( in_array($files['type'],array('audio/mp3','video/mp4') )){
+                return parent::insert_media($name, $description, $album_id, $group, $is_multiple, $is_activity, $parent_fallback_files, $author_id, $album_name);
+            }
             $file = wp_handle_sideload($files, array('test_form' => false));
         }
         
@@ -61,8 +67,7 @@ class BPMediaEncodingTranscoder extends BPMediaHostWordpress {
                 $bp_media_admin->bp_media_encoding->update_usage($bp_media_admin->bp_media_encoding->api_key);
                 $bp_media_admin->bp_media_encoding->usage_quota_over();
                 remove_filter('bp_media_plupload_files_filter', array($bp_media_admin->bp_media_encoding, 'allowed_types'));
-                parent::insert_media($name, $description, $album_id, $group, $is_multiple, $is_activity, $parent_fallback_files, $author_id, $album_name);
-                return;
+                return parent::insert_media($name, $description, $album_id, $group, $is_multiple, $is_activity, $parent_fallback_files, $author_id, $album_name);
             }
         }
         

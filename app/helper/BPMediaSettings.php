@@ -204,7 +204,7 @@ if (!class_exists('BPMediaSettings')) {
             ));
 
             $bp_media_addon = new BPMediaAddon();
-            add_settings_section('bpm-addons', __('BuddyPress Media Addons for Audio/Video Conversion', 'buddypress-media'), array($bp_media_addon, 'get_addons'), 'bp-media-addons');
+            add_settings_section('bpm-addons', __('BuddyPress Media Addons for Photos', 'buddypress-media'), array($bp_media_addon, 'get_addons'), 'bp-media-addons');
             
             add_settings_section('bpm-support', __('Support', 'buddypress-media'), array($this, 'bp_media_support_intro'), 'bp-media-support');
 
