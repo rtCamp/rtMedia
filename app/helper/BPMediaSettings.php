@@ -46,6 +46,31 @@ if (!class_exists('BPMediaSettings')) {
                 'option' => 'audio_enabled',
                 'desc' => __('Enable Audio (mp3)', 'buddypress-media')
             ));
+            
+            add_settings_section('bpm-featured', __('Enable Featured Media', 'buddypress-media'), '', 'bp-media-settings');
+            add_settings_field('bpm-featured-image', __('Photos', 'buddypress-media'), array($this, 'checkbox'), 'bp-media-settings', 'bpm-featured', array(
+                'setting' => 'bp_media_options',
+                'option' => 'featured_image',
+                'desc' => __('Enable Featured Photos', 'buddypress-media')
+            ));
+            add_settings_field('bpm-featured-video', __('Video', 'buddypress-media'), array($this, 'checkbox'), 'bp-media-settings', 'bpm-featured', array(
+                'setting' => 'bp_media_options',
+                'option' => 'featured_video',
+                'desc' => __('Enable Featured Video', 'buddypress-media')
+            ));
+            add_settings_field('bpm-featured-audio', __('Audio', 'buddypress-media'), array($this, 'checkbox'), 'bp-media-settings', 'bpm-featured', array(
+                'setting' => 'bp_media_options',
+                'option' => 'featured_audio',
+                'desc' => __('Enable Featured Audio', 'buddypress-media')
+            ));
+            add_settings_field('bpm-featured-media-dimensions', __('Featured Media Size', 'buddypress-media'), array($this, 'dimensions'), 'bp-media-settings', 'bpm-featured', array(
+                'setting' => 'bp_media_options',
+                'type' => 'media',
+                'size' => 'featured',
+                'crop' => true
+//                'desc' => __('Used in albums, sidebar media widget acitvity stream', 'buddypress-media')
+            ));
+            
 
             add_settings_section('bpm-image-settings', __('Image Settings', 'buddypress-media'), array($this, 'image_settings_intro'), 'bp-media-settings');
             add_settings_field('bpm-image-thumbnail', __('Thumbnail Size', 'buddypress-media'), array($this, 'dimensions'), 'bp-media-settings', 'bpm-image-settings', array(

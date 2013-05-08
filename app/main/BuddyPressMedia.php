@@ -126,6 +126,11 @@ class BuddyPressMedia {
          * Hook it to BuddyPress
          */
         add_action('bp_include', array($this, 'init'));
+
+		/**
+         * Hook admin to wp init
+         */
+        add_action('bp_init', array($this, 'admin_init'));
         /**
          * Add the widget
          */
@@ -186,8 +191,14 @@ class BuddyPressMedia {
                     'audio' => array(
                         'medium' => array('width' => 320),
                         'large' => array('width' => 640)
+                    ),
+                    'media' => array(
+                        'featured' => array('width' => 100,'height'=>100,'crop'=>1)
                     )
                 ),
+				'featured_image' => 0,
+				'featured_video' => 0,
+				'featured_audio' => 0,
                 'videos_enabled' => 1,
                 'audio_enabled' => 1,
                 'images_enabled' => 1,
@@ -209,7 +220,15 @@ class BuddyPressMedia {
                 'audio' => array(
                     'medium' => array('width' => 320),
                     'large' => array('width' => 640)
+                    ),
+                'media' => array(
+                        'featured' => array('width' => 100,'height'=>100,'crop'=>1)
                     ));
+            bp_update_option('bp_media_options', $options);
+        } elseif (!isset($options['sizes']['media'])) {
+            $options['sizes']['media'] = array(
+                        'featured' => array('width' => 100,'height'=>100,'crop'=>1)
+                    );
             bp_update_option('bp_media_options', $options);
         }
 
@@ -385,7 +404,8 @@ class BuddyPressMedia {
                 'privacy' => false,
                 'download' => false,
                 'albumimporter' => false,
-                'image' => false
+                'image' => false,
+				'featured' => false
             );
             $class_construct = apply_filters('bpmedia_class_construct', $class_construct);
 
@@ -406,12 +426,15 @@ class BuddyPressMedia {
          * Add admin notices
          */
         add_action('admin_notices', array($this, 'admin_notice'));
-        /**
+    }
+
+	function admin_init(){
+		       /**
          * Initialise Admin Panels
          */
         global $bp_media_admin;
         $bp_media_admin = new BPMediaAdmin();
-    }
+	}
 
     /**
      * Loads translations
@@ -455,7 +478,7 @@ class BuddyPressMedia {
     function media_sizes() {
         $options = $this->options;
         $def_sizes = array(
-            
+
             //legacy array
             'single_video' => array(
                 'width' => 640,
@@ -464,7 +487,7 @@ class BuddyPressMedia {
             'single_audio' => array(
                 'width' => 640,
             ),
-            
+
             'image' => array(
                 'thumbnail' => array(
                     'width' => $options['sizes']['image']['thumbnail']['width'],

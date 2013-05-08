@@ -352,6 +352,7 @@ class BPMediaActions {
                 $action_buttons[] = '<a href="' . $bp_media_current_entry->get_edit_url()
                         . '" class="button item-button bp-secondary-action bp-media-edit" title="'
                         . __('Edit Media', 'buddypress-media') . '">' . __('Edit', 'buddypress-media') . '</a>';
+            $action_buttons = apply_filters('bp_media_action_buttons', $action_buttons);
 
             if (!bp_is_active('activity') || !get_post_meta($bp_media_current_entry->get_id(), 'bp_media_child_activity')) {
                 $action_buttons[] = '<a href="' . $bp_media_current_entry->get_delete_url()
@@ -359,8 +360,6 @@ class BPMediaActions {
                         . __('Delete Media', 'buddypress-media') . '">' . __('Delete', 'buddypress-media') . '</a>';
             }
         }
-
-        $action_buttons = apply_filters('bp_media_action_buttons', $action_buttons);
 
         foreach ($action_buttons as $action_button) {
             echo $action_button;
@@ -541,7 +540,7 @@ class BPMediaActions {
                 $bp_media_uploader_strings = array(
                     'no_name' => __('You have not filled the album name', 'buddypress-media'),
                     'cant_upload_group_album' => __('Sorry you cannot create albums in this group', 'buddypress-media'),
-                    'select_album' => __('Please Select an Album !!', 'buddypress-media'),
+                    'select_album' => __('Please Select an Album!', 'buddypress-media')
                 );
                 wp_localize_script('bp-media-uploader', 'bp_media_uploader_strings', $bp_media_uploader_strings);
             }

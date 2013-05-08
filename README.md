@@ -118,6 +118,13 @@ Please visit [BuddyPress Media's Features page](http://rtcamp.com/buddypress-med
 ## Changelog ##
 
 Please visit [BuddyPress Media's Roadmap page](http://rtcamp.com/buddypress-media/roadmap/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "Visit BuddyPress Media's Features page") to get some details about future releases.
+#### 2.12 ####
+* Lets users add a featured image/video/audio for their profiles. Can be used to create "Cover Photos" or videos for each user using a template tag.
+* Feature sponsored by [Henry Wright](http://profiles.wordpress.org/henrywright-1)
+
+#### 2.11 ####
+* Added media editing, deleting and other actions when activity stream is disabled
+* Fixes comment posting on lightbox
 
 #### 2.10.3 ####
 * Removes lightbox from mobile devices
@@ -381,4 +388,4 @@ Please visit [BuddyPress Media's Roadmap page](http://rtcamp.com/buddypress-medi
 * HTML5 Audio Tag Support (with fallback)
 * HTML5 Video Tag Support (with fallback)
 
-Removes lightbox automatically on mobile devices. Bug fixes.
+Adds featured media support.
