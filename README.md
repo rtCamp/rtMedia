@@ -36,11 +36,12 @@ BuddyPress Media adds Photos, Music, Videos & Albums to your BuddyPress powered 
 * **Groups** Supported: Users can upload media on Groups, as well!
 * **HTML5 playback**: with fall back to flash/silverlight player support
 * **Privacy**: Users can control access to their uploaded media
-* **Shortcode**: Display public media of all the users on the site
+* **[Shortcode](http://rtcamp.com/buddypress-media/docs/admin/shortcodes/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "Shortcode Documentation")**: Display public media of all the users on the site
 * **Enhanced media management**: including sorting, moving media between albums, etc
 * **Advanced Image Editor**: Use the Dashboard media editor on the front-end!
+* **[Featured Media](http://rtcamp.com/buddypress-media/docs/admin/featured-media/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "Featured Media documentation")**: Using a template tag, this can be then displayed on the user profile as a cover photo/video. Sponsored by [Henry Wright](http://profiles.wordpress.org/henrywright-1)
 * **Automatic conversion** (*premium*): of common audio & video formats to mp3/mp4 via [Kaltura Add-On](http://rtcamp.com/store/buddypress-media-kaltura/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "BuddyPress Media Kaltura Addon for Kaltura.com/Kaltura-CE/Kaltura On-Prem version"), and [FFMPEG Add-On](http://rtcamp.com/store/buddypress-media-ffmpeg/ "BuddyPress Media FFMPEG Addon")
-* **[Encoding Service]( http://rtcamp.com/buddypress-media/addons/audio-video-encoding-service/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media)** [*new*] (*premium*): Site owners will be able to get unsupported formats converted via this service, even on a shared hosting, without installing any additional software.
+* **[Encoding Service]( http://rtcamp.com/buddypress-media/addons/audio-video-encoding-service/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media)** [*new*]: Site owners will be able to get unsupported formats converted via this service, even on a shared hosting, without installing any additional software.
 
 #### Roadmap ####
 
