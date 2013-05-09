@@ -49,7 +49,8 @@ if (!class_exists('BPMediaAdmin')) {
                     add_action('network_admin_edit_bp_media', array($this, 'save_multisite_options'));
             }
             $this->bp_media_settings = new BPMediaSettings();
-            $this->bp_media_encoding = new BPMediaEncoding();
+            if ( !class_exists('BPMediaFFMPEG') && !class_exists('BPMediaKaltura') )
+                $this->bp_media_encoding = new BPMediaEncoding();
         }
 
         /**
@@ -68,10 +69,11 @@ if (!class_exists('BPMediaAdmin')) {
             wp_enqueue_script('bp-media-admin', BP_MEDIA_URL . 'app/assets/js/admin.js', array('jquery-ui-dialog'), BP_MEDIA_VERSION);
             wp_enqueue_style (  'wp-jquery-ui-dialog');
             wp_localize_script('bp-media-admin', 'bp_media_admin_ajax', $admin_ajax);
+            wp_localize_script('bp-media-admin', 'bp_media_admin_admin_url', admin_url());
             $bp_media_admin_strings = array(
                 'no_refresh' => __('Please do not refresh this page.', 'buddypress-media'),
                 'something_went_wrong' => __('Something went wronng. Please <a href onclick="location.reload();">refresh</a> page.', 'buddypress-media'),
-                'are_you_sure' => __('Are you sure you want to opt for the free plan?', 'buddypress-media'),
+                'are_you_sure' => __('This will subscribe you to the free plan.', 'buddypress-media'),
                 'reason_for_unsubscribe' => __('Just to improve our service we would like to know the reason for you to leave us.', 'buddypress-media')
             );
             wp_localize_script('bp-media-admin', 'bp_media_admin_strings', $bp_media_admin_strings);

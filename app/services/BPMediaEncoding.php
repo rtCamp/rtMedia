@@ -7,9 +7,9 @@
  */
 class BPMediaEncoding {
 
-    protected $api_url = 'http://192.168.0.161:3000/';
-    protected $sandbox_testing = 1;
-    protected $merchant_id = 'samrocker4rock@gmail.com';
+    protected $api_url = 'http://api.rtcamp.com/';
+    protected $sandbox_testing = 0;
+    protected $merchant_id = 'paypal@rtcamp.com';
 
     public function __construct() {
         $this->api_key = bp_get_option('bp-media-encoding-api-key');
@@ -47,6 +47,7 @@ class BPMediaEncoding {
         add_action('wp_ajax_bp_media_free_encoding_subscribe', array($this, 'free_encoding_subscribe'));
         add_action('wp_ajax_bp_media_unsubscribe_encoding_service', array($this, 'unsubscribe_encoding'));
         add_action('wp_ajax_bp_media_hide_encoding_notice', array($this, 'hide_encoding_notice'), 1);
+        add_action('wp_ajax_bp_media_enter_api_key', array($this, 'enter_api_key'), 1);
     }
 
     function transcoder($class, $type) {
@@ -168,14 +169,20 @@ class BPMediaEncoding {
     }
 
     public function save_api_key() {
+        if ( isset($_GET['api_key_updated']) && $_GET['api_key_updated'] ) {
+            if (is_multisite()) {
+                add_action('network_admin_notices', array($this, 'successfully_subscribed_notice'));
+            }
+            add_action('admin_notices', array($this, 'successfully_subscribed_notice'));
+        }
         if (isset($_GET['apikey']) && is_admin() && isset($_GET['page']) && ($_GET['page'] == 'bp-media-encoding') && $this->is_valid_key($_GET['apikey'])) {
-            if ( $this->api_key ) {
+            if ( $this->api_key && !(isset($_GET['update']) && $_GET['update']) ) {
                 $unsubscribe_url = trailingslashit($this->api_url) . 'api/cancel/'.$this->api_key;
                 wp_remote_post($unsubscribe_url, array('timeout' => 120, 'body' => array('note' => 'Direct URL Input (API Key: '.$_GET['apikey'].')')));
             }
             bp_update_option('bp-media-encoding-api-key', $_GET['apikey']);
-            $this->update_usage($_GET['apikey']);
-            $return_page = add_query_arg(array('page' => 'bp-media-encoding'), (is_multisite() ? network_admin_url('admin.php') : admin_url('admin.php')));
+            $usage_info = $this->update_usage($_GET['apikey']);
+            $return_page = add_query_arg(array('page' => 'bp-media-encoding','api_key_updated' => $usage_info->plan->name), (is_multisite() ? network_admin_url('admin.php') : admin_url('admin.php')));
             wp_safe_redirect($return_page);
         }
     }
@@ -193,6 +200,13 @@ class BPMediaEncoding {
         ?>
         <div class="updated">
             <p><?php printf(__('We have launched a new Audio/Video encoding service for BuddyPress Media. You can <a href="%s">activate it for free</a>.', 'buddypress-media'), $link); ?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button class="bpm-hide-encoding-notice button-secondary" type="button" ><?php _e('Hide Message', 'buddypress-media') ?></button></p>
+        </div><?php
+    }
+    
+    public function successfully_subscribed_notice() {
+        ?>
+        <div class="updated">
+            <p><?php printf(__('You have successfully subscribed for the <strong>%s</strong> plan', 'buddypress-media'), $_GET['api_key_updated']); ?></p>
         </div><?php
     }
 
@@ -271,6 +285,11 @@ class BPMediaEncoding {
     public function encoding_service_intro() {
         ?>
         <p><?php _e('BuddyPress Media team has started offering an audio/video encoding service.', 'buddypress-media'); ?></p>
+        <p>
+            <label for="new-api-key"><?php _e('Enter API KEY','buddypress-media'); ?></label>
+            <input id="new-api-key" type="text" name="new-api-key" value="<?php echo $this->api_key; ?>" size="60" />
+            <input type="submit" id="api-key-submit" name="api-key-submit" value="Submit" class="button-primary" />
+        </p>
         <table  class="bp-media-encoding-table widefat fixed" cellspacing="0">
             <tbody>
                 <!-- Results table headers -->
@@ -470,7 +489,16 @@ class BPMediaEncoding {
                     echo json_encode(array('error' => __('Your subscription could not be cancelled','buddypress-media')));
                 }
             } else {
-                echo json_encode(array('error' => 'Something went wrong please try again.'));
+                echo json_encode(array('error' => __('Something went wrong please try again.','buddypress-media')));
+            }
+            die();
+        }
+        
+        public function enter_api_key(){
+            if( isset($_GET['apikey']) ) {
+                echo json_encode(array('apikey' => $_GET['apikey']));
+            } else {
+                echo json_encode(array('error' => __('Please enter the api key.','buddypress-media')));
             }
             die();
         }
