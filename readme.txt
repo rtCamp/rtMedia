@@ -119,6 +119,9 @@ Please visit [BuddyPress Media's Features page](http://rtcamp.com/buddypress-med
 
 Please visit [BuddyPress Media's Roadmap page](http://rtcamp.com/buddypress-media/roadmap/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "Visit BuddyPress Media's Features page") to get some details about future releases.
 
+= 2.13 =
+* Adds support for audio/video conversion via rtCamp's Encoding Service
+
 = 2.12.1 =
 * Fixes bug in featured media that occurred when the featured media was deleted
 * Optimises db queries for privacy
@@ -394,5 +397,5 @@ Please visit [BuddyPress Media's Roadmap page](http://rtcamp.com/buddypress-medi
 * HTML5 Video Tag Support (with fallback)
 
 == Upgrade Notice ==
-= 2.12 =
-Adds featured media support.
+= 2.13 =
+Adds support for audio/video conversion via rtCamp's Encoding Service
