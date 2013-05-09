@@ -204,8 +204,8 @@ if (!class_exists('BPMediaSettings')) {
             ));
 
             $bp_media_addon = new BPMediaAddon();
-            add_settings_section('bpm-addons', __('BuddyPress Media Addons for Audio/Video Conversion', 'buddypress-media'), array($bp_media_addon, 'get_addons'), 'bp-media-addons');
-
+            add_settings_section('bpm-addons', __('BuddyPress Media Addons for Photos', 'buddypress-media'), array($bp_media_addon, 'get_addons'), 'bp-media-addons');
+            
             add_settings_section('bpm-support', __('Support', 'buddypress-media'), array($this, 'bp_media_support_intro'), 'bp-media-support');
 
             if (!BPMediaPrivacy::is_installed()) {
@@ -216,38 +216,7 @@ if (!class_exists('BPMediaSettings')) {
 
             $bp_media_album_importer = new BPMediaAlbumimporter();
             add_settings_section('bpm-bp-album-importer', __('BP-Album Importer', 'buddypress-media'), array($bp_media_album_importer, 'ui'), 'bp-media-importer');
-
-            add_settings_section('bpm-convert-videos', '', array($this, 'convert_videos_form'), 'bp-media-convert-videos');
-
             register_setting('bp_media', 'bp_media_options', array($this, 'sanitize'));
-        }
-
-        public function convert_videos_form() {
-            global $current_user;
-            get_currentuserinfo();
-            ?>
-            <div id="video-transcoding-main-container">
-                <h2>Survey</h2>
-                <p class="para-blockquote">We are planning an encoding service where you can convert videos without having to install/configure anything on your server.</p>
-                <h3>Would you be interested?</h3>
-                <label><input class="interested" name="interested" type="radio" value="Yes" required="required" /> Yes</label>&nbsp;&nbsp;&nbsp;
-                <label><input class="not-interested" name="interested" type="radio" value="No" required="required" /> No</label>
-                <div class="interested-container hidden">
-                    <p class="para-blockquote">Glad to see your interest.<br />
-                        Please provide a little more information to help us plan this service better.</p>
-                    <label><h3>Email</h3> <input class="email" type="email" name="email" size="35" value="<?php echo $current_user->user_email; ?>" placeholder="Email" /></label>
-
-                    <h3>How would you use this feature?</h3>
-                    <ul>
-                        <li><label><input class="choice-free" type="radio" name="choice" value="Free" /> Free-only. I will use free-encoding quota only.</label></li>
-                        <li><label><input type="radio" name="choice" value="$9" /> I am ready to pay $9 per month for generous encoding quota.</label></li>
-                        <li><label><input type="radio" name="choice" value="$99" /> I am ready to pay $99 per month for unlimited video encoding!</label></li>
-                </div>
-                <input class="url" type="hidden" name="url" value="<?php echo home_url(); ?>" />
-                <br />
-                <br />
-                <input class="button button-primary video-transcoding-survey" type="submit" value="Submit" />
-            </div><?php
         }
 
         public function network_notices() {
@@ -637,7 +606,7 @@ if (!class_exists('BPMediaSettings')) {
             echo '<p>' . __('If your site has some issues due to BuddyPress Media and you want one on one support then you can create a support topic on the <a target="_blank" href="http://rtcamp.com/groups/buddypress-media/forum/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media">rtCamp Support Forum</a>.', 'buddypress-media') . '</p>';
             echo '<p>' . __('If you have any suggestions, enhancements or bug reports, then you can open a new issue on <a target="_blank" href="https://github.com/rtCamp/buddypress-media/issues/new">GitHub</a>.', 'buddypress-media') . '</p>';
         }
-
+        
     }
 
 }

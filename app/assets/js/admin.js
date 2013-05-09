@@ -71,6 +71,71 @@ jQuery(document).ready(function(){
         });
     });
     
+    jQuery('#encoding-try-now-form').on('click','.encoding-try-now',function(e){
+        e.preventDefault();
+        if(confirm(bp_media_admin_strings.are_you_sure)){
+        jQuery(this).after('<img style="margin: 0 0 0 10px" src="'+bp_media_admin_admin_url+'images/wpspin_light.gif" />')
+        var data = {
+            action: 'bp_media_free_encoding_subscribe'
+        };
+
+        // since 2.8 ajaxurl is always defined in the admin header and points to admin-ajax.php
+        jQuery.getJSON(ajaxurl, data, function(response) {
+            if(response.error===undefined && response.apikey){
+                document.location.href = document.URL+'&apikey='+response.apikey;
+            }else{
+                jQuery('.encoding-try-now').next().remove();
+                jQuery('#settings-error-encoding-error').remove();
+                jQuery('h2:first').after('<div class="error" id="settings-error-encoding-error"><p>'+response.error+'</p></div>');
+            }
+        });
+        }
+    });
+    
+    jQuery('.bp-media-encoding').on('click','#api-key-submit',function(e){
+        e.preventDefault();
+        jQuery(this).after('<img style="margin: 0 0 0 10px" src="'+bp_media_admin_admin_url+'images/wpspin_light.gif" />')
+        var data = {
+            action: 'bp_media_enter_api_key',
+            apikey: jQuery('#new-api-key').val()
+        };
+
+        // since 2.8 ajaxurl is always defined in the admin header and points to admin-ajax.php
+        jQuery.getJSON(ajaxurl, data, function(response) {
+            if(response.error===undefined && response.apikey){
+                document.location.href = document.URL+'&update=true&apikey='+response.apikey;
+            }else{
+                jQuery('#settings-error-api-key-error').remove();
+                jQuery('h2:first').after('<div class="error" id="settings-error-api-key-error"><p>'+response.error+'</p></div>');
+            }
+        });
+    });
+    
+    jQuery('.bp-media-encoding-table').on('click','.bpm-unsubscribe',function(e){
+        e.preventDefault();
+//        var note=prompt(bp_media_admin_strings.reason_for_unsubscribe);
+            jQuery(this).after('<img style="margin: 0 0 0 10px" src="'+bp_media_admin_admin_url+'images/wpspin_light.gif" />')
+            var data = {
+                action: 'bp_media_unsubscribe_encoding_service'
+            };
+
+            // since 2.8 ajaxurl is always defined in the admin header and points to admin-ajax.php
+            jQuery.getJSON(ajaxurl, data, function(response) {
+                if(response.error===undefined && response.updated){
+                    jQuery('.bpm-unsubscribe').next().remove();
+                    jQuery('.bpm-unsubscribe').remove();
+                    jQuery('#settings-unsubscribed-successfully').remove();
+                    jQuery('#settings-unsubscribe-error').remove();
+                    jQuery('h2:first').after('<div class="updated" id="settings-unsubscribed-successfully"><p>'+response.updated+'</p></div>');
+                }else{
+                    jQuery('.bpm-unsubscribe').next().remove();
+                    jQuery('#settings-unsubscribed-successfully').remove();
+                    jQuery('#settings-unsubscribe-error').remove();
+                    jQuery('h2:first').after('<div class="error" id="settings-unsubscribe-error"><p>'+response.error+'</p></div>');
+                }
+            });
+    });
+    
     function fireRequest(data) {
         return jQuery.post(ajaxurl, data, function(response){
             if(response != 0){
@@ -350,6 +415,19 @@ jQuery(document).ready(function(){
                 $bpalbum.parent().after('<p>'+bp_media_admin_strings.something_went_wrong+'</p>');
         });
     });
+    
+    jQuery('.updated').on('click','.bpm-hide-encoding-notice',function(){
+        jQuery(this).after('<img style="margin: 0 0 0 10px" src="'+bp_media_admin_admin_url+'images/wpspin_light.gif" />');
+       var data ={
+           action: 'bp_media_hide_encoding_notice'
+       }
+       jQuery.post(ajaxurl,data,function(response){ 
+           if ( response ) {
+            jQuery('.bpm-hide-encoding-notice').closest('.updated').remove();
+           }
+       });
+    });
 
 
 });
+

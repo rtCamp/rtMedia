@@ -328,7 +328,6 @@ class BPMediaFilters {
                 'title' => __('Settings', 'buddypress-media'),
                 'href' => bp_get_admin_url(add_query_arg(array('page' => 'bp-media-settings'), 'admin.php'))
             );
-
 			
             // Addons
             $bp_media_admin_nav[] = array(
@@ -344,6 +343,14 @@ class BPMediaFilters {
                 'id' => 'bp-media-support',
                 'title' => __('Support', 'buddypress-media'),
                 'href' => bp_get_admin_url(add_query_arg(array('page' => 'bp-media-support'), 'admin.php'))
+            );
+            
+            // Importer
+            $bp_media_admin_nav[] = array(
+                'parent' => 'bp-media-menu',
+                'id' => 'bp-media-importer',
+                'title' => __('Importer', 'buddypress-media'),
+                'href' => bp_get_admin_url(add_query_arg(array('page' => 'bp-media-importer'), 'admin.php'))
             );
 
             $bp_media_admin_nav = apply_filters('bp_media_add_admin_bar_item', $bp_media_admin_nav);

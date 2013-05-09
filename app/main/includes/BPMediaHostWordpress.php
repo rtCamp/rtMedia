@@ -117,7 +117,6 @@ class BPMediaHostWordpress {
     function insert_media($name, $description, $album_id = 0, $group = 0, $is_multiple = false, $is_activity = false, $files = false, $author_id = false, $album_name = false) {
         do_action('bp_media_before_add_media');
 
-        global $bp, $wpdb, $bp_media;
         include_once(ABSPATH . 'wp-admin/includes/file.php');
         include_once(ABSPATH . 'wp-admin/includes/image.php');
 

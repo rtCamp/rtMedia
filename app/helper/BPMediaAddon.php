@@ -67,8 +67,13 @@ if (!class_exists('BPMediaAddon')) {
                 )
             );
             $addons = apply_filters('bp_media_addons', $addons);
-            foreach ($addons as $addon) {
+            foreach ($addons as $key => $addon) {
                 $this->addon($addon);
+                if ( $key == 1 ) {
+                    echo '<h3>';
+                    _e('BuddyPress Media Addons for Audio/Video');
+                    echo '</h3>';
+                }
             }
         }
 
