@@ -73,10 +73,10 @@ jQuery(document).ready(function(){
     
     jQuery('#encoding-try-now-form').on('click','.encoding-try-now',function(e){
         e.preventDefault();
+        if(confirm(bp_media_admin_strings.are_you_sure)){
         jQuery(this).after('<img style="margin: 0 0 0 10px" src="../../../../../../wp-admin/images/wpspin_light.gif" />')
         var data = {
-            action: 'bp_media_free_encoding_subscribe',
-            form_data: jQuery('#encoding-try-now-form').serialize()
+            action: 'bp_media_free_encoding_subscribe'
         };
 
         // since 2.8 ajaxurl is always defined in the admin header and points to admin-ajax.php
@@ -89,6 +89,32 @@ jQuery(document).ready(function(){
                 jQuery('h2:first').after('<div class="error" id="settings-error-encoding-error"><p>'+response.error+'</p></div>');
             }
         });
+        }
+    });
+    
+    jQuery('.bp-media-encoding-table').on('click','.bpm-unsubscribe',function(e){
+        e.preventDefault();
+//        var note=prompt(bp_media_admin_strings.reason_for_unsubscribe);
+            jQuery(this).after('<img style="margin: 0 0 0 10px" src="../../../../../../wp-admin/images/wpspin_light.gif" />')
+            var data = {
+                action: 'bp_media_unsubscribe_encoding_service'
+            };
+
+            // since 2.8 ajaxurl is always defined in the admin header and points to admin-ajax.php
+            jQuery.getJSON(ajaxurl, data, function(response) {
+                if(response.error===undefined && response.updated){
+                    jQuery('.bpm-unsubscribe').next().remove();
+                    jQuery('.bpm-unsubscribe').remove();
+                    jQuery('#settings-unsubscribed-successfully').remove();
+                    jQuery('#settings-unsubscribe-error').remove();
+                    jQuery('h2:first').after('<div class="updated" id="settings-unsubscribed-successfully"><p>'+response.updated+'</p></div>');
+                }else{
+                    jQuery('.bpm-unsubscribe').next().remove();
+                    jQuery('#settings-unsubscribed-successfully').remove();
+                    jQuery('#settings-unsubscribe-error').remove();
+                    jQuery('h2:first').after('<div class="error" id="settings-unsubscribe-error"><p>'+response.error+'</p></div>');
+                }
+            });
     });
     
     function fireRequest(data) {
