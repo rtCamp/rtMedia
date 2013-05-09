@@ -26,8 +26,9 @@
 #debug-info{border:1px solid #CCC; overflow: hidden; padding: 10px; margin-top: 10px; -webkit-border-bottom-left-radius:3px;border-bottom-left-radius:3px;-webkit-border-top-right-radius:3px;border-top-right-radius:3px;-webkit-border-bottom-right-radius:3px;border-bottom-right-radius:3px; float: left; width: 588px;}
 .nav-tab-wrapper a#bp-media{background:url('../img/bpm-icon-32.png') transparent no-repeat; padding-left:32px;}
 .nav-tab-wrapper a#bp-media:hover,.nav-tab-wrapper a#bp-media.nav-tab-active{background-position:left -96px;}
-.metabox-holder .postbox#latest-news .inside ul li{background: transparent url('../img/bpm-icon-32.png') -5px 0px no-repeat; padding-left: 32px;}
-.metabox-holder .postbox#latest-news .inside ul li:hover{background-position-y: -96px;}
+.metabox-holder .postbox#latest-news .inside ul li{list-style: disc inside;}
+/*.metabox-holder .postbox#latest-news .inside ul li{background: transparent url('../img/bpm-icon-32.png') -5px 0px no-repeat; padding-left: 32px;}*/
+/*.metabox-holder .postbox#latest-news .inside ul li:hover{background-position-y: -96px;}*/
 #branding #logo{text-align:center;padding: 10px 0;display:block;}
 ul#social{display:block;text-align:center;margin:0;clear: both;}
 #branding #mc-embedded-subscribe-form{float: left;width: 100%;}
@@ -51,6 +52,19 @@ ul#social li{display:inline;}
 .wrap.bp-media-admin .bp-media-settings-tabs a.nav-tab.convert-videos{background-position-y:-214px;}
 .wrap.bp-media-admin .bp-media-settings-tabs a.nav-tab.insta{background-position-y:-244px;}
 .wrap.bp-media-admin .bp-media-settings-tabs a.nav-tab.watermark{background-position-y:-274px;}
+
+table.bp-media-encoding-table td, table.bp-media-encoding-table th {
+    border-left-color: #fff;
+    border-right-color: #dfdfdf;
+    border-width: 1px;
+    vertical-align: middle;
+    text-align: center;
+    font-family: sans-serif;
+}
+table.bp-media-encoding-table th {
+    font-weight: bold;
+}
+
 /* Addons page Styling */
 
 a.toplevel_page_bp-media-settings div.wp-menu-image{
@@ -209,6 +223,10 @@ img.bp-media-donation-image{display:block;margin: 10px auto;}
     border-radius: 10px;
 }
 
+.encoding-used,
+.encoding-remaining { display: inline-block; width: 10px; height: 10px; margin-right: 5px;}
+.encoding-used { background : #fb6003; }
+.encoding-remaining { background: #444; }
 
 .bp_media_content img{max-width:100%;}
 .bp_media_content .mejs-poster img{max-width: 100%;}
@@ -482,6 +500,8 @@ float:left;
 .bp-media-ajax-preloader{
     display:none;
 }
+
+#adminmenu li#toplevel_page_bp-media-settings a.toplevel_page_bp-media-settings { font-size: 12px; }
 
 @media (min-width: 981px) and (max-width: 1096px) {
     li #bp-media-upload-ui #drag-drop-area{padding: 10px 0;}
