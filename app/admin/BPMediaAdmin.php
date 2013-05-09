@@ -64,11 +64,15 @@ if (!class_exists('BPMediaAdmin')) {
          */
         public function ui($hook) {
             $admin_ajax = admin_url('admin-ajax.php');
-            wp_enqueue_script('bp-media-admin', BP_MEDIA_URL . 'app/assets/js/admin.js', '', BP_MEDIA_VERSION);
+            
+            wp_enqueue_script('bp-media-admin', BP_MEDIA_URL . 'app/assets/js/admin.js', array('jquery-ui-dialog'), BP_MEDIA_VERSION);
+            wp_enqueue_style (  'wp-jquery-ui-dialog');
             wp_localize_script('bp-media-admin', 'bp_media_admin_ajax', $admin_ajax);
             $bp_media_admin_strings = array(
                 'no_refresh' => __('Please do not refresh this page.', 'buddypress-media'),
-                'something_went_wrong' => __('Something went wronng. Please <a href onclick="location.reload();">refresh</a> page.', 'buddypress-media')
+                'something_went_wrong' => __('Something went wronng. Please <a href onclick="location.reload();">refresh</a> page.', 'buddypress-media'),
+                'are_you_sure' => __('Are you sure you want to opt for the free plan?', 'buddypress-media'),
+                'reason_for_unsubscribe' => __('Just to improve our service we would like to know the reason for you to leave us.', 'buddypress-media')
             );
             wp_localize_script('bp-media-admin', 'bp_media_admin_strings', $bp_media_admin_strings);
             wp_localize_script('bp-media-admin', 'settings_url', add_query_arg(
