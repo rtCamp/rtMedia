@@ -428,8 +428,10 @@ class BPMediaEncoding {
 
                 if ($flag && $mail) {
                     $download_link = add_query_arg(array('job_id' => $_GET['job_id'], 'download_url' => $_GET['download_url']), home_url());
-                    $subject = __('BuddyPress Media Encoding: Download Failed.', 'buddypress-media');
-                    $message = sprintf(__('<p>Your server could not download the encoded media, related to <a href="%s">this</a> due to the following reason:</p><p><code>%s</code></p><p>You can trigger the download once again <a href="%s">here</a>.</p>', 'buddypress-media'), get_edit_post_link($attachment_id), $flag, $download_link);
+                    $subject = __('BuddyPress Media Encoding: Download Failed', 'buddypress-media');
+                    $message = sprintf(__('<p><a href="%s">Media</a> was successfully encoded but there was an error while downloading:</p>
+                        <p><code>%s</code></p>
+                        <p>You can <a href="%s">retry the download</a>.</p>', 'buddypress-media'), get_edit_post_link($attachment_id), $flag, $download_link);
                     $users = get_users(array('role' => 'administrator'));
                     if ($users) {
                         foreach ($users as $user)

@@ -40,6 +40,7 @@ BuddyPress Media adds Photos, Music, Videos & Albums to your BuddyPress powered 
 * **Enhanced media management**: including sorting, moving media between albums, etc
 * **Advanced Image Editor**: Use the Dashboard media editor on the front-end!
 * **Automatic conversion** (*premium*): of common audio & video formats to mp3/mp4 via [Kaltura Add-On](http://rtcamp.com/store/buddypress-media-kaltura/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "BuddyPress Media Kaltura Addon for Kaltura.com/Kaltura-CE/Kaltura On-Prem version"), and [FFMPEG Add-On](http://rtcamp.com/store/buddypress-media-ffmpeg/ "BuddyPress Media FFMPEG Addon")
+* **[Encoding Service]( http://rtcamp.com/buddypress-media/addons/audio-video-encoding-service/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media)** [*new*] (*premium*): Site owners will be able to get unsupported formats converted via this service, even on a shared hosting, without installing any additional software.
 
 #### Roadmap ####
 
@@ -58,7 +59,6 @@ BuddyPress Media adds Photos, Music, Videos & Albums to your BuddyPress powered 
 
 **Coming Soon**
 
-* **Encoding Service** [*new*] (*premium*): Site owners will be able to get unsupported formats converted via this service, even on a shared hosting, without installing any additional software.
 * **Watermark Addon** [*new*] (*premium*): Adds advanced, customised watermarks to photos.
 * **Membership Addon** (*premium*): Users can be given controlled upload quotas and media type access on their profiles and groups.
 
@@ -118,6 +118,9 @@ Please visit [BuddyPress Media's Features page](http://rtcamp.com/buddypress-med
 ## Changelog ##
 
 Please visit [BuddyPress Media's Roadmap page](http://rtcamp.com/buddypress-media/roadmap/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "Visit BuddyPress Media's Features page") to get some details about future releases.
+
+#### 2.13 ####
+* Adds support for audio/video conversion via rtCamp's Encoding Service
 
 #### 2.12.1 ####
 * Fixes bug in featured media that occurred when the featured media was deleted
@@ -393,4 +396,4 @@ Please visit [BuddyPress Media's Roadmap page](http://rtcamp.com/buddypress-medi
 * HTML5 Audio Tag Support (with fallback)
 * HTML5 Video Tag Support (with fallback)
 
-Adds featured media support.
+Adds support for audio/video conversion via rtCamp's Encoding Service
