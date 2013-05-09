@@ -40,6 +40,7 @@ BuddyPress Media adds Photos, Music, Videos & Albums to your BuddyPress powered 
 * **Enhanced media management**: including sorting, moving media between albums, etc
 * **Advanced Image Editor**: Use the Dashboard media editor on the front-end!
 * **Automatic conversion** (*premium*): of common audio & video formats to mp3/mp4 via [Kaltura Add-On](http://rtcamp.com/store/buddypress-media-kaltura/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "BuddyPress Media Kaltura Addon for Kaltura.com/Kaltura-CE/Kaltura On-Prem version"), and [FFMPEG Add-On](http://rtcamp.com/store/buddypress-media-ffmpeg/ "BuddyPress Media FFMPEG Addon")
+* **[Encoding Service]( http://rtcamp.com/buddypress-media/addons/audio-video-encoding-service/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media)** [*new*] (*premium*): Site owners will be able to get unsupported formats converted via this service, even on a shared hosting, without installing any additional software.
 
 = Roadmap =
 
@@ -58,7 +59,6 @@ BuddyPress Media adds Photos, Music, Videos & Albums to your BuddyPress powered 
 
 **Coming Soon**
 
-* **Encoding Service** [*new*] (*premium*): Site owners will be able to get unsupported formats converted via this service, even on a shared hosting, without installing any additional software.
 * **Watermark Addon** [*new*] (*premium*): Adds advanced, customised watermarks to photos.
 * **Membership Addon** (*premium*): Users can be given controlled upload quotas and media type access on their profiles and groups.
 
