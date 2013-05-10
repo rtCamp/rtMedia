@@ -42,7 +42,7 @@ if (!class_exists('BPMediaAdmin')) {
             add_filter('plugin_row_meta', array($this, 'plugin_meta_premium_addon_link'), 1, 4);
             if (is_admin()) {
                 add_action('admin_enqueue_scripts', array($this, 'ui'));
-                add_action(bp_core_admin_hook(), array($this, 'menu'));
+                add_action(bp_core_admin_hook(), array($this, 'menu'),9);
                 if (current_user_can('manage_options'))
                     add_action('bp_admin_tabs', array($this, 'tab'));
                 if (is_multisite())
@@ -69,7 +69,7 @@ if (!class_exists('BPMediaAdmin')) {
             wp_enqueue_script('bp-media-admin', BP_MEDIA_URL . 'app/assets/js/admin.js', array('jquery-ui-dialog'), BP_MEDIA_VERSION);
             wp_enqueue_style (  'wp-jquery-ui-dialog');
             wp_localize_script('bp-media-admin', 'bp_media_admin_ajax', $admin_ajax);
-            wp_localize_script('bp-media-admin', 'bp_media_admin_admin_url', admin_url());
+            wp_localize_script('bp-media-admin', 'bp_media_admin_url', admin_url());
             $bp_media_admin_strings = array(
                 'no_refresh' => __('Please do not refresh this page.', 'buddypress-media'),
                 'something_went_wrong' => __('Something went wronng. Please <a href onclick="location.reload();">refresh</a> page.', 'buddypress-media'),
