@@ -53,6 +53,9 @@ ul#social li{display:inline;}
 .wrap.bp-media-admin .bp-media-settings-tabs a.nav-tab.insta{background-position-y:-244px;}
 .wrap.bp-media-admin .bp-media-settings-tabs a.nav-tab.watermark{background-position-y:-274px;}
 
+#bpm-unsubscribe-dialog { display: none; }
+#bpm-unsubscribe-dialog p { margin: 10px; }
+
 table.bp-media-encoding-table td, table.bp-media-encoding-table th {
     border-left-color: #fff;
     border-right-color: #dfdfdf;
