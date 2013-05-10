@@ -80,7 +80,7 @@ class BPMediaLoader {
                 case BP_MEDIA_VIDEOS_SLUG:
                 case BP_MEDIA_AUDIO_SLUG:
                 case BP_MEDIA_ALBUMS_SLUG:
-                    $bp->bp_options_nav[BP_MEDIA_SLUG][] = array(
+                    $bp->bp_options_nav[BP_MEDIA_SLUG][$nav_item['slug']] = array(
                         'name' => $nav_item['name'],
                         'link' => (
                         isset($bp->displayed_user->domain) ?
@@ -103,7 +103,7 @@ class BPMediaLoader {
                     unset($bp->bp_nav[$key]);
                     break;
                 case BP_MEDIA_UPLOAD_SLUG:
-                    $bp->bp_options_nav[BP_MEDIA_SLUG][] = array(
+                    $bp->bp_options_nav[BP_MEDIA_SLUG][$nav_item['slug']] = array(
                         'name' => $nav_item['name'],
                         'link' => (
                         isset($bp->displayed_user->domain) ?
