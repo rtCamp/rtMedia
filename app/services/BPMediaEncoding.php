@@ -31,7 +31,8 @@ class BPMediaEncoding {
                             $this->nearing_usage_limit($usage_info);
                         elseif ($usage_info[$this->api_key]->remaining > 524288000 && bp_get_option('bp-media-encoding-usage-limit-mail'))
                             bp_update_option('bp-media-encoding-usage-limit-mail', 0);
-                        add_filter('bp_media_transcoder', array($this, 'transcoder'), 10, 2);
+                        if ( !class_exists('BPMediaFFMPEG') && !class_exists('BPMediaKaltura') )
+                            add_filter('bp_media_transcoder', array($this, 'transcoder'), 10, 2);
                         add_filter('bp_media_plupload_files_filter', array($this, 'allowed_types'));
                     }
                 }
