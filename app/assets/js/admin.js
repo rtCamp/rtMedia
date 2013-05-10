@@ -74,7 +74,7 @@ jQuery(document).ready(function(){
     jQuery('#encoding-try-now-form').on('click','.encoding-try-now',function(e){
         e.preventDefault();
         if(confirm(bp_media_admin_strings.are_you_sure)){
-        jQuery(this).after('<img style="margin: 0 0 0 10px" src="'+bp_media_admin_admin_url+'images/wpspin_light.gif" />')
+        jQuery(this).after('<img style="margin: 0 0 0 10px" src="'+bp_media_admin_url+'images/wpspin_light.gif" />')
         var data = {
             action: 'bp_media_free_encoding_subscribe'
         };
@@ -94,7 +94,7 @@ jQuery(document).ready(function(){
     
     jQuery('.bp-media-encoding').on('click','#api-key-submit',function(e){
         e.preventDefault();
-        jQuery(this).after('<img style="margin: 0 0 0 10px" src="'+bp_media_admin_admin_url+'images/wpspin_light.gif" />')
+        jQuery(this).after('<img style="margin: 0 0 0 10px" src="'+bp_media_admin_url+'images/wpspin_light.gif" />')
         var data = {
             action: 'bp_media_enter_api_key',
             apikey: jQuery('#new-api-key').val()
@@ -114,7 +114,7 @@ jQuery(document).ready(function(){
     jQuery('.bp-media-encoding-table').on('click','.bpm-unsubscribe',function(e){
         e.preventDefault();
 //        var note=prompt(bp_media_admin_strings.reason_for_unsubscribe);
-            jQuery(this).after('<img style="margin: 0 0 0 10px" src="'+bp_media_admin_admin_url+'images/wpspin_light.gif" />')
+            jQuery(this).after('<img style="margin: 0 0 0 10px" src="'+bp_media_admin_url+'images/wpspin_light.gif" />')
             var data = {
                 action: 'bp_media_unsubscribe_encoding_service'
             };
@@ -417,7 +417,7 @@ jQuery(document).ready(function(){
     });
     
     jQuery('.updated').on('click','.bpm-hide-encoding-notice',function(){
-        jQuery(this).after('<img style="margin: 0 0 0 10px" src="'+bp_media_admin_admin_url+'images/wpspin_light.gif" />');
+        jQuery(this).after('<img style="margin: 0 0 0 10px" src="'+bp_media_admin_url+'images/wpspin_light.gif" />');
        var data ={
            action: 'bp_media_hide_encoding_notice'
        }
