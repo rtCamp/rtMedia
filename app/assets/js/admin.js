@@ -111,6 +111,31 @@ jQuery(document).ready(function(){
         });
     });
     
+    jQuery('.bp-media-encoding').on('click','#disable-encoding',function(e){
+        e.preventDefault();
+        if ( confirm(bp_media_admin_strings.disable_encoding )) {
+            jQuery(this).after('<img style="margin: 0 0 0 10px" src="'+bp_media_admin_url+'images/wpspin_light.gif" />')
+            var data = {
+                action: 'bp_media_disable_encoding'
+            };
+
+            // since 2.8 ajaxurl is always defined in the admin header and points to admin-ajax.php
+            jQuery.post(ajaxurl, data, function(response) {
+                if(response){
+                    jQuery('settings-error-encoding-disabled').remove();
+                    jQuery('h2:first').after('<div class="updated" id="settings-encoding-successfully-disabled"><p>'+response+'</p></div>');
+                    jQuery('#bp-media-encoding-usage').remove();
+                    jQuery('#disable-encoding').next().remove();
+                    jQuery('#disable-encoding').remove();
+                    jQuery('#new-api-key').val('');
+                }else{
+                    jQuery('#settings-error-encoding-disabled').remove();
+                    jQuery('h2:first').after('<div class="error" id="settings-error-encoding-disabled"><p>'+bp_media_admin_strings.something_went_wrong+'</p></div>');
+                }
+            });
+        }
+    });
+    
     jQuery('.bp-media-encoding-table').on('click','.bpm-unsubscribe',function(e){
         e.preventDefault();
         //        var note=prompt(bp_media_admin_strings.reason_for_unsubscribe);

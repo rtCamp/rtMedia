@@ -49,6 +49,7 @@ class BPMediaEncoding {
         add_action('wp_ajax_bp_media_unsubscribe_encoding_service', array($this, 'unsubscribe_encoding'));
         add_action('wp_ajax_bp_media_hide_encoding_notice', array($this, 'hide_encoding_notice'), 1);
         add_action('wp_ajax_bp_media_enter_api_key', array($this, 'enter_api_key'), 1);
+        add_action('wp_ajax_bp_media_disable_encoding', array($this, 'disable_encoding'), 1);
     }
 
     function transcoder($class, $type) {
@@ -294,6 +295,7 @@ class BPMediaEncoding {
             <label for="new-api-key"><?php _e('Enter API KEY', 'buddypress-media'); ?></label>
             <input id="new-api-key" type="text" name="new-api-key" value="<?php echo $this->api_key; ?>" size="60" />
             <input type="submit" id="api-key-submit" name="api-key-submit" value="Submit" class="button-primary" />
+            <?php if ($this->api_key) { ?><br /><br /><input type="submit" id="disable-encoding" name="disable-encoding" value="Disable Encoding" class="button-secondary" /><?php } ?>
         </p>
         <table  class="bp-media-encoding-table widefat fixed" cellspacing="0">
             <tbody>
@@ -505,6 +507,12 @@ class BPMediaEncoding {
             } else {
                 echo json_encode(array('error' => __('Please enter the api key.', 'buddypress-media')));
             }
+            die();
+        }
+        
+        public function disable_encoding(){
+            bp_update_option('bp-media-encoding-api-key', '');
+            _e('Encoding disabled successfully.','buddypress-media');
             die();
         }
 

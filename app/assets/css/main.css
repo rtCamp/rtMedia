@@ -1,8 +1,8 @@
 /*
  *	Default stylesheet for BuddyPress Media
 */
-#wpbody-content div.metabox-fixed{width: 280px;margin-right: -300px;float: right;}
-#wpbody-content div.wrap.bp-media-admin .columns-2{margin-right:300px;padding-top: 0;margin-top: 15px;width: 600px}
+#wpbody-content div.metabox-fixed{width: 300px;margin-right: -320px;float: right;}
+#wpbody-content div.wrap.bp-media-admin .columns-2{margin-right:320px;padding-top: 0;margin-top: 15px;width: 620px}
 #wpbody-content .bp-media-settings-tabs{margin-bottom: 0; }
 #wpbody-content .bp-media-settings-tabs .media-nav-tab{margin: 0 10px; text-decoration: underline; text-transform: capitalize}
 #wpbody-content .bp-media-settings-tabs .media-nav-tab.media-nav-tab-active{font-weight: bold}
