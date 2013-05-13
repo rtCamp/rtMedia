@@ -71,7 +71,8 @@ if (!class_exists('BPMediaAdmin')) {
             $bp_media_admin_strings = array(
                 'no_refresh' => __('Please do not refresh this page.', 'buddypress-media'),
                 'something_went_wrong' => __('Something went wronng. Please <a href onclick="location.reload();">refresh</a> page.', 'buddypress-media'),
-                'are_you_sure' => __('This will subscribe you to the free plan.', 'buddypress-media')
+                'are_you_sure' => __('This will subscribe you to the free plan.', 'buddypress-media'),
+                'disable_encoding' => __('Are you sure you want to disable the encoding service? Make sure you note your api key before diabling it incase you want to activate it in future.', 'buddypress-media')
             );
             wp_localize_script('bp-media-admin', 'bp_media_admin_strings', $bp_media_admin_strings);
             wp_localize_script('bp-media-admin', 'settings_url', add_query_arg(
@@ -355,13 +356,16 @@ if (!class_exists('BPMediaAdmin')) {
                     public function admin_sidebar() {
                         do_action('bp_media_before_default_admin_widgets');
                         $current_user = wp_get_current_user();
-
+                        echo '<p><a target="_blank" href="http://rtcamp.com/news/buddypress-media-review-contest/?utm_source=dashboard&#038;utm_medium=plugin&#038;utm_campaign=buddypress-media"><img src="'.BP_MEDIA_URL.'app/assets/img/bpm-contest-banner.jpg" alt="BuddyPress Media Review Contest" /></a></p>';
+//                        $contest = '<a target="_blank" href="http://rtcamp.com/news/buddypress-media-review-contest/?utm_source=dashboard&#038;utm_medium=plugin&#038;utm_campaign=buddypress-media"><img src="'.BP_MEDIA_URL.'app/assets/img/bpm-contest-banner.jpg" alt="BuddyPress Media Review Contest" /></a>';
+//                        new BPMediaAdminWidget('bpm-contest', __('', 'buddypress-media'), $contest);
+                        
                         $message = sprintf(__('I use @buddypressmedia http://goo.gl/8Upmv on %s', 'buddypress-media'), home_url());
                         $addons = '<label for="bp-media-add-linkback"><input' . checked(bp_get_option('bp_media_add_linkback', false), true, false) . ' type="checkbox" name="bp-media-add-linkback" value="1" id="bp-media-add-linkback"/> ' . __('Add link to footer', 'buddypress-media') . '</label>
 						<a href="http://twitter.com/home/?status=' . $message . '" class="button button-tweet" target= "_blank">' . __('Tweet', 'buddypress-media') . '</a>
 						<a href="http://wordpress.org/support/view/plugin-reviews/buddypress-media?rate=5#postform" class="button button-rating" target= "_blank">' . __('Rate on WordPress.org', 'buddypress-media') . '</a>';
                         new BPMediaAdminWidget('spread-the-word', __('Spread the Word', 'buddypress-media'), $addons);
-
+                        
 //                        $donate = '<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
 //                           <!-- Identify your business so that you can collect the payments. -->
 //                           <input type="hidden" name="business"
