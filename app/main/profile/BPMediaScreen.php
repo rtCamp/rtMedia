@@ -425,7 +425,7 @@ class BPMediaScreen {
 	        $activity_id ));
         }
 
-        if ( 'album' == $bp_media_current_entry->get_type()){
+        if ( !bp_is_active('activity') && 'album' == $bp_media_current_entry->get_type()){
             $delete_handler = new BPMediaAlbum($post_id);
             $delete_handler->delete_album();
         } else {

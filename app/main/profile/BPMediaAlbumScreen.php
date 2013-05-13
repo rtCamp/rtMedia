@@ -43,7 +43,7 @@ class BPMediaAlbumScreen extends BPMediaScreen {
                         $this->page_not_exist();
                     }
                     $media_actions = new BPMediaActions();
-                    if ($media_actions->default_user_album() != $bp->action_variables[1])
+                    if ($media_actions->default_user_album() != $bp->action_variables[1]) 
                         $this->entry_delete();
                     else
                         $this->page_not_exist();
