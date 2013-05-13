@@ -19,10 +19,6 @@ class BPMediaEncodingTranscoder extends BPMediaHostWordpress {
         $post_id = $this->check_and_create_album($album_id, $group, $author_id, $album_name);
         if (!$files) {
             $files = $parent_fallback_files = $_FILES['bp_media_file'];
-            $ext = end(explode(".", $_FILES['bp_media_file']["name"]));
-            if ( in_array($_FILES['bp_media_file']['type'],array('audio/mp3','video/mp4')) || in_array($ext, array('mp3','mp4')) ){
-                return parent::insert_media($name, $description, $album_id, $group, $is_multiple, $is_activity, $parent_fallback_files, $author_id, $album_name);
-            }
             $file = wp_handle_upload($files);
         } else {
             $parent_fallback_files = $files;
