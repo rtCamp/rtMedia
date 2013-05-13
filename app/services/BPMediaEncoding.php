@@ -33,7 +33,10 @@ class BPMediaEncoding {
                             bp_update_option('bp-media-encoding-usage-limit-mail', 0);
                         if (!class_exists('BPMediaFFMPEG') && !class_exists('BPMediaKaltura'))
                             add_filter('bp_media_transcoder', array($this, 'transcoder'), 10, 2);
-                        add_filter('bp_media_plupload_files_filter', array($this, 'allowed_types'));
+                        $blacklist = array('localhost', '127.0.0.1');
+                        if (!in_array($_SERVER['HTTP_HOST'], $blacklist)) {
+                            add_filter('bp_media_plupload_files_filter', array($this, 'allowed_types'));
+                        }
                     }
                 }
             }
@@ -56,6 +59,17 @@ class BPMediaEncoding {
         switch ($type) {
             case 'video':
             case 'audio':
+                $blacklist = array('localhost', '127.0.0.1');
+                if (in_array($_SERVER['HTTP_HOST'], $blacklist)) {
+                    return $class;
+                }
+                
+                if (isset($_FILES['bp_media_file'])) {
+                    $ext = end(explode(".", $_FILES['bp_media_file']["name"]));
+                    if (in_array($_FILES['bp_media_file']['type'], array('audio/mp3', 'video/mp4')) || in_array($ext, array('mp3', 'mp4'))) {
+                        return $class;
+                    }
+                }
                 return 'BPMediaEncodingTranscoder';
             default:
                 return $class;
@@ -358,11 +372,11 @@ class BPMediaEncoding {
         if (isset($usage_details[$this->api_key]->plan->name) && (strtolower($usage_details[$this->api_key]->plan->name) == 'free')) {
             echo '<button disabled="disabled" type="submit" class="encoding-try-now button button-primary">' . __('Current Plan', 'buddypress-media') . '</button>';
         } else {
-            ?>
+                ?>
                         <form id="encoding-try-now-form" method="get" action="">
                             <button type="submit" class="encoding-try-now button button-primary"><?php _e('Try Now', 'buddypress-media'); ?></button>
                         </form><?php }
-        ?>
+            ?>
                 </td>
                 <td><?php echo $this->encoding_subscription_form('silver', 9.0) ?></td>
                 <td><?php echo $this->encoding_subscription_form('gold', 99.0) ?></td>
@@ -509,12 +523,12 @@ class BPMediaEncoding {
             }
             die();
         }
-        
-        public function disable_encoding(){
+
+        public function disable_encoding() {
             bp_update_option('bp-media-encoding-api-key', '');
-            _e('Encoding disabled successfully.','buddypress-media');
+            _e('Encoding disabled successfully.', 'buddypress-media');
             die();
         }
 
     }
-?>
+    ?>
