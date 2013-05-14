@@ -120,6 +120,10 @@ Please visit [BuddyPress Media's Features page](http://rtcamp.com/buddypress-med
 
 Please visit [BuddyPress Media's Roadmap page](http://rtcamp.com/buddypress-media/roadmap/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "Visit BuddyPress Media's Features page") to get some details about future releases.
 
+#### 2.13.2 ####
+* Adds parameter to include/exclude media title in shortcode
+* Resolved admin menu warnings for members
+
 #### 2.13.1 ####
 * Fixes bug in navigation
 * Fixes bug in admin menu
@@ -404,4 +408,4 @@ Please visit [BuddyPress Media's Roadmap page](http://rtcamp.com/buddypress-medi
 * HTML5 Audio Tag Support (with fallback)
 * HTML5 Video Tag Support (with fallback)
 
-Bug fixes for audio/video encoding service and others
+Bug fixes and shortcode enhancements
