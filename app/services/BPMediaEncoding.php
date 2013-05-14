@@ -79,9 +79,11 @@ class BPMediaEncoding {
     public function menu() {
         add_submenu_page('bp-media-settings', __('BuddyPress Media Audio/Video Encoding Service', 'buddypress-media'), __('Audio/Video Encoding', 'buddypress-media'), 'manage_options', 'bp-media-encoding', array($this, 'encoding_page'));
         global $submenu;
-        $menu = $submenu['bp-media-settings'];
-        $encoding_menu = array_pop($menu);
-        $submenu['bp-media-settings'] = array_merge(array_slice($menu, 0, 1), array($encoding_menu), array_slice($menu, 1));
+        if ( isset($submenu['bp-media-settings']) ) {
+            $menu = $submenu['bp-media-settings'];
+            $encoding_menu = array_pop($menu);
+            $submenu['bp-media-settings'] = array_merge(array_slice($menu, 0, 1), array($encoding_menu), array_slice($menu, 1));
+        }
     }
 
     /**
