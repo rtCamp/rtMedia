@@ -471,7 +471,7 @@ class BPMediaHostWordpress {
      * @global type $bp_media
      * @return boolean
      */
-    function get_media_gallery_content($move = false, $echo = true) {
+    function get_media_gallery_content($move = false, $echo = true, $title = true) {
         $attachment = $this->id;
         $markup = '';
         switch ($this->type) {
@@ -488,12 +488,14 @@ class BPMediaHostWordpress {
                 $markup .= '<a href="' . $this->url . '" title="' . $this->description . '">';
                 $markup .= '<img src="' . apply_filters("bp_media_video_thumb", $thumb_url, $attachment, $this->type) . '" />';
                 $markup .= '</a>';
-                $markup .= '<h3 title="' . $this->name . '">';
-                if ($move) {
-                    $markup .= '<input type="checkbox" name="move" value="' . $this->id . '" />';
+                if ($title) {
+                    $markup .= '<h3 title="' . $this->name . '">';
+                    if ($move) {
+                        $markup .= '<input type="checkbox" name="move" value="' . $this->id . '" />';
+                    }
+                    $markup .= '<a href="' . $this->url . '" title="' . $this->description . '">' . $this->name . '</a>';
+                    $markup .= '</h3>';
                 }
-                $markup .= '<a href="' . $this->url . '" title="' . $this->description . '">' . $this->name . '</a>';
-                $markup .= '</h3>';
                 $markup .= '</li>';
                 break;
             case 'audio' :
@@ -510,12 +512,14 @@ class BPMediaHostWordpress {
                 $markup .= '<a href="' . $this->url . '" title="' . $this->description . '">';
                 $markup .= '<img src="' . $thumb_url . '" />';
                 $markup .= '</a>';
-                $markup .= '<h3 title="' . $this->name . '">';
-                if ($move) {
-                    $markup .= '<input type="checkbox" name="move" value="' . $this->id . '" />';
+                if ($title) {
+                    $markup .= '<h3 title="' . $this->name . '">';
+                    if ($move) {
+                        $markup .= '<input type="checkbox" name="move" value="' . $this->id . '" />';
+                    }
+                    $markup .= '<a href="' . $this->url . '" title="' . $this->description . '">' . $this->name . '</a>';
+                    $markup .= '</h3>';
                 }
-                $markup .= '<a href="' . $this->url . '" title="' . $this->description . '">' . $this->name . '</a>';
-                $markup .= '</h3>';
                 $markup .= '<div class="bp-media-ajax-preloader"></div>';
                 $markup .= '</li>';
                 break;
@@ -529,12 +533,14 @@ class BPMediaHostWordpress {
                 $markup .= '<a href="' . $this->url . '" title="' . $this->description . '">';
                 $markup .= '<img src="' . $medium_path . '" />';
                 $markup .= '</a>';
-                $markup .= '<h3 title="' . $this->name . '">';
-                if ($move) {
-                    $markup .= '<input type="checkbox" name="move" value="' . $this->id . '" />';
+                if ($title) {
+                    $markup .= '<h3 title="' . $this->name . '">';
+                    if ($move) {
+                        $markup .= '<input type="checkbox" name="move" value="' . $this->id . '" />';
+                    }
+                    $markup .= '<a href="' . $this->url . '" title="' . $this->description . '">' . $this->name . '</a>';
+                    $markup .= '</h3>';
                 }
-                $markup .= '<a href="' . $this->url . '" title="' . $this->description . '">' . $this->name . '</a>';
-                $markup .= '</h3>';
                 $markup .= '<div class="bp-media-ajax-preloader"></div>';
                 $markup .= '</li>';
                 break;
@@ -567,7 +573,7 @@ class BPMediaHostWordpress {
     function show_comment_form() {
         global $bp_media;
         $activity_id = get_post_meta($this->id, 'bp_media_child_activity', true);
-        if (!$activity_id || !function_exists('bp_has_activities')) 
+        if (!$activity_id || !function_exists('bp_has_activities'))
             return false;
         if (bp_has_activities(array(
                     'display_comments' => 'stream',
@@ -972,25 +978,25 @@ class BPMediaHostWordpress {
             case 'video' :
                 $this->url = trailingslashit($pre_url . BP_MEDIA_VIDEOS_SLUG . '/' . $this->id);
                 $this->edit_url = trailingslashit($pre_url . BP_MEDIA_VIDEOS_SLUG . '/' . BP_MEDIA_VIDEOS_EDIT_SLUG . '/' . $this->id);
-                $this->delete_url = wp_nonce_url(trailingslashit($pre_url . BP_MEDIA_VIDEOS_SLUG . '/' . BP_MEDIA_DELETE_SLUG . '/' . $this->id),'bp-media-delete-'.$this->id);
+                $this->delete_url = wp_nonce_url(trailingslashit($pre_url . BP_MEDIA_VIDEOS_SLUG . '/' . BP_MEDIA_DELETE_SLUG . '/' . $this->id), 'bp-media-delete-' . $this->id);
                 $this->thumbnail_id = get_post_meta($this->id, 'bp_media_thumbnail', true);
                 break;
             case 'audio' :
                 $this->url = trailingslashit($pre_url . BP_MEDIA_AUDIO_SLUG . '/' . $this->id);
                 $this->edit_url = trailingslashit($pre_url . BP_MEDIA_AUDIO_SLUG . '/' . BP_MEDIA_AUDIO_EDIT_SLUG . '/' . $this->id);
-                $this->delete_url = wp_nonce_url(trailingslashit($pre_url . BP_MEDIA_AUDIO_SLUG . '/' . BP_MEDIA_DELETE_SLUG . '/' . $this->id),'bp-media-delete-'.$this->id);
+                $this->delete_url = wp_nonce_url(trailingslashit($pre_url . BP_MEDIA_AUDIO_SLUG . '/' . BP_MEDIA_DELETE_SLUG . '/' . $this->id), 'bp-media-delete-' . $this->id);
                 $this->thumbnail_id = get_post_meta($this->id, 'bp_media_thumbnail', true);
                 break;
             case 'image' :
                 $this->url = trailingslashit($pre_url . BP_MEDIA_IMAGES_SLUG . '/' . $this->id);
                 $this->edit_url = trailingslashit($pre_url . BP_MEDIA_IMAGES_SLUG . '/' . BP_MEDIA_IMAGES_EDIT_SLUG . '/' . $this->id);
-                $this->delete_url = wp_nonce_url(trailingslashit($pre_url . BP_MEDIA_IMAGES_SLUG . '/' . BP_MEDIA_DELETE_SLUG . '/' . $this->id),'bp-media-delete-'.$this->id);
+                $this->delete_url = wp_nonce_url(trailingslashit($pre_url . BP_MEDIA_IMAGES_SLUG . '/' . BP_MEDIA_DELETE_SLUG . '/' . $this->id), 'bp-media-delete-' . $this->id);
                 $this->thumbnail_id = $this->id;
                 break;
             case 'album' :
                 $this->url = trailingslashit($pre_url . BP_MEDIA_ALBUMS_SLUG . '/' . $this->id);
                 $this->edit_url = trailingslashit($pre_url . BP_MEDIA_ALBUMS_SLUG . '/' . BP_MEDIA_ALBUMS_EDIT_SLUG . '/' . $this->id);
-                $this->delete_url = wp_nonce_url(trailingslashit($pre_url . BP_MEDIA_ALBUMS_SLUG . '/' . BP_MEDIA_DELETE_SLUG . '/' . $this->id),'bp-media-delete-'.$this->id);
+                $this->delete_url = wp_nonce_url(trailingslashit($pre_url . BP_MEDIA_ALBUMS_SLUG . '/' . BP_MEDIA_DELETE_SLUG . '/' . $this->id), 'bp-media-delete-' . $this->id);
 //                $this->thumbnail_id = get_post_meta($this->id, 'bp_media_thumbnail', true);
                 break;
             default :
