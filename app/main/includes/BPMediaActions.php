@@ -690,6 +690,7 @@ class BPMediaActions {
         $page = isset($_GET['page']) ? $_GET['page'] : die();
         $type = isset($_GET['media']) ? $_GET['media'] : 'all';
         $count = isset($_GET['count']) ? $_GET['count'] : 1;
+        $title = isset($_GET['title']) ? $_GET['title'] : 1;
 
         $value = 0;
         if (is_user_logged_in()) {
@@ -710,6 +711,13 @@ class BPMediaActions {
             'meta_query' => $privacy_query,
             'posts_per_page' => $count
         );
+        
+        $title = strtolower($title);
+        if ($title != 'false' && $title != '0' && $title != 'no')
+            $title = true;
+        else
+            $title = false;
+        
         if ($type != 'all')
             $args['post_mime_type'] = $type;
         $bp_media_widget_query = new WP_Query($args);
@@ -718,7 +726,7 @@ class BPMediaActions {
                 $bp_media_widget_query->the_post();
                 try {
                     $entry = new BPMediaHostWordpress(get_the_ID());
-                    echo $entry->get_media_gallery_content();
+                    echo $entry->get_media_gallery_content(false,true,$title);
                 } catch (Exception $e) {
                     echo '<li>';
                     echo $e->getMessage();
@@ -1127,6 +1135,7 @@ class BPMediaActions {
         global $bp_media;
         extract(shortcode_atts(array(
                     'type' => 'all',
+                    'title' => true,
                     'count' => $bp_media->options['default_count'] ? $bp_media->options['default_count'] : 10,
                     'loadmore' => true
                         ), $atts));
@@ -1155,8 +1164,13 @@ class BPMediaActions {
             $paged = get_query_var('paged') ? get_query_var('paged') : 1;
             $args['paged'] = $paged;
         }
-
-
+        
+        $title = strtolower($title);
+        if ($title != 'false' && $title != '0' && $title != 'no')
+            $title = true;
+        else
+            $title = false;
+        
         $type = str_replace(array('music', 'photos'), array('audio', 'image'), $type);
 
         if ($type != 'all')
@@ -1170,7 +1184,7 @@ class BPMediaActions {
                 $query->the_post();
                 try {
                     $entry = new BPMediaHostWordpress(get_the_ID());
-                    $markup .= $entry->get_media_gallery_content(false, false);
+                    $markup .= $entry->get_media_gallery_content(false, false, $title);
                 } catch (Exception $e) {
                     $markup .= '<li>';
                     $markup .= $e->getMessage();
@@ -1183,7 +1197,7 @@ class BPMediaActions {
             $markup .= '</div>';
             $loadmore = strtolower($loadmore);
             if ($loadmore != 'false' && $loadmore != '0' && $loadmore != 'no' && $count != -1) {
-                $markup .= '<div class="bp-media-actions"><button data-media="' . $type . '" data-count="' . $count . '" data-page="' . $paged . '" class="button" id="bp-media-show-more-sc">Show More</button></div>';
+                $markup .= '<div class="bp-media-actions"><button data-title="' .($title?'true':'false') . '" data-media="' . $type . '" data-count="' . $count . '" data-page="' . $paged . '" class="button" id="bp-media-show-more-sc">Show More</button></div>';
             }
         } else {
             $markup .= __('No media found', 'buddypress-media');

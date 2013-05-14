@@ -304,7 +304,8 @@ jQuery(document).ready(function(){
             action: 'bp_media_load_more_sc',
             page: parseInt($this.attr('data-page'))+1,
             media:$this.attr('data-media'),
-            count:$this.attr('data-count')
+            count:$this.attr('data-count'),
+            title:$this.attr('data-title')
         };
         jQuery.get(bp_media_vars.ajaxurl, data, function(response) {
             if(response.length==0) {
