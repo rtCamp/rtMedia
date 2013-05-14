@@ -18,6 +18,8 @@
 .bp-media-support .support_list{ margin-left: 25px}
 .bp-media-support .support_list li{list-style: disc;margin-bottom: 10px}
 
+div#icon-buddypress-media { background: url('../img/bpm-icon-32.png'); background-position-y: 35px; }
+
 #adminmenu li.toplevel_page_bp-media-settings .wp-menu-image a{background:url('../img/bpm-icon-16.png') center 1px no-repeat;}
 #adminmenu li.toplevel_page_bp-media-settings:hover .wp-menu-image a,
 #adminmenu li.current.toplevel_page_bp-media-settings .wp-menu-image a{background-position: center 1px;}

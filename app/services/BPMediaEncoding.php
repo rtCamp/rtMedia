@@ -128,12 +128,17 @@ class BPMediaEncoding {
             'href' => bp_get_admin_url(add_query_arg(array('page' => 'bp-media-encoding'), 'admin.php'))
         );
         $reordered_admin_nav = NULL;
-        foreach ($bp_media_admin_nav as $key => $nav) {
-            if ($key == 2)
-                $reordered_admin_nav[] = $admin_nav;
-            $reordered_admin_nav[] = $nav;
+        if ( count($bp_media_admin_nav) > 2 ) {
+            foreach ($bp_media_admin_nav as $key => $nav) {
+                if ($key == 3)
+                    $reordered_admin_nav[] = $admin_nav;
+                $reordered_admin_nav[] = $nav;
+            }
+            $bp_media_admin_nav = $reordered_admin_nav;
+        } else {
+            $bp_media_admin_nav[] = $admin_nav;
         }
-        return $reordered_admin_nav;
+        return $bp_media_admin_nav;
     }
 
     public function is_valid_key($key) {

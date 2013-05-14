@@ -72,7 +72,7 @@ if (!class_exists('BPMediaAdmin')) {
                 'no_refresh' => __('Please do not refresh this page.', 'buddypress-media'),
                 'something_went_wrong' => __('Something went wronng. Please <a href onclick="location.reload();">refresh</a> page.', 'buddypress-media'),
                 'are_you_sure' => __('This will subscribe you to the free plan.', 'buddypress-media'),
-                'disable_encoding' => __('Are you sure you want to disable the encoding service? Make sure you note your api key before diabling it incase you want to activate it in future.', 'buddypress-media')
+                'disable_encoding' => __('Are you sure you want to disable the encoding service? Make sure you note your api key before disabling it incase you want to activate it in future.', 'buddypress-media')
             );
             wp_localize_script('bp-media-admin', 'bp_media_admin_strings', $bp_media_admin_strings);
             wp_localize_script('bp-media-admin', 'settings_url', add_query_arg(
@@ -158,15 +158,15 @@ if (!class_exists('BPMediaAdmin')) {
             ?>
 
             <div class="wrap bp-media-admin <?php echo $this->get_current_tab(); ?>">
-                <div id="icon-buddypress" class="icon32"><br></div>
+                <div id="icon-buddypress-media" class="icon32"><br></div>
                 <h2 class="nav-tab-wrapper"><?php $this->bp_media_tabs(); ?></h2>
                 <?php settings_errors(); ?>
-                <div class="columns-2">
-                    <h3 class="bp-media-settings-tabs"><?php
-            $this->sub_tabs();
+                <div class="columns-2"><?php if ($this->get_current_tab() == 'bp-media-settings') { ?>
+                        <h3 class="bp-media-settings-tabs"><?php
+                $this->settings_sub_tabs();
+                    ?>
+                        </h3><?php }
                 ?>
-                    </h3>
-
                     <div id="bp-media-settings-boxes">
                         <?php
                         $settings_url = ( is_multisite() ) ? network_admin_url('edit.php?action=' . $option_group) : 'options.php';
@@ -175,7 +175,11 @@ if (!class_exists('BPMediaAdmin')) {
                             <form id="bp_media_settings_form" name="bp_media_settings_form" action="<?php echo $settings_url; ?>" method="post" enctype="multipart/form-data">
                                 <div class="bp-media-metabox-holder"><?php
                 settings_fields($option_group);
-                do_settings_sections($page);
+                if ($page == 'bp-media-settings') {
+                    $this->settings_content_tabs($page);
+                } else {
+                    do_settings_sections($page);
+                }
                 submit_button();
                             ?><div class="rt-link alignright"><?php _e('By', 'buddypress-media'); ?> <a href="http://rtcamp.com/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media" title="<?php _e('Empowering The Web With WordPress', 'buddypress-media'); ?>"><img src="<?php echo BP_MEDIA_URL; ?>app/assets/img/rtcamp-logo.png"></a></div>
                                 </div>
@@ -218,7 +222,7 @@ if (!class_exists('BPMediaAdmin')) {
                 'name' => __('BuddyPress Media', 'buddypress-media'),
                 'class' => ($tab == 'bp-media-settings' || $tab == 'bp-media-addons' || $tab == 'bp-media-support') ? $active_class : $idle_class
             );
-            
+
 
             foreach ($tabs as $tab) {
                 $tabs_html.= '<a id="bp-media" title= "' . $tab['title'] . '"  href="' . $tab['href'] . '" class="' . $tab['class'] . '">' . $tab['name'] . '</a>';
@@ -226,7 +230,7 @@ if (!class_exists('BPMediaAdmin')) {
             echo $tabs_html;
         }
 
-        public function bp_media_tabs( $active_tab = '' ) {
+        public function bp_media_tabs($active_tab = '') {
             // Declare local variables
             $tabs_html = '';
             $idle_class = 'nav-tab';
@@ -255,7 +259,7 @@ if (!class_exists('BPMediaAdmin')) {
                     'slug' => 'bp-media-importer'
                 ),
             );
-            
+
             $tabs = apply_filters('bp_media_add_tabs', $tabs);
 
             // Loop through tabs and build navigation
@@ -272,12 +276,33 @@ if (!class_exists('BPMediaAdmin')) {
 //            do_action('bp_media_admin_tabs');
         }
 
+        public function settings_content_tabs($page) {
+            global $wp_settings_sections, $wp_settings_fields;
+
+            if (!isset($wp_settings_sections) || !isset($wp_settings_sections[$page]))
+                return;
+
+            foreach ((array) $wp_settings_sections[$page] as $section) {
+                if ($section['title'])
+                    echo "<h3>{$section['title']}</h3>\n";
+
+                if ($section['callback'])
+                    call_user_func($section['callback'], $section);
+
+                if (!isset($wp_settings_fields) || !isset($wp_settings_fields[$page]) || !isset($wp_settings_fields[$page][$section['id']]))
+                    continue;
+                echo '<table class="form-table">';
+                do_settings_fields($page, $section['id']);
+                echo '</table>';
+            }
+        }
+
         /**
          * Adds a sub tabs to the BuddyPress Media settings page
          *
          * @global type $bp_media
          */
-        public function sub_tabs() {
+        public function settings_sub_tabs() {
             $tabs_html = '';
             $idle_class = 'nav-tab';
             $active_class = 'nav-tab nav-tab-active';
@@ -287,34 +312,34 @@ if (!class_exists('BPMediaAdmin')) {
             $tab = $this->get_current_tab();
             /* BuddyPress Media */
             $tabs[] = array(
-                'href' => bp_get_admin_url(add_query_arg(array('page' => 'bp-media-settings'), 'admin.php')),
-                'title' => __('BuddyPress Media Settings', 'buddypress-media'),
-                'name' => __('Settings', 'buddypress-media'),
+                'href' => '#bp-media-types',
+                'title' => __('BuddyPress Media Types', 'buddypress-media'),
+                'name' => __('Types', 'buddypress-media'),
                 'class' => ($tab == 'bp-media-settings') ? $active_class : $idle_class . ' first_tab'
             );
 
             $tabs[] = array(
-                'href' => bp_get_admin_url(add_query_arg(array('page' => 'bp-media-addons'), 'admin.php')),
-                'title' => __('BuddyPress Media Addons', 'buddypress-media'),
-                'name' => __('Addons', 'buddypress-media'),
+                'href' => '#bp-media-sizes',
+                'title' => __('BuddyPress Media Sizes', 'buddypress-media'),
+                'name' => __('Sizes', 'buddypress-media'),
                 'class' => ($tab == 'bp-media-addons') ? $active_class : $idle_class
             );
 
             $tabs[] = array(
-                'href' => bp_get_admin_url(add_query_arg(array('page' => 'bp-media-support'), 'admin.php')),
-                'title' => __('BuddyPress Media Support', 'buddypress-media'),
-                'name' => __('Support', 'buddypress-media'),
+                'href' => '#bp-media-privacy',
+                'title' => __('BuddyPress Media Privacy', 'buddypress-media'),
+                'name' => __('Privacy', 'buddypress-media'),
                 'class' => ($tab == 'bp-media-support') ? $active_class : $idle_class . ' last_tab'
             );
 
             $tabs[] = array(
-                'href' => bp_get_admin_url(add_query_arg(array('page' => 'bp-media-importer'), 'admin.php')),
-                'title' => __('Importer', 'buddypress-media'),
-                'name' => __('Importer', 'buddypress-media'),
+                'href' => '#bp-media-others',
+                'title' => __('Others', 'buddypress-media'),
+                'name' => __('Others', 'buddypress-media'),
                 'class' => ($tab == 'bp-media-importer') ? $active_class : $idle_class
             );
 
-            $tabs = apply_filters('bp_media_add_sub_tabs', $tabs, $tab);
+            $tabs = apply_filters('bp_media_add_settings_sub_tabs', $tabs, $tab);
             foreach ($tabs as $tab) {
                 $tabs_html.= '<a title="' . $tab['title'] . '" href="' . $tab['href'] . '" class="' . $tab['class'] . ' ' . sanitize_title($tab['name']) . '">' . $tab['name'] . '</a>';
             }
