@@ -13,7 +13,7 @@ class BPMediaUpload {
     }
 
     function endpoint() {
-        add_rewrite_endpoint('upload', EP_ALL);
+        add_rewrite_endpoint(BP_MEDIA_UPLOAD_SLUG, EP_ALL);
     }
 
     function template_redirect() {

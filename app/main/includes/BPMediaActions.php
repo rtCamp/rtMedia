@@ -12,6 +12,7 @@ class BPMediaActions {
      * @global type $bp_media_options
      */
     function __construct() {
+        new BPMediaUploadShortcode();
         add_action('bp_media_before_content', 'BPMediaActions::show_messages');
         add_action('wp_enqueue_scripts', array($this, 'enqueue_scripts_styles'), 11);
         add_action('bp_before_activity_delete', 'BPMediaActions::delete_activity_handler');
