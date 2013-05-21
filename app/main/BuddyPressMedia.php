@@ -348,7 +348,7 @@ class BuddyPressMedia {
         if (!defined('BP_MEDIA_ALBUMS_LABEL_SINGULAR'))
             define('BP_MEDIA_ALBUMS_LABEL_SINGULAR', __('Album', $this->text_domain));
 
-        if (!defined('BP_MEDIAUPLOAD_LABEL'))
+        if (!defined('BP_MEDIA_UPLOAD_LABEL'))
             define('BP_MEDIA_UPLOAD_LABEL', __('Upload', $this->text_domain));
 
         /* Support Email constant */
