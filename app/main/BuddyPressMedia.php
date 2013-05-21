@@ -405,7 +405,8 @@ class BuddyPressMedia {
                 'download' => false,
                 'albumimporter' => false,
                 'image' => false,
-				'featured' => false
+                'featured' => false,
+                'upload' => false
             );
             $class_construct = apply_filters('bpmedia_class_construct', $class_construct);
 
