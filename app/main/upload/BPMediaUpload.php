@@ -3,33 +3,30 @@
 /**
  * Description of BPMediaUpload
  *
- * @author Joshua Abenazer <joshua.abenazer@rtcamp.com>
+ * @author joshua
  */
 class BPMediaUpload {
-
-    public function __construct() {
-        add_action('init', array($this, 'endpoint'));
-        add_action('template_redirect', array($this, 'template_redirect'));
+    
+    private $default_modes = array('file_upload','link_input');
+    
+    public function __construct($uploaded) {
+        
+        $this->process($uploaded);
+        
     }
-
-    function endpoint() {
-        add_rewrite_endpoint(BP_MEDIA_UPLOAD_SLUG, EP_ALL);
-    }
-
-    function template_redirect() {
-        global $wp_query;
-        if (!isset($wp_query->query_vars['upload']))
-            return;
-
-        if (isset($wp_query->query_vars['upload']) && !count($_POST)) {
-            include get_404_template();
-        } else {
-             $model = new BPMediaUploadModel();
-             $this->upload = $model->set_post_object();
+    
+    function process($uploaded){
+        switch($uploaded['mode']){
+            case 'file_upload': new BPMediaUploadFile($uploaded);
+                break;
+            case 'link_input': new BPMediaUploadUrl($uploaded);
+                break;
+            default:
+                do_action('bp_media_upload_'.$mode,$uploaded);
         }
-
-        exit;
     }
+    
+
 }
 
 ?>

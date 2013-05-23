@@ -1,34 +1,35 @@
 <?php
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
  * Description of BPMediaUploadView
  *
  * @author joshua
  */
 class BPMediaUploadView {
-
-    function __construct($upload_object = false) {
-        ;
+    
+    function __construct() {
     }
 
-    function render($template_name) {
-        $is_url = isset($_GET['is_url'])?$_GET['is_url']:false;
+    public function render($template_name) {
+        $tabs = array(
+          'file_upload' => array( 'title' => __('File Upload','buddypress-media'), 'content' => '<input type="file" name="bp_media_file" class="bp-media-upload-input bp-media-file" />' ),
+          'link_input' => array( 'title' => __('Insert from URL','buddypress-media'),'content' => '<input type="url" name="bp-media-url" class="bp-media-upload-input bp-media-url" />' ),
+        );
+        $tabs = apply_filters('bp_media_upload_tabs', $tabs );
+        
+        $mode = ( isset($_GET['mode']) &&  array_key_exists($_GET['mode'], $tabs) )?$_GET['mode']:'file_upload';
+
         include $this->locate_template($template_name);
     }
 
-    function locate_template($template_name) {
+    protected function locate_template($template_name) {
         $located = '';
             if (!$template_name)
                 $located = false;
-            if (file_exists(STYLESHEETPATH . '/' . $template_name)) {
-                $located = STYLESHEETPATH . '/' . $template_name;
-            } else if (file_exists(TEMPLATEPATH . '/' . $template_name)) {
-                $located = TEMPLATEPATH . '/' . $template_name;
+            if (file_exists(STYLESHEETPATH . '/buddypress-media/' . $template_name)) {
+                $located = STYLESHEETPATH . '/buddypress-media/' . $template_name;
+            } else if (file_exists(TEMPLATEPATH . '/buddypress-media/' . $template_name)) {
+                $located = TEMPLATEPATH . '/buddypress-media/' . $template_name;
             } else {
                 $located = BP_MEDIA_PATH . 'templates/' . $template_name;
         }
