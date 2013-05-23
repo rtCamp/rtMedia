@@ -81,6 +81,7 @@ if (!class_exists('BPMediaAdmin')) {
             wp_localize_script('bp-media-admin', 'settings_bp_album_import_url', add_query_arg(
                             array('page' => 'bp-media-settings'), (is_multisite() ? network_admin_url('admin.php') : admin_url('admin.php'))
                     ));
+			wp_enqueue_style('grid-foundation', BP_MEDIA_URL . 'app/assets/css/grid-foundation.css', '', BP_MEDIA_VERSION);
             wp_enqueue_style('bp-media-admin', BP_MEDIA_URL . 'app/assets/css/main.css', '', BP_MEDIA_VERSION);
             wp_enqueue_style('wp-jquery-ui-dialog');
         }
@@ -175,11 +176,12 @@ if (!class_exists('BPMediaAdmin')) {
                             <form id="bp_media_settings_form" name="bp_media_settings_form" action="<?php echo $settings_url; ?>" method="post" enctype="multipart/form-data">
                                 <div class="bp-media-metabox-holder"><?php
                 settings_fields($option_group);
-                if ($page == 'bp-media-settings') {
-                    $this->settings_content_tabs($page);
-                } else {
+//                if ($page == 'bp-media-settings') {
+//                    $this->settings_content_tabs($page);
+//                } else {
                     do_settings_sections($page);
-                }
+//				BPMediaFormHandler::rtForm_do_settings_sections($page);
+//                }
                 submit_button();
                             ?><div class="rt-link alignright"><?php _e('By', 'buddypress-media'); ?> <a href="http://rtcamp.com/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media" title="<?php _e('Empowering The Web With WordPress', 'buddypress-media'); ?>"><img src="<?php echo BP_MEDIA_URL; ?>app/assets/img/rtcamp-logo.png"></a></div>
                                 </div>
