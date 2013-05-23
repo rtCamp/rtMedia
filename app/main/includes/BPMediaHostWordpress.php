@@ -124,7 +124,7 @@ class BPMediaHostWordpress {
             $author_id = get_current_user_id();
 
         $post_id = $this->check_and_create_album($album_id, $group, $author_id, $album_name);
-
+        
         if (!$files) {
             $files = $_FILES['bp_media_file'];
             $file = wp_handle_upload($files);

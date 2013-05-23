@@ -7,7 +7,7 @@
  */
 class BPMediaUploadModel {
     public $upload = array(
-        'is_url' => false,
+        'mode' => 'file_upload',
         'context' => false,
         'context_id' => false,
         'privacy' => 0,

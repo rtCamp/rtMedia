@@ -127,7 +127,7 @@ class BuddyPressMedia {
          */
         add_action('bp_include', array($this, 'init'));
 
-		/**
+        /**
          * Hook admin to wp init
          */
         add_action('bp_init', array($this, 'admin_init'));
@@ -193,12 +193,12 @@ class BuddyPressMedia {
                         'large' => array('width' => 640)
                     ),
                     'media' => array(
-                        'featured' => array('width' => 100,'height'=>100,'crop'=>1)
+                        'featured' => array('width' => 100, 'height' => 100, 'crop' => 1)
                     )
                 ),
-				'featured_image' => 0,
-				'featured_video' => 0,
-				'featured_audio' => 0,
+                'featured_image' => 0,
+                'featured_video' => 0,
+                'featured_audio' => 0,
                 'videos_enabled' => 1,
                 'audio_enabled' => 1,
                 'images_enabled' => 1,
@@ -220,15 +220,15 @@ class BuddyPressMedia {
                 'audio' => array(
                     'medium' => array('width' => 320),
                     'large' => array('width' => 640)
-                    ),
+                ),
                 'media' => array(
-                        'featured' => array('width' => 100,'height'=>100,'crop'=>1)
+                    'featured' => array('width' => 100, 'height' => 100, 'crop' => 1)
                     ));
             bp_update_option('bp_media_options', $options);
         } elseif (!isset($options['sizes']['media'])) {
             $options['sizes']['media'] = array(
-                        'featured' => array('width' => 100,'height'=>100,'crop'=>1)
-                    );
+                'featured' => array('width' => 100, 'height' => 100, 'crop' => 1)
+            );
             bp_update_option('bp_media_options', $options);
         }
 
@@ -406,16 +406,21 @@ class BuddyPressMedia {
                 'albumimporter' => false,
                 'image' => false,
                 'featured' => false,
-                'upload' => false
+                'upload_endpoint' => false
             );
             $class_construct = apply_filters('bpmedia_class_construct', $class_construct);
 
-            foreach ($class_construct as $classname => $global_scope) {
-                $class = 'BPMedia' . ucfirst($classname);
+            foreach ($class_construct as $key => $global_scope) {
+                $classname = '';
+                $ck = explode('_', $key);
+                foreach ($ck as $cn) {
+                    $classname .= ucfirst($cn);
+                }
+                $class = 'BPMedia' . $classname;
                 if (class_exists($class)) {
                     if ($global_scope == true) {
-                        global ${'bp_media_' . $classname};
-                        ${'bp_media_' . $classname} = new $class();
+                        global ${'bp_media_' . $key};
+                        ${'bp_media_' . $key} = new $class();
                     } else {
                         new $class();
                     }
@@ -429,13 +434,13 @@ class BuddyPressMedia {
         add_action('admin_notices', array($this, 'admin_notice'));
     }
 
-	function admin_init(){
-		       /**
+    function admin_init() {
+        /**
          * Initialise Admin Panels
          */
         global $bp_media_admin;
         $bp_media_admin = new BPMediaAdmin();
-	}
+    }
 
     /**
      * Loads translations
@@ -479,7 +484,6 @@ class BuddyPressMedia {
     function media_sizes() {
         $options = $this->options;
         $def_sizes = array(
-
             //legacy array
             'single_video' => array(
                 'width' => 640,
@@ -488,7 +492,6 @@ class BuddyPressMedia {
             'single_audio' => array(
                 'width' => 640,
             ),
-
             'image' => array(
                 'thumbnail' => array(
                     'width' => $options['sizes']['image']['thumbnail']['width'],
@@ -656,7 +659,7 @@ class BuddyPressMedia {
             'video' => false,
             'audio' => false,
             'album' => true,
-            'upload' => true
+            'upload' => false
         );
         if (array_key_exists('images_enabled', $options)) {
             if ($options['images_enabled'] == 1) {
@@ -775,3 +778,4 @@ class BuddyPressMedia {
  *
  */
 ?>
+
