@@ -49,7 +49,7 @@ class rt_plugin_info {
         if ($path != NULL)
             $this->plugin_path = $path;
         else
-            $this->plugin_path = realpath(plugin_dir_path(__FILE__) . "../index.php");
+            $this->plugin_path = realpath(plugin_dir_path(__FILE__) . "../../index.php");
     }
 
 }

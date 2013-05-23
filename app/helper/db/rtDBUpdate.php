@@ -12,7 +12,7 @@ class rtDBUpdate {
      */
     public $db_version;
     public $install_db_version;
-    public $schema_path = '/../app/main/schema/';
+    public $schema_path = '/../../schema/';
     public $db_version_option_name;
     public $rt_plugin_info;
     
