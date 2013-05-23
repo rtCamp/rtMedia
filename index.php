@@ -45,6 +45,7 @@ function buddypress_media_autoloader( $class_name ) {
 	$rtlibpath = array(
 		'app/services/' . $class_name . '.php',
 		'app/helper/' . $class_name . '.php',
+                'app/helper/db/' . $class_name . '.php',
 		'app/admin/' . $class_name . '.php',
 		'app/main/' . $class_name . '.php',
 		'app/main/activity/' . $class_name . '.php',
