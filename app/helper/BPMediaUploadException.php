@@ -7,8 +7,8 @@
  */
 class BPMediaUploadException extends Exception 
 { 
-    public function __construct($code) { 
-        $message = $this->codeToMessage($code); 
+    public function __construct($code,$msg=false) { 
+        $message = $this->codeToMessage($code,$msg); 
         parent::__construct($message, $code); 
     } 
 
@@ -30,7 +30,8 @@ class BPMediaUploadException extends Exception
                 $message = apply_filters('bp_media_file_extension_error', __('File type not allowed.','buddypress-media')); 
                 break; 
             default: 
-                $message = apply_filters('bp_media_file_unknown_error', __('Unknown file upload error.','buddypress-media')); 
+                $msg = $msg ? $msg : __('Unknown file upload error.','buddypress-media');
+                $message = apply_filters('bp_media_file_unknown_error', $msg); 
                 break; 
         } 
         return $message; 

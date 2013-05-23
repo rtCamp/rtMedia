@@ -23,10 +23,15 @@ class BPMediaUpload {
             $this->db = new BPMediaUploadDB();
             
             $file_object = $this->upload($uploaded);
-            $this->post->init($uploaded,$file_object);
+            
+            if ( $file_object ) {
+                $this->post->init($uploaded,$file_object);
+            } else {
+                return false;
+            }
             
         } else {
-            return;
+            return false;
         }
     }
     
