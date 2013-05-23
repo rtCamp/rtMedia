@@ -13,7 +13,10 @@ class BPMediaUploadModel {
         'privacy' => 0,
         'custom_fields' => array(),
         'taxonomy' => array(),
-        'album_id' => false
+        'album_id' => false,
+        'files' => false,
+        'title' => false,
+        'description' => false
     );
     
     function set_post_object() {

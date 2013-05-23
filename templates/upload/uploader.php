@@ -1,7 +1,6 @@
 <?php if (is_array($tabs) && count($tabs)) { ?>
 <div class="bp-media-uploader no-js">
         <form method="post" action="upload" enctype="multipart/form-data">
-
             <?php do_action('bp_media_before_uploader'); ?>
             
             <?php 
@@ -24,6 +23,8 @@
             ?>
 
             <?php do_action('bp_media_after_uploader'); ?>
+            
+            <?php wp_nonce_field('bp_media_'.$mode, 'bp_media_upload_nonce'); ?>
 
             <input type="submit" name="bp-media-upload" value="<?php echo BP_MEDIA_UPLOAD_LABEL; ?>" />
         </form>
