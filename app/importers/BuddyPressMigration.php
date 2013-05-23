@@ -9,8 +9,11 @@ class BuddyPressMigration {
 
     public $bmp_table = "";
 
-    function __construct($tablename) {
-        $this->bmp_table = $tablename;
+    function __construct() {
+        global $wpdb;
+        $this->bmp_table = $wpdb->prefix . "rt_bpm_media";
+        //add_action('bp_media_admin_page_append', array($this, 'test'));
+        //add_action('wp_ajax_bp_media_rt_db_migration', array($this, "migrate_to_new_db"));
     }
 
     function get_total_count() {
@@ -46,7 +49,48 @@ class BuddyPressMigration {
         return $wpdb->get_var($wpdb->prepare($sql, get_current_blog_id()));
     }
 
-    function migrate_to_new_db($lastid = 0,$limit = 5) {
+    function test($page) {
+        if ($page != "bp-migration-page")
+            return;
+        if (!wp_script_is('backbone')) {
+            wp_enqueue_script('backbone', false, array(), false, true);
+        }
+        $prog = new rtProgress();
+        $done = $this->get_done_count();
+        $total = $this->get_total_count();
+        echo "{$done}/{$total}";
+        $temp = $prog->progress($done, $total);
+        $prog->progress_ui($temp, true);
+        ?>
+        <script>
+            var db_done = <?php echo $done; ?>;
+            var db_total = <?php echo $total; ?>;
+
+            function db_start_migration() {
+                if (db_done < db_total) {
+                    jQuery.ajax({
+                        url: bp_media_admin_ajax,
+                        type: 'post',
+                        data: {"action": "bp_media_rt_db_migration", "done": db_done},
+                        success: function(data) {
+                            if (data.status) {
+                                done = data.done;
+                                db_start_migration();
+                            }
+
+                        }
+                    });
+                }
+            }
+
+        </script>
+
+
+
+        <?php
+    }
+
+    function migrate_to_new_db($lastid = 0, $limit = 5) {
         if (!$lastid) {
             $lastid = $this->get_last_imported();
             if (!$lastid)
@@ -78,15 +122,14 @@ class BuddyPressMigration {
                 order by a.post_id
                 limit %d";
 
-        $results = $wpdb->get_results ($wpdb->prepare( $sql, $lastid , $limit ) );
+        $results = $wpdb->get_results($wpdb->prepare($sql, $lastid, $limit));
         if ($results) {
             $blog_id = get_current_blog_id();
             foreach ($results as $result) {
                 $media_id = $result->post_id;
 
-                if ($result->post_type != "attachement") {
+                if ($result->post_type != "attachment") {
                     $media_type = "album";
-                    
                 } else {
                     $mime_type = strtolower($result->post_mime_type);
                     if (strpos($mime_type, "image") == 0) {
@@ -99,18 +142,20 @@ class BuddyPressMigration {
                         $media_type = "other";
                     }
                 }
-                
-                if( intval($result->context_id) > 0){
-                    $context = "media";
-                }else{
-                    $context = "group";
+
+                if (intval($result->context_id) > 0) {
+                    $media_context = "media";
+                } else {
+                    $media_context = "group";
                 }
+                echo $media_context ."-". abs(intval($result->context_id)) . "<br />";
+                
                 $wpdb->insert(
                         $this->bmp_table, array(
                     'blog_id' => $blog_id,
                     'media_id' => $media_id,
                     'media_type' => $media_type,
-                    "context" => $context,
+                    "context" => $media_context,
                     "context_id" => abs(intval($result->context_id)),
                     "activity_id" => $result->activity_id,
                     "privacy" => $result->privacy,
@@ -118,5 +163,9 @@ class BuddyPressMigration {
                 );
             }
         }
+        echo json_encode(array("status" => true, "done" => $this->get_done_count()));
+        die(0);
     }
-}?>
+
+}
+?>
