@@ -77,45 +77,50 @@ class BPMediaUploadModel {
         if (!is_array($this->upload['custom_fields']))
             $this->upload['custom_fields'] = array($this->upload['custom_fields']);
         
-//        if ( !$this->has_album_id() )
-//            $this->set_album_id();
+        if ( !$this->has_album_id() || !$this->has_album_permissions() )
+            $this->set_album_id();
+            
     }
     
-//    function has_album_id(){
-//        if(!$this->upload['album_id'])
-//            return false;
-//        return true;
-//    }
-//    
-//    function set_album_id(){
-//        if (class_exists('BuddyPress')) {
-//            $this->set_bp_album_id();
-//        } else {
-//            $this->set_wp_album_id();
-//        }
-//    }
-//
-//    function set_bp_album_id(){
-//        if (bp_is_blog_page()) {
-//            $this->set_wp_album_id();
-//        } else {
-//            $this->set_bp_component_album_id();
-//        }
-//    }
-//
-//    function set_wp_album_id(){
-//        
-//    }
-//    
-//    function set_bp_component_album_id() {
-//        switch (bp_current_component()) {
-//            case 'groups': return bp_get_current_group_id();
-//                break;
-//            default:
-//                return bp_loggedin_user_id();
-//                break;
-//        }
-//    }
+    function has_album_id(){
+        if(!$this->upload['album_id'])
+            return false;
+        return true;
+    }
+    
+    function has_album_permissions(){
+        return false;
+    }
+    
+    function set_album_id(){
+        if (class_exists('BuddyPress')) {
+            $this->set_bp_album_id();
+        } else {
+            $this->set_wp_album_id();
+        }
+    }
+
+    function set_bp_album_id(){
+        if (bp_is_blog_page()) {
+            $this->set_wp_album_id();
+        } else {
+            $this->set_bp_component_album_id();
+        }
+    }
+
+    function set_wp_album_id(){
+        $this->upload['album_id'] = $this->upload['context_id'];
+    }
+    
+    function set_bp_component_album_id() {
+        switch (bp_current_component()) {
+            case 'groups': return bp_get_current_group_id();
+                break;
+            default:
+                $this->upload['album_id'] = get_user_meta(bp_displayed_user_id(),'bp-media-default-album',true);
+                break;
+        }
+    }
 }
 
 ?>

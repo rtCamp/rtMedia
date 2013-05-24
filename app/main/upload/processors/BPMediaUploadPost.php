@@ -1,10 +1,5 @@
 <?php
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
  * Description of BPMediaUploadPost
  *
@@ -15,11 +10,14 @@ class BPMediaUploadPost {
     var $post_array = false;
 
     function init($uploaded, $file_object) {
-        $attachments = $this->generate_post_array($file_object);
-        return $this->insert_attachment($attachments,$file_object);
+        
+        $attachments = $this->generate_post_array($uploaded,$file_object);
+        
+        return $this->insert_attachment($attachments, $file_object);
+        
     }
 
-    function generate_post_array($file_object) {
+    function generate_post_array($uploaded,$file_object) {
         foreach ($file_object as $file) {
             $attachments[] = array(
                 'post_mime_type' => $file['type'],
@@ -31,9 +29,9 @@ class BPMediaUploadPost {
         }
         return $attachments;
     }
-    
-    function insert_attachment($attachments,$file_object){
-        foreach( $attachments as $key => $attachment) {
+
+    function insert_attachment($attachments, $file_object) {
+        foreach ($attachments as $key => $attachment) {
             $attachment_id = wp_insert_attachment($attachment, $file_object[$key]['file'], $attachment['post_parent']);
             if (!is_wp_error($attachment_id)) {
                 add_filter('intermediate_image_sizes', array($this, 'bp_media_image_sizes'), 99);
@@ -46,7 +44,7 @@ class BPMediaUploadPost {
         }
         return $updated_attachment_ids;
     }
-    
+
     function bp_media_image_sizes($sizes) {
         return array('bp_media_thumbnail', 'bp_media_activity_image', 'bp_media_single_image');
     }
