@@ -144,7 +144,7 @@ class BuddyPressMigration {
                 }
 
                 if (intval($result->context_id) > 0) {
-                    $media_context = "media";
+                    $media_context = "profile";
                 } else {
                     $media_context = "group";
                 }
