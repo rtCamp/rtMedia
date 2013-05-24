@@ -134,7 +134,7 @@ if (!class_exists('BPMediaSettings')) {
 
             if (bp_is_active('groups')) {
                 add_settings_section('bpm-media-type', __('Groups Integration', 'buddypress-media'), '', 'bp-media-settings');
-//            add_settings_field('bpm-admin-profile', __('User profiles', 'buddypress-media'), array($this, 'checkbox'), 'bp-media-settings', 'bpm-media-type', array(
+//            add_settings_field('bpm-admin-profile', __('User profiles', 'buddypress-media'), array('BPMediaFormHandler', 'checkbox'), 'bp-media-settings', 'bpm-media-type', array(
 //                'setting' => 'bp_media_options',
 //                'option' => 'enable_on_profile',
 //                'desc' => __('Check to enable BuddyPress Media on User profiles', 'buddypress-media')
@@ -149,7 +149,7 @@ if (!class_exists('BPMediaSettings')) {
             }
 
             add_settings_section('bpm-media-fine', __('Display Settings', 'buddypress-media'), '', 'bp-media-settings');
-            add_settings_field('bpm-media-count', __('Number of media', 'buddypress-media'), array($this, 'textbox'), 'bp-media-settings', 'bpm-media-fine', array(
+            add_settings_field('bpm-media-count', __('Number of media', 'buddypress-media'), array('BPMediaFormHandler', 'number'), 'bp-media-settings', 'bpm-media-fine', array(
                 'setting' => 'bp_media_options',
                 'option' => 'default_count',
                 'number' => true
@@ -197,7 +197,7 @@ if (!class_exists('BPMediaSettings')) {
                 'desc' => __('Enable menu in WordPress admin bar', 'buddypress-media')
                     )
             );
-            add_settings_field('bpm-other-settings', __('Recount', 'buddypress-media'), array('BPMediaFormHandler', 'button'), 'bp-media-settings', 'bpm-miscellaneous', array(
+            add_settings_field('bpm-other-settings', __('Recount', 'buddypress-media'), array($this, 'button'), 'bp-media-settings', 'bpm-miscellaneous', array(
                 'option' => 'refresh-count',
                 'name' => __('Recount', 'buddypress-media'),
                 'desc' => '<br />' . __('Repair media counts', 'buddypress-media')
@@ -206,7 +206,7 @@ if (!class_exists('BPMediaSettings')) {
             $bp_media_addon = new BPMediaAddon();
             add_settings_section('bpm-addons', __('BuddyPress Media Addons for Photos', 'buddypress-media'), array($bp_media_addon, 'get_addons'), 'bp-media-addons');
             
-            add_settings_section('bpm-support', __('Support', 'buddypress-media'), array('BPMediaFormHandler', 'bp_media_support_intro'), 'bp-media-support');
+            add_settings_section('bpm-support', __('Support', 'buddypress-media'), array($this, 'bp_media_support_intro'), 'bp-media-support');
 
             if (!BPMediaPrivacy::is_installed()) {
                 $bp_media_privacy = new BPMediaPrivacySettings();
@@ -323,6 +323,7 @@ if (!class_exists('BPMediaSettings')) {
                 $regenerate_link = wp_nonce_url(admin_url('update.php?action=install-plugin&plugin=regenerate-thumbnails'), 'install-plugin_regenerate-thumbnails');
             }
             echo '<span class="description">' . sprintf(__('If you make changes to width, height or crop settings, you must use "<a href="%s">Regenerate Thumbnail Plugin</a>" to regenerate old images."', 'buddypress-media'), $regenerate_link) . '</span>';
+			echo '<div class="clearfix">&nbsp;</div>';
         }
 
         /**

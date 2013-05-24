@@ -132,13 +132,13 @@ if(!class_exists("rtForm")) {
 			}
 			return $html;
 		}
-		
+
 		private function generate_element_desc($attributes) {
 
 			if( isset($attributes['desc']) ) {
-				
+
 				$html = '<span class="clearfix large-offset-3 description">' . $attributes['desc'] . '</span>';
-				
+
 				return $html;
 			}
 
@@ -282,8 +282,9 @@ if(!class_exists("rtForm")) {
 				if( isset($attributes['label']) )
 					$html = $this->enclose_label($element, $html, $attributes['label']);
 
-				$html .= $this->generate_element_desc($attributes);
-				
+				if($attributes['show_desc'])
+					$html .= $this->generate_element_desc($attributes);
+
 				return $html;
 			} else
 				throw new rtFormInvalidArgumentsException( "attributes" );
@@ -311,8 +312,9 @@ if(!class_exists("rtForm")) {
 
 				if( isset($attributes['label']) )
 					$html = $this->enclose_label($element, $html, $attributes['label']);
-				
-				$html .= $this->generate_element_desc($attributes);
+
+				if($attributes['show_desc'])
+					$html .= $this->generate_element_desc($attributes);
 
 				return $html;
 			} else
@@ -341,8 +343,9 @@ if(!class_exists("rtForm")) {
 
 				if( isset($attributes['label']) )
 					$html = $this->enclose_label($element, $html, $attributes['label']);
-				
-				$html .= $this->generate_element_desc($attributes);
+
+				if($attributes['show_desc'])
+					$html .= $this->generate_element_desc($attributes);
 
 				return $html;
 			} else
@@ -370,8 +373,9 @@ if(!class_exists("rtForm")) {
 
 				if( isset($attributes['label']) )
 					$html = $this->enclose_label($element, $html, $attributes['label']);
-				
-				$html .= $this->generate_element_desc($attributes);
+
+				if($attributes['show_desc'])
+					$html .= $this->generate_element_desc($attributes);
 
 				return $html;
 			} else
@@ -427,10 +431,11 @@ if(!class_exists("rtForm")) {
 
 			$meta = $this->parse_multiple_options($element, $attributes);
 			$html .= $this->container_enclosed_elements($element, $attributes['id'], $meta['attrib'], $meta['rtForm_options']);
-			
-			$html .= $this->generate_element_desc($attributes);
 
-			$container = '<div ';
+			if($attributes['show_desc'])
+				$html .= $this->generate_element_desc($attributes);
+
+			$container = '<span ';
 			if(isset($attributes['class']))
 				$container .= $this->embedd_class($element, $attributes['class']);
 			else
@@ -439,12 +444,12 @@ if(!class_exists("rtForm")) {
 
 			$container .= $html;
 
-			$container .= '</div>';
+			$container .= '</span>';
 
 			if( isset($attributes['label']) )
-				$html = $this->enclose_label('container', $container, $attributes['label']);
-			
-			return $html;
+				$container = $this->enclose_label('container', $container, $attributes['label']);
+
+			return $container;
 		}
 
 		public function get_radio( $attributes = '' ) {
@@ -460,10 +465,11 @@ if(!class_exists("rtForm")) {
 
 			$meta = $this->parse_multiple_options($element, $attributes);
 			$html .= $this->container_enclosed_elements($element, $attributes['id'], $meta['attrib'], $meta['rtForm_options']);
-			
-			$html .= $this->generate_element_desc($attributes);
 
-			$container = '<div ';
+			if($attributes['show_desc'])
+				$html .= $this->generate_element_desc($attributes);
+
+			$container = '<span ';
 			if(isset($attributes['class']))
 				$container .= $this->embedd_class($element, $attributes['class']);
 			else
@@ -472,12 +478,12 @@ if(!class_exists("rtForm")) {
 
 			$container .= $html;
 
-			$container .= '</div>';
+			$container .= '</span>';
 
 			if( isset($attributes['label']) )
-				$html = $this->enclose_label('container', $container, $attributes['label']);
-			
-			return $html;
+				$container = $this->enclose_label('container', $container, $attributes['label']);
+
+			return $container;
 		}
 
 		public function get_checkbox( $attributes = '' ) {
@@ -510,8 +516,9 @@ if(!class_exists("rtForm")) {
 
 				if( isset($attributes['label']) )
 					$html = $this->enclose_label($element, $html, $attributes['label']);
-				
-				$html .= $this->generate_element_desc($attributes);
+
+				if($attributes['show_desc'])
+					$html .= $this->generate_element_desc($attributes);
 
 				return $html;
 			} else

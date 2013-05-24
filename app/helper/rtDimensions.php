@@ -56,7 +56,8 @@ class rtDimensions extends rtForm {
 			'size' => 'thumbnail',
 			'height' => true,
 			'crop' => false,
-			'desc' => ''
+			'desc' => '',
+			'show_desc' => false
 		);
 
 		$attributes = wp_parse_args($attributes, $defaults);
@@ -90,18 +91,20 @@ class rtDimensions extends rtForm {
 		$html .= parent::get_number(array(
 			'id' => sanitize_title("{$type}_{$size}_w"),
 			'name' => "bp_media_options[sizes][$type][$size][width]",
-			'label' => __('Width', 'buddypress-media'),
+//			'label' => __('Width', 'buddypress-media'),
 			'value' => $w,
-			'class' => array("small-text")
+			'class' => array("small-text large-offset-1"),
+			'show_desc' => $show_desc
 		));
 
 		if ($height) {
 			$html .= parent::get_number(array(
 				'id' => sanitize_title("{$type}_{$size}_h"),
 				'name' => "bp_media_options[sizes][$type][$size][height]",
-				'label' => __('Height', 'buddypress-media'),
+//				'label' => __('Height', 'buddypress-media'),
 				'value' => $h,
-				'class' => array("small-text")
+				'class' => array("small-text large-offset-1"),
+				'show_desc' => $show_desc
 			));
 		}
 
@@ -110,14 +113,16 @@ class rtDimensions extends rtForm {
 				'id' => sanitize_title("{$type}_{$size}_c"),
 				'name' => "bp_media_options[sizes][$type][$size][crop]",
 				'rtForm_options' => array(array(
-					__('Crop', 'buddypress-media') => 1,
+					'' => 1,
+//					__('Crop', 'buddypress-media') => 1,
 					'checked' => $c
 				)),
-				'class' => array("inline")
+				'class' => array("large-offset-1"),
+				'show_desc' => $show_desc
 			));
 		}
 
-		if ($desc)
+		if ($desc && $show_desc)
 			$html .= '<span class="clearfix large-offset-3 description">' . $desc . '</span>';
 
 		$html .= '</div>';

@@ -470,5 +470,19 @@ jQuery(document).ready(function(){
     });
 
 
+	jQuery('#bpm-settings-contents div.tab-content').hide();
+	jQuery('#bpm-settings-contents div:first').show();
+	jQuery('#bpm-settings-tabs .nav-tab:first').addClass('nav-tab-active');
+
+	jQuery('#bpm-settings-tabs a.nav-tab').click(function() {
+		jQuery('#bpm-settings-tabs .nav-tab').removeClass('nav-tab-active');
+		jQuery(this).addClass('nav-tab-active');
+		var currentTab = jQuery(this).attr('href');
+		jQuery('#bpm-settings-contents div.tab-content').hide();
+		jQuery(currentTab).show();
+		return false;
+	});
+
+
 });
 
