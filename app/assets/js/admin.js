@@ -484,5 +484,17 @@ jQuery(document).ready(function(){
 	});
 
 
-});
+	if(jQuery('#privacy_enabled').is(":checked")) {
+		jQuery(".privacy-driven-disable label input").prop("disabled",true);
+	} else {
+		jQuery(".privacy-driven-disable label input").prop("disabled",false);
+	}
+	jQuery('#privacy_enabled').on("click", function(e) {
+		if(jQuery(this).is(":checked")) {
+			jQuery(".privacy-driven-disable label input").prop("disabled",true);
+		} else {
+			jQuery(".privacy-driven-disable label input").prop("disabled",false);
+		}
+	});
 
+});

@@ -30,8 +30,6 @@ class BPMediaFormHandler {
 			return;
 		}
 
-		$args['id'] = $option;
-
 		if (!empty($setting)) {
 			$args['name'] = $setting . '[' . $option . ']';
 			$options = bp_get_option($setting);
@@ -42,46 +40,55 @@ class BPMediaFormHandler {
 		if (!isset($options[$option]))
 			$options[$option] = '';
 
-		$args['rtForm_options'] = array(array('' => 1, 'checked' => $options[$option]));
+		$args['rtForm_options'] = array(array('id' => $option, '' => 1, 'checked' => $options[$option]));
 
 		$chkObj = new rtForm();
 		echo $chkObj->get_checkbox($args);
 	}
 
 	public static function radio($args) {
+
 		global $bp_media;
             $options = $bp_media->options;
-            $defaults = array(
-                'setting' => '',
-                'option' => '',
-                'radios' => array(),
-                'default' => '',
-				'show_desc' => false
-            );
-            $args = wp_parse_args($args, $defaults);
-            extract($args);
-            if (empty($option) || ( 2 > count($radios) )) {
-                if (empty($option))
-                    trigger_error(__('Please provide "option" value ( required ) in the argument. Pass argument to add_settings_field in the following format array( \'option\' => \'option_name\' )', 'buddypress-media'));
-                if (2 > count($radios))
-                    trigger_error(__('Need to specify atleast to radios else use a checkbox instead', 'buddypress-media'));
-                return;
-            }
+		$defaults = array(
+			'setting' => '',
+			'option' => '',
+			'radios' => array(),
+			'default' => '',
+			'show_desc' => false
+		);
+		$args = wp_parse_args($args, $defaults);
+		extract($args);
+		if (empty($option) || ( 2 > count($radios) )) {
+			if (empty($option))
+				trigger_error(__('Please provide "option" value ( required ) in the argument. Pass argument to add_settings_field in the following format array( \'option\' => \'option_name\' )', 'buddypress-media'));
+			if (2 > count($radios))
+				trigger_error(__('Need to specify atleast to radios else use a checkbox instead', 'buddypress-media'));
+			return;
+		}
 
-            if (!empty($setting)) {
-                $name = $setting . '[' . $option . ']';
-                $options = bp_get_option($setting);
-            } else
-                $name = $option;
+		if (!empty($setting)) {
+			$args['name'] = $setting . '[' . $option . ']';
+			$options = bp_get_option($setting);
+		}
+		else
+			$args['name'] = $option;
 
-            if ((isset($options[$option]) && empty($options[$option])) || !isset($options[$option])) {
-                $options[$option] = $default;
-            }
+		if ((isset($options[$option]) && empty($options[$option])) || !isset($options[$option])) {
+			$options[$option] = $default;
+		}
 
-            foreach ($radios as $value => $desc) {
-                    ?>
-                <label for="<?php echo sanitize_title($desc); ?>"><input<?php checked($options[$option], $value); ?> value="<?php echo $value; ?>" name="<?php echo $name; ?>" id="<?php echo sanitize_title($desc); ?>" type="radio" />&nbsp;<?php echo $desc; ?></label><br /><?php
-            }
+		$args['rtForm_options'] = array();
+		foreach ($radios as $value => $key) {
+			$args['rtForm_options'][] = array(
+				'id' => sanitize_title($key),
+				$key => $value,
+				'checked' => ($options[$option] == $value) ? true : false
+			);
+		}
+
+		$objRad = new rtForm();
+		echo $objRad->get_radio($args);
 	}
 
 	public static function dimensions($args) {
@@ -224,7 +231,7 @@ class BPMediaFormHandler {
 
 		//body
 		foreach ($body as $section) {
-			echo '<div class="row">';
+			echo '<div class="row section">';
 			foreach ($section as $value) {
 				echo '<div class="columns ' . $value['class'] . '">';
 
@@ -325,7 +332,7 @@ class BPMediaFormHandler {
 				if (isset($value['content'])) {
 					if (is_array($value['content'])) {
 						foreach ($value['content'] as $entity) {
-							echo '<div class="entity">';
+							echo '<div class="entity section">';
 							echo $entity;
 							echo '</div>';
 						}
@@ -334,7 +341,7 @@ class BPMediaFormHandler {
 						echo $value['content'];
 				} else {
 					for ($i = 0; $i < count($value['callbacks']); $i++) {
-						echo '<div>';
+						echo '<div class="section">';
 						call_user_func($value['callbacks'][$i], $value['args'][$i]);
 						echo '</div>';
 					}
@@ -358,13 +365,14 @@ class BPMediaFormHandler {
 
 		echo '<div class="large-12">';
 			foreach ($wp_settings_fields[$page]['bpm-privacy'] as $key => $value) {
-				echo '<div class="row ' . $key . '">';
-					echo '<h4 class="columns large-3">';
-						$args = array_merge_recursive($value['args'],
-									array('class' => array("large-offset-1")),
-									array('label' => $value['title']));
-						call_user_func($value['callback'],$args);
-					echo '</h4>';
+				echo '<div class="row section" id="' . $key . '">';
+					echo '<div class="columns large-2">' . $value['title'] . '</div>';
+					echo '<div class="columns large-4">';
+						if($key != "bpm-privacy-enabled")
+							call_user_func($value['callback'], array_merge_recursive($value['args'], array('class' => array("privacy-driven-disable"))));
+						else
+							call_user_func($value['callback'], $value['args']);
+					echo '</div>';
 				echo '</div>';
 			}
 		echo '</div>';
@@ -392,11 +400,11 @@ class BPMediaFormHandler {
 
 		echo '</div>';
 
-		echo "<pre>";
+//		echo "<pre>";
 //		print_r($wp_settings_sections);
 //		echo "<br>---------------------------------------------------------------------------<br><br>";
-		print_r($wp_settings_fields);
-		echo "</pre>";
+//		print_r($wp_settings_fields);
+//		echo "</pre>";
 
 //		echo '<div class="small-11 small-centered columns">';
 //			foreach ( (array) $wp_settings_sections[$page] as $section ) {

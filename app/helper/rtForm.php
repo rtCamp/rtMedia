@@ -194,18 +194,20 @@ if(!class_exists("rtForm")) {
 						$attrib['selected'] = $val;
 					else if($key == "desc")
 						$attrib['desc'] = $val;
+					else if($key == "id")
+						$attrib['id'] = $val;
 					else {
 						$attrib['key'] = $key;
 						$attrib['value'] = $val;
 					}
 				}
 
+				$checked = ($attrib['checked']) ? "checked=checked" : "";
 				switch($element) {
 					case "rtRadio" :
-										$data = '<input type="radio" ';
-										break;
+									$data = '<input type="radio" ' . $checked . " ";
+									break;
 					case "rtCheckbox" :
-										$checked = ($attrib['checked']) ? "checked=checked" : "";
 										$data = '<input type="checkbox" ' . $checked . " ";
 										break;
 					case "rtSelect" :
@@ -216,11 +218,15 @@ if(!class_exists("rtForm")) {
 
 				if($element != "rtSelect") {
 					$data .= $this->processAttributes($element, $attrib, true);
-					$data = $this->enclose_label($element, $data, $attrib['key']);
+					if( $size > 1 )
+						$data = '<div>' . $this->enclose_label($element, $data, $attrib['key']) . '</div>';
+					else
+						$data = $this->enclose_label($element, $data, $attrib['key']);
 				}
 
 				$html .=$data;
 
+				unset($attrib['id']);
 				unset($attrib['key']);
 				unset($attrib['value']);
 			}
@@ -446,8 +452,8 @@ if(!class_exists("rtForm")) {
 
 			$container .= '</span>';
 
-			if( isset($attributes['label']) )
-				$container = $this->enclose_label('container', $container, $attributes['label']);
+//			if( isset($attributes['label']) )
+//				$container = $this->enclose_label('container', $container, $attributes['label']);
 
 			return $container;
 		}
@@ -480,8 +486,8 @@ if(!class_exists("rtForm")) {
 
 			$container .= '</span>';
 
-			if( isset($attributes['label']) )
-				$container = $this->enclose_label('container', $container, $attributes['label']);
+//			if( isset($attributes['label']) )
+//				$container = $this->enclose_label('container', $container, $attributes['label']);
 
 			return $container;
 		}
