@@ -114,7 +114,7 @@ class BPMediaUploadModel {
     
     function set_bp_component_album_id() {
         switch (bp_current_component()) {
-            case 'groups': return bp_get_current_group_id();
+            case 'groups': $this->upload['album_id'] = groups_get_groupmeta(bp_get_current_group_id(),'bp_media_default_album');
                 break;
             default:
                 $this->upload['album_id'] = get_user_meta(bp_displayed_user_id(),'bp-media-default-album',true);
