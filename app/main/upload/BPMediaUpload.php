@@ -22,7 +22,9 @@ class BPMediaUpload {
         $file_object = $this->upload($uploaded);
 
         if ($file_object) {
-            $this->post->init($uploaded, $file_object);
+            if($this->post->init($uploaded, $file_object)){
+                do_action('bp_media_after_add_media');
+            }
         } else {
             return false;
         }
