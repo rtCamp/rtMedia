@@ -379,7 +379,33 @@ class BPMediaFormHandler {
 	}
 
 	public static function misc_content($page = '') {
-		echo 'content misc';
+
+		global $wp_settings_sections, $wp_settings_fields;
+
+		if (!isset($wp_settings_fields) ||
+				!isset($wp_settings_fields[$page]) ||
+				!isset($wp_settings_fields[$page]['bpm-activity-upload']) ||
+				!isset($wp_settings_fields[$page]['bpm-media-lightbox']) ||
+				!isset($wp_settings_fields[$page]['bpm-media-fine']) ||
+				!isset($wp_settings_fields[$page]['bpm-miscellaneous']) )
+			return;
+
+		$sections = array("bpm-activity-upload","bpm-media-lightbox","bpm-media-fine","bpm-miscellaneous");
+
+		echo '<div class="large-12">';
+		foreach ($sections as $section) {
+			echo '<h3>' . $wp_settings_sections[$page][$section]['title'] . '</h3>';
+			foreach ($wp_settings_fields[$page][$section] as $value) { ?>
+				<div class="row section">
+					<div class="columns large-2"> <?php echo $value['title']; ?> </div>
+					<div class="columns large-4">
+						<?php call_user_func($value['callback'], $value['args']); ?>
+					</div>
+				</div>
+			<?php }
+			echo '<div class="clearfix">&nbsp;</div>';
+		}
+		echo '</div>';
 	}
 
 	public static function rtForm_settings_tabs_content($page, $sub_tabs) {
