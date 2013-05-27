@@ -28,7 +28,6 @@ class BPMediaUploadEndpoint {
             if (wp_verify_nonce($nonce, 'bp_media_' . $mode)) {
                 $model = new BPMediaUploadModel();
                 $this->upload = $model->set_post_object();
-                error_log(var_export($this->upload,true));
 
                 $upload = new BPMediaUpload($this->upload);
             }
