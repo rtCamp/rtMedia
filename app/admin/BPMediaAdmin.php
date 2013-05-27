@@ -81,6 +81,7 @@ if (!class_exists('BPMediaAdmin')) {
             wp_localize_script('bp-media-admin', 'settings_bp_album_import_url', add_query_arg(
                             array('page' => 'bp-media-settings'), (is_multisite() ? network_admin_url('admin.php') : admin_url('admin.php'))
                     ));
+			wp_enqueue_style('grid-foundation', BP_MEDIA_URL . 'app/assets/css/grid-foundation.css', '', BP_MEDIA_VERSION);
             wp_enqueue_style('bp-media-admin', BP_MEDIA_URL . 'app/assets/css/main.css', '', BP_MEDIA_VERSION);
             wp_enqueue_style('wp-jquery-ui-dialog');
         }
@@ -162,10 +163,10 @@ if (!class_exists('BPMediaAdmin')) {
                 <h2 class="nav-tab-wrapper"><?php $this->bp_media_tabs(); ?></h2>
                 <?php settings_errors(); ?>
                 <div class="columns-2"><?php if ($this->get_current_tab() == 'bp-media-settings') { ?>
-                        <h3 class="bp-media-settings-tabs"><?php
-                $this->settings_sub_tabs();
+                        <h5 id="bpm-settings-tabs" class="bp-media-settings-tabs"><?php
+                $sub_tabs = $this->settings_sub_tabs();
                     ?>
-                        </h3><?php }
+                        </h5><?php }
                 ?>
                     <div id="bp-media-settings-boxes">
                         <?php
@@ -176,7 +177,8 @@ if (!class_exists('BPMediaAdmin')) {
                                 <div class="bp-media-metabox-holder"><?php
                 settings_fields($option_group);
                 if ($page == 'bp-media-settings') {
-                    $this->settings_content_tabs($page);
+//                    $this->settings_content_tabs($page);
+					BPMediaFormHandler::rtForm_settings_tabs_content($page,$sub_tabs);
                 } else {
                     do_settings_sections($page);
                 }
@@ -305,7 +307,6 @@ if (!class_exists('BPMediaAdmin')) {
         public function settings_sub_tabs() {
             $tabs_html = '';
             $idle_class = 'nav-tab';
-            $active_class = 'nav-tab nav-tab-active';
             $tabs = array();
 
 // Check to see which tab we are on
@@ -315,35 +316,36 @@ if (!class_exists('BPMediaAdmin')) {
                 'href' => '#bp-media-types',
                 'title' => __('BuddyPress Media Types', 'buddypress-media'),
                 'name' => __('Types', 'buddypress-media'),
-                'class' => ($tab == 'bp-media-settings') ? $active_class : $idle_class . ' first_tab'
+				'callback' => array('BPMediaFormHandler', 'types_content')
             );
 
             $tabs[] = array(
                 'href' => '#bp-media-sizes',
                 'title' => __('BuddyPress Media Sizes', 'buddypress-media'),
                 'name' => __('Sizes', 'buddypress-media'),
-                'class' => ($tab == 'bp-media-addons') ? $active_class : $idle_class
+				'callback' => array('BPMediaFormHandler', 'sizes_content')
             );
 
             $tabs[] = array(
                 'href' => '#bp-media-privacy',
                 'title' => __('BuddyPress Media Privacy', 'buddypress-media'),
                 'name' => __('Privacy', 'buddypress-media'),
-                'class' => ($tab == 'bp-media-support') ? $active_class : $idle_class . ' last_tab'
+				'callback' => array('BPMediaFormHandler', 'privacy_content')
             );
 
             $tabs[] = array(
-                'href' => '#bp-media-others',
-                'title' => __('Others', 'buddypress-media'),
-                'name' => __('Others', 'buddypress-media'),
-                'class' => ($tab == 'bp-media-importer') ? $active_class : $idle_class
+                'href' => '#bp-media-misc',
+                'title' => __('BuddyPress Media Miscellaneous', 'buddypress-media'),
+                'name' => __('Miscellaneous', 'buddypress-media'),
+				'callback' => array('BPMediaFormHandler', 'misc_content')
             );
 
             $tabs = apply_filters('bp_media_add_settings_sub_tabs', $tabs, $tab);
-            foreach ($tabs as $tab) {
-                $tabs_html.= '<a title="' . $tab['title'] . '" href="' . $tab['href'] . '" class="' . $tab['class'] . ' ' . sanitize_title($tab['name']) . '">' . $tab['name'] . '</a>';
-            }
-            echo $tabs_html;
+			foreach ($tabs as $tab) {
+				$tabs_html.= '<a title="' . $tab['title'] . '" href="' . $tab['href'] . '" class="' . $idle_class . ' ' . sanitize_title($tab['name']) . '">' . $tab['name'] . '</a>';
+			}
+			echo $tabs_html;
+			return $tabs;
         }
 
         /*

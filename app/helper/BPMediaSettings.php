@@ -31,39 +31,39 @@ if (!class_exists('BPMediaSettings')) {
         public function settings() {
             global $bp_media, $bp_media_addon, $wpdb;
             add_settings_section('bpm-settings', __('Enabled Media Types', 'buddypress-media'), is_multisite() ? array($this, 'allowed_types') : '', 'bp-media-settings');
-            add_settings_field('bpm-image', __('Photos', 'buddypress-media'), array($this, 'checkbox'), 'bp-media-settings', 'bpm-settings', array(
+            add_settings_field('bpm-image', __('Photos', 'buddypress-media'), array('BPMediaFormHandler', 'checkbox'), 'bp-media-settings', 'bpm-settings', array(
                 'setting' => 'bp_media_options',
                 'option' => 'images_enabled',
                 'desc' => __('Enable Photos', 'buddypress-media')
             ));
-            add_settings_field('bpm-video', __('Video', 'buddypress-media'), array($this, 'checkbox'), 'bp-media-settings', 'bpm-settings', array(
+            add_settings_field('bpm-video', __('Video', 'buddypress-media'), array('BPMediaFormHandler', 'checkbox'), 'bp-media-settings', 'bpm-settings', array(
                 'setting' => 'bp_media_options',
                 'option' => 'videos_enabled',
                 'desc' => __('Enable Video (mp4)', 'buddypress-media')
             ));
-            add_settings_field('bpm-audio', __('Audio', 'buddypress-media'), array($this, 'checkbox'), 'bp-media-settings', 'bpm-settings', array(
+            add_settings_field('bpm-audio', __('Audio', 'buddypress-media'), array('BPMediaFormHandler', 'checkbox'), 'bp-media-settings', 'bpm-settings', array(
                 'setting' => 'bp_media_options',
                 'option' => 'audio_enabled',
                 'desc' => __('Enable Audio (mp3)', 'buddypress-media')
             ));
             
             add_settings_section('bpm-featured', __('Enable Featured Media', 'buddypress-media'), '', 'bp-media-settings');
-            add_settings_field('bpm-featured-image', __('Photos', 'buddypress-media'), array($this, 'checkbox'), 'bp-media-settings', 'bpm-featured', array(
+            add_settings_field('bpm-featured-image', __('Photos', 'buddypress-media'), array('BPMediaFormHandler', 'checkbox'), 'bp-media-settings', 'bpm-featured', array(
                 'setting' => 'bp_media_options',
                 'option' => 'featured_image',
                 'desc' => __('Enable Featured Photos', 'buddypress-media')
             ));
-            add_settings_field('bpm-featured-video', __('Video', 'buddypress-media'), array($this, 'checkbox'), 'bp-media-settings', 'bpm-featured', array(
+            add_settings_field('bpm-featured-video', __('Video', 'buddypress-media'), array('BPMediaFormHandler', 'checkbox'), 'bp-media-settings', 'bpm-featured', array(
                 'setting' => 'bp_media_options',
                 'option' => 'featured_video',
                 'desc' => __('Enable Featured Video', 'buddypress-media')
             ));
-            add_settings_field('bpm-featured-audio', __('Audio', 'buddypress-media'), array($this, 'checkbox'), 'bp-media-settings', 'bpm-featured', array(
+            add_settings_field('bpm-featured-audio', __('Audio', 'buddypress-media'), array('BPMediaFormHandler', 'checkbox'), 'bp-media-settings', 'bpm-featured', array(
                 'setting' => 'bp_media_options',
                 'option' => 'featured_audio',
                 'desc' => __('Enable Featured Audio', 'buddypress-media')
             ));
-            add_settings_field('bpm-featured-media-dimensions', __('Featured Media Size', 'buddypress-media'), array($this, 'dimensions'), 'bp-media-settings', 'bpm-featured', array(
+            add_settings_field('bpm-featured-media-dimensions', __('Featured Media Size', 'buddypress-media'), array('BPMediaFormHandler', 'dimensions'), 'bp-media-settings', 'bpm-featured', array(
                 'setting' => 'bp_media_options',
                 'type' => 'media',
                 'size' => 'featured',
@@ -73,19 +73,19 @@ if (!class_exists('BPMediaSettings')) {
             
 
             add_settings_section('bpm-image-settings', __('Image Settings', 'buddypress-media'), array($this, 'image_settings_intro'), 'bp-media-settings');
-            add_settings_field('bpm-image-thumbnail', __('Thumbnail Size', 'buddypress-media'), array($this, 'dimensions'), 'bp-media-settings', 'bpm-image-settings', array(
+            add_settings_field('bpm-image-thumbnail', __('Thumbnail Size', 'buddypress-media'), array('BPMediaFormHandler', 'dimensions'), 'bp-media-settings', 'bpm-image-settings', array(
                 'type' => 'image',
                 'size' => 'thumbnail',
                 'crop' => true,
                 'desc' => __('Used in albums, sidebar media widget acitvity stream', 'buddypress-media')
             ));
-            add_settings_field('bpm-image-medium', __('Medium Size', 'buddypress-media'), array($this, 'dimensions'), 'bp-media-settings', 'bpm-image-settings', array(
+            add_settings_field('bpm-image-medium', __('Medium Size', 'buddypress-media'), array('BPMediaFormHandler', 'dimensions'), 'bp-media-settings', 'bpm-image-settings', array(
                 'type' => 'image',
                 'size' => 'medium',
                 'crop' => true,
                 'desc' => __('Used in activity stream for single media uploads', 'buddypress-media')
             ));
-            add_settings_field('bpm-image-large', __('Large Size', 'buddypress-media'), array($this, 'dimensions'), 'bp-media-settings', 'bpm-image-settings', array(
+            add_settings_field('bpm-image-large', __('Large Size', 'buddypress-media'), array('BPMediaFormHandler', 'dimensions'), 'bp-media-settings', 'bpm-image-settings', array(
                 'type' => 'image',
                 'size' => 'large',
                 'crop' => true,
@@ -93,22 +93,22 @@ if (!class_exists('BPMediaSettings')) {
             ));
 
             add_settings_section('bpm-video-settings', __('Video Payer Settings', 'buddypress-media'), is_multisite() ? array($this, 'network_notices') : '', 'bp-media-settings');
-            add_settings_field('bpm-video-medium', __('Activity Player Size', 'buddypress-media'), array($this, 'dimensions'), 'bp-media-settings', 'bpm-video-settings', array(
+            add_settings_field('bpm-video-medium', __('Activity Player Size', 'buddypress-media'), array('BPMediaFormHandler', 'dimensions'), 'bp-media-settings', 'bpm-video-settings', array(
                 'type' => 'video',
                 'size' => 'medium'
             ));
-            add_settings_field('bpm-video-large', __('Single Player Size', 'buddypress-media'), array($this, 'dimensions'), 'bp-media-settings', 'bpm-video-settings', array(
+            add_settings_field('bpm-video-large', __('Single Player Size', 'buddypress-media'), array('BPMediaFormHandler', 'dimensions'), 'bp-media-settings', 'bpm-video-settings', array(
                 'type' => 'video',
                 'size' => 'large'
             ));
 
             add_settings_section('bpm-audio-settings', __('Audio Player Settings', 'buddypress-media'), is_multisite() ? array($this, 'network_notices') : '', 'bp-media-settings');
-            add_settings_field('bpm-audio-medium', __('Activity Player Size', 'buddypress-media'), array($this, 'dimensions'), 'bp-media-settings', 'bpm-audio-settings', array(
+            add_settings_field('bpm-audio-medium', __('Activity Player Size', 'buddypress-media'), array('BPMediaFormHandler', 'dimensions'), 'bp-media-settings', 'bpm-audio-settings', array(
                 'type' => 'audio',
                 'size' => 'medium',
                 'height' => false
             ));
-            add_settings_field('bpm-audio-large', __('Single Player Size', 'buddypress-media'), array($this, 'dimensions'), 'bp-media-settings', 'bpm-audio-settings', array(
+            add_settings_field('bpm-audio-large', __('Single Player Size', 'buddypress-media'), array('BPMediaFormHandler', 'dimensions'), 'bp-media-settings', 'bpm-audio-settings', array(
                 'type' => 'audio',
                 'size' => 'large',
                 'height' => false
@@ -116,7 +116,7 @@ if (!class_exists('BPMediaSettings')) {
 
             if (bp_is_active('activity')) {
                 add_settings_section('bpm-activity-upload', __('Activity Upload', 'buddypress-media'), '', 'bp-media-settings');
-                add_settings_field('bpm-activity', __('Activity Uploads', 'buddypress-media'), array($this, 'checkbox'), 'bp-media-settings', 'bpm-activity-upload', array(
+                add_settings_field('bpm-activity', __('Activity Uploads', 'buddypress-media'), array('BPMediaFormHandler', 'checkbox'), 'bp-media-settings', 'bpm-activity-upload', array(
                     'setting' => 'bp_media_options',
                     'option' => 'activity_upload',
                     'desc' => __('Enable Activity Uploading', 'buddypress-media')
@@ -125,7 +125,7 @@ if (!class_exists('BPMediaSettings')) {
             }
 
             add_settings_section('bpm-media-lightbox', __('Lightbox Integration', 'buddypress-media'), '', 'bp-media-settings');
-            add_settings_field('bpm-media-lightbox-option', __('Lightbox', 'buddypress-media'), array($this, 'checkbox'), 'bp-media-settings', 'bpm-media-lightbox', array(
+            add_settings_field('bpm-media-lightbox-option', __('Lightbox', 'buddypress-media'), array('BPMediaFormHandler', 'checkbox'), 'bp-media-settings', 'bpm-media-lightbox', array(
                 'setting' => 'bp_media_options',
                 'option' => 'enable_lightbox',
                 'desc' => __('Enable Lighbox on Media', 'buddypress-media')
@@ -134,13 +134,13 @@ if (!class_exists('BPMediaSettings')) {
 
             if (bp_is_active('groups')) {
                 add_settings_section('bpm-media-type', __('Groups Integration', 'buddypress-media'), '', 'bp-media-settings');
-//            add_settings_field('bpm-admin-profile', __('User profiles', 'buddypress-media'), array($this, 'checkbox'), 'bp-media-settings', 'bpm-media-type', array(
+//            add_settings_field('bpm-admin-profile', __('User profiles', 'buddypress-media'), array('BPMediaFormHandler', 'checkbox'), 'bp-media-settings', 'bpm-media-type', array(
 //                'setting' => 'bp_media_options',
 //                'option' => 'enable_on_profile',
 //                'desc' => __('Check to enable BuddyPress Media on User profiles', 'buddypress-media')
 //                    )
 //            );
-                add_settings_field('bpm-admin-group', __('Groups', 'buddypress-media'), array($this, 'checkbox'), 'bp-media-settings', 'bpm-media-type', array(
+                add_settings_field('bpm-admin-group', __('Groups', 'buddypress-media'), array('BPMediaFormHandler', 'checkbox'), 'bp-media-settings', 'bpm-media-type', array(
                     'setting' => 'bp_media_options',
                     'option' => 'enable_on_group',
                     'desc' => __('Allow Media in Groups', 'buddypress-media')
@@ -149,12 +149,12 @@ if (!class_exists('BPMediaSettings')) {
             }
 
             add_settings_section('bpm-media-fine', __('Display Settings', 'buddypress-media'), '', 'bp-media-settings');
-            add_settings_field('bpm-media-count', __('Number of media', 'buddypress-media'), array($this, 'textbox'), 'bp-media-settings', 'bpm-media-fine', array(
+            add_settings_field('bpm-media-count', __('Number of media', 'buddypress-media'), array('BPMediaFormHandler', 'number'), 'bp-media-settings', 'bpm-media-fine', array(
                 'setting' => 'bp_media_options',
                 'option' => 'default_count',
                 'number' => true
             ));
-            add_settings_field('bpm-download', __('Download Button', 'buddypress-media'), array($this, 'checkbox'), 'bp-media-settings', 'bpm-media-fine', array(
+            add_settings_field('bpm-download', __('Download Button', 'buddypress-media'), array('BPMediaFormHandler', 'checkbox'), 'bp-media-settings', 'bpm-media-fine', array(
                 'setting' => 'bp_media_options',
                 'option' => 'download_enabled',
                 'desc' => __('Display download button under media', 'buddypress-media')
@@ -162,7 +162,7 @@ if (!class_exists('BPMediaSettings')) {
 
             if (BPMediaPrivacy::is_installed()) {
                 add_settings_section('bpm-privacy', __('Privacy Settings', 'buddypress-media'), '', 'bp-media-settings');
-                add_settings_field('bpm-privacy-enabled', __('Enable Privacy', 'buddypress-media'), array($this, 'checkbox'), 'bp-media-settings', 'bpm-privacy', array(
+                add_settings_field('bpm-privacy-enabled', __('Enable Privacy', 'buddypress-media'), array('BPMediaFormHandler', 'checkbox'), 'bp-media-settings', 'bpm-privacy', array(
                     'setting' => 'bp_media_options',
                     'option' => 'privacy_enabled',
                     'desc' => __('Enable privacy', 'buddypress-media')
@@ -177,13 +177,13 @@ if (!class_exists('BPMediaSettings')) {
                 if (!bp_is_active('friends')) {
                     unset($settings[4]);
                 }
-                add_settings_field('bpm-privacy-private-enabled', __('Default Privacy', 'buddypress-media'), array($this, 'radio'), 'bp-media-settings', 'bpm-privacy', array(
+                add_settings_field('bpm-privacy-private-enabled', __('Default Privacy', 'buddypress-media'), array('BPMediaFormHandler', 'radio'), 'bp-media-settings', 'bpm-privacy', array(
                     'setting' => 'bp_media_options',
                     'option' => 'default_privacy_level',
                     'radios' => $settings,
                     'default' => 0,
                 ));
-                add_settings_field('bpm-privacy-override-enabled', __('User Override', 'buddypress-media'), array($this, 'checkbox'), 'bp-media-settings', 'bpm-privacy', array(
+                add_settings_field('bpm-privacy-override-enabled', __('User Override', 'buddypress-media'), array('BPMediaFormHandler', 'checkbox'), 'bp-media-settings', 'bpm-privacy', array(
                     'setting' => 'bp_media_options',
                     'option' => 'privacy_override_enabled',
                     'desc' => __('Allow users to override admin defaults (<em>Recommended</em>)', 'buddypress-media')
@@ -191,7 +191,7 @@ if (!class_exists('BPMediaSettings')) {
             }
             add_settings_section('bpm-miscellaneous', __('Other Settings', 'buddypress-media'), '', 'bp-media-settings');
 
-            add_settings_field('bpm-admin-bar-menu', __('Admin bar menu', 'buddypress-media'), array($this, 'checkbox'), 'bp-media-settings', 'bpm-miscellaneous', array(
+            add_settings_field('bpm-admin-bar-menu', __('Admin bar menu', 'buddypress-media'), array('BPMediaFormHandler', 'checkbox'), 'bp-media-settings', 'bpm-miscellaneous', array(
                 'setting' => 'bp_media_options',
                 'option' => 'show_admin_menu',
                 'desc' => __('Enable menu in WordPress admin bar', 'buddypress-media')
@@ -323,6 +323,7 @@ if (!class_exists('BPMediaSettings')) {
                 $regenerate_link = wp_nonce_url(admin_url('update.php?action=install-plugin&plugin=regenerate-thumbnails'), 'install-plugin_regenerate-thumbnails');
             }
             echo '<span class="description">' . sprintf(__('If you make changes to width, height or crop settings, you must use "<a href="%s">Regenerate Thumbnail Plugin</a>" to regenerate old images."', 'buddypress-media'), $regenerate_link) . '</span>';
+			echo '<div class="clearfix">&nbsp;</div>';
         }
 
         /**
