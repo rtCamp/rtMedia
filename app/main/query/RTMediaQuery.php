@@ -14,9 +14,11 @@ class RTMediaQuery {
 
 	var $current_media = -1;
 	var $in_the_loop = false;
+	var $all_media = array();
+	var $query_args = {};
 
 	function __construct() {
-
+		//$this->query_args = $query_args;
 	}
 
 	function have_media(){
@@ -40,15 +42,47 @@ class RTMediaQuery {
 			do_action_ref_array('rt_media_loop_start', array(&$this));
 
 		$rt_media = $this->next_media();
-		setup_postdata($media);
+		setup_postdata($rt_media);
 	}
 
 	function next_media() {
-
 		$this->current_media++;
-
 		$this->media = $this->all_media[$this->current_media];
 		return $this->media;
+	}
+
+	function get_post_data($media) {
+		$post_query = get_post($media->ID);
+		return $post_query;
+	}
+
+	function get_media_data($media_id){
+
+	}
+
+	function set_post_data(){
+		foreach ($this->all_media as &$media){
+			array_merge($media,$this->get_post_data($media->ID));
+		}
+	}
+
+	function get_media_data(){
+		foreach ($this->all_media as &$media){
+			array_merge($media,$this->get_media_data($media->ID));
+		}
+	}
+
+	function set_media_data(){
+
+	}
+
+	function complete_query(){
+
+	}
+
+
+	function the_title(){
+		$this->media = false;
 	}
 
 }

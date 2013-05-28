@@ -58,6 +58,7 @@ function buddypress_media_autoloader( $class_name ) {
 		'app/main/widgets/' . $class_name . '.php',
 		'app/main/upload/' . $class_name . '.php',
 		'app/main/upload/processors/' . $class_name . '.php',
+		 'app/main/template/' . $class_name . '.php',
 		'app/main/shortcodes/' . $class_name . '.php',
 		'app/log/' . $class_name . '.php',
 		'app/importers/' . $class_name . '.php',
