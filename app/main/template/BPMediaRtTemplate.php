@@ -51,7 +51,10 @@ class BPMediaRtTemplate {
 		global $rt_media_query;
 
 		if ( isset( $_GET[ 'json' ] ) ) {
-			echo json_encode( $rt_media_query );
+                        foreach($rt_media_query->media as $media){
+                            $array[] = $media;
+                        }
+			echo json_encode( $array );
 			return;
 		} else {
 			include(BP_MEDIA_PATH . 'app/main/template/rt-template-functions.php');
@@ -94,7 +97,7 @@ class BPMediaRtTemplate {
 	function set_query() {
 		global $rt_media_query;
 
-		$context = new BPMediaContext();
+		$context = new RTMediaContext();
 
 
 		$rt_media_args = array(
@@ -102,7 +105,6 @@ class BPMediaRtTemplate {
 			'context_id' => $context->context_id,
 		);
 		$rt_media_query = new RTMediaQuery($rt_media_args);
-
 
 	}
 
