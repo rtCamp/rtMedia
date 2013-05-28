@@ -22,13 +22,13 @@ class rtDBUpdate {
      * @param type string $current_version Optional if not defined then will use plugin version
      */
     public function __construct($current_version = false) {
-        $this->rt_plugin_info = new rt_plugin_info();
+        $this->rt_plugin_info = new rt_plugin_info(BP_MEDIA_PATH.'index.php');
         if ($current_version == false) {
-            $current_version = $this->rt_plugin_info->version;
+           $current_version = $this->rt_plugin_info->version;
         }
         $this->db_version = $current_version;
-        $this->install_db_version = $this->get_install_db_varsion();
         $this->db_version_option_name = $this->get_db_version_option_name();
+        $this->install_db_version = $this->get_install_db_version();
     }
     
     public function create_table($sql) {
@@ -40,7 +40,7 @@ class rtDBUpdate {
         return strtoupper("RT_" . str_replace("-", "_", sanitize_title($this->rt_plugin_info->name)) . "_DB_VERSION");
     }
 
-    public function get_install_db_varsion() {
+    public function get_install_db_version() {
         return get_site_option($this->db_version_option_name, "0.0");
     }
 
@@ -61,7 +61,7 @@ class rtDBUpdate {
                 }
                 closedir($handle);
             }
-            //update_site_option($this->db_version_option_name, $this->db_version);
+            update_site_option($this->db_version_option_name, $this->db_version);
         }
     }
 

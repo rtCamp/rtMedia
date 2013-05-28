@@ -50,32 +50,32 @@ class rtDBModel {
      * @return type result array
      */
     function __call($name, $arguments) {
-        $column_name = str_replace("get_by_","", strtolower($name));
+        $column_name = str_replace("get_by_", "", strtolower($name));
         $paging = false;
         $page = 1;
         if ($arguments && !empty($arguments)) {
-            if(!isset($arguments[1])){
+            if (!isset($arguments[1])) {
                 $paging = true;
-            }else{
+            } else {
                 $paging = $arguments[1];
             }
-            
-            if(!isset($arguments[2])){
+
+            if (!isset($arguments[2])) {
                 $page = 1;
-            }else{
+            } else {
                 $page = $arguments[2];
             }
-            
-            $this->per_page = apply_filters("rt_db_model_per_page",$this->per_page,  $this->table_name);
+
+            $this->per_page = apply_filters("rt_db_model_per_page", $this->per_page, $this->table_name);
             $return_array = Array();
             $return_array["result"] = false;
             global $wpdb;
             $return_array["total"] = intval($wpdb->get_var($wpdb->prepare("SELECT COUNT(*) FROM " . $this->table_name . " WHERE {$column_name} = %s", $arguments[0])));
-            if($return_array["total"] > 0){
+            if ($return_array["total"] > 0) {
                 $other = "";
-                if($paging){
+                if ($paging) {
                     $offset = ($page - 1) * $this->per_page;
-                    if($offset < $return_array["total"] ){
+                    if ($offset < $return_array["total"]) {
                         $other = " LIMIT " . $offset . "," . $this->per_page;
                     }
                 }
@@ -83,7 +83,7 @@ class rtDBModel {
                 $return_array["result"] = $wpdb->get_results($wpdb->prepare("SELECT * FROM " . $this->table_name . " WHERE {$column_name} = %s {$other}", $arguments[0]));
             }
             return $return_array;
-        }else{
+        } else {
             return false;
         }
     }
@@ -124,6 +124,11 @@ class rtDBModel {
         }
         global $wpdb;
         return $wpdb->get_results($sql);
+    }
+
+    function delete($media_id) {
+        global $wpdb;
+        $wpdb->delete($this->table_name, array('media_id' => $media_id));
     }
 
 }
