@@ -33,7 +33,7 @@ class BPMediaUploadModel {
 
     function sanitize_object() {
         if (!$this->has_context())
-            $context = new BPMediaContext;
+            $context = new RTMediaContext();
 			$this->upload['context']= $context->context;
 			$this->upload['context_id'] = $context->context_id;
 
