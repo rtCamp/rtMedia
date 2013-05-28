@@ -12,8 +12,25 @@ class BuddyPressMigration {
     function __construct() {
         global $wpdb;
         $this->bmp_table = $wpdb->prefix . "rt_bpm_media";
-        //add_action('bp_media_admin_page_append', array($this, 'test'));
-        //add_action('wp_ajax_bp_media_rt_db_migration', array($this, "migrate_to_new_db"));
+        add_action(bp_core_admin_hook(), array($this, 'menu'));
+        add_action('wp_ajax_bp_media_rt_db_migration', array($this, "migrate_to_new_db"));
+        add_action('admin_init', array($this, "migration_settings"));
+    }
+
+    function menu() {
+        add_submenu_page('bp-media-settings', __('Migration', 'buddypress-media'), __('Migration', 'buddypress-media'), 'manage_options', 'bp-media-migration', array($this, 'migration_page'));
+    }
+
+    public function migration_settings() {
+        add_settings_section('bpm-migration', __('Migration', 'buddypress-media'), array($this, 'test'), 'bp-media-migration');
+    }
+
+    /**
+     * Render the BuddyPress Media Migration page
+     */
+    public function migration_page() {
+        global $bp_media_admin;
+        $bp_media_admin->render_page('bp-media-migration', 'bp-media-migration','Start Migration');
     }
 
     function get_total_count() {
@@ -45,44 +62,65 @@ class BuddyPressMigration {
     function get_done_count() {
         global $wpdb;
         $sql = "select count(*)
-                from {$this->bmp_table} where blog_id = %d";
+                from {$this->bmp_table} where blog_id = %d and media_id in (select a.post_id
+                from
+                    {$wpdb->postmeta} a
+                        left join
+                    {$wpdb->postmeta} b ON ((a.post_id = b.post_id)
+                        and (b.meta_key = 'bp-media-key'))
+                        left join
+                    {$wpdb->postmeta} c ON (a.post_id = c.post_id)
+                        and (c.meta_key = 'bp_media_child_activity')
+                        left join
+                    {$wpdb->posts} p ON (a.post_id = p.id)
+                where
+                    a.post_id > 0
+                        and a.meta_key = 'bp_media_privacy')";
         return $wpdb->get_var($wpdb->prepare($sql, get_current_blog_id()));
     }
 
-    function test($page) {
-        if ($page != "bp-migration-page")
-            return;
-        if (!wp_script_is('backbone')) {
-            wp_enqueue_script('backbone', false, array(), false, true);
-        }
+    function test() {
         $prog = new rtProgress();
-        $done = $this->get_done_count();
-        $total = $this->get_total_count();
-        echo "{$done}/{$total}";
+        $done = $this->get_done_count() ? $this->get_done_count() : 0;
+        $total = $this->get_total_count() ? $this->get_total_count() : 0;
+        echo '<span class="finished">'.$done.'</span>/<span class="total">'.$total.'</span>';
         $temp = $prog->progress($done, $total);
         $prog->progress_ui($temp, true);
         ?>
         <script>
-            var db_done = <?php echo $done; ?>;
-            var db_total = <?php echo $total; ?>;
-
-            function db_start_migration() {
+                            
+            function db_start_migration(db_done,db_total) {
                 if (db_done < db_total) {
                     jQuery.ajax({
                         url: bp_media_admin_ajax,
                         type: 'post',
                         data: {"action": "bp_media_rt_db_migration", "done": db_done},
-                        success: function(data) {
+                        success: function(sdata) {
+                            data = JSON.parse(sdata);
                             if (data.status) {
-                                done = data.done;
-                                db_start_migration();
+                                done = parseInt(data.done);
+                                total = parseInt(data.total);
+                                var progw = Math.ceil((done/total) *100);
+                                if(progw>100){
+                                    progw=100;
+                                };
+                                jQuery('#bp-media-settings-boxes #rtprogressbar>div').css('width',progw+'%');
+                                jQuery('#bp-media-settings-boxes span.finished').html(done);
+                                jQuery('#bp-media-settings-boxes span.total').html(total);
+                                db_start_migration(done,total);
                             }
 
                         }
                     });
                 }
             }
-
+                    
+            jQuery('.bp-media-migration').on('click','#submit',function(e){
+                e.preventDefault();
+                var db_done = <?php echo $done; ?>;
+                var db_total = <?php echo $total; ?>;
+                db_start_migration(db_done,db_total);
+            });
         </script>
 
 
@@ -148,8 +186,8 @@ class BuddyPressMigration {
                 } else {
                     $media_context = "group";
                 }
-                echo $media_context ."-". abs(intval($result->context_id)) . "<br />";
-                
+//                echo $media_context ."-". abs(intval($result->context_id)) . "<br />";
+
                 $wpdb->insert(
                         $this->bmp_table, array(
                     'blog_id' => $blog_id,
@@ -163,8 +201,8 @@ class BuddyPressMigration {
                 );
             }
         }
-        echo json_encode(array("status" => true, "done" => $this->get_done_count()));
-        die(0);
+        echo json_encode(array("status" => true, "done" => $this->get_done_count(), "total" => $this->get_total_count()));
+        die();
     }
 
 }
