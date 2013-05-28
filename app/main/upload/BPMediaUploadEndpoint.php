@@ -10,6 +10,7 @@ class BPMediaUploadEndpoint {
     public function __construct() {
         add_action('init', array($this, 'endpoint'));
         add_action('template_redirect', array($this, 'template_redirect'));
+        new BPMediaDelete(); // should be placed somewhere else ( just does the trick here )
     }
 
     function endpoint() {

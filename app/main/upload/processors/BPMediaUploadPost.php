@@ -17,7 +17,7 @@ class BPMediaUploadPost {
         
 //        $this->insert_activity($uploaded);
         
-        $this->update_row($attachment_ids,$uploaded);
+        $this->insert_row($attachment_ids,$uploaded);
         
         return array_keys($attachment_ids);
     }
@@ -55,7 +55,7 @@ class BPMediaUploadPost {
         return array('bp_media_thumbnail', 'bp_media_activity_image', 'bp_media_single_image');
     }
     
-    function update_row($attachment_ids,$uploaded){
+    function insert_row($attachment_ids,$uploaded){
         $bp_media_model = new BPMediaModel();
         $blog_id = get_current_blog_id();
         foreach ($attachment_ids as $key => $attachment) {

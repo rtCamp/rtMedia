@@ -48,7 +48,7 @@ class RTMediaQuery {
 		unset($this->query->meta_query);
 		unset($this->query->tax_query);
 
-		$pre_media = $this->model->get_media($this->query);
+                $pre_media = $this->model->get_media($this->query);
 
 		foreach($pre_media as $pre_medium){
 			$this->media[$pre_medium->media_id]=$pre_medium;
