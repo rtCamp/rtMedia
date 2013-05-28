@@ -86,19 +86,24 @@ class BPMediaRtTemplate {
 		return $located;
 	}
 
+	function has_context($query) {
+        if (!isset($query->context_id))
+            return false;
+    }
+
 	function set_query() {
 		global $rt_media_query;
-		$rt_media_query = array(
-			0 => array(
-				'id' => 1
-			),
-			1 => array(
-				'id' => 15
-			),
-			2 => array(
-				'id' => 32
-			)
+
+		$context = new BPMediaContext();
+
+
+		$rt_media_args = array(
+			'context' => $context->context,
+			'context_id' => $context->context_id,
 		);
+		$rt_media_query = new RTMediaQuery($rt_media_args);
+
+
 	}
 
 }
