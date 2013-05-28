@@ -6,11 +6,11 @@
  * @author joshua
  */
 class BPMediaModel extends rtDBModel {
-    
+
     function __construct() {
         parent::__construct('bpm_media');
     }
-    
+
     function __call($name, $arguments) {
         $result = parent::__call($name, $arguments);
         if (!$result['result']) {
@@ -47,6 +47,23 @@ class BPMediaModel extends rtDBModel {
         }
         return $return['result'];
     }
+
+	function get_media($columns){
+		if( is_multisite()){
+			$sql = "SELECT * FROM {$this->table_name} WHERE 2=2 ";
+			foreach ($columns as $colname => $colvalue) {
+				$sql .= " AND {$colname} = '{$colvalue}' ORDER BY blog_id";
+			}
+			global $wpdb;
+			return $wpdb->get_results($sql);
+		}else{
+			return $this->get($columns);
+
+		}
+
+
+	}
+
 
 }
 

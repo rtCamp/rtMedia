@@ -11,8 +11,8 @@ class rtDBModel {
     public $per_page;
 
     /**
-     * 
-     * @param string $table_name Table name for model 
+     *
+     * @param string $table_name Table name for model
      * @param boolean $withprefix Set true if $tablename is with prefix otherwise it will prepend wordpress prefix with "rt_"
      */
     function __construct($table_name, $withprefix = false, $per_page = 10) {
@@ -21,7 +21,7 @@ class rtDBModel {
     }
 
     /**
-     * 
+     *
      * @global type $wpdb
      * @param string $table_name
      * @param type $withprefix
@@ -35,7 +35,7 @@ class rtDBModel {
     }
 
     /**
-     * 
+     *
      * @param type $per_page
      */
     public function set_per_page($per_page) {
@@ -43,7 +43,7 @@ class rtDBModel {
     }
 
     /**
-     * 
+     *
      * @global type $wpdb
      * @param type $name - Added get_by_<coulmname>(value,pagging=true,page_no=1)
      * @param type $arguments
@@ -59,13 +59,13 @@ class rtDBModel {
             }else{
                 $paging = $arguments[1];
             }
-            
+
             if(!isset($arguments[2])){
                 $page = 1;
             }else{
                 $page = $arguments[2];
             }
-            
+
             $this->per_page = apply_filters("rt_db_model_per_page",$this->per_page,  $this->table_name);
             $return_array = Array();
             $return_array["result"] = false;
@@ -89,7 +89,7 @@ class rtDBModel {
     }
 
     /**
-     * 
+     *
      * @global type $wpdb
      * @param type $row
      * @return type
@@ -101,7 +101,7 @@ class rtDBModel {
     }
 
     /**
-     * 
+     *
      * @global type $wpdb
      * @param type $data
      * @param type $where
@@ -112,7 +112,7 @@ class rtDBModel {
     }
 
     /**
-     * 
+     *
      * @global type $wpdb
      * @param type $columns
      * @return type

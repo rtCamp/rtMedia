@@ -354,6 +354,7 @@ class BuddyPressMedia {
         /* Support Email constant */
         if (!defined('BP_MEDIA_SUPPORT_EMAIL'))
             define('BP_MEDIA_SUPPORT_EMAIL', $this->support_email);
+		
     }
 
     /**
@@ -407,7 +408,7 @@ class BuddyPressMedia {
                 'image' => false,
                 'featured' => false,
                 'upload_endpoint' => false,
-				'rt_template'	=> false
+				'rt_template'	=> false,
             );
             $class_construct = apply_filters('bpmedia_class_construct', $class_construct);
 
@@ -427,6 +428,8 @@ class BuddyPressMedia {
                     }
                 }
             }
+
+			new RTMediaQuery();
         }
 
         /**

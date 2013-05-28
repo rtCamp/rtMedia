@@ -12,79 +12,88 @@
  */
 class RTMediaQuery {
 
-	var $current_media = -1;
-	var $in_the_loop = false;
-	var $all_media = array();
-	var $query_args = {};
+	public $query = '', $media = '';
 
-	function __construct() {
-		//$this->query_args = $query_args;
+	function __construct($query = '') {
+		if ( ! empty($query) ) {
+			$this->query($query);
+		}
 	}
 
-	function have_media(){
-		if ( $this->current_media + 1 < $this->media_count ) {
-			return true;
-		} elseif ( $this->current_media + 1 == $this->media_count && $this->media_count > 0 ) {
-			do_action_ref_array('rt_media_loop_end', array(&$this));
-			// Do some cleaning up after the loop
-			$this->rewind_media();
+	function &query( $query ) {
+		$this->init();
+		$this->query = $this->query_vars = wp_parse_args( $query );
+		return $this->get_media();
+	}
+
+	function parse_query( $query =  '' ) {
+		if ( ! empty( $query ) ) {
+			$this->init();
+			$this->query = $this->query_vars = wp_parse_args( $query );
+		} elseif ( ! isset( $this->query ) ) {
+			$this->query = $this->query_vars;
+		}
+	}
+
+	function all_the_ids($media){
+		return implode(',',array_keys($media));
+	}
+
+	function populate_media(){
+		$this->model = new BPMediaModel();
+
+		unset($this->query->meta_query);
+		unset($this->query->tax_query);
+
+		$pre_media = $this->model->get_media($this->query);
+
+		foreach($pre_media as $pre_medium){
+			$this->media[$pre_medium->media_id]=$pre_medium;
 		}
 
-		$this->in_the_loop = false;
-		return false;
+		if(is_multisite()){
+			foreach($this->media as $mk=>$mv){
+				$blogs[$media['blog_id']][$mk]= $mv;
+			}
+
+
+			foreach ($blogs as $blog_id=>&$media){
+				switch_to_blog($blog_id);
+				$this->populate_post_data($media);
+				wp_reset_query();
+			}
+			restore_current_blog();
+		}else{
+			$this->populate_post_data($this->media);
+		}
 	}
 
-	function the_media(){
-		global $rt_media;
-		$this->in_the_loop = true;
+	function populate_post_data($media){
+		if(!empty($media) && is_array($media)){
+			$media_post_query_args = array(
+				'post__in'		=> $this->all_the_ids($media),
+				'meta_query'	=> $this->query_vars->meta_query,
+				'tax_query'		=> $this->query_vars->tax_query,
+			);
 
-		if ( $this->current_media == -1 ) // loop has just started
-			do_action_ref_array('rt_media_loop_start', array(&$this));
+			$media_post_query = new WP_Query($media_post_query_args);
+			$media_post_data = $media_post_query->posts;
+			foreach ($media_post_data as $post){
+				$this->media[$post->ID] = (object)(array_merge((array)$this->media[$post->ID], (array)$post));
+			}
 
-		$rt_media = $this->next_media();
-		setup_postdata($rt_media);
+		}
 	}
 
-	function next_media() {
-		$this->current_media++;
-		$this->media = $this->all_media[$this->current_media];
+	function &get_media(){
+
+
+		$this->populate_media();
+
 		return $this->media;
-	}
-
-	function get_post_data($media) {
-		$post_query = get_post($media->ID);
-		return $post_query;
-	}
-
-	function get_media_data($media_id){
 
 	}
-
-	function set_post_data(){
-		foreach ($this->all_media as &$media){
-			array_merge($media,$this->get_post_data($media->ID));
-		}
-	}
-
-	function get_media_data(){
-		foreach ($this->all_media as &$media){
-			array_merge($media,$this->get_media_data($media->ID));
-		}
-	}
-
-	function set_media_data(){
-
-	}
-
-	function complete_query(){
-
-	}
-
-
-	function the_title(){
-		$this->media = false;
-	}
-
 }
+
 
 ?>
