@@ -410,7 +410,8 @@ class BuddyPressMedia {
                 'albumimporter' => false,
                 'image' => false,
                 'featured' => false,
-                'upload_endpoint' => false
+                'upload_endpoint' => false,
+				'rt_template'	=> false
             );
             $class_construct = apply_filters('bpmedia_class_construct', $class_construct);
 

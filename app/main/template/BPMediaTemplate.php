@@ -5,9 +5,9 @@
  *
  * @author saurabh
  */
-class BPMediaTemplate {
+class BPMediaRtTemplate {
 
-	public function __construct() {
+	function __construct() {
 		add_action( 'init', array( $this, 'endpoint' ) );
 		add_action( 'template_redirect', array( $this, 'template_redirect' ) );
 		add_action( 'template_include', array( $this, 'set_template' ) );
@@ -18,7 +18,7 @@ class BPMediaTemplate {
 	}
 
 	function template_redirect() {
-		global $wp_query, $bp;
+		global $wp_query;
 		if ( ! isset( $wp_query->query_vars[ 'media' ] ) )
 			return;
 
@@ -39,10 +39,18 @@ class BPMediaTemplate {
 				$template = 'media-single';
 			}
 
-			$template = apply_filters( 'rt_media_template_include', $this->locate_template( $template ) );
+			$template = apply_filters( 'rt_media_template_include', $this->get_template( $template ) );
 
 			return $template;
 		}
+	}
+
+
+	function get_template( $template ){
+		$inc_template = $this->locate_template($template);
+
+		return BP_MEDIA_PATH . 'app/main/template/template.php';
+
 	}
 
 	function locate_template( $template ) {
@@ -65,7 +73,7 @@ class BPMediaTemplate {
 
 	function set_query() {
 		global $rt_media_query;
-		$rt_media_query = new RTMediaQuery();
+		$rt_media_query = '';//new RTMediaQuery();
 	}
 
 }

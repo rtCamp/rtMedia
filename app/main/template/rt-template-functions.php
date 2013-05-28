@@ -1,6 +1,6 @@
 <?php
 
-function has_rt_media(){
+function have_rt_media(){
 
 }
 
@@ -35,5 +35,14 @@ function rt_media_actions(){
 function rt_media_comments(){
 
 }
+
+function is_rt_media_gallery(){
+	return true;
+}
+
+function is_rt_media_single(){
+	return true;
+}
+
 
 ?>
