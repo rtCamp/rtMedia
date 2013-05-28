@@ -140,6 +140,10 @@ class BuddyPressMedia {
          */
         add_action('plugins_loaded', array($this, 'load_translation'));
         /**
+         * Check update
+         */
+        add_action('plugins_loaded', array($this, 'update_db'));
+        /**
          * Initialise media counter
          */
         global $bp_media_counter;
@@ -766,6 +770,14 @@ class BuddyPressMedia {
             return $album_id;
         }
         return false;
+    }
+
+    function update_db() {
+        new BuddyPressMigration();
+        $update = new rtDBUpdate();
+        if ($update->check_upgrade()) {
+            $update->do_upgrade();
+        }
     }
 
 }
