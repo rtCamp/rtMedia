@@ -101,7 +101,8 @@ class BPMediaEncoding {
     public function encoding_tab($tabs) {
         $encoding_tab = array(
                     'href' => bp_get_admin_url(add_query_arg(array('page' => 'bp-media-encoding'), 'admin.php')),
-                    'name' => __('Audio/Video Encoding', 'buddypress'),
+//                    'name' => __('Audio/Video Encoding', 'buddypress'),
+					'name' => __('Encoding', 'buddypress'),
                     'slug' => 'bp-media-encoding'
                 );
         
