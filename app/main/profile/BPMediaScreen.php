@@ -190,6 +190,7 @@ class BPMediaScreen {
 
         if ($bp_media_query && $bp_media_query->have_posts()) {
             if (bp_is_my_profile() || BPMediaGroupLoader::can_upload()) {
+//                do_shortcode('[bp-media-uploader]');
                 BPMediaUploadScreen::upload_screen_content();
             }
             echo '<ul id="bp-media-list" class="bp-media-gallery item-list">';

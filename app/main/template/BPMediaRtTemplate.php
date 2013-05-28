@@ -101,7 +101,7 @@ class BPMediaRtTemplate {
 
 		global $wp_query;
 
-		$media_var = $wp_query['media'];
+		$media_var = $wp_query->query_vars[ 'media' ];
 
 
 
@@ -109,8 +109,8 @@ class BPMediaRtTemplate {
 			'context' => $context->context,
 			'context_id' => $context->context_id,
 		);
-		if(is_int($media_var)){
-			$rt_media_args['media_id'] = $media_var;
+		if($media_var){
+			$rt_media_args['id'] = $media_var;
 		}
 		$rt_media_query = new RTMediaQuery($rt_media_args);
 
