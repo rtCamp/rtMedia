@@ -15,6 +15,15 @@ class BPMediaRtTemplate {
 		add_action( 'init', array( $this, 'endpoint' ) );
 		add_action( 'template_redirect', array( $this, 'template_redirect' ) );
 		add_action( 'template_include', array( $this, 'set_template' ) );
+		add_action( 'wp_enqueue_scripts', array( $this,'enqueue_scripts') );
+	}
+
+
+
+
+	function enqueue_scripts(){
+		wp_enqueue_script('backbone');
+		wp_enqueue_script('rtmediamodel', BP_MEDIA_URL.'app/assets/js/backbone/models.js');
 	}
 	function is_media_template(){
 		global $wp_query;
@@ -38,10 +47,12 @@ class BPMediaRtTemplate {
 		if(!$this->is_media_template())
 			return $template;
 
+
 		global $rt_media_query;
 
 		if ( isset( $_GET[ 'json' ] ) ) {
 			echo json_encode( $rt_media_query );
+			return;
 		} else {
 			include(BP_MEDIA_PATH . 'app/main/template/rt-template-functions.php');
 
@@ -77,7 +88,17 @@ class BPMediaRtTemplate {
 
 	function set_query() {
 		global $rt_media_query;
-		$rt_media_query = '';//new RTMediaQuery();
+		$rt_media_query = array(
+			0 => array(
+				'id' => 1
+			),
+			1 => array(
+				'id' => 15
+			),
+			2 => array(
+				'id' => 32
+			)
+		);
 	}
 
 }

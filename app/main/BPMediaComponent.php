@@ -220,12 +220,12 @@ class BPMediaComponent extends BP_Component {
 		}
 
 
-		bp_core_new_nav_item( array(
-			'name' => __( BP_MEDIA_UPLOAD_LABEL, 'buddypress-media' ),
-			'slug' => BP_MEDIA_UPLOAD_SLUG,
-			'screen_function' => array( $bp_media_upload, 'upload_screen' ),
-			'user_has_access' => bp_is_my_profile()
-		) );
+//		bp_core_new_nav_item( array(
+//			'name' => __( BP_MEDIA_UPLOAD_LABEL, 'buddypress-media' ),
+//			'slug' => BP_MEDIA_UPLOAD_SLUG,
+//			'screen_function' => array( $bp_media_upload, 'upload_screen' ),
+//			'user_has_access' => bp_is_my_profile()
+//		) );
 		if(array_key_exists('privacy_override_enabled',$bp_media->options))
 					if(checked($bp_media->options['privacy_override_enabled'],true,false))
 				bp_core_new_subnav_item( array(
