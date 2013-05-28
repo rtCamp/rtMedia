@@ -7,13 +7,9 @@ jQuery(function(){
 		}
 	});
 
-	var rtMediaPostData = Backbone.Model.extend({
-
-	})
-
 	var rtMediaItem = Backbone.Model.extend({
 		defaults: {
-			'id'				: 12,
+			'id'				: 0,
 			'media_id'			: false,
 			'blog_id'			: false,
 			'media_type'		: 'photo',
@@ -25,18 +21,11 @@ jQuery(function(){
 			'ratings_total'		: 0,
 			'ratings_count'		: 0,
 			'likes'				: 0,
-			'dislikes'			: 0,
-			'postdata'			: {}
+			'dislikes'			: 0
+//			'postdata'			: {}
 		},
 
-		rootUrl: 'media',
-
-		populatePost : function(){
-			this.postdata = new rtMediaPostData( 'id',this.media_id );
-			//this.postdata.
-		}
-
-
+		rootUrl: 'media'
 
 	});
 
