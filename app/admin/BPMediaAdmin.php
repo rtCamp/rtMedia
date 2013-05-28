@@ -65,6 +65,7 @@ if (!class_exists('BPMediaAdmin')) {
         public function ui($hook) {
             $admin_ajax = admin_url('admin-ajax.php');
 
+			wp_enqueue_script('bootstrap-switch', BP_MEDIA_URL . 'app/assets/js/bootstrap-switch.js', array('jquery'), BP_MEDIA_VERSION);
             wp_enqueue_script('bp-media-admin', BP_MEDIA_URL . 'app/assets/js/admin.js', array('jquery-ui-dialog'), BP_MEDIA_VERSION);
             wp_localize_script('bp-media-admin', 'bp_media_admin_ajax', $admin_ajax);
             wp_localize_script('bp-media-admin', 'bp_media_admin_url', admin_url());
@@ -81,6 +82,7 @@ if (!class_exists('BPMediaAdmin')) {
             wp_localize_script('bp-media-admin', 'settings_bp_album_import_url', add_query_arg(
                             array('page' => 'bp-media-settings'), (is_multisite() ? network_admin_url('admin.php') : admin_url('admin.php'))
                     ));
+			wp_enqueue_style('bootstrap-switch', BP_MEDIA_URL . 'app/assets/css/bootstrap-switch.css', '', BP_MEDIA_VERSION);
 			wp_enqueue_style('grid-foundation', BP_MEDIA_URL . 'app/assets/css/grid-foundation.css', '', BP_MEDIA_VERSION);
             wp_enqueue_style('bp-media-admin', BP_MEDIA_URL . 'app/assets/css/main.css', '', BP_MEDIA_VERSION);
             wp_enqueue_style('wp-jquery-ui-dialog');
@@ -429,7 +431,7 @@ if (!class_exists('BPMediaAdmin')) {
         public function admin_sidebar() {
             do_action('bp_media_before_default_admin_widgets');
             $current_user = wp_get_current_user();
-            echo '<p><a target="_blank" href="http://rtcamp.com/news/buddypress-media-review-contest/?utm_source=dashboard&#038;utm_medium=plugin&#038;utm_campaign=buddypress-media"><img src="' . BP_MEDIA_URL . 'app/assets/img/bpm-contest-banner.jpg" alt="BuddyPress Media Review Contest" /></a></p>';
+//            echo '<p><a target="_blank" href="http://rtcamp.com/news/buddypress-media-review-contest/?utm_source=dashboard&#038;utm_medium=plugin&#038;utm_campaign=buddypress-media"><img src="' . BP_MEDIA_URL . 'app/assets/img/bpm-contest-banner.jpg" alt="BuddyPress Media Review Contest" /></a></p>';
 //                        $contest = '<a target="_blank" href="http://rtcamp.com/news/buddypress-media-review-contest/?utm_source=dashboard&#038;utm_medium=plugin&#038;utm_campaign=buddypress-media"><img src="'.BP_MEDIA_URL.'app/assets/img/bpm-contest-banner.jpg" alt="BuddyPress Media Review Contest" /></a>';
 //                        new BPMediaAdminWidget('bpm-contest', __('', 'buddypress-media'), $contest);
 

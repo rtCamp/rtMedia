@@ -43,7 +43,9 @@ class BPMediaFormHandler {
 		$args['rtForm_options'] = array(array('id' => $option, '' => 1, 'checked' => $options[$option]));
 
 		$chkObj = new rtForm();
-		echo $chkObj->get_checkbox($args);
+//		echo $chkObj->get_checkbox($args);
+		echo $chkObj->get_switch($args);
+//		echo $chkObj->get_switch_square($args);
 	}
 
 	public static function radio($args) {
@@ -147,15 +149,15 @@ class BPMediaFormHandler {
 		$bpm_settings = $wp_settings_fields[$page]['bpm-settings'];
 		$bpm_featured = $wp_settings_fields[$page]['bpm-featured'];
 		$headers = array(
-			array('title' => "Media", 'class' => 'large-4'),
-			array('title' => "Enable", 'class' => 'large-1'),
-			array('title' => "Featured", 'class' => 'large-1'),
+			array('title' => "Media Type", 'class' => 'large-2'),
+			array('title' => "Allow Upload", 'class' => 'large-1'),
+			array('title' => "Set Featured", 'class' => 'large-1'),
 			array('title' => "File Extensions", 'class' => 'large-4')
 		);
 
 		$image = array(
 			array(
-				'class' => 'large-4',
+				'class' => 'large-2',
 				'content' => $bpm_settings['bpm-image']['title']
 			),
 			array(
@@ -176,7 +178,7 @@ class BPMediaFormHandler {
 
 		$video = array(
 			array(
-				'class' => 'large-4',
+				'class' => 'large-2',
 				'content' => $bpm_settings['bpm-video']['title']
 			),
 			array(
@@ -197,7 +199,7 @@ class BPMediaFormHandler {
 
 		$audio = array(
 			array(
-				'class' => 'large-4',
+				'class' => 'large-2',
 				'content' => $bpm_settings['bpm-audio']['title']
 			),
 			array(
@@ -219,32 +221,37 @@ class BPMediaFormHandler {
 		$body = array($image, $video, $audio);
 
 		//container
-		echo '<div class="large-12">';
+		echo '<table class="rt-table">';
 
 		//header
-		echo '<div class="row">';
-		foreach ($headers as $val) {
-			echo '<h4 class="columns ' . $val['class'] . '">' . $val['title'] . '</h4>';
+		echo '<thead><tr>';
+		foreach ($headers as $val) { ?>
+			<th class="<?php echo $val['class'] ?>"><?php echo $val['title'] ?></th>
+		<?php
 		}
-		echo '</div>';
-		echo '<hr>';
+		echo '</tr></thead><tbody>';
 
 		//body
-		foreach ($body as $section) {
-			echo '<div class="row section">';
-			foreach ($section as $value) {
-				echo '<div class="columns ' . $value['class'] . '">';
-
-				if (isset($value['content']))
-					echo $value['content'];
-				else
-					call_user_func($value['callback'], $value['args']);
-				echo '</div>';
-			}
-			echo '</div>';
+		foreach ($body as $section) { ?>
+			<tr>
+			<?php
+			foreach ($section as $value) { ?>
+				<td cols="<?php echo $value['class'] ?>">
+				<?php
+					if (isset($value['content']))
+						echo $value['content'];
+					else
+						call_user_func($value['callback'], $value['args']);
+				?>
+				</td>
+			<?php
+			} ?>
+			</tr>
+		<?php
 		}
 
-		echo '</div>';
+//		echo '</div>';
+		echo '</tbody></table>';
 	}
 
 	public static function sizes_content($page = '') {

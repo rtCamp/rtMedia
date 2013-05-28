@@ -1,6 +1,4 @@
-
-
-/* Grid HTML Classes */
+* Grid HTML Classes */
 /* line 116, ../../../../../../../usr/lib/ruby/gems/1.8/gems/zurb-foundation-4.1.6/scss/foundation/components/_grid.scss */
 .row {
   width: 100%;
@@ -217,7 +215,8 @@
     float: none;
   }
 }
-/* line 49, ../sass/grid-foundation.scss */
+/*------ custom CSS ------*/
+/* line 51, ../sass/grid-foundation.scss */
 .clearfix {
   *zoom: 1;
 }
@@ -231,18 +230,28 @@
   clear: both;
 }
 
-/* line 53, ../sass/grid-foundation.scss */
+/* line 55, ../sass/grid-foundation.scss */
 .inline {
   display: inline;
 }
 
-/* line 57, ../sass/grid-foundation.scss */
+/* line 59, ../sass/grid-foundation.scss */
 .entity {
   min-height: 25px !important;
 }
 
-/* line 61, ../sass/grid-foundation.scss */
+/* line 63, ../sass/grid-foundation.scss */
 .section {
   margin-top: 5px !important;
   margin-bottom: 5px !important;
+}
+
+/* line 68, ../sass/grid-foundation.scss */
+.rt-table {
+  text-align: center;
+  width: 100%;
+}
+/* line 71, ../sass/grid-foundation.scss */
+.rt-table th {
+  border-bottom: 1px solid #000;
 }

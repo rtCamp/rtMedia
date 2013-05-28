@@ -203,12 +203,17 @@ if(!class_exists("rtForm")) {
 				}
 
 				$checked = ($attrib['checked']) ? "checked=checked" : "";
+				if( isset($attrib['switch']) && $attrib['switch'])
+					$switch = 'data-toggle="switch"';
+				else
+					$switch = '';
+
 				switch($element) {
 					case "rtRadio" :
 									$data = '<input type="radio" ' . $checked . " ";
 									break;
 					case "rtCheckbox" :
-										$data = '<input type="checkbox" ' . $checked . " ";
+										$data = '<input type="checkbox" ' . $checked . " " . $switch . " ";
 										break;
 					case "rtSelect" :
 										$selected = ($attrib['selected']) ? "selected=selected" : "";
@@ -218,10 +223,22 @@ if(!class_exists("rtForm")) {
 
 				if($element != "rtSelect") {
 					$data .= $this->processAttributes($element, $attrib, true);
-					if( $size > 1 )
-						$data = '<div>' . $this->enclose_label($element, $data, $attrib['key']) . '</div>';
-					else
+					
+					if( isset($attrib['switch_square']) && $attrib['switch_square'] ) {
+
+						$data = '<div class="rt-switch switch-square" data-on-label="<i class=\'fui-check\'></i>" data-off-label="<i class=\'fui-cross\'></i>">' . $data . '</div>';
+
+					} else if( (isset($attrib['switch']) && $attrib['switch']) ||
+								(isset($attrib['switch_square']) && $attrib['switch_square']) ) {
+
+						if( $size > 1 )
+							$data = '<div>' . $this->enclose_label($element, $data, $attrib['key']) . '</div>';
+						else
+							$data = $this->enclose_label($element, $data, $attrib['key']);
+
+					} else
 						$data = $this->enclose_label($element, $data, $attrib['key']);
+
 				}
 
 				$html .=$data;
@@ -497,6 +514,17 @@ if(!class_exists("rtForm")) {
 			return $this->generate_checkbox($attributes);
 		}
 
+		public function get_switch($attributes = '') {
+
+			$attributes['switch'] = true;
+			return $this->generate_checkbox($attributes);
+		}
+
+		public function get_switch_square($attributes = '') {
+
+			$attributes['switch_square'] = true;
+			return $this->generate_checkbox($attributes);
+		}
 
 		protected function generate_select($attributes) {
 
