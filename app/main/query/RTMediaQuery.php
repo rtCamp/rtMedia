@@ -12,7 +12,13 @@
  */
 class RTMediaQuery {
 
-	public $query = '', $media = '';
+	public $query = '';
+	public $media = '';
+
+	public $media_count = 0;
+	public $current_media = -1;
+	public $in_the_media_loop = false;
+
 
 	function __construct($query = '') {
 		if ( ! empty($query) ) {
@@ -35,9 +41,6 @@ class RTMediaQuery {
 		}
 	}
 
-	function all_the_ids($media){
-		return implode(',',array_keys($media));
-	}
 
 	function populate_media(){
 		$this->model = new BPMediaModel();
@@ -82,6 +85,44 @@ class RTMediaQuery {
 				$this->media[$post->ID] = (object)(array_merge((array)$this->media[$post->ID], (array)$post));
 			}
 
+			$this->media_count = count($this->media);
+
+		}
+	}
+
+	function have_media(){
+		if ( $this->current_media + 1 < $this->media_count ) {
+			return true;
+		} elseif ( $this->current_media + 1 == $this->media_count && $this->media_count > 0 ) {
+			do_action_ref_array('rt_media_loop_end', array(&$this));
+			// Do some cleaning up after the loop
+			$this->rewind_media();
+		}
+
+		$this->in_the_media_loop = false;
+		return false;
+	}
+
+	function rt_media() {
+		global $rt_media;
+		$this->in_the_media_loop = true;
+
+		if ( $this->current_media == -1 ) // loop has just started
+			do_action_ref_array('rt_media_loop_start', array(&$this));
+
+		$rt_media = $this->next_media();
+	}
+
+	function next_media(){
+		$this->current_media++;
+
+		$this->rt_media = $this->media[$this->current_media];
+		return $this->rt_media;
+	}
+	function rewind_media() {
+		$this->current_media = -1;
+		if ( $this->media_count > 0 ) {
+			$this->media = $this->media[0];
 		}
 	}
 
