@@ -160,7 +160,7 @@ if (!class_exists('BPMediaSettings')) {
                 'desc' => __('Display download button under media', 'buddypress-media')
             ));
 
-            if (BPMediaPrivacy::is_installed()) {
+//            if (BPMediaPrivacy::is_installed()) {
                 add_settings_section('bpm-privacy', __('Privacy Settings', 'buddypress-media'), '', 'bp-media-settings');
                 add_settings_field('bpm-privacy-enabled', __('Enable Privacy', 'buddypress-media'), array($this, 'checkbox'), 'bp-media-settings', 'bpm-privacy', array(
                     'setting' => 'bp_media_options',
@@ -188,7 +188,7 @@ if (!class_exists('BPMediaSettings')) {
                     'option' => 'privacy_override_enabled',
                     'desc' => __('Allow users to override admin defaults (<em>Recommended</em>)', 'buddypress-media')
                 ));
-            }
+//            }
             add_settings_section('bpm-miscellaneous', __('Other Settings', 'buddypress-media'), '', 'bp-media-settings');
 
             add_settings_field('bpm-admin-bar-menu', __('Admin bar menu', 'buddypress-media'), array($this, 'checkbox'), 'bp-media-settings', 'bpm-miscellaneous', array(
@@ -208,11 +208,11 @@ if (!class_exists('BPMediaSettings')) {
             
             add_settings_section('bpm-support', __('Support', 'buddypress-media'), array($this, 'bp_media_support_intro'), 'bp-media-support');
 
-            if (!BPMediaPrivacy::is_installed()) {
-                $bp_media_privacy = new BPMediaPrivacySettings();
-                add_filter('bp_media_add_sub_tabs', array($bp_media_privacy, 'ui'), 99, 2);
-                add_settings_section('bpm-privacy', __('Update Database', 'buddypress-media'), array($bp_media_privacy, 'init'), 'bp-media-privacy');
-            }
+//            if (!BPMediaPrivacy::is_installed()) {
+//                $bp_media_privacy = new BPMediaPrivacySettings();
+//                add_filter('bp_media_add_sub_tabs', array($bp_media_privacy, 'ui'), 99, 2);
+//                add_settings_section('bpm-privacy', __('Update Database', 'buddypress-media'), array($bp_media_privacy, 'init'), 'bp-media-privacy');
+//            }
 
             $bp_media_album_importer = new BPMediaAlbumimporter();
             add_settings_section('bpm-bp-album-importer', __('BP-Album Importer', 'buddypress-media'), array($bp_media_album_importer, 'ui'), 'bp-media-importer');
@@ -586,8 +586,8 @@ if (!class_exists('BPMediaSettings')) {
 
         public function privacy_notice() {
             if (current_user_can('create_users')) {
-                if (BPMediaPrivacy::is_installed())
-                    return;
+//                if (BPMediaPrivacy::is_installed())
+//                    return;
                 $url = add_query_arg(
                         array('page' => 'bp-media-privacy'), (is_multisite() ? network_admin_url('admin.php') : admin_url('admin.php'))
                 );

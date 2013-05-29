@@ -5,7 +5,7 @@
  *
  * @author Joshua Abenazer <joshua.abenazer@rtcamp.com>
  */
-class BPMediaUploadModel {
+class RTMediaUploadModel {
     public $upload = array(
         'mode' => 'file_upload',
         'context' => false,

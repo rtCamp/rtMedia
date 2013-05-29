@@ -12,7 +12,7 @@
             echo $tab_html;
             echo '<div class="bpm-tab-content-wrapper">';
             
-            echo '<div class="bpm-tab-content bpm-'.$mode.'-ui">';
+            echo '<div id="bpm-'.$mode.'-ui" class="bpm-tab-content">';
             do_action('bp_media_before_'.$mode.'_ui');
             echo $tabs[$mode]['content'];
             echo '<input type="hidden" name="mode" value="'.$mode.'" />';

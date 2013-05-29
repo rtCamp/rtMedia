@@ -4,7 +4,7 @@
  *
  * @author joshua
  */
-class BPMediaDelete {
+class RTMediaDelete {
     public function __construct() {
         add_action('delete_attachment',array($this,'delete_row'));
     }

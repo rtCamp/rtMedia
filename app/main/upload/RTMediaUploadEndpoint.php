@@ -5,12 +5,12 @@
  *
  * @author Joshua Abenazer <joshua.abenazer@rtcamp.com>
  */
-class BPMediaUploadEndpoint {
+class RTMediaUploadEndpoint {
 
     public function __construct() {
         add_action('init', array($this, 'endpoint'));
         add_action('template_redirect', array($this, 'template_redirect'));
-        new BPMediaDelete(); // should be placed somewhere else ( just does the trick here )
+        new RTMediaDelete(); // should be placed somewhere else ( just does the trick here )
     }
 
     function endpoint() {
@@ -27,10 +27,10 @@ class BPMediaUploadEndpoint {
             $nonce = $_REQUEST['bp_media_upload_nonce'];
             $mode = $_REQUEST['mode'];
             if (wp_verify_nonce($nonce, 'bp_media_' . $mode)) {
-                $model = new BPMediaUploadModel();
+                $model = new RTMediaUploadModel();
                 $this->upload = $model->set_post_object();
 
-                $upload = new BPMediaUpload($this->upload);
+                $upload = new RTMediaUpload($this->upload);
             }
             wp_safe_redirect(wp_get_referer());
         }
