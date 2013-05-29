@@ -133,7 +133,7 @@ class BuddyPressMedia {
          * Hook admin to wp init
          */
         add_action('bp_init', array($this, 'admin_init'));
-       
+
         /**
          * Load translations
          */
@@ -391,7 +391,8 @@ class BuddyPressMedia {
             $class_construct = array(
                 'upload_shortcode' => false,
                 'upload_endpoint' => false,
-                'rt_template'	=> false,
+                'template'	=> false,
+				'query'		=> false
             );
             $class_construct = apply_filters('bpmedia_class_construct', $class_construct);
 

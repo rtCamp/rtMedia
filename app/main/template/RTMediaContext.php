@@ -12,7 +12,7 @@
  */
 class RTMediaContext {
 
-	public $context,$context_id;
+	public $type,$id;
 
 	function __construct() {
 		$this->set_context();
@@ -29,8 +29,8 @@ class RTMediaContext {
 
     function set_wp_context() {
         global $post;
-        $this->context = $post->post_type;
-        $this->context_id = $post->ID;
+        $this->type = $post->post_type;
+        $this->id = $post->ID;
     }
 
     function set_bp_context() {
@@ -42,8 +42,8 @@ class RTMediaContext {
     }
 
     function set_bp_component_context() {
-        $this->context = bp_current_component();
-        $this->context_id = $this->get_current_bp_component_id();
+        $this->type = bp_current_component();
+        $this->id = $this->get_current_bp_component_id();
     }
 
     function get_current_bp_component_id() {
