@@ -6,11 +6,11 @@
  */
 
 /**
- * Description of BPMediaUploadDB
+ * Description of BPMediaUploadUrl
  *
  * @author joshua
  */
-class BPMediaUploadDB {
+class RTMediaUploadUrl {
     //put your code here
 }
 

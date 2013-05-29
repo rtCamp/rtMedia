@@ -133,10 +133,7 @@ class BuddyPressMedia {
          * Hook admin to wp init
          */
         add_action('bp_init', array($this, 'admin_init'));
-        /**
-         * Add the widget
-         */
-        add_action('widgets_init', array($this, 'widgets_init'), 1);
+       
         /**
          * Load translations
          */
@@ -386,36 +383,15 @@ class BuddyPressMedia {
              * Add a settings link to the Plugin list screen
              */
             add_filter('plugin_action_links', array($this, 'settings_link'), 10, 2);
-            /**
-             * Load BuddyPress Media for profiles
-             */
-            $this->loader = new BPMediaLoader();
-            /**
-             * Load BuddyPress Media for groups
-             */
-            if (array_key_exists('enable_on_group', $this->options)) {
-                if ($this->options['enable_on_group']) {
-                    $this->group_loader = new BPMediaGroupLoader();
-                }
-            }
-
 
             /**
              * Load accessory functions
              */
 //			new BPMediaActivity();
             $class_construct = array(
-                'activity' => false,
-                'filters' => false,
-                'actions' => false,
-                'function' => false,
-                'privacy' => false,
-                'download' => false,
-                'albumimporter' => false,
-                'image' => false,
-                'featured' => false,
+                'upload_shortcode' => false,
                 'upload_endpoint' => false,
-				'rt_template'	=> false,
+                'rt_template'	=> false,
             );
             $class_construct = apply_filters('bpmedia_class_construct', $class_construct);
 
@@ -425,11 +401,11 @@ class BuddyPressMedia {
                 foreach ($ck as $cn) {
                     $classname .= ucfirst($cn);
                 }
-                $class = 'BPMedia' . $classname;
+                $class = 'RTMedia' . $classname;
                 if (class_exists($class)) {
                     if ($global_scope == true) {
-                        global ${'bp_media_' . $key};
-                        ${'bp_media_' . $key} = new $class();
+                        global ${'rt_media_' . $key};
+                        ${'rt_media_' . $key} = new $class();
                     } else {
                         new $class();
                     }
@@ -652,14 +628,6 @@ class BuddyPressMedia {
 
         return $url;
     }
-
-    /**
-     * Registers and activates the BuddyPress Media Widgets
-     */
-    function widgets_init() {
-        register_widget('BPMediaWidget');
-    }
-
     /**
      *
      */

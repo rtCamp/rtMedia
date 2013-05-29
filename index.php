@@ -80,8 +80,8 @@ spl_autoload_register( 'buddypress_media_autoloader' );
 /**
  * Instantiate the BuddyPressMedia class.
  */
-global $bp_media;
-$bp_media = new BuddyPressMedia();
+global $rt_media;
+$rt_media = new BuddyPressMedia();
 
 /*
  * Look Ma! Very few includes! Next File: /app/main/BuddyPressMedia.php

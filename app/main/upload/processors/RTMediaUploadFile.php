@@ -5,7 +5,7 @@
  *
  * @author Joshua Abenazer <joshua.abenazer@rtcamp.com>
  */
-class BPMediaUploadFile {
+class RTMediaUploadFile {
 
     private $default_allowed_types = array('audio', 'video', 'image');
     var $files;
