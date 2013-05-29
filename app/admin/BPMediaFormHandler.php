@@ -138,7 +138,7 @@ class BPMediaFormHandler {
 
 	public static function types_content($page = '') {
 
-		global $wp_settings_fields;
+		global $wp_settings_sections, $wp_settings_fields;
 
 		if (!isset($wp_settings_fields) ||
 				!isset($wp_settings_fields[$page]) ||
@@ -149,10 +149,26 @@ class BPMediaFormHandler {
 		$bpm_settings = $wp_settings_fields[$page]['bpm-settings'];
 		$bpm_featured = $wp_settings_fields[$page]['bpm-featured'];
 		$headers = array(
-			array('title' => "Media Type", 'class' => 'large-2'),
-			array('title' => "Allow Upload", 'class' => 'large-1'),
-			array('title' => "Set Featured", 'class' => 'large-1'),
-			array('title' => "File Extensions", 'class' => 'large-4')
+			array(
+				'title' => "Media Type",
+				'class' => 'large-2',
+				'desc' => ''
+			),
+			array(
+				'title' => "Allow Upload",
+				'class' => 'large-2',
+				'desc' => 'Allows you to upload a particular media type on your post.'
+			),
+			array(
+				'title' => "Set Featured",
+				'class' => 'large-2',
+				'desc' => 'Put a specific media as a featured content on the post.'
+			),
+			array(
+				'title' => "File Extensions",
+				'class' => 'large-3',
+				'desc' => 'File extensions that can be uploaded on the website.'
+			)
 		);
 
 		$image = array(
@@ -161,17 +177,17 @@ class BPMediaFormHandler {
 				'content' => $bpm_settings['bpm-image']['title']
 			),
 			array(
-				'class' => 'large-1',
+				'class' => 'large-2',
 				'callback' => $bpm_settings['bpm-image']['callback'],
 				'args' => $bpm_settings['bpm-image']['args']
 			),
 			array(
-				'class' => 'large-1',
+				'class' => 'large-2',
 				'callback' => $bpm_featured['bpm-featured-image']['callback'],
 				'args' => $bpm_featured['bpm-featured-image']['args']
 			),
 			array(
-				'class' => 'large-4',
+				'class' => 'large-3',
 				'content' => "gif,jpeg,png"
 			),
 		);
@@ -182,17 +198,17 @@ class BPMediaFormHandler {
 				'content' => $bpm_settings['bpm-video']['title']
 			),
 			array(
-				'class' => 'large-1',
+				'class' => 'large-2',
 				'callback' => $bpm_settings['bpm-video']['callback'],
 				'args' => $bpm_settings['bpm-video']['args']
 			),
 			array(
-				'class' => 'large-1',
+				'class' => 'large-2',
 				'callback' => $bpm_featured['bpm-featured-video']['callback'],
 				'args' => $bpm_featured['bpm-featured-video']['args']
 			),
 			array(
-				'class' => 'large-4',
+				'class' => 'large-3',
 				'content' => "avi,mp4,mpeg"
 			),
 		);
@@ -203,17 +219,17 @@ class BPMediaFormHandler {
 				'content' => $bpm_settings['bpm-audio']['title']
 			),
 			array(
-				'class' => 'large-1',
+				'class' => 'large-2',
 				'callback' => $bpm_settings['bpm-audio']['callback'],
 				'args' => $bpm_settings['bpm-audio']['args']
 			),
 			array(
-				'class' => 'large-1',
+				'class' => 'large-2',
 				'callback' => $bpm_featured['bpm-featured-audio']['callback'],
 				'args' => $bpm_featured['bpm-featured-audio']['args']
 			),
 			array(
-				'class' => 'large-4',
+				'class' => 'large-3',
 				'content' => "mp3,wav"
 			),
 		);
@@ -221,37 +237,56 @@ class BPMediaFormHandler {
 		$body = array($image, $video, $audio);
 
 		//container
-		echo '<table class="rt-table">';
+		echo '<div class="rt-table large-12">';
 
 		//header
-		echo '<thead><tr>';
-		foreach ($headers as $val) { ?>
-			<th class="<?php echo $val['class'] ?>"><?php echo $val['title'] ?></th>
-		<?php
+		$desc_count=1;
+		echo '<div class="row rt-header">';
+		foreach ($headers as $val) {
+			if( isset($val['desc']) && !empty($val['desc']) )
+				echo '<h4 " class="columns ' . $val['class'] . '"><abbr>' . $val['title'] . '</abbr> <sup>[' . $desc_count++ . ']</sup></h4>';
+			else
+				echo '<h4 " class="columns ' . $val['class'] . '">' . $val['title'] . '</h4>';
 		}
-		echo '</tr></thead><tbody>';
+		echo '</div>';
 
 		//body
-		foreach ($body as $section) { ?>
-			<tr>
-			<?php
+		$even = 0;
+		foreach ($body as $section) {
+			if( ++$even%2 )
+				echo '<div class="row rt-odd">';
+			else
+				echo '<div class="row rt-even">';
+
 			foreach ($section as $value) { ?>
-				<td cols="<?php echo $value['class'] ?>">
+				<div class="columns<?php echo ' ' . $value['class']; ?>">
 				<?php
 					if (isset($value['content']))
 						echo $value['content'];
 					else
 						call_user_func($value['callback'], $value['args']);
 				?>
-				</td>
+				</div>
 			<?php
 			} ?>
-			</tr>
+			</div>
 		<?php
 		}
 
-//		echo '</div>';
-		echo '</tbody></table>';
+		echo '</div>';
+		echo '<div class="clearfix">&nbsp;</div>';
+
+		$desc_count=1;
+		echo '<div class="large-12">';
+		foreach ($headers as $value) {
+			if( isset($value['desc']) && !empty($value['desc']) ) {
+				echo '<div class="rt-description">';
+					echo '[' . $desc_count++ . '] ' . $value['desc'];
+				echo '</div>';
+			}
+		}
+		echo '<a href="http://rtcamp.com/buddypress-media/" target="_blank">more details</a>';
+		echo '</div>';
 	}
 
 	public static function sizes_content($page = '') {
@@ -321,19 +356,23 @@ class BPMediaFormHandler {
 
 
 		//container
-		echo '<div class="large-12">';
+		echo '<div class="rt-table large-12">';
 
 		//header
-		echo '<div class="row">';
+		echo '<div class="rt-header row">';
 		foreach ($headers as $value) {
 			echo '<h4 class="columns ' . $value['class'] . '">' . $value['title'] . '</h4>';
 		}
 		echo'</div>';
-		echo '<hr>';
 
 		//body
+		$even = 0;
 		foreach ($body as $section) {
-			echo '<div class="row">';
+			if( ++$even%2 )
+				echo '<div class="row rt-odd">';
+			else
+				echo '<div class="row rt-even">';
+
 			foreach ($section as $value) {
 				echo '<div class="columns ' . $value['class'] . '">';
 				if (isset($value['content'])) {
@@ -374,7 +413,7 @@ class BPMediaFormHandler {
 			foreach ($wp_settings_fields[$page]['bpm-privacy'] as $key => $value) {
 				echo '<div class="row section" id="' . $key . '">';
 					echo '<div class="columns large-2">' . $value['title'] . '</div>';
-					echo '<div class="columns large-4">';
+					echo '<div class="columns large-5">';
 						if($key != "bpm-privacy-enabled")
 							call_user_func($value['callback'], array_merge_recursive($value['args'], array('class' => array("privacy-driven-disable"))));
 						else
@@ -422,16 +461,12 @@ class BPMediaFormHandler {
 		if (!isset($wp_settings_sections) || !isset($wp_settings_sections[$page]))
 			return;
 
-		echo '<div id="bpm-settings-contents">';
-
 		foreach ($sub_tabs as $tab) {
-			echo '<div class="tab-content" id="' . substr($tab['href'], 1) . '">
+			echo '<div id="' . substr($tab['href'], 1) . '">
 					<h3>' . $tab['title'] . '</h3>';
 			call_user_func($tab['callback'], $page);
 			echo '</div>';
 		}
-
-		echo '</div>';
 
 //		echo "<pre>";
 //		print_r($wp_settings_sections);

@@ -239,9 +239,10 @@ if(!class_exists("rtForm")) {
 					} else
 						$data = $this->enclose_label($element, $data, $attrib['key']);
 
+					$data .= '<br>';
 				}
 
-				$html .=$data;
+				$html .= $data;
 
 				unset($attrib['id']);
 				unset($attrib['key']);

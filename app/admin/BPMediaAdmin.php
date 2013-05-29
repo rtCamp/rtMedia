@@ -66,6 +66,7 @@ if (!class_exists('BPMediaAdmin')) {
             $admin_ajax = admin_url('admin-ajax.php');
 
 			wp_enqueue_script('bootstrap-switch', BP_MEDIA_URL . 'app/assets/js/bootstrap-switch.js', array('jquery'), BP_MEDIA_VERSION);
+			wp_enqueue_script('slider-tabs', BP_MEDIA_URL . 'app/assets/js/jquery.sliderTabs.min.js', array('jquery','jquery-effects-core','jquery-effects-slide'), BP_MEDIA_VERSION);
             wp_enqueue_script('bp-media-admin', BP_MEDIA_URL . 'app/assets/js/admin.js', array('jquery-ui-dialog'), BP_MEDIA_VERSION);
             wp_localize_script('bp-media-admin', 'bp_media_admin_ajax', $admin_ajax);
             wp_localize_script('bp-media-admin', 'bp_media_admin_url', admin_url());
@@ -82,7 +83,9 @@ if (!class_exists('BPMediaAdmin')) {
             wp_localize_script('bp-media-admin', 'settings_bp_album_import_url', add_query_arg(
                             array('page' => 'bp-media-settings'), (is_multisite() ? network_admin_url('admin.php') : admin_url('admin.php'))
                     ));
+			wp_enqueue_style('font-awesome', BP_MEDIA_URL . 'app/assets/css/font-awesome.min.css', '', BP_MEDIA_VERSION);
 			wp_enqueue_style('bootstrap-switch', BP_MEDIA_URL . 'app/assets/css/bootstrap-switch.css', '', BP_MEDIA_VERSION);
+			wp_enqueue_style('slider-tabs', BP_MEDIA_URL . 'app/assets/css/jquery.sliderTabs.min.css', '', BP_MEDIA_VERSION);
 			wp_enqueue_style('grid-foundation', BP_MEDIA_URL . 'app/assets/css/grid-foundation.css', '', BP_MEDIA_VERSION);
             wp_enqueue_style('bp-media-admin', BP_MEDIA_URL . 'app/assets/css/main.css', '', BP_MEDIA_VERSION);
             wp_enqueue_style('wp-jquery-ui-dialog');
@@ -164,12 +167,7 @@ if (!class_exists('BPMediaAdmin')) {
                 <div id="icon-buddypress-media" class="icon32"><br></div>
                 <h2 class="nav-tab-wrapper"><?php $this->bp_media_tabs(); ?></h2>
                 <?php settings_errors(); ?>
-                <div class="columns-2"><?php if ($this->get_current_tab() == 'bp-media-settings') { ?>
-                        <h5 id="bpm-settings-tabs" class="bp-media-settings-tabs"><?php
-                $sub_tabs = $this->settings_sub_tabs();
-                    ?>
-                        </h5><?php }
-                ?>
+                <div class="columns-2">
                     <div id="bp-media-settings-boxes">
                         <?php
                         $settings_url = ( is_multisite() ) ? network_admin_url('edit.php?action=' . $option_group) : 'options.php';
@@ -180,7 +178,10 @@ if (!class_exists('BPMediaAdmin')) {
                 settings_fields($option_group);
                 if ($page == 'bp-media-settings') {
 //                    $this->settings_content_tabs($page);
-					BPMediaFormHandler::rtForm_settings_tabs_content($page,$sub_tabs);
+					echo '<div id="bpm-settings-tabs">';
+						$sub_tabs = $this->settings_sub_tabs();
+						BPMediaFormHandler::rtForm_settings_tabs_content($page,$sub_tabs);
+					echo '</div>';
                 } else {
                     do_settings_sections($page);
                 }
@@ -308,14 +309,14 @@ if (!class_exists('BPMediaAdmin')) {
          */
         public function settings_sub_tabs() {
             $tabs_html = '';
-            $idle_class = 'nav-tab';
             $tabs = array();
 
-// Check to see which tab we are on
+			// Check to see which tab we are on
             $tab = $this->get_current_tab();
             /* BuddyPress Media */
             $tabs[] = array(
                 'href' => '#bp-media-types',
+				'icon' => 'icon-film',
                 'title' => __('BuddyPress Media Types', 'buddypress-media'),
                 'name' => __('Types', 'buddypress-media'),
 				'callback' => array('BPMediaFormHandler', 'types_content')
@@ -323,6 +324,7 @@ if (!class_exists('BPMediaAdmin')) {
 
             $tabs[] = array(
                 'href' => '#bp-media-sizes',
+				'icon' => 'icon-move',
                 'title' => __('BuddyPress Media Sizes', 'buddypress-media'),
                 'name' => __('Sizes', 'buddypress-media'),
 				'callback' => array('BPMediaFormHandler', 'sizes_content')
@@ -330,6 +332,7 @@ if (!class_exists('BPMediaAdmin')) {
 
             $tabs[] = array(
                 'href' => '#bp-media-privacy',
+				'icon' => 'icon-lock',
                 'title' => __('BuddyPress Media Privacy', 'buddypress-media'),
                 'name' => __('Privacy', 'buddypress-media'),
 				'callback' => array('BPMediaFormHandler', 'privacy_content')
@@ -337,15 +340,24 @@ if (!class_exists('BPMediaAdmin')) {
 
             $tabs[] = array(
                 'href' => '#bp-media-misc',
+				'icon' => 'icon-cog',
                 'title' => __('BuddyPress Media Miscellaneous', 'buddypress-media'),
                 'name' => __('Miscellaneous', 'buddypress-media'),
 				'callback' => array('BPMediaFormHandler', 'misc_content')
             );
-
-            $tabs = apply_filters('bp_media_add_settings_sub_tabs', $tabs, $tab);
+			
+			$tabs = apply_filters('bp_media_add_settings_sub_tabs', $tabs, $tab);
+			$tabs_html .= '<ul>';
 			foreach ($tabs as $tab) {
-				$tabs_html.= '<a title="' . $tab['title'] . '" href="' . $tab['href'] . '" class="' . $idle_class . ' ' . sanitize_title($tab['name']) . '">' . $tab['name'] . '</a>';
+
+				$icon = '';
+				if( isset($tab['icon']) && !empty($tab['icon']) )
+					$icon = '<i class="' . $tab['icon'] . '"></i>';
+
+				$tabs_html.= '<li><a title="' . $tab['title'] . '" href="' . $tab['href'] . '" class="' . sanitize_title($tab['name']) . '">' . $icon . ' ' . $tab['name'] . '</a></li>';
 			}
+			$tabs_html .= '</ul>';
+
 			echo $tabs_html;
 			return $tabs;
         }
