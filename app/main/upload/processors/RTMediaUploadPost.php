@@ -5,7 +5,7 @@
  *
  * @author joshua
  */
-class BPMediaUploadPost {
+class RTMediaUploadPost {
 
     var $post_array = false;
 
