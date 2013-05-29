@@ -246,12 +246,37 @@
   margin-bottom: 5px !important;
 }
 
-/* line 68, ../sass/grid-foundation.scss */
-.rt-table {
-  text-align: center;
-  width: 100%;
+/* line 70, ../sass/grid-foundation.scss */
+.rt-table div.rt-header {
+  border-bottom: 1px solid;
+  margin-bottom: 5px !important;
+  padding-bottom: 5px !important;
 }
-/* line 71, ../sass/grid-foundation.scss */
-.rt-table th {
-  border-bottom: 1px solid #000;
+/* line 75, ../sass/grid-foundation.scss */
+.rt-table div.rt-header h4 {
+  margin: 0;
+}
+/* line 80, ../sass/grid-foundation.scss */
+.rt-table div.row {
+  margin: 2px;
+  padding: 2px;
+}
+/* line 84, ../sass/grid-foundation.scss */
+.rt-table div.row.rt-odd {
+  background-color: #F3F3F3;
+}
+/* line 88, ../sass/grid-foundation.scss */
+.rt-table div.row.rt-even {
+  background-color: #FFFFFF;
+}
+
+/* line 94, ../sass/grid-foundation.scss */
+abbr {
+  border-bottom: dotted 1px;
+}
+
+/* line 98, ../sass/grid-foundation.scss */
+.rt-description {
+  color: #666666;
+  font-style: italic;
 }
