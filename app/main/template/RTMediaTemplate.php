@@ -6,9 +6,7 @@
  * @author saurabh
  */
 
-//if (class_exists('BPMediaRtTemplate')) exit;
-
-class BPMediaRtTemplate {
+class RTMediaTemplate {
 
 	public $media_args;
 
