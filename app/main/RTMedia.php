@@ -18,7 +18,7 @@ if (!defined('ABSPATH'))
  * @author Gagandeep Singh <gagandeep.singh@rtcamp.com>
  * @author Joshua Abenazer <joshua.abenazer@rtcamp.com>
  */
-class BuddyPressMedia {
+class RTMedia {
 
     /**
      *
@@ -32,7 +32,7 @@ class BuddyPressMedia {
      */
     public $options = array();
 
-	public $default_allowed_types = array('audio', 'video', 'image');
+	public $allowed_types = array('audio', 'video', 'image');
 
     /**
      *
@@ -147,7 +147,7 @@ class BuddyPressMedia {
          */
         global $bp_media_counter;
         $bp_media_counter = 0;
-		$this->default_allowed_types = apply_filters('bp_media_allowed_types', $this->default_allowed_types);
+		$this->allowed_types = apply_filters('rt_media_allowed_types', $this->allowed_types);
     }
 
     /**
@@ -251,7 +251,7 @@ class BuddyPressMedia {
 
         /* Current Version. */
         if (!defined('BP_MEDIA_VERSION'))
-            define('BP_MEDIA_VERSION', BuddyPressMedia::plugin_get_version());
+            define('BP_MEDIA_VERSION', RTMedia::plugin_get_version());
 
         /* Required Version  */
         if (!defined('BP_MEDIA_REQUIRED_BP'))
@@ -389,20 +389,24 @@ class BuddyPressMedia {
              */
 //			new BPMediaActivity();
             $class_construct = array(
+				'interaction'	=> false,
                 'upload_shortcode' => false,
                 'upload_endpoint' => false,
-                'template'	=> false,
-				'query'		=> false
+//                'template'	=> false,
+//				'query'		=> false
             );
             $class_construct = apply_filters('bpmedia_class_construct', $class_construct);
 
             foreach ($class_construct as $key => $global_scope) {
                 $classname = '';
                 $ck = explode('_', $key);
+
                 foreach ($ck as $cn) {
                     $classname .= ucfirst($cn);
                 }
+
                 $class = 'RTMedia' . $classname;
+				
                 if (class_exists($class)) {
                     if ($global_scope == true) {
                         global ${'rt_media_' . $key};
@@ -412,6 +416,10 @@ class BuddyPressMedia {
                     }
                 }
             }
+
+			global $rt_media;
+
+			print_r($rt_media->interaction);
 
 			new RTMediaQuery();
         }
@@ -434,7 +442,7 @@ class BuddyPressMedia {
      * Loads translations
      */
     static function load_translation() {
-        load_plugin_textdomain('buddypress-media', false, basename(BP_MEDIA_PATH) . '/languages/');
+        load_plugin_textdomain('buddypress-media', false, basename(RT_MEDIA_PATH) . '/languages/');
     }
 
     /**
@@ -729,7 +737,7 @@ class BuddyPressMedia {
 
     static function plugin_get_version($path = NULL) {
         require_once(ABSPATH . 'wp-admin/includes/plugin.php');
-        $path = ($path) ? $path : BP_MEDIA_PATH . 'index.php';
+        $path = ($path) ? $path : RT_MEDIA_PATH . 'index.php';
         $plugin_data = get_plugin_data($path);
         $plugin_version = $plugin_data['Version'];
         return $plugin_version;

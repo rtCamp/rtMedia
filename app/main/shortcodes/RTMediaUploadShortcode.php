@@ -22,7 +22,7 @@ class RTMediaUploadShortcode {
     }
 
     function register_script() {
-        wp_register_script('bpm-plupload', BP_MEDIA_URL . 'app/assets/js/bpm-plupload.js', array('plupload', 'plupload-html5', 'plupload-flash', 'plupload-silverlight', 'plupload-html4', 'plupload-handlers'), '1.0', true);
+        wp_register_script('bpm-plupload', RT_MEDIA_URL . 'app/assets/js/bpm-plupload.js', array('plupload', 'plupload-html5', 'plupload-flash', 'plupload-silverlight', 'plupload-html4', 'plupload-handlers'), '1.0', true);
     }
 
     function print_script() {

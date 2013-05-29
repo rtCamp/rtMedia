@@ -16,22 +16,22 @@
  * @subpackage Main
  */
 
-if ( ! defined( 'BP_MEDIA_PATH' ) ){
+if ( ! defined( 'RT_MEDIA_PATH' ) ){
 
 	/**
 	 *  The server file system path to the plugin directory
 	 *
 	 */
-	define( 'BP_MEDIA_PATH', plugin_dir_path( __FILE__ ) );
+	define( 'RT_MEDIA_PATH', plugin_dir_path( __FILE__ ) );
 }
 
-if ( ! defined( 'BP_MEDIA_URL' ) ){
+if ( ! defined( 'RT_MEDIA_URL' ) ){
 
 	/**
 	 * The url to the plugin directory
 	 *
 	 */
-	define( 'BP_MEDIA_URL', plugin_dir_url( __FILE__ ) );
+	define( 'RT_MEDIA_URL', plugin_dir_url( __FILE__ ) );
 }
 
 /**
@@ -41,12 +41,13 @@ if ( ! defined( 'BP_MEDIA_URL' ) ){
  *
  * @param string $class_name The name of the class to autoload
  */
-function buddypress_media_autoloader( $class_name ) {
+function rt_media_autoloader( $class_name ) {
 	$rtlibpath = array(
 		'app/services/' . $class_name . '.php',
 		'app/helper/' . $class_name . '.php',
                 'app/helper/db/' . $class_name . '.php',
 		'app/admin/' . $class_name . '.php',
+		'app/main/interactions/' . $class_name . '.php',
 		'app/main/' . $class_name . '.php',
 		'app/main/activity/' . $class_name . '.php',
 		'app/main/profile/' . $class_name . '.php',
@@ -64,7 +65,7 @@ function buddypress_media_autoloader( $class_name ) {
 		'app/importers/' . $class_name . '.php',
 	);
 	foreach ( $rtlibpath as $i => $path ) {
-		$path = BP_MEDIA_PATH . $path;
+		$path = RT_MEDIA_PATH . $path;
 		if ( file_exists( $path ) ) {
 			include $path;
 			break;
@@ -75,13 +76,13 @@ function buddypress_media_autoloader( $class_name ) {
 /**
  * Register the autoloader function into spl_autoload
  */
-spl_autoload_register( 'buddypress_media_autoloader' );
+spl_autoload_register( 'rt_media_autoloader' );
 
 /**
  * Instantiate the BuddyPressMedia class.
  */
 global $rt_media;
-$rt_media = new BuddyPressMedia();
+$rt_media = new RTMedia();
 
 /*
  * Look Ma! Very few includes! Next File: /app/main/BuddyPressMedia.php
