@@ -8,21 +8,21 @@
 class rtDBUpdate {
     /**
      *
-     * @var type String 
+     * @var type String
      */
     public $db_version;
     public $install_db_version;
     public $schema_path = '/../../schema/';
     public $db_version_option_name;
     public $rt_plugin_info;
-    
+
     /**
      * Set db current and installed version and also plugin info in rt_plugin_info variable.
-     * 
+     *
      * @param type string $current_version Optional if not defined then will use plugin version
      */
     public function __construct($current_version = false) {
-        $this->rt_plugin_info = new rt_plugin_info(BP_MEDIA_PATH.'index.php');
+        $this->rt_plugin_info = new rt_plugin_info(RT_MEDIA_PATH.'index.php');
         if ($current_version == false) {
            $current_version = $this->rt_plugin_info->version;
         }
@@ -30,7 +30,7 @@ class rtDBUpdate {
         $this->db_version_option_name = $this->get_db_version_option_name();
         $this->install_db_version = $this->get_install_db_version();
     }
-    
+
     public function create_table($sql) {
         require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
         dbDelta($sql);
