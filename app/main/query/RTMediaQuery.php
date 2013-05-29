@@ -48,7 +48,11 @@ class RTMediaQuery {
 		unset($this->query->meta_query);
 		unset($this->query->tax_query);
 
-                $pre_media = $this->model->get_media($this->query);
+        $pre_media = $this->model->get_media($this->query);
+
+
+
+		if(!$pre_media) return false;
 
 		foreach($pre_media as $pre_medium){
 			$this->media[$pre_medium->media_id]=$pre_medium;
@@ -56,7 +60,7 @@ class RTMediaQuery {
 
 		if(is_multisite()){
 			foreach($this->media as $mk=>$mv){
-				$blogs[$media['blog_id']][$mk]= $mv;
+				$blogs[$mv->blog_id][$mk]= $mv;
 			}
 
 
@@ -74,18 +78,30 @@ class RTMediaQuery {
 	function populate_post_data($media){
 		if(!empty($media) && is_array($media)){
 			$media_post_query_args = array(
-				'post_type'		=> 'any',
-				'post_status'		=> 'any',
-				'post__in'		=> array_keys($media),
-				'meta_query'	=> $this->query_vars->meta_query,
-				'tax_query'		=> $this->query_vars->tax_query,
+				'post_type'				=> 'any',
+				'post_status'			=> 'any',
+				'post__in'				=> array_keys($media),
+				'ignore_sticky_posts'	=> 1
 			);
+
+
+			if(isset( $this->query_vars->meta_query)){
+				$media_post_query_args['meta_query']	= $this->query_vars->meta_query;
+			}
+			if(isset( $this->query_vars->tax_query)){
+				$media_post_query_args['tax_query']	= $this->query_vars->tax_query;
+			}
+
 			$media_post_query = new WP_Query($media_post_query_args);
+
 			$media_post_data = $media_post_query->posts;
 			foreach ($media_post_data as $post){
+
 				$this->media[$post->ID] = (object)(array_merge((array)$this->media[$post->ID], (array)$post));
-                                $this->media[$post->ID]->id = intval($this->media[$post->ID]->id);
-                                unset($this->media[$post->ID]->ID);
+
+                $this->media[$post->ID]->id = intval($this->media[$post->ID]->id);
+
+				unset($this->media[$post->ID]->ID);
 			}
 
 			$this->media_count = count($this->media);

@@ -32,6 +32,8 @@ class BuddyPressMedia {
      */
     public $options = array();
 
+	public $default_allowed_types = array('audio', 'video', 'image');
+
     /**
      *
      * @var string Email address the admin support form should send to
@@ -148,6 +150,7 @@ class BuddyPressMedia {
          */
         global $bp_media_counter;
         $bp_media_counter = 0;
+		$this->default_allowed_types = apply_filters('bp_media_allowed_types', $this->default_allowed_types);
     }
 
     /**
@@ -358,7 +361,7 @@ class BuddyPressMedia {
         /* Support Email constant */
         if (!defined('BP_MEDIA_SUPPORT_EMAIL'))
             define('BP_MEDIA_SUPPORT_EMAIL', $this->support_email);
-		
+
     }
 
     /**
