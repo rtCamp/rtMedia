@@ -97,9 +97,9 @@ if (!class_exists('BPMediaAdmin')) {
             add_submenu_page('bp-media-settings', __('BuddyPress Media Addons', 'buddypress-media'), __('Addons', 'buddypress-media'), 'manage_options', 'bp-media-addons', array($this, 'addons_page'));
             add_submenu_page('bp-media-settings', __('BuddyPress Media Support', 'buddypress-media'), __('Support ', 'buddypress-media'), 'manage_options', 'bp-media-support', array($this, 'support_page'));
             add_submenu_page('bp-media-settings', __('Importer', 'buddypress-media'), __('Importer', 'buddypress-media'), 'manage_options', 'bp-media-importer', array($this, 'bp_importer_page'));
-            if (!BPMediaPrivacy::is_installed()) {
+//            if (!BPMediaPrivacy::is_installed()) {
                 add_submenu_page('bp-media-settings', __('BuddyPress Media Database Update', 'buddypress-media'), __('Update Database', 'buddypress-media'), 'manage_options', 'bp-media-privacy', array($this, 'privacy_page'));
-            }
+//            }
         }
 
         /**

@@ -5,7 +5,7 @@
  *
  * @author joshua
  */
-class BPMediaUploadView {
+class RTMediaUploadView {
     
     function __construct() {
     }

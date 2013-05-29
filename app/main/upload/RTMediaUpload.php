@@ -5,7 +5,7 @@
  *
  * @author joshua
  */
-class BPMediaUpload {
+class RTMediaUpload {
 
     private $default_modes = array('file_upload', 'link_input');
     var $file = NULL;
@@ -14,10 +14,10 @@ class BPMediaUpload {
     var $db = NULL;
 
     public function __construct($uploaded) {
-        $this->file = new BPMediaUploadFile();
-        $this->url = new BPMediaUploadUrl();
-        $this->post = new BPMediaUploadPost();
-        $this->db = new BPMediaUploadDB();
+        $this->file = new RTMediaUploadFile();
+        $this->url = new RTMediaUploadUrl();
+        $this->post = new RTMediaUploadPost();
+        $this->db = new RTMediaUploadDB();
 
         $file_object = $this->upload($uploaded);
 

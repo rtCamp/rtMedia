@@ -5,7 +5,7 @@
  *
  * @author joshua
  */
-class BPMediaUploadShortcode {
+class RTMediaUploadShortcode {
 
     var $add_sc_script = false;
 
@@ -17,7 +17,7 @@ class BPMediaUploadShortcode {
 
     function render() {
         $this->add_sc_script = true;
-        $view = new BPMediaUploadView();
+        $view = new RTMediaUploadView();
         return $view->render('upload/uploader.php');
     }
 
