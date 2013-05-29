@@ -10,6 +10,7 @@
 
 class BPMediaRtTemplate {
 
+	public $media_args;
 
 	function __construct() {
 		add_action( 'init', array( $this, 'endpoint' ) );
@@ -49,12 +50,15 @@ class BPMediaRtTemplate {
 
 
 		global $rt_media_query;
+		$media_array = '';
 
 		if ( isset( $_GET[ 'json' ] ) ) {
+			if($rt_media_query->media){
                         foreach($rt_media_query->media as $media){
-                            $array[] = $media;
+                            $media_array[] = $media;
                         }
-			echo json_encode( $array );
+			}
+			echo json_encode( $media_array );
 			return;
 		} else {
 			include(BP_MEDIA_PATH . 'app/main/template/rt-template-functions.php');
@@ -99,21 +103,33 @@ class BPMediaRtTemplate {
 
 		$context = new RTMediaContext();
 
-		global $wp_query;
-
-		$media_var = $wp_query->query_vars[ 'media' ];
 
 
-
-		$rt_media_args = array(
+		$this->media_args = array(
 			'context' => $context->context,
 			'context_id' => $context->context_id,
 		);
-		if($media_var){
-			$rt_media_args['id'] = $media_var;
-		}
-		$rt_media_query = new RTMediaQuery($rt_media_args);
 
+		$this->set_media_var();
+
+
+		$rt_media_query = new RTMediaQuery($this->media_args);
+
+	}
+
+	function set_media_var(){
+		global $bp_media, $wp_query;
+		$media_var = $wp_query->query_vars[ 'media' ];
+		echo $media_var;
+		if(in_array($media_var,$bp_media->default_allowed_types)){
+			$this->media_args['media_type']	= $media_var;
+		}elseif(is_numeric($media_var)){
+			$this->media_args['id']		= $media_var;
+		}elseif($media_var===''){
+			//do nothing
+		}else{
+			$this->media_args = '';
+		}
 	}
 
 }

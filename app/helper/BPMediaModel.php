@@ -52,14 +52,16 @@ class BPMediaModel extends rtDBModel {
 		if( is_multisite()){
 			$sql = "SELECT * FROM {$this->table_name} WHERE 2=2 ";
 			foreach ($columns as $colname => $colvalue) {
-				$sql .= " AND {$colname} = '{$colvalue}' ORDER BY blog_id";
+				$sql .= " AND {$colname} = '{$colvalue}'";
 			}
+			 $sql .= " ORDER BY blog_id";
 			global $wpdb;
-			return $wpdb->get_results($sql);
+			$results = $wpdb->get_results($sql);
 		}else{
-			return $this->get($columns);
+			$results = $this->get($columns);
 
 		}
+		return $results;
 
 
 	}
