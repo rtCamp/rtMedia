@@ -1,177 +1,169 @@
 <?php
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
- * Description of RTMediaInteraction
+ * Sets up the routes and the context
  *
  * @author saurabh
  */
 class RTMediaInteraction {
 
-	public $slug;
-
 	public $context;
-
-	public $request;
-
-	public $request_type;
-
-	public $type;
-
-	public $media_type;
-
-	public $media_id;
-
-	public $format;
+	private $slugs = array(
+		'media',
+		'upload'
+	);
+	public $routes;
 
 	/**
-	 *
+	 * Initialise the interaction
 	 */
-	function __construct($register_endpoint = true, $slug = 'media') {
+	function __construct( ) {
 
-		$this->slug = $slug;
-		$this->setup();
-		$this->register_interaction($register_endpoint);
-		$this->register_template();
-	}
+		// set up the routes
+		$this->set_routes();
 
-	function register_interaction($register_endpoint){
-		if(!$register_endpoint)
-			return false;
-
-		add_action( 'init', array( $this, 'endpoint' ) );
-	}
-
-	function register_template(){
-		if($this->is_interaction_template()){
-			add_action( 'template_redirect', array( $this, 'template_redirect' ) );
-			add_action( 'template_include', array( $this, 'template_include' ) );
-		}
-	}
-
-	function is_interaction_template(){
-		global $wp_query;
-		return isset( $wp_query->query_vars[ $this->slug ] );
-	}
-
-	function request_type(){
-		if(count($_POST)>0){
-			$this->request_type = 'post';
-		}
-
-		$this->request_type = 'get';
-
-	}
-
-	function setup(){
-
-		global $wp_query, $rt_media;
-
-		// /media/photos, /media/231, /media/231/edit/, /media/231/delete,
-		// /upload/, /media/.../upload/
-		// /media/.../json/
-		$request_url = $wp_query->query_vars[ $this->slug ];
-
-		$this->request = explode('/', $request_url);
-
-		print_r($this->request);
-
-		$this->type = 'view';
-
-		$this->media_type =  'all';
-
-		if(in_array($this->request[0],$rt_media->default_allowed_types)){
-
-			$this->media_type	= $this->request[0];
-
-		}elseif(is_numeric($this->request[0])){
-
-			$this->media_id		= $this->request[0];
-
-		}elseif($this->request[0]===''){
-
-			// do nothing
-
-		}else{
-
-			$this->media_type = false;
-		}
-
-		if(in_array('json', $this->request)){
-			$this->format = 'json';
-		}
-
-		if(in_array('delete', $this->request)){
-			$this->type = 'delete';
-		}
-
-		if(in_array('edit', $this->request)){
-			$this->type = 'edit';
-		}
-
+		// set up the context
 		$this->set_context();
 
 	}
 
-	function set_context(){
-		$this->context = new RTMediaContext();
+	/**
+	 * Set up the route slugs' array
+	 */
+	function route_slugs(){
+
+		// filter to add custom slugs for routes
+		$this->slugs = apply_filters('rt_media_default_routes',$this->slugs);
+
 	}
 
-	function endpoint(){
-		$slug_constant = "RT_MEDIA_{$this->slug}_SLUG";
-		if(defined($slug_constant)){
-			$slug = constant($slug_constant);
+	function set_routes(){
+
+		// set up the routes array
+		$this->default_routes();
+
+		// set up routes for each slug
+		foreach($this->slugs as $slug){
+			$this->routes->{$slug} = new RTMediaRouter($slug);
 		}
-		add_rewrite_endpoint( $slug, EP_ALL );
 	}
 
-	function template_redirect(){
+	/**
+	 * Sets up the default context
+	 */
+	function default_context() {
 
-		if(!$this->is_interaction_template()){
-			return;
-		}
-
-		global $rt_media;
-
-		$rt_media->interaction = &$this;
-
-		print_r($rt_media->interaction);
-
-		do_action('rt_media_template_redirect');
-
+		return new RTMediaContext();
 	}
 
-	function template_include(){
+	/**
+	 *
+	 * @param array $context the context array
+	 * @todo the method should also allow objects
+	 */
+	function set_context( $context = false ) {
 
-		if($this->type == RT_MEDIA_UPLOAD_SLUG) return;
+		// take the context supplied and replace the context
+		if ( is_array( $context ) && isset( $context[ 'type' ] ) && isset( $context[ 'id' ] ) ) {
 
-		$template_class = 'RTMedia'.ucfirst($this->slug).'Template';
-		$template = new $template_class();
-		return $template;
+			$context_object->type = $context[ 'type' ];
+			$context_object->id = $context[ 'id' ];
 
-	}
-
-	public function locate_template( $template ) {
-		$located = '';
-		if ( ! $template )
-			return;
-
-		$template_name = $template . '.php';
-
-		if ( file_exists( STYLESHEETPATH . '/buddypress-media/' . $template_name ) ) {
-			$located = STYLESHEETPATH . '/buddypress-media/' . $template_name;
-		} else if ( file_exists( TEMPLATEPATH . '/buddypress-media/' . $template_name ) ) {
-			$located = TEMPLATEPATH . '/buddypress-media/' . $template_name;
+			// if there is no context array supplied, set the default context
 		} else {
-			$located = BP_MEDIA_PATH . "templates/{$this->slug}/" . $template_name;
+
+			$context_object = $this->default_context();
 		}
 
-		return $located;
+		//set the context property
+
+		$this->context = $context_object;
 	}
+
+	/**
+	 * Reset the context to the default context after temporarily setting it,
+	 * Say, for an upload
+	 */
+
+	function rewind_context(){
+
+		$this->context = $this->default_context();
+
+	}
+
+
+//	function request_type() {
+//		if ( count( $_POST ) > 0 ) {
+//			$this->request_type = 'post';
+//		}
+//
+//		$this->request_type = 'get';
+//	}
+//
+//	function setup() {
+//
+//		global $wp_query, $rt_media;
+//
+//		//print_r($wp_query);
+//		// /media/photos, /media/231, /media/231/edit/, /media/231/delete,
+//		// /upload/, /media/.../upload/
+//		// /media/.../json/
+//		$request_url = $wp_query->query_vars[ $this->slug ];
+//
+//		$this->request_type();
+//
+//
+//		$this->request = explode( '/', $request_url );
+//
+//
+//		$this->type = 'view';
+//
+//		$this->media_type = '';
+//
+//		if ( is_array( $this->request ) && $this->request[ 0 ] != '' ) {
+//
+//
+//			if ( in_array( $this->request[ 0 ], $rt_media->allowed_types ) ) {
+//				$this->media_type = $this->request[ 0 ];
+//			} elseif ( is_numeric( $this->request[ 0 ] ) ) {
+//
+//				$this->media_id = $this->request[ 0 ];
+//			}
+//		}
+//
+//		if ( in_array( 'json', $this->request ) ) {
+//			$this->format = 'json';
+//		}
+//
+//		if ( in_array( 'delete', $this->request ) ) {
+//			$this->type = 'delete';
+//		}
+//
+//		if ( in_array( 'edit', $this->request ) ) {
+//			$this->type = 'edit';
+//		}
+//
+//		$this->set_context();
+//	}
+//
+//
+//	function locate_template( $template ) {
+//		$located = '';
+//		if ( ! $template )
+//			return;
+//
+//		$template_name = $template . '.php';
+//
+//		if ( file_exists( STYLESHEETPATH . '/buddypress-media/' . $template_name ) ) {
+//			$located = STYLESHEETPATH . '/buddypress-media/' . $template_name;
+//		} else if ( file_exists( TEMPLATEPATH . '/buddypress-media/' . $template_name ) ) {
+//			$located = TEMPLATEPATH . '/buddypress-media/' . $template_name;
+//		} else {
+//			$located = BP_MEDIA_PATH . "templates/{$this->slug}/" . $template_name;
+//		}
+//
+//		return $located;
+//	}
 
 }
 

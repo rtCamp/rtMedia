@@ -6,7 +6,7 @@
  * @author joshua
  */
 class RTMediaUploadView {
-    
+
     function __construct() {
     }
 
@@ -16,7 +16,7 @@ class RTMediaUploadView {
           'link_input' => array( 'title' => __('Insert from URL','buddypress-media'),'content' => '<input type="url" name="bp-media-url" class="bp-media-upload-input bp-media-url" />' ),
         );
         $tabs = apply_filters('bp_media_upload_tabs', $tabs );
-        
+
         $mode = ( isset($_GET['mode']) &&  array_key_exists($_GET['mode'], $tabs) )?$_GET['mode']:'file_upload';
 
         include $this->locate_template($template_name);
@@ -31,7 +31,7 @@ class RTMediaUploadView {
             } else if (file_exists(TEMPLATEPATH . '/buddypress-media/' . $template_name)) {
                 $located = TEMPLATEPATH . '/buddypress-media/' . $template_name;
             } else {
-                $located = BP_MEDIA_PATH . 'templates/' . $template_name;
+                $located = RT_MEDIA_PATH . 'templates/' . $template_name;
         }
 
         return $located;

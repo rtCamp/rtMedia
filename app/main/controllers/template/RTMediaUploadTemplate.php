@@ -6,11 +6,11 @@
  */
 
 /**
- * Description of RTMediaUploadInteraction
+ * Description of RTMediaUploadTemplate
  *
  * @author saurabh
  */
-class RTMediaUploadInteraction {
+class RTMediaUploadTemplate {
 
 	/**
 	 *
