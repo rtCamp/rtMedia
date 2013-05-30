@@ -470,7 +470,7 @@ jQuery(document).ready(function(){
     });
 
 
-    jQuery("#bpm-settings-tabs").sliderTabs();
+    jQuery("#bpm-settings-tabs,#bpm-addons").sliderTabs();
 
 	if(jQuery('#privacy_enabled').is(":checked")) {
 		jQuery(".privacy-driven-disable label input").prop("disabled",false);
@@ -490,4 +490,10 @@ jQuery(document).ready(function(){
 	});
 
 	jQuery("[data-toggle='switch']").wrap('<div class="rt-switch" />').parent().bootstrapSwitch();
+
+    if(tooltip_ids != undefined) {
+	    jQuery(tooltip_ids).powerTip({
+	        followMouse: true
+	    });
+    }
 });

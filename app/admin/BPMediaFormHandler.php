@@ -150,21 +150,25 @@ class BPMediaFormHandler {
 		$bpm_featured = $wp_settings_fields[$page]['bpm-featured'];
 		$headers = array(
 			array(
+				'id' => 'bpm-media-type',
 				'title' => "Media Type",
 				'class' => 'large-2',
 				'desc' => ''
 			),
 			array(
+				'id' => 'bpm-allow-upload',
 				'title' => "Allow Upload",
 				'class' => 'large-2',
 				'desc' => 'Allows you to upload a particular media type on your post.'
 			),
 			array(
+				'id' => 'bpm-set-feature',
 				'title' => "Set Featured",
 				'class' => 'large-2',
 				'desc' => 'Put a specific media as a featured content on the post.'
 			),
 			array(
+				'id' => 'bpm-file-extn',
 				'title' => "File Extensions",
 				'class' => 'large-3',
 				'desc' => 'File extensions that can be uploaded on the website.'
@@ -240,15 +244,19 @@ class BPMediaFormHandler {
 		echo '<div class="rt-table large-12">';
 
 		//header
-		$desc_count=1;
+		$tooltip_ids = '';
 		echo '<div class="row rt-header">';
 		foreach ($headers as $val) {
-			if( isset($val['desc']) && !empty($val['desc']) )
-				echo '<h4 " class="columns ' . $val['class'] . '"><abbr>' . $val['title'] . '</abbr> <sup>[' . $desc_count++ . ']</sup></h4>';
+			if( isset($val['desc']) && !empty($val['desc']) ) {
+				echo '<h4 id="' . $val['id'] . '" class="columns ' . $val['class'] . '" title="' . $val['desc'] . '"><abbr>' . $val['title'] . '</abbr></h4>';
+				$tooltip_ids .= '#' . $val['id'] . ',';
+			}
 			else
 				echo '<h4 " class="columns ' . $val['class'] . '">' . $val['title'] . '</h4>';
 		}
 		echo '</div>';
+		
+		$tooltip_ids = substr($tooltip_ids, 0, strlen($tooltip_ids)-1);
 
 		//body
 		$even = 0;
@@ -272,21 +280,12 @@ class BPMediaFormHandler {
 			</div>
 		<?php
 		}
-
-		echo '</div>';
-		echo '<div class="clearfix">&nbsp;</div>';
-
-		$desc_count=1;
-		echo '<div class="large-12">';
-		foreach ($headers as $value) {
-			if( isset($value['desc']) && !empty($value['desc']) ) {
-				echo '<div class="rt-description">';
-					echo '[' . $desc_count++ . '] ' . $value['desc'];
-				echo '</div>';
-			}
-		}
-		echo '<a href="http://rtcamp.com/buddypress-media/" target="_blank">more details</a>';
-		echo '</div>';
+		?>
+		</div>
+		<script type="text/javascript">			
+			var tooltip_ids = '<?php echo $tooltip_ids;?>';
+		</script>
+		<?php
 	}
 
 	public static function sizes_content($page = '') {
@@ -462,9 +461,8 @@ class BPMediaFormHandler {
 			return;
 
 		foreach ($sub_tabs as $tab) {
-			echo '<div id="' . substr($tab['href'], 1) . '">
-					<h3>' . $tab['title'] . '</h3>';
-			call_user_func($tab['callback'], $page);
+			echo '<div id="' . substr($tab['href'], 1) . '">';
+				call_user_func($tab['callback'], $page);
 			echo '</div>';
 		}
 
