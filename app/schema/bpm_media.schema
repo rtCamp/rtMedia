@@ -2,7 +2,7 @@ CREATE TABLE %s (
     id bigint(20) NOT NULL AUTO_INCREMENT ,
     blog_id bigint(20) NULL DEFAULT NULL,
     media_id bigint(20) NOT NULL ,
-    author_id bigint(20) NOT NULL,
+    media_author bigint(20) NOT NULL,
     media_title text,
     album_id bigint(20),
     media_type varchar(100) NULL DEFAULT NULL ,
@@ -17,5 +17,11 @@ CREATE TABLE %s (
     ratings_average decimal(4,2) NULL DEFAULT 0 ,
     likes bigint(20) NULL DEFAULT 0 ,
     dislikes bigint(20) NULL DEFAULT 0 ,
-    PRIMARY KEY (id)
+    PRIMARY KEY (id),
+    KEY media_id (media_id),
+    KEY media_author (media_author),
+    KEY album_id (album_id),
+    KEY media_author_id (album_id,media_author),
+    KEY context_author_album_id (context_id,album_id,media_author),
+    KEY context(context)
 );
