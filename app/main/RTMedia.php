@@ -359,6 +359,14 @@ class RTMedia {
         if (!defined('BP_MEDIA_SUPPORT_EMAIL'))
             define('BP_MEDIA_SUPPORT_EMAIL', $this->support_email);
 
+		/* Media slug */
+        if (!defined('RT_MEDIA_MEDIA_SLUG'))
+            define('RT_MEDIA_MEDIA_SLUG', 'media');
+
+        /* Upload slug */
+        if (!defined('RT_MEDIA_UPLOAD_SLUG'))
+            define('RT_MEDIA_UPLOAD_SLUG', 'upload');
+
     }
 
     /**
@@ -389,11 +397,13 @@ class RTMedia {
              */
 //			new BPMediaActivity();
             $class_construct = array(
-				'interaction'	=> false,
+				'interaction'	=> true,
+				'query'			=>true,
+				'template'	=> false,
                 'upload_shortcode' => false,
                 'upload_endpoint' => false,
-//                'template'	=> false,
-//				'query'		=> false
+
+				//'query'		=> false
             );
             $class_construct = apply_filters('bpmedia_class_construct', $class_construct);
 
@@ -406,7 +416,7 @@ class RTMedia {
                 }
 
                 $class = 'RTMedia' . $classname;
-				
+
                 if (class_exists($class)) {
                     if ($global_scope == true) {
                         global ${'rt_media_' . $key};
@@ -417,11 +427,6 @@ class RTMedia {
                 }
             }
 
-			global $rt_media;
-
-			print_r($rt_media->interaction);
-
-			new RTMediaQuery();
         }
 
         /**

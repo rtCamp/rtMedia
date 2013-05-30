@@ -8,20 +8,14 @@
 class RTMediaUploadEndpoint {
 
     public function __construct() {
-        add_action('init', array($this, 'endpoint'));
-        add_action('template_redirect', array($this, 'template_redirect'));
+        add_action('rt_media_template_redirect', array($this, 'template_redirect'));
         new RTMediaDelete(); // should be placed somewhere else ( just does the trick here )
     }
 
-    function endpoint() {
-        add_rewrite_endpoint(BP_MEDIA_UPLOAD_SLUG, EP_ALL);
-    }
 
     function template_redirect() {
-        global $wp_query, $bp;
-        if (!isset($wp_query->query_vars['upload']))
-            return;
-        if (isset($wp_query->query_vars['upload']) && !count($_POST)) {
+        global $rt_media;
+        if ($rt_media->interaction->request_type!='post') {
             include get_404_template();
         } else {
             $nonce = $_REQUEST['bp_media_upload_nonce'];
