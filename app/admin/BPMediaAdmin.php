@@ -66,9 +66,11 @@ if (!class_exists('BPMediaAdmin')) {
 			$admin_ajax = admin_url('admin-ajax.php');
 
 			wp_enqueue_script('bootstrap-switch', BP_MEDIA_URL . 'app/assets/js/bootstrap-switch.js', array('jquery'), BP_MEDIA_VERSION);
-			wp_enqueue_script('slider-tabs', BP_MEDIA_URL . 'app/assets/js/jquery.sliderTabs.min.js', array('jquery', 'jquery-effects-core'), BP_MEDIA_VERSION);
+			if (!wp_script_is("jquery-effects-core"))
+				wp_enqueue_script("jquery-effects-core");
+			wp_enqueue_script('slider-tabs', BP_MEDIA_URL . 'app/assets/js/jquery.sliderTabs.min.js', array('jquery-effects-core'), BP_MEDIA_VERSION,true);
 			wp_enqueue_script('power-tip', BP_MEDIA_URL . 'app/assets/js/jquery.powertip.min.js', array('jquery'), BP_MEDIA_VERSION);
-			wp_enqueue_script('bp-media-admin', BP_MEDIA_URL . 'app/assets/js/admin.js', array('jquery-ui-dialog'), BP_MEDIA_VERSION);
+			wp_enqueue_script('bp-media-admin', BP_MEDIA_URL . 'app/assets/js/admin.js', array('slider-tabs','jquery-ui-dialog'), BP_MEDIA_VERSION,true);
 			wp_localize_script('bp-media-admin', 'bp_media_admin_ajax', $admin_ajax);
 			wp_localize_script('bp-media-admin', 'bp_media_admin_url', admin_url());
 			$bp_media_admin_strings = array(

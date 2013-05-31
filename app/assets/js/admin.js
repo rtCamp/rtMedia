@@ -1,4 +1,4 @@
-jQuery(document).ready(function(){
+jQuery(document).ready(function($){
 
     /* Linkback */
     jQuery('#spread-the-word').on('click','#bp-media-add-linkback',function(){
