@@ -48,24 +48,32 @@ class BPMediaModel extends rtDBModel {
         return $return['result'];
     }
 
-	function get_media($columns){
-		if( is_multisite()){
-			$sql = "SELECT * FROM {$this->table_name} WHERE 2=2 ";
-			foreach ($columns as $colname => $colvalue) {
-				$sql .= " AND {$colname} = '{$colvalue}'";
-			}
-			 $sql .= " ORDER BY blog_id";
-			global $wpdb;
-			$results = $wpdb->get_results($sql);
-		}else{
-			$results = $this->get($columns);
-
-		}
-		return $results;
-
-
-	}
-
+    function get_media($columns) {
+        if (is_multisite()) {
+            $results = $this->get($columns, "blog_id");
+        } else {
+            $results = $this->get($columns);
+        }
+        return $results;
+    }
+    function get_media_meta($media_id){
+        $media_query_str = "";
+        if (is_array($media_id)){
+            $sep = "";
+            foreach($media_id as $mid){
+                $media_query_str .= $sep . $mid;
+                $sep= ",";
+            }
+        }else{
+            $media_query_str .= $media_id;
+        }
+        
+        global $wpdb;
+        $sql = "SELECT * FROM {$wpdb->posts} LEFT JOIN {$this->table_name} 
+            ON {$wpdb->posts}.ID = {$this->table_name}.media_id 
+            WHERE {$wpdb->posts}.ID in ({$media_query_str});";
+        return $wpdb->get_results($sql);
+    }
 
 }
 
