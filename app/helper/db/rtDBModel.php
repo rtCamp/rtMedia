@@ -8,6 +8,7 @@
 class rtDBModel {
 
     public $table_name;
+    public $meta_table_name;
     public $per_page;
 
     /**
@@ -32,6 +33,7 @@ class rtDBModel {
             $table_name = $wpdb->prefix . "rt_" . $table_name;
         }
         $this->table_name = $table_name;
+        $this->meta_table_name = $table_name . "_meta";
     }
 
     /**
@@ -118,10 +120,27 @@ class rtDBModel {
      * @return type
      */
     function get($columns) {
-        $sql = "SELECT * FROM {$this->table_name} WHERE 2=2 ";
+        $select = "SELECT * FROM {$this->table_name}";
+        $join = "" ;
+        $where = " where 2=2 " ;
+        $temp = 65;
         foreach ($columns as $colname => $colvalue) {
-            $sql .= " AND {$colname} = '{$colvalue}'";
+            if(strtolower($colname) =="meta_query"){
+                foreach($colvalue as $meta_query){
+                    if(!isset($meta_query["compare"])){
+                        $meta_query["compare"] = "=";
+                    }
+                    $tbl_alias = chr($temp++);
+                    $join .= " LEFT JOIN {$this->meta_table_name} {$tbl_alias} ON {$this->table_name}.media_id = {$tbl_alias}.media_id ";
+                    $where .= " AND  ({$tbl_alias}.meta_key = '{$meta_query["key"]}' and  {$tbl_alias}.meta_value  {$meta_query["compare"]}  '{$meta_query["value"]}' ) ";
+                }
+            }else{
+                $where .= " AND {$this->table_name}.{$colname} = '{$colvalue}'";
+            }
         }
+        $sql = $select . $join . $where ."order by {$this->table_name}.media_id";
+        echo $sql;
+        exit;
         global $wpdb;
         return $wpdb->get_results($sql);
     }
