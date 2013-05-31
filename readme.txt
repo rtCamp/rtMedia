@@ -32,7 +32,7 @@ In addition to the existing features, rtMedia contains:
  * Encoding support for WordPress attachments.
  * RESTful API that will integrate well with any other application.
 
-Along with a hot of feature improvements and bug fixing.
+Along with a host of feature improvements and bug fixing. rtMedia for WordPress, BuddyPress and bbPress 3.0 beta will be announced soon.
 
 
 
