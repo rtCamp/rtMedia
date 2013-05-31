@@ -6,11 +6,11 @@
  */
 
 /**
- * Description of RTMediaEditInteraction
+ * Description of RTMediaMediaTemplate
  *
  * @author saurabh
  */
-class RTMediaEditInteraction {
+class RTMediaMediaTemplate {
 
 	/**
 	 *
