@@ -95,7 +95,7 @@ class RTMediaRouter {
 	function template_redirect(){
 
 		// if it is not our route, return early
-		if(!is_template())return;
+		if(!$this->is_template())return;
 
 		//set up the query variables
 		$this->set_query_vars();
@@ -116,7 +116,7 @@ class RTMediaRouter {
 	function template_include($template){
 
 		// if it is not our route, return the default template early
-		if(!is_template())return $template;
+		if(!$this->is_template())return $template;
 
 		// otherwise, apply a filter to the template,
 		// pass the template  and slug to the function hooking here
