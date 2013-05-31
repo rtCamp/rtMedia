@@ -40,7 +40,7 @@ class RTMediaInteraction {
 	function set_routes(){
 
 		// set up the routes array
-		$this->default_routes();
+		$this->route_slugs();
 
 		// set up routes for each slug
 		foreach($this->slugs as $slug){

@@ -48,6 +48,8 @@ function rt_media_autoloader( $class_name ) {
                 'app/helper/db/' . $class_name . '.php',
 		'app/admin/' . $class_name . '.php',
 		'app/main/interactions/' . $class_name . '.php',
+		'app/main/routers/' . $class_name . '.php',
+		'app/main/contexts/' . $class_name . '.php',
 		'app/main/' . $class_name . '.php',
 		'app/main/activity/' . $class_name . '.php',
 		'app/main/profile/' . $class_name . '.php',
