@@ -37,7 +37,7 @@ class BPMediaPrivacySettings {
 		$query =
                     "SELECT	COUNT(*) as Finished
 	FROM
-		$wpdb->posts RIGHT JOIN $wpdb->postmeta ON $wpdb->postmeta.post_id = $wpdb->posts.id
+		$wpdb->posts INNER JOIN $wpdb->postmeta ON $wpdb->postmeta.post_id = $wpdb->posts.id
 	WHERE
 		$wpdb->postmeta.meta_key = 'bp_media_privacy' AND
 		( $wpdb->posts.post_type LIKE 'attachment' OR $wpdb->posts.post_type LIKE 'bp_media_album')";
@@ -50,7 +50,7 @@ class BPMediaPrivacySettings {
 		$query =
                     "SELECT	COUNT(*) as Total
 	FROM
-		$wpdb->posts RIGHT JOIN $wpdb->postmeta ON $wpdb->postmeta.post_id = $wpdb->posts.id
+		$wpdb->posts INNER JOIN $wpdb->postmeta ON $wpdb->postmeta.post_id = $wpdb->posts.id
 	WHERE
 		$wpdb->postmeta.meta_key = 'bp-media-key' AND
 		( $wpdb->posts.post_type LIKE 'attachment' OR $wpdb->posts.post_type LIKE 'bp_media_album')";
