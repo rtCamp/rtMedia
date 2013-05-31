@@ -102,7 +102,8 @@ class RTMediaRouter {
 
 		// otherwise provide a hook for only this route,
 		// pass the slug to the function hooking here
-		do_action('rt_media_template_redirect', $this->slug );
+		echo 'wtf';
+		do_action("rt_media_{$this->slug}_redirect");
 
 	}
 
@@ -122,7 +123,7 @@ class RTMediaRouter {
 		// pass the template  and slug to the function hooking here
 		// so it can load a custom template
 
-		$template = apply_filters('rt_media_template_include',$template, $this->slug);
+		$template = apply_filters("rt_media_{$this->slug}_include",$template);
 
 		// return the template for inclusion in the theme
 
