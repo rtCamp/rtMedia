@@ -173,7 +173,7 @@ if (!class_exists('BPMediaAdmin')) {
 				<h2 class="nav-tab-wrapper"><?php $this->bp_media_tabs(); ?></h2>
 				<?php settings_errors(); ?>
 				<div class="row">
-					<div id="bp-media-settings-boxes" class="columns large-6">
+					<div id="bp-media-settings-boxes" class="columns large-7">
 						<?php
 						$settings_url = ( is_multisite() ) ? network_admin_url('edit.php?action=' . $option_group) : 'options.php';
 						?>
@@ -192,8 +192,8 @@ if (!class_exists('BPMediaAdmin')) {
 							</form><?php } else {
 									?>
 							<div class="bp-media-metabox-holder">
-								
-								
+
+
 								<?php do_settings_sections($page); ?>
 								<div class="rt-link alignright"><?php _e('By', 'buddypress-media'); ?> <a href="http://rtcamp.com/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media" title="<?php _e('Empowering The Web With WordPress', 'buddypress-media'); ?>"><img src="<?php echo BP_MEDIA_URL; ?>app/assets/img/rtcamp-logo.png"></a></div>
 							</div><?php

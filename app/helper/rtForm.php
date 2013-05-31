@@ -226,7 +226,7 @@ if(!class_exists("rtForm")) {
 
 				if($element != "rtSelect") {
 					$data .= $this->processAttributes($element, $attrib, true);
-					
+
 					if( isset($attrib['switch_square']) && $attrib['switch_square'] ) {
 
 						$data = '<div class="rt-switch switch-square" data-on-label="<i class=\'fui-check\'></i>" data-off-label="<i class=\'fui-cross\'></i>">' . $data . '</div>';
@@ -340,7 +340,7 @@ if(!class_exists("rtForm")) {
 				if( isset($attributes['label']) )
 					$html = $this->enclose_label($element, $html, $attributes['label']);
 
-				if($attributes['show_desc'])
+				if(isset($attributes['show_desc']))
 					$html .= $this->generate_element_desc($attributes);
 
 				return $html;
