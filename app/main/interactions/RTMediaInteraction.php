@@ -45,6 +45,7 @@ class RTMediaInteraction {
 		// set up routes for each slug
 		foreach($this->slugs as $slug){
 			$this->routes->{$slug} = new RTMediaRouter($slug);
+			print_r($this->routes->{$slug});
 		}
 	}
 
