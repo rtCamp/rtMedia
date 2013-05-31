@@ -119,7 +119,7 @@ class rtDBModel {
      * @param type $columns
      * @return type
      */
-    function get($columns) {
+    function get($columns,$order_by= false) {
         $select = "SELECT * FROM {$this->table_name}";
         $join = "" ;
         $where = " where 2=2 " ;
@@ -138,9 +138,13 @@ class rtDBModel {
                 $where .= " AND {$this->table_name}.{$colname} = '{$colvalue}'";
             }
         }
-        $sql = $select . $join . $where ."order by {$this->table_name}.media_id";
-        echo $sql;
-        exit;
+        $sql = $select . $join . $where ;
+        if($order_by){
+            $sql .= "order by {$this->table_name}.$order_by";
+        }else{
+            $sql .= "order by {$this->table_name}.media_id";    
+        }
+        
         global $wpdb;
         return $wpdb->get_results($sql);
     }
