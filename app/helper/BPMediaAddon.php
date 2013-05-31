@@ -130,7 +130,7 @@ if (!class_exists('BPMediaAddon')) {
 			$objEncoding->encoding_service_intro();
 		}
 		
-		public function themes_content($param) {
+		public function themes_content($args = '') {
 			echo '<h3>Coming Soon !!</h3>';
 		}
 

@@ -470,7 +470,9 @@ jQuery(document).ready(function($){
     });
 
 
-    jQuery("#bpm-settings-tabs,#bpm-addons").sliderTabs();
+    jQuery("#bpm-settings-tabs,#bpm-addons").sliderTabs({
+        mousewheel: false
+    });
 
 	if(jQuery('#privacy_enabled').is(":checked")) {
 		jQuery(".privacy-driven-disable label input").prop("disabled",false);
