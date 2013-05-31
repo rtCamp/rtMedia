@@ -14,9 +14,9 @@ class BPMediaEncoding {
     public function __construct() {
         $this->api_key = bp_get_option('bp-media-encoding-api-key');
         if (is_admin()) {
-            add_action(bp_core_admin_hook(), array($this, 'menu'));
+            //add_action(bp_core_admin_hook(), array($this, 'menu'));
             add_action('admin_init', array($this, 'encoding_settings'));
-            add_filter('bp_media_add_sub_tabs', array($this, 'encoding_tab'), '', 2);
+            //add_filter('bp_media_add_tabs', array($this, 'encoding_tab'));
             if ($this->api_key)
                 add_action('bp_media_before_default_admin_widgets', array($this, 'usage_widget'));
         }
@@ -82,7 +82,7 @@ class BPMediaEncoding {
         if ( isset($submenu['bp-media-settings']) ) {
             $menu = $submenu['bp-media-settings'];
             $encoding_menu = array_pop($menu);
-            $submenu['bp-media-settings'] = array_merge(array_slice($menu, 0, 1), array($encoding_menu), array_slice($menu, 1));
+            $submenu['bp-media-settings'] = array_merge(array_slice($menu, 0, 2), array($encoding_menu), array_slice($menu, 2));
         }
     }
 
@@ -98,23 +98,26 @@ class BPMediaEncoding {
         add_settings_section('bpm-encoding', __('Audio/Video Encoding Service', 'buddypress-media'), array($this, 'encoding_service_intro'), 'bp-media-encoding');
     }
 
-    public function encoding_tab($tabs, $tab) {
-        $idle_class = 'nav-tab';
-        $active_class = 'nav-tab nav-tab-active';
+    public function encoding_tab($tabs) {
         $encoding_tab = array(
-            'href' => bp_get_admin_url(add_query_arg(array('page' => 'bp-media-encoding'), 'admin.php')),
-            'title' => __('BuddyPress Media Audio/Video Encoding Service', 'buddypress-media'),
-            'name' => __('Audio/Video Encoding', 'buddypress-media'),
-            'class' => ($tab == 'bp-media-encoding') ? $active_class : $idle_class . ' last_tab'
-        );
+                    'href' => bp_get_admin_url(add_query_arg(array('page' => 'bp-media-encoding'), 'admin.php')),
+//                    'name' => __('Audio/Video Encoding', 'buddypress'),
+					'name' => __('Encoding', 'buddypress'),
+                    'slug' => 'bp-media-encoding'
+                );
+        
         $reordered_tabs = NULL;
-        foreach ($tabs as $key => $tab) {
-            if ($key == 1)
-                $reordered_tabs[] = $encoding_tab;
-            $reordered_tabs[] = $tab;
+        if ( count($tabs) > 2 ) {
+            foreach ($tabs as $key => $tab) {
+                if ($key == 2)
+                    $reordered_tabs[] = $encoding_tab;
+                $reordered_tabs[] = $tab;
+            }
+            $tabs = $reordered_tabs;
+        } else {
+            $tabs[] = $encoding_tab;
         }
-
-        return $reordered_tabs;
+        return $tabs;
     }
 
     public function admin_bar_menu($bp_media_admin_nav) {
@@ -126,12 +129,17 @@ class BPMediaEncoding {
             'href' => bp_get_admin_url(add_query_arg(array('page' => 'bp-media-encoding'), 'admin.php'))
         );
         $reordered_admin_nav = NULL;
-        foreach ($bp_media_admin_nav as $key => $nav) {
-            if ($key == 2)
-                $reordered_admin_nav[] = $admin_nav;
-            $reordered_admin_nav[] = $nav;
+        if ( count($bp_media_admin_nav) > 2 ) {
+            foreach ($bp_media_admin_nav as $key => $nav) {
+                if ($key == 3)
+                    $reordered_admin_nav[] = $admin_nav;
+                $reordered_admin_nav[] = $nav;
+            }
+            $bp_media_admin_nav = $reordered_admin_nav;
+        } else {
+            $bp_media_admin_nav[] = $admin_nav;
         }
-        return $reordered_admin_nav;
+        return $bp_media_admin_nav;
     }
 
     public function is_valid_key($key) {

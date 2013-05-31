@@ -24,7 +24,53 @@ if (!class_exists('BPMediaAddon')) {
         }
 
         public function get_addons() {
-            $addons = array(
+
+			$tabs = array();
+			$tabs[] = array(
+				'title' => 'Plugins',
+				'name' => __('Plugins', 'buddypress-media'),
+				'href' => '#bpm-plugins',
+				'callback' => array($this, 'plugins_content')
+			);
+			global $bp_media_admin;
+			$tabs[] = array(
+				'title' => 'Services',
+				'name' => __('Services', 'buddypress-media'),
+				'href' => '#bpm-services',
+				'callback' => array($bp_media_admin->bp_media_encoding, 'encoding_service_intro')
+			);
+			$tabs[] = array(
+				'title' => 'Themes',
+				'name' => __('Themes', 'buddypress-media'),
+				'href' => '#bpm-themes',
+				'callback' => array($this, 'themes_content')
+			);
+
+			?>
+			<div id="bpm-addons">
+				<ul>
+					<?php
+						foreach ($tabs as $tab) {?>
+							<li><a title="<?php echo $tab['title'] ?>" href="<?php echo $tab['href']; ?>"><?php echo $tab['name']; ?></a></li>
+						<?php }
+					?>
+				</ul>
+
+				<?php
+					foreach ($tabs as $tab) {
+						echo '<div id="' . substr($tab['href'],1) . '">';
+							call_user_func($tab['callback']);
+						echo '</div>';
+					}
+				?>
+			</div>
+			<?php
+        }
+
+
+		public function plugins_content($args = '') {
+
+			$addons = array(
 				 array(
                     'title' => __('BuddyPress-Media Photo Tagging', 'buddypress-media'),
                     'img_src' => 'http://rtcamp.com/wp-content/uploads/2013/04/bpm-photo-tagging.png',
@@ -67,7 +113,8 @@ if (!class_exists('BPMediaAddon')) {
                 )
             );
             $addons = apply_filters('bp_media_addons', $addons);
-            foreach ($addons as $key => $addon) {
+
+			foreach ($addons as $key => $addon) {
                 $this->addon($addon);
                 if ( $key == 1 ) {
                     echo '<h3>';
@@ -75,9 +122,21 @@ if (!class_exists('BPMediaAddon')) {
                     echo '</h3>';
                 }
             }
-        }
+		}
 
-        /**
+		public function services_content($args = '') {
+
+			
+			$objEncoding->encoding_service_intro();
+		}
+		
+		public function themes_content($param) {
+			echo '<h3>Coming Soon !!</h3>';
+		}
+
+		
+
+		/**
          *
          * @global type $bp_media
          * @param type $args

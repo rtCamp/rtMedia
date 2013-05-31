@@ -470,5 +470,30 @@ jQuery(document).ready(function(){
     });
 
 
-});
+    jQuery("#bpm-settings-tabs,#bpm-addons").sliderTabs();
 
+	if(jQuery('#privacy_enabled').is(":checked")) {
+		jQuery(".privacy-driven-disable label input").prop("disabled",false);
+        jQuery(".privacy-driven-disable label .rt-switch").bootstrapSwitch("setActive",true);
+	} else {
+		jQuery(".privacy-driven-disable label input").prop("disabled",true);
+        jQuery(".privacy-driven-disable label .rt-switch").bootstrapSwitch("setActive",false);
+	}
+	jQuery('#privacy_enabled').on("click", function(e) {
+		if(jQuery(this).is(":checked")) {
+			jQuery(".privacy-driven-disable label input").prop("disabled",false);
+            jQuery(".privacy-driven-disable label .rt-switch").bootstrapSwitch("setActive",true);
+		} else {
+			jQuery(".privacy-driven-disable label input").prop("disabled",true);
+            jQuery(".privacy-driven-disable label .rt-switch").bootstrapSwitch("setActive",false);
+		}
+	});
+
+	jQuery("[data-toggle='switch']").wrap('<div class="rt-switch" />').parent().bootstrapSwitch();
+
+    if(tooltip_ids != undefined) {
+	    jQuery(tooltip_ids).powerTip({
+	        followMouse: true
+	    });
+    }
+});
