@@ -14,9 +14,9 @@ class BPMediaEncoding {
     public function __construct() {
         $this->api_key = bp_get_option('bp-media-encoding-api-key');
         if (is_admin()) {
-            add_action(bp_core_admin_hook(), array($this, 'menu'));
+            //add_action(bp_core_admin_hook(), array($this, 'menu'));
             add_action('admin_init', array($this, 'encoding_settings'));
-            add_filter('bp_media_add_tabs', array($this, 'encoding_tab'));
+            //add_filter('bp_media_add_tabs', array($this, 'encoding_tab'));
             if ($this->api_key)
                 add_action('bp_media_before_default_admin_widgets', array($this, 'usage_widget'));
         }
@@ -101,7 +101,8 @@ class BPMediaEncoding {
     public function encoding_tab($tabs) {
         $encoding_tab = array(
                     'href' => bp_get_admin_url(add_query_arg(array('page' => 'bp-media-encoding'), 'admin.php')),
-                    'name' => __('Audio/Video Encoding', 'buddypress'),
+//                    'name' => __('Audio/Video Encoding', 'buddypress'),
+					'name' => __('Encoding', 'buddypress'),
                     'slug' => 'bp-media-encoding'
                 );
         
