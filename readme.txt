@@ -6,13 +6,35 @@ License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires at least: WordPress 3.5 + BuddyPress 1.6
 Tested up to: WordPress 3.5 + BuddyPress 1.7
-Stable tag: 2.13.2
+Stable tag: 2.14
 
 Adds Photos, Music, Videos & Albums to BuddyPress. Supports mobile devices (iPhone/iPad, etc) and automatic audio/video conversion.
 
 == Description ==
 
 BuddyPress Media adds Photos, Music, Videos & Albums to your BuddyPress powered social network. Supports mobile devices (Android/iPhone/iPad, etc) and automatic audio/video conversion.
+
+= Important =
+
+Your favourite plugin is undergoing some transformation. This is the last release of the plugin under the name BuddyPress Media. Henceforth, the plugin will be called **rtMedia** for WordPress, BuddyPress and bbPress.
+In addition to the existing features, rtMedia contains:
+
+ * *Anywhere* uploader: Let your users upload from anywhere using a shortcode or a template tag, even from a widget.
+ * *Anywhere* media: rtMedia will work not just on BuddyPress profiles and groups. It will even work for custom posts, bbPress and even comments.
+ * Custom global albums: Toggle album functionality and create default custom albums for all your users.
+ * Universal albums: Any post/page or custom post type can become an album in rtMedia.
+ * Advanced templating system: Completely customise the look and feel using templates.
+ * Custom file type support: Add custom file types: documents, pdf, etc.
+ * Custom tab support: Mix and match your media to create custom tabs.
+ * Keywords and WordPress taxonomy support.
+ * Slick AJAX ui, for the uploader and media display. Better lightbox and navigation.
+ * Full multisite support for all BuddyPress environment.
+ * Encoding support for WordPress attachments.
+ * RESTful API that will integrate well with any other application.
+
+Along with a hot of feature improvements and bug fixing.
+
+
 
 = Demo & Code =
 * [BuddyPress Media **Demo**](http://demo.rtcamp.com/buddypress-media/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media) (Stand-alone, includes Instagram and Photo tagging addon)
@@ -119,6 +141,11 @@ Please visit [BuddyPress Media's Features page](http://rtcamp.com/buddypress-med
 == Changelog ==
 
 Please visit [BuddyPress Media's Roadmap page](http://rtcamp.com/buddypress-media/roadmap/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "Visit BuddyPress Media's Features page") to get some details about future releases.
+
+= 2.14 =
+* Improves admin ui, preview of things to come.
+* Fixes some bugs.
+* Last release as BuddyPress Media. Now onwards, will be called rtMedia for WordPress, BuddyPress and bbPress.
 
 = 2.13.2 =
 * Adds parameter to include/exclude media title in shortcode
@@ -409,5 +436,5 @@ Please visit [BuddyPress Media's Roadmap page](http://rtcamp.com/buddypress-medi
 * HTML5 Video Tag Support (with fallback)
 
 == Upgrade Notice ==
-= 2.13.2 =
-Bug fixes and shortcode enhancements
+= 2.14 =
+Admin refactor

@@ -240,7 +240,7 @@ img.bp-media-donation-image{display:block;margin: 10px auto;}
 .media #item-body .bp-media-gallery h3 { float:none; }
 .media .bp-media-album-actions {float: left; margin-left: 15px;}
 .media .bulk-move, .media .bulk-delete {display: none;}
-.media h3 {display:block;font-size:20px;font-weight:bold;}
+.bp-media-list h3 {display:block;font-size:20px;font-weight:bold;}
 ul.bp-media-gallery{overflow: hidden}
 .bp_media_description {display:block;margin-top:20px;}
 #bp-media-upload-form, #message, .bp-media-action-wrapper, #bp-media-user-privacy {clear:left;}
@@ -256,7 +256,7 @@ ul.bp-media-gallery li span img{height: 150px;}
 .bp-media-single .activity-list .activity-content,.bp-media-single div.activity-comments{margin-left:0;}
 #bp-media-selected-album{max-width: 320px;}
 /*li.media div.activity-content div.activity-inner p{display:none;}*/
-.media h3{margin-bottom:10px;}
+.bp-media-list h3{margin-bottom:10px;}
 #bp-media-footer {color: #4D4D4D;text-align: center;text-shadow: #FAFAFA 1px 1px 0;}
 /*#bp-media-upload-ui{position: relative;}*/
 #item-body:after,ul.bp-media-gallery.item-list:after{content: " ";clear: both;display: block;text-indent: -9999em;}
