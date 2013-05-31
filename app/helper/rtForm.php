@@ -175,10 +175,13 @@ if(!class_exists("rtForm")) {
 			return $html;
 		}
 
-		private function container_enclosed_elements($element, $id, $attrib, $rtForm_options) {
+		private function container_enclosed_elements($element, $attrib, $rtForm_options) {
 
 			$html = '';
 			$size = count($rtForm_options);
+			if( isset($attrib['id']) )
+				$id = $attrib['id'];
+
 			foreach ($rtForm_options as $opt) {
 
 				if( isset($attrib['id']) && $size>1 ) {
@@ -454,7 +457,7 @@ if(!class_exists("rtForm")) {
 			$html = '';
 
 			$meta = $this->parse_multiple_options($element, $attributes);
-			$html .= $this->container_enclosed_elements($element, $attributes['id'], $meta['attrib'], $meta['rtForm_options']);
+			$html .= $this->container_enclosed_elements($element, $meta['attrib'], $meta['rtForm_options']);
 
 			if($attributes['show_desc'])
 				$html .= $this->generate_element_desc($attributes);
@@ -488,7 +491,7 @@ if(!class_exists("rtForm")) {
 			$html = '';
 
 			$meta = $this->parse_multiple_options($element, $attributes);
-			$html .= $this->container_enclosed_elements($element, $attributes['id'], $meta['attrib'], $meta['rtForm_options']);
+			$html .= $this->container_enclosed_elements($element, $meta['attrib'], $meta['rtForm_options']);
 
 			if($attributes['show_desc'])
 				$html .= $this->generate_element_desc($attributes);
@@ -545,7 +548,7 @@ if(!class_exists("rtForm")) {
 				$html .= '>';
 
 				$meta = $this->parse_multiple_options($element, $attributes);
-				$html .= $this->container_enclosed_elements($element, $attributes['id'], $meta['attrib'], $meta['rtForm_options']);
+				$html .= $this->container_enclosed_elements($element, $meta['attrib'], $meta['rtForm_options']);
 
 				$html .= '</select>';
 
