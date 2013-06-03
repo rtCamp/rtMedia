@@ -63,35 +63,42 @@ if (!class_exists('BPMediaAdmin')) {
 		 * @param type $hook
 		 */
 		public function ui($hook) {
-			$admin_ajax = admin_url('admin-ajax.php');
+			
+			$admin_pages = array('toplevel_page_bp-media-settings', 'buddypress-media_page_bp-media-addons', 'buddypress-media_page_bp-media-support', 'buddypress-media_page_bp-media-importer');
 
-			wp_enqueue_script('bootstrap-switch', BP_MEDIA_URL . 'app/assets/js/bootstrap-switch.js', array('jquery'), BP_MEDIA_VERSION);
-			wp_enqueue_script('slider-tabs', BP_MEDIA_URL . 'app/assets/js/jquery.sliderTabs.min.js', array('jquery', 'jquery-effects-core'), BP_MEDIA_VERSION);
-			wp_enqueue_script('power-tip', BP_MEDIA_URL . 'app/assets/js/jquery.powertip.min.js', array('jquery'), BP_MEDIA_VERSION);
-			wp_enqueue_script('bp-media-admin', BP_MEDIA_URL . 'app/assets/js/admin.js', array('jquery-ui-dialog'), BP_MEDIA_VERSION);
-			wp_localize_script('bp-media-admin', 'bp_media_admin_ajax', $admin_ajax);
-			wp_localize_script('bp-media-admin', 'bp_media_admin_url', admin_url());
-			$bp_media_admin_strings = array(
-				'no_refresh' => __('Please do not refresh this page.', 'buddypress-media'),
-				'something_went_wrong' => __('Something went wronng. Please <a href onclick="location.reload();">refresh</a> page.', 'buddypress-media'),
-				'are_you_sure' => __('This will subscribe you to the free plan.', 'buddypress-media'),
-				'disable_encoding' => __('Are you sure you want to disable the encoding service? Make sure you note your api key before disabling it incase you want to activate it in future.', 'buddypress-media')
-			);
-			wp_localize_script('bp-media-admin', 'bp_media_admin_strings', $bp_media_admin_strings);
-			wp_localize_script('bp-media-admin', 'settings_url', add_query_arg(
-							array('page' => 'bp-media-settings'), (is_multisite() ? network_admin_url('admin.php') : admin_url('admin.php'))
-					) . '#privacy_enabled');
-			wp_localize_script('bp-media-admin', 'settings_bp_album_import_url', add_query_arg(
-							array('page' => 'bp-media-settings'), (is_multisite() ? network_admin_url('admin.php') : admin_url('admin.php'))
-			));
-			wp_enqueue_style('font-awesome', BP_MEDIA_URL . 'app/assets/css/font-awesome.min.css', '', BP_MEDIA_VERSION);
-			wp_enqueue_style('bootstrap-switch', BP_MEDIA_URL . 'app/assets/css/bootstrap-switch.css', '', BP_MEDIA_VERSION);
-			wp_enqueue_style('slider-tabs', BP_MEDIA_URL . 'app/assets/css/jquery.sliderTabs.min.css', '', BP_MEDIA_VERSION);
-			wp_enqueue_style('power-tip', BP_MEDIA_URL . 'app/assets/css/jquery.powertip.min.css', '', BP_MEDIA_VERSION);
-			wp_enqueue_style('grid-foundation', BP_MEDIA_URL . 'app/assets/css/grid-foundation.css', '', BP_MEDIA_VERSION);
-			wp_enqueue_style('bp-media-main', BP_MEDIA_URL . 'app/assets/css/main.css', '', BP_MEDIA_VERSION);
-			wp_enqueue_style('bp-media-admin', BP_MEDIA_URL . 'app/assets/css/admin.css', '', BP_MEDIA_VERSION);
-			wp_enqueue_style('wp-jquery-ui-dialog');
+			if(in_array($hook, $admin_pages)) {
+			
+				$admin_ajax = admin_url('admin-ajax.php');
+
+				wp_enqueue_script('bootstrap-switch', BP_MEDIA_URL . 'app/assets/js/bootstrap-switch.js', array('jquery'), BP_MEDIA_VERSION);
+				wp_enqueue_script('slider-tabs', BP_MEDIA_URL . 'app/assets/js/jquery.sliderTabs.min.js', array('jquery', 'jquery-effects-core'), BP_MEDIA_VERSION);
+				wp_enqueue_script('power-tip', BP_MEDIA_URL . 'app/assets/js/jquery.powertip.min.js', array('jquery'), BP_MEDIA_VERSION);
+				wp_enqueue_script('bp-media-admin', BP_MEDIA_URL . 'app/assets/js/admin.js', array('jquery-ui-dialog'), BP_MEDIA_VERSION);
+				wp_localize_script('bp-media-admin', 'bp_media_admin_ajax', $admin_ajax);
+				wp_localize_script('bp-media-admin', 'bp_media_admin_url', admin_url());
+				wp_localize_script('bp-media-admin', 'bp_media_admin_url', admin_url());
+				$bp_media_admin_strings = array(
+					'no_refresh' => __('Please do not refresh this page.', 'buddypress-media'),
+					'something_went_wrong' => __('Something went wronng. Please <a href onclick="location.reload();">refresh</a> page.', 'buddypress-media'),
+					'are_you_sure' => __('This will subscribe you to the free plan.', 'buddypress-media'),
+					'disable_encoding' => __('Are you sure you want to disable the encoding service? Make sure you note your api key before disabling it incase you want to activate it in future.', 'buddypress-media')
+				);
+				wp_localize_script('bp-media-admin', 'bp_media_admin_strings', $bp_media_admin_strings);
+				wp_localize_script('bp-media-admin', 'settings_url', add_query_arg(
+								array('page' => 'bp-media-settings'), (is_multisite() ? network_admin_url('admin.php') : admin_url('admin.php'))
+						) . '#privacy_enabled');
+				wp_localize_script('bp-media-admin', 'settings_bp_album_import_url', add_query_arg(
+								array('page' => 'bp-media-settings'), (is_multisite() ? network_admin_url('admin.php') : admin_url('admin.php'))
+				));
+				wp_enqueue_style('font-awesome', BP_MEDIA_URL . 'app/assets/css/font-awesome.min.css', '', BP_MEDIA_VERSION);
+				wp_enqueue_style('bootstrap-switch', BP_MEDIA_URL . 'app/assets/css/bootstrap-switch.css', '', BP_MEDIA_VERSION);
+				wp_enqueue_style('slider-tabs', BP_MEDIA_URL . 'app/assets/css/jquery.sliderTabs.min.css', '', BP_MEDIA_VERSION);
+				wp_enqueue_style('power-tip', BP_MEDIA_URL . 'app/assets/css/jquery.powertip.min.css', '', BP_MEDIA_VERSION);
+				wp_enqueue_style('grid-foundation', BP_MEDIA_URL . 'app/assets/css/grid-foundation.css', '', BP_MEDIA_VERSION);
+				wp_enqueue_style('bp-media-main', BP_MEDIA_URL . 'app/assets/css/main.css', '', BP_MEDIA_VERSION);
+				wp_enqueue_style('bp-media-admin', BP_MEDIA_URL . 'app/assets/css/admin.css', '', BP_MEDIA_VERSION);
+				wp_enqueue_style('wp-jquery-ui-dialog');
+			}
 		}
 
 		/**

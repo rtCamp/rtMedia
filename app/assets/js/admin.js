@@ -496,11 +496,9 @@ jQuery(document).ready(function(){
 	jQuery("[data-toggle='switch']").wrap('<div class="rt-switch" />').parent().bootstrapSwitch();
 
     try {
-        if(tooltip_ids != undefined) {
-    	    jQuery(tooltip_ids).powerTip({
-    	        followMouse: true
-    	    });
-        }
+		jQuery('bpm-show-tooltip').powerTip({
+			followMouse: true
+		});
     } catch(e) {
         // no tooltip is defined
     }
