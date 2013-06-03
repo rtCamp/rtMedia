@@ -21,7 +21,7 @@ class BPMediaEncoding {
                 add_action('bp_media_before_default_admin_widgets', array($this, 'usage_widget'));
         }
         add_action('admin_init', array($this, 'save_api_key'), 1);
-        add_filter('bp_media_add_admin_bar_item', array($this, 'admin_bar_menu'));
+//        add_filter('bp_media_add_admin_bar_item', array($this, 'admin_bar_menu'));
         if ($this->api_key) {
             $usage_info = bp_get_option('bp-media-encoding-usage');
             if ($usage_info) {

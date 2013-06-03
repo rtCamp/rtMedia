@@ -23,6 +23,26 @@ if (!class_exists('BPMediaAddon')) {
                     . '</a>';
         }
 
+		public static function render_addons($page = '') {
+			global $wp_settings_sections, $wp_settings_fields;
+
+			if ( ! isset( $wp_settings_sections ) || !isset( $wp_settings_sections[$page] ) )
+				return;
+
+			foreach ( (array) $wp_settings_sections[$page] as $section ) {
+
+				if ( $section['callback'] )
+					call_user_func( $section['callback'], $section );
+				
+				if ( ! isset( $wp_settings_fields ) || !isset( $wp_settings_fields[$page] ) || !isset( $wp_settings_fields[$page][$section['id']] ) )
+					continue;
+				
+				echo '<table class="form-table">';
+				do_settings_fields( $page, $section['id'] );
+				echo '</table>';
+			}
+		}
+		
         public function get_addons() {
 
 			$tabs = array();
@@ -39,12 +59,12 @@ if (!class_exists('BPMediaAddon')) {
 				'href' => '#bpm-services',
 				'callback' => array($bp_media_admin->bp_media_encoding, 'encoding_service_intro')
 			);
-			$tabs[] = array(
+/*			$tabs[] = array(
 				'title' => 'Themes',
 				'name' => __('Themes', 'buddypress-media'),
 				'href' => '#bpm-themes',
 				'callback' => array($this, 'themes_content')
-			);
+			);*/
 
 			?>
 			<div id="bpm-addons">
@@ -114,14 +134,19 @@ if (!class_exists('BPMediaAddon')) {
             );
             $addons = apply_filters('bp_media_addons', $addons);
 
-			foreach ($addons as $key => $addon) {
-                $this->addon($addon);
-                if ( $key == 1 ) {
-                    echo '<h3>';
-                    _e('BuddyPress Media Addons for Audio/Video');
-                    echo '</h3>';
-                }
-            }
+			foreach ($addons as $key => $value) {
+				
+				if($key == 0) {
+					echo '<h3>';
+					_e('BuddyPress Media Addons for Photos');
+					echo '</h3>';
+				} else if($key == 2) {
+					echo '<h3>';
+					_e('BuddyPress Media Addons for Audio/Video');
+					echo '</h3>';
+				}
+				$this->addon($value);
+			}
 		}
 
 		public function services_content($args = '') {
@@ -130,7 +155,7 @@ if (!class_exists('BPMediaAddon')) {
 			$objEncoding->encoding_service_intro();
 		}
 		
-		public function themes_content($param) {
+		public function themes_content($args = '') {
 			echo '<h3>Coming Soon !!</h3>';
 		}
 

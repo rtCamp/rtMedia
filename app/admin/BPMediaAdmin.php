@@ -171,7 +171,7 @@ if (!class_exists('BPMediaAdmin')) {
 				<h2 class="nav-tab-wrapper"><?php $this->bp_media_tabs(); ?></h2>
 				<?php settings_errors(); ?>
 				<div class="row">
-					<div id="bp-media-settings-boxes" class="columns large-6">
+					<div id="bp-media-settings-boxes" class="columns large-7">
 						<?php
 						$settings_url = ( is_multisite() ) ? network_admin_url('edit.php?action=' . $option_group) : 'options.php';
 						?>
@@ -190,22 +190,26 @@ if (!class_exists('BPMediaAdmin')) {
 							</form><?php } else {
 									?>
 							<div class="bp-media-metabox-holder">
-								
-								
-								<?php do_settings_sections($page); ?>
+
+								<?php
+									if( $page == 'bp-media-addons' )
+										BPMediaAddon::render_addons ($page);
+									else
+										do_settings_sections($page);
+								?>
 								<div class="rt-link alignright"><?php _e('By', 'buddypress-media'); ?> <a href="http://rtcamp.com/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media" title="<?php _e('Empowering The Web With WordPress', 'buddypress-media'); ?>"><img src="<?php echo BP_MEDIA_URL; ?>app/assets/img/rtcamp-logo.png"></a></div>
 							</div><?php
+							do_action('bp_media_admin_page_append', $page);
 						}
 						?>
 
 
 					</div><!-- .bp-media-settings-boxes -->
-					<div class="metabox-holder bp-media-metabox-holder columns large-2">
+					<div class="metabox-holder bp-media-metabox-holder columns large-3">
 						<?php $this->admin_sidebar(); ?>
 					</div>
 				</div><!-- .metabox-holder -->
 			</div><!-- .bp-media-admin --><?php
-			do_action('bp_media_admin_page_append', $page);
 		}
 
 		/**
@@ -453,11 +457,11 @@ if (!class_exists('BPMediaAdmin')) {
 			$addons = '<div id="social" class="row">
 							<label class="columns large-6 large-offset-2" for="bp-media-add-linkback"><input' . checked(bp_get_option('bp_media_add_linkback', false), true, false) . ' type="checkbox" name="bp-media-add-linkback" value="1" id="bp-media-add-linkback"/> ' . __('Add link to footer', 'buddypress-media') . '</label>
 							<div class="row">
-								<div class="columns large-4 pull-left"><iframe src="//www.facebook.com/plugins/like.php?href=http%3A%2F%2Frtcamp.com%2Fbuddypress-media%2F&amp;send=false&amp;layout=button_count&amp;width=72&amp;show_faces=false&amp;font&amp;colorscheme=light&amp;action=like&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:72px; height:21px; margin-top: 5px;" allowTransparency="true"></iframe></div>
+								<div class="columns large-4 pull-left"><iframe src="//www.facebook.com/plugins/like.php?href=http%3A%2F%2Frtcamp.com%2Fbuddypress-media%2F&amp;send=false&amp;layout=button_count&amp;width=72&amp;show_faces=false&amp;font&amp;colorscheme=light&amp;action=like&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:110px; height:21px; margin-top: 5px;" allowTransparency="true"></iframe></div>
 								<div class="columns large-4 pull-right"><a href="https://www.facebook.com/sharer/sharer.php?u=http://rtcamp.com/buddypress-media/" class="button" target="_blank"> <i class="icon-facebook"></i> ' . __('Share', 'buddypress-media') . '</a></div>
 							</div>
 							<div class="row">
-								<div class="columns large-4 pull-left"><iframe allowtransparency="true" frameborder="0" scrolling="no" src="//platform.twitter.com/widgets/follow_button.html?screen_name=buddypressmedia&show_count=false" style="width:109px; height:21px; margin-top: 5px;"></iframe></div>
+								<div class="columns large-4 pull-left"><iframe allowtransparency="true" frameborder="0" scrolling="no" src="//platform.twitter.com/widgets/follow_button.html?screen_name=buddypressmedia&show_count=false" style="width:110px; height:21px; margin-top: 5px;"></iframe></div>
 								<div class="columns large-4 pull-right"><a href="http://twitter.com/home/?status=' . $message . '" class="button button-tweet" target= "_blank"><i class="icon-twitter"></i> ' . __('Tweet', 'buddypress-media') . '</a></div>
 							</div>
 							<div class="row">
