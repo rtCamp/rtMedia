@@ -32,7 +32,7 @@ div#icon-buddypress-media { background: url('../img/bpm-icon-32.png'); backgroun
 #branding{min-height: 25px;}
 #branding .inside{min-height: 25px;}
 #branding #logo{text-align:center;padding: 10px 0;display:block;}
-#social{display:block;text-align:center;margin:0;clear: both;}
+#social{display:block;margin:0;clear: both;}
 #branding #mc-embedded-subscribe-form{float: left;width: 100%;}
 #branding label{float: right;}
 #branding #mc-embedded-subscribe{float: right;padding: 0 3px;}
@@ -40,7 +40,7 @@ div#icon-buddypress-media { background: url('../img/bpm-icon-32.png'); backgroun
 #social li{display:inline; vertical-align: middle;}
 #spread-the-word .button{display:inline-block; margin: 5px 0px;}
 #spread-the-word label{display:block;}
-#spread-the-word .inside{text-align: center;}
+#spread-the-word .inside{}
 #spread-the-word .button-tweet, #bpmedia-bpalbumimporter .button-import-tweet{background: #33ACE6; border-color: #3399DD #3399DD #2288CC;  color: #FFFFFF !important; text-shadow: -1px -1px 0 #3399DD;}
 #spread-the-word .button-tweet:hover, #bpmedia-bpalbumimporter .button-import-tweet:hover{background: #3399DD;border-color: #2288CC;box-shadow: 0 0 4px rgba(82, 168, 236, 0.75);}
 #spread-the-word .button-rating{background: #8A8A8A; border-color: #222; color: #FFFFFF !important; text-shadow: -1px -1px 0 #444;}

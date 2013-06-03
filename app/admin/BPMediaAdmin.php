@@ -63,37 +63,42 @@ if (!class_exists('BPMediaAdmin')) {
 		 * @param type $hook
 		 */
 		public function ui($hook) {
-			$admin_ajax = admin_url('admin-ajax.php');
+			
+			$admin_pages = array('toplevel_page_bp-media-settings', 'buddypress-media_page_bp-media-addons', 'buddypress-media_page_bp-media-support', 'buddypress-media_page_bp-media-importer');
 
-			wp_enqueue_script('bootstrap-switch', BP_MEDIA_URL . 'app/assets/js/bootstrap-switch.js', array('jquery'), BP_MEDIA_VERSION);
-			if (!wp_script_is("jquery-effects-core"))
-				wp_enqueue_script("jquery-effects-core");
-			wp_enqueue_script('slider-tabs', BP_MEDIA_URL . 'app/assets/js/jquery.sliderTabs.min.js', array('jquery-effects-core'), BP_MEDIA_VERSION,true);
-			wp_enqueue_script('power-tip', BP_MEDIA_URL . 'app/assets/js/jquery.powertip.min.js', array('jquery'), BP_MEDIA_VERSION);
-			wp_enqueue_script('bp-media-admin', BP_MEDIA_URL . 'app/assets/js/admin.js', array('slider-tabs','jquery-ui-dialog'), BP_MEDIA_VERSION,true);
-			wp_localize_script('bp-media-admin', 'bp_media_admin_ajax', $admin_ajax);
-			wp_localize_script('bp-media-admin', 'bp_media_admin_url', admin_url());
-			$bp_media_admin_strings = array(
-				'no_refresh' => __('Please do not refresh this page.', 'buddypress-media'),
-				'something_went_wrong' => __('Something went wronng. Please <a href onclick="location.reload();">refresh</a> page.', 'buddypress-media'),
-				'are_you_sure' => __('This will subscribe you to the free plan.', 'buddypress-media'),
-				'disable_encoding' => __('Are you sure you want to disable the encoding service? Make sure you note your api key before disabling it incase you want to activate it in future.', 'buddypress-media')
-			);
-			wp_localize_script('bp-media-admin', 'bp_media_admin_strings', $bp_media_admin_strings);
-			wp_localize_script('bp-media-admin', 'settings_url', add_query_arg(
-							array('page' => 'bp-media-settings'), (is_multisite() ? network_admin_url('admin.php') : admin_url('admin.php'))
-					) . '#privacy_enabled');
-			wp_localize_script('bp-media-admin', 'settings_bp_album_import_url', add_query_arg(
-							array('page' => 'bp-media-settings'), (is_multisite() ? network_admin_url('admin.php') : admin_url('admin.php'))
-			));
-			wp_enqueue_style('font-awesome', BP_MEDIA_URL . 'app/assets/css/font-awesome.min.css', '', BP_MEDIA_VERSION);
-			wp_enqueue_style('bootstrap-switch', BP_MEDIA_URL . 'app/assets/css/bootstrap-switch.css', '', BP_MEDIA_VERSION);
-			wp_enqueue_style('slider-tabs', BP_MEDIA_URL . 'app/assets/css/jquery.sliderTabs.min.css', '', BP_MEDIA_VERSION);
-			wp_enqueue_style('power-tip', BP_MEDIA_URL . 'app/assets/css/jquery.powertip.min.css', '', BP_MEDIA_VERSION);
-			wp_enqueue_style('grid-foundation', BP_MEDIA_URL . 'app/assets/css/grid-foundation.css', '', BP_MEDIA_VERSION);
-			wp_enqueue_style('bp-media-main', BP_MEDIA_URL . 'app/assets/css/main.css', '', BP_MEDIA_VERSION);
-			wp_enqueue_style('bp-media-admin', BP_MEDIA_URL . 'app/assets/css/admin.css', '', BP_MEDIA_VERSION);
-			wp_enqueue_style('wp-jquery-ui-dialog');
+			if(in_array($hook, $admin_pages)) {
+			
+				$admin_ajax = admin_url('admin-ajax.php');
+
+				wp_enqueue_script('bootstrap-switch', BP_MEDIA_URL . 'app/assets/js/bootstrap-switch.js', array('jquery'), BP_MEDIA_VERSION);
+				wp_enqueue_script('slider-tabs', BP_MEDIA_URL . 'app/assets/js/jquery.sliderTabs.min.js', array('jquery', 'jquery-effects-core'), BP_MEDIA_VERSION);
+				wp_enqueue_script('power-tip', BP_MEDIA_URL . 'app/assets/js/jquery.powertip.min.js', array('jquery'), BP_MEDIA_VERSION);
+				wp_enqueue_script('bp-media-admin', BP_MEDIA_URL . 'app/assets/js/admin.js', array('jquery-ui-dialog'), BP_MEDIA_VERSION);
+				wp_localize_script('bp-media-admin', 'bp_media_admin_ajax', $admin_ajax);
+				wp_localize_script('bp-media-admin', 'bp_media_admin_url', admin_url());
+				wp_localize_script('bp-media-admin', 'bp_media_admin_url', admin_url());
+				$bp_media_admin_strings = array(
+					'no_refresh' => __('Please do not refresh this page.', 'buddypress-media'),
+					'something_went_wrong' => __('Something went wronng. Please <a href onclick="location.reload();">refresh</a> page.', 'buddypress-media'),
+					'are_you_sure' => __('This will subscribe you to the free plan.', 'buddypress-media'),
+					'disable_encoding' => __('Are you sure you want to disable the encoding service? Make sure you note your api key before disabling it incase you want to activate it in future.', 'buddypress-media')
+				);
+				wp_localize_script('bp-media-admin', 'bp_media_admin_strings', $bp_media_admin_strings);
+				wp_localize_script('bp-media-admin', 'settings_url', add_query_arg(
+								array('page' => 'bp-media-settings'), (is_multisite() ? network_admin_url('admin.php') : admin_url('admin.php'))
+						) . '#privacy_enabled');
+				wp_localize_script('bp-media-admin', 'settings_bp_album_import_url', add_query_arg(
+								array('page' => 'bp-media-settings'), (is_multisite() ? network_admin_url('admin.php') : admin_url('admin.php'))
+				));
+				wp_enqueue_style('font-awesome', BP_MEDIA_URL . 'app/assets/css/font-awesome.min.css', '', BP_MEDIA_VERSION);
+				wp_enqueue_style('bootstrap-switch', BP_MEDIA_URL . 'app/assets/css/bootstrap-switch.css', '', BP_MEDIA_VERSION);
+				wp_enqueue_style('slider-tabs', BP_MEDIA_URL . 'app/assets/css/jquery.sliderTabs.min.css', '', BP_MEDIA_VERSION);
+				wp_enqueue_style('power-tip', BP_MEDIA_URL . 'app/assets/css/jquery.powertip.min.css', '', BP_MEDIA_VERSION);
+				wp_enqueue_style('grid-foundation', BP_MEDIA_URL . 'app/assets/css/grid-foundation.css', '', BP_MEDIA_VERSION);
+				wp_enqueue_style('bp-media-main', BP_MEDIA_URL . 'app/assets/css/main.css', '', BP_MEDIA_VERSION);
+				wp_enqueue_style('bp-media-admin', BP_MEDIA_URL . 'app/assets/css/admin.css', '', BP_MEDIA_VERSION);
+				wp_enqueue_style('wp-jquery-ui-dialog');
+			}
 		}
 
 		/**
@@ -173,7 +178,7 @@ if (!class_exists('BPMediaAdmin')) {
 				<h2 class="nav-tab-wrapper"><?php $this->bp_media_tabs(); ?></h2>
 				<?php settings_errors(); ?>
 				<div class="row">
-					<div id="bp-media-settings-boxes" class="columns large-6">
+					<div id="bp-media-settings-boxes" class="columns large-7">
 						<?php
 						$settings_url = ( is_multisite() ) ? network_admin_url('edit.php?action=' . $option_group) : 'options.php';
 						?>
@@ -192,22 +197,26 @@ if (!class_exists('BPMediaAdmin')) {
 							</form><?php } else {
 									?>
 							<div class="bp-media-metabox-holder">
-								
-								
-								<?php do_settings_sections($page); ?>
+
+								<?php
+									if( $page == 'bp-media-addons' )
+										BPMediaAddon::render_addons ($page);
+									else
+										do_settings_sections($page);
+								?>
 								<div class="rt-link alignright"><?php _e('By', 'buddypress-media'); ?> <a href="http://rtcamp.com/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media" title="<?php _e('Empowering The Web With WordPress', 'buddypress-media'); ?>"><img src="<?php echo BP_MEDIA_URL; ?>app/assets/img/rtcamp-logo.png"></a></div>
 							</div><?php
+							do_action('bp_media_admin_page_append', $page);
 						}
 						?>
 
 
 					</div><!-- .bp-media-settings-boxes -->
-					<div class="metabox-holder bp-media-metabox-holder columns large-2">
+					<div class="metabox-holder bp-media-metabox-holder columns large-3">
 						<?php $this->admin_sidebar(); ?>
 					</div>
 				</div><!-- .metabox-holder -->
 			</div><!-- .bp-media-admin --><?php
-			do_action('bp_media_admin_page_append', $page);
 		}
 
 		/**
@@ -455,11 +464,11 @@ if (!class_exists('BPMediaAdmin')) {
 			$addons = '<div id="social" class="row">
 							<label class="columns large-6 large-offset-2" for="bp-media-add-linkback"><input' . checked(bp_get_option('bp_media_add_linkback', false), true, false) . ' type="checkbox" name="bp-media-add-linkback" value="1" id="bp-media-add-linkback"/> ' . __('Add link to footer', 'buddypress-media') . '</label>
 							<div class="row">
-								<div class="columns large-4 pull-left"><iframe src="//www.facebook.com/plugins/like.php?href=http%3A%2F%2Frtcamp.com%2Fbuddypress-media%2F&amp;send=false&amp;layout=button_count&amp;width=72&amp;show_faces=false&amp;font&amp;colorscheme=light&amp;action=like&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:72px; height:21px; margin-top: 5px;" allowTransparency="true"></iframe></div>
+								<div class="columns large-4 pull-left"><iframe src="//www.facebook.com/plugins/like.php?href=http%3A%2F%2Frtcamp.com%2Fbuddypress-media%2F&amp;send=false&amp;layout=button_count&amp;width=72&amp;show_faces=false&amp;font&amp;colorscheme=light&amp;action=like&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:110px; height:21px; margin-top: 5px;" allowTransparency="true"></iframe></div>
 								<div class="columns large-4 pull-right"><a href="https://www.facebook.com/sharer/sharer.php?u=http://rtcamp.com/buddypress-media/" class="button" target="_blank"> <i class="icon-facebook"></i> ' . __('Share', 'buddypress-media') . '</a></div>
 							</div>
 							<div class="row">
-								<div class="columns large-4 pull-left"><iframe allowtransparency="true" frameborder="0" scrolling="no" src="//platform.twitter.com/widgets/follow_button.html?screen_name=buddypressmedia&show_count=false" style="width:109px; height:21px; margin-top: 5px;"></iframe></div>
+								<div class="columns large-4 pull-left"><iframe allowtransparency="true" frameborder="0" scrolling="no" src="//platform.twitter.com/widgets/follow_button.html?screen_name=buddypressmedia&show_count=false" style="width:110px; height:21px; margin-top: 5px;"></iframe></div>
 								<div class="columns large-4 pull-right"><a href="http://twitter.com/home/?status=' . $message . '" class="button button-tweet" target= "_blank"><i class="icon-twitter"></i> ' . __('Tweet', 'buddypress-media') . '</a></div>
 							</div>
 							<div class="row">
