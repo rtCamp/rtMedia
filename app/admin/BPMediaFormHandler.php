@@ -244,19 +244,15 @@ class BPMediaFormHandler {
 		echo '<div class="rt-table large-12">';
 
 		//header
-		$tooltip_ids = '';
 		echo '<div class="row rt-header">';
 		foreach ($headers as $val) {
 			if( isset($val['desc']) && !empty($val['desc']) ) {
-				echo '<h4 id="' . $val['id'] . '" class="columns ' . $val['class'] . '" title="' . $val['desc'] . '"><abbr>' . $val['title'] . '</abbr></h4>';
-				$tooltip_ids .= '#' . $val['id'] . ',';
+				echo '<h4 id="' . $val['id'] . '" class="bpm-show-tooltip columns ' . $val['class'] . '" title="' . $val['desc'] . '"><abbr>' . $val['title'] . '</abbr></h4>';
 			}
 			else
 				echo '<h4 " class="columns ' . $val['class'] . '">' . $val['title'] . '</h4>';
 		}
 		echo '</div>';
-		
-		$tooltip_ids = substr($tooltip_ids, 0, strlen($tooltip_ids)-1);
 
 		//body
 		$even = 0;
@@ -282,9 +278,6 @@ class BPMediaFormHandler {
 		}
 		?>
 		</div>
-		<script type="text/javascript">			
-			var tooltip_ids = '<?php echo $tooltip_ids;?>';
-		</script>
 		<?php
 	}
 

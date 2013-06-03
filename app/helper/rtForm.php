@@ -309,7 +309,7 @@ if(!class_exists("rtForm")) {
 				if( isset($attributes['label']) )
 					$html = $this->enclose_label($element, $html, $attributes['label']);
 
-				if($attributes['show_desc'])
+				if( isset($attributes['show_desc']) && $attributes['show_desc'] )
 					$html .= $this->generate_element_desc($attributes);
 
 				return $html;
@@ -340,7 +340,7 @@ if(!class_exists("rtForm")) {
 				if( isset($attributes['label']) )
 					$html = $this->enclose_label($element, $html, $attributes['label']);
 
-				if(isset($attributes['show_desc']))
+				if( isset($attributes['show_desc']) && $attributes['show_desc'] )
 					$html .= $this->generate_element_desc($attributes);
 
 				return $html;
@@ -371,7 +371,7 @@ if(!class_exists("rtForm")) {
 				if( isset($attributes['label']) )
 					$html = $this->enclose_label($element, $html, $attributes['label']);
 
-				if($attributes['show_desc'])
+				if( isset($attributes['show_desc']) && $attributes['show_desc'] )
 					$html .= $this->generate_element_desc($attributes);
 
 				return $html;
@@ -401,7 +401,7 @@ if(!class_exists("rtForm")) {
 				if( isset($attributes['label']) )
 					$html = $this->enclose_label($element, $html, $attributes['label']);
 
-				if($attributes['show_desc'])
+				if( isset($attributes['show_desc']) && $attributes['show_desc'] )
 					$html .= $this->generate_element_desc($attributes);
 
 				return $html;
@@ -459,7 +459,7 @@ if(!class_exists("rtForm")) {
 			$meta = $this->parse_multiple_options($element, $attributes);
 			$html .= $this->container_enclosed_elements($element, $meta['attrib'], $meta['rtForm_options']);
 
-			if($attributes['show_desc'])
+			if( isset($attributes['show_desc']) && $attributes['show_desc'] )
 				$html .= $this->generate_element_desc($attributes);
 
 			$container = '<span ';
@@ -493,7 +493,7 @@ if(!class_exists("rtForm")) {
 			$meta = $this->parse_multiple_options($element, $attributes);
 			$html .= $this->container_enclosed_elements($element, $meta['attrib'], $meta['rtForm_options']);
 
-			if($attributes['show_desc'])
+			if( isset($attributes['show_desc']) && $attributes['show_desc'] )
 				$html .= $this->generate_element_desc($attributes);
 
 			$container = '<span ';
@@ -555,7 +555,7 @@ if(!class_exists("rtForm")) {
 				if( isset($attributes['label']) )
 					$html = $this->enclose_label($element, $html, $attributes['label']);
 
-				if($attributes['show_desc'])
+				if( isset($attributes['show_desc']) && $attributes['show_desc'] )
 					$html .= $this->generate_element_desc($attributes);
 
 				return $html;

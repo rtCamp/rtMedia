@@ -470,7 +470,11 @@ jQuery(document).ready(function($){
     });
 
 
-    jQuery("#bpm-settings-tabs,#bpm-addons").sliderTabs();
+    jQuery("#bpm-settings-tabs,#bpm-addons").sliderTabs({
+        autoplay: false,
+        mousewheel: false,
+        defaultTab: 1
+    });
 
 	if(jQuery('#privacy_enabled').is(":checked")) {
 		jQuery(".privacy-driven-disable label input").prop("disabled",false);
@@ -491,9 +495,11 @@ jQuery(document).ready(function($){
 
 	jQuery("[data-toggle='switch']").wrap('<div class="rt-switch" />').parent().bootstrapSwitch();
 
-    if(tooltip_ids != undefined) {
-	    jQuery(tooltip_ids).powerTip({
-	        followMouse: true
-	    });
+    try {
+		jQuery('bpm-show-tooltip').powerTip({
+			followMouse: true
+		});
+    } catch(e) {
+        // no tooltip is defined
     }
 });

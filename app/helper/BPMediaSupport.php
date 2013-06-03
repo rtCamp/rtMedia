@@ -13,7 +13,7 @@ if (!class_exists('BPMediaSupport')) {
 
         public function __construct() {
             $this->debug_info();
-            add_action('bp_media_admin_page_append', array($this, 'debug_info_html'));
+            add_action('bp_media_admin_page_insert', array($this, 'debug_info_html'));
         }
 
         public function debug_info() {

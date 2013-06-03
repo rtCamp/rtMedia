@@ -68,11 +68,7 @@ abbr {
   font-style: italic;
 }
 
-/* line 67, ../sass/admin.scss */
-.bpm-wp-button {
-  height: 27px !important;
-}
-/* line 71, ../sass/admin.scss */
+/* line 69, ../sass/admin.scss */
 .bpm-wp-button .bpm-wp-icon {
   background-image: url(../img/wpmini-grey.png);
   width: 20px;
