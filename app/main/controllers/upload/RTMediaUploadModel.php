@@ -32,10 +32,12 @@ class RTMediaUploadModel {
 
 
     function sanitize_object() {
-        if (!$this->has_context())
-            $context = new RTMediaContext();
-			$this->upload['context']= $context->context;
-			$this->upload['context_id'] = $context->context_id;
+        if (!$this->has_context()){
+			
+			global $rt_media_interaction;
+			$this->upload['context']= $rt_media_interaction->context->type;
+			$this->upload['context_id'] = $rt_media_interaction->context->id;
+		}
 
         if (!is_array($this->upload['taxonomy']))
             $this->upload['taxonomy'] = array($this->upload['taxonomy']);

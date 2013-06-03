@@ -15,7 +15,8 @@ class RTMediaUploadShortcode {
         add_action('wp_footer', array($this, 'print_script'));
     }
 
-    function render() {
+    function render($attr) {
+		print_r($attr);
         $this->add_sc_script = true;
         $view = new RTMediaUploadView();
         return $view->render('upload/uploader.php');
