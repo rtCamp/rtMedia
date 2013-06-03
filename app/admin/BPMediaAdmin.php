@@ -63,11 +63,9 @@ if (!class_exists('BPMediaAdmin')) {
 		 * @param type $hook
 		 */
 		public function ui($hook) {
-
-			$admin_pages = array('toplevel_page_bp-media-settings', 'buddypress-media_page_bp-media-addons', 'buddypress-media_page_bp-media-support', 'buddypress-media_page_bp-media-importer');
+			$admin_pages = array('buddypress-media_page_bp-media-kaltura-settings','buddypress-media_page_bp-media-ffmpeg-settings','toplevel_page_bp-media-settings', 'buddypress-media_page_bp-media-addons', 'buddypress-media_page_bp-media-support', 'buddypress-media_page_bp-media-importer');
 
 			if(in_array($hook, $admin_pages)) {
-
 				$admin_ajax = admin_url('admin-ajax.php');
 
 				wp_enqueue_script('bootstrap-switch', BP_MEDIA_URL . 'app/assets/js/bootstrap-switch.js', array('jquery'), BP_MEDIA_VERSION);
@@ -182,16 +180,22 @@ if (!class_exists('BPMediaAdmin')) {
 						<?php
 						$settings_url = ( is_multisite() ) ? network_admin_url('edit.php?action=' . $option_group) : 'options.php';
 						?>
-						<?php if ($option_group) { ?>
+						<?php if ($option_group) { //$option_group if ($page == "bp-media-settings") ?>
 							<form id="bp_media_settings_form" name="bp_media_settings_form" action="<?php echo $settings_url; ?>" method="post" enctype="multipart/form-data">
 								<div class="bp-media-metabox-holder"><?php
 									settings_fields($option_group);
-
+                                                                        if ($page == "bp-media-settings") {
+                                                                            
+                                                                        
 									echo '<div id="bpm-settings-tabs">';
 										$sub_tabs = $this->settings_sub_tabs();
 										BPMediaFormHandler::rtForm_settings_tabs_content($page, $sub_tabs);
 									echo '</div>';
-									submit_button();
+                                                                        }else{
+                                                                            do_settings_sections($page);
+                                                                        }
+                                                                        submit_button();
+                                                                        
 									?><div class="rt-link alignright"><?php _e('By', 'buddypress-media'); ?> <a href="http://rtcamp.com/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media" title="<?php _e('Empowering The Web With WordPress', 'buddypress-media'); ?>"><img src="<?php echo BP_MEDIA_URL; ?>app/assets/img/rtcamp-logo.png"></a></div>
 								</div>
 							</form><?php } else {
@@ -259,26 +263,26 @@ if (!class_exists('BPMediaAdmin')) {
 
 			// Setup core admin tabs
 			$tabs = array(
-				'0' => array(
+				 array(
 					'href' => bp_get_admin_url(add_query_arg(array('page' => 'bp-media-settings'), 'admin.php')),
 					'name' => __('Settings', 'buddypress-media'),
 					'slug' => 'bp-media-settings'
 				),
-				'1' => array(
+				array(
 					'href' => bp_get_admin_url(add_query_arg(array('page' => 'bp-media-addons'), 'admin.php')),
 					'name' => __('Addons', 'buddypress-media'),
 					'slug' => 'bp-media-addons'
 				),
-				'2' => array(
+				array(
 					'href' => bp_get_admin_url(add_query_arg(array('page' => 'bp-media-support'), 'admin.php')),
 					'name' => __('Support', 'buddypress-media'),
 					'slug' => 'bp-media-support'
 				),
-				'3' => array(
+				array(
 					'href' => bp_get_admin_url(add_query_arg(array('page' => 'bp-media-importer'), 'admin.php')),
 					'name' => __('Importer', 'buddypress-media'),
 					'slug' => 'bp-media-importer'
-				),
+                        )
 			);
 
 			$tabs = apply_filters('bp_media_add_tabs', $tabs);
