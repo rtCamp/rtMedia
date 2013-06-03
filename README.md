@@ -149,6 +149,9 @@ Please visit [BuddyPress Media's Features page](http://rtcamp.com/buddypress-med
 ## Changelog ##
 
 Please visit [BuddyPress Media's Roadmap page](http://rtcamp.com/buddypress-media/roadmap/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "Visit BuddyPress Media's Features page") to get some details about future releases.
+#### 2.15 ####
+* Fixes bugs in Group settings
+* Fixes bugs in Addon settings
 
 #### 2.15 ####
 * Fixes bugs in Admin settings
@@ -446,4 +449,4 @@ Please visit [BuddyPress Media's Roadmap page](http://rtcamp.com/buddypress-medi
 * HTML5 Audio Tag Support (with fallback)
 * HTML5 Video Tag Support (with fallback)
 
-Bug fixes for admin screen
+Bug fixes for admin settings
