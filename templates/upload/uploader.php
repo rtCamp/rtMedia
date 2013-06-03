@@ -25,6 +25,21 @@
             <?php do_action('bp_media_after_uploader'); ?>
             
             <?php wp_nonce_field('bp_media_'.$mode, 'bp_media_upload_nonce'); ?>
+			
+			<?php
+
+			if( !empty($attr) ) {
+
+				foreach ($attr as $key=>$value) {
+					if($key == 'context')
+						echo '<input type="hidden" name="context" value="'.$value.'" />';
+					if($key == 'context_id')
+						echo '<input type="hidden" name="context_id" value="'.$value.'" />';
+					if($key == 'privacy')
+						echo '<input type="hidden" name="privacy" value="'.$value.'" />';
+				}
+			}
+			?>
 
             <input type="submit" name="bp-media-upload" value="<?php echo BP_MEDIA_UPLOAD_LABEL; ?>" />
         </form>
