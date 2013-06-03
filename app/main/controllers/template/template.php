@@ -7,7 +7,9 @@
 				$template = 'media-single';
 			}
 
-	include(BPMediaRtTemplate::locate_template( $template ));
+	include(RTMediaTemplate::locate_template( $template ));
+
+	print_r($rt_media_query);
 
 	get_sidebar();
 

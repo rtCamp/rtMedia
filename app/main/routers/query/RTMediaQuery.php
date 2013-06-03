@@ -50,6 +50,8 @@ class RTMediaQuery {
 	public $current_media = -1;
 	public $in_the_media_loop = false;
 
+	public $format = false;
+
 	/**
 	 * Initialise the query
 	 *
@@ -249,6 +251,7 @@ class RTMediaQuery {
 
 	function next_media() {
 		$this->current_media ++;
+		//print_r($this->media);
 
 		$this->rt_media = $this->media[ $this->current_media ];
 		return $this->rt_media;
