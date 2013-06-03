@@ -63,7 +63,7 @@ class RTMediaQuery {
 		// we only need information related to the media route
 		global $rt_media_interaction;
 
-		print_r($rt_media_interaction);
+		//print_r($rt_media_interaction);
 		$this->interaction = $rt_media_interaction->routes->media;
 
 		// set up the action query from the URL
@@ -80,6 +80,7 @@ class RTMediaQuery {
 			$this->query($args);
 
 		}
+
 	}
 
 	/**
@@ -95,6 +96,7 @@ class RTMediaQuery {
 	function set_action_query() {
 
 		$raw_query = $this->interaction->query_vars;
+		//print_r($raw_query);
 
 		if ( is_array( $raw_query ) && count( $raw_query ) ) {
 
@@ -103,6 +105,11 @@ class RTMediaQuery {
 			$attribute = false;
 			$modifier_type = false;
 			$modifier_value = false;
+			$format = '';
+
+			if(in_array('json',$raw_query)){
+				$this->format = 'json';
+			}
 
 			if ( is_numeric( $raw_query[ 0 ] ) ) {
 				$modifier_type = 'id';
@@ -136,6 +143,7 @@ class RTMediaQuery {
 				'attribute'		=> $attribute,
 				'bulk'			=> true
 			);
+
 		}
 	}
 

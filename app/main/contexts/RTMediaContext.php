@@ -29,11 +29,10 @@ class RTMediaContext {
 
     function set_wp_context() {
         global $post;
-		print_r($post);
-		//if(isset($post->post_type)){
+		if(isset($post->post_type)){
 			$this->type = $post->post_type;
 			$this->id = $post->ID;
-		//}
+		}
     }
 
     function set_bp_context() {
