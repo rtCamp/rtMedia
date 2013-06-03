@@ -201,14 +201,14 @@ class BPMediaEncoding {
             }
             add_action('admin_notices', array($this, 'successfully_subscribed_notice'));
         }
-        if (isset($_GET['apikey']) && is_admin() && isset($_GET['page']) && ($_GET['page'] == 'bp-media-encoding') && $this->is_valid_key($_GET['apikey'])) {
+        if (isset($_GET['apikey']) && is_admin() && isset($_GET['page']) && ($_GET['page'] == 'bp-media-addons') && $this->is_valid_key($_GET['apikey'])) {
             if ($this->api_key && !(isset($_GET['update']) && $_GET['update'])) {
                 $unsubscribe_url = trailingslashit($this->api_url) . 'api/cancel/' . $this->api_key;
                 wp_remote_post($unsubscribe_url, array('timeout' => 120, 'body' => array('note' => 'Direct URL Input (API Key: ' . $_GET['apikey'] . ')')));
             }
             bp_update_option('bp-media-encoding-api-key', $_GET['apikey']);
             $usage_info = $this->update_usage($_GET['apikey']);
-            $return_page = add_query_arg(array('page' => 'bp-media-encoding', 'api_key_updated' => $usage_info->plan->name), (is_multisite() ? network_admin_url('admin.php') : admin_url('admin.php')));
+            $return_page = add_query_arg(array('page' => 'bp-media-addons', 'api_key_updated' => $usage_info->plan->name), (is_multisite() ? network_admin_url('admin.php') : admin_url('admin.php')));
             wp_safe_redirect($return_page);
         }
     }
@@ -221,7 +221,7 @@ class BPMediaEncoding {
 
     public function encoding_service_notice() {
         $link = add_query_arg(
-                array('page' => 'bp-media-encoding'), (is_multisite() ? network_admin_url('admin.php') : admin_url('admin.php'))
+                array('page' => 'bp-media-addons'), (is_multisite() ? network_admin_url('admin.php') : admin_url('admin.php'))
                 )
         ?>
         <div class="updated">
@@ -240,7 +240,7 @@ class BPMediaEncoding {
         if ($this->api_key)
             $this->update_usage($this->api_key);
         $action = $this->sandbox_testing ? 'https://sandbox.paypal.com/cgi-bin/webscr' : 'https://www.paypal.com/cgi-bin/webscr';
-        $return_page = add_query_arg(array('page' => 'bp-media-encoding'), (is_multisite() ? network_admin_url('admin.php') : admin_url('admin.php')));
+        $return_page = add_query_arg(array('page' => 'bp-media-addons'), (is_multisite() ? network_admin_url('admin.php') : admin_url('admin.php')));
 
         $usage_details = bp_get_option('bp-media-encoding-usage');
         if (isset($usage_details[$this->api_key]->plan->name) && (strtolower($usage_details[$this->api_key]->plan->name) == strtolower($name)) && $usage_details[$this->api_key]->sub_status && !$force) {
