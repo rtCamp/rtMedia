@@ -10,7 +10,7 @@ class RTMediaUploadView {
     function __construct() {
     }
 
-    public function render($template_name) {
+    public function render($template_name, $attr) {
         $tabs = array(
           'file_upload' => array( 'title' => __('File Upload','buddypress-media'), 'content' => '<div id="drag-drop-area"><input type="file" name="bp_media_file" class="bp-media-upload-input bp-media-file" /><input id="browse-button" type="button" value="Upload Media" class="button"></div>' ),
           'link_input' => array( 'title' => __('Insert from URL','buddypress-media'),'content' => '<input type="url" name="bp-media-url" class="bp-media-upload-input bp-media-url" />' ),

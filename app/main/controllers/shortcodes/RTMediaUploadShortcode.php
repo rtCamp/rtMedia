@@ -16,10 +16,10 @@ class RTMediaUploadShortcode {
     }
 
     function render($attr) {
-		print_r($attr);
+
         $this->add_sc_script = true;
         $view = new RTMediaUploadView();
-        return $view->render('upload/uploader.php');
+        return $view->render('upload/uploader.php', $attr);
     }
 
     function register_script() {

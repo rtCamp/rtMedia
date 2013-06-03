@@ -16,11 +16,14 @@ class RTMediaUploadEndpoint {
 
 
     function template_redirect() {
+		error_log("redirect\n");
         if (!count($_POST)) {
+			error_log("404\n");
             include get_404_template();
         } else {
             $nonce = $_REQUEST['bp_media_upload_nonce'];
             $mode = $_REQUEST['mode'];
+			error_log("b4 verify nonce");
             if (wp_verify_nonce($nonce, 'bp_media_' . $mode)) {
                 $model = new RTMediaUploadModel();
                 $this->upload = $model->set_post_object();
