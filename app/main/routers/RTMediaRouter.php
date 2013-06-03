@@ -102,7 +102,6 @@ class RTMediaRouter {
 
 		// otherwise provide a hook for only this route,
 		// pass the slug to the function hooking here
-		echo 'wtf';
 		do_action("rt_media_{$this->slug}_redirect");
 
 	}

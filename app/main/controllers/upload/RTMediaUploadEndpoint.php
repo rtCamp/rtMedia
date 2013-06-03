@@ -7,6 +7,8 @@
  */
 class RTMediaUploadEndpoint {
 
+	public $upload;
+
     public function __construct() {
         add_action('rt_media_upload_redirect', array($this, 'template_redirect'));
         new RTMediaDelete(); // should be placed somewhere else ( just does the trick here )
