@@ -34,10 +34,12 @@ class RTMediaRouter {
 		//set up the slug for the route
 		$this->slug($slug);
 
-		// hook into the WordPress Rewrite Endpoint API
-		add_action( 'init', array( $this, 'endpoint' ) );
-		add_action( 'template_redirect', array( $this, 'template_redirect' ) );
-		add_filter( 'template_include', array( $this, 'template_include' ) );
+
+		$this->template_redirect();
+
+		//
+		add_filter('template_include', array($this,'template_include'));
+
 	}
 
 
@@ -67,15 +69,6 @@ class RTMediaRouter {
 
 
 	/**
-	 * Just adds the current /{slug}/ to the rewite endpoint
-	 */
-	function endpoint(){
-
-		add_rewrite_endpoint( $this->slug, EP_ALL );
-
-	}
-
-	/**
 	 * Checks if the route has been requested
 	 *
 	 * @global object $wp_query
@@ -102,7 +95,7 @@ class RTMediaRouter {
 
 		// otherwise provide a hook for only this route,
 		// pass the slug to the function hooking here
-		do_action("rt_media_{$this->slug}_redirect");
+		do_action("rt_media_".$this->slug."_redirect");
 
 	}
 
@@ -122,7 +115,15 @@ class RTMediaRouter {
 		// pass the template  and slug to the function hooking here
 		// so it can load a custom template
 
-		$template = apply_filters("rt_media_{$this->slug}_include",$template);
+
+		global $rt_media_query;
+
+		$template_load = new RTMediaTemplate();
+
+		$template = $template_load->set_template($template);
+
+
+		$template = apply_filters("rt_media_".$this->slug."_include",$template);
 
 		// return the template for inclusion in the theme
 
@@ -139,10 +140,11 @@ class RTMediaRouter {
 	function set_query_vars() {
 
 		global $wp_query;
-
 		$query_vars_array = explode('/',$wp_query->query_vars[ $this->slug ]);
 
 		$this->query_vars = apply_filters('rt_media_query_vars',$query_vars_array);
+
+		//print_r($this->query_vars);
 
 	}
 

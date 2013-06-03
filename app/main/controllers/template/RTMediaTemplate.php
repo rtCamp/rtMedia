@@ -11,9 +11,8 @@ class RTMediaTemplate {
 	public $media_args;
 
 	function __construct() {
-		add_action( 'rt_media_template_redirect', array( $this, 'template_redirect' ) );
-		add_filter( 'rt_media_template_include', array( $this, 'set_template' ) );
 		add_action( 'wp_enqueue_scripts', array( $this,'enqueue_scripts') );
+
 	}
 
 
@@ -24,17 +23,13 @@ class RTMediaTemplate {
 		wp_enqueue_script('rtmediamodel', RT_MEDIA_URL.'app/assets/js/backbone/models.js');
 	}
 
-	function template_redirect() {
-		$this->set_query();
-	}
-
 	function set_template($template) {
 
-		global $rt_media_query,$rt_media;
-		print_r($rt_media_query);
+		global $rt_media_query,$rt_media_interaction;
+		//print_r($rt_media_query);
 		$media_array = '';
 
-		if ( $rt_media->interaction->format != 'json' ) {
+		if ( $rt_media_query->format != 'json' ) {
 
 			include(RT_MEDIA_PATH . 'app/main/template/rt-template-functions.php');
 			return $this->get_template();
@@ -43,9 +38,9 @@ class RTMediaTemplate {
 
 
 			if($rt_media_query->media){
-                        foreach($rt_media_query->media as $media){
-                            $media_array[] = $media;
-                        }
+				foreach($rt_media_query->media as $media){
+					$media_array[] = $media;
+				}
 			}
 			echo json_encode( $media_array );
 			return;
@@ -75,23 +70,6 @@ class RTMediaTemplate {
 		}
 
 		return $located;
-	}
-
-
-	function set_query() {
-		global $rt_media_query, $rt_media;
-
-
-		$interaction = $rt_media->interaction;
-		$args = array(
-				'id'=> $interaction->media_id,
-				'media_type' => $interaction->media_type,
-				'context'	=> $interaction->context->type,
-				'context_id'	=> $interaction->context->id
-			);
-
-		$rt_media_query = new RTMediaQuery($args);
-
 	}
 
 

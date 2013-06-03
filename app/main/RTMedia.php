@@ -398,8 +398,7 @@ class RTMedia {
 //			new BPMediaActivity();
             $class_construct = array(
 				'interaction'	=> true,
-				'query'			=>true,
-				'template'	=> false,
+				//'template'	=> false,
                 'upload_shortcode' => false,
                 'upload_endpoint' => false,
 
@@ -428,6 +427,8 @@ class RTMedia {
             }
 
         }
+
+		global $rt_media_query;
 
         /**
          * Add admin notices
