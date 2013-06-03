@@ -22,8 +22,7 @@ class RTMediaInteraction {
 		// set up the routes
 		$this->set_routes();
 
-		// set up the context
-		$this->set_context();
+		add_action('template_include',array($this, 'set_context'));
 
 	}
 
@@ -75,6 +74,8 @@ class RTMediaInteraction {
 
 			$context_object = $this->default_context();
 		}
+
+		print_r(&$this);
 
 		//set the context property
 
