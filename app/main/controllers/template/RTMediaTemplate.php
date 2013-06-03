@@ -31,7 +31,7 @@ class RTMediaTemplate {
 
 		if ( $rt_media_query->format != 'json' ) {
 
-			include(RT_MEDIA_PATH . 'app/main/template/rt-template-functions.php');
+			include(RT_MEDIA_PATH . 'app/main/controllers/template/rt-template-functions.php');
 			return $this->get_template();
 
 		} else {
@@ -50,7 +50,7 @@ class RTMediaTemplate {
 
 	function get_template( ){
 
-		return apply_filters( 'rt_media_media_template_include', RT_MEDIA_PATH . 'app/main/template/template.php');
+		return apply_filters( 'rt_media_media_template_include', RT_MEDIA_PATH . 'app/main/controllers/template/template.php');
 
 	}
 
