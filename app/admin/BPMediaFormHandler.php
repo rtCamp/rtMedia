@@ -421,14 +421,21 @@ class BPMediaFormHandler {
 		global $wp_settings_sections, $wp_settings_fields;
 
 		if (!isset($wp_settings_fields) ||
-				!isset($wp_settings_fields[$page]) ||
-				!isset($wp_settings_fields[$page]['bpm-activity-upload']) ||
-				!isset($wp_settings_fields[$page]['bpm-media-lightbox']) ||
-				!isset($wp_settings_fields[$page]['bpm-media-fine']) ||
-				!isset($wp_settings_fields[$page]['bpm-miscellaneous']) )
+				!isset($wp_settings_fields[$page]) )
 			return;
 
-		$sections = array("bpm-activity-upload","bpm-media-lightbox","bpm-media-fine","bpm-miscellaneous");
+		$sections = array();
+
+		if( isset($wp_settings_fields[$page]['bpm-media-type']) )
+			$sections[] = "bpm-media-type";
+		if( isset($wp_settings_fields[$page]['bpm-activity-upload']) )
+			$sections[] = "bpm-activity-upload";
+		if( isset($wp_settings_fields[$page]['bpm-media-lightbox']) )
+			$sections[] = "bpm-media-lightbox";
+		if( isset($wp_settings_fields[$page]['bpm-media-fine']) )
+			$sections[] = "bpm-media-fine";
+		if( isset($wp_settings_fields[$page]['bpm-miscellaneous']) )
+			$sections[] = "bpm-miscellaneous";
 
 		echo '<div class="large-12">';
 		foreach ($sections as $section) {
