@@ -31,7 +31,7 @@ class RTMediaUploadModel {
             return false;
     }
 
-
+	
     function sanitize_object() {
         if (!$this->has_context()){
 			
@@ -58,8 +58,13 @@ class RTMediaUploadModel {
     }
 
     function has_album_permissions(){
+		//yet to be coded for the privacy options of the album
         return false;
     }
+	
+	function album_id_exists($id) {
+		
+	}
 
     function set_album_id(){
         if (class_exists('BuddyPress')) {

@@ -16,7 +16,7 @@
             do_action('bp_media_before_'.$mode.'_ui');
             echo $tabs[$mode]['content'];
             echo '<input type="hidden" name="mode" value="'.$mode.'" />';
-            do_action('bp_media_after_'.$mode.'_ui');
+            do_action('bp_media_after_'.$mode.'_ui', $attr);
             echo '</div>';
             echo '</div>';
             
@@ -37,6 +37,8 @@
 						echo '<input type="hidden" name="context_id" value="'.$value.'" />';
 					if($key == 'privacy')
 						echo '<input type="hidden" name="privacy" value="'.$value.'" />';
+					if($key == 'album_id')
+						echo '<input type="hidden" name="album_id" value="'.$value.'" />';
 				}
 			}
 			?>
