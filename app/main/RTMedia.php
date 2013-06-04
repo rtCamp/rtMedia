@@ -397,6 +397,7 @@ class RTMedia {
              */
 //			new BPMediaActivity();
             $class_construct = array(
+				'deprecated'	=> true,
 				'interaction'	=> true,
 				//'template'	=> false,
                 'upload_shortcode' => false,
