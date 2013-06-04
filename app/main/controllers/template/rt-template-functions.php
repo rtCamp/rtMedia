@@ -58,5 +58,9 @@ function is_rt_media_single(){
 	return true;
 }
 
+function rtmedia_uploader($attr){
+	echo RTMediaUploadShortcode::render($attr);
+}
+
 
 ?>
