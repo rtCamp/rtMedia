@@ -21,7 +21,7 @@ class RTMediaDeprecated {
 		//add_shortcode('rtmedia_uploader', array($this, 'pre_render'));
 		$deprecated = false;
 		$deprecate_notice = '';
-		echo self::generate_notice(__METHOD__, $deprecated, $deprecate_notice);
+//		echo self::generate_notice(__METHOD__, $deprecated, $deprecate_notice);
 	}
 	
 	static function generate_notice($method, $deprecated=false, $notice='') {

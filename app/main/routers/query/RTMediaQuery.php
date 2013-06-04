@@ -160,7 +160,7 @@ class RTMediaQuery {
 
 
 	function populate_media() {
-		$this->model = new BPMediaModel();
+		$this->model = new RTMediaModel();
 
 		unset( $this->query->meta_query );
 		unset( $this->query->tax_query );

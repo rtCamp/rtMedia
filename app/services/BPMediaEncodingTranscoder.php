@@ -80,7 +80,7 @@ class BPMediaEncodingTranscoder extends BPMediaHostWordpress {
         $attachment_id = wp_insert_attachment($attachment, $file, $post_id);
         if (!is_wp_error($attachment_id)) {
             update_post_meta($attachment_id, 'bp-media-encoding-job-id', $job_id);
-            add_filter('intermediate_image_sizes', array($this, 'bp_media_image_sizes'), 99);
+            add_filter('intermediate_image_sizes', array($this, 'rt_media_image_sizes'), 99);
             wp_update_attachment_metadata($attachment_id, wp_generate_attachment_metadata($attachment_id, $file));
         } else {
             unlink($file);
