@@ -63,7 +63,7 @@ class RTMediaUploadModel {
     }
 	
 	function album_id_exists($id) {
-		
+		return true;
 	}
 
     function set_album_id(){

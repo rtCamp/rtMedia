@@ -8,7 +8,7 @@
 /**
  * Description of rtMediaAlbum
  *
- * @author dit Desai <udit.desai@rtcamp.com>
+ * @author Udit Desai <udit.desai@rtcamp.com>
  */
 class RTMediaAlbum {
 
@@ -85,6 +85,21 @@ class RTMediaAlbum {
             'post_author' => $author_id
         );
         $album_id = wp_insert_post($post_vars);
+		
+		// add in the media since album is also a media
+		//defaults
+		global $rt_media_interaaction;
+		$attributes = array(
+			'blog_id' => get_current_blog_id(),
+			'media_id' => $album_id,
+			'context' => $rt_media_interaaction->context->type,
+			'context_id' => $rt_media_interaaction->context->id,
+			'activity_id' => false,
+			'privacy' => false
+		);
+
+		$media = new RTMediaMedia();
+		$media->rt_insert_album($attributes);
 
         do_action('rt_media_after_add_album', $this);
 		
@@ -152,17 +167,18 @@ class RTMediaAlbum {
 		do_action('rt_media_before_delete_album', $this);
 
 		if($global) {
-			// global delete function from the settings
-		} else {
+			// global delete function from the admin
 			//delete and merge
+		} else {
+	//		foreach ($this->media_entries as $entry) {
+				//delete the media under the album
+	//        }
 		}
-
-//		foreach ($this->media_entries as $entry) {
-			//delete the media under the album
-//        }
 
 			//delete the album
 //        wp_delete_post($this->id, true);
+		
+		//remove from media table also
 
 		do_action('rt_media_after_delete_album', $this);
 	}
