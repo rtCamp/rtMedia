@@ -22,6 +22,7 @@ class RTMediaUploadModel {
     function set_post_object() {
         $this->upload = wp_parse_args($_POST, $this->upload);
         $this->sanitize_object();
+		print_r($this->upload);
         return $this->upload;
     }
 
@@ -30,12 +31,14 @@ class RTMediaUploadModel {
             return false;
     }
 
-
+	
     function sanitize_object() {
-        if (!$this->has_context())
-            $context = new RTMediaContext();
-			$this->upload['context']= $context->context;
-			$this->upload['context_id'] = $context->context_id;
+        if (!$this->has_context()){
+			
+			global $rt_media_interaction;
+			$this->upload['context']= $rt_media_interaction->context->type;
+			$this->upload['context_id'] = $rt_media_interaction->context->id;
+		}
 
         if (!is_array($this->upload['taxonomy']))
             $this->upload['taxonomy'] = array($this->upload['taxonomy']);
@@ -55,8 +58,13 @@ class RTMediaUploadModel {
     }
 
     function has_album_permissions(){
+		//yet to be coded for the privacy options of the album
         return false;
     }
+	
+	function album_id_exists($id) {
+		
+	}
 
     function set_album_id(){
         if (class_exists('BuddyPress')) {
