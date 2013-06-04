@@ -761,7 +761,7 @@ class RTMedia {
 
     function update_db() {
         new BuddyPressMigration();
-        $update = new rtDBUpdate();
+        $update = new RTDBUpdate();
         if ($update->check_upgrade()) {
             $update->do_upgrade();
         }

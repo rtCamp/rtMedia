@@ -1,11 +1,11 @@
 <?php
 
 /**
- * Description of rt_db_update
+ * Description of RTDBUpdate
  * Required : rt_plugin_info.php
  * @author faishal
  */
-class rtDBUpdate {
+class RTDBUpdate {
     /**
      *
      * @var type String

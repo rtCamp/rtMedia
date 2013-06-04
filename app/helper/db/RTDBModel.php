@@ -1,11 +1,11 @@
 <?php
 
 /**
- * Description of rtDBModel
+ * Description of RTDBModel
  *
  * @author faishal
  */
-class rtDBModel {
+class RTDBModel {
 
     public $table_name;
     public $meta_table_name;
