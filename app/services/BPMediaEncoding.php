@@ -41,7 +41,7 @@ class BPMediaEncoding {
                 }
             }
         }
-        if (!bp_get_option('bpmedia_encoding_service_notice') && current_user_can('administrator')) {
+        if (!bp_get_option('bpmedia_encoding_expansion_notice') && current_user_can('administrator')) {
             if (is_multisite()) {
                 add_action('network_admin_notices', array($this, 'encoding_service_notice'));
             }
@@ -63,7 +63,7 @@ class BPMediaEncoding {
                 if (in_array($_SERVER['HTTP_HOST'], $blacklist)) {
                     return $class;
                 }
-                
+
                 if (isset($_FILES['bp_media_file'])) {
                     $ext = end(explode(".", $_FILES['bp_media_file']["name"]));
                     if (in_array($_FILES['bp_media_file']['type'], array('audio/mp3', 'video/mp4')) || in_array($ext, array('mp3', 'mp4'))) {
@@ -105,7 +105,7 @@ class BPMediaEncoding {
 					'name' => __('Encoding', 'buddypress'),
                     'slug' => 'bp-media-encoding'
                 );
-        
+
         $reordered_tabs = NULL;
         if ( count($tabs) > 2 ) {
             foreach ($tabs as $key => $tab) {
@@ -225,7 +225,7 @@ class BPMediaEncoding {
                 )
         ?>
         <div class="updated">
-            <p><?php printf(__('We have launched a new Audio/Video encoding service for BuddyPress Media. You can <a href="%s">activate it for free</a>.', 'buddypress-media'), $link); ?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button class="bpm-hide-encoding-notice button-secondary" type="button" ><?php _e('Hide Message', 'buddypress-media') ?></button></p>
+            <p><?php printf(__('We have increased the free plan by <strong>10 times</strong>. <a href="%s">Try the audio/video conversion for free, now</a>.', 'buddypress-media'), $link); ?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button class="bpm-hide-encoding-notice button-secondary" type="button" ><?php _e('Hide Message', 'buddypress-media') ?></button></p>
         </div><?php
     }
 
@@ -271,7 +271,7 @@ class BPMediaEncoding {
 
                         <!-- Flag to no shipping -->
                         <input type="hidden" name="no_shipping" value="1">
-                        
+
                         <input type="hidden" name="notify_url" value="' . trailingslashit($this->api_url) . 'subscribe/paypal">
 
                         <!-- Flag to post payment return url -->
@@ -283,7 +283,7 @@ class BPMediaEncoding {
 
                         <input type="hidden" name="src" value="1">
                         <input type="hidden" name="sra" value="1">
-                        
+
                         <input type="image" src="http://www.paypal.com/en_US/i/btn/btn_subscribe_SM.gif" border="0" name="submit" alt="Make payments with PayPal - it\'s fast, free and secure!">
                     </form>';
         }
@@ -335,14 +335,12 @@ class BPMediaEncoding {
             </thead>
             <tr>
                 <th><?php _e('File Size Limit', 'buddypress-media'); ?></th>
-                <td>20MB</td>
-                <td>2GB</td>
-                <td>2GB</td>
-                <td>2GB</td>
+                <td>200MB (<del>20MB</del>)</td>
+                <td colspan="3" class="column-posts">2GB</td>
             </tr>
             <tr>
                 <th><?php _e('Bandwidth (monthly)', 'buddypress-media'); ?></th>
-                <td>1GB</td>
+                <td>10GB (<del>1GB</del>)</td>
                 <td>100GB</td>
                 <td>1TB</td>
                 <td>10TB</td>
@@ -507,6 +505,7 @@ class BPMediaEncoding {
 
         public function hide_encoding_notice() {
             bp_update_option('bpmedia_encoding_service_notice', true);
+			bp_update_option('bpmedia_encoding_expansion_notice', true);
             echo true;
             die();
         }
