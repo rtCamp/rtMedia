@@ -70,7 +70,7 @@ jQuery(document).ready(function($){
             jQuery('#bp_media_settings_form .bp-media-metabox-holder').html(response).fadeIn('slow');
         });
     });
-    
+
     jQuery(document).on('click',"#bpm-services .encoding-try-now",function(e){
         e.preventDefault();
         if(confirm(bp_media_admin_strings.are_you_sure)){
@@ -91,7 +91,7 @@ jQuery(document).ready(function($){
             });
         }
     });
-    
+
     jQuery(document).on('click','#api-key-submit',function(e){
         e.preventDefault();
         jQuery(this).after('<img style="margin: 0 0 0 10px" src="'+bp_media_admin_url+'images/wpspin_light.gif" />')
@@ -109,14 +109,14 @@ jQuery(document).ready(function($){
                 if(document.URL.toString().indexOf('&update=true') == -1)
                     tempUrl += '&update=true';
                 document.location.href = tempUrl;
-                
+
             }else{
                 jQuery('#settings-error-api-key-error').remove();
                 jQuery('h2:first').after('<div class="error" id="settings-error-api-key-error"><p>'+response.error+'</p></div>');
             }
         });
     });
-    
+
     jQuery(document).on('click','#disable-encoding',function(e){
         e.preventDefault();
         if ( confirm(bp_media_admin_strings.disable_encoding )) {
@@ -141,11 +141,11 @@ jQuery(document).ready(function($){
             });
         }
     });
-    
+
     jQuery('.bp-media-encoding-table').on('click','.bpm-unsubscribe',function(e){
         e.preventDefault();
         //        var note=prompt(bp_media_admin_strings.reason_for_unsubscribe);
-        jQuery( "#bpm-unsubscribe-dialog" ).dialog({ 
+        jQuery( "#bpm-unsubscribe-dialog" ).dialog({
             dialogClass: "wp-dialog",
             modal: true,
             buttons: {
@@ -180,9 +180,9 @@ jQuery(document).ready(function($){
                 }
             }
         });
-        
+
     });
-    
+
     function fireRequest(data) {
         return jQuery.post(ajaxurl, data, function(response){
             if(response != 0){
@@ -207,7 +207,7 @@ jQuery(document).ready(function($){
             }
         });
     }
-    
+
     jQuery('#bpmedia-bpalbumimporter').on('change','#bp-album-import-accept',function(){
         jQuery('.bp-album-import-accept').toggleClass('i-accept');
         jQuery('.bp-album-importer-wizard').slideToggle();
@@ -283,7 +283,7 @@ jQuery(document).ready(function($){
                 if ( favorites ) {
                     favorite_data = {
                         'action':'bp_media_bp_album_import_favorites'
-                    }
+                    };
                     jQuery.post(ajaxurl,favorite_data,function(response){
                         if(response.favorites!==0||response.favorites!=='0'){
                             if(!jQuery('.bp-album-favorites').length)
@@ -301,7 +301,7 @@ jQuery(document).ready(function($){
                                         $count=1;
                                     }
                                 }
-                                
+
                                 newvals = {
                                     'action':'bp_media_bp_album_import_step_favorites',
                                     'offset':(i-1)*1,
@@ -316,7 +316,7 @@ jQuery(document).ready(function($){
                                     return fireimportfavoriteRequest(v);
                                 });
                             });
-                            
+
                         } else {
                             window.setTimeout(reload_url, 2000);
                         }
@@ -342,10 +342,10 @@ jQuery(document).ready(function($){
             jQuery('.bp-album-favorites #rtprogressbar>div').css('width',favorites_progw+'%');
             if(redirect){
                 window.setTimeout(reload_url, 2000);
-            } 
+            }
         });
     }
-    
+
     function reload_url(){
         window.location = document.URL;
     }
@@ -372,7 +372,7 @@ jQuery(document).ready(function($){
             i = 3; //counter
 
             (function loop() { //recurisve IIFE
-                $el.css("background-color", "#EE0000");    
+                $el.css("background-color", "#EE0000");
                 setTimeout(function () {
                     $el.css("background-color", originalColor);
                     if (--i) setTimeout(loop, x); //restart loop
@@ -385,15 +385,15 @@ jQuery(document).ready(function($){
         wp_admin_url = ajaxurl.replace('admin-ajax.php','');
         if (!jQuery('.bpm-ajax-loader').length)
             jQuery(this).after(' <img class="bpm-ajax-loader" src="'+wp_admin_url+'images/wpspin_light.gif" /> <strong>'+bp_media_admin_strings.no_refresh+'</strong>');
-        
-        
+
+
         $progress_parent = jQuery('#bpmedia-bpalbumimport');
         $values=[];
         jQuery(this).parent().find('input').each(function(){
             $values [jQuery(this).attr('name')]=[jQuery(this).val()];
 
         });
-        
+
         if ( $values['steps'][0] == 0 )
             $values['steps'][0]=1;
 
@@ -448,7 +448,7 @@ jQuery(document).ready(function($){
         });
         return false;
     });
-    
+
     jQuery('#bpmedia-bpalbumimporter').on('click','.deactivate-bp-album',function(e){
         e.preventDefault();
         $bpalbum = jQuery(this);
@@ -462,13 +462,13 @@ jQuery(document).ready(function($){
                 $bpalbum.parent().after('<p>'+bp_media_admin_strings.something_went_wrong+'</p>');
         });
     });
-    
+
     jQuery('.updated').on('click','.bpm-hide-encoding-notice',function(){
         jQuery(this).after('<img style="margin: 0 0 0 10px" src="'+bp_media_admin_url+'images/wpspin_light.gif" />');
         var data ={
             action: 'bp_media_hide_encoding_notice'
         }
-        jQuery.post(ajaxurl,data,function(response){ 
+        jQuery.post(ajaxurl,data,function(response){
             if ( response ) {
                 jQuery('.bpm-hide-encoding-notice').closest('.updated').remove();
             }

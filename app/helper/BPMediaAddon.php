@@ -33,32 +33,33 @@ if (!class_exists('BPMediaAddon')) {
 
 				if ( $section['callback'] )
 					call_user_func( $section['callback'], $section );
-				
+
 				if ( ! isset( $wp_settings_fields ) || !isset( $wp_settings_fields[$page] ) || !isset( $wp_settings_fields[$page][$section['id']] ) )
 					continue;
-				
+
 				echo '<table class="form-table">';
 				do_settings_fields( $page, $section['id'] );
 				echo '</table>';
 			}
 		}
-		
+
         public function get_addons() {
 
 			$tabs = array();
+			global $bp_media_admin;
+			$tabs[] = array(
+				'title' => 'Encoding',
+				'name' => __('Audio/Video Encoding', 'buddypress-media'),
+				'href' => '#bpm-services',
+				'callback' => array($bp_media_admin->bp_media_encoding, 'encoding_service_intro')
+			);
 			$tabs[] = array(
 				'title' => 'Plugins',
 				'name' => __('Plugins', 'buddypress-media'),
 				'href' => '#bpm-plugins',
 				'callback' => array($this, 'plugins_content')
 			);
-			global $bp_media_admin;
-			$tabs[] = array(
-				'title' => 'Services',
-				'name' => __('Services', 'buddypress-media'),
-				'href' => '#bpm-services',
-				'callback' => array($bp_media_admin->bp_media_encoding, 'encoding_service_intro')
-			);
+
 /*			$tabs[] = array(
 				'title' => 'Themes',
 				'name' => __('Themes', 'buddypress-media'),
@@ -135,7 +136,7 @@ if (!class_exists('BPMediaAddon')) {
             $addons = apply_filters('bp_media_addons', $addons);
 
 			foreach ($addons as $key => $value) {
-				
+
 				if($key == 0) {
 					echo '<h3>';
 					_e('BuddyPress Media Addons for Photos');
@@ -151,15 +152,15 @@ if (!class_exists('BPMediaAddon')) {
 
 		public function services_content($args = '') {
 
-			
+
 			$objEncoding->encoding_service_intro();
 		}
-		
+
 		public function themes_content($args = '') {
 			echo '<h3>Coming Soon !!</h3>';
 		}
 
-		
+
 
 		/**
          *

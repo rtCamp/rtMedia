@@ -336,7 +336,7 @@ class BPMediaEncoding {
             <tr>
                 <th><?php _e('File Size Limit', 'buddypress-media'); ?></th>
                 <td>200MB (<del>20MB</del>)</td>
-                <td colspan="3" class="column-posts">2GB</td>
+                <td colspan="3" class="column-posts">16GB</td>
             </tr>
             <tr>
                 <th><?php _e('Bandwidth (monthly)', 'buddypress-media'); ?></th>
