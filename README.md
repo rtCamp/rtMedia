@@ -149,7 +149,13 @@ Please visit [BuddyPress Media's Features page](http://rtcamp.com/buddypress-med
 ## Changelog ##
 
 Please visit [BuddyPress Media's Roadmap page](http://rtcamp.com/buddypress-media/roadmap/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "Visit BuddyPress Media's Features page") to get some details about future releases.
-#### 2.15 ####
+
+#### 2.15.2 ####
+ * Revises free encoding service by 10x, max file size to 200MB and monthly limit to 10GB
+ * Revised file size to 16GB for premium encoding service
+ * Fixes bug in admin js on multisite
+
+#### 2.15.1 ####
 * Fixes bugs in Group settings
 * Fixes bugs in Addon settings
 
@@ -449,4 +455,4 @@ Please visit [BuddyPress Media's Roadmap page](http://rtcamp.com/buddypress-medi
 * HTML5 Audio Tag Support (with fallback)
 * HTML5 Video Tag Support (with fallback)
 
-Bug fixes for admin settings
+Revised free encoding plan by 10x
