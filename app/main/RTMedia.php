@@ -32,7 +32,11 @@ class RTMedia {
      */
     public $options = array();
 
-	public $allowed_types = array('audio', 'video', 'image');
+	public $allowed_types = array(
+		0 => array('name' => 'audio', 'extn' => array('mp3'), 'thumbnail' => '../assets/img/audio_thumb.png'),
+		1 => array('name' => 'video', 'extn' => array('mp4'), 'thumbnail' => '../assets/img/video_thumb.png'),
+		2 => array('name' => 'image', 'extn' => array('jpeg', 'png'), 'thumbnail' => '../assets/img/image_thumb.png')
+	);
 
     /**
      *

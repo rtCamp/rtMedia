@@ -17,21 +17,19 @@ class RTMediaUploadEndpoint {
 
 
     function template_redirect() {
-		error_log("redirect\n");
-        if (!count($_POST)) {
-			error_log("404\n");
+
+		if (!count($_POST)) {
             include get_404_template();
         } else {
-            $nonce = $_REQUEST['bp_media_upload_nonce'];
+            $nonce = $_REQUEST['rt_media_add_media_nonce'];
             $mode = $_REQUEST['mode'];
-			error_log("b4 verify nonce");
-            if (wp_verify_nonce($nonce, 'bp_media_' . $mode)) {
+            if (wp_verify_nonce($nonce, 'rt_media_' . $mode . 'media')) {
                 $model = new RTMediaUploadModel();
                 $this->upload = $model->set_post_object();
 
-                $upload = new RTMediaUpload($this->upload);
+				$upload = new RTMediaUpload($this->upload);
             }
-            wp_safe_redirect(wp_get_referer());
+//            wp_safe_redirect(wp_get_referer());
         }
 
         exit;

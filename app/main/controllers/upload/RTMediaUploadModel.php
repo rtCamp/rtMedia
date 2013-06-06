@@ -22,13 +22,14 @@ class RTMediaUploadModel {
     function set_post_object() {
         $this->upload = wp_parse_args($_POST, $this->upload);
         $this->sanitize_object();
-		print_r($this->upload);
-        return $this->upload;
+//		print_r($this->upload);
+		return $this->upload;
     }
 
     function has_context() {
-        if (!isset($this->upload['context_id']))
-            return false;
+        if (isset($this->upload['context_id']) && !empty($this->upload['context_id']))
+            return true;
+		return false;
     }
 
 	
