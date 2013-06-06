@@ -24,7 +24,7 @@
 
             <?php do_action('bp_media_after_uploader'); ?>
             
-            <?php wp_nonce_field('bp_media_'.$mode, 'bp_media_upload_nonce'); ?>
+            <?php wp_nonce_field('rt_media_' . $mode . 'media', 'rt_media_add_media_nonce'); ?>
 			
 			<?php
 

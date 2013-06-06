@@ -7,13 +7,11 @@
  */
 class RTMediaUploadFile {
 
-    private $default_allowed_types = array('audio', 'video', 'image');
     var $files;
     var $fake = false;
 
     function init($files) {
 
-        $this->allowed_types = apply_filters('bp_media_allowed_types', $this->default_allowed_types);
         $this->set_file($files);
         $this->unset_invalid_files();
         $uploaded_file = $this->process();
@@ -24,12 +22,11 @@ class RTMediaUploadFile {
         include_once(ABSPATH . 'wp-admin/includes/file.php');
         include_once(ABSPATH . 'wp-admin/includes/image.php');
 
-        $function = $this->fake ? 'wp_handle_sideload' : 'wp_handle_upload';
-        foreach ($this->files as $key => $file) {
+        $upload_type = $this->fake ? 'wp_handle_sideload' : 'wp_handle_upload';
+		foreach ($this->files as $key => $file) {
 
-            $uploaded_file[] = $function($file, array('test_form' => false));
-
-            try {
+			$uploaded_file[] = $upload_type($file, array('test_form' => false));
+			try {
                 if (isset($uploaded_file[$key]['error']) || $uploaded_file[$key] === null) {
                     array_pop($uploaded_file);
 
@@ -42,7 +39,7 @@ class RTMediaUploadFile {
 
             if (strpos($file['type'], 'image') !== false) {
                 if (function_exists('read_exif_data')) {
-                    $file = $this->exif($uploaded_file);
+                    $file = $this->exif($uploaded_file[$key]);
                 }
             }
         }
@@ -77,7 +74,13 @@ class RTMediaUploadFile {
 
     function is_valid_type($file) {
         try {
-            if (!preg_match('/' . implode('|', $this->allowed_types) . '/i', $file['type'], $result) || !isset($result[0])) {
+			global $rt_media;
+			$allowed_types = array();
+			foreach ($rt_media->allowed_types as $type) {
+				$allowed_types[] = $type['name'];
+			}
+
+			if (!preg_match('/' . implode('|', $allowed_types) . '/i', $file['type'], $result) || !isset($result[0])) {
                 throw new BPMediaUploadException(UPLOAD_ERR_EXTENSION);
             }
             $this->id3_validate_type($file);
@@ -180,7 +183,6 @@ class RTMediaUploadFile {
     }
 
     function exif($file) {
-
         $file_parts = pathinfo($file['file']);
         if (in_array(strtolower($file_parts['extension']), array('jpg', 'jpeg', 'tiff'))) {
             $exif = read_exif_data($file['file']);

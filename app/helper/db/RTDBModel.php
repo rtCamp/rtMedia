@@ -77,12 +77,14 @@ class RTDBModel {
                 $other = "";
                 if ($paging) {
                     $offset = ($page - 1) * $this->per_page;
-                    if ($offset < $return_array["total"]) {
+                    if ($offset <= $return_array["total"]) {
                         $other = " LIMIT " . $offset . "," . $this->per_page;
-                    }
+					}else{
+						return false;
+					}
                 }
                 echo $wpdb->prepare("SELECT * FROM " . $this->table_name . " WHERE {$column_name} = %s {$other}", $arguments[0]);
-                $return_array["result"] = $wpdb->get_results($wpdb->prepare("SELECT * FROM " . $this->table_name . " WHERE {$column_name} = %s {$other}", $arguments[0]));
+                $return_array["result"] = $wpdb->get_results($wpdb->prepare("SELECT * FROM " . $this->table_name . " WHERE {$column_name} = %s {$other}", $arguments[0]), ARRAY_A);
             }
             return $return_array;
         } else {
@@ -110,7 +112,7 @@ class RTDBModel {
      */
     function update($data, $where) {
         global $wpdb;
-        $wpdb->update($this->table_name, $data, $where);
+        return $wpdb->update($this->table_name, $data, $where);
     }
 
     /**
@@ -151,7 +153,7 @@ class RTDBModel {
 
     function delete($media_id) {
         global $wpdb;
-        $wpdb->delete($this->table_name, array('media_id' => $media_id));
+        return $wpdb->delete($this->table_name, array('media_id' => $media_id));
     }
 
 }
