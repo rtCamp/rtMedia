@@ -26,17 +26,20 @@ class RTMediaUploadView {
 		include $this->locate_template($template_name);
     }
 
-    protected function locate_template($template_name) {
+    protected function locate_template($template) {
         $located = '';
-            if (!$template_name)
-                $located = false;
-            if (file_exists(STYLESHEETPATH . '/buddypress-media/' . $template_name)) {
-                $located = STYLESHEETPATH . '/buddypress-media/' . $template_name;
-            } else if (file_exists(TEMPLATEPATH . '/buddypress-media/' . $template_name)) {
-                $located = TEMPLATEPATH . '/buddypress-media/' . $template_name;
-            } else {
-                $located = RT_MEDIA_PATH . 'templates/' . $template_name;
-        }
+		
+		$template_name = $template . '.php';
+		
+		if (!$template_name)
+			$located = false;
+		if (file_exists(STYLESHEETPATH . '/rt-media/' . $template_name)) {
+			$located = STYLESHEETPATH . '/rt-media/' . $template_name;
+		} else if (file_exists(TEMPLATEPATH . '/rt-media/' . $template_name)) {
+			$located = TEMPLATEPATH . '/rt-media/' . $template_name;
+		} else {
+			$located = RT_MEDIA_PATH . 'templates/upload/' . $template_name;
+		}
 
         return $located;
     }
