@@ -7,7 +7,7 @@
  */
 class RTMediaUpload {
 
-    private $default_modes = array('file_upload', 'link_input');
+    private $default_modes = array('add_media', 'link_input');
     var $file = NULL;
     var $media = NULL;
     var $url = NULL;
@@ -34,7 +34,6 @@ class RTMediaUpload {
 	
 	function verify_album_id($uploaded) {
 
-		print_r($uploaded);
 		if(isset($uploaded['album_id']))
 			return $uploaded;
 		
@@ -48,12 +47,12 @@ class RTMediaUpload {
 
     function upload($uploaded) {
         switch ($uploaded['mode']) {
-            case 'file_upload': return $this->file->init($uploaded['files']);
+            case 'add_media': return $this->file->init($uploaded['files']);
                 break;
             case 'link_input': return $this->url->init($uploaded);
                 break;
             default:
-                do_action('bp_media_upload_' . $mode, $uploaded);
+                do_action('rt_media_upload_' . $uploaded['mode'], $uploaded);
         }
     }
 

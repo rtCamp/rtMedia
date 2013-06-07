@@ -23,7 +23,8 @@ class RTMediaMedia {
 
 		$nonce = $_REQUEST["rt_media_{$mode}_media_nonce"];
 		$mode = $_REQUEST['mode'];
-		if (wp_verify_nonce($nonce, 'rt_media_' . $mode . '_media'))
+		
+		if (wp_verify_nonce($nonce, 'rt_media_' . $mode))
 			return true;
 		else
 			return false;
@@ -35,64 +36,54 @@ class RTMediaMedia {
 
 	function add($uploaded, $file_object) {
 
-		if($this->verify_nonce('add')) {
+		do_action('rt_media_before_add_media', $this);
 
-			do_action('rt_media_before_add_media', $this);
+		$attachments = $this->generate_post_array($uploaded, $file_object);
 
-			$attachments = $this->generate_post_array($uploaded, $file_object);
+		$attachment_ids = $this->insert_attachment($attachments, $file_object);
 
-			$attachment_ids = $this->insert_attachment($attachments, $file_object);
+		if($this->activity_enabled())
+			$this->insert_activity($uploaded);
 
-			if($this->activity_enabled())
-				$this->insert_activity($uploaded);
+		$this->rt_insert_media($attachment_ids,$uploaded);
 
-			$this->rt_insert_media($attachment_ids,$uploaded);
+		do_action('rt_media_after_add_media', $this);
 
-			do_action('rt_media_after_add_media', $this);
+		return $attachment_ids;
 
-			return $attachment_ids;
-		} else
-			return false;
     }
 
 	function update($media_id, $meta) {
 
-		if($this->verify_nonce('update')) {
+		do_action('rt_media_before_update_media', $this);
 
-			do_action('rt_media_before_update_media', $this);
+		$defaults = array();
+		$data = wp_parse_args($meta, $defaults);
+		$where = array( 'media_id' => $media_id );
 
-			$defaults = array();
-			$data = wp_parse_args($meta, $defaults);
-			$where = array( 'media_id' => $media_id );
+		$status = $this->rt_media_model->update($data, $where);
 
-			$status = $this->rt_media_model->update($data, $where);
-
-			if (get_class($status) == 'WP_Error' || $status == 0) {
-				return false;
-			} else {
-				do_action('rt_media_after_update_media', $this);
-				return true;
-			}
-		} else
+		if (get_class($status) == 'WP_Error' || $status == 0) {
 			return false;
+		} else {
+			do_action('rt_media_after_update_media', $this);
+			return true;
+		}
+
 	}
 
 	function delete($media_id){
 
-		if($this->verify_nonce('delete')) {
+		do_action('rt_media_before_delete_media', $this);
 
-			do_action('rt_media_before_delete_media', $this);
+		$status = $this->rt_media_model->delete($media_id);
 
-			$status = $this->rt_media_model->delete($media_id);
-
-			if (get_class($status) == 'WP_Error' || $status == 0) {
-				return false;
-			} else {
-				do_action('rt_media_after_delete_media', $this);
-				return true;
-			}
-		} else
+		if (get_class($status) == 'WP_Error' || $status == 0) {
 			return false;
+		} else {
+			do_action('rt_media_after_delete_media', $this);
+			return true;
+		}
     }
 
 	function move($media_id, $album_id) {
@@ -105,9 +96,9 @@ class RTMediaMedia {
 			$album_data = $this->rt_media_model->get_by_media_id($media_id);
 			$data = array(
 					'album_id' => $album_id,
-					'context' => $album_data['result']['context'],
-					'context_id' => $album_data['result']['context_id'],
-					'privacy' => $album_data['result']['privacy']
+					'context' => $album_data['result'][0]['context'],
+					'context_id' => $album_data['result'][0]['context_id'],
+					'privacy' => $album_data['result'][0]['privacy']
 				);
 			return $this->update($media_id, $data);
 		}

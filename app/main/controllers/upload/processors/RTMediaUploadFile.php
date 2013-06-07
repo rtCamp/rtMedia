@@ -30,7 +30,7 @@ class RTMediaUploadFile {
                 if (isset($uploaded_file[$key]['error']) || $uploaded_file[$key] === null) {
                     array_pop($uploaded_file);
 
-                    throw new BPMediaUploadException(0, __('Error Uploading File', 'buddypress-media'));
+                    throw new BPMediaUploadException(0, __('Error Uploading File', 'rt-media'));
                 }
                 $uploaded_file[$key]['name'] = $file['name'];
             } catch (BPMediaUploadException $e) {
@@ -51,9 +51,9 @@ class RTMediaUploadFile {
         if ($files) {
             $this->fake = true;
             $this->populate_file_array((array) $uploaded['files']);
-        } elseif (isset($_FILES['bp_media_file'])) {
+        } elseif (isset($_FILES['rt_media_file'])) {
             $this->populate_file_array(
-                    $this->arrayify($_FILES['bp_media_file'])
+                    $this->arrayify($_FILES['rt_media_file'])
             );
         } else {
             throw new BPMediaUploadException(UPLOAD_ERR_NO_FILE);
