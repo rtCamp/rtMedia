@@ -88,6 +88,7 @@ class RTMediaMedia {
 
 	function move($media_id, $album_id) {
 
+		global $wpdb;
 		$status = $wpdb->update('wp_posts', array('post_parent' => $album_id), array('ID' => $media_id));
 
 		if (get_class($status) == 'WP_Error' || $status == 0) {
@@ -154,11 +155,6 @@ class RTMediaMedia {
     function rt_insert_media($attachment_ids,$uploaded){
 
 		$defaults = array(
-			'blog_id' => false,
-			'media_id' => false,
-			'media_title' => 'Untitled Media',
-			'media_author' => false,
-			'media_type' => false,
 			'activity_id' => $this->activity_enabled(),
 			'privacy' => false
 		);
@@ -178,7 +174,6 @@ class RTMediaMedia {
 						'media_author' => $attachment['post_author'],
 						'media_title' => $attachment['post_title'],
                         'media_type' => $mime_type[0],
-						'album_id' => false,
                         'context' => $uploaded['context'],
                         'context_id' => $uploaded['context_id'],
                         'activity_id' => $uploaded['activity_id'],
