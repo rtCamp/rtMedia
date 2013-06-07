@@ -83,7 +83,7 @@ class RTMediaAlbum {
 		return $current_user->ID;
 	}
 
-	function add($title = '', $author_id = false) {
+	function add($title = '', $author_id = false, $new = true, $post_id = false) {
 
 		do_action('rt_media_before_add_album');
 
@@ -95,7 +95,11 @@ class RTMediaAlbum {
 			'post_type' => 'rt_media_album',
 			'post_author' => $author_id
 		);
-		$album_id = wp_insert_post($post_vars);
+		
+		if($new)
+			$album_id = wp_insert_post($post_vars);
+		else $album_id = $post_id;
+
 		$current_album = get_post($album_id, ARRAY_A);
 		// add in the media since album is also a media
 		//defaults
@@ -260,6 +264,25 @@ class RTMediaAlbum {
 	}
 
 	function convert_post($post_id) {
+
+		global $wpdb;
+		$attachment_ids = $wpdb->get_results("SELECT ID
+								FROM $wpdb->posts
+								WHERE post_parent = $post_id");
+
+		$album_id = $this->add($post['post_title'], $post['post_author'], false, $post_id);
+		
+		$album_data = $this->rt_media_model->get_by_media_id($album_id);
+		
+		$album_meta = array(
+			'album_id' => $album_id,
+			'context' => $album_data['results'][0]['context'],
+			'context_id' => $album_data['results'][0]['context_id'],
+			'activity_id' => $album_data['results'][0]['activity_id'],
+			'privacy' => $album_data['results'][0]['privacy']
+		);
+		
+		$this->rt_media_object->rt_insert_media($attachment_ids, $album_meta);
 
 		return true;
 	}
