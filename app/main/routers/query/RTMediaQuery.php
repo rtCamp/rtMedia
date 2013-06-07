@@ -171,14 +171,18 @@ class RTMediaQuery {
 
 		if ( ! $pre_media )
 			return false;
+		
+/*		print_r($pre_media);
 
 		foreach ( $pre_media as $pre_medium ) {
 			$this->media[ $pre_medium->media_id ] = $pre_medium;
-		}
+		}*/
+
+		$this->media = $pre_media;
 
 		if ( is_multisite() ) {
-			foreach ( $this->media as $mk => $mv ) {
-				$blogs[ $mv->blog_id ][ $mk ] = $mv;
+			foreach ( $this->media as $media ) {
+				$blogs[ $media->blog_id ][] = $media;
 			}
 
 
@@ -247,11 +251,11 @@ class RTMediaQuery {
 			do_action_ref_array( 'rt_media_loop_start', array( &$this ) );
 
 		$rt_media = $this->next_media();
+		return $rt_media;
 	}
 
 	function next_media() {
 		$this->current_media ++;
-		//print_r($this->media);
 
 		$this->rt_media = $this->media[ $this->current_media ];
 		return $this->rt_media;

@@ -1,3 +1,4 @@
+<li class="rt-media-list-item">
 	<div class="rt-media-container rt-media-single-container">
 
 		<?php if (have_media()) : rt_media(); ?>
@@ -22,3 +23,4 @@
 		<?php endif; ?>
 
 	</div>
+</li>

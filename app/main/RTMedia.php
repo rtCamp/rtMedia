@@ -405,6 +405,7 @@ class RTMedia {
 				'interaction'	=> true,
 				//'template'	=> false,
                 'upload_shortcode' => false,
+				'gallery_shortcode' => false,
                 'upload_endpoint' => false,
 
 				//'query'		=> false

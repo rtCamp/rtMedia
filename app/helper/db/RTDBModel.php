@@ -142,11 +142,11 @@ class RTDBModel {
         }
         $sql = $select . $join . $where ;
         if($order_by){
-            $sql .= "order by {$this->table_name}.$order_by";
+            $sql .= " ORDER BY {$this->table_name}.$order_by";
         }else{
-            $sql .= "order by {$this->table_name}.media_id";    
+            $sql .= " ORDER BY {$this->table_name}.media_id";    
         }
-        
+
         global $wpdb;
         return $wpdb->get_results($sql);
     }
