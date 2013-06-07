@@ -83,7 +83,7 @@ class RTDBModel {
 						return false;
 					}
                 }
-                echo $wpdb->prepare("SELECT * FROM " . $this->table_name . " WHERE {$column_name} = %s {$other}", $arguments[0]);
+                //echo $wpdb->prepare("SELECT * FROM " . $this->table_name . " WHERE {$column_name} = %s {$other}", $arguments[0]);
                 $return_array["result"] = $wpdb->get_results($wpdb->prepare("SELECT * FROM " . $this->table_name . " WHERE {$column_name} = %s {$other}", $arguments[0]), ARRAY_A);
             }
             return $return_array;

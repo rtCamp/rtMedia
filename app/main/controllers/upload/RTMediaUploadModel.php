@@ -22,7 +22,6 @@ class RTMediaUploadModel {
     function set_post_object() {
         $this->upload = wp_parse_args($_POST, $this->upload);
         $this->sanitize_object();
-//		print_r($this->upload);
 		return $this->upload;
     }
 

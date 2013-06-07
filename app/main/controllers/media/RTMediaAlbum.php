@@ -11,7 +11,7 @@
  * @author Udit Desai <udit.desai@rtcamp.com>
  */
 class RTMediaAlbum {
-	
+
 	var $rt_media_object;
 
 	public function __construct() {
@@ -65,12 +65,12 @@ class RTMediaAlbum {
 		/* register Album post type */
 		register_post_type( 'rt_media_album', $album_args );
 	}
-	
+
 	function verify_nonce($mode) {
 
 		$nonce = $_REQUEST["rt_media_{$mode}_album_nonce"];
 		$mode = $_REQUEST['mode'];
-		if (wp_verify_nonce($nonce, 'rt_media_' . $mode . '_album'))
+		if (wp_verify_nonce($nonce, 'rt_media_' . $mode))
 			return true;
 		else
 			return false;
@@ -82,46 +82,43 @@ class RTMediaAlbum {
 		get_currentuserinfo();
 		return $current_user->ID;
 	}
-	
+
 	function add($title = '', $author_id = false) {
-		
-		if($this->verify_nonce('add')) {
 
-			do_action('rt_media_before_add_album');
+		do_action('rt_media_before_add_album');
 
-			$author_id = $author_id ? $author_id : $this->get_current_author();
+		$author_id = $author_id ? $author_id : $this->get_current_author();
 
-			$post_vars = array(
-				'post_title' => (empty($title)) ? 'Untitled Album' : $title,
-				'post_status' => 'publish',
-				'post_type' => 'rt_media_album',
-				'post_author' => $author_id
-			);
-			$album_id = wp_insert_post($post_vars);
-			$current_album = get_post($album_id, ARRAY_A);
-			// add in the media since album is also a media
-			//defaults
-			global $rt_media_interaction;
-			$attributes = array(
-				'blog_id' => get_current_blog_id(),
-				'media_id' => $album_id,
-				'album_id' => false,
-				'media_title' => $current_album['post_title'],
-				'media_author' => $current_album['post_author'],
-				'media_type' => 'album',
-				'context' => $rt_media_interaction->context->type,
-				'context_id' => $rt_media_interaction->context->id,
-				'activity_id' => false,
-				'privacy' => false
-			);
+		$post_vars = array(
+			'post_title' => (empty($title)) ? 'Untitled Album' : $title,
+			'post_status' => 'publish',
+			'post_type' => 'rt_media_album',
+			'post_author' => $author_id
+		);
+		$album_id = wp_insert_post($post_vars);
+		$current_album = get_post($album_id, ARRAY_A);
+		// add in the media since album is also a media
+		//defaults
+		global $rt_media_interaction;
+		$attributes = array(
+			'blog_id' => get_current_blog_id(),
+			'media_id' => $album_id,
+			'album_id' => false,
+			'media_title' => $current_album['post_title'],
+			'media_author' => $current_album['post_author'],
+			'media_type' => 'album',
+			'context' => $rt_media_interaction->context->type,
+			'context_id' => $rt_media_interaction->context->id,
+			'activity_id' => false,
+			'privacy' => false
+		);
 
-			$this->rt_media_object->rt_insert_album($attributes);
+		$this->rt_media_object->rt_insert_album($attributes);
 
-			do_action('rt_media_after_add_album', $this);
+		do_action('rt_media_after_add_album', $this);
 
-			return $album_id;
-		} else
-			return false;
+		return $album_id;
+
 	}
 
 	function add_global($title ='') {
@@ -132,29 +129,29 @@ class RTMediaAlbum {
 			$album_id = $this->add($title, $author_id);
 
 			$this->save_globals($album_id);
-		
+
 			return $album_id;
 		} else
 			return false;
 	}
-	
+
 	static function get_globals() {
 		return get_site_option('rt-media-global-albums',true);
 	}
-	
+
 	static function get_default() {
 		$albums = self::get_globals();
-		
+
 		return $albums[0];
 	}
-	
+
 	function save_globals($album_ids = false) {
-		
+
 		if(!$album_ids)
 			return false;
 
 		$albums = self::get_globals();
-		
+
 		if(!is_array($album_ids))
 			$album_ids = array($album_ids);
 
@@ -175,36 +172,33 @@ class RTMediaAlbum {
 
 	function update($id, $title = '') {
 
-		if($this->verify_nonce('update')) {
+		do_action('rt_media_before_update_album', $this);
+		if ( empty($title) && empty($id) ) {
+			return false;
+		} else {
 
-			do_action('rt_media_before_update_album', $this);
-			if ( empty($title) && empty($id) ) {
+			$args = array(
+				'ID' => $id,
+				'post_title' => $title
+			);
+			$status = wp_insert_post($args);
+			if (get_class($status) == 'WP_Error' || $status == 0) {
 				return false;
 			} else {
-
-				$args = array(
-					'ID' => $id,
-					'post_title' => $title
-				);
-				$status = wp_insert_post($args);
-				if (get_class($status) == 'WP_Error' || $status == 0) {
-					return false;
-				} else {
-					do_action('rt_media_after_update_album', $this);
-					return true;
-				}
+				do_action('rt_media_after_update_album', $this);
+				return true;
 			}
-		} else
-			return false;
+		}
+
 	}
 
 	function delete_global($id) {
 
 		$super_user_ids = get_super_admins();
 		if( in_array($this->get_current_author(), $super_user_ids) ) {
-			
+
 			$default_album = self::get_default();
-			
+
 			//merge with the default album
 			$this->merge($default_album, $id);
 
@@ -213,42 +207,58 @@ class RTMediaAlbum {
 		else
 			return false;
 	}
-	
+
 	function delete($id) {
 
-		if($this->verify_nonce('delete')) {
-			do_action('rt_media_before_delete_album', $this);
-			
-			$album_media = $this->rt_media_object->rt_media_model->get_by_album_id(id);
+		do_action('rt_media_before_delete_album', $this);
 
-		//		foreach ($this->media_entries as $entry) {
-					//delete the media under the album
-		//        }
+		add_filter('rt_db_model_per_page', array($this,'set_queries_per_page'),10,2);
+		$page = 1;
+		$flag = true;
 
-				//delete the album
-	//        wp_delete_post($this->id, true);
+		while( $media = $this->rt_media_object->rt_media_model->get_by_album_id($id, $page) ) {
 
-			//remove from media table also - rtMediaMedia
+			$media_id = $media['result'][0]['media_id'];
 
-			do_action('rt_media_after_delete_album', $this);
-		} else
-			return false;
+			$flag = wp_delete_attachment($media_id);
+
+			if(!$flag)
+				break;
+
+			$page++;
+		}
+
+		if($flag) {
+			$this->rt_media_object->delete($id);
+		}
+
+		do_action('rt_media_after_delete_album', $this);
+		return $flag;
+
+	}
+
+	function set_queries_per_page($per_page, $table_name) {
+
+		$per_page = 1;
+		return $per_page;
 	}
 
 	function merge($primary_album_id, $secondary_album_id) {
-		
+
+		add_filter('rt_db_model_per_page', array($this,'set_queries_per_page'),10,2);
 		$page = 1;
+
 		while( $media = $this->rt_media_object->rt_media_model->get_by_album_id($secondary_album_id, $page) ) {
 
-			
+			$media_id = $media['result'][0]['media_id'];
+			$this->rt_media_object->move($media_id,$primary_album_id);
+
 			$page++;
 		}
-		
-		// some jujitsu code by magic method of RTDBModel
 
 		return $primary_album_id;
 	}
-	
+
 	function convert_post($post_id) {
 
 		return true;

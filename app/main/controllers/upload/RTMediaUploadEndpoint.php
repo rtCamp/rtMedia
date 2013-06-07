@@ -23,13 +23,13 @@ class RTMediaUploadEndpoint {
         } else {
             $nonce = $_REQUEST['rt_media_add_media_nonce'];
             $mode = $_REQUEST['mode'];
-            if (wp_verify_nonce($nonce, 'rt_media_' . $mode . 'media')) {
+            if (wp_verify_nonce($nonce, 'rt_media_' . $mode)) {
                 $model = new RTMediaUploadModel();
                 $this->upload = $model->set_post_object();
 
 				$upload = new RTMediaUpload($this->upload);
             }
-//            wp_safe_redirect(wp_get_referer());
+            wp_safe_redirect(wp_get_referer());
         }
 
         exit;
