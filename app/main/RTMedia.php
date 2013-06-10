@@ -32,7 +32,11 @@ class RTMedia {
      */
     public $options = array();
 
-	public $allowed_types = array('audio', 'video', 'image');
+	public $allowed_types = array(
+		0 => array('name' => 'audio', 'extn' => array('mp3'), 'thumbnail' => '../assets/img/audio_thumb.png'),
+		1 => array('name' => 'video', 'extn' => array('mp4'), 'thumbnail' => '../assets/img/video_thumb.png'),
+		2 => array('name' => 'image', 'extn' => array('jpeg', 'png'), 'thumbnail' => '../assets/img/image_thumb.png')
+	);
 
     /**
      *
@@ -148,6 +152,10 @@ class RTMedia {
         global $bp_media_counter;
         $bp_media_counter = 0;
 		$this->allowed_types = apply_filters('rt_media_allowed_types', $this->allowed_types);
+		/**
+		 * AJAX Call for PL Upload
+		 */
+		add_action('wp_ajax_rt_file_upload', array('RTMediaUploadHelper', 'file_upload'));
     }
 
     /**
@@ -250,8 +258,8 @@ class RTMedia {
             define('BP_MEDIA_IS_INSTALLED', 1);
 
         /* Current Version. */
-        if (!defined('BP_MEDIA_VERSION'))
-            define('BP_MEDIA_VERSION', RTMedia::plugin_get_version());
+        if (!defined('RT_MEDIA_VERSION'))
+            define('RT_MEDIA_VERSION', RTMedia::plugin_get_version());
 
         /* Required Version  */
         if (!defined('BP_MEDIA_REQUIRED_BP'))
@@ -352,8 +360,8 @@ class RTMedia {
         if (!defined('BP_MEDIA_ALBUMS_LABEL_SINGULAR'))
             define('BP_MEDIA_ALBUMS_LABEL_SINGULAR', __('Album', $this->text_domain));
 
-        if (!defined('BP_MEDIA_UPLOAD_LABEL'))
-            define('BP_MEDIA_UPLOAD_LABEL', __('Upload', $this->text_domain));
+        if (!defined('RT_MEDIA_UPLOAD_LABEL'))
+            define('RT_MEDIA_UPLOAD_LABEL', __('Upload', $this->text_domain));
 
         /* Support Email constant */
         if (!defined('BP_MEDIA_SUPPORT_EMAIL'))
@@ -401,6 +409,7 @@ class RTMedia {
 				'interaction'	=> true,
 				//'template'	=> false,
                 'upload_shortcode' => false,
+				'gallery_shortcode' => false,
                 'upload_endpoint' => false,
 
 				//'query'		=> false

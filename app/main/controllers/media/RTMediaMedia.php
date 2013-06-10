@@ -11,55 +11,109 @@
  * @author Udit Desai <udit.desai@rtcamp.com>
  */
 class RTMediaMedia {
-	
+
 	var $rt_media_model;
-	
+
 	public function __construct() {
 
 		$this->rt_media_model = new RTMediaModel();
 	}
 
+	function verify_nonce($mode) {
+
+		$nonce = $_REQUEST["rt_media_{$mode}_media_nonce"];
+		$mode = $_REQUEST['mode'];
+
+		if (wp_verify_nonce($nonce, 'rt_media_' . $mode))
+			return true;
+		else
+			return false;
+	}
+
 	public function delete_hook() {
-		add_action('delete_attachment',array($this,'delete_row'));
+		add_action('delete_attachment',array($this,'delete'));
 	}
 
 	function add($uploaded, $file_object) {
 
-        $attachments = $this->generate_post_array($uploaded, $file_object);
+		do_action('rt_media_before_add_media', $this);
 
-        $attachment_ids = $this->insert_attachment($attachments, $file_object);
+		$attachments = $this->generate_post_array($uploaded, $file_object);
+
+		$attachment_ids = $this->insert_attachment($attachments, $file_object);
 
 		if($this->activity_enabled())
 			$this->insert_activity($uploaded);
 
-        $this->rt_insert_media($attachment_ids,$uploaded);
+		$this->rt_insert_media($attachment_ids,$uploaded);
 
-        return array_keys($attachment_ids);
+		do_action('rt_media_after_add_media', $this);
+
+		return $attachment_ids;
+
     }
+
+	function update($media_id, $meta) {
+
+		do_action('rt_media_before_update_media', $this);
+
+		$defaults = array();
+		$data = wp_parse_args($meta, $defaults);
+		$where = array( 'media_id' => $media_id );
+
+		$status = $this->rt_media_model->update($data, $where);
+
+		if (get_class($status) == 'WP_Error' || $status == 0) {
+			return false;
+		} else {
+			do_action('rt_media_after_update_media', $this);
+			return true;
+		}
+
+	}
+
+	function delete($media_id){
+
+		do_action('rt_media_before_delete_media', $this);
+
+		$status = $this->rt_media_model->delete($media_id);
+
+		if (get_class($status) == 'WP_Error' || $status == 0) {
+			return false;
+		} else {
+			do_action('rt_media_after_delete_media', $this);
+			return true;
+		}
+    }
+
+	function move($media_id, $album_id) {
+
+		global $wpdb;
+		$status = $wpdb->update('wp_posts', array('post_parent' => $album_id), array('ID' => $media_id));
+
+		if (get_class($status) == 'WP_Error' || $status == 0) {
+				return false;
+		} else {
+			$album_data = $this->rt_media_model->get_by_media_id($media_id);
+			$data = array(
+					'album_id' => $album_id,
+					'context' => $album_data['result'][0]['context'],
+					'context_id' => $album_data['result'][0]['context_id'],
+					'privacy' => $album_data['result'][0]['privacy']
+				);
+			return $this->update($media_id, $data);
+		}
+	}
 
 	function import_attachment() {
-		
-	}
-	
-	function move($media_id, $album_id) {
-		$data = array( 'album_id' => $album_id );
-		$where = array( 'media_id' => $media_id );
-		$status = $this->rt_media_model->update($data, $where);
+
 	}
 
-	function update($media_id) {
-		
-	}
-	
 	function activity_enabled() {
+		// as of now disabled; later on we need to check from the activity settings from BuddyPress
 		return false;
-	}	
-	
-	function delete($media_id){
-        $model = new RTMediaModel();
-        $model->delete($media_id);
-    }
-	
+	}
+
 	function generate_post_array($uploaded, $file_object) {
         foreach ($file_object as $file) {
             $attachments[] = array(
@@ -83,7 +137,7 @@ class RTMediaMedia {
                 unlink($file_object[$key]['file']);
                 throw new Exception(__('Error creating attachment for the media file, please try again', 'buddypress-media'));
             }
-            $updated_attachment_ids[$attachment_id] = $attachment;
+            $updated_attachment_ids[] = $attachment_id;
         }
 
         return $updated_attachment_ids;
@@ -97,21 +151,28 @@ class RTMediaMedia {
 
 		$this->rt_media_model->insert($attributes);
 	}
-	
-	function rt_update_media($media_id, $attributes) {
-		
-	}
 
     function rt_insert_media($attachment_ids,$uploaded){
 
+		$defaults = array(
+			'activity_id' => $this->activity_enabled(),
+			'privacy' => false
+		);
+
+		$uploaded = wp_parse_args($uploaded, $defaults);
+
         $blog_id = get_current_blog_id();
 
-		foreach ($attachment_ids as $key => $attachment) {
+		foreach ($attachment_ids as $id) {
+			$attachment = get_post($id, ARRAY_A);
             $mime_type = explode('/',$attachment['post_mime_type']);
             $this->rt_media_model->insert(
                     array(
                         'blog_id' => $blog_id,
-                        'media_id' => $key,
+                        'media_id' => $id,
+						'album_id' => $uploaded['album_id'],
+						'media_author' => $attachment['post_author'],
+						'media_title' => $attachment['post_title'],
                         'media_type' => $mime_type[0],
                         'context' => $uploaded['context'],
                         'context_id' => $uploaded['context_id'],
@@ -120,7 +181,7 @@ class RTMediaMedia {
             ));
         }
     }
-    
+
     function insert_activity(){
         global $bp;
         if (function_exists('bp_activity_add')) {
@@ -176,8 +237,6 @@ class RTMediaMedia {
                 add_post_meta($media->get_id(), 'bp_media_child_activity', $activity_id);
         }
     }
-
-	
 }
 
 ?>

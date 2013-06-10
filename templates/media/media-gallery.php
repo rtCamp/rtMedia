@@ -4,13 +4,9 @@
 
 			<ul class="rt-media-list">
 
-				<?php while (have_rt_media()): rt_media(); ?>
+				<?php $i = 0; while (have_rt_media()) : rt_album(); ?>
 
-					<li class="rt-media-list-item">
-
-						<?php rt_media_gallery_item() ?>
-
-					</li>
+					<?php echo '<br>'.++$i.'<br>'; print_r(rt_media()); ?>
 
 				<?php endwhile; ?>
 
@@ -18,4 +14,4 @@
 
 		<?php } ?>
 
-	</div>
+</div>

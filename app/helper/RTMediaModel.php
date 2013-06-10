@@ -72,7 +72,7 @@ class RTMediaModel extends RTDBModel {
         $sql = "SELECT * FROM {$wpdb->posts} LEFT JOIN {$this->table_name} 
             ON {$wpdb->posts}.ID = {$this->table_name}.media_id 
             WHERE {$wpdb->posts}.ID in ({$media_query_str});";
-        return $wpdb->get_results($sql);
+        return $wpdb->get_results($sql,ARRAY_A);
     }
 
 }
