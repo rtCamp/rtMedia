@@ -26,11 +26,10 @@ class RTMediaTemplate {
 	function set_template($template, $shortcode_attr = false) {
 
 		global $rt_media_query,$rt_media_interaction;
-		//print_r($rt_media_query);
+
 		$media_array = '';
 
 		if ( $rt_media_query->format != 'json' ) {
-			echo $shortcode_attr;
 
 			include(RT_MEDIA_PATH . 'app/main/controllers/template/rt-template-functions.php');
 			
@@ -38,7 +37,6 @@ class RTMediaTemplate {
 				return $this->get_template($template);
 			else {
 				// $shortcode_attr processing
-				echo $template;
 				include $this->locate_template($template);
 			}
 

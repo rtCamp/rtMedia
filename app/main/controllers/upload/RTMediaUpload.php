@@ -19,10 +19,7 @@ class RTMediaUpload {
 
         $file_object = $this->upload($uploaded);
 
-
-		$uploaded = $this->verify_album_id($uploaded);
-
-        if ($file_object && $uploaded) {
+		if ($file_object && $uploaded) {
             if($this->media->add($uploaded, $file_object)){
                 do_action('rt_media_after_add_media');
 				return true;
@@ -31,19 +28,6 @@ class RTMediaUpload {
             return false;
         }
     }
-	
-	function verify_album_id($uploaded) {
-
-		if(isset($uploaded['album_id']))
-			return $uploaded;
-		
-		if(isset($uploaded['context'])) {
-			$uploaded['album_id'] = $uploaded['context_id'];
-			return $uploaded;
-		}
-		
-		return false;	// incorrect request without context
-	}
 
     function upload($uploaded) {
         switch ($uploaded['mode']) {

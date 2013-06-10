@@ -23,7 +23,7 @@ class RTMediaMedia {
 
 		$nonce = $_REQUEST["rt_media_{$mode}_media_nonce"];
 		$mode = $_REQUEST['mode'];
-		
+
 		if (wp_verify_nonce($nonce, 'rt_media_' . $mode))
 			return true;
 		else

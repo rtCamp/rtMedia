@@ -83,8 +83,11 @@ class RTMediaUploadModel {
     }
 
     function set_wp_album_id(){
-        $this->upload['album_id'] = $this->upload['context_id'];
-    }
+		if(isset($this->upload['context']))
+			$this->upload['album_id'] = $this->upload['context_id'];
+		else
+			throw new RTMediaUploadException(9);	// Invalid Context
+	}
 
     function set_bp_component_album_id() {
         switch (bp_current_component()) {
