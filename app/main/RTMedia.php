@@ -152,6 +152,10 @@ class RTMedia {
         global $bp_media_counter;
         $bp_media_counter = 0;
 		$this->allowed_types = apply_filters('rt_media_allowed_types', $this->allowed_types);
+		/**
+		 * AJAX Call for PL Upload
+		 */
+		add_action('wp_ajax_rt_file_upload', array('RTMediaUploadHelper', 'file_upload'));
     }
 
     /**
@@ -254,8 +258,8 @@ class RTMedia {
             define('BP_MEDIA_IS_INSTALLED', 1);
 
         /* Current Version. */
-        if (!defined('BP_MEDIA_VERSION'))
-            define('BP_MEDIA_VERSION', RTMedia::plugin_get_version());
+        if (!defined('RT_MEDIA_VERSION'))
+            define('RT_MEDIA_VERSION', RTMedia::plugin_get_version());
 
         /* Required Version  */
         if (!defined('BP_MEDIA_REQUIRED_BP'))

@@ -65,7 +65,7 @@ if (!class_exists('BPMediaAdmin')) {
         public function ui($hook) {
             $admin_ajax = admin_url('admin-ajax.php');
             
-            wp_enqueue_script('bp-media-admin', BP_MEDIA_URL . 'app/assets/js/admin.js', array('jquery-ui-dialog'), BP_MEDIA_VERSION);
+            wp_enqueue_script('bp-media-admin', BP_MEDIA_URL . 'app/assets/js/admin.js', array('jquery-ui-dialog'), RT_MEDIA_VERSION);
             wp_localize_script('bp-media-admin', 'bp_media_admin_ajax', $admin_ajax);
             wp_localize_script('bp-media-admin', 'bp_media_admin_url', admin_url());
             $bp_media_admin_strings = array(
@@ -81,7 +81,7 @@ if (!class_exists('BPMediaAdmin')) {
             wp_localize_script('bp-media-admin', 'settings_bp_album_import_url', add_query_arg(
                             array('page' => 'bp-media-settings'), (is_multisite() ? network_admin_url('admin.php') : admin_url('admin.php'))
                     ));
-            wp_enqueue_style('bp-media-admin', BP_MEDIA_URL . 'app/assets/css/main.css', '', BP_MEDIA_VERSION);
+            wp_enqueue_style('bp-media-admin', BP_MEDIA_URL . 'app/assets/css/main.css', '', RT_MEDIA_VERSION);
             wp_enqueue_style('wp-jquery-ui-dialog');
         }
 
