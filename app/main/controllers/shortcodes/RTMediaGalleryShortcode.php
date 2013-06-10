@@ -18,9 +18,7 @@ class RTMediaGalleryShortcode {
 
 	function render($attr) {
 
-				echo '"'.$attr.'"';
-		
-		if( !isset($attr) && empty($attr) )
+		if( (!isset($attr)) || empty($attr) )
 			$attr = true;
 
 		$template = new RTMediaTemplate();

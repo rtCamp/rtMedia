@@ -171,9 +171,8 @@ class RTMediaQuery {
 
 		if ( ! $pre_media )
 			return false;
-		
-/*		print_r($pre_media);
 
+/*		removed because of indexing ---- 0,1,2 was required rather than post_ids
 		foreach ( $pre_media as $pre_medium ) {
 			$this->media[ $pre_medium->media_id ] = $pre_medium;
 		}*/
@@ -196,13 +195,26 @@ class RTMediaQuery {
 			$this->populate_post_data( $this->media );
 		}
 	}
+	
+	function get_media_id($media) {
+		return $media->media_id;
+	}
+	
+	function get_media_by_media_id($id) {
+
+		foreach ($this->media as $key=>$media) {
+			if($media->media_id == $id)
+				return $key;
+		}
+		return null;
+	}
 
 	function populate_post_data( $media ) {
 		if ( ! empty( $media ) && is_array( $media ) ) {
 			$media_post_query_args = array(
 				'post_type' => 'any',
 				'post_status' => 'any',
-				'post__in' => array_keys( $media ),
+				'post__in' => array_map(array($this, 'get_media_id'), $media ),
 				'ignore_sticky_posts' => 1
 			);
 
@@ -219,11 +231,12 @@ class RTMediaQuery {
 			$media_post_data = $media_post_query->posts;
 			foreach ( $media_post_data as $post ) {
 
-				$this->media[ $post->ID ] = (object) (array_merge( (array) $this->media[ $post->ID ], (array) $post ));
-
-				$this->media[ $post->ID ]->id = intval( $this->media[ $post->ID ]->id );
-
-				unset( $this->media[ $post->ID ]->ID );
+				$key = $this->get_media_by_media_id($post->ID);
+				$this->media[ $key ] = (object) (array_merge( (array) $this->media[ $key ], (array) $post ));
+				
+				$this->media[ $key ]->id = intval( $this->media[ $key ]->id );
+				
+				unset( $this->media[ $key ]->ID );
 			}
 
 			$this->media_count = count( $this->media );
@@ -243,7 +256,7 @@ class RTMediaQuery {
 		return false;
 	}
 
-	function rt_media() {
+	function rt_album() {
 		global $rt_media;
 		$this->in_the_media_loop = true;
 
@@ -251,6 +264,11 @@ class RTMediaQuery {
 			do_action_ref_array( 'rt_media_loop_start', array( &$this ) );
 
 		$rt_media = $this->next_media();
+	}
+	
+	function rt_media() {
+		global $rt_media;
+		
 		return $rt_media;
 	}
 
