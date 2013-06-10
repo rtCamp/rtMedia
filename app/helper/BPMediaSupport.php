@@ -23,7 +23,7 @@ if (!class_exists('BPMediaSupport')) {
             $debug_info['MYSQL'] = $wpdb->db_version();
             $debug_info['WordPress'] = $wp_version;
             $debug_info['BuddyPress'] = $bp->version;
-            $debug_info['BuddyPress Media'] = BP_MEDIA_VERSION;
+            $debug_info['BuddyPress Media'] = RT_MEDIA_VERSION;
             $debug_info['OS'] = PHP_OS;
             if (extension_loaded('imagick')) {
                 $imagick = $message = preg_replace(" #((http|https|ftp)://(\S*?\.\S*?))(\s|\;|\)|\]|\[|\{|\}|,|\"|'|:|\<|$|\.\s)#ie", "'<a href=\"$1\" target=\"_blank\">$3</a>$4'", Imagick::getVersion() );

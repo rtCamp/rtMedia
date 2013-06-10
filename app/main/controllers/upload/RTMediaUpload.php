@@ -19,9 +19,12 @@ class RTMediaUpload {
 
         $file_object = $this->upload($uploaded);
 
+		print_r($file_object);
+		print_r($uploaded);
 		if ($file_object && $uploaded) {
             if($this->media->add($uploaded, $file_object)){
                 do_action('rt_media_after_add_media');
+				echo '\n inside and return true';
 				return true;
             }
         } else {

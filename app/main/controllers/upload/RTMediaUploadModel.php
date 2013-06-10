@@ -20,6 +20,7 @@ class RTMediaUploadModel {
     );
 
     function set_post_object() {
+		print_r($_POST);
         $this->upload = wp_parse_args($_POST, $this->upload);
         $this->sanitize_object();
 		return $this->upload;
@@ -34,8 +35,9 @@ class RTMediaUploadModel {
 	
     function sanitize_object() {
         if (!$this->has_context()){
-			
+
 			global $rt_media_interaction;
+			var_dump($rt_media_interaction);
 			$this->upload['context']= $rt_media_interaction->context->type;
 			$this->upload['context_id'] = $rt_media_interaction->context->id;
 		}
