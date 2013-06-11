@@ -223,7 +223,7 @@ class RTMediaQuery {
 		if ( ! empty( $media ) && is_array( $media ) ) {
 			$media_post_query_args = array(
 				'orderby' => 'ID',
-				'order' => 'ASC',
+				'order' => 'DESC',
 				'posts_per_page' => $this->action_query->per_page_media,
 				'paged' => $this->action_query->paged,
 				'post_type' => 'any',
