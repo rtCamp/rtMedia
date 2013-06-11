@@ -20,22 +20,24 @@ class RTMediaUploadModel {
     );
 
     function set_post_object() {
+		print_r($_POST);
         $this->upload = wp_parse_args($_POST, $this->upload);
         $this->sanitize_object();
-		print_r($this->upload);
-        return $this->upload;
+		return $this->upload;
     }
 
     function has_context() {
-        if (!isset($this->upload['context_id']))
-            return false;
+        if (isset($this->upload['context_id']) && !empty($this->upload['context_id']))
+            return true;
+		return false;
     }
 
 	
     function sanitize_object() {
         if (!$this->has_context()){
-			
+
 			global $rt_media_interaction;
+			var_dump($rt_media_interaction);
 			$this->upload['context']= $rt_media_interaction->context->type;
 			$this->upload['context_id'] = $rt_media_interaction->context->id;
 		}
@@ -83,8 +85,11 @@ class RTMediaUploadModel {
     }
 
     function set_wp_album_id(){
-        $this->upload['album_id'] = $this->upload['context_id'];
-    }
+		if(isset($this->upload['context']))
+			$this->upload['album_id'] = $this->upload['context_id'];
+		else
+			throw new RTMediaUploadException(9);	// Invalid Context
+	}
 
     function set_bp_component_album_id() {
         switch (bp_current_component()) {

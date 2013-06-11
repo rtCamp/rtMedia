@@ -19,9 +19,13 @@ class RTMediaUpload {
 
         $file_object = $this->upload($uploaded);
 
-        if ($file_object) {
+		print_r($file_object);
+		print_r($uploaded);
+		if ($file_object && $uploaded) {
             if($this->media->add($uploaded, $file_object)){
                 do_action('rt_media_after_add_media');
+				echo '\n inside and return true';
+				return true;
             }
         } else {
             return false;
@@ -35,7 +39,7 @@ class RTMediaUpload {
             case 'link_input': return $this->url->init($uploaded);
                 break;
             default:
-                do_action('bp_media_upload_' . $mode, $uploaded);
+                do_action('rt_media_upload_' . $uploaded['mode'], $uploaded);
         }
     }
 
