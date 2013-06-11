@@ -85,8 +85,8 @@ class RTMediaUploadFile {
             }
             $this->id3_validate_type($file);
         } catch (RTMediaUploadException $e) {
-            return false;
-//            echo $e->getMessage();
+            echo $e->getMessage();
+			return false;
         }
         return true;
     }
@@ -106,7 +106,7 @@ class RTMediaUploadFile {
             case 'video/mp4' :
             case 'video/quicktime' :
                 $type = 'video';
-                include_once(trailingslashit(BP_MEDIA_PATH) . 'lib/getid3/getid3.php');
+                include_once(trailingslashit(RT_MEDIA_PATH) . 'lib/getid3/getid3.php');
                 try {
                     $getID3 = new getID3;
                     $vid_info = $getID3->analyze($file['tmp_name']);
@@ -135,7 +135,7 @@ class RTMediaUploadFile {
                 break;
             case 'audio/mpeg' :
             case 'audio/mp3' :
-                include_once(trailingslashit(BP_MEDIA_PATH) . 'lib/getid3/getid3.php');
+                include_once(trailingslashit(RT_MEDIA_PATH) . 'lib/getid3/getid3.php');
                 try {
                     $getID3 = new getID3;
                     $file_info = $getID3->analyze($file['tmp_name']);

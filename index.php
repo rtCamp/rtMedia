@@ -93,6 +93,6 @@ global $rt_media;
 $rt_media = new RTMedia();
 
 /*
- * Look Ma! Very few includes! Next File: /app/main/BuddyPressMedia.php
+ * Look Ma! Very few includes! Next File: /app/main/RTMedia.php
  */
 ?>

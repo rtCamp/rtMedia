@@ -48,11 +48,11 @@ class RTMediaModel extends RTDBModel {
         return $return['result'];
     }
 
-    function get_media($columns) {
+    function get_media($columns, $offset, $per_page) {
         if (is_multisite()) {
-            $results = $this->get($columns, "blog_id");
+            $results = $this->get($columns, $offset, $per_page, "blog_id");
         } else {
-            $results = $this->get($columns);
+            $results = $this->get($columns, $offset, $per_page);
         }
         return $results;
     }
