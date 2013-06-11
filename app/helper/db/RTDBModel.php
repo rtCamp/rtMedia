@@ -144,7 +144,7 @@ class RTDBModel {
         if($order_by){
             $sql .= " ORDER BY {$this->table_name}.$order_by";
         }else{
-            $sql .= " ORDER BY {$this->table_name}.media_id";
+            $sql .= " ORDER BY {$this->table_name}.media_id DESC";
         }
 
 		if(is_integer($offset) && is_integer($per_page)) {
