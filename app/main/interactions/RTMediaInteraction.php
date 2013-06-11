@@ -63,9 +63,7 @@ class RTMediaInteraction {
 
 		// set up routes for each slug
 		foreach($this->slugs as $slug){
-			//echo $slug;
 			$this->routes->{$slug} = new RTMediaRouter($slug);
-			//print_r($this->routes);
 		}
 
 	}
@@ -98,7 +96,7 @@ class RTMediaInteraction {
 		}
 
 
-
+		
 		//set the context property
 
 		$this->context = $context_object;

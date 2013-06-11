@@ -65,7 +65,7 @@ if (!class_exists('BPMediaAdmin')) {
         public function ui($hook) {
             $admin_ajax = admin_url('admin-ajax.php');
             
-            wp_enqueue_script('bp-media-admin', BP_MEDIA_URL . 'app/assets/js/admin.js', array('jquery-ui-dialog'), RT_MEDIA_VERSION);
+            wp_enqueue_script('bp-media-admin', RT_MEDIA_URL . 'app/assets/js/admin.js', array('jquery-ui-dialog'), RT_MEDIA_VERSION);
             wp_localize_script('bp-media-admin', 'bp_media_admin_ajax', $admin_ajax);
             wp_localize_script('bp-media-admin', 'bp_media_admin_url', admin_url());
             $bp_media_admin_strings = array(
@@ -81,7 +81,7 @@ if (!class_exists('BPMediaAdmin')) {
             wp_localize_script('bp-media-admin', 'settings_bp_album_import_url', add_query_arg(
                             array('page' => 'bp-media-settings'), (is_multisite() ? network_admin_url('admin.php') : admin_url('admin.php'))
                     ));
-            wp_enqueue_style('bp-media-admin', BP_MEDIA_URL . 'app/assets/css/main.css', '', RT_MEDIA_VERSION);
+            wp_enqueue_style('bp-media-admin', RT_MEDIA_URL . 'app/assets/css/main.css', '', RT_MEDIA_VERSION);
             wp_enqueue_style('wp-jquery-ui-dialog');
         }
 
@@ -177,12 +177,12 @@ if (!class_exists('BPMediaAdmin')) {
                 settings_fields($option_group);
                 do_settings_sections($page);
                 submit_button();
-                            ?><div class="rt-link alignright"><?php _e('By', 'buddypress-media'); ?> <a href="http://rtcamp.com/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media" title="<?php _e('Empowering The Web With WordPress', 'buddypress-media'); ?>"><img src="<?php echo BP_MEDIA_URL; ?>app/assets/img/rtcamp-logo.png"></a></div>
+                            ?><div class="rt-link alignright"><?php _e('By', 'buddypress-media'); ?> <a href="http://rtcamp.com/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media" title="<?php _e('Empowering The Web With WordPress', 'buddypress-media'); ?>"><img src="<?php echo RT_MEDIA_URL; ?>app/assets/img/rtcamp-logo.png"></a></div>
                                 </div>
                             </form><?php } else {
                     ?>
                             <div class="bp-media-metabox-holder"><?php do_settings_sections($page); ?>
-                                <div class="rt-link alignright"><?php _e('By', 'buddypress-media'); ?> <a href="http://rtcamp.com/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media" title="<?php _e('Empowering The Web With WordPress', 'buddypress-media'); ?>"><img src="<?php echo BP_MEDIA_URL; ?>app/assets/img/rtcamp-logo.png"></a></div>
+                                <div class="rt-link alignright"><?php _e('By', 'buddypress-media'); ?> <a href="http://rtcamp.com/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media" title="<?php _e('Empowering The Web With WordPress', 'buddypress-media'); ?>"><img src="<?php echo RT_MEDIA_URL; ?>app/assets/img/rtcamp-logo.png"></a></div>
                             </div><?php
             }
                         ?>
@@ -356,8 +356,8 @@ if (!class_exists('BPMediaAdmin')) {
                     public function admin_sidebar() {
                         do_action('bp_media_before_default_admin_widgets');
                         $current_user = wp_get_current_user();
-                        echo '<p><a target="_blank" href="http://rtcamp.com/news/buddypress-media-review-contest/?utm_source=dashboard&#038;utm_medium=plugin&#038;utm_campaign=buddypress-media"><img src="'.BP_MEDIA_URL.'app/assets/img/bpm-contest-banner.jpg" alt="BuddyPress Media Review Contest" /></a></p>';
-//                        $contest = '<a target="_blank" href="http://rtcamp.com/news/buddypress-media-review-contest/?utm_source=dashboard&#038;utm_medium=plugin&#038;utm_campaign=buddypress-media"><img src="'.BP_MEDIA_URL.'app/assets/img/bpm-contest-banner.jpg" alt="BuddyPress Media Review Contest" /></a>';
+                        echo '<p><a target="_blank" href="http://rtcamp.com/news/buddypress-media-review-contest/?utm_source=dashboard&#038;utm_medium=plugin&#038;utm_campaign=buddypress-media"><img src="'.RT_MEDIA_URL.'app/assets/img/bpm-contest-banner.jpg" alt="BuddyPress Media Review Contest" /></a></p>';
+//                        $contest = '<a target="_blank" href="http://rtcamp.com/news/buddypress-media-review-contest/?utm_source=dashboard&#038;utm_medium=plugin&#038;utm_campaign=buddypress-media"><img src="'.RT_MEDIA_URL.'app/assets/img/bpm-contest-banner.jpg" alt="BuddyPress Media Review Contest" /></a>';
 //                        new BPMediaAdminWidget('bpm-contest', __('', 'buddypress-media'), $contest);
                         
                         $message = sprintf(__('I use @buddypressmedia http://goo.gl/8Upmv on %s', 'buddypress-media'), home_url());
@@ -378,9 +378,9 @@ if (!class_exists('BPMediaAdmin')) {
 //						   <input type="text" name="amount" size="3">
 //                           <input type="hidden" name="currency_code" value="USD">
 //                           <!-- Display the payment button. -->
-//                           <input type="hidden" name="cpp_header_image" value="' . BP_MEDIA_URL . 'app/assets/img/rtcamp-logo.png">
+//                           <input type="hidden" name="cpp_header_image" value="' . RT_MEDIA_URL . 'app/assets/img/rtcamp-logo.png">
 //                           <input type="image" id="rt-donate-button" name="submit" border="0"
-//                           src="' . BP_MEDIA_URL . 'app/assets/img/paypal-donate-button.png"
+//                           src="' . RT_MEDIA_URL . 'app/assets/img/paypal-donate-button.png"
 //                           alt="PayPal - The safer, easier way to pay online">
 //                       </form><br />
 //                       <center><b>' . __('OR', 'buddypress-media') . '</b></center><br />
@@ -437,7 +437,7 @@ if (!class_exists('BPMediaAdmin')) {
                     }
 
                     public function plugin_meta_premium_addon_link($plugin_meta, $plugin_file, $plugin_data, $status) {
-                        if (plugin_basename(BP_MEDIA_PATH . 'index.php') == $plugin_file)
+                        if (plugin_basename(RT_MEDIA_PATH . 'index.php') == $plugin_file)
                             $plugin_meta[] = '<a href="https://rtcamp.com/store/product-category/buddypress/?utm_source=dashboard&#038;utm_medium=plugin&#038;utm_campaign=buddypress-media" title="Premium Add-ons">Premium Add-ons</a>';
                         return $plugin_meta;
                     }

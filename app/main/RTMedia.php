@@ -24,11 +24,11 @@ class RTMedia {
      *
      * @var string The text domain for loading translations
      */
-    public $text_domain = 'buddypress-media';
+    public $text_domain = 'rt-media';
 
     /**
      *
-     * @var array BuddyPress Media settings
+     * @var array RTMedia settings
      */
     public $options = array();
 
@@ -244,7 +244,11 @@ class RTMedia {
             bp_update_option('bp_media_options', $options);
         }
 
+		$options['per_page_media'] = 10;
+		
         $this->options = $options;
+		
+		return $options;
     }
 
     /**
@@ -458,7 +462,7 @@ class RTMedia {
      * Loads translations
      */
     static function load_translation() {
-        load_plugin_textdomain('buddypress-media', false, basename(RT_MEDIA_PATH) . '/languages/');
+        load_plugin_textdomain('rt-media', false, basename(RT_MEDIA_PATH) . '/languages/');
     }
 
     /**
@@ -471,7 +475,7 @@ class RTMedia {
      */
     function settings_link($links, $file) {
         /* create link */
-        $plugin_name = plugin_basename(BP_MEDIA_PATH . 'index.php');
+        $plugin_name = plugin_basename(RT_MEDIA_PATH . 'index.php');
         $admin_link = $this->get_admin_url(
                 add_query_arg(
                         array(

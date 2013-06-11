@@ -16,10 +16,10 @@ jQuery(document).ready(function($) {
             action: 'rt_file_upload',
             mode : mode,
             rt_media_file_upload_nonce : nonce,
-            context : ( context != undefined ) ? context : '',
-            context_id : ( context_id != undefined ) ? context_id : '',
-            privacy : ( privacy != undefined ) ? privacy : '',
-            album_id : ( album_id != undefined ) ? album_id : ''
+            context : ( context !== undefined ) ? context : '',
+            context_id : ( context_id !== undefined ) ? context_id : '',
+            privacy : ( privacy !== undefined ) ? privacy : '',
+            album_id : ( album_id !== undefined ) ? album_id : ''
         }
     });
 
@@ -39,4 +39,5 @@ jQuery(document).ready(function($) {
         }
         return false;
     });
+
 });

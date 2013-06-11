@@ -85,7 +85,7 @@ class RTMediaRouter {
 	 *
 	 */
 
-	function template_redirect(){
+	function template_redirect() {
 
 		// if it is not our route, return early
 		if(!$this->is_template())return;
@@ -116,7 +116,7 @@ class RTMediaRouter {
 		// so it can load a custom template
 
 
-		global $rt_media_query;
+//		include(RT_MEDIA_PATH . 'app/main/controllers/template/rt-template-functions.php');
 
 		$template_load = new RTMediaTemplate();
 
@@ -126,7 +126,7 @@ class RTMediaRouter {
 		$template = apply_filters("rt_media_".$this->slug."_include",$template);
 
 		// return the template for inclusion in the theme
-
+		
 		return $template;
 
 	}
@@ -141,10 +141,8 @@ class RTMediaRouter {
 
 		global $wp_query;
 		$query_vars_array = explode('/',$wp_query->query_vars[ $this->slug ]);
-
+		
 		$this->query_vars = apply_filters('rt_media_query_vars',$query_vars_array);
-
-		//print_r($this->query_vars);
 
 	}
 
