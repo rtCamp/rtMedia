@@ -121,7 +121,7 @@ class RTDBModel {
      * @param type $columns
      * @return type
      */
-    function get($columns,$order_by= false) {
+    function get($columns, $offset=false, $per_page=false, $order_by= false) {
         $select = "SELECT * FROM {$this->table_name}";
         $join = "" ;
         $where = " where 2=2 " ;
@@ -144,9 +144,12 @@ class RTDBModel {
         if($order_by){
             $sql .= " ORDER BY {$this->table_name}.$order_by";
         }else{
-            $sql .= " ORDER BY {$this->table_name}.media_id";    
+            $sql .= " ORDER BY {$this->table_name}.media_id";
         }
 
+		if(is_integer($offset) && is_integer($per_page)) {
+			$sql .= ' LIMIT ' . $offset . ',' . $per_page;
+		}
         global $wpdb;
         return $wpdb->get_results($sql);
     }

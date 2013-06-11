@@ -1,7 +1,9 @@
-<li class="rt-media-list-item">
+<!--<li class="rt-media-list-item">-->
 	<div class="rt-media-container rt-media-single-container">
 
-		<?php if (have_media()) : rt_media(); ?>
+		<?php if (have_rt_media()) : rt_album(); ?>
+
+				<?php rt_media(); ?>
 
 				<h2 class="rt-media-item-title">
 					<a href="<?php rt_media_permalink(); ?>"
@@ -23,4 +25,4 @@
 		<?php endif; ?>
 
 	</div>
-</li>
+<!--</li>-->

@@ -13,7 +13,7 @@ class RTMediaUploadException extends Exception
         parent::__construct($message, $code); 
     } 
 
-    private function codeToMessage($code) 
+    private function codeToMessage($code,$msg)
     { 
         switch ($code) { 
             case UPLOAD_ERR_INI_SIZE:

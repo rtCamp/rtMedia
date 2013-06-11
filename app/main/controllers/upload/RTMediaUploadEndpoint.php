@@ -26,10 +26,10 @@ class RTMediaUploadEndpoint {
             if (wp_verify_nonce($nonce, 'rt_media_' . $mode . '_nonce')) {
                 $model = new RTMediaUploadModel();
                 $this->upload = $model->set_post_object();
-
+				
 				$upload = new RTMediaUpload($this->upload);
             }
-//            wp_safe_redirect(wp_get_referer());
+			wp_safe_redirect(wp_get_referer());
         }
 
         exit;

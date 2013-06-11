@@ -26,7 +26,7 @@ if (!class_exists('BPMediaLog')) {
         public function __construct($msg, $context = '', $log_file = '') {
             $log_msg = $this->log_msg($msg, $context = '');
             if ($log_file == '') {
-                $log_file = BP_MEDIA_PATH . 'log/bpmedia.log';
+                $log_file = RT_MEDIA_PATH . 'log/rtmedia.log';
             }
             return $this->log($log_msg, $log_file);
         }
@@ -72,7 +72,7 @@ if (!class_exists('BPMediaLog')) {
          * @return boolean
          */
         public function log($logmsg, $file) {
-            $fp = fopen(BP_MEDIA_PATH . 'plugin.log', "a+");
+            $fp = fopen(RT_MEDIA_PATH . 'plugin.log', "a+");
             if ($fp) {
                 fwrite($fp, "\n" . $logmsg);
                 fclose($fp);

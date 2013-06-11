@@ -23,7 +23,7 @@ class RTMediaQuery {
 	 *
 	 * @var object The current action object (edit/delete/custom)
 	 */
-	private $action_query = false;
+	public $action_query = false;
 
 	/**
 	 *
@@ -98,9 +98,8 @@ class RTMediaQuery {
 	function set_action_query() {
 
 		$raw_query = $this->interaction->query_vars;
-		//print_r($raw_query);
 
-		if ( is_array( $raw_query ) && count( $raw_query ) ) {
+		if ( is_array( $raw_query ) && count( $raw_query ) && !empty($raw_query[0]) ) {
 
 			$bulk = false;
 			$action = false;
@@ -146,7 +145,17 @@ class RTMediaQuery {
 				'bulk'			=> true
 			);
 
-		}
+		} else if( isset($raw_query) )
+			include get_404_template();
+
+		global $rt_media;
+		$options = $rt_media->get_option();
+		$this->action_query = (object) array(
+			'offset' => 0,
+			'paged' => 1,
+			'per_page_media' => $options['per_page_media']
+		);
+
 	}
 
 	function set_actions() {
@@ -165,10 +174,11 @@ class RTMediaQuery {
 		unset( $this->query->meta_query );
 		unset( $this->query->tax_query );
 
-		$pre_media = $this->model->get_media( $this->query );
+		$pre_media = $this->model->get_media( $this->query, $this->action_query->offset, $this->action_query->per_page_media );
 
-
-
+		$media_for_total_count = $this->model->get_media( $this->query, false, false );
+		$this->media_count = count($media_for_total_count);
+		
 		if ( ! $pre_media )
 			return false;
 
@@ -212,6 +222,10 @@ class RTMediaQuery {
 	function populate_post_data( $media ) {
 		if ( ! empty( $media ) && is_array( $media ) ) {
 			$media_post_query_args = array(
+				'orderby' => 'ID',
+				'order' => 'ASC',
+				'posts_per_page' => $this->action_query->per_page_media,
+				'paged' => $this->action_query->paged,
 				'post_type' => 'any',
 				'post_status' => 'any',
 				'post__in' => array_map(array($this, 'get_media_id'), $media ),
@@ -238,15 +252,13 @@ class RTMediaQuery {
 				
 				unset( $this->media[ $key ]->ID );
 			}
-
-			$this->media_count = count( $this->media );
 		}
 	}
 
 	function have_media() {
-		if ( $this->current_media + 1 < $this->media_count ) {
+		if ( $this->current_media + 1 < $this->action_query->per_page_media ) {
 			return true;
-		} elseif ( $this->current_media + 1 == $this->media_count && $this->media_count > 0 ) {
+		} elseif ( $this->current_media + 1 == $this->action_query->per_page_media && $this->action_query->per_page_media > 0 ) {
 			do_action_ref_array( 'rt_media_loop_end', array( &$this ) );
 			// Do some cleaning up after the loop
 			$this->rewind_media();
@@ -257,19 +269,19 @@ class RTMediaQuery {
 	}
 
 	function rt_album() {
-		global $rt_media;
+		global $rt_media_media;
 		$this->in_the_media_loop = true;
 
 		if ( $this->current_media == -1 ) // loop has just started
 			do_action_ref_array( 'rt_media_loop_start', array( &$this ) );
 
-		$rt_media = $this->next_media();
+		$rt_media_media = $this->next_media();
 	}
 	
 	function rt_media() {
-		global $rt_media;
+		global $rt_media_media;
 		
-		return $rt_media;
+		return $rt_media_media;
 	}
 
 	function next_media() {
@@ -281,7 +293,7 @@ class RTMediaQuery {
 
 	function rewind_media() {
 		$this->current_media = -1;
-		if ( $this->media_count > 0 ) {
+		if ( $this->action_query->per_page_media > 0 ) {
 			$this->media = $this->media[ 0 ];
 		}
 	}
