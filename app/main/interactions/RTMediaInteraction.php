@@ -65,7 +65,7 @@ class RTMediaInteraction {
 		foreach($this->slugs as $slug){
 			$this->routes->{$slug} = new RTMediaRouter($slug);
 		}
-
+		
 	}
 
 	/**

@@ -116,14 +116,14 @@ class RTMediaRouter {
 		// so it can load a custom template
 
 		$template_load = new RTMediaTemplate();
-
+		
 		$template = $template_load->set_template($template);
 
 
 		$template = apply_filters("rt_media_".$this->slug."_include",$template);
 
 		// return the template for inclusion in the theme
-		
+
 		return $template;
 
 	}

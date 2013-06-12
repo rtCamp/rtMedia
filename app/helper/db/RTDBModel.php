@@ -133,7 +133,7 @@ class RTDBModel {
      * @param type $columns
      * @return type
      */
-    function get($columns, $offset=false, $per_page=false, $order_by= false) {
+    function get($columns, $offset=false, $per_page=false, $order_by= 'media_id desc') {
         $select = "SELECT * FROM {$this->table_name}";
         $join = "" ;
         $where = " where 2=2 " ;
@@ -153,11 +153,8 @@ class RTDBModel {
             }
         }
         $sql = $select . $join . $where ;
-        if($order_by){
-            $sql .= " ORDER BY {$this->table_name}.$order_by";
-        }else{
-            $sql .= " ORDER BY {$this->table_name}.media_id DESC";
-        }
+
+		$sql .= " ORDER BY {$this->table_name}.$order_by";
 
 		if(is_integer($offset) && is_integer($per_page)) {
 			$sql .= ' LIMIT ' . $offset . ',' . $per_page;

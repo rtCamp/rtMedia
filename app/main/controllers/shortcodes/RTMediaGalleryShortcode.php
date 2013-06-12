@@ -43,7 +43,7 @@ class RTMediaGalleryShortcode {
 		if( self::display_allowed() ) {
 			
 			ob_start();
-
+			
 			if( (!isset($attr)) || empty($attr) )
 				$attr = true;
 
