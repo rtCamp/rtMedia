@@ -2,11 +2,21 @@
 
 /**
  * Description of RTDBModel
- *
+ * Base class for any Database Model like Media, Album etc.
+ * 
  * @author faishal
  */
 class RTDBModel {
 
+	/**
+	 *
+	 * @var type 
+	 * 
+	 * $table_name - database table linked to the model.
+	 *				All the queries will be fired on that table or with the join in this table.
+	 * $meta_table_name - meta table in database for the model.
+	 * $per_page - number of rows per page to be displayed
+	 */
     public $table_name;
     public $meta_table_name;
     public $per_page;
@@ -37,7 +47,7 @@ class RTDBModel {
     }
 
     /**
-     *
+     * set number of rows per page for pagination
      * @param type $per_page
      */
     public function set_per_page($per_page) {
@@ -45,7 +55,8 @@ class RTDBModel {
     }
 
     /**
-     *
+     * Magic Method for getting DB rows by particular column.
+	 * E.g., get_by_<columnName>(params)
      * @global type $wpdb
      * @param type $name - Added get_by_<coulmname>(value,pagging=true,page_no=1)
      * @param type $arguments
@@ -116,7 +127,8 @@ class RTDBModel {
     }
 
     /**
-     *
+     * Get all the rows according to the columns set in $columns parameter.
+	 * offset and rows per page can also be passed for pagination.
      * @global type $wpdb
      * @param type $columns
      * @return type
@@ -154,6 +166,12 @@ class RTDBModel {
         return $wpdb->get_results($sql);
     }
 
+	/**
+	 * 
+	 * @global type $wpdb
+	 * @param type $media_id
+	 * @return type
+	 */
     function delete($media_id) {
         global $wpdb;
         return $wpdb->delete($this->table_name, array('media_id' => $media_id));

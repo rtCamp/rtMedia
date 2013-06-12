@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Description of BPMediaUploadView
+ * Description of RTMediaUploadView
  *
  * @author joshua
  */
@@ -9,12 +9,21 @@ class RTMediaUploadView {
 	
 	private $attributes;
 
+	/**
+	 * 
+	 * @param type $attr
+	 */
     function __construct($attr) {
 		
 		$this->attributes = $attr;
 
     }
 
+	/**
+	 * Render the uploader shortcode and attach the uploader panel
+	 * 
+	 * @param type $template_name
+	 */
     public function render($template_name) {
         $tabs = array(
 			'file_upload' => array( 'title' => __('File Upload','rt-media'), 'content' => '<div id="drag-drop-area"><input type="file" name="rt_media_file" class="rt-media-upload-input rt-media-file" /><input id="browse-button" type="button" value="Upload Media" class="button"></div>' ),
@@ -31,6 +40,12 @@ class RTMediaUploadView {
 
     }
 
+	/**
+	 * Template Locator
+	 * 
+	 * @param type $template
+	 * @return string
+	 */
     protected function locate_template($template) {
         $located = '';
 		

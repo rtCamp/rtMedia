@@ -108,22 +108,35 @@ class RTMediaQuery {
 			$modifier_value = false;
 			$format = '';
 
+			/**
+			 * json request
+			 */
 			if(in_array('json',$raw_query)){
 				$this->format = 'json';
 			}
 
+			/**
+			 * accessed the url directly by media id
+			 */
 			if ( is_numeric( $raw_query[ 0 ] ) ) {
 				$modifier_type = 'id';
 			} else {
+			/**
+			 * accessed the url directly by media type
+			 */
 				$modifier_type = 'media_type';
 			}
 
 			$modifier_value = $raw_query[ 0 ];
 
+			
 			if ( isset( $raw_query[ 1 ] ) ) {
 
+				/**
+				 * action manipulator hook
+				 */
 				$this->set_actions();
-
+				
 				if ( in_array( $raw_query[ 1 ], $this->actions ) ) {
 
 					$action = $raw_query[ 1 ];
@@ -134,10 +147,16 @@ class RTMediaQuery {
 				}
 			}
 
+			/**
+			 * additional attributes
+			 */
 			if ( isset( $raw_query[ 2 ] ) ) {
 				$attribute= $raw_query[2];
 			}
 
+			/**
+			 * set action query object
+			 */
 			$this->action_query = (object)array(
 				$modifier_type	=> $modifier_value,
 				'action'		=> $action,
@@ -146,8 +165,14 @@ class RTMediaQuery {
 			);
 
 		} else if( isset($raw_query) )
+			/*
+			 * invalid slug
+			 */
 			include get_404_template();
 
+		/**
+		 * setting parameters in action query object for pagination
+		 */
 		global $rt_media;
 		$options = $rt_media->get_option();
 		$this->action_query = (object) array(
@@ -158,24 +183,43 @@ class RTMediaQuery {
 
 	}
 
+	/**
+	 * additional actions to be added via action hook
+	 */
 	function set_actions() {
 		$this->actions = apply_filters( 'rt_media_query_actions', $this->actions );
 	}
 
+	/**
+	 * get media query for the request
+	 * @param type $query
+	 * @return type
+	 */
 	function &query( $query ) {
 		$this->query = $this->query_vars = wp_parse_args( $query );
 		return $this->get_media();
 	}
 
 
+	/**
+	 * populate the media object for the page/album
+	 * 
+	 * @return boolean
+	 */
 	function populate_media() {
 		$this->model = new RTMediaModel();
 
 		unset( $this->query->meta_query );
 		unset( $this->query->tax_query );
 
+		/**
+		 * fetch media entries from rtMedia context
+		 */
 		$pre_media = $this->model->get_media( $this->query, $this->action_query->offset, $this->action_query->per_page_media );
 
+		/**
+		 * count total medias in alnum rrespective of pagination
+		 */
 		$media_for_total_count = $this->model->get_media( $this->query, false, false );
 		$this->media_count = count($media_for_total_count);
 		
@@ -189,6 +233,9 @@ class RTMediaQuery {
 
 		$this->media = $pre_media;
 
+		/**
+		 * multiside manipulation
+		 */
 		if ( is_multisite() ) {
 			foreach ( $this->media as $media ) {
 				$blogs[ $media->blog_id ][] = $media;
@@ -205,11 +252,21 @@ class RTMediaQuery {
 			$this->populate_post_data( $this->media );
 		}
 	}
-	
+
+	/**
+	 * helper method to fetch media id of each media from the map
+	 * @param type $media
+	 * @return type
+	 */
 	function get_media_id($media) {
 		return $media->media_id;
 	}
-	
+
+	/**
+	 * helper method to find the array entry for the given media id
+	 * @param type $id
+	 * @return null
+	 */
 	function get_media_by_media_id($id) {
 
 		foreach ($this->media as $key=>$media) {
@@ -219,8 +276,16 @@ class RTMediaQuery {
 		return null;
 	}
 
+	/**
+	 * populate the post data for the fetched media from rtMedia context
+	 * @param type $media
+	 */
 	function populate_post_data( $media ) {
 		if ( ! empty( $media ) && is_array( $media ) ) {
+			
+			/**
+			 * setting up query vars for WP_Query
+			 */
 			$media_post_query_args = array(
 				'orderby' => 'ID',
 				'order' => 'DESC',
@@ -230,16 +295,27 @@ class RTMediaQuery {
 				'ignore_sticky_posts' => 1
 			);
 
-
+			/**
+			 * setting up meta query vars
+			 */
 			if ( isset( $this->query_vars->meta_query ) ) {
 				$media_post_query_args[ 'meta_query' ] = $this->query_vars->meta_query;
 			}
+			/**
+			 * setting up taxonomy query vars
+			 */
 			if ( isset( $this->query_vars->tax_query ) ) {
 				$media_post_query_args[ 'tax_query' ] = $this->query_vars->tax_query;
 			}
-
+			
+			/**
+			 * fetch relative data from WP_POST
+			 */
 			$media_post_query = new WP_Query( $media_post_query_args );
 
+			/**
+			 * Merge the data with media object of the album
+			 */
 			$media_post_data = $media_post_query->posts;
 			foreach ( $media_post_data as $post ) {
 
@@ -253,6 +329,10 @@ class RTMediaQuery {
 		}
 	}
 
+	/**
+	 * Checks at any point of time any media is left to be processed in the db pool
+	 * @return boolean
+	 */
 	function have_media() {
 		
 		$total = $this->media_count;
@@ -272,6 +352,10 @@ class RTMediaQuery {
 		return false;
 	}
 
+	/**
+	 * moves ahead in the loop of media within the album
+	 * @global type $rt_media_media
+	 */
 	function rt_album() {
 		global $rt_media_media;
 		$this->in_the_media_loop = true;
@@ -282,12 +366,21 @@ class RTMediaQuery {
 		$rt_media_media = $this->next_media();
 	}
 	
+	/**
+	 * returns the current media object in the album
+	 * @global type $rt_media_media
+	 * @return \type
+	 */
 	function rt_media() {
 		global $rt_media_media;
 		
 		return $rt_media_media;
 	}
 
+	/**
+	 * helper method for rt_album to move ahead in the db pool
+	 * @return type
+	 */
 	function next_media() {
 		$this->current_media ++;
 
@@ -295,6 +388,9 @@ class RTMediaQuery {
 		return $this->rt_media;
 	}
 
+	/**
+	 * Rewinds the db pool of media album and resets it to begining
+	 */
 	function rewind_media() {
 		$this->current_media = -1;
 		if ( $this->action_query->per_page_media > 0 ) {
@@ -302,6 +398,10 @@ class RTMediaQuery {
 		}
 	}
 
+	/**
+	 * 
+	 * @return type
+	 */
 	function &get_media() {
 
 		$this->populate_media();

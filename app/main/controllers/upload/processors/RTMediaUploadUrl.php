@@ -6,7 +6,7 @@
  */
 
 /**
- * Description of BPMediaUploadUrl
+ * Description of RTMediaUploadUrl
  *
  * @author joshua
  */

@@ -12,13 +12,28 @@
  */
 class RTMediaMedia {
 
+	/**
+	 *DB Model object to interact on Database operations
+	 * 
+	 * @var type 
+	 */
 	var $rt_media_model;
 
+	/**
+	 * 
+	 */
 	public function __construct() {
 
 		$this->rt_media_model = new RTMediaModel();
 	}
 
+	/**
+	 * Method verifies the nonce passed while performing any CRUD operations
+	 * on the media.
+	 * 
+	 * @param type $mode
+	 * @return boolean
+	 */
 	function verify_nonce($mode) {
 
 		$nonce = $_REQUEST["rt_media_{$mode}_media_nonce"];
@@ -30,31 +45,56 @@ class RTMediaMedia {
 			return false;
 	}
 
+	/**
+	 * Adds a hook to delete_attachment tag called
+	 * when a media is deleted externally out of rtMedia context
+	 */
 	public function delete_hook() {
 		add_action('delete_attachment',array($this,'delete'));
 	}
 
+	/**
+	 * Generic method to add a media
+	 * 
+	 * @param type $uploaded
+	 * @param type $file_object
+	 * @return type
+	 */
 	function add($uploaded, $file_object) {
 
+		/* action to perform any task before adding a media */
 		do_action('rt_media_before_add_media', $this);
 
+		/* Generate media details required to feed in database */
 		$attachments = $this->generate_post_array($uploaded, $file_object);
 
+		/* Insert the media as an attachment in Wordpress context */
 		$attachment_ids = $this->insert_attachment($attachments, $file_object);
 
+		/* if buddypress activity is enabled then insert an activity */
 		if($this->activity_enabled())
 			$this->insert_activity($uploaded);
 
+		/* add media in rtMedia context */
 		$this->rt_insert_media($attachment_ids,$uploaded);
 
+		/* action to perform any task after adding a media */
 		do_action('rt_media_after_add_media', $this);
 
 		return $attachment_ids;
 
     }
 
+	/**
+	 * Generic method to update a media. media details can be changed from this method
+	 * 
+	 * @param type $media_id
+	 * @param type $meta
+	 * @return boolean
+	 */
 	function update($media_id, $meta) {
 
+		/* action to perform any task before updating a media */
 		do_action('rt_media_before_update_media', $this);
 
 		$defaults = array();
@@ -66,12 +106,18 @@ class RTMediaMedia {
 		if (get_class($status) == 'WP_Error' || $status == 0) {
 			return false;
 		} else {
+			/* action to perform any task after updating a media */
 			do_action('rt_media_after_update_media', $this);
 			return true;
 		}
 
 	}
 
+	/**
+	 * 
+	 * @param type $media_id
+	 * @return boolean
+	 */
 	function delete($media_id){
 
 		do_action('rt_media_before_delete_media', $this);
@@ -86,14 +132,24 @@ class RTMediaMedia {
 		}
     }
 
+	/**
+	 * Move a media from one album to another
+	 * 
+	 * @global type $wpdb
+	 * @param type $media_id
+	 * @param type $album_id
+	 * @return boolean
+	 */
 	function move($media_id, $album_id) {
 
 		global $wpdb;
+		/* update the post_parent value in wp_post table */
 		$status = $wpdb->update('wp_posts', array('post_parent' => $album_id), array('ID' => $media_id));
 
 		if (get_class($status) == 'WP_Error' || $status == 0) {
 				return false;
 		} else {
+			/* update album_id, context, context_id and privacy in rtMedia context */
 			$album_data = $this->rt_media_model->get_by_media_id($media_id);
 			$data = array(
 					'album_id' => $album_id,
@@ -105,15 +161,28 @@ class RTMediaMedia {
 		}
 	}
 
+	/**
+	 *  Imports attachment as media
+	 */
 	function import_attachment() {
 
 	}
 
+	/**
+	 * 
+	 * @return boolean
+	 */
 	function activity_enabled() {
 		// as of now disabled; later on we need to check from the activity settings from BuddyPress
 		return false;
 	}
 
+	/**
+	 * 
+	 * @param type $uploaded
+	 * @param type $file_object
+	 * @return type
+	 */
 	function generate_post_array($uploaded, $file_object) {
         foreach ($file_object as $file) {
             $attachments[] = array(
@@ -127,6 +196,13 @@ class RTMediaMedia {
         return $attachments;
     }
 
+	/**
+	 * 
+	 * @param type $attachments
+	 * @param type $file_object
+	 * @return type
+	 * @throws Exception
+	 */
     function insert_attachment($attachments, $file_object) {
         foreach ($attachments as $key => $attachment) {
             $attachment_id = wp_insert_attachment($attachment, $file_object[$key]['file'], $attachment['post_parent']);
@@ -143,15 +219,29 @@ class RTMediaMedia {
         return $updated_attachment_ids;
     }
 
+	/**
+	 * 
+	 * @param type $sizes
+	 * @return type
+	 */
     function rt_media_image_sizes($sizes) {
         return array('bp_media_thumbnail', 'bp_media_activity_image', 'bp_media_single_image');
     }
 
+	/**
+	 * 
+	 * @param type $attributes
+	 */
 	function rt_insert_album($attributes) {
 
 		$this->rt_media_model->insert($attributes);
 	}
 
+	/**
+	 * 
+	 * @param type $attachment_ids
+	 * @param type $uploaded
+	 */
     function rt_insert_media($attachment_ids,$uploaded){
 
 		$defaults = array(
@@ -182,6 +272,11 @@ class RTMediaMedia {
         }
     }
 
+	/**
+	 * 
+	 * @global type $bp
+	 * @return boolean
+	 */
     function insert_activity(){
         global $bp;
         if (function_exists('bp_activity_add')) {

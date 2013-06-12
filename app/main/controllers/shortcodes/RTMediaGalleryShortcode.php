@@ -7,15 +7,25 @@
 
 /**
  * Description of RTMediaGalleryShortcode
+ * 
+ * rtMedia Gallery Shortcode to embedd a gallery of media anywhere
  *
  * @author Udit Desai <udit.desai@rtcamp.com>
  */
 class RTMediaGalleryShortcode {
 	
+	/**
+	 * 
+	 */
 	public function __construct() {
 		add_shortcode('rtmedia_gallery', array('RTMediaGalleryShortcode', 'render'));
 	}
 
+	/**
+	 * Helper function to check whether the shortcode should be rendered or not
+	 * 
+	 * @return type
+	 */
 	static function display_allowed() {
 		
 		$flag = !(is_home() || is_post_type_archive());
@@ -23,6 +33,11 @@ class RTMediaGalleryShortcode {
 		return $flag;
 	}
 	
+	/**
+	 * Render a shortcode according to the attributes passed with it
+	 * 
+	 * @param boolean $attr
+	 */
 	function render($attr) {
 		
 		if( self::display_allowed() ) {
