@@ -405,6 +405,17 @@ class RTMediaAlbum {
 
 			$page++;
 		}
+		
+		$author = $this->get_current_author();
+		$admins = get_super_admins();
+		$global_albums = self::get_globals();
+		
+		if(in_array ($secondary_album_id, $global_albums) )
+			if( in_array($author, $admins) )
+				$this->delete_global ($secondary_album_id);
+			else return false;
+		else
+			$this->delete ($secondary_album_id);
 
 		return $primary_album_id;
 	}

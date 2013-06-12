@@ -211,11 +211,29 @@ class RTMediaQuery {
 
 		unset( $this->query->meta_query );
 		unset( $this->query->tax_query );
+		
+		/**
+		 * Handle order of the result set
+		 */
+		$order_by = 'media_id';
+		$order = 'desc';
+		if( isset($this->query['order']) ) {
+			$order = $this->query['order'];
+			unset($this->query['order']);
+		}
+
+		if( isset($this->query['order_by']) ) {
+			$order_by = $this->query['order_by'];
+			unset($this->query['order_by']);
+			if( $order_by == 'ratings' )
+				$order_by = 'ratings_average ' . $order .', ratings_count';
+		}
+		$order_by .= ' ' . $order;
 
 		/**
 		 * fetch media entries from rtMedia context
 		 */
-		$pre_media = $this->model->get_media( $this->query, $this->action_query->offset, $this->action_query->per_page_media );
+		$pre_media = $this->model->get_media( $this->query, $this->action_query->offset, $this->action_query->per_page_media, $order_by );
 
 		/**
 		 * count total medias in alnum rrespective of pagination
