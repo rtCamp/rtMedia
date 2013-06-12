@@ -13,9 +13,6 @@ class RTMediaUploadView {
 		
 		$this->attributes = $attr;
 
-//		wp_enqueue_style('quicksand', RT_MEDIA_URL.'app/assets/js/quicksand.js', array('jquery','jquery-effects-core'), RT_MEDIA_VERSION);
-//		wp_enqueue_script('rt-media-helper', RT_MEDIA_URL.'app/assets/js/rt.media.helper.js', array('jquery','quicksand'), RT_MEDIA_VERSION);
-		wp_enqueue_style('rt-media-main', RT_MEDIA_URL . 'app/assets/css/main.css', '', RT_MEDIA_VERSION);
     }
 
     public function render($template_name) {
