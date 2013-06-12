@@ -16,9 +16,13 @@ class RTMediaGalleryShortcode {
 		add_shortcode('rtmedia_gallery', array('RTMediaGalleryShortcode', 'render'));
 	}
 
+	static function display_allowed() {
+		return !(is_home() || is_post_type_archive());
+	}
+	
 	function render($attr) {
 		
-		if( !(is_home() || is_post_type_archive()) ) {
+		if( self::display_allowed() ) {
 
 			if( (!isset($attr)) || empty($attr) )
 				$attr = true;
