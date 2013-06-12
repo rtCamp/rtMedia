@@ -151,8 +151,8 @@ class RTMediaQuery {
 		global $rt_media;
 		$options = $rt_media->get_option();
 		$this->action_query = (object) array(
-			'offset' => 0,
-			'paged' => 1,
+			'offset' => ( isset($_GET['offset']) && !empty($_GET['offset']) ) ? $_GET['offset'] : 0,
+			'paged' => ( isset($_GET['rt_media_paged']) && !empty($_GET['rt_media_paged']) ) ? $_GET['rT_media_paged'] : 1,
 			'per_page_media' => $options['per_page_media']
 		);
 
@@ -256,9 +256,15 @@ class RTMediaQuery {
 	}
 
 	function have_media() {
-		if ( $this->current_media + 1 < $this->action_query->per_page_media ) {
+		
+		$total = $this->media_count;
+		$curr = $this->current_media;
+		$per_page = $this->action_query->per_page_media;
+		$offset = $this->action_query->offset;
+		
+		if ( $curr + 1 < $per_page && $total > $offset + $curr + 1 ) {
 			return true;
-		} elseif ( $this->current_media + 1 == $this->action_query->per_page_media && $this->action_query->per_page_media > 0 ) {
+		} elseif ( $curr + 1 == $per_page && $per_page > 0 ) {
 			do_action_ref_array( 'rt_media_loop_end', array( &$this ) );
 			// Do some cleaning up after the loop
 			$this->rewind_media();

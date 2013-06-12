@@ -27,10 +27,10 @@
 			
 			
 			<?php if(rt_media_offset() != 0) { ?>
-				<a href="">Prev</a>
+				<a href="?rt_media_paged=<?php echo rt_media_paged()-1; ?>&offset=<?php echo rt_media_offset()-rt_media_per_page_media(); ?>">Prev</a>
 			<?php } ?>
 			<?php if(rt_media_offset()+ rt_media_per_page_media() < rt_media_count()) { ?>
-				<a href="">Next</a>
+				<a href="?rt_media_paged=<?php echo rt_media_paged()+1; ?>&offset=<?php echo rt_media_offset()+rt_media_per_page_media(); ?>">Next</a>
 			<?php } ?>
 
 		<?php } ?>
