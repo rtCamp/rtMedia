@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Description of BPMediaUploadView
+ * Description of RTMediaUploadView
  *
  * @author joshua
  */
@@ -9,15 +9,21 @@ class RTMediaUploadView {
 	
 	private $attributes;
 
+	/**
+	 * 
+	 * @param type $attr
+	 */
     function __construct($attr) {
 		
 		$this->attributes = $attr;
 
-//		wp_enqueue_style('quicksand', RT_MEDIA_URL.'app/assets/js/quicksand.js', array('jquery','jquery-effects-core'), RT_MEDIA_VERSION);
-//		wp_enqueue_script('rt-media-helper', RT_MEDIA_URL.'app/assets/js/rt.media.helper.js', array('jquery','quicksand'), RT_MEDIA_VERSION);
-		wp_enqueue_style('rt-media-main', RT_MEDIA_URL . 'app/assets/css/main.css', '', RT_MEDIA_VERSION);
     }
 
+	/**
+	 * Render the uploader shortcode and attach the uploader panel
+	 * 
+	 * @param type $template_name
+	 */
     public function render($template_name) {
         $tabs = array(
 			'file_upload' => array( 'title' => __('File Upload','rt-media'), 'content' => '<div id="drag-drop-area"><input type="file" name="rt_media_file" class="rt-media-upload-input rt-media-file" /><input id="browse-button" type="button" value="Upload Media" class="button"></div>' ),
@@ -34,6 +40,12 @@ class RTMediaUploadView {
 
     }
 
+	/**
+	 * Template Locator
+	 * 
+	 * @param type $template
+	 * @return string
+	 */
     protected function locate_template($template) {
         $located = '';
 		

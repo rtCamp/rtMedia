@@ -1,8 +1,9 @@
 <?php
 
 /**
- * Description of BPMediaUploadFile
- *
+ * Description of RTMediaUploadFile
+ * Class responsible for uploading a file to the website.
+ * 
  * @author Joshua Abenazer <joshua.abenazer@rtcamp.com>
  */
 class RTMediaUploadFile {
@@ -10,6 +11,12 @@ class RTMediaUploadFile {
     var $files;
     var $fake = false;
 
+	/**
+	 * Initialize the upload process 
+	 * 
+	 * @param type $files
+	 * @return type
+	 */
     function init($files) {
 
         $this->set_file($files);
@@ -18,6 +25,9 @@ class RTMediaUploadFile {
         return $uploaded_file;
     }
 
+	/**
+	 * core process of upload
+	 */
     function process() {
         include_once(ABSPATH . 'wp-admin/includes/file.php');
         include_once(ABSPATH . 'wp-admin/includes/image.php');
@@ -48,18 +58,31 @@ class RTMediaUploadFile {
     }
 
     function set_file($files) {
+		/**
+		 * if files parameter is provided then take th file details from that object
+		 */
         if ($files) {
             $this->fake = true;
             $this->populate_file_array((array) $uploaded['files']);
+		/**
+		 * otherwise check for $_FILES global object from the form submitted
+		 */
         } elseif (isset($_FILES['rt_media_file'])) {
             $this->populate_file_array(
                     $this->arrayify($_FILES['rt_media_file'])
             );
         } else {
+			/**
+			 * No files could be found to upload
+			 */
             throw new RTMediaUploadException(UPLOAD_ERR_NO_FILE);
         }
     }
 
+	/**
+	 * gather the file information for upload process
+	 * @param type $file_array
+	 */
     function populate_file_array($file_array) {
         foreach ($file_array as $file) {
             $this->files[] = array(
@@ -72,6 +95,13 @@ class RTMediaUploadFile {
         }
     }
 
+	/**
+	 * Check for valid file types for rtMedia
+	 * @global type $rt_media
+	 * @param type $file
+	 * @return boolean
+	 * @throws RTMediaUploadException
+	 */
     function is_valid_type($file) {
         try {
 			global $rt_media;
@@ -91,6 +121,9 @@ class RTMediaUploadFile {
         return true;
     }
 
+	/**
+	 * Remove invalid files
+	 */
     function unset_invalid_files() {
         $temp_array = $this->files;
         $this->files = null;

@@ -6,21 +6,31 @@
  */
 
 /**
- * Description of rtMediaAlbum
+ * Description of RTMediaAlbum
  *
  * @author Udit Desai <udit.desai@rtcamp.com>
  */
 class RTMediaAlbum {
 
+	/**
+	 *
+	 * @var type 
+	 * 
+	 * Media object associated with the album. It works as an interface
+	 * for the actions specific the media from this album
+	 */
 	var $rt_media_object;
 
+	/**
+	 * 
+	 */
 	public function __construct() {
 		add_action('init', 'register_post_types');
 		$this->rt_media_object = new RTMediaMedia();
 	}
 
 	/**
-	 * Register Custom Post Types required by BuddyPress Media
+	 * Register Custom Post Types required by rtMedia
 	 */
 	function register_post_types() {
 
@@ -66,6 +76,14 @@ class RTMediaAlbum {
 		register_post_type( 'rt_media_album', $album_args );
 	}
 
+	
+	/**
+	 * Method verifies the nonce passed while performing any CRUD operations
+	 * on the album.
+	 * 
+	 * @param type $mode
+	 * @return boolean
+	 */
 	function verify_nonce($mode) {
 
 		$nonce = $_REQUEST["rt_media_{$mode}_album_nonce"];
@@ -76,6 +94,12 @@ class RTMediaAlbum {
 			return false;
 	}
 
+	/**
+	 * returns user_id of the current logged in user in wordpress
+	 * 
+	 * @global type $current_user
+	 * @return type
+	 */
 	function get_current_author() {
 
 		global $current_user;
@@ -83,24 +107,49 @@ class RTMediaAlbum {
 		return $current_user->ID;
 	}
 
+	/**
+	 * Adds a new album
+	 * 
+	 * @global type $rt_media_interaction
+	 * @param type $title
+	 * @param type $author_id
+	 * @param type $new
+	 * @param type $post_id
+	 * @return type
+	 */
 	function add($title = '', $author_id = false, $new = true, $post_id = false) {
 
+		/* action to perform any task before adding the album */
 		do_action('rt_media_before_add_album');
 
 		$author_id = $author_id ? $author_id : $this->get_current_author();
 
+		/* Album Details which will be passed to Database query to add the album */
 		$post_vars = array(
 			'post_title' => (empty($title)) ? 'Untitled Album' : $title,
 			'post_status' => 'publish',
 			'post_type' => 'rt_media_album',
 			'post_author' => $author_id
 		);
-		
+
+		/* Check whether to create a new album in wp_post table
+		 * This is the case when a user creates a album of his own. We need to
+		 * create a separte post in wp_post which will work as parent for
+		 * all the media uploaded to that album
+		 * 
+		 *  */
 		if($new)
 			$album_id = wp_insert_post($post_vars);
+		/**
+		 * if user uploads any media directly to a post or a page or any custom
+		 * post then the context in which the user is uploading a media becomes
+		 * an album in itself. We do not need to create a separate album in this
+		 * case.
+		 */
 		else $album_id = $post_id;
 
 		$current_album = get_post($album_id, ARRAY_A);
+
 		// add in the media since album is also a media
 		//defaults
 		global $rt_media_interaction;
@@ -119,16 +168,25 @@ class RTMediaAlbum {
 
 		$this->rt_media_object->rt_insert_album($attributes);
 
+		/* action to perform any task after adding the album */
 		do_action('rt_media_after_add_album', $this);
 
 		return $album_id;
-
 	}
 
+	/**
+	 * Wrapper method to add a global album
+	 * 
+	 * @param type $title
+	 * @return boolean
+	 */
 	function add_global($title ='') {
 
 		$super_user_ids = get_super_admins();
 		$author_id = $this->get_current_author();
+		/**
+		 * only admin privilaged user can add a global album
+		 */
 		if( in_array($author_id, $super_user_ids) ) {
 			$album_id = $this->add($title, $author_id);
 
@@ -139,16 +197,32 @@ class RTMediaAlbum {
 			return false;
 	}
 
+	/**
+	 * Get the list of all global albums
+	 * @return type
+	 */
 	static function get_globals() {
 		return get_site_option('rt-media-global-albums',true);
 	}
 
+	/**
+	 * There is a default global album which works as a Wall Post Album for the
+	 * user.
+	 * 
+	 * @return type
+	 */
 	static function get_default() {
 		$albums = self::get_globals();
 
 		return $albums[0];
 	}
 
+	/**
+	 * Save global albums for newly added album
+	 * 
+	 * @param type $album_ids
+	 * @return boolean
+	 */
 	function save_globals($album_ids = false) {
 
 		if(!$album_ids)
@@ -163,8 +237,18 @@ class RTMediaAlbum {
 		update_site_option('rt-media-global-albums', $albums);
 	}
 
+	/**
+	 * Wrapper method to update details for any global album
+	 * 
+	 * @param type $id
+	 * @param type $title
+	 * @return boolean
+	 */
 	function update_global($id, $title = '') {
 
+		/**
+		 * Only admin can update global albums
+		 */
 		$super_user_ids = get_super_admins();
 		if( in_array($this->get_current_author(), $super_user_ids) ) {
 
@@ -174,8 +258,16 @@ class RTMediaAlbum {
 			return false;
 	}
 
+	/**
+	 * Update any album. Generic method for all the user.
+	 * 
+	 * @param type $id
+	 * @param type $title
+	 * @return boolean
+	 */
 	function update($id, $title = '') {
 
+		/* Action to perform before updating the album */
 		do_action('rt_media_before_update_album', $this);
 		if ( empty($title) && empty($id) ) {
 			return false;
@@ -189,6 +281,7 @@ class RTMediaAlbum {
 			if (get_class($status) == 'WP_Error' || $status == 0) {
 				return false;
 			} else {
+				/* Action to perform after updating the album */
 				do_action('rt_media_after_update_album', $this);
 				return true;
 			}
@@ -196,13 +289,32 @@ class RTMediaAlbum {
 
 	}
 
+	/**
+	 * Wrapper method to delete a global album
+	 * 
+	 * @param type $id
+	 * @return boolean
+	 */
 	function delete_global($id) {
 
+		/**
+		 * Only admin can delete a global album
+		 */
 		$super_user_ids = get_super_admins();
 		if( in_array($this->get_current_author(), $super_user_ids) ) {
 
 			$default_album = self::get_default();
 
+			/**
+			 * Default album is NEVER deleted.
+			 */
+			if($id == $default_album)
+				return false;
+
+			/**
+			 * If a global album is deleted then all the media of that album
+			 * is merged to the default global album and then the album is deleted.
+			 */
 			//merge with the default album
 			$this->merge($default_album, $id);
 
@@ -212,14 +324,27 @@ class RTMediaAlbum {
 			return false;
 	}
 
+	/**
+	 * Generic method to delete any album
+	 * 
+	 * @param type $id
+	 * @return type
+	 */
 	function delete($id) {
 
+		/* action to perform any task befor deleting an album */
 		do_action('rt_media_before_delete_album', $this);
 
+		/**
+		 * First fetch all the media from that album
+		 */
 		add_filter('rt_db_model_per_page', array($this,'set_queries_per_page'),10,2);
 		$page = 1;
 		$flag = true;
 
+		/**
+		 * Delete each media from the album first
+		 */
 		while( $media = $this->rt_media_object->rt_media_model->get_by_album_id($id, $page) ) {
 
 			$media_id = $media['result'][0]['media_id'];
@@ -232,26 +357,47 @@ class RTMediaAlbum {
 			$page++;
 		}
 
+		/**
+		 * If all the media are deleted from the album then delete the album at last.
+		 */
 		if($flag) {
 			$this->rt_media_object->delete($id);
 		}
 
+		/* action to perform any task after deleting an album */
 		do_action('rt_media_after_delete_album', $this);
 		return $flag;
 
 	}
 
+	/**
+	 * Helper function to set number of queries in pagination
+	 * 
+	 * @param int $per_page
+	 * @param type $table_name
+	 * @return int
+	 */
 	function set_queries_per_page($per_page, $table_name) {
 
 		$per_page = 1;
 		return $per_page;
 	}
 
+	/**
+	 * Generic function to merge two albums
+	 * 
+	 * @param type $primary_album_id
+	 * @param type $secondary_album_id
+	 * @return type
+	 */
 	function merge($primary_album_id, $secondary_album_id) {
 
 		add_filter('rt_db_model_per_page', array($this,'set_queries_per_page'),10,2);
 		$page = 1;
 
+		/**
+		 * Transfer all the media from secondary album to primary album
+		 */
 		while( $media = $this->rt_media_object->rt_media_model->get_by_album_id($secondary_album_id, $page) ) {
 
 			$media_id = $media['result'][0]['media_id'];
@@ -259,21 +405,48 @@ class RTMediaAlbum {
 
 			$page++;
 		}
+		
+		$author = $this->get_current_author();
+		$admins = get_super_admins();
+		$global_albums = self::get_globals();
+		
+		if(in_array ($secondary_album_id, $global_albums) )
+			if( in_array($author, $admins) )
+				$this->delete_global ($secondary_album_id);
+			else return false;
+		else
+			$this->delete ($secondary_album_id);
 
 		return $primary_album_id;
 	}
 
+	/**
+	 * Convert a post which is not indexed in rtMedia to an album.
+	 * 
+	 * All the attachments from that post will become media of the new album.
+	 * 
+	 * @global type $wpdb
+	 * @param type $post_id
+	 * @return boolean
+	 */
 	function convert_post($post_id) {
 
 		global $wpdb;
+		/**
+		 * Fetch all the attachments from the given post
+		 */
 		$attachment_ids = $wpdb->get_results("SELECT ID
 								FROM $wpdb->posts
 								WHERE post_parent = $post_id");
 
+		/**
+		 * Create a album. Not a new album. Just give index to this post in rtMedia
+		 */
 		$album_id = $this->add($post['post_title'], $post['post_author'], false, $post_id);
 		
 		$album_data = $this->rt_media_model->get_by_media_id($album_id);
-		
+
+		/* Album details */
 		$album_meta = array(
 			'album_id' => $album_id,
 			'context' => $album_data['results'][0]['context'],
@@ -281,7 +454,10 @@ class RTMediaAlbum {
 			'activity_id' => $album_data['results'][0]['activity_id'],
 			'privacy' => $album_data['results'][0]['privacy']
 		);
-		
+
+		/**
+		 * Index attachments in rtMedia
+		 */
 		$this->rt_media_object->rt_insert_media($attachment_ids, $album_meta);
 
 		return true;

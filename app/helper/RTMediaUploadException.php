@@ -7,12 +7,32 @@
  */
 class RTMediaUploadException extends Exception 
 { 
+	/**
+	 *
+	 * @var type
+	 * 
+	 * Exception for Invalid context while uploading any media
+	 */
 	var $upload_err_invalid_context = 9;
+	
+	/**
+	 * 
+	 * @param type $code
+	 * @param type $msg
+	 */
     public function __construct($code,$msg=false) { 
         $message = $this->codeToMessage($code,$msg); 
         parent::__construct($message, $code); 
     } 
 
+	/**
+	 * Error specific Message generated for the exception depending upon the code passed.
+	 * Native Error Codes defined in PHP core module are used for uploading a standard file
+	 * 
+	 * @param type $code
+	 * @param type $msg
+	 * @return type
+	 */
     private function codeToMessage($code,$msg)
     { 
         switch ($code) { 
