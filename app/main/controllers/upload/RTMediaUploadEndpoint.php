@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Description of BPMediaUploadEndpoint
+ * Description of RTMediaUploadEndpoint
  *
  * @author Joshua Abenazer <joshua.abenazer@rtcamp.com>
  */
@@ -9,13 +9,18 @@ class RTMediaUploadEndpoint {
 
 	public $upload;
 
+	/**
+	 * 
+	 */
     public function __construct() {
         add_action('rt_media_upload_redirect', array($this, 'template_redirect'));
         $media = new RTMediaMedia();
 		$media->delete_hook(); // should be placed somewhere else ( just does the trick here )
     }
 
-
+	/**
+	 * 
+	 */
     function template_redirect() {
 
 		if (!count($_POST)) {

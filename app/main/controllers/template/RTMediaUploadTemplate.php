@@ -1,12 +1,9 @@
 <?php
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
  * Description of RTMediaUploadTemplate
+ * 
+ * Template that handles the upload shortcode and it's rendering
  *
  * @author saurabh
  */

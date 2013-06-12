@@ -8,8 +8,6 @@
 
 				<?php while (have_rt_media()) : rt_album(); ?>
 
-						<?php rt_media(); ?>
-
 				<li>
 					<a href="<?php rt_media_permalink(); ?>">
 						<img src="<?php rt_media_thumbnail(); ?>">
