@@ -25,9 +25,10 @@ class RTMediaUploadShortcode {
 
     function pre_render($attr) {
 
-        $this->add_sc_script = true;
-		RTMediaUploadTemplate::render($attr);
-        
+		if( !(is_home() || is_post_type_archive()) ) {
+			$this->add_sc_script = true;
+			RTMediaUploadTemplate::render($attr);
+		}
     }
 	
 	

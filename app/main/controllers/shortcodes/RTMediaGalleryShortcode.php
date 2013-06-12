@@ -17,12 +17,15 @@ class RTMediaGalleryShortcode {
 	}
 
 	function render($attr) {
+		
+		if( !(is_home() || is_post_type_archive()) ) {
 
-		if( (!isset($attr)) || empty($attr) )
-			$attr = true;
+			if( (!isset($attr)) || empty($attr) )
+				$attr = true;
 
-		$template = new RTMediaTemplate();
-		$template->set_template('media-gallery', $attr);
+			$template = new RTMediaTemplate();
+			$template->set_template('media-gallery', $attr);
+		}
 	}
 }
 
