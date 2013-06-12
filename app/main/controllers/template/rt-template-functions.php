@@ -67,7 +67,7 @@ function rt_media_per_page_media() {
 	return $rt_media_query->action_query->per_page_media;
 }
 
-function rt_media_page() {
+function rt_media_paged() {
 	global $rt_media_query;
 	
 	return $rt_media_query->action_query->paged;
