@@ -22,10 +22,14 @@ class RTMediaUploadShortcode {
         // add_action('init', array($this, 'register_script'));
         //add_action('wp_footer', array($this, 'print_script'));
     }
+	
+	function display_allowed() {
+		return (!(is_home() || is_post_type_archive())) && is_user_logged_in();
+	}
 
     function pre_render($attr) {
 
-		if( !(is_home() || is_post_type_archive()) ) {
+		if( $this->display_allowed() ) {
 			$this->add_sc_script = true;
 			RTMediaUploadTemplate::render($attr);
 		}

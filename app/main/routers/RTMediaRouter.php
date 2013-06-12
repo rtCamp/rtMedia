@@ -115,9 +115,6 @@ class RTMediaRouter {
 		// pass the template  and slug to the function hooking here
 		// so it can load a custom template
 
-
-//		include(RT_MEDIA_PATH . 'app/main/controllers/template/rt-template-functions.php');
-
 		$template_load = new RTMediaTemplate();
 
 		$template = $template_load->set_template($template);

@@ -151,8 +151,8 @@ class RTMediaQuery {
 		global $rt_media;
 		$options = $rt_media->get_option();
 		$this->action_query = (object) array(
-			'offset' => ( isset($_GET['offset']) && !empty($_GET['offset']) ) ? $_GET['offset'] : 0,
-			'paged' => ( isset($_GET['rt_media_paged']) && !empty($_GET['rt_media_paged']) ) ? $_GET['rT_media_paged'] : 1,
+			'offset' => ( isset($_GET['offset']) && !empty($_GET['offset']) ) ? intval($_GET['offset']) : 0,
+			'paged' => ( isset($_GET['rt_media_paged']) && !empty($_GET['rt_media_paged']) ) ? intval($_GET['rt_media_paged']) : 1,
 			'per_page_media' => $options['per_page_media']
 		);
 
@@ -224,8 +224,6 @@ class RTMediaQuery {
 			$media_post_query_args = array(
 				'orderby' => 'ID',
 				'order' => 'DESC',
-				'posts_per_page' => $this->action_query->per_page_media,
-				'paged' => $this->action_query->paged,
 				'post_type' => 'any',
 				'post_status' => 'any',
 				'post__in' => array_map(array($this, 'get_media_id'), $media ),
