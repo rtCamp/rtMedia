@@ -41,12 +41,16 @@ class RTMediaGalleryShortcode {
 	function render($attr) {
 		
 		if( self::display_allowed() ) {
+			
+			ob_start();
 
 			if( (!isset($attr)) || empty($attr) )
 				$attr = true;
 
 			$template = new RTMediaTemplate();
 			$template->set_template('media-gallery', $attr);
+			
+			return ob_get_clean();
 		}
 	}
 }
