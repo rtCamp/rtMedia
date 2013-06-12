@@ -1,7 +1,7 @@
 jQuery(document).ready(function($) {
 	/* PL UPLOADER */
 
-    var mode = $("#rt-media-uploader-form input[name='mode']").val();
+    /*var mode = $("#rt-media-uploader-form input[name='mode']").val();
     var nonce = $("#rt_media_file_upload_nonce").val();
     var context = $("#rt-media-uploader-form input[name='context']").val();
     var context_id = $("#rt-media-uploader-form input[name='context_id']").val();
@@ -38,6 +38,6 @@ jQuery(document).ready(function($) {
             alert('You must queue at least one file.');
         }
         return false;
-    });
+    });*/
 
 });

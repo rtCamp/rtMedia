@@ -153,6 +153,10 @@ class RTMedia {
         $bp_media_counter = 0;
 		$this->allowed_types = apply_filters('rt_media_allowed_types', $this->allowed_types);
 		/**
+		 *  Enqueue Plugin Scripts and Styles
+		 */
+		add_action('wp_enqueue_scripts',array($this, 'enqueue_scripts_styles'), 11);
+		/**
 		 * AJAX Call for PL Upload
 		 */
 		add_action('wp_ajax_rt_file_upload', array('RTMediaUploadHelper', 'file_upload'));
@@ -779,7 +783,12 @@ class RTMedia {
             $update->do_upgrade();
         }
     }
+	
+	function enqueue_scripts_styles() {
+		wp_enqueue_style('rt-media-main', RT_MEDIA_URL . 'app/assets/css/main.css', '', RT_MEDIA_VERSION);
 
+		wp_enqueue_script('rt-media-helper', RT_MEDIA_URL.'app/assets/js/rt.media.helper.js', array('jquery'), RT_MEDIA_VERSION);
+	}
 }
 
 /**

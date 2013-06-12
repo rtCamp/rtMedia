@@ -17,7 +17,10 @@ class RTMediaGalleryShortcode {
 	}
 
 	static function display_allowed() {
-		return !(is_home() || is_post_type_archive());
+		
+		$flag = !(is_home() || is_post_type_archive());
+		$flag = apply_filters('before_rtmedia_gallery_display', $flag);
+		return $flag;
 	}
 	
 	function render($attr) {
