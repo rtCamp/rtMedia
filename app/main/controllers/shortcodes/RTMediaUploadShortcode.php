@@ -49,8 +49,13 @@ class RTMediaUploadShortcode {
     function pre_render($attr) {
 
 		if( $this->display_allowed() ) {
+			
+			ob_start();
+
 			$this->add_sc_script = true;
 			RTMediaUploadTemplate::render($attr);
+			
+			return ob_get_clean();
 		}
     }
 }
