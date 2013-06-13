@@ -14,13 +14,13 @@ class RTMediaMedia {
 
 	/**
 	 *DB Model object to interact on Database operations
-	 * 
-	 * @var type 
+	 *
+	 * @var type
 	 */
 	var $rt_media_model;
 
 	/**
-	 * 
+	 *
 	 */
 	public function __construct() {
 
@@ -30,7 +30,7 @@ class RTMediaMedia {
 	/**
 	 * Method verifies the nonce passed while performing any CRUD operations
 	 * on the media.
-	 * 
+	 *
 	 * @param type $mode
 	 * @return boolean
 	 */
@@ -53,9 +53,64 @@ class RTMediaMedia {
 		add_action('delete_attachment',array($this,'delete'));
 	}
 
+	function add_taxonomy($attachments, $taxonomies) {
+
+		foreach ($attachments as $id) {
+
+			foreach ($taxonomies as $taxonomy=>$terms) {
+				if( !taxonomy_exists($taxonomy) ) {
+					register_taxonomy($taxonomy, 'attachment', array(
+						'label' => __($taxonomy, 'rt-media'),
+						'show_admin_column' => true,
+						'hierarchical' => false,
+						'capabilities' => array(
+							'manage_terms' => 'manage_categories',
+							'edit_terms' => 'manage_categories',
+							'delete_terms' => 'manage_categories',
+							'assign_terms' => 'edit_posts'
+						),
+					));
+				}
+
+				wp_set_object_terms($id, $terms, $taxonomy);
+			}
+		}
+		
+	}
+
+	function add_meta($attachments, $custom_fields) {
+
+		foreach ($attachments as $id) {
+			$row = array( 'media_id' => $id );
+
+			foreach ($custom_fields as $key => $value) {
+				
+				if( !is_null($value) ) {
+					$row['meta_key'] = $key;
+					$row['meta_value'] = $value;
+					$status = $this->rt_media_model->add_meta($row);
+
+					if (get_class($status) == 'WP_Error' || $status == 0)
+						return false;
+				}
+			}
+		}
+		
+		return true;
+	}
+
+	/**
+	 * Helper method to check for multisite - will add a few additional checks
+	 * for handling taxonomies
+	 * @return boolean
+	 */
+	function is_multisite() {
+		return is_multisite();
+	}
+
 	/**
 	 * Generic method to add a media
-	 * 
+	 *
 	 * @param type $uploaded
 	 * @param type $file_object
 	 * @return type
@@ -70,6 +125,13 @@ class RTMediaMedia {
 
 		/* Insert the media as an attachment in Wordpress context */
 		$attachment_ids = $this->insert_attachment($attachments, $file_object);
+
+		/* check for multisite and if valid then add taxonomies */
+		if(!$this->is_multisite())
+			$this->add_taxonomy($attachment_ids, $uploaded['taxonomy']);
+
+		/* fetch custom fields and add them to meta table */
+		$this->add_meta($attachment_ids, $uploaded['custom_fields']);
 
 		/* if buddypress activity is enabled then insert an activity */
 		if($this->activity_enabled())
@@ -87,18 +149,18 @@ class RTMediaMedia {
 
 	/**
 	 * Generic method to update a media. media details can be changed from this method
-	 * 
+	 *
 	 * @param type $media_id
 	 * @param type $meta
 	 * @return boolean
 	 */
-	function update($media_id, $meta) {
+	function update($media_id, $data) {
 
 		/* action to perform any task before updating a media */
 		do_action('rt_media_before_update_media', $this);
 
 		$defaults = array();
-		$data = wp_parse_args($meta, $defaults);
+		$data = wp_parse_args($data, $defaults);
 		$where = array( 'media_id' => $media_id );
 
 		$status = $this->rt_media_model->update($data, $where);
@@ -114,7 +176,8 @@ class RTMediaMedia {
 	}
 
 	/**
-	 * 
+	 * Generic method to delete a media
+	 *
 	 * @param type $media_id
 	 * @return boolean
 	 */
@@ -122,7 +185,12 @@ class RTMediaMedia {
 
 		do_action('rt_media_before_delete_media', $this);
 
-		$status = $this->rt_media_model->delete($media_id);
+		/* delete meta */
+		$status = $this->rt_media_model->delete_meta( array( 'media_id' => $media_id ) );
+		if (get_class($status) == 'WP_Error' || $status == 0)
+			return false;
+
+		$status = $this->rt_media_model->delete( array( 'media_id' => $media_id ) );
 
 		if (get_class($status) == 'WP_Error' || $status == 0) {
 			return false;
@@ -134,7 +202,7 @@ class RTMediaMedia {
 
 	/**
 	 * Move a media from one album to another
-	 * 
+	 *
 	 * @global type $wpdb
 	 * @param type $media_id
 	 * @param type $album_id
@@ -169,7 +237,7 @@ class RTMediaMedia {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return boolean
 	 */
 	function activity_enabled() {
@@ -178,7 +246,7 @@ class RTMediaMedia {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param type $uploaded
 	 * @param type $file_object
 	 * @return type
@@ -191,13 +259,14 @@ class RTMediaMedia {
                 'post_title' => $uploaded['title'] ? $uploaded['title'] : $file['name'],
                 'post_content' => $uploaded['description'] ? $uploaded['description'] : '',
                 'post_parent' => $uploaded['album_id'] ? $uploaded['album_id'] : 0,
+				'post_author' => $uploaded['media_author']
             );
         }
         return $attachments;
     }
 
 	/**
-	 * 
+	 *
 	 * @param type $attachments
 	 * @param type $file_object
 	 * @return type
@@ -220,7 +289,7 @@ class RTMediaMedia {
     }
 
 	/**
-	 * 
+	 *
 	 * @param type $sizes
 	 * @return type
 	 */
@@ -229,7 +298,7 @@ class RTMediaMedia {
     }
 
 	/**
-	 * 
+	 *
 	 * @param type $attributes
 	 */
 	function rt_insert_album($attributes) {
@@ -238,7 +307,7 @@ class RTMediaMedia {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param type $attachment_ids
 	 * @param type $uploaded
 	 */
@@ -273,7 +342,7 @@ class RTMediaMedia {
     }
 
 	/**
-	 * 
+	 *
 	 * @global type $bp
 	 * @return boolean
 	 */

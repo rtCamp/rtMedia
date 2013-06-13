@@ -26,10 +26,10 @@ class RTMediaUploadEndpoint {
 		if (!count($_POST)) {
             include get_404_template();
         } else {
-            $nonce = $_REQUEST['rt_media_file_upload_nonce'];
+            $nonce = $_REQUEST['rt_media_upload_nonce'];
             $mode = $_REQUEST['mode'];
-            if (wp_verify_nonce($nonce, 'rt_media_' . $mode . '_nonce')) {
-                $model = new RTMediaUploadModel();
+            if (wp_verify_nonce($nonce, 'rt_media_upload_nonce')) {
+				$model = new RTMediaUploadModel();
                 $this->upload = $model->set_post_object();
 				
 				$upload = new RTMediaUpload($this->upload);

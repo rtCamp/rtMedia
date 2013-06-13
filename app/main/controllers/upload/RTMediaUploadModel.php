@@ -16,11 +16,12 @@ class RTMediaUploadModel {
         'album_id' => false,
         'files' => false,
         'title' => false,
-        'description' => false
+        'description' => false,
+		'media_author' => false
     );
 
 	/**
-	 * 
+	 *
 	 * @return type
 	 */
     function set_post_object() {
@@ -30,7 +31,7 @@ class RTMediaUploadModel {
     }
 
 	/**
-	 * 
+	 *
 	 * @return boolean
 	 */
     function has_context() {
@@ -40,7 +41,7 @@ class RTMediaUploadModel {
     }
 
 	/**
-	 * 
+	 *
 	 * @global type $rt_media_interaction
 	 */
     function sanitize_object() {
@@ -61,10 +62,24 @@ class RTMediaUploadModel {
         if ( !$this->has_album_id() || !$this->has_album_permissions() )
             $this->set_album_id();
 
+		if( !$this->has_author() )
+			$this->set_author();
     }
 
 	/**
-	 * 
+	 *
+	 * @return type
+	 */
+	function has_author() {
+		return $this->upload['media_author'];
+	}
+
+	function set_author() {
+		$this->upload['media_author'] = get_current_user_id();
+	}
+
+	/**
+	 *
 	 * @return boolean
 	 */
     function has_album_id(){
@@ -74,16 +89,16 @@ class RTMediaUploadModel {
     }
 
 	/**
-	 * 
+	 *
 	 * @return boolean
 	 */
     function has_album_permissions(){
 		//yet to be coded for the privacy options of the album
         return false;
     }
-	
+
 	/**
-	 * 
+	 *
 	 * @param type $id
 	 * @return boolean
 	 */
@@ -92,7 +107,7 @@ class RTMediaUploadModel {
 	}
 
 	/**
-	 * 
+	 *
 	 */
     function set_album_id(){
         if (class_exists('BuddyPress')) {
@@ -103,7 +118,7 @@ class RTMediaUploadModel {
     }
 
 	/**
-	 * 
+	 *
 	 */
     function set_bp_album_id(){
         if (bp_is_blog_page()) {
@@ -114,7 +129,7 @@ class RTMediaUploadModel {
     }
 
 	/**
-	 * 
+	 *
 	 * @throws RTMediaUploadException
 	 */
     function set_wp_album_id(){
@@ -125,7 +140,7 @@ class RTMediaUploadModel {
 	}
 
 	/**
-	 * 
+	 *
 	 */
     function set_bp_component_album_id() {
         switch (bp_current_component()) {

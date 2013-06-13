@@ -3,25 +3,26 @@
 
 		<?php if (have_rt_media()) : rt_album(); ?>
 
-				<?php rt_media(); ?>
+			<div class="rt-media-media">
+				<img src="<?php rt_media_thumbnail(); ?>">
+			</div>
+		
+			<h4 class="rt-media-item-title" title="<?php rt_media_title(); ?>">
+				<?php rt_media_title(); ?>
+			</h4>
 
-				<h2 class="rt-media-item-title">
-					<a href="<?php rt_media_permalink(); ?>"
-					   title="<?php rt_media_title(); ?>">
-						<?php rt_media_title(); ?>
-					</a>
-				</h2>
+			<div class="rt-media-item-content">
+				<?php rt_media_content(); ?>
+			</div>
 
-				<div class="rt-media-item-content">
-					<?php rt_media_content(); ?>
-				</div>
+			<div class="rt-media-item-actions">
+				<?php rt_media_actions(); ?>
+			</div>
 
-				<div class="rt-media-item-actions">
-					<?php rt_media_actions(); ?>
-				</div>
-
-				<?php rt_media_comments(); ?>
-
+			<?php rt_media_comments(); ?>
+		
+		<?php else: ?>
+			<p><?php echo __("Oops !! There's no media found for the request !!","rt-media"); ?></p>
 		<?php endif; ?>
 
 	</div>
