@@ -46,6 +46,8 @@ class RTMediaGalleryShortcode {
 			
 			if( (!isset($attr)) || empty($attr) )
 				$attr = true;
+			
+			$attr = array('name'=>'gallery', 'attr'=>$attr);
 
 			$template = new RTMediaTemplate();
 			$template->set_template('media-gallery', $attr);

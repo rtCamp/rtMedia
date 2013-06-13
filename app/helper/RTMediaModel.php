@@ -11,6 +11,12 @@ class RTMediaModel extends RTDBModel {
         parent::__construct('bpm_media');
     }
 
+	/**
+	 * 
+	 * @param type $name
+	 * @param type $arguments
+	 * @return type
+	 */
     function __call($name, $arguments) {
         $result = parent::__call($name, $arguments);
         if (!$result['result']) {
@@ -19,6 +25,51 @@ class RTMediaModel extends RTDBModel {
         return $result;
     }
 
+	/**
+	 *
+	 * @global type $wpdb
+	 * @param type $columns
+	 * @param type $offset
+	 * @param type $per_page
+	 * @param type $order_by
+	 * @return type
+	 */
+	function get($columns, $offset=false, $per_page=false, $order_by= 'media_id desc') {
+        $select = "SELECT * FROM {$this->table_name}";
+        $join = "" ;
+        $where = " where 2=2 " ;
+        $temp = 65;
+        foreach ($columns as $colname => $colvalue) {
+            if(strtolower($colname) =="meta_query"){
+                foreach($colvalue as $meta_query){
+                    if(!isset($meta_query["compare"])){
+                        $meta_query["compare"] = "=";
+                    }
+                    $tbl_alias = chr($temp++);
+                    $join .= " LEFT JOIN {$this->meta_table_name} {$tbl_alias} ON {$this->table_name}.media_id = {$tbl_alias}.media_id ";
+                    $where .= " AND  ({$tbl_alias}.meta_key = '{$meta_query["key"]}' and  {$tbl_alias}.meta_value  {$meta_query["compare"]}  '{$meta_query["value"]}' ) ";
+                }
+            }else{
+                $where .= " AND {$this->table_name}.{$colname} = '{$colvalue}'";
+            }
+        }
+        $sql = $select . $join . $where ;
+
+		$sql .= " ORDER BY {$this->table_name}.$order_by";
+
+		if(is_integer($offset) && is_integer($per_page)) {
+			$sql .= ' LIMIT ' . $offset . ',' . $per_page;
+		}
+        global $wpdb;
+        return $wpdb->get_results($sql);
+    }
+
+	/**
+	 * 
+	 * @param type $name
+	 * @param type $arguments
+	 * @return type
+	 */
     function populate_results_fallback($name, $arguments) {
         $result['result'] = false;
         if ('get_by_media_id' == $name && isset($arguments[0]) && $arguments[0]) {
@@ -48,6 +99,14 @@ class RTMediaModel extends RTDBModel {
         return $return['result'];
     }
 
+	/**
+	 * 
+	 * @param type $columns
+	 * @param type $offset
+	 * @param type $per_page
+	 * @param type $order_by
+	 * @return type
+	 */
     function get_media($columns, $offset, $per_page, $order_by = 'media_id desc') {
         if (is_multisite()) {
             $results = $this->get($columns, $offset, $per_page, "blog_id ,".$order_by);
@@ -56,6 +115,13 @@ class RTMediaModel extends RTDBModel {
         }
         return $results;
     }
+
+	/**
+	 * 
+	 * @global type $wpdb
+	 * @param type $media_id
+	 * @return type
+	 */
     function get_media_meta($media_id){
         $media_query_str = "";
         if (is_array($media_id)){
@@ -67,14 +133,38 @@ class RTMediaModel extends RTDBModel {
         }else{
             $media_query_str .= $media_id;
         }
-        
+
         global $wpdb;
-        $sql = "SELECT * FROM {$wpdb->posts} LEFT JOIN {$this->table_name} 
-            ON {$wpdb->posts}.ID = {$this->table_name}.media_id 
+        $sql = "SELECT * FROM {$wpdb->posts} LEFT JOIN {$this->table_name}
+            ON {$wpdb->posts}.ID = {$this->table_name}.media_id
             WHERE {$wpdb->posts}.ID in ({$media_query_str});";
         return $wpdb->get_results($sql,ARRAY_A);
     }
 
-}
+	/**
+	 * 
+	 * @param type $row
+	 * @param type $new
+	 * @return type
+	 */
+	function add_meta($row, $new = false) {
 
+		if($new) {
+			return parent::insert_meta($row);
+		} else {
+
+			$columns = $row;
+			unset($columns['meta_value']);
+			$existing_meta = parent::get_meta($columns);
+
+			if(count($existing_meta)) {
+				$meta = array('meta_value' => $row['meta_value']);
+				$where = array('media_id' => $row['media_id'], 'meta_key' => $row['meta_key']);
+				return parent::update_meta($meta, $where);
+			}
+			else
+				return parent::insert_meta ($row);
+		}
+	}
+}
 ?>

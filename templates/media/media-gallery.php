@@ -12,7 +12,7 @@
 					<a href="<?php rt_media_permalink(); ?>">
 						<img src="<?php rt_media_thumbnail(); ?>">
 					</a>
-					<h4 title="<?php rt_media_title(); ?>">
+					<h4 class="rt-media-item-title" title="<?php rt_media_title(); ?>">
 						<a href="<?php rt_media_permalink(); ?>">
 							<?php rt_media_title(); ?>
 						</a>

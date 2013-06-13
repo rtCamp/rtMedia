@@ -98,6 +98,9 @@ class RTMediaQuery {
 	function set_action_query() {
 
 		$raw_query = $this->interaction->query_vars;
+		
+		var_dump($raw_query);
+		$action_query_vars = array();
 
 		if ( is_array( $raw_query ) && count( $raw_query ) && !empty($raw_query[0]) ) {
 
@@ -157,7 +160,7 @@ class RTMediaQuery {
 			/**
 			 * set action query object
 			 */
-			$this->action_query = (object)array(
+			$action_query_vars = array(
 				$modifier_type	=> $modifier_value,
 				'action'		=> $action,
 				'attribute'		=> $attribute,
@@ -175,12 +178,13 @@ class RTMediaQuery {
 		 */
 		global $rt_media;
 		$options = $rt_media->get_option();
-		$this->action_query = (object) array(
+		$action_query_vars = array_merge($action_query_vars, array(
 			'offset' => ( isset($_GET['offset']) && !empty($_GET['offset']) ) ? intval($_GET['offset']) : 0,
 			'paged' => ( isset($_GET['rt_media_paged']) && !empty($_GET['rt_media_paged']) ) ? intval($_GET['rt_media_paged']) : 1,
 			'per_page_media' => $options['per_page_media']
-		);
+		));
 
+		$this->action_query = (object) $action_query_vars;
 	}
 
 	/**
