@@ -151,7 +151,8 @@ function rt_media_comments(){
  * @return boolean
  */
 function is_rt_media_gallery(){
-	return false;
+	global $rt_media_query;
+	return $rt_media_query->is_gallery();
 }
 
 /**
@@ -159,7 +160,8 @@ function is_rt_media_gallery(){
  * @return boolean
  */
 function is_rt_media_single(){
-	return true;
+	global $rt_media_query;
+	$rt_media_query->is_single();
 }
 
 /**
