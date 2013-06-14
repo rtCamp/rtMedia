@@ -177,9 +177,12 @@ function is_rt_media_single(){
  *
  * @param type $attr
  */
-function rtmedia_uploader($attr){
-	echo RTMediaUploadShortcode::render($attr);
+function rt_media_uploader($attr) {
+	echo RTMediaUploadShortcode::pre_render($attr);
 }
 
+function rt_media_gallery($attr) {
+	echo RTMediaGalleryShortcode::render($attr);
+}
 
 ?>
