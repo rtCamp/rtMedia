@@ -52,17 +52,19 @@ class RTMediaTemplate {
 			if(!$shortcode_attr)
 				return $this->get_template($template);
 			else {
-				$valid = $this->sanitize_attributes($shortcode_attr);
+				if($shortcode_attr['name'] == 'gallery') {
+					$valid = $this->sanitize_gallery_attributes($shortcode_attr['attr']);
 
-				if($valid) {
-					if(is_array($shortcode_attr))
-						$this->update_global_query($shortcode_attr);
-					include $this->locate_template($template);
-				} else {
-					echo 'Invalid attribute passed for shortcode.';
-					return false;
+					if($valid) {
+						if(is_array($shortcode_attr['attr']))
+							$this->update_global_query($shortcode_attr['attr']);
+						include $this->locate_template($template);
+					} else {
+						echo 'Invalid attribute passed for rtmedia_gallery shortcode.';
+						return false;
+					}
+
 				}
-
 			}
 
 		} else {
@@ -78,11 +80,24 @@ class RTMediaTemplate {
 		}
 	}
 
+	/**
+	 * Helper method to fetch allowed media types from each section
+	 * 
+	 * @param type $allowed_type
+	 * @return type
+	 */
 	function get_allowed_type_name($allowed_type) {
 		return $allowed_type['name'];
 	}
 
-	function sanitize_attributes(&$attr) {
+	/**
+	 * Validates all the attributes for gallery shortcode
+	 * 
+	 * @global type $rt_media
+	 * @param string $attr
+	 * @return type
+	 */
+	function sanitize_gallery_attributes(&$attr) {
 		global $rt_media;
 
 		$flag = true;
@@ -90,7 +105,11 @@ class RTMediaTemplate {
 		if( isset($attr['media_type']) ) {
 			$allowed_type_names = array_map(array($this, 'get_allowed_type_name'), $rt_media->allowed_types );
 
-			$flag = $flag && in_array($attr['media_type'], $allowed_type_names);
+			if(strtolower($attr['media_type']) == 'all') {
+				$flag = $flag && true;
+				unset($attr['media_type']);
+			} else
+				$flag = $flag && in_array($attr['media_type'], $allowed_type_names);
 		}
 
 		if( isset($attr['order_by']) ) {
