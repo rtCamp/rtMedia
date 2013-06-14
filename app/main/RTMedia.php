@@ -324,11 +324,17 @@ class RTMedia {
 
  
 
+	function rtMedia_activate_flush_rewrite() {
+		// register taxonomies/post types here
+		flush_rewrite_rules();
+	}
+	
+	function rtMedia_deactivate_flush_rewrite() {
+		flush_rewrite_rules();
+	}
 
 
-   
-
-    function default_count() {
+	function default_count() {
         $count = $this->posts_per_page;
         if (array_key_exists('default_count', $this->options)) {
             $count = $this->options['default_count'];

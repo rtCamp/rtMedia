@@ -3,15 +3,15 @@
 /**
  * Description of RTDBModel
  * Base class for any Database Model like Media, Album etc.
- * 
+ *
  * @author faishal
  */
 class RTDBModel {
 
 	/**
 	 *
-	 * @var type 
-	 * 
+	 * @var type
+	 *
 	 * $table_name - database table linked to the model.
 	 *				All the queries will be fired on that table or with the join in this table.
 	 * $meta_table_name - meta table in database for the model.
@@ -133,26 +133,13 @@ class RTDBModel {
      * @param type $columns
      * @return type
      */
-    function get($columns, $offset=false, $per_page=false, $order_by= 'media_id desc') {
+    function get($columns, $offset=false, $per_page=false, $order_by= 'id desc') {
         $select = "SELECT * FROM {$this->table_name}";
-        $join = "" ;
         $where = " where 2=2 " ;
-        $temp = 65;
         foreach ($columns as $colname => $colvalue) {
-            if(strtolower($colname) =="meta_query"){
-                foreach($colvalue as $meta_query){
-                    if(!isset($meta_query["compare"])){
-                        $meta_query["compare"] = "=";
-                    }
-                    $tbl_alias = chr($temp++);
-                    $join .= " LEFT JOIN {$this->meta_table_name} {$tbl_alias} ON {$this->table_name}.media_id = {$tbl_alias}.media_id ";
-                    $where .= " AND  ({$tbl_alias}.meta_key = '{$meta_query["key"]}' and  {$tbl_alias}.meta_value  {$meta_query["compare"]}  '{$meta_query["value"]}' ) ";
-                }
-            }else{
-                $where .= " AND {$this->table_name}.{$colname} = '{$colvalue}'";
-            }
+			$where .= " AND {$this->table_name}.{$colname} = '{$colvalue}'";
         }
-        $sql = $select . $join . $where ;
+        $sql = $select . $where ;
 
 		$sql .= " ORDER BY {$this->table_name}.$order_by";
 
@@ -164,14 +151,70 @@ class RTDBModel {
     }
 
 	/**
-	 * 
+	 *
 	 * @global type $wpdb
-	 * @param type $media_id
+	 * @param type $where
 	 * @return type
 	 */
-    function delete($media_id) {
+    function delete($where) {
         global $wpdb;
-        return $wpdb->delete($this->table_name, array('media_id' => $media_id));
+        return $wpdb->delete($this->table_name, $where);
     }
 
+	/**
+	 * Insert meta entries for the entity
+	 *
+	 * @global type $wpdb
+	 * @param type $row
+	 */
+	function insert_meta($row) {
+		global $wpdb;
+        return $wpdb->insert($this->meta_table_name, $row);
+	}
+
+	/**
+	 * update meta entries
+	 * 
+	 * @global type $wpdb
+	 * @param type $meta
+	 * @param type $where
+	 * @return type
+	 */
+	function update_meta($meta, $where) {
+		global $wpdb;
+        return $wpdb->update($this->meta_table_name, $data, $where);
+	}
+
+	/**
+	 * retrieve existinf meta entries
+	 * 
+	 * @global type $wpdb
+	 * @param type $columns
+	 * @return type
+	 */
+	function get_meta($columns) {
+
+		$select = "SELECT * FROM {$this->meta_table_name}";
+		$where = " WHERE 1 = 1 ";
+
+		foreach ($columns as $key => $value) {
+			$where .= "AND {$this->meta_table_name}.{$key} = '{$value}'";
+		}
+
+		$sql = $select . $where;
+		global $wpdb;
+		return $wpdb->get_results($sql, ARRAY_A);
+	}
+
+	/**
+	 * Deletes meta entry
+	 * 
+	 * @global type $wpdb
+	 * @param type $where
+	 * @return type
+	 */
+	function delete_meta($where) {
+		global $wpdb;
+        return $wpdb->delete($this->meta_table_name, $where);
+	}
 }
