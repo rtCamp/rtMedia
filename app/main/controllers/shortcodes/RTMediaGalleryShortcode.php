@@ -38,7 +38,7 @@ class RTMediaGalleryShortcode {
 	 *
 	 * @param boolean $attr
 	 */
-	function render($attr) {
+	static function render($attr) {
 
 		if( self::display_allowed() ) {
 

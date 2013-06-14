@@ -9,7 +9,7 @@
  */
 class RTMediaUploadShortcode {
 
-    var $add_sc_script = false;
+    static $add_sc_script = false;
 	var $deprecated = false;
 
 	/**
@@ -17,7 +17,7 @@ class RTMediaUploadShortcode {
 	 */
     public function __construct() {
 
-        add_shortcode('rtmedia_uploader', array($this, 'pre_render'));
+        add_shortcode('rtmedia_uploader', array('RTMediaUploadShortcode', 'pre_render'));
 		$method_name = strtolower(str_replace('RTMedia', '', __CLASS__));
 
 		if(is_callable("RTMediaDeprecated::{$method_name}",true, $callable_name)){
@@ -33,7 +33,7 @@ class RTMediaUploadShortcode {
 	 *
 	 * @return type
 	 */
-	function display_allowed() {
+	static function display_allowed() {
 
 		$flag = (!(is_home() || is_post_type_archive())) && is_user_logged_in();
 
@@ -46,13 +46,13 @@ class RTMediaUploadShortcode {
 	 *
 	 * @param type $attr
 	 */
-    function pre_render($attr) {
+    static function pre_render($attr) {
 
-		if( $this->display_allowed() ) {
+		if( self::display_allowed() ) {
 
 			ob_start();
 
-			$this->add_sc_script = true;
+			self::$add_sc_scriptadd_sc_script = true;
 			RTMediaUploadTemplate::render($attr);
 
 			return ob_get_clean();
