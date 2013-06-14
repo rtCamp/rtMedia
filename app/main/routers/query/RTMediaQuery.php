@@ -95,6 +95,21 @@ class RTMediaQuery {
 
 	}
 
+	function is_single(){
+		if(!isset($this->action_query->id)){
+			return false;
+		}
+
+		return true;
+	}
+
+	function is_gallery(){
+		if(!$this->is_single())
+			return true;
+
+		return false;
+	}
+
 	function set_action_query() {
 
 		$raw_query = $this->interaction->query_vars;
@@ -211,6 +226,10 @@ class RTMediaQuery {
 	 */
 	function populate_media() {
 		$this->model = new RTMediaModel();
+
+		if($this->is_single()){
+			$this->query['id']= $this->action_query->id;
+		}
 
 		unset( $this->query->meta_query );
 		unset( $this->query->tax_query );

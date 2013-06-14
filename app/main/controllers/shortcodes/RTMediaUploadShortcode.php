@@ -52,7 +52,7 @@ class RTMediaUploadShortcode {
 
 			ob_start();
 
-			self::$add_sc_scriptadd_sc_script = true;
+			self::$add_sc_script = true;
 			RTMediaUploadTemplate::render($attr);
 
 			return ob_get_clean();
