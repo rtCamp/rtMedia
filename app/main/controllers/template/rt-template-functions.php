@@ -28,18 +28,7 @@ function rewind_rt_media() {
  * @global type $rt_media_query
  * @return type
  */
-function rt_album(){
-	global $rt_media_query;
-
-	return $rt_media_query->rt_album();
-}
-
-/**
- * returns the current media object in the album
- * @global type $rt_media_query
- * @return type
- */
-function rt_media() {
+function rt_media(){
 	global $rt_media_query;
 
 	return $rt_media_query->rt_media();

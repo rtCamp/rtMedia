@@ -98,7 +98,7 @@ class RTMediaQuery {
 	function set_action_query() {
 
 		$raw_query = $this->interaction->query_vars;
-		
+
 		$action_query_vars = array();
 
 		if ( is_array( $raw_query ) && count( $raw_query ) && !empty($raw_query[0]) ) {
@@ -131,14 +131,14 @@ class RTMediaQuery {
 
 			$modifier_value = $raw_query[ 0 ];
 
-			
+
 			if ( isset( $raw_query[ 1 ] ) ) {
 
 				/**
 				 * action manipulator hook
 				 */
 				$this->set_actions();
-				
+
 				if ( in_array( $raw_query[ 1 ], $this->actions ) ) {
 
 					$action = $raw_query[ 1 ];
@@ -206,7 +206,7 @@ class RTMediaQuery {
 
 	/**
 	 * populate the media object for the page/album
-	 * 
+	 *
 	 * @return boolean
 	 */
 	function populate_media() {
@@ -214,7 +214,7 @@ class RTMediaQuery {
 
 		unset( $this->query->meta_query );
 		unset( $this->query->tax_query );
-		
+
 		/**
 		 * Handle order of the result set
 		 */
@@ -243,7 +243,7 @@ class RTMediaQuery {
 		 */
 		$media_for_total_count = $this->model->get_media( $this->query, false, false );
 		$this->media_count = count($media_for_total_count);
-		
+
 		if ( ! $pre_media )
 			return false;
 
@@ -303,7 +303,7 @@ class RTMediaQuery {
 	 */
 	function populate_post_data( $media ) {
 		if ( ! empty( $media ) && is_array( $media ) ) {
-			
+
 			/**
 			 * setting up query vars for WP_Query
 			 */
@@ -328,7 +328,7 @@ class RTMediaQuery {
 			if ( isset( $this->query_vars->tax_query ) ) {
 				$media_post_query_args[ 'tax_query' ] = $this->query_vars->tax_query;
 			}
-			
+
 			/**
 			 * fetch relative data from WP_POST
 			 */
@@ -342,9 +342,9 @@ class RTMediaQuery {
 
 				$key = $this->get_media_by_media_id($post->ID);
 				$this->media[ $key ] = (object) (array_merge( (array) $this->media[ $key ], (array) $post ));
-				
+
 				$this->media[ $key ]->id = intval( $this->media[ $key ]->id );
-				
+
 				unset( $this->media[ $key ]->ID );
 			}
 		}
@@ -355,12 +355,12 @@ class RTMediaQuery {
 	 * @return boolean
 	 */
 	function have_media() {
-		
+
 		$total = $this->media_count;
 		$curr = $this->current_media;
 		$per_page = $this->action_query->per_page_media;
 		$offset = $this->action_query->offset;
-		
+
 		if ( $curr + 1 < $per_page && $total > $offset + $curr + 1 ) {
 			return true;
 		} elseif ( $curr + 1 == $per_page && $per_page > 0 ) {
@@ -377,25 +377,14 @@ class RTMediaQuery {
 	 * moves ahead in the loop of media within the album
 	 * @global type $rt_media_media
 	 */
-	function rt_album() {
+	function rt_media() {
 		global $rt_media_media;
 		$this->in_the_media_loop = true;
 
 		if ( $this->current_media == -1 ) // loop has just started
 			do_action_ref_array( 'rt_media_loop_start', array( &$this ) );
 
-		$rt_media_media = $this->next_media();
-	}
-	
-	/**
-	 * returns the current media object in the album
-	 * @global type $rt_media_media
-	 * @return \type
-	 */
-	function rt_media() {
-		global $rt_media_media;
-		
-		return $rt_media_media;
+		return $rt_media_media = $this->next_media();
 	}
 
 	/**
@@ -420,7 +409,7 @@ class RTMediaQuery {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return type
 	 */
 	function &get_media() {
