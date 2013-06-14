@@ -99,7 +99,6 @@ class RTMediaQuery {
 
 		$raw_query = $this->interaction->query_vars;
 		
-		var_dump($raw_query);
 		$action_query_vars = array();
 
 		if ( is_array( $raw_query ) && count( $raw_query ) && !empty($raw_query[0]) ) {
