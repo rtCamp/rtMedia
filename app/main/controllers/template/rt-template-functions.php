@@ -41,7 +41,7 @@ function rt_album(){
  */
 function rt_media() {
 	global $rt_media_query;
-	
+
 	return $rt_media_query->rt_media();
 }
 
@@ -73,7 +73,7 @@ function rt_media_thumbnail(){
 }
 
 /**
- * 
+ *
  */
 function rt_media_content(){
 
@@ -95,7 +95,7 @@ function rt_media_description(){
  */
 function rt_media_count() {
 	global $rt_media_query;
-	
+
 	return $rt_media_query->media_count;
 }
 
@@ -106,7 +106,7 @@ function rt_media_count() {
  */
 function rt_media_offset() {
 	global $rt_media_query;
-	
+
 	return $rt_media_query->action_query->offset;
 }
 
@@ -117,7 +117,7 @@ function rt_media_offset() {
  */
 function rt_media_per_page_media() {
 	global $rt_media_query;
-	
+
 	return $rt_media_query->action_query->per_page_media;
 }
 
@@ -128,7 +128,7 @@ function rt_media_per_page_media() {
  */
 function rt_media_paged() {
 	global $rt_media_query;
-	
+
 	return $rt_media_query->action_query->paged;
 }
 
@@ -139,26 +139,26 @@ function rt_media_paged() {
  */
 function rt_media_current_media() {
 	global $rt_media_query;
-	
+
 	return $rt_media_query->current_media;
 }
 
 /**
- * 
+ *
  */
 function rt_media_actions(){
 
 }
 
 /**
- * 
+ *
  */
 function rt_media_comments(){
 
 }
 
 /**
- * 
+ *
  * @return boolean
  */
 function is_rt_media_gallery(){
@@ -166,7 +166,7 @@ function is_rt_media_gallery(){
 }
 
 /**
- * 
+ *
  * @return boolean
  */
 function is_rt_media_single(){
@@ -174,7 +174,7 @@ function is_rt_media_single(){
 }
 
 /**
- * 
+ *
  * @param type $attr
  */
 function rtmedia_uploader($attr){

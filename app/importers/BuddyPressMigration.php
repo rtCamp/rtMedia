@@ -88,7 +88,7 @@ class BuddyPressMigration {
         $prog->progress_ui($temp, true);
         ?>
         <script>
-                            
+
             function db_start_migration(db_done,db_total) {
                 if (db_done < db_total) {
                     jQuery.ajax({
@@ -114,7 +114,7 @@ class BuddyPressMigration {
                     });
                 }
             }
-                    
+
             jQuery('.bp-media-migration').on('click','#submit',function(e){
                 e.preventDefault();
                 var db_done = <?php echo $done; ?>;
@@ -136,14 +136,14 @@ class BuddyPressMigration {
         }
 
         global $wpdb;
-        $sql = "select 
+        $sql = "select
                     a.post_id as 'post_id',
                     a.meta_value as 'privacy',
                     b.meta_value as 'context_id',
                     c.meta_value as 'activity_id',
                     p.post_type,
                     p.post_mime_type
-                    
+
                 from
                     {$wpdb->postmeta} a
                         left join

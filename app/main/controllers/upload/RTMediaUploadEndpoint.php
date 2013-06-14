@@ -10,7 +10,7 @@ class RTMediaUploadEndpoint {
 	public $upload;
 
 	/**
-	 * 
+	 *
 	 */
     public function __construct() {
         add_action('rt_media_upload_redirect', array($this, 'template_redirect'));
@@ -19,7 +19,7 @@ class RTMediaUploadEndpoint {
     }
 
 	/**
-	 * 
+	 *
 	 */
     function template_redirect() {
 
@@ -31,7 +31,7 @@ class RTMediaUploadEndpoint {
             if (wp_verify_nonce($nonce, 'rt_media_upload_nonce')) {
 				$model = new RTMediaUploadModel();
                 $this->upload = $model->set_post_object();
-				
+
 				$upload = new RTMediaUpload($this->upload);
             }
 			wp_safe_redirect(wp_get_referer());

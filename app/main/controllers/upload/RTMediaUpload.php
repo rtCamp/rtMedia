@@ -13,7 +13,7 @@ class RTMediaUpload {
     var $url = NULL;
 
 	/**
-	 * 
+	 *
 	 * @param type $uploaded
 	 * @return boolean
 	 */

@@ -75,7 +75,7 @@ class RTMediaMedia {
 				wp_set_object_terms($id, $terms, $taxonomy);
 			}
 		}
-		
+
 	}
 
 	function add_meta($attachments, $custom_fields) {
@@ -84,7 +84,7 @@ class RTMediaMedia {
 			$row = array( 'media_id' => $id );
 
 			foreach ($custom_fields as $key => $value) {
-				
+
 				if( !is_null($value) ) {
 					$row['meta_key'] = $key;
 					$row['meta_value'] = $value;
@@ -95,7 +95,7 @@ class RTMediaMedia {
 				}
 			}
 		}
-		
+
 		return true;
 	}
 

@@ -2,7 +2,7 @@
 
 /**
  * Description of RTMediaUploadTemplate
- * 
+ *
  * Template that handles the upload shortcode and it's rendering
  *
  * @author saurabh
@@ -15,12 +15,12 @@ class RTMediaUploadTemplate {
 	function __construct() {
 
 	}
-	
+
 	static function render($attr){
 		$view = new RTMediaUploadView($attr);
         return $view->render('uploader');
 	}
-	
+
 	function register_script() {
         wp_register_script('bpm-plupload', RT_MEDIA_URL . 'app/assets/js/bpm-plupload.js', array('plupload', 'plupload-html5', 'plupload-flash', 'plupload-silverlight', 'plupload-html4', 'plupload-handlers'), '1.0', true);
     }

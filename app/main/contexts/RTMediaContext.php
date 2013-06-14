@@ -7,11 +7,11 @@
 
 /**
  * Description of RTMediaContext
- * 
+ *
  * Default Context - The page on from which the request is generating will be taken
  * as the default context; if any context/context_id is not passed while uploading any media
  * or displaying the gallery.
- * 
+ *
  * @author saurabh
  */
 class RTMediaContext {
@@ -19,14 +19,14 @@ class RTMediaContext {
 	/**
 	 *
 	 * @var type
-	 * 
+	 *
 	 * $type - Context Type. It can be any type among these. (post, page, custom_post, home_page, archive etc.)
 	 * $id - context id of the context
 	 */
 	public $type,$id;
 
 	/**
-	 * 
+	 *
 	 * @return \RTMediaContext
 	 */
 	function __construct() {
@@ -35,7 +35,7 @@ class RTMediaContext {
 	}
 
 	/**
-	 * 
+	 *
 	 */
 	function set_context() {
         if (class_exists('BuddyPress')) {
@@ -46,7 +46,7 @@ class RTMediaContext {
     }
 
 	/**
-	 * 
+	 *
 	 * @global type $post
 	 */
     function set_wp_context() {
@@ -58,7 +58,7 @@ class RTMediaContext {
     }
 
 	/**
-	 * 
+	 *
 	 */
     function set_bp_context() {
         if (bp_is_blog_page()) {
@@ -69,7 +69,7 @@ class RTMediaContext {
     }
 
 	/**
-	 * 
+	 *
 	 */
     function set_bp_component_context() {
         $this->type = bp_current_component();
@@ -77,7 +77,7 @@ class RTMediaContext {
     }
 
 	/**
-	 * 
+	 *
 	 * @return type
 	 */
     function get_current_bp_component_id() {
