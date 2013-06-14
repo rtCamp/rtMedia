@@ -92,12 +92,6 @@ spl_autoload_register( 'rt_media_autoloader' );
 global $rt_media;
 $rt_media = new RTMedia();
 
-/**
- * Rewrite API flush before activating and after deactivating the plugin
- */
-register_activation_hook( __FILE__, array($rt_media, 'rtMedia_activate_flush_rewrite') );
-register_deactivation_hook( __FILE__, array($rt_media, 'rtMedia_deactivate_flush_rewrite') );
-
 /*
  * Look Ma! Very few includes! Next File: /app/main/RTMedia.php
  */

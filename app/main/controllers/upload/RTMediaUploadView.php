@@ -6,19 +6,19 @@
  * @author joshua
  */
 class RTMediaUploadView {
-	
+
 	private $attributes;
 
 	/**
-	 * 
+	 *
 	 * @param type $attr
 	 */
     function __construct($attr) {
-		
+
 		$this->attributes = $attr;
 
     }
-	
+
 	static function upload_nonce_generator($echo = true) {
 
 		if($echo) {
@@ -35,7 +35,7 @@ class RTMediaUploadView {
 
 	/**
 	 * Render the uploader shortcode and attach the uploader panel
-	 * 
+	 *
 	 * @param type $template_name
 	 */
     public function render($template_name) {
@@ -56,15 +56,15 @@ class RTMediaUploadView {
 
 	/**
 	 * Template Locator
-	 * 
+	 *
 	 * @param type $template
 	 * @return string
 	 */
     protected function locate_template($template) {
         $located = '';
-		
+
 		$template_name = $template . '.php';
-		
+
 		if (!$template_name)
 			$located = false;
 		if (file_exists(STYLESHEETPATH . '/rt-media/' . $template_name)) {

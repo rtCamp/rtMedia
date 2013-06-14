@@ -3,7 +3,7 @@
 /**
  * Description of RTMediaUploadFile
  * Class responsible for uploading a file to the website.
- * 
+ *
  * @author Joshua Abenazer <joshua.abenazer@rtcamp.com>
  */
 class RTMediaUploadFile {
@@ -12,8 +12,8 @@ class RTMediaUploadFile {
     var $fake = false;
 
 	/**
-	 * Initialize the upload process 
-	 * 
+	 * Initialize the upload process
+	 *
 	 * @param type $files
 	 * @return type
 	 */

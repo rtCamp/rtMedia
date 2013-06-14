@@ -12,9 +12,9 @@
  */
 class RTMediaDeprecated {
 	//put your code here
-	
+
 	var $deprecate_notice = false;
-	
+
 	static function uploadshortcode() {
 		//print_r('yay!');
 		//
@@ -23,7 +23,7 @@ class RTMediaDeprecated {
 		$deprecate_notice = '';
 //		echo self::generate_notice(__METHOD__, $deprecated, $deprecate_notice);
 	}
-	
+
 	static function generate_notice($method, $deprecated=false, $notice='') {
 		return sprintf(__("Deprecated %s. Please use %s.",'rtmedia' ), $deprecated, $method);
 	}
