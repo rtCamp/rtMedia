@@ -9,8 +9,6 @@
 
 	include(RTMediaTemplate::locate_template( $template ));
 
-	// print_r($rt_media_query);
-
 	get_sidebar();
 
 	get_footer();
