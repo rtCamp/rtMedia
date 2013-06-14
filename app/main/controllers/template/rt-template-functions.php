@@ -50,7 +50,7 @@ function rt_media_title(){
  */
 function rt_media_permalink(){
 	global $rt_media_media;
-	echo 'media/' . $rt_media_media->media_id;
+	echo 'media/' . $rt_media_media->id;
 }
 
 /*
