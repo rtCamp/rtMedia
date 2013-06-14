@@ -39,7 +39,8 @@ class RTMediaQuery {
 
 	private $actions = array(
 		'edit',
-		'delete'
+		'delete',
+		'page'
 	);
 
 
@@ -65,7 +66,6 @@ class RTMediaQuery {
 		// we only need information related to the media route
 		global $rt_media_interaction;
 
-		//print_r($rt_media_interaction);
 		$this->interaction = $rt_media_interaction->routes->media;
 
 		// set up the action query from the URL
@@ -96,6 +96,10 @@ class RTMediaQuery {
 	}
 
 	function is_single(){
+		/**
+		 * // check the condition
+		 * wont be true in case of multiple albums
+		 */
 		if(!isset($this->action_query->id)){
 			return false;
 		}
@@ -114,21 +118,20 @@ class RTMediaQuery {
 
 		$raw_query = $this->interaction->query_vars;
 
-		$action_query_vars = array();
+		$bulk = false;
+		$action = false;
+		$attribute = false;
+		$modifier_type = 'default';
+		$modifier_value = false;
+		$format = '';
+		$page = 1;
 
 		if ( is_array( $raw_query ) && count( $raw_query ) && !empty($raw_query[0]) ) {
-
-			$bulk = false;
-			$action = false;
-			$attribute = false;
-			$modifier_type = false;
-			$modifier_value = false;
-			$format = '';
 
 			/**
 			 * json request
 			 */
-			if(in_array('json',$raw_query)){
+			if(in_array('json',$raw_query) || isset($_GET['json'])) {
 				$this->format = 'json';
 			}
 
@@ -158,7 +161,7 @@ class RTMediaQuery {
 
 					$action = $raw_query[ 1 ];
 
-					if ( $modifier_type === 'media_type' ) {
+					if ( $modifier_type === 'media_type' && $action !== 'page' ) {
 						$bulk = true;
 					}
 				}
@@ -168,18 +171,11 @@ class RTMediaQuery {
 			 * additional attributes
 			 */
 			if ( isset( $raw_query[ 2 ] ) ) {
-				$attribute= $raw_query[2];
+				if($action === 'page')
+					$page = $raw_query[2];
+				else
+					$attribute= $raw_query[2];
 			}
-
-			/**
-			 * set action query object
-			 */
-			$action_query_vars = array(
-				$modifier_type	=> $modifier_value,
-				'action'		=> $action,
-				'attribute'		=> $attribute,
-				'bulk'			=> true
-			);
 
 		} else if( isset($raw_query) )
 			/*
@@ -188,17 +184,20 @@ class RTMediaQuery {
 			include get_404_template();
 
 		/**
+		 * set action query object
 		 * setting parameters in action query object for pagination
 		 */
 		global $rt_media;
 		$options = $rt_media->get_option();
-		$action_query_vars = array_merge($action_query_vars, array(
-			'offset' => ( isset($_GET['offset']) && !empty($_GET['offset']) ) ? intval($_GET['offset']) : 0,
-			'paged' => ( isset($_GET['rt_media_paged']) && !empty($_GET['rt_media_paged']) ) ? intval($_GET['rt_media_paged']) : 1,
-			'per_page_media' => $options['per_page_media']
-		));
 
-		$this->action_query = (object) $action_query_vars;
+		$this->action_query = (object) array(
+			$modifier_type		=> $modifier_value,
+			'action'			=> $action,
+			'attribute'			=> $attribute,
+			'bulk'				=> true,
+			'page'				=> ( isset($_GET['rt_media_page']) && !empty($_GET['rt_media_page']) ) ? $_GET['rt_media_page'] : $page,
+			'per_page_media'	=> $options['per_page_media']
+		);
 	}
 
 	/**
@@ -255,7 +254,7 @@ class RTMediaQuery {
 		/**
 		 * fetch media entries from rtMedia context
 		 */
-		$pre_media = $this->model->get_media( $this->query, $this->action_query->offset, $this->action_query->per_page_media, $order_by );
+		$pre_media = $this->model->get_media( $this->query, ($this->action_query->page-1)*$this->action_query->per_page_media, $this->action_query->per_page_media, $order_by );
 
 		/**
 		 * count total medias in alnum rrespective of pagination
@@ -378,7 +377,7 @@ class RTMediaQuery {
 		$total = $this->media_count;
 		$curr = $this->current_media;
 		$per_page = $this->action_query->per_page_media;
-		$offset = $this->action_query->offset;
+		$offset = ($this->action_query->page-1)*$this->action_query->per_page_media;
 
 		if ( $curr + 1 < $per_page && $total > $offset + $curr + 1 ) {
 			return true;

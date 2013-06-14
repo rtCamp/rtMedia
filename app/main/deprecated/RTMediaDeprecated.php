@@ -16,7 +16,6 @@ class RTMediaDeprecated {
 	var $deprecate_notice = false;
 
 	static function uploadshortcode() {
-		//print_r('yay!');
 		//
 		//add_shortcode('rtmedia_uploader', array($this, 'pre_render'));
 		$deprecated = false;

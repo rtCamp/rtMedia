@@ -116,8 +116,6 @@ class RTMediaInteraction {
 	function set_query() {
 		global $rt_media_query;
 
-		//print_r($rt_media_interaction);
-
 		$args = array(
 				'context'	=> $this->context->type,
 				'context_id'	=> $this->context->id

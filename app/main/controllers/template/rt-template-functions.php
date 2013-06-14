@@ -96,7 +96,7 @@ function rt_media_count() {
 function rt_media_offset() {
 	global $rt_media_query;
 
-	return $rt_media_query->action_query->offset;
+	return ($rt_media_query->action_query->page-1)*$rt_media_query->action_query->per_page_media;
 }
 
 /**
@@ -115,10 +115,10 @@ function rt_media_per_page_media() {
  * @global type $rt_media_query
  * @return type
  */
-function rt_media_paged() {
+function rt_media_page() {
 	global $rt_media_query;
 
-	return $rt_media_query->action_query->paged;
+	return $rt_media_query->action_query->page;
 }
 
 /**
@@ -161,7 +161,7 @@ function is_rt_media_gallery(){
  */
 function is_rt_media_single(){
 	global $rt_media_query;
-	$rt_media_query->is_single();
+	return $rt_media_query->is_single();
 }
 
 /**

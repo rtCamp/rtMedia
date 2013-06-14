@@ -70,7 +70,7 @@ class RTMediaTemplate {
 		} else {
 
 
-			if($rt_media_query->media){
+			if($rt_media_query->media) {
 				foreach($rt_media_query->media as $media){
 					$media_array[] = $media;
 				}
@@ -82,7 +82,7 @@ class RTMediaTemplate {
 
 	/**
 	 * Helper method to fetch allowed media types from each section
-	 * 
+	 *
 	 * @param type $allowed_type
 	 * @return type
 	 */
@@ -92,7 +92,7 @@ class RTMediaTemplate {
 
 	/**
 	 * Validates all the attributes for gallery shortcode
-	 * 
+	 *
 	 * @global type $rt_media
 	 * @param string $attr
 	 * @return type
@@ -131,7 +131,7 @@ class RTMediaTemplate {
 	}
 
 	function update_global_query($attr) {
-		
+
 		global $rt_media_query;
 
 		$rt_media_query->query($attr);
