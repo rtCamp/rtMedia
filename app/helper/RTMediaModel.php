@@ -8,11 +8,11 @@
 class RTMediaModel extends RTDBModel {
 
     function __construct() {
-        parent::__construct('bpm_media');
+        parent::__construct('rtm_media');
     }
 
 	/**
-	 * 
+	 *
 	 * @param type $name
 	 * @param type $arguments
 	 * @return type
@@ -65,7 +65,7 @@ class RTMediaModel extends RTDBModel {
     }
 
 	/**
-	 * 
+	 *
 	 * @param type $name
 	 * @param type $arguments
 	 * @return type
@@ -100,7 +100,7 @@ class RTMediaModel extends RTDBModel {
     }
 
 	/**
-	 * 
+	 *
 	 * @param type $columns
 	 * @param type $offset
 	 * @param type $per_page
@@ -117,7 +117,7 @@ class RTMediaModel extends RTDBModel {
     }
 
 	/**
-	 * 
+	 *
 	 * @global type $wpdb
 	 * @param type $media_id
 	 * @return type
@@ -142,7 +142,7 @@ class RTMediaModel extends RTDBModel {
     }
 
 	/**
-	 * 
+	 *
 	 * @param type $row
 	 * @param type $new
 	 * @return type
