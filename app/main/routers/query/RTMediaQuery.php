@@ -66,7 +66,7 @@ class RTMediaQuery {
 		// we only need information related to the media route
 		global $rt_media_interaction;
 
-		$this->interaction = $rt_media_interaction->routes->media;
+		$this->interaction = $rt_media_interaction->routes['media'];
 
 		// set up the action query from the URL
 		$this->set_action_query();

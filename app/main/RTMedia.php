@@ -265,6 +265,12 @@ class RTMedia {
 	 * @global BPMediaAdmin $bp_media_admin
 	 */
 	function init() {
+            
+            /**
+             * 
+             * Buddypress Media Auto Upgradation
+             */
+            $this->update_db();
 
 		/**
 		 * Load options/settings
@@ -341,13 +347,13 @@ class RTMedia {
 		return $plugin_version;
 	}
 
-	/*    function update_db() {
-	  new BuddyPressMigration();
-	  $update = new RTDBUpdate();
-	  if ($update->check_upgrade()) {
-	  $update->do_upgrade();
-	  }
-	  } */
+        function update_db() {
+            new BuddyPressMigration();
+            $update = new RTDBUpdate();
+            if ($update->check_upgrade()) {
+                $update->do_upgrade();
+            }
+        }
 
 	function enqueue_scripts_styles() {
 		wp_enqueue_style('rt-media-main', RT_MEDIA_URL . 'app/assets/css/main.css', '', RT_MEDIA_VERSION);
