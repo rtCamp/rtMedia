@@ -12,7 +12,7 @@ class BuddyPressMigration {
     function __construct() {
         global $wpdb;
         $this->bmp_table = $wpdb->prefix . "rt_bpm_media";
-        add_action(bp_core_admin_hook(), array($this, 'menu'));
+//        add_action(bp_core_admin_hook(), array($this, 'menu'));
         add_action('wp_ajax_bp_media_rt_db_migration', array($this, "migrate_to_new_db"));
         add_action('admin_init', array($this, "migration_settings"));
     }

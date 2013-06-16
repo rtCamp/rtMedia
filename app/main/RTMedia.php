@@ -155,7 +155,8 @@ class RTMedia {
 	 * Populates $options with saved settings
 	 */
 	public function get_option() {
-		$options = bp_get_option('bp_media_options', false);
+		//$options = bp_get_option('bp_media_options', false);
+                $options = '';
 		if (!$options) {
 			$options = array(
 				'enable_on_group' => 1,
@@ -187,7 +188,7 @@ class RTMedia {
 				'download_enabled' => 1,
 				'show_admin_menu' => 1
 			);
-			bp_update_option('bp_media_options', $options);
+			//bp_update_option('bp_media_options', $options);
 		} elseif (!isset($options['sizes'])) {
 			$options['sizes'] = array(
 				'image' => array(
@@ -206,12 +207,12 @@ class RTMedia {
 				'media' => array(
 					'featured' => array('width' => 100, 'height' => 100, 'crop' => 1)
 			));
-			bp_update_option('bp_media_options', $options);
+			//bp_update_option('bp_media_options', $options);
 		} elseif (!isset($options['sizes']['media'])) {
 			$options['sizes']['media'] = array(
 				'featured' => array('width' => 100, 'height' => 100, 'crop' => 1)
 			);
-			bp_update_option('bp_media_options', $options);
+			//bp_update_option('bp_media_options', $options);
 		}
 
 		$options['per_page_media'] = 10;
