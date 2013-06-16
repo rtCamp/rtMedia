@@ -2,18 +2,19 @@
 /* RT MEDIA */
 /* line 560, ../sass/main.scss */
 .rt-media-container {
-  margin: 5% 5%;
+  margin: 1% 1%;
+  width: 100%;
   float:left;
 }
 
 /* line 564, ../sass/main.scss */
 .rt-media-list {
   list-style: none;
+  margin: 1% 1%;
 }
 /* line 567, ../sass/main.scss */
 .rt-media-list > li {
   display: inline-block;
   margin: 3% 3% 0;
-  width: 25%;
   word-wrap: break-word;
 }

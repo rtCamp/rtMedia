@@ -14,7 +14,7 @@ class RTMediaTemplate {
 	public $media_args;
 
 	function __construct() {
-		add_action( 'wp_enqueue_scripts', array( $this,'enqueue_scripts') );
+//		add_action( 'wp_enqueue_scripts', array( $this,'enqueue_scripts') );
 
 	}
 
@@ -23,7 +23,10 @@ class RTMediaTemplate {
 	 */
 	function enqueue_scripts(){
 		wp_enqueue_script('backbone');
-		wp_enqueue_script('rtmediamodel', RT_MEDIA_URL.'app/assets/js/backbone/models.js');
+		wp_enqueue_script('rtmedia-backbone', RT_MEDIA_URL.'app/assets/js/backbone/rtMedia.backbone.js',array('backbone'));
+		wp_enqueue_script('rtmedia-models', RT_MEDIA_URL.'app/assets/js/backbone/models.js', array('rtmedia-backbone'));
+		wp_enqueue_script('rtmedia-collections', RT_MEDIA_URL.'app/assets/js/backbone/collections.js', array('rtmedia-backbone'));
+		wp_enqueue_script('rtmedia-views', RT_MEDIA_URL.'app/assets/js/backbone/views.js', array('rtmedia-backbone'));
 	}
 
 	/**

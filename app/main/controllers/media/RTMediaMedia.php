@@ -187,8 +187,6 @@ class RTMediaMedia {
 
 		/* delete meta */
 		$status = $this->rt_media_model->delete_meta( array( 'media_id' => $media_id ) );
-		if (get_class($status) == 'WP_Error' || $status == 0)
-			return false;
 
 		$status = $this->rt_media_model->delete( array( 'media_id' => $media_id ) );
 
