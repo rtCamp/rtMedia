@@ -1,29 +1,32 @@
-<!--<li class="rt-media-list-item">-->
-	<div class="rt-media-container rt-media-single-container">
+<div class="rt-media-container rt-media-single-container">
 
-		<?php if (have_rt_media()) : rt_media(); ?>
+    <?php if (have_rt_media()) : rt_media(); ?>
 
-			<div class="rt-media-media">
-				<img src="<?php rt_media_thumbnail(); ?>">
-			</div>
+        <?php
+            global $rt_media;
+            $size = $rt_media->options['sizes']['image']['large'];
+        ?>
 
-			<h4 class="rt-media-item-title" title="<?php rt_media_title(); ?>">
-				<?php rt_media_title(); ?>
-			</h4>
+        <div class="rt-media-media">
+            <img src="<?php rt_media_thumbnail(); ?>" width="<?php echo $size['width']; ?>">
+        </div>
 
-			<div class="rt-media-item-content">
-				<?php rt_media_content(); ?>
-			</div>
+        <h4 class="rt-media-item-title" title="<?php rt_media_title(); ?>">
+            <?php rt_media_title(); ?>
+        </h4>
 
-			<div class="rt-media-item-actions">
-				<?php rt_media_actions(); ?>
-			</div>
+        <div class="rt-media-item-content">
+            <?php rt_media_content(); ?>
+        </div>
 
-			<?php rt_media_comments(); ?>
+        <div class="rt-media-item-actions">
+            <?php rt_media_actions(); ?>
+        </div>
 
-		<?php else: ?>
-			<p><?php echo __("Oops !! There's no media found for the request !!","rt-media"); ?></p>
-		<?php endif; ?>
+        <?php rt_media_comments(); ?>
 
-	</div>
-<!--</li>-->
+    <?php else: ?>
+        <p><?php echo __("Oops !! There's no media found for the request !!","rt-media"); ?></p>
+    <?php endif; ?>
+
+</div>

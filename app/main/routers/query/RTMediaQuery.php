@@ -39,12 +39,11 @@ class RTMediaQuery {
 
 	private $actions = array(
 		'edit',
-		'delete',
-		'page'
+		'delete'
 	);
 
 
-
+	
 	public $media = '';
 
 	public $media_count = 0;
@@ -152,16 +151,21 @@ class RTMediaQuery {
 
 			if ( isset( $raw_query[ 1 ] ) ) {
 
+				$this->set_actions();
+
+				if($modifier_value === 'page') {
+					$page = $raw_query[1];
+				} else
+
 				/**
 				 * action manipulator hook
 				 */
-				$this->set_actions();
 
 				if ( in_array( $raw_query[ 1 ], $this->actions ) ) {
 
 					$action = $raw_query[ 1 ];
 
-					if ( $modifier_type === 'media_type' && $action !== 'page' ) {
+					if ( $modifier_type === 'media_type' ) {
 						$bulk = true;
 					}
 				}
@@ -177,11 +181,15 @@ class RTMediaQuery {
 					$attribute= $raw_query[2];
 			}
 
-		} else if( isset($raw_query) )
-			/*
-			 * invalid slug
-			 */
-			include get_404_template();
+		} else if( isset($raw_query) ) {
+		/*
+		 * invalid slug
+		 */
+			global $rt_media;
+
+			if( !$rt_media->options['media_end_point_enable'] )
+				include get_404_template();
+		}
 
 		/**
 		 * set action query object

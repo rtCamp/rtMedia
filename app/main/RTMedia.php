@@ -216,6 +216,7 @@ class RTMedia {
 		}
 
 		$options['per_page_media'] = 10;
+                $options['media_end_point_enable'] = true;
 
 		$this->options = $options;
 
