@@ -28,6 +28,7 @@
 
 </div>
 
+<!-- template for single media in gallery -->
 <script id="rt-media-gallery-item-template" type="text/template">
     <div class="rt-media-item-thumbnail">
         <a href ="media/<%= id %>">
@@ -42,8 +43,5 @@
             </a>
         </h4>
     </div>
-
-    <div class="rt-media-item-actions">
-        <%= rt_media_actions %>
-    </div>
 </script>
+<!-- rt_media_actions remained in script tag -->

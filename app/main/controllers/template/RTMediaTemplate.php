@@ -23,10 +23,10 @@ class RTMediaTemplate {
 	 */
 	function enqueue_scripts(){
 		wp_enqueue_script('backbone');
-		wp_enqueue_script('rtmedia-backbone', RT_MEDIA_URL.'app/assets/js/backbone/rtMedia.backbone.js',array('backbone'));
-		wp_enqueue_script('rtmedia-models', RT_MEDIA_URL.'app/assets/js/backbone/models.js', array('rtmedia-backbone'));
-		wp_enqueue_script('rtmedia-collections', RT_MEDIA_URL.'app/assets/js/backbone/collections.js', array('rtmedia-backbone'));
-		wp_enqueue_script('rtmedia-views', RT_MEDIA_URL.'app/assets/js/backbone/views.js', array('rtmedia-backbone'));
+		wp_enqueue_script('rtmedia-models', RT_MEDIA_URL.'app/assets/js/backbone/models.js', array('backbone'));
+		wp_enqueue_script('rtmedia-collections', RT_MEDIA_URL.'app/assets/js/backbone/collections.js', array('backbone','rtmedia-models'));
+		wp_enqueue_script('rtmedia-views', RT_MEDIA_URL.'app/assets/js/backbone/views.js', array('backbone','rtmedia-collections'));
+		wp_enqueue_script('rtmedia-backbone', RT_MEDIA_URL.'app/assets/js/backbone/rtMedia.backbone.js',array('rtmedia-models','rtmedia-collections','rtmedia-views'));
 	}
 
 	/**
@@ -47,10 +47,36 @@ class RTMediaTemplate {
 
 		$media_array = '';
 
-		if ( $rt_media_query->format != 'json' ) {
+		/* Includes db specific wrapper functions required to render the template */
+		include(RT_MEDIA_PATH . 'app/main/controllers/template/rt-template-functions.php');
+		$this->enqueue_scripts();
 
-			/* Includes db specific wrapper functions required to render the template */
-			include(RT_MEDIA_PATH . 'app/main/controllers/template/rt-template-functions.php');
+		if( $rt_media_query->action_query->action == 'comments'
+				&& isset($rt_media_query->action_query->media_type)
+				&& !count($_POST) ) {
+			/**
+			 * /media/comments [GET]
+			 *
+			 */
+			if($rt_media_query->media) {
+				foreach($rt_media_query->media as $media){
+					$media_array[] = $media;
+				}
+			}
+			echo json_encode( $media_array );
+			return;
+		} else if($rt_media_query->action_query->action == 'comments'
+				&& isset($rt_media_query->action_query->media_type)
+				&& count($_POST)) {
+			/**
+			 * /media/comments [POST]
+			 * Post a comment to the album by post id
+			 */
+			$comment = new RTMediaComment();
+			$comment->add($_POST);
+			return $this->get_template($template);
+
+		} else if ( $rt_media_query->format != 'json' ) {
 
 			if(!$shortcode_attr)
 				return $this->get_template($template);
