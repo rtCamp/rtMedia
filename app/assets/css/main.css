@@ -3,7 +3,6 @@
 /* line 560, ../sass/main.scss */
 .rt-media-container {
   margin: 1% 1%;
-  width: 100%;
   float:left;
 }
 
@@ -17,4 +16,16 @@
   display: inline-block;
   margin: 3% 3% 0;
   word-wrap: break-word;
+}
+
+.rt-media-item-thumbnail img {
+	max-width: 100%;
+}
+
+.rt-media-media img {
+	max-width: 100%;
+}
+
+.rt-media-item-comments {
+	margin: 1% 1%;
 }

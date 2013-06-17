@@ -27,6 +27,20 @@ class RTMediaMedia {
 		$this->rt_media_media_model = new RTMediaMediaModel();
 	}
 
+	static function media_nonce_generator($echo=true) {
+
+		if($echo) {
+			wp_nonce_field('rt_media_media_nonce','rt_media_media_nonce');
+		} else {
+			$token = array(
+				'action' => 'rt_media_media_nonce',
+				'nonce' => wp_create_nonce('rt_media_media_nonce')
+			);
+
+			return json_encode($token);
+		}
+	}
+
 	/**
 	 * Method verifies the nonce passed while performing any CRUD operations
 	 * on the media.
@@ -154,18 +168,31 @@ class RTMediaMedia {
 	 * @param type $meta
 	 * @return boolean
 	 */
-	function update($media_id, $data) {
+	function update($id, $data, $media_id) {
 
 		/* action to perform any task before updating a media */
 		do_action('rt_media_before_update_media', $this);
 
 		$defaults = array();
 		$data = wp_parse_args($data, $defaults);
-		$where = array( 'media_id' => $media_id );
+		$where = array( 'id' => $id );
+
+		if(array_key_exists('media_title', $data) || array_key_exists('description', $data)) {
+			$post_data['ID'] = $media_id;
+			if(isset($data['media_title'])) {
+				$post_data['post_title'] = $data['media_title'];
+				$post_data['post_name'] = sanitize_title($data['media_title']);
+			}
+			if(isset($data['description'])) {
+				$post_data['post_content'] = $data['description'];
+				unset($data['description']);
+			}
+			wp_update_post($post_data);
+		}
 
 		$status = $this->rt_media_media_model->update($data, $where);
 
-		if (get_class($status) == 'WP_Error' || $status == 0) {
+		if ($status == 0) {
 			return false;
 		} else {
 			/* action to perform any task after updating a media */
@@ -181,16 +208,19 @@ class RTMediaMedia {
 	 * @param type $media_id
 	 * @return boolean
 	 */
-	function delete($media_id){
+	function delete($id, $media_id = false){
 
 		do_action('rt_media_before_delete_media', $this);
 
+		/* remove attachment --- confirm with saurabh */
+		wp_update_post(array('ID'=>$media_id, 'post_parent'=>0));
+
 		/* delete meta */
-		$status = $this->rt_media_media_model->delete_meta( array( 'media_id' => $media_id ) );
+		$this->rt_media_media_model->delete_meta( array( 'media_id' => $media_id ) );
 
-		$status = $this->rt_media_media_model->delete( array( 'media_id' => $media_id ) );
+		$status = $this->rt_media_media_model->delete( array( 'id' => $id ) );
 
-		if (get_class($status) == 'WP_Error' || $status == 0) {
+		if ($status == 0) {
 			return false;
 		} else {
 			do_action('rt_media_after_delete_media', $this);
@@ -274,7 +304,7 @@ class RTMediaMedia {
         foreach ($attachments as $key => $attachment) {
             $attachment_id = wp_insert_attachment($attachment, $file_object[$key]['file'], $attachment['post_parent']);
             if (!is_wp_error($attachment_id)) {
-                add_filter('intermediate_image_sizes', array($this, 'rt_media_image_sizes'), 99);
+//                add_filter('intermediate_image_sizes', array($this, 'rt_media_image_sizes'), 99);
                 wp_update_attachment_metadata($attachment_id, wp_generate_attachment_metadata($attachment_id, $file_object[$key]['file']));
             } else {
                 unlink($file_object[$key]['file']);

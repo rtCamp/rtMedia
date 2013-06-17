@@ -1,4 +1,4 @@
-<div class="rt-media-container rt-media-list-container">
+<div class="rt-media-container">
 
     <?php if (have_rt_media()) { ?>
 

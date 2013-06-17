@@ -116,7 +116,6 @@ class RTMediaQuery {
 
 		$raw_query = $this->interaction->query_vars;
 
-		var_dump($raw_query);
 
 		$bulk = false;
 		$action = false;
@@ -144,6 +143,9 @@ class RTMediaQuery {
 			 */
 			if ( is_numeric( $raw_query[ 0 ] ) ) {
 				$modifier_type = 'id';
+				if(isset($_POST['request_action']) && $_POST['request_action']=='delete') {
+					$action = 'delete';
+				}
 			} else {
 			/**
 			 * accessed the url directly by media type
@@ -156,6 +158,9 @@ class RTMediaQuery {
 
 			if ( isset( $raw_query[ 1 ] ) ) {
 
+				/**
+				 * action manipulator hook
+				 */
 				$this->set_actions();
 
 				/**
@@ -168,17 +173,20 @@ class RTMediaQuery {
 				/**
 				 * Comments Nonce [GET]
 				 */
-				if( $modifier_value=='comments' && $raw_query[1] == 'nonce' ) {
-					echo RTMediaComment::comment_nonce_generator(false);
-					exit();
-				} else
-				/**
-				 * action manipulator hook
-				 */
-				if ( $modifier_type!='id' && in_array( $raw_query[ 1 ], $this->actions ) ) {
+				if( $modifier_value=='comments' ) {
+
+					if ( $raw_query[1] == 'nonce' ) {
+						echo RTMediaComment::comment_nonce_generator(false);
+						exit();
+					} else {
+						$this->query['id']= $modifier_value;
+					}
+				} else if ( in_array( $raw_query[ 1 ], $this->actions ) ) {
 
 					$action = $raw_query[ 1 ];
-					$bulk = true;
+
+					if( $modifier_type == 'media_type' )
+						$bulk = true;
 				}
 			}
 
@@ -197,7 +205,7 @@ class RTMediaQuery {
 		} else if( isset($raw_query) ) {
 			global $rt_media;
 
-			if( !$rt_media->options['media_end_point_enable'] )
+			if( !$rt_media->get_option('media_end_point_enable') )
 				include get_404_template();
 		}
 
@@ -206,7 +214,7 @@ class RTMediaQuery {
 		 * setting parameters in action query object for pagination
 		 */
 		global $rt_media;
-		$options = $rt_media->get_option();
+		$per_page_media = $rt_media->get_option('per_page_media');
 
 		$this->action_query = (object) array(
 			$modifier_type		=> $modifier_value,
@@ -214,10 +222,9 @@ class RTMediaQuery {
 			'attribute'			=> $attribute,
 			'bulk'				=> true,
 			'page'				=> ( isset($_GET['rt_media_page']) && !empty($_GET['rt_media_page']) ) ? $_GET['rt_media_page'] : $page,
-			'per_page_media'	=> $options['per_page_media'],
+			'per_page_media'	=> $per_page_media,
 			'attributes'		=> $attributes
 		);
-		print_r($this->action_query);
 	}
 
 	/**
@@ -233,7 +240,7 @@ class RTMediaQuery {
 	 * @return type
 	 */
 	function &query( $query ) {
-		$this->query = $this->query_vars = wp_parse_args( $query );
+		$this->query = wp_parse_args( $this->query , $query );
 		return $this->get_data();
 	}
 
@@ -244,7 +251,13 @@ class RTMediaQuery {
 		if( $this->is_single() )
 			$this->query['id']= $this->action_query->id;
 
-		if( isset($this->action_query->media_type) )
+		$allowed_media_types = array();
+		global $rt_media;
+		foreach ($rt_media->allowed_types as $value) {
+			$allowed_media_types[] = $value['name'];
+		}
+
+		if( isset($this->action_query->media_type) && in_array($this->action_query->media_type, $allowed_media_types) )
 			$this->query['media_type'] = $this->action_query->media_type;
 
 		/**
@@ -308,10 +321,10 @@ class RTMediaQuery {
 		unset( $this->query->meta_query );
 		unset( $this->query->tax_query );
 
-		if($this->action_query->action!='comments')
-			$this->media = $this->populate_media();
-		else
+		if($this->action_query->action=='comments' && !isset($this->action_query->id))
 			$this->media = $this->populate_comments();
+		else
+			$this->media = $this->populate_media();
 
 
 		/**
@@ -325,14 +338,14 @@ class RTMediaQuery {
 
 			foreach ( $blogs as $blog_id => &$media ) {
 				switch_to_blog( $blog_id );
-				if($this->action_query->action != 'comments') {
+				if(!($this->action_query->action == 'comments' && !isset($this->action_query->id))) {
 					$this->populate_post_data( $media );
 					wp_reset_query();
 				}
 			}
 			restore_current_blog();
 		} else {
-			if($this->action_query->action != 'comments')
+			if(!($this->action_query->action == 'comments' && !isset($this->action_query->id)))
 				$this->populate_post_data( $this->media );
 		}
 	}
@@ -465,9 +478,7 @@ class RTMediaQuery {
 
 		global $rt_media_media, $wpdb;
 
-		$post = new WP_Query(array('id' => $rt_media_media->post_parent));
-
-		$post = $post->posts[0];
+		$post = get_post($rt_media_media->post_parent);
 
 		$link = get_site_url() . '/' . $post->post_name . '/media/' . $rt_media_media->id;
 
