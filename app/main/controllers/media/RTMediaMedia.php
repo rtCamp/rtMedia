@@ -17,14 +17,14 @@ class RTMediaMedia {
 	 *
 	 * @var type
 	 */
-	var $rt_media_model;
+	var $rt_media_media_model;
 
 	/**
 	 *
 	 */
 	public function __construct() {
 
-		$this->rt_media_model = new RTMediaModel();
+		$this->rt_media_media_model = new RTMediaMediaModel();
 	}
 
 	/**
@@ -88,7 +88,7 @@ class RTMediaMedia {
 				if( !is_null($value) ) {
 					$row['meta_key'] = $key;
 					$row['meta_value'] = $value;
-					$status = $this->rt_media_model->add_meta($row);
+					$status = $this->rt_media_media_model->add_meta($row);
 
 					if (get_class($status) == 'WP_Error' || $status == 0)
 						return false;
@@ -163,7 +163,7 @@ class RTMediaMedia {
 		$data = wp_parse_args($data, $defaults);
 		$where = array( 'media_id' => $media_id );
 
-		$status = $this->rt_media_model->update($data, $where);
+		$status = $this->rt_media_media_model->update($data, $where);
 
 		if (get_class($status) == 'WP_Error' || $status == 0) {
 			return false;
@@ -186,9 +186,9 @@ class RTMediaMedia {
 		do_action('rt_media_before_delete_media', $this);
 
 		/* delete meta */
-		$status = $this->rt_media_model->delete_meta( array( 'media_id' => $media_id ) );
+		$status = $this->rt_media_media_model->delete_meta( array( 'media_id' => $media_id ) );
 
-		$status = $this->rt_media_model->delete( array( 'media_id' => $media_id ) );
+		$status = $this->rt_media_media_model->delete( array( 'media_id' => $media_id ) );
 
 		if (get_class($status) == 'WP_Error' || $status == 0) {
 			return false;
@@ -216,7 +216,7 @@ class RTMediaMedia {
 				return false;
 		} else {
 			/* update album_id, context, context_id and privacy in rtMedia context */
-			$album_data = $this->rt_media_model->get_by_media_id($media_id);
+			$album_data = $this->rt_media_media_model->get_by_media_id($media_id);
 			$data = array(
 					'album_id' => $album_id,
 					'context' => $album_data['result'][0]['context'],
@@ -301,7 +301,7 @@ class RTMediaMedia {
 	 */
 	function rt_insert_album($attributes) {
 
-		$this->rt_media_model->insert($attributes);
+		$this->rt_media_media_model->insert($attributes);
 	}
 
 	/**
@@ -323,7 +323,7 @@ class RTMediaMedia {
 		foreach ($attachment_ids as $id) {
 			$attachment = get_post($id, ARRAY_A);
             $mime_type = explode('/',$attachment['post_mime_type']);
-            $this->rt_media_model->insert(
+            $this->rt_media_media_model->insert(
                     array(
                         'blog_id' => $blog_id,
                         'media_id' => $id,

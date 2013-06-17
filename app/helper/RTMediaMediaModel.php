@@ -5,7 +5,7 @@
  *
  * @author joshua
  */
-class RTMediaModel extends RTDBModel {
+class RTMediaMediaModel extends RTDBModel {
 
     function __construct() {
         parent::__construct('rtm_media');

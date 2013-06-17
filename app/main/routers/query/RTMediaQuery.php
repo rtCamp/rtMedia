@@ -39,11 +39,10 @@ class RTMediaQuery {
 
 	private $actions = array(
 		'edit',
-		'delete'
+		'delete',
+		'comments'
 	);
 
-
-	
 	public $media = '';
 
 	public $media_count = 0;
@@ -124,15 +123,19 @@ class RTMediaQuery {
 		$modifier_value = false;
 		$format = '';
 		$page = 1;
+		$attributes = '';
+
+		/**
+		 * json request
+		 */
+		if(is_array($raw_query) && in_array('json', $raw_query) || isset($_GET['json']) || isset($_POST['json'])) {
+			$this->format = 'json';
+		}
+		if(is_array($raw_query) && in_array('comments', $raw_query) ) {
+			$action = 'comments';
+		}
 
 		if ( is_array( $raw_query ) && count( $raw_query ) && !empty($raw_query[0]) ) {
-
-			/**
-			 * json request
-			 */
-			if(in_array('json',$raw_query) || isset($_GET['json'])) {
-				$this->format = 'json';
-			}
 
 			/**
 			 * accessed the url directly by media id
@@ -153,21 +156,20 @@ class RTMediaQuery {
 
 				$this->set_actions();
 
-				if($modifier_value === 'page') {
+				/**
+				 * pagination
+				 */
+				if($modifier_value == 'page') {
 					$page = $raw_query[1];
 				} else
 
 				/**
 				 * action manipulator hook
 				 */
-
-				if ( in_array( $raw_query[ 1 ], $this->actions ) ) {
+				if ( $modifier_type!='id' && in_array( $raw_query[ 1 ], $this->actions ) ) {
 
 					$action = $raw_query[ 1 ];
-
-					if ( $modifier_type === 'media_type' ) {
-						$bulk = true;
-					}
+					$bulk = true;
 				}
 			}
 
@@ -175,16 +177,15 @@ class RTMediaQuery {
 			 * additional attributes
 			 */
 			if ( isset( $raw_query[ 2 ] ) ) {
-				if($action === 'page')
-					$page = $raw_query[2];
-				else
+
+				if ( $modifier_type == 'id' && in_array( $raw_query[ 2 ], $this->actions ) ) {
+
+					$action = $raw_query[ 2 ];
+				} else
 					$attribute= $raw_query[2];
 			}
 
 		} else if( isset($raw_query) ) {
-		/*
-		 * invalid slug
-		 */
 			global $rt_media;
 
 			if( !$rt_media->options['media_end_point_enable'] )
@@ -204,8 +205,10 @@ class RTMediaQuery {
 			'attribute'			=> $attribute,
 			'bulk'				=> true,
 			'page'				=> ( isset($_GET['rt_media_page']) && !empty($_GET['rt_media_page']) ) ? $_GET['rt_media_page'] : $page,
-			'per_page_media'	=> $options['per_page_media']
+			'per_page_media'	=> $options['per_page_media'],
+			'attributes'		=> $attributes
 		);
+		print_r($this->action_query);
 	}
 
 	/**
@@ -222,30 +225,24 @@ class RTMediaQuery {
 	 */
 	function &query( $query ) {
 		$this->query = $this->query_vars = wp_parse_args( $query );
-		return $this->get_media();
+		return $this->get_data();
 	}
 
-
-	/**
-	 * populate the media object for the page/album
-	 *
-	 * @return boolean
-	 */
 	function populate_media() {
-		$this->model = new RTMediaModel();
 
-		if($this->is_single()){
+		$this->model = new RTMediaMediaModel();
+
+		if( $this->is_single() )
 			$this->query['id']= $this->action_query->id;
-		}
 
-		unset( $this->query->meta_query );
-		unset( $this->query->tax_query );
+		if( isset($this->action_query->media_type) )
+			$this->query['media_type'] = $this->action_query->media_type;
 
 		/**
 		 * Handle order of the result set
 		 */
-		$order_by = 'media_id';
-		$order = 'desc';
+		$order_by = '';
+		$order = '';
 		if( isset($this->query['order']) ) {
 			$order = $this->query['order'];
 			unset($this->query['order']);
@@ -262,7 +259,10 @@ class RTMediaQuery {
 		/**
 		 * fetch media entries from rtMedia context
 		 */
-		$pre_media = $this->model->get_media( $this->query, ($this->action_query->page-1)*$this->action_query->per_page_media, $this->action_query->per_page_media, $order_by );
+		if($order_by==' ')
+			$pre_media = $this->model->get_media( $this->query, ($this->action_query->page-1)*$this->action_query->per_page_media, $this->action_query->per_page_media );
+		else
+			$pre_media = $this->model->get_media( $this->query, ($this->action_query->page-1)*$this->action_query->per_page_media, $this->action_query->per_page_media, $order_by );
 
 		/**
 		 * count total medias in alnum rrespective of pagination
@@ -272,13 +272,38 @@ class RTMediaQuery {
 
 		if ( ! $pre_media )
 			return false;
+		else return $pre_media;
 
 /*		removed because of indexing ---- 0,1,2 was required rather than post_ids
 		foreach ( $pre_media as $pre_medium ) {
 			$this->media[ $pre_medium->media_id ] = $pre_medium;
 		}*/
+	}
 
-		$this->media = $pre_media;
+	function populate_comments() {
+
+		$this->model = new RTMediaCommentModel();
+		global $rt_media_interaction;
+
+		return $this->model->get(array( 'post_id' => $rt_media_interaction->context->id ));
+	}
+
+
+	/**
+	 * populate the data object for the page/album
+	 *
+	 * @return boolean
+	 */
+	function populate_data() {
+
+		unset( $this->query->meta_query );
+		unset( $this->query->tax_query );
+
+		if($this->action_query->action!='comments')
+			$this->media = $this->populate_media();
+		else
+			$this->media = $this->populate_comments();
+
 
 		/**
 		 * multiside manipulation
@@ -291,12 +316,15 @@ class RTMediaQuery {
 
 			foreach ( $blogs as $blog_id => &$media ) {
 				switch_to_blog( $blog_id );
-				$this->populate_post_data( $media );
-				wp_reset_query();
+				if($this->action_query->action != 'comments') {
+					$this->populate_post_data( $media );
+					wp_reset_query();
+				}
 			}
 			restore_current_blog();
 		} else {
-			$this->populate_post_data( $this->media );
+			if($this->action_query->action != 'comments')
+				$this->populate_post_data( $this->media );
 		}
 	}
 
@@ -424,6 +452,19 @@ class RTMediaQuery {
 		return $this->rt_media;
 	}
 
+	function permalink() {
+
+		global $rt_media_media, $wpdb;
+
+		$post = new WP_Query(array('id' => $rt_media_media->post_parent));
+
+		$post = $post->posts[0];
+
+		$link = get_site_url() . '/' . $post->post_name . '/media/' . $rt_media_media->id;
+
+		return $link;
+	}
+
 	/**
 	 * Rewinds the db pool of media album and resets it to begining
 	 */
@@ -438,9 +479,9 @@ class RTMediaQuery {
 	 *
 	 * @return type
 	 */
-	function &get_media() {
+	function &get_data() {
 
-		$this->populate_media();
+		$this->populate_data();
 
 		return $this->media;
 	}

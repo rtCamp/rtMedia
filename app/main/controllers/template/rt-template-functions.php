@@ -49,8 +49,8 @@ function rt_media_title(){
  * @global type $rt_media_media
  */
 function rt_media_permalink(){
-	global $rt_media_media;
-	echo 'media/' . $rt_media_media->id;
+	global $rt_media_query;
+	echo $rt_media_query->permalink();
 }
 
 /*

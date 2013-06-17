@@ -1,5 +1,7 @@
 jQuery(function($){
 
+	rtMedia = window.rtMedia || {};
+
 	rtMedia.Context = Backbone.Model.extend({
 		defaults: {
 			"context"		: "post",
@@ -25,7 +27,7 @@ jQuery(function($){
 			"ratings_count"		: 0,
 			"likes"				: 0,
 			"dislikes"			: 0,
-			"guid"				: false
+			"guid"				: false,
 		}
 
 	});
