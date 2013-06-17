@@ -116,6 +116,8 @@ class RTMediaQuery {
 
 		$raw_query = $this->interaction->query_vars;
 
+		var_dump($raw_query);
+
 		$bulk = false;
 		$action = false;
 		$attribute = false;
@@ -163,6 +165,13 @@ class RTMediaQuery {
 					$page = $raw_query[1];
 				} else
 
+				/**
+				 * Comments Nonce [GET]
+				 */
+				if( $modifier_value=='comments' && $raw_query[1] == 'nonce' ) {
+					echo RTMediaComment::comment_nonce_generator(false);
+					exit();
+				} else
 				/**
 				 * action manipulator hook
 				 */

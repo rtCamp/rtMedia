@@ -18,6 +18,19 @@ class RTMediaComment {
 		$this->rt_media_comment_model = new RTMediaCommentModel();
 	}
 
+	static function comment_nonce_generator($echo = true) {
+		if($echo) {
+			wp_nonce_field('rt_media_comment_nonce','rt_media_comment_nonce');
+		} else {
+			$token = array(
+				'action' => 'rt_media_comment_nonce',
+				'nonce' => wp_create_nonce('rt_media_comment_nonce')
+			);
+
+			return json_encode($token);
+		}
+	}
+
 	/**
 	 * returns user_id of the current logged in user in wordpress
 	 *

@@ -72,8 +72,15 @@ class RTMediaTemplate {
 			 * /media/comments [POST]
 			 * Post a comment to the album by post id
 			 */
-			$comment = new RTMediaComment();
-			$comment->add($_POST);
+
+			$nonce = $_REQUEST['rt_media_comment_nonce'];
+            if (wp_verify_nonce($nonce, 'rt_media_comment_nonce')) {
+				$comment = new RTMediaComment();
+				$comment->add($_POST);
+			}
+			else {
+				echo "Ooops !!! Invalid access. No nonce was found !!";
+			}
 			return $this->get_template($template);
 
 		} else if ( $rt_media_query->format != 'json' ) {
