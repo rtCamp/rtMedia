@@ -29,7 +29,7 @@ if (!class_exists('BPMediaSettings')) {
          * @global BPMediaAddon $bp_media_addon
          */
         public function settings() {
-            global $bp_media, $bp_media_addon, $wpdb;
+            global $rt_media, $bp_media_addon, $wpdb;
             add_settings_section('bpm-settings', __('Enabled Media Types', 'buddypress-media'), is_multisite() ? array($this, 'allowed_types') : '', 'bp-media-settings');
             add_settings_field('bpm-image', __('Photos', 'buddypress-media'), array($this, 'checkbox'), 'bp-media-settings', 'bpm-settings', array(
                 'setting' => 'bp_media_options',
