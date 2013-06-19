@@ -107,10 +107,10 @@ class BPMediaScreen {
     public function hook_after() {
         global $bp;
 		$media_id=0;
-        do_action('bp_media_after_' . $this->slug, $media_id);
 		if(isset($bp->action_variables[1])){
 			$media_id = $bp->action_variables[1];
 		}
+        do_action('bp_media_after_' . $this->slug, $media_id);
         do_action('bp_media_after_content');
     }
 

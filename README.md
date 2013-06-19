@@ -150,6 +150,10 @@ Please visit [BuddyPress Media's Features page](http://rtcamp.com/buddypress-med
 
 Please visit [BuddyPress Media's Roadmap page](http://rtcamp.com/buddypress-media/roadmap/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "Visit BuddyPress Media's Features page") to get some details about future releases.
 
+#### 2.15.4 ####
+ * Fixes Security Vulnerability reported by [inderpreet99](http://wordpress.org/support/profile/inderpreet99)
+ * Fixes bp_media_after_photo hook
+
 #### 2.15.3 ####
  * Fixes error reported by [Harry-Nak](http://rtcamp.com/members/harry-nak/)
 
@@ -458,5 +462,5 @@ Please visit [BuddyPress Media's Roadmap page](http://rtcamp.com/buddypress-medi
 * HTML5 Audio Tag Support (with fallback)
 * HTML5 Video Tag Support (with fallback)
 
-#### 2.15.3 ####
-Fixes fatal error
+#### 2.15.4 ####
+Fixes Security Vulnerability
