@@ -23,8 +23,75 @@ if (!class_exists('BPMediaAddon')) {
                     . '</a>';
         }
 
+		public static function render_addons($page = '') {
+			global $wp_settings_sections, $wp_settings_fields;
+
+			if ( ! isset( $wp_settings_sections ) || !isset( $wp_settings_sections[$page] ) )
+				return;
+
+			foreach ( (array) $wp_settings_sections[$page] as $section ) {
+
+				if ( $section['callback'] )
+					call_user_func( $section['callback'], $section );
+
+				if ( ! isset( $wp_settings_fields ) || !isset( $wp_settings_fields[$page] ) || !isset( $wp_settings_fields[$page][$section['id']] ) )
+					continue;
+
+				echo '<table class="form-table">';
+				do_settings_fields( $page, $section['id'] );
+				echo '</table>';
+			}
+		}
+
         public function get_addons() {
-            $addons = array(
+
+			$tabs = array();
+			global $bp_media_admin;
+			$tabs[] = array(
+				'title' => 'Encoding',
+				'name' => __('Audio/Video Encoding', 'buddypress-media'),
+				'href' => '#bpm-services',
+				'callback' => array($bp_media_admin->bp_media_encoding, 'encoding_service_intro')
+			);
+			$tabs[] = array(
+				'title' => 'Plugins',
+				'name' => __('Plugins', 'buddypress-media'),
+				'href' => '#bpm-plugins',
+				'callback' => array($this, 'plugins_content')
+			);
+
+/*			$tabs[] = array(
+				'title' => 'Themes',
+				'name' => __('Themes', 'buddypress-media'),
+				'href' => '#bpm-themes',
+				'callback' => array($this, 'themes_content')
+			);*/
+
+			?>
+			<div id="bpm-addons">
+				<ul>
+					<?php
+						foreach ($tabs as $tab) {?>
+							<li><a title="<?php echo $tab['title'] ?>" href="<?php echo $tab['href']; ?>"><?php echo $tab['name']; ?></a></li>
+						<?php }
+					?>
+				</ul>
+
+				<?php
+					foreach ($tabs as $tab) {
+						echo '<div id="' . substr($tab['href'],1) . '">';
+							call_user_func($tab['callback']);
+						echo '</div>';
+					}
+				?>
+			</div>
+			<?php
+        }
+
+
+		public function plugins_content($args = '') {
+
+			$addons = array(
 				 array(
                     'title' => __('BuddyPress-Media Photo Tagging', 'buddypress-media'),
                     'img_src' => 'http://rtcamp.com/wp-content/uploads/2013/04/bpm-photo-tagging.png',
@@ -67,15 +134,33 @@ if (!class_exists('BPMediaAddon')) {
                 )
             );
             $addons = apply_filters('bp_media_addons', $addons);
-            foreach ($addons as $key => $addon) {
-                $this->addon($addon);
-                if ( $key == 1 ) {
-                    echo '<h3>';
-                    _e('BuddyPress Media Addons for Audio/Video');
-                    echo '</h3>';
-                }
-            }
-        }
+
+			foreach ($addons as $key => $value) {
+
+				if($key == 0) {
+					echo '<h3>';
+					_e('BuddyPress Media Addons for Photos');
+					echo '</h3>';
+				} else if($key == 2) {
+					echo '<h3>';
+					_e('BuddyPress Media Addons for Audio/Video');
+					echo '</h3>';
+				}
+				$this->addon($value);
+			}
+		}
+
+		public function services_content($args = '') {
+
+
+			$objEncoding->encoding_service_intro();
+		}
+
+		public function themes_content($args = '') {
+			echo '<h3>Coming Soon !!</h3>';
+		}
+
+
 
         /**
          *
