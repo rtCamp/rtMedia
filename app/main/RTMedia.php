@@ -142,7 +142,7 @@ class RTMedia {
 		/**
 		 * Admin Panel
 		 */
-		add_action('bp_init', array($this, 'admin_init'));
+		add_action('admin_init', array($this, 'admin_init'));
 
 		/**
 		 * Initialise media counter
