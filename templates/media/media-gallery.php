@@ -1,5 +1,7 @@
 <div class="rt-media-container">
 
+	<?php rt_media_uploader() ?>
+
     <?php if (have_rt_media()) { ?>
 
         <h2><?php echo __('Media Gallery','rt-media'); ?></h2>
@@ -24,7 +26,9 @@
             <a href="?rt_media_page=<?php echo rt_media_page()+1; ?>">Next</a>
         <?php } ?>
 
-    <?php } ?>
+	<?php } else { ?>
+		<p><?php echo __("Oops !! There's no media found for the request !!","rt-media"); ?></p>
+	<?php } ?>
 
 </div>
 

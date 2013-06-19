@@ -14,11 +14,23 @@
  */
 class RTMediaGalleryShortcode {
 
+	static $add_script;
+
 	/**
 	 *
 	 */
 	public function __construct() {
+
 		add_shortcode('rtmedia_gallery', array('RTMediaGalleryShortcode', 'render'));
+		add_action('init', array($this, 'register_scripts'));
+		add_action('wp_footer', array($this, 'print_script'));
+	}
+
+	function register_scripts() {
+		wp_register_script('rtmedia-models', RT_MEDIA_URL . 'app/assets/js/backbone/models.js', array('backbone'));
+		wp_register_script('rtmedia-collections', RT_MEDIA_URL . 'app/assets/js/backbone/collections.js', array('backbone', 'rtmedia-models'));
+		wp_register_script('rtmedia-views', RT_MEDIA_URL . 'app/assets/js/backbone/views.js', array('backbone', 'rtmedia-collections'));
+		wp_register_script('rtmedia-backbone', RT_MEDIA_URL . 'app/assets/js/backbone/rtMedia.backbone.js', array('rtmedia-models', 'rtmedia-collections', 'rtmedia-views'));
 	}
 
 	/**
@@ -39,15 +51,15 @@ class RTMediaGalleryShortcode {
 	 * @param boolean $attr
 	 */
 	static function render($attr) {
-
-		if( self::display_allowed() ) {
+		if (self::display_allowed()) {
+			self::$add_script = true;
 
 			ob_start();
 
-			if( (!isset($attr)) || empty($attr) )
+			if ((!isset($attr)) || empty($attr))
 				$attr = true;
 
-			$attr = array('name'=>'gallery', 'attr'=>$attr);
+			$attr = array('name' => 'gallery', 'attr' => $attr);
 
 			$template = new RTMediaTemplate();
 			$template->set_template('media-gallery', $attr);
@@ -55,6 +67,15 @@ class RTMediaGalleryShortcode {
 			return ob_get_clean();
 		}
 	}
+
+	static function print_script() {
+		if (!self::$add_script)
+			return;
+		if (!wp_script_is('rtmedia-backbone')){
+			wp_print_scripts('rtmedia-backbone');
+		}
+	}
+
 }
 
 ?>

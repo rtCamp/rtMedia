@@ -50,7 +50,13 @@ class RTMediaMediaModel extends RTDBModel {
                     $where .= " AND  ({$tbl_alias}.meta_key = '{$meta_query["key"]}' and  {$tbl_alias}.meta_value  {$meta_query["compare"]}  '{$meta_query["value"]}' ) ";
                 }
             }else{
-                $where .= " AND {$this->table_name}.{$colname} = '{$colvalue}'";
+				if(is_array($colvalue)) {
+					if(!isset($colvalue['compare']))
+						$colvalue['compare'] = 'IN';
+					$where .= " AND {$this->table_name}.{$colname} {$colvalue['compare']} ('". implode("','", $colvalue['value'])."')";
+
+				} else
+					$where .= " AND {$this->table_name}.{$colname} = '{$colvalue}'";
             }
         }
         $sql = $select . $join . $where ;
