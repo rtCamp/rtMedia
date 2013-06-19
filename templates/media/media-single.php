@@ -9,8 +9,8 @@
 		<?php } ?>
 
 		<?php
-		if(is_user_logged_in()) {
-			if( rt_media_edit_allowed() && rt_media_request_action()!="edit" ) { ?>
+		if(is_user_logged_in() && rt_media_edit_allowed()) {
+			if( rt_media_request_action()!="edit" ) { ?>
 				<a href="<?php echo rt_media_url() . '/edit'; ?>"><button>Edit</button></a>
 			<?php } else {
 				rt_media_image_editor();

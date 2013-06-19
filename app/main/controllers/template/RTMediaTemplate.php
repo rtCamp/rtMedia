@@ -15,11 +15,8 @@ class RTMediaTemplate {
 
 	function __construct() {
 
-		/* Includes db specific wrapper functions required to render the template */
-		include(RT_MEDIA_PATH . 'app/main/controllers/template/rt-template-functions.php');
-
 		add_action( 'wp_enqueue_scripts', array( $this,'enqueue_scripts') );
-		add_action('init', array($this,'register_image_editor_scripts'));
+		add_action('init', array($this,'enqueue_image_editor_scripts'));
 	}
 
 	/**
@@ -27,18 +24,13 @@ class RTMediaTemplate {
 	 */
 	function enqueue_scripts(){
 		wp_enqueue_script('rtmedia-backbone');
-		if( rt_media_edit_allowed() && rt_media_request_action()!="edit" ) {
-			wp_enqueue_script('wp-ajax-response');
-			wp_enqueue_script('rt-media-image-edit');
-			wp_enqueue_style('rt-media-image-edit');
-		}
 	}
 
-	function register_image_editor_scripts() {
+	function enqueue_image_editor_scripts() {
 		$suffix = defined('SCRIPT_DEBUG') && SCRIPT_DEBUG ? '' : '.min';
-
-		wp_register_script('rt-media-image-edit', admin_url("js/image-edit$suffix.js"), array('jquery', 'json2', 'imgareaselect'), false, 1);
-		wp_register_style('rt-media-image-edit', RT_MEDIA_URL . 'app/assets/css/image-edit.css');
+		wp_enqueue_script('wp-ajax-response');
+		wp_enqueue_script('rt-media-image-edit', admin_url("js/image-edit$suffix.js"), array('jquery', 'json2', 'imgareaselect'), false, 1);
+		wp_enqueue_style('rt-media-image-edit', RT_MEDIA_URL . 'app/assets/css/image-edit.css');
 	}
 
 	/**
@@ -59,11 +51,23 @@ class RTMediaTemplate {
 
 		$media_array = '';
 
-//		$this->enqueue_scripts();
+		/* Includes db specific wrapper functions required to render the template */
+		include(RT_MEDIA_PATH . 'app/main/controllers/template/rt-template-functions.php');
 
 		if(in_array($rt_media_interaction->context->type, array("profile","group"))) {
-//			echo "User/Group Media";
-			return $this->get_default_template();
+			echo "User/Group Media";
+
+			if ($rt_media_query->format == 'json') {
+				if ($rt_media_query->media) {
+					foreach ($rt_media_query->media as $media) {
+						$media_array[] = $media;
+					}
+				}
+				echo json_encode($media_array);
+				return;
+			}
+			else
+				return $this->get_default_template();
 		} else if($rt_media_interaction->context->type=="activity") {
 			echo 'Activity Handling';
 		} else if( $rt_media_query->action_query->action == 'comments' ) {

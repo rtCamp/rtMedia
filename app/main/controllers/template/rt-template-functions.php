@@ -286,7 +286,7 @@ function is_rt_media_single(){
 
 function rt_media_image_editor() {
 
-//	RTMediaTemplate::enqueue_image_editor_scripts();
+	RTMediaTemplate::enqueue_image_editor_scripts();
 	global $rt_media_query;
 	$media_id = $rt_media_query->media[0]->media_id;
 	$id = $rt_media_query->media[0]->id;

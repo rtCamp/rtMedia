@@ -1,8 +1,8 @@
 <?php
 /**
- * Description of BPMediaAdmin
+ * Description of RTMediaAdmin
  *
- * @package BuddyPressMedia
+ * @package RTMedia
  * @subpackage Admin
  *
  */
