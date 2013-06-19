@@ -57,39 +57,54 @@ if (!class_exists('RTMediaAdmin')) {
          * @param string $hook
          */
 
-        /**
-         *
-         * @param type $hook
-         */
-        public function ui($hook) {
-            $admin_ajax = admin_url('admin-ajax.php');
+		/**
+		 *
+		 * @param type $hook
+		 */
+		public function ui($hook) {
+			$admin_pages = array('buddypress-media_page_bp-media-kaltura-settings','buddypress-media_page_bp-media-ffmpeg-settings','toplevel_page_bp-media-settings', 'buddypress-media_page_bp-media-addons', 'buddypress-media_page_bp-media-support', 'buddypress-media_page_bp-media-importer');
+			$admin_pages = apply_filters('rt_media_filter_admin_pages_array', $admin_pages);
 
-            wp_enqueue_script('bp-media-admin', RT_MEDIA_URL . 'app/assets/js/admin.js', array('jquery-ui-dialog'), RT_MEDIA_VERSION);
-            wp_localize_script('bp-media-admin', 'bp_media_admin_ajax', $admin_ajax);
-            wp_localize_script('bp-media-admin', 'bp_media_admin_url', admin_url());
-            $bp_media_admin_strings = array(
-                'no_refresh' => __('Please do not refresh this page.', 'buddypress-media'),
-                'something_went_wrong' => __('Something went wronng. Please <a href onclick="location.reload();">refresh</a> page.', 'buddypress-media'),
-                'are_you_sure' => __('This will subscribe you to the free plan.', 'buddypress-media'),
-                'disable_encoding' => __('Are you sure you want to disable the encoding service? Make sure you note your api key before diabling it incase you want to activate it in future.', 'buddypress-media')
-            );
-            wp_localize_script('bp-media-admin', 'bp_media_admin_strings', $bp_media_admin_strings);
-            wp_localize_script('bp-media-admin', 'settings_url', add_query_arg(
-                            array('page' => 'bp-media-settings'), (is_multisite() ? network_admin_url('admin.php') : admin_url('admin.php'))
-                    ) . '#privacy_enabled');
-            wp_localize_script('bp-media-admin', 'settings_bp_album_import_url', add_query_arg(
-                            array('page' => 'bp-media-settings'), (is_multisite() ? network_admin_url('admin.php') : admin_url('admin.php'))
-                    ));
-            wp_enqueue_style('bp-media-admin', RT_MEDIA_URL . 'app/assets/css/main.css', '', RT_MEDIA_VERSION);
-            wp_enqueue_style('wp-jquery-ui-dialog');
-        }
+			if(in_array($hook, $admin_pages)) {
+				$admin_ajax = admin_url('admin-ajax.php');
 
-        /**
-         * Admin Menu
-         *
-         * @global string 'buddypress-media'
-         */
-        public function menu() {
+				wp_enqueue_script('bootstrap-switch', RT_MEDIA_URL . 'app/assets/js/bootstrap-switch.js', array('jquery'), RT_MEDIA_VERSION);
+				wp_enqueue_script('slider-tabs', RT_MEDIA_URL . 'app/assets/js/jquery.sliderTabs.min.js', array('jquery', 'jquery-effects-core'), RT_MEDIA_VERSION);
+				wp_enqueue_script('power-tip', RT_MEDIA_URL . 'app/assets/js/jquery.powertip.min.js', array('jquery'), RT_MEDIA_VERSION);
+				wp_enqueue_script('bp-media-admin', RT_MEDIA_URL . 'app/assets/js/admin.js', array('jquery-ui-dialog'), RT_MEDIA_VERSION);
+				wp_localize_script('bp-media-admin', 'bp_media_admin_ajax', $admin_ajax);
+				wp_localize_script('bp-media-admin', 'bp_media_admin_url', admin_url());
+				wp_localize_script('bp-media-admin', 'bp_media_admin_url', admin_url());
+				$bp_media_admin_strings = array(
+					'no_refresh' => __('Please do not refresh this page.', 'buddypress-media'),
+					'something_went_wrong' => __('Something went wronng. Please <a href onclick="location.reload();">refresh</a> page.', 'buddypress-media'),
+					'are_you_sure' => __('This will subscribe you to the free plan.', 'buddypress-media'),
+					'disable_encoding' => __('Are you sure you want to disable the encoding service? Make sure you note your api key before disabling it incase you want to activate it in future.', 'buddypress-media')
+				);
+				wp_localize_script('bp-media-admin', 'bp_media_admin_strings', $bp_media_admin_strings);
+				wp_localize_script('bp-media-admin', 'settings_url', add_query_arg(
+								array('page' => 'bp-media-settings'), (is_multisite() ? network_admin_url('admin.php') : admin_url('admin.php'))
+						) . '#privacy_enabled');
+				wp_localize_script('bp-media-admin', 'settings_bp_album_import_url', add_query_arg(
+								array('page' => 'bp-media-settings'), (is_multisite() ? network_admin_url('admin.php') : admin_url('admin.php'))
+				));
+				wp_enqueue_style('font-awesome', RT_MEDIA_URL . 'app/assets/css/font-awesome.min.css', '', RT_MEDIA_VERSION);
+				wp_enqueue_style('bootstrap-switch', RT_MEDIA_URL . 'app/assets/css/bootstrap-switch.css', '', RT_MEDIA_VERSION);
+				wp_enqueue_style('slider-tabs', RT_MEDIA_URL . 'app/assets/css/jquery.sliderTabs.min.css', '', RT_MEDIA_VERSION);
+				wp_enqueue_style('power-tip', RT_MEDIA_URL . 'app/assets/css/jquery.powertip.min.css', '', RT_MEDIA_VERSION);
+				wp_enqueue_style('grid-foundation', RT_MEDIA_URL . 'app/assets/css/grid-foundation.css', '', RT_MEDIA_VERSION);
+				wp_enqueue_style('bp-media-main', RT_MEDIA_URL . 'app/assets/css/main.css', '', RT_MEDIA_VERSION);
+				wp_enqueue_style('bp-media-admin', RT_MEDIA_URL . 'app/assets/css/admin.css', '', RT_MEDIA_VERSION);
+				wp_enqueue_style('wp-jquery-ui-dialog');
+			}
+		}
+
+		/**
+		 * Admin Menu
+		 *
+		 * @global string 'buddypress-media'
+		 */
+		public function menu() {
             add_menu_page(__('rtMedia Component', 'rt-media'), __('rtMedia Media', 'rt-media'), 'manage_options', 'bp-media-settings', array($this, 'settings_page'));
             add_submenu_page('bp-media-settings', __('rtMedia Settings', 'rt-media'), __('Settings', 'rt-media'), 'manage_options', 'bp-media-settings', array($this, 'settings_page'));
             add_submenu_page('bp-media-settings', __('rtMedia Addons', 'rt-media'), __('Addons', 'rt-media'), 'manage_options', 'bp-media-addons', array($this, 'addons_page'));
@@ -98,7 +113,7 @@ if (!class_exists('RTMediaAdmin')) {
 //            if (!BPMediaPrivacy::is_installed()) {
                 add_submenu_page('bp-media-settings', __('rtMedia Database Update', 'rt-media'), __('Update Database', 'rt-media'), 'manage_options', 'bp-media-privacy', array($this, 'privacy_page'));
 //            }
-        }
+		}
 
         /**
          * Render the BuddyPress Media Settings page
@@ -155,45 +170,60 @@ if (!class_exists('RTMediaAdmin')) {
         public function render_page($page, $option_group = NULL) {
             ?>
 
-            <div class="wrap bp-media-admin <?php echo $this->get_current_tab(); ?>">
-                <div id="icon-buddypress" class="icon32"><br></div>
-                <h2 class="nav-tab-wrapper"><?php bp_core_admin_tabs(__('Media', 'buddypress-media')); ?></h2>
-                <?php settings_errors(); ?>
-                <div class="columns-2">
-                    <h3 class="bp-media-settings-tabs"><?php
-            $this->sub_tabs();
-                ?>
-                    </h3>
-
-                    <div id="bp-media-settings-boxes">
-                        <?php
-                        $settings_url = ( is_multisite() ) ? network_admin_url('edit.php?action=' . $option_group) : 'options.php';
-                        ?>
-                        <?php if ($option_group) { ?>
-                            <form id="bp_media_settings_form" name="bp_media_settings_form" action="<?php echo $settings_url; ?>" method="post" enctype="multipart/form-data">
-                                <div class="bp-media-metabox-holder"><?php
-                settings_fields($option_group);
-                do_settings_sections($page);
-                submit_button();
-                            ?><div class="rt-link alignright"><?php _e('By', 'buddypress-media'); ?> <a href="http://rtcamp.com/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media" title="<?php _e('Empowering The Web With WordPress', 'buddypress-media'); ?>"><img src="<?php echo RT_MEDIA_URL; ?>app/assets/img/rtcamp-logo.png"></a></div>
-                                </div>
-                            </form><?php } else {
-                    ?>
-                            <div class="bp-media-metabox-holder"><?php do_settings_sections($page); ?>
-                                <div class="rt-link alignright"><?php _e('By', 'buddypress-media'); ?> <a href="http://rtcamp.com/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media" title="<?php _e('Empowering The Web With WordPress', 'buddypress-media'); ?>"><img src="<?php echo RT_MEDIA_URL; ?>app/assets/img/rtcamp-logo.png"></a></div>
-                            </div><?php
-            }
-                        ?>
+			<div class="wrap bp-media-admin <?php echo $this->get_current_tab(); ?>">
+				<div id="icon-buddypress-media" class="icon32"><br></div>
+				<h2 class="nav-tab-wrapper"><?php $this->bp_media_tabs(); ?></h2>
+				<?php settings_errors(); ?>
+				<div class="row">
+					<div id="bp-media-settings-boxes" class="columns large-7">
+						<?php
+						$settings_url = ( is_multisite() ) ? network_admin_url('edit.php?action=' . $option_group) : 'options.php';
+						?>
+						<?php if ($option_group) { //$option_group if ($page == "bp-media-settings") ?>
+							<form id="bp_media_settings_form" name="bp_media_settings_form" action="<?php echo $settings_url; ?>" method="post" enctype="multipart/form-data">
+								<div class="bp-media-metabox-holder"><?php
+									settings_fields($option_group);
+                                                                        if ($page == "bp-media-settings") {
 
 
-                    </div><!-- .bp-media-settings-boxes -->
-                    <div class="metabox-fixed metabox-holder alignright bp-media-metabox-holder">
-                        <?php $this->admin_sidebar(); ?>
-                    </div>
-                </div><!-- .metabox-holder -->
-            </div><!-- .bp-media-admin --><?php
-                        do_action('bp_media_admin_page_append', $page);
-                    }
+									echo '<div id="bpm-settings-tabs">';
+										$sub_tabs = $this->settings_sub_tabs();
+										RTMediaFormHandler::rtForm_settings_tabs_content($page, $sub_tabs);
+									echo '</div>';
+                                                                        }else{
+                                                                            do_settings_sections($page);
+                                                                        }
+                                                                        submit_button();
+
+									?><div class="rt-link alignright"><?php _e('By', 'buddypress-media'); ?> <a href="http://rtcamp.com/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media" title="<?php _e('Empowering The Web With WordPress', 'buddypress-media'); ?>"><img src="<?php echo RT_MEDIA_URL; ?>app/assets/img/rtcamp-logo.png"></a></div>
+								</div>
+							</form><?php } else {
+									?>
+							<div class="bp-media-metabox-holder">
+
+								<?php
+									if( $page == 'bp-media-addons' )
+										BPMediaAddon::render_addons ($page);
+									else
+										do_settings_sections($page);
+								?>
+								<?php
+							do_action('bp_media_admin_page_insert', $page);
+						?>
+								<div class="rt-link alignright"><?php _e('By', 'buddypress-media'); ?> <a href="http://rtcamp.com/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media" title="<?php _e('Empowering The Web With WordPress', 'buddypress-media'); ?>"><img src="<?php echo RT_MEDIA_URL; ?>app/assets/img/rtcamp-logo.png"></a></div>
+							</div><?php
+							do_action('bp_media_admin_page_append', $page);
+						}
+						?>
+
+
+					</div><!-- .bp-media-settings-boxes -->
+					<div class="metabox-holder bp-media-metabox-holder columns large-3">
+						<?php $this->admin_sidebar(); ?>
+					</div>
+				</div><!-- .metabox-holder -->
+			</div><!-- .bp-media-admin --><?php
+		}
 
                     /**
                      * Adds a tab for Media settings in the BuddyPress settings page
@@ -224,54 +254,132 @@ if (!class_exists('RTMediaAdmin')) {
                         echo $tabs_html;
                     }
 
-                    /**
-                     * Adds a sub tabs to the BuddyPress Media settings page
-                     *
-                     * @global type $bp_media
-                     */
-                    public function sub_tabs() {
-                        $tabs_html = '';
-                        $idle_class = 'nav-tab';
-                        $active_class = 'nav-tab nav-tab-active';
-                        $tabs = array();
+		public function bp_media_tabs($active_tab = '') {
+			// Declare local variables
+			$tabs_html = '';
+			$idle_class = 'nav-tab';
+			$active_class = 'nav-tab nav-tab-active';
 
-// Check to see which tab we are on
-                        $tab = $this->get_current_tab();
-                        /* BuddyPress Media */
-                        $tabs[] = array(
-                            'href' => bp_get_admin_url(add_query_arg(array('page' => 'bp-media-settings'), 'admin.php')),
-                            'title' => __('BuddyPress Media Settings', 'buddypress-media'),
-                            'name' => __('Settings', 'buddypress-media'),
-                            'class' => ($tab == 'bp-media-settings') ? $active_class : $idle_class . ' first_tab'
-                        );
+			// Setup core admin tabs
+			$tabs = array(
+				 array(
+					'href' => bp_get_admin_url(add_query_arg(array('page' => 'bp-media-settings'), 'admin.php')),
+					'name' => __('Settings', 'buddypress-media'),
+					'slug' => 'bp-media-settings'
+				),
+				array(
+					'href' => bp_get_admin_url(add_query_arg(array('page' => 'bp-media-addons'), 'admin.php')),
+					'name' => __('Addons', 'buddypress-media'),
+					'slug' => 'bp-media-addons'
+				),
+				array(
+					'href' => bp_get_admin_url(add_query_arg(array('page' => 'bp-media-support'), 'admin.php')),
+					'name' => __('Support', 'buddypress-media'),
+					'slug' => 'bp-media-support'
+				),
+				array(
+					'href' => bp_get_admin_url(add_query_arg(array('page' => 'bp-media-importer'), 'admin.php')),
+					'name' => __('Importer', 'buddypress-media'),
+					'slug' => 'bp-media-importer'
+                        )
+			);
 
-                        $tabs[] = array(
-                            'href' => bp_get_admin_url(add_query_arg(array('page' => 'bp-media-addons'), 'admin.php')),
-                            'title' => __('BuddyPress Media Addons', 'buddypress-media'),
-                            'name' => __('Addons', 'buddypress-media'),
-                            'class' => ($tab == 'bp-media-addons') ? $active_class : $idle_class
-                        );
+			$tabs = apply_filters('bp_media_add_tabs', $tabs);
 
-                        $tabs[] = array(
-                            'href' => bp_get_admin_url(add_query_arg(array('page' => 'bp-media-support'), 'admin.php')),
-                            'title' => __('BuddyPress Media Support', 'buddypress-media'),
-                            'name' => __('Support', 'buddypress-media'),
-                            'class' => ($tab == 'bp-media-support') ? $active_class : $idle_class . ' last_tab'
-                        );
+			// Loop through tabs and build navigation
+			foreach (array_values($tabs) as $tab_data) {
+				$is_current = (bool) ( $tab_data['slug'] == $this->get_current_tab() );
+				$tab_class = $is_current ? $active_class : $idle_class;
+				$tabs_html .= '<a href="' . $tab_data['href'] . '" class="' . $tab_class . '">' . $tab_data['name'] . '</a>';
+			}
 
-                        $tabs[] = array(
-                            'href' => bp_get_admin_url(add_query_arg(array('page' => 'bp-media-importer'), 'admin.php')),
-                            'title' => __('Importer', 'buddypress-media'),
-                            'name' => __('Importer', 'buddypress-media'),
-                            'class' => ($tab == 'bp-media-importer') ? $active_class : $idle_class
-                        );
+			// Output the tabs
+			echo $tabs_html;
 
-                        $tabs = apply_filters('bp_media_add_sub_tabs', $tabs, $tab);
-                        foreach ($tabs as $tab) {
-                            $tabs_html.= '<a title="' . $tab['title'] . '" href="' . $tab['href'] . '" class="' . $tab['class'] . ' ' . sanitize_title($tab['name']) . '">' . $tab['name'] . '</a>';
-                        }
-                        echo $tabs_html;
-                    }
+//            // Do other fun things
+//            do_action('bp_media_admin_tabs');
+		}
+
+		public function settings_content_tabs($page) {
+			global $wp_settings_sections, $wp_settings_fields;
+
+			if (!isset($wp_settings_sections) || !isset($wp_settings_sections[$page]))
+				return;
+
+			foreach ((array) $wp_settings_sections[$page] as $section) {
+				if ($section['title'])
+					echo "<h3>{$section['title']}</h3>\n";
+
+				if ($section['callback'])
+					call_user_func($section['callback'], $section);
+
+				if (!isset($wp_settings_fields) || !isset($wp_settings_fields[$page]) || !isset($wp_settings_fields[$page][$section['id']]))
+					continue;
+				echo '<table class="form-table">';
+				do_settings_fields($page, $section['id']);
+				echo '</table>';
+			}
+		}
+
+		/**
+		 * Adds a sub tabs to the BuddyPress Media settings page
+		 *
+		 * @global type $bp_media
+		 */
+		public function settings_sub_tabs() {
+			$tabs_html = '';
+			$tabs = array();
+
+			// Check to see which tab we are on
+			$tab = $this->get_current_tab();
+			/* BuddyPress Media */
+			$tabs[] = array(
+				'href' => '#bp-media-types',
+				'icon' => 'icon-film',
+				'title' => __('BuddyPress Media Types', 'buddypress-media'),
+				'name' => __('Types', 'buddypress-media'),
+				'callback' => array('RTMediaFormHandler', 'types_content')
+			);
+
+			$tabs[] = array(
+				'href' => '#bp-media-sizes',
+				'icon' => 'icon-resize-full',
+				'title' => __('BuddyPress Media Sizes', 'buddypress-media'),
+				'name' => __('Sizes', 'buddypress-media'),
+				'callback' => array('RTMediaFormHandler', 'sizes_content')
+			);
+
+			$tabs[] = array(
+				'href' => '#bp-media-privacy',
+				'icon' => 'icon-lock',
+				'title' => __('BuddyPress Media Privacy', 'buddypress-media'),
+				'name' => __('Privacy', 'buddypress-media'),
+				'callback' => array('RTMediaFormHandler', 'privacy_content')
+			);
+
+			$tabs[] = array(
+				'href' => '#bp-media-misc',
+				'icon' => 'icon-cog',
+				'title' => __('BuddyPress Media Miscellaneous', 'buddypress-media'),
+				'name' => __('Miscellaneous', 'buddypress-media'),
+				'callback' => array('RTMediaFormHandler', 'misc_content')
+			);
+
+			$tabs = apply_filters('bp_media_add_settings_sub_tabs', $tabs, $tab);
+			$tabs_html .= '<ul>';
+			foreach ($tabs as $tab) {
+
+				$icon = '';
+				if (isset($tab['icon']) && !empty($tab['icon']))
+					$icon = '<i class="' . $tab['icon'] . '"></i>';
+
+				$tabs_html.= '<li><a title="' . $tab['title'] . '" href="' . $tab['href'] . '" class="' . sanitize_title($tab['name']) . '">' . $icon . ' ' . $tab['name'] . '</a></li>';
+			}
+			$tabs_html .= '</ul>';
+
+			echo $tabs_html;
+			return $tabs;
+		}
 
                     /*
                      * Updates the media count of all users.
@@ -347,22 +455,32 @@ if (!class_exists('RTMediaAdmin')) {
 
                     /* Admin Sidebar */
 
-                    /**
-                     *
-                     * @global type $bp_media
-                     */
-                    public function admin_sidebar() {
-                        do_action('bp_media_before_default_admin_widgets');
-                        $current_user = wp_get_current_user();
-                        echo '<p><a target="_blank" href="http://rtcamp.com/news/buddypress-media-review-contest/?utm_source=dashboard&#038;utm_medium=plugin&#038;utm_campaign=buddypress-media"><img src="'.RT_MEDIA_URL.'app/assets/img/bpm-contest-banner.jpg" alt="BuddyPress Media Review Contest" /></a></p>';
+		/**
+		 *
+		 * @global type $bp_media
+		 */
+		public function admin_sidebar() {
+			do_action('bp_media_before_default_admin_widgets');
+			$current_user = wp_get_current_user();
+//            echo '<p><a target="_blank" href="http://rtcamp.com/news/buddypress-media-review-contest/?utm_source=dashboard&#038;utm_medium=plugin&#038;utm_campaign=buddypress-media"><img src="' . RT_MEDIA_URL . 'app/assets/img/bpm-contest-banner.jpg" alt="BuddyPress Media Review Contest" /></a></p>';
 //                        $contest = '<a target="_blank" href="http://rtcamp.com/news/buddypress-media-review-contest/?utm_source=dashboard&#038;utm_medium=plugin&#038;utm_campaign=buddypress-media"><img src="'.RT_MEDIA_URL.'app/assets/img/bpm-contest-banner.jpg" alt="BuddyPress Media Review Contest" /></a>';
 //                        new BPMediaAdminWidget('bpm-contest', __('', 'buddypress-media'), $contest);
 
-                        $message = sprintf(__('I use @buddypressmedia http://goo.gl/8Upmv on %s', 'buddypress-media'), home_url());
-                        $addons = '<label for="bp-media-add-linkback"><input' . checked(bp_get_option('bp_media_add_linkback', false), true, false) . ' type="checkbox" name="bp-media-add-linkback" value="1" id="bp-media-add-linkback"/> ' . __('Add link to footer', 'buddypress-media') . '</label>
-						<a href="http://twitter.com/home/?status=' . $message . '" class="button button-tweet" target= "_blank">' . __('Tweet', 'buddypress-media') . '</a>
-						<a href="http://wordpress.org/support/view/plugin-reviews/buddypress-media?rate=5#postform" class="button button-rating" target= "_blank">' . __('Rate on WordPress.org', 'buddypress-media') . '</a>';
-                        new BPMediaAdminWidget('spread-the-word', __('Spread the Word', 'buddypress-media'), $addons);
+			$message = sprintf(__('I use @buddypressmedia http://goo.gl/8Upmv on %s', 'buddypress-media'), home_url());
+			$addons = '<div id="social" class="row">
+							<label class="columns large-6 large-offset-3" for="bp-media-add-linkback"><input' . checked(bp_get_option('bp_media_add_linkback', false), true, false) . ' type="checkbox" name="bp-media-add-linkback" value="1" id="bp-media-add-linkback"/> ' . __('Add link to footer', 'buddypress-media') . '</label>
+							<div class="row">
+								<div class="columns large-6"><iframe src="//www.facebook.com/plugins/like.php?href=http%3A%2F%2Frtcamp.com%2Fbuddypress-media%2F&amp;send=false&amp;layout=button_count&amp;width=72&amp;show_faces=false&amp;font&amp;colorscheme=light&amp;action=like&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:76px; height:21px; margin-top: 5px;" allowTransparency="true"></iframe></div>
+								<div class="columns large-6"><a href="https://www.facebook.com/sharer/sharer.php?u=http://rtcamp.com/buddypress-media/" class="button" target="_blank"> <i class="icon-facebook"></i> ' . __('Share', 'buddypress-media') . '</a></div>
+								<div class="columns large-6"><iframe allowtransparency="true" frameborder="0" scrolling="no" src="//platform.twitter.com/widgets/follow_button.html?screen_name=buddypressmedia&show_count=false" style="width:62px; height:21px; margin-top: 5px;"></iframe></div>
+								<div class="columns large-6"><a href="http://twitter.com/home/?status=' . $message . '" class="button button-tweet" target= "_blank"><i class="icon-twitter"></i> ' . __('Tweet', 'buddypress-media') . '</a></div>
+								<div class="columns large-6"><a href="http://wordpress.org/support/view/plugin-reviews/buddypress-media?rate=5#postform" class="button bpm-wp-button" target= "_blank"><span class="bpm-wp-icon">&nbsp;</span> ' . __('Review', 'buddypress-media') . '</a></div>
+								<div class="columns large-6"><a href="' . sprintf('%s', 'http://feeds.feedburner.com/rtcamp/') . '"  title="' . __('Subscribe to our feeds', 'buddypress-media') . '" class="button"><i class="bp-media-rss icon-rss"></i> ' . __('Feeds', 'buddypress-media') . '</a></div>
+							</div>
+						</div>';
+			//<li><a href="' . sprintf('%s', 'http://www.facebook.com/rtCamp.solutions/') . '"  title="' . __('Become a fan on Facebook', 'buddypress-media') . '" class="bp-media-facebook bp-media-social">' . __('Facebook', 'buddypress-media') . '</a></li>
+			//<li><a href="' . sprintf('%s', 'https://twitter.com/rtcamp/') . '"  title="' . __('Follow us on Twitter', 'buddypress-media') . '" class="bp-media-twitter bp-media-social">' . __('Twitter', 'buddypress-media') . '</a></li>	;
+			new BPMediaAdminWidget('spread-the-word', __('Spread the Word', 'buddypress-media'), $addons);
 
 //                        $donate = '<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
 //                           <!-- Identify your business so that you can collect the payments. -->
@@ -386,23 +504,18 @@ if (!class_exists('RTMediaAdmin')) {
 //                        ;
 //                        new BPMediaAdminWidget('donate', __('Donate', 'buddypress-media'), $donate);
 
-                        $branding = '<form action="http://rtcamp.us1.list-manage1.com/subscribe/post?u=85b65c9c71e2ba3fab8cb1950&amp;id=9e8ded4470" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
-                                    <div class="mc-field-group">
-                                    <input type="email" value="' . $current_user->user_email . '" name="EMAIL" placeholder="Email" class="required email" id="mce-EMAIL">
-                                    <input style="display:none;" type="checkbox" checked="checked" value="1" name="group[1721][1]" id="mce-group[1721]-1721-0"><label for="mce-group[1721]-1721-0">
-                                    <div id="mce-responses" class="clear">
-                                    <div class="response" id="mce-error-response" style="display:none"></div>
-                                    <div class="response" id="mce-success-response" style="display:none"></div>
-                                    </div>
-                                    <input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button">
-                                    </div>
-                                    </form>
-                        <ul id="social">
-                            <li><a href="' . sprintf('%s', 'http://www.facebook.com/rtCamp.solutions/') . '"  title="' . __('Become a fan on Facebook', 'buddypress-media') . '" class="bp-media-facebook bp-media-social">' . __('Facebook', 'buddypress-media') . '</a></li>
-                            <li><a href="' . sprintf('%s', 'https://twitter.com/rtcamp/') . '"  title="' . __('Follow us on Twitter', 'buddypress-media') . '" class="bp-media-twitter bp-media-social">' . __('Twitter', 'buddypress-media') . '</a></li>
-                            <li><a href="' . sprintf('%s', 'http://feeds.feedburner.com/rtcamp/') . '"  title="' . __('Subscribe to our feeds', 'buddypress-media') . '" class="bp-media-rss bp-media-social">' . __('RSS Feed', 'buddypress-media') . '</a></li>
-                        </ul>';
-                        new BPMediaAdminWidget('branding', __('Subscribe', 'buddypress-media'), $branding);
+			$branding = '<form action="http://rtcamp.us1.list-manage1.com/subscribe/post?u=85b65c9c71e2ba3fab8cb1950&amp;id=9e8ded4470" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+							<div class="mc-field-group">
+								<input type="email" value="' . $current_user->user_email . '" name="EMAIL" placeholder="Email" class="required email" id="mce-EMAIL">
+								<input style="display:none;" type="checkbox" checked="checked" value="1" name="group[1721][1]" id="mce-group[1721]-1721-0"><label for="mce-group[1721]-1721-0">
+								<div id="mce-responses" class="clear">
+									<div class="response" id="mce-error-response" style="display:none"></div>
+									<div class="response" id="mce-success-response" style="display:none"></div>
+								</div>
+								<input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button">
+							</div>
+						</form>';
+			new BPMediaAdminWidget('branding', __('Subscribe', 'buddypress-media'), $branding);
 
                         $news = '<img src ="' . admin_url('/images/wpspin_light.gif') . '" /> Loading...';
                         new BPMediaAdminWidget('latest-news', __('Latest News', 'buddypress-media'), $news);

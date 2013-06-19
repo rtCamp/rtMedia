@@ -1,4 +1,4 @@
-jQuery(document).ready(function(){
+jQuery(document).ready(function($){
 
     /* Linkback */
     jQuery('#spread-the-word').on('click','#bp-media-add-linkback',function(){
@@ -70,8 +70,8 @@ jQuery(document).ready(function(){
             jQuery('#bp_media_settings_form .bp-media-metabox-holder').html(response).fadeIn('slow');
         });
     });
-    
-    jQuery('#encoding-try-now-form').on('click','.encoding-try-now',function(e){
+
+    jQuery(document).on('click',"#bpm-services .encoding-try-now",function(e){
         e.preventDefault();
         if(confirm(bp_media_admin_strings.are_you_sure)){
             jQuery(this).after('<img style="margin: 0 0 0 10px" src="'+bp_media_admin_url+'images/wpspin_light.gif" />')
@@ -91,8 +91,8 @@ jQuery(document).ready(function(){
             });
         }
     });
-    
-    jQuery('.bp-media-encoding').on('click','#api-key-submit',function(e){
+
+    jQuery(document).on('click','#api-key-submit',function(e){
         e.preventDefault();
         jQuery(this).after('<img style="margin: 0 0 0 10px" src="'+bp_media_admin_url+'images/wpspin_light.gif" />')
         var data = {
@@ -103,15 +103,21 @@ jQuery(document).ready(function(){
         // since 2.8 ajaxurl is always defined in the admin header and points to admin-ajax.php
         jQuery.getJSON(ajaxurl, data, function(response) {
             if(response.error===undefined && response.apikey){
-                document.location.href = document.URL+'&update=true&apikey='+response.apikey;
+                var tempUrl = document.URL;
+                if(document.URL.toString().indexOf('&apikey='+response.apikey) == -1)
+                    tempUrl += '&apikey='+response.apikey;
+                if(document.URL.toString().indexOf('&update=true') == -1)
+                    tempUrl += '&update=true';
+                document.location.href = tempUrl;
+
             }else{
                 jQuery('#settings-error-api-key-error').remove();
                 jQuery('h2:first').after('<div class="error" id="settings-error-api-key-error"><p>'+response.error+'</p></div>');
             }
         });
     });
-    
-    jQuery('.bp-media-encoding').on('click','#disable-encoding',function(e){
+
+    jQuery(document).on('click','#disable-encoding',function(e){
         e.preventDefault();
         if ( confirm(bp_media_admin_strings.disable_encoding )) {
             jQuery(this).after('<img style="margin: 0 0 0 10px" src="'+bp_media_admin_url+'images/wpspin_light.gif" />')
@@ -470,5 +476,36 @@ jQuery(document).ready(function(){
     });
 
 
-});
+    jQuery("#bpm-settings-tabs,#bpm-addons").sliderTabs({
+        autoplay: false,
+        mousewheel: false,
+        defaultTab: 1
+    });
 
+	if(jQuery('#privacy_enabled').is(":checked")) {
+		jQuery(".privacy-driven-disable label input").prop("disabled",false);
+        jQuery(".privacy-driven-disable label .rt-switch").bootstrapSwitch("setActive",true);
+	} else {
+		jQuery(".privacy-driven-disable label input").prop("disabled",true);
+        jQuery(".privacy-driven-disable label .rt-switch").bootstrapSwitch("setActive",false);
+	}
+	jQuery('#privacy_enabled').on("click", function(e) {
+		if(jQuery(this).is(":checked")) {
+			jQuery(".privacy-driven-disable label input").prop("disabled",false);
+            jQuery(".privacy-driven-disable label .rt-switch").bootstrapSwitch("setActive",true);
+		} else {
+			jQuery(".privacy-driven-disable label input").prop("disabled",true);
+            jQuery(".privacy-driven-disable label .rt-switch").bootstrapSwitch("setActive",false);
+		}
+	});
+
+	jQuery("[data-toggle='switch']").wrap('<div class="rt-switch" />').parent().bootstrapSwitch();
+
+    try {
+		jQuery('bpm-show-tooltip').powerTip({
+			followMouse: true
+		});
+    } catch(e) {
+        // no tooltip is defined
+    }
+});
