@@ -115,6 +115,13 @@ class RTMedia {
 		 */
 		register_activation_hook(__FILE__, array($this, 'flush_rewrite'));
 		register_deactivation_hook(__FILE__, array($this, 'flush_rewrite'));
+
+		/**
+		 *
+		 * check for global album --- after wordpress is fully loaded
+		 */
+		add_action('wp', array($this, 'check_global_album'));
+
 		/**
 		 * Define constants
 		 */
@@ -127,12 +134,15 @@ class RTMedia {
 		 */
 		add_action('plugins_loaded', array($this, 'init'));
 
-
-
 		/**
 		 * Load translations
 		 */
 		add_action('plugins_loaded', array($this, 'load_translation'));
+
+		/**
+		 * Admin Panel
+		 */
+		add_action('bp_init', array($this, 'admin_init'));
 
 		/**
 		 * Initialise media counter
@@ -148,6 +158,36 @@ class RTMedia {
 		 * AJAX Call for PL Upload
 		 */
 		//add_action('wp_ajax_rt_file_upload', array('RTMediaUploadHelper', 'file_upload'));
+	}
+
+	function dummy_function() {
+		return;
+	}
+
+	function admin_init() {
+		global $rt_media_admin;
+		$rt_media_admin = new RTMediaAdmin();
+	}
+
+	function custom_media_nav_tab() {
+
+		bp_core_new_nav_item( array(
+			'name' => __( 'Media', 'rt-media' ),
+			'slug' => 'media',
+			'screen_function' => array($this,'dummy_function')
+		) );
+
+		if(bp_is_group()) {
+			global $bp;
+			$bp->bp_options_nav[bp_get_current_group_slug()]['media'] = array(
+				'name' => 'Media',
+				'link' => ( (is_multisite()) ? get_site_url(get_current_blog_id()) : get_site_url() ) . '/groups/' . bp_get_current_group_slug().'/media',
+				'slug' => 'media',
+				'user_has_access' => true,
+				'css_id' => 'rt-media-media-nav',
+				'position' => 99
+			);
+		}
 	}
 
 	public function init_site_options() {
@@ -270,11 +310,11 @@ class RTMedia {
 	 */
 	function init() {
 
-            /**
-             *
-             * Buddypress Media Auto Upgradation
-             */
-            $this->update_db();
+		/**
+		 *
+		 * Buddypress Media Auto Upgradation
+		 */
+		$this->update_db();
 
 		/**
 		 * Load options/settings
@@ -285,6 +325,14 @@ class RTMedia {
 		 * Add a settings link to the Plugin list screen
 		 */
 //            add_filter('plugin_action_links', array($this, 'settings_link'), 10, 2);
+
+		/**
+		 * BuddyPress - Media Navigation Tab Inject
+		 *
+		 */
+		if(class_exists('BuddyPress')) {
+			add_action('bp_init', array($this,'custom_media_nav_tab'), 10,1);
+		}
 
 		/**
 		 * Load accessory functions
@@ -330,8 +378,17 @@ class RTMedia {
 	}
 
 	function flush_rewrite() {
-		// register taxonomies/post types here
+		error_log('flush');
 		flush_rewrite_rules();
+	}
+
+	function check_global_album() {
+		$album = new RTMediaAlbum();
+		$global_album = $album->get_default();
+
+		if(!$global_album) {
+			$global_album = $album->add_global(__("rtMedia Global Album","rt-media"));
+		}
 	}
 
 	function default_count() {

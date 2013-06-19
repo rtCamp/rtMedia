@@ -11,11 +11,14 @@ class RTMediaUploadShortcode {
 
     static $add_sc_script = false;
 	var $deprecated = false;
+	static $uploader_displayed = false;
 
 	/**
 	 *
 	 */
     public function __construct() {
+
+
 
         add_shortcode('rtmedia_uploader', array('RTMediaUploadShortcode', 'pre_render'));
 		$method_name = strtolower(str_replace('RTMedia', '', __CLASS__));
@@ -27,6 +30,7 @@ class RTMediaUploadShortcode {
         // add_action('init', array($this, 'register_script'));
         //add_action('wp_footer', array($this, 'print_script'));
     }
+
 
 	/**
 	 * Helper function to check whether the shortcode should be rendered or not
@@ -55,6 +59,7 @@ class RTMediaUploadShortcode {
 			self::$add_sc_script = true;
 			RTMediaUploadTemplate::render($attr);
 
+			self::$uploader_displayed = true;
 			return ob_get_clean();
 		}
     }

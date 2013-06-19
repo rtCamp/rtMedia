@@ -151,6 +151,9 @@ class RTMediaQuery {
 			 * accessed the url directly by media type
 			 */
 				$modifier_type = 'media_type';
+
+				if($raw_query[0] == 'upload')
+					$action = 'upload';
 			}
 
 			$modifier_value = $raw_query[ 0 ];
@@ -214,7 +217,7 @@ class RTMediaQuery {
 		 * setting parameters in action query object for pagination
 		 */
 		global $rt_media;
-		$per_page_media = $rt_media->get_option('per_page_media');
+		$per_page_media = intval($rt_media->get_option('per_page_media'));
 
 		$this->action_query = (object) array(
 			$modifier_type		=> $modifier_value,
@@ -248,6 +251,18 @@ class RTMediaQuery {
 
 		$this->model = new RTMediaMediaModel();
 
+		if($this->query['context'] == 'profile') {
+
+			$this->query['media_author'] = $this->query['context_id'];
+
+			unset($this->query['context']);
+			unset($this->query['context_id']);
+
+		} else if($this->query['context'] == 'group') {
+
+
+		}
+
 		if( $this->is_single() )
 			$this->query['id']= $this->action_query->id;
 
@@ -259,6 +274,8 @@ class RTMediaQuery {
 
 		if( isset($this->action_query->media_type) && in_array($this->action_query->media_type, $allowed_media_types) )
 			$this->query['media_type'] = $this->action_query->media_type;
+		else
+			$this->query['media_type'] = array('compare' => 'NOT IN', 'value' => array('album'));
 
 		/**
 		 * Handle order of the result set

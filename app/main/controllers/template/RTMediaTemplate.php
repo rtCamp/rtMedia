@@ -14,27 +14,31 @@ class RTMediaTemplate {
 	public $media_args;
 
 	function __construct() {
-//		add_action( 'wp_enqueue_scripts', array( $this,'enqueue_scripts') );
 
+		/* Includes db specific wrapper functions required to render the template */
+		include(RT_MEDIA_PATH . 'app/main/controllers/template/rt-template-functions.php');
+
+		add_action( 'wp_enqueue_scripts', array( $this,'enqueue_scripts') );
+		add_action('init', array($this,'register_image_editor_scripts'));
 	}
 
 	/**
 	 * Enqueues required scripts on the page
 	 */
 	function enqueue_scripts(){
-		wp_enqueue_script('backbone');
-		wp_enqueue_script('rtmedia-models', RT_MEDIA_URL.'app/assets/js/backbone/models.js', array('backbone'));
-		wp_enqueue_script('rtmedia-collections', RT_MEDIA_URL.'app/assets/js/backbone/collections.js', array('backbone','rtmedia-models'));
-		wp_enqueue_script('rtmedia-views', RT_MEDIA_URL.'app/assets/js/backbone/views.js', array('backbone','rtmedia-collections'));
-		wp_enqueue_script('rtmedia-backbone', RT_MEDIA_URL.'app/assets/js/backbone/rtMedia.backbone.js',array('rtmedia-models','rtmedia-collections','rtmedia-views'));
+		wp_enqueue_script('rtmedia-backbone');
+		if( rt_media_edit_allowed() && rt_media_request_action()!="edit" ) {
+			wp_enqueue_script('wp-ajax-response');
+			wp_enqueue_script('rt-media-image-edit');
+			wp_enqueue_style('rt-media-image-edit');
+		}
 	}
 
-	static function enqueue_image_editor_scripts() {
+	function register_image_editor_scripts() {
 		$suffix = defined('SCRIPT_DEBUG') && SCRIPT_DEBUG ? '' : '.min';
-		wp_enqueue_script('wp-ajax-response');
-		wp_enqueue_script('rt-media-image-edit', admin_url("js/image-edit$suffix.js"), array('jquery', 'json2', 'imgareaselect'), false, 1);
-		wp_enqueue_style('rt-media-image-edit', RT_MEDIA_URL . 'app/assets/css/image-edit.css');
-		wp_enqueue_style('imgareaselect');
+
+		wp_register_script('rt-media-image-edit', admin_url("js/image-edit$suffix.js"), array('jquery', 'json2', 'imgareaselect'), false, 1);
+		wp_register_style('rt-media-image-edit', RT_MEDIA_URL . 'app/assets/css/image-edit.css');
 	}
 
 	/**
@@ -51,15 +55,18 @@ class RTMediaTemplate {
 	 */
 	function set_template($template, $shortcode_attr = false) {
 
-		global $rt_media_query;
+		global $rt_media_query, $rt_media_interaction;
 
 		$media_array = '';
 
-		/* Includes db specific wrapper functions required to render the template */
-		include(RT_MEDIA_PATH . 'app/main/controllers/template/rt-template-functions.php');
-		$this->enqueue_scripts();
+//		$this->enqueue_scripts();
 
-		if( $rt_media_query->action_query->action == 'comments' ) {
+		if(in_array($rt_media_interaction->context->type, array("profile","group"))) {
+//			echo "User/Group Media";
+			return $this->get_default_template();
+		} else if($rt_media_interaction->context->type=="activity") {
+			echo 'Activity Handling';
+		} else if( $rt_media_query->action_query->action == 'comments' ) {
 
 			if(isset($rt_media_query->action_query->media_type) && !count($_POST) ) {
 				/**
@@ -91,7 +98,7 @@ class RTMediaTemplate {
 					echo "Ooops !!! Invalid access. No nonce was found !!";
 				}
 			}
-			return $this->get_template($template);
+			return $this->get_default_template();
 
 		} else if($rt_media_query->action_query->action == 'edit' && count($_POST)) {
 			/**
@@ -112,8 +119,10 @@ class RTMediaTemplate {
 				} else{
 					echo "Ooops !!! Invalid access. No nonce was found !!";
 				}
-				return $this->get_template($template);
-			}// else media album update
+			} else {
+				 echo "media album update handling.";
+			}
+			return $this->get_default_template();
 
 		} else if($rt_media_query->action_query->action == 'delete') {
 			/**
@@ -138,8 +147,13 @@ class RTMediaTemplate {
 				} else{
 					echo "Ooops !!! Invalid access. No nonce was found !!";
 				}
-				return $this->get_template($template);
-			}// else media album update
+			}else {
+				echo "media album delete handling";
+			}
+			return $this->get_default_template();
+		} else if($rt_media_query->action_query->action == 'upload') {
+			$upload = new RTMediaUploadEndpoint();
+			$upload->template_redirect();
 		} else if ( $rt_media_query->format == 'json' ) {
 
 			if($rt_media_query->media) {
@@ -150,24 +164,18 @@ class RTMediaTemplate {
 			echo json_encode( $media_array );
 			return;
 
-		} else {
+		} else if(!$shortcode_attr)
+			return $this->get_default_template();
+		else if($shortcode_attr['name'] == 'gallery') {
+			$valid = $this->sanitize_gallery_attributes($shortcode_attr['attr']);
 
-			if(!$shortcode_attr)
-				return $this->get_template($template);
-			else {
-				if($shortcode_attr['name'] == 'gallery') {
-					$valid = $this->sanitize_gallery_attributes($shortcode_attr['attr']);
-
-					if($valid) {
-						if(is_array($shortcode_attr['attr']))
-							$this->update_global_query($shortcode_attr['attr']);
-						include $this->locate_template($template);
-					} else {
-						echo 'Invalid attribute passed for rtmedia_gallery shortcode.';
-						return false;
-					}
-
-				}
+			if($valid) {
+				if(is_array($shortcode_attr['attr']))
+					$this->update_global_query($shortcode_attr['attr']);
+				include $this->locate_template($template);
+			} else {
+				echo 'Invalid attribute passed for rtmedia_gallery shortcode.';
+				return false;
 			}
 		}
 	}
@@ -234,7 +242,7 @@ class RTMediaTemplate {
 	 *
 	 * @return type
 	 */
-	function get_template( ){
+	function get_default_template() {
 
 		return apply_filters( 'rt_media_media_template_include', RT_MEDIA_PATH . 'app/main/controllers/template/template.php');
 
@@ -246,19 +254,25 @@ class RTMediaTemplate {
 	 * @param type $template
 	 * @return string
 	 */
-	static function locate_template( $template ) {
+	static function locate_template( $template, $context=false ) {
 		$located = '';
 		if ( ! $template )
 			return;
 
 		$template_name = $template . '.php';
 
-		if ( file_exists( STYLESHEETPATH . '/rt-media/' . $template_name ) ) {
-			$located = STYLESHEETPATH . '/rt-media/' . $template_name;
-		} else if ( file_exists( TEMPLATEPATH . '/rt-media/' . $template_name ) ) {
-			$located = TEMPLATEPATH . '/rt-media/' . $template_name;
+		if(!$context) $context = 'rt-media';
+
+		$path = '/'.$context.'/';
+		$ogpath = 'templates/media/';
+
+
+		if ( file_exists( STYLESHEETPATH . $path . $template_name ) ) {
+			$located = STYLESHEETPATH . $path . $template_name;
+		} else if ( file_exists( TEMPLATEPATH . $path . $template_name ) ) {
+			$located = TEMPLATEPATH . $path . $template_name;
 		} else {
-			$located = RT_MEDIA_PATH . 'templates/media/' . $template_name;
+			$located = RT_MEDIA_PATH . $ogpath . $template_name;
 		}
 
 		return $located;

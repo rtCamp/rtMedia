@@ -46,7 +46,7 @@ if (!class_exists('BPMediaSettings')) {
                 'option' => 'audio_enabled',
                 'desc' => __('Enable Audio (mp3)', 'buddypress-media')
             ));
-            
+
             add_settings_section('bpm-featured', __('Enable Featured Media', 'buddypress-media'), '', 'bp-media-settings');
             add_settings_field('bpm-featured-image', __('Photos', 'buddypress-media'), array($this, 'checkbox'), 'bp-media-settings', 'bpm-featured', array(
                 'setting' => 'bp_media_options',
@@ -70,7 +70,7 @@ if (!class_exists('BPMediaSettings')) {
                 'crop' => true
 //                'desc' => __('Used in albums, sidebar media widget acitvity stream', 'buddypress-media')
             ));
-            
+
 
             add_settings_section('bpm-image-settings', __('Image Settings', 'buddypress-media'), array($this, 'image_settings_intro'), 'bp-media-settings');
             add_settings_field('bpm-image-thumbnail', __('Thumbnail Size', 'buddypress-media'), array($this, 'dimensions'), 'bp-media-settings', 'bpm-image-settings', array(
@@ -205,7 +205,7 @@ if (!class_exists('BPMediaSettings')) {
 
             $bp_media_addon = new BPMediaAddon();
             add_settings_section('bpm-addons', __('BuddyPress Media Addons for Photos', 'buddypress-media'), array($bp_media_addon, 'get_addons'), 'bp-media-addons');
-            
+
             add_settings_section('bpm-support', __('Support', 'buddypress-media'), array($this, 'bp_media_support_intro'), 'bp-media-support');
 
 //            if (!BPMediaPrivacy::is_installed()) {
@@ -606,7 +606,7 @@ if (!class_exists('BPMediaSettings')) {
             echo '<p>' . __('If your site has some issues due to BuddyPress Media and you want one on one support then you can create a support topic on the <a target="_blank" href="http://rtcamp.com/groups/buddypress-media/forum/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media">rtCamp Support Forum</a>.', 'buddypress-media') . '</p>';
             echo '<p>' . __('If you have any suggestions, enhancements or bug reports, then you can open a new issue on <a target="_blank" href="https://github.com/rtCamp/buddypress-media/issues/new">GitHub</a>.', 'buddypress-media') . '</p>';
         }
-        
+
     }
 
 }

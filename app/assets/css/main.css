@@ -12,20 +12,41 @@
   margin: 1% 1%;
 }
 /* line 567, ../sass/main.scss */
-.rt-media-list > li {
+.rt-media-list-item {
   display: inline-block;
   margin: 3% 3% 0;
   word-wrap: break-word;
-}
-
-.rt-media-item-thumbnail img {
-	max-width: 100%;
 }
 
 .rt-media-media img {
 	max-width: 100%;
 }
 
+.rt-media-item-thumbnail img {
+	max-width: 100%;
+}
+
 .rt-media-item-comments {
-	margin: 1% 1%;
+	margin: 3% 3%;
+}
+
+.rt-media-comment {
+	list-style: none;
+	background: #f6f6f6;
+	border: 1px solid #ddd;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	margin: 3% 0;
+	padding: 1% 4% 8%;
+	position: relative;
+	width: 330px;
+}
+
+.rt-media-comment-date {
+	float: right;
+}
+
+.rt-media-bp-header {
+	width: 460px;
+	margin: auto;
 }

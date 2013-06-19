@@ -72,7 +72,7 @@ function rt_media_autoloader( $class_name ) {
 		'app/log/' . $class_name . '.php',
 		'app/importers/' . $class_name . '.php',
 	);
-	foreach ( $rtlibpath as $i => $path ) {
+	foreach ( $rtlibpath as $path ) {
 		$path = RT_MEDIA_PATH . $path;
 		if ( file_exists( $path ) ) {
 			include $path;

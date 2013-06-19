@@ -25,7 +25,7 @@ class RTMediaAlbum {
 	 *
 	 */
 	public function __construct() {
-		add_action('init', 'register_post_types');
+		add_action('plugins_loaded', 'register_post_types');
 		$this->rt_media_object = new RTMediaMedia();
 	}
 
@@ -102,9 +102,7 @@ class RTMediaAlbum {
 	 */
 	function get_current_author() {
 
-		global $current_user;
-		get_currentuserinfo();
-		return $current_user->ID;
+		return get_current_user_id();
 	}
 
 	/**
@@ -127,7 +125,6 @@ class RTMediaAlbum {
 		/* Album Details which will be passed to Database query to add the album */
 		$post_vars = array(
 			'post_title' => (empty($title)) ? 'Untitled Album' : $title,
-			'post_status' => 'publish',
 			'post_type' => 'rt_media_album',
 			'post_author' => $author_id
 		);
@@ -160,8 +157,8 @@ class RTMediaAlbum {
 			'media_title' => $current_album['post_title'],
 			'media_author' => $current_album['post_author'],
 			'media_type' => 'album',
-			'context' => $rt_media_interaction->context->type,
-			'context_id' => $rt_media_interaction->context->id,
+			'context' => (isset($rt_media_interaction->context->type)) ? $rt_media_interaction->context->type : NULL,
+			'context_id' => (isset($rt_media_interaction->context->id)) ? $rt_media_interaction->context->id : NULL,
 			'activity_id' => false,
 			'privacy' => false
 		);
@@ -182,12 +179,13 @@ class RTMediaAlbum {
 	 */
 	function add_global($title ='') {
 
-		$super_user_ids = get_super_admins();
+//		$super_user_ids = get_super_admins();
 		$author_id = $this->get_current_author();
 		/**
 		 * only admin privilaged user can add a global album
 		 */
-		if( in_array($author_id, $super_user_ids) ) {
+
+		if( current_user_can('activate_plugins') ) {
 			$album_id = $this->add($title, $author_id);
 
 			$this->save_globals($album_id);
@@ -202,7 +200,7 @@ class RTMediaAlbum {
 	 * @return type
 	 */
 	static function get_globals() {
-		return get_site_option('rt-media-global-albums',true);
+		return get_site_option('rt-media-global-albums');
 	}
 
 	/**
@@ -214,7 +212,9 @@ class RTMediaAlbum {
 	static function get_default() {
 		$albums = self::get_globals();
 
-		return $albums[0];
+		if(isset($albums[0]))
+			return $albums[0];
+		else return false;
 	}
 
 	/**
@@ -230,10 +230,13 @@ class RTMediaAlbum {
 
 		$albums = self::get_globals();
 
+		if(!$albums)
+			$albums = array();
+
 		if(!is_array($album_ids))
 			$album_ids = array($album_ids);
 
-		array_merge($albums, $album_ids);
+		$albums = array_merge($albums, $album_ids);
 		update_site_option('rt-media-global-albums', $albums);
 	}
 

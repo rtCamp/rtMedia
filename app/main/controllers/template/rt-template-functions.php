@@ -238,10 +238,10 @@ function rt_media_comments(){
 
 	foreach ($comments as $comment) {
 		$html .= '<li class="rt-media-comment">';
-			$html .= '<span class="rt-media-comment-content">' . $comment['comment_content'] . '</span>';
-			$html .= ' by <span class ="rt-media-comment-author">' . $comment['comment_author'] . '</span>';
-			$html .= ' at <span class ="rt-media-comment-author">' . $comment['comment_date_gmt'] . '</span>';
-			$html .= '<a href></a>';
+			$html .= '<div class ="rt-media-comment-author">' . (($comment['comment_author']) ? $comment['comment_author'] : 'Annonymous') . '  said : </div>';
+			$html .= '<div class="rt-media-comment-content">' . $comment['comment_content'] . '</div>';
+			$html .= '<div class ="rt-media-comment-date"> on ' . $comment['comment_date_gmt'] . '</div>';
+//			$html .= '<a href></a>';
 		$html .= '</li>';
 	}
 
@@ -263,7 +263,7 @@ function rt_media_url() {
 
 function rt_media_comments_enabled() {
 	global $rt_media;
-	return $rt_media->get_option('comments_enabled');
+	return $rt_media->get_option('comments_enabled') && is_user_logged_in();
 }
 
 /**
@@ -284,15 +284,55 @@ function is_rt_media_single(){
 	return $rt_media_query->is_single();
 }
 
+function rt_media_image_editor() {
+
+//	RTMediaTemplate::enqueue_image_editor_scripts();
+	global $rt_media_query;
+	$media_id = $rt_media_query->media[0]->media_id;
+	$id = $rt_media_query->media[0]->id;
+	//$editor = wp_get_image_editor(get_attached_file($id));
+	include_once( ABSPATH . 'wp-admin/includes/image-edit.php' );
+	echo '<div class="rt-media-image-editor-cotnainer">';
+	echo '<div class="rt-media-image-editor" id="image-editor-' . $media_id . '"></div>';
+	$thumb_url = wp_get_attachment_image_src($media_id, 'thumbnail', true);
+	$nonce = wp_create_nonce("image_editor-$media_id");
+	echo '<div id="imgedit-response-' . $media_id . '"></div>';
+	echo '<div class="wp_attachment_image" id="media-head-' . $media_id . '">
+				<p id="thumbnail-head-' . $id . '"><img class="thumbnail" src="' . set_url_scheme($thumb_url[0]) . '" alt="" /></p>
+	<p><input type="button" class="rt-media-image-edit" id="imgedit-open-btn-' . $media_id . '" onclick="imageEdit.open( \'' . $media_id . '\', \'' . $nonce . '\' )" class="button" value="Modifiy Image"> <span class="spinner"></span></p></div>';
+	echo '</div>';
+}
+
+function rt_media_comment_form() {
+
+	$html = '<form method="post" action="' . rt_media_url() . '/comments" style="width: 400px;">';
+	$html .= '<textarea rows="4" name="comment_content" id="comment_content"></textarea>';
+	$html .= '<input type="submit" value="Comment">';
+	echo $html;
+	RTMediaComment::comment_nonce_generator();
+	echo '</form>';
+}
+
+function rt_media_delete_form() {
+
+	$html = '<form method="post">';
+	$html .= '<input type="hidden" name="id" id="id" value="' . rt_media_id(). '">';
+	$html .= '<input type="hidden" name="request_action" id="request_action" value="delete">';
+	echo $html;
+	RTMediaMedia::media_nonce_generator(true);
+	echo '<input type="submit" value="Delete"></form>';
+}
+
 /**
  *
  * @param type $attr
  */
-function rt_media_uploader($attr) {
-	echo RTMediaUploadShortcode::pre_render($attr);
+function rt_media_uploader($attr = '') {
+	if(!RTMediaUploadShortcode::$uploader_displayed)
+		echo RTMediaUploadShortcode::pre_render($attr);
 }
 
-function rt_media_gallery($attr) {
+function rt_media_gallery($attr = '') {
 	echo RTMediaGalleryShortcode::render($attr);
 }
 

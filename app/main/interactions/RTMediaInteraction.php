@@ -34,7 +34,6 @@ class RTMediaInteraction {
 		$this->set_context();
 		$this->set_routers();
 		$this->set_query();
-
 	}
 
 	/**
