@@ -113,17 +113,17 @@ if (!class_exists('BPMediaSettings')) {
                 'size' => 'large',
                 'height' => false
             ));
-
-            if (bp_is_active('activity')) {
-                add_settings_section('bpm-activity-upload', __('Activity Upload', 'buddypress-media'), '', 'bp-media-settings');
-                add_settings_field('bpm-activity', __('Activity Uploads', 'buddypress-media'), array($this, 'checkbox'), 'bp-media-settings', 'bpm-activity-upload', array(
-                    'setting' => 'bp_media_options',
-                    'option' => 'activity_upload',
-                    'desc' => __('Enable Activity Uploading', 'buddypress-media')
-                        )
-                );
+            if (function_exists("bp_is_active")) {
+                if (bp_is_active('activity')) {
+                    add_settings_section('bpm-activity-upload', __('Activity Upload', 'buddypress-media'), '', 'bp-media-settings');
+                    add_settings_field('bpm-activity', __('Activity Uploads', 'buddypress-media'), array($this, 'checkbox'), 'bp-media-settings', 'bpm-activity-upload', array(
+                        'setting' => 'bp_media_options',
+                        'option' => 'activity_upload',
+                        'desc' => __('Enable Activity Uploading', 'buddypress-media')
+                            )
+                    );
+                }
             }
-
             add_settings_section('bpm-media-lightbox', __('Lightbox Integration', 'buddypress-media'), '', 'bp-media-settings');
             add_settings_field('bpm-media-lightbox-option', __('Lightbox', 'buddypress-media'), array($this, 'checkbox'), 'bp-media-settings', 'bpm-media-lightbox', array(
                 'setting' => 'bp_media_options',
@@ -131,23 +131,23 @@ if (!class_exists('BPMediaSettings')) {
                 'desc' => __('Enable Lighbox on Media', 'buddypress-media')
                     )
             );
-
-            if (bp_is_active('groups')) {
-                add_settings_section('bpm-media-type', __('Groups Integration', 'buddypress-media'), '', 'bp-media-settings');
+            if (function_exists("bp_is_active")) {
+                if (bp_is_active('groups')) {
+                    add_settings_section('bpm-media-type', __('Groups Integration', 'buddypress-media'), '', 'bp-media-settings');
 //            add_settings_field('bpm-admin-profile', __('User profiles', 'buddypress-media'), array($this, 'checkbox'), 'bp-media-settings', 'bpm-media-type', array(
 //                'setting' => 'bp_media_options',
 //                'option' => 'enable_on_profile',
 //                'desc' => __('Check to enable BuddyPress Media on User profiles', 'buddypress-media')
 //                    )
 //            );
-                add_settings_field('bpm-admin-group', __('Groups', 'buddypress-media'), array($this, 'checkbox'), 'bp-media-settings', 'bpm-media-type', array(
-                    'setting' => 'bp_media_options',
-                    'option' => 'enable_on_group',
-                    'desc' => __('Allow Media in Groups', 'buddypress-media')
-                        )
-                );
+                    add_settings_field('bpm-admin-group', __('Groups', 'buddypress-media'), array($this, 'checkbox'), 'bp-media-settings', 'bpm-media-type', array(
+                        'setting' => 'bp_media_options',
+                        'option' => 'enable_on_group',
+                        'desc' => __('Allow Media in Groups', 'buddypress-media')
+                            )
+                    );
+                }
             }
-
             add_settings_section('bpm-media-fine', __('Display Settings', 'buddypress-media'), '', 'bp-media-settings');
             add_settings_field('bpm-media-count', __('Number of media', 'buddypress-media'), array($this, 'textbox'), 'bp-media-settings', 'bpm-media-fine', array(
                 'setting' => 'bp_media_options',
@@ -161,33 +161,35 @@ if (!class_exists('BPMediaSettings')) {
             ));
 
 //            if (BPMediaPrivacy::is_installed()) {
-                add_settings_section('bpm-privacy', __('Privacy Settings', 'buddypress-media'), '', 'bp-media-settings');
-                add_settings_field('bpm-privacy-enabled', __('Enable Privacy', 'buddypress-media'), array($this, 'checkbox'), 'bp-media-settings', 'bpm-privacy', array(
-                    'setting' => 'bp_media_options',
-                    'option' => 'privacy_enabled',
-                    'desc' => __('Enable privacy', 'buddypress-media')
-                ));
+            add_settings_section('bpm-privacy', __('Privacy Settings', 'buddypress-media'), '', 'bp-media-settings');
+            add_settings_field('bpm-privacy-enabled', __('Enable Privacy', 'buddypress-media'), array($this, 'checkbox'), 'bp-media-settings', 'bpm-privacy', array(
+                'setting' => 'bp_media_options',
+                'option' => 'privacy_enabled',
+                'desc' => __('Enable privacy', 'buddypress-media')
+            ));
 
-                $settings = array(
-                    6 => __('<strong>Private</strong> - Visible only to the user', 'buddypress-media'),
-                    4 => __('<strong>Friends</strong> - Visible to user\'s friends', 'buddypress-media'),
-                    2 => __('<strong>Users</strong> - Visible to registered users', 'buddypress-media'),
-                    0 => __('<strong>Public</strong> - Visible to the world', 'buddypress-media')
-                );
+            $settings = array(
+                6 => __('<strong>Private</strong> - Visible only to the user', 'buddypress-media'),
+                4 => __('<strong>Friends</strong> - Visible to user\'s friends', 'buddypress-media'),
+                2 => __('<strong>Users</strong> - Visible to registered users', 'buddypress-media'),
+                0 => __('<strong>Public</strong> - Visible to the world', 'buddypress-media')
+            );
+            if (function_exists("bp_is_active")) {
                 if (!bp_is_active('friends')) {
                     unset($settings[4]);
                 }
-                add_settings_field('bpm-privacy-private-enabled', __('Default Privacy', 'buddypress-media'), array($this, 'radio'), 'bp-media-settings', 'bpm-privacy', array(
-                    'setting' => 'bp_media_options',
-                    'option' => 'default_privacy_level',
-                    'radios' => $settings,
-                    'default' => 0,
-                ));
-                add_settings_field('bpm-privacy-override-enabled', __('User Override', 'buddypress-media'), array($this, 'checkbox'), 'bp-media-settings', 'bpm-privacy', array(
-                    'setting' => 'bp_media_options',
-                    'option' => 'privacy_override_enabled',
-                    'desc' => __('Allow users to override admin defaults (<em>Recommended</em>)', 'buddypress-media')
-                ));
+            }
+            add_settings_field('bpm-privacy-private-enabled', __('Default Privacy', 'buddypress-media'), array($this, 'radio'), 'bp-media-settings', 'bpm-privacy', array(
+                'setting' => 'bp_media_options',
+                'option' => 'default_privacy_level',
+                'radios' => $settings,
+                'default' => 0,
+            ));
+            add_settings_field('bpm-privacy-override-enabled', __('User Override', 'buddypress-media'), array($this, 'checkbox'), 'bp-media-settings', 'bpm-privacy', array(
+                'setting' => 'bp_media_options',
+                'option' => 'privacy_override_enabled',
+                'desc' => __('Allow users to override admin defaults (<em>Recommended</em>)', 'buddypress-media')
+            ));
 //            }
             add_settings_section('bpm-miscellaneous', __('Other Settings', 'buddypress-media'), '', 'bp-media-settings');
 
@@ -356,7 +358,8 @@ if (!class_exists('BPMediaSettings')) {
             if (!empty($setting)) {
                 $name = $setting . '[' . $option . ']';
                 $options = bp_get_option($setting);
-            } else
+            }
+            else
                 $name = $option;
 
             if (!isset($options[$option]))
@@ -364,7 +367,7 @@ if (!class_exists('BPMediaSettings')) {
             ?>
             <label for="<?php echo $option; ?>">
                 <input<?php checked($options[$option]); ?> name="<?php echo $name; ?>" id="<?php echo $option; ?>" value="1" type="checkbox" />
-                <?php echo $desc; ?>
+            <?php echo $desc; ?>
             </label><?php
         }
 
@@ -403,7 +406,8 @@ if (!class_exists('BPMediaSettings')) {
             if (!empty($setting)) {
                 $name = $setting . '[' . $option . ']';
                 $options = bp_get_option($setting);
-            } else
+            }
+            else
                 $name = $option;
 
             if ((isset($options[$option]) && empty($options[$option])) || !isset($options[$option])) {
@@ -411,7 +415,7 @@ if (!class_exists('BPMediaSettings')) {
             }
 
             foreach ($radios as $value => $desc) {
-                    ?>
+                ?>
                 <label for="<?php echo sanitize_title($desc); ?>"><input<?php checked($options[$option], $value); ?> value="<?php echo $value; ?>" name="<?php echo $name; ?>" id="<?php echo sanitize_title($desc); ?>" type="radio" />&nbsp;<?php echo $desc; ?></label><br /><?php
             }
         }
@@ -450,17 +454,18 @@ if (!class_exists('BPMediaSettings')) {
             if (!empty($setting)) {
                 $name = $setting . '[' . $option . ']';
                 $options = bp_get_option($setting);
-            } else
+            }
+            else
                 $name = $option;
 
             if ((isset($options[$option]) && empty($options[$option])) || !isset($options[$option])) {
                 $options[$option] = '';
             }
-                ?>
+            ?>
             <label for="<?php echo sanitize_title($option); ?>"><input value="<?php echo $options[$option]; ?>" name="<?php echo $name; ?>" id="<?php echo sanitize_title($option); ?>" type="<?php echo $password ? 'password' : ($hidden ? 'hidden' : ($number ? 'number' : 'text')); ?>" /><?php
-            if (!empty($desc)) {
-                echo '<br /><span class="description">' . $desc . '</span>';
-            }
+                if (!empty($desc)) {
+                    echo '<br /><span class="description">' . $desc . '</span>';
+                }
                 ?></label><br /><?php
         }
 
@@ -491,7 +496,7 @@ if (!class_exists('BPMediaSettings')) {
             if ($crop) {
                 $c = $options['sizes'][$type][$size]['crop'];
             }
-                ?>
+            ?>
             <label for="<?php echo sanitize_title("{$type}_{$size}_w"); ?>"><?php _e('Width', 'buddypress-media'); ?> <input value="<?php echo $w; ?>" name="<?php echo "bp_media_options[sizes][$type][$size][width]"; ?>" id="<?php echo sanitize_title("{$type}_{$size}_w"); ?>" type="number" class="small-text" /></label>
             <?php if ($height) { ?><label for="<?php echo sanitize_title("{$type}_{$size}_h"); ?>"><?php _e('Height', 'buddypress-media'); ?> <input value="<?php echo $h; ?>" name="<?php echo "bp_media_options[sizes][$type][$size][height]"; ?>" id="<?php echo sanitize_title("{$type}_{$size}_h"); ?>" type="number" class="small-text" /></label> <?php } ?>
             <?php if ($crop) { ?><label for="<?php echo sanitize_title("{$type}_{$size}_c"); ?>"> <input value="1"<?php checked($c ? $c : 0, 1); ?> name="<?php echo "bp_media_options[sizes][$type][$size][crop]"; ?>" id="<?php echo sanitize_title("{$type}_{$size}_c"); ?>" type="checkbox" /> <?php _e('Crop', 'buddypress-media'); ?></label><?php } ?>
@@ -531,7 +536,8 @@ if (!class_exists('BPMediaSettings')) {
             if (!empty($setting)) {
                 $name = $setting . '[' . $option . ']';
                 $options = bp_get_option($setting);
-            } else
+            }
+            else
                 $name = $option;
 
             if ((isset($options[$option]) && empty($options[$option])) || !isset($options[$option])) {
@@ -540,11 +546,11 @@ if (!class_exists('BPMediaSettings')) {
             ?>
             <select name="<?php echo $name; ?>" id="<?php echo $option; ?>"><?php if ($none) { ?>
                     <option><?php _e('None', 'buddypress-media'); ?></option><?php
-            }
-            foreach ($values as $value => $text) {
-                ?>
+                }
+                foreach ($values as $value => $text) {
+                    ?>
                     <option<?php selected($options[$option], $value); ?> value="<?php echo $value; ?>"><?php echo $text; ?></option><?php }
-            ?>
+                ?>
             </select><?php
         }
 
@@ -575,7 +581,8 @@ if (!class_exists('BPMediaSettings')) {
             }
             if (!empty($setting)) {
                 $button = $setting . '[' . $option . ']';
-            } else
+            }
+            else
                 $button = $option;
             submit_button($name, '', $button, false);
             if (!empty($desc)) {
