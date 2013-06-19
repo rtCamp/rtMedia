@@ -41,7 +41,7 @@ if (!class_exists('RTMediaAdmin')) {
             if (is_admin()) {
                 add_action('admin_enqueue_scripts', array($this, 'ui'));
                 //bp_core_admin_hook();
-                add_action("admin_init", array($this, 'menu'),9);
+                add_action('admin_menu', array($this, 'menu'),1);
                 if (current_user_can('manage_options'))
                     add_action('bp_admin_tabs', array($this, 'tab'));
                 if (is_multisite())
