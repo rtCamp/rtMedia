@@ -12,9 +12,10 @@ class BPMediaEncoding {
     protected $merchant_id = 'paypal@rtcamp.com';
 
     public function __construct() {
-        $this->api_key = bp_get_option('bp-media-encoding-api-key');
+        $this->api_key = get_option('bp-media-encoding-api-key');        
         if (is_admin()) {
-            add_action(bp_core_admin_hook(), array($this, 'menu'));
+            //bp_core_admin_hook()
+            add_action('admin_init', array($this, 'menu'));
             add_action('admin_init', array($this, 'encoding_settings'));
             add_filter('bp_media_add_sub_tabs', array($this, 'encoding_tab'), '', 2);
             if ($this->api_key)
@@ -23,14 +24,14 @@ class BPMediaEncoding {
         add_action('admin_init', array($this, 'save_api_key'), 1);
         add_filter('bp_media_add_admin_bar_item', array($this, 'admin_bar_menu'));
         if ($this->api_key) {
-            $usage_info = bp_get_option('bp-media-encoding-usage');
+            $usage_info = get_option('bp-media-encoding-usage');
             if ($usage_info) {
                 if (isset($usage_info[$this->api_key]->status) && $usage_info[$this->api_key]->status) {
                     if (isset($usage_info[$this->api_key]->remaining) && $usage_info[$this->api_key]->remaining > 0) {
-                        if ($usage_info[$this->api_key]->remaining < 524288000 && !bp_get_option('bp-media-encoding-usage-limit-mail'))
+                        if ($usage_info[$this->api_key]->remaining < 524288000 && !get_option('bp-media-encoding-usage-limit-mail'))
                             $this->nearing_usage_limit($usage_info);
-                        elseif ($usage_info[$this->api_key]->remaining > 524288000 && bp_get_option('bp-media-encoding-usage-limit-mail'))
-                            bp_update_option('bp-media-encoding-usage-limit-mail', 0);
+                        elseif ($usage_info[$this->api_key]->remaining > 524288000 && get_option('bp-media-encoding-usage-limit-mail'))
+                            update_option('bp-media-encoding-usage-limit-mail', 0);
                         if (!class_exists('BPMediaFFMPEG') && !class_exists('BPMediaKaltura'))
                             add_filter('bp_media_transcoder', array($this, 'transcoder'), 10, 2);
                         $blacklist = array('localhost', '127.0.0.1');
@@ -41,13 +42,13 @@ class BPMediaEncoding {
                 }
             }
         }
-        if (!bp_get_option('bpmedia_encoding_service_notice') && current_user_can('administrator')) {
+        if (!get_option('bpmedia_encoding_service_notice') && current_user_can('administrator')) {
             if (is_multisite()) {
                 add_action('network_admin_notices', array($this, 'encoding_service_notice'));
             }
             add_action('admin_notices', array($this, 'encoding_service_notice'));
         }
-        add_action('bp_init', array($this, 'handle_callback'), 20);
+        add_action('admin_init', array($this, 'handle_callback'), 20);
         add_action('wp_ajax_bp_media_free_encoding_subscribe', array($this, 'free_encoding_subscribe'));
         add_action('wp_ajax_bp_media_unsubscribe_encoding_service', array($this, 'unsubscribe_encoding'));
         add_action('wp_ajax_bp_media_hide_encoding_notice', array($this, 'hide_encoding_notice'), 1);
@@ -153,7 +154,7 @@ class BPMediaEncoding {
             $usage_info = json_decode($usage_page['body']);
         else
             $usage_info = NULL;
-        bp_update_option('bp-media-encoding-usage', array($key => $usage_info));
+        update_option('bp-media-encoding-usage', array($key => $usage_info));
         return $usage_info;
     }
 
@@ -167,7 +168,7 @@ class BPMediaEncoding {
             add_filter('wp_mail_content_type', create_function('', 'return "text/html";'));
             wp_mail($admin_email_ids, $subject, sprintf($message, size_format($usage_details[$this->api_key]->used, 2), size_format($usage_details[$this->api_key]->remaining, 2), size_format($usage_details[$this->api_key]->total, 2)));
         }
-        bp_update_option('bp-media-encoding-usage-limit-mail', 1);
+        update_option('bp-media-encoding-usage-limit-mail', 1);
     }
 
     public function usage_quota_over() {
@@ -182,7 +183,7 @@ class BPMediaEncoding {
                 add_filter('wp_mail_content_type', create_function('', 'return "text/html";'));
                 wp_mail($admin_email_ids, $subject, sprintf($message, size_format($usage_details[$this->api_key]->used, 2), 0, size_format($usage_details[$this->api_key]->total, 2)));
             }
-            bp_update_option('bp-media-encoding-usage-limit-mail', 1);
+            update_option('bp-media-encoding-usage-limit-mail', 1);
         }
     }
 
@@ -198,7 +199,7 @@ class BPMediaEncoding {
                 $unsubscribe_url = trailingslashit($this->api_url) . 'api/cancel/' . $this->api_key;
                 wp_remote_post($unsubscribe_url, array('timeout' => 120, 'body' => array('note' => 'Direct URL Input (API Key: ' . $_GET['apikey'] . ')')));
             }
-            bp_update_option('bp-media-encoding-api-key', $_GET['apikey']);
+            update_option('bp-media-encoding-api-key', $_GET['apikey']);
             $usage_info = $this->update_usage($_GET['apikey']);
             $return_page = add_query_arg(array('page' => 'bp-media-encoding', 'api_key_updated' => $usage_info->plan->name), (is_multisite() ? network_admin_url('admin.php') : admin_url('admin.php')));
             wp_safe_redirect($return_page);
@@ -498,7 +499,7 @@ class BPMediaEncoding {
         }
 
         public function hide_encoding_notice() {
-            bp_update_option('bpmedia_encoding_service_notice', true);
+            update_option('bpmedia_encoding_service_notice', true);
             echo true;
             die();
         }
@@ -527,7 +528,7 @@ class BPMediaEncoding {
         }
 
         public function disable_encoding() {
-            bp_update_option('bp-media-encoding-api-key', '');
+            update_option('bp-media-encoding-api-key', '');
             _e('Encoding disabled successfully.', 'buddypress-media');
             die();
         }

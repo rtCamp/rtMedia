@@ -22,7 +22,7 @@ if (!class_exists('BPMediaSupport')) {
             $debug_info['PHP'] = PHP_VERSION;
             $debug_info['MYSQL'] = $wpdb->db_version();
             $debug_info['WordPress'] = $wp_version;
-            $debug_info['BuddyPress'] = $bp->version;
+            $debug_info['BuddyPress'] = (isset($bp->version))?$bp->version:'-NA-';
             $debug_info['BuddyPress Media'] = RT_MEDIA_VERSION;
             $debug_info['OS'] = PHP_OS;
             if (extension_loaded('imagick')) {
