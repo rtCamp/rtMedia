@@ -208,15 +208,14 @@ class RTMediaMedia {
 	 * @param type $media_id
 	 * @return boolean
 	 */
-	function delete($id, $media_id = false){
+	function delete($id){
 
 		do_action('rt_media_before_delete_media', $this);
 
-		/* remove attachment --- confirm with saurabh */
-		wp_update_post(array('ID'=>$media_id, 'post_parent'=>0));
+		$media_data = $this->rt_media_media_model->get(array('media_id'=>$id));
 
 		/* delete meta */
-		$this->rt_media_media_model->delete_meta( array( 'media_id' => $media_id ) );
+		$this->rt_media_media_model->delete_meta( array( 'media_id' => $media_data->id ) );
 
 		$status = $this->rt_media_media_model->delete( array( 'id' => $id ) );
 
@@ -246,12 +245,12 @@ class RTMediaMedia {
 				return false;
 		} else {
 			/* update album_id, context, context_id and privacy in rtMedia context */
-			$album_data = $this->rt_media_media_model->get_by_media_id($media_id);
+			$album_data = $this->rt_media_media_model->get(array('media_id'=>$media_id));
 			$data = array(
 					'album_id' => $album_id,
-					'context' => $album_data['result'][0]['context'],
-					'context_id' => $album_data['result'][0]['context_id'],
-					'privacy' => $album_data['result'][0]['privacy']
+					'context' => $album_data->context,
+					'context_id' => $album_data->context_id,
+					'privacy' => $album_data->privacy
 				);
 			return $this->update($media_id, $data);
 		}
