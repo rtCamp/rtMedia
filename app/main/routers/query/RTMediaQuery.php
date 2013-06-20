@@ -81,6 +81,8 @@ class RTMediaQuery {
 
 		}
 
+		$this->model = new RTMediaMediaModel();
+
 	}
 
 	/**
@@ -100,6 +102,12 @@ class RTMediaQuery {
 		 */
 		if(!isset($this->action_query->id)){
 			return false;
+		}else{
+			$media = $this->model->get(array('id'=>$this->action_query->id));
+			$media_type = $media->media_type;
+			if($media_type==='album'){
+				return false;
+			}
 		}
 
 		return true;
@@ -249,7 +257,6 @@ class RTMediaQuery {
 
 	function populate_media() {
 
-		$this->model = new RTMediaMediaModel();
 
 		if($this->query['context'] == 'profile') {
 
@@ -304,7 +311,7 @@ class RTMediaQuery {
 			$pre_media = $this->model->get_media( $this->query, ($this->action_query->page-1)*$this->action_query->per_page_media, $this->action_query->per_page_media, $order_by );
 
 		/**
-		 * count total medias in alnum rrespective of pagination
+		 * count total medias in album irrespective of pagination
 		 */
 		$media_for_total_count = $this->model->get_media( $this->query, false, false );
 		$this->media_count = count($media_for_total_count);
