@@ -32,6 +32,8 @@ class rtProgress {
 	}
 
 	function progress($progress,$total){
+                if($total<1)
+                    return 100;
 		return ($progress/$total)*100;
 	}
 
