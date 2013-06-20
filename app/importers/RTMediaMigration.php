@@ -5,7 +5,7 @@
  *
  * @author faishal
  */
-class BuddyPressMigration {
+class RTMediaMigration {
 
     public $bmp_table = "";
 
