@@ -111,7 +111,13 @@ class RTDBModel {
      */
     function insert($row) {
         global $wpdb;
-        $wpdb->insert($this->table_name, $row);
+        $insertdata =array();
+        foreach($row as $key=>$val){
+            if($val != NULL)
+                $insertdata[$key]=$val;
+        }
+
+        $wpdb->insert($this->table_name, $insertdata);
         return $wpdb->insert_id;
     }
 
