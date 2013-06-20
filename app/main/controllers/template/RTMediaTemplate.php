@@ -55,12 +55,13 @@ class RTMediaTemplate {
 		include(RT_MEDIA_PATH . 'app/main/controllers/template/rt-template-functions.php');
 
 		if(in_array($rt_media_interaction->context->type, array("profile","group"))) {
-			echo "User/Group Media";
 
 			if ($rt_media_query->format == 'json') {
 				if ($rt_media_query->media) {
-					foreach ($rt_media_query->media as $media) {
-						$media_array[] = $media;
+					foreach ($rt_media_query->media as $key => $media) {
+						$media_array[$key] = $media;
+						list($src,$width,$height) = wp_get_attachment_image_src($media->media_id,'thumbnail');
+						$media_array[$key]->guid = $src;
 					}
 				}
 				echo json_encode($media_array);
@@ -161,8 +162,10 @@ class RTMediaTemplate {
 		} else if ( $rt_media_query->format == 'json' ) {
 
 			if($rt_media_query->media) {
-				foreach($rt_media_query->media as $media){
-					$media_array[] = $media;
+				foreach($rt_media_query->media as $key => $media){
+					$media_array[$key] = $media;
+					list($src,$width,$height) = wp_get_attachment_image_src($rt_media_media->media_id,$size);
+					$media_array[$key]->guid = $src;
 				}
 			}
 			echo json_encode( $media_array );
