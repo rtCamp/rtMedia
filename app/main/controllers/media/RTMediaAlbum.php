@@ -153,16 +153,16 @@ class RTMediaAlbum {
 		$attributes = array(
 			'blog_id' => get_current_blog_id(),
 			'media_id' => $album_id,
-			'album_id' => false,
+			'album_id' => NULL,
 			'media_title' => $current_album['post_title'],
 			'media_author' => $current_album['post_author'],
 			'media_type' => 'album',
 			'context' => (isset($rt_media_interaction->context->type)) ? $rt_media_interaction->context->type : NULL,
 			'context_id' => (isset($rt_media_interaction->context->id)) ? $rt_media_interaction->context->id : NULL,
-			'activity_id' => false,
-			'privacy' => false
+			'activity_id' => NULL,
+			'privacy' => NULL
 		);
-
+                
 		$this->rt_media_object->rt_insert_album($attributes);
 
 		/* action to perform any task after adding the album */
