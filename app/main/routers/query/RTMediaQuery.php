@@ -56,7 +56,10 @@ class RTMediaQuery {
 		// set up the interaction object relevant to just the query
 		// we only need information related to the media route
 		global $rt_media_interaction;
+                
+                $this->model = new RTMediaMediaModel();
 
+                
 		$this->interaction = $rt_media_interaction->routes[ 'media' ];
 
 		//check and set the format to json, if needed
@@ -76,8 +79,7 @@ class RTMediaQuery {
 			$this->query( $args );
 		}
 
-		$this->model = new RTMediaMediaModel();
-	}
+        }
 
 	/**
 	 * Initialise the default args for the query
@@ -90,8 +92,8 @@ class RTMediaQuery {
 		if ( ! isset( $this->query[ 'media_type' ] ) ) {
 			if ( isset( $this->action_query->id ) ) {
 				$media = $this->model->get( array( 'id' => $this->action_query->id ) );
-				$media_type = $media->media_type;
-				$this->query[ 'media_type' ] == $media_type;
+				$media_type = $media[0]->media_type;
+				$this->query[ 'media_type' ] = $media_type;
 			}
 		}
 	}
@@ -115,7 +117,7 @@ class RTMediaQuery {
 
 	function is_album() {
 
-		if ( $this->query[ 'album_id' ] ) {
+		if ( isset($this->query[ 'album_id' ]) ) {
 			return true;
 		}
 		return false;
@@ -379,9 +381,7 @@ class RTMediaQuery {
 		if(!isset($this->query['media_type'])){
 			if ( isset( $this->action_query->media_type ) && in_array( $this->action_query->media_type, $allowed_media_types ) )
 				$this->query[ 'media_type' ] = $this->action_query->media_type;
-		}
-
-		if($this->query['media_type']=='album'){
+		} elseif($this->query['media_type']=='album'){
 			$this->query[ 'media_type' ] = array( 'compare' => 'NOT IN', 'value' => array( 'album' ) );
 		}
 
