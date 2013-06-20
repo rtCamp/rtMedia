@@ -3,7 +3,7 @@
   Plugin Name: rtMedia
   Plugin URI: http://rtcamp.com/buddypress-media/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media
   Description: This plugin adds missing media rich features like photos, videos and audio uploading to BuddyPress which are essential if you are building social network, seriously!
-  Version: 3.0 Beta
+  Version: 3.0.0
   Author: rtCamp
   Text Domain: buddypress-media
   Author URI: http://rtcamp.com/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media
