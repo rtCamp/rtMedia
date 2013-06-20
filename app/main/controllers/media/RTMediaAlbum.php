@@ -348,7 +348,7 @@ class RTMediaAlbum {
 		/**
 		 * Delete each media from the album first
 		 */
-		while( $media = $this->rt_media_object->rt_media_media_model->get_by_album_id($id, $page) ) {
+		while( $media = $this->rt_media_object->model->get_by_album_id($id, $page) ) {
 
 			$media_id = $media['result'][0]['media_id'];
 
@@ -401,7 +401,7 @@ class RTMediaAlbum {
 		/**
 		 * Transfer all the media from secondary album to primary album
 		 */
-		while( $media = $this->rt_media_object->rt_media_media_model->get_by_album_id($secondary_album_id, $page) ) {
+		while( $media = $this->rt_media_object->model->get_by_album_id($secondary_album_id, $page) ) {
 
 			$media_id = $media['result'][0]['media_id'];
 			$this->rt_media_object->move($media_id,$primary_album_id);
@@ -447,7 +447,7 @@ class RTMediaAlbum {
 		 */
 		$album_id = $this->add($post['post_title'], $post['post_author'], false, $post_id);
 
-		$album_data = $this->rt_media_media_model->get_by_media_id($album_id);
+		$album_data = $this->model->get_by_media_id($album_id);
 
 		/* Album details */
 		$album_meta = array(

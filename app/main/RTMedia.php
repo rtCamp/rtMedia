@@ -404,6 +404,9 @@ class RTMedia {
 				}
 			}
 		}
+                
+                $media = new RTMediaMedia();
+                $media->delete_hook();
 	}
 
 	/**
@@ -449,7 +452,7 @@ class RTMedia {
             if ($update->check_upgrade()) {
                 $update->do_upgrade();
             }
-            new BuddyPressMigration();
+            new RTMediaMigration();
         }
 
 	function enqueue_scripts_styles() {
