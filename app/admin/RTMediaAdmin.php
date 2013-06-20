@@ -111,7 +111,7 @@ if (!class_exists('RTMediaAdmin')) {
             add_submenu_page('rt-media-settings', __('rtMedia Support', 'rt-media'), __('Support ', 'rt-media'), 'manage_options', 'rt-media-support', array($this, 'support_page'));
             add_submenu_page('rt-media-settings', __('Importer', 'rt-media'), __('Importer', 'rt-media'), 'manage_options', 'rt-media-importer', array($this, 'rt_importer_page'));
 //            if (!BPMediaPrivacy::is_installed()) {
-			add_submenu_page('rt-media-settings', __('rtMedia Database Update', 'rt-media'), __('Update Database', 'rt-media'), 'manage_options', 'rt-media-db_update', array($this, 'privacy_page'));
+//			add_submenu_page('rt-media-settings', __('rtMedia Database Update', 'rt-media'), __('Update Database', 'rt-media'), 'manage_options', 'rt-media-db-update', array($this, 'privacy_page'));
 //            }
 		}
 
