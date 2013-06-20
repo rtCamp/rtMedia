@@ -98,11 +98,19 @@ class RTMediaQuery {
 		 * // check the condition
 		 * wont be true in case of multiple albums
 		 */
-		if(!isset($this->action_query->id)){
+		if(!isset($this->action_query->id) || $this->is_album()){
 			return false;
 		}
 
 		return true;
+	}
+        
+	function is_album(){
+            
+            if ($this->query['album_id']) {
+                return true;
+            }
+            return false;
 	}
 
 	function is_gallery(){
@@ -110,6 +118,13 @@ class RTMediaQuery {
 			return true;
 
 		return false;
+	}
+
+	function is_album_gallery(){
+	if ($this->query['media_type'] == 'album') {
+                return true;
+            }
+            return false;
 	}
 
 	function set_action_query() {
@@ -246,11 +261,21 @@ class RTMediaQuery {
 		$this->query = wp_parse_args( $this->query , $query );
 		return $this->get_data();
 	}
+        
+        function album_check(){
+            if ($this->query['media_type'] == 'album') {
+                
+            }
+            
+            if ($this->query['album_id']) {
+
+            }
+        }
 
 	function populate_media() {
 
 		$this->model = new RTMediaMediaModel();
-
+                
 		if($this->query['context'] == 'profile') {
 
 			$this->query['media_author'] = $this->query['context_id'];
