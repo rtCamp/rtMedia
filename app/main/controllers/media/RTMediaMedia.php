@@ -212,12 +212,10 @@ class RTMediaMedia {
 
 		do_action('rt_media_before_delete_media', $this);
 
-		$media_data = $this->rt_media_media_model->get(array('media_id'=>$id));
-
 		/* delete meta */
-		$this->rt_media_media_model->delete_meta( array( 'media_id' => $media_data->id ) );
+		$this->rt_media_media_model->delete_meta( array( 'media_id' => $id ) );
 
-		$status = $this->rt_media_media_model->delete( array( 'id' => $id ) );
+		$status = $this->rt_media_media_model->delete( array( 'media_id' => $id ) );
 
 		if ($status == 0) {
 			return false;
