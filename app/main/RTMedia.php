@@ -31,9 +31,37 @@ class RTMedia {
 	 * @var array RTMedia settings
 	 */
 	public $allowed_types = array(
-		0 => array('name' => 'audio', 'extn' => array('mp3'), 'thumbnail' => '../assets/img/audio_thumb.png'),
-		1 => array('name' => 'video', 'extn' => array('mp4'), 'thumbnail' => '../assets/img/video_thumb.png'),
-		2 => array('name' => 'image', 'extn' => array('jpeg', 'png'), 'thumbnail' => '../assets/img/image_thumb.png')
+		0 => array(
+			'name' => 'audio',
+			'extn' => array('mp3'),
+			'thumbnail' => '../assets/img/audio_thumb.png'
+		),
+		1 => array(
+			'name' => 'video',
+			'extn' => array('mp4'),
+			'thumbnail' => '../assets/img/video_thumb.png'
+		),
+		2 => array(
+			'name' => 'image',
+			'extn' => array('jpeg', 'png'),
+			'thumbnail' => '../assets/img/image_thumb.png'
+		)
+	);
+
+	public $allowed_sizes = array(
+		'image' => array(
+			'thumbnail' => array('width' => 150, 'height' => 150, 'crop' => 1),
+			'medium' => array('width' => 320, 'height' => 240, 'crop' => 1),
+			'large' => array('width' => 800, 'height' => 0, 'crop' => 1)
+		),
+		'video' => array(
+			'medium' => array('width' => 320, 'height' => 240),
+			'large' => array('width' => 640, 'height' => 480)
+		),
+		'audio' => array(
+			'medium' => array('width' => 320),
+			'large' => array('width' => 640)
+		)
 	);
 
 	/**
@@ -152,6 +180,8 @@ class RTMedia {
 		global $bp_media_counter;
 		$bp_media_counter = 0;
 		$this->allowed_types = apply_filters('rt_media_allowed_types', $this->allowed_types);
+
+		$this->allowed_sizes = apply_filters('rt_media_allowed_types', $this->allowed_sizes);
 		/**
 		 *  Enqueue Plugin Scripts and Styles
 		 */
@@ -194,78 +224,72 @@ class RTMedia {
 
 	public function init_site_options() {
 
-		if(get_site_option('enable_on_profile'))
-			add_site_option('enable_on_profile', 1);
-		if(get_site_option('enable_on_groups'))
-			add_site_option('enable_on_group', 1);
-		if(get_site_option('enable_lightbox'))
-			add_site_option('enable_lightbox', 1);
+		/**
+		 * General Settings
+		 */
+		rt_media_get_site_option('download_button', 1);
+		rt_media_get_site_option('albums_enabled', 1);
+		rt_media_get_site_option('show_admin_menu', 1);
+		rt_media_get_site_option('per_page_media', 10);
+		rt_media_get_site_option('media_end_point_enable', true);
+		rt_media_get_site_option('comments_enabled', 1);
+		rt_media_get_site_option('enable_lightbox', 1);
 
-		if(get_site_option('sizes'))
-			add_site_option('sizes', array(
-				'image' => array(
-					'thumbnail' => array('width' => 150, 'height' => 150, 'crop' => 1),
-					'medium' => array('width' => 320, 'height' => 240, 'crop' => 1),
-					'large' => array('width' => 800, 'height' => 0, 'crop' => 1)
-				),
-				'video' => array(
-					'medium' => array('width' => 320, 'height' => 240),
-					'large' => array('width' => 640, 'height' => 480)
-				),
-				'audio' => array(
-					'medium' => array('width' => 320),
-					'large' => array('width' => 640)
-				),
-				'media' => array(
-					'featured' => array('width' => 100, 'height' => 100, 'crop' => 1)
-				)
-			));
+		/**
+		 * Sizes Settings
+		 */
+		rt_media_get_site_option('allowed_sizes', $this->allowed_sizes);
+		rt_media_get_site_option('featured_media_size', array( 'width' => 100, 'height' => 100, 'crop' => 1 ));
 
-		if(get_site_option('featured_image'))
-			add_site_option('featured_image', 0);
-		if(get_site_option('featured_video'))
-			add_site_option('featured_video', 0);
-		if(get_site_option('featured_audio'))
-			add_site_option('featured_audio', 0);
+		/**
+		 * Types Settings
+		 */
+		rt_media_get_site_option('allowed_types', $this->allowed_types);
+		rt_media_get_site_option('videos_enabled', 1);
+		rt_media_get_site_option('images_enabled', 1);
+		rt_media_get_site_option('audio_enabled', 1);
+		/**
+		 * Featured Settings
+		 */
+		rt_media_get_site_option('featured_image', 0);
+		rt_media_get_site_option('featured_video', 0);
+		rt_media_get_site_option('featured_audio', 0);
 
-		if(get_site_option('videos_enabled'))
-			add_site_option('videos_enabled', 1);
-		if(get_site_option('images_enabled'))
-			add_site_option('images_enabled', 1);
-		if(get_site_option('audio_enabled'))
-			add_site_option('audio_enabled', 1);
-		if(get_site_option('downloads_enabled'))
-			add_site_option('downloads_enabled', 1);
-		if(get_site_option('albums_enabled'))
-			add_site_option('albums_enabled', 1);
-
-		if(get_site_option('show_admin_menu'))
-			add_site_option('show_admin_menu', 1);
-		if(get_site_option('per_page_media'))
-			add_site_option('per_page_media', 10);
-		if(get_site_option('media_end_pont_enabled'))
-			add_site_option('media_end_point_enable', true);
-		if(get_site_option('comments_enabled'))
-			add_site_option('comments_enabled', 1);
+		/**
+		 * BuddyPress Settings
+		 */
+		rt_media_get_site_option('enable_on_profile', 1);
+		rt_media_get_site_option('enable_on_group', 1);
+		rt_media_get_site_option('enable_on_activity', 1);
 
 		$options = array(
-			'comments_enabled' => get_site_option('comments_enabled'),
-			'media_end_point_enabled' => get_site_option('media_end_pont_enabled'),
-			'per_page_media' => get_site_option('per_page_media'),
-			'show_admin_menu' => get_site_option('show_admin_menu'),
-			'albums_enabled' => get_site_option('albums_enabled'),
-			'downloads_enabled' => get_site_option('albums_enabled'),
-			'audio_enabled' => get_site_option('audio_enabled'),
-			'images_enabled' => get_site_option('images_enabled'),
-			'videos_enabled' => get_site_option('videos_enabled'),
-			'featured_image' => get_site_option('featured_image'),
-			'featured_audio' => get_site_option('featured_audio'),
-			'featured_video' => get_site_option('featured_video'),
-			'sizes' => get_site_option('sizes'),
-			'enable_lightbox' => get_site_option('enable_lightbox'),
-			'enable_on_profile' => get_site_option('enable_on_profile'),
-			'enable_on_groups' => get_site_option('enable_on_groups')
+			/* General */
+			'comments_enabled' => rt_media_get_site_option('comments_enabled'),
+			'media_end_point_enabled' => rt_media_get_site_option('media_end_pont_enabled'),
+			'per_page_media' => rt_media_get_site_option('per_page_media'),
+			'show_admin_menu' => rt_media_get_site_option('show_admin_menu'),
+			'albums_enabled' => rt_media_get_site_option('albums_enabled'),
+			'download_button' => rt_media_get_site_option('download_button'),
+			'enable_lightbox' => rt_media_get_site_option('enable_lightbox'),
+			/* Sizes */
+			'allowed_sizes' => rt_media_get_site_option('allowed_sizes'),
+			'featured_media_size' => rt_media_get_site_option('featured_media_size'),
+			/* Types */
+			'allowed_types' => rt_media_get_site_option('allowed_types'),
+			'audio_enabled' => rt_media_get_site_option('audio_enabled'),
+			'images_enabled' => rt_media_get_site_option('images_enabled'),
+			'videos_enabled' => rt_media_get_site_option('videos_enabled'),
+			/* Featured */
+			'featured_image' => rt_media_get_site_option('featured_image'),
+			'featured_audio' => rt_media_get_site_option('featured_audio'),
+			'featured_video' => rt_media_get_site_option('featured_video'),
+			/* BuddyPress */
+			'enable_on_profile' => rt_media_get_site_option('enable_on_profile'),
+			'enable_on_groups' => rt_media_get_site_option('enable_on_groups'),
+			'enable_on_activity' => rt_media_get_site_option('enable_on_activity')
 		);
+
+		$this->options = $options;
 	}
 
 	/**
@@ -273,7 +297,7 @@ class RTMedia {
 	 */
 	public function get_option($key) {
 
-		$options = get_site_option($key);
+		$options = rt_media_get_site_option($key);
 		return $options;
 	}
 
@@ -435,6 +459,25 @@ class RTMedia {
 	}
 
 }
+
+function rt_media_update_site_option($option_name,$option_value) {
+	update_site_option($option_name, $option_value);
+}
+
+function rt_media_get_site_option($option_name,$default=false){
+	$return_val	 = get_site_option($option_name);
+	if($return_val === false){
+		if(function_exists("bp_get_option")){
+			$return_val = bp_get_option($option_name,$default);
+			rt_media_update_site_option($option_name, $return_val);
+		}
+	}
+	if($default!== false && $return_val === false){
+		$return_val = $default;
+	}
+	return $return_val;
+}
+
 
 /**
  * This wraps up the main rtMedia class. Three important notes:
