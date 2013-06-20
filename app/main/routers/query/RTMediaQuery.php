@@ -155,7 +155,7 @@ class RTMediaQuery {
 		$modifier_type = 'default';
 		$modifier_value = false;
 		$format = '';
-		$page = 1;
+		$pageno = 1;
 		$attributes = '';
 
 
