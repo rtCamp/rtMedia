@@ -57,7 +57,7 @@ class RTMediaQuery {
 		// we only need information related to the media route
 		global $rt_media_interaction;
                 
-                $this->model = new RTMediaMediaModel();
+                $this->model = new RTMediaModel();
 
                 
 		$this->interaction = $rt_media_interaction->routes[ 'media' ];
