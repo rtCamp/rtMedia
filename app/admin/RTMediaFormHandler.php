@@ -14,8 +14,8 @@ class RTMediaFormHandler {
 
 	public static function checkbox($args) {
 
-		global $bp_media;
-		$options = $bp_media->options;
+		global $rt_media;
+		$options = $rt_media->options;
 		$defaults = array(
 			'setting' => '',
 			'option' => '',
@@ -26,13 +26,13 @@ class RTMediaFormHandler {
 		extract($args);
 
 		if (empty($option)) {
-			trigger_error(__('Please provide "option" value ( required ) in the argument. Pass argument to add_settings_field in the following format array( \'option\' => \'option_name\' ) ', 'buddypress-media'));
+			trigger_error(__('Please provide "option" value ( required ) in the argument. Pass argument to add_settings_field in the following format array( \'option\' => \'option_name\' ) ', 'rt-media'));
 			return;
 		}
 
 		if (!empty($setting)) {
 			$args['name'] = $setting . '[' . $option . ']';
-			$options = bp_get_option($setting);
+			$options = get_site_option($setting);
 		}
 		else
 			$args['name'] = $option;
@@ -50,8 +50,8 @@ class RTMediaFormHandler {
 
 	public static function radio($args) {
 
-		global $bp_media;
-            $options = $bp_media->options;
+		global $rt_media;
+            $options = $rt_media->options;
 		$defaults = array(
 			'setting' => '',
 			'option' => '',
@@ -63,15 +63,15 @@ class RTMediaFormHandler {
 		extract($args);
 		if (empty($option) || ( 2 > count($radios) )) {
 			if (empty($option))
-				trigger_error(__('Please provide "option" value ( required ) in the argument. Pass argument to add_settings_field in the following format array( \'option\' => \'option_name\' )', 'buddypress-media'));
+				trigger_error(__('Please provide "option" value ( required ) in the argument. Pass argument to add_settings_field in the following format array( \'option\' => \'option_name\' )', 'rt-media'));
 			if (2 > count($radios))
-				trigger_error(__('Need to specify atleast to radios else use a checkbox instead', 'buddypress-media'));
+				trigger_error(__('Need to specify atleast to radios else use a checkbox instead', 'rt-media'));
 			return;
 		}
 
 		if (!empty($setting)) {
 			$args['name'] = $setting . '[' . $option . ']';
-			$options = bp_get_option($setting);
+			$options = get_site_option($setting);
 		}
 		else
 			$args['name'] = $option;
@@ -100,8 +100,8 @@ class RTMediaFormHandler {
 	}
 
 	public static function number($args) {
-		global $bp_media;
-		$options = $bp_media->options;
+		global $rt_media;
+		$options = $rt_media->options;
 		$defaults = array(
 			'setting' => '',
 			'option' => '',
@@ -114,13 +114,13 @@ class RTMediaFormHandler {
 		extract($args);
 
 		if (empty($option)) {
-			trigger_error(__('Please provide "option" value ( required ) in the argument. Pass argument to add_settings_field in the following format array( \'option\' => \'option_name\' )', 'buddypress-media'));
+			trigger_error(__('Please provide "option" value ( required ) in the argument. Pass argument to add_settings_field in the following format array( \'option\' => \'option_name\' )', 'rt-media'));
 			return;
 		}
 
 		if (!empty($setting)) {
 			$args['name'] = $setting . '[' . $option . ']';
-			$options = bp_get_option($setting);
+			$options = get_site_option($setting);
 		}
 		else
 			$args['name'] = $option;
@@ -142,33 +142,33 @@ class RTMediaFormHandler {
 
 		if (!isset($wp_settings_fields) ||
 				!isset($wp_settings_fields[$page]) ||
-				!isset($wp_settings_fields[$page]['bpm-settings']) ||
-				!isset($wp_settings_fields[$page]['bpm-featured']))
+				!isset($wp_settings_fields[$page]['rtm-settings']) ||
+				!isset($wp_settings_fields[$page]['rtm-featured']))
 			return;
 
-		$bpm_settings = $wp_settings_fields[$page]['bpm-settings'];
-		$bpm_featured = $wp_settings_fields[$page]['bpm-featured'];
+		$rtm_settings = $wp_settings_fields[$page]['rtm-settings'];
+		$rtm_featured = $wp_settings_fields[$page]['rtm-featured'];
 		$headers = array(
 			array(
-				'id' => 'bpm-media-type',
+				'id' => 'rtm-media-type',
 				'title' => "Media Type",
 				'class' => 'large-2',
 				'desc' => ''
 			),
 			array(
-				'id' => 'bpm-allow-upload',
+				'id' => 'rtm-allow-upload',
 				'title' => "Allow Upload",
 				'class' => 'large-2',
 				'desc' => 'Allows you to upload a particular media type on your post.'
 			),
 			array(
-				'id' => 'bpm-set-feature',
+				'id' => 'rtm-set-feature',
 				'title' => "Set Featured",
 				'class' => 'large-2',
 				'desc' => 'Put a specific media as a featured content on the post.'
 			),
 			array(
-				'id' => 'bpm-file-extn',
+				'id' => 'rtm-file-extn',
 				'title' => "File Extensions",
 				'class' => 'large-3',
 				'desc' => 'File extensions that can be uploaded on the website.'
@@ -178,17 +178,17 @@ class RTMediaFormHandler {
 		$image = array(
 			array(
 				'class' => 'large-2',
-				'content' => $bpm_settings['bpm-image']['title']
+				'content' => $rtm_settings['rtm-image']['title']
 			),
 			array(
 				'class' => 'large-2',
-				'callback' => $bpm_settings['bpm-image']['callback'],
-				'args' => $bpm_settings['bpm-image']['args']
+				'callback' => $rtm_settings['rtm-image']['callback'],
+				'args' => $rtm_settings['rtm-image']['args']
 			),
 			array(
 				'class' => 'large-2',
-				'callback' => $bpm_featured['bpm-featured-image']['callback'],
-				'args' => $bpm_featured['bpm-featured-image']['args']
+				'callback' => $rtm_featured['rtm-featured-image']['callback'],
+				'args' => $rtm_featured['rtm-featured-image']['args']
 			),
 			array(
 				'class' => 'large-3',
@@ -199,17 +199,17 @@ class RTMediaFormHandler {
 		$video = array(
 			array(
 				'class' => 'large-2',
-				'content' => $bpm_settings['bpm-video']['title']
+				'content' => $rtm_settings['rtm-video']['title']
 			),
 			array(
 				'class' => 'large-2',
-				'callback' => $bpm_settings['bpm-video']['callback'],
-				'args' => $bpm_settings['bpm-video']['args']
+				'callback' => $rtm_settings['rtm-video']['callback'],
+				'args' => $rtm_settings['rtm-video']['args']
 			),
 			array(
 				'class' => 'large-2',
-				'callback' => $bpm_featured['bpm-featured-video']['callback'],
-				'args' => $bpm_featured['bpm-featured-video']['args']
+				'callback' => $rtm_featured['rtm-featured-video']['callback'],
+				'args' => $rtm_featured['rtm-featured-video']['args']
 			),
 			array(
 				'class' => 'large-3',
@@ -220,17 +220,17 @@ class RTMediaFormHandler {
 		$audio = array(
 			array(
 				'class' => 'large-2',
-				'content' => $bpm_settings['bpm-audio']['title']
+				'content' => $rtm_settings['rtm-audio']['title']
 			),
 			array(
 				'class' => 'large-2',
-				'callback' => $bpm_settings['bpm-audio']['callback'],
-				'args' => $bpm_settings['bpm-audio']['args']
+				'callback' => $rtm_settings['rtm-audio']['callback'],
+				'args' => $rtm_settings['rtm-audio']['args']
 			),
 			array(
 				'class' => 'large-2',
-				'callback' => $bpm_featured['bpm-featured-audio']['callback'],
-				'args' => $bpm_featured['bpm-featured-audio']['args']
+				'callback' => $rtm_featured['rtm-featured-audio']['callback'],
+				'args' => $rtm_featured['rtm-featured-audio']['args']
 			),
 			array(
 				'class' => 'large-3',
@@ -287,10 +287,10 @@ class RTMediaFormHandler {
 
 		if (!isset($wp_settings_fields) ||
 				!isset($wp_settings_fields[$page]) ||
-				!isset($wp_settings_fields[$page]['bpm-image-settings']) ||
-				!isset($wp_settings_fields[$page]['bpm-video-settings']) ||
-				!isset($wp_settings_fields[$page]['bpm-audio-settings']) ||
-				!isset($wp_settings_fields[$page]['bpm-featured']))
+				!isset($wp_settings_fields[$page]['rtm-image-settings']) ||
+				!isset($wp_settings_fields[$page]['rtm-video-settings']) ||
+				!isset($wp_settings_fields[$page]['rtm-audio-settings']) ||
+				!isset($wp_settings_fields[$page]['rtm-featured']))
 			return;
 
 		$dimension = '<span class="large-offset-1">Width</span>
@@ -302,7 +302,7 @@ class RTMediaFormHandler {
 			array('title' => $dimension, 'class' => 'large-4')
 		);
 
-		$sections = array("bpm-image-settings", "bpm-video-settings", "bpm-audio-settings", "bpm-featured");
+		$sections = array("rtm-image-settings", "rtm-video-settings", "rtm-audio-settings", "rtm-featured");
 
 		$contents = array();
 		$body = array();
@@ -314,10 +314,10 @@ class RTMediaFormHandler {
 				'args' => array()
 			);
 
-			if ($section == "bpm-featured") {
-				$contents[$section]['entity_names'][] = $wp_settings_fields[$page][$section]['bpm-featured-media-dimensions']['title'];
-				$contents[$section]['callbacks'][] = $wp_settings_fields[$page][$section]['bpm-featured-media-dimensions']['callback'];
-				$contents[$section]['args'][] = $wp_settings_fields[$page][$section]['bpm-featured-media-dimensions']['args'];
+			if ($section == "rtm-featured") {
+				$contents[$section]['entity_names'][] = $wp_settings_fields[$page][$section]['rtm-featured-media-dimensions']['title'];
+				$contents[$section]['callbacks'][] = $wp_settings_fields[$page][$section]['rtm-featured-media-dimensions']['callback'];
+				$contents[$section]['args'][] = $wp_settings_fields[$page][$section]['rtm-featured-media-dimensions']['args'];
 			} else {
 				foreach ($wp_settings_fields[$page][$section] as $value) {
 					$contents[$section]['entity_names'][] = $value['title'];
@@ -330,12 +330,12 @@ class RTMediaFormHandler {
 				//title
 				array(
 					'class' => 'large-3',
-					'content' => ( $section == "bpm-featured" ) ? "Featured Media" : $wp_settings_sections[$page][$section]['title']
+					'content' => ( $section == "rtm-featured" ) ? "Featured Media" : $wp_settings_sections[$page][$section]['title']
 				),
 				//entity names
 				array(
 					'class' => 'large-3',
-					'content' => ( $section == "bpm-featured" ) ? $wp_settings_fields[$page][$section]['bpm-featured-media-dimensions']['title'] : $contents[$section]['entity_names']
+					'content' => ( $section == "rtm-featured" ) ? $wp_settings_fields[$page][$section]['rtm-featured-media-dimensions']['title'] : $contents[$section]['entity_names']
 				),
 				//dimensions
 				array(
@@ -398,15 +398,15 @@ class RTMediaFormHandler {
 
 		if (!isset($wp_settings_fields) ||
 				!isset($wp_settings_fields[$page]) ||
-				!isset($wp_settings_fields[$page]['bpm-privacy']))
+				!isset($wp_settings_fields[$page]['rtm-privacy']))
 			return;
 
 		echo '<div class="large-12">';
-			foreach ($wp_settings_fields[$page]['bpm-privacy'] as $key => $value) {
+			foreach ($wp_settings_fields[$page]['rtm-privacy'] as $key => $value) {
 				echo '<div class="row section" id="' . $key . '">';
 					echo '<div class="columns large-2">' . $value['title'] . '</div>';
 					echo '<div class="columns large-5">';
-						if($key != "bpm-privacy-enabled")
+						if($key != "rtm-privacy-enabled")
 							call_user_func($value['callback'], array_merge_recursive($value['args'], array('class' => array("privacy-driven-disable"))));
 						else
 							call_user_func($value['callback'], $value['args']);
@@ -426,16 +426,16 @@ class RTMediaFormHandler {
 
 		$sections = array();
 
-		if( isset($wp_settings_fields[$page]['bpm-media-type']) )
-			$sections[] = "bpm-media-type";
-		if( isset($wp_settings_fields[$page]['bpm-activity-upload']) )
-			$sections[] = "bpm-activity-upload";
-		if( isset($wp_settings_fields[$page]['bpm-media-lightbox']) )
-			$sections[] = "bpm-media-lightbox";
-		if( isset($wp_settings_fields[$page]['bpm-media-fine']) )
-			$sections[] = "bpm-media-fine";
-		if( isset($wp_settings_fields[$page]['bpm-miscellaneous']) )
-			$sections[] = "bpm-miscellaneous";
+		if( isset($wp_settings_fields[$page]['rtm-media-type']) )
+			$sections[] = "rtm-media-type";
+		if( isset($wp_settings_fields[$page]['rtm-activity-upload']) )
+			$sections[] = "rtm-activity-upload";
+		if( isset($wp_settings_fields[$page]['rtm-media-lightbox']) )
+			$sections[] = "rtm-media-lightbox";
+		if( isset($wp_settings_fields[$page]['rtm-media-fine']) )
+			$sections[] = "rtm-media-fine";
+		if( isset($wp_settings_fields[$page]['rtm-miscellaneous']) )
+			$sections[] = "rtm-miscellaneous";
 
 		echo '<div class="large-12">';
 		foreach ($sections as $section) {

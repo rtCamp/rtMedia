@@ -1,23 +1,23 @@
 <?php
 /**
- * Description of BPMediaWidget
+ * Description of RTMediaWidget
  *
  * @author Gagandeep Singh <gagandeep.singh@rtcamp.com>
  * @author Joshua Abenazer <joshua.abenazer@rtcamp.com>
  */
-if (!class_exists('BPMediaAdminWidget')) {
+if (!class_exists('RTMediaAdminWidget')) {
 
-    class BPMediaAdminWidget {
+    class RTMediaAdminWidget {
 
         /**
-         * 
-         * @global type $bp_media
+         *
+         * @global type $rt_media
          * @param type $id
          * @param type $title
          * @param type $content
          */
         public function __construct($id = NULL, $title = NULL, $content = NULL) {
-            global $bp_media;
+            global $rt_media;
             if ($id) {
                 ?>
                 <div class="postbox" id="<?php echo $id; ?>"><?php if ($title) { ?>
@@ -26,7 +26,7 @@ if (!class_exists('BPMediaAdminWidget')) {
                     <div class="inside"><?php echo $content; ?></div>
                 </div><?php
             } else {
-                trigger_error(__('Argument missing. id is required.', 'buddypress-media'));
+                trigger_error(__('Argument missing. id is required.', 'rt-media'));
             }
         }
 

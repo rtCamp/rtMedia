@@ -94,6 +94,8 @@ class RTMedia {
 	 */
 	public $loader;
 
+	public $options;
+
 	/**
 	 *
 	 * @var type
@@ -245,6 +247,25 @@ class RTMedia {
 			add_site_option('media_end_point_enable', true);
 		if(get_site_option('comments_enabled'))
 			add_site_option('comments_enabled', 1);
+
+		$options = array(
+			'comments_enabled' => get_site_option('comments_enabled'),
+			'media_end_point_enabled' => get_site_option('media_end_pont_enabled'),
+			'per_page_media' => get_site_option('per_page_media'),
+			'show_admin_menu' => get_site_option('show_admin_menu'),
+			'albums_enabled' => get_site_option('albums_enabled'),
+			'downloads_enabled' => get_site_option('albums_enabled'),
+			'audio_enabled' => get_site_option('audio_enabled'),
+			'images_enabled' => get_site_option('images_enabled'),
+			'videos_enabled' => get_site_option('videos_enabled'),
+			'featured_image' => get_site_option('featured_image'),
+			'featured_audio' => get_site_option('featured_audio'),
+			'featured_video' => get_site_option('featured_video'),
+			'sizes' => get_site_option('sizes'),
+			'enable_lightbox' => get_site_option('enable_lightbox'),
+			'enable_on_profile' => get_site_option('enable_on_profile'),
+			'enable_on_groups' => get_site_option('enable_on_groups')
+		);
 	}
 
 	/**
