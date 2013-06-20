@@ -141,8 +141,8 @@ class RTMediaTemplate {
 					unset($id['rt_media_media_nonce']);
 					unset($id['_wp_http_referer']);
 					$media = new RTMediaMedia();
-					$media->delete($rt_media_query->action_query->id, $rt_media_query->media[0]->media_id);
-
+                                        
+                                        wp_delete_attachment($rt_media_query->media[0]->media_id,true);
 
 					$post = get_post($rt_media_query->media[0]->post_parent);
 
