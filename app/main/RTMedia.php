@@ -404,6 +404,9 @@ class RTMedia {
 				}
 			}
 		}
+                
+                $media = new RTMediaMedia();
+                $media->delete_hook();
 	}
 
 	/**
