@@ -14,8 +14,6 @@ class BuddyPressMigration {
         $this->bmp_table = $wpdb->prefix . "rt_rtm_media";
         add_action('admin_menu', array($this, 'menu'));
         add_action('wp_ajax_bp_media_rt_db_migration', array($this, "migrate_to_new_db"));
-        add_action('admin_init', array($this, "migration_settings"));
-        //exit;
         add_action('init', array(&$this,'init_sessions'));
 
     }
@@ -28,19 +26,7 @@ class BuddyPressMigration {
 
 
     function menu() {
-        add_submenu_page('bp-media-settings', __('Migration', 'buddypress-media'), __('Migration', 'buddypress-media'), 'manage_options', 'bp-media-migration', array($this, 'test'));
-    }
-
-    public function migration_settings() {
-        add_settings_section('bpm-migration', __('Migration', 'buddypress-media'), array($this, 'test'), 'bp-media-migration');
-    }
-
-    /**
-     * Render the BuddyPress Media Migration page
-     */
-    public function migration_page() {
-        global $bp_media_admin;
-        $bp_media_admin->render_page('bp-media-migration', 'bp-media-migration','Start Migration');
+        add_submenu_page('rt-media-settings', __('Migration', 'buddypress-media'), __('Migration', 'buddypress-media'), 'manage_options', 'rt-media-migration', array($this, 'test'));
     }
 
     function get_total_count() {
@@ -166,6 +152,10 @@ class BuddyPressMigration {
         echo '<span class="finished">'.$done.'</span>/<span class="total">'.$total.'</span>';
         $temp = $prog->progress($done, $total);
         $prog->progress_ui($temp, true);
+        
+        
+        $temp = new BP_Activity_Activity();
+        
         
         ?>
         <script>

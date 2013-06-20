@@ -102,7 +102,7 @@ class RTMediaMediaModel extends RTDBModel {
 
             $result['result'][0]->privacy = get_post_meta($arguments[0], 'bp_media_privacy', true);
         }
-        return $return['result'];
+        return $result['result'];
     }
 
 	/**
