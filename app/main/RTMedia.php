@@ -120,7 +120,7 @@ class RTMedia {
 		 *
 		 * check for global album --- after wordpress is fully loaded
 		 */
-		add_action('wp', array($this, 'check_global_album'));
+		add_action('init', array($this, 'check_global_album'));
 
 		/**
 		 * Define constants
@@ -409,11 +409,11 @@ class RTMedia {
 	}
 
         function update_db() {
-            new BuddyPressMigration();
             $update = new RTDBUpdate();
             if ($update->check_upgrade()) {
                 $update->do_upgrade();
             }
+            new BuddyPressMigration();
         }
 
 	function enqueue_scripts_styles() {
