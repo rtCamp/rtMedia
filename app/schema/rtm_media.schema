@@ -8,6 +8,8 @@ CREATE TABLE %s (
     media_type varchar(100) NULL DEFAULT NULL ,
     context varchar(100) NULL DEFAULT NULL ,
     context_id bigint(20) NULL DEFAULT NULL ,
+    source varchar(100) NULL DEFAULT NULL ,
+    source_id bigint(20) NULL DEFAULT NULL ,
     activity_id bigint(20) NULL DEFAULT NULL ,
     privacy int(3) NULL DEFAULT NULL ,
     views bigint(20) NULL DEFAULT 0 ,

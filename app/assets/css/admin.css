@@ -77,3 +77,17 @@ abbr {
   background-repeat: no-repeat;
   padding: 0 6px;
 }
+
+#rtprogressbar {
+                background-color: #444;
+                border-radius: 13px;
+                padding: 3px;
+                margin-bottom: 10px;
+            }
+
+            #rtprogressbar div {
+                background-color: #fb6003;
+                width: 0;
+                height: 20px;
+                border-radius: 10px;
+            }

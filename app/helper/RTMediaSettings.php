@@ -11,11 +11,11 @@ if (!class_exists('RTMediaSettings')) {
 
         public function __construct() {
             add_action('admin_init', array($this, 'settings'));
-            if (is_multisite()) {
-                add_action('network_admin_notices', array($this, 'privacy_notice'));
-            } else {
-                add_action('admin_notices', array($this, 'privacy_notice'));
-            }
+//            if (is_multisite()) {
+//                add_action('network_admin_notices', array($this, 'privacy_notice'));
+//            } else {
+//                add_action('admin_notices', array($this, 'privacy_notice'));
+//            }
         }
 
         /**
@@ -221,28 +221,28 @@ if (!class_exists('RTMediaSettings')) {
 
         public function network_notices() {
             $flag = 1;
-            if (get_site_option('rtm-media-enable', false)) {
-                echo '<div id="setting-error-bpm-media-enable" class="error"><p><strong>' . get_site_option('rtm-media-enable') . '</strong></p></div>';
+            if (rt_media_get_site_option('rtm-media-enable', false)) {
+                echo '<div id="setting-error-bpm-media-enable" class="error"><p><strong>' . rt_media_get_site_option('rtm-media-enable') . '</strong></p></div>';
                 delete_site_option('rtm-media-enable');
                 $flag = 0;
             }
-            if (get_site_option('rtm-media-type', false)) {
-                echo '<div id="setting-error-bpm-media-type" class="error"><p><strong>' . get_site_option('rtm-media-type') . '</strong></p></div>';
+            if (rt_media_get_site_option('rtm-media-type', false)) {
+                echo '<div id="setting-error-bpm-media-type" class="error"><p><strong>' . rt_media_get_site_option('rtm-media-type') . '</strong></p></div>';
                 delete_site_option('rtm-media-type');
                 $flag = 0;
             }
-            if (get_site_option('rtm-media-default-count', false)) {
-                echo '<div id="setting-error-bpm-media-default-count" class="error"><p><strong>' . get_site_option('rtm-media-default-count') . '</strong></p></div>';
+            if (rt_media_get_site_option('rtm-media-default-count', false)) {
+                echo '<div id="setting-error-bpm-media-default-count" class="error"><p><strong>' . rt_media_get_site_option('rtm-media-default-count') . '</strong></p></div>';
                 delete_site_option('rtm-media-default-count');
                 $flag = 0;
             }
 
-            if (get_site_option('rtm-recount-success', false)) {
-                echo '<div id="setting-error-bpm-recount-success" class="updated"><p><strong>' . get_site_option('rtm-recount-success') . '</strong></p></div>';
+            if (rt_media_get_site_option('rtm-recount-success', false)) {
+                echo '<div id="setting-error-bpm-recount-success" class="updated"><p><strong>' . rt_media_get_site_option('rtm-recount-success') . '</strong></p></div>';
                 delete_site_option('rtm-recount-success');
                 $flag = 0;
-            } elseif (get_site_option('rtm-recount-fail', false)) {
-                echo '<div id="setting-error-bpm-recount-fail" class="error"><p><strong>' . get_site_option('rtm-recount-fail') . '</strong></p></div>';
+            } elseif (rt_media_get_site_option('rtm-recount-fail', false)) {
+                echo '<div id="setting-error-bpm-recount-fail" class="error"><p><strong>' . rt_media_get_site_option('rtm-recount-fail') . '</strong></p></div>';
                 delete_site_option('rtm-recount-fail');
                 $flag = 0;
             }

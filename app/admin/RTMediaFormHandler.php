@@ -32,7 +32,7 @@ class RTMediaFormHandler {
 
 		if (!empty($setting)) {
 			$args['name'] = $setting . '[' . $option . ']';
-			$options = get_site_option($setting);
+			$options = rt_media_get_site_option($setting);
 		}
 		else
 			$args['name'] = $option;
@@ -71,7 +71,7 @@ class RTMediaFormHandler {
 
 		if (!empty($setting)) {
 			$args['name'] = $setting . '[' . $option . ']';
-			$options = get_site_option($setting);
+			$options = rt_media_get_site_option($setting);
 		}
 		else
 			$args['name'] = $option;
@@ -120,7 +120,7 @@ class RTMediaFormHandler {
 
 		if (!empty($setting)) {
 			$args['name'] = $setting . '[' . $option . ']';
-			$options = get_site_option($setting);
+			$options = rt_media_get_site_option($setting);
 		}
 		else
 			$args['name'] = $option;

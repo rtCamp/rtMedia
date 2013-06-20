@@ -62,7 +62,7 @@ if (!class_exists('RTMediaAdmin')) {
 		 * @param type $hook
 		 */
 		public function ui($hook) {
-			$admin_pages = array('rt-media_page_rt-media-kaltura-settings','rt-media_page_rt-media-ffmpeg-settings','toplevel_page_rt-media-settings', 'rtmedia_page_rt-media-addons', 'rtmedia_page_rt-media-support', 'rtmedia_page_rt-media-importer');
+			$admin_pages = array('rtmedia_page_rt-media-migration','rt-media_page_rt-media-kaltura-settings','rt-media_page_rt-media-ffmpeg-settings','toplevel_page_rt-media-settings', 'rtmedia_page_rt-media-addons', 'rtmedia_page_rt-media-support', 'rtmedia_page_rt-media-importer');
 			$admin_pages = apply_filters('rt_media_filter_admin_pages_array', $admin_pages);
 
 			if(in_array($hook, $admin_pages)) {
@@ -97,31 +97,6 @@ if (!class_exists('RTMediaAdmin')) {
 				wp_enqueue_style('rt-media-admin', RT_MEDIA_URL . 'app/assets/css/admin.css', '', RT_MEDIA_VERSION);
 				wp_enqueue_style('wp-jquery-ui-dialog');
 			}
-
-			echo 'scripts :';
-			if(wp_script_is('bootstrap-switch'))
-				echo ' bootstrap-switch,';
-			if(wp_script_is('slider-tabs'))
-				echo ' slider-tabs,';
-			if(wp_script_is('power-tip'))
-				echo ' power-tip,';
-			if(wp_script_is('rt-media-admin'))
-				echo ' rt-media-admin';
-			echo '<br>styles :';
-			if(wp_style_is('font-awesome'))
-				echo ' font-awesome,';
-			if(wp_style_is('bootstrap-switch'))
-				echo ' bootstrap-switch,';
-			if(wp_style_is('power-tip'))
-				echo ' power-tip,';
-			if(wp_style_is('slider-tabs'))
-				echo ' slider-tabs,';
-			if(wp_style_is('grid-foundation'))
-				echo ' grid-foundation,';
-			if(wp_style_is('rt-media-main'))
-				echo ' rt-media-main,';
-			if(wp_style_is('rt-media-admin'))
-				echo ' rt-media-admin';
 		}
 
 		/**
@@ -136,7 +111,7 @@ if (!class_exists('RTMediaAdmin')) {
             add_submenu_page('rt-media-settings', __('rtMedia Support', 'rt-media'), __('Support ', 'rt-media'), 'manage_options', 'rt-media-support', array($this, 'support_page'));
             add_submenu_page('rt-media-settings', __('Importer', 'rt-media'), __('Importer', 'rt-media'), 'manage_options', 'rt-media-importer', array($this, 'rt_importer_page'));
 //            if (!BPMediaPrivacy::is_installed()) {
-			add_submenu_page('rt-media-settings', __('rtMedia Database Update', 'rt-media'), __('Update Database', 'rt-media'), 'manage_options', 'rt-media-db_update', array($this, 'privacy_page'));
+//			add_submenu_page('rt-media-settings', __('rtMedia Database Update', 'rt-media'), __('Update Database', 'rt-media'), 'manage_options', 'rt-media-db-update', array($this, 'privacy_page'));
 //            }
 		}
 
