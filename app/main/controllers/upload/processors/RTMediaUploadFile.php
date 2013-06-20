@@ -33,6 +33,7 @@ class RTMediaUploadFile {
         include_once(ABSPATH . 'wp-admin/includes/image.php');
 
         $upload_type = $this->fake ? 'wp_handle_sideload' : 'wp_handle_upload';
+        add_filter('upload_dir',array($this,'upload_dir'));
 		foreach ($this->files as $key => $file) {
 
 			$uploaded_file[] = $upload_type($file, array('test_form' => false));
@@ -55,6 +56,12 @@ class RTMediaUploadFile {
         }
 
         return $uploaded_file;
+    }
+    
+    function upload_dir($upload_dir){
+//        print_r($upload_dir); die;
+        
+        return $upload_dir;
     }
 
     function set_file($files) {
