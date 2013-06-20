@@ -11,14 +11,24 @@ class BuddyPressMigration {
 
     function __construct() {
         global $wpdb;
-        $this->bmp_table = $wpdb->prefix . "rt_bpm_media";
-//        add_action(bp_core_admin_hook(), array($this, 'menu'));
+        $this->bmp_table = $wpdb->prefix . "rt_rtm_media";
+        add_action('admin_menu', array($this, 'menu'));
         add_action('wp_ajax_bp_media_rt_db_migration', array($this, "migrate_to_new_db"));
         add_action('admin_init', array($this, "migration_settings"));
+        //exit;
+        add_action('init', array(&$this,'init_sessions'));
+
+    }
+    
+    function init_sessions() {
+        if (!session_id()) {
+            session_start();
+        }
     }
 
+
     function menu() {
-        add_submenu_page('bp-media-settings', __('Migration', 'buddypress-media'), __('Migration', 'buddypress-media'), 'manage_options', 'bp-media-migration', array($this, 'migration_page'));
+        add_submenu_page('bp-media-settings', __('Migration', 'buddypress-media'), __('Migration', 'buddypress-media'), 'manage_options', 'bp-media-migration', array($this, 'test'));
     }
 
     public function migration_settings() {
@@ -35,6 +45,26 @@ class BuddyPressMigration {
 
     function get_total_count() {
         global $wpdb;
+        if(function_exists("bp_core_get_table_prefix")) 
+            $bp_prefix = bp_core_get_table_prefix();
+        $sql_album_usercount = "select count(*) FROM $wpdb->usermeta where meta_key ='bp-media-default-album' ";
+        
+        $_SESSION["migration_user_album"] = $wpdb->get_var($sql_album_usercount);
+        $count = intval($_SESSION["migration_user_album"]);
+        
+        if (function_exists("bp_is_active")) {
+            if (bp_is_active('groups')) {
+                $sql_album_groupcount = "select count(*) FROM {$bp_prefix}bp_groups_groupmeta where meta_key ='bp_media_default_album'";
+                $_SESSION["migration_group_album"] = $wpdb->get_var($sql_album_groupcount);
+                $count += intval($_SESSION["migration_group_album"]);
+            }
+            if (bp_is_active('activity')) {
+                $sql_bpm_comment_count = "select count(*) from {$bp_prefix}bp_activity where component='activity' and type='activity_comment';";
+                $_SESSION["migration_activity"] = $wpdb->get_var($sql_bpm_comment_count);
+                $count +=intval($_SESSION["migration_activity"]);
+            }
+        }
+
         $sql = "select count(*)
                 from
                     {$wpdb->postmeta} a
@@ -49,7 +79,12 @@ class BuddyPressMigration {
                 where
                     a.post_id > 0
                         and a.meta_key = 'bp_media_privacy'";
-        return $wpdb->get_var($sql);
+                    
+                    $_SESSION["migration_media"]= $wpdb->get_var($sql) ;
+        $count += intval($_SESSION["migration_media"]);
+
+        return $count;
+        
     }
 
     function get_last_imported() {
@@ -76,16 +111,62 @@ class BuddyPressMigration {
                 where
                     a.post_id > 0
                         and a.meta_key = 'bp_media_privacy')";
-        return $wpdb->get_var($wpdb->prepare($sql, get_current_blog_id()));
+        $media_count =  $wpdb->get_var($wpdb->prepare($sql, get_current_blog_id()));
+        $state = intval(get_site_option("rt-media-migration","0"));
+        if($state<=5){
+            $album_count = intval($_SESSION["migration_user_album"]) + (isset($_SESSION["migration_group_album"]))? intval($_SESSION["migration_group_album"]): 0;
+        }else{
+            $album_count= 0;
+        }
+        
+        return $media_count + $album_count;
+        
     }
+    function manage_album(){
+        $album = get_site_option("rt-media-global-albums");
+        
+        $album_id = $album[0];
+        
+        $album_post_type="rt_media_album";
+        
+        global $wpdb;
+        if(function_exists("bp_core_get_table_prefix")) 
+            $bp_prefix = bp_core_get_table_prefix();
 
+        $sql_group = "update $wpdb->posts set post_parent='{$album_id}' where post_parent in (select meta_value FROM $wpdb->usermeta where meta_key ='bp-media-default-album') ";
+        if (function_exists("bp_is_active")) {
+            if (bp_is_active('groups')) {
+                $sql_group .= " or post_parent in (select meta_value FROM {$bp_prefix}bp_groups_groupmeta where meta_key ='bp_media_default_album')";
+            }
+        }
+        $sql_delete = "delete from $wpdb->posts where post_type='bp_media_album' and (ID in (select meta_value FROM $wpdb->usermeta where meta_key ='bp-media-default-album') ";
+        if (function_exists("bp_is_active")) {
+            if (bp_is_active('groups')) {
+                $sql_delete .= " or ID in (select meta_value FROM {$bp_prefix}bp_groups_groupmeta where meta_key ='bp_media_default_album')";
+            }
+        }
+        $sql_delete .= ")";
+
+        $sql = "update $wpdb->posts set post_type='{$album_post_type}' where post_type='bp_media_album'";
+        
+        if($wpdb->query($sql_group) !== false){
+            if($wpdb->query($sql_delete) !== false ){
+                if($wpdb->query($sql) !== false ){
+                    update_site_option("rt-media-migration", "5");
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
     function test() {
         $prog = new rtProgress();
-        $done = $this->get_done_count() ? $this->get_done_count() : 0;
-        $total = $this->get_total_count() ? $this->get_total_count() : 0;
+        $done = $this->get_done_count();
+        $total = $this->get_total_count();
         echo '<span class="finished">'.$done.'</span>/<span class="total">'.$total.'</span>';
         $temp = $prog->progress($done, $total);
         $prog->progress_ui($temp, true);
+        
         ?>
         <script>
 
@@ -115,7 +196,7 @@ class BuddyPressMigration {
                 }
             }
 
-            jQuery('.bp-media-migration').on('click','#submit',function(e){
+            jQuery(document).on('click','#submit',function(e){
                 e.preventDefault();
                 var db_done = <?php echo $done; ?>;
                 var db_total = <?php echo $total; ?>;
@@ -123,12 +204,25 @@ class BuddyPressMigration {
             });
         </script>
 
-
+        <input type="button" id="submit" value="start" class="button button-primary" />
 
         <?php
     }
 
     function migrate_to_new_db($lastid = 0, $limit = 5) {
+        if(!isset($_SESSION["migration_media"]))
+            $this->get_total_count ();
+        
+        $state= intval(get_site_option("rt-media-migration"));
+        if($state< 5){
+            if($this->manage_album()){
+                echo json_encode(array("status" => true, "done" => $this->get_done_count(), "total" => $this->get_total_count()));
+                die();
+            }else{
+                echo "error";
+            }
+        }
+        
         if (!$lastid) {
             $lastid = $this->get_last_imported();
             if (!$lastid)
