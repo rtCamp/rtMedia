@@ -35,7 +35,7 @@ class RTMediaUploadEndpoint {
 				var_dump($_FILES);
 				$upload = new RTMediaUpload($this->upload);
             }
-			wp_safe_redirect(wp_get_referer());
+//			wp_safe_redirect(wp_get_referer());
         }
 
         exit;

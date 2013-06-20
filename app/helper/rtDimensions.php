@@ -13,9 +13,9 @@
 class rtDimensions extends rtForm {
 
 	private $element_id;
-	
+
 	private static $id_count = 0;
-	
+
 	private static $default_class = "rt-form-dimension";
 
 	private function get_default_id() {
@@ -29,7 +29,7 @@ class rtDimensions extends rtForm {
 	private function get_default_class() {
 		return self::$default_class;
 	}
-	
+
 	private function embedd_class( $element, $class = null ) {
 
 		$html = 'class = "' . $this->get_default_class();
@@ -50,7 +50,7 @@ class rtDimensions extends rtForm {
 	protected function generate_dimensions( $attributes ) {
 
 		$element = "rtDimension";
-		global $bp_media;
+		global $rt_media;
 		$defaults = array(
 			'type' => 'image',
 			'size' => 'thumbnail',
@@ -63,7 +63,7 @@ class rtDimensions extends rtForm {
 		$attributes = wp_parse_args($attributes, $defaults);
 		extract($attributes);
 
-		$options = bp_get_option('bp_media_options');
+		$options = get_site_option('rt_media_options');
 
 		$w = $options['sizes'][$type][$size]['width'];
 		if ($height) {
@@ -72,7 +72,7 @@ class rtDimensions extends rtForm {
 		if ($crop) {
 			$c = $options['sizes'][$type][$size]['crop'];
 		}
-		
+
 		$html = '<div ';
 
 		if( isset($attributes['id']) )
@@ -90,8 +90,8 @@ class rtDimensions extends rtForm {
 
 		$html .= parent::get_number(array(
 			'id' => sanitize_title("{$type}_{$size}_w"),
-			'name' => "bp_media_options[sizes][$type][$size][width]",
-//			'label' => __('Width', 'buddypress-media'),
+			'name' => "rt_media_options[sizes][$type][$size][width]",
+//			'label' => __('Width', 'rt-media'),
 			'value' => $w,
 			'class' => array("small-text large-offset-1"),
 			'show_desc' => $show_desc
@@ -100,8 +100,8 @@ class rtDimensions extends rtForm {
 		if ($height) {
 			$html .= parent::get_number(array(
 				'id' => sanitize_title("{$type}_{$size}_h"),
-				'name' => "bp_media_options[sizes][$type][$size][height]",
-//				'label' => __('Height', 'buddypress-media'),
+				'name' => "rt_media_options[sizes][$type][$size][height]",
+//				'label' => __('Height', 'rt-media'),
 				'value' => $h,
 				'class' => array("small-text large-offset-1"),
 				'show_desc' => $show_desc
@@ -111,10 +111,10 @@ class rtDimensions extends rtForm {
 		if($crop) {
 			$html .= parent::get_checkbox(array(
 				'id' => sanitize_title("{$type}_{$size}_c"),
-				'name' => "bp_media_options[sizes][$type][$size][crop]",
+				'name' => "rt_media_options[sizes][$type][$size][crop]",
 				'rtForm_options' => array(array(
 					'' => 1,
-//					__('Crop', 'buddypress-media') => 1,
+//					__('Crop', 'rt-media') => 1,
 					'checked' => $c
 				)),
 				'class' => array("large-offset-1"),
@@ -129,7 +129,7 @@ class rtDimensions extends rtForm {
 
 		if( isset($attributes['label']) )
 			$html = parent::enclose_label('container', $html, $attributes['label']);
-		
+
 		return $html;
 	}
 
