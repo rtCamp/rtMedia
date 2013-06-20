@@ -114,7 +114,7 @@ if (!class_exists('RTMediaSettings')) {
                 'height' => false
             ));
 
-            if (bp_is_active('activity')) {
+            if (function_exists("bp_is_active") && bp_is_active('activity')) {
                 add_settings_section('rtm-activity-upload', __('Activity Upload', 'rt-media'), '', 'rt-media-settings');
                 add_settings_field('rtm-activity', __('Activity Uploads', 'rt-media'), array('RTMediaFormHandler', 'checkbox'), 'rt-media-settings', 'rtm-activity-upload', array(
                     'setting' => 'rt_media_options',
@@ -132,7 +132,7 @@ if (!class_exists('RTMediaSettings')) {
                     )
             );
 
-            if (bp_is_active('groups')) {
+            if (function_exists("bp_is_active") && bp_is_active('groups')) {
                 add_settings_section('rtm-media-type', __('Groups Integration', 'rt-media'), '', 'rt-media-settings');
 //            add_settings_field('rtm-admin-profile', __('User profiles', 'rt-media'), array('RTMediaFormHandler', 'checkbox'), 'rt-media-settings', 'rtm-media-type', array(
 //                'setting' => 'rt_media_options',
@@ -174,7 +174,7 @@ if (!class_exists('RTMediaSettings')) {
                     2 => __('<strong>Users</strong> - Visible to registered users', 'rt-media'),
                     0 => __('<strong>Public</strong> - Visible to the world', 'rt-media')
                 );
-                if (!bp_is_active('friends')) {
+                if (function_exists("bp_is_active") && !bp_is_active('friends')) {
                     unset($settings[4]);
                 }
                 add_settings_field('rtm-privacy-private-enabled', __('Default Privacy', 'rt-media'), array('RTMediaFormHandler', 'radio'), 'rt-media-settings', 'rtm-privacy', array(
