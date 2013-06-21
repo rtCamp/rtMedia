@@ -25,7 +25,7 @@ class RTMediaAlbum {
 	 *
 	 */
 	public function __construct() {
-		add_action('plugins_loaded', 'register_post_types');
+		add_action('init', array(&$this,'register_post_types'),12);
 		$this->rt_media_object = new RTMediaMedia();
 	}
 
