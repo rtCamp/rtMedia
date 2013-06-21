@@ -166,10 +166,13 @@ class RTMediaTemplate {
 					$media_array[$key] = $media;
 					list($src,$width,$height) = wp_get_attachment_image_src($media->media_id,'thumbnail');
 					$media_array[$key]->guid = $src;
+                                        $media_array[$key]->next = (rt_media_offset()+ rt_media_per_page_media() < rt_media_count())?(rt_media_page()+1): -1 ;
+                                        $media_array[$key]->prev = rt_media_page()-1; 
 				}
 			}
-			echo json_encode( $media_array );
-			return;
+                        
+			echo json_encode($media_array);
+                        return;
 
 		} else if(!$shortcode_attr)
 			return $this->get_default_template();
