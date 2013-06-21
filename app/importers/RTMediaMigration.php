@@ -534,7 +534,7 @@ class RTMediaMigration {
                         if (!copy(str_replace($baseurl, $basedir, $insta_thumb), str_replace($baseurl, $basedir . "rtMedia/$prefix/", $insta_thumb))) {
                             $delete = false;
                         } else {
-                            $delete_sizes[] = str_replace($baseurl, $basedir . "rtMedia/$prefix/", $insta_thumb);
+                            $delete_sizes[] = str_replace($baseurl, $basedir, $insta_thumb);
                             $instagram_thumbs_new[$key] = str_replace($baseurl, $baseurl . "rtMedia/$prefix/", $insta_thumb);
                         }
                     }

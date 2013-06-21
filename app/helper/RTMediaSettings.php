@@ -34,7 +34,6 @@ if (!class_exists('RTMediaSettings')) {
 			// Save Settings first then proceed.
 
 			if(isset($_POST) && count($_POST)) {
-				print_r($_POST);
 				if(isset($_POST['rt-media-general']))
 					$this->save_general_settings($_POST['rt-media-general']);
 				if(isset($_POST['rt-media-allowed-types']))
