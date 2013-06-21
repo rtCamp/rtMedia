@@ -43,7 +43,7 @@ if (!class_exists('RTMediaAdmin')) {
                 //bp_core_admin_hook();
                 add_action('admin_menu', array($this, 'menu'),1);
                 if (current_user_can('manage_options'))
-                    add_action('rt_admin_tabs', array($this, 'tab'));
+                    add_action('bp_admin_tabs', array($this, 'tab'));
                 if (is_multisite())
                     add_action('network_admin_edit_rt_media', array($this, 'save_multisite_options'));
             }
@@ -179,8 +179,8 @@ if (!class_exists('RTMediaAdmin')) {
 						<?php
 						$settings_url = ( is_multisite() ) ? network_admin_url('edit.php?action=' . $option_group) : 'options.php';
 						?>
-						<?php if ($option_group) { //$option_group if ($page == "bp-media-settings") ?>
-							<form id="bp_media_settings_form" name="bp_media_settings_form" action="<?php echo $settings_url; ?>" method="post" enctype="multipart/form-data">
+						<?php if ($option_group) { //$option_group if ($page == "bp-media-settings") action="<?php echo $settings_url; ?>
+							<form id="bp_media_settings_form" name="bp_media_settings_form" method="post" enctype="multipart/form-data">
 								<div class="bp-media-metabox-holder"><?php
 									settings_fields($option_group);
                                                                         if ($page == "rt-media-settings") {
@@ -188,14 +188,16 @@ if (!class_exists('RTMediaAdmin')) {
 
 									echo '<div id="bpm-settings-tabs">';
 										$sub_tabs = $this->settings_sub_tabs();
-										RTMediaFormHandler::rtForm_settings_tabs_content($page, $sub_tabs);
+										RTMediaFormHandler::rtForm_settings_tabs_content($page,$sub_tabs);
 									echo '</div>';
                                                                         }else{
                                                                             do_settings_sections($page);
-                                                                        }
-                                                                        submit_button();
-
-									?><div class="rt-link alignright"><?php _e('By', 'rt-media'); ?> <a href="http://rtcamp.com/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media" title="<?php _e('Empowering The Web With WordPress', 'rt-media'); ?>"><img src="<?php echo RT_MEDIA_URL; ?>app/assets/img/rtcamp-logo.png"></a></div>
+                                                                        }?>
+									<div class="clearfix">&nbsp;</div>
+									<div class="row">
+										<input type="submit" id="rt-media-settings-submit" class="rt-media-settings-submit button" value="<?php echo __("Save Settings","rt-media"); ?>">
+									</div>
+									<div class="rt-link alignright"><?php _e('By', 'rt-media'); ?> <a href="http://rtcamp.com/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media" title="<?php _e('Empowering The Web With WordPress', 'rt-media'); ?>"><img src="<?php echo RT_MEDIA_URL; ?>app/assets/img/rtcamp-logo.png"></a></div>
 								</div>
 							</form><?php } else {
 									?>
@@ -239,12 +241,12 @@ if (!class_exists('RTMediaAdmin')) {
 
 // Check to see which tab we are on
                         $tab = $this->get_current_tab();
-                        /* BuddyPress Media */
+                        /* rtMedia */
                         $tabs[] = array(
-                            'href' => get_admin_url(add_query_arg(array('page' => 'rt-media-settings'), 'admin.php')),
+                            'href' => get_admin_url(null,add_query_arg(array('page' => 'rt-media-settings'), 'admin.php')),
                             'title' => __('rtMedia', 'rt-media'),
                             'name' => __('rtMedia', 'rt-media'),
-                            'class' => ($tab == 'rt-media-settings' || $tab == 'rt-media-addons' || $tab == 'rt-media-support') ? $active_class : $idle_class
+                            'class' => ($tab == 'rt-media-settings' || $tab == 'rt-media-addons' || $tab == 'rt-media-support' || $tab == 'rt-media-importer') ? $active_class : $idle_class
                         );
 
 
@@ -280,7 +282,7 @@ if (!class_exists('RTMediaAdmin')) {
 				array(
 					'href' => get_admin_url(null, add_query_arg(array('page' => 'rt-media-importer'), 'admin.php')),
 					'name' => __('Importer', 'rt-media'),
-					'slug' => 'bp-media-importer'
+					'slug' => 'rt-media-importer'
                         )
 			);
 
@@ -332,9 +334,16 @@ if (!class_exists('RTMediaAdmin')) {
 
 			// Check to see which tab we are on
 			$tab = $this->get_current_tab();
-			/* BuddyPress Media */
+			/* rtMedia */
 			$tabs[] = array(
-				'href' => '#bp-media-types',
+				'href' => '#rt-media-general',
+				'icon' => 'icon-cogs',
+				'title' => __('rtMedia General', 'rt-media'),
+				'name' => __('General', 'rt-media'),
+				'callback' => array('RTMediaFormHandler', 'general_content')
+			);
+			$tabs[] = array(
+				'href' => '#rt-media-types',
 				'icon' => 'icon-film',
 				'title' => __('rtMedia Types', 'rt-media'),
 				'name' => __('Types', 'rt-media'),
@@ -342,7 +351,7 @@ if (!class_exists('RTMediaAdmin')) {
 			);
 
 			$tabs[] = array(
-				'href' => '#bp-media-sizes',
+				'href' => '#rt-media-sizes',
 				'icon' => 'icon-resize-full',
 				'title' => __('rtMedia Sizes', 'rt-media'),
 				'name' => __('Sizes', 'rt-media'),
@@ -350,7 +359,7 @@ if (!class_exists('RTMediaAdmin')) {
 			);
 
 			$tabs[] = array(
-				'href' => '#bp-media-privacy',
+				'href' => '#rt-media-privacy',
 				'icon' => 'icon-lock',
 				'title' => __('rtMedia Privacy', 'rt-media'),
 				'name' => __('Privacy', 'rt-media'),
@@ -358,11 +367,11 @@ if (!class_exists('RTMediaAdmin')) {
 			);
 
 			$tabs[] = array(
-				'href' => '#bp-media-misc',
-				'icon' => 'icon-cog',
-				'title' => __('rtMedia Miscellaneous', 'rt-media'),
-				'name' => __('Miscellaneous', 'rt-media'),
-				'callback' => array('RTMediaFormHandler', 'misc_content')
+				'href' => '#rt-media-bp',
+				'icon' => 'icon-group',
+				'title' => __('rtMedia BuddyPress', 'rt-media'),
+				'name' => __('BuddyPress', 'rt-media'),
+				'callback' => array('RTMediaFormHandler', 'buddypress_content')	//change it to BuddyPress Content
 			);
 
 			$tabs = apply_filters('rt_media_add_settings_sub_tabs', $tabs, $tab);
@@ -475,7 +484,7 @@ if (!class_exists('RTMediaAdmin')) {
 								<div class="columns large-6"><iframe allowtransparency="true" frameborder="0" scrolling="no" src="//platform.twitter.com/widgets/follow_button.html?screen_name=buddypressmedia&show_count=false" style="width:62px; height:21px; margin-top: 5px;"></iframe></div>
 								<div class="columns large-6"><a href="http://twitter.com/home/?status=' . $message . '" class="button button-tweet" target= "_blank"><i class="icon-twitter"></i> ' . __('Tweet', 'rt-media') . '</a></div>
 								<div class="columns large-6"><a href="http://wordpress.org/support/view/plugin-reviews/buddypress-media?rate=5#postform" class="button bpm-wp-button" target= "_blank"><span class="bpm-wp-icon">&nbsp;</span> ' . __('Review', 'rt-media') . '</a></div>
-								<div class="columns large-6"><a href="' . sprintf('%s', 'http://feeds.feedburner.com/rtcamp/') . '"  title="' . __('Subscribe to our feeds', 'rt-media') . '" class="button"><i class="bp-media-rss icon-rss"></i> ' . __('Feeds', 'rt-media') . '</a></div>
+								<div class="columns large-6"><a href="' . sprintf('%s', 'http://feeds.feedburner.com/rtcamp/') . '"  title="' . __('Subscribe to our feeds', 'rt-media') . '" class="button" target="_blank"><i class="bp-media-rss icon-rss"></i> ' . __('Feeds', 'rt-media') . '</a></div>
 							</div>
 						</div>';
 			//<li><a href="' . sprintf('%s', 'http://www.facebook.com/rtCamp.solutions/') . '"  title="' . __('Become a fan on Facebook', 'rt-media') . '" class="bp-media-facebook bp-media-social">' . __('Facebook', 'rt-media') . '</a></li>
