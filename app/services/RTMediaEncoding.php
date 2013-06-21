@@ -30,7 +30,7 @@ class RTMediaEncoding {
                     if (isset($usage_info[$this->api_key]->remaining) && $usage_info[$this->api_key]->remaining > 0) {
                         if ($usage_info[$this->api_key]->remaining < 524288000 && !get_site_option('rt-media-encoding-usage-limit-mail'))
                             $this->nearing_usage_limit($usage_info);
-                        elseif ($usage_info[$this->api_key]->remaining > 524288000 && rt_get_option('rt-media-encoding-usage-limit-mail'))
+                        elseif ($usage_info[$this->api_key]->remaining > 524288000 && get_site_option('rt-media-encoding-usage-limit-mail'))
                             update_site_option('rt-media-encoding-usage-limit-mail', 0);
 						/**
 						 * @todo update class_name

@@ -317,16 +317,25 @@ class RTMediaQuery {
 		}
 
 
+<<<<<<< Updated upstream
 		global $rt_media;
 
 			if ( ! $rt_media->get_option( 'media_end_point_enable' ) )
+=======
+			if( !$rt_media->get_option('media-end-point-enabled') )
+>>>>>>> Stashed changes
 				include get_404_template();
 
 		/**
 		 * set action query object
 		 * setting parameters in action query object for pagination
 		 */
+<<<<<<< Updated upstream
 		$per_page_media = intval( $rt_media->get_option( 'per_page_media' ) );
+=======
+		global $rt_media;
+		$per_page_media = intval($rt_media->get_option('per-page-media'));
+>>>>>>> Stashed changes
 
 		$this->action_query = (object) array(
 					$modifier_type => $modifier_value,
