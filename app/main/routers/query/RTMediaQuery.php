@@ -56,11 +56,12 @@ class RTMediaQuery {
 		// set up the interaction object relevant to just the query
 		// we only need information related to the media route
 		global $rt_media_interaction;
-                
+
                 $this->model = new RTMediaModel();
 
-                
+
 		$this->interaction = $rt_media_interaction->routes[ 'media' ];
+
 
 		//check and set the format to json, if needed
 		$this->set_json_format();

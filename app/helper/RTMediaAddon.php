@@ -49,7 +49,7 @@ if (!class_exists('RTMediaAddon')) {
 			global $rt_media_admin;
 			$tabs[] = array(
 				'title' => 'Encoding',
-				'name' => __('Audio/Video Encoding', 'rt-media'),
+				'name' => __('Encoding', 'rt-media'),
 				'href' => '#bpm-services',
 				'callback' => array($rt_media_admin->rt_media_encoding, 'encoding_service_intro')
 			);

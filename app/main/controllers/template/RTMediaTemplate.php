@@ -47,10 +47,10 @@ class RTMediaTemplate {
 	 */
 	function set_template($template, $shortcode_attr = false) {
 
-		global $rt_media_query, $rt_media_interaction;
+		global $rt_media_query, $rt_media_interaction, $rt_media_media;
 
 		$media_array = '';
-
+                
 		/* Includes db specific wrapper functions required to render the template */
 		include(RT_MEDIA_PATH . 'app/main/controllers/template/rt-template-functions.php');
 
@@ -164,7 +164,7 @@ class RTMediaTemplate {
 			if($rt_media_query->media) {
 				foreach($rt_media_query->media as $key => $media){
 					$media_array[$key] = $media;
-					list($src,$width,$height) = wp_get_attachment_image_src($rt_media_media->media_id,$size);
+					list($src,$width,$height) = wp_get_attachment_image_src($media->media_id,'thumbnail');
 					$media_array[$key]->guid = $src;
 				}
 			}

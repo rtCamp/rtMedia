@@ -52,26 +52,12 @@ class rtDimensions extends rtForm {
 		$element = "rtDimension";
 		global $rt_media;
 		$defaults = array(
-			'type' => 'image',
-			'size' => 'thumbnail',
-			'height' => true,
-			'crop' => false,
 			'desc' => '',
 			'show_desc' => false
 		);
 
 		$attributes = wp_parse_args($attributes, $defaults);
 		extract($attributes);
-
-		$options = get_site_option('rt_media_options');
-
-		$w = $options['sizes'][$type][$size]['width'];
-		if ($height) {
-			$h = $options['sizes'][$type][$size]['height'];
-		}
-		if ($crop) {
-			$c = $options['sizes'][$type][$size]['crop'];
-		}
 
 		$html = '<div ';
 
@@ -89,33 +75,27 @@ class rtDimensions extends rtForm {
 		$html .= '>';
 
 		$html .= parent::get_number(array(
-			'id' => sanitize_title("{$type}_{$size}_w"),
-			'name' => "rt_media_options[sizes][$type][$size][width]",
-//			'label' => __('Width', 'rt-media'),
-			'value' => $w,
+			'name' => "rt-media-options[{$key}][width]",
+			'value' => $width,
 			'class' => array("small-text large-offset-1"),
 			'show_desc' => $show_desc
 		));
 
-		if ($height) {
+		if (isset($height)) {
 			$html .= parent::get_number(array(
-				'id' => sanitize_title("{$type}_{$size}_h"),
-				'name' => "rt_media_options[sizes][$type][$size][height]",
-//				'label' => __('Height', 'rt-media'),
-				'value' => $h,
+				'name' => "rt-media-options[{$key}][height]",
+				'value' => $height,
 				'class' => array("small-text large-offset-1"),
 				'show_desc' => $show_desc
 			));
 		}
 
-		if($crop) {
+		if(isset($crop)) {
 			$html .= parent::get_checkbox(array(
-				'id' => sanitize_title("{$type}_{$size}_c"),
-				'name' => "rt_media_options[sizes][$type][$size][crop]",
+				'name' => "rt-media-options[{$key}][crop]",
 				'rtForm_options' => array(array(
-					'' => 1,
-//					__('Crop', 'rt-media') => 1,
-					'checked' => $c
+					'' => 1,	//label would be blank
+					'checked' => $crop
 				)),
 				'class' => array("large-offset-1"),
 				'show_desc' => $show_desc

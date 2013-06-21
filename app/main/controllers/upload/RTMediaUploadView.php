@@ -40,7 +40,7 @@ class RTMediaUploadView {
 	 */
     public function render($template_name) {
         $tabs = array(
-			'file_upload' => array( 'title' => __('File Upload','rt-media'), 'content' => '<div id="drag-drop-area"><input type="file" name="rt_media_file" class="rt-media-upload-input rt-media-file" /></div>' ),
+			'file_upload' => array( 'title' => __('File Upload','rt-media'), 'content' => '<div id="drag-drop-area"><input type="file" name="rt_media_file[]" class="rt-media-upload-input rt-media-file" multiple="" /></div>' ),
 //			'file_upload' => array( 'title' => __('File Upload','rt-media'), 'content' => '<div id="rt-media-uploader"><p>Your browser does not have HTML5 support.</p></div>'),
 			'link_input' => array( 'title' => __('Insert from URL','rt-media'),'content' => '<input type="url" name="bp-media-url" class="rt-media-upload-input rt-media-url" />' ),
         );

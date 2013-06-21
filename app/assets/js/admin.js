@@ -482,14 +482,14 @@ jQuery(document).ready(function($){
         defaultTab: 1
     });
 
-	if(jQuery('#privacy_enabled').is(":checked")) {
+	if(jQuery('#rt-media-privacy-enable').is(":checked")) {
 		jQuery(".privacy-driven-disable label input").prop("disabled",false);
         jQuery(".privacy-driven-disable label .rt-switch").bootstrapSwitch("setActive",true);
 	} else {
 		jQuery(".privacy-driven-disable label input").prop("disabled",true);
         jQuery(".privacy-driven-disable label .rt-switch").bootstrapSwitch("setActive",false);
 	}
-	jQuery('#privacy_enabled').on("click", function(e) {
+	jQuery('#rt-media-privacy-enable').on("click", function(e) {
 		if(jQuery(this).is(":checked")) {
 			jQuery(".privacy-driven-disable label input").prop("disabled",false);
             jQuery(".privacy-driven-disable label .rt-switch").bootstrapSwitch("setActive",true);
@@ -502,7 +502,7 @@ jQuery(document).ready(function($){
 	jQuery("[data-toggle='switch']").wrap('<div class="rt-switch" />').parent().bootstrapSwitch();
 
     try {
-		jQuery('bpm-show-tooltip').powerTip({
+		jQuery('.rtm-show-tooltip').powerTip({
 			followMouse: true
 		});
     } catch(e) {

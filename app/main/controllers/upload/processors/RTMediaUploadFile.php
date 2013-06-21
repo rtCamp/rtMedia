@@ -93,9 +93,7 @@ class RTMediaUploadFile {
              * otherwise check for $_FILES global object from the form submitted
              */
         } elseif (isset($_FILES['rt_media_file'])) {
-            $this->populate_file_array(
-                    $this->arrayify($_FILES['rt_media_file'])
-            );
+            $this->populate_file_array($_FILES['rt_media_file']);
         } else {
             /**
              * No files could be found to upload
@@ -109,14 +107,17 @@ class RTMediaUploadFile {
      * @param type $file_array
      */
     function populate_file_array($file_array) {
-        foreach ($file_array as $file) {
+        $count=0;
+        $lastcount = count($file_array['name']);
+        while ($count < $lastcount) {
             $this->files[] = array(
-                'name' => isset($file['name']) ? $file['name'] : '',
-                'type' => isset($file['type']) ? $file['type'] : '',
-                'tmp_name' => isset($file['tmp_name']) ? $file['tmp_name'] : '',
-                'error' => isset($file['error']) ? $file['error'] : '',
-                'size' => isset($file['size']) ? $file['size'] : 0,
+                'name' => isset($file_array['name'][$count]) ? $file_array['name'][$count] : '',
+                'type' => isset($file_array['type'][$count]) ? $file_array['type'][$count] : '',
+                'tmp_name' => isset($file_array['tmp_name'][$count]) ? $file_array['tmp_name'][$count] : '',
+                'error' => isset($file_array['error'][$count]) ? $file_array['error'][$count] : '',
+                'size' => isset($file_array['size'][$count]) ? $file_array['size'][$count] : 0,
             );
+            $count++;
         }
     }
 
@@ -132,7 +133,9 @@ class RTMediaUploadFile {
             global $rt_media;
             $allowed_types = array();
             foreach ($rt_media->allowed_types as $type) {
-                $allowed_types[] = $type['name'];
+				foreach ($type['extn'] as $extn) {
+					$allowed_types[] = $extn;
+				}
             }
 
             if (!preg_match('/' . implode('|', $allowed_types) . '/i', $file['type'], $result) || !isset($result[0])) {
