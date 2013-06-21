@@ -133,7 +133,9 @@ class RTMediaUploadFile {
             global $rt_media;
             $allowed_types = array();
             foreach ($rt_media->allowed_types as $type) {
-                $allowed_types[] = $type['name'];
+				foreach ($type['extn'] as $extn) {
+					$allowed_types[] = $extn;
+				}
             }
 
             if (!preg_match('/' . implode('|', $allowed_types) . '/i', $file['type'], $result) || !isset($result[0])) {

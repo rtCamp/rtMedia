@@ -126,7 +126,8 @@ class RTMediaAlbum {
 		$post_vars = array(
 			'post_title' => (empty($title)) ? 'Untitled Album' : $title,
 			'post_type' => 'rt_media_album',
-			'post_author' => $author_id
+			'post_author' => $author_id,
+                        'post_status' => 'publish'
 		);
 
 		/* Check whether to create a new album in wp_post table

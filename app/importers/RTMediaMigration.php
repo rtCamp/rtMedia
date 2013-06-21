@@ -239,7 +239,7 @@ class RTMediaMigration {
                                     jQuery('span.finished').html(done);
                                     jQuery('span.total').html(total);
                                     jQuery('span.pending').html(data.pending);
-                                                
+                                                                        
                                     db_start_migration(done,total);
                                 }else{
                                     alert("Migration Done");
@@ -248,6 +248,9 @@ class RTMediaMigration {
 
                             }
                         });
+                    }else{
+                        alert("Migration Done");
+                        jQuery("#rtMediaSyncing").hide();
                     }
                 }
 
@@ -335,10 +338,29 @@ class RTMediaMigration {
                         $prefix = "users/" . abs(intval($result->context_id));
                     } else {
                         $media_context = "group";
-                        $prefix = "group/" . abs(intval($result->context_id));
+                        $prefix = "groups/" . abs(intval($result->context_id));
                     }
 
-                    $this->import_media($media_id, $prefix);
+
+
+
+                    if ($result->post_type != "attachment") {
+                        $media_type = "album";
+                    } else {
+                        $mime_type = strtolower($result->post_mime_type);
+                        if (strpos($mime_type, "image") == 0) {
+                            $media_type = "image";
+                        } else if (strpos($mime_type, "audio") == 0) {
+                            $media_type = "audio";
+                        } else if (strpos($mime_type, "video") == 0) {
+                            $media_type = "video";
+                        } else {
+                            $media_type = "other";
+                        }
+                    }
+
+                    if ($media_type != 'album')
+                        $this->import_media($media_id, $prefix);
 
                     if ($this->table_exists($bp_prefix . "bp_activity") && class_exists("BP_Activity_Activity")) {
                         $bp_activity = new BP_Activity_Activity();
@@ -358,25 +380,6 @@ class RTMediaMigration {
 
                     //
                     //$temp->get_activity_comments(2640, 1, 8)
-
-
-
-                    if ($result->post_type != "attachment") {
-                        $media_type = "album";
-                    } else {
-                        $mime_type = strtolower($result->post_mime_type);
-                        if (strpos($mime_type, "image") == 0) {
-                            $media_type = "image";
-                        } else if (strpos($mime_type, "audio") == 0) {
-                            $media_type = "audio";
-                        } else if (strpos($mime_type, "video") == 0) {
-                            $media_type = "video";
-                        } else {
-                            $media_type = "other";
-                        }
-                    }
-
-
 //                echo $media_context ."-". abs(intval($result->context_id)) . "<br />";
 
                     $wpdb->insert(
@@ -411,7 +414,8 @@ class RTMediaMigration {
     }
 
     function import_media($id, $prefix) {
-
+//        error_log($id);
+//        error_log($prefix);
         $delete = false;
         $attached_file = get_attached_file($id);
         $attached_file_option = get_post_meta($id, '_wp_attached_file', true);
@@ -493,16 +497,21 @@ class RTMediaMigration {
 
         $metadata = wp_get_attachment_metadata($id);
         $backup_metadata = get_post_meta($id, '_wp_attachment_backup_sizes', true);
-        error_log($attached_file);
-        error_log(str_replace($basedir, $basedir . "rtMedia/$prefix/", $attached_file));
+        $instagram_thumbs = get_post_meta($id, '_instagram_thumbs', true);
+        $instagram_full_images = get_post_meta($id, '_instagram_full_images', true);
+        $instagram_metadata = get_post_meta($id, '_instagram_metadata', true);
+
+
+//        error_log($attached_file);
+//        error_log(str_replace($basedir, $basedir . "rtMedia/$prefix/", $attached_file));
         if (wp_mkdir_p($basedir . "rtMedia/$prefix/" . $year_month)) {
             if (copy($attached_file, str_replace($basedir, $basedir . "rtMedia/$prefix/", $attached_file))) {
                 $delete = true;
 
                 if (isset($metadata['sizes'])) {
                     foreach ($metadata['sizes'] as $size) {
-                        error_log($file_folder_path . $size['file']);
-                        error_log($new_file_folder_path . $size['file']);
+//                        error_log($file_folder_path . $size['file']);
+//                        error_log($new_file_folder_path . $size['file']);
                         if (!copy($file_folder_path . $size['file'], $new_file_folder_path . $size['file'])) {
                             $delete = false;
                         } else {
@@ -514,28 +523,89 @@ class RTMediaMigration {
                     foreach ($backup_metadata as $backup_images) {
                         if (!copy($file_folder_path . $backup_images['file'], $new_file_folder_path . $backup_images['file'])) {
                             $delete = false;
+                        } else {
                             $delete_sizes[] = $file_folder_path . $backup_images['file'];
                         }
                     }
                 }
-            }
 
-            if ($delete) {
-                unlink($attached_file);
-                if ($delete_sizes) {
-                    foreach ($delete_sizes as $delete_size)
-                        unlink($delete_size);
+                if ($instagram_thumbs) {
+                    foreach ($instagram_thumbs as $key => $insta_thumb) {
+                        if (!copy(str_replace($baseurl, $basedir, $insta_thumb), str_replace($baseurl, $basedir . "rtMedia/$prefix/", $insta_thumb))) {
+                            $delete = false;
+                        } else {
+                            $delete_sizes[] = str_replace($baseurl, $basedir, $insta_thumb);
+                            $instagram_thumbs_new[$key] = str_replace($baseurl, $baseurl . "rtMedia/$prefix/", $insta_thumb);
+                        }
+                    }
                 }
-                update_post_meta($id, '_wp_attached_file', "rtMedia/$prefix/" . $attached_file_option);
-                $metadata['file'] = "rtMedia/$prefix/" . $metadata['file'];
-                wp_update_attachment_metadata($id, $metadata);
+
+                if ($instagram_full_images) {
+                    foreach ($instagram_full_images as $key => $insta_full_image) {
+                        if (!copy($insta_full_image, str_replace($basedir, $basedir . "rtMedia/$prefix/", $insta_full_image))) {
+                            $delete = false;
+                        } else {
+                            $delete_sizes[] = $insta_full_image;
+                            $instagram_full_images_new[$key] = str_replace($basedir, $basedir . "rtMedia/$prefix", $insta_full_image);
+                        }
+                    }
+                }
+
+                if ($instagram_metadata) {
+                    $instagram_metadata_new = $instagram_metadata;
+                    foreach ($instagram_metadata as $wp_size => $insta_metadata) {
+                        if (isset($insta_metadata['file'])) {
+                            if (!copy($basedir . $insta_metadata['file'], $basedir . "rtMedia/$prefix/" . $insta_metadata['file'])) {
+                                $delete = false;
+                            } else {
+                                $delete_sizes[] = $basedir . $insta_metadata['file'];
+                                $instagram_metadata_new[$wp_size]['file'] = "rtMedia/$prefix/" . $insta_metadata['file'];
+                                if (isset($insta_metadata['sizes'])) {
+                                    foreach ($insta_metadata['sizes'] as $key => $insta_size) {
+                                        if (!copy($file_folder_path . $insta_size['file'], $new_file_folder_path . $insta_size['file'])) {
+                                            $delete = false;
+                                        } else {
+                                            $delete_sizes[] = $file_folder_path . $insta_size['file'];
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                if ($delete) {
+                    if (file_exists($attached_file))
+                        unlink($attached_file);
+
+                    if (isset($delete_sizes)) {
+                        foreach ($delete_sizes as $delete_size) {
+                            if (file_exists($delete_size))
+                                unlink($delete_size);
+                        }
+                    }
+                    update_post_meta($id, '_wp_attached_file', "rtMedia/$prefix/" . $attached_file_option);
+                    if (isset($metadata['file'])) {
+                        $metadata['file'] = "rtMedia/$prefix/" . $metadata['file'];
+                        wp_update_attachment_metadata($id, $metadata);
+                    }
+                    if ($instagram_thumbs) {
+                        update_post_meta($id, '_instagram_thumbs', $instagram_thumbs_new);
+                    }
+                    if ($instagram_full_images) {
+                        update_post_meta($id, '_instagram_full_images', $instagram_full_images_new);
+                    }
+                    if ($instagram_metadata) {
+                        update_post_meta($id, '_instagram_metadata', $instagram_metadata_new);
+                    }
 
 
-                $attachment = array();
-                $attachment['ID'] = $id;
-                $attachment['guid'] = str_replace($baseurl, $baseurl . "rtMedia/$prefix/", get_post_field('guid', $id));
+                    $attachment = array();
+                    $attachment['ID'] = $id;
+                    $attachment['guid'] = str_replace($baseurl, $baseurl . "rtMedia/$prefix/", get_post_field('guid', $id));
 
-                wp_update_post($attachment);
+                    wp_update_post($attachment);
+                }
             }
         }
     }
