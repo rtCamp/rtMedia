@@ -30,7 +30,7 @@ class RTMediaGalleryShortcode {
 		//wp_register_script('rtmedia-models', RT_MEDIA_URL . 'app/assets/js/backbone/models.js', array('backbone'));
 		//wp_register_script('rtmedia-collections', RT_MEDIA_URL . 'app/assets/js/backbone/collections.js', array('backbone', 'rtmedia-models'));
 		//wp_register_script('rtmedia-views', RT_MEDIA_URL . 'app/assets/js/backbone/views.js', array('backbone', 'rtmedia-collections'));
-		wp_register_script('rtmedia-backbone', RT_MEDIA_URL . 'app/assets/js/backbone/rtMedia.backbone.js', array());
+		wp_register_script('rtmedia-backbone', RT_MEDIA_URL . 'app/assets/js/rtMedia.backbone.js', array('backbone'));
 	}
 
 	/**

@@ -50,7 +50,7 @@ class RTMediaTemplate {
 		global $rt_media_query, $rt_media_interaction, $rt_media_media;
 
 		$media_array = '';
-
+                
 		/* Includes db specific wrapper functions required to render the template */
 		include(RT_MEDIA_PATH . 'app/main/controllers/template/rt-template-functions.php');
 

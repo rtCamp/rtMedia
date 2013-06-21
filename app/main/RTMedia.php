@@ -109,7 +109,6 @@ class RTMedia {
 	 * @global int $bp_media_counter Media counter
 	 */
 	public function __construct() {
-
 		/**
 		 * Rewrite API flush before activating and after deactivating the plugin
 		 */

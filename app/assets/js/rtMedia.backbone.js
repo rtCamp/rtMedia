@@ -48,10 +48,10 @@ jQuery(function($) {
 					rt_media_page: page
 				},
 				success: function(model, response) {
-					var galleryViewObj = new rtMedia.GalleryView({
-						collection: model,
-						el: $(".rt-media-list")[0]
-					});
+					//var galleryViewObj = new rtMedia.GalleryView({
+				//		collection: model,
+			//			el: $(".rt-media-list")[0]
+		//			});
 				}
 			});
 		},
@@ -106,6 +106,5 @@ jQuery(function($) {
 
 
 	var galleryObj = new rtMedia.Gallery();
-
 
 });

@@ -93,9 +93,7 @@ class RTMediaUploadFile {
              * otherwise check for $_FILES global object from the form submitted
              */
         } elseif (isset($_FILES['rt_media_file'])) {
-            $this->populate_file_array(
-                    $this->arrayify($_FILES['rt_media_file'])
-            );
+            $this->populate_file_array($_FILES['rt_media_file']);
         } else {
             /**
              * No files could be found to upload
@@ -109,14 +107,16 @@ class RTMediaUploadFile {
      * @param type $file_array
      */
     function populate_file_array($file_array) {
+        $count=0;
         foreach ($file_array as $file) {
             $this->files[] = array(
-                'name' => isset($file['name']) ? $file['name'] : '',
-                'type' => isset($file['type']) ? $file['type'] : '',
-                'tmp_name' => isset($file['tmp_name']) ? $file['tmp_name'] : '',
-                'error' => isset($file['error']) ? $file['error'] : '',
-                'size' => isset($file['size']) ? $file['size'] : 0,
+                'name' => isset($file_array['name'][$count]) ? $file_array['name'][$count] : '',
+                'type' => isset($file_array['type'][$count]) ? $file_array['type'][$count] : '',
+                'tmp_name' => isset($file_array['tmp_name'][$count]) ? $file_array['tmp_name'][$count] : '',
+                'error' => isset($file_array['error'][$count]) ? $file_array['error'][$count] : '',
+                'size' => isset($file_array['size'][$count]) ? $file_array['size'][$count] : 0,
             );
+            $count++;
         }
     }
 
