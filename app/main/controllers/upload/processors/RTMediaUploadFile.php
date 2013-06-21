@@ -108,7 +108,8 @@ class RTMediaUploadFile {
      */
     function populate_file_array($file_array) {
         $count=0;
-        foreach ($file_array as $file) {
+        $lastcount = count($file_array['name']);
+        while ($count < $lastcount) {
             $this->files[] = array(
                 'name' => isset($file_array['name'][$count]) ? $file_array['name'][$count] : '',
                 'type' => isset($file_array['type'][$count]) ? $file_array['type'][$count] : '',
