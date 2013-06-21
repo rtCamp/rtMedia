@@ -37,40 +37,6 @@ jQuery(function($) {
 
 	});
 
-
-//	var rtMedia = Backbone.Collection.extend({
-//		model: rtMediaItem,
-//		url: 'media'
-//	});
-
-//	media = new rtMedia;
-
-//	media.fetch({data:{'json':true}});
-//	media.each(function(medium){
-//		medium.fetch();
-//	}
-
-	//media.get(15)
-
-//	media.add([{'id':12}]);
-//
-//
-//	setInterval(function() {
-//	  media.get(12).fetch({data:{'json':true}});
-//	}, 10000);
-
-
-//	mediaGallery = new rtMedia.Gallery();
-//	mediaModel
-//	mediaGallery.add(new rtMedia.Media());
-//	mediaGallery.fetch({data:{'json':true}});
-//	new rtMedia.GalleryView();
-//	media = new rtMedia.Media({ "media_title" : "Test" });
-//	mediaView = new rtMedia.MediaView({ model: media});
-//	galleryView = new rtMedia.GalleryView();
-
-
-
 	rtMedia.Gallery = Backbone.Collection.extend({
 		model: rtMedia.Media,
 		url: 'media/',
@@ -119,10 +85,6 @@ jQuery(function($) {
 		className: 'rt-media-list',
 		template: _.template($("#rt-media-gallery-item-template").html()),
 		initialize: function() {
-//			this.collection= galleryColl.models;
-//			this.add(new rtMedia.Media());
-///			this.collection.on('add', this.appendItem);
-			//console.log(this.collection);
 			this.render();
 		},
 		render: function(){

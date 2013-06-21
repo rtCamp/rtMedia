@@ -41,6 +41,8 @@ class RTMediaMigration {
         global $wpdb;
         if (function_exists("bp_core_get_table_prefix"))
             $bp_prefix = bp_core_get_table_prefix();
+        else
+            $bp_prefix = "";
         $sql_album_usercount = "select count(*) FROM $wpdb->usermeta where meta_key ='bp-media-default-album' ";
 
         $_SESSION["migration_user_album"] = $wpdb->get_var($sql_album_usercount);
@@ -163,6 +165,8 @@ class RTMediaMigration {
         global $wpdb;
         if (function_exists("bp_core_get_table_prefix"))
             $bp_prefix = bp_core_get_table_prefix();
+        else
+            $bp_prefix="";
 
         $sql_group = "update $wpdb->posts set post_parent='{$album_id}' where post_parent in (select meta_value FROM $wpdb->usermeta where meta_key ='bp-media-default-album') ";
         if ($this->table_exists($bp_prefix . "bp_groups_groupmeta")) {
@@ -197,9 +201,13 @@ class RTMediaMigration {
             <h2>rtMedia Migration</h2>
             <h3><?php _e("It will migrate following things"); ?> </h3>
             User Albums : <?php echo $_SESSION["migration_user_album"]; ?><br />
+            <?php if(isset($_SESSION["migration_group_album"])){ ?>
             Groups Albums : <?php echo $_SESSION["migration_group_album"]; ?><br />
+            <?php } ?>
             Media : <?php echo $_SESSION["migration_media"]; ?><br />
+            <?php if(isset($_SESSION["migration_activity"])){ ?>
             Comments : <?php echo $_SESSION["migration_activity"]; ?><br />
+            <?php } ?>
             <hr />
 
             <?php
@@ -315,6 +323,8 @@ class RTMediaMigration {
             $results = $wpdb->get_results($wpdb->prepare($sql, $lastid, $limit));
             if (function_exists("bp_core_get_table_prefix"))
                 $bp_prefix = bp_core_get_table_prefix();
+            else
+                $bp_prefix="";
             if ($results) {
                 $blog_id = get_current_blog_id();
                 foreach ($results as $result) {
