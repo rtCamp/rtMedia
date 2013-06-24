@@ -380,10 +380,17 @@ class RTMediaQuery {
 		}
 
 		if(!isset($this->query['media_type'])){
-			if ( isset( $this->action_query->media_type ) && in_array( $this->action_query->media_type, $allowed_media_types ) )
+			if ( isset( $this->action_query->media_type ) &&
+					(
+					in_array( $this->action_query->media_type, $allowed_media_types )||
+					$this->action_query->media_type == 'album'
+					)
+					){
 				$this->query[ 'media_type' ] = $this->action_query->media_type;
-		} elseif($this->query['media_type']=='album'){
-			$this->query[ 'media_type' ] = array( 'compare' => 'NOT IN', 'value' => array( 'album' ) );
+			}else{
+				$this->query[ 'media_type' ] = array( 'compare' => 'NOT IN', 'value' => array( 'album' ) );
+
+			}
 		}
 
 		/**
