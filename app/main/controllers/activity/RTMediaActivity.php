@@ -15,11 +15,12 @@ class RTMediaActivity {
 
 	var $media = array();
 	var $activity_text = '';
+	var $privacy;
 
 	/**
 	 *
 	 */
-	function __construct($media, $activity_text=false) {
+	function __construct($media, $activity_text=false, $privacy=0) {
 		if(!isset($media))
 			return false;
 		if(!is_array($media))
@@ -27,6 +28,7 @@ class RTMediaActivity {
 
 		$this->media = $media;
 		$this->activity_text = $activity_text;
+		$this->privacy = $privacy;
 	}
 
 	function create_activity_html(){
