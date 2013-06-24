@@ -49,9 +49,16 @@ jQuery(function($) {
 	rtMedia.Gallery = Backbone.Collection.extend({
 		model: rtMedia.Media,
 		url: function(){
-                    var url = 'media/';
+                    var temp = window.location.pathname;
+                    var url='';
+                    if(temp.indexOf('media') == -1){
+                        url = 'media/';   
+                    }else{
+                        url = window.location.pathname.substr(0,window.location.pathname.lastIndexOf("page/"));
+                    }
                     if(nextpage >1)
                         url += 'page/' + nextpage + '/';
+                    
                     return url;
                 },
 
@@ -131,5 +138,13 @@ jQuery(function($) {
             
             galleryObj.getNext(nextpage);
         });
-
+        
+        
+        
+        if(window.location.pathname.indexOf('media') != -1){
+            var tempNext = window.location.pathname.substring(window.location.pathname.lastIndexOf("page/")+5, window.location.pathname.lastIndexOf("/"));
+            if(isNaN(tempNext)=== false){
+                nextpage = parseInt(tempNext) + 1;
+            }
+        }
 });

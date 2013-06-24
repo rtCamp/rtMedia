@@ -6,10 +6,14 @@
 
 	get_header($template_type);
 
-	if ( is_rt_media_gallery() ) {
-		$template = 'media-gallery';
+	if (is_rt_media_album_gallery()){
+            $template = 'album-gallery';
+//        } elseif (is_rt_media_album()) {
+//            $template = 'media-single';
+        } else if ( is_rt_media_gallery() ){
+            $template = 'media-gallery';
 	} else if ( is_rt_media_single() ) {
-		$template = 'media-single';
+            $template = 'media-single';
 	}
 
 	if($template_type=='buddypress') { ?>

@@ -132,7 +132,7 @@ class RTMediaQuery {
 	}
 
 	function is_album_gallery() {
-		if ( $this->query[ 'media_type' ] == 'album' ) {
+		if ( isset( $this->query[ 'media_type' ] ) && $this->query[ 'media_type' ] == 'album' ) {
 			return true;
 		}
 		return false;
@@ -609,11 +609,9 @@ class RTMediaQuery {
 
 	function permalink() {
 
-		global $rt_media_media, $wpdb;
+		global $rt_media_media;
 
-		$post = get_post( $rt_media_media->post_parent );
-
-		$link = get_site_url() . '/' . $post->post_name . '/media/' . $rt_media_media->id;
+		$link = get_site_url() . '/media/' . $rt_media_media->id;
 
 		return $link;
 	}
