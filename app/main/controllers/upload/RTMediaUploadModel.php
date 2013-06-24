@@ -48,7 +48,7 @@ class RTMediaUploadModel {
         if (!$this->has_context()){
 
 			global $rt_media_interaction;
-
+                        
 			$this->upload['context']= $rt_media_interaction->context->type;
 			$this->upload['context_id'] = $rt_media_interaction->context->id;
 		}

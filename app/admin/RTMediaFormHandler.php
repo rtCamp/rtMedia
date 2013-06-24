@@ -151,7 +151,7 @@ class RTMediaFormHandler {
 				echo '<div class="columns large-2">';
 					self::checkbox($args);
 				echo '</div>';
-				echo '<div class="columns large-3">' . implode(',', $section['extn']) . '</div>';
+				echo '<div class="columns large-3">' . implode(', ', $section['extn']) . '</div>';
 			echo '</div>';
 		}
 		echo '</div>';
@@ -207,8 +207,6 @@ class RTMediaFormHandler {
 
 	public static function privacy_content() {
 
-		global $wp_settings_fields;
-
 		global $rt_media;
 
 		$options = $rt_media->options['rt-media-privacy'];
@@ -228,7 +226,7 @@ class RTMediaFormHandler {
 		echo '</div>';
 	}
 
-	public static function buddypress_content($page='') {
+	public static function buddypress_content() {
 
 		global $rt_media;
 

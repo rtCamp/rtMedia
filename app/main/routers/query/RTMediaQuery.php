@@ -611,7 +611,9 @@ class RTMediaQuery {
 
 		global $rt_media_media;
 
-		$link = get_site_url() . '/media/' . $rt_media_media->id;
+		$post = get_post($rt_media_media->post_parent);
+
+		$link = get_site_url() . '/' . $post->post_name . '/media/' . $rt_media_media->id;
 
 		return $link;
 	}

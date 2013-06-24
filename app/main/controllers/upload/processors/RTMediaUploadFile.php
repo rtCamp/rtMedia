@@ -107,18 +107,13 @@ class RTMediaUploadFile {
      * @param type $file_array
      */
     function populate_file_array($file_array) {
-        $count=0;
-        $lastcount = count($file_array['name']);
-        while ($count < $lastcount) {
             $this->files[] = array(
-                'name' => isset($file_array['name'][$count]) ? $file_array['name'][$count] : '',
-                'type' => isset($file_array['type'][$count]) ? $file_array['type'][$count] : '',
-                'tmp_name' => isset($file_array['tmp_name'][$count]) ? $file_array['tmp_name'][$count] : '',
-                'error' => isset($file_array['error'][$count]) ? $file_array['error'][$count] : '',
-                'size' => isset($file_array['size'][$count]) ? $file_array['size'][$count] : 0,
+                'name' => isset($file_array['name']) ? $file_array['name'] : '',
+                'type' => isset($file_array['type']) ? $file_array['type']: '',
+                'tmp_name' => isset($file_array['tmp_name']) ? $file_array['tmp_name'] : '',
+                'error' => isset($file_array['error']) ? $file_array['error']: '',
+                'size' => isset($file_array['size']) ? $file_array['size']: 0,
             );
-            $count++;
-        }
     }
 
     /**

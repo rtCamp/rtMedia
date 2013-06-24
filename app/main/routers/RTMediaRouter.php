@@ -39,6 +39,7 @@ class RTMediaRouter {
 
 		//
 		add_filter('template_include', array($this,'template_include'));
+		add_action('wp_ajax_rt_media_include_gallery_item',array('RTMediaTemplate','include_gallery_item'));
 
 	}
 
@@ -116,7 +117,7 @@ class RTMediaRouter {
 		// so it can load a custom template
 
 		$template_load = new RTMediaTemplate();
-		
+
 		$template = $template_load->set_template($template);
 
 
@@ -138,7 +139,7 @@ class RTMediaRouter {
 
 		global $wp_query;
 		$query_vars_array = explode('/',$wp_query->query_vars[ $this->slug ]);
-		
+
 		$this->query_vars = apply_filters('rt_media_query_vars',$query_vars_array);
 
 	}
