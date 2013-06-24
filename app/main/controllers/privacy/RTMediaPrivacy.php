@@ -13,25 +13,48 @@
 class RTMediaPrivacy {
 
 
-	var $settings = array( );
-	var $messages = array( );
-
 	/**
 	 *
+	 * @var object default application wide privacy levels
 	 */
+	public $default_privacy = array(
+		'0'		=> 'Public',
+		'20'	=> 'Users',
+		'40'	=> 'Friends',
+		'60'	=> 'Private'
+	);
+
 	function __construct() {
-//		add_action( 'bp_media_after_update_media', array( $this, 'save_privacy_by_object' ), 99 );
-//		add_action( 'bp_media_after_add_media', array( $this, 'save_privacy_by_object' ), 99 );
-//		add_action( 'bp_media_after_add_album', array( $this, 'save_privacy_by_object' ), 99 );
-//		add_action( 'bp_media_after_edit_album', array( $this, 'save_privacy_by_object' ), 99 );
-//		add_action( 'wp_ajax_bp_media_privacy_install', 'BPMediaPrivacy::install' );
-//		add_action( 'wp_ajax_bp_media_privacy_redirect', array( $this, 'set_option_redirect' ) );
-//		add_action( 'bp_has_activities', array( $this, 'activity' ), 10, 2 );
-//		if ( BPMediaPrivacy::is_enabled() == false )
-//			return;
-//		$this->settings = $this->get_settings();
-//		add_action( 'bp_media_add_media_fields', array( $this, 'ui' ) );
+
 	}
+
+	public function system_default(){
+		return 0;
+	}
+
+	public function site_default(){
+		global $rtmedia;
+		print_r($rt_media->options);
+		return rt_media_get_site_option('privacy_settings');
+	}
+
+	public function user_default(){
+		return;
+
+	}
+
+	public function get_default(){
+		$default_privacy = $this->user_default();
+
+		if($default_privacy===false){
+			$default_privacy = $this->site_default();
+		}
+
+		if(!$default_privacy ===false){
+			$default_privacy = $this->system_default();
+		}
+	}
+
 
 	public function set_option_redirect() {
 		bp_update_option( 'bp_media_privacy_installed', true );

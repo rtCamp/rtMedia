@@ -320,8 +320,8 @@ class RTMediaQuery {
 
 		global $rt_media;
 
-			if ( ! $rt_media->get_option( 'media_end_point_enable' ) )
-				include get_404_template();
+			//if ( ! $rt_media->get_option( 'media_end_point_enable' ) )
+			//include get_404_template();
 
 		/**
 		 * set action query object
@@ -464,6 +464,7 @@ class RTMediaQuery {
 		 * multiside manipulation
 		 */
 		if ( is_multisite() ) {
+			$blogs = array();
 			foreach ( $this->media as $media ) {
 				$blogs[ $media->blog_id ][ ] = $media;
 			}
