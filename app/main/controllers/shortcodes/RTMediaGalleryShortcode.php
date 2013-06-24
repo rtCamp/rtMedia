@@ -37,7 +37,7 @@ class RTMediaGalleryShortcode {
                     'url' => (isset($_SERVER["REQUEST_URI"]) && strpos($_SERVER["REQUEST_URI"],"/media/") !== false)?str_replace("/media/", "/upload/", $_SERVER["REQUEST_URI"]):'../upload/',
                     'runtimes' => 'gears,html5,flash,silverlight,browserplus',
                     'browse_button' => 'rtMedia-upload-button',
-                    'container' => 'upload-container',
+                    'container' => 'rtmedia-upload-container',
                     'drop_element' => 'drag-drop-area',
                     'filters' => apply_filters('bp_media_plupload_files_filter', array(array('title' => "Media Files", 'extensions' => "mp4,jpg,png,jpeg,gif,mp3"))),
                     'max_file_size' => min(array(ini_get('upload_max_filesize'), ini_get('post_max_size'))),
