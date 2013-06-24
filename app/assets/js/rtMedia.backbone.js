@@ -1,5 +1,6 @@
 var galleryObj;
 var nextpage = 2;
+var upload_sync = false;
 
 jQuery(function($) {
 
@@ -11,7 +12,7 @@ jQuery(function($) {
 	rtMedia.Context = Backbone.Model.extend({
                 url: function(){
                     var url = "media/";
-                    if(nextpage>0)
+                    if(!upload_sync && nextpage>0)
                         url += 'page/' + nextpage + '/'
                     return url;
                 },
@@ -56,7 +57,7 @@ jQuery(function($) {
                     }else{
                         url = window.location.pathname.substr(0,window.location.pathname.lastIndexOf("page/"));
                     }
-                    if(nextpage >1)
+                    if(!upload_sync && nextpage >1)
                         url += 'page/' + nextpage + '/';
                     
                     return url;
@@ -72,10 +73,15 @@ jQuery(function($) {
 					var galleryViewObj = new rtMedia.GalleryView({
 					collection: model,
                         		el: $(".rt-media-list")[0] });
+                                        upload_sync=false;
                                         
 				}
 			});
 		},
+                reloadView: function(){
+                    upload_sync=true;
+                    this.getNext();
+                }
 
 
 	});
@@ -147,4 +153,98 @@ jQuery(function($) {
                 nextpage = parseInt(tempNext) + 1;
             }
         }
+        
+        
+        
+         window.UploadView = Backbone.View.extend({ 
+                 events: {
+                        "click #rtMedia-start-upload": "uploadFiles"
+                 },
+                 
+                 initialize: function() {
+                        _.bindAll(this, "render");
+                 },
+                 
+                 render: function() {
+                        //$(this.el).html(this.template());
+                        return this;
+                 },
+                 
+                 initUploader: function() {
+                        var self = this;
+                        this.uploader = new plupload.Uploader(rtMedia_plupload_config);
+                        this.uploader.init();
+                        
+                        this.uploader.bind('BeforeUpload', function(up, files){
+                            console.log(up);
+                        });
+                        this.uploader.bind('PostInit', function(up){
+                            console.log(up);
+                        });
+                        
+                        this.uploader.bind('FilesAdded', function(up, files){
+                                $.each(files, function(i, file){
+                                        tdName = document.createElement("td");
+                                                tdName.innerHTML = file.name;
+                                        tdStatus = document.createElement("td");
+                                                tdStatus.className = "plupload_file_status";
+                                                tdStatus.innerHTML = "0%";
+                                        tdSize = document.createElement("td");
+                                                tdSize.className = "plupload_file_size";
+                                                tdSize.innerHTML = plupload.formatSize(file.size);
+                                        tdDelete = document.createElement("td");
+                                                tdDelete.innerHTML = "X";
+                                                tdDelete.className = "plupload_delete"
+                                        tr = document.createElement("tr");
+                                                tr.id = file.id;
+                                                tr.appendChild(tdName); tr.appendChild(tdStatus); tr.appendChild(tdSize); tr.appendChild(tdDelete);
+                                        $("#rtMedia-queue-list").append(tr);
+                                        //Delete Function
+                                        $("#" + file.id + " td.plupload_delete").click(function(e){
+                                                e.preventDefault();
+                                                self.uploader.removeFile(self.uploader.getFile(file.id));
+                                                $("#" + file.id).remove();
+                                                return false;
+                                        });
+ 
+                                });
+                        });
+                       
+                        this.uploader.bind('UploadProgress', function(up, file){
+                                $("#" + file.id + " .plupload_file_status").html(file.percent + "%");
+                       
+                        });
+                       
+                        this.uploader.bind('FileUploaded', function(up, file){
+                               
+                                files = self.uploader.files;
+                                lastfile = files[files.length-1];
+                        });
+                                             
+ 
+                        //The plupload HTML5 code gives a negative z-index making add files button unclickable
+                        $(".plupload.html5").css({zIndex: 0});
+                        $("#rtMedia-upload-button   ").css({zIndex: 2});
+                       
+                        return this;
+                 },
+                 
+                 uploadFiles: function(e){
+                        e.preventDefault();
+                        this.uploader.start();
+                        return false;
+                 }
+       
+        });
+        
+       
+        if ($("#rtMedia-upload-button").length > 0){
+            var uploader = new UploadView();
+            uploader.initUploader();
+            $("#rtMedia-start-upload").click(function(e){
+                uploader.uploadFiles(e);
+            })        
+        }
+        
+       
 });
