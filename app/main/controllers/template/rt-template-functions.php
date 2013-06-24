@@ -250,6 +250,28 @@ function rt_media_comments(){
 	echo $html;
 }
 
+function rt_media_pagination_prev_link() {
+
+	global $rt_media_media;
+
+	$post = get_post($rt_media_media->post_parent);
+
+	$link = get_site_url() . '/' . $post->post_name . '/media/page/' . (rt_media_page()-1);
+
+	return $link;
+}
+
+function rt_media_pagination_next_link() {
+
+	global $rt_media_media;
+
+	$post = get_post($rt_media_media->post_parent);
+
+	$link = get_site_url() . '/' . $post->post_name . '/media/page/' . (rt_media_page()+1);
+
+	return $link;
+}
+
 function rt_media_url() {
 
 	global $rt_media_media;
