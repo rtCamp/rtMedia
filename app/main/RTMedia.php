@@ -733,7 +733,12 @@ class RTMedia {
 	function check_global_album() {
 		$album = new RTMediaAlbum();
 		$global_album = $album->get_default();
-
+                //**
+                    if(isset($_POST["action"]) && isset($_POST["mode"]) && $_POST["mode"] == "file_upload"){
+                        unset($_POST["name"]);
+                    }
+                
+                //**
 		if(!$global_album) {
 			$global_album = $album->add_global(__("rtMedia Global Album","rt-media"));
 		}
