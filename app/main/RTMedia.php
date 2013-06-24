@@ -86,8 +86,9 @@ class RTMedia {
 		register_activation_hook(__FILE__, array($this, 'flush_rewrite'));
 		register_deactivation_hook(__FILE__, array($this, 'flush_rewrite'));
 
-		// default thumbnail for media types
-		$this->default_thumbnail = apply_filter('rtmedia_default_thumbnail',BP_MEDIA_URL. 'assets/thumb_default.png');
+		$this->default_thumbnail = apply_filters('rtmedia_default_thumbnail',RT_MEDIA_URL. 'assets/thumb_default.png');
+		// Define allowed types
+		$this->set_allowed_types();
 
 		$this->set_allowed_types(); // Define allowed types
 
@@ -282,9 +283,57 @@ class RTMedia {
 		);
 		$this->privacy_settings = apply_filters('rt_media_privacy_levels', $this->privacy_settings);
 
+		$this->privacy = array(
+			'enable' => array(
+				'title' => __("Enable Privacy","rt-media"),
+				'callback' => array("RTMediaFormHandler", "checkbox"),
+				'args' => array(
+					'id' => 'rt-media-privacy-enable',
+					'key' => 'rt-media-privacy][enable',
+					'value' => 0
+				)
+			),
+			'default' => array(
+				'title' => __("Default Privacy","rt-media"),
+				'callback' => array("RTMediaFormHandler","radio"),
+				'args' => array(
+					'key' => 'rt-media-privacy][default',
+					'radios' => array(
+						60 => __('<strong>Private</strong> - Visible only to the user', 'rt-media'),
+						40 => __('<strong>Friends</strong> - Visible to user\'s friends', 'rt-media'),
+						20 => __('<strong>Users</strong> - Visible to registered users', 'rt-media'),
+						0 => __('<strong>Public</strong> - Visible to the world', 'rt-media')
+					),
+					'default' => 0
+				),
+			),
+			'user_override' => array(
+				'title' => __("User Override","rt-media"),
+				'callback' => array("RTMediaFormHandler", "checkbox"),
+				'args' => array(
+					'key' => 'rt-media-privacy][user-override',
+					'value' => 0
+				)
+			)
+		);
+		$this->privacy = apply_filters('rt_media_privacy_levels', $this->privacy);
+
 		if (function_exists("bp_is_active") && !bp_is_active('friends')) {
 			unset($this->privacy_settings['levels'][40]);
 		}
+
+		/**
+		 *  Enqueue Plugin Scripts and Styles
+		 */
+		add_action('wp_enqueue_scripts', array($this, 'enqueue_scripts_styles'), 11);
+                
+                /* Includes db specific wrapper functions required to render the template */
+                include(RT_MEDIA_PATH . 'app/main/controllers/template/rt-template-functions.php');
+                
+		/**
+		 * AJAX Call for PL Upload
+		 */
+		//add_action('wp_ajax_rt_file_upload', array('RTMediaUploadHelper', 'file_upload'));
 	}
 
 	/**

@@ -51,9 +51,6 @@ class RTMediaTemplate {
 
 		$media_array = '';
                 
-		/* Includes db specific wrapper functions required to render the template */
-		include(RT_MEDIA_PATH . 'app/main/controllers/template/rt-template-functions.php');
-
 		if(in_array($rt_media_interaction->context->type, array("profile","group"))) {
 
 			if ($rt_media_query->format == 'json') {
