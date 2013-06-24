@@ -291,23 +291,37 @@ function rt_media_comments() {
 
 function rt_media_pagination_prev_link() {
 
-	global $rt_media_media;
+	global $rt_media_media, $rt_media_interaction;
 
-	$post = get_post($rt_media_media->post_parent);
+	$page_url = ((rt_media_page()-1)==1) ? "" : "/page/".(rt_media_page()-1) ;
 
-	$link = get_site_url() . '/' . $post->post_name . '/media/page/' . (rt_media_page()-1);
+	if($rt_media_interaction->context->type=="profile") {
+		if(class_exists("BuddyPress"))
+			$link = get_site_url() . '/members/' . get_query_var('author_name') . '/media/' . $page_url;
+		else
+			$link = get_site_url() . '/author/' . get_query_var('author_name') . '/media/' . $page_url;
+	} else {
+		$post = get_post($rt_media_media->post_parent);
 
+		$link = get_site_url() . '/' . $post->post_name . '/media/' . $page_url;
+	}
 	return $link;
 }
 
 function rt_media_pagination_next_link() {
 
-	global $rt_media_media;
+	global $rt_media_media, $rt_media_interaction;
 
-	$post = get_post($rt_media_media->post_parent);
+	if($rt_media_interaction->context->type=="profile") {
+		if(class_exists("BuddyPress"))
+			$link = get_site_url() . '/members/' . get_query_var('author_name') . '/media/page/' . (rt_media_page()+1);
+		else
+			$link = get_site_url() . '/author/' . get_query_var('author_name') . '/media/page/' . (rt_media_page()+1);
+	} else {
+		$post = get_post($rt_media_media->post_parent);
 
-	$link = get_site_url() . '/' . $post->post_name . '/media/page/' . (rt_media_page()+1);
-
+		$link = get_site_url() . '/' . $post->post_name . '/media/page/' . (rt_media_page()+1);
+	}
 	return $link;
 }
 
