@@ -50,7 +50,7 @@ class RTMediaTemplate {
 		global $rt_media_query, $rt_media_interaction, $rt_media_media;
 
 		$media_array = '';
-                
+
 		if(in_array($rt_media_interaction->context->type, array("profile","group"))) {
 
 			if ($rt_media_query->format == 'json') {
@@ -138,7 +138,7 @@ class RTMediaTemplate {
 					unset($id['rt_media_media_nonce']);
 					unset($id['_wp_http_referer']);
 					$media = new RTMediaMedia();
-                                        
+
                                         wp_delete_attachment($rt_media_query->media[0]->media_id,true);
 
 					$post = get_post($rt_media_query->media[0]->post_parent);
@@ -163,12 +163,15 @@ class RTMediaTemplate {
 					$media_array[$key] = $media;
 					list($src,$width,$height) = wp_get_attachment_image_src($media->media_id,'thumbnail');
 					$media_array[$key]->guid = $src;
-                                        $media_array[$key]->next = (rt_media_offset()+ rt_media_per_page_media() < rt_media_count())?(rt_media_page()+1): -1 ;
-                                        $media_array[$key]->prev = rt_media_page()-1; 
+					$post = get_post($media->post_parent);
+					$media_array[$key]->rt_permalink = get_site_url() . '/' . $post->post_name . '/media/' . $media->id;
 				}
 			}
-                        
-			echo json_encode($media_array);
+            $return_array['data'] = $media_array;
+			$return_array['prev'] = rt_media_page()-1;
+			$return_array['next'] = (rt_media_offset()+ rt_media_per_page_media() < rt_media_count())?(rt_media_page()+1): -1 ;
+
+			echo json_encode($return_array);
                         return;
 
 		} else if(!$shortcode_attr)

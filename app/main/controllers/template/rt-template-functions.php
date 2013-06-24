@@ -38,9 +38,15 @@ function rt_media() {
  * echo the title of the media
  * @global type $rt_media_media
  */
-function rt_media_title() {
-    global $rt_media_media;
-    return $rt_media_media->post_title;
+function rt_media_title(){
+
+	global $rt_media_backbone;
+	if($rt_media_backbone) {
+		echo '<%= media_title %>';
+	} else {
+		global $rt_media_media;
+		return $rt_media_media->post_title;
+	}
 }
 
 function rt_media_id() {
@@ -53,8 +59,15 @@ function rt_media_id() {
  * @global type $rt_media_media
  */
 function rt_media_permalink() {
-    global $rt_media_query;
-    echo $rt_media_query->permalink();
+
+	global $rt_media_backbone;
+
+	if($rt_media_backbone) {
+		echo '<%= rt_permalink %>';
+	} else {
+		global $rt_media_query;
+		echo $rt_media_query->permalink();
+	}
 }
 
 /*
@@ -62,7 +75,7 @@ function rt_media_permalink() {
  */
 
 function rt_media_image($size = 'thumbnail', $return = 'src') {
-    global $rt_media_media, $rt_media;
+    global $rt_media_media, $rt_media_backbone;
     $thumbnail_id = 0;
     if (isset($rt_media_media->media_type)) {
         if ($rt_media_media->media_type == 'album' ||
@@ -81,12 +94,24 @@ function rt_media_image($size = 'thumbnail', $return = 'src') {
 
     list($src, $width, $height) = wp_get_attachment_image_src($rt_media_media->media_id, $size);
 
-    if ($return == "src")
-        echo $src;
-    if ($return == "width")
-        echo $width;
-    if ($return == "height")
-        echo $height;
+    if ($return == "src") {
+        if($rt_media_backbone)
+			echo '<%= guid %>';
+		else
+			echo $src;
+	}
+    if ($return == "width") {
+		if($rt_media_backbone)
+			echo '<%= width %>';
+		else
+			echo $width;
+	}
+	if ($return == "height") {
+		if($rt_media_backbone)
+			echo '<%= height %>';
+		else
+			echo $height;
+	}
 }
 
 function rt_media_delete_allowed() {
@@ -239,7 +264,7 @@ function rt_media_current_media() {
  *
  */
 function rt_media_actions() {
-    
+
 }
 
 /**

@@ -41,8 +41,11 @@ jQuery(function($) {
 			"likes"				: 0,
 			"dislikes"			: 0,
 			"guid"				: false,
-			"next"			: -1,
-			"prev"			: -1
+			"width"				: 0,
+			"height"			: 0,
+			"rt_permalink"		: false
+//			"next"			: -1,
+//			"prev"			: -1
 		}
 
 	});
@@ -53,13 +56,13 @@ jQuery(function($) {
                     var temp = window.location.pathname;
                     var url='';
                     if(temp.indexOf('media') == -1){
-                        url = 'media/';   
+                        url = 'media/';
                     }else{
                         url = window.location.pathname.substr(0,window.location.pathname.lastIndexOf("page/"));
                     }
                     if(!upload_sync && nextpage >1)
                         url += 'page/' + nextpage + '/';
-                    
+
                     return url;
                 },
 
@@ -70,8 +73,9 @@ jQuery(function($) {
 					rt_media_page: nextpage
 				},
 				success: function(model, response) {
+					nextpage = response.next;
 					var galleryViewObj = new rtMedia.GalleryView({
-					collection: model,
+					collection: new rtMedia.Gallery(response.data),
                         		el: $(".rt-media-list")[0] });
                                         upload_sync=false;
                                         
@@ -89,11 +93,11 @@ jQuery(function($) {
 	rtMedia.MediaView = Backbone.View.extend({
 		tagName: 'li',
 		className: 'rt-media-list-item',
-		template: _.template($("#rt-media-gallery-item-template").html()),
 		initialize: function() {
+			this.template = _.template($("#rt-media-gallery-item-template").html());
 			this.model.bind('change', this.render);
 			this.model.bind('remove', this.unrender);
-			console.log(this.render());
+			this.render();
 		},
 		render: function() {
 			$(this.el).html(this.template(this.model.toJSON()));
@@ -110,22 +114,26 @@ jQuery(function($) {
 	rtMedia.GalleryView = Backbone.View.extend({
 		tagName: 'ul',
 		className: 'rt-media-list',
-		template: _.template($("#rt-media-gallery-item-template").html()),
 		initialize: function() {
+			this.template = _.template($("#rt-media-gallery-item-template").html());
 			this.render();
 		},
 		render: function(){
-			//$(this.el).html("");
+
 			that = this;
+//			test = this.template({data: this.collection.toJSON()});
+//			console.log(test);
+//			$("body").append(test);
 			$.each(this.collection.toJSON(), function(key, media){
+				test = that.template(media);
+				console.log(test);
 				$(that.el).append(that.template(media));
-                                   nextpage = media.next;
 			});
-                        if(nextpage > 1){
-                            $("#rtMedia-galary-next").show();
-                        }
-                        
-			
+			if(nextpage > 1){
+				$("#rtMedia-galary-next").show();
+			}
+
+
 		},
 		appendTo: function(media) {
 			console.log("append");
@@ -138,15 +146,22 @@ jQuery(function($) {
 
 
 	galleryObj = new rtMedia.Gallery();
-        $(document).on("click","#rtMedia-galary-next",function(e){
+
+	console.log(template_url);
+	$("body").append('<script id="rt-media-gallery-item-template" type="text/template"></script>');
+
+	$("#rt-media-gallery-item-template").load(ajaxurl,{action: 'rt_media_backbone_template',backbone: true} ,function(response,status,xhr) {
+
+		$(document).on("click","#rtMedia-galary-next",function(e){
             $(this).hide();
             e.preventDefault();
-            
+
             galleryObj.getNext(nextpage);
         });
-        
-        
-        
+	});
+
+
+
         if(window.location.pathname.indexOf('media') != -1){
             var tempNext = window.location.pathname.substring(window.location.pathname.lastIndexOf("page/")+5, window.location.pathname.lastIndexOf("/"));
             if(isNaN(tempNext)=== false){

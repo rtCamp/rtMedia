@@ -307,7 +307,7 @@ class RTMedia {
 					'default' => 0
 				),
 			),
-			'user_override' => array(
+			'user-override' => array(
 				'title' => __("User Override","rt-media"),
 				'callback' => array("RTMediaFormHandler", "checkbox"),
 				'args' => array(
@@ -329,7 +329,7 @@ class RTMedia {
 
                 /* Includes db specific wrapper functions required to render the template */
                 include(RTMEDIA_PATH . 'app/main/controllers/template/rt-template-functions.php');
-                
+
 		/**
 		 * AJAX Call for PL Upload
 		 */
@@ -378,13 +378,13 @@ class RTMedia {
 		/**
 		 * General Settings
 		 */
-		rt_media_get_site_option('rt-media-albums-enabled', 1);
-		rt_media_get_site_option('rt-media-comments-enabled', 1);
-		rt_media_get_site_option('rt-media-download-button', 1);
-		rt_media_get_site_option('rt-media-enable-lightbox', 1);
-		rt_media_get_site_option('rt-media-per-page-media', 10);
-		rt_media_get_site_option('rt-media-media-end-point_enable', true);
-		rt_media_get_site_option('rt-media-show-admin-menu', 1);
+		rt_media_update_site_option('rt-media-albums-enabled', 1);
+		rt_media_update_site_option('rt-media-comments-enabled', 1);
+		rt_media_update_site_option('rt-media-download-button', 1);
+		rt_media_update_site_option('rt-media-enable-lightbox', 1);
+		rt_media_update_site_option('rt-media-per-page-media', 10);
+		rt_media_update_site_option('rt-media-media-end-point_enable', true);
+		rt_media_update_site_option('rt-media-show-admin-menu', 1);
 
 		/**
 		 * Types Settings
@@ -410,13 +410,13 @@ class RTMedia {
 		 * BuddyPress Settings
 		 */
 		if (function_exists("bp_is_active")) {
-			rt_media_get_site_option('rt-media-enable-on-activity', bp_is_active('activity'));
-			rt_media_get_site_option('rt-media-enable-on-profile', bp_is_active('profile'));
-			rt_media_get_site_option('rt-media-enable-on-group', bp_is_active('groups'));
+			rt_media_update_site_option('rt-media-enable-on-activity', bp_is_active('activity'));
+			rt_media_update_site_option('rt-media-enable-on-profile', bp_is_active('profile'));
+			rt_media_update_site_option('rt-media-enable-on-group', bp_is_active('groups'));
 		} else {
-			rt_media_get_site_option('rt-media-enable-on-activity', 0);
-			rt_media_get_site_option('rt-media-enable-on-profile', 0);
-			rt_media_get_site_option('rt-media-enable-on-group', 0);
+			rt_media_update_site_option('rt-media-enable-on-activity', 0);
+			rt_media_update_site_option('rt-media-enable-on-profile', 0);
+			rt_media_update_site_option('rt-media-enable-on-group', 0);
 		}
 
 		$options = array(
@@ -507,12 +507,12 @@ class RTMedia {
 						'desc' => __('Enable Media on BuddyPress Profile','rt-media')
 					)
 				),
-				'rt-media-enable-on-groups' => array(
+				'rt-media-enable-on-group' => array(
 					'title' => __('Group Media','rt-media'),
 					'callback' => array('RTMediaFormHandler', 'checkbox'),
 					'args' => array(
-						'key' => 'rt-media-buddypress][rt-media-enable-on-groups]',
-						'value' => rt_media_get_site_option('rt-media-enable-on-groups'),
+						'key' => 'rt-media-buddypress][rt-media-enable-on-group]',
+						'value' => rt_media_get_site_option('rt-media-enable-on-group'),
 						'desc' => __('Enable Media on BuddyPress Groups','rt-media')
 					)
 				),
@@ -711,6 +711,9 @@ class RTMedia {
 
                 $media = new RTMediaMedia();
                 $media->delete_hook();
+
+				global $rt_media_ajax;
+				$rt_media_ajax = new RTMediaAJAX();
 	}
 
 	/**
