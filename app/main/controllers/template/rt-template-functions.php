@@ -376,4 +376,24 @@ function rt_media_gallery($attr = '') {
 	echo RTMediaGalleryShortcode::render($attr);
 }
 
+function get_media_meta($id=false,$key=false){
+	$rtmediameta = new RTMediaMeta();
+	return $rtmediameta->get_meta($id, $key);
+}
+
+function add_media_meta($id=false,$key=false,$value=false,$duplicate=false){
+	$rtmediameta = new RTMediaMeta($id, $key, $value, $duplicate);
+	return $rtmediameta->add_meta($id, $key, $value, $duplicate);
+}
+
+function update_media_meta($id=false,$key=false,$value=false,$duplicate=false){
+	$rtmediameta = new RTMediaMeta();
+	return $rtmediameta->update_meta( $id, $key, $value, $duplicate );
+}
+
+function delete_media_meta($id=false,$key=false){
+	$rtmediameta = new RTMediaMeta();
+	return $rtmediameta->delete_meta($id, $key);
+}
+
 ?>
