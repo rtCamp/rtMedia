@@ -62,7 +62,7 @@ function rt_media_permalink() {
  */
 
 function rt_media_image($size = 'thumbnail', $return = 'src') {
-    global $rt_media_media, $rt_media;
+    global $rt_media_media;
     $thumbnail_id = 0;
     if (isset($rt_media_media->media_type)) {
         if ($rt_media_media->media_type == 'album' ||
@@ -80,7 +80,7 @@ function rt_media_image($size = 'thumbnail', $return = 'src') {
     if (!$thumbnail_id)
         return false;
 
-    list($src, $width, $height) = wp_get_attachment_image_src($rt_media_media->media_id, $size);
+    list($src, $width, $height) = wp_get_attachment_image_src($thumbnail_id, $size);
 
     if ($return == "src")
         echo $src;
