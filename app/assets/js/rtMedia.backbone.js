@@ -58,7 +58,10 @@ jQuery(function($) {
                     if(temp.indexOf('media') == -1){
                         url = 'media/';
                     }else{
-                        url = window.location.pathname.substr(0,window.location.pathname.lastIndexOf("page/"));
+                        if(temp.indexOf('page/') == -1)
+                            url=temp;
+                        else
+                            url = window.location.pathname.substr(0,window.location.pathname.lastIndexOf("page/"));
                     }
                     if(!upload_sync && nextpage >1)
                         url += 'page/' + nextpage + '/';
@@ -77,8 +80,6 @@ jQuery(function($) {
 					var galleryViewObj = new rtMedia.GalleryView({
 					collection: new rtMedia.Gallery(response.data),
                         		el: $(".rt-media-list")[0] });
-                                        upload_sync=false;
-
 				}
 			});
 		},
@@ -121,14 +122,19 @@ jQuery(function($) {
 		render: function(){
 
 			that = this;
-//			test = this.template({data: this.collection.toJSON()});
-//			console.log(test);
-//			$("body").append(test);
-			$.each(this.collection.toJSON(), function(key, media){
+                        
+                        if(upload_sync){
+                            $(that.el).html('');
+                        }
+			
+                    $.each(this.collection.toJSON(), function(key, media){
 				test = that.template(media);
 				console.log(test);
 				$(that.el).append(that.template(media));
 			});
+                         if (upload_sync){
+                                            upload_sync=false;
+                                        }
 			if(nextpage > 1){
 				$("#rtMedia-galary-next").show();
 			}
@@ -190,11 +196,8 @@ jQuery(function($) {
                         this.uploader = new plupload.Uploader(rtMedia_plupload_config);
                         this.uploader.init();
 
-                        this.uploader.bind('BeforeUpload', function(up, files){
-                            console.log(up);
-                        });
-                        this.uploader.bind('PostInit', function(up){
-                            console.log(up);
+                        this.uploader.bind('UploadComplete', function(up, files){
+                            galleryObj.reloadView()
                         });
 
                         this.uploader.bind('FilesAdded', function(up, files){
