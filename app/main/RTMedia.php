@@ -326,10 +326,10 @@ class RTMedia {
 		 *  Enqueue Plugin Scripts and Styles
 		 */
 		add_action('wp_enqueue_scripts', array($this, 'enqueue_scripts_styles'), 11);
-                
+
                 /* Includes db specific wrapper functions required to render the template */
                 include(RT_MEDIA_PATH . 'app/main/controllers/template/rt-template-functions.php');
-                
+
 		/**
 		 * AJAX Call for PL Upload
 		 */
@@ -567,7 +567,7 @@ class RTMedia {
 			define('RTMEDIA_MEDIA_SLUG', 'media');
 
 		if (!defined('RTMEDIA_MEDIA_LABEL'))
-			define('RTMEDIA_MEDIA_SLUG', __('Media','rt-media'));
+			define('RTMEDIA_MEDIA_LABEL', __('Media','rt-media'));
 
 		if (!defined('RTMEDIA_ALBUM_SLUG'))
 			define('RTMEDIA_ALBUM_SLUG', 'album');
