@@ -22,7 +22,7 @@ class RTDBUpdate {
      * @param type string $current_version Optional if not defined then will use plugin version
      */
     public function __construct($current_version = false) {
-        $this->rt_plugin_info = new rt_plugin_info(RT_MEDIA_PATH.'index.php');
+        $this->rt_plugin_info = new rt_plugin_info(RTMEDIA_PATH.'index.php');
         if ($current_version == false) {
            $current_version = $this->rt_plugin_info->version;
         }

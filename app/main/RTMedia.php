@@ -33,7 +33,7 @@ class RTMedia {
 	 *
 	 * @var array privacy settings
 	 */
-	public $privacy;
+	public $privacy_settings;
 	/**
 	 *
 	 * @var array default media sizes
@@ -86,7 +86,7 @@ class RTMedia {
 		register_activation_hook(__FILE__, array($this, 'flush_rewrite'));
 		register_deactivation_hook(__FILE__, array($this, 'flush_rewrite'));
 
-		$this->default_thumbnail = apply_filters('rtmedia_default_thumbnail',RT_MEDIA_URL. 'assets/thumb_default.png');
+		$this->default_thumbnail = apply_filters('rtmedia_default_thumbnail',RTMEDIA_URL. 'assets/thumb_default.png');
 		// Define allowed types
 		$this->set_allowed_types();
 
@@ -240,7 +240,7 @@ class RTMedia {
 			)
 		);
 
-		$this->default_sizes = apply_filters('rt_media_allowed_sizes', $this->allowed_sizes);
+		$this->default_sizes = apply_filters('rt_media_allowed_sizes', $this->default_sizes);
 
 	}
 
@@ -328,8 +328,8 @@ class RTMedia {
 		add_action('wp_enqueue_scripts', array($this, 'enqueue_scripts_styles'), 11);
 
                 /* Includes db specific wrapper functions required to render the template */
-                include(RT_MEDIA_PATH . 'app/main/controllers/template/rt-template-functions.php');
-
+                include(RTMEDIA_PATH . 'app/main/controllers/template/rt-template-functions.php');
+                
 		/**
 		 * AJAX Call for PL Upload
 		 */
@@ -399,7 +399,7 @@ class RTMedia {
 		/**
 		 * Sizes Settings
 		 */
-		rt_media_get_site_option('rt-media-allowed-sizes', $this->default_sizes);
+		rt_media_get_site_option('rt-media-default-sizes', $this->default_sizes);
 
 		/**
 		 * Privacy

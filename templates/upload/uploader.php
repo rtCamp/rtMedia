@@ -60,7 +60,7 @@
 				echo '<input type="hidden" name="album_id" value="'.$rt_media_interaction->context->id.'" />';*/
 			?>
 
-            <input type="submit" name="rt-media-upload" value="<?php echo RT_MEDIA_UPLOAD_LABEL; ?>" />
+            <input type="submit" name="rt-media-upload" value="<?php echo RTMEDIA_UPLOAD_LABEL; ?>" />
         </form>
     </div>
         <?php } ?>
