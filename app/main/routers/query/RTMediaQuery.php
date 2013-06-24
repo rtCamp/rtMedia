@@ -616,7 +616,7 @@ class RTMediaQuery {
 			$parent_link = bp_core_get_user_domain($rt_media_media->media_author);
 		} else {
 			$parent_link = get_author_posts_url($rt_media_media->media_author);
-		};
+		}
 
 		$link = $parent_link . 'media/' . $rt_media_media->id;
 
