@@ -1,5 +1,6 @@
 var galleryObj;
 var nextpage = 2;
+var upload_sync = false;
 
 jQuery(function($) {
 
@@ -11,7 +12,7 @@ jQuery(function($) {
 	rtMedia.Context = Backbone.Model.extend({
                 url: function(){
                     var url = "media/";
-                    if(nextpage>0)
+                    if(!upload_sync && nextpage>0)
                         url += 'page/' + nextpage + '/'
                     return url;
                 },
@@ -40,8 +41,11 @@ jQuery(function($) {
 			"likes"				: 0,
 			"dislikes"			: 0,
 			"guid"				: false,
-			"next"			: -1,
-			"prev"			: -1
+			"width"				: 0,
+			"height"			: 0,
+			"rt_permalink"		: false
+//			"next"			: -1,
+//			"prev"			: -1
 		}
 
 	});
@@ -52,13 +56,16 @@ jQuery(function($) {
                     var temp = window.location.pathname;
                     var url='';
                     if(temp.indexOf('media') == -1){
-                        url = 'media/';   
+                        url = 'media/';
                     }else{
-                        url = window.location.pathname.substr(0,window.location.pathname.lastIndexOf("page/"));
+                        if(temp.indexOf('page/') == -1)
+                            url=temp;
+                        else
+                            url = window.location.pathname.substr(0,window.location.pathname.lastIndexOf("page/"));
                     }
-                    if(nextpage >1)
+                    if(!upload_sync && nextpage >1)
                         url += 'page/' + nextpage + '/';
-                    
+
                     return url;
                 },
 
@@ -69,13 +76,17 @@ jQuery(function($) {
 					rt_media_page: nextpage
 				},
 				success: function(model, response) {
+					nextpage = response.next;
 					var galleryViewObj = new rtMedia.GalleryView({
-					collection: model,
+					collection: new rtMedia.Gallery(response.data),
                         		el: $(".rt-media-list")[0] });
-                                        
 				}
 			});
 		},
+                reloadView: function(){
+                    upload_sync=true;
+                    this.getNext();
+                }
 
 
 	});
@@ -83,11 +94,11 @@ jQuery(function($) {
 	rtMedia.MediaView = Backbone.View.extend({
 		tagName: 'li',
 		className: 'rt-media-list-item',
-		template: _.template($("#rt-media-gallery-item-template").html()),
 		initialize: function() {
+			this.template = _.template($("#rt-media-gallery-item-template").html());
 			this.model.bind('change', this.render);
 			this.model.bind('remove', this.unrender);
-			console.log(this.render());
+			this.render();
 		},
 		render: function() {
 			$(this.el).html(this.template(this.model.toJSON()));
@@ -104,22 +115,31 @@ jQuery(function($) {
 	rtMedia.GalleryView = Backbone.View.extend({
 		tagName: 'ul',
 		className: 'rt-media-list',
-		template: _.template($("#rt-media-gallery-item-template").html()),
 		initialize: function() {
+			this.template = _.template($("#rt-media-gallery-item-template").html());
 			this.render();
 		},
 		render: function(){
-			//$(this.el).html("");
+
 			that = this;
-			$.each(this.collection.toJSON(), function(key, media){
-				$(that.el).append(that.template(media));
-                                   nextpage = media.next;
-			});
-                        if(nextpage > 1){
-                            $("#rtMedia-galary-next").show();
+
+                        if(upload_sync){
+                            $(that.el).html('');
                         }
-                        
-			
+
+                    $.each(this.collection.toJSON(), function(key, media){
+				test = that.template(media);
+				console.log(test);
+				$(that.el).append(that.template(media));
+			});
+                         if (upload_sync){
+                                            upload_sync=false;
+                                        }
+			if(nextpage > 1){
+				$("#rtMedia-galary-next").show();
+			}
+
+
 		},
 		appendTo: function(media) {
 			console.log("append");
@@ -132,19 +152,116 @@ jQuery(function($) {
 
 
 	galleryObj = new rtMedia.Gallery();
-        $(document).on("click","#rtMedia-galary-next",function(e){
+
+	$("body").append('<script id="rt-media-gallery-item-template" type="text/template"></script>');
+
+	$("#rt-media-gallery-item-template").load(template_url+"/media-gallery-item.php",{action: 'rt_media_backbone_template',backbone: true} ,function(response,status,xhr) {
+
+		$(document).on("click","#rtMedia-galary-next",function(e){
             $(this).hide();
             e.preventDefault();
-            
+
             galleryObj.getNext(nextpage);
         });
-        
-        
-        
+	});
+
+
+
         if(window.location.pathname.indexOf('media') != -1){
             var tempNext = window.location.pathname.substring(window.location.pathname.lastIndexOf("page/")+5, window.location.pathname.lastIndexOf("/"));
             if(isNaN(tempNext)=== false){
                 nextpage = parseInt(tempNext) + 1;
             }
         }
+
+
+
+         window.UploadView = Backbone.View.extend({
+                 events: {
+                        "click #rtMedia-start-upload": "uploadFiles"
+                 },
+
+                 initialize: function() {
+                        _.bindAll(this, "render");
+                 },
+
+                 render: function() {
+                        //$(this.el).html(this.template());
+                        return this;
+                 },
+
+                 initUploader: function() {
+                        var self = this;
+                        this.uploader = new plupload.Uploader(rtMedia_plupload_config);
+                        this.uploader.init();
+
+                        this.uploader.bind('UploadComplete', function(up, files){
+                            galleryObj.reloadView()
+                        });
+
+                        this.uploader.bind('FilesAdded', function(up, files){
+                                $.each(files, function(i, file){
+                                        tdName = document.createElement("td");
+                                                tdName.innerHTML = file.name;
+                                        tdStatus = document.createElement("td");
+                                                tdStatus.className = "plupload_file_status";
+                                                tdStatus.innerHTML = "0%";
+                                        tdSize = document.createElement("td");
+                                                tdSize.className = "plupload_file_size";
+                                                tdSize.innerHTML = plupload.formatSize(file.size);
+                                        tdDelete = document.createElement("td");
+                                                tdDelete.innerHTML = "X";
+                                                tdDelete.className = "plupload_delete"
+                                        tr = document.createElement("tr");
+                                                tr.id = file.id;
+                                                tr.appendChild(tdName); tr.appendChild(tdStatus); tr.appendChild(tdSize); tr.appendChild(tdDelete);
+                                        $("#rtMedia-queue-list").append(tr);
+                                        //Delete Function
+                                        $("#" + file.id + " td.plupload_delete").click(function(e){
+                                                e.preventDefault();
+                                                self.uploader.removeFile(self.uploader.getFile(file.id));
+                                                $("#" + file.id).remove();
+                                                return false;
+                                        });
+
+                                });
+                        });
+
+                        this.uploader.bind('UploadProgress', function(up, file){
+                                $("#" + file.id + " .plupload_file_status").html(file.percent + "%");
+
+                        });
+
+                        this.uploader.bind('FileUploaded', function(up, file){
+
+                                files = self.uploader.files;
+                                lastfile = files[files.length-1];
+                        });
+
+
+                        //The plupload HTML5 code gives a negative z-index making add files button unclickable
+                        $(".plupload.html5").css({zIndex: 0});
+                        $("#rtMedia-upload-button   ").css({zIndex: 2});
+
+                        return this;
+                 },
+
+                 uploadFiles: function(e){
+                        e.preventDefault();
+                        this.uploader.start();
+                        return false;
+                 }
+
+        });
+
+
+        if ($("#rtMedia-upload-button").length > 0){
+            var uploader = new UploadView();
+            uploader.initUploader();
+            $("#rtMedia-start-upload").click(function(e){
+                uploader.uploadFiles(e);
+            })
+        }
+
+
 });

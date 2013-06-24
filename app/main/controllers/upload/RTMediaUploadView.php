@@ -19,11 +19,13 @@ class RTMediaUploadView {
 
     }
 
-	static function upload_nonce_generator($echo = true) {
-
+	static function upload_nonce_generator($echo = true,$only_nonce =false) {
+                
 		if($echo) {
 			wp_nonce_field('rt_media_upload_nonce','rt_media_upload_nonce');
 		} else {
+                        if($only_nonce)
+                            return wp_create_nonce('rt_media_upload_nonce');
 			$token = array(
 				'action' => 'rt_media_upload_nonce',
 				'nonce' => wp_create_nonce('rt_media_upload_nonce')
@@ -40,7 +42,7 @@ class RTMediaUploadView {
 	 */
     public function render($template_name) {
         $tabs = array(
-			'file_upload' => array( 'title' => __('File Upload','rt-media'), 'content' => '<div id="drag-drop-area"><input type="file" name="rt_media_file[]" class="rt-media-upload-input rt-media-file" multiple="" /></div>' ),
+			'file_upload' => array( 'title' => __('File Upload','rt-media'), 'content' => '<div id="rtmedia-upload-container" ><div id="drag-drop-area" class="drag-drop"><input id="rtMedia-upload-button" value="Select" type="button" class="rt-media-upload-input rt-media-file" /></div><table id="rtMedia-queue-list"></table></div>' ),
 //			'file_upload' => array( 'title' => __('File Upload','rt-media'), 'content' => '<div id="rt-media-uploader"><p>Your browser does not have HTML5 support.</p></div>'),
 			'link_input' => array( 'title' => __('Insert from URL','rt-media'),'content' => '<input type="url" name="bp-media-url" class="rt-media-upload-input rt-media-url" />' ),
         );

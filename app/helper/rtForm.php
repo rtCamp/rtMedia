@@ -145,6 +145,12 @@ if(!class_exists("rtForm")) {
 			return "";
 		}
 
+		private function embedd_misc_attributes($misc) {
+			$html = '';
+
+			return $html;
+		}
+
 		private function processAttributes($element, $attributes, $container = false) {
 
 			/* generating the id on its own if not provided otherwise taken from the parameter provided */
@@ -169,6 +175,9 @@ if(!class_exists("rtForm")) {
 				else
 					$html .= $this->embedd_class($element);
 			}
+
+			if(isset($attributes['misc']) && is_array($attributes['misc']))
+				$html.= $this->embedd_misc_attributes($attributes['misc']);
 
 			$html .= $this->generate_element_value($element, $attributes);
 

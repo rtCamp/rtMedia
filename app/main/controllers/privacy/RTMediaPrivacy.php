@@ -34,7 +34,7 @@ class RTMediaPrivacy {
 
 	public function site_default(){
 		global $rtmedia;
-		print_r($rt_media->options);
+
 		return rt_media_get_site_option('privacy_settings');
 	}
 

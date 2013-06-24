@@ -38,9 +38,15 @@ function rt_media() {
  * echo the title of the media
  * @global type $rt_media_media
  */
-function rt_media_title() {
-    global $rt_media_media;
-    return $rt_media_media->post_title;
+function rt_media_title(){
+
+	global $rt_media_backbone;
+	if($rt_media_backbone) {
+		echo '<%= media_title %>';
+	} else {
+		global $rt_media_media;
+		return $rt_media_media->post_title;
+	}
 }
 
 function rt_media_id() {
@@ -53,8 +59,15 @@ function rt_media_id() {
  * @global type $rt_media_media
  */
 function rt_media_permalink() {
-    global $rt_media_query;
-    echo $rt_media_query->permalink();
+
+	global $rt_media_backbone;
+
+	if($rt_media_backbone) {
+		echo '<%= rt_permalink %>';
+	} else {
+		global $rt_media_query;
+		echo $rt_media_query->permalink();
+	}
 }
 
 /*
@@ -62,11 +75,20 @@ function rt_media_permalink() {
  */
 
 function rt_media_image($size = 'thumbnail', $return = 'src') {
-    global $rt_media_media, $rt_media;
+    global $rt_media_media, $rt_media_backbone;
     $thumbnail_id = 0;
-    if (isset($rt_media_media->media_type)) {
+
+	if($rt_media_backbone) {
+		if($return=="src")
+			echo '<%= guid %>';
+		if($return=="width")
+			echo '<%= width %>';
+		if($return=="height")
+			echo '<%= height %>';
+	} else if (isset($rt_media_media->media_type)) {
         if ($rt_media_media->media_type == 'album' ||
                 $rt_media_media->media_type != 'image') {
+            $thumbnail_id = get_rtmedia_meta($rt_media_media->media_id,'cover_art');
         } elseif ( $rt_media_media->media_type == 'image' ) {
             $thumbnail_id = $rt_media_media->media_id;
         } else {
@@ -79,14 +101,14 @@ function rt_media_image($size = 'thumbnail', $return = 'src') {
     if (!$thumbnail_id)
         return false;
 
-    list($src, $width, $height) = wp_get_attachment_image_src($rt_media_media->media_id, $size);
+    list($src, $width, $height) = wp_get_attachment_image_src($thumbnail_id, $size);
 
     if ($return == "src")
-        echo $src;
+		echo $src;
     if ($return == "width")
-        echo $width;
-    if ($return == "height")
-        echo $height;
+		echo $width;
+	if ($return == "height")
+		echo $height;
 }
 
 function rt_media_delete_allowed() {
@@ -239,7 +261,7 @@ function rt_media_current_media() {
  *
  */
 function rt_media_actions() {
-    
+
 }
 
 /**
@@ -269,23 +291,37 @@ function rt_media_comments() {
 
 function rt_media_pagination_prev_link() {
 
-	global $rt_media_media;
+	global $rt_media_media, $rt_media_interaction;
 
-	$post = get_post($rt_media_media->post_parent);
+	$page_url = ((rt_media_page()-1)==1) ? "" : "/page/".(rt_media_page()-1) ;
 
-	$link = get_site_url() . '/' . $post->post_name . '/media/page/' . (rt_media_page()-1);
+	if($rt_media_interaction->context->type=="profile") {
+		if(class_exists("BuddyPress"))
+			$link = get_site_url() . '/members/' . get_query_var('author_name') . '/media/' . $page_url;
+		else
+			$link = get_site_url() . '/author/' . get_query_var('author_name') . '/media/' . $page_url;
+	} else {
+		$post = get_post($rt_media_media->post_parent);
 
+		$link = get_site_url() . '/' . $post->post_name . '/media/' . $page_url;
+	}
 	return $link;
 }
 
 function rt_media_pagination_next_link() {
 
-	global $rt_media_media;
+	global $rt_media_media, $rt_media_interaction;
 
-	$post = get_post($rt_media_media->post_parent);
+	if($rt_media_interaction->context->type=="profile") {
+		if(function_exists("bp_core_get_user_domain"))
+			$link = bp_core_get_user_domain($rt_media_media->media_author) . 'media/page/' . (rt_media_page()+1);
+		else
+			$link = get_site_url() . '/author/' . get_query_var('author_name') . '/media/page/' . (rt_media_page()+1);
+	} else {
+		$post = get_post($rt_media_media->post_parent);
 
-	$link = get_site_url() . '/' . $post->post_name . '/media/page/' . (rt_media_page()+1);
-
+		$link = get_site_url() . '/' . $post->post_name . '/media/page/' . (rt_media_page()+1);
+	}
 	return $link;
 }
 
@@ -393,22 +429,22 @@ function rt_media_gallery($attr = '') {
     echo RTMediaGalleryShortcode::render($attr);
 }
 
-function get_media_meta($id=false,$key=false){
+function get_rtmedia_meta($id=false,$key=false){
 	$rtmediameta = new RTMediaMeta();
 	return $rtmediameta->get_meta($id, $key);
 }
 
-function add_media_meta($id=false,$key=false,$value=false,$duplicate=false){
+function add_rtmedia_meta($id=false,$key=false,$value=false,$duplicate=false){
 	$rtmediameta = new RTMediaMeta($id, $key, $value, $duplicate);
 	return $rtmediameta->add_meta($id, $key, $value, $duplicate);
 }
 
-function update_media_meta($id=false,$key=false,$value=false,$duplicate=false){
+function update_rtmedia_meta($id=false,$key=false,$value=false,$duplicate=false){
 	$rtmediameta = new RTMediaMeta();
 	return $rtmediameta->update_meta( $id, $key, $value, $duplicate );
 }
 
-function delete_media_meta($id=false,$key=false){
+function delete_rtmedia_meta($id=false,$key=false){
 	$rtmediameta = new RTMediaMeta();
 	return $rtmediameta->delete_meta($id, $key);
 }

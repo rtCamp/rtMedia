@@ -217,48 +217,48 @@ class RTMediaMigration {
             $temp = $prog->progress($done, $total);
             $prog->progress_ui($temp, true);
             ?>
-            <script>
-
-                function db_start_migration(db_done,db_total) {
-                if (db_done < db_total) {
-                jQuery("#rtMediaSyncing").show();
-                jQuery.ajax({
-                url: rt_media_admin_ajax,
-                type: 'post',
-                data: {"action": "bp_media_rt_db_migration", "done": db_done},
-                success: function(sdata) {
-                data = JSON.parse(sdata);
-                if (data.status) {
-                done = parseInt(data.done);
-                total = parseInt(data.total);
-                var progw = Math.ceil((done/total) *100);
-                if(progw>100){
-                progw=100;
-                };
-                jQuery('#rtprogressbar>div').css('width',progw+'%');
-                jQuery('span.finished').html(done);
-                jQuery('span.total').html(total);
-                jQuery('span.pending').html(data.pending);
-
-                db_start_migration(done,total);
-                }else{
-                alert("Migration Done");
-                jQuery("#rtMediaSyncing").hide();
+            <script type="text/javascript">
+                function db_start_migration(db_done, db_total) {
+                    if (db_done < db_total) {
+                        jQuery("#rtMediaSyncing").show();
+                        jQuery.ajax({
+                            url: rt_media_admin_ajax,
+                            type: 'post',
+                            data: {
+                                "action": "bp_media_rt_db_migration",
+                                "done": db_done
+                            },
+                            success: function (sdata) {
+                                data = JSON.parse(sdata);
+                                if (data.status) {
+                                    done = parseInt(data.done);
+                                    total = parseInt(data.total);
+                                    var progw = Math.ceil((done / total) * 100);
+                                    if (progw > 100) {
+                                        progw = 100;
+                                    };
+                                    jQuery('#rtprogressbar>div').css('width', progw + '%');
+                                    jQuery('span.finished').html(done);
+                                    jQuery('span.total').html(total);
+                                    jQuery('span.pending').html(data.pending);
+                                    db_start_migration(done, total);
+                                } else {
+                                    alert("Migration Done");
+                                    jQuery("#rtMediaSyncing").hide();
+                                }
+                            }
+                        });
+                    } else {
+                        alert("Migration Done");
+                        jQuery("#rtMediaSyncing").hide();
+                    }
                 }
 
-                }
-                });
-                }else{
-                alert("Migration Done");
-                jQuery("#rtMediaSyncing").hide();
-                }
-                }
-
-                jQuery(document).on('click','#submit',function(e){
-                e.preventDefault();
-                var db_done = <?php echo $done; ?>;
-                var db_total = <?php echo $total; ?>;
-                db_start_migration(db_done,db_total);
+                jQuery(document).on('click', '#submit', function (e) {
+                    e.preventDefault();
+                    var db_done = <?php echo $done; ?> ;
+                    var db_total = <?php echo $total; ?> ;
+                    db_start_migration(db_done, db_total);
                 });
             </script>
             <hr />
@@ -388,7 +388,7 @@ class RTMediaMigration {
                         "context" => $media_context,
                         "context_id" => abs(intval($result->context_id)),
                         "activity_id" => $result->activity_id,
-                        "privacy" => $result->privacy,
+                        "privacy" => intval($result->privacy) * 10,
                         "media_author" => $result->media_author,
                             ), array('%d', '%d', '%s', '%s', '%d', '%d', '%d', '%d')
                     );

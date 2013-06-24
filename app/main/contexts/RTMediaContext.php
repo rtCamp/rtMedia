@@ -52,10 +52,13 @@ class RTMediaContext {
      */
     function set_wp_context() {
         global $post;
-        if (isset($post->post_type)) {
+		if(is_author()) {
+			$this->type = 'profile';
+			$this->id = get_query_var('author');
+		} elseif (isset($post->post_type)) {
             $this->type = $post->post_type;
             $this->id = $post->ID;
-        }
+		}
     }
 
     /**

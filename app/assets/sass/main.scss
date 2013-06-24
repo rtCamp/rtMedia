@@ -1,0 +1,16 @@
+.rt-media-container{
+    @import "compass/reset";
+    padding:5px;
+    #rtmedia-upload-container{
+        .drag-drop{
+            border: 4px dashed #DDD;
+            text-align: center;
+            background: #fafafa;
+            overflow: hidden;
+            padding: 15px 0;
+            &:hover{
+                border-color: #83b4d8;
+            }
+        }
+    }
+}

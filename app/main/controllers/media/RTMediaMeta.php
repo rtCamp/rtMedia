@@ -37,7 +37,11 @@ class RTMediaMeta {
 	private function get_single_meta($id=false, $key=false){
 		if($id===false) return false;
 		if($key===false) return false;
-		return maybe_unserialize($this->model->get(array('media_id'=>$id,'meta_key'=>$key)));
+                $value = $this->model->get(array('media_id'=>$id,'meta_key'=>$key));
+                if(isset($value[0]))
+                    return maybe_unserialize($value[0]->meta_value);
+                else
+                    return false;
 	}
 
 	function add_meta($id=false,$key=false,$value=false,$duplicate=false){
