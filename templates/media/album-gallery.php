@@ -4,13 +4,13 @@
 
     <?php if (have_rt_media()) { ?>
 
-        <h2><?php echo __('Media Gallery','rt-media'); ?></h2>
+        <h2><?php echo __('Album Gallery','rt-media'); ?></h2>
 
         <ul class="rt-media-list">
 
             <?php while (have_rt_media()) : rt_media(); ?>
 
-                <?php include ('media-gallery-item.php'); ?>
+                <?php include ('album-gallery-item.php'); ?>
 
             <?php endwhile; ?>
 
@@ -20,10 +20,10 @@
         <!--  these links will be handled by backbone later
                         -- get request parameters will be removed  -->
         <?php if(rt_media_offset() != 0) { ?>
-            <a id="rtMedia-galary-prev" href="<?php echo rt_media_pagination_prev_link(); ?>">Prev</a>
+            <a href="?rt_media_page=<?php echo rt_media_page()-1; ?>">Prev</a>
         <?php } ?>
         <?php if(rt_media_offset()+ rt_media_per_page_media() < rt_media_count()) { ?>
-            <a  id="rtMedia-galary-next" href="<?php echo rt_media_pagination_next_link(); ?>">Next</a>
+            <a href="?rt_media_page=<?php echo rt_media_page()+1; ?>">Next</a>
         <?php } ?>
 
 	<?php } else { ?>
@@ -34,20 +34,18 @@
 
 <!-- template for single media in gallery -->
 <script id="rt-media-gallery-item-template" type="text/template">
-    <li class="rt-media-list-item">
-        <div class="rt-media-item-thumbnail">
-            <a href ="media/<%= id %>">
-                <img src="<%= guid %>">
-            </a>
-        </div>
+    <div class="rt-media-item-thumbnail">
+        <a href ="media/<%= id %>">
+            <img src="<%= guid %>">
+        </a>
+    </div>
 
-        <div class="rt-media-item-title">
-            <h4 title="<%= media_title %>">
-                <a href="media/<%= id %>">
-                    <%= media_title %>
-                </a>
-            </h4>
-        </div>
-    </li>
+    <div class="rt-media-item-title">
+        <h4 title="<%= media_title %>">
+            <a href="media/<%= id %>">
+                <%= media_title %>
+            </a>
+        </h4>
+    </div>
 </script>
 <!-- rt_media_actions remained in script tag -->

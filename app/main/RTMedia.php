@@ -110,7 +110,7 @@ class RTMedia {
 		register_activation_hook(__FILE__, array($this, 'flush_rewrite'));
 		register_deactivation_hook(__FILE__, array($this, 'flush_rewrite'));
 
-		$this->default_thumbnail = apply_filter('rtmedia_default_thumbnail',BP_MEDIA_URL. 'assets/thumb_default.png');
+		$this->default_thumbnail = apply_filters('rtmedia_default_thumbnail',RT_MEDIA_URL. 'assets/thumb_default.png');
 		// Define allowed types
 		$this->set_allowed_types();
 
@@ -230,7 +230,7 @@ class RTMedia {
 		);
 
 		$allowed_types = apply_filters('rt_media_allowed_types', $allowed_types);
-
+                
 		$allowed_types = $this->sanitize_allowed_types($allowed_types);
 
 		$this->allowed_types = $allowed_types;
@@ -251,6 +251,7 @@ class RTMedia {
 				$type['thumbnail']= $this->default_thumbnail;
 			}
 		}
+                return $allowed_types;
 	}
 
 	function set_allowed_sizes(){
@@ -303,6 +304,57 @@ class RTMedia {
 
 		$this->allowed_sizes = apply_filters('rt_media_allowed_sizes', $this->allowed_sizes);
 
+		$this->privacy = array(
+			'enable' => array(
+				'title' => __("Enable Privacy","rt-media"),
+				'callback' => array("RTMediaFormHandler", "checkbox"),
+				'args' => array(
+					'id' => 'rt-media-privacy-enable',
+					'key' => 'rt-media-privacy][enable',
+					'value' => 0
+				)
+			),
+			'default' => array(
+				'title' => __("Default Privacy","rt-media"),
+				'callback' => array("RTMediaFormHandler","radio"),
+				'args' => array(
+					'key' => 'rt-media-privacy][default',
+					'radios' => array(
+						60 => __('<strong>Private</strong> - Visible only to the user', 'rt-media'),
+						40 => __('<strong>Friends</strong> - Visible to user\'s friends', 'rt-media'),
+						20 => __('<strong>Users</strong> - Visible to registered users', 'rt-media'),
+						0 => __('<strong>Public</strong> - Visible to the world', 'rt-media')
+					),
+					'default' => 0
+				),
+			),
+			'user_override' => array(
+				'title' => __("User Override","rt-media"),
+				'callback' => array("RTMediaFormHandler", "checkbox"),
+				'args' => array(
+					'key' => 'rt-media-privacy][user-override',
+					'value' => 0
+				)
+			)
+		);
+		$this->privacy = apply_filters('rt_media_privacy_levels', $this->privacy);
+
+		if (function_exists("bp_is_active") && !bp_is_active('friends')) {
+			unset($this->privacy['levels'][40]);
+		}
+
+		/**
+		 *  Enqueue Plugin Scripts and Styles
+		 */
+		add_action('wp_enqueue_scripts', array($this, 'enqueue_scripts_styles'), 11);
+                
+                /* Includes db specific wrapper functions required to render the template */
+                include(RT_MEDIA_PATH . 'app/main/controllers/template/rt-template-functions.php');
+                
+		/**
+		 * AJAX Call for PL Upload
+		 */
+		//add_action('wp_ajax_rt_file_upload', array('RTMediaUploadHelper', 'file_upload'));
 	}
 
 	function dummy_function() {
@@ -529,7 +581,7 @@ class RTMedia {
 			define('RT_MEDIA_MEDIA_SLUG', 'media');
 
 		if (!defined('RT_MEDIA_MEDIA_LABEL'))
-			define('RT_MEDIA_MEDIA_SLUG', __('Media','rt-media'));
+			define('RT_MEDIA_MEDIA_LABEL', __('Media','rt-media'));
 
 		if (!defined('RT_MEDIA_ALBUM_SLUG'))
 			define('RT_MEDIA_ALBUM_SLUG', 'album');
