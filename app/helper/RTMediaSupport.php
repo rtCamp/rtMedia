@@ -23,7 +23,7 @@ if (!class_exists('RTMediaSupport')) {
             $debug_info['MYSQL'] = $wpdb->db_version();
             $debug_info['WordPress'] = $wp_version;
             $debug_info['BuddyPress'] = (isset($bp->version))?$bp->version:'-NA-';
-            $debug_info['rtMedia'] = RT_MEDIA_VERSION;
+            $debug_info['rtMedia'] = RTMEDIA_VERSION;
             $debug_info['OS'] = PHP_OS;
             if (extension_loaded('imagick')) {
 								$imagickobj = new Imagick();

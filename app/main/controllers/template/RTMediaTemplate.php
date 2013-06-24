@@ -30,7 +30,7 @@ class RTMediaTemplate {
 		$suffix = defined('SCRIPT_DEBUG') && SCRIPT_DEBUG ? '' : '.min';
 		wp_enqueue_script('wp-ajax-response');
 		wp_enqueue_script('rt-media-image-edit', admin_url("js/image-edit$suffix.js"), array('jquery', 'json2', 'imgareaselect'), false, 1);
-		wp_enqueue_style('rt-media-image-edit', RT_MEDIA_URL . 'app/assets/css/image-edit.css');
+		wp_enqueue_style('rt-media-image-edit', RTMEDIA_URL . 'app/assets/css/image-edit.css');
 	}
 
 	/**
@@ -251,7 +251,7 @@ class RTMediaTemplate {
 	 */
 	function get_default_template() {
 
-		return apply_filters( 'rt_media_media_template_include', RT_MEDIA_PATH . 'app/main/controllers/template/template.php');
+		return apply_filters( 'rt_media_media_template_include', RTMEDIA_PATH . 'app/main/controllers/template/template.php');
 
 	}
 
@@ -279,7 +279,7 @@ class RTMediaTemplate {
 		} else if ( file_exists( TEMPLATEPATH . $path . $template_name ) ) {
 			$located = TEMPLATEPATH . $path . $template_name;
 		} else {
-			$located = RT_MEDIA_PATH . $ogpath . $template_name;
+			$located = RTMEDIA_PATH . $ogpath . $template_name;
 		}
 
 		return $located;
