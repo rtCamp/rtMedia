@@ -60,7 +60,30 @@
 				echo '<input type="hidden" name="album_id" value="'.$rt_media_interaction->context->id.'" />';*/
 			?>
 
-            <input type="submit" name="rt-media-upload" value="<?php echo RT_MEDIA_UPLOAD_LABEL; ?>" />
+            <input type="submit" id='rtMedia-start-upload' name="rt-media-upload" value="<?php echo RT_MEDIA_UPLOAD_LABEL; ?>" />
         </form>
     </div>
-        <?php } ?>
+<?php } 
+    $params = array(
+            'url' => 'upload/',
+            'runtimes' => 'gears,html5,flash,silverlight,browserplus',
+            'browse_button' => 'rtMedia-upload-button',
+            'container' => 'upload-container',
+            'drop_element' => 'drag-drop-area',
+            'filters' => apply_filters('bp_media_plupload_files_filter', array(array('title' => "Media Files", 'extensions' => "mp4,jpg,png,jpeg,gif,mp3"))),
+            'max_file_size' => min(array(ini_get('upload_max_filesize'), ini_get('post_max_size'))),
+            'multipart' => true,
+            'urlstream_upload' => true,
+            'flash_swf_url' => includes_url('js/plupload/plupload.flash.swf'),
+            'silverlight_xap_url' => includes_url('js/plupload/plupload.silverlight.xap'),
+            'file_data_name' => 'rt_media_file', // key passed to $_FILE.
+            'multi_selection' => true,
+            'multipart_params' => apply_filters('rt-media-multi-params', array('redirect'=>'no','action' => 'wp_handle_upload','_wp_http_referer'=> $_SERVER['REQUEST_URI'],'mode'=>'file_upload','rt_media_upload_nonce'=>RTMediaUploadView::upload_nonce_generator(false,true)))
+        );
+    
+    
+    
+?>
+<script type="text/javascript">
+    var rtMedia_plupload_config=<?php echo json_encode($params); ?>;
+</script> 
