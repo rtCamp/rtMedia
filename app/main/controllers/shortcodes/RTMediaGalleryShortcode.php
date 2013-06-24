@@ -34,7 +34,7 @@ class RTMediaGalleryShortcode {
 		wp_register_script('rtmedia-backbone', RTMEDIA_URL . 'app/assets/js/rtMedia.backbone.js', array('plupload','backbone'));
 		wp_localize_script('rtmedia-backbone', 'template_url', RTMEDIA_URL . 'templates/media');
                 $params = array(
-                    'url' => (isset($_SERVER["REQUEST_URI"]) && strpos($_SERVER["REQUEST_URI"],"/media/")!== false)?'../upload/':'upload/',
+                    'url' => (isset($_SERVER["REQUEST_URI"]) && strpos($_SERVER["REQUEST_URI"],"/media/") !== false)?str_replace("/media/", "/upload/", $_SERVER["REQUEST_URI"]):'../upload/',
                     'runtimes' => 'gears,html5,flash,silverlight,browserplus',
                     'browse_button' => 'rtMedia-upload-button',
                     'container' => 'upload-container',
