@@ -42,7 +42,7 @@ class RTMediaGalleryShortcode {
 	 */
 	static function display_allowed() {
 
-		$flag = !(is_home() || is_post_type_archive());
+		$flag = !(is_home() || is_post_type_archive() || is_author());
 		$flag = apply_filters('before_rtmedia_gallery_display', $flag);
 		return $flag;
 	}

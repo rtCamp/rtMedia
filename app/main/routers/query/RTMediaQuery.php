@@ -610,10 +610,15 @@ class RTMediaQuery {
 	function permalink() {
 
 		global $rt_media_media;
+		$parent_link = '';
 
-		$post = get_post($rt_media_media->post_parent);
+		if(function_exists('bp_core_get_user_domain')) {
+			$parent_link = bp_core_get_user_domain($rt_media_media->media_author);
+		} else {
+			$parent_link = get_author_posts_url($rt_media_media->media_author);
+		};
 
-		$link = get_site_url() . '/' . $post->post_name . '/media/' . $rt_media_media->id;
+		$link = $parent_link . 'media/' . $rt_media_media->id;
 
 		return $link;
 	}

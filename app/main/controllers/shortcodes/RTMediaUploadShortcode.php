@@ -39,7 +39,7 @@ class RTMediaUploadShortcode {
 	 */
 	static function display_allowed() {
 
-		$flag = (!(is_home() || is_post_type_archive())) && is_user_logged_in();
+		$flag = (!(is_home() || is_post_type_archive() || is_author())) && is_user_logged_in();
 
 		$flag = apply_filters('before_rtmedia_uploader_display', $flag);
 		return $flag;
