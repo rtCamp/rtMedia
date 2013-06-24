@@ -63,9 +63,11 @@ jQuery(function($) {
                         else
                             url = window.location.pathname.substr(0,window.location.pathname.lastIndexOf("page/"));
                     }
-                    if(!upload_sync && nextpage >1)
-                        url += 'page/' + nextpage + '/';
-
+                    if(!upload_sync && nextpage >1){
+						if(url.substr(url.length-1)!="/")
+							url +="/"
+						url += 'page/' + nextpage + '/';
+					}
                     return url;
                 },
 

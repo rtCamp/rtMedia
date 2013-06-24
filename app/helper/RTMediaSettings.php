@@ -73,8 +73,8 @@ if (!class_exists('RTMediaSettings')) {
 //                add_settings_section('rtm-privacy', __('Update Database', 'rt-media'), array($rt_media_privacy, 'init'), 'rt-media-privacy');
 //            }
 
-            $rt_media_album_importer = new BPMediaAlbumimporter();
-            add_settings_section('rtm-rt-album-importer', __('BP-Album Importer', 'rt-media'), array($rt_media_album_importer, 'ui'), 'rt-media-importer');
+            //$rt_media_album_importer = new BPMediaAlbumimporter();
+            //add_settings_section('rtm-rt-album-importer', __('BP-Album Importer', 'rt-media'), array($rt_media_album_importer, 'ui'), 'rt-media-importer');
             register_setting('rt_media', 'rt_media_options', array($this, 'sanitize'));
         }
 

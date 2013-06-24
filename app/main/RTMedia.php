@@ -44,7 +44,12 @@ class RTMedia {
 	 *
 	 * @var object default application wide privacy levels
 	 */
-	public $privacy;
+	public $default_privacy = array(
+		'0'		=> 'Public',
+		'20'	=> 'Users',
+		'40'	=> 'Friends',
+		'60'	=> 'Private'
+	);
 
 
 	/**
@@ -282,41 +287,6 @@ class RTMedia {
 			)
 		);
 		$this->privacy_settings = apply_filters('rt_media_privacy_levels', $this->privacy_settings);
-
-		$this->privacy = array(
-			'enable' => array(
-				'title' => __("Enable Privacy","rt-media"),
-				'callback' => array("RTMediaFormHandler", "checkbox"),
-				'args' => array(
-					'id' => 'rt-media-privacy-enable',
-					'key' => 'rt-media-privacy][enable',
-					'value' => 0
-				)
-			),
-			'default' => array(
-				'title' => __("Default Privacy","rt-media"),
-				'callback' => array("RTMediaFormHandler","radio"),
-				'args' => array(
-					'key' => 'rt-media-privacy][default',
-					'radios' => array(
-						60 => __('<strong>Private</strong> - Visible only to the user', 'rt-media'),
-						40 => __('<strong>Friends</strong> - Visible to user\'s friends', 'rt-media'),
-						20 => __('<strong>Users</strong> - Visible to registered users', 'rt-media'),
-						0 => __('<strong>Public</strong> - Visible to the world', 'rt-media')
-					),
-					'default' => 0
-				),
-			),
-			'user-override' => array(
-				'title' => __("User Override","rt-media"),
-				'callback' => array("RTMediaFormHandler", "checkbox"),
-				'args' => array(
-					'key' => 'rt-media-privacy][user-override',
-					'value' => 0
-				)
-			)
-		);
-		$this->privacy = apply_filters('rt_media_privacy_levels', $this->privacy);
 
 		if (function_exists("bp_is_active") && !bp_is_active('friends')) {
 			unset($this->privacy_settings['levels'][40]);
