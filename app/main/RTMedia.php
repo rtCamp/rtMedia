@@ -28,7 +28,7 @@ class RTMedia {
 	public $default_thumbnail;
 	public $allowed_types;
 	public $privacy;
-	public $allowed_sizes;
+	public $default_sizes;
 
 	/**
 	 *
@@ -105,102 +105,44 @@ class RTMedia {
 	 * @global int $bp_media_counter Media counter
 	 */
 	public function __construct() {
-		// Rewrite API flush before activating and after deactivating the plugin
 
+		// Rewrite API flush before activating and after deactivating the plugin
 		register_activation_hook(__FILE__, array($this, 'flush_rewrite'));
 		register_deactivation_hook(__FILE__, array($this, 'flush_rewrite'));
 
+		// default thumbnail for media types
 		$this->default_thumbnail = apply_filter('rtmedia_default_thumbnail',BP_MEDIA_URL. 'assets/thumb_default.png');
-		// Define allowed types
-		$this->set_allowed_types();
 
-		/**
-		 * Define constants
-		 */
-		$this->constants();
+		$this->set_allowed_types(); // Define allowed types
 
-		/**
-		 *
-		 * check for global album --- after wordpress is fully loaded
-		 */
+		$this->constants(); // Define constants
+
+		// check for global album --- after wordpress is fully loaded
 		add_action('init', array($this, 'check_global_album'));
 
-
-		/**
-		 * Define excerpt lengths
-		 */
-		/**
-		 * Hook it to BuddyPress
-		 */
+		// Hook it to WordPress
 		add_action('plugins_loaded', array($this, 'init'));
 
-		/**
-		 * Load translations
-		 */
+		// Load translations
 		add_action('plugins_loaded', array($this, 'load_translation'));
 
-		/**
-		 * Admin Panel
-		 */
+		//Admin Panel
 		add_action('init', array($this, 'admin_init'));
 
-		/**
-		 * Initialise media counter
-		 */
-		global $bp_media_counter;
-		$bp_media_counter = 0;
+		$this->set_default_sizes(); // set default sizes
 
+		$this->set_privacy(); // set privacy
 
-		$this->set_allowed_sizes();
-		$this->privacy = array(
-			'enable' => array(
-				'title' => __("Enable Privacy","rt-media"),
-				'callback' => array("RTMediaFormHandler", "checkbox"),
-				'args' => array(
-					'id' => 'rt-media-privacy-enable',
-					'key' => 'rt-media-privacy][enable',
-					'value' => 0
-				)
-			),
-			'default' => array(
-				'title' => __("Default Privacy","rt-media"),
-				'callback' => array("RTMediaFormHandler","radio"),
-				'args' => array(
-					'key' => 'rt-media-privacy][default',
-					'radios' => array(
-						60 => __('<strong>Private</strong> - Visible only to the user', 'rt-media'),
-						40 => __('<strong>Friends</strong> - Visible to user\'s friends', 'rt-media'),
-						20 => __('<strong>Users</strong> - Visible to registered users', 'rt-media'),
-						0 => __('<strong>Public</strong> - Visible to the world', 'rt-media')
-					),
-					'default' => 0
-				),
-			),
-			'user_override' => array(
-				'title' => __("User Override","rt-media"),
-				'callback' => array("RTMediaFormHandler", "checkbox"),
-				'args' => array(
-					'key' => 'rt-media-privacy][user-override',
-					'value' => 0
-				)
-			)
-		);
-		$this->privacy = apply_filters('rt_media_privacy_levels', $this->privacy);
-
-		if (function_exists("bp_is_active") && !bp_is_active('friends')) {
-			unset($this->privacy['levels'][40]);
-		}
-
-		/**
-		 *  Enqueue Plugin Scripts and Styles
-		 */
+		//  Enqueue Plugin Scripts and Styles
 		add_action('wp_enqueue_scripts', array($this, 'enqueue_scripts_styles'), 11);
-		/**
-		 * AJAX Call for PL Upload
-		 */
+
+		//AJAX Call for PL Upload
 		//add_action('wp_ajax_rt_file_upload', array('RTMediaUploadHelper', 'file_upload'));
 	}
 
+	/**
+	 *  Default allowed media types array
+	 */
 	function set_allowed_types(){
 		$allowed_types = array(
 			array(
@@ -229,14 +171,22 @@ class RTMedia {
 				)
 		);
 
+		// filter for hooking additional media types
 		$allowed_types = apply_filters('rt_media_allowed_types', $allowed_types);
 
+		// sanitize all the types
 		$allowed_types = $this->sanitize_allowed_types($allowed_types);
 
+		// set the allowed types property
 		$this->allowed_types = $allowed_types;
 
 	}
 
+	/**
+	 *
+	 * @param array $allowed_types allowed media types after hooking custom types
+	 * @return array $allowed_types sanitized media types
+	 */
 	function sanitize_allowed_types($allowed_types){
 		if(!is_array($allowed_types)&& count($allowed_types)<1) return;
 		foreach($allowed_types as $key=>&$type){
@@ -251,10 +201,11 @@ class RTMedia {
 				$type['thumbnail']= $this->default_thumbnail;
 			}
 		}
+		return $allowed_types;
 	}
 
-	function set_allowed_sizes(){
-		$this->allowed_sizes = array(
+	function set_default_sizes(){
+		$this->default_sizes = array(
 			'image' => array(
 				'title' => __("Image","rt-media"),
 				'thumbnail' => array(
@@ -301,8 +252,49 @@ class RTMedia {
 			)
 		);
 
-		$this->allowed_sizes = apply_filters('rt_media_allowed_sizes', $this->allowed_sizes);
+		$this->default_sizes = apply_filters('rt_media_allowed_sizes', $this->allowed_sizes);
 
+	}
+
+	function set_privacy(){
+		$this->privacy = array(
+			'enable' => array(
+				'title' => __("Enable Privacy","rt-media"),
+				'callback' => array("RTMediaFormHandler", "checkbox"),
+				'args' => array(
+					'id' => 'rt-media-privacy-enable',
+					'key' => 'rt-media-privacy][enable',
+					'value' => 0
+				)
+			),
+			'default' => array(
+				'title' => __("Default Privacy","rt-media"),
+				'callback' => array("RTMediaFormHandler","radio"),
+				'args' => array(
+					'key' => 'rt-media-privacy][default',
+					'radios' => array(
+						60 => __('<strong>Private</strong> - Visible only to the user', 'rt-media'),
+						40 => __('<strong>Friends</strong> - Visible to user\'s friends', 'rt-media'),
+						20 => __('<strong>Users</strong> - Visible to registered users', 'rt-media'),
+						0 => __('<strong>Public</strong> - Visible to the world', 'rt-media')
+					),
+					'default' => 0
+				),
+			),
+			'user_override' => array(
+				'title' => __("User Override","rt-media"),
+				'callback' => array("RTMediaFormHandler", "checkbox"),
+				'args' => array(
+					'key' => 'rt-media-privacy][user-override',
+					'value' => 0
+				)
+			)
+		);
+		$this->privacy = apply_filters('rt_media_privacy_levels', $this->privacy);
+
+		if (function_exists("bp_is_active") && !bp_is_active('friends')) {
+			unset($this->privacy['levels'][40]);
+		}
 	}
 
 	function dummy_function() {
