@@ -20,17 +20,17 @@ class RTMediaPrivacy {
 	 *
 	 */
 	function __construct() {
-		add_action( 'bp_media_after_update_media', array( $this, 'save_privacy_by_object' ), 99 );
-		add_action( 'bp_media_after_add_media', array( $this, 'save_privacy_by_object' ), 99 );
-		add_action( 'bp_media_after_add_album', array( $this, 'save_privacy_by_object' ), 99 );
-		add_action( 'bp_media_after_edit_album', array( $this, 'save_privacy_by_object' ), 99 );
-		add_action( 'wp_ajax_bp_media_privacy_install', 'BPMediaPrivacy::install' );
-		add_action( 'wp_ajax_bp_media_privacy_redirect', array( $this, 'set_option_redirect' ) );
-		add_action( 'bp_has_activities', array( $this, 'activity' ), 10, 2 );
-		if ( BPMediaPrivacy::is_enabled() == false )
-			return;
-		$this->settings = $this->get_settings();
-		add_action( 'bp_media_add_media_fields', array( $this, 'ui' ) );
+//		add_action( 'bp_media_after_update_media', array( $this, 'save_privacy_by_object' ), 99 );
+//		add_action( 'bp_media_after_add_media', array( $this, 'save_privacy_by_object' ), 99 );
+//		add_action( 'bp_media_after_add_album', array( $this, 'save_privacy_by_object' ), 99 );
+//		add_action( 'bp_media_after_edit_album', array( $this, 'save_privacy_by_object' ), 99 );
+//		add_action( 'wp_ajax_bp_media_privacy_install', 'BPMediaPrivacy::install' );
+//		add_action( 'wp_ajax_bp_media_privacy_redirect', array( $this, 'set_option_redirect' ) );
+//		add_action( 'bp_has_activities', array( $this, 'activity' ), 10, 2 );
+//		if ( BPMediaPrivacy::is_enabled() == false )
+//			return;
+//		$this->settings = $this->get_settings();
+//		add_action( 'bp_media_add_media_fields', array( $this, 'ui' ) );
 	}
 
 	public function set_option_redirect() {

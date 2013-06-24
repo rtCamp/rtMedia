@@ -102,7 +102,7 @@ class RTMediaMedia {
 				if( !is_null($value) ) {
 					$row['meta_key'] = $key;
 					$row['meta_value'] = $value;
-					$status = $this->model->add_meta($row);
+					$status = add_rtmedia_meta($id,$key,$value);
 
 					if (get_class($status) == 'WP_Error' || $status == 0)
 						return false;

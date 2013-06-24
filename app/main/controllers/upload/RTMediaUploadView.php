@@ -74,7 +74,7 @@ class RTMediaUploadView {
 		} else if (file_exists(TEMPLATEPATH . '/rt-media/' . $template_name)) {
 			$located = TEMPLATEPATH . '/rt-media/' . $template_name;
 		} else {
-			$located = RT_MEDIA_PATH . 'templates/upload/' . $template_name;
+			$located = RTMEDIA_PATH . 'templates/upload/' . $template_name;
 		}
 
         return $located;

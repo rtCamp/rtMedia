@@ -9,6 +9,7 @@ class RTMediaModel extends RTDBModel {
 
     function __construct() {
         parent::__construct('rtm_media');
+		$this->meta_table_name = "rtm_media_meta";
     }
 
 	/**
@@ -121,56 +122,5 @@ class RTMediaModel extends RTDBModel {
         }
         return $results;
     }
-
-	/**
-	 *
-	 * @global type $wpdb
-	 * @param type $media_id
-	 * @return type
-	 */
-    function get_media_meta($media_id){
-        $media_query_str = "";
-        if (is_array($media_id)){
-            $sep = "";
-            foreach($media_id as $mid){
-                $media_query_str .= $sep . $mid;
-                $sep= ",";
-            }
-        }else{
-            $media_query_str .= $media_id;
-        }
-
-        global $wpdb;
-        $sql = "SELECT * FROM {$wpdb->posts} LEFT JOIN {$this->table_name}
-            ON {$wpdb->posts}.ID = {$this->table_name}.media_id
-            WHERE {$wpdb->posts}.ID in ({$media_query_str});";
-        return $wpdb->get_results($sql,ARRAY_A);
-    }
-
-	/**
-	 *
-	 * @param type $row
-	 * @param type $new
-	 * @return type
-	 */
-	function add_meta($row, $new = false) {
-
-		if($new) {
-			return parent::insert_meta($row);
-		} else {
-
-			$columns = $row;
-			unset($columns['meta_value']);
-			$existing_meta = parent::get_meta($columns);
-
-			if(count($existing_meta)) {
-				$meta = array('meta_value' => $row['meta_value']);
-				$where = array('media_id' => $row['media_id'], 'meta_key' => $row['meta_key']);
-				return parent::update_meta($meta, $where);
-			}
-			else
-				return parent::insert_meta ($row);
-		}
-	}
 }
 ?>

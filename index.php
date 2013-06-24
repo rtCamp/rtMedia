@@ -16,22 +16,22 @@
  * @subpackage Main
  */
 
-if ( ! defined( 'RT_MEDIA_PATH' ) ){
+if ( ! defined( 'RTMEDIA_PATH' ) ){
 
 	/**
 	 *  The server file system path to the plugin directory
 	 *
 	 */
-	define( 'RT_MEDIA_PATH', plugin_dir_path( __FILE__ ) );
+	define( 'RTMEDIA_PATH', plugin_dir_path( __FILE__ ) );
 }
 
-if ( ! defined( 'RT_MEDIA_URL' ) ){
+if ( ! defined( 'RTMEDIA_URL' ) ){
 
 	/**
 	 * The url to the plugin directory
 	 *
 	 */
-	define( 'RT_MEDIA_URL', plugin_dir_url( __FILE__ ) );
+	define( 'RTMEDIA_URL', plugin_dir_url( __FILE__ ) );
 }
 
 /**
@@ -73,7 +73,7 @@ function rt_media_autoloader( $class_name ) {
 		'app/importers/' . $class_name . '.php',
 	);
 	foreach ( $rtlibpath as $path ) {
-		$path = RT_MEDIA_PATH . $path;
+		$path = RTMEDIA_PATH . $path;
 		if ( file_exists( $path ) ) {
 			include $path;
 			break;

@@ -45,14 +45,14 @@ class RTMediaRouter {
 
 	/**
 	 * Check if there is a constant defined for this route and use that instead
-	 * So, this can be overridden by defining RT_MEDIA_MEDIA_SLUG in wp-config.php
+	 * So, this can be overridden by defining RTMEDIA_MEDIA_SLUG in wp-config.php
 	 *
 	 * @param string $slug The slug string passed for the route, in the constructor
 	 */
 	function slug($slug){
 
 		// create the slug constant name
-		$slug_constant = 'RT_MEDIA_' . strtoupper( $slug ) . '_SLUG';
+		$slug_constant = 'RTMEDIA_' . strtoupper( $slug ) . '_SLUG';
 
 		// check if the constant is defined
 		if ( defined( $slug_constant ) ){
