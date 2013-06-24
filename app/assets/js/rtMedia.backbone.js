@@ -78,7 +78,7 @@ jQuery(function($) {
 					collection: new rtMedia.Gallery(response.data),
                         		el: $(".rt-media-list")[0] });
                                         upload_sync=false;
-                                        
+
 				}
 			});
 		},
@@ -150,7 +150,7 @@ jQuery(function($) {
 	console.log(template_url);
 	$("body").append('<script id="rt-media-gallery-item-template" type="text/template"></script>');
 
-	$("#rt-media-gallery-item-template").load(ajaxurl,{action: 'rt_media_backbone_template',backbone: true} ,function(response,status,xhr) {
+	$("#rt-media-gallery-item-template").load(template_url+"/media-gallery-item.php",{action: 'rt_media_backbone_template',backbone: true} ,function(response,status,xhr) {
 
 		$(document).on("click","#rtMedia-galary-next",function(e){
             $(this).hide();
@@ -168,35 +168,35 @@ jQuery(function($) {
                 nextpage = parseInt(tempNext) + 1;
             }
         }
-        
-        
-        
-         window.UploadView = Backbone.View.extend({ 
+
+
+
+         window.UploadView = Backbone.View.extend({
                  events: {
                         "click #rtMedia-start-upload": "uploadFiles"
                  },
-                 
+
                  initialize: function() {
                         _.bindAll(this, "render");
                  },
-                 
+
                  render: function() {
                         //$(this.el).html(this.template());
                         return this;
                  },
-                 
+
                  initUploader: function() {
                         var self = this;
                         this.uploader = new plupload.Uploader(rtMedia_plupload_config);
                         this.uploader.init();
-                        
+
                         this.uploader.bind('BeforeUpload', function(up, files){
                             console.log(up);
                         });
                         this.uploader.bind('PostInit', function(up){
                             console.log(up);
                         });
-                        
+
                         this.uploader.bind('FilesAdded', function(up, files){
                                 $.each(files, function(i, file){
                                         tdName = document.createElement("td");
@@ -221,45 +221,45 @@ jQuery(function($) {
                                                 $("#" + file.id).remove();
                                                 return false;
                                         });
- 
+
                                 });
                         });
-                       
+
                         this.uploader.bind('UploadProgress', function(up, file){
                                 $("#" + file.id + " .plupload_file_status").html(file.percent + "%");
-                       
+
                         });
-                       
+
                         this.uploader.bind('FileUploaded', function(up, file){
-                               
+
                                 files = self.uploader.files;
                                 lastfile = files[files.length-1];
                         });
-                                             
- 
+
+
                         //The plupload HTML5 code gives a negative z-index making add files button unclickable
                         $(".plupload.html5").css({zIndex: 0});
                         $("#rtMedia-upload-button   ").css({zIndex: 2});
-                       
+
                         return this;
                  },
-                 
+
                  uploadFiles: function(e){
                         e.preventDefault();
                         this.uploader.start();
                         return false;
                  }
-       
+
         });
-        
-       
+
+
         if ($("#rtMedia-upload-button").length > 0){
             var uploader = new UploadView();
             uploader.initUploader();
             $("#rtMedia-start-upload").click(function(e){
                 uploader.uploadFiles(e);
-            })        
+            })
         }
-        
-       
+
+
 });

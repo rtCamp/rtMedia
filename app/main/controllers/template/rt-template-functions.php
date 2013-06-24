@@ -77,7 +77,15 @@ function rt_media_permalink() {
 function rt_media_image($size = 'thumbnail', $return = 'src') {
     global $rt_media_media, $rt_media_backbone;
     $thumbnail_id = 0;
-    if (isset($rt_media_media->media_type)) {
+
+	if($rt_media_backbone) {
+		if($return=="src")
+			echo '<%= guid %>';
+		if($return=="width")
+			echo '<%= width %>';
+		if($return=="height")
+			echo '<%= height %>';
+	} else if (isset($rt_media_media->media_type)) {
         if ($rt_media_media->media_type == 'album' ||
                 $rt_media_media->media_type != 'image') {
             $thumbnail_id = get_rtmedia_meta($rt_media_media->media_id,'cover_art');
@@ -95,24 +103,12 @@ function rt_media_image($size = 'thumbnail', $return = 'src') {
 
     list($src, $width, $height) = wp_get_attachment_image_src($thumbnail_id, $size);
 
-    if ($return == "src") {
-        if($rt_media_backbone)
-			echo '<%= guid %>';
-		else
-			echo $src;
-	}
-    if ($return == "width") {
-		if($rt_media_backbone)
-			echo '<%= width %>';
-		else
-			echo $width;
-	}
-	if ($return == "height") {
-		if($rt_media_backbone)
-			echo '<%= height %>';
-		else
-			echo $height;
-	}
+    if ($return == "src")
+		echo $src;
+    if ($return == "width")
+		echo $width;
+	if ($return == "height")
+		echo $height;
 }
 
 function rt_media_delete_allowed() {
