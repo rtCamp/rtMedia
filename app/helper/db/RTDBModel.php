@@ -14,11 +14,9 @@ class RTDBModel {
 	 *
 	 * $table_name - database table linked to the model.
 	 *				All the queries will be fired on that table or with the join in this table.
-	 * $meta_table_name - meta table in database for the model.
 	 * $per_page - number of rows per page to be displayed
 	 */
     public $table_name;
-    public $meta_table_name;
     public $per_page;
 
     /**
@@ -43,7 +41,6 @@ class RTDBModel {
             $table_name = $wpdb->prefix . "rt_" . $table_name;
         }
         $this->table_name = $table_name;
-        $this->meta_table_name = $table_name . "_meta";
     }
 
     /**
@@ -167,60 +164,5 @@ class RTDBModel {
         return $wpdb->delete($this->table_name, $where);
     }
 
-	/**
-	 * Insert meta entries for the entity
-	 *
-	 * @global type $wpdb
-	 * @param type $row
-	 */
-	function insert_meta($row) {
-		global $wpdb;
-        return $wpdb->insert($this->meta_table_name, $row);
-	}
 
-	/**
-	 * update meta entries
-	 * 
-	 * @global type $wpdb
-	 * @param type $meta
-	 * @param type $where
-	 * @return type
-	 */
-	function update_meta($meta, $where) {
-		global $wpdb;
-        return $wpdb->update($this->meta_table_name, $data, $where);
-	}
-
-	/**
-	 * retrieve existinf meta entries
-	 * 
-	 * @global type $wpdb
-	 * @param type $columns
-	 * @return type
-	 */
-	function get_meta($columns) {
-
-		$select = "SELECT * FROM {$this->meta_table_name}";
-		$where = " WHERE 1 = 1 ";
-
-		foreach ($columns as $key => $value) {
-			$where .= "AND {$this->meta_table_name}.{$key} = '{$value}'";
-		}
-
-		$sql = $select . $where;
-		global $wpdb;
-		return $wpdb->get_results($sql, ARRAY_A);
-	}
-
-	/**
-	 * Deletes meta entry
-	 * 
-	 * @global type $wpdb
-	 * @param type $where
-	 * @return type
-	 */
-	function delete_meta($where) {
-		global $wpdb;
-        return $wpdb->delete($this->meta_table_name, $where);
-	}
 }

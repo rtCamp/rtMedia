@@ -326,7 +326,7 @@ class RTMedia {
 		 *  Enqueue Plugin Scripts and Styles
 		 */
 		add_action('wp_enqueue_scripts', array($this, 'enqueue_scripts_styles'), 11);
-                
+
                 /* Includes db specific wrapper functions required to render the template */
                 include(RTMEDIA_PATH . 'app/main/controllers/template/rt-template-functions.php');
                 
