@@ -20,10 +20,10 @@
         <!--  these links will be handled by backbone later
                         -- get request parameters will be removed  -->
         <?php if(rt_media_offset() != 0) { ?>
-            <a id="rtMedia-galary-prev" href="media/page/<?php echo rt_media_page()-1; ?>">Prev</a>
+            <a id="rtMedia-galary-prev" href="<?php echo rt_media_pagination_prev_link(); ?>">Prev</a>
         <?php } ?>
         <?php if(rt_media_offset()+ rt_media_per_page_media() < rt_media_count()) { ?>
-            <a  id="rtMedia-galary-next" href="media/page/<?php echo rt_media_page()+1; ?>">Next</a>
+            <a  id="rtMedia-galary-next" href="<?php echo rt_media_pagination_next_link(); ?>">Next</a>
         <?php } ?>
 
 	<?php } else { ?>
