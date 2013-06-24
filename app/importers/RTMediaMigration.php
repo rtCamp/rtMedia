@@ -111,7 +111,7 @@ class RTMediaMigration {
 
         global $wpdb;
         $sql = "select media_id
-                from {$this->bmp_table} where blog_id = %d and media_id <> %d order by media_id desc";
+                from {$this->bmp_table} where blog_id = %d and media_id < %d order by media_id desc";
         $row = $wpdb->get_row($wpdb->prepare($sql, get_current_blog_id(), $album_id));
         if ($row) {
             return $row->media_id;
@@ -166,7 +166,7 @@ class RTMediaMigration {
         if (function_exists("bp_core_get_table_prefix"))
             $bp_prefix = bp_core_get_table_prefix();
         else
-            $bp_prefix="";
+            $bp_prefix = "";
 
         $sql_group = "update $wpdb->posts set post_parent='{$album_id}' where post_parent in (select meta_value FROM $wpdb->usermeta where meta_key ='bp-media-default-album') ";
         if ($this->table_exists($bp_prefix . "bp_groups_groupmeta")) {
@@ -201,12 +201,12 @@ class RTMediaMigration {
             <h2>rtMedia Migration</h2>
             <h3><?php _e("It will migrate following things"); ?> </h3>
             User Albums : <?php echo $_SESSION["migration_user_album"]; ?><br />
-            <?php if(isset($_SESSION["migration_group_album"])){ ?>
-            Groups Albums : <?php echo $_SESSION["migration_group_album"]; ?><br />
+            <?php if (isset($_SESSION["migration_group_album"])) { ?>
+                Groups Albums : <?php echo $_SESSION["migration_group_album"]; ?><br />
             <?php } ?>
             Media : <?php echo $_SESSION["migration_media"]; ?><br />
-            <?php if(isset($_SESSION["migration_activity"])){ ?>
-            Comments : <?php echo $_SESSION["migration_activity"]; ?><br />
+            <?php if (isset($_SESSION["migration_activity"])) { ?>
+                Comments : <?php echo $_SESSION["migration_activity"]; ?><br />
             <?php } ?>
             <hr />
 
@@ -220,45 +220,45 @@ class RTMediaMigration {
             <script>
 
                 function db_start_migration(db_done,db_total) {
-                    if (db_done < db_total) {
-                        jQuery("#rtMediaSyncing").show();
-                        jQuery.ajax({
-                            url: rt_media_admin_ajax,
-                            type: 'post',
-                            data: {"action": "bp_media_rt_db_migration", "done": db_done},
-                            success: function(sdata) {
-                                data = JSON.parse(sdata);
-                                if (data.status) {
-                                    done = parseInt(data.done);
-                                    total = parseInt(data.total);
-                                    var progw = Math.ceil((done/total) *100);
-                                    if(progw>100){
-                                        progw=100;
-                                    };
-                                    jQuery('#rtprogressbar>div').css('width',progw+'%');
-                                    jQuery('span.finished').html(done);
-                                    jQuery('span.total').html(total);
-                                    jQuery('span.pending').html(data.pending);
-                                                                        
-                                    db_start_migration(done,total);
-                                }else{
-                                    alert("Migration Done");
-                                    jQuery("#rtMediaSyncing").hide();
-                                }
+                if (db_done < db_total) {
+                jQuery("#rtMediaSyncing").show();
+                jQuery.ajax({
+                url: rt_media_admin_ajax,
+                type: 'post',
+                data: {"action": "bp_media_rt_db_migration", "done": db_done},
+                success: function(sdata) {
+                data = JSON.parse(sdata);
+                if (data.status) {
+                done = parseInt(data.done);
+                total = parseInt(data.total);
+                var progw = Math.ceil((done/total) *100);
+                if(progw>100){
+                progw=100;
+                };
+                jQuery('#rtprogressbar>div').css('width',progw+'%');
+                jQuery('span.finished').html(done);
+                jQuery('span.total').html(total);
+                jQuery('span.pending').html(data.pending);
 
-                            }
-                        });
-                    }else{
-                        alert("Migration Done");
-                        jQuery("#rtMediaSyncing").hide();
-                    }
+                db_start_migration(done,total);
+                }else{
+                alert("Migration Done");
+                jQuery("#rtMediaSyncing").hide();
+                }
+
+                }
+                });
+                }else{
+                alert("Migration Done");
+                jQuery("#rtMediaSyncing").hide();
+                }
                 }
 
                 jQuery(document).on('click','#submit',function(e){
-                    e.preventDefault();
-                    var db_done = <?php echo $done; ?>;
-                    var db_total = <?php echo $total; ?>;
-                    db_start_migration(db_done,db_total);
+                e.preventDefault();
+                var db_done = <?php echo $done; ?>;
+                var db_total = <?php echo $total; ?>;
+                db_start_migration(db_done,db_total);
                 });
             </script>
             <hr />
@@ -324,15 +324,15 @@ class RTMediaMigration {
 
 
             $results = $wpdb->get_results($wpdb->prepare($sql, $lastid, $limit));
-    
+
             if (function_exists("bp_core_get_table_prefix"))
                 $bp_prefix = bp_core_get_table_prefix();
             else
-                $bp_prefix="";
+                $bp_prefix = "";
             if ($results) {
                 $blog_id = get_current_blog_id();
                 foreach ($results as $result) {
-                                                
+
                     $media_id = $result->post_id;
 
                     if (intval($result->context_id) > 0) {
@@ -392,6 +392,7 @@ class RTMediaMigration {
                         "media_author" => $result->media_author,
                             ), array('%d', '%d', '%s', '%s', '%d', '%d', '%d', '%d')
                     );
+                    update_option("rtMedia-media-migration-last-id", $media_id);
                 }
             }
         } else {
