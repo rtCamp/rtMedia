@@ -279,9 +279,27 @@ function is_rt_media_gallery(){
  *
  * @return boolean
  */
+function is_rt_media_album_gallery(){
+	global $rt_media_query;
+	return $rt_media_query->is_album_gallery();
+}
+
+/**
+ *
+ * @return boolean
+ */
 function is_rt_media_single(){
 	global $rt_media_query;
 	return $rt_media_query->is_single();
+}
+
+/**
+ *
+ * @return boolean
+ */
+function is_rt_media_album(){
+	global $rt_media_query;
+	return $rt_media_query->is_album();
 }
 
 function rt_media_image_editor() {
