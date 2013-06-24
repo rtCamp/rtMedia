@@ -313,8 +313,8 @@ function rt_media_pagination_next_link() {
 	global $rt_media_media, $rt_media_interaction;
 
 	if($rt_media_interaction->context->type=="profile") {
-		if(class_exists("BuddyPress"))
-			$link = get_site_url() . '/members/' . get_query_var('author_name') . '/media/page/' . (rt_media_page()+1);
+		if(function_exists("bp_core_get_user_domain"))
+			$link = bp_core_get_user_domain($rt_media_media->media_author) . 'media/page/' . (rt_media_page()+1);
 		else
 			$link = get_site_url() . '/author/' . get_query_var('author_name') . '/media/page/' . (rt_media_page()+1);
 	} else {
