@@ -122,11 +122,11 @@ jQuery(function($) {
 		render: function(){
 
 			that = this;
-                        
+
                         if(upload_sync){
                             $(that.el).html('');
                         }
-			
+
                     $.each(this.collection.toJSON(), function(key, media){
 				test = that.template(media);
 				console.log(test);
@@ -153,7 +153,6 @@ jQuery(function($) {
 
 	galleryObj = new rtMedia.Gallery();
 
-	console.log(template_url);
 	$("body").append('<script id="rt-media-gallery-item-template" type="text/template"></script>');
 
 	$("#rt-media-gallery-item-template").load(template_url+"/media-gallery-item.php",{action: 'rt_media_backbone_template',backbone: true} ,function(response,status,xhr) {
