@@ -38,6 +38,7 @@ class RTMediaContext {
      *
      */
     function set_context() {
+        global $post;
         if (class_exists('BuddyPress')) {
             $this->set_bp_context();
         } else {

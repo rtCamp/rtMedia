@@ -253,7 +253,7 @@ class RTMedia {
 			)
 		);
 
-		$this->default_sizes = apply_filters('rt_media_allowed_sizes', $this->allowed_sizes);
+		$this->default_sizes = apply_filters('rt_media_allowed_sizes', $this->default_sizes);
 
 	}
 
@@ -402,7 +402,7 @@ class RTMedia {
 		/**
 		 * Sizes Settings
 		 */
-		rt_media_get_site_option('rt-media-allowed-sizes', $this->allowed_sizes);
+		rt_media_get_site_option('rt-media-default-sizes', $this->default_sizes);
 
 		/**
 		 * Privacy
