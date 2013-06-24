@@ -132,7 +132,7 @@ class RTMediaQuery {
 	}
 
 	function is_album_gallery() {
-		if ( $this->query[ 'media_type' ] == 'album' ) {
+		if ( isset( $this->query[ 'media_type' ] ) && $this->query[ 'media_type' ] == 'album' ) {
 			return true;
 		}
 		return false;
@@ -380,10 +380,17 @@ class RTMediaQuery {
 		}
 
 		if(!isset($this->query['media_type'])){
-			if ( isset( $this->action_query->media_type ) && in_array( $this->action_query->media_type, $allowed_media_types ) )
+			if ( isset( $this->action_query->media_type ) &&
+					(
+					in_array( $this->action_query->media_type, $allowed_media_types )||
+					$this->action_query->media_type == 'album'
+					)
+					){
 				$this->query[ 'media_type' ] = $this->action_query->media_type;
-		} elseif($this->query['media_type']=='album'){
-			$this->query[ 'media_type' ] = array( 'compare' => 'NOT IN', 'value' => array( 'album' ) );
+			}else{
+				$this->query[ 'media_type' ] = array( 'compare' => 'NOT IN', 'value' => array( 'album' ) );
+
+			}
 		}
 
 		/**
@@ -602,11 +609,9 @@ class RTMediaQuery {
 
 	function permalink() {
 
-		global $rt_media_media, $wpdb;
+		global $rt_media_media;
 
-		$post = get_post( $rt_media_media->post_parent );
-
-		$link = get_site_url() . '/' . $post->post_name . '/media/' . $rt_media_media->id;
+		$link = get_site_url() . '/media/' . $rt_media_media->id;
 
 		return $link;
 	}

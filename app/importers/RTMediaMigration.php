@@ -324,6 +324,7 @@ class RTMediaMigration {
 
 
             $results = $wpdb->get_results($wpdb->prepare($sql, $lastid, $limit));
+    
             if (function_exists("bp_core_get_table_prefix"))
                 $bp_prefix = bp_core_get_table_prefix();
             else
@@ -331,6 +332,7 @@ class RTMediaMigration {
             if ($results) {
                 $blog_id = get_current_blog_id();
                 foreach ($results as $result) {
+                                                
                     $media_id = $result->post_id;
 
                     if (intval($result->context_id) > 0) {
@@ -340,7 +342,6 @@ class RTMediaMigration {
                         $media_context = "group";
                         $prefix = "groups/" . abs(intval($result->context_id));
                     }
-
 
 
 
@@ -361,6 +362,7 @@ class RTMediaMigration {
 
                     if ($media_type != 'album')
                         $this->import_media($media_id, $prefix);
+//                        $this->import_media($media_id, $prefix, $result->activity_id);
 
                     if ($this->table_exists($bp_prefix . "bp_activity") && class_exists("BP_Activity_Activity")) {
                         $bp_activity = new BP_Activity_Activity();
@@ -377,10 +379,6 @@ class RTMediaMigration {
                                 $this->insert_comment($media_id, $comments, $exclude);
                         }
                     }
-
-                    //
-                    //$temp->get_activity_comments(2640, 1, 8)
-//                echo $media_context ."-". abs(intval($result->context_id)) . "<br />";
 
                     $wpdb->insert(
                             $this->bmp_table, array(
@@ -414,8 +412,6 @@ class RTMediaMigration {
     }
 
     function import_media($id, $prefix) {
-//        error_log($id);
-//        error_log($prefix);
         $delete = false;
         $attached_file = get_attached_file($id);
         $attached_file_option = get_post_meta($id, '_wp_attached_file', true);
@@ -501,17 +497,12 @@ class RTMediaMigration {
         $instagram_full_images = get_post_meta($id, '_instagram_full_images', true);
         $instagram_metadata = get_post_meta($id, '_instagram_metadata', true);
 
-
-//        error_log($attached_file);
-//        error_log(str_replace($basedir, $basedir . "rtMedia/$prefix/", $attached_file));
         if (wp_mkdir_p($basedir . "rtMedia/$prefix/" . $year_month)) {
             if (copy($attached_file, str_replace($basedir, $basedir . "rtMedia/$prefix/", $attached_file))) {
                 $delete = true;
 
                 if (isset($metadata['sizes'])) {
                     foreach ($metadata['sizes'] as $size) {
-//                        error_log($file_folder_path . $size['file']);
-//                        error_log($new_file_folder_path . $size['file']);
                         if (!copy($file_folder_path . $size['file'], $new_file_folder_path . $size['file'])) {
                             $delete = false;
                         } else {
