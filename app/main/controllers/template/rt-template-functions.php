@@ -67,6 +67,7 @@ function rt_media_image($size = 'thumbnail', $return = 'src') {
     if (isset($rt_media_media->media_type)) {
         if ($rt_media_media->media_type == 'album' ||
                 $rt_media_media->media_type != 'image') {
+            $thumbnail_id = get_rtmedia_meta($rt_media_media->media_id,'cover_art');
         } elseif ( $rt_media_media->media_type == 'image' ) {
             $thumbnail_id = $rt_media_media->media_id;
         } else {
@@ -393,22 +394,22 @@ function rt_media_gallery($attr = '') {
     echo RTMediaGalleryShortcode::render($attr);
 }
 
-function get_media_meta($id=false,$key=false){
+function get_rtmedia_meta($id=false,$key=false){
 	$rtmediameta = new RTMediaMeta();
 	return $rtmediameta->get_meta($id, $key);
 }
 
-function add_media_meta($id=false,$key=false,$value=false,$duplicate=false){
+function add_rtmedia_meta($id=false,$key=false,$value=false,$duplicate=false){
 	$rtmediameta = new RTMediaMeta($id, $key, $value, $duplicate);
 	return $rtmediameta->add_meta($id, $key, $value, $duplicate);
 }
 
-function update_media_meta($id=false,$key=false,$value=false,$duplicate=false){
+function update_rtmedia_meta($id=false,$key=false,$value=false,$duplicate=false){
 	$rtmediameta = new RTMediaMeta();
 	return $rtmediameta->update_meta( $id, $key, $value, $duplicate );
 }
 
-function delete_media_meta($id=false,$key=false){
+function delete_rtmedia_meta($id=false,$key=false){
 	$rtmediameta = new RTMediaMeta();
 	return $rtmediameta->delete_meta($id, $key);
 }

@@ -345,6 +345,10 @@ class RTMedia {
 		global $rt_media_admin;
 		$rt_media_admin = new RTMediaAdmin();
 	}
+        
+        function media_screen(){
+            return;
+        }
 
 	/**
 	 * Load Custom tabs on BuddyPress
@@ -357,7 +361,7 @@ class RTMedia {
 		bp_core_new_nav_item( array(
 			'name' => __( 'Media', 'rt-media' ),
 			'slug' => 'media',
-			'screen_function' => array($this,'dummy_function')
+			'screen_function' => array($this,'media_screen')
 		) );
 
 		if(bp_is_group()) {
