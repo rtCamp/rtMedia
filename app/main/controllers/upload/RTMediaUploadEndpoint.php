@@ -33,12 +33,13 @@ class RTMediaUploadEndpoint {
             }
             if(isset($_POST["redirect"]) && $_POST["redirect"]=="no" ){
                 // Ha ha ha 
+                die();
             }else{
                 wp_safe_redirect(wp_get_referer());
             }
         }
 
-        exit;
+        die();
     }
 
 }
