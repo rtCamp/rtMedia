@@ -670,6 +670,7 @@ class RTMedia {
 			}
 		}
 
+                new RTMediaBuddyPressActivity();
                 $media = new RTMediaMedia();
                 $media->delete_hook();
 
