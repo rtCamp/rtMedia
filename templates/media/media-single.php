@@ -8,7 +8,7 @@
 
 			<?php if( rt_media_request_action()!="edit" ) { ?>
 				<div class="rt-media-media">
-					<img src="<?php rt_media_image('full','src'); ?>" width="<?php rt_media_image('full','width'); ?>" height="<?php rt_media_image('full','height'); ?>">
+					<img src="<?php rt_media_image('full','src'); ?>">
 				</div>
 			<?php } ?>
 
