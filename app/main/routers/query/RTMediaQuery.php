@@ -85,7 +85,7 @@ class RTMediaQuery {
      * Initialise the default args for the query
      */
     function init() {
-        
+
     }
 
     function set_media_type() {
@@ -200,7 +200,7 @@ class RTMediaQuery {
 
                 //paginating default query
                 $modifier_type = 'pg';
-                
+
             } else {
 
                 // requesting by media type /media/photos | /media/videos/
@@ -208,7 +208,7 @@ class RTMediaQuery {
             }
         }
 
-			
+
 
         if (isset($raw_query[1])) {
 
@@ -475,6 +475,8 @@ class RTMediaQuery {
         if ($this->is_album()) {
             $this->media = $this->populate_album();
         }
+
+		if(empty($this->media)) return;
 
         /**
          * multiside manipulation
