@@ -151,7 +151,6 @@ class RTMediaQuery {
 
 		$raw_query = $this->interaction->query_vars;
 
-
 		$bulk = false;
 		$action = false;
 		$attribute = false;
@@ -196,11 +195,11 @@ class RTMediaQuery {
 				$modifier_type = 'upload';
 				$action = 'upload';
 
-			// /media/page/2/
-			} elseif ( $modifier_value == 'page' ) {
+			// /media/pg/2/
+			} elseif ( $modifier_value == 'pg' ) {
 
 				//paginating default query
-				$modifier_type = 'page';
+				$modifier_type = 'pg';
 
 			} else {
 
@@ -215,6 +214,7 @@ class RTMediaQuery {
 		if ( isset( $raw_query[ 1 ] ) ) {
 
 			$second_modifier = $raw_query[1];
+
 
 			// action manipulator hook
 			$this->set_actions();
@@ -240,9 +240,10 @@ class RTMediaQuery {
 					}
 					break;
 
-				case 'page':
+				case 'pg':
 
-					// /media/page/2/ | /media/page/3/
+
+					// /media/pg/2/ | /media/pg/3/
 					if(is_numeric($second_modifier)){
 
 						$pageno = $second_modifier;
@@ -302,14 +303,14 @@ class RTMediaQuery {
 					// leaving here for more granular editing, in future, for eg,
 					// /media/photos/edit/title/
 
-					// /media/photos/page/2/
-					if($second_modifier=='page' && is_numeric($third_modifier)){
+					// /media/photos/pg/2/
+					if($second_modifier=='pg' && is_numeric($third_modifier)){
 
 						$pageno = $third_modifier;
 					}
 					break;
 
-				case 'page':
+				case 'pg':
 				default:
 					break;
 
@@ -337,6 +338,7 @@ class RTMediaQuery {
 					'per_page_media' => $per_page_media,
 					'attributes' => $attributes
 		);
+
 	}
 
 	/**
