@@ -11,6 +11,7 @@ class RTMediaUpload {
     var $file = NULL;
     var $media = NULL;
     var $url = NULL;
+    var $attachment_ids = NULL;
 
     /**
      *
@@ -41,7 +42,8 @@ class RTMediaUpload {
          * if upload successful then populate the rtMedia database and insert the media into album
          */
         if ($file_object && $uploaded) {
-            if ($this->media->add($uploaded, $file_object)) {
+            $this->attachment_ids= $this->media->add($uploaded, $file_object);
+            if ($this->attachment_ids) {
                 do_action('rt_media_after_add_media');
                 return true;
             }
