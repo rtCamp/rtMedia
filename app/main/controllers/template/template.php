@@ -1,89 +1,104 @@
 <?php
+global $rt_media_query;
 
-        if(class_exists('BuddyPress') && !bp_is_blog_page())
-		$template_type = 'buddypress';
-	else $template_type = '';
 
-	get_header($template_type);
-        
-        global $rt_media_query;
-        
-        
-	if (is_rt_media_album_gallery()){
-                $template = 'album-gallery';
-        } elseif (is_rt_media_album()||is_rt_media_gallery()) {
-            if ( is_rt_media_album() && isset($rt_media_query->media_query) && get_current_user_id() == $rt_media_query->media_query['media_author'] && $rt_media_query->action_query->action == 'edit' )
-                $template = 'album-single-edit';
-            else
-                $template = 'media-gallery';
-	} else if ( is_rt_media_single() ) {
-            $template = 'media-single';
-	}
+if (is_rt_media_album_gallery()) {
+    $template = 'album-gallery';
+} elseif (is_rt_media_album() || is_rt_media_gallery()) {
+    if (is_rt_media_album() && isset($rt_media_query->media_query) && get_current_user_id() == $rt_media_query->media_query['media_author'] && $rt_media_query->action_query->action == 'edit')
+        $template = 'album-single-edit';
+    else
+        $template = 'media-gallery';
+} else if (is_rt_media_single()) {
+    $template = 'media-single';
+}
 
-	if($template_type=='buddypress') { ?>
+if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest')
+    $ajax = true;
 
-		<div id="buddypress">
+if (!$ajax) {
 
-			<?php if(bp_is_user()) { ?>
-				<div id="item-header">
+    if (class_exists('BuddyPress') && !bp_is_blog_page())
+        $template_type = 'buddypress';
+    else
+        $template_type = '';
 
-					<?php bp_get_template_part( 'members/single/member-header' ) ?>
+    get_header($template_type);
 
-				</div>
 
-				<div id="item-nav">
-					<div class="item-list-tabs no-ajax" id="object-nav" role="navigation">
-						<ul>
 
-							<?php bp_get_displayed_user_nav(); ?>
 
-							<?php do_action( 'bp_member_options_nav' ); ?>
+    if ($template_type == 'buddypress') {
+        ?>
 
-						</ul>
-					</div>
-				</div>
+        <div id="buddypress">
 
-				<div id="item-body">
+                <?php if (bp_is_user()) { ?>
+                <div id="item-header">
 
-					<?php do_action( 'bp_before_member_body' ); ?>
+            <?php bp_get_template_part('members/single/member-header') ?>
 
-			<?php } else if(bp_is_group()) { ?>
+                </div>
 
-				<?php if ( bp_has_groups() ) : while ( bp_groups() ) : bp_the_group(); ?>
-					<div id="item-header">
+                <div id="item-nav">
+                    <div class="item-list-tabs no-ajax" id="object-nav" role="navigation">
+                        <ul>
 
-						<?php bp_get_template_part( 'groups/single/group-header' ); ?>
+                            <?php bp_get_displayed_user_nav(); ?>
 
-					</div>
+            <?php do_action('bp_member_options_nav'); ?>
 
-					<div id="item-nav">
-						<div class="item-list-tabs no-ajax" id="object-nav" role="navigation">
-							<ul>
+                        </ul>
+                    </div>
+                </div>
 
-								<?php bp_get_options_nav(); ?>
+                <div id="item-body">
 
-								<?php do_action( 'bp_group_options_nav' ); ?>
+                    <?php do_action('bp_before_member_body'); ?>
 
-							</ul>
-						</div>
-					</div>
-				<?php endwhile; endif; ?>
+                <?php } else if (bp_is_group()) { ?>
 
-				<div id="item-body">
+                        <?php if (bp_has_groups()) : while (bp_groups()) : bp_the_group(); ?>
+                            <div id="item-header">
 
-					<?php do_action( 'bp_before_group_body' ); ?>
+                    <?php bp_get_template_part('groups/single/group-header'); ?>
 
-			<?php } ?>
-	<?php }
+                            </div>
 
-	include(RTMediaTemplate::locate_template( $template ));
+                            <div id="item-nav">
+                                <div class="item-list-tabs no-ajax" id="object-nav" role="navigation">
+                                    <ul>
 
-	if($template_type=='buddypress' && (bp_is_user() || bp_is_group())) { ?>
-			</div>
-		</div>
-	<?php }
+                                        <?php bp_get_options_nav(); ?>
 
-	get_sidebar($template_type);
+                    <?php do_action('bp_group_options_nav'); ?>
 
-	get_footer($template_type);
-?>
+                                    </ul>
+                                </div>
+                            </div>
+                <?php endwhile;
+            endif; ?>
+
+                    <div id="item-body">
+
+                        <?php do_action('bp_before_group_body'); ?>
+
+                    <?php } ?>
+                <?php
+                }
+            }
+
+            include(RTMediaTemplate::locate_template($template));
+            if (!$ajax) {
+                if ($template_type == 'buddypress' && (bp_is_user() || bp_is_group())) {
+                    ?>
+                </div>
+            </div>
+        <?php
+        }
+
+        get_sidebar($template_type);
+
+        get_footer($template_type);
+    }
+    ?>

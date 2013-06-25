@@ -8,7 +8,7 @@
 
 			<?php if( rt_media_request_action()!="edit" ) { ?>
 				<div class="rt-media-media">
-					<img src="<?php rt_media_image('full','src'); ?>">
+					<img src="<?php rt_media_image('large','src'); ?>">
 				</div>
 			<?php } ?>
 
@@ -39,7 +39,7 @@
             <?php rt_media_actions(); ?>
         </div>
 
-		<?php if(rt_media_comments_enabled()) { ?>
+		<?php //if(rt_media_comments_enabled()) { ?>
 			<div class="rt-media-item-comments">
 				<h2>Comments</h2>
 				<div class="rt-media-container">
@@ -47,7 +47,7 @@
 				</div>
 				<?php rt_media_comment_form(); ?>
 			</div>
-		<?php } ?>
+		<?php //} ?>
 
     <?php else: ?>
         <p><?php echo __("Oops !! There's no media found for the request !!","rt-media"); ?></p>
