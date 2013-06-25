@@ -14,7 +14,7 @@ class RTMediaMigration {
         $this->bmp_table = $wpdb->prefix . "rt_rtm_media";
         add_action('admin_menu', array($this, 'menu'));
         add_action('wp_ajax_bp_media_rt_db_migration', array($this, "migrate_to_new_db"));
-        add_action('init', array(&$this, 'init_sessions'));
+//        add_action('init', array(&$this, 'init_sessions'));
     }
 
     static function table_exists($table) {
@@ -55,13 +55,13 @@ class RTMediaMigration {
         }
         if ($this->table_exists($bp_prefix . "bp_activity")) {
             //$sql_bpm_comment_count = "select count(*) from {$bp_prefix}bp_activity where component='activity' and type='activity_comment' and is_spam <> 1 and ;";
-            $sql_bpm_comment_count = "SELECT 
+            $sql_bpm_comment_count = "SELECT
                                                 count(*)
                                             FROM
                                                 {$bp_prefix}bp_activity
                                             where
                                                 type = 'activity_comment' and  is_spam <> 1
-                                                    and item_id in (SELECT 
+                                                    and item_id in (SELECT
                                                         id
                                                     FROM
                                                         wp_bp_activity
