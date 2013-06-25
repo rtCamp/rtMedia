@@ -60,7 +60,7 @@
   display: block;
 }
 /* line 6, ../sass/main.scss */
-.rt-media-container #rtmedia-upload-container #drag-drop-area {
+.rt-media-container .drag-drop {
   border: 4px dashed #DDD;
   text-align: center;
   background: #fafafa;
@@ -68,7 +68,7 @@
   padding: 15px 0;
 }
 /* line 12, ../sass/main.scss */
-.rt-media-container #rtmedia-upload-container #drag-drop-area.dragover {
+.rt-media-container .drag-drop.dragover {
   border-color: #83b4d8;
 }
 /* line 18, ../sass/main.scss */
@@ -114,4 +114,12 @@
 .rt-media-container .rt-media-bp-header {
   width: 460px;
   margin: auto;
+}
+/* line 62, ../sass/main.scss */
+.rt-media-container #div-attache-rtmedia {
+  display: none;
+}
+/* line 67, ../sass/main.scss */
+.rt-media-container #rtMedia-update-queue-list p span {
+  margin-right: 20px;
 }
