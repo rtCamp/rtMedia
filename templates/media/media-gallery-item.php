@@ -32,9 +32,11 @@
 
     <div class="rt-media-item-title">
         <h4 title="<?php echo rt_media_title(); ?>">
+            <?php do_action('rtmedia_before_item', rt_media_id()); ?>
             <a href="<?php rt_media_permalink(); ?>">
                 <?php echo rt_media_title(); ?>
             </a>
+            <?php do_action('rtmedia_after_item', rt_media_id()); ?>
         </h4>
     </div>
 

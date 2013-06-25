@@ -461,12 +461,23 @@ function delete_rtmedia_meta($id=false,$key=false){
 	return $rtmediameta->delete_meta($id, $key);
 }
 
-//add_action('rtmedia_before_media_gallery','rt_media_album_edit');
-//function rt_media_album_edit(){
-//    if ( !is_rt_media_album() ) return;
-//    global $rt_media_query;
-//    if (rt_media_edit_allowed() )
-//        echo "edit";
-//}
+add_action('rtmedia_before_media_gallery','rt_media_album_edit');
+function rt_media_album_edit(){
+    if ( !is_rt_media_album() || !is_user_logged_in() ) return;
+    
+    global $rt_media_query;
+    
+    if (isset($rt_media_query->media_query) && get_current_user_id() == $rt_media_query->media_query['media_author'] )
+        echo '<a href="edit/">'.__('Edit','rt-media').'</a>';
+}
+
+add_action('rtmedia_before_item','rt_media_item_select');
+function rt_media_item_select($id){
+    global $rt_media_query;
+    if( is_rt_media_album() && isset($rt_media_query->media_query) && get_current_user_id() == $rt_media_query->media_query['media_author'] && $rt_media_query->action_query->action == 'edit' ) {
+        echo '<input type="checkbox" name="move" value="'.$id.'" />';
+    }
+        
+}
 
 ?>

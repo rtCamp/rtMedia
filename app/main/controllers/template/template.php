@@ -1,15 +1,21 @@
 <?php
 
-	if(class_exists('BuddyPress') && !bp_is_blog_page())
+        if(class_exists('BuddyPress') && !bp_is_blog_page())
 		$template_type = 'buddypress';
 	else $template_type = '';
 
 	get_header($template_type);
-
+        
+        global $rt_media_query;
+        
+        
 	if (is_rt_media_album_gallery()){
-            $template = 'album-gallery';
+                $template = 'album-gallery';
         } elseif (is_rt_media_album()||is_rt_media_gallery()) {
-            $template = 'media-gallery';
+            if ( is_rt_media_album() && isset($rt_media_query->media_query) && get_current_user_id() == $rt_media_query->media_query['media_author'] && $rt_media_query->action_query->action == 'edit' )
+                $template = 'album-single-edit';
+            else
+                $template = 'media-gallery';
 	} else if ( is_rt_media_single() ) {
             $template = 'media-single';
 	}
