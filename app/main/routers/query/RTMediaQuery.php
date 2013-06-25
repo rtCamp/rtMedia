@@ -20,6 +20,12 @@ class RTMediaQuery {
 
     /**
      *
+     * @var array The query arguments for the current instance (variable)
+     */
+    public $media_query = '';
+
+    /**
+     *
      * @var object The current action object (edit/delete/custom)
      */
     public $action_query = false;
@@ -116,7 +122,7 @@ class RTMediaQuery {
     }
 
     function is_album() {
-        if (isset($this->query['media_type']) && $this->query['media_type'] == 'album' && isset($this->action_query->id)) {
+        if (isset($this->query['media_type']) && $this->query['media_type'] == 'album') {
             return true;
         }
         return false;
@@ -195,12 +201,11 @@ class RTMediaQuery {
                 $modifier_type = 'upload';
                 $action = 'upload';
 
-            // /media/pg/2/
-            } elseif ( $modifier_value == 'pg' ) {
+                // /media/pg/2/
+            } elseif ($modifier_value == 'pg') {
 
                 //paginating default query
                 $modifier_type = 'pg';
-
             } else {
 
                 // requesting by media type /media/photos | /media/videos/
@@ -344,13 +349,13 @@ class RTMediaQuery {
     function &query($query) {
         $this->query = wp_parse_args($this->query, $query);
         $this->set_media_type();
+        $this->media_query = $this->query;
         return $this->get_data();
     }
 
     function populate_media() {
-
-        if ($this->is_single() || $this->is_album())
-            $this->query['id'] = $this->action_query->id;
+        if ($this->is_single())
+            $this->media_query['id'] = $this->action_query->id;
 
         $allowed_media_types = array();
         global $rt_media;
@@ -358,16 +363,16 @@ class RTMediaQuery {
             $allowed_media_types[] = $value['name'];
         }
 
-        if (!isset($this->query['media_type'])) {
+        if (!isset($this->media_query['media_type'])) {
             if (isset($this->action_query->media_type) &&
                     (
                     in_array($this->action_query->media_type, $allowed_media_types) ||
                     $this->action_query->media_type == 'album'
                     )
             ) {
-                $this->query['media_type'] = $this->action_query->media_type;
+                $this->media_query['media_type'] = $this->action_query->media_type;
             } else {
-                $this->query['media_type'] = array('compare' => 'NOT IN', 'value' => array('album'));
+                $this->media_query['media_type'] = array('compare' => 'NOT IN', 'value' => array('album'));
             }
         }
 
@@ -376,43 +381,44 @@ class RTMediaQuery {
          */
         $order_by = '';
         $order = '';
-        if (isset($this->query['order'])) {
-            $order = $this->query['order'];
-            unset($this->query['order']);
+        if (isset($this->media_query['order'])) {
+            $order = $this->media_query['order'];
+            unset($this->media_query['order']);
         }
 
-        if (isset($this->query['order_by'])) {
-            $order_by = $this->query['order_by'];
-            unset($this->query['order_by']);
+        if (isset($this->media_query['order_by'])) {
+            $order_by = $this->media_query['order_by'];
+            unset($this->media_query['order_by']);
             if ($order_by == 'ratings')
                 $order_by = 'ratings_average ' . $order . ', ratings_count';
         }
         $order_by .= ' ' . $order;
 
-        if ($this->query['context'] == 'profile') {
+        if (isset($this->media_query['context'])) {
+            if ($this->media_query['context'] == 'profile') {
 
-            $this->query['media_author'] = $this->query['context_id'];
+                if (!$this->is_album_gallery())
+                    $this->media_query['media_author'] = $this->media_query['context_id'];
+                else
+                    $author = $this->media_query['context_id'];
 
-            $this->media_query = $this->query;
-
-            if ($this->is_album_gallery() && isset($this->media_query['media_author']))
-                unset($this->media_query['media_author']);
-            unset($this->media_query['context']);
-            unset($this->media_query['context_id']);
-        } else if ($this->query['context'] == 'group') {
-            $this->media_query = $this->query;
-        } else {
-            $this->media_query = $this->query;
+                unset($this->media_query['context']);
+                unset($this->media_query['context_id']);
+            } else if ($this->media_query['context'] == 'group') {
+                
+            } else {
+                
+            }
         }
 
 
         if ($this->is_album_gallery()) {
             if ($order_by == ' ')
-                $pre_media = $this->model->get_user_albums($this->query['media_author'], ($this->action_query->page - 1) * $this->action_query->per_page_media, $this->action_query->per_page_media);
+                $pre_media = $this->model->get_user_albums($author, ($this->action_query->page - 1) * $this->action_query->per_page_media, $this->action_query->per_page_media);
             else
-                $pre_media = $this->model->get_user_albums($this->query['media_author'], ($this->action_query->page - 1) * $this->action_query->per_page_media, $this->action_query->per_page_media, $order_by);
+                $pre_media = $this->model->get_user_albums($author, ($this->action_query->page - 1) * $this->action_query->per_page_media, $this->action_query->per_page_media, $order_by);
 
-            $media_for_total_count = $this->model->get_user_albums($this->query['media_author'], false, false);
+            $media_for_total_count = $this->model->get_user_albums($author, false, false);
         } else {
             /**
              * fetch media entries from rtMedia context
@@ -443,10 +449,10 @@ class RTMediaQuery {
 
     function populate_album() {
         $this->album = $this->media;
-        $this->query['album_id'] = $this->action_query->id;
+        $this->media_query['album_id'] = $this->action_query->id;
         unset($this->action_query->id);
-        unset($this->query['id']);
-        unset($this->query['media_type']);
+        unset($this->media_query['id']);
+        unset($this->media_query['media_type']);
         return $this->populate_media();
     }
 
@@ -464,8 +470,8 @@ class RTMediaQuery {
      * @return boolean
      */
     function populate_data() {
-        unset($this->query->meta_query);
-        unset($this->query->tax_query);
+        unset($this->media_query->meta_query);
+        unset($this->media_query->tax_query);
 
         if ($this->action_query->action == 'comments' && !isset($this->action_query->id))
             $this->media = $this->populate_comments();

@@ -349,7 +349,7 @@ class RTMediaMedia {
 		$uploaded = wp_parse_args( $uploaded, $defaults );
 
 		$blog_id = get_current_blog_id();
-		$id=array();
+		$media_id=Array();
 		foreach ( $attachment_ids as $id ) {
 			$attachment = get_post( $id, ARRAY_A );
 			$mime_type = explode( '/', $attachment[ 'post_mime_type' ] );
@@ -364,10 +364,11 @@ class RTMediaMedia {
 				'context_id' => $uploaded[ 'context_id' ],
 				'privacy' => $uploaded[ 'privacy' ]
 			);
-			$id[] = $this->model->insert( $media );
+                        
+			$media_id[] = $this->model->insert( $media );
 
 		}
-		return $id;
+		return $media_id;
 	}
 
 	function insert_activity( $id, $media ) {

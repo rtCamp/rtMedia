@@ -461,4 +461,12 @@ function delete_rtmedia_meta($id=false,$key=false){
 	return $rtmediameta->delete_meta($id, $key);
 }
 
+//add_action('rtmedia_before_media_gallery','rt_media_album_edit');
+//function rt_media_album_edit(){
+//    if ( !is_rt_media_album() ) return;
+//    global $rt_media_query;
+//    if (rt_media_edit_allowed() )
+//        echo "edit";
+//}
+
 ?>

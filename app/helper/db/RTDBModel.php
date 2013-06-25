@@ -113,7 +113,7 @@ class RTDBModel {
             if($val != NULL)
                 $insertdata[$key]=$val;
         }
-
+        
         $wpdb->insert($this->table_name, $insertdata);
         return $wpdb->insert_id;
     }
