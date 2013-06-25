@@ -49,19 +49,29 @@ class RTMediaTemplate {
 
 		global $rt_media_query, $rt_media_interaction, $rt_media_media;
 
-		$media_array = array();
-
 		if(in_array($rt_media_interaction->context->type, array("profile","group"))) {
 
 			if ($rt_media_query->format == 'json') {
+				$media_array = array();
 				if ($rt_media_query->media) {
 					foreach ($rt_media_query->media as $key => $media) {
 						$media_array[$key] = $media;
 						list($src,$width,$height) = wp_get_attachment_image_src($media->media_id,'thumbnail');
 						$media_array[$key]->guid = $src;
+
+						$parent_link = '';
+						if(function_exists('bp_core_get_user_domain')) {
+							$parent_link = bp_core_get_user_domain($media->media_author);
+						} else {
+							$parent_link = get_author_posts_url($media->media_author);
+						}
+						$media_array[$key]->rt_permalink = $parent_link . 'media/' . $media->id;
 					}
 				}
-				echo json_encode($media_array);
+				$return_array['data'] = $media_array;
+				$return_array['prev'] = rt_media_page()-1;
+				$return_array['next'] = (rt_media_offset()+ rt_media_per_page_media() < rt_media_count())?(rt_media_page()+1): -1 ;
+				echo json_encode($return_array);
 				die;
 			}
 			else
@@ -142,11 +152,16 @@ class RTMediaTemplate {
 
                                         wp_delete_attachment($rt_media_query->media[0]->media_id,true);
 
-					$post = get_post($rt_media_query->media[0]->post_parent);
+					$post = get_post($rt_media_query->media[0]);
 
-					$link = get_site_url() . '/' . $post->post_name . '/media';
+					$parent_link = '';
+					if(function_exists('bp_core_get_user_domain')) {
+						$parent_link = bp_core_get_user_domain($post->media_author);
+					} else {
+						$parent_link = get_author_posts_url($post->media_author);
+					}
 
-					wp_redirect($link);
+					wp_redirect($parent_link);
 				} else{
 					echo "Ooops !!! Invalid access. No nonce was found !!";
 				}
@@ -165,8 +180,14 @@ class RTMediaTemplate {
 					$media_array[$key] = $media;
 					list($src,$width,$height) = wp_get_attachment_image_src($media->media_id,'thumbnail');
 					$media_array[$key]->guid = $src;
-					$post = get_post($media->post_parent);
-					$media_array[$key]->rt_permalink = get_site_url() . '/' . $post->post_name . '/media/' . $media->id;
+
+					$parent_link = '';
+					if(function_exists('bp_core_get_user_domain')) {
+						$parent_link = bp_core_get_user_domain($rt_media_media->media_author);
+					} else {
+						$parent_link = get_author_posts_url($rt_media_media->media_author);
+					}
+					$media_array[$key]->rt_permalink = $parent_link . 'media/' . $media->id;
 				}
 			}
             $return_array['data'] = $media_array;

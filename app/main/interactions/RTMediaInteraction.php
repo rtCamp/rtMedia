@@ -21,13 +21,15 @@ class RTMediaInteraction {
 
 		// hook into the WordPress Rewrite Endpoint API
 
-		// add_action( 'init', array( $this,'rewrite_rules' ) );
-		// add_action( 'init', array( $this,'rewrite_tags' ) );
-		add_action( 'init', array( $this, 'endpoint' ) );
+		add_action( 'init', array( $this,'rewrite_rules' ) );
+		add_action( 'init', array( $this,'rewrite_tags' ) );
+                add_action( 'init', array( $this, 'endpoint' ) );
 
-		add_filter('wp_title', array($this,'set_title'), 10, 2);
+
 		// set up interaction and routes
 		add_action('template_redirect',array($this, 'init'),99);
+
+		add_filter('wp_title', array($this,'set_title'), 9999, 2);
 
 
 	}
@@ -148,10 +150,13 @@ class RTMediaInteraction {
 	}
 
 	function set_title($default,$sep){
+		global $wp_query;
+
+		if( ! array_key_exists('media',$wp_query->query_vars)) return $default;
 
 		$title = RTMEDIA_MEDIA_LABEL .' '. $sep .' ';
 		global $bp;
-		echo get_post_field('post_title',$this->context->id);
+		//echo get_post_field('post_title',$this->context->id);
 		switch($this->context->type){
 			case 'group':
 				$title .=  ucfirst($bp->groups->slug);
@@ -160,11 +165,12 @@ class RTMediaInteraction {
 				$title .=  ucfirst($bp->profile->slug);
 				break;
 			default:
-				$title = get_post_field('post_title',$this->context->id);
+				$title .= get_post_field('post_title',$this->context->id);
+
 				break;
 		}
-		$title .= ' '.$sep  ;
-		echo $title;
+		$title .= ' '.$sep.' '.get_bloginfo( 'name' )  ;
+		return $title;
 	}
 
 

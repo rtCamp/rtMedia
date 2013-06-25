@@ -122,5 +122,20 @@ class RTMediaModel extends RTDBModel {
         }
         return $results;
     }
+    
+    function get_user_albums($author_id, $offset, $per_page, $order_by = 'media_id desc'){
+        global $wpdb;
+        if (is_multisite() )
+            $order_by = "blog_id ,".$order_by;
+        $sql = "SELECT * FROM {$this->table_name} WHERE id IN(SELECT DISTINCT (album_id) FROM {$this->table_name} WHERE media_author = $author_id AND album_id IS NOT NULL AND media_type != 'album') OR (media_type = 'album' AND media_author = $author_id)";
+        $sql .= " ORDER BY {$this->table_name}.$order_by";
+
+        if(is_integer($offset) && is_integer($per_page)) {
+                $sql .= ' LIMIT ' . $offset . ',' . $per_page;
+        }
+        
+        $results = $wpdb->get_results($sql);
+        return $results;
+    }
 }
 ?>

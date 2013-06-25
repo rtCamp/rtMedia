@@ -76,10 +76,11 @@ class RTMediaContext {
      *
      */
     function set_bp_component_context() {
-        if (bp_is_user() && !bp_is_group())
+        if (bp_displayed_user_id() && !bp_is_group())
             $this->type = 'profile';
-        else if (!bp_is_user() && bp_is_group())
+        else if (!bp_displayed_user_id() && bp_is_group())
             $this->type = 'group';
+
         $this->id = $this->get_current_bp_component_id();
     }
 
