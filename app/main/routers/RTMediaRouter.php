@@ -91,8 +91,10 @@ class RTMediaRouter {
 		// if it is not our route, return early
 		if(!$this->is_template())return;
 
+		status_header( 200 );
 		//set up the query variables
 		$this->set_query_vars();
+
 
 		// otherwise provide a hook for only this route,
 		// pass the slug to the function hooking here
@@ -115,6 +117,7 @@ class RTMediaRouter {
 		// otherwise, apply a filter to the template,
 		// pass the template  and slug to the function hooking here
 		// so it can load a custom template
+		
 
 		$template_load = new RTMediaTemplate();
 

@@ -21,6 +21,9 @@ class RTMediaInteraction {
 
 		// hook into the WordPress Rewrite Endpoint API
 		add_action( 'init', array( $this, 'endpoint' ) );
+		add_action( 'init', array( $this,'rewrite_rules' ) );
+		add_action( 'init', array( $this,'rewrite_tags' ) );
+
 
 		// set up interaction and routes
 		add_action('template_redirect',array($this, 'init'),99);
@@ -34,6 +37,7 @@ class RTMediaInteraction {
 		$this->set_context();
 		$this->set_routers();
 		$this->set_query();
+
 	}
 
 	/**
@@ -45,6 +49,23 @@ class RTMediaInteraction {
 		$this->slugs = apply_filters('rt_media_default_routes',$this->slugs);
 
 	}
+
+	function rewrite_rules() {
+		add_rewrite_rule('^media/([0-9]*)/([^/]*)/?','index.php?media_id=$matches[1]&action=$matches[2]','bottom');
+		add_rewrite_rule('^media/([0-9]*)/pg/([0-9]*)/?','index.php?media_id=$matches[1]&pg=$matches[2]','bottom');
+		add_rewrite_rule('^media/nonce/([^/]*)/?','index.php?nonce_type=$matches[1]','bottom');
+		add_rewrite_rule('^media/([A-Za-z]*)/pg/([0-9]*)/?','index.php?media_type=$matches[1]&pg=$matches[2]','bottom');
+		add_rewrite_rule('^media/pg/([0-9]*)/?','index.php?pg=$matches[1]','bottom');
+	}
+
+	function rewrite_tags(){
+		add_rewrite_tag('%media_id%','([0-9]*)');
+		add_rewrite_tag('%action%','([^/]*)');
+		add_rewrite_tag('%nonce_type%','([^/]*)');
+		add_rewrite_tag('%media_type%','([A-Za-z]*)');
+		add_rewrite_tag('%pg%','([0-9]*)');
+	}
+
 
 	/**
 	 * Just adds the current /{slug}/ to the rewite endpoint
