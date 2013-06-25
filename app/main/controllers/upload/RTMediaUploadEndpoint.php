@@ -26,14 +26,19 @@ class RTMediaUploadEndpoint {
         } else {
             $nonce = $_REQUEST['rt_media_upload_nonce'];
             $mode = $_REQUEST['mode'];
+            $rtupload =false;
             if (wp_verify_nonce($nonce, 'rt_media_upload_nonce')) {
                 $model = new RTMediaUploadModel();
                 $this->upload = $model->set_post_object();
-				var_dump($this->upload);
-                $upload = new RTMediaUpload($this->upload);
+                $rtupload = new RTMediaUpload($this->upload);
             }
             if(isset($_POST["redirect"]) && $_POST["redirect"]=="no" ){
                 // Ha ha ha
+                if(isset($_POST["activity_update"]) && $_POST["activity_update"]=="true"){
+                    header('Content-type: application/json');
+                    echo json_encode($rtupload->attachment_ids);
+                    die();
+                }
                 die();
             }else{
                 //wp_safe_redirect(wp_get_referer());
