@@ -164,9 +164,9 @@ function rt_media_description_input() {
     $html = '';
 
     if (rt_media_request_action() == 'edit')
-        $html .= '<textarea name="' . $name . '" id="' . $name . '">' . $value . '</textarea>';
+        $html .= wp_editor($value,$name);
     else
-        $html .= '<span name="' . $name . '" id="' . $name . '">' . $value . '</span>';
+        $html .= '<div name="' . $name . '" id="' . $name . '">' . $value . '</div>';
 
     $html .= '';
 
