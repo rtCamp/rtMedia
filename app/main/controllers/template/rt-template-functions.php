@@ -300,6 +300,9 @@ function rt_media_pagination_prev_link() {
 			$link = get_site_url() . '/members/' . get_query_var('author_name') . '/media/' . $page_url;
 		else
 			$link = get_site_url() . '/author/' . get_query_var('author_name') . '/media/' . $page_url;
+	} else if($rt_media_interaction->context->type=='group') {
+		if(function_exists("bp_get_current_group_slug"))
+			$link = get_site_url() . '/groups/' . bp_get_current_group_slug() . '/media/' . $page_url;
 	} else {
 		$post = get_post($rt_media_media->post_parent);
 
@@ -317,6 +320,9 @@ function rt_media_pagination_next_link() {
 			$link = bp_core_get_user_domain($rt_media_media->media_author) . 'media/page/' . (rt_media_page()+1);
 		else
 			$link = get_site_url() . '/author/' . get_query_var('author_name') . '/media/page/' . (rt_media_page()+1);
+	} else if($rt_media_interaction->context->type=='group') {
+		if(function_exists("bp_get_current_group_slug"))
+			$link = get_site_url() . '/groups/' . bp_get_current_group_slug() . '/media/page/' . (rt_media_page()+1);
 	} else {
 		$post = get_post($rt_media_media->post_parent);
 
@@ -425,7 +431,7 @@ function rt_media_uploader($attr = '') {
 	if(function_exists('bp_is_blog_page') && !bp_is_blog_page()) {
 		if (function_exists('bp_displayed_user_id') && bp_displayed_user_id() == get_current_user_id())
 			echo RTMediaUploadShortcode::pre_render($attr);
-		if(function_exists('bp_group_is_member') && bp_group_is_member())
+		else if(function_exists('bp_group_is_member') && bp_group_is_member())
 			echo RTMediaUploadShortcode::pre_render($attr);
 	} else if (!RTMediaUploadShortcode::$uploader_displayed)
 		echo RTMediaUploadShortcode::pre_render($attr);
