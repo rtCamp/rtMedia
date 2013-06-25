@@ -55,6 +55,7 @@ function rt_media_autoloader( $class_name ) {
 		'app/main/controllers/shortcodes/' . $class_name . '.php',
 		'app/main/controllers/template/' . $class_name . '.php',
 		'app/main/controllers/media/' . $class_name . '.php',
+                'app/main/controllers/activity/' . $class_name . '.php',
 		'app/main/deprecated/' . $class_name . '.php',
 		'app/main/contexts/' . $class_name . '.php',
 		'app/main/' . $class_name . '.php',
