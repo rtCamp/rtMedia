@@ -73,102 +73,101 @@ class RTMediaTemplate {
 				$return_array['next'] = (rt_media_offset()+ rt_media_per_page_media() < rt_media_count())?(rt_media_page()+1): -1 ;
 				echo json_encode($return_array);
 				die;
-			}
-			else
+			} else if($rt_media_query->action_query->action == 'edit' && count($_POST)) {
+				/**
+				 * /media/id/edit [POST]
+				 * save details of media
+				 *
+				 */
+				if(is_rt_media_single()) {
+
+					$nonce = $_REQUEST['rt_media_media_nonce'];
+					if (wp_verify_nonce($nonce, 'rt_media_media_nonce')) {
+						$data = $_POST;
+						unset($data['rt_media_media_nonce']);
+						unset($data['_wp_http_referer']);
+						$media = new RTMediaMedia();
+						$media->update($rt_media_query->action_query->id, $data, $rt_media_query->media[0]->media_id);
+						$rt_media_query->query(false);
+					} else{
+						echo __("Ooops !!! Invalid access. No nonce was found !!","rt-media");
+					}
+				} else {
+					 echo "media album update handling.";
+				}
+				return $this->get_default_template();
+
+			} else if($rt_media_query->action_query->action == 'delete') {
+				/**
+				 * /media/id/delete [POST]
+				 */
+				if(is_rt_media_single()) {
+
+					$nonce = $_REQUEST['rt_media_media_nonce'];
+					if (wp_verify_nonce($nonce, 'rt_media_media_nonce')) {
+						$id = $_POST;
+						unset($id['rt_media_media_nonce']);
+						unset($id['_wp_http_referer']);
+						$media = new RTMediaMedia();
+
+						wp_delete_attachment($rt_media_query->media[0]->media_id,true);
+
+						$post = get_post($rt_media_query->media[0]);
+
+						$parent_link = '';
+						if(function_exists('bp_core_get_user_domain')) {
+							$parent_link = bp_core_get_user_domain($post->media_author);
+						} else {
+							$parent_link = get_author_posts_url($post->media_author);
+						}
+
+						wp_redirect($parent_link);
+					} else{
+						echo __("Ooops !!! Invalid access. No nonce was found !!","rt-media");
+					}
+				} else {
+					echo "media album delete handling";
+				}
+				return $this->get_default_template();
+			} else if( $rt_media_query->action_query->action == 'comments' ) {
+
+				if(isset($rt_media_query->action_query->media_type) && !count($_POST) ) {
+					/**
+					 * /media/comments [GET]
+					 *
+					 */
+					$media_array = array();
+					if($rt_media_query->media) {
+						foreach($rt_media_query->media as $media){
+							$media_array[] = $media;
+						}
+					}
+					echo json_encode( $media_array );
+					die;
+				} else if( isset($rt_media_query->action_query->id) && count($_POST)) {
+					/**
+					 * /media/comments [POST]
+					 * Post a comment to the album by post id
+					 */
+
+					$nonce = $_REQUEST['rt_media_comment_nonce'];
+					if (wp_verify_nonce($nonce, 'rt_media_comment_nonce')) {
+						$comment = new RTMediaComment();
+						$attr = $_POST;
+						if(!isset($attr['comment_post_ID']))
+							$attr['comment_post_ID'] = $rt_media_query->action_query->id;
+						$comment->add($attr);
+					}
+					else {
+						echo "Ooops !!! Invalid access. No nonce was found !!";
+					}
+				}
+				return $this->get_default_template();
+
+			} else
 				return $this->get_default_template();
 		} else if($rt_media_interaction->context->type=="activity") {
 			echo 'Activity Handling';
-		} else if( $rt_media_query->action_query->action == 'comments' ) {
-
-			if(isset($rt_media_query->action_query->media_type) && !count($_POST) ) {
-				/**
-				 * /media/comments [GET]
-				 *
-				 */
-				$media_array = array();
-				if($rt_media_query->media) {
-					foreach($rt_media_query->media as $media){
-						$media_array[] = $media;
-					}
-				}
-				echo json_encode( $media_array );
-				die;
-			} else if( isset($rt_media_query->action_query->id) && count($_POST)) {
-				/**
-				 * /media/comments [POST]
-				 * Post a comment to the album by post id
-				 */
-
-				$nonce = $_REQUEST['rt_media_comment_nonce'];
-				if (wp_verify_nonce($nonce, 'rt_media_comment_nonce')) {
-					$comment = new RTMediaComment();
-					$attr = $_POST;
-					if(!isset($attr['comment_post_ID']))
-						$attr['comment_post_ID'] = $rt_media_query->action_query->id;
-					$comment->add($attr);
-				}
-				else {
-					echo "Ooops !!! Invalid access. No nonce was found !!";
-				}
-			}
-			return $this->get_default_template();
-
-		} else if($rt_media_query->action_query->action == 'edit' && count($_POST)) {
-			/**
-			 * /media/id/edit [POST]
-			 * save details of media
-			 *
-			 */
-			if(is_rt_media_single()) {
-
-				$nonce = $_REQUEST['rt_media_media_nonce'];
-				if (wp_verify_nonce($nonce, 'rt_media_media_nonce')) {
-					$data = $_POST;
-					unset($data['rt_media_media_nonce']);
-					unset($data['_wp_http_referer']);
-					$media = new RTMediaMedia();
-					$media->update($rt_media_query->action_query->id, $data, $rt_media_query->media[0]->media_id);
-					$rt_media_query->query(false);
-				} else{
-					echo "Ooops !!! Invalid access. No nonce was found !!";
-				}
-			} else {
-				 echo "media album update handling.";
-			}
-			return $this->get_default_template();
-
-		} else if($rt_media_query->action_query->action == 'delete') {
-			/**
-			 * /media/id/delete [POST]
-			 */
-			if(is_rt_media_single()) {
-
-				$nonce = $_REQUEST['rt_media_media_nonce'];
-				if (wp_verify_nonce($nonce, 'rt_media_media_nonce')) {
-					$id = $_POST;
-					unset($id['rt_media_media_nonce']);
-					unset($id['_wp_http_referer']);
-					$media = new RTMediaMedia();
-
-                                        wp_delete_attachment($rt_media_query->media[0]->media_id,true);
-
-					$post = get_post($rt_media_query->media[0]);
-
-					$parent_link = '';
-					if(function_exists('bp_core_get_user_domain')) {
-						$parent_link = bp_core_get_user_domain($post->media_author);
-					} else {
-						$parent_link = get_author_posts_url($post->media_author);
-					}
-
-					wp_redirect($parent_link);
-				} else{
-					echo "Ooops !!! Invalid access. No nonce was found !!";
-				}
-			}else {
-				echo "media album delete handling";
-			}
-			return $this->get_default_template();
 		} else if($rt_media_query->action_query->action == 'upload') {
 			$upload = new RTMediaUploadEndpoint();
 			$upload->template_redirect();
@@ -183,9 +182,9 @@ class RTMediaTemplate {
 
 					$parent_link = '';
 					if(function_exists('bp_core_get_user_domain')) {
-						$parent_link = bp_core_get_user_domain($rt_media_media->media_author);
+						$parent_link = bp_core_get_user_domain($media->media_author);
 					} else {
-						$parent_link = get_author_posts_url($rt_media_media->media_author);
+						$parent_link = get_author_posts_url($media->media_author);
 					}
 					$media_array[$key]->rt_permalink = $parent_link . 'media/' . $media->id;
 				}

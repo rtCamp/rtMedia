@@ -29,8 +29,8 @@ class RTMediaUploadEndpoint {
             if (wp_verify_nonce($nonce, 'rt_media_upload_nonce')) {
                 $model = new RTMediaUploadModel();
                 $this->upload = $model->set_post_object();
+				var_dump($this->upload);
                 $upload = new RTMediaUpload($this->upload);
-                var_dump($upload);
             }
             if(isset($_POST["redirect"]) && $_POST["redirect"]=="no" ){
                 // Ha ha ha

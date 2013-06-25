@@ -5,11 +5,11 @@
 	<?php rt_media_uploader() ?>
 
 	<h2><?php echo __('Media Gallery','rt-media'); ?></h2>
-
+        <ul class="rt-media-list">
     <?php
 			if (have_rt_media()) { ?>
 
-			<ul class="rt-media-list">
+			
 
 				<?php while (have_rt_media()) : rt_media(); ?>
 
@@ -43,6 +43,7 @@
 		<?php } else { ?>
 			<p><?php echo __("Oops !! There's no media found for the request !!","rt-media"); ?></p>
 		<?php } ?>
+                        </ul>
 </div>
 
 <?php do_action('rtmedia_after_media_gallery'); ?>

@@ -2,29 +2,38 @@
 
     <?php if (have_rt_media()) : rt_media(); ?>
 
-		<?php if( rt_media_request_action()!="edit" ) { ?>
-			<div class="rt-media-media">
-				<img src="<?php rt_media_image('full','src'); ?>" width="<?php rt_media_image('full','width'); ?>" height="<?php rt_media_image('full','height'); ?>">
-			</div>
-		<?php } ?>
+	    <form method="post">
+			<?php echo rt_media_title_input(); ?>
 
-		<?php
-		if(is_user_logged_in() && rt_media_edit_allowed()) {
-			if( rt_media_request_action()!="edit" ) { ?>
-				<a href="<?php echo rt_media_permalink() . 'edit/'; ?>"><button>Edit</button></a>
-			<?php } else {
-				rt_media_image_editor();
-			}
-		}?>
 
-		<?php
-			if( rt_media_delete_allowed() && rt_media_request_action()!="edit" ) {
-				rt_media_delete_form();
-		} ?>
+			<?php if( rt_media_request_action()!="edit" ) { ?>
+				<div class="rt-media-media">
+					<img src="<?php rt_media_image('full','src'); ?>">
+				</div>
+			<?php } ?>
 
-		<div class="rt-media-item-content">
-            <?php rt_media_content(); ?>
-        </div>
+			<?php
+			if(is_user_logged_in() && rt_media_edit_allowed()) {
+				if( rt_media_request_action()!="edit" ) { ?>
+					<a href="<?php echo rt_media_permalink() . 'edit/'; ?>"><button type="button">Edit</button></a>
+				<?php } else {
+					rt_media_image_editor();
+				}
+			}?>
+
+			<?php
+				if( rt_media_delete_allowed() && rt_media_request_action()!="edit" ) {
+					rt_media_delete_form();
+				}
+
+				echo rt_media_description_input();
+				if (rt_media_request_action() == "edit") {
+					RTMediaMedia::media_nonce_generator();
+			?>
+					<input type="submit" value="Save">
+					<a href="<?php rt_media_permalink(); ?>"><input type="button" value="Back"></a>
+			<?php } ?>
+		</form>
 
         <div class="rt-media-item-actions">
             <?php rt_media_actions(); ?>

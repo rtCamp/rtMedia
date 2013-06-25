@@ -3,13 +3,13 @@
     padding:5px;
 
     #rtmedia-upload-container{
-        .drag-drop{
+        #drag-drop-area{
             border: 4px dashed #DDD;
             text-align: center;
             background: #fafafa;
             overflow: hidden;
             padding: 15px 0;
-            &:hover{
+            &.dragover{
                 border-color: #83b4d8;
             }
         }

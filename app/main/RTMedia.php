@@ -692,7 +692,7 @@ class RTMedia {
 	function check_global_album() {
 		$album = new RTMediaAlbum();
 		$global_album = $album->get_default();
-                //**
+                //** Hack for plupload default name 
                     if(isset($_POST["action"]) && isset($_POST["mode"]) && $_POST["mode"] == "file_upload"){
                         unset($_POST["name"]);
                     }
