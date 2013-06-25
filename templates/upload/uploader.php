@@ -1,4 +1,5 @@
 <?php if (is_array($tabs) && count($tabs)) { ?>
+<div class="rt-media-container">
 <div class="rt-media-uploader no-js">
         <form id="rt-media-uploader-form" method="post" action="upload" enctype="multipart/form-data">
             <?php do_action('rt_media_before_uploader'); ?>
@@ -63,4 +64,5 @@
             <input type="submit" id='rtMedia-start-upload' name="rt-media-upload" value="<?php echo RTMEDIA_UPLOAD_LABEL; ?>" />
         </form>
     </div>
+</div>
 <?php } 
