@@ -425,6 +425,8 @@ function rt_media_uploader($attr = '') {
 	if(function_exists('bp_is_blog_page') && !bp_is_blog_page()) {
 		if (function_exists('bp_displayed_user_id') && bp_displayed_user_id() == get_current_user_id())
 			echo RTMediaUploadShortcode::pre_render($attr);
+		if(function_exists('bp_group_is_member') && bp_group_is_member())
+			echo RTMediaUploadShortcode::pre_render($attr);
 	} else if (!RTMediaUploadShortcode::$uploader_displayed)
 		echo RTMediaUploadShortcode::pre_render($attr);
 }
