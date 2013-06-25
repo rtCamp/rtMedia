@@ -1,4 +1,16 @@
 <?php
+if (is_rt_media_album_gallery()){
+            $template = 'album-gallery';
+        } elseif (is_rt_media_album()||is_rt_media_gallery()) {
+            $template = 'media-gallery';
+	} else if ( is_rt_media_single() ) {
+            $template = 'media-single';
+	}
+
+	 if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest')
+		 $ajax = true;
+
+if(!$ajax){
 
 	if(class_exists('BuddyPress') && !bp_is_blog_page())
 		$template_type = 'buddypress';
@@ -6,13 +18,7 @@
 
 	get_header($template_type);
 
-	if (is_rt_media_album_gallery()){
-            $template = 'album-gallery';
-        } elseif (is_rt_media_album()||is_rt_media_gallery()) {
-            $template = 'media-gallery';
-	} else if ( is_rt_media_single() ) {
-            $template = 'media-single';
-	}
+
 
 	if($template_type=='buddypress') { ?>
 
@@ -69,9 +75,10 @@
 
 			<?php } ?>
 	<?php }
+}
 
 	include(RTMediaTemplate::locate_template( $template ));
-
+if(!$ajax){
 	if($template_type=='buddypress' && (bp_is_user() || bp_is_group())) { ?>
 			</div>
 		</div>
@@ -80,4 +87,5 @@
 	get_sidebar($template_type);
 
 	get_footer($template_type);
+}
 ?>

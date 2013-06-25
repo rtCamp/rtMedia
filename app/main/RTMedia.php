@@ -692,7 +692,7 @@ class RTMedia {
 	function check_global_album() {
 		$album = new RTMediaAlbum();
 		$global_album = $album->get_default();
-                //** Hack for plupload default name 
+                //** Hack for plupload default name
                     if(isset($_POST["action"]) && isset($_POST["mode"]) && $_POST["mode"] == "file_upload"){
                         unset($_POST["name"]);
                     }
@@ -730,6 +730,10 @@ class RTMedia {
 
 	function enqueue_scripts_styles() {
 		wp_enqueue_style('rt-media-main', RTMEDIA_URL . 'app/assets/css/main.css', '', RTMEDIA_VERSION);
+		wp_enqueue_script('rt-media-main', RTMEDIA_URL . 'app/assets/js/rtMedia.js', '', RTMEDIA_VERSION);
+		wp_enqueue_style('rt-media-magnific', RTMEDIA_URL . 'lib/magnific/magnific.css', '', RTMEDIA_VERSION);
+		wp_enqueue_script('rt-media-magnific', RTMEDIA_URL . 'lib/magnific/magnific.js', '', RTMEDIA_VERSION);
+
 	}
 
 }
