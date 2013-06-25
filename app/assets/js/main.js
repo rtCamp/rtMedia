@@ -826,3 +826,4 @@ jQuery(document).ready(function(){
 	jQuery('.rt-media-item-thumbnail a').magnificPopup({type:'ajax'});
 
 });
+
