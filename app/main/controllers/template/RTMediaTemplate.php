@@ -49,7 +49,7 @@ class RTMediaTemplate {
 
 		global $rt_media_query, $rt_media_interaction, $rt_media_media;
 
-		$media_array = '';
+		$media_array = array();
 
 		if(in_array($rt_media_interaction->context->type, array("profile","group"))) {
 
@@ -62,7 +62,7 @@ class RTMediaTemplate {
 					}
 				}
 				echo json_encode($media_array);
-				return;
+				die;
 			}
 			else
 				return $this->get_default_template();
@@ -75,13 +75,14 @@ class RTMediaTemplate {
 				 * /media/comments [GET]
 				 *
 				 */
+				$media_array = array();
 				if($rt_media_query->media) {
 					foreach($rt_media_query->media as $media){
 						$media_array[] = $media;
 					}
 				}
 				echo json_encode( $media_array );
-				return;
+				die;
 			} else if( isset($rt_media_query->action_query->id) && count($_POST)) {
 				/**
 				 * /media/comments [POST]
@@ -158,6 +159,7 @@ class RTMediaTemplate {
 			$upload->template_redirect();
 		} else if ( $rt_media_query->format == 'json' ) {
 
+			$media_array = array();
 			if($rt_media_query->media) {
 				foreach($rt_media_query->media as $key => $media){
 					$media_array[$key] = $media;
@@ -172,7 +174,7 @@ class RTMediaTemplate {
 			$return_array['next'] = (rt_media_offset()+ rt_media_per_page_media() < rt_media_count())?(rt_media_page()+1): -1 ;
 
 			echo json_encode($return_array);
-                        return;
+			die;
 
 		} else if(!$shortcode_attr)
 			return $this->get_default_template();
