@@ -92,7 +92,18 @@ class RTMediaTemplate {
 					} else{
 						echo __("Ooops !!! Invalid access. No nonce was found !!","rt-media");
 					}
-				} else {
+				} elseif (is_rt_media_album()) {
+//                                    $nonce = $_REQUEST['rt_media_media_nonce'];
+//					if (wp_verify_nonce($nonce, 'rt_media_media_nonce')) {
+//                                            $data = $_POST;
+//                                            unset($data['rt_media_media_nonce']);
+//                                            unset($data['_wp_http_referer']);
+//                                            $media = new RTMediaMedia();
+//                                            $media->update($rt_media_query->action_query->id, $data, $rt_media_query->media[0]->media_id);
+//                                            $rt_media_query->query(false);
+//                                        } else{
+//						echo __("Ooops !!! Invalid access. No nonce was found !!","rt-media");
+//					}
 					 echo "media album update handling.";
 				}
 				return $this->get_default_template();
