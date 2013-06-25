@@ -1,3 +1,5 @@
+<?php do_action('rtmedia_before_media_gallery'); ?>
+
 <div class="rt-media-container">
 
 	<?php rt_media_uploader() ?>
@@ -42,3 +44,5 @@
 			<p><?php echo __("Oops !! There's no media found for the request !!","rt-media"); ?></p>
 		<?php } ?>
 </div>
+
+<?php do_action('rtmedia_after_media_gallery'); ?>
