@@ -228,7 +228,7 @@ class RTMediaMigration {
                                 "action": "bp_media_rt_db_migration",
                                 "done": db_done
                             },
-                            success: function (sdata) {
+                            success: function(sdata) {
                                 data = JSON.parse(sdata);
                                 if (data.status) {
                                     done = parseInt(data.done);
@@ -236,7 +236,8 @@ class RTMediaMigration {
                                     var progw = Math.ceil((done / total) * 100);
                                     if (progw > 100) {
                                         progw = 100;
-                                    };
+                                    }
+                                    ;
                                     jQuery('#rtprogressbar>div').css('width', progw + '%');
                                     jQuery('span.finished').html(done);
                                     jQuery('span.total').html(total);
@@ -254,10 +255,10 @@ class RTMediaMigration {
                     }
                 }
 
-                jQuery(document).on('click', '#submit', function (e) {
+                jQuery(document).on('click', '#submit', function(e) {
                     e.preventDefault();
-                    var db_done = <?php echo $done; ?> ;
-                    var db_total = <?php echo $total; ?> ;
+                    var db_done = <?php echo $done; ?>;
+                    var db_total = <?php echo $total; ?>;
                     db_start_migration(db_done, db_total);
                 });
             </script>
@@ -305,7 +306,9 @@ class RTMediaMigration {
                     c.meta_value as 'activity_id',
                     p.post_type,
                     p.post_mime_type,
-                    p.post_author as 'media_author'
+                    p.post_author as 'media_author',
+                    p.post_title as 'media_title',
+                    p.post_parent as 'parent'
                 from
                     {$wpdb->postmeta} a
                         left join
@@ -330,69 +333,9 @@ class RTMediaMigration {
             else
                 $bp_prefix = "";
             if ($results) {
-                $blog_id = get_current_blog_id();
+
                 foreach ($results as $result) {
-
-                    $media_id = $result->post_id;
-
-                    if (intval($result->context_id) > 0) {
-                        $media_context = "profile";
-                        $prefix = "users/" . abs(intval($result->context_id));
-                    } else {
-                        $media_context = "group";
-                        $prefix = "groups/" . abs(intval($result->context_id));
-                    }
-
-
-
-                    if ($result->post_type != "attachment") {
-                        $media_type = "album";
-                    } else {
-                        $mime_type = strtolower($result->post_mime_type);
-                        if (strpos($mime_type, "image") == 0) {
-                            $media_type = "image";
-                        } else if (strpos($mime_type, "audio") == 0) {
-                            $media_type = "audio";
-                        } else if (strpos($mime_type, "video") == 0) {
-                            $media_type = "video";
-                        } else {
-                            $media_type = "other";
-                        }
-                    }
-
-                    if ($media_type != 'album')
-                        $this->import_media($media_id, $prefix);
-//                        $this->import_media($media_id, $prefix, $result->activity_id);
-
-                    if ($this->table_exists($bp_prefix . "bp_activity") && class_exists("BP_Activity_Activity")) {
-                        $bp_activity = new BP_Activity_Activity();
-                        $activity_sql = $wpdb->prepare("SELECT * FROM {$bp_prefix}bp_activity where component='activity' and  type='activity_update' and item_id =%d order by id", $media_id);
-                        $all_activity = $wpdb->get_results($activity_sql);
-                        remove_all_actions("wp_insert_comment");
-                        foreach ($all_activity as $activity) {
-                            $comments = $bp_activity->get_activity_comments($activity->id, $activity->mptt_left, $activity->mptt_right);
-                            $exclude = get_post_meta($media_id, "rt_media_imported_activity", true);
-                            if (!is_array($exclude)) {
-                                $exclude = array();
-                            }
-                            if ($comments)
-                                $this->insert_comment($media_id, $comments, $exclude);
-                        }
-                    }
-
-                    $wpdb->insert(
-                            $this->bmp_table, array(
-                        'blog_id' => $blog_id,
-                        'media_id' => $media_id,
-                        'media_type' => $media_type,
-                        "context" => $media_context,
-                        "context_id" => abs(intval($result->context_id)),
-                        "activity_id" => $result->activity_id,
-                        "privacy" => intval($result->privacy) * 10,
-                        "media_author" => $result->media_author,
-                            ), array('%d', '%d', '%s', '%s', '%d', '%d', '%d', '%d')
-                    );
-                    update_option("rtMedia-media-migration-last-id", $media_id);
+                    $this->migrate_single_media($result);
                 }
             }
         } else {
@@ -410,6 +353,113 @@ class RTMediaMigration {
 
         echo json_encode(array("status" => true, "done" => $done, "total" => $this->get_total_count(), "pending" => $pending_time));
         die();
+    }
+
+    function migrate_single_media($result, $album = false) {
+        $blog_id = get_current_blog_id();
+        if (function_exists("bp_core_get_table_prefix"))
+            $bp_prefix = bp_core_get_table_prefix();
+        else
+            $bp_prefix = "";
+        global $wpdb;
+        if ($album) {
+            $id = $wpdb->get_var($wpdb->prepare("select ID from $this->bmp_table where media_id = %d", $result));
+            if ($id == NULL) {
+                $sql = "select
+                        a.post_id as 'post_id',
+                        a.meta_value as 'privacy',
+                        b.meta_value as 'context_id',
+                        c.meta_value as 'activity_id',
+                        p.post_type,
+                        p.post_mime_type,
+                        p.post_author as 'media_author',
+                        p.post_title as 'media_title',
+                        p.post_parent as 'parent'
+                    from
+                        {$wpdb->postmeta} a
+                            left join
+                        {$wpdb->postmeta} b ON ((a.post_id = b.post_id)
+                            and (b.meta_key = 'bp-media-key'))
+                            left join
+                        {$wpdb->postmeta} c ON (a.post_id = c.post_id)
+                            and (c.meta_key = 'bp_media_child_activity')
+                            left join
+                        {$wpdb->posts} p ON (a.post_id = p.id)
+                    where
+                        a.post_id = %d
+                            and a.meta_key = 'bp_media_privacy'";
+                $result = $wpdb->get_row($wpdb->prepare($sql, $result));
+            } else {
+                return $id;
+            }
+        }
+
+        $media_id = $result->post_id;
+
+        if (intval($result->context_id) > 0) {
+            $media_context = "profile";
+            $prefix = "users/" . abs(intval($result->context_id));
+        } else {
+            $media_context = "group";
+            $prefix = "groups/" . abs(intval($result->context_id));
+        }
+
+
+
+        if ($result->post_type != "attachment") {
+            $media_type = "album";
+        } else {
+            $mime_type = strtolower($result->post_mime_type);
+            if (strpos($mime_type, "image") == 0) {
+                $media_type = "image";
+            } else if (strpos($mime_type, "audio") == 0) {
+                $media_type = "audio";
+            } else if (strpos($mime_type, "video") == 0) {
+                $media_type = "video";
+            } else {
+                $media_type = "other";
+            }
+        }
+
+        if ($media_type != 'album')
+            $this->import_media($media_id, $prefix);
+//                        $this->import_media($media_id, $prefix, $result->activity_id);
+
+        if ($this->table_exists($bp_prefix . "bp_activity") && class_exists("BP_Activity_Activity")) {
+            $bp_activity = new BP_Activity_Activity();
+            $activity_sql = $wpdb->prepare("SELECT * FROM {$bp_prefix}bp_activity where component='activity' and  type='activity_update' and item_id =%d order by id", $media_id);
+            $all_activity = $wpdb->get_results($activity_sql);
+            remove_all_actions("wp_insert_comment");
+            foreach ($all_activity as $activity) {
+                $comments = $bp_activity->get_activity_comments($activity->id, $activity->mptt_left, $activity->mptt_right);
+                $exclude = get_post_meta($media_id, "rt_media_imported_activity", true);
+                if (!is_array($exclude)) {
+                    $exclude = array();
+                }
+                if ($comments)
+                    $this->insert_comment($media_id, $comments, $exclude);
+            }
+        }
+        if ($result->parent !== 0) {
+            $album_id = $this->migrate_single_media($result->parent, true);
+        } else {
+            $album_id = 0;
+        }
+        $last_id = $wpdb->insert(
+                $this->bmp_table, array(
+            'blog_id' => $blog_id,
+            'media_id' => $media_id,
+            'media_type' => $media_type,
+            "context" => $media_context,
+            "context_id" => abs(intval($result->context_id)),
+            "activity_id" => $result->activity_id,
+            "privacy" => intval($result->privacy) * 10,
+            "media_author" => $result->media_author,
+            "media_title" => $result->media_title,
+            "album_id" => $album_id
+                ), array('%d', '%d', '%s', '%s', '%d', '%d', '%d', '%d', '%s', '%d')
+        );
+        return $last_id;
     }
 
     function import_media($id, $prefix) {

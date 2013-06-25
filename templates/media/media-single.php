@@ -11,7 +11,7 @@
 		<?php
 		if(is_user_logged_in() && rt_media_edit_allowed()) {
 			if( rt_media_request_action()!="edit" ) { ?>
-				<a href="<?php echo rt_media_url() . '/edit'; ?>"><button>Edit</button></a>
+				<a href="<?php echo rt_media_permalink() . '/edit'; ?>"><button>Edit</button></a>
 			<?php } else {
 				rt_media_image_editor();
 			}
