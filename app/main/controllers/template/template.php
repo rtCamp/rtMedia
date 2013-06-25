@@ -1,7 +1,6 @@
 <?php
 global $rt_media_query;
 
-
 if ( is_rt_media_album_gallery() ) {
 	$template = 'album-gallery';
 } elseif ( is_rt_media_album() || is_rt_media_gallery() ) {

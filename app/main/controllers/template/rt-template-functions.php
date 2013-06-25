@@ -164,7 +164,7 @@ function rt_media_description_input() {
     $html = '';
 
     if (rt_media_request_action() == 'edit')
-        $html .= wp_editor($value,$name);
+        $html .= wp_editor($value,$name,array('media_buttons'=>false));
     else
         $html .= '<div name="' . $name . '" id="' . $name . '">' . $value . '</div>';
 
