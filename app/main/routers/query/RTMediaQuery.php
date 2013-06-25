@@ -322,7 +322,8 @@ class RTMediaQuery {
          * set action query object
          * setting parameters in action query object for pagination
          */
-        $per_page_media = intval($rt_media->get_option('per_page_media'));
+        $per_page_media = intval(rt_media_get_site_option('rt-media-per-page-media',10));
+        
 
         $this->action_query = (object) array(
                     $modifier_type => $modifier_value,

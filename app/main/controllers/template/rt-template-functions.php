@@ -143,14 +143,14 @@ function rt_media_title_input() {
     $name = 'media_title';
     $value = $rt_media_media->media_title;
 
-    $html = '<label for="' . $name . '"> Title : ';
+    $html = '';
 
     if (rt_media_request_action() == 'edit')
         $html .= '<input type="text" name="' . $name . '" id="' . $name . '" value="' . $value . '">';
     else
-        $html .= '<span name="' . $name . '" id="' . $name . '">' . $value . '</span>';
+        $html .= '<h2 name="' . $name . '" id="' . $name . '">' . $value . '</h2>';
 
-    $html .= '</label>';
+    $html .= '';
 
     return $html;
 }
@@ -161,36 +161,16 @@ function rt_media_description_input() {
     $name = 'description';
     $value = $rt_media_media->post_content;
 
-    $html = '<label for="' . $name . '"> Description : ';
+    $html = '';
 
     if (rt_media_request_action() == 'edit')
         $html .= '<textarea name="' . $name . '" id="' . $name . '">' . $value . '</textarea>';
     else
         $html .= '<span name="' . $name . '" id="' . $name . '">' . $value . '</span>';
 
-    $html .= '</label>';
+    $html .= '';
 
     return $html;
-}
-
-/**
- *
- */
-function rt_media_content() {
-
-    $html = '<form method="post">';
-    $html .= rt_media_title_input() . '<br>';
-    $html .= rt_media_description_input();
-    if (rt_media_request_action() == "edit") {
-        ob_start();
-        RTMediaMedia::media_nonce_generator();
-        $html .= ob_get_clean();
-        $html .= '<input type="submit" value="Save">';
-        $html .= '<a href="' . rt_media_url() . '"><input type="button" value="Back"></a>';
-    }
-    $html .= '</form>';
-
-    echo $html;
 }
 
 /**
@@ -433,8 +413,7 @@ function rt_media_uploader($attr = '') {
 			echo RTMediaUploadShortcode::pre_render($attr);
 		else if(function_exists ('bp_is_group') && bp_is_group() && function_exists('bp_group_is_member') && bp_group_is_member())
 			echo RTMediaUploadShortcode::pre_render($attr);
-	} else if (!RTMediaUploadShortcode::$uploader_displayed)
-		echo RTMediaUploadShortcode::pre_render($attr);
+	}
 }
 
 function rt_media_gallery($attr = '') {

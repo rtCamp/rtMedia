@@ -1,6 +1,7 @@
 var galleryObj;
 var nextpage = 2;
 var upload_sync = false;
+var activity_id = -1;
 
 jQuery(function($) {
 
@@ -196,7 +197,8 @@ jQuery(function($) {
                         this.uploader.init();
 
                         this.uploader.bind('UploadComplete', function(up, files){
-                            galleryObj.reloadView()
+							activity_id = -1;
+                            galleryObj.reloadView();
                         });
 
                         this.uploader.bind('FilesAdded', function(up, files){
@@ -231,12 +233,25 @@ jQuery(function($) {
                                 $("#" + file.id + " .plupload_file_status").html(file.percent + "%");
 
                         });
+                        this.uploader.bind('BeforeUpload', function(up, file){
+							up.settings.multipart_params.activity_id = activity_id;
 
-                        this.uploader.bind('FileUploaded', function(up, file){
+                        });
+
+                        this.uploader.bind('FileUploaded', function(up, file, res){
 
                                 files = self.uploader.files;
                                 lastfile = files[files.length-1];
+								try {
+									var rtnObj;
+									rtnObj = JSON.parse(res)
+									activity_id = rtnObj.activity_id;
+								} catch(e) {
+//									return;
+								}
                         });
+
+
 
 
                         //The plupload HTML5 code gives a negative z-index making add files button unclickable
