@@ -2,8 +2,8 @@
     @import "compass/reset";
     padding:5px;
 
-    #rtmedia-upload-container{
-        #drag-drop-area{
+    
+        .drag-drop{
             border: 4px dashed #DDD;
             text-align: center;
             background: #fafafa;
@@ -13,7 +13,7 @@
                 border-color: #83b4d8;
             }
         }
-    }
+    
 
 	.rt-media-list {
 		list-style: none;
@@ -58,4 +58,15 @@
 		width: 460px;
 		margin: auto;
 	}
+
+        #div-attache-rtmedia{
+            display:none;
+        }
+        #rtMedia-update-queue-list{
+            p{
+                span{
+                    margin-right:20px;
+                }
+            }
+        }
 }
