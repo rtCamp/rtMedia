@@ -19,14 +19,14 @@ class RTMediaAlbum {
 	 * Media object associated with the album. It works as an interface
 	 * for the actions specific the media from this album
 	 */
-	var $rt_media_object;
+	var $media;
 
 	/**
 	 *
 	 */
 	public function __construct() {
 		add_action('init', array(&$this,'register_post_types'),12);
-		$this->rt_media_object = new RTMediaMedia();
+		$this->media = new RTMediaMedia();
 	}
 
 	/**
@@ -163,8 +163,8 @@ class RTMediaAlbum {
 			'activity_id' => NULL,
 			'privacy' => NULL
 		);
-                
-		$this->rt_media_object->rt_insert_album($attributes);
+
+		$this->media->insert_album($attributes);
 
 		/* action to perform any task after adding the album */
 		do_action('rt_media_after_add_album', $this);
@@ -349,7 +349,7 @@ class RTMediaAlbum {
 		/**
 		 * Delete each media from the album first
 		 */
-		while( $media = $this->rt_media_object->model->get_by_album_id($id, $page) ) {
+		while( $media = $this->media->model->get_by_album_id($id, $page) ) {
 
 			$media_id = $media['result'][0]['media_id'];
 
@@ -365,7 +365,7 @@ class RTMediaAlbum {
 		 * If all the media are deleted from the album then delete the album at last.
 		 */
 		if($flag) {
-			$this->rt_media_object->delete($id);
+			$this->media->delete($id);
 		}
 
 		/* action to perform any task after deleting an album */
@@ -402,10 +402,10 @@ class RTMediaAlbum {
 		/**
 		 * Transfer all the media from secondary album to primary album
 		 */
-		while( $media = $this->rt_media_object->model->get_by_album_id($secondary_album_id, $page) ) {
+		while( $media = $this->media->model->get_by_album_id($secondary_album_id, $page) ) {
 
 			$media_id = $media['result'][0]['media_id'];
-			$this->rt_media_object->move($media_id,$primary_album_id);
+			$this->media->move($media_id,$primary_album_id);
 
 			$page++;
 		}
@@ -462,9 +462,36 @@ class RTMediaAlbum {
 		/**
 		 * Index attachments in rtMedia
 		 */
-		$this->rt_media_object->rt_insert_media($attachment_ids, $album_meta);
+		$this->media->insert_media($attachment_ids, $album_meta);
 
 		return true;
+	}
+
+	/**
+	 * Check if a post is being indexed as an rtMedia album
+	 * @param integer $post_id the post id to check
+	 * @return boolean if a post is an rtmedia album
+	 */
+	function is_post_album($post_id){
+		$album = $this->model->get(array('album_id'=>$post_id));
+		if(!empty($album) && count($album)>0){
+			return true;
+		}
+		return false;
+
+	}
+
+	/**
+	 * Convert an existing post, with attachments indexed by rtMedia to rtMedia album
+	 * @param integer $post_id The post id to convert
+	 */
+	function post_to_album($post_id){
+		$album_id = $this->add($post['post_title'], $post['post_author'], false, $post_id);
+		$this->model->update(
+				array('album_id'=>$album_id),
+				array('context'=>$post['post_type'],'context_id'=>$post_id)
+				);
+
 	}
 }
 
