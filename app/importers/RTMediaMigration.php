@@ -14,9 +14,32 @@ class RTMediaMigration {
         $this->bmp_table = $wpdb->prefix . "rt_rtm_media";
         add_action('admin_menu', array($this, 'menu'));
         add_action('wp_ajax_bp_media_rt_db_migration', array($this, "migrate_to_new_db"));
-        add_action('init', array(&$this, 'init_sessions'));
+        if(isset($_REQUEST["force"]) && $_REQUEST["force"]=== "true")
+            $pending= false;
+        else                
+            $pending = get_site_option("rtMigration-pending-count");
+        if($pending === false){
+            $total = $this->get_total_count();
+            $done = $this->get_done_count();
+            $pending = $total - $done;
+            if ($pending < 0)
+                $pending = 0;
+            update_site_option("rtMigration-pending-count",$pending);
+            
+        }
+        if($pending > 0){
+            add_action('admin_notices', array(&$this, 'add_migration_notice'));
+        }
     }
 
+    function add_migration_notice(){
+        $this->create_notice("<p>Please Migrate Database. <a href='" . admin_url("admin.php?page=rt-media-migration&force=true") . "'>Migrate</a>  </p>");
+    }
+    
+    function create_notice($message, $type = "error") {
+        echo '<div class="' . $type . '">' . $message . '</div>';
+    }
+    
     static function table_exists($table) {
         global $wpdb;
 
@@ -25,12 +48,6 @@ class RTMediaMigration {
         }
 
         return false;
-    }
-
-    function init_sessions() {
-        if (!session_id()) {
-            session_start();
-        }
     }
 
     function menu() {
@@ -55,13 +72,13 @@ class RTMediaMigration {
         }
         if ($this->table_exists($bp_prefix . "bp_activity")) {
             //$sql_bpm_comment_count = "select count(*) from {$bp_prefix}bp_activity where component='activity' and type='activity_comment' and is_spam <> 1 and ;";
-            $sql_bpm_comment_count = "SELECT 
+            $sql_bpm_comment_count = "SELECT
                                                 count(*)
                                             FROM
                                                 {$bp_prefix}bp_activity
                                             where
                                                 type = 'activity_comment' and  is_spam <> 1
-                                                    and item_id in (SELECT 
+                                                    and item_id in (SELECT
                                                         id
                                                     FROM
                                                         wp_bp_activity
@@ -110,11 +127,16 @@ class RTMediaMigration {
         $album_id = $album[0];
 
         global $wpdb;
-        $sql = "select media_id
-                from {$this->bmp_table} where blog_id = %d and media_id < %d order by media_id desc";
-        $row = $wpdb->get_row($wpdb->prepare($sql, get_current_blog_id(), $album_id));
+        $sql = "select a.post_ID
+                from
+                    {$wpdb->postmeta} a
+                where
+                     a.meta_key = 'bp-media-key' and a.post_id not in (select media_id
+                from {$this->bmp_table} where blog_id = %d and media_id <> %d ) order by a.post_ID";
+        $sql = $wpdb->prepare($sql, get_current_blog_id(), $album_id);
+        $row = $wpdb->get_row($sql);
         if ($row) {
-            return $row->media_id;
+            return $row->post_ID;
         } else {
             return false;
         }
@@ -153,6 +175,22 @@ class RTMediaMigration {
 
         //echo $media_count . "--" . $album_count . "--" . $comment_sql;
         return $media_count + $album_count + $comment_sql;
+    }
+
+    function return_migration() {
+        $total = $this->get_total_count();
+        $done = $this->get_done_count();
+        $pending = $total - $done;
+        if ($pending < 0){
+            $pending = 0;
+            $done=$total;
+        }
+
+        update_site_option("rtMigration-pending-count", $pending);
+        $pending_time = $this->formatSeconds($pending);
+
+        echo json_encode(array("status" => true, "done" => $done, "total" => $total, $pending_time));
+        die();
     }
 
     function manage_album() {
@@ -277,17 +315,7 @@ class RTMediaMigration {
         $state = intval(get_site_option("rt-media-migration"));
         if ($state < 5) {
             if ($this->manage_album()) {
-                $done = $this->get_done_count();
-                $total = $this->get_total_count();
-
-                $pending = $total - $done;
-                if ($pending < 0)
-                    $pending = 0;
-
-                $pending_time = $this->formatSeconds($pending);
-
-                echo json_encode(array("status" => true, "done" => $done, "total" => $this->get_total_count(), "pending" => $pending_time));
-                die();
+                $this->return_migration();
             }
         }
 
@@ -295,8 +323,9 @@ class RTMediaMigration {
 
             if (!$lastid) {
                 $lastid = $this->get_last_imported();
-                if (!$lastid)
-                    $lastid = 0;
+                if (!$lastid) {
+                   $this->return_migration();
+                }
             }
             global $wpdb;
             $sql = "select
@@ -320,7 +349,7 @@ class RTMediaMigration {
                         left join
                     {$wpdb->posts} p ON (a.post_id = p.id)
                 where
-                    a.post_id > %d
+                    a.post_id >= %d
                         and a.meta_key = 'bp_media_privacy'
                 order by a.post_id
                 limit %d";
@@ -342,17 +371,7 @@ class RTMediaMigration {
             echo json_encode(array("status" => false, "done" => $done, "total" => $this->get_total_count()));
             die();
         }
-        $done = $this->get_done_count();
-        $total = $this->get_total_count();
-
-        $pending = $total - $done;
-        if ($pending < 0)
-            $pending = 0;
-
-        $pending_time = $this->formatSeconds($pending);
-
-        echo json_encode(array("status" => true, "done" => $done, "total" => $this->get_total_count(), "pending" => $pending_time));
-        die();
+        $this->return_migration();
     }
 
     function migrate_single_media($result, $album = false) {
@@ -421,9 +440,12 @@ class RTMediaMigration {
             }
         }
 
-        if ($media_type != 'album')
-            $this->import_media($media_id, $prefix);
-//                        $this->import_media($media_id, $prefix, $result->activity_id);
+
+        if ($media_type != 'album') {
+            $activity_data = $wpdb->get_row($wpdb->prepare("select * from {$bp_prefix}bp_activity where id= %d", $result->activity_id));
+            $this->import_media($media_id, $prefix, $activity_data);
+        }
+
 
         if ($this->table_exists($bp_prefix . "bp_activity") && class_exists("BP_Activity_Activity")) {
             $bp_activity = new BP_Activity_Activity();
@@ -440,11 +462,16 @@ class RTMediaMigration {
                     $this->insert_comment($media_id, $comments, $exclude);
             }
         }
-        if ($result->parent !== 0) {
+        if (intval($result->parent) !== 0) {
             $album_id = $this->migrate_single_media($result->parent, true);
         } else {
             $album_id = 0;
         }
+        if (function_exists("bp_activity_get_meta"))
+            $likes = bp_activity_get_meta($result->activity_id, 'favorite_count');
+        else
+            $likes = 0;
+
         $last_id = $wpdb->insert(
                 $this->bmp_table, array(
             'blog_id' => $blog_id,
@@ -456,13 +483,16 @@ class RTMediaMigration {
             "privacy" => intval($result->privacy) * 10,
             "media_author" => $result->media_author,
             "media_title" => $result->media_title,
-            "album_id" => $album_id
-                ), array('%d', '%d', '%s', '%s', '%d', '%d', '%d', '%d', '%s', '%d')
+            "album_id" => $album_id,
+            "likes" => $likes
+                ), array('%d', '%d', '%s', '%s', '%d', '%d', '%d', '%d', '%s', '%d', '%d')
         );
         return $last_id;
     }
 
-    function import_media($id, $prefix) {
+    function import_media($id, $prefix, $activity_data) {
+
+
         $delete = false;
         $attached_file = get_attached_file($id);
         $attached_file_option = get_post_meta($id, '_wp_attached_file', true);
@@ -645,6 +675,29 @@ class RTMediaMigration {
                     $attachment = array();
                     $attachment['ID'] = $id;
                     $attachment['guid'] = str_replace($baseurl, $baseurl . "rtMedia/$prefix/", get_post_field('guid', $id));
+
+
+
+
+                    if (function_exists('bp_core_get_user_domain')) {
+                        if (function_exists("bp_core_get_table_prefix"))
+                            $bp_prefix = bp_core_get_table_prefix();
+                        else
+                            $bp_prefix = "";
+
+                        $activity_data->old_primary_link = $activity_data->primary_link;
+                        $parent_link = bp_core_get_user_domain($activity_data->user_id);
+                        $activity_data->primary_link = $parent_link . "media/" . $id;
+                        $activity_data->action = str_replace($activity_data->old_primary_link, $activity_data->primary_link, $activity_data->action);
+                        $activity_data->content = str_replace($activity_data->old_primary_link, $activity_data->primary_link, $activity_data->content);
+                        $replace_img = $baseurl . "rtMedia/$prefix/";
+                        if (strpos($activity_data->content, $replace_img) === false)
+                            $activity_data->content = str_replace($baseurl, $replace_img, $activity_data->content);
+                        global $wpdb;
+                        $wpdb->update($bp_prefix . "bp_activity", array("primary_link" => $activity_data->primary_link,
+                            "action" => $activity_data->action,
+                            "content" => $activity_data->content), array("id" => $activity_data->id));
+                    }
 
                     wp_update_post($attachment);
                 }
