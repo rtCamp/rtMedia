@@ -118,8 +118,8 @@ class RTMedia {
 		//  Enqueue Plugin Scripts and Styles
 		add_action('wp_enqueue_scripts', array($this, 'enqueue_scripts_styles'), 11);
 
-		//AJAX Call for PL Upload
-		//add_action('wp_ajax_rt_file_upload', array('RTMediaUploadHelper', 'file_upload'));
+		/* Includes db specific wrapper functions required to render the template */
+		include(RTMEDIA_PATH . 'app/main/controllers/template/rt-template-functions.php');
 	}
 
 	/**
@@ -291,19 +291,6 @@ class RTMedia {
 		if (function_exists("bp_is_active") && !bp_is_active('friends')) {
 			unset($this->privacy_settings['levels'][40]);
 		}
-
-		/**
-		 *  Enqueue Plugin Scripts and Styles
-		 */
-		add_action('wp_enqueue_scripts', array($this, 'enqueue_scripts_styles'), 11);
-
-                /* Includes db specific wrapper functions required to render the template */
-                include(RTMEDIA_PATH . 'app/main/controllers/template/rt-template-functions.php');
-
-		/**
-		 * AJAX Call for PL Upload
-		 */
-		//add_action('wp_ajax_rt_file_upload', array('RTMediaUploadHelper', 'file_upload'));
 	}
 
 	/**
@@ -315,7 +302,7 @@ class RTMedia {
 		global $rt_media_admin;
 		$rt_media_admin = new RTMediaAdmin();
 	}
-        
+
         function media_screen(){
             return;
         }
@@ -709,7 +696,7 @@ class RTMedia {
                     if(isset($_POST["action"]) && isset($_POST["mode"]) && $_POST["mode"] == "file_upload"){
                         unset($_POST["name"]);
                     }
-                
+
                 //**
 		if(!$global_album) {
 			$global_album = $album->add_global(__("rtMedia Global Album","rt-media"));
