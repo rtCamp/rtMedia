@@ -459,6 +459,8 @@ class RTMediaQuery {
 		else
 			$this->media = $this->populate_media();
 
+		if(empty($this->media)) return false;
+
 
 		/**
 		 * multiside manipulation
