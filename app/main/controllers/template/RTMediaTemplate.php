@@ -163,7 +163,7 @@ class RTMediaTemplate {
 
 					wp_redirect($parent_link);
 				} else{
-					echo "Ooops !!! Invalid access. No nonce was found !!";
+					echo __("Ooops !!! Invalid access. No nonce was found !!","rt-media");
 				}
 			}else {
 				echo "media album delete handling";
@@ -183,9 +183,9 @@ class RTMediaTemplate {
 
 					$parent_link = '';
 					if(function_exists('bp_core_get_user_domain')) {
-						$parent_link = bp_core_get_user_domain($rt_media_media->media_author);
+						$parent_link = bp_core_get_user_domain($media->media_author);
 					} else {
-						$parent_link = get_author_posts_url($rt_media_media->media_author);
+						$parent_link = get_author_posts_url($media->media_author);
 					}
 					$media_array[$key]->rt_permalink = $parent_link . 'media/' . $media->id;
 				}
