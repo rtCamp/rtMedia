@@ -117,7 +117,7 @@ class RTMediaRouter {
 		// otherwise, apply a filter to the template,
 		// pass the template  and slug to the function hooking here
 		// so it can load a custom template
-		
+
 
 		$template_load = new RTMediaTemplate();
 
