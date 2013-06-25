@@ -14,32 +14,31 @@ class RTMediaMigration {
         $this->bmp_table = $wpdb->prefix . "rt_rtm_media";
         add_action('admin_menu', array($this, 'menu'));
         add_action('wp_ajax_bp_media_rt_db_migration', array($this, "migrate_to_new_db"));
-        if(isset($_REQUEST["force"]) && $_REQUEST["force"]=== "true")
-            $pending= false;
-        else                
+        if (isset($_REQUEST["force"]) && $_REQUEST["force"] === "true")
+            $pending = false;
+        else
             $pending = get_site_option("rtMigration-pending-count");
-        if($pending === false){
+        if ($pending === false) {
             $total = $this->get_total_count();
             $done = $this->get_done_count();
             $pending = $total - $done;
             if ($pending < 0)
                 $pending = 0;
-            update_site_option("rtMigration-pending-count",$pending);
-            
+            update_site_option("rtMigration-pending-count", $pending);
         }
-        if($pending > 0){
+        if ($pending > 0) {
             add_action('admin_notices', array(&$this, 'add_migration_notice'));
         }
     }
 
-    function add_migration_notice(){
+    function add_migration_notice() {
         $this->create_notice("<p>Please Migrate Database. <a href='" . admin_url("admin.php?page=rt-media-migration&force=true") . "'>Migrate</a>  </p>");
     }
-    
+
     function create_notice($message, $type = "error") {
         echo '<div class="' . $type . '">' . $message . '</div>';
     }
-    
+
     static function table_exists($table) {
         global $wpdb;
 
@@ -181,9 +180,9 @@ class RTMediaMigration {
         $total = $this->get_total_count();
         $done = $this->get_done_count();
         $pending = $total - $done;
-        if ($pending < 0){
+        if ($pending < 0) {
             $pending = 0;
-            $done=$total;
+            $done = $total;
         }
 
         update_site_option("rtMigration-pending-count", $pending);
@@ -324,7 +323,7 @@ class RTMediaMigration {
             if (!$lastid) {
                 $lastid = $this->get_last_imported();
                 if (!$lastid) {
-                   $this->return_migration();
+                    $this->return_migration();
                 }
             }
             global $wpdb;
@@ -443,7 +442,7 @@ class RTMediaMigration {
 
         if ($media_type != 'album') {
             $activity_data = $wpdb->get_row($wpdb->prepare("select * from {$bp_prefix}bp_activity where id= %d", $result->activity_id));
-            $this->import_media($media_id, $prefix, $activity_data);
+            $this->import_media($media_id, $prefix);
         }
 
 
@@ -487,10 +486,33 @@ class RTMediaMigration {
             "likes" => $likes
                 ), array('%d', '%d', '%s', '%s', '%d', '%d', '%d', '%d', '%s', '%d', '%d')
         );
+
+        if ($media_type != 'album' && function_exists('bp_core_get_user_domain') && $activity_data) {
+            if (function_exists("bp_core_get_table_prefix"))
+                $bp_prefix = bp_core_get_table_prefix();
+            else
+                $bp_prefix = "";
+
+            $activity_data->old_primary_link = $activity_data->primary_link;
+            $parent_link = bp_core_get_user_domain($activity_data->user_id);
+            $activity_data->primary_link = $parent_link . "media/" . $last_id;
+            $activity_data->action = str_replace($activity_data->old_primary_link, $activity_data->primary_link, $activity_data->action);
+            $activity_data->content = str_replace($activity_data->old_primary_link, $activity_data->primary_link, $activity_data->content);
+            global $last_baseurl, $last_newurl;
+
+            $replace_img = $last_newurl; //$last_baseurl . "rtMedia/$prefix/";
+            if (strpos($activity_data->content, $replace_img) === false)
+                $activity_data->content = str_replace($last_baseurl, $replace_img, $activity_data->content);
+            global $wpdb;
+            $wpdb->update($bp_prefix . "bp_activity", array("primary_link" => $activity_data->primary_link,
+                "action" => $activity_data->action,
+                "content" => $activity_data->content), array("id" => $activity_data->id));
+        }
+
         return $last_id;
     }
 
-    function import_media($id, $prefix, $activity_data) {
+    function import_media($id, $prefix) {
 
 
         $delete = false;
@@ -671,33 +693,15 @@ class RTMediaMigration {
                         update_post_meta($id, '_instagram_metadata', $instagram_metadata_new);
                     }
 
-
                     $attachment = array();
                     $attachment['ID'] = $id;
                     $attachment['guid'] = str_replace($baseurl, $baseurl . "rtMedia/$prefix/", get_post_field('guid', $id));
-
-
-
-
-                    if (function_exists('bp_core_get_user_domain')) {
-                        if (function_exists("bp_core_get_table_prefix"))
-                            $bp_prefix = bp_core_get_table_prefix();
-                        else
-                            $bp_prefix = "";
-
-                        $activity_data->old_primary_link = $activity_data->primary_link;
-                        $parent_link = bp_core_get_user_domain($activity_data->user_id);
-                        $activity_data->primary_link = $parent_link . "media/" . $id;
-                        $activity_data->action = str_replace($activity_data->old_primary_link, $activity_data->primary_link, $activity_data->action);
-                        $activity_data->content = str_replace($activity_data->old_primary_link, $activity_data->primary_link, $activity_data->content);
-                        $replace_img = $baseurl . "rtMedia/$prefix/";
-                        if (strpos($activity_data->content, $replace_img) === false)
-                            $activity_data->content = str_replace($baseurl, $replace_img, $activity_data->content);
-                        global $wpdb;
-                        $wpdb->update($bp_prefix . "bp_activity", array("primary_link" => $activity_data->primary_link,
-                            "action" => $activity_data->action,
-                            "content" => $activity_data->content), array("id" => $activity_data->id));
-                    }
+                    /**
+                     * For Activity
+                     */
+                    global $last_baseurl, $last_newurl;
+                    $last_baseurl = $baseurl;
+                    $last_newurl = $baseurl . "rtMedia/$prefix/";
 
                     wp_update_post($attachment);
                 }

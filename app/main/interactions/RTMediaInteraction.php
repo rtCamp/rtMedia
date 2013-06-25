@@ -20,10 +20,10 @@ class RTMediaInteraction {
 	function __construct( ) {
 
 		// hook into the WordPress Rewrite Endpoint API
-		add_action( 'init', array( $this, 'endpoint' ) );
+		
 		add_action( 'init', array( $this,'rewrite_rules' ) );
 		add_action( 'init', array( $this,'rewrite_tags' ) );
-
+                add_action( 'init', array( $this, 'endpoint' ) );
 
 		// set up interaction and routes
 		add_action('template_redirect',array($this, 'init'),99);
