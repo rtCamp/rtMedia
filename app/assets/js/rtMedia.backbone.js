@@ -13,7 +13,7 @@ jQuery(function($) {
                 url: function(){
                     var url = "media/";
                     if(!upload_sync && nextpage>0)
-                        url += 'page/' + nextpage + '/'
+                        url += 'pg/' + nextpage + '/'
                     return url;
                 },
 		defaults: {
@@ -58,15 +58,15 @@ jQuery(function($) {
                     if(temp.indexOf('media') == -1){
                         url = 'media/';
                     }else{
-                        if(temp.indexOf('page/') == -1)
+                        if(temp.indexOf('pg/') == -1)
                             url=temp;
                         else
-                            url = window.location.pathname.substr(0,window.location.pathname.lastIndexOf("page/"));
+                            url = window.location.pathname.substr(0,window.location.pathname.lastIndexOf("pg/"));
                     }
                     if(!upload_sync && nextpage >1){
 						if(url.substr(url.length-1)!="/")
 							url +="/"
-						url += 'page/' + nextpage + '/';
+						url += 'pg/' + nextpage + '/';
 					}
                     return url;
                 },
@@ -130,8 +130,6 @@ jQuery(function($) {
                         }
 
                     $.each(this.collection.toJSON(), function(key, media){
-				test = that.template(media);
-				console.log(test);
 				$(that.el).append(that.template(media));
 			});
                          if (upload_sync){
