@@ -6,7 +6,7 @@ if (is_rt_media_album_gallery()){
 	} else if ( is_rt_media_single() ) {
             $template = 'media-single';
 	}
-
+	$ajax = false;
 	 if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest')
 		 $ajax = true;
 
