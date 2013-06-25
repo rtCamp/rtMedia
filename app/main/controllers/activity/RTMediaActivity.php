@@ -20,7 +20,7 @@ class RTMediaActivity {
 	/**
 	 *
 	 */
-	function __construct($media, $activity_text=false, $privacy=0) {
+	function __construct($media, $privacy=0, $activity_text=false) {
 		if(!isset($media))
 			return false;
 		if(!is_array($media))

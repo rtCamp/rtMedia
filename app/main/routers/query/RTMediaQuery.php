@@ -195,11 +195,12 @@ class RTMediaQuery {
                 $modifier_type = 'upload';
                 $action = 'upload';
 
-                // /media/page/2/
-            } elseif ($modifier_value == 'page') {
+            // /media/pg/2/
+            } elseif ( $modifier_value == 'pg' ) {
 
                 //paginating default query
-                $modifier_type = 'page';
+                $modifier_type = 'pg';
+                
             } else {
 
                 // requesting by media type /media/photos | /media/videos/
@@ -207,8 +208,7 @@ class RTMediaQuery {
             }
         }
 
-
-        //the second part of the query /media/modifier/{*}
+			
 
         if (isset($raw_query[1])) {
 
@@ -238,7 +238,7 @@ class RTMediaQuery {
                     }
                     break;
 
-                case 'page':
+                case 'pg':
 
                     // /media/page/2/ | /media/page/3/
                     if (is_numeric($second_modifier)) {
@@ -301,7 +301,7 @@ class RTMediaQuery {
                     }
                     break;
 
-                case 'page':
+                case 'pg':
                 default:
                     break;
             }
