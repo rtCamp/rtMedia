@@ -433,8 +433,7 @@ function rt_media_uploader($attr = '') {
 			echo RTMediaUploadShortcode::pre_render($attr);
 		else if(function_exists ('bp_is_group') && bp_is_group() && function_exists('bp_group_is_member') && bp_group_is_member())
 			echo RTMediaUploadShortcode::pre_render($attr);
-	} else if (!RTMediaUploadShortcode::$uploader_displayed)
-		echo RTMediaUploadShortcode::pre_render($attr);
+	}
 }
 
 function rt_media_gallery($attr = '') {
