@@ -743,8 +743,6 @@ class RTMedia {
 
 	function enqueue_scripts_styles() {
 		wp_enqueue_style('rt-media-main', RTMEDIA_URL . 'app/assets/css/main.css', '', RTMEDIA_VERSION);
-
-		wp_enqueue_script('rt-media-helper', RTMEDIA_URL . 'app/assets/js/rt.media.helper.js', array('jquery'), RTMEDIA_VERSION);
 	}
 
 }
