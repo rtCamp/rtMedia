@@ -156,13 +156,13 @@ jQuery(function($) {
     $("body").append('<script id="rt-media-gallery-item-template" type="text/template"></script>');
 
     $("#rt-media-gallery-item-template").load(template_url + "/media-gallery-item.php", {action: 'rt_media_backbone_template', backbone: true}, function(response, status, xhr) {
-/**
+
         $(document).on("click", "#rtMedia-galary-next", function(e) {
             $(this).hide();
             e.preventDefault();
 
             galleryObj.getNext(nextpage);
-        }); **/
+        });
     });
 
 
