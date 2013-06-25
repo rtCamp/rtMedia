@@ -27,12 +27,7 @@ class RTMediaMigration {
         return false;
     }
 
-    function init_sessions() {
-        if (!session_id()) {
-            session_start();
-        }
-    }
-
+    
     function menu() {
         add_submenu_page('rt-media-settings', __('Migration', 'buddypress-media'), __('Migration', 'buddypress-media'), 'manage_options', 'rt-media-migration', array($this, 'test'));
     }
@@ -110,11 +105,16 @@ class RTMediaMigration {
         $album_id = $album[0];
 
         global $wpdb;
-        $sql = "select media_id
-                from {$this->bmp_table} where blog_id = %d and media_id < %d order by media_id desc";
+        $sql = "select a.post_ID
+                from
+                    {$wpdb->postmeta} a
+                where
+                     a.meta_key = 'bp-media-key' and a.post_id not in (select media_id
+                from {$this->bmp_table} where blog_id = %d and media_id <> %d ) order by a.post_ID";
+        $sql =  $wpdb->prepare($sql, get_current_blog_id(), $album_id);
         $row = $wpdb->get_row($wpdb->prepare($sql, get_current_blog_id(), $album_id));
         if ($row) {
-            return $row->media_id;
+            return $row->post_ID;
         } else {
             return false;
         }
@@ -320,7 +320,7 @@ class RTMediaMigration {
                         left join
                     {$wpdb->posts} p ON (a.post_id = p.id)
                 where
-                    a.post_id > %d
+                    a.post_id >= %d
                         and a.meta_key = 'bp_media_privacy'
                 order by a.post_id
                 limit %d";
@@ -420,9 +420,12 @@ class RTMediaMigration {
                 $media_type = "other";
             }
         }
-
-        if ($media_type != 'album')
-            $this->import_media($media_id, $prefix);
+        
+        
+        if ($media_type != 'album'){
+            $activity_data = $wpdb->get_row($wpdb->prepare("select * from {$bp_prefix}bp_activity where id= %d",$result->activity_id));
+            $this->import_media($media_id, $prefix,$activity_data);
+        }
 //                        $this->import_media($media_id, $prefix, $result->activity_id);
 
         if ($this->table_exists($bp_prefix . "bp_activity") && class_exists("BP_Activity_Activity")) {
@@ -440,11 +443,16 @@ class RTMediaMigration {
                     $this->insert_comment($media_id, $comments, $exclude);
             }
         }
-        if ($result->parent !== 0) {
+        if (intval($result->parent) !== 0) {
             $album_id = $this->migrate_single_media($result->parent, true);
         } else {
             $album_id = 0;
         }
+        if(function_exists("bp_activity_get_meta"))
+            $likes = bp_activity_get_meta($result->activity_id, 'favorite_count');
+        else
+            $likes = 0;
+        
         $last_id = $wpdb->insert(
                 $this->bmp_table, array(
             'blog_id' => $blog_id,
@@ -456,13 +464,16 @@ class RTMediaMigration {
             "privacy" => intval($result->privacy) * 10,
             "media_author" => $result->media_author,
             "media_title" => $result->media_title,
-            "album_id" => $album_id
-                ), array('%d', '%d', '%s', '%s', '%d', '%d', '%d', '%d', '%s', '%d')
+            "album_id" => $album_id,
+                    "likes"=>$likes
+                ), array('%d', '%d', '%s', '%s', '%d', '%d', '%d', '%d', '%s', '%d','%d')
         );
         return $last_id;
     }
 
-    function import_media($id, $prefix) {
+    function import_media($id, $prefix,$activity_data) {
+      
+                    
         $delete = false;
         $attached_file = get_attached_file($id);
         $attached_file_option = get_post_meta($id, '_wp_attached_file', true);
@@ -645,7 +656,33 @@ class RTMediaMigration {
                     $attachment = array();
                     $attachment['ID'] = $id;
                     $attachment['guid'] = str_replace($baseurl, $baseurl . "rtMedia/$prefix/", get_post_field('guid', $id));
+                    
+        
+                    
+                   
+                    if(function_exists('bp_core_get_user_domain')){
+                        if (function_exists("bp_core_get_table_prefix"))
+                            $bp_prefix = bp_core_get_table_prefix();
+                        else
+                            $bp_prefix = "";
 
+                            $activity_data->old_primary_link = $activity_data->primary_link;
+                                $parent_link = bp_core_get_user_domain($activity_data->user_id);
+                                $activity_data->primary_link =  $parent_link ."media/" . $id;
+                                $activity_data->action = str_replace($activity_data->old_primary_link, $activity_data->primary_link, $activity_data->action);
+                                $activity_data->content = str_replace($activity_data->old_primary_link, $activity_data->primary_link, $activity_data->content);
+                                $replace_img = $baseurl . "rtMedia/$prefix/";
+                                if(strpos($activity_data->content,$replace_img)===false)
+                                    $activity_data->content = str_replace($baseurl,$replace_img, $activity_data->content);
+                                global $wpdb;
+                                $wpdb->update($bp_prefix. "bp_activity",array("primary_link"=>$activity_data->primary_link,
+                                                                                "action"=>$activity_data->action,
+                                                                                "content"=>$activity_data->content),
+                                                                                array("id"=>$activity_data->id));
+                                
+                                
+                    }
+        
                     wp_update_post($attachment);
                 }
             }
