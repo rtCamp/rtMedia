@@ -739,15 +739,21 @@ class RTMedia {
 
 }
 
-function get_rt_media_permalink($id) {
-	$mediaModel = new RTMediaModel();
-	$media = $mediaModel->get(array('id'=>$id));
+function get_rt_media_permalink($id, $media_author=false) {
+
+	if($media_author)
+		$author_id = $media_author;
+	else {
+		$mediaModel = new RTMediaModel();
+		$media = $mediaModel->get(array('id'=>$id));
+		$author_id = $media[0]->media_author;
+	}
 
 	$parent_link = '';
 	if(function_exists('bp_core_get_user_domain')) {
-		$parent_link = bp_core_get_user_domain($media[0]->media_author);
+		$parent_link = bp_core_get_user_domain($author_id);
 	} else {
-		$parent_link = get_author_posts_url($media[0]->media_author);
+		$parent_link = get_author_posts_url($author_id);
 	}
 
 	return trailingslashit($parent_link) . 'media/' . $id;
