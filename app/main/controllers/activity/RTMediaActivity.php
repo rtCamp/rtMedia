@@ -45,7 +45,7 @@ class RTMediaActivity {
 			}
 
 			$mediaObj = new RTMediaModel();
-			$media_details = $mediaObj->get(array('media_id'=> $this->media));
+			$media_details = $mediaObj->get(array('id'=> $this->media));
 
 			$html .= '<ul class="rt-media-list">';
 			foreach ($media_details as $media) {

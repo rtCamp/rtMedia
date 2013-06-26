@@ -264,9 +264,10 @@ jQuery(function($) {
             lastfile = files[files.length - 1];
             try {
                 var rtnObj;
-                rtnObj = JSON.parse(res)
+                rtnObj = JSON.parse(res.response);
                 activity_id = rtnObj.activity_id;
             } catch (e) {
+				console.log('Invalid Activity ID');
             }
         });
 
@@ -279,8 +280,8 @@ jQuery(function($) {
 
 
 });
-/** History Code for route 
- 
+/** History Code for route
+
  var rtMediaRouter = Backbone.Router.extend({
  routes: {
  "media/*": "getMedia"
@@ -288,10 +289,10 @@ jQuery(function($) {
  });
  var app_router = new rtMediaRouter;
  app_router.on('route:getMedia', function() {
- // Note the variable in the route definition being passed in here 
+ // Note the variable in the route definition being passed in here
  });
  Backbone.history.start({pushState: true});
- 
+
  **/
 
 
@@ -344,7 +345,7 @@ jQuery(document).ready(function($) {
         }
     });
     objUploadView.uploader.bind('BeforeUpload', function(up, files) {
-        
+
         var object = '';
         var item_id = jq("#whats-new-post-in").val();
         if(item_id==undefined)
@@ -354,7 +355,7 @@ jQuery(document).ready(function($) {
         }else{
             object="profile";
         }
-        
+
         up.settings.multipart_params.context = object;
         up.settings.multipart_params.context_id = item_id;
 
@@ -392,19 +393,19 @@ jQuery(document).ready(function($) {
                     $("#rt-media-add-media-button-post-update").attr('disabled', 'disabled');
                     objUploadView.uploadFiles()
                     media_uploading=true;
-                    return false;    
+                    return false;
                 }else{
                     media_uploading=false;
                     return true;
                 }
-                
-                
+
+
             }
             options.success= function(response){
                 orignalSuccess(response);
                 if ( response[0] + response[1] == '-1' ) {
                     //Error
-                    
+
                 }else{
                     jQuery("input[data-mode=rtMedia-update]").remove();
                     while(objUploadView.uploader.files.pop()!= undefined){}
@@ -414,8 +415,8 @@ jQuery(document).ready(function($) {
                 }
                  $("#whats-new-post-in").removeAttr('disabled');
                  $("#rt-media-add-media-button-post-update").removeAttr('disabled');
-                    
+
             }
-        }   
+        }
     });
 });
