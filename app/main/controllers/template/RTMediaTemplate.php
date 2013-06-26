@@ -49,6 +49,10 @@ class RTMediaTemplate {
 
 		global $rt_media_query, $rt_media_interaction, $rt_media_media;
 
+		do_action('rtmedia_pre_template');
+
+		do_action('rtmedia_pre_action_'.$rt_media_query->action_query->action);
+
 		if(in_array($rt_media_interaction->context->type, array("profile","group"))) {
 
 			if ($rt_media_query->format == 'json') {
