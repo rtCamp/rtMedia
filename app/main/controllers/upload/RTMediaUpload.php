@@ -22,7 +22,7 @@ class RTMediaUpload {
         /**
          * prepare to upload a file
          */
-        $this->file = new RTMediaUploadFile();
+        $this->file = new RTMediaUploadFile($uploaded);
         /**
          * prepare to upload a url
          */
