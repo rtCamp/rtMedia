@@ -1,5 +1,10 @@
 .rt-media-container{
     @import "compass/reset";
+    @import "foundation/components/global"; // *always required
+    @import "foundation/components/grid";
+    @import "foundation/components/visibility";
+    @import "foundation/components/block-grid";
+
     padding:5px;
 
     
@@ -17,12 +22,12 @@
 
 	.rt-media-list {
 		list-style: none;
-		margin: 1% 1%;
+		//margin: 1% 1%;
 	}
 
 	.rt-media-list-item {
-	  display: inline-block;
-	  margin: 3% 3% 0;
+	//  display: inline-block;
+	//  margin: 3% 3% 0;
 	  word-wrap: break-word;
 	}
 
@@ -79,3 +84,7 @@
         #whats-new-post-in-box{
             float:left;
         }
+.rt-media-activity-text{
+    display:block;
+    padding-bottom:10px;
+}
