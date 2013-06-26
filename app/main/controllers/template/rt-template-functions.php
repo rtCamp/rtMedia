@@ -462,12 +462,17 @@ function rt_media_album_edit(){
 
     global $rt_media_query;
 
-    if (isset($rt_media_query->media_query) && get_current_user_id() == $rt_media_query->media_query['media_author'] )
+    if (isset($rt_media_query->media_query) && get_current_user_id() == $rt_media_query->media_query['media_author'] ) {
         echo '<a class="button" href="edit/">'.__('Edit','rt-media').'</a>';
+        echo '<form method="post" action="delete/">';
+        wp_nonce_field('rt_media_delete_album_'.$rt_media_query->media_query['album_id'], 'rt_media_delete_album');
+        echo '<input type="submit" name="album-delete" value="Delete" />';
+        echo '</form>';
+    }
 }
 
 add_action('rtmedia_before_item','rt_media_item_select');
-function rt_media_item_select(){
+function rt_media_item_select(){ 
     global $rt_media_query, $rt_media_backbone;
 	if($rt_media_backbone) {
 		echo '<input type="checkbox" name="move[]" value="<%= id %>" />';
