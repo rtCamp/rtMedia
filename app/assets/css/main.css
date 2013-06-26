@@ -2,7 +2,7 @@
 .rt-media-container {
   padding: 5px;
 }
-/* line 17, ../../../../../.rvm/gems/ruby-2.0.0-p0/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+/* line 17, ../../../../../../../../../../lib/ruby/gems/1.9.1/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 .rt-media-container html, .rt-media-container body, .rt-media-container div, .rt-media-container span, .rt-media-container applet, .rt-media-container object, .rt-media-container iframe,
 .rt-media-container h1, .rt-media-container h2, .rt-media-container h3, .rt-media-container h4, .rt-media-container h5, .rt-media-container h6, .rt-media-container p, .rt-media-container blockquote, .rt-media-container pre,
 .rt-media-container a, .rt-media-container abbr, .rt-media-container acronym, .rt-media-container address, .rt-media-container big, .rt-media-container cite, .rt-media-container code,
@@ -23,39 +23,39 @@
   font-size: 100%;
   vertical-align: baseline;
 }
-/* line 22, ../../../../../.rvm/gems/ruby-2.0.0-p0/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+/* line 22, ../../../../../../../../../../lib/ruby/gems/1.9.1/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 .rt-media-container html {
   line-height: 1;
 }
-/* line 24, ../../../../../.rvm/gems/ruby-2.0.0-p0/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+/* line 24, ../../../../../../../../../../lib/ruby/gems/1.9.1/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 .rt-media-container ol, .rt-media-container ul {
   list-style: none;
 }
-/* line 26, ../../../../../.rvm/gems/ruby-2.0.0-p0/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+/* line 26, ../../../../../../../../../../lib/ruby/gems/1.9.1/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 .rt-media-container table {
   border-collapse: collapse;
   border-spacing: 0;
 }
-/* line 28, ../../../../../.rvm/gems/ruby-2.0.0-p0/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+/* line 28, ../../../../../../../../../../lib/ruby/gems/1.9.1/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 .rt-media-container caption, .rt-media-container th, .rt-media-container td {
   text-align: left;
   font-weight: normal;
   vertical-align: middle;
 }
-/* line 30, ../../../../../.rvm/gems/ruby-2.0.0-p0/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+/* line 30, ../../../../../../../../../../lib/ruby/gems/1.9.1/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 .rt-media-container q, .rt-media-container blockquote {
   quotes: none;
 }
-/* line 103, ../../../../../.rvm/gems/ruby-2.0.0-p0/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+/* line 103, ../../../../../../../../../../lib/ruby/gems/1.9.1/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 .rt-media-container q:before, .rt-media-container q:after, .rt-media-container blockquote:before, .rt-media-container blockquote:after {
   content: "";
   content: none;
 }
-/* line 32, ../../../../../.rvm/gems/ruby-2.0.0-p0/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+/* line 32, ../../../../../../../../../../lib/ruby/gems/1.9.1/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 .rt-media-container a img {
   border: none;
 }
-/* line 116, ../../../../../.rvm/gems/ruby-2.0.0-p0/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+/* line 116, ../../../../../../../../../../lib/ruby/gems/1.9.1/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 .rt-media-container article, .rt-media-container aside, .rt-media-container details, .rt-media-container figcaption, .rt-media-container figure, .rt-media-container footer, .rt-media-container header, .rt-media-container hgroup, .rt-media-container menu, .rt-media-container nav, .rt-media-container section, .rt-media-container summary {
   display: block;
 }
@@ -122,4 +122,8 @@
 /* line 67, ../sass/main.scss */
 .rt-media-container #rtMedia-update-queue-list p span {
   margin-right: 20px;
+}
+/* line 72, ../sass/main.scss */
+.rt-media-container .rt-media-move-container {
+  display: none;
 }

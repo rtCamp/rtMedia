@@ -32,7 +32,10 @@ jQuery('document').ready(function(){
         });
     });
 
-
+    jQuery('.rt-media-container').on('click','.rt-media-move',function(e){
+        jQuery('.rt-media-delete-container').slideUp();
+        jQuery('.rt-media-move-container').slideToggle();
+    });
 
 });
 

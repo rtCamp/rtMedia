@@ -10,16 +10,25 @@ $media = $model->get_media(array('id'=>$rt_media_query->media_query['album_id'])
         
     <form method="post">
         <?php 
-        RTMediaMedia::media_nonce_generator();
+        RTMediaMedia::media_nonce_generator($rt_media_query->media_query['album_id']);
         $post_details = get_post($media[0]->media_id);
         $content = apply_filters('the_content', $post_details->post_content);
         ?>
         
         <input type="text" name="media_title" value="<?php echo esc_attr($media[0]->media_title); ?>" />
         <?php wp_editor($content,'description',array('media_buttons'=>false)); ?>
+                                <input type="submit" name="submit" value="Submit" />
+
+    </form>
     <br />
+    <form method="post">
+        <?php RTMediaMedia::media_nonce_generator($rt_media_query->media_query['album_id']); ?>
     <span class="rt-media-selection"><a class="select-all" href="#">Select All Visible</a> | 
     <a class="unselect-all" href="#">Unselect All Visible</a> | </span>
+    <br />
+    <input type="button" class="button rt-media-move" value="Move" />
+    <input type="submit" name="delete-selected" class="button rt-media-delete" value="Delete Selected" />
+    <div class="rt-media-move-container">
     <?php $global_albums = get_site_option('rt-media-global-albums'); ?>
     <?php _e('Move selected media to','rt-media'); ?><select name="album">
         <?php
@@ -39,6 +48,8 @@ $media = $model->get_media(array('id'=>$rt_media_query->media_query['album_id'])
         }
         ?>
     </select>
+        <input type="submit" name="move-selected" value="Move Selected" />
+    </div>
     <?php
     if (have_rt_media()) { ?>
 
@@ -76,7 +87,6 @@ $media = $model->get_media(array('id'=>$rt_media_query->media_query['album_id'])
 		<?php } else { ?>
 			<p><?php echo __("Oops !! There's no media found for the request !!","rt-media"); ?></p>
 		<?php } ?>
-                        <input type="submit" name="submit" value="Submit" />
     </form>
     
 
