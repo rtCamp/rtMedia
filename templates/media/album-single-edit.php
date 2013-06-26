@@ -42,7 +42,7 @@ $media = $model->get_media(array('id'=>$rt_media_query->media_query['album_id'])
     <?php
     if (have_rt_media()) { ?>
 
-			<ul class="rt-media-list">
+			<ul class="rt-media-list  large-block-grid-5">
 
 				<?php while (have_rt_media()) : rt_media(); ?>
 
