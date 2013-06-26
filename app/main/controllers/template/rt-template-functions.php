@@ -257,16 +257,18 @@ function rt_media_actions() {
         $id = $rt_media_query->action_query->id;
     }
 
-//        if (is_rt_media_single()) {
-    foreach ($actions as $action => $label) {
-        $button = '<form action="' . get_rt_media_permalink($id) . $action . '/" method="post">';
-        $button .= wp_nonce_field($id, 'rt_media_user_action_' . $action . '_nonce', true, false);
-        $button .= '<input type="submit" class="rt-media-' . $action . '" value="' . $label . '">';
-        $button .= '</form>';
-        echo $button;
-    }
-//        }
-    // render delete button here
+	foreach ($actions as $action=>$details ){
+		$button = '';
+		if($details[1]!=false){
+		$button .= '<form action="'.get_rt_media_permalink($rt_media_query->action_query->id).'/'.$action.'/" method="post">';
+		$button .= wp_nonce_field( $rt_media_query->action_query->id, 'rt_media_user_action_'.$action.'_nonce', true, false );
+		$button .= '<input type="submit" class="rt-media-'.$action.'" value="'.$details[0].'">';
+		$button .= '</form>';
+		}
+		echo $button;
+	}
+
+	// render delete button here
 }
 
 /**

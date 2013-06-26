@@ -1,8 +1,8 @@
-<div class="rt-media-container rt-media-single-container">
+<div class="rt-media-container rt-media-single-container row">
 
     <?php if (have_rt_media()) : rt_media(); ?>
 
-	    <form method="post">
+	    <form method="post" class="large-8 columns">
 			<?php echo rt_media_title_input(); ?>
 
 
@@ -40,7 +40,7 @@
         </div>
 
 		<?php //if(rt_media_comments_enabled()) { ?>
-			<div class="rt-media-item-comments">
+			<div class="rt-media-item-comments columns large-4">
 				<h2>Comments</h2>
 				<div class="rt-media-comments-container">
 					<?php rt_media_comments(); ?>

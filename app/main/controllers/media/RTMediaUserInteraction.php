@@ -34,14 +34,12 @@ class RTMediaUserInteraction {
 	 *
 	 * @var object The action query populated by the default query
 	 */
-
 	public $action_query;
 
 	/**
 	 *
 	 * @var object The db model
 	 */
-
 	public $model;
 
 	/**
@@ -49,33 +47,33 @@ class RTMediaUserInteraction {
 	 *
 	 * @global object $rt_media_query Default query
 	 * @param string $action The user action
+	 * @param boolean $others Whether other users are allowed the action
+	 * @param string $label The label for the button
 	 * @param boolean $increase Increase or decrease the action count
 	 */
-	function __construct($action, $label=false, $increase=true) {
+	function __construct( $action, $others = false, $label = false, $increase = true ) {
 
 		$this->action = $action;
-		$this->actions = $action.'s';
+		$this->actions = $action . 's';
 		$this->label = $label;
 		$this->increase = $increase;
-
+		$this->others = $others;
 
 		$this->set_label();
 
 		// filter the default actions with this new one
-		add_filter('rt_media_query_actions', array($this,'register'));
+		add_filter( 'rt_media_query_actions', array( $this, 'register' ) );
 
 		// hook into the template for this action
-		add_action('rtmedia_pre_action_'.$action,array($this,'preprocess'));
-
-
+		add_action( 'rtmedia_pre_action_' . $action, array( $this, 'preprocess' ) );
 	}
 
 	/**
 	 * Checks if there's a label, if not creates from the action name
 	 */
-	function set_label(){
-		if($this->label===false){
-			$this->label = ucfirst($this->action);
+	function set_label() {
+		if ( $this->label === false ) {
+			$this->label = ucfirst( $this->action );
 		}
 	}
 
@@ -84,8 +82,9 @@ class RTMediaUserInteraction {
 	 * @param array $actions The default array of actions
 	 * @return array $actions Filtered actions array
 	 */
-	function register($actions){
-		$actions[$this->action]=$this->label;
+	function register( $actions ) {
+
+		$actions[ $this->action ] = array($this->label,$this->others);
 		return $actions;
 	}
 
@@ -95,15 +94,20 @@ class RTMediaUserInteraction {
 	 * Calls the process
 	 *
 	 */
-	function preprocess(){
+	function preprocess() {
 		global $rt_media_query;
 		$this->action_query = $rt_media_query->action_query;
 
-		if($this->action_query->action!=$this->action) return false;
-		do_action('rtmedia_pre_process_'.$this->action);
-		$this->process();
-		do_action('rtmedia_post_process_'.$this->action);
+		if ( $this->action_query->action != $this->action )
+			return false;
 
+		if ( ! isset( $this->action_query->id ) )
+			return false;
+		do_action( 'rtmedia_pre_process_' . $this->action );
+
+		$this->process();
+
+		do_action( 'rtmedia_post_process_' . $this->action );
 	}
 
 	/**
@@ -111,23 +115,21 @@ class RTMediaUserInteraction {
 	 *
 	 * @return integer New count
 	 */
-	function process(){
+	function process() {
 
-		if(!isset($this->action_query->id)) return;
 
 		$this->model = new RTMediaModel();
-		$actions = $this->model->get(array('id'=>$this->action_query->id));
-		$actions = $actions[0]->$this->actions;
-		if($this->increase===true){
-			$actions++;
-		}else{
-			$actions--;
+		$actions = $this->model->get( array( 'id' => $this->action_query->id ) );
+		$actions = $actions[ 0 ]->$this->actions;
+		if ( $this->increase === true ) {
+			$actions ++;
+		} else {
+			$actions --;
 		}
 
-		$this->model->update(array($this->actions=>$actions),array('id'=>$this->action_query->id));
-		return $actions;
+		$this->model->update( array( $this->actions => $actions ), array( 'id' => $this->action_query->id ) );
+		die( $actions );
 	}
-
 
 }
 

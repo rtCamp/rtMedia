@@ -385,13 +385,13 @@ class RTMedia {
 		/**
 		 * General Settings
 		 */
-		rt_media_update_site_option('rt-media-albums-enabled', 1);
-		rt_media_update_site_option('rt-media-comments-enabled', 1);
-		rt_media_update_site_option('rt-media-download-button', 1);
-		rt_media_update_site_option('rt-media-enable-lightbox', 1);
-		rt_media_update_site_option('rt-media-per-page-media', 10);
-		rt_media_update_site_option('rt-media-media-end-point_enable', true);
-		rt_media_update_site_option('rt-media-show-admin-menu', 1);
+		rt_media_get_site_option('rt-media-albums-enabled', 1);
+		rt_media_get_site_option('rt-media-comments-enabled', 1);
+		rt_media_get_site_option('rt-media-download-button', 1);
+		rt_media_get_site_option('rt-media-enable-lightbox', 1);
+		rt_media_get_site_option('rt-media-per-page-media', 10);
+		rt_media_get_site_option('rt-media-media-end-point_enable', true);
+		rt_media_get_site_option('rt-media-show-admin-menu', 1);
 
 		/**
 		 * Types Settings
@@ -485,7 +485,7 @@ class RTMedia {
 			'rt-media-allowed-types' => rt_media_get_site_option('rt-media-allowed-types'),
 
 			/* Sizes */
-			'rt-media-allowed-sizes' => rt_media_get_site_option('rt-media-allowed-sizes'),
+			'rt-media-default-sizes' => rt_media_get_site_option('rt-media-default-sizes'),
 
 			/* Privacy */
 			'rt-media-privacy' => rt_media_get_site_option('rt-media-privacy')
@@ -684,7 +684,9 @@ class RTMedia {
 				global $rt_media_ajax;
 				$rt_media_ajax = new RTMediaAJAX();
 
-				new RTMediaUserInteraction('like');
+				new RTMediaUserInteraction('like',true, __('Like','rt-media'));
+				new RTMediaFeatured();
+				new RTMediaCoverArt();
 
 	}
 
@@ -769,9 +771,9 @@ function get_rt_media_user_link($id){
 }
 
 function rt_media_update_site_option($option_name,$option_value) {
-	update_site_option($option_name, $option_value);
-}
-
+        update_site_option($option_name, $option_value);
+    }
+    
 function rt_media_get_site_option($option_name,$default=false){
 	$return_val	 = get_site_option($option_name);
 	if($return_val === false){
