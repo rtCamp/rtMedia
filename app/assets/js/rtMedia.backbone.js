@@ -303,7 +303,7 @@ jQuery(document).ready(function($) {
     }
     var activity_attachemnt_ids = [];
     if ($("#rt-media-add-media-button-post-update").length > 0) {
-        $("#whats-new-options").prepend($("#rt-media-add-media-button-post-update"));
+        $("#whats-new-options").prepend($("#rt-media-action-update"));
     }
     $("#whats-new-form").on('click', '#rt-media-add-media-button-post-update', function(e) {
         $("#div-attache-rtmedia").toggle();
