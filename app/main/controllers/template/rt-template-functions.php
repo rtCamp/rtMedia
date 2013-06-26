@@ -241,6 +241,23 @@ function rt_media_current_media() {
  */
 function rt_media_actions() {
 
+	global $rt_media_query;
+	$actions = $rt_media_query->actions;
+
+	unset($actions['edit']);
+	unset($actions['comment']);
+	unset($actions['delete']);
+	//render edit button here
+
+	foreach ($actions as $action=>$label ){
+		$button = '<form action="'.get_rt_media_permalink($rt_media_query->action_query->id).'/'.$action.'/" method="post">';
+		$button .= wp_nonce_field( $rt_media_query->action_query->id, 'rt_media_user_action_'.$action.'_nonce', true, false );
+		$button .= '<input type="submit" class="rt-media-'.$action.'" value="'.$label.'">';
+		$button .= '</form>';
+		echo $button;
+	}
+
+	// render delete button here
 }
 
 /**

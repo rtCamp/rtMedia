@@ -674,8 +674,14 @@ class RTMedia {
                 $media = new RTMediaMedia();
                 $media->delete_hook();
 
+
+
+
 				global $rt_media_ajax;
 				$rt_media_ajax = new RTMediaAJAX();
+
+				new RTMediaUserInteraction('like');
+
 	}
 
 	/**
@@ -743,9 +749,9 @@ function get_rt_media_permalink($id) {
         $mediaModel = new RTMediaModel();
 
     	$media = $mediaModel->get(array('id'=>$id));
-        
+
 	$parent_link = get_rt_media_user_link($media[0]->media_author);
-	
+
 	return trailingslashit($parent_link . 'media/' . $id);
 }
 
