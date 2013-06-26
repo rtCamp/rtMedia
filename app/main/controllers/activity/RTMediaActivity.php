@@ -49,14 +49,14 @@ class RTMediaActivity {
 			foreach ($media_details as $media) {
 				$html .= '<li class="rt-media-list-item">';
 					$html .= '<div class="rt-media-item-thumbnail">';
-						$html .= '<a href ="'. $this->permalink($media) .'">';
+						$html .= '<a href ="'. get_rt_media_permalink($media->id) .'">';
 							$html .= '<img src="'. $this->image($media) .'" >';
 						$html .= '</a>';
 					$html .= '</div>';
 
 					$html .= '<div class="rt-media-item-title">';
 						$html .= '<h4 title="'. $media->media_title .'">';
-							$html .= '<a href="'. $this->permalink($media) .'">';
+							$html .= '<a href="'. get_rt_media_permalink($media->id) .'">';
 								$html .= $media->media_title;
 							$html .= '</a>';
 						$html .= '</h4>';
@@ -94,21 +94,6 @@ class RTMediaActivity {
 		if ($return == "src")
 			return $src;
 	}
-
-	function permalink($media) {
-		$parent_link = '';
-
-		if(function_exists('bp_core_get_user_domain')) {
-			$parent_link = bp_core_get_user_domain($media->media_author);
-		} else {
-			$parent_link = get_author_posts_url($media->media_author);
-		};
-
-		$link = $parent_link . 'media/' . $rt_media_media->id;
-
-		return $link;
-	}
-
 }
 
 ?>
