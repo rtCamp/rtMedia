@@ -740,17 +740,22 @@ class RTMedia {
 }
 
 function get_rt_media_permalink($id) {
-	$mediaModel = new RTMediaModel();
-	$media = $mediaModel->get(array('id'=>$id));
+        $mediaModel = new RTMediaModel();
 
-	$parent_link = '';
-	if(function_exists('bp_core_get_user_domain')) {
-		$parent_link = bp_core_get_user_domain($media[0]->media_author);
-	} else {
-		$parent_link = get_author_posts_url($media[0]->media_author);
-	}
-
+    	$media = $mediaModel->get(array('id'=>$id));
+        
+	$parent_link = get_rt_media_user_link($media[0]->media_author);
+	
 	return trailingslashit($parent_link . 'media/' . $id);
+}
+
+function get_rt_media_user_link($id){
+    	if(function_exists('bp_core_get_user_domain')) {
+		$parent_link = bp_core_get_user_domain($id);
+	} else {
+		$parent_link = get_author_posts_url($id);
+	}
+        return $parent_link;
 }
 
 function rt_media_update_site_option($option_name,$option_value) {

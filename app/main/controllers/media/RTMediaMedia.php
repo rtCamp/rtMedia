@@ -32,14 +32,13 @@ class RTMediaMedia {
 	 * @param boolean $echo whether nonce should be echoed
 	 * @return string json encoded nonce
 	 */
-	static function media_nonce_generator( $echo = true ) {
-
+	static function media_nonce_generator( $id, $echo = true ) {
 		if ( $echo ) {
-			wp_nonce_field( 'rt_media_media_nonce', 'rt_media_media_nonce' );
+			wp_nonce_field( 'rt_media_'.$id, 'rt_media_media_nonce' );
 		} else {
 			$token = array(
 				'action' => 'rt_media_media_nonce',
-				'nonce' => wp_create_nonce( 'rt_media_media_nonce' )
+				'nonce' => wp_create_nonce( 'rt_media_'.$id )
 			);
 
 			return json_encode( $token );
@@ -211,11 +210,20 @@ class RTMediaMedia {
 	function delete( $id ) {
 
 		do_action( 'rt_media_before_delete_media', $this );
-
+                
+                $media = $this->model->get(array( 'id' => $id ),false,false);
+                
+                $status = 0;
+                
+                if ( $media ) {
+//                print_r($media);
 		/* delete meta */
-		$this->model->delete_meta( array( 'media_id' => $id ) );
-
-		$status = $this->model->delete( array( 'media_id' => $id ) );
+		delete_rtmedia_meta( $id );
+                
+                wp_delete_attachment($media[0]->media_id,true);
+                
+                $status = $this->model->delete( array( 'id' => $id ) );
+                }
 
 		if ( $status == 0 ) {
 			return false;

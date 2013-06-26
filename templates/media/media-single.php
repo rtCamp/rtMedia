@@ -28,7 +28,7 @@
 
 				echo rt_media_description_input();
 				if (rt_media_request_action() == "edit") {
-					RTMediaMedia::media_nonce_generator();
+					RTMediaMedia::media_nonce_generator(rt_media_id());
 			?>
 					<input type="submit" value="Save">
 					<a href="<?php rt_media_permalink(); ?>"><input type="button" value="Back"></a>

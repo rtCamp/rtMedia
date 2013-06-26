@@ -397,7 +397,7 @@ function rt_media_delete_form() {
     $html .= '<input type="hidden" name="id" id="id" value="' . rt_media_id() . '">';
     $html .= '<input type="hidden" name="request_action" id="request_action" value="delete">';
     echo $html;
-    RTMediaMedia::media_nonce_generator(true);
+    RTMediaMedia::media_nonce_generator(rt_media_id(),true);
     echo '<input type="submit" value="Delete"></form>';
 }
 
@@ -453,7 +453,7 @@ add_action('rtmedia_before_item','rt_media_item_select');
 function rt_media_item_select($id){
     global $rt_media_query;
     if( is_rt_media_album() && isset($rt_media_query->media_query) && get_current_user_id() == $rt_media_query->media_query['media_author'] && $rt_media_query->action_query->action == 'edit' ) {
-        echo '<input type="checkbox" name="move[]" value="'.$id.'" />';
+        echo '<input type="checkbox" name="selected[]" value="'.$id.'" />';
     }
 
 }
