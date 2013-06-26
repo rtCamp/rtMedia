@@ -184,11 +184,11 @@ jQuery(function($) {
             this.uploader = new plupload.Uploader(config);
         },
         render: function() {
-    
+
         },
         initUploader: function() {
             this.uploader.init();
-             //The plupload HTML5 code gives a negative z-index making add files button unclickable
+            //The plupload HTML5 code gives a negative z-index making add files button unclickable
             $(".plupload.html5").css({zIndex: 0});
             $("#rtMedia-upload-button   ").css({zIndex: 2});
 
@@ -203,165 +203,167 @@ jQuery(function($) {
 
     });
 
-  
+
 
     if ($("#rtMedia-upload-button").length > 0) {
         var uploaderObj = new UploadView(rtMedia_plupload_config);
-        
-         uploaderObj.uploader.bind('UploadComplete', function(up, files) {
-                activity_id = -1;
-                galleryObj.reloadView();
-            });
 
-           uploaderObj.uploader.bind('FilesAdded', function(up, files) {
-                $.each(files, function(i, file) {
-                    tdName = document.createElement("td");
-                    tdName.innerHTML = file.name;
-                    tdStatus = document.createElement("td");
-                    tdStatus.className = "plupload_file_status";
-                    tdStatus.innerHTML = "0%";
-                    tdSize = document.createElement("td");
-                    tdSize.className = "plupload_file_size";
-                    tdSize.innerHTML = plupload.formatSize(file.size);
-                    tdDelete = document.createElement("td");
-                    tdDelete.innerHTML = "X";
-                    tdDelete.className = "plupload_delete"
-                    tr = document.createElement("tr");
-                    tr.id = file.id;
-                    tr.appendChild(tdName);
-                    tr.appendChild(tdStatus);
-                    tr.appendChild(tdSize);
-                    tr.appendChild(tdDelete);
-                    $("#rtMedia-queue-list").append(tr);
-                    //Delete Function
-                    $("#" + file.id + " td.plupload_delete").click(function(e) {
-                        e.preventDefault();
-                        uploaderObj.uploader.removeFile(uploader.getFile(file.id));
-                        $("#" + file.id).remove();
-                        return false;
-                    });
+        uploaderObj.uploader.bind('UploadComplete', function(up, files) {
+            activity_id = -1;
+            galleryObj.reloadView();
+        });
 
+        uploaderObj.uploader.bind('FilesAdded', function(up, files) {
+            $.each(files, function(i, file) {
+                tdName = document.createElement("td");
+                tdName.innerHTML = file.name;
+                tdStatus = document.createElement("td");
+                tdStatus.className = "plupload_file_status";
+                tdStatus.innerHTML = "0%";
+                tdSize = document.createElement("td");
+                tdSize.className = "plupload_file_size";
+                tdSize.innerHTML = plupload.formatSize(file.size);
+                tdDelete = document.createElement("td");
+                tdDelete.innerHTML = "X";
+                tdDelete.className = "plupload_delete"
+                tr = document.createElement("tr");
+                tr.id = file.id;
+                tr.appendChild(tdName);
+                tr.appendChild(tdStatus);
+                tr.appendChild(tdSize);
+                tr.appendChild(tdDelete);
+                $("#rtMedia-queue-list").append(tr);
+                //Delete Function
+                $("#" + file.id + " td.plupload_delete").click(function(e) {
+                    e.preventDefault();
+                    uploaderObj.uploader.removeFile(uploader.getFile(file.id));
+                    $("#" + file.id).remove();
+                    return false;
                 });
-            });
-
-            uploaderObj.uploader.bind('QueueChanged', function(up) {
-                uploaderObj.uploadFiles()
 
             });
+        });
 
-            uploaderObj.uploader.bind('UploadProgress', function(up, file) {
-                $("#" + file.id + " .plupload_file_status").html(file.percent + "%");
+        uploaderObj.uploader.bind('QueueChanged', function(up) {
+            uploaderObj.uploadFiles()
 
-            });
-            uploaderObj.uploader.bind('BeforeUpload', function(up, file) {
-                up.settings.multipart_params.activity_id = activity_id;
+        });
 
-            });
+        uploaderObj.uploader.bind('UploadProgress', function(up, file) {
+            $("#" + file.id + " .plupload_file_status").html(file.percent + "%");
 
-            uploaderObj.uploader.bind('FileUploaded', function(up, file, res) {
+        });
+        uploaderObj.uploader.bind('BeforeUpload', function(up, file) {
+            up.settings.multipart_params.activity_id = activity_id;
 
-                files = up.files;
-                lastfile = files[files.length - 1];
-                try {
-                    var rtnObj;
-                    rtnObj = JSON.parse(res)
-                    activity_id = rtnObj.activity_id;
-                } catch (e) {
-                }
-            });
+        });
 
-            uploaderObj.initUploader();
-            $("#rtMedia-start-upload").click(function(e) {
-                uploaderObj.uploadFiles(e);
-            });
-            $("#rtMedia-start-upload").hide();
+        uploaderObj.uploader.bind('FileUploaded', function(up, file, res) {
+
+            files = up.files;
+            lastfile = files[files.length - 1];
+            try {
+                var rtnObj;
+                rtnObj = JSON.parse(res)
+                activity_id = rtnObj.activity_id;
+            } catch (e) {
+            }
+        });
+
+        uploaderObj.initUploader();
+        $("#rtMedia-start-upload").click(function(e) {
+            uploaderObj.uploadFiles(e);
+        });
+        $("#rtMedia-start-upload").hide();
     }
 
 
 });
 /** History Code for route 
-
-    var rtMediaRouter = Backbone.Router.extend({
-        routes: {
-            "media/*": "getMedia"
-        }
-    });
-    var app_router = new rtMediaRouter;
-    app_router.on('route:getMedia', function() {
-        // Note the variable in the route definition being passed in here 
-    });
-    Backbone.history.start({pushState: true});
-
-**/
+ 
+ var rtMediaRouter = Backbone.Router.extend({
+ routes: {
+ "media/*": "getMedia"
+ }
+ });
+ var app_router = new rtMediaRouter;
+ app_router.on('route:getMedia', function() {
+ // Note the variable in the route definition being passed in here 
+ });
+ Backbone.history.start({pushState: true});
+ 
+ **/
 
 
 /** Activity Update Js **/
 
-jQuery(document).ready(function($){
-    
+jQuery(document).ready(function($) {
+    if (typeof rtMedia_update_plupload_config == 'undefined'){
+        return false;
+    }
     var activity_attachemnt_ids = [];
-    if($("#rt-media-add-media-button-post-update").length >0){
+    if ($("#rt-media-add-media-button-post-update").length > 0) {
         $("#whats-new-options").prepend($("#rt-media-add-media-button-post-update"));
     }
-    $("#whats-new-form").on('click','#rt-media-add-media-button-post-update',function(e){
+    $("#whats-new-form").on('click', '#rt-media-add-media-button-post-update', function(e) {
         $("#div-attache-rtmedia").toggle();
     })
-    
+
     var objUploadView = new UploadView(rtMedia_update_plupload_config);
-    
+
     objUploadView.uploader.bind('FilesAdded', function(up, files) {
         $("#aw-whats-new-submit").attr('disabled', 'disabled');
-                $.each(files, function(i, file) {
-                    tdName = document.createElement("span");
-                    tdName.innerHTML = file.name;
-                    tdStatus = document.createElement("span");
-                    tdStatus.className = "plupload_file_status";
-                    tdStatus.innerHTML = "0%";
-                    tr = document.createElement("p");
-                    tr.id = file.id;
-                    tr.appendChild(tdName);
-                    tr.appendChild(tdStatus);
-                    $("#rtMedia-update-queue-list").append(tr);
-                });
-            });
-            
-            objUploadView.uploader.bind('FileUploaded', function(up, file, res) {
-                   if(res.status==200){
-                       try{
-                           var objIds = JSON.parse(res.response);
-                           $.each(objIds,function(key,val){
-                              activity_attachemnt_ids.push(val);
-                              if($("#whats-new-form").find("#rtmedia_attached_id_" + val).length < 1){
-                                 $("#whats-new-form").append("<input type='hidden' name='rtMedia_attached_files[]' id='rtmedia_attached_id_" +  val + "' value='" 
-                                            + val + "' />") ;
-                              }
-                           });
-                       }catch(e){
-                           
-                       }
-                   }
-            });
-            objUploadView.uploader.bind('QueueChanged', function(up) {
-                objUploadView.uploadFiles()
-            });
-            objUploadView.uploader.bind('UploadComplete', function(up, files) {
-                $("#aw-whats-new-submit").removeAttr('disabled'); 
-            });
-            objUploadView.uploader.bind('UploadProgress', function(up, file) {
-                $("#" + file.id + " .plupload_file_status").html(file.percent + "%");
+        $.each(files, function(i, file) {
+            tdName = document.createElement("span");
+            tdName.innerHTML = file.name;
+            tdStatus = document.createElement("span");
+            tdStatus.className = "plupload_file_status";
+            tdStatus.innerHTML = "0%";
+            tr = document.createElement("p");
+            tr.id = file.id;
+            tr.appendChild(tdName);
+            tr.appendChild(tdStatus);
+            $("#rtMedia-update-queue-list").append(tr);
+        });
+    });
 
-            });
-            
-    objUploadView.initUploader();
-    var change_flag =false
-    $.ajaxPrefilter( function( options, originalOptions, jqXHR ) {
-        // Modify options, control originalOptions, store jqXHR, etc
-        if(originalOptions.data.action == 'post_update'){
-            var temp = activity_attachemnt_ids;
-           while(activity_attachemnt_ids.length > 0){
-               options.data += "&rtMedia_attached_files[]=" + activity_attachemnt_ids.pop();
-           } 
-           activity_attachemnt_ids = temp;
+    objUploadView.uploader.bind('FileUploaded', function(up, file, res) {
+        if (res.status == 200) {
+            try {
+                var objIds = JSON.parse(res.response);
+                $.each(objIds, function(key, val) {
+                    activity_attachemnt_ids.push(val);
+                    if ($("#whats-new-form").find("#rtmedia_attached_id_" + val).length < 1) {
+                        $("#whats-new-form").append("<input type='hidden' name='rtMedia_attached_files[]' id='rtmedia_attached_id_" + val + "' value='"
+                                + val + "' />");
+                    }
+                });
+            } catch (e) {
+
+            }
         }
-    });  
+    });
+    objUploadView.uploader.bind('QueueChanged', function(up) {
+        objUploadView.uploadFiles()
+    });
+    objUploadView.uploader.bind('UploadComplete', function(up, files) {
+        $("#aw-whats-new-submit").removeAttr('disabled');
+    });
+    objUploadView.uploader.bind('UploadProgress', function(up, file) {
+        $("#" + file.id + " .plupload_file_status").html(file.percent + "%");
+
+    });
+
+    objUploadView.initUploader();
+    var change_flag = false
+    $.ajaxPrefilter(function(options, originalOptions, jqXHR) {
+        // Modify options, control originalOptions, store jqXHR, etc
+        if (originalOptions.data.action == 'post_update') {
+            var temp = activity_attachemnt_ids;
+            while (activity_attachemnt_ids.length > 0) {
+                options.data += "&rtMedia_attached_files[]=" + activity_attachemnt_ids.pop();
+            }
+            activity_attachemnt_ids = temp;
+        }
+    });
 });
