@@ -235,7 +235,7 @@ class RTMediaUploadFile {
             case 'image/gif' :
             case 'image/jpeg' :
             case 'image/png' :
-                $type = 'image';
+                $type = 'photo';
                 break;
             default :
                 $this->safe_unlink($file['tmp_name']);
