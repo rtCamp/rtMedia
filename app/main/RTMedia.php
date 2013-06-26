@@ -199,8 +199,8 @@ class RTMedia {
 	 */
 	function set_default_sizes(){
 		$this->default_sizes = array(
-			'image' => array(
-				'title' => __("Image","rt-media"),
+			'photo' => array(
+				'title' => __("Photo","rt-media"),
 				'thumbnail' => array(
 					'title' => __("Thumbnail","rt-media"),
 					'dimensions' => array('width' => 150, 'height' => 150, 'crop' => 1)
@@ -339,13 +339,13 @@ class RTMedia {
 		/**
 		 * General Settings
 		 */
-		rt_media_update_site_option('rt-media-albums-enabled', 1);
-		rt_media_update_site_option('rt-media-comments-enabled', 1);
-		rt_media_update_site_option('rt-media-download-button', 1);
-		rt_media_update_site_option('rt-media-enable-lightbox', 1);
-		rt_media_update_site_option('rt-media-per-page-media', 10);
-		rt_media_update_site_option('rt-media-media-end-point_enable', true);
-		rt_media_update_site_option('rt-media-show-admin-menu', 1);
+		rt_media_get_site_option('rt-media-albums-enabled', 1);
+		rt_media_get_site_option('rt-media-comments-enabled', 1);
+		rt_media_get_site_option('rt-media-download-button', 1);
+		rt_media_get_site_option('rt-media-enable-lightbox', 1);
+		rt_media_get_site_option('rt-media-per-page-media', 10);
+		rt_media_get_site_option('rt-media-media-end-point_enable', true);
+		rt_media_get_site_option('rt-media-show-admin-menu', 1);
 
 		/**
 		 * Types Settings
@@ -355,8 +355,8 @@ class RTMedia {
 			$type['enabled']= 1;
 			$type['featured']= 0;
 		}
-		rt_media_get_site_option('rt-media-allowed-types', $allowed_types);
-
+                rt_media_get_site_option('rt-media-allowed-types', $allowed_types);
+                
 		/**
 		 * Sizes Settings
 		 */
@@ -371,13 +371,13 @@ class RTMedia {
 		 * BuddyPress Settings
 		 */
 		if (function_exists("bp_is_active")) {
-			rt_media_update_site_option('rt-media-enable-on-activity', bp_is_active('activity'));
-			rt_media_update_site_option('rt-media-enable-on-profile', bp_is_active('profile'));
-			rt_media_update_site_option('rt-media-enable-on-group', bp_is_active('groups'));
+			rt_media_get_site_option('rt-media-enable-on-activity', bp_is_active('activity'));
+			rt_media_get_site_option('rt-media-enable-on-profile', bp_is_active('profile'));
+			rt_media_get_site_option('rt-media-enable-on-group', bp_is_active('groups'));
 		} else {
-			rt_media_update_site_option('rt-media-enable-on-activity', 0);
-			rt_media_update_site_option('rt-media-enable-on-profile', 0);
-			rt_media_update_site_option('rt-media-enable-on-group', 0);
+			rt_media_get_site_option('rt-media-enable-on-activity', 0);
+			rt_media_get_site_option('rt-media-enable-on-profile', 0);
+			rt_media_get_site_option('rt-media-enable-on-group', 0);
 		}
 
 		$options = array(
@@ -452,7 +452,7 @@ class RTMedia {
 			'rt-media-allowed-types' => rt_media_get_site_option('rt-media-allowed-types'),
 
 			/* Sizes */
-			'rt-media-allowed-sizes' => rt_media_get_site_option('rt-media-allowed-sizes'),
+			'rt-media-default-sizes' => rt_media_get_site_option('rt-media-default-sizes'),
 
 			/* Privacy */
 			'rt-media-privacy' => rt_media_get_site_option('rt-media-privacy'),
@@ -754,9 +754,9 @@ function get_rt_media_permalink($id) {
 }
 
 function rt_media_update_site_option($option_name,$option_value) {
-	update_site_option($option_name, $option_value);
-}
-
+        update_site_option($option_name, $option_value);
+    }
+    
 function rt_media_get_site_option($option_name,$default=false){
 	$return_val	 = get_site_option($option_name);
 	if($return_val === false){

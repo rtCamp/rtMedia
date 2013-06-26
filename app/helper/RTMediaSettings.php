@@ -10,7 +10,7 @@ if (!class_exists('RTMediaSettings')) {
     class RTMediaSettings {
 
         public function __construct() {
-            add_action('admin_init`', array($this, 'settings'));
+            add_action('admin_init', array($this, 'settings'));
 //            if (is_multisite()) {
 //                add_action('network_admin_notices', array($this, 'privacy_notice'));
 //            } else {
@@ -30,12 +30,12 @@ if (!class_exists('RTMediaSettings')) {
          */
         public function settings() {
             global $rt_media, $rt_media_addon;
-
+            
 			// Save Settings first then proceed.
 			if(isset($_POST) && count($_POST)) {
 
 				$options = $_POST['rt-media-options'];
-
+                                
 				if(isset($options['rt-media-general']))
 					$this->save_general_settings($options['rt-media-general']);
 				else
@@ -46,8 +46,8 @@ if (!class_exists('RTMediaSettings')) {
 				else
 					$this->sanitize_types_settings();
 
-				if(isset($options['rt-media-allowed-sizes']))
-					$this->save_sizes_settings($options['rt-media-allowed-sizes']);
+				if(isset($options['rt-media-default-sizes']))
+					$this->save_sizes_settings($options['rt-media-default-sizes']);
 				else
 					$this->sanitize_sizes_settings();
 
@@ -61,7 +61,7 @@ if (!class_exists('RTMediaSettings')) {
 				else
 					$this->sanitize_buddypress_settings();
 			}
-
+			
             $rt_media_addon = new RTMediaAddon();
             add_settings_section('rtm-addons', __('BuddyPress Media Addons for Photos', 'rt-media'), array($rt_media_addon, 'get_addons'), 'rt-media-addons');
 
@@ -75,7 +75,7 @@ if (!class_exists('RTMediaSettings')) {
 
             //$rt_media_album_importer = new BPMediaAlbumimporter();
             //add_settings_section('rtm-rt-album-importer', __('BP-Album Importer', 'rt-media'), array($rt_media_album_importer, 'ui'), 'rt-media-importer');
-            register_setting('rt_media', 'rt_media_options', array($this, 'sanitize'));
+            //register_setting('rt_media', 'rt_media_options', array($this, 'sanitize'));
         }
 
 		public function sanitize_general_settings() {
@@ -99,35 +99,11 @@ if (!class_exists('RTMediaSettings')) {
 			$rt_media->options[$key]['rt-media-show-admin-menu']['args']['value'] = 0;
 		}
 
-		public function sanitize_types_settings() {
-
-			$options = array(
-				'audio' => array(
-						'enable' => 0,
-						'featured' => 0,
-						'name' => __('Audio','rt-media'),
-						'extn' => array('mp3'),
-						'thumbnail' => '../assets/img/audio_thumb.png'
-					),
-				'videos' => array(
-						'enable' => 0,
-						'featured' => 0,
-						'name' => __('Videos','rt-media'),
-						'extn' => array('mp4'),
-						'thumbnail' => '../assets/img/video_thumb.png'
-					),
-				'images' => array(
-						'enable' => 0,
-						'featured' => 0,
-						'name' => __('Images','rt-media'),
-						'extn' => array('jpeg', 'png'),
-						'thumbnail' => '../assets/img/image_thumb.png'
-					)
-			);
+		public function sanitize_types_settings_bak() {			
 
 			global $rt_media;
 
-			$rt_media->options['rt-media-allowed-types'] = wp_parse_args($options, $rt_media->options['rt-media-allowed-types']);
+			$rt_media->options['rt-media-allowed-types'] = wp_parse_args($rt_media->allowed_types, $rt_media->options['rt-media-allowed-types']);
 
 			rt_media_update_site_option('rt-media-allowed-types', $rt_media->options['rt-media-allowed-types']);
 		}
@@ -181,9 +157,9 @@ if (!class_exists('RTMediaSettings')) {
 			);
 
 			global $rt_media;
-			$rt_media->options['rt-media-allowed-sizes'] = wp_parse_args($options, $rt_media->options['rt-media-allowed-sizes']);
+			$rt_media->options['rt-media-default-sizes'] = wp_parse_args($options, $rt_media->options['rt-media-default-sizes']);
 
-			rt_media_update_site_option('rt-media-allowed-sizes', $rt_media->options['rt-media-allowed-sizes']);
+			rt_media_update_site_option('rt-media-default-sizes', $rt_media->options['rt-media-default-sizes']);
 		}
 
 		public function sanitize_privacy_settings() {
@@ -289,8 +265,8 @@ if (!class_exists('RTMediaSettings')) {
 		public function save_sizes_settings($settings) {
 			global $rt_media;
 
-			$old_values = $rt_media->options['rt-media-allowed-sizes'];
-			$defaults = $rt_media->options['rt-media-allowed-sizes'];
+			$old_values = $rt_media->options['rt-media-default-sizes'];
+			$defaults = $rt_media->options['rt-media-default-sizes'];
 
 			foreach ($defaults as $type => $type_value) {
 				unset($type_value['title']);
@@ -307,8 +283,8 @@ if (!class_exists('RTMediaSettings')) {
 				}
 			}
 
-			rt_media_update_site_option('rt-media-allowed-sizes', $old_values);
-			$rt_media->options['rt-media-allowed-sizes'] = $old_values;
+			rt_media_update_site_option('rt-media-default-sizes', $old_values);
+			$rt_media->options['rt-media-default-sizes'] = $old_values;
 		}
 
 		public function save_privacy_settings($settings) {
