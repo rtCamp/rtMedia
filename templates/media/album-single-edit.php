@@ -21,13 +21,14 @@ $media = $model->get_media(array('id'=>$rt_media_query->media_query['album_id'])
 
     </form>
     <br />
-    <form method="post">
+    <form class="rt-media-bulk-actions" method="post">
+        <?php wp_nonce_field('rt_media_bulk_delete_nonce','rt_media_bulk_delete_nonce'); ?>
         <?php RTMediaMedia::media_nonce_generator($rt_media_query->media_query['album_id']); ?>
     <span class="rt-media-selection"><a class="select-all" href="#">Select All Visible</a> | 
     <a class="unselect-all" href="#">Unselect All Visible</a> | </span>
     <br />
     <input type="button" class="button rt-media-move" value="Move" />
-    <input type="submit" name="delete-selected" class="button rt-media-delete" value="Delete Selected" />
+    <input type="submit" name="delete-selected" class="button rt-media-delete-selected" value="Delete Selected" />
     <div class="rt-media-move-container">
     <?php $global_albums = get_site_option('rt-media-global-albums'); ?>
     <?php _e('Move selected media to','rt-media'); ?><select name="album">
@@ -48,7 +49,7 @@ $media = $model->get_media(array('id'=>$rt_media_query->media_query['album_id'])
         }
         ?>
     </select>
-        <input type="submit" name="move-selected" value="Move Selected" />
+        <input type="submit" class="rt-media-move-selected" name="move-selected" value="Move Selected" />
     </div>
     <?php
     if (have_rt_media()) { ?>

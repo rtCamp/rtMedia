@@ -114,21 +114,6 @@ class RTMediaTemplate {
                                     $media->update($media_details[0]->id, array('album_id' => $album_move_details[0]->id), $media_details[0]->media_id);
                                 }
                             }
-                        } elseif ( isset($_POST['delete-selected']) ) {
-                            $selected_ids = NULL;
-
-                            if (isset($_POST['selected'])) {
-                                $selected_ids = $_POST['selected'];
-                                unset($_POST['selected']);
-                            }
-                            if (!empty($selected_ids) && is_array($selected_ids)) {
-                                foreach ($selected_ids as $media_id) {
-                                    $media_details = $model->get_media(array('id' => $media_id), false, false);
-//                                    print_r(wp_remote_get(get_rt_media_permalink($media_details[0]->id).'delete/',array('body' => array('rt_media_media_nonce' => wp_create_nonce('rt_media_'.$media_details[0]->id)))));
-//                                    die;
-//                                    $media->delete($media_details[0]->id);
-                                }
-                            }
                         }
                         wp_safe_redirect(get_rt_media_permalink($rt_media_query->media_query['album_id']) . 'edit/');
                     } else {
@@ -136,6 +121,18 @@ class RTMediaTemplate {
                     }
                 }
                 return $this->get_default_template();
+            } elseif( $rt_media_query->action_query->action == 'delete' && isset($rt_media_query->action_query->default) && $rt_media_query->action_query->default == 'delete' && count($_POST) ) {
+                $nonce = $_REQUEST['rt_media_bulk_delete_nonce'];
+                
+                $media = new RTMediaMedia();
+//                echo $rt_media_query->action_query->id
+                if (wp_verify_nonce($nonce, 'rt_media_bulk_delete_nonce') && isset($_POST['selected'])) {
+                    $ids = $_POST['selected'];
+                    foreach ( $ids as $id ) {
+                        $media->delete($id);
+                    }
+                }
+                wp_safe_redirect($_POST['_wp_http_referer']);
             } else if ($rt_media_query->action_query->action == 'delete') {
                 /**
                  * /media/id/delete [POST]

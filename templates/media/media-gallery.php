@@ -4,7 +4,7 @@
 
 	<?php rt_media_uploader() ?>
 
-	<h2><?php echo __('Media Gallery','rt-media'); ?></h2>
+        <h2><?php echo __('Media Gallery','rt-media'); ?></h2>
         <ul class="rt-media-list large-block-grid-5">
     <?php
 			if (have_rt_media()) { ?>

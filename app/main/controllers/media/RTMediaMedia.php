@@ -213,12 +213,17 @@ class RTMediaMedia {
                 
                 $media = $this->model->get(array( 'id' => $id ),false,false);
                 
+                $status = 0;
+                
+                if ( $media ) {
+//                print_r($media);
 		/* delete meta */
-		$this->model->delete_meta( array( 'media_id' => $id ) );
-
-		$status = $this->model->delete( array( 'id' => $id ) );
+		delete_rtmedia_meta( $id );
                 
                 wp_delete_attachment($media[0]->media_id,true);
+                
+                $status = $this->model->delete( array( 'id' => $id ) );
+                }
 
 		if ( $status == 0 ) {
 			return false;
