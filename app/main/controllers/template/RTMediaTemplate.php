@@ -114,6 +114,7 @@ class RTMediaTemplate {
                                                     $media->update($media_details[0]->id, array('album_id' => $album_move_details[0]->id), $media_details[0]->media_id);
                                                 }
                                             }
+                                            wp_safe_redirect(get_rt_media_permalink($rt_media_query->media_query['album_id']).'edit/');
                                         } else{
 						echo __("Ooops !!! Invalid access. No nonce was found !!","rt-media");
 					}
