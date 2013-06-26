@@ -6,6 +6,7 @@
     @import "foundation/components/block-grid";
 
     padding:5px;
+    clear: left;
 
     
         .drag-drop{
@@ -88,6 +89,9 @@
         .rt-media-activity-text{
             display:block;
             padding-bottom:10px;
+        }
+        .rt-media-merge-container{
+            display: none;
         }
 }
    

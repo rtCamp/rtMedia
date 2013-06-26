@@ -40,7 +40,4 @@
         </h4>
     </div>
 
-    <div class="rt-media-item-actions">
-        <?php rt_media_actions(); ?>
-    </div>
 </li>

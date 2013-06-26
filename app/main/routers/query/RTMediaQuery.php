@@ -199,7 +199,7 @@ class RTMediaQuery {
                 }
 
                 // requesting an upload screen /media/upload/
-            }elseif (in_array($modifier_value, $this->actions)){
+            }elseif (array_key_exists($modifier_value, $this->actions)){
 				// /media/edit/ | media/delete/ | /media/like/
 
                         $action = $modifier_value;

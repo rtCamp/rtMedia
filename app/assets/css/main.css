@@ -14,6 +14,7 @@
   /* Foundation Block Grids for below small breakpoint */
   /* Foundation Block Grids for above small breakpoint */
   padding: 5px;
+  clear: left;
 }
 /* line 17, ../../../../../../../../../../lib/ruby/gems/1.9.1/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 .rt-media-container html, .rt-media-container body, .rt-media-container div, .rt-media-container span, .rt-media-container applet, .rt-media-container object, .rt-media-container iframe,
@@ -1426,7 +1427,7 @@
     clear: both;
   }
 }
-/* line 11, ../sass/main.scss */
+/* line 12, ../sass/main.scss */
 .rt-media-container .drag-drop {
   border: 4px dashed #DDD;
   text-align: center;
@@ -1434,31 +1435,31 @@
   overflow: hidden;
   padding: 15px 0;
 }
-/* line 17, ../sass/main.scss */
+/* line 18, ../sass/main.scss */
 .rt-media-container .drag-drop.dragover {
   border-color: #83b4d8;
 }
-/* line 23, ../sass/main.scss */
+/* line 24, ../sass/main.scss */
 .rt-media-container .rt-media-list {
   list-style: none;
 }
-/* line 28, ../sass/main.scss */
+/* line 29, ../sass/main.scss */
 .rt-media-container .rt-media-list-item {
   word-wrap: break-word;
 }
-/* line 34, ../sass/main.scss */
+/* line 35, ../sass/main.scss */
 .rt-media-container .rt-media-media img {
   max-width: 100%;
 }
-/* line 38, ../sass/main.scss */
+/* line 39, ../sass/main.scss */
 .rt-media-container .rt-media-item-thumbnail img {
   max-width: 100%;
 }
-/* line 42, ../sass/main.scss */
+/* line 43, ../sass/main.scss */
 .rt-media-container .rt-media-item-comments {
   margin: 3% 3%;
 }
-/* line 46, ../sass/main.scss */
+/* line 47, ../sass/main.scss */
 .rt-media-container .rt-media-comment {
   list-style: none;
   background: #f6f6f6;
@@ -1470,39 +1471,43 @@
   position: relative;
   width: 330px;
 }
-/* line 58, ../sass/main.scss */
+/* line 59, ../sass/main.scss */
 .rt-media-container .rt-media-comment-date {
   float: right;
 }
-/* line 62, ../sass/main.scss */
+/* line 63, ../sass/main.scss */
 .rt-media-container .rt-media-bp-header {
   width: 460px;
   margin: auto;
 }
-/* line 67, ../sass/main.scss */
+/* line 68, ../sass/main.scss */
 .rt-media-container #div-attache-rtmedia {
   display: none;
 }
-/* line 72, ../sass/main.scss */
+/* line 73, ../sass/main.scss */
 .rt-media-container #rtMedia-update-queue-list p span {
   margin-right: 20px;
 }
-/* line 77, ../sass/main.scss */
+/* line 78, ../sass/main.scss */
 .rt-media-container .rt-media-move-container {
   display: none;
 }
-/* line 80, ../sass/main.scss */
+/* line 81, ../sass/main.scss */
 .rt-media-container #rt-media-add-media-button-post-update {
   float: left;
   margin-top: 10px;
   margin-right: 20px;
 }
-/* line 85, ../sass/main.scss */
+/* line 86, ../sass/main.scss */
 .rt-media-container #whats-new-post-in-box {
   float: left;
 }
-/* line 88, ../sass/main.scss */
+/* line 89, ../sass/main.scss */
 .rt-media-container .rt-media-activity-text {
   display: block;
   padding-bottom: 10px;
+}
+/* line 93, ../sass/main.scss */
+.rt-media-container .rt-media-merge-container {
+  display: none;
 }

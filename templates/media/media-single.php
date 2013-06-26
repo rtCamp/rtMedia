@@ -42,7 +42,7 @@
 		<?php //if(rt_media_comments_enabled()) { ?>
 			<div class="rt-media-item-comments">
 				<h2>Comments</h2>
-				<div class="rt-media-container">
+				<div class="rt-media-comments-container">
 					<?php rt_media_comments(); ?>
 				</div>
 				<?php rt_media_comment_form(); ?>

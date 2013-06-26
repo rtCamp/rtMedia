@@ -44,6 +44,10 @@ jQuery('document').ready(function(){
         jQuery('.rt-media-move-container').slideToggle();
     });
     
+    jQuery('.rt-media-container').on('click','.rt-media-merge',function(e){
+        jQuery('.rt-media-merge-container').slideToggle();
+    });
+    
     jQuery('.rt-media-container').on('click','.rt-media-delete-selected',function(e){
         jQuery('.rt-media-bulk-actions').attr('action','../../../media/delete');
     });
