@@ -58,14 +58,7 @@ class RTMediaTemplate {
 						$media_array[$key] = $media;
 						list($src,$width,$height) = wp_get_attachment_image_src($media->media_id,'thumbnail');
 						$media_array[$key]->guid = $src;
-
-						$parent_link = '';
-						if(function_exists('bp_core_get_user_domain')) {
-							$parent_link = bp_core_get_user_domain($media->media_author);
-						} else {
-							$parent_link = get_author_posts_url($media->media_author);
-						}
-						$media_array[$key]->rt_permalink = $parent_link . 'media/' . $media->id;
+						$media_array[$key]->rt_permalink = get_rt_media_permalink($media->id);
 					}
 				}
 				$return_array['data'] = $media_array;
@@ -209,14 +202,7 @@ class RTMediaTemplate {
 					$media_array[$key] = $media;
 					list($src,$width,$height) = wp_get_attachment_image_src($media->media_id,'thumbnail');
 					$media_array[$key]->guid = $src;
-
-					$parent_link = '';
-					if(function_exists('bp_core_get_user_domain')) {
-						$parent_link = bp_core_get_user_domain($media->media_author);
-					} else {
-						$parent_link = get_author_posts_url($media->media_author);
-					}
-					$media_array[$key]->rt_permalink = $parent_link . 'media/' . $media->id;
+					$media_array[$key]->rt_permalink = get_rt_media_permalink($media->id);
 				}
 			}
             $return_array['data'] = $media_array;

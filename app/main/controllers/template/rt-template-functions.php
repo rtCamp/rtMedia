@@ -65,8 +65,7 @@ function rt_media_permalink() {
 	if($rt_media_backbone) {
 		echo '<%= rt_permalink %>';
 	} else {
-		global $rt_media_query;
-		echo $rt_media_query->permalink();
+		echo get_rt_media_permalink(rt_media_id());
 	}
 }
 
