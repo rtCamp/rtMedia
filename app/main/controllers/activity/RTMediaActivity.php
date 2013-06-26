@@ -32,8 +32,8 @@ class RTMediaActivity {
 	}
 
 	function create_activity_html(){
-           
-                
+
+
 		$html = '';
 
 		$html .='<div class="rt-media-activity-container">';
@@ -77,14 +77,14 @@ class RTMediaActivity {
 	}
 
         function actions(){
-            
+
         }
 	function image($media) {
 		if (isset($media->media_type)) {
 			if ($media->media_type == 'album' ||
-					$media->media_type != 'image') {
+					$media->media_type != 'photo') {
 				$thumbnail_id = get_rtmedia_meta($media->media_id,'cover_art');
-			} elseif ( $media->media_type == 'image' ) {
+			} elseif ( $media->media_type == 'photo' ) {
 				$thumbnail_id = $media->media_id;
 			} else {
 				return false;

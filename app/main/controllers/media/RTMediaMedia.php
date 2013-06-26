@@ -213,7 +213,8 @@ class RTMediaMedia {
 		do_action( 'rt_media_before_delete_media', $this );
 
 		/* delete meta */
-		$this->model->delete_meta( array( 'media_id' => $id ) );
+		$metaModel = new RTMediaMeta();
+		$metaModel->delete_meta( $id );
 
 		$status = $this->model->delete( array( 'media_id' => $id ) );
 
@@ -359,7 +360,7 @@ class RTMediaMedia {
 				'album_id' => $uploaded[ 'album_id' ],
 				'media_author' => $attachment[ 'post_author' ],
 				'media_title' => $attachment[ 'post_title' ],
-				'media_type' => $mime_type[ 0 ],
+				'media_type' => ($mime_type[ 0 ] == 'image') ? 'photo' : $mime_type[0],
 				'context' => $uploaded[ 'context' ],
 				'context_id' => $uploaded[ 'context_id' ],
 				'privacy' => $uploaded[ 'privacy' ]

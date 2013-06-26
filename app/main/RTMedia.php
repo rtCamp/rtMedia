@@ -133,7 +133,7 @@ class RTMedia {
 					'label' => __('Music','rt-media'),
 					'plural_label' => __('Music','rt-media'),
 					'extn' => array('mp3'),
-					'thumbnail' => RTMEDIA_URL.'/assets/img/audio_thumb.png'
+					'thumbnail' => RTMEDIA_URL.'assets/img/audio_thumb.png'
 				),
 			array(
 					'name'	=> 'video',
@@ -141,7 +141,7 @@ class RTMedia {
 					'label' => __('Video','rt-media'),
 					'plural_label' => __('Videos','rt-media'),
 					'extn' => array('mp4'),
-					'thumbnail' => RTMEDIA_URL.'/assets/img/video_thumb.png'
+					'thumbnail' => RTMEDIA_URL.'assets/img/video_thumb.png'
 				),
 			array(
 					'name'	=> 'photo',
@@ -149,7 +149,7 @@ class RTMedia {
 					'label' => __('Photo','rt-media'),
 					'plural_label' => __('Photos','rt-media'),
 					'extn' => array('jpeg', 'png'),
-					'thumbnail' => RTMEDIA_URL.'/assets/img/image_thumb.png'
+					'thumbnail' => RTMEDIA_URL.'assets/img/image_thumb.png'
 				)
 		);
 
@@ -199,8 +199,8 @@ class RTMedia {
 	 */
 	function set_default_sizes(){
 		$this->default_sizes = array(
-			'image' => array(
-				'title' => __("Image","rt-media"),
+			'photo' => array(
+				'title' => __("Photo","rt-media"),
 				'thumbnail' => array(
 					'title' => __("Thumbnail","rt-media"),
 					'dimensions' => array('width' => 150, 'height' => 150, 'crop' => 1)

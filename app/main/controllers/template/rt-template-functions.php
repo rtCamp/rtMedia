@@ -86,9 +86,9 @@ function rt_media_image($size = 'thumbnail', $return = 'src') {
 			echo '<%= height %>';
 	} else if (isset($rt_media_media->media_type)) {
         if ($rt_media_media->media_type == 'album' ||
-                $rt_media_media->media_type != 'image') {
+                $rt_media_media->media_type != 'photo') {
             $thumbnail_id = get_rtmedia_meta($rt_media_media->media_id,'cover_art');
-        } elseif ( $rt_media_media->media_type == 'image' ) {
+        } elseif ( $rt_media_media->media_type == 'photo' ) {
             $thumbnail_id = $rt_media_media->media_id;
         } else {
             return false;
@@ -450,10 +450,12 @@ function rt_media_album_edit(){
 }
 
 add_action('rtmedia_before_item','rt_media_item_select');
-function rt_media_item_select($id){
-    global $rt_media_query;
-    if( is_rt_media_album() && isset($rt_media_query->media_query) && get_current_user_id() == $rt_media_query->media_query['media_author'] && $rt_media_query->action_query->action == 'edit' ) {
-        echo '<input type="checkbox" name="move[]" value="'.$id.'" />';
+function rt_media_item_select(){
+    global $rt_media_query, $rt_media_backbone;
+	if($rt_media_backbone) {
+		echo '<input type="checkbox" name="move[]" value="<%= id %>" />';
+	} else if( is_rt_media_album() && isset($rt_media_query->media_query) && get_current_user_id() == $rt_media_query->media_query['media_author'] && $rt_media_query->action_query->action == 'edit' ) {
+        echo '<input type="checkbox" name="move[]" value="'.  rt_media_id().'" />';
     }
 
 }
