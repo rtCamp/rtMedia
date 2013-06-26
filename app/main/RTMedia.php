@@ -684,7 +684,9 @@ class RTMedia {
 				global $rt_media_ajax;
 				$rt_media_ajax = new RTMediaAJAX();
 
-				new RTMediaUserInteraction('like');
+				new RTMediaUserInteraction('like',true, __('Like','rt-media'));
+				new RTMediaFeatured();
+				new RTMediaCoverArt();
 
 	}
 
