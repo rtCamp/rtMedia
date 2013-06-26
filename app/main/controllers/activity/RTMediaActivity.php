@@ -56,7 +56,7 @@ class RTMediaActivity {
 
 					$html .= '<div class="rt-media-item-title">';
 						$html .= '<h4 title="'. $media->media_title .'">';
-							$html .= '<a href="'. $this->permalink($media) .'">';
+							$html .= '<a href="'. $this->permalink($media->id) .'">';
 								$html .= $media->media_title;
 							$html .= '</a>';
 						$html .= '</h4>';
@@ -96,15 +96,15 @@ class RTMediaActivity {
 	}
 
 	function permalink($media) {
-		$parent_link = '';
+		$user_link = '';
 
 		if(function_exists('bp_core_get_user_domain')) {
-			$parent_link = bp_core_get_user_domain($media->media_author);
+			$user_link = bp_core_get_user_domain($media->media_author);
 		} else {
-			$parent_link = get_author_posts_url($media->media_author);
+			$user_link = get_author_posts_url($media->media_author);
 		};
 
-		$link = $parent_link . 'media/' . $rt_media_media->id;
+		$link = $user_link . 'media/' . $media;
 
 		return $link;
 	}
