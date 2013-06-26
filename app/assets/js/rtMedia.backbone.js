@@ -350,7 +350,7 @@ jQuery(document).ready(function($) {
         if(item_id==undefined)
             item_id = 0;
         if ( item_id > 0 ) {
-            object = jq("#whats-new-post-object").val();
+            object="group";
         }else{
             object="profile";
         }
