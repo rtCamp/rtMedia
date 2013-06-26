@@ -91,7 +91,7 @@ class RTMediaQuery {
      * Initialise the default args for the query
      */
     function init() {
-        
+
     }
 
     function set_media_type() {
@@ -196,7 +196,13 @@ class RTMediaQuery {
                 }
 
                 // requesting an upload screen /media/upload/
-            } elseif ($modifier_value == 'upload') {
+            }elseif (in_array($modifier_value, $this->actions)){
+				// /media/edit/ | media/delete/ | /media/like/
+
+                        $action = $modifier_value;
+						$bulk = true;
+
+			} elseif ($modifier_value == 'upload') {
 
                 $modifier_type = 'upload';
                 $action = 'upload';
@@ -406,9 +412,9 @@ class RTMediaQuery {
                 unset($this->media_query['context']);
                 unset($this->media_query['context_id']);
             } else if ($this->media_query['context'] == 'group') {
-                
+
             } else {
-                
+
             }
         }
 

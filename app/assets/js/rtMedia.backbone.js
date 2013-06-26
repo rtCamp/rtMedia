@@ -308,11 +308,11 @@ jQuery(document).ready(function($) {
     $("#whats-new-form").on('click', '#rt-media-add-media-button-post-update', function(e) {
         $("#div-attache-rtmedia").toggle();
     })
-
+//whats-new-post-in
     var objUploadView = new UploadView(rtMedia_update_plupload_config);
 
     objUploadView.uploader.bind('FilesAdded', function(up, files) {
-        $("#aw-whats-new-submit").attr('disabled', 'disabled');
+        //$("#aw-whats-new-submit").attr('disabled', 'disabled');
         $.each(files, function(i, file) {
             tdName = document.createElement("span");
             tdName.innerHTML = file.name;
@@ -343,11 +343,26 @@ jQuery(document).ready(function($) {
             }
         }
     });
-    objUploadView.uploader.bind('QueueChanged', function(up) {
-        objUploadView.uploadFiles()
+    objUploadView.uploader.bind('BeforeUpload', function(up, files) {
+        
+        var object = '';
+        var item_id = jq("#whats-new-post-in").val();
+        if(item_id==undefined)
+            item_id = 0;
+        if ( item_id > 0 ) {
+            object="group";
+        }else{
+            object="profile";
+        }
+        
+        up.settings.multipart_params.context = object;
+        up.settings.multipart_params.context_id = item_id;
+
     });
     objUploadView.uploader.bind('UploadComplete', function(up, files) {
-        $("#aw-whats-new-submit").removeAttr('disabled');
+        media_uploading=true;
+        $("#aw-whats-new-submit").click();
+        //$("#aw-whats-new-submit").removeAttr('disabled');
     });
     objUploadView.uploader.bind('UploadProgress', function(up, file) {
         $("#" + file.id + " .plupload_file_status").html(file.percent + "%");
@@ -356,7 +371,7 @@ jQuery(document).ready(function($) {
 
     objUploadView.initUploader();
     var change_flag = false
-    
+    var media_uploading = false ;
     $.ajaxPrefilter(function(options, originalOptions, jqXHR) {
         // Modify options, control originalOptions, store jqXHR, etc
         if (originalOptions.data.action == 'post_update') {
@@ -366,6 +381,25 @@ jQuery(document).ready(function($) {
             }
             activity_attachemnt_ids = temp;
             var orignalSuccess = originalOptions.success ;
+            options.beforeSend= function(){
+                if($.trim($("#whats-new").val())==""){
+                    alert("Please enter some content to post.");
+                    $("#aw-whats-new-submit").prop("disabled", true).removeClass('loading');
+                    return false;
+                }
+                if(! media_uploading){
+                    $("#whats-new-post-in").attr('disabled', 'disabled');
+                    $("#rt-media-add-media-button-post-update").attr('disabled', 'disabled');
+                    objUploadView.uploadFiles()
+                    media_uploading=true;
+                    return false;    
+                }else{
+                    media_uploading=false;
+                    return true;
+                }
+                
+                
+            }
             options.success= function(response){
                 orignalSuccess(response);
                 if ( response[0] + response[1] == '-1' ) {
@@ -378,6 +412,9 @@ jQuery(document).ready(function($) {
                     $('#rtMedia-update-queue-list').html('');
                     $("#div-attache-rtmedia").hide();
                 }
+                 $("#whats-new-post-in").removeAttr('disabled');
+                 $("#rt-media-add-media-button-post-update").removeAttr('disabled');
+                    
             }
         }   
     });

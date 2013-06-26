@@ -32,6 +32,8 @@ class RTMediaActivity {
 	}
 
 	function create_activity_html(){
+           
+                
 		$html = '';
 
 		$html .='<div class="rt-media-activity-container">';
@@ -45,7 +47,7 @@ class RTMediaActivity {
 			$mediaObj = new RTMediaModel();
 			$media_details = $mediaObj->get(array('media_id'=> $this->media));
 
-			$html .= '<ul class="rt-media-list">';
+			$html .= '<ul class="rt-media-list large-block-grid-5">';
 			foreach ($media_details as $media) {
 				$html .= '<li class="rt-media-list-item">';
 					$html .= '<div class="rt-media-item-thumbnail">';
@@ -74,6 +76,9 @@ class RTMediaActivity {
 		return $html;
 	}
 
+        function actions(){
+            
+        }
 	function image($media) {
 		if (isset($media->media_type)) {
 			if ($media->media_type == 'album' ||
@@ -87,14 +92,10 @@ class RTMediaActivity {
 		} else {
 			return false;
 		}
-
 		if (!$thumbnail_id)
 			return false;
-
-		list($src, $width, $height) = wp_get_attachment_image_src($thumbnail_id, $size);
-
-		if ($return == "src")
-			return $src;
+		list($src, $width, $height) = wp_get_attachment_image_src($thumbnail_id);
+                return $src;
 	}
 }
 
