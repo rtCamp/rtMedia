@@ -86,9 +86,9 @@ function rt_media_image($size = 'thumbnail', $return = 'src') {
 			echo '<%= height %>';
 	} else if (isset($rt_media_media->media_type)) {
         if ($rt_media_media->media_type == 'album' ||
-                $rt_media_media->media_type != 'image') {
+                $rt_media_media->media_type != 'photo') {
             $thumbnail_id = get_rtmedia_meta($rt_media_media->media_id,'cover_art');
-        } elseif ( $rt_media_media->media_type == 'image' ) {
+        } elseif ( $rt_media_media->media_type == 'photo' ) {
             $thumbnail_id = $rt_media_media->media_id;
         } else {
             return false;
@@ -241,6 +241,23 @@ function rt_media_current_media() {
  */
 function rt_media_actions() {
 
+	global $rt_media_query;
+	$actions = $rt_media_query->actions;
+
+	unset($actions['edit']);
+	unset($actions['comment']);
+	unset($actions['delete']);
+	//render edit button here
+
+	foreach ($actions as $action=>$label ){
+		$button = '<form action="'.get_rt_media_permalink($rt_media_query->action_query->id).'/'.$action.'/" method="post">';
+		$button .= wp_nonce_field( $rt_media_query->action_query->id, 'rt_media_user_action_'.$action.'_nonce', true, false );
+		$button .= '<input type="submit" class="rt-media-'.$action.'" value="'.$label.'">';
+		$button .= '</form>';
+		echo $button;
+	}
+
+	// render delete button here
 }
 
 /**
@@ -397,7 +414,7 @@ function rt_media_delete_form() {
     $html .= '<input type="hidden" name="id" id="id" value="' . rt_media_id() . '">';
     $html .= '<input type="hidden" name="request_action" id="request_action" value="delete">';
     echo $html;
-    RTMediaMedia::media_nonce_generator(true);
+    RTMediaMedia::media_nonce_generator(rt_media_id(),true);
     echo '<input type="submit" value="Delete"></form>';
 }
 
@@ -445,15 +462,22 @@ function rt_media_album_edit(){
 
     global $rt_media_query;
 
-    if (isset($rt_media_query->media_query) && get_current_user_id() == $rt_media_query->media_query['media_author'] )
-        echo '<a href="edit/">'.__('Edit','rt-media').'</a>';
+    if (isset($rt_media_query->media_query) && get_current_user_id() == $rt_media_query->media_query['media_author'] ) {
+        echo '<a class="button" href="edit/">'.__('Edit','rt-media').'</a>';
+        echo '<form method="post" action="delete/">';
+        wp_nonce_field('rt_media_delete_album_'.$rt_media_query->media_query['album_id'], 'rt_media_delete_album');
+        echo '<input type="submit" name="album-delete" value="Delete" />';
+        echo '</form>';
+    }
 }
 
 add_action('rtmedia_before_item','rt_media_item_select');
-function rt_media_item_select($id){
-    global $rt_media_query;
-    if( is_rt_media_album() && isset($rt_media_query->media_query) && get_current_user_id() == $rt_media_query->media_query['media_author'] && $rt_media_query->action_query->action == 'edit' ) {
-        echo '<input type="checkbox" name="move[]" value="'.$id.'" />';
+function rt_media_item_select(){ 
+    global $rt_media_query, $rt_media_backbone;
+	if($rt_media_backbone) {
+		echo '<input type="checkbox" name="move[]" value="<%= id %>" />';
+	} else if( is_rt_media_album() && isset($rt_media_query->media_query) && get_current_user_id() == $rt_media_query->media_query['media_author'] && $rt_media_query->action_query->action == 'edit' ) {
+        echo '<input type="checkbox" name="selected[]" value="'.  rt_media_id().'" />';
     }
 
 }
