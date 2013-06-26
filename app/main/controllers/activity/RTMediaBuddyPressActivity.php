@@ -54,7 +54,10 @@ class RTMediaBuddyPressActivity {
         wp_enqueue_script( 'rtmedia-backbone',false,array("rtmedia-backbone"),false,true);
         wp_localize_script('rtmedia-backbone', 'rtMedia_update_plupload_config', $params); ?>
         <div class="rt-media-container">
-            <input type="button" class='rt-media-add-media-button' id='rt-media-add-media-button-post-update'  value="<?php _e("Add Media");?>" />
+            <div id='rt-media-action-update'>
+                <input type="button" class='rt-media-add-media-button' id='rt-media-add-media-button-post-update'  value="<?php _e("Add Media");?>" />
+                <?php do_action("rtmedia_activity_update_privacy_hook"); ?>
+            </div>
             <div id="div-attache-rtmedia">
                 <div id="rt-media-whts-new-upload-container" >
                     <div id="rt-media-whts-new-drag-drop-area" class="drag-drop">
