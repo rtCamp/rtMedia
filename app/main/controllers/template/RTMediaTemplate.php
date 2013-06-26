@@ -128,9 +128,8 @@ class RTMediaTemplate {
                 return $this->get_default_template();
             } elseif( $rt_media_query->action_query->action == 'delete' && isset($rt_media_query->action_query->default) && $rt_media_query->action_query->default == 'delete' && count($_POST) ) {
                 $nonce = $_REQUEST['rt_media_bulk_delete_nonce'];
-
+                
                 $media = new RTMediaMedia();
-//                echo $rt_media_query->action_query->id
                 if (wp_verify_nonce($nonce, 'rt_media_bulk_delete_nonce') && isset($_POST['selected'])) {
                     $ids = $_POST['selected'];
                     foreach ( $ids as $id ) {
