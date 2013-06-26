@@ -161,7 +161,8 @@ class RTMediaFormHandler {
 
 		global $rt_media;
 
-		$options = $rt_media->options['rt-media-allowed-sizes'];
+
+		$options = $rt_media->options['rt-media-default-sizes'];
 
 		//container
 		echo '<div class="rt-table large-12">';

@@ -216,13 +216,10 @@ class RTMediaMedia {
                 $status = 0;
                 
                 if ( $media ) {
-//                print_r($media);
-		/* delete meta */
-		delete_rtmedia_meta( $id );
-                
-                wp_delete_attachment($media[0]->media_id,true);
-                
-                $status = $this->model->delete( array( 'id' => $id ) );
+                    /* delete meta */
+                    delete_rtmedia_meta( $id );
+                    wp_delete_post($media[0]->media_id,true);
+                    $status = $this->model->delete( array( 'id' => $id ) );
                 }
 
 		if ( $status == 0 ) {

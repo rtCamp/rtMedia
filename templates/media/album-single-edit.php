@@ -20,6 +20,8 @@ $media = $model->get_media(array('id'=>$rt_media_query->media_query['album_id'])
                                 <input type="submit" name="submit" value="Submit" />
 
     </form>
+    <?php
+    if (have_rt_media()) { ?>
     <br />
     <form class="rt-media-bulk-actions" method="post">
         <?php wp_nonce_field('rt_media_bulk_delete_nonce','rt_media_bulk_delete_nonce'); ?>
@@ -51,8 +53,7 @@ $media = $model->get_media(array('id'=>$rt_media_query->media_query['album_id'])
     </select>
         <input type="submit" class="rt-media-move-selected" name="move-selected" value="Move Selected" />
     </div>
-    <?php
-    if (have_rt_media()) { ?>
+    
 
 			<ul class="rt-media-list  large-block-grid-5">
 
@@ -86,7 +87,7 @@ $media = $model->get_media(array('id'=>$rt_media_query->media_query['album_id'])
 			<a id="rtMedia-galary-next" <?php echo $display; ?> href="<?php echo rt_media_pagination_next_link(); ?>">Next</a>
 
 		<?php } else { ?>
-			<p><?php echo __("Oops !! There's no media found for the request !!","rt-media"); ?></p>
+			<p><?php echo __("The album is empty.","rt-media"); ?></p>
 		<?php } ?>
     </form>
     
