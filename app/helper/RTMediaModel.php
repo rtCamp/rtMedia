@@ -53,8 +53,14 @@ class RTMediaModel extends RTDBModel {
             }else{
 				if(is_array($colvalue)) {
 					if(!isset($colvalue['compare']))
-						$colvalue['compare'] = 'IN';
-					$where .= " AND {$this->table_name}.{$colname} {$colvalue['compare']} ('". implode("','", $colvalue['value'])."')";
+						$compare = 'IN';
+					else
+						$compare  = $colvalue['compare'];
+					if(!isset($colvalue['value'])){
+						$colvalue['value'] = $colvalue;
+					}
+
+					$where .= " AND {$this->table_name}.{$colname} {$compare} ('". implode("','", $colvalue['value'])."')";
 
 				} else
 					$where .= " AND {$this->table_name}.{$colname} = '{$colvalue}'";
@@ -122,7 +128,7 @@ class RTMediaModel extends RTDBModel {
         }
         return $results;
     }
-    
+
     function get_user_albums($author_id, $offset, $per_page, $order_by = 'media_id desc'){
         global $wpdb;
         if (is_multisite() )
@@ -133,7 +139,7 @@ class RTMediaModel extends RTDBModel {
         if(is_integer($offset) && is_integer($per_page)) {
                 $sql .= ' LIMIT ' . $offset . ',' . $per_page;
         }
-        
+
         $results = $wpdb->get_results($sql);
         return $results;
     }

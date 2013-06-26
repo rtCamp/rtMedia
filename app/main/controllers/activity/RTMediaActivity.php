@@ -56,7 +56,9 @@ class RTMediaActivity {
 
 					$html .= '<div class="rt-media-item-title">';
 						$html .= '<h4 title="'. $media->media_title .'">';
+
 							$html .= '<a href="'. get_rt_media_permalink($media->id) .'">';
+
 								$html .= $media->media_title;
 							$html .= '</a>';
 						$html .= '</h4>';
