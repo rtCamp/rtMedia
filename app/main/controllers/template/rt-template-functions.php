@@ -453,7 +453,7 @@ add_action('rtmedia_before_item','rt_media_item_select');
 function rt_media_item_select($id){
     global $rt_media_query;
     if( is_rt_media_album() && isset($rt_media_query->media_query) && get_current_user_id() == $rt_media_query->media_query['media_author'] && $rt_media_query->action_query->action == 'edit' ) {
-        echo '<input type="checkbox" name="move" value="'.$id.'" />';
+        echo '<input type="checkbox" name="move[]" value="'.$id.'" />';
     }
 
 }
