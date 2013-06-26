@@ -40,10 +40,10 @@ class RTMediaQuery {
      *
      * @var array The actions recognised for the object
      */
-    private $actions = array(
-        'edit',
-        'delete',
-        'comments'
+    public $actions = array(
+        'edit'=> 'Edit',
+        'delete' => 'Delete',
+        'comment'=> 'Comment'
     );
     public $media = '';
     public $media_count = 0;
@@ -68,6 +68,9 @@ class RTMediaQuery {
 
         $this->interaction = $rt_media_interaction->routes['media'];
 
+
+        // action manipulator hook
+        $this->set_actions();
 
         //check and set the format to json, if needed
         $this->set_json_format();
@@ -225,15 +228,13 @@ class RTMediaQuery {
 
             $second_modifier = $raw_query[1];
 
-            // action manipulator hook
-            $this->set_actions();
 
             switch ($modifier_type) {
 
                 case 'nonce':
 
                     // /media/nonce/edit/ | /media/nonce/delete/
-                    if (in_array($second_modifier, $this->actions)) {
+                    if (array_key_exists($second_modifier, $this->actions)) {
 
                         $nonce_type = $second_modifier;
                     }
@@ -243,7 +244,7 @@ class RTMediaQuery {
                 case 'id':
 
                     // /media/23/edit/ | media/23/delete/ | /media/23/like/
-                    if (in_array($second_modifier, $this->actions)) {
+                    if (array_key_exists($second_modifier, $this->actions)) {
 
                         $action = $second_modifier;
                     }
@@ -261,7 +262,7 @@ class RTMediaQuery {
                 case 'media_type':
 
                     // /media/photos/edit/ | /media/videos/edit/
-                    if (in_array($second_modifier, $this->actions)) {
+                    if (array_key_exists($second_modifier, $this->actions)) {
 
                         $action = $second_modifier;
                         $bulk = true;

@@ -16,6 +16,7 @@ class RTMediaTemplate {
 
         add_action('wp_enqueue_scripts', array($this, 'enqueue_scripts'));
         add_action('init', array($this, 'enqueue_image_editor_scripts'));
+		
     }
 
     /**
