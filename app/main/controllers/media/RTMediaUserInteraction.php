@@ -120,7 +120,8 @@ class RTMediaUserInteraction {
 
 		$this->model = new RTMediaModel();
 		$actions = $this->model->get( array( 'id' => $this->action_query->id ) );
-		$actions = $actions[ 0 ]->$this->actions;
+		$actionwa = $this->actions;
+		$actions = $actions[ 0 ]->$actionwa;
 		if ( $this->increase === true ) {
 			$actions ++;
 		} else {

@@ -252,7 +252,7 @@ function rt_media_actions() {
 	foreach ($actions as $action=>$details ){
 		$button = '';
 		if($details[1]!=false){
-		$button .= '<form action="'.get_rt_media_permalink($rt_media_query->action_query->id).'/'.$action.'/" method="post">';
+		$button .= '<form action="'.get_rt_media_permalink($rt_media_query->action_query->id).$action.'/" method="post">';
 		$button .= wp_nonce_field( $rt_media_query->action_query->id, 'rt_media_user_action_'.$action.'_nonce', true, false );
 		$button .= '<input type="submit" class="rt-media-'.$action.'" value="'.$details[0].'">';
 		$button .= '</form>';
@@ -475,7 +475,7 @@ function rt_media_album_edit(){
 }
 
 add_action('rtmedia_before_item','rt_media_item_select');
-function rt_media_item_select(){ 
+function rt_media_item_select(){
     global $rt_media_query, $rt_media_backbone;
 	if($rt_media_backbone) {
 		echo '<input type="checkbox" name="move[]" value="<%= id %>" />';
