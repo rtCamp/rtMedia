@@ -756,7 +756,7 @@ function get_rt_media_permalink($id, $media_author=false) {
 		$parent_link = get_author_posts_url($author_id);
 	}
 
-	return trailingslashit($parent_link) . 'media/' . $id;
+	return trailingslashit($parent_link . 'media/' . $id);
 }
 
 function rt_media_update_site_option($option_name,$option_value) {

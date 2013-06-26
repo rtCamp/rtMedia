@@ -1,6 +1,6 @@
 <?php
-global $rt_media_query;
-//print_r($rt_media_query);
+global $rt_media_query,$rt_media_media;
+print_r($rt_media_media);
 
 $model = new RTMediaModel();
 
@@ -11,10 +11,12 @@ $media = $model->get_media(array('id'=>$rt_media_query->media_query['album_id'])
     <form method="post">
         <?php 
         RTMediaMedia::media_nonce_generator();
+        $post_details = get_post($media[0]->media_id);
+        $content = apply_filters('the_content', $post_details->post_content);
         ?>
         
         <input type="text" name="media_title" value="<?php echo esc_attr($media[0]->media_title); ?>" />
-        <?php wp_editor('','description',array('media_buttons'=>false)); ?>
+        <?php wp_editor($content,'description',array('media_buttons'=>false)); ?>
     <br />
     <span class="rt-media-selection"><a class="select-all" href="#">Select All Visible</a> | 
     <a class="unselect-all" href="#">Unselect All Visible</a> | </span>
@@ -24,13 +26,14 @@ $media = $model->get_media(array('id'=>$rt_media_query->media_query['album_id'])
         foreach($global_albums as $album) {
             $album_object = $model->get_media(array('media_id'=>$album),false,false);
             $global_album_ids[] = $album_object[0]->id;
-            echo '<option value="'.$album_object[0]->id.'">'.$album_object[0]->media_title.'</option>';
+            if ( ($album_object[0]->id != $rt_media_query->media_query['album_id'] ) )
+                echo '<option value="'.$album_object[0]->id.'">'.$album_object[0]->media_title.'</option>';
         }
         
         $album_objects = $model->get_media(array('media_author'=>$rt_media_query->media_query['media_author'], 'media_type' => 'album'),false,false);
         if ($album_objects) {
             foreach($album_objects as $album){
-                if (!in_array($album->id,$global_album_ids))
+                if (!in_array($album->id,$global_album_ids) && ($album->id != $rt_media_query->media_query['album_id'] ) )
                     echo '<option value="'.$album->id.'">'.$album->media_title.'</option>';
             }
         }

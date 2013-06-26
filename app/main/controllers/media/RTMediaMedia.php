@@ -191,7 +191,7 @@ class RTMediaMedia {
 			wp_update_post( $post_data );
 		}
 
-		$status = $this->model->update( $data, $where );
+                $status = $this->model->update( $data, $where );
 
 		if ( $status == 0 ) {
 			return false;
