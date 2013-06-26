@@ -80,7 +80,6 @@ class RTMediaTemplate {
 				 *
 				 */
 				if(is_rt_media_single()) {
-
 					$nonce = $_REQUEST['rt_media_media_nonce'];
 					if (wp_verify_nonce($nonce, 'rt_media_media_nonce')) {
 						$data = $_POST;
@@ -93,18 +92,38 @@ class RTMediaTemplate {
 						echo __("Ooops !!! Invalid access. No nonce was found !!","rt-media");
 					}
 				} elseif (is_rt_media_album()) {
-//                                    $nonce = $_REQUEST['rt_media_media_nonce'];
-//					if (wp_verify_nonce($nonce, 'rt_media_media_nonce')) {
-//                                            $data = $_POST;
-//                                            unset($data['rt_media_media_nonce']);
-//                                            unset($data['_wp_http_referer']);
-//                                            $media = new RTMediaMedia();
-//                                            $media->update($rt_media_query->action_query->id, $data, $rt_media_query->media[0]->media_id);
-//                                            $rt_media_query->query(false);
-//                                        } else{
-//						echo __("Ooops !!! Invalid access. No nonce was found !!","rt-media");
-//					}
-					 echo "media album update handling.";
+                                    $nonce = $_REQUEST['rt_media_media_nonce'];
+					if (wp_verify_nonce($nonce, 'rt_media_media_nonce')) {
+                                            $data = $_POST;
+                                            $album_move = $data['album'];
+                                            $move_ids = NULL;
+//                                            $data = $_POST['rt_media_album'];
+                                            unset($data['rt_media_media_nonce']);
+                                            unset($data['_wp_http_referer']);
+                                            unset($data['album']);
+                                            unset($data['submit']);
+                                            if ( isset($data['move'])){
+                                                $move_ids = $data['move'];
+                                                unset($data['move']);
+                                            }
+                                            $media = new RTMediaMedia();
+                                            $model = new RTMediaModel();
+
+                                            $album = $model->get_media(array('id'=>$rt_media_query->media_query['album_id']),false,false);
+                                            $media->update($album[0]->id, $data, $album[0]->media_id);
+                                            if ( !empty($move_ids) && is_array($move_ids)) {
+                                                $album_move_details = $model->get_media(array('id'=>$album_move),false,false);
+                                                foreach($move_ids as $media_id) {
+                                                    $media_details = $model->get_media(array('id'=>$media_id),false,false);
+                                                    $post_array['ID'] = $media_details[0]->media_id;
+                                                    $post_array['post_parent'] = $album_move_details[0]->media_id;
+                                                    wp_update_post($post_array);
+                                                    $media->update($media_details[0]->id, array('album_id' => $album_move_details[0]->id), $media_details[0]->media_id);
+                                                }
+                                            }
+                                        } else{
+						echo __("Ooops !!! Invalid access. No nonce was found !!","rt-media");
+					}
 				}
 				return $this->get_default_template();
 

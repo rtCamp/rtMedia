@@ -1,6 +1,6 @@
 <?php
-global $rt_media_query;
-//print_r($rt_media_query);
+global $rt_media_query,$rt_media_media;
+print_r($rt_media_media);
 
 $model = new RTMediaModel();
 
@@ -11,10 +11,12 @@ $media = $model->get_media(array('id'=>$rt_media_query->media_query['album_id'])
     <form method="post">
         <?php 
         RTMediaMedia::media_nonce_generator();
+        $post_details = get_post($media[0]->media_id);
+        $content = apply_filters('the_content', $post_details->post_content);
         ?>
         
         <input type="text" name="media_title" value="<?php echo esc_attr($media[0]->media_title); ?>" />
-        <?php wp_editor('','description',array('media_buttons'=>false)); ?>
+        <?php wp_editor($content,'description',array('media_buttons'=>false)); ?>
     <br />
     <span class="rt-media-selection"><a class="select-all" href="#">Select All Visible</a> | 
     <a class="unselect-all" href="#">Unselect All Visible</a> | </span>
