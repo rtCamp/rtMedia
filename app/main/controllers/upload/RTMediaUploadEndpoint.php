@@ -27,18 +27,34 @@ class RTMediaUploadEndpoint {
             $nonce = $_REQUEST['rt_media_upload_nonce'];
             $mode = $_REQUEST['mode'];
             $rtupload =false;
+			$activity_id = -1;
             if (wp_verify_nonce($nonce, 'rt_media_upload_nonce')) {
                 $model = new RTMediaUploadModel();
                 $this->upload = $model->set_post_object();
+				if(isset($_POST['activity_id']) && $_POST['activity_id']!=-1) {
+					$this->upload['activity_id'] = $_POST['activity_id'];
+					$activity_id = $_POST['activity_id'];
+				}
                 $rtupload = new RTMediaUpload($this->upload);
+				$mediaObj = new RTMediaMedia();
+				$media = $mediaObj->model->get(array('id'=>$rtupload->media_ids[0]));
+				if($activity_id==-1) {
+					$activity_id = $mediaObj->insert_activity($rtupload->media_ids[0], $media[0]);
+				} else {
+					$mediaObj->model->update(array( 'activity_id' => $activity_id ), array( 'id' => $rtupload->media_ids[0] ));
+				}
             }
             if(isset($_POST["redirect"]) && $_POST["redirect"]=="no" ){
                 // Ha ha ha
                 if(isset($_POST["activity_update"]) && $_POST["activity_update"]=="true"){
                     header('Content-type: application/json');
-                    echo json_encode($rtupload->attachment_ids);
-                    die();
-                }
+                    echo json_encode($rtupload->media_ids);
+				} else {
+					// Media Upload Case - on album/post/profile/group
+					$data = array('activity_id'=>$activity_id);
+					header('Content-type: application/json');
+					echo json_encode($data);
+				}
                 die();
             }else{
                 //wp_safe_redirect(wp_get_referer());

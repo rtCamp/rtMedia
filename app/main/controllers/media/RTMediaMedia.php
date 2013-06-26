@@ -153,12 +153,12 @@ class RTMediaMedia {
 
 
 		/* add media in rtMedia context */
-		$this->insert_media( $attachment_ids, $uploaded );
+		$media_ids = $this->insert_media( $attachment_ids, $uploaded );
 
 		/* action to perform any task after adding a media */
 		do_action( 'rt_media_after_add_media', $this );
 
-		return $attachment_ids;
+		return $media_ids;
 	}
 
 	/**
@@ -274,11 +274,11 @@ class RTMediaMedia {
 	 * @return boolean
 	 */
 	function activity_enabled() {
-		if ( ! class_exists( 'BuddyPress' ) )
-			return;
 
-		if ( ! bp_is_active( 'activity' ) )
-			return;
+		if ( !function_exists('bp_is_active') || ! bp_is_active( 'activity' ) )
+			return false;
+
+		return rt_media_get_site_option('rt-media-enable-on-activity');
 	}
 
 	/**
@@ -367,12 +367,12 @@ class RTMediaMedia {
 				'album_id' => $uploaded[ 'album_id' ],
 				'media_author' => $attachment[ 'post_author' ],
 				'media_title' => $attachment[ 'post_title' ],
-				'media_type' => $mime_type[ 0 ],
+				'media_type' => ($mime_type[ 0 ] == 'image') ? 'photo' : $mime_type[0],
 				'context' => $uploaded[ 'context' ],
 				'context_id' => $uploaded[ 'context_id' ],
 				'privacy' => $uploaded[ 'privacy' ]
 			);
-                        
+
 			$media_id[] = $this->model->insert( $media );
 
 		}
@@ -418,6 +418,8 @@ class RTMediaMedia {
 		$this->model->update(
 				array( 'activity_id' => $activity_id ), array( 'id' => $id )
 		);
+
+		return $activity_id;
 	}
 
 }
