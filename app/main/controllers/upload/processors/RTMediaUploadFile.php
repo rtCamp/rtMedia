@@ -10,7 +10,11 @@ class RTMediaUploadFile {
 
     var $files;
     var $fake = false;
-
+    var $uploaded = false;
+    
+    function __construct($uploaded) {
+        $this->uploaded = $uploaded;
+    }
     /**
      * Initialize the upload process
      *
@@ -60,13 +64,22 @@ class RTMediaUploadFile {
 
     function upload_dir($upload_dir) {
         global $rt_media_interaction;
-
-        if ($rt_media_interaction->context->type != 'group') {
-            $rtmedia_upload_prefix = 'users/';
-            $id = get_current_user_id();
-        } else {
-            $rtmedia_upload_prefix = 'groups/';
-            $id = $rt_media_interaction->context->id;
+        if(isset($this->uploaded["context"]) && isset($this->uploaded["context_id"])){
+            if ($this->uploaded["context"] != 'group') {
+                $rtmedia_upload_prefix = 'users/';
+                $id = get_current_user_id();
+            } else {
+                $rtmedia_upload_prefix = 'groups/';
+                $id = $this->uploaded["context_id"];
+            }
+        }else{
+            if ($rt_media_interaction->context->type != 'group') {
+                $rtmedia_upload_prefix = 'users/';
+                $id = get_current_user_id();
+            } else {
+                $rtmedia_upload_prefix = 'groups/';
+                $id = $rt_media_interaction->context->id;
+            }
         }
 
 
