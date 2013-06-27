@@ -28,22 +28,6 @@ if ( isset( $_POST[ 'backbone' ] ) )
 		<div class="rt-media-item-thumbnail">
 
             <img src="<?php rt_media_image(); ?>" >
-<<<<<<< HEAD
-        </a>
-    </div>
-
-    <div class="rt-media-item-title">
-        <h4 title="<?php echo rt_media_title(); ?>">
-            <?php do_action('rtmedia_before_item'); ?>
-            <a href="<?php rt_media_permalink(); ?>">
-                <?php echo rt_media_title(); ?>
-            </a>
-            <?php do_action('rtmedia_after_item'); ?>
-        </h4>
-    </div>
-
-</li>
-=======
 
 		</div>
 
@@ -58,4 +42,3 @@ if ( isset( $_POST[ 'backbone' ] ) )
 	</a>
 	<?php do_action( 'rtmedia_after_item' ); ?>
 </li>
->>>>>>> 965906b788036136fe0d4c3d941cdb3a673f42d3
