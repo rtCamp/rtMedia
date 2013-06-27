@@ -382,7 +382,7 @@ class RTMediaMedia {
 		$activity = new RTMediaActivity( $id, $media->privacy );
 		$activity_content = $activity->create_activity_html();
 		$user = get_userdata( $media->media_author );
-		$username = $user->login;
+		$username = '<a href="'.  get_rt_media_user_link($media->media_author).'">'.$user->user_nicename.'</a>';
 		$count = count($id);
 		$media_const = 'RTMEDIA_'.strtoupper($media->media_type);
 		if($count>1){
@@ -395,7 +395,7 @@ class RTMediaMedia {
 		$action = sprintf(
 				_n(
 						'%s added a %s', '%s added %d %s.', $count, 'rt-media'
-				), $username, $count, $media_str
+				), $username, $media->media_type, $media_str
 		);
 
 		$activity_args = array(
