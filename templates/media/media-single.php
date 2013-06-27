@@ -2,39 +2,33 @@
 
     <?php if (have_rt_media()) : rt_media(); ?>
 
-	    <form method="post" class="large-8 columns">
-			<?php echo rt_media_title_input(); ?>
+	<div class="rt-media-single-media columns large-8 small">
+
+			<?php rt_media_title(); ?>
 
 
-			<?php if( rt_media_request_action()!="edit" ) { ?>
 				<div class="rt-media-media">
 					<img src="<?php rt_media_image('large','src'); ?>">
 				</div>
-			<?php } ?>
+
+	</div>
+	<div class="rt-media-single-meta columns large-4">
+
+			<?php rt_media_description(); ?>
 
 			<?php
+
 			if(is_user_logged_in() && rt_media_edit_allowed()) {
-				if( rt_media_request_action()!="edit" ) { ?>
+			?>
 					<a href="<?php echo rt_media_permalink() . 'edit/'; ?>"><button type="button">Edit</button></a>
-				<?php } else {
-					rt_media_image_editor();
-				}
+			<?php
 			}?>
 
 			<?php
-				if( rt_media_delete_allowed() && rt_media_request_action()!="edit" ) {
+				if( rt_media_delete_allowed() ) {
 					rt_media_delete_form();
 				}
-
-				echo rt_media_description_input();
-				if (rt_media_request_action() == "edit") {
-					RTMediaMedia::media_nonce_generator(rt_media_id());
 			?>
-					<input type="submit" value="Save">
-					<a href="<?php rt_media_permalink(); ?>"><input type="button" value="Back"></a>
-			<?php } ?>
-		</form>
-
         <div class="rt-media-item-actions">
             <?php rt_media_actions(); ?>
         </div>
@@ -48,6 +42,7 @@
 				<?php rt_media_comment_form(); ?>
 			</div>
 		<?php //} ?>
+	</div>
 
     <?php else: ?>
         <p><?php echo __("Oops !! There's no media found for the request !!","rt-media"); ?></p>

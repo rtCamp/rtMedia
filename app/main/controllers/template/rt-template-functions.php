@@ -248,9 +248,7 @@ function rt_media_actions() {
     unset($actions['delete']);
     unset($actions['merge']);
 
-	new RTMediaLike();
-				new RTMediaFeatured();
-				new RTMediaCoverArt();
+	
 //        if (!is_rt_media_album())
 //            unset($actions['merge']);
     //render edit button here

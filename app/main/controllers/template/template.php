@@ -4,6 +4,7 @@ global $rt_media_query;
 if ( is_rt_media_album_gallery() ) {
 	$template = 'album-gallery';
 } elseif ( is_rt_media_album() || is_rt_media_gallery() ) {
+	$template = 'media-gallery';
 	if (
 			is_rt_media_album() &&
 			isset( $rt_media_query->media_query ) &&
@@ -11,10 +12,12 @@ if ( is_rt_media_album_gallery() ) {
 			$rt_media_query->action_query->action == 'edit'
 			)
 		$template = 'album-single-edit';
-	else
-		$template = 'media-gallery';
+
 } else if ( is_rt_media_single() ) {
 	$template = 'media-single';
+	if($rt_media_query->action_query->action == 'edit')
+		$template = 'media-single-edit';
+
 }
 
 $ajax = false;
