@@ -16,20 +16,29 @@ class RTMediaBuddyPressActivity {
         add_action("bp_after_activity_post_form", array(&$this, "bp_after_activity_post_form"));
         add_action("bp_activity_posted_update",array(&$this, "bp_activity_posted_update"),99,3);
         add_action("bp_groups_posted_update",array(&$this, "bp_groups_posted_update"),99,4);
-        
+		add_action("bp_init",array($this,'non_threaded_comments'));
     }
+	function non_threaded_comments() {
+		if(isset($_POST['action']) && $_POST['action']=='new_activity_comment') {
+			$activity_id = $_POST['form_id'];
+			$act = new BP_Activity_Activity($activity_id);
+
+			if($act->type=='rtmedia_activity_update')
+				$_POST['comment_id'] = $_POST['form_id'];
+		}
+	}
     function bp_groups_posted_update($content, $user_id, $group_id, $activity_id){
         $this->bp_activity_posted_update($content, $user_id, $activity_id);
     }
-    
+
     function bp_activity_posted_update($content, $user_id, $activity_id){
         if(isset($_POST["rtMedia_attached_files"]) && is_array($_POST["rtMedia_attached_files"])){
             $objActivity =  new RTMediaActivity($_POST["rtMedia_attached_files"],0,$content);
             global $wpdb, $bp;
             $wpdb->update($bp->activity->table_name,array("content"=>$objActivity->create_activity_html()),array("id"=>$activity_id));
         }
-        
-        
+
+
     }
     function bp_after_activity_post_form() {
         $url = $_SERVER["REQUEST_URI"];
@@ -67,7 +76,7 @@ class RTMediaBuddyPressActivity {
                 </div>
             </div>
         </div>
-<?php        
+<?php
     }
 
 }
