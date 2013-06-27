@@ -208,6 +208,8 @@ jQuery(function($) {
     if ($("#rtMedia-upload-button").length > 0) {
         var uploaderObj = new UploadView(rtMedia_plupload_config);
         
+		uploaderObj.initUploader();
+		
         uploaderObj.uploader.bind('UploadComplete', function(up, files) {
             activity_id = -1;
             galleryObj.reloadView();
@@ -274,7 +276,6 @@ jQuery(function($) {
             }
         });
 
-        uploaderObj.initUploader();
         $("#rtMedia-start-upload").click(function(e) {
             uploaderObj.uploadFiles(e);
         });
