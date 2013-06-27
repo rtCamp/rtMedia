@@ -216,13 +216,10 @@ class RTMediaMedia {
                 $status = 0;
 
                 if ( $media ) {
-//                print_r($media);
-		/* delete meta */
-		delete_rtmedia_meta( $id );
-
-                wp_delete_attachment($media[0]->media_id,true);
-
-                $status = $this->model->delete( array( 'id' => $id ) );
+                    /* delete meta */
+                    delete_rtmedia_meta( $id );
+                    wp_delete_post($media[0]->media_id,true);
+                    $status = $this->model->delete( array( 'id' => $id ) );
                 }
 
 		if ( $status == 0 ) {
@@ -339,7 +336,7 @@ class RTMediaMedia {
 	 */
 	function insert_album( $attributes ) {
 
-		$this->model->insert( $attributes );
+		return $this->model->insert( $attributes );
 	}
 
 	function set_media_type($mime_type) {
@@ -393,7 +390,7 @@ class RTMediaMedia {
 		$activity = new RTMediaActivity( $id, $media->privacy );
 		$activity_content = $activity->create_activity_html();
 		$user = get_userdata( $media->media_author );
-		$username = $user->login;
+		$username = '<a href="'.  get_rt_media_user_link($media->media_author).'">'.$user->user_nicename.'</a>';
 		$count = count($id);
 		$media_const = 'RTMEDIA_'.strtoupper($media->media_type);
 		if($count>1){
@@ -406,7 +403,7 @@ class RTMediaMedia {
 		$action = sprintf(
 				_n(
 						'%s added a %s', '%s added %d %s.', $count, 'rt-media'
-				), $username, $count, $media_str
+				), $username, $media->media_type, $media_str
 		);
 
 		$activity_args = array(

@@ -555,8 +555,16 @@ class RTMedia {
 		$media = new RTMediaMedia();
 		$media->delete_hook();
 
-		global $rt_media_ajax;
-		$rt_media_ajax = new RTMediaAJAX();
+
+
+
+				global $rt_media_ajax;
+				$rt_media_ajax = new RTMediaAJAX();
+
+				new RTMediaUserInteraction('like',true, __('Like','rt-media'));
+				new RTMediaFeatured();
+				new RTMediaCoverArt();
+
 	}
 
 	/**
@@ -640,9 +648,9 @@ function get_rt_media_user_link($id){
 }
 
 function rt_media_update_site_option($option_name,$option_value) {
-	update_site_option($option_name, $option_value);
-}
-
+        update_site_option($option_name, $option_value);
+    }
+    
 function rt_media_get_site_option($option_name,$default=false){
 	$return_val	 = get_site_option($option_name);
 	if($return_val === false){

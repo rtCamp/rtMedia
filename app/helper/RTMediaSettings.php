@@ -10,7 +10,8 @@ if (!class_exists('RTMediaSettings')) {
     class RTMediaSettings {
 
         public function __construct() {
-			add_action('admin_init', array($this, 'settings'),11);
+            if ( !(defined('DOING_AJAX') && DOING_AJAX) )
+                add_action('admin_init', array($this, 'settings'));
 //            if (is_multisite()) {
 //                add_action('network_admin_notices', array($this, 'privacy_notice'));
 //            } else {
@@ -73,7 +74,7 @@ if (!class_exists('RTMediaSettings')) {
          */
         public function settings() {
             global $rt_media, $rt_media_addon;
-
+            
 			// Save Settings first then proceed.
 			if(isset($_POST['rt-media-options-save'])) {
 
@@ -84,7 +85,7 @@ if (!class_exists('RTMediaSettings')) {
 				global $rt_media;
 				$rt_media->options = $options;
 			}
-
+			
             $rt_media_addon = new RTMediaAddon();
             add_settings_section('rtm-addons', __('BuddyPress Media Addons for Photos', 'rt-media'), array($rt_media_addon, 'get_addons'), 'rt-media-addons');
 
@@ -98,7 +99,7 @@ if (!class_exists('RTMediaSettings')) {
 
             //$rt_media_album_importer = new BPMediaAlbumimporter();
             //add_settings_section('rtm-rt-album-importer', __('BP-Album Importer', 'rt-media'), array($rt_media_album_importer, 'ui'), 'rt-media-importer');
-            register_setting('rt_media', 'rt_media_options', array($this, 'sanitize'));
+            //register_setting('rt_media', 'rt_media_options', array($this, 'sanitize'));
         }
 
         public function network_notices() {

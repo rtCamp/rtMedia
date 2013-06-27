@@ -17,7 +17,7 @@ class RTMediaUploadModel {
         'files' => false,
         'title' => false,
         'description' => false,
-		'media_author' => false
+        'media_author' => false
     );
 
 	/**
@@ -94,7 +94,7 @@ class RTMediaUploadModel {
 	 */
     function has_album_permissions(){
 		//yet to be coded for the privacy options of the album
-        return false;
+        return true;
     }
 
 	/**
