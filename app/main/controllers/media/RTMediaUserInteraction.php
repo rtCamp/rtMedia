@@ -42,6 +42,16 @@ class RTMediaUserInteraction {
 	 */
 	public $model;
 
+	public $interactor;
+
+	public $owner;
+
+	public $media;
+
+	public $others;
+
+	public $private;
+
 	/**
 	 * Initialise the user interaction
 	 *
@@ -59,7 +69,12 @@ class RTMediaUserInteraction {
 		$this->increase = $increase;
 		$this->others = $others;
 
+		$this->model = new RTMediaModel();
+
 		$this->set_label();
+		$this->set_media();
+		$this->set_interactor();
+		$this->set_owner();
 
 		// filter the default actions with this new one
 		add_filter( 'rt_media_query_actions', array( $this, 'register' ) );
@@ -77,12 +92,46 @@ class RTMediaUserInteraction {
 		}
 	}
 
+	function set_media(){
+		global $rt_media_query;
+
+		$this->action_query = $rt_media_query->action_query;
+
+		if ( ! isset( $this->action_query->id ) )
+			$this->media = false;
+		else
+			$this->media = $this->action_query->id;
+	}
+
+	function set_interactor(){
+		$this->interactor = get_current_user_id();
+	}
+
+	function set_owner(){
+		$this->owner = false;
+		$user = $this->model->get(array('id'=>$this->media));
+		if(!empty($user)){
+			$user = $user[0];
+			$this->owner = $user->media_author;
+		}
+
+	}
+
+	function set_privacy(){
+		$this->private = false;
+		if($this->owner === $this->interactor&& !$this->others){
+			$this->private = true;
+		}
+
+	}
+
 	/**
 	 *
 	 * @param array $actions The default array of actions
 	 * @return array $actions Filtered actions array
 	 */
 	function register( $actions ) {
+
 
 		$actions[ $this->action ] = array($this->label,$this->others);
 		return $actions;
@@ -103,12 +152,17 @@ class RTMediaUserInteraction {
 
 		if ( ! isset( $this->action_query->id ) )
 			return false;
+		$result= false;
+
 		do_action( 'rtmedia_pre_process_' . $this->action );
 
-		$result = $this->process();
+		if(!$this->private) $result = $this->process();
 
 		do_action( 'rtmedia_post_process_' . $this->action, $result );
-		die($result);
+
+		print_r($result);
+
+		die();
 	}
 
 	/**
@@ -117,9 +171,6 @@ class RTMediaUserInteraction {
 	 * @return integer New count
 	 */
 	function process() {
-
-
-		$this->model = new RTMediaModel();
 		$actions = $this->model->get( array( 'id' => $this->action_query->id ) );
 		$actionwa = $this->actions;
 		$actions = $actions[ 0 ]->$actionwa;

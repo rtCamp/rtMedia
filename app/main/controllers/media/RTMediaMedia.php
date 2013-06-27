@@ -263,7 +263,7 @@ class RTMediaMedia {
      *  Imports attachment as media
      */
     function import_attachment() {
-        
+
     }
 
     /**
@@ -416,7 +416,7 @@ class RTMediaMedia {
         $activity_args = array(
             'action' => $action,
             'content' => $activity_content,
-            'type' => 'activity_update',
+            'type' => 'rtmedia_update',
             'primary_link' => '',
             'item_id' => $id
         );
