@@ -41,7 +41,7 @@ function rt_media() {
 function rt_media_title(){
 
 	global $rt_media_backbone;
-	if($rt_media_backbone) {
+	if($rt_media_backbone['backbone']) {
 		echo '<%= media_title %>';
 	} else {
 		global $rt_media_media;
@@ -62,7 +62,7 @@ function rt_media_permalink() {
 
 	global $rt_media_backbone;
 
-	if($rt_media_backbone) {
+	if($rt_media_backbone['backbone']) {
 		echo '<%= rt_permalink %>';
 	} else {
 		echo get_rt_media_permalink(rt_media_id());
@@ -77,7 +77,7 @@ function rt_media_image($size = 'thumbnail', $return = 'src') {
     global $rt_media_media, $rt_media_backbone;
     $thumbnail_id = 0;
 
-	if($rt_media_backbone) {
+	if($rt_media_backbone['backbone']) {
 		if($return=="src")
 			echo '<%= guid %>';
 		if($return=="width")
@@ -322,8 +322,7 @@ function rt_media_url() {
 }
 
 function rt_media_comments_enabled() {
-    global $rt_media;
-    return $rt_media->get_option('comments-enabled') && is_user_logged_in();
+    return rt_media_get_site_option('general_enableComments') && is_user_logged_in();
 }
 
 /**
@@ -452,7 +451,7 @@ function rt_media_album_edit(){
 add_action('rtmedia_before_item','rt_media_item_select');
 function rt_media_item_select(){
     global $rt_media_query, $rt_media_backbone;
-	if($rt_media_backbone) {
+	if($rt_media_backbone['backbone'] && $rt_media_backbone['is_album'] && $rt_media_backbone['is_edit']) {
 		echo '<input type="checkbox" name="move[]" value="<%= id %>" />';
 	} else if( is_rt_media_album() && isset($rt_media_query->media_query) && get_current_user_id() == $rt_media_query->media_query['media_author'] && $rt_media_query->action_query->action == 'edit' ) {
         echo '<input type="checkbox" name="move[]" value="'.  rt_media_id().'" />';

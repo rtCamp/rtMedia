@@ -19,9 +19,18 @@
 	}
 
 	global $rt_media_backbone;
-	$rt_media_backbone = false;
+	$rt_media_backbone = array(
+		'backbone' => false,
+		'is_album' => false,
+		'is_edit' => false
+	);
 	if(isset($_POST['backbone']))
-		$rt_media_backbone = $_POST['backbone'];
+		$rt_media_backbone['backbone'] = $_POST['backbone'];
+	if(isset($_POST['is_album']))
+		$rt_media_backbone['is_album'] = $_POST['is_album'];
+	if(isset($_POST['is_edit']))
+		$rt_media_backbone['is_edit'] = $_POST['is_edit'];
+
 ?>
 <li class="rt-media-list-item">
     <div class="rt-media-item-thumbnail">

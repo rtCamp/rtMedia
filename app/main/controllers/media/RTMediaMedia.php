@@ -210,18 +210,18 @@ class RTMediaMedia {
 	function delete( $id ) {
 
 		do_action( 'rt_media_before_delete_media', $this );
-                
+
                 $media = $this->model->get(array( 'id' => $id ),false,false);
-                
+
                 $status = 0;
-                
+
                 if ( $media ) {
 //                print_r($media);
 		/* delete meta */
 		delete_rtmedia_meta( $id );
-                
+
                 wp_delete_attachment($media[0]->media_id,true);
-                
+
                 $status = $this->model->delete( array( 'id' => $id ) );
                 }
 
@@ -342,6 +342,14 @@ class RTMediaMedia {
 		$this->model->insert( $attributes );
 	}
 
+	function set_media_type($mime_type) {
+		switch($mime_type) {
+			case 'image': return 'photo';
+			case 'audio': return 'music';
+			default:  return $mime_type;
+		}
+	}
+
 	/**
 	 *
 	 * @param type $attachment_ids
@@ -367,7 +375,7 @@ class RTMediaMedia {
 				'album_id' => $uploaded[ 'album_id' ],
 				'media_author' => $attachment[ 'post_author' ],
 				'media_title' => $attachment[ 'post_title' ],
-				'media_type' => ($mime_type[ 0 ] == 'image') ? 'photo' : $mime_type[0],
+				'media_type' => $this->set_media_type($mime_type[ 0 ]),
 				'context' => $uploaded[ 'context' ],
 				'context_id' => $uploaded[ 'context_id' ],
 				'privacy' => $uploaded[ 'privacy' ]
