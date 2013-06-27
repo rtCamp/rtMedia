@@ -248,6 +248,9 @@ function rt_media_actions() {
     unset($actions['delete']);
     unset($actions['merge']);
 
+	new RTMediaLike();
+				new RTMediaFeatured();
+				new RTMediaCoverArt();
 //        if (!is_rt_media_album())
 //            unset($actions['merge']);
     //render edit button here
@@ -489,7 +492,7 @@ function rt_media_user_album_list() {
                 $option .= '<option value="' . $album->id . '">' . $album->media_title . '</option>';
         }
     }
-    
+
     if ( $option )
         return $option;
     else
@@ -499,7 +502,7 @@ function rt_media_user_album_list() {
 add_action('rtmedia_before_media_gallery', 'rt_media_create_album');
 function rt_media_create_album(){
     global $rt_media_query;
-    
+
     if (bp_displayed_user_id() == get_current_user_id() ) {
         if(isset($rt_media_query->query['context']) && !isset($rt_media_query->media_query['album_id']) && in_array($rt_media_query->query['context'],array('profile','group'))){ ?>
             <input type=button class="button rt-media-create-new-album-button" value="Create New Album" />
