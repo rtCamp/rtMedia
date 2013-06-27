@@ -347,6 +347,14 @@ class RTMediaMedia {
         return $this->model->insert($attributes);
     }
 
+    function set_media_type($mime_type) {
+        switch ($mime_type) {
+            case 'image': return 'photo';
+            case 'audio': return 'music';
+            default: return $mime_type;
+        }
+    }
+
     /**
      *
      * @param type $attachment_ids

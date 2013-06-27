@@ -411,7 +411,7 @@ function rt_media_image_editor() {
 
 function rt_media_comment_form() {
 
-    $html = '<form method="post" action="' . rt_media_url() . '/comments" style="width: 400px;">';
+    $html = '<form method="post" action="' . get_rt_media_permalink(rt_media_id()) . 'comment/" style="width: 400px;">';
     $html .= '<textarea rows="4" name="comment_content" id="comment_content"></textarea>';
     $html .= '<input type="submit" value="Comment">';
     echo $html;
@@ -421,7 +421,7 @@ function rt_media_comment_form() {
 
 function rt_media_delete_form() {
 
-    $html = '<form method="post">';
+    $html = '<form method="post" acction="' . get_rt_media_permalink(rt_media_id()) . 'delete/">';
     $html .= '<input type="hidden" name="id" id="id" value="' . rt_media_id() . '">';
     $html .= '<input type="hidden" name="request_action" id="request_action" value="delete">';
     echo $html;
@@ -469,19 +469,15 @@ function delete_rtmedia_meta($id = false, $key = false) {
 
 function rt_media_user_album_list() {
     global $rt_media_query;
-//    print_r($rt_media_query);
     $global_albums = get_site_option('rt-media-global-albums');
     $option = NULL;
     foreach ($global_albums as $album) {
         $model = new RTMediaModel();
-        $album_object = $model->get_media(array('media_id' => $album), false, false);
+        $album_object = $model->get_media(array('id' => $album), false, false);
         $global_album_ids[] = $album_object[0]->id;
         if ( (isset($rt_media_query->media_query['album_id']) && ($album_object[0]->id != $rt_media_query->media_query['album_id'])) || !isset($rt_media_query->media_query['album_id']))
             $option .= '<option value="' . $album_object[0]->id . '">' . $album_object[0]->media_title . '</option>';
     }
-//    get_current_user
-//    echo bp_profile_group_name();
-//    echo get_query_var('author'); die;
     $album_objects = $model->get_media(array('media_author' => get_current_user_id(), 'media_type' => 'album'), false, false);
     if ($album_objects) {
         foreach ($album_objects as $album) {
@@ -518,8 +514,7 @@ function rt_media_album_edit() {
         return;
 
     global $rt_media_query;
-
-    if (isset($rt_media_query->media_query) && get_current_user_id() == $rt_media_query->media_query['media_author']) {
+    if (isset($rt_media_query->media_query) && get_current_user_id() == $rt_media_query->media_query['media_author'] && !in_arraY($rt_media_query->media_query['album_id'],get_site_option('rt-media-global-albums'))) {
         ?>
         <a class="alignleft" href="edit/"><input type="button" class="button rt-media-edit" value="<?php _e('Edit','rt-media'); ?>" /></a>
         <form method="post" class="album-delete-form alignleft" action="delete/">
