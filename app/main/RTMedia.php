@@ -551,7 +551,8 @@ class RTMedia {
 			}
 		}
 
-		new RTMediaBuddyPressActivity();
+		global $rtmedia_buddypress_activity;
+		$rtmedia_buddypress_activity = new RTMediaBuddyPressActivity();
 		$media = new RTMediaMedia();
 		$media->delete_hook();
 

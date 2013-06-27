@@ -17,7 +17,19 @@ class RTMediaBuddyPressActivity {
         add_action("bp_activity_posted_update",array(&$this, "bp_activity_posted_update"),99,3);
         add_action("bp_groups_posted_update",array(&$this, "bp_groups_posted_update"),99,4);
 		add_action("bp_init",array($this,'non_threaded_comments'));
+		add_action("bp_activity_comment_posted", array($this,"comment_sync"),10,2);
     }
+	function comment_sync($comment_id,$param) {
+
+		// comment_id 40
+		// Array( [id] => [content] => testing [user_id] => 1 [activity_id] => 26 [parent_id] => 26)
+		$activity = new BP_Activity_Activity($param['activity_id']);
+		if($activity->type=='rtmedia_update') {
+			$media_id = $activity->item_id;
+			$comment = new RTMediaComment();
+			$comment->add(array('comment_content'=>$param['content'], 'comment_post_ID'=>$media_id));
+		}
+	}
 	function non_threaded_comments() {
 		if(isset($_POST['action']) && $_POST['action']=='new_activity_comment') {
 			$activity_id = $_POST['form_id'];
