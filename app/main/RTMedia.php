@@ -619,6 +619,8 @@ class RTMedia {
 	}
 
 	function enqueue_scripts_styles() {
+                wp_enqueue_script('bp-media-mejs', RTMEDIA_URL . 'lib/media-element/mediaelement-and-player.min.js', '', RTMEDIA_VERSION);
+                wp_enqueue_style('bp-media-mecss', RTMEDIA_URL . 'lib/media-element/mediaelementplayer.min.css', '', RTMEDIA_VERSION);
 		wp_enqueue_style('rt-media-main', RTMEDIA_URL . 'app/assets/css/main.css', '', RTMEDIA_VERSION);
 		wp_enqueue_script('rt-media-main', RTMEDIA_URL . 'app/assets/js/rtMedia.js', '', RTMEDIA_VERSION);
 		wp_enqueue_style('rt-media-magnific', RTMEDIA_URL . 'lib/magnific/magnific.css', '', RTMEDIA_VERSION);
