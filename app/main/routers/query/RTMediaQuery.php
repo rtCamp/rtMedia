@@ -88,20 +88,6 @@ class RTMediaQuery {
 
             $this->query($args);
         }
-
-
-		$is_album = $this->is_album();
-		$is_edit = false;
-		if(isset($this->action_query->action) && $this->action_query->action=="edit")
-
-		(isset($this->action_query->action) && $this->action_query->action=="edit") ? true : false ;
-		echo 'is_album : ';
-		print_r($this->is_album());
-		echo 'media_author : ';
-		print_r($this->media_query);
-		echo 'action : ';
-		print_r($this->action_query->action);
-
     }
 
     /**

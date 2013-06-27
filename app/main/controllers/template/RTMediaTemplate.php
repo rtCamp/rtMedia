@@ -188,7 +188,7 @@ class RTMediaTemplate {
 //                    print_r($album_contents); die;
                     $album_move_details = $model->get_media(array('id' => $_POST['album']), false, false);
                     foreach ($album_contents as $album_media) {
-                        
+
                             $media_details = $model->get_media(array('id' => $album_media->id), false, false);
                             $post_array['ID'] = $album_media->media_id;
                             $post_array['post_parent'] = $album_move_details[0]->media_id;
@@ -199,11 +199,11 @@ class RTMediaTemplate {
                 }
                 wp_safe_redirect(get_rt_media_user_link(get_current_user_id()) . 'media/album/');
                 exit;
-            } else if ($rt_media_query->action_query->action == 'comments') {
+            } else if ($rt_media_query->action_query->action == 'comment') {
 
                 if (isset($rt_media_query->action_query->media_type) && !count($_POST)) {
                     /**
-                     * /media/comments [GET]
+                     * /media/comment [GET]
                      *
                      */
                     $media_array = array();
