@@ -353,8 +353,7 @@ function rt_media_url() {
 }
 
 function rt_media_comments_enabled() {
-    global $rt_media;
-    return $rt_media->get_option('comments-enabled') && is_user_logged_in();
+    return rt_media_get_site_option('general_enableComments') && is_user_logged_in();
 }
 
 /**

@@ -195,6 +195,7 @@ if (!class_exists('RTMediaAdmin')) {
                                                                         }?>
 									<div class="clearfix">&nbsp;</div>
 									<div class="row">
+										<input type="hidden" name="rt-media-options-save" value="true">
 										<input type="submit" id="rt-media-settings-submit" class="rt-media-settings-submit button" value="<?php echo __("Save Settings","rt-media"); ?>">
 									</div>
 									<div class="rt-link alignright"><?php _e('By', 'rt-media'); ?> <a href="http://rtcamp.com/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media" title="<?php _e('Empowering The Web With WordPress', 'rt-media'); ?>"><img src="<?php echo RTMEDIA_URL; ?>app/assets/img/rtcamp-logo.png"></a></div>
