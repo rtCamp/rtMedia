@@ -16,15 +16,22 @@ class RTMediaFeatured extends RTMediaUserInteraction{
 	 *
 	 */
 	function __construct() {
-		if(!class_exists('BuddyPress')) return;
-
 		$label = __('Set as Featured', 'rt-media');
 		parent::__construct('featured',false, $label);
 	}
 
 	function init( $user_id = false ) {
 		if ( ! $user_id ) {
-			$user = bp_displayed_user_id();
+			if(!class_exists('BuddyPress')){
+				$user = bp_displayed_user_id();
+			}elseif(is_author()){
+				$curauth = (get_query_var('author_name')) ?
+				get_user_by('slug', get_query_var('author_name')) :
+					get_userdata(get_query_var('author'));
+				$user = $curauth->ID;
+			} else {
+				return false;
+			}
 		} else {
 			$user = $user_id;
 		}
@@ -38,14 +45,19 @@ class RTMediaFeatured extends RTMediaUserInteraction{
 			return;
 		}
 
-		$user = bp_loggedin_user_id();
+		$user = get_current_user_id();
 
-		bp_update_user_meta( $user, 'bp_media_featured_media', $media_id );
+		update_user_meta( $user, 'rtmedia_featured_media', $media_id );
 		$this->get();
 	}
 
 	function get() {
-		$this->featured = bp_get_user_meta( $this->user, 'bp_media_featured_media', true );
+		$legacy_featured = bp_get_user_meta( $this->user, 'bp_media_featured_media', true );
+		if(!$legacy_featured || $legacy_featured=''){
+			$this->set($legacy_featured);
+			bp_delete_user_meta($this->user, 'bp_media_featured_media');
+		}
+		$this->featured = get_user_meta($this->user, 'rtmedia_featured_media', true );
 	}
 
 	function settings() {

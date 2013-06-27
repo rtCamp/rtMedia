@@ -34,7 +34,7 @@ class RTMediaCoverArt extends RTMediaUserInteraction{
 		$album = $media->album_id;
 
 		$this->model->update(array('cover_art',$media_id),array('id'=>$album));
-		die(1);
+		return 1;
 	}
 
 }

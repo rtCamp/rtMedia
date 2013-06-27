@@ -105,9 +105,10 @@ class RTMediaUserInteraction {
 			return false;
 		do_action( 'rtmedia_pre_process_' . $this->action );
 
-		$this->process();
+		$result = $this->process();
 
-		do_action( 'rtmedia_post_process_' . $this->action );
+		do_action( 'rtmedia_post_process_' . $this->action, $result );
+		die($result);
 	}
 
 	/**
@@ -129,7 +130,7 @@ class RTMediaUserInteraction {
 		}
 
 		$this->model->update( array( $this->actions => $actions ), array( 'id' => $this->action_query->id ) );
-		die( $actions );
+		return $actions;
 	}
 
 }
