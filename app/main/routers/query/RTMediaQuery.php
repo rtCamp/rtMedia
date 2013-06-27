@@ -343,7 +343,7 @@ class RTMediaQuery {
          * set action query object
          * setting parameters in action query object for pagination
          */
-        $per_page_media = intval(rt_media_get_site_option('rt-media-per-page-media', 10));
+        $per_page_media = $rt_media->options['general_perPageMedia'];
 
 
         $this->action_query = (object) array(
@@ -433,7 +433,7 @@ class RTMediaQuery {
             }
         }
 
-        
+
         if ($this->is_album_gallery()) {
             if ($order_by == ' ')
                 $pre_media = $this->model->get_user_albums($author, ($this->action_query->page - 1) * $this->action_query->per_page_media, $this->action_query->per_page_media);
@@ -449,7 +449,7 @@ class RTMediaQuery {
                 $pre_media = $this->model->get_media($this->media_query, ($this->action_query->page - 1) * $this->action_query->per_page_media, $this->action_query->per_page_media);
             else
                 $pre_media = $this->model->get_media($this->media_query, ($this->action_query->page - 1) * $this->action_query->per_page_media, $this->action_query->per_page_media, $order_by);
-            
+
             /**
              * count total medias in album irrespective of pagination
              */
