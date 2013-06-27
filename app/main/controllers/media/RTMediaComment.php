@@ -73,7 +73,7 @@ class RTMediaComment {
 
 	function remove($id) {
 
-		do_action('rt_media_before_add_comment', $attr);
+		do_action('rt_media_before_remove_comment', $attr);
 	}
 }
 

@@ -410,7 +410,7 @@ function rt_media_image_editor() {
 
 function rt_media_comment_form() {
 
-    $html = '<form method="post" action="' . rt_media_url() . '/comments" style="width: 400px;">';
+    $html = '<form method="post" action="' . get_rt_media_permalink(rt_media_id()) . 'comment/" style="width: 400px;">';
     $html .= '<textarea rows="4" name="comment_content" id="comment_content"></textarea>';
     $html .= '<input type="submit" value="Comment">';
     echo $html;
@@ -420,7 +420,7 @@ function rt_media_comment_form() {
 
 function rt_media_delete_form() {
 
-    $html = '<form method="post">';
+    $html = '<form method="post" acction="' . get_rt_media_permalink(rt_media_id()) . 'delete/">';
     $html .= '<input type="hidden" name="id" id="id" value="' . rt_media_id() . '">';
     $html .= '<input type="hidden" name="request_action" id="request_action" value="delete">';
     echo $html;
@@ -484,7 +484,7 @@ function rt_media_user_album_list() {
                 $option .= '<option value="' . $album->id . '">' . $album->media_title . '</option>';
         }
     }
-    
+
     if ( $option )
         return $option;
     else
@@ -494,7 +494,7 @@ function rt_media_user_album_list() {
 add_action('rtmedia_before_media_gallery', 'rt_media_create_album');
 function rt_media_create_album(){
     global $rt_media_query;
-    
+
     if (bp_displayed_user_id() == get_current_user_id() ) {
         if(isset($rt_media_query->query['context']) && !isset($rt_media_query->media_query['album_id']) && in_array($rt_media_query->query['context'],array('profile','group'))){ ?>
             <input type=button class="button rt-media-create-new-album-button" value="Create New Album" />
