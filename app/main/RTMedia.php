@@ -617,7 +617,7 @@ class RTMedia {
                 wp_enqueue_script('bp-media-mejs', RTMEDIA_URL . 'lib/media-element/mediaelement-and-player.min.js', '', RTMEDIA_VERSION);
                 wp_enqueue_style('bp-media-mecss', RTMEDIA_URL . 'lib/media-element/mediaelementplayer.min.css', '', RTMEDIA_VERSION);
 		wp_enqueue_style('rt-media-main', RTMEDIA_URL . 'app/assets/css/main.css', '', RTMEDIA_VERSION);
-		wp_enqueue_script('rt-media-main', RTMEDIA_URL . 'app/assets/js/rtMedia.js', '', RTMEDIA_VERSION);
+		wp_enqueue_script('rt-media-main', RTMEDIA_URL . 'app/assets/js/rtMedia.js', array('jquery','bp-media-mejs'), RTMEDIA_VERSION);
 		wp_enqueue_style('rt-media-magnific', RTMEDIA_URL . 'lib/magnific/magnific.css', '', RTMEDIA_VERSION);
 		wp_enqueue_script('rt-media-magnific', RTMEDIA_URL . 'lib/magnific/magnific.js', '', RTMEDIA_VERSION);
 
