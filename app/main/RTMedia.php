@@ -556,14 +556,9 @@ class RTMedia {
 		$media->delete_hook();
 
 
-
-
 				global $rt_media_ajax;
 				$rt_media_ajax = new RTMediaAJAX();
 
-				new RTMediaUserInteraction('like',true, __('Like','rt-media'));
-				new RTMediaFeatured();
-				new RTMediaCoverArt();
 
 	}
 
@@ -619,6 +614,8 @@ class RTMedia {
 	}
 
 	function enqueue_scripts_styles() {
+                wp_enqueue_script('bp-media-mejs', RTMEDIA_URL . 'lib/media-element/mediaelement-and-player.min.js', '', RTMEDIA_VERSION);
+                wp_enqueue_style('bp-media-mecss', RTMEDIA_URL . 'lib/media-element/mediaelementplayer.min.css', '', RTMEDIA_VERSION);
 		wp_enqueue_style('rt-media-main', RTMEDIA_URL . 'app/assets/css/main.css', '', RTMEDIA_VERSION);
 		wp_enqueue_script('rt-media-main', RTMEDIA_URL . 'app/assets/js/rtMedia.js', '', RTMEDIA_VERSION);
 		wp_enqueue_style('rt-media-magnific', RTMEDIA_URL . 'lib/magnific/magnific.css', '', RTMEDIA_VERSION);
@@ -650,7 +647,7 @@ function get_rt_media_user_link($id){
 function rt_media_update_site_option($option_name,$option_value) {
         update_site_option($option_name, $option_value);
     }
-    
+
 function rt_media_get_site_option($option_name,$default=false){
 	$return_val	 = get_site_option($option_name);
 	if($return_val === false){
