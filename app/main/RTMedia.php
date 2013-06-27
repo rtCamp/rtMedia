@@ -144,29 +144,29 @@ class RTMedia {
 	 */
 	function set_allowed_types(){
 		$allowed_types = array(
-			array(
+			'photo' => array(
 					'name'	=> 'photo',
 					'plural' => 'photos',
 					'label' => __('Photo','rt-media'),
 					'plural_label' => __('Photos','rt-media'),
 					'extn' => array('jpeg', 'png'),
-					'thumbnail' => RTMEDIA_URL.'assets/img/image_thumb.png'
+					'thumbnail' => RTMEDIA_URL.'app/assets/img/image_thumb.png'
 				),
-			array(
+			'video' => array(
 					'name'	=> 'video',
 					'plural' => 'videos',
 					'label' => __('Video','rt-media'),
 					'plural_label' => __('Videos','rt-media'),
 					'extn' => array('mp4'),
-					'thumbnail' => RTMEDIA_URL.'assets/img/video_thumb.png'
+					'thumbnail' => RTMEDIA_URL.'app/assets/img/video_thumb.png'
 				),
-			array(
+			'music' => array(
 					'name'	=> 'music',
 					'plural' => 'music',
 					'label' => __('Music','rt-media'),
 					'plural_label' => __('Music','rt-media'),
 					'extn' => array('mp3'),
-					'thumbnail' => RTMEDIA_URL.'assets/img/audio_thumb.png'
+					'thumbnail' => RTMEDIA_URL.'app/assets/img/audio_thumb.png'
 				)
 		);
 
