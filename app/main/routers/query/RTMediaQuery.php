@@ -199,7 +199,7 @@ class RTMediaQuery {
                 }
 
                 // requesting an upload screen /media/upload/
-            }elseif (in_array($modifier_value, $this->actions)){
+            }elseif (array_key_exists($modifier_value, $this->actions)){
 				// /media/edit/ | media/delete/ | /media/like/
 
                         $action = $modifier_value;
@@ -419,7 +419,7 @@ class RTMediaQuery {
             }
         }
 
-
+        
         if ($this->is_album_gallery()) {
             if ($order_by == ' ')
                 $pre_media = $this->model->get_user_albums($author, ($this->action_query->page - 1) * $this->action_query->per_page_media, $this->action_query->per_page_media);
@@ -435,7 +435,7 @@ class RTMediaQuery {
                 $pre_media = $this->model->get_media($this->media_query, ($this->action_query->page - 1) * $this->action_query->per_page_media, $this->action_query->per_page_media);
             else
                 $pre_media = $this->model->get_media($this->media_query, ($this->action_query->page - 1) * $this->action_query->per_page_media, $this->action_query->per_page_media, $order_by);
-
+            
             /**
              * count total medias in album irrespective of pagination
              */

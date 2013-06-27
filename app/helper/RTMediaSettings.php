@@ -10,7 +10,8 @@ if (!class_exists('RTMediaSettings')) {
     class RTMediaSettings {
 
         public function __construct() {
-            add_action('admin_init', array($this, 'settings'));
+            if ( !(defined('DOING_AJAX') && DOING_AJAX) )
+                add_action('admin_init', array($this, 'settings'));
 //            if (is_multisite()) {
 //                add_action('network_admin_notices', array($this, 'privacy_notice'));
 //            } else {
@@ -32,7 +33,7 @@ if (!class_exists('RTMediaSettings')) {
             global $rt_media, $rt_media_addon;
             
 			// Save Settings first then proceed.
-			if(isset($_POST) && count($_POST)) {
+			if(isset($_POST) && count($_POST) && isset( $_POST['rt-media-options'] )) {
 
 				$options = $_POST['rt-media-options'];
                                 
