@@ -336,7 +336,7 @@ class RTMediaMedia {
 	 */
 	function insert_album( $attributes ) {
 
-		$this->model->insert( $attributes );
+		return $this->model->insert( $attributes );
 	}
 
 	/**

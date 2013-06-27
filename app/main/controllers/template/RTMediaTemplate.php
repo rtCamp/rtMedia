@@ -48,9 +48,6 @@ class RTMediaTemplate {
 
         global $rt_media_query, $rt_media_interaction, $rt_media_media;
 
-//        print_r($rt_media_query->action_query);
-//        print_r($rt_media_interaction->context->type);
-
         do_action('rtmedia_pre_template');
 
         do_action('rtmedia_pre_action_' . $rt_media_query->action_query->action);

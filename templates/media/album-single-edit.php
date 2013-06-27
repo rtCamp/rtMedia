@@ -33,7 +33,7 @@ $media = $model->get_media(array('id' => $rt_media_query->media_query['album_id'
             <div class="rt-media-move-container">
                 <?php $global_albums = get_site_option('rt-media-global-albums'); ?>
                 <?php _e('Move selected media to', 'rt-media'); ?>
-                <?php echo rt_media_user_album_list(); ?>
+                <?php echo '<select name="album" class="rt-media-user-album-list">'.rt_media_user_album_list().'</select>'; ?>
                 <input type="submit" class="rt-media-move-selected" name="move-selected" value="Move Selected" />
             </div>
 

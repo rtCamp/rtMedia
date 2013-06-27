@@ -1511,3 +1511,7 @@
 .rt-media-container .rt-media-merge-container {
   display: none;
 }
+/* line 96, ../sass/main.scss */
+.rt-media-container .rt-media-create-new-album-container {
+  display: none;
+}

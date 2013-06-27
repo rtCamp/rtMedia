@@ -33,7 +33,7 @@ if (!class_exists('RTMediaSettings')) {
             global $rt_media, $rt_media_addon;
             
 			// Save Settings first then proceed.
-			if(isset($_POST) && count($_POST)) {
+			if(isset($_POST) && count($_POST) && isset( $_POST['rt-media-options'] )) {
 
 				$options = $_POST['rt-media-options'];
                                 

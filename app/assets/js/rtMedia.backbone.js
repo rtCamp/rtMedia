@@ -207,7 +207,7 @@ jQuery(function($) {
 
     if ($("#rtMedia-upload-button").length > 0) {
         var uploaderObj = new UploadView(rtMedia_plupload_config);
-
+        
         uploaderObj.uploader.bind('UploadComplete', function(up, files) {
             activity_id = -1;
             galleryObj.reloadView();
@@ -255,7 +255,10 @@ jQuery(function($) {
         });
         uploaderObj.uploader.bind('BeforeUpload', function(up, file) {
             up.settings.multipart_params.activity_id = activity_id;
-
+            if ($('.rt-media-user-album-list').length > 0)
+                up.settings.multipart_params.album_id = $('.rt-media-user-album-list').find(":selected").val();
+            else if ( $('.rt-media-current-album').length > 0 )
+                up.settings.multipart_params.album_id = $('.rt-media-current-album').val();
         });
 
         uploaderObj.uploader.bind('FileUploaded', function(up, file, res) {

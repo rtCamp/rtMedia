@@ -469,31 +469,49 @@ function delete_rtmedia_meta($id = false, $key = false) {
 
 function rt_media_user_album_list() {
     global $rt_media_query;
+//    print_r($rt_media_query);
     $global_albums = get_site_option('rt-media-global-albums');
     $option = NULL;
     foreach ($global_albums as $album) {
         $model = new RTMediaModel();
         $album_object = $model->get_media(array('media_id' => $album), false, false);
         $global_album_ids[] = $album_object[0]->id;
-        if (($album_object[0]->id != $rt_media_query->media_query['album_id']))
+        if ( (isset($rt_media_query->media_query['album_id']) && ($album_object[0]->id != $rt_media_query->media_query['album_id'])) || !isset($rt_media_query->media_query['album_id']))
             $option .= '<option value="' . $album_object[0]->id . '">' . $album_object[0]->media_title . '</option>';
     }
-    $album_objects = $model->get_media(array('media_author' => $rt_media_query->media_query['media_author'], 'media_type' => 'album'), false, false);
+//    get_current_user
+//    echo bp_profile_group_name();
+//    echo get_query_var('author'); die;
+    $album_objects = $model->get_media(array('media_author' => get_current_user_id(), 'media_type' => 'album'), false, false);
     if ($album_objects) {
         foreach ($album_objects as $album) {
-            if (!in_array($album->id, $global_album_ids) && ($album->id != $rt_media_query->media_query['album_id'] ))
+            if (!in_array($album->id, $global_album_ids) && (( isset($rt_media_query->media_query['album_id']) && ($album->id != $rt_media_query->media_query['album_id'])) || !isset($rt_media_query->media_query['album_id']) ))
                 $option .= '<option value="' . $album->id . '">' . $album->media_title . '</option>';
         }
     }
     
     if ( $option )
-        return '<select name="album">'.$option.'</select>';
+        return $option;
     else
         return false;
 }
 
-add_action('rtmedia_before_media_gallery', 'rt_media_album_edit');
+add_action('rtmedia_before_media_gallery', 'rt_media_create_album');
+function rt_media_create_album(){
+    global $rt_media_query;
+    
+    if (bp_displayed_user_id() == get_current_user_id() ) {
+        if(isset($rt_media_query->query['context']) && !isset($rt_media_query->media_query['album_id']) && in_array($rt_media_query->query['context'],array('profile','group'))){ ?>
+            <input type=button class="button rt-media-create-new-album-button" value="Create New Album" />
+            <div class="rt-media-create-new-album-container">
+                <input type="text" class="rt-media-new-album-name" value="" />
+                <input type="submit" class="rt-media-create-new-album" value="Create Album" />
+            </div><?php
+        }
+    }
+}
 
+add_action('rtmedia_before_media_gallery', 'rt_media_album_edit');
 function rt_media_album_edit() {
 
     if (!is_rt_media_album() || !is_user_logged_in())
@@ -513,7 +531,7 @@ function rt_media_album_edit() {
         <div class="rt-media-merge-container">
             <?php _e('Merge to', 'rt-media'); ?>
             <form method="post" class="album-merge-form" action="merge/">
-                <?php echo $album_list; ?>
+                <?php echo '<select name="album" class="rt-media-merge-user-album-list">'.$album_list.'</select>'; ?>
                 <?php wp_nonce_field('rt_media_merge_album_' . $rt_media_query->media_query['album_id'], 'rt_media_merge_album_nonce'); ?>
                 <input type="submit" class="rt-media-move-selected" name="merge-album" value="<?php _e('Merge Album','rt-media'); ?>" />
             </form>
