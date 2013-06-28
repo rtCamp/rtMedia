@@ -12,6 +12,13 @@
  */
 class RTMediaMedia {
 
+    static $default_object = array(
+        'id', 'blog_id', 'media_id', 'media_author', 'media_title', 'album_id',
+        'media_type', 'context', 'context_id', 'source', 'source_id', 'activity_id',
+        'cover_art', 'privacy', 'views', 'downloads', 'ratings_total',
+        'ratings_count', 'ratings_average', 'likes', 'dislikes'
+    );
+
     /**
      * DB Model object to interact on Database operations
      *
@@ -263,7 +270,7 @@ class RTMediaMedia {
      *  Imports attachment as media
      */
     function import_attachment() {
-
+        
     }
 
     /**

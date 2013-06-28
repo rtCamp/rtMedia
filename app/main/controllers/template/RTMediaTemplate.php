@@ -144,9 +144,7 @@ class RTMediaTemplate {
                     
                         do_action('rt_media_before_update_media',$rt_media_query->action_query->id);
                     
-			$data = $_POST;
-			unset( $data[ 'rt_media_media_nonce' ] );
-			unset( $data[ '_wp_http_referer' ] );
+			$data = rt_media_sanitize_object($_POST, array('media_title','description'));
 			$media = new RTMediaMedia();
 			$media->update( $rt_media_query->action_query->id, $data, $rt_media_query->media[ 0 ]->media_id );
 			$rt_media_query->query( false );

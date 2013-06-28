@@ -71,9 +71,15 @@ function rt_media_media_id($id = false) {
     }
 }
 
-function rt_media_type() {
-    global $rt_media_media;
-    return $rt_media_media->media_type;
+function rt_media_type($id = false) {
+    if ( $id ){
+        $model = new RTMediaModel();
+        $media = $model->get_media(array('id' => $id), 0, 1);
+        return $media[0]->media_type;
+    } else {
+        global $rt_media_media;
+        return $rt_media_media->media_type;
+    }
 }
 
 /**
@@ -174,6 +180,14 @@ function rt_media_album_image($size = 'thumbnail') {
         global $rt_media;
         echo $rt_media->allowed_types['photo']['thumbnail'];
     }
+}
+
+function rt_media_sanitize_object($data,$exceptions = array()){
+    foreach($data as $key => $value) {
+        if (!in_array($key, array_merge(RTMediaMedia::$default_object,$exceptions)) )
+            unset($data[$key]);
+    }
+    return $data;
 }
 
 function rt_media_delete_allowed() {
