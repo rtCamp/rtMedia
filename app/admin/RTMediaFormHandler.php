@@ -253,7 +253,7 @@ class RTMediaFormHandler {
 			else
 				echo '<div class="row rt-even">';
 
-				echo '<div class="columns large-2">' . $section['name'] . '</div>';
+				echo '<div class="columns large-2">' . __($section['name'],'rt-media') . '</div>';
 				$args = array('key' => 'allowedTypes_'.$key.'_enabled', 'value' => $section['enabled']);
 				echo '<div class="columns large-2">';
 					self::checkbox($args);
@@ -262,7 +262,7 @@ class RTMediaFormHandler {
 				echo '<div class="columns large-2">';
 					self::checkbox($args);
 				echo '</div>';
-				echo '<div class="columns large-3">' . implode(', ', $section['extn']) . '</div>';
+				echo '<div class="columns large-3">' . __(implode(', ', $section['extn']),'rt-media') . '</div>';
 			echo '</div>';
 		}
 		echo '</div>';

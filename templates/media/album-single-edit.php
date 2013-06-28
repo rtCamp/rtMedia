@@ -25,11 +25,11 @@ $media = $model->get_media(array('id' => $rt_media_query->media_query['album_id'
         <form class="rt-media-bulk-actions" method="post">
             <?php wp_nonce_field('rt_media_bulk_delete_nonce', 'rt_media_bulk_delete_nonce'); ?>
             <?php RTMediaMedia::media_nonce_generator($rt_media_query->media_query['album_id']); ?>
-            <span class="rt-media-selection"><a class="select-all" href="#">Select All Visible</a> | 
-                <a class="unselect-all" href="#">Unselect All Visible</a> | </span>
+            <span class="rt-media-selection"><a class="select-all" href="#"><?php echo __('Select All Visible','rt-media'); ?></a> |
+                <a class="unselect-all" href="#"><?php echo __('Unselect All Visible','rt-media'); ?></a> | </span>
             <br />
-            <input type="button" class="button rt-media-move" value="Move" />
-            <input type="submit" name="delete-selected" class="button rt-media-delete-selected" value="Delete Selected" />
+            <input type="button" class="button rt-media-move" value="<?php echo __('Move','rt-media'); ?>" />
+            <input type="submit" name="delete-selected" class="button rt-media-delete-selected" value="<?php echo __('Delete Selected','rt-media'); ?>" />
             <div class="rt-media-move-container">
                 <?php $global_albums = get_site_option('rt-media-global-albums'); ?>
                 <?php _e('Move selected media to', 'rt-media'); ?>
@@ -58,7 +58,7 @@ $media = $model->get_media(array('id' => $rt_media_query->media_query['album_id'
             else
                 $display = 'style="display:none;"';
             ?>
-            <a id="rtMedia-galary-prev" <?php echo $display; ?> href="<?php echo rt_media_pagination_prev_link(); ?>">Prev</a>
+            <a id="rtMedia-galary-prev" <?php echo $display; ?> href="<?php echo rt_media_pagination_prev_link(); ?>"><?php echo __('Prev','rt-media'); ?></a>
 
             <?php
             $display = '';
@@ -67,7 +67,7 @@ $media = $model->get_media(array('id' => $rt_media_query->media_query['album_id'
             else
                 $display = 'style="display:none;"';
             ?>
-            <a id="rtMedia-galary-next" <?php echo $display; ?> href="<?php echo rt_media_pagination_next_link(); ?>">Next</a>
+            <a id="rtMedia-galary-next" <?php echo $display; ?> href="<?php echo rt_media_pagination_next_link(); ?>"><?php echo __('Next','rt-media'); ?></a>
 
         <?php } else { ?>
             <p><?php echo __("The album is empty.", "rt-media"); ?></p>

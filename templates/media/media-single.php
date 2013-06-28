@@ -20,7 +20,7 @@
 
 			if(is_user_logged_in() && rt_media_edit_allowed()) {
 			?>
-					<a href="<?php echo rt_media_permalink() . 'edit/'; ?>"><button type="button">Edit</button></a>
+					<a href="<?php echo rt_media_permalink() . 'edit/'; ?>"><button type="button"><?php echo __('Edit','rt-media'); ?></button></a>
 			<?php
 			}?>
 

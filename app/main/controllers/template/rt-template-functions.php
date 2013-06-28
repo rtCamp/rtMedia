@@ -463,7 +463,7 @@ function rt_media_comment_form() {
 
     $html = '<form method="post" action="' . get_rt_media_permalink(rt_media_id()) . 'comment/" style="width: 400px;">';
     $html .= '<textarea rows="4" name="comment_content" id="comment_content"></textarea>';
-    $html .= '<input type="submit" value="Comment">';
+    $html .= '<input type="submit" value="'.__('Comment','rt-media').'">';
     echo $html;
     RTMediaComment::comment_nonce_generator();
     echo '</form>';
@@ -476,7 +476,7 @@ function rt_media_delete_form() {
     $html .= '<input type="hidden" name="request_action" id="request_action" value="delete">';
     echo $html;
     RTMediaMedia::media_nonce_generator(rt_media_id(), true);
-    echo '<input type="submit" value="Delete"></form>';
+    echo '<input type="submit" value="'.__('Delete','rt-media').'"></form>';
 }
 
 /**

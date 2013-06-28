@@ -21,8 +21,8 @@
 				if (rt_media_request_action() == "edit") {
 					RTMediaMedia::media_nonce_generator(rt_media_id());
 			?>
-					<input type="submit" value="Save">
-					<a href="<?php rt_media_permalink(); ?>"><input type="button" value="Back"></a>
+					<input type="submit" value="<?php echo __('Save','rt-media'); ?>">
+					<a href="<?php rt_media_permalink(); ?>"><input type="button" value="<?php echo __('Back','rt-media'); ?>"></a>
 			<?php } ?>
 		</form>
 

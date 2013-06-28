@@ -27,7 +27,7 @@
         else
             $display = 'style="display:none;"';
         ?>
-        <a id="rtMedia-galary-prev" <?php echo $display; ?> href="<?php echo rt_media_pagination_prev_link(); ?>">Prev</a>
+        <a id="rtMedia-galary-prev" <?php echo $display; ?> href="<?php echo rt_media_pagination_prev_link(); ?>"><?php echo __('Prev','rt-media'); ?></a>
 
         <?php
         $display = '';
@@ -36,7 +36,7 @@
         else
             $display = 'style="display:none;"';
         ?>
-        <a id="rtMedia-galary-next" <?php echo $display; ?> href="<?php echo rt_media_pagination_next_link(); ?>">Next</a>
+        <a id="rtMedia-galary-next" <?php echo $display; ?> href="<?php echo rt_media_pagination_next_link(); ?>"><?php echo __('Next','rt-media'); ?></a>
 
     <?php } else { ?>
         <p><?php echo __("Oops !! There's no media found for the request !!", "rt-media"); ?></p>

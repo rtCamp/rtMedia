@@ -20,10 +20,10 @@
         <!--  these links will be handled by backbone later
                         -- get request parameters will be removed  -->
         <?php if(rt_media_offset() != 0) { ?>
-            <a href="?rt_media_page=<?php echo rt_media_page()-1; ?>">Prev</a>
+            <a href="?rt_media_page=<?php echo rt_media_page()-1; ?>"><?php echo __('Prev','rt-media'); ?></a>
         <?php } ?>
         <?php if(rt_media_offset()+ rt_media_per_page_media() < rt_media_count()) { ?>
-            <a href="?rt_media_page=<?php echo rt_media_page()+1; ?>">Next</a>
+            <a href="?rt_media_page=<?php echo rt_media_page()+1; ?>"><?php echo __('Next','rt-media'); ?></a>
         <?php } ?>
 
 	<?php } else { ?>

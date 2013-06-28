@@ -62,7 +62,15 @@ if (!class_exists('RTMediaAdmin')) {
 		 * @param type $hook
 		 */
 		public function ui($hook) {
-			$admin_pages = array('rtmedia_page_rt-media-migration','rt-media_page_rt-media-kaltura-settings','rt-media_page_rt-media-ffmpeg-settings','toplevel_page_rt-media-settings', 'rtmedia_page_rt-media-addons', 'rtmedia_page_rt-media-support', 'rtmedia_page_rt-media-importer');
+			$admin_pages = array(
+				'rtmedia_page_rt-media-migration',
+				'rt-media_page_rt-media-kaltura-settings',
+				'rt-media_page_rt-media-ffmpeg-settings',
+				'toplevel_page_rt-media-settings',
+				'rtmedia_page_rt-media-addons',
+				'rtmedia_page_rt-media-support',
+				'rtmedia_page_rt-media-importer'
+			);
 			$admin_pages = apply_filters('rt_media_filter_admin_pages_array', $admin_pages);
 
 			if(in_array($hook, $admin_pages)) {
@@ -105,11 +113,11 @@ if (!class_exists('RTMediaAdmin')) {
 		 * @global string 'rt-media'
 		 */
 		public function menu() {
-            add_menu_page(__('rtMedia Component', 'rt-media'), __('rtMedia', 'rt-media'), 'manage_options', 'rt-media-settings', array($this, 'settings_page'));
-            add_submenu_page('rt-media-settings', __('rtMedia Settings', 'rt-media'), __('Settings', 'rt-media'), 'manage_options', 'rt-media-settings', array($this, 'settings_page'));
-            add_submenu_page('rt-media-settings', __('rtMedia Addons', 'rt-media'), __('Addons', 'rt-media'), 'manage_options', 'rt-media-addons', array($this, 'addons_page'));
-            add_submenu_page('rt-media-settings', __('rtMedia Support', 'rt-media'), __('Support ', 'rt-media'), 'manage_options', 'rt-media-support', array($this, 'support_page'));
-            add_submenu_page('rt-media-settings', __('Importer', 'rt-media'), __('Importer', 'rt-media'), 'manage_options', 'rt-media-importer', array($this, 'rt_importer_page'));
+            add_menu_page('rtMedia', 'rtMedia', 'manage_options', 'rt-media-settings', array($this, 'settings_page'));
+            add_submenu_page('rt-media-settings', __('Settings', 'rt-media'), __('Settings', 'rt-media'), 'manage_options', 'rt-media-settings', array($this, 'settings_page'));
+            add_submenu_page('rt-media-settings', __('Addons', 'rt-media'), __('Addons', 'rt-media'), 'manage_options', 'rt-media-addons', array($this, 'addons_page'));
+            add_submenu_page('rt-media-settings', __('Support', 'rt-media'), __('Support ', 'rt-media'), 'manage_options', 'rt-media-support', array($this, 'support_page'));
+//            add_submenu_page('rt-media-settings', __('Importer', 'rt-media'), __('Importer', 'rt-media'), 'manage_options', 'rt-media-importer', array($this, 'rt_importer_page'));
 //            if (!BPMediaPrivacy::is_installed()) {
 //			add_submenu_page('rt-media-settings', __('rtMedia Database Update', 'rt-media'), __('Update Database', 'rt-media'), 'manage_options', 'rt-media-db-update', array($this, 'privacy_page'));
 //            }
@@ -279,12 +287,12 @@ if (!class_exists('RTMediaAdmin')) {
 					'href' => get_admin_url(null, add_query_arg(array('page' => 'rt-media-support'), 'admin.php')),
 					'name' => __('Support', 'rt-media'),
 					'slug' => 'rt-media-support'
-				),
-				array(
-					'href' => get_admin_url(null, add_query_arg(array('page' => 'rt-media-importer'), 'admin.php')),
-					'name' => __('Importer', 'rt-media'),
-					'slug' => 'rt-media-importer'
-                        )
+				)//,
+//				array(
+//					'href' => get_admin_url(null, add_query_arg(array('page' => 'rt-media-importer'), 'admin.php')),
+//					'name' => __('Importer', 'rt-media'),
+//					'slug' => 'rt-media-importer'
+//                        )
 			);
 
 			$tabs = apply_filters('media_add_tabs', $tabs);
@@ -522,7 +530,7 @@ if (!class_exists('RTMediaAdmin')) {
 									<div class="response" id="mce-error-response" style="display:none"></div>
 									<div class="response" id="mce-success-response" style="display:none"></div>
 								</div>
-								<input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button">
+								<input type="submit" value="'.__('Subscribe','rt-media').'" name="subscribe" id="mc-embedded-subscribe" class="button">
 							</div>
 						</form>';
 			new RTMediaAdminWidget('branding', __('Subscribe', 'rt-media'), $branding);

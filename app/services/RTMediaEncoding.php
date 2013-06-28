@@ -322,7 +322,7 @@ class RTMediaEncoding {
         <p>
             <label for="new-api-key"><?php _e('Enter API KEY', 'rt-media'); ?></label>
             <input id="new-api-key" type="text" name="new-api-key" value="<?php echo $this->api_key; ?>" size="60" />
-            <input type="submit" id="api-key-submit" name="api-key-submit" value="Submit" class="button-primary" />
+            <input type="submit" id="api-key-submit" name="api-key-submit" value="<?php echo __('Submit','rt-media'); ?>" class="button-primary" />
             <?php if ($this->api_key) { ?><br /><br /><input type="submit" id="disable-encoding" name="disable-encoding" value="Disable Encoding" class="button-secondary" /><?php } ?>
         </p>
         <table  class="bp-media-encoding-table widefat fixed" cellspacing="0">
