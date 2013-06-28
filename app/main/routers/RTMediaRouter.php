@@ -78,7 +78,13 @@ class RTMediaRouter {
 
 	function is_template() {
 		global $wp_query;
-		return isset( $wp_query->query_vars[ $this->slug ] );
+
+		$return = isset( $wp_query->query_vars[ $this->slug ] );
+		if($return){
+			if(isset($wp_query->query_vars['action']) && $wp_query->query_vars['action']== 'bp_avatar_upload')$return = false;
+		}
+
+		return $return;
 	}
 
 	/**

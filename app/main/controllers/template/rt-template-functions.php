@@ -49,9 +49,31 @@ function rt_media_title() {
     }
 }
 
-function rt_media_id() {
+function rt_media_id($media_id=false) {
+    if ($media_id) {
+        $model = new RTMediaModel();
+        $media = $model->get_media(array('media_id' => $media_id), 0, 1);
+        return $media[0]->id;
+    } else {
+        global $rt_media_media;
+        return $rt_media_media->id;
+    }
+}
+
+function rt_media_media_id($id = false) {
+    if ( $id ){
+        $model = new RTMediaModel();
+        $media = $model->get_media(array('id' => $id), 0, 1);
+        return $media[0]->media_id;
+    } else {
+        global $rt_media_media;
+        return $rt_media_media->media_id;
+    }
+}
+
+function rt_media_type() {
     global $rt_media_media;
-    return $rt_media_media->id;
+    return $rt_media_media->media_type;
 }
 
 /**
@@ -92,12 +114,7 @@ function rt_media_image($size = 'thumbnail', $id = false) {
     global $rt_media_backbone;
 
     if ($rt_media_backbone) {
-        if ($return == "src")
-            echo '<%= guid %>';
-        if ($return == "width")
-            echo '<%= width %>';
-        if ($return == "height")
-            echo '<%= height %>';
+        echo '<%= guid %>';
         return;
     }
 
@@ -439,6 +456,7 @@ function is_rt_media_album() {
     return $rt_media_query->is_album();
 }
 
+add_action('rt_media_add_edit_fields','rt_media_image_editor');
 function rt_media_image_editor() {
     global $rt_media_query;
     if ($rt_media_query->media[0]->media_type == 'photo') {

@@ -162,7 +162,11 @@ class RTMediaInteraction {
 				$title .=  ucfirst($bp->groups->slug);
 				break;
 			case 'profile':
-				$title .=  ucfirst($bp->profile->slug);
+				if(class_exists('BuddyPress')){
+					$title .=  ucfirst($bp->profile->slug);
+				}else{
+					$title .=  get_query_var('author_name');
+				}
 				break;
 			default:
 				$title .= get_post_field('post_title',$this->context->id);
