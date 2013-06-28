@@ -10,7 +10,7 @@
 					<img src="<?php rt_media_image('large','src'); ?>">
 				</div>
 
-			<?php rt_media_image_editor(); ?>
+                <?php do_action('rt_media_add_edit_fields', rt_media_type()); ?>
 
 			<?php
 				if( rt_media_delete_allowed() ) {
