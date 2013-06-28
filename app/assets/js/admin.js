@@ -499,7 +499,13 @@ jQuery(document).ready(function($){
 		}
 	});
 
-	jQuery("[data-toggle='switch']").wrap('<div class="rt-switch" />').parent().bootstrapSwitch();
+	var onData = '';
+	var offData = '';
+	if(rt_media_on_label!==undefined)
+		onData = 'data-on-label="'+rt_media_on_label+'"';
+	if(rt_media_off_label!==undefined)
+		offData = 'data-off-label="'+rt_media_off_label+'"';
+	jQuery("[data-toggle='switch']").wrap('<div class="rt-switch" '+onData+' '+offData+' />').parent().bootstrapSwitch();
 
     try {
 		jQuery('.rtm-show-tooltip').powerTip({

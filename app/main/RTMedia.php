@@ -93,31 +93,18 @@ class RTMedia {
 		register_deactivation_hook(__FILE__, array($this, 'flush_rewrite'));
 
 		$this->default_thumbnail = apply_filters('rtmedia_default_thumbnail',RTMEDIA_URL. 'assets/thumb_default.png');
-		// Define allowed types
-		$this->set_allowed_types();
-
-		$this->constants(); // Define constants
 
 		// check for global album --- after wordpress is fully loaded
 		add_action('init', array($this, 'check_global_album'));
 
 		// Hook it to WordPress
-		add_action('plugins_loaded', array($this, 'init'));
+		add_action('plugins_loaded', array($this, 'init'),20);
 
 		// Load translations
-		add_action('plugins_loaded', array($this, 'load_translation'));
+		add_action('plugins_loaded', array($this, 'load_translation'),10);
 
 		//Admin Panel
 		add_action('init', array($this, 'admin_init'));
-
-		$this->set_default_sizes(); // set default sizes
-
-		$this->set_privacy(); // set privacy
-
-		/**
-		 * Load options/settings
-		 */
-		$this->set_site_options();
 
 		//  Enqueue Plugin Scripts and Styles
 		add_action('wp_enqueue_scripts', array($this, 'enqueue_scripts_styles'), 11);
@@ -149,7 +136,7 @@ class RTMedia {
 					'plural' => 'photos',
 					'label' => __('Photo','rt-media'),
 					'plural_label' => __('Photos','rt-media'),
-					'extn' => array('jpeg', 'png'),
+					'extn' => array(__('jpeg','rt-media'), __('png','rt-media')),
 					'thumbnail' => RTMEDIA_URL.'app/assets/img/image_thumb.png'
 				),
 			'video' => array(
@@ -157,7 +144,7 @@ class RTMedia {
 					'plural' => 'videos',
 					'label' => __('Video','rt-media'),
 					'plural_label' => __('Videos','rt-media'),
-					'extn' => array('mp4'),
+					'extn' => array(__('mp4','rt-media')),
 					'thumbnail' => RTMEDIA_URL.'app/assets/img/video_thumb.png'
 				),
 			'music' => array(
@@ -165,7 +152,7 @@ class RTMedia {
 					'plural' => 'music',
 					'label' => __('Music','rt-media'),
 					'plural_label' => __('Music','rt-media'),
-					'extn' => array('mp3'),
+					'extn' => array(__('mp3','rt-media')),
 					'thumbnail' => RTMEDIA_URL.'app/assets/img/audio_thumb.png'
 				)
 		);
@@ -496,6 +483,16 @@ class RTMedia {
 	 * @global BPMediaAdmin $bp_media_admin
 	 */
 	function init() {
+
+		$this->set_allowed_types(); // Define allowed types
+		$this->constants(); // Define constants
+		$this->set_default_sizes(); // set default sizes
+		$this->set_privacy(); // set privacy
+
+		/**
+		 * Load options/settings
+		 */
+		$this->set_site_options();
 
 		/**
 		 *
