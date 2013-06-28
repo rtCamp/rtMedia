@@ -81,7 +81,7 @@ class RTMediaRouter {
 
 		$return = isset( $wp_query->query_vars[ $this->slug ] );
 		if($return){
-			if($wp_query->query_vars['action']== 'bp_avatar_upload')$return = false;
+			if(isset($wp_query->query_vars['action']) && $wp_query->query_vars['action']== 'bp_avatar_upload')$return = false;
 		}
 
 		return $return;
