@@ -329,7 +329,7 @@ class RTMediaQuery {
          * set action query object
          * setting parameters in action query object for pagination
          */
-        $per_page_media = $rt_media->options['general_perPageMedia'];
+        $per_page_media = intval($rt_media->options['general_perPageMedia']);
 
 
         $this->action_query = (object) array(
@@ -444,7 +444,7 @@ class RTMediaQuery {
 
         $this->media_count = count($media_for_total_count);
 
-        if (!$pre_media)
+		if (!$pre_media)
             return false;
         else
             return $pre_media;
@@ -556,7 +556,8 @@ class RTMediaQuery {
                 'post_type' => 'any',
                 'post_status' => 'any',
                 'post__in' => array_map(array($this, 'get_media_id'), $media),
-                'ignore_sticky_posts' => 1
+                'ignore_sticky_posts' => 1,
+				'posts_per_page' => $this->action_query->per_page_media
             );
 
             /**
