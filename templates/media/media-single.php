@@ -8,7 +8,7 @@
 
 
 				<div class="rt-media-media">
-					<img src="<?php rt_media_image('large','src'); ?>">
+					<?php rt_media_media(); ?>
 				</div>
 
 	</div>

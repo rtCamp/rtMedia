@@ -1,5 +1,8 @@
 jQuery('document').ready(function(){
-
+    
+    
+    jQuery('.wp-audio-shortcode, .wp-video-shortcode').mediaelementplayer();
+    
     jQuery('.rt-media-list').magnificPopup({
         delegate: 'a',
         type: 'ajax',

@@ -1,7 +1,7 @@
 <li class="rt-media-list-item">
     <div class="rt-media-item-thumbnail">
         <a href ="<?php rt_media_permalink(); ?>">
-            <img src="<?php rt_media_image('thumbnail','src'); ?>" width="<?php rt_media_image('thumbnail','width'); ?>" height="<?php rt_media_image('thumbnail','height'); ?>">
+            <img src="<?php rt_media_image('thumbnail'); ?>">
         </a>
     </div>
 

@@ -146,29 +146,29 @@ class RTMedia {
 	 */
 	function set_allowed_types(){
 		$allowed_types = array(
-			array(
+			'photo' => array(
 					'name'	=> 'photo',
 					'plural' => 'photos',
 					'label' => __('Photo','rt-media'),
 					'plural_label' => __('Photos','rt-media'),
 					'extn' => array('jpeg', 'png'),
-					'thumbnail' => RTMEDIA_URL.'assets/img/image_thumb.png'
+					'thumbnail' => RTMEDIA_URL.'app/assets/img/image_thumb.png'
 				),
-			array(
+			'video' => array(
 					'name'	=> 'video',
 					'plural' => 'videos',
 					'label' => __('Video','rt-media'),
 					'plural_label' => __('Videos','rt-media'),
 					'extn' => array('mp4'),
-					'thumbnail' => RTMEDIA_URL.'assets/img/video_thumb.png'
+					'thumbnail' => RTMEDIA_URL.'app/assets/img/video_thumb.png'
 				),
-			array(
+			'music' => array(
 					'name'	=> 'music',
 					'plural' => 'music',
 					'label' => __('Music','rt-media'),
 					'plural_label' => __('Music','rt-media'),
 					'extn' => array('mp3'),
-					'thumbnail' => RTMEDIA_URL.'assets/img/audio_thumb.png'
+					'thumbnail' => RTMEDIA_URL.'app/assets/img/audio_thumb.png'
 				)
 		);
 
@@ -553,7 +553,8 @@ class RTMedia {
 			}
 		}
 
-		new RTMediaBuddyPressActivity();
+		global $rtmedia_buddypress_activity;
+		$rtmedia_buddypress_activity = new RTMediaBuddyPressActivity();
 		$media = new RTMediaMedia();
 		$media->delete_hook();
 
@@ -619,7 +620,7 @@ class RTMedia {
                 wp_enqueue_script('bp-media-mejs', RTMEDIA_URL . 'lib/media-element/mediaelement-and-player.min.js', '', RTMEDIA_VERSION);
                 wp_enqueue_style('bp-media-mecss', RTMEDIA_URL . 'lib/media-element/mediaelementplayer.min.css', '', RTMEDIA_VERSION);
 		wp_enqueue_style('rt-media-main', RTMEDIA_URL . 'app/assets/css/main.css', '', RTMEDIA_VERSION);
-		wp_enqueue_script('rt-media-main', RTMEDIA_URL . 'app/assets/js/rtMedia.js', '', RTMEDIA_VERSION);
+		wp_enqueue_script('rt-media-main', RTMEDIA_URL . 'app/assets/js/rtMedia.js', array('jquery','bp-media-mejs'), RTMEDIA_VERSION);
 		wp_enqueue_style('rt-media-magnific', RTMEDIA_URL . 'lib/magnific/magnific.css', '', RTMEDIA_VERSION);
 		wp_enqueue_script('rt-media-magnific', RTMEDIA_URL . 'lib/magnific/magnific.js', '', RTMEDIA_VERSION);
 

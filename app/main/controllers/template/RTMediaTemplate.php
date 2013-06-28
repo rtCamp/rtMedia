@@ -308,6 +308,17 @@ class RTMediaTemplate {
 						if ( ! isset( $attr[ 'comment_post_ID' ] ) )
 							$attr[ 'comment_post_ID' ] = $rt_media_query->action_query->id;
 						$comment->add( $attr );
+
+						$mediaModel = new RTMediaModel();
+						$result=$mediaModel->get(array('id'=>$rt_media_query->action_query->id));
+
+						if($result[0]->activity_id!=NULL) {
+							global $rtmedia_buddypress_activity;
+							remove_action("bp_activity_comment_posted", array($rtmedia_buddypress_activity,"comment_sync"),10,2);
+							if(function_exists('bp_activity_new_comment')) {
+								bp_activity_new_comment(array('content'=> $_POST['comment_content'], 'activity_id'=> $result[0]->activity_id));
+							}
+						}
 					}
 					else {
 						echo "Ooops !!! Invalid access. No nonce was found !!";
