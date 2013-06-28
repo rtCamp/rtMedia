@@ -4,7 +4,7 @@
  * Class extends the add_media functionality of BPMediaHostWordpress to send
  * the file to the rtCamp Transcoding server instead of making it as attachment.
  */
-class BPMediaEncodingTranscoder extends BPMediaHostWordpress {
+class RTMediaEncodingTranscoder extends BPMediaHostWordpress {
 
 
     public function insert_media($name, $description, $album_id = 0, $group = 0, $is_multiple = false, $is_activity = false, $files = false, $author_id = false, $album_name = false) {
@@ -46,7 +46,7 @@ class BPMediaEncodingTranscoder extends BPMediaHostWordpress {
         $title = $name;
         $content = $description;
         
-        $api_key = bp_get_option('bp-media-encoding-api-key');
+        $api_key = get_site_option('rt-media-encoding-api-key');
 
         $query_args = array('url' => urlencode($url),
             'callbackurl' => urlencode(home_url()),

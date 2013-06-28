@@ -314,6 +314,7 @@ class RTMediaMigration {
         $state = intval(get_site_option("rt-media-migration"));
         if ($state < 5) {
             if ($this->manage_album()) {
+                $this->migrate_encoding_options();
                 $this->return_migration();
             }
         }
@@ -371,6 +372,21 @@ class RTMediaMigration {
             die();
         }
         $this->return_migration();
+    }
+
+    function migrate_encoding_options() {
+        $encoding_mnigration_array = array(
+            'bp-media-encoding-api-key' => 'rt-media-encoding-api-key',
+            'bp-media-encoding-usage-limit-mail' => 'rt-media-encoding-usage-limit-mail',
+            'bp-media-encoding-usage' => 'rt-media-encoding-usage',
+            'bpmedia_encoding_service_notice' => 'rt-media-encoding-service-notice',
+            'bpmedia_encoding_expansion_notice' => 'rt-media-encoding-expansion-notice',
+        );
+        foreach ($encoding_mnigration_array as $key => $ma) {
+            if (($value = get_site_option($key)) !== false) {
+                update_site_option($ma, $value);
+            }
+        }
     }
 
     function migrate_single_media($result, $album = false) {
@@ -599,6 +615,7 @@ class RTMediaMigration {
         $instagram_thumbs = get_post_meta($id, '_instagram_thumbs', true);
         $instagram_full_images = get_post_meta($id, '_instagram_full_images', true);
         $instagram_metadata = get_post_meta($id, '_instagram_metadata', true);
+        $encoding_job_id = get_post_meta($id, 'bp-media-encoding-job-id', true);
 
         if (wp_mkdir_p($basedir . "rtMedia/$prefix/" . $year_month)) {
             if (copy($attached_file, str_replace($basedir, $basedir . "rtMedia/$prefix/", $attached_file))) {
@@ -684,13 +701,16 @@ class RTMediaMigration {
                         wp_update_attachment_metadata($id, $metadata);
                     }
                     if ($instagram_thumbs) {
-                        update_post_meta($id, '_instagram_thumbs', $instagram_thumbs_new);
+                        update_rtmedia_meta($id, '_instagram_thumbs', $instagram_thumbs_new);
                     }
                     if ($instagram_full_images) {
-                        update_post_meta($id, '_instagram_full_images', $instagram_full_images_new);
+                        update_rtmedia_meta($id, '_instagram_full_images', $instagram_full_images_new);
                     }
                     if ($instagram_metadata) {
-                        update_post_meta($id, '_instagram_metadata', $instagram_metadata_new);
+                        update_rtmedia_meta($id, '_instagram_metadata', $instagram_metadata_new);
+                    }
+                    if ($encoding_job_id) {
+                        update_rtmedia_meta($id, 'rt-media-encoding-job-id', $encoding_job_id);
                     }
 
                     $attachment = array();

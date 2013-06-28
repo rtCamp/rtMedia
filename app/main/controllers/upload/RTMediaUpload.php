@@ -37,15 +37,16 @@ class RTMediaUpload {
          * either file_upload or link_input
          */
         $file_object = $this->upload($uploaded);
-
+        
         /**
          * if upload successful then populate the rtMedia database and insert the media into album
          */
         if ($file_object && $uploaded) {
             $this->media_ids= $this->media->add($uploaded, $file_object);
             if ($this->media_ids) {
-                do_action('rt_media_after_add_media');
                 return true;
+            } else {
+                return false;
             }
         } else {
             return false;
