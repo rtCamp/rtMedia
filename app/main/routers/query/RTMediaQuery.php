@@ -88,6 +88,11 @@ class RTMediaQuery {
 
             $this->query($args);
         }
+
+		$is_album = $this->is_album();
+		$is_edit_allowed = isset($this->media_query['media_author']) && get_current_user_id() == $this->media_query['media_author'] && $this->action_query->action == 'edit';
+		wp_localize_script('rtmedia-backbone', 'is_album', ($is_album)?$is_album:'0');
+		wp_localize_script('rtmedia-backbone', 'is_edit_allowed', ($is_edit_allowed)?$is_edit_allowed:'0');
     }
 
     /**

@@ -155,7 +155,7 @@ jQuery(function($) {
 
     $("body").append('<script id="rt-media-gallery-item-template" type="text/template"></script>');
 
-    $("#rt-media-gallery-item-template").load(template_url + "/media-gallery-item.php", {action: 'rt_media_backbone_template', backbone: true}, function(response, status, xhr) {
+	$("#rt-media-gallery-item-template").load(template_url + "/media-gallery-item.php", {backbone: true, is_album: is_album, is_edit_allowed: is_edit_allowed}, function(response, status, xhr) {
 
         $(document).on("click", "#rtMedia-galary-next", function(e) {
             $(this).hide();
@@ -207,9 +207,9 @@ jQuery(function($) {
 
     if ($("#rtMedia-upload-button").length > 0) {
         var uploaderObj = new UploadView(rtMedia_plupload_config);
-        
+
 		uploaderObj.initUploader();
-		
+
         uploaderObj.uploader.bind('UploadComplete', function(up, files) {
             activity_id = -1;
             galleryObj.reloadView();
