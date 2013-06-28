@@ -479,7 +479,7 @@ jQuery(document).ready(function($){
     jQuery("#bpm-settings-tabs,#bpm-addons").sliderTabs({
         autoplay: false,
         mousewheel: false,
-        defaultTab: 1
+        defaultTab: manageHash()
     });
 
 	if(jQuery('#rt-media-privacy-enable').is(":checked")) {
@@ -513,5 +513,25 @@ jQuery(document).ready(function($){
 		});
     } catch(e) {
         // no tooltip is defined
-    }
+	}
+	$(".rtmedia-tab-title").click(function(){
+		hash = $(this).attr('href');
+		window.location.hash = hash.substring(1,hash.length);
+	})
+	function manageHash() {
+		if(window.location.hash===undefined || window.location.hash==='')
+			window.location.hash = 'rt-media-general';
+
+
+		hash = window.location.hash;
+		$('#tab-'+hash.substr(1,hash.length)).click();
+		if($('#tab-'+hash.substr(1,hash.length)).length < 1)
+			return 1;
+		return $('#tab-'+hash.substr(1,hash.length)).parent().index()+1
+	}
+
+	$(window).hashchange(function(e,data) {
+		e.preventDefault();
+		manageHash();
+	});
 });

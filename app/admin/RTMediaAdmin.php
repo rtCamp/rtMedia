@@ -79,6 +79,7 @@ if (!class_exists('RTMediaAdmin')) {
 				wp_enqueue_script('bootstrap-switch', RTMEDIA_URL . 'app/assets/js/bootstrap-switch.js', array('jquery'), RTMEDIA_VERSION);
 				wp_enqueue_script('slider-tabs', RTMEDIA_URL . 'app/assets/js/jquery.sliderTabs.min.js', array('jquery', 'jquery-effects-core'), RTMEDIA_VERSION);
 				wp_enqueue_script('power-tip', RTMEDIA_URL . 'app/assets/js/jquery.powertip.min.js', array('jquery'), RTMEDIA_VERSION);
+				wp_enqueue_script('observe-hashchange', RTMEDIA_URL . 'app/assets/js/jquery.observehashchange.pack.js', array('jquery'), RTMEDIA_VERSION);
 				wp_enqueue_script('rt-media-admin', RTMEDIA_URL . 'app/assets/js/admin.js', array('jquery-ui-dialog'), RTMEDIA_VERSION);
 				wp_localize_script('rt-media-admin', 'rt_media_on_label', __('ON','rt-media'));
 				wp_localize_script('rt-media-admin', 'rt_media_off_label', __('OFF','rt-media'));
@@ -393,7 +394,7 @@ if (!class_exists('RTMediaAdmin')) {
 				if (isset($tab['icon']) && !empty($tab['icon']))
 					$icon = '<i class="' . $tab['icon'] . '"></i>';
 
-				$tabs_html.= '<li><a title="' . $tab['title'] . '" href="' . $tab['href'] . '" class="' . sanitize_title($tab['name']) . '">' . $icon . ' ' . $tab['name'] . '</a></li>';
+				$tabs_html.= '<li><a id="tab-'.substr($tab['href'], 1).'" title="' . $tab['title'] . '" href="' . $tab['href'] . '" class="rtmedia-tab-title ' . sanitize_title($tab['name']) . '">' . $icon . ' ' . $tab['name'] . '</a></li>';
 			}
 			$tabs_html .= '</ul>';
 

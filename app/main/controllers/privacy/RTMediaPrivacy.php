@@ -17,12 +17,7 @@ class RTMediaPrivacy {
 	 *
 	 * @var object default application wide privacy levels
 	 */
-	public $default_privacy = array(
-		'0'		=> 'Public',
-		'20'	=> 'Users',
-		'40'	=> 'Friends',
-		'60'	=> 'Private'
-	);
+	public $default_privacy;
 
 	function __construct() {
 
@@ -56,16 +51,7 @@ class RTMediaPrivacy {
 	}
 
 
-	public function set_option_redirect() {
-		bp_update_option( 'bp_media_privacy_installed', true );
-		do_action( 'bp_media_after_privacy_install' );
-		echo true;
-		die();
-	}
-
 	static function is_enabled() {
-		if ( ! BPMediaPrivacy::is_installed() )
-			return false;
 		global $bp_media;
 		$options = $bp_media->options;
 		if ( ! array_key_exists( 'privacy_enabled', $options ) ) {
@@ -76,28 +62,6 @@ class RTMediaPrivacy {
 			}
 		}
 		return true;
-	}
-
-	static function is_installed() {
-		$settings = new BPMediaPrivacySettings();
-		$total = $settings->get_total_count();
-		if ( is_array( $total ) && ! empty( $total ) ) {
-			$total = $total[ 0 ]->Total;
-		} else {
-			$total = 0;
-		}
-		$finished = $settings->get_completed_count();
-		if ( is_array( $finished ) && ! empty( $finished ) ) {
-			$finished = $finished[ 0 ]->Finished;
-		} else {
-			$finished = 0;
-		}
-		if ( $total === $finished )
-			$installed = true;
-		else
-			$installed = false;
-
-		return $installed;
 	}
 
 	static function get_privacy( $id ) {
