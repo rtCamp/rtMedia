@@ -64,7 +64,7 @@ jQuery('document').ready(function(){
             };
 
             // since 2.8 ajaxurl is always defined in the admin header and points to admin-ajax.php
-            jQuery.post(ajaxurl, data, function(response) {
+            jQuery.post(rt_media_ajax_url, data, function(response) {
                 if(response){
                     jQuery('.rt-media-user-album-list').append('<option value="'+response+'">'+$albumname+'</option>');
                     jQuery('select.rt-media-user-album-list option[value="'+response+'"]').prop('selected', true)

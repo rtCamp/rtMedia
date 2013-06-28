@@ -141,12 +141,18 @@ class RTMediaTemplate {
 		global $rt_media_query;
 		$nonce = $_POST[ 'rt_media_media_nonce' ];
 		if ( wp_verify_nonce( $nonce, 'rt_media_' . $rt_media_query->action_query->id ) ) {
+                    
+                        do_action('rt_media_before_update_media',$rt_media_query->action_query->id);
+                    
 			$data = $_POST;
 			unset( $data[ 'rt_media_media_nonce' ] );
 			unset( $data[ '_wp_http_referer' ] );
 			$media = new RTMediaMedia();
 			$media->update( $rt_media_query->action_query->id, $data, $rt_media_query->media[ 0 ]->media_id );
 			$rt_media_query->query( false );
+                        
+                        do_action('rt_media_after_update_media',$rt_media_query->action_query->id);
+                        
 		} else {
 			echo __( "Ooops !!! Invalid access. No nonce was found !!", "rt-media" );
 		}
@@ -228,6 +234,9 @@ class RTMediaTemplate {
 		global $rt_media_query;
 		$nonce = $_REQUEST[ 'rt_media_media_nonce' ];
 		if ( wp_verify_nonce( $nonce, 'rt_media_' . $rt_media_query->media[ 0 ]->id ) ) {
+                    
+                        add_action('rt_media_before_delete_media',$rt_media_query->media[ 0 ]->id);
+                        
 			$id = $_POST;
 			unset( $id[ 'rt_media_media_nonce' ] );
 			unset( $id[ '_wp_http_referer' ] );
@@ -242,7 +251,9 @@ class RTMediaTemplate {
 			} else {
 				$parent_link = get_author_posts_url( $post->media_author );
 			}
-
+                        
+                        add_action('rt_media_before_delete_media',$rt_media_query->media[ 0 ]->id);
+                        
 			wp_redirect( $parent_link );
 		} else {
 			echo __( "Ooops !!! Invalid access. No nonce was found !!", "rt-media" );

@@ -45,7 +45,7 @@ class RTMediaMeta {
 	}
 
 	function add_meta($id=false,$key=false,$value=false,$duplicate=false){
-		$this->update_media_meta($id=false,$key=false,$value=false,$duplicate=true);
+		$this->update_meta($id=false,$key=false,$value=false,$duplicate=true);
 	}
 
 	function update_meta($id=false,$key=false,$value=false,$duplicate=false){
@@ -57,9 +57,13 @@ class RTMediaMeta {
 		if($duplicate===true){
 			$media_meta = $this->model->insert(array('media_id'=>$id,'meta_key'=>$key, 'meta_value'=>$value));
 		}else{
+                    if($this->get_single_meta($id,$key)){
 				$meta = array('meta_value' => $value);
 				$where = array('media_id' => $id, 'meta_key' => $key);
 			$media_meta = $this->model->update($meta, $where);
+                    } else {
+                        $media_meta = $this->model->insert(array('media_id'=>$id,'meta_key'=>$key, 'meta_value'=>$value));
+                    }
 		}
 	}
 

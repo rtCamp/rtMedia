@@ -12,7 +12,7 @@
 			<div class="rt-media-editor-main columns large-6 small">
 			<?php echo rt_media_title_input(); ?>
 
-			<?php rt_media_image_editor(); ?>
+			<?php do_action('rt_media_add_edit_fields', rt_media_type()); ?>
 
 			</div>
 			<div class="rt-media-editor-description columns large-6 small">
