@@ -20,7 +20,25 @@ class RTMediaPrivacy {
 	public $default_privacy;
 
 	function __construct() {
+		add_action('rt_media_after_file_upload_ui',array($this,'select_privacy_ui'));
+	}
 
+	function select_privacy_ui($attr) {
+		if(!isset($attr['privacy'])) {
+			$form = new rtForm();
+			$attributes = array(
+				'name' => 'privacy',
+				'id' => 'privacy'
+			);
+			global $rt_media;
+			foreach ($rt_media->privacy_settings['levels'] as $key => $value) {
+				$attributes['rtForm_options'][] = array(
+					$value => $key,
+					'selected' => ($key=='0') ? 1 : 0
+				);
+			}
+			echo $form->get_select($attributes);
+		}
 	}
 
 	public function system_default(){
@@ -261,50 +279,6 @@ class RTMediaPrivacy {
 			}
 		}
 		return $privacy;
-	}
-
-	static function current_access() {
-		global $bp;
-		$current_privacy = 0;
-
-		if ( is_user_logged_in() ) {
-			$current_privacy = 2;
-			if ( bp_is_my_profile() ) {
-				$current_privacy = 6;
-			}
-			if ( isset( $bp->displayed_user->id ) ) {
-				if ( ! (bp_is_my_profile()) ) {
-					if ( bp_is_active( 'groups' ) && class_exists( 'BP_Group_Extension' ) ) {
-						if ( bp_get_current_group_id() == 0 ) {
-							if ( bp_is_active( 'friends' ) ) {
-								$is_friend = friends_check_friendship_status( $bp->loggedin_user->id, $bp->displayed_user->id );
-								if ( $is_friend == 'is_friend' ) {
-									$current_privacy = 4;
-								}
-							}
-						}
-					} else {
-						if ( bp_is_active( 'friends' ) ) {
-							$is_friend = friends_check_friendship_status( $bp->loggedin_user->id, $bp->displayed_user->id );
-							if ( $is_friend == 'is_friend' ) {
-								$current_privacy = 4;
-							}
-						}
-					}
-				}
-			}
-		}
-
-		return $current_privacy;
-	}
-
-	static function has_access( $object_id = false ) {
-		$access = false;
-		$current_access = BPMediaPrivacy::current_access();
-		$required_access = BPMediaPrivacy::required_access( $object_id );
-		if ( $current_access >= $required_access )
-			$access = true;
-		return $access;
 	}
 
 	static function get_messages( $media_type, $username ) {

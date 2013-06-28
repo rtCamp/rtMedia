@@ -517,7 +517,7 @@ jQuery(document).ready(function($){
 	$(".rtmedia-tab-title").click(function(){
 		hash = $(this).attr('href');
 		window.location.hash = hash.substring(1,hash.length);
-	})
+	});
 	function manageHash() {
 		if(window.location.hash===undefined || window.location.hash==='')
 			window.location.hash = 'rt-media-general';

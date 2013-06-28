@@ -256,6 +256,7 @@ jQuery(function($) {
 
         });
         uploaderObj.uploader.bind('BeforeUpload', function(up, file) {
+			up.settings.multipart_params.privacy = $("#rt-media-uploader-form select#privacy").val();
             up.settings.multipart_params.activity_id = activity_id;
             if ($('.rt-media-user-album-list').length > 0)
                 up.settings.multipart_params.album_id = $('.rt-media-user-album-list').find(":selected").val();

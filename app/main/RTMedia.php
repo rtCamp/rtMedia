@@ -524,9 +524,10 @@ class RTMedia {
 			'upload_shortcode' => false,
 			'gallery_shortcode' => false,
 			'upload_endpoint' => false,
+			'privacy' => false
 				//'query'		=> false
 		);
-		$class_construct = apply_filters('bpmedia_class_construct', $class_construct);
+		$class_construct = apply_filters('rtmedia_class_construct', $class_construct);
 
 		foreach ($class_construct as $key => $global_scope) {
 			$classname = '';
