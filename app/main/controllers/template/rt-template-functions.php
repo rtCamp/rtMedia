@@ -547,7 +547,7 @@ add_action('rtmedia_before_media_gallery', 'rt_media_create_album');
 function rt_media_create_album() {
     global $rt_media_query;
 
-    if (bp_displayed_user_id() == get_current_user_id()) {
+    if (function_exists('bp_displayed_user_id') && bp_displayed_user_id() == get_current_user_id()) {
         if (isset($rt_media_query->query['context']) && !isset($rt_media_query->media_query['album_id']) && in_array($rt_media_query->query['context'], array('profile', 'group'))) {
             ?>
             <input type=button class="button rt-media-create-new-album-button" value="Create New Album" />
