@@ -141,9 +141,9 @@ class RTMediaMedia {
      * @return type
      */
     function add($uploaded, $file_object) {
-
+        
         /* action to perform any task before adding a media */
-        do_action('rt_media_before_add_media', $this);
+        do_action('rt_media_before_add_media', $file_object, $uploaded);
 
         /* Generate media details required to feed in database */
         $attachments = $this->generate_post_array($uploaded, $file_object);
@@ -161,9 +161,9 @@ class RTMediaMedia {
 
         /* add media in rtMedia context */
         $media_ids = $this->insert_media($attachment_ids, $uploaded);
-
+        
         /* action to perform any task after adding a media */
-        do_action('rt_media_after_add_media', $this);
+        do_action('rt_media_after_add_media', $media_ids, $file_object, $uploaded);
 
         return $media_ids;
     }

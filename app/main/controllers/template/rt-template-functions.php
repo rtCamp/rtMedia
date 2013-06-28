@@ -41,7 +41,7 @@ function rt_media() {
 function rt_media_title() {
 
     global $rt_media_backbone;
-    if ($rt_media_backbone['backbone']) {
+    if ($rt_media_backbone) {
         echo '<%= media_title %>';
     } else {
         global $rt_media_media;
@@ -90,7 +90,7 @@ function rt_media_permalink() {
 
     global $rt_media_backbone;
 
-    if ($rt_media_backbone['backbone']) {
+    if ($rt_media_backbone) {
         echo '<%= rt_permalink %>';
     } else {
         echo get_rt_media_permalink(rt_media_id());
@@ -119,7 +119,7 @@ function rt_media_media() {
 function rt_media_image($size = 'thumbnail', $id = false) {
     global $rt_media_backbone;
 
-    if ($rt_media_backbone['backbone']) {
+    if ($rt_media_backbone) {
         echo '<%= guid %>';
         return;
     }
@@ -625,9 +625,8 @@ add_action('rtmedia_before_item', 'rt_media_item_select');
 
 function rt_media_item_select() {
     global $rt_media_query, $rt_media_backbone;
-    if ($rt_media_backbone['backbone']) {
-		if( $rt_media_backbone['is_album'] && $rt_media_backbone['is_edit_allowed'])
-			echo '<input type="checkbox" name="move[]" value="<%= id %>" />';
+    if ($rt_media_backbone) {
+        echo '<input type="checkbox" name="move[]" value="<%= id %>" />';
     } else if (is_rt_media_album() && isset($rt_media_query->media_query) && get_current_user_id() == $rt_media_query->media_query['media_author'] && $rt_media_query->action_query->action == 'edit') {
         echo '<input type="checkbox" name="selected[]" value="' . rt_media_id() . '" />';
     }

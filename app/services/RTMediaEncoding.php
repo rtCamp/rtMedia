@@ -13,18 +13,19 @@ class RTMediaEncoding {
 
     public function __construct() {
         $this->api_key = get_site_option('rt-media-encoding-api-key');
+
         if (is_admin()) {
-            //bp_core_admin_hook()
-//            add_action('admin_init', array($this, 'menu'));
-            add_action('admin_init', array($this, 'encoding_settings'));
-            //add_filter('bp_media_add_tabs', array($this, 'encoding_tab'));
+
+//            add_action('admin_init', array($this, 'encoding_settings'));
+
             if ($this->api_key)
                 add_action('rt_media_before_default_admin_widgets', array($this, 'usage_widget'));
         }
+
         add_action('admin_init', array($this, 'save_api_key'), 1);
-//        add_filter('rt_media_add_admin_bar_item', array($this, 'admin_bar_menu'));
+
         if ($this->api_key) {
-            $usage_info = get_site_option('bp-media-encoding-usage');
+            $usage_info = get_site_option('rt-media-encoding-usage');
             if ($usage_info) {
                 if (isset($usage_info[$this->api_key]->status) && $usage_info[$this->api_key]->status) {
                     if (isset($usage_info[$this->api_key]->remaining) && $usage_info[$this->api_key]->remaining > 0) {
@@ -32,11 +33,11 @@ class RTMediaEncoding {
                             $this->nearing_usage_limit($usage_info);
                         elseif ($usage_info[$this->api_key]->remaining > 524288000 && get_site_option('rt-media-encoding-usage-limit-mail'))
                             update_site_option('rt-media-encoding-usage-limit-mail', 0);
-						/**
-						 * @todo update class_name
-						 */
-                        if (!class_exists('BPMediaFFMPEG') && !class_exists('BPMediaKaltura'))
-                            add_filter('rt_media_transcoder', array($this, 'transcoder'), 10, 2);
+                        /**
+                         * @todo update class_name
+                         */
+                        if (!class_exists('RTMediaFFMPEG') && !class_exists('RTMediaKaltura'))
+                            add_filter('rt_media_after_add_media', array($this, 'encoding'), 10, 3);
                         $blacklist = array('localhost', '127.0.0.1');
                         if (!in_array($_SERVER['HTTP_HOST'], $blacklist)) {
                             add_filter('rt_media_plupload_files_filter', array($this, 'allowed_types'));
@@ -45,13 +46,8 @@ class RTMediaEncoding {
                 }
             }
         }
-        if (!get_site_option('rt-media-encoding-expansion-notice') && current_user_can('administrator')) {
-            if (is_multisite()) {
-                add_action('network_admin_notices', array($this, 'encoding_service_notice'));
-            }
-            add_action('admin_notices', array($this, 'encoding_service_notice'));
-        }
-        add_action('admin_init', array($this, 'handle_callback'), 20);
+        
+        add_action('init', array($this, 'handle_callback'), 20);
         add_action('wp_ajax_rt_media_free_encoding_subscribe', array($this, 'free_encoding_subscribe'));
         add_action('wp_ajax_rt_media_unsubscribe_encoding_service', array($this, 'unsubscribe_encoding'));
         add_action('wp_ajax_rt_media_hide_encoding_notice', array($this, 'hide_encoding_notice'), 1);
@@ -59,92 +55,121 @@ class RTMediaEncoding {
         add_action('wp_ajax_rt_media_disable_encoding', array($this, 'disable_encoding'), 1);
     }
 
-    function transcoder($class, $type) {
-        switch ($type) {
-            case 'video':
-            case 'audio':
-                $blacklist = array('localhost', '127.0.0.1');
-                if (in_array($_SERVER['HTTP_HOST'], $blacklist)) {
-                    return $class;
-                }
+    function encoding($media_ids, $file_object, $uploaded) {
+        foreach ($file_object as $key => $single) {
+            if (preg_match('/video|audio/i', $single['type'], $type_array) && !in_array($single['type'], array('audio/mp3', 'video/mp4'))) {
 
-                if (isset($_FILES['rt_media_file'])) {
-                    $ext = end(explode(".", $_FILES['rt_media_file']["name"]));
-                    if (in_array($_FILES['rt_media_file']['type'], array('audio/mp3', 'video/mp4')) || in_array($ext, array('mp3', 'mp4'))) {
-                        return $class;
+                $query_args = array('url' => urlencode($single['url']),
+                    'callbackurl' => urlencode(home_url()),
+                    'force' => 0,
+                    'size' => filesize($single['file']),
+                    'formats' => ($type_array[0] == 'video') ? 'mp4' : 'mp3');
+                $encoding_url = $this->api_url . 'job/new/';
+                $upload_url = add_query_arg($query_args, $encoding_url . $api_key);
+                $upload_page = wp_remote_get($upload_url, array('timeout' => 20));
+
+                if (!is_wp_error($upload_page) && (!isset($upload_page['headers']['status']) || (isset($upload_page['headers']['status']) && ($upload_page['headers']['status'] == 200)))) {
+                    $upload_info = json_decode($upload_page['body']);
+                    if (isset($upload_info->status) && $upload_info->status && isset($upload_info->job_id) && $upload_info->job_id) {
+                        $job_id = $upload_info->job_id;
+                        update_rtmedia_meta($media_ids[$key], 'bp-media-encoding-job-id', $job_id);
+                    } else {
+//                        remove_filter('bp_media_plupload_files_filter', array($bp_media_admin->bp_media_encoding, 'allowed_types'));
+//                        return parent::insert_media($name, $description, $album_id, $group, $is_multiple, $is_activity, $parent_fallback_files, $author_id, $album_name);
                     }
                 }
-                return 'BPMediaEncodingTranscoder';
-            default:
-                return $class;
-        }
-    }
-
-    public function menu() {
-        add_submenu_page('bp-media-settings', __('BuddyPress Media Audio/Video Encoding Service', 'rt-media'), __('Audio/Video Encoding', 'rt-media'), 'manage_options', 'bp-media-encoding', array($this, 'encoding_page'));
-        global $submenu;
-        if ( isset($submenu['bp-media-settings']) ) {
-            $menu = $submenu['bp-media-settings'];
-            $encoding_menu = array_pop($menu);
-            $submenu['bp-media-settings'] = array_merge(array_slice($menu, 0, 2), array($encoding_menu), array_slice($menu, 2));
-        }
-    }
-
-    /**
-     * Render the BuddyPress Media Encoding page
-     */
-    public function encoding_page() {
-        global $rt_media_admin;
-        $rt_media_admin->render_page('rt-media-encoding');
-    }
-
-    public function encoding_settings() {
-        add_settings_section('rtm-encoding', __('Audio/Video Encoding Service', 'rt-media'), array($this, 'encoding_service_intro'), 'rt-media-encoding');
-    }
-
-    public function encoding_tab($tabs) {
-        $encoding_tab = array(
-                    'href' => get_admin_url(add_query_arg(array('page' => 'rt-media-encoding'), 'admin.php')),
-//                    'name' => __('Audio/Video Encoding', 'rt'),
-					'name' => __('Encoding', 'rt'),
-                    'slug' => 'rt-media-encoding'
-                );
-
-        $reordered_tabs = NULL;
-        if ( count($tabs) > 2 ) {
-            foreach ($tabs as $key => $tab) {
-                if ($key == 2)
-                    $reordered_tabs[] = $encoding_tab;
-                $reordered_tabs[] = $tab;
+                $this->update_usage($this>api_key);
+                $this->usage_quota_over();
             }
-            $tabs = $reordered_tabs;
-        } else {
-            $tabs[] = $encoding_tab;
         }
-        return $tabs;
     }
 
-    public function admin_bar_menu($rt_media_admin_nav) {
-// Encoding Service
-        $admin_nav = array(
-            'parent' => 'rt-media-menu',
-            'id' => 'rt-media-encoding',
-            'title' => __('Audio/Video Encoding', 'rt-media'),
-            'href' => get_admin_url(add_query_arg(array('page' => 'rt-media-encoding'), 'admin.php'))
-        );
-        $reordered_admin_nav = NULL;
-        if ( count($rt_media_admin_nav) > 2 ) {
-            foreach ($rt_media_admin_nav as $key => $nav) {
-                if ($key == 3)
-                    $reordered_admin_nav[] = $admin_nav;
-                $reordered_admin_nav[] = $nav;
-            }
-            $rt_media_admin_nav = $reordered_admin_nav;
-        } else {
-            $rt_media_admin_nav[] = $admin_nav;
-        }
-        return $rt_media_admin_nav;
-    }
+//    function transcoder($class, $type) {
+//        switch ($type) {
+//            case 'video':
+//            case 'audio':
+//                $blacklist = array('localhost', '127.0.0.1');
+//                if (in_array($_SERVER['HTTP_HOST'], $blacklist)) {
+//                    return $class;
+//                }
+//
+//                if (isset($_FILES['rt_media_file'])) {
+//                    $ext = end(explode(".", $_FILES['rt_media_file']["name"]));
+//                    if (in_array($_FILES['rt_media_file']['type'], array('audio/mp3', 'video/mp4')) || in_array($ext, array('mp3', 'mp4'))) {
+//                        return $class;
+//                    }
+//                }
+//                return 'RTMediaEncodingTranscoder';
+//            default:
+//                return $class;
+//        }
+//    }
+
+//    public function menu() {
+//        add_submenu_page('bp-media-settings', __('BuddyPress Media Audio/Video Encoding Service', 'rt-media'), __('Audio/Video Encoding', 'rt-media'), 'manage_options', 'bp-media-encoding', array($this, 'encoding_page'));
+//        global $submenu;
+//        if (isset($submenu['bp-media-settings'])) {
+//            $menu = $submenu['bp-media-settings'];
+//            $encoding_menu = array_pop($menu);
+//            $submenu['bp-media-settings'] = array_merge(array_slice($menu, 0, 2), array($encoding_menu), array_slice($menu, 2));
+//        }
+//    }
+
+//    /**
+//     * Render the BuddyPress Media Encoding page
+//     */
+//    public function encoding_page() {
+//        global $rt_media_admin;
+//        $rt_media_admin->render_page('rt-media-encoding');
+//    }
+
+//    public function encoding_settings() {
+//        add_settings_section('rtm-encoding', __('Audio/Video Encoding Service', 'rt-media'), array($this, 'encoding_service_intro'), 'rt-media-encoding');
+//    }
+
+//    public function encoding_tab($tabs) {
+//        $encoding_tab = array(
+//            'href' => get_admin_url(add_query_arg(array('page' => 'rt-media-encoding'), 'admin.php')),
+////                    'name' => __('Audio/Video Encoding', 'rt'),
+//            'name' => __('Encoding', 'rt'),
+//            'slug' => 'rt-media-encoding'
+//        );
+//
+//        $reordered_tabs = NULL;
+//        if (count($tabs) > 2) {
+//            foreach ($tabs as $key => $tab) {
+//                if ($key == 2)
+//                    $reordered_tabs[] = $encoding_tab;
+//                $reordered_tabs[] = $tab;
+//            }
+//            $tabs = $reordered_tabs;
+//        } else {
+//            $tabs[] = $encoding_tab;
+//        }
+//        return $tabs;
+//    }
+
+//    public function admin_bar_menu($rt_media_admin_nav) {
+//// Encoding Service
+//        $admin_nav = array(
+//            'parent' => 'rt-media-menu',
+//            'id' => 'rt-media-encoding',
+//            'title' => __('Audio/Video Encoding', 'rt-media'),
+//            'href' => get_admin_url(add_query_arg(array('page' => 'rt-media-encoding'), 'admin.php'))
+//        );
+//        $reordered_admin_nav = NULL;
+//        if (count($rt_media_admin_nav) > 2) {
+//            foreach ($rt_media_admin_nav as $key => $nav) {
+//                if ($key == 3)
+//                    $reordered_admin_nav[] = $admin_nav;
+//                $reordered_admin_nav[] = $nav;
+//            }
+//            $rt_media_admin_nav = $reordered_admin_nav;
+//        } else {
+//            $rt_media_admin_nav[] = $admin_nav;
+//        }
+//        return $rt_media_admin_nav;
+//    }
 
     public function is_valid_key($key) {
         $validate_url = trailingslashit($this->api_url) . 'api/validate/' . $key;
@@ -219,18 +244,8 @@ class RTMediaEncoding {
 
     public function allowed_types($types) {
 //        $this->update_usage($this->api_key);
-        $types = array(); //Allow all types of file to be uploded
+        $types['extensions'] .= 'mov,m4v,m2v,avi,mpg,flv,wmv,mkv,webm,ogv,mxf,asf,vob,mts,qt,wma,ogg,wav,mpeg,m4a'; //Allow all types of file to be uploded
         return $types;
-    }
-
-    public function encoding_service_notice() {
-        $link = add_query_arg(
-                array('page' => 'rt-media-addons'), (is_multisite() ? network_admin_url('admin.php') : admin_url('admin.php'))
-                )
-        ?>
-        <div class="updated">
-            <p><?php printf(__('We have increased the free plan by <strong>10 times</strong>. <a href="%s">Try the audio/video conversion for free, now</a>.', 'rt-media'), $link); ?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button class="bpm-hide-encoding-notice button-secondary" type="button" ><?php _e('Hide Message', 'rt-media') ?></button></p>
-        </div><?php
     }
 
     public function successfully_subscribed_notice() {
@@ -322,8 +337,8 @@ class RTMediaEncoding {
         <p>
             <label for="new-api-key"><?php _e('Enter API KEY', 'rt-media'); ?></label>
             <input id="new-api-key" type="text" name="new-api-key" value="<?php echo $this->api_key; ?>" size="60" />
-            <input type="submit" id="api-key-submit" name="api-key-submit" value="<?php echo __('Submit','rt-media'); ?>" class="button-primary" />
-            <?php if ($this->api_key) { ?><br /><br /><input type="submit" id="disable-encoding" name="disable-encoding" value="Disable Encoding" class="button-secondary" /><?php } ?>
+            <input type="submit" id="api-key-submit" name="api-key-submit" value="<?php echo __('Submit', 'rt-media'); ?>" class="button-primary" />
+        <?php if ($this->api_key) { ?><br /><br /><input type="submit" id="disable-encoding" name="disable-encoding" value="Disable Encoding" class="button-secondary" /><?php } ?>
         </p>
         <table  class="bp-media-encoding-table widefat fixed" cellspacing="0">
             <tbody>
@@ -384,11 +399,11 @@ class RTMediaEncoding {
         if (isset($usage_details[$this->api_key]->plan->name) && (strtolower($usage_details[$this->api_key]->plan->name) == 'free')) {
             echo '<button disabled="disabled" type="submit" class="encoding-try-now button button-primary">' . __('Current Plan', 'rt-media') . '</button>';
         } else {
-                ?>
+            ?>
                         <form id="encoding-try-now-form" method="get" action="">
                             <button type="submit" class="encoding-try-now button button-primary"><?php _e('Try Now', 'rt-media'); ?></button>
                         </form><?php }
-            ?>
+        ?>
                 </td>
                 <td><?php echo $this->encoding_subscription_form('silver', 9.0) ?></td>
                 <td><?php echo $this->encoding_subscription_form('gold', 99.0) ?></td>
@@ -406,15 +421,15 @@ class RTMediaEncoding {
         public function handle_callback() {
             if (isset($_GET['job_id']) && isset($_GET['download_url'])) {
                 $flag = false;
-                global $wpdb, $rt_media_counter;
-                $query_string =
-                        "SELECT $wpdb->postmeta.post_id
-					FROM $wpdb->postmeta
-					WHERE $wpdb->postmeta.meta_key = 'bp-media-encoding-job-id'
-						AND $wpdb->postmeta.meta_value='" . $_GET['job_id'] . "' ORDER BY post_id";
-                $result = $wpdb->get_results($query_string);
-                if (is_array($result) && count($result) > 0) {
-                    $attachment_id = $result[0]->post_id;
+                global $wpdb;
+                $model = new RTDBModel('rtm_media_meta');
+                $meta_details = $model->get(array('media_value'=>$_GET['job_id'],'meta_key'=>'rt-media-encoding-job-id'));
+                if(isset($meta_details[0])) {
+                    $id = maybe_unserialize($meta_details[0]->media_id);
+                    $model = new RTMediaModel();
+                    $media = $model->get_media(array('id' => $id), 0, 1);
+                    $attachment_id =  $media[0]->media_id;
+                
                     $download_url = urldecode($_GET['download_url']);
                     $new_wp_attached_file_pathinfo = pathinfo($download_url);
                     $post_mime_type = $new_wp_attached_file_pathinfo['extension'] == 'mp4' ? 'video/mp4' : 'audio/mp3';
@@ -431,16 +446,16 @@ class RTMediaEncoding {
                         $old_wp_attached_file = get_post_meta($attachment_id, '_wp_attached_file', true);
                         $old_wp_attached_file_pathinfo = pathinfo($old_wp_attached_file);
                         update_post_meta($attachment_id, '_wp_attached_file', str_replace($old_wp_attached_file_pathinfo['basename'], $new_wp_attached_file_pathinfo['basename'], $old_wp_attached_file));
-                        $media_entry = new BPMediaHostWordpress($attachment_id);
-                        $activity_content = str_replace($old_wp_attached_file_pathinfo['basename'], $new_wp_attached_file_pathinfo['basename'], $media_entry->get_media_activity_content());
-                        $wpdb->update($wpdb->prefix . 'bp_activity', array('content' => $activity_content), array('id' => get_post_meta($attachment_id, 'bp_media_child_activity', true)));
+//                        $media_entry = new BPMediaHostWordpress($attachment_id);
+//                        $activity_content = str_replace($old_wp_attached_file_pathinfo['basename'], $new_wp_attached_file_pathinfo['basename'], $media_entry->get_media_activity_content());
+//                        $wpdb->update($wpdb->prefix . 'bp_activity', array('content' => $activity_content), array('id' => $media[0]->activity_id));
                         // Check if uplaod is through activity upload
-                        $activity_id = get_post_meta($attachment_id, 'bp-media-activity-upload-id', true);
-                        if ($activity_id) {
-                            $content = $wpdb->get_var("SELECT content FROM {$wpdb->prefix}bp_activity WHERE id = $activity_id");
-                            $activity_content = str_replace($old_wp_attached_file_pathinfo['basename'], $new_wp_attached_file_pathinfo['basename'], $content);
-                            $wpdb->update($wpdb->prefix . 'bp_activity', array('content' => $activity_content), array('id' => $activity_id));
-                        }
+//                        $activity_id = get_post_meta($attachment_id, 'bp-media-activity-upload-id', true);
+//                        if ($activity_id) {
+//                            $content = $wpdb->get_var("SELECT content FROM {$wpdb->prefix}bp_activity WHERE id = $activity_id");
+//                            $activity_content = str_replace($old_wp_attached_file_pathinfo['basename'], $new_wp_attached_file_pathinfo['basename'], $content);
+//                            $wpdb->update($wpdb->prefix . 'bp_activity', array('content' => $activity_content), array('id' => $activity_id));
+//                        }
                     } else {
                         $flag = __('Could not read file.', 'rt-media');
                         error_log($flag);
@@ -509,7 +524,7 @@ class RTMediaEncoding {
 
         public function hide_encoding_notice() {
             update_site_option('rt-media-encoding-service-notice', true);
-			update_site_option('rt-media-encoding-expansion-notice', true);
+            update_site_option('rt-media-encoding-expansion-notice', true);
             echo true;
             die();
         }
@@ -544,4 +559,4 @@ class RTMediaEncoding {
         }
 
     }
-    ?>
+?>
