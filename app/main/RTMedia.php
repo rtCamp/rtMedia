@@ -119,6 +119,8 @@ class RTMedia {
 		 */
 		$this->set_site_options();
 
+		add_action('wp_footer',array($this,'set_bp_bar'),1);
+
 		//  Enqueue Plugin Scripts and Styles
 		add_action('wp_enqueue_scripts', array($this, 'enqueue_scripts_styles'), 11);
 
@@ -621,6 +623,10 @@ class RTMedia {
 		wp_enqueue_style('rt-media-magnific', RTMEDIA_URL . 'lib/magnific/magnific.css', '', RTMEDIA_VERSION);
 		wp_enqueue_script('rt-media-magnific', RTMEDIA_URL . 'lib/magnific/magnific.js', '', RTMEDIA_VERSION);
 
+	}
+
+	function set_bp_bar(){
+		remove_action( 'bp_adminbar_menus', 'bp_adminbar_account_menu', 4   );
 	}
 
 }
