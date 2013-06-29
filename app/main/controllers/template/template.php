@@ -32,11 +32,11 @@ if (
 
 if ( ! $ajax ) {
 
-	if ( class_exists( 'BuddyPress' ) && ! bp_is_blog_page() )
+	if ( class_exists( 'BuddyPress' ) && ! bp_is_blog_page() ){
 		$template_type = 'buddypress';
-	else
+	}else{
 		$template_type = '';
-
+	}
 	get_header( $template_type );
 
 
@@ -47,7 +47,7 @@ if ( ! $ajax ) {
 
 		<div id="buddypress">
 
-			<?php if ( bp_is_user() ) { ?>
+			<?php if ( bp_displayed_user_id() ) { ?>
 				<div id="item-header">
 
 					<?php bp_get_template_part( 'members/single/member-header' ) ?>
@@ -102,7 +102,6 @@ if ( ! $ajax ) {
 					<?php
 				}
 			}
-
 			include(RTMediaTemplate::locate_template( $template ));
 			if ( ! $ajax ) {
 				if ( $template_type == 'buddypress' && (bp_is_user() || bp_is_group()) ) {

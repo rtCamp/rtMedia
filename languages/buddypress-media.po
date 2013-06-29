@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: BuddyPress Media\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-05-13 18:00+0530\n"
-"PO-Revision-Date: 2013-05-13 18:00+0530\n"
-"Last-Translator: Joshua Abenazer <joshua.abenazer@rtcamp.com>\n"
+"POT-Creation-Date: 2013-06-28 17:10+0530\n"
+"PO-Revision-Date: 2013-06-28 17:11+0530\n"
+"Last-Translator: Saurabh Shukla <saurabh.shukla@rtcamp.com>\n"
 "Language-Team: rtCamp <info@rtcamp.com>\n"
 "Language: en_IN\n"
 "MIME-Version: 1.0\n"
@@ -15,683 +15,926 @@ msgstr ""
 "X-Generator: Poedit 1.5.4\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: app/helper/BPMediaAddon.php:29
-msgid "BuddyPress-Media Photo Tagging"
+#: templates/media/media-single.php:23
+#: app/main/controllers/template/rt-template-functions.php:590
+msgid "Edit"
 msgstr ""
 
-#: app/helper/BPMediaAddon.php:32
-#: app/helper/BPMediaAddon.php:42
-msgid "BuddyPress Media Instagram adds Instagram like filters to images uploaded with BuddyPress Media."
+#: templates/media/media-single.php:48
+#: templates/media/media-single-edit.php:34
+#: templates/media/album-gallery.php:30 templates/media/media-gallery.php:42
+msgid "Oops !! There's no media found for the request !!"
 msgstr ""
 
-#: app/helper/BPMediaAddon.php:33
-#: app/helper/BPMediaAddon.php:43
-msgid "Important"
+#: templates/media/media-single-edit.php:27
+msgid "Save"
 msgstr ""
 
-#: app/helper/BPMediaAddon.php:33
-#: app/helper/BPMediaAddon.php:43
-msgid "You need to have ImageMagick installed on your server for this addon to work."
+#: templates/media/media-single-edit.php:28
+msgid "Back"
 msgstr ""
 
-#: app/helper/BPMediaAddon.php:39
-msgid "BuddyPress-Media Instagram"
+#: templates/media/album-gallery.php:7
+msgid "Album Gallery"
 msgstr ""
 
-#: app/helper/BPMediaAddon.php:49
-msgid "BuddyPress-Media Kaltura Add-on"
+#: templates/media/album-gallery.php:23
+#: templates/media/album-single-edit.php:61
+#: templates/media/media-gallery.php:30
+msgid "Prev"
 msgstr ""
 
-#: app/helper/BPMediaAddon.php:52
-msgid "Add support for more video formats using Kaltura video solution."
+#: templates/media/album-gallery.php:26
+#: templates/media/album-single-edit.php:70
+#: templates/media/media-gallery.php:39
+msgid "Next"
 msgstr ""
 
-#: app/helper/BPMediaAddon.php:53
-msgid "Works with Kaltura.com, self-hosted Kaltura-CE and Kaltura-on-premise."
+#: templates/media/album-single-edit.php:28
+msgid "Select All Visible"
 msgstr ""
 
-#: app/helper/BPMediaAddon.php:59
-msgid "BuddyPress-Media FFMPEG Add-on"
+#: templates/media/album-single-edit.php:29
+msgid "Unselect All Visible"
 msgstr ""
 
-#: app/helper/BPMediaAddon.php:62
-msgid "Add supports for more audio & video formats using open-source media-node."
+#: templates/media/album-single-edit.php:31
+msgid "Move"
 msgstr ""
 
-#: app/helper/BPMediaAddon.php:63
-msgid "Media node comes with automated setup script for Ubuntu/Debian."
+#: templates/media/album-single-edit.php:32
+msgid "Delete Selected"
 msgstr ""
 
-#: app/helper/BPMediaAddon.php:74
-msgid "BuddyPress Media Addons for Audio/Video"
+#: templates/media/album-single-edit.php:35
+msgid "Move selected media to"
 msgstr ""
 
-#: app/helper/BPMediaAddon.php:114
-msgid "Buy Now"
+#: templates/media/album-single-edit.php:73
+msgid "The album is empty."
 msgstr ""
 
-#: app/helper/BPMediaAddon.php:115
-msgid "Live Demo"
+#: templates/media/media-gallery.php:6
+msgid "Media Gallery"
 msgstr ""
 
-#: app/helper/BPMediaSupport.php:50
+#: app/helper/RTMediaSupport.php:51
 msgid "Debug info"
 msgstr ""
 
-#: app/helper/BPMediaSupport.php:81
+#: app/helper/RTMediaSupport.php:82
 msgid "Submit a Bug Report"
 msgstr ""
 
-#: app/helper/BPMediaSupport.php:84
+#: app/helper/RTMediaSupport.php:85
 msgid "Submit a New Feature Request"
 msgstr ""
 
-#: app/helper/BPMediaSupport.php:87
+#: app/helper/RTMediaSupport.php:88
 msgid "Submit a Premium Support Request"
 msgstr ""
 
-#: app/helper/BPMediaSupport.php:95
+#: app/helper/RTMediaSupport.php:96
 msgid "Name"
 msgstr ""
 
-#: app/helper/BPMediaSupport.php:98
+#: app/helper/RTMediaSupport.php:99
 msgid "Email"
 msgstr ""
 
-#: app/helper/BPMediaSupport.php:101
+#: app/helper/RTMediaSupport.php:102
 msgid "Website"
 msgstr ""
 
-#: app/helper/BPMediaSupport.php:104
+#: app/helper/RTMediaSupport.php:105
 msgid "Phone"
 msgstr ""
 
-#: app/helper/BPMediaSupport.php:107
+#: app/helper/RTMediaSupport.php:108
 msgid "Subject"
 msgstr ""
 
-#: app/helper/BPMediaSupport.php:110
+#: app/helper/RTMediaSupport.php:111
 msgid "Details"
 msgstr ""
 
-#: app/helper/BPMediaSupport.php:121
+#: app/helper/RTMediaSupport.php:122
 msgid "Additional Information"
 msgstr ""
 
-#: app/helper/BPMediaSupport.php:126
+#: app/helper/RTMediaSupport.php:127
 msgid "Your WP Admin Login:"
 msgstr ""
 
-#: app/helper/BPMediaSupport.php:129
+#: app/helper/RTMediaSupport.php:130
 msgid "Your WP Admin password:"
 msgstr ""
 
-#: app/helper/BPMediaSupport.php:132
+#: app/helper/RTMediaSupport.php:133
 msgid "Your SSH / FTP host:"
 msgstr ""
 
-#: app/helper/BPMediaSupport.php:135
+#: app/helper/RTMediaSupport.php:136
 msgid "Your SSH / FTP login:"
 msgstr ""
 
-#: app/helper/BPMediaSupport.php:138
+#: app/helper/RTMediaSupport.php:139
 msgid "Your SSH / FTP password:"
 msgstr ""
 
-#: app/helper/BPMediaSupport.php:161
-msgid "BuddyPress Media Premium Support Request from"
+#: app/helper/RTMediaSupport.php:162
+msgid "rtMedia Premium Support Request from"
 msgstr ""
 
-#: app/helper/BPMediaSupport.php:164
-msgid "BuddyPress Media New Feature Request from"
+#: app/helper/RTMediaSupport.php:165
+msgid "rtMedia New Feature Request from"
 msgstr ""
 
-#: app/helper/BPMediaSupport.php:167
-msgid "BuddyPress Media Bug Report from"
+#: app/helper/RTMediaSupport.php:168
+msgid "rtMedia Bug Report from"
 msgstr ""
 
-#: app/helper/BPMediaSupport.php:170
-msgid "BuddyPress Media Contact from"
+#: app/helper/RTMediaSupport.php:171
+msgid "rtMedia Contact from"
 msgstr ""
 
-#: app/helper/BPMediaSupport.php:231
+#: app/helper/RTMediaSupport.php:232
 msgid "Debug Info"
 msgstr ""
 
-#: app/helper/BPMediaSupport.php:246
+#: app/helper/RTMediaSupport.php:247
 msgid "Thank you for your Feedback/Suggestion."
 msgstr ""
 
-#: app/helper/BPMediaSupport.php:248
+#: app/helper/RTMediaSupport.php:249
 msgid "Thank you for posting your support request."
 msgstr ""
 
-#: app/helper/BPMediaSupport.php:249
+#: app/helper/RTMediaSupport.php:250
 msgid "We will get back to you shortly."
 msgstr ""
 
-#: app/helper/BPMediaSupport.php:252
+#: app/helper/RTMediaSupport.php:253
 msgid "Your server failed to send an email."
 msgstr ""
 
-#: app/helper/BPMediaSupport.php:253
+#: app/helper/RTMediaSupport.php:254
 msgid "Kindly contact your server support to fix this."
 msgstr ""
 
-#: app/helper/BPMediaSupport.php:254
+#: app/helper/RTMediaSupport.php:255
 #, php-format
 msgid "You can alternatively create a support request <a href=\"%s\">here</a>"
 msgstr ""
 
-#: app/helper/BPMediaFeed.php:43
-msgid "No items"
+#: app/helper/RTMediaUploadException.php:41
+msgid ""
+"The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in "
+"the HTML form"
 msgstr ""
 
-#: app/helper/BPMediaFeed.php:49
-msgid "Posted "
+#: app/helper/RTMediaUploadException.php:44
+msgid "No file was uploaded"
 msgstr ""
 
-#: app/helper/BPMediaAdminWidget.php:29
-msgid "Argument missing. id is required."
+#: app/helper/RTMediaUploadException.php:48
+msgid "Uploade failed due to internal server error."
 msgstr ""
 
-#: app/helper/BPMediaSettings.php:33
-msgid "Enabled Media Types"
+#: app/helper/RTMediaUploadException.php:51
+msgid "File type not allowed."
 msgstr ""
 
-#: app/helper/BPMediaSettings.php:34
-#: app/helper/BPMediaSettings.php:51
-#: app/main/BuddyPressMedia.php:328
-msgid "Photos"
+#: app/helper/RTMediaUploadException.php:55
+msgid "Invalid Context for upload."
 msgstr ""
 
-#: app/helper/BPMediaSettings.php:37
-msgid "Enable Photos"
+#: app/helper/RTMediaUploadException.php:58
+msgid "Unknown file upload error."
 msgstr ""
 
-#: app/helper/BPMediaSettings.php:39
-#: app/helper/BPMediaSettings.php:56
-#: app/main/BuddyPressMedia.php:337
-msgid "Video"
+#: app/helper/RTMediaAddon.php:52 app/services/RTMediaEncoding.php:109
+msgid "Encoding"
 msgstr ""
 
-#: app/helper/BPMediaSettings.php:42
-msgid "Enable Video (mp4)"
+#: app/helper/RTMediaAddon.php:58
+msgid "Plugins"
 msgstr ""
 
-#: app/helper/BPMediaSettings.php:44
-#: app/helper/BPMediaSettings.php:61
-msgid "Audio"
+#: app/helper/RTMediaAddon.php:96
+msgid "BuddyPress-Media Photo Tagging"
 msgstr ""
 
-#: app/helper/BPMediaSettings.php:47
-msgid "Enable Audio (mp3)"
+#: app/helper/RTMediaAddon.php:99 app/helper/RTMediaAddon.php:109
+#: app/importers/BPMediaAlbumimporter.php:176
+msgid ""
+"BuddyPress Media Instagram adds Instagram like filters to images uploaded "
+"with BuddyPress Media."
 msgstr ""
 
-#: app/helper/BPMediaSettings.php:50
-msgid "Enable Featured Media"
+#: app/helper/RTMediaAddon.php:100 app/helper/RTMediaAddon.php:110
+#: app/importers/BPMediaAlbumimporter.php:177
+msgid "Important"
 msgstr ""
 
-#: app/helper/BPMediaSettings.php:54
-msgid "Enable Featured Photos"
+#: app/helper/RTMediaAddon.php:100 app/helper/RTMediaAddon.php:110
+#: app/importers/BPMediaAlbumimporter.php:177
+msgid ""
+"You need to have ImageMagick installed on your server for this addon to work."
 msgstr ""
 
-#: app/helper/BPMediaSettings.php:59
-msgid "Enable Featured Video"
+#: app/helper/RTMediaAddon.php:106
+msgid "BuddyPress-Media Instagram"
 msgstr ""
 
-#: app/helper/BPMediaSettings.php:64
-msgid "Enable Featured Audio"
+#: app/helper/RTMediaAddon.php:116
+msgid "BuddyPress-Media Kaltura Add-on"
 msgstr ""
 
-#: app/helper/BPMediaSettings.php:66
-msgid "Featured Media Size"
+#: app/helper/RTMediaAddon.php:119
+msgid "Add support for more video formats using Kaltura video solution."
 msgstr ""
 
-#: app/helper/BPMediaSettings.php:75
-msgid "Image Settings"
+#: app/helper/RTMediaAddon.php:120
+msgid "Works with Kaltura.com, self-hosted Kaltura-CE and Kaltura-on-premise."
 msgstr ""
 
-#: app/helper/BPMediaSettings.php:76
-msgid "Thumbnail Size"
+#: app/helper/RTMediaAddon.php:126
+msgid "BuddyPress-Media FFMPEG Add-on"
 msgstr ""
 
-#: app/helper/BPMediaSettings.php:80
-msgid "Used in albums, sidebar media widget acitvity stream"
+#: app/helper/RTMediaAddon.php:129
+msgid ""
+"Add supports for more audio & video formats using open-source media-node."
 msgstr ""
 
-#: app/helper/BPMediaSettings.php:82
-msgid "Medium Size"
+#: app/helper/RTMediaAddon.php:130
+msgid "Media node comes with automated setup script for Ubuntu/Debian."
 msgstr ""
 
-#: app/helper/BPMediaSettings.php:86
-msgid "Used in activity stream for single media uploads"
-msgstr ""
-
-#: app/helper/BPMediaSettings.php:88
-msgid "Large Size"
-msgstr ""
-
-#: app/helper/BPMediaSettings.php:92
-msgid "Used in single media and thickbox"
-msgstr ""
-
-#: app/helper/BPMediaSettings.php:95
-msgid "Video Payer Settings"
-msgstr ""
-
-#: app/helper/BPMediaSettings.php:96
-#: app/helper/BPMediaSettings.php:106
-msgid "Activity Player Size"
-msgstr ""
-
-#: app/helper/BPMediaSettings.php:100
-#: app/helper/BPMediaSettings.php:111
-msgid "Single Player Size"
-msgstr ""
-
-#: app/helper/BPMediaSettings.php:105
-msgid "Audio Player Settings"
-msgstr ""
-
-#: app/helper/BPMediaSettings.php:118
-msgid "Activity Upload"
-msgstr ""
-
-#: app/helper/BPMediaSettings.php:119
-msgid "Activity Uploads"
-msgstr ""
-
-#: app/helper/BPMediaSettings.php:122
-msgid "Enable Activity Uploading"
-msgstr ""
-
-#: app/helper/BPMediaSettings.php:127
-msgid "Lightbox Integration"
-msgstr ""
-
-#: app/helper/BPMediaSettings.php:128
-msgid "Lightbox"
-msgstr ""
-
-#: app/helper/BPMediaSettings.php:131
-msgid "Enable Lighbox on Media"
-msgstr ""
-
-#: app/helper/BPMediaSettings.php:136
-msgid "Groups Integration"
-msgstr ""
-
-#: app/helper/BPMediaSettings.php:143
-msgid "Groups"
-msgstr ""
-
-#: app/helper/BPMediaSettings.php:146
-msgid "Allow Media in Groups"
-msgstr ""
-
-#: app/helper/BPMediaSettings.php:151
-msgid "Display Settings"
-msgstr ""
-
-#: app/helper/BPMediaSettings.php:152
-msgid "Number of media"
-msgstr ""
-
-#: app/helper/BPMediaSettings.php:157
-msgid "Download Button"
-msgstr ""
-
-#: app/helper/BPMediaSettings.php:160
-msgid "Display download button under media"
-msgstr ""
-
-#: app/helper/BPMediaSettings.php:164
-#: app/main/privacy/BPMediaPrivacyScreen.php:59
-msgid "Privacy Settings"
-msgstr ""
-
-#: app/helper/BPMediaSettings.php:165
-msgid "Enable Privacy"
-msgstr ""
-
-#: app/helper/BPMediaSettings.php:168
-msgid "Enable privacy"
-msgstr ""
-
-#: app/helper/BPMediaSettings.php:172
-msgid "<strong>Private</strong> - Visible only to the user"
-msgstr ""
-
-#: app/helper/BPMediaSettings.php:173
-msgid "<strong>Friends</strong> - Visible to user's friends"
-msgstr ""
-
-#: app/helper/BPMediaSettings.php:174
-msgid "<strong>Users</strong> - Visible to registered users"
-msgstr ""
-
-#: app/helper/BPMediaSettings.php:175
-msgid "<strong>Public</strong> - Visible to the world"
-msgstr ""
-
-#: app/helper/BPMediaSettings.php:180
-msgid "Default Privacy"
-msgstr ""
-
-#: app/helper/BPMediaSettings.php:186
-msgid "User Override"
-msgstr ""
-
-#: app/helper/BPMediaSettings.php:189
-msgid "Allow users to override admin defaults (<em>Recommended</em>)"
-msgstr ""
-
-#: app/helper/BPMediaSettings.php:192
-msgid "Other Settings"
-msgstr ""
-
-#: app/helper/BPMediaSettings.php:194
-msgid "Admin bar menu"
-msgstr ""
-
-#: app/helper/BPMediaSettings.php:197
-msgid "Enable menu in WordPress admin bar"
-msgstr ""
-
-#: app/helper/BPMediaSettings.php:200
-#: app/helper/BPMediaSettings.php:202
-msgid "Recount"
-msgstr ""
-
-#: app/helper/BPMediaSettings.php:203
-msgid "Repair media counts"
-msgstr ""
-
-#: app/helper/BPMediaSettings.php:207
+#: app/helper/RTMediaAddon.php:142 app/helper/RTMediaSettings.php:90
 msgid "BuddyPress Media Addons for Photos"
 msgstr ""
 
-#: app/helper/BPMediaSettings.php:209
-#: app/admin/BPMediaAdmin.php:260
+#: app/helper/RTMediaAddon.php:146
+msgid "BuddyPress Media Addons for Audio/Video"
+msgstr ""
+
+#: app/helper/RTMediaAddon.php:199 app/importers/BPMediaAlbumimporter.php:181
+msgid "Buy Now"
+msgstr ""
+
+#: app/helper/RTMediaAddon.php:200 app/importers/BPMediaAlbumimporter.php:182
+msgid "Live Demo"
+msgstr ""
+
+#: app/helper/RTMediaFeed.php:44
+msgid "No items"
+msgstr ""
+
+#: app/helper/RTMediaFeed.php:50
+msgid "Posted "
+msgstr ""
+
+#: app/helper/RTMediaAdminWidget.php:29
+msgid "Argument missing. id is required."
+msgstr ""
+
+#: app/helper/RTMediaSettings.php:92 app/admin/RTMediaAdmin.php:121
+#: app/admin/RTMediaAdmin.php:290
 msgid "Support"
 msgstr ""
 
-#: app/helper/BPMediaSettings.php:214
-#: app/helper/BPMediaSettings.php:598
-#: app/admin/BPMediaAdmin.php:101
-#: app/main/privacy/BPMediaPrivacySettings.php:29
-msgid "Update Database"
-msgstr ""
-
-#: app/helper/BPMediaSettings.php:218
-msgid "BP-Album Importer"
-msgstr ""
-
-#: app/helper/BPMediaSettings.php:260
+#: app/helper/RTMediaSettings.php:143
 #, php-format
-msgid "Currently your network allows uploading of the following file types. You can change the settings <a href=\"%s\">here</a>.<br /><code>%s</code></span>"
+msgid ""
+"Currently your network allows uploading of the following file types. You can "
+"change the settings <a href=\"%s\">here</a>.<br /><code>%s</code></span>"
 msgstr ""
 
-#: app/helper/BPMediaSettings.php:278
-#: app/helper/BPMediaSettings.php:280
+#: app/helper/RTMediaSettings.php:161 app/helper/RTMediaSettings.php:163
 msgid "Recounting of media files done successfully"
 msgstr ""
 
-#: app/helper/BPMediaSettings.php:280
+#: app/helper/RTMediaSettings.php:163
 msgid "Recount Success"
 msgstr ""
 
-#: app/helper/BPMediaSettings.php:283
-#: app/helper/BPMediaSettings.php:285
+#: app/helper/RTMediaSettings.php:166 app/helper/RTMediaSettings.php:168
 msgid "Recounting Failed"
 msgstr ""
 
-#: app/helper/BPMediaSettings.php:285
+#: app/helper/RTMediaSettings.php:168
 msgid "Recount Fail"
 msgstr ""
 
-#: app/helper/BPMediaSettings.php:297
-#: app/helper/BPMediaSettings.php:299
+#: app/helper/RTMediaSettings.php:180 app/helper/RTMediaSettings.php:182
 msgid "Atleast one Media Type Must be selected"
 msgstr ""
 
-#: app/helper/BPMediaSettings.php:299
+#: app/helper/RTMediaSettings.php:182 app/admin/RTMediaFormHandler.php:243
 msgid "Media Type"
 msgstr ""
 
-#: app/helper/BPMediaSettings.php:306
-#: app/helper/BPMediaSettings.php:308
+#: app/helper/RTMediaSettings.php:189 app/helper/RTMediaSettings.php:191
 msgid "\"Number of media\" count value should be numeric and greater than 0."
 msgstr ""
 
-#: app/helper/BPMediaSettings.php:308
+#: app/helper/RTMediaSettings.php:191
 msgid "Default Count"
 msgstr ""
 
-#: app/helper/BPMediaSettings.php:312
+#: app/helper/RTMediaSettings.php:195
 msgid "Settings saved."
 msgstr ""
 
-#: app/helper/BPMediaSettings.php:325
+#: app/helper/RTMediaSettings.php:208
 #, php-format
-msgid "If you make changes to width, height or crop settings, you must use \"<a href=\"%s\">Regenerate Thumbnail Plugin</a>\" to regenerate old images.\""
+msgid ""
+"If you make changes to width, height or crop settings, you must use \"<a "
+"href=\"%s\">Regenerate Thumbnail Plugin</a>\" to regenerate old images.\""
 msgstr ""
 
-#: app/helper/BPMediaSettings.php:352
-msgid "Please provide \"option\" value ( required ) in the argument. Pass argument to add_settings_field in the following format array( 'option' => 'option_name' ) "
-msgstr ""
-
-#: app/helper/BPMediaSettings.php:397
-#: app/helper/BPMediaSettings.php:446
-#: app/helper/BPMediaSettings.php:525
-msgid "Please provide \"option\" value ( required ) in the argument. Pass argument to add_settings_field in the following format array( 'option' => 'option_name' )"
-msgstr ""
-
-#: app/helper/BPMediaSettings.php:399
-msgid "Need to specify atleast to radios else use a checkbox instead"
-msgstr ""
-
-#: app/helper/BPMediaSettings.php:495
-msgid "Width"
-msgstr ""
-
-#: app/helper/BPMediaSettings.php:496
-msgid "Height"
-msgstr ""
-
-#: app/helper/BPMediaSettings.php:497
-msgid "Crop"
-msgstr ""
-
-#: app/helper/BPMediaSettings.php:527
-msgid "Please provide some values to populate the dropdown. Format : array( 'value' => 'option' )"
-msgstr ""
-
-#: app/helper/BPMediaSettings.php:542
-msgid "None"
-msgstr ""
-
-#: app/helper/BPMediaSettings.php:597
+#: app/helper/RTMediaSettings.php:229
 msgid "BuddyPress Media 2.6 requires a database upgrade. "
 msgstr ""
 
-#: app/helper/BPMediaSettings.php:606
-msgid "If your site has some issues due to BuddyPress Media and you want one on one support then you can create a support topic on the <a target=\"_blank\" href=\"http://rtcamp.com/groups/buddypress-media/forum/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media\">rtCamp Support Forum</a>."
+#: app/helper/RTMediaSettings.php:230
+msgid "Update Database"
 msgstr ""
 
-#: app/helper/BPMediaSettings.php:607
-msgid "If you have any suggestions, enhancements or bug reports, then you can open a new issue on <a target=\"_blank\" href=\"https://github.com/rtCamp/buddypress-media/issues/new\">GitHub</a>."
+#: app/helper/RTMediaSettings.php:238
+msgid ""
+"If your site has some issues due to BuddyPress Media and you want one on one "
+"support then you can create a support topic on the <a target=\"_blank\" href="
+"\"http://rtcamp.com/groups/buddypress-media/forum/?"
+"utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media"
+"\">rtCamp Support Forum</a>."
 msgstr ""
 
-#: app/admin/BPMediaAdmin.php:72
+#: app/helper/RTMediaSettings.php:239
+msgid ""
+"If you have any suggestions, enhancements or bug reports, then you can open "
+"a new issue on <a target=\"_blank\" href=\"https://github.com/rtCamp/"
+"buddypress-media/issues/new\">GitHub</a>."
+msgstr ""
+
+#: app/services/BPMediaEncodingTranscoder.php:35
+#: app/main/controllers/upload/processors/RTMediaUploadFile.php:48
+msgid "Error Uploading File"
+msgstr ""
+
+#: app/services/BPMediaEncodingTranscoder.php:40
+msgid "Upload file type not supported"
+msgstr ""
+
+#: app/services/BPMediaEncodingTranscoder.php:87
+#: app/main/controllers/media/RTMediaMedia.php:324
+msgid "Error creating attachment for the media file, please try again"
+msgstr ""
+
+#: app/services/RTMediaEncoding.php:84
+msgid "BuddyPress Media Audio/Video Encoding Service"
+msgstr ""
+
+#: app/services/RTMediaEncoding.php:84 app/services/RTMediaEncoding.php:132
+msgid "Audio/Video Encoding"
+msgstr ""
+
+#: app/services/RTMediaEncoding.php:102
+msgid "Audio/Video Encoding Service"
+msgstr ""
+
+#: app/services/RTMediaEncoding.php:173
+msgid "BuddyPress Media Encoding: Nearing quota limit."
+msgstr ""
+
+#: app/services/RTMediaEncoding.php:174
+#, php-format
+msgid ""
+"<p>You are nearing the quota limit for your BuddyPress Media encoding "
+"service.</p><p>Following are the details:</p><p><strong>Used:</strong> %s</"
+"p><p><strong>Remaining</strong>: %s</p><p><strong>Total:</strong> %s</p>"
+msgstr ""
+
+#: app/services/RTMediaEncoding.php:188
+msgid "BuddyPress Media Encoding: Usage quota over."
+msgstr ""
+
+#: app/services/RTMediaEncoding.php:189
+#, php-format
+msgid ""
+"<p>Your usage quota is over. Upgrade your plan</p><p>Following are the "
+"details:</p><p><strong>Used:</strong> %s</p><p><strong>Remaining</strong>: "
+"%s</p><p><strong>Total:</strong> %s</p>"
+msgstr ""
+
+#: app/services/RTMediaEncoding.php:232
+#, php-format
+msgid ""
+"We have increased the free plan by <strong>10 times</strong>. <a href=\"%s"
+"\">Try the audio/video conversion for free, now</a>."
+msgstr ""
+
+#: app/services/RTMediaEncoding.php:232
+msgid "Hide Message"
+msgstr ""
+
+#: app/services/RTMediaEncoding.php:239
+#, php-format
+msgid "You have successfully subscribed for the <strong>%s</strong> plan"
+msgstr ""
+
+#: app/services/RTMediaEncoding.php:251
+msgid "Unsubscribe"
+msgstr ""
+
+#: app/services/RTMediaEncoding.php:302 app/services/RTMediaEncoding.php:385
+msgid "Current Plan"
+msgstr ""
+
+#: app/services/RTMediaEncoding.php:302
+msgid "Unsubscribed"
+msgstr ""
+
+#: app/services/RTMediaEncoding.php:304
+msgid "Used"
+msgstr ""
+
+#: app/services/RTMediaEncoding.php:306
+msgid "Remaining"
+msgstr ""
+
+#: app/services/RTMediaEncoding.php:308
+msgid "Total"
+msgstr ""
+
+#: app/services/RTMediaEncoding.php:312
+msgid "Your usage limit has been reached. Upgrade your plan."
+msgstr ""
+
+#: app/services/RTMediaEncoding.php:314
+msgid "Your API key is not valid or is expired."
+msgstr ""
+
+#: app/services/RTMediaEncoding.php:316
+msgid "Encoding Usage"
+msgstr ""
+
+#: app/services/RTMediaEncoding.php:321
+msgid ""
+"BuddyPress Media team has started offering an audio/video encoding service."
+msgstr ""
+
+#: app/services/RTMediaEncoding.php:323
+msgid "Enter API KEY"
+msgstr ""
+
+#: app/services/RTMediaEncoding.php:325
+msgid "Submit"
+msgstr ""
+
+#: app/services/RTMediaEncoding.php:333
+msgid "Feature\\Plan"
+msgstr ""
+
+#: app/services/RTMediaEncoding.php:334 app/services/RTMediaEncoding.php:375
+msgid "Free"
+msgstr ""
+
+#: app/services/RTMediaEncoding.php:335
+msgid "Silver"
+msgstr ""
+
+#: app/services/RTMediaEncoding.php:336
+msgid "Gold"
+msgstr ""
+
+#: app/services/RTMediaEncoding.php:337
+msgid "Platinum"
+msgstr ""
+
+#: app/services/RTMediaEncoding.php:341
+msgid "File Size Limit"
+msgstr ""
+
+#: app/services/RTMediaEncoding.php:346
+msgid "Bandwidth (monthly)"
+msgstr ""
+
+#: app/services/RTMediaEncoding.php:353
+msgid "Overage Bandwidth"
+msgstr ""
+
+#: app/services/RTMediaEncoding.php:354 app/services/RTMediaEncoding.php:361
+#: app/services/RTMediaEncoding.php:366
+msgid "Not Available"
+msgstr ""
+
+#: app/services/RTMediaEncoding.php:360
+msgid "Amazon S3 Support"
+msgstr ""
+
+#: app/services/RTMediaEncoding.php:362 app/services/RTMediaEncoding.php:367
+#: app/services/RTMediaEncoding.php:371
+msgid "Coming Soon"
+msgstr ""
+
+#: app/services/RTMediaEncoding.php:365
+msgid "HD Profile"
+msgstr ""
+
+#: app/services/RTMediaEncoding.php:370
+msgid "Webcam Recording"
+msgstr ""
+
+#: app/services/RTMediaEncoding.php:374
+msgid "Pricing"
+msgstr ""
+
+#: app/services/RTMediaEncoding.php:376
+msgid "$9/month"
+msgstr ""
+
+#: app/services/RTMediaEncoding.php:377
+msgid "$99/month"
+msgstr ""
+
+#: app/services/RTMediaEncoding.php:378
+msgid "$999/month"
+msgstr ""
+
+#: app/services/RTMediaEncoding.php:389
+msgid "Try Now"
+msgstr ""
+
+#: app/services/RTMediaEncoding.php:445
+msgid "Could not read file."
+msgstr ""
+
+#: app/services/RTMediaEncoding.php:449
+msgid ""
+"Something went wrong. The required attachment id does not exists. It must "
+"have been deleted."
+msgstr ""
+
+#: app/services/RTMediaEncoding.php:464
+msgid "BuddyPress Media Encoding: Download Failed"
+msgstr ""
+
+#: app/services/RTMediaEncoding.php:465
+#, php-format
+msgid ""
+"<p><a href=\"%s\">Media</a> was successfully encoded but there was an error "
+"while downloading:</p>\n"
+"                        <p><code>%s</code></p>\n"
+"                        <p>You can <a href=\"%s\">retry the download</a>.</p>"
+msgstr ""
+
+#: app/services/RTMediaEncoding.php:479
+msgid "Done"
+msgstr ""
+
+#: app/services/RTMediaEncoding.php:523
+msgid "Your subscription was cancelled successfully"
+msgstr ""
+
+#: app/services/RTMediaEncoding.php:526
+msgid "Something went wrong please try again."
+msgstr ""
+
+#: app/services/RTMediaEncoding.php:535
+msgid "Please enter the api key."
+msgstr ""
+
+#: app/services/RTMediaEncoding.php:542
+msgid "Encoding disabled successfully."
+msgstr ""
+
+#: app/admin/RTMediaFormHandler.php:28 app/admin/RTMediaFormHandler.php:94
+msgid "Please provide \"value\" in the argument."
+msgstr ""
+
+#: app/admin/RTMediaFormHandler.php:58
+msgid "Need to specify atleast to radios else use a checkbox instead"
+msgstr ""
+
+#: app/admin/RTMediaFormHandler.php:121 app/main/RTMedia.php:416
+#: app/main/controllers/media/RTMediaAlbum.php:39
+#: app/main/controllers/media/RTMediaAlbum.php:51
+msgid "Albums"
+msgstr ""
+
+#: app/admin/RTMediaFormHandler.php:126
+msgid "Enable Albums in rtMedia"
+msgstr ""
+
+#: app/admin/RTMediaFormHandler.php:130
+#: app/importers/BPMediaAlbumimporter.php:111
+msgid "Comments"
+msgstr ""
+
+#: app/admin/RTMediaFormHandler.php:135
+msgid "Enable Comments in rtMedia"
+msgstr ""
+
+#: app/admin/RTMediaFormHandler.php:139
+msgid "Download Button"
+msgstr ""
+
+#: app/admin/RTMediaFormHandler.php:144
+msgid "Display download button under media"
+msgstr ""
+
+#: app/admin/RTMediaFormHandler.php:148
+msgid "Lightbox"
+msgstr ""
+
+#: app/admin/RTMediaFormHandler.php:153
+msgid "Enable Lighbox on Media"
+msgstr ""
+
+#: app/admin/RTMediaFormHandler.php:157
+msgid "Number of Media Per Page"
+msgstr ""
+
+#: app/admin/RTMediaFormHandler.php:165
+msgid "Enable Media End Point for users"
+msgstr ""
+
+#: app/admin/RTMediaFormHandler.php:170
+msgid "Users can access their media on media end point"
+msgstr ""
+
+#: app/admin/RTMediaFormHandler.php:174
+msgid "Admin Bar Menu"
+msgstr ""
+
+#: app/admin/RTMediaFormHandler.php:179
+msgid "Enable menu in WordPress admin bar"
+msgstr ""
+
+#: app/admin/RTMediaFormHandler.php:244
+msgid "Allows you to upload a particular media type on your post."
+msgstr ""
+
+#: app/admin/RTMediaFormHandler.php:244
+msgid "Allow Upload"
+msgstr ""
+
+#: app/admin/RTMediaFormHandler.php:245
+msgid "Put a specific media as a featured content on the post."
+msgstr ""
+
+#: app/admin/RTMediaFormHandler.php:245
+msgid "Set Featured"
+msgstr ""
+
+#: app/admin/RTMediaFormHandler.php:246
+msgid "File extensions that can be uploaded on the website."
+msgstr ""
+
+#: app/admin/RTMediaFormHandler.php:246
+msgid "File Extensions"
+msgstr ""
+
+#: app/admin/RTMediaFormHandler.php:300
+msgid "Category"
+msgstr ""
+
+#: app/admin/RTMediaFormHandler.php:301
+msgid "Entity"
+msgstr ""
+
+#: app/admin/RTMediaFormHandler.php:302
+msgid "Width"
+msgstr ""
+
+#: app/admin/RTMediaFormHandler.php:302
+msgid "Height"
+msgstr ""
+
+#: app/admin/RTMediaFormHandler.php:302
+msgid "Crop"
+msgstr ""
+
+#: app/admin/RTMediaFormHandler.php:345
+msgid "Enable Privacy"
+msgstr ""
+
+#: app/admin/RTMediaFormHandler.php:354
+msgid "Default Privacy"
+msgstr ""
+
+#: app/admin/RTMediaFormHandler.php:363
+msgid "User Override"
+msgstr ""
+
+#: app/admin/RTMediaFormHandler.php:402
+msgid "Profile Media"
+msgstr ""
+
+#: app/admin/RTMediaFormHandler.php:407
+msgid "Enable Media on BuddyPress Profile"
+msgstr ""
+
+#: app/admin/RTMediaFormHandler.php:411
+msgid "Group Media"
+msgstr ""
+
+#: app/admin/RTMediaFormHandler.php:416
+msgid "Enable Media on BuddyPress Groups"
+msgstr ""
+
+#: app/admin/RTMediaFormHandler.php:420
+msgid "Activity Media"
+msgstr ""
+
+#: app/admin/RTMediaFormHandler.php:425
+msgid "Enable Media on BuddyPress Activities"
+msgstr ""
+
+#: app/admin/RTMediaAdmin.php:83
+msgid "ON"
+msgstr ""
+
+#: app/admin/RTMediaAdmin.php:84
+msgid "OFF"
+msgstr ""
+
+#: app/admin/RTMediaAdmin.php:89
 msgid "Please do not refresh this page."
 msgstr ""
 
-#: app/admin/BPMediaAdmin.php:73
-msgid "Something went wronng. Please <a href onclick=\"location.reload();\">refresh</a> page."
+#: app/admin/RTMediaAdmin.php:90
+msgid ""
+"Something went wronng. Please <a href onclick=\"location.reload();"
+"\">refresh</a> page."
 msgstr ""
 
-#: app/admin/BPMediaAdmin.php:74
+#: app/admin/RTMediaAdmin.php:91
 msgid "This will subscribe you to the free plan."
 msgstr ""
 
-#: app/admin/BPMediaAdmin.php:75
-msgid "Are you sure you want to disable the encoding service? Make sure you note your api key before diabling it incase you want to activate it in future."
+#: app/admin/RTMediaAdmin.php:92
+msgid ""
+"Are you sure you want to disable the encoding service? Make sure you note "
+"your api key before disabling it incase you want to activate it in future."
 msgstr ""
 
-#: app/admin/BPMediaAdmin.php:95
-msgid "BuddyPress Media Component"
-msgstr ""
-
-#: app/admin/BPMediaAdmin.php:95
-#: app/admin/BPMediaAdmin.php:217
-#: app/admin/BPMediaAdmin.php:218
-msgid "BuddyPress Media"
-msgstr ""
-
-#: app/admin/BPMediaAdmin.php:96
-#: app/admin/BPMediaAdmin.php:245
-msgid "BuddyPress Media Settings"
-msgstr ""
-
-#: app/admin/BPMediaAdmin.php:96
-#: app/admin/BPMediaAdmin.php:246
-#: app/main/BuddyPressMedia.php:466
+#: app/admin/RTMediaAdmin.php:119 app/admin/RTMediaAdmin.php:280
 msgid "Settings"
 msgstr ""
 
-#: app/admin/BPMediaAdmin.php:97
-#: app/admin/BPMediaAdmin.php:252
-msgid "BuddyPress Media Addons"
-msgstr ""
-
-#: app/admin/BPMediaAdmin.php:97
-#: app/admin/BPMediaAdmin.php:253
+#: app/admin/RTMediaAdmin.php:120 app/admin/RTMediaAdmin.php:285
 msgid "Addons"
 msgstr ""
 
-#: app/admin/BPMediaAdmin.php:98
-#: app/admin/BPMediaAdmin.php:259
-msgid "BuddyPress Media Support"
-msgstr ""
-
-#: app/admin/BPMediaAdmin.php:98
+#: app/admin/RTMediaAdmin.php:121
 msgid "Support "
 msgstr ""
 
-#: app/admin/BPMediaAdmin.php:99
-#: app/admin/BPMediaAdmin.php:266
-#: app/admin/BPMediaAdmin.php:267
-msgid "Importer"
+#: app/admin/RTMediaAdmin.php:209
+msgid "Save Settings"
 msgstr ""
 
-#: app/admin/BPMediaAdmin.php:101
-msgid "BuddyPress Media Database Update"
-msgstr ""
-
-#: app/admin/BPMediaAdmin.php:162
-#: app/importers/BPMediaAlbumimporter.php:91
-#: app/main/BuddyPressMedia.php:320
-#: app/main/BuddyPressMedia.php:323
-#: app/main/BPMediaComponent.php:298
-#: app/main/BPMediaComponent.php:299
-#: app/main/BPMediaComponent.php:305
-msgid "Media"
-msgstr ""
-
-#: app/admin/BPMediaAdmin.php:180
-#: app/admin/BPMediaAdmin.php:185
+#: app/admin/RTMediaAdmin.php:211 app/admin/RTMediaAdmin.php:226
 msgid "By"
 msgstr ""
 
-#: app/admin/BPMediaAdmin.php:180
-#: app/admin/BPMediaAdmin.php:185
+#: app/admin/RTMediaAdmin.php:211 app/admin/RTMediaAdmin.php:226
 msgid "Empowering The Web With WordPress"
 msgstr ""
 
-#: app/admin/BPMediaAdmin.php:363
+#: app/admin/RTMediaAdmin.php:258 app/admin/RTMediaAdmin.php:259
+msgid "rtMedia"
+msgstr ""
+
+#: app/admin/RTMediaAdmin.php:352
+msgid "rtMedia General"
+msgstr ""
+
+#: app/admin/RTMediaAdmin.php:353
+msgid "General"
+msgstr ""
+
+#: app/admin/RTMediaAdmin.php:359
+msgid "rtMedia Types"
+msgstr ""
+
+#: app/admin/RTMediaAdmin.php:360
+msgid "Types"
+msgstr ""
+
+#: app/admin/RTMediaAdmin.php:367
+msgid "rtMedia Sizes"
+msgstr ""
+
+#: app/admin/RTMediaAdmin.php:368
+msgid "Sizes"
+msgstr ""
+
+#: app/admin/RTMediaAdmin.php:375
+msgid "rtMedia Privacy"
+msgstr ""
+
+#: app/admin/RTMediaAdmin.php:376
+msgid "Privacy"
+msgstr ""
+
+#: app/admin/RTMediaAdmin.php:383
+msgid "rtMedia BuddyPress"
+msgstr ""
+
+#: app/admin/RTMediaAdmin.php:384
+msgid "BuddyPress"
+msgstr ""
+
+#: app/admin/RTMediaAdmin.php:489
 #, php-format
 msgid "I use @buddypressmedia http://goo.gl/8Upmv on %s"
 msgstr ""
 
-#: app/admin/BPMediaAdmin.php:364
+#: app/admin/RTMediaAdmin.php:491
 msgid "Add link to footer"
 msgstr ""
 
-#: app/admin/BPMediaAdmin.php:365
+#: app/admin/RTMediaAdmin.php:494
+msgid "Share"
+msgstr ""
+
+#: app/admin/RTMediaAdmin.php:496
 msgid "Tweet"
 msgstr ""
 
-#: app/admin/BPMediaAdmin.php:366
-msgid "Rate on WordPress.org"
+#: app/admin/RTMediaAdmin.php:497
+msgid "Review"
 msgstr ""
 
-#: app/admin/BPMediaAdmin.php:367
-msgid "Spread the Word"
-msgstr ""
-
-#: app/admin/BPMediaAdmin.php:403
-msgid "Become a fan on Facebook"
-msgstr ""
-
-#: app/admin/BPMediaAdmin.php:403
-msgid "Facebook"
-msgstr ""
-
-#: app/admin/BPMediaAdmin.php:404
-msgid "Follow us on Twitter"
-msgstr ""
-
-#: app/admin/BPMediaAdmin.php:404
-msgid "Twitter"
-msgstr ""
-
-#: app/admin/BPMediaAdmin.php:405
+#: app/admin/RTMediaAdmin.php:498
 msgid "Subscribe to our feeds"
 msgstr ""
 
-#: app/admin/BPMediaAdmin.php:405
-msgid "RSS Feed"
+#: app/admin/RTMediaAdmin.php:498
+msgid "Feeds"
 msgstr ""
 
-#: app/admin/BPMediaAdmin.php:407
+#: app/admin/RTMediaAdmin.php:503
+msgid "Spread the Word"
+msgstr ""
+
+#: app/admin/RTMediaAdmin.php:535 app/admin/RTMediaAdmin.php:538
 msgid "Subscribe"
 msgstr ""
 
-#: app/admin/BPMediaAdmin.php:410
+#: app/admin/RTMediaAdmin.php:541
 msgid "Latest News"
 msgstr ""
 
-#: app/admin/BPMediaAdmin.php:455
+#: app/admin/RTMediaAdmin.php:586
 #, php-format
-msgid "You have images enabled on BuddyPress Media but your network allowed filetypes does not allow uploading of %s. Click <a href=\"%s\">here</a> to change your settings manually."
+msgid ""
+"You have images enabled on rtMedia but your network allowed filetypes does "
+"not allow uploading of %s. Click <a href=\"%s\">here</a> to change your "
+"settings manually."
 msgstr ""
 
-#: app/admin/BPMediaAdmin.php:456
-#: app/admin/BPMediaAdmin.php:467
-#: app/admin/BPMediaAdmin.php:476
+#: app/admin/RTMediaAdmin.php:587 app/admin/RTMediaAdmin.php:598
+#: app/admin/RTMediaAdmin.php:607
 msgid "Recommended"
 msgstr ""
 
-#: app/admin/BPMediaAdmin.php:456
-#: app/admin/BPMediaAdmin.php:467
-#: app/admin/BPMediaAdmin.php:476
+#: app/admin/RTMediaAdmin.php:587 app/admin/RTMediaAdmin.php:598
+#: app/admin/RTMediaAdmin.php:607
 msgid "Update Network Settings Automatically"
 msgstr ""
 
-#: app/admin/BPMediaAdmin.php:466
+#: app/admin/RTMediaAdmin.php:597
 #, php-format
-msgid "You have video enabled on BuddyPress Media but your network allowed filetypes does not allow uploading of mp4. Click <a href=\"%s\">here</a> to change your settings manually."
+msgid ""
+"You have video enabled on BuddyPress Media but your network allowed "
+"filetypes does not allow uploading of mp4. Click <a href=\"%s\">here</a> to "
+"change your settings manually."
 msgstr ""
 
-#: app/admin/BPMediaAdmin.php:475
+#: app/admin/RTMediaAdmin.php:606
 #, php-format
-msgid "You have audio enabled on BuddyPress Media but your network allowed filetypes does not allow uploading of mp3. Click <a href=\"%s\">here</a> to change your settings manually."
+msgid ""
+"You have audio enabled on BuddyPress Media but your network allowed "
+"filetypes does not allow uploading of mp3. Click <a href=\"%s\">here</a> to "
+"change your settings manually."
 msgstr ""
 
-#: app/admin/BPMediaAdmin.php:490
+#: app/admin/RTMediaAdmin.php:621
 msgid "Network settings updated successfully."
+msgstr ""
+
+#: app/importers/RTMediaMigration.php:53
+msgid "Migration"
+msgstr ""
+
+#: app/importers/RTMediaMigration.php:239
+msgid "It will migrate following things"
 msgstr ""
 
 #: app/importers/BPMediaAlbumimporter.php:72
@@ -700,11 +943,18 @@ msgstr ""
 
 #: app/importers/BPMediaAlbumimporter.php:72
 #, php-format
-msgid "This import process is irreversible. Although everything is tested, please take a <a target=\"_blank\" href=\"http://codex.wordpress.org/WordPress_Backups\">backup of your database and files</a>, before proceeding. If you don't know your way around databases and files, consider <a target=\"_blank\" href=\"%s\">hiring us</a>, or another professional."
+msgid ""
+"This import process is irreversible. Although everything is tested, please "
+"take a <a target=\"_blank\" href=\"http://codex.wordpress.org/"
+"WordPress_Backups\">backup of your database and files</a>, before "
+"proceeding. If you don't know your way around databases and files, consider "
+"<a target=\"_blank\" href=\"%s\">hiring us</a>, or another professional."
 msgstr ""
 
 #: app/importers/BPMediaAlbumimporter.php:73
-msgid "If you have set \"WP_DEBUG\" in you wp-config.php file, please make sure it is set to \"false\", so that it doesn't conflict with the import process."
+msgid ""
+"If you have set \"WP_DEBUG\" in you wp-config.php file, please make sure it "
+"is set to \"false\", so that it doesn't conflict with the import process."
 msgstr ""
 
 #: app/importers/BPMediaAlbumimporter.php:74
@@ -719,8 +969,9 @@ msgstr ""
 msgid "Users"
 msgstr ""
 
-#: app/importers/BPMediaAlbumimporter.php:111
-msgid "Comments"
+#: app/importers/BPMediaAlbumimporter.php:91 app/main/RTMedia.php:271
+#: app/main/RTMedia.php:404
+msgid "Media"
 msgstr ""
 
 #: app/importers/BPMediaAlbumimporter.php:117
@@ -732,7 +983,8 @@ msgid "User's Favorites"
 msgstr ""
 
 #: app/importers/BPMediaAlbumimporter.php:133
-msgid "BP-Album is active on your site and will cause problems with the import."
+msgid ""
+"BP-Album is active on your site and will cause problems with the import."
 msgstr ""
 
 #: app/importers/BPMediaAlbumimporter.php:134
@@ -740,7 +992,8 @@ msgid "Click here to deactivate BP-Album and continue importing"
 msgstr ""
 
 #: app/importers/BPMediaAlbumimporter.php:140
-msgid "Some of the media failed to import. The file might be corrupt or deleted."
+msgid ""
+"Some of the media failed to import. The file might be corrupt or deleted."
 msgstr ""
 
 #: app/importers/BPMediaAlbumimporter.php:141
@@ -766,7 +1019,9 @@ msgid "Tweet this"
 msgstr ""
 
 #: app/importers/BPMediaAlbumimporter.php:156
-msgid "However, a lot of unnecessary files and a database table are still eating up your resources. If everything seems fine, you can clean this data up."
+msgid ""
+"However, a lot of unnecessary files and a database table are still eating up "
+"your resources. If everything seems fine, you can clean this data up."
 msgstr ""
 
 #: app/importers/BPMediaAlbumimporter.php:159
@@ -782,7 +1037,9 @@ msgid "Why don't you try adding some instagram like effects to your images?"
 msgstr ""
 
 #: app/importers/BPMediaAlbumimporter.php:187
-msgid "Looks like you don't use BP Album. Is there any other BuddyPress Plugin you want an importer for?"
+msgid ""
+"Looks like you don't use BP Album. Is there any other BuddyPress Plugin you "
+"want an importer for?"
 msgstr ""
 
 #: app/importers/BPMediaAlbumimporter.php:188
@@ -790,906 +1047,230 @@ msgstr ""
 msgid "<a href=\"%s\">Create an issue</a> on GitHub requesting the same."
 msgstr ""
 
-#: app/main/BPMediaGroupLoader.php:252
-msgid "Media Settings"
-msgstr ""
-
-#: app/main/BuddyPressMedia.php:163
-msgid "BuddyPress is not installed."
-msgstr ""
-
-#: app/main/BuddyPressMedia.php:165
-msgid "To use BuddyPress Media, BuddyPress must be installed first."
-msgstr ""
-
-#: app/main/BuddyPressMedia.php:166
-#, php-format
-msgid "<a href=\"%s\">Install BuddyPress now</a>"
-msgstr ""
-
-#: app/main/BuddyPressMedia.php:325
-msgid "Privacy"
-msgstr ""
-
-#: app/main/BuddyPressMedia.php:331
+#: app/main/RTMedia.php:137
 msgid "Photo"
 msgstr ""
 
-#: app/main/BuddyPressMedia.php:334
+#: app/main/RTMedia.php:138
+msgid "Photos"
+msgstr ""
+
+#: app/main/RTMedia.php:139
+msgid "jpeg"
+msgstr ""
+
+#: app/main/RTMedia.php:139
+msgid "png"
+msgstr ""
+
+#: app/main/RTMedia.php:145
+msgid "Video"
+msgstr ""
+
+#: app/main/RTMedia.php:146
 msgid "Videos"
 msgstr ""
 
-#: app/main/BuddyPressMedia.php:340
-#: app/main/BuddyPressMedia.php:343
+#: app/main/RTMedia.php:147
+msgid "mp4"
+msgstr ""
+
+#: app/main/RTMedia.php:153 app/main/RTMedia.php:154
 msgid "Music"
 msgstr ""
 
-#: app/main/BuddyPressMedia.php:346
-#: app/main/BPMediaComponent.php:256
-#: app/main/BPMediaComponent.php:268
-msgid "Albums"
+#: app/main/RTMedia.php:155
+msgid "mp3"
 msgstr ""
 
-#: app/main/BuddyPressMedia.php:349
-#: app/main/BPMediaComponent.php:257
+#: app/main/RTMedia.php:235
+msgid "<strong>Private</strong> - Visible only to the user"
+msgstr ""
+
+#: app/main/RTMedia.php:236
+msgid "<strong>Friends</strong> - Visible to user's friends"
+msgstr ""
+
+#: app/main/RTMedia.php:237
+msgid "<strong>Users</strong> - Visible to registered users"
+msgstr ""
+
+#: app/main/RTMedia.php:238
+msgid "<strong>Public</strong> - Visible to the world"
+msgstr ""
+
+#: app/main/RTMedia.php:413 app/main/controllers/media/RTMediaAlbum.php:40
 msgid "Album"
 msgstr ""
 
-#: app/main/BuddyPressMedia.php:352
+#: app/main/RTMedia.php:424
 msgid "Upload"
 msgstr ""
 
-#: app/main/BuddyPressMedia.php:570
+#: app/main/RTMedia.php:585
+msgid "rtMedia Global Album"
+msgstr ""
+
+#: app/main/deprecated/RTMediaDeprecated.php:27
 #, php-format
+msgid "Deprecated %s. Please use %s."
+msgstr ""
+
+#: app/main/controllers/upload/RTMediaUploadView.php:51
+msgid "File Upload"
+msgstr ""
+
+#: app/main/controllers/upload/RTMediaUploadView.php:53
+msgid "Insert from URL"
+msgstr ""
+
+#: app/main/controllers/upload/processors/RTMediaUploadFile.php:185
+msgid "MP4 file you have uploaded is corrupt."
+msgstr ""
+
+#: app/main/controllers/upload/processors/RTMediaUploadFile.php:192
+#: app/main/controllers/upload/processors/RTMediaUploadFile.php:197
 msgid ""
-"The BuddyPress version installed is an\n"
-"\t\t\t\t\t\t\t\t\t\tolder version and is not supported,\n"
-"\t\t\t\t\t\t\t\t\t\tplease update BuddyPress to use\n"
-"\t\t\t\t\t\t\t\t\t\tBuddyPress Media Plugin.\n"
-"\t\t\t\t\t\t\t\t\t\t<a class=\"alignright\" href=\"%1$s\">X</a>"
+"The MP4 file you have uploaded is using an unsupported video codec. "
+"Supported video codec is H.264."
 msgstr ""
 
-#: app/main/BuddyPressMedia.php:583
-#, php-format
+#: app/main/controllers/upload/processors/RTMediaUploadFile.php:202
+msgid "The MP4 file you have uploaded is not a video file."
+msgstr ""
+
+#: app/main/controllers/upload/processors/RTMediaUploadFile.php:214
+msgid "MP3 file you have uploaded is currupt."
+msgstr ""
+
+#: app/main/controllers/upload/processors/RTMediaUploadFile.php:221
+#: app/main/controllers/upload/processors/RTMediaUploadFile.php:226
 msgid ""
-"You have not installed BuddyPress.\n"
-"\t\t\t\t\t\t\t\t\tPlease install latest version of BuddyPress\n"
-"\t\t\t\t\t\t\t\t\tto use BuddyPress Media plugin.\n"
-"\t\t\t\t\t\t\t\t\t<a class=\"alignright\" href=\"%1$s\">X</a>"
+"The MP3 file you have uploaded is using an unsupported audio format. "
+"Supported audio format is MP3."
 msgstr ""
 
-#: app/main/BPMediaComponent.php:60
-msgid "Search Media..."
+#: app/main/controllers/upload/processors/RTMediaUploadFile.php:231
+msgid "The MP3 file you have uploaded is not an audio file."
 msgstr ""
 
-#: app/main/BPMediaComponent.php:258
+#: app/main/controllers/upload/processors/RTMediaUploadFile.php:243
+msgid ""
+"Media File you have tried to upload is not supported. Supported media files "
+"are .jpg, .png, .gif, .mp3, .mov and .mp4."
+msgstr ""
+
+#: app/main/controllers/media/RTMediaFeatured.php:19
+msgid "Set as Featured"
+msgstr ""
+
+#: app/main/controllers/media/RTMediaCoverArt.php:19
+msgid "Set as Album Cover"
+msgstr ""
+
+#: app/main/controllers/media/RTMediaAlbum.php:41
 msgid "Create"
 msgstr ""
 
-#: app/main/BPMediaComponent.php:259
+#: app/main/controllers/media/RTMediaAlbum.php:42
 msgid "Create Album"
 msgstr ""
 
-#: app/main/BPMediaComponent.php:260
+#: app/main/controllers/media/RTMediaAlbum.php:43
 msgid "Edit Album"
 msgstr ""
 
-#: app/main/BPMediaComponent.php:261
+#: app/main/controllers/media/RTMediaAlbum.php:44
 msgid "New Album"
 msgstr ""
 
-#: app/main/BPMediaComponent.php:262
+#: app/main/controllers/media/RTMediaAlbum.php:45
 msgid "All Albums"
 msgstr ""
 
-#: app/main/BPMediaComponent.php:263
+#: app/main/controllers/media/RTMediaAlbum.php:46
 msgid "View Album"
 msgstr ""
 
-#: app/main/BPMediaComponent.php:264
+#: app/main/controllers/media/RTMediaAlbum.php:47
 msgid "Search Albums"
 msgstr ""
 
-#: app/main/BPMediaComponent.php:265
+#: app/main/controllers/media/RTMediaAlbum.php:48
 msgid "No album found"
 msgstr ""
 
-#: app/main/BPMediaComponent.php:266
+#: app/main/controllers/media/RTMediaAlbum.php:49
 msgid "No album found in Trash"
 msgstr ""
 
-#: app/main/BPMediaComponent.php:300
-msgid "Add New Media"
+#: app/main/controllers/media/RTMediaLike.php:19
+msgid "Like"
 msgstr ""
 
-#: app/main/BPMediaComponent.php:308
-msgid "BuddyPress Media's Media Files"
+#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:79
+msgid "Add Media"
 msgstr ""
 
-#: app/main/privacy/BPMediaPrivacySettings.php:28
-msgid "Update BuddyPress Media Database"
+#: app/main/controllers/template/rt-template-functions.php:484
+msgid "Comment"
 msgstr ""
 
-#: app/main/privacy/BPMediaPrivacySettings.php:93
-msgid "Start"
+#: app/main/controllers/template/rt-template-functions.php:497
+#: app/main/controllers/template/rt-template-functions.php:593
+msgid "Delete"
 msgstr ""
 
-#: app/main/privacy/BPMediaPrivacyScreen.php:42
-msgid "Default privacy level for your media has been updated"
+#: app/main/controllers/template/rt-template-functions.php:596
+#: app/main/controllers/template/rt-template-functions.php:624
+msgid "Merge"
 msgstr ""
 
-#: app/main/privacy/BPMediaPrivacyScreen.php:53
-msgid "Save Changes"
+#: app/main/controllers/template/rt-template-functions.php:598
+msgid "Merge to"
 msgstr ""
 
-#: app/main/privacy/BPMediaPrivacy.php:112
+#: app/main/controllers/template/rt-template-functions.php:602
+msgid "Merge Album"
+msgstr ""
+
+#: app/main/controllers/template/RTMediaTemplate.php:157
+#: app/main/controllers/template/RTMediaTemplate.php:196
+#: app/main/controllers/template/RTMediaTemplate.php:259
+msgid "Ooops !!! Invalid access. No nonce was found !!"
+msgstr ""
+
+#: app/main/controllers/privacy/RTMediaPrivacy.php:137
 msgid "<strong>Private</strong>, Visible only to myself"
 msgstr ""
 
-#: app/main/privacy/BPMediaPrivacy.php:116
+#: app/main/controllers/privacy/RTMediaPrivacy.php:141
 msgid "<strong>Friends</strong>, Visible to my friends"
 msgstr ""
 
-#: app/main/privacy/BPMediaPrivacy.php:120
+#: app/main/controllers/privacy/RTMediaPrivacy.php:145
 msgid "<strong>Users</strong>, Visible to registered users"
 msgstr ""
 
-#: app/main/privacy/BPMediaPrivacy.php:124
+#: app/main/controllers/privacy/RTMediaPrivacy.php:149
 msgid "<strong>Public</strong>, Visible to the world"
 msgstr ""
 
-#: app/main/privacy/BPMediaPrivacy.php:144
+#: app/main/controllers/privacy/RTMediaPrivacy.php:169
 msgid "Set default privacy levels for your media"
 msgstr ""
 
-#: app/main/privacy/BPMediaPrivacy.php:325
+#: app/main/controllers/privacy/RTMediaPrivacy.php:350
 #, php-format
 msgid "This %s is private"
 msgstr ""
 
-#: app/main/privacy/BPMediaPrivacy.php:326
+#: app/main/controllers/privacy/RTMediaPrivacy.php:351
 #, php-format
 msgid "This %1s is visible only to %2s&rsquo;s friends"
 msgstr ""
 
-#: app/main/privacy/BPMediaPrivacy.php:327
+#: app/main/controllers/privacy/RTMediaPrivacy.php:352
 #, php-format
 msgid "This %s is visible to logged in users, only"
 msgstr ""
-
-#: app/main/includes/BPMediaFilters.php:158
-#, php-format
-msgid "Delete %s"
-msgstr ""
-
-#: app/main/includes/BPMediaFilters.php:417
-msgid "Total Photos"
-msgstr ""
-
-#: app/main/includes/BPMediaFilters.php:418
-msgid "Total Videos"
-msgstr ""
-
-#: app/main/includes/BPMediaFilters.php:419
-msgid "Total Audio"
-msgstr ""
-
-#: app/main/includes/BPMediaFilters.php:420
-msgid "Total Albums"
-msgstr ""
-
-#: app/main/includes/BPMediaTemplateFunctions.php:34
-msgid "Media Title"
-msgstr ""
-
-#: app/main/includes/BPMediaTemplateFunctions.php:35
-msgid "Media Description"
-msgstr ""
-
-#: app/main/includes/BPMediaTemplateFunctions.php:36
-msgid "Select Media File"
-msgstr ""
-
-#: app/main/includes/BPMediaTemplateFunctions.php:231
-msgid "Show More"
-msgstr ""
-
-#: app/main/includes/BPMediaHostWordpress.php:59
-msgid "Sorry, the requested media does not exist."
-msgstr ""
-
-#: app/main/includes/BPMediaHostWordpress.php:136
-msgid "Error Uploading File"
-msgstr ""
-
-#: app/main/includes/BPMediaHostWordpress.php:169
-msgid "MP4 file you have uploaded is corrupt."
-msgstr ""
-
-#: app/main/includes/BPMediaHostWordpress.php:176
-#: app/main/includes/BPMediaHostWordpress.php:181
-msgid "The MP4 file you have uploaded is using an unsupported video codec. Supported video codec is H.264."
-msgstr ""
-
-#: app/main/includes/BPMediaHostWordpress.php:186
-msgid "The MP4 file you have uploaded is not a video file."
-msgstr ""
-
-#: app/main/includes/BPMediaHostWordpress.php:197
-msgid "MP3 file you have uploaded is currupt."
-msgstr ""
-
-#: app/main/includes/BPMediaHostWordpress.php:204
-#: app/main/includes/BPMediaHostWordpress.php:209
-msgid "The MP3 file you have uploaded is using an unsupported audio format. Supported audio format is MP3."
-msgstr ""
-
-#: app/main/includes/BPMediaHostWordpress.php:214
-msgid "The MP3 file you have uploaded is not an audio file."
-msgstr ""
-
-#: app/main/includes/BPMediaHostWordpress.php:226
-msgid "Media File you have tried to upload is not supported. Supported media files are .jpg, .png, .gif, .mp3, .mov and .mp4."
-msgstr ""
-
-#: app/main/includes/BPMediaHostWordpress.php:235
-msgid "Error creating attachment for the media file, please try again"
-msgstr ""
-
-#: app/main/includes/BPMediaHostWordpress.php:345
-#, php-format
-msgid "%s uploaded a media."
-msgstr ""
-
-#: app/main/includes/BPMediaHostWordpress.php:366
-msgid "Uploaded by "
-msgstr ""
-
-#: app/main/includes/BPMediaHostWordpress.php:589
-#, php-format
-msgid "Comment <span>%s</span>"
-msgstr ""
-
-#: app/main/includes/BPMediaHostWordpress.php:593
-msgid "Favorite"
-msgstr ""
-
-#: app/main/includes/BPMediaHostWordpress.php:595
-msgid "Remove Favorite"
-msgstr ""
-
-#: app/main/includes/BPMediaHostWordpress.php:614
-msgid "Post"
-msgstr ""
-
-#: app/main/includes/BPMediaHostWordpress.php:614
-msgid "or press esc to cancel."
-msgstr ""
-
-#: app/main/includes/BPMediaHostWordpress.php:639
-#: app/main/includes/BPMediaActions.php:360
-msgid "Delete"
-msgstr ""
-
-#: app/main/includes/BPMediaHostWordpress.php:741
-#: app/main/includes/BPMediaActions.php:935
-#: app/main/group/BPMediaGroupAction.php:124
-#, php-format
-msgid "%1$s added a %2$s"
-msgstr ""
-
-#: app/main/includes/BPMediaHostWordpress.php:1016
-msgid "Wall Posts"
-msgstr ""
-
-#: app/main/includes/BPMediaActions.php:76
-#: app/main/includes/BPMediaActions.php:100
-msgid "File uploaded is not supported"
-msgstr ""
-
-#: app/main/includes/BPMediaActions.php:83
-msgid "Image uploads are disabled"
-msgstr ""
-
-#: app/main/includes/BPMediaActions.php:89
-msgid "Video uploads are disabled"
-msgstr ""
-
-#: app/main/includes/BPMediaActions.php:95
-msgid "Audio uploads are disabled"
-msgstr ""
-
-#: app/main/includes/BPMediaActions.php:114
-msgid "Upload Successful"
-msgstr ""
-
-#: app/main/includes/BPMediaActions.php:119
-msgid "You did not specified a file to upload"
-msgstr ""
-
-#: app/main/includes/BPMediaActions.php:185
-msgid "Something went wrong. Please try again."
-msgstr ""
-
-#: app/main/includes/BPMediaActions.php:186
-msgid "Are you sure you want to merge this album?"
-msgstr ""
-
-#: app/main/includes/BPMediaActions.php:187
-msgid "Would you like to delete this album after the merge?"
-msgstr ""
-
-#: app/main/includes/BPMediaActions.php:188
-msgid "Are you sure you want to delete the selected media?"
-msgstr ""
-
-#: app/main/includes/BPMediaActions.php:189
-msgid "Are you sure you want to delete this activity and associated media?"
-msgstr ""
-
-#: app/main/includes/BPMediaActions.php:190
-msgid "Are you sure?"
-msgstr ""
-
-#: app/main/includes/BPMediaActions.php:191
-msgid "Please select media."
-msgstr ""
-
-#: app/main/includes/BPMediaActions.php:192
-msgid "Please select an action."
-msgstr ""
-
-#: app/main/includes/BPMediaActions.php:336
-msgid "Download"
-msgstr ""
-
-#: app/main/includes/BPMediaActions.php:343
-#: app/main/includes/BPMediaActions.php:985
-msgid "Set as Album Cover"
-msgstr ""
-
-#: app/main/includes/BPMediaActions.php:348
-#: app/main/includes/BPMediaActions.php:988
-msgid "Unset as Album Cover"
-msgstr ""
-
-#: app/main/includes/BPMediaActions.php:354
-msgid "Edit Media"
-msgstr ""
-
-#: app/main/includes/BPMediaActions.php:354
-msgid "Edit"
-msgstr ""
-
-#: app/main/includes/BPMediaActions.php:360
-msgid "Delete Media"
-msgstr ""
-
-#: app/main/includes/BPMediaActions.php:541
-msgid "You have not filled the album name"
-msgstr ""
-
-#: app/main/includes/BPMediaActions.php:542
-msgid "Sorry you cannot create albums in this group"
-msgstr ""
-
-#: app/main/includes/BPMediaActions.php:543
-msgid "Please Select an Album!"
-msgstr ""
-
-#: app/main/includes/BPMediaActions.php:886
-#, php-format
-msgid "%1$s created an album %2$s"
-msgstr ""
-
-#: app/main/includes/BPMediaActions.php:1177
-msgid "Private"
-msgstr ""
-
-#: app/main/includes/BPMediaActions.php:1189
-msgid "No media found"
-msgstr ""
-
-#: app/main/includes/bp-media-upload-handler.php:32
-msgid "You are not allowed to be here"
-msgstr ""
-
-#: app/main/includes/BPMediaFunction.php:168
-msgid "You do not have access to this page."
-msgstr ""
-
-#: app/main/includes/BPMediaFunction.php:229
-#, php-format
-msgid "%1$s added new media in album %2$s"
-msgstr ""
-
-#: app/main/widgets/BPMediaWidget.php:20
-msgid "The most recent/popular media uploaded on your site"
-msgstr ""
-
-#: app/main/widgets/BPMediaWidget.php:21
-msgid "BuddyPress Media Widget"
-msgstr ""
-
-#: app/main/widgets/BPMediaWidget.php:72
-msgid "All"
-msgstr ""
-
-#: app/main/widgets/BPMediaWidget.php:82
-#, php-format
-msgid ""
-"Please configure this widget\n"
-"\t\t\t\t\t\t\t\t\t<a href=\"%s\" target=\"_blank\"\n"
-"\t\t\t\t\t\t\t\t\ttitle=\"Configure BuddyPress Media Widget\">\n"
-"\t\t\t\t\t\t\t\t\there</a>."
-msgstr ""
-
-#: app/main/widgets/BPMediaWidget.php:150
-msgid "No "
-msgstr ""
-
-#: app/main/widgets/BPMediaWidget.php:197
-msgid "Widget Type:"
-msgstr ""
-
-#: app/main/widgets/BPMediaWidget.php:199
-msgid "Recent Media"
-msgstr ""
-
-#: app/main/widgets/BPMediaWidget.php:200
-msgid "Popular Media"
-msgstr ""
-
-#: app/main/widgets/BPMediaWidget.php:203
-msgid "Title:"
-msgstr ""
-
-#: app/main/widgets/BPMediaWidget.php:206
-msgid "Number of posts to show:"
-msgstr ""
-
-#: app/main/widgets/BPMediaWidget.php:210
-msgid "Show All"
-msgstr ""
-
-#: app/main/widgets/BPMediaWidget.php:213
-msgid "Show Photos"
-msgstr ""
-
-#: app/main/widgets/BPMediaWidget.php:216
-msgid "Show Music"
-msgstr ""
-
-#: app/main/widgets/BPMediaWidget.php:220
-msgid "Show Videos"
-msgstr ""
-
-#: app/main/group/BPMediaGroupElementExtension.php:91
-msgid "Sorry, the requested media does not belong to the group"
-msgstr ""
-
-#: app/main/group/BPMediaGroupsExtension.php:40
-#: app/main/group/BPMediaGroupsExtension.php:87
-msgid "Album Creation Control"
-msgstr ""
-
-#: app/main/group/BPMediaGroupsExtension.php:41
-#: app/main/group/BPMediaGroupsExtension.php:88
-msgid "Who can create Albums in this group?"
-msgstr ""
-
-#: app/main/group/BPMediaGroupsExtension.php:45
-#: app/main/group/BPMediaGroupsExtension.php:92
-msgid "All Group Members"
-msgstr ""
-
-#: app/main/group/BPMediaGroupsExtension.php:49
-#: app/main/group/BPMediaGroupsExtension.php:96
-msgid "Group Admins and Mods only"
-msgstr ""
-
-#: app/main/group/BPMediaGroupsExtension.php:53
-#: app/main/group/BPMediaGroupsExtension.php:100
-msgid "Group Admin only"
-msgstr ""
-
-#: app/main/group/BPMediaGroupsExtension.php:130
-msgid "There was an error saving, please try again"
-msgstr ""
-
-#: app/main/group/BPMediaGroupsExtension.php:132
-msgid "Settings saved successfully"
-msgstr ""
-
-#: app/main/group/BPMediaGroupsExtension.php:153
-msgid ""
-"You could display a small snippet of information from your group extension here. It will show on the group\n"
-"\t                home screen."
-msgstr ""
-
-#: app/main/profile/BPMediaUploadScreen.php:33
-#: app/main/profile/BPMediaTemplate.php:98
-msgid "Upload Media"
-msgstr ""
-
-#: app/main/profile/BPMediaTemplate.php:44
-msgid "Select Album: "
-msgstr ""
-
-#: app/main/profile/BPMediaTemplate.php:83
-msgid "+ Create New Album"
-msgstr ""
-
-#: app/main/profile/BPMediaTemplate.php:90
-msgid "Cancel"
-msgstr ""
-
-#: app/main/profile/BPMediaTemplate.php:93
-msgid "&"
-msgstr ""
-
-#: app/main/profile/BPMediaTemplate.php:96
-msgid "Drop files here"
-msgstr ""
-
-#: app/main/profile/BPMediaTemplate.php:97
-msgid " or "
-msgstr ""
-
-#: app/main/profile/BPMediaTemplate.php:98
-msgid "Max Upload Size"
-msgstr ""
-
-#: app/main/profile/BPMediaTemplate.php:246
-msgid "Select Album"
-msgstr ""
-
-#: app/main/profile/BPMediaTemplate.php:247
-#: app/main/profile/BPMediaTemplate.php:275
-msgid "x"
-msgstr ""
-
-#: app/main/profile/BPMediaTemplate.php:267
-msgid "Select"
-msgstr ""
-
-#: app/main/profile/BPMediaTemplate.php:278
-msgid "Album Name"
-msgstr ""
-
-#: app/main/profile/BPMediaTemplate.php:286
-msgid "Add Media"
-msgstr ""
-
-#: app/main/profile/BPMediaAlbumScreen.php:82
-#: app/main/profile/BPMediaScreen.php:203
-#, php-format
-msgid "Sorry, no %s were found."
-msgstr ""
-
-#: app/main/profile/BPMediaAlbumScreen.php:134
-msgid "Sorry, no media items were found in this album."
-msgstr ""
-
-#: app/main/profile/BPMediaAlbumScreen.php:250
-#: app/main/profile/BPMediaAlbumScreen.php:258
-msgid "Delete Album"
-msgstr ""
-
-#: app/main/profile/BPMediaAlbumScreen.php:254
-#: app/main/profile/BPMediaAlbumScreen.php:297
-msgid "Select All Visible"
-msgstr ""
-
-#: app/main/profile/BPMediaAlbumScreen.php:255
-#: app/main/profile/BPMediaAlbumScreen.php:298
-msgid "Unselect All Visible"
-msgstr ""
-
-#: app/main/profile/BPMediaAlbumScreen.php:256
-msgid "Delete Selected Media"
-msgstr ""
-
-#: app/main/profile/BPMediaAlbumScreen.php:295
-msgid "Move"
-msgstr ""
-
-#: app/main/profile/BPMediaAlbumScreen.php:299
-msgid "Move selected"
-msgstr ""
-
-#: app/main/profile/BPMediaAlbumScreen.php:299
-msgid "Move all"
-msgstr ""
-
-#: app/main/profile/BPMediaAlbumScreen.php:300
-msgid "to"
-msgstr ""
-
-#: app/main/profile/BPMediaAlbumScreen.php:300
-msgid "Submit"
-msgstr ""
-
-#: app/main/profile/BPMediaFeatured.php:94
-msgid "Set as Featured"
-msgstr ""
-
-#: app/main/profile/BPMediaFeatured.php:94
-msgid "Featured"
-msgstr ""
-
-#: app/main/profile/BPMediaScreen.php:122
-#: app/main/profile/BPMediaScreen.php:394
-msgid "The requested url does not exist"
-msgstr ""
-
-#: app/main/profile/BPMediaScreen.php:133
-#, php-format
-msgid "All %s"
-msgstr ""
-
-#: app/main/profile/BPMediaScreen.php:327
-#, php-format
-msgid "Edit %s"
-msgstr ""
-
-#: app/main/profile/BPMediaScreen.php:348
-#, php-format
-msgid "%s Title"
-msgstr ""
-
-#: app/main/profile/BPMediaScreen.php:354
-#, php-format
-msgid "%s Description"
-msgstr ""
-
-#: app/main/profile/BPMediaScreen.php:362
-msgid "Update"
-msgstr ""
-
-#: app/main/profile/BPMediaScreen.php:363
-msgid "Back to Media File"
-msgstr ""
-
-#: app/main/profile/BPMediaScreen.php:364
-msgid "Back to Media"
-msgstr ""
-
-#: app/main/profile/BPMediaScreen.php:412
-msgid "Something went wrong"
-msgstr ""
-
-#: app/main/profile/BPMediaScreen.php:435
-msgid "Media deleted successfully"
-msgstr ""
-
-#: app/main/profile/BPMediaAlbum.php:74
-msgid "Sorry, the requested album does not exist."
-msgstr ""
-
-#: app/main/activity/BPMediaActivity.php:46
-msgid "Attach Media"
-msgstr ""
-
-#: app/main/activity/BPMediaActivity.php:103
-msgid "View"
-msgstr ""
-
-#: app/main/activity/BPMediaActivity.php:161
-#, php-format
-msgid "%1$s posted an update in the group %2$s"
-msgstr ""
-
-#: app/services/BPMediaEncoding.php:66
-#: app/services/BPMediaEncoding.php:90
-msgid "BuddyPress Media Audio/Video Encoding Service"
-msgstr ""
-
-#: app/services/BPMediaEncoding.php:66
-#: app/services/BPMediaEncoding.php:91
-#: app/services/BPMediaEncoding.php:109
-msgid "Audio/Video Encoding"
-msgstr ""
-
-#: app/services/BPMediaEncoding.php:82
-msgid "Audio/Video Encoding Service"
-msgstr ""
-
-#: app/services/BPMediaEncoding.php:145
-msgid "BuddyPress Media Encoding: Nearing quota limit."
-msgstr ""
-
-#: app/services/BPMediaEncoding.php:146
-#, php-format
-msgid "<p>You are nearing the quota limit for your BuddyPress Media encoding service.</p><p>Following are the details:</p><p><strong>Used:</strong> %s</p><p><strong>Remaining</strong>: %s</p><p><strong>Total:</strong> %s</p>"
-msgstr ""
-
-#: app/services/BPMediaEncoding.php:160
-msgid "BuddyPress Media Encoding: Usage quota over."
-msgstr ""
-
-#: app/services/BPMediaEncoding.php:161
-#, php-format
-msgid "<p>Your usage quota is over. Upgrade your plan</p><p>Following are the details:</p><p><strong>Used:</strong> %s</p><p><strong>Remaining</strong>: %s</p><p><strong>Total:</strong> %s</p>"
-msgstr ""
-
-#: app/services/BPMediaEncoding.php:204
-#, php-format
-msgid "We have launched a new Audio/Video encoding service for BuddyPress Media. You can <a href=\"%s\">activate it for free</a>."
-msgstr ""
-
-#: app/services/BPMediaEncoding.php:204
-msgid "Hide Message"
-msgstr ""
-
-#: app/services/BPMediaEncoding.php:211
-#, php-format
-msgid "You have successfully subscribed for the <strong>%s</strong> plan"
-msgstr ""
-
-#: app/services/BPMediaEncoding.php:223
-msgid "Unsubscribe"
-msgstr ""
-
-#: app/services/BPMediaEncoding.php:274
-#: app/services/BPMediaEncoding.php:359
-msgid "Current Plan"
-msgstr ""
-
-#: app/services/BPMediaEncoding.php:274
-msgid "Unsubscribed"
-msgstr ""
-
-#: app/services/BPMediaEncoding.php:276
-msgid "Used"
-msgstr ""
-
-#: app/services/BPMediaEncoding.php:278
-msgid "Remaining"
-msgstr ""
-
-#: app/services/BPMediaEncoding.php:280
-msgid "Total"
-msgstr ""
-
-#: app/services/BPMediaEncoding.php:284
-msgid "Your usage limit has been reached. Upgrade your plan."
-msgstr ""
-
-#: app/services/BPMediaEncoding.php:286
-msgid "Your API key is not valid or is expired."
-msgstr ""
-
-#: app/services/BPMediaEncoding.php:288
-msgid "Encoding Usage"
-msgstr ""
-
-#: app/services/BPMediaEncoding.php:293
-msgid "BuddyPress Media team has started offering an audio/video encoding service."
-msgstr ""
-
-#: app/services/BPMediaEncoding.php:295
-msgid "Enter API KEY"
-msgstr ""
-
-#: app/services/BPMediaEncoding.php:305
-msgid "Feature\\Plan"
-msgstr ""
-
-#: app/services/BPMediaEncoding.php:306
-#: app/services/BPMediaEncoding.php:349
-msgid "Free"
-msgstr ""
-
-#: app/services/BPMediaEncoding.php:307
-msgid "Silver"
-msgstr ""
-
-#: app/services/BPMediaEncoding.php:308
-msgid "Gold"
-msgstr ""
-
-#: app/services/BPMediaEncoding.php:309
-msgid "Platinum"
-msgstr ""
-
-#: app/services/BPMediaEncoding.php:313
-msgid "File Size Limit"
-msgstr ""
-
-#: app/services/BPMediaEncoding.php:320
-msgid "Bandwidth (monthly)"
-msgstr ""
-
-#: app/services/BPMediaEncoding.php:327
-msgid "Overage Bandwidth"
-msgstr ""
-
-#: app/services/BPMediaEncoding.php:328
-#: app/services/BPMediaEncoding.php:335
-#: app/services/BPMediaEncoding.php:340
-msgid "Not Available"
-msgstr ""
-
-#: app/services/BPMediaEncoding.php:334
-msgid "Amazon S3 Support"
-msgstr ""
-
-#: app/services/BPMediaEncoding.php:336
-#: app/services/BPMediaEncoding.php:341
-#: app/services/BPMediaEncoding.php:345
-msgid "Coming Soon"
-msgstr ""
-
-#: app/services/BPMediaEncoding.php:339
-msgid "HD Profile"
-msgstr ""
-
-#: app/services/BPMediaEncoding.php:344
-msgid "Webcam Recording"
-msgstr ""
-
-#: app/services/BPMediaEncoding.php:348
-msgid "Pricing"
-msgstr ""
-
-#: app/services/BPMediaEncoding.php:350
-msgid "$9/month"
-msgstr ""
-
-#: app/services/BPMediaEncoding.php:351
-msgid "$99/month"
-msgstr ""
-
-#: app/services/BPMediaEncoding.php:352
-msgid "$999/month"
-msgstr ""
-
-#: app/services/BPMediaEncoding.php:363
-msgid "Try Now"
-msgstr ""
-
-#: app/services/BPMediaEncoding.php:419
-msgid "Could not read file."
-msgstr ""
-
-#: app/services/BPMediaEncoding.php:423
-msgid "Something went wrong. The required attachment id does not exists. It must have been deleted."
-msgstr ""
-
-#: app/services/BPMediaEncoding.php:438
-msgid "BuddyPress Media Encoding: Download Failed"
-msgstr ""
-
-#: app/services/BPMediaEncoding.php:439
-#, php-format
-msgid ""
-"<p><a href=\"%s\">Media</a> was successfully encoded but there was an error while downloading:</p>\n"
-"                        <p><code>%s</code></p>\n"
-"                        <p>You can <a href=\"%s\">retry the download</a>.</p>"
-msgstr ""
-
-#: app/services/BPMediaEncoding.php:453
-msgid "Done"
-msgstr ""
-
-#: app/services/BPMediaEncoding.php:496
-msgid "Your subscription was cancelled successfully"
-msgstr ""
-
-#: app/services/BPMediaEncoding.php:499
-msgid "Something went wrong please try again."
-msgstr ""
-
-#: app/services/BPMediaEncoding.php:508
-msgid "Please enter the api key."
-msgstr ""
-
-#: app/services/BPMediaEncoding.php:515
-msgid "Encoding disabled successfully."
-msgstr ""
-
-#: app/services/BPMediaEncodingTranscoder.php:44
-msgid "Upload file type not supported"
-msgstr ""
-
