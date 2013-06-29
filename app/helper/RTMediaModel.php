@@ -66,6 +66,8 @@ class RTMediaModel extends RTDBModel {
 					$where .= " AND {$this->table_name}.{$colname} = '{$colvalue}'";
             }
         }
+
+		$where = apply_filters('rt-media-model-where-query',$where,$this->table_name);
         $sql = $select . $join . $where ;
 
 		$sql .= " ORDER BY {$this->table_name}.$order_by";

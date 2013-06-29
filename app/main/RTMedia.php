@@ -127,7 +127,7 @@ class RTMedia {
 			$this->options = $rt_media_options;
 		}
 
-		add_action( 'admin_bar_menu', array( $this, 'admin_bar_menu' ), 99 );
+
 	}
 
 	/**
@@ -336,6 +336,7 @@ class RTMedia {
 			) );
 
 			foreach ( $this->allowed_types as $type ) {
+				if(!$this->options['allowedTypes_' . $type[ 'name' ] . '_enabled']) continue;
 				$name = strtoupper( $type[ 'name' ] );
 				$wp_admin_bar->add_menu( array(
 					'parent' => 'my-account-' . constant('RTMEDIA_'.$name.'_SLUG'),
@@ -374,6 +375,7 @@ class RTMedia {
 		) );
 
 		foreach ( $this->allowed_types as $type ) {
+			if(!$this->options['allowedTypes_' . $type[ 'name' ] . '_enabled']) continue;
 			$name = strtoupper( $type[ 'name' ] );
 			bp_core_new_subnav_item( array(
 				'name' => constant( 'RTMEDIA_' . $name . '_LABEL' ),
@@ -626,6 +628,8 @@ class RTMedia {
 			add_action( 'bp_init', array( $this, 'custom_media_sub_nav_tab' ), 10, 20 );
 		}
 
+		add_action( 'admin_bar_menu', array( $this, 'admin_bar_menu' ), 99 );
+
 		/**
 		 * Load accessory functions
 		 */
@@ -737,6 +741,16 @@ class RTMedia {
 
 	function set_bp_bar() {
 		remove_action( 'bp_adminbar_menus', 'bp_adminbar_account_menu', 4 );
+	}
+
+	function set_friends_object(){
+		if(is_user_logged_in()){
+			$user = get_current_user_id();
+			$friends = friends_get_friend_user_ids($user);
+		}else{
+			$user = 0;
+		}
+
 	}
 
 }
