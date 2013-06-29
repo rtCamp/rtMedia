@@ -30,6 +30,7 @@
   left: 0;
   top: 0;
   padding: 0 8px;
+  padding-top:30px;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box; }
@@ -147,7 +148,7 @@ button::-moz-focus-inner {
     top: 1px; }
 
 .mfp-close-btn-in .mfp-close {
-  color: #333333; }
+  color: #fff; }
 
 .mfp-image-holder .mfp-close,
 .mfp-iframe-holder .mfp-close {

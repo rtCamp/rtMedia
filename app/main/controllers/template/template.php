@@ -104,7 +104,7 @@ if ( ! $ajax ) {
 			}
 			include(RTMediaTemplate::locate_template( $template ));
 			if ( ! $ajax ) {
-				if ( $template_type == 'buddypress' && (bp_is_user() || bp_is_group()) ) {
+				if ( $template_type == 'buddypress' && (bp_displayed_user_id() || bp_is_group()) ) {
 					?>
 				</div>
 			</div>

@@ -1515,3 +1515,32 @@
 .rt-media-container .rt-media-create-new-album-container {
   display: none;
 }
+
+
+/* additional css added by me */
+
+.rt-media-container{
+	margin:0;
+}
+
+.rt-media-container h2{
+	font-size:1.4em;
+	font-weight:bold;
+	line-height: 2.4em;
+}
+
+.rt-media-container ul.rt-media-list li.rt-media-list-item{
+	padding-top:20px;
+	padding-bottom:20px;
+}
+
+
+.rt-media-container ul.rt-media-list li.rt-media-list-item a{
+	text-decoration:none;
+}
+
+.rt-media-container ul.rt-media-list li.rt-media-list-item a h4{
+	line-height:1.4em;
+	font-size:1.2em;
+	padding-top:10px;
+}
