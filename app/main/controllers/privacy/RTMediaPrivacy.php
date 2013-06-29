@@ -21,6 +21,9 @@ class RTMediaPrivacy {
 
 	function __construct() {
 		add_action('rt_media_after_file_upload_ui',array($this,'select_privacy_ui'));
+		add_action('bp_init',array($this,'add_nav'));
+		add_action('bp_template_content',array($this,'content'));
+		add_filter('bp_activity_get_user_join_filter',array($this,'activity_privacy'),10,6);
 	}
 
 	function select_privacy_ui($attr) {
@@ -82,166 +85,6 @@ class RTMediaPrivacy {
 		return true;
 	}
 
-	static function get_privacy( $id ) {
-		return get_post_meta( $id, 'bp_media_privacy', TRUE );
-	}
-
-	static function get_site_default() {
-		global $bp_media;
-		$site_privacy = false;
-		$options = $bp_media->options;
-		if ( array_key_exists( 'privacy_enabled', $options ) ) {
-			if ( array_key_exists( 'default_privacy_level', $options ) ) {
-				$site_privacy = $options[ 'default_privacy_level' ];
-			}
-		}
-		return $site_privacy;
-	}
-
-	static function default_privacy() {
-		global $bp_media;
-		$options = $bp_media->options;
-		$default_privacy = false;
-		$default_privacy = BPMediaPrivacy::get_site_default();
-		if ( array_key_exists( 'privacy_override_enabled', $options ) ) {
-			$user_default_privacy = BPMediaPrivacy::get_user_default();
-			if ( $user_default_privacy !== false ) {
-				$default_privacy = $user_default_privacy;
-			}
-		}
-		return $default_privacy;
-	}
-
-	static function get_settings() {
-		$settings = array(
-			6 => array(
-				'private',
-				__( '<strong>Private</strong>, Visible only to myself', 'buddypress-media' )
-			),
-			4 => array(
-				'friends',
-				__( '<strong>Friends</strong>, Visible to my friends', 'buddypress-media' )
-			),
-			2 => array(
-				'users',
-				__( '<strong>Users</strong>, Visible to registered users', 'buddypress-media' )
-			),
-			0 => array(
-				'public',
-				__( '<strong>Public</strong>, Visible to the world', 'buddypress-media' )
-			)
-		);
-		if ( ! bp_is_active( 'friends' ) ) {
-			unset( $settings[ 4 ] );
-		}
-		return $settings;
-	}
-
-	function ui() {
-		if ( BPMediaPrivacy::is_enabled() == false )
-			return;
-		global $bp_media_current_entry;
-		$privacy_level = BPMediaPrivacy::get_privacy( $bp_media_current_entry->get_id() );
-		BPMediaPrivacy::ui_html( $privacy_level );
-	}
-
-	static function ui_html( $privacy_level ) {
-		?>
-		<div id="bp-media-upload-privacy-wrap">
-			<label for="bp-media-upload-set-privacy"><?php _e( 'Set default privacy levels for your media', 'buddypress-media' ); ?></label>
-			<ul id="bp-media-upload-set-privacy">
-				<?php
-				$settings = BPMediaPrivacy::get_settings();
-				foreach ( $settings as $level => &$msg ) {
-					?>
-					<li>
-						<input type="radio" name="bp_media_privacy" class="set-privacy-radio" id="bp-media-privacy-<?php echo $msg[ 0 ]; ?>" value="<?php echo $level; ?>" <?php checked( $level, $privacy_level, TRUE ); ?> >
-						<label class="album-set-privacy-label" for="bp-media-privacy-<?php echo $msg[ 0 ]; ?>"><?php echo $msg[ 1 ]; ?></label>
-					</li>
-					<?php
-				}
-				?>
-			</ul>
-		</div>
-		<?php
-	}
-
-	function save_privacy( $level, $object_id, $type ) {
-
-		$this->save( $level, $object_id );
-		if ( $type == 'album' ) {
-			$args = array(
-				'post_type' => 'attachment',
-				'post_parent' => $object_id,
-				'post_status' => 'any',
-				'posts_per_page' => -1
-			);
-
-			$child_query = new WP_Query( $args );
-			$children = $child_query->posts;
-			foreach ( $children as $child ) {
-				$this->save( $level, $child->ID );
-			}
-		}
-	}
-
-	function save_privacy_by_object( $object ) {
-		$level = isset( $_POST[ 'bp_media_privacy' ] ) ? $_POST[ 'bp_media_privacy' ] : false;
-
-		if ( ! is_object( $object ) ) {
-			return false;
-		}
-		if ( $level == false ) {
-			if ( $object->get_type() != 'album' ) {
-				$album_id = $object->get_album_id();
-				$level = BPMediaPrivacy::get_privacy( $album_id );
-			}
-		}
-
-		$default_level = BPMediaPrivacy::default_privacy();
-		if ( $level == false ) {
-			$level = $default_level;
-		}
-
-		$media_id = $object->get_id();
-		$type = $object->get_type();
-		return $this->save_privacy( $level, $media_id, $type );
-	}
-
-	function save( $level = 0, $object_id = false ) {
-		if ( $object_id == false )
-			return false;
-		if ( ! $level )
-			$level = 0;
-		if ( ! array_key_exists( $level, BPMediaPrivacy::get_settings() ) )
-			$level = 0;
-
-		$level = apply_filters( 'bp_media_save_privacy', $level );
-
-		return update_post_meta( $object_id, 'bp_media_privacy', $level );
-	}
-
-	function activity( $a, $activities ) {
-		global $bp_media;
-
-		foreach ( $activities->activities as $key => $activity ) {
-			//if ( $activity != null && in_array( $activity->type, $bp_media->activity_types ) ) {
-				$has_access = BPMediaPrivacy::has_access( $activity->item_id );
-				if ( ! $has_access ) {
-
-					unset( $activities->activities[ $key ] );
-					$activities->activity_count = $activities->activity_count - 1;
-					$activities->total_activity_count = $activities->total_activity_count - 1;
-					$activities->pag_num = $activities->pag_num - 1;
-				}
-			//}
-		}
-		$activities_new = array_values( $activities->activities );
-		$activities->activities = $activities_new;
-
-		return $activities;
-	}
-
 	static function save_user_default( $level = 0, $user_id = false ) {
 		if ( $user_id == false ) {
 			global $bp;
@@ -281,45 +124,85 @@ class RTMediaPrivacy {
 		return $privacy;
 	}
 
-	static function get_messages( $media_type, $username ) {
-		if ( BPMediaPrivacy::is_enabled() == false )
+	
+
+	function add_nav(){
+
+		if ( bp_displayed_user_domain() ) {
+			$user_domain = bp_displayed_user_domain();
+		} elseif ( bp_loggedin_user_domain() ) {
+			$user_domain = bp_loggedin_user_domain();
+		} else {
 			return;
-		return array(
-			6 => sprintf( __( 'This %s is private', 'buddypress-media' ), $media_type ),
-			4 => sprintf( __( 'This %1s is visible only to %2s&rsquo;s friends', 'buddypress-media' ), $media_type, $username ),
-			2 => sprintf( __( 'This %s is visible to logged in users, only', 'buddypress-media' ), $media_type ),
-		);
+		}
+
+
+
+		$settings_link = trailingslashit( $user_domain . 'settings' );
+
+		$defaults = array(
+		'name'            => $this->title(), // Display name for the nav item
+		'slug'            => 'privacy', // URL slug for the nav item
+		'parent_slug'     => 'settings', // URL slug of the parent nav item
+		'parent_url'      => $settings_link, // URL of the parent item
+		'item_css_id'     => 'rt-media-privacy-settings', // The CSS ID to apply to the HTML of the nav item
+		'user_has_access' => true,  // Can the logged in user see this nav item?
+		'site_admin_only' => false, // Can only site admins see this nav item?
+		'position'        => 900,    // Index of where this nav item should be positioned
+		'screen_function' => array($this,'settings_ui'), // The name of the function to run when clicked
+		'link'            => ''     // The link for the subnav item; optional, not usually required.
+	);
+		bp_core_new_subnav_item($defaults);
 	}
 
-	static function install() {
-		$page = $_POST[ 'page' ];
-		($page) ? $page : 1;
-		$args = array(
-			'post_type' => array(
-				'attachment',
-				'bp_media_album'
-			),
-			'post_status' => 'any',
-			'posts_per_page' => $_POST[ 'count' ],
-			'meta_query' => array(
-				'relation' => 'AND',
-				array(
-					'key' => 'bp-media-key',
-					'compare' => 'EXISTS'
-				),
-				array(
-					'key' => 'bp_media_privacy',
-					'compare' => 'NOT EXISTS'
-				),
-			),
-		);
-		$all_media = new WP_Query( $args );
-		foreach ( $all_media->posts as $media ) {
-			update_post_meta( $media->ID, 'bp_media_privacy', 0 );
-		}
-		die( $page );
+	function settings_ui(){
+		if ( bp_action_variables() ) {
+		bp_do_404();
+		return;
 	}
+
+
+	// Load the template
+	bp_core_load_template( apply_filters( 'bp_settings_screen_delete_account', 'members/single/plugins' ) );
+
+	}
+
+	function content(){
+		if (buddypress()->current_action != 'privacy') return;
+		RTMediaFormHandler::privacy_content();
+	}
+
+	function title(){
+		return __('Privacy','rt-media');
+	}
+
+	function activity_privacy($sql, $select_sql, $from_sql, $where_sql,$sort,$pag_sql=''){
+		//apply_filters( 'bp_activity_get_user_join_filter', "
+		//"{$select_sql} {$from_sql} {$where_sql} ORDER BY a.date_recorded {$sort} {$pag_sql}",
+		//$select_sql,
+		//$from_sql,
+		//$where_sql,
+		//$sort,
+		//$pag_sql
+
+		$sql = '';
+
+		//$from_sql = " FROM {$bp->activity->table_name} a LEFT JOIN {$wpdb->users} u ON a.user_id = u.ID";
+
+		global $bp,$wpdb;
+
+		$from_sql = " FROM {$bp->activity->table_name} a LEFT JOIN {$wpdb->users} u ON a.user_id = u.ID LEFT JOIN {$bp->activity->table_name_meta} m ON a.id = m.activity_id";
+		$where_sql = $where_sql . " AND (NOT EXISTS (SELECT m.activity_id FROM wp_bp_activity_meta m WHERE m.meta_key='bp_media_privacy' AND m.activity_id=a.id)  OR (m.meta_key='bp_media_privacy' AND m.meta_value<1 ) )";
+
+		$newsql = "{$select_sql} {$from_sql} {$where_sql} ORDER BY a.date_recorded {$sort} {$pag_sql}";
+
+		return $newsql;
+	}
+
+
 
 }
+
+
 
 ?>

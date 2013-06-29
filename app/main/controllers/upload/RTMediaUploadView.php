@@ -46,7 +46,6 @@ class RTMediaUploadView {
         if ( is_rt_media_album()){
             $album = '<input class="rt-media-current-album" type="hidden" name="rt-media-current-album" value="'.$rt_media_query->media_query['album_id'].'" />';
 	}elseif ( !is_single() && is_rt_media_gallery() ){
-		echo 'wtf';
             $album = '<select name="album" class="rt-media-user-album-list">'.rt_media_user_album_list().'</select>';
 
 	}
