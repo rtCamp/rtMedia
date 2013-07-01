@@ -127,7 +127,19 @@ class RTMedia {
 			$this->options = $rt_media_options;
 		}
 
+		$this->reset_allowed_types();
 
+
+	}
+
+	function reset_allowed_types(){
+		$options = $this->options;
+
+		foreach($this->allowed_types as $type=>$details){
+			if(!$options['allowedTypes_' . $type . '_enabled']){
+				unset($this->allowed_types[$type]);
+			}
+		}
 	}
 
 	/**
@@ -300,105 +312,6 @@ class RTMedia {
 		}
 	}
 
-	function admin_bar_menu() {
-//		$wp_admin_bar->add_menu( array(
-//			'parent'    => 'my-account',
-//			'id'        => 'my-account-buddypress',
-//			'title'     => __( 'My Account' ),
-//			'group'     => true,
-//			'meta'      => array(
-//				'class' => 'ab-sub-secondary'
-//			)
-//		) );
-
-		global $wp_admin_bar;
-
-		// Bail if this is an ajax request
-		if ( ! bp_use_wp_admin_bar() || defined( 'DOING_AJAX' ) )
-			return;
-
-		// Only add menu for logged in user
-		if ( is_user_logged_in() ) {
-
-			// Add secondary parent item for all BuddyPress components
-			$wp_admin_bar->add_menu( array(
-				'parent' => 'my-account-buddypress',
-				'id' => 'my-account-' . RTMEDIA_MEDIA_SLUG,
-				'title' => RTMEDIA_MEDIA_LABEL,
-				'href' => trailingslashit( $this->get_user_link( get_current_user_id() ) ) . 'media/'
-			) );
-
-			$wp_admin_bar->add_menu( array(
-				'parent' => 'my-account-' . RTMEDIA_MEDIA_SLUG,
-				'id' => 'my-account-media-' . RTMEDIA_MEDIA_SLUG,
-				'title' => RTMEDIA_ALL_LABEL,
-				'href' => trailingslashit( $this->get_user_link( get_current_user_id() ) ) . 'media/'
-			) );
-
-			foreach ( $this->allowed_types as $type ) {
-				if(!$this->options['allowedTypes_' . $type[ 'name' ] . '_enabled']) continue;
-				$name = strtoupper( $type[ 'name' ] );
-				$wp_admin_bar->add_menu( array(
-					'parent' => 'my-account-' . constant('RTMEDIA_'.$name.'_SLUG'),
-					'id' => 'my-account-media-' . constant('RTMEDIA_'.$name.'_SLUG'),
-					'title' => constant('RTMEDIA_'.$name.'_LABEL'),
-					'href' => trailingslashit( $this->get_user_link( get_current_user_id() ) ) . 'media/'.constant('RTMEDIA_'.$name.'_SLUG').'/'
-				) );
-			}
-		}
-	}
-
-	function custom_media_sub_nav_tab() {
-
-		if ( bp_displayed_user_domain() ) {
-			$user_domain = bp_displayed_user_domain();
-		} elseif ( bp_loggedin_user_domain() ) {
-			$user_domain = bp_loggedin_user_domain();
-		} else {
-			return;
-		}
-
-		bp_core_new_subnav_item( array(
-			'name' => __( 'All', 'rt-media' ),
-			'slug' => 'all',
-			'parent_slug' => RTMEDIA_MEDIA_SLUG,
-			'parent_url' => trailingslashit( $user_domain . RTMEDIA_MEDIA_SLUG ),
-			'screen_function' => array( $this, 'media_screen' )
-		) );
-
-		bp_core_new_subnav_item( array(
-			'name' => RTMEDIA_ALBUM_LABEL,
-			'slug' => RTMEDIA_ALBUM_SLUG,
-			'parent_slug' => RTMEDIA_MEDIA_SLUG,
-			'parent_url' => trailingslashit( $user_domain . RTMEDIA_MEDIA_SLUG ),
-			'screen_function' => array( $this, 'media_screen' )
-		) );
-
-		foreach ( $this->allowed_types as $type ) {
-			if(!$this->options['allowedTypes_' . $type[ 'name' ] . '_enabled']) continue;
-			$name = strtoupper( $type[ 'name' ] );
-			bp_core_new_subnav_item( array(
-				'name' => constant( 'RTMEDIA_' . $name . '_LABEL' ),
-				'slug' => constant( 'RTMEDIA_' . $name . '_SLUG' ),
-				'parent_slug' => RTMEDIA_MEDIA_SLUG,
-				'parent_url' => trailingslashit( $user_domain . RTMEDIA_MEDIA_SLUG ),
-				'screen_function' => array( $this, 'media_screen' )
-			) );
-		}
-
-//		if(bp_is_group()) {
-//			global $bp;
-//			$bp->bp_options_nav[bp_get_current_group_slug()]['media'] = array(
-//				'name' => RTMEDIA_MEDIA_LABEL,
-//				'link' => ( (is_multisite()) ? get_site_url(get_current_blog_id()) : get_site_url() ) . '/groups/' . bp_get_current_group_slug().'/media',
-//				'slug' => RTMEDIA_MEDIA_SLUG,
-//				'user_has_access' => true,
-//				'css_id' => 'rt-media-media-nav',
-//				'default_subnav_slug' => 'all',
-//				'position' => 99
-//			);
-//		}
-	}
 
 	public function init_buddypress_options() {
 		/**
@@ -625,10 +538,8 @@ class RTMedia {
 		 */
 		if ( class_exists( 'BuddyPress' ) ) {
 			add_action( 'bp_init', array( $this, 'custom_media_nav_tab' ), 10, 1 );
-			add_action( 'bp_init', array( $this, 'custom_media_sub_nav_tab' ), 10, 20 );
+			//add_action( 'bp_init', array( $this, 'custom_media_sub_nav_tab' ), 10, 20 );
 		}
-
-		add_action( 'admin_bar_menu', array( $this, 'admin_bar_menu' ), 99 );
 
 		/**
 		 * Load accessory functions
@@ -641,9 +552,12 @@ class RTMedia {
 			'upload_shortcode' => false,
 			'gallery_shortcode' => false,
 			'upload_endpoint' => false,
-			'privacy' => false
+			'privacy' => false,
+			'nav'	=> true
 				//'query'		=> false
 		);
+		global $rt_media_nav;
+		print_r($rt_media_nav);
 		$class_construct = apply_filters( 'rtmedia_class_construct', $class_construct );
 
 		foreach ( $class_construct as $key => $global_scope ) {

@@ -53,7 +53,13 @@ class RTMediaTemplate {
 
 		do_action( 'rtmedia_pre_template' );
 
-		do_action( 'rtmedia_pre_action_' . $rt_media_query->action_query->action );
+		//print_r($rt_media_query);
+
+		if(isset($rt_media_query->action_query->action)){
+			do_action( 'rtmedia_pre_action_' . $rt_media_query->action_query->action );
+		}else{
+			do_action( 'rtmedia_pre_action_default' );
+		}
 
 		$this->check_return_json();
 
@@ -141,16 +147,16 @@ class RTMediaTemplate {
 		global $rt_media_query;
 		$nonce = $_POST[ 'rt_media_media_nonce' ];
 		if ( wp_verify_nonce( $nonce, 'rt_media_' . $rt_media_query->action_query->id ) ) {
-                    
+
                         do_action('rt_media_before_update_media',$rt_media_query->action_query->id);
-                    
+
 			$data = rt_media_sanitize_object($_POST, array('media_title','description'));
 			$media = new RTMediaMedia();
 			$media->update( $rt_media_query->action_query->id, $data, $rt_media_query->media[ 0 ]->media_id );
 			$rt_media_query->query( false );
-                        
+
                         do_action('rt_media_after_update_media',$rt_media_query->action_query->id);
-                        
+
 		} else {
 			echo __( "Ooops !!! Invalid access. No nonce was found !!", "rt-media" );
 		}
@@ -232,9 +238,9 @@ class RTMediaTemplate {
 		global $rt_media_query;
 		$nonce = $_REQUEST[ 'rt_media_media_nonce' ];
 		if ( wp_verify_nonce( $nonce, 'rt_media_' . $rt_media_query->media[ 0 ]->id ) ) {
-                    
+
                         add_action('rt_media_before_delete_media',$rt_media_query->media[ 0 ]->id);
-                        
+
 			$id = $_POST;
 			unset( $id[ 'rt_media_media_nonce' ] );
 			unset( $id[ '_wp_http_referer' ] );
@@ -249,9 +255,9 @@ class RTMediaTemplate {
 			} else {
 				$parent_link = get_author_posts_url( $post->media_author );
 			}
-                        
+
                         add_action('rt_media_before_delete_media',$rt_media_query->media[ 0 ]->id);
-                        
+
 			wp_redirect( $parent_link );
 		} else {
 			echo __( "Ooops !!! Invalid access. No nonce was found !!", "rt-media" );
@@ -297,6 +303,9 @@ class RTMediaTemplate {
 		wp_safe_redirect( get_rt_media_user_link( get_current_user_id() ) . 'media/album/' );
 		exit;
 	}
+
+
+
 
 
 	function check_return_comments(){

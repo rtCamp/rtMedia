@@ -415,41 +415,11 @@ class RTMediaQuery {
 			$this->media_query[ 'id' ] = $this->action_query->id;
 
 		$allowed_media_types = array( );
-		global $rt_media;
-		foreach ( $rt_media->allowed_types as $value ) {
-			$allowed_media_types[ ] = $value[ 'name' ];
-		}
 
-		if ( ! isset( $this->media_query[ 'media_type' ] ) ) {
-			if ( isset( $this->action_query->media_type ) &&
-					(
-					in_array( $this->action_query->media_type, $allowed_media_types ) ||
-					$this->action_query->media_type == 'album'
-					)
-			) {
-				$this->media_query[ 'media_type' ] = $this->action_query->media_type;
-			} else {
-				$this->media_query[ 'media_type' ] = array( 'compare' => 'NOT IN', 'value' => array( 'album' ) );
-			}
-		}
+		// is this an album or some other media
+		$this->album_or_media();
 
-		/**
-		 * Handle order of the result set
-		 */
-		$order_by = '';
-		$order = '';
-		if ( isset( $this->media_query[ 'order' ] ) ) {
-			$order = $this->media_query[ 'order' ];
-			unset( $this->media_query[ 'order' ] );
-		}
-
-		if ( isset( $this->media_query[ 'order_by' ] ) ) {
-			$order_by = $this->media_query[ 'order_by' ];
-			unset( $this->media_query[ 'order_by' ] );
-			if ( $order_by == 'ratings' )
-				$order_by = 'ratings_average ' . $order . ', ratings_count';
-		}
-		$order_by .= ' ' . $order;
+		$order_by = $this->order_by();
 
 		if ( isset( $this->media_query[ 'context' ] ) ) {
 			if ( $this->media_query[ 'context' ] == 'profile' ) {
@@ -502,6 +472,48 @@ class RTMediaQuery {
 		  foreach ( $pre_media as $pre_medium ) {
 		  $this->media[ $pre_medium->media_id ] = $pre_medium;
 		  } */
+	}
+
+	function album_or_media(){
+		global $rt_media;
+		foreach ( $rt_media->allowed_types as $value ) {
+			$allowed_media_types[ ] = $value[ 'name' ];
+		}
+
+		if ( ! isset( $this->media_query[ 'media_type' ] ) ) {
+			if ( isset( $this->action_query->media_type ) &&
+					(
+					in_array( $this->action_query->media_type, $allowed_media_types ) ||
+					$this->action_query->media_type == 'album'
+					)
+			) {
+				$this->media_query[ 'media_type' ] = $this->action_query->media_type;
+			} else {
+				$this->media_query[ 'media_type' ] = array( 'compare' => 'NOT IN', 'value' => array( 'album' ) );
+			}
+		}
+	}
+
+	function order_by(){
+		/**
+		 * Handle order of the result set
+		 */
+		$order_by = '';
+		$order = '';
+		if ( isset( $this->media_query[ 'order' ] ) ) {
+			$order = $this->media_query[ 'order' ];
+			unset( $this->media_query[ 'order' ] );
+		}
+
+		if ( isset( $this->media_query[ 'order_by' ] ) ) {
+			$order_by = $this->media_query[ 'order_by' ];
+			unset( $this->media_query[ 'order_by' ] );
+			if ( $order_by == 'ratings' )
+				$order_by = 'ratings_average ' . $order . ', ratings_count';
+		}
+		$order_by .= ' ' . $order;
+
+		return $order_by = apply_filters('rt_media_model_order_by', $order_by);
 	}
 
 	function populate_album() {
