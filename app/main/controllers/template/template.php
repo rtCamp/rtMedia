@@ -72,9 +72,9 @@ if ( ! $ajax ) {
 					<div class="item-list-tabs no-ajax" id="subnav">
 						<ul>
 
-							<?php bp_get_options_nav(); ?>
+							<?php rt_media_sub_nav(); ?>
 
-							<?php do_action( 'bp_member_plugin_options_nav' ); ?>
+							<?php do_action( 'rt_media_sub_nav' ); ?>
 
 						</ul>
 					</div><!-- .item-list-tabs -->
@@ -93,9 +93,9 @@ if ( ! $ajax ) {
 								<div class="item-list-tabs no-ajax" id="object-nav" role="navigation">
 									<ul>
 
-										<?php bp_get_options_nav(); ?>
+										<?php rt_media_sub_nav(); ?>
 
-										<?php do_action( 'bp_group_options_nav' ); ?>
+							<?php do_action( 'rt_media_sub_nav' ); ?>
 
 									</ul>
 								</div>

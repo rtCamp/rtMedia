@@ -553,7 +553,6 @@ function rt_media_user_album_list() {
     global $rt_media_query;
     $global_albums = get_site_option('rt-media-global-albums');
 
-	print_r($global_albums);
     $option = NULL;
     foreach ($global_albums as $album) {
         $model = new RTMediaModel();
@@ -639,5 +638,9 @@ add_action('rt_media_query_actions', 'rt_media_album_merge_action');
 function rt_media_album_merge_action($actions) {
     $actions['merge'] = __('Merge', 'rt-media');
     return $actions;
+}
+
+function rt_media_sub_nav(){
+	RTMediaNav::sub_nav();
 }
 ?>
