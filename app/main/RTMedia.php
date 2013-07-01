@@ -126,20 +126,6 @@ class RTMedia {
 			/* if new options added via filter then it needs to be updated */
 			$this->options = $rt_media_options;
 		}
-
-		$this->reset_allowed_types();
-
-
-	}
-
-	function reset_allowed_types(){
-		$options = $this->options;
-
-		foreach($this->allowed_types as $type=>$details){
-			if(!$options['allowedTypes_' . $type . '_enabled']){
-				unset($this->allowed_types[$type]);
-			}
-		}
 	}
 
 	/**
