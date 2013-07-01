@@ -41,6 +41,7 @@ class RTMediaEncoding {
                         $blacklist = array('localhost', '127.0.0.1');
                         if (!in_array($_SERVER['HTTP_HOST'], $blacklist)) {
                             add_filter('rt_media_plupload_files_filter', array($this, 'allowed_types'));
+                            add_filter('rt_media_allowed_types', array($this, 'allowed_types'));
                         }
                     }
                 }
@@ -243,8 +244,15 @@ class RTMediaEncoding {
     }
 
     public function allowed_types($types) {
-//        $this->update_usage($this->api_key);
-        $types['extensions'] .= 'mov,m4v,m2v,avi,mpg,flv,wmv,mkv,webm,ogv,mxf,asf,vob,mts,qt,wma,ogg,wav,mpeg,m4a'; //Allow all types of file to be uploded
+        if ( isset($types[0]) && isset($types[0]['extensions']) ) {
+            $types[0]['extensions'] .= 'mov,m4v,m2v,avi,mpg,flv,wmv,mkv,webm,ogv,mxf,asf,vob,mts,qt,mpeg'; //Allow all types of file to be uploded
+            $types[0]['extensions'] .= 'wma,ogg,wav,m4a'; //Allow all types of file to be uploded
+        } else {
+            if ( isset($types['video']) )
+                $types['video']['extn'] .= 'mov,m4v,m2v,avi,mpg,flv,wmv,mkv,webm,ogv,mxf,asf,vob,mts,qt,mpeg'; //Allow all types of file to be uploded
+            if ( isset($types['audio']) )
+                $types['audio']['extn'] .= 'wma,ogg,wav,m4a'; //Allow all types of file to be uploded
+        }
         return $types;
     }
 
