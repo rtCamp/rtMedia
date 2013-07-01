@@ -124,7 +124,7 @@ class RTMediaPrivacy {
 		return $privacy;
 	}
 
-	
+
 
 	function add_nav(){
 
@@ -169,8 +169,27 @@ class RTMediaPrivacy {
 
 	function content(){
 		if (buddypress()->current_action != 'privacy') return;
-		RTMediaFormHandler::privacy_content();
-	}
+
+		global $rt_media;
+		$default_user_privacy = array(
+			'title' => __("Default Privacy","rt-media"),
+			'callback' => array("RTMediaFormHandler","radio"),
+			'args' => array(
+				'key' => 'privacy_default',
+				'radios' => $rt_media->privacy_settings['levels'],
+				'default' => get_user_meta(get_current_user_id(),'rt-media-default-privacy')
+			)
+		);
+?>
+		<div class="large-12">
+			<div class="row section">
+				<div class="columns large-2"><?php echo $default_user_privacy['title']; ?></div>
+				<div class="columns large-5">
+					<?php call_user_func($default_user_privacy['callback'], $default_user_privacy['args']); ?>
+				</div>
+			</div>
+		</div>
+<?php	}
 
 	function title(){
 		return __('Privacy','rt-media');
