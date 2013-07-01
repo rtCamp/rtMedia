@@ -152,7 +152,7 @@ class RTMedia {
 				'plural' => 'photos',
 				'label' => __( 'Photo', 'rt-media' ),
 				'plural_label' => __( 'Photos', 'rt-media' ),
-				'extn' => array( __( 'jpeg', 'rt-media' ), __( 'png', 'rt-media' ) ),
+				'extn' => array( 'jpeg', 'png' ),
 				'thumbnail' => RTMEDIA_URL . 'app/assets/img/image_thumb.png'
 			),
 			'video' => array(
@@ -160,7 +160,7 @@ class RTMedia {
 				'plural' => 'videos',
 				'label' => __( 'Video', 'rt-media' ),
 				'plural_label' => __( 'Videos', 'rt-media' ),
-				'extn' => array( __( 'mp4', 'rt-media' ) ),
+				'extn' => array( 'mp4' ),
 				'thumbnail' => RTMEDIA_URL . 'app/assets/img/video_thumb.png'
 			),
 			'music' => array(
@@ -168,7 +168,7 @@ class RTMedia {
 				'plural' => 'music',
 				'label' => __( 'Music', 'rt-media' ),
 				'plural_label' => __( 'Music', 'rt-media' ),
-				'extn' => array( __( 'mp3', 'rt-media' ) ),
+				'extn' => array( 'mp3' ),
 				'thumbnail' => RTMEDIA_URL . 'app/assets/img/audio_thumb.png'
 			)
 		);

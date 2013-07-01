@@ -140,6 +140,7 @@ class RTMediaUploadFile {
         try {
             global $rt_media;
             $allowed_types = array();
+//            error_log(var_export($rt_media->allowed_types,true));
             foreach ($rt_media->allowed_types as $type) {
 				foreach ($type['extn'] as $extn) {
 					$allowed_types[] = $extn;
@@ -161,6 +162,7 @@ class RTMediaUploadFile {
      * Remove invalid files
      */
     function unset_invalid_files() {
+//        error_log(var_export($this->files,true));
         $temp_array = $this->files;
         $this->files = null;
         foreach ($temp_array as $key => $file) {
@@ -168,6 +170,8 @@ class RTMediaUploadFile {
                 $this->files[] = $file;
             }
         }
+//        error_log(var_export($this->files,true));
+//        die;
     }
 
     function id3_validate_type($file) {
