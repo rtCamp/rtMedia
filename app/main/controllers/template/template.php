@@ -44,8 +44,8 @@ if ( ! $ajax ) {
 
 	if ( $template_type == 'buddypress' ) {
 		?>
-
-		<div id="buddypress">
+		<div id ="content">
+		<div id="buddypress" class="padder">
 
 			<?php if ( bp_displayed_user_id() ) { ?>
 				<div id="item-header">
@@ -118,6 +118,7 @@ if ( ! $ajax ) {
 					?>
 				</div>
 			</div>
+		</div>
 			<?php
 		}
 
