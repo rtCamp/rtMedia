@@ -115,7 +115,7 @@ class RTMediaAlbum {
 	 * @param type $post_id
 	 * @return type
 	 */
-	function add($title = '', $author_id = false, $new = true, $post_id = false,&$rt_media_id=0) {
+	function add($title = '', $author_id = false, $new = true, $post_id = false) {
 
 		/* action to perform any task before adding the album */
 		do_action('rt_media_before_add_album');
@@ -169,7 +169,7 @@ class RTMediaAlbum {
 		/* action to perform any task after adding the album */
 		do_action('rt_media_after_add_album', $this);
 
-		return $album_id;
+		return $rt_media_id;
 	}
 
 	/**
@@ -187,10 +187,10 @@ class RTMediaAlbum {
 		 */
 
 		if( current_user_can('activate_plugins') ) {
-                        $rt_media_id= 0;
-			$album_id = $this->add($title, $author_id,true,false, $rt_media_id);
 
-			$this->save_globals($album_id,$rt_media_id);
+			$album_id = $this->add($title, $author_id,true,false);
+
+			$this->save_globals($album_id);
 
 			return $album_id;
 		} else
@@ -225,7 +225,7 @@ class RTMediaAlbum {
 	 * @param type $album_ids
 	 * @return boolean
 	 */
-	function save_globals($album_ids = false,$rt_media_id=false) {
+	function save_globals($album_ids = false) {
 
 		if(!$album_ids)
 			return false;

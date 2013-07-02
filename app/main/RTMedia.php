@@ -414,6 +414,9 @@ class RTMedia {
 		if ( ! defined( 'RTMEDIA_UPLOAD_LABEL' ) )
 			define( 'RTMEDIA_UPLOAD_LABEL', __( 'Upload', 'rt-media' ) );
 
+		/* Global Album/Wall Post */
+		if ( ! defined( 'RTMEDIA_GLOBAL_ALBUM_LABEL' ) )
+			define( 'RTMEDIA_GLOBAL_ALBUM_LABEL', __( 'Wall Post', 'rt-media' ) );
 
 		$this->define_type_constants();
 	}

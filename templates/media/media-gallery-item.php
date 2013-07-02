@@ -26,9 +26,9 @@ $rt_media_backbone = array(
 if ( isset( $_POST[ 'backbone' ] ) )
 	$rt_media_backbone['backbone'] = $_POST[ 'backbone' ];
 if ( isset( $_POST[ 'is_album' ] ) )
-	$rt_media_backbone['is_album'] = $_POST[ 'is_album' ];
+	$rt_media_backbone['is_album'] = $_POST[ 'is_album' ][0];
 if ( isset( $_POST[ 'is_edit_allowed' ] ) )
-	$rt_media_backbone['is_edit_allowed'] = $_POST[ 'is_edit_allowed' ];
+	$rt_media_backbone['is_edit_allowed'] = $_POST[ 'is_edit_allowed' ][0];
 ?>
 <li class="rt-media-list-item">
 	<?php do_action( 'rtmedia_before_item' ); ?>
