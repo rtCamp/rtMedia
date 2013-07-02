@@ -372,9 +372,10 @@ class RTMediaQuery {
 	function privacy_filter( $where,$table_name ) {
 		$user = $this->get_user();
 
-		$where .= " AND {$table_name}.privacy=0";
+		$where .= " AND ({$table_name}.privacy=0";
 		if ( $user ) {
-			$where .= " OR ({$table_name}.media_author={$user} AND privacy=60)";
+			$where .= " OR ({$table_name}.privacy=20)";
+			$where .= " OR ({$table_name}.media_author={$user} AND {$table_name}.privacy>=40)";
 			if ( class_exists( 'BuddyPress' ) ) {
 				if ( bp_is_active( 'friends' ) ) {
 					$friends = $this->friendship->get_friends_cache( $user );
@@ -382,7 +383,7 @@ class RTMediaQuery {
 				}
 			}
 		}
-		return $where;
+		return $where . ')';
 	}
 
 	function get_user() {
@@ -734,32 +735,8 @@ class RTMediaQuery {
 	function &get_data() {
 
 		$this->populate_data();
-		$this->counts();
 
 		return $this->media;
-	}
-
-	function counts(){
-        $user_id = get_current_user_id();
-        $counts = $this->model->get_counts($user_id);
-		$media_count = array(
-			'total'=> 0
-		);
-		foreach($counts as $count){
-			$media_count[$count->privacy]= $count;
-			unset($media_count[$count->privacy]->privacy);
-
-
-		}
-		foreach($media_count as $ind_count){
-			foreach($ind_count as $ind_ind_count){
-				$media_count['total']+= $ind_ind_count;
-			}
-		}
-		print_r($media_count);
-		// get count from model
-        update_user_meta($user_id, 'rt_media_count', $counts);
-        return true;
 	}
 
 }
