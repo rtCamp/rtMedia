@@ -50,14 +50,21 @@ class RTMediaUploadView {
 
 	}
 	$tabs = array(
-			'file_upload' => array( 'title' => __('File Upload','rt-media'), 'content' => '<div id="rtmedia-upload-container" ><div id="drag-drop-area" class="drag-drop">'.$album.'<input id="rtMedia-upload-button" value="Select" type="button" class="rt-media-upload-input rt-media-file" /></div><table id="rtMedia-queue-list"></table></div>' ),
+			'file_upload' => array(
+				'default' => array('title' => __('File Upload','rt-media'), 'content' => '<div id="rtmedia-upload-container" ><div id="drag-drop-area" class="drag-drop">'.$album.'<input id="rtMedia-upload-button" value="Select" type="button" class="rt-media-upload-input rt-media-file" /></div><table id="rtMedia-queue-list"></table></div>' ),
+				'activity' => array('title' => __('File Upload','rt-media'), 'content' => '<div class="rt-media-container"><div id="rt-media-action-update"><input type="button" class="rt-media-add-media-button" id="rt-media-add-media-button-post-update"  value="' . __("Add Media","rt-media") . '" /></div><div id="div-attache-rtmedia"><div id="rt-media-whts-new-upload-container" ><div id="rt-media-whts-new-drag-drop-area" class="drag-drop"><input id="rt-media-whts-new-upload-button" value="Select" type="button" class="rt-media-upload-input rt-media-file" /></div><div id="rtMedia-update-queue-list"></div></div></div></div>')
+			),
 //			'file_upload' => array( 'title' => __('File Upload','rt-media'), 'content' => '<div id="rt-media-uploader"><p>Your browser does not have HTML5 support.</p></div>'),
 			'link_input' => array( 'title' => __('Insert from URL','rt-media'),'content' => '<input type="url" name="bp-media-url" class="rt-media-upload-input rt-media-url" />' ),
         );
-        $tabs = apply_filters('bp_media_upload_tabs', $tabs );
+        $tabs = apply_filters('rt_media_upload_tabs', $tabs );
 
 		$attr = $this->attributes;
 		$mode = (isset($_GET['mode']) && array_key_exists($_GET['mode'], $tabs)) ? $_GET['mode'] : 'file_upload';
+
+		$upload_type = 'default';
+		if(isset($attr['activity']) && $attr['activity'])
+			$upload_type = 'activity';
 
 		$uploadHelper = new RTMediaUploadHelper();
 		include $this->locate_template($template_name);

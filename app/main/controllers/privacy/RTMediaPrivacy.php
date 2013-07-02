@@ -35,8 +35,9 @@ class RTMediaPrivacy {
 			);
 			global $rt_media;
 			foreach ($rt_media->privacy_settings['levels'] as $key => $value) {
+				$privacy = explode(' - ', $value);
 				$attributes['rtForm_options'][] = array(
-					$value => $key,
+					$privacy[0] => $key,
 					'selected' => ($key=='0') ? 1 : 0
 				);
 			}
