@@ -43,9 +43,9 @@ class RTMediaUploadView {
     public function render($template_name) {
         global $rt_media_query;
         $album = '';
-        if ( is_rt_media_album()){
+        if ( $rt_media_query && is_rt_media_album()){
             $album = '<input class="rt-media-current-album" type="hidden" name="rt-media-current-album" value="'.$rt_media_query->media_query['album_id'].'" />';
-	}elseif ( !is_single() && is_rt_media_gallery() ){
+	}elseif ( !is_single() && $rt_media_query && is_rt_media_gallery() ){
             $album = '<select name="album" class="rt-media-user-album-list">'.rt_media_user_album_list().'</select>';
 
 	}
