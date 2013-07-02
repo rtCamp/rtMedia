@@ -256,7 +256,7 @@ jQuery(function($) {
 
         });
         uploaderObj.uploader.bind('BeforeUpload', function(up, file) {
-			up.settings.multipart_params.privacy = $("#rt-media-uploader-form select#privacy").val();
+			up.settings.multipart_params.privacy = $("#rtm-file_upload-ui select#privacy").val();
             up.settings.multipart_params.activity_id = activity_id;
             if ($('.rt-media-user-album-list').length > 0)
                 up.settings.multipart_params.album_id = $('.rt-media-user-album-list').find(":selected").val();
@@ -363,7 +363,7 @@ jQuery(document).ready(function($) {
 
         up.settings.multipart_params.context = object;
         up.settings.multipart_params.context_id = item_id;
-
+		up.settings.multipart_params.privacy = $("#rtm-file_upload-ui select#privacy").val();
     });
     objUploadView.uploader.bind('UploadComplete', function(up, files) {
         media_uploading=true;
@@ -374,6 +374,8 @@ jQuery(document).ready(function($) {
         $("#" + file.id + " .plupload_file_status").html(file.percent + "%");
 
     });
+
+	$("#rtMedia-start-upload").hide();
 
     objUploadView.initUploader();
     var change_flag = false
