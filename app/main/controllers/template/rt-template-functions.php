@@ -551,7 +551,7 @@ function delete_rtmedia_meta($id = false, $key = false) {
 
 function rt_media_user_album_list() {
     global $rt_media_query;
-    $global_albums = get_site_option('rt-media-global-albums');
+    $global_albums = RTMediaAlbum::get_globals();	//get_site_option('rt-media-global-albums');
 
     $option = NULL;
     foreach ($global_albums as $album) {

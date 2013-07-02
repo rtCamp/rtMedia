@@ -49,8 +49,8 @@ class RTMediaNav {
 			$wp_admin_bar->add_menu( array(
 				'parent' => 'my-account-' . RTMEDIA_MEDIA_SLUG,
 				'id' => 'my-account-media-' . RTMEDIA_MEDIA_SLUG,
-				'title' => RTMEDIA_ALL_LABEL,
-				'href' => trailingslashit( get_rt_media_user_link( get_current_user_id() ) ) . 'media/'
+				'title' => __('Wall Post','rt-media'),
+				'href' => trailingslashit( get_rt_media_user_link( get_current_user_id() ) ) . 'media/'.RTMediaAlbum::get_default()
 			) );
 			global $rt_media;
 
@@ -71,10 +71,18 @@ class RTMediaNav {
 	static function sub_nav() {
 		global $rt_media, $rt_media_query;
 
+		$default = false;
 		if(!isset($rt_media_query->action_query->action)||empty($rt_media_query->action_query->action)){
 			$default = true;
 		}
 
+		$global_album = '';
+		if(isset($rt_media_query->action_query->id)) {
+			if($rt_media_query->action_query->id==RTMediaAlbum::get_default())
+				$global_album = 'class = "current selected"';
+		}
+		echo apply_filters( 'rt_media_sub_nav_wall_post' ,
+				'<li id="rt-media-nav-item-wall-post-li" ' . $global_album . '><a id="rt-media-nav-item-wall-post" href="' . trailingslashit( get_rt_media_user_link( get_current_user_id() ) ) . 'media/' . RTMediaAlbum::get_default() . '/' . '">' . __("Wall Post","rt-media") . '</a></li>' );
 
 
 		foreach ( $rt_media->allowed_types as $type ) {
