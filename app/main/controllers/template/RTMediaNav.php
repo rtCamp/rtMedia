@@ -50,8 +50,16 @@ class RTMediaNav {
 				'parent' => 'my-account-' . RTMEDIA_MEDIA_SLUG,
 				'id' => 'my-account-media-' . RTMEDIA_MEDIA_SLUG,
 				'title' => __('Wall Post','rt-media'),
-				'href' => trailingslashit( get_rt_media_user_link( get_current_user_id() ) ) . 'media/'.RTMediaAlbum::get_default()
+				'href' => trailingslashit( get_rt_media_user_link( get_current_user_id() ) ) . 'media/'.RTMediaAlbum::get_default().'/'
 			) );
+
+			$wp_admin_bar->add_menu( array(
+				'parent' => 'my-account-' . RTMEDIA_MEDIA_SLUG,
+				'id' => 'my-account-media-' . RTMEDIA_ALBUM_SLUG,
+				'title' => __('Albums','rt-media'),
+				'href' => trailingslashit( get_rt_media_user_link( get_current_user_id() ) ) . 'media/album/'
+			) );
+
 			global $rt_media;
 
 			foreach ( $rt_media->allowed_types as $type ) {
@@ -77,13 +85,16 @@ class RTMediaNav {
 		}
 
 		$global_album = '';
-		if(isset($rt_media_query->action_query->id)) {
-			if($rt_media_query->action_query->id==RTMediaAlbum::get_default())
-				$global_album = 'class = "current selected"';
-		}
+		if(isset($rt_media_query->action_query->id) && $rt_media_query->action_query->id==RTMediaAlbum::get_default())
+			$global_album = 'class = "current selected"';
 		echo apply_filters( 'rt_media_sub_nav_wall_post' ,
 				'<li id="rt-media-nav-item-wall-post-li" ' . $global_album . '><a id="rt-media-nav-item-wall-post" href="' . trailingslashit( get_rt_media_user_link( get_current_user_id() ) ) . 'media/' . RTMediaAlbum::get_default() . '/' . '">' . __("Wall Post","rt-media") . '</a></li>' );
 
+		$albums = '';
+		if(isset($rt_media_query->action_query->action) && $rt_media_query->action_query->action=='album')
+			$albums = 'class="current selected"';
+		echo apply_filters( 'rt_media_sub_nav_albums' ,
+				'<li id="rt-media-nav-item-albums-li" ' . $albums . '><a id="rt-media-nav-item-albums" href="' . trailingslashit( get_rt_media_user_link( get_current_user_id() ) ) . 'media/album/">' . __("Albums","rt-media") . '</a></li>' );
 
 		foreach ( $rt_media->allowed_types as $type ) {
 			if ( ! $rt_media->options[ 'allowedTypes_' . $type[ 'name' ] . '_enabled' ] )

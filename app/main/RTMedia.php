@@ -280,6 +280,7 @@ class RTMedia {
 		bp_core_new_nav_item( array(
 			'name' => RTMEDIA_MEDIA_LABEL,
 			'slug' => RTMEDIA_MEDIA_SLUG,
+			'screen_function' => array($this,'media_screen'),
 			'default_subnav_slug' => 'all'
 		) );
 
@@ -293,6 +294,7 @@ class RTMedia {
 				'user_has_access' => true,
 				'css_id' => 'rt-media-media-nav',
 				'position' => 99,
+				'screen_function' => array($this,'media_screen'),
 				'default_subnav_slug' => 'all'
 			);
 		}
@@ -603,7 +605,7 @@ class RTMedia {
 
 		//**
 		if ( ! $global_album ) {
-			$global_album = $album->add_global( __( "rtMedia Global Album", "rt-media" ) );
+			$global_album = $album->add_global( __( "rtMedia Global Album", "rt-media", true ) );
 		}
 	}
 

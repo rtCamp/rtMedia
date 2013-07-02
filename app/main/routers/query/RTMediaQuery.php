@@ -313,7 +313,7 @@ class RTMediaQuery {
 					// leaving here for more granular editing, in future, for eg,
 					// /media/photos/edit/title/
 					// /media/photos/page/2/
-					if ( $second_modifier == 'page' && is_numeric( $third_modifier ) ) {
+					if ( $second_modifier == 'pg' && is_numeric( $third_modifier ) ) {
 
 						$pageno = $third_modifier;
 					}

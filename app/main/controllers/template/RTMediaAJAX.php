@@ -20,18 +20,17 @@ class RTMediaAJAX {
 	function backbone_template() {
 		include RTMEDIA_PATH.'templates/media/media-gallery-item.php';
 	}
-        
+
         function create_album(){
             if ( isset($_POST['name']) && $_POST['name'] ) {
                 $album = new RTMediaAlbum();
-                $rt_media_id = NULL;
-                $album->add($_POST['name'], get_current_user_id(), true, false, $rt_media_id);
-                
+                $album->add($_POST['name'], get_current_user_id(), true, false);
+
                 if ( $rt_media_id )
                     echo $rt_media_id;
                 else
                     echo false;
-                
+
             } else {
                 echo false;
             }

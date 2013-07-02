@@ -88,7 +88,7 @@ class RTMediaTemplate {
 					$this->update_global_query( $shortcode_attr[ 'attr' ] );
 				include $this->locate_template( $template );
 			} else {
-				echo 'Invalid attribute passed for rtmedia_gallery shortcode.';
+				echo __('Invalid attribute passed for rtmedia_gallery shortcode.','rt-media');
 				return false;
 			}
 		}

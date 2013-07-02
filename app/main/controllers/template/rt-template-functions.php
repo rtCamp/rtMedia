@@ -379,55 +379,64 @@ function rt_media_comments() {
 
 function rt_media_pagination_prev_link() {
 
-    global $rt_media_media, $rt_media_interaction;
+    global $rt_media_media, $rt_media_interaction, $rt_media_query;
 
-    $page_url = ((rt_media_page() - 1) == 1) ? "" : "/pg/" . (rt_media_page() - 1);
+    $page_url = ((rt_media_page() - 1) == 1) ? "" : "pg/" . (rt_media_page() - 1);
+	$site_url = (is_multisite()) ? trailingslashit(get_site_url(get_current_blog_id())) : trailingslashit(get_site_url());
+	$author_name = get_query_var('author_name');
+	$link = '';
 
-    if ($rt_media_interaction->context->type == "profile") {
-        if (class_exists("BuddyPress"))
-            $link = get_site_url() . '/members/' . get_query_var('author_name') . '/media/' . $page_url;
+	if ($rt_media_interaction->context->type == "profile") {
+        if (function_exists("bp_core_get_user_domain"))
+            $link .= trailingslashit(bp_core_get_user_domain($rt_media_media->media_author));
         else
-            $link = get_site_url() . '/author/' . get_query_var('author_name') . '/media/' . $page_url;
+            $link = $site_url . 'author/' . $author_name . '/';
     } else if ($rt_media_interaction->context->type == 'group') {
         if (function_exists("bp_get_current_group_slug"))
-            $link = get_site_url() . '/groups/' . bp_get_current_group_slug() . '/media/' . $page_url;
+            $link .= $site_url . 'groups/' . bp_get_current_group_slug() . '/';
     } else {
         $post = get_post($rt_media_media->post_parent);
 
-        $link = get_site_url() . '/' . $post->post_name . '/media/' . $page_url;
+        $link .= $site_url . $post->post_name . '/';
     }
-    return $link;
+
+	$link .= 'media/';
+
+	if(isset($rt_media_query->action_query->media_type)) {
+		if(in_array($rt_media_query->action_query->media_type, array("photo","music","video","album")))
+			$link .= $rt_media_query->action_query->media_type . '/';
+	}
+    return $link . $page_url;
 }
 
 function rt_media_pagination_next_link() {
 
-    global $rt_media_media, $rt_media_interaction;
+    global $rt_media_media, $rt_media_interaction, $rt_media_query;
 
-    if ($rt_media_interaction->context->type == "profile") {
+	$page_url = 'pg/'. (rt_media_page() + 1);
+	$site_url = (is_multisite()) ? trailingslashit(get_site_url(get_current_blog_id())) : trailingslashit(get_site_url());
+	$author_name = get_query_var('author_name');
+	$link = '';
+
+	if ($rt_media_interaction->context->type == "profile") {
         if (function_exists("bp_core_get_user_domain"))
-            $link = bp_core_get_user_domain($rt_media_media->media_author) . 'media/pg/' . (rt_media_page() + 1);
+            $link .= trailingslashit(bp_core_get_user_domain($rt_media_media->media_author));
         else
-            $link = get_site_url() . '/author/' . get_query_var('author_name') . '/media/pg/' . (rt_media_page() + 1);
+            $link .= $site_url . 'author/' . $author_name . '/';
     } else if ($rt_media_interaction->context->type == 'group') {
         if (function_exists("bp_get_current_group_slug"))
-            $link = get_site_url() . '/groups/' . bp_get_current_group_slug() . '/media/pg/' . (rt_media_page() + 1);
+            $link .=  $site_url . 'groups/' . bp_get_current_group_slug() . '/';
     } else {
         $post = get_post($rt_media_media->post_parent);
 
-        $link = get_site_url() . '/' . $post->post_name . '/media/pg/' . (rt_media_page() + 1);
+        $link .= $site_url . $post->post_name . '/';
     }
-    return $link;
-}
-
-function rt_media_url() {
-
-    global $rt_media_media;
-
-    $post = get_post($rt_media_media->post_parent);
-
-    $link = get_site_url() . '/' . $post->post_name . '/media/' . $rt_media_media->id;
-
-    return $link;
+	$link .= 'media/';
+	if(isset($rt_media_query->action_query->media_type)) {
+		if(in_array($rt_media_query->action_query->media_type, array("photo","music","video","album")))
+			$link .= $rt_media_query->action_query->media_type . '/';
+	}
+	return $link . $page_url;
 }
 
 function rt_media_comments_enabled() {
