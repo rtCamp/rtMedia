@@ -145,5 +145,24 @@ class RTMediaModel extends RTDBModel {
         $results = $wpdb->get_results($sql);
         return $results;
     }
+
+	function get_counts($user_id){
+
+		global $wpdb, $rt_media;
+		$query =
+                "SELECT privacy, ";
+		foreach($rt_media->allowed_types as $type){
+			$query .= " SUM(CASE WHEN media_type LIKE '{$type['name']}' THEN 1 ELSE 0 END) as {$type['name']}," ;
+		}
+        $query .= " SUM(CASE WHEN media_type LIKE 'album' THEN 1 ELSE 0 END) as album
+	FROM
+		{$this->table_name} WHERE media_author = $user_id
+	GROUP BY privacy";
+        $result = $wpdb->get_results($query);
+        if (!is_array($result))
+            return false;
+
+		return $result;
+	}
 }
 ?>

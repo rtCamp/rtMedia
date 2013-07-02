@@ -68,6 +68,8 @@ class RTMediaQuery {
 
 		$this->interaction = $rt_media_interaction->routes[ 'media' ];
 
+		$this->friendship = new RTMediaFriends();
+
 
 		// action manipulator hook
 		$this->set_actions();
@@ -375,7 +377,7 @@ class RTMediaQuery {
 			$where .= " OR ({$table_name}.media_author={$user} AND privacy=60)";
 			if ( class_exists( 'BuddyPress' ) ) {
 				if ( bp_is_active( 'friends' ) ) {
-					$friends = $this->get_friends_cache( $user );
+					$friends = $this->friendship->get_friends_cache( $user );
 					$where .= " OR ({$table_name}.privacy=40 AND {$table_name}.media_author IN ('". implode("','", $friends)."'))";
 				}
 			}
@@ -392,17 +394,7 @@ class RTMediaQuery {
 		return $user;
 	}
 
-	function get_friends_cache( $user ) {
 
-		if ( ! $user )
-			return false;
-		$friends = wp_cache_get( 'rtmedia-user-friends-' . $user );
-		if ( $friends === false ) {
-			$friends = friends_get_friend_user_ids($user);
-			wp_cache_set( 'rtmedia-user-friends-' . $user, $friends );
-		}
-		return $friends;
-	}
 
 	function set_privacy() {
 		$user = $this->get_user();
@@ -742,8 +734,32 @@ class RTMediaQuery {
 	function &get_data() {
 
 		$this->populate_data();
+		$this->counts();
 
 		return $this->media;
+	}
+
+	function counts(){
+        $user_id = get_current_user_id();
+        $counts = $this->model->get_counts($user_id);
+		$media_count = array(
+			'total'=> 0
+		);
+		foreach($counts as $count){
+			$media_count[$count->privacy]= $count;
+			unset($media_count[$count->privacy]->privacy);
+
+
+		}
+		foreach($media_count as $ind_count){
+			foreach($ind_count as $ind_ind_count){
+				$media_count['total']+= $ind_ind_count;
+			}
+		}
+		print_r($media_count);
+		// get count from model
+        update_user_meta($user_id, 'rt_media_count', $counts);
+        return true;
 	}
 
 }
