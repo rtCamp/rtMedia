@@ -387,6 +387,7 @@ jQuery(document).ready(function($) {
             while (activity_attachemnt_ids.length > 0) {
                 options.data += "&rtMedia_attached_files[]=" + activity_attachemnt_ids.pop();
             }
+			options.data += "&rtmedia-privacy="+$("#rtm-file_upload-ui select#privacy").val();
             activity_attachemnt_ids = temp;
             var orignalSuccess = originalOptions.success ;
             options.beforeSend= function(){

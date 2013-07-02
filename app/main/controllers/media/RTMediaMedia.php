@@ -448,7 +448,7 @@ class RTMediaMedia {
         }
 
         $activity_id = bp_activity_add($activity_args);
-		bp_activity_update_meta($activity_id, 'privacy', ($media->privacy==0)?-1:$media->privacy);
+		bp_activity_update_meta($activity_id, 'rtmedia_privacy', ($media->privacy==0)?-1:$media->privacy);
 
 
         $this->model->update(
