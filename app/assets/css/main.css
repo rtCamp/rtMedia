@@ -1544,3 +1544,9 @@
 	font-size:1.2em;
 	padding-top:10px;
 }
+
+.rt-media-action-update{
+float: left;
+margin-top: 12px;
+margin-right: 10px;
+}
