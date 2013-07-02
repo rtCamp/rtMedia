@@ -71,6 +71,17 @@ function rt_media_media_id($id = false) {
     }
 }
 
+function rt_media_activity_id($id = false) {
+    if ( $id ){
+        $model = new RTMediaModel();
+        $media = $model->get_media(array('id' => $id), 0, 1);
+        return $media[0]->activity_id;
+    } else {
+        global $rt_media_media;
+        return $rt_media_media->activity_id;
+    }
+}
+
 function rt_media_type($id = false) {
     if ( $id ){
         $model = new RTMediaModel();

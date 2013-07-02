@@ -18,6 +18,7 @@ class RTMediaBuddyPressActivity {
         add_action("bp_groups_posted_update",array(&$this, "bp_groups_posted_update"),99,4);
 		add_action("bp_init",array($this,'non_threaded_comments'));
 		add_action("bp_activity_comment_posted", array($this,"comment_sync"),10,2);
+		add_filter('bp_activity_allowed_tags', array(&$this, 'override_allowed_tags'));
     }
 	function comment_sync($comment_id,$param) {
 
@@ -78,6 +79,37 @@ class RTMediaBuddyPressActivity {
 
 		$uploadView = new RTMediaUploadView(array('activity'=> true));
 		$uploadView->render('uploader');
+    }
+
+	function override_allowed_tags($activity_allowedtags) {
+
+		$activity_allowedtags['video'] = array();
+        $activity_allowedtags['video']['id'] = array();
+        $activity_allowedtags['video']['class'] = array();
+        $activity_allowedtags['video']['src'] = array();
+        $activity_allowedtags['video']['controls'] = array();
+        $activity_allowedtags['video']['preload'] = array();
+        $activity_allowedtags['video']['alt'] = array();
+        $activity_allowedtags['video']['title'] = array();
+        $activity_allowedtags['audio'] = array();
+        $activity_allowedtags['audio']['id'] = array();
+        $activity_allowedtags['audio']['class'] = array();
+        $activity_allowedtags['audio']['src'] = array();
+        $activity_allowedtags['audio']['controls'] = array();
+        $activity_allowedtags['audio']['preload'] = array();
+        $activity_allowedtags['audio']['alt'] = array();
+        $activity_allowedtags['audio']['title'] = array();
+        $activity_allowedtags['div'] = array();
+        $activity_allowedtags['div']['id'] = array();
+        $activity_allowedtags['div']['class'] = array();
+        $activity_allowedtags['a'] = array();
+        $activity_allowedtags['a']['title'] = array();
+        $activity_allowedtags['a']['href'] = array();
+        $activity_allowedtags['ul'] = array();
+        $activity_allowedtags['ul']['class'] = array();
+        $activity_allowedtags['li'] = array();
+
+        return $activity_allowedtags;
     }
 
 }

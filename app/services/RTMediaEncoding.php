@@ -458,12 +458,13 @@ class RTMediaEncoding {
 //                        $activity_content = str_replace($old_wp_attached_file_pathinfo['basename'], $new_wp_attached_file_pathinfo['basename'], $media_entry->get_media_activity_content());
 //                        $wpdb->update($wpdb->prefix . 'bp_activity', array('content' => $activity_content), array('id' => $media[0]->activity_id));
                         // Check if uplaod is through activity upload
-//                        $activity_id = get_post_meta($attachment_id, 'bp-media-activity-upload-id', true);
-//                        if ($activity_id) {
-//                            $content = $wpdb->get_var("SELECT content FROM {$wpdb->prefix}bp_activity WHERE id = $activity_id");
-//                            $activity_content = str_replace($old_wp_attached_file_pathinfo['basename'], $new_wp_attached_file_pathinfo['basename'], $content);
-//                            $wpdb->update($wpdb->prefix . 'bp_activity', array('content' => $activity_content), array('id' => $activity_id));
-//                        }
+                        
+                        $activity_id = rt_media_activity_id($id);
+                        if ($activity_id) {
+                            $content = $wpdb->get_var("SELECT content FROM {$wpdb->prefix}bp_activity WHERE id = $activity_id");
+                            $activity_content = str_replace($old_wp_attached_file_pathinfo['basename'], $new_wp_attached_file_pathinfo['basename'], $content);
+                            $wpdb->update($wpdb->prefix . 'bp_activity', array('content' => $activity_content), array('id' => $activity_id));
+                        }
                     } else {
                         $flag = __('Could not read file.', 'rt-media');
                         error_log($flag);
