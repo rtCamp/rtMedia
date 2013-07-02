@@ -46,7 +46,7 @@ class RTMediaUploadEndpoint {
             }
             if(isset($_POST["redirect"]) && $_POST["redirect"]=="no" ){
                 // Ha ha ha
-                if(isset($_POST["activity_update"]) && $_POST["activity_update"]=="true"){
+                if(isset($_POST["rtmedia_update"]) && $_POST["rtmedia_update"]=="true"){
                     header('Content-type: application/json');
                     echo json_encode($rtupload->media_ids);
 				} else {
