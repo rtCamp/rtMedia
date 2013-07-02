@@ -33,7 +33,7 @@
             <?php rt_media_actions(); ?>
         </div>
 
-		<?php //if(rt_media_comments_enabled()) { ?>
+		<?php if(rt_media_comments_enabled()) { ?>
 			<div class="rt-media-item-comments columns large-4">
 				<h2>Comments</h2>
 				<div class="rt-media-comments-container">
@@ -41,7 +41,7 @@
 				</div>
 				<?php rt_media_comment_form(); ?>
 			</div>
-		<?php //} ?>
+		<?php } ?>
 	</div>
 
     <?php else: ?>

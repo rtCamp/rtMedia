@@ -451,7 +451,8 @@ function rt_media_pagination_next_link() {
 }
 
 function rt_media_comments_enabled() {
-    return rt_media_get_site_option('general_enableComments') && is_user_logged_in();
+	global $rt_media;
+    return $rt_media->options['general_enableComments'] && is_user_logged_in();
 }
 
 /**

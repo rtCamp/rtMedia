@@ -141,7 +141,7 @@ class RTMediaMedia {
      * @return type
      */
     function add($uploaded, $file_object) {
-        
+
         /* action to perform any task before adding a media */
         do_action('rt_media_before_add_media', $file_object, $uploaded);
 
@@ -161,7 +161,7 @@ class RTMediaMedia {
 
         /* add media in rtMedia context */
         $media_ids = $this->insert_media($attachment_ids, $uploaded);
-        
+
         /* action to perform any task after adding a media */
         do_action('rt_media_after_add_media', $media_ids, $file_object, $uploaded);
 
@@ -207,7 +207,7 @@ class RTMediaMedia {
             return true;
         }
     }
-    
+
     /**
      * Generic method to delete a media from wordpress media library ( other than by rtMedia )
      *
@@ -297,7 +297,8 @@ class RTMediaMedia {
         if (!function_exists('bp_is_active') || !bp_is_active('activity'))
             return false;
 
-        return rt_media_get_site_option('rt-media-enable-on-activity');
+		global $rt_media;
+        return $rt_media->options['buddypress_enableOnActivity'];
     }
 
     /**
@@ -386,7 +387,7 @@ class RTMediaMedia {
 
         $defaults = array(
             'activity_id' => $this->activity_enabled(),
-            'privacy' => false
+            'privacy' => 0
         );
 
         $uploaded = wp_parse_args($uploaded, $defaults);

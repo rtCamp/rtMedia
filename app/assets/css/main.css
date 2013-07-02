@@ -1561,7 +1561,7 @@
   max-width: 100%;
 }
 /* line 63, ../sass/main.scss */
-.rt-media-container .rt-media-item-comments, .rt-media-activity-container .rt-media-item-comments {
+.rt-media-container .rt-media-item-comments-container, .rt-media-activity-container .rt-media-item-comments-container {
   margin: 3% 3%;
 }
 /* line 67, ../sass/main.scss */
@@ -1571,52 +1571,60 @@
   border: 1px solid #ddd;
   -moz-border-radius: 3px;
   border-radius: 3px;
-  margin: 3% 0;
-  padding: 1% 4% 8%;
-  position: relative;
+  margin: 5px 0;
+  padding: 1px 5px 25px;
   width: 391px;
 }
-/* line 79, ../sass/main.scss */
-.rt-media-container .rt-media-comment-date, .rt-media-activity-container .rt-media-comment-date {
+/* line 77, ../sass/main.scss */
+.rt-media-container .rt-media-comment .rt-media-comment-author, .rt-media-activity-container .rt-media-comment .rt-media-comment-author {
+  display: block;
+}
+/* line 81, ../sass/main.scss */
+.rt-media-container .rt-media-comment .rt-media-comment-content, .rt-media-activity-container .rt-media-comment .rt-media-comment-content {
+  display: block;
+}
+/* line 85, ../sass/main.scss */
+.rt-media-container .rt-media-comment .rt-media-comment-date, .rt-media-activity-container .rt-media-comment .rt-media-comment-date {
+  display: block;
   float: right;
 }
-/* line 83, ../sass/main.scss */
+/* line 91, ../sass/main.scss */
 .rt-media-container .rt-media-bp-header, .rt-media-activity-container .rt-media-bp-header {
   width: 460px;
   margin: auto;
 }
-/* line 88, ../sass/main.scss */
+/* line 96, ../sass/main.scss */
 .rt-media-container #div-attache-rtmedia, .rt-media-activity-container #div-attache-rtmedia {
   display: none;
 }
-/* line 93, ../sass/main.scss */
+/* line 101, ../sass/main.scss */
 .rt-media-container #rtMedia-update-queue-list p span, .rt-media-activity-container #rtMedia-update-queue-list p span {
   margin-right: 20px;
 }
-/* line 98, ../sass/main.scss */
+/* line 106, ../sass/main.scss */
 .rt-media-container .rt-media-move-container, .rt-media-activity-container .rt-media-move-container {
   display: none;
 }
-/* line 101, ../sass/main.scss */
+/* line 109, ../sass/main.scss */
 .rt-media-container #rt-media-add-media-button-post-update, .rt-media-activity-container #rt-media-add-media-button-post-update {
   float: left;
   margin-top: 10px;
   margin-right: 20px;
 }
-/* line 106, ../sass/main.scss */
+/* line 114, ../sass/main.scss */
 .rt-media-container #whats-new-post-in-box, .rt-media-activity-container #whats-new-post-in-box {
   float: left;
 }
-/* line 109, ../sass/main.scss */
+/* line 117, ../sass/main.scss */
 .rt-media-container .rt-media-activity-text, .rt-media-activity-container .rt-media-activity-text {
   display: block;
   padding-bottom: 10px;
 }
-/* line 113, ../sass/main.scss */
+/* line 121, ../sass/main.scss */
 .rt-media-container .rt-media-merge-container, .rt-media-activity-container .rt-media-merge-container {
   display: none;
 }
-/* line 116, ../sass/main.scss */
+/* line 124, ../sass/main.scss */
 .rt-media-container .rt-media-create-new-album-container, .rt-media-activity-container .rt-media-create-new-album-container {
   display: none;
 }

@@ -60,7 +60,7 @@
 		max-width: 100%;
 	}
 
-	.rt-media-item-comments {
+	.rt-media-item-comments-container {
 		margin: 3% 3%;
 	}
 
@@ -70,14 +70,22 @@
 		border: 1px solid #ddd;
 		-moz-border-radius: 3px;
 		border-radius: 3px;
-		margin: 3% 0;
-		padding: 1% 4% 8%;
-		position: relative;
+		margin: 5px 0;
+		padding: 1px 5px 25px;
 		width: 391px;
-	}
 
-	.rt-media-comment-date {
-		float: right;
+		.rt-media-comment-author {
+			display: block;
+		}
+
+		.rt-media-comment-content {
+			display: block;
+		}
+
+		.rt-media-comment-date {
+			display: block;
+			float: right;
+		}
 	}
 
 	.rt-media-bp-header {

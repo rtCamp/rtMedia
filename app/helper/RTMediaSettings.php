@@ -59,9 +59,9 @@ if (!class_exists('RTMediaSettings')) {
 			$defaults['privacy_default'] = 0;
 			$defaults['privacy_userOverride'] = 0;
 
-			$defaults['buddypress_enable_on_group'] = 0;
-			$defaults['buddypress_enable_on_activity'] = 0;
-			$defaults['buddypress_enable_on_profile'] = 0;
+			$defaults['buddypress_enableOnGroup'] = 0;
+			$defaults['buddypress_enableOnActivity'] = 0;
+			$defaults['buddypress_enableOnProfile'] = 0;
 
 			$options = wp_parse_args($options, $defaults);
 
@@ -74,7 +74,7 @@ if (!class_exists('RTMediaSettings')) {
          */
         public function settings() {
             global $rt_media, $rt_media_addon;
-            
+
 			// Save Settings first then proceed.
 			if(isset($_POST['rt-media-options-save'])) {
 
@@ -85,7 +85,7 @@ if (!class_exists('RTMediaSettings')) {
 				global $rt_media;
 				$rt_media->options = $options;
 			}
-			
+
             $rt_media_addon = new RTMediaAddon();
             add_settings_section('rtm-addons', __('BuddyPress Media Addons for Photos', 'rt-media'), array($rt_media_addon, 'get_addons'), 'rt-media-addons');
 
