@@ -487,7 +487,7 @@ class RTMediaMigration {
         else
             $likes = 0;
 
-        $last_id = $wpdb->insert(
+        $wpdb->insert(
                 $this->bmp_table, array(
             'blog_id' => $blog_id,
             'media_id' => $media_id,
@@ -502,7 +502,7 @@ class RTMediaMigration {
             "likes" => $likes
                 ), array('%d', '%d', '%s', '%s', '%d', '%d', '%d', '%d', '%s', '%d', '%d')
         );
-
+		$last_id = $wpdb->insert_id;
         if ($media_type != 'album' && function_exists('bp_core_get_user_domain') && $activity_data) {
             if (function_exists("bp_core_get_table_prefix"))
                 $bp_prefix = bp_core_get_table_prefix();
