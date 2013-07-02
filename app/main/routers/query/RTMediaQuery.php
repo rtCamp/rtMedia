@@ -68,6 +68,8 @@ class RTMediaQuery {
 
 		$this->interaction = $rt_media_interaction->routes[ 'media' ];
 
+		$this->friendship = new RTMediaFriends();
+
 
 		// action manipulator hook
 		$this->set_actions();
@@ -370,17 +372,18 @@ class RTMediaQuery {
 	function privacy_filter( $where,$table_name ) {
 		$user = $this->get_user();
 
-		$where .= " AND {$table_name}.privacy=0";
+		$where .= " AND ({$table_name}.privacy=0";
 		if ( $user ) {
-			$where .= " OR ({$table_name}.media_author={$user} AND privacy=60)";
+			$where .= " OR ({$table_name}.privacy=20)";
+			$where .= " OR ({$table_name}.media_author={$user} AND {$table_name}.privacy>=40)";
 			if ( class_exists( 'BuddyPress' ) ) {
 				if ( bp_is_active( 'friends' ) ) {
-					$friends = $this->get_friends_cache( $user );
+					$friends = $this->friendship->get_friends_cache( $user );
 					$where .= " OR ({$table_name}.privacy=40 AND {$table_name}.media_author IN ('". implode("','", $friends)."'))";
 				}
 			}
 		}
-		return $where;
+		return $where . ')';
 	}
 
 	function get_user() {
@@ -392,17 +395,7 @@ class RTMediaQuery {
 		return $user;
 	}
 
-	function get_friends_cache( $user ) {
 
-		if ( ! $user )
-			return false;
-		$friends = wp_cache_get( 'rtmedia-user-friends-' . $user );
-		if ( $friends === false ) {
-			$friends = friends_get_friend_user_ids($user);
-			wp_cache_set( 'rtmedia-user-friends-' . $user, $friends );
-		}
-		return $friends;
-	}
 
 	function set_privacy() {
 		$user = $this->get_user();

@@ -270,37 +270,6 @@ class RTMedia {
 		return $parent_link;
 	}
 
-	/**
-	 * Load Custom tabs on BuddyPress
-	 *
-	 * @global object $bp global BuddyPress object
-	 */
-	function custom_media_nav_tab() {
-
-		bp_core_new_nav_item( array(
-			'name' => RTMEDIA_MEDIA_LABEL,
-			'slug' => RTMEDIA_MEDIA_SLUG,
-			'screen_function' => array($this,'media_screen'),
-			'default_subnav_slug' => 'all'
-		) );
-
-
-		if ( bp_is_group() ) {
-			global $bp;
-			$bp->bp_options_nav[ bp_get_current_group_slug() ][ 'media' ] = array(
-				'name' => RTMEDIA_MEDIA_LABEL,
-				'link' => ( (is_multisite()) ? get_site_url( get_current_blog_id() ) : get_site_url() ) . '/groups/' . bp_get_current_group_slug() . '/media',
-				'slug' => RTMEDIA_MEDIA_SLUG,
-				'user_has_access' => true,
-				'css_id' => 'rt-media-media-nav',
-				'position' => 99,
-				'screen_function' => array($this,'media_screen'),
-				'default_subnav_slug' => 'all'
-			);
-		}
-	}
-
-
 	public function init_buddypress_options() {
 		/**
 		 * BuddyPress Settings
@@ -527,10 +496,7 @@ class RTMedia {
 		 * BuddyPress - Media Navigation Tab Inject
 		 *
 		 */
-		if ( class_exists( 'BuddyPress' ) ) {
-			add_action( 'bp_init', array( $this, 'custom_media_nav_tab' ), 10, 1 );
-			//add_action( 'bp_init', array( $this, 'custom_media_sub_nav_tab' ), 10, 20 );
-		}
+
 
 		/**
 		 * Load accessory functions
@@ -681,6 +647,12 @@ function get_rt_media_user_link( $id ) {
 
 function rt_media_update_site_option( $option_name, $option_value ) {
 	update_site_option( $option_name, $option_value );
+}
+
+function get_rt_media_group_link( $group_id){
+	global $bp;
+	$group = groups_get_group( array( 'group_id' => $group_id ) );
+	return home_url( $bp->groups->slug . '/' . $group -> slug );
 }
 
 function rt_media_get_site_option( $option_name, $default = false ) {
