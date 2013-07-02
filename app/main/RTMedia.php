@@ -281,16 +281,16 @@ class RTMedia {
 			$group = $bp_media_options[ 'enable_on_group' ];
 		else if ( function_exists( "bp_is_active" ) )
 			$group = bp_is_active( 'groups' );
-		$this->options[ 'buddypress_enable_on_group' ] = $group;
+		$this->options[ 'buddypress_enableOnGroup' ] = $group;
 
 		$activity = 0;
 		if ( isset( $bp_media_options[ 'activity_upload' ] ) && ! empty( $bp_media_options[ 'activity_upload' ] ) )
 			$activity = $bp_media_options[ 'activity_upload' ];
 		else if ( function_exists( "bp_is_active" ) )
 			$activity = bp_is_active( 'activity' );
-		$this->options[ 'buddypress_enable_on_activity' ] = $activity;
+		$this->options[ 'buddypress_enableOnActivity' ] = $activity;
 
-		$this->options[ 'buddypress_enable_on_profile' ] = 0;
+		$this->options[ 'buddypress_enableOnProfile' ] = 0;
 
 		/* Last settings updated in options. Update them in DB & after this no other option would be saved in db */
 		rt_media_update_site_option( 'rt-media-options', $this->options );
@@ -353,7 +353,7 @@ class RTMedia {
 
 		$this->options = $defaults;
 
-		add_action( 'bp_include', array( $this, 'init_buddypress_options' ) );
+		$this->init_buddypress_options();
 	}
 
 	/**

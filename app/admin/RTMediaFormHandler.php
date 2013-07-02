@@ -309,12 +309,12 @@ class RTMediaFormHandler {
 				echo '<div class="row rt-odd">';
 			else
 				echo '<div class="row rt-even">';
-			echo '<div class="columns large-3">' . $section['title'] . '</div>';
+			echo '<div class="columns large-3">' . ucfirst($section['title']) . '</div>';
 			$entities = $section;
 			unset($entities['title']);
 			echo '<div class="columns large-3">';
 			foreach ($entities as $entity) {
-				echo '<div class="row">' . $entity['title'] . '</div>';
+				echo '<div class="row">' . ucfirst($entity['title']) . '</div>';
 			}
 			echo '</div>';
 			echo '<div class="columns large-4">';
@@ -402,8 +402,8 @@ class RTMediaFormHandler {
 				'title' => __('Profile Media','rt-media'),
 				'callback' => array('RTMediaFormHandler', 'checkbox'),
 				'args' => array(
-					'key' => 'buddypress_enable_on_profile',
-					'value' => $options['buddypress_enable_on_profile'],
+					'key' => 'buddypress_enableOnProfile',
+					'value' => $options['buddypress_enableOnProfile'],
 					'desc' => __('Enable Media on BuddyPress Profile','rt-media')
 				)
 			),
@@ -411,8 +411,8 @@ class RTMediaFormHandler {
 				'title' => __('Group Media','rt-media'),
 				'callback' => array('RTMediaFormHandler', 'checkbox'),
 				'args' => array(
-					'key' => 'buddypress_enable_on_group',
-					'value' => $options['buddypress_enable_on_group'],
+					'key' => 'buddypress_enableOnGroup',
+					'value' => $options['buddypress_enableOnGroup'],
 					'desc' => __('Enable Media on BuddyPress Groups','rt-media')
 				)
 			),
@@ -420,8 +420,8 @@ class RTMediaFormHandler {
 				'title' => __('Activity Media','rt-media'),
 				'callback' => array('RTMediaFormHandler', 'checkbox'),
 				'args' => array(
-					'key' => 'buddypress_enable_on_activity',
-					'value' => $options['buddypress_enable_on_activity'],
+					'key' => 'buddypress_enableOnActivity',
+					'value' => $options['buddypress_enableOnActivity'],
 					'desc' => __('Enable Media on BuddyPress Activities','rt-media')
 				)
 			)
