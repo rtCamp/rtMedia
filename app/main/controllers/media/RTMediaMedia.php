@@ -75,7 +75,7 @@ class RTMediaMedia {
      * when a media is deleted externally out of rtMedia context
      */
     public function delete_hook() {
-        add_action('delete_attachment', array($this, 'delete'));
+        add_action('delete_attachment', array($this, 'delete_wordpress_attachment'));
     }
 
     /**
@@ -207,6 +207,22 @@ class RTMediaMedia {
             return true;
         }
     }
+    
+    /**
+     * Generic method to delete a media from wordpress media library ( other than by rtMedia )
+     *
+     * @param type $media_id
+     * @return boolean
+     */
+    function delete_wordpress_attachment($id){
+        $media = $this->model->get(array('media_id' => $id), false, false);
+
+        if ($media) {
+            /* delete meta */
+            delete_rtmedia_meta($media[0]->id);
+            $this->model->delete(array('id' => $media[0]->id));
+        }
+    }
 
     /**
      * Generic method to delete a media
@@ -215,7 +231,6 @@ class RTMediaMedia {
      * @return boolean
      */
     function delete($id) {
-
         do_action('rt_media_before_delete_media', $this);
 
         $media = $this->model->get(array('id' => $id), false, false);
