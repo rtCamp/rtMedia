@@ -49,9 +49,9 @@ class RTMediaBuddyPressActivity {
             $objActivity =  new RTMediaActivity($_POST["rtMedia_attached_files"],0,$content);
             global $wpdb, $bp;
             $wpdb->update($bp->activity->table_name,array("type"=>"rtmedia-update","content"=>$objActivity->create_activity_html()),array("id"=>$activity_id));
-			if(isset($_POST['rtmedia-privacy']))
-				bp_activity_update_meta($activity_id, 'rtmedia_privacy', ($_POST['rtmedia-privacy']==0)?-1:$_POST['rtmedia-privacy']);
         }
+        if(isset($_POST['rtmedia-privacy']))
+            bp_activity_update_meta($activity_id, 'rtmedia_privacy', (intval($_POST['rtmedia-privacy'])==0)?-1:$_POST['rtmedia-privacy']);
 
 
     }
