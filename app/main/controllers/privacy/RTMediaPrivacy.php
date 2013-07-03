@@ -209,7 +209,7 @@ class RTMediaPrivacy {
 
 		$where = '';
 
-		//$from_sql = " FROM {$bp->activity->table_name} a LEFT JOIN {$wpdb->users} u ON a.user_id = u.ID";
+//		$from_sql = " FROM {$bp->activity->table_name} a LEFT JOIN {$wpdb->users} u ON a.user_id = u.ID";
 
 		global $bp,$wpdb;
 
@@ -219,10 +219,10 @@ class RTMediaPrivacy {
 			$user = 0;
 		}
 
-		$where .= "AND (m.meta_value=0)";
+		$where .= "AND (m.meta_value <= 0)";
 
 		if ( $user ) {
-			$where .= "AND ((m.meta_value=20)";
+			$where .= "OR ((m.meta_value=20)";
 			$where .= " OR (a.user_id={$user} AND m.meta_value>=40)";
 			if ( class_exists( 'BuddyPress' ) ) {
 				if ( bp_is_active( 'friends' ) ) {
