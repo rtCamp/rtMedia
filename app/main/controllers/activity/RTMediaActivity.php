@@ -52,7 +52,7 @@ class RTMediaActivity {
 				$html .= '<li class="rtmedia-list-item">';
 					$html .= '<div class="rtmedia-item-thumbnail">';
 						$html .= '<a href ="'. get_rtmedia_permalink($media->id) .'">';
-							$html .= '<img src="'. $this->image($media) .'" >';
+							$html .= $this->media($media);
 						$html .= '</a>';
 					$html .= '</div>';
 
@@ -79,23 +79,31 @@ class RTMediaActivity {
         function actions(){
 
         }
-	function image($media) {
+	function media($media) {
 		if (isset($media->media_type)) {
 			if ($media->media_type == 'album' ||
 					$media->media_type != 'photo') {
 				$thumbnail_id = get_rtmedia_meta($media->media_id,'cover_art');
+                                if ( $thumbnail_id ) {
+                                    list($src, $width, $height) = wp_get_attachment_image_src($thumbnail_id);
+                                    return '<img src="'.$src.'" />';
+                                }
 			} elseif ( $media->media_type == 'photo' ) {
 				$thumbnail_id = $media->media_id;
-			} else {
+                                if ( $thumbnail_id ) {
+                                    list($src, $width, $height) = wp_get_attachment_image_src($thumbnail_id);
+                                    return '<img src="'.$src.'" />';
+                                }
+			} elseif ( $media->media_type == 'video' )  {
+				return '<video src="' . wp_get_attachment_url($media->media_id) . '" width="320" height="240" type="video/mp4" class="wp-video-shortcode" id="bp_media_video_' . $media->id . '" controls="controls" preload="none"></video>';
+			} elseif ( $media->media_type == 'music' )  {
+                                return '<audio src="' . wp_get_attachment_url($media->media_id) . '" width="320" height="0" type="audio/mp3" class="wp-audio-shortcode" id="bp_media_audio_' . $media->id . '" controls="controls" preload="none"></audio>';
+			} else  {
 				return false;
 			}
 		} else {
 			return false;
 		}
-		if (!$thumbnail_id)
-			return false;
-		list($src, $width, $height) = wp_get_attachment_image_src($thumbnail_id);
-                return $src;
 	}
 }
 

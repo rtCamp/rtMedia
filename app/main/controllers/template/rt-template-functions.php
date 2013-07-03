@@ -115,8 +115,10 @@ function rtmedia_media() {
             echo wp_get_attachment_image($rtmedia_media->media_id, 'large');
         } elseif ($rtmedia_media->media_type == 'video') {
             echo '<video src="' . wp_get_attachment_url($rtmedia_media->media_id) . '" width="800" height="600" type="video/mp4" class="wp-video-shortcode" id="bp_media_video_' . $rtmedia_media->id . '" controls="controls" preload="none"></video>';
+        } elseif ($rtmedia_media->media_type == 'music') {
+            echo '<audio src="' . wp_get_attachment_url($rtmedia_media->media_id) . '" width="600" height="0" type="audio/mp3" class="wp-audio-shortcode" id="bp_media_audio_' . $rtmedia_media->id . '" controls="controls" preload="none"></audio>';
         } else {
-            echo '<audio src="' . wp_get_attachment_url($rtmedia_media->media_id) . '" width="600" height="0" type="audio/mp3" class="wp-audio-shortcode" id="bp_media_audio_' . $rtmedia_media->id . '" controls="controls" preload="none"></video>';
+            return false;
         }
     } else {
         return false;
@@ -578,9 +580,12 @@ function rtmedia_user_album_list() {
     foreach ($global_albums as $album) {
         $model = new RTMediaModel();
         $album_object = $model->get_media(array('id' => $album), false, false);
-        $global_album_ids[] = $album_object[0]->id;
-        if ((isset($rtmedia_query->media_query['album_id']) && ($album_object[0]->id != $rtmedia_query->media_query['album_id'])) || !isset($rtmedia_query->media_query['album_id']))
-            $option .= '<option value="' . $album_object[0]->id . '">' . $album_object[0]->media_title . '</option>';
+        $global_album_ids = array();
+        if ( isset($album_object[0]) ) {
+            $global_album_ids[] = $album_object[0]->id;
+            if ((isset($rtmedia_query->media_query['album_id']) && ($album_object[0]->id != $rtmedia_query->media_query['album_id'])) || !isset($rtmedia_query->media_query['album_id']))
+                $option .= '<option value="' . $album_object[0]->id . '">' . $album_object[0]->media_title . '</option>';
+        }
     }
     $album_objects = $model->get_media(array('media_author' => get_current_user_id(), 'media_type' => 'album'), false, false);
     if ($album_objects) {
