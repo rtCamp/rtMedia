@@ -1,21 +1,21 @@
 <?php
-global $rt_media_query;
+global $rtmedia_query;
 
-if ( is_rt_media_album_gallery() ) {
+if ( is_rtmedia_album_gallery() ) {
 	$template = 'album-gallery';
-} elseif ( is_rt_media_album() || is_rt_media_gallery() ) {
+} elseif ( is_rtmedia_album() || is_rtmedia_gallery() ) {
 	$template = 'media-gallery';
 	if (
-			is_rt_media_album() &&
-			isset( $rt_media_query->media_query ) &&
-			get_current_user_id() == $rt_media_query->media_query[ 'media_author' ] &&
-			$rt_media_query->action_query->action == 'edit'
+			is_rtmedia_album() &&
+			isset( $rtmedia_query->media_query ) &&
+			get_current_user_id() == $rtmedia_query->media_query[ 'media_author' ] &&
+			$rtmedia_query->action_query->action == 'edit'
 			)
 		$template = 'album-single-edit';
 
-} else if ( is_rt_media_single() ) {
+} else if ( is_rtmedia_single() ) {
 	$template = 'media-single';
-	if($rt_media_query->action_query->action == 'edit')
+	if($rtmedia_query->action_query->action == 'edit')
 		$template = 'media-single-edit';
 
 }
@@ -72,9 +72,9 @@ if ( ! $ajax ) {
 					<div class="item-list-tabs no-ajax" id="subnav">
 						<ul>
 
-							<?php rt_media_sub_nav(); ?>
+							<?php rtmedia_sub_nav(); ?>
 
-							<?php do_action( 'rt_media_sub_nav' ); ?>
+							<?php do_action( 'rtmedia_sub_nav' ); ?>
 
 						</ul>
 					</div><!-- .item-list-tabs -->
@@ -93,9 +93,9 @@ if ( ! $ajax ) {
 								<div class="item-list-tabs no-ajax" id="object-nav" role="navigation">
 									<ul>
 
-										<?php rt_media_sub_nav(); ?>
+										<?php rtmedia_sub_nav(); ?>
 
-							<?php do_action( 'rt_media_sub_nav' ); ?>
+							<?php do_action( 'rtmedia_sub_nav' ); ?>
 
 									</ul>
 								</div>

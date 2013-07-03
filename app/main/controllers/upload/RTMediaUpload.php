@@ -65,7 +65,7 @@ class RTMediaUpload {
             case 'link_input': return $this->url->init($uploaded);
                 break;
             default:
-                do_action('rt_media_upload_' . $uploaded['mode'], $uploaded);
+                do_action('rtmedia_upload_' . $uploaded['mode'], $uploaded);
         }
     }
 

@@ -46,7 +46,7 @@ class RTMediaUploadFile {
                 if (isset($uploaded_file[$key]['error']) || $uploaded_file[$key] === null) {
                     array_pop($uploaded_file);
 
-                    throw new RTMediaUploadException(0, __('Error Uploading File', 'rt-media'));
+                    throw new RTMediaUploadException(0, __('Error Uploading File', 'rtmedia'));
                 }
                 $uploaded_file[$key]['name'] = $file['name'];
             } catch (RTMediaUploadException $e) {
@@ -64,7 +64,7 @@ class RTMediaUploadFile {
     }
 
     function upload_dir($upload_dir) {
-        global $rt_media_interaction;
+        global $rtmedia_interaction;
         if(isset($this->uploaded["context"]) && isset($this->uploaded["context_id"])){
             if ($this->uploaded["context"] != 'group') {
                 $rtmedia_upload_prefix = 'users/';
@@ -74,12 +74,12 @@ class RTMediaUploadFile {
                 $id = $this->uploaded["context_id"];
             }
         }else{
-            if ($rt_media_interaction->context->type != 'group') {
+            if ($rtmedia_interaction->context->type != 'group') {
                 $rtmedia_upload_prefix = 'users/';
                 $id = get_current_user_id();
             } else {
                 $rtmedia_upload_prefix = 'groups/';
-                $id = $rt_media_interaction->context->id;
+                $id = $rtmedia_interaction->context->id;
             }
         }
 
@@ -106,8 +106,8 @@ class RTMediaUploadFile {
             /**
              * otherwise check for $_FILES global object from the form submitted
              */
-        } elseif (isset($_FILES['rt_media_file'])) {
-            $this->populate_file_array($_FILES['rt_media_file']);
+        } elseif (isset($_FILES['rtmedia_file'])) {
+            $this->populate_file_array($_FILES['rtmedia_file']);
         } else {
             /**
              * No files could be found to upload
@@ -132,17 +132,17 @@ class RTMediaUploadFile {
 
     /**
      * Check for valid file types for rtMedia
-     * @global type $rt_media
+     * @global type $rtmedia
      * @param type $file
      * @return boolean
      * @throws RTMediaUploadException
      */
     function is_valid_type($file) {
         try {
-            global $rt_media;
+            global $rtmedia;
             $allowed_types = array();
-            $rt_media->allowed_types = apply_filters('rt_media_allowed_types',$rt_media->allowed_types);
-            foreach ($rt_media->allowed_types as $type) {
+            $rtmedia->allowed_types = apply_filters('rtmedia_allowed_types',$rtmedia->allowed_types);
+            foreach ($rtmedia->allowed_types as $type) {
 				foreach ($type['extn'] as $extn) {
 					$allowed_types[] = $extn;
 				}

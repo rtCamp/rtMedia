@@ -41,7 +41,7 @@ if ( ! defined( 'RTMEDIA_URL' ) ){
  *
  * @param string $class_name The name of the class to autoload
  */
-function rt_media_autoloader( $class_name ) {
+function rtmedia_autoloader( $class_name ) {
 	$rtlibpath = array(
 		'app/services/' . $class_name . '.php',
 		'app/helper/' . $class_name . '.php',
@@ -86,13 +86,13 @@ function rt_media_autoloader( $class_name ) {
 /**
  * Register the autoloader function into spl_autoload
  */
-spl_autoload_register( 'rt_media_autoloader' );
+spl_autoload_register( 'rtmedia_autoloader' );
 
 /**
  * Instantiate the BuddyPressMedia class.
  */
-global $rt_media;
-$rt_media = new RTMedia();
+global $rtmedia;
+$rtmedia = new RTMedia();
 
 /*
  * Look Ma! Very few includes! Next File: /app/main/RTMedia.php

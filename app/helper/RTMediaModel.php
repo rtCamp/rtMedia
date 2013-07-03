@@ -66,7 +66,7 @@ class RTMediaModel extends RTDBModel {
 			}
 		}
 
-		$where = apply_filters( 'rt-media-model-where-query', $where, $this->table_name );
+		$where = apply_filters( 'rtmedia-model-where-query', $where, $this->table_name );
 		$sql = $select . $join . $where;
 
 		$sql .= " ORDER BY {$this->table_name}.$order_by";
@@ -149,11 +149,11 @@ class RTMediaModel extends RTDBModel {
 
 		if ( ! $user_id && ! $where_query )
 			return false;
-		global $wpdb, $rt_media;
+		global $wpdb, $rtmedia;
 
 		$query =
 				"SELECT {$this->table_name}.privacy, ";
-		foreach ( $rt_media->allowed_types as $type ) {
+		foreach ( $rtmedia->allowed_types as $type ) {
 			$query .= "SUM(CASE WHEN {$this->table_name}.media_type LIKE '{$type[ 'name' ]}' THEN 1 ELSE 0 END) as {$type[ 'name' ]}, ";
 		}
 		$query .= "SUM(CASE WHEN {$this->table_name}.media_type LIKE 'album' THEN 1 ELSE 0 END) as album

@@ -11,13 +11,13 @@ if (!class_exists('RTMediaAdminWidget')) {
 
         /**
          *
-         * @global type $rt_media
+         * @global type $rtmedia
          * @param type $id
          * @param type $title
          * @param type $content
          */
         public function __construct($id = NULL, $title = NULL, $content = NULL) {
-            global $rt_media;
+            global $rtmedia;
             if ($id) {
                 ?>
                 <div class="postbox" id="<?php echo $id; ?>"><?php if ($title) { ?>
@@ -26,7 +26,7 @@ if (!class_exists('RTMediaAdminWidget')) {
                     <div class="inside"><?php echo $content; ?></div>
                 </div><?php
             } else {
-                trigger_error(__('Argument missing. id is required.', 'rt-media'));
+                trigger_error(__('Argument missing. id is required.', 'rtmedia'));
             }
         }
 

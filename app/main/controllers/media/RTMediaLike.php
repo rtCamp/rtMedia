@@ -16,7 +16,7 @@ class RTMediaLike extends RTMediaUserInteraction {
 	 *
 	 */
 	function __construct() {
-		$label=__('Like','rt-media');
+		$label=__('Like','rtmedia');
 		parent::__construct('like',false,$label);
 
 	}

@@ -3,7 +3,7 @@ jQuery('document').ready(function(){
     
     jQuery('.wp-audio-shortcode, .wp-video-shortcode').mediaelementplayer();
     
-    jQuery('.rt-media-list').magnificPopup({
+    jQuery('.rtmedia-list').magnificPopup({
         delegate: 'a',
         type: 'ajax',
         tLoading: 'Loading image #%curr%...',
@@ -28,46 +28,46 @@ jQuery('document').ready(function(){
         }
     });
 
-    jQuery('.rt-media-container').on('click','.select-all', function(e){
+    jQuery('.rtmedia-container').on('click','.select-all', function(e){
         e.preventDefault();
-        jQuery('.rt-media-list input').each(function(){
+        jQuery('.rtmedia-list input').each(function(){
             jQuery(this).prop('checked',true);
         });
     });
 
-    jQuery('.rt-media-container').on('click','.unselect-all', function(e){
+    jQuery('.rtmedia-container').on('click','.unselect-all', function(e){
         e.preventDefault();
-        jQuery('.rt-media-list input').each(function(){
+        jQuery('.rtmedia-list input').each(function(){
             jQuery(this).prop('checked',false);
         });
     });
 
-    jQuery('.rt-media-container').on('click','.rt-media-move',function(e){
-        jQuery('.rt-media-delete-container').slideUp();
-        jQuery('.rt-media-move-container').slideToggle();
+    jQuery('.rtmedia-container').on('click','.rtmedia-move',function(e){
+        jQuery('.rtmedia-delete-container').slideUp();
+        jQuery('.rtmedia-move-container').slideToggle();
     });
     
-    jQuery('.rt-media-container').on('click','.rt-media-merge',function(e){
-        jQuery('.rt-media-merge-container').slideToggle();
+    jQuery('.rtmedia-container').on('click','.rtmedia-merge',function(e){
+        jQuery('.rtmedia-merge-container').slideToggle();
     });
     
-    jQuery('.rt-media-container').on('click','.rt-media-create-new-album-button',function(e){
-        jQuery('.rt-media-create-new-album-container').slideToggle();
+    jQuery('.rtmedia-container').on('click','.rtmedia-create-new-album-button',function(e){
+        jQuery('.rtmedia-create-new-album-container').slideToggle();
     });
     
-    jQuery('.rt-media-container').on('click','.rt-media-create-new-album',function(e){
-        $albumname = jQuery.trim(jQuery('.rt-media-new-album-name').val());
+    jQuery('.rtmedia-container').on('click','.rtmedia-create-new-album',function(e){
+        $albumname = jQuery.trim(jQuery('.rtmedia-new-album-name').val());
         if ($albumname != '') {
             var data = {
-                action: 'rt_media_create_album',
+                action: 'rtmedia_create_album',
                 name: $albumname
             };
 
             // since 2.8 ajaxurl is always defined in the admin header and points to admin-ajax.php
-            jQuery.post(rt_media_ajax_url, data, function(response) {
+            jQuery.post(rtmedia_ajax_url, data, function(response) {
                 if(response){
-                    jQuery('.rt-media-user-album-list').append('<option value="'+response+'">'+$albumname+'</option>');
-                    jQuery('select.rt-media-user-album-list option[value="'+response+'"]').prop('selected', true)
+                    jQuery('.rtmedia-user-album-list').append('<option value="'+response+'">'+$albumname+'</option>');
+                    jQuery('select.rtmedia-user-album-list option[value="'+response+'"]').prop('selected', true)
                 } else {
                     alert('Something went wrong. Please try again.');
                 }
@@ -77,12 +77,12 @@ jQuery('document').ready(function(){
         }
     });
     
-    jQuery('.rt-media-container').on('click','.rt-media-delete-selected',function(e){
-        jQuery('.rt-media-bulk-actions').attr('action','../../../media/delete');
+    jQuery('.rtmedia-container').on('click','.rtmedia-delete-selected',function(e){
+        jQuery('.rtmedia-bulk-actions').attr('action','../../../media/delete');
     });
     
-    jQuery('.rt-media-container').on('click','.rt-media-move-selected',function(e){
-        jQuery('.rt-media-bulk-actions').attr('action','');
+    jQuery('.rtmedia-container').on('click','.rtmedia-move-selected',function(e){
+        jQuery('.rtmedia-bulk-actions').attr('action','');
     });
 
 });

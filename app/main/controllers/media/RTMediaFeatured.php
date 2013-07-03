@@ -16,7 +16,7 @@ class RTMediaFeatured extends RTMediaUserInteraction{
 	 *
 	 */
 	function __construct() {
-		$label = __('Set as Featured', 'rt-media');
+		$label = __('Set as Featured', 'rtmedia');
 		parent::__construct('featured',false, $label);
 	}
 
@@ -61,11 +61,11 @@ class RTMediaFeatured extends RTMediaUserInteraction{
 	}
 
 	function settings() {
-		global $rt_media;
-		$size_settings = $rt_media->options[ 'sizes' ][ 'media' ][ 'featured' ];
-		$this->settings[ 'image' ] = isset( $rt_media->options[ 'featured_image' ] ) ? 1 : 0;
-		$this->settings[ 'video' ] = isset( $rt_media->options[ 'featured_video' ] ) ? 1 : 0;
-		$this->settings[ 'audio' ] = isset( $rt_media->options[ 'featured_audio' ] ) ? 1 : 0;
+		global $rtmedia;
+		$size_settings = $rtmedia->options[ 'sizes' ][ 'media' ][ 'featured' ];
+		$this->settings[ 'image' ] = isset( $rtmedia->options[ 'featured_image' ] ) ? 1 : 0;
+		$this->settings[ 'video' ] = isset( $rtmedia->options[ 'featured_video' ] ) ? 1 : 0;
+		$this->settings[ 'audio' ] = isset( $rtmedia->options[ 'featured_audio' ] ) ? 1 : 0;
 		$this->settings[ 'width' ] = isset( $size_settings[ 'width' ] ) ? $size_settings[ 'width' ] : 400;
 		$this->settings[ 'height' ] = isset( $size_settings[ 'height' ] ) ? $size_settings[ 'height' ] : 300;
 		$this->settings[ 'crop' ] = isset( $size_settings[ 'crop' ] ) ? $size_settings[ 'crop' ] : 1;
@@ -82,7 +82,7 @@ class RTMediaFeatured extends RTMediaUserInteraction{
 		$metadata = wp_get_attachment_metadata( $media_id );
 		$resized = image_make_intermediate_size( get_attached_file( $media_id ), $this->settings[ 'width' ], $this->settings[ 'height' ], $this->settings[ 'crop' ] );
 		if ( $resized ) {
-			$metadata[ 'sizes' ][ 'rt-media-featured' ] = $resized;
+			$metadata[ 'sizes' ][ 'rtmedia-featured' ] = $resized;
 			wp_update_attachment_metadata( $media_id, $metadata );
 		}
 	}
@@ -147,21 +147,21 @@ class RTMediaFeatured extends RTMediaUserInteraction{
 
 }
 
-function rt_media_featured( $user_id = false ) {
+function rtmedia_featured( $user_id = false ) {
 	echo bp_media_get_featured( $user_id );
 }
 
-function rt_media_get_featured( $user_id = false ) {
+function rtmedia_get_featured( $user_id = false ) {
 	$featured = new RTMediaFeatured( $user_id , false);
 	return $featured->content();
 }
 
 function bp_media_featured( $user_id = false ) {
-	echo rt_media_get_featured( $user_id );
+	echo rtmedia_get_featured( $user_id );
 }
 
 function bp_media_get_featured( $user_id = false ) {
-	return rt_media_get_featured( $user_id );
+	return rtmedia_get_featured( $user_id );
 }
 
 
