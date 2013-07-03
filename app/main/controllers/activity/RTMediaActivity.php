@@ -50,21 +50,26 @@ class RTMediaActivity {
 			$html .= '<ul class="rtmedia-list large-block-grid-5">';
 			foreach ($media_details as $media) {
 				$html .= '<li class="rtmedia-list-item">';
+                                if (  $media->media_type == 'photo' )
+                                    $html .= '<a href ="'. get_rtmedia_permalink($media->id) .'">';
 					$html .= '<div class="rtmedia-item-thumbnail">';
-						$html .= '<a href ="'. get_rtmedia_permalink($media->id) .'">';
+                                                
 							$html .= $this->media($media);
-						$html .= '</a>';
+                                                
 					$html .= '</div>';
 
 					$html .= '<div class="rtmedia-item-title">';
 						$html .= '<h4 title="'. $media->media_title .'">';
-
-							$html .= '<a href="'. get_rtmedia_permalink($media->id) .'">';
+                                                        if (  $media->media_type != 'photo' )
+                                                            $html .= '<a href="'. get_rtmedia_permalink($media->id) .'">';
 
 								$html .= $media->media_title;
-							$html .= '</a>';
+                                                        if (  $media->media_type != 'photo' )
+                                                            $html .= '</a>';
 						$html .= '</h4>';
 					$html .= '</div>';
+                                        if (  $media->media_type == 'photo' )
+                                                    $html .= '</a>';
 
 					$html .= '<div class="rtmedia-item-actions">';
 						$html .= $this->actions();
@@ -81,14 +86,16 @@ class RTMediaActivity {
         }
 	function media($media) {
 		if (isset($media->media_type)) {
-			if ($media->media_type == 'album' ||
-					$media->media_type != 'photo') {
-				$thumbnail_id = get_rtmedia_meta($media->media_id,'cover_art');
-                                if ( $thumbnail_id ) {
-                                    list($src, $width, $height) = wp_get_attachment_image_src($thumbnail_id);
-                                    return '<img src="'.$src.'" />';
-                                }
-			} elseif ( $media->media_type == 'photo' ) {
+//			if ($media->media_type == 'album' ||
+//					$media->media_type != 'photo') {
+//				$thumbnail_id = get_rtmedia_meta($media->media_id,'cover_art');
+//                                if ( $thumbnail_id ) {
+//                                    list($src, $width, $height) = wp_get_attachment_image_src($thumbnail_id);
+//                                    return '<img src="'.$src.'" />';
+//                                }
+//			} 
+                        
+                        if ( $media->media_type == 'photo' ) {
 				$thumbnail_id = $media->media_id;
                                 if ( $thumbnail_id ) {
                                     list($src, $width, $height) = wp_get_attachment_image_src($thumbnail_id);

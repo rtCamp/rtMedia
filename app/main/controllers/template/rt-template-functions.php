@@ -490,7 +490,25 @@ function is_rtmedia_single() {
  */
 function is_rtmedia_album() {
     global $rtmedia_query;
-    return $rtmedia_query->is_album();
+    if ($rtmedia_query)
+        return $rtmedia_query->is_album();
+    else
+        return false;
+}
+/**
+ *
+ * @return boolean
+ */
+function is_rtmedia_edit_allowed() {
+    global $rtmedia_query;
+    if ( $rtmedia_query ) {
+        if(isset($rtmedia_query->media_query['media_author']) && get_current_user_id() == $rtmedia_query->media_query['media_author'] && $rtmedia_query->action_query->action == 'edit')
+            return true;
+        else
+            return false;
+    } else {
+        return false;
+    }
 }
 
 add_action('rtmedia_add_edit_fields','rtmedia_image_editor');

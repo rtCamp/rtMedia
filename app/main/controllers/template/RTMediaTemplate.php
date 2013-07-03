@@ -13,9 +13,11 @@ class RTMediaTemplate {
 	public $media_args;
 
 	function __construct() {
-
-		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
-		add_action( 'init', array( $this, 'enqueue_image_editor_scripts' ) );
+            global $rtmedia_query;
+                if ( $rtmedia_query ) {
+                    add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
+                    add_action( 'init', array( $this, 'enqueue_image_editor_scripts' ) );
+                }
 		new RTMediaLike();
 		new RTMediaFeatured();
 		new RTMediaCoverArt();
@@ -26,6 +28,10 @@ class RTMediaTemplate {
 	 */
 	function enqueue_scripts() {
 		wp_enqueue_script( 'rtmedia-backbone' );
+                $is_album = is_rtmedia_album() ? true : false;
+		$is_edit_allowed = is_rtmedia_edit_allowed() ? true: false;
+		wp_localize_script('rtmedia-backbone', 'is_album', $is_album);
+		wp_localize_script('rtmedia-backbone', 'is_edit_allowed', $is_edit_allowed);
 	}
 
 	function enqueue_image_editor_scripts() {
