@@ -1628,10 +1628,13 @@
 .rtmedia-container .rtmedia-create-new-album-container, .rtmedia-activity-container .rtmedia-create-new-album-container {
   display: none;
 }
+/* line 127, ../sass/main.scss */
+.rtmedia-container select, .rtmedia-activity-container select {
+  width: auto;
+}
 
-/* line 133, ../sass/main.scss */
+/* line 136, ../sass/main.scss */
 #rtmedia-action-update {
   float: left;
-  padding-top: 5px;
   padding-right: 10px;
 }
