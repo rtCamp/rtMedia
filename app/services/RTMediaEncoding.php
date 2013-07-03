@@ -41,7 +41,7 @@ class RTMediaEncoding {
                         $blacklist = array('localhost', '127.0.0.1');
                         if (!in_array($_SERVER['HTTP_HOST'], $blacklist)) {
                             add_filter('rt_media_plupload_files_filter', array($this, 'allowed_types'));
-                            add_filter('rt_media_allowed_types', array($this, 'allowed_types'));
+                            add_filter('rtmedia_valid_type_check', array($this, 'bypass_video_audio'),'',2);
                         }
                     }
                 }
@@ -80,92 +80,18 @@ class RTMediaEncoding {
                     }
                 }
                 $this->update_usage($this->api_key);
-//                $this->usage_quota_over();
             }
         }
     }
-
-//    function transcoder($class, $type) {
-//        switch ($type) {
-//            case 'video':
-//            case 'audio':
-//                $blacklist = array('localhost', '127.0.0.1');
-//                if (in_array($_SERVER['HTTP_HOST'], $blacklist)) {
-//                    return $class;
-//                }
-//
-//                if (isset($_FILES['rt_media_file'])) {
-//                    $ext = end(explode(".", $_FILES['rt_media_file']["name"]));
-//                    if (in_array($_FILES['rt_media_file']['type'], array('audio/mp3', 'video/mp4')) || in_array($ext, array('mp3', 'mp4'))) {
-//                        return $class;
-//                    }
-//                }
-//                return 'RTMediaEncodingTranscoder';
-//            default:
-//                return $class;
-//        }
-//    }
-//    public function menu() {
-//        add_submenu_page('bp-media-settings', __('BuddyPress Media Audio/Video Encoding Service', 'rt-media'), __('Audio/Video Encoding', 'rt-media'), 'manage_options', 'bp-media-encoding', array($this, 'encoding_page'));
-//        global $submenu;
-//        if (isset($submenu['bp-media-settings'])) {
-//            $menu = $submenu['bp-media-settings'];
-//            $encoding_menu = array_pop($menu);
-//            $submenu['bp-media-settings'] = array_merge(array_slice($menu, 0, 2), array($encoding_menu), array_slice($menu, 2));
-//        }
-//    }
-//    /**
-//     * Render the BuddyPress Media Encoding page
-//     */
-//    public function encoding_page() {
-//        global $rt_media_admin;
-//        $rt_media_admin->render_page('rt-media-encoding');
-//    }
-//    public function encoding_settings() {
-//        add_settings_section('rtm-encoding', __('Audio/Video Encoding Service', 'rt-media'), array($this, 'encoding_service_intro'), 'rt-media-encoding');
-//    }
-//    public function encoding_tab($tabs) {
-//        $encoding_tab = array(
-//            'href' => get_admin_url(add_query_arg(array('page' => 'rt-media-encoding'), 'admin.php')),
-////                    'name' => __('Audio/Video Encoding', 'rt'),
-//            'name' => __('Encoding', 'rt'),
-//            'slug' => 'rt-media-encoding'
-//        );
-//
-//        $reordered_tabs = NULL;
-//        if (count($tabs) > 2) {
-//            foreach ($tabs as $key => $tab) {
-//                if ($key == 2)
-//                    $reordered_tabs[] = $encoding_tab;
-//                $reordered_tabs[] = $tab;
-//            }
-//            $tabs = $reordered_tabs;
-//        } else {
-//            $tabs[] = $encoding_tab;
-//        }
-//        return $tabs;
-//    }
-//    public function admin_bar_menu($rt_media_admin_nav) {
-//// Encoding Service
-//        $admin_nav = array(
-//            'parent' => 'rt-media-menu',
-//            'id' => 'rt-media-encoding',
-//            'title' => __('Audio/Video Encoding', 'rt-media'),
-//            'href' => get_admin_url(add_query_arg(array('page' => 'rt-media-encoding'), 'admin.php'))
-//        );
-//        $reordered_admin_nav = NULL;
-//        if (count($rt_media_admin_nav) > 2) {
-//            foreach ($rt_media_admin_nav as $key => $nav) {
-//                if ($key == 3)
-//                    $reordered_admin_nav[] = $admin_nav;
-//                $reordered_admin_nav[] = $nav;
-//            }
-//            $rt_media_admin_nav = $reordered_admin_nav;
-//        } else {
-//            $rt_media_admin_nav[] = $admin_nav;
-//        }
-//        return $rt_media_admin_nav;
-//    }
+    
+    public function bypass_video_audio($flag,$file){
+        if ( isset($file['type']) ) {
+            $fileinfo = explode('/',$file['type']);
+            if (in_array($fileinfo[0],array('audio','video')))
+                    $flag = true;
+        }
+        return $flag;
+    }
 
     public function is_valid_key($key) {
         $validate_url = trailingslashit($this->api_url) . 'api/validate/' . $key;
@@ -240,17 +166,8 @@ class RTMediaEncoding {
 
     public function allowed_types($types) {
         if (isset($types[0]) && isset($types[0]['extensions'])) {
-            $types[0]['extensions'] .= 'mov,m4v,m2v,avi,mpg,flv,wmv,mkv,webm,ogv,mxf,asf,vob,mts,qt,mpeg'; //Allow all types of file to be uploded
-            $types[0]['extensions'] .= 'wma,ogg,wav,m4a'; //Allow all types of file to be uploded
-        } else {
-            if (isset($types['video'])) {
-                $video_types = explode(',', 'mov,m4v,m2v,avi,mpg,flv,wmv,mkv,webm,ogv,mxf,asf,vob,mts,qt,mpeg');
-                $types['video']['extn'] = array_merge($types['video']['extn'], $video_types);
-            }
-            if (isset($types['audio'])) {
-                $audio_types = explode(',', 'wma,ogg,wav,m4a');
-                $types['audio']['extn'] = array_merge($types['audio']['extn'], $audio_types);
-            }
+            $types[0]['extensions'] .= ',mov,m4v,m2v,avi,mpg,flv,wmv,mkv,webm,ogv,mxf,asf,vob,mts,qt,mpeg'; //Allow all types of file to be uploded
+            $types[0]['extensions'] .= ',wma,ogg,wav,m4a'; //Allow all types of file to be uploded
         }
         return $types;
     }

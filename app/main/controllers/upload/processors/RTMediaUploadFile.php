@@ -147,7 +147,6 @@ class RTMediaUploadFile {
 					$allowed_types[] = $extn;
 				}
             }
-
             if (!preg_match('/' . implode('|', $allowed_types) . '/i', $file['type'], $result) || !isset($result[0])) {
                 throw new RTMediaUploadException(UPLOAD_ERR_EXTENSION);
             }
@@ -166,7 +165,7 @@ class RTMediaUploadFile {
         $temp_array = $this->files;
         $this->files = null;
         foreach ($temp_array as $key => $file) {
-            if ($this->is_valid_type($file)) {
+            if (apply_filters('rtmedia_valid_type_check',$this->is_valid_type($file),$file)) {
                 $this->files[] = $file;
             }
         }
