@@ -124,6 +124,9 @@
         .rtmedia-create-new-album-container{
             display: none;
         }
+        select{
+            width: auto;
+        }
 }
 
 .rtmedia-activity-container {
@@ -132,6 +135,5 @@
 
 #rtmedia-action-update{
     float: left;
-    padding-top: 5px;
     padding-right: 10px;    
 }
