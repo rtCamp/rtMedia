@@ -6,7 +6,7 @@
 
         <h2><?php echo __('Album Gallery','rtmedia'); ?></h2>
 
-        <ul class="rtmedia-list large-block-grid-5">
+        <ul class="rtmedia-list rtmedia-album-list large-block-grid-5">
 
             <?php while (have_rtmedia()) : rtmedia(); ?>
 

@@ -1,9 +1,9 @@
 jQuery('document').ready(function(){
-    
-    
+
+
     jQuery('.wp-audio-shortcode, .wp-video-shortcode').mediaelementplayer();
-    
-    jQuery('.rtmedia-list').magnificPopup({
+
+    jQuery('.rtmedia-list-media').magnificPopup({
         delegate: 'a',
         type: 'ajax',
         tLoading: 'Loading image #%curr%...',
@@ -46,15 +46,15 @@ jQuery('document').ready(function(){
         jQuery('.rtmedia-delete-container').slideUp();
         jQuery('.rtmedia-move-container').slideToggle();
     });
-    
+
     jQuery('.rtmedia-container').on('click','.rtmedia-merge',function(e){
         jQuery('.rtmedia-merge-container').slideToggle();
     });
-    
+
     jQuery('.rtmedia-container').on('click','.rtmedia-create-new-album-button',function(e){
         jQuery('.rtmedia-create-new-album-container').slideToggle();
     });
-    
+
     jQuery('.rtmedia-container').on('click','.rtmedia-create-new-album',function(e){
         $albumname = jQuery.trim(jQuery('.rtmedia-new-album-name').val());
         if ($albumname != '') {
@@ -76,11 +76,11 @@ jQuery('document').ready(function(){
             alert('Enter an album name');
         }
     });
-    
+
     jQuery('.rtmedia-container').on('click','.rtmedia-delete-selected',function(e){
         jQuery('.rtmedia-bulk-actions').attr('action','../../../media/delete');
     });
-    
+
     jQuery('.rtmedia-container').on('click','.rtmedia-move-selected',function(e){
         jQuery('.rtmedia-bulk-actions').attr('action','');
     });
