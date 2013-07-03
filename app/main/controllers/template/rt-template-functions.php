@@ -45,7 +45,7 @@ function rtmedia_title() {
         echo '<%= media_title %>';
     } else {
         global $rtmedia_media;
-        return $rtmedia_media->post_title;
+        return $rtmedia_media->media_title;
     }
 }
 

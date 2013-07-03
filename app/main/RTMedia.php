@@ -571,7 +571,7 @@ class RTMedia {
 
 		//**
 		if ( ! $global_album ) {
-			$global_album = $album->add_global( __( "rtMedia Global Album", "rtmedia", true ) );
+			$global_album = $album->add_global( __( "Wall Posts", "rtmedia", true ) );
 		}
 	}
 
