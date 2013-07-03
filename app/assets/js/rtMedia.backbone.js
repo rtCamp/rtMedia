@@ -310,6 +310,9 @@ jQuery(document).ready(function($) {
     var activity_attachemnt_ids = [];
     if ($("#rtmedia-add-media-button-post-update").length > 0) {
         $("#whats-new-options").prepend($("#rtmedia-action-update"));
+        if($("#privacy").length > 0 ){
+           $("#rtmedia-action-update").append($("#privacy")); 
+        }
     }
     $("#whats-new-form").on('click', '#rtmedia-add-media-button-post-update', function(e) {
         $("#div-attache-rtmedia").toggle();
