@@ -219,6 +219,7 @@ class RTMediaPrivacy {
 			$user = 0;
 		}
 
+		$where .= "AND (m.meta_value=0)";
 
 		if ( $user ) {
 			$where .= "AND ((m.meta_value=20)";
@@ -236,9 +237,9 @@ class RTMediaPrivacy {
 
 
 		$from_sql = " FROM {$bp->activity->table_name} a LEFT JOIN {$wpdb->users} u ON a.user_id = u.ID LEFT JOIN {$bp->activity->table_name_meta} m ON a.id = m.activity_id";
-		$where_sql = $where_sql . " AND (NOT EXISTS (SELECT m.activity_id FROM wp_bp_activity_meta m WHERE m.meta_key='bp_media_privacy' AND m.activity_id=a.id) OR (m.meta_key='bp_media_privacy' {$where} ) )";
+		$where_sql = $where_sql . " AND (NOT EXISTS (SELECT m.activity_id FROM wp_bp_activity_meta m WHERE m.meta_key='rtmedia_privacy' AND m.activity_id=a.id) OR (m.meta_key='rtmedia_privacy' {$where} ) )";
 		$newsql = "{$select_sql} {$from_sql} {$where_sql} ORDER BY a.date_recorded {$sort} {$pag_sql}";
-
+		error_log($newsql);
 		return $newsql;
 	}
 
