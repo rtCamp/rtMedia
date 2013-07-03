@@ -22,13 +22,13 @@ class RTMediaUploadView {
 	static function upload_nonce_generator($echo = true,$only_nonce =false) {
 
 		if($echo) {
-			wp_nonce_field('rt_media_upload_nonce','rt_media_upload_nonce');
+			wp_nonce_field('rtmedia_upload_nonce','rtmedia_upload_nonce');
 		} else {
                         if($only_nonce)
-                            return wp_create_nonce('rt_media_upload_nonce');
+                            return wp_create_nonce('rtmedia_upload_nonce');
 			$token = array(
-				'action' => 'rt_media_upload_nonce',
-				'nonce' => wp_create_nonce('rt_media_upload_nonce')
+				'action' => 'rtmedia_upload_nonce',
+				'nonce' => wp_create_nonce('rtmedia_upload_nonce')
 			);
 
 			return json_encode($token);
@@ -41,23 +41,30 @@ class RTMediaUploadView {
 	 * @param type $template_name
 	 */
     public function render($template_name) {
-        global $rt_media_query;
+        global $rtmedia_query;
         $album = '';
-        if ( is_rt_media_album()){
-            $album = '<input class="rt-media-current-album" type="hidden" name="rt-media-current-album" value="'.$rt_media_query->media_query['album_id'].'" />';
-	}elseif ( !is_single() && is_rt_media_gallery() ){
-            $album = '<select name="album" class="rt-media-user-album-list">'.rt_media_user_album_list().'</select>';
+        if ( $rtmedia_query && is_rtmedia_album()){
+            $album = '<input class="rtmedia-current-album" type="hidden" name="rtmedia-current-album" value="'.$rtmedia_query->media_query['album_id'].'" />';
+	}elseif ( !is_single() && $rtmedia_query && is_rtmedia_gallery() ){
+            $album = '<select name="album" class="rtmedia-user-album-list">'.rtmedia_user_album_list().'</select>';
 
 	}
 	$tabs = array(
-			'file_upload' => array( 'title' => __('File Upload','rt-media'), 'content' => '<div id="rtmedia-upload-container" ><div id="drag-drop-area" class="drag-drop">'.$album.'<input id="rtMedia-upload-button" value="Select" type="button" class="rt-media-upload-input rt-media-file" /></div><table id="rtMedia-queue-list"></table></div>' ),
-//			'file_upload' => array( 'title' => __('File Upload','rt-media'), 'content' => '<div id="rt-media-uploader"><p>Your browser does not have HTML5 support.</p></div>'),
-			'link_input' => array( 'title' => __('Insert from URL','rt-media'),'content' => '<input type="url" name="bp-media-url" class="rt-media-upload-input rt-media-url" />' ),
+			'file_upload' => array(
+				'default' => array('title' => __('File Upload','rtmedia'), 'content' => '<div id="rtmedia-upload-container" ><div id="drag-drop-area" class="drag-drop">'.$album.'<input id="rtMedia-upload-button" value="Select" type="button" class="rtmedia-upload-input rtmedia-file" /></div><table id="rtMedia-queue-list"></table></div>' ),
+				'activity' => array('title' => __('File Upload','rtmedia'), 'content' => '<div class="rtmedia-container"><div id="rtmedia-action-update"><input type="button" class="rtmedia-add-media-button" id="rtmedia-add-media-button-post-update"  value="' . __("Add Media","rtmedia") . '" /></div><div id="div-attache-rtmedia"><div id="rtmedia-whts-new-upload-container" ><div id="rtmedia-whts-new-drag-drop-area" class="drag-drop"><input id="rtmedia-whts-new-upload-button" value="Select" type="button" class="rtmedia-upload-input rtmedia-file" /></div><div id="rtMedia-update-queue-list"></div></div></div></div>')
+			),
+//			'file_upload' => array( 'title' => __('File Upload','rtmedia'), 'content' => '<div id="rtmedia-uploader"><p>Your browser does not have HTML5 support.</p></div>'),
+			'link_input' => array( 'title' => __('Insert from URL','rtmedia'),'content' => '<input type="url" name="bp-media-url" class="rtmedia-upload-input rtmedia-url" />' ),
         );
-        $tabs = apply_filters('bp_media_upload_tabs', $tabs );
+        $tabs = apply_filters('rtmedia_upload_tabs', $tabs );
 
 		$attr = $this->attributes;
 		$mode = (isset($_GET['mode']) && array_key_exists($_GET['mode'], $tabs)) ? $_GET['mode'] : 'file_upload';
+
+		$upload_type = 'default';
+		if(isset($attr['activity']) && $attr['activity'])
+			$upload_type = 'activity';
 
 		$uploadHelper = new RTMediaUploadHelper();
 		include $this->locate_template($template_name);
@@ -77,10 +84,10 @@ class RTMediaUploadView {
 
 		if (!$template_name)
 			$located = false;
-		if (file_exists(STYLESHEETPATH . '/rt-media/' . $template_name)) {
-			$located = STYLESHEETPATH . '/rt-media/' . $template_name;
-		} else if (file_exists(TEMPLATEPATH . '/rt-media/' . $template_name)) {
-			$located = TEMPLATEPATH . '/rt-media/' . $template_name;
+		if (file_exists(STYLESHEETPATH . '/rtmedia/' . $template_name)) {
+			$located = STYLESHEETPATH . '/rtmedia/' . $template_name;
+		} else if (file_exists(TEMPLATEPATH . '/rtmedia/' . $template_name)) {
+			$located = TEMPLATEPATH . '/rtmedia/' . $template_name;
 		} else {
 			$located = RTMEDIA_PATH . 'templates/upload/' . $template_name;
 		}

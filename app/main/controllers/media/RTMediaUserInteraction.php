@@ -55,7 +55,7 @@ class RTMediaUserInteraction {
 	/**
 	 * Initialise the user interaction
 	 *
-	 * @global object $rt_media_query Default query
+	 * @global object $rtmedia_query Default query
 	 * @param string $action The user action
 	 * @param boolean $others Whether other users are allowed the action
 	 * @param string $label The label for the button
@@ -77,7 +77,7 @@ class RTMediaUserInteraction {
 		$this->set_owner();
 
 		// filter the default actions with this new one
-		add_filter( 'rt_media_query_actions', array( $this, 'register' ) );
+		add_filter( 'rtmedia_query_actions', array( $this, 'register' ) );
 
 		// hook into the template for this action
 		add_action( 'rtmedia_pre_action_' . $action, array( $this, 'preprocess' ) );
@@ -93,9 +93,9 @@ class RTMediaUserInteraction {
 	}
 
 	function set_media(){
-		global $rt_media_query;
+		global $rtmedia_query;
 
-		$this->action_query = $rt_media_query->action_query;
+		$this->action_query = $rtmedia_query->action_query;
 
 		if ( ! isset( $this->action_query->id ) )
 			$this->media = false;
@@ -144,8 +144,8 @@ class RTMediaUserInteraction {
 	 *
 	 */
 	function preprocess() {
-		global $rt_media_query;
-		$this->action_query = $rt_media_query->action_query;
+		global $rtmedia_query;
+		$this->action_query = $rtmedia_query->action_query;
 
 		if ( $this->action_query->action != $this->action )
 			return false;

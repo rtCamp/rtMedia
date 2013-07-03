@@ -32,7 +32,7 @@ class RTMediaMigration {
     }
 
     function add_migration_notice() {
-        $this->create_notice("<p>Please Migrate Database. <a href='" . admin_url("admin.php?page=rt-media-migration&force=true") . "'>Migrate</a>  </p>");
+        $this->create_notice("<p>Please Migrate Database. <a href='" . admin_url("admin.php?page=rtmedia-migration&force=true") . "'>Migrate</a>  </p>");
     }
 
     function create_notice($message, $type = "error") {
@@ -50,7 +50,7 @@ class RTMediaMigration {
     }
 
     function menu() {
-        add_submenu_page('rt-media-settings', __('Migration', 'buddypress-media'), __('Migration', 'buddypress-media'), 'manage_options', 'rt-media-migration', array($this, 'test'));
+        add_submenu_page('rtmedia-settings', __('Migration', 'buddypress-media'), __('Migration', 'buddypress-media'), 'manage_options', 'rtmedia-migration', array($this, 'test'));
     }
 
     function get_total_count() {
@@ -122,7 +122,7 @@ class RTMediaMigration {
     }
 
     function get_last_imported() {
-        $album = get_site_option("rt-media-global-albums");
+        $album = get_site_option("rtmedia-global-albums");
         $album_id = $album[0];
 
         global $wpdb;
@@ -162,7 +162,7 @@ class RTMediaMigration {
         $media_count = $wpdb->get_var($wpdb->prepare($sql, get_current_blog_id()));
         if ($flag)
             return $media_count - 1;
-        $state = intval(get_site_option("rt-media-migration", "0"));
+        $state = intval(get_site_option("rtmedia-migration", "0"));
         if ($state == 5) {
             $album_count = intval($_SESSION["migration_user_album"]);
             $album_count += (isset($_SESSION["migration_group_album"])) ? intval($_SESSION["migration_group_album"]) : 0;
@@ -193,11 +193,11 @@ class RTMediaMigration {
     }
 
     function manage_album() {
-        $album = get_site_option("rt-media-global-albums");
+        $album = get_site_option("rtmedia-global-albums");
 
         $album_id = $album[0];
 
-        $album_post_type = "rt_media_album";
+        $album_post_type = "rtmedia_album";
 
         global $wpdb;
         if (function_exists("bp_core_get_table_prefix"))
@@ -221,7 +221,7 @@ class RTMediaMigration {
         if ($wpdb->query($sql_group) !== false) {
             if ($wpdb->query($sql_delete) !== false) {
                 if ($wpdb->query($sql) !== false) {
-                    update_site_option("rt-media-migration", "5");
+                    update_site_option("rtmedia-migration", "5");
                     return true;
                 }
             }
@@ -259,7 +259,7 @@ class RTMediaMigration {
                     if (db_done < db_total) {
                         jQuery("#rtMediaSyncing").show();
                         jQuery.ajax({
-                            url: rt_media_admin_ajax,
+                            url: rtmedia_admin_ajax,
                             type: 'post',
                             data: {
                                 "action": "bp_media_rt_db_migration",
@@ -311,7 +311,7 @@ class RTMediaMigration {
         if (!isset($_SESSION["migration_media"]))
             $this->get_total_count();
 
-        $state = intval(get_site_option("rt-media-migration"));
+        $state = intval(get_site_option("rtmedia-migration"));
         if ($state < 5) {
             if ($this->manage_album()) {
                 $this->migrate_encoding_options();
@@ -376,11 +376,11 @@ class RTMediaMigration {
 
     function migrate_encoding_options() {
         $encoding_mnigration_array = array(
-            'bp-media-encoding-api-key' => 'rt-media-encoding-api-key',
-            'bp-media-encoding-usage-limit-mail' => 'rt-media-encoding-usage-limit-mail',
-            'bp-media-encoding-usage' => 'rt-media-encoding-usage',
-            'bpmedia_encoding_service_notice' => 'rt-media-encoding-service-notice',
-            'bpmedia_encoding_expansion_notice' => 'rt-media-encoding-expansion-notice',
+            'bp-media-encoding-api-key' => 'rtmedia-encoding-api-key',
+            'bp-media-encoding-usage-limit-mail' => 'rtmedia-encoding-usage-limit-mail',
+            'bp-media-encoding-usage' => 'rtmedia-encoding-usage',
+            'bpmedia_encoding_service_notice' => 'rtmedia-encoding-service-notice',
+            'bpmedia_encoding_expansion_notice' => 'rtmedia-encoding-expansion-notice',
         );
         foreach ($encoding_mnigration_array as $key => $ma) {
             if (($value = get_site_option($key)) !== false) {
@@ -458,7 +458,7 @@ class RTMediaMigration {
 
         if ($media_type != 'album') {
             $activity_data = $wpdb->get_row($wpdb->prepare("select * from {$bp_prefix}bp_activity where id= %d", $result->activity_id));
-            $this->import_media($media_id, $prefix);
+            $this->importmedia($media_id, $prefix);
         }
 
 
@@ -469,7 +469,7 @@ class RTMediaMigration {
             remove_all_actions("wp_insert_comment");
             foreach ($all_activity as $activity) {
                 $comments = $bp_activity->get_activity_comments($activity->id, $activity->mptt_left, $activity->mptt_right);
-                $exclude = get_post_meta($media_id, "rt_media_imported_activity", true);
+                $exclude = get_post_meta($media_id, "rtmedia_imported_activity", true);
                 if (!is_array($exclude)) {
                     $exclude = array();
                 }
@@ -487,7 +487,7 @@ class RTMediaMigration {
         else
             $likes = 0;
 
-        $last_id = $wpdb->insert(
+        $wpdb->insert(
                 $this->bmp_table, array(
             'blog_id' => $blog_id,
             'media_id' => $media_id,
@@ -502,7 +502,7 @@ class RTMediaMigration {
             "likes" => $likes
                 ), array('%d', '%d', '%s', '%s', '%d', '%d', '%d', '%d', '%s', '%d', '%d')
         );
-
+		$last_id = $wpdb->insert_id;
         if ($media_type != 'album' && function_exists('bp_core_get_user_domain') && $activity_data) {
             if (function_exists("bp_core_get_table_prefix"))
                 $bp_prefix = bp_core_get_table_prefix();
@@ -528,7 +528,7 @@ class RTMediaMigration {
         return $last_id;
     }
 
-    function import_media($id, $prefix) {
+    function importmedia($id, $prefix) {
 
 
         $delete = false;
@@ -710,7 +710,7 @@ class RTMediaMigration {
                         update_rtmedia_meta($id, '_instagram_metadata', $instagram_metadata_new);
                     }
                     if ($encoding_job_id) {
-                        update_rtmedia_meta($id, 'rt-media-encoding-job-id', $encoding_job_id);
+                        update_rtmedia_meta($id, 'rtmedia-encoding-job-id', $encoding_job_id);
                     }
 
                     $attachment = array();
@@ -792,7 +792,7 @@ class RTMediaMigration {
                 $comment_id = $exclude[strval($cmnt->id)];
             }
 
-            update_post_meta($media_id, "rt_media_imported_activity", $exclude);
+            update_post_meta($media_id, "rtmedia_imported_activity", $exclude);
 
             if (is_array($cmnt->children)) {
                 $this->insert_comment($media_id, $cmnt->children, $exclude, $comment_id);

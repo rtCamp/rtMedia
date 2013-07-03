@@ -42,15 +42,15 @@ class RTMediaUploadModel {
 
 	/**
 	 *
-	 * @global type $rt_media_interaction
+	 * @global type $rtmedia_interaction
 	 */
     function sanitize_object() {
         if (!$this->has_context()){
 
-			global $rt_media_interaction;
+			global $rtmedia_interaction;
                         
-			$this->upload['context']= $rt_media_interaction->context->type;
-			$this->upload['context_id'] = $rt_media_interaction->context->id;
+			$this->upload['context']= $rtmedia_interaction->context->type;
+			$this->upload['context_id'] = $rtmedia_interaction->context->id;
 		}
 
         if (!is_array($this->upload['taxonomy']))

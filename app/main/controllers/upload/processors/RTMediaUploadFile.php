@@ -37,6 +37,7 @@ class RTMediaUploadFile {
         include_once(ABSPATH . 'wp-admin/includes/image.php');
 
         $upload_type = $this->fake ? 'wp_handle_sideload' : 'wp_handle_upload';
+        
         add_filter('upload_dir', array($this, 'upload_dir'));
         foreach ($this->files as $key => $file) {
 
@@ -45,7 +46,7 @@ class RTMediaUploadFile {
                 if (isset($uploaded_file[$key]['error']) || $uploaded_file[$key] === null) {
                     array_pop($uploaded_file);
 
-                    throw new RTMediaUploadException(0, __('Error Uploading File', 'rt-media'));
+                    throw new RTMediaUploadException(0, __('Error Uploading File', 'rtmedia'));
                 }
                 $uploaded_file[$key]['name'] = $file['name'];
             } catch (RTMediaUploadException $e) {
@@ -63,7 +64,7 @@ class RTMediaUploadFile {
     }
 
     function upload_dir($upload_dir) {
-        global $rt_media_interaction;
+        global $rtmedia_interaction;
         if(isset($this->uploaded["context"]) && isset($this->uploaded["context_id"])){
             if ($this->uploaded["context"] != 'group') {
                 $rtmedia_upload_prefix = 'users/';
@@ -73,12 +74,12 @@ class RTMediaUploadFile {
                 $id = $this->uploaded["context_id"];
             }
         }else{
-            if ($rt_media_interaction->context->type != 'group') {
+            if ($rtmedia_interaction->context->type != 'group') {
                 $rtmedia_upload_prefix = 'users/';
                 $id = get_current_user_id();
             } else {
                 $rtmedia_upload_prefix = 'groups/';
-                $id = $rt_media_interaction->context->id;
+                $id = $rtmedia_interaction->context->id;
             }
         }
 
@@ -105,8 +106,8 @@ class RTMediaUploadFile {
             /**
              * otherwise check for $_FILES global object from the form submitted
              */
-        } elseif (isset($_FILES['rt_media_file'])) {
-            $this->populate_file_array($_FILES['rt_media_file']);
+        } elseif (isset($_FILES['rtmedia_file'])) {
+            $this->populate_file_array($_FILES['rtmedia_file']);
         } else {
             /**
              * No files could be found to upload
@@ -131,26 +132,25 @@ class RTMediaUploadFile {
 
     /**
      * Check for valid file types for rtMedia
-     * @global type $rt_media
+     * @global type $rtmedia
      * @param type $file
      * @return boolean
      * @throws RTMediaUploadException
      */
     function is_valid_type($file) {
         try {
-            global $rt_media;
+            global $rtmedia;
             $allowed_types = array();
-//            error_log(var_export($rt_media->allowed_types,true));
-            foreach ($rt_media->allowed_types as $type) {
+            $rtmedia->allowed_types = apply_filters('rtmedia_allowed_types',$rtmedia->allowed_types);
+            foreach ($rtmedia->allowed_types as $type) {
 				foreach ($type['extn'] as $extn) {
 					$allowed_types[] = $extn;
 				}
             }
-
             if (!preg_match('/' . implode('|', $allowed_types) . '/i', $file['type'], $result) || !isset($result[0])) {
                 throw new RTMediaUploadException(UPLOAD_ERR_EXTENSION);
             }
-            $this->id3_validate_type($file);
+//            $is_valid = $this->id3_validate_type($file);
         } catch (RTMediaUploadException $e) {
             echo $e->getMessage();
             return false;
@@ -162,23 +162,20 @@ class RTMediaUploadFile {
      * Remove invalid files
      */
     function unset_invalid_files() {
-//        error_log(var_export($this->files,true));
         $temp_array = $this->files;
         $this->files = null;
         foreach ($temp_array as $key => $file) {
-            if ($this->is_valid_type($file)) {
+            if (apply_filters('rtmedia_valid_type_check',$this->is_valid_type($file),$file)) {
                 $this->files[] = $file;
             }
         }
-//        error_log(var_export($this->files,true));
-//        die;
     }
 
     function id3_validate_type($file) {
-        switch ($file['type']) {
-            case 'video/mp4' :
-            case 'video/quicktime' :
-                $type = 'video';
+        $file_type = explode('/',$file['type']);
+        $type = $file_type[0];
+        switch ($type) {
+            case 'video' :
                 include_once(trailingslashit(RTMEDIA_PATH) . 'lib/getid3/getid3.php');
                 try {
                     $getID3 = new getID3;
@@ -206,8 +203,7 @@ class RTMediaUploadFile {
                     throw new RTMediaUploadException(0, __('The MP4 file you have uploaded is not a video file.', 'buddypress-media'));
                 }
                 break;
-            case 'audio/mpeg' :
-            case 'audio/mp3' :
+            case 'audio' :
                 include_once(trailingslashit(RTMEDIA_PATH) . 'lib/getid3/getid3.php');
                 try {
                     $getID3 = new getID3;
@@ -234,12 +230,8 @@ class RTMediaUploadFile {
                     $activity_content = false;
                     throw new RTMediaUploadException(0, __('The MP3 file you have uploaded is not an audio file.', 'buddypress-media'));
                 }
-                $type = 'audio';
                 break;
-            case 'image/gif' :
-            case 'image/jpeg' :
-            case 'image/png' :
-                $type = 'photo';
+            case 'image' :
                 break;
             default :
                 $this->safe_unlink($file['tmp_name']);

@@ -49,7 +49,7 @@ class RTMediaInteraction {
 	function route_slugs(){
 
 		// filter to add custom slugs for routes
-		$this->slugs = apply_filters('rt_media_default_routes',$this->slugs);
+		$this->slugs = apply_filters('rtmedia_default_routes',$this->slugs);
 
 	}
 
@@ -137,14 +137,14 @@ class RTMediaInteraction {
 	}
 
 	function set_query() {
-		global $rt_media_query;
+		global $rtmedia_query;
 
 		$args = array(
 				'context'	=> $this->context->type,
 				'context_id'	=> $this->context->id
 			);
 
-		$rt_media_query = new RTMediaQuery($args);
+		$rtmedia_query = new RTMediaQuery($args);
 
 
 	}

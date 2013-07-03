@@ -36,10 +36,10 @@ class RTMediaActivity {
 
 		$html = '';
 
-		$html .='<div class="rt-media-activity-container">';
+		$html .='<div class="rtmedia-activity-container">';
 
 			if(!empty($this->activity_text)) {
-				$html .= '<span class="rt-media-activity-text">';
+				$html .= '<span class="rtmedia-activity-text">';
 					$html .= $this->activity_text;
 				$html .= '</span>';
 			}
@@ -47,26 +47,26 @@ class RTMediaActivity {
 			$mediaObj = new RTMediaModel();
 			$media_details = $mediaObj->get(array('id'=> $this->media));
 
-			$html .= '<ul class="rt-media-list large-block-grid-5">';
+			$html .= '<ul class="rtmedia-list large-block-grid-5">';
 			foreach ($media_details as $media) {
-				$html .= '<li class="rt-media-list-item">';
-					$html .= '<div class="rt-media-item-thumbnail">';
-						$html .= '<a href ="'. get_rt_media_permalink($media->id) .'">';
-							$html .= '<img src="'. $this->image($media) .'" >';
+				$html .= '<li class="rtmedia-list-item">';
+					$html .= '<div class="rtmedia-item-thumbnail">';
+						$html .= '<a href ="'. get_rtmedia_permalink($media->id) .'">';
+							$html .= $this->media($media);
 						$html .= '</a>';
 					$html .= '</div>';
 
-					$html .= '<div class="rt-media-item-title">';
+					$html .= '<div class="rtmedia-item-title">';
 						$html .= '<h4 title="'. $media->media_title .'">';
 
-							$html .= '<a href="'. get_rt_media_permalink($media->id) .'">';
+							$html .= '<a href="'. get_rtmedia_permalink($media->id) .'">';
 
 								$html .= $media->media_title;
 							$html .= '</a>';
 						$html .= '</h4>';
 					$html .= '</div>';
 
-					$html .= '<div class="rt-media-item-actions">';
+					$html .= '<div class="rtmedia-item-actions">';
 						$html .= $this->actions();
 					$html .= '</div>';
 				$html .= '</li>';
@@ -79,23 +79,31 @@ class RTMediaActivity {
         function actions(){
 
         }
-	function image($media) {
+	function media($media) {
 		if (isset($media->media_type)) {
 			if ($media->media_type == 'album' ||
 					$media->media_type != 'photo') {
 				$thumbnail_id = get_rtmedia_meta($media->media_id,'cover_art');
+                                if ( $thumbnail_id ) {
+                                    list($src, $width, $height) = wp_get_attachment_image_src($thumbnail_id);
+                                    return '<img src="'.$src.'" />';
+                                }
 			} elseif ( $media->media_type == 'photo' ) {
 				$thumbnail_id = $media->media_id;
-			} else {
+                                if ( $thumbnail_id ) {
+                                    list($src, $width, $height) = wp_get_attachment_image_src($thumbnail_id);
+                                    return '<img src="'.$src.'" />';
+                                }
+			} elseif ( $media->media_type == 'video' )  {
+				return '<video src="' . wp_get_attachment_url($media->media_id) . '" width="320" height="240" type="video/mp4" class="wp-video-shortcode" id="bp_media_video_' . $media->id . '" controls="controls" preload="none"></video>';
+			} elseif ( $media->media_type == 'music' )  {
+                                return '<audio src="' . wp_get_attachment_url($media->media_id) . '" width="320" height="0" type="audio/mp3" class="wp-audio-shortcode" id="bp_media_audio_' . $media->id . '" controls="controls" preload="none"></audio>';
+			} else  {
 				return false;
 			}
 		} else {
 			return false;
 		}
-		if (!$thumbnail_id)
-			return false;
-		list($src, $width, $height) = wp_get_attachment_image_src($thumbnail_id);
-                return $src;
 	}
 }
 

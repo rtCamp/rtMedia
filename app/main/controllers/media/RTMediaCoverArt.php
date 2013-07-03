@@ -16,14 +16,14 @@ class RTMediaCoverArt extends RTMediaUserInteraction{
 	 *
 	 */
 	function __construct() {
-		$label=__('Set as Album Cover','rt-media');
+		$label=__('Set as Album Cover','rtmedia');
 		parent::__construct('cover',false,$label);
 
 	}
 
 	function process(){
-		global $rt_media_query;
-		$media_id = $rt_media_query->action_query->id;
+		global $rtmedia_query;
+		$media_id = $rtmedia_query->action_query->id;
 
 		$this->model = new RTMediaModel();
 

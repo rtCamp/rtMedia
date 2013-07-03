@@ -14,8 +14,8 @@ class RTMediaFormHandler {
 
 	public static function checkbox($args) {
 
-		global $rt_media;
-		$options = $rt_media->options;
+		global $rtmedia;
+		$options = $rtmedia->options;
 		$defaults = array(
 			'key' => '',
 			'desc' => '',
@@ -25,12 +25,12 @@ class RTMediaFormHandler {
 		extract($args);
 
 		if (!isset($value)) {
-			trigger_error(__('Please provide "value" in the argument.', 'rt-media'));
+			trigger_error(__('Please provide "value" in the argument.', 'rtmedia'));
 			return;
 		}
 
 		if (!empty($key)) {
-			$args['name'] = 'rt-media-options[' . $key . ']';
+			$args['name'] = 'rtmedia-options[' . $key . ']';
 		}
 
 		$args['rtForm_options'] = array(array('' => 1, 'checked' => $value));
@@ -43,8 +43,8 @@ class RTMediaFormHandler {
 
 	public static function radio($args) {
 
-		global $rt_media;
-            $options = $rt_media->options;
+		global $rtmedia;
+            $options = $rtmedia->options;
 		$defaults = array(
 			'key' => '',
 			'radios' => array(),
@@ -55,12 +55,12 @@ class RTMediaFormHandler {
 		extract($args);
 
 		if (2 > count($radios)) {
-			trigger_error(__('Need to specify atleast to radios else use a checkbox instead', 'rt-media'));
+			trigger_error(__('Need to specify atleast to radios else use a checkbox instead', 'rtmedia'));
 			return;
 		}
 
 		if (!empty($key))
-			$args['name'] = 'rt-media-options[' . $key . ']';
+			$args['name'] = 'rtmedia-options[' . $key . ']';
 
 		$args['rtForm_options'] = array();
 		foreach ($radios as $value => $key) {
@@ -81,8 +81,8 @@ class RTMediaFormHandler {
 	}
 
 	public static function number($args) {
-		global $rt_media;
-		$options = $rt_media->options;
+		global $rtmedia;
+		$options = $rtmedia->options;
 		$defaults = array(
 			'key' => '',
 			'desc' => ''
@@ -91,12 +91,12 @@ class RTMediaFormHandler {
 		extract($args);
 
 		if (!isset($value)) {
-			trigger_error(__('Please provide "value" in the argument.', 'rt-media'));
+			trigger_error(__('Please provide "value" in the argument.', 'rtmedia'));
 			return;
 		}
 
 		if (!empty($key)) {
-			$args['name'] = 'rt-media-options[' . $key . ']';
+			$args['name'] = 'rtmedia-options[' . $key . ']';
 		}
 
 		$args['value'] = $value;
@@ -118,43 +118,43 @@ class RTMediaFormHandler {
 
 		$render = array(
 			'general_enableAlbums' => array(
-				'title' => __('Albums','rt-media'),
+				'title' => __('Albums','rtmedia'),
 				'callback' => array('RTMediaFormHandler', 'checkbox'),
 				'args' => array(
 					'key' => 'general_enableAlbums',
 					'value' => $options['general_enableAlbums'],
-					'desc' => __('Enable Albums in rtMedia','rt-media')
+					'desc' => __('Enable Albums in rtMedia','rtmedia')
 				)
 			),
 			'general_enableComments' => array(
-				'title' => __('Comments','rt-media'),
+				'title' => __('Comments','rtmedia'),
 				'callback' => array('RTMediaFormHandler', 'checkbox'),
 				'args' => array(
 					'key' => 'general_enableComments',
 					'value' => $options['general_enableComments'],
-					'desc' => __('Enable Comments in rtMedia','rt-media')
+					'desc' => __('Enable Comments in rtMedia','rtmedia')
 				)
 			),
 			'general_downloadButton' => array(
-				'title' => __('Download Button','rt-media'),
+				'title' => __('Download Button','rtmedia'),
 				'callback' => array('RTMediaFormHandler', 'checkbox'),
 				'args' => array(
 					'key' => 'general_downloadButton',
 					'value' => $options['general_downloadButton'],
-					'desc' => __('Display download button under media','rt-media')
+					'desc' => __('Display download button under media','rtmedia')
 				)
 			),
 			'general_enableLightbox' => array(
-				'title' => __('Lightbox','rt-media'),
+				'title' => __('Lightbox','rtmedia'),
 				'callback' => array('RTMediaFormHandler', 'checkbox'),
 				'args' => array(
 					'key' => 'general_enableLightbox',
 					'value' => $options['general_enableLightbox'],
-					'desc' => __('Enable Lighbox on Media','rt-media')
+					'desc' => __('Enable Lighbox on Media','rtmedia')
 				)
 			),
 			'general_perPageMedia' => array(
-				'title' => __('Number of Media Per Page','rt-media'),
+				'title' => __('Number of Media Per Page','rtmedia'),
 				'callback' => array('RTMediaFormHandler', 'number'),
 				'args' => array(
 					'key' => 'general_perPageMedia',
@@ -162,21 +162,21 @@ class RTMediaFormHandler {
 				)
 			),
 			'general_enableMediaEndPoint' => array(
-				'title' => __('Enable Media End Point for users','rt-media'),
+				'title' => __('Enable Media End Point for users','rtmedia'),
 				'callback' => array('RTMediaFormHandler', 'checkbox'),
 				'args' => array(
 					'key' => 'general_enableMediaEndPoint',
 					'value' => $options['general_enableMediaEndPoint'],
-					'desc' => __('Users can access their media on media end point','rt-media')
+					'desc' => __('Users can access their media on media end point','rtmedia')
 				)
 			),
 			'general_showAdminMenu' => array(
-				'title' => __('Admin Bar Menu','rt-media'),
+				'title' => __('Admin Bar Menu','rtmedia'),
 				'callback' => array('RTMediaFormHandler', 'checkbox'),
 				'args' => array(
 					'key' => 'general_showAdminMenu',
 					'value' => $options['general_showAdminMenu'],
-					'desc' => __('Enable menu in WordPress admin bar','rt-media')
+					'desc' => __('Enable menu in WordPress admin bar','rtmedia')
 				)
 			)
 		);
@@ -185,8 +185,8 @@ class RTMediaFormHandler {
 	}
 
 	public static function general_content() {
-		global $rt_media;
-		$options = self::extract_settings('general', $rt_media->options);
+		global $rtmedia;
+		$options = self::extract_settings('general', $rtmedia->options);
 
 		$render_options = self::general_render_options($options);
 
@@ -214,14 +214,14 @@ class RTMediaFormHandler {
 	}
 
 	static function types_render_options($options) {
-		global $rt_media;
+		global $rtmedia;
 
 		$render = array();
 
 		foreach ($options as $key => $value) {
 			$data = explode('_', $key);
 			if(!isset($render[$data[1]]))
-				$render[$data[1]] = self::get_type_details($rt_media->allowed_types, $data[1]);
+				$render[$data[1]] = self::get_type_details($rtmedia->allowed_types, $data[1]);
 		}
 		foreach ($options as $key => $value) {
 			$data = explode('_', $key);
@@ -233,17 +233,17 @@ class RTMediaFormHandler {
 
 	public static function types_content() {
 
-		global $rt_media;
-		$options = self::extract_settings('allowedTypes', $rt_media->options);
+		global $rtmedia;
+		$options = self::extract_settings('allowedTypes', $rtmedia->options);
 
 		$render_data = self::types_render_options($options);
 ?>
 		<div class="rt-table large-12">
 			<div class="row rt-header">
-				<h4 class="columns large-2"><?php echo __("Media Type","rt-media") ?></h4>
-				<h4 class="columns large-2 rtm-show-tooltip" title="<?php echo __("Allows you to upload a particular media type on your post.","rt-media"); ?>"><abbr><?php echo __("Allow Upload","rt-media"); ?></abbr></h4>
-				<h4 class="columns large-2 rtm-show-tooltip" title="<?php echo __("Put a specific media as a featured content on the post.","rt-media"); ?>"><abbr><?php echo __("Set Featured","rt-media"); ?></abbr></h4>
-				<h4 class="columns large-3 rtm-show-tooltip" title="<?php echo __("File extensions that can be uploaded on the website.","rt-media"); ?>"><abbr><?php echo __("File Extensions","rt-media"); ?></abbr></h4>
+				<h4 class="columns large-2"><?php echo __("Media Type","rtmedia") ?></h4>
+				<h4 class="columns large-2 rtm-show-tooltip" title="<?php echo __("Allows you to upload a particular media type on your post.","rtmedia"); ?>"><abbr><?php echo __("Allow Upload","rtmedia"); ?></abbr></h4>
+				<h4 class="columns large-2 rtm-show-tooltip" title="<?php echo __("Put a specific media as a featured content on the post.","rtmedia"); ?>"><abbr><?php echo __("Set Featured","rtmedia"); ?></abbr></h4>
+				<h4 class="columns large-3 rtm-show-tooltip" title="<?php echo __("File extensions that can be uploaded on the website.","rtmedia"); ?>"><abbr><?php echo __("File Extensions","rtmedia"); ?></abbr></h4>
 			</div>
 <?php
 		$even = 0;
@@ -275,11 +275,11 @@ class RTMediaFormHandler {
 			$data = explode('_', $key);
 			if(!isset($render[$data[1]])) {
 				$render[$data[1]] = array();
-				$render[$data[1]]['title'] = __($data[1],"rt-media");
+				$render[$data[1]]['title'] = __($data[1],"rtmedia");
 			}
 			if(!isset($render[$data[1]][$data[2]])) {
 				$render[$data[1]][$data[2]] = array();
-				$render[$data[1]][$data[2]]['title'] = __($data[2],"rt-media");
+				$render[$data[1]][$data[2]]['title'] = __($data[2],"rtmedia");
 			}
 			$render[$data[1]][$data[2]][$data[3]] = $value;
 		}
@@ -288,8 +288,8 @@ class RTMediaFormHandler {
 
 	public static function sizes_content() {
 
-		global $rt_media;
-		$options = self::extract_settings('defaultSizes',$rt_media->options);
+		global $rtmedia;
+		$options = self::extract_settings('defaultSizes',$rtmedia->options);
 		$render_data = self::sizes_render_options($options);
 
 		//container
@@ -297,9 +297,9 @@ class RTMediaFormHandler {
 
 		//header
 		echo '<div class="rt-header row">';
-			echo '<h4 class="columns large-3">' . __("Category","rt-media") . '</h4>';
-			echo '<h4 class="columns large-3">' . __("Entity","rt-media") . '</h4>';
-			echo '<h4 class="columns large-4"><span class="large-offset-2">' . __("Width","rt-media") . '</span><span class="large-offset-2">' . __("Height","rt-media") . '</span><span class="large-offset-2">' . __("Crop","rt-media") . '</span></h4>';
+			echo '<h4 class="columns large-3">' . __("Category","rtmedia") . '</h4>';
+			echo '<h4 class="columns large-3">' . __("Entity","rtmedia") . '</h4>';
+			echo '<h4 class="columns large-4"><span class="large-offset-2">' . __("Width","rtmedia") . '</span><span class="large-offset-2">' . __("Height","rtmedia") . '</span><span class="large-offset-2">' . __("Crop","rtmedia") . '</span></h4>';
 		echo'</div>';
 
 		//body
@@ -309,12 +309,12 @@ class RTMediaFormHandler {
 				echo '<div class="row rt-odd">';
 			else
 				echo '<div class="row rt-even">';
-			echo '<div class="columns large-3">' . $section['title'] . '</div>';
+			echo '<div class="columns large-3">' . ucfirst($section['title']) . '</div>';
 			$entities = $section;
 			unset($entities['title']);
 			echo '<div class="columns large-3">';
 			foreach ($entities as $entity) {
-				echo '<div class="row">' . $entity['title'] . '</div>';
+				echo '<div class="row">' . ucfirst($entity['title']) . '</div>';
 			}
 			echo '</div>';
 			echo '<div class="columns large-4">';
@@ -338,29 +338,29 @@ class RTMediaFormHandler {
 
 	static function privacy_render_options($options) {
 
-		global $rt_media;
+		global $rtmedia;
 
 		$render = array(
 			'enable' => array(
-				'title' => __("Enable Privacy","rt-media"),
+				'title' => __("Enable Privacy","rtmedia"),
 				'callback' => array("RTMediaFormHandler", "checkbox"),
 				'args' => array(
-					'id' => 'rt-media-privacy-enable',
+					'id' => 'rtmedia-privacy-enable',
 					'key' => 'privacy_enabled',
 					'value' => $options['privacy_enabled']
 				)
 			),
 			'default' => array(
-				'title' => __("Default Privacy","rt-media"),
+				'title' => __("Default Privacy","rtmedia"),
 				'callback' => array("RTMediaFormHandler","radio"),
 				'args' => array(
 					'key' => 'privacy_default',
-					'radios' => $rt_media->privacy_settings['levels'],
+					'radios' => $rtmedia->privacy_settings['levels'],
 					'default' => $options['privacy_default']
 				),
 			),
 			'user_override' => array(
-				'title' => __("User Override","rt-media"),
+				'title' => __("User Override","rtmedia"),
 				'callback' => array("RTMediaFormHandler", "checkbox"),
 				'args' => array(
 					'key' => 'privacy_userOverride',
@@ -374,8 +374,8 @@ class RTMediaFormHandler {
 
 	public static function privacy_content() {
 
-		global $rt_media;
-		$options = self::extract_settings('privacy', $rt_media->options);
+		global $rtmedia;
+		$options = self::extract_settings('privacy', $rtmedia->options);
 
 		$render_data = self::privacy_render_options($options);
 
@@ -398,31 +398,31 @@ class RTMediaFormHandler {
 
 
 		$render = array(
-			'rt-media-enable-on-profile' => array(
-				'title' => __('Profile Media','rt-media'),
+			'rtmedia-enable-on-profile' => array(
+				'title' => __('Profile Media','rtmedia'),
 				'callback' => array('RTMediaFormHandler', 'checkbox'),
 				'args' => array(
-					'key' => 'buddypress_enable_on_profile',
-					'value' => $options['buddypress_enable_on_profile'],
-					'desc' => __('Enable Media on BuddyPress Profile','rt-media')
+					'key' => 'buddypress_enableOnProfile',
+					'value' => $options['buddypress_enableOnProfile'],
+					'desc' => __('Enable Media on BuddyPress Profile','rtmedia')
 				)
 			),
-			'rt-media-enable-on-group' => array(
-				'title' => __('Group Media','rt-media'),
+			'rtmedia-enable-on-group' => array(
+				'title' => __('Group Media','rtmedia'),
 				'callback' => array('RTMediaFormHandler', 'checkbox'),
 				'args' => array(
-					'key' => 'buddypress_enable_on_group',
-					'value' => $options['buddypress_enable_on_group'],
-					'desc' => __('Enable Media on BuddyPress Groups','rt-media')
+					'key' => 'buddypress_enableOnGroup',
+					'value' => $options['buddypress_enableOnGroup'],
+					'desc' => __('Enable Media on BuddyPress Groups','rtmedia')
 				)
 			),
-			'rt-media-enable-on-activity' => array(
-				'title' => __('Activity Media','rt-media'),
+			'rtmedia-enable-on-activity' => array(
+				'title' => __('Activity Media','rtmedia'),
 				'callback' => array('RTMediaFormHandler', 'checkbox'),
 				'args' => array(
-					'key' => 'buddypress_enable_on_activity',
-					'value' => $options['buddypress_enable_on_activity'],
-					'desc' => __('Enable Media on BuddyPress Activities','rt-media')
+					'key' => 'buddypress_enableOnActivity',
+					'value' => $options['buddypress_enableOnActivity'],
+					'desc' => __('Enable Media on BuddyPress Activities','rtmedia')
 				)
 			)
 		);
@@ -432,8 +432,8 @@ class RTMediaFormHandler {
 
 	public static function buddypress_content() {
 
-		global $rt_media;
-		$options = self::extract_settings('buddypress', $rt_media->options);
+		global $rtmedia;
+		$options = self::extract_settings('buddypress', $rtmedia->options);
 
 		$render_data = self::buddypress_render_options($options);
 

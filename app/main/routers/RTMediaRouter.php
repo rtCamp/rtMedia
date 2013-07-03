@@ -39,7 +39,7 @@ class RTMediaRouter {
 
 		//
 		add_filter('template_include', array($this,'template_include'));
-		add_action('wp_ajax_rt_media_include_gallery_item',array('RTMediaTemplate','include_gallery_item'));
+		add_action('wp_ajax_rtmedia_include_gallery_item',array('RTMediaTemplate','include_gallery_item'));
 
 	}
 
@@ -104,7 +104,7 @@ class RTMediaRouter {
 
 		// otherwise provide a hook for only this route,
 		// pass the slug to the function hooking here
-		do_action("rt_media_".$this->slug."_redirect");
+		do_action("rtmedia_".$this->slug."_redirect");
 
 	}
 
@@ -130,7 +130,7 @@ class RTMediaRouter {
 		$template = $template_load->set_template($template);
 
 
-		$template = apply_filters("rt_media_".$this->slug."_include",$template);
+		$template = apply_filters("rtmedia_".$this->slug."_include",$template);
 
 		// return the template for inclusion in the theme
 
@@ -149,7 +149,7 @@ class RTMediaRouter {
 		global $wp_query;
 		$query_vars_array = explode('/',$wp_query->query_vars[ $this->slug ]);
 
-		$this->query_vars = apply_filters('rt_media_query_vars',$query_vars_array);
+		$this->query_vars = apply_filters('rtmedia_query_vars',$query_vars_array);
 
 	}
 

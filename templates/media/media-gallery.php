@@ -1,15 +1,15 @@
-<div class="rt-media-container">
+<div class="rtmedia-container">
     <?php do_action('rtmedia_before_media_gallery'); ?>
 
-    <?php rt_media_uploader() ?>
+    <?php rtmedia_uploader() ?>
 
-    <h2><?php echo __('Media Gallery', 'rt-media'); ?></h2>
-    <ul class="rt-media-list large-block-grid-5">
-        <?php if (have_rt_media()) { ?>
+    <h2><?php echo __('Media Gallery', 'rtmedia'); ?></h2>
+    <ul class="rtmedia-list rtmedia-list-media large-block-grid-5">
+        <?php if (have_rtmedia()) { ?>
 
 
 
-            <?php while (have_rt_media()) : rt_media(); ?>
+            <?php while (have_rtmedia()) : rtmedia(); ?>
 
                 <?php include ('media-gallery-item.php'); ?>
 
@@ -22,24 +22,24 @@
                                         -- get request parameters will be removed  -->
         <?php
         $display = '';
-        if (rt_media_offset() != 0)
+        if (rtmedia_offset() != 0)
             $display = 'style="display:block;"';
         else
             $display = 'style="display:none;"';
         ?>
-        <a id="rtMedia-galary-prev" <?php echo $display; ?> href="<?php echo rt_media_pagination_prev_link(); ?>"><?php echo __('Prev','rt-media'); ?></a>
+        <a id="rtMedia-galary-prev" <?php echo $display; ?> href="<?php echo rtmedia_pagination_prev_link(); ?>"><?php echo __('Prev','rtmedia'); ?></a>
 
         <?php
         $display = '';
-        if (rt_media_offset() + rt_media_per_page_media() < rt_media_count())
+        if (rtmedia_offset() + rtmedia_per_page_media() < rtmedia_count())
             $display = 'style="display:block;"';
         else
             $display = 'style="display:none;"';
         ?>
-        <a id="rtMedia-galary-next" <?php echo $display; ?> href="<?php echo rt_media_pagination_next_link(); ?>"><?php echo __('Next','rt-media'); ?></a>
+        <a id="rtMedia-galary-next" <?php echo $display; ?> href="<?php echo rtmedia_pagination_next_link(); ?>"><?php echo __('Next','rtmedia'); ?></a>
 
     <?php } else { ?>
-        <p><?php echo __("Oops !! There's no media found for the request !!", "rt-media"); ?></p>
+        <p><?php echo __("Oops !! There's no media found for the request !!", "rtmedia"); ?></p>
     <?php } ?>
 </ul>
 <?php do_action('rtmedia_after_media_gallery'); ?>

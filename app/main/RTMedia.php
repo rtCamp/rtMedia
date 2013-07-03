@@ -117,14 +117,14 @@ class RTMedia {
 
 	function set_site_options() {
 
-		$rt_media_options = rt_media_get_site_option( 'rt-media-options' );
-		$bp_media_options = rt_media_get_site_option( 'bp_media_options' );
+		$rtmedia_options = rtmedia_get_site_option( 'rtmedia-options' );
+		$bp_media_options = rtmedia_get_site_option( 'bp_media_options' );
 
-		if ( $rt_media_options == false ) {
+		if ( $rtmedia_options == false ) {
 			$this->init_site_options();
 		} else {
 			/* if new options added via filter then it needs to be updated */
-			$this->options = $rt_media_options;
+			$this->options = $rtmedia_options;
 		}
 	}
 
@@ -136,31 +136,31 @@ class RTMedia {
 			'photo' => array(
 				'name' => 'photo',
 				'plural' => 'photos',
-				'label' => __( 'Photo', 'rt-media' ),
-				'plural_label' => __( 'Photos', 'rt-media' ),
+				'label' => __( 'Photo', 'rtmedia' ),
+				'plural_label' => __( 'Photos', 'rtmedia' ),
 				'extn' => array( 'jpeg', 'png' ),
 				'thumbnail' => RTMEDIA_URL . 'app/assets/img/image_thumb.png'
 			),
 			'video' => array(
 				'name' => 'video',
 				'plural' => 'videos',
-				'label' => __( 'Video', 'rt-media' ),
-				'plural_label' => __( 'Videos', 'rt-media' ),
+				'label' => __( 'Video', 'rtmedia' ),
+				'plural_label' => __( 'Videos', 'rtmedia' ),
 				'extn' => array( 'mp4' ),
 				'thumbnail' => RTMEDIA_URL . 'app/assets/img/video_thumb.png'
 			),
 			'music' => array(
 				'name' => 'music',
 				'plural' => 'music',
-				'label' => __( 'Music', 'rt-media' ),
-				'plural_label' => __( 'Music', 'rt-media' ),
+				'label' => __( 'Music', 'rtmedia' ),
+				'plural_label' => __( 'Music', 'rtmedia' ),
 				'extn' => array( 'mp3' ),
 				'thumbnail' => RTMEDIA_URL . 'app/assets/img/audio_thumb.png'
 			)
 		);
 
 		// filter for hooking additional media types
-		$allowed_types = apply_filters( 'rt_media_allowed_types', $allowed_types );
+		$allowed_types = apply_filters( 'rtmedia_allowed_types', $allowed_types );
 
 		// sanitize all the types
 		$allowed_types = $this->sanitize_allowed_types( $allowed_types );
@@ -222,7 +222,7 @@ class RTMedia {
 			)
 		);
 
-		$this->default_sizes = apply_filters( 'rt_media_allowed_sizes', $this->default_sizes );
+		$this->default_sizes = apply_filters( 'rtmedia_allowed_sizes', $this->default_sizes );
 	}
 
 	/**
@@ -232,13 +232,13 @@ class RTMedia {
 
 		$this->privacy_settings = array(
 			'levels' => array(
-				60 => __( '<strong>Private</strong> - Visible only to the user', 'rt-media' ),
-				40 => __( '<strong>Friends</strong> - Visible to user\'s friends', 'rt-media' ),
-				20 => __( '<strong>Users</strong> - Visible to registered users', 'rt-media' ),
-				0 => __( '<strong>Public</strong> - Visible to the world', 'rt-media' )
+				60 => __( '<strong>Private</strong> - Visible only to the user', 'rtmedia' ),
+				40 => __( '<strong>Friends</strong> - Visible to user\'s friends', 'rtmedia' ),
+				20 => __( '<strong>Users</strong> - Visible to registered users', 'rtmedia' ),
+				0 => __( '<strong>Public</strong> - Visible to the world', 'rtmedia' )
 			)
 		);
-		$this->privacy_settings = apply_filters( 'rt_media_privacy_levels', $this->privacy_settings );
+		$this->privacy_settings = apply_filters( 'rtmedia_privacy_levels', $this->privacy_settings );
 
 		if ( function_exists( "bp_is_active" ) && ! bp_is_active( 'friends' ) ) {
 			unset( $this->privacy_settings[ 'levels' ][ 40 ] );
@@ -248,11 +248,11 @@ class RTMedia {
 	/**
 	 * Load admin screens
 	 *
-	 * @global RTMediaAdmin $rt_media_admin Class for loading admin screen
+	 * @global RTMediaAdmin $rtmedia_admin Class for loading admin screen
 	 */
 	function admin_init() {
-		global $rt_media_admin;
-		$rt_media_admin = new RTMediaAdmin();
+		global $rtmedia_admin;
+		$rtmedia_admin = new RTMediaAdmin();
 	}
 
 	function media_screen() {
@@ -270,64 +270,35 @@ class RTMedia {
 		return $parent_link;
 	}
 
-	/**
-	 * Load Custom tabs on BuddyPress
-	 *
-	 * @global object $bp global BuddyPress object
-	 */
-	function custom_media_nav_tab() {
-
-		bp_core_new_nav_item( array(
-			'name' => RTMEDIA_MEDIA_LABEL,
-			'slug' => RTMEDIA_MEDIA_SLUG,
-			'default_subnav_slug' => 'all'
-		) );
-
-
-		if ( bp_is_group() ) {
-			global $bp;
-			$bp->bp_options_nav[ bp_get_current_group_slug() ][ 'media' ] = array(
-				'name' => RTMEDIA_MEDIA_LABEL,
-				'link' => ( (is_multisite()) ? get_site_url( get_current_blog_id() ) : get_site_url() ) . '/groups/' . bp_get_current_group_slug() . '/media',
-				'slug' => RTMEDIA_MEDIA_SLUG,
-				'user_has_access' => true,
-				'css_id' => 'rt-media-media-nav',
-				'position' => 99,
-				'default_subnav_slug' => 'all'
-			);
-		}
-	}
-
-
 	public function init_buddypress_options() {
 		/**
 		 * BuddyPress Settings
 		 */
-		$bp_media_options = rt_media_get_site_option( 'bp_media_options' );
+		$bp_media_options = rtmedia_get_site_option( 'bp_media_options' );
 
 		$group = 0;
 		if ( isset( $bp_media_options[ 'enable_on_group' ] ) && ! empty( $bp_media_options[ 'enable_on_group' ] ) )
 			$group = $bp_media_options[ 'enable_on_group' ];
 		else if ( function_exists( "bp_is_active" ) )
 			$group = bp_is_active( 'groups' );
-		$this->options[ 'buddypress_enable_on_group' ] = $group;
+		$this->options[ 'buddypress_enableOnGroup' ] = $group;
 
 		$activity = 0;
 		if ( isset( $bp_media_options[ 'activity_upload' ] ) && ! empty( $bp_media_options[ 'activity_upload' ] ) )
 			$activity = $bp_media_options[ 'activity_upload' ];
 		else if ( function_exists( "bp_is_active" ) )
 			$activity = bp_is_active( 'activity' );
-		$this->options[ 'buddypress_enable_on_activity' ] = $activity;
+		$this->options[ 'buddypress_enableOnActivity' ] = $activity;
 
-		$this->options[ 'buddypress_enable_on_profile' ] = 0;
+		$this->options[ 'buddypress_enableOnProfile' ] = 0;
 
 		/* Last settings updated in options. Update them in DB & after this no other option would be saved in db */
-		rt_media_update_site_option( 'rt-media-options', $this->options );
+		rtmedia_update_site_option( 'rtmedia-options', $this->options );
 	}
 
 	public function init_site_options() {
 
-		$bp_media_options = rt_media_get_site_option( 'bp_media_options' );
+		$bp_media_options = rtmedia_get_site_option( 'bp_media_options' );
 
 		$defaults = array(
 			'general_enableAlbums' => 0,
@@ -382,7 +353,7 @@ class RTMedia {
 
 		$this->options = $defaults;
 
-		add_action( 'bp_include', array( $this, 'init_buddypress_options' ) );
+		$this->init_buddypress_options();
 	}
 
 	/**
@@ -412,13 +383,13 @@ class RTMedia {
 			define( 'RTMEDIA_MEDIA_SLUG', 'media' );
 
 		if ( ! defined( 'RTMEDIA_MEDIA_LABEL' ) )
-			define( 'RTMEDIA_MEDIA_LABEL', __( 'Media', 'rt-media' ) );
+			define( 'RTMEDIA_MEDIA_LABEL', __( 'Media', 'rtmedia' ) );
 
 		if ( ! defined( 'RTMEDIA_ALL_SLUG' ) )
 			define( 'RTMEDIA_ALL_SLUG', 'all' );
 
 		if ( ! defined( 'RTMEDIA_ALL_LABEL' ) )
-			define( 'RTMEDIA_ALL_LABEL', __( 'All', 'rt-media' ) );
+			define( 'RTMEDIA_ALL_LABEL', __( 'All', 'rtmedia' ) );
 
 		if ( ! defined( 'RTMEDIA_ALBUM_SLUG' ) )
 			define( 'RTMEDIA_ALBUM_SLUG', 'album' );
@@ -427,10 +398,10 @@ class RTMedia {
 			define( 'RTMEDIA_ALBUM_PLURAL_SLUG', 'albums' );
 
 		if ( ! defined( 'RTMEDIA_ALBUM_LABEL' ) )
-			define( 'RTMEDIA_ALBUM_LABEL', __( 'Album', 'rt-media' ) );
+			define( 'RTMEDIA_ALBUM_LABEL', __( 'Album', 'rtmedia' ) );
 
 		if ( ! defined( 'RTMEDIA_ALBUM_PLURAL_LABEL' ) )
-			define( 'RTMEDIA_ALBUM_PLURAL_LABEL', __( 'Albums', 'rt-media' ) );
+			define( 'RTMEDIA_ALBUM_PLURAL_LABEL', __( 'Albums', 'rtmedia' ) );
 
 		/* Upload slug */
 		if ( ! defined( 'RTMEDIA_UPLOAD_SLUG' ) )
@@ -438,8 +409,11 @@ class RTMedia {
 
 		/* Upload slug */
 		if ( ! defined( 'RTMEDIA_UPLOAD_LABEL' ) )
-			define( 'RTMEDIA_UPLOAD_LABEL', __( 'Upload', 'rt-media' ) );
+			define( 'RTMEDIA_UPLOAD_LABEL', __( 'Upload', 'rtmedia' ) );
 
+		/* Global Album/Wall Post */
+		if ( ! defined( 'RTMEDIA_GLOBAL_ALBUM_LABEL' ) )
+			define( 'RTMEDIA_GLOBAL_ALBUM_LABEL', __( 'Wall Post', 'rtmedia' ) );
 
 		$this->define_type_constants();
 	}
@@ -522,10 +496,7 @@ class RTMedia {
 		 * BuddyPress - Media Navigation Tab Inject
 		 *
 		 */
-		if ( class_exists( 'BuddyPress' ) ) {
-			add_action( 'bp_init', array( $this, 'custom_media_nav_tab' ), 10, 1 );
-			//add_action( 'bp_init', array( $this, 'custom_media_sub_nav_tab' ), 10, 20 );
-		}
+
 
 		/**
 		 * Load accessory functions
@@ -542,8 +513,8 @@ class RTMedia {
 			'nav'	=> true
 				//'query'		=> false
 		);
-		global $rt_media_nav;
-		print_r($rt_media_nav);
+		global $rtmedia_nav;
+		print_r($rtmedia_nav);
 		$class_construct = apply_filters( 'rtmedia_class_construct', $class_construct );
 
 		foreach ( $class_construct as $key => $global_scope ) {
@@ -558,8 +529,8 @@ class RTMedia {
 
 			if ( class_exists( $class ) ) {
 				if ( $global_scope == true ) {
-					global ${'rt_media_' . $key};
-					${'rt_media_' . $key} = new $class();
+					global ${'rtmedia_' . $key};
+					${'rtmedia_' . $key} = new $class();
 				} else {
 					new $class();
 				}
@@ -572,17 +543,17 @@ class RTMedia {
 		$media->delete_hook();
 
 
-		global $rt_media_ajax;
-		$rt_media_ajax = new RTMediaAJAX();
+		global $rtmedia_ajax;
+		$rtmedia_ajax = new RTMediaAJAX();
 
-		do_action( 'rt_media_init' );
+		do_action( 'rtmedia_init' );
 	}
 
 	/**
 	 * Loads translations
 	 */
 	static function load_translation() {
-		load_plugin_textdomain( 'rt-media', false, basename( RTMEDIA_PATH ) . '/languages/' );
+		load_plugin_textdomain( 'rtmedia', false, basename( RTMEDIA_PATH ) . '/languages/' );
 	}
 
 	function flush_rewrite() {
@@ -600,7 +571,7 @@ class RTMedia {
 
 		//**
 		if ( ! $global_album ) {
-			$global_album = $album->add_global( __( "rtMedia Global Album", "rt-media" ) );
+			$global_album = $album->add_global( __( "Wall Posts", "rtmedia", true ) );
 		}
 	}
 
@@ -630,13 +601,13 @@ class RTMedia {
 	}
 
 	function enqueue_scripts_styles() {
-		wp_enqueue_script( 'rt-media-mejs', RTMEDIA_URL . 'lib/media-element/mediaelement-and-player.min.js', '', RTMEDIA_VERSION );
-		wp_enqueue_style( 'rt-media-mecss', RTMEDIA_URL . 'lib/media-element/mediaelementplayer.min.css', '', RTMEDIA_VERSION );
-		wp_enqueue_style( 'rt-media-main', RTMEDIA_URL . 'app/assets/css/main.css', '', RTMEDIA_VERSION );
-		wp_enqueue_script( 'rt-media-main', RTMEDIA_URL . 'app/assets/js/rtMedia.js', array( 'jquery', 'rt-media-mejs' ), RTMEDIA_VERSION );
-		wp_enqueue_style( 'rt-media-magnific', RTMEDIA_URL . 'lib/magnific/magnific.css', '', RTMEDIA_VERSION );
-		wp_enqueue_script( 'rt-media-magnific', RTMEDIA_URL . 'lib/magnific/magnific.js', '', RTMEDIA_VERSION );
-		wp_localize_script( 'rt-media-main', 'rt_media_ajax_url', admin_url( 'admin-ajax.php' ) );
+		wp_enqueue_script( 'rtmedia-mejs', RTMEDIA_URL . 'lib/media-element/mediaelement-and-player.min.js', '', RTMEDIA_VERSION );
+		wp_enqueue_style( 'rtmedia-mecss', RTMEDIA_URL . 'lib/media-element/mediaelementplayer.min.css', '', RTMEDIA_VERSION );
+		wp_enqueue_style( 'rtmedia-main', RTMEDIA_URL . 'app/assets/css/main.css', '', RTMEDIA_VERSION );
+		wp_enqueue_script( 'rtmedia-main', RTMEDIA_URL . 'app/assets/js/rtMedia.js', array( 'jquery', 'rtmedia-mejs' ), RTMEDIA_VERSION );
+		wp_enqueue_style( 'rtmedia-magnific', RTMEDIA_URL . 'lib/magnific/magnific.css', '', RTMEDIA_VERSION );
+		wp_enqueue_script( 'rtmedia-magnific', RTMEDIA_URL . 'lib/magnific/magnific.js', '', RTMEDIA_VERSION );
+		wp_localize_script( 'rtmedia-main', 'rtmedia_ajax_url', admin_url( 'admin-ajax.php' ) );
 	}
 
 	function set_bp_bar() {
@@ -655,17 +626,17 @@ class RTMedia {
 
 }
 
-function get_rt_media_permalink( $id ) {
+function get_rtmedia_permalink( $id ) {
 	$mediaModel = new RTMediaModel();
 
 	$media = $mediaModel->get( array( 'id' => $id ) );
 
-	$parent_link = get_rt_media_user_link( $media[ 0 ]->media_author );
+	$parent_link = get_rtmedia_user_link( $media[ 0 ]->media_author );
 
 	return trailingslashit( $parent_link . 'media/' . $id );
 }
 
-function get_rt_media_user_link( $id ) {
+function get_rtmedia_user_link( $id ) {
 	if ( function_exists( 'bp_core_get_user_domain' ) ) {
 		$parent_link = bp_core_get_user_domain( $id );
 	} else {
@@ -674,16 +645,22 @@ function get_rt_media_user_link( $id ) {
 	return $parent_link;
 }
 
-function rt_media_update_site_option( $option_name, $option_value ) {
+function rtmedia_update_site_option( $option_name, $option_value ) {
 	update_site_option( $option_name, $option_value );
 }
 
-function rt_media_get_site_option( $option_name, $default = false ) {
+function get_rtmedia_group_link( $group_id){
+	global $bp;
+	$group = groups_get_group( array( 'group_id' => $group_id ) );
+	return home_url( $bp->groups->slug . '/' . $group -> slug );
+}
+
+function rtmedia_get_site_option( $option_name, $default = false ) {
 	$return_val = get_site_option( $option_name );
 	if ( $return_val === false ) {
 		if ( function_exists( "bp_get_option" ) ) {
 			$return_val = bp_get_option( $option_name, $default );
-			rt_media_update_site_option( $option_name, $return_val );
+			rtmedia_update_site_option( $option_name, $return_val );
 		}
 	}
 	if ( $default !== false && $return_val === false ) {

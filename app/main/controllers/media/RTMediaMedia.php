@@ -41,11 +41,11 @@ class RTMediaMedia {
      */
     static function media_nonce_generator($id, $echo = true) {
         if ($echo) {
-            wp_nonce_field('rt_media_' . $id, 'rt_media_media_nonce');
+            wp_nonce_field('rtmedia_' . $id, 'rtmedia_media_nonce');
         } else {
             $token = array(
-                'action' => 'rt_media_media_nonce',
-                'nonce' => wp_create_nonce('rt_media_' . $id)
+                'action' => 'rtmedia_media_nonce',
+                'nonce' => wp_create_nonce('rtmedia_' . $id)
             );
 
             return json_encode($token);
@@ -61,10 +61,10 @@ class RTMediaMedia {
      */
     function verify_nonce($mode) {
 
-        $nonce = $_REQUEST["rt_media_{$mode}_media_nonce"];
+        $nonce = $_REQUEST["rtmedia_{$mode}_media_nonce"];
         $mode = $_REQUEST['mode'];
 
-        if (wp_verify_nonce($nonce, 'rt_media_' . $mode))
+        if (wp_verify_nonce($nonce, 'rtmedia_' . $mode))
             return true;
         else
             return false;
@@ -75,7 +75,7 @@ class RTMediaMedia {
      * when a media is deleted externally out of rtMedia context
      */
     public function delete_hook() {
-        add_action('delete_attachment', array($this, 'delete'));
+        add_action('delete_attachment', array($this, 'delete_wordpress_attachment'));
     }
 
     /**
@@ -141,9 +141,9 @@ class RTMediaMedia {
      * @return type
      */
     function add($uploaded, $file_object) {
-        
+
         /* action to perform any task before adding a media */
-        do_action('rt_media_before_add_media', $file_object, $uploaded);
+        do_action('rtmedia_before_add_media', $file_object, $uploaded);
 
         /* Generate media details required to feed in database */
         $attachments = $this->generate_post_array($uploaded, $file_object);
@@ -160,10 +160,10 @@ class RTMediaMedia {
 
 
         /* add media in rtMedia context */
-        $media_ids = $this->insert_media($attachment_ids, $uploaded);
-        
+        $media_ids = $this->insertmedia($attachment_ids, $uploaded);
+
         /* action to perform any task after adding a media */
-        do_action('rt_media_after_add_media', $media_ids, $file_object, $uploaded);
+        do_action('rtmedia_after_add_media', $media_ids, $file_object, $uploaded);
 
         return $media_ids;
     }
@@ -178,7 +178,7 @@ class RTMediaMedia {
     function update($id, $data, $media_id) {
 
         /* action to perform any task before updating a media */
-        do_action('rt_media_before_update_media', $this);
+        do_action('rtmedia_before_update_media', $this);
 
         $defaults = array();
         $data = wp_parse_args($data, $defaults);
@@ -203,8 +203,24 @@ class RTMediaMedia {
             return false;
         } else {
             /* action to perform any task after updating a media */
-            do_action('rt_media_after_update_media', $this);
+            do_action('rtmedia_after_update_media', $this);
             return true;
+        }
+    }
+
+    /**
+     * Generic method to delete a media from wordpress media library ( other than by rtMedia )
+     *
+     * @param type $media_id
+     * @return boolean
+     */
+    function delete_wordpress_attachment($id){
+        $media = $this->model->get(array('media_id' => $id), false, false);
+
+        if ($media) {
+            /* delete meta */
+            delete_rtmedia_meta($media[0]->id);
+            $this->model->delete(array('id' => $media[0]->id));
         }
     }
 
@@ -215,8 +231,7 @@ class RTMediaMedia {
      * @return boolean
      */
     function delete($id) {
-
-        do_action('rt_media_before_delete_media', $this);
+        do_action('rtmedia_before_delete_media', $this);
 
         $media = $this->model->get(array('id' => $id), false, false);
 
@@ -232,7 +247,7 @@ class RTMediaMedia {
         if ($status == 0) {
             return false;
         } else {
-            do_action('rt_media_after_delete_media', $this);
+            do_action('rtmedia_after_delete_media', $this);
             return true;
         }
     }
@@ -282,7 +297,8 @@ class RTMediaMedia {
         if (!function_exists('bp_is_active') || !bp_is_active('activity'))
             return false;
 
-        return rt_media_get_site_option('rt-media-enable-on-activity');
+		global $rtmedia;
+        return $rtmedia->options['buddypress_enableOnActivity'];
     }
 
     /**
@@ -324,7 +340,7 @@ class RTMediaMedia {
         foreach ($attachments as $key => $attachment) {
             $attachment_id = wp_insert_attachment($attachment, $file_object[$key]['file'], $attachment['post_parent']);
             if (!is_wp_error($attachment_id)) {
-//                add_filter('intermediate_image_sizes', array($this, 'rt_media_image_sizes'), 99);
+//                add_filter('intermediate_image_sizes', array($this, 'rtmedia_image_sizes'), 99);
                 wp_update_attachment_metadata($attachment_id, wp_generate_attachment_metadata($attachment_id, $file_object[$key]['file']));
             } else {
                 unlink($file_object[$key]['file']);
@@ -367,11 +383,11 @@ class RTMediaMedia {
      * @param type $attachment_ids
      * @param type $uploaded
      */
-    function insert_media($attachment_ids, $uploaded) {
+    function insertmedia($attachment_ids, $uploaded) {
 
         $defaults = array(
             'activity_id' => $this->activity_enabled(),
-            'privacy' => false
+            'privacy' => 0
         );
 
         $uploaded = wp_parse_args($uploaded, $defaults);
@@ -404,7 +420,7 @@ class RTMediaMedia {
         $activity = new RTMediaActivity($id, $media->privacy);
         $activity_content = $activity->create_activity_html();
         $user = get_userdata($media->media_author);
-        $username = '<a href="' . get_rt_media_user_link($media->media_author) . '">' . $user->user_nicename . '</a>';
+        $username = '<a href="' . get_rtmedia_user_link($media->media_author) . '">' . $user->user_nicename . '</a>';
         $count = count($id);
         $media_const = 'RTMEDIA_' . strtoupper($media->media_type);
         if ($count > 1) {
@@ -416,7 +432,7 @@ class RTMediaMedia {
 
         $action = sprintf(
                 _n(
-                        '%s added a %s', '%s added %d %s.', $count, 'rt-media'
+                        '%s added a %s', '%s added %d %s.', $count, 'rtmedia'
                 ), $username, $media->media_type, $media_str
         );
 
@@ -432,7 +448,7 @@ class RTMediaMedia {
         }
 
         $activity_id = bp_activity_add($activity_args);
-		bp_activity_update_meta($activity_id, 'privacy', ($media->privacy==0)?-1:$media->privacy);
+		bp_activity_update_meta($activity_id, 'rtmedia_privacy', ($media->privacy==0)?-1:$media->privacy);
 
 
         $this->model->update(

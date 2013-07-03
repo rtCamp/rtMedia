@@ -1,14 +1,14 @@
-<li class="rt-media-list-item">
-    <div class="rt-media-item-thumbnail">
-        <a href ="<?php rt_media_permalink(); ?>">
-            <img src="<?php rt_media_image('thumbnail'); ?>">
+<li class="rtmedia-list-item">
+    <div class="rtmedia-item-thumbnail">
+        <a href ="<?php rtmedia_permalink(); ?>">
+            <img src="<?php rtmedia_image('thumbnail'); ?>">
         </a>
     </div>
 
-    <div class="rt-media-item-title">
-        <h4 title="<?php echo rt_media_title(); ?>">
-            <a href="<?php rt_media_permalink(); ?>">
-                <?php echo rt_media_title(); ?>
+    <div class="rtmedia-item-title">
+        <h4 title="<?php echo rtmedia_title(); ?>">
+            <a href="<?php rtmedia_permalink(); ?>">
+                <?php echo rtmedia_title(); ?>
             </a>
         </h4>
     </div>

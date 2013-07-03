@@ -20,7 +20,7 @@ class RTMediaPrivacy {
 	public $default_privacy;
 
 	function __construct() {
-		add_action('rt_media_after_file_upload_ui',array($this,'select_privacy_ui'));
+		add_action('rtmedia_after_file_upload_ui',array($this,'select_privacy_ui'));
 		add_action('bp_init',array($this,'add_nav'));
 		add_action('bp_template_content',array($this,'content'));
 		add_filter('bp_activity_get_user_join_filter',array($this,'activity_privacy'),10,6);
@@ -33,10 +33,11 @@ class RTMediaPrivacy {
 				'name' => 'privacy',
 				'id' => 'privacy'
 			);
-			global $rt_media;
-			foreach ($rt_media->privacy_settings['levels'] as $key => $value) {
+			global $rtmedia;
+			foreach ($rtmedia->privacy_settings['levels'] as $key => $value) {
+				$privacy = explode(' - ', $value);
 				$attributes['rtForm_options'][] = array(
-					$value => $key,
+					$privacy[0] => $key,
 					'selected' => ($key=='0') ? 1 : 0
 				);
 			}
@@ -51,7 +52,7 @@ class RTMediaPrivacy {
 	public function site_default(){
 		global $rtmedia;
 
-		return rt_media_get_site_option('privacy_settings');
+		return rtmedia_get_site_option('privacy_settings');
 	}
 
 	public function user_default(){
@@ -145,7 +146,7 @@ class RTMediaPrivacy {
 		'slug'            => 'privacy', // URL slug for the nav item
 		'parent_slug'     => 'settings', // URL slug of the parent nav item
 		'parent_url'      => $settings_link, // URL of the parent item
-		'item_css_id'     => 'rt-media-privacy-settings', // The CSS ID to apply to the HTML of the nav item
+		'item_css_id'     => 'rtmedia-privacy-settings', // The CSS ID to apply to the HTML of the nav item
 		'user_has_access' => true,  // Can the logged in user see this nav item?
 		'site_admin_only' => false, // Can only site admins see this nav item?
 		'position'        => 900,    // Index of where this nav item should be positioned
@@ -170,14 +171,14 @@ class RTMediaPrivacy {
 	function content(){
 		if (buddypress()->current_action != 'privacy') return;
 
-		global $rt_media;
+		global $rtmedia;
 		$default_user_privacy = array(
-			'title' => __("Default Privacy","rt-media"),
+			'title' => __("Default Privacy","rtmedia"),
 			'callback' => array("RTMediaFormHandler","radio"),
 			'args' => array(
 				'key' => 'privacy_default',
-				'radios' => $rt_media->privacy_settings['levels'],
-				'default' => get_user_meta(get_current_user_id(),'rt-media-default-privacy')
+				'radios' => $rtmedia->privacy_settings['levels'],
+				'default' => get_user_meta(get_current_user_id(),'rtmedia-default-privacy')
 			)
 		);
 ?>
@@ -192,7 +193,7 @@ class RTMediaPrivacy {
 <?php	}
 
 	function title(){
-		return __('Privacy','rt-media');
+		return __('Privacy','rtmedia');
 	}
 
 	function activity_privacy($sql, $select_sql, $from_sql, $where_sql,$sort,$pag_sql=''){
@@ -206,15 +207,38 @@ class RTMediaPrivacy {
 
 		$sql = '';
 
+		$where = '';
+
 		//$from_sql = " FROM {$bp->activity->table_name} a LEFT JOIN {$wpdb->users} u ON a.user_id = u.ID";
 
 		global $bp,$wpdb;
 
+		if ( is_user_logged_in() ) {
+			$user = get_current_user_id();
+		} else {
+			$user = 0;
+		}
+
+		$where .= "AND (m.meta_value=0)";
+
+		if ( $user ) {
+			$where .= "AND ((m.meta_value=20)";
+			$where .= " OR (a.user_id={$user} AND m.meta_value>=40)";
+			if ( class_exists( 'BuddyPress' ) ) {
+				if ( bp_is_active( 'friends' ) ) {
+					$friendship = new RTMediaFriends();
+					$friends = $friendship->get_friends_cache( $user );
+					$where .= " OR (m.meta_value=40 AND a.user_id IN ('". implode("','", $friends)."'))";
+				}
+			}
+			$where .= ')';
+		}
+
+
+
 		$from_sql = " FROM {$bp->activity->table_name} a LEFT JOIN {$wpdb->users} u ON a.user_id = u.ID LEFT JOIN {$bp->activity->table_name_meta} m ON a.id = m.activity_id";
-		$where_sql = $where_sql . " AND (NOT EXISTS (SELECT m.activity_id FROM wp_bp_activity_meta m WHERE m.meta_key='bp_media_privacy' AND m.activity_id=a.id)  OR (m.meta_key='bp_media_privacy' AND m.meta_value<1 ) )";
-
+		$where_sql = $where_sql . " AND (NOT EXISTS (SELECT m.activity_id FROM wp_bp_activity_meta m WHERE m.meta_key='rtmedia_privacy' AND m.activity_id=a.id) OR (m.meta_key='rtmedia_privacy' {$where} ) )";
 		$newsql = "{$select_sql} {$from_sql} {$where_sql} ORDER BY a.date_recorded {$sort} {$pag_sql}";
-
 		return $newsql;
 	}
 

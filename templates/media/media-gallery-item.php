@@ -17,33 +17,33 @@ if ( ! defined( 'WP_LOAD_PATH' ) ) {
 	require_once( WP_LOAD_PATH . 'wp-load.php');
 }
 
-global $rt_media_backbone;
-$rt_media_backbone = array(
+global $rtmedia_backbone;
+$rtmedia_backbone = array(
 	'backbone' => false,
 	'is_album' => false,
 	'is_edit_allowed' => false
 );
 if ( isset( $_POST[ 'backbone' ] ) )
-	$rt_media_backbone['backbone'] = $_POST[ 'backbone' ];
+	$rtmedia_backbone['backbone'] = $_POST[ 'backbone' ];
 if ( isset( $_POST[ 'is_album' ] ) )
-	$rt_media_backbone['is_album'] = $_POST[ 'is_album' ];
+	$rtmedia_backbone['is_album'] = $_POST[ 'is_album' ][0];
 if ( isset( $_POST[ 'is_edit_allowed' ] ) )
-	$rt_media_backbone['is_edit_allowed'] = $_POST[ 'is_edit_allowed' ];
+	$rtmedia_backbone['is_edit_allowed'] = $_POST[ 'is_edit_allowed' ][0];
 ?>
-<li class="rt-media-list-item">
+<li class="rtmedia-list-item">
 	<?php do_action( 'rtmedia_before_item' ); ?>
-	<a href ="<?php rt_media_permalink(); ?>">
-		<div class="rt-media-item-thumbnail">
+	<a href ="<?php rtmedia_permalink(); ?>">
+		<div class="rtmedia-item-thumbnail">
 
-            <img src="<?php rt_media_image(); ?>" >
+            <img src="<?php rtmedia_image(); ?>" >
 
 		</div>
 
-		<div class="rt-media-item-title">
-			<h4 title="<?php echo rt_media_title(); ?>">
+		<div class="rtmedia-item-title">
+			<h4 title="<?php echo rtmedia_title(); ?>">
 
 
-				<?php echo rt_media_title(); ?>
+				<?php echo rtmedia_title(); ?>
 
 			</h4>
 		</div>
