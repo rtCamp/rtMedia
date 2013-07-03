@@ -54,19 +54,19 @@ class RTMediaQuery {
 	/**
 	 * Initialise the query
 	 *
-	 * @global object $rt_media_interaction The global interaction object
+	 * @global object $rtmedia_interaction The global interaction object
 	 * @param array $args The query arguments
 	 */
 	function __construct( $args = false ) {
 
 		// set up the interaction object relevant to just the query
 		// we only need information related to the media route
-		global $rt_media_interaction;
+		global $rtmedia_interaction;
 
 		$this->model = new RTMediaModel();
 
 
-		$this->interaction = $rt_media_interaction->routes[ 'media' ];
+		$this->interaction = $rtmedia_interaction->routes[ 'media' ];
 
 		$this->friendship = new RTMediaFriends();
 
@@ -80,7 +80,7 @@ class RTMediaQuery {
 		// set up the action query from the URL
 		$this->set_action_query();
 
-		add_filter( 'rt-media-model-where-query', array( $this, 'privacy_filter' ),1,2 );
+		add_filter( 'rtmedia-model-where-query', array( $this, 'privacy_filter' ),1,2 );
 
 		// if no args were supplied, initialise the $args
 		if ( empty( $args ) ) {
@@ -328,16 +328,16 @@ class RTMediaQuery {
 		}
 
 
-		global $rt_media;
+		global $rtmedia;
 
-		//if ( ! $rt_media->get_option( 'media_end_point_enable' ) )
+		//if ( ! $rtmedia->get_option( 'media_end_point_enable' ) )
 		//include get_404_template();
 
 		/**
 		 * set action query object
 		 * setting parameters in action query object for pagination
 		 */
-		$per_page_media = intval( $rt_media->options[ 'general_perPageMedia' ] );
+		$per_page_media = intval( $rtmedia->options[ 'general_perPageMedia' ] );
 
 
 		$this->action_query = (object) array(
@@ -354,7 +354,7 @@ class RTMediaQuery {
 	 * additional actions to be added via action hook
 	 */
 	function set_actions() {
-		$this->actions = apply_filters( 'rt_media_query_actions', $this->actions );
+		$this->actions = apply_filters( 'rtmedia_query_actions', $this->actions );
 	}
 
 	/**
@@ -473,8 +473,8 @@ class RTMediaQuery {
 	}
 
 	function album_or_media(){
-		global $rt_media;
-		foreach ( $rt_media->allowed_types as $value ) {
+		global $rtmedia;
+		foreach ( $rtmedia->allowed_types as $value ) {
 			$allowed_media_types[ ] = $value[ 'name' ];
 		}
 
@@ -511,7 +511,7 @@ class RTMediaQuery {
 		}
 		$order_by .= ' ' . $order;
 
-		return $order_by = apply_filters('rt_media_model_order_by', $order_by);
+		return $order_by = apply_filters('rtmedia_model_order_by', $order_by);
 	}
 
 	function populate_album() {
@@ -526,9 +526,9 @@ class RTMediaQuery {
 	function populate_comments() {
 
 		$this->model = new RTMediaCommentModel();
-		global $rt_media_interaction;
+		global $rtmedia_interaction;
 
-		return $this->model->get( array( 'post_id' => $rt_media_interaction->context->id ) );
+		return $this->model->get( array( 'post_id' => $rtmedia_interaction->context->id ) );
 	}
 
 	/**
@@ -668,7 +668,7 @@ class RTMediaQuery {
 		if ( $curr + 1 < $per_page && $total > $offset + $curr + 1 ) {
 			return true;
 		} elseif ( $curr + 1 == $per_page && $per_page > 0 ) {
-			do_action_ref_array( 'rt_media_loop_end', array( &$this ) );
+			do_action_ref_array( 'rtmedia_loop_end', array( &$this ) );
 			// Do some cleaning up after the loop
 			$this->rewind_media();
 		}
@@ -679,16 +679,16 @@ class RTMediaQuery {
 
 	/**
 	 * moves ahead in the loop of media within the album
-	 * @global type $rt_media_media
+	 * @global type $rtmedia_media
 	 */
-	function rt_media() {
-		global $rt_media_media;
+	function rtmedia() {
+		global $rtmedia_media;
 		$this->in_the_media_loop = true;
 
 		if ( $this->current_media == -1 ) // loop has just started
-			do_action_ref_array( 'rt_media_loop_start', array( &$this ) );
+			do_action_ref_array( 'rtmedia_loop_start', array( &$this ) );
 
-		return $rt_media_media = $this->next_media();
+		return $rtmedia_media = $this->next_media();
 	}
 
 	/**
@@ -698,22 +698,22 @@ class RTMediaQuery {
 	function next_media() {
 		$this->current_media ++;
 
-		$this->rt_media = $this->media[ $this->current_media ];
-		return $this->rt_media;
+		$this->rtmedia = $this->media[ $this->current_media ];
+		return $this->rtmedia;
 	}
 
 	function permalink() {
 
-		global $rt_media_media;
+		global $rtmedia_media;
 		$parent_link = '';
 
 		if ( function_exists( 'bp_core_get_user_domain' ) ) {
-			$parent_link = bp_core_get_user_domain( $rt_media_media->media_author );
+			$parent_link = bp_core_get_user_domain( $rtmedia_media->media_author );
 		} else {
-			$parent_link = get_author_posts_url( $rt_media_media->media_author );
+			$parent_link = get_author_posts_url( $rtmedia_media->media_author );
 		}
 
-		$link = trailingslashit( $parent_link . 'media/' . $rt_media_media->id );
+		$link = trailingslashit( $parent_link . 'media/' . $rtmedia_media->id );
 
 		return $link;
 	}

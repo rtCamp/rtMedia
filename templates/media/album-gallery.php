@@ -1,14 +1,14 @@
-<div class="rt-media-container">
+<div class="rtmedia-container">
 
-	<?php rt_media_uploader() ?>
+	<?php rtmedia_uploader() ?>
 
-    <?php if (have_rt_media()) { ?>
+    <?php if (have_rtmedia()) { ?>
 
-        <h2><?php echo __('Album Gallery','rt-media'); ?></h2>
+        <h2><?php echo __('Album Gallery','rtmedia'); ?></h2>
 
-        <ul class="rt-media-list large-block-grid-5">
+        <ul class="rtmedia-list large-block-grid-5">
 
-            <?php while (have_rt_media()) : rt_media(); ?>
+            <?php while (have_rtmedia()) : rtmedia(); ?>
 
                 <?php include ('album-gallery-item.php'); ?>
 
@@ -19,28 +19,28 @@
 
         <!--  these links will be handled by backbone later
                         -- get request parameters will be removed  -->
-        <?php if(rt_media_offset() != 0) { ?>
-            <a href="?rt_media_page=<?php echo rt_media_page()-1; ?>"><?php echo __('Prev','rt-media'); ?></a>
+        <?php if(rtmedia_offset() != 0) { ?>
+            <a href="?rtmedia_page=<?php echo rtmedia_page()-1; ?>"><?php echo __('Prev','rtmedia'); ?></a>
         <?php } ?>
-        <?php if(rt_media_offset()+ rt_media_per_page_media() < rt_media_count()) { ?>
-            <a href="?rt_media_page=<?php echo rt_media_page()+1; ?>"><?php echo __('Next','rt-media'); ?></a>
+        <?php if(rtmedia_offset()+ rtmedia_per_page_media() < rtmedia_count()) { ?>
+            <a href="?rtmedia_page=<?php echo rtmedia_page()+1; ?>"><?php echo __('Next','rtmedia'); ?></a>
         <?php } ?>
 
 	<?php } else { ?>
-		<p><?php echo __("Oops !! There's no media found for the request !!","rt-media"); ?></p>
+		<p><?php echo __("Oops !! There's no media found for the request !!","rtmedia"); ?></p>
 	<?php } ?>
 
 </div>
 
 <!-- template for single media in gallery -->
-<script id="rt-media-gallery-item-template" type="text/template">
-    <div class="rt-media-item-thumbnail">
+<script id="rtmedia-gallery-item-template" type="text/template">
+    <div class="rtmedia-item-thumbnail">
         <a href ="media/<%= id %>">
             <img src="<%= guid %>">
         </a>
     </div>
 
-    <div class="rt-media-item-title">
+    <div class="rtmedia-item-title">
         <h4 title="<%= media_title %>">
             <a href="media/<%= id %>">
                 <%= media_title %>
@@ -48,4 +48,4 @@
         </h4>
     </div>
 </script>
-<!-- rt_media_actions remained in script tag -->
+<!-- rtmedia_actions remained in script tag -->

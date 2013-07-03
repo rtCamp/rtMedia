@@ -13,7 +13,7 @@ if (!class_exists('RTMediaSupport')) {
 
         public function __construct() {
             $this->debug_info();
-            add_action('rt_media_admin_page_insert', array($this, 'debug_info_html'));
+            add_action('rtmedia_admin_page_insert', array($this, 'debug_info_html'));
         }
 
         public function debug_info() {
@@ -45,10 +45,10 @@ if (!class_exists('RTMediaSupport')) {
         }
 
         public function debug_info_html($page) {
-            if ('rt-media-support' == $page) {
+            if ('rtmedia-support' == $page) {
                 ?>
                 <div id="debug-info">
-                    <h3><?php _e('Debug info', 'rt-media'); ?></h3>
+                    <h3><?php _e('Debug info', 'rtmedia'); ?></h3>
                     <table class="form-table">
                         <tbody><?php
                 if ($this->debug_info) {
@@ -79,13 +79,13 @@ if (!class_exists('RTMediaSupport')) {
             global $current_user;
             switch ($form) {
                 case "bug_report":
-                    $meta_title = __('Submit a Bug Report', 'rt-media');
+                    $meta_title = __('Submit a Bug Report', 'rtmedia');
                     break;
                 case "new_feature":
-                    $meta_title = __('Submit a New Feature Request', 'rt-media');
+                    $meta_title = __('Submit a New Feature Request', 'rtmedia');
                     break;
                 case "premium_support":
-                    $meta_title = __('Submit a Premium Support Request', 'rt-media');
+                    $meta_title = __('Submit a Premium Support Request', 'rtmedia');
                     break;
             }
             ?>
@@ -93,22 +93,22 @@ if (!class_exists('RTMediaSupport')) {
             <div id="support-form" class="bp-media-form">
                 <ul>
                     <li>
-                        <label class="bp-media-label" for="name"><?php _e('Name', 'rt-media'); ?>:</label><input class="bp-media-input" id="name" type="text" name="name" value="<?php echo (isset($_REQUEST['name'])) ? esc_attr(stripslashes(trim($_REQUEST['name']))) : $current_user->display_name; ?>" required />
+                        <label class="bp-media-label" for="name"><?php _e('Name', 'rtmedia'); ?>:</label><input class="bp-media-input" id="name" type="text" name="name" value="<?php echo (isset($_REQUEST['name'])) ? esc_attr(stripslashes(trim($_REQUEST['name']))) : $current_user->display_name; ?>" required />
                     </li>
                     <li>
-                        <label class="bp-media-label" for="email"><?php _e('Email', 'rt-media'); ?>:</label><input id="email" class="bp-media-input" type="text" name="email" value="<?php echo (isset($_REQUEST['email'])) ? esc_attr(stripslashes(trim($_REQUEST['email']))) : get_option('admin_email'); ?>" required />
+                        <label class="bp-media-label" for="email"><?php _e('Email', 'rtmedia'); ?>:</label><input id="email" class="bp-media-input" type="text" name="email" value="<?php echo (isset($_REQUEST['email'])) ? esc_attr(stripslashes(trim($_REQUEST['email']))) : get_option('admin_email'); ?>" required />
                     </li>
                     <li>
-                        <label class="bp-media-label" for="website"><?php _e('Website', 'rt-media'); ?>:</label><input id="website" class="bp-media-input" type="text" name="website" value="<?php echo (isset($_REQUEST['website'])) ? esc_attr(stripslashes(trim($_REQUEST['website']))) : get_bloginfo('url'); ?>" required />
+                        <label class="bp-media-label" for="website"><?php _e('Website', 'rtmedia'); ?>:</label><input id="website" class="bp-media-input" type="text" name="website" value="<?php echo (isset($_REQUEST['website'])) ? esc_attr(stripslashes(trim($_REQUEST['website']))) : get_bloginfo('url'); ?>" required />
                     </li>
                     <li>
-                        <label class="bp-media-label" for="phone"><?php _e('Phone', 'rt-media'); ?>:</label><input class="bp-media-input" id="phone" type="text" name="phone" value="<?php echo (isset($_REQUEST['phone'])) ? esc_attr(stripslashes(trim($_REQUEST['phone']))) : ''; ?>"/>
+                        <label class="bp-media-label" for="phone"><?php _e('Phone', 'rtmedia'); ?>:</label><input class="bp-media-input" id="phone" type="text" name="phone" value="<?php echo (isset($_REQUEST['phone'])) ? esc_attr(stripslashes(trim($_REQUEST['phone']))) : ''; ?>"/>
                     </li>
                     <li>
-                        <label class="bp-media-label" for="subject"><?php _e('Subject', 'rt-media'); ?>:</label><input id="subject" class="bp-media-input" type="text" name="subject" value="<?php echo (isset($_REQUEST['subject'])) ? esc_attr(stripslashes(trim($_REQUEST['subject']))) : ''; ?>" required />
+                        <label class="bp-media-label" for="subject"><?php _e('Subject', 'rtmedia'); ?>:</label><input id="subject" class="bp-media-input" type="text" name="subject" value="<?php echo (isset($_REQUEST['subject'])) ? esc_attr(stripslashes(trim($_REQUEST['subject']))) : ''; ?>" required />
                     </li>
                     <li>
-                        <label class="bp-media-label" for="details"><?php _e('Details', 'rt-media'); ?>:</label><textarea id="details" class="bp-media-textarea" type="text" name="details" required/><?php echo (isset($_REQUEST['details'])) ? esc_textarea(stripslashes(trim($_REQUEST['details']))) : ''; ?></textarea>
+                        <label class="bp-media-label" for="details"><?php _e('Details', 'rtmedia'); ?>:</label><textarea id="details" class="bp-media-textarea" type="text" name="details" required/><?php echo (isset($_REQUEST['details'])) ? esc_textarea(stripslashes(trim($_REQUEST['details']))) : ''; ?></textarea>
                     </li>
                     <input type="hidden" name="request_type" value="<?php echo $form; ?>"/>
                     <input type="hidden" name="request_id" value="<?php echo wp_create_nonce(date('YmdHis')); ?>"/>
@@ -119,24 +119,24 @@ if (!class_exists('RTMediaSupport')) {
 
                 </ul>
             </div><!-- .submit-bug-box --><?php if ($form == 'bug_report') { ?>
-                <h3><?php _e('Additional Information', 'rt-media'); ?></h3>
+                <h3><?php _e('Additional Information', 'rtmedia'); ?></h3>
                 <div id="support-form" class="bp-media-form">
                     <ul>
 
                         <li>
-                            <label class="bp-media-label" for="wp_admin_username"><?php _e('Your WP Admin Login:', 'rt-media'); ?></label><input class="bp-media-input" id="wp_admin_username" type="text" name="wp_admin_username" value="<?php echo (isset($_REQUEST['wp_admin_username'])) ? esc_attr(stripslashes(trim($_REQUEST['wp_admin_username']))) : $current_user->user_login; ?>"/>
+                            <label class="bp-media-label" for="wp_admin_username"><?php _e('Your WP Admin Login:', 'rtmedia'); ?></label><input class="bp-media-input" id="wp_admin_username" type="text" name="wp_admin_username" value="<?php echo (isset($_REQUEST['wp_admin_username'])) ? esc_attr(stripslashes(trim($_REQUEST['wp_admin_username']))) : $current_user->user_login; ?>"/>
                         </li>
                         <li>
-                            <label class="bp-media-label" for="wp_admin_pwd"><?php _e('Your WP Admin password:', 'rt-media'); ?></label><input class="bp-media-input" id="wp_admin_pwd" type="password" name="wp_admin_pwd" value="<?php echo (isset($_REQUEST['wp_admin_pwd'])) ? esc_attr(stripslashes(trim($_REQUEST['wp_admin_pwd']))) : ''; ?>"/>
+                            <label class="bp-media-label" for="wp_admin_pwd"><?php _e('Your WP Admin password:', 'rtmedia'); ?></label><input class="bp-media-input" id="wp_admin_pwd" type="password" name="wp_admin_pwd" value="<?php echo (isset($_REQUEST['wp_admin_pwd'])) ? esc_attr(stripslashes(trim($_REQUEST['wp_admin_pwd']))) : ''; ?>"/>
                         </li>
                         <li>
-                            <label class="bp-media-label" for="ssh_ftp_host"><?php _e('Your SSH / FTP host:', 'rt-media'); ?></label><input class="bp-media-input" id="ssh_ftp_host" type="text" name="ssh_ftp_host" value="<?php echo (isset($_REQUEST['ssh_ftp_host'])) ? esc_attr(stripslashes(trim($_REQUEST['ssh_ftp_host']))) : ''; ?>"/>
+                            <label class="bp-media-label" for="ssh_ftp_host"><?php _e('Your SSH / FTP host:', 'rtmedia'); ?></label><input class="bp-media-input" id="ssh_ftp_host" type="text" name="ssh_ftp_host" value="<?php echo (isset($_REQUEST['ssh_ftp_host'])) ? esc_attr(stripslashes(trim($_REQUEST['ssh_ftp_host']))) : ''; ?>"/>
                         </li>
                         <li>
-                            <label class="bp-media-label" for="ssh_ftp_username"><?php _e('Your SSH / FTP login:', 'rt-media'); ?></label><input class="bp-media-input" id="ssh_ftp_username" type="text" name="ssh_ftp_username" value="<?php echo (isset($_REQUEST['ssh_ftp_username'])) ? esc_attr(stripslashes(trim($_REQUEST['ssh_ftp_username']))) : ''; ?>"/>
+                            <label class="bp-media-label" for="ssh_ftp_username"><?php _e('Your SSH / FTP login:', 'rtmedia'); ?></label><input class="bp-media-input" id="ssh_ftp_username" type="text" name="ssh_ftp_username" value="<?php echo (isset($_REQUEST['ssh_ftp_username'])) ? esc_attr(stripslashes(trim($_REQUEST['ssh_ftp_username']))) : ''; ?>"/>
                         </li>
                         <li>
-                            <label class="bp-media-label" for="ssh_ftp_pwd"><?php _e('Your SSH / FTP password:', 'rt-media'); ?></label><input class="bp-media-input" id="ssh_ftp_pwd" type="password" name="ssh_ftp_pwd" value="<?php echo (isset($_REQUEST['ssh_ftp_pwd'])) ? esc_attr(stripslashes(trim($_REQUEST['ssh_ftp_pwd']))) : ''; ?>"/>
+                            <label class="bp-media-label" for="ssh_ftp_pwd"><?php _e('Your SSH / FTP password:', 'rtmedia'); ?></label><input class="bp-media-input" id="ssh_ftp_pwd" type="password" name="ssh_ftp_pwd" value="<?php echo (isset($_REQUEST['ssh_ftp_pwd'])) ? esc_attr(stripslashes(trim($_REQUEST['ssh_ftp_pwd']))) : ''; ?>"/>
                         </li>
                     </ul>
                 </div><!-- .submit-bug-box --><?php } ?>
@@ -152,23 +152,23 @@ if (!class_exists('RTMediaSupport')) {
 
         /**
          *
-         * @global type $rt_media
+         * @global type $rtmedia
          */
         public function submit_request() {
-            global $rt_media;
+            global $rtmedia;
             $form_data = wp_parse_args($_POST['form_data']);
             if ($form_data['request_type'] == 'premium_support') {
                 $mail_type = 'Premium Support';
-                $title = __('rtMedia Premium Support Request from', 'rt-media');
+                $title = __('rtMedia Premium Support Request from', 'rtmedia');
             } elseif ($form_data['request_type'] == 'new_feature') {
                 $mail_type = 'New Feature Request';
-                $title = __('rtMedia New Feature Request from', 'rt-media');
+                $title = __('rtMedia New Feature Request from', 'rtmedia');
             } elseif ($form_data['request_type'] == 'bug_report') {
                 $mail_type = 'Bug Report';
-                $title = __('rtMedia Bug Report from', 'rt-media');
+                $title = __('rtMedia Bug Report from', 'rtmedia');
             } else {
                 $mail_type = 'Bug Report';
-                $title = __('rtMedia Contact from', 'rt-media');
+                $title = __('rtMedia Contact from', 'rtmedia');
             }
             $message = '<html>
                             <head>
@@ -229,7 +229,7 @@ if (!class_exists('RTMediaSupport')) {
             }
             $message .= '</table>';
             if ( $this->debug_info ) {
-                $message .= '<h3>'.__('Debug Info', 'rt-media').'</h3>';
+                $message .= '<h3>'.__('Debug Info', 'rtmedia').'</h3>';
                 $message .= '<table>';
                 foreach ($this->debug_info as $configuration => $value) {
                     $message .= '<tr>
@@ -242,17 +242,17 @@ if (!class_exists('RTMediaSupport')) {
                 </html>';
             add_filter('wp_mail_content_type', create_function('', 'return "text/html";'));
             $headers = 'From: ' . $form_data['name'] . ' <' . $form_data['email'] . '>' . "\r\n";
-            if (wp_mail($rt_media->support_email, '[rt-media] ' . $mail_type . ' from ' . str_replace(array('http://', 'https://'), '', $form_data['website']), $message, $headers)) {
+            if (wp_mail($rtmedia->support_email, '[rtmedia] ' . $mail_type . ' from ' . str_replace(array('http://', 'https://'), '', $form_data['website']), $message, $headers)) {
                 if ($form_data['request_type'] == 'new_feature') {
-                    echo '<p>' . __('Thank you for your Feedback/Suggestion.', 'rt-media') . '</p>';
+                    echo '<p>' . __('Thank you for your Feedback/Suggestion.', 'rtmedia') . '</p>';
                 } else {
-                    echo '<p>' . __('Thank you for posting your support request.', 'rt-media') . '</p>';
-                    echo '<p>' . __('We will get back to you shortly.', 'rt-media') . '</p>';
+                    echo '<p>' . __('Thank you for posting your support request.', 'rtmedia') . '</p>';
+                    echo '<p>' . __('We will get back to you shortly.', 'rtmedia') . '</p>';
                 }
             } else {
-                echo '<p>' . __('Your server failed to send an email.', 'rt-media') . '</p>';
-                echo '<p>' . __('Kindly contact your server support to fix this.', 'rt-media') . '</p>';
-                echo '<p>' . sprintf(__('You can alternatively create a support request <a href="%s">here</a>', 'rt-media'), $rt_media->support_url) . '</p>';
+                echo '<p>' . __('Your server failed to send an email.', 'rtmedia') . '</p>';
+                echo '<p>' . __('Kindly contact your server support to fix this.', 'rtmedia') . '</p>';
+                echo '<p>' . sprintf(__('You can alternatively create a support request <a href="%s">here</a>', 'rtmedia'), $rtmedia->support_url) . '</p>';
             }
             die();
         }

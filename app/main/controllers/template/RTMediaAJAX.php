@@ -13,8 +13,8 @@
 class RTMediaAJAX {
 
 	public function __construct() {
-		add_action('wp_ajax_rt_media_backbone_template',array($this,'backbone_template'));
-		add_action('wp_ajax_rt_media_create_album',array($this,'create_album'));
+		add_action('wp_ajax_rtmedia_backbone_template',array($this,'backbone_template'));
+		add_action('wp_ajax_rtmedia_create_album',array($this,'create_album'));
 	}
 
 	function backbone_template() {
@@ -26,8 +26,8 @@ class RTMediaAJAX {
                 $album = new RTMediaAlbum();
                 $album->add($_POST['name'], get_current_user_id(), true, false);
 
-                if ( $rt_media_id )
-                    echo $rt_media_id;
+                if ( $rtmedia_id )
+                    echo $rtmedia_id;
                 else
                     echo false;
 

@@ -50,7 +50,7 @@ class rtDimensions extends rtForm {
 	protected function generate_dimensions( $attributes ) {
 
 		$element = "rtDimension";
-		global $rt_media;
+		global $rtmedia;
 		$defaults = array(
 			'desc' => '',
 			'show_desc' => false
@@ -75,7 +75,7 @@ class rtDimensions extends rtForm {
 		$html .= '>';
 
 		$html .= parent::get_number(array(
-			'name' => "rt-media-options[{$key}_width]",
+			'name' => "rtmedia-options[{$key}_width]",
 			'value' => $width,
 			'class' => array("small-text large-offset-1"),
 			'show_desc' => $show_desc
@@ -83,7 +83,7 @@ class rtDimensions extends rtForm {
 
 		if (isset($height)) {
 			$html .= parent::get_number(array(
-				'name' => "rt-media-options[{$key}_height]",
+				'name' => "rtmedia-options[{$key}_height]",
 				'value' => $height,
 				'class' => array("small-text large-offset-1"),
 				'show_desc' => $show_desc
@@ -92,7 +92,7 @@ class rtDimensions extends rtForm {
 
 		if(isset($crop)) {
 			$html .= parent::get_checkbox(array(
-				'name' => "rt-media-options[{$key}_crop]",
+				'name' => "rtmedia-options[{$key}_crop]",
 				'rtForm_options' => array(array(
 					'' => 1,	//label would be blank
 					'checked' => $crop

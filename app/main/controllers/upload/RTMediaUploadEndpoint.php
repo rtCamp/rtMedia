@@ -13,7 +13,7 @@ class RTMediaUploadEndpoint {
 	 *
 	 */
     public function __construct() {
-        add_action('rt_media_upload_redirect', array($this, 'template_redirect'));
+        add_action('rtmedia_upload_redirect', array($this, 'template_redirect'));
     }
 
 	/**
@@ -24,11 +24,11 @@ class RTMediaUploadEndpoint {
         if (!count($_POST)) {
             include get_404_template();
         } else {
-            $nonce = $_REQUEST['rt_media_upload_nonce'];
+            $nonce = $_REQUEST['rtmedia_upload_nonce'];
             $mode = $_REQUEST['mode'];
             $rtupload =false;
 			$activity_id = -1;
-            if (wp_verify_nonce($nonce, 'rt_media_upload_nonce')) {
+            if (wp_verify_nonce($nonce, 'rtmedia_upload_nonce')) {
                 $model = new RTMediaUploadModel();
                 $this->upload = $model->set_post_object();
 				if(isset($_POST['activity_id']) && $_POST['activity_id']!=-1) {

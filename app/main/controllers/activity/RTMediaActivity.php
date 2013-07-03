@@ -36,10 +36,10 @@ class RTMediaActivity {
 
 		$html = '';
 
-		$html .='<div class="rt-media-activity-container">';
+		$html .='<div class="rtmedia-activity-container">';
 
 			if(!empty($this->activity_text)) {
-				$html .= '<span class="rt-media-activity-text">';
+				$html .= '<span class="rtmedia-activity-text">';
 					$html .= $this->activity_text;
 				$html .= '</span>';
 			}
@@ -47,26 +47,26 @@ class RTMediaActivity {
 			$mediaObj = new RTMediaModel();
 			$media_details = $mediaObj->get(array('id'=> $this->media));
 
-			$html .= '<ul class="rt-media-list large-block-grid-5">';
+			$html .= '<ul class="rtmedia-list large-block-grid-5">';
 			foreach ($media_details as $media) {
-				$html .= '<li class="rt-media-list-item">';
-					$html .= '<div class="rt-media-item-thumbnail">';
-						$html .= '<a href ="'. get_rt_media_permalink($media->id) .'">';
+				$html .= '<li class="rtmedia-list-item">';
+					$html .= '<div class="rtmedia-item-thumbnail">';
+						$html .= '<a href ="'. get_rtmedia_permalink($media->id) .'">';
 							$html .= '<img src="'. $this->image($media) .'" >';
 						$html .= '</a>';
 					$html .= '</div>';
 
-					$html .= '<div class="rt-media-item-title">';
+					$html .= '<div class="rtmedia-item-title">';
 						$html .= '<h4 title="'. $media->media_title .'">';
 
-							$html .= '<a href="'. get_rt_media_permalink($media->id) .'">';
+							$html .= '<a href="'. get_rtmedia_permalink($media->id) .'">';
 
 								$html .= $media->media_title;
 							$html .= '</a>';
 						$html .= '</h4>';
 					$html .= '</div>';
 
-					$html .= '<div class="rt-media-item-actions">';
+					$html .= '<div class="rtmedia-item-actions">';
 						$html .= $this->actions();
 					$html .= '</div>';
 				$html .= '</li>';

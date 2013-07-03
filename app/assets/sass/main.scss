@@ -1,4 +1,4 @@
-.rt-media-container{
+.rtmedia-container{
     @import "compass/reset";
     @import "foundation/components/global"; // *always required
     @import "foundation/components/grid";
@@ -26,17 +26,17 @@
 		}
 	}
 
-	.rt-media-action-update{
+	.rtmedia-action-update{
 		float: left;
 		margin-top: 12px;
 		margin-right: 10px;
 	}
 
 
-	.rt-media-list {
+	.rtmedia-list {
 		list-style: none;
 
-		.rt-media-list-item {
+		.rtmedia-list-item {
 			word-wrap: break-word;
 			padding-top:20px;
 			padding-bottom:20px;
@@ -52,19 +52,19 @@
 		}
 	}
 
-	.rt-media-media img {
+	.rtmedia-media img {
 		max-width: 100%;
 	}
 
-	.rt-media-item-thumbnail img {
+	.rtmedia-item-thumbnail img {
 		max-width: 100%;
 	}
 
-	.rt-media-item-comments-container {
+	.rtmedia-item-comments-container {
 		margin: 3% 3%;
 	}
 
-	.rt-media-comment {
+	.rtmedia-comment {
 		list-style: none;
 		background: #f6f6f6;
 		border: 1px solid #ddd;
@@ -74,21 +74,21 @@
 		padding: 1px 5px 25px;
 		width: 391px;
 
-		.rt-media-comment-author {
+		.rtmedia-comment-author {
 			display: block;
 		}
 
-		.rt-media-comment-content {
+		.rtmedia-comment-content {
 			display: block;
 		}
 
-		.rt-media-comment-date {
+		.rtmedia-comment-date {
 			display: block;
 			float: right;
 		}
 	}
 
-	.rt-media-bp-header {
+	.rtmedia-bp-header {
 		width: 460px;
 		margin: auto;
 	}
@@ -103,10 +103,10 @@
                 }
             }
         }
-        .rt-media-move-container {
+        .rtmedia-move-container {
             display: none;
         }
-        #rt-media-add-media-button-post-update{
+        #rtmedia-add-media-button-post-update{
                     float: left;
                     margin-top: 10px;
                     margin-right: 20px;
@@ -114,18 +114,18 @@
         #whats-new-post-in-box{
             float:left;
         }
-        .rt-media-activity-text{
+        .rtmedia-activity-text{
             display:block;
             padding-bottom:10px;
         }
-        .rt-media-merge-container{
+        .rtmedia-merge-container{
             display: none;
         }
-        .rt-media-create-new-album-container{
+        .rtmedia-create-new-album-container{
             display: none;
         }
 }
 
-.rt-media-activity-container {
-	@extend .rt-media-container;
+.rtmedia-activity-container {
+	@extend .rtmedia-container;
 }

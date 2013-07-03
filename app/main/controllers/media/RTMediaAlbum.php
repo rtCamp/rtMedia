@@ -73,7 +73,7 @@ class RTMediaAlbum {
 		);
 
 		/* register Album post type */
-		register_post_type( 'rt_media_album', $album_args );
+		register_post_type( 'rtmedia_album', $album_args );
 	}
 
 
@@ -86,9 +86,9 @@ class RTMediaAlbum {
 	 */
 	function verify_nonce($mode) {
 
-		$nonce = $_REQUEST["rt_media_{$mode}_album_nonce"];
+		$nonce = $_REQUEST["rtmedia_{$mode}_album_nonce"];
 		$mode = $_REQUEST['mode'];
-		if (wp_verify_nonce($nonce, 'rt_media_' . $mode))
+		if (wp_verify_nonce($nonce, 'rtmedia_' . $mode))
 			return true;
 		else
 			return false;
@@ -108,7 +108,7 @@ class RTMediaAlbum {
 	/**
 	 * Adds a new album
 	 *
-	 * @global type $rt_media_interaction
+	 * @global type $rtmedia_interaction
 	 * @param type $title
 	 * @param type $author_id
 	 * @param type $new
@@ -118,14 +118,14 @@ class RTMediaAlbum {
 	function add($title = '', $author_id = false, $new = true, $post_id = false) {
 
 		/* action to perform any task before adding the album */
-		do_action('rt_media_before_add_album');
+		do_action('rtmedia_before_add_album');
 
 		$author_id = $author_id ? $author_id : $this->get_current_author();
 
 		/* Album Details which will be passed to Database query to add the album */
 		$post_vars = array(
 			'post_title' => (empty($title)) ? 'Untitled Album' : $title,
-			'post_type' => 'rt_media_album',
+			'post_type' => 'rtmedia_album',
 			'post_author' => $author_id,
                         'post_status' => 'publish'
 		);
@@ -150,7 +150,7 @@ class RTMediaAlbum {
 
 		// add in the media since album is also a media
 		//defaults
-		global $rt_media_interaction;
+		global $rtmedia_interaction;
 		$attributes = array(
 			'blog_id' => get_current_blog_id(),
 			'media_id' => $album_id,
@@ -158,18 +158,18 @@ class RTMediaAlbum {
 			'media_title' => $current_album['post_title'],
 			'media_author' => $current_album['post_author'],
 			'media_type' => 'album',
-			'context' => (isset($rt_media_interaction->context->type)) ? $rt_media_interaction->context->type : NULL,
-			'context_id' => (isset($rt_media_interaction->context->id)) ? $rt_media_interaction->context->id : NULL,
+			'context' => (isset($rtmedia_interaction->context->type)) ? $rtmedia_interaction->context->type : NULL,
+			'context_id' => (isset($rtmedia_interaction->context->id)) ? $rtmedia_interaction->context->id : NULL,
 			'activity_id' => NULL,
 			'privacy' => NULL
 		);
 
-		$rt_media_id = $this->media->insert_album($attributes);
+		$rtmedia_id = $this->media->insert_album($attributes);
 
 		/* action to perform any task after adding the album */
-		do_action('rt_media_after_add_album', $this);
+		do_action('rtmedia_after_add_album', $this);
 
-		return $rt_media_id;
+		return $rtmedia_id;
 	}
 
 	/**
@@ -202,7 +202,7 @@ class RTMediaAlbum {
 	 * @return type
 	 */
 	static function get_globals() {
-		return get_site_option('rt-media-global-albums');
+		return get_site_option('rtmedia-global-albums');
 	}
 
 	/**
@@ -239,7 +239,7 @@ class RTMediaAlbum {
 			$album_ids = array($album_ids);
 
 		$albums = array_merge($albums, $album_ids);
-		update_site_option('rt-media-global-albums', $albums);
+		update_site_option('rtmedia-global-albums', $albums);
 	}
 
 	/**
@@ -273,7 +273,7 @@ class RTMediaAlbum {
 	function update($id, $title = '') {
 
 		/* Action to perform before updating the album */
-		do_action('rt_media_before_update_album', $this);
+		do_action('rtmedia_before_update_album', $this);
 		if ( empty($title) && empty($id) ) {
 			return false;
 		} else {
@@ -287,7 +287,7 @@ class RTMediaAlbum {
 				return false;
 			} else {
 				/* Action to perform after updating the album */
-				do_action('rt_media_after_update_album', $this);
+				do_action('rtmedia_after_update_album', $this);
 				return true;
 			}
 		}
@@ -338,7 +338,7 @@ class RTMediaAlbum {
 	function delete($id) {
 
 		/* action to perform any task befor deleting an album */
-		do_action('rt_media_before_delete_album', $this);
+		do_action('rtmedia_before_delete_album', $this);
 
 		/**
 		 * First fetch all the media from that album
@@ -370,7 +370,7 @@ class RTMediaAlbum {
 		}
 
 		/* action to perform any task after deleting an album */
-		do_action('rt_media_after_delete_album', $this);
+		do_action('rtmedia_after_delete_album', $this);
 		return $flag;
 
 	}
@@ -463,7 +463,7 @@ class RTMediaAlbum {
 		/**
 		 * Index attachments in rtMedia
 		 */
-		$this->media->insert_media($attachment_ids, $album_meta);
+		$this->media->insertmedia($attachment_ids, $album_meta);
 
 		return true;
 	}
