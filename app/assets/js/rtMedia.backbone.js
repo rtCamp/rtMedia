@@ -45,8 +45,8 @@ jQuery(function($) {
             "width": 0,
             "height": 0,
             "rt_permalink": false
-//			"next"			: -1,
-//			"prev"			: -1
+        //			"next"			: -1,
+        //			"prev"			: -1
         }
 
     });
@@ -81,7 +81,8 @@ jQuery(function($) {
                     nextpage = response.next;
                     var galleryViewObj = new rtMedia.GalleryView({
                         collection: new rtMedia.Gallery(response.data),
-                        el: $(".rtmedia-list")[0]});
+                        el: $(".rtmedia-list")[0]
+                        });
                 }
             });
         },
@@ -154,16 +155,22 @@ jQuery(function($) {
     galleryObj = new rtMedia.Gallery();
 
     $("body").append('<script id="rtmedia-gallery-item-template" type="text/template"></script>');
+    if (typeof is_album == undefined && typeof is_edit_allowed == undefined) {
+    } else {
+        $("#rtmedia-gallery-item-template").load(template_url + "/media-gallery-item.php", {
+            backbone: true, 
+            is_album: is_album, 
+            is_edit_allowed: is_edit_allowed
+        }, function(response, status, xhr) {
 
-    $("#rtmedia-gallery-item-template").load(template_url + "/media-gallery-item.php", {backbone: true, is_album: is_album, is_edit_allowed: is_edit_allowed}, function(response, status, xhr) {
+            $(document).on("click", "#rtMedia-galary-next", function(e) {
+                $(this).hide();
+                e.preventDefault();
 
-        $(document).on("click", "#rtMedia-galary-next", function(e) {
-            $(this).hide();
-            e.preventDefault();
-
-            galleryObj.getNext(nextpage);
+                galleryObj.getNext(nextpage);
+            });
         });
-    });
+    }
 
 
 
@@ -189,8 +196,12 @@ jQuery(function($) {
         initUploader: function() {
             this.uploader.init();
             //The plupload HTML5 code gives a negative z-index making add files button unclickable
-            $(".plupload.html5").css({zIndex: 0});
-            $("#rtMedia-upload-button   ").css({zIndex: 2});
+            $(".plupload.html5").css({
+                zIndex: 0
+            });
+            $("#rtMedia-upload-button   ").css({
+                zIndex: 2
+            });
 
             return this;
         },
@@ -208,7 +219,7 @@ jQuery(function($) {
     if ($("#rtMedia-upload-button").length > 0) {
         var uploaderObj = new UploadView(rtMedia_plupload_config);
 
-		uploaderObj.initUploader();
+        uploaderObj.initUploader();
 
         uploaderObj.uploader.bind('UploadComplete', function(up, files) {
             activity_id = -1;
@@ -256,7 +267,7 @@ jQuery(function($) {
 
         });
         uploaderObj.uploader.bind('BeforeUpload', function(up, file) {
-			up.settings.multipart_params.privacy = $("#rtm-file_upload-ui select#privacy").val();
+            up.settings.multipart_params.privacy = $("#rtm-file_upload-ui select#privacy").val();
             up.settings.multipart_params.activity_id = activity_id;
             if ($('.rtmedia-user-album-list').length > 0)
                 up.settings.multipart_params.album_id = $('.rtmedia-user-album-list').find(":selected").val();
@@ -273,7 +284,7 @@ jQuery(function($) {
                 rtnObj = JSON.parse(res.response);
                 activity_id = rtnObj.activity_id;
             } catch (e) {
-				console.log('Invalid Activity ID');
+                console.log('Invalid Activity ID');
             }
         });
 
@@ -314,7 +325,7 @@ jQuery(document).ready(function($) {
     $("#whats-new-form").on('click', '#rtmedia-add-media-button-post-update', function(e) {
         $("#div-attache-rtmedia").toggle();
     })
-//whats-new-post-in
+    //whats-new-post-in
     var objUploadView = new UploadView(rtMedia_update_plupload_config);
 
     objUploadView.uploader.bind('FilesAdded', function(up, files) {
@@ -341,7 +352,7 @@ jQuery(document).ready(function($) {
                     activity_attachemnt_ids.push(val);
                     if ($("#whats-new-form").find("#rtmedia_attached_id_" + val).length < 1) {
                         $("#whats-new-form").append("<input type='hidden' name='rtMedia_attached_files[]' data-mode='rtMedia-update' id='rtmedia_attached_id_" + val + "' value='"
-                                + val + "' />");
+                            + val + "' />");
                     }
                 });
             } catch (e) {
@@ -363,19 +374,19 @@ jQuery(document).ready(function($) {
 
         up.settings.multipart_params.context = object;
         up.settings.multipart_params.context_id = item_id;
-		up.settings.multipart_params.privacy = $("#rtm-file_upload-ui select#privacy").val();
+        up.settings.multipart_params.privacy = $("#rtm-file_upload-ui select#privacy").val();
     });
     objUploadView.uploader.bind('UploadComplete', function(up, files) {
         media_uploading=true;
         $("#aw-whats-new-submit").click();
-        //$("#aw-whats-new-submit").removeAttr('disabled');
+    //$("#aw-whats-new-submit").removeAttr('disabled');
     });
     objUploadView.uploader.bind('UploadProgress', function(up, file) {
         $("#" + file.id + " .plupload_file_status").html(file.percent + "%");
 
     });
 
-	$("#rtMedia-start-upload").hide();
+    $("#rtMedia-start-upload").hide();
 
     objUploadView.initUploader();
     var change_flag = false
@@ -387,7 +398,7 @@ jQuery(document).ready(function($) {
             while (activity_attachemnt_ids.length > 0) {
                 options.data += "&rtMedia_attached_files[]=" + activity_attachemnt_ids.pop();
             }
-			options.data += "&rtmedia-privacy="+$("#rtm-file_upload-ui select#privacy").val();
+            options.data += "&rtmedia-privacy="+$("#rtm-file_upload-ui select#privacy").val();
             activity_attachemnt_ids = temp;
             var orignalSuccess = originalOptions.success ;
             options.beforeSend= function(){
@@ -412,7 +423,7 @@ jQuery(document).ready(function($) {
             options.success= function(response){
                 orignalSuccess(response);
                 if ( response[0] + response[1] == '-1' ) {
-                    //Error
+                //Error
 
                 }else{
                     jQuery("input[data-mode=rtMedia-update]").remove();
@@ -421,8 +432,8 @@ jQuery(document).ready(function($) {
                     $('#rtMedia-update-queue-list').html('');
                     $("#div-attache-rtmedia").hide();
                 }
-                 $("#whats-new-post-in").removeAttr('disabled');
-                 $("#rtmedia-add-media-button-post-update").removeAttr('disabled');
+                $("#whats-new-post-in").removeAttr('disabled');
+                $("#rtmedia-add-media-button-post-update").removeAttr('disabled');
 
             }
         }
