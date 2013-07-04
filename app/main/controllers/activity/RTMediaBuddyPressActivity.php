@@ -99,6 +99,8 @@ class RTMediaBuddyPressActivity {
         $activity_allowedtags['video']['preload'] = array();
         $activity_allowedtags['video']['alt'] = array();
         $activity_allowedtags['video']['title'] = array();
+        $activity_allowedtags['video']['width'] = array();
+        $activity_allowedtags['video']['height'] = array();
         $activity_allowedtags['audio'] = array();
         $activity_allowedtags['audio']['id'] = array();
         $activity_allowedtags['audio']['class'] = array();
@@ -107,6 +109,7 @@ class RTMediaBuddyPressActivity {
         $activity_allowedtags['audio']['preload'] = array();
         $activity_allowedtags['audio']['alt'] = array();
         $activity_allowedtags['audio']['title'] = array();
+        $activity_allowedtags['audio']['width'] = array();
         $activity_allowedtags['div'] = array();
         $activity_allowedtags['div']['id'] = array();
         $activity_allowedtags['div']['class'] = array();
