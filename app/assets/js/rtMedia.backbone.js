@@ -410,7 +410,7 @@ jQuery(document).ready(function($) {
                     $("#aw-whats-new-submit").prop("disabled", true).removeClass('loading');
                     return false;
                 }
-                if(! media_uploading){
+                if(! media_uploading && activity_attachemnt_ids.length > 0){
                     $("#whats-new-post-in").attr('disabled', 'disabled');
                     $("#rtmedia-add-media-button-post-update").attr('disabled', 'disabled');
                     objUploadView.uploadFiles()
