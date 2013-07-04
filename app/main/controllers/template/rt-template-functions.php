@@ -108,15 +108,22 @@ function rtmedia_permalink() {
     }
 }
 
-function rtmedia_media() {
+function rtmedia_media($size_flag) {
+    $size_flag=true;
     global $rtmedia_media;
+    global $rtmedia;
     if (isset($rtmedia_media->media_type)) {
         if ($rtmedia_media->media_type == 'photo') {
             echo wp_get_attachment_image($rtmedia_media->media_id, 'large');
         } elseif ($rtmedia_media->media_type == 'video') {
-            echo '<video src="' . wp_get_attachment_url($rtmedia_media->media_id) . '" width="800" height="600" type="video/mp4" class="wp-video-shortcode" id="bp_media_video_' . $rtmedia_media->id . '" controls="controls" preload="none"></video>';
+            $size = " width=\"" . $rtmedia->options["defaultSizes_video_singlePlayer_width"]. "\" height=\"" . $rtmedia->options["defaultSizes_video_singlePlayer_height"]. "\" ";
+            
+            echo '<video src="' . wp_get_attachment_url($rtmedia_media->media_id) . '" ' . $size . ' type="video/mp4" class="wp-video-shortcode" id="bp_media_video_' . $rtmedia_media->id . '" controls="controls" preload="none"></video>';
         } elseif ($rtmedia_media->media_type == 'music') {
-            echo '<audio src="' . wp_get_attachment_url($rtmedia_media->media_id) . '" width="600" height="0" type="audio/mp3" class="wp-audio-shortcode" id="bp_media_audio_' . $rtmedia_media->id . '" controls="controls" preload="none"></audio>';
+            $size = ' width="600" height="0" ';
+            if(!$size_flag)
+                $size = '';
+            echo '<audio src="' . wp_get_attachment_url($rtmedia_media->media_id) . '" ' . $size . ' type="audio/mp3" class="wp-audio-shortcode" id="bp_media_audio_' . $rtmedia_media->id . '" controls="controls" preload="none"></audio>';
         } else {
             return false;
         }
@@ -370,24 +377,29 @@ function rtmedia_actions() {
  */
 function rtmedia_comments() {
 
-    $html = '<ul>';
+    $html = '<ul id="rtmedia_comment_ul" class="large-block-grid-1">';
 
     global $wpdb, $rtmedia_media;
 
-    $comments = $wpdb->get_results("SELECT * FROM wp_comments WHERE comment_post_ID = '" . $rtmedia_media->id . "'", ARRAY_A);
+    $comments = $wpdb->get_results("SELECT * FROM $wpdb->comments WHERE comment_post_ID = '" . $rtmedia_media->id . "'", ARRAY_A);
 
     foreach ($comments as $comment) {
-        $html .= '<li class="rtmedia-comment">';
-        $html .= '<div class ="rtmedia-comment-author">' . (($comment['comment_author']) ? $comment['comment_author'] : 'Annonymous') . '  said : </div>';
-        $html .= '<div class="rtmedia-comment-content">' . $comment['comment_content'] . '</div>';
-        $html .= '<div class ="rtmedia-comment-date"> on ' . $comment['comment_date_gmt'] . '</div>';
-//			$html .= '<a href></a>';
-        $html .= '</li>';
+       $html .= rmedia_single_comment($comment);
     }
 
     $html .= '</ul>';
 
     echo $html;
+}
+function rmedia_single_comment($comment){
+    $html = "";
+    $html .= '<li class="rtmedia-comment">';
+        $html .= '<div class ="rtmedia-comment-author">' . (($comment['comment_author']) ? $comment['comment_author'] : 'Annonymous') . '  said : </div>';
+        $html .= '<div class="rtmedia-comment-content">' . $comment['comment_content'] . '</div>';
+        $html .= '<div class ="rtmedia-comment-date"> on ' . $comment['comment_date_gmt'] . '</div>';
+//			$html .= '<a href></a>';
+        $html .= '</li>';
+    return $html;
 }
 
 function rtmedia_pagination_prev_link() {
@@ -532,14 +544,18 @@ function rtmedia_image_editor() {
     }
 }
 
-function rtmedia_comment_form() {
-
-    $html = '<form method="post" action="' . get_rtmedia_permalink(rtmedia_id()) . 'comment/" style="width: 400px;">';
-    $html .= '<textarea rows="4" name="comment_content" id="comment_content"></textarea>';
-    $html .= '<input type="submit" value="'.__('Comment','rtmedia').'">';
-    echo $html;
-    RTMediaComment::comment_nonce_generator();
-    echo '</form>';
+function rtmedia_comment_form() {?>
+<form method="post" id="rt_media_comment_form" action="<?php echo get_rtmedia_permalink(rtmedia_id());?>comment/">
+     <div class="row">
+      <div class="large-12 columns">
+        <textarea style="width:100%" placeholder="<?php _e("Type Comment...",'rtmedia'); ?>" name="comment_content" id="comment_content"></textarea>
+      </div>
+    </div>
+    <input type="submit" id="rt_media_comment_submit" value="<?php _e('Comment','rtmedia'); ?>">
+    <?php 
+    RTMediaComment::comment_nonce_generator(); ?>
+    </form>
+<?php
 }
 
 function rtmedia_delete_form() {
