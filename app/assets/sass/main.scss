@@ -1,10 +1,14 @@
 .rtmedia-container{
+    @import "settings";
     @import "compass/reset";
     @import "foundation/components/global"; // *always required
     @import "foundation/components/grid";
     @import "foundation/components/visibility";
-    @import "foundation/components/block-grid";
-
+    @import "foundation/components/block-grid",
+            "foundation/components/flex-video";
+    .row{
+        max-width:1000px
+    }
     padding:5px;
 	margin: 0;
     clear: left;
@@ -127,6 +131,20 @@
         select{
             width: auto;
         }
+        &.rtmedia-single-container{
+        	.row{
+        		background-color: #FFF;
+        		.rtmedia-single-media{
+        			background-color: #000;
+        		}
+        		.rtmedia-single-meta{
+        			padding: 10px;
+        			&>a{
+        				float: left;
+        			}
+        		}
+        	}
+        }
 }
 
 .rtmedia-activity-container {
@@ -136,4 +154,7 @@
 #rtmedia-action-update{
     float: left;
     padding-right: 10px;    
+}
+#header{
+    z-index:1 !important;
 }
