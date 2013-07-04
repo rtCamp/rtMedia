@@ -314,8 +314,6 @@ class RTMediaTemplate {
 		global $rtmedia_query;
 
 		if ( $rtmedia_query->action_query->action != 'comment' ) return;
-
-
 				if ( isset( $rtmedia_query->action_query->id ) && count( $_POST ) ) {
 					/**
 					 * /media/comments [POST]
@@ -327,7 +325,7 @@ class RTMediaTemplate {
 						$attr = $_POST;
 						if ( ! isset( $attr[ 'comment_post_ID' ] ) )
 							$attr[ 'comment_post_ID' ] = $rtmedia_query->action_query->id;
-						$comment->add( $attr );
+						$id = $comment->add( $attr );
 
 						$mediaModel = new RTMediaModel();
 						$result=$mediaModel->get(array('id'=>$rtmedia_query->action_query->id));
@@ -339,6 +337,12 @@ class RTMediaTemplate {
 								bp_activity_new_comment(array('content'=> $_POST['comment_content'], 'activity_id'=> $result[0]->activity_id));
 							}
 						}
+                                                if(isset($_POST["rtajax"])){
+                                                    global $wpdb;
+                                                    $comments = $wpdb->get_row($wpdb->prepare("SELECT * FROM $wpdb->comments WHERE comment_ID = %d",$id), ARRAY_A);
+                                                    echo rmedia_single_comment($comments);
+                                                    exit;
+                                                }
 					}
 					else {
 						echo "Ooops !!! Invalid access. No nonce was found !!";
