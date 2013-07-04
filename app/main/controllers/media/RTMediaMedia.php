@@ -403,7 +403,7 @@ class RTMediaMedia {
                 'album_id' => $uploaded['album_id'],
                 'media_author' => $attachment['post_author'],
                 'media_title' => $attachment['post_title'],
-                'media_type' => ($mime_type[0] == 'image') ? 'photo' : $mime_type[0],
+                'media_type' => ($mime_type[0] == 'image') ? 'photo' : ($mime_type[0] == 'audio') ? 'music' : $mime_type[0],
                 'context' => $uploaded['context'],
                 'context_id' => $uploaded['context_id'],
                 'privacy' => $uploaded['privacy']

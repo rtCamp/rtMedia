@@ -418,7 +418,7 @@ if (!class_exists('RTMediaAdmin')) {
                                 "SELECT
 		p.post_author,pmp.meta_value,
 		SUM(CASE WHEN post_mime_type LIKE 'image%' THEN 1 ELSE 0 END) as Images,
-		SUM(CASE WHEN post_mime_type LIKE 'audio%' THEN 1 ELSE 0 END) as Audio,
+		SUM(CASE WHEN post_mime_type LIKE 'music%' THEN 1 ELSE 0 END) as Music,
 		SUM(CASE WHEN post_mime_type LIKE 'video%' THEN 1 ELSE 0 END) as Videos,
 		SUM(CASE WHEN post_type LIKE 'bp_media_album' THEN 1 ELSE 0 END) as Albums
 	FROM
@@ -427,7 +427,7 @@ if (!class_exists('RTMediaAdmin')) {
 		pm.meta_key = 'bp-media-key' AND
 		pm.meta_value > 0 AND
 		pmp.meta_key = 'bp_media_privacy' AND
-		( post_mime_type LIKE 'image%' OR post_mime_type LIKE 'audio%' OR post_mime_type LIKE 'video%' OR post_type LIKE 'bp_media_album')
+		( post_mime_type LIKE 'image%' OR post_mime_type LIKE 'music%' OR post_mime_type LIKE 'video%' OR post_type LIKE 'bp_media_album')
 	GROUP BY p.post_author,pmp.meta_value order by p.post_author";
                         $result = $wpdb->get_results($query);
                         if (!is_array($result))
@@ -437,7 +437,7 @@ if (!class_exists('RTMediaAdmin')) {
                             $formatted[$obj->post_author][$obj->meta_value] = array(
                                 'image' => $obj->Images,
                                 'video' => $obj->Videos,
-                                'audio' => $obj->Audio,
+                                'music' => $obj->Music,
                                 'album' => $obj->Albums,
                             );
                         }
