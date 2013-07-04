@@ -372,9 +372,15 @@ class RTMediaMedia {
 
     function set_media_type($mime_type) {
         switch ($mime_type) {
-            case 'image': return 'photo';
-            case 'audio': return 'music';
-            default: return $mime_type;
+            case 'image':
+				return 'photo';
+				break;
+            case 'audio':
+				return 'music';
+				break;
+            default:
+				return $mime_type;
+				break;
         }
     }
 
@@ -397,13 +403,14 @@ class RTMediaMedia {
         foreach ($attachment_ids as $id) {
             $attachment = get_post($id, ARRAY_A);
             $mime_type = explode('/', $attachment['post_mime_type']);
+
             $media = array(
                 'blog_id' => $blog_id,
                 'media_id' => $id,
                 'album_id' => $uploaded['album_id'],
                 'media_author' => $attachment['post_author'],
                 'media_title' => $attachment['post_title'],
-                'media_type' => ($mime_type[0] == 'image') ? 'photo' : ($mime_type[0] == 'audio') ? 'music' : $mime_type[0],
+                'media_type' => $this->set_media_type($mime_type[0]),
                 'context' => $uploaded['context'],
                 'context_id' => $uploaded['context_id'],
                 'privacy' => $uploaded['privacy']
