@@ -40,16 +40,17 @@ class RTMediaNav {
 		//$counts = $this->actual_counts();
 
 		//print_r($counts);die();
-
+global $rtmedia; 
+                        if($rtmedia->options["buddypress_enableOnProfile"]!==0){
 		bp_core_new_nav_item( array(
 			'name' => RTMEDIA_MEDIA_LABEL,// '<span>'.$counts['total']['all'].'</span>',
 			'slug' => RTMEDIA_MEDIA_SLUG,
 			'screen_function' => array($this,'media_screen'),
 			'default_subnav_slug' => 'all'
 		) );
+                        }
 
-
-		if ( bp_is_group() ) {
+		if ( bp_is_group() && $rtmedia->options["buddypress_enableOnGroup"]!==0 ) {
 			global $bp;
 			$bp->bp_options_nav[ bp_get_current_group_slug() ][ 'media' ] = array(
 				'name' => RTMEDIA_MEDIA_LABEL,//. '<span>'.$counts['total']['all'].'</span>',
@@ -91,12 +92,12 @@ class RTMediaNav {
 				'href' => trailingslashit( get_rtmedia_user_link( get_current_user_id() ) ) . 'media/'
 			) );
 
-			$wp_admin_bar->add_menu( array(
-				'parent' => 'my-account-' . RTMEDIA_MEDIA_SLUG,
-				'id' => 'my-account-media-' . RTMEDIA_MEDIA_SLUG,
-				'title' => __('Wall Posts','rtmedia'),
-				'href' => trailingslashit( get_rtmedia_user_link( get_current_user_id() ) ) . 'media/'.RTMediaAlbum::get_default().'/'
-			) );
+//			$wp_admin_bar->add_menu( array(
+//				'parent' => 'my-account-' . RTMEDIA_MEDIA_SLUG,
+//				'id' => 'my-account-media-' . RTMEDIA_MEDIA_SLUG,
+//				'title' => __('Wall Posts','rtmedia'),
+//				'href' => trailingslashit( get_rtmedia_user_link( get_current_user_id() ) ) . 'media/'.RTMediaAlbum::get_default().'/'
+//			) );
 
 			$wp_admin_bar->add_menu( array(
 				'parent' => 'my-account-' . RTMEDIA_MEDIA_SLUG,
@@ -130,10 +131,10 @@ class RTMediaNav {
 		}
 
 		$global_album = '';
-		if(isset($rtmedia_query->action_query->id) && $rtmedia_query->action_query->id==RTMediaAlbum::get_default())
-			$global_album = 'class = "current selected"';
-		echo apply_filters( 'rtmedia_sub_nav_wall_post' ,
-				'<li id="rtmedia-nav-item-wall-post-li" ' . $global_album . '><a id="rtmedia-nav-item-wall-post" href="' . trailingslashit( get_rtmedia_user_link( get_current_user_id() ) ) . 'media/' . RTMediaAlbum::get_default() . '/' . '">' . __("Wall Posts","rtmedia") . '</a></li>' );
+//		if(isset($rtmedia_query->action_query->id) && $rtmedia_query->action_query->id==RTMediaAlbum::get_default())
+//			$global_album = 'class = "current selected"';
+//		echo apply_filters( 'rtmedia_sub_nav_wall_post' ,
+//				'<li id="rtmedia-nav-item-wall-post-li" ' . $global_album . '><a id="rtmedia-nav-item-wall-post" href="' . trailingslashit( get_rtmedia_user_link( get_current_user_id() ) ) . 'media/' . RTMediaAlbum::get_default() . '/' . '">' . __("Wall Posts","rtmedia") . '</a></li>' );
 
 		$albums = '';
 		if(isset($rtmedia_query->action_query->action) && $rtmedia_query->action_query->action=='album')
