@@ -42,6 +42,15 @@ if (!class_exists('RTMediaAdmin')) {
                 add_action('admin_enqueue_scripts', array($this, 'ui'));
                 //bp_core_admin_hook();
                 add_action('admin_menu', array($this, 'menu'),1);
+                global $rtmedia;
+                echo $rtmedia->options["general_showAdminMenu"];
+                if (isset($_POST["rtmedia-options"])){
+                    if(isset($_POST["rtmedia-options"]["general_showAdminMenu"]) && $_POST["rtmedia-options"]["general_showAdminMenu"] == "1")
+                        add_action('admin_bar_menu', array($this, 'admin_bar_menu'),100,1);
+                }else if(intval($rtmedia->options["general_showAdminMenu"]) == 1){
+                    add_action('admin_bar_menu', array($this, 'admin_bar_menu'),100,1);
+                }  
+                    
                 if (current_user_can('manage_options'))
                     add_action('bp_admin_tabs', array($this, 'tab'));
                 if (is_multisite())
@@ -50,7 +59,27 @@ if (!class_exists('RTMediaAdmin')) {
             $this->rtmedia_settings = new RTMediaSettings();
             $this->rtmedia_encoding = new RTMediaEncoding();
         }
-
+        function admin_bar_menu($admin_bar){
+             $admin_bar->add_menu( array(
+		'id'    => 'rtMedia',
+		'title' => 'rtMedia',
+		'href'  => admin_url('admin.php?page=rtmedia-settings'),	
+		'meta'  => array(
+			'title' => __('rtMedia'),			
+		),
+	));
+	$admin_bar->add_menu( array(
+		'id'    => 'rt-media-dashborad',
+		'parent' => 'rtMedia',
+		'title' => __('Settings',"rtmedia"),
+		'href'  => admin_url('admin.php?page=rtmedia-settings'),
+		'meta'  => array(
+			'title' => __('Settings'),
+			'target' => '_self',
+                ),
+	));
+            
+        }
         /**
          * Generates the Admin UI.
          *
