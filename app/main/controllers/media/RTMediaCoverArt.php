@@ -16,8 +16,18 @@ class RTMediaCoverArt extends RTMediaUserInteraction{
 	 *
 	 */
 	function __construct() {
-		$label=__('Set as Album Cover','rtmedia');
-		parent::__construct('cover',false,$label);
+		$defaults = array(
+		'action' => 'cover',
+		'label' => 'Set as Album Cover',
+		'plural' => '',
+		'undo_label' => 'Unset as Album Cover',
+		'privacy' => 60,
+		'countable' => false,
+		'single' => false,
+		'repeatable' => false,
+		'undoable' => true
+		);
+		parent::__construct($defaults);
 
 	}
 
