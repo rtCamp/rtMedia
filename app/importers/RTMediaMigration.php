@@ -18,6 +18,7 @@ class RTMediaMigration {
             $pending = false;
         else
             $pending = get_site_option("rtMigration-pending-count");
+        
         if ($pending === false) {
             $total = $this->get_total_count();
             $done = $this->get_done_count();
@@ -27,12 +28,13 @@ class RTMediaMigration {
             update_site_option("rtMigration-pending-count", $pending);
         }
         if ($pending > 0) {
-            add_action('admin_notices', array(&$this, 'add_migration_notice'));
+            if(isset($_REQUEST["page"]) && $_REQUEST["page"] != "rtmedia-migration")
+                add_action('admin_notices', array(&$this, 'add_migration_notice'));
         }
     }
 
     function add_migration_notice() {
-        $this->create_notice("<p>Please Migrate Database. <a href='" . admin_url("admin.php?page=rtmedia-migration&force=true") . "'>Migrate</a>  </p>");
+        $this->create_notice("<p><strong>rtMedia</strong> : Please Migrate your Database <a href='" . admin_url("admin.php?page=rtmedia-migration&force=true") . "'>Click Here</a>.  </p>");
     }
 
     function create_notice($message, $type = "error") {
@@ -87,9 +89,10 @@ class RTMediaMigration {
                                                             and item_id in (select post_id
                                                             from
                                                                 {$wpdb->postmeta} a
-
+                                                                left join
+                                                                     {$wpdb->posts} p ON (a.post_id = p.ID)
                                                             where
-                                                                a.post_id > 0
+                                                                a.post_id > 0 and  (NOT p.ID IS NULL)
                                                                     and a.meta_key = 'bp-media-key'))";
 
 
@@ -109,15 +112,15 @@ class RTMediaMigration {
                     {$wpdb->postmeta} c ON (a.post_id = c.post_id)
                         and (c.meta_key = 'bp_media_child_activity')
                         left join
-                    {$wpdb->posts} p ON (a.post_id = p.id)
+                    {$wpdb->posts} p ON (a.post_id = p.ID)
                 where
-                    a.post_id > 0
+                    a.post_id > 0 and  (NOT p.ID IS NULL)
                         and a.meta_key = 'bp-media-key'";
 
 
         $_SESSION["migration_media"] = $wpdb->get_var($sql);
         $count += intval($_SESSION["migration_media"]);
-        //var_dump($_SESSION);
+       // var_dump($_SESSION);
         return $count;
     }
 
@@ -128,9 +131,10 @@ class RTMediaMigration {
         global $wpdb;
         $sql = "select a.post_ID
                 from
-                    {$wpdb->postmeta} a
+                    {$wpdb->postmeta} a  left join
+                    {$wpdb->posts} p ON (a.post_id = p.ID)
                 where
-                     a.meta_key = 'bp-media-key' and a.post_id not in (select media_id
+                     a.meta_key = 'bp-media-key' and  (NOT p.ID IS NULL) and a.post_id not in (select media_id
                 from {$this->bmp_table} where blog_id = %d and media_id <> %d ) order by a.post_ID";
         $sql = $wpdb->prepare($sql, get_current_blog_id(), $album_id);
         $row = $wpdb->get_row($sql);
@@ -154,9 +158,9 @@ class RTMediaMigration {
                     {$wpdb->postmeta} c ON (a.post_id = c.post_id)
                         and (c.meta_key = 'bp_media_child_activity')
                         left join
-                    {$wpdb->posts} p ON (a.post_id = p.id)
+                    {$wpdb->posts} p ON (a.post_id = p.ID)
                 where
-                    a.post_id > 0
+                    a.post_id > 0 and  (NOT p.ID IS NULL)
                         and a.meta_key = 'bp-media-key')";
 
         $media_count = $wpdb->get_var($wpdb->prepare($sql, get_current_blog_id()));
@@ -170,9 +174,9 @@ class RTMediaMigration {
             $album_count = 0;
         }
 
-        $comment_sql = $wpdb->get_var("select count(*) from $wpdb->comments where comment_post_ID in (select media_id from $this->bmp_table) and comment_agent=''");
-
-        //echo $media_count . "--" . $album_count . "--" . $comment_sql;
+        $comment_sql = $wpdb->get_var("select count(*) from $wpdb->comments a  where a.comment_post_ID in (select b.media_id from $this->bmp_table b  left join
+                                                                                            {$wpdb->posts} p ON (b.media_id = p.ID) where  (NOT p.ID IS NULL) ) and a.comment_agent=''");
+      //  echo $media_count . "--" . $album_count . "--" . $comment_sql;
         return $media_count + $album_count + $comment_sql;
     }
 
@@ -184,7 +188,8 @@ class RTMediaMigration {
             $pending = 0;
             $done = $total;
         }
-
+        if($done > $total)
+            $done = $total;
         update_site_option("rtMigration-pending-count", $pending);
         $pending_time = $this->formatSeconds($pending);
 
@@ -233,7 +238,16 @@ class RTMediaMigration {
         $prog = new rtProgress();
         $total = $this->get_total_count();
         $done = $this->get_done_count();
+        if($done >= $total){
+            $done = $total;
         ?>
+<div class="error"><p> Please Update your <a href='<?php admin_url("options-permalink.php") ?>'>Permalink<a/> after migration.</p></div>
+        <?php }else{ ?>
+            <div class="error"><p> Please Backup your <strong>DATABASE</strong> and <strong>UPLOAD</strong> folder before Migration.</p></div>
+        <?php }
+        
+        ?>
+        
         <div class="wrap">
             <h2>rtMedia Migration</h2>
             <h3><?php _e("It will migrate following things"); ?> </h3>
@@ -250,7 +264,8 @@ class RTMediaMigration {
             <?php
             echo '<span class="pending">' . $this->formatSeconds($total - $done) . '</span><br />';
             echo '<span class="finished">' . $done . '</span>/<span class="total">' . $total . '</span>';
-            echo '<img src="images/loading.gif" alt="syncing" id="rtMediaSyncing" style="display:none" />';
+            echo '<img src="images/loading.gif" alt="syncing" id="rtMediaSyncing" style="display:none" />'; 
+
             $temp = $prog->progress($done, $total);
             $prog->progress_ui($temp, true);
             ?>
@@ -266,7 +281,12 @@ class RTMediaMigration {
                                 "done": db_done
                             },
                             success: function(sdata) {
-                                data = JSON.parse(sdata);
+                                
+                                try{
+                                    data = JSON.parse(sdata);
+                                }catch(e){
+                                    jQuery("#submit").attr('disabled',"");
+                                }
                                 if (data.status) {
                                     done = parseInt(data.done);
                                     total = parseInt(data.total);
@@ -281,13 +301,17 @@ class RTMediaMigration {
                                     jQuery('span.pending').html(data.pending);
                                     db_start_migration(done, total);
                                 } else {
-                                    alert("Migration Done");
+                                    alert("Migration Done, Please Update your Permalink");
                                     jQuery("#rtMediaSyncing").hide();
                                 }
-                            }
+                            },
+                                    error: function(){
+                                        alert("Error During Migration, Please Refresh Page then try again");
+                                        jQuery("#submit").attr('disabled',"");
+                                    }
                         });
                     } else {
-                        alert("Migration Done");
+                        alert("Migration already Done, Please Update your Permalink");
                         jQuery("#rtMediaSyncing").hide();
                     }
                 }
@@ -297,6 +321,7 @@ class RTMediaMigration {
                     var db_done = <?php echo $done; ?>;
                     var db_total = <?php echo $total; ?>;
                     db_start_migration(db_done, db_total);
+                    jQuery(this).attr('disabled', 'disabled');
                 });
             </script>
             <hr />
@@ -347,9 +372,9 @@ class RTMediaMigration {
                     {$wpdb->postmeta} c ON (a.post_id = c.post_id)
                         and (c.meta_key = 'bp_media_child_activity')
                         left join
-                    {$wpdb->posts} p ON (a.post_id = p.id)
+                    {$wpdb->posts} p ON (a.post_id = p.ID)
                 where
-                    a.post_id >= %d
+                    a.post_id >= %d and (NOT p.ID is NULL) 
                         and a.meta_key = 'bp_media_privacy'
                 order by a.post_id
                 limit %d";
@@ -420,9 +445,9 @@ class RTMediaMigration {
                         {$wpdb->postmeta} c ON (a.post_id = c.post_id)
                             and (c.meta_key = 'bp_media_child_activity')
                             left join
-                        {$wpdb->posts} p ON (a.post_id = p.id)
+                        {$wpdb->posts} p ON (a.post_id = p.ID)
                     where
-                        a.post_id = %d
+                        a.post_id = %d and (NOT p.ID IS NULL)
                             and a.meta_key = 'bp_media_privacy'";
                 $result = $wpdb->get_row($wpdb->prepare($sql, $result));
             } else {

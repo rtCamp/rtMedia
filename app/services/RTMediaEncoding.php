@@ -117,8 +117,8 @@ class RTMediaEncoding {
     }
 
     public function nearing_usage_limit($usage_details) {
-        $subject = __('BuddyPress Media Encoding: Nearing quota limit.', 'rtmedia');
-        $message = __('<p>You are nearing the quota limit for your BuddyPress Media encoding service.</p><p>Following are the details:</p><p><strong>Used:</strong> %s</p><p><strong>Remaining</strong>: %s</p><p><strong>Total:</strong> %s</p>', 'rtmedia');
+        $subject = __('rtMedia Encoding: Nearing quota limit.', 'rtmedia');
+        $message = __('<p>You are nearing the quota limit for your rtMedia encoding service.</p><p>Following are the details:</p><p><strong>Used:</strong> %s</p><p><strong>Remaining</strong>: %s</p><p><strong>Total:</strong> %s</p>', 'rtmedia');
         $users = get_users(array('role' => 'administrator'));
         if ($users) {
             foreach ($users as $user)
@@ -132,7 +132,7 @@ class RTMediaEncoding {
     public function usage_quota_over() {
         $usage_details = get_site_option('rtmedia-encoding-usage');
         if (!$usage_details[$this->api_key]->remaining) {
-            $subject = __('BuddyPress Media Encoding: Usage quota over.', 'rtmedia');
+            $subject = __('rtMedia Encoding: Usage quota over.', 'rtmedia');
             $message = __('<p>Your usage quota is over. Upgrade your plan</p><p>Following are the details:</p><p><strong>Used:</strong> %s</p><p><strong>Remaining</strong>: %s</p><p><strong>Total:</strong> %s</p>', 'rtmedia');
             $users = get_users(array('role' => 'administrator'));
             if ($users) {
@@ -257,7 +257,7 @@ class RTMediaEncoding {
 
     public function encoding_service_intro() {
         ?>
-        <p><?php _e('BuddyPress Media team has started offering an audio/video encoding service.', 'rtmedia'); ?></p>
+        <p><?php _e('rtMedia team has started offering an audio/video encoding service.', 'rtmedia'); ?></p>
         <p>
             <label for="new-api-key"><?php _e('Enter API KEY', 'rtmedia'); ?></label>
             <input id="new-api-key" type="text" name="new-api-key" value="<?php echo $this->api_key; ?>" size="60" />
@@ -402,7 +402,7 @@ class RTMediaEncoding {
 
                 if ($flag && $mail) {
                     $download_link = add_query_arg(array('job_id' => $_GET['job_id'], 'download_url' => $_GET['download_url']), home_url());
-                    $subject = __('BuddyPress Media Encoding: Download Failed', 'rtmedia');
+                    $subject = __('rtMedia Encoding: Download Failed', 'rtmedia');
                     $message = sprintf(__('<p><a href="%s">Media</a> was successfully encoded but there was an error while downloading:</p>
                         <p><code>%s</code></p>
                         <p>You can <a href="%s">retry the download</a>.</p>', 'rtmedia'), get_edit_post_link($attachment_id), $flag, $download_link);
