@@ -161,7 +161,7 @@ function rtmedia_image($size = 'thumbnail', $id = false) {
         global $rtmedia_media;
         $media_object = $rtmedia_media;
     }
-
+    
     $thumbnail_id = 0;
     if (isset($media_object->media_type)) {
         if ($media_object->media_type == 'album' ||
@@ -181,7 +181,6 @@ function rtmedia_image($size = 'thumbnail', $id = false) {
         if (isset($rtmedia->allowed_types[$media_object->media_type])
                 && isset($rtmedia->allowed_types[$media_object->media_type]['thumbnail'])) {
             $src = $rtmedia->allowed_types[$media_object->media_type]['thumbnail'];
-            return;
         } elseif ($media_object->media_type == 'album') {
             $src = rtmedia_album_image($size);
         } else {
@@ -206,7 +205,7 @@ function rtmedia_album_image($size = 'thumbnail') {
         global $rtmedia;
         $src = $rtmedia->allowed_types['photo']['thumbnail'];
     }
-    echo $src;
+    return $src;
 }
 
 function rtmedia_sanitize_object($data,$exceptions = array()){
@@ -500,7 +499,10 @@ function is_rtmedia_album_gallery() {
  */
 function is_rtmedia_single() {
     global $rtmedia_query;
-    return $rtmedia_query->is_single();
+    if ( $rtmedia_query )
+        return $rtmedia_query->is_single();
+    else
+        return false;
 }
 
 /**
