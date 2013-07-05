@@ -36,11 +36,7 @@ class RTMediaLike extends RTMediaUserInteraction {
 		//print_r($actions);
 		$actionwa = $this->action.'s';
 		$actions = $actions[ 0 ]->{$actionwa};
-		if ( $this->increase === true ) {
-			$actions ++;
-		} else {
-			$actions --;
-		}
+		$actions ++;
 
 		$this->model->update( array( $this->plural => $actions ), array( 'id' => $this->action_query->id ) );
 		update_user_meta($this->interactor,'rtmedia_liked_media',$actions);

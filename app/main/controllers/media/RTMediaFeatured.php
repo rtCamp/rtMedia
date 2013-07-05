@@ -124,17 +124,6 @@ class RTMediaFeatured extends RTMediaUserInteraction{
 
 	function process(){
 		if(!isset($this->action_query->id)) return;
-
-		$this->model = new RTMediaModel();
-		$actions = $this->model->get(array('id'=>$this->action_query->id));
-		$actions = $actions[0]->$this->actions;
-		if($this->increase===true){
-			$actions++;
-		}else{
-			$actions--;
-		}
-
-		$this->model->update(array($this->actions=>$actions),array('id'=>$this->action_query->id));
 		die($actions);
 	}
 
