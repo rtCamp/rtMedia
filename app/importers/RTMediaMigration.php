@@ -529,7 +529,18 @@ class RTMediaMigration {
             "likes" => $likes
                 ), array('%d', '%d', '%s', '%s', '%d', '%d', '%d', '%d', '%s', '%d', '%d')
         );
-		$last_id = $wpdb->insert_id;
+	$last_id = $wpdb->insert_id;
+        
+        // Photo tag meta migration 
+        $photo_tag_meta = get_post_meta($media_id, "bp-media-user-tags", true);
+        
+        if($photo_tag_meta && !empty($photo_tag_meta)){
+            $wpdb->insert(
+                $wpdb->prefix . "rt_rtm_media_meta", array(
+                    'media_id' => $media_id,
+                    'meta_key' => "user-tags",
+                    "meta_value" =>  maybe_serialize($photo_tag_meta)), array('%d', '%s', '%s'));
+        }
         if ($media_type != 'album' && function_exists('bp_core_get_user_domain') && $activity_data) {
             if (function_exists("bp_core_get_table_prefix"))
                 $bp_prefix = bp_core_get_table_prefix();
