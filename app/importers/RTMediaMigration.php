@@ -18,6 +18,7 @@ class RTMediaMigration {
             $pending = false;
         else
             $pending = get_site_option("rtMigration-pending-count");
+        
         if ($pending === false) {
             $total = $this->get_total_count();
             $done = $this->get_done_count();
@@ -27,12 +28,13 @@ class RTMediaMigration {
             update_site_option("rtMigration-pending-count", $pending);
         }
         if ($pending > 0) {
-            add_action('admin_notices', array(&$this, 'add_migration_notice'));
+            if(isset($_REQUEST["page"]) && $_REQUEST["page"] != "rtmedia-migration")
+                add_action('admin_notices', array(&$this, 'add_migration_notice'));
         }
     }
 
     function add_migration_notice() {
-        $this->create_notice("<p>Please Migrate Database. <a href='" . admin_url("admin.php?page=rtmedia-migration&force=true") . "'>Migrate</a>  </p>");
+        $this->create_notice("<p><strong>rtMedia</strong> : Please Migrate your Database <a href='" . admin_url("admin.php?page=rtmedia-migration&force=true") . "'>Click Here</a>.  </p>");
     }
 
     function create_notice($message, $type = "error") {
@@ -239,6 +241,7 @@ class RTMediaMigration {
         if($done > $total)
             $done = $total;
         ?>
+        <div class="error"><p> Please Backup your <strong>DATABASE</strong> and <strong>UPLOAD</strong> folder before Migration.</p></div>
         <div class="wrap">
             <h2>rtMedia Migration</h2>
             <h3><?php _e("It will migrate following things"); ?> </h3>
