@@ -243,7 +243,9 @@ class RTMediaTemplate {
 		global $rtmedia_query;
 		$nonce = $_REQUEST[ 'rtmedia_media_nonce' ];
 		if ( wp_verify_nonce( $nonce, 'rtmedia_' . $rtmedia_query->media[ 0 ]->id ) ) {
-
+                    
+                        do_action('rtmedia_before_delete_media',$rtmedia_query->media[ 0 ]->id);
+                        
 			$id = $_POST;
 			unset( $id[ 'rtmedia_media_nonce' ] );
 			unset( $id[ '_wp_http_referer' ] );
@@ -258,6 +260,8 @@ class RTMediaTemplate {
 			} else {
 				$parent_link = get_author_posts_url( $post->media_author );
 			}
+                        
+                        do_action('rtmedia_after_delete_media',$rtmedia_query->media[ 0 ]->id);
 
 			wp_redirect( $parent_link );
 		} else {

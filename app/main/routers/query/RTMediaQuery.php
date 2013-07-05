@@ -94,7 +94,8 @@ class RTMediaQuery {
 			$this->query( $args );
 		}
 
-		
+		do_action('rtmedia_query_construct');
+
 	}
 
 	/**

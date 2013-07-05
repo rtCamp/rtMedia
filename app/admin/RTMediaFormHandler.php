@@ -399,7 +399,7 @@ class RTMediaFormHandler {
 
 		$render = array(
 			'rtmedia-enable-on-profile' => array(
-				'title' => __('Profile Media','rtmedia'),
+				'title' => __('Enable Media in Profile','rtmedia'),
 				'callback' => array('RTMediaFormHandler', 'checkbox'),
 				'args' => array(
 					'key' => 'buddypress_enableOnProfile',
@@ -408,7 +408,7 @@ class RTMediaFormHandler {
 				)
 			),
 			'rtmedia-enable-on-group' => array(
-				'title' => __('Group Media','rtmedia'),
+				'title' => __('Enable Media in Group','rtmedia'),
 				'callback' => array('RTMediaFormHandler', 'checkbox'),
 				'args' => array(
 					'key' => 'buddypress_enableOnGroup',
@@ -417,7 +417,7 @@ class RTMediaFormHandler {
 				)
 			),
 			'rtmedia-enable-on-activity' => array(
-				'title' => __('Activity Media','rtmedia'),
+				'title' => __('Enable Media in Activity','rtmedia'),
 				'callback' => array('RTMediaFormHandler', 'checkbox'),
 				'args' => array(
 					'key' => 'buddypress_enableOnActivity',

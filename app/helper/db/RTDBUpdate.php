@@ -37,7 +37,7 @@ class RTDBUpdate {
     }
 
     public function get_db_version_option_name() {
-        return strtoupper("RT_" . str_replace("-", "_", sanitize_title($this->rt_plugin_info->name)) . "_DB_VERSION");
+        return strtoupper("RT_" . str_replace("-", "_", sanitize_title($this->rt_plugin_info->name)) . "_DB_VERSIONS");
     }
 
     public function get_install_db_version() {

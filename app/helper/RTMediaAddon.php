@@ -48,8 +48,8 @@ if (!class_exists('RTMediaAddon')) {
 			$tabs = array();
 			global $rtmedia_admin;
 			$tabs[] = array(
-				'title' => 'Encoding',
-				'name' => __('Encoding', 'rtmedia'),
+				'title' => 'Audio/Video Encoding',
+				'name' => __('Audio/Video  Encoding', 'rtmedia'),
 				'href' => '#bpm-services',
 				'callback' => array($rtmedia_admin->rtmedia_encoding, 'encoding_service_intro')
 			);
@@ -93,27 +93,27 @@ if (!class_exists('RTMediaAddon')) {
 
 			$addons = array(
 				 array(
-                    'title' => __('BuddyPress-Media Photo Tagging', 'rtmedia'),
+                    'title' => __('rtMedia Photo Tagging', 'rtmedia'),
                     'img_src' => 'http://rtcamp.com/wp-content/uploads/2013/04/bpm-photo-tagging.png',
                     'product_link' => 'http://rtcamp.com/store/buddypress-media-photo-tagging/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media',
-                    'desc' => '<p>' . __('BuddyPress Media Instagram adds Instagram like filters to images uploaded with BuddyPress Media.', 'rtmedia') . '</p>
+                    'desc' => '<p>' . __('rtMedia Instagram adds Instagram like filters to images uploaded with rtMedia.', 'rtmedia') . '</p>
                     <p><strong>' . __('Important', 'rtmedia') . ':</strong> ' . __('You need to have ImageMagick installed on your server for this addon to work.', 'rtmedia') . '</p>',
                     'price' => '$19',
                     'demo_link' => 'http://demo.rtcamp.com/buddypress-media/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media',
                     'buy_now' => 'http://rtcamp.com/store/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media&add-to-cart=37506'
                 ),
                 array(
-                    'title' => __('BuddyPress-Media Instagram', 'rtmedia'),
+                    'title' => __('rtMedia Instagram', 'rtmedia'),
                     'img_src' => 'http://cdn.rtcamp.com/wp-content/uploads/2013/03/BuddyPressMedia-Instagram.png',
                     'product_link' => 'http://rtcamp.com/store/buddypress-media-instagram/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media',
-                    'desc' => '<p>' . __('BuddyPress Media Instagram adds Instagram like filters to images uploaded with BuddyPress Media.', 'rtmedia') . '</p>
+                    'desc' => '<p>' . __('rtMedia Instagram adds Instagram like filters to images uploaded with rtMedia.', 'rtmedia') . '</p>
                     <p><strong>' . __('Important', 'rtmedia') . ':</strong> ' . __('You need to have ImageMagick installed on your server for this addon to work.', 'rtmedia') . '</p>',
                     'price' => '$19',
                     'demo_link' => 'http://demo.rtcamp.com/buddypress-media/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media',
                     'buy_now' => 'http://rtcamp.com/store/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media&add-to-cart=34379'
                 ),
                 array(
-                    'title' => __('BuddyPress-Media Kaltura Add-on', 'rtmedia'),
+                    'title' => __('rtMedia Kaltura Add-on', 'rtmedia'),
                     'img_src' => 'http://cdn.rtcamp.com/files/2012/10/new-buddypress-media-kaltura-logo-240x184.png',
                     'product_link' => 'http://rtcamp.com/store/buddypress-media-kaltura/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media',
                     'desc' => '<p>' . __('Add support for more video formats using Kaltura video solution.', 'rtmedia') . '</p>
@@ -123,7 +123,7 @@ if (!class_exists('RTMediaAddon')) {
                     'buy_now' => 'http://rtcamp.com/store/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media&add-to-cart=15446'
                 ),
                 array(
-                    'title' => __('BuddyPress-Media FFMPEG Add-on', 'rtmedia'),
+                    'title' => __('rtMedia FFMPEG Add-on', 'rtmedia'),
                     'img_src' => 'http://cdn.rtcamp.com/files/2012/09/ffmpeg-logo-240x184.png',
                     'product_link' => 'http://rtcamp.com/store/buddypress-media-ffmpeg-converter/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media',
                     'desc' => '<p>' . __('Add supports for more audio & video formats using open-source media-node.', 'rtmedia') . '</p>
@@ -139,11 +139,11 @@ if (!class_exists('RTMediaAddon')) {
 
 				if($key == 0) {
 					echo '<h3>';
-					_e('BuddyPress Media Addons for Photos');
+					_e('rtMedia Addons for Photos');
 					echo '</h3>';
 				} else if($key == 2) {
 					echo '<h3>';
-					_e('BuddyPress Media Addons for Audio/Video');
+					_e('rtMedia Addons for Audio/Video');
 					echo '</h3>';
 				}
 				$this->addon($value);

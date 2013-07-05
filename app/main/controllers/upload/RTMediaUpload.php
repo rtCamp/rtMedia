@@ -38,8 +38,6 @@ class RTMediaUpload {
          */
         $file_object = $this->upload($uploaded);
 
-
-		print_r($file_object);
         /**
          * if upload successful then populate the rtMedia database and insert the media into album
          */

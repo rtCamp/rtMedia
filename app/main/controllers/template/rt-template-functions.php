@@ -99,107 +99,113 @@ function rtmedia_type( $id = false ) {
  */
 function rtmedia_permalink() {
 
-	global $rtmedia_backbone;
+    global $rtmedia_backbone;
 
-	if ( $rtmedia_backbone[ 'backbone' ] ) {
-		echo '<%= rt_permalink %>';
-	} else {
-		echo get_rtmedia_permalink( rtmedia_id() );
-	}
+    if ($rtmedia_backbone['backbone']) {
+        echo '<%= rt_permalink %>';
+    } else {
+        echo get_rtmedia_permalink(rtmedia_id());
+    }
 }
 
-function rtmedia_media( $size_flag ) {
-	$size_flag = true;
-	global $rtmedia_media;
-	global $rtmedia;
-	if ( isset( $rtmedia_media->media_type ) ) {
-		if ( $rtmedia_media->media_type == 'photo' ) {
-			echo wp_get_attachment_image( $rtmedia_media->media_id, 'large' );
-		} elseif ( $rtmedia_media->media_type == 'video' ) {
-			$size = " width=\"" . $rtmedia->options[ "defaultSizes_video_singlePlayer_width" ] . "\" height=\"" . $rtmedia->options[ "defaultSizes_video_singlePlayer_height" ] . "\" ";
-
-			echo '<video src="' . wp_get_attachment_url( $rtmedia_media->media_id ) . '" ' . $size . ' type="video/mp4" class="wp-video-shortcode" id="bp_media_video_' . $rtmedia_media->id . '" controls="controls" preload="none"></video>';
-		} elseif ( $rtmedia_media->media_type == 'music' ) {
-			$size = ' width="600" height="0" ';
-			if ( ! $size_flag )
-				$size = '';
-			echo '<audio src="' . wp_get_attachment_url( $rtmedia_media->media_id ) . '" ' . $size . ' type="audio/mp3" class="wp-audio-shortcode" id="bp_media_audio_' . $rtmedia_media->id . '" controls="controls" preload="none"></audio>';
-		} else {
-			return false;
-		}
-	} else {
-		return false;
-	}
+function rtmedia_media($size_flag,$echo = true) {
+    $size_flag=true;
+    global $rtmedia_media, $rtmedia;
+    if (isset($rtmedia_media->media_type)) {
+        if ($rtmedia_media->media_type == 'photo') {
+            $html = wp_get_attachment_image($rtmedia_media->media_id, 'large');
+        } elseif ($rtmedia_media->media_type == 'video') {
+            $size = " width=\"" . $rtmedia->options["defaultSizes_video_singlePlayer_width"]. "\" height=\"" . $rtmedia->options["defaultSizes_video_singlePlayer_height"]. "\" ";
+            
+            $html = '<video src="' . wp_get_attachment_url($rtmedia_media->media_id) . '" ' . $size . ' type="video/mp4" class="wp-video-shortcode" id="bp_media_video_' . $rtmedia_media->id . '" controls="controls" preload="none"></video>';
+        } elseif ($rtmedia_media->media_type == 'music') {
+            $size = ' width="600" height="0" ';
+            if(!$size_flag)
+                $size = '';
+            $html = '<audio src="' . wp_get_attachment_url($rtmedia_media->media_id) . '" ' . $size . ' type="audio/mp3" class="wp-audio-shortcode" id="bp_media_audio_' . $rtmedia_media->id . '" controls="controls" preload="none"></audio>';
+        } else {
+            $html = false;
+        }
+    } else {
+        $html = false;
+    }
+    
+    $html = apply_filters('rtmedia_single_content_filter',$html,$rtmedia_media);
+    
+    if ($echo)
+        echo $html;
+    else
+        return $html;
 }
 
 /*
  * echo http url of the media
  */
 
-function rtmedia_image( $size = 'thumbnail', $id = false ) {
-	global $rtmedia_backbone;
+function rtmedia_image($size = 'thumbnail', $id = false) {
+    global $rtmedia_backbone;
 
-	if ( $rtmedia_backbone[ 'backbone' ] ) {
-		echo '<%= guid %>';
-		return;
-	}
+    if ($rtmedia_backbone['backbone']) {
+        echo '<%= guid %>';
+        return;
+    }
 
-	if ( $id ) {
-		$model = new RTMediaModel();
-		$media = $model->get_media( array( 'id' => $id ), false, false );
-		if ( isset( $media[ 0 ] ) )
-			$media_object = $media[ 0 ];
-		else
-			return false;
-	} else {
-		global $rtmedia_media;
-		$media_object = $rtmedia_media;
-	}
+    if ($id) {
+        $model = new RTMediaModel();
+        $media = $model->get_media(array('id' => $id), false, false);
+        if (isset($media[0]))
+            $media_object = $media[0];
+        else
+            return false;
+    } else {
+        global $rtmedia_media;
+        $media_object = $rtmedia_media;
+    }
+    
+    $thumbnail_id = 0;
+    if (isset($media_object->media_type)) {
+        if ($media_object->media_type == 'album' ||
+                $media_object->media_type != 'photo') {
+            $thumbnail_id = isset($media_object->cover_art) ? $media_object->cover_art : false;
+        } elseif ($media_object->media_type == 'photo') {
+            $thumbnail_id = $media_object->media_id;
+        } else {
+            $thumbnail_id = false;
+        }
+    } else {
+        $src = false;
+    }
 
-	$thumbnail_id = 0;
-	if ( isset( $media_object->media_type ) ) {
-		if ( $media_object->media_type == 'album' ||
-				$media_object->media_type != 'photo' ) {
-			$thumbnail_id = isset( $media_object->cover_art ) ? $media_object->cover_art : false;
-		} elseif ( $media_object->media_type == 'photo' ) {
-			$thumbnail_id = $media_object->media_id;
-		} else {
-			$thumbnail_id = false;
-		}
-	} else {
-		return false;
-	}
-
-	if ( ! $thumbnail_id ) {
-		global $rtmedia;
-		if ( isset( $rtmedia->allowed_types[ $media_object->media_type ] )
-				&& isset( $rtmedia->allowed_types[ $media_object->media_type ][ 'thumbnail' ] ) ) {
-			echo $rtmedia->allowed_types[ $media_object->media_type ][ 'thumbnail' ];
-			return;
-		} elseif ( $media_object->media_type == 'album' ) {
-			rtmedia_album_image( $size );
-			return;
-		} else {
-			return false;
-		}
-	}
-
-//    if ()
-	list($src, $width, $height) = wp_get_attachment_image_src( $thumbnail_id, $size );
-
-	echo $src;
+    if (!$thumbnail_id) {
+        global $rtmedia;
+        if (isset($rtmedia->allowed_types[$media_object->media_type])
+                && isset($rtmedia->allowed_types[$media_object->media_type]['thumbnail'])) {
+            $src = $rtmedia->allowed_types[$media_object->media_type]['thumbnail'];
+        } elseif ($media_object->media_type == 'album') {
+            $src = rtmedia_album_image($size);
+        } else {
+            $src = false;
+        }
+    } else {
+        list($src, $width, $height) = wp_get_attachment_image_src($thumbnail_id, $size);
+    }
+    
+    $src = apply_filters('rtmedia_media_thumb',$src,$id,$media_object->media_type);
+    
+    echo $src;
 }
 
-function rtmedia_album_image( $size = 'thumbnail' ) {
-	global $rtmedia_media;
-	$model = new RTMediaModel();
-	$media = $model->get_media( array( 'album_id' => $rtmedia_media->id, 'media_type' => 'photo' ), 0, 1 );
-	if ( $media ) {
-		rtmedia_image( $size, $media[ 0 ]->id );
-	} else {
-		global $rtmedia;
-		echo $rtmedia->allowed_types[ 'photo' ][ 'thumbnail' ];
-	}
+function rtmedia_album_image($size = 'thumbnail') {
+    global $rtmedia_media;
+    $model = new RTMediaModel();
+    $media = $model->get_media(array('album_id' => $rtmedia_media->id, 'media_type' => 'photo'), 0, 1);
+    if ($media) {
+        $src = rtmedia_image($size, $media[0]->id);
+    } else {
+        global $rtmedia;
+        $src = $rtmedia->allowed_types['photo']['thumbnail'];
+    }
+    return $src;
 }
 
 function rtmedia_sanitize_object( $data, $exceptions = array( ) ) {
@@ -484,8 +490,11 @@ function is_rtmedia_album_gallery() {
  * @return boolean
  */
 function is_rtmedia_single() {
-	global $rtmedia_query;
-	return $rtmedia_query->is_single();
+    global $rtmedia_query;
+    if ( $rtmedia_query )
+        return $rtmedia_query->is_single();
+    else
+        return false;
 }
 
 /**
