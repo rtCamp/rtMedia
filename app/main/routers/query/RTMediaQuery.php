@@ -71,6 +71,7 @@ class RTMediaQuery {
 		$this->friendship = new RTMediaFriends();
 
 
+
 		// action manipulator hook
 		$this->set_actions();
 
@@ -92,6 +93,8 @@ class RTMediaQuery {
 
 			$this->query( $args );
 		}
+
+		
 	}
 
 	/**

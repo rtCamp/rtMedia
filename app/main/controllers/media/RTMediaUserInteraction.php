@@ -41,99 +41,179 @@ class RTMediaUserInteraction {
 	 * @var object The db model
 	 */
 	public $model;
-
 	public $interactor;
-
 	public $owner;
-
 	public $media;
-
-	public $others;
-
-	public $private;
+	public $privacy;
 
 	/**
 	 * Initialise the user interaction
 	 *
 	 * @global object $rtmedia_query Default query
 	 * @param string $action The user action
-	 * @param boolean $others Whether other users are allowed the action
+	 * @param boolean $private Whether other users are allowed the action
 	 * @param string $label The label for the button
 	 * @param boolean $increase Increase or decrease the action count
 	 */
-	function __construct( $action, $others = false, $label = false, $increase = true ) {
+	function __construct($args = array()) {
+		$defaults = array(
+		'action' => '',
+		'label' => '',
+		'plural' => '',
+		'undo_label' => '',
+		'privacy' => 60,
+		'countable' => false,
+		'single' => false,
+		'repeatable' => false,
+		'undoable' => false
+		);
 
-		$this->action = $action;
-		$this->actions = $action . 's';
-		$this->label = $label;
-		$this->increase = $increase;
-		$this->others = $others;
+		$args = wp_parse_args($args,$defaults);
+		foreach($args as $key=>$val){
+			$this->{$key} = $val;
+		}
 
-		$this->model = new RTMediaModel();
 
-		$this->set_label();
-		$this->set_media();
-		$this->set_interactor();
-		$this->set_owner();
+
+		$this->init();
+
+
 
 		// filter the default actions with this new one
 		add_filter( 'rtmedia_query_actions', array( $this, 'register' ) );
-
 		// hook into the template for this action
-		add_action( 'rtmedia_pre_action_' . $action, array( $this, 'preprocess' ) );
+		add_action( 'rtmedia_pre_action_' . $this->action, array( $this, 'preprocess' ) );
+		add_filter( 'rtmedia_action_buttons_before_delete', array($this,'button_filter') );
+	}
+
+
+	function init(){
+		global $rtmedia_query;
+		if(!isset($rtmedia_query->action_query)) return;
+		if(!isset($rtmedia_query->action_query->id)) return;
+
+		$this->model = new RTMediaModel();
+		$this->set_label();
+		$this->set_plural();
+		$this->set_media();
+		$this->set_interactor();
+
 	}
 
 	/**
 	 * Checks if there's a label, if not creates from the action name
 	 */
 	function set_label() {
-		if ( $this->label === false ) {
+		if ( empty($this->label) ) {
 			$this->label = ucfirst( $this->action );
 		}
 	}
 
-	function set_media(){
-		global $rtmedia_query;
+	function set_plural() {
+		if ( empty($this->plural) ) {
+			$this->plural = $this->label .'s';
+		}
+	}
 
+	function set_media() {
+
+		$media_id = false;
+		$this->media = false;
+
+		global $rtmedia_query;
 		$this->action_query = $rtmedia_query->action_query;
 
-		if ( ! isset( $this->action_query->id ) )
-			$this->media = false;
-		else
-			$this->media = $this->action_query->id;
-	}
-
-	function set_interactor(){
-		$this->interactor = get_current_user_id();
-	}
-
-	function set_owner(){
-		$this->owner = false;
-		$user = $this->model->get(array('id'=>$this->media));
-		if(!empty($user)){
-			$user = $user[0];
-			$this->owner = $user->media_author;
+		if (isset( $this->action_query->id ) ){
+			$media_id = $this->action_query->id;
+			$media = $this->model->get( array( 'id' => $media_id ) );
+			if(!empty($media)){
+				$this->media = $media[0];
+				$this->owner = $this->media->media_author;
+			}
 		}
 
+
 	}
 
-	function set_privacy(){
-		$this->private = false;
-		if($this->owner === $this->interactor&& !$this->others){
-			$this->private = true;
+	function set_interactor() {
+		$this->interactor = false;
+		if(  is_user_logged_in()){
+			$this->interactor = get_current_user_id();
+		}
+		$this->interactor_privacy = $this->interactor_privacy();
+	}
+
+	function interactor_privacy(){
+
+		if(!isset($this->interactor)) return 0;
+		if($this->interactor ==$this->owner) return 60;
+
+		$friends = new RTMediaFriends();
+		$friends = $friends->get_friends_cache($this->interactor);
+		if(in_array($this->owner,$friends)) return 40;
+
+		return 20;
+	}
+
+	function is_visible(){
+		if($this->interactor_privacy >=$this->privacy) return true;
+		return false;
+	}
+
+	function is_clickable(){
+		$clickable = false;
+		if($this->repeatable){
+			$clickable = true;
+			if($this->undoable){
+				$clickable = true;
+			}
+		}else{
+			if($this->undoable){
+				$clickable = true;
+			}
 		}
 
+		return $clickable;
 	}
 
+
+	function render(){
+
+		$button = '';
+		if($this->is_visible()){
+			$link = trailingslashit(get_rtmedia_permalink($this->media->id)).
+					$this->action.'/';
+			$disabled = '';
+			if(!$this->is_clickable()){
+				$disabled = ' disabled';
+			}
+			$button = '<a href="'.$link.'" id="rtmedia-action-button-'
+					.$this->media->id.'" class="rtmedia-'.$this->action
+					.' rtmedia-action-buttons button'.$disabled.'">'
+					.$this->label.'</a>';
+		}
+
+		return $button;
+	}
+
+	function button_filter($buttons){
+		if(empty($this->media)){
+			$this->init();
+		}
+		$buttons[] = $this->render();
+		return $buttons;
+	}
 	/**
 	 *
 	 * @param array $actions The default array of actions
 	 * @return array $actions Filtered actions array
 	 */
 	function register( $actions ) {
+		if(empty($this->media)){
+			$this->init();
+		}
 
-
-		$actions[ $this->action ] = array($this->label,$this->others);
+		$actions[ $this->action ] = array( $this->label, false );
 		return $actions;
 	}
 
@@ -152,15 +232,21 @@ class RTMediaUserInteraction {
 
 		if ( ! isset( $this->action_query->id ) )
 			return false;
-		$result= false;
+		$result = false;
 
 		do_action( 'rtmedia_pre_process_' . $this->action );
+		if(empty($this->media)){
+			$this->init();
+		}
 
-		if(!$this->private) $result = $this->process();
+		if($this->interactor_privacy >=$this->privacy){
+
+			$result = $this->process();
+		}
 
 		do_action( 'rtmedia_post_process_' . $this->action, $result );
 
-		print_r($result);
+		print_r( $result );
 
 		die();
 	}
@@ -171,17 +257,8 @@ class RTMediaUserInteraction {
 	 * @return integer New count
 	 */
 	function process() {
-		$actions = $this->model->get( array( 'id' => $this->action_query->id ) );
-		$actionwa = $this->actions;
-		$actions = $actions[ 0 ]->$actionwa;
-		if ( $this->increase === true ) {
-			$actions ++;
-		} else {
-			$actions --;
-		}
 
-		$this->model->update( array( $this->actions => $actions ), array( 'id' => $this->action_query->id ) );
-		return $actions;
+		return $false;
 	}
 
 }
