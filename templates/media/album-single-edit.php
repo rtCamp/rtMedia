@@ -1,6 +1,5 @@
 <?php
-global $rtmedia_query, $rtmedia_media;
-print_r($rtmedia_media);
+global $rtmedia_query;
 
 $model = new RTMediaModel();
 

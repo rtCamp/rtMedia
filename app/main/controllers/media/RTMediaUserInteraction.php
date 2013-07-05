@@ -160,8 +160,6 @@ class RTMediaUserInteraction {
 
 		do_action( 'rtmedia_post_process_' . $this->action, $result );
 
-		print_r($result);
-
 		die();
 	}
 

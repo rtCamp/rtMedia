@@ -513,9 +513,8 @@ class RTMedia {
 			'nav'	=> true
 				//'query'		=> false
 		);
-		global $rtmedia_nav;
-		print_r($rtmedia_nav);
-		$class_construct = apply_filters( 'rtmedia_class_construct', $class_construct );
+
+                $class_construct = apply_filters( 'rtmedia_class_construct', $class_construct );
 
 		foreach ( $class_construct as $key => $global_scope ) {
 			$classname = '';
