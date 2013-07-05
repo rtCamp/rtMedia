@@ -10,152 +10,155 @@
  *
  * @author saurabh
  */
-class RTMediaFeatured extends RTMediaUserInteraction{
+class RTMediaFeatured extends RTMediaUserInteraction {
 
-	/**
-	 *
-	 */
-	function __construct() {
-		$args = array(
-		'action' => 'featured',
-		'label' => 'Set Featured',
-		'plural' => '',
-		'undo_label' => 'Unset Featured',
-		'privacy' => 60,
-		'countable' => false,
-		'single' => true,
-		'repeatable' => false,
-		'undoable' => true
-		);
+    /**
+     *
+     */
+    public $user_id;
+    public $featured;
+    public $settings;
 
-		parent::__construct($args);
-	}
+    function __construct($user_id = false, $flag = false) {
+        $args = array(
+            'action' => 'featured',
+            'label' => 'Set Featured',
+            'plural' => '',
+            'undo_label' => 'Unset Featured',
+            'privacy' => 60,
+            'countable' => false,
+            'single' => true,
+            'repeatable' => false,
+            'undoable' => true
+        );
+        
+        
+        $this->user_id = $user_id;
+        parent::__construct($args);
+        $this->settings();
+    }
 
+    function set($media_id = false) {
+        if (!$media_id) {
+            return;
+        }
+        if ($this->user_id === false)
+            $this->user_id = get_current_user_id();
+        update_user_meta($this->user_id, 'rtmedia_featured_media', $media_id);
+    }
 
+    function get() {
+        if ($this->user_id === false)
+            $this->user_id = get_current_user_id();
+        
+        $this->featured = get_user_meta($this->user_id, "rtmedia_featured_media", true);
+        if ($this->featured == "")
+            $this->featured = get_user_meta($this->user_id, "bp_media_featured_media", true);
+        return $this->featured;
+    }
 
-	function set( $media_id = false ) {
-		if ( ! $media_id ){
-			return;
-		}
+    function settings() {
+        global $rtmedia;
+        $this->settings['photo'] = isset($rtmedia->options['allowedTypes_photo_featured']) ? $rtmedia->options['allowedTypes_photo_featured'] : 0;
+        $this->settings['video'] = isset($rtmedia->options['allowedTypes_video_featured']) ? $rtmedia->options['allowedTypes_video_featured'] : 0;
+        $this->settings['music'] = isset($rtmedia->options['allowedTypes_music_featured']) ? $rtmedia->options['allowedTypes_music_featured'] : 0;
+        $this->settings['width'] = isset($rtmedia->options['defaultSizes_featured_default_width']) ? $rtmedia->options['defaultSizes_featured_default_width'] : 400;
+        $this->settings['height'] = isset($rtmedia->options['defaultSizes_featured_default_height']) ? $rtmedia->options['defaultSizes_featured_default_height'] : 300;
+        $this->settings['crop'] = isset($rtmedia->options['defaultSizes_featured_default_crop']) ? $rtmedia->options['defaultSizes_featured_default_crop'] : 1;
+    }
 
-		$user = get_current_user_id();
+    function valid_type($type) {
+        if (isset($this->settings[$type]) && $this->settings[$type] > 0) {
+            return true;
+        }
+        return false;
+    }
 
-		update_user_meta( $user, 'rtmedia_featured_media', $media_id );
-		$this->get();
-	}
+    function generate_featured_size($media_id) {
+        $metadata = wp_get_attachment_metadata($media_id);
+        $resized = image_make_intermediate_size(get_attached_file($media_id), $this->settings['width'], $this->settings['height'], $this->settings['crop']);
+        if ($resized) {
+            $metadata['sizes']['rtmedia-featured'] = $resized;
+            wp_update_attachment_metadata($media_id, $metadata);
+        }
+    }
 
-	function get() {
-		$legacy_featured = bp_get_user_meta( $this->user, 'bp_media_featured_media', true );
-		if(!$legacy_featured || $legacy_featured=''){
-			$this->set($legacy_featured);
-			bp_delete_user_meta($this->user, 'bp_media_featured_media');
-		}
-		$this->featured = get_user_meta($this->user, 'rtmedia_featured_media', true );
-	}
+    function media_exists($id) {
+        global $wpdb;
+        $post_exists = $wpdb->get_row("SELECT * FROM $wpdb->posts WHERE id = '" . $id . "'", 'ARRAY_A');
+        if ($post_exists)
+            return true;
+        else
+            return false;
+    }
 
-	function settings() {
-		global $rtmedia;
-		$size_settings = $rtmedia->options[ 'sizes' ][ 'media' ][ 'featured' ];
-		$this->settings[ 'image' ] = isset( $rtmedia->options[ 'featured_image' ] ) ? 1 : 0;
-		$this->settings[ 'video' ] = isset( $rtmedia->options[ 'featured_video' ] ) ? 1 : 0;
-		$this->settings[ 'audio' ] = isset( $rtmedia->options[ 'featured_audio' ] ) ? 1 : 0;
-		$this->settings[ 'width' ] = isset( $size_settings[ 'width' ] ) ? $size_settings[ 'width' ] : 400;
-		$this->settings[ 'height' ] = isset( $size_settings[ 'height' ] ) ? $size_settings[ 'height' ] : 300;
-		$this->settings[ 'crop' ] = isset( $size_settings[ 'crop' ] ) ? $size_settings[ 'crop' ] : 1;
-	}
+    function content() {
+        $this->get();
+        $actions = $this->model->get(array('id' => $this->featured));
+        if(!$actions)
+            return false;
+        
+        $featured = $actions[0];
+        $type = $featured->media_type;
 
-	function valid_type( $type ) {
-		if ( isset($this->settings[ $type ])&&$this->settings[ $type ] > 0 ) {
-			return true;
-		}
-		return false;
-	}
+        $content_xtra = '';
+        switch ($type) {
+            case 'video' :
+                $this->generate_featured_size($this->featured);
+                if ($featured->media_id) {
+                    $image_array = image_downsize($featured->media_id, 'rtmedia-featured');
+                    $content_xtra = 'poster="' . $image_array[0] . '" ';
+                }
+                $content = '<video class="bp-media-featured-media"' . $content_xtra . 'src="' . wp_get_attachment_url($this->featured) . '" width="' . $this->settings['width'] . '" height="' . $this->settings['height'] . '" type="video/mp4" id="bp_media_video_' . $this->featured . '" controls="controls" preload="none"></video>';
+                break;
+            case 'music' :
+                $content = '<audio class="bp-media-featured-media"' . $content_xtra . 'src="' . wp_get_attachment_url($this->featured) . '" width="' . $this->settings['width'] . '" type="audio/mp3" id="bp_media_audio_' . $this->featured . '" controls="controls" preload="none"></video>';
+                break;
+            case 'photo' :
+                $this->generate_featured_size($featured->media_id);
+                $image_array = image_downsize($featured->media_id, 'rtmedia-featured');
+                $content = '<img src="' . $image_array[0] . '" alt="' . $featured->media_title . '" />';
+                break;
+            default :
+                return false;
+        }
+        return $content;
+    }
 
-	function generate_featured_size($media_id) {
-		$metadata = wp_get_attachment_metadata( $media_id );
-		$resized = image_make_intermediate_size( get_attached_file( $media_id ), $this->settings[ 'width' ], $this->settings[ 'height' ], $this->settings[ 'crop' ] );
-		if ( $resized ) {
-			$metadata[ 'sizes' ][ 'rtmedia-featured' ] = $resized;
-			wp_update_attachment_metadata( $media_id, $metadata );
-		}
-	}
-
-	function media_exists($id){
-		global $wpdb;
-		$post_exists = $wpdb->get_row("SELECT * FROM $wpdb->posts WHERE id = '" . $id . "'", 'ARRAY_A');
-		if ($post_exists)
-			return true;
-		else
-			return false;
-	}
-
-	function content() {
-		if(!$this->media_exists($this->featured)){
-			return false;
-		}
-		$featured = new BPMediaHostWordpress( $this->featured );
-		$type = $featured->get_type();
-		if ( ! $this->valid_type( $type ) ) {
-			return false;
-		}
-		$content_xtra = '';
-		switch ( $type ) {
-			case 'video' :
-
-				if ( $featured->get_thumbnail_id() ) {
-					$image_array = image_downsize( $featured->get_thumbnail_id(), 'bp_media_activity_image' );
-					$content_xtra = 'poster="' . $image_array[ 0 ] . '" ';
-				}
-				$content = '<video class="bp-media-featured-media"' . $content_xtra . 'src="' . wp_get_attachment_url( $this->featured ) . '" width="' . $this->settings[ 'width' ] . '" height="' . $this->settings[ 'height' ] . '" type="video/mp4" id="bp_media_video_'.$this->featured.'" controls="controls" preload="none"></video>';
-				break;
-			case 'music' :
-				$content = '<audio class="bp-media-featured-media"' . $content_xtra . 'src="' . wp_get_attachment_url( $this->featured ) . '" width="' . $this->settings[ 'width' ] . '" type="audio/mp3" id="bp_media_audio_'.$this->featured.'" controls="controls" preload="none"></video>';
-				break;
-			case 'image' :
-				$image_array = image_downsize( $this->featured, 'bp-media-featured' );
-				$content = '<img src="' . $image_array[ 0 ] . '" alt="' . $featured->get_title() . '" />';
-				break;
-			default :
-				return false;
-		}
-		return $content;
-	}
-
-
-	function process(){
-		if(!isset($this->action_query->id)) return;
-
-		$this->model = new RTMediaModel();
-		$actions = $this->model->get(array('id'=>$this->action_query->id));
-		$actions = $actions[0]->$this->actions;
-		if($this->increase===true){
-			$actions++;
-		}else{
-			$actions--;
-		}
-
-		$this->model->update(array($this->actions=>$actions),array('id'=>$this->action_query->id));
-		die($actions);
-	}
+    function process() {
+        if (!isset($this->action_query->id))
+            return;
+        $return = array();
+        $this->model = new RTMediaModel();
+        $actions = $this->model->get(array('id' => $this->action_query->id));
+        
+        if (intval($this->settings[$actions[0]->media_type]) == 1){
+            $return["status"] = true;
+            $this->set($this->action_query->id);
+        }else{
+            $return["status"] = false;
+            $return["erroe"] = "Media type is not allowed";
+        }
+        echo json_encode($return);
+    }
 
 }
 
-function rtmedia_featured( $user_id = false ) {
-	echo rtmedia_get_featured( $user_id );
+function rtmedia_featured($user_id = false) {
+    echo rtmedia_get_featured($user_id);
 }
 
-function rtmedia_get_featured( $user_id = false ) {
-	$featured = new RTMediaFeatured( $user_id , false);
-	return $featured->content();
+function rtmedia_get_featured($user_id = false) {
+    $featured = new RTMediaFeatured($user_id, false);
+    return $featured->content();
 }
 
-function bp_media_featured( $user_id = false ) {
-	echo rtmedia_get_featured( $user_id );
+function bp_media_featured($user_id = false) {
+    echo rtmedia_get_featured($user_id);
 }
 
-function bp_media_get_featured( $user_id = false ) {
-	return rtmedia_get_featured( $user_id );
+function bp_media_get_featured($user_id = false) {
+    return rtmedia_get_featured($user_id);
 }
-
 
 ?>

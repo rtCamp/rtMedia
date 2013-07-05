@@ -46,17 +46,27 @@ class RTMediaLike extends RTMediaUserInteraction {
                     $like_media = trim(str_replace("," . $this->action_query->id . ",", ",",",". $like_media .","), ",");
                 }
 		$actionwa = $this->action.'s';
-		$actions = intval($actions[ 0 ]->{$actionwa});
+                
+                $return = array();
+		
+                $actions = intval($actions[ 0 ]->{$actionwa});
 		if ( $this->increase === true ) {
 			$actions ++;
+                        $return["next"] = __("Unlike","rtmedia");
 		} else {
 			$actions --;
+                        $return["next"] = __("Like","rtmedia");
 		}
                 if($actions <0)
                     $actions = 0;
+                
+                $return["count"] = $actions;
 		$this->model->update( array( $this->plural => $actions ), array( 'id' => $this->action_query->id ) );
                 
 		update_user_meta($this->interactor,'rtmedia_liked_media',$like_media);
+
+                echo json_encode($return);
+
 		return $actions;
 	}
         
