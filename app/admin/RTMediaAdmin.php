@@ -43,7 +43,6 @@ if (!class_exists('RTMediaAdmin')) {
                 //bp_core_admin_hook();
                 add_action('admin_menu', array($this, 'menu'),1);
                 global $rtmedia;
-                echo $rtmedia->options["general_showAdminMenu"];
                 if (isset($_POST["rtmedia-options"])){
                     if(isset($_POST["rtmedia-options"]["general_showAdminMenu"]) && $_POST["rtmedia-options"]["general_showAdminMenu"] == "1")
                         add_action('admin_bar_menu', array($this, 'admin_bar_menu'),100,1);
