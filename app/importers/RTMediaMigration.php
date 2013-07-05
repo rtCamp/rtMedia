@@ -646,6 +646,7 @@ class RTMediaMigration {
         $ffmpeg_thumbnail_ids = get_post_meta($id, 'bp_media_thumbnail_ids', true);
         $ffmpeg_thumbnail = get_post_meta($id, 'bp_media_thumbnail', true);
         $ffmpeg_remote_id = get_post_meta($id, 'bp_media_ffmpeg_remote_id', true);
+        $kaltura_remote_id = get_post_meta($id, 'bp_media_kaltura_remote_id', true);
 
         if (wp_mkdir_p($basedir . "rtMedia/$prefix/" . $year_month)) {
             if (copy($attached_file, str_replace($basedir, $basedir . "rtMedia/$prefix/", $attached_file))) {
@@ -750,6 +751,9 @@ class RTMediaMigration {
                     }
                     if ($ffmpeg_remote_id) {
                         update_rtmedia_meta($id, 'rtmedia-ffmpeg-remote-id', $ffmpeg_remote_id);
+                    }
+                    if ($kaltura_remote_id) {
+                        update_rtmedia_meta($id, 'rtmedia-kaltura-remote-id', $kaltura_remote_id);
                     }
 
                     $attachment = array();

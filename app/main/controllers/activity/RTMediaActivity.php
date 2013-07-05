@@ -99,18 +99,19 @@ class RTMediaActivity {
 				$thumbnail_id = $media->media_id;
                                 if ( $thumbnail_id ) {
                                     list($src, $width, $height) = wp_get_attachment_image_src($thumbnail_id);
-                                    return '<img src="'.$src.'" />';
+                                    $html = '<img src="'.$src.'" />';
                                 }
 			} elseif ( $media->media_type == 'video' )  {
-				return '<video src="' . wp_get_attachment_url($media->media_id) . '" width="320" height="240" type="video/mp4" class="wp-video-shortcode" id="bp_media_video_' . $media->id . '" controls="controls" preload="none"></video>';
+				$html = '<video src="' . wp_get_attachment_url($media->media_id) . '" width="320" height="240" type="video/mp4" class="wp-video-shortcode" id="bp_media_video_' . $media->id . '" controls="controls" preload="none"></video>';
 			} elseif ( $media->media_type == 'music' )  {
-                                return '<audio src="' . wp_get_attachment_url($media->media_id) . '" width="320" height="0" type="audio/mp3" class="wp-audio-shortcode" id="bp_media_audio_' . $media->id . '" controls="controls" preload="none"></audio>';
+                                $html = '<audio src="' . wp_get_attachment_url($media->media_id) . '" width="320" height="0" type="audio/mp3" class="wp-audio-shortcode" id="bp_media_audio_' . $media->id . '" controls="controls" preload="none"></audio>';
 			} else  {
-				return false;
+				$html = false;
 			}
 		} else {
-			return false;
+			$html = false;
 		}
+                return apply_filters('rtmedia_single_activity_filter',$html,$media,true);
 	}
 }
 
