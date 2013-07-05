@@ -238,10 +238,16 @@ class RTMediaMigration {
         $prog = new rtProgress();
         $total = $this->get_total_count();
         $done = $this->get_done_count();
-        if($done > $total)
+        if($done >= $total){
             $done = $total;
         ?>
-        <div class="error"><p> Please Backup your <strong>DATABASE</strong> and <strong>UPLOAD</strong> folder before Migration.</p></div>
+<div class="error"><p> Please Update your <a href='<?php admin_url("options-permalink.php") ?>'>Permalink<a/> after migration.</p></div>
+        <?php }else{ ?>
+            <div class="error"><p> Please Backup your <strong>DATABASE</strong> and <strong>UPLOAD</strong> folder before Migration.</p></div>
+        <?php }
+        
+        ?>
+        
         <div class="wrap">
             <h2>rtMedia Migration</h2>
             <h3><?php _e("It will migrate following things"); ?> </h3>
@@ -275,7 +281,12 @@ class RTMediaMigration {
                                 "done": db_done
                             },
                             success: function(sdata) {
-                                data = JSON.parse(sdata);
+                                
+                                try{
+                                    data = JSON.parse(sdata);
+                                }catch(e){
+                                    jQuery("#submit").attr('disabled',"");
+                                }
                                 if (data.status) {
                                     done = parseInt(data.done);
                                     total = parseInt(data.total);
@@ -290,13 +301,17 @@ class RTMediaMigration {
                                     jQuery('span.pending').html(data.pending);
                                     db_start_migration(done, total);
                                 } else {
-                                    alert("Migration Done");
+                                    alert("Migration Done, Please Update your Permalink");
                                     jQuery("#rtMediaSyncing").hide();
                                 }
-                            }
+                            },
+                                    error: function(){
+                                        alert("Error During Migration, Please Refresh Page then try again");
+                                        jQuery("#submit").attr('disabled',"");
+                                    }
                         });
                     } else {
-                        alert("Migration Done");
+                        alert("Migration already Done, Please Update your Permalink");
                         jQuery("#rtMediaSyncing").hide();
                     }
                 }
@@ -306,6 +321,7 @@ class RTMediaMigration {
                     var db_done = <?php echo $done; ?>;
                     var db_total = <?php echo $total; ?>;
                     db_start_migration(db_done, db_total);
+                    jQuery(this).attr('disabled', 'disabled');
                 });
             </script>
             <hr />
