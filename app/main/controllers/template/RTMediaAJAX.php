@@ -24,7 +24,7 @@ class RTMediaAJAX {
         function create_album(){
             if ( isset($_POST['name']) && $_POST['name'] ) {
                 $album = new RTMediaAlbum();
-                $album->add($_POST['name'], get_current_user_id(), true, false);
+                $rtmedia_id = $album->add($_POST['name'], get_current_user_id(), true, false);
 
                 if ( $rtmedia_id )
                     echo $rtmedia_id;
