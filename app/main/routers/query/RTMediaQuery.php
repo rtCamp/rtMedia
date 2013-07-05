@@ -371,7 +371,7 @@ class RTMediaQuery {
 	function privacy_filter( $where,$table_name ) {
 		$user = $this->get_user();
 
-		$where .= " AND ({$table_name}.privacy=0";
+		$where .= " AND ({$table_name}.privacy is NULL OR {$table_name}.privacy=0";
 		if ( $user ) {
 			$where .= " OR ({$table_name}.privacy=20)";
 			$where .= " OR ({$table_name}.media_author={$user} AND {$table_name}.privacy>=40)";

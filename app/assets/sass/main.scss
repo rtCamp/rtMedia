@@ -140,8 +140,22 @@
         			padding: 10px;
         			&>a{
         				float: left;
+                                        margin:10px;
         			}
+                                .rtmedia-item-actions{
+                                        &>a{
+                                    margin-left:5px;
+                                    margin-top:5px;
+                                    display: inline-block;
+                                    }
+}
         		}
+                    .rtmedia-item-comments{
+                        background-color:transparent;
+                        div{
+                            background-color:transparent;
+                        }
+                    }
         	}
         }
 }

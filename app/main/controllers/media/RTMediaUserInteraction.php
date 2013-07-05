@@ -29,6 +29,7 @@ class RTMediaUserInteraction {
 	 * @var boolean Whether the action increases the count or decreases the count
 	 */
 	public $increase;
+        
 
 	/**
 	 *
