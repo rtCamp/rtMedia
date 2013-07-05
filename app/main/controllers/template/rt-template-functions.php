@@ -190,7 +190,7 @@ function rtmedia_image($size = 'thumbnail', $id = false) {
         list($src, $width, $height) = wp_get_attachment_image_src($thumbnail_id, $size);
     }
     
-    $src = apply_filters('rtmedia_media_thumb',$src,$id,$media_object->media_type);
+    $src = apply_filters('rtmedia_media_thumb',$src,$media_object->id,$media_object->media_type);
     
     echo $src;
 }
