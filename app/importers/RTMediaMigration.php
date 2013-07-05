@@ -87,9 +87,10 @@ class RTMediaMigration {
                                                             and item_id in (select post_id
                                                             from
                                                                 {$wpdb->postmeta} a
-
+                                                                left join
+                                                                     {$wpdb->posts} p ON (a.post_id = p.ID)
                                                             where
-                                                                a.post_id > 0
+                                                                a.post_id > 0 and  (NOT p.ID IS NULL)
                                                                     and a.meta_key = 'bp-media-key'))";
 
 
@@ -109,15 +110,15 @@ class RTMediaMigration {
                     {$wpdb->postmeta} c ON (a.post_id = c.post_id)
                         and (c.meta_key = 'bp_media_child_activity')
                         left join
-                    {$wpdb->posts} p ON (a.post_id = p.id)
+                    {$wpdb->posts} p ON (a.post_id = p.ID)
                 where
-                    a.post_id > 0
+                    a.post_id > 0 and  (NOT p.ID IS NULL)
                         and a.meta_key = 'bp-media-key'";
 
 
         $_SESSION["migration_media"] = $wpdb->get_var($sql);
         $count += intval($_SESSION["migration_media"]);
-        //var_dump($_SESSION);
+       // var_dump($_SESSION);
         return $count;
     }
 
@@ -128,9 +129,10 @@ class RTMediaMigration {
         global $wpdb;
         $sql = "select a.post_ID
                 from
-                    {$wpdb->postmeta} a
+                    {$wpdb->postmeta} a  left join
+                    {$wpdb->posts} p ON (a.post_id = p.ID)
                 where
-                     a.meta_key = 'bp-media-key' and a.post_id not in (select media_id
+                     a.meta_key = 'bp-media-key' and  (NOT p.ID IS NULL) and a.post_id not in (select media_id
                 from {$this->bmp_table} where blog_id = %d and media_id <> %d ) order by a.post_ID";
         $sql = $wpdb->prepare($sql, get_current_blog_id(), $album_id);
         $row = $wpdb->get_row($sql);
@@ -154,9 +156,9 @@ class RTMediaMigration {
                     {$wpdb->postmeta} c ON (a.post_id = c.post_id)
                         and (c.meta_key = 'bp_media_child_activity')
                         left join
-                    {$wpdb->posts} p ON (a.post_id = p.id)
+                    {$wpdb->posts} p ON (a.post_id = p.ID)
                 where
-                    a.post_id > 0
+                    a.post_id > 0 and  (NOT p.ID IS NULL)
                         and a.meta_key = 'bp-media-key')";
 
         $media_count = $wpdb->get_var($wpdb->prepare($sql, get_current_blog_id()));
@@ -170,9 +172,9 @@ class RTMediaMigration {
             $album_count = 0;
         }
 
-        $comment_sql = $wpdb->get_var("select count(*) from $wpdb->comments where comment_post_ID in (select media_id from $this->bmp_table) and comment_agent=''");
-
-        //echo $media_count . "--" . $album_count . "--" . $comment_sql;
+        $comment_sql = $wpdb->get_var("select count(*) from $wpdb->comments a  where a.comment_post_ID in (select b.media_id from $this->bmp_table b  left join
+                                                                                            {$wpdb->posts} p ON (b.media_id = p.ID) where  (NOT p.ID IS NULL) ) and a.comment_agent=''");
+      //  echo $media_count . "--" . $album_count . "--" . $comment_sql;
         return $media_count + $album_count + $comment_sql;
     }
 
@@ -184,7 +186,8 @@ class RTMediaMigration {
             $pending = 0;
             $done = $total;
         }
-
+        if($done > $total)
+            $done = $total;
         update_site_option("rtMigration-pending-count", $pending);
         $pending_time = $this->formatSeconds($pending);
 
@@ -233,6 +236,8 @@ class RTMediaMigration {
         $prog = new rtProgress();
         $total = $this->get_total_count();
         $done = $this->get_done_count();
+        if($done > $total)
+            $done = $total;
         ?>
         <div class="wrap">
             <h2>rtMedia Migration</h2>
@@ -250,7 +255,8 @@ class RTMediaMigration {
             <?php
             echo '<span class="pending">' . $this->formatSeconds($total - $done) . '</span><br />';
             echo '<span class="finished">' . $done . '</span>/<span class="total">' . $total . '</span>';
-            echo '<img src="images/loading.gif" alt="syncing" id="rtMediaSyncing" style="display:none" />';
+            echo '<img src="images/loading.gif" alt="syncing" id="rtMediaSyncing" style="display:none" />'; 
+
             $temp = $prog->progress($done, $total);
             $prog->progress_ui($temp, true);
             ?>
@@ -347,9 +353,9 @@ class RTMediaMigration {
                     {$wpdb->postmeta} c ON (a.post_id = c.post_id)
                         and (c.meta_key = 'bp_media_child_activity')
                         left join
-                    {$wpdb->posts} p ON (a.post_id = p.id)
+                    {$wpdb->posts} p ON (a.post_id = p.ID)
                 where
-                    a.post_id >= %d
+                    a.post_id >= %d and (NOT p.ID is NULL) 
                         and a.meta_key = 'bp_media_privacy'
                 order by a.post_id
                 limit %d";
@@ -418,9 +424,9 @@ class RTMediaMigration {
                         {$wpdb->postmeta} c ON (a.post_id = c.post_id)
                             and (c.meta_key = 'bp_media_child_activity')
                             left join
-                        {$wpdb->posts} p ON (a.post_id = p.id)
+                        {$wpdb->posts} p ON (a.post_id = p.ID)
                     where
-                        a.post_id = %d
+                        a.post_id = %d and (NOT p.ID IS NULL)
                             and a.meta_key = 'bp_media_privacy'";
                 $result = $wpdb->get_row($wpdb->prepare($sql, $result));
             } else {
