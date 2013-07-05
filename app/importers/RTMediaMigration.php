@@ -617,6 +617,9 @@ class RTMediaMigration {
         $instagram_full_images = get_post_meta($id, '_instagram_full_images', true);
         $instagram_metadata = get_post_meta($id, '_instagram_metadata', true);
         $encoding_job_id = get_post_meta($id, 'bp-media-encoding-job-id', true);
+        $ffmpeg_thumbnail_ids = get_post_meta($id, 'bp_media_thumbnail_ids', true);
+        $ffmpeg_thumbnail = get_post_meta($id, 'bp_media_thumbnail', true);
+        $ffmpeg_remote_id = get_post_meta($id, 'bp_media_ffmpeg_remote_id', true);
 
         if (wp_mkdir_p($basedir . "rtMedia/$prefix/" . $year_month)) {
             if (copy($attached_file, str_replace($basedir, $basedir . "rtMedia/$prefix/", $attached_file))) {
@@ -712,6 +715,15 @@ class RTMediaMigration {
                     }
                     if ($encoding_job_id) {
                         update_rtmedia_meta($id, 'rtmedia-encoding-job-id', $encoding_job_id);
+                    }
+                    if ($ffmpeg_thumbnail_ids) {
+                        update_rtmedia_meta($id, 'rtmedia-thumbnail-ids', $ffmpeg_thumbnail_ids);
+                    }
+                    if ($ffmpeg_thumbnail) {
+                        update_rtmedia_meta($id, 'rtmedia-thumbnail', $ffmpeg_thumbnail);
+                    }
+                    if ($ffmpeg_remote_id) {
+                        update_rtmedia_meta($id, 'rtmedia-ffmpeg-remote-id', $ffmpeg_remote_id);
                     }
 
                     $attachment = array();
