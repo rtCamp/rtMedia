@@ -82,7 +82,7 @@ class RTMediaMigration {
                                                     and item_id in (SELECT
                                                         id
                                                     FROM
-                                                        wp_bp_activity
+                                                        {$bp_prefix}bp_activity
                                                     where
                                                         component = 'activity'
                                                             and type = 'activity_update' and is_spam <> 1
