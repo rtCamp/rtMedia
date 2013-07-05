@@ -382,6 +382,7 @@ class RTMediaMigration {
             'bpmedia_encoding_service_notice' => 'rtmedia-encoding-service-notice',
             'bpmedia_encoding_expansion_notice' => 'rtmedia-encoding-expansion-notice',
             'bp_media_ffmpeg_options' => 'rtmedia-ffmpeg-options',
+            'bp_media_kaltura_options' => 'rtmedia-kaltura-options',
         );
         foreach ($encoding_mnigration_array as $key => $ma) {
             if (($value = get_site_option($key)) !== false) {
