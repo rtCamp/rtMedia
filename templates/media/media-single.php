@@ -16,18 +16,6 @@
 
                 <?php rtmedia_description(); ?>
 
-                <?php
-                if (is_user_logged_in() && rtmedia_edit_allowed()) {
-                    ?>
-                    <a href="<?php echo rtmedia_permalink() . 'edit/'; ?>"><button type="button"><?php echo __('Edit', 'rtmedia'); ?></button></a>
-                    <?php }
-                ?>
-
-                <?php
-                if (rtmedia_delete_allowed()) {
-                    rtmedia_delete_form();
-                }
-                ?>
                 <div class="rtmedia-item-actions">
                     <?php rtmedia_actions(); ?>
                 </div>

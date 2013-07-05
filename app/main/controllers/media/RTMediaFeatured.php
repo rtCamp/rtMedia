@@ -16,29 +16,22 @@ class RTMediaFeatured extends RTMediaUserInteraction{
 	 *
 	 */
 	function __construct() {
-		$label = __('Set as Featured', 'rtmedia');
-		parent::__construct('featured',false, $label);
+		$args = array(
+		'action' => 'featured',
+		'label' => 'Set Featured',
+		'plural' => '',
+		'undo_label' => 'Unset Featured',
+		'privacy' => 60,
+		'countable' => false,
+		'single' => true,
+		'repeatable' => false,
+		'undoable' => true
+		);
+
+		parent::__construct($args);
 	}
 
-	function init( $user_id = false ) {
-		if ( ! $user_id ) {
-			if(!class_exists('BuddyPress')){
-				$user = bp_displayed_user_id();
-			}elseif(is_author()){
-				$curauth = (get_query_var('author_name')) ?
-				get_user_by('slug', get_query_var('author_name')) :
-					get_userdata(get_query_var('author'));
-				$user = $curauth->ID;
-			} else {
-				return false;
-			}
-		} else {
-			$user = $user_id;
-		}
-		$this->user = $user;
-		$this->get();
-		$this->settings();
-	}
+
 
 	function set( $media_id = false ) {
 		if ( ! $media_id ){
@@ -148,7 +141,7 @@ class RTMediaFeatured extends RTMediaUserInteraction{
 }
 
 function rtmedia_featured( $user_id = false ) {
-	echo bp_media_get_featured( $user_id );
+	echo rtmedia_get_featured( $user_id );
 }
 
 function rtmedia_get_featured( $user_id = false ) {

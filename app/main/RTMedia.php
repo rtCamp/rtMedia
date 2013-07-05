@@ -510,7 +510,11 @@ class RTMedia {
 			'gallery_shortcode' => false,
 			'upload_endpoint' => false,
 			'privacy' => false,
-			'nav'	=> true
+			'nav'	=> true,
+			'like'	=> false,
+			'cover_art'	=> false,
+			'featured'	=> false
+
 				//'query'		=> false
 		);
 		global $rtmedia_nav;

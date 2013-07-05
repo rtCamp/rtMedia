@@ -18,9 +18,7 @@ class RTMediaTemplate {
                     add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
                     add_action( 'init', array( $this, 'enqueue_image_editor_scripts' ) );
                 }
-		new RTMediaLike();
-		new RTMediaFeatured();
-		new RTMediaCoverArt();
+
 	}
 
 	/**
@@ -62,6 +60,7 @@ class RTMediaTemplate {
 		//print_r($rtmedia_query);
 
 		if(isset($rtmedia_query->action_query->action)){
+			//echo $rtmedia_query->action_query->action;
 			do_action( 'rtmedia_pre_action_' . $rtmedia_query->action_query->action );
 		}else{
 			do_action( 'rtmedia_pre_action_default' );

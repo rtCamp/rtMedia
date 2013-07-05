@@ -16,26 +16,34 @@ class RTMediaLike extends RTMediaUserInteraction {
 	 *
 	 */
 	function __construct() {
-		$label=__('Like','rtmedia');
-		parent::__construct('like',false,$label);
+		$args = array(
+		'action' => 'like',
+		'label' => 'Like',
+		'plural' => 'Likes',
+		'undo_label' => 'Unlike',
+		'privacy' => 20,
+		'countable' => true,
+		'single' => false,
+		'repeatable' => false,
+		'undoable' => true
+		);
+		parent::__construct($args);
 
 	}
 
 	function process() {
-
-
-		$this->model = new RTMediaModel();
 		$actions = $this->model->get( array( 'id' => $this->action_query->id ) );
-		$actionwa = $this->actions;
-		$actions = $actions[ 0 ]->$actionwa;
+		//print_r($actions);
+		$actionwa = $this->action.'s';
+		$actions = $actions[ 0 ]->{$actionwa};
 		if ( $this->increase === true ) {
 			$actions ++;
 		} else {
 			$actions --;
 		}
 
-		$this->model->update( array( $this->actions => $actions ), array( 'id' => $this->action_query->id ) );
-		update_user_meta($user_id,'rtmedia_liked_media',$actions);
+		$this->model->update( array( $this->plural => $actions ), array( 'id' => $this->action_query->id ) );
+		update_user_meta($this->interactor,'rtmedia_liked_media',$actions);
 		return $actions;
 	}
 
