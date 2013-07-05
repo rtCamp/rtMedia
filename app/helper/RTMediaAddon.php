@@ -48,8 +48,8 @@ if (!class_exists('RTMediaAddon')) {
 			$tabs = array();
 			global $rtmedia_admin;
 			$tabs[] = array(
-				'title' => 'Encoding',
-				'name' => __('Encoding', 'rtmedia'),
+				'title' => 'Audio/Video Encoding',
+				'name' => __('Audio/Video  Encoding', 'rtmedia'),
 				'href' => '#bpm-services',
 				'callback' => array($rtmedia_admin->rtmedia_encoding, 'encoding_service_intro')
 			);
