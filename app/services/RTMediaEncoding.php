@@ -485,7 +485,7 @@ class RTMediaEncoding {
         }
 
         function upload_dir($upload_dir) {
-            global $rtmedia_interaction;
+            global $rtmedia_interaction,$rt_media_media;
             if (isset($this->uploaded["context"]) && isset($this->uploaded["context_id"])) {
                 if ($this->uploaded["context"] != 'group') {
                     $rtmedia_upload_prefix = 'users/';

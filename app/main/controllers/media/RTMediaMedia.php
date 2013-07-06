@@ -218,9 +218,7 @@ class RTMediaMedia {
         $media = $this->model->get(array('media_id' => $id), false, false);
 
         if ($media) {
-            /* delete meta */
-            delete_rtmedia_meta($media[0]->id);
-            $this->model->delete(array('id' => $media[0]->id));
+            $this->delete($media[0]->id,true);
         }
     }
 
@@ -230,8 +228,8 @@ class RTMediaMedia {
      * @param type $media_id
      * @return boolean
      */
-    function delete($id) {
-        do_action('rtmedia_before_delete_media', $this);
+    function delete($id,$core=false) {
+        do_action('rtmedia_before_delete_media', $id);
 
         $media = $this->model->get(array('id' => $id), false, false);
 
@@ -240,14 +238,17 @@ class RTMediaMedia {
         if ($media) {
             /* delete meta */
             delete_rtmedia_meta($id);
-            wp_delete_post($media[0]->media_id, true);
+            if ($media[0]->activity_id && function_exists('bp_activity_delete_by_activity_id'))
+                bp_activity_delete_by_activity_id ($media[0]->activity_id);
+            if(!$core)
+                wp_delete_post($media[0]->media_id, true);
             $status = $this->model->delete(array('id' => $id));
         }
 
         if ($status == 0) {
             return false;
         } else {
-            do_action('rtmedia_after_delete_media', $this);
+            do_action('rtmedia_after_delete_media', $id);
             return true;
         }
     }
