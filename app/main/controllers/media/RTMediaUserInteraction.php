@@ -29,6 +29,7 @@ class RTMediaUserInteraction {
 	 * @var boolean Whether the action increases the count or decreases the count
 	 */
 	public $increase;
+        
 
 	/**
 	 *
@@ -187,10 +188,10 @@ class RTMediaUserInteraction {
 			if(!$this->is_clickable()){
 				$disabled = ' disabled';
 			}
-			$button = '<a href="'.$link.'" id="rtmedia-action-button-'
+			$button = '<form action="'. $link .'"><button type="submit" id="rtmedia-action-button-'
 					.$this->media->id.'" class="rtmedia-'.$this->action
 					.' rtmedia-action-buttons button'.$disabled.'">'
-					.$this->label.'</a>';
+					.$this->label.'</button></form>';
 		}
 
 		return $button;

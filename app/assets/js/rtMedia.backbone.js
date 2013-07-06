@@ -464,4 +464,28 @@ jQuery(document).ready(function($) {
 
         return false;
     });
+    
+    
+    
+    $(document).on("click",'a.rtmedia-like',function(e){
+        e.preventDefault();
+        var that = this;
+        $(this).attr('disabled', 'disabled');
+        var url = $(this).attr("src");
+          $.ajax({
+                url: url,
+                type: 'post',
+                success: function (data) {
+                    try{
+                        data = JSON.parse(data);
+                    }catch(e){
+                        
+                    }
+                    $(that).html(data.next);
+                    $(that).attr('disabled',"");
+                }
+            });
+
+        
+    })    
 });

@@ -264,7 +264,7 @@ class RTMediaMedia {
 
         global $wpdb;
         /* update the post_parent value in wp_post table */
-        $status = $wpdb->update('wp_posts', array('post_parent' => $album_id), array('ID' => $media_id));
+        $status = $wpdb->update($wpdb->posts, array('post_parent' => $album_id), array('ID' => $media_id));
 
         if (get_class($status) == 'WP_Error' || $status == 0) {
             return false;
