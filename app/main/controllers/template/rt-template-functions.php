@@ -781,8 +781,10 @@ function rtmedia_item_select() {
     if ($rtmedia_backbone['backbone']) {
         if ($rtmedia_backbone['is_album'] && $rtmedia_backbone['is_edit_allowed'])
             echo '<input type="checkbox" name="move[]" value="<%= id %>" />';
-    } else if (is_rtmedia_album() && isset($rtmedia_query->media_query) && get_current_user_id() == $rtmedia_query->media_query['media_author'] && $rtmedia_query->action_query->action == 'edit') {
-        echo '<input type="checkbox" name="selected[]" value="' . rtmedia_id() . '" />';
+    } else if (is_rtmedia_album() && isset($rtmedia_query->media_query)  && $rtmedia_query->action_query->action == 'edit') {
+        if(isset($rtmedia_query->media_query['media_author'])
+				&& get_current_user_id() == $rtmedia_query->media_query['media_author'])
+		echo '<input type="checkbox" name="selected[]" value="' . rtmedia_id() . '" />';
     }
 }
 
