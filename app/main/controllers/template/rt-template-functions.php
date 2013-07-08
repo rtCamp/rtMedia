@@ -654,6 +654,8 @@ function rtmedia_user_album_list() {
 
 add_action('rtmedia_before_media_gallery', 'rtmedia_create_album');
 
+add_action('rtmedia_before_album_gallery', 'rtmedia_create_album');
+
 function rtmedia_create_album() {
     global $rtmedia_query;
 	$user_id = get_current_user_id();
@@ -677,8 +679,10 @@ function rtmedia_create_album() {
             ?>
             <input type=button class="button rtmedia-create-new-album-button" value="Create New Album" />
             <div class="rtmedia-create-new-album-container">
-                <input type="text" class="rtmedia-new-album-name" value="" />
-                <input type="submit" class="rtmedia-create-new-album" value="Create Album" />
+                <input type="text" id="rtmedia_album_name" value="" />
+				<input type="hidden" id="rtmedia_album_context" value="<?php echo $rtmedia_query->query['context']; ?>">
+                <input type="hidden" id="rtmedia_album_context_id" value="<?php echo $rtmedia_query->query['context_id']; ?>">
+                <input type="submit" id="rtmedia_create_new_album" value="Create Album" />
             </div><?php
 		}
 

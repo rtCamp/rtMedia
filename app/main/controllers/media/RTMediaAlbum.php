@@ -115,7 +115,7 @@ class RTMediaAlbum {
 	 * @param type $post_id
 	 * @return type
 	 */
-	function add($title = '', $author_id = false, $new = true, $post_id = false) {
+	function add($title = '', $author_id = false, $new = true, $post_id = false, $context = false, $context_id = false) {
 
 		/* action to perform any task before adding the album */
 		do_action('rtmedia_before_add_album');
@@ -147,10 +147,18 @@ class RTMediaAlbum {
 		else $album_id = $post_id;
 
 		$current_album = get_post($album_id, ARRAY_A);
-
+		if($context===false){
+			$context = (isset($rtmedia_interaction->context->type))
+			? $rtmedia_interaction->context->type : NULL;
+		}
+		if($context_id===false){
+			$context = (isset($rtmedia_interaction->context->id))
+			? $rtmedia_interaction->context->id : NULL;
+		}
 		// add in the media since album is also a media
 		//defaults
 		global $rtmedia_interaction;
+		print_r($rtmedia_interaction);
 		$attributes = array(
 			'blog_id' => get_current_blog_id(),
 			'media_id' => $album_id,
@@ -158,8 +166,8 @@ class RTMediaAlbum {
 			'media_title' => $current_album['post_title'],
 			'media_author' => $current_album['post_author'],
 			'media_type' => 'album',
-			'context' => (isset($rtmedia_interaction->context->type)) ? $rtmedia_interaction->context->type : NULL,
-			'context_id' => (isset($rtmedia_interaction->context->id)) ? $rtmedia_interaction->context->id : NULL,
+			'context' => $context,
+			'context_id' => $context_id,
 			'activity_id' => NULL,
 			'privacy' => NULL
 		);

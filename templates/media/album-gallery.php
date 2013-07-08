@@ -1,5 +1,5 @@
 <div class="rtmedia-container">
-
+	<?php do_action('rtmedia_before_album_gallery'); ?>
 	<?php rtmedia_uploader() ?>
 
     <?php if (have_rtmedia()) { ?>
@@ -29,6 +29,8 @@
 	<?php } else { ?>
 		<p><?php echo __("Oops !! There's no media found for the request !!","rtmedia"); ?></p>
 	<?php } ?>
+
+		<?php do_action('rtmedia_after_album_gallery'); ?>
 
 </div>
 

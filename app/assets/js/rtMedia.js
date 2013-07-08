@@ -71,12 +71,16 @@ jQuery('document').ready(function(){
         jQuery('.rtmedia-create-new-album-container').slideToggle();
     });
 
-    jQuery('.rtmedia-container').on('click','.rtmedia-create-new-album',function(e){
-        $albumname = jQuery.trim(jQuery('.rtmedia-new-album-name').val());
+    jQuery('.rtmedia-container').on('click','#rtmedia_create_new_album',function(e){
+        $albumname = jQuery.trim(jQuery('#rtmedia_album_name').val());
+		$context = jQuery.trim(jQuery('#rtmedia_album_context').val());
+		$context_id = jQuery.trim(jQuery('#rtmedia_album_context_id').val());
         if ($albumname != '') {
             var data = {
                 action: 'rtmedia_create_album',
-                name: $albumname
+                name: $albumname,
+				context:$context,
+				context_id: $context_id
             };
 
             // since 2.8 ajaxurl is always defined in the admin header and points to admin-ajax.php
