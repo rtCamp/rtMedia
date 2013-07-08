@@ -67,7 +67,7 @@ class RTMediaLike extends RTMediaUserInteraction {
 
                 echo json_encode($return);
 
-		return $actions;
+		//return $actions;
 	}
         
         function is_liked() {
