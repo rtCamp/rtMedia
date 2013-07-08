@@ -32,20 +32,54 @@ class RTMediaLike extends RTMediaUserInteraction {
 	}
 
 	function process() {
+            
 		$actions = $this->model->get( array( 'id' => $this->action_query->id ) );
-		//print_r($actions);
+                $like_media = get_user_meta($this->interactor,"rtmedia_liked_media",true);
+                if(strpos("," . $like_media . ",","," . $this->action_query->id . ",") === false){
+                    $this->increase =true;
+                    if($like_media =="")
+                        $like_media = $this->action_query->id . ",";
+                    else
+                        $like_media .= "," . $this->action_query->id;
+                } else {
+                    $this->increase =false;
+                    $like_media = trim(str_replace("," . $this->action_query->id . ",", ",",",". $like_media .","), ",");
+                }
 		$actionwa = $this->action.'s';
-		$actions = $actions[ 0 ]->{$actionwa};
+                
+                $return = array();
+		
+                $actions = intval($actions[ 0 ]->{$actionwa});
 		if ( $this->increase === true ) {
 			$actions ++;
+                        $return["next"] = __("Unlike","rtmedia");
 		} else {
 			$actions --;
+                        $return["next"] = __("Like","rtmedia");
 		}
-
+                if($actions <0)
+                    $actions = 0;
+                
+                $return["count"] = $actions;
 		$this->model->update( array( $this->plural => $actions ), array( 'id' => $this->action_query->id ) );
-		update_user_meta($this->interactor,'rtmedia_liked_media',$actions);
+                
+		update_user_meta($this->interactor,'rtmedia_liked_media',$like_media);
+
+                echo json_encode($return);
+
 		return $actions;
 	}
+        
+        function is_liked() {
+            $like_media = get_user_meta($this->interactor, "rtmedia_liked_media", true);
+            if (strpos("," . $like_media . ",", "," . $this->action_query->id . ",") === false) {
+                $this->increase = true;
+                return false;
+            } else {
+                $this->increase = false;
+                return true;
+            }
+        }
 
 }
 
