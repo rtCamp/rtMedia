@@ -178,7 +178,7 @@ class RTMediaMedia {
     function update($id, $data, $media_id) {
 
         /* action to perform any task before updating a media */
-        do_action('rtmedia_before_update_media', $this);
+        do_action('rtmedia_before_update_media', $id);
 
         $defaults = array();
         $data = wp_parse_args($data, $defaults);
@@ -198,12 +198,13 @@ class RTMediaMedia {
         }
 
         $status = $this->model->update($data, $where);
+        
+        /* action to perform any task after updating a media */
+        do_action('rtmedia_after_update_media', $id);
 
         if ($status == 0) {
             return false;
         } else {
-            /* action to perform any task after updating a media */
-            do_action('rtmedia_after_update_media', $this);
             return true;
         }
     }

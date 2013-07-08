@@ -153,14 +153,14 @@ class RTMediaTemplate {
 		$nonce = $_POST[ 'rtmedia_media_nonce' ];
 		if ( wp_verify_nonce( $nonce, 'rtmedia_' . $rtmedia_query->action_query->id ) ) {
 
-                        do_action('rtmedia_before_update_media',$rtmedia_query->action_query->id);
+//                        do_action('rtmedia_before_update_media',$rtmedia_query->action_query->id);
 
 			$data = rtmedia_sanitize_object($_POST, array('media_title','description'));
 			$media = new RTMediaMedia();
 			$media->update( $rtmedia_query->action_query->id, $data, $rtmedia_query->media[ 0 ]->media_id );
 			$rtmedia_query->query( false );
 
-                        do_action('rtmedia_after_update_media',$rtmedia_query->action_query->id);
+//                        do_action('rtmedia_after_update_media',$rtmedia_query->action_query->id);
 
 		} else {
 			echo __( "Ooops !!! Invalid access. No nonce was found !!", "rtmedia" );
