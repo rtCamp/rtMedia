@@ -28,7 +28,7 @@ class RTMediaFriends {
 		if(!bp_is_active('friends'))return;
 
 		if ( ! $user )
-			return false;
+			return array();
 		$friends = wp_cache_get( 'rtmedia-user-friends-' . $user );
 		if ( $friends === false ) {
 			$friends = $this->refresh_friends_cache($user);

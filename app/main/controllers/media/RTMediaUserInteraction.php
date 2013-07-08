@@ -147,17 +147,19 @@ class RTMediaUserInteraction {
 	function interactor_privacy(){
 
 		if(!isset($this->interactor)) return 0;
+                if($this->interactor === false ) return 0;
 		if($this->interactor ==$this->owner) return 60;
 
 		$friends = new RTMediaFriends();
 		$friends = $friends->get_friends_cache($this->interactor);
+                
 		if(in_array($this->owner,$friends)) return 40;
 
 		return 20;
 	}
 
 	function is_visible(){
-		if($this->interactor_privacy >=$this->privacy) return true;
+		if($this->interactor_privacy >= $this->privacy) return true;
 		return false;
 	}
 

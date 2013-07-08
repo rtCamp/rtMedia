@@ -467,11 +467,11 @@ jQuery(document).ready(function($) {
     
     
     
-    $(document).on("click",'a.rtmedia-like',function(e){
+    $(document).on("click",'.rtmedia-like',function(e){
         e.preventDefault();
         var that = this;
         $(this).attr('disabled', 'disabled');
-        var url = $(this).attr("src");
+        var url = $(this).parent().attr("action");
           $.ajax({
                 url: url,
                 type: 'post',
