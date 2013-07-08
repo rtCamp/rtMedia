@@ -467,8 +467,7 @@ class RTMediaMigration {
             }
         }
         if(!isset($result) || !isset($result->post_id)){
-            var_dump($result);
-            var_dump($old);
+            return $old;
         }
         $media_id = $result->post_id;
 
