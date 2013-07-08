@@ -38,10 +38,11 @@ class RTMediaNav {
 	 */
 	function custom_media_nav_tab() {
 		//$counts = $this->actual_counts();
-
+                if (! function_exists("bp_core_new_nav_item"))
+                    return;
 		//print_r($counts);die();
-global $rtmedia; 
-                        if($rtmedia->options["buddypress_enableOnProfile"]!==0){
+                global $rtmedia; 
+                if($rtmedia->options["buddypress_enableOnProfile"]!==0){
 		bp_core_new_nav_item( array(
 			'name' => RTMEDIA_MEDIA_LABEL,// '<span>'.$counts['total']['all'].'</span>',
 			'slug' => RTMEDIA_MEDIA_SLUG,
@@ -77,6 +78,8 @@ global $rtmedia;
 //		) );
 		global $wp_admin_bar;
 
+                if(! function_exists("bp_use_wp_admin_bar"))
+                    return; 
 		// Bail if this is an ajax request
 		if ( ! bp_use_wp_admin_bar() || defined( 'DOING_AJAX' ) )
 			return;
