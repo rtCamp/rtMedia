@@ -429,7 +429,7 @@ class RTMediaQuery {
 				unset( $this->media_query[ 'context' ] );
 				unset( $this->media_query[ 'context_id' ] );
 			} else if ( $this->media_query[ 'context' ] == 'group' ) {
-
+                                $group_id = $this->media_query[ 'context_id' ];
 			} else {
 
 			}
@@ -437,12 +437,21 @@ class RTMediaQuery {
 
 
 		if ( $this->is_album_gallery() ) {
+                
+                        if ( isset($author) ) {
+                            $query_function = 'get_user_albums';
+                            $context_id = $author;
+                        } elseif( isset($group_id) ) {
+                            $query_function = 'get_group_albums';
+                            $context_id = $group_id;
+                        }
+                        
 			if ( $order_by == ' ' )
-				$pre_media = $this->model->get_user_albums( $author, ($this->action_query->page - 1) * $this->action_query->per_page_media, $this->action_query->per_page_media );
+				$pre_media = $this->model->$query_function( $context_id, ($this->action_query->page - 1) * $this->action_query->per_page_media, $this->action_query->per_page_media );
 			else
-				$pre_media = $this->model->get_user_albums( $author, ($this->action_query->page - 1) * $this->action_query->per_page_media, $this->action_query->per_page_media, $order_by );
+				$pre_media = $this->model->$query_function( $context_id, ($this->action_query->page - 1) * $this->action_query->per_page_media, $this->action_query->per_page_media, $order_by );
 
-			$media_for_total_count = $this->model->get_user_albums( $author, false, false );
+			$media_for_total_count = $this->model->$query_function( $context_id, false, false );
 		} else {
 			/**
 			 * fetch media entries from rtMedia context

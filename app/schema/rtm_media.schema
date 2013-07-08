@@ -21,7 +21,6 @@ CREATE TABLE %s (
     likes bigint(20) NULL DEFAULT 0 ,
     dislikes bigint(20) NULL DEFAULT 0 ,
     PRIMARY KEY (id),
-    UNIQUE INDEX media_id_UNIQUE (media_id ASC),
     KEY media_id (media_id),
     KEY media_author (media_author),
     KEY album_id (album_id),

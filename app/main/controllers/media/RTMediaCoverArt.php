@@ -46,6 +46,27 @@ class RTMediaCoverArt extends RTMediaUserInteraction{
 		$this->model->update(array('cover_art',$media_id),array('id'=>$album));
 		return 1;
 	}
+        
+        function before_render() {
+                $globa_id = RTMediaAlbum::get_default();
+                
+                if(isset($this->media->album_id ) && $this->media->album_id > 0){
+                    $album = ($this->model->get(array('media_id'=>$globa_id)));
+                    if($album && isset($album[0])){
+                        if($album[0]->id == $this->media->album_id){
+                            $this->privacy =1000;
+                            return;
+                        }
+                    }
+                    $album = ($this->model->get(array('id'=>$this->media->album_id)));
+                    if($album && isset($album[0])){
+                        if($album[0]->media_author != $this->interactor ){
+                            $this->privacy =1000;
+                            return;
+                        }
+                    }
+                }
+        }
 
 }
 
