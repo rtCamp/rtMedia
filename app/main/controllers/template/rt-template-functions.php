@@ -697,7 +697,7 @@ function rtmedia_album_edit() {
         return;
 
     global $rtmedia_query;
-    if (isset($rtmedia_query->media_query) && get_current_user_id() == $rtmedia_query->media_query['media_author'] && !in_arraY($rtmedia_query->media_query['album_id'], get_site_option('rtmedia-global-albums'))) {
+    if (isset($rtmedia_query->media_query) && get_current_user_id() == $rtmedia_query->media_query['media_author'] && !in_array($rtmedia_query->media_query['album_id'], get_site_option('rtmedia-global-albums'))) {
         ?>
         <a class="alignleft" href="edit/"><input type="button" class="button rtmedia-edit" value="<?php _e('Edit', 'rtmedia'); ?>" /></a>
         <form method="post" class="album-delete-form alignleft" action="delete/">
