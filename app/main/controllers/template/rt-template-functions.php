@@ -188,7 +188,7 @@ function rtmedia_image($size = 'thumbnail', $id = false) {
     } else {
         $src = false;
     }
-    
+
     if (!$thumbnail_id) {
         global $rtmedia;
         if (isset($rtmedia->allowed_types[$media_object->media_type])
@@ -212,7 +212,7 @@ function rtmedia_album_image($size = 'thumbnail') {
     global $rtmedia_media;
     $model = new RTMediaModel();
     $media = $model->get_media(array('album_id' => $rtmedia_media->id, 'media_type' => 'image'), 0, 1);
-    
+
     if ($media) {
         $src = rtmedia_image($size, $media[0]->id);
     } else {
@@ -656,17 +656,33 @@ add_action('rtmedia_before_media_gallery', 'rtmedia_create_album');
 
 function rtmedia_create_album() {
     global $rtmedia_query;
-
-    if (function_exists('bp_displayed_user_id') && bp_displayed_user_id() == get_current_user_id()) {
-        if (isset($rtmedia_query->query['context']) && !isset($rtmedia_query->media_query['album_id']) && in_array($rtmedia_query->query['context'], array('profile', 'group'))) {
+	$user_id = get_current_user_id();
+	$display = false;
+    if(isset($rtmedia_query->query['context']) && in_array($rtmedia_query->query['context'], array('profile', 'group'))){
+        switch ($rtmedia_query->query['context']){
+			case 'profile':
+				if($rtmedia_query->query['context_id']== $user_id){
+					$display=true;
+				}
+				break;
+			case 'group':
+				$group_id = $rtmedia_query->query['context_id'];
+				if(groups_is_user_admin( $user_id, $group_id )||groups_is_user_mod( $user_id, $group_id )){
+					$display=true;
+				}
+				break;
+		}
+		}
+		if($display===true){
             ?>
             <input type=button class="button rtmedia-create-new-album-button" value="Create New Album" />
             <div class="rtmedia-create-new-album-container">
                 <input type="text" class="rtmedia-new-album-name" value="" />
                 <input type="submit" class="rtmedia-create-new-album" value="Create Album" />
             </div><?php
-        }
-    }
+		}
+
+
 }
 
 add_action('rtmedia_before_media_gallery', 'rtmedia_album_edit');
