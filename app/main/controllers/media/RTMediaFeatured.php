@@ -36,10 +36,18 @@ class RTMediaFeatured extends RTMediaUserInteraction {
         $this->user_id = $user_id;
         parent::__construct($args);
         $this->settings();
+        //$this->get();
+    }
+    function before_render() {
+        $this->get();
+        if(isset($this->action_query) && isset($this->action_query->id) && $this->action_query->id == $this->featured){
+            $this->label = $this->undo_label;
+        }
+        
     }
 
     function set($media_id = false) {
-        if (!$media_id) {
+        if ($media_id === false) {
             return;
         }
         if ($this->user_id === false)
@@ -48,9 +56,9 @@ class RTMediaFeatured extends RTMediaUserInteraction {
     }
 
     function get() {
-        if ($this->user_id === false)
+        if ($this->user_id === false){
             $this->user_id = get_current_user_id();
-        
+        }
         $this->featured = get_user_meta($this->user_id, "rtmedia_featured_media", true);
         if ($this->featured == "")
             $this->featured = get_user_meta($this->user_id, "bp_media_featured_media", true);
@@ -73,7 +81,9 @@ class RTMediaFeatured extends RTMediaUserInteraction {
         }
         return false;
     }
-
+    function get_last_media(){
+        
+    }
     function generate_featured_size($media_id) {
         $metadata = wp_get_attachment_metadata($media_id);
         $resized = image_make_intermediate_size(get_attached_file($media_id), $this->settings['width'], $this->settings['height'], $this->settings['crop']);
@@ -131,15 +141,27 @@ class RTMediaFeatured extends RTMediaUserInteraction {
         $return = array();
         $this->model = new RTMediaModel();
         $actions = $this->model->get(array('id' => $this->action_query->id));
-        
+        $this->get();
         if (intval($this->settings[$actions[0]->media_type]) == 1){
+            if($this->action_query->id == $this->featured){
+                $this->set(0);
+                $return["next"] = $this->label;
+            }else{
+                $this->set($this->action_query->id);
+                $return["next"] = $this->undo_label;
+            }
             $return["status"] = true;
-            $this->set($this->action_query->id);
+            
         }else{
             $return["status"] = false;
-            $return["erroe"] = "Media type is not allowed";
+            $return["error"] = "Media type is not allowed";
         }
-        echo json_encode($return);
+        if (isset($_REQUEST["json"]) && $_REQUEST["json"] == "true") {
+            echo json_encode($return);
+            die();
+        } else {
+            wp_safe_redirect($_SERVER["HTTP_REFERER"]);
+        }
     }
 
 }

@@ -52,10 +52,10 @@ class RTMediaLike extends RTMediaUserInteraction {
                 $actions = intval($actions[ 0 ]->{$actionwa});
 		if ( $this->increase === true ) {
 			$actions ++;
-                        $return["next"] = __("Unlike","rtmedia");
+                        $return["next"] = $this->undo_label;
 		} else {
 			$actions --;
-                        $return["next"] = __("Like","rtmedia");
+                        $return["next"] = $this->label;
 		}
                 if($actions <0)
                     $actions = 0;
@@ -64,10 +64,14 @@ class RTMediaLike extends RTMediaUserInteraction {
 		$this->model->update( array( $this->plural => $actions ), array( 'id' => $this->action_query->id ) );
                 
 		update_user_meta($this->interactor,'rtmedia_liked_media',$like_media);
-
-                echo json_encode($return);
-
-		//return $actions;
+                if(isset($_REQUEST["json"]) && $_REQUEST["json"]=="true"){
+                    echo json_encode($return);
+                    die();
+                }
+                else{
+                    wp_safe_redirect ($_SERVER["HTTP_REFERER"]);
+                }
+                return $actions;
 	}
         
         function is_liked() {
@@ -78,6 +82,11 @@ class RTMediaLike extends RTMediaUserInteraction {
             } else {
                 $this->increase = false;
                 return true;
+            }
+        }
+        function before_render(){
+            if($this->is_liked()){
+                $this->label =$this->undo_label;
             }
         }
 

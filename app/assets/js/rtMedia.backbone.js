@@ -472,9 +472,11 @@ jQuery(document).ready(function($) {
         var that = this;
         $(this).attr('disabled', 'disabled');
         var url = $(this).parent().attr("action");
+        $(that).prepend("<img src='" + rMedia_loading_file + "' />");
           $.ajax({
                 url: url,
                 type: 'post',
+                data:"json=true",
                 success: function (data) {
                     try{
                         data = JSON.parse(data);
@@ -482,10 +484,33 @@ jQuery(document).ready(function($) {
                         
                     }
                     $(that).html(data.next);
-                    $(that).attr('disabled',"");
+                    $(that).removeAttr('disabled');
                 }
             });
 
         
-    })    
+    });    
+    $(document).on("click",'.rtmedia-featured',function(e){
+        e.preventDefault();
+        var that = this;
+        $(this).attr('disabled', 'disabled');
+        var url = $(this).parent().attr("action");
+        $(that).prepend("<img src='" + rMedia_loading_file +  "' />");
+          $.ajax({
+                url: url,
+                type: 'post',
+                data:"json=true",
+                success: function (data) {
+                    try{
+                        data = JSON.parse(data);
+                    }catch(e){
+                        
+                    }
+                    $(that).html(data.next);
+                    $(that).removeAttr('disabled');
+                }
+            });
+
+        
+    });    
 });
