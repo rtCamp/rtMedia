@@ -142,8 +142,13 @@ class RTMediaNav {
 		$albums = '';
 		if(isset($rtmedia_query->action_query->action) && $rtmedia_query->action_query->action=='album')
 			$albums = 'class="current selected"';
+                
+                if ( function_exists('bp_is_group') && bp_is_group() )
+                    $link = get_rtmedia_group_link(bp_get_group_id());
+                else
+                    $link = get_rtmedia_user_link( get_current_user_id() );
 		echo apply_filters( 'rtmedia_sub_nav_albums' ,
-				'<li id="rtmedia-nav-item-albums-li" ' . $albums . '><a id="rtmedia-nav-item-albums" href="' . trailingslashit( get_rtmedia_user_link( get_current_user_id() ) ) . 'media/album/">' . __("Albums","rtmedia") . '</a></li>' );
+				'<li id="rtmedia-nav-item-albums-li" ' . $albums . '><a id="rtmedia-nav-item-albums" href="' . trailingslashit( $link ) . 'media/album/">' . __("Albums","rtmedia") . '</a></li>' );
 
 		foreach ( $rtmedia->allowed_types as $type ) {
 			if ( ! $rtmedia->options[ 'allowedTypes_' . $type[ 'name' ] . '_enabled' ] )

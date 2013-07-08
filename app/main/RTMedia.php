@@ -633,8 +633,11 @@ function get_rtmedia_permalink( $id ) {
 	$mediaModel = new RTMediaModel();
 
 	$media = $mediaModel->get( array( 'id' => $id ) );
-
-	$parent_link = get_rtmedia_user_link( $media[ 0 ]->media_author );
+        
+        if ($media[ 0 ]->context == 'group' )
+            $parent_link = get_rtmedia_group_link( $media[ 0 ]->context_id );
+        else
+            $parent_link = get_rtmedia_user_link( $media[ 0 ]->media_author );
 
 	return trailingslashit( $parent_link . 'media/' . $id );
 }
