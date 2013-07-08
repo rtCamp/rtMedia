@@ -518,7 +518,7 @@ class RTMediaMigration {
                     $this->insert_comment($media_id, $comments, $exclude);
             }
         }
-        if (intval($result->parent) !== 0 && $media_context != "group") {
+        if (intval($result->parent) !== 0 ) {
             $album_id = $this->migrate_single_media($result->parent, true);
         } else {
             $album_id = 0;
