@@ -8,10 +8,12 @@ if ( is_rtmedia_album_gallery() ) {
 	if (
 			is_rtmedia_album() &&
 			isset( $rtmedia_query->media_query ) &&
-			get_current_user_id() == $rtmedia_query->media_query[ 'media_author' ] &&
 			$rtmedia_query->action_query->action == 'edit'
-			)
+			){
+		if(isset($rtmedia_query->media_query[ 'media_author' ]) && (get_current_user_id() == $rtmedia_query->media_query[ 'media_author' ])){
 		$template = 'album-single-edit';
+		}
+			}
 
 } else if ( is_rtmedia_single() ) {
 	$template = 'media-single';
