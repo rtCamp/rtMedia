@@ -623,25 +623,46 @@ function delete_rtmedia_meta($id = false, $key = false) {
     return $rtmediameta->delete_meta($id, $key);
 }
 
-function rtmedia_user_album_list() {
-    global $rtmedia_query;
-    $global_albums = RTMediaAlbum::get_globals(); //get_site_option('rtmedia-global-albums');
+function rtmedia_global_albums(){
+	return RTMediaAlbum::get_globals(); //get_site_option('rtmedia-global-albums');
 
+}
+function rtmedia_global_album_list(){
+	global $rtmedia_query;
+	$model = new RTMediaModel();
+    $global_albums = rtmedia_global_albums();
     $option = NULL;
-    foreach ($global_albums as $album) {
-        $model = new RTMediaModel();
-        $album_object = $model->get_media(array('id' => $album), false, false);
-        $global_album_ids = array();
-        if (isset($album_object[0])) {
-            $global_album_ids[] = $album_object[0]->id;
-            if ((isset($rtmedia_query->media_query['album_id']) && ($album_object[0]->id != $rtmedia_query->media_query['album_id'])) || !isset($rtmedia_query->media_query['album_id']))
-                $option .= '<option value="' . $album_object[0]->id . '">' . $album_object[0]->media_title . '</option>';
-        }
-    }
+	$albums = implode(',',$global_albums);
+
+        $album_objects = $model->get_media(array('id' => ($albums)), false, false);
+		if($album_objects){
+			foreach ($album_objects as $album){
+				if ((isset($rtmedia_query->media_query['album_id']) && ($album_object[0]->id != $rtmedia_query->media_query['album_id'])) || !isset($rtmedia_query->media_query['album_id']))
+                $option .= '<option value="' . $album->id . '">' . $album->media_title . '</option>';
+			}
+		}
+
+
+	return $option;
+
+}
+
+function rtmedia_user_album_list() {
+	global $rtmedia_query;
+	$model = new RTMediaModel();
+	$option = rtmedia_global_album_list();
+	$global_albums = rtmedia_global_albums();
+
     $album_objects = $model->get_media(array('media_author' => get_current_user_id(), 'media_type' => 'album'), false, false);
     if ($album_objects) {
         foreach ($album_objects as $album) {
-            if (!in_array($album->id, $global_album_ids) && (( isset($rtmedia_query->media_query['album_id']) && ($album->id != $rtmedia_query->media_query['album_id'])) || !isset($rtmedia_query->media_query['album_id']) ))
+            if (!in_array($album->id, $global_albums)
+					&& (( isset($rtmedia_query->media_query['album_id'])
+					&& (
+							$album->id != $rtmedia_query->media_query['album_id']))
+					|| !isset($rtmedia_query->media_query['album_id'])
+							)
+					)
                 $option .= '<option value="' . $album->id . '">' . $album->media_title . '</option>';
         }
     }
@@ -651,6 +672,36 @@ function rtmedia_user_album_list() {
     else
         return false;
 }
+
+function rtmedia_group_album_list() {
+	global $rtmedia_query;
+	$model = new RTMediaModel();
+
+	$option = rtmedia_global_album_list();
+	$global_albums = rtmedia_global_albums();
+
+    $album_objects = $model->get_media(
+			array(
+				'context'		=> $rtmedia_query->media_query['context'],
+				'context_id'	=> $rtmedia_query->media_query['context_id'],
+				'media_type' => 'album'
+				),
+			false,
+			false
+			);
+    if ($album_objects) {
+        foreach ($album_objects as $album) {
+            if (!in_array($album->id, $global_albums) && (( isset($rtmedia_query->media_query['album_id']) && ($album->id != $rtmedia_query->media_query['album_id'])) || !isset($rtmedia_query->media_query['album_id']) ))
+                $option .= '<option value="' . $album->id . '">' . $album->media_title . '</option>';
+        }
+    }
+
+    if ($option)
+        return $option;
+    else
+        return false;
+}
+
 
 add_action('rtmedia_before_media_gallery', 'rtmedia_create_album');
 
@@ -697,6 +748,7 @@ function rtmedia_album_edit() {
         return;
 
     global $rtmedia_query;
+	//var_dump($rtmedia_query);
     if (isset($rtmedia_query->media_query) && get_current_user_id() == $rtmedia_query->media_query['media_author'] && !in_array($rtmedia_query->media_query['album_id'], get_site_option('rtmedia-global-albums'))) {
         ?>
         <a class="alignleft" href="edit/"><input type="button" class="button rtmedia-edit" value="<?php _e('Edit', 'rtmedia'); ?>" /></a>
@@ -704,7 +756,7 @@ function rtmedia_album_edit() {
             <?php wp_nonce_field('rtmedia_delete_album_' . $rtmedia_query->media_query['album_id'], 'rtmedia_delete_album_nonce'); ?>
             <input type="submit" name="album-delete" value="<?php _e('Delete', 'rtmedia'); ?>" />
         </form>
-        <?php if ($album_list = rtmedia_user_album_list()) { ?>
+        <?php if ($album_list == rtmedia_user_album_list()) { ?>
             <input type="button" class="button rtmedia-merge" value="<?php _e('Merge', 'rtmedia'); ?>" />
             <div class="rtmedia-merge-container">
                 <?php _e('Merge to', 'rtmedia'); ?>
