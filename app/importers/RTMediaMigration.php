@@ -241,7 +241,7 @@ class RTMediaMigration {
         if($done >= $total){
             $done = $total;
         ?>
-<div class="error"><p> Please Update your <a href='<?php admin_url("options-permalink.php") ?>'>Permalink<a/> after migration.</p></div>
+<div class="error"><p> Please Update your <a href='<?php admin_url("options-permalink.php") ?>'>Permalink</a> after migration.</p></div>
         <?php }else{ ?>
             <div class="error"><p> Please Backup your <strong>DATABASE</strong> and <strong>UPLOAD</strong> folder before Migration.</p></div>
         <?php }
@@ -249,6 +249,7 @@ class RTMediaMigration {
         ?>
         
         <div class="wrap">
+            
             <h2>rtMedia Migration</h2>
             <h3><?php _e("It will migrate following things"); ?> </h3>
             User Albums : <?php echo $_SESSION["migration_user_album"]; ?><br />
@@ -418,12 +419,14 @@ class RTMediaMigration {
 
     function migrate_single_media($result, $album = false) {
         $blog_id = get_current_blog_id();
+        $old= $result;
         if (function_exists("bp_core_get_table_prefix"))
             $bp_prefix = bp_core_get_table_prefix();
         else
             $bp_prefix = "";
         global $wpdb;
-        if ($album) {
+        
+        if ($album !== false && ! (is_object($result))) {
             $id = $wpdb->get_var($wpdb->prepare("select ID from $this->bmp_table where media_id = %d", $result));
             if ($id == NULL) {
                 $sql = "select
@@ -454,7 +457,10 @@ class RTMediaMigration {
                 return $id;
             }
         }
-
+        if(!isset($result) || !isset($result->post_id)){
+            var_dump($result);
+            var_dump($old);
+        }
         $media_id = $result->post_id;
 
         if (intval($result->context_id) > 0) {
@@ -504,7 +510,7 @@ class RTMediaMigration {
                     $this->insert_comment($media_id, $comments, $exclude);
             }
         }
-        if (intval($result->parent) !== 0) {
+        if (intval($result->parent) !== 0 && $media_context != "group") {
             $album_id = $this->migrate_single_media($result->parent, true);
         } else {
             $album_id = 0;

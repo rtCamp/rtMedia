@@ -48,7 +48,7 @@ class RTMediaCoverArt extends RTMediaUserInteraction{
 	}
         
         function before_render() {
-            
+                
         }
 
 }
