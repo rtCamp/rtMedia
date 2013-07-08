@@ -633,11 +633,18 @@ function get_rtmedia_permalink( $id ) {
 	$mediaModel = new RTMediaModel();
 
 	$media = $mediaModel->get( array( 'id' => $id ) );
+        global $rtmedia_query;
         
         if ($media[ 0 ]->context == 'group' )
             $parent_link = get_rtmedia_group_link( $media[ 0 ]->context_id );
-        else
-            $parent_link = get_rtmedia_user_link( $media[ 0 ]->media_author );
+        else{
+            if($rtmedia_query->query["context"] == "group"){
+                $parent_link = get_rtmedia_group_link( $rtmedia_query->query["context_id"] );
+            }else{
+                $parent_link = get_rtmedia_user_link( $media[ 0 ]->media_author );
+            }
+        }
+            
 
         $parent_link = trailingslashit($parent_link);
 	return trailingslashit( $parent_link . 'media/' . $id );
@@ -656,7 +663,7 @@ function rtmedia_update_site_option( $option_name, $option_value ) {
 	update_site_option( $option_name, $option_value );
 }
 
-function get_rtmedia_group_link( $group_id){
+function get_rtmedia_group_link( $group_id ){
 	global $bp;
 	$group = groups_get_group( array( 'group_id' => $group_id ) );
 	return home_url( $bp->groups->slug . '/' . $group -> slug );
