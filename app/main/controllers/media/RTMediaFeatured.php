@@ -152,7 +152,7 @@ function rtmedia_get_featured($user_id = false) {
     $featured = new RTMediaFeatured($user_id, false);
     return $featured->content();
 }
-if(! function_exists(bp_media_featured)){
+if(! function_exists("bp_media_featured")){
     function bp_media_featured($user_id = false) {
         echo rtmedia_get_featured($user_id);
     }
