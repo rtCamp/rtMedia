@@ -639,6 +639,7 @@ function get_rtmedia_permalink( $id ) {
         else
             $parent_link = get_rtmedia_user_link( $media[ 0 ]->media_author );
 
+        $parent_link = trailingslashit($parent_link);
 	return trailingslashit( $parent_link . 'media/' . $id );
 }
 
