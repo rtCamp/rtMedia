@@ -141,6 +141,8 @@ function rtmedia_media($size_flag, $echo = true) {
         $html = false;
     }
 
+	do_action('rtmedia_after_'.$rtmedia_media->media_type,$rtmedia_media->id);
+
     $html = apply_filters('rtmedia_single_content_filter', $html, $rtmedia_media);
 
     if ($echo)

@@ -20,12 +20,28 @@ jQuery('document').ready(function(){
                 return item.el.attr('title') + '<small>by Marsel Van Oosten</small>';
             }
         },
+
         disableOn: function() {
             if( jQuery(window).width() < 600 ) {
                 return false;
             }
             return true;
-        }
+        },
+		callbacks: {
+			ajaxContentAdded: function(){
+
+			$container = this.content.find('.tagcontainer');
+			if($container.length>0){
+			$context = $container.find('img');
+			$container.find('.tagcontainer').css(
+				{
+					'height': $context.css('height'),
+					'width': $context.css('width')
+				});
+
+			}
+			}
+		}
     });
 
     jQuery('.rtmedia-container').on('click','.select-all', function(e){
