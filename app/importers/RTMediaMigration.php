@@ -247,9 +247,9 @@ class RTMediaMigration {
         if($done >= $total){
             $done = $total;
         ?>
-<div class="error"><p> Please Update your <a href='<?php admin_url("options-permalink.php") ?>'>Permalink</a> after migration.</p></div>
+        <!--<div class="error"><p> Please Update your <a href='<?php //admin_url("options-permalink.php") ?>'>Permalink</a> after migration.</p></div>-->
         <?php }else{ ?>
-<!--            <div class="error"><p> Please Backup your <strong>DATABASE</strong> and <strong>UPLOAD</strong> folder before Migration.</p></div>-->
+            <div class="error"><p> Please Backup your <strong>DATABASE</strong> and <strong>UPLOAD</strong> folder before Migration.</p></div>
         <?php }
         
         ?>
