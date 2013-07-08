@@ -124,7 +124,7 @@ function rtmedia_media($size_flag, $echo = true) {
     global $rtmedia_media, $rtmedia;
     if (isset($rtmedia_media->media_type)) {
         if ($rtmedia_media->media_type == 'photo') {
-            $html = wp_get_attachment_photo($rtmedia_media->media_id, 'large');
+            $html = wp_get_attachment_image($rtmedia_media->media_id, 'large');
         } elseif ($rtmedia_media->media_type == 'video') {
             $size = " width=\"" . $rtmedia->options["defaultSizes_video_singlePlayer_width"] . "\" height=\"" . $rtmedia->options["defaultSizes_video_singlePlayer_height"] . "\" ";
 
