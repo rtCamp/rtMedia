@@ -9,7 +9,7 @@ class RTMediaModel extends RTDBModel {
 
 	function __construct() {
 		parent::__construct( 'rtm_media' );
-		$this->meta_table_name = "rtm_media_meta";
+		$this->meta_table_name = "rt_rtm_media_meta";
 	}
 
 	/**
@@ -36,6 +36,7 @@ class RTMediaModel extends RTDBModel {
 	 * @return type
 	 */
 	function get( $columns, $offset = false, $per_page = false, $order_by = 'media_id desc' ) {
+                global $wpdb;
 		$select = "SELECT * FROM {$this->table_name}";
 		$join = "";
 		$where = " where 2=2 ";
@@ -47,8 +48,11 @@ class RTMediaModel extends RTDBModel {
 						$meta_query[ "compare" ] = "=";
 					}
 					$tbl_alias = chr( $temp ++  );
-					$join .= " LEFT JOIN {$this->meta_table_name} {$tbl_alias} ON {$this->table_name}.media_id = {$tbl_alias}.media_id ";
-					$where .= " AND  ({$tbl_alias}.meta_key = '{$meta_query[ "key" ]}' and  {$tbl_alias}.meta_value  {$meta_query[ "compare" ]}  '{$meta_query[ "value" ]}' ) ";
+					$join .= " LEFT JOIN {$wpdb->prefix}{$this->meta_table_name} {$tbl_alias} ON {$this->table_name}.id = {$tbl_alias}.media_id ";
+                                        if ( isset($meta_query[ "value" ]) )
+                                            $where .= " AND  ({$tbl_alias}.meta_key = '{$meta_query[ "key" ]}' and  {$tbl_alias}.meta_value  {$meta_query[ "compare" ]}  '{$meta_query[ "value" ]}' ) ";
+                                        else
+                                            $where .= " AND  {$tbl_alias}.meta_key = '{$meta_query[ "key" ]}' ";
 				}
 			} else {
 				if ( is_array( $colvalue ) ) {
@@ -59,8 +63,8 @@ class RTMediaModel extends RTDBModel {
 					if ( ! isset( $colvalue[ 'value' ] ) ) {
 						$colvalue[ 'value' ] = $colvalue;
 					}
-
-					$where .= " AND {$this->table_name}.{$colname} {$compare} ('" . implode( "','", $colvalue[ 'value' ] ) . "')";
+                                        $col_val_comapare = ($colvalue[ 'value' ]) ? '(\''. implode( "','", $colvalue[ 'value' ] ) .'\')' : '';
+					$where .= " AND {$this->table_name}.{$colname} {$compare} {$col_val_comapare}";
 				} else
 					$where .= " AND {$this->table_name}.{$colname} = '{$colvalue}'";
 			}
@@ -74,8 +78,8 @@ class RTMediaModel extends RTDBModel {
 		if ( is_integer( $offset ) && is_integer( $per_page ) ) {
 			$sql .= ' LIMIT ' . $offset . ',' . $per_page;
 		}
-		global $wpdb;
-		return $wpdb->get_results( $sql );
+
+                return $wpdb->get_results( $sql );
 	}
 
 	/**
@@ -121,7 +125,7 @@ class RTMediaModel extends RTDBModel {
 	 * @param type $order_by
 	 * @return type
 	 */
-	function get_media( $columns, $offset, $per_page, $order_by = 'media_id desc' ) {
+	function get_media( $columns, $offset = false, $per_page = false, $order_by = 'media_id desc' ) {
 		if ( is_multisite() ) {
 			$results = $this->get( $columns, $offset, $per_page, "blog_id ," . $order_by );
 		} else {
