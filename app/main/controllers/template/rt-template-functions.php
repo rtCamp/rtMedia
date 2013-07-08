@@ -123,8 +123,8 @@ function rtmedia_media($size_flag, $echo = true) {
     $size_flag = true;
     global $rtmedia_media, $rtmedia;
     if (isset($rtmedia_media->media_type)) {
-        if ($rtmedia_media->media_type == 'image') {
-            $html = wp_get_attachment_image($rtmedia_media->media_id, 'large');
+        if ($rtmedia_media->media_type == 'photo') {
+            $html = wp_get_attachment_photo($rtmedia_media->media_id, 'large');
         } elseif ($rtmedia_media->media_type == 'video') {
             $size = " width=\"" . $rtmedia->options["defaultSizes_video_singlePlayer_width"] . "\" height=\"" . $rtmedia->options["defaultSizes_video_singlePlayer_height"] . "\" ";
 
@@ -178,9 +178,9 @@ function rtmedia_image($size = 'thumbnail', $id = false) {
     $thumbnail_id = 0;
     if (isset($media_object->media_type)) {
         if ($media_object->media_type == 'album' ||
-                $media_object->media_type != 'image') {
+                $media_object->media_type != 'photo') {
             $thumbnail_id = isset($media_object->cover_art) ? $media_object->cover_art : false;
-        } elseif ($media_object->media_type == 'image') {
+        } elseif ($media_object->media_type == 'photo') {
             $thumbnail_id = $media_object->media_id;
         } else {
             $thumbnail_id = false;
@@ -211,7 +211,7 @@ function rtmedia_image($size = 'thumbnail', $id = false) {
 function rtmedia_album_image($size = 'thumbnail') {
     global $rtmedia_media;
     $model = new RTMediaModel();
-    $media = $model->get_media(array('album_id' => $rtmedia_media->id, 'media_type' => 'image'), 0, 1);
+    $media = $model->get_media(array('album_id' => $rtmedia_media->id, 'media_type' => 'photo'), 0, 1);
 
     if ($media) {
         $src = rtmedia_image($size, $media[0]->id);
@@ -440,7 +440,7 @@ function rtmedia_pagination_prev_link() {
     $link .= 'media/';
 
     if (isset($rtmedia_query->action_query->media_type)) {
-        if (in_array($rtmedia_query->action_query->media_type, array("image", "music", "video", "album")))
+        if (in_array($rtmedia_query->action_query->media_type, array("photo", "music", "video", "album")))
             $link .= $rtmedia_query->action_query->media_type . '/';
     }
     return $link . $page_url;
@@ -470,7 +470,7 @@ function rtmedia_pagination_next_link() {
     }
     $link .= 'media/';
     if (isset($rtmedia_query->action_query->media_type)) {
-        if (in_array($rtmedia_query->action_query->media_type, array("image", "music", "video", "album")))
+        if (in_array($rtmedia_query->action_query->media_type, array("photo", "music", "video", "album")))
             $link .= $rtmedia_query->action_query->media_type . '/';
     }
     return $link . $page_url;
@@ -543,7 +543,7 @@ add_action('rtmedia_add_edit_fields', 'rtmedia_image_editor');
 
 function rtmedia_image_editor() {
     global $rtmedia_query;
-    if ($rtmedia_query->media[0]->media_type == 'image') {
+    if ($rtmedia_query->media[0]->media_type == 'photo') {
         RTMediaTemplate::enqueue_image_editor_scripts();
         $media_id = $rtmedia_query->media[0]->media_id;
         $id = $rtmedia_query->media[0]->id;

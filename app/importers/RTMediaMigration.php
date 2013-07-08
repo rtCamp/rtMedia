@@ -486,7 +486,7 @@ class RTMediaMigration {
         } else {
             $mime_type = strtolower($result->post_mime_type);
             if (strpos($mime_type, "image") === 0) {
-                $media_type = "image";
+                $media_type = "photo";
             } else if (strpos($mime_type, "audio") === 0) {
                 $media_type = "music";
             } else if (strpos($mime_type, "video") === 0) {
