@@ -188,8 +188,14 @@ class RTMediaMigration {
             $pending = 0;
             $done = $total;
         }
-        if($done > $total)
+        if($done > $total){
             $done = $total;
+        }
+        if($done == $total){
+                global $wp_rewrite;
+            //Call flush_rules() as a method of the $wp_rewrite object
+            $wp_rewrite->flush_rules();
+        }
         update_site_option("rtMigration-pending-count", $pending);
         $pending_time = $this->formatSeconds($pending);
 
@@ -243,7 +249,7 @@ class RTMediaMigration {
         ?>
 <div class="error"><p> Please Update your <a href='<?php admin_url("options-permalink.php") ?>'>Permalink</a> after migration.</p></div>
         <?php }else{ ?>
-            <div class="error"><p> Please Backup your <strong>DATABASE</strong> and <strong>UPLOAD</strong> folder before Migration.</p></div>
+<!--            <div class="error"><p> Please Backup your <strong>DATABASE</strong> and <strong>UPLOAD</strong> folder before Migration.</p></div>-->
         <?php }
         
         ?>
@@ -302,17 +308,17 @@ class RTMediaMigration {
                                     jQuery('span.pending').html(data.pending);
                                     db_start_migration(done, total);
                                 } else {
-                                    alert("Migration Done, Please Update your Permalink");
+                                    alert("Migration completed.");
                                     jQuery("#rtMediaSyncing").hide();
                                 }
                             },
                                     error: function(){
                                         alert("Error During Migration, Please Refresh Page then try again");
-                                        jQuery("#submit").attr('disabled',"");
+                                        jQuery("#submit").removeAttr('disabled');
                                     }
                         });
                     } else {
-                        alert("Migration already Done, Please Update your Permalink");
+                        alert("Migration completed.");
                         jQuery("#rtMediaSyncing").hide();
                     }
                 }
@@ -394,6 +400,9 @@ class RTMediaMigration {
                 }
             }
         } else {
+               global $wp_rewrite;
+            //Call flush_rules() as a method of the $wp_rewrite object
+            $wp_rewrite->flush_rules();
             echo json_encode(array("status" => false, "done" => $done, "total" => $this->get_total_count()));
             die();
         }
@@ -477,11 +486,11 @@ class RTMediaMigration {
             $media_type = "album";
         } else {
             $mime_type = strtolower($result->post_mime_type);
-            if (strpos($mime_type, "image") == 0) {
+            if (strpos($mime_type, "image") === 0) {
                 $media_type = "image";
-            } else if (strpos($mime_type, "audio") == 0) {
+            } else if (strpos($mime_type, "audio") === 0) {
                 $media_type = "music";
-            } else if (strpos($mime_type, "video") == 0) {
+            } else if (strpos($mime_type, "video") === 0) {
                 $media_type = "video";
             } else {
                 $media_type = "other";
