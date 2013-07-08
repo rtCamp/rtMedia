@@ -758,7 +758,8 @@ class RTMediaMigration {
                         update_rtmedia_meta($id, 'rtmedia-thumbnail-ids', $ffmpeg_thumbnail_ids);
                     }
                     if ($ffmpeg_thumbnail) {
-                        update_rtmedia_meta($id, 'rtmedia-thumbnail', $ffmpeg_thumbnail);
+                        $model = new RTMediaModel();
+                        $model->update(array('cover_art' => $ffmpeg_thumbnail), array('id' => $id));
                     }
                     if ($ffmpeg_remote_id) {
                         update_rtmedia_meta($id, 'rtmedia-ffmpeg-remote-id', $ffmpeg_remote_id);
