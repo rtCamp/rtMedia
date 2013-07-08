@@ -193,7 +193,7 @@ class RTMediaMigration {
         update_site_option("rtMigration-pending-count", $pending);
         $pending_time = $this->formatSeconds($pending);
 
-        echo json_encode(array("status" => true, "done" => $done, "total" => $total, $pending_time));
+        echo json_encode(array("status" => true, "done" => $done, "total" => $total,"pending"=>$pending_time));
         die();
     }
 
