@@ -505,7 +505,20 @@ class RTMediaMigration {
 
         if ($this->table_exists($bp_prefix . "bp_activity") && class_exists("BP_Activity_Activity")) {
             $bp_activity = new BP_Activity_Activity();
-            $activity_sql = $wpdb->prepare("SELECT * FROM {$bp_prefix}bp_activity where component='activity' and  (type='activity_update' or type='media_upload') and item_id =%d order by id", $media_id);
+                $activity_sql = $wpdb->prepare("SELECT 
+    id
+FROM
+    {$bp_prefix}bp_activity
+where
+		id in (select distinct
+            a.meta_value
+        from
+            $wpdb->postmeta a
+                left join
+            $wpdb->posts p ON (a.post_id = p.ID)
+        where
+            (NOT p.ID IS NULL) and p.ID = %d
+                and a.meta_key = 'bp_media_child_activity')", $media_id);
             $all_activity = $wpdb->get_results($activity_sql);
             remove_all_actions("wp_insert_comment");
             foreach ($all_activity as $activity) {
