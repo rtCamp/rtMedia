@@ -11,7 +11,6 @@
 	    <form method="post" action="">
 			<div class="rtmedia-editor-main columns large-12 small">
 			<?php rtmedia_title_input(); ?>
-			<?php rtmedia_privacy_input(); ?>
 
 			<?php do_action('rtmedia_add_edit_fields', rtmedia_type()); ?>
 

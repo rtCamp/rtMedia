@@ -161,7 +161,7 @@ class RTMediaTemplate {
 
 //                        do_action('rtmedia_before_update_media',$rtmedia_query->action_query->id);
 
-			$data = rtmedia_sanitize_object($_POST, array('media_title','description'));
+			$data = rtmedia_sanitize_object($_POST, array('media_title','description','privacy'));
 			$media = new RTMediaMedia();
 			$media->update( $rtmedia_query->action_query->id, $data, $rtmedia_query->media[ 0 ]->media_id );
 			$rtmedia_query->query( false );
@@ -415,7 +415,7 @@ class RTMediaTemplate {
 		global $rtmedia_query;
 
 		$rtmedia_query->query( $attr );
-                
+
 	}
 
 	/**
