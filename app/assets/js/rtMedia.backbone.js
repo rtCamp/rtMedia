@@ -155,23 +155,31 @@ jQuery(function($) {
     galleryObj = new rtMedia.Gallery();
 
     $("body").append('<script id="rtmedia-gallery-item-template" type="text/template"></script>');
-    if (typeof(is_album) == "undefined" && typeof(is_edit_allowed) == "undefined") {
-    
+    var o_is_album,o_is_edit_allowed;
+    if (typeof(is_album) == "undefined"){
+        o_is_album=new Array("");
     } else {
+        o_is_album = is_album
+    }
+    if(typeof(is_edit_allowed) == "undefined") {
+        o_is_edit_allowed=new Array("")
+    } else{
+        o_is_edit_allowed = is_edit_allowed;
+    }
         $("#rtmedia-gallery-item-template").load(template_url + "/media-gallery-item.php", {
             backbone: true, 
-            is_album: is_album, 
-            is_edit_allowed: is_edit_allowed
+            is_album: o_is_album, 
+            is_edit_allowed: o_is_edit_allowed
         }, function(response, status, xhr) {
 
-            $(document).on("click", "#rtMedia-galary-next", function(e) {
+        $(document).on("click", "#rtMedia-galary-next", function(e) {
                 $(this).hide();
                 e.preventDefault();
 
                 galleryObj.getNext(nextpage);
             });
         });
-    }
+    
 
 
 
