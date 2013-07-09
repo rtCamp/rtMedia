@@ -50,6 +50,8 @@ class RTMediaPrivacy {
 				if(!bp_is_active('friends')){
 					unset($privacy_levels[40]);
 				}
+			}else{
+				unset($privacy_levels[40]);
 			}
 			foreach ( $privacy_levels as $key => $value) {
 				$privacy = explode(' - ', $value);
