@@ -2,7 +2,7 @@
     <div class="row">
         <?php if (have_rtmedia()) : rtmedia(); ?>
 
-            <div class="rtmedia-single-media columns large-9">
+            <div id="rtmedia-single-media-container" class="rtmedia-single-media columns large-9">
 
                 <?php rtmedia_title(); ?>
 
