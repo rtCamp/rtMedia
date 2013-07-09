@@ -271,7 +271,7 @@ class RTMediaMigration {
             $prog->progress_ui($temp, true);
             ?>
             <script type="text/javascript">
-                jQuery(documnet).ready(function(e){
+                jQuery(document).ready(function(e){
                     if(db_total<1)
                         jQuery("#submit").attr('disabled',"disabled");
                 })
