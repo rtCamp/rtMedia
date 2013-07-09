@@ -100,7 +100,7 @@ class RTMediaTemplate {
 			}
 		}
 	}
-
+        
 	function check_return_json() {
 		global $rtmedia_query;
 		if ( $rtmedia_query->format == 'json' ) {
@@ -330,6 +330,9 @@ class RTMediaTemplate {
 					 */
 					$nonce = $_REQUEST[ 'rtmedia_comment_nonce' ];
 					if ( wp_verify_nonce( $nonce, 'rtmedia_comment_nonce' ) ) {
+						if(empty($_POST['comment_content'])){
+                                                    return false;
+						}
 						$comment = new RTMediaComment();
 						$attr = $_POST;
 						if ( ! isset( $attr[ 'comment_post_ID' ] ) )

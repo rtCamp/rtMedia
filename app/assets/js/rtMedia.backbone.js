@@ -489,7 +489,7 @@ jQuery(document).ready(function($) {
                 success: function (data) {
                     $(".mfp-content #rtmedia_comment_ul").append(data);
                     $("#comment_content").val("");
-                    $(".mfp-content #rt_media_comment_form #rt_media_comment_submit").attr('disabled', '');
+                    $(".mfp-content #rt_media_comment_form #rt_media_comment_submit").removeAttr('disabled');
                 }
             });
 
