@@ -1,4 +1,14 @@
-jQuery('document').ready(function(){
+jQuery('document').ready(function($){
+    
+    $("#rt_media_comment_form").submit(function(e){
+        if($.trim($("#comment_content").val()) == ""){
+            alert("Empty Comment is not allowed");
+            return false;
+        }else{
+            return true;
+        }
+            
+    })
 
 if(jQuery('.wp-audio-shortcode, .wp-video-shortcode').length > 0)
     jQuery('.wp-audio-shortcode, .wp-video-shortcode').mediaelementplayer();
