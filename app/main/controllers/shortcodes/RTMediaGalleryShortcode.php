@@ -22,13 +22,13 @@ class RTMediaGalleryShortcode {
 	public function __construct() {
 
 		add_shortcode('rtmedia_gallery', array('RTMediaGalleryShortcode', 'render'));
-		add_action('init', array($this, 'register_scripts'));
-		add_action('wp_footer', array($this, 'print_script'));
+		//add_action('init', array($this, 'register_scripts'));
+		//add_action('wp_footer', array($this, 'print_script'));
 	}
 
 	function register_scripts() {
                 wp_enqueue_script('plupload-all');
-		wp_register_script('rtmedia-backbone', RTMEDIA_URL . 'app/assets/js/rtMedia.backbone.js', array('plupload','backbone'));
+		wp_enqueue_script('rtmedia-backbone', RTMEDIA_URL . 'app/assets/js/rtMedia.backbone.js', array('plupload','backbone'),false,true);
 		wp_localize_script('rtmedia-backbone', 'template_url', RTMEDIA_URL . 'templates/media');
                 $url = $_SERVER["REQUEST_URI"];
                 $url = trailingslashit($url);

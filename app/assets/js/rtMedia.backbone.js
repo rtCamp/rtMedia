@@ -155,23 +155,31 @@ jQuery(function($) {
     galleryObj = new rtMedia.Gallery();
 
     $("body").append('<script id="rtmedia-gallery-item-template" type="text/template"></script>');
-    if (typeof(is_album) == "undefined" && typeof(is_edit_allowed) == "undefined") {
-    
+    var o_is_album,o_is_edit_allowed;
+    if (typeof(is_album) == "undefined"){
+        o_is_album=new Array("");
     } else {
+        o_is_album = is_album
+    }
+    if(typeof(is_edit_allowed) == "undefined") {
+        o_is_edit_allowed=new Array("")
+    } else{
+        o_is_edit_allowed = is_edit_allowed;
+    }
         $("#rtmedia-gallery-item-template").load(template_url + "/media-gallery-item.php", {
             backbone: true, 
-            is_album: is_album, 
-            is_edit_allowed: is_edit_allowed
+            is_album: o_is_album, 
+            is_edit_allowed: o_is_edit_allowed
         }, function(response, status, xhr) {
 
-            $(document).on("click", "#rtMedia-galary-next", function(e) {
+        $(document).on("click", "#rtMedia-galary-next", function(e) {
                 $(this).hide();
                 e.preventDefault();
 
                 galleryObj.getNext(nextpage);
             });
         });
-    }
+    
 
 
 
@@ -200,9 +208,10 @@ jQuery(function($) {
             $(".plupload.html5").css({
                 zIndex: 0
             });
-            $("#rtMedia-upload-button   ").css({
+            $("#rtMedia-upload-button").css({
                 zIndex: 2
             });
+            $("#rtMedia-upload-button").after("<span>(Max file size is " +  plupload.formatSize (this.uploader.settings.max_file_size) + ")</span>" )
 
             return this;
         },
@@ -228,7 +237,18 @@ jQuery(function($) {
         });
 
         uploaderObj.uploader.bind('FilesAdded', function(up, files) {
+            var upload_size_error =false;
+            var upload_error = "";
+            var upload_error_sep = "";
             $.each(files, function(i, file) {
+                if(uploaderObj.uploader.settings.max_file_size<file.size){
+                    upload_size_error=true
+                    upload_error += upload_error_sep + file.name;
+                    upload_error_sep = ",";
+                    var tr = "<tr style='background-color:lightpink;color:black' id='" +  file.id + "'><td>" + file.name+ "(" + plupload.formatSize(file.size) + ")" + "</td><td colspan='3'> Max file size is " + plupload.formatSize (uploaderObj.uploader.settings.max_file_size)+ "</td></tr>"
+                    $("#rtMedia-queue-list tbody").append(tr)
+                    return true;
+                }
                 tdName = document.createElement("td");
                 tdName.innerHTML = file.name;
                 tdStatus = document.createElement("td");
@@ -256,6 +276,9 @@ jQuery(function($) {
                 });
 
             });
+            if(upload_size_error){
+               // alert(upload_error + " because max file size is " + plupload.formatSize(uploaderObj.uploader.settings.max_file_size) );
+            }
         });
 
         uploaderObj.uploader.bind('QueueChanged', function(up) {
@@ -265,7 +288,10 @@ jQuery(function($) {
 
         uploaderObj.uploader.bind('UploadProgress', function(up, file) {
             $("#" + file.id + " .plupload_file_status").html(file.percent + "%");
-
+            if(file.percent == 100){
+                $("#" + file.id ).css("background-color","lightgreen");
+                $("#" + file.id ).css("color","#000");
+            }
         });
         uploaderObj.uploader.bind('BeforeUpload', function(up, file) {
             up.settings.multipart_params.privacy = $("#rtm-file_upload-ui select#privacy").val();
@@ -448,15 +474,21 @@ jQuery(document).ready(function($) {
  */
 jQuery(document).ready(function($) {
     jQuery(document).on("click",".mfp-content #rt_media_comment_form #rt_media_comment_submit",function(e){
-        $(this).attr('disabled', 'disabled');
         e.preventDefault();
+        if($.trim($("#comment_content").val())==""){
+            alert("Empty Comment is not allowed");
+            return false;
+        }
+            
+        $(this).attr('disabled', 'disabled');
+        
         $.ajax({
                 url: jQuery("#rt_media_comment_form").attr("action"),
                 type: 'post',
                 data: jQuery("#rt_media_comment_form").serialize() + "&rtajax=true",
                 success: function (data) {
                     $(".mfp-content #rtmedia_comment_ul").append(data);
-                    $("#comment_content").html("");
+                    $("#comment_content").val("");
                     $(".mfp-content #rt_media_comment_form #rt_media_comment_submit").attr('disabled', '');
                 }
             });

@@ -106,13 +106,16 @@ class RTMedia {
 		//Admin Panel
 		add_action( 'init', array( $this, 'admin_init' ) );
 
+                add_action('wp_enqueue_scripts', array('RTMediaGalleryShortcode', 'register_scripts'));   
+                //add_action('wp_footer', array('RTMediaGalleryShortcode', 'print_script'));
+                
 		//  Enqueue Plugin Scripts and Styles
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts_styles' ), 11 );
 
+                
 		/* Includes db specific wrapper functions required to render the template */
 		include(RTMEDIA_PATH . 'app/main/controllers/template/rt-template-functions.php');
-                 add_action('init', array('RTMediaGalleryShortcode', 'register_scripts'));   
-        add_action('wp_footer', array('RTMediaGalleryShortcode', 'print_script'));
+                
 
 
 	}
