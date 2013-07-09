@@ -133,6 +133,7 @@ class RTMediaNav {
 		if(!isset($rtmedia_query->action_query->action)||empty($rtmedia_query->action_query->action)){
 			$default = true;
 		}
+		//print_r($rtmedia_query->action_query);
 
 		$global_album = '';
 //		if(isset($rtmedia_query->action_query->id) && $rtmedia_query->action_query->id==RTMediaAlbum::get_default())
@@ -141,7 +142,7 @@ class RTMediaNav {
 //				'<li id="rtmedia-nav-item-wall-post-li" ' . $global_album . '><a id="rtmedia-nav-item-wall-post" href="' . trailingslashit( get_rtmedia_user_link( get_current_user_id() ) ) . 'media/' . RTMediaAlbum::get_default() . '/' . '">' . __("Wall Posts","rtmedia") . '</a></li>' );
 
 		$albums = '';
-		if(isset($rtmedia_query->action_query->action) && $rtmedia_query->action_query->action=='album')
+		if(isset($rtmedia_query->action_query->media_type) && $rtmedia_query->action_query->media_type=='album')
 			$albums = 'class="current selected"';
 
                 if ( function_exists('bp_is_group') && bp_is_group() )
@@ -152,6 +153,7 @@ class RTMediaNav {
 				'<li id="rtmedia-nav-item-albums-li" ' . $albums . '><a id="rtmedia-nav-item-albums" href="' . trailingslashit( $link ) . 'media/album/">' . __("Albums","rtmedia") . '</a></li>' );
 
 		foreach ( $rtmedia->allowed_types as $type ) {
+			//print_r($type);
 			if ( ! $rtmedia->options[ 'allowedTypes_' . $type[ 'name' ] . '_enabled' ] )
 				continue;
 

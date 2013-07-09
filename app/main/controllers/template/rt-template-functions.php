@@ -262,6 +262,22 @@ function rtmedia_request_action() {
     return $rtmedia_query->action_query->action;
 }
 
+function rtmedia_privacy_input() {
+    global $rtmedia_media;
+
+    $name = 'privacy';
+    $value = $rtmedia_media->privacy;
+
+    $html = '';
+
+    if (rtmedia_request_action() == 'edit')
+        $html .= '<select name="' . $name . '" id="' . $name . '" value="' . $value . '">';
+		$html .= '</select>';
+
+    echo $html;
+}
+
+
 function rtmedia_title_input() {
     global $rtmedia_media;
 
@@ -277,7 +293,7 @@ function rtmedia_title_input() {
 
     $html .= '';
 
-    return $html;
+    echo $html;
 }
 
 function rtmedia_description_input() {
@@ -550,7 +566,6 @@ add_action('rtmedia_add_edit_fields', 'rtmedia_image_editor');
 function rtmedia_image_editor() {
     global $rtmedia_query;
     if ($rtmedia_query->media[0]->media_type == 'photo') {
-        RTMediaTemplate::enqueue_image_editor_scripts();
         $media_id = $rtmedia_query->media[0]->media_id;
         $id = $rtmedia_query->media[0]->id;
         //$editor = wp_get_image_editor(get_attached_file($id));
