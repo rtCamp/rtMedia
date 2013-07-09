@@ -208,9 +208,10 @@ jQuery(function($) {
             $(".plupload.html5").css({
                 zIndex: 0
             });
-            $("#rtMedia-upload-button   ").css({
+            $("#rtMedia-upload-button").css({
                 zIndex: 2
             });
+            $("#rtMedia-upload-button").after("<span>(Max file size is " +  plupload.formatSize (this.uploader.settings.max_file_size) + ")</span>" )
 
             return this;
         },
@@ -236,7 +237,18 @@ jQuery(function($) {
         });
 
         uploaderObj.uploader.bind('FilesAdded', function(up, files) {
+            var upload_size_error =false;
+            var upload_error = "";
+            var upload_error_sep = "";
             $.each(files, function(i, file) {
+                if(uploaderObj.uploader.settings.max_file_size<file.size){
+                    upload_size_error=true
+                    upload_error += upload_error_sep + file.name;
+                    upload_error_sep = ",";
+                    var tr = "<tr style='background-color:lightpink;color:black' id='" +  file.id + "'><td>" + file.name+ "(" + plupload.formatSize(file.size) + ")" + "</td><td colspan='3'> Max file size is " + plupload.formatSize (uploaderObj.uploader.settings.max_file_size)+ "</td></tr>"
+                    $("#rtMedia-queue-list tbody").append(tr)
+                    return true;
+                }
                 tdName = document.createElement("td");
                 tdName.innerHTML = file.name;
                 tdStatus = document.createElement("td");
@@ -264,6 +276,9 @@ jQuery(function($) {
                 });
 
             });
+            if(upload_size_error){
+               // alert(upload_error + " because max file size is " + plupload.formatSize(uploaderObj.uploader.settings.max_file_size) );
+            }
         });
 
         uploaderObj.uploader.bind('QueueChanged', function(up) {
@@ -273,7 +288,10 @@ jQuery(function($) {
 
         uploaderObj.uploader.bind('UploadProgress', function(up, file) {
             $("#" + file.id + " .plupload_file_status").html(file.percent + "%");
-
+            if(file.percent == 100){
+                $("#" + file.id ).css("background-color","lightgreen");
+                $("#" + file.id ).css("color","#000");
+            }
         });
         uploaderObj.uploader.bind('BeforeUpload', function(up, file) {
             up.settings.multipart_params.privacy = $("#rtm-file_upload-ui select#privacy").val();
