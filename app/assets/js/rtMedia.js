@@ -1,5 +1,5 @@
 jQuery('document').ready(function($){
-    
+
     $("#rt_media_comment_form").submit(function(e){
         if($.trim($("#comment_content").val()) == ""){
             alert("Empty Comment is not allowed");
@@ -7,13 +7,13 @@ jQuery('document').ready(function($){
         }else{
             return true;
         }
-            
+
     })
 
 if(jQuery('.wp-audio-shortcode, .wp-video-shortcode').length > 0)
     jQuery('.wp-audio-shortcode, .wp-video-shortcode').mediaelementplayer();
 
-    jQuery('.rtmedia-list-media').magnificPopup({
+    jQuery('.rtmedia-list-media, .rtmedia-activity-container ul.rtmedia-list, #bp-media-list,.widget-item-listing,.bp-media-sc-list, li.media.album_updated ul,ul.bp-media-list-media, li.activity-item div.activity-content div.activity-inner div.bp_media_content').magnificPopup({
         delegate: 'a',
         type: 'ajax',
         tLoading: 'Loading image #%curr%...',
