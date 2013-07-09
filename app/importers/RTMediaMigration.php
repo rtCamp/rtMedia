@@ -79,7 +79,7 @@ class RTMediaMigration {
                                                     {$bp_prefix}bp_activity
                                                 where
                                                     type = 'activity_comment'
-                                                    and isspam <>1 
+                                                    and is_spam <>1 
                                                         and item_id in (select distinct
                                                             a.meta_value
                                                         from
