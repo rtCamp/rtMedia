@@ -544,7 +544,6 @@ add_action('rtmedia_add_edit_fields', 'rtmedia_image_editor');
 function rtmedia_image_editor() {
     global $rtmedia_query;
     if ($rtmedia_query->media[0]->media_type == 'photo') {
-        RTMediaTemplate::enqueue_image_editor_scripts();
         $media_id = $rtmedia_query->media[0]->media_id;
         $id = $rtmedia_query->media[0]->id;
         //$editor = wp_get_image_editor(get_attached_file($id));

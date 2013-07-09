@@ -16,7 +16,7 @@ class RTMediaTemplate {
             global $rtmedia_query;
                 if ( $rtmedia_query ) {
                     add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
-                    add_action( 'init', array( $this, 'enqueue_image_editor_scripts' ) );
+					add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_image_editor_scripts' ) );
                 }
 
 	}
@@ -37,6 +37,8 @@ class RTMediaTemplate {
 		wp_enqueue_script( 'wp-ajax-response' );
 		wp_enqueue_script( 'rtmedia-image-edit', admin_url( "js/image-edit$suffix.js" ), array( 'jquery', 'json2', 'imgareaselect' ), false, 1 );
 		wp_enqueue_style( 'rtmedia-image-edit', RTMEDIA_URL . 'app/assets/css/image-edit.css' );
+		wp_enqueue_style( 'rtmedia-image-area-select', includes_url('/js/imgareaselect/imgareaselect.css') );
+
 	}
 
 	/**
@@ -243,9 +245,9 @@ class RTMediaTemplate {
 		global $rtmedia_query;
 		$nonce = $_REQUEST[ 'rtmedia_media_nonce' ];
 		if ( wp_verify_nonce( $nonce, 'rtmedia_' . $rtmedia_query->media[ 0 ]->id ) ) {
-                    
+
 //                        do_action('rtmedia_before_delete_media',$rtmedia_query->media[ 0 ]->id);
-                        
+
 			$id = $_POST;
 			unset( $id[ 'rtmedia_media_nonce' ] );
 			unset( $id[ '_wp_http_referer' ] );
@@ -260,7 +262,7 @@ class RTMediaTemplate {
 			} else {
 				$parent_link = get_author_posts_url( $post->media_author );
 			}
-                        
+
 //                        do_action('rtmedia_after_delete_media',$rtmedia_query->media[ 0 ]->id);
 
 			wp_redirect( $parent_link );
