@@ -28,9 +28,6 @@ class RTMediaGalleryShortcode {
 
 	function register_scripts() {
                 wp_enqueue_script('plupload-all');
-		//wp_register_script('rtmedia-models', RTMEDIA_URL . 'app/assets/js/backbone/models.js', array('backbone'));
-		//wp_register_script('rtmedia-collections', RTMEDIA_URL . 'app/assets/js/backbone/collections.js', array('backbone', 'rtmedia-models'));
-		//wp_register_script('rtmedia-views', RTMEDIA_URL . 'app/assets/js/backbone/views.js', array('backbone', 'rtmedia-collections'));
 		wp_register_script('rtmedia-backbone', RTMEDIA_URL . 'app/assets/js/rtMedia.backbone.js', array('plupload','backbone'));
 		wp_localize_script('rtmedia-backbone', 'template_url', RTMEDIA_URL . 'templates/media');
                 $url = $_SERVER["REQUEST_URI"];
