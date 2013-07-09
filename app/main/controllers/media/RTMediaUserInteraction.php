@@ -183,7 +183,9 @@ class RTMediaUserInteraction {
         }
 
 	function render(){
-                $this->before_render();
+                $before_render = $this->before_render();
+                if($before_render === false )
+                    return false;
 		$button = '';
 		if($this->is_visible()){
 			$link = trailingslashit(get_rtmedia_permalink($this->media->id)).

@@ -133,8 +133,32 @@
         &.rtmedia-single-container{
         	.row{
         		background-color: #FFF;
-        		.rtmedia-single-media{
-        			background-color: #000;
+        		#rtmedia-single-media-container{
+        			.rtmedia-media{
+                        .mejs-overlay-button{
+                            margin: -50px 0 0 -50px;
+                        }
+                        .mejs-controls .mejs-button button {
+                            cursor: pointer;
+                            display: block;
+                            font-size: 0;
+                            line-height: 0;
+                            text-decoration: none;
+                            margin: 7px 5px;
+                            padding: 0;
+                            position: absolute;
+                            height: 16px;
+                            width: 16px;
+                            border: 0;
+                            background: rgba(0, 0, 0, 0) url('../../../lib/media-element/controls.png') no-repeat;
+                        }
+                        .mejs-controls .mejs-mute button {
+                            background-position: -16px -16px;
+                        }
+                        .mejs-controls .mejs-fullscreen-button button {
+                            background-position: -32px 0;
+                        }
+                    }
         		}
         		.rtmedia-single-meta{
         			padding: 10px;
