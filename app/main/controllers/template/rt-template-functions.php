@@ -365,8 +365,8 @@ function rtmedia_actions() {
 
     if (is_user_logged_in() && rtmedia_edit_allowed()) {
 
-        $actions[] = '<a href="' . get_rtmedia_permalink(rtmedia_id()) . 'edit/">
-			<button type="button">' . __('Edit', 'rtmedia') . '</button></a>';
+        $actions[] = '<form action="' . get_rtmedia_permalink(rtmedia_id()) . 'edit/">
+			<button type="submit" >' . __('Edit', 'rtmedia') . '</button></a>';
     }
     $actions = apply_filters('rtmedia_action_buttons_before_delete', $actions);
     foreach ($actions as $action) {

@@ -21,7 +21,7 @@ class RTMediaCoverArt extends RTMediaUserInteraction{
 		'label' => 'Set as Album Cover',
 		'plural' => '',
 		'undo_label' => 'Unset as Album Cover',
-		'privacy' => 60,
+		'privacy' => 1000, //60,
 		'countable' => false,
 		'single' => false,
 		'repeatable' => false,
