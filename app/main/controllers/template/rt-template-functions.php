@@ -262,6 +262,22 @@ function rtmedia_request_action() {
     return $rtmedia_query->action_query->action;
 }
 
+function rtmedia_privacy_input() {
+    global $rtmedia_media;
+
+    $name = 'privacy';
+    $value = $rtmedia_media->privacy;
+
+    $html = '';
+
+    if (rtmedia_request_action() == 'edit')
+        $html .= '<select name="' . $name . '" id="' . $name . '" value="' . $value . '">';
+		$html .= '</select>';
+
+    echo $html;
+}
+
+
 function rtmedia_title_input() {
     global $rtmedia_media;
 
@@ -277,7 +293,7 @@ function rtmedia_title_input() {
 
     $html .= '';
 
-    return $html;
+    echo $html;
 }
 
 function rtmedia_description_input() {
