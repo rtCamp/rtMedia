@@ -362,7 +362,7 @@ class RTMediaQuery {
 	 * @return type
 	 */
 	function &query( $query ) {
-		$this->query = wp_parse_args( $this->query, $query );
+		$this->query = wp_parse_args($query , $this->query );
 		$this->set_media_type();
 		$this->media_query = $this->query;
 		return $this->get_data();

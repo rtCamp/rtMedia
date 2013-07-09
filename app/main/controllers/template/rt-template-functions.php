@@ -49,6 +49,12 @@ function rtmedia_title() {
     }
 }
 
+
+function rtmedia_media_gallery_class(){
+    global $rtmedia_query;
+    if(isset($rtmedia_query->media_query) && isset($rtmedia_query->media_query["context_id"]))
+        echo "context-id-" . $rtmedia_query->media_query["context_id"];
+}
 function rtmedia_id($media_id = false) {
     if ($media_id) {
         $model = new RTMediaModel();

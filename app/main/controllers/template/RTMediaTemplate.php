@@ -409,6 +409,7 @@ class RTMediaTemplate {
 		global $rtmedia_query;
 
 		$rtmedia_query->query( $attr );
+                
 	}
 
 	/**
