@@ -189,7 +189,8 @@ class RTMediaMigration {
         if($done == $total){
                 global $wp_rewrite;
             //Call flush_rules() as a method of the $wp_rewrite object
-            $wp_rewrite->flush_rules();
+            $wp_rewrite->flush_rules(true);
+            
         }
         update_site_option("rtMigration-pending-count", $pending);
         $pending_time = $this->formatSeconds($pending);
@@ -403,7 +404,7 @@ class RTMediaMigration {
         } else {
                global $wp_rewrite;
             //Call flush_rules() as a method of the $wp_rewrite object
-            $wp_rewrite->flush_rules();
+            $wp_rewrite->flush_rules(true);
 //            echo json_encode(array("status" => false, "done" => $done, "total" => $this->get_total_count()));
 //            die();
         }
