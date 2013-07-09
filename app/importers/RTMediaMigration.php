@@ -507,7 +507,7 @@ class RTMediaMigration {
         if ($this->table_exists($bp_prefix . "bp_activity") && class_exists("BP_Activity_Activity")) {
             $bp_activity = new BP_Activity_Activity();
                 $activity_sql = $wpdb->prepare("SELECT 
-    id
+    *
 FROM
     {$bp_prefix}bp_activity
 where
