@@ -37,7 +37,7 @@ rtMedia (formerly BuddyPress Media) adds advanced multimedia features to WordPre
 * **Anywhere Media**
  * Display media anywhere on the site using rtmedia_gallery shortcode or template tag
  * Advanced image editor
- * HTML5 audio/video playback using MediaElement.js (due to be integrated in WordPress 3.6, by default)
+ * HTML5 audio/video playback using MediaElement.js (due to be integrated in [WordPress 3.6](http://make.wordpress.org/core/2013/04/08/audio-video-support-in-core/), by default)
 
 * **Albums**
  * Allows creation of albums, moving media between albums and merging them
@@ -55,23 +55,23 @@ rtMedia (formerly BuddyPress Media) adds advanced multimedia features to WordPre
  * Completely customisable template system.
 
 * **Responsive**
- * Uses advanced responsive Magnific Popup for lightbox, degrades gracefully on small screens
+ * Uses advanced responsive [Magnific Popup](http://dimsemenov.com/plugins/magnific-popup/) for lightbox, degrades gracefully on small screens
  * Uses Foundation's grid for true responsive display
 
 * **Privacy**
  * Allows different privacy levels for each media
  * *Bonus* Allows true privacy on regular BuddyPress activities
 
-
 * **[Featured Media](http://rtcamp.com/buddypress-media/docs/admin/featured-media/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "Featured Media documentation")**: Using a template tag, this can be then displayed on the user profile as a cover photo/video. Sponsored by [Henry Wright](http://profiles.wordpress.org/henrywright-1)
+
 * **Automatic conversion** (*premium*): of common audio & video formats to mp3/mp4 via [Kaltura Add-On](http://rtcamp.com/store/buddypress-media-kaltura/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "rtMedia Kaltura Addon for Kaltura.com/Kaltura-CE/Kaltura On-Prem version"), and [FFMPEG Add-On](http://rtcamp.com/store/buddypress-media-ffmpeg/ "rtMedia FFMPEG Addon")
-* **[Encoding Service]( http://rtcamp.com/buddypress-media/addons/audio-video-encoding-service/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media)** [*new*]: Site owners will be able to get unsupported formats converted via this service, even on a shared hosting, without installing any additional software.
+
+* **[Encoding Service]( http://rtcamp.com/buddypress-media/addons/audio-video-encoding-service/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media)** [*new*]: Unsupported formats can be converted via this service, even on a shared hosting, without installing any additional software.
 
 = Roadmap =
 
 [rtMedia's Roadmap page](http://rtcamp.com/buddypress-media/roadmap/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "Visit rtMedia's Roadmap page")
 
-* **Importers**: Site admins will be able to import media from other media plugins for BuddyPress
 * **External media** support: Users will be able to add external media using url
 * **Flagging** and **report abuse**: To auto moderate spam/inappropriate media
 
@@ -91,23 +91,7 @@ rtMedia (formerly BuddyPress Media) adds advanced multimedia features to WordPre
 
 **Important:** Please provide a **URL** of the site/web page when requesting support.
 
-We only provide support on
-
-= Translation =
-
-rtMedia includes [full translation support](https://rtcamp.com/tutorials/buddypress-media-translation/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media). Head over to the [translation project](http://rtcamp.com/translate/projects/buddypress-media/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media) to contribute your translations. If you don't see the language of your choice, let us know in the support forum, we'll add it.
-
-* [Brazilian Portuguese](https://rtcamp.com/translate/projects/buddypress-media/pt-br/default)  translation by [Jose Fabiosan](http://profiles.wordpress.org/josefabiosan/) and [doutorsocrates](http://profiles.wordpress.org/doutorsocrates/)
-* [Spanish](https://rtcamp.com/translate/projects/buddypress-media/es/default) translation by [Andrés Felipe](http://profiles.wordpress.org/naturalworldstm/)
-* [Japanese](https://rtcamp.com/translate/projects/buddypress-media/ja/default) translation by [Tetsu Yamaoka](http://twitter.com/ytetsu)
-* [Polish](https://rtcamp.com/translate/projects/buddypress-media/pl/default) translation by [czemubynie](http://profiles.wordpress.org/czemubyniegmailcom/)
-* [Serbian](https://rtcamp.com/translate/projects/buddypress-media/sr/default) translation by [nikolakica](http://profiles.wordpress.org/nikolakica/)
-* [German](https://rtcamp.com/translate/projects/buddypress-media/de/default) translation by [hannes.muc]
-* [French](https://rtcamp.com/translate/projects/buddypress-media/fr/default) translation by [Peter Lewit](http://profiles.wordpress.org/deegan)
-* [Persian](https://rtcamp.com/translate/projects/buddypress-media/fa/default) translation by [mahdiar](http://profiles.wordpress.org/mahdiar/)
-
-
-(**Note**: Credits are given for translations that are at least 50% complete.)
+We only provide support on our [support forum] (http://rtcamp.com/groups/buddypress-media/forum/)
 
 == Installation ==
 
@@ -145,7 +129,8 @@ Please visit [rtMedia's Roadmap page](http://rtcamp.com/buddypress-media/roadmap
 * Adds Anywhere uploader
 * Adds Anywhere media
 * Author page integration (in the absence of BuddyPress)
-*
+* Fixes lightbox
+* Fixes comments and media actions in the absence of activities
 
 = 2.13.2 =
 * Adds parameter to include/exclude media title in shortcode
@@ -438,3 +423,14 @@ Please visit [rtMedia's Roadmap page](http://rtcamp.com/buddypress-media/roadmap
 == Upgrade Notice ==
 = 2.13.2 =
 Bug fixes and shortcode enhancements
+
+== Translation ==
+
+rtMedia includes [full translation support](https://rtcamp.com/tutorials/buddypress-media-translation/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media). Head over to the [translation project](http://rtcamp.com/translate/projects/buddypress-media/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media) to contribute your translations. If you don't see the language of your choice, let us know in the support forum, we'll add it.
+
+* [Persian](https://rtcamp.com/translate/projects/buddypress-media/fa/default) translation by [mahdiar](http://profiles.wordpress.org/mahdiar/)
+* [Spanish](https://rtcamp.com/translate/projects/buddypress-media/es/default) translation by [Andrés Felipe](http://profiles.wordpress.org/naturalworldstm/)
+* [German](https://rtcamp.com/translate/projects/buddypress-media/de/default) translation by [hannes.muc]
+
+(**Note**: Credits are given for translations that are at least 50% complete.)
+
