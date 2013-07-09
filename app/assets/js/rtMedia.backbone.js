@@ -423,7 +423,7 @@ jQuery(document).ready(function($) {
     var media_uploading = false ;
     $.ajaxPrefilter(function(options, originalOptions, jqXHR) {
         // Modify options, control originalOptions, store jqXHR, etc
-        if(typeOf(originalOptions.data) == "undefined" || typeOf(originalOptions.data.action) =="undefined"){
+        if(typeof(originalOptions.data) == "undefined" || typeof(originalOptions.data.action) =="undefined"){
             return true;
         }
         if (originalOptions.data.action == 'post_update') {
