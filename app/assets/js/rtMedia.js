@@ -1,6 +1,6 @@
 jQuery('document').ready(function(){
 
-
+if(jQuery('.wp-audio-shortcode, .wp-video-shortcode').length > 0)
     jQuery('.wp-audio-shortcode, .wp-video-shortcode').mediaelementplayer();
 
     jQuery('.rtmedia-list-media').magnificPopup({

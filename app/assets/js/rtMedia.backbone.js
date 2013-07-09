@@ -155,7 +155,8 @@ jQuery(function($) {
     galleryObj = new rtMedia.Gallery();
 
     $("body").append('<script id="rtmedia-gallery-item-template" type="text/template"></script>');
-    if (typeof is_album == undefined && typeof is_edit_allowed == undefined) {
+    if (typeof(is_album) == "undefined" && typeof(is_edit_allowed) == "undefined") {
+    
     } else {
         $("#rtmedia-gallery-item-template").load(template_url + "/media-gallery-item.php", {
             backbone: true, 

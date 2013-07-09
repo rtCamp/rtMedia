@@ -111,6 +111,8 @@ class RTMedia {
 
 		/* Includes db specific wrapper functions required to render the template */
 		include(RTMEDIA_PATH . 'app/main/controllers/template/rt-template-functions.php');
+                 add_action('init', array('RTMediaGalleryShortcode', 'register_scripts'));   
+        add_action('wp_footer', array('RTMediaGalleryShortcode', 'print_script'));
 
 
 	}
@@ -638,7 +640,7 @@ function get_rtmedia_permalink( $id ) {
         if ($media[ 0 ]->context == 'group' )
             $parent_link = get_rtmedia_group_link( $media[ 0 ]->context_id );
         else{
-            if($rtmedia_query->query["context"] == "group"){
+            if(isset($rtmedia_query->query) && isset($rtmedia_query->query["context"]) && $rtmedia_query->query["context"] == "group"){
                 $parent_link = get_rtmedia_group_link( $rtmedia_query->query["context_id"] );
             }else{
                 $parent_link = get_rtmedia_user_link( $media[ 0 ]->media_author );
