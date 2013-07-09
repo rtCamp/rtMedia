@@ -317,7 +317,9 @@ class RTMediaMedia {
         } else {
             $album_id = 0;
         }
-
+        if ( ! in_array( $uploaded["context"] , array("profile", "group") ) ) {
+            $album_id = $uploaded["context_id"];
+        }
         foreach ($file_object as $file) {
             $attachments[] = array(
                 'post_mime_type' => $file['type'],
