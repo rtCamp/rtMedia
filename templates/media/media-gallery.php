@@ -4,7 +4,7 @@
     <?php rtmedia_uploader() ?>
 
     <h2><?php echo __('Media Gallery', 'rtmedia'); ?></h2>
-    <ul class="rtmedia-list rtmedia-list-media large-block-grid-5">
+    <ul class="rtmedia-list rtmedia-list-media large-block-grid-5 <?php echo rtmedia_media_gallery_class();?>">
         <?php if (have_rtmedia()) { ?>
 
 
