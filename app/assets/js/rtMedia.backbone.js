@@ -456,15 +456,21 @@ jQuery(document).ready(function($) {
  */
 jQuery(document).ready(function($) {
     jQuery(document).on("click",".mfp-content #rt_media_comment_form #rt_media_comment_submit",function(e){
-        $(this).attr('disabled', 'disabled');
         e.preventDefault();
+        if($.trim($("#comment_content").val())==""){
+            alert("Empty Comment is not allowed");
+            return false;
+        }
+            
+        $(this).attr('disabled', 'disabled');
+        
         $.ajax({
                 url: jQuery("#rt_media_comment_form").attr("action"),
                 type: 'post',
                 data: jQuery("#rt_media_comment_form").serialize() + "&rtajax=true",
                 success: function (data) {
                     $(".mfp-content #rtmedia_comment_ul").append(data);
-                    $("#comment_content").html("");
+                    $("#comment_content").val("");
                     $(".mfp-content #rt_media_comment_form #rt_media_comment_submit").attr('disabled', '');
                 }
             });
