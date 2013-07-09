@@ -41,7 +41,7 @@ class RTMediaNav {
                 if (! function_exists("bp_core_new_nav_item"))
                     return;
 		//print_r($counts);die();
-                global $rtmedia; 
+                global $rtmedia;
                 if($rtmedia->options["buddypress_enableOnProfile"]!==0){
 		bp_core_new_nav_item( array(
 			'name' => RTMEDIA_MEDIA_LABEL,// '<span>'.$counts['total']['all'].'</span>',
@@ -79,7 +79,7 @@ class RTMediaNav {
 		global $wp_admin_bar;
 
                 if(! function_exists("bp_use_wp_admin_bar"))
-                    return; 
+                    return;
 		// Bail if this is an ajax request
 		if ( ! bp_use_wp_admin_bar() || defined( 'DOING_AJAX' ) )
 			return;
@@ -129,6 +129,7 @@ class RTMediaNav {
 		global $rtmedia, $rtmedia_query;
 
 		$default = false;
+
 		if(!isset($rtmedia_query->action_query->action)||empty($rtmedia_query->action_query->action)){
 			$default = true;
 		}
@@ -142,7 +143,7 @@ class RTMediaNav {
 		$albums = '';
 		if(isset($rtmedia_query->action_query->action) && $rtmedia_query->action_query->action=='album')
 			$albums = 'class="current selected"';
-                
+
                 if ( function_exists('bp_is_group') && bp_is_group() )
                     $link = get_rtmedia_group_link(bp_get_group_id());
                 else
@@ -156,15 +157,11 @@ class RTMediaNav {
 
 			$selected = '';
 
-			if(!$default){
-
-
-				if ( $type[ 'name' ] == $rtmedia_query->action_query->action ) {
+				if ( isset($rtmedia_query->action_query->media_type) && $type[ 'name' ] == $rtmedia_query->action_query->media_type ) {
 					$selected = ' class="current selected"';
 				} else {
 					$selected = '';
 				}
-			}
 
 			$context = isset($rtmedia_query->query['context'])?$rtmedia_query->query['context']:'default';
 			$context_id = isset($rtmedia_query->query['context_id'])?$rtmedia_query->query['context_id']:0;
