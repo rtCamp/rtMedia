@@ -158,7 +158,6 @@ class RTMediaAlbum {
 		// add in the media since album is also a media
 		//defaults
 		global $rtmedia_interaction;
-		print_r($rtmedia_interaction);
 		$attributes = array(
 			'blog_id' => get_current_blog_id(),
 			'media_id' => $album_id,
