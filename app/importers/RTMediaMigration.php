@@ -73,27 +73,27 @@ class RTMediaMigration {
         }
         if ($this->table_exists($bp_prefix . "bp_activity")) {
             //$sql_bpm_comment_count = "select count(*) from {$bp_prefix}bp_activity where component='activity' and type='activity_comment' and is_spam <> 1 and ;";
-            $sql_bpm_comment_count = "SELECT
-                                                count(*)
-                                            FROM
-                                                {$bp_prefix}bp_activity
-                                            where
-                                                type = 'activity_comment' and  is_spam <> 1
-                                                    and item_id in (SELECT
-                                                        id
-                                                    FROM
-                                                        {$bp_prefix}bp_activity
-                                                    where
-                                                        component = 'activity'
-                                                            and type = 'activity_update' and is_spam <> 1
-                                                            and item_id in (select post_id
-                                                            from
-                                                                {$wpdb->postmeta} a
-                                                                left join
-                                                                     {$wpdb->posts} p ON (a.post_id = p.ID)
-                                                            where
-                                                                a.post_id > 0 and  (NOT p.ID IS NULL)
-                                                                    and a.meta_key = 'bp-media-key'))";
+                $sql_bpm_comment_count = "SELECT
+                                                    count(*)
+                                                FROM
+                                                    {$bp_prefix}bp_activity
+                                                where
+                                                    type = 'activity_comment' and  is_spam <> 1
+                                                        and item_id in (SELECT
+                                                            id
+                                                        FROM
+                                                            {$bp_prefix}bp_activity
+                                                        where
+                                                            component = 'activity'
+                                                                and (type = 'activity_update' or type='media_upload') and is_spam <> 1
+                                                                and item_id in (select post_id
+                                                                from
+                                                                    {$wpdb->postmeta} a
+                                                                    left join
+                                                                         {$wpdb->posts} p ON (a.post_id = p.ID)
+                                                                where
+                                                                    a.post_id > 0 and  (NOT p.ID IS NULL)
+                                                                        and a.meta_key = 'bp-media-key'))";
 
 
             //echo  $sql_bpm_comment_count;
@@ -505,7 +505,7 @@ class RTMediaMigration {
 
         if ($this->table_exists($bp_prefix . "bp_activity") && class_exists("BP_Activity_Activity")) {
             $bp_activity = new BP_Activity_Activity();
-            $activity_sql = $wpdb->prepare("SELECT * FROM {$bp_prefix}bp_activity where component='activity' and  type='activity_update' and item_id =%d order by id", $media_id);
+            $activity_sql = $wpdb->prepare("SELECT * FROM {$bp_prefix}bp_activity where component='activity' and  (type='activity_update' or type='media_upload') and item_id =%d order by id", $media_id);
             $all_activity = $wpdb->get_results($activity_sql);
             remove_all_actions("wp_insert_comment");
             foreach ($all_activity as $activity) {
