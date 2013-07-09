@@ -3,7 +3,7 @@ jQuery('document').ready(function(){
 if(jQuery('.wp-audio-shortcode, .wp-video-shortcode').length > 0)
     jQuery('.wp-audio-shortcode, .wp-video-shortcode').mediaelementplayer();
 
-    jQuery('.rtmedia-list-media').magnificPopup({
+    jQuery('.rtmedia-list-media, .rtmedia-activity-container>ul.rtmedia-list').magnificPopup({
         delegate: 'a',
         type: 'ajax',
         tLoading: 'Loading image #%curr%...',
