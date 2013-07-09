@@ -9,13 +9,13 @@
 	?>
 
 	    <form method="post" action="">
-			<div class="rtmedia-editor-main columns large-6 small">
+			<div class="rtmedia-editor-main columns large-12 small">
 			<?php echo rtmedia_title_input(); ?>
 
 			<?php do_action('rtmedia_add_edit_fields', rtmedia_type()); ?>
 
 			</div>
-			<div class="rtmedia-editor-description columns large-6 small">
+			<div class="rtmedia-editor-description columns large-12 small">
 			<?php
 
 				echo rtmedia_description_input();

@@ -31,6 +31,9 @@ if (
 
 
 if ( ! $ajax ) {
+	?>
+
+<?php
 
 	if ( class_exists( 'BuddyPress' ) && ! bp_is_blog_page() ) {
 		$template_type = 'buddypress';
@@ -39,6 +42,9 @@ if ( ! $ajax ) {
 	}
 
 	get_header( $template_type );
+	?>
+	<div id="primary" class="site-content">
+		<?php
 
 	if ( $template_type == 'buddypress' ) {
 		?>
@@ -144,9 +150,14 @@ if ( ! $ajax ) {
 					</div>
 				</div>
 			</div>
-			<?php
-		}
 
+			<?php
+			if ( ! $ajax ) {
+	?>
+		</div>
+<?php
+			}
+		}
 		get_sidebar( $template_type );
 
 		get_footer( $template_type );
