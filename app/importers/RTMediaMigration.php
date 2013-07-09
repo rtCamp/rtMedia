@@ -73,27 +73,21 @@ class RTMediaMigration {
         }
         if ($this->table_exists($bp_prefix . "bp_activity")) {
             //$sql_bpm_comment_count = "select count(*) from {$bp_prefix}bp_activity where component='activity' and type='activity_comment' and is_spam <> 1 and ;";
-                $sql_bpm_comment_count = "SELECT
-                                                    count(*)
+                $sql_bpm_comment_count = "SELECT 
+                                                    count(id)
                                                 FROM
                                                     {$bp_prefix}bp_activity
                                                 where
-                                                    type = 'activity_comment' and  is_spam <> 1
-                                                        and item_id in (SELECT
-                                                            id
-                                                        FROM
-                                                            {$bp_prefix}bp_activity
+                                                    type = 'activity_comment'
+                                                        and item_id in (select distinct
+                                                            a.meta_value
+                                                        from
+                                                            $wpdb->postmeta a
+                                                                left join
+                                                            $wpdb->posts p ON (a.post_id = p.ID)
                                                         where
-                                                            component = 'activity'
-                                                                and (type = 'activity_update' or type='media_upload') and is_spam <> 1
-                                                                and item_id in (select post_id
-                                                                from
-                                                                    {$wpdb->postmeta} a
-                                                                    left join
-                                                                         {$wpdb->posts} p ON (a.post_id = p.ID)
-                                                                where
-                                                                    a.post_id > 0 and  (NOT p.ID IS NULL)
-                                                                        and a.meta_key = 'bp-media-key'))";
+                                                            (NOT p.ID IS NULL)
+                                                                and a.meta_key = 'bp_media_child_activity')";
 
 
             //echo  $sql_bpm_comment_count;
@@ -277,7 +271,13 @@ class RTMediaMigration {
             $prog->progress_ui($temp, true);
             ?>
             <script type="text/javascript">
+                jQuery(document).ready(function(e){
+                    if(db_total<1)
+                        jQuery("#submit").attr('disabled',"disabled");
+                })
                 function db_start_migration(db_done, db_total) {
+                    
+                
                     if (db_done < db_total) {
                         jQuery("#rtMediaSyncing").show();
                         jQuery.ajax({
@@ -322,11 +322,11 @@ class RTMediaMigration {
                         jQuery("#rtMediaSyncing").hide();
                     }
                 }
-
-                jQuery(document).on('click', '#submit', function(e) {
-                    e.preventDefault();
                     var db_done = <?php echo $done; ?>;
                     var db_total = <?php echo $total; ?>;
+                jQuery(document).on('click', '#submit', function(e) {
+                    e.preventDefault();
+                    
                     db_start_migration(db_done, db_total);
                     jQuery(this).attr('disabled', 'disabled');
                 });
@@ -403,8 +403,8 @@ class RTMediaMigration {
                global $wp_rewrite;
             //Call flush_rules() as a method of the $wp_rewrite object
             $wp_rewrite->flush_rules();
-            echo json_encode(array("status" => false, "done" => $done, "total" => $this->get_total_count()));
-            die();
+//            echo json_encode(array("status" => false, "done" => $done, "total" => $this->get_total_count()));
+//            die();
         }
         $this->return_migration();
     }
