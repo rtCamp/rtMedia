@@ -34,6 +34,10 @@ class RTMediaPrivacy {
 	}
 
 	function select_privacy_ui() {
+			global $rtmedia_media;
+			$default = 0;
+			if(isset($rtmedia_media->privacy))
+				$default = $rtmedia_media->privacy;
 
 			$form = new rtForm();
 			$attributes = array(
@@ -51,7 +55,7 @@ class RTMediaPrivacy {
 				$privacy = explode(' - ', $value);
 				$attributes['rtForm_options'][] = array(
 					$privacy[0] => $key,
-					'selected' => ($key=='0') ? 1 : 0
+					'selected' => ($key==$default) ? 1 : 0
 				);
 			}
 
