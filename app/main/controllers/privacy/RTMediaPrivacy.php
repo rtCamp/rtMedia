@@ -20,29 +20,43 @@ class RTMediaPrivacy {
 	public $default_privacy;
 
 	function __construct() {
-		add_action('rtmedia_after_file_upload_ui',array($this,'select_privacy_ui'));
+		add_action('rtmedia_after_file_upload_ui',array($this,'uploader_privacy_ui'));
+		add_action('rtmedia_add_edit_fields',array($this,'select_privacy_ui'));
 		add_action('bp_init',array($this,'add_nav'));
 		add_action('bp_template_content',array($this,'content'));
 		add_filter('bp_activity_get_user_join_filter',array($this,'activity_privacy'),10,6);
 	}
 
-	function select_privacy_ui($attr) {
+	function uploader_privacy_ui($attr){
 		if(!isset($attr['privacy'])) {
+			$this->select_privacy_ui();
+		}
+	}
+
+	function select_privacy_ui() {
+
 			$form = new rtForm();
 			$attributes = array(
 				'name' => 'privacy',
 				'id' => 'privacy'
 			);
 			global $rtmedia;
-			foreach ($rtmedia->privacy_settings['levels'] as $key => $value) {
+			$privacy_levels = $rtmedia->privacy_settings['levels'];
+			if(class_exists('BuddyPress')){
+				if(!bp_is_active('friends')){
+					unset($privacy_levels[40]);
+				}
+			}
+			foreach ( $privacy_levels as $key => $value) {
 				$privacy = explode(' - ', $value);
 				$attributes['rtForm_options'][] = array(
 					$privacy[0] => $key,
 					'selected' => ($key=='0') ? 1 : 0
 				);
 			}
+
+
 			echo $form->get_select($attributes);
-		}
 	}
 
 	public function system_default(){
@@ -239,12 +253,12 @@ class RTMediaPrivacy {
             $bp_prefix = "";
 
                 $select_sql = str_replace("SELECT", "SELECT distinct", $select_sql);
-                
+
 		$from_sql = " FROM {$bp->activity->table_name} a LEFT JOIN {$wpdb->users} u ON a.user_id = u.ID LEFT JOIN {$bp->activity->table_name_meta} m ON a.id = m.activity_id";
 		$where_sql = $where_sql . " AND (NOT EXISTS (SELECT m.activity_id FROM {$bp_prefix}bp_activity_meta m WHERE m.meta_key='rtmedia_privacy' AND m.activity_id=a.id) OR (m.meta_key='rtmedia_privacy' {$where} ) )";
 		$newsql = "{$select_sql} {$from_sql} {$where_sql} ORDER BY a.date_recorded {$sort} {$pag_sql}";
 		return $newsql;
-                
+
 	}
 
 
