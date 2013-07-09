@@ -764,7 +764,8 @@ function rtmedia_album_edit() {
             <?php wp_nonce_field('rtmedia_delete_album_' . $rtmedia_query->media_query['album_id'], 'rtmedia_delete_album_nonce'); ?>
             <input type="submit" name="album-delete" value="<?php _e('Delete', 'rtmedia'); ?>" />
         </form>
-        <?php if ($album_list == rtmedia_user_album_list()) { ?>
+        <?php $album_list = rtmedia_user_album_list();
+        if ($album_list) { ?>
             <input type="button" class="button rtmedia-merge" value="<?php _e('Merge', 'rtmedia'); ?>" />
             <div class="rtmedia-merge-container">
                 <?php _e('Merge to', 'rtmedia'); ?>
