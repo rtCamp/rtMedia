@@ -47,7 +47,7 @@ class RTMediaActivity {
 			$mediaObj = new RTMediaModel();
 			$media_details = $mediaObj->get(array('id'=> $this->media));
 
-			$html .= '<ul class="rtmedia-list large-block-grid-5">';
+			$html .= '<ul class="rtmedia-list large-block-grid-3">';
 			foreach ($media_details as $media) {
 				$html .= '<li class="rtmedia-list-item">';
                                 if (  $media->media_type == 'photo' )

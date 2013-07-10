@@ -643,7 +643,7 @@ function rtmedia_global_album_list(){
         $album_objects = $model->get_media(array('id' => ($albums)), false, false);
 		if($album_objects){
 			foreach ($album_objects as $album){
-				if ((isset($rtmedia_query->media_query['album_id']) && ($album_object[0]->id != $rtmedia_query->media_query['album_id'])) || !isset($rtmedia_query->media_query['album_id']))
+				if ((isset($rtmedia_query->media_query['album_id']) && ($album_objects[0]->id != $rtmedia_query->media_query['album_id'])) || !isset($rtmedia_query->media_query['album_id']))
                 $option .= '<option value="' . $album->id . '">' . $album->media_title . '</option>';
 			}
 		}

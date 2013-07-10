@@ -23,6 +23,7 @@ if (!class_exists('RTMediaAdmin')) {
                 add_action('admin_notices', array($this, 'upload_filetypes_error'));
             }
             $rtmedia_feed = new RTMediaFeed();
+            add_filter( "plugin_action_links_". RTMEDIA_BASE_NAME, array(&$this,'plugin_add_settings_link' ));
             add_action('wp_ajax_rtmedia_fetch_feed', array($rtmedia_feed, 'fetch_feed'), 1);
             $this->rtmedia_support = new RTMediaSupport();
             add_action('wp_ajax_rtmedia_select_request', array($this->rtmedia_support, 'get_form'), 1);
@@ -58,6 +59,15 @@ if (!class_exists('RTMediaAdmin')) {
             $this->rtmedia_settings = new RTMediaSettings();
             $this->rtmedia_encoding = new RTMediaEncoding();
         }
+        function plugin_add_settings_link( $links ) {
+            $settings_link = '<a href="' . admin_url('admin.php?page=rtmedia-settings') . '">Settings</a>';
+            array_push( $links, $settings_link );
+            $settings_link = '<a href="' . admin_url('admin.php?page=rtmedia-support') . '">Support</a>';
+            array_push( $links, $settings_link );
+            return $links;
+        }
+
+
         function admin_bar_menu($admin_bar){
              $admin_bar->add_menu( array(
 		'id'    => 'rtMedia',

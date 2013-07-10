@@ -34,6 +34,16 @@ if ( ! defined( 'RTMEDIA_URL' ) ){
 	define( 'RTMEDIA_URL', plugin_dir_url( __FILE__ ) );
 }
 
+if ( ! defined( 'RTMEDIA_BASE_NAME' ) ){
+
+	/**
+	 * The url to the plugin directory
+	 *
+	 */
+	define( 'RTMEDIA_BASE_NAME', plugin_basename( __FILE__ ) );
+}
+
+
 /**
  * Auto Loader Function
  *

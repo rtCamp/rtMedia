@@ -12,6 +12,7 @@ class RTMediaMigration {
     function __construct() {
         global $wpdb;
         $this->bmp_table = $wpdb->prefix . "rt_rtm_media";
+        
         add_action('admin_menu', array($this, 'menu'));
         add_action('wp_ajax_bp_media_rt_db_migration', array($this, "migrate_to_new_db"));
         if (isset($_REQUEST["force"]) && $_REQUEST["force"] === "true")
@@ -166,12 +167,30 @@ class RTMediaMigration {
             $album_count = intval($_SESSION["migration_user_album"]);
             $album_count += (isset($_SESSION["migration_group_album"])) ? intval($_SESSION["migration_group_album"]) : 0;
         } else {
-            $album_count = 0;
+            if ($state >0){
+              if (function_exists("bp_core_get_table_prefix"))
+                    $bp_prefix = bp_core_get_table_prefix();
+                else
+                    $bp_prefix = "";
+                $pending_count = "select count(*) from $wpdb->posts where post_type='bp_media_album' and ( ID in (select meta_value FROM $wpdb->usermeta where meta_key ='bp-media-default-album') ";
+                if ($this->table_exists($bp_prefix . "bp_groups_groupmeta")) {
+                    $pending_count .= " or ID in (select meta_value FROM {$bp_prefix}bp_groups_groupmeta where meta_key ='bp_media_default_album')";
+                }
+                $pending_count .= ")";
+                $pending_count = $wpdb->get_var($pending_count);
+                
+                $album_count = intval($_SESSION["migration_user_album"]);
+                $album_count += (isset($_SESSION["migration_group_album"])) ? intval($_SESSION["migration_group_album"]) : 0;
+                $album_count = $album_count -  intval($pending_count);
+            }
+            else{
+                $album_count = 0;
+            }
         }
 
         $comment_sql = $wpdb->get_var("select count(*) from $wpdb->comments a  where a.comment_post_ID in (select b.media_id from $this->bmp_table b  left join
                                                                                             {$wpdb->posts} p ON (b.media_id = p.ID) where  (NOT p.ID IS NULL) ) and a.comment_agent=''");
-      //  echo $media_count . "--" . $album_count . "--" . $comment_sql;
+      // echo $media_count . "--" . $album_count . "--" . $comment_sql;
         return $media_count + $album_count + $comment_sql;
     }
 
@@ -189,7 +208,8 @@ class RTMediaMigration {
         if($done == $total){
                 global $wp_rewrite;
             //Call flush_rules() as a method of the $wp_rewrite object
-            $wp_rewrite->flush_rules();
+            $wp_rewrite->flush_rules(true);
+            
         }
         update_site_option("rtMigration-pending-count", $pending);
         $pending_time = $this->formatSeconds($pending);
@@ -200,42 +220,105 @@ class RTMediaMigration {
 
     function manage_album() {
         $album = get_site_option("rtmedia-global-albums");
-
-        $album_id = $album[0];
+        $stage = intval(get_site_option("rtmedia-migration", "0"));
+        
+        $album_rt_id = $album[0];
 
         $album_post_type = "rtmedia_album";
-
+        
         global $wpdb;
+        
+        $album_id =  $wpdb->get_var($wpdb->prepare("select media_id from $this->bmp_table where id = %d",$album_rt_id));
+        
         if (function_exists("bp_core_get_table_prefix"))
             $bp_prefix = bp_core_get_table_prefix();
         else
             $bp_prefix = "";
 
-        $sql_group = "update $wpdb->posts set post_parent='{$album_id}' where post_parent in (select meta_value FROM $wpdb->usermeta where meta_key ='bp-media-default-album') ";
-        if ($this->table_exists($bp_prefix . "bp_groups_groupmeta")) {
-            $sql_group .= " or post_parent in (select meta_value FROM {$bp_prefix}bp_groups_groupmeta where meta_key ='bp_media_default_album')";
+        if($stage < 1){
+             global $wpdb;
+        if (function_exists("bp_core_get_table_prefix"))
+            $bp_prefix = bp_core_get_table_prefix();
+        else
+            $bp_prefix = ""; 
+            $sql = $wpdb->prepare("update {$bp_prefix}bp_activity set content=replace(content,%s,%s) where id > 0;",'<ul class="bp-media-list-media">','<div class="rtmedia-activity-container"><ul class="rtmedia-list large-block-grid-3">');
+            $wpdb->get_row($sql);
+            $sql = $wpdb->prepare("update {$bp_prefix}bp_activity set content=replace(content,%s,%s) where id > 0;",'</ul>','</ul></div>');
+            $wpdb->get_row($sql);
+            
+            
+            $sql_group = "update $wpdb->posts set post_parent='{$album_id}' where post_parent in (select meta_value FROM $wpdb->usermeta where meta_key ='bp-media-default-album') ";
+            if ($this->table_exists($bp_prefix . "bp_groups_groupmeta")) {
+                $sql_group .= " or post_parent in (select meta_value FROM {$bp_prefix}bp_groups_groupmeta where meta_key ='bp_media_default_album')";
+            }
+            $wpdb->query($sql_group);
+            $stage = 1;
+            update_site_option("rtmedia-migration", $stage);
+            $this->return_migration();
         }
-
-        $sql_delete = "delete from $wpdb->posts where post_type='bp_media_album' and (ID in (select meta_value FROM $wpdb->usermeta where meta_key ='bp-media-default-album') ";
-        if ($this->table_exists($bp_prefix . "bp_groups_groupmeta")) {
-            $sql_delete .= " or ID in (select meta_value FROM {$bp_prefix}bp_groups_groupmeta where meta_key ='bp_media_default_album')";
+        if($stage < 2){
+            $sql_delete = "select * from $wpdb->posts where post_type='bp_media_album' and ID in (select meta_value FROM $wpdb->usermeta where meta_key ='bp-media-default-album') limit 10";
+            $results = $wpdb->get_results($sql_delete);
+            $delete_ids = "";
+            $sep = "";
+            foreach($results as $result){
+                $this->search_and_replace($result->guid, trailingslashit(get_rtmedia_user_link($result->post_author)). "media/" . $album_rt_id); 
+                $delete_ids .= $sep . $result->ID;
+                $sep = ",";
+            }
+            if($delete_ids != "")
+               $wpdb->query("delete from $wpdb->posts where ID in ({$delete_ids})");
+            if(count($results) < 10){
+                $stage =2;
+            }
+            update_site_option("rtmedia-migration", $stage);
+            $this->return_migration();
         }
-        $sql_delete .= ")";
+        if($stage < 3){
+             if ($this->table_exists($bp_prefix . "bp_groups_groupmeta")) {
+                $sql_delete = "select * from $wpdb->posts where post_type='bp_media_album' and ID in (select meta_value FROM {$bp_prefix}bp_groups_groupmeta where meta_key ='bp_media_default_album') limit 10";
+                $results = $wpdb->get_results($sql_delete);
+                $delete_ids = "";
+                $sep = "";
+                if($results){
+                    foreach($results as $result){
+                        $group_id =  abs(intval(get_post_meta($result->ID, "bp-media-key",true)));
+                        $this->search_and_replace(trailingslashit(get_rtmedia_group_link($group_id)). "albums/" . $result->ID, trailingslashit(get_rtmedia_group_link($group_id)). "media/" . $album_rt_id);
+                        $delete_ids .= $sep . $result->ID;
+                        $sep = ",";
+                    }
+                    if($delete_ids != "")
+                        $wpdb->query("delete from $wpdb->posts where ID in ({$delete_ids})");
+                    if(count($results) < 10){
+                        $stage =3;
+                    }
+                }else{
+                     $stage =3;
+                }
+                update_site_option("rtmedia-migration", $stage);
+                $this->return_migration();
+             }else{
+                 $stage =3;
+                 update_site_option("rtmedia-migration", $stage);
+                $this->return_migration();
+             }
+        }
+       
 
         $sql = "update $wpdb->posts set post_type='{$album_post_type}' where post_type='bp_media_album'";
-
-        if ($wpdb->query($sql_group) !== false) {
-            if ($wpdb->query($sql_delete) !== false) {
-                if ($wpdb->query($sql) !== false) {
+         if ($wpdb->query($sql) !== false) {
                     update_site_option("rtmedia-migration", "5");
                     return true;
-                }
-            }
-        }
+         }
         return false;
     }
 
     function test() {
+        if( !$this->table_exists($this->bmp_table) ){
+          $obj =   new RTDBUpdate();
+          $obj->install_db_version = "0";
+          $obj->do_upgrade();
+        }
         $prog = new rtProgress();
         $total = $this->get_total_count();
         $done = $this->get_done_count();
@@ -403,7 +486,7 @@ class RTMediaMigration {
         } else {
                global $wp_rewrite;
             //Call flush_rules() as a method of the $wp_rewrite object
-            $wp_rewrite->flush_rules();
+            $wp_rewrite->flush_rules(true);
 //            echo json_encode(array("status" => false, "done" => $done, "total" => $this->get_total_count()));
 //            die();
         }
@@ -481,44 +564,46 @@ class RTMediaMigration {
         }
 
 
-
+        $old_type ="";
         if ($result->post_type != "attachment") {
             $media_type = "album";
         } else {
             $mime_type = strtolower($result->post_mime_type);
+            $old_type = "";
             if (strpos($mime_type, "image") === 0) {
                 $media_type = "photo";
+                $old_type = "photos";
             } else if (strpos($mime_type, "audio") === 0) {
                 $media_type = "music";
+                $old_type = "music";
             } else if (strpos($mime_type, "video") === 0) {
                 $media_type = "video";
+                $old_type = "videos";
             } else {
                 $media_type = "other";
             }
         }
 
-
-        if ($media_type != 'album') {
-            $activity_data = $wpdb->get_row($wpdb->prepare("select * from {$bp_prefix}bp_activity where id= %d", $result->activity_id));
+        $activity_data = $wpdb->get_row($wpdb->prepare("select * from {$bp_prefix}bp_activity where id= %d", $result->activity_id));
+        if ($media_type != 'album') {    
             $this->importmedia($media_id, $prefix);
         }
-
 
         if ($this->table_exists($bp_prefix . "bp_activity") && class_exists("BP_Activity_Activity")) {
             $bp_activity = new BP_Activity_Activity();
                 $activity_sql = $wpdb->prepare("SELECT 
-    *
-FROM
-    {$bp_prefix}bp_activity
-where
-		id in (select distinct
-            a.meta_value
-        from
-            $wpdb->postmeta a
-                left join
-            $wpdb->posts p ON (a.post_id = p.ID)
-        where
-            (NOT p.ID IS NULL) and p.ID = %d
+                            *
+                        FROM
+                            {$bp_prefix}bp_activity
+                        where
+                                        id in (select distinct
+                                    a.meta_value
+                                from
+                                    $wpdb->postmeta a
+                                        left join
+                                    $wpdb->posts p ON (a.post_id = p.ID)
+                                where
+                                    (NOT p.ID IS NULL) and p.ID = %d
                 and a.meta_key = 'bp_media_child_activity')", $media_id);
             $all_activity = $wpdb->get_results($activity_sql);
             remove_all_actions("wp_insert_comment");
@@ -576,8 +661,9 @@ where
                 $bp_prefix = "";
 
             $activity_data->old_primary_link = $activity_data->primary_link;
-            $parent_link = bp_core_get_user_domain($activity_data->user_id);
+            $parent_link = get_rtmedia_user_link($activity_data->user_id);
             $activity_data->primary_link = $parent_link . "media/" . $last_id;
+            $this->search_and_replace($activity_data->old_primary_link, $activity_data->primary_link);
             $activity_data->action = str_replace($activity_data->old_primary_link, $activity_data->primary_link, $activity_data->action);
             $activity_data->content = str_replace($activity_data->old_primary_link, $activity_data->primary_link, $activity_data->content);
             global $last_baseurl, $last_newurl;
@@ -589,14 +675,41 @@ where
             $wpdb->update($bp_prefix . "bp_activity", array("primary_link" => $activity_data->primary_link,
                 "action" => $activity_data->action,
                 "content" => $activity_data->content), array("id" => $activity_data->id));
+        }else{
+            if($media_context == "group"){
+                $activity_data->old_primary_link = $activity_data->primary_link;
+                $parent_link = get_rtmedia_group_link( abs(intval($result->context_id)) );
+                $parent_link = trailingslashit($parent_link);
+                $activity_data->primary_link = trailingslashit( $parent_link . 'media/' . $last_id );
+                $this->search_and_replace($activity_data->old_primary_link, $activity_data->primary_link);
+            }else{
+                $activity_data->old_primary_link = $activity_data->primary_link;
+                $parent_link = get_rtmedia_user_link($activity_data->user_id);
+                $parent_link = trailingslashit($parent_link);
+                $activity_data->primary_link = trailingslashit( $parent_link . 'media/' . $last_id );
+                $this->search_and_replace($activity_data->old_primary_link, $activity_data->primary_link);
+            }
         }
-
+        if($old_type !=""){
+            if($media_context == "group"){
+                $parent_link = get_rtmedia_group_link( abs(intval($result->context_id)) );
+                $parent_link = trailingslashit($parent_link);
+                $this->search_and_replace(trailingslashit( $parent_link . $old_type . '/' . $media_id ), trailingslashit( $parent_link . 'media/' . $last_id ));
+                
+            }else{
+                $parent_link = get_rtmedia_user_link($activity_data->user_id);
+                $parent_link = trailingslashit($parent_link);
+                $this->search_and_replace(trailingslashit( $parent_link . $old_type . '/' . $media_id ), trailingslashit( $parent_link . 'media/' . $last_id ));
+                
+            }
+            
+        }
         return $last_id;
     }
 
     function importmedia($id, $prefix) {
 
-
+        
         $delete = false;
         $attached_file = get_attached_file($id);
         $attached_file_option = get_post_meta($id, '_wp_attached_file', true);
@@ -695,9 +808,12 @@ where
                     foreach ($metadata['sizes'] as $size) {
                         if (!copy($file_folder_path . $size['file'], $new_file_folder_path . $size['file'])) {
                             $delete = false;
+                             
                         } else {
                             $delete_sizes[] = $file_folder_path . $size['file'];
+                            $this->search_and_replace(trailingslashit($baseurl . $year_month). $size['file'],trailingslashit($baseurl .  "rtMedia/$prefix/" . $year_month). $size['file']);
                         }
+                       
                     }
                 }
                 if ($backup_metadata) {
@@ -706,6 +822,7 @@ where
                             $delete = false;
                         } else {
                             $delete_sizes[] = $file_folder_path . $backup_images['file'];
+                            $this->search_and_replace(trailingslashit($baseurl . $year_month). $backup_images['file'],trailingslashit($baseurl .  "rtMedia/$prefix/" . $year_month). $backup_images['file']);
                         }
                     }
                 }
@@ -718,6 +835,7 @@ where
                         } else {
                             $delete_sizes[] = str_replace($baseurl, $basedir, $insta_thumb);
                             $instagram_thumbs_new[$key] = str_replace($baseurl, $baseurl . "rtMedia/$prefix/", $insta_thumb);
+                            $this->search_and_replace(trailingslashit($baseurl . $year_month).$insta_thumb,trailingslashit($baseurl .  "rtMedia/$prefix/" . $year_month). $insta_thumb);
                         }
                         } catch (Exceptio $e){
                             $delete = false;
@@ -732,6 +850,7 @@ where
                         } else {
                             $delete_sizes[] = $insta_full_image;
                             $instagram_full_images_new[$key] = str_replace($basedir, $basedir . "rtMedia/$prefix", $insta_full_image);
+                            $this->search_and_replace(trailingslashit($baseurl . $year_month).$insta_full_image,trailingslashit($baseurl .  "rtMedia/$prefix/" . $year_month). $insta_full_image);
                         }
                     }
                 }
@@ -748,9 +867,10 @@ where
                                 if (isset($insta_metadata['sizes'])) {
                                     foreach ($insta_metadata['sizes'] as $key => $insta_size) {
                                         if (!copy($file_folder_path . $insta_size['file'], $new_file_folder_path . $insta_size['file'])) {
-                                            $delete = false;
+                                            $delete = false;    
                                         } else {
                                             $delete_sizes[] = $file_folder_path . $insta_size['file'];
+                                            $this->search_and_replace(trailingslashit($baseurl . $year_month).$insta_size['file'],trailingslashit($baseurl .  "rtMedia/$prefix/" . $year_month). $insta_size['file']);
                                         }
                                     }
                                 }
@@ -802,20 +922,30 @@ where
 
                     $attachment = array();
                     $attachment['ID'] = $id;
-                    $attachment['guid'] = str_replace($baseurl, $baseurl . "rtMedia/$prefix/", get_post_field('guid', $id));
+                    $old_guid = get_post_field('guid', $id);
+                    $attachment['guid'] = str_replace($baseurl, $baseurl . "rtMedia/$prefix/", $old_guid);
                     /**
                      * For Activity
                      */
                     global $last_baseurl, $last_newurl;
                     $last_baseurl = $baseurl;
                     $last_newurl = $baseurl . "rtMedia/$prefix/";
-
+                    $this->search_and_replace($old_guid, $attachment['guid']);
                     wp_update_post($attachment);
                 }
             }
         }
     }
-
+    
+    function search_and_replace($old,$new){
+        global $wpdb;
+        if (function_exists("bp_core_get_table_prefix"))
+            $bp_prefix = bp_core_get_table_prefix();
+        else
+            $bp_prefix = ""; 
+        $sql = $wpdb->prepare("update {$bp_prefix}bp_activity set action=replace(action,%s,%s) ,content=replace(content,%s,%s), primary_link=replace(primary_link,%s,%s) where id > 0;",$old,$new,$old,$new,$old,$new);
+        $wpdb->get_row($sql);
+    }
     function formatSeconds($secondsLeft) {
 
         $minuteInSeconds = 60;
