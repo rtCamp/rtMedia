@@ -12,6 +12,7 @@ class RTMediaMigration {
     function __construct() {
         global $wpdb;
         $this->bmp_table = $wpdb->prefix . "rt_rtm_media";
+        
         add_action('admin_menu', array($this, 'menu'));
         add_action('wp_ajax_bp_media_rt_db_migration', array($this, "migrate_to_new_db"));
         if (isset($_REQUEST["force"]) && $_REQUEST["force"] === "true")
@@ -313,6 +314,11 @@ class RTMediaMigration {
     }
 
     function test() {
+        if( !$this->table_exists($this->bmp_table) ){
+          $obj =   new RTDBUpdate();
+          $obj->install_db_version = "0";
+          $obj->do_upgrade();
+        }
         $prog = new rtProgress();
         $total = $this->get_total_count();
         $done = $this->get_done_count();
