@@ -118,14 +118,14 @@ If all your music files is mp3 formats and videos in mp4 formats, you may not ne
 
 * [Fork rtMedia on **GitHub**](http://github.com/rtCamp/rtMedia/)
 * We are accepting pull requests on Github.
-* For translations, please do NOT use Github. Instead use [this GlotPress project](http://rtcamp.com/translate/projects/rtmedia)
+* For translations, please do NOT use Github. Instead use [this GlotPress project](http://rtcamp.com/translate/projects/rtmedia?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media)
 * Please do not use GitHub for support requests.
 
 = Support =
 
 **Important:** Please provide a **URL** of the site/web page when requesting support.
 
-We only provide support on our [free support forum] (http://rtcamp.com/groups/buddypress-media/forum/).
+We only provide support on our [free support forum] (http://rtcamp.com/groups/buddypress-media/forum/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media).
 
 == Installation ==
 
@@ -136,6 +136,8 @@ We only provide support on our [free support forum] (http://rtcamp.com/groups/bu
 == Frequently Asked Questions ==
 
 Please visit [rtMedia's FAQ page](http://rtcamp.com/buddypress-media/faq/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "Visit rtMedia's FAQ page").
+
+Read rtMedia [Documentation](http://rtcamp.com/buddypress-media/docs/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media)
 
 == Screenshots ==
 
