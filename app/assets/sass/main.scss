@@ -1,5 +1,6 @@
 .rtmedia-container{
     @import "compass/reset";
+    @import "compass/css3";
     @import "foundation/components/global"; // *always required
     @import "foundation/components/grid";
     @import "foundation/components/visibility";
@@ -7,6 +8,13 @@
             "foundation/components/flex-video";
     .row{
         max-width:1000px
+    }
+    .rtmedia-success{
+        display: block;
+        padding: 10px;
+        border: 1px solid #008000;
+        background-color: #90EE90;
+        @include border-radius(4px);
     }
     padding:5px;
 	margin: 0;
