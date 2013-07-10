@@ -190,7 +190,7 @@ class RTMediaMigration {
 
         $comment_sql = $wpdb->get_var("select count(*) from $wpdb->comments a  where a.comment_post_ID in (select b.media_id from $this->bmp_table b  left join
                                                                                             {$wpdb->posts} p ON (b.media_id = p.ID) where  (NOT p.ID IS NULL) ) and a.comment_agent=''");
-      //  echo $media_count . "--" . $album_count . "--" . $comment_sql;
+      // echo $media_count . "--" . $album_count . "--" . $comment_sql;
         return $media_count + $album_count + $comment_sql;
     }
 
@@ -564,17 +564,21 @@ class RTMediaMigration {
         }
 
 
-
+        $old_type ="";
         if ($result->post_type != "attachment") {
             $media_type = "album";
         } else {
             $mime_type = strtolower($result->post_mime_type);
+            $old_type = "";
             if (strpos($mime_type, "image") === 0) {
                 $media_type = "photo";
+                $old_type = "photos";
             } else if (strpos($mime_type, "audio") === 0) {
                 $media_type = "music";
+                $old_type = "music";
             } else if (strpos($mime_type, "video") === 0) {
                 $media_type = "video";
+                $old_type = "videos";
             } else {
                 $media_type = "other";
             }
@@ -584,7 +588,6 @@ class RTMediaMigration {
         if ($media_type != 'album') {    
             $this->importmedia($media_id, $prefix);
         }
-
 
         if ($this->table_exists($bp_prefix . "bp_activity") && class_exists("BP_Activity_Activity")) {
             $bp_activity = new BP_Activity_Activity();
@@ -687,12 +690,26 @@ class RTMediaMigration {
                 $this->search_and_replace($activity_data->old_primary_link, $activity_data->primary_link);
             }
         }
+        if($old_type !=""){
+            if($media_context == "group"){
+                $parent_link = get_rtmedia_group_link( abs(intval($result->context_id)) );
+                $parent_link = trailingslashit($parent_link);
+                $this->search_and_replace(trailingslashit( $parent_link . $old_type . '/' . $media_id ), trailingslashit( $parent_link . 'media/' . $last_id ));
+                
+            }else{
+                $parent_link = get_rtmedia_user_link($activity_data->user_id);
+                $parent_link = trailingslashit($parent_link);
+                $this->search_and_replace(trailingslashit( $parent_link . $old_type . '/' . $media_id ), trailingslashit( $parent_link . 'media/' . $last_id ));
+                
+            }
+            
+        }
         return $last_id;
     }
 
     function importmedia($id, $prefix) {
 
-
+        
         $delete = false;
         $attached_file = get_attached_file($id);
         $attached_file_option = get_post_meta($id, '_wp_attached_file', true);
@@ -905,15 +922,15 @@ class RTMediaMigration {
 
                     $attachment = array();
                     $attachment['ID'] = $id;
-                    $attachment['guid'] = str_replace($baseurl, $baseurl . "rtMedia/$prefix/", get_post_field('guid', $id));
+                    $old_guid = get_post_field('guid', $id);
+                    $attachment['guid'] = str_replace($baseurl, $baseurl . "rtMedia/$prefix/", $old_guid);
                     /**
                      * For Activity
                      */
                     global $last_baseurl, $last_newurl;
                     $last_baseurl = $baseurl;
                     $last_newurl = $baseurl . "rtMedia/$prefix/";
-                    
-                    
+                    $this->search_and_replace($old_guid, $attachment['guid']);
                     wp_update_post($attachment);
                 }
             }
