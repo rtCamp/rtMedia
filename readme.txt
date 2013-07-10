@@ -461,7 +461,9 @@ Please visit [rtMedia's Roadmap page](http://rtcamp.com/buddypress-media/roadmap
 Complete rebuild. Please backup your database and files before updating the database.
 
 == Sponsors ==
-(*[Henry Wright]*)(http://profiles.wordpress.org/henrywright-1) sponsored Featured Media.
+* *[Henry Wright](http://profiles.wordpress.org/henrywright-1)* has kindly sponsored the *Featured Media* feature.
+* 优素映像 (Yousu Image) has sponsored the latest *Like* feature which doesn't depend on BuddyPress, any more.
+
 
 
 == Translation ==
