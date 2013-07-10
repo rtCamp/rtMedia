@@ -1,113 +1,127 @@
 === rtMedia for WordPress, BuddyPress and bbPress ===
 Contributors: rtcamp, rahul286, gagan0123, saurabhshukla, JoshuaAbenazer, faishal, desaiuditd, umesh.nevase, suhasgirgaonkar, neerukoul, hrishiv90
 Donate link: http://rtcamp.com/donate
-Tags: BuddyPress, media, multimedia, album, audio, songs, music, video, photo, image, upload, share, MediaElement.js, ffmpeg, kaltura, media-node
+Tags: BuddyPress, media, multimedia, album, audio, songs, music, video, photo, image, upload, share, MediaElement.js, ffmpeg, kaltura, media-node, rtMedia, WordPress, bbPress
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires at least: WordPress 3.5
 Tested up to: WordPress 3.5.2 + BuddyPress 1.7
 Stable tag: 3.0
 
-rtMedia (formerly BuddyPress Media) adds advanced multimedia features to WordPress, BuddyPress and bbPress.
+rtMedia adds albums, audio/video encoding, privacy/sharing, front-end uploads & more. All this works nicely on mobile/tablets devices.
 
 == Description ==
 
-rtMedia (formerly BuddyPress Media) adds advanced multimedia features to WordPress, BuddyPress and bbPress. Supports mobile devices (Android/iPhone/iPad, etc) and automatic audio/video conversion.
+rtMedia is all-in-one media solution for WordPress, BuddyPress and bbPress. It extends existing media features as well as adds many new media features for itself, its addons and other themes/plugins.
 
-= Demo & Code =
-* [rtMedia **Demo**](http://demo.rtcamp.com/buddypress-media/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media) (Stand-alone, includes Instagram and Photo tagging addon)
-* [rtMedia Kaltura Add-on](http://demo.rtcamp.com/bpm-kaltura/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media)
-* [rtMedia FFMPEG Add-on](http://demo.rtcamp.com/bpm-media/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media)
+Built with mobile-first philosophy, it works on mobile devices like (iPhone/iPad, Android BlackBerry, Windows Mobile, etc) and comes with automatic audio/video conversion among other features *(see list below)*.
+
+= Live Demos =
+
+In case you are in hurry, you can skip long list of features in subsequent section and just explore live demos! :-)
+
+* [rtMedia Demo](http://demo.rtcamp.com/buddypress-media/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media) (includes [Instagram-effects](http://rtcamp.com/store/buddypress-media-instagram/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media) and [Photo-tagging](http://rtcamp.com/store/buddypress-media-photo-tagging/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media) addon. [Audio/Video conversion service](http://rtcamp.com/buddypress-media/addons/audio-video-encoding-service/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media ))
+* [rtMedia with Kaltura Add-on](http://demo.rtcamp.com/bpm-kaltura/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media) (Uses Kaltura.com account for video conversion)
+* [rtMedia with FFMPEG Add-on](http://demo.rtcamp.com/bpm-media/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media) (Uses FFMPEG-based video conversion)
 
 
-[Fork rtMedia on **GitHub**](http://github.com/rtCamp/rtMedia/)
+= Core Concepts =
 
-= Features =
+rtMedia core at its heart made up of 2 concepts - rtMedia uploader and rtMedia gallery. 
 
-[rtMedia's Features page](http://rtcamp.com/buddypress-media/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "Visit rtMedia's Features page")
+**#1. rtMedia Uploader**
 
-* **Anywhere Uploader**
- * Using rtmedia_uploader shortcode or rtmedia_uploader template tag, let users upload media from anywhere on your site
- * Drag and drop uploader
- * All uploads integrated with BuddyPress profiles (if present)
- * Supports other plugins and custom post types
- * Upload Widget (coming soon)
- * Attach media to comments (coming soon)
+ * Use `[rtmedia_uploader]` shortcode or `<?php rtmedia_uploader() ?>` template tag, to show drag-n-drop uploader in any WordPress area (post, page, custom-post, etc). 
+ * All uploads integrated with *the context*. Context can be BuddyPress profiles/groups, WordPress posts/pages, custom post types or another plugin. 
+ * Mostly rtMedia tries to *guess* context for WordPress, BuddyPress & bbPress areas. For other plugin, it provides API to define context.  
 
-* **Anywhere Media**
- * Display media anywhere on the site using rtmedia_gallery shortcode or template tag
- * Advanced image editor
- * HTML5 audio/video playback using MediaElement.js (due to be integrated in WordPress 3.6, by default)
+**#2. rtMedia Gallery**
 
-* **Albums**
- * Allows creation of albums, moving media between albums and merging them
- * Global albums (coming soon). Add your own global albums for all users on the site, apart from the default Wall Posts
+ * Display media gallery anywhere on your site using `[rtmedia_gallery]` shortcode or `<?php rtmedia_gallery ?>` template tag.
+ * In most cases, gallery can be accessed by simply appending `/media` in the end of a WordPress URL. If its a valid context, media uploaded from rtMedia Uploader will show up automatically!
 
-* **Author Integration**
- * Display media on WordPress author url (eg: http://rtcamp.com/author/rtcamp/media/)
+= Key Features *(Free ones)* = 
 
-* **BuddyPress Integration**
- * Adds media tab to Profiles *and* Groups
- * Create activity on uploads
- * Attach media to activity updates
+**WordPress Integration**
 
-* **Template System**
- * Completely customisable template system.
+ * Display media on WordPress author pages (eg: `http://example.com/author/admin/media/`)
+ * Media Attachment for WordPress comments on posts/pages *(coming soon)*
 
-* **Responsive**
- * Uses advanced responsive Magnific Popup for lightbox, degrades gracefully on small screens
- * Uses Foundation's grid for true responsive display
+**BuddyPress Integration**
 
-* **Privacy**
+ * Adds media tab to BuddyPress Profiles and Groups.
+ * Attach media to activity status updates.
+ * Create activity on uploads and sync comments on them with WordPress comments.
+ * Works even if BuddyPress activity is disabled.
+
+**bbPress Integration**
+
+ * bbPress profile integration 
+ * Attachment support for topics and replies (coming soon)
+
+**Albums**
+
+ * Albums are used to organise media. Since rtMedia 3.0, you can create albums even if BuddyPress is not present.
+ * Apart from creation of albums, moving media between albums and merging albums is also supported.
+ * Global albums can be used to define preset albums. "Wall Posts" is an example of global album. 
+ * Option to disable albums (just in case you don't like them!)
+
+**Responsive**
+
+ * Lightbox/Album Slideshow works on mobiles & tablets.
+ * Video player resizing is also supported.
+ * Swipe gestures (coming soon)
+
+**Privacy**
+
  * Allows different privacy levels for each media
  * *Bonus* Allows true privacy on regular BuddyPress activities
+ * Privacy works with BuddyPress friends disabled. Also works with standalone WordPress.
+
+**Other Features**
+
+ * [Featured Media](http://rtcamp.com/buddypress-media/docs/admin/featured-media/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "Featured Media documentation") - Using a template tag, this can be then displayed on the user profile as a cover photo/video. (*Sponsored by [Henry Wright]*)(http://profiles.wordpress.org/henrywright-1)
 
 
-* **[Featured Media](http://rtcamp.com/buddypress-media/docs/admin/featured-media/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "Featured Media documentation")**: Using a template tag, this can be then displayed on the user profile as a cover photo/video. Sponsored by [Henry Wright](http://profiles.wordpress.org/henrywright-1)
-* **Automatic conversion** (*premium*): of common audio & video formats to mp3/mp4 via [Kaltura Add-On](http://rtcamp.com/store/buddypress-media-kaltura/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "rtMedia Kaltura Addon for Kaltura.com/Kaltura-CE/Kaltura On-Prem version"), and [FFMPEG Add-On](http://rtcamp.com/store/buddypress-media-ffmpeg/ "rtMedia FFMPEG Addon")
-* **[Encoding Service]( http://rtcamp.com/buddypress-media/addons/audio-video-encoding-service/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media)** [*new*]: Site owners will be able to get unsupported formats converted via this service, even on a shared hosting, without installing any additional software.
+= Premium Features = 
+
+**Audio/Video Conversion**
+
+rtMedia has 3 premium solutions to take care of audio/video conversion. 
+
+ * [Audio/Video Encoding Subscription Service](http://rtcamp.com/buddypress-media/addons/audio-video-encoding-service/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "rtMedia FFMPEG Addon") - Monthly subscription service. Easiest to setup.
+ * [FFMPEG-Addon](http://rtcamp.com/store/buddypress-media-ffmpeg-converter/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "rtMedia FFMPEG Addon") - Requires FFMPEG & Media-Node installed on a VPS/Dedicated server.
+ * [Kaltura-Addon](http://rtcamp.com/store/buddypress-media-kaltura/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "rtMedia Kaltura Addon for Kaltura.com/Kaltura-CE/Kaltura On-Prem version") - Rquries a Kaltura.com account or Kaltura-CE or Kaltura-on-Prem server.
+
+If all your music files is mp3 formats and videos in mp4 formats, you may not need any of above add-ons.
+
+**Images Addons**
+
+* [Instagram-Effects](http://rtcamp.com/store/buddypress-media-instagram/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "rtMedia FFMPEG Addon"): User can apply Instagram like filters to photos.
+* [Photo-Tagging](http://rtcamp.com/store/buddypress-media-photo-tagging/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "rtMedia FFMPEG Addon"): Users can tag their friends/other users in photos.
+
+**Coming Soon - Premium Addons on the way**
+
+* **Watermark Addon** - Adds advanced, customised watermark text to photos. Supports Google Fonts. *(Development completed. Under testing)*
+* **Membership Addon** - Users can be given controlled upload quotas and media type access on their profiles and groups. *(planning stage)*
+
 
 = Roadmap =
 
-[rtMedia's Roadmap page](http://rtcamp.com/buddypress-media/roadmap/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "Visit rtMedia's Roadmap page")
+* For latest update, check [rtMedia's Roadmap page](http://rtcamp.com/buddypress-media/roadmap/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "Visit rtMedia's Roadmap page")
 
-* **Importers**: Site admins will be able to import media from other media plugins for BuddyPress
-* **External media** support: Users will be able to add external media using url
-* **Flagging** and **report abuse**: To auto moderate spam/inappropriate media
+= GitHub Code =
 
-= Premium Addons =
-
-* [**BuddyPress-Media Kaltura addon**](http://rtcamp.com/store/buddypress-media-kaltura/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "rtMedia Kaltura Addon for Kaltura.com/Kaltura-CE/Kaltura On-Prem version"): Adds support for additional browser-unsupported audio/video formats via Kaltura.com/Kaltura On-Prem or self-hosted Kaltura-CE servers.
-* [**BuddyPress-Media FFMPEG addon**](http://rtcamp.com/store/buddypress-media-ffmpeg-converter/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "rtMedia FFMPEG Addon"): Adds support for additional browser-unsupported audio/video formats via self hosted FFMPEG
-* [**BuddyPress-Media Instagram**](http://rtcamp.com/store/buddypress-media-instagram/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "rtMedia FFMPEG Addon"): Adds Instagram like filters to photos.
-* [**BuddyPress-Media Photo Tagging**](http://rtcamp.com/store/buddypress-media-photo-tagging/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "rtMedia FFMPEG Addon"): Adds user tagging to photos.
-
-**Coming Soon**
-
-* **Watermark Addon** [*new*] (*premium*): Adds advanced, customised watermarks to photos.
-* **Membership Addon** (*premium*): Users can be given controlled upload quotas and media type access on their profiles and groups.
+* [Fork rtMedia on **GitHub**](http://github.com/rtCamp/rtMedia/)
+* We are accepting pull requests on Github.
+* For translations, please do NOT use Github. Instead use [this GlotPress project](http://rtcamp.com/translate/projects/rtmedia)
+* Please do not use GitHub for support requests. 
 
 = Support =
 
 **Important:** Please provide a **URL** of the site/web page when requesting support.
 
-We only provide support on
-
-= Translation =
-
-rtMedia includes [full translation support](https://rtcamp.com/tutorials/buddypress-media-translation/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media). Head over to the [translation project](http://rtcamp.com/translate/projects/buddypress-media/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media) to contribute your translations. If you don't see the language of your choice, let us know in the support forum, we'll add it.
-
-* [Brazilian Portuguese](https://rtcamp.com/translate/projects/buddypress-media/pt-br/default)  translation by [Jose Fabiosan](http://profiles.wordpress.org/josefabiosan/) and [doutorsocrates](http://profiles.wordpress.org/doutorsocrates/)
-* [Spanish](https://rtcamp.com/translate/projects/buddypress-media/es/default) translation by [Andrés Felipe](http://profiles.wordpress.org/naturalworldstm/)
-* [Japanese](https://rtcamp.com/translate/projects/buddypress-media/ja/default) translation by [Tetsu Yamaoka](http://twitter.com/ytetsu)
-* [Polish](https://rtcamp.com/translate/projects/buddypress-media/pl/default) translation by [czemubynie](http://profiles.wordpress.org/czemubyniegmailcom/)
-* [Serbian](https://rtcamp.com/translate/projects/buddypress-media/sr/default) translation by [nikolakica](http://profiles.wordpress.org/nikolakica/)
-* [German](https://rtcamp.com/translate/projects/buddypress-media/de/default) translation by [hannes.muc]
-* [French](https://rtcamp.com/translate/projects/buddypress-media/fr/default) translation by [Peter Lewit](http://profiles.wordpress.org/deegan)
-* [Persian](https://rtcamp.com/translate/projects/buddypress-media/fa/default) translation by [mahdiar](http://profiles.wordpress.org/mahdiar/)
-
-
-(**Note**: Credits are given for translations that are at least 50% complete.)
+We only provide support on our [free support forum] (http://rtcamp.com/groups/buddypress-media/forum/).
 
 == Installation ==
 
@@ -145,7 +159,8 @@ Please visit [rtMedia's Roadmap page](http://rtcamp.com/buddypress-media/roadmap
 * Adds Anywhere uploader
 * Adds Anywhere media
 * Author page integration (in the absence of BuddyPress)
-*
+* Fixes lightbox
+* Fixes comments and media actions in the absence of activities
 
 = 2.13.2 =
 * Adds parameter to include/exclude media title in shortcode
@@ -438,3 +453,13 @@ Please visit [rtMedia's Roadmap page](http://rtcamp.com/buddypress-media/roadmap
 == Upgrade Notice ==
 = 2.13.2 =
 Bug fixes and shortcode enhancements
+
+== Translation ==
+
+rtMedia includes [full translation support](https://rtcamp.com/tutorials/buddypress-media-translation/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media). Head over to the [translation project](http://rtcamp.com/translate/projects/buddypress-media/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media) to contribute your translations. If you don't see the language of your choice, let us know in the support forum, we'll add it.
+
+* [Persian](https://rtcamp.com/translate/projects/buddypress-media/fa/default) translation by [mahdiar](http://profiles.wordpress.org/mahdiar/)
+* [Spanish](https://rtcamp.com/translate/projects/buddypress-media/es/default) translation by [Andrés Felipe](http://profiles.wordpress.org/naturalworldstm/)
+* [German](https://rtcamp.com/translate/projects/buddypress-media/de/default) translation by [hannes.muc]
+
+(**Note**: Credits are given for translations that are at least 50% complete.)
