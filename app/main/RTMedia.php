@@ -106,16 +106,16 @@ class RTMedia {
 		//Admin Panel
 		add_action( 'init', array( $this, 'admin_init' ) );
 
-                add_action('wp_enqueue_scripts', array('RTMediaGalleryShortcode', 'register_scripts'));   
+                add_action('wp_enqueue_scripts', array('RTMediaGalleryShortcode', 'register_scripts'));
                 //add_action('wp_footer', array('RTMediaGalleryShortcode', 'print_script'));
-                
+
 		//  Enqueue Plugin Scripts and Styles
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts_styles' ), 11 );
 
-                
+
 		/* Includes db specific wrapper functions required to render the template */
 		include(RTMEDIA_PATH . 'app/main/controllers/template/rt-template-functions.php');
-                
+
 
 
 	}
@@ -373,7 +373,7 @@ class RTMedia {
 
 		/* Current Version. */
 		if ( ! defined( 'RTMEDIA_VERSION' ) )
-			define( 'RTMEDIA_VERSION', '3.0 Beta' );
+			define( 'RTMEDIA_VERSION', '3.0.0' );
 
 		/* Required Version  */
 		if ( ! defined( 'RTMEDIA_REQUIRED_BP' ) )
@@ -639,7 +639,7 @@ function get_rtmedia_permalink( $id ) {
 
 	$media = $mediaModel->get( array( 'id' => $id ) );
         global $rtmedia_query;
-        
+
         if ($media[ 0 ]->context == 'group' )
             $parent_link = get_rtmedia_group_link( $media[ 0 ]->context_id );
         else{
@@ -649,7 +649,7 @@ function get_rtmedia_permalink( $id ) {
                 $parent_link = get_rtmedia_user_link( $media[ 0 ]->media_author );
             }
         }
-            
+
 
         $parent_link = trailingslashit($parent_link);
 	return trailingslashit( $parent_link . 'media/' . $id );
