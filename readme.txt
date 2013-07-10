@@ -125,7 +125,7 @@ If all your music files is mp3 formats and videos in mp4 formats, you may not ne
 
 **Important:** Please provide a **URL** of the site/web page when requesting support.
 
-We only provide support on our [free support forum] (http://rtcamp.com/groups/buddypress-media/forum/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media).
+We only provide support on our [free support forum](http://rtcamp.com/groups/buddypress-media/forum/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media).
 
 == Installation ==
 
