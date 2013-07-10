@@ -25,6 +25,16 @@ if ( ! defined( 'RTMEDIA_PATH' ) ){
 	define( 'RTMEDIA_PATH', plugin_dir_path( __FILE__ ) );
 }
 
+if ( ! defined( 'BP_MEDIA_PATH' ) ){
+
+	/**
+	 *  Legacy support
+	 *
+	 */
+	define( 'BP_MEDIA_PATH', RTMEDIA_PATH );
+}
+
+
 if ( ! defined( 'RTMEDIA_URL' ) ){
 
 	/**
