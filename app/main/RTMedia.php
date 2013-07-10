@@ -295,7 +295,7 @@ class RTMedia {
 			$activity = bp_is_active( 'activity' );
 		$this->options[ 'buddypress_enableOnActivity' ] = $activity;
 
-		$this->options[ 'buddypress_enableOnProfile' ] = 0;
+		$this->options[ 'buddypress_enableOnProfile' ] = 1;
 
 		/* Last settings updated in options. Update them in DB & after this no other option would be saved in db */
 		rtmedia_update_site_option( 'rtmedia-options', $this->options );
