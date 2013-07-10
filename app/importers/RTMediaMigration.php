@@ -166,6 +166,7 @@ class RTMediaMigration {
             $album_count = intval($_SESSION["migration_user_album"]);
             $album_count += (isset($_SESSION["migration_group_album"])) ? intval($_SESSION["migration_group_album"]) : 0;
         } else {
+            if ($state >0){
               if (function_exists("bp_core_get_table_prefix"))
                     $bp_prefix = bp_core_get_table_prefix();
                 else
@@ -180,6 +181,10 @@ class RTMediaMigration {
                 $album_count = intval($_SESSION["migration_user_album"]);
                 $album_count += (isset($_SESSION["migration_group_album"])) ? intval($_SESSION["migration_group_album"]) : 0;
                 $album_count = $album_count -  intval($pending_count);
+            }
+            else{
+                $album_count = 0;
+            }
         }
 
         $comment_sql = $wpdb->get_var("select count(*) from $wpdb->comments a  where a.comment_post_ID in (select b.media_id from $this->bmp_table b  left join
