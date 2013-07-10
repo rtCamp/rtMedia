@@ -363,6 +363,17 @@ class RTMediaQuery {
 	 */
 	function &query( $query ) {
 		$this->query = wp_parse_args($query , $this->query );
+                
+                if(isset($this->query) && isset($this->query["global"]) && $this->query["global"]=="true"){
+                        if(isset($this->query["context_id"]))
+                            unset($this->query["context_id"]);
+                        if(isset($this->query["context"]))
+                            unset($this->query["context"]);
+                        if(isset($this->query["album_id"]))
+                            unset($this->query["album_id"]);
+                        unset($this->query["global"]);
+                }
+                
 		$this->set_media_type();
 		$this->media_query = $this->query;
 		return $this->get_data();
