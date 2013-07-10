@@ -62,6 +62,8 @@ if (!class_exists('RTMediaAdmin')) {
         function plugin_add_settings_link( $links ) {
             $settings_link = '<a href="' . admin_url('admin.php?page=rtmedia-settings') . '">Settings</a>';
             array_push( $links, $settings_link );
+            $settings_link = '<a href="' . admin_url('admin.php?page=rtmedia-support') . '">Support</a>';
+            array_push( $links, $settings_link );
             return $links;
         }
 
