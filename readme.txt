@@ -457,13 +457,14 @@ Please visit [rtMedia's Roadmap page](http://rtcamp.com/buddypress-media/roadmap
 * HTML5 Video Tag Support (with fallback)
 
 == Upgrade Notice ==
+
 = 3.0 =
 Complete rebuild. Please backup your database and files before updating the database.
 
 == Sponsors ==
+
 * *[Henry Wright](http://profiles.wordpress.org/henrywright-1)* has kindly sponsored the *Featured Media* feature.
 * 优素映像 (Yousu Image) has sponsored the latest *Like* feature which doesn't depend on BuddyPress, any more.
-
 
 
 == Translation ==
