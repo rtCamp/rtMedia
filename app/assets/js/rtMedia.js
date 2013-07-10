@@ -94,13 +94,23 @@ if(jQuery('.wp-audio-shortcode, .wp-video-shortcode').length > 0)
             };
 
             // since 2.8 ajaxurl is always defined in the admin header and points to admin-ajax.php
+            $("#rtmedia_create_new_album").attr('disabled','disabled');
+            var old_val = $("#rtmedia_create_new_album").html();
+            $("#rtmedia_create_new_album").prepend("<img src='" + rMedia_loading_file + "'/>");
             jQuery.post(rtmedia_ajax_url, data, function(response) {
                 if(response){
                     jQuery('.rtmedia-user-album-list').append('<option value="'+response+'">'+$albumname+'</option>');
-                    jQuery('select.rtmedia-user-album-list option[value="'+response+'"]').prop('selected', true)
+                    jQuery('select.rtmedia-user-album-list option[value="'+response+'"]').prop('selected', true);
+                    jQuery('.rtmedia-create-new-album-container').slideToggle();
+                    jQuery('#rtmedia_album_name').val("");
+                    jQuery(".rtmedia-create-new-album-button").after("<span class='rtmedia-success rtmedia-create-album-alert'><b>" + $albumname + "</b> album created.</span>" );
+                    setTimeout(function(){jQuery(".rtmedia-create-album-alert").remove()},4000);
+                    
                 } else {
                     alert('Something went wrong. Please try again.');
                 }
+                $("#rtmedia_create_new_album").removeAttr('disabled');
+                $("#rtmedia_create_new_album").html(old_val); 
             });
         } else {
             alert('Enter an album name');
