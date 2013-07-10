@@ -29,6 +29,8 @@ class RTMediaPrivacy {
 
 	function uploader_privacy_ui($attr){
 		if(!isset($attr['privacy'])) {
+                    global $rtmedia;
+                    if($rtmedia->options["privacy_enabled"] != "0")
 			$this->select_privacy_ui();
 		}
 	}

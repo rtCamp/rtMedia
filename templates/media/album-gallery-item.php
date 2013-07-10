@@ -1,7 +1,7 @@
 <li class="rtmedia-list-item">
     <div class="rtmedia-item-thumbnail">
         <a href ="<?php rtmedia_permalink(); ?>">
-            <img src="<?php rtmedia_image('thumbnail'); ?>">
+            <img src="<?php rtmedia_image('thumbnail'); ?>" >
         </a>
     </div>
 

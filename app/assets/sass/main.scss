@@ -1,5 +1,6 @@
 .rtmedia-container{
     @import "compass/reset";
+    @import "compass/css3";
     @import "foundation/components/global"; // *always required
     @import "foundation/components/grid";
     @import "foundation/components/visibility";
@@ -7,6 +8,23 @@
             "foundation/components/flex-video";
     .row{
         max-width:1000px
+    }
+    .rtmedia-item-title{
+        h4{
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            width: 100%;
+            overflow: hidden;
+            font-size:1.1em;
+            text-align:center;
+        }
+    }
+    .rtmedia-success{
+        display: block;
+        padding: 10px;
+        border: 1px solid #008000;
+        background-color: #90EE90;
+        @include border-radius(4px);
     }
     padding:5px;
 	margin: 0;
@@ -59,10 +77,16 @@
 		max-width: 100%;
 	}
 
-	.rtmedia-item-thumbnail img {
-		max-width: 100%;
-	}
-
+	.rtmedia-item-thumbnail {
+        text-align: center;
+        height: 110px;
+        line-height: 110px;
+        img {
+            max-width: 100%;
+            max-height: 110px;
+            vertical-align: middle;
+        }
+    }
 	.rtmedia-item-comments-container {
 		margin: 3% 3%;
 	}
@@ -207,4 +231,10 @@
 }
 #header{
     z-index:1 !important;
+}
+
+.bp_media_content{
+    video{
+        background-color:black;
+    }
 }
