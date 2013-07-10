@@ -235,6 +235,17 @@ class RTMediaMigration {
             $bp_prefix = "";
 
         if($stage < 1){
+             global $wpdb;
+        if (function_exists("bp_core_get_table_prefix"))
+            $bp_prefix = bp_core_get_table_prefix();
+        else
+            $bp_prefix = ""; 
+            $sql = $wpdb->prepare("update {$bp_prefix}bp_activity set content=replace(content,%s,%s) where id > 0;",'<ul class="bp-media-list-media">','<div class="rtmedia-activity-container"><ul class="rtmedia-list large-block-grid-3">');
+            $wpdb->get_row($sql);
+            $sql = $wpdb->prepare("update {$bp_prefix}bp_activity set content=replace(content,%s,%s) where id > 0;",'</ul>','</ul></div>');
+            $wpdb->get_row($sql);
+            
+            
             $sql_group = "update $wpdb->posts set post_parent='{$album_id}' where post_parent in (select meta_value FROM $wpdb->usermeta where meta_key ='bp-media-default-album') ";
             if ($this->table_exists($bp_prefix . "bp_groups_groupmeta")) {
                 $sql_group .= " or post_parent in (select meta_value FROM {$bp_prefix}bp_groups_groupmeta where meta_key ='bp_media_default_album')";
