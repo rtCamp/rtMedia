@@ -128,7 +128,8 @@ class RTMediaNav {
 	}
 
 	static function sub_nav() {
-		global $rtmedia, $rtmedia_query;
+
+            global $rtmedia, $rtmedia_query;
 
 		$default = false;
 
@@ -147,10 +148,16 @@ class RTMediaNav {
 		if(isset($rtmedia_query->action_query->media_type) && $rtmedia_query->action_query->media_type=='album')
 			$albums = 'class="current selected"';
                 if(is_rtmedia_album_enable()){
-                    if ( function_exists('bp_is_group') && bp_is_group() )
+                    if ( function_exists('bp_is_group') && bp_is_group() ) {
                         $link = get_rtmedia_group_link(bp_get_group_id());
-                    else
-                        $link = get_rtmedia_user_link( get_current_user_id() );
+                    } else {
+                        if ( function_exists('bp_displayed_user_id') && bp_displayed_user_id() ){
+                            $link = get_rtmedia_user_link( bp_displayed_user_id() );
+                        } elseif ( get_query_var('author') ) {
+                            $link = get_rtmedia_user_link( get_query_var('author') );
+                        }
+                        
+                    }
                     echo apply_filters( 'rtmedia_sub_nav_albums' ,
 				'<li id="rtmedia-nav-item-albums-li" ' . $albums . '><a id="rtmedia-nav-item-albums" href="' . trailingslashit( $link ) . 'media/album/">' . __("Albums","rtmedia") . '</a></li>' );
                 }
