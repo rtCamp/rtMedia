@@ -209,7 +209,7 @@
                                             float:left;
                                             margin-right: 5px;
                                         }    
-}
+                                }
         		}
                     .rtmedia-item-comments{
                         background-color:transparent;
@@ -219,18 +219,32 @@
                     }
         	}
         }
+        
 #wp-description-editor-tools{
     a.wp-switch-editor{
             margin: 5px 5px 0 0;
             padding: 4px 5px 2px;
             float: right;
             cursor: pointer;
-            border: 1px solid #f1f1f1;
+            border: 1px solid;
             border-color: #DFDFDF #DFDFDF #CCC;
             font: 13px/18px Arial,Helvetica,sans-serif normal;
+            height:auto;
         }
+       
+    }
+     #description_toolbargroup .mceToolbar td{
+             padding:0px;
+        }
+#wp-description-editor-container{
+    border-width: 1px;
+    border-style: solid;
+    -webkit-border-top-right-radius: 3px;
+    -webkit-border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    border-top-left-radius: 3px;
+    border-color: #CCC #CCC #DFDFDF;
 }
-        
 }
 
 .rtmedia-activity-container {

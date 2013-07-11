@@ -583,7 +583,7 @@ function rtmedia_comment_form() {
 
 function rtmedia_delete_form() {
 
-    $html = '<form method="post" acction="' . get_rtmedia_permalink(rtmedia_id()) . 'delete/">';
+    $html = '<form method="post" action="' . get_rtmedia_permalink(rtmedia_id()) . 'delete/">';
     $html .= '<input type="hidden" name="id" id="id" value="' . rtmedia_id() . '">';
     $html .= '<input type="hidden" name="request_action" id="request_action" value="delete">';
     echo $html;
