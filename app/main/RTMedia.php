@@ -578,6 +578,9 @@ class RTMedia {
 		}
 
 		//**
+                global $rtmedia_error;
+                if(isset($rtmedia_error) && $rtmedia_error===true)
+                    return false;
 		if ( ! $global_album ) {
 			$global_album = $album->add_global( __( "Wall Posts", "rtmedia", true ) );
 		}
@@ -601,13 +604,25 @@ class RTMedia {
 	}
 
 	function update_db() {
+                $rtMigration = new RTMediaMigration();
 		$update = new RTDBUpdate();
 		if ( $update->check_upgrade() ) {
 			$update->do_upgrade();
-		}
-		new RTMediaMigration();
+                }else{
+                    if($update->table_exists($rtMigration->bmp_table) == false){
+                        $update->do_upgrade(true);
+                        if($update->table_exists($rtMigration->bmp_table) == false){
+                            add_action("admin_notice",array(&$this,"create_table_error_notice"));
+                        }
+                    }
+                }
+		
 	}
-
+        function create_table_error_notice() {
+            global $rtmedia_error;
+            $rtmedia_error = true;
+            echo "<div class='error'><p><strong>rtMedia</strong>: Can't Create Database table. Please check create table permission.</p></div>";
+        }
 	function enqueue_scripts_styles() {
 		wp_enqueue_script( 'rtmedia-mejs', RTMEDIA_URL . 'lib/media-element/mediaelement-and-player.min.js', '', RTMEDIA_VERSION );
 		wp_enqueue_style( 'rtmedia-mecss', RTMEDIA_URL . 'lib/media-element/mediaelementplayer.min.css', '', RTMEDIA_VERSION );

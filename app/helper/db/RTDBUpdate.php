@@ -50,7 +50,7 @@ class RTDBUpdate {
 
     public function do_upgrade() {
         if (version_compare($this->db_version, $this->install_db_version, '>')) {
-            $path = realpath(__DIR__ . $this->schema_path);
+            $path = realpath(dirname(__FILE__) . $this->schema_path);
             if ($handle = opendir($path)) {
                 while (false !== ($entry = readdir($handle))) {
                     if ($entry != "." && $entry != "..") {
@@ -63,6 +63,15 @@ class RTDBUpdate {
             }
             update_site_option($this->db_version_option_name, $this->db_version);
         }
+    }
+    static function table_exists($table) {
+        global $wpdb;
+
+        if ($wpdb->query("SHOW TABLES LIKE '" . $table . "'") == 1) {
+            return true;
+        }
+
+        return false;
     }
 
     public function genrate_sql($file_name, $file_content) {
