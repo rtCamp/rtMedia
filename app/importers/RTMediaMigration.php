@@ -317,16 +317,20 @@ class RTMediaMigration {
         if( !$this->table_exists($this->bmp_table) ){
           $obj =   new RTDBUpdate();
           $obj->install_db_version = "0";
-          $obj->do_upgrade();
+          $obj->do_upgrade(true);
         }
+        global $rtmedia_error;
+        if(isset($rtmedia_error) && $rtmedia_error===true){
+        ?>
+            <div class="error"><p> Please Resolve create database error before migration.</p></div>
+        <?php }
+        
         $prog = new rtProgress();
         $total = $this->get_total_count();
         $done = $this->get_done_count();
         if($done >= $total){
             $done = $total;
-        ?>
-        <!--<div class="error"><p> Please Update your <a href='<?php //admin_url("options-permalink.php") ?>'>Permalink</a> after migration.</p></div>-->
-        <?php }else{ ?>
+         }else{ ?>
             <div class="error"><p> Please Backup your <strong>DATABASE</strong> and <strong>UPLOAD</strong> folder before Migration.</p></div>
         <?php }
         
@@ -416,7 +420,9 @@ class RTMediaMigration {
                 });
             </script>
             <hr />
+            <?php if(!(isset($rtmedia_error) && $rtmedia_error===true)){ ?>
             <input type="button" id="submit" value="start" class="button button-primary" />
+            <?php } ?>
 
         </div>
         <?php
