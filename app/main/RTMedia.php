@@ -631,6 +631,7 @@ class RTMedia {
 		wp_enqueue_style( 'rtmedia-magnific', RTMEDIA_URL . 'lib/magnific/magnific.css', '', RTMEDIA_VERSION );
 		wp_enqueue_script( 'rtmedia-magnific', RTMEDIA_URL . 'lib/magnific/magnific.js', '', RTMEDIA_VERSION );
 		wp_localize_script( 'rtmedia-main', 'rtmedia_ajax_url', admin_url( 'admin-ajax.php' ) );
+                wp_localize_script( 'rtmedia-main', 'rtmedia_lightbox_enabled',strval($this->options["general_enableLightbox"]));
 	}
 
 	function set_bp_bar() {
