@@ -363,7 +363,7 @@ class RTMediaQuery {
 	 */
 	function &query( $query ) {
 		$this->query = wp_parse_args($query , $this->query );
-                
+
                 if(isset($this->query) && isset($this->query["global"]) && $this->query["global"]=="true"){
                         if(isset($this->query["context_id"]))
                             unset($this->query["context_id"]);
@@ -373,7 +373,7 @@ class RTMediaQuery {
                             unset($this->query["album_id"]);
                         unset($this->query["global"]);
                 }
-                
+
 		$this->set_media_type();
 		$this->media_query = $this->query;
 		return $this->get_data();
@@ -448,7 +448,7 @@ class RTMediaQuery {
 
 
 		if ( $this->is_album_gallery() ) {
-                
+
                         if ( isset($author) ) {
                             $query_function = 'get_user_albums';
                             $context_id = $author;
@@ -456,13 +456,13 @@ class RTMediaQuery {
                             $query_function = 'get_group_albums';
                             $context_id = $group_id;
                         }
-                        
-			if ( $order_by == ' ' )
-				$pre_media = $this->model->$query_function( $context_id, ($this->action_query->page - 1) * $this->action_query->per_page_media, $this->action_query->per_page_media );
-			else
-				$pre_media = $this->model->$query_function( $context_id, ($this->action_query->page - 1) * $this->action_query->per_page_media, $this->action_query->per_page_media, $order_by );
 
-			$media_for_total_count = $this->model->$query_function( $context_id, false, false );
+			if ( $order_by == ' ' )
+				$pre_media = $this->model->{$query_function}( $context_id, ($this->action_query->page - 1) * $this->action_query->per_page_media, $this->action_query->per_page_media );
+			else
+				$pre_media = $this->model->{$query_function}( $context_id, ($this->action_query->page - 1) * $this->action_query->per_page_media, $this->action_query->per_page_media, $order_by );
+
+			$media_for_total_count = $this->model->{$query_function}( $context_id, false, false );
 		} else {
 			/**
 			 * fetch media entries from rtMedia context

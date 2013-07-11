@@ -637,8 +637,16 @@ function rtmedia_global_album_list(){
 	global $rtmedia_query;
 	$model = new RTMediaModel();
     $global_albums = rtmedia_global_albums();
+	if(!empty($global_albums)){
+		if(is_array($global_albums)){
+			$albums = @implode(',',$global_albums);
+		} else {
+			return;
+		}
+		return;
+		}
     $option = NULL;
-	$albums = implode(',',$global_albums);
+
 
         $album_objects = $model->get_media(array('id' => ($albums)), false, false);
 		if($album_objects){
