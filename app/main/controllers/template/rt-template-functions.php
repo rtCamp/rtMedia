@@ -639,7 +639,7 @@ function rtmedia_global_album_list(){
     $global_albums = rtmedia_global_albums();
 	if(!empty($global_albums)){
 		if(is_array($global_albums)){
-			$albums = @implode(',',$global_albums);
+			$albums = implode(',',$global_albums);
 		} else {
 			return;
 		}

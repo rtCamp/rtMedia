@@ -162,6 +162,8 @@ Please visit [rtMedia's Roadmap page](http://rtcamp.com/buddypress-media/roadmap
 
 = 3.0.1 =
 * Legacy path support for Addon Updates
+* Added database check for migration
+* Fixed a few errors
 
 = 3.0 =
 * Renamed to rtMedia for WordPress, BuddyPress and bbPress
@@ -462,7 +464,7 @@ Please visit [rtMedia's Roadmap page](http://rtcamp.com/buddypress-media/roadmap
 == Upgrade Notice ==
 
 = 3.0.1 =
-Complete rebuild. Please backup your database and files before updating the database.
+Added database check. Fixed some errors. Please backup your database and files before updating the database.
 
 == Sponsors ==
 
