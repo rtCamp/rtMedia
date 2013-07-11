@@ -45,8 +45,8 @@ class RTMediaUploadView {
         $album = '';
         if ( $rtmedia_query && is_rtmedia_album()){
             $album = '<input class="rtmedia-current-album" type="hidden" name="rtmedia-current-album" value="'.$rtmedia_query->media_query['album_id'].'" />';
-		}elseif ( $rtmedia_query && is_rtmedia_gallery() ){
-                    
+		}elseif (is_rtmedia_album_enable () && $rtmedia_query && is_rtmedia_gallery() ){
+                       
 			if($rtmedia_query->query['context']=='profile'){
 				$album = '<select name="album" class="rtmedia-user-album-list">'.rtmedia_user_album_list().'</select>';
 			}

@@ -93,7 +93,7 @@ class RTMediaQuery {
 
 			$this->query( $args );
 		}
-
+                
 		do_action('rtmedia_query_construct');
 
 	}
@@ -133,7 +133,7 @@ class RTMediaQuery {
 	}
 
 	function is_album() {
-		if ( isset( $this->query[ 'media_type' ] ) && $this->query[ 'media_type' ] == 'album' ) {
+		if (isset( $this->query[ 'media_type' ] ) && $this->query[ 'media_type' ] == 'album' ) {
 			return true;
 		}
 		return false;
@@ -147,7 +147,7 @@ class RTMediaQuery {
 	}
 
 	function is_album_gallery() {
-		if ( isset( $this->action_query->media_type ) && $this->action_query->media_type == 'album' ) {
+		if (isset( $this->action_query->media_type ) && $this->action_query->media_type == 'album' ) {
 			return true;
 		}
 		return false;
@@ -187,6 +187,11 @@ class RTMediaQuery {
 			//set the modifier value beforehand
 			$modifier_value = $raw_query[ 0 ];
 
+                        if($modifier_value== "album" && !is_rtmedia_album_enable()){
+                            include get_404_template();
+                            die();
+                        }
+                        
 			// requesting nonce /media/nonce/edit/ | /media/nonce/comment
 			// | /media/nonce/delete
 
@@ -337,7 +342,7 @@ class RTMediaQuery {
 		 * setting parameters in action query object for pagination
 		 */
 		$per_page_media = intval( $rtmedia->options[ 'general_perPageMedia' ] );
-
+                
 
 		$this->action_query = (object) array(
 					$modifier_type => $modifier_value,

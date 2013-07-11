@@ -102,12 +102,14 @@ class RTMediaNav {
 //				'href' => trailingslashit( get_rtmedia_user_link( get_current_user_id() ) ) . 'media/'.RTMediaAlbum::get_default().'/'
 //			) );
 
-			$wp_admin_bar->add_menu( array(
-				'parent' => 'my-account-' . RTMEDIA_MEDIA_SLUG,
-				'id' => 'my-account-media-' . RTMEDIA_ALBUM_SLUG,
-				'title' => __('Albums','rtmedia'),
-				'href' => trailingslashit( get_rtmedia_user_link( get_current_user_id() ) ) . 'media/album/'
-			) );
+                        if(is_rtmedia_album_enable()){
+                            $wp_admin_bar->add_menu( array(
+                                    'parent' => 'my-account-' . RTMEDIA_MEDIA_SLUG,
+                                    'id' => 'my-account-media-' . RTMEDIA_ALBUM_SLUG,
+                                    'title' => __('Albums','rtmedia'),
+                                    'href' => trailingslashit( get_rtmedia_user_link( get_current_user_id() ) ) . 'media/album/'
+                            ) );
+                        }
 
 			global $rtmedia;
 
@@ -144,14 +146,14 @@ class RTMediaNav {
 		$albums = '';
 		if(isset($rtmedia_query->action_query->media_type) && $rtmedia_query->action_query->media_type=='album')
 			$albums = 'class="current selected"';
-
-                if ( function_exists('bp_is_group') && bp_is_group() )
-                    $link = get_rtmedia_group_link(bp_get_group_id());
-                else
-                    $link = get_rtmedia_user_link( get_current_user_id() );
-		echo apply_filters( 'rtmedia_sub_nav_albums' ,
+                if(is_rtmedia_album_enable()){
+                    if ( function_exists('bp_is_group') && bp_is_group() )
+                        $link = get_rtmedia_group_link(bp_get_group_id());
+                    else
+                        $link = get_rtmedia_user_link( get_current_user_id() );
+                    echo apply_filters( 'rtmedia_sub_nav_albums' ,
 				'<li id="rtmedia-nav-item-albums-li" ' . $albums . '><a id="rtmedia-nav-item-albums" href="' . trailingslashit( $link ) . 'media/album/">' . __("Albums","rtmedia") . '</a></li>' );
-
+                }
 		foreach ( $rtmedia->allowed_types as $type ) {
 			//print_r($type);
 			if ( ! $rtmedia->options[ 'allowedTypes_' . $type[ 'name' ] . '_enabled' ] )

@@ -117,15 +117,15 @@ class RTMediaFormHandler {
 	static function general_render_options($options) {
 
 		$render = array(
-//			'general_enableAlbums' => array(
-//				'title' => __('Albums','rtmedia'),
-//				'callback' => array('RTMediaFormHandler', 'checkbox'),
-//				'args' => array(
-//					'key' => 'general_enableAlbums',
-//					'value' => $options['general_enableAlbums'],
-//					'desc' => __('Enable Albums in rtMedia','rtmedia')
-//				)
-//			),
+			'general_enableAlbums' => array(
+				'title' => __('Albums','rtmedia'),
+				'callback' => array('RTMediaFormHandler', 'checkbox'),
+				'args' => array(
+					'key' => 'general_enableAlbums',
+					'value' => $options['general_enableAlbums'],
+					'desc' => __('Enable Albums in rtMedia','rtmedia')
+				)
+			),
 			'general_enableComments' => array(
 				'title' => __('Comments','rtmedia'),
 				'callback' => array('RTMediaFormHandler', 'checkbox'),

@@ -2,7 +2,7 @@
 global $rtmedia_query;
 
 if ( is_rtmedia_album_gallery() ) {
-	$template = 'album-gallery';
+            $template = 'album-gallery';
 } elseif ( is_rtmedia_album() || is_rtmedia_gallery() ) {
 	$template = 'media-gallery';
 	if (

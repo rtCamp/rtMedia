@@ -722,6 +722,8 @@ add_action('rtmedia_before_media_gallery', 'rtmedia_create_album');
 add_action('rtmedia_before_album_gallery', 'rtmedia_create_album');
 
 function rtmedia_create_album() {
+    if(!is_rtmedia_album_enable())
+        return ;
     global $rtmedia_query;
 	$user_id = get_current_user_id();
 	$display = false;
@@ -760,7 +762,8 @@ function rtmedia_album_edit() {
 
     if (!is_rtmedia_album() || !is_user_logged_in())
         return;
-
+    if(! is_rtmedia_album_enable())
+        return ;
     global $rtmedia_query;
 	//var_dump($rtmedia_query);
     if (isset($rtmedia_query->media_query)
@@ -772,21 +775,21 @@ function rtmedia_album_edit() {
             <?php wp_nonce_field('rtmedia_delete_album_' . $rtmedia_query->media_query['album_id'], 'rtmedia_delete_album_nonce'); ?>
             <input type="submit" name="album-delete" value="<?php _e('Delete', 'rtmedia'); ?>" />
         </form>
-        <?php $album_list = rtmedia_user_album_list();
-        if ($album_list) { ?>
-            <input type="button" class="button rtmedia-merge" value="<?php _e('Merge', 'rtmedia'); ?>" />
-            <div class="rtmedia-merge-container">
-                <?php _e('Merge to', 'rtmedia'); ?>
-                <form method="post" class="album-merge-form" action="merge/">
-                    <?php echo '<select name="album" class="rtmedia-merge-user-album-list">' . $album_list . '</select>'; ?>
-                    <?php wp_nonce_field('rtmedia_merge_album_' . $rtmedia_query->media_query['album_id'], 'rtmedia_merge_album_nonce'); ?>
-                    <input type="submit" class="rtmedia-move-selected" name="merge-album" value="<?php _e('Merge Album', 'rtmedia'); ?>" />
-                </form>
-            </div>
-            <?php
-        }
-    }
-	}
+        <?php 
+        if( $album_list = rtmedia_user_album_list()){ ?>
+                <input type="button" class="button rtmedia-merge" value="<?php _e('Merge', 'rtmedia'); ?>" />
+                <div class="rtmedia-merge-container">
+                    <?php _e('Merge to', 'rtmedia'); ?>
+                    <form method="post" class="album-merge-form" action="merge/">
+                        <?php echo '<select name="album" class="rtmedia-merge-user-album-list">' . $album_list . '</select>'; ?>
+                        <?php wp_nonce_field('rtmedia_merge_album_' . $rtmedia_query->media_query['album_id'], 'rtmedia_merge_album_nonce'); ?>
+                        <input type="submit" class="rtmedia-move-selected" name="merge-album" value="<?php _e('Merge Album', 'rtmedia'); ?>" />
+                    </form>
+                </div>
+                <?php
+            }
+          }
+                        }
 }
 
 add_action('rtmedia_before_item', 'rtmedia_item_select');
@@ -813,4 +816,12 @@ function rtmedia_album_merge_action($actions) {
 function rtmedia_sub_nav() {
     RTMediaNav::sub_nav();
 }
-?>
+
+function is_rtmedia_album_enable(){
+    global $rtmedia;
+    if(isset($rtmedia->options["general_enableAlbums"]) && $rtmedia->options["general_enableAlbums"] != "0"){
+        return true;
+    }
+    return false;
+}
+            
