@@ -160,7 +160,7 @@ Please visit [rtMedia's Features page](http://rtcamp.com/buddypress-media/?utm_s
 
 Please visit [rtMedia's Roadmap page](http://rtcamp.com/buddypress-media/roadmap/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "Visit rtMedia's Features page") to get some details about future releases.
 
-= 3.1 =
+= 3.0.1 =
 * Legacy path support for Addon Updates
 * Added database check for migration
 * Fixed a few errors
@@ -463,7 +463,7 @@ Please visit [rtMedia's Roadmap page](http://rtcamp.com/buddypress-media/roadmap
 
 == Upgrade Notice ==
 
-= 3.1 =
+= 3.0.1 =
 Added database check. Fixed some errors. Please backup your database and files before updating the database.
 
 == Sponsors ==
