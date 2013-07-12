@@ -82,7 +82,10 @@ jQuery(document).ready(function($){
             // since 2.8 ajaxurl is always defined in the admin header and points to admin-ajax.php
             jQuery.getJSON(ajaxurl, data, function(response) {
                 if(response.error===undefined && response.apikey){
-                    document.location.href = document.URL+'&apikey='+response.apikey;
+                    var tempUrl = window.location.href;
+                    var hash = window.location.hash;
+                    tempUrl = tempUrl.replace(hash, '');
+                    document.location.href = tempUrl+'&apikey='+response.apikey+hash;
                 }else{
                     jQuery('.encoding-try-now').next().remove();
                     jQuery('#settings-error-encoding-error').remove();
@@ -103,12 +106,14 @@ jQuery(document).ready(function($){
         // since 2.8 ajaxurl is always defined in the admin header and points to admin-ajax.php
         jQuery.getJSON(ajaxurl, data, function(response) {
             if(response.error===undefined && response.apikey){
-                var tempUrl = document.URL;
-                if(document.URL.toString().indexOf('&apikey='+response.apikey) == -1)
+                var tempUrl = window.location.href;
+                var hash = window.location.hash;
+                tempUrl = tempUrl.replace(hash, '');
+                if(tempUrl.toString().indexOf('&apikey='+response.apikey) == -1)
                     tempUrl += '&apikey='+response.apikey;
-                if(document.URL.toString().indexOf('&update=true') == -1)
+                if(tempUrl.toString().indexOf('&update=true') == -1)
                     tempUrl += '&update=true';
-                document.location.href = tempUrl;
+                document.location.href = tempUrl+hash;
 
             }else{
                 jQuery('#settings-error-api-key-error').remove();

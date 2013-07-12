@@ -46,7 +46,7 @@ class RTMediaUploadView {
         if ( $rtmedia_query && is_rtmedia_album()){
             $album = '<input class="rtmedia-current-album" type="hidden" name="rtmedia-current-album" value="'.$rtmedia_query->media_query['album_id'].'" />';
 		}elseif (is_rtmedia_album_enable () && $rtmedia_query && is_rtmedia_gallery() ){
-                       
+
 			if($rtmedia_query->query['context']=='profile'){
 				$album = '<select name="album" class="rtmedia-user-album-list">'.rtmedia_user_album_list().'</select>';
 			}
@@ -90,10 +90,10 @@ class RTMediaUploadView {
 
 		if (!$template_name)
 			$located = false;
-		if (file_exists(STYLESHEETPATH . '/rtmedia/' . $template_name)) {
-			$located = STYLESHEETPATH . '/rtmedia/' . $template_name;
-		} else if (file_exists(TEMPLATEPATH . '/rtmedia/' . $template_name)) {
-			$located = TEMPLATEPATH . '/rtmedia/' . $template_name;
+		if (file_exists(STYLESHEETPATH . '/rtmedia/upload/' . $template_name)) {
+			$located = STYLESHEETPATH . '/rtmedia/upload/' . $template_name;
+		} else if (file_exists(TEMPLATEPATH . '/rtmedia/upload/' . $template_name)) {
+			$located = TEMPLATEPATH . '/rtmedia/upload/' . $template_name;
 		} else {
 			$located = RTMEDIA_PATH . 'templates/upload/' . $template_name;
 		}
