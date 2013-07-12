@@ -13,12 +13,11 @@ class RTMediaTemplate {
 	public $media_args;
 
 	function __construct() {
-            global $rtmedia_query;
-                if ( $rtmedia_query ) {
-                    add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
-					add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_image_editor_scripts' ) );
-                }
-
+		global $rtmedia_query;
+		if ( $rtmedia_query ) {
+			add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
+			add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_image_editor_scripts' ) );
+		}
 	}
 
 	/**
@@ -26,10 +25,10 @@ class RTMediaTemplate {
 	 */
 	function enqueue_scripts() {
 		wp_enqueue_script( 'rtmedia-backbone' );
-                $is_album = is_rtmedia_album() ? true : false;
-		$is_edit_allowed = is_rtmedia_edit_allowed() ? true: false;
-		wp_localize_script('rtmedia-backbone', 'is_album', array($is_album));
-		wp_localize_script('rtmedia-backbone', 'is_edit_allowed', array($is_edit_allowed));
+		$is_album = is_rtmedia_album() ? true : false;
+		$is_edit_allowed = is_rtmedia_edit_allowed() ? true : false;
+		wp_localize_script( 'rtmedia-backbone', 'is_album', array( $is_album ) );
+		wp_localize_script( 'rtmedia-backbone', 'is_edit_allowed', array( $is_edit_allowed ) );
 	}
 
 	function enqueue_image_editor_scripts() {
@@ -37,8 +36,7 @@ class RTMediaTemplate {
 		wp_enqueue_script( 'wp-ajax-response' );
 		wp_enqueue_script( 'rtmedia-image-edit', admin_url( "js/image-edit$suffix.js" ), array( 'jquery', 'json2', 'imgareaselect' ), false, 1 );
 		wp_enqueue_style( 'rtmedia-image-edit', RTMEDIA_URL . 'app/assets/css/image-edit.css' );
-		wp_enqueue_style( 'rtmedia-image-area-select', includes_url('/js/imgareaselect/imgareaselect.css') );
-
+		wp_enqueue_style( 'rtmedia-image-area-select', includes_url( '/js/imgareaselect/imgareaselect.css' ) );
 	}
 
 	/**
@@ -61,10 +59,10 @@ class RTMediaTemplate {
 
 		//print_r($rtmedia_query);
 
-		if(isset($rtmedia_query->action_query->action)){
+		if ( isset( $rtmedia_query->action_query->action ) ) {
 			//echo $rtmedia_query->action_query->action;
 			do_action( 'rtmedia_pre_action_' . $rtmedia_query->action_query->action );
-		}else{
+		} else {
 			do_action( 'rtmedia_pre_action_default' );
 		}
 
@@ -84,8 +82,7 @@ class RTMediaTemplate {
 			$this->check_return_comments();
 
 			return $this->get_default_template();
-
-		}  else if ( ! $shortcode_attr ){
+		} else if ( ! $shortcode_attr ) {
 			return $this->get_default_template();
 		} else if ( $shortcode_attr[ 'name' ] == 'gallery' ) {
 			$valid = $this->sanitize_gallery_attributes( $shortcode_attr[ 'attr' ] );
@@ -95,12 +92,12 @@ class RTMediaTemplate {
 					$this->update_global_query( $shortcode_attr[ 'attr' ] );
 				include $this->locate_template( $template );
 			} else {
-				echo __('Invalid attribute passed for rtmedia_gallery shortcode.','rtmedia');
+				echo __( 'Invalid attribute passed for rtmedia_gallery shortcode.', 'rtmedia' );
 				return false;
 			}
 		}
 	}
-        
+
 	function check_return_json() {
 		global $rtmedia_query;
 		if ( $rtmedia_query->format == 'json' ) {
@@ -110,11 +107,12 @@ class RTMediaTemplate {
 		}
 	}
 
-	function check_return_upload(){
+	function check_return_upload() {
 		global $rtmedia_query;
-		 if ( $rtmedia_query->action_query->action != 'upload' ) return;
-			$upload = new RTMediaUploadEndpoint();
-			$upload->template_redirect();
+		if ( $rtmedia_query->action_query->action != 'upload' )
+			return;
+		$upload = new RTMediaUploadEndpoint();
+		$upload->template_redirect();
 	}
 
 	function json_output() {
@@ -124,10 +122,10 @@ class RTMediaTemplate {
 			foreach ( $rtmedia_query->media as $key => $media ) {
 				$media_array[ $key ] = $media;
 				list($src, $width, $height) = wp_get_attachment_image_src( $media->media_id, 'thumbnail' );
-                                if(!$src){
-                                    global $rtmedia;
-                                    $src = $rtmedia->allowed_types[$media->media_type]["thumbnail"];
-                                }
+				if ( ! $src ) {
+					global $rtmedia;
+					$src = $rtmedia->allowed_types[ $media->media_type ][ "thumbnail" ];
+				}
 				$media_array[ $key ]->guid = $src;
 				$media_array[ $key ]->rt_permalink = get_rtmedia_permalink( $media->id );
 			}
@@ -161,13 +159,12 @@ class RTMediaTemplate {
 
 //                        do_action('rtmedia_before_update_media',$rtmedia_query->action_query->id);
 
-			$data = rtmedia_sanitize_object($_POST, array('media_title','description','privacy'));
+			$data = rtmedia_sanitize_object( $_POST, array( 'media_title', 'description', 'privacy' ) );
 			$media = new RTMediaMedia();
 			$media->update( $rtmedia_query->action_query->id, $data, $rtmedia_query->media[ 0 ]->media_id );
 			$rtmedia_query->query( false );
 
 //                        do_action('rtmedia_after_update_media',$rtmedia_query->action_query->id);
-
 		} else {
 			echo __( "Ooops !!! Invalid access. No nonce was found !!", "rtmedia" );
 		}
@@ -315,52 +312,47 @@ class RTMediaTemplate {
 		exit;
 	}
 
-
-
-
-
-	function check_return_comments(){
+	function check_return_comments() {
 		global $rtmedia_query;
 
-		if ( $rtmedia_query->action_query->action != 'comment' ) return;
-				if ( isset( $rtmedia_query->action_query->id ) && count( $_POST ) ) {
-					/**
-					 * /media/comments [POST]
-					 * Post a comment to the album by post id
-					 */
-					$nonce = $_REQUEST[ 'rtmedia_comment_nonce' ];
-					if ( wp_verify_nonce( $nonce, 'rtmedia_comment_nonce' ) ) {
-						if(empty($_POST['comment_content'])){
-                                                    return false;
-						}
-						$comment = new RTMediaComment();
-						$attr = $_POST;
-						if ( ! isset( $attr[ 'comment_post_ID' ] ) )
-							$attr[ 'comment_post_ID' ] = $rtmedia_query->action_query->id;
-						$id = $comment->add( $attr );
+		if ( $rtmedia_query->action_query->action != 'comment' )
+			return;
+		if ( isset( $rtmedia_query->action_query->id ) && count( $_POST ) ) {
+			/**
+			 * /media/comments [POST]
+			 * Post a comment to the album by post id
+			 */
+			$nonce = $_REQUEST[ 'rtmedia_comment_nonce' ];
+			if ( wp_verify_nonce( $nonce, 'rtmedia_comment_nonce' ) ) {
+				if ( empty( $_POST[ 'comment_content' ] ) ) {
+					return false;
+				}
+				$comment = new RTMediaComment();
+				$attr = $_POST;
+				if ( ! isset( $attr[ 'comment_post_ID' ] ) )
+					$attr[ 'comment_post_ID' ] = $rtmedia_query->action_query->id;
+				$id = $comment->add( $attr );
 
-						$mediaModel = new RTMediaModel();
-						$result=$mediaModel->get(array('id'=>$rtmedia_query->action_query->id));
+				$mediaModel = new RTMediaModel();
+				$result = $mediaModel->get( array( 'id' => $rtmedia_query->action_query->id ) );
 
-						if($result[0]->activity_id!=NULL) {
-							global $rtmedia_buddypress_activity;
-							remove_action("bp_activity_comment_posted", array($rtmedia_buddypress_activity,"comment_sync"),10,2);
-							if(function_exists('bp_activity_new_comment')) {
-								bp_activity_new_comment(array('content'=> $_POST['comment_content'], 'activity_id'=> $result[0]->activity_id));
-							}
-						}
-                                                if(isset($_POST["rtajax"])){
-                                                    global $wpdb;
-                                                    $comments = $wpdb->get_row($wpdb->prepare("SELECT * FROM $wpdb->comments WHERE comment_ID = %d",$id), ARRAY_A);
-                                                    echo rmedia_single_comment($comments);
-                                                    exit;
-                                                }
-					}
-					else {
-						echo "Ooops !!! Invalid access. No nonce was found !!";
+				if ( $result[ 0 ]->activity_id != NULL ) {
+					global $rtmedia_buddypress_activity;
+					remove_action( "bp_activity_comment_posted", array( $rtmedia_buddypress_activity, "comment_sync" ), 10, 2 );
+					if ( function_exists( 'bp_activity_new_comment' ) ) {
+						bp_activity_new_comment( array( 'content' => $_POST[ 'comment_content' ], 'activity_id' => $result[ 0 ]->activity_id ) );
 					}
 				}
-
+				if ( isset( $_POST[ "rtajax" ] ) ) {
+					global $wpdb;
+					$comments = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM $wpdb->comments WHERE comment_ID = %d", $id ), ARRAY_A );
+					echo rmedia_single_comment( $comments );
+					exit;
+				}
+			} else {
+				echo "Ooops !!! Invalid access. No nonce was found !!";
+			}
+		}
 	}
 
 	/**
@@ -418,7 +410,6 @@ class RTMediaTemplate {
 		global $rtmedia_query;
 
 		$rtmedia_query->query( $attr );
-
 	}
 
 	/**
@@ -428,7 +419,7 @@ class RTMediaTemplate {
 	 */
 	function get_default_template() {
 
-		return apply_filters( 'rtmedia_media_template_include', RTMEDIA_PATH . 'app/main/controllers/template/template.php' );
+		return apply_filters( 'rtmedia_media_template_include', self::locate_template('main','') );
 	}
 
 	/**
@@ -437,18 +428,46 @@ class RTMediaTemplate {
 	 * @param type $template
 	 * @return string
 	 */
-	static function locate_template( $template, $context = false ) {
+	static function locate_template( $template=false, $context = false ) {
 		$located = '';
-		if ( ! $template )
-			return;
+		if ( ! $template ) {
+			global $rtmedia_query;
+
+			if ( is_rtmedia_album_gallery() ) {
+				$template = 'album-gallery';
+			} elseif ( is_rtmedia_album() || is_rtmedia_gallery() ) {
+				$template = 'media-gallery';
+				if (
+						is_rtmedia_album() &&
+						isset( $rtmedia_query->media_query ) &&
+						$rtmedia_query->action_query->action == 'edit'
+				) {
+					if ( isset( $rtmedia_query->media_query[ 'media_author' ] ) && (get_current_user_id() == $rtmedia_query->media_query[ 'media_author' ]) ) {
+						$template = 'album-single-edit';
+					}
+				}
+			} else if ( is_rtmedia_single() ) {
+				$template = 'media-single';
+				if ( $rtmedia_query->action_query->action == 'edit' )
+					$template = 'media-single-edit';
+			}else{
+				return;
+			}
+		}
+
 
 		$template_name = $template . '.php';
 
-		if ( ! $context )
-			$context = 'rtmedia';
+		if ( $context===false ){
+			$context = 'media/';
+		}
+		if(!$context===''){
+			$context .='/';
+		}
 
-		$path = '/' . $context . '/';
-		$ogpath = 'templates/media/';
+
+		$path = 'rtmedia/' . $context ;
+		$ogpath = 'templates/' . $context ;
 
 
 		if ( file_exists( STYLESHEETPATH . $path . $template_name ) ) {
