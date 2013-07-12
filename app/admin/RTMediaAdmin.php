@@ -17,6 +17,7 @@ if (!class_exists('RTMediaAdmin')) {
         public $rtmedia_feed;
 
         public function __construct() {
+            global $rtmedia;
             add_action('init', array($this, 'video_transcoding_survey_response'));
             if (is_multisite()) {
                 add_action('network_admin_notices', array($this, 'upload_filetypes_error'));
@@ -39,17 +40,18 @@ if (!class_exists('RTMediaAdmin')) {
             add_action('wp_ajax_rtmedia_convert_videos_form', array($this, 'convert_videos_mailchimp_send'), 1);
             add_action('wp_ajax_rtmedia_correct_upload_filetypes', array($this, 'correct_upload_filetypes'), 1);
             add_filter('plugin_row_meta', array($this, 'plugin_meta_premium_addon_link'), 1, 4);
+            
+            if (isset($_POST["rtmedia-options"])) {
+                if (isset($_POST["rtmedia-options"]["general_showAdminMenu"]) && $_POST["rtmedia-options"]["general_showAdminMenu"] == "1")
+                    add_action('admin_bar_menu', array($this, 'admin_bar_menu'), 100, 1);
+            }else if (intval($rtmedia->options["general_showAdminMenu"]) == 1) {
+                add_action('admin_bar_menu', array($this, 'admin_bar_menu'), 100, 1);
+            }
+            
             if (is_admin()) {
                 add_action('admin_enqueue_scripts', array($this, 'ui'));
                 //bp_core_admin_hook();
                 add_action('admin_menu', array($this, 'menu'), 1);
-                global $rtmedia;
-                if (isset($_POST["rtmedia-options"])) {
-                    if (isset($_POST["rtmedia-options"]["general_showAdminMenu"]) && $_POST["rtmedia-options"]["general_showAdminMenu"] == "1")
-                        add_action('admin_bar_menu', array($this, 'admin_bar_menu'), 100, 1);
-                }else if (intval($rtmedia->options["general_showAdminMenu"]) == 1) {
-                    add_action('admin_bar_menu', array($this, 'admin_bar_menu'), 100, 1);
-                }
 
                 if (current_user_can('manage_options'))
                     add_action('bp_admin_tabs', array($this, 'tab'));
@@ -87,6 +89,26 @@ if (!class_exists('RTMediaAdmin')) {
                 'href' => admin_url('admin.php?page=rtmedia-settings'),
                 'meta' => array(
                     'title' => __('Settings'),
+                    'target' => '_self',
+                ),
+            ));
+            $admin_bar->add_menu(array(
+                'id' => 'rt-media-addons',
+                'parent' => 'rtMedia',
+                'title' => __('Addons', "rtmedia"),
+                'href' => admin_url('admin.php?page=rtmedia-addons'),
+                'meta' => array(
+                    'title' => __('Addons'),
+                    'target' => '_self',
+                ),
+            ));
+            $admin_bar->add_menu(array(
+                'id' => 'rt-media-support',
+                'parent' => 'rtMedia',
+                'title' => __('Support', "rtmedia"),
+                'href' => admin_url('admin.php?page=rtmedia-support'),
+                'meta' => array(
+                    'title' => __('Support'),
                     'target' => '_self',
                 ),
             ));
