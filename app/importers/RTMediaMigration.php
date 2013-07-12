@@ -35,7 +35,8 @@ class RTMediaMigration {
     }
 
     function add_migration_notice() {
-        $this->create_notice("<p><strong>rtMedia</strong> : Please Migrate your Database <a href='" . admin_url("admin.php?page=rtmedia-migration&force=true") . "'>Click Here</a>.  </p>");
+        if (current_user_can( 'manage_options' ) )
+            $this->create_notice("<p><strong>rtMedia</strong> : Please Migrate your Database <a href='" . admin_url("admin.php?page=rtmedia-migration&force=true") . "'>Click Here</a>.  </p>");
     }
 
     function create_notice($message, $type = "error") {
