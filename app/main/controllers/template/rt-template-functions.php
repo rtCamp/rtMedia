@@ -476,6 +476,9 @@ function rtmedia_pagination_next_link() {
         $link .= $site_url . $post->post_name . '/';
     }
     $link .= 'media/';
+    if(isset($rtmedia_query->media_query["album_id"]) && intval($rtmedia_query->media_query["album_id"]) > 0){
+        $link .= $rtmedia_query->media_query["album_id"] . "/";
+    }
     if (isset($rtmedia_query->action_query->media_type)) {
         if (in_array($rtmedia_query->action_query->media_type, array("photo", "music", "video", "album")))
             $link .= $rtmedia_query->action_query->media_type . '/';

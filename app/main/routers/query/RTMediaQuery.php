@@ -256,10 +256,14 @@ class RTMediaQuery {
 				case 'id':
 
 					// /media/23/edit/ | media/23/delete/ | /media/23/like/
-					if ( array_key_exists( $second_modifier, $this->actions ) ) {
+                                            if ( array_key_exists( $second_modifier, $this->actions ) ) {
 
 						$action = $second_modifier;
-					}
+                                        }else if($second_modifier == "pg"){
+                                            if(isset($raw_query[ 2 ]) && is_numeric($raw_query[ 2 ])){
+                                                $pageno = $raw_query[ 2 ];
+                                            }
+                                        }
 					break;
 
 				case 'pg':
