@@ -309,7 +309,8 @@ jQuery(function($) {
             try {
                 var rtnObj;
                 rtnObj = JSON.parse(res.response);
-                activity_id = rtnObj.activity_id;
+                uploaderObj.uploader.settings.multipart_params.activity_id = rtnObj.activity_id;
+                activity_id= rtnObj.activity_id;
             } catch (e) {
                 console.log('Invalid Activity ID');
             }

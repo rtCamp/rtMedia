@@ -27,7 +27,7 @@ class RTMediaUploadEndpoint {
             $nonce = $_REQUEST['rtmedia_upload_nonce'];
             $mode = $_REQUEST['mode'];
             $rtupload =false;
-			$activity_id = -1;
+            $activity_id = -1;
             if (wp_verify_nonce($nonce, 'rtmedia_upload_nonce')) {
                 $model = new RTMediaUploadModel();
                 $this->upload = $model->set_post_object();
@@ -38,10 +38,23 @@ class RTMediaUploadEndpoint {
                 $rtupload = new RTMediaUpload($this->upload);
 				$mediaObj = new RTMediaMedia();
 				$media = $mediaObj->model->get(array('id'=>$rtupload->media_ids[0]));
-				if($activity_id==-1) {
+				if($activity_id==-1 && (!(isset($_POST["rtmedia_update"]) && $_POST["rtmedia_update"]=="true"))) {
 					$activity_id = $mediaObj->insert_activity($rtupload->media_ids[0], $media[0]);
 				} else {
 					$mediaObj->model->update(array( 'activity_id' => $activity_id ), array( 'id' => $rtupload->media_ids[0] ));
+                                        $same_medias  = $mediaObj->model->get(array('activity_id'=>$activity_id));
+                                        
+                                        $update_activity_media = Array();
+                                        foreach($same_medias as $a_media){
+                                            $update_activity_media[] = $a_media->id;
+                                        }
+                                        $privacy = 0;
+                                        if(isset($_POST["privacy"])){
+                                            $privacy = $_POST["privacy"];
+                                        }
+                                        $objActivity = new RTMediaActivity($update_activity_media, $privacy, false);
+                                        global $wpdb, $bp;
+                                        $wpdb->update($bp->activity->table_name, array("type" => "rtmedia_update", "content" => $objActivity->create_activity_html()), array("id" => $activity_id));
 				}
             }
             if(isset($_POST["redirect"]) && $_POST["redirect"]=="no" ){
