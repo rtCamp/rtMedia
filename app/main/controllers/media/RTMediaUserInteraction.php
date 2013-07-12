@@ -78,7 +78,7 @@ class RTMediaUserInteraction {
 
 		$this->init();
 
-
+                
 
 		// filter the default actions with this new one
 		add_filter( 'rtmedia_query_actions', array( $this, 'register' ) );
@@ -89,11 +89,11 @@ class RTMediaUserInteraction {
 
 
 	function init(){
-		global $rtmedia_query;
+                $this->model = new RTMediaModel();	
+                global $rtmedia_query;
 		if(!isset($rtmedia_query->action_query)) return;
 		if(!isset($rtmedia_query->action_query->id)) return;
-
-		$this->model = new RTMediaModel();
+		
 		$this->set_label();
 		$this->set_plural();
 		$this->set_media();
