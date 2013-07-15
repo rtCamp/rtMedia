@@ -160,6 +160,13 @@ Please visit [rtMedia's Features page](http://rtcamp.com/buddypress-media/?utm_s
 
 Please visit [rtMedia's Roadmap page](http://rtcamp.com/buddypress-media/roadmap/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "Visit rtMedia's Features page") to get some details about future releases.
 
+#### 3.0.3 ####
+* Improved template system
+* Fixed bug with audio/video uploads
+* Fixed bug with featured media
+* Fixed activity duplication issue
+* Other minor bug fixes
+
 #### 3.0.2 ####
 * Legacy code added for Addon Updates
 * Added album enable /disable option
@@ -467,8 +474,8 @@ Please visit [rtMedia's Roadmap page](http://rtcamp.com/buddypress-media/roadmap
 * HTML5 Audio Tag Support (with fallback)
 * HTML5 Video Tag Support (with fallback)
 
-#### 3.0.2 ####
-Legacy code added for Addon Updates. Added album enable /disable option. Resolved other minor issues
+#### 3.0.3 ####
+Fixed bugs. Improved template system.
 
 ## Sponsors ##
 
