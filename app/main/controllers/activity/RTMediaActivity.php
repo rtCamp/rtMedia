@@ -98,7 +98,7 @@ class RTMediaActivity {
                         if ( $media->media_type == 'photo' ) {
 				$thumbnail_id = $media->media_id;
                                 if ( $thumbnail_id ) {
-                                    list($src, $width, $height) = wp_get_attachment_image_src($thumbnail_id);
+                                    list($src, $width, $height) = wp_get_attachment_image_src($thumbnail_id, "rt_media_activity_image");
                                     $html = '<img src="'.$src.'" />';
                                 }
 			} elseif ( $media->media_type == 'video' )  {

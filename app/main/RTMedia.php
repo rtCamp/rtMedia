@@ -131,9 +131,25 @@ class RTMedia {
 			/* if new options added via filter then it needs to be updated */
 			$this->options = $rtmedia_options;
 		}
+                $this->add_image_sizes();
 	}
 
-	/**
+        public function add_image_sizes() {
+            add_image_size(
+                    'rt_media_thumbnail', $this->options["defaultSizes_photo_thumbnail_width"], $this->options["defaultSizes_photo_thumbnail_height"], ($this->options["defaultSizes_photo_thumbnail_crop"]=="0")?false:true
+            );
+            add_image_size(
+                    'rt_media_activity_image', $this->options["defaultSizes_photo_medium_width"], $this->options["defaultSizes_photo_medium_height"], ($this->options["defaultSizes_photo_medium_crop"]=="0")?false:true
+            );
+            add_image_size(
+                    'rt_media_single_image', $this->options["defaultSizes_photo_large_width"], $this->options["defaultSizes_photo_large_height"], ($this->options["defaultSizes_photo_large_crop"]=="0")?false:true
+            );
+            add_image_size(
+                    'rt_media_featured_image', $this->options["defaultSizes_featured_default_width"], $this->options["defaultSizes_featured_default_height"], ($this->options["defaultSizes_featured_default_crop"]=="0")?false:true
+            );
+        }
+
+    /**
 	 *  Default allowed media types array
 	 */
 	function set_allowed_types() {

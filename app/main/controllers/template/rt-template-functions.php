@@ -125,16 +125,16 @@ function rtmedia_permalink() {
     }
 }
 
-function rtmedia_media($size_flag, $echo = true) {
+function rtmedia_media($size_flag = true, $echo = true,$media_size = "rt_media_single_image") {
     $size_flag = true;
     global $rtmedia_media, $rtmedia;
     if (isset($rtmedia_media->media_type)) {
         if ($rtmedia_media->media_type == 'photo') {
-            $html = wp_get_attachment_image($rtmedia_media->media_id, 'large');
+            $html = wp_get_attachment_image($rtmedia_media->media_id, $media_size);
         } elseif ($rtmedia_media->media_type == 'video') {
             $size = " width=\"" . $rtmedia->options["defaultSizes_video_singlePlayer_width"] . "\" height=\"" . $rtmedia->options["defaultSizes_video_singlePlayer_height"] . "\" ";
 
-            $html = '<video src="' . wp_get_attachment_url($rtmedia_media->media_id) . '" ' . $size . ' type="video/mp4" class="wp-video-shortcode" id="bp_media_video_' . $rtmedia_media->id . '" controls="controls" preload="none"></video>';
+            $html = '<div class="flex-video"><video src="' . wp_get_attachment_url($rtmedia_media->media_id) . '" ' . $size . ' type="video/mp4" class="wp-video-shortcode" id="bp_media_video_' . $rtmedia_media->id . '" controls="controls" preload="none"></video></div>';
         } elseif ($rtmedia_media->media_type == 'music') {
             $size = ' width="600" height="0" ';
             if (!$size_flag)

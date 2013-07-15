@@ -33,6 +33,15 @@ class RTMediaMigration {
                 add_action('admin_notices', array(&$this, 'add_migration_notice'));
         }
     }
+    
+    function migrate_image_size_fix(){
+        if(get_site_option("rt_image_size_migration_fix","") == ""){
+            global $wpdb;
+            $sql = $wpdb->prepare("update $wpdb->postmeta set meta_value=replace(meta_value	,%s,%s) where meta_key = '_wp_attachment_metadata';","bp_media","rt_media");
+            $wpdb->get_row($sql);
+            update_option("rt_image_size_migration_fix", "fix");
+        }
+    }
 
     function add_migration_notice() {
         if (current_user_can( 'manage_options' ) )

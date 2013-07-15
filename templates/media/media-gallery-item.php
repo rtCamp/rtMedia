@@ -35,7 +35,7 @@ if ( isset( $_POST[ 'is_edit_allowed' ] ) )
 	<a href ="<?php rtmedia_permalink(); ?>">
 		<div class="rtmedia-item-thumbnail">
 
-            <img src="<?php rtmedia_image(); ?>" >
+            <img src="<?php rtmedia_image("rt_media_thumbnail"); ?>" >
 
 		</div>
 

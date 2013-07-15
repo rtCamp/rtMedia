@@ -7,7 +7,7 @@
                 <?php rtmedia_title(); ?>
 
 
-                <div class="rtmedia-media flex-video" id ="rtmedia-media-<?php echo rtmedia_id(); ?>">
+                <div class="rtmedia-media" id ="rtmedia-media-<?php echo rtmedia_id(); ?>">
                     <?php rtmedia_media(true); ?>
                 </div>
 
