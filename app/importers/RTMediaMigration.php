@@ -19,7 +19,8 @@ class RTMediaMigration {
             $pending = false;
         else
             $pending = get_site_option("rtMigration-pending-count");
-        
+        $total = $this->get_total_count();
+            $done = $this->get_done_count();
         if ($pending === false) {
             $total = $this->get_total_count();
             $done = $this->get_done_count();
@@ -197,10 +198,15 @@ class RTMediaMigration {
                 $album_count = 0;
             }
         }
-
-        $comment_sql = $wpdb->get_var("select count(*) from $wpdb->comments a  where a.comment_post_ID in (select b.media_id from $this->bmp_table b  left join
+        if (intval($_SESSION["migration_media"]) == intval($media_count)) {
+            $comment_sql = $_SESSION["migration_activity"];
+        } else {
+            $comment_sql = $wpdb->get_var("select count(*) 
+                                                from $wpdb->comments a  
+                                                 where a.comment_post_ID in (select b.media_id from $this->bmp_table b  left join
                                                                                             {$wpdb->posts} p ON (b.media_id = p.ID) where  (NOT p.ID IS NULL) ) and a.comment_agent=''");
-      // echo $media_count . "--" . $album_count . "--" . $comment_sql;
+        }
+        // echo $media_count . "--" . $album_count . "--" . $comment_sql;
         return $media_count + $album_count + $comment_sql;
     }
 

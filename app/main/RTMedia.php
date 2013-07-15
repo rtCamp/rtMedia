@@ -115,9 +115,6 @@ class RTMedia {
 
 		/* Includes db specific wrapper functions required to render the template */
 		include(RTMEDIA_PATH . 'app/main/controllers/template/rt-template-functions.php');
-
-
-
 	}
 
 	function set_site_options() {
