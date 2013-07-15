@@ -36,6 +36,10 @@ class RTMediaPrivacy {
         
         if (intval($rtmedia->options["privacy_enabled"]) === 0)
             return false;
+        
+        if (intval($rtmedia->options["privacy_userOverride"]) === 0)
+            return false;
+        
         global $rtmedia_media;
         $default = 0;
         if (isset($rtmedia_media->privacy))
