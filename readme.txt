@@ -6,7 +6,7 @@ License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires at least: WordPress 3.5
 Tested up to: WordPress 3.5.2 + BuddyPress 1.7
-Stable tag: 3.0.3
+Stable tag: 3.0.4
 
 rtMedia adds albums, audio/video encoding, privacy/sharing, front-end uploads & more. All this works nicely on mobile/tablets devices.
 
@@ -159,6 +159,15 @@ Please visit [rtMedia's Features page](http://rtcamp.com/buddypress-media/?utm_s
 == Changelog ==
 
 Please visit [rtMedia's Roadmap page](http://rtcamp.com/buddypress-media/roadmap/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "Visit rtMedia's Features page") to get some details about future releases.
+
+= 3.0.4 =
+* Handle delete media and activity
+* Add like button count
+* Hide buddypress tab if not active
+* Fixed https problem in plugin update
+* Fixed image size issue
+* Fixed privacy issue
+* Other minor bug fixes
 
 = 3.0.3 =
 * Improved template system
@@ -476,8 +485,8 @@ Please visit [rtMedia's Roadmap page](http://rtcamp.com/buddypress-media/roadmap
 
 == Upgrade Notice ==
 
-= 3.0.3 =
-Fixed bugs. Improved template system.
+= 3.0.4 =
+Handle delete media and activity,Add like button count,Fixed image size issue privacy issue Other minor bug fixes
 
 == Sponsors ==
 
