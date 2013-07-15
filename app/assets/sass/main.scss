@@ -209,7 +209,23 @@
 					&>form{
 						float:left;
 						margin-right: 5px;
-					}    
+					}
+					.rtmedia-action-buttons{
+						span{
+							background: #EEE;
+							@include border-radius(50%);
+							border: 1px solid #CCC;
+							color: #999;
+							display: inline;
+							font-size: 70%;
+							margin-left: 2px;
+							margin-right: 2px;
+							padding: 3px 6px;
+							text-align: center;
+							vertical-align: middle;
+
+						}
+					}
 				}
 			}
 			.rtmedia-item-comments{
@@ -264,3 +280,6 @@
 		background-color:black;
 	}
 }
+
+
+
