@@ -441,14 +441,15 @@ if (!class_exists('RTMediaAdmin')) {
                 'name' => __('Privacy', 'rtmedia'),
                 'callback' => array('RTMediaFormHandler', 'privacy_content')
             );
-
-            $tabs[] = array(
-                'href' => '#rtmedia-bp',
-                'icon' => 'icon-group',
-                'title' => __('rtMedia BuddyPress', 'rtmedia'),
-                'name' => __('BuddyPress', 'rtmedia'),
-                'callback' => array('RTMediaFormHandler', 'buddypress_content') //change it to BuddyPress Content
-            );
+            if(class_exists("BuddyPress")){
+                $tabs[] = array(
+                    'href' => '#rtmedia-bp',
+                    'icon' => 'icon-group',
+                    'title' => __('rtMedia BuddyPress', 'rtmedia'),
+                    'name' => __('BuddyPress', 'rtmedia'),
+                    'callback' => array('RTMediaFormHandler', 'buddypress_content') //change it to BuddyPress Content
+                );
+            }
 
             $tabs = apply_filters('rtmedia_add_settings_sub_tabs', $tabs, $tab);
             $tabs_html .= '<ul>';
