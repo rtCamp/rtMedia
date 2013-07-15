@@ -52,10 +52,10 @@ class RTMediaLike extends RTMediaUserInteraction {
                 $actions = intval($actions[ 0 ]->{$actionwa});
 		if ( $this->increase === true ) {
 			$actions ++;
-                        $return["next"] = $this->undo_label;
+                        $return["next"] = "<span>" .$actions ."</span>" . $this->undo_label;
 		} else {
 			$actions --;
-                        $return["next"] = $this->label;
+                        $return["next"] = "<span>" .$actions ."</span>" .  $this->label;
 		}
                 if($actions <0)
                     $actions = 0;
@@ -86,8 +86,15 @@ class RTMediaLike extends RTMediaUserInteraction {
         }
         function before_render(){
             if($this->is_liked()){
-                $this->label =$this->undo_label;
+                $this->label =  $this->undo_label;
             }
+            $actions = $this->model->get( array( 'id' => $this->action_query->id ) );
+            if(isset($actions[ 0 ]->likes)){
+                $actions = intval($actions[ 0 ]->likes);
+            }else{
+                $actions = 0;
+            }
+            $this->label =  "<span>" .$actions ."</span>" . $this->label;
         }
 
 }
