@@ -238,11 +238,25 @@ class RTMediaMedia {
 
         if ($media) {
             /* delete meta */
-            delete_rtmedia_meta($id);
-            if ($media[0]->activity_id && function_exists('bp_activity_delete_by_activity_id'))
-                bp_activity_delete_by_activity_id ($media[0]->activity_id);
+            //delete_rtmedia_meta($id);
+            if ($media[0]->activity_id && function_exists('bp_activity_delete_by_activity_id')){
+                $related_media = $this->model->get(array('activity_id' => $media[0]->activity_id), false, false);
+                if(count($related_media) > 1 ){
+                    $activity_media = array();
+                    foreach($related_media as $temp_media){
+                        if($temp_media->id == $id)
+                            continue;
+                        $activity_media[]  = $temp_media->id;
+                    }
+                    $objActivity = new RTMediaActivity($activity_media);
+                    global $wpdb, $bp;
+                    $wpdb->update($bp->activity->table_name, array("type" => "rtmedia_update", "content" => $objActivity->create_activity_html()), array("id" => $media[0]->activity_id));
+                }else{
+                    bp_activity_delete_by_activity_id ($media[0]->activity_id);
+                }
+            }
             if(!$core)
-                wp_delete_post($media[0]->media_id, true);
+                wp_delete_attachment($media[0]->media_id, true);
             $status = $this->model->delete(array('id' => $id));
         }
 
