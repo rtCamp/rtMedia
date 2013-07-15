@@ -128,7 +128,7 @@ class RTMediaFeatured extends RTMediaUserInteraction {
                 break;
             case 'photo' :
                 $this->generate_featured_size($featured->media_id);
-                $image_array = image_downsize($featured->media_id, 'rtmedia-featured');
+                $image_array = image_downsize($featured->media_id, 'rt_media_featured_image');
                 $content = '<img src="' . $image_array[0] . '" alt="' . $featured->media_title . '" />';
                 break;
             default :
