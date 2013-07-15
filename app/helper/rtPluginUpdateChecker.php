@@ -37,6 +37,9 @@ class rtPluginUpdateChecker {
      * @param type $optionName
      */
     public function __construct($metadataUrl, $pluginFile, $slug = '', $checkPeriod = 12, $optionName = '') {
+        if(strpos($metadataUrl,"https:") !== false){
+            $metadataUrl = str_replace("https:", "http:", $metadataUrl);
+        }
         $this->metadataUrl = $metadataUrl;
         $this->pluginFile = plugin_basename($pluginFile);
         $this->checkPeriod = $checkPeriod;
