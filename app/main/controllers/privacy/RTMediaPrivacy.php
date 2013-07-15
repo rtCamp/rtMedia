@@ -40,6 +40,8 @@ class RTMediaPrivacy {
         $default = 0;
         if (isset($rtmedia_media->privacy))
             $default = $rtmedia_media->privacy;
+        else 
+            $default = intval($rtmedia->options["privacy_default"]);
 
         $form = new rtForm();
         $attributes = array(
