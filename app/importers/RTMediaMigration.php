@@ -582,7 +582,7 @@ class RTMediaMigration {
             $prefix = "users/" . abs(intval($result->context_id));
         } else {
             $media_context = "group";
-            $prefix = "groups/" . abs(intval($result->context_id));
+            $prefix = bp_get_groups_root_slug() . abs(intval($result->context_id));
         }
 
 

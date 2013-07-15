@@ -719,9 +719,8 @@ function rtmedia_update_site_option( $option_name, $option_value ) {
 }
 
 function get_rtmedia_group_link( $group_id ){
-	global $bp;
 	$group = groups_get_group( array( 'group_id' => $group_id ) );
-	return home_url( $bp->groups->slug . '/' . $group -> slug );
+	return home_url( bp_get_groups_root_slug()  . '/' . $group -> slug );
 }
 
 function rtmedia_get_site_option( $option_name, $default = false ) {

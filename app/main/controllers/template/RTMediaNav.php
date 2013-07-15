@@ -50,12 +50,12 @@ class RTMediaNav {
 			'default_subnav_slug' => 'all'
 		) );
                         }
-
+                        
 		if ( bp_is_group() && $rtmedia->options["buddypress_enableOnGroup"]!==0 ) {
 			global $bp;
 			$bp->bp_options_nav[ bp_get_current_group_slug() ][ 'media' ] = array(
 				'name' => RTMEDIA_MEDIA_LABEL,//. '<span>'.$counts['total']['all'].'</span>',
-				'link' => ( (is_multisite()) ? get_site_url( get_current_blog_id() ) : get_site_url() ) . '/groups/' . bp_get_current_group_slug() . '/media',
+				'link' => ( (is_multisite()) ? get_site_url( get_current_blog_id() ) : get_site_url() ) . '/' . bp_get_groups_root_slug() . '/' . bp_get_current_group_slug() . '/media',
 				'slug' => RTMEDIA_MEDIA_SLUG,
 				'user_has_access' => true,
 				'css_id' => 'rtmedia-media-nav',

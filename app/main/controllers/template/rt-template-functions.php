@@ -437,7 +437,7 @@ function rtmedia_pagination_prev_link() {
             $link = $site_url . 'author/' . $author_name . '/';
     } else if ($rtmedia_interaction->context->type == 'group') {
         if (function_exists("bp_get_current_group_slug"))
-            $link .= $site_url . 'groups/' . bp_get_current_group_slug() . '/';
+            $link .= $site_url . bp_get_groups_root_slug (). '/' . bp_get_current_group_slug() . '/';
     } else {
         $post = get_post($rtmedia_media->post_parent);
 
@@ -469,7 +469,7 @@ function rtmedia_pagination_next_link() {
             $link .= $site_url . 'author/' . $author_name . '/';
     } else if ($rtmedia_interaction->context->type == 'group') {
         if (function_exists("bp_get_current_group_slug"))
-            $link .= $site_url . 'groups/' . bp_get_current_group_slug() . '/';
+            $link .= $site_url . bp_get_groups_root_slug() . '/' . bp_get_current_group_slug() . '/';
     } else {
         $post = get_post($rtmedia_media->post_parent);
 
