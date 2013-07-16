@@ -399,7 +399,7 @@ function rtmedia_comments() {
 
     global $wpdb, $rtmedia_media;
 
-    $comments = $wpdb->get_results("SELECT * FROM $wpdb->comments WHERE comment_post_ID = '" . $rtmedia_media->id . "'", ARRAY_A);
+    $comments = $wpdb->get_results("SELECT * FROM $wpdb->comments WHERE comment_post_ID = '" . $rtmedia_media->media_id . "'", ARRAY_A);
 
     foreach ($comments as $comment) {
         $html .= rmedia_single_comment($comment);
