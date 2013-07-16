@@ -11,10 +11,11 @@ class RTMediaUploadFile {
     var $files;
     var $fake = false;
     var $uploaded = false;
-    
+
     function __construct($uploaded) {
         $this->uploaded = $uploaded;
     }
+
     /**
      * Initialize the upload process
      *
@@ -37,7 +38,7 @@ class RTMediaUploadFile {
         include_once(ABSPATH . 'wp-admin/includes/image.php');
 
         $upload_type = $this->fake ? 'wp_handle_sideload' : 'wp_handle_upload';
-        
+
         add_filter('upload_dir', array($this, 'upload_dir'));
         foreach ($this->files as $key => $file) {
 
@@ -65,7 +66,7 @@ class RTMediaUploadFile {
 
     function upload_dir($upload_dir) {
         global $rtmedia_interaction;
-        if(isset($this->uploaded["context"]) && isset($this->uploaded["context_id"])){
+        if (isset($this->uploaded["context"]) && isset($this->uploaded["context_id"])) {
             if ($this->uploaded["context"] != 'group') {
                 $rtmedia_upload_prefix = 'users/';
                 $id = get_current_user_id();
@@ -73,7 +74,7 @@ class RTMediaUploadFile {
                 $rtmedia_upload_prefix = 'groups/';
                 $id = $this->uploaded["context_id"];
             }
-        }else{
+        } else {
             if ($rtmedia_interaction->context->type != 'group') {
                 $rtmedia_upload_prefix = 'users/';
                 $id = get_current_user_id();
@@ -85,11 +86,11 @@ class RTMediaUploadFile {
 
 
         $upload_dir['path'] = trailingslashit(
-                str_replace($upload_dir['subdir'], '', $upload_dir['path']))
+                        str_replace($upload_dir['subdir'], '', $upload_dir['path']))
                 . 'rtMedia/' . $rtmedia_upload_prefix . $id .
                 $upload_dir['subdir'];
         $upload_dir['url'] = trailingslashit(
-                str_replace($upload_dir['subdir'], '', $upload_dir['url']))
+                        str_replace($upload_dir['subdir'], '', $upload_dir['url']))
                 . 'rtMedia/' . $rtmedia_upload_prefix . $id
                 . $upload_dir['subdir'];
 
@@ -121,13 +122,13 @@ class RTMediaUploadFile {
      * @param type $file_array
      */
     function populate_file_array($file_array) {
-            $this->files[] = array(
-                'name' => isset($file_array['name']) ? $file_array['name'] : '',
-                'type' => isset($file_array['type']) ? $file_array['type']: '',
-                'tmp_name' => isset($file_array['tmp_name']) ? $file_array['tmp_name'] : '',
-                'error' => isset($file_array['error']) ? $file_array['error']: '',
-                'size' => isset($file_array['size']) ? $file_array['size']: 0,
-            );
+        $this->files[] = array(
+            'name' => isset($file_array['name']) ? $file_array['name'] : '',
+            'type' => isset($file_array['type']) ? $file_array['type'] : '',
+            'tmp_name' => isset($file_array['tmp_name']) ? $file_array['tmp_name'] : '',
+            'error' => isset($file_array['error']) ? $file_array['error'] : '',
+            'size' => isset($file_array['size']) ? $file_array['size'] : 0,
+        );
     }
 
     /**
@@ -141,12 +142,14 @@ class RTMediaUploadFile {
         try {
             global $rtmedia;
             $allowed_types = array();
-            $rtmedia->allowed_types = apply_filters('rtmedia_allowed_types',$rtmedia->allowed_types);
+            $rtmedia->allowed_types = apply_filters('rtmedia_allowed_types', $rtmedia->allowed_types);
             foreach ($rtmedia->allowed_types as $type) {
-				foreach ($type['extn'] as $extn) {
-					$allowed_types[] = $extn;
-				}
+                foreach ($type['extn'] as $extn) {
+                    $allowed_types[] = $extn;
+                }
             }
+            $allowed_types = apply_filters('rtmedia_plupload_files_filter', array(array('title' => "Media Files", 'extensions' => implode(",", $allowed_types))));
+            $allowed_types = explode(",", $allowed_types[0]["extensions"]);
             if (!preg_match('/' . implode('|', $allowed_types) . '/i', $file['type'], $result) || !isset($result[0])) {
                 throw new RTMediaUploadException(UPLOAD_ERR_EXTENSION);
             }
@@ -165,14 +168,14 @@ class RTMediaUploadFile {
         $temp_array = $this->files;
         $this->files = null;
         foreach ($temp_array as $key => $file) {
-            if (apply_filters('rtmedia_valid_type_check',$this->is_valid_type($file),$file)) {
+            if (apply_filters('rtmedia_valid_type_check', $this->is_valid_type($file), $file)) {
                 $this->files[] = $file;
             }
         }
     }
 
     function id3_validate_type($file) {
-        $file_type = explode('/',$file['type']);
+        $file_type = explode('/', $file['type']);
         $type = $file_type[0];
         switch ($type) {
             case 'video' :
