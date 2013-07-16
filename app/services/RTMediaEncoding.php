@@ -357,7 +357,7 @@ class RTMediaEncoding {
                     $this->uploaded["context"] = $media[0]->context;
                     $this->uploaded["context_id"] = $media[0]->context_id;
                     $this->uploaded["media_author"] = $media[0]->media_author;
-                    
+                    $attachemnt_post = get_post($attachment_id);
                     $download_url = urldecode($_GET['download_url']);
                     $new_wp_attached_file_pathinfo = pathinfo($download_url);
                     $post_mime_type = $new_wp_attached_file_pathinfo['extension'] == 'mp4' ? 'video/mp4' : 'audio/mp3';
@@ -379,10 +379,10 @@ class RTMediaEncoding {
 //                        $wpdb->update($wpdb->prefix . 'bp_activity', array('content' => $activity_content), array('id' => $media[0]->activity_id));
                         // Check if uplaod is through activity upload
                         
-                        $activity_id = rtmedia_activity_id($id);
+                        $activity_id =$media[0]->activity_id;
                         if ($activity_id) {
                             $content = $wpdb->get_var("SELECT content FROM {$wpdb->prefix}bp_activity WHERE id = $activity_id");
-                            $activity_content = str_replace($old_wp_attached_file_pathinfo['basename'], $new_wp_attached_file_pathinfo['basename'], $content);
+                            $activity_content = str_replace($attachemnt_post->guid, $upload_info['url'], $content);
                             $wpdb->update($wpdb->prefix . 'bp_activity', array('content' => $activity_content), array('id' => $activity_id));
                         }
                     } else {
