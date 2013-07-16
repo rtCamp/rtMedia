@@ -115,6 +115,10 @@ class RTMedia {
 
 		/* Includes db specific wrapper functions required to render the template */
 		include(RTMEDIA_PATH . 'app/main/controllers/template/rt-template-functions.php');
+
+		add_filter('intermediate_image_sizes_advanced', array($this, 'filter_image_sizes_details'));
+        add_filter('intermediate_image_sizes', array($this, 'filter_image_sizes'));
+
 	}
 
 	function set_site_options() {
@@ -546,9 +550,9 @@ class RTMedia {
 				//'query'		=> false
 		);
 		global $rtmedia_nav;
-		
+
                 /** Legacy code for Add-ons **/
-                
+
                 $bp_class_construct = apply_filters('bpmedia_class_construct', array());
                 foreach ($bp_class_construct as $classname => $global_scope) {
                     $class = 'BPMedia' . ucfirst($classname);
@@ -562,7 +566,7 @@ class RTMedia {
                     }
                 }
                 /** ------------------- **/
-                
+
                 $class_construct = apply_filters( 'rtmedia_class_construct', $class_construct );
 
 		foreach ( $class_construct as $key => $global_scope ) {
@@ -585,7 +589,7 @@ class RTMedia {
 			}
 		}
 
-                
+
 		global $rtmedia_buddypress_activity;
 		$rtmedia_buddypress_activity = new RTMediaBuddyPressActivity();
 		$media = new RTMediaMedia();
@@ -594,11 +598,11 @@ class RTMedia {
 
 		global $rtmedia_ajax;
 		$rtmedia_ajax = new RTMediaAJAX();
-                
+
                 do_action( 'bp_media_init' ); // legacy For plugin using this actions
 		do_action( 'rtmedia_init' );
-                
-                
+
+
 	}
 
 	/**
@@ -660,7 +664,7 @@ class RTMedia {
                         }
                     }
                 }
-		
+
 	}
         function create_table_error_notice() {
             global $rtmedia_error;
@@ -691,6 +695,72 @@ class RTMedia {
 		}
 
 	}
+
+	function filter_image_sizes_details($sizes) {
+        if (isset($_REQUEST['post_id'])) {
+            $sizes = $this->unset_bp_media_image_sizes_details($sizes);
+        } elseif (isset($_REQUEST['id'])) { //For Regenerate Thumbnails Plugin
+            if ($parent_id = get_post_field('post_parent', $_REQUEST['id'])) {
+                $post_type = get_post_field('post_type', $parent_id);
+                if ($post_type == 'bp_media_album') {
+                    global $bp_media;
+                    $bp_media_sizes = $bp_media->media_sizes();
+                    $sizes = array(
+                        'bp_media_thumbnail' => $bp_media_sizes['image']['thumbnail'],
+                        'bp_media_activity_image' => $bp_media_sizes['image']['medium'],
+                        'bp_media_single_image' => $bp_media_sizes['image']['large']
+                    );
+                } else {
+                    $sizes = $this->unset_bp_media_image_sizes_details($sizes);
+                }
+            } else {
+                $sizes = $this->unset_bp_media_image_sizes_details($sizes);
+            }
+        }
+
+        return $sizes;
+    }
+
+    function filter_image_sizes($sizes) {
+        if (isset($_REQUEST['postid'])) { //For Regenerate Thumbnails Plugin
+            if ($parent_id = get_post_field('post_parent', $_REQUEST['postid'])) {
+                $post_type = get_post_field('post_type', $parent_id);
+                if ($post_type == 'bp_media_album') {
+                    $sizes = array(
+                        'bp_media_thumbnail', 'bp_media_activity_image', 'bp_media_single_image'
+                    );
+                } else {
+                    $sizes = $this->unset_bp_media_image_sizes($sizes);
+                }
+            } else {
+                $sizes = $this->unset_bp_media_image_sizes($sizes);
+            }
+        }
+
+        return $sizes;
+    }
+
+    function unset_bp_media_image_sizes_details($sizes) {
+        if (isset($sizes['bp_media_thumbnail']))
+            unset($sizes['bp_media_thumbnail']);
+        if (isset($sizes['bp_media_activity_image']))
+            unset($sizes['bp_media_activity_image']);
+        if (isset($sizes['bp_media_single_image']))
+            unset($sizes['bp_media_single_image']);
+        return $sizes;
+    }
+
+    function unset_bp_media_image_sizes($sizes) {
+        if (($key = array_search('bp_media_thumbnail', $sizes)) !== false)
+            unset($sizes[$key]);
+        if (($key = array_search('bp_media_activity_image', $sizes)) !== false)
+            unset($sizes[$key]);
+        if (($key = array_search('bp_media_single_image', $sizes)) !== false)
+            unset($sizes[$key]);
+        return $sizes;
+    }
+
+
 
 }
 

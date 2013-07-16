@@ -32,7 +32,7 @@ class RTMediaMedia {
     public function __construct() {
 
         $this->model = new RTMediaModel();
-    }
+	}
 
     /**
      * Generate nonce
@@ -198,7 +198,7 @@ class RTMediaMedia {
         }
 
         $status = $this->model->update($data, $where);
-        
+
         /* action to perform any task after updating a media */
         do_action('rtmedia_after_update_media', $id);
 
@@ -358,7 +358,7 @@ class RTMediaMedia {
         foreach ($attachments as $key => $attachment) {
             $attachment_id = wp_insert_attachment($attachment, $file_object[$key]['file'], $attachment['post_parent']);
             if (!is_wp_error($attachment_id)) {
-//                add_filter('intermediate_image_sizes', array($this, 'rtmedia_image_sizes'), 99);
+               add_filter('intermediate_image_sizes', array($this, 'image_sizes'), 99);
                 wp_update_attachment_metadata($attachment_id, wp_generate_attachment_metadata($attachment_id, $file_object[$key]['file']));
             } else {
                 unlink($file_object[$key]['file']);
@@ -376,7 +376,7 @@ class RTMediaMedia {
      * @return type
      */
     function image_sizes($sizes) {
-        return array('bp_media_thumbnail', 'bp_media_activity_image', 'bp_media_single_image');
+        return array('rt_media_thumbnail', 'rt_media_activity_image', 'rt_media_single_image');
     }
 
     /**
@@ -482,6 +482,7 @@ class RTMediaMedia {
 
         return $activity_id;
     }
+
 
 }
 
