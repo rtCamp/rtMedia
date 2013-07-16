@@ -156,12 +156,6 @@
 			#rtmedia-single-media-container{
 				padding-top: 10px;
 				padding-bottom: 10px;
-                                &.rtmedia-single-media.large-9{
-                                    @extend .large-12;
-                                }
-                                &.rtmedia-single-meta.large-3{
-                                    @extend .large-12;
-                                }
 				.rtmedia-media{
 					.mejs-overlay-button{
 						margin: -50px 0 0 -50px;

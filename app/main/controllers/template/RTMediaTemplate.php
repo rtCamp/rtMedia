@@ -266,7 +266,7 @@ class RTMediaTemplate {
 
 //                        do_action('rtmedia_after_delete_media',$rtmedia_query->media[ 0 ]->id);
 
-			wp_redirect( $parent_link );
+			wp_redirect( $_SERVER["HTTP_REFERER"] );
 		} else {
 			echo __( "Ooops !!! Invalid access. No nonce was found !!", "rtmedia" );
 		}
