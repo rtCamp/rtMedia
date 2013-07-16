@@ -52,7 +52,7 @@ class RTMediaTemplate {
 	 * @return type
 	 */
 	function set_template( $template, $shortcode_attr = false ) {
-
+            
 		global $rtmedia_query, $rtmedia_interaction, $rtmedia_media;
 
 		do_action( 'rtmedia_pre_template' );
@@ -469,16 +469,17 @@ class RTMediaTemplate {
 		$path = 'rtmedia/' . $context ;
 		$ogpath = 'templates/' . $context ;
 
-
-		if ( file_exists( STYLESHEETPATH . $path . $template_name ) ) {
-			$located = STYLESHEETPATH . $path . $template_name;
-		} else if ( file_exists( TEMPLATEPATH . $path . $template_name ) ) {
-			$located = TEMPLATEPATH . $path . $template_name;
+                
+                
+		if ( file_exists( trailingslashit(STYLESHEETPATH) . $path . $template_name ) ) {
+			$located = trailingslashit(STYLESHEETPATH) . $path . $template_name;        
+		} else if ( file_exists( trailingslashit(TEMPLATEPATH) . $path . $template_name ) ) {
+			$located = trailingslashit(TEMPLATEPATH) . $path . $template_name;
 		} else {
-			$located = RTMEDIA_PATH . $ogpath . $template_name;
-		}
-
-		return $located;
+			$located = trailingslashit(RTMEDIA_PATH) . $ogpath . $template_name;
+		} 
+		
+        	return $located;
 	}
 
 }
