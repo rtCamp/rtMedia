@@ -1,8 +1,10 @@
 <div class="rtmedia-container rtmedia-single-container">
     <div class="row">
-        <?php if (have_rtmedia()) : rtmedia(); ?>
+        <?php 
+        global $rt_ajax_request;
+        if (have_rtmedia()) : rtmedia(); ?>
 
-            <div id="rtmedia-single-media-container" class="rtmedia-single-media columns large-9">
+            <div id="rtmedia-single-media-container" class="rtmedia-single-media columns <?php  echo ($rt_ajax_request)? "large-9" : "large-12"; ?>">
 
                 <?php rtmedia_title(); ?>
 
@@ -12,7 +14,7 @@
                 </div>
 
             </div>
-            <div class="rtmedia-single-meta columns large-3">
+            <div class="rtmedia-single-meta columns <?php  echo ($rt_ajax_request)? "large-3" : "large-12"; ?>">
 
                 <?php rtmedia_description(); ?>
 
