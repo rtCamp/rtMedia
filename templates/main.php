@@ -7,20 +7,20 @@
  * apart from loading the appropriate rtMedia template
  *****************************************/
 // by default it is not an ajax request
-
-$ajax = false;
+global $rt_ajax_request;
+$rt_ajax_request = false;
 
 // check if it is an ajax request
 if (
 		! empty( $_SERVER[ 'HTTP_X_REQUESTED_WITH' ] ) &&
 		strtolower( $_SERVER[ 'HTTP_X_REQUESTED_WITH' ] ) == 'xmlhttprequest'
  ){
-	$ajax = true;
+	$rt_ajax_request = true;
  }
 
 
 //if it's not an ajax request, load headers
-if ( ! $ajax ) {
+if ( ! $rt_ajax_request ) {
 
 	// if this is a BuddyPress page, set template type to
 	// buddypress to load appropriate headers
@@ -140,7 +140,7 @@ if ( ! $ajax ) {
 
 
 
-if ( ! $ajax ) {
+if ( ! $rt_ajax_request ) {
 	if ( $template_type == 'buddypress' && (bp_displayed_user_id() || bp_is_group()) ) {
 
 	if ( bp_is_group() ) {
