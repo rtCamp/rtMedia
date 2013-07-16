@@ -14,7 +14,7 @@ class RTMediaBuddyPressActivity {
 
     function __construct() {
         global $rtmedia;
-        if($rtmedia->options["buddypress_enableOnActivity"]!==0){
+        if ($rtmedia->options["buddypress_enableOnActivity"] !== 0) {
             add_action("bp_after_activity_post_form", array(&$this, "bp_after_activity_post_form"));
             add_action("bp_activity_posted_update", array(&$this, "bp_activity_posted_update"), 99, 3);
             add_action("bp_groups_posted_update", array(&$this, "bp_groups_posted_update"), 99, 4);
@@ -22,6 +22,34 @@ class RTMediaBuddyPressActivity {
         add_action("bp_init", array($this, 'non_threaded_comments'));
         add_action("bp_activity_comment_posted", array($this, "comment_sync"), 10, 2);
         add_filter('bp_activity_allowed_tags', array(&$this, 'override_allowed_tags'));
+        add_filter('bp_get_activity_parent_content', array(&$this, 'bp_get_activity_parent_content'));
+    }
+
+    function bp_get_activity_parent_content($content) {
+        global $activities_template;
+
+        // Get the ID of the parent activity content
+        if (!$parent_id = $activities_template->activity->item_id)
+            return false;
+
+        // Bail if no parent content
+        if (empty($activities_template->activity_parents[$parent_id]))
+            return false;
+
+        // Bail if no action
+        if (empty($activities_template->activity_parents[$parent_id]->action))
+            return false;
+
+        // Content always includes action
+        $content = $activities_template->activity_parents[$parent_id]->action;
+
+        // Maybe append activity content, if it exists
+        if (!empty($activities_template->activity_parents[$parent_id]->content))
+            $content .= ' ' . $activities_template->activity_parents[$parent_id]->content;
+
+        // Remove the time since content for backwards compatibility
+        $content = str_replace('<span class="time-since">%s</span>', '', $content);
+        return $content;
     }
 
     function comment_sync($comment_id, $param) {
@@ -57,7 +85,7 @@ class RTMediaBuddyPressActivity {
             $wpdb->update($bp->activity->table_name, array("type" => "rtmedia_update", "content" => $objActivity->create_activity_html()), array("id" => $activity_id));
         }
         if (isset($_POST['rtmedia-privacy']))
-                bp_activity_update_meta($activity_id, 'rtmedia_privacy', ($_POST['rtmedia-privacy'] == 0) ? -1 : $_POST['rtmedia-privacy']);
+            bp_activity_update_meta($activity_id, 'rtmedia_privacy', ($_POST['rtmedia-privacy'] == 0) ? -1 : $_POST['rtmedia-privacy']);
     }
 
     function bp_after_activity_post_form() {
@@ -82,7 +110,7 @@ class RTMediaBuddyPressActivity {
         );
         wp_enqueue_script('rtmedia-backbone', false, '', false, true);
         $is_album = is_rtmedia_album() ? true : false;
-        $is_edit_allowed = is_rtmedia_edit_allowed() ? true: false;
+        $is_edit_allowed = is_rtmedia_edit_allowed() ? true : false;
         wp_localize_script('rtmedia-backbone', 'is_album', $is_album);
         wp_localize_script('rtmedia-backbone', 'is_edit_allowed', $is_edit_allowed);
         wp_localize_script('rtmedia-backbone', 'rtMedia_update_plupload_config', $params);
