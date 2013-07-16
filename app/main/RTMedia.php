@@ -157,6 +157,10 @@ class RTMedia {
                     max-width: <?php echo $this->options["defaultSizes_photo_medium_width"] ;?>px;
                     max-height: <?php echo $this->options["defaultSizes_photo_medium_height"];?>px;
                 }
+                .rtmedia-container .rtmedia-list-media  .rtmedia-item-thumbnail,.rtmedia-container .rtmedia-album-list  .rtmedia-item-thumbnail {
+                    max-width: <?php echo $this->options["defaultSizes_photo_thumbnail_width"] ;?>px;
+                    max-height: <?php echo $this->options["defaultSizes_photo_thumbnail_height"];?>px;
+                }
             </style>
         <?php }
 

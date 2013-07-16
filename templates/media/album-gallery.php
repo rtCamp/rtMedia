@@ -16,7 +16,7 @@
 
         </ul>
 
-
+<div class='rtmedia_next_prev row'>
         <!--  these links will be handled by backbone later
                         -- get request parameters will be removed  -->
           <?php
@@ -41,7 +41,7 @@
 	<?php } else { ?>
 		<p><?php echo __("Oops !! There's no media found for the request !!","rtmedia"); ?></p>
 	<?php } ?>
-
+</div>
 		<?php do_action('rtmedia_after_album_gallery'); ?>
 
 </div>
