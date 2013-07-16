@@ -164,7 +164,7 @@ class RTMediaQuery {
 	}
 
 	function set_action_query() {
-
+            
 		$raw_query = $this->interaction->query_vars;
 
 
