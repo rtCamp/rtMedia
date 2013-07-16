@@ -32,7 +32,7 @@ class RTMediaMedia {
     public function __construct() {
 
         $this->model = new RTMediaModel();
-    }
+	}
 
     /**
      * Generate nonce
@@ -482,6 +482,7 @@ class RTMediaMedia {
 
         return $activity_id;
     }
+
 
 }
 
