@@ -144,7 +144,17 @@ class RTMedia {
             add_image_size(
                     'rt_media_featured_image', $this->options["defaultSizes_featured_default_width"], $this->options["defaultSizes_featured_default_height"], ($this->options["defaultSizes_featured_default_crop"]=="0")?false:true
             );
+            //Printing style at fotter
+            add_action('wp_footer', array(&$this,'custome_style_for_activity_image_size'));
         }
+        function custome_style_for_activity_image_size() {?>
+            <style>
+                .rtmedia-activity-container .rtmedia-list .rtmedia-item-thumbnail{
+                    max-width: <?php echo $this->options["defaultSizes_photo_medium_width"] ;?>px;
+                    max-height: <?php echo $this->options["defaultSizes_photo_medium_height"];?>px;
+                }
+            </style>
+        <?php }
 
     /**
 	 *  Default allowed media types array
