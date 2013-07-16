@@ -98,7 +98,7 @@ class RTMediaBuddyPressActivity {
             'browse_button' => 'rtmedia-whts-new-upload-button',
             'container' => 'rtmedia-whts-new-upload-container',
             'drop_element' => 'rtmedia-whts-new-drag-drop-area',
-            'filters' => apply_filters('bp_media_plupload_files_filter', array(array('title' => "Media Files", 'extensions' => "mp4,jpg,png,jpeg,gif,mp3"))),
+            'filters' => apply_filters('rtmedia_plupload_files_filter', array(array('title' => "Media Files", 'extensions' => "mp4,jpg,png,jpeg,gif,mp3"))),
             'max_file_size' => min(array(ini_get('upload_max_filesize'), ini_get('post_max_size'))),
             'multipart' => true,
             'urlstream_upload' => true,
