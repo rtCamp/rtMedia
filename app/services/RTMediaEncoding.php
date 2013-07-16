@@ -10,7 +10,7 @@ class RTMediaEncoding {
     protected $api_url = 'http://api.rtcamp.com/';
     protected $sandbox_testing = 0;
     protected $merchant_id = 'paypal@rtcamp.com';
-
+    public $uploaded;
     public function __construct() {
         $this->api_key = get_site_option('rtmedia-encoding-api-key');
 
@@ -354,7 +354,10 @@ class RTMediaEncoding {
                     $media = $model->get_media(array('id' => $id), 0, 1);
                     $this->media_author = $media[0]->media_author;
                     $attachment_id = $media[0]->media_id;
-
+                    $this->uploaded["context"] = $media[0]->context;
+                    $this->uploaded["context_id"] = $media[0]->context_id;
+                    $this->uploaded["media_author"] = $media[0]->media_author;
+                    
                     $download_url = urldecode($_GET['download_url']);
                     $new_wp_attached_file_pathinfo = pathinfo($download_url);
                     $post_mime_type = $new_wp_attached_file_pathinfo['extension'] == 'mp4' ? 'video/mp4' : 'audio/mp3';
@@ -489,7 +492,7 @@ class RTMediaEncoding {
             if (isset($this->uploaded["context"]) && isset($this->uploaded["context_id"])) {
                 if ($this->uploaded["context"] != 'group') {
                     $rtmedia_upload_prefix = 'users/';
-                    $id = get_current_user_id();
+                    $id = $this->uploaded["media_author"];
                     
                 } else {
                     $rtmedia_upload_prefix = 'groups/';
@@ -498,7 +501,7 @@ class RTMediaEncoding {
             } else {
                 if ($rtmedia_interaction->context->type != 'group') {
                     $rtmedia_upload_prefix = 'users/';
-                    $id = get_current_user_id();
+                    $id = $this->uploaded["media_author"];
                 } else {
                     $rtmedia_upload_prefix = 'groups/';
                     $id = $rtmedia_interaction->context->id;
