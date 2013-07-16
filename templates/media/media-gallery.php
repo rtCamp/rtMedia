@@ -4,7 +4,7 @@
     <?php rtmedia_uploader() ?>
 
     <h2><?php echo __('Media Gallery', 'rtmedia'); ?></h2>
-    <ul class="rtmedia-list rtmedia-list-media large-block-grid-4 <?php echo rtmedia_media_gallery_class();?>">
+    <ul class="rtmedia-list rtmedia-list-media <?php echo rtmedia_media_gallery_class();?>">
         <?php if (have_rtmedia()) { ?>
 
 
@@ -17,7 +17,7 @@
 
         </ul>
 
-
+<div class='rtmedia_next_prev row'>
         <!--  these links will be handled by backbone later
                                         -- get request parameters will be removed  -->
         <?php
@@ -37,11 +37,11 @@
             $display = 'style="display:none;"';
         ?>
         <a id="rtMedia-galary-next" <?php echo $display; ?> href="<?php echo rtmedia_pagination_next_link(); ?>"><?php echo __('Next','rtmedia'); ?></a>
-
+</div>
     <?php } else { ?>
         <p><?php echo __("Oops !! There's no media found for the request !!", "rtmedia"); ?></p>
     <?php } ?>
 </ul>
-<?php do_action('rtmedia_after_media_gallery'); ?>
+    <?php do_action('rtmedia_after_media_gallery'); ?>
 
 </div>
