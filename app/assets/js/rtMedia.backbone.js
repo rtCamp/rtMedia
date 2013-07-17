@@ -405,7 +405,7 @@ jQuery(document).ready(function($) {
 
         up.settings.multipart_params.context = object;
         up.settings.multipart_params.context_id = item_id;
-        up.settings.multipart_params.privacy = $("#rtm-file_upload-ui select#privacy").val();
+        up.settings.multipart_params.privacy = jQuery("select#privacy").val();
     });
     objUploadView.uploader.bind('UploadComplete', function(up, files) {
         media_uploading=true;
@@ -432,7 +432,7 @@ jQuery(document).ready(function($) {
             while (activity_attachemnt_ids.length > 0) {
                 options.data += "&rtMedia_attached_files[]=" + activity_attachemnt_ids.pop();
             }
-            options.data += "&rtmedia-privacy="+$("#rtm-file_upload-ui select#privacy").val();
+            options.data += "&rtmedia-privacy="+jQuery("select#privacy").val();
             activity_attachemnt_ids = temp;
             var orignalSuccess = originalOptions.success ;
             options.beforeSend= function(){
