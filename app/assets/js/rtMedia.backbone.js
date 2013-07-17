@@ -166,7 +166,7 @@ jQuery(function($) {
     } else{
         o_is_edit_allowed = is_edit_allowed;
     }
-        $("#rtmedia-gallery-item-template").load(template_url + "/media-gallery-item.php", {
+        $("#rtmedia-gallery-item-template").load(template_url, {
             backbone: true, 
             is_album: o_is_album, 
             is_edit_allowed: o_is_edit_allowed

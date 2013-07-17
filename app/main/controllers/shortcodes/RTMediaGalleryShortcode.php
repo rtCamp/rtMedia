@@ -29,7 +29,8 @@ class RTMediaGalleryShortcode {
 	function register_scripts() {
                 wp_enqueue_script('plupload-all');
 		wp_enqueue_script('rtmedia-backbone', RTMEDIA_URL . 'app/assets/js/rtMedia.backbone.js', array('plupload','backbone'),false,true);
-		wp_localize_script('rtmedia-backbone', 'template_url', RTMEDIA_URL . 'templates/media');
+                $template_url  = RTMediaTemplate::locate_template("media-gallery-item", "media/",true);
+		wp_localize_script('rtmedia-backbone', 'template_url', $template_url);
                 $url = $_SERVER["REQUEST_URI"];
                 $url = trailingslashit($url);
                 
