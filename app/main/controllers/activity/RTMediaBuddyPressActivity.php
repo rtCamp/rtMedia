@@ -86,7 +86,6 @@ class RTMediaBuddyPressActivity {
             $mediaObj = new RTMediaModel();
             $sql = "update $mediaObj->table_name set activity_id = '" .$activity_id . "' where id in (" . implode(",",$_POST["rtMedia_attached_files"]) . ")";
             $wpdb->query($sql);
-            
         }
         if (isset($_POST['rtmedia-privacy']))
             bp_activity_update_meta($activity_id, 'rtmedia_privacy', ($_POST['rtmedia-privacy'] == 0) ? -1 : $_POST['rtmedia-privacy']);
