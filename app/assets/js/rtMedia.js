@@ -20,6 +20,7 @@ if(typeof(rtmedia_lightbox_enabled) != 'undefined' &&  rtmedia_lightbox_enabled 
         tLoading: 'Loading image #%curr%...',
         mainClass: 'mfp-img-mobile',
         preload: [1, 3],
+        closeOnBgClick:false,
         gallery: {
             enabled: true,
             navigateByImgClick: true,
@@ -50,6 +51,9 @@ if(typeof(rtmedia_lightbox_enabled) != 'undefined' &&  rtmedia_lightbox_enabled 
                             });
 
                 }
+            },
+            close: function(e) {
+                console.log(e);
             }
         }
     });
