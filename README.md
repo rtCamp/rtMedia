@@ -160,6 +160,14 @@ Please visit [rtMedia's Features page](http://rtcamp.com/buddypress-media/?utm_s
 
 Please visit [rtMedia's Roadmap page](http://rtcamp.com/buddypress-media/roadmap/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "Visit rtMedia's Features page") to get some details about future releases.
 
+#### 3.0.5 ####
+* Fixed privacy issue in media
+* Fixed activity media upload issue
+* Fixed encoding download issue
+* Remove grid from gallery and activity for use defined size
+* Fixed template issue
+* Other minor bug fixes
+
 #### 3.0.4 ####
 * Handle delete media and activity
 * Add like button count
@@ -483,8 +491,8 @@ Please visit [rtMedia's Roadmap page](http://rtcamp.com/buddypress-media/roadmap
 * HTML5 Audio Tag Support (with fallback)
 * HTML5 Video Tag Support (with fallback)
 
-#### 3.0.4 ####
-Handle delete media and activity,Add like button count,Fixed image size issue privacy issue Other minor bug fixes
+#### 3.0.5 ####
+Fixed template,privacy,activity media upload issue and other minor bug fixes.
 
 ## Sponsors ##
 
