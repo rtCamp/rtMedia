@@ -155,6 +155,7 @@ class RTMediaBuddyPressActivity {
         $activity_allowedtags['ul'] = array();
         $activity_allowedtags['ul']['class'] = array();
         $activity_allowedtags['li'] = array();
+        $activity_allowedtags['li']['class'] = array();
 
         return $activity_allowedtags;
     }

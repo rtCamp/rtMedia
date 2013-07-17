@@ -269,8 +269,11 @@
             ul{
                 &.rtmedia-list{
                     li{
-                        float:left;
-                        padding:10px; 
+                       float:left;
+                       padding:10px; 
+                       &.media-type-video{
+                            float:none;
+                        }
                     }
                 }
             }

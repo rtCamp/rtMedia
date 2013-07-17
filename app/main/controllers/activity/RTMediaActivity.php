@@ -49,7 +49,7 @@ class RTMediaActivity {
 
 			$html .= '<ul class="rtmedia-list large-block-grid-3">';
 			foreach ($media_details as $media) {
-				$html .= '<li class="rtmedia-list-item">';
+				$html .= '<li class="rtmedia-list-item media-type-' . $media->media_type . '">';
                                 if (  $media->media_type == 'photo' )
                                     $html .= '<a href ="'. get_rtmedia_permalink($media->id) .'">';
 					$html .= '<div class="rtmedia-item-thumbnail">';
