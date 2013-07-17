@@ -831,3 +831,28 @@ function is_rtmedia_album_enable(){
 function rtmedia_load_template(){
 	include(RTMediaTemplate::locate_template());
 }
+
+function is_rtmedia_privacy_enable(){
+    global $rtmedia;
+    if(isset($rtmedia->options["privacy_enabled"]) && $rtmedia->options["privacy_enabled"] != "0"){
+        return true;
+    }
+    return false;
+}
+
+function is_rtmedia_privacy_user_overide(){
+    global $rtmedia;
+    if(isset($rtmedia->options["privacy_userOverride"]) && $rtmedia->options["privacy_userOverride"] != "0"){
+        return true;
+    }
+    return false;
+}
+
+function get_rtmedia_default_privacy(){
+    
+    global $rtmedia;
+    if(isset($rtmedia->options["privacy_default"])){
+        return $rtmedia->options["privacy_default"];
+    }
+    return 0;
+}
