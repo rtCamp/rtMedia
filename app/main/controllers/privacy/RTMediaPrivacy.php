@@ -244,16 +244,16 @@ class RTMediaPrivacy {
             $user = 0;
         }
 
-        $where .= "AND (m.meta_value <= 0)";
+        $where .= "AND (CONVERT(m.meta_value,SIGNED INTEGER) <= 0)";
 
         if ($user) {
             $where .= "OR ((m.meta_value=20)";
-            $where .= " OR (a.user_id={$user} AND m.meta_value>=40)";
+            $where .= " OR (a.user_id={$user} AND CONVERT(m.meta_value, UNSIGNED INTEGER) >= 40)";
             if (class_exists('BuddyPress')) {
                 if (bp_is_active('friends')) {
                     $friendship = new RTMediaFriends();
                     $friends = $friendship->get_friends_cache($user);
-                    $where .= " OR (m.meta_value=40 AND a.user_id IN ('" . implode("','", $friends) . "'))";
+                    $where .= " OR (CONVERT(m.meta_value,UNSIGNED INTEGER)=40 AND a.user_id IN ('" . implode("','", $friends) . "'))";
                 }
             }
             $where .= ')';

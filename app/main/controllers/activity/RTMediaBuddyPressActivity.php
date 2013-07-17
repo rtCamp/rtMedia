@@ -87,8 +87,19 @@ class RTMediaBuddyPressActivity {
             $sql = "update $mediaObj->table_name set activity_id = '" .$activity_id . "' where id in (" . implode(",",$_POST["rtMedia_attached_files"]) . ")";
             $wpdb->query($sql);
         }
-        if (isset($_POST['rtmedia-privacy']))
-            bp_activity_update_meta($activity_id, 'rtmedia_privacy', ($_POST['rtmedia-privacy'] == 0) ? -1 : $_POST['rtmedia-privacy']);
+        if (isset($_POST['rtmedia-privacy'])) {
+            $privacy = -1;
+            if (is_rtmedia_privacy_enable()) {
+                if (is_rtmedia_privacy_user_overide()) {
+                        $privacy = $_POST['rtmedia-privacy'];
+                   
+                } else {
+                    $privacy = get_rtmedia_default_privacy();
+                }
+            } 
+            bp_activity_update_meta($activity_id, 'rtmedia_privacy',$privacy);
+        }
+            
     }
 
     function bp_after_activity_post_form() {
