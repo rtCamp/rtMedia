@@ -1,5 +1,5 @@
 === rtMedia for WordPress, BuddyPress and bbPress ===
-Contributors: rtcamp, rahul286, gagan0123, saurabhshukla, JoshuaAbenazer, faishal, desaiuditd, nitunlanjewar, umesh.nevase, suhasgirgaonkar, neerukoul, hrishiv90
+Contributors: rtcamp, rahul286, gagan0123, saurabhshukla, JoshuaAbenazer, faishal, desaiuditd, nitun.lanjewar, umesh.nevase, suhasgirgaonkar, neerukoul, hrishiv90
 Donate link: http://rtcamp.com/donate
 Tags: BuddyPress, media, multimedia, album, audio, songs, music, video, photo, image, upload, share, MediaElement.js, ffmpeg, kaltura, media-node, rtMedia, WordPress, bbPress
 License: GPLv2 or later
