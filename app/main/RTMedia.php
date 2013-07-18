@@ -117,7 +117,7 @@ class RTMedia {
 		include(RTMEDIA_PATH . 'app/main/controllers/template/rt-template-functions.php');
 
 		add_filter('intermediate_image_sizes_advanced', array($this, 'filter_image_sizes_details'));
-        add_filter('intermediate_image_sizes', array($this, 'filter_image_sizes'));
+                add_filter('intermediate_image_sizes', array($this, 'filter_image_sizes'));
 
 	}
 
@@ -134,21 +134,15 @@ class RTMedia {
 		}
                 $this->add_image_sizes();
 	}
-
+        public function image_sizes(){
+            $image_sizes = array();
+            $image_sizes["thumbnail"] = array("width"=> $this->options["defaultSizes_photo_thumbnail_width"],"height" =>$this->options["defaultSizes_photo_thumbnail_height"] ,"crop" => ($this->options["defaultSizes_photo_thumbnail_crop"]=="0")?false:true);
+            $image_sizes["activity"] = array("width"=> $this->options["defaultSizes_photo_medium_width"],"height" =>$this->options["defaultSizes_photo_medium_height"] ,"crop" => ($this->options["defaultSizes_photo_medium_crop"]=="0")?false:true);
+            $image_sizes["single"] = array("width"=> $this->options["defaultSizes_photo_large_width"],"height" =>$this->options["defaultSizes_photo_large_height"] ,"crop" => ($this->options["defaultSizes_photo_large_crop"]=="0")?false:true);
+            $image_sizes["featured"] = array("width"=> $this->options["defaultSizes_featured_default_width"],"height" =>$this->options["defaultSizes_featured_default_height"] ,"crop" => ($this->options["defaultSizes_featured_default_crop"]=="0")?false:true);
+            return $image_sizes;
+        }
         public function add_image_sizes() {
-            add_image_size(
-                    'rt_media_thumbnail', $this->options["defaultSizes_photo_thumbnail_width"], $this->options["defaultSizes_photo_thumbnail_height"], ($this->options["defaultSizes_photo_thumbnail_crop"]=="0")?false:true
-            );
-            add_image_size(
-                    'rt_media_activity_image', $this->options["defaultSizes_photo_medium_width"], $this->options["defaultSizes_photo_medium_height"], ($this->options["defaultSizes_photo_medium_crop"]=="0")?false:true
-            );
-            add_image_size(
-                    'rt_media_single_image', $this->options["defaultSizes_photo_large_width"], $this->options["defaultSizes_photo_large_height"], ($this->options["defaultSizes_photo_large_crop"]=="0")?false:true
-            );
-            add_image_size(
-                    'rt_media_featured_image', $this->options["defaultSizes_featured_default_width"], $this->options["defaultSizes_featured_default_height"], ($this->options["defaultSizes_featured_default_crop"]=="0")?false:true
-            );
-            //Printing style at fotter
             add_action('wp_footer', array(&$this,'custome_style_for_activity_image_size'));
         }
         function custome_style_for_activity_image_size() {?>
@@ -706,13 +700,13 @@ class RTMedia {
         } elseif (isset($_REQUEST['id'])) { //For Regenerate Thumbnails Plugin
             if ($parent_id = get_post_field('post_parent', $_REQUEST['id'])) {
                 $post_type = get_post_field('post_type', $parent_id);
-                if ($post_type == 'bp_media_album') {
-                    global $bp_media;
-                    $bp_media_sizes = $bp_media->media_sizes();
+                if ($post_type == 'rtmedia_album') {
+                    $bp_media_sizes = $this->image_sizes();
                     $sizes = array(
-                        'bp_media_thumbnail' => $bp_media_sizes['image']['thumbnail'],
-                        'bp_media_activity_image' => $bp_media_sizes['image']['medium'],
-                        'bp_media_single_image' => $bp_media_sizes['image']['large']
+                        'rt_media_thumbnail' => $bp_media_sizes['thumbnail'],
+                        'rt_media_activity_image' => $bp_media_sizes['activity'],
+                        'rt_media_single_image' => $bp_media_sizes['single'],
+                        'rt_media_featured_image' => $bp_media_sizes['featured'],
                     );
                 } else {
                     $sizes = $this->unset_bp_media_image_sizes_details($sizes);
@@ -721,7 +715,6 @@ class RTMedia {
                 $sizes = $this->unset_bp_media_image_sizes_details($sizes);
             }
         }
-
         return $sizes;
     }
 
@@ -729,9 +722,9 @@ class RTMedia {
         if (isset($_REQUEST['postid'])) { //For Regenerate Thumbnails Plugin
             if ($parent_id = get_post_field('post_parent', $_REQUEST['postid'])) {
                 $post_type = get_post_field('post_type', $parent_id);
-                if ($post_type == 'bp_media_album') {
+                if ($post_type == 'rtmedia_album') {
                     $sizes = array(
-                        'bp_media_thumbnail', 'bp_media_activity_image', 'bp_media_single_image'
+                        'rt_media_thumbnail', 'rt_media_activity_image', 'rt_media_single_image'
                     );
                 } else {
                     $sizes = $this->unset_bp_media_image_sizes($sizes);
@@ -745,21 +738,21 @@ class RTMedia {
     }
 
     function unset_bp_media_image_sizes_details($sizes) {
-        if (isset($sizes['bp_media_thumbnail']))
-            unset($sizes['bp_media_thumbnail']);
-        if (isset($sizes['bp_media_activity_image']))
-            unset($sizes['bp_media_activity_image']);
-        if (isset($sizes['bp_media_single_image']))
-            unset($sizes['bp_media_single_image']);
+        if (isset($sizes['rt_media_thumbnail']))
+            unset($sizes['rt_media_thumbnail']);
+        if (isset($sizes['rt_media_activity_image']))
+            unset($sizes['rt_media_activity_image']);
+        if (isset($sizes['rt_media_single_image']))
+            unset($sizes['rt_media_single_image']);
         return $sizes;
     }
 
     function unset_bp_media_image_sizes($sizes) {
-        if (($key = array_search('bp_media_thumbnail', $sizes)) !== false)
+        if (($key = array_search('rt_media_thumbnail', $sizes)) !== false)
             unset($sizes[$key]);
-        if (($key = array_search('bp_media_activity_image', $sizes)) !== false)
+        if (($key = array_search('rt_media_activity_image', $sizes)) !== false)
             unset($sizes[$key]);
-        if (($key = array_search('bp_media_single_image', $sizes)) !== false)
+        if (($key = array_search('rt_media_single_image', $sizes)) !== false)
             unset($sizes[$key]);
         return $sizes;
     }
