@@ -360,7 +360,7 @@ class RTMediaMedia {
         foreach ($attachments as $key => $attachment) {
             $attachment_id = wp_insert_attachment($attachment, $file_object[$key]['file'], $attachment['post_parent']);
             if (!is_wp_error($attachment_id)) {
-               add_filter('intermediate_image_sizes', array($this, 'image_sizes'), 99);
+                add_filter('intermediate_image_sizes', array($this, 'image_sizes'), 99);
                 wp_update_attachment_metadata($attachment_id, wp_generate_attachment_metadata($attachment_id, $file_object[$key]['file']));
             } else {
                 unlink($file_object[$key]['file']);

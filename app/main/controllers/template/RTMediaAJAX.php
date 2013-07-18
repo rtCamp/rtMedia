@@ -22,7 +22,13 @@ class RTMediaAJAX {
 	}
 
         function create_album(){
-            if ( isset($_POST['name']) && $_POST['name'] ) {
+            if ( isset($_POST['name']) && $_POST['name'] && is_rtmedia_album_enable()) {
+                if(isset($_POST['context']) && $_POST['context'] =="group"){
+                    if(can_user_create_album_in_group() == false){
+                        echo false;
+                        wp_die();
+                    }
+                }
                 $album = new RTMediaAlbum();
                 $rtmedia_id = $album->add($_POST['name'], get_current_user_id(), true, false, $_POST['context'], $_POST['context_id']);
 

@@ -118,7 +118,7 @@ class RTMedia {
 
 		add_filter('intermediate_image_sizes_advanced', array($this, 'filter_image_sizes_details'));
                 add_filter('intermediate_image_sizes', array($this, 'filter_image_sizes'));
-
+                
 	}
 
 	function set_site_options() {
@@ -543,8 +543,8 @@ class RTMedia {
 			'nav'	=> true,
 			'like'	=> false,
 			'cover_art'	=> false,
-			'featured'	=> false
-
+			'featured'	=> false,
+                        'Group'=>false
 				//'query'		=> false
 		);
 		global $rtmedia_nav;

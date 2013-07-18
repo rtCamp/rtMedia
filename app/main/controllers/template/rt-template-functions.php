@@ -599,12 +599,14 @@ function rtmedia_delete_form() {
  * @param type $attr
  */
 function rtmedia_uploader($attr = '') {
-
     if (function_exists('bp_is_blog_page') && !bp_is_blog_page()) {
         if (function_exists('bp_is_user') && bp_is_user() && function_exists('bp_displayed_user_id') && bp_displayed_user_id() == get_current_user_id())
             echo RTMediaUploadShortcode::pre_render($attr);
-        else if (function_exists('bp_is_group') && bp_is_group() && function_exists('bp_group_is_member') && bp_group_is_member())
-            echo RTMediaUploadShortcode::pre_render($attr);
+        else if (function_exists('bp_is_group') && bp_is_group()){
+            if(can_user_upload_in_group()) 
+                echo RTMediaUploadShortcode::pre_render($attr);
+        }
+            
     }
 }
 
@@ -739,7 +741,7 @@ function rtmedia_create_album() {
 				break;
 			case 'group':
 				$group_id = $rtmedia_query->query['context_id'];
-				if(groups_is_user_admin( $user_id, $group_id )||groups_is_user_mod( $user_id, $group_id )){
+				if(can_user_create_album_in_group()){
 					$display=true;
 				}
 				break;
@@ -855,4 +857,62 @@ function get_rtmedia_default_privacy(){
         return $rtmedia->options["privacy_default"];
     }
     return 0;
+}
+
+function is_rtmedia_group_media_enable(){
+    global $rtmedia;
+    if(isset($rtmedia->options["buddypress_enableOnGroup"]) && $rtmedia->options["buddypress_enableOnGroup"] != "0"){
+        return true;
+    }
+    return false;
+}
+function can_user_upload_in_group() {
+    $group = groups_get_current_group();
+    $upload_level = groups_get_groupmeta($group->id, "rt_upload_media_control_level");
+    $user_id = get_current_user_id();
+    $display_flag = false;
+    if (groups_is_user_member($user_id, $group->id)) {
+//        if ($upload_level == "admin") {
+//            if (groups_is_user_admin($user_id, $group->id)) {
+//                $display_flag = true;
+//            }
+//        } else if ($upload_level == "moderator") {
+//            if (groups_is_user_mod($user_id, $group->id)) {
+//                $display_flag = true;
+//            }
+//        } else {
+//            $display_flag = true;
+//        }
+        $display_flag = true;
+    }
+    return $display_flag;
+}
+function can_user_create_album_in_group($group_id = false, $user_id = false) {
+    if($group_id == false){
+        $group = groups_get_current_group();
+        $group_id = $group->id;  
+    } 
+    $upload_level = groups_get_groupmeta($group_id, "rt_media_group_control_level");
+    if(empty($upload_level)){
+        $upload_level = groups_get_groupmeta($group_id, "bp_media_group_control_level");    
+        if(empty($upload_level)){
+            $upload_level = "all";
+        }
+    }
+    $user_id = get_current_user_id();
+    $display_flag = false;
+    if (groups_is_user_member($user_id, $group_id)) {
+        if ($upload_level == "admin") {
+            if (groups_is_user_admin($user_id, $group_id) > 0) {
+                $display_flag = true;
+            }
+        } else if ($upload_level == "moderators") {
+            if (groups_is_user_mod($user_id, $group_id)) {
+                $display_flag = true;
+            }
+        } else {
+            $display_flag = true;
+        }
+    }
+    return $display_flag;
 }

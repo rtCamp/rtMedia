@@ -11,7 +11,8 @@ if (class_exists('BP_Group_Extension')) :// Recommended, to prevent problems dur
             $this->name = RTMEDIA_MEDIA_LABEL;
             $this->slug = RTMEDIA_MEDIA_SLUG;
             $this->create_step_position = 21;
-            $this->nav_item_position = 31;
+            $this->enable_nav_item = false;
+            
         }
 
         function create_screen() {
@@ -35,22 +36,6 @@ if (class_exists('BP_Group_Extension')) :// Recommended, to prevent problems dur
                     <strong><?php _e("Group Admin only", 'rtmedia'); ?></strong>
                 </label>
             </div>
-            <h4><?php _e("Media Upload Control", 'rtmedia'); ?></h4>
-            <p><?php _e("Who can Upload media in this group?", 'rtmedia'); ?></p>
-            <div class="radio">
-                <label>
-                    <input name="rt_upload_media_control" type="radio" id="rt_media_upload_level_all" checked="checked" value="all">
-                    <strong><?php _e("All Group Members", 'rtmedia'); ?></strong>
-                </label>
-                <label>
-                    <input name="rt_upload_media_control" type="radio" id="rt_media_upload_level_moderators" value="moderators">
-                    <strong><?php _e("Group Admins and Mods only", 'rtmedia'); ?></strong>
-                </label>
-                <label>
-                    <input name="rt_upload_media_control" type="radio" id="rt_media_upload_level_admin" value="admin">
-                    <strong><?php _e("Group Admin only", 'rtmedia'); ?></strong>
-                </label>
-            </div>
 
             <?php
             wp_nonce_field('groups_create_save_' . $this->slug);
@@ -68,7 +53,6 @@ if (class_exists('BP_Group_Extension')) :// Recommended, to prevent problems dur
             /* Save any details submitted here */
             if (isset($_POST['rt_album_creation_control']) && $_POST['rt_album_creation_control'] != '')
                 groups_update_groupmeta($bp->groups->new_group_id, 'rt_media_group_control_level', $_POST['rt_album_creation_control']);
-                groups_update_groupmeta($bp->groups->new_group_id, 'rt_upload_media_control_level', $_POST['rt_upload_media_control']);
         }
 
         /**
@@ -80,11 +64,14 @@ if (class_exists('BP_Group_Extension')) :// Recommended, to prevent problems dur
             if (!bp_is_group_admin_screen($this->slug))
                 return false;
             $current_level = groups_get_groupmeta(bp_get_current_group_id(), 'rt_media_group_control_level');
-            $current_level = groups_get_groupmeta(bp_get_current_group_id(), 'rt_upload_media_control_level');
+            if(empty($current_level)){
+                $current_level = "all";
+            }
+            
             ?>
 
             <h4><?php _e("Album Creation Control", 'rtmedia'); ?></h4>
-            <p><?php _e("Who can Upload media in this group?", 'rtmedia'); ?></p>
+            <p><?php _e("Who can create Albums in this group?", 'rtmedia'); ?></p>
             <div class="radio">
                 <label>
                     <input name="rt_album_creation_control" type="radio" id="rt_media_group_level_moderators"  value="all"<?php checked($current_level, 'all', true) ?>>
@@ -96,23 +83,6 @@ if (class_exists('BP_Group_Extension')) :// Recommended, to prevent problems dur
                 </label>
                 <label>
                     <input name="rt_album_creation_control" type="radio" id="rt_media_group_level_admin" value="admin" <?php checked($current_level, 'admin', true) ?>>
-                    <strong><?php _e("Group Admin only", 'rtmedia'); ?></strong>
-                </label>
-            </div>
-            <hr>
-            <h4><?php _e("Media Upload Control", 'rtmedia'); ?></h4>
-            <p><?php _e("Who can create Albums in this group?", 'rtmedia'); ?></p>
-            <div class="radio">
-                <label>
-                    <input name="rt_upload_media_control" type="radio" id="rt_media_upload_level_all"  value="all"<?php checked($current_level, 'all', true) ?>>
-                    <strong><?php _e("All Group Members", 'rtmedia'); ?></strong>
-                </label>
-                <label>
-                    <input name="rt_upload_media_control" type="radio" id="rt_media_upload_level_moderator" value="moderators" <?php checked($current_level, 'moderators', true) ?>>
-                    <strong><?php _e("Group Admins and Mods only", 'rtmedia'); ?></strong>
-                </label>
-                <label>
-                    <input name="rt_upload_media_control" type="radio" id="rt_media_upload_level_admin" value="admin" <?php checked($current_level, 'admin', true) ?>>
                     <strong><?php _e("Group Admin only", 'rtmedia'); ?></strong>
                 </label>
             </div>
@@ -138,7 +108,8 @@ if (class_exists('BP_Group_Extension')) :// Recommended, to prevent problems dur
 
             if (isset($_POST['rt_album_creation_control']) && $_POST['rt_album_creation_control'] != ''){
                 $success = groups_update_groupmeta(bp_get_current_group_id(), 'rt_media_group_control_level', $_POST['rt_album_creation_control']);
-                $success = groups_update_groupmeta(bp_get_current_group_id(), 'rt_upload_media_control_level', $_POST['rt_upload_media_control']);
+            //    $success = groups_update_groupmeta(bp_get_current_group_id(), 'rt_upload_media_control_level', $_POST['rt_upload_media_control']);
+                $success = true;
             }
             else
                 $success = false;
