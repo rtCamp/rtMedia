@@ -831,7 +831,9 @@ function is_rtmedia_album_enable(){
 }
 
 function rtmedia_load_template(){
+        do_action("rtmedia_before_template_load");
 	include(RTMediaTemplate::locate_template());
+        do_action("rtmedia_after_template_load");
 }
 
 function is_rtmedia_privacy_enable(){

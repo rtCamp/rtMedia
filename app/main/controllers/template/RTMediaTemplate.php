@@ -156,20 +156,31 @@ class RTMediaTemplate {
         global $rtmedia_query;
         $nonce = $_POST['rtmedia_media_nonce'];
         if (wp_verify_nonce($nonce, 'rtmedia_' . $rtmedia_query->action_query->id)) {
-
-//                        do_action('rtmedia_before_update_media',$rtmedia_query->action_query->id);
-
+            do_action('rtmedia_before_update_media',$rtmedia_query->action_query->id);
             $data = rtmedia_sanitize_object($_POST, array('media_title', 'description', 'privacy'));
             $media = new RTMediaMedia();
-            $media->update($rtmedia_query->action_query->id, $data, $rtmedia_query->media[0]->media_id);
+            $state = $media->update($rtmedia_query->action_query->id, $data, $rtmedia_query->media[0]->media_id);
             $rtmedia_query->query(false);
-
-//                        do_action('rtmedia_after_update_media',$rtmedia_query->action_query->id);
+            do_action('rtmedia_after_update_media',$rtmedia_query->action_query->id, $state);
+            if($state){
+                add_action("rtmedia_before_template_load", array(&$this,"media_update_success_messege"));
+            }else{
+                add_action("rtmedia_before_template_load", array(&$this, "media_update_success_error"));
+            }
         } else {
             echo __("Ooops !!! Invalid access. No nonce was found !!", "rtmedia");
         }
     }
-
+    function media_update_success_messege(){
+        $message = apply_filters("rtmedia_update_media_message","Media updated Sucessfully",false);
+        $html = "<div class='rtmedia-success media-edit-messge'><p>" . __($message,"rtmedia") . "</p></div>";
+        echo apply_filters("rtmedia_update_media_message_html",$html, $message,false);
+    }
+    function media_update_success_error(){
+        $message = apply_filters("rtmedia_update_media_message","Error in updating Media",true);
+        $html = "<div class='rtmedia-error  media-edit-messge'><p>" . __($message,"rtmedia") . "</p></div>";
+        echo apply_filters("rtmedia_update_media_message_html",$html, $message,true);
+    }
     function save_album_edit() {
         global $rtmedia_query;
         $nonce = $_REQUEST['rtmedia_media_nonce'];

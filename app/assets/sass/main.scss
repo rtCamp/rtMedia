@@ -1,6 +1,6 @@
+@import "compass/css3";
 .rtmedia-container{
 	@import "compass/reset";
-	@import "compass/css3";
 	@import "foundation/components/global"; // *always required
 	@import "foundation/components/grid";
 	@import "foundation/components/visibility";
@@ -320,6 +320,17 @@
 		background-color:black;
 	}
 }
-
-
-
+.rtmedia-success{
+    display: block;
+    padding: 10px;
+    @include border-radius(4px);
+    background-color: #2ECC71;
+    color:white;
+}
+.rtmedia-error{
+    color:white;
+    display: block;
+    padding: 10px;
+    @include border-radius(4px);
+    background-color: #E74C3C;
+}
