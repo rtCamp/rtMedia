@@ -2,7 +2,7 @@
 
 # rtMedia for WordPress, BuddyPress and bbPress #
 
-* **Contributors:** [rtcamp] (http://profiles.wordpress.org/rtcamp), [rahul286] (http://profiles.wordpress.org/rahul286), [gagan0123] (http://profiles.wordpress.org/gagan0123), [saurabhshukla] (http://profiles.wordpress.org/saurabhshukla), [JoshuaAbenazer] (http://profiles.wordpress.org/JoshuaAbenazer), [faishal] (http://profiles.wordpress.org/faishal), [desaiuditd] (http://profiles.wordpress.org/desaiuditd), [nitunlanjewar] (http://profiles.wordpress.org/nitunlanjewar), [umesh.nevase] (http://profiles.wordpress.org/umesh.nevase), [suhasgirgaonkar] (http://profiles.wordpress.org/suhasgirgaonkar), [neerukoul] (http://profiles.wordpress.org/neerukoul), [hrishiv90] (http://profiles.wordpress.org/hrishiv90),
+* **Contributors:** [rtcamp] (http://profiles.wordpress.org/rtcamp), [rahul286] (http://profiles.wordpress.org/rahul286), [gagan0123] (http://profiles.wordpress.org/gagan0123), [saurabhshukla] (http://profiles.wordpress.org/saurabhshukla), [JoshuaAbenazer] (http://profiles.wordpress.org/JoshuaAbenazer), [faishal] (http://profiles.wordpress.org/faishal), [desaiuditd] (http://profiles.wordpress.org/desaiuditd), [nitun.lanjewar] (http://profiles.wordpress.org/nitun.lanjewar), [umesh.nevase] (http://profiles.wordpress.org/umesh.nevase), [suhasgirgaonkar] (http://profiles.wordpress.org/suhasgirgaonkar), [neerukoul] (http://profiles.wordpress.org/neerukoul), [hrishiv90] (http://profiles.wordpress.org/hrishiv90),
 
 * **License:** [GPL v2 or later] ( http://www.gnu.org/licenses/gpl-2.0.html)
 
@@ -159,6 +159,15 @@ Please visit [rtMedia's Features page](http://rtcamp.com/buddypress-media/?utm_s
 ## Changelog ##
 
 Please visit [rtMedia's Roadmap page](http://rtcamp.com/buddypress-media/roadmap/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "Visit rtMedia's Features page") to get some details about future releases.
+
+#### 3.0.6 ####
+* Fixed image size issue
+* Fixed group create album permission and add setting for group admin
+* Fixed Activity Delete issue
+* Fixed Delete redirection
+* Fixed template url issue for backbone
+* Fixed photo tagging lightbox issue
+* Other minor bug fixes
 
 #### 3.0.5 ####
 * Fixed privacy issue in media
@@ -491,8 +500,8 @@ Please visit [rtMedia's Roadmap page](http://rtcamp.com/buddypress-media/roadmap
 * HTML5 Audio Tag Support (with fallback)
 * HTML5 Video Tag Support (with fallback)
 
-#### 3.0.5 ####
-Fixed template,privacy,activity media upload issue and other minor bug fixes.
+#### 3.0.6 ####
+Fixed image size creation isssue,create album permission,Activity Delete, Delete redirection,photo tagging lightbox issues.
 
 ## Sponsors ##
 
