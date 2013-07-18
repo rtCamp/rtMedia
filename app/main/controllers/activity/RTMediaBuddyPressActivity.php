@@ -23,8 +23,21 @@ class RTMediaBuddyPressActivity {
         add_action("bp_activity_comment_posted", array($this, "comment_sync"), 10, 2);
         add_filter('bp_activity_allowed_tags', array(&$this, 'override_allowed_tags'));
         add_filter('bp_get_activity_parent_content', array(&$this, 'bp_get_activity_parent_content'));
+        add_action('bp_activity_deleted_activities', array(&$this, 'bp_activity_deleted_activities'));
     }
 
+    function bp_activity_deleted_activities( $activity_ids_deleted ){
+        //$activity_ids_deleted
+         $rt_model = new RTMediaModel();
+         $all_media = $rt_model->get(array("activity_id"=> $activity_ids_deleted ));
+         if($all_media){
+            $media = new RTMediaMedia();
+            remove_action('bp_activity_deleted_activities', array(&$this, 'bp_activity_deleted_activities'));
+            foreach($all_media as $single_media){
+               $media->delete($single_media->id,false,false);
+            }
+         }
+    }
     function bp_get_activity_parent_content($content) {
         global $activities_template;
 
