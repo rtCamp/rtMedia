@@ -265,8 +265,18 @@ class RTMediaTemplate {
             }
 
 //                        do_action('rtmedia_after_delete_media',$rtmedia_query->media[ 0 ]->id);
-
-            wp_redirect($parent_link);
+            $redirect_url = $_SERVER["HTTP_REFERER"];
+            
+            
+            if( strpos($_SERVER["HTTP_REFERER"], "/" . $rtmedia_query->media[0]->id) > 0 ){
+                if(isset($rtmedia_query->media[0]->album_id) && intval($rtmedia_query->media[0]->album_id) > 0){
+                    $redirect_url = trailingslashit($parent_link). "media/" . $rtmedia_query->media[0]->album_id;
+                }else{
+                    $redirect_url = trailingslashit($parent_link). "media/";
+                }
+            }
+            
+            wp_redirect($redirect_url);
         } else {
             echo __("Ooops !!! Invalid access. No nonce was found !!", "rtmedia");
         }
