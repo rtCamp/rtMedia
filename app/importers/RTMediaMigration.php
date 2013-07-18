@@ -15,7 +15,6 @@ class RTMediaMigration {
         
         add_action('admin_menu', array($this, 'menu'));
         add_action('wp_ajax_bp_media_rt_db_migration', array($this, "migrate_to_new_db"));
-        add_action('wp_ajax_bp_media_rt_db_migration', array($this, "migrate_to_new_db"));
         
         if(isset($_REQUEST["page"]) && $_REQUEST["page"] == "rtmedia-migration" && isset($_REQUEST["hide"]) && $_REQUEST["hide"] =="true"){
             $this->hide_migration_notice();
@@ -480,8 +479,8 @@ class RTMediaMigration {
             global $wpdb;
             $sql = "select
                     a.post_id as 'post_id',
-                    a.meta_value as 'privacy',
-                    b.meta_value as 'context_id',
+                    b.meta_value as 'privacy',
+                    a.meta_value as 'context_id',
                     c.meta_value as 'activity_id',
                     p.post_type,
                     p.post_mime_type,
@@ -492,7 +491,7 @@ class RTMediaMigration {
                     {$wpdb->postmeta} a
                         left join
                     {$wpdb->postmeta} b ON ((a.post_id = b.post_id)
-                        and (b.meta_key = 'bp-media-key'))
+                        and (b.meta_key = 'bp_media_privacy'))
                         left join
                     {$wpdb->postmeta} c ON (a.post_id = c.post_id)
                         and (c.meta_key = 'bp_media_child_activity')
@@ -500,7 +499,7 @@ class RTMediaMigration {
                     {$wpdb->posts} p ON (a.post_id = p.ID)
                 where
                     a.post_id >= %d and (NOT p.ID is NULL) 
-                        and a.meta_key = 'bp_media_privacy'
+                        and a.meta_key = 'bp-media-key'
                 order by a.post_id
                 limit %d";
 
