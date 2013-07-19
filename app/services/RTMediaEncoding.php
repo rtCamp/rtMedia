@@ -166,7 +166,7 @@ class RTMediaEncoding {
 
     public function allowed_types($types) {
         if (isset($types[0]) && isset($types[0]['extensions'])) {
-            $types[0]['extensions'] .= ',mov,m4v,m2v,avi,mpg,flv,wmv,mkv,webm,ogv,mxf,asf,vob,mts,qt,mpeg'; //Allow all types of file to be uploded
+            $types[0]['extensions'] .= ',mov,m4v,m2v,avi,mpg,flv,wmv,mkv,webm,ogv,mxf,asf,vob,mts,qt,mpeg,x-msvideo'; //Allow all types of file to be uploded
             $types[0]['extensions'] .= ',wma,ogg,wav,m4a'; //Allow all types of file to be uploded
         }
         return $types;
