@@ -143,6 +143,11 @@ class RTMedia {
             return $image_sizes;
         }
         public function add_image_sizes() {
+            $bp_media_sizes = $this->image_sizes();
+            add_image_size("rt_media_thumbnail", $bp_media_sizes['thumbnail']["width"],$bp_media_sizes['thumbnail']["height"],$bp_media_sizes['thumbnail']["crop"]);
+            add_image_size("rt_media_activity_image", $bp_media_sizes['activity']["width"],$bp_media_sizes['activity']["height"],$bp_media_sizes['activity']["crop"]);
+            add_image_size("rt_media_single_image", $bp_media_sizes['single']["width"],$bp_media_sizes['single']["height"],$bp_media_sizes['single']["crop"]);
+            add_image_size("rt_media_featured_image", $bp_media_sizes['featured']["width"],$bp_media_sizes['featured']["height"],$bp_media_sizes['featured']["crop"]);
             add_action('wp_footer', array(&$this,'custome_style_for_activity_image_size'));
         }
         function custome_style_for_activity_image_size() {?>
