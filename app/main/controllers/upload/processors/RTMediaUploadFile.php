@@ -148,9 +148,10 @@ class RTMediaUploadFile {
                     $allowed_types[] = $extn;
                 }
             }
+            $file_data = wp_check_filetype($file['name']);
             $allowed_types = apply_filters('rtmedia_plupload_files_filter', array(array('title' => "Media Files", 'extensions' => implode(",", $allowed_types))));
             $allowed_types = explode(",", $allowed_types[0]["extensions"]);
-            if (!preg_match('/' . implode('|', $allowed_types) . '/i', $file['type'], $result) || !isset($result[0])) {
+            if (in_array($file_data["ext"], $allowed_types)) {
                 throw new RTMediaUploadException(UPLOAD_ERR_EXTENSION);
             }
 //            $is_valid = $this->id3_validate_type($file);
