@@ -350,13 +350,14 @@ class RTMediaTemplate {
                 }
                 $comment = new RTMediaComment();
                 $attr = $_POST;
-                if (!isset($attr['comment_post_ID']))
-                    $attr['comment_post_ID'] = $rtmedia_query->action_query->id;
-                $id = $comment->add($attr);
-
                 $mediaModel = new RTMediaModel();
                 $result = $mediaModel->get(array('id' => $rtmedia_query->action_query->id));
 
+                if (!isset($attr['comment_post_ID']))
+                    $attr['comment_post_ID'] = $result[0]->media_id;
+                $id = $comment->add($attr);
+
+                
                 if ($result[0]->activity_id != NULL) {
                     global $rtmedia_buddypress_activity;
                     remove_action("bp_activity_comment_posted", array($rtmedia_buddypress_activity, "comment_sync"), 10, 2);
