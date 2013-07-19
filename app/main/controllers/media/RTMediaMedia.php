@@ -462,7 +462,7 @@ class RTMediaMedia {
                         '%s added a %s', '%s added %d %s.', $count, 'rtmedia'
                 ), $username, $media->media_type, $media_str
         );
-
+        
         $activity_args = array(
             'action' => $action,
             'content' => $activity_content,
@@ -470,6 +470,11 @@ class RTMediaMedia {
             'primary_link' => '',
             'item_id' => $id
         );
+        
+        if($media->context == "group" && function_exists("bp_get_group_status") && bp_get_group_status(groups_get_group(array("group_id"=> $media->context_id)))!= "public"){
+            $activity_args["hide_sitewide"] = true;
+        }
+        
         if ($media->context == 'group' || 'profile') {
             $activity_args['component'] = $media->context;
         }
