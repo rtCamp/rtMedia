@@ -54,11 +54,11 @@ class RTMediaInteraction {
 	}
 
 	static function rewrite_rules() {
-		add_rewrite_rule('^media/([0-9]*)/([^/]*)/?','index.php?media_id=$matches[1]&action=$matches[2]','bottom');
-		add_rewrite_rule('^media/([0-9]*)/pg/([0-9]*)/?','index.php?media_id=$matches[1]&pg=$matches[2]','bottom');
-		add_rewrite_rule('^media/nonce/([^/]*)/?','index.php?nonce_type=$matches[1]','bottom');
-		add_rewrite_rule('^media/([A-Za-z]*)/pg/([0-9]*)/?','index.php?media_type=$matches[1]&pg=$matches[2]','bottom');
-		add_rewrite_rule('^media/pg/([0-9]*)/?','index.php?pg=$matches[1]','bottom');
+		add_rewrite_rule('^/media/([0-9]*)/([^/]*)/?','index.php?media_id=$matches[1]&action=$matches[2]','bottom');
+		add_rewrite_rule('^/media/([0-9]*)/pg/([0-9]*)/?','index.php?media_id=$matches[1]&pg=$matches[2]','bottom');
+		add_rewrite_rule('^/media/nonce/([^/]*)/?','index.php?nonce_type=$matches[1]','bottom');
+		add_rewrite_rule('^/media/([A-Za-z]*)/pg/([0-9]*)/?','index.php?media_type=$matches[1]&pg=$matches[2]','bottom');
+		add_rewrite_rule('^/media/pg/([0-9]*)/?','index.php?pg=$matches[1]','bottom');
 	}
 
 	static function rewrite_tags(){
