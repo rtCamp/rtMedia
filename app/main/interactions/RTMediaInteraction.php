@@ -53,7 +53,7 @@ class RTMediaInteraction {
 
 	}
 
-	function rewrite_rules() {
+	static function rewrite_rules() {
 		add_rewrite_rule('^media/([0-9]*)/([^/]*)/?','index.php?media_id=$matches[1]&action=$matches[2]','bottom');
 		add_rewrite_rule('^media/([0-9]*)/pg/([0-9]*)/?','index.php?media_id=$matches[1]&pg=$matches[2]','bottom');
 		add_rewrite_rule('^media/nonce/([^/]*)/?','index.php?nonce_type=$matches[1]','bottom');
@@ -61,7 +61,7 @@ class RTMediaInteraction {
 		add_rewrite_rule('^media/pg/([0-9]*)/?','index.php?pg=$matches[1]','bottom');
 	}
 
-	function rewrite_tags(){
+	static function rewrite_tags(){
 		add_rewrite_tag('%media_id%','([0-9]*)');
 		add_rewrite_tag('%action%','([^/]*)');
 		add_rewrite_tag('%nonce_type%','([^/]*)');

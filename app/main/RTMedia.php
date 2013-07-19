@@ -87,11 +87,6 @@ class RTMedia {
 	 * @global int $bp_media_counter Media counter
 	 */
 	public function __construct() {
-
-		// Rewrite API flush before activating and after deactivating the plugin
-		register_activation_hook( __FILE__, array( $this, 'flush_rewrite' ) );
-		register_deactivation_hook( __FILE__, array( $this, 'flush_rewrite' ) );
-
 		$this->default_thumbnail = apply_filters( 'rtmedia_default_thumbnail', RTMEDIA_URL . 'assets/thumb_default.png' );
 
 		// check for global album --- after wordpress is fully loaded
@@ -615,10 +610,6 @@ class RTMedia {
 		load_plugin_textdomain( 'rtmedia', false, basename( RTMEDIA_PATH ) . '/languages/' );
 	}
 
-	function flush_rewrite() {
-		error_log( 'flush' );
-		flush_rewrite_rules();
-	}
 
 	function check_global_album() {
 		$album = new RTMediaAlbum();
