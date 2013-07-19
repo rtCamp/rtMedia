@@ -160,6 +160,13 @@ Please visit [rtMedia's Features page](http://rtcamp.com/buddypress-media/?utm_s
 
 Please visit [rtMedia's Roadmap page](http://rtcamp.com/buddypress-media/roadmap/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "Visit rtMedia's Features page") to get some details about future releases.
 
+#### 3.0.7 ####
+* Fixed rewrite rule issue
+* Fixed comment issue on media
+* Fixed hide activity on private group
+* Fixed file format and mime type issue
+* Fixed image size issue
+
 #### 3.0.6 ####
 * Fixed image size issue
 * Fixed group create album permission and add setting for group admin
@@ -500,8 +507,8 @@ Please visit [rtMedia's Roadmap page](http://rtcamp.com/buddypress-media/roadmap
 * HTML5 Audio Tag Support (with fallback)
 * HTML5 Video Tag Support (with fallback)
 
-#### 3.0.6 ####
-Fixed image size creation isssue,create album permission,Activity Delete, Delete redirection,photo tagging lightbox issues.
+#### 3.0.7 ####
+Fixed rewrite rule,media comment, activity on private group and image size issue
 
 ## Sponsors ##
 
