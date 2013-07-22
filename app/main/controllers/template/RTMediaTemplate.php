@@ -88,11 +88,14 @@ class RTMediaTemplate {
             $valid = $this->sanitize_gallery_attributes($shortcode_attr['attr']);
             if ($valid) {
                 if (is_array($shortcode_attr['attr'])){
-                    $temp = $this->add_hidden_fields_in_gallery($shortcode_attr['attr']);
-                    
-                    add_action("rtmedia_before_media_gallery", create_function('', "echo '" . $temp . "';")) ;        
                     $this->update_global_query($shortcode_attr['attr']);
                 }
+                global $rtaccount;
+                if(!isset($rtaccount)){
+                    $rtaccount = 0;
+                }
+                //add_action("rtmedia_before_media_gallery",array(&$this,"")) ;        
+                $this->add_hidden_fields_in_gallery();
                 include $this->locate_template($template);
             } else {
                 echo __('Invalid attribute passed for rtmedia_gallery shortcode.', 'rtmedia');
@@ -100,15 +103,16 @@ class RTMediaTemplate {
             }
         }
     }
-    function add_hidden_fields_in_gallery($attr){
+    function add_hidden_fields_in_gallery(){
+        global $rtmedia_query;
         $return_str= "";
-        if($attr && is_array($attr)){
-            foreach($attr as $key=>$val){ 
+        if($rtmedia_query->original_query && is_array($rtmedia_query->original_query)){
+            foreach($rtmedia_query->original_query as $key=>$val){ 
                 $return_str.= '<input name="' . $key . '" value="' . $val . '" type="hidden" />';
                 
             }
         }
-        return $return_str;
+        echo  $return_str;
     }
     function check_return_json() {
         global $rtmedia_query;

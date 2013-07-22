@@ -35,6 +35,7 @@ class RTMediaQuery {
 	 * @var object The currently relevant interaction object
 	 */
 	private $interaction;
+        public $original_query;
 
 	/**
 	 *
@@ -371,6 +372,7 @@ class RTMediaQuery {
 	 * @return type
 	 */
 	function &query( $query ) {
+                $this->original_query =  $query;
 		$this->query = wp_parse_args($query , $this->query );
 
                 if(isset($this->query) && isset($this->query["global"]) && $this->query["global"]=="true"){
