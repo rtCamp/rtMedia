@@ -107,7 +107,8 @@ class RTMedia {
 		//  Enqueue Plugin Scripts and Styles
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts_styles' ), 11 );
 
-
+                
+                add_action( 'rt_db_upgrade', array($this,'fix_parent_id'));
 		/* Includes db specific wrapper functions required to render the template */
 		include(RTMEDIA_PATH . 'app/main/controllers/template/rt-template-functions.php');
 
@@ -115,7 +116,29 @@ class RTMedia {
                 add_filter('intermediate_image_sizes', array($this, 'filter_image_sizes'));
                 
 	}
-
+        function fix_parent_id(){
+            $site_global =   get_site_option('rtmedia-global-albums');
+            if($site_global && is_array($site_global) && isset($site_global[0])){
+                $model = new RTMediaModel();
+                $album_row = $model->get_by_id($site_global[0]);
+                if(isset($album_row["result"]) && count($album_row["result"]) > 0){
+                    global $wpdb;
+                    $row = $album_row["result"][0];
+                    $sql = "update $wpdb->posts p
+                                left join
+                            $model->table_name r ON p.ID = r.media_id 
+                        set 
+                            post_parent = {$row["media_id"]}
+                        where
+                            p.guid like '%/rtMedia/%'
+                                and (p.post_parent = 0 or p.post_parent is NULL)
+                                and not r.id is NULL
+                                and r.media_type <> 'album'";
+                       $wpdb->query($sql);     
+                }
+                
+            }
+        }
 	function set_site_options() {
 
 		$rtmedia_options = rtmedia_get_site_option( 'rtmedia-options' );
@@ -694,25 +717,26 @@ class RTMedia {
         if (isset($_REQUEST['post_id'])) {
             $sizes = $this->unset_bp_media_image_sizes_details($sizes);
         } elseif (isset($_REQUEST['id'])) { //For Regenerate Thumbnails Plugin
-            if ($parent_id = get_post_field('post_parent', $_REQUEST['id'])) {
-                $post_type = get_post_field('post_type', $parent_id);
-                if ($post_type == 'rtmedia_album') {
-                    $bp_media_sizes = $this->image_sizes();
-                    $sizes = array(
-                        'rt_media_thumbnail' => $bp_media_sizes['thumbnail'],
-                        'rt_media_activity_image' => $bp_media_sizes['activity'],
-                        'rt_media_single_image' => $bp_media_sizes['single'],
-                        'rt_media_featured_image' => $bp_media_sizes['featured'],
-                    );
-                } else {
+            $model  = new RTMediaModel();
+            $result = $model->get_by_media_id($_REQUEST['id']);
+            if($result){
+                if(isset($result["result"]) && count($result["result"]) > 0){
+                     $bp_media_sizes = $this->image_sizes();
+                        $sizes = array(
+                            'rt_media_thumbnail' => $bp_media_sizes['thumbnail'],
+                            'rt_media_activity_image' => $bp_media_sizes['activity'],
+                            'rt_media_single_image' => $bp_media_sizes['single'],
+                            'rt_media_featured_image' => $bp_media_sizes['featured'],
+                        );
+                }else{
                     $sizes = $this->unset_bp_media_image_sizes_details($sizes);
                 }
-            } else {
+            }else{
                 $sizes = $this->unset_bp_media_image_sizes_details($sizes);
             }
         }
         return $sizes;
-    }
+}
 
     function filter_image_sizes($sizes) {
         if (isset($_REQUEST['postid'])) { //For Regenerate Thumbnails Plugin
