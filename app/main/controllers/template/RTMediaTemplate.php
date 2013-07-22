@@ -86,10 +86,13 @@ class RTMediaTemplate {
             return $this->get_default_template();
         } else if ($shortcode_attr['name'] == 'gallery') {
             $valid = $this->sanitize_gallery_attributes($shortcode_attr['attr']);
-
             if ($valid) {
-                if (is_array($shortcode_attr['attr']))
+                if (is_array($shortcode_attr['attr'])){
+                    $temp = $this->add_hidden_fields_in_gallery($shortcode_attr['attr']);
+                    
+                    add_action("rtmedia_before_media_gallery", create_function('', "echo '" . $temp . "';")) ;        
                     $this->update_global_query($shortcode_attr['attr']);
+                }
                 include $this->locate_template($template);
             } else {
                 echo __('Invalid attribute passed for rtmedia_gallery shortcode.', 'rtmedia');
@@ -97,7 +100,16 @@ class RTMediaTemplate {
             }
         }
     }
-
+    function add_hidden_fields_in_gallery($attr){
+        $return_str= "";
+        if($attr && is_array($attr)){
+            foreach($attr as $key=>$val){ 
+                $return_str.= '<input name="' . $key . '" value="' . $val . '" type="hidden" />';
+                
+            }
+        }
+        return $return_str;
+    }
     function check_return_json() {
         global $rtmedia_query;
         if ($rtmedia_query->format == 'json') {
@@ -431,7 +443,6 @@ class RTMediaTemplate {
     function update_global_query($attr) {
 
         global $rtmedia_query;
-
         $rtmedia_query->query($attr);
     }
 

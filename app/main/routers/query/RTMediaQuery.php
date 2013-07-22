@@ -382,7 +382,6 @@ class RTMediaQuery {
                             unset($this->query["album_id"]);
                         unset($this->query["global"]);
                 }
-
 		$this->set_media_type();
 		$this->media_query = $this->query;
 		return $this->get_data();
@@ -567,7 +566,7 @@ class RTMediaQuery {
 	function populate_data() {
 		unset( $this->media_query->meta_query );
 		unset( $this->media_query->tax_query );
-
+                $this->current_media = -1;
 		if ( $this->action_query->action == 'comments' && ! isset( $this->action_query->id ) )
 			$this->media = $this->populate_comments();
 		else
