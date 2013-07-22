@@ -162,7 +162,7 @@ class RTMediaTemplate {
             $state = $media->update($rtmedia_query->action_query->id, $data, $rtmedia_query->media[0]->media_id);
             $rtmedia_query->query(false);
             do_action('rtmedia_after_update_media',$rtmedia_query->action_query->id, $state);
-            if($state){
+            if($state!==false){
                 add_action("rtmedia_before_template_load", array(&$this,"media_update_success_messege"));
             }else{
                 add_action("rtmedia_before_template_load", array(&$this, "media_update_success_error"));
