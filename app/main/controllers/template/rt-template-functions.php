@@ -889,6 +889,14 @@ function can_user_upload_in_group() {
     }
     return $display_flag;
 }
+
+/**
+ * 
+ * @param type $group_id
+ * @param type $user_id
+ * @return boolean
+ */
+
 function can_user_create_album_in_group($group_id = false, $user_id = false) {
     if($group_id == false){
         $group = groups_get_current_group();

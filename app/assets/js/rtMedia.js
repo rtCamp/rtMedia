@@ -1,3 +1,4 @@
+var rtMagnificPopup;
 jQuery('document').ready(function($) {
 
     $("#rt_media_comment_form").submit(function(e) {
@@ -12,10 +13,14 @@ jQuery('document').ready(function($) {
 
     if (jQuery('.wp-audio-shortcode, .wp-video-shortcode').length > 0)
         jQuery('.wp-audio-shortcode, .wp-video-shortcode').mediaelementplayer();
-//rtmedia_lightbox_enabled from setting 
+    //Remove title from popup duplication
+    $("li.rtmedia-list-item p a").each(function(e){
+        $(this).addClass("no-popup");
+    })
+    //rtmedia_lightbox_enabled from setting 
 if(typeof(rtmedia_lightbox_enabled) != 'undefined' &&  rtmedia_lightbox_enabled =="1"){
-    jQuery('.rtmedia-list-media, .rtmedia-activity-container ul.rtmedia-list, #bp-media-list,.widget-item-listing,.bp-media-sc-list, li.media.album_updated ul,ul.bp-media-list-media, li.activity-item div.activity-content div.activity-inner div.bp_media_content').magnificPopup({
-        delegate: 'a',
+    rtMagnificPopup = jQuery('.rtmedia-list-media, .rtmedia-activity-container ul.rtmedia-list, #bp-media-list,.widget-item-listing,.bp-media-sc-list, li.media.album_updated ul,ul.bp-media-list-media, li.activity-item div.activity-content div.activity-inner div.bp_media_content').magnificPopup({
+        delegate: 'a:not(".no-popup")',
         type: 'ajax',
         tLoading: 'Loading image #%curr%...',
         mainClass: 'mfp-img-mobile',
@@ -54,6 +59,9 @@ if(typeof(rtmedia_lightbox_enabled) != 'undefined' &&  rtmedia_lightbox_enabled 
             },
             close: function(e) {
                 console.log(e);
+            },
+            BeforeChange : function(e){
+        console.log(e);
             }
         }
     });
