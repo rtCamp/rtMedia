@@ -89,10 +89,23 @@ class RTMediaGalleryShortcode {
 				$attr = true;
 
 			$attr = array('name' => 'gallery', 'attr' => $attr);
-
+                        global $post;
+                        if(isset($attr) && isset($attr["attr"])){
+                            if(! is_array($attr["attr"])){
+                                $attr["attr"] = Array();
+                            }
+                            if(!isset($attr["attr"]["context_id"]) && isset($post->ID)){
+                                $attr["attr"]["context_id"] = $post->ID;
+                            }
+                            if(!isset($attr["attr"]["context"]) && isset($post->post_type) ){
+                                $attr["attr"]["context"] = $post->post_type;
+                            }
+                            
+                        }
+                        
 			$template = new RTMediaTemplate();
 			$template->set_template('media-gallery', $attr);
-
+                        
 			return ob_get_clean();
 		}
 	}

@@ -2,6 +2,7 @@ var galleryObj;
 var nextpage = 2;
 var upload_sync = false;
 var activity_id = -1;
+var uploaderObj;
 
 jQuery(function($) {
 
@@ -227,7 +228,7 @@ jQuery(function($) {
 
 
     if ($("#rtMedia-upload-button").length > 0) {
-        var uploaderObj = new UploadView(rtMedia_plupload_config);
+        uploaderObj = new UploadView(rtMedia_plupload_config);
 
         uploaderObj.initUploader();
 
@@ -295,6 +296,9 @@ jQuery(function($) {
         });
         uploaderObj.uploader.bind('BeforeUpload', function(up, file) {
             up.settings.multipart_params.privacy = $("#rtm-file_upload-ui select#privacy").val();
+            jQuery("#rtmedia-uploader-form input[type=hidden]").each(function(){
+                up.settings.multipart_params[$(this).attr("name")] = $(this).val();
+            });
             up.settings.multipart_params.activity_id = activity_id;
             if ($('.rtmedia-user-album-list').length > 0)
                 up.settings.multipart_params.album_id = $('.rtmedia-user-album-list').find(":selected").val();
@@ -312,7 +316,7 @@ jQuery(function($) {
                 uploaderObj.uploader.settings.multipart_params.activity_id = rtnObj.activity_id;
                 activity_id= rtnObj.activity_id;
             } catch (e) {
-                console.log('Invalid Activity ID');
+               // console.log('Invalid Activity ID');
             }
         });
 

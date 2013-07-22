@@ -17,8 +17,8 @@ class RTMediaUploadTemplate {
 	}
 
 	static function render($attr){
-		$view = new RTMediaUploadView($attr);
-        return $view->render('uploader');
+            $view = new RTMediaUploadView($attr);
+            return $view->render('uploader');
 	}
 
 	function register_script() {

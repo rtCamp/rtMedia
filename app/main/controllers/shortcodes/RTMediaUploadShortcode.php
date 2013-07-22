@@ -26,7 +26,6 @@ class RTMediaUploadShortcode {
         if (is_callable("RTMediaDeprecated::{$method_name}", true, $callable_name)) {
             $this->deprecated = RTMediaDeprecated::$method_name();
         }
-
     }
 
     /**
@@ -48,6 +47,19 @@ class RTMediaUploadShortcode {
      * @param type $attr
      */
     static function pre_render($attr) {
+
+        global $post;
+        if (isset($attr) && isset($attr["attr"])) {
+            if (!is_array($attr)) {
+                $attr = Array();
+            }
+            if (!isset($attr["context_id"]) && isset($post->ID)) {
+                $attr["context_id"] = $post->ID;
+            }
+            if (!isset($attr["context"]) && isset($post->post_type)) {
+                $attr["context"] = $post->post_type;
+            }
+        }
 
         if (self::display_allowed()) {
 

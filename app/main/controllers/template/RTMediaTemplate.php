@@ -121,7 +121,7 @@ class RTMediaTemplate {
         if ($rtmedia_query->media) {
             foreach ($rtmedia_query->media as $key => $media) {
                 $media_array[$key] = $media;
-                list($src, $width, $height) = wp_get_attachment_image_src($media->media_id, 'thumbnail');
+                list($src, $width, $height) = wp_get_attachment_image_src($media->media_id, 'rt_media_thumbnail');
                 if (!$src) {
                     global $rtmedia;
                     $src = $rtmedia->allowed_types[$media->media_type]["thumbnail"];
