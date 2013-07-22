@@ -34,18 +34,23 @@ class RTMediaPrivacy {
     function select_privacy_ui() {
         global $rtmedia;
         
-        if (intval($rtmedia->options["privacy_enabled"]) === 0)
+        if (!is_rtmedia_privacy_enable())
             return false;
         
-        if (intval($rtmedia->options["privacy_userOverride"]) === 0)
+        if (!is_rtmedia_privacy_user_overide())
             return false;
         
         global $rtmedia_media;
         $default = 0;
         if (isset($rtmedia_media->privacy))
             $default = $rtmedia_media->privacy;
-        else 
-            $default = intval($rtmedia->options["privacy_default"]);
+        else {
+            $default = get_user_meta(get_current_user_id(), 'rtmedia-default-privacy',true);
+            if(!$default){
+                $default  = get_rtmedia_default_privacy();
+            }
+        }
+            
 
         $form = new rtForm();
         $attributes = array(
@@ -161,7 +166,12 @@ class RTMediaPrivacy {
             return;
         }
 
-
+        if(!is_rtmedia_privacy_enable()){
+            return ;
+        }
+        if(!is_rtmedia_privacy_user_overide()){
+            return ;
+        }
 
         $settings_link = trailingslashit($user_domain . 'settings');
 
@@ -194,26 +204,33 @@ class RTMediaPrivacy {
     function content() {
         if (buddypress()->current_action != 'privacy')
             return;
-
+        
+        if(isset($_POST["rtmedia-default-privacy"])){
+            update_user_meta(get_current_user_id(), 'rtmedia-default-privacy', $_POST["rtmedia-default-privacy"]); 
+        }
+        $default_privacy = get_user_meta(get_current_user_id(), 'rtmedia-default-privacy',true);
+        if(!$default_privacy){
+            $default_privacy  = get_rtmedia_default_privacy();
+        }
         global $rtmedia;
-        $default_user_privacy = array(
-            'title' => __("Default Privacy", "rtmedia"),
-            'callback' => array("RTMediaFormHandler", "radio"),
-            'args' => array(
-                'key' => 'privacy_default',
-                'radios' => $rtmedia->privacy_settings['levels'],
-                'default' => get_user_meta(get_current_user_id(), 'rtmedia-default-privacy')
-            )
-        );
+       
         ?>
-        <div class="large-12">
-            <div class="row section">
-                <div class="columns large-2"><?php echo $default_user_privacy['title']; ?></div>
+<form method='post'>
+        <div class="">
+            <div class="section">
+                <div class="columns large-2"><?php echo __("Default Privacy", "rtmedia"); ?></div>
                 <div class="columns large-5">
-        <?php call_user_func($default_user_privacy['callback'], $default_user_privacy['args']); ?>
-                </div>
+                 <?php 
+                 foreach($rtmedia->privacy_settings['levels'] as $level=>$data){ ?>
+                    <label><input type='radio' value='<?php echo $level;?>' name ='rtmedia-default-privacy' <?php echo ($default_privacy == $level)?"checked":""; ?> /> <?php _e($data);?></label><br/>
+                 <?php } ?>
+                 </div>
             </div>
         </div>
+    <div class="submit">
+		<input type="submit" name="submit" value="<?php _e("Save Changes"); ?>" id="submit" class="auto">
+	</div>
+    </form>
     <?php
     }
 
