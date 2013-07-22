@@ -202,7 +202,7 @@ class RTMediaMedia {
         /* action to perform any task after updating a media */
         do_action('rtmedia_after_update_media', $id);
 
-        if ($status == 0) {
+        if ($status === false) {
             return false;
         } else {
             return true;
