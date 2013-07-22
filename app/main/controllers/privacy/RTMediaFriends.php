@@ -24,8 +24,8 @@ class RTMediaFriends {
 
 	function get_friends_cache( $user ) {
 
-		if(!class_exists('BuddyPress')) return;
-		if(!bp_is_active('friends'))return;
+		if(!class_exists('BuddyPress')) return array();
+		if(!bp_is_active('friends'))return array();
 
 		if ( ! $user )
 			return array();

@@ -153,7 +153,7 @@ class RTMediaUserInteraction {
 		$friends = new RTMediaFriends();
 		$friends = $friends->get_friends_cache($this->interactor);
                 
-		if(in_array($this->owner,$friends)) return 40;
+		if($friends && in_array($this->owner,$friends)) return 40;
 
 		return 20;
 	}
