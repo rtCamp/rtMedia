@@ -209,7 +209,7 @@ class RTMediaPrivacy {
             update_user_meta(get_current_user_id(), 'rtmedia-default-privacy', $_POST["rtmedia-default-privacy"]); 
         }
         $default_privacy = get_user_meta(get_current_user_id(), 'rtmedia-default-privacy',true);
-        if(!$default_privacy){
+        if($default_privacy === false){
             $default_privacy  = get_rtmedia_default_privacy();
         }
         global $rtmedia;
@@ -218,7 +218,7 @@ class RTMediaPrivacy {
 <form method='post'>
         <div class="">
             <div class="section">
-                <div class="columns large-2"><?php echo __("Default Privacy", "rtmedia"); ?></div>
+                <div class="columns large-2"><h2><?php echo __("Default Privacy", "rtmedia"); ?></h2></div>
                 <div class="columns large-5">
                  <?php 
                  foreach($rtmedia->privacy_settings['levels'] as $level=>$data){ ?>
@@ -227,6 +227,7 @@ class RTMediaPrivacy {
                  </div>
             </div>
         </div>
+    <br/>
     <div class="submit">
 		<input type="submit" name="submit" value="<?php _e("Save Changes"); ?>" id="submit" class="auto">
 	</div>
