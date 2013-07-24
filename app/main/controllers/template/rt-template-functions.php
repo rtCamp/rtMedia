@@ -915,3 +915,42 @@ function can_user_create_album_in_group ( $group_id = false, $user_id = false ) 
     return $display_flag;
 }
 
+function is_rtmedia_upload_video_enabled () {
+    global $rtmedia;
+    if ( isset ( $rtmedia->options[ "allowedTypes_video_enabled" ] ) && $rtmedia->options[ "allowedTypes_video_enabled" ] != "0" ) {
+        return true;
+    }
+    return false;
+}
+
+function is_rtmedia_upload_photo_enabled () {
+    global $rtmedia;
+    if ( isset ( $rtmedia->options[ "allowedTypes_photo_enabled" ] ) && $rtmedia->options[ "allowedTypes_photo_enabled" ] != "0" ) {
+        return true;
+    }
+    return false;
+}
+
+function is_rtmedia_upload_music_enabled () {
+    global $rtmedia;
+    if ( isset ( $rtmedia->options[ "allowedTypes_music_enabled" ] ) && $rtmedia->options[ "allowedTypes_music_enabled" ] != "0" ) {
+        return true;
+    }
+    return false;
+}
+
+function get_rtmedia_allowed_upload_type () {
+    global $rtmedia;
+    $allow_type_str = "";
+    $sep = "";
+    foreach ( $rtmedia->allowed_types as $type ) {
+        if ( call_user_func ( "is_rtmedia_upload_" . $type[ "name" ] . "_enabled" ) ) {
+            foreach ( $type[ "extn" ] as $extn ) {
+                $allow_type_str .= $sep . $extn;
+                $sep = ",";
+            }
+        }
+    }
+    return $allow_type_str;
+}
+
