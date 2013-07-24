@@ -139,7 +139,14 @@ class RTMediaModel extends RTDBModel {
         global $wpdb;
         if ( is_multisite () )
             $order_by = "blog_id ," . $order_by;
-        $sql = "SELECT * FROM {$this->table_name} WHERE id IN(SELECT DISTINCT (album_id) FROM {$this->table_name} WHERE media_author = $author_id AND album_id IS NOT NULL AND media_type != 'album' AND context != 'group') OR (media_type = 'album' AND media_author = $author_id AND context != 'group')";
+
+        $sql = "SELECT * FROM {$this->table_name} WHERE (id IN(SELECT DISTINCT (album_id)
+                            FROM {$this->table_name}
+                                WHERE media_author = $author_id
+                                    AND album_id IS NOT NULL
+                                    AND media_type <> 'album' AND context <> 'group') OR (media_author = $author_id ))
+                                        AND media_type = 'album'
+                                        AND (context <> 'group' or context is NULL) ";
         $sql .= " ORDER BY {$this->table_name}.$order_by";
 
         if ( is_integer ( $offset ) && is_integer ( $per_page ) ) {
@@ -160,7 +167,6 @@ class RTMediaModel extends RTDBModel {
         if ( is_integer ( $offset ) && is_integer ( $per_page ) ) {
             $sql .= ' LIMIT ' . $offset . ',' . $per_page;
         }
-
         $results = $wpdb->get_results ( $sql );
         return $results;
     }
@@ -179,9 +185,7 @@ class RTMediaModel extends RTDBModel {
         $query .= "SUM(CASE WHEN {$this->table_name}.media_type LIKE 'album' THEN 1 ELSE 0 END) as album
 	FROM
 		{$this->table_name} WHERE 2=2 ";
-        if ( $user_id ) {
-            $query .= "AND {$this->table_name}.media_author = $user_id ";
-        }
+
         if ( $where_query ) {
             foreach ( $where_query as $colname => $colvalue ) {
                 if ( strtolower ( $colname ) != "meta_query" ) {
@@ -194,18 +198,45 @@ class RTMediaModel extends RTDBModel {
                             $colvalue[ 'value' ] = $colvalue;
                         }
 
-                        $where .= " AND {$this->table_name}.{$colname} {$compare} ('" . implode ( "','", $colvalue[ 'value' ] ) . "')";
+                        $query .= " AND {$this->table_name}.{$colname} {$compare} ('" . implode ( "','", $colvalue[ 'value' ] ) . "')";
                     }
                     else
-                        $where .= " AND {$this->table_name}.{$colname} = '{$colvalue}'";
+                        $query .= " AND {$this->table_name}.{$colname} = '{$colvalue}'";
                 }
             }
         }
         $query .= "GROUP BY privacy";
+
         $result = $wpdb->get_results ( $query );
         if ( ! is_array ( $result ) )
             return false;
         return $result;
+    }
+
+    function get_other_album_count ( $profile_id, $context = "profile" ) {
+        $global = RTMediaAlbum::get_globals ();
+        $sql = "select distinct album_id from {$this->table_name} where 2=2 AND context = '{$context}' ";
+        if ( is_array ( $global ) && count ( $global ) > 0 ) {
+            $sql .= " and album_id in (";
+            $sep = "";
+            foreach ( $global as $id ) {
+                $sql .= $sep . $id;
+                $sep = ",";
+            }
+            $sql .= ")";
+        }
+        if ( $context == "profile" ) {
+            $sql .= " AND media_author=$profile_id ";
+        } else if ( $context == "group" ) {
+            $sql .= " AND context_id=$profile_id ";
+        }
+        global $wpdb;
+        $result = $wpdb->get_results ( $sql );
+        if ( isset ( $result ) ) {
+            return count ( $result );
+        } else {
+            return 0;
+        }
     }
 
 }
