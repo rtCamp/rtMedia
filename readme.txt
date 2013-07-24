@@ -161,8 +161,8 @@ Please visit [rtMedia's Features page](http://rtcamp.com/buddypress-media/?utm_s
 Please visit [rtMedia's Roadmap page](http://rtcamp.com/buddypress-media/roadmap/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "Visit rtMedia's Features page") to get some details about future releases.
 
 = 3.0.8 =
-* Fixed gallery and upload shortcode 
-* Fixed duplicate media in popup 
+* Fixed gallery and upload shortcode
+* Fixed duplicate media in popup
 * Fixed privacy user setting
 * Fixed post parent issue and regenerate thumbnail issue
 
@@ -516,7 +516,7 @@ Please visit [rtMedia's Roadmap page](http://rtcamp.com/buddypress-media/roadmap
 == Upgrade Notice ==
 
 = 3.0.8 =
-Fixed gallery and upload shortcode,duplicate media in popup, privacy user setting and regenerate thumbnail issue
+Requires BuddyPress 1.7 or higher, if using BuddyPress. Fixed gallery and upload shortcode,duplicate media in popup, privacy user setting and regenerate thumbnail issue
 
 == Sponsors ==
 
