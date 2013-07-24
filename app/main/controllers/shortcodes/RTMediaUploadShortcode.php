@@ -16,15 +16,15 @@ class RTMediaUploadShortcode {
     /**
      *
      */
-    public function __construct() {
+    public function __construct () {
 
 
 
-        add_shortcode('rtmedia_uploader', array('RTMediaUploadShortcode', 'pre_render'));
-        $method_name = strtolower(str_replace('RTMedia', '', __CLASS__));
+        add_shortcode ( 'rtmedia_uploader', array( 'RTMediaUploadShortcode', 'pre_render' ) );
+        $method_name = strtolower ( str_replace ( 'RTMedia', '', __CLASS__ ) );
 
-        if (is_callable("RTMediaDeprecated::{$method_name}", true, $callable_name)) {
-            $this->deprecated = RTMediaDeprecated::$method_name();
+        if ( is_callable ( "RTMediaDeprecated::{$method_name}", true, $callable_name ) ) {
+            $this->deprecated = RTMediaDeprecated::$method_name ();
         }
     }
 
@@ -33,11 +33,10 @@ class RTMediaUploadShortcode {
      *
      * @return type
      */
-    static function display_allowed() {
+    static function display_allowed () {
 
-        $flag = (!(is_home() || is_post_type_archive() || is_author())) && is_user_logged_in();
-
-        $flag = apply_filters('before_rtmedia_uploader_display', $flag);
+        $flag = ( ! (is_home () || is_post_type_archive () || is_author ())) && is_user_logged_in () && (is_rtmedia_upload_music_enabled () || is_rtmedia_upload_photo_enabled () || is_rtmedia_upload_video_enabled ());
+        $flag = apply_filters ( 'before_rtmedia_uploader_display', $flag );
         return $flag;
     }
 
@@ -46,30 +45,30 @@ class RTMediaUploadShortcode {
      *
      * @param type $attr
      */
-    static function pre_render($attr) {
+    static function pre_render ( $attr ) {
 
         global $post;
-        if (isset($attr) && isset($attr["attr"])) {
-            if (!is_array($attr)) {
-                $attr = Array();
+        if ( isset ( $attr ) && isset ( $attr[ "attr" ] ) ) {
+            if ( ! is_array ( $attr ) ) {
+                $attr = Array( );
             }
-            if (!isset($attr["context_id"]) && isset($post->ID)) {
-                $attr["context_id"] = $post->ID;
+            if ( ! isset ( $attr[ "context_id" ] ) && isset ( $post->ID ) ) {
+                $attr[ "context_id" ] = $post->ID;
             }
-            if (!isset($attr["context"]) && isset($post->post_type)) {
-                $attr["context"] = $post->post_type;
+            if ( ! isset ( $attr[ "context" ] ) && isset ( $post->post_type ) ) {
+                $attr[ "context" ] = $post->post_type;
             }
         }
 
-        if (self::display_allowed()) {
+        if ( self::display_allowed () ) {
 
-            ob_start();
+            ob_start ();
 
             self::$add_sc_script = true;
-            RTMediaUploadTemplate::render($attr);
+            RTMediaUploadTemplate::render ( $attr );
 
             self::$uploader_displayed = true;
-            return ob_get_clean();
+            return ob_get_clean ();
         }
     }
 
