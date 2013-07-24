@@ -787,10 +787,12 @@ function get_rtmedia_permalink ( $id ) {
         if ( isset ( $rtmedia_query->query ) && isset ( $rtmedia_query->query[ "context" ] ) && $rtmedia_query->query[ "context" ] == "group" ) {
             $parent_link = get_rtmedia_group_link ( $rtmedia_query->query[ "context_id" ] );
         } else {
+            if ( ! isset ( $media[ 0 ]->context ) ) {
+                $media[ 0 ]->media_author = $rtmedia_query->query[ "context_id" ];
+            }
             $parent_link = get_rtmedia_user_link ( $media[ 0 ]->media_author );
         }
     }
-
 
     $parent_link = trailingslashit ( $parent_link );
     return trailingslashit ( $parent_link . 'media/' . $id );
