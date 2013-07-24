@@ -23,26 +23,26 @@ class RTMediaContext {
      * $type - Context Type. It can be any type among these. (post, page, custom_post, home_page, archive etc.)
      * $id - context id of the context
      */
-            public $type, $id;
+    public $type, $id;
 
     /**
      *
      * @return \RTMediaContext
      */
-    function __construct() {
-        $this->set_context();
+    function __construct () {
+        $this->set_context ();
         return $this;
     }
 
     /**
      *
      */
-    function set_context() {
+    function set_context () {
         global $post;
-        if (class_exists('BuddyPress')) {
-            $this->set_bp_context();
+        if ( class_exists ( 'BuddyPress' ) ) {
+            $this->set_bp_context ();
         } else {
-            $this->set_wp_context();
+            $this->set_wp_context ();
         }
     }
 
@@ -50,50 +50,53 @@ class RTMediaContext {
      *
      * @global type $post
      */
-    function set_wp_context() {
+    function set_wp_context () {
         global $post;
-		if(is_author()) {
-			$this->type = 'profile';
-			$this->id = get_query_var('author');
-		} elseif (isset($post->post_type)) {
+        if ( is_author () ) {
+            $this->type = 'profile';
+            $this->id = get_query_var ( 'author' );
+        } elseif ( isset ( $post->post_type ) ) {
             $this->type = $post->post_type;
             $this->id = $post->ID;
-		}
-    }
-
-    /**
-     *
-     */
-    function set_bp_context() {
-        if (bp_is_blog_page()) {
-            $this->set_wp_context();
         } else {
-            $this->set_bp_component_context();
+            $this->type = 'profile';
+            $this->id = get_current_user_id ();
         }
     }
 
     /**
      *
      */
-    function set_bp_component_context() {
-        if (bp_displayed_user_id() && !bp_is_group())
+    function set_bp_context () {
+        if ( bp_is_blog_page () ) {
+            $this->set_wp_context ();
+        } else {
+            $this->set_bp_component_context ();
+        }
+    }
+
+    /**
+     *
+     */
+    function set_bp_component_context () {
+        if ( bp_displayed_user_id () && ! bp_is_group () )
             $this->type = 'profile';
-        else if (!bp_displayed_user_id() && bp_is_group())
+        else if ( ! bp_displayed_user_id () && bp_is_group () )
             $this->type = 'group';
 
-        $this->id = $this->get_current_bp_component_id();
+        $this->id = $this->get_current_bp_component_id ();
     }
 
     /**
      *
      * @return type
      */
-    function get_current_bp_component_id() {
-        switch (bp_current_component()) {
-            case 'groups': return bp_get_current_group_id();
+    function get_current_bp_component_id () {
+        switch ( bp_current_component () ) {
+            case 'groups': return bp_get_current_group_id ();
                 break;
             default:
-                return bp_displayed_user_id();
+                return bp_displayed_user_id ();
                 break;
         }
     }
