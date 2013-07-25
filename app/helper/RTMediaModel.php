@@ -199,9 +199,14 @@ class RTMediaModel extends RTDBModel {
                         }
 
                         $query .= " AND {$this->table_name}.{$colname} {$compare} ('" . implode ( "','", $colvalue[ 'value' ] ) . "')";
+                    } else {
+
+                        if ( $colname == "context" && $colvalue == "profile" ) {
+                            $query .= " AND {$this->table_name}.{$colname} <> 'group'";
+                        } else {
+                            $query .= " AND {$this->table_name}.{$colname} = '{$colvalue}'";
+                        }
                     }
-                    else
-                        $query .= " AND {$this->table_name}.{$colname} = '{$colvalue}'";
                 }
             }
         }

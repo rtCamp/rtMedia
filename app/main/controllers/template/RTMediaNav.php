@@ -2,8 +2,10 @@
 
 class RTMediaNav {
 
-    function __construct () {
-
+    function __construct ( $action = true ) {
+        if ( $action === false ) {
+            return;
+        }
         add_action ( 'admin_bar_menu', array( $this, 'admin_nav' ), 99 );
 
         if ( class_exists ( 'BuddyPress' ) ) {
@@ -234,6 +236,14 @@ class RTMediaNav {
                 $media_count[ strval ( $count->privacy ) ] = $count;
             unset ( $media_count[ strval ( $count->privacy ) ]->privacy );
         }
+
+        if ( isset ( $where[ "context" ] ) ) {
+            if ( $where[ "context" ] == "profile" ) {
+                update_user_meta ( $user_id, 'rtmedia_counts', $media_count );
+            } else if ( $where[ "context" ] == "group" && function_exists ( "groups_update_groupmeta" ) ) {
+                groups_update_groupmeta ( $user_id, 'rtmedia_counts', $media_count );
+            }
+        }
         return $media_count;
     }
 
@@ -245,17 +255,15 @@ class RTMediaNav {
         if ( ! $profile_id )
             return false;
         if ( $context == "profile" ) {
-            //$counts = get_user_meta ( $profile_id, 'rtmedia_count' );
-            //if ( empty ( $counts ) ) {
-            $counts = $this->refresh_counts ( $profile_id, array( "context" => $context, 'media_author' => $profile_id ) );
-            //update_user_meta($user_id, 'rtmedia_count', $counts);
-            //}
+            $counts = get_user_meta ( $profile_id, 'rtmedia_counts', true );
+            if ( $counts == false || empty ( $counts ) ) {
+                $counts = $this->refresh_counts ( $profile_id, array( "context" => $context, 'media_author' => $profile_id ) );
+            }
         } else if ( function_exists ( "groups_get_groupmeta" ) && $context = "group" ) {
-            //$counts = groups_get_groupmeta ( $profile_id, 'rtmedia_count' );
-            //if ( empty ( $counts ) ) {
-            $counts = $this->refresh_counts ( $profile_id, array( "context" => $context, 'context_id' => $profile_id ) );
-            //    groups_update_groupmeta ( $profile_id, 'rtmedia_count', $counts );
-            // }
+            $counts = groups_get_groupmeta ( $profile_id, 'rtmedia_counts' );
+            if ( $counts === false || empty ( $counts ) ) {
+                $counts = $this->refresh_counts ( $profile_id, array( "context" => $context, 'context_id' => $profile_id ) );
+            }
         }
         return $counts;
     }
@@ -288,6 +296,7 @@ class RTMediaNav {
 
     function process_count ( $media_count, $privacy ) {
         $total = array( 'all' => 0 );
+
         foreach ( $media_count as $private => $ind_count ) {
             if ( $private <= $privacy ) {
                 foreach ( $ind_count as $type => $ind_ind_count ) {

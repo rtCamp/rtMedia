@@ -112,6 +112,8 @@ class RTMediaQuery {
                 $media_type = $media[ 0 ]->media_type;
                 $this->query[ 'media_type' ] = $media_type;
             }
+        } else {
+
         }
     }
 
@@ -437,6 +439,7 @@ class RTMediaQuery {
         $order_by = $this->order_by ();
 
         if ( isset ( $this->media_query[ 'context' ] ) ) {
+
             if ( $this->media_query[ 'context' ] == 'profile' ) {
 
                 if ( ! $this->is_album_gallery () )
