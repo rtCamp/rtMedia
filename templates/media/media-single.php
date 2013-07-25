@@ -16,16 +16,19 @@
 
             </div>
             <div class="rtmedia-single-meta columns <?php echo ($rt_ajax_request) ? "large-3" : "large-12"; ?>">
-                <div>
-                    <div class="userprofile">
-                        <?php rtmedia_author_profile_pic ( true ); ?>
-                    </div>
-                    <div class="username">
-                        <?php rtmedia_author_name ( true ); ?>
-                    </div>
+                <?php if ( $rt_ajax_request ) { ?>
+                    <div>
+                        <div class="userprofile">
+                            <?php rtmedia_author_profile_pic ( true ); ?>
+                        </div>
+                        <div class="username">
+                            <?php rtmedia_author_name ( true ); ?>
+                        </div>
 
-                </div>
-                <?php rtmedia_description (); ?>
+                    </div>
+                <?php } ?>
+                <?php rtmedia_description ();
+                ?>
 
                 <div class="rtmedia-item-actions">
                     <?php rtmedia_actions (); ?>
