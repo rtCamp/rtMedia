@@ -47,7 +47,7 @@ class RTMediaNav {
             $group_counts = $this->actual_counts ( $bp->groups->current_group->id, "group" );
             $bp->bp_options_nav[ bp_get_current_group_slug () ][ 'media' ] = array(
                 'name' => RTMEDIA_MEDIA_LABEL . '<span>' . $group_counts[ 'total' ][ 'all' ] . '</span>',
-                'link' => ( (is_multisite ()) ? get_site_url ( get_current_blog_id () ) : get_site_url () ) . '/' . bp_get_groups_root_slug () . '/' . bp_get_current_group_slug () . '/media',
+                'link' => ( (is_multisite ()) ? get_site_url ( get_current_blog_id () ) : get_site_url () ) . '/' . bp_get_groups_root_slug () . '/' . bp_get_current_group_slug () . '/' . RTMEDIA_MEDIA_SLUG,
                 'slug' => RTMEDIA_MEDIA_SLUG,
                 'user_has_access' => true,
                 'css_id' => 'rtmedia-media-nav',
@@ -84,7 +84,7 @@ class RTMediaNav {
                 'parent' => 'my-account',
                 'id' => 'my-account-' . RTMEDIA_MEDIA_SLUG,
                 'title' => RTMEDIA_MEDIA_LABEL,
-                'href' => trailingslashit ( get_rtmedia_user_link ( get_current_user_id () ) ) . 'media/'
+                'href' => trailingslashit ( get_rtmedia_user_link ( get_current_user_id () ) ) . RTMEDIA_MEDIA_SLUG . '/'
             ) );
 
 //			$wp_admin_bar->add_menu( array(
@@ -99,7 +99,7 @@ class RTMediaNav {
                     'parent' => 'my-account-' . RTMEDIA_MEDIA_SLUG,
                     'id' => 'my-account-media-' . RTMEDIA_ALBUM_SLUG,
                     'title' => __ ( 'Albums', 'rtmedia' ),
-                    'href' => trailingslashit ( get_rtmedia_user_link ( get_current_user_id () ) ) . 'media/album/'
+                    'href' => trailingslashit ( get_rtmedia_user_link ( get_current_user_id () ) ) . RTMEDIA_MEDIA_SLUG . '/album/'
                 ) );
             }
 
@@ -113,7 +113,7 @@ class RTMediaNav {
                     'parent' => 'my-account-' . constant ( 'RTMEDIA_MEDIA_SLUG' ),
                     'id' => 'my-account-media-' . constant ( 'RTMEDIA_' . $name . '_SLUG' ),
                     'title' => $type[ 'plural_label' ],
-                    'href' => trailingslashit ( get_rtmedia_user_link ( get_current_user_id () ) ) . 'media/' . constant ( 'RTMEDIA_' . $name . '_SLUG' ) . '/'
+                    'href' => trailingslashit ( get_rtmedia_user_link ( get_current_user_id () ) ) . RTMEDIA_MEDIA_SLUG . '/' . constant ( 'RTMEDIA_' . $name . '_SLUG' ) . '/'
                 ) );
             }
         }
@@ -166,7 +166,7 @@ class RTMediaNav {
             }
 
             $counts[ 'total' ][ "album" ] = $counts[ 'total' ][ "album" ] + $other_count;
-            echo apply_filters ( 'rtmedia_sub_nav_albums', '<li id="rtmedia-nav-item-albums-li" ' . $albums . '><a id="rtmedia-nav-item-albums" href="' . trailingslashit ( $link ) . 'media/album/">' . __ ( "Albums", "rtmedia" ) . '<span>' . ((isset ( $counts[ 'total' ][ "album" ] )) ? $counts[ 'total' ][ "album" ] : 0 ) . '</span>' . '</a></li>' );
+            echo apply_filters ( 'rtmedia_sub_nav_albums', '<li id="rtmedia-nav-item-albums-li" ' . $albums . '><a id="rtmedia-nav-item-albums" href="' . trailingslashit ( $link ) . RTMEDIA_MEDIA_SLUG . '/album/">' . __ ( "Albums", "rtmedia" ) . '<span>' . ((isset ( $counts[ 'total' ][ "album" ] )) ? $counts[ 'total' ][ "album" ] : 0 ) . '</span>' . '</a></li>' );
         }
 
         foreach ( $rtmedia->allowed_types as $type ) {
@@ -210,7 +210,7 @@ class RTMediaNav {
             echo apply_filters ( 'rtmedia_sub_nav_' . $type[ 'name' ], '<li id="rtmedia-nav-item-' . $type[ 'name' ]
                     . '-' . $context . '-' . $context_id . '-li" ' . $selected
                     . '><a id="rtmedia-nav-item-' . $type[ 'name' ] . '" href="'
-                    . $profile_link . 'media/'
+                    . $profile_link . RTMEDIA_MEDIA_SLUG . '/'
                     . constant ( 'RTMEDIA_' . $name . '_SLUG' ) . '/' . '">'
                     . $type[ 'plural_label' ] . '<span>' . ((isset ( $counts[ 'total' ][ $type[ 'name' ] ] )) ? $counts[ 'total' ][ $type[ 'name' ] ] : 0) . '</span>' . '</a></li>', $type[ 'name' ]
             );

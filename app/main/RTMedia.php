@@ -194,7 +194,7 @@ class RTMedia {
                 'plural' => 'photos',
                 'label' => __ ( 'Photo', 'rtmedia' ),
                 'plural_label' => __ ( 'Photos', 'rtmedia' ),
-                'extn' => array( 'jpeg', 'png', 'gif' ),
+                'extn' => array( 'jpg', 'jpeg', 'png', 'gif' ),
                 'thumbnail' => RTMEDIA_URL . 'app/assets/img/image_thumb.png'
             ),
             'video' => array(
@@ -795,7 +795,7 @@ function get_rtmedia_permalink ( $id ) {
     }
 
     $parent_link = trailingslashit ( $parent_link );
-    return trailingslashit ( $parent_link . 'media/' . $id );
+    return trailingslashit ( $parent_link . RTMEDIA_MEDIA_SLUG . '/' . $id );
 }
 
 function get_rtmedia_user_link ( $id ) {
