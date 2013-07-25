@@ -54,15 +54,16 @@ class RTMediaAlbum {
         /* Set up Album post type arguments */
         $album_args = array(
             'labels' => $album_labels,
-            'public' => true,
-            'publicly_queryable' => true,
+            'public' => false,
+            'publicly_queryable' => false,
             'show_ui' => false,
             'show_in_menu' => false,
-            'query_var' => true,
+            'query_var' => false,
             'capability_type' => 'post',
-            'has_archive' => true,
+            'has_archive' => false,
             'hierarchical' => false,
             'menu_position' => null,
+            'rewrite' => false,
             'supports' => array(
                 'title',
                 'author',
