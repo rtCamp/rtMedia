@@ -172,7 +172,7 @@ class RTMedia {
     function custome_style_for_activity_image_size () {
         ?>
         <style>
-            .rtmedia-activity-container .rtmedia-list .rtmedia-item-thumbnail{
+            .rtmedia-activity-container .rtmedia-list .rtmedia-item-thumbnail,.bp_media_content img{
                 max-width: <?php echo $this->options[ "defaultSizes_photo_medium_width" ]; ?>px;
                 max-height: <?php echo $this->options[ "defaultSizes_photo_medium_height" ]; ?>px;
             }
