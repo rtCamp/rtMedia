@@ -38,6 +38,12 @@ class RTMediaUploadEndpoint {
                 $rtupload = new RTMediaUpload ( $this->upload );
                 $mediaObj = new RTMediaMedia();
                 $media = $mediaObj->model->get ( array( 'id' => $rtupload->media_ids[ 0 ] ) );
+                $rtMediaNav = new RTMediaNav();
+                if ( $media[ 0 ]->context == "group" ) {
+                    $rtMediaNav->refresh_counts ( $media[ 0 ]->context_id, array( "context" => $media[ 0 ]->context, 'context_id' => $media[ 0 ]->context_id ) );
+                } else {
+                    $rtMediaNav->refresh_counts ( $media[ 0 ]->media_author, array( "context" => "profile", 'media_author' => $media[ 0 ]->media_author ) );
+                }
                 if ( $activity_id == -1 && ( ! (isset ( $_POST[ "rtmedia_update" ] ) && $_POST[ "rtmedia_update" ] == "true")) ) {
                     $activity_id = $mediaObj->insert_activity ( $rtupload->media_ids[ 0 ], $media[ 0 ] );
                 } else {
