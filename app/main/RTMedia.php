@@ -529,6 +529,7 @@ class RTMedia {
 
         $this->set_allowed_types (); // Define allowed types
         $this->constants (); // Define constants
+        $this->redirect_on_change_slug ();
         $this->set_default_sizes (); // set default sizes
         $this->set_privacy (); // set privacy
 
@@ -621,6 +622,21 @@ class RTMedia {
 
         do_action ( 'bp_media_init' ); // legacy For plugin using this actions
         do_action ( 'rtmedia_init' );
+    }
+
+    function redirect_on_change_slug () {
+        $old_slugs = get_site_option ( "rtmedia_old_media_slug", false, true );
+        $current_slugs = get_site_option ( "rtmedia_current_media_slug", false, false );
+        if ( $current_slugs === false ) {
+            update_site_option ( "rtmedia_current_media_slug", RTMEDIA_MEDIA_SLUG );
+            return;
+        }
+        if ( $current_slugs === RTMEDIA_MEDIA_SLUG )
+            return;
+        if ( $old_slugs === false )
+            $old_slugs = array( );
+        $old_slugs[ ] = $current_slugs;
+        update_site_option ( "rtmedia_current_media_slug", RTMEDIA_MEDIA_SLUG );
     }
 
     /**
@@ -740,7 +756,7 @@ class RTMedia {
                 $post_type = get_post_field ( 'post_type', $parent_id );
                 if ( $post_type == 'rtmedia_album' ) {
                     $sizes = array(
-                        'rt_media_thumbnail', 'rt_media_activity_image', 'rt_media_single_image'
+                        'rt_media_thumbnail', 'rt_media_activity_image', 'rt_media_single_image', 'rt_media_featured_image'
                     );
                 } else {
                     $sizes = $this->unset_bp_media_image_sizes ( $sizes );
@@ -760,6 +776,8 @@ class RTMedia {
             unset ( $sizes[ 'rt_media_activity_image' ] );
         if ( isset ( $sizes[ 'rt_media_single_image' ] ) )
             unset ( $sizes[ 'rt_media_single_image' ] );
+        if ( isset ( $sizes[ 'rt_media_featured_image' ] ) )
+            unset ( $sizes[ 'rt_media_featured_image' ] );
         return $sizes;
     }
 
@@ -769,6 +787,8 @@ class RTMedia {
         if ( ($key = array_search ( 'rt_media_activity_image', $sizes )) !== false )
             unset ( $sizes[ $key ] );
         if ( ($key = array_search ( 'rt_media_single_image', $sizes )) !== false )
+            unset ( $sizes[ $key ] );
+        if ( ($key = array_search ( 'rt_media_featured_image', $sizes )) !== false )
             unset ( $sizes[ $key ] );
         return $sizes;
     }
