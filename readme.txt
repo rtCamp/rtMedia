@@ -6,7 +6,7 @@ License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires at least: WordPress 3.5
 Tested up to: WordPress 3.5.2 + BuddyPress 1.7
-Stable tag: 3.0.9
+Stable tag: 3.0.10
 
 rtMedia adds albums, audio/video encoding, privacy/sharing, front-end uploads & more. All this works nicely on mobile/tablets devices.
 
@@ -159,6 +159,11 @@ Please visit [rtMedia's Features page](http://rtcamp.com/buddypress-media/?utm_s
 == Changelog ==
 
 Please visit [rtMedia's Roadmap page](http://rtcamp.com/buddypress-media/roadmap/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "Visit rtMedia's Features page") to get some details about future releases.
+
+= 3.0.10 =
+* Add Dahsboard Widget
+* Fix uploader for Mobile
+* Other minor bug fixes
 
 = 3.0.9 =
 * Add Media Count
@@ -521,8 +526,8 @@ Please visit [rtMedia's Roadmap page](http://rtcamp.com/buddypress-media/roadmap
 
 == Upgrade Notice ==
 
-= 3.0.9 =
-Requires BuddyPress 1.7 or higher, if using BuddyPress. * Add Media Count,Setting for Upload media,Feature image and other issues
+= 3.0.10 =
+Requires BuddyPress 1.7 or higher, if using BuddyPress. Add Dahsboard Widget, Fix uploader for Mobile and Other minor bug fixes
 == Sponsors ==
 
 * *[Henry Wright](http://profiles.wordpress.org/henrywright-1)* has kindly sponsored the *Featured Media* feature.
