@@ -644,3 +644,10 @@ abbr {
                 height: 20px;
                 border-radius: 10px;
             }
+
+#rtmedia_dashboard_widget p .sub{
+			padding: 0px;
+			margin : 0px;
+			color: #8F8F8F;
+			font-size: 14px
+}
