@@ -160,9 +160,15 @@ Please visit [rtMedia's Features page](http://rtcamp.com/buddypress-media/?utm_s
 
 Please visit [rtMedia's Roadmap page](http://rtcamp.com/buddypress-media/roadmap/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "Visit rtMedia's Features page") to get some details about future releases.
 
+#### 3.0.9 ####
+* Add Media Count
+* Fixed Setting for Upload media
+* Fixed Feature image issue
+* Other minor bug fixes
+
 #### 3.0.8 ####
-* Fixed gallery and upload shortcode 
-* Fixed duplicate media in popup 
+* Fixed gallery and upload shortcode
+* Fixed duplicate media in popup
 * Fixed privacy user setting
 * Fixed post parent issue and regenerate thumbnail issue
 
@@ -513,9 +519,8 @@ Please visit [rtMedia's Roadmap page](http://rtcamp.com/buddypress-media/roadmap
 * HTML5 Audio Tag Support (with fallback)
 * HTML5 Video Tag Support (with fallback)
 
-#### 3.0.8 ####
-Fixed gallery and upload shortcode,duplicate media in popup, privacy user setting and regenerate thumbnail issue
-
+#### 3.0.9 ####
+Requires BuddyPress 1.7 or higher, if using BuddyPress. * Add Media Count,Setting for Upload media,Feature image and other issues
 ## Sponsors ##
 
 * *[Henry Wright](http://profiles.wordpress.org/henrywright-1)* has kindly sponsored the *Featured Media* feature.
