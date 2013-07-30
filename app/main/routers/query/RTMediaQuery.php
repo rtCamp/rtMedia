@@ -85,6 +85,7 @@ class RTMediaQuery {
         add_filter ( 'rtmedia-model-where-query', array( $this, 'privacy_filter' ), 1, 2 );
 
         // if no args were supplied, initialise the $args
+
         if ( empty ( $args ) ) {
 
             $this->init ();
@@ -375,6 +376,17 @@ class RTMediaQuery {
     function &query ( $query ) {
         $this->original_query = $query;
         $this->query = wp_parse_args ( $query, $this->query );
+        //Set Json
+        if ( isset ( $_REQUEST[ "rtmedia_shortcode" ] ) ) {
+            $query_data = $_REQUEST;
+            $allowed_query = array( "id", "media_id", "media_type", "media_author", "albume_id", "context", "context_id", "global" );
+            foreach ( $query_data as $key => $val ) {
+                if ( ! in_array ( $key, $allowed_query ) ) {
+                    unset ( $query_data[ $key ] );
+                }
+            }
+            $this->query = wp_parse_args ( $query_data, $this->query );
+        }
 
         if ( isset ( $this->query[ "context" ] ) && $this->query[ "context" ] == "activity" ) {
             $this->query[ "activity_id" ] = array( "value" );
