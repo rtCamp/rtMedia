@@ -80,9 +80,19 @@
 			vertical-align: middle;
 		}
 	}
-.rtmedia_next_prev{
-    float:left;
-}
+        .rtmedia_next_prev{
+            clear:both;
+            a{
+                display: block;
+                clear: both;
+                background-color: #E9E9E9;
+                padding: 10px;
+                text-align: center;
+                text-decoration: none;
+                color: #000;
+                margin: 15px;
+            }
+        }
 	.rtmedia-item-comments-container {
 		margin: 3% 3%;
 	}
@@ -258,7 +268,7 @@
 		border-top-right-radius: 3px;
 		border-top-left-radius: 3px;
 		border-color: #CCC #CCC #DFDFDF;
-	}	
+	}
 }
 .rtmedia-activity-container {
             @extend .rtmedia-container;
@@ -271,7 +281,7 @@
                 &.rtmedia-list{
                     li{
                        float:left;
-                       padding:10px; 
+                       padding:10px;
                        &.media-type-video{
                             float:none;
                             .rtmedia-item-thumbnail{
@@ -310,7 +320,7 @@
 
 #rtmedia-action-update{
 	float: left;
-	padding-right: 10px;    
+	padding-right: 10px;
 }
 #header{
 	z-index:1 !important;
