@@ -168,6 +168,11 @@
 				padding-top: 10px;
 				padding-bottom: 10px;
 				.rtmedia-media{
+					div.mejs-layers{
+						div.mejs-poster{
+							overflow: hidden
+						}
+					}
 					.mejs-layers .mejs-overlay-button{
 						margin: -50px 0 0 -50px;
 					}
@@ -291,11 +296,16 @@
                     li{
                        float:left;
                        padding:10px;
+						.rtmedia-item-thumbnail{
+                                overflow:hidden;							
+						}
+
                        &.media-type-video{
                             float:none;
                             .rtmedia-item-thumbnail{
                                 margin : 0 auto;
-.mejs-overlay-button{
+                                overflow:hidden;
+							.mejs-overlay-button{
 						margin: -50px 0 0 -50px;
 					}
 					.mejs-controls .mejs-button button {
