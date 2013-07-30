@@ -11,61 +11,61 @@ jQuery('document').ready(function($) {
 
     })
 
-    if (jQuery('.wp-audio-shortcode, .wp-video-shortcode').length > 0)
-        jQuery('.wp-audio-shortcode, .wp-video-shortcode').mediaelementplayer();
+    if (jQuery('.wp-audio-shortcode, .wp-video-shortcode, .bp_media_content video').length > 0)
+        jQuery('.wp-audio-shortcode, .wp-video-shortcode, .bp_media_content video').mediaelementplayer();
     //Remove title from popup duplication
-    $("li.rtmedia-list-item p a").each(function(e){
+    $("li.rtmedia-list-item p a").each(function(e) {
         $(this).addClass("no-popup");
     })
-    //rtmedia_lightbox_enabled from setting 
-if(typeof(rtmedia_lightbox_enabled) != 'undefined' &&  rtmedia_lightbox_enabled =="1"){
-    rtMagnificPopup = jQuery('.rtmedia-list-media, .rtmedia-activity-container ul.rtmedia-list, #bp-media-list,.widget-item-listing,.bp-media-sc-list, li.media.album_updated ul,ul.bp-media-list-media, li.activity-item div.activity-content div.activity-inner div.bp_media_content').magnificPopup({
-        delegate: 'a:not(".no-popup")',
-        type: 'ajax',
-        tLoading: 'Loading image #%curr%...',
-        mainClass: 'mfp-img-mobile',
-        preload: [1, 3],
-        closeOnBgClick:false,
-        gallery: {
-            enabled: true,
-            navigateByImgClick: true,
-            preload: [0, 1] // Will preload 0 - before current, and 1 after the current image
-        },
-        image: {
-            tError: '<a href="%url%">The image #%curr%</a> could not be loaded.',
-            titleSrc: function(item) {
-                return item.el.attr('title') + '<small>by Marsel Van Oosten</small>';
-            }
-        },
-        disableOn: function() {
-            if (jQuery(window).width() < 600) {
-                return false;
-            }
-            return true;
-        },
-        callbacks: {
-            ajaxContentAdded: function() {
-
-                $container = this.content.find('.tagcontainer');
-                if ($container.length > 0) {
-                    $context = $container.find('img');
-                    $container.find('.tagcontainer').css(
-                            {
-                                'height': $context.css('height'),
-                                'width': $context.css('width')
-                            });
-
+    //rtmedia_lightbox_enabled from setting
+    if (typeof(rtmedia_lightbox_enabled) != 'undefined' && rtmedia_lightbox_enabled == "1") {
+        rtMagnificPopup = jQuery('.rtmedia-list-media, .rtmedia-activity-container ul.rtmedia-list, #bp-media-list,.widget-item-listing,.bp-media-sc-list, li.media.album_updated ul,ul.bp-media-list-media, li.activity-item div.activity-content div.activity-inner div.bp_media_content').magnificPopup({
+            delegate: 'a:not(".no-popup")',
+            type: 'ajax',
+            tLoading: 'Loading image #%curr%...',
+            mainClass: 'mfp-img-mobile',
+            preload: [1, 3],
+            closeOnBgClick: false,
+            gallery: {
+                enabled: true,
+                navigateByImgClick: true,
+                preload: [0, 1] // Will preload 0 - before current, and 1 after the current image
+            },
+            image: {
+                tError: '<a href="%url%">The image #%curr%</a> could not be loaded.',
+                titleSrc: function(item) {
+                    return item.el.attr('title') + '<small>by Marsel Van Oosten</small>';
                 }
             },
-            close: function(e) {
-                console.log(e);
+            disableOn: function() {
+                if (jQuery(window).width() < 600) {
+                    return false;
+                }
+                return true;
             },
-            BeforeChange : function(e){
-        console.log(e);
+            callbacks: {
+                ajaxContentAdded: function() {
+
+                    $container = this.content.find('.tagcontainer');
+                    if ($container.length > 0) {
+                        $context = $container.find('img');
+                        $container.find('.tagcontainer').css(
+                                {
+                                    'height': $context.css('height'),
+                                    'width': $context.css('width')
+                                });
+
+                    }
+                },
+                close: function(e) {
+                    console.log(e);
+                },
+                BeforeChange: function(e) {
+                    console.log(e);
+                }
             }
-        }
-    });
-}
+        });
+    }
 
     jQuery('.rtmedia-container').on('click', '.select-all', function(e) {
         e.preventDefault();
