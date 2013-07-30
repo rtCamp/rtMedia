@@ -72,12 +72,19 @@ jQuery(function($) {
             }
             return url;
         },
-        getNext: function(page) {
+        getNext: function(page, el) {
+            var query = {
+                json: true,
+                rtmedia_page: nextpage
+            };
+
+            if (el != undefined) {
+                $(el).children("input[type=hidden]").each(function(e) {
+                    query[$(this).attr("name")] = $(this).val();
+                });
+            }
             this.fetch({
-                data: {
-                    json: true,
-                    rtmedia_page: nextpage
-                },
+                data: query,
                 success: function(model, response) {
                     nextpage = response.next;
                     var galleryViewObj = new rtMedia.GalleryView({
@@ -176,8 +183,7 @@ jQuery(function($) {
         $(document).on("click", "#rtMedia-galary-next", function(e) {
             $(this).hide();
             e.preventDefault();
-
-            galleryObj.getNext(nextpage);
+            galleryObj.getNext(nextpage, $(this).parent().parent().parent());
         });
     });
 
