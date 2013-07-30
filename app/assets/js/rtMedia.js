@@ -142,3 +142,7 @@ jQuery('document').ready(function($) {
 
 });
 
+//Legacy media element for old activities
+function bp_media_create_element(id) {
+    return false;
+}
