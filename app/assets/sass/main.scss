@@ -194,6 +194,15 @@
 				}
 			}
 			.rtmedia-single-meta{
+				div{
+					&.userprofile{
+						float: left;
+						padding: 10px;
+					}
+					&.username{
+						padding: 10px;
+					}
+				}
 				padding: 10px;
 				button{
 					color: #5E5E5E;
