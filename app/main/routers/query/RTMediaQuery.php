@@ -376,6 +376,13 @@ class RTMediaQuery {
         $this->original_query = $query;
         $this->query = wp_parse_args ( $query, $this->query );
 
+        if ( isset ( $this->query[ "context" ] ) && $this->query[ "context" ] == "activity" ) {
+            $this->query[ "activity_id" ] = array( "value" );
+            global $wpdb;
+            $sql_query = "select id from {$wpdb->prefix}_bp_activity where item_id = 0  and type = 'rtmedia_update'";
+            $wpdb->query ( $sql_query, ARRAY_A );
+            $this->query[ "activity_id" ][ "value" ] = "";
+        }
         if ( isset ( $this->query ) && isset ( $this->query[ "global" ] ) && $this->query[ "global" ] == "true" ) {
             if ( isset ( $this->query[ "context_id" ] ) )
                 unset ( $this->query[ "context_id" ] );
