@@ -185,7 +185,8 @@ function rtmedia_media ( $size_flag = true, $echo = true, $media_size = "rt_medi
     global $rtmedia_media, $rtmedia;
     if ( isset ( $rtmedia_media->media_type ) ) {
         if ( $rtmedia_media->media_type == 'photo' ) {
-            $html = wp_get_attachment_image ( $rtmedia_media->media_id, $media_size );
+            $src = wp_get_attachment_image_src ( $rtmedia_media->media_id, $media_size );
+            $html = "<img src='" . $src[ 0 ] . "' alt='' />";
         } elseif ( $rtmedia_media->media_type == 'video' ) {
             $size = " width=\"" . $rtmedia->options[ "defaultSizes_video_singlePlayer_width" ] . "\" height=\"" . $rtmedia->options[ "defaultSizes_video_singlePlayer_height" ] . "\" ";
 
