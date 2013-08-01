@@ -18,7 +18,8 @@ if ( ! defined ( 'ABSPATH' ) )
  * @author Joshua Abenazer <joshua.abenazer@rtcamp.com>
  */
 class RTMedia {
-    //update wp_rt_rtm_media r join wp_posts p on p.ID = r.media_id set r.`context` = 'profile', r.context_id = r.media_author  where r.context is NULL and p.guid like '%user%'
+    //update wp_rt_rtm_media r join wp_posts p on p.ID = r.media_id set r.`context` = 'profile', r.context_id = r.media_author
+    ///where r.context is NULL and p.guid like '%user%'
 
     /**
      * @var string default thumbnail url fallback for all media types
@@ -167,7 +168,7 @@ class RTMedia {
         add_image_size ( "rt_media_activity_image", $bp_media_sizes[ 'activity' ][ "width" ], $bp_media_sizes[ 'activity' ][ "height" ], $bp_media_sizes[ 'activity' ][ "crop" ] );
         add_image_size ( "rt_media_single_image", $bp_media_sizes[ 'single' ][ "width" ], $bp_media_sizes[ 'single' ][ "height" ], $bp_media_sizes[ 'single' ][ "crop" ] );
         add_image_size ( "rt_media_featured_image", $bp_media_sizes[ 'featured' ][ "width" ], $bp_media_sizes[ 'featured' ][ "height" ], $bp_media_sizes[ 'featured' ][ "crop" ] );
-        add_action ( 'wp_footer', array( &$this, 'custome_style_for_activity_image_size' ) );
+        add_action ( 'wp_head', array( &$this, 'custome_style_for_activity_image_size' ) );
     }
 
     function custome_style_for_activity_image_size () {
