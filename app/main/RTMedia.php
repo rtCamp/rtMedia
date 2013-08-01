@@ -179,6 +179,11 @@ class RTMedia {
                 max-height: <?php echo $this->options[ "defaultSizes_photo_medium_height" ]; ?>px;
             }
             .rtmedia-container .rtmedia-list-media  li,.rtmedia-container .rtmedia-album-list  li {
+                max-width: <?php echo $this->options[ "defaultSizes_photo_thumbnail_width" ]; ?>px;
+                max-height: <?php echo $this->options[ "defaultSizes_photo_thumbnail_height" ]; ?>px;
+
+            }
+            .rtmedia-container .rtmedia-list  .rtmedia-list-item {
                 width: <?php echo $this->options[ "defaultSizes_photo_thumbnail_width" ]; ?>px;
                 height: <?php echo $this->options[ "defaultSizes_photo_thumbnail_height" ]; ?>px;
 
