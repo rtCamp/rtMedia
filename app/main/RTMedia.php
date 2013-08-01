@@ -19,7 +19,7 @@ if ( ! defined ( 'ABSPATH' ) )
  */
 class RTMedia {
     //update wp_rt_rtm_media r join wp_posts p on p.ID = r.media_id set r.`context` = 'profile', r.context_id = r.media_author
-    ///where r.context is NULL and p.guid like '%user%'
+    //where r.context is NULL and p.guid like '%user%'
 
     /**
      * @var string default thumbnail url fallback for all media types
