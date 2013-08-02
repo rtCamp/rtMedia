@@ -15,7 +15,7 @@ if ( class_exists ( 'BP_Group_Extension' ) ) :// Recommended, to prevent problem
             $this->enable_nav_item = false;
         }
 
-        function create_screen () {
+        function create_screen ( $group_id = NULL ) {
 
             if ( ! bp_is_group_creation_step ( $this->slug ) )
                 return false;
@@ -45,7 +45,7 @@ if ( class_exists ( 'BP_Group_Extension' ) ) :// Recommended, to prevent problem
          *
          * @global type $bp
          */
-        function create_screen_save () {
+        function create_screen_save ( $group_id = NULL ) {
             global $bp;
 
             check_admin_referer ( 'groups_create_save_' . $this->slug );
@@ -60,7 +60,7 @@ if ( class_exists ( 'BP_Group_Extension' ) ) :// Recommended, to prevent problem
          * @global type $bp_media
          * @return boolean
          */
-        function edit_screen () {
+        function edit_screen ( $group_id = NULL ) {
             if ( ! bp_is_group_admin_screen ( $this->slug ) )
                 return false;
             $current_level = groups_get_groupmeta ( bp_get_current_group_id (), 'rt_media_group_control_level' );
@@ -97,7 +97,7 @@ if ( class_exists ( 'BP_Group_Extension' ) ) :// Recommended, to prevent problem
          * @global type $bp_media
          * @return boolean
          */
-        function edit_screen_save () {
+        function edit_screen_save ( $group_id = NULL ) {
             global $bp;
 
             if ( ! isset ( $_POST[ 'save' ] ) )
@@ -145,6 +145,10 @@ if ( class_exists ( 'BP_Group_Extension' ) ) :// Recommended, to prevent problem
         }
 
     }
+
+
+
+
 
 
 
