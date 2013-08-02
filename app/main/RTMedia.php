@@ -18,6 +18,8 @@ if ( ! defined ( 'ABSPATH' ) )
  * @author Joshua Abenazer <joshua.abenazer@rtcamp.com>
  */
 class RTMedia {
+    //update wp_rt_rtm_media r join wp_posts p on p.ID = r.media_id set r.`context` = 'profile', r.context_id = r.media_author
+    //where r.context is NULL and p.guid like '%user%'
 
     /**
      * @var string default thumbnail url fallback for all media types
@@ -166,19 +168,25 @@ class RTMedia {
         add_image_size ( "rt_media_activity_image", $bp_media_sizes[ 'activity' ][ "width" ], $bp_media_sizes[ 'activity' ][ "height" ], $bp_media_sizes[ 'activity' ][ "crop" ] );
         add_image_size ( "rt_media_single_image", $bp_media_sizes[ 'single' ][ "width" ], $bp_media_sizes[ 'single' ][ "height" ], $bp_media_sizes[ 'single' ][ "crop" ] );
         add_image_size ( "rt_media_featured_image", $bp_media_sizes[ 'featured' ][ "width" ], $bp_media_sizes[ 'featured' ][ "height" ], $bp_media_sizes[ 'featured' ][ "crop" ] );
-        add_action ( 'wp_footer', array( &$this, 'custome_style_for_activity_image_size' ) );
+        add_action ( 'wp_head', array( &$this, 'custome_style_for_activity_image_size' ) );
     }
 
     function custome_style_for_activity_image_size () {
         ?>
         <style>
-            .rtmedia-activity-container .rtmedia-list .rtmedia-item-thumbnail{
+            .rtmedia-activity-container .rtmedia-list .rtmedia-item-thumbnail,.bp_media_content img{
                 max-width: <?php echo $this->options[ "defaultSizes_photo_medium_width" ]; ?>px;
                 max-height: <?php echo $this->options[ "defaultSizes_photo_medium_height" ]; ?>px;
             }
-            .rtmedia-container .rtmedia-list-media  li,.rtmedia-container .rtmedia-album-list  li {
+            .rtmedia-container .rtmedia-list-media  li,.rtmedia-container .rtmedia-album-list  li, .rtmedia-container .rtmedia-list  .rtmedia-list-item img {
                 max-width: <?php echo $this->options[ "defaultSizes_photo_thumbnail_width" ]; ?>px;
                 max-height: <?php echo $this->options[ "defaultSizes_photo_thumbnail_height" ]; ?>px;
+
+            }
+            .rtmedia-container .rtmedia-list  .rtmedia-list-item {
+                width: <?php echo $this->options[ "defaultSizes_photo_thumbnail_width" ]; ?>px;
+                height: <?php echo $this->options[ "defaultSizes_photo_thumbnail_height" ]; ?>px;
+
             }
         </style>
         <?php
@@ -422,9 +430,6 @@ class RTMedia {
         if ( ! defined ( 'RTMEDIA_IS_INSTALLED' ) )
             define ( 'RTMEDIA_IS_INSTALLED', 1 );
 
-        /* Current Version. */
-        if ( ! defined ( 'RTMEDIA_VERSION' ) )
-            define ( 'RTMEDIA_VERSION', '3.0.0' );
 
         /* Required Version  */
         if ( ! defined ( 'RTMEDIA_REQUIRED_BP' ) )
@@ -683,6 +688,11 @@ class RTMedia {
     function update_db () {
         $rtMigration = new RTMediaMigration();
         $update = new RTDBUpdate();
+        /* Current Version. */
+        if ( ! defined ( 'RTMEDIA_VERSION' ) )
+            define ( 'RTMEDIA_VERSION', $update->db_version );
+
+
         if ( $update->check_upgrade () ) {
             $update->do_upgrade ();
         } else {
@@ -709,6 +719,7 @@ class RTMedia {
         wp_enqueue_style ( 'rtmedia-magnific', RTMEDIA_URL . 'lib/magnific/magnific.css', '', RTMEDIA_VERSION );
         wp_enqueue_script ( 'rtmedia-magnific', RTMEDIA_URL . 'lib/magnific/magnific.js', '', RTMEDIA_VERSION );
         wp_localize_script ( 'rtmedia-main', 'rtmedia_ajax_url', admin_url ( 'admin-ajax.php' ) );
+        wp_localize_script ( 'rtmedia-main', 'rtmedia_media_slug', RTMEDIA_MEDIA_SLUG );
         wp_localize_script ( 'rtmedia-main', 'rtmedia_lightbox_enabled', strval ( $this->options[ "general_enableLightbox" ] ) );
     }
 
@@ -807,9 +818,10 @@ function get_rtmedia_permalink ( $id ) {
         if ( isset ( $rtmedia_query->query ) && isset ( $rtmedia_query->query[ "context" ] ) && $rtmedia_query->query[ "context" ] == "group" ) {
             $parent_link = get_rtmedia_group_link ( $rtmedia_query->query[ "context_id" ] );
         } else {
-            if ( ! isset ( $media[ 0 ]->context ) ) {
-                $media[ 0 ]->media_author = $rtmedia_query->query[ "context_id" ];
-            }
+            //if ( ! isset ( $media[ 0 ]->context ) ) {
+            //   $media[ 0 ]->media_author = $rtmedia_query->query[ "context_id" ];
+            // }
+
             $parent_link = get_rtmedia_user_link ( $media[ 0 ]->media_author );
         }
     }
@@ -848,6 +860,61 @@ function rtmedia_get_site_option ( $option_name, $default = false ) {
         $return_val = $default;
     }
     return $return_val;
+}
+
+function check_broken_media () {
+    global $wpdb;
+    $media_model = new RTMediaModel();
+    $sql = "select * from wp_postmeta m join wp_posts p on p.ID = m.post_id where meta_value like '%rtMedia%'";
+    $results = $wpdb->get_results ( $sql );
+    $upload_path = trim ( get_option ( 'upload_path' ) );
+
+    if ( empty ( $upload_path ) || 'wp-content/uploads' == $upload_path ) {
+        $dir = WP_CONTENT_DIR . '/uploads';
+    } elseif ( 0 !== strpos ( $upload_path, ABSPATH ) ) {
+        // $dir is absolute, $upload_path is (maybe) relative to ABSPATH
+        $dir = path_join ( ABSPATH, $upload_path );
+    } else {
+        $dir = $upload_path;
+    }
+    foreach ( $results as $row ) {
+        $row->meta_value = maybe_unserialize ( $row->meta_value );
+        if ( is_array ( $row->meta_value ) ) {
+//            foreach ( $row->meta_value as $files ) {
+//                var_dump ( $files );
+//                if ( file_exists ( trailingslashit ( $dir ) . $files[ "file" ] ) == false )
+//                    echo $row->post_id . " - " . trailingslashit ( $dir ) . $files[ "file" ] . "<br />";
+//            }
+        } else {
+            if ( ! file_exists ( trailingslashit ( $dir ) . $row->meta_value ) ) {
+                echo $row->post_author . ' - ' . $row->post_id . " - " . trailingslashit ( $dir ) . $row->meta_value . "-- " . var_dump ( file_exists ( str_replace ( '/rtMedia/users/' . $row->post_author . "/", '/', trailingslashit ( $dir ) . $row->meta_value ) ) ) . " -- " . str_replace ( '/rtMedia/users/' . $row->post_author . "/", '/', trailingslashit ( $dir ) . $row->meta_value ) . "<br />";
+            }
+        }
+    }
+    exit;
+}
+
+function bp_latest_update_fix () {
+    global $wpdb;
+    $sql = "select * from $wpdb->usermeta where meta_key like 'bp_latest_update'";
+    $results = $wpdb->get_results ( $sql );
+    foreach ( $results as $row ) {
+        if ( $meta_value = maybe_unserialize ( $row->meta_value ) ) {
+            if ( is_array ( $meta_value ) ) {
+                if ( isset ( $meta_value[ "content" ] ) && strpos ( $meta_value[ "content" ], "update_txt" ) !== false ) {
+                    $data_up = json_decode ( $meta_value[ "content" ] );
+                    if ( isset ( $data_up->update_txt ) ) {
+                        $meta_value[ "content" ] = urldecode ( $data_up->update_txt );
+                        update_user_meta ( $row->user_id, 'bp_latest_update', $meta_value );
+                    }
+                }
+            }
+        }
+    }
+}
+
+if ( isset ( $_REQUEST[ "bp_latest_update_fix" ] ) ) {
+    bp_latest_update_fix ();
 }
 
 /**

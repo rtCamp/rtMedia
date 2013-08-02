@@ -85,6 +85,7 @@ class RTMediaQuery {
         add_filter ( 'rtmedia-model-where-query', array( $this, 'privacy_filter' ), 1, 2 );
 
         // if no args were supplied, initialise the $args
+
         if ( empty ( $args ) ) {
 
             $this->init ();
@@ -375,7 +376,24 @@ class RTMediaQuery {
     function &query ( $query ) {
         $this->original_query = $query;
         $this->query = wp_parse_args ( $query, $this->query );
+        //Set Json
+        if ( isset ( $_REQUEST[ "rtmedia_shortcode" ] ) ) {
+            $query_data = $_REQUEST;
+            $allowed_query = array( "id", "media_id", "media_type", "media_author", "albume_id", "context", "context_id", "global" );
+            foreach ( $query_data as $key => $val ) {
+                if ( ! in_array ( $key, $allowed_query ) ) {
+                    unset ( $query_data[ $key ] );
+                }
+            }
+            $this->query = wp_parse_args ( $query_data, $this->query );
+        }
 
+        if ( isset ( $this->query[ "context" ] ) && $this->query[ "context" ] == "activity" ) {
+            $this->query[ "activity_id" ] = array( "value" );
+            global $wpdb;
+            $sql_query = "select id from {$wpdb->prefix}bp_activity where item_id = 0  and type = 'rtmedia_update'";
+            $this->query[ "activity_id" ][ "value" ] = $wpdb->get_col ( $sql_query );
+        }
         if ( isset ( $this->query ) && isset ( $this->query[ "global" ] ) && $this->query[ "global" ] == "true" ) {
             if ( isset ( $this->query[ "context_id" ] ) )
                 unset ( $this->query[ "context_id" ] );
