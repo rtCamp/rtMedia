@@ -169,14 +169,14 @@ function rtmedia_cover_art ( $id = false ) {
  * echo parmalink of the media
  * @global type $rtmedia_media
  */
-function rtmedia_permalink ($media_id =false) {
+function rtmedia_permalink ( $media_id = false ) {
 
     global $rtmedia_backbone;
 
     if ( $rtmedia_backbone[ 'backbone' ] ) {
         echo '<%= rt_permalink %>';
     } else {
-        echo get_rtmedia_permalink ( rtmedia_id ($media_id) );
+        echo get_rtmedia_permalink ( rtmedia_id ( $media_id ) );
     }
 }
 
@@ -190,12 +190,12 @@ function rtmedia_media ( $size_flag = true, $echo = true, $media_size = "rt_medi
         } elseif ( $rtmedia_media->media_type == 'video' ) {
             $size = " width=\"" . $rtmedia->options[ "defaultSizes_video_singlePlayer_width" ] . "\" height=\"" . $rtmedia->options[ "defaultSizes_video_singlePlayer_height" ] . "\" ";
 
-            $html = '<div class="flex-video"><video src="' . wp_get_attachment_url ( $rtmedia_media->media_id ) . '" ' . $size . ' type="video/mp4" class="wp-video-shortcode" id="bp_media_video_' . $rtmedia_media->id . '" controls="controls" preload="none"></video></div>';
+            $html = '<video src="' . wp_get_attachment_url ( $rtmedia_media->media_id ) . '" ' . $size . ' type="video/mp4" class="wp-video-shortcode" id="bp_media_video_' . $rtmedia_media->id . '" controls="controls" preload="true"></video>';
         } elseif ( $rtmedia_media->media_type == 'music' ) {
             $size = ' width="600" height="0" ';
             if ( ! $size_flag )
                 $size = '';
-            $html = '<audio src="' . wp_get_attachment_url ( $rtmedia_media->media_id ) . '" ' . $size . ' type="audio/mp3" class="wp-audio-shortcode" id="bp_media_audio_' . $rtmedia_media->id . '" controls="controls" preload="none"></audio>';
+            $html = '<audio src="' . wp_get_attachment_url ( $rtmedia_media->media_id ) . '" ' . $size . ' type="audio/mp3" class="wp-audio-shortcode" id="bp_media_audio_' . $rtmedia_media->id . '" controls="controls" preload="true"></audio>';
         } else {
             $html = false;
         }
