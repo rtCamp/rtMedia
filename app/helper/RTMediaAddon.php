@@ -50,13 +50,13 @@ if (!class_exists('RTMediaAddon')) {
 			$tabs[] = array(
 				'title' => 'Audio/Video Encoding',
 				'name' => __('Audio/Video  Encoding', 'rtmedia'),
-				'href' => '#bpm-services',
+				'href' => '#rtm-services',
 				'callback' => array($rtmedia_admin->rtmedia_encoding, 'encoding_service_intro')
 			);
 			$tabs[] = array(
 				'title' => 'Plugins',
 				'name' => __('Plugins', 'rtmedia'),
-				'href' => '#bpm-plugins',
+				'href' => '#rtm-plugins',
 				'callback' => array($this, 'plugins_content')
 			);
 
@@ -68,11 +68,11 @@ if (!class_exists('RTMediaAddon')) {
 			);*/
 
 			?>
-			<div id="bpm-addons">
+			<div id="rtm-addons">
 				<ul>
 					<?php
 						foreach ($tabs as $tab) {?>
-							<li><a title="<?php echo $tab['title'] ?>" href="<?php echo $tab['href']; ?>"><?php echo $tab['name']; ?></a></li>
+							<li><a id="tab-<?php echo substr ( $tab[ 'href' ], 1 ); ?>" title="<?php echo $tab['title'] ?>" href="<?php echo $tab['href']; ?>" class="rtmedia-tab-title"><?php echo $tab['name']; ?></a></li>
 						<?php }
 					?>
 				</ul>

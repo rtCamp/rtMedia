@@ -481,7 +481,7 @@ jQuery(document).ready(function($){
     });
 
 
-    jQuery("#bpm-settings-tabs,#bpm-addons").sliderTabs({
+    jQuery("#rtm-settings-tabs,#rtm-addons").sliderTabs({
         autoplay: false,
         mousewheel: false,
         defaultTab: manageHash()
@@ -524,15 +524,12 @@ jQuery(document).ready(function($){
 		window.location.hash = hash.substring(1,hash.length);
 	});
 	function manageHash() {
-		if(window.location.hash===undefined || window.location.hash==='')
-			window.location.hash = 'rtmedia-general';
-
 
 		hash = window.location.hash;
 		$('#tab-'+hash.substr(1,hash.length)).click();
 		if($('#tab-'+hash.substr(1,hash.length)).length < 1)
 			return 1;
-		return $('#tab-'+hash.substr(1,hash.length)).parent().index()+1
+		return $('#tab-'+hash.substr(1,hash.length)).parent().index()+1;
 	}
 
 	$(window).hashchange(function(e,data) {
