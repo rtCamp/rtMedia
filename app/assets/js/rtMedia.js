@@ -11,8 +11,6 @@ jQuery('document').ready(function($) {
 
     })
 
-    if (jQuery('.wp-audio-shortcode, .wp-video-shortcode, .bp_media_content video').length > 0)
-        jQuery('.wp-audio-shortcode, .wp-video-shortcode, .bp_media_content video').mediaelementplayer();
     //Remove title from popup duplication
     $("li.rtmedia-list-item p a").each(function(e) {
         $(this).addClass("no-popup");
