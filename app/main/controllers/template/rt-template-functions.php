@@ -114,14 +114,14 @@ function rtmedia_cover_art ( $id = false ) {
  * echo parmalink of the media
  * @global type $rtmedia_media
  */
-function rtmedia_permalink () {
+function rtmedia_permalink ($media_id =false) {
 
     global $rtmedia_backbone;
 
     if ( $rtmedia_backbone[ 'backbone' ] ) {
         echo '<%= rt_permalink %>';
     } else {
-        echo get_rtmedia_permalink ( rtmedia_id () );
+        echo get_rtmedia_permalink ( rtmedia_id ($media_id) );
     }
 }
 
