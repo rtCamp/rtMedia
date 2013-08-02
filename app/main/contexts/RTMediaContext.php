@@ -69,23 +69,28 @@ class RTMediaContext {
      */
     function set_bp_context () {
         if ( bp_is_blog_page () ) {
-            $this->set_wp_context ();
+            $this->set_wp_context ();            
         } else {
-            $this->set_bp_component_context ();
-        }
+            $this->set_bp_component_context ();            
+        }   
     }
 
     /**
      *
      */
     function set_bp_component_context () {
-        if ( bp_displayed_user_id () && ! bp_is_group () )
-            $this->type = 'profile';
-        else if ( ! bp_displayed_user_id () && bp_is_group () )
+        if ( bp_displayed_user_id () && ! bp_is_group () ) 
+            $this->type = 'profile';            
+        else if ( ! bp_displayed_user_id () && bp_is_group () ) 
             $this->type = 'group';
-
+        else
+            $this->type = 'profile';            
         $this->id = $this->get_current_bp_component_id ();
-    }
+        if($this->id == null) {  
+            global $bp;
+            $this->id = $bp->loggedin_user->id;
+        }               
+   }
 
     /**
      *
