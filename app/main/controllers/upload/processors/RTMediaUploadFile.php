@@ -185,7 +185,8 @@ class RTMediaUploadFile {
         $type = $file_type[ 0 ];
         switch ( $type ) {
             case 'video' :
-                include_once(trailingslashit ( RTMEDIA_PATH ) . 'lib/getid3/getid3.php');
+                if ( ! class_exists ( "getID3", true ) )
+                    include_once(trailingslashit ( RTMEDIA_PATH ) . 'lib/getid3/getid3.php');
                 try {
                     $getID3 = new getID3;
                     $vid_info = $getID3->analyze ( $file[ 'tmp_name' ] );
@@ -213,7 +214,8 @@ class RTMediaUploadFile {
                 }
                 break;
             case 'audio' :
-                include_once(trailingslashit ( RTMEDIA_PATH ) . 'lib/getid3/getid3.php');
+                if ( ! class_exists ( "getID3" ) )
+                    include_once(trailingslashit ( RTMEDIA_PATH ) . 'lib/getid3/getid3.php');
                 try {
                     $getID3 = new getID3;
                     $file_info = $getID3->analyze ( $file[ 'tmp_name' ] );
