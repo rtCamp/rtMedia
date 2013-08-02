@@ -105,7 +105,7 @@ class RTMedia {
         add_action ( 'wp_enqueue_scripts', array( 'RTMediaGalleryShortcode', 'register_scripts' ) );
         //add_action('wp_footer', array('RTMediaGalleryShortcode', 'print_script'));
         //  Enqueue Plugin Scripts and Styles
-        add_action ( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts_styles' ), 11 );
+        add_action ( 'wp_enqueue_scripts', array( &$this, 'enqueue_scripts_styles' ), 999 );
 
 
         add_action ( 'rt_db_upgrade', array( $this, 'fix_parent_id' ) );
@@ -712,10 +712,18 @@ class RTMedia {
     }
 
     function enqueue_scripts_styles () {
-        wp_enqueue_script ( 'rtmedia-mejs', RTMEDIA_URL . 'lib/media-element/mediaelement-and-player.min.js', '', RTMEDIA_VERSION );
-        wp_enqueue_style ( 'rtmedia-mecss', RTMEDIA_URL . 'lib/media-element/mediaelementplayer.min.css', '', RTMEDIA_VERSION );
+
+        if ( wp_script_is ( "wp-mediaelement", "registered" ) ) {
+            wp_enqueue_style ( 'wp-mediaelement' );
+            wp_enqueue_script ( 'wp-mediaelement' );
+        } else {
+            wp_enqueue_script ( 'wp-mediaelement', RTMEDIA_URL . 'lib/media-element/mediaelement-and-player.min.js', '', RTMEDIA_VERSION );
+            wp_enqueue_style ( 'wp-mediaelement', RTMEDIA_URL . 'lib/media-element/mediaelementplayer.min.css', '', RTMEDIA_VERSION );
+            wp_enqueue_script ( 'wp-mediaelement-start', RTMEDIA_URL . 'lib/media-element/wp-mediaelement.js', 'wp-mediaelement', RTMEDIA_VERSION, true );
+        }
+
         wp_enqueue_style ( 'rtmedia-main', RTMEDIA_URL . 'app/assets/css/main.css', '', RTMEDIA_VERSION );
-        wp_enqueue_script ( 'rtmedia-main', RTMEDIA_URL . 'app/assets/js/rtMedia.js', array( 'jquery', 'rtmedia-mejs' ), RTMEDIA_VERSION );
+        wp_enqueue_script ( 'rtmedia-main', RTMEDIA_URL . 'app/assets/js/rtMedia.js', array( 'jquery', 'wp-mediaelement' ), RTMEDIA_VERSION );
         wp_enqueue_style ( 'rtmedia-magnific', RTMEDIA_URL . 'lib/magnific/magnific.css', '', RTMEDIA_VERSION );
         wp_enqueue_script ( 'rtmedia-magnific', RTMEDIA_URL . 'lib/magnific/magnific.js', '', RTMEDIA_VERSION );
         wp_localize_script ( 'rtmedia-main', 'rtmedia_ajax_url', admin_url ( 'admin-ajax.php' ) );
@@ -913,9 +921,9 @@ function bp_latest_update_fix () {
     }
 }
 
-if ( isset ( $_REQUEST[ "bp_latest_update_fix" ] ) ) {
-    bp_latest_update_fix ();
-}
+//if ( isset ( $_REQUEST[ "bp_latest_update_fix" ] ) ) {
+//    bp_latest_update_fix ();
+//}
 
 /**
  * This wraps up the main rtMedia class. Three important notes:
