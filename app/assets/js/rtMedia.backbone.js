@@ -13,7 +13,7 @@ jQuery(function($) {
 
     rtMedia.Context = Backbone.Model.extend({
         url: function() {
-            var url = "media/";
+            var url = rtmedia_media_slug + "/";
             if (!upload_sync && nextpage > 0)
                 url += 'pg/' + nextpage + '/'
             return url;
@@ -57,8 +57,8 @@ jQuery(function($) {
         url: function() {
             var temp = window.location.pathname;
             var url = '';
-            if (temp.indexOf('media') == -1) {
-                url = 'media/';
+            if (temp.indexOf(rtmedia_media_slug) == -1) {
+                url = rtmedia_media_slug + '/';
             } else {
                 if (temp.indexOf('pg/') == -1)
                     url = temp;
@@ -190,8 +190,8 @@ jQuery(function($) {
 
 
 
-    if (window.location.pathname.indexOf('media') != -1) {
-        var tempNext = window.location.pathname.substring(window.location.pathname.lastIndexOf("page/") + 5, window.location.pathname.lastIndexOf("/"));
+    if (window.location.pathname.indexOf(rtmedia_media_slug) != -1) {
+        var tempNext = window.location.pathname.substring(window.location.pathname.lastIndexOf("pg/") + 5, window.location.pathname.lastIndexOf("/"));
         if (isNaN(tempNext) === false) {
             nextpage = parseInt(tempNext) + 1;
         }
