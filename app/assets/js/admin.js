@@ -524,12 +524,6 @@ jQuery(document).ready(function($){
 		window.location.hash = hash.substring(1,hash.length);
 	});
 	function manageHash() {
-		if(window.location.hash===undefined || window.location.hash==='') {
-            if(window.location.href.indexOf('page=rtmedia-settings') != -1)
-                window.location.hash = 'rtmedia-general';
-            else if(window.location.href.indexOf('page=rtmedia-addons') != -1)
-                window.location.hash = 'rtm-services';
-        }
 
 		hash = window.location.hash;
 		$('#tab-'+hash.substr(1,hash.length)).click();
