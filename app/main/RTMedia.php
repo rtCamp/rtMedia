@@ -719,6 +719,7 @@ class RTMedia {
         wp_enqueue_style ( 'rtmedia-magnific', RTMEDIA_URL . 'lib/magnific/magnific.css', '', RTMEDIA_VERSION );
         wp_enqueue_script ( 'rtmedia-magnific', RTMEDIA_URL . 'lib/magnific/magnific.js', '', RTMEDIA_VERSION );
         wp_localize_script ( 'rtmedia-main', 'rtmedia_ajax_url', admin_url ( 'admin-ajax.php' ) );
+        wp_localize_script ( 'rtmedia-main', 'rtmedia_media_slug', RTMEDIA_MEDIA_SLUG );
         wp_localize_script ( 'rtmedia-main', 'rtmedia_lightbox_enabled', strval ( $this->options[ "general_enableLightbox" ] ) );
     }
 
@@ -817,9 +818,10 @@ function get_rtmedia_permalink ( $id ) {
         if ( isset ( $rtmedia_query->query ) && isset ( $rtmedia_query->query[ "context" ] ) && $rtmedia_query->query[ "context" ] == "group" ) {
             $parent_link = get_rtmedia_group_link ( $rtmedia_query->query[ "context_id" ] );
         } else {
-            if ( ! isset ( $media[ 0 ]->context ) ) {
-                $media[ 0 ]->media_author = $rtmedia_query->query[ "context_id" ];
-            }
+            //if ( ! isset ( $media[ 0 ]->context ) ) {
+            //   $media[ 0 ]->media_author = $rtmedia_query->query[ "context_id" ];
+            // }
+
             $parent_link = get_rtmedia_user_link ( $media[ 0 ]->media_author );
         }
     }
@@ -890,6 +892,29 @@ function check_broken_media () {
         }
     }
     exit;
+}
+
+function bp_latest_update_fix () {
+    global $wpdb;
+    $sql = "select * from $wpdb->usermeta where meta_key like 'bp_latest_update'";
+    $results = $wpdb->get_results ( $sql );
+    foreach ( $results as $row ) {
+        if ( $meta_value = maybe_unserialize ( $row->meta_value ) ) {
+            if ( is_array ( $meta_value ) ) {
+                if ( isset ( $meta_value[ "content" ] ) && strpos ( $meta_value[ "content" ], "update_txt" ) !== false ) {
+                    $data_up = json_decode ( $meta_value[ "content" ] );
+                    if ( isset ( $data_up->update_txt ) ) {
+                        $meta_value[ "content" ] = urldecode ( $data_up->update_txt );
+                        update_user_meta ( $row->user_id, 'bp_latest_update', $meta_value );
+                    }
+                }
+            }
+        }
+    }
+}
+
+if ( isset ( $_REQUEST[ "bp_latest_update_fix" ] ) ) {
+    bp_latest_update_fix ();
 }
 
 /**
