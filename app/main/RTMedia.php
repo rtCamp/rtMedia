@@ -178,15 +178,14 @@ class RTMedia {
                 max-width: <?php echo $this->options[ "defaultSizes_photo_medium_width" ]; ?>px;
                 max-height: <?php echo $this->options[ "defaultSizes_photo_medium_height" ]; ?>px;
             }
-            .rtmedia-container .rtmedia-list-media  li,.rtmedia-container .rtmedia-album-list  li, .rtmedia-container .rtmedia-list  .rtmedia-list-item img {
-                max-width: <?php echo $this->options[ "defaultSizes_photo_thumbnail_width" ]; ?>px;
-                max-height: <?php echo $this->options[ "defaultSizes_photo_thumbnail_height" ]; ?>px;
-
-            }
-            .rtmedia-container .rtmedia-list  .rtmedia-list-item {
+            .rtmedia-container ul.rtmedia-list li.rtmedia-list-item div.rtmedia-item-thumbnail {
                 width: <?php echo $this->options[ "defaultSizes_photo_thumbnail_width" ]; ?>px;
                 height: <?php echo $this->options[ "defaultSizes_photo_thumbnail_height" ]; ?>px;
-
+                line-height: <?php echo $this->options[ "defaultSizes_photo_thumbnail_height" ]; ?>px;
+            }
+            .rtmedia-container .rtmedia-list  .rtmedia-list-item {
+                width: <?php echo intval ( $this->options[ "defaultSizes_photo_thumbnail_width" ] ) + 20; ?>px;
+                height: <?php echo intval ( $this->options[ "defaultSizes_photo_thumbnail_height" ] ) + 20; ?>px;
             }
         </style>
         <?php
