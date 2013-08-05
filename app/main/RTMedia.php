@@ -100,7 +100,7 @@ class RTMedia {
         add_action ( 'plugins_loaded', array( $this, 'load_translation' ), 10 );
 
         //Admin Panel
-        add_action ( 'init', array( $this, 'admin_init' ) );
+        add_action ( 'admin_init', array( $this, 'admin_init' ) );
 
         add_action ( 'wp_enqueue_scripts', array( 'RTMediaGalleryShortcode', 'register_scripts' ) );
         //add_action('wp_footer', array('RTMediaGalleryShortcode', 'print_script'));
@@ -316,6 +316,7 @@ class RTMedia {
     function admin_init () {
         global $rtmedia_admin;
         $rtmedia_admin = new RTMediaAdmin();
+        $rtMigration = new RTMediaMigration();
     }
 
     function media_screen () {
@@ -685,22 +686,12 @@ class RTMedia {
     }
 
     function update_db () {
-        $rtMigration = new RTMediaMigration();
         $update = new RTDBUpdate();
         /* Current Version. */
         if ( ! defined ( 'RTMEDIA_VERSION' ) )
             define ( 'RTMEDIA_VERSION', $update->db_version );
-
-
         if ( $update->check_upgrade () ) {
             $update->do_upgrade ();
-        } else {
-            if ( $update->table_exists ( $rtMigration->bmp_table ) == false ) {
-                $update->do_upgrade ( true );
-                if ( $update->table_exists ( $rtMigration->bmp_table ) == false ) {
-                    add_action ( "admin_notice", array( &$this, "create_table_error_notice" ) );
-                }
-            }
         }
     }
 
@@ -815,8 +806,9 @@ class RTMedia {
 
 function get_rtmedia_permalink ( $id ) {
     $mediaModel = new RTMediaModel();
+    $media = $mediaModel->get ( array( 'id' => intval ( $id ) ) );
 
-    $media = $mediaModel->get ( array( 'id' => $id ) );
+
     global $rtmedia_query;
 
     if ( $media[ 0 ]->context == 'group' )
