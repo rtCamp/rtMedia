@@ -442,6 +442,7 @@ function rtmedia_actions () {
     foreach ( $actions as $action ) {
         echo $action;
     }
+    do_action ( "after_rtmedia_action_buttons" );
 }
 
 /**
