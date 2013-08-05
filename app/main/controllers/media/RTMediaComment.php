@@ -66,7 +66,7 @@ class RTMediaComment {
 		$attr['comment_date'] = current_time('mysql');
 		$id = $this->rtmedia_comment_model->insert($attr);
 
-		do_action('rtmedia_before_add_comment', $attr);
+		do_action('rtmedia_after_add_comment', $attr);
 
 		return $id;
 	}
