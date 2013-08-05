@@ -119,7 +119,7 @@ class RTMediaBuddyPressActivity {
         $url = trailingslashit ( $url );
         $params = array(
             'url' => (isset ( $url ) && (strpos ( $url, "/media/" ) !== false)) ? str_replace ( "/media/", "/upload/", $url ) : 'upload/',
-            'runtimes' => 'gears,html5,flash,silverlight,browserplus',
+            'runtimes' => 'html5,silverlight,flash,html4',
             'browse_button' => 'rtmedia-whts-new-upload-button',
             'container' => 'rtmedia-whts-new-upload-container',
             'drop_element' => 'rtmedia-whts-new-drag-drop-area',
