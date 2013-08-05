@@ -364,7 +364,7 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
                                     if ( $page == "rtmedia-settings" ) {
 
 
-                                        echo '<div id="bpm-settings-tabs">';
+                                        echo '<div id="rtm-settings-tabs">';
                                         $sub_tabs = $this->settings_sub_tabs ();
                                         RTMediaFormHandler::rtForm_settings_tabs_content ( $page, $sub_tabs );
                                         echo '</div>';
