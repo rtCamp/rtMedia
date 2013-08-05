@@ -160,6 +160,9 @@ Please visit [rtMedia's Features page](http://rtcamp.com/buddypress-media/?utm_s
 
 Please visit [rtMedia's Roadmap page](http://rtcamp.com/buddypress-media/roadmap/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "Visit rtMedia's Features page") to get some details about future releases.
 
+= 3.0.11 =
+* Added profile picture along with the link back to the profile in the media pop ups ( sponsored by Richard Ellis )
+
 = 3.0.10 =
 * Add Dahsboard Widget
 * Fix uploader for Mobile
@@ -532,6 +535,7 @@ Requires BuddyPress 1.7 or higher, if using BuddyPress. Add Dahsboard Widget, Fi
 
 * *[Henry Wright](http://profiles.wordpress.org/henrywright-1)* has kindly sponsored the *Featured Media* feature.
 * 优素映像 (Yousu Image) has sponsored the latest *Like* feature which doesn't depend on BuddyPress, any more.
+* Richard Ellis has sponsored the profile picture along with the link back to the profile in the media pop ups.
 
 
 == Translation ==
