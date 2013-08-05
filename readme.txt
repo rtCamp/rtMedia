@@ -4,9 +4,9 @@ Donate link: http://rtcamp.com/donate
 Tags: BuddyPress, media, multimedia, album, audio, songs, music, video, photo, image, upload, share, MediaElement.js, ffmpeg, kaltura, media-node, rtMedia, WordPress, bbPress
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
-Requires at least: WordPress 3.5
-Tested up to: WordPress 3.5.2 + BuddyPress 1.7
-Stable tag: 3.0.10
+Requires at least: WordPress 3.6
+Tested up to: WordPress 3.6 + BuddyPress 1.7
+Stable tag: 3.0.11
 
 rtMedia adds albums, audio/video encoding, privacy/sharing, front-end uploads & more. All this works nicely on mobile/tablets devices.
 
@@ -162,6 +162,12 @@ Please visit [rtMedia's Roadmap page](http://rtcamp.com/buddypress-media/roadmap
 
 = 3.0.11 =
 * Added profile picture along with the link back to the profile in the media pop ups ( sponsored by Richard Ellis )
+* Fixed WordPress 3.6 attachment meta function issue & mediaElementJs
+* Fixed Context Null issue in activity
+* Fixed image size issue in gallery
+* Fixed lightbox whitespace issue
+* Fixed backbone paging on custom shortcode
+* Other minor bug fixes
 
 = 3.0.10 =
 * Add Dahsboard Widget
@@ -529,8 +535,9 @@ Please visit [rtMedia's Roadmap page](http://rtcamp.com/buddypress-media/roadmap
 
 == Upgrade Notice ==
 
-= 3.0.10 =
-Requires BuddyPress 1.7 or higher, if using BuddyPress. Add Dahsboard Widget, Fix uploader for Mobile and Other minor bug fixes
+= 3.0.11 =
+Requires BuddyPress 1.7 or higher, if using BuddyPress. Added profile picture along with the link, WordPress 3.6 and Other minor bug fixes.
+
 == Sponsors ==
 
 * *[Henry Wright](http://profiles.wordpress.org/henrywright-1)* has kindly sponsored the *Featured Media* feature.
