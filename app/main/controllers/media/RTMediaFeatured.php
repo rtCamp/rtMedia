@@ -126,7 +126,7 @@ class RTMediaFeatured extends RTMediaUserInteraction {
                     $image_array = image_downsize ( $featured->media_id, 'rt_media_thumbnail' );
                     $content_xtra = 'poster="' . $image_array[ 0 ] . '" ';
                 }
-                $content = '<video class="bp-media-featured-media"' . $content_xtra . 'src="' . wp_get_attachment_url ( $this->featured ) . '" width="' . $this->settings[ 'width' ] . '" height="' . $this->settings[ 'height' ] . '" type="video/mp4" id="bp_media_video_' . $this->featured . '" controls="controls" preload="none"></video>';
+                $content = '<video class="bp-media-featured-media"' . $content_xtra . 'src="' . wp_get_attachment_url ( $this->featured ) . '" width="' . $this->settings[ 'width' ] . '" height="' . $this->settings[ 'height' ] . '" type="video/mp4" id="bp_media_video_' . $this->featured . '" controls="controls" preload="true"></video>';
                 break;
             case 'music' :
                 $content = '<audio class="bp-media-featured-media"' . $content_xtra . 'src="' . wp_get_attachment_url ( $this->featured ) . '" width="' . $this->settings[ 'width' ] . '" type="audio/mp3" id="bp_media_audio_' . $this->featured . '" controls="controls" preload="none"></video>';
