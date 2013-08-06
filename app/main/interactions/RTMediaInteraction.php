@@ -32,6 +32,7 @@ class RTMediaInteraction {
         add_filter ( 'wp_title', array( $this, 'set_title' ), 9999, 2 );
         add_filter ( 'wpseo_opengraph_title', array( $this, 'set_title' ), 9999, 1 );
         add_filter ( 'wpseo_opengraph', array( $this, 'rtmedia_wpseo_og_image' ), 999, 1 );
+        add_filter ( 'wpseo_opengraph_url', array( $this, 'rtmedia_wpseo_og_url' ), 999, 1 );
     }
 
     function init () {
@@ -212,7 +213,10 @@ class RTMediaInteraction {
         return $title;
     }
 
-    function rtmedia_wpseo_og_image () {
+    function rtmedia_wpseo_og_image ( $data ) {
+        global $wp_query;
+        if ( ! array_key_exists ( 'media', $wp_query->query_vars ) )
+            return $data;
         global $rtmedia_query;
         if ( isset ( $rtmedia_query->media ) && $rtmedia_query->media && count ( $rtmedia_query->media ) > 0 ) {
 
@@ -221,6 +225,17 @@ class RTMediaInteraction {
                 echo "<meta property='og:image' content='" . esc_url ( $img[ 0 ] ) . "'/>\n";
             }
         }
+    }
+
+    function rtmedia_wpseo_og_url ( $url ) {
+        global $wp_query;
+        if ( ! array_key_exists ( 'media', $wp_query->query_vars ) )
+            return $url;
+        $s = empty ( $_SERVER[ "HTTPS" ] ) ? '' : ($_SERVER[ "HTTPS" ] == "on") ? "s" : "";
+        $sp = strtolower ( $_SERVER[ "SERVER_PROTOCOL" ] );
+        $protocol = substr ( $sp, 0, strpos ( $sp, "/" ) ) . $s;
+        $port = ($_SERVER[ "SERVER_PORT" ] == "80") ? "" : (":" . $_SERVER[ "SERVER_PORT" ]);
+        return $protocol . "://" . $_SERVER[ 'SERVER_NAME' ] . $port . $_SERVER[ 'REQUEST_URI' ];
     }
 
 }
