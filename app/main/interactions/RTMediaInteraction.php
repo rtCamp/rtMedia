@@ -221,7 +221,7 @@ class RTMediaInteraction {
         if ( isset ( $rtmedia_query->media ) && $rtmedia_query->media && count ( $rtmedia_query->media ) > 0 ) {
 
             foreach ( $rtmedia_query->media as $media ) {
-                $img = wp_get_attachment_image_src ( $media->media_id, "rt_media_thumbnail" );
+                $img = wp_get_attachment_image_src ( $media->media_id, "full" );
                 echo "<meta property='og:image' content='" . esc_url ( $img[ 0 ] ) . "'/>\n";
             }
         }
