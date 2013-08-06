@@ -55,7 +55,7 @@ class RTMediaUploadView {
         }
         $tabs = array(
             'file_upload' => array(
-                'default' => array( 'title' => __ ( 'File Upload', 'rtmedia' ), 'content' => '<div id="rtmedia-upload-container" ><div id="drag-drop-area" class="drag-drop">' . $album . '<input id="rtMedia-upload-button" value="Select" type="button" class="rtmedia-upload-input rtmedia-file" /></div><table id="rtMedia-queue-list"><tbody></tbody></table></div>' ),
+                'default' => array( 'title' => __ ( 'File Upload', 'rtmedia' ), 'content' => '<div id="rtmedia-upload-container" ><div id="drag-drop-area" class="drag-drop">' . $album . '<input id="rtMedia-upload-button" value="' . __ ( "Select", "rtmedia" ) . '" type="button" class="rtmedia-upload-input rtmedia-file" /></div><table id="rtMedia-queue-list"><tbody></tbody></table></div>' ),
                 'activity' => array( 'title' => __ ( 'File Upload', 'rtmedia' ), 'content' => '<div class="rtmedia-container"><div id="rtmedia-action-update"><input type="button" class="rtmedia-add-media-button" id="rtmedia-add-media-button-post-update"  value="' . __ ( "Add Media", "rtmedia" ) . '" /></div><div id="div-attache-rtmedia"><div id="rtmedia-whts-new-upload-container" ><div id="rtmedia-whts-new-drag-drop-area" class="drag-drop"><input id="rtmedia-whts-new-upload-button" value="Select" type="button" class="rtmedia-upload-input rtmedia-file" /></div><div id="rtMedia-update-queue-list"></div></div></div></div>' )
             ),
 //			'file_upload' => array( 'title' => __('File Upload','rtmedia'), 'content' => '<div id="rtmedia-uploader"><p>Your browser does not have HTML5 support.</p></div>'),
@@ -101,7 +101,9 @@ class RTMediaUploadView {
             $located = RTMEDIA_PATH . 'templates/upload/' . $template_name;
         }
 
-        return $located;
+        return $located
+
+        ;
     }
 
 }

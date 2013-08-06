@@ -797,12 +797,13 @@ function rtmedia_create_album () {
     }
     if ( $display === true ) {
         ?>
-        <button type="button" class="button rtmedia-create-new-album-button"> Create New Album </button>
+        <button type="button" class="button rtmedia-create-new-album-button"><?php _e ( "Create New Album", "rtmedia" ); ?> </button>
         <div class="rtmedia-create-new-album-container">
             <input type="text" id="rtmedia_album_name" value="" />
             <input type="hidden" id="rtmedia_album_context" value="<?php echo $rtmedia_query->query[ 'context' ]; ?>">
             <input type="hidden" id="rtmedia_album_context_id" value="<?php echo $rtmedia_query->query[ 'context_id' ]; ?>">
-            <button type="button" id="rtmedia_create_new_album">Create Album</button>
+            <button type="button" id="rtmedia_create_new_album"><?php _e ( "Create Album", "rtmedia" ); ?>
+            </button>
         </div><?php
     }
 }
