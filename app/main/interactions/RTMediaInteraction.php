@@ -210,7 +210,7 @@ class RTMediaInteraction {
         }
         $title .= $sep . get_bloginfo ( 'name' );
         $rtmedia_seo_title = $title;        
-        return apply_filters("rtmedia_wp_title", $title, $default, $sep = "|");
+        return apply_filters("rtmedia_wp_title", $title, $default, $sep);
     }
 
     function rtmedia_wpseo_og_image ( $data ) {
