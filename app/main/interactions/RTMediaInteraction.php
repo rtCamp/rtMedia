@@ -28,7 +28,7 @@ class RTMediaInteraction {
 
         // set up interaction and routes
         add_action ( 'template_redirect', array( $this, 'init' ), 99 );
-
+        
         add_filter ( 'wp_title', array( $this, 'set_title' ), 9999, 2 );
         add_filter ( 'wpseo_opengraph_title', array( $this, 'set_title' ), 9999, 1 );
         add_filter ( 'wpseo_opengraph', array( $this, 'rtmedia_wpseo_og_image' ), 999, 1 );
@@ -209,8 +209,8 @@ class RTMediaInteraction {
                 break;
         }
         $title .= $sep . get_bloginfo ( 'name' );
-        $rtmedia_seo_title = $title;
-        return $title;
+        $rtmedia_seo_title = $title;        
+        return apply_filters("rtmedia_wp_title", $title, $default, $sep = "|");
     }
 
     function rtmedia_wpseo_og_image ( $data ) {
