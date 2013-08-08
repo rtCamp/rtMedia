@@ -34,7 +34,7 @@ class RTMediaGalleryShortcode {
         $url = trailingslashit ( $_SERVER[ "REQUEST_URI" ] );
 
         if ( strpos ( $url, "/media" ) !== false ) {
-            $url_array = split ( "/media", $url );
+            $url_array = explode ( "/media", $url );
             $url = trailingslashit ( $url_array[ 0 ] ) . "upload/";
         } else {
             $url = trailingslashit ( $url ) . "upload/";
