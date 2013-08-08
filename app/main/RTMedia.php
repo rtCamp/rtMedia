@@ -100,7 +100,7 @@ class RTMedia {
         add_action ( 'plugins_loaded', array( $this, 'load_translation' ), 10 );
 
         //Admin Panel
-        add_action ( 'admin_init', array( $this, 'admin_init' ) );
+        add_action ( 'init', array( $this, 'admin_init' ) );
 
         add_action ( 'wp_enqueue_scripts', array( 'RTMediaGalleryShortcode', 'register_scripts' ) );
         //add_action('wp_footer', array('RTMediaGalleryShortcode', 'print_script'));
