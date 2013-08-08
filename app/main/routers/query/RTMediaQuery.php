@@ -170,7 +170,22 @@ class RTMediaQuery {
 
         $raw_query = $this->interaction->query_vars;
 
+        if ( isset ( $raw_query ) && is_array ( $raw_query ) && count ( $raw_query ) > 1 ) {
+            if ( empty ( $raw_query[ 0 ] ) && ! empty ( $raw_query[ 1 ] ) ) {
+                $temp_query = array( );
+                for ( $rtCount = 1; $rtCount < count ( $raw_query ); $rtCount ++  ) {
+                    $temp_query[ ] = $raw_query[ $rtCount ];
+                }
+                $raw_query = $temp_query;
+            }
+        }
 
+
+//        if ( isset ( $_SERVER[ "REMOTE_ADDR" ] ) && $_SERVER[ "REMOTE_ADDR" ] == "14.97.170.202" ) {
+//            echo "<pre>";
+//            print_r ( $this );
+//            echo "</pre>";
+//        }
         $bulk = false;
         $action = false;
         $attribute = false;

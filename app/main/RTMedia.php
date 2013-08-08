@@ -183,6 +183,10 @@ class RTMedia {
                 height: <?php echo $this->options[ "defaultSizes_photo_thumbnail_height" ]; ?>px;
                 line-height: <?php echo $this->options[ "defaultSizes_photo_thumbnail_height" ]; ?>px;
             }
+            .rtmedia-container ul.rtmedia-list li.rtmedia-list-item div.rtmedia-item-thumbnail img {
+                max-width: <?php echo $this->options[ "defaultSizes_photo_thumbnail_width" ]; ?>px;
+                max-height: <?php echo $this->options[ "defaultSizes_photo_thumbnail_height" ]; ?>px;
+            }
             .rtmedia-container .rtmedia-list  .rtmedia-list-item {
                 width: <?php echo intval ( $this->options[ "defaultSizes_photo_thumbnail_width" ] ) + 20; ?>px;
                 height: <?php echo intval ( $this->options[ "defaultSizes_photo_thumbnail_height" ] ) + 20; ?>px;

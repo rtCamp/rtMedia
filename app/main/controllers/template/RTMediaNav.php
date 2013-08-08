@@ -49,7 +49,7 @@ class RTMediaNav {
             $group_counts = $this->actual_counts ( $bp->groups->current_group->id, "group" );
             $bp->bp_options_nav[ bp_get_current_group_slug () ][ 'media' ] = array(
                 'name' => RTMEDIA_MEDIA_LABEL . '<span>' . $group_counts[ 'total' ][ 'all' ] . '</span>',
-                'link' => ( (is_multisite ()) ? get_site_url ( get_current_blog_id () ) : get_site_url () ) . '/' . bp_get_groups_root_slug () . '/' . bp_get_current_group_slug () . '/' . RTMEDIA_MEDIA_SLUG,
+                'link' => trailingslashit ( bp_get_root_domain () . '/' . bp_get_groups_root_slug () . '/' . bp_get_current_group_slug () . '/' ) . RTMEDIA_MEDIA_SLUG,
                 'slug' => RTMEDIA_MEDIA_SLUG,
                 'user_has_access' => true,
                 'css_id' => 'rtmedia-media-nav',
