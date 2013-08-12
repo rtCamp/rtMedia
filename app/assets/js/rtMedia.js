@@ -60,7 +60,7 @@ jQuery('document').ready(function($) {
                         settings.pluginPath = _wpmejsSettings.pluginPath;
 
                     $('.mfp-content .wp-audio-shortcode,.mfp-content .wp-video-shortcode,.mfp-content .bp_media_content video').mediaelementplayer(settings);
-                    $('.mfp-content .mejs-controls').css('position','relative');
+                    $('.mfp-content .mejs-audio .mejs-controls').css('position','relative');
                 },
                 close: function(e) {
                     console.log(e);                    
