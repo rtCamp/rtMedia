@@ -969,7 +969,7 @@ class RTMediaMigration {
         if ( function_exists ( "bp_core_get_table_prefix" ) )
             $bp_prefix = bp_core_get_table_prefix ();
         else
-            $bp_prefix = "";
+            $bp_prefix = $wpdb->prefix;
         $sql = $wpdb->prepare ( "update {$bp_prefix}bp_activity set action=replace(action,%s,%s) ,content=replace(content,%s,%s), primary_link=replace(primary_link,%s,%s) where id > 0;", $old, $new, $old, $new, $old, $new );
         $wpdb->get_row ( $sql );
     }

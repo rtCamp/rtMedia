@@ -133,6 +133,8 @@ class RTMediaBuddyPressActivity {
             'multi_selection' => true,
             'multipart_params' => apply_filters ( 'rtmedia-multi-params', array( 'redirect' => 'no', 'rtmedia_update' => 'true', 'action' => 'wp_handle_upload', '_wp_http_referer' => $_SERVER[ 'REQUEST_URI' ], 'mode' => 'file_upload', 'rtmedia_upload_nonce' => RTMediaUploadView::upload_nonce_generator ( false, true ) ) )
         );
+        if ( wp_is_mobile () )
+            $params[ 'multi_selection' ] = false;
         wp_enqueue_script ( 'rtmedia-backbone', false, '', false, true );
         $is_album = is_rtmedia_album () ? true : false;
         $is_edit_allowed = is_rtmedia_edit_allowed () ? true : false;
