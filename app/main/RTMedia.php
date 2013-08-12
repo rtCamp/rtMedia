@@ -865,61 +865,6 @@ function rtmedia_get_site_option ( $option_name, $default = false ) {
     return $return_val;
 }
 
-function check_broken_media () {
-    global $wpdb;
-    $media_model = new RTMediaModel();
-    $sql = "select * from wp_postmeta m join wp_posts p on p.ID = m.post_id where meta_value like '%rtMedia%'";
-    $results = $wpdb->get_results ( $sql );
-    $upload_path = trim ( get_option ( 'upload_path' ) );
-
-    if ( empty ( $upload_path ) || 'wp-content/uploads' == $upload_path ) {
-        $dir = WP_CONTENT_DIR . '/uploads';
-    } elseif ( 0 !== strpos ( $upload_path, ABSPATH ) ) {
-        // $dir is absolute, $upload_path is (maybe) relative to ABSPATH
-        $dir = path_join ( ABSPATH, $upload_path );
-    } else {
-        $dir = $upload_path;
-    }
-    foreach ( $results as $row ) {
-        $row->meta_value = maybe_unserialize ( $row->meta_value );
-        if ( is_array ( $row->meta_value ) ) {
-//            foreach ( $row->meta_value as $files ) {
-//                var_dump ( $files );
-//                if ( file_exists ( trailingslashit ( $dir ) . $files[ "file" ] ) == false )
-//                    echo $row->post_id . " - " . trailingslashit ( $dir ) . $files[ "file" ] . "<br />";
-//            }
-        } else {
-            if ( ! file_exists ( trailingslashit ( $dir ) . $row->meta_value ) ) {
-                echo $row->post_author . ' - ' . $row->post_id . " - " . trailingslashit ( $dir ) . $row->meta_value . "-- " . var_dump ( file_exists ( str_replace ( '/rtMedia/users/' . $row->post_author . "/", '/', trailingslashit ( $dir ) . $row->meta_value ) ) ) . " -- " . str_replace ( '/rtMedia/users/' . $row->post_author . "/", '/', trailingslashit ( $dir ) . $row->meta_value ) . "<br />";
-            }
-        }
-    }
-    exit;
-}
-
-function bp_latest_update_fix () {
-    global $wpdb;
-    $sql = "select * from $wpdb->usermeta where meta_key like 'bp_latest_update'";
-    $results = $wpdb->get_results ( $sql );
-    foreach ( $results as $row ) {
-        if ( $meta_value = maybe_unserialize ( $row->meta_value ) ) {
-            if ( is_array ( $meta_value ) ) {
-                if ( isset ( $meta_value[ "content" ] ) && strpos ( $meta_value[ "content" ], "update_txt" ) !== false ) {
-                    $data_up = json_decode ( $meta_value[ "content" ] );
-                    if ( isset ( $data_up->update_txt ) ) {
-                        $meta_value[ "content" ] = urldecode ( $data_up->update_txt );
-                        update_user_meta ( $row->user_id, 'bp_latest_update', $meta_value );
-                    }
-                }
-            }
-        }
-    }
-}
-
-//if ( isset ( $_REQUEST[ "bp_latest_update_fix" ] ) ) {
-//    bp_latest_update_fix ();
-//}
-
 /**
  * This wraps up the main rtMedia class. Three important notes:
  *
