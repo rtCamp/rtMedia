@@ -73,7 +73,7 @@
 			.mejs-controls {
 				.mejs-time-rail {
 					margin: 8px 2px 2px 0;
-				}	
+				}
 				button {
 					padding: 4px 8px;
 					border: none;
@@ -81,25 +81,25 @@
 				}
 				.mejs-play {
 					button {
-						background-position: 0 0;	
-					}					
+						background-position: 0 0;
+					}
 				}
 				.mejs-pause {
 					button {
-						background-position: 0 -16px;	
-					}					
+						background-position: 0 -16px;
+					}
 				}
 				.mejs-unmute {
 					button {
-						background-position: -16px 0;	
+						background-position: -16px 0;
 					}
 				}
 				.mejs-mute {
 					button {
-						background-position: -16px -16px;						
+						background-position: -16px -16px;
 					}
 				}
-			}						
+			}
 		}
 	}
 
@@ -212,25 +212,48 @@
 					.mejs-layers .mejs-poster {
 					    overflow: hidden;
 					}
-					.mejs-controls .mejs-button button {
-						cursor: pointer;
-						display: block;
-						font-size: 0;
-						line-height: 0;
-						text-decoration: none;
-						margin: 7px 5px;
-						padding: 0;
-						position: absolute;
-						height: 16px;
-						width: 16px;
-						border: 0;
-						background: rgba(0, 0, 0, 0) url('../../../lib/media-element/controls.png') no-repeat;
-					}
-					.mejs-controls .mejs-mute button {
-						background-position: -16px -16px;
-					}
-					.mejs-controls .mejs-fullscreen-button button {
-						background-position: -32px 0;
+					.mejs-controls {
+						.mejs-button {
+							button {
+								cursor: pointer;
+								display: block;
+								font-size: 0;
+								line-height: 0;
+								text-decoration: none;
+								margin: 7px 5px;
+								padding: 0;
+								position: absolute;
+								height: 16px;
+								width: 16px;
+								border: 0;
+								background: rgba(0, 0, 0, 0) url('../../../lib/media-element/controls.png') no-repeat;
+							}
+						}
+						.mejs-play {
+							button {
+								background-position: 0 0;
+							}
+						}
+						.mejs-pause {
+							button {
+								background-position: 0 -16px;
+							}
+						}
+						.mejs-unmute {
+							button {
+								background-position: -16px 0;
+							}
+						}
+						.mejs-mute {
+							button {
+								background-position: -16px -16px;
+							}
+						}
+						.mejs-fullscreen-button {
+							button {
+								background-position: -32px 0;
+							}
+						}
 					}
 				}
 			}
@@ -333,7 +356,7 @@
                        float:left;
                        padding:10px;
 						.rtmedia-item-thumbnail{
-                                overflow:hidden;							
+                                overflow:hidden;
 						}
 
                        &.media-type-video{
