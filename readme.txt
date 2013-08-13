@@ -1,5 +1,5 @@
 === rtMedia for WordPress, BuddyPress and bbPress ===
-Contributors: rtcamp, rahul286, gagan0123, saurabhshukla, JoshuaAbenazer, faishal, desaiuditd, nitun.lanjewar, rittx`esh.patel, umesh.nevase, suhasgirgaonkar, neerukoul, hrishiv90
+Contributors: rtcamp, rahul286, faishal, JoshuaAbenazer, gagan0123, saurabhshukla, desaiuditd, nitun.lanjewar, rittesh.patel, umesh.nevase, suhasgirgaonkar, neerukoul, hrishiv90, kanakiyajay
 Donate link: http://rtcamp.com/donate
 Tags: BuddyPress, media, multimedia, album, audio, songs, music, video, photo, image, upload, share, MediaElement.js, ffmpeg, kaltura, media-node, rtMedia, WordPress, bbPress
 License: GPLv2 or later
@@ -168,6 +168,7 @@ Please visit [rtMedia's Roadmap page](http://rtcamp.com/buddypress-media/roadmap
 * Fixed media player css issues
 * Fixed permalink and count issue
 * Update SEO for media
+* Thanks to [kanakiyajay](http://profiles.wordpress.org/kanakiyajay) for replacing deprecated function split
 * Other minor bug fixes
 
 = 3.0.11 =
