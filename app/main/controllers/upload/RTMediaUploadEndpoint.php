@@ -81,7 +81,7 @@ class RTMediaUploadEndpoint {
             }
         }
 
-        die ();
+        //die ();
     }
 
 }
