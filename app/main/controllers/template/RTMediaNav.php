@@ -10,7 +10,6 @@ class RTMediaNav {
 
         if ( class_exists ( 'BuddyPress' ) ) {
             add_action ( 'bp_init', array( $this, 'custom_media_nav_tab' ), 10, 1 );
-            //add_action( 'bp_init', array( $this, 'custom_media_sub_nav_tab' ), 10, 20 );
         }
     }
 
@@ -61,15 +60,6 @@ class RTMediaNav {
     }
 
     function admin_nav () {
-        //		$wp_admin_bar->add_menu( array(
-//			'parent'    => 'my-account',
-//			'id'        => 'my-account-buddypress',
-//			'title'     => __( 'My Account' ),
-//			'group'     => true,
-//			'meta'      => array(
-//				'class' => 'ab-sub-secondary'
-//			)
-//		) );
         global $wp_admin_bar;
 
         if ( ! function_exists ( "bp_use_wp_admin_bar" ) )
@@ -77,10 +67,8 @@ class RTMediaNav {
         // Bail if this is an ajax request
         if ( ! bp_use_wp_admin_bar () || defined ( 'DOING_AJAX' ) )
             return;
-
         // Only add menu for logged in user
         if ( is_user_logged_in () ) {
-
             // Add secondary parent item for all BuddyPress components
             $wp_admin_bar->add_menu ( array(
                 'parent' => 'my-account',
@@ -88,13 +76,6 @@ class RTMediaNav {
                 'title' => RTMEDIA_MEDIA_LABEL,
                 'href' => trailingslashit ( get_rtmedia_user_link ( get_current_user_id () ) ) . RTMEDIA_MEDIA_SLUG . '/'
             ) );
-
-//			$wp_admin_bar->add_menu( array(
-//				'parent' => 'my-account-' . RTMEDIA_MEDIA_SLUG,
-//				'id' => 'my-account-media-' . RTMEDIA_MEDIA_SLUG,
-//				'title' => __('Wall Posts','rtmedia'),
-//				'href' => trailingslashit( get_rtmedia_user_link( get_current_user_id() ) ) . 'media/'.RTMediaAlbum::get_default().'/'
-//			) );
 
             if ( is_rtmedia_album_enable () ) {
                 $wp_admin_bar->add_menu ( array(
@@ -140,11 +121,6 @@ class RTMediaNav {
         //print_r($rtmedia_query->action_query);
 
         $global_album = '';
-//		if(isset($rtmedia_query->action_query->id) && $rtmedia_query->action_query->id==RTMediaAlbum::get_default())
-//			$global_album = 'class = "current selected"';
-//		echo apply_filters( 'rtmedia_sub_nav_wall_post' ,
-//				'<li id="rtmedia-nav-item-wall-post-li" ' . $global_album . '><a id="rtmedia-nav-item-wall-post" href="' . trailingslashit( get_rtmedia_user_link( get_current_user_id() ) ) . 'media/' . RTMediaAlbum::get_default() . '/' . '">' . __("Wall Posts","rtmedia") . '</a></li>' );
-
         $albums = '';
         if ( isset ( $rtmedia_query->action_query->media_type ) && $rtmedia_query->action_query->media_type == 'album' )
             $albums = 'class="current selected"';
