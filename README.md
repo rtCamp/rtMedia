@@ -2,7 +2,7 @@
 
 # rtMedia for WordPress, BuddyPress and bbPress #
 
-* **Contributors:** [rtcamp] (http://profiles.wordpress.org/rtcamp), [rahul286] (http://profiles.wordpress.org/rahul286), [gagan0123] (http://profiles.wordpress.org/gagan0123), [saurabhshukla] (http://profiles.wordpress.org/saurabhshukla), [JoshuaAbenazer] (http://profiles.wordpress.org/JoshuaAbenazer), [faishal] (http://profiles.wordpress.org/faishal), [desaiuditd] (http://profiles.wordpress.org/desaiuditd), [nitun.lanjewar] (http://profiles.wordpress.org/nitun.lanjewar), [rittesh.patel] (http://profiles.wordpress.org/rittesh.patel), [umesh.nevase] (http://profiles.wordpress.org/umesh.nevase), [suhasgirgaonkar] (http://profiles.wordpress.org/suhasgirgaonkar), [neerukoul] (http://profiles.wordpress.org/neerukoul), [hrishiv90] (http://profiles.wordpress.org/hrishiv90),
+* **Contributors:** [rtcamp] (http://profiles.wordpress.org/rtcamp), [rahul286] (http://profiles.wordpress.org/rahul286), [faishal] (http://profiles.wordpress.org/faishal), [JoshuaAbenazer] (http://profiles.wordpress.org/JoshuaAbenazer), [gagan0123] (http://profiles.wordpress.org/gagan0123), [saurabhshukla] (http://profiles.wordpress.org/saurabhshukla), [desaiuditd] (http://profiles.wordpress.org/desaiuditd), [nitun.lanjewar] (http://profiles.wordpress.org/nitun.lanjewar), [rittesh.patel] (http://profiles.wordpress.org/rittesh.patel), [umesh.nevase] (http://profiles.wordpress.org/umesh.nevase), [suhasgirgaonkar] (http://profiles.wordpress.org/suhasgirgaonkar), [neerukoul] (http://profiles.wordpress.org/neerukoul), [hrishiv90] (http://profiles.wordpress.org/hrishiv90), [kanakiyajay] (http://profiles.wordpress.org/kanakiyajay),
 
 * **License:** [GPL v2 or later] ( http://www.gnu.org/licenses/gpl-2.0.html)
 
@@ -159,6 +159,17 @@ Please visit [rtMedia's Features page](http://rtcamp.com/buddypress-media/?utm_s
 ## Changelog ##
 
 Please visit [rtMedia's Roadmap page](http://rtcamp.com/buddypress-media/roadmap/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "Visit rtMedia's Features page") to get some details about future releases.
+
+#### 3.0.12 ####
+* Fixed activity mention issue
+* Fixed group avatar blank page issue
+* Fixed encoding service free subscription issue
+* Fixed featured video issue
+* Fixed media player css issues
+* Fixed permalink and count issue
+* Update SEO for media
+* Thanks to [kanakiyajay](http://profiles.wordpress.org/kanakiyajay) for replacing deprecated function split
+* Other minor bug fixes
 
 #### 3.0.11 ####
 * Added profile picture along with the link back to the profile in the media pop ups ( sponsored by Richard Ellis )
@@ -533,8 +544,8 @@ Please visit [rtMedia's Roadmap page](http://rtcamp.com/buddypress-media/roadmap
 * HTML5 Audio Tag Support (with fallback)
 * HTML5 Video Tag Support (with fallback)
 
-#### 3.0.11 ####
-Requires BuddyPress 1.7 or higher, if using BuddyPress. Added profile picture along with the link, WordPress 3.6 and Other minor bug fixes.
+#### 3.0.12 ####
+Requires BuddyPress 1.7 or higher, if using BuddyPress. Fixed activity mention,featured video,Other minor bugs and Update SEO for media.
 
 ## Sponsors ##
 

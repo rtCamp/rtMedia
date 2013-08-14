@@ -94,8 +94,10 @@ class RTMediaBuddyPressActivity {
 
     function bp_activity_posted_update ( $content, $user_id, $activity_id ) {
         if ( isset ( $_POST[ "rtMedia_attached_files" ] ) && is_array ( $_POST[ "rtMedia_attached_files" ] ) ) {
-            $objActivity = new RTMediaActivity ( $_POST[ "rtMedia_attached_files" ], 0, $content );
             global $wpdb, $bp;
+            $updated_content = $wpdb->get_var ( "select content from  {$bp->activity->table_name} where  id= $activity_id" );
+            $objActivity = new RTMediaActivity ( $_POST[ "rtMedia_attached_files" ], 0, $updated_content );
+
             $wpdb->update ( $bp->activity->table_name, array( "type" => "rtmedia_update", "content" => $objActivity->create_activity_html () ), array( "id" => $activity_id ) );
             $mediaObj = new RTMediaModel();
             $sql = "update $mediaObj->table_name set activity_id = '" . $activity_id . "' where id in (" . implode ( ",", $_POST[ "rtMedia_attached_files" ] ) . ")";
