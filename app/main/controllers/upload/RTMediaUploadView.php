@@ -68,7 +68,7 @@ class RTMediaUploadView {
         if ( $attr && is_array ( $attr ) ) {
             foreach ( $attr as $key => $val ) {
                 ?>
-                <input type='hidden' value='<?php echo $val; ?>' name ='<?php echo $key; ?>' />
+                <input type='hidden' id="rt_upload_hf_<?php echo sanitize_key ( $key ); ?>" value='<?php echo $val; ?>' name ='<?php echo $key; ?>' />
                 <?php
             }
         }
