@@ -11,10 +11,10 @@
 /////////////////////////////////////////////////////////////////
 // attempt to define temp dir as something flexible but reliable
 
-if ( ! class_exists ( "getID3" ) ) {
+if ( class_exists ( "getID3" ) ) {
     return;
 }
-if ( ! class_exists ( "getid3_exception" ) ) {
+if ( class_exists ( "getid3_exception" ) ) {
     return;
 }
 $temp_dir = ini_get ( 'upload_tmp_dir' );
