@@ -35,7 +35,7 @@ jQuery('document').ready(function($) {
         rtMagnificPopup = jQuery('.rtmedia-list-media, .rtmedia-activity-container ul.rtmedia-list, #bp-media-list,.widget-item-listing,.bp-media-sc-list, li.media.album_updated ul,ul.bp-media-list-media, li.activity-item div.activity-content div.activity-inner div.bp_media_content').magnificPopup({
             delegate: 'a:not(".no-popup")',
             type: 'ajax',
-            tLoading: 'Loading image #%curr%...',
+            tLoading: 'Loading media #%curr%...',
             mainClass: 'mfp-img-mobile',
             preload: [1, 3],
             closeOnBgClick: false,
