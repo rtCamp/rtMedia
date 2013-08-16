@@ -61,7 +61,10 @@ class RTMediaUploadShortcode {
         }
 
         if ( self::display_allowed () ) {
-
+            if ( ! _device_can_upload () ) {
+                echo '<p>' . __ ( 'The web browser on your device cannot be used to upload files.' ) . '</p>';
+                return;
+            }
             ob_start ();
 
             self::$add_sc_script = true;
