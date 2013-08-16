@@ -1,4 +1,19 @@
 var rtMagnificPopup;
+var rtMediaHook = {
+    hooks: [],
+    register: function(name, callback) {
+        if ('undefined' == typeof(rtMediaHook.hooks[name]))
+            rtMediaHook.hooks[name] = []
+        rtMediaHook.hooks[name].push(callback)
+    },
+    call: function(name, arguments) {
+        if ('undefined' != typeof(rtMediaHook.hooks[name]))
+            for (i = 0; i < rtMediaHook.hooks[name].length; ++i)
+                if (true != rtMediaHook.hooks[name][i](arguments)) {
+                    break;
+                }
+    }
+}
 jQuery('document').ready(function($) {
 
     $("#rt_media_comment_form").submit(function(e) {
@@ -60,10 +75,11 @@ jQuery('document').ready(function($) {
                         settings.pluginPath = _wpmejsSettings.pluginPath;
 
                     $('.mfp-content .wp-audio-shortcode,.mfp-content .wp-video-shortcode,.mfp-content .bp_media_content video').mediaelementplayer(settings);
-                    $('.mfp-content .mejs-audio .mejs-controls').css('position','relative');
+                    $('.mfp-content .mejs-audio .mejs-controls').css('position', 'relative');
+                    rtMediaHook.call('rtmedia_js_popup_after_content_added', []);
                 },
                 close: function(e) {
-                    console.log(e);                    
+                    console.log(e);
                 },
                 BeforeChange: function(e) {
                     console.log(e);
