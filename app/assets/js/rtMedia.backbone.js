@@ -378,11 +378,13 @@ jQuery(document).ready(function($) {
             $("#rtmedia-action-update").append($("#privacy"));
         }
     }
+    var objUploadView = new UploadView(rtMedia_update_plupload_config);
     $("#whats-new-form").on('click', '#rtmedia-add-media-button-post-update', function(e) {
         $("#div-attache-rtmedia").toggle();
+        objUploadView.uploader.refresh();
     })
     //whats-new-post-in
-    var objUploadView = new UploadView(rtMedia_update_plupload_config);
+    
 
     objUploadView.uploader.bind('FilesAdded', function(up, files) {
         //$("#aw-whats-new-submit").attr('disabled', 'disabled');
