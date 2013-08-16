@@ -160,6 +160,11 @@ Please visit [rtMedia's Features page](http://rtcamp.com/buddypress-media/?utm_s
 
 Please visit [rtMedia's Roadmap page](http://rtcamp.com/buddypress-media/roadmap/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "Visit rtMedia's Features page") to get some details about future releases.
 
+#### 3.0.13 ####
+* Add redirect in upload shortcode sponsored by [Henry Wright](http://profiles.wordpress.org/henrywright-1)
+* Fixed getID3 issue for FFMPEG
+* Add rtMedia JS hook for lighbox
+
 #### 3.0.12 ####
 * Fixed activity mention issue
 * Fixed group avatar blank page issue
@@ -544,8 +549,8 @@ Please visit [rtMedia's Roadmap page](http://rtcamp.com/buddypress-media/roadmap
 * HTML5 Audio Tag Support (with fallback)
 * HTML5 Video Tag Support (with fallback)
 
-#### 3.0.12 ####
-Requires BuddyPress 1.7 or higher, if using BuddyPress. Fixed activity mention,featured video,Other minor bugs and Update SEO for media.
+#### 3.0.13 ####
+Requires BuddyPress 1.7 or higher, if using BuddyPress. Add redirect in upload shortcode.
 
 ## Sponsors ##
 
