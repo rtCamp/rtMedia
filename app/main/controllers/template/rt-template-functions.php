@@ -295,7 +295,10 @@ function rtmedia_delete_allowed () {
     global $rtmedia_media;
 
     $flag = $rtmedia_media->media_author == get_current_user_id ();
-
+    
+    if(!$flag)
+        $flag = is_site_admin ();
+    
     $flag = apply_filters ( 'rtmedia_media_delete_priv', $flag );
 
     return $flag;
@@ -306,6 +309,9 @@ function rtmedia_edit_allowed () {
     global $rtmedia_media;
 
     $flag = $rtmedia_media->media_author == get_current_user_id ();
+    
+    if(!$flag)
+        $flag = is_site_admin ();
 
     $flag = apply_filters ( 'rtmedia_media_edit_priv', $flag );
 
@@ -700,9 +706,9 @@ function rtmedia_global_album_list () {
         if ( is_array ( $global_albums ) ) {
             $albums = implode ( ',', $global_albums );
         } else {
-            return;
+            //return;
         }
-        return;
+        //return;
     }
     $option = NULL;
 
