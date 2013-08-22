@@ -110,7 +110,7 @@ class RTMediaFormHandler {
 		foreach ($options as $key => $value) {
 			if(strncmp($key, $section_name, strlen($section_name))==0)
 				$section[$key] = $value;
-		}
+		}                
 		return $section;
 	}
 
@@ -185,11 +185,10 @@ class RTMediaFormHandler {
 	}
 
 	public static function general_content() {
-		global $rtmedia;
-		$options = self::extract_settings('general', $rtmedia->options);
-
-		$render_options = self::general_render_options($options);
-
+		global $rtmedia;                
+		$options = self::extract_settings('general', $rtmedia->options);                
+		$render_options = self::general_render_options($options);                
+                $render_options = apply_filters("rtmedia-general-content-add-itmes",$render_options, $options);                
 		foreach ($render_options as $key => $option) { ?>
 			<div class="row section">
 				<div class="columns large-2"> <?php echo $option['title']; ?> </div>
