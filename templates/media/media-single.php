@@ -21,10 +21,9 @@
                         <div class="username">
                             <?php rtmedia_author_name ( true ); ?>
                         </div>
-
                     </div>
-                <?php } ?>
-                <?php rtmedia_description ();
+                <?php } 
+		    rtmedia_description ();
                 ?>
 
                 <div class="rtmedia-item-actions">
