@@ -7,7 +7,7 @@
 
             <div id="rtmedia-single-media-container" class="rtmedia-single-media columns <?php echo ($rt_ajax_request) ? "large-9" : "large-12"; ?>">
 
-                <?php rtmedia_title (); ?>
+                <?php echo '<span class="rtmedia-media-title">'.rtmedia_title ().'</span>'; ?>
 
 
                 <div class="rtmedia-media" id ="rtmedia-media-<?php echo rtmedia_id (); ?>">

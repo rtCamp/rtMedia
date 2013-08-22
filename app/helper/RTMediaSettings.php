@@ -36,9 +36,11 @@ if (!class_exists('RTMediaSettings')) {
 				'general_enableLightbox' => 0,
 				'general_perPageMedia' => 10,
 				'general_enableMediaEndPoint' => 0,
-				'general_showAdminMenu' => 0,
+				'general_showAdminMenu' => 0                                
 			);
-
+                        
+                        $defaults = apply_filters('rtmedia-general-content-default-values', $defaults);
+                        
 			foreach($rtmedia->allowed_types as $type){
 				// invalid keys handled in sanitize method
 				$defaults['allowedTypes_'.$type['name'].'_enabled'] = 0;

@@ -26,8 +26,12 @@ class RTMediaLike extends RTMediaUserInteraction {
 		'single' => false,
 		'repeatable' => false,
 		'undoable' => true
-		);
-		parent::__construct($args);
+		);                
+                
+//                
+                
+                
+                    parent::__construct($args);
 
 	}
 
@@ -85,6 +89,10 @@ class RTMediaLike extends RTMediaUserInteraction {
             }
         }
         function before_render(){
+            $enable_like = true;
+            $enable_like = apply_filters('rtmedia-check-enable-disable-like',$enable_like);                
+            if(!$enable_like) 
+                return false;
             if($this->is_liked()){
                 $this->label =  $this->undo_label;
             }
