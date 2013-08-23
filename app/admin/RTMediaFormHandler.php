@@ -191,12 +191,12 @@ class RTMediaFormHandler {
                 $render_options = apply_filters("rtmedia-general-content-add-itmes",$render_options, $options);                
 		foreach ($render_options as $key => $option) { ?>
 			<div class="row section">
-				<div class="columns large-2"> <?php echo $option['title']; ?> </div>
-				<div class="columns large-4">
+				<div class="columns large-4"> <?php echo $option['title']; ?> </div>
+				<div class="columns large-8">
 					<?php call_user_func($option['callback'], $option['args']); ?>
 				</div>
 			</div>
-			<div class="clearfix">&nbsp;</div>
+			<div class="clearfix"></div>
 		<?php }
 	}
 
@@ -239,9 +239,9 @@ class RTMediaFormHandler {
 ?>
 		<div class="rt-table large-12">
 			<div class="row rt-header">
-				<h4 class="columns large-2"><?php echo __("Media Type","rtmedia") ?></h4>
-				<h4 class="columns large-2 rtm-show-tooltip" title="<?php echo __("Allows you to upload a particular media type on your post.","rtmedia"); ?>"><abbr><?php echo __("Allow Upload","rtmedia"); ?></abbr></h4>
-				<h4 class="columns large-2 rtm-show-tooltip" title="<?php echo __("Put a specific media as a featured content on the post.","rtmedia"); ?>"><abbr><?php echo __("Set Featured","rtmedia"); ?></abbr></h4>
+				<h4 class="columns large-3"><?php echo __("Media Type","rtmedia") ?></h4>
+				<h4 class="columns large-3 rtm-show-tooltip" title="<?php echo __("Allows you to upload a particular media type on your post.","rtmedia"); ?>"><abbr><?php echo __("Allow Upload","rtmedia"); ?></abbr></h4>
+				<h4 class="columns large-3 rtm-show-tooltip" title="<?php echo __("Put a specific media as a featured content on the post.","rtmedia"); ?>"><abbr><?php echo __("Set Featured","rtmedia"); ?></abbr></h4>
 				<h4 class="columns large-3 rtm-show-tooltip" title="<?php echo __("File extensions that can be uploaded on the website.","rtmedia"); ?>"><abbr><?php echo __("File Extensions","rtmedia"); ?></abbr></h4>
 			</div>
 <?php
@@ -252,13 +252,13 @@ class RTMediaFormHandler {
 			else
 				echo '<div class="row rt-even">';
 
-				echo '<div class="columns large-2">' . $section['name'] . '</div>';
+				echo '<div class="columns large-3">' . $section['name'] . '</div>';
 				$args = array('key' => 'allowedTypes_'.$key.'_enabled', 'value' => $section['enabled']);
-				echo '<div class="columns large-2">';
+				echo '<div class="columns large-3">';
 					self::checkbox($args);
 				echo '</div>';
 				$args = array('key' => 'allowedTypes_'.$key.'_featured', 'value' => $section['featured']);
-				echo '<div class="columns large-2">';
+				echo '<div class="columns large-3">';
 					self::checkbox($args);
 				echo '</div>';
 				echo '<div class="columns large-3">' . implode(', ', $section['extn']) . '</div>';
@@ -298,7 +298,7 @@ class RTMediaFormHandler {
 		echo '<div class="rt-header row">';
 			echo '<h4 class="columns large-3">' . __("Category","rtmedia") . '</h4>';
 			echo '<h4 class="columns large-3">' . __("Entity","rtmedia") . '</h4>';
-			echo '<h4 class="columns large-4"><span class="large-offset-2">' . __("Width","rtmedia") . '</span><span class="large-offset-2">' . __("Height","rtmedia") . '</span><span class="large-offset-2">' . __("Crop","rtmedia") . '</span></h4>';
+			echo '<h4 class="columns large-6"><span class="large-offset-2">' . __("Width","rtmedia") . '</span><span class="large-offset-2">' . __("Height","rtmedia") . '</span><span class="large-offset-2">' . __("Crop","rtmedia") . '</span></h4>';
 		echo'</div>';
 
 		//body
@@ -316,7 +316,7 @@ class RTMediaFormHandler {
 				echo '<div class="row">' . ucfirst($entity['title']) . '</div>';
 			}
 			echo '</div>';
-			echo '<div class="columns large-4">';
+			echo '<div class="columns large-6">';
 			foreach ($entities as $entity) {
 				$args = array(
 					'key' => 'defaultSizes_'.$parent_key.'_'.$entity['title'],
@@ -381,8 +381,8 @@ class RTMediaFormHandler {
 		echo '<div class="large-12">';
 			foreach ($render_data as $key=>$privacy) {
 				echo '<div class="row section">';
-					echo '<div class="columns large-2">' . $privacy['title'] . '</div>';
-					echo '<div class="columns large-5">';
+					echo '<div class="columns large-4">' . $privacy['title'] . '</div>';
+					echo '<div class="columns large-8">';
 						if($key != "enable")
 							call_user_func($privacy['callback'], array_merge_recursive($privacy['args'], array('class' => array("privacy-driven-disable"))));
 						else
@@ -439,8 +439,8 @@ class RTMediaFormHandler {
 		echo '<div class="large-12">';
 		foreach ($render_data as $option) { ?>
 			<div class="row section">
-				<div class="columns large-2"><?php echo $option['title']; ?></div>
-				<div class="columns large-4">
+				<div class="columns large-4"><?php echo $option['title']; ?></div>
+				<div class="columns large-8">
 					<?php call_user_func($option['callback'], $option['args']); ?>
 				</div>
 			</div>
@@ -448,13 +448,24 @@ class RTMediaFormHandler {
 		echo '</div>';
 	}
 
-	public static function rtForm_settings_tabs_content($page, $sub_tabs) {
-
+	public static function rtForm_settings_tabs_content($page, $sub_tabs) { 
+            ?>
+                <div class="section-container vertical-tabs" data-section="vertical-tabs">  
+                   
+            <?php            
+                $sub_tabs = apply_filters("rtmedia_pro_settings_tabs_content",$sub_tabs);                
 		foreach ($sub_tabs as $tab) {
-			echo '<div id="' . substr($tab['href'], 1) . '">';
+                    if ( isset ( $tab[ 'icon' ] ) && ! empty ( $tab[ 'icon' ] ) )
+                        $icon = '<i class="' . $tab[ 'icon' ] . '"></i>';
+                    
+                    echo '<section> <p class="title" data-section-title><a id="tab-' . substr ( $tab[ 'href' ], 1 ) . '" title="' . $tab[ 'title' ] . '" href="' . $tab[ 'href' ] . '" class="rtmedia-tab-title ' . sanitize_title ( $tab[ 'name' ] ) . '">' . $icon . ' ' . $tab[ 'name' ] . '</a> </p> <div class="content" data-section-content>';
 				call_user_func($tab['callback'], $page);
-			echo '</div>';
+                    echo '</div> </section>';
 		}
+            ?>
+                </div>
+                     <div class="clearfix"></div>
+            <?php
 	}
 
 	public static function rtForm_do_settings_fields($page, $section) {
