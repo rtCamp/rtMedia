@@ -558,7 +558,10 @@ function rtmedia_comments_enabled () {
  */
 function is_rtmedia_gallery () {
     global $rtmedia_query;
-    return $rtmedia_query->is_gallery ();
+    if ( $rtmedia_query )
+	return $rtmedia_query->is_gallery ();
+    else
+	return false;
 }
 
 /**
@@ -567,7 +570,10 @@ function is_rtmedia_gallery () {
  */
 function is_rtmedia_album_gallery () {
     global $rtmedia_query;
-    return $rtmedia_query->is_album_gallery ();
+    if ( $rtmedia_query )
+	return $rtmedia_query->is_album_gallery ();
+    else
+	return false;
 }
 
 /**
