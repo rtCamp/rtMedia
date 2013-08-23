@@ -279,7 +279,7 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
                 wp_enqueue_style ( 'rtmedia-main', RTMEDIA_URL . 'app/assets/css/main.css', '', RTMEDIA_VERSION );
                 wp_enqueue_style ( 'rtmedia-admin', RTMEDIA_URL . 'app/assets/css/admin.css', '', RTMEDIA_VERSION );                 
                 if(isset($_REQUEST['page']) && $_REQUEST['page']== "rtmedia-settings") {
-                    wp_enqueue_style ( 'foundation-admin-css', RTMEDIA_URL . 'app/assets/css/admin_pro.css', '', RTMEDIA_VERSION );
+                    wp_enqueue_style ( 'foundation-admin-css', RTMEDIA_URL . 'app/assets/css/settings.css', '', RTMEDIA_VERSION );
                 }
                 wp_enqueue_style ( 'wp-jquery-ui-dialog' );
             } else {
