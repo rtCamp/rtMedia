@@ -4,16 +4,13 @@
         global $rt_ajax_request;
         if ( have_rtmedia () ) : rtmedia ();
             ?>
-
             <div id="rtmedia-single-media-container" class="rtmedia-single-media columns <?php echo ($rt_ajax_request) ? "large-9" : "large-12"; ?>">
-
-                <?php echo '<span class="rtmedia-media-title">'.rtmedia_title ().'</span>'; ?>
-
-
+		<span class="rtmedia-media-title">
+		    <?php echo rtmedia_title (); ?>
+		</span>
                 <div class="rtmedia-media" id ="rtmedia-media-<?php echo rtmedia_id (); ?>">
                     <?php rtmedia_media ( true ); ?>
                 </div>
-
             </div>
             <div class="rtmedia-single-meta columns <?php echo ($rt_ajax_request) ? "large-3" : "large-12"; ?>">
                 <?php if ( $rt_ajax_request ) { ?>
@@ -24,10 +21,9 @@
                         <div class="username">
                             <?php rtmedia_author_name ( true ); ?>
                         </div>
-
                     </div>
-                <?php } ?>
-                <?php rtmedia_description ();
+                <?php } 
+		    rtmedia_description ();
                 ?>
 
                 <div class="rtmedia-item-actions">

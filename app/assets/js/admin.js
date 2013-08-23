@@ -57,18 +57,22 @@ jQuery(document).ready(function($) {
     });
 
     /* Submit Request */
-    jQuery('.bp-media-support').on('submit', '#bp_media_settings_form', function(e) {
-        e.preventDefault();
-        var data = {
-            action: 'rtmedia_submit_request',
-            form_data: jQuery('form').serialize()
-        };
 
-        // since 2.8 ajaxurl is always defined in the admin header and points to admin-ajax.php
-        jQuery.post(ajaxurl, data, function(response) {
-            jQuery('#bp_media_settings_form .bp-media-metabox-holder').html()
-            jQuery('#bp_media_settings_form .bp-media-metabox-holder').html(response).fadeIn('slow');
+    jQuery('#bp-media-settings-boxes').on('submit', '#bp_media_settings_form,#rtmedia-settings-submit', function(e) {
+        var return_code = true;
+        var reg = new RegExp('^auto$|^[+-]?[0-9]+\\.?([0-9]+)?(px|em|ex|%|in|cm|mm|pt|pc)?$')
+        jQuery("input[name*='defaultSizes']").each(function(el) {
+            if (!reg.test(jQuery(this).val())) {
+                alert("Invalid value for " + jQuery(this).attr('name').replace('rtmedia-options[', '').replace(']', '').replace(/_/g, ' '))
+                return_code = false;
+                return false;
+            }
+
         });
+        if (!return_code) {
+            e.preventDefault();
+        }
+
     });
 
     jQuery(document).on('click', "#bpm-services .encoding-try-now,#rtm-services .encoding-try-now", function(e) {

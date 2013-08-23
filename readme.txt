@@ -6,7 +6,7 @@ License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires at least: WordPress 3.6
 Tested up to: WordPress 3.6 + BuddyPress 1.7
-Stable tag: 3.0.12
+Stable tag: 3.0.13
 
 rtMedia adds albums, audio/video encoding, privacy/sharing, front-end uploads & more. All this works nicely on mobile/tablets devices.
 
@@ -159,6 +159,11 @@ Please visit [rtMedia's Features page](http://rtcamp.com/buddypress-media/?utm_s
 == Changelog ==
 
 Please visit [rtMedia's Roadmap page](http://rtcamp.com/buddypress-media/roadmap/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "Visit rtMedia's Features page") to get some details about future releases.
+
+= 3.0.13 =
+* Add redirect in upload shortcode sponsored by [Henry Wright](http://profiles.wordpress.org/henrywright-1)
+* Fixed getID3 issue for FFMPEG
+* Add rtMedia JS hook for lighbox
 
 = 3.0.12 =
 * Fixed activity mention issue
@@ -546,8 +551,8 @@ Please visit [rtMedia's Roadmap page](http://rtcamp.com/buddypress-media/roadmap
 
 == Upgrade Notice ==
 
-= 3.0.12 =
-Requires BuddyPress 1.7 or higher, if using BuddyPress. Fixed activity mention,featured video,Other minor bugs and Update SEO for media.
+= 3.0.13 =
+Requires BuddyPress 1.7 or higher, if using BuddyPress. Add redirect in upload shortcode.
 
 == Sponsors ==
 
