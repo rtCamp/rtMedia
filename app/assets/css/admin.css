@@ -59,7 +59,7 @@ div#icon-buddypress-media { background: url('../img/bpm-icon-32.png'); backgroun
 .wrap.bp-media-admin .bp-media-settings-tabs a.nav-tab.convert-videos{background-position-y:-214px;}
 .wrap.bp-media-admin .bp-media-settings-tabs a.nav-tab.insta{background-position-y:-244px;}
 .wrap.bp-media-admin .bp-media-settings-tabs a.nav-tab.watermark{background-position-y:-274px;}
-
+.wrap.bp-media-admin .row {max-width: 97%;}
 #bpm-unsubscribe-dialog { display: none; }
 #bpm-unsubscribe-dialog p { margin: 10px; }
 

@@ -81,8 +81,8 @@ if (!class_exists('RTMediaSettings')) {
 			if(isset($_POST['rtmedia-options-save'])) {
 
 				$options = $_POST['rtmedia-options'];
-				$options = $this->sanitize_options($options);
-
+				$options = $this->sanitize_options($options);                                
+                                $options = apply_filters("rtmedia_pro_options_save_settings", $options);
 				rtmedia_update_site_option('rtmedia-options', $options);
 				global $rtmedia;
 				$rtmedia->options = $options;

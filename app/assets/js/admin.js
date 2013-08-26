@@ -490,11 +490,11 @@ jQuery(document).ready(function($) {
     });
 
 
-    jQuery("#rtm-settings-tabs,#rtm-addons").sliderTabs({
-        autoplay: false,
-        mousewheel: false,
-        defaultTab: manageHash()
-    });
+//    jQuery("#rtm-settings-tabs,#rtm-addons").sliderTabs({
+//        autoplay: false,
+//        mousewheel: false,
+//        defaultTab: manageHash()
+//    });
 
     if (jQuery('#rtmedia-privacy-enable').is(":checked")) {
         jQuery(".privacy-driven-disable label input").prop("disabled", false);
@@ -545,4 +545,5 @@ jQuery(document).ready(function($) {
         e.preventDefault();
         manageHash();
     });
+    jQuery(document).foundation('section');
 });

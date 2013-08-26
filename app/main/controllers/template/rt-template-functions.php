@@ -717,9 +717,9 @@ function rtmedia_global_album_list () {
         //return;
     }
     $option = NULL;
-
-
-    $album_objects = $model->get_media ( array( 'id' => ($albums) ), false, false );
+    
+    $album_objects = $model->get_media ( array( 'id' => ($global_albums) ), false, false );
+    
     if ( $album_objects ) {
         foreach ( $album_objects as $album ) {
             if ( (isset ( $rtmedia_query->media_query[ 'album_id' ] ) && ($album_objects[ 0 ]->id != $rtmedia_query->media_query[ 'album_id' ])) || ! isset ( $rtmedia_query->media_query[ 'album_id' ] ) )
@@ -734,12 +734,13 @@ function rtmedia_global_album_list () {
 function rtmedia_user_album_list () {
     global $rtmedia_query;
     $model = new RTMediaModel();
-    $option = rtmedia_global_album_list ();
+    $global_option = rtmedia_global_album_list ();
     $global_albums = rtmedia_global_albums ();
 
     $global_album = get_site_option ( 'rtmedia-global-albums' );
     $album_objects = $model->get_media ( array( 'media_author' => get_current_user_id (), 'media_type' => 'album' ), false, 'context' );
     $option_group = "";
+    $profile_option = "";
     if ( $album_objects ) {
         foreach ( $album_objects as $album ) {
             if ( ! in_array ( $album->id, $global_albums ) && (( isset ( $rtmedia_query->media_query[ 'album_id' ] ) && (
@@ -747,13 +748,13 @@ function rtmedia_user_album_list () {
                     )
             )                    
                 if($album->context == 'profile')
-                    $option .= '<option value="' . $album->id . '">' . $album->media_title . '</option>';
+                    $profile_option .= '<option value="' . $album->id . '">' . $album->media_title . '</option>';
                 else
                     $option_group .= '<option value="' . $album->id . '">' . $album->media_title . '</option>';
                 
         }
     }    
-    $option = "<optgroup label='Profile Albums'>$option</optgroup><optgroup label='Group Albums'>$option_group</optgroup>"; 
+    $option = "<optgroup label='Global Albums'>$global_option</optgroup><optgroup label='Profile Albums'>$profile_option</optgroup><optgroup label='Group Albums'>$option_group</optgroup>"; 
     if ( $option )
         return $option;
     else
