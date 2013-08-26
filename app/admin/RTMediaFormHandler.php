@@ -186,7 +186,7 @@ class RTMediaFormHandler {
 
 	public static function general_content() {
 		global $rtmedia;                
-		$options = self::extract_settings('general', $rtmedia->options);                
+		$options = self::extract_settings('general', $rtmedia->options);                   
 		$render_options = self::general_render_options($options);                
                 $render_options = apply_filters("rtmedia-general-content-add-itmes",$render_options, $options);                
 		foreach ($render_options as $key => $option) { ?>
@@ -292,7 +292,7 @@ class RTMediaFormHandler {
 		$render_data = self::sizes_render_options($options);
 
 		//container
-		echo '<div class="rt-table large-12">';
+		echo '<div class="rt-table large-12 rtmedia-size-content-setting">';
 
 		//header
 		echo '<div class="rt-header row">';
@@ -449,16 +449,16 @@ class RTMediaFormHandler {
 	}
 
 	public static function rtForm_settings_tabs_content($page, $sub_tabs) { 
-            ?>
-                <div class="section-container vertical-tabs" data-section="vertical-tabs">  
-                   
-            <?php            
+                $rtmedia_admin_ui_handler = "<div class='section-container auto' data-options='deep_linking: true' data-section=''>";
+                $rtmedia_admin_ui_handler = apply_filters("rtmedia_admin_ui_handler_filter",$rtmedia_admin_ui_handler);
+                echo $rtmedia_admin_ui_handler;
                 $sub_tabs = apply_filters("rtmedia_pro_settings_tabs_content",$sub_tabs);                
 		foreach ($sub_tabs as $tab) {
                     if ( isset ( $tab[ 'icon' ] ) && ! empty ( $tab[ 'icon' ] ) )
                         $icon = '<i class="' . $tab[ 'icon' ] . '"></i>';
-                    
-                    echo '<section> <p class="title" data-section-title><a id="tab-' . substr ( $tab[ 'href' ], 1 ) . '" title="' . $tab[ 'title' ] . '" href="' . $tab[ 'href' ] . '" class="rtmedia-tab-title ' . sanitize_title ( $tab[ 'name' ] ) . '">' . $icon . ' ' . $tab[ 'name' ] . '</a> </p> <div class="content" data-section-content>';
+                    $tab_without_hash = explode("#", $tab[ 'href' ]);
+                    $tab_without_hash  = $tab_without_hash[1];
+                    echo '<section> <p class="title" data-section-title><a id="tab-' . substr ( $tab[ 'href' ], 1 ) . '" title="' . $tab[ 'title' ] . '" href="' . $tab[ 'href' ] . '" class="rtmedia-tab-title ' . sanitize_title ( $tab[ 'name' ] ) . '">' . $icon . ' ' . $tab[ 'name' ] . '</a> </p> <div class="content" data-section-content data-slug="' . $tab_without_hash . '">';
 				call_user_func($tab['callback'], $page);
                     echo '</div> </section>';
 		}

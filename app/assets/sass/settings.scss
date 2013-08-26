@@ -15,7 +15,7 @@
 	.has-switch span.switch-right { 
 		border-radius: 0; 
 	}
-	.section-container.vertical-tabs {
+	.section-container {
 		section {
 			> {
 				.title {
@@ -38,6 +38,33 @@
 				}
 			}
 		}
-	} 	
+		.rtmedia-size-content-setting {
+			.rt-form-dimension  {
+				input[type="text"] {
+					margin-left: 32px;
+				}
+				span {
+					margin-left: 36px;
+				}
+			}
+		}
+	}
+	.section-container.vertical-tabs, .section-container.auto {
+		section {
+			> {
+				.title {
+					a {
+						font-size: 13px;						
+					}
+				}
+			}
+		}
+	}
+    .global-album-settings {
+            p {
+                height: 35px;
+                overflow: hidden;
+            }
+    }
 }
 
