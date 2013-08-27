@@ -251,6 +251,13 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
                 wp_localize_script ( 'rtmedia-admin', 'rtmedia_admin_ajax', $admin_ajax );
                 wp_localize_script ( 'rtmedia-admin', 'rtmedia_admin_url', admin_url () );
                 wp_localize_script ( 'rtmedia-admin', 'rtmedia_admin_url', admin_url () );
+                if(isset($_REQUEST['page']) && $_REQUEST['page']== "rtmedia-settings")             
+                {
+                    wp_enqueue_script ( 'rtmedia-foundation-modernizr', RTMEDIA_URL . 'lib/foundation/custom.modernizr.js', array('jquery'), RTMEDIA_VERSION );
+                     wp_enqueue_script ( 'rtmedia-foundation', RTMEDIA_URL . 'lib/foundation/foundation.js', array('jquery'), RTMEDIA_VERSION );
+                     wp_enqueue_script ( 'rtmedia-foundation-section', RTMEDIA_URL . 'lib/foundation/foundation.section.js', array('jquery'), RTMEDIA_VERSION );
+                }
+                
                 $rtmedia_admin_strings = array(
                     'no_refresh' => __ ( 'Please do not refresh this page.', 'rtmedia' ),
                     'something_went_wrong' => __ ( 'Something went wronng. Please <a href onclick="location.reload();">refresh</a> page.', 'rtmedia' ),
@@ -270,7 +277,10 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
                 wp_enqueue_style ( 'power-tip', RTMEDIA_URL . 'app/assets/css/jquery.powertip.min.css', '', RTMEDIA_VERSION );
                 wp_enqueue_style ( 'grid-foundation', RTMEDIA_URL . 'app/assets/css/grid-foundation.css', '', RTMEDIA_VERSION );
                 wp_enqueue_style ( 'rtmedia-main', RTMEDIA_URL . 'app/assets/css/main.css', '', RTMEDIA_VERSION );
-                wp_enqueue_style ( 'rtmedia-admin', RTMEDIA_URL . 'app/assets/css/admin.css', '', RTMEDIA_VERSION );
+                wp_enqueue_style ( 'rtmedia-admin', RTMEDIA_URL . 'app/assets/css/admin.css', '', RTMEDIA_VERSION );                 
+                if(isset($_REQUEST['page']) && $_REQUEST['page']== "rtmedia-settings") {
+                    wp_enqueue_style ( 'foundation-admin-css', RTMEDIA_URL . 'app/assets/css/settings.css', '', RTMEDIA_VERSION );
+                }
                 wp_enqueue_style ( 'wp-jquery-ui-dialog' );
             } else {
                 wp_enqueue_style ( 'rtmedia-widget', RTMEDIA_URL . 'app/assets/css/widget.css', '', RTMEDIA_VERSION );
@@ -352,8 +362,8 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
                 <div id="icon-buddypress-media" class="icon32"><br></div>
                 <h2 class="nav-tab-wrapper"><?php $this->rtmedia_tabs (); ?></h2>
                 <?php settings_errors (); ?>
-                <div class="row">
-                    <div id="bp-media-settings-boxes" class="columns large-7">
+                <div class="row bp-media-settings-boxes-container" >
+                    <div id="bp-media-settings-boxes" class="columns large-8">
                         <?php
                         $settings_url = ( is_multisite () ) ? network_admin_url ( 'edit.php?action=' . $option_group ) : 'options.php';
                         ?>
@@ -555,7 +565,7 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
                 );
             }
 
-            $tabs = apply_filters ( 'rtmedia_add_settings_sub_tabs', $tabs, $tab );
+            $tabs = apply_filters ( 'rtmedia_add_settings_sub_tabs', $tabs, $tab );            
             $tabs_html .= '<ul>';
             foreach ( $tabs as $tab ) {
 
@@ -567,7 +577,7 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
             }
             $tabs_html .= '</ul>';
 
-            echo $tabs_html;
+            //echo $tabs_html;
             return $tabs;
         }
 

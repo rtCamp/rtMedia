@@ -1,0 +1,70 @@
+#bp-media-settings-boxes{
+    @import "foundation/components/global"; // *always required    
+    @import "foundation/components/section";
+    margin: 0;    
+	.has-switch { 
+		border-radius: 0
+	}
+	.has-switch label { 
+		padding: 6px; 
+		border-radius: 0; 
+	}
+	.has-switch span.switch-left { 
+		border-radius: 0; 
+	}
+	.has-switch span.switch-right { 
+		border-radius: 0; 
+	}
+	.section-container {
+		section {
+			> {
+				.title {
+					a {
+						font-size: 13px;						
+						text-decoration: none;
+						font-weight: bold;
+						color: #555;
+						&:hover {							
+							color: #000;
+						}
+					}
+				}
+			} 
+		}
+		section.active {
+			.title {
+				a {
+					color: #000;
+				}
+			}
+		}
+		.rtmedia-size-content-setting {
+			.rt-form-dimension  {
+				input[type="text"] {
+					margin-left: 32px;
+				}
+				span {
+					margin-left: 36px;
+				}
+			}
+		}
+	}
+	.section-container.vertical-tabs, .section-container.auto {
+		section {
+			> {
+				.title {
+					a {
+						font-size: 13px;						
+					}
+				}
+			}
+		}
+	}
+    .global-album-settings {
+            p {
+                height: 35px;
+                overflow: hidden;
+            }
+    }
+}
+
