@@ -27,8 +27,7 @@ class RTMediaMigration {
             $pending = false;
         else
             $pending = get_site_option ( "rtMigration-pending-count" );
-        $total = $this->get_total_count ();
-        $done = $this->get_done_count ();
+
         if ( $pending === false ) {
             $total = $this->get_total_count ();
             $done = $this->get_done_count ();
@@ -100,11 +99,7 @@ class RTMediaMigration {
             $sql_bpm_comment_count = "SELECT
                                                     count(id)
                                                 FROM
-                                                    {$bp_prefix}bp_activity
-                                                where
-                                                    type = 'activity_comment'
-                                                    and is_spam <>1
-                                                        and item_id in (select distinct
+                                                    {$bp_prefix}bp_activity left outer join (select distinct
                                                             a.meta_value
                                                         from
                                                             $wpdb->postmeta a
@@ -112,7 +107,12 @@ class RTMediaMigration {
                                                             $wpdb->posts p ON (a.post_id = p.ID)
                                                         where
                                                             (NOT p.ID IS NULL)
-                                                                and a.meta_key = 'bp_media_child_activity')";
+                                                                and a.meta_key = 'bp_media_child_activity') p
+							on  wp_bp_activity.item_id = p.meta_value
+                                                where
+                                                    type = 'activity_comment'
+                                                    and is_spam <>1
+                                                        not p.meta_value is NULL";
 
 
             //echo  $sql_bpm_comment_count;
