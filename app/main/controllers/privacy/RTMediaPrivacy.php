@@ -255,23 +255,23 @@ class RTMediaPrivacy {
 //		$from_sql = " FROM {$bp->activity->table_name} a LEFT JOIN {$wpdb->users} u ON a.user_id = u.ID";
 
         global $bp, $wpdb;
-
+	$rtmedia_model  = new RTMediaModel();
         if ( is_user_logged_in () ) {
             $user = get_current_user_id ();
         } else {
             $user = 0;
         }
 
-        $where .= "AND (CONVERT(m.meta_value,SIGNED INTEGER) <= 0)";
+        $where .= " (m.privacy is NULL OR CONVERT(m.privacy,SIGNED INTEGER) <= 0)";
 
         if ( $user ) {
-            $where .= "OR ((m.meta_value=20)";
-            $where .= " OR (a.user_id={$user} AND CONVERT(m.meta_value, UNSIGNED INTEGER) >= 40)";
+            $where .= "OR ((m.privacy=20)";
+            $where .= " OR (a.user_id={$user} AND CONVERT(m.privacy, UNSIGNED INTEGER) >= 40)";
             if ( class_exists ( 'BuddyPress' ) ) {
                 if ( bp_is_active ( 'friends' ) ) {
                     $friendship = new RTMediaFriends();
                     $friends = $friendship->get_friends_cache ( $user );
-                    $where .= " OR (CONVERT(m.meta_value,UNSIGNED INTEGER)=40 AND a.user_id IN ('" . implode ( "','", $friends ) . "'))";
+                    $where .= " OR (CONVERT(m.privacy,UNSIGNED INTEGER)=40 AND a.user_id IN ('" . implode ( "','", $friends ) . "'))";
                 }
             }
             $where .= ')';
@@ -283,8 +283,8 @@ class RTMediaPrivacy {
 
         $select_sql = str_replace ( "SELECT", "SELECT distinct", $select_sql );
 
-        $from_sql = " FROM {$bp->activity->table_name} a LEFT JOIN {$wpdb->users} u ON a.user_id = u.ID LEFT JOIN {$bp->activity->table_name_meta} m ON a.id = m.activity_id";
-        $where_sql = $where_sql . " AND (NOT EXISTS (SELECT m.activity_id FROM {$bp_prefix}bp_activity_meta m WHERE m.meta_key='rtmedia_privacy' AND m.activity_id=a.id) OR (m.meta_key='rtmedia_privacy' {$where} ) )";
+        $from_sql = " FROM {$bp->activity->table_name} a LEFT JOIN {$wpdb->users} u ON a.user_id = u.ID LEFT JOIN {$rtmedia_model->table_name} m ON a.id = m.activity_id";
+        $where_sql = $where_sql . " AND (NOT EXISTS (SELECT m.activity_id FROM {$bp_prefix}bp_activity_meta m WHERE m.meta_key='rtmedia_privacy' AND m.activity_id=a.id) OR ( {$where} ) )";
         $newsql = "{$select_sql} {$from_sql} {$where_sql} ORDER BY a.date_recorded {$sort} {$pag_sql}";
         return $newsql;
     }
