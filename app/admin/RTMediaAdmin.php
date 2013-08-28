@@ -361,7 +361,7 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
             <div class="wrap bp-media-admin <?php echo $this->get_current_tab (); ?>">
                 <div id="icon-buddypress-media" class="icon32"><br></div>
                 <h2 class="nav-tab-wrapper"><?php $this->rtmedia_tabs (); ?></h2>
-                <?php settings_errors (); ?>
+                <?php //settings_errors (); ?>
                 <div class="row bp-media-settings-boxes-container" >
                     <div id="bp-media-settings-boxes" class="columns large-8">
                         <?php

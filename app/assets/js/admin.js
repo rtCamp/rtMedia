@@ -58,12 +58,12 @@ jQuery(document).ready(function($) {
 
     /* Submit Request */
 
-    jQuery('#bp-media-settings-boxes').on('submit', '#bp_media_settings_form,#rtmedia-settings-submit', function(e) {
+    jQuery('#bp-media-settings-boxes').on('submit', '#bp_media_settings_form,#rtmedia-settings-submit', function(e) {        
         var return_code = true;
-        var reg = new RegExp('^auto$|^[+-]?[0-9]+\\.?([0-9]+)?(px|em|ex|%|in|cm|mm|pt|pc)?$')
+        var reg = new RegExp('^auto$|^[+-]?[0-9]+\\.?([0-9]+)?(px|em|ex|%|in|cm|mm|pt|pc)?$');
         jQuery("input[name*='defaultSizes']").each(function(el) {
             if (!reg.test(jQuery(this).val())) {
-                alert("Invalid value for " + jQuery(this).attr('name').replace('rtmedia-options[', '').replace(']', '').replace(/_/g, ' '))
+                alert("Invalid value for " + jQuery(this).attr('name').replace('rtmedia-options[', '').replace(']', '').replace(/_/g, ' '));
                 return_code = false;
                 return false;
             }
@@ -490,11 +490,11 @@ jQuery(document).ready(function($) {
     });
 
 
-//    jQuery("#rtm-settings-tabs,#rtm-addons").sliderTabs({
-//        autoplay: false,
-//        mousewheel: false,
-//        defaultTab: manageHash()
-//    });
+    jQuery("#rtm-addons").sliderTabs({
+        autoplay: false,
+        mousewheel: false,
+        defaultTab: manageHash()
+    });
 
     if (jQuery('#rtmedia-privacy-enable').is(":checked")) {
         jQuery(".privacy-driven-disable label input").prop("disabled", false);

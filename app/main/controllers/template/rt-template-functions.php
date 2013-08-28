@@ -754,7 +754,7 @@ function rtmedia_user_album_list () {
                 
         }
     }    
-    $option = "<optgroup label='Global Albums'>$global_option</optgroup><optgroup label='Profile Albums'>$profile_option</optgroup><optgroup label='Group Albums'>$option_group</optgroup>"; 
+    $option = "$global_option<optgroup label='Profile Albums'>$profile_option</optgroup><optgroup label='Group Albums'>$option_group</optgroup>"; 
     if ( $option )
         return $option;
     else

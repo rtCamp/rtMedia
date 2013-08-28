@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Description of RTMediaSettings
  *
@@ -9,8 +10,9 @@ if (!class_exists('RTMediaSettings')) {
 
     class RTMediaSettings {
 
-        public function __construct() {
-            if ( !(defined('DOING_AJAX') && DOING_AJAX) )
+        public
+                function __construct() {
+            if (!(defined('DOING_AJAX') && DOING_AJAX))
                 add_action('admin_init', array($this, 'settings'));
 //            if (is_multisite()) {
 //                add_action('network_admin_notices', array($this, 'privacy_notice'));
@@ -24,70 +26,70 @@ if (!class_exists('RTMediaSettings')) {
          *
          * @global string 'rtmedia'
          */
+        function sanitize_options($options) {
 
-		function sanitize_options($options) {
+            global $rtmedia;
 
-			global $rtmedia;
+            $defaults = array(
+                'general_enableAlbums' => 0,
+                'general_enableComments' => 0,
+                'general_downloadButton' => 0,
+                'general_enableLightbox' => 0,
+                'general_perPageMedia' => 10,
+                'general_enableMediaEndPoint' => 0,
+                'general_showAdminMenu' => 0,
+                'general_videothumbs' => 2
+            );
 
-			$defaults = array(
-				'general_enableAlbums' => 0,
-				'general_enableComments' => 0,
-				'general_downloadButton' => 0,
-				'general_enableLightbox' => 0,
-				'general_perPageMedia' => 10,
-				'general_enableMediaEndPoint' => 0,
-				'general_showAdminMenu' => 0                                
-			);
-                        
-                        $defaults = apply_filters('rtmedia-general-content-default-values', $defaults);
-                        
-			foreach($rtmedia->allowed_types as $type){
-				// invalid keys handled in sanitize method
-				$defaults['allowedTypes_'.$type['name'].'_enabled'] = 0;
-				$defaults['allowedTypes_'.$type['name'].'_featured'] = 0;
-			}
+            $defaults = apply_filters('rtmedia_general_content_default_values', $defaults);
+            foreach ($rtmedia->allowed_types as $type) {
+                // invalid keys handled in sanitize method
+                $defaults['allowedTypes_' . $type['name'] . '_enabled'] = 0;
+                $defaults['allowedTypes_' . $type['name'] . '_featured'] = 0;
+            }
 
-			/* Previous Sizes values from buddypress is migrated */
-			foreach ($rtmedia->default_sizes as $type => $typeValue) {
-				foreach ($typeValue as $size => $sizeValue) {
-					foreach ($sizeValue as $dimension => $value) {
-						$defaults['defaultSizes_'.$type.'_'.$size.'_'.$dimension] = 0;
-					}
-				}
-			}
+            /* Previous Sizes values from buddypress is migrated */
+            foreach ($rtmedia->default_sizes as $type => $typeValue) {
+                foreach ($typeValue as $size => $sizeValue) {
+                    foreach ($sizeValue as $dimension => $value) {
+                        $defaults['defaultSizes_' . $type . '_' . $size . '_' . $dimension] = 0;
+                    }
+                }
+            }
 
-			/* Privacy */
-			$defaults['privacy_enabled'] = 0;
-			$defaults['privacy_default'] = 0;
-			$defaults['privacy_userOverride'] = 0;
+            /* Privacy */
+            $defaults['privacy_enabled'] = 0;
+            $defaults['privacy_default'] = 0;
+            $defaults['privacy_userOverride'] = 0;
 
-			$defaults['buddypress_enableOnGroup'] = 0;
-			$defaults['buddypress_enableOnActivity'] = 0;
-			$defaults['buddypress_enableOnProfile'] = 0;
+            $defaults['buddypress_enableOnGroup'] = 0;
+            $defaults['buddypress_enableOnActivity'] = 0;
+            $defaults['buddypress_enableOnProfile'] = 0;
 
-			$options = wp_parse_args($options, $defaults);
+            $options = wp_parse_args($options, $defaults);
 
-			return $options;
-		}
+            return $options;
+        }
 
         /**
          *
          * @global BPMediaAddon $rtmedia_addon
          */
-        public function settings() {
+        public
+                function settings() {
             global $rtmedia, $rtmedia_addon;
-
-			// Save Settings first then proceed.
-			if(isset($_POST['rtmedia-options-save'])) {
-
-				$options = $_POST['rtmedia-options'];
-				$options = $this->sanitize_options($options);                                
-                                $options = apply_filters("rtmedia_pro_options_save_settings", $options);
-				rtmedia_update_site_option('rtmedia-options', $options);
-				global $rtmedia;
-				$rtmedia->options = $options;
-			}
-
+            $options = rtmedia_get_site_option('rtmedia-options');
+            $options = $this->sanitize_options($options);
+            $rtmedia->options = $options;
+            // Save Settings first then proceed.
+            if (isset($_POST['rtmedia-options-save'])) {
+                $options = $_POST['rtmedia-options'];
+                $options = $this->sanitize_options($options);
+                $options = apply_filters("rtmedia_pro_options_save_settings", $options);
+                rtmedia_update_site_option('rtmedia-options', $options);
+                global $rtmedia;
+                $rtmedia->options = $options;
+            }
             $rtmedia_addon = new RTMediaAddon();
             add_settings_section('rtm-addons', __('BuddyPress Media Addons for Photos', 'rtmedia'), array($rtmedia_addon, 'get_addons'), 'rtmedia-addons');
 
@@ -98,13 +100,13 @@ if (!class_exists('RTMediaSettings')) {
 //                add_filter('rtmedia_add_sub_tabs', array($rtmedia_privacy, 'ui'), 99, 2);
 //                add_settings_section('rtm-privacy', __('Update Database', 'rtmedia'), array($rtmedia_privacy, 'init'), 'rtmedia-privacy');
 //            }
-
             //$rtmedia_album_importer = new BPMediaAlbumimporter();
             //add_settings_section('rtm-rt-album-importer', __('BP-Album Importer', 'rtmedia'), array($rtmedia_album_importer, 'ui'), 'rtmedia-importer');
             //register_setting('rtmedia', 'rtmedia_options', array($this, 'sanitize'));
         }
 
-        public function network_notices() {
+        public
+                function network_notices() {
             $flag = 1;
             if (rtmedia_get_site_option('rtm-media-enable', false)) {
                 echo '<div id="setting-error-bpm-media-enable" class="error"><p><strong>' . rtmedia_get_site_option('rtm-media-enable') . '</strong></p></div>';
@@ -126,7 +128,8 @@ if (!class_exists('RTMediaSettings')) {
                 echo '<div id="setting-error-bpm-recount-success" class="updated"><p><strong>' . rtmedia_get_site_option('rtm-recount-success') . '</strong></p></div>';
                 delete_site_option('rtm-recount-success');
                 $flag = 0;
-            } elseif (rtmedia_get_site_option('rtm-recount-fail', false)) {
+            }
+            elseif (rtmedia_get_site_option('rtm-recount-fail', false)) {
                 echo '<div id="setting-error-bpm-recount-fail" class="error"><p><strong>' . rtmedia_get_site_option('rtm-recount-fail') . '</strong></p></div>';
                 delete_site_option('rtm-recount-fail');
                 $flag = 0;
@@ -138,7 +141,8 @@ if (!class_exists('RTMediaSettings')) {
             delete_site_option('rtm-settings-saved');
         }
 
-        public function allowed_types() {
+        public
+                function allowed_types() {
             $allowed_types = get_site_option('upload_filetypes', 'jpg jpeg png gif');
             $allowed_types = explode(' ', $allowed_types);
             $allowed_types = implode(', ', $allowed_types);
@@ -155,7 +159,8 @@ if (!class_exists('RTMediaSettings')) {
          * @param type $input
          * @return type
          */
-        public function sanitize($input) {
+        public
+                function sanitize($input) {
             global $rtmedia_admin;
             if (isset($_POST['refresh-count'])) {
                 if ($rtmedia_admin->update_count()) {
@@ -199,16 +204,19 @@ if (!class_exists('RTMediaSettings')) {
             return $input;
         }
 
-        public function image_settings_intro() {
+        public
+                function image_settings_intro() {
             if (is_plugin_active('regenerate-thumbnails/regenerate-thumbnails.php')) {
                 $regenerate_link = admin_url('/tools.php?page=regenerate-thumbnails');
-            } elseif (array_key_exists('regenerate-thumbnails/regenerate-thumbnails.php', get_plugins())) {
+            }
+            elseif (array_key_exists('regenerate-thumbnails/regenerate-thumbnails.php', get_plugins())) {
                 $regenerate_link = admin_url('/plugins.php#regenerate-thumbnails');
-            } else {
+            }
+            else {
                 $regenerate_link = wp_nonce_url(admin_url('update.php?action=install-plugin&plugin=regenerate-thumbnails'), 'install-plugin_regenerate-thumbnails');
             }
             echo '<span class="description">' . sprintf(__('If you make changes to width, height or crop settings, you must use "<a href="%s">Regenerate Thumbnail Plugin</a>" to regenerate old images."', 'rtmedia'), $regenerate_link) . '</span>';
-			echo '<div class="clearfix">&nbsp;</div>';
+            echo '<div class="clearfix">&nbsp;</div>';
         }
 
         /**
@@ -217,8 +225,8 @@ if (!class_exists('RTMediaSettings')) {
          * @global array $rtmedia
          * @param array $args
          */
-
-        public function privacy_notice() {
+        public
+                function privacy_notice() {
             if (current_user_can('create_users')) {
 //                if (BPMediaPrivacy::is_installed())
 //                    return;
@@ -236,7 +244,8 @@ if (!class_exists('RTMediaSettings')) {
             }
         }
 
-        public function rtmedia_support_intro() {
+        public
+                function rtmedia_support_intro() {
             echo '<p>' . __('If your site has some issues due to BuddyPress Media and you want one on one support then you can create a support topic on the <a target="_blank" href="http://rtcamp.com/groups/buddypress-media/forum/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media">rtCamp Support Forum</a>.', 'rtmedia') . '</p>';
             echo '<p>' . __('If you have any suggestions, enhancements or bug reports, then you can open a new issue on <a target="_blank" href="https://github.com/rtCamp/buddypress-media/issues/new">GitHub</a>.', 'rtmedia') . '</p>';
         }
