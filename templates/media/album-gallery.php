@@ -37,11 +37,11 @@
             ?>
             <a id="rtMedia-galary-next" <?php echo $display; ?> href="<?php echo rtmedia_pagination_next_link (); ?>"><?php echo __ ( 'Next', 'rtmedia' ); ?></a>
 
+        </div><!--/.rtmedia_next_prev-->
 
         <?php } else { ?>
             <p><?php echo __ ( "Oops !! There's no media found for the request !!", "rtmedia" ); ?></p>
         <?php } ?>
-    </div>
     <?php do_action ( 'rtmedia_after_album_gallery' ); ?>
 
 </div>
