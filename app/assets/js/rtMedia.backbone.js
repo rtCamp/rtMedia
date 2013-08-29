@@ -403,6 +403,19 @@ jQuery(document).ready(function($) {
     });
 
     objUploadView.uploader.bind('FileUploaded', function(up, file, res) {
+        if (/MSIE (\d+\.\d+);/.test(navigator.userAgent)) { //test for MSIE x.x;
+         var ieversion=new Number(RegExp.$1) // capture x.x portion and store as a number
+ 
+            if(ieversion <10) {
+                try {
+                    if( typeof JSON.parse(res.response) !== "undefined" )
+                        res.status = 200;
+                    console.log(res.status);
+                }
+                catch(e){}
+            }
+        }
+        
         if (res.status == 200) {
             try {
                 var objIds = JSON.parse(res.response);
