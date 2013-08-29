@@ -3,7 +3,7 @@ var nextpage = 2;
 var upload_sync = false;
 var activity_id = -1;
 var uploaderObj;
-
+    
 jQuery(function($) {
 
 
@@ -338,8 +338,9 @@ jQuery(function($) {
             } catch (e) {
                 // console.log('Invalid Activity ID');
             }
-
         });
+        
+        uploaderObj.uploader.refresh();//refresh the uploader for opera/IE fix on media page
 
         $("#rtMedia-start-upload").click(function(e) {
             uploaderObj.uploadFiles(e);
@@ -378,11 +379,11 @@ jQuery(document).ready(function($) {
             $("#rtmedia-action-update").append($("#privacy"));
         }
     }
-    var objUploadView = new UploadView(rtMedia_update_plupload_config);
+    window.objUploadView = new UploadView(rtMedia_update_plupload_config);
     $("#whats-new-form").on('click', '#rtmedia-add-media-button-post-update', function(e) {
         $("#div-attache-rtmedia").toggle();
         objUploadView.uploader.refresh();
-    })
+    });
     //whats-new-post-in
     
 
