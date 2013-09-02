@@ -409,15 +409,17 @@ class RTMediaQuery {
             $sql_query = "select id from {$wpdb->prefix}bp_activity where item_id = 0  and type = 'rtmedia_update'";
             $this->query[ "activity_id" ][ "value" ] = $wpdb->get_col ( $sql_query );
         }
-        if ( isset ( $this->query ) && isset ( $this->query[ "global" ] ) && $this->query[ "global" ] == "true" ) {
-            if ( isset ( $this->query[ "context_id" ] ) )
-                unset ( $this->query[ "context_id" ] );
-            if ( isset ( $this->query[ "context" ] ) )
-                unset ( $this->query[ "context" ] );
-            if ( isset ( $this->query[ "album_id" ] ) )
-                unset ( $this->query[ "album_id" ] );
-            unset ( $this->query[ "global" ] );
-        }
+        if ( isset ( $this->query ) && isset ( $this->query[ "global" ] ) ) {
+	    if ( $this->query[ "global" ] == "true" ) {
+		if ( isset ( $this->query[ "context_id" ] ) )
+		    unset ( $this->query[ "context_id" ] );
+		if ( isset ( $this->query[ "context" ] ) )
+		    unset ( $this->query[ "context" ] );
+		if ( isset ( $this->query[ "album_id" ] ) )
+		    unset ( $this->query[ "album_id" ] );
+	    }
+	    unset ( $this->query[ "global" ] );
+	}
         $this->set_media_type ();
         $this->media_query = $this->query;
         return $this->get_data ();
