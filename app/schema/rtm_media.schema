@@ -11,7 +11,7 @@ CREATE TABLE %s (
     source varchar(100) NULL DEFAULT NULL ,
     source_id bigint(20) NULL DEFAULT NULL ,
     activity_id bigint(20) NULL DEFAULT NULL ,
-    cover_art bigint(20) NULL DEFAULT NULL,
+    cover_art varchar(250) NULL DEFAULT NULL,
     privacy int(3) NULL DEFAULT NULL ,
     views bigint(20) NULL DEFAULT 0 ,
     downloads bigint(20) NULL DEFAULT 0 ,

@@ -7,17 +7,12 @@
  */
 class RTMediaEncoding {
 
-    protected
-            $api_url = 'http://api.rtcamp.net/';
-    protected
-            $sandbox_testing = 0;
-    protected
-            $merchant_id = 'paypal@rtcamp.com';
-    public
-            $uploaded = array();
+    protected $api_url = 'http://api.rtcamp.net/';
+    protected $sandbox_testing = 0;
+    protected $merchant_id = 'paypal@rtcamp.com';
+    public $uploaded = array();
 
-    public
-            function __construct($no_init = false) {
+    public function __construct($no_init = false) {
         $this->api_key = get_site_option('rtmedia-encoding-api-key');
         if ($no_init)
             return;
@@ -30,9 +25,9 @@ class RTMediaEncoding {
         }
 
         add_action('admin_init', array($this, 'save_api_key'), 1);
-
         if ($this->api_key) {
             $usage_info = get_site_option('rtmedia-encoding-usage');
+
             if ($usage_info) {
                 if (isset($usage_info[$this->api_key]->status) && $usage_info[$this->api_key]->status) {
                     if (isset($usage_info[$this->api_key]->remaining) && $usage_info[$this->api_key]->remaining > 0) {
@@ -62,21 +57,37 @@ class RTMediaEncoding {
         add_action('wp_ajax_rtmedia_enter_api_key', array($this, 'enter_api_key'), 1);
         add_action('wp_ajax_rtmedia_disable_encoding', array($this, 'disable_encoding'), 1);
     }
-
-    function encoding($media_ids, $file_object, $uploaded) {
+    /**
+     *
+     * @param type $media_ids
+     * @param type $file_object
+     * @param type $uploaded
+     * @param string $autoformat thumbnails for genrating thumbs only
+     */
+    function encoding($media_ids, $file_object, $uploaded, $autoformat = true) {
         foreach ($file_object as $key => $single) {
-            if (preg_match('/video|audio/i', $single['type'], $type_array) && !in_array($single['type'], array('audio/mp3', 'video/mp4'))) {
+            if (preg_match('/video|audio/i', $single['type'], $type_array) && !in_array($single['type'], array('audio/mp3'))) {
                 $options = rtmedia_get_site_option('rtmedia-options');
                 $options_vedio_thumb = $options['general_videothumbs'];
+                if($options_vedio_thumb == "")
+                    $options_vedio_thumb = 3;
+
+                /**  fORMAT **/
+                if( $single['type'] == 'video/mp4')
+                    $autoformat = "thumbnails";
+
                 $query_args = array('url' => urlencode($single['url']),
                     'callbackurl' => urlencode(home_url()),
                     'force' => 0,
                     'size' => filesize($single['file']),
-                    'formats' => ($type_array[0] == 'video') ? 'mp4' : 'mp3',
+                    'formats' => ($autoformat === true)?(($type_array[0] == 'video') ? 'mp4' : 'mp3'):$autoformat,
                     'thumbs' => $options_vedio_thumb);
                 $encoding_url = $this->api_url . 'job/new/';
                 $upload_url = add_query_arg($query_args, $encoding_url . $this->api_key);
-                $upload_page = wp_remote_get($upload_url, array('timeout' => 20));
+                //error_log(var_export($upload_url, true));
+                $upload_page = wp_remote_get($upload_url, array('timeout' => 200));
+
+                //error_log(var_export($upload_page, true));
                 if (!is_wp_error($upload_page) && (!isset($upload_page['headers']['status']) || (isset($upload_page['headers']['status']) && ($upload_page['headers']['status'] == 200)))) {
                     $upload_info = json_decode($upload_page['body']);
                     if (isset($upload_info->status) && $upload_info->status && isset($upload_info->job_id) && $upload_info->job_id) {
@@ -93,8 +104,7 @@ class RTMediaEncoding {
         }
     }
 
-    public
-            function bypass_video_audio($flag, $file) {
+    public function bypass_video_audio($flag, $file) {
         if (isset($file['type'])) {
             $fileinfo = explode('/', $file['type']);
             if (in_array($fileinfo[0], array('audio', 'video')))
@@ -103,8 +113,7 @@ class RTMediaEncoding {
         return $flag;
     }
 
-    public
-            function is_valid_key($key) {
+    public function is_valid_key($key) {
         $validate_url = trailingslashit($this->api_url) . 'api/validate/' . $key;
         $validation_page = wp_remote_get($validate_url, array('timeout' => 20));
         if (!is_wp_error($validation_page)) {
@@ -117,8 +126,7 @@ class RTMediaEncoding {
         return $status;
     }
 
-    public
-            function update_usage($key) {
+    public function update_usage($key) {
         $usage_url = trailingslashit($this->api_url) . 'api/usage/' . $key;
         $usage_page = wp_remote_get($usage_url, array('timeout' => 20));
         if (!is_wp_error($usage_page))
@@ -129,8 +137,7 @@ class RTMediaEncoding {
         return $usage_info;
     }
 
-    public
-            function nearing_usage_limit($usage_details) {
+    public function nearing_usage_limit($usage_details) {
         $subject = __('rtMedia Encoding: Nearing quota limit.', 'rtmedia');
         $message = __('<p>You are nearing the quota limit for your rtMedia encoding service.</p><p>Following are the details:</p><p><strong>Used:</strong> %s</p><p><strong>Remaining</strong>: %s</p><p><strong>Total:</strong> %s</p>', 'rtmedia');
         $users = get_users(array('role' => 'administrator'));
@@ -143,8 +150,7 @@ class RTMediaEncoding {
         update_site_option('rtmedia-encoding-usage-limit-mail', 1);
     }
 
-    public
-            function usage_quota_over() {
+    public function usage_quota_over() {
         $usage_details = get_site_option('rtmedia-encoding-usage');
         if (!$usage_details[$this->api_key]->remaining) {
             $subject = __('rtMedia Encoding: Usage quota over.', 'rtmedia');
@@ -160,8 +166,7 @@ class RTMediaEncoding {
         }
     }
 
-    public
-            function save_api_key() {
+    public function save_api_key() {
         if (isset($_GET['api_key_updated']) && $_GET['api_key_updated']) {
             if (is_multisite()) {
                 add_action('network_admin_notices', array($this, 'successfully_subscribed_notice'));
@@ -180,8 +185,7 @@ class RTMediaEncoding {
         }
     }
 
-    public
-            function allowed_types($types) {
+    public function allowed_types($types) {
         if (isset($types[0]) && isset($types[0]['extensions'])) {
             if (is_rtmedia_upload_video_enabled())
                 $types[0]['extensions'] .= ',mov,m4v,m2v,avi,mpg,flv,wmv,mkv,webm,ogv,mxf,asf,vob,mts,qt,mpeg,x-msvideo'; //Allow all types of file to be uploded
@@ -191,16 +195,14 @@ class RTMediaEncoding {
         return $types;
     }
 
-    public
-            function successfully_subscribed_notice() {
+    public function successfully_subscribed_notice() {
         ?>
         <div class="updated">
             <p><?php printf(__('You have successfully subscribed for the <strong>%s</strong> plan', 'rtmedia'), $_GET['api_key_updated']); ?></p>
         </div><?php
     }
 
-    public
-            function encoding_subscription_form($name = 'No Name', $price = '0', $force = false) {
+    public function encoding_subscription_form($name = 'No Name', $price = '0', $force = false) {
         if ($this->api_key)
             $this->update_usage($this->api_key);
         $action = $this->sandbox_testing ? 'https://sandbox.paypal.com/cgi-bin/webscr' : 'https://www.paypal.com/cgi-bin/webscr';
@@ -255,8 +257,7 @@ class RTMediaEncoding {
         return $form;
     }
 
-    public
-            function usage_widget() {
+    public function usage_widget() {
         $usage_details = get_site_option('rtmedia-encoding-usage');
         $content = '';
         if ($usage_details && isset($usage_details[$this->api_key]->status) && $usage_details[$this->api_key]->status) {
@@ -278,8 +279,7 @@ class RTMediaEncoding {
         new RTMediaAdminWidget('rtmedia-encoding-usage', __('Encoding Usage', 'rtmedia'), $content);
     }
 
-    public
-            function encoding_service_intro() {
+    public function encoding_service_intro() {
         ?>
         <p><?php _e('rtMedia team has started offering an audio/video encoding service.', 'rtmedia'); ?></p>
         <p>
@@ -362,30 +362,103 @@ class RTMediaEncoding {
         </table><br /><?php
     }
 
+
+    public function add_media_thumbnails($post_id) {
+        //global $rtmedia_ffmpeg;
+        $post_info = get_post($post_id);
+        $post_date_string = new DateTime($post_info->post_date);
+        $post_date = $post_date_string->format('Y-m-d G:i:s');
+        $post_date_thumb_string = new DateTime($post_info->post_date);
+        $post_date_thumb = $post_date_thumb_string->format('Y/m/');
+        $post_thumbs = get_post_meta($post_id,'rtmedia_encode_response',TRUE);
+        $post_thumbs_array = maybe_unserialize($post_thumbs);
+        $largest_thumb_size = 0;
+        $model = new RTMediaModel();
+        $largest_thumb = false;
+        $upload_thumbnail_array = array();
+        for ($i = 1; $i <= sizeof($post_thumbs_array['thumbs']); $i++) {
+            $thumbnail = 'thumb_' . $i;
+            if (isset($post_thumbs_array['thumbs'][$thumbnail])) {
+                $thumbnail_ids = get_rtmedia_meta($post_id, 'rtmedia-thumbnail-ids', true);
+                $thumbresource = wp_remote_get($post_thumbs_array['thumbs'][$thumbnail]);
+                $thumbinfo = pathinfo($post_thumbs_array['thumbs'][$thumbnail]);
+
+                $temp_name = $thumbinfo['basename'];
+                $temp_name = urldecode($temp_name);
+                $temp_name_array = explode("/", $temp_name);
+                $temp_name = $temp_name_array[sizeof($temp_name_array) - 1];
+                $thumbinfo['basename'] = $temp_name;
+                $thumb_upload_info = wp_upload_bits($thumbinfo['basename'], null, $thumbresource['body']);
+                $upload_thumbnail_array[] = $thumb_upload_info['url'];
+                //var_dump($thumb_upload_info);
+//                $thumb_attachment = array(
+//                    'guid' => $thumb_upload_info['url'],
+//                    'post_mime_type' => 'image/jpeg',
+//                    'post_title' => basename($thumbinfo['basename'], '.jpg'),
+//                    'post_content' => '',
+//                    'post_status' => 'inherit',
+//                    'post_date' => $post_date
+//                );
+//                //var_dump($thumb_attachment);
+//                $upload_dir = wp_upload_dir($post_date_thumb);
+//
+//                //insert into attachment
+//                $attach_id = wp_insert_attachment($thumb_attachment, trailingslashit($upload_dir['path']) . $thumbinfo['basename'], 0);
+//                if (!is_wp_error($attach_id) && $attach_id) {
+//                    $attach_data = wp_generate_attachment_metadata($attach_id, $thumb_upload_info['file']);
+//                    if (wp_update_attachment_metadata($attach_id, $attach_data)) {
+//                        $thumbnail_ids[] = $attach_id;
+//                        update_rtmedia_meta($post_id, 'rtmedia-thumbnail-ids', $thumbnail_ids);
+//                    }
+//                    else
+//                        wp_delete_attachment($attach_id, true);
+//                }
+
+                $current_thumb_size = filesize($thumb_upload_info['url']);
+                if ($current_thumb_size >= $largest_thumb_size) {
+                    $largest_thumb_size = $current_thumb_size;
+                    $largest_thumb = $thumb_upload_info['url'];
+                    $model->update(array('cover_art' => $thumb_upload_info['url']), array('media_id' => $post_id));
+                }
+            }
+        }
+        update_post_meta($post_id, 'rtmedia_media_thumbnails', $upload_thumbnail_array);
+        return $largest_thumb;
+    }
+
     /**
      * Function to handle the callback request by the FFMPEG encoding server
      *
      * @since 1.0
      */
-    public
-            function handle_callback() {
-        if (isset($_GET['job_id']) && isset($_GET['download_url'])) {
+    public function handle_callback() {
+        require_once ( ABSPATH . 'wp-admin/includes/image.php');
+        //error_log(var_export($_POST['thumbs'],true));
+        if (isset($_REQUEST['job_id']) && isset($_REQUEST['download_url']) && isset($_POST['thumbs'])) {
+            $response = $_POST['thumbs'];
             $flag = false;
             global $wpdb;
             $model = new RTDBModel('rtm_media_meta');
-            $meta_details = $model->get(array('meta_value' => $_GET['job_id'], 'meta_key' => 'rtmedia-encoding-job-id'));
+            $meta_details = $model->get(array('meta_value' => $_REQUEST['job_id'], 'meta_key' => 'rtmedia-encoding-job-id'));
             if (isset($meta_details[0])) {
                 $id = maybe_unserialize($meta_details[0]->media_id);
                 $model = new RTMediaModel();
                 $media = $model->get_media(array('id' => $id), 0, 1);
                 $this->media_author = $media[0]->media_author;
                 $attachment_id = $media[0]->media_id;
+                error_log(var_export($_POST,true));
+                update_post_meta($attachment_id, 'rtmedia_encode_response', $_POST);
+                $cover_art = $this->add_media_thumbnails($attachment_id);
+                if($_POST['format'] == 'thumbnails')
+                    die();
                 $this->uploaded["context"] = $media[0]->context;
                 $this->uploaded["context_id"] = $media[0]->context_id;
                 $this->uploaded["media_author"] = $media[0]->media_author;
                 $attachemnt_post = get_post($attachment_id);
-                $download_url = urldecode($_GET['download_url']);
+                $download_url = urldecode(urldecode($_REQUEST['download_url']));
+                error_log($download_url);
                 $new_wp_attached_file_pathinfo = pathinfo($download_url);
+                error_log(var_dump($new_wp_attached_file_pathinfo));
                 $post_mime_type = $new_wp_attached_file_pathinfo['extension'] == 'mp4' ? 'video/mp4' : 'audio/mp3';
                 try {
                     $file_bits = file_get_contents($download_url);
@@ -397,6 +470,7 @@ class RTMediaEncoding {
                     unlink(get_attached_file($attachment_id));
                     add_filter('upload_dir', array($this, 'upload_dir'));
                     $upload_info = wp_upload_bits($new_wp_attached_file_pathinfo['basename'], null, $file_bits);
+                    error_log(var_dump($upload_info));
                     $wpdb->update($wpdb->posts, array('guid' => $upload_info['url'], 'post_mime_type' => $post_mime_type), array('ID' => $attachment_id));
                     $old_wp_attached_file = get_post_meta($attachment_id, '_wp_attached_file', true);
                     $old_wp_attached_file_pathinfo = pathinfo($old_wp_attached_file);
@@ -405,6 +479,11 @@ class RTMediaEncoding {
 //                        $activity_content = str_replace($old_wp_attached_file_pathinfo['basename'], $new_wp_attached_file_pathinfo['basename'], $media_entry->get_media_activity_content());
 //                        $wpdb->update($wpdb->prefix . 'bp_activity', array('content' => $activity_content), array('id' => $media[0]->activity_id));
                     // Check if uplaod is through activity upload
+                    //update_post_meta($attachment_id, 'rtmedia_encode_response', $_POST);
+
+
+
+
 
                     $activity_id = $media[0]->activity_id;
                     if ($activity_id) {
@@ -458,8 +537,7 @@ class RTMediaEncoding {
         }
     }
 
-    public
-            function free_encoding_subscribe() {
+    public function free_encoding_subscribe() {
         $email = get_site_option('admin_email');
         $usage_details = get_site_option('rtmedia-encoding-usage');
         if (isset($usage_details[$this->api_key]->plan->name) && (strtolower($usage_details[$this->api_key]->plan->name) == 'free')) {
@@ -487,16 +565,14 @@ class RTMediaEncoding {
         die();
     }
 
-    public
-            function hide_encoding_notice() {
+    public function hide_encoding_notice() {
         update_site_option('rtmedia-encoding-service-notice', true);
         update_site_option('rtmedia-encoding-expansion-notice', true);
         echo true;
         die();
     }
 
-    public
-            function unsubscribe_encoding() {
+    public function unsubscribe_encoding() {
         $unsubscribe_url = trailingslashit($this->api_url) . 'api/cancel/' . $this->api_key;
         $unsubscribe_page = wp_remote_post($unsubscribe_url, array('timeout' => 120, 'body' => array('note' => $_GET['note'])));
         if (!is_wp_error($unsubscribe_page) && (!isset($unsubscribe_page['headers']['status']) || (isset($unsubscribe_page['headers']['status']) && ($unsubscribe_page['headers']['status'] == 200)))) {
@@ -511,8 +587,7 @@ class RTMediaEncoding {
         die();
     }
 
-    public
-            function enter_api_key() {
+    public function enter_api_key() {
         if (isset($_GET['apikey'])) {
             echo json_encode(array('apikey' => $_GET['apikey']));
         }
@@ -522,8 +597,7 @@ class RTMediaEncoding {
         die();
     }
 
-    public
-            function disable_encoding() {
+    public function disable_encoding() {
         update_site_option('rtmedia-encoding-api-key', '');
         _e('Encoding disabled successfully.', 'rtmedia');
         die();
@@ -569,8 +643,7 @@ class RTMediaEncoding {
         return $upload_dir;
     }
 
-    public
-            function reencoding($attachment) {
+    public function reencoding($attachment) {
         $rtmedia_model = new RTMediaModel();
         $media_array = $rtmedia_model->get(array("media_id" => $attachment));
         $media_id = $media_array[0]->id;
@@ -601,7 +674,9 @@ class RTMediaEncoding {
     }
 
 }
+if(isset($_REQUEST['temp123'])) {
 
+}
 if (isset($_REQUEST['rtreencoding'])) {
     $objRTMediaEncoding = new RTMediaEncoding(true);
     $objRTMediaEncoding->reencoding(intval($_REQUEST['rtreencoding']));

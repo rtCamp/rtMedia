@@ -41,6 +41,9 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
             add_action ( 'wp_ajax_rtmedia_correct_upload_filetypes', array( $this, 'correct_upload_filetypes' ), 1 );
             add_filter ( 'plugin_row_meta', array( $this, 'plugin_meta_premium_addon_link' ), 1, 4 );
             add_action ( 'wp_dashboard_setup', array( &$this, 'add_dashboard_widgets' ), 0 );
+            add_filter("attachment_fields_to_edit", array($this,"edit_video_thumbnail"), null, 2);
+            add_filter("attachment_fields_to_save", array($this,"save_video_thumbnail"), null, 2);
+
             if ( isset ( $_POST[ "rtmedia-options" ] ) ) {
                 if ( isset ( $_POST[ "rtmedia-options" ][ "general_showAdminMenu" ] ) && $_POST[ "rtmedia-options" ][ "general_showAdminMenu" ] == "1" )
                     add_action ( 'admin_bar_menu', array( $this, 'admin_bar_menu' ), 100, 1 );
@@ -251,13 +254,13 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
                 wp_localize_script ( 'rtmedia-admin', 'rtmedia_admin_ajax', $admin_ajax );
                 wp_localize_script ( 'rtmedia-admin', 'rtmedia_admin_url', admin_url () );
                 wp_localize_script ( 'rtmedia-admin', 'rtmedia_admin_url', admin_url () );
-                if(isset($_REQUEST['page']) && $_REQUEST['page']== "rtmedia-settings")             
+                if(isset($_REQUEST['page']) && $_REQUEST['page']== "rtmedia-settings")
                 {
                     wp_enqueue_script ( 'rtmedia-foundation-modernizr', RTMEDIA_URL . 'lib/foundation/custom.modernizr.js', array('jquery'), RTMEDIA_VERSION );
                      wp_enqueue_script ( 'rtmedia-foundation', RTMEDIA_URL . 'lib/foundation/foundation.js', array('jquery'), RTMEDIA_VERSION );
                      wp_enqueue_script ( 'rtmedia-foundation-section', RTMEDIA_URL . 'lib/foundation/foundation.section.js', array('jquery'), RTMEDIA_VERSION );
                 }
-                
+
                 $rtmedia_admin_strings = array(
                     'no_refresh' => __ ( 'Please do not refresh this page.', 'rtmedia' ),
                     'something_went_wrong' => __ ( 'Something went wronng. Please <a href onclick="location.reload();">refresh</a> page.', 'rtmedia' ),
@@ -277,7 +280,7 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
                 wp_enqueue_style ( 'power-tip', RTMEDIA_URL . 'app/assets/css/jquery.powertip.min.css', '', RTMEDIA_VERSION );
                 wp_enqueue_style ( 'grid-foundation', RTMEDIA_URL . 'app/assets/css/grid-foundation.css', '', RTMEDIA_VERSION );
                 wp_enqueue_style ( 'rtmedia-main', RTMEDIA_URL . 'app/assets/css/main.css', '', RTMEDIA_VERSION );
-                wp_enqueue_style ( 'rtmedia-admin', RTMEDIA_URL . 'app/assets/css/admin.css', '', RTMEDIA_VERSION );                 
+                wp_enqueue_style ( 'rtmedia-admin', RTMEDIA_URL . 'app/assets/css/admin.css', '', RTMEDIA_VERSION );
                 if(isset($_REQUEST['page']) && $_REQUEST['page']== "rtmedia-settings") {
                     wp_enqueue_style ( 'foundation-admin-css', RTMEDIA_URL . 'app/assets/css/settings.css', '', RTMEDIA_VERSION );
                 }
@@ -565,7 +568,7 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
                 );
             }
 
-            $tabs = apply_filters ( 'rtmedia_add_settings_sub_tabs', $tabs, $tab );            
+            $tabs = apply_filters ( 'rtmedia_add_settings_sub_tabs', $tabs, $tab );
             $tabs_html .= '<ul>';
             foreach ( $tabs as $tab ) {
 
@@ -838,6 +841,51 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
             }
             echo true;
             die ();
+        }
+
+        function edit_video_thumbnail($form_fields, $post) {
+            if(isset($post->post_mime_type)) {
+                $media_type = explode("/", $post->post_mime_type);
+                if(is_array($media_type) && $media_type[0] == "video") {
+                    $media_id = $post->ID;
+                    $thumbnail_array = get_post_meta($media_id, "rtmedia_media_thumbnails", true);
+                    $rtmedia_model = new RTMediaModel();
+                    $rtmedia_media = $rtmedia_model->get(array("media_id" => $media_id));
+                    $video_thumb_html = "";
+                    if(is_array($thumbnail_array)) {
+                           $video_thumb_html.= '<ul> ';
+                                foreach($thumbnail_array as $key => $thumbnail_src) {
+                                    $checked = checked($thumbnail_src, $rtmedia_media[ 0 ]->cover_art, false);
+                                    $count = $key + 1;
+                                    $video_thumb_html .= '<li style="width: 150px;display: inline-block;">
+                                    <label for="rtmedia-upload-select-thumbnail-$count" class="alignleft">
+                                    <input type="radio" '.$checked.' id="rtmedia-upload-select-thumbnail-'.$count.'" value="'.$thumbnail_src.'" name="rtmedia-thumbnail" />
+                                    <img src=" '. $thumbnail_src.'" style="max-height: 120px;max-width: 120px" />
+                                    </label>
+                                </li> ';
+
+                                }
+
+                          $video_thumb_html .= '  </ul>';
+
+                    }
+
+                    $form_fields['rtmedia_video_thumbnail'] = array(
+                            'label' => 'Video Thumbnails',
+                            'input' => 'html',
+                            'html' => $video_thumb_html
+                        );
+                    return $form_fields;
+                }
+            }
+
+        }
+        function save_video_thumbnail($post, $attachment) {
+            if( isset($post['rtmedia-thumbnail']) ){
+                $rtmedia_model = new RTMediaModel();
+                $rtmedia_model->update(array("cover_art" => $post['rtmedia-thumbnail']), array("media_id"=>$post['ID']));
+            }
+            return $post;
         }
 
     }
