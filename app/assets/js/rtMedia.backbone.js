@@ -267,7 +267,8 @@ jQuery(function($) {
                 tdSize.innerHTML = plupload.formatSize(file.size);
                 tdDelete = document.createElement("td");
                 tdDelete.innerHTML = "X";
-                tdDelete.className = "plupload_delete"
+                tdDelete.title = "Close";
+                tdDelete.className = "close plupload_delete"
                 tr = document.createElement("tr");
                 tr.id = file.id;
                 tr.appendChild(tdName);
@@ -278,7 +279,7 @@ jQuery(function($) {
                 //Delete Function
                 $("#" + file.id + " td.plupload_delete").click(function(e) {
                     e.preventDefault();
-                    uploaderObj.uploader.removeFile(uploader.getFile(file.id));
+                    uploaderObj.uploader.removeFile(up.getFile(file.id));
                     $("#" + file.id).remove();
                     return false;
                 });
