@@ -33,7 +33,7 @@ class RTMediaPrivacy {
         }
     }
 
-    function select_privacy_ui () {
+    function select_privacy_ui ($echo = true) {
         global $rtmedia;
 
         if ( ! is_rtmedia_privacy_enable () )
@@ -76,8 +76,10 @@ class RTMediaPrivacy {
             );
         }
 
-
-        echo $form->get_select ( $attributes );
+        if($echo)
+            echo $form->get_select ( $attributes );
+        else
+            return $form->get_select ( $attributes );
     }
 
     public function system_default () {
