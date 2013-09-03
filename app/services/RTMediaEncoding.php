@@ -447,7 +447,7 @@ class RTMediaEncoding {
                 $media = $model->get_media(array('id' => $id), 0, 1);
                 $this->media_author = $media[0]->media_author;
                 $attachment_id = $media[0]->media_id;
-                error_log(var_export($_POST,true));
+                //error_log(var_export($_POST,true));
                 update_post_meta($attachment_id, 'rtmedia_encode_response', $_POST);
                 $cover_art = $this->add_media_thumbnails($attachment_id);
                 if($_POST['format'] == 'thumbnails')
@@ -457,9 +457,8 @@ class RTMediaEncoding {
                 $this->uploaded["media_author"] = $media[0]->media_author;
                 $attachemnt_post = get_post($attachment_id);
                 $download_url = urldecode(urldecode($_REQUEST['download_url']));
-                error_log($download_url);
+                //error_log($download_url);
                 $new_wp_attached_file_pathinfo = pathinfo($download_url);
-                error_log(var_dump($new_wp_attached_file_pathinfo));
                 $post_mime_type = $new_wp_attached_file_pathinfo['extension'] == 'mp4' ? 'video/mp4' : 'audio/mp3';
                 try {
                     $file_bits = file_get_contents($download_url);
