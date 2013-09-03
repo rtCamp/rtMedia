@@ -171,7 +171,7 @@ class RTMediaFormHandler {
 //				)
 //			),
                         'general_videothumbs' => array( 
-                                'title' => __('Number of Video Thumbnails ( >= 1 and <= 10 )','rtmedia'),
+                                'title' => __('Number of Video Thumbnails','rtmedia'),
                                 'callback' => array('RTMediaFormHandler', 'number'),
                                 'args' => array(
                                         'key' => 'general_videothumbs',
