@@ -190,10 +190,8 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
 
 	function bulk_action_handler() {
 	    if($_REQUEST['action'] == "bulk_video_regenerate_thumbnails" && $_REQUEST['media'] != "") {
-		$objRTMediaEncoding = new RTMediaEncoding(true);
-		foreach ($_REQUEST['media'] as $media) {
-		    $objRTMediaEncoding->reencoding(intval($media));
-		}
+                wp_safe_redirect(add_query_arg(array("media_ids" => urlencode(implode(",", $_REQUEST["media"]))), admin_url("admin.php?page=rtmedia-regenerate")));
+                exit;
 	    }
 	}
 
@@ -259,7 +257,8 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
                 'toplevel_page_rtmedia-settings',
                 'rtmedia_page_rtmedia-addons',
                 'rtmedia_page_rtmedia-support',
-                'rtmedia_page_rtmedia-importer'
+                'rtmedia_page_rtmedia-importer',
+                'rtmedia_page_rtmedia-regenerate'
             );
             $admin_pages = apply_filters ( 'rtmedia_filter_admin_pages_array', $admin_pages );
 
@@ -322,12 +321,107 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
             add_submenu_page ( 'rtmedia-settings', __ ( 'Settings', 'rtmedia' ), __ ( 'Settings', 'rtmedia' ), 'manage_options', 'rtmedia-settings', array( $this, 'settings_page' ) );
             add_submenu_page ( 'rtmedia-settings', __ ( 'Addons', 'rtmedia' ), __ ( 'Addons', 'rtmedia' ), 'manage_options', 'rtmedia-addons', array( $this, 'addons_page' ) );
             add_submenu_page ( 'rtmedia-settings', __ ( 'Support', 'rtmedia' ), __ ( 'Support ', 'rtmedia' ), 'manage_options', 'rtmedia-support', array( $this, 'support_page' ) );
+            add_submenu_page ( 'rtmedia-settings', __ ( 'Regenerate Thumbnail', 'rtmedia' ), __ ( 'Regenerate Thumbnail ', 'rtmedia' ), 'manage_options', 'rtmedia-regenerate', array( $this, 'rt_regenerate_thumbnail' ) );
+            
 //            add_submenu_page('rtmedia-settings', __('Importer', 'rtmedia'), __('Importer', 'rtmedia'), 'manage_options', 'rtmedia-importer', array($this, 'rt_importer_page'));
 //            if (!BPMediaPrivacy::is_installed()) {
 //			add_submenu_page('rtmedia-settings', __('rtMedia Database Update', 'rtmedia'), __('Update Database', 'rtmedia'), 'manage_options', 'rtmedia-db-update', array($this, 'privacy_page'));
 //            }
         }
 
+        function rt_regenerate_thumbnail() {
+            $prog = new rtProgress();
+            $done = 0;
+            ?>
+                    <div class="wrap">
+                        <h2> <?php _e("Regenerate Video Thumbnails"); ?> </h2>
+                        <?php
+                        if (isset($_REQUEST["media_ids"]) && trim($_REQUEST["media_ids"]) != "") {
+                            $requested = false;
+                            $media_ids = explode(',', $_REQUEST["media_ids"]);
+                            $total = count($media_ids);
+                        } else {
+                            $media_ids = $this->get_vedio_without_thumbs();
+                            $total = count($media_ids);
+                        }
+                        ?>
+                       <script>
+                                var rt_thumb_all_media = <?php echo json_encode($this->get_vedio_without_thumbs()); ?>;
+                       </script>
+                        <?php
+                if(!isset($requested)) {?>
+                       <br /> <br />
+                       <input type="button" class="button button-primary" id="rt-start-media-regenerate" value ="<?php _e("Regenerate Pending Thumbnails"); ?>" />  
+                <?php } ?>
+                       <div id="rt-migration-progress">
+                           <br /> <br />
+           <?php
+                $temp = $prog->progress ( $done, $total );
+                $prog->progress_ui ( $temp, true );
+                ?>
+                       <p> <?php _e("Total Videos") ?> : <span class='rt-total'><?php echo $total; ?></span></p>
+                       <p> <?php _e("Sent of regenerate thumbails") ?> : <span class='rt-done'>0</span></p>
+                       <p> <?php _e("Fail to regenerate thumbails") ?> : <span class='rt-fail'>0</span></p>
+                       
+                   </div>
+                <?php
+                
+                ?> 
+                <script>
+                    if(jQuery("#rt-start-media-regenerate").length > 0 ){
+                        jQuery("#rt-migration-progress").hide()
+                        jQuery("#rt-start-media-regenerate").click(function(){
+                            jQuery(this).hide();
+                            jQuery("#rt-migration-progress").show()
+                            db_start_regenrate();
+                        })
+                    }
+                      var db_done = 0;
+                      var db_fail = 0;
+                      var db_total = <?php echo $total; ?>;
+                      var indx = 0;
+                      function db_start_regenrate() {
+                        if (indx < db_total) {
+                            jQuery.ajax({
+                                url: rtmedia_admin_ajax,
+                                type: 'post',
+                                data: {
+                                    "action": "rt_media_regeneration",
+                                    "media_id": rt_thumb_all_media[indx++]
+                                },
+                                success: function(sdata) {
+                                    db_done ++;
+                                        var progw = Math.ceil((db_done / db_total) * 100);
+                                        if (progw > 100) {
+                                            progw = 100;
+                                        }
+                                        ;
+                                        jQuery('#rtprogressbar>div').css('width', progw + '%');
+                                        jQuery('span.rt-done').html(db_done);
+                                        db_start_regenrate();
+                                },
+                                error: function() {
+                                    db_fail ++;
+                                    jQuery('span.rt-fail').html(db_fail);
+                                    db_start_regenrate();
+                                }
+                            });
+                        } else {
+                            alert("<?php _e("Regenerate Video Thumbnails Done"); ?>");
+                        }
+                    }
+                </script>
+                    
+                    
+                    </div> <?php
+        }
+        function get_vedio_without_thumbs() {
+            $rtmedia_model = new RTMediaModel();
+            $sql = "select media_id from {$rtmedia_model->table_name} where media_type = 'video' and cover_art is null";
+            global $wpdb;
+            $results = $wpdb->get_col( $sql );
+            return $results;
+        }
         /**
          * Render the BuddyPress Media Settings page
          */
