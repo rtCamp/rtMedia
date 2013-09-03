@@ -623,6 +623,25 @@ function is_rtmedia_edit_allowed () {
 add_action ( 'rtmedia_add_edit_fields', 'rtmedia_image_editor', 999 );
 add_action ( 'rtmedia_add_edit_fields', 'rtmedia_vedio_editor', 1000 );
 add_action ('rtmedia_after_update_media', 'set_vedio_thumbnail', 12);
+add_filter ('rtmedia_single_content_filter', 'change_poster', 2);
+
+function change_poster($html,$media){
+    global $rtmedia_media;
+    if ( $rtmedia_media->media_type == 'video' ) {
+        $thumbnail_id = $rtmedia_media->cover_art;
+        if ( $thumbnail_id ) {
+            if(is_numeric($thumbnail_id)) {
+                $thumbnail_info = wp_get_attachment_image_src($thumbnail_id, 'full');
+                $html = str_replace('<video ', '<video poster="'.$thumbnail_info[0].'" ', $html);
+            }
+            else {
+                $html = str_replace('<video ', '<video poster="'.$thumbnail_id.'" ', $html);
+            }
+        }
+    }
+    return $html;
+}
+
 function rtmedia_vedio_editor() {
     global $rtmedia_query;
     if ( $rtmedia_query->media[ 0 ]->media_type == 'video' ) {
@@ -648,18 +667,86 @@ function rtmedia_vedio_editor() {
                 </ul>
             </div>
     <?php
+        }
+        else {  // check for array of thumbs stored as attachement ids
+            global $rtmedia_media;
+            $curr_cover_art = $rtmedia_media->cover_art;
+            if($curr_cover_art != "") {
+                $rtmedia_video_thumbs = get_rtmedia_meta($rtmedia_query->media[ 0 ]->media_id, "rtmedia-thumbnail-ids");
+                if(is_array($rtmedia_video_thumbs)) {
+            ?>
+                <div class="rtmedia-change-cover-arts">
+                    <p> Video Thumbnail:</p>
+                    <ul>
+            <?php
+                    foreach($rtmedia_video_thumbs as $key=>$attachment_id) {
+                        $thumbnail_src = wp_get_attachment_url($attachment_id);
+             ?>
+                        <li<?php echo checked($attachment_id, $curr_cover_art, false) ? ' class="selected"' : ''; ?> style="width: 150px;display: inline-block;">
+                            <label for="rtmedia-upload-select-thumbnail-<?php echo $key + 1; ?>" class="alignleft">
+                            <input type="radio"<?php checked($attachment_id, $curr_cover_art); ?> id="rtmedia-upload-select-thumbnail-<?php echo $key + 1; ?>" value="<?php echo $attachment_id; ?>" name="rtmedia-thumbnail" />
+                            <img src="<?php echo $thumbnail_src; ?>" style="max-height: 120px;max-width: 120px" />
+                            </label>
+                        </li>
+            <?php
+                    }
+            ?>
+                    </ul>
+                </div>
+            <?php
 
+                }
+            }
         }
     }
 }
+
 function set_vedio_thumbnail($id) {
     $media_type = rtmedia_type($id);
     if ('video' == $media_type) {
         $model = new RTMediaModel();
-        $old_cover_art = rtmedia_cover_art($id);
+        $mediaObj = new RTMediaMedia();
         $model->update(array('cover_art' => $_POST['rtmedia-thumbnail']), array('id' => $id));
+
+        // code to update activity
+        $media = $model->get(array('id' => $id));
+        $privacy = $media->privacy;
+        $activity_id = rtmedia_activity_id($id);
+        $same_medias = $mediaObj->model->get ( array( 'activity_id' => $activity_id ) );
+        $update_activity_media = Array( );
+        foreach ( $same_medias as $a_media ) {
+            $update_activity_media[ ] = $a_media->id;
+        }
+//        $objActivity = new RTMediaActivity ( $update_activity_media, $privacy, false );
+//        global $wpdb, $bp;
+//        $activity_old_content = bp_activity_get_meta($activity_id, "bp_old_activity_content");
+//        $activity_text = bp_activity_get_meta($activity_id, "bp_activity_text");
+//        if( $activity_old_content == "") {
+//            // get old activity content and save in activity meta
+//            $activity_get = bp_activity_get_specific( array( 'activity_ids' => $activity_id ) );
+//            $activity = $activity_get['activities'][0];
+//            $activity_body = $activity->content;
+//            //bp_activity_update_meta ($activity_id, "bp_old_activity_content", $activity_body);
+//            bp_activity_update_meta ($activity_id, "bp_old_activity_content", "");
+//
+////            $activity_text = strip_tags($activity_body, '<h4>');
+
+//            //bp_activity_update_meta ($activity_id, "bp_activity_text", $activity_text);
+//            // extract activity text from old content
+//
+//
+//            $matches = array();
+//            $pattern = '~<span class="rtmedia-activity-text">(.*?)<span>~';
+//            preg_match('~(<span>(.*?)</span>)~', $activity_body, $matches);
+
+
+//
+//        }
+
+        //$wpdb->update ( $bp->activity->table_name, array( "type" => "rtmedia_update", "content" => $objActivity->create_activity_html () ), array( "id" => $activity_id ) );
     }
 }
+
 function rtmedia_image_editor () {
     global $rtmedia_query;
     if ( $rtmedia_query->media[ 0 ]->media_type == 'photo' ) {
@@ -680,6 +767,17 @@ function rtmedia_image_editor () {
 
 }
 
+function update_video_poster($html,$media,$activity=false){
+    if ( $media->media_type == 'video' ) {
+        $thumbnail_id = $media->cover_art;
+        if ( $thumbnail_id ) {
+            $thumbnail_info = wp_get_attachment_image_src($thumbnail_id, 'full');
+            $html = str_replace('<video ', '<video poster="'.$thumbnail_info[0].'" ', $html);
+        }
+    }
+    return $html;
+}
+
 function rtmedia_comment_form () {
     ?>
     <form method="post" id="rt_media_comment_form" action="<?php echo get_rtmedia_permalink ( rtmedia_id () ); ?>comment/">
@@ -692,6 +790,23 @@ function rtmedia_comment_form () {
         <?php RTMediaComment::comment_nonce_generator (); ?>
     </form>
     <?php
+}
+
+function rtmedia_get_cover_art_src($id) {
+    $model = new RTMediaModel();
+    $media = $model->get(array("id" => $id));
+    $cover_art = $media->cover_art;
+    if($cover_art != "") {
+        if(is_numeric($cover_art)) {
+            $thumbnail_info = wp_get_attachment_image_src($thumbnail_id, 'full');
+            return $thumbnail_info[0];
+        }
+        else
+            return $cover_art;
+    }
+    else
+        return false;
+
 }
 
 function rtmedia_delete_form () {

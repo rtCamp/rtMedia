@@ -858,24 +858,22 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
                                     $checked = checked($thumbnail_src, $rtmedia_media[ 0 ]->cover_art, false);
                                     $count = $key + 1;
                                     $video_thumb_html .= '<li style="width: 150px;display: inline-block;">
-                                    <label for="rtmedia-upload-select-thumbnail-$count" class="alignleft">
+                                    <label for="rtmedia-upload-select-thumbnail-'.$count.'">
                                     <input type="radio" '.$checked.' id="rtmedia-upload-select-thumbnail-'.$count.'" value="'.$thumbnail_src.'" name="rtmedia-thumbnail" />
-                                    <img src=" '. $thumbnail_src.'" style="max-height: 120px;max-width: 120px" />
+                                    <img src=" '. $thumbnail_src.'" style="max-height: 120px;max-width: 120px; vertical-align: middle;" />
                                     </label>
                                 </li> ';
 
                                 }
 
                           $video_thumb_html .= '  </ul>';
-
-                    }
-
-                    $form_fields['rtmedia_video_thumbnail'] = array(
+                          $form_fields['rtmedia_video_thumbnail'] = array(
                             'label' => 'Video Thumbnails',
                             'input' => 'html',
                             'html' => $video_thumb_html
                         );
-                    return $form_fields;
+                        return $form_fields;
+                    }
                 }
             }
 

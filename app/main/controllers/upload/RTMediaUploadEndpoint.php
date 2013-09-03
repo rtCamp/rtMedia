@@ -48,6 +48,7 @@ class RTMediaUploadEndpoint {
                     $activity_id = $mediaObj->insert_activity ( $rtupload->media_ids[ 0 ], $media[ 0 ] );
                 } else {
                     $mediaObj->model->update ( array( 'activity_id' => $activity_id ), array( 'id' => $rtupload->media_ids[ 0 ] ) );
+                    //
                     $same_medias = $mediaObj->model->get ( array( 'activity_id' => $activity_id ) );
 
                     $update_activity_media = Array( );

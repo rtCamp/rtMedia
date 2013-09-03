@@ -96,9 +96,12 @@ class RTMediaBuddyPressActivity {
         if ( isset ( $_POST[ "rtMedia_attached_files" ] ) && is_array ( $_POST[ "rtMedia_attached_files" ] ) ) {
             global $wpdb, $bp;
             $updated_content = $wpdb->get_var ( "select content from  {$bp->activity->table_name} where  id= $activity_id" );
-            $objActivity = new RTMediaActivity ( $_POST[ "rtMedia_attached_files" ], 0, $updated_content );
 
-            $wpdb->update ( $bp->activity->table_name, array( "type" => "rtmedia_update", "content" => $objActivity->create_activity_html () ), array( "id" => $activity_id ) );
+            $objActivity = new RTMediaActivity ( $_POST[ "rtMedia_attached_files" ], 0, $updated_content );
+            $html_content = $objActivity->create_activity_html();
+            bp_activity_update_meta($activity_id, "bp_old_activity_content", $html_content);
+            bp_activity_update_meta($activity_id, "bp_activity_text", $updated_content);
+            $wpdb->update ( $bp->activity->table_name, array( "type" => "rtmedia_update", "content" => $html_content ), array( "id" => $activity_id ) );
             $mediaObj = new RTMediaModel();
             $sql = "update $mediaObj->table_name set activity_id = '" . $activity_id . "' where id in (" . implode ( ",", $_POST[ "rtMedia_attached_files" ] ) . ")";
             $wpdb->query ( $sql );
