@@ -153,7 +153,6 @@ class RTMediaUploadFile {
             $file_data = wp_check_filetype ( $file[ 'name' ] );
             $allowed_types = apply_filters ( 'rtmedia_plupload_files_filter', array( array( 'title' => "Media Files", 'extensions' => implode ( ",", $allowed_types ) ) ) );
             $allowed_types = explode ( ",", $allowed_types[ 0 ][ "extensions" ] );
-
             if ( in_array ( strtolower ( $file_data[ "ext" ] ), $allowed_types ) == false ) {
                 if ( ! preg_match ( '/' . implode ( '|', $allowed_types ) . '/i', $file[ 'type' ], $result ) || ! isset ( $result[ 0 ] ) ) {
                     throw new RTMediaUploadException ( UPLOAD_ERR_EXTENSION );

@@ -48,6 +48,7 @@ class RTMediaUploadEndpoint {
                     $activity_id = $mediaObj->insert_activity ( $rtupload->media_ids[ 0 ], $media[ 0 ] );
                 } else {
                     $mediaObj->model->update ( array( 'activity_id' => $activity_id ), array( 'id' => $rtupload->media_ids[ 0 ] ) );
+                    //
                     $same_medias = $mediaObj->model->get ( array( 'activity_id' => $activity_id ) );
 
                     $update_activity_media = Array( );
@@ -69,12 +70,20 @@ class RTMediaUploadEndpoint {
                     // Ha ha ha
                     ob_end_clean ();
                     if ( isset ( $_POST[ "rtmedia_update" ] ) && $_POST[ "rtmedia_update" ] == "true" ) {
-                        header ( 'Content-type: application/json' );
+                        if(preg_match('/(?i)msie [1-9]/',$_SERVER['HTTP_USER_AGENT'])) { // if IE(<=9) set content type = text/plain
+                           header ( 'Content-type: text/plain' );
+                        } else {
+                           header ( 'Content-type: application/json' );
+                        }
                         echo json_encode ( $rtupload->media_ids );
                     } else {
                         // Media Upload Case - on album/post/profile/group
                         $data = array( 'activity_id' => $activity_id );
-                        header ( 'Content-type: application/json' );
+                        if(preg_match('/(?i)msie [1-9]/',$_SERVER['HTTP_USER_AGENT'])) { // if IE(<=9) set content type = text/plain
+                           header ( 'Content-type: text/plain' );
+                        } else {
+                           header ( 'Content-type: application/json' );
+                        }
                         echo json_encode ( $data );
                     }
                 } else {

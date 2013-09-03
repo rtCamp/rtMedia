@@ -280,6 +280,11 @@
 		border-top-left-radius: 3px;
 		border-color: #CCC #CCC #DFDFDF;
 	}
+	.rtmedia-change-cover-arts {
+		p {
+			padding: 5px 0;
+		}
+	}
 }
 .rtmedia-activity-container {
             @extend .rtmedia-container;

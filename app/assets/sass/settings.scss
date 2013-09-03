@@ -30,7 +30,7 @@
 					}
 				}
 			} 
-		}
+		}		
 		section.active {
 			.title {
 				a {
@@ -59,11 +59,23 @@
 				}
 			}
 		}
+		section.active {
+			> {
+				.title {
+					a {
+						color: #000;
+					}
+				}
+			}	
+		}
 	}
     .global-album-settings {
-            p {
-                height: 35px;
+            .default-global-albums {
+            	padding: 5px 0;             
                 overflow: hidden;
+                &:hover {
+                	background-color: #EEE;
+                }
             }
     }
 }

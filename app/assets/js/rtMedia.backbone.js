@@ -3,7 +3,7 @@ var nextpage = 2;
 var upload_sync = false;
 var activity_id = -1;
 var uploaderObj;
-
+    
 jQuery(function($) {
 
 
@@ -278,7 +278,8 @@ jQuery(function($) {
                 //Delete Function
                 $("#" + file.id + " td.plupload_delete").click(function(e) {
                     e.preventDefault();
-                    uploaderObj.uploader.removeFile(uploader.getFile(file.id));
+                    //console.log(up.getFile(file.id));
+                    uploaderObj.uploader.removeFile(up.getFile(file.id));
                     $("#" + file.id).remove();
                     return false;
                 });
@@ -338,8 +339,9 @@ jQuery(function($) {
             } catch (e) {
                 // console.log('Invalid Activity ID');
             }
-
         });
+        
+        uploaderObj.uploader.refresh();//refresh the uploader for opera/IE fix on media page
 
         $("#rtMedia-start-upload").click(function(e) {
             uploaderObj.uploadFiles(e);
@@ -378,13 +380,13 @@ jQuery(document).ready(function($) {
             $("#rtmedia-action-update").append($("#privacy"));
         }
     }
-    var objUploadView = new UploadView(rtMedia_update_plupload_config);
+    window.objUploadView = new UploadView(rtMedia_update_plupload_config);
     $("#whats-new-form").on('click', '#rtmedia-add-media-button-post-update', function(e) {
         $("#div-attache-rtmedia").toggle();
         objUploadView.uploader.refresh();
-    })
+    });
     //whats-new-post-in
-    
+
 
     objUploadView.uploader.bind('FilesAdded', function(up, files) {
         //$("#aw-whats-new-submit").attr('disabled', 'disabled');
@@ -403,6 +405,19 @@ jQuery(document).ready(function($) {
     });
 
     objUploadView.uploader.bind('FileUploaded', function(up, file, res) {
+        if (/MSIE (\d+\.\d+);/.test(navigator.userAgent)) { //test for MSIE x.x;
+         var ieversion=new Number(RegExp.$1) // capture x.x portion and store as a number
+ 
+            if(ieversion <10) {
+                try {
+                    if( typeof JSON.parse(res.response) !== "undefined" )
+                        res.status = 200;
+                    console.log(res.status);
+                }
+                catch(e){}
+            }
+        }
+        
         if (res.status == 200) {
             try {
                 var objIds = JSON.parse(res.response);
@@ -579,8 +594,8 @@ jQuery(document).ready(function($) {
 
     });
     jQuery("#div-attache-rtmedia").find("input[type=file]").each(function() {
-        $(this).attr("capture", "camera");
-        $(this).attr("accept", $(this).attr("accept") + ';capture=camera');
+        //$(this).attr("capture", "camera");
+        // $(this).attr("accept", $(this).attr("accept") + ';capture=camera');
 
     });
 });
