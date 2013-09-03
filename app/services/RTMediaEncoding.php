@@ -665,14 +665,17 @@ class RTMediaEncoding {
         $file_name_array = explode("/", $url);
         $file_name = $file_name_array[sizeof($file_name_array) - 1];
         $file_object = array();
-        $file_object[] = array(
-            "file" => $file,
-            "url" => $url,
-            "name" => $file_name,
-            "type" => get_post_field('post_mime_type', $attachment)
-        );
-	var_dump($file_object);
-        $this->encoding(array($media_id), $file_object, $uploaded);
+	$media_type = get_post_field('post_mime_type', $attachment);
+	$media_type_array = explode("/", $media_type);
+	if($media_type_array[0] == "video") {
+	    $file_object[] = array(
+		"file" => $file,
+		"url" => $url,
+		"name" => $file_name,
+		"type" => $media_type
+	    );
+	    $this->encoding(array($media_id), $file_object, $uploaded);
+	}
     }
 
     function rtmedia_regenerate_thumbnails() {

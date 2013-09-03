@@ -43,7 +43,7 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
             add_action ( 'wp_dashboard_setup', array( &$this, 'add_dashboard_widgets' ), 0 );
             add_filter("attachment_fields_to_edit", array($this,"edit_video_thumbnail"), null, 2);
             add_filter("attachment_fields_to_save", array($this,"save_video_thumbnail"), null, 2);
-            add_filter ("media_row_actions", array($this,"add_reencode_link"), null, 3);
+            add_filter ("media_row_actions", array($this,"add_reencode_link"), null, 2);
 	    add_action( 'admin_head-upload.php', array( $this, 'add_bulk_actions_regenerate' ) );
 	    add_action('admin_footer', array($this,'rtmedia_regenerate_thumb_js'));
 	    add_action( 'admin_action_bulk_video_regenerate_thumbnails', array( $this, 'bulk_action_handler' ) );
@@ -179,7 +179,7 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
             return $links;
         }
 
-        function add_reencode_link ($actions, $post, $detached) {
+        function add_reencode_link ($actions, $post) {
 
 	    $mime_type_array = explode("/", $post->post_mime_type);
 	    if(is_array($mime_type_array) && $mime_type_array != "" && $mime_type_array[0] == "video") {
