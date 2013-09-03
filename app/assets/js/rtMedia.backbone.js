@@ -267,7 +267,8 @@ jQuery(function($) {
                 tdSize.innerHTML = plupload.formatSize(file.size);
                 tdDelete = document.createElement("td");
                 tdDelete.innerHTML = "X";
-                tdDelete.className = "plupload_delete"
+                tdDelete.title = "Close";
+                tdDelete.className = "close plupload_delete"
                 tr = document.createElement("tr");
                 tr.id = file.id;
                 tr.appendChild(tdName);
@@ -303,7 +304,7 @@ jQuery(function($) {
             }
         });
         uploaderObj.uploader.bind('BeforeUpload', function(up, file) {
-            up.settings.multipart_params.privacy = $("#rtm-file_upload-ui select#privacy").val();
+            up.settings.multipart_params.privacy = $("#rtm-file_upload-ui select.privacy").val();
             if (jQuery("#rt_upload_hf_redirect").length > 0)
                 up.settings.multipart_params.redirect = up.files.length;
             jQuery("#rtmedia-uploader-form input[type=hidden]").each(function() {
@@ -376,8 +377,8 @@ jQuery(document).ready(function($) {
     var activity_attachemnt_ids = [];
     if ($("#rtmedia-add-media-button-post-update").length > 0) {
         $("#whats-new-options").prepend($("#rtmedia-action-update"));
-        if ($("#privacy").length > 0) {
-            $("#rtmedia-action-update").append($("#privacy"));
+        if ($("#rtm-file_upload-ui .privacy").length > 0) {
+            $("#rtmedia-action-update").append($("#rtm-file_upload-ui .privacy"));
         }
     }
     window.objUploadView = new UploadView(rtMedia_update_plupload_config);
@@ -447,7 +448,7 @@ jQuery(document).ready(function($) {
 
         up.settings.multipart_params.context = object;
         up.settings.multipart_params.context_id = item_id;
-        up.settings.multipart_params.privacy = jQuery("select#privacy").val();
+        up.settings.multipart_params.privacy = jQuery("select.privacy").val();
     });
     objUploadView.uploader.bind('UploadComplete', function(up, files) {
         media_uploading = true;
@@ -474,7 +475,7 @@ jQuery(document).ready(function($) {
             while (activity_attachemnt_ids.length > 0) {
                 options.data += "&rtMedia_attached_files[]=" + activity_attachemnt_ids.pop();
             }
-            options.data += "&rtmedia-privacy=" + jQuery("select#privacy").val();
+            options.data += "&rtmedia-privacy=" + jQuery("select.privacy").val();
             activity_attachemnt_ids = temp;
             var orignalSuccess = originalOptions.success;
             options.beforeSend = function() {
