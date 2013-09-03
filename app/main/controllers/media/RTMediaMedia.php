@@ -372,7 +372,7 @@ class RTMediaMedia {
                  */
                 require_once ( ABSPATH . 'wp-admin/includes/media.php' );
                 /**
-                 * 
+                 *
                  */
                 wp_update_attachment_metadata ( $attachment_id, wp_generate_attachment_metadata ( $attachment_id, $file_object[ $key ][ 'file' ] ) );
             } else {

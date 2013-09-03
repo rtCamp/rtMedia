@@ -170,6 +170,14 @@ class RTMediaFormHandler {
 //					'desc' => __('Users can access their media on media end point','rtmedia')
 //				)
 //			),
+                        'general_videothumbs' => array( 
+                                'title' => __('Number of Video Thumbnails ( >= 1 and <= 10 )','rtmedia'),
+                                'callback' => array('RTMediaFormHandler', 'number'),
+                                'args' => array(
+                                        'key' => 'general_videothumbs',
+                                        'value' => $options['general_videothumbs']                        
+                                )                  
+                        ),
 			'general_showAdminMenu' => array(
 				'title' => __('Admin Bar Menu','rtmedia'),
 				'callback' => array('RTMediaFormHandler', 'checkbox'),
@@ -178,7 +186,7 @@ class RTMediaFormHandler {
 					'value' => $options['general_showAdminMenu'],
 					'desc' => __('Enable menu in WordPress admin bar','rtmedia')
 				)
-			)
+			)                    
 		);
 
 		return $render;
@@ -186,9 +194,9 @@ class RTMediaFormHandler {
 
 	public static function general_content() {
 		global $rtmedia;                
-		$options = self::extract_settings('general', $rtmedia->options);                   
-		$render_options = self::general_render_options($options);                
-                $render_options = apply_filters("rtmedia-general-content-add-itmes",$render_options, $options);                
+		$options = self::extract_settings('general', $rtmedia->options);
+		$render_options = self::general_render_options($options);
+                $render_options = apply_filters("rtmedia_general_content_add_itmes",$render_options, $options);                
 		foreach ($render_options as $key => $option) { ?>
 			<div class="row section">
 				<div class="columns large-4"> <?php echo $option['title']; ?> </div>

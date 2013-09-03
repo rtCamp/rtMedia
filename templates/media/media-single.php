@@ -22,7 +22,7 @@
                             <?php rtmedia_author_name ( true ); ?>
                         </div>
                     </div>
-                <?php } 
+                <?php }
 		    rtmedia_description ();
                 ?>
 

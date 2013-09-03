@@ -278,7 +278,8 @@ jQuery(function($) {
                 //Delete Function
                 $("#" + file.id + " td.plupload_delete").click(function(e) {
                     e.preventDefault();
-                    uploaderObj.uploader.removeFile(uploader.getFile(file.id));
+                    //console.log(up.getFile(file.id));
+                    uploaderObj.uploader.removeFile(up.getFile(file.id));
                     $("#" + file.id).remove();
                     return false;
                 });
@@ -385,7 +386,7 @@ jQuery(document).ready(function($) {
         objUploadView.uploader.refresh();
     });
     //whats-new-post-in
-    
+
 
     objUploadView.uploader.bind('FilesAdded', function(up, files) {
         //$("#aw-whats-new-submit").attr('disabled', 'disabled');
@@ -593,8 +594,8 @@ jQuery(document).ready(function($) {
 
     });
     jQuery("#div-attache-rtmedia").find("input[type=file]").each(function() {
-        $(this).attr("capture", "camera");
-        $(this).attr("accept", $(this).attr("accept") + ';capture=camera');
+        //$(this).attr("capture", "camera");
+        // $(this).attr("accept", $(this).attr("accept") + ';capture=camera');
 
     });
 });
