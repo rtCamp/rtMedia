@@ -7,7 +7,7 @@
  */
 class RTMediaEncoding {
 
-    protected $api_url = 'http://api.rtcamp.net/';
+    protected $api_url = 'http://api.rtcamp.com/';
     protected $sandbox_testing = 0;
     protected $merchant_id = 'paypal@rtcamp.com';
     public $uploaded = array();
@@ -56,6 +56,7 @@ class RTMediaEncoding {
         add_action('wp_ajax_rtmedia_hide_encoding_notice', array($this, 'hide_encoding_notice'), 1);
         add_action('wp_ajax_rtmedia_enter_api_key', array($this, 'enter_api_key'), 1);
         add_action('wp_ajax_rtmedia_disable_encoding', array($this, 'disable_encoding'), 1);
+	//add_action('wp_ajax_rtmedia_regenerate_thumbnails', array($this, 'rtmedia_regenerate_thumbnails'), 1);
     }
     /**
      *
@@ -670,13 +671,16 @@ class RTMediaEncoding {
             "name" => $file_name,
             "type" => get_post_field('post_mime_type', $attachment)
         );
+	var_dump($file_object);
         $this->encoding(array($media_id), $file_object, $uploaded);
     }
 
+    function rtmedia_regenerate_thumbnails() {
+	$this->reencoding(intval($_REQUEST['rtreencoding']));
+	die();
+    }
 }
-if(isset($_REQUEST['temp123'])) {
 
-}
 if (isset($_REQUEST['rtreencoding'])) {
     $objRTMediaEncoding = new RTMediaEncoding(true);
     $objRTMediaEncoding->reencoding(intval($_REQUEST['rtreencoding']));
