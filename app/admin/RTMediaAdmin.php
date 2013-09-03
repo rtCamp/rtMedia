@@ -43,7 +43,11 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
             add_action ( 'wp_dashboard_setup', array( &$this, 'add_dashboard_widgets' ), 0 );
             add_filter("attachment_fields_to_edit", array($this,"edit_video_thumbnail"), null, 2);
             add_filter("attachment_fields_to_save", array($this,"save_video_thumbnail"), null, 2);
-
+            add_filter ("media_row_actions", array($this,"add_reencode_link"), null, 3);
+	    add_action( 'admin_head-upload.php', array( $this, 'add_bulk_actions_regenerate' ) );
+	    add_action('admin_footer', array($this,'rtmedia_regenerate_thumb_js'));
+	    add_action( 'admin_action_bulk_video_regenerate_thumbnails', array( $this, 'bulk_action_handler' ) );
+	    add_action( 'admin_action_-1', array( $this, 'bulk_action_handler' ) );
             if ( isset ( $_POST[ "rtmedia-options" ] ) ) {
                 if ( isset ( $_POST[ "rtmedia-options" ][ "general_showAdminMenu" ] ) && $_POST[ "rtmedia-options" ][ "general_showAdminMenu" ] == "1" )
                     add_action ( 'admin_bar_menu', array( $this, 'admin_bar_menu' ), 100, 1 );
@@ -174,6 +178,24 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
             array_push ( $links, $settings_link );
             return $links;
         }
+
+        function add_reencode_link ($actions, $post, $detached) {
+
+	    $mime_type_array = explode("/", $post->post_mime_type);
+	    if(is_array($mime_type_array) && $mime_type_array != "" && $mime_type_array[0] == "video") {
+		$actions['reencode'] = "<a class='submitdelete' onclick='return rtmedia_regenerate_thumbs(".$post->ID.")' href='#'>Regenerate Thumbnail</a>";
+	    }
+	    return $actions;
+	}
+
+	function bulk_action_handler() {
+	    if($_REQUEST['action'] == "bulk_video_regenerate_thumbnails" && $_REQUEST['media'] != "") {
+		$objRTMediaEncoding = new RTMediaEncoding(true);
+		foreach ($_REQUEST['media'] as $media) {
+		    $objRTMediaEncoding->reencoding(intval($media));
+		}
+	    }
+	}
 
         function admin_bar_menu ( $admin_bar ) {
             if ( ! current_user_can ( 'manage_options' ) )
@@ -886,6 +908,37 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
             return $post;
         }
 
+	function rtmedia_regenerate_thumb_js() {
+	    global $pagenow;
+
+	    if($pagenow == 'upload.php') {
+	    ?>
+		<script type="text/javascript">
+		    function rtmedia_regenerate_thumbs(post_id) {
+			if(post_id != "") {
+			    var data = {
+				action: 'rtmedia_regenerate_thumbnails',
+				rtreencoding: post_id
+			    };
+			    jQuery.post(ajaxurl,data, function() {
+
+			    });
+			}
+		    }
+		</script>
+	    <?php
+	    }
+	}
+
+	function add_bulk_actions_regenerate () {
+	 ?>
+	    <script type="text/javascript">
+		jQuery(document).ready(function($){
+			$('select[name^="action"] option:last-child').before('<option value="bulk_video_regenerate_thumbnails"><?php echo esc_attr( __( 'Regenerate Video Thumbnails', 'regenerate-video-thumbnails' ) ); ?></option>');
+		});
+	    </script>
+	<?php
+	}
     }
 
 }
