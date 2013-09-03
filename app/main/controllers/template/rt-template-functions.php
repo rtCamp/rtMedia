@@ -623,7 +623,7 @@ function is_rtmedia_edit_allowed () {
 add_action ( 'rtmedia_add_edit_fields', 'rtmedia_image_editor', 999 );
 add_action ( 'rtmedia_add_edit_fields', 'rtmedia_vedio_editor', 1000 );
 add_action ('rtmedia_after_update_media', 'set_vedio_thumbnail', 12);
-add_filter ('rtmedia_single_content_filter', 'change_poster', 2);
+add_filter ('rtmedia_single_content_filter', 'change_poster', 99, 2);
 
 function change_poster($html,$media){
     global $rtmedia_media;

@@ -415,7 +415,7 @@ class RTMediaEncoding {
 //                        wp_delete_attachment($attach_id, true);
 //                }
 
-                $current_thumb_size = filesize($thumb_upload_info['url']);
+                $current_thumb_size = @filesize($thumb_upload_info['url']);
                 if ($current_thumb_size >= $largest_thumb_size) {
                     $largest_thumb_size = $current_thumb_size;
                     $largest_thumb = $thumb_upload_info['url'];
@@ -447,7 +447,7 @@ class RTMediaEncoding {
                 $media = $model->get_media(array('id' => $id), 0, 1);
                 $this->media_author = $media[0]->media_author;
                 $attachment_id = $media[0]->media_id;
-                error_log(var_export($_POST,true));
+                //error_log(var_export($_POST,true));
                 update_post_meta($attachment_id, 'rtmedia_encode_response', $_POST);
                 $cover_art = $this->add_media_thumbnails($attachment_id);
                 if($_POST['format'] == 'thumbnails')
@@ -457,9 +457,8 @@ class RTMediaEncoding {
                 $this->uploaded["media_author"] = $media[0]->media_author;
                 $attachemnt_post = get_post($attachment_id);
                 $download_url = urldecode(urldecode($_REQUEST['download_url']));
-                error_log($download_url);
+                //error_log($download_url);
                 $new_wp_attached_file_pathinfo = pathinfo($download_url);
-                error_log(var_dump($new_wp_attached_file_pathinfo));
                 $post_mime_type = $new_wp_attached_file_pathinfo['extension'] == 'mp4' ? 'video/mp4' : 'audio/mp3';
                 try {
                     $file_bits = file_get_contents($download_url);
@@ -471,7 +470,7 @@ class RTMediaEncoding {
                     unlink(get_attached_file($attachment_id));
                     add_filter('upload_dir', array($this, 'upload_dir'));
                     $upload_info = wp_upload_bits($new_wp_attached_file_pathinfo['basename'], null, $file_bits);
-                    error_log(var_dump($upload_info));
+                    //error_log(var_dump($upload_info));
                     $wpdb->update($wpdb->posts, array('guid' => $upload_info['url'], 'post_mime_type' => $post_mime_type), array('ID' => $attachment_id));
                     $old_wp_attached_file = get_post_meta($attachment_id, '_wp_attached_file', true);
                     $old_wp_attached_file_pathinfo = pathinfo($old_wp_attached_file);
