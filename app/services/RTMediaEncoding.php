@@ -415,7 +415,7 @@ class RTMediaEncoding {
 //                        wp_delete_attachment($attach_id, true);
 //                }
 
-                $current_thumb_size = filesize($thumb_upload_info['url']);
+                $current_thumb_size = @filesize($thumb_upload_info['url']);
                 if ($current_thumb_size >= $largest_thumb_size) {
                     $largest_thumb_size = $current_thumb_size;
                     $largest_thumb = $thumb_upload_info['url'];
@@ -471,7 +471,7 @@ class RTMediaEncoding {
                     unlink(get_attached_file($attachment_id));
                     add_filter('upload_dir', array($this, 'upload_dir'));
                     $upload_info = wp_upload_bits($new_wp_attached_file_pathinfo['basename'], null, $file_bits);
-                    error_log(var_dump($upload_info));
+                    //error_log(var_dump($upload_info));
                     $wpdb->update($wpdb->posts, array('guid' => $upload_info['url'], 'post_mime_type' => $post_mime_type), array('ID' => $attachment_id));
                     $old_wp_attached_file = get_post_meta($attachment_id, '_wp_attached_file', true);
                     $old_wp_attached_file_pathinfo = pathinfo($old_wp_attached_file);
