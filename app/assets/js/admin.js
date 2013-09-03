@@ -58,7 +58,7 @@ jQuery(document).ready(function($) {
 
     /* Submit Request */
 
-    jQuery('#bp-media-settings-boxes').on('submit', '#bp_media_settings_form,#rtmedia-settings-submit', function(e) {        
+    jQuery('#bp-media-settings-boxes').on('submit', '#bp_media_settings_form,#rtmedia-settings-submit', function(e) {
         var return_code = true;
         var reg = new RegExp('^auto$|^[+-]?[0-9]+\\.?([0-9]+)?(px|em|ex|%|in|cm|mm|pt|pc)?$');
         jQuery("input[name*='defaultSizes']").each(function(el) {
