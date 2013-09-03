@@ -545,5 +545,6 @@ jQuery(document).ready(function($) {
         e.preventDefault();
         manageHash();
     });
-    jQuery(document).foundation('section');
+    if(jQuery(document).foundation !== undefined)
+        jQuery(document).foundation('section');
 });
