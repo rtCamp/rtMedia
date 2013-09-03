@@ -65,12 +65,17 @@ if (!class_exists('RTMediaSettings')) {
             $defaults['buddypress_enableOnGroup'] = 0;
             $defaults['buddypress_enableOnActivity'] = 0;
             $defaults['buddypress_enableOnProfile'] = 0;
-
+            if(isset($options["general_videothumbs"]) && is_numeric($options["general_videothumbs"]) && intval($options["general_videothumbs"]) > 10){
+                $options["general_videothumbs"] = 10;
+                add_action ( 'admin_notices', array( &$this, 'add_max_video_thumb_notice' ) );
+            }
             $options = wp_parse_args($options, $defaults);
 
             return $options;
         }
-
+        function add_max_video_thumb_notice(){
+             echo '<div class="error"><p>' . __("Max Video thumbnail size is ") .' <strong>10</strong></p></div>';
+        }
         /**
          *
          * @global BPMediaAddon $rtmedia_addon
