@@ -86,7 +86,8 @@ class RTMediaEncoding {
                     'force' => 0,
                     'size' => filesize($single['file']),
                     'formats' => ($autoformat === true)?(($type_array[0] == 'video') ? 'mp4' : 'mp3'):$autoformat,
-                    'thumbs' => $options_vedio_thumb);
+                    'thumbs' => $options_vedio_thumb,
+		    'rt_id' => $media_ids[$key]);
                 $encoding_url = $this->api_url . 'job/new/';
                 $upload_url = add_query_arg($query_args, $encoding_url . $this->api_key);
                 //error_log(var_export($upload_url, true));
@@ -446,8 +447,13 @@ class RTMediaEncoding {
             global $wpdb;
             $model = new RTDBModel('rtm_media_meta');
             $meta_details = $model->get(array('meta_value' => $_REQUEST['job_id'], 'meta_key' => 'rtmedia-encoding-job-id'));
-            if (isset($meta_details[0])) {
-                $id = maybe_unserialize($meta_details[0]->media_id);
+	    if(!isset($meta_details[0])){
+		$id = intval($_REQUEST["rt_id"]);
+	    }
+	    else {
+		$id = $meta_details[0]->media_id;
+	    }
+            if (isset($id) && is_numeric($id)) {
                 $model = new RTMediaModel();
                 $media = $model->get_media(array('id' => $id), 0, 1);
                 $this->media_author = $media[0]->media_author;
