@@ -778,6 +778,15 @@ function update_video_poster($html,$media,$activity=false){
     return $html;
 }
 
+function get_vedio_without_thumbs() {
+    $rtmedia_model = new RTMediaModel();
+    $sql = "select media_id from {$rtmedia_model->table_name} where media_type = 'video' and cover_art is null";
+    global $wpdb;
+    $results = $wpdb-> get_col ( $sql );
+    return $results;
+}
+
+
 function rtmedia_comment_form () {
     ?>
     <form method="post" id="rt_media_comment_form" action="<?php echo get_rtmedia_permalink ( rtmedia_id () ); ?>comment/">

@@ -48,6 +48,8 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
 	    add_action('admin_footer', array($this,'rtmedia_regenerate_thumb_js'));
 	    add_action( 'admin_action_bulk_video_regenerate_thumbnails', array( $this, 'bulk_action_handler' ) );
 	    add_action( 'admin_action_-1', array( $this, 'bulk_action_handler' ) );
+	    add_action ( 'wp_ajax_rt_media_regeneration', array( $this, 'rt_media_regeneration' ), 1 );
+
             if ( isset ( $_POST[ "rtmedia-options" ] ) ) {
                 if ( isset ( $_POST[ "rtmedia-options" ][ "general_showAdminMenu" ] ) && $_POST[ "rtmedia-options" ][ "general_showAdminMenu" ] == "1" )
                     add_action ( 'admin_bar_menu', array( $this, 'admin_bar_menu' ), 100, 1 );
@@ -322,7 +324,7 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
             add_submenu_page ( 'rtmedia-settings', __ ( 'Addons', 'rtmedia' ), __ ( 'Addons', 'rtmedia' ), 'manage_options', 'rtmedia-addons', array( $this, 'addons_page' ) );
             add_submenu_page ( 'rtmedia-settings', __ ( 'Support', 'rtmedia' ), __ ( 'Support ', 'rtmedia' ), 'manage_options', 'rtmedia-support', array( $this, 'support_page' ) );
             add_submenu_page ( 'rtmedia-settings', __ ( 'Regenerate Thumbnail', 'rtmedia' ), __ ( 'Regenerate Thumbnail ', 'rtmedia' ), 'manage_options', 'rtmedia-regenerate', array( $this, 'rt_regenerate_thumbnail' ) );
-            
+
 //            add_submenu_page('rtmedia-settings', __('Importer', 'rtmedia'), __('Importer', 'rtmedia'), 'manage_options', 'rtmedia-importer', array($this, 'rt_importer_page'));
 //            if (!BPMediaPrivacy::is_installed()) {
 //			add_submenu_page('rtmedia-settings', __('rtMedia Database Update', 'rtmedia'), __('Update Database', 'rtmedia'), 'manage_options', 'rtmedia-db-update', array($this, 'privacy_page'));
@@ -351,7 +353,7 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
                         <?php
                 if(!isset($requested)) {?>
                        <br /> <br />
-                       <input type="button" class="button button-primary" id="rt-start-media-regenerate" value ="<?php _e("Regenerate Pending Thumbnails"); ?>" />  
+                       <input type="button" class="button button-primary" id="rt-start-media-regenerate" value ="<?php _e("Regenerate Pending Thumbnails"); ?>" />
                 <?php } ?>
                        <div id="rt-migration-progress">
                            <br /> <br />
@@ -362,18 +364,17 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
                        <p> <?php _e("Total Videos") ?> : <span class='rt-total'><?php echo $total; ?></span></p>
                        <p> <?php _e("Sent of regenerate thumbails") ?> : <span class='rt-done'>0</span></p>
                        <p> <?php _e("Fail to regenerate thumbails") ?> : <span class='rt-fail'>0</span></p>
-                       
+
                    </div>
                 <?php
-                
-                ?> 
+
+                ?>
                 <script>
                     if(jQuery("#rt-start-media-regenerate").length > 0 ){
                         jQuery("#rt-migration-progress").hide()
                         jQuery("#rt-start-media-regenerate").click(function(){
                             jQuery(this).hide();
                             jQuery("#rt-migration-progress").show()
-                            db_start_regenrate();
                         })
                     }
                       var db_done = 0;
@@ -410,11 +411,35 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
                             alert("<?php _e("Regenerate Video Thumbnails Done"); ?>");
                         }
                     }
+		    db_start_regenrate();
                 </script>
-                    
-                    
+
+
                     </div> <?php
         }
+
+	function rt_media_regeneration() {
+	    if(isset($_POST['media_id'])) {
+		$model = new RTMediaModel();
+		$media = $model->get_media ( array( 'media_id' => $_POST['media_id'] ), 0, 1 );
+		$media_type = $media[ 0 ]->media_type;
+		$response = array();
+		if($media_type == "video") {
+		    $objRTMediaEncoding = new RTMediaEncoding(true);
+		    $autoformat = "thumbnails";
+		    $objRTMediaEncoding->reencoding(intval($_POST['media_id']), $autoformat);
+		    $response['status'] = "true";
+		}
+		else {
+		    $response['status'] = "false";
+		    $response['message'] = "not a video ...";
+		}
+		echo json_encode($response);
+		die();
+	    }
+	}
+
+
         function get_vedio_without_thumbs() {
             $rtmedia_model = new RTMediaModel();
             $sql = "select media_id from {$rtmedia_model->table_name} where media_type = 'video' and cover_art is null";
@@ -1011,8 +1036,8 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
 		    function rtmedia_regenerate_thumbs(post_id) {
 			if(post_id != "") {
 			    var data = {
-				action: 'rtmedia_regenerate_thumbnails',
-				rtreencoding: post_id
+				action: 'rt_media_regeneration',
+				media_id: post_id
 			    };
 			    jQuery.post(ajaxurl,data, function() {
 
