@@ -209,7 +209,9 @@ jQuery(function($) {
         render: function() {
 
         },
-        initUploader: function() {
+        initUploader: function(a) {
+            
+            if(typeof(a)!=="undefined") a=false;// if rtmediapro widget calls the function, dont show max size note.
             this.uploader.init();
             //The plupload HTML5 code gives a negative z-index making add files button unclickable
             $(".plupload.html5").css({
@@ -218,7 +220,8 @@ jQuery(function($) {
             $("#rtMedia-upload-button").css({
                 zIndex: 2
             });
-            $("#rtMedia-upload-button").after("<span>(Max file size is " + plupload.formatSize(this.uploader.settings.max_file_size) + ")</span>")
+            if(a!==false)
+                $("#rtMedia-upload-button").after("<span>(Max file size is " + plupload.formatSize(this.uploader.settings.max_file_size) + ")</span>")
 
             return this;
         },
@@ -324,7 +327,7 @@ jQuery(function($) {
                 else
                     uploaderObj.upload_count++;
 
-                if (uploaderObj.upload_count == up.files.length && jQuery("#rt_upload_hf_redirect").length > 0 && res.response.indexOf("http") == 0) {
+                if (uploaderObj.upload_count == up.files.length && jQuery("#rt_upload_hf_redirect").length > 0 && jQuery.trim(res.response.indexOf("http") == 0)) {
                     window.location = res.response;
                 }
             }
