@@ -1,12 +1,12 @@
 === rtMedia for WordPress, BuddyPress and bbPress ===
-Contributors: rtcamp, rahul286, faishal, JoshuaAbenazer, gagan0123, saurabhshukla, desaiuditd, nitun.lanjewar, rittesh.patel, umesh.nevase, suhasgirgaonkar, neerukoul, hrishiv90, kanakiyajay
+Contributors: rtcamp, rahul286, faishal, JoshuaAbenazer, gagan0123, saurabhshukla, desaiuditd, nitun.lanjewar, rittesh.patel, pushpak.pop, umesh.nevase, suhasgirgaonkar, neerukoul, hrishiv90, kanakiyajay
 Donate link: http://rtcamp.com/donate
 Tags: BuddyPress, media, multimedia, album, audio, songs, music, video, photo, image, upload, share, MediaElement.js, ffmpeg, kaltura, media-node, rtMedia, WordPress, bbPress
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires at least: WordPress 3.6
-Tested up to: WordPress 3.6 + BuddyPress 1.7
-Stable tag: 3.0.13
+Tested up to: WordPress 3.6 + BuddyPress 1.8.1
+Stable tag: 3.1
 
 rtMedia adds albums, audio/video encoding, privacy/sharing, front-end uploads & more. All this works nicely on mobile/tablets devices.
 
@@ -159,6 +159,16 @@ Please visit [rtMedia's Features page](http://rtcamp.com/buddypress-media/?utm_s
 == Changelog ==
 
 Please visit [rtMedia's Roadmap page](http://rtcamp.com/buddypress-media/roadmap/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "Visit rtMedia's Features page") to get some details about future releases.
+
+= 3.1 =
+* Add Thumbnail support in encoding.
+* Add Regenerate thumbnail option for video.
+* Add Change Video thumbnail for video in media edit screen (Admin & Frontend)
+* Optimize SQL query & code for better performance .
+* Fix uploader for IE and Opera.
+* Fixed single media issue (add preload for video)
+* Fixed Activity Privacy issue.
+* Fixed Gallery shorcode issue.
 
 = 3.0.13 =
 * Add redirect in upload shortcode sponsored by [Henry Wright](http://profiles.wordpress.org/henrywright-1)
@@ -551,8 +561,8 @@ Please visit [rtMedia's Roadmap page](http://rtcamp.com/buddypress-media/roadmap
 
 == Upgrade Notice ==
 
-= 3.0.13 =
-Requires BuddyPress 1.7 or higher, if using BuddyPress. Add redirect in upload shortcode.
+= 3.1 =
+Requires BuddyPress 1.7 or higher, if using BuddyPress. Add Thumbnail support in encoding & other fixes
 
 == Sponsors ==
 
