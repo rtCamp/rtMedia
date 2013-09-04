@@ -400,3 +400,11 @@
     @include border-radius(4px);
     background-color: #E74C3C;
 }
+.rtmp-uploaded-file {
+    width: 100%;
+} 
+.close {
+    cursor: pointer;
+    color : red;
+}
+

@@ -57,7 +57,7 @@ class RTMediaPrivacy {
         $form = new rtForm();
         $attributes = array(
             'name' => 'privacy',
-            'id' => 'privacy'
+            'class' => array('privacy')
         );
         global $rtmedia;
         $privacy_levels = $rtmedia->privacy_settings[ 'levels' ];
