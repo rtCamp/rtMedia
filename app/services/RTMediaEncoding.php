@@ -86,7 +86,7 @@ class RTMediaEncoding {
                 $encoding_url = $this->api_url . 'job/new/';
                 $upload_url = add_query_arg($query_args, $encoding_url . $this->api_key);
                 //error_log(var_export($upload_url, true));
-		var_dump($upload_url);
+		//var_dump($upload_url);
                 $upload_page = wp_remote_get($upload_url, array('timeout' => 200));
 
                 //error_log(var_export($upload_page, true));
