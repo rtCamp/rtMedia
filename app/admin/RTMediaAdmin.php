@@ -43,7 +43,7 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
             add_action ( 'wp_dashboard_setup', array( &$this, 'add_dashboard_widgets' ), 0 );
             add_filter("attachment_fields_to_edit", array($this,"edit_video_thumbnail"), null, 2);
             add_filter("attachment_fields_to_save", array($this,"save_video_thumbnail"), null, 2);
-            
+
 	    $obj_encoding =  new RTMediaEncoding(true);
             if ($obj_encoding->api_key){
                 add_filter ("media_row_actions", array($this,"add_reencode_link"), null, 2);
@@ -354,7 +354,7 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
                         }
                         ?>
                        <script>
-                                var rt_thumb_all_media = <?php echo json_encode($this->get_vedio_without_thumbs()); ?>;
+                                var rt_thumb_all_media = <?php echo json_encode($media_ids); ?>;
                        </script>
                         <?php
                 if(!isset($requested)) {?>
@@ -376,7 +376,7 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
 
                 ?>
                 <script>
-                    
+
                       var db_done = 0;
                       var db_fail = 0;
                       var db_total = <?php echo $total; ?>;
@@ -392,7 +392,7 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
                                 },
                                 success: function(data) {
                                     data = JSON.parse(data);
-                                
+
                                     if(data.status == false){
                                         handle_regenrate_fail();
                                     }else{
@@ -429,7 +429,7 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
                     } else{
                         db_start_regenrate();
                     }
-		
+
                 </script>
 
 
