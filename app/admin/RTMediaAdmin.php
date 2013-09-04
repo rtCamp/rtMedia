@@ -375,7 +375,6 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
                         jQuery("#rt-start-media-regenerate").click(function(){
                             jQuery(this).hide();
                             jQuery("#rt-migration-progress").show()
-                            db_start_regenrate();
                         })
                     }
                       var db_done = 0;
@@ -412,6 +411,7 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
                             alert("<?php _e("Regenerate Video Thumbnails Done"); ?>");
                         }
                     }
+		    db_start_regenrate();
                 </script>
 
 
@@ -426,7 +426,8 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
 		$response = array();
 		if($media_type == "video") {
 		    $objRTMediaEncoding = new RTMediaEncoding(true);
-		    $objRTMediaEncoding->reencoding(intval($_POST['media_id']));
+		    $autoformat = "thumbnails";
+		    $objRTMediaEncoding->reencoding(intval($_POST['media_id']), $autoformat);
 		    $response['status'] = "true";
 		}
 		else {
@@ -1035,8 +1036,8 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
 		    function rtmedia_regenerate_thumbs(post_id) {
 			if(post_id != "") {
 			    var data = {
-				action: 'rtmedia_regenerate_thumbnails',
-				rtreencoding: post_id
+				action: 'rt_media_regeneration',
+				media_id: post_id
 			    };
 			    jQuery.post(ajaxurl,data, function() {
 

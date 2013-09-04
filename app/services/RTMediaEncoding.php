@@ -86,6 +86,7 @@ class RTMediaEncoding {
                 $encoding_url = $this->api_url . 'job/new/';
                 $upload_url = add_query_arg($query_args, $encoding_url . $this->api_key);
                 //error_log(var_export($upload_url, true));
+		var_dump($upload_url);
                 $upload_page = wp_remote_get($upload_url, array('timeout' => 200));
 
                 //error_log(var_export($upload_page, true));
@@ -643,7 +644,7 @@ class RTMediaEncoding {
         return $upload_dir;
     }
 
-    public function reencoding($attachment) {
+    public function reencoding($attachment, $autoformat = true) {
         $rtmedia_model = new RTMediaModel();
         $media_array = $rtmedia_model->get(array("media_id" => $attachment));
         $media_id = $media_array[0]->id;
@@ -673,7 +674,7 @@ class RTMediaEncoding {
 		"name" => $file_name,
 		"type" => $media_type
 	    );
-	    $this->encoding(array($media_id), $file_object, $uploaded);
+	    $this->encoding(array($media_id), $file_object, $uploaded, $autoformat);
 	}
     }
 
