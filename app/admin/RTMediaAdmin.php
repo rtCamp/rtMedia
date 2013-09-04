@@ -1039,8 +1039,14 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
 				action: 'rt_media_regeneration',
 				media_id: post_id
 			    };
-			    jQuery.post(ajaxurl,data, function() {
-
+			    jQuery.post(ajaxurl,data, function(data) {
+				data = JSON.parse(data);
+				if(data.status === "true") {
+				    alert("<?php _e('Video is sent to generate thumbnails.') ?>");
+				}
+				else {
+				    alert("<?php _e('Video can\'t be sent to generate thumbnails.') ?>");
+				}
 			    });
 			}
 		    }

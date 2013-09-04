@@ -67,14 +67,17 @@ class RTMediaEncoding {
      */
     function encoding($media_ids, $file_object, $uploaded, $autoformat = true) {
         foreach ($file_object as $key => $single) {
-            if (preg_match('/video|audio/i', $single['type'], $type_array) && !in_array($single['type'], array('audio/mp3'))) {
-                $options = rtmedia_get_site_option('rtmedia-options');
+	    $type_arry = explode(".", $single['url']);
+	    $type = strtolower($type_arry[sizeof($type_arry) - 1]);
+	    $not_allowed_type = array("mp3");
+            if (preg_match('/video|audio/i', $single['type'], $type_array) && !in_array($single['type'], array('audio/mp3')) && !in_array($type, $not_allowed_type)) {
+		$options = rtmedia_get_site_option('rtmedia-options');
                 $options_vedio_thumb = $options['general_videothumbs'];
                 if($options_vedio_thumb == "")
                     $options_vedio_thumb = 3;
 
                 /**  fORMAT **/
-                if( $single['type'] == 'video/mp4')
+                if( $single['type'] == 'video/mp4' || $type == "mp4")
                     $autoformat = "thumbnails";
 
                 $query_args = array('url' => urlencode($single['url']),
