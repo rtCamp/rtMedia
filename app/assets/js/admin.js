@@ -93,7 +93,7 @@ jQuery(document).ready(function($) {
                 } else {
                     jQuery('.encoding-try-now').next().remove();
                     jQuery('#settings-error-encoding-error').remove();
-                    jQuery('h2:first').after('<div class="error" id="settings-error-encoding-error"><p>' + response.error + '</p></div>');
+                    jQuery('#bp-media-settings-boxes').before('<div class="error" id="settings-error-encoding-error"><p>' + response.error + '</p></div>');
                 }
             });
         }

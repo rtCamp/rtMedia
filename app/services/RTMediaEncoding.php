@@ -11,6 +11,7 @@ class RTMediaEncoding {
     protected $sandbox_testing = 0;
     protected $merchant_id = 'paypal@rtcamp.com';
     public $uploaded = array();
+    public $api_key = false;
 
     public function __construct($no_init = false) {
         $this->api_key = get_site_option('rtmedia-encoding-api-key');
