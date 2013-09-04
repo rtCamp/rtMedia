@@ -11,6 +11,7 @@ class RTMediaEncoding {
     protected $sandbox_testing = 0;
     protected $merchant_id = 'paypal@rtcamp.com';
     public $uploaded = array();
+    public $api_key = false;
 
     public function __construct($no_init = false) {
         $this->api_key = get_site_option('rtmedia-encoding-api-key');
@@ -67,14 +68,17 @@ class RTMediaEncoding {
      */
     function encoding($media_ids, $file_object, $uploaded, $autoformat = true) {
         foreach ($file_object as $key => $single) {
-            if (preg_match('/video|audio/i', $single['type'], $type_array) && !in_array($single['type'], array('audio/mp3'))) {
-                $options = rtmedia_get_site_option('rtmedia-options');
+	    $type_arry = explode(".", $single['url']);
+	    $type = strtolower($type_arry[sizeof($type_arry) - 1]);
+	    $not_allowed_type = array("mp3");
+            if (preg_match('/video|audio/i', $single['type'], $type_array) && !in_array($single['type'], array('audio/mp3')) && !in_array($type, $not_allowed_type)) {
+		$options = rtmedia_get_site_option('rtmedia-options');
                 $options_vedio_thumb = $options['general_videothumbs'];
                 if($options_vedio_thumb == "")
                     $options_vedio_thumb = 3;
 
                 /**  fORMAT **/
-                if( $single['type'] == 'video/mp4')
+                if( $single['type'] == 'video/mp4' || $type == "mp4")
                     $autoformat = "thumbnails";
 
                 $query_args = array('url' => urlencode($single['url']),
@@ -86,6 +90,7 @@ class RTMediaEncoding {
                 $encoding_url = $this->api_url . 'job/new/';
                 $upload_url = add_query_arg($query_args, $encoding_url . $this->api_key);
                 //error_log(var_export($upload_url, true));
+		//var_dump($upload_url);
                 $upload_page = wp_remote_get($upload_url, array('timeout' => 200));
 
                 //error_log(var_export($upload_page, true));
@@ -415,7 +420,7 @@ class RTMediaEncoding {
 //                        wp_delete_attachment($attach_id, true);
 //                }
 
-                $current_thumb_size = filesize($thumb_upload_info['url']);
+                $current_thumb_size = @filesize($thumb_upload_info['url']);
                 if ($current_thumb_size >= $largest_thumb_size) {
                     $largest_thumb_size = $current_thumb_size;
                     $largest_thumb = $thumb_upload_info['url'];
@@ -447,7 +452,7 @@ class RTMediaEncoding {
                 $media = $model->get_media(array('id' => $id), 0, 1);
                 $this->media_author = $media[0]->media_author;
                 $attachment_id = $media[0]->media_id;
-                error_log(var_export($_POST,true));
+                //error_log(var_export($_POST,true));
                 update_post_meta($attachment_id, 'rtmedia_encode_response', $_POST);
                 $cover_art = $this->add_media_thumbnails($attachment_id);
                 if($_POST['format'] == 'thumbnails')
@@ -457,9 +462,8 @@ class RTMediaEncoding {
                 $this->uploaded["media_author"] = $media[0]->media_author;
                 $attachemnt_post = get_post($attachment_id);
                 $download_url = urldecode(urldecode($_REQUEST['download_url']));
-                error_log($download_url);
+                //error_log($download_url);
                 $new_wp_attached_file_pathinfo = pathinfo($download_url);
-                error_log(var_dump($new_wp_attached_file_pathinfo));
                 $post_mime_type = $new_wp_attached_file_pathinfo['extension'] == 'mp4' ? 'video/mp4' : 'audio/mp3';
                 try {
                     $file_bits = file_get_contents($download_url);
@@ -471,7 +475,7 @@ class RTMediaEncoding {
                     unlink(get_attached_file($attachment_id));
                     add_filter('upload_dir', array($this, 'upload_dir'));
                     $upload_info = wp_upload_bits($new_wp_attached_file_pathinfo['basename'], null, $file_bits);
-                    error_log(var_dump($upload_info));
+                    //error_log(var_dump($upload_info));
                     $wpdb->update($wpdb->posts, array('guid' => $upload_info['url'], 'post_mime_type' => $post_mime_type), array('ID' => $attachment_id));
                     $old_wp_attached_file = get_post_meta($attachment_id, '_wp_attached_file', true);
                     $old_wp_attached_file_pathinfo = pathinfo($old_wp_attached_file);
@@ -644,7 +648,7 @@ class RTMediaEncoding {
         return $upload_dir;
     }
 
-    public function reencoding($attachment) {
+    public function reencoding($attachment, $autoformat = true) {
         $rtmedia_model = new RTMediaModel();
         $media_array = $rtmedia_model->get(array("media_id" => $attachment));
         $media_id = $media_array[0]->id;
@@ -665,14 +669,17 @@ class RTMediaEncoding {
         $file_name_array = explode("/", $url);
         $file_name = $file_name_array[sizeof($file_name_array) - 1];
         $file_object = array();
-        $file_object[] = array(
-            "file" => $file,
-            "url" => $url,
-            "name" => $file_name,
-            "type" => get_post_field('post_mime_type', $attachment)
-        );
-	var_dump($file_object);
-        $this->encoding(array($media_id), $file_object, $uploaded);
+	$media_type = get_post_field('post_mime_type', $attachment);
+	$media_type_array = explode("/", $media_type);
+	if($media_type_array[0] == "video") {
+	    $file_object[] = array(
+		"file" => $file,
+		"url" => $url,
+		"name" => $file_name,
+		"type" => $media_type
+	    );
+	    $this->encoding(array($media_id), $file_object, $uploaded, $autoformat);
+	}
     }
 
     function rtmedia_regenerate_thumbnails() {
