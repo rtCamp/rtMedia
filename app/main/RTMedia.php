@@ -600,7 +600,8 @@ class RTMedia {
             'like' => false,
             'cover_art' => false,
             'featured' => false,
-            'Group' => false
+            'Group' => false,
+	    'ViewCount' => false
                 //'query'		=> false
         );
         global $rtmedia_nav;
