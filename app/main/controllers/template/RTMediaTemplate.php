@@ -96,7 +96,8 @@ class RTMediaTemplate {
                 }
                 //add_action("rtmedia_before_media_gallery",array(&$this,"")) ;
                 $this->add_hidden_fields_in_gallery ();
-                include $this->locate_template ( $template );
+                $gallery_template = apply_filters("rtmedia-before-template",$template,$shortcode_attr);
+                include $this->locate_template ( $gallery_template );
             } else {
                 echo __ ( 'Invalid attribute passed for rtmedia_gallery shortcode.', 'rtmedia' );
                 return false;
@@ -420,6 +421,8 @@ class RTMediaTemplate {
             if ( strtolower ( $attr[ 'media_type' ] ) == 'all' ) {
                 $flag = $flag && true;
                 unset ( $attr[ 'media_type' ] );
+            } else if(strtolower ( $attr[ 'media_type' ] ) == 'album' ){
+                $flag = $flag && true;
             }
             else
                 $flag = $flag && in_array ( $attr[ 'media_type' ], $allowed_type_names );
@@ -444,7 +447,6 @@ class RTMediaTemplate {
     }
 
     function update_global_query ( $attr ) {
-
         global $rtmedia_query;
         $rtmedia_query->query ( $attr );
     }
