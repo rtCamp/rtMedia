@@ -10,8 +10,7 @@ if (!class_exists('RTMediaSettings')) {
 
     class RTMediaSettings {
 
-        public
-                function __construct() {
+        public function __construct() {
             if (!(defined('DOING_AJAX') && DOING_AJAX))
                 add_action('admin_init', array($this, 'settings'));
 //            if (is_multisite()) {
@@ -38,7 +37,9 @@ if (!class_exists('RTMediaSettings')) {
                 'general_perPageMedia' => 10,
                 'general_enableMediaEndPoint' => 0,
                 'general_showAdminMenu' => 0,
-                'general_videothumbs' => 2
+                'general_videothumbs' => 2,
+		'general_uniqueviewcount' => 0,
+		'general_viewcount' => 0
             );
 
             $defaults = apply_filters('rtmedia_general_content_default_values', $defaults);
@@ -80,8 +81,7 @@ if (!class_exists('RTMediaSettings')) {
          *
          * @global BPMediaAddon $rtmedia_addon
          */
-        public
-                function settings() {
+        public function settings() {
             global $rtmedia, $rtmedia_addon;
             $options = rtmedia_get_site_option('rtmedia-options');
             $options = $this->sanitize_options($options);
@@ -110,8 +110,7 @@ if (!class_exists('RTMediaSettings')) {
             //register_setting('rtmedia', 'rtmedia_options', array($this, 'sanitize'));
         }
 
-        public
-                function network_notices() {
+        public function network_notices() {
             $flag = 1;
             if (rtmedia_get_site_option('rtm-media-enable', false)) {
                 echo '<div id="setting-error-bpm-media-enable" class="error"><p><strong>' . rtmedia_get_site_option('rtm-media-enable') . '</strong></p></div>';
@@ -146,8 +145,7 @@ if (!class_exists('RTMediaSettings')) {
             delete_site_option('rtm-settings-saved');
         }
 
-        public
-                function allowed_types() {
+        public function allowed_types() {
             $allowed_types = get_site_option('upload_filetypes', 'jpg jpeg png gif');
             $allowed_types = explode(' ', $allowed_types);
             $allowed_types = implode(', ', $allowed_types);
@@ -164,8 +162,7 @@ if (!class_exists('RTMediaSettings')) {
          * @param type $input
          * @return type
          */
-        public
-                function sanitize($input) {
+        public function sanitize($input) {
             global $rtmedia_admin;
             if (isset($_POST['refresh-count'])) {
                 if ($rtmedia_admin->update_count()) {
@@ -209,8 +206,7 @@ if (!class_exists('RTMediaSettings')) {
             return $input;
         }
 
-        public
-                function image_settings_intro() {
+        public function image_settings_intro() {
             if (is_plugin_active('regenerate-thumbnails/regenerate-thumbnails.php')) {
                 $regenerate_link = admin_url('/tools.php?page=regenerate-thumbnails');
             }
@@ -230,8 +226,7 @@ if (!class_exists('RTMediaSettings')) {
          * @global array $rtmedia
          * @param array $args
          */
-        public
-                function privacy_notice() {
+        public function privacy_notice() {
             if (current_user_can('create_users')) {
 //                if (BPMediaPrivacy::is_installed())
 //                    return;
@@ -249,8 +244,7 @@ if (!class_exists('RTMediaSettings')) {
             }
         }
 
-        public
-                function rtmedia_support_intro() {
+        public function rtmedia_support_intro() {
             echo '<p>' . __('If your site has some issues due to BuddyPress Media and you want one on one support then you can create a support topic on the <a target="_blank" href="http://rtcamp.com/groups/buddypress-media/forum/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media">rtCamp Support Forum</a>.', 'rtmedia') . '</p>';
             echo '<p>' . __('If you have any suggestions, enhancements or bug reports, then you can open a new issue on <a target="_blank" href="https://github.com/rtCamp/buddypress-media/issues/new">GitHub</a>.', 'rtmedia') . '</p>';
         }
