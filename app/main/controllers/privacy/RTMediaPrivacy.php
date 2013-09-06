@@ -276,7 +276,7 @@ class RTMediaPrivacy {
                 if ( bp_is_active ( 'friends' ) ) {
                     $friendship = new RTMediaFriends() ;
                     $friends    = $friendship -> get_friends_cache ( $user ) ;
-                    if ( trim ( $friends ) != "" ){
+                    if ( isset($friends) && ! empty ( $friends ) != "" ){
                         $where .= " OR (m.privacy=40 AND a.user_id IN ('" . implode ( "','" , $friends ) . "'))" ;
                     }
                 }
@@ -290,7 +290,7 @@ class RTMediaPrivacy {
             $bp_prefix = "" ;
         }
 
-        if ( strpos ( $friends , "SELECT DISTINCT" ) === false ){
+        if ( strpos ( $select_sql , "SELECT DISTINCT" ) === false ){
             $select_sql = str_replace ( "SELECT" , "SELECT DISTINCT" , $select_sql ) ;
         }
 
