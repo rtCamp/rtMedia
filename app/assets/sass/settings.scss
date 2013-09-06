@@ -17,7 +17,6 @@
 	}
 	.section-container {
 		section {
-			> {
 				.title {
 					a {
 						font-size: 13px;						
@@ -29,7 +28,6 @@
 						}
 					}
 				}
-			} 
 		}		
 		section.active {
 			.title {
@@ -51,22 +49,18 @@
 	}
 	.section-container.vertical-tabs, .section-container.auto {
 		section {
-			> {
 				.title {
 					a {
 						font-size: 13px;						
 					}
 				}
-			}
 		}
 		section.active {
-			> {
 				.title {
 					a {
 						color: #000;
 					}
-				}
-			}	
+				}	
 		}
 	}
     .global-album-settings {

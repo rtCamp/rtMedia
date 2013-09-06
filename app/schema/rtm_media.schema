@@ -26,5 +26,6 @@ CREATE TABLE %s (
     KEY album_id (album_id),
     KEY media_author_id (album_id,media_author),
     KEY context_author_album_id (context_id,album_id,media_author),
-    KEY context_data (context)
+    KEY context_data (context),
+    KEY activity_id (activity_id)
 );
