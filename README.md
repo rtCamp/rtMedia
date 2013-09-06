@@ -2,7 +2,7 @@
 
 # rtMedia for WordPress, BuddyPress and bbPress #
 
-* **Contributors:** [rtcamp] (http://profiles.wordpress.org/rtcamp), [rahul286] (http://profiles.wordpress.org/rahul286), [faishal] (http://profiles.wordpress.org/faishal), [JoshuaAbenazer] (http://profiles.wordpress.org/JoshuaAbenazer), [gagan0123] (http://profiles.wordpress.org/gagan0123), [saurabhshukla] (http://profiles.wordpress.org/saurabhshukla), [desaiuditd] (http://profiles.wordpress.org/desaiuditd), [nitun.lanjewar] (http://profiles.wordpress.org/nitun.lanjewar), [rittesh.patel] (http://profiles.wordpress.org/rittesh.patel), [umesh.nevase] (http://profiles.wordpress.org/umesh.nevase), [suhasgirgaonkar] (http://profiles.wordpress.org/suhasgirgaonkar), [neerukoul] (http://profiles.wordpress.org/neerukoul), [hrishiv90] (http://profiles.wordpress.org/hrishiv90), [kanakiyajay] (http://profiles.wordpress.org/kanakiyajay),
+* **Contributors:** [rtcamp] (http://profiles.wordpress.org/rtcamp), [rahul286] (http://profiles.wordpress.org/rahul286), [faishal] (http://profiles.wordpress.org/faishal), [JoshuaAbenazer] (http://profiles.wordpress.org/JoshuaAbenazer), [gagan0123] (http://profiles.wordpress.org/gagan0123), [saurabhshukla] (http://profiles.wordpress.org/saurabhshukla), [desaiuditd] (http://profiles.wordpress.org/desaiuditd), [nitun.lanjewar] (http://profiles.wordpress.org/nitun.lanjewar), [rittesh.patel] (http://profiles.wordpress.org/rittesh.patel), [pushpak.pop] (http://profiles.wordpress.org/pushpak.pop), [umesh.nevase] (http://profiles.wordpress.org/umesh.nevase), [suhasgirgaonkar] (http://profiles.wordpress.org/suhasgirgaonkar), [neerukoul] (http://profiles.wordpress.org/neerukoul), [hrishiv90] (http://profiles.wordpress.org/hrishiv90), [kanakiyajay] (http://profiles.wordpress.org/kanakiyajay),
 
 * **License:** [GPL v2 or later] ( http://www.gnu.org/licenses/gpl-2.0.html)
 
@@ -159,6 +159,16 @@ Please visit [rtMedia's Features page](http://rtcamp.com/buddypress-media/?utm_s
 ## Changelog ##
 
 Please visit [rtMedia's Roadmap page](http://rtcamp.com/buddypress-media/roadmap/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "Visit rtMedia's Features page") to get some details about future releases.
+
+#### 3.1 ####
+* Add Thumbnail support in encoding.
+* Add Regenerate thumbnail option for video.
+* Add Change Video thumbnail for video in media edit screen (Admin & Frontend)
+* Optimize SQL query & code for better performance .
+* Fix uploader for IE and Opera.
+* Fixed single media issue (add preload for video)
+* Fixed Activity Privacy issue.
+* Fixed Gallery shorcode issue.
 
 #### 3.0.13 ####
 * Add redirect in upload shortcode sponsored by [Henry Wright](http://profiles.wordpress.org/henrywright-1)
@@ -549,8 +559,8 @@ Please visit [rtMedia's Roadmap page](http://rtcamp.com/buddypress-media/roadmap
 * HTML5 Audio Tag Support (with fallback)
 * HTML5 Video Tag Support (with fallback)
 
-#### 3.0.13 ####
-Requires BuddyPress 1.7 or higher, if using BuddyPress. Add redirect in upload shortcode.
+#### 3.1 ####
+Requires BuddyPress 1.7 or higher, if using BuddyPress. Add Thumbnail support in encoding & other fixes
 
 ## Sponsors ##
 
