@@ -321,8 +321,8 @@ jQuery(function($) {
         });
 
         uploaderObj.uploader.bind('FileUploaded', function(up, file, res) {
-
-	     if (/MSIE (\d+\.\d+);/.test(navigator.userAgent)) { //test for MSIE x.x;
+            
+            if (/MSIE (\d+\.\d+);/.test(navigator.userAgent)) { //test for MSIE x.x;
                 var ieversion=new Number(RegExp.$1) // capture x.x portion and store as a number
 
                    if(ieversion <10) {
@@ -330,7 +330,6 @@ jQuery(function($) {
                                res.status = 200;
                    }
             }
-	    
             if (res.status == 200 || res.status == 302) {
                 if (uploaderObj.upload_count == undefined)
                     uploaderObj.upload_count = 1;
@@ -426,7 +425,6 @@ jQuery(document).ready(function($) {
                 try {
                     if( typeof JSON.parse(res.response) !== "undefined" )
                         res.status = 200;
-                    console.log(res.status);
                 }
                 catch(e){}
             }
