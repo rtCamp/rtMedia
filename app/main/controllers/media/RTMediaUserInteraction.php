@@ -29,7 +29,7 @@ class RTMediaUserInteraction {
 	 * @var boolean Whether the action increases the count or decreases the count
 	 */
 	public $increase;
-        
+
 
 	/**
 	 *
@@ -78,7 +78,7 @@ class RTMediaUserInteraction {
 
 		$this->init();
 
-                
+
 
 		// filter the default actions with this new one
 		add_filter( 'rtmedia_query_actions', array( $this, 'register' ) );
@@ -89,11 +89,11 @@ class RTMediaUserInteraction {
 
 
 	function init(){
-                $this->model = new RTMediaModel();	
+                $this->model = new RTMediaModel();
                 global $rtmedia_query;
 		if(!isset($rtmedia_query->action_query)) return;
 		if(!isset($rtmedia_query->action_query->id)) return;
-		
+
 		$this->set_label();
 		$this->set_plural();
 		$this->set_media();
@@ -152,7 +152,7 @@ class RTMediaUserInteraction {
 
 		$friends = new RTMediaFriends();
 		$friends = $friends->get_friends_cache($this->interactor);
-                
+
 		if($friends && in_array($this->owner,$friends)) return 40;
 
 		return 20;
@@ -179,7 +179,7 @@ class RTMediaUserInteraction {
 		return $clickable;
 	}
         function before_render(){
-            
+
         }
 
 	function render(){
