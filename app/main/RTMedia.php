@@ -849,20 +849,21 @@ function get_rtmedia_permalink($id) {
 
     global $rtmedia_query;
 
-    if ($media[0]->context == 'group')
-        $parent_link = get_rtmedia_group_link($media[0]->context_id);
-    else {
-        if (isset($rtmedia_query->query) && isset($rtmedia_query->query["context"]) && $rtmedia_query->query["context"] == "group") {
-            $parent_link = get_rtmedia_group_link($rtmedia_query->query["context_id"]);
-        }
-        else {
-            //if ( ! isset ( $media[ 0 ]->context ) ) {
-            //   $media[ 0 ]->media_author = $rtmedia_query->query[ "context_id" ];
-            // }
 
-            $parent_link = get_rtmedia_user_link($media[0]->media_author);
-        }
-    }
+	if (!isset($media[0]->context)) {
+	    if (isset($rtmedia_query->query) && isset($rtmedia_query->query["context"]) && $rtmedia_query->query["context"] == "group")		    {
+		$parent_link = get_rtmedia_group_link($rtmedia_query->query["context_id"]);
+	    }
+	    else {
+		$parent_link = get_rtmedia_user_link($media[0]->media_author);
+	    }
+	} else{
+	    if ($media[0]->context == 'group'){
+		$parent_link = get_rtmedia_group_link($media[0]->context_id);
+	    }else {
+		$parent_link = get_rtmedia_user_link($media[0]->media_author);
+	    }
+	}
 
     $parent_link = trailingslashit($parent_link);
     return trailingslashit($parent_link . RTMEDIA_MEDIA_SLUG . '/' . $id);
