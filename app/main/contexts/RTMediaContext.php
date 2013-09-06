@@ -51,6 +51,7 @@ class RTMediaContext {
      */
     function set_wp_context () {
         global $post;
+        global $bp;
         if ( is_author () ) {
             $this->type = 'profile';
             $this->id = get_query_var ( 'author' );
@@ -67,7 +68,7 @@ class RTMediaContext {
      *
      */
     function set_bp_context () {
-        if ( bp_is_blog_page () ) {
+        if ( bp_is_blog_page () && !is_home() ) {
             $this->set_wp_context ();
         } else {
             $this->set_bp_component_context ();

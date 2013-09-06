@@ -18,8 +18,8 @@ class RTMediaPrivacy {
     public
             $default_privacy ;
 
-    function __construct () {
-        if ( is_rtmedia_privacy_enable () ) {
+    function __construct ($flag = true) {
+        if ( is_rtmedia_privacy_enable () && $flag ) {
             add_action ( 'rtmedia_after_file_upload_ui' , array ( $this , 'uploader_privacy_ui' ) ) ;
             add_action ( 'rtmedia_add_edit_fields' , array ( $this , 'select_privacy_ui' ) ) ;
             add_action ( 'bp_init' , array ( $this , 'add_nav' ) ) ;

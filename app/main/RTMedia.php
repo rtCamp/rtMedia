@@ -845,20 +845,18 @@ class RTMedia {
 function get_rtmedia_permalink($id) {
     $mediaModel = new RTMediaModel();
     $media = $mediaModel->get(array('id' => intval($id)));
-
-
     global $rtmedia_query;
 
 
 	if (!isset($media[0]->context)) {
-	    if (isset($rtmedia_query->query) && isset($rtmedia_query->query["context"]) && $rtmedia_query->query["context"] == "group")		    {
+	    if ( function_exists("bp_get_groups_root_slug") && isset($rtmedia_query->query) && isset($rtmedia_query->query["context"]) && $rtmedia_query->query["context"] == "group")		    {
 		$parent_link = get_rtmedia_group_link($rtmedia_query->query["context_id"]);
 	    }
 	    else {
 		$parent_link = get_rtmedia_user_link($media[0]->media_author);
 	    }
 	} else{
-	    if ($media[0]->context == 'group'){
+	    if (function_exists("bp_get_groups_root_slug") && $media[0]->context == 'group'){
 		$parent_link = get_rtmedia_group_link($media[0]->context_id);
 	    }else {
 		$parent_link = get_rtmedia_user_link($media[0]->media_author);
@@ -884,8 +882,8 @@ function rtmedia_update_site_option($option_name, $option_value) {
 }
 
 function get_rtmedia_group_link($group_id) {
-    $group = groups_get_group(array('group_id' => $group_id));
-    return home_url(bp_get_groups_root_slug() . '/' . $group->slug);
+        $group = groups_get_group(array('group_id' => $group_id));
+        return home_url(trailingslashit(bp_get_groups_root_slug())  . $group->slug);
 }
 
 function rtmedia_get_site_option($option_name, $default = false) {
