@@ -141,28 +141,32 @@ if ( ! $rt_ajax_request ) {
 
 
 if ( ! $rt_ajax_request ) {
-	if ( $template_type == 'buddypress' && (bp_displayed_user_id() || bp_is_group()) ) {
+    if (function_exists("bp_displayed_user_id") && $template_type == 'buddypress' && (bp_displayed_user_id() || bp_is_group())) {
 
-	if ( bp_is_group() ) {
-		do_action( 'bp_after_group_media' );
-		do_action( 'bp_after_group_body' );
-	}
-	if ( bp_displayed_user_id() ) {
-		do_action( 'bp_after_member_media' );
-		do_action( 'bp_after_member_body' );
-	}
-		//close all markup
-		?>
+        if (bp_is_group()) {
+            do_action('bp_after_group_media');
+            do_action('bp_after_group_body');
+        }
+        if (bp_displayed_user_id()) {
+            do_action('bp_after_member_media');
+            do_action('bp_after_member_body');
+        }
+        //close all markup
+                    ?>
 
-				</div><!--#item-body-->
-			</div><!--#buddypress-->
-		</div><!--#content-->
-	</div><!--#site-content-->
+        				</div><!--#item-body-->
+        			</div><!--#buddypress-->
+        		</div><!--#content-->
+        	</div><!--#site-content-->
 
-	<?php
-			get_sidebar( $template_type );
+        <?php
+    } //if Buddypress
+    else {
+        ?> </div> <?php
+    }
+        get_sidebar($template_type);
 
-			get_footer( $template_type );
-	} //if Buddypress
+        get_footer($template_type);
+    
 } // if ajax
 ?>
