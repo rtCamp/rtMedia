@@ -110,7 +110,7 @@ class RTMediaFormHandler {
 		foreach ($options as $key => $value) {
 			if(strncmp($key, $section_name, strlen($section_name))==0)
 				$section[$key] = $value;
-		}                
+		}
 		return $section;
 	}
 
@@ -170,13 +170,13 @@ class RTMediaFormHandler {
 //					'desc' => __('Users can access their media on media end point','rtmedia')
 //				)
 //			),
-                        'general_videothumbs' => array( 
+                        'general_videothumbs' => array(
                                 'title' => __('Number of Video Thumbnails','rtmedia'),
                                 'callback' => array('RTMediaFormHandler', 'number'),
                                 'args' => array(
                                         'key' => 'general_videothumbs',
-                                        'value' => $options['general_videothumbs']                        
-                                )                  
+                                        'value' => $options['general_videothumbs']
+                                )
                         ),
 			'general_showAdminMenu' => array(
 				'title' => __('Admin Bar Menu','rtmedia'),
@@ -186,17 +186,35 @@ class RTMediaFormHandler {
 					'value' => $options['general_showAdminMenu'],
 					'desc' => __('Enable menu in WordPress admin bar','rtmedia')
 				)
-			)                    
+			)
+//			,'general_viewcount' => array(
+//				'title' => __('View count','rtmedia'),
+//				'callback' => array('RTMediaFormHandler', 'checkbox'),
+//				'args' => array(
+//					'key' => 'general_viewcount',
+//					'value' => $options['general_viewcount'],
+//					'desc' => __('Enable media view count','rtmedia')
+//				)
+//			),
+//			'general_uniqueviewcount' => array(
+//				'title' => __('Unique view count','rtmedia'),
+//				'callback' => array('RTMediaFormHandler', 'checkbox'),
+//				'args' => array(
+//					'key' => 'general_uniqueviewcount',
+//					'value' => $options['general_uniqueviewcount'],
+//					'desc' => __('Enable Unique media view count','rtmedia')
+//				)
+//			)
 		);
 
 		return $render;
 	}
 
 	public static function general_content() {
-		global $rtmedia;                
+		global $rtmedia;
 		$options = self::extract_settings('general', $rtmedia->options);
 		$render_options = self::general_render_options($options);
-                $render_options = apply_filters("rtmedia_general_content_add_itmes",$render_options, $options);                
+                $render_options = apply_filters("rtmedia_general_content_add_itmes",$render_options, $options);
 		foreach ($render_options as $key => $option) { ?>
 			<div class="row section">
 				<div class="columns large-4"> <?php echo $option['title']; ?> </div>
@@ -456,11 +474,11 @@ class RTMediaFormHandler {
 		echo '</div>';
 	}
 
-	public static function rtForm_settings_tabs_content($page, $sub_tabs) { 
+	public static function rtForm_settings_tabs_content($page, $sub_tabs) {
                 $rtmedia_admin_ui_handler = "<div class='section-container auto' data-options='deep_linking: true' data-section=''>";
                 $rtmedia_admin_ui_handler = apply_filters("rtmedia_admin_ui_handler_filter",$rtmedia_admin_ui_handler);
                 echo $rtmedia_admin_ui_handler;
-                $sub_tabs = apply_filters("rtmedia_pro_settings_tabs_content",$sub_tabs);                
+                $sub_tabs = apply_filters("rtmedia_pro_settings_tabs_content",$sub_tabs);
 		foreach ($sub_tabs as $tab) {
                     if ( isset ( $tab[ 'icon' ] ) && ! empty ( $tab[ 'icon' ] ) )
                         $icon = '<i class="' . $tab[ 'icon' ] . '"></i>';

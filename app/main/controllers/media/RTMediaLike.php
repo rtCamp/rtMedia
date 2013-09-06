@@ -26,17 +26,17 @@ class RTMediaLike extends RTMediaUserInteraction {
 		'single' => false,
 		'repeatable' => false,
 		'undoable' => true
-		);                
-                
-//                
-                
-                
+		);
+
+//
+
+
                     parent::__construct($args);
 
 	}
 
 	function process() {
-            
+
 		$actions = $this->model->get( array( 'id' => $this->action_query->id ) );
                 $like_media = get_user_meta($this->interactor,"rtmedia_liked_media",true);
                 if(strpos("," . $like_media . ",","," . $this->action_query->id . ",") === false){
@@ -50,9 +50,9 @@ class RTMediaLike extends RTMediaUserInteraction {
                     $like_media = trim(str_replace("," . $this->action_query->id . ",", ",",",". $like_media .","), ",");
                 }
 		$actionwa = $this->action.'s';
-                
+
                 $return = array();
-		
+
                 $actions = intval($actions[ 0 ]->{$actionwa});
 		if ( $this->increase === true ) {
 			$actions ++;
@@ -63,10 +63,10 @@ class RTMediaLike extends RTMediaUserInteraction {
 		}
                 if($actions <0)
                     $actions = 0;
-                
+
                 $return["count"] = $actions;
 		$this->model->update( array( $this->plural => $actions ), array( 'id' => $this->action_query->id ) );
-                
+
 		update_user_meta($this->interactor,'rtmedia_liked_media',$like_media);
                 if(isset($_REQUEST["json"]) && $_REQUEST["json"]=="true"){
                     echo json_encode($return);
@@ -77,7 +77,7 @@ class RTMediaLike extends RTMediaUserInteraction {
                 }
                 return $actions;
 	}
-        
+
         function is_liked() {
             $like_media = get_user_meta($this->interactor, "rtmedia_liked_media", true);
             if (strpos("," . $like_media . ",", "," . $this->action_query->id . ",") === false) {
@@ -90,8 +90,8 @@ class RTMediaLike extends RTMediaUserInteraction {
         }
         function before_render(){
             $enable_like = true;
-            $enable_like = apply_filters('rtmedia_check_enable_disable_like',$enable_like);                
-            if(!$enable_like) 
+            $enable_like = apply_filters('rtmedia_check_enable_disable_like',$enable_like);
+            if(!$enable_like)
                 return false;
             if($this->is_liked()){
                 $this->label =  $this->undo_label;

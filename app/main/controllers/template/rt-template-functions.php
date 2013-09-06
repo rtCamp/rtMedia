@@ -217,9 +217,9 @@ function rtmedia_media ( $size_flag = true, $echo = true, $media_size = "rt_medi
  * echo http url of the media
  */
 
-function rtmedia_image ( $size = 'rt_media_thumbnail', $id = false ) {
+function rtmedia_image ( $size = 'rt_media_thumbnail', $id = false ,$recho = true ) {
     global $rtmedia_backbone;
-
+    
     if ( $rtmedia_backbone[ 'backbone' ] ) {
         echo '<%= guid %>';
         return;
@@ -255,7 +255,7 @@ function rtmedia_image ( $size = 'rt_media_thumbnail', $id = false ) {
         if ( isset ( $rtmedia->allowed_types[ $media_object->media_type ] ) && isset ( $rtmedia->allowed_types[ $media_object->media_type ][ 'thumbnail' ] ) ) {
             $src = $rtmedia->allowed_types[ $media_object->media_type ][ 'thumbnail' ];
         } elseif ( $media_object->media_type == 'album' ) {
-            $src = rtmedia_album_image ( $size );
+            $src = rtmedia_album_image ( $size , $id );
         } else {
             $src = false;
         }
@@ -269,17 +269,23 @@ function rtmedia_image ( $size = 'rt_media_thumbnail', $id = false ) {
     }
 
     $src = apply_filters ( 'rtmedia_media_thumb', $src, $media_object->id, $media_object->media_type );
-
-    echo $src;
+    if($recho == true){
+        echo $src;
+    }else{
+        return $src;
+    }
 }
 
-function rtmedia_album_image ( $size = 'thumbnail' ) {
+function rtmedia_album_image ( $size = 'thumbnail', $id = false) {
     global $rtmedia_media;
     $model = new RTMediaModel();
-    $media = $model->get_media ( array( 'album_id' => $rtmedia_media->id, 'media_type' => 'photo' ), 0, 1 );
+    if($id == false){
+        $id = $rtmedia_media->id;
+    }
+    $media = $model->get_media ( array( 'album_id' => $id, 'media_type' => 'photo' ), 0, 1 );
 
     if ( $media ) {
-        $src = rtmedia_image ( $size, $media[ 0 ]->id );
+        $src = rtmedia_image ( $size, $media[ 0 ]->id ,false);
     } else {
         global $rtmedia;
         $src = $rtmedia->allowed_types[ 'photo' ][ 'thumbnail' ];
@@ -921,7 +927,11 @@ function rtmedia_user_album_list () {
 
         }
     }
-    $option = "$global_option<optgroup label='Profile Albums'>$profile_option</optgroup><optgroup label='Group Albums'>$option_group</optgroup>";
+    $option = "$global_option";
+    if($profile_option != "")
+	$option.= "<optgroup label='".__("Profile Albums","rtmedia")." ' value = 'profile'>$profile_option</optgroup>";
+    if($option_group != "")
+	$option.="<optgroup label='".__("Group Albums","rtmedia")."' value = 'group'>$option_group</optgroup>";
     if ( $option )
         return $option;
     else
@@ -932,7 +942,7 @@ function rtmedia_group_album_list () {
     global $rtmedia_query;
     $model = new RTMediaModel();
 
-    $option = rtmedia_global_album_list ();
+    $global_option = rtmedia_global_album_list ();
     $global_albums = rtmedia_global_albums ();
 
     $album_objects = $model->get_media (
@@ -942,13 +952,17 @@ function rtmedia_group_album_list () {
         'media_type' => 'album'
             ), false, false
     );
+    $option_group = "";
     if ( $album_objects ) {
         foreach ( $album_objects as $album ) {
             if ( ! in_array ( $album->id, $global_albums ) && (( isset ( $rtmedia_query->media_query[ 'album_id' ] ) && ($album->id != $rtmedia_query->media_query[ 'album_id' ])) || ! isset ( $rtmedia_query->media_query[ 'album_id' ] ) ) )
-                $option .= '<option value="' . $album->id . '">' . $album->media_title . '</option>';
+		$option_group .= '<option value="' . $album->id . '">' . $album->media_title . '</option>';
+
         }
     }
-
+    $option = $global_option;
+    if($option_group != "")
+	$option.="<optgroup label='".__("Group Albums")."' value = 'group'>$option_group</optgroup>";
     if ( $option )
         return $option;
     else
