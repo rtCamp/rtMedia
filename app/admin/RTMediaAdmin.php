@@ -43,7 +43,8 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
             add_action ( 'wp_dashboard_setup', array( &$this, 'add_dashboard_widgets' ), 0 );
             add_filter("attachment_fields_to_edit", array($this,"edit_video_thumbnail"), null, 2);
             add_filter("attachment_fields_to_save", array($this,"save_video_thumbnail"), null, 2);
-
+	    add_action ( 'admin_notices', array( $this, 'rtmedia_regenerate_thumbnail_notice' ) );
+	    add_action ( 'wp_ajax_rtmedia_hide_video_thumb_admin_notice', array( $this, 'rtmedia_hide_video_thumb_admin_notice' ), 1 );
 	    $obj_encoding =  new RTMediaEncoding(true);
             if ($obj_encoding->api_key){
                 add_filter ("media_row_actions", array($this,"add_reencode_link"), null, 2);
@@ -435,6 +436,45 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
 
                     </div> <?php
         }
+
+	function rtmedia_regenerate_thumbnail_notice() {
+	    $obj_encoding =  new RTMediaEncoding(true);
+            if ($obj_encoding->api_key) {
+		$site_option  = get_site_option("rtmedia-video-thumb-notice");
+		if(!$site_option || $site_option != "hide") {
+		    update_site_option("rtmedia-video-thumb-notice", "show");
+		    $videos_without_thumbs = get_vedio_without_thumbs();
+		    if(isset($videos_without_thumbs) && is_array($videos_without_thumbs) && $videos_without_thumbs!= "") {
+			echo '<div class="error rtmedia-regenerate-video-thumb-error">
+				<p>
+				' . sprintf ( __ ( 'You have total '. sizeof($videos_without_thumbs) .' videos without thumbnails. Click <a href="'. admin_url('admin.php?page=rtmedia-regenerate') .'"> here </a> to generate thumbnails. <a href="#" onclick="rtmedia_hide_video_thumb_notice()" style="float:right">Hide</a>' ) ) . '
+				</p>
+			    </div>';
+
+		?>
+		    <script type="text/javascript">
+			function rtmedia_hide_video_thumb_notice() {
+			    var data = {action : 'rtmedia_hide_video_thumb_admin_notice'};
+			    jQuery.post(ajaxurl,data,function(response){
+				response = response.trim();
+				if(response === "1")
+				    jQuery('.rtmedia-regenerate-video-thumb-error').remove();
+			    });
+			}
+		    </script>
+		<?php
+		    }
+		}
+	    }
+	}
+
+	function rtmedia_hide_video_thumb_admin_notice() {
+	    if(update_site_option("rtmedia-video-thumb-notice", "hide"))
+		echo "1";
+	    else
+		echo "0";
+	    die();
+	}
 
 	function rt_media_regeneration() {
 	    if(isset($_POST['media_id'])) {
