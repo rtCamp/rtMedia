@@ -307,7 +307,7 @@ function rtmedia_delete_allowed () {
     $flag = $rtmedia_media->media_author == get_current_user_id ();
 
     if(!$flag)
-        $flag = is_site_admin ();
+        $flag = is_super_admin ();
 
     $flag = apply_filters ( 'rtmedia_media_delete_priv', $flag );
 
@@ -321,7 +321,7 @@ function rtmedia_edit_allowed () {
     $flag = $rtmedia_media->media_author == get_current_user_id ();
 
     if(!$flag)
-        $flag = is_site_admin ();
+        $flag = is_super_admin ();
 
     $flag = apply_filters ( 'rtmedia_media_edit_priv', $flag );
 
