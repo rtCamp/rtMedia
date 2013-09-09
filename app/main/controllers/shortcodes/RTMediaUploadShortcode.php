@@ -55,7 +55,7 @@ class RTMediaUploadShortcode {
                 $attr[ "context_id" ] = $post->ID;
             }
             if ( ! isset ( $attr[ "context" ] ) && isset ( $post->post_type ) ) {
-              echo  $attr[ "context" ] = $post->post_type;
+                $attr[ "context" ] = $post->post_type;
             }
         }
 
