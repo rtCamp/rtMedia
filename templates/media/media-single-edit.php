@@ -44,5 +44,4 @@
     <?php else: ?>
         <p><?php echo __("Oops !! There's no media found for the request !!","rtmedia"); ?></p>
     <?php endif; ?>
-        
 </div>
