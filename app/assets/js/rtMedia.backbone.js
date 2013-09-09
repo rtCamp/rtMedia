@@ -151,7 +151,7 @@ jQuery(function($) {
 
         },
         appendTo: function(media) {
-            console.log("append");
+            //console.log("append");
             var mediaView = new rtMedia.MediaView({
                 model: media
             });
