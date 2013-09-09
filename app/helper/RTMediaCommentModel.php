@@ -17,7 +17,6 @@ class RTMediaCommentModel {
 	}
 
 	function insert($attr) {
-
 		return wp_insert_comment($attr);
 	}
 
