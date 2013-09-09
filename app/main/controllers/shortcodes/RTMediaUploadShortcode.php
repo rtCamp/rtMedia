@@ -46,9 +46,8 @@ class RTMediaUploadShortcode {
      * @param type $attr
      */
     static function pre_render ( $attr ) {
-
         global $post;
-        if ( isset ( $attr ) && isset ( $attr[ "attr" ] ) ) {
+        if ( isset ( $attr ) && !empty($attr)) {
             if ( ! is_array ( $attr ) ) {
                 $attr = Array( );
             }
