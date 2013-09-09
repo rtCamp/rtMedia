@@ -20,7 +20,7 @@ class RTMediaCommentModel {
 		return wp_insert_comment($attr);
 	}
 
-	function update() {
+	function update($attr) {
 
 		return wp_update_comment($attr, ARRAY_A);
 	}
