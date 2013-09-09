@@ -123,7 +123,7 @@ class RTMediaUploadFile {
      */
     function populate_file_array ( $file_array ) {
         $this->files[ ] = array(
-            'name' => isset ( $file_array[ 'name' ] ) ? $file_array[ 'name' ] : '',
+            'name' => isset ( $file_array[ 'name' ] ) ? $file_array[ 'name' ] = str_replace ( '%' , '-' , $file_array[ 'name' ]) : '',
             'type' => isset ( $file_array[ 'type' ] ) ? $file_array[ 'type' ] : '',
             'tmp_name' => isset ( $file_array[ 'tmp_name' ] ) ? $file_array[ 'tmp_name' ] : '',
             'error' => isset ( $file_array[ 'error' ] ) ? $file_array[ 'error' ] : '',
