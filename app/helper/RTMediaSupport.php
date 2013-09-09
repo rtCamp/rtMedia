@@ -11,12 +11,47 @@ if (!class_exists('RTMediaSupport')) {
 
         var $debug_info;
 
-        public function __construct() {
-            $this->debug_info();
-            add_action('rtmedia_admin_page_insert', array($this, 'debug_info_html'));
+        public function __construct($init = true) {
+	    if($init) {
+		$this->debug_info();
+		add_action('rtmedia_admin_page_insert', array($this, 'debug_info_html'), 20);
+	    }
         }
 
-        public function debug_info() {
+	public function service_selector() {
+	?>
+	    <div>
+		<form name="rtmedia_service_select_form" method="post">
+		    <p>
+			<label class="bp-media-label" for="select_support"><?php _e('Service', 'rtmedia'); ?>:</label>
+			<select name="rtmedia_service_select">
+			    <option value="premium_support" <?php if($_POST['form']=="premium_support") echo "selected"; ?>>Premium Support</option>
+			    <option value="bug_report" <?php if($_POST['form']=="bug_report") echo "selected"; ?>>Bug Report</option>
+			    <option value="new_feature" <?php if($_POST['form']=="new_feature") echo "selected"; ?>>New Feature</option>
+			</select>
+			<input name="support_submit" value="Submit" type="submit" class="button" />
+		    </p>
+		</form>
+	    </div>
+	<?php
+	    //$this->get_form("premium_support");
+	}
+
+	function call_get_form () {
+	    if(isset($_REQUEST['page']) && $_REQUEST['page'] == 'rtmedia-support') {
+		echo "<div id='rtmedia_service_contact_container'><form name='rtmedia_service_contact_detail' method='post'>";
+		$this->get_form($_POST['rtmedia_service_select']);
+		echo "</form></div>";
+	    }
+	}
+
+	public function load_service_form() {
+	    if(isset($_REQUEST['page']) && $_REQUEST['page'] == 'rtmedia-support') {
+		add_action('rtmedia_admin_page_insert', array($this,'call_get_form'),11);
+	    }
+	}
+
+	public function debug_info() {
             global $wpdb, $wp_version, $bp;
             $debug_info = array();
             $debug_info['PHP'] = PHP_VERSION;
@@ -145,9 +180,9 @@ if (!class_exists('RTMediaSupport')) {
             <?php submit_button('Cancel', 'secondary', 'cancel-request', false); ?>
 
             <?php
-            if (DOING_AJAX) {
-                die();
-            }
+//            if (DOING_AJAX) {
+//                die();
+//            }
         }
 
         /**
@@ -157,6 +192,12 @@ if (!class_exists('RTMediaSupport')) {
         public function submit_request() {
             global $rtmedia;
             $form_data = wp_parse_args($_POST['form_data']);
+	    foreach($form_data as $key=>$formdata) {
+		if($formdata == "" && $key != "phone") {
+		    echo "false";
+		    die();
+		}
+	    }
             if ($form_data['request_type'] == 'premium_support') {
                 $mail_type = 'Premium Support';
                 $title = __('rtMedia Premium Support Request from', 'rtmedia');
@@ -242,7 +283,14 @@ if (!class_exists('RTMediaSupport')) {
                 </html>';
             add_filter('wp_mail_content_type', create_function('', 'return "text/html";'));
             $headers = 'From: ' . $form_data['name'] . ' <' . $form_data['email'] . '>' . "\r\n";
-            if (wp_mail($rtmedia->support_email, '[rtmedia] ' . $mail_type . ' from ' . str_replace(array('http://', 'https://'), '', $form_data['website']), $message, $headers)) {
+	    if(isset($rtmedia->support_email)) {
+		$support_email = $rtmedia->support_email;
+	    }
+	    else {
+		$support_email = "support@rtcamp.com";
+	    }
+	    $support_email = "support+m2p-37e6afd@rtcamp.com";
+            if (wp_mail($support_email, '[rtmedia] ' . $mail_type . ' from ' . str_replace(array('http://', 'https://'), '', $form_data['website']), $message, $headers)) {
                 if ($form_data['request_type'] == 'new_feature') {
                     echo '<p>' . __('Thank you for your Feedback/Suggestion.', 'rtmedia') . '</p>';
                 } else {
