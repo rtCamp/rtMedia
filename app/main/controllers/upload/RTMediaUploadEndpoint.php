@@ -64,10 +64,21 @@ class RTMediaUploadEndpoint {
                     $wpdb->update ( $bp->activity->table_name, array( "type" => "rtmedia_update", "content" => $objActivity->create_activity_html () ), array( "id" => $activity_id ) );
                 }
             }
-            if ( isset ( $_POST[ "redirect" ] ) ) {
-                if ( $_POST[ "redirect" ] == "no" ) {
-
-                    // Ha ha ha
+            
+                if ( isset ( $_POST[ "redirect" ] ) && is_numeric ( $_POST[ "redirect" ] ) ) {
+                        if ( intval ( $_POST[ "redirect" ] ) > 1 ) {
+                            //bulkurl
+                            if ( $media[ 0 ]->context == "group" ) {
+                                $redirect_url =  trailingslashit ( get_rtmedia_group_link ( $media[ 0 ]->context_id ) ) . RTMEDIA_MEDIA_SLUG;
+                            } else {
+                                $redirect_url =  trailingslashit ( get_rtmedia_user_link ( $media[ 0 ]->media_author ) ) . RTMEDIA_MEDIA_SLUG;
+                            }
+                        } else {
+                            $redirect_url = get_rtmedia_permalink ( $media[ 0 ]->id );
+                        }
+                }
+                    
+                          // Ha ha ha
                     ob_end_clean ();
                     if ( isset ( $_POST[ "rtmedia_update" ] ) && $_POST[ "rtmedia_update" ] == "true" ) {
                         if(preg_match('/(?i)msie [1-9]/',$_SERVER['HTTP_USER_AGENT'])) { // if IE(<=9) set content type = text/plain
@@ -78,7 +89,7 @@ class RTMediaUploadEndpoint {
                         echo json_encode ( $rtupload->media_ids );
                     } else {
                         // Media Upload Case - on album/post/profile/group
-                        $data = array( 'activity_id' => $activity_id );
+                        $data = array( 'activity_id' => $activity_id, 'redirect_url' => $redirect_url  );
                         if(preg_match('/(?i)msie [1-9]/',$_SERVER['HTTP_USER_AGENT'])) { // if IE(<=9) set content type = text/plain
                            header ( 'Content-type: text/plain' );
                         } else {
@@ -86,23 +97,8 @@ class RTMediaUploadEndpoint {
                         }
                         echo json_encode ( $data );
                     }
-                } else {
-                    if ( is_numeric ( $_POST[ "redirect" ] ) ) {
-                        if ( intval ( $_POST[ "redirect" ] ) > 1 ) {
-                            //bulkurl
-                            if ( $media[ 0 ]->context == "group" ) {
-                                echo trailingslashit ( get_rtmedia_group_link ( $media[ 0 ]->context_id ) ) . RTMEDIA_MEDIA_SLUG;
-                            } else {
-                                echo trailingslashit ( get_rtmedia_user_link ( $media[ 0 ]->media_author ) ) . RTMEDIA_MEDIA_SLUG;
-                            }
-                        } else {
-                            echo get_rtmedia_permalink ( $media[ 0 ]->id );
-                        }
-                    }
-                }
-            } else {
-                //wp_safe_redirect(wp_get_referer());
-            }
+               
+           
             die ();
         }
     }
