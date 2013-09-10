@@ -478,7 +478,11 @@ jQuery(document).ready(function($) {
     var media_uploading = false;
     $.ajaxPrefilter(function(options, originalOptions, jqXHR) {
         // Modify options, control originalOptions, store jqXHR, etc
-        if (typeof(originalOptions.data) == "undefined" || typeof(originalOptions.data.action) == "undefined") {
+        try{
+            if (originalOptions.data == null || typeof(originalOptions.data) == "undefined" || typeof(originalOptions.data.action) == "undefined" ) {
+                return true;
+            }
+        }catch(e){
             return true;
         }
         if (originalOptions.data.action == 'post_update') {

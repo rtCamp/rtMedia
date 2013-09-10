@@ -6,7 +6,7 @@ License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires at least: WordPress 3.6
 Tested up to: WordPress 3.6 + BuddyPress 1.8.1
-Stable tag: 3.1
+Stable tag: 3.1.1
 
 rtMedia adds albums, audio/video encoding, privacy/sharing, front-end uploads & more. All this works nicely on mobile/tablets devices.
 
@@ -159,6 +159,14 @@ Please visit [rtMedia's Features page](http://rtcamp.com/buddypress-media/?utm_s
 == Changelog ==
 
 Please visit [rtMedia's Roadmap page](http://rtcamp.com/buddypress-media/roadmap/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "Visit rtMedia's Features page") to get some details about future releases.
+
+= 3.1.1 =
+* Add index for Activity query.
+* Fixed activity and comment sync issue.
+* Fixed shortcode issue.
+* Fixed permalink for default album.
+* Fixed media filename issue.
+* Other minor issues.
 
 = 3.1 =
 * Add Thumbnail support in encoding.
@@ -561,8 +569,8 @@ Please visit [rtMedia's Roadmap page](http://rtcamp.com/buddypress-media/roadmap
 
 == Upgrade Notice ==
 
-= 3.1 =
-Requires BuddyPress 1.7 or higher, if using BuddyPress. Add Thumbnail support in encoding & other fixes
+= 3.1.1 =
+Requires BuddyPress 1.7 or higher, if using BuddyPress. Fixed bugs and issues
 
 == Sponsors ==
 

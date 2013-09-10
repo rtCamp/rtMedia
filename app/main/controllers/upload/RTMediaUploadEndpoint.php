@@ -45,7 +45,7 @@ class RTMediaUploadEndpoint {
                     $rtMediaNav->refresh_counts ( $media[ 0 ]->media_author, array( "context" => "profile", 'media_author' => $media[ 0 ]->media_author ) );
                 }
                 if ( $activity_id == -1 && ( ! (isset ( $_POST[ "rtmedia_update" ] ) && $_POST[ "rtmedia_update" ] == "true")) ) {
-                    $activity_id = $mediaObj->insert_activity ( $rtupload->media_ids[ 0 ], $media[ 0 ] );
+                    $activity_id = $mediaObj->insert_activity ( $media[ 0 ]->media_id, $media[ 0 ] );
                 } else {
                     $mediaObj->model->update ( array( 'activity_id' => $activity_id ), array( 'id' => $rtupload->media_ids[ 0 ] ) );
                     //

@@ -4,15 +4,15 @@
 
     <?php if ( have_rtmedia () ) { ?>
 
-        <h2><?php echo __ ( 'Album Gallery', 'rtmedia' ); ?></h2>
+        <h2><?php echo __ ( 'Album Gallery' , 'rtmedia' ) ; ?></h2>
 
         <ul class="rtmedia-list rtmedia-album-list">
 
-            <?php while ( have_rtmedia () ) : rtmedia (); ?>
+            <?php while ( have_rtmedia () ) : rtmedia () ; ?>
 
-                <?php include ('album-gallery-item.php'); ?>
+                <?php include ('album-gallery-item.php') ; ?>
 
-            <?php endwhile; ?>
+            <?php endwhile ; ?>
 
         </ul>
 
@@ -20,29 +20,29 @@
             <!--  these links will be handled by backbone later
                             -- get request parameters will be removed  -->
             <?php
-            $display = '';
+            $display = '' ;
             if ( rtmedia_offset () != 0 )
-                $display = 'style="display:block;"';
+                $display = 'style="display:block;"' ;
             else
-                $display = 'style="display:none;"';
+                $display = 'style="display:none;"' ;
             ?>
-            <a id="rtMedia-galary-prev" <?php echo $display; ?> href="<?php echo rtmedia_pagination_prev_link (); ?>"><?php echo __ ( 'Prev', 'rtmedia' ); ?></a>
+            <a id="rtMedia-galary-prev" <?php echo $display ; ?> href="<?php echo rtmedia_pagination_prev_link () ; ?>"><?php echo __ ( 'Prev' , 'rtmedia' ) ; ?></a>
 
             <?php
-            $display = '';
+            $display = '' ;
             if ( rtmedia_offset () + rtmedia_per_page_media () < rtmedia_count () )
-                $display = 'style="display:block;"';
+                $display = 'style="display:block;"' ;
             else
-                $display = 'style="display:none;"';
+                $display = 'style="display:none;"' ;
             ?>
-            <a id="rtMedia-galary-next" <?php echo $display; ?> href="<?php echo rtmedia_pagination_next_link (); ?>"><?php echo __ ( 'Next', 'rtmedia' ); ?></a>
+            <a id="rtMedia-galary-next" <?php echo $display ; ?> href="<?php echo rtmedia_pagination_next_link () ; ?>"><?php echo __ ( 'Next' , 'rtmedia' ) ; ?></a>
 
         </div><!--/.rtmedia_next_prev-->
 
-        <?php } else { ?>
-            <p><?php echo __ ( "Oops !! There's no media found for the request !!", "rtmedia" ); ?></p>
-        <?php } ?>
-    <?php do_action ( 'rtmedia_after_album_gallery' ); ?>
+    <?php } else { ?>
+        <p><?php echo __ ( "Oops !! There's no media found for the request !!" , "rtmedia" ) ; ?></p>
+    <?php } ?>
+    <?php do_action ( 'rtmedia_after_album_gallery' ) ; ?>
 
 </div>
 

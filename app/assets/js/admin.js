@@ -541,6 +541,75 @@ jQuery(document).ready(function($) {
         return $('#tab-' + hash.substr(1, hash.length)).parent().index() + 1;
     }
 
+    jQuery('#submit-request').click(function(){
+	var flag = true;
+	var name = jQuery('#name').val();
+	var email = jQuery('#email').val();
+	var website = jQuery('#website').val();
+	var phone = jQuery('#phone').val();
+	var subject = jQuery('#subject').val();
+	var details = jQuery('#details').val();
+	var request_type = jQuery('input[name="request_type"]').val();
+	var request_id = jQuery('input[name="request_id"]').val();
+	var server_address = jQuery('input[name="server_address"]').val();
+	var ip_address = jQuery('input[name="ip_address"]').val();
+	var server_type = jQuery('input[name="server_type"]').val();
+	var user_agent = jQuery('input[name="user_agent"]').val();
+	var form_data = { name : name, email : email, website : website, phone : phone, subject : subject, details : details, request_id : request_id, request_type: 'premium_support', server_address : server_address, ip_address : ip_address, server_type : server_type, user_agent : user_agent};
+	if(request_type == "bug_report") {
+	    var wp_admin_username = jQuery('#wp_admin_username').val();
+	    if(wp_admin_username == "") {
+		alert("Please enter WP Admin Login.");
+		return false;
+	    }
+	    var wp_admin_pwd = jQuery('#wp_admin_pwd').val();
+	    if(wp_admin_pwd == "") {
+		alert("Please enter WP Admin password.");
+		return false;
+	    }
+	    var ssh_ftp_host = jQuery('#ssh_ftp_host').val();
+	    if(ssh_ftp_host == "") {
+		alert("Please enter SSH / FTP host.");
+		return false;
+	    }
+	    var ssh_ftp_username = jQuery('#ssh_ftp_username').val();
+	    if(ssh_ftp_username == "") {
+		alert("Please enter SSH / FTP login.");
+		return false;
+	    }
+	    var ssh_ftp_pwd = jQuery('#ssh_ftp_pwd').val();
+	    if(ssh_ftp_pwd == "") {
+		alert("Please enter SSH / FTP password.");
+		return false;
+	    }
+	    form_data = { name : name, email : email, website : website, phone : phone, subject : subject, details : details, request_id : request_id, request_type: 'premium_support', server_address : server_address, ip_address : ip_address, server_type : server_type, user_agent : user_agent, wp_admin_username : wp_admin_username, wp_admin_pwd : wp_admin_pwd, ssh_ftp_host : ssh_ftp_host, ssh_ftp_username : ssh_ftp_username, ssh_ftp_pwd : ssh_ftp_pwd };
+	}
+	for(formdata in form_data) {
+	    if(form_data[formdata] == "" && formdata != 'phone'  ) {
+		alert("Please enter " + formdata.replace("_", " ") + " field.");
+		return false;
+	    }
+	}
+	data = {
+		action: "rtmedia_submit_request",
+		form_data: form_data
+	    };
+	jQuery.post(ajaxurl,data,function(data){
+	    data = data.trim();
+	    if(data == "false") {
+		alert("Please fill all the fields.");
+		return false;
+	    }
+	    $('#rtmedia_service_contact_container').empty();
+	    $('#rtmedia_service_contact_container').append(data);
+	});
+	return false;
+    });
+
+    jQuery('#cancel-request').click(function(){
+	return false;
+    });
+
     $(window).hashchange(function(e, data) {
         e.preventDefault();
         manageHash();

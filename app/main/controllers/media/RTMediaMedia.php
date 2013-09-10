@@ -457,7 +457,7 @@ class RTMediaMedia {
     function insert_activity ( $id, $media ) {
         if ( ! $this->activity_enabled () )
             return;
-        $activity = new RTMediaActivity ( $id, $media->privacy );
+        $activity = new RTMediaActivity ( $media->id, $media->privacy );
         $activity_content = $activity->create_activity_html ();
         $user = get_userdata ( $media->media_author );
         $username = '<a href="' . get_rtmedia_user_link ( $media->media_author ) . '">' . $user->user_nicename . '</a>';
