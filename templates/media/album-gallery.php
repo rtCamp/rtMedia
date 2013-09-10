@@ -1,5 +1,4 @@
 <div class="rtmedia-container">
-    echo
     <?php do_action ( 'rtmedia_before_album_gallery' ); ?>
     <?php rtmedia_uploader () ?>
 
