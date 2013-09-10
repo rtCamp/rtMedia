@@ -160,6 +160,14 @@ Please visit [rtMedia's Features page](http://rtcamp.com/buddypress-media/?utm_s
 
 Please visit [rtMedia's Roadmap page](http://rtcamp.com/buddypress-media/roadmap/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "Visit rtMedia's Features page") to get some details about future releases.
 
+#### 3.1.1 ####
+* Add index for Activity query.
+* Fixed activity and comment sync issue.
+* Fixed shortcode issue.
+* Fixed permalink for default album.
+* Fixed media filename issue.
+* Other minor issues.
+
 #### 3.1 ####
 * Add Thumbnail support in encoding.
 * Add Regenerate thumbnail option for video.
@@ -559,8 +567,8 @@ Please visit [rtMedia's Roadmap page](http://rtcamp.com/buddypress-media/roadmap
 * HTML5 Audio Tag Support (with fallback)
 * HTML5 Video Tag Support (with fallback)
 
-#### 3.1 ####
-Requires BuddyPress 1.7 or higher, if using BuddyPress. Add Thumbnail support in encoding & other fixes
+#### 3.1.1 ####
+Requires BuddyPress 1.7 or higher, if using BuddyPress. Fixed bugs and issues
 
 ## Sponsors ##
 
