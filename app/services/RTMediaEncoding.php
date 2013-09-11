@@ -100,6 +100,8 @@ class RTMediaEncoding {
                     if (isset($upload_info->status) && $upload_info->status && isset($upload_info->job_id) && $upload_info->job_id) {
                         $job_id = $upload_info->job_id;
                         update_rtmedia_meta($media_ids[$key], 'rtmedia-encoding-job-id', $job_id);
+			$model = new RTMediaModel();
+			$model->update(array('cover_art' => '0'), array('id' => $media_ids[$key]));
                     }
                     else {
 //                        remove_filter('bp_media_plupload_files_filter', array($bp_media_admin->bp_media_encoding, 'allowed_types'));
@@ -383,13 +385,15 @@ class RTMediaEncoding {
         $model = new RTMediaModel();
         $largest_thumb = false;
         $upload_thumbnail_array = array();
-        for ($i = 1; $i <= sizeof($post_thumbs_array['thumbs']); $i++) {
-            $thumbnail = 'thumb_' . $i;
-            if (isset($post_thumbs_array['thumbs'][$thumbnail])) {
+	foreach($post_thumbs_array['thumbs'] as $thumbs=>$thumbnail) {
+//	    error_log("Thumb:" + var_export($post_thumbs_array['thumbs'][$thumbnail]));
+//	}
+//        for ($i = 1; $i <= sizeof($post_thumbs_array['thumbs']); $i++) {
+//            $thumbnail = 'thumb_' . $i;
+//            if (isset($post_thumbs_array['thumbs'][$thumbnail])) {
                 $thumbnail_ids = get_rtmedia_meta($post_id, 'rtmedia-thumbnail-ids', true);
-                $thumbresource = wp_remote_get($post_thumbs_array['thumbs'][$thumbnail]);
-                $thumbinfo = pathinfo($post_thumbs_array['thumbs'][$thumbnail]);
-
+                $thumbresource = wp_remote_get($thumbnail);
+                $thumbinfo = pathinfo($thumbnail);
                 $temp_name = $thumbinfo['basename'];
                 $temp_name = urldecode($temp_name);
                 $temp_name_array = explode("/", $temp_name);
@@ -427,7 +431,7 @@ class RTMediaEncoding {
                     $largest_thumb = $thumb_upload_info['url'];
                     $model->update(array('cover_art' => $thumb_upload_info['url']), array('media_id' => $post_id));
                 }
-            }
+            ///}
         }
         update_post_meta($post_id, 'rtmedia_media_thumbnails', $upload_thumbnail_array);
         return $largest_thumb;
