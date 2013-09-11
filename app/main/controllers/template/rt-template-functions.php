@@ -901,7 +901,7 @@ function rtmedia_global_album_list () {
     return $option;
 }
 
-function rtmedia_user_album_list () {
+function rtmedia_user_album_list ( $get_all = false ) {
     global $rtmedia_query;
     $model = new RTMediaModel();
     $global_option = rtmedia_global_album_list ();
@@ -914,7 +914,7 @@ function rtmedia_user_album_list () {
     if ( $album_objects ) {
         foreach ( $album_objects as $album ) {
             if ( ! in_array ( $album->id, $global_albums ) && (( isset ( $rtmedia_query->media_query[ 'album_id' ] ) && (
-                    $album->id != $rtmedia_query->media_query[ 'album_id' ])) || ! isset ( $rtmedia_query->media_query[ 'album_id' ] )
+                    $album->id != $rtmedia_query->media_query[ 'album_id' ] || $get_all)) || ! isset ( $rtmedia_query->media_query[ 'album_id' ] )
                     )
             )
                 if($album->context == 'profile')
