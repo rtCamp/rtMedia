@@ -415,3 +415,11 @@ button.mfp-arrow,button.mfp-arrow:active {
 button.mfp-close {
  margin-top:-10px;  
 }
+
+.mejs-container .mejs-controls {
+    position: static;
+}
+
+.mejs-video .mejs-controls {
+    position: abosulute;
+}
