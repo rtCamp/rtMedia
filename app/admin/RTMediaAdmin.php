@@ -1071,11 +1071,10 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
                             'input' => 'html',
                             'html' => $video_thumb_html
                         );
-                        return $form_fields;
                     }
                 }
             }
-
+            return $form_fields;
         }
         function save_video_thumbnail($post, $attachment) {
             if( isset($post['rtmedia-thumbnail']) ){

@@ -330,28 +330,30 @@ jQuery(function($) {
                                res.status = 200;
                    }
             }
-            if (res.status == 200 || res.status == 302) {
-                if (uploaderObj.upload_count == undefined)
-                    uploaderObj.upload_count = 1;
-                else
-                    uploaderObj.upload_count++;
-
-                if (uploaderObj.upload_count == up.files.length && jQuery("#rt_upload_hf_redirect").length > 0 && jQuery.trim(res.response.indexOf("http") == 0)) {
-                    window.location = res.response;
-                }
-            }
-
-            files = up.files;
-            lastfile = files[files.length - 1];
-
-            try {
-                var rtnObj;
+            var rtnObj;
+             try {
+                
                 rtnObj = JSON.parse(res.response);
                 uploaderObj.uploader.settings.multipart_params.activity_id = rtnObj.activity_id;
                 activity_id = rtnObj.activity_id;
             } catch (e) {
                 // console.log('Invalid Activity ID');
             }
+            if (res.status == 200 || res.status == 302) {
+                if (uploaderObj.upload_count == undefined)
+                    uploaderObj.upload_count = 1;
+                else
+                    uploaderObj.upload_count++;
+
+                if (uploaderObj.upload_count == up.files.length && jQuery("#rt_upload_hf_redirect").length > 0 && jQuery.trim(rtnObj.redirect_url.indexOf("http") == 0)) {
+                    window.location = rtnObj.redirect_url;
+                }
+            }
+
+            files = up.files;
+            lastfile = files[files.length - 1];
+
+           
         });
 
         uploaderObj.uploader.refresh();//refresh the uploader for opera/IE fix on media page
