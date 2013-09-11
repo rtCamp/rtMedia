@@ -684,7 +684,7 @@ class RTMediaEncoding {
 		"name" => $file_name,
 		"type" => $media_type
 	    );
-	    $this->encoding(array($media_id), $file_object, $uploaded, $autoformat);
+	    $this->encoding(array($media_id), $file_object, array(), $autoformat);
 	}
     }
 
