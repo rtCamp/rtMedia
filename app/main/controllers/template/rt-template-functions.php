@@ -219,7 +219,7 @@ function rtmedia_media ( $size_flag = true, $echo = true, $media_size = "rt_medi
 
 function rtmedia_image ( $size = 'rt_media_thumbnail', $id = false ,$recho = true ) {
     global $rtmedia_backbone;
-    
+
     if ( $rtmedia_backbone[ 'backbone' ] ) {
         echo '<%= guid %>';
         return;
@@ -240,7 +240,7 @@ function rtmedia_image ( $size = 'rt_media_thumbnail', $id = false ,$recho = tru
     $thumbnail_id = 0;
     if ( isset ( $media_object->media_type ) ) {
         if ( $media_object->media_type == 'album' || $media_object->media_type != 'photo' || $media_object->media_type == 'video' ) {
-            $thumbnail_id = isset ( $media_object->cover_art ) ? $media_object->cover_art : false;
+            $thumbnail_id = (isset ( $media_object->cover_art) && ($media_object->cover_art !=  "0"  )) ? $media_object->cover_art : false;
         } elseif ( $media_object->media_type == 'photo' ) {
             $thumbnail_id = $media_object->media_id;
         } else {
@@ -260,7 +260,7 @@ function rtmedia_image ( $size = 'rt_media_thumbnail', $id = false ,$recho = tru
             $src = false;
         }
     } else {
-        if(is_numeric($thumbnail_id)) {
+        if(is_numeric($thumbnail_id) && $thumbnail_id != "0" ) {
 
         list($src, $width, $height) = wp_get_attachment_image_src ( $thumbnail_id, $size );
         } else {
