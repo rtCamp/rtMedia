@@ -1082,8 +1082,8 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
 		$model = new RTMediaModel();
 		$media = $model->get(array("media_id" => $post['ID']));
 		$media_id = $media[0]->id;
-		update_activity_after_thumb_set($media_id);
                 $rtmedia_model->update(array("cover_art" => $post['rtmedia-thumbnail']), array("media_id"=>$post['ID']));
+		update_activity_after_thumb_set($media_id);
             }
             return $post;
         }
