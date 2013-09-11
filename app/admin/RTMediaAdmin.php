@@ -350,7 +350,7 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
                             $media_ids = explode(',', $_REQUEST["media_ids"]);
                             $total = count($media_ids);
                         } else {
-                            $media_ids = $this->get_vedio_without_thumbs();
+                            $media_ids = $this->get_video_without_thumbs();
                             $total = count($media_ids);
                         }
                         ?>
@@ -443,7 +443,7 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
 		$site_option  = get_site_option("rtmedia-video-thumb-notice");
 		if(!$site_option || $site_option != "hide") {
 		    update_site_option("rtmedia-video-thumb-notice", "show");
-		    $videos_without_thumbs = get_vedio_without_thumbs();
+		    $videos_without_thumbs = get_video_without_thumbs();
 		    if(isset($videos_without_thumbs) && is_array($videos_without_thumbs) && $videos_without_thumbs!= "") {
 			echo '<div class="error rtmedia-regenerate-video-thumb-error">
 				<p>
@@ -498,7 +498,7 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
 	}
 
 
-        function get_vedio_without_thumbs() {
+        function get_video_without_thumbs() {
             $rtmedia_model = new RTMediaModel();
             $sql = "select media_id from {$rtmedia_model->table_name} where media_type = 'video' and cover_art is null";
             global $wpdb;
@@ -1079,6 +1079,10 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
         function save_video_thumbnail($post, $attachment) {
             if( isset($post['rtmedia-thumbnail']) ){
                 $rtmedia_model = new RTMediaModel();
+		$model = new RTMediaModel();
+		$media = $model->get(array("media_id" => $post['ID']));
+		$media_id = $media[0]->id;
+		update_activity_after_thumb_set($media_id);
                 $rtmedia_model->update(array("cover_art" => $post['rtmedia-thumbnail']), array("media_id"=>$post['ID']));
             }
             return $post;
