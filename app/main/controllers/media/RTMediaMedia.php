@@ -497,7 +497,7 @@ class RTMediaMedia {
 
 
         $this->model->update (
-                array( 'activity_id' => $activity_id ), array( 'id' => $id )
+                array( 'activity_id' => $activity_id ), array( 'id' => $media->id )
         );
 
         return $activity_id;
