@@ -82,7 +82,7 @@ class RTMediaEncoding {
                     $autoformat = "thumbnails";
 
                 $query_args = array('url' => urlencode($single['url']),
-                    'callbackurl' => urlencode(home_url()),
+                    'callbackurl' => urlencode(trailingslashit(home_url()). "index.php"),
                     'force' => 0,
                     'size' => filesize($single['file']),
                     'formats' => ($autoformat === true)?(($type_array[0] == 'video') ? 'mp4' : 'mp3'):$autoformat,
@@ -385,6 +385,7 @@ class RTMediaEncoding {
         $model = new RTMediaModel();
         $largest_thumb = false;
         $upload_thumbnail_array = array();
+        var_dump($post_thumbs_array['thumbs']);
 	foreach($post_thumbs_array['thumbs'] as $thumbs=>$thumbnail) {
 //	    error_log("Thumb:" + var_export($post_thumbs_array['thumbs'][$thumbnail]));
 //	}
@@ -429,7 +430,7 @@ class RTMediaEncoding {
                 if ($current_thumb_size >= $largest_thumb_size) {
                     $largest_thumb_size = $current_thumb_size;
                     $largest_thumb = $thumb_upload_info['url'];
-                    $model->update(array('cover_art' => $thumb_upload_info['url']), array('media_id' => $post_id));
+                    var_dump($model->update(array('cover_art' => $thumb_upload_info['url']), array('media_id' => $post_id)));
                 }
             ///}
         }
@@ -444,7 +445,6 @@ class RTMediaEncoding {
      */
     public function handle_callback() {
         require_once ( ABSPATH . 'wp-admin/includes/image.php');
-        //error_log(var_export($_POST['thumbs'],true));
         if (isset($_REQUEST['job_id']) && isset($_REQUEST['download_url']) && isset($_POST['thumbs'])) {
             $response = $_POST['thumbs'];
             $flag = false;
