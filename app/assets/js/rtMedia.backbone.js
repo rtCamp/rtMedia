@@ -314,14 +314,14 @@ jQuery(function($) {
                 up.settings.multipart_params[$(this).attr("name")] = $(this).val();
             });
             up.settings.multipart_params.activity_id = activity_id;
-            if ($('.rtmedia-user-album-list').length > 0)
-                up.settings.multipart_params.album_id = $('.rtmedia-user-album-list').find(":selected").val();
-            else if ($('.rtmedia-current-album').length > 0)
-                up.settings.multipart_params.album_id = $('.rtmedia-current-album').val();
+	     if ($('#rtmedia-uploader-form .rtmedia-user-album-list').length > 0)
+                up.settings.multipart_params.album_id = $('#rtmedia-uploader-form .rtmedia-user-album-list').find(":selected").val();
+            else if ($('#rtmedia-uploader-form .rtmedia-current-album').length > 0)
+                up.settings.multipart_params.album_id = $('#rtmedia-uploader-form .rtmedia-current-album').val();
         });
 
         uploaderObj.uploader.bind('FileUploaded', function(up, file, res) {
-            
+
             if (/MSIE (\d+\.\d+);/.test(navigator.userAgent)) { //test for MSIE x.x;
                 var ieversion=new Number(RegExp.$1) // capture x.x portion and store as a number
 
@@ -332,7 +332,7 @@ jQuery(function($) {
             }
             var rtnObj;
              try {
-                
+
                 rtnObj = JSON.parse(res.response);
                 uploaderObj.uploader.settings.multipart_params.activity_id = rtnObj.activity_id;
                 activity_id = rtnObj.activity_id;
@@ -353,7 +353,7 @@ jQuery(function($) {
             files = up.files;
             lastfile = files[files.length - 1];
 
-           
+
         });
 
         uploaderObj.uploader.refresh();//refresh the uploader for opera/IE fix on media page
