@@ -219,7 +219,7 @@ function rtmedia_media ( $size_flag = true, $echo = true, $media_size = "rt_medi
 
 function rtmedia_image ( $size = 'rt_media_thumbnail', $id = false ,$recho = true ) {
     global $rtmedia_backbone;
-    
+
     if ( $rtmedia_backbone[ 'backbone' ] ) {
         echo '<%= guid %>';
         return;
@@ -264,7 +264,7 @@ function rtmedia_image ( $size = 'rt_media_thumbnail', $id = false ,$recho = tru
             $src = false;
         }
     } else {
-        if(is_numeric($thumbnail_id)) {
+        if(is_numeric($thumbnail_id) && $thumbnail_id != "0" ) {
 
         list($src, $width, $height) = wp_get_attachment_image_src ( $thumbnail_id, $size );
         } else {
@@ -633,7 +633,7 @@ function is_rtmedia_edit_allowed () {
 
 add_action ( 'rtmedia_add_edit_fields', 'rtmedia_image_editor', 999 );
 add_action ( 'rtmedia_add_edit_fields', 'rtmedia_vedio_editor', 1000 );
-add_action ('rtmedia_after_update_media', 'set_vedio_thumbnail', 12);
+add_action ('rtmedia_after_update_media', 'set_video_thumbnail', 12);
 add_filter ('rtmedia_single_content_filter', 'change_poster', 99, 2);
 
 function change_poster($html,$media){
@@ -712,49 +712,46 @@ function rtmedia_vedio_editor() {
     }
 }
 
-function set_vedio_thumbnail($id) {
-    $media_type = rtmedia_type($id);
-    if ('video' == $media_type) {
-        $model = new RTMediaModel();
-        $mediaObj = new RTMediaMedia();
-        $model->update(array('cover_art' => $_POST['rtmedia-thumbnail']), array('id' => $id));
-
-        // code to update activity
-        $media = $model->get(array('id' => $id));
-        $privacy = $media->privacy;
+function update_activity_after_thumb_set($id) {
+	$model = new RTMediaModel();
+	$mediaObj = new RTMediaMedia();
+	$media = $model->get(array('id' => $id));
+        $privacy = $media[0]->privacy;
         $activity_id = rtmedia_activity_id($id);
         $same_medias = $mediaObj->model->get ( array( 'activity_id' => $activity_id ) );
         $update_activity_media = Array( );
         foreach ( $same_medias as $a_media ) {
             $update_activity_media[ ] = $a_media->id;
         }
-//        $objActivity = new RTMediaActivity ( $update_activity_media, $privacy, false );
-//        global $wpdb, $bp;
-//        $activity_old_content = bp_activity_get_meta($activity_id, "bp_old_activity_content");
-//        $activity_text = bp_activity_get_meta($activity_id, "bp_activity_text");
-//        if( $activity_old_content == "") {
-//            // get old activity content and save in activity meta
-//            $activity_get = bp_activity_get_specific( array( 'activity_ids' => $activity_id ) );
-//            $activity = $activity_get['activities'][0];
-//            $activity_body = $activity->content;
-//            //bp_activity_update_meta ($activity_id, "bp_old_activity_content", $activity_body);
-//            bp_activity_update_meta ($activity_id, "bp_old_activity_content", "");
-//
-////            $activity_text = strip_tags($activity_body, '<h4>');
+        $objActivity = new RTMediaActivity ( $update_activity_media, $privacy, false );
+        global $wpdb, $bp;
+        $activity_old_content = bp_activity_get_meta($activity_id, "bp_old_activity_content");
+        $activity_text = bp_activity_get_meta($activity_id, "bp_activity_text");
+        if( $activity_old_content == "") {
+            // get old activity content and save in activity meta
+            $activity_get = bp_activity_get_specific( array( 'activity_ids' => $activity_id ) );
+            $activity = $activity_get['activities'][0];
+            $activity_body = $activity->content;
+            bp_activity_update_meta ($activity_id, "bp_old_activity_content", $activity_body);
+	    //extract activity text from old content
+            $activity_text = strip_tags($activity_body, '<span>');
+	    $activity_text = explode("</span>", $activity_text);
+	    $activity_text = strip_tags($activity_text[0]);
+            bp_activity_update_meta ($activity_id, "bp_activity_text", $activity_text);
+        }
+	$activity_text = bp_activity_get_meta($activity_id, "bp_activity_text");
+	$objActivity->activity_text =$activity_text;
+        $wpdb->update ( $bp->activity->table_name, array( "type" => "rtmedia_update", "content" => $objActivity->create_activity_html () ), array( "id" => $activity_id ) );
+}
 
-//            //bp_activity_update_meta ($activity_id, "bp_activity_text", $activity_text);
-//            // extract activity text from old content
-//
-//
-//            $matches = array();
-//            $pattern = '~<span class="rtmedia-activity-text">(.*?)<span>~';
-//            preg_match('~(<span>(.*?)</span>)~', $activity_body, $matches);
+function set_video_thumbnail($id) {
+    $media_type = rtmedia_type($id);
+    if ('video' == $media_type) {
+        $model = new RTMediaModel();
+        $model->update(array('cover_art' => $_POST['rtmedia-thumbnail']), array('id' => $id));
+	update_activity_after_thumb_set($id);
+        // code to update activity
 
-
-//
-//        }
-
-        //$wpdb->update ( $bp->activity->table_name, array( "type" => "rtmedia_update", "content" => $objActivity->create_activity_html () ), array( "id" => $activity_id ) );
     }
 }
 
@@ -789,7 +786,7 @@ function update_video_poster($html,$media,$activity=false){
     return $html;
 }
 
-function get_vedio_without_thumbs() {
+function get_video_without_thumbs() {
     $rtmedia_model = new RTMediaModel();
     $sql = "select media_id from {$rtmedia_model->table_name} where media_type = 'video' and cover_art is null";
     global $wpdb;
@@ -815,7 +812,7 @@ function rtmedia_comment_form () {
 function rtmedia_get_cover_art_src($id) {
     $model = new RTMediaModel();
     $media = $model->get(array("id" => $id));
-    $cover_art = $media->cover_art;
+    $cover_art = $media[0]->cover_art;
     if($cover_art != "") {
         if(is_numeric($cover_art)) {
             $thumbnail_info = wp_get_attachment_image_src($thumbnail_id, 'full');
