@@ -51,7 +51,7 @@ class RTMediaTemplate {
      * @param type $shortcode_attr
      * @return type
      */
-    function set_template ( $template, $shortcode_attr = false ) {
+    function set_template ( $template = false, $shortcode_attr = false ) {
 
         global $rtmedia_query, $rtmedia_interaction, $rtmedia_media;
 

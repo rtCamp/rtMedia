@@ -105,7 +105,7 @@ class RTMediaGalleryShortcode {
             }
 
             $template = new RTMediaTemplate();
-            
+            $gallery_template = false;
             $template->set_template ( $gallery_template, $attr );
 
             return ob_get_clean ();
