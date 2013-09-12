@@ -175,8 +175,7 @@ class RTMedia {
         return $image_sizes;
     }
 
-    public
-            function add_image_sizes() {
+    public function add_image_sizes() {
         $bp_media_sizes = $this->image_sizes();
         add_image_size("rt_media_thumbnail", $bp_media_sizes['thumbnail']["width"], $bp_media_sizes['thumbnail']["height"], $bp_media_sizes['thumbnail']["crop"]);
         add_image_size("rt_media_activity_image", $bp_media_sizes['activity']["width"], $bp_media_sizes['activity']["height"], $bp_media_sizes['activity']["crop"]);
