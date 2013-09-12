@@ -57,7 +57,7 @@ jQuery(function($) {
         url: function() {
             var temp = window.location.pathname;
             var url = '';
-            if (temp.indexOf(rtmedia_media_slug) == -1) {
+            if (temp.indexOf("/" + rtmedia_media_slug + "/") == -1) {
                 url = rtmedia_media_slug + '/';
             } else {
                 if (temp.indexOf('pg/') == -1)
