@@ -74,8 +74,14 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
             }
             $this->rtmedia_settings = new RTMediaSettings();
             $this->rtmedia_encoding = new RTMediaEncoding();
+            if(! defined("RTMEDIA_PRO_VERSION"))
+                add_action ( 'rtmedia_before_default_admin_widgets', array( $this, 'rtmedia_advertisement' ),1);
         }
-
+        function rtmedia_advertisement(){ ?>
+    <div class='rtmedia-admin-ad'>
+        <img src='http://cdn.rtcamp.com/wp-content/uploads/2013/09/rtMedia-pro-ad-300x300px-2-RS.png' alt='rtMedia Pro is released' />
+    </div>
+        <?php }
         // Create the function to output the contents of our Dashboard Widget
 
         function rtMedia_dashboard_widget_function () {
