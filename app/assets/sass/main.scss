@@ -415,3 +415,9 @@ button.mfp-arrow,button.mfp-arrow:active {
 button.mfp-close {
  margin-top:-10px;  
 }
+
+#object-nav,#group-admins,.item-list-tabs{
+    li{
+        list-style:none;
+    }
+} 
