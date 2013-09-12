@@ -17,11 +17,9 @@ Add albums, photo, audio/video encoding, privacy, sharing, front-end uploads & m
 > If you are looking for more features, 1-on-1 support, please consider [rtMedia-PRO](https://rtcamp.com/store/rtmedia-pro/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media).
 > [rtMedia-PRO](https://rtcamp.com/store/rtmedia-pro/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media) is premiun & open-source (and of-course GPL too).
 
-rtMedia is *only* complete media solution for WordPress, BuddyPress and bbPress. 
+rtMedia is **only** complete media solution for WordPress, BuddyPress and bbPress. 
 
-It extends existing media features as well as adds many others for itself, its addons and other themes/plugins.
-
-Built with a mobile-first philosophy, it works on mobile devices (like iPhone/iPad, Android, BlackBerry, Windows Mobile, etc) and comes with automatic audio/video conversion among other features *(see list below)*.
+Built with a mobile-first philosophy, it works on mobile/tablet devices (like iPhone/iPad, Android).
 
 = Live Demos =
 
@@ -34,8 +32,7 @@ In case you are in hurry, you can skip the long list of features in subsequent s
 
 = rtMedia Features =
 
- * rtMedia Uploader - Use `[rtmedia_uploader]` shortcode or `<?php rtmedia_uploader() ?>` template tag, to show drag-n-drop uploader in any WordPress area (post, page, custom-post, etc).
- * rtMedia Gallery - Display media gallery anywhere on your site using `[rtmedia_gallery]` shortcode or `<?php rtmedia_gallery ?>` template tag.
+ * Free Audio/Video conversion - rtCamp (company behind rtMedia) has setup dedicated serves to provide free audio/video encoding services for all sites running rtMedia. 
  * WordPress Integration - Display media on WordPress author pages (eg: `http://example.com/author/admin/media/`)
  * BuddyPress Integration - Adds media tab under to BuddyPress Profiles & Groups.
  * BuddyPress Activity Stream - Attach media to activity status updates like you do it on Facebook.
@@ -46,6 +43,9 @@ In case you are in hurry, you can skip the long list of features in subsequent s
  * Privacy - control who can see media files, albums and buddypress-activties.
  * Templating system - Completely customise rtMedia by modifying the template files. Just copy over the template folder to your theme.
  * [Featured Media](http://rtcamp.com/buddypress-media/docs/admin/featured-media/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "Featured Media documentation") - This can be used for facebook-style cover photo on profiles.
+ * rtMedia Uploader - Use `[rtmedia_uploader]` shortcode or `<?php rtmedia_uploader() ?>` template tag, to show drag-n-drop uploader in any WordPress area (post, page, custom-post, etc).
+ * rtMedia Gallery - Display media gallery anywhere on your site using `[rtmedia_gallery]` shortcode or `<?php rtmedia_gallery ?>` template tag.
+ 
 
 = rtMedia-PRO Features =
 
@@ -60,8 +60,8 @@ In case you are in hurry, you can skip the long list of features in subsequent s
 
 rtMedia has 3 premium solutions to take care of audio/video conversion.
 
- * [Audio/Video Encoding Subscription Service](http://rtcamp.com/buddypress-media/addons/audio-video-encoding-service/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "rtMedia FFMPEG Addon") - Monthly subscription service. Easiest to setup.
  * [FFMPEG-Addon](http://rtcamp.com/store/buddypress-media-ffmpeg-converter/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "rtMedia FFMPEG Addon") - Requires FFMPEG & Media-Node installed on a VPS/Dedicated server.
+ * [Audio/Video Encoding Subscription Service](http://rtcamp.com/buddypress-media/addons/audio-video-encoding-service/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "rtMedia FFMPEG Addon") - If free plan is not enough for you, there is monthly subscription service also. Easiest to setup.
  * [Kaltura-Addon](http://rtcamp.com/store/buddypress-media-kaltura/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "rtMedia Kaltura Addon for Kaltura.com/Kaltura-CE/Kaltura On-Prem version") - Rquries a Kaltura.com account or Kaltura-CE or Kaltura-on-Prem server.
 
 If all your music files is mp3 formats and videos in mp4 formats, you may not need any of above add-ons.
