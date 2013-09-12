@@ -77,7 +77,7 @@ jQuery(function($) {
                 json: true,
                 rtmedia_page: nextpage
             };
-
+            el = jQuery(".rtmedia-list").parent().parent();
             if (el != undefined) {
                 $(el).children("input[type=hidden]").each(function(e) {
                     query[$(this).attr("name")] = $(this).val();
@@ -96,6 +96,7 @@ jQuery(function($) {
         },
         reloadView: function() {
             upload_sync = true;
+            nextpage = 1;
             this.getNext();
         }
 

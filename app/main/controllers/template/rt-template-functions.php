@@ -240,7 +240,11 @@ function rtmedia_image ( $size = 'rt_media_thumbnail', $id = false ,$recho = tru
     $thumbnail_id = 0;
     if ( isset ( $media_object->media_type ) ) {
         if ( $media_object->media_type == 'album' || $media_object->media_type != 'photo' || $media_object->media_type == 'video' ) {
+            
             $thumbnail_id = isset ( $media_object->cover_art ) ? $media_object->cover_art : false;
+            
+            $thumbnail_id = apply_filters('show_custom_album_cover', $thumbnail_id , $media_object->media_type , $media_object->id );// for rtMedia pro users
+           
         } elseif ( $media_object->media_type == 'photo' ) {
             $thumbnail_id = $media_object->media_id;
         } else {
@@ -281,6 +285,7 @@ function rtmedia_album_image ( $size = 'thumbnail', $id = false) {
     $model = new RTMediaModel();
     if($id == false){
         $id = $rtmedia_media->id;
+        
     }
     $media = $model->get_media ( array( 'album_id' => $id, 'media_type' => 'photo' ), 0, 1 );
 
