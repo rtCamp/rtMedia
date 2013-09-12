@@ -118,6 +118,9 @@ if ( ! empty ( $_SERVER[ 'HTTP_X_REQUESTED_WITH' ] ) &&
                             endwhile ;
                         endif ;
                     } // group/profile if/else
+                    ?>
+                             </div>   
+                                <?php
                 } //if BuddyPress
             } // if ajax
             // include the right rtMedia template
@@ -141,7 +144,6 @@ if ( ! empty ( $_SERVER[ 'HTTP_X_REQUESTED_WITH' ] ) &&
             }
             //close all markup
             ?>
-        </div>
     </div><!--#buddypress-->
             <?php
             //get_sidebar($template_type);
