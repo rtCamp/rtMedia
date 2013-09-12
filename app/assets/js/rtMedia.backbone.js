@@ -57,7 +57,7 @@ jQuery(function($) {
         url: function() {
             var temp = window.location.pathname;
             var url = '';
-            if (temp.indexOf(rtmedia_media_slug) == -1) {
+            if (temp.indexOf("/" + rtmedia_media_slug + "/") == -1) {
                 url = rtmedia_media_slug + '/';
             } else {
                 if (temp.indexOf('pg/') == -1)
@@ -322,7 +322,7 @@ jQuery(function($) {
         });
 
         uploaderObj.uploader.bind('FileUploaded', function(up, file, res) {
-            
+
             if (/MSIE (\d+\.\d+);/.test(navigator.userAgent)) { //test for MSIE x.x;
                 var ieversion=new Number(RegExp.$1) // capture x.x portion and store as a number
 
@@ -333,7 +333,7 @@ jQuery(function($) {
             }
             var rtnObj;
              try {
-                
+
                 rtnObj = JSON.parse(res.response);
                 uploaderObj.uploader.settings.multipart_params.activity_id = rtnObj.activity_id;
                 activity_id = rtnObj.activity_id;
@@ -354,7 +354,7 @@ jQuery(function($) {
             files = up.files;
             lastfile = files[files.length - 1];
 
-           
+
         });
 
         uploaderObj.uploader.refresh();//refresh the uploader for opera/IE fix on media page

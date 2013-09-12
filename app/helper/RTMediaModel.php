@@ -202,7 +202,7 @@ class RTMediaModel extends RTDBModel {
                     } else {
 
                         if ( $colname == "context" && $colvalue == "profile" ) {
-                            //   $query .= " AND {$this->table_name}.{$colname} <> 'group'";
+                               $query .= " AND {$this->table_name}.{$colname} <> 'group'";
                         } else {
                             $query .= " AND {$this->table_name}.{$colname} = '{$colvalue}'";
                         }
