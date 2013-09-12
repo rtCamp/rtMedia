@@ -383,6 +383,8 @@ class RTMediaEncoding {
         $post_thumbs_array = maybe_unserialize($post_thumbs);
         $largest_thumb_size = 0;
         $model = new RTMediaModel();
+	$media = $model->get(array("media_id" => $post_id));
+	$media_id = $media[0]->id;
         $largest_thumb = false;
         $upload_thumbnail_array = array();
         var_dump($post_thumbs_array['thumbs']);
@@ -434,6 +436,7 @@ class RTMediaEncoding {
                 }
             ///}
         }
+	update_activity_after_thumb_set($media_id);
         update_post_meta($post_id, 'rtmedia_media_thumbnails', $upload_thumbnail_array);
         return $largest_thumb;
     }
