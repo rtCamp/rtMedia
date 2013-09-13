@@ -391,7 +391,7 @@ class RTMediaMedia {
      * @return type
      */
     function image_sizes ( $sizes ) {
-        return array( 'rt_media_thumbnail', 'rt_media_activity_image', 'rt_media_single_image' );
+        return array( 'rt_media_thumbnail', 'rt_media_activity_image', 'rt_media_single_image','rt_media_featured_image' );
     }
 
     /**

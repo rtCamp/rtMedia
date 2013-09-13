@@ -93,7 +93,7 @@ class RTMediaRouter {
         // if it is not our route, return early
         if ( ! $this->is_template () )
             return;
-
+         
         status_header ( 200 );
         //set up the query variables
         $this->set_query_vars ();
@@ -119,19 +119,180 @@ class RTMediaRouter {
         // otherwise, apply a filter to the template,
         // pass the template  and slug to the function hooking here
         // so it can load a custom template
-
-
+        
         $template_load = new RTMediaTemplate();
+        global $new_rt_template;
+        $new_rt_template = $template_load->set_template ( $template );
 
-        $template = $template_load->set_template ( $template );
+        $new_rt_template = apply_filters ( "rtmedia_" . $this->slug . "_include", $new_rt_template );
+        global $rt_ajax_request;
+        $rt_ajax_request = false;
 
-
-        $template = apply_filters ( "rtmedia_" . $this->slug . "_include", $template );
-
-        // return the template for inclusion in the theme
-
+        // check if it is an ajax request
+        if (
+                        ! empty( $_SERVER[ 'HTTP_X_REQUESTED_WITH' ] ) &&
+                        strtolower( $_SERVER[ 'HTTP_X_REQUESTED_WITH' ] ) == 'xmlhttprequest'
+         ){
+                $rt_ajax_request = true;
+         }
+         if($rt_ajax_request)
+             return $new_rt_template;
+        if(  function_exists ('bp_set_theme_compat_active'))
+         bp_set_theme_compat_active( true );
+        add_filter( 'the_content', array(&$this,'rt_replace_the_content') );
+        $this ->rt_theme_compat_reset_post();
         return $template;
+        
     }
+
+    /**
+ * This fun little function fills up some WordPress globals with dummy data to
+ * stop your average page template from complaining about it missing.
+ *
+ * @since BuddyPress (1.7)
+ * @global WP_Query $wp_query
+ * @global object $post
+ * @param array $args
+ */
+    function rt_replace_the_content( $content = '' ) {
+	// Do we have new content to replace the old content?
+        global $new_rt_template;
+        load_template($new_rt_template);
+        return '';
+	$new_content = apply_filters( 'bp_replace_the_content', $content );
+        
+	// Juggle the content around and try to prevent unsightly comments
+        if ( !empty( $new_content ) && ( $new_content !== $content ) ) {
+
+		// Set the content to be the new content
+		$content = $new_content;
+
+		// Clean up after ourselves
+		unset( $new_content );
+
+		// Reset the $post global
+		wp_reset_postdata();
+	}
+
+	// Return possibly hi-jacked content
+	return $content;
+}
+function rt_theme_compat_reset_post( $args = array() ) {
+	global $wp_query, $post;
+
+	// Switch defaults if post is set
+	if ( isset( $wp_query->post ) ) {
+		$dummy = wp_parse_args( $args, array(
+			'ID'                    => $wp_query->post->ID,
+			'post_status'           => $wp_query->post->post_status,
+			'post_author'           => $wp_query->post->post_author,
+			'post_parent'           => $wp_query->post->post_parent,
+			'post_type'             => $wp_query->post->post_type,
+			'post_date'             => $wp_query->post->post_date,
+			'post_date_gmt'         => $wp_query->post->post_date_gmt,
+			'post_modified'         => $wp_query->post->post_modified,
+			'post_modified_gmt'     => $wp_query->post->post_modified_gmt,
+			'post_content'          => $wp_query->post->post_content,
+			'post_title'            => $wp_query->post->post_title,
+			'post_excerpt'          => $wp_query->post->post_excerpt,
+			'post_content_filtered' => $wp_query->post->post_content_filtered,
+			'post_mime_type'        => $wp_query->post->post_mime_type,
+			'post_password'         => $wp_query->post->post_password,
+			'post_name'             => $wp_query->post->post_name,
+			'guid'                  => $wp_query->post->guid,
+			'menu_order'            => $wp_query->post->menu_order,
+			'pinged'                => $wp_query->post->pinged,
+			'to_ping'               => $wp_query->post->to_ping,
+			'ping_status'           => $wp_query->post->ping_status,
+			'comment_status'        => $wp_query->post->comment_status,
+			'comment_count'         => $wp_query->post->comment_count,
+			'filter'                => $wp_query->post->filter,
+
+			'is_404'                => false,
+			'is_page'               => false,
+			'is_single'             => false,
+			'is_archive'            => false,
+			'is_tax'                => false,
+		) );
+	} else {
+		$dummy = wp_parse_args( $args, array(
+			'ID'                    => 0,
+			'post_status'           => 'public',
+			'post_author'           => 0,
+			'post_parent'           => 0,
+			'post_type'             => 'bp_member',
+			'post_date'             => 0,
+			'post_date_gmt'         => 0,
+			'post_modified'         => 0,
+			'post_modified_gmt'     => 0,
+			'post_content'          => '',
+			'post_title'            => '',
+			'post_excerpt'          => '',
+			'post_content_filtered' => '',
+			'post_mime_type'        => '',
+			'post_password'         => '',
+			'post_name'             => '',
+			'guid'                  => '',
+			'menu_order'            => 0,
+			'pinged'                => '',
+			'to_ping'               => '',
+			'ping_status'           => '',
+			'comment_status'        => 'closed',
+			'comment_count'         => 0,
+			'filter'                => 'raw',
+			'is_404'                => false,
+			'is_page'               => false,
+			'is_single'             => false,
+			'is_archive'            => false,
+			'is_tax'                => false,
+		) );
+	}
+        if(  function_exists ( "bp_is_group")){
+            if(bp_is_group ( )){
+                $dummy['post_type'] = "bp_group";
+                $dummy['post_title'] = '<a href="' . bp_get_group_permalink( groups_get_current_group() ) . '">' . bp_get_current_group_name() . '</a>';
+            }else{
+                $dummy['post_type'] = "bp_member";
+                $dummy['post_title'] =  '<a href="' . bp_get_displayed_user_link() . '">' . bp_get_displayed_user_fullname() . '</a>';
+            }
+        }
+            
+        
+	// Bail if dummy post is empty
+	if ( empty( $dummy ) ) {
+		return;
+	}
+
+	// Set the $post global
+	$post = new WP_Post( (object) $dummy );
+
+	// Copy the new post global into the main $wp_query
+	$wp_query->post       = $post;
+	$wp_query->posts      = array( $post );
+
+	// Prevent comments form from appearing
+	$wp_query->post_count = 1;
+	$wp_query->is_404     = $dummy['is_404'];
+	$wp_query->is_page    = $dummy['is_page'];
+	$wp_query->is_single  = $dummy['is_single'];
+	$wp_query->is_archive = $dummy['is_archive'];
+	$wp_query->is_tax     = $dummy['is_tax'];
+
+	// Clean up the dummy post
+	unset( $dummy );
+
+	/**
+	 * Force the header back to 200 status if not a deliberate 404
+	 *
+	 * @see http://bbpress.trac.wordpress.org/ticket/1973
+	 */
+	if ( ! $wp_query->is_404() ) {
+		status_header( 200 );
+	}
+
+	
+}
+
 
     /**
      * Break the request URL into an array of variables after the route slug
