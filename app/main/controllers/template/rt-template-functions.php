@@ -1,4 +1,4 @@
-<?php
+    <?php
 
 /**
  * Checks at any point of time any media is left to be processed in the db pool
@@ -914,7 +914,7 @@ function rtmedia_user_album_list ( $get_all = false ) {
     if ( $album_objects ) {
         foreach ( $album_objects as $album ) {
             if ( ! in_array ( $album->id, $global_albums ) && (( isset ( $rtmedia_query->media_query[ 'album_id' ] ) && (
-                    $album->id != $rtmedia_query->media_query[ 'album_id' ] || $get_all)) || ! isset ( $rtmedia_query->media_query[ 'album_id' ] )
+                    $album->id != $rtmedia_query->media_query[ 'album_id' ] || $get_all )) || ! isset ( $rtmedia_query->media_query[ 'album_id' ] )
                     )
             )
                 if($album->context == 'profile')

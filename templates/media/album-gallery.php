@@ -1,5 +1,5 @@
 <div class="rtmedia-container">
-    <?php do_action ( 'rtmedia_before_album_gallery' ) ; ?>
+    <?php do_action ( 'rtmedia_before_album_gallery' ); ?>
     <?php rtmedia_uploader () ?>
 
     <?php if ( have_rtmedia () ) { ?>
