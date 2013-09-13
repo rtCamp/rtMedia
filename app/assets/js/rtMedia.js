@@ -79,10 +79,10 @@ jQuery('document').ready(function($) {
                     rtMediaHook.call('rtmedia_js_popup_after_content_added', []);
                 },
                 close: function(e) {
-                    console.log(e);
+                    //console.log(e);
                 },
                 BeforeChange: function(e) {
-                    console.log(e);
+                    //console.log(e);
                 }
             }
         });
