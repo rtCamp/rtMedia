@@ -152,7 +152,7 @@ class RTMediaAlbum {
             $context = (isset ( $rtmedia_interaction->context->type )) ? $rtmedia_interaction->context->type : NULL;
         }
         if ( $context_id === false ) {
-            $context = (isset ( $rtmedia_interaction->context->id )) ? $rtmedia_interaction->context->id : NULL;
+            $context_id = (isset ( $rtmedia_interaction->context->id )) ? $rtmedia_interaction->context->id : NULL;
         }
         // add in the media since album is also a media
         //defaults
@@ -171,7 +171,10 @@ class RTMediaAlbum {
         );
 
         $rtmedia_id = $this->media->insert_album ( $attributes );
-
+	$model = new RTMediaModel();
+	$media_count = $model->get_counts ( $context_id, array( "context" => $context, 'media_author' => $context_id ) );
+	$media_count[0]->album++;
+	update_user_meta ( $context_id, 'rtmedia_counts', $media_count );
         /* action to perform any task after adding the album */
         do_action ( 'rtmedia_after_add_album', $this );
 

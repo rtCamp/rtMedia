@@ -71,11 +71,11 @@ class RTMediaModel extends RTDBModel {
             }
         }
         $qorder_by = " ORDER BY {$this->table_name}.$order_by";
-        
+
         $join = apply_filters ( 'rtmedia-model-join-query', $join, $this->table_name );
         $where = apply_filters ( 'rtmedia-model-where-query', $where, $this->table_name );
         $qorder_by = apply_filters ( 'rtmedia-model-order-by-query', $qorder_by, $this->table_name );
-        
+
         $sql = $select . $join . $where .$qorder_by;
         if ( is_integer ( $offset ) && is_integer ( $per_page ) ) {
             $sql .= ' LIMIT ' . $offset . ',' . $per_page;

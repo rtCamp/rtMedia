@@ -132,6 +132,7 @@ jQuery('document').ready(function($) {
             var old_val = $("#rtmedia_create_new_album").html();
             $("#rtmedia_create_new_album").prepend("<img src='" + rMedia_loading_file + "'/>");
             jQuery.post(rtmedia_ajax_url, data, function(response) {
+		response = response.trim();
                 if (response) {
 		    response = response.trim();
 		    var flag = true;

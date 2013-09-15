@@ -158,7 +158,8 @@ class RTMediaFormHandler {
 				'callback' => array('RTMediaFormHandler', 'number'),
 				'args' => array(
 					'key' => 'general_perPageMedia',
-					'value' => $options['general_perPageMedia']
+					'value' => $options['general_perPageMedia'],
+					'class' => array('rtmedia-setting-text-box')
 				)
 			),
 //			'general_enableMediaEndPoint' => array(
@@ -175,7 +176,8 @@ class RTMediaFormHandler {
                                 'callback' => array('RTMediaFormHandler', 'number'),
                                 'args' => array(
                                         'key' => 'general_videothumbs',
-                                        'value' => $options['general_videothumbs']
+                                        'value' => $options['general_videothumbs'],
+					'class' => array('rtmedia-setting-text-box')
                                 )
                         ),
 			'general_showAdminMenu' => array(
@@ -242,11 +244,14 @@ class RTMediaFormHandler {
 		global $rtmedia;
 
 		$render = array();
-
+		$allowed_media_type = $rtmedia->allowed_types;
+		$allowed_media_type = apply_filters("allowed_media_type_settings", $allowed_media_type);
+		//  var_dump($allowed_media_type);
 		foreach ($options as $key => $value) {
 			$data = explode('_', $key);
-			if(!isset($render[$data[1]]))
-				$render[$data[1]] = self::get_type_details($rtmedia->allowed_types, $data[1]);
+			if(!isset($render[$data[1]])) {
+			    $render[$data[1]] = self::get_type_details($allowed_media_type, $data[1]);
+			}
 		}
 		foreach ($options as $key => $value) {
 			$data = explode('_', $key);
