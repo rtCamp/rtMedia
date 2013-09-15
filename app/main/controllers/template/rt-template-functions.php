@@ -971,8 +971,13 @@ add_action ( 'rtmedia_before_media_gallery', 'rtmedia_create_album' );
 add_action ( 'rtmedia_before_album_gallery', 'rtmedia_create_album' );
 
 function rtmedia_create_album () {
-    if ( ! is_rtmedia_album_enable () )
-        return;
+    if ( ! is_rtmedia_album_enable () || !is_album_create_enable() ) {
+	return;
+    }
+    $return = apply_filters("rtm_is_album_create_enable");
+    if(!$return) {
+	return;
+    }
     global $rtmedia_query;
     $user_id = get_current_user_id ();
     $display = false;
@@ -980,8 +985,9 @@ function rtmedia_create_album () {
         switch ( $rtmedia_query->query[ 'context' ] ) {
             case 'profile':
                 if ( $rtmedia_query->query[ 'context_id' ] == $user_id ) {
-                    $display = true;
-                }
+		    $display = true;
+		    $display = apply_filters("rtm_display_create_album_button", $display,$user_id);
+		}
                 break;
             case 'group':
                 $group_id = $rtmedia_query->query[ 'context_id' ];
