@@ -22,13 +22,18 @@ class RTMediaAJAX {
 	}
 
         function create_album(){
-            if ( isset($_POST['name']) && $_POST['name'] && is_rtmedia_album_enable() && is_album_create_enable()) {
+            if ( isset($_POST['name']) && $_POST['name'] && is_rtmedia_album_enable()) {
                 if(isset($_POST['context']) && $_POST['context'] =="group"){
                     if(can_user_create_album_in_group() == false){
                         echo false;
                         wp_die();
                     }
                 }
+                 $create_album = apply_filters("rtm_is_album_create_enable",false);
+		if(!$create_album) {
+		    echo false;
+		    wp_die();
+		}
 		$create_album = apply_filters("rtm_display_create_album_button",true, $_POST['context_id']);
 		if(!$create_album) {
 		    echo false;
