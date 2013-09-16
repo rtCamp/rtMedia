@@ -250,10 +250,12 @@ function rt_theme_compat_reset_post( $args = array() ) {
         if(  function_exists ( "bp_is_group")){
             if(bp_is_group ( )){
                 $dummy['post_type'] = "bp_group";
-                $dummy['post_title'] = '<a href="' . bp_get_group_permalink( groups_get_current_group() ) . '">' . bp_get_current_group_name() . '</a>';
+                if("bp-default" != get_option( 'stylesheet' ))
+                    $dummy['post_title'] = '<a href="' . bp_get_group_permalink( groups_get_current_group() ) . '">' . bp_get_current_group_name() . '</a>';
             }else{
                 $dummy['post_type'] = "bp_member";
-                $dummy['post_title'] =  '<a href="' . bp_get_displayed_user_link() . '">' . bp_get_displayed_user_fullname() . '</a>';
+                if("bp-default" != get_option( 'stylesheet' ))
+                    $dummy['post_title'] =  '<a href="' . bp_get_displayed_user_link() . '">' . bp_get_displayed_user_fullname() . '</a>';
             }
         }
             
