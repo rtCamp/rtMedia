@@ -395,8 +395,7 @@ if (!class_exists('RTMediaSupport')) {
 	    else {
 		$support_email = "support@rtcamp.com";
 	    }
-	    $support_email = "support+m2p-37e6afd@rtcamp.com";
-	    $support_email = "ritesh.patel@rtcamp.com";
+	    $support_email = "support+m2p-37e6afd@rtcamp.com";	
             if (wp_mail($support_email, '[rtmedia] ' . $mail_type . ' from ' . str_replace(array('http://', 'https://'), '', $form_data['website']), $message, $headers)) {
 		    echo '<div class="rtmedia-success" style="margin:10px 0;">';
                 if ($form_data['request_type'] == 'new_feature') {
