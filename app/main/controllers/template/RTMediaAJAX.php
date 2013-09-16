@@ -29,7 +29,7 @@ class RTMediaAJAX {
                         wp_die();
                     }
                 }
-                 $create_album = apply_filters("rtm_is_album_create_enable",false);
+                 $create_album = apply_filters("rtm_is_album_create_enable",true);
 		if(!$create_album) {
 		    echo false;
 		    wp_die();
@@ -41,7 +41,12 @@ class RTMediaAJAX {
 		}
 		$album = new RTMediaAlbum();
                 $rtmedia_id = $album->add($_POST['name'], get_current_user_id(), true, false, $_POST['context'], $_POST['context_id']);
-
+                $rtMediaNav = new RTMediaNav();
+                if (  $_POST['context'] == "group" ) {
+                    $rtMediaNav->refresh_counts ( $_POST['context_id'], array( "context" =>  $_POST['context'], 'context_id' => $_POST['context_id'] ) );
+                } else {
+                    $rtMediaNav->refresh_counts ( get_current_user_id(), array( "context" => "profile", 'media_author' => get_current_user_id() ) );
+                }
                 if ( $rtmedia_id )
                     echo $rtmedia_id;
                 else

@@ -977,11 +977,12 @@ function rtmedia_create_album () {
     if ( ! is_rtmedia_album_enable () ) {
 	return;
     }
-    $return = false;
+    $return = true;
     $return = apply_filters("rtm_is_album_create_enable",$return);
-    if(!$return) {
+    if( !$return ) {
 	return;
     }
+    
     global $rtmedia_query;
     $user_id = get_current_user_id ();
     $display = false;
