@@ -5,6 +5,11 @@
 	@import "foundation/components/grid";
 	@import "foundation/components/visibility";
 	@import "foundation/components/flex-video";
+        #buddypress{
+            li{
+                list-style:none;
+            }
+        }
 	.row{
                     max-width:95%;
 	}
@@ -59,6 +64,7 @@
 			word-wrap: break-word;
 			margin:10px;
 			float:left;
+                        list-style:none;
 			a {
 				text-decoration:none;
 				h4 {
