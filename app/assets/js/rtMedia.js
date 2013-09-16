@@ -79,10 +79,10 @@ jQuery('document').ready(function($) {
                     rtMediaHook.call('rtmedia_js_popup_after_content_added', []);
                 },
                 close: function(e) {
-                    console.log(e);
+                    //console.log(e);
                 },
                 BeforeChange: function(e) {
-                    console.log(e);
+                    //console.log(e);
                 }
             }
         });
@@ -132,6 +132,7 @@ jQuery('document').ready(function($) {
             var old_val = $("#rtmedia_create_new_album").html();
             $("#rtmedia_create_new_album").prepend("<img src='" + rMedia_loading_file + "'/>");
             jQuery.post(rtmedia_ajax_url, data, function(response) {
+		response = response.trim();
                 if (response) {
 		    response = response.trim();
 		    var flag = true;

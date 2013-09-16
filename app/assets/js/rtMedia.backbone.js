@@ -77,7 +77,7 @@ jQuery(function($) {
                 json: true,
                 rtmedia_page: nextpage
             };
-
+            el = jQuery(".rtmedia-list").parent().parent();
             if (el != undefined) {
                 $(el).children("input[type=hidden]").each(function(e) {
                     query[$(this).attr("name")] = $(this).val();
@@ -96,6 +96,7 @@ jQuery(function($) {
         },
         reloadView: function() {
             upload_sync = true;
+            nextpage = 1;
             this.getNext();
         }
 
@@ -151,7 +152,7 @@ jQuery(function($) {
 
         },
         appendTo: function(media) {
-            console.log("append");
+            //console.log("append");
             var mediaView = new rtMedia.MediaView({
                 model: media
             });
@@ -314,7 +315,7 @@ jQuery(function($) {
                 up.settings.multipart_params[$(this).attr("name")] = $(this).val();
             });
             up.settings.multipart_params.activity_id = activity_id;
-	     if ($('#rtmedia-uploader-form .rtmedia-user-album-list').length > 0)
+            if ($('#rtmedia-uploader-form .rtmedia-user-album-list').length > 0)
                 up.settings.multipart_params.album_id = $('#rtmedia-uploader-form .rtmedia-user-album-list').find(":selected").val();
             else if ($('#rtmedia-uploader-form .rtmedia-current-album').length > 0)
                 up.settings.multipart_params.album_id = $('#rtmedia-uploader-form .rtmedia-current-album').val();

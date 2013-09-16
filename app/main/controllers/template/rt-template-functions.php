@@ -1,4 +1,4 @@
-<?php
+    <?php
 
 /**
  * Checks at any point of time any media is left to be processed in the db pool
@@ -241,6 +241,7 @@ function rtmedia_image ( $size = 'rt_media_thumbnail', $id = false ,$recho = tru
     if ( isset ( $media_object->media_type ) ) {
         if ( $media_object->media_type == 'album' || $media_object->media_type != 'photo' || $media_object->media_type == 'video' ) {
             $thumbnail_id = (isset ( $media_object->cover_art) && ($media_object->cover_art !=  "0"  )) ? $media_object->cover_art : false;
+            $thumbnail_id = apply_filters('show_custom_album_cover', $thumbnail_id , $media_object->media_type , $media_object->id );// for rtMedia pro users
         } elseif ( $media_object->media_type == 'photo' ) {
             $thumbnail_id = $media_object->media_id;
         } else {
@@ -282,7 +283,8 @@ function rtmedia_album_image ( $size = 'thumbnail', $id = false) {
     if($id == false){
         $id = $rtmedia_media->id;
     }
-    $media = $model->get_media ( array( 'album_id' => $id, 'media_type' => 'photo' ), 0, 1 );
+    global $rtmedia_query;
+    $media = $model->get_media ( array( 'album_id' => $id, 'media_type' => 'photo', 'media_author' => $rtmedia_query->query['context_id'] ), 0, 1 );
 
     if ( $media ) {
         $src = rtmedia_image ( $size, $media[ 0 ]->id ,false);
@@ -914,7 +916,7 @@ function rtmedia_user_album_list ( $get_all = false ) {
     if ( $album_objects ) {
         foreach ( $album_objects as $album ) {
             if ( ! in_array ( $album->id, $global_albums ) && (( isset ( $rtmedia_query->media_query[ 'album_id' ] ) && (
-                    $album->id != $rtmedia_query->media_query[ 'album_id' ] || $get_all)) || ! isset ( $rtmedia_query->media_query[ 'album_id' ] )
+                    $album->id != $rtmedia_query->media_query[ 'album_id' ] || $get_all )) || ! isset ( $rtmedia_query->media_query[ 'album_id' ] )
                     )
             )
                 if($album->context == 'profile')
@@ -971,8 +973,13 @@ add_action ( 'rtmedia_before_media_gallery', 'rtmedia_create_album' );
 add_action ( 'rtmedia_before_album_gallery', 'rtmedia_create_album' );
 
 function rtmedia_create_album () {
-    if ( ! is_rtmedia_album_enable () )
-        return;
+    if ( ! is_rtmedia_album_enable () || !is_album_create_enable() ) {
+	return;
+    }
+    $return = apply_filters("rtm_is_album_create_enable");
+    if(!$return) {
+	return;
+    }
     global $rtmedia_query;
     $user_id = get_current_user_id ();
     $display = false;
@@ -980,8 +987,9 @@ function rtmedia_create_album () {
         switch ( $rtmedia_query->query[ 'context' ] ) {
             case 'profile':
                 if ( $rtmedia_query->query[ 'context_id' ] == $user_id ) {
-                    $display = true;
-                }
+		    $display = true;
+		    $display = apply_filters("rtm_display_create_album_button", $display,$user_id);
+		}
                 break;
             case 'group':
                 $group_id = $rtmedia_query->query[ 'context_id' ];
