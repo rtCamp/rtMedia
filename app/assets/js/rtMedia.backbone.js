@@ -3,6 +3,7 @@ var nextpage = 2;
 var upload_sync = false;
 var activity_id = -1;
 var uploaderObj;
+var objUploadView ;
 
 jQuery(function($) {
 
@@ -407,7 +408,7 @@ jQuery(document).ready(function($) {
             $("#rtmedia-action-update").append($("#rtm-file_upload-ui .privacy"));
         }
     }
-    window.objUploadView = new UploadView(rtMedia_update_plupload_config);
+    objUploadView = new UploadView(rtMedia_update_plupload_config);
     $("#whats-new-form").on('click', '#rtmedia-add-media-button-post-update', function(e) {
         $("#div-attache-rtmedia").toggle();
         objUploadView.uploader.refresh();
@@ -415,11 +416,11 @@ jQuery(document).ready(function($) {
     //whats-new-post-in
 
 
-    objUploadView.uploader.bind('FilesAdded', function(up, files) {
+    objUploadView.uploader.bind('FilesAdded', function(upl, rfiles) {
         //$("#aw-whats-new-submit").attr('disabled', 'disabled');
-        var upload_remove_array= [];
-        $.each(files, function(i, file) {
-            var hook_respo = rtMediaHook.call('rtmedia_js_file_added', [up,file, "#rtMedia-update-queue-list"]);
+        objUploadView.upload_remove_array= [];
+        $.each(rfiles, function(i, file) {
+            var hook_respo = rtMediaHook.call('rtmedia_js_file_added', [upl,file, "#rtMedia-update-queue-list"]);
             if( hook_respo == false){
                     file.status = -1;
                     upload_remove_array.push(file.id);
@@ -436,8 +437,8 @@ jQuery(document).ready(function($) {
             tr.appendChild(tdStatus);
             $("#rtMedia-update-queue-list").append(tr);
         });
-        $.each(upload_remove_array, function(i, rfile) {
-                up.removeFile(up.getFile(rfile));
+        $.each(objUploadView.upload_remove_array, function(i, rfile) {
+                objUploadView.uploader.removeFile(objUploadView.uploader.getFile(rfile));
         });
     });
 
