@@ -1,6 +1,7 @@
 var rtMagnificPopup;
 var rtMediaHook = {
     hooks: [],
+    is_break : false,
     register: function(name, callback) {
         if ('undefined' == typeof(rtMediaHook.hooks[name]))
             rtMediaHook.hooks[name] = []
@@ -8,10 +9,14 @@ var rtMediaHook = {
     },
     call: function(name, arguments) {
         if ('undefined' != typeof(rtMediaHook.hooks[name]))
-            for (i = 0; i < rtMediaHook.hooks[name].length; ++i)
+            for (i = 0; i < rtMediaHook.hooks[name].length; ++i){
                 if (true != rtMediaHook.hooks[name][i](arguments)) {
+                    rtMediaHook.is_break=true;
+                    return false;
                     break;
                 }
+            }
+            return true;
     }
 }
 jQuery('document').ready(function($) {

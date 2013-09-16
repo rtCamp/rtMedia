@@ -252,13 +252,21 @@ jQuery(function($) {
             var upload_size_error = false;
             var upload_error = "";
             var upload_error_sep = "";
+            var upload_remove_array= [];
             $.each(files, function(i, file) {
+                var hook_respo = rtMediaHook.call('rtmedia_js_file_added', [up,file, "#rtMedia-queue-list tbody"]);
+                if( hook_respo == false){
+                    file.status = -1;
+                    upload_remove_array.push(file.id);
+                    return true;
+                }
+                console.log(hook_respo);
                 if (uploaderObj.uploader.settings.max_file_size < file.size) {
                     upload_size_error = true
                     upload_error += upload_error_sep + file.name;
                     upload_error_sep = ",";
                     var tr = "<tr style='background-color:lightpink;color:black' id='" + file.id + "'><td>" + file.name + "(" + plupload.formatSize(file.size) + ")" + "</td><td colspan='3'> Max file size is " + plupload.formatSize(uploaderObj.uploader.settings.max_file_size) + "</td></tr>"
-                    $("#rtMedia-queue-list tbody").append(tr)
+                    $("#rtMedia-queue-list tbody").append(tr);
                     return true;
                 }
                 tdName = document.createElement("td");
@@ -290,6 +298,10 @@ jQuery(function($) {
                 });
 
             });
+            $.each(upload_remove_array, function(i, rfile) {
+                up.removeFile(up.getFile(rfile));
+            });
+            
             if (upload_size_error) {
                 // alert(upload_error + " because max file size is " + plupload.formatSize(uploaderObj.uploader.settings.max_file_size) );
             }
