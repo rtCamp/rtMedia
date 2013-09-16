@@ -973,10 +973,11 @@ add_action ( 'rtmedia_before_media_gallery', 'rtmedia_create_album' );
 add_action ( 'rtmedia_before_album_gallery', 'rtmedia_create_album' );
 
 function rtmedia_create_album () {
-    if ( ! is_rtmedia_album_enable ()  ) {
+    if ( ! is_rtmedia_album_enable () ) {
 	return;
     }
-    $return = apply_filters("rtm_is_album_create_enable");
+    $return = true;
+    $return = apply_filters("rtm_is_album_create_enable",$return);
     if(!$return) {
 	return;
     }
