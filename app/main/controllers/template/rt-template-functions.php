@@ -282,6 +282,7 @@ function rtmedia_album_image ( $size = 'thumbnail', $id = false) {
     $model = new RTMediaModel();
     if($id == false){
         $id = $rtmedia_media->id;
+        
     }
     global $rtmedia_query;
     $media = $model->get_media ( array( 'album_id' => $id, 'media_type' => 'photo', 'media_author' => $rtmedia_query->query['context_id'] ), 0, 1 );
@@ -976,7 +977,7 @@ function rtmedia_create_album () {
     if ( ! is_rtmedia_album_enable () ) {
 	return;
     }
-    $return = true;
+    $return = false;
     $return = apply_filters("rtm_is_album_create_enable",$return);
     if(!$return) {
 	return;
