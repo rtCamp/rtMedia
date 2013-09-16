@@ -140,6 +140,7 @@ class RTMediaBuddyPressActivity {
         );
         if ( wp_is_mobile () )
             $params[ 'multi_selection' ] = false;
+        $params = apply_filters("rtmedia_modify_upload_params",$params);
         wp_enqueue_script ( 'rtmedia-backbone', false, '', false, true );
         $is_album = is_rtmedia_album () ? true : false;
         $is_edit_allowed = is_rtmedia_edit_allowed () ? true : false;
