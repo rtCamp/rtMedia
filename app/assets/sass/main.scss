@@ -416,8 +416,10 @@ button.mfp-close {
  margin-top:-10px;
 }
 
-.mejs-container .mejs-controls {
-    position: static;
+#object-nav,#group-admins,.item-list-tabs{
+    li{
+        list-style:none;
+    }
 }
 
 .mejs-video .mejs-controls {
