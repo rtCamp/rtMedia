@@ -260,7 +260,6 @@ jQuery(function($) {
                     upload_remove_array.push(file.id);
                     return true;
                 }
-                console.log(hook_respo);
                 if (uploaderObj.uploader.settings.max_file_size < file.size) {
                     upload_size_error = true
                     upload_error += upload_error_sep + file.name;
@@ -418,7 +417,14 @@ jQuery(document).ready(function($) {
 
     objUploadView.uploader.bind('FilesAdded', function(up, files) {
         //$("#aw-whats-new-submit").attr('disabled', 'disabled');
+        var upload_remove_array= [];
         $.each(files, function(i, file) {
+            var hook_respo = rtMediaHook.call('rtmedia_js_file_added', [up,file, "#rtMedia-update-queue-list"]);
+            if( hook_respo == false){
+                    file.status = -1;
+                    upload_remove_array.push(file.id);
+                    return true;
+            }
             tdName = document.createElement("span");
             tdName.innerHTML = file.name;
             tdStatus = document.createElement("span");
@@ -429,6 +435,9 @@ jQuery(document).ready(function($) {
             tr.appendChild(tdName);
             tr.appendChild(tdStatus);
             $("#rtMedia-update-queue-list").append(tr);
+        });
+        $.each(upload_remove_array, function(i, rfile) {
+                up.removeFile(up.getFile(rfile));
         });
     });
 
