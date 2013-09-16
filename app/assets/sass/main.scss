@@ -5,6 +5,11 @@
 	@import "foundation/components/grid";
 	@import "foundation/components/visibility";
 	@import "foundation/components/flex-video";
+        #buddypress{
+            li{
+                list-style:none;
+            }
+        }
 	.row{
                     max-width:95%;
 	}
@@ -59,6 +64,7 @@
 			word-wrap: break-word;
 			margin:10px;
 			float:left;
+                        list-style:none;
 			a {
 				text-decoration:none;
 				h4 {
@@ -73,7 +79,7 @@
 			.mejs-controls {
 				.mejs-time-rail {
 					margin: 8px 2px 2px 0;
-				}				
+				}
 			}
 		}
 	}
@@ -186,7 +192,7 @@
 					}
 					.mejs-layers .mejs-poster {
 					    overflow: hidden;
-					}					
+					}
 				}
 				.rtmedia-media-title {
 					margin: 0 0 5px 0;
@@ -309,7 +315,7 @@
                                 overflow:hidden;
 								.mejs-overlay-button{
 									margin: -50px 0 0 -50px;
-								}					
+								}
                             }
                         }
                     }
@@ -321,7 +327,7 @@
 
 
 #buddypress, .rtmedia-container {
-	.mejs-controls {		
+	.mejs-controls {
 		button {
 			padding: 4px 8px;
 			border: none;
@@ -349,12 +355,12 @@
 		}
 		.mejs-fullscreen-button {
 			button {
-				background-position: -32px 0;	
-			}		
+				background-position: -32px 0;
+			}
 		}
 		.mejs-unfullscreen {
 			button{
-				background-position: -32px -16px;	
+				background-position: -32px -16px;
 			}
 		}
 	}
@@ -402,7 +408,7 @@
 }
 .rtmp-uploaded-file {
     width: 100%;
-} 
+}
 .close {
     cursor: pointer;
     color : red;
@@ -413,11 +419,13 @@ button.mfp-arrow,button.mfp-arrow:active {
 }
 
 button.mfp-close {
- margin-top:-10px;  
+ margin-top:-10px;
 }
 
-.mejs-container .mejs-controls {
-    position: static;
+#object-nav,#group-admins,.item-list-tabs{
+    li{
+        list-style:none;
+    }
 }
 
 .mejs-video .mejs-controls {

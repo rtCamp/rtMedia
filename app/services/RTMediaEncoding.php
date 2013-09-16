@@ -44,6 +44,7 @@ class RTMediaEncoding {
                         $blacklist = array('localhost', '127.0.0.1');
                         if (!in_array($_SERVER['HTTP_HOST'], $blacklist)) {
                             add_filter('rtmedia_plupload_files_filter', array($this, 'allowed_types'));
+                            add_filter('allowed_media_type_settings', array($this, 'allowed_types_admin_settings'));
                             add_filter('rtmedia_valid_type_check', array($this, 'bypass_video_audio'), '', 2);
                         }
                     }
@@ -201,6 +202,16 @@ class RTMediaEncoding {
             if (is_rtmedia_upload_music_enabled())
                 $types[0]['extensions'] .= ',wma,ogg,wav,m4a'; //Allow all types of file to be uploded
         }
+        return $types;
+    }
+
+    public function allowed_types_admin_settings($types) {
+	$allowed_video_string = implode(",", $types['video']['extn']);
+	$allowed_audio_string = implode(",", $types['music']['extn']);
+	$allowed_video = explode(",",$allowed_video_string.',mov,m4v,m2v,avi,mpg,flv,wmv,mkv,webm,ogv,mxf,asf,vob,mts,qt,mpeg,x-msvideo');
+	$allowed_audio = explode(",",$allowed_audio_string.',wma,ogg,wav,m4a');
+	$types['video']['extn'] = $allowed_video;
+	$types['music']['extn'] = $allowed_audio;
         return $types;
     }
 

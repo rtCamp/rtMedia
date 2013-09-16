@@ -10,11 +10,17 @@ if (!class_exists('RTMediaSupport')) {
     class RTMediaSupport {
 
         var $debug_info;
-
+	var $curr_sub_tab;
         public function __construct($init = true) {
+	    $this->curr_sub_tab = "debug";
+	    if(isset($_REQUEST['tab'])) {
+		$this->curr_sub_tab = $_REQUEST['tab'];
+	    }
 	    if($init) {
 		$this->debug_info();
-		add_action('rtmedia_admin_page_insert', array($this, 'debug_info_html'), 20);
+		if($this->curr_sub_tab == "debug") {
+		    add_action('rtmedia_admin_page_insert', array($this, 'debug_info_html'), 20);
+		}
 	    }
         }
 
@@ -37,11 +43,51 @@ if (!class_exists('RTMediaSupport')) {
 	    //$this->get_form("premium_support");
 	}
 
+	public function get_current_sub_tab() {
+	    return isset ( $_GET[ 'tab' ] ) ? $_GET[ 'tab' ] : "debug";
+	}
+	public function rtmedia_support_sub_tabs ( $active_tab = '' ) {
+            // Declare local variables
+            $tabs_html = '';
+            $idle_class = 'nav-tab';
+            $active_class = 'nav-tab nav-tab-active';
+
+            // Setup core admin tabs
+            $tabs = array(
+                array(
+                    'href' => get_admin_url ( null, add_query_arg ( array( 'page' => 'rtmedia-support' ), 'admin.php' ) ) . "&tab=debug",
+                    'name' => __ ( 'Debug Info', 'rtmedia' ),
+                    'slug' => 'rtmedia-support&tab=debug'
+                ),
+		array(
+                    'href' => get_admin_url ( null, add_query_arg ( array( 'page' => 'rtmedia-support' ), 'admin.php' ) ) . "&tab=support",
+                    'name' => __ ( 'Support Request', 'rtmedia' ),
+                    'slug' => 'rtmedia-support&tab=support'
+                )
+            );
+	    $tabs = apply_filters ( 'rtmedia_support_add_sub_tabs', $tabs );
+	    // Loop through tabs and build navigation
+	    $tabs_html = "";
+            foreach ( array_values ( $tabs ) as $tab_data ) {
+                $is_current = (bool) ( $tab_data[ 'slug' ] == (RTMediaAdmin::get_current_tab()."&tab=".$this->get_current_sub_tab () ) );
+		$tab_class = $is_current ? $active_class : $idle_class;
+                $tabs_html .= '<a href="' . $tab_data[ 'href' ] . '" class="' . $tab_class . '">' . $tab_data[ 'name' ] . '</a>';
+            }
+            // Output the tabs
+            return $tabs_html;
+
+//            // Do other fun things
+//            do_action('bp_media_admin_tabs');
+        }
+
 	function call_get_form () {
 	    if(isset($_REQUEST['page']) && $_REQUEST['page'] == 'rtmedia-support') {
-		echo "<div id='rtmedia_service_contact_container'><form name='rtmedia_service_contact_detail' method='post'>";
-		$this->get_form($_POST['rtmedia_service_select']);
-		echo "</form></div>";
+		echo "<h2 class='nav-tab-wrapper'>".$this->rtmedia_support_sub_tabs()."</h2>";
+		if($this->curr_sub_tab == "support") {
+		    echo "<div id='rtmedia_service_contact_container'><form name='rtmedia_service_contact_detail' method='post'>";
+		    $this->get_form("premium_support");
+		    echo "</form></div>";
+		}
 	    }
 	}
 
@@ -51,9 +97,53 @@ if (!class_exists('RTMediaSupport')) {
 	    }
 	}
 
+	public function get_plugin_info() {
+	    $active_plugins = (array) get_option( 'active_plugins', array() );
+	    if ( is_multisite() ) {
+		$active_plugins = array_merge( $active_plugins, get_site_option( 'active_sitewide_plugins', array() ) );
+	    }
+	    $rtmedia_plugins = array();
+	    foreach ( $active_plugins as $plugin ) {
+		$plugin_data    = @get_plugin_data( WP_PLUGIN_DIR . '/' . $plugin );
+		$version_string = '';
+		if ( ! empty( $plugin_data['Name'] ) ) {
+		    $rtmedia_plugins[] = $plugin_data['Name'] . ' ' . __( 'by', 'rtmedia' ) . ' ' . $plugin_data['Author'] . ' ' . __( 'version', 'rtmedia' ) . ' ' . $plugin_data['Version'] . $version_string;
+		}
+	    }
+	    if ( sizeof( $rtmedia_plugins ) == 0 ) {
+		return false;
+	    } else {
+		return implode( ', <br/>', $rtmedia_plugins );
+	    }
+	}
+
+	function rtmedia_scan_template_files( $template_path ) {
+	    $files         = scandir( $template_path );
+	    $result        = array();
+	    if ( $files ) {
+		foreach ( $files as $key => $value ) {
+		    if ( ! in_array( $value, array( ".",".." ) ) ) {
+			if ( is_dir( $template_path . DIRECTORY_SEPARATOR . $value ) ) {
+			    $sub_files = $this->rtmedia_scan_template_files( $template_path . DIRECTORY_SEPARATOR . $value );
+			    foreach ( $sub_files as $sub_file ) {
+				$result[] = str_replace(ABSPATH."wp-content/", "", RTMediaTemplate::locate_template(substr($sub_file, 1, ( sizeof($sub_file) - 5 ) )));
+				//$result[] = $value . DIRECTORY_SEPARATOR . $sub_file;
+			    }
+			} else {
+			    if($value != "main.php")
+				$result[] = $value;
+			}
+		    }
+		}
+	    }
+	    return $result;
+	}
+
 	public function debug_info() {
             global $wpdb, $wp_version, $bp;
             $debug_info = array();
+	    $debug_info['Home URL'] = home_url();
+	    $debug_info['Site URL'] = site_url();
             $debug_info['PHP'] = PHP_VERSION;
             $debug_info['MYSQL'] = $wpdb->db_version();
             $debug_info['WordPress'] = $wp_version;
@@ -76,6 +166,22 @@ if (!class_exists('RTMediaSupport')) {
             $debug_info['[php.ini] post_max_size'] = ini_get('post_max_size');
             $debug_info['[php.ini] upload_max_filesize'] = ini_get('upload_max_filesize');
             $debug_info['[php.ini] memory_limit'] = ini_get('memory_limit');
+	    $debug_info['Installed Plugins'] = $this->get_plugin_info();
+	    $active_theme = wp_get_theme();
+	    $debug_info['Theme Name'] = $active_theme->Name;
+	    $debug_info['Theme Version'] = $active_theme->Version;
+	    $debug_info['Author URL'] = $active_theme->{'Author URI'};
+	    $debug_info['Template Overrides'] = implode( ', <br/>', $this->rtmedia_scan_template_files(RTMEDIA_PATH . "/templates/") );
+
+	    $rtMedia_model = new RTMediaModel();
+	    $sql = "select media_type, count(id) as count from {$rtMedia_model->table_name} group by media_type";
+	    global $wpdb;
+	    $results = $wpdb->get_results ( $sql );
+	    if ( $results ) {
+		foreach ( $results as $media ) {
+		    $debug_info["Total ".ucfirst ( $media->media_type ). "s"] = $media->count;
+		}
+	    }
             $this->debug_info = $debug_info;
         }
 
@@ -274,7 +380,7 @@ if (!class_exists('RTMediaSupport')) {
                 $message .= '<table>';
                 foreach ($this->debug_info as $configuration => $value) {
                     $message .= '<tr>
-                                    <td>' . $configuration . '</td><td>' . $value . '</td>
+                                    <td style="vertical-align:top">' . $configuration . '</td><td>' . $value . '</td>
                                 </tr>';
                 }
                 $message .= '</table>';
@@ -289,18 +395,22 @@ if (!class_exists('RTMediaSupport')) {
 	    else {
 		$support_email = "support@rtcamp.com";
 	    }
-	    $support_email = "support+m2p-37e6afd@rtcamp.com";
+	    $support_email = "support+m2p-37e6afd@rtcamp.com";	
             if (wp_mail($support_email, '[rtmedia] ' . $mail_type . ' from ' . str_replace(array('http://', 'https://'), '', $form_data['website']), $message, $headers)) {
+		    echo '<div class="rtmedia-success" style="margin:10px 0;">';
                 if ($form_data['request_type'] == 'new_feature') {
                     echo '<p>' . __('Thank you for your Feedback/Suggestion.', 'rtmedia') . '</p>';
                 } else {
                     echo '<p>' . __('Thank you for posting your support request.', 'rtmedia') . '</p>';
                     echo '<p>' . __('We will get back to you shortly.', 'rtmedia') . '</p>';
                 }
+		    echo '</div>';
             } else {
+		echo '<div class="rtmedia-error">';
                 echo '<p>' . __('Your server failed to send an email.', 'rtmedia') . '</p>';
                 echo '<p>' . __('Kindly contact your server support to fix this.', 'rtmedia') . '</p>';
                 echo '<p>' . sprintf(__('You can alternatively create a support request <a href="%s">here</a>', 'rtmedia'), $rtmedia->support_url) . '</p>';
+		echo '</div>';
             }
             die();
         }

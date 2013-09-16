@@ -158,7 +158,8 @@ class RTMediaFormHandler {
 				'callback' => array('RTMediaFormHandler', 'number'),
 				'args' => array(
 					'key' => 'general_perPageMedia',
-					'value' => $options['general_perPageMedia']
+					'value' => $options['general_perPageMedia'],
+					'class' => array('rtmedia-setting-text-box')
 				)
 			),
 //			'general_enableMediaEndPoint' => array(
@@ -175,7 +176,8 @@ class RTMediaFormHandler {
                                 'callback' => array('RTMediaFormHandler', 'number'),
                                 'args' => array(
                                         'key' => 'general_videothumbs',
-                                        'value' => $options['general_videothumbs']
+                                        'value' => $options['general_videothumbs'],
+					'class' => array('rtmedia-setting-text-box')
                                 )
                         ),
 			'general_showAdminMenu' => array(
@@ -242,11 +244,14 @@ class RTMediaFormHandler {
 		global $rtmedia;
 
 		$render = array();
-
+		$allowed_media_type = $rtmedia->allowed_types;
+		$allowed_media_type = apply_filters("allowed_media_type_settings", $allowed_media_type);
+		//  var_dump($allowed_media_type);
 		foreach ($options as $key => $value) {
 			$data = explode('_', $key);
-			if(!isset($render[$data[1]]))
-				$render[$data[1]] = self::get_type_details($rtmedia->allowed_types, $data[1]);
+			if(!isset($render[$data[1]])) {
+			    $render[$data[1]] = self::get_type_details($allowed_media_type, $data[1]);
+			}
 		}
 		foreach ($options as $key => $value) {
 			$data = explode('_', $key);
@@ -265,19 +270,24 @@ class RTMediaFormHandler {
 ?>
 		<div class="rt-table large-12">
 			<div class="row rt-header">
+			    <?php do_action("rtmedia_type_settings_before_heading"); ?>
 				<h4 class="columns large-3"><?php echo __("Media Type","rtmedia") ?></h4>
 				<h4 class="columns large-3 rtm-show-tooltip" title="<?php echo __("Allows you to upload a particular media type on your post.","rtmedia"); ?>"><abbr><?php echo __("Allow Upload","rtmedia"); ?></abbr></h4>
 				<h4 class="columns large-3 rtm-show-tooltip" title="<?php echo __("Put a specific media as a featured content on the post.","rtmedia"); ?>"><abbr><?php echo __("Set Featured","rtmedia"); ?></abbr></h4>
 				<h4 class="columns large-3 rtm-show-tooltip" title="<?php echo __("File extensions that can be uploaded on the website.","rtmedia"); ?>"><abbr><?php echo __("File Extensions","rtmedia"); ?></abbr></h4>
+				<?php do_action("rtmedia_type_settings_after_heading"); ?>
 			</div>
+
 <?php
 		$even = 0;
 		foreach ($render_data as $key=>$section) {
-			if( ++$even%2 )
-				echo '<div class="row rt-odd">';
-			else
-				echo '<div class="row rt-even">';
-
+			if( ++$even%2 ) {
+			    echo '<div class="row rt-odd">';
+			}
+			else {
+			    echo '<div class="row rt-even">';
+			}
+			    do_action("rtmedia_type_settings_before_body");
 				echo '<div class="columns large-3">' . $section['name'] . '</div>';
 				$args = array('key' => 'allowedTypes_'.$key.'_enabled', 'value' => $section['enabled']);
 				echo '<div class="columns large-3">';
@@ -288,6 +298,7 @@ class RTMediaFormHandler {
 					self::checkbox($args);
 				echo '</div>';
 				echo '<div class="columns large-3">' . implode(', ', $section['extn']) . '</div>';
+			    do_action("rtmedia_type_settings_after_body",$key, $section);
 			echo '</div>';
 		}
 		echo '</div>';

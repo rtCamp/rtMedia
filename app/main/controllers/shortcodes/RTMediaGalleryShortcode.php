@@ -59,6 +59,8 @@ class RTMediaGalleryShortcode {
         if ( wp_is_mobile () )
             $params[ 'multi_selection' ] = false;
 
+	$params = apply_filters("rtmedia_modify_upload_params",$params);
+
         wp_localize_script ( 'rtmedia-backbone', 'rtMedia_plupload_config', $params );
         wp_localize_script ( 'rtmedia-backbone', 'rMedia_loading_file', admin_url ( "/images/loading.gif" ) );
     }
