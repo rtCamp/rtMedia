@@ -310,5 +310,3 @@ function rt_theme_compat_reset_post( $args = array() ) {
     }
 
 }
-
-?>

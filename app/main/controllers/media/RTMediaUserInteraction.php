@@ -267,5 +267,3 @@ class RTMediaUserInteraction {
 	}
 
 }
-
-?>

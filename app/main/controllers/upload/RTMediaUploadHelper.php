@@ -25,7 +25,4 @@ class RTMediaUploadHelper {
 		$end_point->template_redirect();
 	}
 }
-
-
-
 ?>

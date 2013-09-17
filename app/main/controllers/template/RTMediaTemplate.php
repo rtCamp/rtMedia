@@ -534,5 +534,3 @@ class RTMediaTemplate {
     }
 
 }
-
-?>

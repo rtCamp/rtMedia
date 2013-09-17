@@ -192,4 +192,3 @@ if ( ! function_exists ( "bp_media_featured" ) ) {
     }
 
 }
-?>

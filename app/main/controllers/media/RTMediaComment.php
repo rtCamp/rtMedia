@@ -76,5 +76,3 @@ class RTMediaComment {
 		do_action('rtmedia_before_remove_comment', $attr);
 	}
 }
-
-?>
