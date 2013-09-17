@@ -1,4 +1,4 @@
-    <?php
+<?php
 
 /**
  * Checks at any point of time any media is left to be processed in the db pool
