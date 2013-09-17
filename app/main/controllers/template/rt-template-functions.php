@@ -1218,4 +1218,3 @@ function get_rtmedia_allowed_upload_type () {
     }
     return $allow_type_str;
 }
-

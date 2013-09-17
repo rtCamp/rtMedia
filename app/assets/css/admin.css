@@ -652,9 +652,7 @@ abbr {
 			font-size: 14px
 }
 
-.rtmedia-admin-ad{
-    padding: 3px;
-}
 .rtmedia-admin-ad img{
    text-align: center;
+   width:100%;
 }
