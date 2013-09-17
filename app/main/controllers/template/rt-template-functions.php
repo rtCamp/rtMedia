@@ -979,6 +979,7 @@ function rtmedia_create_album () {
     if ( ! is_rtmedia_album_enable ()  ) {
 	return;
     }
+    $return = true;
     $return = apply_filters("rtm_is_album_create_enable");
     if(!$return) {
 	return;
