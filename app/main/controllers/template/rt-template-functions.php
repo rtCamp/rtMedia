@@ -1,4 +1,4 @@
-<?php
+    <?php
 
 /**
  * Checks at any point of time any media is left to be processed in the db pool
@@ -282,7 +282,6 @@ function rtmedia_album_image ( $size = 'thumbnail', $id = false) {
     $model = new RTMediaModel();
     if($id == false){
         $id = $rtmedia_media->id;
-        
     }
     global $rtmedia_query;
     $media = $model->get_media ( array( 'album_id' => $id, 'media_type' => 'photo', 'media_author' => $rtmedia_query->query['context_id'] ), 0, 1 );
@@ -469,7 +468,7 @@ function rtmedia_actions () {
  */
 function rtmedia_comments () {
 
-    $html = '<ul id="rtmedia_comment_ul" class="large-block-grid-1">';
+    $html = '<ul id="rtmedia_comment_ul" class="large-block-grid-1" data-action="'. get_rtmedia_permalink ( rtmedia_id () ) .'delete-comment/">';
 
     global $wpdb, $rtmedia_media;
 
@@ -488,6 +487,9 @@ function rmedia_single_comment ( $comment ) {
     $html = "";
     $html .= '<li class="rtmedia-comment">';
     $html .= '<div class ="rtmedia-comment-author">' . (($comment[ 'comment_author' ]) ? $comment[ 'comment_author' ] : 'Annonymous') . '  said : </div>';
+    if(current_user_can('administrator')){
+        $html .= '<a href="#' . $comment['comment_ID'] . '" class = "rtmedia-delte-comment" title="Delete Comment">x</a>';
+    }
     $html .= '<div class="rtmedia-comment-content">' . $comment[ 'comment_content' ] . '</div>';
     $html .= '<div class ="rtmedia-comment-date"> on ' . $comment[ 'comment_date_gmt' ] . '</div>';
 //			$html .= '<a href></a>';
@@ -974,15 +976,13 @@ add_action ( 'rtmedia_before_media_gallery', 'rtmedia_create_album' );
 add_action ( 'rtmedia_before_album_gallery', 'rtmedia_create_album' );
 
 function rtmedia_create_album () {
-    if ( ! is_rtmedia_album_enable () ) {
+    if ( ! is_rtmedia_album_enable ()  ) {
 	return;
     }
-    $return = true;
-    $return = apply_filters("rtm_is_album_create_enable",$return);
-    if( !$return ) {
+    $return = apply_filters("rtm_is_album_create_enable");
+    if(!$return) {
 	return;
     }
-    
     global $rtmedia_query;
     $user_id = get_current_user_id ();
     $display = false;
