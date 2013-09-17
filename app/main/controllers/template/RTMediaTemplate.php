@@ -403,26 +403,19 @@ class RTMediaTemplate {
         
         if ( count ( $_POST ) ) {
             /**
-             * /media/comments [POST]
-             * Post a comment to the album by post id
+             * /media/id/delete-comment [POST]
+             * Delete Comment by Comment ID
              */
         
-//            $nonce = $_REQUEST[ 'rtmedia_comment_nonce' ];
-//            if ( wp_verify_nonce ( $nonce, 'rtmedia_comment_nonce' ) ) {
-                if ( empty ( $_POST[ 'comment_id' ] ) ) {
-                    return false;
-                }
-               
-                $comment = new RTMediaComment();
-                $id = $_POST['comment_id'];
-//                $mediaModel = new RTMediaModel();
+            if ( empty ( $_POST[ 'comment_id' ] ) ) {
+                return false;
+            }
+            $comment = new RTMediaComment();
+            $id = $_POST['comment_id'];
              
-                $comment_deleted = $comment->remove ( $id );
-                echo $comment_deleted;
-                exit;
-//            } else {
-//                echo "Ooops !!! Invalid access. No nonce was found !!";
-//            }
+            $comment_deleted = $comment->remove ( $id );
+            echo $comment_deleted;
+            exit;
         }
     }
 
