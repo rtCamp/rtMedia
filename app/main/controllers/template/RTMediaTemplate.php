@@ -60,7 +60,6 @@ class RTMediaTemplate {
         //print_r($rtmedia_query);
 
         if ( isset ( $rtmedia_query->action_query->action ) ) {
-            //echo $rtmedia_query->action_query->action;
             do_action ( 'rtmedia_pre_action_' . $rtmedia_query->action_query->action );
         } else {
             do_action ( 'rtmedia_pre_action_default' );
@@ -69,10 +68,11 @@ class RTMediaTemplate {
         $this->check_return_json ();
 
         $this->check_return_upload ();
-
+       
         if ( in_array ( $rtmedia_interaction->context->type, array( "profile", "group" ) ) ) {
-
-
+            
+            global $rtmedia_query;
+            
             $this->check_return_edit ();
 
             $this->check_return_delete ();
@@ -80,6 +80,8 @@ class RTMediaTemplate {
             $this->check_return_merge ();
 
             $this->check_return_comments ();
+            
+            $this->check_delete_comments ();
 
             return $this->get_default_template ();
         } else if ( ! $shortcode_attr ) {
@@ -351,7 +353,6 @@ class RTMediaTemplate {
 
     function check_return_comments () {
         global $rtmedia_query;
-
         if ( $rtmedia_query->action_query->action != 'comment' )
             return;
         if ( isset ( $rtmedia_query->action_query->id ) && count ( $_POST ) ) {
@@ -364,6 +365,7 @@ class RTMediaTemplate {
                 if ( empty ( $_POST[ 'comment_content' ] ) ) {
                     return false;
                 }
+               
                 $comment = new RTMediaComment();
                 $attr = $_POST;
                 $mediaModel = new RTMediaModel();
@@ -390,6 +392,37 @@ class RTMediaTemplate {
             } else {
                 echo "Ooops !!! Invalid access. No nonce was found !!";
             }
+        }
+    }
+    
+    function check_delete_comments () {
+        global $rtmedia_query;
+   
+        if ( $rtmedia_query->action_query->action != 'delete-comment' )
+            return;
+        
+        if ( count ( $_POST ) ) {
+            /**
+             * /media/comments [POST]
+             * Post a comment to the album by post id
+             */
+        
+//            $nonce = $_REQUEST[ 'rtmedia_comment_nonce' ];
+//            if ( wp_verify_nonce ( $nonce, 'rtmedia_comment_nonce' ) ) {
+                if ( empty ( $_POST[ 'comment_id' ] ) ) {
+                    return false;
+                }
+               
+                $comment = new RTMediaComment();
+                $id = $_POST['comment_id'];
+//                $mediaModel = new RTMediaModel();
+             
+                $comment_deleted = $comment->remove ( $id );
+                echo $comment_deleted;
+                exit;
+//            } else {
+//                echo "Ooops !!! Invalid access. No nonce was found !!";
+//            }
         }
     }
 
@@ -534,3 +567,5 @@ class RTMediaTemplate {
     }
 
 }
+
+?>
