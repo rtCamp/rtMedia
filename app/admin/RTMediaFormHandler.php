@@ -12,6 +12,61 @@
  */
 class RTMediaFormHandler {
 
+	public static function selectBox($args) {
+	    global $rtmedia;
+		$options = $rtmedia->options;
+		$defaults = array(
+			'key' => '',
+			'desc' => '',
+			'default'  => '',
+			'show_desc' => false,
+			'selects' => array()
+		);
+		$args = wp_parse_args($args, $defaults);
+		extract($args);
+
+		if (!empty($key)) {
+			$args['name'] = 'rtmedia-options[' . $key . ']';
+		}
+
+		$args['rtForm_options'] = array();
+		foreach ($selects as $value => $key) {
+			$args['rtForm_options'][] = array(
+				$key => $value,
+				'selected' => ($default == $value) ? true : false
+			);
+		}
+
+		$chkObj = new rtForm();
+		echo $chkObj->get_select($args);
+	}
+
+	public static function texarea($args) {
+	    global $rtmedia;
+		$options = $rtmedia->options;
+		$defaults = array(
+			'key' => '',
+			'desc' => '',
+			'show_desc' => false
+		);
+		$args = wp_parse_args($args, $defaults);
+		extract($args);
+
+		if (!isset($value)) {
+			trigger_error(__('Please provide "value" in the argument.', 'rtmedia'));
+			return;
+		}
+
+		if (!empty($key)) {
+			$args['name'] = 'rtmedia-options[' . $key . ']';
+		}
+
+		$args['rtForm_options'] = array(array('' => 1, 'checked' => $value));
+
+		$chkObj = new rtForm();
+		echo $chkObj->get_textarea($args);
+	}
+
 	public static function checkbox($args) {
 
 		global $rtmedia;
@@ -526,4 +581,3 @@ class RTMediaFormHandler {
 		}
 	}
 }
-?>
