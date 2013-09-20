@@ -591,7 +591,7 @@ jQuery(document).ready(function($) {
        e.preventDefault();
        var current_comment = jQuery(this);
        var current_comment_parent = current_comment.parent();
-       current_comment_parent.fadeToggle();
+       current_comment_parent.css('opacity', '0.4');
        var comment_href = current_comment.attr('href'); 
        var comment_id = comment_href.split('#');
        comment_id = comment_id[1];
@@ -608,7 +608,8 @@ jQuery(document).ready(function($) {
            success: function(res) {
             if(res !='undefined' && res == 1){
                 current_comment_parent.hide('slow', function(){ current_comment_parent.remove(); });
-            }
+            }else
+                current_comment.css('opacity', '1');
             
            }
        });
