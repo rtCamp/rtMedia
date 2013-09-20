@@ -74,7 +74,7 @@ class RTMediaComment {
 	function remove($id) {
 
 		do_action('rtmedia_before_remove_comment', $id);
-       
+                
                 if(!current_user_can('administrator') || empty($id))
                     return;
                 
