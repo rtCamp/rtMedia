@@ -586,10 +586,12 @@ jQuery(document).ready(function($) {
         return false;
     });
 
-    //Delete comment
+	 //Delete comment
     jQuery(document).on('click', '.rtmedia-delte-comment', function(e){
        e.preventDefault();
        var current_comment = jQuery(this);
+       var current_comment_parent = current_comment.parent();
+       current_comment_parent.fadeToggle();
        var comment_href = current_comment.attr('href'); 
        var comment_id = comment_href.split('#');
        comment_id = comment_id[1];
@@ -605,7 +607,7 @@ jQuery(document).ready(function($) {
            data: { comment_id : comment_id },
            success: function(res) {
             if(res !='undefined' && res == 1){
-                current_comment.parent().hide('slow', function(){ current_comment.remove(); });
+                current_comment_parent.hide('slow', function(){ current_comment_parent.remove(); });
             }
             
            }

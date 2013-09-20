@@ -85,5 +85,3 @@ class RTMediaComment {
                 return $comment_deleted;
 	}
 }
-
-?>
