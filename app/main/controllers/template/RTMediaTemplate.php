@@ -80,6 +80,8 @@ class RTMediaTemplate {
             $this->check_return_merge ();
 
             $this->check_return_comments ();
+            
+            $this->check_delete_comments ();
 
             return $this->get_default_template ();
         } else if ( ! $shortcode_attr ) {
@@ -397,7 +399,7 @@ class RTMediaTemplate {
     }
     function check_delete_comments () {
         global $rtmedia_query;
-   
+        
         if ( $rtmedia_query->action_query->action != 'delete-comment' )
             return;
         
@@ -420,7 +422,6 @@ class RTMediaTemplate {
                 $delete = bp_activity_delete( array( 'id' => $activity_id, 'type' => 'activity_comment' ) );
      
             }
-            
             $comment_deleted = $comment->remove ( $id );
          
            
