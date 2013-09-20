@@ -71,8 +71,6 @@ class RTMediaTemplate {
        
         if ( in_array ( $rtmedia_interaction->context->type, array( "profile", "group" ) ) ) {
             
-            global $rtmedia_query;
-            
             $this->check_return_edit ();
 
             $this->check_return_delete ();
