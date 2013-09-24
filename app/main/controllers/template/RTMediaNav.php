@@ -302,6 +302,9 @@ class RTMediaNav {
     }
 
     function set_privacy ( $profile ) {
+        if( is_rt_admin () )
+            return 60;
+        
         $user = $this->visitor_id ();
         $privacy = 0;
         if ( $user ) {
