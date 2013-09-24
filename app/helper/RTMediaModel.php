@@ -37,7 +37,7 @@ class RTMediaModel extends RTDBModel {
      */
     function get ( $columns, $offset = false, $per_page = false, $order_by = 'media_id desc' ) {
         global $wpdb;
-        $select = "SELECT * FROM {$this->table_name}";
+        $select = "SELECT {$this->table_name}.* FROM {$this->table_name}";
         $join = "";
         $where = " where 2=2 ";
         $temp = 65;
