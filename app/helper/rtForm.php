@@ -7,9 +7,9 @@
 
 /**
  * Description of rtForms
- * 
+ *
  * Usage Example :
- * 
+ *
  * $obj = new rtForm();
  *
  *   ----textbox test
@@ -710,4 +710,3 @@ if(!class_exists("rtForm")) {
 		}
 	}
 }
-?>
