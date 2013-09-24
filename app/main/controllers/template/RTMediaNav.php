@@ -146,7 +146,7 @@ class RTMediaNav {
             $counts[ 'total' ][ "album" ] = $counts[ 'total' ][ "album" ] + $other_count;
             echo apply_filters ( 'rtmedia_sub_nav_albums', '<li id="rtmedia-nav-item-albums-li" ' . $albums . '><a id="rtmedia-nav-item-albums" href="' . trailingslashit ( $link ) . RTMEDIA_MEDIA_SLUG . '/album/">' . __ ( "Albums", "rtmedia" ) . '<span>' . ((isset ( $counts[ 'total' ][ "album" ] )) ? $counts[ 'total' ][ "album" ] : 0 ) . '</span>' . '</a></li>' );
         }
-
+        
         foreach ( $rtmedia->allowed_types as $type ) {
             //print_r($type);
             if ( ! $rtmedia->options[ 'allowedTypes_' . $type[ 'name' ] . '_enabled' ] )
@@ -193,6 +193,8 @@ class RTMediaNav {
                     . $type[ 'plural_label' ] . '<span>' . ((isset ( $counts[ 'total' ][ $type[ 'name' ] ] )) ? $counts[ 'total' ][ $type[ 'name' ] ] : 0) . '</span>' . '</a></li>', $type[ 'name' ]
             );
         }
+        
+        do_action("add_extra_sub_nav");
     }
 
     function refresh_counts ( $user_id, $where ) {
