@@ -211,7 +211,7 @@ class RTMedia
 
         // sanitize all the types
         $allowed_types = $this->sanitize_allowed_types($allowed_types);
-
+        
         // set the allowed types property
         $this->allowed_types = $allowed_types;
     }
@@ -232,8 +232,9 @@ class RTMedia
 
             if (!isset($type['name']) || // check if a name is set
                     empty($type['name']) ||
-                    !isset($type['extn']) || // check if file extensions are set
-                    empty($type['extn']) || strstr($type['name'], " ") || strstr($type['name'], "_")) {
+                   //commented this section for playlist // !isset($type['extn']) || // check if file extensions are set
+                   //commented this section for playlist  // empty($type['extn']) || 
+                    strstr($type['name'], " ") || strstr($type['name'], "_")) {
                 unset($allowed_types[$key]); // if not unset this type
                 continue;
             }
@@ -600,7 +601,8 @@ class RTMedia
                 }
             }
         }
-
+        
+        $this->set_allowed_types(); // Define allowed types
 
         global $rtmedia_buddypress_activity;
         $rtmedia_buddypress_activity = new RTMediaBuddyPressActivity();
