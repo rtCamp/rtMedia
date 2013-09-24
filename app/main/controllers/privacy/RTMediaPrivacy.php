@@ -256,6 +256,9 @@ class RTMediaPrivacy {
     }
 
     function activity_privacy ( $sql , $select_sql , $from_sql , $where_sql , $sort , $pag_sql = '' ) {
+        if( is_rt_admin() )
+              return $sql;
+        
         $sql           = '' ;
         $where         = '' ;
         global $bp , $wpdb ;
