@@ -176,7 +176,7 @@ class RTMediaMedia {
      * @return boolean
      */
     function update ( $id, $data, $media_id ) {
-
+	
         /* action to perform any task before updating a media */
         do_action ( 'rtmedia_before_update_media', $id );
 
