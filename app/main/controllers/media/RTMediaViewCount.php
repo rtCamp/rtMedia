@@ -18,11 +18,14 @@ class RTMediaViewCount extends RTMediaUserInteraction {
 	    'privacy' => 0
 	    );
 	parent::__construct ($args);
+	remove_filter('rtmedia_action_buttons_before_delete', array($this,'button_filter'));
+        add_filter ( 'rtmedia_action_buttons_after_delete', array( $this, 'button_filter' ), 99 );
     }
 
     function render () {
 	    $link = trailingslashit(get_rtmedia_permalink($this->media->id)).$this->action.'/';
-	    echo '<form action="'. $link .'" id="rtmedia-media-view-form"></form>';
+	    echo '<div style="clear:both"></div><form action="'. $link .'" id="rtmedia-media-view-form"></form>';
+	    do_action("rtmedia_view_media_counts",$this);
     }
 
     function process() {
@@ -66,4 +69,3 @@ class RTMediaViewCount extends RTMediaUserInteraction {
 	die();
     }
 }
-?>
