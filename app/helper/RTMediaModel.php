@@ -145,13 +145,13 @@ class RTMediaModel extends RTDBModel {
         if ( is_multisite () )
             $order_by = "blog_id ," . $order_by;
 
-        $sql = "SELECT * FROM {$this->table_name} WHERE (id IN(SELECT DISTINCT (album_id)
-                            FROM {$this->table_name} ";
-        $where = " WHERE media_author = $author_id
+        $sql = "SELECT * FROM {$this->table_name}  ";
+        $where = " WHERE (id IN(SELECT DISTINCT (album_id)
+				    FROM {$this->table_name}WHERE media_author = $author_id
                                     AND album_id IS NOT NULL
                                     AND media_type <> 'album' AND context <> 'group') OR (media_author = $author_id ))
-                                        AND media_type = 'album'
-                                        AND (context <> 'group' or context is NULL) ";
+			    AND media_type = 'album'
+			    AND (context <> 'group' or context is NULL) ";
 	$where = apply_filters ( 'rtmedia-get-album-where-query', $where, $this->table_name );
 	$qorder_by = " ORDER BY {$this->table_name}.$order_by ";
         $sql .= $where . $qorder_by ;
