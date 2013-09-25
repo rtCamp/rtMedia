@@ -34,7 +34,7 @@ class RTMediaPrivacy {
         }
     }
 
-    function select_privacy_ui ( $echo = true ) {
+    function select_privacy_ui ( $echo = true, $select_id = false ) {
         global $rtmedia ;
 
         if ( ! is_rtmedia_privacy_enable () )
@@ -60,6 +60,9 @@ class RTMediaPrivacy {
             'name'  => 'privacy' ,
             'class' => array ( 'privacy' )
                 ) ;
+	if($select_id && $select_id != "") {
+	    $attributes['id'] = $select_id;
+	}
         global $rtmedia ;
         $privacy_levels = $rtmedia -> privacy_settings[ 'levels' ] ;
         if ( class_exists ( 'BuddyPress' ) ) {
@@ -258,7 +261,7 @@ class RTMediaPrivacy {
     function activity_privacy ( $sql , $select_sql , $from_sql , $where_sql , $sort , $pag_sql = '' ) {
         if( is_rt_admin() )
               return $sql;
-        
+
         $sql           = '' ;
         $where         = '' ;
         global $bp , $wpdb ;
