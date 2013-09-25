@@ -190,15 +190,6 @@ class RTMediaFormHandler {
 					'desc' => __('Enable Comments in rtMedia','rtmedia')
 				)
 			),
-			'general_downloadButton' => array(
-				'title' => __('Download Button','rtmedia'),
-				'callback' => array('RTMediaFormHandler', 'checkbox'),
-				'args' => array(
-					'key' => 'general_downloadButton',
-					'value' => $options['general_downloadButton'],
-					'desc' => __('Display download button under media','rtmedia')
-				)
-			),
 			'general_enableLightbox' => array(
 				'title' => __('Lightbox','rtmedia'),
 				'callback' => array('RTMediaFormHandler', 'checkbox'),

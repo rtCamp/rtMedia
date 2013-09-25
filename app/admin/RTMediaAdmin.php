@@ -80,7 +80,7 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
         function rtmedia_advertisement(){ ?>
     <div class='rtmedia-admin-ad'>
         <a href='http://rtcamp.com/store/rtmedia-pro/' target='_blank' title='rtMedia Pro'>
-            <img src='http://cdn.rtcamp.com/wp-content/uploads/2013/09/rtMedia-pro-ad-300x300px-2-RS.png?' alt='rtMedia Pro is released' />
+            <img src='http://rtcamp.com/wp-content/uploads/2013/09/rtMedia-pro-ad-300x300px-2-RS.png' alt='rtMedia Pro is released' />
         </a>
     </div>
         <?php }
@@ -104,7 +104,7 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
                                     ?>
                                     <tr>
                                         <td class = "b"> <?php echo $media->count; ?> </td>
-                                        <td class = "t"><?php _e ( ucfirst ( $media->media_type ) . "s" ) ?></td>
+                                        <td class = "t"><?php echo constant(strtoupper('RTMEDIA_'.$media->media_type.'_PLURAL_LABEL') ); ?></td>
                                     </tr>
                                     <?php
                                 }

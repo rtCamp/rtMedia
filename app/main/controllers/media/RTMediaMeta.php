@@ -45,7 +45,7 @@ class RTMediaMeta {
 	}
 
 	function add_meta($id=false,$key=false,$value=false,$duplicate=false){
-		$this->update_meta($id=false,$key=false,$value=false,$duplicate=true);
+		return $this->update_meta($id,$key,$value,$duplicate);
 	}
 
 	function update_meta($id=false,$key=false,$value=false,$duplicate=false){
@@ -65,6 +65,7 @@ class RTMediaMeta {
                         $media_meta = $this->model->insert(array('media_id'=>$id,'meta_key'=>$key, 'meta_value'=>$value));
                     }
 		}
+                return $media_meta;
 	}
 
 	function delete_meta($id=false,$key=false){
