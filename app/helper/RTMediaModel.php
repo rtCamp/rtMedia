@@ -147,7 +147,7 @@ class RTMediaModel extends RTDBModel {
 
         $sql = "SELECT * FROM {$this->table_name}  ";
         $where = " WHERE (id IN(SELECT DISTINCT (album_id)
-				    FROM {$this->table_name}WHERE media_author = $author_id
+				    FROM {$this->table_name} WHERE media_author = $author_id
                                     AND album_id IS NOT NULL
                                     AND media_type <> 'album' AND context <> 'group') OR (media_author = $author_id ))
 			    AND media_type = 'album'
