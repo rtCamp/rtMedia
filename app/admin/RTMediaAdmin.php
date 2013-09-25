@@ -104,7 +104,7 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
                                     ?>
                                     <tr>
                                         <td class = "b"> <?php echo $media->count; ?> </td>
-                                        <td class = "t"><?php _e ( ucfirst ( $media->media_type ) . "s" ) ?></td>
+                                        <td class = "t"><?php echo constant(strtoupper('RTMEDIA_'.$media->media_type.'_PLURAL_LABEL') ); ?></td>
                                     </tr>
                                     <?php
                                 }
