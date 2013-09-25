@@ -156,6 +156,20 @@ class RTMediaQuery {
         }
         return false;
     }
+    
+    function is_playlist_gallery () {
+        if ( isset ( $this->action_query->media_type ) && $this->action_query->media_type == 'playlist' ) {
+            return true;
+        }
+        return false;
+    }
+    
+    function is_playlist () {
+        if ( isset ( $this->query[ 'media_type' ] ) && $this->query[ 'media_type' ] == 'playlist' ) {
+            return true;
+        }
+        return false;
+    }
 
     /**
      * json request
@@ -552,7 +566,7 @@ class RTMediaQuery {
         foreach ( $rtmedia->allowed_types as $value ) {
             $allowed_media_types[ ] = $value[ 'name' ];
         }
-
+        
         if ( ! isset ( $this->media_query[ 'media_type' ] ) ) {
             if ( isset ( $this->action_query->media_type ) &&
                     (
@@ -560,7 +574,7 @@ class RTMediaQuery {
                     $this->action_query->media_type == 'album'
                     )
             ) {
-                $this->media_query[ 'media_type' ] = $this->action_query->media_type;
+               $this->media_query[ 'media_type' ] = $this->action_query->media_type;
             } else {
                 $this->media_query[ 'media_type' ] = array( 'compare' => 'NOT IN', 'value' => array( 'album' ) );
             }

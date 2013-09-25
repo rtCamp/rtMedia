@@ -521,7 +521,7 @@ function rtmedia_pagination_prev_link () {
     $link .= RTMEDIA_MEDIA_SLUG . '/';
 
     if ( isset ( $rtmedia_query->action_query->media_type ) ) {
-        if ( in_array ( $rtmedia_query->action_query->media_type, array( "photo", "music", "video", "album" ) ) )
+        if ( in_array ( $rtmedia_query->action_query->media_type, array( "photo", "music", "video", "album", "playlist" ) ) )
             $link .= $rtmedia_query->action_query->media_type . '/';
     }
     return $link . $page_url;
@@ -554,7 +554,7 @@ function rtmedia_pagination_next_link () {
         $link .= $rtmedia_query->media_query[ "album_id" ] . "/";
     }
     if ( isset ( $rtmedia_query->action_query->media_type ) ) {
-        if ( in_array ( $rtmedia_query->action_query->media_type, array( "photo", "music", "video", "album" ) ) )
+        if ( in_array ( $rtmedia_query->action_query->media_type, array( "photo", "music", "video", "album", "playlist" ) ) )
             $link .= $rtmedia_query->action_query->media_type . '/';
     }
     return $link . $page_url;
@@ -1209,7 +1209,8 @@ function get_rtmedia_allowed_upload_type () {
     $allow_type_str = "";
     $sep = "";
     foreach ( $rtmedia->allowed_types as $type ) {
-        if ( call_user_func ( "is_rtmedia_upload_" . $type[ "name" ] . "_enabled" ) ) {
+        
+        if (function_exists("is_rtmedia_upload_" . $type[ "name" ] . "_enabled") && call_user_func ( "is_rtmedia_upload_" . $type[ "name" ] . "_enabled" ) ) {
             foreach ( $type[ "extn" ] as $extn ) {
                 $allow_type_str .= $sep . $extn;
                 $sep = ",";
