@@ -32,17 +32,13 @@ if ( ! empty ( $_SERVER[ 'HTTP_X_REQUESTED_WITH' ] ) &&
 
         if ( $template_type == 'buddypress' ) {
             //load buddypress markup
-            ?>
-
-
-            <?php
             if ( bp_displayed_user_id () ) {
 
                 //if it is a buddypress member profile
                 ?>
                 <div id="item-header">
 
-            <?php bp_get_template_part ( 'members/single/member-header' ) ?>
+                    <?php bp_get_template_part ( 'members/single/member-header' ) ?>
 
                 </div><!--#item-header-->
 
@@ -52,7 +48,7 @@ if ( ! empty ( $_SERVER[ 'HTTP_X_REQUESTED_WITH' ] ) &&
 
                             <?php bp_get_displayed_user_nav () ; ?>
 
-            <?php do_action ( 'bp_member_options_nav' ) ; ?>
+                            <?php do_action ( 'bp_member_options_nav' ) ; ?>
 
                         </ul>
                     </div>
@@ -61,13 +57,13 @@ if ( ! empty ( $_SERVER[ 'HTTP_X_REQUESTED_WITH' ] ) &&
                 <div id="item-body">
 
                     <?php do_action ( 'bp_before_member_body' ) ; ?>
-            <?php do_action ( 'bp_before_member_media' ) ; ?>
+                    <?php do_action ( 'bp_before_member_media' ) ; ?>
                     <div class="item-list-tabs no-ajax" id="subnav">
                         <ul>
 
                             <?php rtmedia_sub_nav () ; ?>
 
-            <?php do_action ( 'rtmedia_sub_nav' ) ; ?>
+                            <?php do_action ( 'rtmedia_sub_nav' ) ; ?>
 
                         </ul>
                     </div><!-- .item-list-tabs -->
@@ -84,7 +80,7 @@ if ( ! empty ( $_SERVER[ 'HTTP_X_REQUESTED_WITH' ] ) &&
                             ?>
                             <div id="item-header">
 
-                    <?php bp_get_template_part ( 'groups/single/group-header' ) ; ?>
+                                <?php bp_get_template_part ( 'groups/single/group-header' ) ; ?>
 
                             </div><!--#item-header-->
 
@@ -94,7 +90,7 @@ if ( ! empty ( $_SERVER[ 'HTTP_X_REQUESTED_WITH' ] ) &&
 
                                         <?php bp_get_options_nav () ; ?>
 
-                    <?php do_action ( 'bp_group_options_nav' ) ; ?>
+                                        <?php do_action ( 'bp_group_options_nav' ) ; ?>
 
                                     </ul>
                                 </div>
@@ -104,13 +100,13 @@ if ( ! empty ( $_SERVER[ 'HTTP_X_REQUESTED_WITH' ] ) &&
                             <div id="item-body">
 
                                 <?php do_action ( 'bp_before_group_body' ) ; ?>
-                    <?php do_action ( 'bp_before_group_media' ) ; ?>
+                                <?php do_action ( 'bp_before_group_media' ) ; ?>
                                 <div class="item-list-tabs no-ajax" id="subnav">
                                     <ul>
 
                                         <?php rtmedia_sub_nav () ; ?>
 
-                    <?php do_action ( 'rtmedia_sub_nav' ) ; ?>
+                                        <?php do_action ( 'rtmedia_sub_nav' ) ; ?>
 
                                     </ul>
                                 </div><!-- .item-list-tabs -->
@@ -119,31 +115,34 @@ if ( ! empty ( $_SERVER[ 'HTTP_X_REQUESTED_WITH' ] ) &&
                         endif ;
                     } // group/profile if/else
                     ?>
-                             </div>   
-                                <?php
-                } //if BuddyPress
-            } // if ajax
-            // include the right rtMedia template
-            rtmedia_load_template () ;
+                <?php
+            }else{ ////if BuddyPress
+                ?>
+                            <div id="item-body">
+                            <?php
+            }
+        } // if ajax
+        // include the right rtMedia template
+        rtmedia_load_template () ;
+?>
+                            </div>
+<?php
+        
+        if ( ! $rt_ajax_request ) {
+            if ( function_exists ( "bp_displayed_user_id" ) && $template_type == 'buddypress' && (bp_displayed_user_id () || bp_is_group ()) ) {
 
-
-
-
-            if ( ! $rt_ajax_request ) {
-                if ( function_exists ( "bp_displayed_user_id" ) && $template_type == 'buddypress' && (bp_displayed_user_id () || bp_is_group ()) ) {
-
-                    if ( bp_is_group () ) {
-                        do_action ( 'bp_after_group_media' ) ;
-                        do_action ( 'bp_after_group_body' ) ;
-                    }
-                    if ( bp_displayed_user_id () ) {
-                        do_action ( 'bp_after_member_media' ) ;
-                        do_action ( 'bp_after_member_body' ) ;
-                    }
+                if ( bp_is_group () ) {
+                    do_action ( 'bp_after_group_media' ) ;
+                    do_action ( 'bp_after_group_body' ) ;
+                }
+                if ( bp_displayed_user_id () ) {
+                    do_action ( 'bp_after_member_media' ) ;
+                    do_action ( 'bp_after_member_body' ) ;
                 }
             }
-            //close all markup
-            ?>
+        }
+        //close all markup
+        ?>
     </div><!--#buddypress-->
             <?php
             //get_sidebar($template_type);

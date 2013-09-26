@@ -156,14 +156,14 @@ class RTMediaQuery {
         }
         return false;
     }
-    
+
     function is_playlist_gallery () {
         if ( isset ( $this->action_query->media_type ) && $this->action_query->media_type == 'playlist' ) {
             return true;
         }
         return false;
     }
-    
+
     function is_playlist () {
         if ( isset ( $this->query[ 'media_type' ] ) && $this->query[ 'media_type' ] == 'playlist' ) {
             return true;
@@ -447,9 +447,11 @@ class RTMediaQuery {
     function register_set_gallery_template_filter($template,$attr){
         remove_filter("rtmedia-before-template", array(&$this,"register_set_gallery_template_filter"),10,2);
         return "album-gallery";
-        
+
     }
     function privacy_filter ( $where, $table_name ) {
+        if( is_rt_admin() )
+            return $where;
         $user = $this->get_user ();
 
         $where .= " AND ({$table_name}.privacy is NULL OR {$table_name}.privacy=0";
@@ -564,7 +566,7 @@ class RTMediaQuery {
         foreach ( $rtmedia->allowed_types as $value ) {
             $allowed_media_types[ ] = $value[ 'name' ];
         }
-        
+
         if ( ! isset ( $this->media_query[ 'media_type' ] ) ) {
             if ( isset ( $this->action_query->media_type ) &&
                     (

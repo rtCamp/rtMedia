@@ -119,6 +119,15 @@ Please visit [rtMedia's Features page](http://rtcamp.com/rtmedia/?utm_source####
 
 Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "Visit rtMedia's Features page") to get some details about future releases.
 
+#### 3.1.6 ####
+* Removed download button enable/disable settings
+* Bug fixed for translation
+* added support for Playlists and its required filters
+
+#### 3.1.5 ####
+* Ignore privacy if admin user.
+* Other minor issues.
+
 #### 3.1.4 ####
 * Fixed Trailing space issue.
 
@@ -541,8 +550,8 @@ Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_sou
 * HTML5 Audio Tag Support (with fallback)
 * HTML5 Video Tag Support (with fallback)
 
-#### 3.1.4 ####
-Requires BuddyPress 1.7 or higher, if using BuddyPress. Fixed template issues, other bug fixes
+#### 3.1.6 ####
+Requires BuddyPress 1.7 or higher, if using BuddyPress. Fix for translation, other bug fixes
 
 ## Sponsors ##
 

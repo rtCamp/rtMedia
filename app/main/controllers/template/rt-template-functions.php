@@ -282,7 +282,7 @@ function rtmedia_album_image ( $size = 'thumbnail', $id = false) {
     $model = new RTMediaModel();
     if($id == false){
         $id = $rtmedia_media->id;
-        
+
     }
     global $rtmedia_query;
     $media = $model->get_media ( array( 'album_id' => $id, 'media_type' => 'photo', 'media_author' => $rtmedia_query->query['context_id'] ), 0, 1 );
@@ -982,7 +982,7 @@ function rtmedia_create_album () {
     if( !$return ) {
 	return;
     }
-    
+
     global $rtmedia_query;
     $user_id = get_current_user_id ();
     $display = false;
@@ -1009,6 +1009,7 @@ function rtmedia_create_album () {
             <input type="text" id="rtmedia_album_name" value="" />
             <input type="hidden" id="rtmedia_album_context" value="<?php echo $rtmedia_query->query[ 'context' ]; ?>">
             <input type="hidden" id="rtmedia_album_context_id" value="<?php echo $rtmedia_query->query[ 'context_id' ]; ?>">
+	    <?php do_action("rtmedia_add_album_privacy"); ?>
             <button type="button" id="rtmedia_create_new_album"><?php _e ( "Create Album", "rtmedia" ); ?>
             </button>
         </div><?php
@@ -1209,7 +1210,7 @@ function get_rtmedia_allowed_upload_type () {
     $allow_type_str = "";
     $sep = "";
     foreach ( $rtmedia->allowed_types as $type ) {
-        
+
         if (function_exists("is_rtmedia_upload_" . $type[ "name" ] . "_enabled") && call_user_func ( "is_rtmedia_upload_" . $type[ "name" ] . "_enabled" ) ) {
             foreach ( $type[ "extn" ] as $extn ) {
                 $allow_type_str .= $sep . $extn;
@@ -1218,4 +1219,9 @@ function get_rtmedia_allowed_upload_type () {
         }
     }
     return $allow_type_str;
+}
+
+
+function is_rt_admin(){
+    return current_user_can("list_users");
 }
