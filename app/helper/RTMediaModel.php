@@ -37,7 +37,8 @@ class RTMediaModel extends RTDBModel {
      */
     function get ( $columns, $offset = false, $per_page = false, $order_by = 'media_id desc' ) {
         global $wpdb;
-        $select = "SELECT {$this->table_name}.* FROM {$this->table_name}";
+        $select = "SELECT {$this->table_name}.* ";
+	$from = " FROM {$this->table_name} ";
         $join = "";
         $where = " where 2=2 ";
         $temp = 65;
@@ -70,13 +71,16 @@ class RTMediaModel extends RTDBModel {
                     $where .= " AND {$this->table_name}.{$colname} = '{$colvalue}'";
             }
         }
+	$qgroup_by = " ";
         $qorder_by = " ORDER BY {$this->table_name}.$order_by";
 
+        $select = apply_filters ( 'rtmedia-model-select-query', $select, $this->table_name );
         $join = apply_filters ( 'rtmedia-model-join-query', $join, $this->table_name );
         $where = apply_filters ( 'rtmedia-model-where-query', $where, $this->table_name );
+        $qgroup_by = apply_filters ( 'rtmedia-model-group-by-query', $qgroup_by, $this->table_name );
         $qorder_by = apply_filters ( 'rtmedia-model-order-by-query', $qorder_by, $this->table_name );
 
-        $sql = $select . $join . $where .$qorder_by;
+        $sql = $select . $from . $join . $where . $qgroup_by . $qorder_by;
         if ( is_integer ( $offset ) && is_integer ( $per_page ) ) {
             $sql .= ' LIMIT ' . $offset . ',' . $per_page;
         }
@@ -141,14 +145,16 @@ class RTMediaModel extends RTDBModel {
         if ( is_multisite () )
             $order_by = "blog_id ," . $order_by;
 
-        $sql = "SELECT * FROM {$this->table_name} WHERE (id IN(SELECT DISTINCT (album_id)
-                            FROM {$this->table_name}
-                                WHERE media_author = $author_id
+        $sql = "SELECT * FROM {$this->table_name}  ";
+        $where = " WHERE (id IN(SELECT DISTINCT (album_id)
+				    FROM {$this->table_name} WHERE media_author = $author_id
                                     AND album_id IS NOT NULL
                                     AND media_type <> 'album' AND context <> 'group') OR (media_author = $author_id ))
-                                        AND media_type = 'album'
-                                        AND (context <> 'group' or context is NULL) ";
-        $sql .= " ORDER BY {$this->table_name}.$order_by";
+			    AND media_type = 'album'
+			    AND (context <> 'group' or context is NULL) ";
+	$where = apply_filters ( 'rtmedia-get-album-where-query', $where, $this->table_name );
+	$qorder_by = " ORDER BY {$this->table_name}.$order_by ";
+        $sql .= $where . $qorder_by ;
 
         if ( is_integer ( $offset ) && is_integer ( $per_page ) ) {
             $sql .= ' LIMIT ' . $offset . ',' . $per_page;

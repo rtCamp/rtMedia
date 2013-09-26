@@ -235,24 +235,6 @@ class RTMediaFormHandler {
 					'desc' => __('Enable menu in WordPress admin bar','rtmedia')
 				)
 			)
-//			,'general_viewcount' => array(
-//				'title' => __('View count','rtmedia'),
-//				'callback' => array('RTMediaFormHandler', 'checkbox'),
-//				'args' => array(
-//					'key' => 'general_viewcount',
-//					'value' => $options['general_viewcount'],
-//					'desc' => __('Enable media view count','rtmedia')
-//				)
-//			),
-//			'general_uniqueviewcount' => array(
-//				'title' => __('Unique view count','rtmedia'),
-//				'callback' => array('RTMediaFormHandler', 'checkbox'),
-//				'args' => array(
-//					'key' => 'general_uniqueviewcount',
-//					'value' => $options['general_uniqueviewcount'],
-//					'desc' => __('Enable Unique media view count','rtmedia')
-//				)
-//			)
 		);
 
 		return $render;

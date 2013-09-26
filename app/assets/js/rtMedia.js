@@ -124,6 +124,7 @@ jQuery('document').ready(function($) {
         $albumname = jQuery.trim(jQuery('#rtmedia_album_name').val());
         $context = jQuery.trim(jQuery('#rtmedia_album_context').val());
         $context_id = jQuery.trim(jQuery('#rtmedia_album_context_id').val());
+	$privacy = jQuery.trim(jQuery('#rtmedia_select_album_privacy').val());
         if ($albumname != '') {
             var data = {
                 action: 'rtmedia_create_album',
@@ -131,7 +132,9 @@ jQuery('document').ready(function($) {
                 context: $context,
                 context_id: $context_id
             };
-
+	   if($privacy !== "") {
+	       data['privacy'] = $privacy;
+	   }
             // since 2.8 ajaxurl is always defined in the admin header and points to admin-ajax.php
             $("#rtmedia_create_new_album").attr('disabled', 'disabled');
             var old_val = $("#rtmedia_create_new_album").html();

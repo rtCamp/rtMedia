@@ -169,7 +169,7 @@ class RTMediaAlbum {
             'activity_id' => NULL,
             'privacy' => NULL
         );
-
+	$attributes = apply_filters("rtmedia_before_save_album_attributes",$attributes, $_POST);
         $rtmedia_id = $this->media->insert_album ( $attributes );
         $rtMediaNav = new RTMediaNav();
 	$media_count = $rtMediaNav->refresh_counts ( $context_id, array( "context" => $context, 'media_author' => $context_id ) );
