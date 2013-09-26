@@ -274,6 +274,7 @@ class RTMediaNav {
 
     function process_count ( $media_count, $privacy ) {
         $total = array( 'all' => 0 );
+        $media_count = !empty( $media_count ) ? $media_count : array();
 
         foreach ( $media_count as $private => $ind_count ) {
             if ( $private <= $privacy ) {
