@@ -80,7 +80,7 @@ class RTMediaTemplate {
             $this->check_return_merge ();
 
             $this->check_return_comments ();
-
+            
             return $this->get_default_template ();
         } else if ( ! $shortcode_attr ) {
             return $this->get_default_template ();
@@ -491,11 +491,11 @@ class RTMediaTemplate {
                     $template = 'media-single-edit';
             }else {
                 return;
-            }
+            } 
+            $template = apply_filters('rtmedia_template_filter',$template);
         }
-        
-        $context = apply_filters( 'rtmedia_context_filter' , $context ); // filter added for rtmedia_pro playist
-        $template = apply_filters( 'rtmedia_template_filter', $template ); // filter added for rtmedia_pro playist
+
+        $context = apply_filters( 'rtmedia_context_filter' , $context );
         
         $template_name = $template . '.php';
         

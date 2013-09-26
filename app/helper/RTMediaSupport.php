@@ -12,6 +12,10 @@ if (!class_exists('RTMediaSupport')) {
         var $debug_info;
 	var $curr_sub_tab;
         public function __construct($init = true) {
+            
+            if( !is_admin () ) { 
+                return;
+            }
 	    $this->curr_sub_tab = "debug";
 	    if(isset($_REQUEST['tab'])) {
 		$this->curr_sub_tab = $_REQUEST['tab'];

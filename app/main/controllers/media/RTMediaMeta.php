@@ -75,7 +75,7 @@ class RTMediaMeta {
 		}else{
 			$where = array('media_id' => $id, 'meta_key' => $key);
 		}
-		$this->model->delete($where);
+		return $this->model->delete($where);
 	}
 
 }
