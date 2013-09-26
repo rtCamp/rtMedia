@@ -12,6 +12,10 @@ if (!class_exists('RTMediaSupport')) {
         var $debug_info;
 	var $curr_sub_tab;
         public function __construct($init = true) {
+            
+            if( !is_admin () ) { 
+                return;
+            }
 	    $this->curr_sub_tab = "debug";
 	    if(isset($_REQUEST['tab'])) {
 		$this->curr_sub_tab = $_REQUEST['tab'];
@@ -118,25 +122,26 @@ if (!class_exists('RTMediaSupport')) {
 	}
 
 	function rtmedia_scan_template_files( $template_path ) {
-	    $files         = scandir( $template_path );
-	    $result        = array();
-	    if ( $files ) {
-		foreach ( $files as $key => $value ) {
-		    if ( ! in_array( $value, array( ".",".." ) ) ) {
-			if ( is_dir( $template_path . DIRECTORY_SEPARATOR . $value ) ) {
-			    $sub_files = $this->rtmedia_scan_template_files( $template_path . DIRECTORY_SEPARATOR . $value );
-			    foreach ( $sub_files as $sub_file ) {
-				$result[] = str_replace(ABSPATH."wp-content/", "", RTMediaTemplate::locate_template(substr($sub_file, 1, ( sizeof($sub_file) - 5 ) )));
-				//$result[] = $value . DIRECTORY_SEPARATOR . $sub_file;
-			    }
-			} else {
-			    if($value != "main.php")
-				$result[] = $value;
-			}
-		    }
-		}
-	    }
-	    return $result;
+            
+                $files         = scandir( $template_path );
+                $result        = array();
+                if ( $files ) {
+                    foreach ( $files as $key => $value ) {
+                        if ( ! in_array( $value, array( ".",".." ) ) ) {
+                            if ( is_dir( $template_path . DIRECTORY_SEPARATOR . $value ) ) {
+                                $sub_files = $this->rtmedia_scan_template_files( $template_path . DIRECTORY_SEPARATOR . $value );
+                                foreach ( $sub_files as $sub_file ) {
+                                    $result[] = str_replace(ABSPATH."wp-content/", "", RTMediaTemplate::locate_template(substr($sub_file, 0, ( sizeof($sub_file) - 5 ) )));
+                                    //$result[] = $value . DIRECTORY_SEPARATOR . $sub_file;
+                                }
+                            } else {
+                                if($value != "main.php")
+                                    $result[] = $value;
+                            }
+                        }
+                    }
+                }
+                return $result;
 	}
 
 	public function debug_info() {
