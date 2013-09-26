@@ -12,6 +12,10 @@ if (!class_exists('RTMediaSupport')) {
         var $debug_info;
 	var $curr_sub_tab;
         public function __construct($init = true) {
+            
+            if( !is_admin () ) { 
+                return;
+            }
 	    $this->curr_sub_tab = "debug";
 	    if(isset($_REQUEST['tab'])) {
 		$this->curr_sub_tab = $_REQUEST['tab'];
@@ -126,7 +130,7 @@ if (!class_exists('RTMediaSupport')) {
 			if ( is_dir( $template_path . DIRECTORY_SEPARATOR . $value ) ) {
 			    $sub_files = $this->rtmedia_scan_template_files( $template_path . DIRECTORY_SEPARATOR . $value );
 			    foreach ( $sub_files as $sub_file ) {
-				$result[] = str_replace(ABSPATH."wp-content/", "", RTMediaTemplate::locate_template(substr($sub_file, 1, ( sizeof($sub_file) - 5 ) )));
+				$result[] = str_replace(ABSPATH."wp-content/", "", RTMediaTemplate::locate_template(substr($sub_file, 0, ( sizeof($sub_file) - 5 ) )));
 				//$result[] = $value . DIRECTORY_SEPARATOR . $sub_file;
 			    }
 			} else {
@@ -395,7 +399,7 @@ if (!class_exists('RTMediaSupport')) {
 	    else {
 		$support_email = "support@rtcamp.com";
 	    }
-	    $support_email = "support+m2p-37e6afd@rtcamp.com";	
+	    $support_email = "support+m2p-37e6afd@rtcamp.com";
             if (wp_mail($support_email, '[rtmedia] ' . $mail_type . ' from ' . str_replace(array('http://', 'https://'), '', $form_data['website']), $message, $headers)) {
 		    echo '<div class="rtmedia-success" style="margin:10px 0;">';
                 if ($form_data['request_type'] == 'new_feature') {

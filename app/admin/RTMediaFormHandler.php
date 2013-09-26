@@ -12,6 +12,61 @@
  */
 class RTMediaFormHandler {
 
+	public static function selectBox($args) {
+	    global $rtmedia;
+		$options = $rtmedia->options;
+		$defaults = array(
+			'key' => '',
+			'desc' => '',
+			'default'  => '',
+			'show_desc' => false,
+			'selects' => array()
+		);
+		$args = wp_parse_args($args, $defaults);
+		extract($args);
+
+		if (!empty($key)) {
+			$args['name'] = 'rtmedia-options[' . $key . ']';
+		}
+
+		$args['rtForm_options'] = array();
+		foreach ($selects as $value => $key) {
+			$args['rtForm_options'][] = array(
+				$key => $value,
+				'selected' => ($default == $value) ? true : false
+			);
+		}
+
+		$chkObj = new rtForm();
+		echo $chkObj->get_select($args);
+	}
+
+	public static function texarea($args) {
+	    global $rtmedia;
+		$options = $rtmedia->options;
+		$defaults = array(
+			'key' => '',
+			'desc' => '',
+			'show_desc' => false
+		);
+		$args = wp_parse_args($args, $defaults);
+		extract($args);
+
+		if (!isset($value)) {
+			trigger_error(__('Please provide "value" in the argument.', 'rtmedia'));
+			return;
+		}
+
+		if (!empty($key)) {
+			$args['name'] = 'rtmedia-options[' . $key . ']';
+		}
+
+		$args['rtForm_options'] = array(array('' => 1, 'checked' => $value));
+
+		$chkObj = new rtForm();
+		echo $chkObj->get_textarea($args);
+	}
+
 	public static function checkbox($args) {
 
 		global $rtmedia;
@@ -135,15 +190,6 @@ class RTMediaFormHandler {
 					'desc' => __('Enable Comments in rtMedia','rtmedia')
 				)
 			),
-			'general_downloadButton' => array(
-				'title' => __('Download Button','rtmedia'),
-				'callback' => array('RTMediaFormHandler', 'checkbox'),
-				'args' => array(
-					'key' => 'general_downloadButton',
-					'value' => $options['general_downloadButton'],
-					'desc' => __('Display download button under media','rtmedia')
-				)
-			),
 			'general_enableLightbox' => array(
 				'title' => __('Lightbox','rtmedia'),
 				'callback' => array('RTMediaFormHandler', 'checkbox'),
@@ -189,24 +235,6 @@ class RTMediaFormHandler {
 					'desc' => __('Enable menu in WordPress admin bar','rtmedia')
 				)
 			)
-//			,'general_viewcount' => array(
-//				'title' => __('View count','rtmedia'),
-//				'callback' => array('RTMediaFormHandler', 'checkbox'),
-//				'args' => array(
-//					'key' => 'general_viewcount',
-//					'value' => $options['general_viewcount'],
-//					'desc' => __('Enable media view count','rtmedia')
-//				)
-//			),
-//			'general_uniqueviewcount' => array(
-//				'title' => __('Unique view count','rtmedia'),
-//				'callback' => array('RTMediaFormHandler', 'checkbox'),
-//				'args' => array(
-//					'key' => 'general_uniqueviewcount',
-//					'value' => $options['general_uniqueviewcount'],
-//					'desc' => __('Enable Unique media view count','rtmedia')
-//				)
-//			)
 		);
 
 		return $render;
@@ -526,4 +554,3 @@ class RTMediaFormHandler {
 		}
 	}
 }
-?>

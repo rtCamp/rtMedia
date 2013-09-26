@@ -528,12 +528,14 @@ class RTMediaTemplate {
                     $template = 'media-single-edit';
             }else {
                 return;
-            }
+            } 
+            $template = apply_filters('rtmedia_template_filter',$template);
         }
 
-
+        $context = apply_filters( 'rtmedia_context_filter' , $context );
+        
         $template_name = $template . '.php';
-
+        
         if ( $context === false ) {
             $context = 'media/';
         }
@@ -541,11 +543,8 @@ class RTMediaTemplate {
             $context .='/';
         }
 
-
         $path = 'rtmedia/' . $context;
         $ogpath = 'templates/' . $context;
-
-
 
         if ( file_exists ( trailingslashit ( STYLESHEETPATH ) . $path . $template_name ) ) {
             if ( $url ) {
@@ -566,7 +565,8 @@ class RTMediaTemplate {
                 $located = trailingslashit ( RTMEDIA_PATH ) . $ogpath . $template_name;
             }
         }
-
+        
+        $located = apply_filters('rtmedia_located_template', $located );
         return $located;
     }
 
