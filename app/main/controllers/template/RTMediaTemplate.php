@@ -81,6 +81,8 @@ class RTMediaTemplate {
 
             $this->check_return_comments ();
             
+            $this->check_delete_comments ();
+
             return $this->get_default_template ();
         } else if ( ! $shortcode_attr ) {
             return $this->get_default_template ();
@@ -378,8 +380,11 @@ class RTMediaTemplate {
                     global $rtmedia_buddypress_activity;
                     remove_action ( "bp_activity_comment_posted", array( $rtmedia_buddypress_activity, "comment_sync" ), 10, 2 );
                     if ( function_exists ( 'bp_activity_new_comment' ) ) {
-                        bp_activity_new_comment ( array( 'content' => $_POST[ 'comment_content' ], 'activity_id' => $result[ 0 ]->activity_id ) );
+                       $comment_activity_id = bp_activity_new_comment ( array( 'content' => $_POST[ 'comment_content' ], 'activity_id' => $result[ 0 ]->activity_id ) );
                     }
+                }
+                if(!empty($comment_activity_id)){
+                    update_comment_meta($id, 'activity_id', $comment_activity_id);
                 }
                 if ( isset ( $_POST[ "rtajax" ] ) ) {
                     global $wpdb;
@@ -390,6 +395,38 @@ class RTMediaTemplate {
             } else {
                 echo "Ooops !!! Invalid access. No nonce was found !!";
             }
+        }
+    }
+    function check_delete_comments () {
+        global $rtmedia_query;
+        
+        if ( $rtmedia_query->action_query->action != 'delete-comment' )
+            return;
+        
+        if ( count ( $_POST ) ) {
+            /**
+             * /media/id/delete-comment [POST]
+             * Delete Comment by Comment ID
+             */
+        
+            if ( empty ( $_POST[ 'comment_id' ] ) ) {
+                return false;
+            }
+            $comment = new RTMediaComment();
+            $id = $_POST['comment_id'];
+            $activity_id = get_comment_meta($id, 'activity_id',true);
+            
+            if(!empty($activity_id)){
+                $activity_deleted = bp_activity_delete_comment ($activity_id, $id);
+                
+                $delete = bp_activity_delete( array( 'id' => $activity_id, 'type' => 'activity_comment' ) );
+     
+            }
+            $comment_deleted = $comment->remove ( $id );
+         
+           
+            echo $comment_deleted;
+            exit;
         }
     }
 

@@ -121,12 +121,15 @@
 		padding: 1px 5px 25px;
 		width: 391px;
                 max-width:100%;
+                position: relative;
 
 		.rtmedia-comment-author {
 			display: block;
+                        float: left;
 		}
 
 		.rtmedia-comment-content {
+                        clear: left;
 			display: block;
 		}
 
@@ -431,3 +434,4 @@ button.mfp-close {
 .mejs-video .mejs-controls {
     position: absolute;
 }
+.rtmedia-delte-comment{position: absolute;right: 8px;}
