@@ -1225,3 +1225,14 @@ function get_rtmedia_allowed_upload_type () {
 function is_rt_admin(){
     return current_user_can("list_users");
 }
+
+function get_rtmedia_like($media_id = false) {
+    $mediamodel = new RTMediaModel();
+    $actions = $mediamodel->get( array( 'id' => rtmedia_id($media_id) ) );
+    if(isset($actions[ 0 ]->likes)){
+	$actions = intval($actions[ 0 ]->likes);
+    }else{
+	$actions = 0;
+    }
+    return $actions;
+}
