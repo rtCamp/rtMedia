@@ -495,8 +495,9 @@ class RTMediaFormHandler {
 				'args' => array(
 					'key' => 'buddypress_limitOnActivity',
 					'value' => $options['buddypress_limitOnActivity'],
-					'desc' => __('Limit items posted in activity feed', 'rtmedia')
-				)
+					'desc' => __('Limit items posted in activity feed', 'rtmedia'),
+					'class' => array('rtmedia-setting-text-box')
+				),
 			)
 		);
 
