@@ -488,6 +488,15 @@ class RTMediaFormHandler {
 					'value' => $options['buddypress_enableOnActivity'],
 					'desc' => __('Enable Media on BuddyPress Activities','rtmedia')
 				)
+			),
+			'rtmedia-activity-feed-limit' => array(
+				'title' => __('Limit items posted in activity feed', 'rtmedia'),
+				'callback' => array('RTMediaFormHandler', 'number'),
+				'args' => array(
+					'key' => 'buddypress_limitOnActivity',
+					'value' => $options['buddypress_limitOnActivity'],
+					'desc' => __('Limit items posted in activity feed', 'rtmedia')
+				)
 			)
 		);
 
