@@ -1012,6 +1012,12 @@ msgstr ""
 msgid "Error creating attachment for the media file, please try again"
 msgstr ""
 
+#: app/main/controllers/media/RTMediaMedia.php:481
+msgid "%s added a %s"
+msgid_plural "%s added %d %s."
+msgstr[0] ""
+msgstr[1] ""
+
 #: app/main/controllers/shortcodes/RTMediaUploadShortcode.php:64
 msgid "The web browser on your device cannot be used to upload files."
 msgstr ""
