@@ -1355,6 +1355,10 @@ msgstr ""
 msgid "Oops !! There's no media found for the request !!"
 msgstr ""
 
+#: templates/media/media-single.php:36
+msgid "Comments"
+msgstr ""
+
 #: templates/media/album-single-edit.php:27
 msgid "Select All Visible"
 msgstr ""
