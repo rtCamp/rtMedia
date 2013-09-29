@@ -89,8 +89,8 @@ class RTMediaUserInteraction {
 
 
 	function init(){
-                $this->model = new RTMediaModel();
-                global $rtmedia_query;
+				$this->model = new RTMediaModel();
+				global $rtmedia_query;
 		if(!isset($rtmedia_query->action_query)) return;
 		if(!isset($rtmedia_query->action_query->id)) return;
 
@@ -147,7 +147,7 @@ class RTMediaUserInteraction {
 	function interactor_privacy(){
 
 		if(!isset($this->interactor)) return 0;
-                if($this->interactor === false ) return 0;
+				if($this->interactor === false ) return 0;
 		if($this->interactor ==$this->owner) return 60;
 
 		$friends = new RTMediaFriends();
@@ -178,14 +178,14 @@ class RTMediaUserInteraction {
 
 		return $clickable;
 	}
-        function before_render(){
+		function before_render(){
 
-        }
+		}
 
 	function render(){
-                $before_render = $this->before_render();
-                if($before_render === false )
-                    return false;
+				$before_render = $this->before_render();
+				if($before_render === false )
+					return false;
 		$button = '';
 		if($this->is_visible()){
 			$link = trailingslashit(get_rtmedia_permalink($this->media->id)).
@@ -245,7 +245,7 @@ class RTMediaUserInteraction {
 		if(empty($this->media)){
 			$this->init();
 		}
-                
+
 		if($this->interactor_privacy >=$this->privacy){
 			$result = $this->process();
 		}

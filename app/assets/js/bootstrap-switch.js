@@ -99,7 +99,7 @@
               }
             });
 
-            $switchLeft.on('click', function (e) {  
+            $switchLeft.on('click', function (e) {
               changeStatus($(this));
             });
 

@@ -18,39 +18,39 @@
  */
 if ( ! defined ( 'RTMEDIA_PATH' ) ) {
 
-    /**
-     *  The server file system path to the plugin directory
-     *
-     */
-    define ( 'RTMEDIA_PATH', plugin_dir_path ( __FILE__ ) );
+	/**
+	 *  The server file system path to the plugin directory
+	 *
+	 */
+	define ( 'RTMEDIA_PATH', plugin_dir_path ( __FILE__ ) );
 }
 
 if ( ! defined ( 'BP_MEDIA_PATH' ) ) {
 
-    /**
-     *  Legacy support
-     *
-     */
-    define ( 'BP_MEDIA_PATH', RTMEDIA_PATH );
+	/**
+	 *  Legacy support
+	 *
+	 */
+	define ( 'BP_MEDIA_PATH', RTMEDIA_PATH );
 }
 
 
 if ( ! defined ( 'RTMEDIA_URL' ) ) {
 
-    /**
-     * The url to the plugin directory
-     *
-     */
-    define ( 'RTMEDIA_URL', plugin_dir_url ( __FILE__ ) );
+	/**
+	 * The url to the plugin directory
+	 *
+	 */
+	define ( 'RTMEDIA_URL', plugin_dir_url ( __FILE__ ) );
 }
 
 if ( ! defined ( 'RTMEDIA_BASE_NAME' ) ) {
 
-    /**
-     * The url to the plugin directory
-     *
-     */
-    define ( 'RTMEDIA_BASE_NAME', plugin_basename ( __FILE__ ) );
+	/**
+	 * The url to the plugin directory
+	 *
+	 */
+	define ( 'RTMEDIA_BASE_NAME', plugin_basename ( __FILE__ ) );
 }
 
 /**
@@ -61,40 +61,40 @@ if ( ! defined ( 'RTMEDIA_BASE_NAME' ) ) {
  * @param string $class_name The name of the class to autoload
  */
 function rtmedia_autoloader ( $class_name ) {
-    $rtlibpath = array(
-        'app/services/' . $class_name . '.php',
-        'app/helper/' . $class_name . '.php',
-        'app/helper/db/' . $class_name . '.php',
-        'app/admin/' . $class_name . '.php',
-        'app/main/interactions/' . $class_name . '.php',
-        'app/main/routers/' . $class_name . '.php',
-        'app/main/routers/query/' . $class_name . '.php',
-        'app/main/controllers/upload/' . $class_name . '.php',
-        'app/main/controllers/upload/processors/' . $class_name . '.php',
-        'app/main/controllers/shortcodes/' . $class_name . '.php',
-        'app/main/controllers/template/' . $class_name . '.php',
-        'app/main/controllers/media/' . $class_name . '.php',
-        'app/main/controllers/group/' . $class_name . '.php',
-        'app/main/controllers/privacy/' . $class_name . '.php',
-        'app/main/controllers/activity/' . $class_name . '.php',
-        'app/main/deprecated/' . $class_name . '.php',
-        'app/main/contexts/' . $class_name . '.php',
-        'app/main/' . $class_name . '.php',
-        'app/main/includes/' . $class_name . '.php',
-        'app/main/widgets/' . $class_name . '.php',
-        'app/main/upload/' . $class_name . '.php',
-        'app/main/upload/processors/' . $class_name . '.php',
-        'app/main/template/' . $class_name . '.php',
-        'app/log/' . $class_name . '.php',
-        'app/importers/' . $class_name . '.php',
-    );
-    foreach ( $rtlibpath as $path ) {
-        $path = RTMEDIA_PATH . $path;
-        if ( file_exists ( $path ) ) {
-            include $path;
-            break;
-        }
-    }
+	$rtlibpath = array(
+		'app/services/' . $class_name . '.php',
+		'app/helper/' . $class_name . '.php',
+		'app/helper/db/' . $class_name . '.php',
+		'app/admin/' . $class_name . '.php',
+		'app/main/interactions/' . $class_name . '.php',
+		'app/main/routers/' . $class_name . '.php',
+		'app/main/routers/query/' . $class_name . '.php',
+		'app/main/controllers/upload/' . $class_name . '.php',
+		'app/main/controllers/upload/processors/' . $class_name . '.php',
+		'app/main/controllers/shortcodes/' . $class_name . '.php',
+		'app/main/controllers/template/' . $class_name . '.php',
+		'app/main/controllers/media/' . $class_name . '.php',
+		'app/main/controllers/group/' . $class_name . '.php',
+		'app/main/controllers/privacy/' . $class_name . '.php',
+		'app/main/controllers/activity/' . $class_name . '.php',
+		'app/main/deprecated/' . $class_name . '.php',
+		'app/main/contexts/' . $class_name . '.php',
+		'app/main/' . $class_name . '.php',
+		'app/main/includes/' . $class_name . '.php',
+		'app/main/widgets/' . $class_name . '.php',
+		'app/main/upload/' . $class_name . '.php',
+		'app/main/upload/processors/' . $class_name . '.php',
+		'app/main/template/' . $class_name . '.php',
+		'app/log/' . $class_name . '.php',
+		'app/importers/' . $class_name . '.php',
+	);
+	foreach ( $rtlibpath as $path ) {
+		$path = RTMEDIA_PATH . $path;
+		if ( file_exists ( $path ) ) {
+			include $path;
+			break;
+		}
+	}
 }
 
 /**

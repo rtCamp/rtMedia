@@ -14,58 +14,58 @@
  *
  *   ----textbox test
  *   echo $obj->get_textbox(array(
- *           "id"=>"myid",
- *           "label" => "mylabel",
- *           "name"=>"myname",
- *           "value"=>"myval",
- *           "class"=> array("myclass")
+ *		   "id"=>"myid",
+ *		   "label" => "mylabel",
+ *		   "name"=>"myname",
+ *		   "value"=>"myval",
+ *		   "class"=> array("myclass")
  *   ))."\n";
  *
  *
  *   ----textarea test
  *   echo $obj->get_textarea(array(
- *           "id"=>"myid",
- *           "name"=>"myname",
- *           "value"=>"myval",
- *           "class"=> array("myclass")
+ *		   "id"=>"myid",
+ *		   "name"=>"myname",
+ *		   "value"=>"myval",
+ *		   "class"=> array("myclass")
  *   ))."\n";
  *
  *
  *   ----radio test
  *   echo $obj->get_radio(array(
- *           "id"=>"myid",
- *           "name"=>"myname",
- *           "class"=>array("myclass"),
- *           "rtForm_options"=>array(
- *                   "op1"=>1,
- *                   "op2"=>2,
- *                   "op3"=>3
- *           )
+ *		   "id"=>"myid",
+ *		   "name"=>"myname",
+ *		   "class"=>array("myclass"),
+ *		   "rtForm_options"=>array(
+ *				   "op1"=>1,
+ *				   "op2"=>2,
+ *				   "op3"=>3
+ *		   )
  *   ))."\n";
 
 
  *   ----checkbox test
  *   echo $obj->get_checkbox(array(
- *           "id"=>"myid",
- *           "name"=>"myname",
- *           "class"=>array("myclass"),
- *           "rtForm_options"=>array(
- *                   "op1"=>1,
- *                   "op2"=>2,
- *                   "op3"=>3
- *           )
+ *		   "id"=>"myid",
+ *		   "name"=>"myname",
+ *		   "class"=>array("myclass"),
+ *		   "rtForm_options"=>array(
+ *				   "op1"=>1,
+ *				   "op2"=>2,
+ *				   "op3"=>3
+ *		   )
  *   ))."\n";
 
  *   ----select test
  *   echo $obj->get_select(array(
- *           "id"=>"myid",
- *           "name"=>"myname",
- *           "class"=>array("myclass"),
- *           "rtForm_options"=>array(
- *                   "op1"=>1,
- *                   "op2"=>2,
- *                   "op3"=>3
- *           )
+ *		   "id"=>"myid",
+ *		   "name"=>"myname",
+ *		   "class"=>array("myclass"),
+ *		   "rtForm_options"=>array(
+ *				   "op1"=>1,
+ *				   "op2"=>2,
+ *				   "op3"=>3
+ *		   )
  *   ))."\n";
  *
  * @author udit
@@ -377,7 +377,7 @@ if(!class_exists("rtForm")) {
 		}
 
 
-        protected function generate_textbox($attributes) {
+		protected function generate_textbox($attributes) {
 
 			$element = 'rtText';
 			if( is_array( $attributes ) ) {

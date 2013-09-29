@@ -632,24 +632,24 @@ abbr {
 }
 
 #rtprogressbar {
-                background-color: #444;
-                border-radius: 13px;
-                padding: 3px;
-                margin-bottom: 10px;
-            }
+  background-color: #444;
+  border-radius: 13px;
+  padding: 3px;
+  margin-bottom: 10px;
+}
 
-            #rtprogressbar div {
-                background-color: #fb6003;
-                width: 0;
-                height: 20px;
-                border-radius: 10px;
-            }
+#rtprogressbar div {
+  background-color: #fb6003;
+  width: 0;
+  height: 20px;
+  border-radius: 10px;
+}
 
 #rtmedia_dashboard_widget p .sub{
-			padding: 0px;
-			margin : 0px;
-			color: #8F8F8F;
-			font-size: 14px
+  padding: 0px;
+  margin : 0px;
+  color: #8F8F8F;
+  font-size: 14px
 }
 
 .rtmedia-admin-ad img{

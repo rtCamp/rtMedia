@@ -13,7 +13,7 @@
 class RTMediaFormHandler {
 
 	public static function selectBox($args) {
-	    global $rtmedia;
+		global $rtmedia;
 		$options = $rtmedia->options;
 		$defaults = array(
 			'key' => '',
@@ -42,7 +42,7 @@ class RTMediaFormHandler {
 	}
 
 	public static function texarea($args) {
-	    global $rtmedia;
+		global $rtmedia;
 		$options = $rtmedia->options;
 		$defaults = array(
 			'key' => '',
@@ -99,7 +99,7 @@ class RTMediaFormHandler {
 	public static function radio($args) {
 
 		global $rtmedia;
-            $options = $rtmedia->options;
+			$options = $rtmedia->options;
 		$defaults = array(
 			'key' => '',
 			'radios' => array(),
@@ -217,15 +217,15 @@ class RTMediaFormHandler {
 //					'desc' => __('Users can access their media on media end point','rtmedia')
 //				)
 //			),
-                        'general_videothumbs' => array(
-                                'title' => __('Number of Video Thumbnails','rtmedia'),
-                                'callback' => array('RTMediaFormHandler', 'number'),
-                                'args' => array(
-                                        'key' => 'general_videothumbs',
-                                        'value' => $options['general_videothumbs'],
+						'general_videothumbs' => array(
+								'title' => __('Number of Video Thumbnails','rtmedia'),
+								'callback' => array('RTMediaFormHandler', 'number'),
+								'args' => array(
+										'key' => 'general_videothumbs',
+										'value' => $options['general_videothumbs'],
 					'class' => array('rtmedia-setting-text-box')
-                                )
-                        ),
+								)
+						),
 			'general_showAdminMenu' => array(
 				'title' => __('Admin Bar Menu','rtmedia'),
 				'callback' => array('RTMediaFormHandler', 'checkbox'),
@@ -244,7 +244,7 @@ class RTMediaFormHandler {
 		global $rtmedia;
 		$options = self::extract_settings('general', $rtmedia->options);
 		$render_options = self::general_render_options($options);
-                $render_options = apply_filters("rtmedia_general_content_add_itmes",$render_options, $options);
+				$render_options = apply_filters("rtmedia_general_content_add_itmes",$render_options, $options);
 		foreach ($render_options as $key => $option) { ?>
 			<div class="row section">
 				<div class="columns large-4"> <?php echo $option['title']; ?> </div>
@@ -278,7 +278,7 @@ class RTMediaFormHandler {
 		foreach ($options as $key => $value) {
 			$data = explode('_', $key);
 			if(!isset($render[$data[1]])) {
-			    $render[$data[1]] = self::get_type_details($allowed_media_type, $data[1]);
+				$render[$data[1]] = self::get_type_details($allowed_media_type, $data[1]);
 			}
 		}
 		foreach ($options as $key => $value) {
@@ -298,7 +298,7 @@ class RTMediaFormHandler {
 ?>
 		<div class="rt-table large-12">
 			<div class="row rt-header">
-			    <?php do_action("rtmedia_type_settings_before_heading"); ?>
+				<?php do_action("rtmedia_type_settings_before_heading"); ?>
 				<h4 class="columns large-3"><?php echo __("Media Type","rtmedia") ?></h4>
 				<h4 class="columns large-3 rtm-show-tooltip" title="<?php echo __("Allows you to upload a particular media type on your post.","rtmedia"); ?>"><abbr><?php echo __("Allow Upload","rtmedia"); ?></abbr></h4>
 				<h4 class="columns large-3 rtm-show-tooltip" title="<?php echo __("Put a specific media as a featured content on the post.","rtmedia"); ?>"><abbr><?php echo __("Set Featured","rtmedia"); ?></abbr></h4>
@@ -310,12 +310,12 @@ class RTMediaFormHandler {
 		$even = 0;
 		foreach ($render_data as $key=>$section) {
 			if( ++$even%2 ) {
-			    echo '<div class="row rt-odd">';
+				echo '<div class="row rt-odd">';
 			}
 			else {
-			    echo '<div class="row rt-even">';
+				echo '<div class="row rt-even">';
 			}
-			    do_action("rtmedia_type_settings_before_body");
+				do_action("rtmedia_type_settings_before_body");
 				echo '<div class="columns large-3">' . $section['name'] . '</div>';
 				$args = array('key' => 'allowedTypes_'.$key.'_enabled', 'value' => $section['enabled']);
 				echo '<div class="columns large-3">';
@@ -326,7 +326,7 @@ class RTMediaFormHandler {
 					self::checkbox($args);
 				echo '</div>';
 				echo '<div class="columns large-3">' . implode(', ', $section['extn']) . '</div>';
-			    do_action("rtmedia_type_settings_after_body",$key, $section);
+				do_action("rtmedia_type_settings_after_body",$key, $section);
 			echo '</div>';
 		}
 		echo '</div>';
@@ -514,23 +514,23 @@ class RTMediaFormHandler {
 	}
 
 	public static function rtForm_settings_tabs_content($page, $sub_tabs) {
-                $rtmedia_admin_ui_handler = "<div class='section-container auto' data-options='deep_linking: true' data-section=''>";
-                $rtmedia_admin_ui_handler = apply_filters("rtmedia_admin_ui_handler_filter",$rtmedia_admin_ui_handler);
-                echo $rtmedia_admin_ui_handler;
-                $sub_tabs = apply_filters("rtmedia_pro_settings_tabs_content",$sub_tabs);
+				$rtmedia_admin_ui_handler = "<div class='section-container auto' data-options='deep_linking: true' data-section=''>";
+				$rtmedia_admin_ui_handler = apply_filters("rtmedia_admin_ui_handler_filter",$rtmedia_admin_ui_handler);
+				echo $rtmedia_admin_ui_handler;
+				$sub_tabs = apply_filters("rtmedia_pro_settings_tabs_content",$sub_tabs);
 		foreach ($sub_tabs as $tab) {
-                    if ( isset ( $tab[ 'icon' ] ) && ! empty ( $tab[ 'icon' ] ) )
-                        $icon = '<i class="' . $tab[ 'icon' ] . '"></i>';
-                    $tab_without_hash = explode("#", $tab[ 'href' ]);
-                    $tab_without_hash  = $tab_without_hash[1];
-                    echo '<section> <p class="title" data-section-title><a id="tab-' . substr ( $tab[ 'href' ], 1 ) . '" title="' . $tab[ 'title' ] . '" href="' . $tab[ 'href' ] . '" class="rtmedia-tab-title ' . sanitize_title ( $tab[ 'name' ] ) . '">' . $icon . ' ' . $tab[ 'name' ] . '</a> </p> <div class="content" data-section-content data-slug="' . $tab_without_hash . '">';
+					if ( isset ( $tab[ 'icon' ] ) && ! empty ( $tab[ 'icon' ] ) )
+						$icon = '<i class="' . $tab[ 'icon' ] . '"></i>';
+					$tab_without_hash = explode("#", $tab[ 'href' ]);
+					$tab_without_hash  = $tab_without_hash[1];
+					echo '<section> <p class="title" data-section-title><a id="tab-' . substr ( $tab[ 'href' ], 1 ) . '" title="' . $tab[ 'title' ] . '" href="' . $tab[ 'href' ] . '" class="rtmedia-tab-title ' . sanitize_title ( $tab[ 'name' ] ) . '">' . $icon . ' ' . $tab[ 'name' ] . '</a> </p> <div class="content" data-section-content data-slug="' . $tab_without_hash . '">';
 				call_user_func($tab['callback'], $page);
-                    echo '</div> </section>';
+					echo '</div> </section>';
 		}
-            ?>
-                </div>
-                     <div class="clearfix"></div>
-            <?php
+			?>
+				</div>
+					 <div class="clearfix"></div>
+			<?php
 	}
 
 	public static function rtForm_do_settings_fields($page, $section) {
