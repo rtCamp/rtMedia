@@ -231,9 +231,9 @@ class RTMediaMedia {
      */
     function delete ( $id, $core = false, $delete_activity = true ) {
         do_action ( 'rtmedia_before_delete_media', $id );
-        
+
         $media = $this->model->get ( array( 'id' => $id ), false, false );
-        
+
         $status = 0;
 
         if ( $media ) {
@@ -260,10 +260,10 @@ class RTMediaMedia {
             if ( ! $core )
                 wp_delete_attachment ( $media[ 0 ]->media_id, true );
             $status = $this->model->delete ( array( 'id' => $id ) );
-            
+
             //delete media meta (view) from wp_rt_rtm_media_meta
             $delete_rtmedia_views = delete_rtmedia_meta( $id , 'view' );
-            
+
             if( $status != 0 && ( $media[0]->media_type == "album" || $media[0]->media_type == "playlist" ) ) {
                 $status =  wp_delete_post( $media[0]->media_id);
             }
@@ -384,7 +384,7 @@ class RTMediaMedia {
                 wp_update_attachment_metadata ( $attachment_id, wp_generate_attachment_metadata ( $attachment_id, $file_object[ $key ][ 'file' ] ) );
             } else {
                 unlink ( $file_object[ $key ][ 'file' ] );
-                throw new Exception ( __ ( 'Error creating attachment for the media file, please try again', 'buddypress-media' ) );
+                throw new Exception ( __ ( 'Error creating attachment for the media file, please try again', 'rtmedia' ) );
             }
             $updated_attachment_ids[ ] = $attachment_id;
         }

@@ -75,7 +75,7 @@ class RTMediaMigration {
     }
 
     function menu () {
-        add_submenu_page ( 'rtmedia-settings', __ ( 'Migration', 'buddypress-media' ), __ ( 'Migration', 'buddypress-media' ), 'manage_options', 'rtmedia-migration', array( $this, 'test' ) );
+        add_submenu_page ( 'rtmedia-settings', __ ( 'Migration', 'rtmedia' ), __ ( 'Migration', 'rtmedia' ), 'manage_options', 'rtmedia-migration', array( $this, 'test' ) );
     }
 
     function get_total_count () {
@@ -111,7 +111,7 @@ class RTMediaMigration {
 							on  wp_bp_activity.item_id = p.meta_value
                                                 where
                                                     type = 'activity_comment'
-                                                    and is_spam <>1 and 
+                                                    and is_spam <>1 and
                                                         not p.meta_value is NULL";
 
 
@@ -135,7 +135,7 @@ class RTMediaMigration {
                 where
                     a.post_id > 0 and  (NOT p.ID IS NULL)
                         and a.meta_key = 'bp-media-key'";
-		 
+
 
         $_SESSION[ "migration_media" ] = $wpdb->get_var ( $sql );
         $count += intval ( $_SESSION[ "migration_media" ] );
