@@ -487,9 +487,9 @@ function rtmedia_comments () {
 function rmedia_single_comment ( $comment ) {
     $html = "";
     $html .= '<li class="rtmedia-comment">';
-    $html .= '<div class ="rtmedia-comment-author">' . (($comment[ 'comment_author' ]) ? $comment[ 'comment_author' ] : 'Annonymous') . '  said : </div>';
+    $html .= '<div class ="rtmedia-comment-author">' . (($comment[ 'comment_author' ]) ? $comment[ 'comment_author' ] : 'Annonymous') . ' ' . __ ( 'said', 'rtmedia' ) . ' : </div>';
     $html .= '<div class="rtmedia-comment-content">' . $comment[ 'comment_content' ] . '</div>';
-    $html .= '<div class ="rtmedia-comment-date"> on ' . $comment[ 'comment_date_gmt' ] . '</div>';
+    $html .= '<div class ="rtmedia-comment-date"> ' . __ ( 'on', 'rtmedia' ) . ' ' . $comment[ 'comment_date_gmt' ] . '</div>';
 //			$html .= '<a href></a>';
     $html .= '</li>';
     return $html;

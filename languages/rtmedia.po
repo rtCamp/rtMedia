@@ -1027,6 +1027,14 @@ msgstr ""
 msgid "Edit"
 msgstr ""
 
+#: app/main/controllers/template/rt-template-functions.php:490
+msgid "said"
+msgstr ""
+
+#: app/main/controllers/template/rt-template-functions.php:492
+msgid "on"
+msgstr ""
+
 #: app/main/controllers/template/rt-template-functions.php:801
 msgid "Type Comment..."
 msgstr ""
