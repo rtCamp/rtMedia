@@ -37,11 +37,11 @@ class RTMediaMeta {
 	private function get_single_meta($id=false, $key=false){
 		if($id===false) return false;
 		if($key===false) return false;
-                $value = $this->model->get(array('media_id'=>$id,'meta_key'=>$key));
-                if(isset($value[0]))
-                    return maybe_unserialize($value[0]->meta_value);
-                else
-                    return false;
+				$value = $this->model->get(array('media_id'=>$id,'meta_key'=>$key));
+				if(isset($value[0]))
+					return maybe_unserialize($value[0]->meta_value);
+				else
+					return false;
 	}
 
 	function add_meta($id=false,$key=false,$value=false,$duplicate=false){
@@ -57,15 +57,15 @@ class RTMediaMeta {
 		if($duplicate===true){
 			$media_meta = $this->model->insert(array('media_id'=>$id,'meta_key'=>$key, 'meta_value'=>$value));
 		}else{
-                    if($this->get_single_meta($id,$key)){
+					if($this->get_single_meta($id,$key)){
 				$meta = array('meta_value' => $value);
 				$where = array('media_id' => $id, 'meta_key' => $key);
 			$media_meta = $this->model->update($meta, $where);
-                    } else {
-                        $media_meta = $this->model->insert(array('media_id'=>$id,'meta_key'=>$key, 'meta_value'=>$value));
-                    }
+					} else {
+						$media_meta = $this->model->insert(array('media_id'=>$id,'meta_key'=>$key, 'meta_value'=>$value));
+					}
 		}
-                return $media_meta;
+				return $media_meta;
 	}
 
 	function delete_meta($id=false,$key=false){
