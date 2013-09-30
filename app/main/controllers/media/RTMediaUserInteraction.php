@@ -245,7 +245,7 @@ class RTMediaUserInteraction {
 		if(empty($this->media)){
 			$this->init();
 		}
-                
+
 		if($this->interactor_privacy >=$this->privacy){
 			$result = $this->process();
 		}

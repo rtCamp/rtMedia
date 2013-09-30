@@ -224,7 +224,9 @@ class RTMediaQuery {
                 include get_404_template ();
                 die ();
             }
-
+            
+            do_action('rtmedia_slug_404_handler'); // disbale  media type 404 handler
+            
             // requesting nonce /media/nonce/edit/ | /media/nonce/comment
             // | /media/nonce/delete
 
@@ -576,7 +578,8 @@ class RTMediaQuery {
             ) {
                $this->media_query[ 'media_type' ] = $this->action_query->media_type;
             } else {
-                $this->media_query[ 'media_type' ] = array( 'compare' => 'NOT IN', 'value' => array( 'album' ) );
+                $this->media_query[ 'media_type' ] = array( 'compare' => 'IN', 'value' => array( 'music', 'video', 'photo') );
+                $this->media_query[ 'media_type' ] = apply_filters( 'rtmedia_query_media_type_filter', $this->media_query[ 'media_type' ] ); // can add more types here
             }
         }
     }

@@ -309,6 +309,7 @@ class RTMediaFormHandler {
 <?php
 		$even = 0;
 		foreach ($render_data as $key=>$section) {
+                    if( $section['extn'] != "") {
 			if( ++$even%2 ) {
 			    echo '<div class="row rt-odd">';
 			}
@@ -328,6 +329,10 @@ class RTMediaFormHandler {
 				echo '<div class="columns large-3">' . implode(', ', $section['extn']) . '</div>';
 			    do_action("rtmedia_type_settings_after_body",$key, $section);
 			echo '</div>';
+                    } else {
+                        echo "<input type='hidden' value='1' name='rtmedia-options[allowedTypes_" . $key . "_enabled]'>";
+                        echo "<input type='hidden' value='0' name='rtmedia-options[allowedTypes_" . $key . "_featured]'>";
+                    }
 		}
 		echo '</div>';
 	}
@@ -488,6 +493,16 @@ class RTMediaFormHandler {
 					'value' => $options['buddypress_enableOnActivity'],
 					'desc' => __('Enable Media on BuddyPress Activities','rtmedia')
 				)
+			),
+			'rtmedia-activity-feed-limit' => array(
+				'title' => __('Limit items posted in activity feed', 'rtmedia'),
+				'callback' => array('RTMediaFormHandler', 'number'),
+				'args' => array(
+					'key' => 'buddypress_limitOnActivity',
+					'value' => $options['buddypress_limitOnActivity'],
+					'desc' => __('Limit items posted in activity feed', 'rtmedia'),
+					'class' => array('rtmedia-setting-text-box')
+				),
 			)
 		);
 
