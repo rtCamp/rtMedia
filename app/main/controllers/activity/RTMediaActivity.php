@@ -43,12 +43,14 @@ class RTMediaActivity {
             $html .= '</span>';
         }
 
-        $options = rtmedia_get_site_option('rtmedia-options');
-        $limitActivityFeed = $options['buddypress_limitOnActivity'];
+        global $rtmedia;
+        $limitActivityFeed = $rtmedia->options['buddypress_limitOnActivity'];
 
         $mediaObj = new RTMediaModel();
         $media_details = $mediaObj->get ( array( 'id' => $this->media ) );
-        $media_details = array_slice( $media_details, 0, $limitActivityFeed, true);
+        
+        if( intval( $limitActivityFeed ) > 0 )
+            $media_details = array_slice( $media_details, 0, $limitActivityFeed, true);
 
         $html .= '<ul class="rtmedia-list large-block-grid-3">';
         foreach ( $media_details as $media ) {
