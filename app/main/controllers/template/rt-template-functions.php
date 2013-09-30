@@ -831,7 +831,7 @@ function rtmedia_delete_form () {
     $html .= '<input type="hidden" name="request_action" id="request_action" value="delete">';
     echo $html;
     RTMediaMedia::media_nonce_generator ( rtmedia_id (), true );
-    echo '<input type="submit" value="' . __ ( 'Delete', 'rtmedia' ) . '"></form>';
+    echo '<button type="submit">' . __ ( 'Delete', 'rtmedia' ) . '</button></form>';
 }
 
 /**

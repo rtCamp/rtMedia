@@ -529,7 +529,7 @@ class RTMediaTemplate {
             }
         }
         
-        $located = apply_filters('rtmedia_located_template', $located );
+        $located = apply_filters('rtmedia_located_template', $located , $url, $ogpath, $template_name );// filter for rtmedia pro
         return $located;
     }
 
