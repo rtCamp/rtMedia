@@ -1012,6 +1012,12 @@ msgstr ""
 msgid "Error creating attachment for the media file, please try again"
 msgstr ""
 
+#: app/main/controllers/media/RTMediaMedia.php:481
+msgid "%s added a %s"
+msgid_plural "%s added %d %s."
+msgstr[0] ""
+msgstr[1] ""
+
 #: app/main/controllers/shortcodes/RTMediaUploadShortcode.php:64
 msgid "The web browser on your device cannot be used to upload files."
 msgstr ""
@@ -1019,6 +1025,14 @@ msgstr ""
 #: app/main/controllers/template/rt-template-functions.php:449
 #: app/main/controllers/template/rt-template-functions.php:1031
 msgid "Edit"
+msgstr ""
+
+#: app/main/controllers/template/rt-template-functions.php:490
+msgid "said"
+msgstr ""
+
+#: app/main/controllers/template/rt-template-functions.php:492
+msgid "on"
 msgstr ""
 
 #: app/main/controllers/template/rt-template-functions.php:801
@@ -1076,6 +1090,7 @@ msgid "File Upload"
 msgstr ""
 
 #: app/main/controllers/upload/RTMediaUploadView.php:58
+#: app/main/controllers/upload/RTMediaUploadView.php:59
 msgid "Select"
 msgstr ""
 
@@ -1346,6 +1361,10 @@ msgstr ""
 #: templates/media/media-single-edit.php:45
 #: templates/media/media-single.php:47
 msgid "Oops !! There's no media found for the request !!"
+msgstr ""
+
+#: templates/media/media-single.php:36
+msgid "Comments"
 msgstr ""
 
 #: templates/media/album-single-edit.php:27
