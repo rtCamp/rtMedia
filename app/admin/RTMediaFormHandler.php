@@ -189,7 +189,8 @@ class RTMediaFormHandler {
 					'key' => 'general_enableComments',
 					'value' => $options['general_enableComments'],
 					'desc' => __('Enable Comments in rtMedia','rtmedia')
-				)
+				),
+				'group' => "10"
 			),
 			'general_enableLightbox' => array(
 				'title' => __('Lightbox','rtmedia'),
@@ -198,7 +199,8 @@ class RTMediaFormHandler {
 					'key' => 'general_enableLightbox',
 					'value' => $options['general_enableLightbox'],
 					'desc' => __('Enable Lighbox on Media','rtmedia')
-				)
+				),
+				'group' => "10"
 			),
 			'general_perPageMedia' => array(
 				'title' => __('Number of Media Per Page','rtmedia'),
@@ -207,7 +209,8 @@ class RTMediaFormHandler {
 					'key' => 'general_perPageMedia',
 					'value' => $options['general_perPageMedia'],
 					'class' => array('rtmedia-setting-text-box')
-				)
+				),
+				'group' => "10"
 			),
 //			'general_enableMediaEndPoint' => array(
 //				'title' => __('Enable Media End Point for users','rtmedia'),
@@ -226,6 +229,7 @@ class RTMediaFormHandler {
                                         'value' => $options['general_videothumbs'],
 					'class' => array('rtmedia-setting-text-box')
                                 )
+
                         ),
 			'general_showAdminMenu' => array(
 				'title' => __('Admin Bar Menu','rtmedia'),
@@ -234,7 +238,8 @@ class RTMediaFormHandler {
 					'key' => 'general_showAdminMenu',
 					'value' => $options['general_showAdminMenu'],
 					'desc' => __('Enable menu in WordPress admin bar','rtmedia')
-				)
+				),
+				'group' => "10"
 			)
 		);
 
@@ -246,15 +251,40 @@ class RTMediaFormHandler {
 		$options = self::extract_settings('general', $rtmedia->options);
 		$render_options = self::general_render_options($options);
                 $render_options = apply_filters("rtmedia_general_content_add_itmes",$render_options, $options);
-		foreach ($render_options as $key => $option) { ?>
+		$general_group = array();
+		$general_group[10] = "UI";
+		$general_group[30] = "Misc.";
+		$general_group = apply_filters("rtmedia_general_content_groups", $general_group);
+		ksort($general_group);
+		$html = '';
+		foreach($general_group as $key => $value) {
+		?>
+		    <fieldset>
+			<legend><?php echo $value; ?></legend>
+		<?php
+		    foreach ($render_options as $tab => $option) {
+
+			if(!isset($option['group'])) {
+			    $option['group'] = "30";
+			}
+
+			if($option['group'] != $key) {
+			    continue;
+			}
+		?>
 			<div class="row section">
 				<div class="columns large-4"> <?php echo $option['title']; ?> </div>
 				<div class="columns large-8">
 					<?php call_user_func($option['callback'], $option['args']); ?>
 				</div>
 			</div>
-			<div class="clearfix"></div>
-		<?php }
+		    <?php
+		    }
+		    ?>
+			</fieldset>
+		    <?php
+		}
+
 	}
 
 	static function get_type_details($allowed_types, $key) {
@@ -492,7 +522,8 @@ class RTMediaFormHandler {
 				'args' => array(
 					'key' => 'buddypress_enableOnActivity',
 					'value' => $options['buddypress_enableOnActivity'],
-					'desc' => __('Enable Media on BuddyPress Activities','rtmedia')
+					'desc' => __('Enable Media on BuddyPress Activities','rtmedia'),
+					'id' => "rtmedia-bp-enable-activity"
 				)
 			),
 			'rtmedia-activity-feed-limit' => array(
@@ -502,8 +533,8 @@ class RTMediaFormHandler {
 					'key' => 'buddypress_limitOnActivity',
 					'value' => $options['buddypress_limitOnActivity'],
 					'desc' => __('Limit items posted in activity feed', 'rtmedia'),
-					'class' => array('rtmedia-setting-text-box')
-				),
+					'class' => array('rtmedia-setting-text-box rtmedia-bp-activity-setting')
+				)
 			)
 		);
 

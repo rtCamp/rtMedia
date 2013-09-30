@@ -79,5 +79,13 @@
                 }
             }
     }
+    fieldset {
+		border: solid 1px #dddddd;
+		padding: 10px;
+		margin: 10px 0;
+		legend {
+			font-weight: bold;
+		}
+	}
 }
 
