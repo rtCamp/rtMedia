@@ -487,9 +487,9 @@ function rtmedia_comments () {
 function rmedia_single_comment ( $comment ) {
     $html = "";
     $html .= '<li class="rtmedia-comment">';
-    $html .= '<div class ="rtmedia-comment-author">' . (($comment[ 'comment_author' ]) ? $comment[ 'comment_author' ] : 'Annonymous') . '  said : </div>';
+    $html .= '<div class ="rtmedia-comment-author">' . (($comment[ 'comment_author' ]) ? $comment[ 'comment_author' ] : 'Annonymous') . ' ' . __ ( 'said', 'rtmedia' ) . ' : </div>';
     $html .= '<div class="rtmedia-comment-content">' . $comment[ 'comment_content' ] . '</div>';
-    $html .= '<div class ="rtmedia-comment-date"> on ' . $comment[ 'comment_date_gmt' ] . '</div>';
+    $html .= '<div class ="rtmedia-comment-date"> ' . __ ( 'on', 'rtmedia' ) . ' ' . $comment[ 'comment_date_gmt' ] . '</div>';
 //			$html .= '<a href></a>';
     $html .= '</li>';
     return $html;
@@ -1224,4 +1224,15 @@ function get_rtmedia_allowed_upload_type () {
 
 function is_rt_admin(){
     return current_user_can("list_users");
+}
+
+function get_rtmedia_like($media_id = false) {
+    $mediamodel = new RTMediaModel();
+    $actions = $mediamodel->get( array( 'id' => rtmedia_id($media_id) ) );
+    if(isset($actions[ 0 ]->likes)){
+	$actions = intval($actions[ 0 ]->likes);
+    }else{
+	$actions = 0;
+    }
+    return $actions;
 }
