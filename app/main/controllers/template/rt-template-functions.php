@@ -492,7 +492,7 @@ function rmedia_single_comment ( $comment ) {
     $html .= '<div class ="rtmedia-comment-date"> ' . __ ( 'on', 'rtmedia' ) . ' ' . $comment[ 'comment_date_gmt' ] . '</div>';
 //			$html .= '<a href></a>';
     $html .= '</li>';
-    return $html;
+    return apply_filters( 'rtmedia_single_comment', $html, $comment );
 }
 
 function rtmedia_pagination_prev_link () {
