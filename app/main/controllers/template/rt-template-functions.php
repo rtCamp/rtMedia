@@ -1171,7 +1171,7 @@ function can_user_create_album_in_group ( $group_id = false, $user_id = false ) 
                 $display_flag = true;
             }
         } else if ( $upload_level == "moderators" ) {
-            if ( groups_is_user_mod ( $user_id, $group_id ) ) {
+            if ( groups_is_user_mod ( $user_id, $group_id ) || groups_is_user_admin ( $user_id, $group_id ) ) {
                 $display_flag = true;
             }
         } else {
