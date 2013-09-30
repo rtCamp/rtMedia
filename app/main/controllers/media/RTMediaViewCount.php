@@ -17,31 +17,47 @@ class RTMediaViewCount extends RTMediaUserInteraction {
 	    'label' => 'view',
 	    'privacy' => 0
 	    );
+	session_start();
 	parent::__construct ($args);
 	remove_filter('rtmedia_action_buttons_before_delete', array($this,'button_filter'));
         add_filter ( 'rtmedia_action_buttons_after_delete', array( $this, 'button_filter' ), 99 );
     }
 
     function render () {
-	    $link = trailingslashit(get_rtmedia_permalink($this->media->id)).$this->action.'/';
-	    echo '<div style="clear:both"></div><form action="'. $link .'" id="rtmedia-media-view-form"></form>';
-	    do_action("rtmedia_view_media_counts",$this);
+	if(isset($_SESSION['rtmedia_media_view']) && $_SESSION['rtmedia_media_view'] != "" && sizeof($_SESSION['rtmedia_media_view'] > 0)) {
+	    $key = array_search ($this->media->id, $_SESSION['rtmedia_media_view']);
+	    if(!$key) {
+		$_SESSION['rtmedia_media_view'][] = $this->media->id;
+		$this->rtmedia_update_view_meta($this->media->id, $this->action);
+	    }
+	} else {
+	    $_SESSION['rtmedia_media_view'] = array();
+	    $_SESSION['rtmedia_media_view'][] = "do not consider 0 index in php";
+	    $_SESSION['rtmedia_media_view'][] = $this->media->id;
+	    $this->rtmedia_update_view_meta($this->media->id, $this->action);
+	}
+	$link = trailingslashit(get_rtmedia_permalink($this->media->id)).$this->action.'/';
+	echo '<div style="clear:both"></div><form action="'. $link .'" id="rtmedia-media-view-form"></form>';
+	do_action("rtmedia_view_media_counts",$this);
+    }
+
+    function rtmedia_update_view_meta($media_id, $action) {
+	$curr_count = get_rtmedia_meta($media_id, $action);
+	if(!$curr_count) {
+	    $curr_count=1;
+	} else {
+	    $curr_count++;
+	}
+	update_rtmedia_meta($media_id, $action, $curr_count, false);
     }
 
     function process() {
 	$user_id = $this->interactor;
-	if(!$user_id)
+	if(!$user_id) {
 	    $user_id = -1;
+	}
         $media_id = $this->action_query->id;
 	$action = $this->action_query->action;
-	$model_meta = new RTMediaMeta();
-	$curr_count = $model_meta->get_meta($media_id, $action);
-	if(!$curr_count)
-	    $curr_count=1;
-	else
-	    $curr_count++;
-	$model_meta->update_meta($media_id, $action, $curr_count, false);
-
 	$rtmediainteraction = new RTMediaInteractionModel();
 	$check_action = $rtmediainteraction->check($user_id, $media_id, $action);
 	if($check_action) {
