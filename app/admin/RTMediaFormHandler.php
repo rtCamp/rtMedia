@@ -176,6 +176,7 @@ class RTMediaFormHandler {
 				'title' => __('Albums','rtmedia'),
 				'callback' => array('RTMediaFormHandler', 'checkbox'),
 				'args' => array(
+					'id' => 'rtmedia-album-enable',
 					'key' => 'general_enableAlbums',
 					'value' => $options['general_enableAlbums'],
 					'desc' => __('Enable Albums in rtMedia','rtmedia')
