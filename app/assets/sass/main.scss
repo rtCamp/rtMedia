@@ -431,3 +431,9 @@ button.mfp-close {
 .mejs-video .mejs-controls {
     position: absolute;
 }
+
+/* audio player positioning fix */
+.mejs-container .mejs-controls {
+    position: static;
+}
+
