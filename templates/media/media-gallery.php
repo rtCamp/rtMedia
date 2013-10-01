@@ -2,8 +2,15 @@
     <?php do_action ( 'rtmedia_before_media_gallery' ); ?>
 
     <?php rtmedia_uploader () ?>
+    
+    <?php 
+        $title = get_rtmedia_gallery_title();
+    ?>
 
-    <h2><?php echo __ ( 'Media Gallery', 'rtmedia' ); ?></h2>
+    <h2>
+        <?php if( $title ) { echo $title; }
+                else { echo __ ( 'Media Gallery', 'rtmedia' ); } ?>
+    </h2>
     <ul class="rtmedia-list rtmedia-list-media <?php echo rtmedia_media_gallery_class (); ?>">
         <?php if ( have_rtmedia () ) { ?>
 
