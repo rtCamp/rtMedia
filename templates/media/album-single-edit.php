@@ -12,6 +12,7 @@ $media = $model->get_media(array('id' => $rtmedia_query->media_query['album_id']
         $post_details = get_post($media[0]->media_id);
         $content = apply_filters('the_content', $post_details->post_content);
         ?>
+        <h2><?php echo __ ( 'Edit Album : ' , 'rtmedia' ) . esc_attr($media[0]->media_title) ; ?></h2>
         <label for='media_title'><?php _e('Title: ', 'rtmedia'); ?></label>
         <input type="text" name="media_title" id='media_title' value="<?php echo esc_attr($media[0]->media_title); ?>" />
 	<?php do_action("rtmedia_add_album_privacy"); ?>
