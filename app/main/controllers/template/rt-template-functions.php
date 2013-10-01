@@ -535,7 +535,8 @@ function rtmedia_pagination_prev_link () {
         if ( function_exists ( "bp_get_current_group_slug" ) )
             $link .= $site_url . bp_get_groups_root_slug () . '/' . bp_get_current_group_slug () . '/';
     } else {
-        $post = get_post ( $rtmedia_media->post_parent );
+        //$post = get_post ( $rtmedia_media->post_parent );
+        $post = get_post ( get_post_field("post_parent", $rtmedia_media->media_id));
 
         $link .= $site_url . $post->post_name . '/';
     }
@@ -567,8 +568,9 @@ function rtmedia_pagination_next_link () {
         if ( function_exists ( "bp_get_current_group_slug" ) )
             $link .= $site_url . bp_get_groups_root_slug () . '/' . bp_get_current_group_slug () . '/';
     } else {
-        $post = get_post ( $rtmedia_media->post_parent );
-
+        //$post = get_post ( $rtmedia_media->post_parent );
+	$post = get_post ( get_post_field("post_parent", $rtmedia_media->media_id));
+	
         $link .= $site_url . $post->post_name . '/';
     }
     $link .= RTMEDIA_MEDIA_SLUG . '/';
