@@ -78,7 +78,9 @@ jQuery(function($) {
                 json: true,
                 rtmedia_page: nextpage
             };
-            el = jQuery(".rtmedia-list").parent().parent();
+            if (el == undefined){
+                el = jQuery(".rtmedia-list").parent().parent();
+            }
             if (el != undefined) {
                 $(el).find("input[type=hidden]").each(function(e) {
                     query[$(this).attr("name")] = $(this).val();

@@ -41,7 +41,7 @@ class RTMediaFeatured extends RTMediaUserInteraction {
 
     function before_render () {
         $this->get ();
-        if ( ! $this->settings[ $this->media->media_type ] )
+        if ( !(isset($this->settings[ $this->media->media_type ]) && $this->settings[ $this->media->media_type ]))
             return false;
         if ( isset ( $this->action_query ) && isset ( $this->action_query->id ) && $this->action_query->id == $this->featured ) {
             $this->label = $this->undo_label;

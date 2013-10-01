@@ -6,18 +6,22 @@ $model = new RTMediaModel();
 $media = $model->get_media(array('id' => $rtmedia_query->media_query['album_id']), false, false);
 ?>
 <div class="rtmedia-container rtmedia-single-container">
-
     <form method="post">
         <?php
         RTMediaMedia::media_nonce_generator($rtmedia_query->media_query['album_id']);
         $post_details = get_post($media[0]->media_id);
         $content = apply_filters('the_content', $post_details->post_content);
         ?>
-
-        <input type="text" name="media_title" value="<?php echo esc_attr($media[0]->media_title); ?>" />
+        <h2><?php echo __ ( 'Edit Album : ' , 'rtmedia' ) . esc_attr($media[0]->media_title) ; ?></h2>
+        <label for='media_title'><?php _e('Title: ', 'rtmedia'); ?></label>
+        <input type="text" name="media_title" id='media_title' value="<?php echo esc_attr($media[0]->media_title); ?>" />
 	<?php do_action("rtmedia_add_album_privacy"); ?>
-        <?php wp_editor($content, 'description', array('media_buttons' => false)); ?>
-        <input type="submit" name="submit" value="Submit" />
+        <div class="rtmedia-editor-description">
+            <label for='media_title'><?php _e('Description: ', 'rtmedia'); ?></label>
+            <?php wp_editor($content, 'description', array('media_buttons' => false, 'textarea_rows' => 4, 'quicktags' => false)); ?>
+            <input type="submit" name="submit" value="<?php _e('Save', 'rtmedia'); ?>" />
+        </div>
+        
 
     </form>
     <?php if (have_rtmedia()) { ?>
