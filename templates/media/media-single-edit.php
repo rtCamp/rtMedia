@@ -5,20 +5,24 @@
 
 	<?php
         
-            if( rtmedia_delete_allowed() ) {
-                    rtmedia_delete_form();
-            }
+//            if( rtmedia_delete_allowed() ) {
+//                    rtmedia_delete_form();
+//            }
             if(rtmedia_edit_allowed ()) {
+                global $rtmedia_media;
             ?>
-
+            
+            <h2><?php echo __ ( 'Edit Media : ' , 'rtmedia' ) . $rtmedia_media->media_title ; ?></h2>
             <form method="post" action="">
                 <div class="rtmedia-editor-main columns large-12 small">
+                <label><?php _e('Title: ', 'rtmedia'); ?></label>
                 <?php rtmedia_title_input(); ?>
 
                 <?php do_action('rtmedia_add_edit_fields', rtmedia_type()); ?>
 
                 </div>
                 <div class="rtmedia-editor-description columns large-12 small">
+                <label><?php _e('Description: ', 'rtmedia') ?></label>
                 <?php
 
                         echo rtmedia_description_input();
