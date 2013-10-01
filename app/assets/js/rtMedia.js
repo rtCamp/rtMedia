@@ -1,5 +1,6 @@
 var rtMagnificPopup;
 function apply_rtMagnificPopup(selector){
+    jQuery('document').ready(function($) {
         rtMagnificPopup = jQuery(selector).magnificPopup({
             delegate: 'a:not(".no-popup")',
             type: 'ajax',
@@ -54,7 +55,8 @@ function apply_rtMagnificPopup(selector){
                 }
             }
         });
-    }
+    });
+}
 var rtMediaHook = {
     hooks: [],
     is_break : false,
