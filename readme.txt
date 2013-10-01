@@ -1,5 +1,5 @@
 === rtMedia for WordPress, BuddyPress and bbPress ===
-Contributors: rtcamp, rahul286, faishal, JoshuaAbenazer, gagan0123, saurabhshukla, desaiuditd, nitun.lanjewar, rittesh.patel, pushpak.pop, umesh.nevase, suhasgirgaonkar, neerukoul, hrishiv90, kanakiyajay
+Contributors: rtcamp, rahul286, faishal, JoshuaAbenazer, gagan0123, saurabhshukla, desaiuditd, nitun.lanjewar, rittesh.patel, pushpak.pop, umesh.nevase, suhasgirgaonkar, neerukoul, hrishiv90, kanakiyajay, jarretc
 Donate link: http://rtcamp.com/store/rtmedia-pro/
 Tags: BuddyPress, media, multimedia, album, audio, songs, music, video, photo, image, upload, share, MediaElement.js, ffmpeg, kaltura, media-node, rtMedia, WordPress, bbPress
 License: GPLv2 or later
@@ -120,7 +120,7 @@ Please visit [rtMedia's Features page](http://rtcamp.com/rtmedia/?utm_source=rea
 Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "Visit rtMedia's Features page") to get some details about future releases.
 
 = 3.1.7 =
-* Translatable message and button in activity stream and single media view. thanks to [jonasnick](https://github.com/jonasnick)
+* Translatable message and button in activity stream and single media view thanks to [jonasnick](https://github.com/jonasnick)
 * Limits items posted in activity feed thanks to [jarretc](https://github.com/jarretc)
 * bug fixed for album deletion
 * Fix count issue on update
@@ -572,6 +572,7 @@ Requires BuddyPress 1.7 or higher, if using BuddyPress. Add Limits items posted 
 
 rtMedia includes [full translation support](https://rtcamp.com/tutorials/rtmedia-translation/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media). Head over to the [translation project](http://rtcamp.com/translate/projects/rtmedia/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media) to contribute your translations. If you don't see the language of your choice, let us know in the support forum, we'll add it.
 
+* [Italian](https://rtcamp.com/translate/projects/rtmedia/it/default) translation by [Yukiko.Kawa]
 * [Persian](https://rtcamp.com/translate/projects/rtmedia/fa/default) translation by [mahdiar](http://profiles.wordpress.org/mahdiar/)
 * [Spanish](https://rtcamp.com/translate/projects/rtmedia/es/default) translation by [Andrés Felipe](http://profiles.wordpress.org/naturalworldstm/)
 * [German](https://rtcamp.com/translate/projects/rtmedia/de/default) translation by [hannes.muc]
