@@ -50,7 +50,7 @@ function rtmedia_title () {
 }
 
 function get_rtmedia_gallery_title () {
-    global $rtmedia_query; 
+    global $rtmedia_query;
     $title = '';
     if( isset( $rtmedia_query->media_query['media_type'] ) && !is_array( $rtmedia_query->media_query['media_type']) && $rtmedia_query->media_query['media_type'] != "") {
         $title = __('All '. $rtmedia_query->media_query['media_type'] . "s" , 'rtmedia');
@@ -59,14 +59,16 @@ function get_rtmedia_gallery_title () {
     if( isset( $rtmedia_query->query['media_type'] ) &&  $rtmedia_query->query['media_type'] == "album"
         && isset( $rtmedia_query->media_query['album_id'] )  &&  $rtmedia_query->media_query['album_id'] != ""  ) {
         $id = $rtmedia_query->media_query['album_id'];
-        $rtmedia = new RTMediaModel();
-        $title = $rtmedia->get( array('id' => $id ) );
-        $title = __('Album : ', 'rtmedia') . $title[0]->media_title;
-        return $title;
+        return get_rtmedia_title($id);
     }
     return false;
 }
 
+function get_rtmedia_title($id) {
+    $rtmedia_model = new RTMediaModel();
+    $title = $rtmedia_model->get( array('id' => $id ) );
+    return $title[0]->media_title;
+}
 
 function rtmedia_author_profile_pic ( $show_link = true ) {
     global $rtmedia_backbone;
