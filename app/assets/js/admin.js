@@ -503,6 +503,13 @@ jQuery(document).ready(function($) {
         jQuery(".privacy-driven-disable label input").prop("disabled", true);
         jQuery(".privacy-driven-disable label .rt-switch").bootstrapSwitch("setActive", false);
     }
+
+    if (jQuery('#rtmedia-bp-enable-activity').is(":checked")) {
+        jQuery(".rtmedia-bp-activity-setting").prop("disabled", false);
+    } else {
+	jQuery(".rtmedia-bp-activity-setting").prop("disabled", true);
+    }
+
     jQuery('#rtmedia-privacy-enable').on("click", function(e) {
         if (jQuery(this).is(":checked")) {
             jQuery(".privacy-driven-disable label input").prop("disabled", false);
@@ -512,7 +519,13 @@ jQuery(document).ready(function($) {
             jQuery(".privacy-driven-disable label .rt-switch").bootstrapSwitch("setActive", false);
         }
     });
-
+    jQuery('#rtmedia-bp-enable-activity').on("click", function(e){
+	if (jQuery(this).is(":checked")) {
+	    jQuery(".rtmedia-bp-activity-setting").prop("disabled", false);
+	} else {
+	    jQuery(".rtmedia-bp-activity-setting").prop("disabled", true);
+	}
+    });
     var onData = '';
     var offData = '';
     if (rtmedia_on_label !== undefined)
