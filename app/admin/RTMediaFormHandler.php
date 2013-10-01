@@ -273,8 +273,8 @@ class RTMediaFormHandler {
 			}
 		?>
 			<div class="row section">
-				<div class="columns large-4"> <?php echo $option['title']; ?> </div>
-				<div class="columns large-8">
+				<div class="columns large-5"> <?php echo $option['title']; ?> </div>
+				<div class="columns large-7">
 					<?php call_user_func($option['callback'], $option['args']); ?>
 				</div>
 			</div>

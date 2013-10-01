@@ -42,18 +42,18 @@
 					color: #000;
 				}
 			}
-		}
-		.rtmedia-size-content-setting {
+		}		
+	}
+	.rtmedia-size-content-setting {
 			.rt-form-dimension  {
 				input[type="text"] {
-					margin-left: 43px;
+					margin-left: 13%;
 				}
 				span {
-					margin-left: 50px;
+					margin-left: 14%;
 				}
 			}
 		}
-	}
 	.section-container.vertical-tabs, .section-container.auto {
 		section {
 				.title {
@@ -82,7 +82,7 @@
     fieldset {
 		border: solid 1px #dddddd;
 		padding: 10px;
-		margin: 10px 0;
+		margin-bottom: 10px;
 		legend {
 			font-weight: bold;
 		}
