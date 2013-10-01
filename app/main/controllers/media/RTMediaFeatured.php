@@ -95,7 +95,7 @@ class RTMediaFeatured extends RTMediaUserInteraction {
         $metadata = wp_get_attachment_metadata ( $media_id );
         $resized = image_make_intermediate_size ( get_attached_file ( $media_id ), $this->settings[ 'width' ], $this->settings[ 'height' ], $this->settings[ 'crop' ] );
         if ( $resized ) {
-            $metadata[ 'sizes' ][ 'rtmedia-featured' ] = $resized;
+            $metadata[ 'sizes' ][ 'rt_media_featured_image' ] = $resized;
             wp_update_attachment_metadata ( $media_id, $metadata );
         }
     }
