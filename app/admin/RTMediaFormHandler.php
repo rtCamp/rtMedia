@@ -253,7 +253,7 @@ class RTMediaFormHandler {
                 $render_options = apply_filters("rtmedia_general_content_add_itmes",$render_options, $options);
 		$general_group = array();
 		$general_group[10] = "UI";
-		$general_group[30] = "Misc.";
+		$general_group[30] = "Miscellaneous";
 		$general_group = apply_filters("rtmedia_general_content_groups", $general_group);
 		ksort($general_group);
 		$html = '';
