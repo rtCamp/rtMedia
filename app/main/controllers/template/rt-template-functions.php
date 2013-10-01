@@ -49,6 +49,25 @@ function rtmedia_title () {
     }
 }
 
+function get_rtmedia_gallery_title () {
+    global $rtmedia_query; 
+    $title = '';
+    if( isset( $rtmedia_query->media_query['media_type'] ) && !is_array( $rtmedia_query->media_query['media_type']) && $rtmedia_query->media_query['media_type'] != "") {
+        $title = __('All '. $rtmedia_query->media_query['media_type'] . "s" , 'rtmedia');
+        return $title;
+    }
+    if( isset( $rtmedia_query->query['media_type'] ) &&  $rtmedia_query->query['media_type'] == "album"
+        && isset( $rtmedia_query->media_query['album_id'] )  &&  $rtmedia_query->media_query['album_id'] != ""  ) {
+        $id = $rtmedia_query->media_query['album_id'];
+        $rtmedia = new RTMediaModel();
+        $title = $rtmedia->get( array('id' => $id ) );
+        $title = __('Album : ', 'rtmedia') . $title[0]->media_title;
+        return $title;
+    }
+    return false;
+}
+
+
 function rtmedia_author_profile_pic ( $show_link = true ) {
     global $rtmedia_backbone;
     if ( $rtmedia_backbone[ 'backbone' ] ) {
