@@ -10,7 +10,7 @@ if ( class_exists ( 'BP_Group_Extension' ) ) :// Recommended, to prevent problem
 
         function __construct () {
             $this->name = RTMEDIA_MEDIA_LABEL;
-            $this->slug = RTMEDIA_MEDIA_SLUG;
+            $this->slug = RTMEDIA_MEDIA_SLUG . "-setting";
             $this->create_step_position = 21;
             $this->enable_nav_item = false;
         }
@@ -36,6 +36,8 @@ if ( class_exists ( 'BP_Group_Extension' ) ) :// Recommended, to prevent problem
                     <strong><?php _e ( "Group Admin only", 'rtmedia' ); ?></strong>
                 </label>
             </div>
+            
+            <?php do_action('rtmedia_playlist_creation_settings_create_group'); ?>
 
             <?php
             wp_nonce_field ( 'groups_create_save_' . $this->slug );
@@ -53,6 +55,7 @@ if ( class_exists ( 'BP_Group_Extension' ) ) :// Recommended, to prevent problem
             /* Save any details submitted here */
             if ( isset ( $_POST[ 'rt_album_creation_control' ] ) && $_POST[ 'rt_album_creation_control' ] != '' )
                 groups_update_groupmeta ( $bp->groups->new_group_id, 'rt_media_group_control_level', $_POST[ 'rt_album_creation_control' ] );
+                do_action('rtmedia_create_save_group_media_settings' , $_POST);
         }
 
         /**
@@ -86,6 +89,9 @@ if ( class_exists ( 'BP_Group_Extension' ) ) :// Recommended, to prevent problem
                 </label>
             </div>
             <hr>
+            
+            
+            <?php do_action('rtmedia_playlist_creation_settings_groups_edit'); ?>
             <input type="submit" name="save" value="<?php _e ( "Save Changes", 'rtmedia' ); ?>" />
             <?php
             wp_nonce_field ( 'groups_edit_save_' . $this->slug );
@@ -107,7 +113,7 @@ if ( class_exists ( 'BP_Group_Extension' ) ) :// Recommended, to prevent problem
 
             if ( isset ( $_POST[ 'rt_album_creation_control' ] ) && $_POST[ 'rt_album_creation_control' ] != '' ) {
                 $success = groups_update_groupmeta ( bp_get_current_group_id (), 'rt_media_group_control_level', $_POST[ 'rt_album_creation_control' ] );
-                //    $success = groups_update_groupmeta(bp_get_current_group_id(), 'rt_upload_media_control_level', $_POST['rt_upload_media_control']);
+                do_action('rtmedia_edit_save_group_media_settings' , $_POST);
                 $success = true;
             }
             else
