@@ -382,7 +382,7 @@ function rtmedia_description_input () {
     $html = '';
 
     if ( rtmedia_request_action () == 'edit' )
-        $html .= wp_editor ( $value, $name, array( 'media_buttons' => false ) );
+        $html .= wp_editor ( $value, $name, array( 'media_buttons' => false , 'textarea_rows' => 4, 'quicktags' => false) );
     else
         $html .= '<div name="' . $name . '" id="' . $name . '">' . $value . '</div>';
 
