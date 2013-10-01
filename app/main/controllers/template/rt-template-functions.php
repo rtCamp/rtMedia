@@ -399,7 +399,8 @@ function rtmedia_description_input () {
  */
 function rtmedia_description () {
     global $rtmedia_media;
-    echo $rtmedia_media->post_content;
+    echo get_post_field("post_content", $rtmedia_media->media_id);
+    //echo $rtmedia_media->post_content;
 }
 
 /**
