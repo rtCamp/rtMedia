@@ -434,7 +434,10 @@ button.mfp-close {
 
 /* audio player positioning fix */
 .mejs-container .mejs-controls {
-    position: static;
+ //   position: static;
+}
+.mfp-content #rtmedia-single-media-container .wp-audio-shortcode{
+    height: 0px!important;
 }
 
 .rtmedia-single-container .rtmedia-editor-description {
