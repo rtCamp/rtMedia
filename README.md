@@ -119,6 +119,12 @@ Please visit [rtMedia's Features page](http://rtcamp.com/rtmedia/?utm_source####
 
 Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "Visit rtMedia's Features page") to get some details about future releases.
 
+#### 3.1.7 ####
+* Translatable message and button in activity stream and single media view. thanks to [jonasnick](https://github.com/jonasnick)
+* Limits items posted in activity feed thanks to [jarretc](https://github.com/jarretc)
+* bug fixed for album deletion
+* Fix count issue on update
+
 #### 3.1.6 ####
 * Removed download button enable/disable settings
 * Bug fixed for translation
@@ -550,8 +556,8 @@ Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_sou
 * HTML5 Audio Tag Support (with fallback)
 * HTML5 Video Tag Support (with fallback)
 
-#### 3.1.6 ####
-Requires BuddyPress 1.7 or higher, if using BuddyPress. Fix for translation, other bug fixes
+#### 3.1.7 ####
+Requires BuddyPress 1.7 or higher, if using BuddyPress. Add Limits items posted in activity,fix count on update and other bug fixes.
 
 ## Sponsors ##
 
