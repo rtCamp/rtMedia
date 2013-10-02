@@ -78,9 +78,11 @@ jQuery(function($) {
                 json: true,
                 rtmedia_page: nextpage
             };
-            el = jQuery(".rtmedia-list").parent().parent();
+            if (el == undefined){
+                el = jQuery(".rtmedia-list").parent().parent();
+            }
             if (el != undefined) {
-                $(el).children("input[type=hidden]").each(function(e) {
+                $(el).find("input[type=hidden]").each(function(e) {
                     query[$(this).attr("name")] = $(this).val();
                 });
             }
@@ -549,6 +551,7 @@ jQuery(document).ready(function($) {
                     objUploadView.uploader.refresh()
                     $('#rtMedia-update-queue-list').html('');
                     $("#div-attache-rtmedia").hide();
+                    apply_rtMagnificPopup(jQuery('.rtmedia-list-media, .rtmedia-activity-container ul.rtmedia-list, #bp-media-list,.widget-item-listing,.bp-media-sc-list, li.media.album_updated ul,ul.bp-media-list-media, li.activity-item div.activity-content div.activity-inner div.bp_media_content'));
                 }
                 $("#whats-new-post-in").removeAttr('disabled');
                 $("#rtmedia-add-media-button-post-update").removeAttr('disabled');

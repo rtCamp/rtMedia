@@ -1,43 +1,7 @@
 var rtMagnificPopup;
-var rtMediaHook = {
-    hooks: [],
-    is_break : false,
-    register: function(name, callback) {
-        if ('undefined' == typeof(rtMediaHook.hooks[name]))
-            rtMediaHook.hooks[name] = []
-        rtMediaHook.hooks[name].push(callback)
-    },
-    call: function(name, arguments) {
-        if ('undefined' != typeof(rtMediaHook.hooks[name]))
-            for (i = 0; i < rtMediaHook.hooks[name].length; ++i){
-                if (true != rtMediaHook.hooks[name][i](arguments)) {
-                    rtMediaHook.is_break=true;
-                    return false;
-                    break;
-                }
-            }
-            return true;
-    }
-}
-jQuery('document').ready(function($) {
-
-    $("#rt_media_comment_form").submit(function(e) {
-        if ($.trim($("#comment_content").val()) == "") {
-            alert("Empty Comment is not allowed");
-            return false;
-        } else {
-            return true;
-        }
-
-    })
-
-    //Remove title from popup duplication
-    $("li.rtmedia-list-item p a").each(function(e) {
-        $(this).addClass("no-popup");
-    })
-    //rtmedia_lightbox_enabled from setting
-    if (typeof(rtmedia_lightbox_enabled) != 'undefined' && rtmedia_lightbox_enabled == "1") {
-        rtMagnificPopup = jQuery('.rtmedia-list-media, .rtmedia-activity-container ul.rtmedia-list, #bp-media-list,.widget-item-listing,.bp-media-sc-list, li.media.album_updated ul,ul.bp-media-list-media, li.activity-item div.activity-content div.activity-inner div.bp_media_content').magnificPopup({
+function apply_rtMagnificPopup(selector){
+    jQuery('document').ready(function($) {
+        rtMagnificPopup = jQuery(selector).magnificPopup({
             delegate: 'a:not(".no-popup")',
             type: 'ajax',
             tLoading: 'Loading media #%curr%...',
@@ -91,6 +55,47 @@ jQuery('document').ready(function($) {
                 }
             }
         });
+    });
+}
+var rtMediaHook = {
+    hooks: [],
+    is_break : false,
+    register: function(name, callback) {
+        if ('undefined' == typeof(rtMediaHook.hooks[name]))
+            rtMediaHook.hooks[name] = []
+        rtMediaHook.hooks[name].push(callback)
+    },
+    call: function(name, arguments) {
+        if ('undefined' != typeof(rtMediaHook.hooks[name]))
+            for (i = 0; i < rtMediaHook.hooks[name].length; ++i){
+                if (true != rtMediaHook.hooks[name][i](arguments)) {
+                    rtMediaHook.is_break=true;
+                    return false;
+                    break;
+                }
+            }
+            return true;
+    }
+}
+jQuery('document').ready(function($) {
+
+    $("#rt_media_comment_form").submit(function(e) {
+        if ($.trim($("#comment_content").val()) == "") {
+            alert("Empty Comment is not allowed");
+            return false;
+        } else {
+            return true;
+        }
+
+    })
+
+    //Remove title from popup duplication
+    $("li.rtmedia-list-item p a").each(function(e) {
+        $(this).addClass("no-popup");
+    })
+    //rtmedia_lightbox_enabled from setting
+    if (typeof(rtmedia_lightbox_enabled) != 'undefined' && rtmedia_lightbox_enabled == "1") {
+        apply_rtMagnificPopup('.rtmedia-list-media, .rtmedia-activity-container ul.rtmedia-list, #bp-media-list,.widget-item-listing,.bp-media-sc-list, li.media.album_updated ul,ul.bp-media-list-media, li.activity-item div.activity-content div.activity-inner div.bp_media_content');
     }
 
     jQuery('.rtmedia-container').on('click', '.select-all', function(e) {

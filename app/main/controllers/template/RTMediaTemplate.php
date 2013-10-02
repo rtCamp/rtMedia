@@ -175,6 +175,15 @@ class RTMediaTemplate {
             $state = $media->update ( $rtmedia_query->action_query->id, $data, $rtmedia_query->media[ 0 ]->media_id );
             $rtmedia_query->query ( false );
             do_action ( 'rtmedia_after_update_media', $rtmedia_query->action_query->id, $state );
+
+            //refresh
+            $rtMediaNav = new RTMediaNav();
+            if (  $rtmedia_query->media[ 0 ]->context == "group" ) {
+                $rtMediaNav->refresh_counts ( $rtmedia_query->media[ 0 ]->context_id, array( "context" =>  $rtmedia_query->media[ 0 ]->context, 'context_id' => $rtmedia_query->media[ 0 ]->context_id ) );
+            } else {
+                    $rtMediaNav->refresh_counts ( $rtmedia_query->media[ 0 ]->media_author, array( "context" => "profile", 'media_author' => $rtmedia_query->media[ 0 ]->media_author ) );
+            }
+
             if ( $state !== false ) {
                 add_action ( "rtmedia_before_template_load", array( &$this, "media_update_success_messege" ) );
             } else {
