@@ -791,7 +791,7 @@ function rtmedia_image_editor () {
         echo '<div id="imgedit-response-' . $media_id . '"></div>';
         echo '<div class="wp_attachment_image" id="media-head-' . $media_id . '">
 				<p id="thumbnail-head-' . $id . '"><img class="thumbnail" src="' . set_url_scheme ( $thumb_url[ 0 ] ) . '" alt="" /></p>
-	<p><input type="button" class="rtmedia-image-edit" id="imgedit-open-btn-' . $media_id . '" onclick="imageEdit.open( \'' . $media_id . '\', \'' . $nonce . '\' )" class="button" value="Modifiy Image"> <span class="spinner"></span></p></div>';
+	<p><input type="button" class="rtmedia-image-edit" id="imgedit-open-btn-' . $media_id . '" onclick="imageEdit.open( \'' . $media_id . '\', \'' . $nonce . '\' )" class="button" value="Modify Image"> <span class="spinner"></span></p></div>';
         echo '</div>';
     }
 
