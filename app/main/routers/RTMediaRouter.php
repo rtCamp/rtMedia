@@ -138,10 +138,11 @@ class RTMediaRouter {
          if($rt_ajax_request)
              return $new_rt_template;
         if(  function_exists ('bp_set_theme_compat_active'))
-         bp_set_theme_compat_active( true );
+        	bp_set_theme_compat_active( apply_filters( 'rtmedia_main_template_set_theme_compat', true ) );
         add_filter( 'the_content', array(&$this,'rt_replace_the_content') );
         $this ->rt_theme_compat_reset_post();
-        return $template;
+        
+        return apply_filters( 'rtmedia_main_template_include', $template, $new_rt_template );
         
     }
 
