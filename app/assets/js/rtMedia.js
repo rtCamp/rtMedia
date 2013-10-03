@@ -208,11 +208,37 @@ jQuery('document').ready(function($) {
     rtMediaHook.register('rtmedia_js_popup_after_content_added',
 	    function() {
 		rtmedia_media_view_counts();
+                rtmedia_init_media_deleting();// for media delete confirmation on 
 		return true;
 	    }
     );
-
+        
+   function rtmedia_init_media_deleting() {
+        jQuery('.rtmedia-container').on('click', '.rtmedia-delete-media', function(e) {
+            e.preventDefault();
+            if(confirm('Are you sure you want to delete this media?')) {
+                jQuery(this).closest('form').submit();
+            }
+        });
+    }
+        
+    jQuery('.rtmedia-container').on('click', '.rtmedia-delete-album' , function(e) {
+        e.preventDefault();
+        if(confirm('Are you sure you want to delete this Album?')) {
+            jQuery(this).closest('form').submit();
+        }
+    });
+    
+    jQuery('.rtmedia-container').on('click', '.rtmedia-delete-media', function(e) {
+        e.preventDefault();
+        if(confirm('Are you sure you want to delete this media?')) {
+            jQuery(this).closest('form').submit();
+        }
+    });
+    
 });
+
+
 
 //Legacy media element for old activities
 function bp_media_create_element(id) {

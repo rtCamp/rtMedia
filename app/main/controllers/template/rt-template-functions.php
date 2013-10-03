@@ -855,7 +855,7 @@ function rtmedia_delete_form () {
     $html .= '<input type="hidden" name="request_action" id="request_action" value="delete">';
     echo $html;
     RTMediaMedia::media_nonce_generator ( rtmedia_id (), true );
-    echo '<button type="submit">' . __ ( 'Delete', 'rtmedia' ) . '</button></form>';
+    echo '<button type="submit" class="rtmedia-delete-media">' . __ ( 'Delete', 'rtmedia' ) . '</button></form>';
 }
 
 /**
@@ -1056,7 +1056,7 @@ function rtmedia_album_edit () {
             <a class="alignleft" href="edit/"><input type="button" class="button rtmedia-edit" value="<?php _e ( 'Edit', 'rtmedia' ); ?>" /></a>
             <form method="post" class="album-delete-form alignleft" action="delete/">
                 <?php wp_nonce_field ( 'rtmedia_delete_album_' . $rtmedia_query->media_query[ 'album_id' ], 'rtmedia_delete_album_nonce' ); ?>
-                <input type="submit" name="album-delete" value="<?php _e ( 'Delete', 'rtmedia' ); ?>" />
+                <input type="submit" name="album-delete" value="<?php _e ( 'Delete', 'rtmedia' ); ?>" class="rtmedia-delete-album" />
             </form>
             <?php if ( $album_list = rtmedia_user_album_list () ) { ?>
                 <input type="button" class="button rtmedia-merge" value="<?php _e ( 'Merge', 'rtmedia' ); ?>" />
