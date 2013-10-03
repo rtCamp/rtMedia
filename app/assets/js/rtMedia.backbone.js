@@ -588,21 +588,18 @@ jQuery(document).ready(function($) {
 
         return false;
     });
-
-	 //Delete comment
+    
+    //Delete comment
     jQuery(document).on('click', '.rtmedia-delte-comment', function(e){
        e.preventDefault();
        var current_comment = jQuery(this);
        var current_comment_parent = current_comment.parent();
+       var comment_id = current_comment.data('id'); 
        current_comment_parent.css('opacity', '0.4');
-       var comment_href = current_comment.attr('href'); 
-       var comment_id = comment_href.split('#');
-       comment_id = comment_id[1];
-        //console.log(comment_id);
        if(comment_id == '' || isNaN(comment_id)){
            return false;
        }
-       var action = current_comment.parent().parent().attr("data-action");
+       var action = current_comment.parent('ul').data("action");
   
        jQuery.ajax({
            url: action,

@@ -509,8 +509,8 @@ function rmedia_single_comment ( $comment ) {
     $html = "";
     $html .= '<li class="rtmedia-comment">';
     $html .= '<div class ="rtmedia-comment-author">' . (($comment[ 'comment_author' ]) ? $comment[ 'comment_author' ] : 'Annonymous') . '  said : </div>';
-    if(current_user_can('administrator')){
-        $html .= '<a href="#' . $comment['comment_ID'] . '" class = "rtmedia-delte-comment" title="Delete Comment">x</a>';
+    if(isset( $comment['user_id'] ) && ( is_rt_admin() || ( get_current_user_id() == $comment['user_id'] )) ){ // show delete button for comment author and admins
+        $html .= '<a href="#" data-id="' . $comment['comment_ID'] . '" class = "rtmedia-delte-comment" title="Delete Comment">x</a>';
     }
     $html .= '<div class="rtmedia-comment-content">' . $comment[ 'comment_content' ] . '</div>';
     $html .= '<div class ="rtmedia-comment-date"> ' . __ ( 'on', 'rtmedia' ) . ' ' . $comment[ 'comment_date_gmt' ] . '</div>';
