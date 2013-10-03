@@ -154,11 +154,14 @@ class RTMediaInteraction {
         if ( isset ( $rtmedia_query->query ) && isset ( $rtmedia_query->query[ "media_type" ] ) ) {
             if ( $rtmedia_query->query[ "media_type" ] == "album" ) {
                 if ( isset ( $rtmedia_query->media_query ) && isset ( $rtmedia_query->media_query[ "album_id" ] ) ) {
-                    foreach ( $rtmedia_query->album as $single_album ) {
-                        if ( intval ( $single_album->id ) == intval ( $rtmedia_query->media_query[ "album_id" ] ) ) {
-                            $title .= $sep . ucfirst ( $single_album->media_title );
-                            $sep = $oldSep;
-                        }
+	                //print_r( $rtmedia_query ); die();
+	                if ( is_array( $rtmedia_query->album ) && count ( $rtmedia_query->album ) > 0 ) {
+						foreach ( $rtmedia_query->album as $single_album ) {
+							if ( intval ( $single_album->id ) == intval ( $rtmedia_query->media_query[ "album_id" ] ) ) {
+								$title .= $sep . ucfirst ( $single_album->media_title );
+								$sep = $oldSep;
+							}
+						}
                     }
                 }
             } else {
