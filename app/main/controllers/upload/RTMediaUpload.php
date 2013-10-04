@@ -43,6 +43,7 @@ class RTMediaUpload {
          */
         if ($file_object && $uploaded) {
             $this->media_ids= $this->media->add($uploaded, $file_object);
+	    do_action("rtemdia_after_file_upload_before_activity", $file_object, $this);
             if ($this->media_ids) {
                 return true;
             } else {
