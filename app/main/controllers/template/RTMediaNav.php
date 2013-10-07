@@ -112,8 +112,25 @@ class RTMediaNav {
         }
 
         global $rtmedia, $rtmedia_query;
-
         $default = false;
+	if ( function_exists ( 'bp_is_group' ) && bp_is_group () ) {
+	    $link = get_rtmedia_group_link ( bp_get_group_id () );
+	    $model = new RTMediaModel();
+	    $other_count = $model->get_other_album_count ( bp_get_group_id (), "group" );
+	} else {
+	    if ( function_exists ( 'bp_displayed_user_id' ) && bp_displayed_user_id () ) {
+		$link = get_rtmedia_user_link ( bp_displayed_user_id () );
+	    } elseif ( get_query_var ( 'author' ) ) {
+		$link = get_rtmedia_user_link ( get_query_var ( 'author' ) );
+	    }
+	    $model = new RTMediaModel();
+	    $other_count = $model->get_other_album_count ( bp_displayed_user_id (), "profile" );
+	}
+	$all = '';
+	if ( ! isset ( $rtmedia_query->action_query->media_type )) {
+	    $all = 'class="current selected"';
+	}
+	echo apply_filters ( 'rtmedia_sub_nav_all', '<li id="rtmedia-nav-item-all-li" ' . $all . '><a id="rtmedia-nav-item-all" href="' . trailingslashit ( $link ) . RTMEDIA_MEDIA_SLUG . '/">' . __ ( "All", "rtmedia" ) . '<span>' . ((isset ( $counts[ 'total' ][ 'all' ] )) ? $counts[ 'total' ][ 'all' ] : 0 ) . '</span>' . '</a></li>' );
 
         if ( ! isset ( $rtmedia_query->action_query->action ) || empty ( $rtmedia_query->action_query->action ) ) {
             $default = true;
@@ -122,23 +139,13 @@ class RTMediaNav {
 
         $global_album = '';
         $albums = '';
-        if ( isset ( $rtmedia_query->action_query->media_type ) && $rtmedia_query->action_query->media_type == 'album' )
-            $albums = 'class="current selected"';
+        if ( isset ( $rtmedia_query->action_query->media_type ) && $rtmedia_query->action_query->media_type == 'album' ) {
+	    $albums = 'class="current selected"';
+	}
+
         $other_count = 0;
         if ( is_rtmedia_album_enable () ) {
-            if ( function_exists ( 'bp_is_group' ) && bp_is_group () ) {
-                $link = get_rtmedia_group_link ( bp_get_group_id () );
-                $model = new RTMediaModel();
-                $other_count = $model->get_other_album_count ( bp_get_group_id (), "group" );
-            } else {
-                if ( function_exists ( 'bp_displayed_user_id' ) && bp_displayed_user_id () ) {
-                    $link = get_rtmedia_user_link ( bp_displayed_user_id () );
-                } elseif ( get_query_var ( 'author' ) ) {
-                    $link = get_rtmedia_user_link ( get_query_var ( 'author' ) );
-                }
-                $model = new RTMediaModel();
-                $other_count = $model->get_other_album_count ( bp_displayed_user_id (), "profile" );
-            }
+
             if ( ! isset ( $counts[ 'total' ][ "album" ] ) ) {
                 $counts[ 'total' ][ "album" ] = 0;
             }
@@ -146,7 +153,7 @@ class RTMediaNav {
             $counts[ 'total' ][ "album" ] = $counts[ 'total' ][ "album" ] + $other_count;
             echo apply_filters ( 'rtmedia_sub_nav_albums', '<li id="rtmedia-nav-item-albums-li" ' . $albums . '><a id="rtmedia-nav-item-albums" href="' . trailingslashit ( $link ) . RTMEDIA_MEDIA_SLUG . '/album/">' . __ ( "Albums", "rtmedia" ) . '<span>' . ((isset ( $counts[ 'total' ][ "album" ] )) ? $counts[ 'total' ][ "album" ] : 0 ) . '</span>' . '</a></li>' );
         }
-        
+
         foreach ( $rtmedia->allowed_types as $type ) {
             //print_r($type);
             if ( ! $rtmedia->options[ 'allowedTypes_' . $type[ 'name' ] . '_enabled' ] )
@@ -193,7 +200,7 @@ class RTMediaNav {
                     . $type[ 'plural_label' ] . '<span>' . ((isset ( $counts[ 'total' ][ $type[ 'name' ] ] )) ? $counts[ 'total' ][ $type[ 'name' ] ] : 0) . '</span>' . '</a></li>', $type[ 'name' ]
             );
         }
-        
+
         do_action("add_extra_sub_nav");
     }
 
@@ -274,6 +281,7 @@ class RTMediaNav {
 
     function process_count ( $media_count, $privacy ) {
         $total = array( 'all' => 0 );
+        $media_count = !empty( $media_count ) ? $media_count : array();
 
         foreach ( $media_count as $private => $ind_count ) {
             if ( $private <= $privacy ) {
@@ -306,7 +314,7 @@ class RTMediaNav {
     function set_privacy ( $profile ) {
         if( is_rt_admin () )
             return 60;
-        
+
         $user = $this->visitor_id ();
         $privacy = 0;
         if ( $user ) {
