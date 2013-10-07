@@ -2,3 +2,4 @@
 *.swp
 *.bak
 /nbproject/private/
+*/.sass-cache/

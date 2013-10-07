@@ -534,7 +534,7 @@ class RTMediaQuery {
             else
                 $pre_media = $this->model->{$query_function} ( $context_id, ($this->action_query->page - 1) * $this->action_query->per_page_media, $this->action_query->per_page_media, $order_by );
 
-            $media_for_total_count = $this->model->{$query_function} ( $context_id, false, false );
+            $media_for_total_count = $this->model->{$query_function} ( $context_id, false, false , false , true );
         } else {
             /**
              * fetch media entries from rtMedia context
@@ -547,10 +547,10 @@ class RTMediaQuery {
             /**
              * count total medias in album irrespective of pagination
              */
-            $media_for_total_count = $this->model->get_media ( $this->media_query, false, false );
+            $media_for_total_count = $this->model->get_media ( $this->media_query, false, false, false , true );
         }
 
-        $this->media_count = count ( $media_for_total_count );
+        $this->media_count = intval( $media_for_total_count );
 
         if ( ! $pre_media )
             return false;
