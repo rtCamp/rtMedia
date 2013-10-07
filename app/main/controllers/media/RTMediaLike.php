@@ -82,6 +82,7 @@ class RTMediaLike extends RTMediaUserInteraction {
 
 	$return["count"] = $actions;
 	$this->model->update( array( $this->plural => $actions ), array( 'id' => $this->action_query->id ) );
+	do_action("rtmedia_after_like_media", $this);
 	if(isset($_REQUEST["json"]) && $_REQUEST["json"]=="true"){
 	    echo json_encode($return);
 	    die();
