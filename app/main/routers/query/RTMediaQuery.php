@@ -550,7 +550,7 @@ class RTMediaQuery {
             $media_for_total_count = $this->model->get_media ( $this->media_query, false, false, false , true );
         }
 
-        $this->media_count = count ( $media_for_total_count );
+        $this->media_count = intval( $media_for_total_count );
 
         if ( ! $pre_media )
             return false;
