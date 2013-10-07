@@ -43,7 +43,7 @@ class RTMediaModel extends RTDBModel {
         }else{
             $select .= "{$this->table_name}.* " ;
         }
-        
+
 	$from = " FROM {$this->table_name} ";
         $join = "";
         $where = " where 2=2 ";
@@ -83,7 +83,7 @@ class RTMediaModel extends RTDBModel {
         } else {
             $qorder_by = "";
         }
-       
+
         $select = apply_filters ( 'rtmedia-model-select-query', $select, $this->table_name );
         $join = apply_filters ( 'rtmedia-model-join-query', $join, $this->table_name );
         $where = apply_filters ( 'rtmedia-model-where-query', $where, $this->table_name, $join );
@@ -94,7 +94,7 @@ class RTMediaModel extends RTDBModel {
         if ( is_integer ( $offset ) && is_integer ( $per_page ) ) {
             $sql .= ' LIMIT ' . $offset . ',' . $per_page;
         }
-        if( $count_flag )
+        if( ! $count_flag )
             return $wpdb->get_results ( $sql );
         else
             return $wpdb->get_var ( $sql );
