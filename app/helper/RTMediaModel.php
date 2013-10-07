@@ -39,7 +39,7 @@ class RTMediaModel extends RTDBModel {
         global $wpdb;
         $select = "SELECT ";
         if($count_flag){
-            $select .= "count({$this->table_name}.*) ";
+            $select .= "count(*) ";
         }else{
             $select .= "{$this->table_name}.* " ;
         }
@@ -143,11 +143,11 @@ class RTMediaModel extends RTDBModel {
      * @param type $order_by
      * @return type
      */
-    function get_media ( $columns, $offset = false, $per_page = false, $order_by = 'media_id desc' ) {
+    function get_media ( $columns, $offset = false, $per_page = false, $order_by = 'media_id desc', $count_flag = false ) {
         if ( is_multisite () ) {
-            $results = $this->get ( $columns, $offset, $per_page, "blog_id ," . $order_by );
+            $results = $this->get ( $columns, $offset, $per_page, "blog_id ," . $order_by, $count_flag );
         } else {
-            $results = $this->get ( $columns, $offset, $per_page, $order_by );
+            $results = $this->get ( $columns, $offset, $per_page, $order_by , $count_flag );
         }
         return $results;
     }
