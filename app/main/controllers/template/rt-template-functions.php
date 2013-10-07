@@ -70,28 +70,40 @@ function get_rtmedia_title($id) {
     return $title[0]->media_title;
 }
 
-function rtmedia_author_profile_pic ( $show_link = true ) {
+function rtmedia_author_profile_pic ( $show_link = true, $echo = true, $author_id = false ) {
     global $rtmedia_backbone;
     if ( $rtmedia_backbone[ 'backbone' ] ) {
         echo '';
     } else {
-        global $rtmedia_media;
+        if( !$author_id || $author_id == ""){
+            global $rtmedia_media;
+            $author_id = $rtmedia_media->media_author;
+        }
+        
         $show_link = apply_filters ( "rtmedia_single_media_show_profile_picture_link", $show_link );
+        $profile_pic = "";
+        
         if ( $show_link ) {
-            echo "<a href='" . get_rtmedia_user_link ( $rtmedia_media->media_author ) . "' title='" . rtmedia_get_author_name ( $rtmedia_media->media_author ) . "'>";
+                $profile_pic .= "<a href='" . get_rtmedia_user_link ( $author_id ) . "' title='" . rtmedia_get_author_name ( $author_id ) . "'>";
         }
         $size = apply_filters ( "rtmedia_single_media_profile_picture_size", 90 );
         if ( function_exists ( "bp_get_user_has_avatar" ) ) {
-            if ( bp_core_fetch_avatar ( array( 'item_id' => $rtmedia_media->media_author, 'object' => 'user', 'no_grav' => false, 'html' => false ) ) != bp_core_avatar_default () ) {
-                echo bp_core_fetch_avatar ( array( 'item_id' => $rtmedia_media->media_author, 'object' => 'user', 'no_grav' => false, 'html' => true, 'width' => $size, 'height' => $size ) );
+            if ( bp_core_fetch_avatar ( array( 'item_id' => $author_id, 'object' => 'user', 'no_grav' => false, 'html' => false ) ) != bp_core_avatar_default () ) {
+                $profile_pic .= bp_core_fetch_avatar ( array( 'item_id' => $author_id, 'object' => 'user', 'no_grav' => false, 'html' => true, 'width' => $size, 'height' => $size ) );
             } else {
-                echo "<img src='" . bp_core_avatar_default () . "' width='" . $size . "'  height='" . $size . "'/>";
+                $profile_pic .= "<img src='" . bp_core_avatar_default () . "' width='" . $size . "'  height='" . $size . "'/>";
             }
         } else {
-            echo get_avatar ( $rtmedia_media->media_author, $size );
+            $profile_pic .= get_avatar ( $author_id, $size );
         }
         if ( $show_link ) {
-            echo "</a>";
+            $profile_pic .= "</a>";
+        }
+        
+        if( $echo ) {
+            echo $profile_pic;
+        } else {
+            return $profile_pic;
         }
     }
 }
@@ -494,7 +506,7 @@ function rtmedia_comments () {
 
     global $wpdb, $rtmedia_media;
 
-    $comments = $wpdb->get_results ( "SELECT * FROM $wpdb->comments WHERE comment_post_ID = '" . $rtmedia_media->media_id . "'", ARRAY_A );
+    $comments = $wpdb->get_results ( "SELECT * FROM $wpdb->comments WHERE comment_post_ID = '" . $rtmedia_media->media_id . "'", ARRAY_A ); 
 
     foreach ( $comments as $comment ) {
         $html .= rmedia_single_comment ( $comment );
@@ -508,14 +520,26 @@ function rtmedia_comments () {
 function rmedia_single_comment ( $comment ) {
     $html = "";
     $html .= '<li class="rtmedia-comment">';
-    $html .= '<div class ="rtmedia-comment-author">' . (($comment[ 'comment_author' ]) ? $comment[ 'comment_author' ] : 'Annonymous') . '  said : </div>';
-    if(isset( $comment['user_id'] ) && ( is_rt_admin() || ( get_current_user_id() == $comment['user_id'] )) ){ // show delete button for comment author and admins
-        $html .= '<a href="#" data-id="' . $comment['comment_ID'] . '" class = "rtmedia-delte-comment" title="Delete Comment">x</a>';
+    if($comment[ 'user_id' ]){
+        $user_name = "<a href='" . get_rtmedia_user_link ( $comment['user_id'] ) . "' title='" . rtmedia_get_author_name ( $comment['user_id'] ) . "'>" . rtmedia_get_author_name ( $comment['user_id'] ) . "</a>";
+        $profile_pic = rtmedia_author_profile_pic( $show_link = true, $echo = false, $comment['user_id'] );
+    } else {
+        $user_name = "Annonymous";
+        $profile_pic = "";
     }
-    $html .= '<div class="rtmedia-comment-content">' . $comment[ 'comment_content' ] . '</div>';
+    if( $profile_pic != "") {
+        $html .= "<div class='rtmedia-comment-user-pic'>" . $profile_pic . "</div>";
+    }
+    $html .= "<div>";
+    $html .= '<span class ="rtmedia-comment-author">'
+            . '' . $user_name . ' : </span>';
+    
+    if(isset( $comment['user_id'] ) && ( is_rt_admin() || ( get_current_user_id() == $comment['user_id'] )) ){ // show delete button for comment author and admins
+        $html .= '<a href="#" data-id="' . $comment['comment_ID'] . '" class = "rtmedia-delte-comment" title="Delete Comment">X</a>';
+    }
+    $html .= '<span class="rtmedia-comment-content">' . $comment[ 'comment_content' ] . '</span>';
     $html .= '<div class ="rtmedia-comment-date"> ' . __ ( 'on', 'rtmedia' ) . ' ' . $comment[ 'comment_date_gmt' ] . '</div>';
-//			$html .= '<a href></a>';
-    $html .= '</li>';
+    $html .= '</div></li>';
     return $html;
 }
 
@@ -1004,7 +1028,7 @@ function rtmedia_create_album () {
 	return;
     }
     $return = true;
-    $return = apply_filters("rtm_is_album_create_enable");
+    $return = apply_filters("rtm_is_album_create_enable", $return);
     if(!$return) {
 	return;
     }

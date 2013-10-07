@@ -564,7 +564,7 @@ jQuery(document).ready(function($) {
  * rtMedia Comment Js
  */
 jQuery(document).ready(function($) {
-    jQuery(document).on("click", ".mfp-content #rt_media_comment_form #rt_media_comment_submit", function(e) {
+    jQuery(document).on("click", "#rt_media_comment_form #rt_media_comment_submit", function(e) {
         e.preventDefault();
         if ($.trim($("#comment_content").val()) == "") {
             alert("Empty Comment is not allowed");
@@ -578,9 +578,9 @@ jQuery(document).ready(function($) {
             type: 'post',
             data: jQuery("#rt_media_comment_form").serialize() + "&rtajax=true",
             success: function(data) {
-                $(".mfp-content #rtmedia_comment_ul").append(data);
+                $("#rtmedia_comment_ul").append(data);
                 $("#comment_content").val("");
-                $(".mfp-content #rt_media_comment_form #rt_media_comment_submit").removeAttr('disabled');
+                $("#rt_media_comment_form #rt_media_comment_submit").removeAttr('disabled');
             }
         });
 
@@ -592,6 +592,8 @@ jQuery(document).ready(function($) {
     //Delete comment
     jQuery(document).on('click', '.rtmedia-delte-comment', function(e){
        e.preventDefault();
+       if(!confirm('Are you sure you want to delete this comment ?'))
+           return false;
        var current_comment = jQuery(this);
        var current_comment_parent = current_comment.parent();
        var comment_id = current_comment.data('id'); 
@@ -599,7 +601,7 @@ jQuery(document).ready(function($) {
        if(comment_id == '' || isNaN(comment_id)){
            return false;
        }
-       var action = current_comment.parent('ul').data("action");
+       var action = current_comment.closest('ul').data("action");
   
        jQuery.ajax({
            url: action,
@@ -607,7 +609,7 @@ jQuery(document).ready(function($) {
            data: { comment_id : comment_id },
            success: function(res) {
             if(res !='undefined' && res == 1){
-                current_comment_parent.hide('slow', function(){ current_comment_parent.remove(); });
+                current_comment.closest('li').hide(1000, function(){ current_comment.closest('li').remove(); });
             }else
                 current_comment.css('opacity', '1');
             

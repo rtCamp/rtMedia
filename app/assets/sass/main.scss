@@ -110,33 +110,67 @@
 	.rtmedia-item-comments-container {
 		margin: 3% 3%;
 	}
+        
+        #rtmedia_comment_ul {
+            margin-left: 0;
+            margin-bottom: 10px;
+        }
 
-	.rtmedia-comment {
+	#rtmedia_comment_ul .rtmedia-comment {
 		list-style: none;
-		background: #f6f6f6;
-		border: 1px solid #ddd;
-		-moz-border-radius: 3px;
-		border-radius: 3px;
-		margin: 5px 0;
-		padding: 1px 5px 25px;
-		width: 391px;
-                max-width:100%;
+		background: #EDEFF4;
+		margin: 2px 0;
+		padding: 1px 5px 4px;
+		width: 100%;
                 position: relative;
+                word-wrap: break;
+                
+                .rtmedia-comment-user-pic {
+                    
+                    float: left;
+                    img {
+                        height: 35px!important;
+                        width : 35px!important;
+                        //importants are provided to override the inline style that comes when buddypress is not active and image is set as profile pic
+                        @include border-radius(0); 
+                        margin-top : 4px; 
+                    }
+                }
 
 		.rtmedia-comment-author {
 			display: block;
-                        float: left;
+                        
+                        a {
+                            margin-left : 5px;
+                            color: #3B5998;
+                            font-weight: bold;
+                            text-decoration: none;
+                            line-height: 24px;
+                        }
+                        a:hover{
+                            text-decoration: underline;
+                        }
 		}
 
 		.rtmedia-comment-content {
-                        clear: left;
-			display: block;
+                        margin-left : 5px;
+                        line-height: 20px;
 		}
 
 		.rtmedia-comment-date {
+                        clear: left;
 			display: block;
-			float: right;
+			text-align: right;
+                        color : #808080;
 		}
+                
+                .rtmedia-delte-comment{
+                    text-decoration: none;
+                    position : absolute;
+                    right: 8px;
+                    top : 0;
+                    line-height : 24px; 
+                }
 	}
 
 	.rtmedia-bp-header {
@@ -434,7 +468,6 @@ button.mfp-close {
 .mejs-video .mejs-controls {
     position: absolute;
 }
-.rtmedia-delte-comment{position: absolute;right: 8px;}
 
 /* audio player positioning fix */
 .mfp-content #rtmedia-single-media-container .wp-audio-shortcode{
