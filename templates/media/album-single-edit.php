@@ -4,6 +4,8 @@ global $rtmedia_query;
 $model = new RTMediaModel();
 
 $media = $model->get_media(array('id' => $rtmedia_query->media_query['album_id']), false, false);
+global $rtmedia_media;
+$rtmedia_media = $media[0];
 ?>
 <div class="rtmedia-container rtmedia-single-container">
     <form method="post">
@@ -21,7 +23,7 @@ $media = $model->get_media(array('id' => $rtmedia_query->media_query['album_id']
             <?php wp_editor($content, 'description', array('media_buttons' => false, 'textarea_rows' => 4, 'quicktags' => false)); ?>
             <input type="submit" name="submit" value="<?php _e('Save', 'rtmedia'); ?>" />
         </div>
-        
+
 
     </form>
     <?php if (have_rtmedia()) { ?>

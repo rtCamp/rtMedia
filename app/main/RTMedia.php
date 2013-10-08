@@ -211,7 +211,7 @@ class RTMedia
 
         // sanitize all the types
         $allowed_types = $this->sanitize_allowed_types($allowed_types);
-        
+
         // set the allowed types property
         $this->allowed_types = $allowed_types;
     }
@@ -233,7 +233,7 @@ class RTMedia
             if (!isset($type['name']) || // check if a name is set
                     empty($type['name']) ||
                    //commented this section for playlist // !isset($type['extn']) || // check if file extensions are set
-                   //commented this section for playlist  // empty($type['extn']) || 
+                   //commented this section for playlist  // empty($type['extn']) ||
                     strstr($type['name'], " ") || strstr($type['name'], "_")) {
                 unset($allowed_types[$key]); // if not unset this type
                 continue;
@@ -601,7 +601,7 @@ class RTMedia
                 }
             }
         }
-        
+
         $this->set_allowed_types(); // Define allowed types
 
         global $rtmedia_buddypress_activity;
@@ -702,13 +702,13 @@ class RTMedia
             wp_enqueue_script('wp-mediaelement-start', RTMEDIA_URL . 'lib/media-element/wp-mediaelement.js', 'wp-mediaelement', RTMEDIA_VERSION, true);
         }
 
-        wp_enqueue_style('rtmedia-main', RTMEDIA_URL . 'app/assets/css/main.css', '', RTMEDIA_VERSION);
         wp_enqueue_script('rtmedia-main', RTMEDIA_URL . 'app/assets/js/rtMedia.js', array('jquery', 'wp-mediaelement'), RTMEDIA_VERSION);
         wp_enqueue_style('rtmedia-magnific', RTMEDIA_URL . 'lib/magnific/magnific.css', '', RTMEDIA_VERSION);
         wp_enqueue_script('rtmedia-magnific', RTMEDIA_URL . 'lib/magnific/magnific.js', '', RTMEDIA_VERSION);
         wp_localize_script('rtmedia-main', 'rtmedia_ajax_url', admin_url('admin-ajax.php'));
         wp_localize_script('rtmedia-main', 'rtmedia_media_slug', RTMEDIA_MEDIA_SLUG);
         wp_localize_script('rtmedia-main', 'rtmedia_lightbox_enabled', strval($this->options["general_enableLightbox"]));
+	wp_enqueue_style('rtmedia-main', RTMEDIA_URL . 'app/assets/css/main.css', '', RTMEDIA_VERSION);
     }
 
     function set_bp_bar() {

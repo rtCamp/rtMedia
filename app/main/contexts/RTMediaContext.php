@@ -98,7 +98,9 @@ class RTMediaContext {
      */
     function get_current_bp_component_id () {
         switch ( bp_current_component () ) {
-            case 'groups': return bp_get_current_group_id ();
+            case 'groups': if(function_exists("bp_get_current_group_id"))
+				return bp_get_current_group_id ();
+			    return null;
                 break;
             default:
                 return bp_displayed_user_id ();
