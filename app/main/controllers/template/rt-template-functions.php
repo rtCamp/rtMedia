@@ -283,6 +283,10 @@ function rtmedia_image ( $size = 'rt_media_thumbnail', $id = false ,$recho = tru
 	if($media_object->media_type == 'music' && $thumbnail_id == "") {
 	    $thumbnail_id = get_music_cover_art(get_attached_file($media_object->media_id),$media_object->id);
 	}
+	if($media_object->media_type == 'music' && $thumbnail_id == "-1") {
+	    $thumbnail_id = false;
+	}
+
     } else {
         $src = false;
     }
@@ -1342,5 +1346,6 @@ function get_music_cover_art($file, $id) {
 	    return $thumb_upload_info['url'];
 	}
     }
+    $mediaObj->model->update ( array( 'cover_art' => "-1" ), array( 'id' => $id ) );
     return false;
 }
