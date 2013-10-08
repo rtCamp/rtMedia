@@ -37,7 +37,7 @@ class RTMediaCommentModel {
 
 	function delete($id) {
 
-		return wp_delete_comment($id);
+		return wp_delete_comment($id, true);
 	}
 }
 

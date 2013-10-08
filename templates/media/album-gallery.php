@@ -1,10 +1,15 @@
 <div class="rtmedia-container">
     <?php do_action ( 'rtmedia_before_album_gallery' ); ?>
-    <?php rtmedia_uploader () ?>
+    <div id="rtm-gallery-title-container">
+        <h2 class="rtm-gallery-title"><?php echo __ ( 'Album Gallery' , 'rtmedia' ) ; ?></h2>
+        <div id="rtm-media-options"><?php do_action ( 'rtmedia_album_gallery_actions' ); ?></div>
+    </div>   
+    
+    <div id="rtm-media-gallery-uploader">
+        <?php rtmedia_uploader ( array('is_up_shortcode'=> false) ); ?>
+    </div>
 
     <?php if ( have_rtmedia () ) { ?>
-
-        <h2><?php echo __ ( 'Album Gallery' , 'rtmedia' ) ; ?></h2>
 
         <ul class="rtmedia-list rtmedia-album-list">
 
@@ -40,7 +45,7 @@
         </div><!--/.rtmedia_next_prev-->
 
     <?php } else { ?>
-        <p><?php echo __ ( "Oops !! There's no media found for the request !!" , "rtmedia" ) ; ?></p>
+        <p><?php echo __ ( "Oops !! No album found for the request !!" , "rtmedia" ) ; ?></p>
     <?php } ?>
     <?php do_action ( 'rtmedia_after_album_gallery' ) ; ?>
 
