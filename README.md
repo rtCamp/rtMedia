@@ -2,7 +2,7 @@
 
 # rtMedia for WordPress, BuddyPress and bbPress #
 
-* **Contributors:** [rtcamp] (http://profiles.wordpress.org/rtcamp), [rahul286] (http://profiles.wordpress.org/rahul286), [faishal] (http://profiles.wordpress.org/faishal), [JoshuaAbenazer] (http://profiles.wordpress.org/JoshuaAbenazer), [gagan0123] (http://profiles.wordpress.org/gagan0123), [saurabhshukla] (http://profiles.wordpress.org/saurabhshukla), [desaiuditd] (http://profiles.wordpress.org/desaiuditd), [nitun.lanjewar] (http://profiles.wordpress.org/nitun.lanjewar), [rittesh.patel] (http://profiles.wordpress.org/rittesh.patel), [pushpak.pop] (http://profiles.wordpress.org/pushpak.pop), [umesh.nevase] (http://profiles.wordpress.org/umesh.nevase), [suhasgirgaonkar] (http://profiles.wordpress.org/suhasgirgaonkar), [neerukoul] (http://profiles.wordpress.org/neerukoul), [hrishiv90] (http://profiles.wordpress.org/hrishiv90), [kanakiyajay] (http://profiles.wordpress.org/kanakiyajay),
+* **Contributors:** [rtcamp] (http://profiles.wordpress.org/rtcamp), [rahul286] (http://profiles.wordpress.org/rahul286), [faishal] (http://profiles.wordpress.org/faishal), [JoshuaAbenazer] (http://profiles.wordpress.org/JoshuaAbenazer), [gagan0123] (http://profiles.wordpress.org/gagan0123), [saurabhshukla] (http://profiles.wordpress.org/saurabhshukla), [desaiuditd] (http://profiles.wordpress.org/desaiuditd), [nitun.lanjewar] (http://profiles.wordpress.org/nitun.lanjewar), [rittesh.patel] (http://profiles.wordpress.org/rittesh.patel), [pushpak.pop] (http://profiles.wordpress.org/pushpak.pop), [umesh.nevase] (http://profiles.wordpress.org/umesh.nevase), [suhasgirgaonkar] (http://profiles.wordpress.org/suhasgirgaonkar), [neerukoul] (http://profiles.wordpress.org/neerukoul), [hrishiv90] (http://profiles.wordpress.org/hrishiv90), [kanakiyajay] (http://profiles.wordpress.org/kanakiyajay), [jarretc] (http://profiles.wordpress.org/jarretc),
 
 * **License:** [GPL v2 or later] ( http://www.gnu.org/licenses/gpl-2.0.html)
 
@@ -119,8 +119,13 @@ Please visit [rtMedia's Features page](http://rtcamp.com/rtmedia/?utm_source####
 
 Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "Visit rtMedia's Features page") to get some details about future releases.
 
+#### 3.2 ####
+* UI Changes
+* Cover art for music
+* Used Font awesome for icon buttons
+
 #### 3.1.7 ####
-* Translatable message and button in activity stream and single media view. thanks to [jonasnick](https://github.com/jonasnick)
+* Translatable message and button in activity stream and single media view thanks to [jonasnick](https://github.com/jonasnick)
 * Limits items posted in activity feed thanks to [jarretc](https://github.com/jarretc)
 * bug fixed for album deletion
 * Fix count issue on update
@@ -556,8 +561,8 @@ Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_sou
 * HTML5 Audio Tag Support (with fallback)
 * HTML5 Video Tag Support (with fallback)
 
-#### 3.1.7 ####
-Requires BuddyPress 1.7 or higher, if using BuddyPress. Add Limits items posted in activity,fix count on update and other bug fixes.
+#### 3.2 ####
+Requires BuddyPress 1.7 or higher, if using BuddyPress. UI changes, cover art for Music.
 
 ## Sponsors ##
 
@@ -570,6 +575,7 @@ Requires BuddyPress 1.7 or higher, if using BuddyPress. Add Limits items posted 
 
 rtMedia includes [full translation support](https://rtcamp.com/tutorials/rtmedia-translation/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media). Head over to the [translation project](http://rtcamp.com/translate/projects/rtmedia/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media) to contribute your translations. If you don't see the language of your choice, let us know in the support forum, we'll add it.
 
+* [Italian](https://rtcamp.com/translate/projects/rtmedia/it/default) translation by [Yukiko.Kawa]
 * [Persian](https://rtcamp.com/translate/projects/rtmedia/fa/default) translation by [mahdiar](http://profiles.wordpress.org/mahdiar/)
 * [Spanish](https://rtcamp.com/translate/projects/rtmedia/es/default) translation by [Andrés Felipe](http://profiles.wordpress.org/naturalworldstm/)
 * [German](https://rtcamp.com/translate/projects/rtmedia/de/default) translation by [hannes.muc]
