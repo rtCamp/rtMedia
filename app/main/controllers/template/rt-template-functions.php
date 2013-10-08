@@ -395,7 +395,7 @@ function rtmedia_description_input () {
     $html = '';
 
     if ( rtmedia_request_action () == 'edit' )
-        $html .= wp_editor ( $value, $name, array( 'media_buttons' => false , 'textarea_rows' => 4, 'quicktags' => false) );
+        $html .= wp_editor ( $value, $name, array( 'media_buttons' => false , 'textarea_rows' => 2, 'quicktags' => false) );
     else
         $html .= '<div name="' . $name . '" id="' . $name . '">' . $value . '</div>';
 
@@ -535,7 +535,7 @@ function rmedia_single_comment ( $comment ) {
             . '' . $user_name . ' : </span>';
     
     if(isset( $comment['user_id'] ) && ( is_rt_admin() || ( get_current_user_id() == $comment['user_id'] )) ){ // show delete button for comment author and admins
-        $html .= '<a href="#" data-id="' . $comment['comment_ID'] . '" class = "rtmedia-delte-comment" title="Delete Comment">X</a>';
+        $html .= '<i data-id="' . $comment['comment_ID'] . '" class = "rtmedia-delte-comment icon-remove" title="Delete Comment"></i>';
     }
     $html .= '<span class="rtmedia-comment-content">' . $comment[ 'comment_content' ] . '</span>';
     $html .= '<div class ="rtmedia-comment-date"> ' . __ ( 'on', 'rtmedia' ) . ' ' . $comment[ 'comment_date_gmt' ] . '</div>';

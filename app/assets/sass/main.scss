@@ -121,63 +121,6 @@
             margin-bottom: 10px;
         }
 
-	#rtmedia_comment_ul .rtmedia-comment {
-		list-style: none;
-		background: #EDEFF4;
-		margin: 2px 0;
-		padding: 1px 5px 4px;
-		width: 100%;
-                position: relative;
-                word-wrap: break;
-                
-                .rtmedia-comment-user-pic {
-                    
-                    float: left;
-                    img {
-                        height: 35px!important;
-                        width : 35px!important;
-                        //importants are provided to override the inline style that comes when buddypress is not active and image is set as profile pic
-                        @include border-radius(0); 
-                        margin-top : 4px; 
-                    }
-                }
-
-		.rtmedia-comment-author {
-			display: block;
-                        
-                        a {
-                            margin-left : 5px;
-                            color: #3B5998;
-                            font-weight: bold;
-                            text-decoration: none;
-                            line-height: 24px;
-                        }
-                        a:hover{
-                            text-decoration: underline;
-                        }
-		}
-
-		.rtmedia-comment-content {
-                        margin-left : 5px;
-                        line-height: 20px;
-		}
-
-		.rtmedia-comment-date {
-                        clear: left;
-			display: block;
-			text-align: right;
-                        color : #808080;
-		}
-                
-                .rtmedia-delte-comment{
-                    text-decoration: none;
-                    position : absolute;
-                    right: 8px;
-                    top : 0;
-                    line-height : 24px; 
-                }
-	}
-
 	.rtmedia-bp-header {
 		width: 460px;
 		margin: auto;
@@ -508,6 +451,9 @@ button.mfp-close {
             background: none;
         }
     }
+    .icon-remove {
+        color: red;
+    }
 }
 
 #rtm-media-options {
@@ -614,5 +560,62 @@ button.mfp-close {
         padding: 5px 0;
         display: inline-block;
         
+    }
+}
+
+ .rtmedia-container ul#rtmedia_comment_ul li.rtmedia-comment {
+    list-style: none;
+    background: #EDEFF4;
+    margin: 2px 0;
+    padding: 1px 5px 4px;
+    width: 100%;
+    position: relative;
+    word-wrap: break;
+    line-height : 20px;
+
+    .rtmedia-comment-user-pic {
+
+        float: left;
+        img {
+            height: 35px!important;
+            width : 35px!important;
+            //importants are provided to override the inline style that comes when buddypress is not active and image is set as profile pic
+            @include border-radius(0); 
+            margin-top : 4px; 
+        }
+    }
+
+    .rtmedia-comment-author {
+            display: block;
+            line-height : 24px;
+            a {
+                margin-left : 5px;
+                color: #3B5998;
+                font-weight: bold;
+                text-decoration: none;
+                line-height: 24px;
+            }
+            a:hover{
+                text-decoration: underline;
+            }
+    }
+
+    .rtmedia-comment-content {
+            margin-left : 5px;
+    }
+
+    .rtmedia-comment-date {
+            clear: left;
+            display: block;
+            text-align: right;
+            color : #808080;
+    }
+
+    .rtmedia-delte-comment{
+        text-decoration: none;
+        position : absolute;
+        right: 8px;
+        top : 0; 
+        color : #3B59A1;
     }
 }

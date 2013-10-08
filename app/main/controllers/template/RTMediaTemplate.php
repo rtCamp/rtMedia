@@ -198,13 +198,13 @@ class RTMediaTemplate {
 
     function media_update_success_messege () {
         $message = apply_filters ( "rtmedia_update_media_message", "Media updated Sucessfully", false );
-        $html = "<div class='rtmedia-success media-edit-messge'><p>" . __ ( $message, "rtmedia" ) . "</p></div>";
+        $html = "<div class='rtmedia-success media-edit-messge'>" . __ ( $message, "rtmedia" ) . "</div>";
         echo apply_filters ( "rtmedia_update_media_message_html", $html, $message, false );
     }
 
     function media_update_success_error () {
         $message = apply_filters ( "rtmedia_update_media_message", "Error in updating Media", true );
-        $html = "<div class='rtmedia-error  media-edit-messge'><p>" . __ ( $message, "rtmedia" ) . "</p></div>";
+        $html = "<div class='rtmedia-error  media-edit-messge'>" . __ ( $message, "rtmedia" ) . "</div>";
         echo apply_filters ( "rtmedia_update_media_message_html", $html, $message, true );
     }
 
