@@ -125,9 +125,9 @@ class RTMediaBuddyPressActivity {
         $params = array(
             'url' => (isset ( $url ) && (strpos ( $url, "/media/" ) !== false)) ? str_replace ( "/media/", "/upload/", $url ) : 'upload/',
             'runtimes' => 'html5,silverlight,flash,html4',
-            'browse_button' => 'rtmedia-whts-new-upload-button',
+            'browse_button' => 'rtmedia-add-media-button-post-update',// browse button assigned to "Attach Files" Button.
             'container' => 'rtmedia-whts-new-upload-container',
-            'drop_element' => 'rtmedia-whts-new-drag-drop-area',
+            'drop_element' => 'whats-new-textarea',// drag-drop area assigned to activity update textarea
             'filters' => apply_filters ( 'rtmedia_plupload_files_filter', array( array( 'title' => "Media Files", 'extensions' => get_rtmedia_allowed_upload_type () ) ) ),
             'max_file_size' => min ( array( ini_get ( 'upload_max_filesize' ), ini_get ( 'post_max_size' ) ) ),
             'multipart' => true,
