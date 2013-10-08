@@ -268,6 +268,9 @@ function rtmedia_image ( $size = 'rt_media_thumbnail', $id = false ,$recho = tru
         } else {
             $thumbnail_id = false;
         }
+	if($media_object->media_type == 'music' && $thumbnail_id == "") {
+	    $thumbnail_id = get_music_cover_art(get_attached_file($media_object->media_id),$media_object->id);
+	}
     } else {
         $src = false;
     }
@@ -1261,21 +1264,32 @@ function get_rtmedia_like($media_id = false) {
     return $actions;
 }
 
-add_action("rtemdia_after_file_upload_before_activity","add_music_cover_art" ,20 ,2);
+//add_action("rtemdia_after_file_upload_before_activity","add_music_cover_art" ,20 ,2);
 function add_music_cover_art($file_object, $upload_obj) {
     $mediaObj = new RTMediaMedia();
     $media = $mediaObj->model->get ( array( 'id' => $upload_obj->media_ids[ 0 ] ) );
     if ( $media[ 0 ]->media_type == "music" ) {
-	if ( ! class_exists ( "getID3" ) ) {
-	    include_once(trailingslashit ( RTMEDIA_PATH ) . 'lib/getid3/getid3.php');
+	//$cover_art = get_music_cover_art($file_object[0]['file'], $upload_obj->media_ids[ 0 ]);
+    }
+}
+
+function get_music_cover_art($file, $id) {
+    $mediaObj = new RTMediaMedia();
+    if ( ! class_exists ( "getID3" ) ) {
+	include_once(trailingslashit ( RTMEDIA_PATH ) . 'lib/getid3/getid3.php');
+    }
+    $getID3 = new getID3;
+    $file_info = $getID3->analyze ( $file );
+    if( isset($file_info['id3v2']['APIC']) && is_array ( $file_info['id3v2']['APIC'] ) && $file_info['id3v2']['APIC'] != "" ) {
+	$title = "cover_art";
+	if(isset($file_info['id3v2']['comments']['title'][0])) {
+	    $title = $file_info['id3v2']['comments']['title'][0];
 	}
-	$getID3 = new getID3;
-	$file_info = $getID3->analyze ( $file_object[0]['file'] );
-	if( is_array ( $file_info['id3v2']['APIC'] ) && $file_info['id3v2']['APIC'] != "" ) {
-		$thumb_upload_info = wp_upload_bits($file_info['id3v2']['comments']['title'][0].".jpeg", null, $file_info['id3v2']['APIC'][0]['data']);
-	    if( is_array ( $thumb_upload_info ) && $thumb_upload_info['url'] != "") {
-		$mediaObj->model->update ( array( 'cover_art' => $thumb_upload_info['url'] ), array( 'id' => $upload_obj->media_ids[ 0 ] ) );
-	    }
+	$thumb_upload_info = wp_upload_bits($file_info['id3v2']['comments']['title'][0].".jpeg", null, $file_info['id3v2']['APIC'][0]['data']);
+	if( is_array ( $thumb_upload_info ) && $thumb_upload_info['url'] != "") {
+	    $mediaObj->model->update ( array( 'cover_art' => $thumb_upload_info['url'] ), array( 'id' => $id ) );
+	    return $thumb_upload_info['url'];
 	}
     }
+    return false;
 }
