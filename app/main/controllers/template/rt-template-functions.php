@@ -53,7 +53,12 @@ function get_rtmedia_gallery_title () {
     global $rtmedia_query;
     $title = '';
     if( isset( $rtmedia_query->media_query['media_type'] ) && !is_array( $rtmedia_query->media_query['media_type']) && $rtmedia_query->media_query['media_type'] != "") {
-        $title = __('All '. $rtmedia_query->media_query['media_type'] . "s" , 'rtmedia');
+        
+        if($rtmedia_query->media_query['media_type'] == "music") {
+            $title = __('All '. $rtmedia_query->media_query['media_type'] , 'rtmedia');
+        } else {
+            $title = __('All '. $rtmedia_query->media_query['media_type'] . "s" , 'rtmedia');
+        }
         return $title;
     }
     if( isset( $rtmedia_query->query['media_type'] ) &&  $rtmedia_query->query['media_type'] == "album"
