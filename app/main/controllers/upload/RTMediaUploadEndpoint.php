@@ -39,6 +39,15 @@ class RTMediaUploadEndpoint {
                 $mediaObj = new RTMediaMedia();
                 $media = $mediaObj->model->get ( array( 'id' => $rtupload->media_ids[ 0 ] ) );
                 $rtMediaNav = new RTMediaNav();
+		$perma_link = get_rtmedia_permalink($rtupload->media_ids[ 0 ]);
+		if($media[0]->media_type == "photo") {
+		    $thumb_image = rtmedia_image("rt_media_thumbnail", $rtupload->media_ids[ 0 ], false);
+		} elseif( $media[0]->media_type == "music" ) {
+		    $thumb_image = $media[0]->cover_art;
+		} else {
+		    $thumb_image = "";
+		}
+		
                 if ( $media[ 0 ]->context == "group" ) {
                     $rtMediaNav->refresh_counts ( $media[ 0 ]->context_id, array( "context" => $media[ 0 ]->context, 'context_id' => $media[ 0 ]->context_id ) );
                 } else {
@@ -64,7 +73,7 @@ class RTMediaUploadEndpoint {
                     $wpdb->update ( $bp->activity->table_name, array( "type" => "rtmedia_update", "content" => $objActivity->create_activity_html () ), array( "id" => $activity_id ) );
                 }
             }
-            
+
                 if ( isset ( $_POST[ "redirect" ] ) && is_numeric ( $_POST[ "redirect" ] ) ) {
                         if ( intval ( $_POST[ "redirect" ] ) > 1 ) {
                             //bulkurl
@@ -77,7 +86,7 @@ class RTMediaUploadEndpoint {
                             $redirect_url = get_rtmedia_permalink ( $media[ 0 ]->id );
                         }
                 }
-                    
+
                           // Ha ha ha
                     ob_end_clean ();
                     if ( isset ( $_POST[ "rtmedia_update" ] ) && $_POST[ "rtmedia_update" ] == "true" ) {
@@ -89,7 +98,7 @@ class RTMediaUploadEndpoint {
                         echo json_encode ( $rtupload->media_ids );
                     } else {
                         // Media Upload Case - on album/post/profile/group
-                        $data = array( 'activity_id' => $activity_id, 'redirect_url' => $redirect_url  );
+                        $data = array( 'activity_id' => $activity_id, 'redirect_url' => $redirect_url, 'permalink' => $perma_link, 'cover_art' => $thumb_image  );
                         if(preg_match('/(?i)msie [1-9]/',$_SERVER['HTTP_USER_AGENT'])) { // if IE(<=9) set content type = text/plain
                            header ( 'Content-type: text/plain' );
                         } else {
@@ -97,8 +106,8 @@ class RTMediaUploadEndpoint {
                         }
                         echo json_encode ( $data );
                     }
-               
-           
+
+
             die ();
         }
     }
