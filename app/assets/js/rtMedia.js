@@ -219,13 +219,11 @@ jQuery('document').ready(function($) {
    jQuery('#whats-new-textarea').after("<h2 id='rtm-drop-files-title'>Drop files here</h2>");
    jQuery(document)
            .on('dragover', function(e) {
-               console.log('a');
-                //var height = dragArea.height();
+               jQuery('#rtm-media-gallery-uploader').show();
                 activityArea.addClass('rtm-drag-drop-active');
                 activityArea.css('height','150px');
                 dragArea.addClass('rtm-drag-drop-active');
                 jQuery('#rtm-drop-files-title').css('display', 'block');
-               // jQuery('html, body').scrollTop( dragArea.offset().top);
                 })
            .on("dragleave", function(e){
                e.preventDefault();
