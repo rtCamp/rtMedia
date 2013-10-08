@@ -79,10 +79,10 @@ function rtmedia_author_profile_pic ( $show_link = true, $echo = true, $author_i
             global $rtmedia_media;
             $author_id = $rtmedia_media->media_author;
         }
-        
+
         $show_link = apply_filters ( "rtmedia_single_media_show_profile_picture_link", $show_link );
         $profile_pic = "";
-        
+
         if ( $show_link ) {
                 $profile_pic .= "<a href='" . get_rtmedia_user_link ( $author_id ) . "' title='" . rtmedia_get_author_name ( $author_id ) . "'>";
         }
@@ -99,7 +99,7 @@ function rtmedia_author_profile_pic ( $show_link = true, $echo = true, $author_i
         if ( $show_link ) {
             $profile_pic .= "</a>";
         }
-        
+
         if( $echo ) {
             echo $profile_pic;
         } else {
@@ -280,6 +280,13 @@ function rtmedia_image ( $size = 'rt_media_thumbnail', $id = false ,$recho = tru
         } else {
             $thumbnail_id = false;
         }
+	if($media_object->media_type == 'music' && $thumbnail_id == "") {
+	    $thumbnail_id = get_music_cover_art(get_attached_file($media_object->media_id),$media_object->id);
+	}
+	if($media_object->media_type == 'music' && $thumbnail_id == "-1") {
+	    $thumbnail_id = false;
+	}
+
     } else {
         $src = false;
     }
@@ -506,7 +513,7 @@ function rtmedia_comments () {
 
     global $wpdb, $rtmedia_media;
 
-    $comments = $wpdb->get_results ( "SELECT * FROM $wpdb->comments WHERE comment_post_ID = '" . $rtmedia_media->media_id . "'", ARRAY_A ); 
+    $comments = $wpdb->get_results ( "SELECT * FROM $wpdb->comments WHERE comment_post_ID = '" . $rtmedia_media->media_id . "'", ARRAY_A );
 
     foreach ( $comments as $comment ) {
         $html .= rmedia_single_comment ( $comment );
@@ -533,7 +540,7 @@ function rmedia_single_comment ( $comment ) {
     $html .= "<div>";
     $html .= '<span class ="rtmedia-comment-author">'
             . '' . $user_name . ' : </span>';
-    
+
     if(isset( $comment['user_id'] ) && ( is_rt_admin() || ( get_current_user_id() == $comment['user_id'] )) ){ // show delete button for comment author and admins
         $html .= '<i data-id="' . $comment['comment_ID'] . '" class = "rtmedia-delte-comment icon-remove" title="Delete Comment"></i>';
     }
@@ -1303,7 +1310,7 @@ function get_rtmedia_like($media_id = false) {
 
 add_action('rtmedia_media_gallery_actions', 'add_upload_button');
 add_action('rtmedia_album_gallery_actions', 'add_upload_button');
-function add_upload_button() { 
+function add_upload_button() {
     if ( function_exists ( 'bp_is_blog_page' ) && ! bp_is_blog_page () ) {
         if ( function_exists ( 'bp_is_user' ) && bp_is_user () && function_exists ( 'bp_displayed_user_id' ) && bp_displayed_user_id () == get_current_user_id () )
             echo '<span class="icon-upload-alt icon-2x" id="rtm_show_upload_ui" title="Upload Media"></span>';
@@ -1311,24 +1318,36 @@ function add_upload_button() {
             if ( can_user_upload_in_group () )
                echo '<span class="icon-upload-alt icon-2x" id="rtm_show_upload_ui" title="Upload Media"></span>';
         }
-    } 
+    }
 }
 
-add_action("rtemdia_after_file_upload_before_activity","add_music_cover_art" ,20 ,2);
+//add_action("rtemdia_after_file_upload_before_activity","add_music_cover_art" ,20 ,2);
 function add_music_cover_art($file_object, $upload_obj) {
     $mediaObj = new RTMediaMedia();
     $media = $mediaObj->model->get ( array( 'id' => $upload_obj->media_ids[ 0 ] ) );
     if ( $media[ 0 ]->media_type == "music" ) {
-	if ( ! class_exists ( "getID3" ) ) {
-	    include_once(trailingslashit ( RTMEDIA_PATH ) . 'lib/getid3/getid3.php');
+	//$cover_art = get_music_cover_art($file_object[0]['file'], $upload_obj->media_ids[ 0 ]);
+    }
+}
+
+function get_music_cover_art($file, $id) {
+    $mediaObj = new RTMediaMedia();
+    if ( ! class_exists ( "getID3" ) ) {
+	include_once(trailingslashit ( RTMEDIA_PATH ) . 'lib/getid3/getid3.php');
+    }
+    $getID3 = new getID3;
+    $file_info = $getID3->analyze ( $file );
+    if( isset($file_info['id3v2']['APIC']) && is_array ( $file_info['id3v2']['APIC'] ) && $file_info['id3v2']['APIC'] != "" ) {
+	$title = "cover_art";
+	if(isset($file_info['id3v2']['comments']['title'][0])) {
+	    $title = $file_info['id3v2']['comments']['title'][0];
 	}
-	$getID3 = new getID3;
-	$file_info = $getID3->analyze ( $file_object[0]['file'] );
-	if( is_array ( $file_info['id3v2']['APIC'] ) && $file_info['id3v2']['APIC'] != "" ) {
-		$thumb_upload_info = wp_upload_bits($file_info['id3v2']['comments']['title'][0].".jpeg", null, $file_info['id3v2']['APIC'][0]['data']);
-	    if( is_array ( $thumb_upload_info ) && $thumb_upload_info['url'] != "") {
-		$mediaObj->model->update ( array( 'cover_art' => $thumb_upload_info['url'] ), array( 'id' => $upload_obj->media_ids[ 0 ] ) );
-	    }
+	$thumb_upload_info = wp_upload_bits($file_info['id3v2']['comments']['title'][0].".jpeg", null, $file_info['id3v2']['APIC'][0]['data']);
+	if( is_array ( $thumb_upload_info ) && $thumb_upload_info['url'] != "") {
+	    $mediaObj->model->update ( array( 'cover_art' => $thumb_upload_info['url'] ), array( 'id' => $id ) );
+	    return $thumb_upload_info['url'];
 	}
     }
+    $mediaObj->model->update ( array( 'cover_art' => "-1" ), array( 'id' => $id ) );
+    return false;
 }
