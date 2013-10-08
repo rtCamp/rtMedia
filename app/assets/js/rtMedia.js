@@ -78,7 +78,7 @@ var rtMediaHook = {
     }
 }
 jQuery('document').ready(function($) {
-
+   
     $("#rt_media_comment_form").submit(function(e) {
         if ($.trim($("#comment_content").val()) == "") {
             alert("Empty Comment is not allowed");
@@ -117,13 +117,13 @@ jQuery('document').ready(function($) {
         jQuery('.rtmedia-move-container').slideToggle();
     });
 
-    jQuery('.rtmedia-container').on('click', '.rtmedia-merge', function(e) {
-        jQuery('.rtmedia-merge-container').slideToggle();
-    });
+//    jQuery('.rtmedia-container').on('click', '.rtmedia-merge', function(e) {
+//        jQuery('.rtmedia-merge-container').slideToggle();
+//    });
 
-    jQuery('.rtmedia-container').on('click', '.rtmedia-create-new-album-button', function(e) {
-        jQuery('.rtmedia-create-new-album-container').slideToggle();
-    });
+//    jQuery('.rtmedia-container').on('click', '.rtmedia-create-new-album-button', function(e) {
+//        jQuery('.rtmedia-create-new-album-container').slideToggle();
+//    });
 
     jQuery('.rtmedia-container').on('click', '#rtmedia_create_new_album', function(e) {
         $albumname = jQuery.trim(jQuery('#rtmedia_album_name').val());
@@ -167,7 +167,7 @@ jQuery('document').ready(function($) {
                     jQuery('select.rtmedia-user-album-list option[value="' + response + '"]').prop('selected', true);
                     jQuery('.rtmedia-create-new-album-container').slideToggle();
                     jQuery('#rtmedia_album_name').val("");
-                    jQuery(".rtmedia-create-new-album-button").after("<span class='rtmedia-success rtmedia-create-album-alert'><b>" + $albumname + "</b> album created.</span>");
+                    jQuery("#rtmedia_create_new_album").after("<span class='rtmedia-success rtmedia-create-album-alert'><b>" + $albumname + "</b> album created.</span>");
                     setTimeout(function() {
                         jQuery(".rtmedia-create-album-alert").remove()
                     }, 4000);
@@ -208,32 +208,82 @@ jQuery('document').ready(function($) {
     rtMediaHook.register('rtmedia_js_popup_after_content_added',
 	    function() {
 		rtmedia_media_view_counts();
-                rtmedia_init_media_deleting();// for media delete confirmation on 
+                rtmedia_init_media_deleting();
 		return true;
 	    }
     );
-        
-   function rtmedia_init_media_deleting() {
+   var dragArea = jQuery("#drag-drop-area");
+   var activityArea = jQuery('#whats-new');
+   var content = dragArea.html();
+   jQuery('#rtmedia-upload-container').after("<h2 id='rtm-drop-files-title'>Drop files here</h2>");
+   jQuery('#whats-new-textarea').after("<h2 id='rtm-drop-files-title'>Drop files here</h2>");
+   jQuery(document)
+           .on('dragover', function(e) {
+               console.log('a');
+                //var height = dragArea.height();
+                activityArea.addClass('rtm-drag-drop-active');
+                activityArea.css('height','150px');
+                dragArea.addClass('rtm-drag-drop-active');
+                jQuery('#rtm-drop-files-title').css('display', 'block');
+               // jQuery('html, body').scrollTop( dragArea.offset().top);
+                })
+           .on("dragleave", function(e){
+               e.preventDefault();
+               activityArea.removeClass('rtm-drag-drop-active');
+               activityArea.removeAttr('style');
+               dragArea.removeClass('rtm-drag-drop-active');
+                jQuery('#rtm-drop-files-title').hide();
+                
+                })
+           .on("drop", function(e){
+                e.preventDefault();
+                 activityArea.removeClass('rtm-drag-drop-active');
+                 activityArea.removeAttr('style');
+                 dragArea.removeClass('rtm-drag-drop-active');
+                jQuery('#rtm-drop-files-title').hide();                                
+                });
+           
+           
+    function rtmedia_init_media_deleting() {
         jQuery('.rtmedia-container').on('click', '.rtmedia-delete-media', function(e) {
             e.preventDefault();
             if(confirm('Are you sure you want to delete this media?')) {
                 jQuery(this).closest('form').submit();
             }
         });
-    }
-        
-    jQuery('.rtmedia-container').on('click', '.rtmedia-delete-album' , function(e) {
+       }
+
+       jQuery('.rtmedia-container').on('click', '.rtmedia-delete-album' , function(e) {
         e.preventDefault();
         if(confirm('Are you sure you want to delete this Album?')) {
             jQuery(this).closest('form').submit();
         }
-    });
-    
-    jQuery('.rtmedia-container').on('click', '.rtmedia-delete-media', function(e) {
+       });
+
+       jQuery('.rtmedia-container').on('click', '.rtmedia-delete-media', function(e) {
         e.preventDefault();
         if(confirm('Are you sure you want to delete this media?')) {
             jQuery(this).closest('form').submit();
         }
+    });
+
+       jQuery(document).on('click', '.rtmedia-reveal-modal', function(e){
+        e.preventDefault();
+        var modalId = jQuery(this).data('reveal-id');
+        jQuery('.reveal-modal-bg').css('display', 'block');
+        jQuery('.reveal-modal-bg').css('opacity', '0.5');
+        jQuery("#"+modalId).foundation('reveal', 'open');
+    });
+    
+    jQuery(document).on('click', '.close-reveal-modal', function(e){
+        e.preventDefault();
+        var modalId = jQuery(this).parent('.reveal-modal');
+        jQuery(modalId).foundation('reveal', 'close');
+        jQuery('.reveal-modal-bg').fadeOut();
+    });
+    
+    jQuery(document).on('click', '#rtm_show_upload_ui', function(){
+        jQuery('#rtm-media-gallery-uploader').slideToggle();
     });
     
 });

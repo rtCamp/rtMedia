@@ -110,6 +110,9 @@ class RTMediaGalleryShortcode {
                     $attr[ "attr" ][ "context" ] = $post->post_type;
                 }
             }
+            
+            global $rtmedia_query;
+            $rtmedia_query->is_gallery_shortcode = true;// to check if gallery shortcode is executed to display the gallery.
 
             $template = new RTMediaTemplate();
             $gallery_template = false;
