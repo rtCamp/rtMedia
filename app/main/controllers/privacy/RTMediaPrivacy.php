@@ -20,7 +20,7 @@ class RTMediaPrivacy {
 
     function __construct ($flag = true) {
         if ( is_rtmedia_privacy_enable () && $flag ) {
-            add_action ( 'rtmedia_after_file_upload_ui' , array ( $this , 'uploader_privacy_ui' ) ) ;
+            //add_action ( 'rtmedia_after_file_upload_ui' , array ( $this , 'uploader_privacy_ui' ) ) ;
             add_action ( 'rtmedia_add_edit_fields' , array ( $this , 'select_privacy_ui' ) ) ;
             add_action ( 'bp_init' , array ( $this , 'add_nav' ) ) ;
             add_action ( 'bp_template_content' , array ( $this , 'content' ) ) ;
@@ -29,12 +29,12 @@ class RTMediaPrivacy {
     }
 
     function uploader_privacy_ui ( $attr ) {
-        if ( ! isset ( $attr[ 'privacy' ] ) ) {
-            $this -> select_privacy_ui () ;
+        if ( ! isset ( $attr[ 'privacy' ] ) ) {            
+                $this -> select_privacy_ui () ;
         }
     }
 
-    function select_privacy_ui ( $echo = true, $select_id = false ) {
+    function select_privacy_ui ( $echo = true, $select_id = false ) { 
         global $rtmedia ;
 
         if ( ! is_rtmedia_privacy_enable () )
