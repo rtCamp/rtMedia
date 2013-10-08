@@ -48,7 +48,7 @@ class RTMediaActivity {
 
         $mediaObj = new RTMediaModel();
         $media_details = $mediaObj->get ( array( 'id' => $this->media ) );
-        
+
         if( intval( $limitActivityFeed ) > 0 )
             $media_details = array_slice( $media_details, 0, $limitActivityFeed, true);
 
@@ -100,7 +100,7 @@ class RTMediaActivity {
 //                                    return '<img src="'.$src.'" />';
 //                                }
 //			}
-
+	     global $rtmedia;
             if ( $media->media_type == 'photo' ) {
                 $thumbnail_id = $media->media_id;
                 if ( $thumbnail_id ) {
@@ -108,7 +108,6 @@ class RTMediaActivity {
                     $html = '<img src="' . $src . '" />';
                 }
             } elseif ( $media->media_type == 'video' ) {
-                global $rtmedia;
                 $cover_art = rtmedia_get_cover_art_src($media->id);
                 if($cover_art) {
                     $poster = 'poster = "'. $cover_art .'"';

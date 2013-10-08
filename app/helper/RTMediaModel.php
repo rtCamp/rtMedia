@@ -39,11 +39,11 @@ class RTMediaModel extends RTDBModel {
         global $wpdb;
         $select = "SELECT ";
         if($count_flag){
-            $select .= "count({$this->table_name}.*) ";
+            $select .= "count(*) ";
         }else{
             $select .= "{$this->table_name}.* " ;
         }
-        
+
 	$from = " FROM {$this->table_name} ";
         $join = "";
         $where = " where 2=2 ";
@@ -83,10 +83,10 @@ class RTMediaModel extends RTDBModel {
         } else {
             $qorder_by = "";
         }
-       
+
         $select = apply_filters ( 'rtmedia-model-select-query', $select, $this->table_name );
         $join = apply_filters ( 'rtmedia-model-join-query', $join, $this->table_name );
-        $where = apply_filters ( 'rtmedia-model-where-query', $where, $this->table_name );
+        $where = apply_filters ( 'rtmedia-model-where-query', $where, $this->table_name, $join );
         $qgroup_by = apply_filters ( 'rtmedia-model-group-by-query', $qgroup_by, $this->table_name );
         $qorder_by = apply_filters ( 'rtmedia-model-order-by-query', $qorder_by, $this->table_name );
 
@@ -94,7 +94,7 @@ class RTMediaModel extends RTDBModel {
         if ( is_integer ( $offset ) && is_integer ( $per_page ) ) {
             $sql .= ' LIMIT ' . $offset . ',' . $per_page;
         }
-        if( $count_flag )
+        if( ! $count_flag )
             return $wpdb->get_results ( $sql );
         else
             return $wpdb->get_var ( $sql );
@@ -143,11 +143,11 @@ class RTMediaModel extends RTDBModel {
      * @param type $order_by
      * @return type
      */
-    function get_media ( $columns, $offset = false, $per_page = false, $order_by = 'media_id desc' ) {
+    function get_media ( $columns, $offset = false, $per_page = false, $order_by = 'media_id desc', $count_flag = false ) {
         if ( is_multisite () ) {
-            $results = $this->get ( $columns, $offset, $per_page, "blog_id ," . $order_by );
+            $results = $this->get ( $columns, $offset, $per_page, "blog_id ," . $order_by, $count_flag );
         } else {
-            $results = $this->get ( $columns, $offset, $per_page, $order_by );
+            $results = $this->get ( $columns, $offset, $per_page, $order_by , $count_flag );
         }
         return $results;
     }

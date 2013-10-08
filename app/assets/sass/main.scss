@@ -383,8 +383,8 @@
 	float: left;
 	padding-right: 10px;
 }
-#header{
-	z-index:1 !important;
+.mfp-ready, .mfp-bg{
+	z-index:9999;
 }
 
 .bp_media_content{
