@@ -141,8 +141,7 @@ class RTMediaPrivacy {
         return update_user_meta ( $user_id , 'bp_media_privacy' , $level ) ;
     }
 
-    static
-            function get_user_default ( $user_id = false ) {
+    static function get_user_default ( $user_id = false ) {
         if ( $user_id == false ) {
             global $bp ;
             $user_id = $bp -> loggedin_user -> id ;
