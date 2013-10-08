@@ -280,7 +280,7 @@ jQuery(function($) {
                 tdSize.className = "plupload_file_size";
                 tdSize.innerHTML = plupload.formatSize(file.size);
                 tdDelete = document.createElement("td");
-                tdDelete.innerHTML = "X";
+                tdDelete.innerHTML = "<i class='icon-remove'></i>";
                 tdDelete.title = "Close";
                 tdDelete.className = "close plupload_delete"
                 tr = document.createElement("tr");
@@ -400,6 +400,16 @@ jQuery(function($) {
 /** Activity Update Js **/
 
 jQuery(document).ready(function($) {
+    
+    //handling the "post update: button on activity page
+        jQuery('#aw-whats-new-submit').removeAttr('disabled');
+        jQuery(document).on( "blur",'#whats-new', function(){
+            setTimeout(function(){ jQuery('#aw-whats-new-submit').removeAttr('disabled'); },100);
+        });
+        jQuery('#aw-whats-new-submit').on('click', function(e){
+            setTimeout(function(){ jQuery('#aw-whats-new-submit').removeAttr('disabled'); },100);
+        });
+    
     if (typeof rtMedia_update_plupload_config == 'undefined') {
         return false;
     }
@@ -409,10 +419,9 @@ jQuery(document).ready(function($) {
         if ($("#rtm-file_upload-ui .privacy").length > 0) {
             $("#rtmedia-action-update").append($("#rtm-file_upload-ui .privacy"));
         }
-    }
+    }  
     objUploadView = new UploadView(rtMedia_update_plupload_config);
     $("#whats-new-form").on('click', '#rtmedia-add-media-button-post-update', function(e) {
-        $("#div-attache-rtmedia").toggle();
         objUploadView.uploader.refresh();
     });
     //whats-new-post-in
@@ -428,16 +437,32 @@ jQuery(document).ready(function($) {
                     upload_remove_array.push(file.id);
                     return true;
             }
-            tdName = document.createElement("span");
+            tdName = document.createElement("td");
             tdName.innerHTML = file.name;
-            tdStatus = document.createElement("span");
+            tdStatus = document.createElement("td");
             tdStatus.className = "plupload_file_status";
             tdStatus.innerHTML = "0%";
-            tr = document.createElement("p");
+            tdSize = document.createElement("td");
+            tdSize.className = "plupload_file_size";
+            tdSize.innerHTML = plupload.formatSize(file.size);
+            tdDelete = document.createElement("td");
+            tdDelete.innerHTML = "<i class='icon-remove'></i>";
+            tdDelete.title = "Remove from queue";
+            tdDelete.className = "close plupload_delete right";
+            tr = document.createElement("tr");
             tr.id = file.id;
             tr.appendChild(tdName);
             tr.appendChild(tdStatus);
-            $("#rtMedia-update-queue-list").append(tr);
+            tr.appendChild(tdSize);
+            tr.appendChild(tdDelete);
+            $("#rtm-upload-start-notice").css('display','block'); // show the file upload notice to the user
+            $("#rtMedia-queue-list").append(tr);
+            $("#" + file.id + " td.plupload_delete").click(function(e) {
+                    e.preventDefault();
+                    objUploadView.uploader.removeFile(upl.getFile(file.id));
+                    $("#" + file.id).remove();
+                    return false;
+                });            
         });
         $.each(objUploadView.upload_remove_array, function(i, rfile) {
                 objUploadView.uploader.removeFile(objUploadView.uploader.getFile(rfile));
@@ -491,6 +516,9 @@ jQuery(document).ready(function($) {
     objUploadView.uploader.bind('UploadComplete', function(up, files) {
         media_uploading = true;
         $("#aw-whats-new-submit").click();
+        //remove the current file list
+        $("#rtMedia-queue-list tr").remove();
+        $("#rtm-upload-start-notice").hide();
         //$("#aw-whats-new-submit").removeAttr('disabled');
     });
     objUploadView.uploader.bind('UploadProgress', function(up, file) {
@@ -523,7 +551,7 @@ jQuery(document).ready(function($) {
             options.beforeSend = function() {
                 if ($.trim($("#whats-new").val()) == "") {
                     alert("Please enter some content to post.");
-                    $("#aw-whats-new-submit").prop("disabled", true).removeClass('loading');
+                   // $("#aw-whats-new-submit").prop("disabled", true).removeClass('loading');
                     return false;
                 }
                 if (!media_uploading && objUploadView.uploader.files.length > 0) {
@@ -550,7 +578,7 @@ jQuery(document).ready(function($) {
                     }
                     objUploadView.uploader.refresh()
                     $('#rtMedia-update-queue-list').html('');
-                    $("#div-attache-rtmedia").hide();
+                    //$("#div-attache-rtmedia").hide();
                     apply_rtMagnificPopup(jQuery('.rtmedia-list-media, .rtmedia-activity-container ul.rtmedia-list, #bp-media-list,.widget-item-listing,.bp-media-sc-list, li.media.album_updated ul,ul.bp-media-list-media, li.activity-item div.activity-content div.activity-inner div.bp_media_content'));
                 }
                 $("#whats-new-post-in").removeAttr('disabled');
