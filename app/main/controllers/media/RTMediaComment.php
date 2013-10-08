@@ -73,6 +73,20 @@ class RTMediaComment {
 
 	function remove($id) {
 
-		do_action('rtmedia_before_remove_comment', $attr);
+		do_action('rtmedia_before_remove_comment', $id);
+                
+                $comment = "";
+                if(!empty($id)) {
+                    $comment = get_comment( $id );
+                }
+                
+                if(!is_rt_admin() && isset( $comment->user_id ) && $comment->user_id != get_current_user_id() )
+                    return;
+                
+                $comment_deleted = $this->rtmedia_comment_model->delete($id);
+                
+                do_action('rtmedia_after_remove_comment', $id);
+                
+                return $comment_deleted;
 	}
 }
