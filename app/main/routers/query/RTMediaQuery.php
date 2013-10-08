@@ -41,10 +41,11 @@ class RTMediaQuery {
      *
      * @var array The actions recognised for the object
      */
-    public $actions = array(
+     public $actions = array(
         'edit' => array( 'Edit', false ),
         'delete' => array( 'Delete', false ),
-        'comment' => array( 'Comment', true )
+        'comment' => array( 'Comment', true ),
+        'delete-comment' => array( 'Comment Deleted', false )
     );
     public $media = '';
     public $media_count = 0;
