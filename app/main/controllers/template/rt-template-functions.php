@@ -1,4 +1,4 @@
-    <?php
+<?php
 
 /**
  * Checks at any point of time any media is left to be processed in the db pool
@@ -53,7 +53,7 @@ function get_rtmedia_gallery_title () {
     global $rtmedia_query;
     $title = '';
     if( isset( $rtmedia_query->media_query['media_type'] ) && !is_array( $rtmedia_query->media_query['media_type']) && $rtmedia_query->media_query['media_type'] != "") {
-        
+
         if($rtmedia_query->media_query['media_type'] == "music") {
             $title = __('All '. $rtmedia_query->media_query['media_type'] , 'rtmedia');
         } else {

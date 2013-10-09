@@ -1136,4 +1136,3 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
     }
 
 }
-?>

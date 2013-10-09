@@ -716,4 +716,3 @@ if (isset($_REQUEST['rtreencoding'])) {
     $objRTMediaEncoding = new RTMediaEncoding(true);
     $objRTMediaEncoding->reencoding(intval($_REQUEST['rtreencoding']));
 }
-?>

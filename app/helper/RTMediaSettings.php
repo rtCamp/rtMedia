@@ -253,4 +253,3 @@ if (!class_exists('RTMediaSettings')) {
     }
 
 }
-?>

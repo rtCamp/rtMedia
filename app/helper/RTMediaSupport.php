@@ -422,4 +422,3 @@ if (!class_exists('RTMediaSupport')) {
     }
 
 }
-?>

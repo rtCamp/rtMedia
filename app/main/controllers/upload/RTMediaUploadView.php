@@ -41,7 +41,7 @@ class RTMediaUploadView {
     public function render ( $template_name ) {
 
         global $rtmedia_query;
-        $album = '';
+	$album = '';
         if ( $rtmedia_query && is_rtmedia_album () ) {
             $album = '<input class="rtmedia-current-album" type="hidden" name="rtmedia-current-album" value="' . $rtmedia_query->media_query[ 'album_id' ] . '" />';
         } elseif ( is_rtmedia_album_enable () && $rtmedia_query && is_rtmedia_gallery () ) {
@@ -53,9 +53,8 @@ class RTMediaUploadView {
                 $album = '<label>Album: </label><select name="album" class="rtmedia-user-album-list">' . rtmedia_group_album_list () . '</select>';
             }
         }
-        global $rtmedia_query;
-        $up_privacy = ""; //uploader privacy dropdown for uploader under rtMedia Media tab. 
-        if( is_rtmedia_privacy_enable () && isset( $rtmedia_query->is_upload_shortcode ) && $rtmedia_query->is_upload_shortcode === false) {
+        $up_privacy = ""; //uploader privacy dropdown for uploader under rtMedia Media tab.
+        if( is_rtmedia_privacy_enable () && ( ! isset( $rtmedia_query->is_upload_shortcode ) || $rtmedia_query->is_upload_shortcode === false) ) {
             $up_privacy = new RTMediaPrivacy();
             $up_privacy = $up_privacy->select_privacy_ui( false, 'rtSelectPrivacy') ;
         }
@@ -114,4 +113,3 @@ class RTMediaUploadView {
     }
 
 }
-?>

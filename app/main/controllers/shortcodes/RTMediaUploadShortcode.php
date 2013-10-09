@@ -71,7 +71,7 @@ class RTMediaUploadShortcode {
                 return;
             }
             ob_start ();
-            
+
             self::$add_sc_script = true;
             RTMediaUploadTemplate::render ( $attr );
 
@@ -81,5 +81,3 @@ class RTMediaUploadShortcode {
     }
 
 }
-
-?>

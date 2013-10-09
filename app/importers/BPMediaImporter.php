@@ -105,9 +105,9 @@ class BPMediaImporter {
             $bp_imported_media = new BPMediaHostWordpress();
 //            add_filter('bp_media_force_hide_activity', create_function('', 'return true;'));
             $imported_media_id = $bp_imported_media->insertmedia($title, $description, $album_id, 0, false, false, $files, $author_id, $album_name);
-            
+
             wp_update_post($args = array('ID' => $imported_media_id, 'post_author' => $author_id));
-            
+
             $bp_album_privacy = $privacy;
             if ($bp_album_privacy == 10)
                 $bp_album_privacy = 6;
@@ -152,5 +152,3 @@ class BPMediaImporter {
     }
 
 }
-
-?>
