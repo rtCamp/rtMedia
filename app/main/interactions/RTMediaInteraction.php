@@ -242,5 +242,3 @@ class RTMediaInteraction {
     }
 
 }
-
-?>

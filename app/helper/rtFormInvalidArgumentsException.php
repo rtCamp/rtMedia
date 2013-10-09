@@ -25,5 +25,3 @@ if(!class_exists("rtFormsInvalidArgumentsException")) {
 	    }
 	}
 }
-
-?>

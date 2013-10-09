@@ -17,14 +17,14 @@ class rtPluginUpdate {
 
     /**
      * Create a new instance of PluginUpdate from its JSON-encoded representation.
-     * 
+     *
      * @param string $json
      * @param bool $triggerErrors
      * @return PluginUpdate|null
      */
 
     /**
-     * 
+     *
      * @param type $json
      * @param type $triggerErrors
      * @return null
@@ -44,13 +44,13 @@ class rtPluginUpdate {
     /**
      * Create a new instance of PluginUpdate based on an instance of PluginInfo.
      * Basically, this just copies a subset of fields from one object to another.
-     * 
+     *
      * @param PluginInfo $info
      * @return PluginUpdate
      */
 
     /**
-     * 
+     *
      * @param type $info
      * @return type
      */
@@ -59,15 +59,15 @@ class rtPluginUpdate {
     }
 
     /**
-     * Create a new instance of PluginUpdate by copying the necessary fields from 
+     * Create a new instance of PluginUpdate by copying the necessary fields from
      * another object.
-     *  
+     *
      * @param StdClass|PluginInfo|PluginUpdate $object The source object.
      * @return PluginUpdate The new copy.
      */
 
     /**
-     * 
+     *
      * @param type $object
      * @return \self
      */
@@ -80,16 +80,16 @@ class rtPluginUpdate {
     }
 
     /**
-     * Create an instance of StdClass that can later be converted back to 
+     * Create an instance of StdClass that can later be converted back to
      * a PluginUpdate. Useful for serialization and caching, as it avoids
      * the "incomplete object" problem if the cached value is loaded before
      * this class.
-     * 
+     *
      * @return StdClass
      */
 
     /**
-     * 
+     *
      * @return \StdClass
      */
     public function toStdClass() {
@@ -102,12 +102,12 @@ class rtPluginUpdate {
 
     /**
      * Transform the update into the format used by WordPress native plugin API.
-     * 
+     *
      * @return object
      */
 
     /**
-     * 
+     *
      * @return \StdClass
      */
     public function toWpFormat() {
@@ -126,5 +126,3 @@ class rtPluginUpdate {
     }
 
 }
-
-?>

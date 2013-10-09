@@ -207,4 +207,3 @@ if (!class_exists('RTMediaAddon')) {
     }
 
 }
-?>

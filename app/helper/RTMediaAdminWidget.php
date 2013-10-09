@@ -33,4 +33,3 @@ if (!class_exists('RTMediaAdminWidget')) {
     }
 
 }
-?>

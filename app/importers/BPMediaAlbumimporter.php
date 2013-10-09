@@ -26,7 +26,7 @@ class BPMediaAlbumimporter extends BPMediaImporter {
             return;
         global $wpdb;
         return $wpdb->query(
-                        "ALTER TABLE {$wpdb->base_prefix}bp_album 
+                        "ALTER TABLE {$wpdb->base_prefix}bp_album
                             ADD COLUMN import_status BIGINT (20) NOT NULL DEFAULT 0,
                             ADD COLUMN old_activity_id BIGINT (20) NOT NULL DEFAULT 0,
                             ADD COLUMN new_activity_id BIGINT (20) NOT NULL DEFAULT 0,
@@ -229,14 +229,14 @@ class BPMediaAlbumimporter extends BPMediaImporter {
             return $wpdb->get_var("SELECT SUM( b.count ) AS total
                                         FROM (
                                             SELECT (
-                                                SELECT COUNT( a.id ) 
+                                                SELECT COUNT( a.id )
                                                 FROM $activity_table a
                                                 WHERE a.item_id = activity.id
                                                 AND a.component =  'activity'
                                                 AND a.type =  'activity_comment'
                                             ) AS count
                                             FROM $activity_table AS activity
-                                            INNER JOIN $bp_album_table AS album ON ( album.id = activity.item_id ) 
+                                            INNER JOIN $bp_album_table AS album ON ( album.id = activity.item_id )
                                             WHERE activity.component =  'album'
                                             AND activity.type =  'bp_album_picture'
                                             AND album.import_status =0
@@ -252,7 +252,7 @@ class BPMediaAlbumimporter extends BPMediaImporter {
         if ($this->table_exists($bp_album_table)) {
             return $wpdb->get_var("SELECT COUNT( activity.id ) AS count
                                         FROM $activity_table AS activity
-                                        INNER JOIN $bp_album_table AS album ON ( activity.item_id = album.import_status ) 
+                                        INNER JOIN $bp_album_table AS album ON ( activity.item_id = album.import_status )
                                         WHERE activity.component =  'activity'
                                         AND activity.type =  'activity_comment'");
         }
@@ -265,7 +265,7 @@ class BPMediaAlbumimporter extends BPMediaImporter {
         if (BPMediaAlbumimporter::table_exists($table)) {
             return $wpdb->get_results("SELECT COUNT( DISTINCT owner_id ) AS users
                                             FROM $table
-                                            WHERE owner_id NOT 
+                                            WHERE owner_id NOT
                                             IN (
                                                 SELECT a.owner_id
                                                 FROM $table a
@@ -422,5 +422,3 @@ class BPMediaAlbumimporter extends BPMediaImporter {
     }
 
 }
-
-?>

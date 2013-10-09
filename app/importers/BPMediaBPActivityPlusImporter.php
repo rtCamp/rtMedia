@@ -21,5 +21,3 @@ class BPMediaBPActivityPlusImporter extends BPMediaImporter {
 	}
 
 }
-
-?>

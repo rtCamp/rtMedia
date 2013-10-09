@@ -665,5 +665,3 @@ class rtPluginUpdateChecker {
     }
 
 }
-
-?>
