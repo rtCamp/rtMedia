@@ -151,7 +151,8 @@ class RTMediaBuddyPressActivity {
 
         $uploadView = new RTMediaUploadView ( array( 'activity' => true ) );
         global $rtmedia_query;
-        $rtmedia_query->is_upload_shortcode = false;
+        if(isset($rtmedia_query))
+            $rtmedia_query->is_upload_shortcode = false;
         $uploadView->render ( 'uploader' );
     }
 
