@@ -53,5 +53,3 @@ class rt_plugin_info {
     }
 
 }
-
-?>

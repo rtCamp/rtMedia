@@ -54,7 +54,7 @@ class RTMediaUploadView {
             }
         }
         global $rtmedia_query;
-        $up_privacy = ""; //uploader privacy dropdown for uploader under rtMedia Media tab. 
+        $up_privacy = ""; //uploader privacy dropdown for uploader under rtMedia Media tab.
         if( is_rtmedia_privacy_enable () && isset( $rtmedia_query->is_upload_shortcode ) && $rtmedia_query->is_upload_shortcode === false) {
             $up_privacy = new RTMediaPrivacy();
             $up_privacy = $up_privacy->select_privacy_ui( false, 'rtSelectPrivacy') ;
@@ -114,4 +114,3 @@ class RTMediaUploadView {
     }
 
 }
-?>

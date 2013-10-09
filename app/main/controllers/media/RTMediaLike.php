@@ -169,4 +169,3 @@ class RTMediaLike extends RTMediaUserInteraction {
 	$this->label =  "<span>" .$actions ."</span>" . $this->label;
     }
 }
-?>

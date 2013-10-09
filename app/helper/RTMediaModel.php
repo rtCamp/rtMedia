@@ -263,5 +263,3 @@ class RTMediaModel extends RTDBModel {
     }
 
 }
-
-?>

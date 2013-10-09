@@ -833,5 +833,3 @@ class RTMediaQuery {
     }
 
 }
-
-?>

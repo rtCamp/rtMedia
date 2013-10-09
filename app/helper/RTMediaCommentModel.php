@@ -40,5 +40,3 @@ class RTMediaCommentModel {
 		return wp_delete_comment($id, true);
 	}
 }
-
-?>

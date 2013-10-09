@@ -8,7 +8,7 @@
 class rtPluginInfo {
 
     //Most fields map directly to the contents of the plugin's info.json file.
-    //See the relevant docs for a description of their meaning.  
+    //See the relevant docs for a description of their meaning.
     public $name;
     public $slug;
     public $version;
@@ -27,16 +27,16 @@ class rtPluginInfo {
     public $id = 0; //The native WP.org API returns numeric plugin IDs, but they're not used for anything.
 
     /**
-     * Create a new instance of PluginInfo from JSON-encoded plugin info 
+     * Create a new instance of PluginInfo from JSON-encoded plugin info
      * returned by an external update API.
-     * 
+     *
      * @param string $json Valid JSON string representing plugin info.
      * @param bool $triggerErrors
      * @return PluginInfo|null New instance of PluginInfo, or NULL on error.
      */
 
     /**
-     * 
+     *
      * @param type $json
      * @param type $triggerErrors
      * @return null|\self
@@ -74,19 +74,19 @@ class rtPluginInfo {
 
     /**
      * Transform plugin info into the format used by the native WordPress.org API
-     * 
+     *
      * @return object
      */
 
     /**
-     * 
+     *
      * @return \StdClass
      */
     public function toWpFormat() {
         $info = new StdClass;
 
         //The custom update API is built so that many fields have the same name and format
-        //as those returned by the native WordPress.org API. These can be assigned directly. 
+        //as those returned by the native WordPress.org API. These can be assigned directly.
         $sameFormat = array(
             'name', 'slug', 'version', 'requires', 'tested', 'rating', 'upgrade_notice',
             'num_ratings', 'downloaded', 'homepage', 'last_updated',
@@ -120,5 +120,3 @@ class rtPluginInfo {
     }
 
 }
-
-?>

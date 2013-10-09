@@ -6,19 +6,19 @@ License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires at least: WordPress 3.6
 Tested up to: WordPress 3.6.1 + BuddyPress 1.8.1
-Stable tag: 3.2.1
+Stable tag: 3.2.2
 
 Add albums, photo, audio/video encoding, privacy, sharing, front-end uploads & more. All this works mobile/tablets devices.
 
 == Description ==
 
 > **Important Update**
-> 
+>
 > If you are looking for more features, 1-on-1 support, please consider [rtMedia-PRO](https://rtcamp.com/store/rtmedia-pro/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media).
 >
 > [rtMedia-PRO](https://rtcamp.com/store/rtmedia-pro/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media) is premiun & open-source (and of-course GPL too).
 
-rtMedia is **only** complete media solution for WordPress, BuddyPress and bbPress. 
+rtMedia is **only** complete media solution for WordPress, BuddyPress and bbPress.
 
 Built with a mobile-first approach, it works on mobile/tablet devices (like iPhone/iPad, Android).
 
@@ -33,7 +33,7 @@ In case you are in hurry, you can skip the long list of features in subsequent s
 
 = rtMedia Features =
 
- * **[Free Audio/Video conversion](http://rtcamp.com/rtmedia/addons/audio-video-encoding-service/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "rtMedia FFMPEG Addon")** - rtCamp (company behind rtMedia) has setup dedicated serves to provide free audio/video encoding services for all sites running rtMedia. 
+ * **[Free Audio/Video conversion](http://rtcamp.com/rtmedia/addons/audio-video-encoding-service/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "rtMedia FFMPEG Addon")** - rtCamp (company behind rtMedia) has setup dedicated serves to provide free audio/video encoding services for all sites running rtMedia.
  * **WordPress Integration** - Display media on WordPress author pages (eg: http://demo.rtcamp.com/rtmedia/author/admin/media/)
  * **BuddyPress Integration** - Adds media tab under to BuddyPress Profiles & Groups.
  * **BuddyPress Activity Stream** - Attach media to activity status updates like you do it on Facebook.
@@ -51,7 +51,7 @@ In case you are in hurry, you can skip the long list of features in subsequent s
 
  * **Sidebar Widgets** - Add sidebar widgets for recent, most popular media gallery and quick-upload.
  * **Post-editor Button** - Add tinymce button to make it easy to insert gallery and uploader on any wordpress page.
- * **Star-Rating Option** - Classic 5-star rating option. You can choose between facebook-style "like" or "star-rating". 
+ * **Star-Rating Option** - Classic 5-star rating option. You can choose between facebook-style "like" or "star-rating".
  * **Global Albums** - Create list of predefined albums. Optionally disable new album-creation by user.
  * **Premium 1-on-1 support** - From backend of your WordPress, you can send raise direct support requests, feature requests, report bugs.
  * **Automatic Updates** - rtMedia-PRO will see more than one weekly release on average. So automatic-updates is must and its already there.
@@ -118,6 +118,9 @@ Please visit [rtMedia's Features page](http://rtcamp.com/rtmedia/?utm_source=rea
 == Changelog ==
 
 Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "Visit rtMedia's Features page") to get some details about future releases.
+
+= 3.2.2 =
+* Fixed header already sent issue
 
 = 3.2.1 =
 * Fixed activity issue

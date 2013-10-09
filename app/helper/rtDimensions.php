@@ -116,5 +116,3 @@ class rtDimensions extends rtForm {
     }
 
 }
-
-?>
