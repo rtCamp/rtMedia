@@ -455,6 +455,7 @@ jQuery(document).ready(function($) {
             tr.appendChild(tdStatus);
             tr.appendChild(tdSize);
             tr.appendChild(tdDelete);
+            jQuery('#whats-new-content').css('padding-bottom','0px');
             $("#rtm-upload-start-notice").css('display','block'); // show the file upload notice to the user
             $("#rtMedia-queue-list").append(tr);
             $("#" + file.id + " td.plupload_delete").click(function(e) {

@@ -76,6 +76,8 @@ class RTMediaRouter {
         if ( $return ) {
             if ( isset ( $wp_query->query_vars[ 'action' ] ) && $wp_query->query_vars[ 'action' ] == 'bp_avatar_upload' )
                 $return = false;
+            if ( isset ( $wp_query->query_vars[ 'pagename' ] ) && $wp_query->query_vars[ 'pagename' ] == 'group-avatar' )
+                $return = false;
         }
 
         if ( $return ) {
