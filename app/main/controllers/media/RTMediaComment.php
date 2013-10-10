@@ -65,7 +65,8 @@ class RTMediaComment {
 		$attr['user_id'] = $this->get_current_id();
 		$attr['comment_date'] = current_time('mysql');
 		$id = $this->rtmedia_comment_model->insert($attr);
-
+		global $rtmedia_points_media_id;
+		$rtmedia_points_media_id = rtmedia_id($attr['comment_post_ID']);
 		do_action('rtmedia_after_add_comment', $attr);
 
 		return $id;

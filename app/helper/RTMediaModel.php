@@ -145,17 +145,18 @@ class RTMediaModel extends RTDBModel {
      */
     function get_media ( $columns, $offset = false, $per_page = false, $order_by = 'media_id desc', $count_flag = false ) {
         if ( is_multisite () ) {
-            $results = $this->get ( $columns, $offset, $per_page, "blog_id ," . $order_by, $count_flag );
-        } else {
-            $results = $this->get ( $columns, $offset, $per_page, $order_by , $count_flag );
-        }
+	    $order_by = "blog_id" . (($order_by)? "," . $order_by :'');
+	}
+
+	$results = $this->get ( $columns, $offset, $per_page, $order_by , $count_flag );
+
         return $results;
     }
 
     function get_user_albums ( $author_id, $offset, $per_page, $order_by = 'media_id desc' ) {
         global $wpdb;
         if ( is_multisite () )
-            $order_by = "blog_id ," . $order_by;
+            $order_by = "blog_id" . (($order_by)? "," . $order_by :'');
 
         $sql = "SELECT * FROM {$this->table_name}  ";
         $where = " WHERE (id IN(SELECT DISTINCT (album_id)
@@ -179,7 +180,7 @@ class RTMediaModel extends RTDBModel {
     function get_group_albums ( $group_id, $offset, $per_page, $order_by = 'media_id desc' ) {
         global $wpdb;
         if ( is_multisite () )
-            $order_by = "blog_id ," . $order_by;
+            $order_by = "blog_id" . (($order_by)? "," . $order_by :'');
         $sql = "SELECT * FROM {$this->table_name} WHERE id IN(SELECT DISTINCT (album_id) FROM {$this->table_name} WHERE context_id = $group_id AND album_id IS NOT NULL AND media_type != 'album' AND context = 'group') OR (media_type = 'album' AND context_id = $group_id AND context = 'group')";
         $sql .= " ORDER BY {$this->table_name}.$order_by";
 

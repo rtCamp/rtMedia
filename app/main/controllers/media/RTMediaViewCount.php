@@ -82,6 +82,8 @@ class RTMediaViewCount extends RTMediaUserInteraction {
             $insert_id = $rtmediainteraction->insert($columns);
 
 	}
+	global $rtmedia_points_media_id;
+	$rtmedia_points_media_id = $this->action_query->id;
 	do_action("rtmedia_after_view_media", $this);
 	die();
     }
