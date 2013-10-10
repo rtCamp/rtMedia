@@ -165,7 +165,10 @@ class RTMediaMedia {
 	$rtmedia_type  = rtmedia_type($media_ids);
         /* action to perform any task after adding a media */
 	global $rtmedia_points_media_id;
-	$rtmedia_points_media_id = $media_ids;
+	if($media_ids && is_array($media_ids) && isset($media_ids[0])) {
+	    $rtmedia_points_media_id = $media_ids[0];
+	}
+
 
 	do_action('rtmedia_after_add_'.$rtmedia_type);
         do_action ( 'rtmedia_after_add_media', $media_ids, $file_object, $uploaded );
