@@ -158,6 +158,9 @@ class RTMediaFeatured extends RTMediaUserInteraction {
                 $return[ "next" ] = $this->undo_label;
             }
             $return[ "status" ] = true;
+	    global $rtmedia_points_media_id;
+	    $rtmedia_points_media_id = $this->action_query->id;
+	    do_action("rtmedia_after_set_featured", $this);
         } else {
             $return[ "status" ] = false;
             $return[ "error" ] = "Media type is not allowed";
