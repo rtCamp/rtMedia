@@ -398,7 +398,7 @@ class RTMediaEncoding {
 	$media_id = $media[0]->id;
         $largest_thumb = false;
         $upload_thumbnail_array = array();
-        var_dump($post_thumbs_array['thumbs']);
+        //var_dump($post_thumbs_array['thumbs']);
 	foreach($post_thumbs_array['thumbs'] as $thumbs=>$thumbnail) {
 //	    error_log("Thumb:" + var_export($post_thumbs_array['thumbs'][$thumbnail]));
 //	}
@@ -443,7 +443,7 @@ class RTMediaEncoding {
                 if ($current_thumb_size >= $largest_thumb_size) {
                     $largest_thumb_size = $current_thumb_size;
                     $largest_thumb = $thumb_upload_info['url'];
-                    var_dump($model->update(array('cover_art' => $thumb_upload_info['url']), array('media_id' => $post_id)));
+                    $model->update(array('cover_art' => $thumb_upload_info['url']), array('media_id' => $post_id));
                 }
             ///}
         }
