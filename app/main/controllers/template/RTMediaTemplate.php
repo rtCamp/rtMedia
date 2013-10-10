@@ -176,7 +176,9 @@ class RTMediaTemplate {
             $media = new RTMediaMedia();
             $state = $media->update ( $rtmedia_query->action_query->id, $data, $rtmedia_query->media[ 0 ]->media_id );
             $rtmedia_query->query ( false );
-            do_action ( 'rtmedia_after_update_media', $rtmedia_query->action_query->id, $state );
+	    global $rtmedia_points_media_id;
+	    $rtmedia_points_media_id = $rtmedia_query->action_query->id;
+            do_action ( 'rtmedia_after_edit_media', $rtmedia_query->action_query->id, $state );
 
             //refresh
             $rtMediaNav = new RTMediaNav();
@@ -220,7 +222,10 @@ class RTMediaTemplate {
                 unset ( $data[ '_wp_http_referer' ] );
                 unset ( $data[ 'submit' ] );
                 $album = $model->get_media ( array( 'id' => $rtmedia_query->media_query[ 'album_id' ] ), false, false );
-                $media->update ( $album[ 0 ]->id, $data, $album[ 0 ]->media_id );
+                $state = $media->update ( $album[ 0 ]->id, $data, $album[ 0 ]->media_id );
+		global $rtmedia_points_media_id;
+		$rtmedia_points_media_id = $album[ 0 ]->id;
+		do_action ( 'rtmedia_after_update_album', $album[ 0 ]->id, $state );
             } elseif ( isset ( $_POST[ 'move-selected' ] ) ) {
 //                            print_r($_POST);die;
                 $album_move = $_POST[ 'album' ];

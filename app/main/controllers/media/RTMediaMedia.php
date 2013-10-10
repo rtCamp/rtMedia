@@ -162,7 +162,15 @@ class RTMediaMedia {
         /* add media in rtMedia context */
         $media_ids = $this->insertmedia ( $attachment_ids, $uploaded );
 
+	$rtmedia_type  = rtmedia_type($media_ids);
         /* action to perform any task after adding a media */
+	global $rtmedia_points_media_id;
+	if($media_ids && is_array($media_ids) && isset($media_ids[0])) {
+	    $rtmedia_points_media_id = $media_ids[0];
+	}
+
+
+	do_action('rtmedia_after_add_'.$rtmedia_type);
         do_action ( 'rtmedia_after_add_media', $media_ids, $file_object, $uploaded );
 
         return $media_ids;
@@ -231,9 +239,9 @@ class RTMediaMedia {
      */
     function delete ( $id, $core = false, $delete_activity = true ) {
         do_action ( 'rtmedia_before_delete_media', $id );
-        
+
         $media = $this->model->get ( array( 'id' => $id ), false, false );
-        
+
         $status = 0;
 
         if ( $media ) {
@@ -260,10 +268,10 @@ class RTMediaMedia {
             if ( ! $core )
                 wp_delete_attachment ( $media[ 0 ]->media_id, true );
             $status = $this->model->delete ( array( 'id' => $id ) );
-            
+
             //delete media meta (view) from wp_rt_rtm_media_meta
             $delete_rtmedia_views = delete_rtmedia_meta( $id , 'view' );
-            
+
             if( $status != 0 && ( $media[0]->media_type == "album" || $media[0]->media_type == "playlist" ) ) {
                 $status =  wp_delete_post( $media[0]->media_id);
             }
@@ -278,6 +286,8 @@ class RTMediaMedia {
         if ( $status == 0 ) {
             return false;
         } else {
+	    global $rtmedia_points_media_id;
+	    $rtmedia_points_media_id = $id;
             do_action ( 'rtmedia_after_delete_media', $id );
             return true;
         }
