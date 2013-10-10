@@ -167,7 +167,7 @@ jQuery('document').ready(function($) {
                     jQuery('select.rtmedia-user-album-list option[value="' + response + '"]').prop('selected', true);
                     jQuery('.rtmedia-create-new-album-container').slideToggle();
                     jQuery('#rtmedia_album_name').val("");
-                    jQuery("#rtmedia_create_new_album").after("<span class='rtmedia-success rtmedia-create-album-alert'><b>" + $albumname + "</b> album created.</span>");
+                    jQuery("#rtmedia-create-album-modal").append("<span class='rtmedia-success rtmedia-create-album-alert'><b>" + $albumname + "</b> album created.</span>");
                     setTimeout(function() {
                         jQuery(".rtmedia-create-album-alert").remove()
                     }, 4000);
