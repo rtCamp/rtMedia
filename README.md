@@ -119,6 +119,10 @@ Please visit [rtMedia's Features page](http://rtcamp.com/rtmedia/?utm_source####
 
 Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "Visit rtMedia's Features page") to get some details about future releases.
 
+#### 3.2.3 ####
+* Bug fixed for group avatar upload while creating a group in buddypress
+* Fixed multisite 
+
 #### 3.2.2 ####
 * Fixed header already sent issue
 
@@ -567,8 +571,8 @@ Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_sou
 * HTML5 Audio Tag Support (with fallback)
 * HTML5 Video Tag Support (with fallback)
 
-#### 3.2 ####
-Requires BuddyPress 1.7 or higher, if using BuddyPress. UI changes, cover art for Music.
+#### 3.2.3 ####
+Requires BuddyPress 1.7 or higher, if using BuddyPress. Bug fixes.
 
 ## Sponsors ##
 
