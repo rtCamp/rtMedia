@@ -174,6 +174,8 @@ class RTMediaAlbum {
         $rtMediaNav = new RTMediaNav();
 	$media_count = $rtMediaNav->refresh_counts ( $context_id, array( "context" => $context, 'media_author' => $context_id ) );
         /* action to perform any task after adding the album */
+	global $rtmedia_points_media_id;
+	$rtmedia_points_media_id = $rtmedia_id;
         do_action ( 'rtmedia_after_add_album', $this );
 
         return $rtmedia_id;
