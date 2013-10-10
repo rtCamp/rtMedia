@@ -1,19 +1,12 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <phpunit
+	bootstrap="bootstrap_tests.php"
 	backupGlobals="false"
-	backupStaticAttributes="false"
 	colors="true"
-	convertErrorsToExceptions="true"
-	convertNoticesToExceptions="true"
-	convertWarningsToExceptions="true"
-	processIsolation="false"
-	stopOnFailure="false"
-	syntaxCheck="false"
-	bootstrap="tests/bootstrap.php"
 >
-	<testsuites>
-		<testsuite name="BuddyPress Media">
-			<directory>./tests/</directory>
-		</testsuite>
-	</testsuites>
+    <testsuites>
+        <!-- Default test suite to run all tests -->
+        <testsuite>
+            <directory prefix="test_" suffix=".php">tests</directory>
+        </testsuite>
+    </testsuites>
 </phpunit>
