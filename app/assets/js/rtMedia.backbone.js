@@ -73,7 +73,7 @@ jQuery(function($) {
             }
             return url;
         },
-        getNext: function(page, el) {
+        getNext: function(page, el, element) {
             var query = {
                 json: true,
                 rtmedia_page: nextpage
@@ -82,7 +82,8 @@ jQuery(function($) {
                 el = jQuery(".rtmedia-list").parent().parent();
             }
             if (el != undefined) {
-                $(el).find("input[type=hidden]").each(function(e) {
+                //$(el).find("input[type=hidden]").each(function(e) {
+                $(element).parent().parent().prevAll("input[type=hidden]").each(function(e) {
                     query[$(this).attr("name")] = $(this).val();
                 });
             }
@@ -92,8 +93,9 @@ jQuery(function($) {
                     nextpage = response.next;
                     var galleryViewObj = new rtMedia.GalleryView({
                         collection: new rtMedia.Gallery(response.data),
-                        el: $(".rtmedia-list")[0]
+                        el: element.parent().siblings('.rtmedia-list')
                     });
+		    //element.show();
                 }
             });
         },
@@ -149,7 +151,8 @@ jQuery(function($) {
                 upload_sync = false;
             }
             if (nextpage > 1) {
-                $("#rtMedia-galary-next").show();
+		$(that.el).siblings('.rtmedia_next_prev').children('#rtMedia-galary-next').show();
+		//$("#rtMedia-galary-next").show();
             }
 
 
@@ -187,7 +190,7 @@ jQuery(function($) {
         $(document).on("click", "#rtMedia-galary-next", function(e) {
             $(this).hide();
             e.preventDefault();
-            galleryObj.getNext(nextpage, $(this).parent().parent().parent());
+            galleryObj.getNext(nextpage, $(this).parent().parent().parent(), $(this));
         });
     });
 
@@ -303,7 +306,7 @@ jQuery(function($) {
             $.each(upload_remove_array, function(i, rfile) {
                 up.removeFile(up.getFile(rfile));
             });
-            
+
             if (upload_size_error) {
                 // alert(upload_error + " because max file size is " + plupload.formatSize(uploaderObj.uploader.settings.max_file_size) );
             }
@@ -400,7 +403,7 @@ jQuery(function($) {
 /** Activity Update Js **/
 
 jQuery(document).ready(function($) {
-    
+
     //handling the "post update: button on activity page
         jQuery('#aw-whats-new-submit').removeAttr('disabled');
         jQuery(document).on( "blur",'#whats-new', function(){
@@ -409,7 +412,7 @@ jQuery(document).ready(function($) {
         jQuery('#aw-whats-new-submit').on('click', function(e){
             setTimeout(function(){ jQuery('#aw-whats-new-submit').removeAttr('disabled'); },100);
         });
-    
+
     if (typeof rtMedia_update_plupload_config == 'undefined') {
         return false;
     }
@@ -419,7 +422,7 @@ jQuery(document).ready(function($) {
         if ($("#rtm-file_upload-ui .privacy").length > 0) {
             $("#rtmedia-action-update").append($("#rtm-file_upload-ui .privacy"));
         }
-    }  
+    }
     objUploadView = new UploadView(rtMedia_update_plupload_config);
     $("#whats-new-form").on('click', '#rtmedia-add-media-button-post-update', function(e) {
         objUploadView.uploader.refresh();
@@ -463,7 +466,7 @@ jQuery(document).ready(function($) {
                     objUploadView.uploader.removeFile(upl.getFile(file.id));
                     $("#" + file.id).remove();
                     return false;
-                });            
+                });
         });
         $.each(objUploadView.upload_remove_array, function(i, rfile) {
                 objUploadView.uploader.removeFile(objUploadView.uploader.getFile(rfile));
@@ -617,7 +620,7 @@ jQuery(document).ready(function($) {
 
         return false;
     });
-    
+
     //Delete comment
     jQuery(document).on('click', '.rtmedia-delte-comment', function(e){
        e.preventDefault();
@@ -625,13 +628,13 @@ jQuery(document).ready(function($) {
            return false;
        var current_comment = jQuery(this);
        var current_comment_parent = current_comment.parent();
-       var comment_id = current_comment.data('id'); 
+       var comment_id = current_comment.data('id');
        current_comment_parent.css('opacity', '0.4');
        if(comment_id == '' || isNaN(comment_id)){
            return false;
        }
        var action = current_comment.closest('ul').data("action");
-  
+
        jQuery.ajax({
            url: action,
            type: 'post',
@@ -641,10 +644,10 @@ jQuery(document).ready(function($) {
                 current_comment.closest('li').hide(1000, function(){ current_comment.closest('li').remove(); });
             }else
                 current_comment.css('opacity', '1');
-            
+
            }
        });
-       
+
     });
 
     $(document).on("click", '.rtmedia-like', function(e) {
