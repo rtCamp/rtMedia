@@ -1,10 +1,16 @@
 var rtMagnificPopup;
 function apply_rtMagnificPopup(selector){
     jQuery('document').ready(function($) {
+	var rt_load_more = "";
+	if(typeof(rtmedia_load_more) === "undefined") {
+	    rt_load_more = "Loading media";
+	} else {
+	    rt_load_more = rtmedia_load_more;
+	}
         rtMagnificPopup = jQuery(selector).magnificPopup({
             delegate: 'a:not(".no-popup")',
             type: 'ajax',
-            tLoading: 'Loading media #%curr%...',
+            tLoading: rt_load_more + ' #%curr%...',
             mainClass: 'mfp-img-mobile',
             preload: [1, 3],
             closeOnBgClick: false,
@@ -78,7 +84,7 @@ var rtMediaHook = {
     }
 }
 jQuery('document').ready(function($) {
-   
+
     $("#rt_media_comment_form").submit(function(e) {
         if ($.trim($("#comment_content").val()) == "") {
             alert("Empty Comment is not allowed");
@@ -231,17 +237,17 @@ jQuery('document').ready(function($) {
                activityArea.removeAttr('style');
                dragArea.removeClass('rtm-drag-drop-active');
                 jQuery('#rtm-drop-files-title').hide();
-                
+
                 })
            .on("drop", function(e){
                 e.preventDefault();
                  activityArea.removeClass('rtm-drag-drop-active');
                  activityArea.removeAttr('style');
                  dragArea.removeClass('rtm-drag-drop-active');
-                jQuery('#rtm-drop-files-title').hide();                                
+                jQuery('#rtm-drop-files-title').hide();
                 });
-           
-           
+
+
     function rtmedia_init_media_deleting() {
         jQuery('.rtmedia-container').on('click', '.rtmedia-delete-media', function(e) {
             e.preventDefault();
@@ -272,18 +278,18 @@ jQuery('document').ready(function($) {
         jQuery('.reveal-modal-bg').css('opacity', '0.5');
         jQuery("#"+modalId).foundation('reveal', 'open');
     });
-    
+
     jQuery(document).on('click', '.close-reveal-modal', function(e){
         e.preventDefault();
         var modalId = jQuery(this).parent('.reveal-modal');
         jQuery(modalId).foundation('reveal', 'close');
         jQuery('.reveal-modal-bg').fadeOut();
     });
-    
+
     jQuery(document).on('click', '#rtm_show_upload_ui', function(){
         jQuery('#rtm-media-gallery-uploader').slideToggle();
     });
-    
+
 });
 
 

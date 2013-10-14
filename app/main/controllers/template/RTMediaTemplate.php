@@ -80,7 +80,7 @@ class RTMediaTemplate {
             $this->check_return_merge ();
 
             $this->check_return_comments ();
-            
+
             $this->check_delete_comments ();
 
             return $this->get_default_template ();
@@ -97,9 +97,11 @@ class RTMediaTemplate {
                     $rtaccount = 0;
                 }
                 //add_action("rtmedia_before_media_gallery",array(&$this,"")) ;
+		echo "<div class='rtmedia_gallery_wrapper'>";
                 $this->add_hidden_fields_in_gallery ();
                 $gallery_template = apply_filters("rtmedia-before-template",$template,$shortcode_attr);
                 include $this->locate_template ( $gallery_template );
+		echo "</div>";
             } else {
                 echo __ ( 'Invalid attribute passed for rtmedia_gallery shortcode.', 'rtmedia' );
                 return false;
@@ -420,32 +422,32 @@ class RTMediaTemplate {
     }
     function check_delete_comments () {
         global $rtmedia_query;
-        
+
         if ( $rtmedia_query->action_query->action != 'delete-comment' )
             return;
-        
+
         if ( count ( $_POST ) ) {
             /**
              * /media/id/delete-comment [POST]
              * Delete Comment by Comment ID
              */
-        
+
             if ( empty ( $_POST[ 'comment_id' ] ) ) {
                 return false;
             }
             $comment = new RTMediaComment();
             $id = $_POST['comment_id'];
             $activity_id = get_comment_meta($id, 'activity_id',true);
-            
+
             if(!empty($activity_id)){
                 $activity_deleted = bp_activity_delete_comment ($activity_id, $id);
-                
+
                 $delete = bp_activity_delete( array( 'id' => $activity_id, 'type' => 'activity_comment' ) );
-     
+
             }
             $comment_deleted = $comment->remove ( $id );
-         
-           
+
+
             echo $comment_deleted;
             exit;
         }
