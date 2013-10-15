@@ -359,7 +359,9 @@ class RTMediaFormHandler {
 				echo '<div class="columns large-3">' . $section['name'] . '</div>';
 				$args = array('key' => 'allowedTypes_'.$key.'_enabled', 'value' => $section['enabled']);
 				echo '<div class="columns large-3">';
-                                    self::checkbox($args);
+                                $allow_upload_checkbox = self::checkbox($args, $echo = false );
+                                $allow_upload_checkbox = apply_filters('rtmedia_filter_allow_upload_checkbox', $allow_upload_checkbox , $key, $args);
+                                echo $allow_upload_checkbox;
 				echo '</div>';
 				$args = array('key' => 'allowedTypes_'.$key.'_featured', 'value' => $section['featured']);
 				echo '<div class="columns large-3">';
