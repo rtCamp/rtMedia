@@ -143,7 +143,7 @@ class RTMediaNav {
 	    $albums = 'class="current selected"';
 	}
 
-        $other_count = 0;
+        //$other_count = 0;
         if ( is_rtmedia_album_enable () ) {
 
             if ( ! isset ( $counts[ 'total' ][ "album" ] ) ) {
