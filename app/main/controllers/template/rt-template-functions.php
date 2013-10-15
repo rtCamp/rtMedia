@@ -525,7 +525,13 @@ function rtmedia_comments () {
     $comments = $wpdb->get_results ( "SELECT * FROM $wpdb->comments WHERE comment_post_ID = '" . $rtmedia_media->media_id . "'", ARRAY_A );
 
     foreach ( $comments as $comment ) {
-        $html .= rmedia_single_comment ( $comment );
+        $comment_list .= rmedia_single_comment ( $comment );
+    }
+    
+    if( $comment_list ) {
+        $html .= $comment_list;
+    } else {
+        $html .= "<li id='rtmedia-no-comments'>There are no comments on this media yet.</li>";
     }
 
     $html .= '</ul>';
@@ -628,7 +634,7 @@ function rtmedia_pagination_next_link () {
 
 function rtmedia_comments_enabled () {
     global $rtmedia;
-    return $rtmedia->options[ 'general_enableComments' ] && is_user_logged_in ();
+    return $rtmedia->options[ 'general_enableComments' ];// && is_user_logged_in ();
 }
 
 /**
@@ -860,6 +866,7 @@ function get_video_without_thumbs() {
 
 
 function rtmedia_comment_form () {
+    if(is_user_logged_in()) {
     ?>
     <form method="post" id="rt_media_comment_form" action="<?php echo get_rtmedia_permalink ( rtmedia_id () ); ?>comment/">
         <div class="row">
@@ -871,6 +878,7 @@ function rtmedia_comment_form () {
         <?php RTMediaComment::comment_nonce_generator (); ?>
     </form>
     <?php
+    }
 }
 
 function rtmedia_get_cover_art_src($id) {

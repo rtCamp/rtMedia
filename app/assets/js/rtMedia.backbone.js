@@ -607,6 +607,7 @@ jQuery(document).ready(function($) {
             type: 'post',
             data: jQuery("#rt_media_comment_form").serialize() + "&rtajax=true",
             success: function(data) {
+                $('#rtmedia-no-comments').remove();
                 $("#rtmedia_comment_ul").append(data);
                 $("#comment_content").val("");
                 $("#rt_media_comment_form #rt_media_comment_submit").removeAttr('disabled');
