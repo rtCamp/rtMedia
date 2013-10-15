@@ -712,6 +712,7 @@ class RTMedia
         wp_localize_script('rtmedia-main', 'rtmedia_ajax_url', admin_url('admin-ajax.php'));
         wp_localize_script('rtmedia-main', 'rtmedia_media_slug', RTMEDIA_MEDIA_SLUG);
         wp_localize_script('rtmedia-main', 'rtmedia_lightbox_enabled', strval($this->options["general_enableLightbox"]));
+        wp_localize_script('rtmedia-magnific', 'rtmedia_load_more', __('Loading media',"rtMedia"));
     }
 
     function set_bp_bar() {
