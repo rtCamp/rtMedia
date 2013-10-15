@@ -90,10 +90,15 @@ jQuery(function($) {
             this.fetch({
                 data: query,
                 success: function(model, response) {
+		    var list_el = "";
+		    if(typeof(element) === "undefined" )
+			list_el = $(".rtmedia-list")[0];
+		    else
+			list_el = element.parent().siblings('.rtmedia-list');
                     nextpage = response.next;
                     var galleryViewObj = new rtMedia.GalleryView({
                         collection: new rtMedia.Gallery(response.data),
-                        el: element.parent().siblings('.rtmedia-list')
+                        el: list_el
                     });
 		    //element.show();
                 }
