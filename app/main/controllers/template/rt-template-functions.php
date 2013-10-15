@@ -523,15 +523,16 @@ function rtmedia_comments () {
     global $wpdb, $rtmedia_media;
 
     $comments = $wpdb->get_results ( "SELECT * FROM $wpdb->comments WHERE comment_post_ID = '" . $rtmedia_media->media_id . "'", ARRAY_A );
-
+    
+    $comment_list = "";
     foreach ( $comments as $comment ) {
         $comment_list .= rmedia_single_comment ( $comment );
     }
     
-    if( $comment_list ) {
+    if( $comment_list != "") {
         $html .= $comment_list;
     } else {
-        $html .= "<li id='rtmedia-no-comments'>There are no comments on this media yet.</li>";
+        $html .= "<li id='rtmedia-no-comments'>". __('There are no comments on this media yet.') . "</li>";
     }
 
     $html .= '</ul>';

@@ -87,7 +87,7 @@ jQuery('document').ready(function($) {
 
     $("#rt_media_comment_form").submit(function(e) {
         if ($.trim($("#comment_content").val()) == "") {
-            alert("Empty Comment is not allowed");
+            alert( rtmedia_empty_comment_msg );
             return false;
         } else {
             return true;
@@ -173,19 +173,19 @@ jQuery('document').ready(function($) {
                     jQuery('select.rtmedia-user-album-list option[value="' + response + '"]').prop('selected', true);
                     jQuery('.rtmedia-create-new-album-container').slideToggle();
                     jQuery('#rtmedia_album_name').val("");
-                    jQuery("#rtmedia-create-album-modal").append("<span class='rtmedia-success rtmedia-create-album-alert'><b>" + $albumname + "</b> album created.</span>");
+                    jQuery("#rtmedia-create-album-modal").append("<span class='rtmedia-success rtmedia-create-album-alert'><b>" + $albumname + "</b>" + rtmedia_album_created_msg + "</span>");
                     setTimeout(function() {
                         jQuery(".rtmedia-create-album-alert").remove()
                     }, 4000);
 
                 } else {
-                    alert('Something went wrong. Please try again.');
+                    alert(rtmedia_something_wrong_msg);
                 }
                 $("#rtmedia_create_new_album").removeAttr('disabled');
                 $("#rtmedia_create_new_album").html(old_val);
             });
         } else {
-            alert('Enter an album name');
+            alert(rtmedia_empty_album_name_msg);
         }
     });
 
@@ -221,8 +221,8 @@ jQuery('document').ready(function($) {
    var dragArea = jQuery("#drag-drop-area");
    var activityArea = jQuery('#whats-new');
    var content = dragArea.html();
-   jQuery('#rtmedia-upload-container').after("<h2 id='rtm-drop-files-title'>Drop files here</h2>");
-   jQuery('#whats-new-textarea').after("<h2 id='rtm-drop-files-title'>Drop files here</h2>");
+   jQuery('#rtmedia-upload-container').after("<h2 id='rtm-drop-files-title'>" + rtmedia_drop_media_msg + "</h2>");
+   jQuery('#whats-new-textarea').after("<h2 id='rtm-drop-files-title'>" + rtmedia_drop_media_msg + "</h2>");
    jQuery(document)
            .on('dragover', function(e) {
                jQuery('#rtm-media-gallery-uploader').show();
@@ -251,7 +251,7 @@ jQuery('document').ready(function($) {
     function rtmedia_init_media_deleting() {
         jQuery('.rtmedia-container').on('click', '.rtmedia-delete-media', function(e) {
             e.preventDefault();
-            if(confirm('Are you sure you want to delete this media?')) {
+            if(confirm(rtmedia_media_delete_confirmation)) {
                 jQuery(this).closest('form').submit();
             }
         });
@@ -259,14 +259,14 @@ jQuery('document').ready(function($) {
 
        jQuery('.rtmedia-container').on('click', '.rtmedia-delete-album' , function(e) {
         e.preventDefault();
-        if(confirm('Are you sure you want to delete this Album?')) {
+        if(confirm(rtmedia_album_delete_confirmation)) {
             jQuery(this).closest('form').submit();
         }
        });
 
        jQuery('.rtmedia-container').on('click', '.rtmedia-delete-media', function(e) {
         e.preventDefault();
-        if(confirm('Are you sure you want to delete this media?')) {
+        if(confirm(rtmedia_media_delete_confirmation)) {
             jQuery(this).closest('form').submit();
         }
     });

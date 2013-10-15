@@ -40,7 +40,7 @@ $rtmedia_media = $media[0];
                 <?php $global_albums = get_site_option('rtmedia-global-albums'); ?>
                 <?php _e('Move selected media to', 'rtmedia'); ?>
                 <?php echo '<select name="album" class="rtmedia-user-album-list">'.rtmedia_user_album_list().'</select>'; ?>
-                <input type="submit" class="rtmedia-move-selected" name="move-selected" value="Move Selected" />
+                <input type="submit" class="rtmedia-move-selected" name="move-selected" value="<?php _e('Move Selected','rtmedia'); ?>" />
             </div>
 
 

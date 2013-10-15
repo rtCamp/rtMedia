@@ -228,7 +228,7 @@ jQuery(function($) {
                 zIndex: 2
             });
             if(a!==false)
-                $("#rtMedia-upload-button").after("<span>(Max file size is " + plupload.formatSize(this.uploader.settings.max_file_size) + ")</span>")
+                $("#rtMedia-upload-button").after("<span>(" + rtmedia_max_file_msg + plupload.formatSize(this.uploader.settings.max_file_size) + ")</span>")
 
             return this;
         },
@@ -270,7 +270,7 @@ jQuery(function($) {
                     upload_size_error = true
                     upload_error += upload_error_sep + file.name;
                     upload_error_sep = ",";
-                    var tr = "<tr style='background-color:lightpink;color:black' id='" + file.id + "'><td>" + file.name + "(" + plupload.formatSize(file.size) + ")" + "</td><td colspan='3'> Max file size is " + plupload.formatSize(uploaderObj.uploader.settings.max_file_size) + "</td></tr>"
+                    var tr = "<tr style='background-color:lightpink;color:black' id='" + file.id + "'><td>" + file.name + "(" + plupload.formatSize(file.size) + ")" + "</td><td colspan='3'> " + rtmedia_max_file_msg + plupload.formatSize(uploaderObj.uploader.settings.max_file_size) + "</td></tr>"
                     $("#rtMedia-queue-list tbody").append(tr);
                     return true;
                 }
@@ -554,7 +554,7 @@ jQuery(document).ready(function($) {
             var orignalSuccess = originalOptions.success;
             options.beforeSend = function() {
                 if ($.trim($("#whats-new").val()) == "") {
-                    alert("Please enter some content to post.");
+                    alert(rtmedia_empty_activity_msg);
                    // $("#aw-whats-new-submit").prop("disabled", true).removeClass('loading');
                     return false;
                 }
@@ -599,7 +599,7 @@ jQuery(document).ready(function($) {
     jQuery(document).on("click", "#rt_media_comment_form #rt_media_comment_submit", function(e) {
         e.preventDefault();
         if ($.trim($("#comment_content").val()) == "") {
-            alert("Empty Comment is not allowed");
+            alert(rtmedia_empty_comment_msg);
             return false;
         }
 
