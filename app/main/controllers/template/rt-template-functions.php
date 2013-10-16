@@ -523,12 +523,12 @@ function rtmedia_comments () {
     global $wpdb, $rtmedia_media;
 
     $comments = $wpdb->get_results ( "SELECT * FROM $wpdb->comments WHERE comment_post_ID = '" . $rtmedia_media->media_id . "'", ARRAY_A );
-    
+
     $comment_list = "";
     foreach ( $comments as $comment ) {
         $comment_list .= rmedia_single_comment ( $comment );
     }
-    
+
     if( $comment_list != "") {
         $html .= $comment_list;
     } else {
@@ -682,6 +682,15 @@ function is_rtmedia_album () {
     global $rtmedia_query;
     if ( $rtmedia_query )
         return $rtmedia_query->is_album ();
+    else
+        return false;
+}
+
+
+function is_rtmedia_group_album () {
+    global $rtmedia_query;
+    if ( $rtmedia_query )
+        return $rtmedia_query->is_group_album ();
     else
         return false;
 }
@@ -1098,6 +1107,21 @@ function rtmedia_create_album () {
     }
 }
 
+ function rtmedia_is_album_editable() {
+    global $rtmedia_query;
+    if( isset($rtmedia_query->query[ 'context' ]) && $rtmedia_query->query[ 'context' ] == "profile" ) {
+        if ( isset ( $rtmedia_query->media_query[ 'media_author' ] ) && get_current_user_id () == $rtmedia_query->media_query[ 'media_author' ] ) {
+            return true;
+        }
+    }
+    if( isset($rtmedia_query->query[ 'context' ]) && $rtmedia_query->query[ 'context' ] == "group" ) {
+        if ( isset ( $rtmedia_query->album[0]->media_author ) && get_current_user_id () == $rtmedia_query->album[0]->media_author ) {
+            return true;
+        }
+    }
+    return false;
+}
+
 add_action ( 'rtmedia_media_gallery_actions', 'rtmedia_album_edit' );
 
 function rtmedia_album_edit () {
@@ -1107,19 +1131,27 @@ function rtmedia_album_edit () {
     if ( ! is_rtmedia_album_enable () )
         return;
     global $rtmedia_query;
-    //var_dump($rtmedia_query);
+
     ?>
         <div class="reveal-modal-bg" style="display: none"></div>
         <?php
     if ( isset ( $rtmedia_query->media_query ) && ! in_array ( $rtmedia_query->media_query[ 'album_id' ], get_site_option ( 'rtmedia-global-albums' ) ) ) {
-        if ( isset ( $rtmedia_query->media_query[ 'media_author' ] ) && get_current_user_id () == $rtmedia_query->media_query[ 'media_author' ] ) {
+        //if ( isset ( $rtmedia_query->media_query[ 'media_author' ] ) && get_current_user_id () == $rtmedia_query->media_query[ 'media_author' ] ) {
+	if ( rtmedia_is_album_editable() || is_rt_admin() ) {
             ?>
             <a href="edit/" class="icon-edit rtmedia-edit icon-2x" title="<?php _e ( 'Edit', 'rtmedia' ); ?>"></a>
             <form method="post" class="album-delete-form rtmedia-inline" action="delete/">
                 <?php wp_nonce_field ( 'rtmedia_delete_album_' . $rtmedia_query->media_query[ 'album_id' ], 'rtmedia_delete_album_nonce' ); ?>
                 <button type="submit" name="album-delete" class="icon-button icon-2x icon-remove rtmedia-delete-album" title="<?php _e ( 'Delete', 'rtmedia' ); ?>"></button>
             </form>
-            <?php if ( $album_list = rtmedia_user_album_list () ) { ?>
+
+            <?php
+		if(is_rtmedia_group_album())
+		    $album_list = rtmedia_group_album_list();
+		else
+		    $album_list = rtmedia_user_album_list();
+		if ( $album_list ) {
+	    ?>
                 <i class="icon-code-fork rtmedia-reveal-modal icon-2x" data-reveal-id="rtmedia-merge" title="<?php _e ( 'Merge', 'rtmedia' ); ?>" ></i>
                 <div class="rtmedia-merge-container reveal-modal small rtm-modal" id="rtmedia-merge">
                     <div id="rtm-modal-container">
