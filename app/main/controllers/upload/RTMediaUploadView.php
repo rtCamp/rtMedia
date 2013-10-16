@@ -47,10 +47,10 @@ class RTMediaUploadView {
         } elseif ( is_rtmedia_album_enable () && $rtmedia_query && is_rtmedia_gallery () ) {
 
             if ( $rtmedia_query->query[ 'context' ] == 'profile' ) {
-                $album = '<label>Album: </label><select name="album" class="rtmedia-user-album-list">' . rtmedia_user_album_list () . '</select>';
+                $album = '<label>' . __('Album','rtmedia') . ': </label><select name="album" class="rtmedia-user-album-list">' . rtmedia_user_album_list () . '</select>';
             }
             if ( $rtmedia_query->query[ 'context' ] == 'group' ) {
-                $album = '<label>Album: </label><select name="album" class="rtmedia-user-album-list">' . rtmedia_group_album_list () . '</select>';
+                $album = '<label>' . __('Album','rtmedia') . '</label><select name="album" class="rtmedia-user-album-list">' . rtmedia_group_album_list () . '</select>';
             }
         }
         $up_privacy = ""; //uploader privacy dropdown for uploader under rtMedia Media tab.
