@@ -432,30 +432,9 @@ class RTMediaMedia {
                 return 'video';
                 break;
             default:
-                
-                $is_document = $this->is_rtmedia_document( $file_object );/* added for file extension */
-                if( $is_document ){
-                    return 'document';
-                }else {
-                    return 'other';
-                }
-                //return $mime_type;
+                return apply_filters('rtmedia_set_media_type_filter', $mime_type, $file_object );
                 break;
         }
-    }
-    
-    /*Function to get the file extension from file object */
-    function is_rtmedia_document ( $file_object ) {
-        if( isset( $file_object[0]['file'] ) && $file_object[0]['file'] !="" ) {
-            $extn = pathinfo( $file_object[0]['file']);
-            $extn = $extn['extension'];
-            global $document_extensions;
-            if( isset( $document_extensions ) && in_array( $extn, $document_extensions ) ) {
-                return true;
-            }
-        }
-        return false;
-        
     }
 
     /**
