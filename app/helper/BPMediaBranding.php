@@ -20,4 +20,3 @@ if (!class_exists('BPMediaBranding')) {
     }
 
 }
-?>

@@ -27,5 +27,3 @@ class RTMediaDeprecated {
 		return sprintf(__("Deprecated %s. Please use %s.",'rtmedia' ), $deprecated, $method);
 	}
 }
-
-?>
