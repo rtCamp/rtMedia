@@ -82,10 +82,16 @@ jQuery(function($) {
                 el = jQuery(".rtmedia-list").parent().parent();
             }
             if (el != undefined) {
-                //$(el).find("input[type=hidden]").each(function(e) {
-                $(element).parent().parent().prevAll("input[type=hidden]").each(function(e) {
-                    query[$(this).attr("name")] = $(this).val();
-                });
+		if(element != undefined) {
+		    $(element).parent().parent().prevAll("input[type=hidden]").each(function(e) {
+			query[$(this).attr("name")] = $(this).val();
+		    });
+		} else {
+		    $(el).find("input[type=hidden]").each(function(e) {
+			query[$(this).attr("name")] = $(this).val();
+		    });
+		}
+
             }
             this.fetch({
                 data: query,
