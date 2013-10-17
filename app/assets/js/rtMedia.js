@@ -286,9 +286,9 @@ jQuery('document').ready(function($) {
         jQuery('.reveal-modal-bg').fadeOut();
     });
 
-    jQuery(document).on('click', '#rtm_show_upload_ui', function(){
-        jQuery('#rtm-media-gallery-uploader').slideToggle();
-    });
+//    jQuery(document).on('click', '#rtm_show_upload_ui', function(){
+//        jQuery('#rtm-media-gallery-uploader').slideToggle();
+//    });
 
 });
 
