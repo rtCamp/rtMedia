@@ -6,7 +6,7 @@ License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires at least: WordPress 3.6
 Tested up to: WordPress 3.6.1 + BuddyPress 1.8.1
-Stable tag: 3.2.3
+Stable tag: 3.2.4
 
 Add albums, photo, audio/video encoding, privacy, sharing, front-end uploads & more. All this works mobile/tablets devices.
 
@@ -121,6 +121,8 @@ Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_sou
 
 = 3.2.4 =
 * Updated polish,solvak and spanish transalation.
+* Fixed multiple gallery on same page,comment sync for single media in activity, comments visibilty when not-logged in.
+* Strings made translation ready
 
 = 3.2.3 =
 * Bug fixed for group avatar upload while creating a group in buddypress
@@ -576,8 +578,8 @@ Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_sou
 
 == Upgrade Notice ==
 
-= 3.2.3 =
-Requires BuddyPress 1.7 or higher, if using BuddyPress. Bug fixes.
+= 3.2.4 =
+Requires BuddyPress 1.7 or higher, if using BuddyPress. Updated translation files and bug fixes.
 
 == Sponsors ==
 
@@ -590,7 +592,7 @@ Requires BuddyPress 1.7 or higher, if using BuddyPress. Bug fixes.
 
 rtMedia includes [full translation support](https://rtcamp.com/tutorials/rtmedia-translation/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media). Head over to the [translation project](http://rtcamp.com/translate/projects/rtmedia/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media) to contribute your translations. If you don't see the language of your choice, let us know in the support forum, we'll add it.
 
-* [Polish](https://rtcamp.com/translate/projects/rtmedia/pl/default) translation by [Polski_Ziom]
+* [Polish](https://rtcamp.com/translate/projects/rtmedia/pl/default) translation by [Polski_Ziom](http://profiles.wordpress.org/polski_ziom)
 * [Spanish](https://rtcamp.com/translate/projects/rtmedia/es/default) translation by [Andrés Felipe](http://profiles.wordpress.org/naturalworldstm/) and [d3ne]
 * [Solvak](https://rtcamp.com/translate/projects/rtmedia/sk/default) translation by [igid26](http://profiles.wordpress.org/igid26)
 * [Italian](https://rtcamp.com/translate/projects/rtmedia/it/default) translation by [Yukiko.Kawa]
