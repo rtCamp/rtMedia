@@ -372,6 +372,9 @@ class RTMediaFormHandler {
                                 $featured_checkbox = apply_filters('rtmedia_filter_featured_checkbox', $featured_checkbox, $key);
 				echo $featured_checkbox;
 				echo ' </div>';
+                                 if(!isset($section['extn']) || !is_array($section['extn'])) {
+				    $section['extn'] = array();
+				}
                                 $extensions = implode(', ', $section['extn']);
                                 $extensions = apply_filters('rtmedia_type_settings_filter_extension', $extensions , $key) ;
 				echo '<div class="columns large-3">' . $extensions . '</div>';
