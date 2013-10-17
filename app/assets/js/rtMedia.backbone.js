@@ -336,7 +336,10 @@ jQuery(function($) {
             }
         });
         uploaderObj.uploader.bind('BeforeUpload', function(up, file) {
-            up.settings.multipart_params.privacy = $("#rtm-file_upload-ui select.privacy").val();
+            var privacy = $("#rtm-file_upload-ui select.privacy").val();
+            if(privacy !== undefined) {
+                up.settings.multipart_params.privacy = $("#rtm-file_upload-ui select.privacy").val();
+            }
             if (jQuery("#rt_upload_hf_redirect").length > 0)
                 up.settings.multipart_params.redirect = up.files.length;
             jQuery("#rtmedia-uploader-form input[type=hidden]").each(function() {
