@@ -406,7 +406,13 @@ function rtmedia_description_input () {
     global $rtmedia_media;
 
     $name = 'description';
-    $value = $rtmedia_media->post_content;
+    if(isset($rtmedia_media->post_content)) {
+	$value = $rtmedia_media->post_content;
+    } else {
+	$post_details = get_post($rtmedia_media->media_id);
+	$value = $post_details->post_content;
+    }
+
 
     $html = '';
 
