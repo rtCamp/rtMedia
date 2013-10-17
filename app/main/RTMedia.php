@@ -186,7 +186,8 @@ class RTMedia
                 'label' => __('Photo', 'rtmedia'),
                 'plural_label' => __('Photos', 'rtmedia'),
                 'extn' => array('jpg', 'jpeg', 'png', 'gif'),
-                'thumbnail' => RTMEDIA_URL . 'app/assets/img/image_thumb.png'
+                'thumbnail' => RTMEDIA_URL . 'app/assets/img/image_thumb.png',
+		'settings_visibility' => true
             ),
             'video' => array(
                 'name' => 'video',
@@ -194,7 +195,8 @@ class RTMedia
                 'label' => __('Video', 'rtmedia'),
                 'plural_label' => __('Videos', 'rtmedia'),
                 'extn' => array('mp4'),
-                'thumbnail' => RTMEDIA_URL . 'app/assets/img/video_thumb.png'
+                'thumbnail' => RTMEDIA_URL . 'app/assets/img/video_thumb.png',
+		'settings_visibility' => true
             ),
             'music' => array(
                 'name' => 'music',
@@ -202,7 +204,8 @@ class RTMedia
                 'label' => __('Music', 'rtmedia'),
                 'plural_label' => __('Music', 'rtmedia'),
                 'extn' => array('mp3'),
-                'thumbnail' => RTMEDIA_URL . 'app/assets/img/audio_thumb.png'
+                'thumbnail' => RTMEDIA_URL . 'app/assets/img/audio_thumb.png',
+		'settings_visibility' => true
             )
         );
 
