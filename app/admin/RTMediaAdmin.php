@@ -452,7 +452,7 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
 		if(!$site_option || $site_option != "hide") {
 		    update_site_option("rtmedia-video-thumb-notice", "show");
 		    $videos_without_thumbs = get_video_without_thumbs();
-		    if(isset($videos_without_thumbs) && is_array($videos_without_thumbs) && $videos_without_thumbs!= "") {
+		    if(isset($videos_without_thumbs) && is_array($videos_without_thumbs) && sizeof($videos_without_thumbs) > 0 ) {
 			echo '<div class="error rtmedia-regenerate-video-thumb-error">
 				<p>
 				' . sprintf ( __ ( 'You have total '. sizeof($videos_without_thumbs) .' videos without thumbnails. Click <a href="'. admin_url('admin.php?page=rtmedia-regenerate') .'"> here </a> to generate thumbnails. <a href="#" onclick="rtmedia_hide_video_thumb_notice()" style="float:right">Hide</a>' ) ) . '
