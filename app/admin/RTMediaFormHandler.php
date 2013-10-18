@@ -316,7 +316,7 @@ class RTMediaFormHandler {
 		$render = array();
 		$allowed_media_type = $rtmedia->allowed_types;
 		$allowed_media_type = apply_filters("rtmedia_allowed_types", $allowed_media_type);
-		
+
 		foreach ($options as $key => $value) {
 			$data = explode('_', $key);
 			if(!isset($render[$data[1]])) {
@@ -351,7 +351,7 @@ class RTMediaFormHandler {
 <?php
 		$even = 0;
 		foreach ($render_data as $key=>$section) {
-                    if( isset($section['settings_visibility']) && isset($section['settings_visibility'] ) == true ) {
+                    if( isset($section['settings_visibility']) && $section['settings_visibility'] == true ) {
 			if( ++$even%2 ) {
 			    echo '<div class="row rt-odd">';
 			}
