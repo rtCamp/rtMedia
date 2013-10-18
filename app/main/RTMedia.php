@@ -721,7 +721,7 @@ class RTMedia
         wp_localize_script('rtmedia-main', 'rtmedia_media_delete_confirmation', __('Are you sure you want to delete this media?',"rtMedia"));
         wp_localize_script('rtmedia-main', 'rtmedia_album_delete_confirmation', __('Are you sure you want to delete this Album?',"rtMedia"));
         wp_localize_script('rtmedia-main', 'rtmedia_drop_media_msg', __('Drop files here',"rtMedia"));
-        wp_localize_script('rtmedia-main', 'rtmedia_album_created_msg', __(' album created successfully.',"rtMedia"));
+        wp_localize_script('rtmedia-main', 'rtmedia_album_created_msg', ' ' . __('album created successfully.',"rtMedia"));
         wp_localize_script('rtmedia-main', 'rtmedia_something_wrong_msg', __('Something went wrong. Please try again.',"rtMedia"));
         wp_localize_script('rtmedia-main', 'rtmedia_empty_album_name_msg', __('Enter an album name.',"rtMedia"));
         wp_localize_script('rtmedia-main', 'rtmedia_max_file_msg', __('Max file size is',"rtMedia"));
