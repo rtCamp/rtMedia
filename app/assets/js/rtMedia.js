@@ -17,6 +17,7 @@ function apply_rtMagnificPopup(selector){
             gallery: {
                 enabled: true,
                 navigateByImgClick: true,
+                arrowMarkup: '',// disabled default arrows 
                 preload: [0, 1] // Will preload 0 - before current, and 1 after the current image
             },
             image: {
@@ -47,9 +48,17 @@ function apply_rtMagnificPopup(selector){
                     var settings = {};
 
                     if (typeof _wpmejsSettings !== 'undefined')
-                        settings.pluginPath = _wpmejsSettings.pluginPath;
-
-                    $('.mfp-content .wp-audio-shortcode,.mfp-content .wp-video-shortcode,.mfp-content .bp_media_content video').mediaelementplayer(settings);
+                        settings.pluginPath = _wpmejsSettings.pluginPath;                    
+                    $('.mfp-content .wp-audio-shortcode,.mfp-content .wp-video-shortcode,.mfp-content .bp_media_content video').mediaelementplayer({
+                        // if the <video width> is not specified, this is the default
+                        defaultVideoWidth: 480,
+                        // if the <video height> is not specified, this is the default
+                        defaultVideoHeight: 270,
+                        // if set, overrides <video width>
+                        videoWidth: 1,
+                        // if set, overrides <video height>
+                        videoHeight: 1
+                    });
                     $('.mfp-content .mejs-audio .mejs-controls').css('position', 'relative');
                     rtMediaHook.call('rtmedia_js_popup_after_content_added', []);
                 },
@@ -215,9 +224,25 @@ jQuery('document').ready(function($) {
 	    function() {
 		rtmedia_media_view_counts();
                 rtmedia_init_media_deleting();
+                rtmedia_init_popup_navigation();
+                var height = $(window).height() ;
+                console.log( height );
+                //   , .mfp-content #buddypress .rtmedia-container,
+                jQuery('.mfp-content .rtmedia-single-meta, .mfp-content #rtmedia-single-media-container .rtmedia-media, .mejs-video').css({ 'height' : height*0.8, 'max-height' : height*0.8, 'over-flow' : 'hidden' });
+                //mejs-video
 		return true;
 	    }
     );
+   
+   function rtmedia_init_popup_navigation() {
+        var rtm_mfp = jQuery.magnificPopup.instance;
+        jQuery('.mfp-arrow-right').on('click', function(e) {
+            rtm_mfp.next();
+        });
+        jQuery('.mfp-arrow-left').on('click', function(e) {
+            rtm_mfp.prev();
+        });
+   }
    var dragArea = jQuery("#drag-drop-area");
    var activityArea = jQuery('#whats-new');
    var content = dragArea.html();

@@ -14,6 +14,14 @@ jQuery(document).ready(function() {
         jQuery(this).mediaelementplayer({
             enableKeyboard: false,
             startVolume: 1,
+            // if the <video width> is not specified, this is the default
+            defaultVideoWidth: 480,
+            // if the <video height> is not specified, this is the default
+            defaultVideoHeight: 270,
+            // if set, overrides <video width>
+            videoWidth: 1,
+            // if set, overrides <video height>
+            videoHeight: 1,
             success: function(mediaElement, domElement) {
                 var $thisMediaElement = (mediaElement.id) ? jQuery("#" + mediaElement.id) : jQuery(mediaElement);
                 $thisMediaElement.parents('.mejs-container').find(".mejs-volume-current").css("top", "8px");
