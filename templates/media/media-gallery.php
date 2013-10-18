@@ -54,7 +54,7 @@
             else
                 $display = 'style="display:none;"';
             ?>
-            <a id="rtMedia-galary-next" <?php echo $display; ?> href="<?php echo rtmedia_pagination_next_link (); ?>"><?php echo __ ( 'Next', 'rtmedia' ); ?></a>
+            <a id="rtMedia-galary-next" <?php echo $display; ?> href="<?php echo rtmedia_pagination_next_link (); ?>"><?php echo __ ( 'Load more', 'rtmedia' ); ?></a>
         </div>
     <?php } else { ?>
         <p><?php echo __ ( "Oops !! There's no media found for the request !!", "rtmedia" ); ?></p>
