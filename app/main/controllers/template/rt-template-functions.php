@@ -1075,7 +1075,7 @@ function rtmedia_create_album () {
     global $rtmedia_query;
     $user_id = get_current_user_id ();
     $display = false;
-    if ( isset ( $rtmedia_query->query[ 'context' ] ) && in_array ( $rtmedia_query->query[ 'context' ], array( 'profile', 'group' ) ) ) {
+    if ( isset ( $rtmedia_query->query[ 'context' ] ) && in_array ( $rtmedia_query->query[ 'context' ], array( 'profile', 'group' ) ) && $user_id != 0 ) {
         switch ( $rtmedia_query->query[ 'context' ] ) {
             case 'profile':
                 if ( $rtmedia_query->query[ 'context_id' ] == $user_id ) {
