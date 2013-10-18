@@ -160,7 +160,7 @@ class RTMediaMedia {
 
 
         /* add media in rtMedia context */
-        $media_ids = $this->insertmedia ( $attachment_ids, $uploaded );
+        $media_ids = $this->insertmedia ( $attachment_ids, $uploaded, $file_object /* passing file object to check the extension */ );
 
 	$rtmedia_type  = rtmedia_type($media_ids);
         /* action to perform any task after adding a media */
@@ -420,7 +420,7 @@ class RTMediaMedia {
         return $this->model->insert ( $attributes );
     }
 
-    function set_media_type ( $mime_type ) {
+    function set_media_type ( $mime_type, $file_object ) {
         switch ( $mime_type ) {
             case 'image':
                 return 'photo';
@@ -428,8 +428,11 @@ class RTMediaMedia {
             case 'audio':
                 return 'music';
                 break;
+            case 'video':
+                return 'video';
+                break;
             default:
-                return $mime_type;
+                return apply_filters('rtmedia_set_media_type_filter', $mime_type, $file_object );
                 break;
         }
     }
@@ -439,7 +442,7 @@ class RTMediaMedia {
      * @param type $attachment_ids
      * @param type $uploaded
      */
-    function insertmedia ( $attachment_ids, $uploaded ) {
+    function insertmedia ( $attachment_ids, $uploaded , $file_object /* added for file extension */ ) {
 
         $defaults = array(
             'activity_id' => $this->activity_enabled (),
@@ -453,14 +456,14 @@ class RTMediaMedia {
         foreach ( $attachment_ids as $id ) {
             $attachment = get_post ( $id, ARRAY_A );
             $mime_type = explode ( '/', $attachment[ 'post_mime_type' ] );
-
+            
             $media = array(
                 'blog_id' => $blog_id,
                 'media_id' => $id,
                 'album_id' => $uploaded[ 'album_id' ],
                 'media_author' => $attachment[ 'post_author' ],
                 'media_title' => $attachment[ 'post_title' ],
-                'media_type' => $this->set_media_type ( $mime_type[ 0 ] ),
+                'media_type' => $this->set_media_type ( $mime_type[ 0 ], $file_object /* added for file extension */ ),
                 'context' => $uploaded[ 'context' ],
                 'context_id' => $uploaded[ 'context_id' ],
                 'privacy' => $uploaded[ 'privacy' ]
@@ -521,5 +524,3 @@ class RTMediaMedia {
     }
 
 }
-
-?>

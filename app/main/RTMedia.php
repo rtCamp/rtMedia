@@ -186,7 +186,8 @@ class RTMedia
                 'label' => __('Photo', 'rtmedia'),
                 'plural_label' => __('Photos', 'rtmedia'),
                 'extn' => array('jpg', 'jpeg', 'png', 'gif'),
-                'thumbnail' => RTMEDIA_URL . 'app/assets/img/image_thumb.png'
+                'thumbnail' => RTMEDIA_URL . 'app/assets/img/image_thumb.png',
+		'settings_visibility' => true
             ),
             'video' => array(
                 'name' => 'video',
@@ -194,7 +195,8 @@ class RTMedia
                 'label' => __('Video', 'rtmedia'),
                 'plural_label' => __('Videos', 'rtmedia'),
                 'extn' => array('mp4'),
-                'thumbnail' => RTMEDIA_URL . 'app/assets/img/video_thumb.png'
+                'thumbnail' => RTMEDIA_URL . 'app/assets/img/video_thumb.png',
+		'settings_visibility' => true
             ),
             'music' => array(
                 'name' => 'music',
@@ -202,7 +204,8 @@ class RTMedia
                 'label' => __('Music', 'rtmedia'),
                 'plural_label' => __('Music', 'rtmedia'),
                 'extn' => array('mp3'),
-                'thumbnail' => RTMEDIA_URL . 'app/assets/img/audio_thumb.png'
+                'thumbnail' => RTMEDIA_URL . 'app/assets/img/audio_thumb.png',
+		'settings_visibility' => true
             )
         );
 
@@ -688,7 +691,7 @@ class RTMedia
     function create_table_error_notice() {
         global $rtmedia_error;
         $rtmedia_error = true;
-        echo "<div class='error'><p><strong>rtMedia</strong>: Can't Create Database table. Please check create table permission.</p></div>";
+        echo "<div class='error'><p><strong>rtMedia</strong>" . __(": Can't Create Database table. Please check create table permission.") . "</p></div>";
     }
 
     function enqueue_scripts_styles() {
@@ -712,6 +715,17 @@ class RTMedia
         wp_localize_script('rtmedia-main', 'rtmedia_ajax_url', admin_url('admin-ajax.php'));
         wp_localize_script('rtmedia-main', 'rtmedia_media_slug', RTMEDIA_MEDIA_SLUG);
         wp_localize_script('rtmedia-main', 'rtmedia_lightbox_enabled', strval($this->options["general_enableLightbox"]));
+        //javascript messages
+        wp_localize_script('rtmedia-magnific', 'rtmedia_load_more', __('Loading media',"rtMedia"));
+        wp_localize_script('rtmedia-main', 'rtmedia_empty_activity_msg', __('Please enter some content to post.',"rtMedia"));
+        wp_localize_script('rtmedia-main', 'rtmedia_empty_comment_msg', __('Empty Comment is not allowed.',"rtMedia"));
+        wp_localize_script('rtmedia-main', 'rtmedia_media_delete_confirmation', __('Are you sure you want to delete this media?',"rtMedia"));
+        wp_localize_script('rtmedia-main', 'rtmedia_album_delete_confirmation', __('Are you sure you want to delete this Album?',"rtMedia"));
+        wp_localize_script('rtmedia-main', 'rtmedia_drop_media_msg', __('Drop files here',"rtMedia"));
+        wp_localize_script('rtmedia-main', 'rtmedia_album_created_msg', __('album created successfully.',"rtMedia"));
+        wp_localize_script('rtmedia-main', 'rtmedia_something_wrong_msg', __('Something went wrong. Please try again.',"rtMedia"));
+        wp_localize_script('rtmedia-main', 'rtmedia_empty_album_name_msg', __('Enter an album name.',"rtMedia"));
+        wp_localize_script('rtmedia-main', 'rtmedia_max_file_msg', __('Max file size is',"rtMedia"));
     }
 
     function set_bp_bar() {

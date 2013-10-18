@@ -39,6 +39,7 @@ class RTMediaUploadEndpoint {
                 $mediaObj = new RTMediaMedia();
                 $media = $mediaObj->model->get ( array( 'id' => $rtupload->media_ids[ 0 ] ) );
                 $rtMediaNav = new RTMediaNav();
+                $perma_link = "";
 		$perma_link = get_rtmedia_permalink($rtupload->media_ids[ 0 ]);
 		if($media[0]->media_type == "photo") {
 		    $thumb_image = rtmedia_image("rt_media_thumbnail", $rtupload->media_ids[ 0 ], false);
@@ -73,7 +74,8 @@ class RTMediaUploadEndpoint {
                     $wpdb->update ( $bp->activity->table_name, array( "type" => "rtmedia_update", "content" => $objActivity->create_activity_html () ), array( "id" => $activity_id ) );
                 }
             }
-
+                
+                $redirect_url = "";
                 if ( isset ( $_POST[ "redirect" ] ) && is_numeric ( $_POST[ "redirect" ] ) ) {
                         if ( intval ( $_POST[ "redirect" ] ) > 1 ) {
                             //bulkurl

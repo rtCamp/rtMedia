@@ -741,3 +741,18 @@ button.rtp-lb-close {
         }
     }
 }
+
+.rtmedia-admin-notice {
+    padding: 4px;
+    border: 1px dashed;
+    text-align: center;
+    margin: 10px 0;
+}
+.rtmedia-info {
+    color : green;
+}
+.rtmedia-warning {
+    color : red;
+    }
+//audio player fix under the current lightbox.
+.mfp-content #rtmedia-single-media-container .wp-audio-shortcode{ margin-left : 30px; }    

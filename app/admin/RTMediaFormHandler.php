@@ -41,10 +41,11 @@ class RTMediaFormHandler {
 		echo $chkObj->get_select($args);
 	}
 
-	public static function texarea($args) {
+	public static function textarea($args, $echo = true) {
 	    global $rtmedia;
 		$options = $rtmedia->options;
 		$defaults = array(
+                        'id' => '',
 			'key' => '',
 			'desc' => '',
 			'show_desc' => false
@@ -64,10 +65,14 @@ class RTMediaFormHandler {
 		$args['rtForm_options'] = array(array('' => 1, 'checked' => $value));
 
 		$chkObj = new rtForm();
-		echo $chkObj->get_textarea($args);
+                if( $echo ) {
+                    echo $chkObj->get_textarea($args);
+                } else {
+                    return $chkObj->get_textarea($args);
+                }
 	}
 
-	public static function checkbox($args) {
+	public static function checkbox($args, $echo = true) {
 
 		global $rtmedia;
 		$options = $rtmedia->options;
@@ -92,7 +97,10 @@ class RTMediaFormHandler {
 
 		$chkObj = new rtForm();
 //		echo $chkObj->get_checkbox($args);
-		echo $chkObj->get_switch($args);
+                if( $echo )
+                    echo $chkObj->get_switch($args);
+                else
+                    return $chkObj->get_switch($args);
 //		echo $chkObj->get_switch_square($args);
 	}
 
@@ -294,6 +302,9 @@ class RTMediaFormHandler {
 					'name' => $type['label'],
 					'extn' => $type['extn']
 				);
+				if ( isset ( $type['settings_visibility'] ) ) {
+				    $data['settings_visibility'] = $type['settings_visibility'];
+				}
 				return $data;
 			}
 		}
@@ -304,8 +315,8 @@ class RTMediaFormHandler {
 
 		$render = array();
 		$allowed_media_type = $rtmedia->allowed_types;
-		$allowed_media_type = apply_filters("allowed_media_type_settings", $allowed_media_type);
-		//  var_dump($allowed_media_type);
+		$allowed_media_type = apply_filters("rtmedia_allowed_types", $allowed_media_type);
+		
 		foreach ($options as $key => $value) {
 			$data = explode('_', $key);
 			if(!isset($render[$data[1]])) {
@@ -340,7 +351,7 @@ class RTMediaFormHandler {
 <?php
 		$even = 0;
 		foreach ($render_data as $key=>$section) {
-                    if( $section['extn'] != "") {
+                    if( isset($section['settings_visibility']) && isset($section['settings_visibility'] ) == true ) {
 			if( ++$even%2 ) {
 			    echo '<div class="row rt-odd">';
 			}
@@ -351,13 +362,22 @@ class RTMediaFormHandler {
 				echo '<div class="columns large-3">' . $section['name'] . '</div>';
 				$args = array('key' => 'allowedTypes_'.$key.'_enabled', 'value' => $section['enabled']);
 				echo '<div class="columns large-3">';
-					self::checkbox($args);
+                                $allow_upload_checkbox = self::checkbox($args, $echo = false );
+                                $allow_upload_checkbox = apply_filters('rtmedia_filter_allow_upload_checkbox', $allow_upload_checkbox , $key, $args);
+                                echo $allow_upload_checkbox;
 				echo '</div>';
 				$args = array('key' => 'allowedTypes_'.$key.'_featured', 'value' => $section['featured']);
 				echo '<div class="columns large-3">';
-					self::checkbox($args);
-				echo '</div>';
-				echo '<div class="columns large-3">' . implode(', ', $section['extn']) . '</div>';
+                                $featured_checkbox = self::checkbox($args , $echo = false );
+                                $featured_checkbox = apply_filters('rtmedia_filter_featured_checkbox', $featured_checkbox, $key);
+				echo $featured_checkbox;
+				echo ' </div>';
+                                 if(!isset($section['extn']) || !is_array($section['extn'])) {
+				    $section['extn'] = array();
+				}
+                                $extensions = implode(', ', $section['extn']);
+                                $extensions = apply_filters('rtmedia_type_settings_filter_extension', $extensions , $key) ;
+				echo '<div class="columns large-3">' . $extensions . '</div>';
 			    do_action("rtmedia_type_settings_after_body",$key, $section);
 			echo '</div>';
                     } else {
@@ -366,6 +386,7 @@ class RTMediaFormHandler {
                     }
 		}
 		echo '</div>';
+                do_action('rtmedia_after_media_types_settings');
 	}
 
 	static function sizes_render_options($options) {

@@ -13,5 +13,3 @@
 class RTMediaUploadUrl {
     //put your code here
 }
-
-?>

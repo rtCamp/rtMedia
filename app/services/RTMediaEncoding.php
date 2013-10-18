@@ -44,8 +44,8 @@ class RTMediaEncoding {
                         $blacklist = array('localhost', '127.0.0.1');
                         if (!in_array($_SERVER['HTTP_HOST'], $blacklist)) {
                             add_filter('rtmedia_plupload_files_filter', array($this, 'allowed_types'));
-                            add_filter('allowed_media_type_settings', array($this, 'allowed_types_admin_settings'));
-                            add_filter('rtmedia_valid_type_check', array($this, 'bypass_video_audio'), '', 2);
+                            add_filter('rtmedia_allowed_types', array($this, 'allowed_types_admin_settings'), 10, 1);
+                            add_filter('rtmedia_valid_type_check', array($this, 'bypass_video_audio'), 10, 2);
                         }
                     }
                 }
@@ -232,7 +232,7 @@ class RTMediaEncoding {
         if (isset($usage_details[$this->api_key]->plan->name) && (strtolower($usage_details[$this->api_key]->plan->name) == strtolower($name)) && $usage_details[$this->api_key]->sub_status && !$force) {
             $form = '<button data-plan="' . $name . '" data-price="' . $price . '" type="submit" class="button bpm-unsubscribe">' . __('Unsubscribe', 'rtmedia') . '</button>';
             $form .= '<div id="bpm-unsubscribe-dialog" title="Unsubscribe">
-  <p>Just to improve our service we would like to know the reason for you to leave us.</p>
+  <p>' . __('Just to improve our service we would like to know the reason for you to leave us.') . '</p>
   <p><textarea rows="3" cols="36" id="bpm-unsubscribe-note"></textarea></p>
 </div>';
         }
@@ -588,7 +588,7 @@ class RTMediaEncoding {
                 }
             }
             else {
-                echo json_encode(array('error' => 'Something went wrong please try again.'));
+                echo json_encode(array('error' => __('Something went wrong please try again.')));
             }
         }
         die();

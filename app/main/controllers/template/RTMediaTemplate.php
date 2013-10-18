@@ -80,7 +80,7 @@ class RTMediaTemplate {
             $this->check_return_merge ();
 
             $this->check_return_comments ();
-            
+
             $this->check_delete_comments ();
 
             return $this->get_default_template ();
@@ -97,9 +97,11 @@ class RTMediaTemplate {
                     $rtaccount = 0;
                 }
                 //add_action("rtmedia_before_media_gallery",array(&$this,"")) ;
+		echo "<div class='rtmedia_gallery_wrapper'>";
                 $this->add_hidden_fields_in_gallery ();
                 $gallery_template = apply_filters("rtmedia-before-template",$template,$shortcode_attr);
                 include $this->locate_template ( $gallery_template );
+		echo "</div>";
             } else {
                 echo __ ( 'Invalid attribute passed for rtmedia_gallery shortcode.', 'rtmedia' );
                 return false;
@@ -334,7 +336,7 @@ class RTMediaTemplate {
 
     function album_delete () {
         global $rtmedia_query;
-        $nonce = $_REQUEST[ 'rtmedia_delete_album_nonce' ];
+	$nonce = $_REQUEST[ 'rtmedia_delete_album_nonce' ];
         if ( wp_verify_nonce ( $nonce, 'rtmedia_delete_album_' . $rtmedia_query->media_query[ 'album_id' ] ) ) {
             $media = new RTMediaMedia();
             $model = new RTMediaModel();
@@ -344,13 +346,19 @@ class RTMediaTemplate {
             }
             $media->delete ( $rtmedia_query->media_query[ 'album_id' ] );
         }
-        wp_safe_redirect ( get_rtmedia_user_link ( get_current_user_id () ) . 'media/album/' );
+	if(isset($rtmedia_query->media_query['context']) && $rtmedia_query->media_query['context'] == "group") {
+	    global $bp;
+	    $group_link = bp_get_group_permalink($bp->groups->current_group);
+	    wp_safe_redirect ( trailingslashit( $group_link ) . RTMEDIA_MEDIA_SLUG . '/album/' );
+	} else {
+	    wp_safe_redirect ( trailingslashit( get_rtmedia_user_link ( get_current_user_id () ) ) . RTMEDIA_MEDIA_SLUG . '/album/' );
+	}
         exit;
     }
 
     function check_return_merge () {
         global $rtmedia_query;
-        if ( $rtmedia_query->action_query->action != 'merge' )
+	if ( $rtmedia_query->action_query->action != 'merge' )
             return;
         $nonce = $_REQUEST[ 'rtmedia_merge_album_nonce' ];
         if ( wp_verify_nonce ( $nonce, 'rtmedia_merge_album_' . $rtmedia_query->media_query[ 'album_id' ] ) ) {
@@ -368,7 +376,13 @@ class RTMediaTemplate {
             }
             $media->delete ( $rtmedia_query->media_query[ 'album_id' ] );
         }
-        wp_safe_redirect ( get_rtmedia_user_link ( get_current_user_id () ) . 'media/album/' );
+	if(isset($rtmedia_query->media_query['context']) && $rtmedia_query->media_query['context'] == "group") {
+	    global $bp;
+	    $group_link = bp_get_group_permalink($bp->groups->current_group);
+	    wp_safe_redirect ( trailingslashit( $group_link ) . RTMEDIA_MEDIA_SLUG . '/album/' );
+	} else {
+	    wp_safe_redirect ( trailingslashit( get_rtmedia_user_link ( get_current_user_id () ) ) . RTMEDIA_MEDIA_SLUG . '/album/' );
+	}
         exit;
     }
 
@@ -420,32 +434,32 @@ class RTMediaTemplate {
     }
     function check_delete_comments () {
         global $rtmedia_query;
-        
+
         if ( $rtmedia_query->action_query->action != 'delete-comment' )
             return;
-        
+
         if ( count ( $_POST ) ) {
             /**
              * /media/id/delete-comment [POST]
              * Delete Comment by Comment ID
              */
-        
+
             if ( empty ( $_POST[ 'comment_id' ] ) ) {
                 return false;
             }
             $comment = new RTMediaComment();
             $id = $_POST['comment_id'];
             $activity_id = get_comment_meta($id, 'activity_id',true);
-            
+
             if(!empty($activity_id)){
                 $activity_deleted = bp_activity_delete_comment ($activity_id, $id);
-                
+
                 $delete = bp_activity_delete( array( 'id' => $activity_id, 'type' => 'activity_comment' ) );
-     
+
             }
             $comment_deleted = $comment->remove ( $id );
-         
-           
+
+
             echo $comment_deleted;
             exit;
         }
@@ -539,7 +553,7 @@ class RTMediaTemplate {
                         isset ( $rtmedia_query->media_query ) &&
                         $rtmedia_query->action_query->action == 'edit'
                 ) {
-                    if ( isset ( $rtmedia_query->media_query[ 'media_author' ] ) && (get_current_user_id () == $rtmedia_query->media_query[ 'media_author' ]) ) {
+                    if ( rtmedia_is_album_editable() || is_rt_admin() ) {
                         $template = 'album-single-edit';
                     }
                 }

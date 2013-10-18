@@ -13,6 +13,7 @@ $rtmedia_media = $media[0];
         RTMediaMedia::media_nonce_generator($rtmedia_query->media_query['album_id']);
         $post_details = get_post($media[0]->media_id);
         $content = apply_filters('the_content', $post_details->post_content);
+	$content = $post_details->post_content;
         ?>
         <h2><?php echo __ ( 'Edit Album : ' , 'rtmedia' ) . esc_attr($media[0]->media_title) ; ?></h2>
         <label for='media_title'><?php _e('Title: ', 'rtmedia'); ?></label>
@@ -26,6 +27,7 @@ $rtmedia_media = $media[0];
 
 
     </form>
+    <?php if(!is_rtmedia_group_album()) { ?>
     <?php if (have_rtmedia()) { ?>
         <br />
         <form class="rtmedia-bulk-actions" method="post">
@@ -40,7 +42,7 @@ $rtmedia_media = $media[0];
                 <?php $global_albums = get_site_option('rtmedia-global-albums'); ?>
                 <?php _e('Move selected media to', 'rtmedia'); ?>
                 <?php echo '<select name="album" class="rtmedia-user-album-list">'.rtmedia_user_album_list().'</select>'; ?>
-                <input type="submit" class="rtmedia-move-selected" name="move-selected" value="Move Selected" />
+                <input type="submit" class="rtmedia-move-selected" name="move-selected" value="<?php _e('Move Selected','rtmedia'); ?>" />
             </div>
 
 
@@ -78,6 +80,7 @@ $rtmedia_media = $media[0];
         <?php } else { ?>
             <p><?php echo __("The album is empty.", "rtmedia"); ?></p>
         <?php } ?>
+    <?php } ?>
     </form>
 
 

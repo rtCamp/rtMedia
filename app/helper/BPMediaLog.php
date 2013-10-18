@@ -83,4 +83,3 @@ if (!class_exists('BPMediaLog')) {
     }
 
 }
-?>

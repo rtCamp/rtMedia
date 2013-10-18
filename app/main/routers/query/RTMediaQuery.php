@@ -112,8 +112,10 @@ class RTMediaQuery {
         if ( ! isset ( $this->query[ 'media_type' ] ) ) {
             if ( isset ( $this->action_query->id ) ) {
                 $media = $this->model->get ( array( 'id' => $this->action_query->id ) );
-                $media_type = $media[ 0 ]->media_type;
-                $this->query[ 'media_type' ] = $media_type;
+		if ( sizeof ( $media ) > 0 ) {
+		    $media_type = $media[ 0 ]->media_type;
+		    $this->query[ 'media_type' ] = $media_type;
+		}
             }
         } else {
 
@@ -139,6 +141,13 @@ class RTMediaQuery {
 
     function is_album () {
         if ( isset ( $this->query[ 'media_type' ] ) && $this->query[ 'media_type' ] == 'album' ) {
+            return true;
+        }
+        return false;
+    }
+
+    function is_group_album() {
+	if ( $this->is_album() && ( isset ( $this->query[ 'context' ] ) && $this->query[ 'context' ] == 'group' ) ){
             return true;
         }
         return false;
