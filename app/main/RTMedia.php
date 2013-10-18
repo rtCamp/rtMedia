@@ -561,7 +561,6 @@ class RTMedia
             'privacy' => false,
             'nav' => true,
             'like' => false,
-            'cover_art' => false,
             'featured' => false,
             'Group' => false,
             'ViewCount' => false
