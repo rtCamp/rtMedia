@@ -6,7 +6,7 @@ License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires at least: WordPress 3.6
 Tested up to: WordPress 3.6.1 + BuddyPress 1.8.1
-Stable tag: 3.2.4
+Stable tag: 3.2.5
 
 Add albums, photo, audio/video encoding, privacy, sharing, front-end uploads & more. All this works mobile/tablets devices.
 
@@ -119,6 +119,9 @@ Please visit [rtMedia's Features page](http://rtcamp.com/rtmedia/?utm_source=rea
 
 Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "Visit rtMedia's Features page") to get some details about future releases.
 
+= 3.2.5 =
+* Bug fixes
+
 = 3.2.4 =
 * Updated polish,solvak and spanish transalation.
 * Fixed multiple gallery on same page,comment sync for single media in activity, comments visibilty when not-logged in.
@@ -126,7 +129,7 @@ Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_sou
 
 = 3.2.3 =
 * Bug fixed for group avatar upload while creating a group in buddypress
-* Fixed multisite 
+* Fixed multisite
 
 = 3.2.2 =
 * Fixed header already sent issue
@@ -578,7 +581,7 @@ Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_sou
 
 == Upgrade Notice ==
 
-= 3.2.4 =
+= 3.2.5 =
 Requires BuddyPress 1.7 or higher, if using BuddyPress. Updated translation files and bug fixes.
 
 == Sponsors ==

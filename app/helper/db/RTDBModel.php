@@ -38,7 +38,7 @@ class RTDBModel {
     public function set_table_name($table_name, $withprefix = false) {
         global $wpdb;
         if (!$withprefix) {
-            $table_name = $wpdb->base_prefix . "rt_" . $table_name;
+            $table_name = $wpdb->prefix . "rt_" . $table_name;
         }
         $this->table_name = $table_name;
     }

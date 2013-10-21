@@ -85,7 +85,7 @@ class RTDBUpdate {
 
     public function genrate_table_name ( $file_name ) {
         global $wpdb;
-        return $wpdb->base_prefix . "rt_" . str_replace ( ".schema", "", strtolower ( $file_name ) );
+        return $wpdb->prefix . "rt_" . str_replace ( ".schema", "", strtolower ( $file_name ) );
     }
 
 }
