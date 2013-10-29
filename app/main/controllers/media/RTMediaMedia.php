@@ -352,7 +352,11 @@ class RTMediaMedia {
         if ( $uploaded[ 'album_id' ] ) {
             $model = new RTMediaModel();
             $parent_details = $model->get ( array( 'id' => $uploaded[ 'album_id' ] ) );
-            $album_id = $parent_details[ 0 ]->media_id;
+	    if(is_array($parent_details) && sizeof($parent_details) > 0 ) {
+		$album_id = $parent_details[ 0 ]->media_id;
+	    } else {
+		$album_id = 0;
+	    }
         } else {
             $album_id = 0;
         }
@@ -456,7 +460,7 @@ class RTMediaMedia {
         foreach ( $attachment_ids as $id ) {
             $attachment = get_post ( $id, ARRAY_A );
             $mime_type = explode ( '/', $attachment[ 'post_mime_type' ] );
-            
+
             $media = array(
                 'blog_id' => $blog_id,
                 'media_id' => $id,

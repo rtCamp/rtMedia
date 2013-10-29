@@ -152,7 +152,10 @@ function rtmedia_id ( $media_id = false ) {
     if ( $media_id ) {
         $model = new RTMediaModel();
         $media = $model->get_media ( array( 'media_id' => $media_id ), 0, 1 );
-        return $media[ 0 ]->id;
+	if(isset($media) && sizeof($media) > 0 ) {
+	    return $media[ 0 ]->id;
+	}
+        return false;
     } else {
         global $rtmedia_media;
         return $rtmedia_media->id;
@@ -274,7 +277,7 @@ function rtmedia_image ( $size = 'rt_media_thumbnail', $id = false ,$recho = tru
         global $rtmedia_media;
         $media_object = $rtmedia_media;
     }
-
+    
     $thumbnail_id = 0;
     if ( isset ( $media_object->media_type ) ) {
         if ( $media_object->media_type == 'album' || $media_object->media_type != 'photo' || $media_object->media_type == 'video' ) {

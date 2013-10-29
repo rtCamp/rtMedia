@@ -1,6 +1,26 @@
 <?php if ( is_array ( $tabs ) && count ( $tabs ) ) { ?>
     <div class="rtmedia-container">
-        <div class="rtmedia-uploader no-js">
+    <?php
+    
+	if( isset($attr['rtmedia_simple_file_upload']) && $attr['rtmedia_simple_file_upload'] == true) {
+	    echo '<div class="rtm-file-input-container"> <input type="file" name="rtmedia_file_multiple[]" multiple="true" class="rtm-simple-file-input" id="rtmedia_simple_file_input" />';
+	    RTMediaUploadView::upload_nonce_generator ( true );
+	    if ( ! empty ( $attr ) ) {
+                    foreach ( $attr as $key => $value ) {
+                        if ( $key == 'context' )
+                            echo '<input type="hidden" name="context" value="' . $value . '" />';
+                        if ( $key == 'context_id' )
+                            echo '<input type="hidden" name="context_id" value="' . $value . '" />';
+                        if ( $key == 'privacy' )
+                            echo '<input type="hidden" name="privacy" value="' . $value . '" />';
+                        if ( $key == 'album_id' )
+                            echo '<input type="hidden" name="album_id" value="' . $value . '" />';
+                    }
+                }
+	    echo "</div>";
+	} else {
+    ?>
+	<div class="rtmedia-uploader no-js">
             <form id="rtmedia-uploader-form" method="post" action="upload" enctype="multipart/form-data">
                 <?php do_action ( 'rtmedia_before_uploader' ); ?>
 
@@ -47,6 +67,9 @@
                 <input type="submit" id='rtMedia-start-upload' name="rtmedia-upload" value="<?php echo RTMEDIA_UPLOAD_LABEL; ?>" />
             </form>
         </div>
+    <?php
+	}
+    ?>
     </div>
     <?php
 }
