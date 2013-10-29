@@ -273,11 +273,12 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
                 'rtmedia_page_rtmedia-addons',
                 'rtmedia_page_rtmedia-support',
                 'rtmedia_page_rtmedia-importer',
-                'rtmedia_page_rtmedia-regenerate'
+                'rtmedia_page_rtmedia-regenerate',
+                'rtmedia_page_rtmedia-premium'
             );
             $admin_pages = apply_filters ( 'rtmedia_filter_admin_pages_array', $admin_pages );
 
-            if ( in_array ( $hook, $admin_pages ) ) {
+	    if ( in_array ( $hook, $admin_pages ) ) {
                 $admin_ajax = admin_url ( 'admin-ajax.php' );
 
                 wp_enqueue_script ( 'bootstrap-switch', RTMEDIA_URL . 'app/assets/js/bootstrap-switch.js', array( 'jquery' ), RTMEDIA_VERSION );
@@ -336,6 +337,10 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
             add_submenu_page ( 'rtmedia-settings', __ ( 'Settings', 'rtmedia' ), __ ( 'Settings', 'rtmedia' ), 'manage_options', 'rtmedia-settings', array( $this, 'settings_page' ) );
             add_submenu_page ( 'rtmedia-settings', __ ( 'Addons', 'rtmedia' ), __ ( 'Addons', 'rtmedia' ), 'manage_options', 'rtmedia-addons', array( $this, 'addons_page' ) );
             add_submenu_page ( 'rtmedia-settings', __ ( 'Support', 'rtmedia' ), __ ( 'Support ', 'rtmedia' ), 'manage_options', 'rtmedia-support', array( $this, 'support_page' ) );
+	    if(! defined("RTMEDIA_PRO_VERSION")) {
+		add_submenu_page ( 'rtmedia-settings', __ ( 'Premium', 'rtmedia' ), __ ( 'Premium ', 'rtmedia' ), 'manage_options', 'rtmedia-premium', array( $this, 'premium_page' ) );
+	    }
+
             $obj_encoding =  new RTMediaEncoding(true);
             if ($obj_encoding->api_key)
                 add_submenu_page ( 'rtmedia-settings', __ ( 'Regenerate Thumbnail', 'rtmedia' ), __ ( 'Regen. Thumbnail ', 'rtmedia' ), 'manage_options', 'rtmedia-regenerate', array( $this, 'rt_regenerate_thumbnail' ) );
@@ -546,7 +551,11 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
             $this->render_page ( 'rtmedia-support' );
         }
 
-        /**
+	public function premium_page() {
+	    $this->render_page ( 'rtmedia-premium' );
+	}
+
+	/**
          *
          * @return type
          */
@@ -692,6 +701,9 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
             foreach ( array_values ( $tabs ) as $tab_data ) {
                 $is_current = ( bool ) ( $tab_data[ 'slug' ] == $this->get_current_tab () );
                 $tab_class = $is_current ? $active_class : $idle_class;
+		if(isset($tab_data['class']) && is_array($tab_data['class'])) {
+		    $tab_class .= " ".implode(" ", $tab_data['class']);
+		}
                 $tabs_html .= '<a href="' . $tab_data[ 'href' ] . '" class="' . $tab_class . '">' . $tab_data[ 'name' ] . '</a>';
             }
 
