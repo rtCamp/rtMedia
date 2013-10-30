@@ -670,3 +670,8 @@ abbr {
 .bp-media-admin .premium-page-container {
 	margin-bottom: 20px;
 }
+
+.bp-media-admin .premium-page-container .rtm-premium-icon-pro {
+	margin-top: 9px;
+	width: 40px;
+}
