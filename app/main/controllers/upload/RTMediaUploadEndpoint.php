@@ -25,13 +25,15 @@ class RTMediaUploadEndpoint {
             include get_404_template ();
         } else {
             $nonce = $_REQUEST[ 'rtmedia_upload_nonce' ];
-            $mode = $_REQUEST[ 'mode' ];
+	    if(isset($_REQUEST[ 'mode' ])) {
+		$mode = $_REQUEST[ 'mode' ];
+	    }
             $rtupload = false;
             $activity_id = -1;
             if ( wp_verify_nonce ( $nonce, 'rtmedia_upload_nonce' ) ) {
                 $model = new RTMediaUploadModel();
                 $this->upload = $model->set_post_object ();
-                if ( isset ( $_POST[ 'activity_id' ] ) && $_POST[ 'activity_id' ] != -1 ) {
+		if ( isset ( $_POST[ 'activity_id' ] ) && $_POST[ 'activity_id' ] != -1 ) {
                     $this->upload[ 'activity_id' ] = $_POST[ 'activity_id' ];
                     $activity_id = $_POST[ 'activity_id' ];
                 }
@@ -40,41 +42,47 @@ class RTMediaUploadEndpoint {
                 $media = $mediaObj->model->get ( array( 'id' => $rtupload->media_ids[ 0 ] ) );
                 $rtMediaNav = new RTMediaNav();
                 $perma_link = "";
-		$perma_link = get_rtmedia_permalink($rtupload->media_ids[ 0 ]);
-		if($media[0]->media_type == "photo") {
-		    $thumb_image = rtmedia_image("rt_media_thumbnail", $rtupload->media_ids[ 0 ], false);
-		} elseif( $media[0]->media_type == "music" ) {
-		    $thumb_image = $media[0]->cover_art;
-		} else {
-		    $thumb_image = "";
-		}
-		
-                if ( $media[ 0 ]->context == "group" ) {
-                    $rtMediaNav->refresh_counts ( $media[ 0 ]->context_id, array( "context" => $media[ 0 ]->context, 'context_id' => $media[ 0 ]->context_id ) );
-                } else {
-                    $rtMediaNav->refresh_counts ( $media[ 0 ]->media_author, array( "context" => "profile", 'media_author' => $media[ 0 ]->media_author ) );
-                }
-                if ( $activity_id == -1 && ( ! (isset ( $_POST[ "rtmedia_update" ] ) && $_POST[ "rtmedia_update" ] == "true")) ) {
-                    $activity_id = $mediaObj->insert_activity ( $media[ 0 ]->media_id, $media[ 0 ] );
-                } else {
-                    $mediaObj->model->update ( array( 'activity_id' => $activity_id ), array( 'id' => $rtupload->media_ids[ 0 ] ) );
-                    //
-                    $same_medias = $mediaObj->model->get ( array( 'activity_id' => $activity_id ) );
+		if(isset($media) && sizeof($media) > 0) {
+		    $perma_link = get_rtmedia_permalink($media[0]->id);
+		    if($media[0]->media_type == "photo") {
+			$thumb_image = rtmedia_image("rt_media_thumbnail", $rtupload->media_ids[ 0 ], false);
+		    } elseif( $media[0]->media_type == "music" ) {
+			$thumb_image = $media[0]->cover_art;
+		    } else {
+			$thumb_image = "";
+		    }
 
-                    $update_activity_media = Array( );
-                    foreach ( $same_medias as $a_media ) {
-                        $update_activity_media[ ] = $a_media->id;
-                    }
-                    $privacy = 0;
-                    if ( isset ( $_POST[ "privacy" ] ) ) {
-                        $privacy = $_POST[ "privacy" ];
-                    }
-                    $objActivity = new RTMediaActivity ( $update_activity_media, $privacy, false );
-                    global $wpdb, $bp;
-                    $wpdb->update ( $bp->activity->table_name, array( "type" => "rtmedia_update", "content" => $objActivity->create_activity_html () ), array( "id" => $activity_id ) );
-                }
+		    if ( $media[ 0 ]->context == "group" ) {
+			$rtMediaNav->refresh_counts ( $media[ 0 ]->context_id, array( "context" => $media[ 0 ]->context, 'context_id' => $media[ 0 ]->context_id ) );
+		    } else {
+			$rtMediaNav->refresh_counts ( $media[ 0 ]->media_author, array( "context" => "profile", 'media_author' => $media[ 0 ]->media_author ) );
+		    }
+		    if ( $activity_id == -1 && ( ! (isset ( $_POST[ "rtmedia_update" ] ) && $_POST[ "rtmedia_update" ] == "true")) ) {
+			$activity_id = $mediaObj->insert_activity ( $media[ 0 ]->media_id, $media[ 0 ] );
+		    } else {
+			$mediaObj->model->update ( array( 'activity_id' => $activity_id ), array( 'id' => $rtupload->media_ids[ 0 ] ) );
+			//
+			$same_medias = $mediaObj->model->get ( array( 'activity_id' => $activity_id ) );
+
+			$update_activity_media = Array( );
+			foreach ( $same_medias as $a_media ) {
+			    $update_activity_media[ ] = $a_media->id;
+			}
+			$privacy = 0;
+			if ( isset ( $_POST[ "privacy" ] ) ) {
+			    $privacy = $_POST[ "privacy" ];
+			}
+			$objActivity = new RTMediaActivity ( $update_activity_media, $privacy, false );
+			global $wpdb, $bp;
+			$wpdb->update ( $bp->activity->table_name, array( "type" => "rtmedia_update", "content" => $objActivity->create_activity_html () ), array( "id" => $activity_id ) );
+		    }
+
+		}
+		if(isset($this->upload['rtmedia_simple_file_upload']) && $this->upload['rtmedia_simple_file_upload'] == true ) {
+		    return $media;
+		}
             }
-                
+
                 $redirect_url = "";
                 if ( isset ( $_POST[ "redirect" ] ) && is_numeric ( $_POST[ "redirect" ] ) ) {
                         if ( intval ( $_POST[ "redirect" ] ) > 1 ) {

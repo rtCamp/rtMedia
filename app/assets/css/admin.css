@@ -656,3 +656,17 @@ abbr {
    text-align: center;
    width:100%;
 }
+
+.bp-media-admin .rtm-premium {	 
+		background-color: #DDD;	
+}
+
+.bp-media-admin .premium-title {	 
+		color: #444;	
+		border-bottom: 1px solid #DDD ;
+		padding-bottom: 10px;
+}
+
+.bp-media-admin .premium-page-container {
+	margin-bottom: 20px;
+}
