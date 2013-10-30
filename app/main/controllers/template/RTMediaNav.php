@@ -62,10 +62,11 @@ class RTMediaNav {
     function admin_nav () {
         global $wp_admin_bar;
 
-        if ( ! function_exists ( "bp_use_wp_admin_bar" ) )
+        if ( function_exists ( "bp_use_wp_admin_bar" ) && ! bp_use_wp_admin_bar () )
             return;
+        
         // Bail if this is an ajax request
-        if ( ! bp_use_wp_admin_bar () || defined ( 'DOING_AJAX' ) )
+        if ( defined ( 'DOING_AJAX' ) )
             return;
         // Only add menu for logged in user
         if ( is_user_logged_in () ) {

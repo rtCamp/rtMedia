@@ -175,8 +175,12 @@ jQuery('document').ready(function($) {
                     jQuery('#rtmedia_album_name').val("");
                     jQuery("#rtmedia-create-album-modal").append("<span class='rtmedia-success rtmedia-create-album-alert'><b>" + $albumname + "</b>" + rtmedia_album_created_msg + "</span>");
                     setTimeout(function() {
-                        jQuery(".rtmedia-create-album-alert").remove()
+                        jQuery(".rtmedia-create-album-alert").remove();
                     }, 4000);
+                    setTimeout(function() {
+                        galleryObj.reloadView();
+                        jQuery(".close-reveal-modal").click();
+                    }, 2000);
 
                 } else {
                     alert(rtmedia_something_wrong_msg);

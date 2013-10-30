@@ -184,13 +184,24 @@ function rt_theme_compat_reset_post( $args = array() ) {
 	global $wp_query, $post;
 
 	// Switch defaults if post is set
-	if ( isset( $wp_query->post ) ) {
+        global $rtmedia_query;
+	 if ( isset( $wp_query->post ) ) {
+             if(isset($rtmedia_query->query) && isset( $rtmedia_query->query["media_type"] ) && $rtmedia_query->query["media_type"] == "album" && isset( $rtmedia_query->media_query["album_id"])){
+                 foreach($rtmedia_query->album as $al){
+                     if($al->id == $rtmedia_query->media_query["album_id"]){
+                         $wp_query->post = get_post($al->media_id);
+                         break;
+                     }
+                 }
+             }else if( isset($rtmedia_query->media) && count($rtmedia_query->media) ==  1 ){
+                 $wp_query->post = get_post($rtmedia_query->media[0]->media_id);
+             }
 		$dummy = wp_parse_args( $args, array(
 			'ID'                    => $wp_query->post->ID,
 			'post_status'           => $wp_query->post->post_status,
 			'post_author'           => $wp_query->post->post_author,
 			'post_parent'           => $wp_query->post->post_parent,
-			'post_type'             => $wp_query->post->post_type,
+			'post_type'             => 'rtmedia', //$wp_query->post->post_type,
 			'post_date'             => $wp_query->post->post_date,
 			'post_date_gmt'         => $wp_query->post->post_date_gmt,
 			'post_modified'         => $wp_query->post->post_modified,
@@ -217,7 +228,7 @@ function rt_theme_compat_reset_post( $args = array() ) {
 			'is_archive'            => false,
 			'is_tax'                => false,
 		) );
-	} else {
+	} else { 
 		$dummy = wp_parse_args( $args, array(
 			'ID'                    => 0,
 			'post_status'           => 'public',
@@ -259,6 +270,18 @@ function rt_theme_compat_reset_post( $args = array() ) {
                 $dummy['post_type'] = "bp_member";
                 if("bp-default" != get_option( 'stylesheet' ))
                     $dummy['post_title'] =  '<a href="' . bp_get_displayed_user_link() . '">' . bp_get_displayed_user_fullname() . '</a>';
+            }
+        }else{
+            global $rtmedia_query;
+            $dummy['comment_status'] = 'closed';
+            if(isset($rtmedia_query->media_query)){
+                if(isset($rtmedia_query->media_query["media_author"])){
+                    $dummy["post_author"] =$rtmedia_query->media_query["media_author"];
+                }
+                if(isset($rtmedia_query->media_query["id"])){
+                    //var_dump($rtmedia_query);
+                    //echo $rtmedia_query->media_query["id"];
+                }
             }
         }
             
