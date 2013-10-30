@@ -75,7 +75,7 @@ class RTMediaMigration {
     }
 
     function menu () {
-        add_submenu_page ( 'rtmedia-settings', __ ( 'Migration', 'buddypress-media' ), __ ( 'Migration', 'buddypress-media' ), 'manage_options', 'rtmedia-migration', array( $this, 'test' ) );
+        add_submenu_page ( 'rtmedia-setting', __ ( 'Migration', 'buddypress-media' ), __ ( 'Migration', 'buddypress-media' ), 'manage_options', 'rtmedia-migration', array( $this, 'test' ) );
     }
 
     function get_total_count () {

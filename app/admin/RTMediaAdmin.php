@@ -277,8 +277,7 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
                 'rtmedia_page_rtmedia-premium'
             );
             $admin_pages = apply_filters ( 'rtmedia_filter_admin_pages_array', $admin_pages );
-
-	    if ( in_array ( $hook, $admin_pages ) ) {
+	    if ( in_array ( $hook, $admin_pages ) || strpos( $hook, 'rtmedia-migration') ) {
                 $admin_ajax = admin_url ( 'admin-ajax.php' );
 
                 wp_enqueue_script ( 'bootstrap-switch', RTMEDIA_URL . 'app/assets/js/bootstrap-switch.js', array( 'jquery' ), RTMEDIA_VERSION );
@@ -615,7 +614,11 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
                                 <?php
                                 if ( $page == 'rtmedia-addons' )
                                     RTMediaAddon::render_addons ( $page );
-                                else
+                                else if ( $page == 'rtmedia-support' ) {
+				    $rtmedia_support = new RTMediaSupport(false);
+				    $rtmedia_support->render_support($page);
+				}
+				else
                                     do_settings_sections ( $page );
                                 ?>
                                 <?php

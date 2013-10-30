@@ -98,8 +98,8 @@ if (!class_exists('RTMediaSettings')) {
             }
             $rtmedia_addon = new RTMediaAddon();
             add_settings_section('rtm-addons', __('BuddyPress Media Addons for Photos', 'rtmedia'), array($rtmedia_addon, 'get_addons'), 'rtmedia-addons');
-
-            add_settings_section('rtm-support', __('Support', 'rtmedia'), array($this, 'rtmedia_support_intro'), 'rtmedia-support');
+	    $rtmedia_support = new RTMediaSupport(false);
+            add_settings_section('rtm-support', __('Support', 'rtmedia'), array($rtmedia_support, 'get_support_content'), 'rtmedia-support');
 
 //            if (!BPMediaPrivacy::is_installed()) {
 //                $rtmedia_privacy = new BPMediaPrivacySettings();
