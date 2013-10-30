@@ -1432,87 +1432,94 @@ function rtmedia_admin_premium_page($page) {
     ?>
 	<div class="premium-page-container">
 	    <div class="row">
-	    <h1 class="premium-title">16 Reasons to buy rtMedia-PRO</h1>
+	    <h1 class="premium-title">17 Reasons to buy rtMedia-PRO</h1>
 	    </div>
 	    <div class="row">
-		<div class="columns large-1"><i class="icon-file icon-3x"></i></div>
+		<div class="columns large-1 rtm-premium-icon-pro"><i class="icon-user icon-3x"></i></div>
+		<div class="columns large-10">
+		    <h2>bbPress Attachment</h2>
+		    <p>You can attach files to bbPress topic and reply.</p>
+		</div>
+	    </div>
+	    <div class="row">
+		<div class="columns large-1 rtm-premium-icon-pro"><i class="icon-file icon-3x"></i></div>
 		<div class="columns large-10">
 		    <h2>Document Support</h2>
 		    <p>You can add, view and download documents like txt, doc, pdf, also add and upload other file types like zip, tar and tar.gz etc.</p>
 		</div>
 	    </div>
 	    <div class="row">
-		<div class="columns large-1"><i class="icon-gamepad icon-3x"></i></div>
+		<div class="columns large-1 rtm-premium-icon-pro"><i class="icon-gamepad icon-3x"></i></div>
 		<div class="columns large-10">
 		    <h2>CubePoints & MyCRED Integration</h2>
 		    <p>Integrating CubePoints/myCRED with rtMedia, you can reward users with virtual points on rtMedia activities.</p>
 		</div>
 	    </div>
 	    <div class="row">
-		<div class="columns large-1"><i class="icon-lock icon-3x"></i></div>
+		<div class="columns large-1 rtm-premium-icon-pro"><i class="icon-lock icon-3x"></i></div>
 		<div class="columns large-10">
 		    <h2>Album Privacy</h2>
 		    <p>This will allow you to set album privacy while creating albums or change album privacy with editing albums too.</p>
 		</div>
 	    </div>
 	    <div class="row">
-		<div class="columns large-1"><i class="icon-play icon-3x"></i></div>
+		<div class="columns large-1 rtm-premium-icon-pro"><i class="icon-play icon-3x"></i></div>
 		<div class="columns large-10">
 		    <h2>Audio Playlist</h2>
 		    <p>With this feature you can create your audio playlists and listen to your favorite music at will.</p>
 		</div>
 	    </div>
 	    <div class="row">
-		<div class="columns large-1"><i class="icon-warning-sign icon-3x"></i></div>
+		<div class="columns large-1 rtm-premium-icon-pro"><i class="icon-warning-sign icon-3x"></i></div>
 		<div class="columns large-10">
 		    <h2>Report Button & Moderation Tools</h2>
 		    <p>Users can report media if they find it offensive. Set number of reports to automatically take down media.</p>
 		</div>
 	    </div>
 	    <div class="row">
-		<div class="columns large-1"><i class="icon-download-alt icon-3x"></i></div>
+		<div class="columns large-1 rtm-premium-icon-pro"><i class="icon-download-alt icon-3x"></i></div>
 		<div class="columns large-10">
 		    <h2>Download Button For Media</h2>
 		    <p>Users can download photos, videos and music. Admin has option to allow download the media.</p>
 		</div>
 	    </div>
 	    <div class="row">
-		<div class="columns large-1"><i class="icon-align-right icon-3x"></i></div>
+		<div class="columns large-1 rtm-premium-icon-pro"><i class="icon-align-right icon-3x"></i></div>
 		<div class="columns large-10">
 		    <h2>Sidebar widgets</h2>
 		    <p>These will let you display a gallery or an uploader in a sidebar. Several of them can be used in a single sidebar.</p>
 		</div>
 	    </div>
 	    <div class="row">
-		<div class="columns large-1"><i class="icon-edit icon-3x"></i></div>
+		<div class="columns large-1 rtm-premium-icon-pro"><i class="icon-edit icon-3x"></i></div>
 		<div class="columns large-10">
 		    <h2>Post-editor button</h2>
 		    <p>With this button, a UI appears to quickly generate shortcodes for special pages like ‘Editorial Picks’.</p>
 		</div>
 	    </div>
 	    <div class="row">
-		<div class="columns large-1"><i class="icon-star icon-3x"></i></div>
+		<div class="columns large-1 rtm-premium-icon-pro"><i class="icon-star icon-3x"></i></div>
 		<div class="columns large-10">
 		    <h2>Star-Rating option</h2>
 		    <p>Users can give up to five stars to rate media. This data can be used for ‘Most Rated Media’ in sidebars.</p>
 		</div>
 	    </div>
 	    <div class="row">
-		<div class="columns large-1"><i class="icon-picture icon-3x"></i></div>
+		<div class="columns large-1 rtm-premium-icon-pro"><i class="icon-picture icon-3x"></i></div>
 		<div class="columns large-10">
 		    <h2>Global Albums</h2>
 		    <p>Multiple global albums can be created beforehand. One of these can be chosen as the default album.</p>
 		</div>
 	    </div>
 	    <div class="row">
-		<div class="columns large-1"><i class="icon-wrench icon-3x"></i></div>
+		<div class="columns large-1 rtm-premium-icon-pro"><i class="icon-wrench icon-3x"></i></div>
 		<div class="columns large-10">
 		    <h2>Premium one-to-one support</h2>
 		    <p>Without leaving your WordPress dashboard, you can contact us for help using a support form.</p>
 		</div>
 	    </div>
 	    <div class="row">
-		<div class="columns large-1"><i class="icon-code icon-3x"></i></div>
+		<div class="columns large-1 rtm-premium-icon-pro"><i class="icon-code icon-3x"></i></div>
 		<div class="columns large-10">
 		    <h2>Premium & Open-Source</h2>
 		    <p>Developers get full control over rtMedia-PRO’s source. They’ll get access to <a href="http://git.rtcamp.com/" target="_blank">git.rtcamp.com</a> to dive into the code.</p>
