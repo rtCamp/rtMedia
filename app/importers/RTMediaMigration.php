@@ -75,7 +75,7 @@ class RTMediaMigration {
     }
 
     function menu () {
-        add_submenu_page ( 'rtmedia-settings', __ ( 'Migration', 'buddypress-media' ), __ ( 'Migration', 'buddypress-media' ), 'manage_options', 'rtmedia-migration', array( $this, 'test' ) );
+        add_submenu_page ( 'rtmedia-setting', __ ( 'Migration', 'buddypress-media' ), __ ( 'Migration', 'buddypress-media' ), 'manage_options', 'rtmedia-migration', array( $this, 'test' ) );
     }
 
     function get_total_count () {
@@ -387,6 +387,12 @@ class RTMediaMigration {
             ?>
             <script type="text/javascript">
                 jQuery(document).ready(function(e) {
+		    jQuery("#toplevel_page_rtmedia-settings").addClass("wp-has-current-submenu")
+		    jQuery("#toplevel_page_rtmedia-settings").removeClass("wp-not-current-submenu")
+		    jQuery("#toplevel_page_rtmedia-settings").addClass("wp-menu-open")
+		    jQuery("#toplevel_page_rtmedia-settings>a").addClass("wp-menu-open")
+		    jQuery("#toplevel_page_rtmedia-settings>a").addClass("wp-has-current-submenu")
+
                     if (db_total < 1)
                         jQuery("#submit").attr('disabled', "disabled");
                 })

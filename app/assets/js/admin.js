@@ -496,6 +496,12 @@ jQuery(document).ready(function($) {
         defaultTab: manageHash()
     });
 
+    jQuery("#rtm-support").sliderTabs({
+        autoplay: false,
+        mousewheel: false,
+        defaultTab: manageHash()
+    });
+
     if (jQuery('#rtmedia-privacy-enable').is(":checked")) {
         jQuery(".privacy-driven-disable label input").prop("disabled", false);
         jQuery(".privacy-driven-disable label .rt-switch").bootstrapSwitch("setActive", true);
