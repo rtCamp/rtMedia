@@ -19,7 +19,7 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
         public function __construct () {
             global $rtmedia;
             add_action ( 'init', array( $this, 'video_transcoding_survey_response' ) );
-            add_action ( 'init', array( $this, 'presstrends_plugin' ) );
+            add_action ( 'admin_init', array( $this, 'presstrends_plugin' ) );
             if ( is_multisite () ) {
                 add_action ( 'network_admin_notices', array( $this, 'upload_filetypes_error' ) );
                 add_action ( 'admin_notices', array( $this, 'upload_filetypes_error' ) );
