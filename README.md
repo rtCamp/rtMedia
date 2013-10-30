@@ -78,11 +78,11 @@ rtMedia has 3 premium solutions to take care of audio/video conversion.
 
 #### Important Links ####
 
-* [Project Homepage](http://rtcamp.com/rtmedia/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "Visit rtMedia's Roadmap page")
+* [Project Homepage](http://rtcamp.com/rtmedia/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "Visit rtMedia's Project Homepage")
 * [Roadmap](http://rtcamp.com/rtmedia/roadmap/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "Visit rtMedia's Roadmap page")
-* [Documentation](http://rtcamp.com/rtmedia/roadmap/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "Visit rtMedia's Roadmap page")
-* [FAQ](http://rtcamp.com/rtmedia/roadmap/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "Visit rtMedia's Roadmap page")
-* [Support](http://rtcamp.com/rtmedia/roadmap/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "Visit rtMedia's Roadmap page")
+* [Documentation](http://rtcamp.com/rtmedia/docs/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "Visit rtMedia's Documentation page")
+* [FAQ](http://rtcamp.com/rtmedia/faq/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "Visit rtMedia's FAQ page")
+* [Support](http://rtcamp.com/rtmedia/support/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "Visit rtMedia's support page")
 * [GitHub](http://github.com/rtCamp/rtMedia/) - Please mention your wordpress.org username when sending pull requests.
 * [Translations](http://rtcamp.com/translate/projects/rtmedia?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media) - Please do NOT use Github for translations. Instead Use [this GlotPress project](http://rtcamp.com/translate/projects/rtmedia?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media)
 
@@ -119,6 +119,9 @@ Please visit [rtMedia's Features page](http://rtcamp.com/rtmedia/?utm_source####
 
 Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "Visit rtMedia's Features page") to get some details about future releases.
 
+#### 3.2.5 ####
+* Bug fixes
+
 #### 3.2.4 ####
 * Updated polish,solvak and spanish transalation.
 * Fixed multiple gallery on same page,comment sync for single media in activity, comments visibilty when not-logged in.
@@ -126,7 +129,7 @@ Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_sou
 
 #### 3.2.3 ####
 * Bug fixed for group avatar upload while creating a group in buddypress
-* Fixed multisite 
+* Fixed multisite
 
 #### 3.2.2 ####
 * Fixed header already sent issue
@@ -576,7 +579,7 @@ Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_sou
 * HTML5 Audio Tag Support (with fallback)
 * HTML5 Video Tag Support (with fallback)
 
-#### 3.2.4 ####
+#### 3.2.5 ####
 Requires BuddyPress 1.7 or higher, if using BuddyPress. Updated translation files and bug fixes.
 
 ## Sponsors ##
