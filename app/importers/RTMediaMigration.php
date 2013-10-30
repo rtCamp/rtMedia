@@ -387,6 +387,12 @@ class RTMediaMigration {
             ?>
             <script type="text/javascript">
                 jQuery(document).ready(function(e) {
+		    jQuery("#toplevel_page_rtmedia-settings").addClass("wp-has-current-submenu")
+		    jQuery("#toplevel_page_rtmedia-settings").removeClass("wp-not-current-submenu")
+		    jQuery("#toplevel_page_rtmedia-settings").addClass("wp-menu-open")
+		    jQuery("#toplevel_page_rtmedia-settings>a").addClass("wp-menu-open")
+		    jQuery("#toplevel_page_rtmedia-settings>a").addClass("wp-has-current-submenu")
+
                     if (db_total < 1)
                         jQuery("#submit").attr('disabled', "disabled");
                 })
