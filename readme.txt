@@ -14,17 +14,17 @@ Add albums, photo, audio/video encoding, privacy, sharing, front-end uploads & m
 
 > **Important Update**
 >
-> If you are looking for more features, 1-on-1 support, please consider [rtMedia-PRO](https://rtcamp.com/store/rtmedia-pro/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media).
+> If you are looking for more features and 1-on-1 support, please consider [rtMedia-PRO](https://rtcamp.com/store/rtmedia-pro/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media).
 >
 > [rtMedia-PRO](https://rtcamp.com/store/rtmedia-pro/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media) is premiun & open-source (and of-course GPL too).
 
-rtMedia is **only** complete media solution for WordPress, BuddyPress and bbPress.
+rtMedia is the **only** complete media solution for WordPress, BuddyPress and bbPress.
 
 Built with a mobile-first approach, it works on mobile/tablet devices (like iPhone/iPad, Android).
 
 = Live Demos =
 
-In case you are in hurry, you can skip the long list of features in subsequent sections and just explore live demos!
+If you're in a hurry, you can skip the long list of features in subsequent sections and just explore live demos!
 
 * [rtMedia Demo](http://demo.rtcamp.com/rtmedia/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media)
 * [rtMedia with Kaltura Add-on](http://demo.rtcamp.com/rtmedia-kaltura/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media) (Uses Kaltura.com account for video conversion)
@@ -35,13 +35,12 @@ In case you are in hurry, you can skip the long list of features in subsequent s
 
  * **[Free Audio/Video conversion](http://rtcamp.com/rtmedia/addons/audio-video-encoding-service/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "rtMedia FFMPEG Addon")** - rtCamp (company behind rtMedia) has setup dedicated serves to provide free audio/video encoding services for all sites running rtMedia.
  * **WordPress Integration** - Display media on WordPress author pages (eg: http://demo.rtcamp.com/rtmedia/author/admin/media/)
- * **BuddyPress Integration** - Adds media tab under to BuddyPress Profiles & Groups.
- * **BuddyPress Activity Stream** - Attach media to activity status updates like you do it on Facebook.
- * **bbPress Integration** - Integrates with profiles. Attachment support for topics and replies is coming soon.
- * **Albums** - To organise media into manageable collection. BuddyPress-Group albums supports collaboration.
- * **Global albums** - can be used to define preset albums. "Wall Posts" is an example of global album.
- * **Responsive** - Album Slideshow (Lightbox), video-player, uploads works on mobiles & tablets. Support for swipe-guesture.
- * **Privacy** - control who can see media files, albums and buddypress-activities.
+ * **BuddyPress Integration** - Find a new media tab under BuddyPress Profiles & Groups.
+ * **BuddyPress Activity Stream** - Attach media to activity status updates just like Facebook.
+ * **Albums** - Organise media into manageable collections. BuddyPress Group albums support collaboration.
+ * **Global albums** - Can be used to define preset albums. "Wall Posts" is an example of a global album.
+ * **Responsive** - Album Slideshow (Lightbox), video player, uploads work on mobiles & tablets. Support for swipe guestures.
+ * **Privacy** - Control who can see media files, albums and BuddyPress activities.
  * **Templating system** - Completely customise rtMedia by modifying the template files. Just copy over the template folder to your theme.
  * **[Featured Media](http://rtcamp.com/rtmedia/docs/admin/featured-media/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "Featured Media documentation")** - This can be used for facebook-style cover photo on profiles.
  * **[rtMedia Uploader](http://rtcamp.com/rtmedia/docs/common/shortcodes/uploader-shortcode/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media)** - Use `[rtmedia_uploader]` shortcode or `<?php rtmedia_uploader() ?>` template tag, to show drag-n-drop uploader in any WordPress area (post, page, custom-post, etc).
@@ -49,12 +48,13 @@ In case you are in hurry, you can skip the long list of features in subsequent s
 
 = rtMedia-PRO Features =
 
- * **Sidebar Widgets** - Add sidebar widgets for recent, most popular media gallery and quick-upload.
- * **Post-editor Button** - Add tinymce button to make it easy to insert gallery and uploader on any wordpress page.
- * **Star-Rating Option** - Classic 5-star rating option. You can choose between facebook-style "like" or "star-rating".
+ * **Sidebar Widgets** - Add sidebar widgets for recent, most popular media gallery and quick upload.
+ * **Post-editor Button** - Includes tinymce button to insert gallery and uploader on any WordPress page.
+ * **Star-Rating Option** - Classic 5-star rating option. You can choose between Facebook-style "like" or "star-rating".
  * **Global Albums** - Create list of predefined albums. Optionally disable new album-creation by user.
+ * **bbPress Integration** - Integrates with profiles. Also adds attachment support for topics and replies.
  * **Premium 1-on-1 support** - From backend of your WordPress, you can send raise direct support requests, feature requests, report bugs.
- * **Automatic Updates** - rtMedia-PRO will see more than one weekly release on average. So automatic-updates is must and its already there.
+ * **Automatic Updates** - rtMedia-PRO will see releases at regular intervals. So automatic updates is a must and it's already there.
 
 = Audio/Video Conversion =
 
@@ -73,7 +73,7 @@ rtMedia has 3 premium solutions to take care of audio/video conversion.
 = *Coming Soon* - Premium Addons on the way =
 
 * **Watermark Addon** - Adds advanced, customised watermark text to photos. Supports Google Fonts. *(Development completed. Under testing)*
-* **Membership Addon** - Users can be given controlled upload quotas and media type access on their profiles and groups. *(planning stage)*
+* **Membership Addon** - Users can be given controlled upload quotas and media type access on their profiles and groups. *(Planning stage)*
 
 
 = Important Links =
@@ -104,7 +104,7 @@ Please visit [rtMedia's Features page](http://rtcamp.com/rtmedia/?utm_source=rea
 
 1. Media Settings
 2. Privacy Settings
-3. Builtin Support
+3. Built-in Support
 4. Media View
 5. Album View
 6. Uploader
@@ -120,8 +120,8 @@ Please visit [rtMedia's Features page](http://rtcamp.com/rtmedia/?utm_source=rea
 Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "Visit rtMedia's Features page") to get some details about future releases.
 
 = 3.2.6 =
-* Updated dutch transalation.
-* Fix WordPress template issue.
+* Updated dutch translation.
+* Fixed WordPress template issue.
 
 
 = 3.2.5 =
@@ -151,12 +151,12 @@ Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_sou
 * Translatable message and button in activity stream and single media view thanks to [jonasnick](https://github.com/jonasnick)
 * Limits items posted in activity feed thanks to [jarretc](https://github.com/jarretc)
 * bug fixed for album deletion
-* Fix count issue on update
+* Fixed count issue on update
 
 = 3.1.6 =
 * Removed download button enable/disable settings
 * Bug fixed for translation
-* added support for Playlists and its required filters
+* Added support for Playlists and its required filters
 
 = 3.1.5 =
 * Ignore privacy if admin user.
