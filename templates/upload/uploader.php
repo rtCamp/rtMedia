@@ -1,23 +1,47 @@
 <?php if ( is_array ( $tabs ) && count ( $tabs ) ) { ?>
     <div class="rtmedia-container">
     <?php
-    
+
 	if( isset($attr['rtmedia_simple_file_upload']) && $attr['rtmedia_simple_file_upload'] == true) {
-	    echo '<div class="rtm-file-input-container"> <input type="file" name="rtmedia_file_multiple[]" multiple="true" class="rtm-simple-file-input" id="rtmedia_simple_file_input" />';
+	    if(isset($attr['rtmedia_upload_without_form']) && $attr['rtmedia_upload_without_form'] == true) {
+		echo '<div class="rtmedia-simple-file-upload">';
+	    } else {
+		echo '<form id="rtmedia-uploader-form" method="post" action="upload" enctype="multipart/form-data">';
+		echo '<div class="rtmedia-simple-file-upload">';
+	    }
 	    RTMediaUploadView::upload_nonce_generator ( true );
 	    if ( ! empty ( $attr ) ) {
                     foreach ( $attr as $key => $value ) {
                         if ( $key == 'context' )
                             echo '<input type="hidden" name="context" value="' . $value . '" />';
-                        if ( $key == 'context_id' )
+                        else if ( $key == 'context_id' )
                             echo '<input type="hidden" name="context_id" value="' . $value . '" />';
-                        if ( $key == 'privacy' )
+                        else if ( $key == 'privacy' )
                             echo '<input type="hidden" name="privacy" value="' . $value . '" />';
-                        if ( $key == 'album_id' )
+                        else if ( $key == 'album_id' )
                             echo '<input type="hidden" name="album_id" value="' . $value . '" />';
+			else if ( $key == 'title' )
+			    echo '<p class="rtmedia-file-upload-p rtmedia-file-upload-title"><input type="text" name="title" /></p>';
+			else if ( $key == 'description' )
+			    echo '<p class="rtmedia-file-upload-p rtmedia-file-upload-desc"><textarea name="description"></textarea></p>';
+			else
+			    echo "<input type='hidden' id='rt_upload_hf_".sanitize_key ( $key )."' value='".$value."' name ='".$key."' />";
                     }
                 }
-	    echo "</div>";
+		if(isset($attr['rtmedia_upload_allow_multiple']) && $attr['rtmedia_upload_allow_multiple'] == true) {
+		    echo '<div class="rtm-file-input-container"> <p class="rtmedia-file-upload-p"> <input type="file" name="rtmedia_file_multiple[]" multiple="true" class="rtm-simple-file-input" id="rtmedia_simple_file_input" /> </p> </div>';
+		} else {
+		    echo '<div class="rtm-file-input-container"> <p class="rtmedia-file-upload-p"> <input type="file" name="rtmedia_file" class="rtm-simple-file-input" id="rtmedia_simple_file_input" /> </p> </div>';
+		}
+		do_action("rtmedia_add_upload_content");
+
+	    if(isset($attr['rtmedia_upload_without_form']) && $attr['rtmedia_upload_without_form'] == true) {
+		echo '</div>';
+	    } else {
+		echo '<p> <input type="submit" name="rtmedia_simple_file_upload_submit" /> </p> ';
+		echo '</div>';
+		echo '</form>';
+	    }
 	} else {
     ?>
 	<div class="rtmedia-uploader no-js">

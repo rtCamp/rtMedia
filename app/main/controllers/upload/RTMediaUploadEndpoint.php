@@ -79,6 +79,21 @@ class RTMediaUploadEndpoint {
 
 		}
 		if(isset($this->upload['rtmedia_simple_file_upload']) && $this->upload['rtmedia_simple_file_upload'] == true ) {
+		    $redirect_url = "";
+		    if ( isset ( $_POST[ "redirect" ] ) ) {
+                        if ( intval ( $_POST[ "redirect" ] ) > 1 ) {
+                            //bulkurl
+                            if ( $media[ 0 ]->context == "group" ) {
+                                $redirect_url =  trailingslashit ( get_rtmedia_group_link ( $media[ 0 ]->context_id ) ) . RTMEDIA_MEDIA_SLUG;
+                            } else {
+                                $redirect_url =  trailingslashit ( get_rtmedia_user_link ( $media[ 0 ]->media_author ) ) . RTMEDIA_MEDIA_SLUG;
+                            }
+                        } else {
+                            $redirect_url = get_rtmedia_permalink ( $media[ 0 ]->id );
+                        }
+			$redirect_url = apply_filters("rtmedia_simple_file_upload_redirect_url_filter",$redirect_url);
+			wp_safe_redirect($redirect_url);
+		    }
 		    return $media;
 		}
             }
@@ -97,8 +112,14 @@ class RTMediaUploadEndpoint {
                         }
                 }
 
+
                           // Ha ha ha
                     ob_end_clean ();
+		    //check for simpe
+		    /**
+		     * if(redirect)
+		     *
+		     */
                     if ( isset ( $_POST[ "rtmedia_update" ] ) && $_POST[ "rtmedia_update" ] == "true" ) {
                         if(preg_match('/(?i)msie [1-9]/',$_SERVER['HTTP_USER_AGENT'])) { // if IE(<=9) set content type = text/plain
                            header ( 'Content-type: text/plain' );

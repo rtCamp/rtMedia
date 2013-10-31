@@ -95,7 +95,7 @@ class RTMediaRouter {
         // if it is not our route, return early
         if ( ! $this->is_template () )
             return;
-         
+
         status_header ( 200 );
         //set up the query variables
         $this->set_query_vars ();
@@ -121,7 +121,7 @@ class RTMediaRouter {
         // otherwise, apply a filter to the template,
         // pass the template  and slug to the function hooking here
         // so it can load a custom template
-        
+
         $template_load = new RTMediaTemplate();
         global $new_rt_template;
         $new_rt_template = $template_load->set_template ( $template );
@@ -143,9 +143,9 @@ class RTMediaRouter {
         	bp_set_theme_compat_active( apply_filters( 'rtmedia_main_template_set_theme_compat', true ) );
         add_filter( 'the_content', array(&$this,'rt_replace_the_content') );
         $this ->rt_theme_compat_reset_post();
-        
+
         return apply_filters( 'rtmedia_main_template_include', $template, $new_rt_template );
-        
+
     }
 
     /**
@@ -163,7 +163,7 @@ class RTMediaRouter {
         load_template($new_rt_template);
         return '';
 	$new_content = apply_filters( 'bp_replace_the_content', $content );
-        
+
 	// Juggle the content around and try to prevent unsightly comments
         if ( !empty( $new_content ) && ( $new_content !== $content ) ) {
 
@@ -193,8 +193,8 @@ function rt_theme_compat_reset_post( $args = array() ) {
                          break;
                      }
                  }
-             }else if( isset($rtmedia_query->media) && count($rtmedia_query->media) ==  1 ){
-                 $wp_query->post = get_post($rtmedia_query->media[0]->media_id);
+             }else if( isset($rtmedia_query->media) && count($rtmedia_query->media) ==  1 && $rtmedia_query->media ){
+		 $wp_query->post = get_post($rtmedia_query->media[0]->media_id);
              }
 		$dummy = wp_parse_args( $args, array(
 			'ID'                    => $wp_query->post->ID,
@@ -228,7 +228,7 @@ function rt_theme_compat_reset_post( $args = array() ) {
 			'is_archive'            => false,
 			'is_tax'                => false,
 		) );
-	} else { 
+	} else {
 		$dummy = wp_parse_args( $args, array(
 			'ID'                    => 0,
 			'post_status'           => 'public',
@@ -284,8 +284,8 @@ function rt_theme_compat_reset_post( $args = array() ) {
                 }
             }
         }
-            
-        
+
+
 	// Bail if dummy post is empty
 	if ( empty( $dummy ) ) {
 		return;
@@ -318,7 +318,7 @@ function rt_theme_compat_reset_post( $args = array() ) {
 		status_header( 200 );
 	}
 
-	
+
 }
 
 
