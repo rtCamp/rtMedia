@@ -394,11 +394,15 @@ jQuery(function($) {
             uploaderObj.uploadFiles(e);
         });
         $("#rtMedia-start-upload").hide();
-        
+
         jQuery(document).on('click', '#rtm_show_upload_ui', function(){
             jQuery('#rtm-media-gallery-uploader').slideToggle();
             uploaderObj.uploader.refresh();//refresh the uploader for opera/IE fix on media page
         });
+    } else {
+	jQuery(document).on('click', '#rtm_show_upload_ui', function(){
+            jQuery('#rtm-media-gallery-uploader').slideToggle();
+	});
     }
 
 
