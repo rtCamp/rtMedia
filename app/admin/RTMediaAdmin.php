@@ -1152,8 +1152,8 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
         
         function presstrends_plugin() {
             // PressTrends Account API Key
-            $api_key = 'o3w063qppl7ha022jyc3bjpi7usrmczho';
-            $auth    = '';
+            $api_key = 'djbzu1no2tdz4qq4u2fpgaemuup2zzmtjulb';
+            $auth    = 'o3w063qppl7ha022jyc3bjpi7usrmczho';
             // Start of Metrics
             global $wpdb;
             $data = get_transient( 'presstrends_cache_data' );

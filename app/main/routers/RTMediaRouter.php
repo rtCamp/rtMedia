@@ -136,7 +136,7 @@ class RTMediaRouter {
                         strtolower( $_SERVER[ 'HTTP_X_REQUESTED_WITH' ] ) == 'xmlhttprequest'
          ){
                 $rt_ajax_request = true;
-         }
+        }
          if($rt_ajax_request)
              return $new_rt_template;
         if(  function_exists ('bp_set_theme_compat_active'))
