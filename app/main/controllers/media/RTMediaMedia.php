@@ -499,7 +499,7 @@ class RTMediaMedia {
                         '%s added a %s', '%s added %d %s.', $count, 'rtmedia'
                 ), $username, $media->media_type, $media_str
         );
-
+	$action = apply_filters('rtmedia_buddypress_action_text_fitler',$action,$username,$count,$user->user_nicename,$media->media_type);
         $activity_args = array(
             'action' => $action,
             'content' => $activity_content,

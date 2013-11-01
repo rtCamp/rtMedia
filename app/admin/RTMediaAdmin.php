@@ -102,12 +102,14 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
                             $results = $wpdb->get_results ( $sql );
                             if ( $results ) {
                                 foreach ( $results as $media ) {
+				    if( defined( strtoupper( 'RTMEDIA_'.$media->media_type.'_PLURAL_LABEL' ) ) ) {
                                     ?>
                                     <tr>
                                         <td class = "b"> <?php echo $media->count; ?> </td>
                                         <td class = "t"><?php echo constant(strtoupper('RTMEDIA_'.$media->media_type.'_PLURAL_LABEL') ); ?></td>
                                     </tr>
                                     <?php
+				    }
                                 }
                             }
                             ?>
@@ -1149,7 +1151,7 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
 	    </script>
 	<?php
 	}
-        
+
         function presstrends_plugin() {
             // PressTrends Account API Key
             $api_key = 'djbzu1no2tdz4qq4u2fpgaemuup2zzmtjulb';
