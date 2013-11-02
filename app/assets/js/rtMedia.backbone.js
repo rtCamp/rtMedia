@@ -637,6 +637,7 @@ jQuery(document).ready(function($) {
                 $("#rtmedia_comment_ul").append(data);
                 $("#comment_content").val("");
                 $("#rt_media_comment_form #rt_media_comment_submit").removeAttr('disabled');
+                rtMediaHook.call('rtmedia_js_after_comment_added', []);
             }
         });
 
@@ -668,9 +669,10 @@ jQuery(document).ready(function($) {
            success: function(res) {
             if(res !='undefined' && res == 1){
                 current_comment.closest('li').hide(1000, function(){ current_comment.closest('li').remove(); });
-            }else
+            }else{
                 current_comment.css('opacity', '1');
-
+            }
+            rtMediaHook.call('rtmedia_js_after_comment_deleted', []);
            }
        });
 
