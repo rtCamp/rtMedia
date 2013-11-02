@@ -541,7 +541,7 @@ function rtmedia_comments () {
     if( $comment_list != "") {
         $html .= $comment_list;
     } else {
-        $html .= "<li id='rtmedia-no-comments'>". __('There are no comments on this media yet.') . "</li>";
+        $html .= "<li id='rtmedia-no-comments'>". __(apply_filters('rtmedia_single_media_no_comment_messege','There are no comments on this media yet.')) . "</li>";
     }
 
     $html .= '</ul>';
