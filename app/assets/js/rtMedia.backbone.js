@@ -648,7 +648,9 @@ jQuery(document).ready(function($) {
     //Delete comment
     jQuery(document).on('click', '.rtmedia-delte-comment', function(e){
        e.preventDefault();
-       if(!confirm('Are you sure you want to delete this comment ?'))
+       var ask_confirmation = true
+       ask_confirmation = rtMediaHook.call('rtmedia_js_delete_comment_confirmation', [ask_confirmation]);
+       if(ask_confirmation && !confirm('Are you sure you want to delete this comment ?'))
            return false;
        var current_comment = jQuery(this);
        var current_comment_parent = current_comment.parent();
