@@ -93,6 +93,7 @@ class RTMediaUploadEndpoint {
                         }
 			$redirect_url = apply_filters("rtmedia_simple_file_upload_redirect_url_filter",$redirect_url);
 			wp_safe_redirect($redirect_url);
+                        die();
 		    }
 		    return $media;
 		}

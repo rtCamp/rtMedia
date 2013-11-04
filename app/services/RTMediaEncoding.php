@@ -192,6 +192,7 @@ class RTMediaEncoding {
             $usage_info = $this->update_usage($_GET['apikey']);
             $return_page = add_query_arg(array('page' => 'rtmedia-addons', 'api_key_updated' => $usage_info->plan->name), (is_multisite() ? network_admin_url('admin.php') : admin_url('admin.php')));
             wp_safe_redirect($return_page);
+            die();
         }
     }
 
