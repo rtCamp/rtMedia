@@ -108,7 +108,6 @@ spl_autoload_register ( 'rtmedia_autoloader' );
 global $rtmedia;
 $rtmedia = new RTMedia();
 
-add_action("bp_before_member_header","rt_custom_after_header");
 
 /*
  * Look Ma! Very few includes! Next File: /app/main/RTMedia.php
