@@ -1,3 +1,0 @@
-[submodule "app/helper/rtdbmodel"]
-	path = app/helper/rtdbmodel
-	url = git@git.rtcamp.com:rtlib/rtdbmodel.git

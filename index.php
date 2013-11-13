@@ -64,7 +64,7 @@ function rtmedia_autoloader ( $class_name ) {
     $rtlibpath = array(
         'app/services/' . $class_name . '.php',
         'app/helper/' . $class_name . '.php',
-        'app/helper/rtdbmodel/' . $class_name . '.php',
+        'app/helper/db/' . $class_name . '.php',
         'app/admin/' . $class_name . '.php',
         'app/main/interactions/' . $class_name . '.php',
         'app/main/routers/' . $class_name . '.php',
