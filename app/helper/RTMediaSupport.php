@@ -287,23 +287,26 @@ if (!class_exists('RTMediaSupport')) {
         }
 
 	public function migration_html($page = '') {
-	?>
-	    <div id="rtmedia-migration-html">
-		<div class="rtmedia-migration-support">
-		    <p><?php _e('Click');?> <a href="<?php echo get_admin_url(); ?>admin.php?page=rtmedia-migration"><?php _e('here'); ?></a> <?php _e('here to migrate media from rtMedia 2.x to rtMedia 3.0+.'); ?></p>
-		</div>
-	<?php
-	    if(class_exists("gdbbPressAttachments")) {
-	?>
-		<div class="rtmedia-gd-migration-support">
-		    <p><?php _e('Click');?> <a href="<?php echo get_admin_url(); ?>admin.php?page=rtmedia-migration-bbpress"><?php _e('here'); ?></a> <?php _e('here to migrate attachments from GD bbPress Attacemnt to rtMedia.'); ?></p>
-		</div>
-	<?php
+	    $pending_rtmedia_migrate = get_site_option ( "rtMigration-pending-count" );
+
+	    $content = " ";
+	    $flag = true;
+	    if( ( $pending_rtmedia_migrate === false || $pending_rtmedia_migrate == 0 ) ) {
+		$content.= __('There is no media found to migrate.','rtmedia');
+		$flag = false;
 	    }
-	?>
-	    </div>
-	<?php
-	}
+	    $content = apply_filters("rtmedia_migration_content_filter", $content);
+	    if( $flag ) {
+		$content.= ' <div class="rtmedia-migration-support">';
+		$content.=' <p>'.__('Click','rtmedia').' <a href="'.get_admin_url().'admin.php?page=rtmedia-migration">'. _e('here','rtmedia').'</a>'. __('here to migrate media from rtMedia 2.x to rtMedia 3.0+.','rtmedia').'</p>';
+		$content.='</div>';
+	    }
+?>
+	<div id="rtmedia-migration-html">
+	    <?php echo $content; ?>
+	</div>
+    <?php
+    }
 
         /**
          *

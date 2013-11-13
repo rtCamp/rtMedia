@@ -5,8 +5,8 @@ Tags: BuddyPress, media, multimedia, album, audio, songs, music, video, photo, i
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires at least: WordPress 3.6
-Tested up to: WordPress 3.6.1 + BuddyPress 1.8.1
-Stable tag: 3.2.5
+Tested up to: WordPress 3.7 + BuddyPress 1.8.1
+Stable tag: 3.2.6
 
 Add albums, photo, audio/video encoding, privacy, sharing, front-end uploads & more. All this works mobile/tablets devices.
 
@@ -118,6 +118,11 @@ Please visit [rtMedia's Features page](http://rtcamp.com/rtmedia/?utm_source=rea
 == Changelog ==
 
 Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "Visit rtMedia's Features page") to get some details about future releases.
+
+= 3.2.6 =
+* Updated dutch transalation.
+* Fix WordPress template issue.
+
 
 = 3.2.5 =
 * Bug fixes
@@ -581,7 +586,7 @@ Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_sou
 
 == Upgrade Notice ==
 
-= 3.2.5 =
+= 3.2.6 =
 Requires BuddyPress 1.7 or higher, if using BuddyPress. Updated translation files and bug fixes.
 
 == Sponsors ==
@@ -595,6 +600,7 @@ Requires BuddyPress 1.7 or higher, if using BuddyPress. Updated translation file
 
 rtMedia includes [full translation support](https://rtcamp.com/tutorials/rtmedia-translation/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media). Head over to the [translation project](http://rtcamp.com/translate/projects/rtmedia/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media) to contribute your translations. If you don't see the language of your choice, let us know in the support forum, we'll add it.
 
+* [Dutch](https://rtcamp.com/translate/projects/rtmedia/nl/default) translation by [rjpj](http://profiles.wordpress.org/rjpj)
 * [Polish](https://rtcamp.com/translate/projects/rtmedia/pl/default) translation by [Polski_Ziom](http://profiles.wordpress.org/polski_ziom)
 * [Spanish](https://rtcamp.com/translate/projects/rtmedia/es/default) translation by [Andrés Felipe](http://profiles.wordpress.org/naturalworldstm/) and [d3ne]
 * [Solvak](https://rtcamp.com/translate/projects/rtmedia/sk/default) translation by [igid26](http://profiles.wordpress.org/igid26)
