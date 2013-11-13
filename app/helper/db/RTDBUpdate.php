@@ -16,10 +16,10 @@ if ( !class_exists( 'RTDBUpdate' ) ) {
         public $db_version;
         public $install_db_version;
         public $schema_path = '/../../../schema/';
-		public $plugin_path = '/../../../index.php';
+	public $plugin_path = '/../../../index.php';
         public $db_version_option_name;
         public $rt_plugin_info;
-		public $mu_single_table;
+	public $mu_single_table;
 
         /**
          * Set db current and installed version and also plugin info in rt_plugin_info variable.
@@ -28,21 +28,21 @@ if ( !class_exists( 'RTDBUpdate' ) ) {
          */
         public function __construct( $current_version = false, $plugin_path = false, $schema_path = false, $mu_single_table = false ) {
 
-			if ( $schema_path != false ) {
-	            $this->schema_path = $schema_path;
-			} else {
-				$this->schema_path = dirname ( __FILE__ ) . $this->schema_path;
-			}
+	    if ( $schema_path != false ) {
+		$this->schema_path = $schema_path;
+	    } else {
+		$this->schema_path = dirname ( __FILE__ ) . $this->schema_path;
+	    }
 
-			if ( $plugin_path != false ) {
-				$this->plugin_path = $plugin_path;
-			} else {
-				$this->plugin_path = dirname( __FILE__ ) . $this->plugin_path;
-			}
+	    if ( $plugin_path != false ) {
+		$this->plugin_path = $plugin_path;
+	    } else {
+		$this->plugin_path = dirname( __FILE__ ) . $this->plugin_path;
+	    }
 
-			$this->mu_single_table = $mu_single_table;
+	    $this->mu_single_table = $mu_single_table;
 
-			$this->rt_plugin_info = new rt_plugin_info ( $plugin_path );
+	    $this->rt_plugin_info = new rt_plugin_info ( $plugin_path );
             if ($current_version == false) {
                $current_version = $this->rt_plugin_info->version;
             }
@@ -83,10 +83,10 @@ if ( !class_exists( 'RTDBUpdate' ) ) {
                     closedir($handle);
                 }
                 if ( $this->mu_single_table ) {
-					update_site_option($this->db_version_option_name, $this->db_version);
-				} else {
-					update_option($this->db_version_option_name, $this->db_version);
-				}
+		    update_site_option($this->db_version_option_name, $this->db_version);
+		} else {
+		    update_option($this->db_version_option_name, $this->db_version);
+		}
             }
         }
         static function table_exists($table) {

@@ -261,7 +261,7 @@ class RTMediaFormHandler {
                 $render_options = apply_filters("rtmedia_general_content_add_itmes",$render_options, $options);
 		$general_group = array();
 		$general_group[10] = "UI";
-		$general_group[30] = "Miscellaneous";
+		$general_group[90] = "Miscellaneous";
 		$general_group = apply_filters("rtmedia_general_content_groups", $general_group);
 		ksort($general_group);
 		$html = '';
@@ -273,7 +273,7 @@ class RTMediaFormHandler {
 		    foreach ($render_options as $tab => $option) {
 
 			if(!isset($option['group'])) {
-			    $option['group'] = "30";
+			    $option['group'] = "90";
 			}
 
 			if($option['group'] != $key) {
