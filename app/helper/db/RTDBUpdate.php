@@ -4,7 +4,9 @@
  * Description of RTDBUpdate
  * Required : rt_plugin_info.php
  * @author faishal
+ * version 1.1
  */
+if( ! class_exists ( 'RTDBUpdate')) :
 class RTDBUpdate {
 
     /**
@@ -22,13 +24,20 @@ class RTDBUpdate {
      *
      * @param type string $current_version Optional if not defined then will use plugin version
      */
-    public function __construct ( $current_version = false ) {
-        $this->rt_plugin_info = new rt_plugin_info ( RTMEDIA_PATH . 'index.php' );
+    public function __construct ( $current_version = false , $pluign_path = false , $schema_path = false) {
+        if($schema_path != false)
+            $this->schema_path = $schema_path;
+        else
+            $this->schema_path = dirname ( __FILE__ ) .$this->schema_path;
+        
+        if($pluign_path == false)
+            $pluign_path= RTMEDIA_PATH . 'index.php' ;
+        $this->rt_plugin_info = new rt_plugin_info ( $pluign_path );
         if ( $current_version == false ) {
             $current_version = $this->rt_plugin_info->version;
         }
 
-
+        
         $this->db_version = $current_version;
         $this->db_version_option_name = $this->get_db_version_option_name ();
         $this->install_db_version = $this->get_install_db_version ();
@@ -54,7 +63,7 @@ class RTDBUpdate {
     public function do_upgrade () {
         if ( version_compare ( $this->db_version, $this->install_db_version, '>' ) ) {
             do_action ( "rt_db_upgrade" );
-            $path = realpath ( dirname ( __FILE__ ) . $this->schema_path );
+            $path = realpath ( $this->schema_path );
             if ( $handle = opendir ( $path ) ) {
                 while ( false !== ($entry = readdir ( $handle )) ) {
                     if ( $entry != "." && $entry != ".." ) {
@@ -89,3 +98,4 @@ class RTDBUpdate {
     }
 
 }
+endif;

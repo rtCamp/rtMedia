@@ -67,10 +67,10 @@ class RTMediaModel extends RTDBModel {
                         $compare = 'IN';
                     else
                         $compare = $colvalue[ 'compare' ];
-                    if ( ! isset ( $colvalue[ 'value' ] ) ) {
-                        $colvalue[ 'value' ] = $colvalue;
-                    }
-                    $col_val_comapare = ($colvalue[ 'value' ]) ? '(\'' . implode ( "','", $colvalue[ 'value' ] ) . '\')' : '';
+
+                    $tmpVal = isset ( $colvalue[ 'value' ] ) ? $colvalue[ 'value' ] : $colvalue;
+                    $col_val_comapare = (is_array($tmpVal)) ? '(\'' . implode ( "','", $tmpVal ) . '\')' : '';
+
                     $where .= " AND {$this->table_name}.{$colname} {$compare} {$col_val_comapare}";
                 }
                 else
