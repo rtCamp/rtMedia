@@ -20,7 +20,7 @@ if(!class_exists('RTDBModel')) {
     	 */
         public $table_name;
         public $per_page;
-		public $mu_single_table;
+	public $mu_single_table;
 
         /**
          *
@@ -28,7 +28,7 @@ if(!class_exists('RTDBModel')) {
          * @param boolean $withprefix Set true if $tablename is with prefix otherwise it will prepend wordpress prefix with "rt_"
          */
         function __construct($table_name, $withprefix = false, $per_page = 10, $mu_single_table = false ) {
-			$this->mu_single_table = $mu_single_table;
+	    $this->mu_single_table = $mu_single_table;
             $this->set_table_name($table_name, $withprefix);
             $this->set_per_page($per_page);
         }
@@ -144,19 +144,19 @@ if(!class_exists('RTDBModel')) {
             $select = "SELECT * FROM {$this->table_name}";
             $where = " where 2=2 " ;
             foreach ($columns as $colname => $colvalue) {
-				if ( is_array ( $colvalue ) ) {
-					if ( ! isset ( $colvalue[ 'compare' ] ) )
-						$compare = 'IN';
-					else
-						$compare = $colvalue[ 'compare' ];
-					if ( ! isset ( $colvalue[ 'value' ] ) ) {
-						$colvalue[ 'value' ] = $colvalue;
-					}
-					$col_val_comapare = ($colvalue[ 'value' ]) ? '(\'' . implode ( "','", $colvalue[ 'value' ] ) . '\')' : '';
-					$where .= " AND {$this->table_name}.{$colname} {$compare} {$col_val_comapare}";
-				} else {
-					$where .= " AND {$this->table_name}.{$colname} = '{$colvalue}'";
-				}
+		if ( is_array ( $colvalue ) ) {
+			if ( ! isset ( $colvalue[ 'compare' ] ) )
+				$compare = 'IN';
+			else
+				$compare = $colvalue[ 'compare' ];
+			if ( ! isset ( $colvalue[ 'value' ] ) ) {
+				$colvalue[ 'value' ] = $colvalue;
+			}
+			$col_val_comapare = ($colvalue[ 'value' ]) ? '(\'' . implode ( "','", $colvalue[ 'value' ] ) . '\')' : '';
+			$where .= " AND {$this->table_name}.{$colname} {$compare} {$col_val_comapare}";
+		} else {
+			$where .= " AND {$this->table_name}.{$colname} = '{$colvalue}'";
+		}
             }
             $sql = $select . $where ;
 

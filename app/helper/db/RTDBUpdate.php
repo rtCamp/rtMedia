@@ -71,7 +71,7 @@ if ( !class_exists( 'RTDBUpdate' ) ) {
         public function do_upgrade() {
             if (version_compare($this->db_version, $this->install_db_version, '>')) {
                 do_action("rt_db_upgrade");
-                $path = realpath(dirname(__FILE__) . $this->schema_path);
+                $path = realpath( $this->schema_path );
                 if ($handle = opendir($path)) {
                     while (false !== ($entry = readdir($handle))) {
                         if ($entry != "." && $entry != "..") {
