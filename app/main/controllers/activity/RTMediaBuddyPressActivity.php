@@ -120,7 +120,7 @@ class RTMediaBuddyPressActivity {
             bp_activity_update_meta($activity_id, "bp_activity_text", $updated_content);
             $wpdb->update ( $bp->activity->table_name, array( "type" => "rtmedia_update", "content" => $html_content ), array( "id" => $activity_id ) );
             $mediaObj = new RTMediaModel();
-            $sql = "update $mediaObj->table_name set activity_id = '" . $activity_id . "' where id in (" . implode ( ",", $_POST[ "rtMedia_attached_files" ] ) . ")";
+            $sql = "update $mediaObj->table_name set activity_id = '" . $activity_id . "' where blog_id = '".get_current_blog_id()."' and id in (" . implode ( ",", $_POST[ "rtMedia_attached_files" ] ) . ")";
             $wpdb->query ( $sql );
         }
         if ( isset ( $_POST[ 'rtmedia-privacy' ] ) ) {

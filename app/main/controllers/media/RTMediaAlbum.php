@@ -211,7 +211,7 @@ class RTMediaAlbum {
      * @return type
      */
     static function get_globals () {
-        return get_site_option ( 'rtmedia-global-albums' );
+        return rtmedia_get_site_option ( 'rtmedia-global-albums' );
     }
 
     /**
@@ -248,7 +248,7 @@ class RTMediaAlbum {
             $album_ids = array( $album_ids );
 
         $albums = array_merge ( $albums, $album_ids );
-        update_site_option ( 'rtmedia-global-albums', $albums );
+        rtmedia_update_site_option ( 'rtmedia-global-albums', $albums );
     }
 
     /**

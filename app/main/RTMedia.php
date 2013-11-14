@@ -97,16 +97,17 @@ class RTMedia
     }
 
     function fix_parent_id() {
-        $site_global = get_site_option('rtmedia-global-albums');
+        $site_global = rtmedia_get_site_option('rtmedia-global-albums');
         if ($site_global && is_array($site_global) && isset($site_global[0])) {
             $model = new RTMediaModel();
             $album_row = $model->get_by_id($site_global[0]);
             if (isset($album_row["result"]) && count($album_row["result"]) > 0) {
                 global $wpdb;
                 $row = $album_row["result"][0];
-                $sql = "update $wpdb->posts p
+		if( isset( $row["media_id"] ) ) {
+		    $sql = "update $wpdb->posts p
                                 left join
-                            $model->table_name r ON p.ID = r.media_id
+                            $model->table_name r ON ( p.ID = r.media_id and blog_id = '".get_current_blog_id()."' )
                         set
                             post_parent = {$row["media_id"]}
                         where
@@ -114,7 +115,8 @@ class RTMedia
                                 and (p.post_parent = 0 or p.post_parent is NULL)
                                 and not r.id is NULL
                                 and r.media_type <> 'album'";
-                $wpdb->query($sql);
+		    $wpdb->query($sql);
+		}
             }
         }
     }
@@ -620,10 +622,10 @@ class RTMedia
     }
 
     function redirect_on_change_slug() {
-        $old_slugs = get_site_option("rtmedia_old_media_slug", false, true);
-        $current_slugs = get_site_option("rtmedia_current_media_slug", false, false);
+        $old_slugs = rtmedia_get_site_option("rtmedia_old_media_slug", false, true);
+        $current_slugs = rtmedia_get_site_option("rtmedia_current_media_slug", false, false);
         if ($current_slugs === false) {
-            update_site_option("rtmedia_current_media_slug", RTMEDIA_MEDIA_SLUG);
+            rtmedia_update_site_option("rtmedia_current_media_slug", RTMEDIA_MEDIA_SLUG);
             return;
         }
         if ($current_slugs === RTMEDIA_MEDIA_SLUG)
@@ -631,7 +633,7 @@ class RTMedia
         if ($old_slugs === false)
             $old_slugs = array();
         $old_slugs[] = $current_slugs;
-        update_site_option("rtmedia_current_media_slug", RTMEDIA_MEDIA_SLUG);
+        rtmedia_update_site_option("rtmedia_current_media_slug", RTMEDIA_MEDIA_SLUG);
     }
 
     /**
@@ -678,7 +680,7 @@ class RTMedia
     }
 
     function update_db() {
-        $update = new RTDBUpdate();
+        $update = new RTDBUpdate(false, RTMEDIA_PATH."index.php", RTMEDIA_PATH."app/schema/",true);
         /* Current Version. */
         if (!defined('RTMEDIA_VERSION'))
             define('RTMEDIA_VERSION', $update->db_version);
@@ -869,7 +871,11 @@ function get_rtmedia_user_link($id) {
 }
 
 function rtmedia_update_site_option($option_name, $option_value) {
-    update_site_option($option_name, $option_value);
+    if( is_multisite() ) {
+	update_option($option_name, $option_value);
+    } else {
+	update_site_option($option_name, $option_value);
+    }
 }
 
 function get_rtmedia_group_link($group_id) {
@@ -878,12 +884,26 @@ function get_rtmedia_group_link($group_id) {
 }
 
 function rtmedia_get_site_option($option_name, $default = false) {
-    $return_val = get_site_option($option_name);
-    if ($return_val === false) {
-        if (function_exists("bp_get_option")) {
-            $return_val = bp_get_option($option_name, $default);
-            rtmedia_update_site_option($option_name, $return_val);
-        }
+    if( is_multisite() ) {
+	$return_val = get_option($option_name, $default);
+	if( $return_val === false ) {
+	    $return_val = get_site_option($option_name, $default);
+	    if( $return_val === false ) {
+		if( function_exists( "bp_get_option" ) ) {
+		    $return_val = bp_get_option($option_name, $default);
+		}
+	    }
+	    rtmedia_update_site_option( $option_name, $return_val );
+	    delete_site_option($option_name);
+	}
+    } else {
+	$return_val = get_site_option($option_name, $default);
+	if ($return_val === false) {
+	    if (function_exists("bp_get_option")) {
+		$return_val = bp_get_option($option_name, $default);
+		rtmedia_update_site_option($option_name, $return_val);
+	    }
+	}
     }
     if ($default !== false && $return_val === false) {
         $return_val = $default;

@@ -20,13 +20,13 @@ class RTMediaMigration {
             $this->hide_migration_notice ();
             wp_safe_redirect ( $_SERVER[ "HTTP_REFERER" ] );
         }
-        if ( get_site_option ( "rt_migration_hide_notice" ) !== false )
+        if ( rtmedia_get_site_option ( "rt_migration_hide_notice" ) !== false )
             return true;
 
         if ( isset ( $_REQUEST[ "force" ] ) && $_REQUEST[ "force" ] === "true" )
             $pending = false;
         else
-            $pending = get_site_option ( "rtMigration-pending-count" );
+            $pending = rtmedia_get_site_option ( "rtMigration-pending-count" );
 
         if ( $pending === false ) {
             $total = $this->get_total_count ();
@@ -34,7 +34,7 @@ class RTMediaMigration {
             $pending = $total - $done;
             if ( $pending < 0 )
                 $pending = 0;
-            update_site_option ( "rtMigration-pending-count", $pending );
+            rtmedia_update_site_option ( "rtMigration-pending-count", $pending );
         }
         if ( $pending > 0 ) {
             if ( ! (isset ( $_REQUEST[ "page" ] ) && $_REQUEST[ "page" ] == "rtmedia-migration") )
@@ -43,11 +43,11 @@ class RTMediaMigration {
     }
 
     function hide_migration_notice () {
-        update_site_option ( "rt_migration_hide_notice", true );
+        rtmedia_update_site_option ( "rt_migration_hide_notice", true );
     }
 
     function migrate_image_size_fix () {
-        if ( get_site_option ( "rt_image_size_migration_fix", "" ) == "" ) {
+        if ( rtmedia_get_site_option ( "rt_image_size_migration_fix", "" ) == "" ) {
             global $wpdb;
             $sql = $wpdb->prepare ( "update $wpdb->postmeta set meta_value=replace(meta_value	,%s,%s) where meta_key = '_wp_attachment_metadata';", "bp_media", "rt_media" );
             $wpdb->get_row ( $sql );
@@ -144,7 +144,7 @@ class RTMediaMigration {
     }
 
     function get_last_imported () {
-        $album = get_site_option ( "rtmedia-global-albums" );
+        $album = rtmedia_get_site_option ( "rtmedia-global-albums" );
         $album_id = $album[ 0 ];
 
         global $wpdb;
@@ -185,7 +185,7 @@ class RTMediaMigration {
         $media_count = $wpdb->get_var ( $wpdb->prepare ( $sql, get_current_blog_id () ) );
         if ( $flag )
             return $media_count - 1;
-        $state = intval ( get_site_option ( "rtmedia-migration", "0" ) );
+        $state = intval ( rtmedia_get_site_option ( "rtmedia-migration", "0" ) );
         if ( $state == 5 ) {
             $album_count = intval ( $_SESSION[ "migration_user_album" ] );
             $album_count += (isset ( $_SESSION[ "migration_group_album" ] )) ? intval ( $_SESSION[ "migration_group_album" ] ) : 0;
@@ -237,7 +237,7 @@ class RTMediaMigration {
             //Call flush_rules() as a method of the $wp_rewrite object
             $wp_rewrite->flush_rules ( true );
         }
-        update_site_option ( "rtMigration-pending-count", $pending );
+        rtmedia_update_site_option ( "rtMigration-pending-count", $pending );
         $pending_time = $this->formatSeconds ( $pending );
 
         echo json_encode ( array( "status" => true, "done" => $done, "total" => $total, "pending" => $pending_time ) );
@@ -245,8 +245,8 @@ class RTMediaMigration {
     }
 
     function manage_album () {
-        $album = get_site_option ( "rtmedia-global-albums" );
-        $stage = intval ( get_site_option ( "rtmedia-migration", "0" ) );
+        $album = rtmedia_get_site_option ( "rtmedia-global-albums" );
+        $stage = intval ( rtmedia_get_site_option ( "rtmedia-migration", "0" ) );
 
         $album_rt_id = $album[ 0 ];
 
@@ -279,7 +279,7 @@ class RTMediaMigration {
             }
             $wpdb->query ( $sql_group );
             $stage = 1;
-            update_site_option ( "rtmedia-migration", $stage );
+            rtmedia_update_site_option ( "rtmedia-migration", $stage );
             $this->return_migration ();
         }
         if ( $stage < 2 ) {
@@ -297,7 +297,7 @@ class RTMediaMigration {
             if ( count ( $results ) < 10 ) {
                 $stage = 2;
             }
-            update_site_option ( "rtmedia-migration", $stage );
+            rtmedia_update_site_option ( "rtmedia-migration", $stage );
             $this->return_migration ();
         }
         if ( $stage < 3 ) {
@@ -321,11 +321,11 @@ class RTMediaMigration {
                 } else {
                     $stage = 3;
                 }
-                update_site_option ( "rtmedia-migration", $stage );
+                rtmedia_update_site_option ( "rtmedia-migration", $stage );
                 $this->return_migration ();
             } else {
                 $stage = 3;
-                update_site_option ( "rtmedia-migration", $stage );
+                rtmedia_update_site_option ( "rtmedia-migration", $stage );
                 $this->return_migration ();
             }
         }
@@ -333,7 +333,7 @@ class RTMediaMigration {
 
         $sql = "update $wpdb->posts set post_type='{$album_post_type}' where post_type='bp_media_album'";
         if ( $wpdb->query ( $sql ) !== false ) {
-            update_site_option ( "rtmedia-migration", "5" );
+            rtmedia_update_site_option ( "rtmedia-migration", "5" );
             return true;
         }
         return false;
@@ -341,7 +341,7 @@ class RTMediaMigration {
 
     function test () {
         if ( ! $this->table_exists ( $this->bmp_table ) ) {
-            $obj = new RTDBUpdate();
+            $obj = new RTDBUpdate(false, RTMEDIA_PATH."index.php", RTMEDIA_PATH."app/schema/",true);
             $obj->install_db_version = "0";
             $obj->do_upgrade ( true );
         }
@@ -466,7 +466,7 @@ class RTMediaMigration {
         if ( ! isset ( $_SESSION[ "migration_media" ] ) )
             $this->get_total_count ();
 
-        $state = intval ( get_site_option ( "rtmedia-migration" ) );
+        $state = intval ( rtmedia_get_site_option ( "rtmedia-migration" ) );
         if ( $state < 5 ) {
             if ( $this->manage_album () ) {
                 $this->migrate_encoding_options ();
@@ -543,8 +543,8 @@ class RTMediaMigration {
             'bp_media_kaltura_options' => 'rtmedia-kaltura-options',
         );
         foreach ( $encoding_mnigration_array as $key => $ma ) {
-            if ( ($value = get_site_option ( $key )) !== false ) {
-                update_site_option ( $ma, $value );
+            if ( ($value = rtmedia_get_site_option ( $key )) !== false ) {
+                rtmedia_update_site_option ( $ma, $value );
             }
         }
     }
@@ -773,7 +773,7 @@ class RTMediaMigration {
 
         // Obey the value of UPLOADS. This happens as long as ms-files rewriting is disabled.
         // We also sometimes obey UPLOADS when rewriting is enabled -- see the next block.
-        if ( defined ( 'UPLOADS' ) && ! ( is_multisite () && get_site_option ( 'ms_files_rewriting' ) ) ) {
+        if ( defined ( 'UPLOADS' ) && ! ( is_multisite () && rtmedia_get_site_option ( 'ms_files_rewriting' ) ) ) {
             $dir = ABSPATH . UPLOADS;
             $url = trailingslashit ( $siteurl ) . UPLOADS;
         }
@@ -781,7 +781,7 @@ class RTMediaMigration {
         // If multisite (and if not the main site in a post-MU network)
         if ( is_multisite () && ! ( is_main_site () && defined ( 'MULTISITE' ) ) ) {
 
-            if ( ! get_site_option ( 'ms_files_rewriting' ) ) {
+            if ( ! rtmedia_get_site_option ( 'ms_files_rewriting' ) ) {
                 // If ms-files rewriting is disabled (networks created post-3.5), it is fairly straightforward:
                 // Append sites/%d if we're not on the main site (for post-MU networks). (The extra directory
                 // prevents a four-digit ID from conflicting with a year-based directory for the main site.
