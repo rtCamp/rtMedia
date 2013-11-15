@@ -894,7 +894,6 @@ function rtmedia_get_site_option($option_name, $default = false) {
 		}
 	    }
 	    rtmedia_update_site_option( $option_name, $return_val );
-	    delete_site_option($option_name);
 	}
     } else {
 	$return_val = get_site_option($option_name, $default);
