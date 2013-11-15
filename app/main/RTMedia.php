@@ -107,7 +107,14 @@ class RTMedia
                 }
             }
         $ext = apply_filters ( 'rtmedia_plupload_files_filter', array( array( 'title' => "Media Files", 'extensions' => implode ( ",", $allowed_types ) ) ) );
-        return trim($options) . " " . str_replace(",", " " , $ext[0]["extensions"]);
+        $ext_arr = explode("," ,$ext[0]["extensions"]);
+        $options =  trim($options);
+        foreach($ext_arr as $f_ext){
+            if(  strpos( $options , $f_ext ) === false){
+                $options .= " " . $f_ext;
+            }
+        }
+        return $options ;
     }
     function fix_parent_id() {
         $site_global = rtmedia_get_site_option('rtmedia-global-albums');
