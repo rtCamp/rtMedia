@@ -87,15 +87,28 @@ class RTMedia
         add_action('init', array($this, 'check_global_album'));
         add_action('plugins_loaded', array($this, 'init'), 20);
         add_action('plugins_loaded', array($this, 'load_translation'), 10);
-        add_action('init', array($this, 'admin_init'));
+        add_action('plugins_loaded', array($this, 'admin_init'));
         add_action('wp_enqueue_scripts', array('RTMediaGalleryShortcode', 'register_scripts'));
         add_action('wp_enqueue_scripts', array(&$this, 'enqueue_scripts_styles'), 999);
         add_action('rt_db_upgrade', array($this, 'fix_parent_id'));
         include(RTMEDIA_PATH . 'app/main/controllers/template/rt-template-functions.php');
         add_filter('intermediate_image_sizes_advanced', array($this, 'filter_image_sizes_details'));
         add_filter('intermediate_image_sizes', array($this, 'filter_image_sizes'));
+        add_filter("site_option_upload_filetypes",array(&$this, "filter_allow_mime_type_mu"),1,1);
     }
-
+    function filter_allow_mime_type_mu($options){
+        $allowed_types = array();
+        $this->allowed_types = apply_filters ( 'rtmedia_allowed_types', $this->allowed_types );
+            foreach ( $this->allowed_types as $type ) {
+                if ( $type[ 'extn' ] != "" && call_user_func ( "is_rtmedia_upload_" . $type[ "name" ] . "_enabled" ) ) {
+                    foreach ( $type[ 'extn' ] as $extn ) {
+                        $allowed_types[ ] = $extn;
+                    }
+                }
+            }
+        $ext = apply_filters ( 'rtmedia_plupload_files_filter', array( array( 'title' => "Media Files", 'extensions' => implode ( ",", $allowed_types ) ) ) );
+        return trim($options) . " " . str_replace(",", " " , $ext[0]["extensions"]);
+    }
     function fix_parent_id() {
         $site_global = rtmedia_get_site_option('rtmedia-global-albums');
         if ($site_global && is_array($site_global) && isset($site_global[0])) {
@@ -522,7 +535,6 @@ class RTMedia
      * @global BPMediaAdmin $bp_media_admin
      */
     function init() {
-
         $this->set_allowed_types(); // Define allowed types
         $this->constants(); // Define constants
         $this->redirect_on_change_slug();
