@@ -115,7 +115,7 @@ class RTMediaMedia {
                     $row[ 'meta_value' ] = $value;
                     $status = add_rtmedia_meta ( $id, $key, $value );
 
-                    if ( get_class ( $status ) == 'WP_Error' || $status == 0 )
+                    if ( is_wp_error ( $status ) || $status == 0 )
                         return false;
                 }
             }
@@ -307,7 +307,7 @@ class RTMediaMedia {
         /* update the post_parent value in wp_post table */
         $status = $wpdb->update ( $wpdb->posts, array( 'post_parent' => $album_id ), array( 'ID' => $media_id ) );
 
-        if ( get_class ( $status ) == 'WP_Error' || $status == 0 ) {
+        if ( is_wp_error ( $status ) || $status == 0 ) {
             return false;
         } else {
             /* update album_id, context, context_id and privacy in rtMedia context */

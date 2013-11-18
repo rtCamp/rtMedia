@@ -292,7 +292,7 @@ class RTMediaAlbum {
                 'post_title' => $title
             );
             $status = wp_insert_post ( $args );
-            if ( get_class ( $status ) == 'WP_Error' || $status == 0 ) {
+            if ( is_wp_error ( $status ) || $status == 0 ) {
                 return false;
             } else {
                 /* Action to perform after updating the album */
