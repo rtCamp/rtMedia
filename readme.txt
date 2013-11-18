@@ -1,12 +1,12 @@
 === rtMedia for WordPress, BuddyPress and bbPress ===
-Contributors: rtcamp, rahul286, faishal, JoshuaAbenazer, gagan0123, saurabhshukla, desaiuditd, nitun.lanjewar, rittesh.patel, pushpak.pop, umesh.nevase, suhasgirgaonkar, neerukoul, hrishiv90, kanakiyajay, jarretc
+Contributors: rtcamp, rahul286, faishal, JoshuaAbenazer, gagan0123, saurabhshukla, desaiuditd, nitun.lanjewar, rittesh.patel, pushpak.pop, umesh.nevase, suhasgirgaonkar, neerukoul, hrishiv90, kanakiyajay, jarretc, tobiaskluge
 Donate link: http://rtcamp.com/store/rtmedia-pro/
 Tags: BuddyPress, media, multimedia, album, audio, songs, music, video, photo, image, upload, share, MediaElement.js, ffmpeg, kaltura, media-node, rtMedia, WordPress, bbPress
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires at least: WordPress 3.6
 Tested up to: WordPress 3.7 + BuddyPress 1.8.1
-Stable tag: 3.2.7
+Stable tag: 3.2.8
 
 Add albums, photo, audio/video encoding, privacy, sharing, front-end uploads & more. All this works mobile/tablets devices.
 
@@ -130,6 +130,10 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 == Changelog ==
 
 Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "Visit rtMedia's Features page") to get some details about future releases.
+
+= 3.2.8 =
+* Fix WordPress MultiSite issue.
+* Shortcode invalid argument issue fix.
 
 = 3.2.7 =
 * Update readme
@@ -602,8 +606,8 @@ Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_sou
 
 == Upgrade Notice ==
 
-= 3.2.7 =
-Requires BuddyPress 1.7 or higher, if using BuddyPress. Update readme and simple file upload in shortcode.
+= 3.2.8 =
+Requires BuddyPress 1.7 or higher, if using BuddyPress. Fix WordPress MultiSite issue and Shortcode invalid argument issue fix.
 
 == Sponsors ==
 
