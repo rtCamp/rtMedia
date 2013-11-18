@@ -97,7 +97,7 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
                     <table>
                         <tbody> <?php
                             $rtMedia_model = new RTMediaModel();
-                            $sql = "select media_type, count(id) as count from {$rtMedia_model->table_name} group by media_type";
+                            $sql = "select media_type, count(id) as count from {$rtMedia_model->table_name} where blog_id='".get_current_blog_id()."' group by media_type";
                             global $wpdb;
                             $results = $wpdb->get_results ( $sql );
                             if ( $results ) {
@@ -455,9 +455,9 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
 	function rtmedia_regenerate_thumbnail_notice() {
 	    $obj_encoding =  new RTMediaEncoding(true);
             if ($obj_encoding->api_key) {
-		$site_option  = get_site_option("rtmedia-video-thumb-notice");
+		$site_option  = rtmedia_get_site_option("rtmedia-video-thumb-notice");
 		if(!$site_option || $site_option != "hide") {
-		    update_site_option("rtmedia-video-thumb-notice", "show");
+		    rtmedia_update_site_option("rtmedia-video-thumb-notice", "show");
 		    $videos_without_thumbs = get_video_without_thumbs();
 		    if(isset($videos_without_thumbs) && is_array($videos_without_thumbs) && sizeof($videos_without_thumbs) > 0 ) {
 			echo '<div class="error rtmedia-regenerate-video-thumb-error">
@@ -484,7 +484,7 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
 	}
 
 	function rtmedia_hide_video_thumb_admin_notice() {
-	    if(update_site_option("rtmedia-video-thumb-notice", "hide"))
+	    if(rtmedia_update_site_option("rtmedia-video-thumb-notice", "hide"))
 		echo "1";
 	    else
 		echo "0";
@@ -515,7 +515,7 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
 
         function get_video_without_thumbs() {
             $rtmedia_model = new RTMediaModel();
-            $sql = "select media_id from {$rtmedia_model->table_name} where media_type = 'video' and cover_art is null";
+            $sql = "select media_id from {$rtmedia_model->table_name} where media_type = 'video' and blog_id = '".get_current_blog_id()."' and cover_art is null";
             global $wpdb;
             $results = $wpdb->get_col( $sql );
             return $results;
@@ -869,7 +869,7 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
             do_action ( 'rtmedia_sanitize_settings', $_POST );
 
             if ( isset ( $_POST[ 'rtmedia_options' ] ) ) {
-                update_site_option ( 'rtmedia_options', $_POST[ 'rtmedia_options' ] );
+                rtmedia_update_site_option ( 'rtmedia_options', $_POST[ 'rtmedia_options' ] );
 //
 //                // redirect to settings page in network
                 wp_redirect (
@@ -896,7 +896,7 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
 
             $message = sprintf ( __ ( 'I use @buddypressmedia http://goo.gl/8Upmv on %s', 'rtmedia' ), home_url () );
             $addons = '<div id="social" class="row">
-							<label class="columns large-6 large-offset-3" for="bp-media-add-linkback"><input' . checked ( get_site_option ( 'rtmedia-add-linkback', false ), true, false ) . ' type="checkbox" name="bp-media-add-linkback" value="1" id="bp-media-add-linkback"/> ' . __ ( 'Add link to footer', 'rtmedia' ) . '</label>
+							<label class="columns large-6 large-offset-3" for="bp-media-add-linkback"><input' . checked ( rtmedia_get_site_option ( 'rtmedia-add-linkback', false ), true, false ) . ' type="checkbox" name="bp-media-add-linkback" value="1" id="bp-media-add-linkback"/> ' . __ ( 'Add link to footer', 'rtmedia' ) . '</label>
 							<div class="row">
 								<div class="columns large-6"><iframe src="//www.facebook.com/plugins/like.php?href=http%3A%2F%2Frtcamp.com%2Fbuddypress-media%2F&amp;send=false&amp;layout=button_count&amp;width=72&amp;show_faces=false&amp;font&amp;colorscheme=light&amp;action=like&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:80px; height:21px; margin-top: 5px;" allowTransparency="true"></iframe></div>
 								<div class="columns large-6"><a href="https://www.facebook.com/sharer/sharer.php?u=http://rtcamp.com/buddypress-media/" class="button" target="_blank"> <i class="icon-facebook"></i> ' . __ ( 'Share', 'rtmedia' ) . '</a></div>
@@ -952,9 +952,9 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
 
         public function linkback () {
             if ( isset ( $_POST[ 'linkback' ] ) && $_POST[ 'linkback' ] ) {
-                return update_site_option ( 'rtmedia-add-linkback', true );
+                return rtmedia_update_site_option ( 'rtmedia-add-linkback', true );
             } else {
-                return update_site_option ( 'rtmedia-add-linkback', false );
+                return rtmedia_update_site_option ( 'rtmedia-add-linkback', false );
             }
             die;
         }
@@ -963,7 +963,7 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
             if ( $_POST[ 'interested' ] == 'Yes' && ! empty ( $_POST[ 'choice' ] ) ) {
                 wp_remote_get ( add_query_arg ( array( 'rtmedia-convert-videos-form' => 1, 'choice' => $_POST[ 'choice' ], 'url' => urlencode ( $_POST[ 'url' ] ), 'email' => $_POST[ 'email' ] ), 'http://rtcamp.com/' ) );
             } else {
-                update_site_option ( 'rtmedia-survey', 0 );
+                rtmedia_update_site_option ( 'rtmedia-survey', 0 );
             }
             echo 'Thank you for your time.';
             die;
@@ -971,7 +971,7 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
 
         public function video_transcoding_survey_response () {
             if ( isset ( $_GET[ 'survey-done' ] ) && ($_GET[ 'survey-done' ] == md5 ( 'survey-done' )) ) {
-                update_site_option ( 'rtmedia-survey', 0 );
+                rtmedia_update_site_option ( 'rtmedia-survey', 0 );
             }
         }
 
@@ -983,7 +983,7 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
 
         public function upload_filetypes_error () {
             global $rtmedia;
-            $upload_filetypes = get_site_option ( 'upload_filetypes', 'jpg jpeg png gif' );
+            $upload_filetypes = rtmedia_get_site_option ( 'upload_filetypes', 'jpg jpeg png gif' );
             $upload_filetypes = explode ( ' ', $upload_filetypes );
             $flag = false;
             if ( isset ( $rtmedia->options[ 'images_enabled' ] ) && $rtmedia->options[ 'images_enabled' ] ) {
@@ -1037,7 +1037,7 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
 
         public function correct_upload_filetypes () {
             global $rtmedia;
-            $upload_filetypes_orig = $upload_filetypes = get_site_option ( 'upload_filetypes', 'jpg jpeg png gif' );
+            $upload_filetypes_orig = $upload_filetypes = rtmedia_get_site_option ( 'upload_filetypes', 'jpg jpeg png gif' );
             $upload_filetypes = explode ( ' ', $upload_filetypes );
             if ( isset ( $rtmedia->options[ 'images_enabled' ] ) && $rtmedia->options[ 'images_enabled' ] ) {
                 $not_supported_image = array_diff ( array( 'jpg', 'jpeg', 'png', 'gif' ), $upload_filetypes );
@@ -1048,20 +1048,20 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
                     }
                     if ( $update_image_support ) {
                         $upload_filetypes_orig .= $update_image_support;
-                        update_site_option ( 'upload_filetypes', $upload_filetypes_orig );
+                        rtmedia_update_site_option ( 'upload_filetypes', $upload_filetypes_orig );
                     }
                 }
             }
             if ( isset ( $rtmedia->options[ 'videos_enabled' ] ) && $rtmedia->options[ 'videos_enabled' ] ) {
                 if ( ! in_array ( 'mp4', $upload_filetypes ) ) {
                     $upload_filetypes_orig .= ' mp4';
-                    update_site_option ( 'upload_filetypes', $upload_filetypes_orig );
+                    rtmedia_update_site_option ( 'upload_filetypes', $upload_filetypes_orig );
                 }
             }
             if ( isset ( $rtmedia->options[ 'audio_enabled' ] ) && $rtmedia->options[ 'audio_enabled' ] ) {
                 if ( ! in_array ( 'mp3', $upload_filetypes ) ) {
                     $upload_filetypes_orig .= ' mp3';
-                    update_site_option ( 'upload_filetypes', $upload_filetypes_orig );
+                    rtmedia_update_site_option ( 'upload_filetypes', $upload_filetypes_orig );
                 }
             }
             echo true;

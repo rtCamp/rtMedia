@@ -8,7 +8,7 @@
 class RTMediaModel extends RTDBModel {
 
     function __construct () {
-        parent::__construct ( 'rtm_media' );
+        parent::__construct ( 'rtm_media', false, 10, true );
         $this->meta_table_name = "rt_rtm_media_meta";
     }
 
@@ -47,6 +47,9 @@ class RTMediaModel extends RTDBModel {
 	$from = " FROM {$this->table_name} ";
         $join = "";
         $where = " where 2=2 ";
+	if( is_multisite() ) {
+	    $where.= " AND {$this->table_name}.blog_id = '".get_current_blog_id()."' ";
+	}
         $temp = 65;
         foreach ( $columns as $colname => $colvalue ) {
             if ( strtolower ( $colname ) == "meta_query" ) {
@@ -55,7 +58,11 @@ class RTMediaModel extends RTDBModel {
                         $meta_query[ "compare" ] = "=";
                     }
                     $tbl_alias = chr ( $temp ++  );
-                    $join .= " LEFT JOIN {$wpdb->prefix}{$this->meta_table_name} as {$tbl_alias} ON {$this->table_name}.id = {$tbl_alias}.media_id ";
+		    if(is_multisite() ) {
+			$join .= " LEFT JOIN {$wpdb->base_prefix}{$this->meta_table_name} as {$tbl_alias} ON {$this->table_name}.id = {$tbl_alias}.media_id ";
+		    } else {
+			$join .= " LEFT JOIN {$wpdb->prefix}{$this->meta_table_name} as {$tbl_alias} ON {$this->table_name}.id = {$tbl_alias}.media_id ";
+		    }
                     if ( isset ( $meta_query[ "value" ] ) )
                         $where .= " AND  ({$tbl_alias}.meta_key = '{$meta_query[ "key" ]}' and  {$tbl_alias}.meta_value  {$meta_query[ "compare" ]}  '{$meta_query[ "value" ]}' ) ";
                     else
@@ -69,7 +76,7 @@ class RTMediaModel extends RTDBModel {
                         $compare = $colvalue[ 'compare' ];
 
                     $tmpVal = isset ( $colvalue[ 'value' ] ) ? $colvalue[ 'value' ] : $colvalue;
-                    $col_val_comapare = (is_array($tmpVal)) ? '(\'' . implode ( "','", $tmpVal ) . '\')' : '';
+                    $col_val_comapare = ( is_array( $tmpVal ) ) ? '(\'' . implode ( "','", $tmpVal ) . '\')' : '(\''.$tmpVal.'\')';
 
                     $where .= " AND {$this->table_name}.{$colname} {$compare} {$col_val_comapare}";
                 }

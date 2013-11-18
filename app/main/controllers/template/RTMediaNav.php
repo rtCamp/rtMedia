@@ -64,7 +64,7 @@ class RTMediaNav {
 
         if ( function_exists ( "bp_use_wp_admin_bar" ) && ! bp_use_wp_admin_bar () )
             return;
-        
+
         // Bail if this is an ajax request
         if ( defined ( 'DOING_AJAX' ) )
             return;
@@ -90,15 +90,17 @@ class RTMediaNav {
             global $rtmedia;
 
             foreach ( $rtmedia->allowed_types as $type ) {
-                if ( ! $rtmedia->options[ 'allowedTypes_' . $type[ 'name' ] . '_enabled' ] )
-                    continue;
-                $name = strtoupper ( $type[ 'name' ] );
-                $wp_admin_bar->add_menu ( array(
-                    'parent' => 'my-account-' . constant ( 'RTMEDIA_MEDIA_SLUG' ),
-                    'id' => 'my-account-media-' . constant ( 'RTMEDIA_' . $name . '_SLUG' ),
-                    'title' => $type[ 'plural_label' ],
-                    'href' => trailingslashit ( get_rtmedia_user_link ( get_current_user_id () ) ) . RTMEDIA_MEDIA_SLUG . '/' . constant ( 'RTMEDIA_' . $name . '_SLUG' ) . '/'
-                ) );
+		if( isset( $rtmedia->options[ 'allowedTypes_' . $type[ 'name' ] . '_enabled' ] ) ) {
+		    if ( ! $rtmedia->options[ 'allowedTypes_' . $type[ 'name' ] . '_enabled' ] )
+			continue;
+		    $name = strtoupper ( $type[ 'name' ] );
+		    $wp_admin_bar->add_menu ( array(
+			'parent' => 'my-account-' . constant ( 'RTMEDIA_MEDIA_SLUG' ),
+			'id' => 'my-account-media-' . constant ( 'RTMEDIA_' . $name . '_SLUG' ),
+			'title' => $type[ 'plural_label' ],
+			'href' => trailingslashit ( get_rtmedia_user_link ( get_current_user_id () ) ) . RTMEDIA_MEDIA_SLUG . '/' . constant ( 'RTMEDIA_' . $name . '_SLUG' ) . '/'
+		    ) );
+		}
             }
         }
     }

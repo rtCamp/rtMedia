@@ -464,7 +464,7 @@ class RTMediaEncoding {
             $response = $_POST['thumbs'];
             $flag = false;
             global $wpdb;
-            $model = new RTDBModel('rtm_media_meta');
+            $model = new RTDBModel('rtm_media_meta', false, 10, true);
             $meta_details = $model->get(array('meta_value' => $_REQUEST['job_id'], 'meta_key' => 'rtmedia-encoding-job-id'));
 	    if(!isset($meta_details[0])){
 		$id = intval($_REQUEST["rt_id"]);

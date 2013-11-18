@@ -147,7 +147,7 @@ if (!class_exists('RTMediaSettings')) {
         }
 
         public function allowed_types() {
-            $allowed_types = get_site_option('upload_filetypes', 'jpg jpeg png gif');
+            $allowed_types = rtmedia_get_site_option('upload_filetypes', 'jpg jpeg png gif');
             $allowed_types = explode(' ', $allowed_types);
             $allowed_types = implode(', ', $allowed_types);
             echo '<span class="description">' . sprintf(__('Currently your network allows uploading of the following file types. You can change the settings <a href="%s">here</a>.<br /><code>%s</code></span>', 'rtmedia'), network_admin_url('settings.php#upload_filetypes'), $allowed_types);
@@ -168,12 +168,12 @@ if (!class_exists('RTMediaSettings')) {
             if (isset($_POST['refresh-count'])) {
                 if ($rtmedia_admin->update_count()) {
                     if (is_multisite())
-                        update_site_option('rtm-recount-success', __('Recounting of media files done successfully', 'rtmedia'));
+                        rtmedia_update_site_option('rtm-recount-success', __('Recounting of media files done successfully', 'rtmedia'));
                     else
                         add_settings_error(__('Recount Success', 'rtmedia'), 'rtm-recount-success', __('Recounting of media files done successfully', 'rtmedia'), 'updated');
                 } else {
                     if (is_multisite())
-                        update_site_option('rtm-recount-fail', __('Recounting Failed', 'rtmedia'));
+                        rtmedia_update_site_option('rtm-recount-fail', __('Recounting Failed', 'rtmedia'));
                     else
                         add_settings_error(__('Recount Fail', 'rtmedia'), 'rtm-recount-fail', __('Recounting Failed', 'rtmedia'));
                 }
@@ -187,7 +187,7 @@ if (!class_exists('RTMediaSettings')) {
 //            }
             if (!isset($_POST['rtmedia_options']['videos_enabled']) && !isset($_POST['rtmedia_options']['audio_enabled']) && !isset($_POST['rtmedia_options']['images_enabled'])) {
                 if (is_multisite())
-                    update_site_option('rtm-media-type', __('Atleast one Media Type Must be selected', 'rtmedia'));
+                    rtmedia_update_site_option('rtm-media-type', __('Atleast one Media Type Must be selected', 'rtmedia'));
                 else
                     add_settings_error(__('Media Type', 'rtmedia'), 'rtm-media-type', __('Atleast one Media Type Must be selected', 'rtmedia'));
                 $input['images_enabled'] = 1;
@@ -196,13 +196,13 @@ if (!class_exists('RTMediaSettings')) {
             $input['default_count'] = intval($_POST['rtmedia_options']['default_count']);
             if (!is_int($input['default_count']) || ($input['default_count'] < 0 ) || empty($input['default_count'])) {
                 if (is_multisite())
-                    update_site_option('rtm-media-default-count', __('"Number of media" count value should be numeric and greater than 0.', 'rtmedia'));
+                    rtmedia_update_site_option('rtm-media-default-count', __('"Number of media" count value should be numeric and greater than 0.', 'rtmedia'));
                 else
                     add_settings_error(__('Default Count', 'rtmedia'), 'rtm-media-default-count', __('"Number of media" count value should be numeric and greater than 0.', 'rtmedia'));
                 $input['default_count'] = 10;
             }
             if (is_multisite())
-                update_site_option('rtm-settings-saved', __('Settings saved.', 'rtmedia'));
+                rtmedia_update_site_option('rtm-settings-saved', __('Settings saved.', 'rtmedia'));
             do_action('rtmedia_sanitize_settings', $_POST, $input);
             return $input;
         }

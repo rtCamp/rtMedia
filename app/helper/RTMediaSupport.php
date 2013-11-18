@@ -178,7 +178,7 @@ if (!class_exists('RTMediaSupport')) {
 	public function get_plugin_info() {
 	    $active_plugins = (array) get_option( 'active_plugins', array() );
 	    if ( is_multisite() ) {
-		$active_plugins = array_merge( $active_plugins, get_site_option( 'active_sitewide_plugins', array() ) );
+		$active_plugins = array_merge( $active_plugins, rtmedia_get_site_option( 'active_sitewide_plugins', array() ) );
 	    }
 	    $rtmedia_plugins = array();
 	    foreach ( $active_plugins as $plugin ) {
@@ -252,7 +252,7 @@ if (!class_exists('RTMediaSupport')) {
 	    $debug_info['Template Overrides'] = implode( ', <br/>', $this->rtmedia_scan_template_files(RTMEDIA_PATH . "/templates/") );
 
 	    $rtMedia_model = new RTMediaModel();
-	    $sql = "select media_type, count(id) as count from {$rtMedia_model->table_name} group by media_type";
+	    $sql = "select media_type, count(id) as count from {$rtMedia_model->table_name} where blog_id = '".get_current_blog_id()."' group by media_type";
 	    global $wpdb;
 	    $results = $wpdb->get_results ( $sql );
 	    if ( $results ) {
@@ -287,7 +287,7 @@ if (!class_exists('RTMediaSupport')) {
         }
 
 	public function migration_html($page = '') {
-	    $pending_rtmedia_migrate = get_site_option ( "rtMigration-pending-count" );
+	    $pending_rtmedia_migrate = rtmedia_get_site_option ( "rtMigration-pending-count" );
 
 	    $content = " ";
 	    $flag = true;

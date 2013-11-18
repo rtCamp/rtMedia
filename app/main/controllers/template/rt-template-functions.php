@@ -877,7 +877,7 @@ function update_video_poster($html,$media,$activity=false){
 
 function get_video_without_thumbs() {
     $rtmedia_model = new RTMediaModel();
-    $sql = "select media_id from {$rtmedia_model->table_name} where media_type = 'video' and cover_art is null";
+    $sql = "select media_id from {$rtmedia_model->table_name} where media_type = 'video' and blog_id = '".get_current_blog_id()."' and cover_art is null";
     global $wpdb;
     $results = $wpdb-> get_col ( $sql );
     return $results;
@@ -1004,7 +1004,7 @@ function rtmedia_user_album_list ( $get_all = false ) {
     $global_option = rtmedia_global_album_list ();
     $global_albums = rtmedia_global_albums ();
 
-    $global_album = get_site_option ( 'rtmedia-global-albums' );
+    $global_album = rtmedia_get_site_option ( 'rtmedia-global-albums' );
     $album_objects = $model->get_media ( array( 'media_author' => get_current_user_id (), 'media_type' => 'album' ), false, 'context' );
     $option_group = "";
     $profile_option = "";
@@ -1145,7 +1145,7 @@ function rtmedia_album_edit () {
     ?>
         <div class="reveal-modal-bg" style="display: none"></div>
         <?php
-    if ( isset ( $rtmedia_query->media_query ) && ! in_array ( $rtmedia_query->media_query[ 'album_id' ], get_site_option ( 'rtmedia-global-albums' ) ) ) {
+    if ( isset ( $rtmedia_query->media_query ) && ! in_array ( $rtmedia_query->media_query[ 'album_id' ], rtmedia_get_site_option ( 'rtmedia-global-albums' ) ) ) {
         //if ( isset ( $rtmedia_query->media_query[ 'media_author' ] ) && get_current_user_id () == $rtmedia_query->media_query[ 'media_author' ] ) {
 	if ( rtmedia_is_album_editable() || is_rt_admin() ) {
             ?>

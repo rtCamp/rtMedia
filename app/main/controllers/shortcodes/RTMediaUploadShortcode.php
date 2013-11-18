@@ -65,7 +65,7 @@ class RTMediaUploadShortcode {
             }
         }
 
-        if ( self::display_allowed () ) {
+        if ( self::display_allowed () || ( isset( $attr['allow_anonymous'] ) && $attr['allow_anonymous'] === true ) ) {
             if ( ! _device_can_upload () ) {
                 echo '<p>' . __ ( 'The web browser on your device cannot be used to upload files.' ) . '</p>';
                 return;

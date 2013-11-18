@@ -419,16 +419,22 @@ class RTMediaQuery {
         $this->original_query = $query;
         $this->query = wp_parse_args ( $query, $this->query );
         //Set Json
+	$allowed_query = array( "id", "media_id", "media_type", "media_author", "album_id", "context", "context_id", "global", "privacy" );
         if ( isset ( $_REQUEST[ "rtmedia_shortcode" ] ) ) {
             $query_data = $_REQUEST;
-            $allowed_query = array( "id", "media_id", "media_type", "media_author", "albume_id", "context", "context_id", "global" );
             foreach ( $query_data as $key => $val ) {
                 if ( ! in_array ( $key, $allowed_query ) ) {
                     unset ( $query_data[ $key ] );
                 }
             }
             $this->query = wp_parse_args ( $query_data, $this->query );
-        }
+	} else if(isset($this->is_gallery_shortcode) && $this->is_gallery_shortcode === true) {
+	    foreach ( $this->query as $key => $val ) {
+                if ( ! in_array ( $key, $allowed_query ) ) {
+                    unset ( $this->query[ $key ] );
+                }
+            }
+	}
 
         if ( isset ( $this->query[ "context" ] ) && $this->query[ "context" ] == "activity" ) {
             $this->query[ "activity_id" ] = array( "value" );

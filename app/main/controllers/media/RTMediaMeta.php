@@ -16,7 +16,7 @@ class RTMediaMeta {
 	 *
 	 */
 	function __construct() {
-		$this->model = new RTDBModel('rtm_media_meta');
+		$this->model = new RTDBModel('rtm_media_meta', false, 10, true);
 	}
 
 	function get_meta($id=false,$key=false){
