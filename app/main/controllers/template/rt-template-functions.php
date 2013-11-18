@@ -1433,7 +1433,7 @@ function rtmedia_admin_premium_page($page) {
     ?>
 	<div class="premium-page-container">
 	    <div class="row">
-	    <h1 class="premium-title">18 Reasons to buy rtMedia-PRO</h1>
+	    <h1 class="premium-title">Reasons to buy rtMedia-PRO</h1>
 	    </div>
 	    <div class="row">
 		<div class="columns large-1 rtm-premium-icon-pro"><i class="icon-comments icon-3x"></i></div>
