@@ -257,9 +257,7 @@ class RTMediaModel extends RTDBModel {
 
     function get_other_album_count ( $profile_id, $context = "profile" ) {
         $global = RTMediaAlbum::get_globals ();
-	var_dump($global);
-	exit;
-        $sql = "select distinct album_id from {$this->table_name} where 2=2 AND context = '{$context}' ";
+	$sql = "select distinct album_id from {$this->table_name} where 2=2 AND context = '{$context}' ";
 	if ( is_multisite () ) {
 	    $sql.= " AND {$this->table_name}.blog_id = '".get_current_blog_id()."' ";
 	}
