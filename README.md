@@ -2,7 +2,7 @@
 
 # rtMedia for WordPress, BuddyPress and bbPress #
 
-* **Contributors:** [rtcamp] (http://profiles.wordpress.org/rtcamp), [rahul286] (http://profiles.wordpress.org/rahul286), [faishal] (http://profiles.wordpress.org/faishal), [JoshuaAbenazer] (http://profiles.wordpress.org/JoshuaAbenazer), [gagan0123] (http://profiles.wordpress.org/gagan0123), [saurabhshukla] (http://profiles.wordpress.org/saurabhshukla), [desaiuditd] (http://profiles.wordpress.org/desaiuditd), [nitun.lanjewar] (http://profiles.wordpress.org/nitun.lanjewar), [rittesh.patel] (http://profiles.wordpress.org/rittesh.patel), [pushpak.pop] (http://profiles.wordpress.org/pushpak.pop), [umesh.nevase] (http://profiles.wordpress.org/umesh.nevase), [suhasgirgaonkar] (http://profiles.wordpress.org/suhasgirgaonkar), [neerukoul] (http://profiles.wordpress.org/neerukoul), [hrishiv90] (http://profiles.wordpress.org/hrishiv90), [kanakiyajay] (http://profiles.wordpress.org/kanakiyajay), [jarretc] (http://profiles.wordpress.org/jarretc),
+* **Contributors:** [rtcamp] (http://profiles.wordpress.org/rtcamp), [rahul286] (http://profiles.wordpress.org/rahul286), [faishal] (http://profiles.wordpress.org/faishal), [JoshuaAbenazer] (http://profiles.wordpress.org/JoshuaAbenazer), [gagan0123] (http://profiles.wordpress.org/gagan0123), [saurabhshukla] (http://profiles.wordpress.org/saurabhshukla), [desaiuditd] (http://profiles.wordpress.org/desaiuditd), [nitun.lanjewar] (http://profiles.wordpress.org/nitun.lanjewar), [rittesh.patel] (http://profiles.wordpress.org/rittesh.patel), [pushpak.pop] (http://profiles.wordpress.org/pushpak.pop), [umesh.nevase] (http://profiles.wordpress.org/umesh.nevase), [suhasgirgaonkar] (http://profiles.wordpress.org/suhasgirgaonkar), [neerukoul] (http://profiles.wordpress.org/neerukoul), [hrishiv90] (http://profiles.wordpress.org/hrishiv90), [kanakiyajay] (http://profiles.wordpress.org/kanakiyajay), [jarretc] (http://profiles.wordpress.org/jarretc), [tobiaskluge] (http://profiles.wordpress.org/tobiaskluge),
 
 * **License:** [GPL v2 or later] ( http://www.gnu.org/licenses/gpl-2.0.html)
 
@@ -130,6 +130,10 @@ http://www.youtube.com/watch?v####dJrykKQGDcs
 ## Changelog ##
 
 Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "Visit rtMedia's Features page") to get some details about future releases.
+
+#### 3.2.8 ####
+* Fix WordPress MultiSite issue.
+* Shortcode invalid argument issue fix.
 
 #### 3.2.7 ####
 * Update readme
@@ -600,8 +604,8 @@ Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_sou
 * HTML5 Audio Tag Support (with fallback)
 * HTML5 Video Tag Support (with fallback)
 
-#### 3.2.7 ####
-Requires BuddyPress 1.7 or higher, if using BuddyPress. Update readme and simple file upload in shortcode.
+#### 3.2.8 ####
+Requires BuddyPress 1.7 or higher, if using BuddyPress. Fix WordPress MultiSite issue and Shortcode invalid argument issue fix.
 
 ## Sponsors ##
 
