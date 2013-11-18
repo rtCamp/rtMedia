@@ -1433,7 +1433,14 @@ function rtmedia_admin_premium_page($page) {
     ?>
 	<div class="premium-page-container">
 	    <div class="row">
-	    <h1 class="premium-title">17 Reasons to buy rtMedia-PRO</h1>
+	    <h1 class="premium-title">18 Reasons to buy rtMedia-PRO</h1>
+	    </div>
+	    <div class="row">
+		<div class="columns large-1 rtm-premium-icon-pro"><i class="icon-comments icon-3x"></i></div>
+		<div class="columns large-10">
+		    <h2>WordPress Comment Attachment</h2>
+		    <p>You can attach files to WordPress comments.</p>
+		</div>
 	    </div>
 	    <div class="row">
 		<div class="columns large-1 rtm-premium-icon-pro"><i class="icon-user icon-3x"></i></div>
@@ -1443,7 +1450,7 @@ function rtmedia_admin_premium_page($page) {
 		</div>
 	    </div>
 	    <div class="row">
-		<div class="columns large-1 rtm-premium-icon-pro"><i class="icon-file icon-3x"></i></div>
+		<div class="columns large-1 rtm-premium-icon-pro"><i class="icon-file-alt icon-3x"></i></div>
 		<div class="columns large-10">
 		    <h2>Document Support</h2>
 		    <p>You can add, view and download documents like txt, doc, pdf, also add and upload other file types like zip, tar and tar.gz etc.</p>
