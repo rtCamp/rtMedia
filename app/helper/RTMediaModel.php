@@ -172,6 +172,9 @@ class RTMediaModel extends RTDBModel {
                                     AND media_type <> 'album' AND context <> 'group') OR (media_author = $author_id ))
 			    AND media_type = 'album'
 			    AND (context <> 'group' or context is NULL) ";
+	if( is_multisite() ) {
+	    $where.= " AND {$this->table_name}.blog_id = '".get_current_blog_id()."' ";
+	}
 	$where = apply_filters ( 'rtmedia-get-album-where-query', $where, $this->table_name );
 	$qorder_by = " ORDER BY {$this->table_name}.$order_by ";
         $sql .= $where . $qorder_by ;
@@ -189,6 +192,10 @@ class RTMediaModel extends RTDBModel {
         if ( is_multisite () )
             $order_by = "blog_id" . (($order_by)? "," . $order_by :'');
         $sql = "SELECT * FROM {$this->table_name} WHERE id IN(SELECT DISTINCT (album_id) FROM {$this->table_name} WHERE context_id = $group_id AND album_id IS NOT NULL AND media_type != 'album' AND context = 'group') OR (media_type = 'album' AND context_id = $group_id AND context = 'group')";
+
+	if( is_multisite() ) {
+	    $sql.= " AND  {$this->table_name}.blog_id = '".get_current_blog_id()."' ";
+	}
         $sql .= " ORDER BY {$this->table_name}.$order_by";
 
         if ( is_integer ( $offset ) && is_integer ( $per_page ) ) {
@@ -212,6 +219,10 @@ class RTMediaModel extends RTDBModel {
         $query .= "SUM(CASE WHEN {$this->table_name}.media_type LIKE 'album' THEN 1 ELSE 0 END) as album
 	FROM
 		{$this->table_name} WHERE 2=2 ";
+
+	if ( is_multisite () ) {
+	    $query.= " AND {$this->table_name}.blog_id = '".get_current_blog_id()."' ";
+	}
 
         if ( $where_query ) {
             foreach ( $where_query as $colname => $colvalue ) {
@@ -246,7 +257,12 @@ class RTMediaModel extends RTDBModel {
 
     function get_other_album_count ( $profile_id, $context = "profile" ) {
         $global = RTMediaAlbum::get_globals ();
+	var_dump($global);
+	exit;
         $sql = "select distinct album_id from {$this->table_name} where 2=2 AND context = '{$context}' ";
+	if ( is_multisite () ) {
+	    $sql.= " AND {$this->table_name}.blog_id = '".get_current_blog_id()."' ";
+	}
         if ( is_array ( $global ) && count ( $global ) > 0 ) {
             $sql .= " and album_id in (";
             $sep = "";
