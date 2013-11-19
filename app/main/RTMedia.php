@@ -91,6 +91,7 @@ class RTMedia
         add_action('wp_enqueue_scripts', array('RTMediaGalleryShortcode', 'register_scripts'));
         add_action('wp_enqueue_scripts', array(&$this, 'enqueue_scripts_styles'), 999);
         add_action('rt_db_upgrade', array($this, 'fix_parent_id'));
+        add_action('rt_db_upgrade', array($this, 'fix_privacy'));
         include(RTMEDIA_PATH . 'app/main/controllers/template/rt-template-functions.php');
         add_filter('intermediate_image_sizes_advanced', array($this, 'filter_image_sizes_details'));
         add_filter('intermediate_image_sizes', array($this, 'filter_image_sizes'));
@@ -139,6 +140,11 @@ class RTMedia
 		}
             }
         }
+    }
+
+    function fix_privacy() {
+	$model = new RTMediaModel();
+	$update_sql = "UPDATE $model->table_name SET privacy = '80' where privacy = '-1' ";
     }
 
     function set_site_options() {
