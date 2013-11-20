@@ -11,7 +11,7 @@ class RTMediaMigration {
 
     function __construct () {
         global $wpdb;
-        $this->bmp_table = $wpdb->prefix . "rt_rtm_media";
+        $this->bmp_table = $wpdb->base_prefix . "rt_rtm_media";
 
         add_action ( 'admin_menu', array( $this, 'menu' ) );
         add_action ( 'wp_ajax_bp_media_rt_db_migration', array( $this, "migrate_to_new_db" ) );
@@ -108,7 +108,7 @@ class RTMediaMigration {
                                                         where
                                                             (NOT p.ID IS NULL)
                                                                 and a.meta_key = 'bp_media_child_activity') p
-							on  wp_bp_activity.item_id = p.meta_value
+							on  {$bp_prefix}bp_activity.item_id = p.meta_value
                                                 where
                                                     type = 'activity_comment'
                                                     and is_spam <>1 and
