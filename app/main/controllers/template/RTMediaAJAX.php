@@ -24,7 +24,8 @@ class RTMediaAJAX {
         function create_album(){
             if ( isset($_POST['name']) && $_POST['name'] && is_rtmedia_album_enable()) {
                 if(isset($_POST['context']) && $_POST['context'] =="group"){
-                    if(can_user_create_album_in_group() == false){
+                    $group_id = !empty( $_POST['group_id']) ? $_POST['group_id'] : '';
+                    if(can_user_create_album_in_group($group_id) == false){
                         echo false;
                         wp_die();
                     }
