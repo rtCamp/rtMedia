@@ -191,7 +191,13 @@ class RTMediaInteraction {
         if ( function_exists ( "bp_get_displayed_user_fullname" ) && bp_displayed_user_id () != 0 ) {
             $title .= $sep . bp_get_displayed_user_fullname ();
             $sep = $oldSep;
-        }
+        } else {
+	    $user_info = get_userdata( get_current_user_id() );
+	    if( isset( $user_info->data->display_name ) ) {
+		$title .= $sep . $user_info->data->display_name;
+		$sep = $oldSep;
+	    }
+	}
 
         $title .= $sep . RTMEDIA_MEDIA_LABEL;
         $sep = $oldSep;
