@@ -44,7 +44,11 @@ class RTMediaActivity {
         }
 
         global $rtmedia;
-        $limitActivityFeed = $rtmedia->options['buddypress_limitOnActivity'];
+	if( isset( $rtmedia->options['buddypress_limitOnActivity'] ) ) {
+	    $limitActivityFeed = $rtmedia->options['buddypress_limitOnActivity'];
+	} else {
+	    $limitActivityFeed = 0;
+	}
 
         $mediaObj = new RTMediaModel();
         $media_details = $mediaObj->get ( array( 'id' => $this->media ) );
