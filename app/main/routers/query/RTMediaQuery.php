@@ -192,8 +192,12 @@ class RTMediaQuery {
     }
 
     function set_action_query () {
+	if(isset( $this->interaction ) && isset( $this->interaction->query_vars ) ) {
+	    $raw_query = $this->interaction->query_vars;
+	} else {
+	    $raw_query = array();
+	}
 
-        $raw_query = $this->interaction->query_vars;
 
         if ( isset ( $raw_query ) && is_array ( $raw_query ) && count ( $raw_query ) > 1 ) {
             if ( empty ( $raw_query[ 0 ] ) && ! empty ( $raw_query[ 1 ] ) ) {
@@ -279,6 +283,8 @@ class RTMediaQuery {
             }
         }
 
+	$modifier_type = apply_filters( "rtmedia_action_query_modifier_type", $modifier_type, $raw_query );
+	$modifier_value = apply_filters( "rtmedia_action_query_modifier_value", $modifier_value, $raw_query );
 
 
         if ( isset ( $raw_query[ 1 ] ) ) {
@@ -391,6 +397,7 @@ class RTMediaQuery {
          * setting parameters in action query object for pagination
          */
         $per_page_media = intval ( $rtmedia->options[ 'general_perPageMedia' ] );
+	$per_page_media = apply_filters( "rtmedia_per_page_media", $per_page_media );
 
 
         $this->action_query = ( object ) array(

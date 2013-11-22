@@ -843,6 +843,10 @@ function parentlink_global_album($id) {
             } else {
                 $parent_link = get_rtmedia_user_link($disp_user);
             }
+	    global $rtmedia_query;
+	    if( isset( $rtmedia_query->is_gallery_shortcode ) && $rtmedia_query->is_gallery_shortcode == true) {
+		$parent_link = get_rtmedia_user_link( get_current_user_id() );
+	    }
         }
     }
     return $parent_link;

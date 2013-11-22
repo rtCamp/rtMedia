@@ -42,14 +42,14 @@ class RTMediaUploadView {
 
         global $rtmedia_query;
 	$album = '';
-        if ( $rtmedia_query && is_rtmedia_album () ) {
+        if ( $rtmedia_query && is_rtmedia_album () && isset( $rtmedia_query->media_query[ 'album_id' ] ) ) {
             $album = '<input class="rtmedia-current-album" type="hidden" name="rtmedia-current-album" value="' . $rtmedia_query->media_query[ 'album_id' ] . '" />';
         } elseif ( is_rtmedia_album_enable () && $rtmedia_query && is_rtmedia_gallery () ) {
 
-            if ( $rtmedia_query->query[ 'context' ] == 'profile' ) {
+            if ( isset( $rtmedia_query->query[ 'context' ] ) && $rtmedia_query->query[ 'context' ] == 'profile' ) {
                 $album = '<label>' . __('Album','rtmedia') . ': </label><select name="album" class="rtmedia-user-album-list">' . rtmedia_user_album_list () . '</select>';
             }
-            if ( $rtmedia_query->query[ 'context' ] == 'group' ) {
+            if (isset( $rtmedia_query->query[ 'context' ] ) && $rtmedia_query->query[ 'context' ] == 'group' ) {
                 $album = '<label>' . __('Album','rtmedia') . '</label><select name="album" class="rtmedia-user-album-list">' . rtmedia_group_album_list () . '</select>';
             }
         }
