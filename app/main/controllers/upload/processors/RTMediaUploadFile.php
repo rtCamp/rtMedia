@@ -38,8 +38,11 @@ class RTMediaUploadFile {
         include_once(ABSPATH . 'wp-admin/includes/image.php');
 
         $upload_type = $this->fake ? 'wp_handle_sideload' : 'wp_handle_upload';
-
-        add_filter ( 'upload_dir', array( $this, 'upload_dir' ) );
+        global $rt_set_filter_uplaod_dir;
+        if(!isset($rt_set_filter_uplaod_dir)){
+            add_filter ( 'upload_dir', array( $this, 'upload_dir' ) );
+            $rt_set_filter_uplaod_dir = true;
+        }
 	if(isset($this->files) && sizeof($this->files) > 0) {
 	    foreach ( $this->files as $key => $file ) {
 
@@ -87,15 +90,16 @@ class RTMediaUploadFile {
         }
 
 
-        $upload_dir[ 'path' ] = trailingslashit (
+       if(  strpos ( $upload_dir[ 'path' ] , 'rtMedia/' . $rtmedia_upload_prefix ) === false ){
+            $upload_dir[ 'path' ] = trailingslashit (
                         str_replace ( $upload_dir[ 'subdir' ], '', $upload_dir[ 'path' ] ) )
                 . 'rtMedia/' . $rtmedia_upload_prefix . $id .
                 $upload_dir[ 'subdir' ];
-        $upload_dir[ 'url' ] = trailingslashit (
+            $upload_dir[ 'url' ] = trailingslashit (
                         str_replace ( $upload_dir[ 'subdir' ], '', $upload_dir[ 'url' ] ) )
                 . 'rtMedia/' . $rtmedia_upload_prefix . $id
                 . $upload_dir[ 'subdir' ];
-
+        }        
 	$upload_dir = apply_filters("rtmedia_filter_upload_dir",$upload_dir);
 
         return $upload_dir;
