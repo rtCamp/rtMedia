@@ -91,6 +91,7 @@ class RTMediaLike extends RTMediaUserInteraction {
 	}
 	else{
 	    wp_safe_redirect ($_SERVER["HTTP_REFERER"]);
+	    die();
 	}
 	return $actions;
     }

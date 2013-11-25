@@ -115,7 +115,7 @@ class RTMediaMedia {
                     $row[ 'meta_value' ] = $value;
                     $status = add_rtmedia_meta ( $id, $key, $value );
 
-                    if ( get_class ( $status ) == 'WP_Error' || $status == 0 )
+                    if ( is_wp_error ( $status ) || $status == 0 )
                         return false;
                 }
             }
@@ -307,7 +307,7 @@ class RTMediaMedia {
         /* update the post_parent value in wp_post table */
         $status = $wpdb->update ( $wpdb->posts, array( 'post_parent' => $album_id ), array( 'ID' => $media_id ) );
 
-        if ( get_class ( $status ) == 'WP_Error' || $status == 0 ) {
+        if ( is_wp_error ( $status ) || $status == 0 ) {
             return false;
         } else {
             /* update album_id, context, context_id and privacy in rtMedia context */
@@ -352,7 +352,11 @@ class RTMediaMedia {
         if ( $uploaded[ 'album_id' ] ) {
             $model = new RTMediaModel();
             $parent_details = $model->get ( array( 'id' => $uploaded[ 'album_id' ] ) );
-            $album_id = $parent_details[ 0 ]->media_id;
+	    if(is_array($parent_details) && sizeof($parent_details) > 0 ) {
+		$album_id = $parent_details[ 0 ]->media_id;
+	    } else {
+		$album_id = 0;
+	    }
         } else {
             $album_id = 0;
         }
@@ -456,7 +460,7 @@ class RTMediaMedia {
         foreach ( $attachment_ids as $id ) {
             $attachment = get_post ( $id, ARRAY_A );
             $mime_type = explode ( '/', $attachment[ 'post_mime_type' ] );
-            
+
             $media = array(
                 'blog_id' => $blog_id,
                 'media_id' => $id,
@@ -495,7 +499,7 @@ class RTMediaMedia {
                         '%s added a %s', '%s added %d %s.', $count, 'rtmedia'
                 ), $username, $media->media_type, $media_str
         );
-
+	$action = apply_filters('rtmedia_buddypress_action_text_fitler',$action,$username,$count,$user->user_nicename,$media->media_type);
         $activity_args = array(
             'action' => $action,
             'content' => $activity_content,

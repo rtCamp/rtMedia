@@ -261,7 +261,7 @@ class RTMediaFormHandler {
                 $render_options = apply_filters("rtmedia_general_content_add_itmes",$render_options, $options);
 		$general_group = array();
 		$general_group[10] = "UI";
-		$general_group[30] = "Miscellaneous";
+		$general_group[90] = "Miscellaneous";
 		$general_group = apply_filters("rtmedia_general_content_groups", $general_group);
 		ksort($general_group);
 		$html = '';
@@ -273,7 +273,7 @@ class RTMediaFormHandler {
 		    foreach ($render_options as $tab => $option) {
 
 			if(!isset($option['group'])) {
-			    $option['group'] = "30";
+			    $option['group'] = "90";
 			}
 
 			if($option['group'] != $key) {
@@ -316,7 +316,7 @@ class RTMediaFormHandler {
 		$render = array();
 		$allowed_media_type = $rtmedia->allowed_types;
 		$allowed_media_type = apply_filters("rtmedia_allowed_types", $allowed_media_type);
-		
+
 		foreach ($options as $key => $value) {
 			$data = explode('_', $key);
 			if(!isset($render[$data[1]])) {
@@ -351,7 +351,7 @@ class RTMediaFormHandler {
 <?php
 		$even = 0;
 		foreach ($render_data as $key=>$section) {
-                    if( isset($section['settings_visibility']) && isset($section['settings_visibility'] ) == true ) {
+                    if( isset($section['settings_visibility']) && $section['settings_visibility'] == true ) {
 			if( ++$even%2 ) {
 			    echo '<div class="row rt-odd">';
 			}

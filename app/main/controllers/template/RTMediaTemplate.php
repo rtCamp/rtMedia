@@ -256,6 +256,7 @@ class RTMediaTemplate {
                     $rtMediaNav->refresh_counts ( $rtmedia_query->media[ 0 ]->media_author, array( "context" => "profile", 'media_author' => $rtmedia_query->media[ 0 ]->media_author ) );
             }
             wp_safe_redirect ( get_rtmedia_permalink ( $rtmedia_query->media_query[ 'album_id' ] ) . 'edit/' );
+            die();
         } else {
             echo __ ( "Ooops !!! Invalid access. No nonce was found !!", "rtmedia" );
         }
@@ -292,6 +293,7 @@ class RTMediaTemplate {
             }
         }
         wp_safe_redirect ( $_POST[ '_wp_http_referer' ] );
+        die();
     }
 
     function single_delete () {
@@ -315,8 +317,6 @@ class RTMediaTemplate {
             } else {
                 $parent_link = get_author_posts_url ( $post->media_author );
             }
-
-//                        do_action('rtmedia_after_delete_media',$rtmedia_query->media[ 0 ]->id);
             $redirect_url = $_SERVER[ "HTTP_REFERER" ];
 
 
@@ -327,8 +327,9 @@ class RTMediaTemplate {
                     $redirect_url = trailingslashit ( $parent_link ) . "media/";
                 }
             }
-
-            wp_redirect ( $redirect_url );
+            $redirect_url = apply_filters( 'rtmedia_before_delete_media_redirect', $redirect_url );
+            wp_safe_redirect ( $redirect_url );
+            die();
         } else {
             echo __ ( "Ooops !!! Invalid access. No nonce was found !!", "rtmedia" );
         }

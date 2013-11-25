@@ -19,6 +19,7 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
         public function __construct () {
             global $rtmedia;
             add_action ( 'init', array( $this, 'video_transcoding_survey_response' ) );
+            add_action ( 'admin_init', array( $this, 'presstrends_plugin' ) );
             if ( is_multisite () ) {
                 add_action ( 'network_admin_notices', array( $this, 'upload_filetypes_error' ) );
                 add_action ( 'admin_notices', array( $this, 'upload_filetypes_error' ) );
@@ -96,17 +97,19 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
                     <table>
                         <tbody> <?php
                             $rtMedia_model = new RTMediaModel();
-                            $sql = "select media_type, count(id) as count from {$rtMedia_model->table_name} group by media_type";
+                            $sql = "select media_type, count(id) as count from {$rtMedia_model->table_name} where blog_id='".get_current_blog_id()."' group by media_type";
                             global $wpdb;
                             $results = $wpdb->get_results ( $sql );
                             if ( $results ) {
                                 foreach ( $results as $media ) {
+				    if( defined( strtoupper( 'RTMEDIA_'.$media->media_type.'_PLURAL_LABEL' ) ) ) {
                                     ?>
                                     <tr>
                                         <td class = "b"> <?php echo $media->count; ?> </td>
                                         <td class = "t"><?php echo constant(strtoupper('RTMEDIA_'.$media->media_type.'_PLURAL_LABEL') ); ?></td>
                                     </tr>
                                     <?php
+				    }
                                 }
                             }
                             ?>
@@ -273,11 +276,11 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
                 'rtmedia_page_rtmedia-addons',
                 'rtmedia_page_rtmedia-support',
                 'rtmedia_page_rtmedia-importer',
-                'rtmedia_page_rtmedia-regenerate'
+                'rtmedia_page_rtmedia-regenerate',
+                'rtmedia_page_rtmedia-premium'
             );
             $admin_pages = apply_filters ( 'rtmedia_filter_admin_pages_array', $admin_pages );
-
-            if ( in_array ( $hook, $admin_pages ) ) {
+	    if ( in_array ( $hook, $admin_pages ) || strpos( $hook, 'rtmedia-migration') ) {
                 $admin_ajax = admin_url ( 'admin-ajax.php' );
 
                 wp_enqueue_script ( 'bootstrap-switch', RTMEDIA_URL . 'app/assets/js/bootstrap-switch.js', array( 'jquery' ), RTMEDIA_VERSION );
@@ -336,6 +339,10 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
             add_submenu_page ( 'rtmedia-settings', __ ( 'Settings', 'rtmedia' ), __ ( 'Settings', 'rtmedia' ), 'manage_options', 'rtmedia-settings', array( $this, 'settings_page' ) );
             add_submenu_page ( 'rtmedia-settings', __ ( 'Addons', 'rtmedia' ), __ ( 'Addons', 'rtmedia' ), 'manage_options', 'rtmedia-addons', array( $this, 'addons_page' ) );
             add_submenu_page ( 'rtmedia-settings', __ ( 'Support', 'rtmedia' ), __ ( 'Support ', 'rtmedia' ), 'manage_options', 'rtmedia-support', array( $this, 'support_page' ) );
+	    if(! defined("RTMEDIA_PRO_VERSION")) {
+		add_submenu_page ( 'rtmedia-settings', __ ( 'Premium', 'rtmedia' ), __ ( 'Premium ', 'rtmedia' ), 'manage_options', 'rtmedia-premium', array( $this, 'premium_page' ) );
+	    }
+
             $obj_encoding =  new RTMediaEncoding(true);
             if ($obj_encoding->api_key)
                 add_submenu_page ( 'rtmedia-settings', __ ( 'Regenerate Thumbnail', 'rtmedia' ), __ ( 'Regen. Thumbnail ', 'rtmedia' ), 'manage_options', 'rtmedia-regenerate', array( $this, 'rt_regenerate_thumbnail' ) );
@@ -448,11 +455,11 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
 	function rtmedia_regenerate_thumbnail_notice() {
 	    $obj_encoding =  new RTMediaEncoding(true);
             if ($obj_encoding->api_key) {
-		$site_option  = get_site_option("rtmedia-video-thumb-notice");
+		$site_option  = rtmedia_get_site_option("rtmedia-video-thumb-notice");
 		if(!$site_option || $site_option != "hide") {
-		    update_site_option("rtmedia-video-thumb-notice", "show");
+		    rtmedia_update_site_option("rtmedia-video-thumb-notice", "show");
 		    $videos_without_thumbs = get_video_without_thumbs();
-		    if(isset($videos_without_thumbs) && is_array($videos_without_thumbs) && $videos_without_thumbs!= "") {
+		    if(isset($videos_without_thumbs) && is_array($videos_without_thumbs) && sizeof($videos_without_thumbs) > 0 ) {
 			echo '<div class="error rtmedia-regenerate-video-thumb-error">
 				<p>
 				' . sprintf ( __ ( 'You have total '. sizeof($videos_without_thumbs) .' videos without thumbnails. Click <a href="'. admin_url('admin.php?page=rtmedia-regenerate') .'"> here </a> to generate thumbnails. <a href="#" onclick="rtmedia_hide_video_thumb_notice()" style="float:right">Hide</a>' ) ) . '
@@ -477,7 +484,7 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
 	}
 
 	function rtmedia_hide_video_thumb_admin_notice() {
-	    if(update_site_option("rtmedia-video-thumb-notice", "hide"))
+	    if(rtmedia_update_site_option("rtmedia-video-thumb-notice", "hide"))
 		echo "1";
 	    else
 		echo "0";
@@ -508,7 +515,7 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
 
         function get_video_without_thumbs() {
             $rtmedia_model = new RTMediaModel();
-            $sql = "select media_id from {$rtmedia_model->table_name} where media_type = 'video' and cover_art is null";
+            $sql = "select media_id from {$rtmedia_model->table_name} where media_type = 'video' and blog_id = '".get_current_blog_id()."' and cover_art is null";
             global $wpdb;
             $results = $wpdb->get_col( $sql );
             return $results;
@@ -546,7 +553,11 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
             $this->render_page ( 'rtmedia-support' );
         }
 
-        /**
+	public function premium_page() {
+	    $this->render_page ( 'rtmedia-premium' );
+	}
+
+	/**
          *
          * @return type
          */
@@ -606,7 +617,11 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
                                 <?php
                                 if ( $page == 'rtmedia-addons' )
                                     RTMediaAddon::render_addons ( $page );
-                                else
+                                else if ( $page == 'rtmedia-support' ) {
+				    $rtmedia_support = new RTMediaSupport(false);
+				    $rtmedia_support->render_support($page);
+				}
+				else
                                     do_settings_sections ( $page );
                                 ?>
                                 <?php
@@ -692,6 +707,9 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
             foreach ( array_values ( $tabs ) as $tab_data ) {
                 $is_current = ( bool ) ( $tab_data[ 'slug' ] == $this->get_current_tab () );
                 $tab_class = $is_current ? $active_class : $idle_class;
+		if(isset($tab_data['class']) && is_array($tab_data['class'])) {
+		    $tab_class .= " ".implode(" ", $tab_data['class']);
+		}
                 $tabs_html .= '<a href="' . $tab_data[ 'href' ] . '" class="' . $tab_class . '">' . $tab_data[ 'name' ] . '</a>';
             }
 
@@ -851,7 +869,7 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
             do_action ( 'rtmedia_sanitize_settings', $_POST );
 
             if ( isset ( $_POST[ 'rtmedia_options' ] ) ) {
-                update_site_option ( 'rtmedia_options', $_POST[ 'rtmedia_options' ] );
+                rtmedia_update_site_option ( 'rtmedia_options', $_POST[ 'rtmedia_options' ] );
 //
 //                // redirect to settings page in network
                 wp_redirect (
@@ -878,7 +896,7 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
 
             $message = sprintf ( __ ( 'I use @buddypressmedia http://goo.gl/8Upmv on %s', 'rtmedia' ), home_url () );
             $addons = '<div id="social" class="row">
-							<label class="columns large-6 large-offset-3" for="bp-media-add-linkback"><input' . checked ( get_site_option ( 'rtmedia-add-linkback', false ), true, false ) . ' type="checkbox" name="bp-media-add-linkback" value="1" id="bp-media-add-linkback"/> ' . __ ( 'Add link to footer', 'rtmedia' ) . '</label>
+							<label class="columns large-6 large-offset-3" for="bp-media-add-linkback"><input' . checked ( rtmedia_get_site_option ( 'rtmedia-add-linkback', false ), true, false ) . ' type="checkbox" name="bp-media-add-linkback" value="1" id="bp-media-add-linkback"/> ' . __ ( 'Add link to footer', 'rtmedia' ) . '</label>
 							<div class="row">
 								<div class="columns large-6"><iframe src="//www.facebook.com/plugins/like.php?href=http%3A%2F%2Frtcamp.com%2Fbuddypress-media%2F&amp;send=false&amp;layout=button_count&amp;width=72&amp;show_faces=false&amp;font&amp;colorscheme=light&amp;action=like&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:80px; height:21px; margin-top: 5px;" allowTransparency="true"></iframe></div>
 								<div class="columns large-6"><a href="https://www.facebook.com/sharer/sharer.php?u=http://rtcamp.com/buddypress-media/" class="button" target="_blank"> <i class="icon-facebook"></i> ' . __ ( 'Share', 'rtmedia' ) . '</a></div>
@@ -934,9 +952,9 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
 
         public function linkback () {
             if ( isset ( $_POST[ 'linkback' ] ) && $_POST[ 'linkback' ] ) {
-                return update_site_option ( 'rtmedia-add-linkback', true );
+                return rtmedia_update_site_option ( 'rtmedia-add-linkback', true );
             } else {
-                return update_site_option ( 'rtmedia-add-linkback', false );
+                return rtmedia_update_site_option ( 'rtmedia-add-linkback', false );
             }
             die;
         }
@@ -945,7 +963,7 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
             if ( $_POST[ 'interested' ] == 'Yes' && ! empty ( $_POST[ 'choice' ] ) ) {
                 wp_remote_get ( add_query_arg ( array( 'rtmedia-convert-videos-form' => 1, 'choice' => $_POST[ 'choice' ], 'url' => urlencode ( $_POST[ 'url' ] ), 'email' => $_POST[ 'email' ] ), 'http://rtcamp.com/' ) );
             } else {
-                update_site_option ( 'rtmedia-survey', 0 );
+                rtmedia_update_site_option ( 'rtmedia-survey', 0 );
             }
             echo 'Thank you for your time.';
             die;
@@ -953,7 +971,7 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
 
         public function video_transcoding_survey_response () {
             if ( isset ( $_GET[ 'survey-done' ] ) && ($_GET[ 'survey-done' ] == md5 ( 'survey-done' )) ) {
-                update_site_option ( 'rtmedia-survey', 0 );
+                rtmedia_update_site_option ( 'rtmedia-survey', 0 );
             }
         }
 
@@ -965,7 +983,7 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
 
         public function upload_filetypes_error () {
             global $rtmedia;
-            $upload_filetypes = get_site_option ( 'upload_filetypes', 'jpg jpeg png gif' );
+            $upload_filetypes = rtmedia_get_site_option ( 'upload_filetypes', 'jpg jpeg png gif' );
             $upload_filetypes = explode ( ' ', $upload_filetypes );
             $flag = false;
             if ( isset ( $rtmedia->options[ 'images_enabled' ] ) && $rtmedia->options[ 'images_enabled' ] ) {
@@ -1019,7 +1037,7 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
 
         public function correct_upload_filetypes () {
             global $rtmedia;
-            $upload_filetypes_orig = $upload_filetypes = get_site_option ( 'upload_filetypes', 'jpg jpeg png gif' );
+            $upload_filetypes_orig = $upload_filetypes = rtmedia_get_site_option ( 'upload_filetypes', 'jpg jpeg png gif' );
             $upload_filetypes = explode ( ' ', $upload_filetypes );
             if ( isset ( $rtmedia->options[ 'images_enabled' ] ) && $rtmedia->options[ 'images_enabled' ] ) {
                 $not_supported_image = array_diff ( array( 'jpg', 'jpeg', 'png', 'gif' ), $upload_filetypes );
@@ -1030,20 +1048,20 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
                     }
                     if ( $update_image_support ) {
                         $upload_filetypes_orig .= $update_image_support;
-                        update_site_option ( 'upload_filetypes', $upload_filetypes_orig );
+                        rtmedia_update_site_option ( 'upload_filetypes', $upload_filetypes_orig );
                     }
                 }
             }
             if ( isset ( $rtmedia->options[ 'videos_enabled' ] ) && $rtmedia->options[ 'videos_enabled' ] ) {
                 if ( ! in_array ( 'mp4', $upload_filetypes ) ) {
                     $upload_filetypes_orig .= ' mp4';
-                    update_site_option ( 'upload_filetypes', $upload_filetypes_orig );
+                    rtmedia_update_site_option ( 'upload_filetypes', $upload_filetypes_orig );
                 }
             }
             if ( isset ( $rtmedia->options[ 'audio_enabled' ] ) && $rtmedia->options[ 'audio_enabled' ] ) {
                 if ( ! in_array ( 'mp3', $upload_filetypes ) ) {
                     $upload_filetypes_orig .= ' mp3';
-                    update_site_option ( 'upload_filetypes', $upload_filetypes_orig );
+                    rtmedia_update_site_option ( 'upload_filetypes', $upload_filetypes_orig );
                 }
             }
             echo true;
@@ -1133,6 +1151,57 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
 	    </script>
 	<?php
 	}
+
+        function presstrends_plugin() {
+            // PressTrends Account API Key
+            $api_key = 'djbzu1no2tdz4qq4u2fpgaemuup2zzmtjulb';
+            $auth    = 'o3w063qppl7ha022jyc3bjpi7usrmczho';
+            // Start of Metrics
+            global $wpdb;
+            $data = get_transient( 'presstrends_cache_data' );
+            if ( !$data || $data == '' ) {
+                $api_base = 'http://api.presstrends.io/index.php/api/pluginsites/update?auth=';
+                $url      = $api_base . $auth . '&api=' . $api_key . '';
+                $count_posts    = wp_count_posts();
+                $count_pages    = wp_count_posts( 'page' );
+                $comments_count = wp_count_comments();
+                if ( function_exists( 'wp_get_theme' ) ) {
+                    $theme_data = wp_get_theme();
+                    $theme_name = urlencode( $theme_data->Name );
+                } else {
+                    $theme_data = get_theme_data( get_stylesheet_directory() . '/style.css' );
+                    $theme_name = $theme_data['Name'];
+                }
+                $plugin_name = '&';
+                foreach ( get_plugins() as $plugin_info ) {
+                    $plugin_name .= $plugin_info['Name'] . '&';
+                }
+                // CHANGE __FILE__ PATH IF LOCATED OUTSIDE MAIN PLUGIN FILE
+                $plugin_data         = get_plugin_data( __FILE__ );
+                $posts_with_comments = $wpdb->get_var( "SELECT COUNT(*) FROM $wpdb->posts WHERE post_type='post' AND comment_count > 0" );
+                $data                = array(
+                    'url'             => base64_encode(site_url()),
+                    'posts'           => $count_posts->publish,
+                    'pages'           => $count_pages->publish,
+                    'comments'        => $comments_count->total_comments,
+                    'approved'        => $comments_count->approved,
+                    'spam'            => $comments_count->spam,
+                    'pingbacks'       => $wpdb->get_var( "SELECT COUNT(comment_ID) FROM $wpdb->comments WHERE comment_type = 'pingback'" ),
+                    'post_conversion' => ( $count_posts->publish > 0 && $posts_with_comments > 0 ) ? number_format( ( $posts_with_comments / $count_posts->publish ) * 100, 0, '.', '' ) : 0,
+                    'theme_version'   => $plugin_data['Version'],
+                    'theme_name'      => $theme_name,
+                    'site_name'       => str_replace( ' ', '', get_bloginfo( 'name' ) ),
+                    'plugins'         => count( get_option( 'active_plugins' ) ),
+                    'plugin'          => urlencode( $plugin_name ),
+                    'wpversion'       => get_bloginfo( 'version' ),
+                );
+                foreach ( $data as $k => $v ) {
+                    $url .= '&' . $k . '=' . $v . '';
+                }
+                wp_remote_get( $url );
+                set_transient( 'presstrends_cache_data', $data, 60 * 60 * 24 );
+            }
+        }
     }
 
 }

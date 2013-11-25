@@ -110,7 +110,7 @@ jQuery('document').ready(function($) {
     })
     //rtmedia_lightbox_enabled from setting
     if (typeof(rtmedia_lightbox_enabled) != 'undefined' && rtmedia_lightbox_enabled == "1") {
-        apply_rtMagnificPopup('.rtmedia-list-media, .rtmedia-activity-container ul.rtmedia-list, #bp-media-list,.widget-item-listing,.bp-media-sc-list, li.media.album_updated ul,ul.bp-media-list-media, li.activity-item div.activity-content div.activity-inner div.bp_media_content');
+        apply_rtMagnificPopup('.rtmedia-list-media, .rtmedia-activity-container ul.rtmedia-list, #bp-media-list,.widget-item-listing,.bp-media-sc-list, li.media.album_updated ul,ul.bp-media-list-media, li.activity-item div.activity-content div.activity-inner div.bp_media_content, .rtm-bbp-container');
     }
 
     jQuery('.rtmedia-container').on('click', '.select-all', function(e) {
@@ -184,8 +184,12 @@ jQuery('document').ready(function($) {
                     jQuery('#rtmedia_album_name').val("");
                     jQuery("#rtmedia-create-album-modal").append("<span class='rtmedia-success rtmedia-create-album-alert'><b>" + $albumname + "</b>" + rtmedia_album_created_msg + "</span>");
                     setTimeout(function() {
-                        jQuery(".rtmedia-create-album-alert").remove()
+                        jQuery(".rtmedia-create-album-alert").remove();
                     }, 4000);
+                    setTimeout(function() {
+                        galleryObj.reloadView();
+                        jQuery(".close-reveal-modal").click();
+                    }, 2000);
 
                 } else {
                     alert(rtmedia_something_wrong_msg);

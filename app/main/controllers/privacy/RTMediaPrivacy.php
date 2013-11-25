@@ -29,12 +29,12 @@ class RTMediaPrivacy {
     }
 
     function uploader_privacy_ui ( $attr ) {
-        if ( ! isset ( $attr[ 'privacy' ] ) ) {            
+        if ( ! isset ( $attr[ 'privacy' ] ) ) {
                 $this -> select_privacy_ui () ;
         }
     }
 
-    function select_privacy_ui ( $echo = true, $select_id = false ) { 
+    function select_privacy_ui ( $echo = true, $select_id = false ) {
         global $rtmedia ;
 
         if ( ! is_rtmedia_privacy_enable () )
@@ -272,7 +272,7 @@ class RTMediaPrivacy {
             $user = 0 ;
         }
 
-        $where .= " (m.privacy is NULL OR m.privacy <= 0)" ;
+        $where .= " (m.privacy is NULL OR m.privacy <= 0) " ;
 
         if ( $user ) {
             $where .= "OR ((m.privacy=20)" ;
@@ -299,7 +299,7 @@ class RTMediaPrivacy {
             $select_sql = str_replace ( "SELECT" , "SELECT DISTINCT" , $select_sql ) ;
         }
 
-        $from_sql = " FROM {$bp->activity->table_name} a LEFT JOIN {$wpdb->users} u ON a.user_id = u.ID LEFT JOIN {$rtmedia_model->table_name} m ON a.id = m.activity_id";
+        $from_sql = " FROM {$bp->activity->table_name} a LEFT JOIN {$wpdb->users} u ON a.user_id = u.ID LEFT JOIN {$rtmedia_model->table_name} m ON ( a.id = m.activity_id AND m.blog_id = '".  get_current_blog_id()."' ) ";
         $where_sql = $where_sql . " AND (NOT EXISTS (SELECT m.activity_id FROM {$bp_prefix}bp_activity_meta m WHERE m.meta_key='rtmedia_privacy' AND m.activity_id=a.id) OR ( {$where} ) )";
         $newsql = "{$select_sql} {$from_sql} {$where_sql} ORDER BY a.date_recorded {$sort} {$pag_sql}";
         return $newsql;

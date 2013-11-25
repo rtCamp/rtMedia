@@ -13,7 +13,7 @@
 class RTMediaInteractionModel extends RTDBModel {
 
     function __construct () {
-        parent::__construct ( 'rtm_media_interaction' );
+        parent::__construct ( 'rtm_media_interaction', false, 10, true );
     }
 
     function check($user_id = "", $media_id = "", $action = "") {

@@ -62,10 +62,11 @@ class RTMediaNav {
     function admin_nav () {
         global $wp_admin_bar;
 
-        if ( ! function_exists ( "bp_use_wp_admin_bar" ) )
+        if ( function_exists ( "bp_use_wp_admin_bar" ) && ! bp_use_wp_admin_bar () )
             return;
+
         // Bail if this is an ajax request
-        if ( ! bp_use_wp_admin_bar () || defined ( 'DOING_AJAX' ) )
+        if ( defined ( 'DOING_AJAX' ) )
             return;
         // Only add menu for logged in user
         if ( is_user_logged_in () ) {
@@ -89,15 +90,17 @@ class RTMediaNav {
             global $rtmedia;
 
             foreach ( $rtmedia->allowed_types as $type ) {
-                if ( ! $rtmedia->options[ 'allowedTypes_' . $type[ 'name' ] . '_enabled' ] )
-                    continue;
-                $name = strtoupper ( $type[ 'name' ] );
-                $wp_admin_bar->add_menu ( array(
-                    'parent' => 'my-account-' . constant ( 'RTMEDIA_MEDIA_SLUG' ),
-                    'id' => 'my-account-media-' . constant ( 'RTMEDIA_' . $name . '_SLUG' ),
-                    'title' => $type[ 'plural_label' ],
-                    'href' => trailingslashit ( get_rtmedia_user_link ( get_current_user_id () ) ) . RTMEDIA_MEDIA_SLUG . '/' . constant ( 'RTMEDIA_' . $name . '_SLUG' ) . '/'
-                ) );
+		if( isset( $rtmedia->options[ 'allowedTypes_' . $type[ 'name' ] . '_enabled' ] ) ) {
+		    if ( ! $rtmedia->options[ 'allowedTypes_' . $type[ 'name' ] . '_enabled' ] )
+			continue;
+		    $name = strtoupper ( $type[ 'name' ] );
+		    $wp_admin_bar->add_menu ( array(
+			'parent' => 'my-account-' . constant ( 'RTMEDIA_MEDIA_SLUG' ),
+			'id' => 'my-account-media-' . constant ( 'RTMEDIA_' . $name . '_SLUG' ),
+			'title' => $type[ 'plural_label' ],
+			'href' => trailingslashit ( get_rtmedia_user_link ( get_current_user_id () ) ) . RTMEDIA_MEDIA_SLUG . '/' . constant ( 'RTMEDIA_' . $name . '_SLUG' ) . '/'
+		    ) );
+		}
             }
         }
     }
@@ -224,9 +227,9 @@ class RTMediaNav {
 
         if ( isset ( $where[ "context" ] ) ) {
             if ( $where[ "context" ] == "profile" ) {
-                update_user_meta ( $user_id, 'rtmedia_counts', $media_count );
+                update_user_meta ( $user_id, 'rtmedia_counts_' . get_current_blog_id(), $media_count );
             } else if ( $where[ "context" ] == "group" && function_exists ( "groups_update_groupmeta" ) ) {
-                groups_update_groupmeta ( $user_id, 'rtmedia_counts', $media_count );
+                groups_update_groupmeta ( $user_id, 'rtmedia_counts_' . get_current_blog_id(), $media_count );
             }
         }
         return $media_count;
@@ -240,12 +243,12 @@ class RTMediaNav {
         if ( ! $profile_id )
             return false;
         if ( $context == "profile" ) {
-            $counts = get_user_meta ( $profile_id, 'rtmedia_counts', true );
+            $counts = get_user_meta ( $profile_id, 'rtmedia_counts_' . get_current_blog_id(), true );
             if ( $counts == false || empty ( $counts ) ) {
                 $counts = $this->refresh_counts ( $profile_id, array( "context" => $context, 'media_author' => $profile_id ) );
             }
         } else if ( function_exists ( "groups_get_groupmeta" ) && $context = "group" ) {
-            $counts = groups_get_groupmeta ( $profile_id, 'rtmedia_counts' );
+            $counts = groups_get_groupmeta ( $profile_id, 'rtmedia_counts_' . get_current_blog_id() );
             if ( $counts === false || empty ( $counts ) ) {
                 $counts = $this->refresh_counts ( $profile_id, array( "context" => $context, 'context_id' => $profile_id ) );
             }

@@ -16,17 +16,85 @@ if (!class_exists('RTMediaSupport')) {
             if( !is_admin () ) {
                 return;
             }
-	    $this->curr_sub_tab = "debug";
+
+	    $this->curr_sub_tab = "support";
 	    if(isset($_REQUEST['tab'])) {
 		$this->curr_sub_tab = $_REQUEST['tab'];
 	    }
-	    if($init) {
-		$this->debug_info();
-		if($this->curr_sub_tab == "debug") {
-		    add_action('rtmedia_admin_page_insert', array($this, 'debug_info_html'), 20);
-		}
-	    }
+//	    if($init) {
+//		$this->debug_info();
+//		if($this->curr_sub_tab == "debug") {
+//		    add_action('rtmedia_admin_page_insert', array($this, 'debug_info_html'), 20);
+//		}
+//		if($this->curr_sub_tab == "migration") {
+//		    add_action('rtmedia_admin_page_insert', array($this, 'migration_html'), 20);
+//		}
+//	    }
+	    //add_action('admin_init', array($this,'load_service_form'),99);
         }
+
+	public function get_support_content() {
+	    $tabs = array();
+			global $rtmedia_admin;
+			$tabs[] = array(
+				'title' => 'Premium Support',
+				'name' => __('Premium Support', 'rtmedia'),
+				'href' => '#support',
+				'callback' => array($this, 'call_get_form')
+			);
+			$tabs[] = array(
+				'title' => 'Debug Info',
+				'name' => __('Debug Info', 'rtmedia'),
+				'href' => '#debug',
+				'callback' => array($this, 'debug_info_html')
+			);
+			$tabs[] = array(
+				'title' => 'Migration',
+				'name' => __('Migration', 'rtmedia'),
+				'href' => '#migration',
+				'callback' => array($this, 'migration_html')
+			);
+		?>
+			<div id="rtm-support">
+				<ul>
+					<?php
+						foreach ($tabs as $tab) {?>
+							<li><a id="tab-<?php echo substr ( $tab[ 'href' ], 1 ); ?>" title="<?php echo $tab['title'] ?>" href="<?php echo $tab['href']; ?>" class="rtmedia-tab-title"><?php echo $tab['name']; ?></a></li>
+						<?php }
+					?>
+				</ul>
+
+				<?php
+					foreach ($tabs as $tab) {
+						echo '<div id="' . substr($tab['href'],1) . '">';
+							call_user_func($tab['callback']);
+						echo '</div>';
+					}
+				?>
+			</div>
+<?php
+
+	}
+
+	public function render_support($page = '') {
+	    global $wp_settings_sections, $wp_settings_fields;
+
+			if ( ! isset( $wp_settings_sections ) || !isset( $wp_settings_sections[$page] ) )
+				return;
+
+			foreach ( (array) $wp_settings_sections[$page] as $section ) {
+
+				if ( $section['callback'] )
+					call_user_func( $section['callback'], $section );
+
+				if ( ! isset( $wp_settings_fields ) || !isset( $wp_settings_fields[$page] ) || !isset( $wp_settings_fields[$page][$section['id']] ) )
+					continue;
+
+				echo '<table class="form-table">';
+				do_settings_fields( $page, $section['id'] );
+				echo '</table>';
+			}
+	}
 
 	public function service_selector() {
 	?>
@@ -47,46 +115,52 @@ if (!class_exists('RTMediaSupport')) {
 	    //$this->get_form("premium_support");
 	}
 
-	public function get_current_sub_tab() {
-	    return isset ( $_GET[ 'tab' ] ) ? $_GET[ 'tab' ] : "debug";
-	}
-	public function rtmedia_support_sub_tabs ( $active_tab = '' ) {
-            // Declare local variables
-            $tabs_html = '';
-            $idle_class = 'nav-tab';
-            $active_class = 'nav-tab nav-tab-active';
+//	public function get_current_sub_tab() {
+//	    return isset ( $_GET[ 'tab' ] ) ? $_GET[ 'tab' ] : "support";
+//	}
 
-            // Setup core admin tabs
-            $tabs = array(
-                array(
-                    'href' => get_admin_url ( null, add_query_arg ( array( 'page' => 'rtmedia-support' ), 'admin.php' ) ) . "&tab=debug",
-                    'name' => __ ( 'Debug Info', 'rtmedia' ),
-                    'slug' => 'rtmedia-support&tab=debug'
-                ),
-		array(
-                    'href' => get_admin_url ( null, add_query_arg ( array( 'page' => 'rtmedia-support' ), 'admin.php' ) ) . "&tab=support",
-                    'name' => __ ( 'Support Request', 'rtmedia' ),
-                    'slug' => 'rtmedia-support&tab=support'
-                )
-            );
-	    $tabs = apply_filters ( 'rtmedia_support_add_sub_tabs', $tabs );
-	    // Loop through tabs and build navigation
-	    $tabs_html = "";
-            foreach ( array_values ( $tabs ) as $tab_data ) {
-                $is_current = (bool) ( $tab_data[ 'slug' ] == (RTMediaAdmin::get_current_tab()."&tab=".$this->get_current_sub_tab () ) );
-		$tab_class = $is_current ? $active_class : $idle_class;
-                $tabs_html .= '<a href="' . $tab_data[ 'href' ] . '" class="' . $tab_class . '">' . $tab_data[ 'name' ] . '</a>';
-            }
-            // Output the tabs
-            return $tabs_html;
-
-//            // Do other fun things
-//            do_action('bp_media_admin_tabs');
-        }
+//	public function rtmedia_support_sub_tabs ( $active_tab = '' ) {
+//            // Declare local variables
+//            $tabs_html = '';
+//            $idle_class = 'nav-tab';
+//            $active_class = 'nav-tab nav-tab-active';
+//
+//            // Setup core admin tabs
+//            $tabs = array(
+//		array(
+//                    'href' => get_admin_url ( null, add_query_arg ( array( 'page' => 'rtmedia-support' ), 'admin.php' ) ) . "&tab=support",
+//                    'name' => __ ( 'Premium Support', 'rtmedia' ),
+//                    'slug' => 'rtmedia-support&tab=support'
+//                ),
+//                array(
+//                    'href' => get_admin_url ( null, add_query_arg ( array( 'page' => 'rtmedia-support' ), 'admin.php' ) ) . "&tab=debug",
+//                    'name' => __ ( 'Debug Info', 'rtmedia' ),
+//                    'slug' => 'rtmedia-support&tab=debug'
+//                ),
+//		array(
+//                    'href' => get_admin_url ( null, add_query_arg ( array( 'page' => 'rtmedia-support' ), 'admin.php' ) ) . "&tab=migration",
+//                    'name' => __ ( 'Migration', 'rtmedia' ),
+//                    'slug' => 'rtmedia-support&tab=migration'
+//                )
+//            );
+//	    $tabs = apply_filters ( 'rtmedia_support_add_sub_tabs', $tabs );
+//	    // Loop through tabs and build navigation
+//	    $tabs_html = "";
+//            foreach ( array_values ( $tabs ) as $tab_data ) {
+//                $is_current = (bool) ( $tab_data[ 'slug' ] == (RTMediaAdmin::get_current_tab()."&tab=".$this->get_current_sub_tab () ) );
+//		$tab_class = $is_current ? $active_class : $idle_class;
+//                $tabs_html .= '<a href="' . $tab_data[ 'href' ] . '" class="' . $tab_class . '">' . $tab_data[ 'name' ] . '</a>';
+//            }
+//            // Output the tabs
+//            return $tabs_html;
+//
+////            // Do other fun things
+////            do_action('bp_media_admin_tabs');
+//        }
 
 	function call_get_form () {
 	    if(isset($_REQUEST['page']) && $_REQUEST['page'] == 'rtmedia-support') {
-		echo "<h2 class='nav-tab-wrapper'>".$this->rtmedia_support_sub_tabs()."</h2>";
+		//echo "<h2 class='nav-tab-wrapper'>".$this->rtmedia_support_sub_tabs()."</h2>";
 		if($this->curr_sub_tab == "support") {
 		    echo "<div id='rtmedia_service_contact_container'><form name='rtmedia_service_contact_detail' method='post'>";
 		    $this->get_form("premium_support");
@@ -95,16 +169,16 @@ if (!class_exists('RTMediaSupport')) {
 	    }
 	}
 
-	public function load_service_form() {
-	    if(isset($_REQUEST['page']) && $_REQUEST['page'] == 'rtmedia-support') {
-		add_action('rtmedia_admin_page_insert', array($this,'call_get_form'),11);
-	    }
-	}
+//	public function load_service_form() {
+//	    if(isset($_REQUEST['page']) && $_REQUEST['page'] == 'rtmedia-support') {
+//		add_action('rtmedia_admin_page_insert', array($this,'call_get_form'),11);
+//	    }
+//	}
 
 	public function get_plugin_info() {
 	    $active_plugins = (array) get_option( 'active_plugins', array() );
 	    if ( is_multisite() ) {
-		$active_plugins = array_merge( $active_plugins, get_site_option( 'active_sitewide_plugins', array() ) );
+		$active_plugins = array_merge( $active_plugins, rtmedia_get_site_option( 'active_sitewide_plugins', array() ) );
 	    }
 	    $rtmedia_plugins = array();
 	    foreach ( $active_plugins as $plugin ) {
@@ -178,7 +252,7 @@ if (!class_exists('RTMediaSupport')) {
 	    $debug_info['Template Overrides'] = implode( ', <br/>', $this->rtmedia_scan_template_files(RTMEDIA_PATH . "/templates/") );
 
 	    $rtMedia_model = new RTMediaModel();
-	    $sql = "select media_type, count(id) as count from {$rtMedia_model->table_name} group by media_type";
+	    $sql = "select media_type, count(id) as count from {$rtMedia_model->table_name} where blog_id = '".get_current_blog_id()."' group by media_type";
 	    global $wpdb;
 	    $results = $wpdb->get_results ( $sql );
 	    if ( $results ) {
@@ -189,11 +263,11 @@ if (!class_exists('RTMediaSupport')) {
             $this->debug_info = $debug_info;
         }
 
-        public function debug_info_html($page) {
-            if ('rtmedia-support' == $page) {
+        public function debug_info_html() {
+	    $this->debug_info();
                 ?>
                 <div id="debug-info">
-                    <h3><?php _e('Debug info', 'rtmedia'); ?></h3>
+
                     <table class="form-table">
                         <tbody><?php
                 if ($this->debug_info) {
@@ -209,18 +283,42 @@ if (!class_exists('RTMediaSupport')) {
                         </tbody>
                     </table>
                 </div><?php
-            }
+
         }
+
+	public function migration_html($page = '') {
+	    $pending_rtmedia_migrate = rtmedia_get_site_option ( "rtMigration-pending-count" );
+
+	    $content = " ";
+	    $flag = true;
+	    if( ( $pending_rtmedia_migrate === false || $pending_rtmedia_migrate == 0 ) ) {
+		$content.= __('There is no media found to migrate.','rtmedia');
+		$flag = false;
+	    }
+	    $content = apply_filters("rtmedia_migration_content_filter", $content);
+	    if( $flag ) {
+		$content.= ' <div class="rtmedia-migration-support">';
+		$content.=' <p>'.__('Click','rtmedia').' <a href="'.get_admin_url().'admin.php?page=rtmedia-migration">'. _e('here','rtmedia').'</a>'. __('here to migrate media from rtMedia 2.x to rtMedia 3.0+.','rtmedia').'</p>';
+		$content.='</div>';
+	    }
+?>
+	<div id="rtmedia-migration-html">
+	    <?php echo $content; ?>
+	</div>
+    <?php
+    }
 
         /**
          *
          * @global type $current_user
          * @param type $form
          */
-        public function get_form($form) {
+        public function get_form($form = '') {
             if (empty($form))
                 $form = (isset($_POST['form'])) ? $_POST['form'] : '';
-
+	    if($form == "") {
+		$form = "premium_support";
+	    }
             global $current_user;
             switch ($form) {
                 case "bug_report":
@@ -233,63 +331,74 @@ if (!class_exists('RTMediaSupport')) {
                     $meta_title = __('Submit a Premium Support Request', 'rtmedia');
                     break;
             }
-            ?>
-            <h3><?php echo $meta_title; ?></h3>
-            <div id="support-form" class="bp-media-form">
-                <ul>
-                    <li>
-                        <label class="bp-media-label" for="name"><?php _e('Name', 'rtmedia'); ?>:</label><input class="bp-media-input" id="name" type="text" name="name" value="<?php echo (isset($_REQUEST['name'])) ? esc_attr(stripslashes(trim($_REQUEST['name']))) : $current_user->display_name; ?>" required />
-                    </li>
-                    <li>
-                        <label class="bp-media-label" for="email"><?php _e('Email', 'rtmedia'); ?>:</label><input id="email" class="bp-media-input" type="text" name="email" value="<?php echo (isset($_REQUEST['email'])) ? esc_attr(stripslashes(trim($_REQUEST['email']))) : get_option('admin_email'); ?>" required />
-                    </li>
-                    <li>
-                        <label class="bp-media-label" for="website"><?php _e('Website', 'rtmedia'); ?>:</label><input id="website" class="bp-media-input" type="text" name="website" value="<?php echo (isset($_REQUEST['website'])) ? esc_attr(stripslashes(trim($_REQUEST['website']))) : get_bloginfo('url'); ?>" required />
-                    </li>
-                    <li>
-                        <label class="bp-media-label" for="phone"><?php _e('Phone', 'rtmedia'); ?>:</label><input class="bp-media-input" id="phone" type="text" name="phone" value="<?php echo (isset($_REQUEST['phone'])) ? esc_attr(stripslashes(trim($_REQUEST['phone']))) : ''; ?>"/>
-                    </li>
-                    <li>
-                        <label class="bp-media-label" for="subject"><?php _e('Subject', 'rtmedia'); ?>:</label><input id="subject" class="bp-media-input" type="text" name="subject" value="<?php echo (isset($_REQUEST['subject'])) ? esc_attr(stripslashes(trim($_REQUEST['subject']))) : ''; ?>" required />
-                    </li>
-                    <li>
-                        <label class="bp-media-label" for="details"><?php _e('Details', 'rtmedia'); ?>:</label><textarea id="details" class="bp-media-textarea" type="text" name="details" required/><?php echo (isset($_REQUEST['details'])) ? esc_textarea(stripslashes(trim($_REQUEST['details']))) : ''; ?></textarea>
-                    </li>
-                    <input type="hidden" name="request_type" value="<?php echo $form; ?>"/>
-                    <input type="hidden" name="request_id" value="<?php echo wp_create_nonce(date('YmdHis')); ?>"/>
-                    <input type="hidden" name="server_address" value="<?php echo $_SERVER['SERVER_ADDR']; ?>"/>
-                    <input type="hidden" name="ip_address" value="<?php echo $_SERVER['REMOTE_ADDR']; ?>"/>
-                    <input type="hidden" name="server_type" value="<?php echo $_SERVER['SERVER_SOFTWARE']; ?>"/>
-                    <input type="hidden" name="user_agent" value="<?php echo $_SERVER['HTTP_USER_AGENT']; ?>"/>
 
-                </ul>
-            </div><!-- .submit-bug-box --><?php if ($form == 'bug_report') { ?>
-                <h3><?php _e('Additional Information', 'rtmedia'); ?></h3>
-                <div id="support-form" class="bp-media-form">
-                    <ul>
+	    if($form == "premium_support") {
+		if(! defined("RTMEDIA_PRO_VERSION")) {
+		    $content = '<p>' . __('If your site has some issues due to BuddyPress Media and you want one on one support then you can create a support topic on the <a target="_blank" href="http://rtcamp.com/groups/buddypress-media/forum/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media">rtCamp Support Forum</a>.', 'rtmedia') . '</p>';
+		$content.= '<p>' . __('If you have any suggestions, enhancements or bug reports, then you can open a new issue on <a target="_blank" href="https://github.com/rtCamp/buddypress-media/issues/new">GitHub</a>.', 'rtmedia') . '</p>';
 
-                        <li>
-                            <label class="bp-media-label" for="wp_admin_username"><?php _e('Your WP Admin Login:', 'rtmedia'); ?></label><input class="bp-media-input" id="wp_admin_username" type="text" name="wp_admin_username" value="<?php echo (isset($_REQUEST['wp_admin_username'])) ? esc_attr(stripslashes(trim($_REQUEST['wp_admin_username']))) : $current_user->user_login; ?>"/>
-                        </li>
-                        <li>
-                            <label class="bp-media-label" for="wp_admin_pwd"><?php _e('Your WP Admin password:', 'rtmedia'); ?></label><input class="bp-media-input" id="wp_admin_pwd" type="password" name="wp_admin_pwd" value="<?php echo (isset($_REQUEST['wp_admin_pwd'])) ? esc_attr(stripslashes(trim($_REQUEST['wp_admin_pwd']))) : ''; ?>"/>
-                        </li>
-                        <li>
-                            <label class="bp-media-label" for="ssh_ftp_host"><?php _e('Your SSH / FTP host:', 'rtmedia'); ?></label><input class="bp-media-input" id="ssh_ftp_host" type="text" name="ssh_ftp_host" value="<?php echo (isset($_REQUEST['ssh_ftp_host'])) ? esc_attr(stripslashes(trim($_REQUEST['ssh_ftp_host']))) : ''; ?>"/>
-                        </li>
-                        <li>
-                            <label class="bp-media-label" for="ssh_ftp_username"><?php _e('Your SSH / FTP login:', 'rtmedia'); ?></label><input class="bp-media-input" id="ssh_ftp_username" type="text" name="ssh_ftp_username" value="<?php echo (isset($_REQUEST['ssh_ftp_username'])) ? esc_attr(stripslashes(trim($_REQUEST['ssh_ftp_username']))) : ''; ?>"/>
-                        </li>
-                        <li>
-                            <label class="bp-media-label" for="ssh_ftp_pwd"><?php _e('Your SSH / FTP password:', 'rtmedia'); ?></label><input class="bp-media-input" id="ssh_ftp_pwd" type="password" name="ssh_ftp_pwd" value="<?php echo (isset($_REQUEST['ssh_ftp_pwd'])) ? esc_attr(stripslashes(trim($_REQUEST['ssh_ftp_pwd']))) : ''; ?>"/>
-                        </li>
-                    </ul>
-                </div><!-- .submit-bug-box --><?php } ?>
+		echo $content;
 
-            <?php submit_button('Submit', 'primary', 'submit-request', false); ?>
-            <?php submit_button('Cancel', 'secondary', 'cancel-request', false); ?>
+		} else {
+	?>
+		    <h3><?php echo $meta_title; ?></h3>
+		    <div id="support-form" class="bp-media-form">
+			<ul>
+			    <li>
+				<label class="bp-media-label" for="name"><?php _e('Name', 'rtmedia'); ?>:</label><input class="bp-media-input" id="name" type="text" name="name" value="<?php echo (isset($_REQUEST['name'])) ? esc_attr(stripslashes(trim($_REQUEST['name']))) : $current_user->display_name; ?>" required />
+			    </li>
+			    <li>
+				<label class="bp-media-label" for="email"><?php _e('Email', 'rtmedia'); ?>:</label><input id="email" class="bp-media-input" type="text" name="email" value="<?php echo (isset($_REQUEST['email'])) ? esc_attr(stripslashes(trim($_REQUEST['email']))) : get_option('admin_email'); ?>" required />
+			    </li>
+			    <li>
+				<label class="bp-media-label" for="website"><?php _e('Website', 'rtmedia'); ?>:</label><input id="website" class="bp-media-input" type="text" name="website" value="<?php echo (isset($_REQUEST['website'])) ? esc_attr(stripslashes(trim($_REQUEST['website']))) : get_bloginfo('url'); ?>" required />
+			    </li>
+			    <li>
+				<label class="bp-media-label" for="phone"><?php _e('Phone', 'rtmedia'); ?>:</label><input class="bp-media-input" id="phone" type="text" name="phone" value="<?php echo (isset($_REQUEST['phone'])) ? esc_attr(stripslashes(trim($_REQUEST['phone']))) : ''; ?>"/>
+			    </li>
+			    <li>
+				<label class="bp-media-label" for="subject"><?php _e('Subject', 'rtmedia'); ?>:</label><input id="subject" class="bp-media-input" type="text" name="subject" value="<?php echo (isset($_REQUEST['subject'])) ? esc_attr(stripslashes(trim($_REQUEST['subject']))) : ''; ?>" required />
+			    </li>
+			    <li>
+				<label class="bp-media-label" for="details"><?php _e('Details', 'rtmedia'); ?>:</label><textarea id="details" class="bp-media-textarea" type="text" name="details" required/><?php echo (isset($_REQUEST['details'])) ? esc_textarea(stripslashes(trim($_REQUEST['details']))) : ''; ?></textarea>
+			    </li>
+			    <input type="hidden" name="request_type" value="<?php echo $form; ?>"/>
+			    <input type="hidden" name="request_id" value="<?php echo wp_create_nonce(date('YmdHis')); ?>"/>
+			    <input type="hidden" name="server_address" value="<?php echo $_SERVER['SERVER_ADDR']; ?>"/>
+			    <input type="hidden" name="ip_address" value="<?php echo $_SERVER['REMOTE_ADDR']; ?>"/>
+			    <input type="hidden" name="server_type" value="<?php echo $_SERVER['SERVER_SOFTWARE']; ?>"/>
+			    <input type="hidden" name="user_agent" value="<?php echo $_SERVER['HTTP_USER_AGENT']; ?>"/>
 
-            <?php
+			</ul>
+		    </div><!-- .submit-bug-box --><?php if ($form == 'bug_report') { ?>
+		    <h3><?php _e('Additional Information', 'rtmedia'); ?></h3>
+		    <div id="support-form" class="bp-media-form">
+			<ul>
+
+			    <li>
+				<label class="bp-media-label" for="wp_admin_username"><?php _e('Your WP Admin Login:', 'rtmedia'); ?></label><input class="bp-media-input" id="wp_admin_username" type="text" name="wp_admin_username" value="<?php echo (isset($_REQUEST['wp_admin_username'])) ? esc_attr(stripslashes(trim($_REQUEST['wp_admin_username']))) : $current_user->user_login; ?>"/>
+			    </li>
+			    <li>
+				<label class="bp-media-label" for="wp_admin_pwd"><?php _e('Your WP Admin password:', 'rtmedia'); ?></label><input class="bp-media-input" id="wp_admin_pwd" type="password" name="wp_admin_pwd" value="<?php echo (isset($_REQUEST['wp_admin_pwd'])) ? esc_attr(stripslashes(trim($_REQUEST['wp_admin_pwd']))) : ''; ?>"/>
+			    </li>
+			    <li>
+				<label class="bp-media-label" for="ssh_ftp_host"><?php _e('Your SSH / FTP host:', 'rtmedia'); ?></label><input class="bp-media-input" id="ssh_ftp_host" type="text" name="ssh_ftp_host" value="<?php echo (isset($_REQUEST['ssh_ftp_host'])) ? esc_attr(stripslashes(trim($_REQUEST['ssh_ftp_host']))) : ''; ?>"/>
+			    </li>
+			    <li>
+				<label class="bp-media-label" for="ssh_ftp_username"><?php _e('Your SSH / FTP login:', 'rtmedia'); ?></label><input class="bp-media-input" id="ssh_ftp_username" type="text" name="ssh_ftp_username" value="<?php echo (isset($_REQUEST['ssh_ftp_username'])) ? esc_attr(stripslashes(trim($_REQUEST['ssh_ftp_username']))) : ''; ?>"/>
+			    </li>
+			    <li>
+				<label class="bp-media-label" for="ssh_ftp_pwd"><?php _e('Your SSH / FTP password:', 'rtmedia'); ?></label><input class="bp-media-input" id="ssh_ftp_pwd" type="password" name="ssh_ftp_pwd" value="<?php echo (isset($_REQUEST['ssh_ftp_pwd'])) ? esc_attr(stripslashes(trim($_REQUEST['ssh_ftp_pwd']))) : ''; ?>"/>
+			    </li>
+			</ul>
+		    </div><!-- .submit-bug-box --><?php } ?>
+
+		<?php submit_button('Submit', 'primary', 'submit-request', false); ?>
+		<?php submit_button('Cancel', 'secondary', 'cancel-request', false); ?>
+	<?php
+		}
+	    }
+
 //            if (DOING_AJAX) {
 //                die();
 //            }
