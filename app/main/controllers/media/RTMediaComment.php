@@ -59,15 +59,18 @@ class RTMediaComment {
 
 	function add($attr) {
 
-		do_action('rtmedia_before_add_comment', $attr);
-
-		$attr['comment_author'] = $this->get_current_author();
-		$attr['user_id'] = $this->get_current_id();
-		$attr['comment_date'] = current_time('mysql');
-		$id = $this->rtmedia_comment_model->insert($attr);
+	       do_action('rtmedia_before_add_comment', $attr);
+               $defaults = array(
+                        'user_id'           => $this->get_current_id(),
+                        'comment_author'    => $this->get_current_author(),
+                        'comment_date'      =>  current_time('mysql')
+                );
+                $params = wp_parse_args( $attr, $defaults );
+		
+		$id = $this->rtmedia_comment_model->insert($params);
 		global $rtmedia_points_media_id;
-		$rtmedia_points_media_id = rtmedia_id($attr['comment_post_ID']);
-		do_action('rtmedia_after_add_comment', $attr);
+		$rtmedia_points_media_id = rtmedia_id($params['comment_post_ID']);
+		do_action('rtmedia_after_add_comment', $params);
 
 		return $id;
 	}
