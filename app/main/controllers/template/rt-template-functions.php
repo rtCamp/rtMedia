@@ -1436,6 +1436,13 @@ function rtmedia_admin_premium_page($page) {
 	    <h1 class="premium-title">Reasons to buy rtMedia-PRO</h1>
 	    </div>
 	    <div class="row">
+		<div class="columns large-1 rtm-premium-icon-pro"><i class="icon-rss icon-3x"></i></div>
+		<div class="columns large-10">
+		    <h2>RSS feed and Podcast Support</h2>
+		    <p>You can view media with RSS reader and enjoy media through Podcast.</p>
+		</div>
+	    </div>
+	    <div class="row">
 		<div class="columns large-1 rtm-premium-icon-pro"><i class="icon-comments icon-3x"></i></div>
 		<div class="columns large-10">
 		    <h2>WordPress Comment Attachment</h2>
