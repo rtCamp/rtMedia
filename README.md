@@ -131,6 +131,10 @@ http://www.youtube.com/watch?v####dJrykKQGDcs
 
 Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "Visit rtMedia's Features page") to get some details about future releases.
 
+#### 3.2.9 ####
+* Fix permalink issue in album gallery
+* Bug Fixes
+
 #### 3.2.8 ####
 * Fix WordPress MultiSite issue.
 * Shortcode invalid argument issue fix.
@@ -604,8 +608,8 @@ Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_sou
 * HTML5 Audio Tag Support (with fallback)
 * HTML5 Video Tag Support (with fallback)
 
-#### 3.2.8 ####
-Requires BuddyPress 1.7 or higher, if using BuddyPress. Fix WordPress MultiSite issue and Shortcode invalid argument issue fix.
+#### 3.2.9 ####
+Requires BuddyPress 1.7 or higher, if using BuddyPress. Fix permalink issue in album gallery and few Bug fixes.
 
 ## Sponsors ##
 
