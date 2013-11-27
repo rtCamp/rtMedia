@@ -438,25 +438,25 @@ class RTMediaTemplate {
 
         if ( $rtmedia_query->action_query->action != 'delete-comment' )
             return;
-
+        
         if ( count ( $_POST ) ) {
             /**
              * /media/id/delete-comment [POST]
              * Delete Comment by Comment ID
              */
-
+            
             if ( empty ( $_POST[ 'comment_id' ] ) ) {
                 return false;
             }
             $comment = new RTMediaComment();
             $id = $_POST['comment_id'];
             $activity_id = get_comment_meta($id, 'activity_id',true);
-
+            
             if(!empty($activity_id)){
-                $activity_deleted = bp_activity_delete_comment ($activity_id, $id);
-
-                $delete = bp_activity_delete( array( 'id' => $activity_id, 'type' => 'activity_comment' ) );
-
+                if(function_exists('bp_activity_delete_comment')){ //if buddypress is active
+                    $activity_deleted = bp_activity_delete_comment ($activity_id, $id);
+                    $delete = bp_activity_delete( array( 'id' => $activity_id, 'type' => 'activity_comment' ) );
+                }
             }
             $comment_deleted = $comment->remove ( $id );
 
