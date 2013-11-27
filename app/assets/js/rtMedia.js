@@ -234,6 +234,9 @@ jQuery('document').ready(function($) {
                 //   , .mfp-content #buddypress .rtmedia-container,
                 jQuery('.mfp-content .rtmedia-single-meta, .mfp-content #rtmedia-single-media-container .rtmedia-media, .mejs-video').css({ 'height' : height*0.8, 'max-height' : height*0.8, 'over-flow' : 'hidden' });
                 //mejs-video
+                //init the options dropdown menu
+                init_action_dropdown();
+                
 		return true;
 	    }
     );
@@ -318,7 +321,22 @@ jQuery('document').ready(function($) {
 //    jQuery(document).on('click', '#rtm_show_upload_ui', function(){
 //        jQuery('#rtm-media-gallery-uploader').slideToggle();
 //    });
-
+    
+    //drop-down js
+    function init_action_dropdown() {
+        $('.click-nav > span').toggleClass('no-js js');
+        $('.click-nav .js ul').hide();
+        $('.click-nav .clicker').click(function(e) {
+            $('.click-nav ul').toggle();
+            e.stopPropagation();
+        });
+    }
+    init_action_dropdown();
+    $(document).click(function() {
+        if ($('.click-nav ul').is(':visible')) {
+            $('.click-nav ul', this).hide();
+        }
+    });
 });
 
 
