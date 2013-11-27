@@ -237,6 +237,10 @@
 						}
 					}
 				}
+                                .rtmedia-media-description {
+                                    line-height: 22px;
+                                    margin-top: 10px;
+                                }
 			}
 			.rtmedia-item-comments{
 				background-color:transparent;
@@ -571,7 +575,7 @@ button.rtp-lb-close {
     list-style: none;
     background: #EDEFF4;
     margin: 2px 0;
-    padding: 1px 5px 4px;
+    padding: 5px 5px 1px 5px;
     width: 100%;
     position: relative;
     word-wrap: break;
@@ -589,19 +593,20 @@ button.rtp-lb-close {
             width : 35px!important;
             //importants are provided to override the inline style that comes when buddypress is not active and image is set as profile pic
             @include border-radius(0); 
-            margin-top : 4px; 
+            margin: 0 5px 0 0; 
         }
     }
 
     .rtmedia-comment-author {
-            display: block;
-            line-height : 24px;
+            //display: block;
+            line-height : 18px;
+            font-size : 13px;
+            margin-right : 5px;
             a {
-                margin-left : 5px;
                 color: #3B5998;
                 font-weight: bold;
                 text-decoration: none;
-                line-height: 24px;
+                line-height: 18px;
             }
             a:hover{
                 text-decoration: underline;
@@ -609,23 +614,34 @@ button.rtp-lb-close {
     }
 
     .rtmedia-comment-content {
-            margin-left : 5px;
+            line-height: 16px;
+            font-size: 13px;
+            padding-right: 5px;
     }
 
     .rtmedia-comment-date {
-            clear: left;
+            //clear: left;
             display: block;
-            text-align: right;
+            font-size: 11px;
+            //text-align: right;
             color : #808080;
     }
 
     .rtmedia-delte-comment{
         text-decoration: none;
         position : absolute;
-        right: 8px;
+        right: 4px;
         top : 0; 
         color : #3B59A1;
         display: none;
+    }
+}
+
+.rtmedia-item-comments .rt_media_comment_form {
+    textarea{
+        width: 100%;
+        font-size: 13px;
+        height: 50px;
     }
 }
 
@@ -638,11 +654,16 @@ button.rtp-lb-close {
     
         .rtm-lightbox-container {
             background: #333;
+            
+            .rtmedia-media .tagcontainer {
+                display: inline-block;
+                max-width: calc(100% - 4px);
+            }
         }
         .rtmedia-single-meta {
             background: #fff;
             overflow: hidden;
-            padding : 0 0 0 10px;
+            padding : 20px 0 0 10px;
             
             .rtm-single-meta-contents {
                 max-height : calc(97% - 100px);
@@ -650,13 +671,44 @@ button.rtp-lb-close {
                 overflow-y: auto;
                 overflow-x: hidden;
                 padding: 0 10px;
+                
+                .rtmedia-media-title {
+                    font-size: 16px;
+                    line-height: 22px;
+                    margin: 5px 0 10px 0;
+                }
+                .rtmedia-media-description {
+                    font-size: 13px;
+                    line-height: 20px;
+                    margin-bottom: 10px;
+                }
             }
+            .rtm-single-meta-contents .rtmedia-comment {
+                .rtmedia-comment-content {
+                    font-size: 12px;
+                    line-height: 18px;
+                }
+                .rtmedia-comment-date {
+                    font-size: 11px;
+                }
+                .rtmedia-comment-author {
+                    font-size: 13px;
+                    line-height: 18px;
+                }
+            }
+            
             
             .username {
                 padding: 0 10px;
+                line-height: 16px;
+                margin-bottom: 10px;
             }
             .userprofile {
                 padding : 0 10px 10px 0 ;
+                
+                .avatar {
+                    width: 55px;
+                }
             }
             
             .rtm-media-single-comments {
@@ -665,19 +717,22 @@ button.rtp-lb-close {
                 width : 95%;
                 padding: 4px;
                 background-color : #EDEFF4;
-                
                 .row {
                     background : none;
                 }
                 textarea {
-                    max-height : 30px;
+                    min-height : 30px;
+                    max-height: 40px;
+                    line-height: 14px;
+                    font-size: 12px;
+                    padding: 4px;
                 }
             }
         }
         .rtm-mfp-close {
-            height: 20px;
+/*            height: 20px;
             text-align: right;
-            font-weight : normal;
+            font-weight : normal;*/
             
             .mfp-close {
                 height :20px;
@@ -685,6 +740,9 @@ button.rtp-lb-close {
                 font-size: 20px;
                 color : grey;
                 line-height: 22px;
+                position : absolute;
+                right: 0;
+                z-index: 2;
             }
         }
         .mfp-arrow {
@@ -756,3 +814,64 @@ button.rtp-lb-close {
     }
 //audio player fix under the current lightbox.
 .mfp-content #rtmedia-single-media-container .wp-audio-shortcode{ margin-left : 30px; }    
+
+
+// options dropdown styles
+#rtm-media-options-list.click-nav {position:relative;float:left; margin-right: 5px;}
+#rtm-media-options-list ul {
+    position:absolute;left:0;right:0;
+    width: 170px;
+    z-index: 9;
+    padding: 10px 5px;
+    left: -85px;
+    background-color: #37454D;
+    margin-top: 12px;
+    @include border-radius(6px);
+    
+    &:before {
+        content: '';
+        border-width: 12px;
+        border-style: inset inset solid;
+        display: block;
+        position: absolute;
+        z-index: 9;
+        top: -24px;
+        right: 20px;
+        border-color: rgba(0, 0, 0, 0) rgba(0, 0, 0, 0) #37454D;
+    }
+    
+    .clicker {
+        position:relative;
+    }
+    
+    li {
+        padding : 0 5px;
+        list-style: none;
+        form{
+            display: block
+        }
+        button.rtmedia-action-buttons {
+            transition:background-color 0.2s ease-in-out;
+            -webkit-transition:background-color 0.2s ease-in-out;
+            -moz-transition:background-color 0.2s ease-in-out;
+            display:block;
+            padding:8px;
+            background:none;
+            color:#fff;
+            border: none;
+            width: 100%;
+            text-align: left;
+            margin: 0;
+            @include border-radius(6px);
+            
+            &:hover {
+                background-color: #EDEFF4;
+                color : #2284B5;
+            }
+        }
+    }
+}
+
+/* Fallbacks */
+.click-nav .no-js ul {display:none;}
+.click-nav .no-js:hover ul {display:block;}
