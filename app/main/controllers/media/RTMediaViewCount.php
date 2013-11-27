@@ -37,7 +37,8 @@ class RTMediaViewCount extends RTMediaUserInteraction {
 	    $this->rtmedia_update_view_meta($this->media->id, $this->action);
 	}
 	$link = trailingslashit(get_rtmedia_permalink($this->media->id)).$this->action.'/';
-	echo '<div style="clear:both"></div><form action="'. $link .'" id="rtmedia-media-view-form"></form>';
+	//echo '<div style="clear:both"></div><form action="'. $link .'" id="rtmedia-media-view-form"></form>';
+	echo '<form action="'. $link .'" id="rtmedia-media-view-form"></form>';
 	do_action("rtmedia_view_media_counts",$this);
     }
 
