@@ -341,10 +341,10 @@ class RTMediaFormHandler {
 		<div class="rt-table large-12">
 			<div class="row rt-header">
 			    <?php do_action("rtmedia_type_settings_before_heading"); ?>
-				<h4 class="columns large-3"><?php echo __("Media Type","rtmedia") ?></h4>
-				<h4 class="columns large-3 rtm-show-tooltip" title="<?php echo __("Allows you to upload a particular media type on your post.","rtmedia"); ?>"><abbr><?php echo __("Allow Upload","rtmedia"); ?></abbr></h4>
-				<h4 class="columns large-3 rtm-show-tooltip" title="<?php echo __("Put a specific media as a featured content on the post.","rtmedia"); ?>"><abbr><?php echo __("Set Featured","rtmedia"); ?></abbr></h4>
-				<h4 class="columns large-3 rtm-show-tooltip" title="<?php echo __("File extensions that can be uploaded on the website.","rtmedia"); ?>"><abbr><?php echo __("File Extensions","rtmedia"); ?></abbr></h4>
+				<h4 class="columns large-3"><?php _e("Media Type","rtmedia") ?></h4>
+				<h4 class="columns large-3 rtm-show-tooltip" title="<?php _e("Allows you to upload a particular media type on your post.","rtmedia"); ?>"><abbr><?php _e("Allow Upload","rtmedia"); ?></abbr></h4>
+				<h4 class="columns large-3 rtm-show-tooltip" title="<?php _e("Put a specific media as a featured content on the post.","rtmedia"); ?>"><abbr><?php _e("Set Featured","rtmedia"); ?></abbr></h4>
+				<h4 class="columns large-3 rtm-show-tooltip" title="<?php _e("File extensions that can be uploaded on the website.","rtmedia"); ?>"><abbr><?php _e("File Extensions","rtmedia"); ?></abbr></h4>
 				<?php do_action("rtmedia_type_settings_after_heading"); ?>
 			</div>
 

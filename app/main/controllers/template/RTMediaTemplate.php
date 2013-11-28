@@ -196,18 +196,18 @@ class RTMediaTemplate {
                 add_action ( "rtmedia_before_template_load", array( &$this, "media_update_success_error" ) );
             }
         } else {
-            echo __ ( "Ooops !!! Invalid access. No nonce was found !!", "rtmedia" );
+            _e( 'Ooops !!! Invalid access. No nonce was found !!', 'rtmedia' );
         }
     }
 
     function media_update_success_messege () {
-        $message = apply_filters ( "rtmedia_update_media_message", "Media updated Sucessfully", false );
+        $message = apply_filters ( "rtmedia_update_media_message", __( 'Media updated Sucessfully', 'rtmedia' ), false );
         $html = "<div class='rtmedia-success media-edit-messge'>" . __ ( $message, "rtmedia" ) . "</div>";
         echo apply_filters ( "rtmedia_update_media_message_html", $html, $message, false );
     }
 
     function media_update_success_error () {
-        $message = apply_filters ( "rtmedia_update_media_message", "Error in updating Media", true );
+        $message = apply_filters ( "rtmedia_update_media_message", __( 'Error in updating Media', 'rtmedia' ), true );
         $html = "<div class='rtmedia-error  media-edit-messge'>" . __ ( $message, "rtmedia" ) . "</div>";
         echo apply_filters ( "rtmedia_update_media_message_html", $html, $message, true );
     }
@@ -258,7 +258,7 @@ class RTMediaTemplate {
             wp_safe_redirect ( get_rtmedia_permalink ( $rtmedia_query->media_query[ 'album_id' ] ) . 'edit/' );
             die();
         } else {
-            echo __ ( "Ooops !!! Invalid access. No nonce was found !!", "rtmedia" );
+            _e( 'Ooops !!! Invalid access. No nonce was found !!', 'rtmedia' );
         }
     }
 
@@ -331,7 +331,7 @@ class RTMediaTemplate {
             wp_safe_redirect ( $redirect_url );
             die();
         } else {
-            echo __ ( "Ooops !!! Invalid access. No nonce was found !!", "rtmedia" );
+            _e( 'Ooops !!! Invalid access. No nonce was found !!', 'rtmedia' );
         }
     }
 
@@ -429,7 +429,7 @@ class RTMediaTemplate {
                     exit;
                 }
             } else {
-                echo "Ooops !!! Invalid access. No nonce was found !!";
+                _e ( 'Ooops !!! Invalid access. No nonce was found !!', 'rtmedia' );
             }
         }
     }

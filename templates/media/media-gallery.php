@@ -5,13 +5,13 @@
         global $rtmedia_query;
         if( isset($rtmedia_query->is_gallery_shortcode) && $rtmedia_query->is_gallery_shortcode == true) { // if gallery is displayed using gallery shortcode
         ?>            
-            <h2><?php echo __ ( 'Media Gallery', 'rtmedia' ); ?></h2>
+            <h2><?php _e( 'Media Gallery', 'rtmedia' ); ?></h2>
         <?php }
         else { ?>
             <div id="rtm-gallery-title-container">
                 <h2 class="rtm-gallery-title">
                     <?php if( $title ) { echo $title; }
-                            else { echo __ ( 'Media Gallery', 'rtmedia' ); } ?>
+                            else { _e( 'Media Gallery', 'rtmedia' ); } ?>
                 </h2>
                 <div id="rtm-media-options"><?php do_action ( 'rtmedia_media_gallery_actions' ); ?></div>
             </div>    
@@ -45,7 +45,7 @@
             else
                 $display = 'style="display:none;"';
             ?>
-            <a id="rtMedia-galary-prev" <?php echo $display; ?> href="<?php echo rtmedia_pagination_prev_link (); ?>"><?php echo __ ( 'Prev', 'rtmedia' ); ?></a>
+            <a id="rtMedia-galary-prev" <?php echo $display; ?> href="<?php echo rtmedia_pagination_prev_link (); ?>"><?php _e( 'Prev', 'rtmedia' ); ?></a>
 
             <?php
             $display = '';
@@ -54,10 +54,10 @@
             else
                 $display = 'style="display:none;"';
             ?>
-            <a id="rtMedia-galary-next" <?php echo $display; ?> href="<?php echo rtmedia_pagination_next_link (); ?>"><?php echo __ ( 'Next', 'rtmedia' ); ?></a>
+            <a id="rtMedia-galary-next" <?php echo $display; ?> href="<?php echo rtmedia_pagination_next_link (); ?>"><?php _e( 'Next', 'rtmedia' ); ?></a>
         </div>
     <?php } else { ?>
-        <p><?php echo __ ( "Oops !! There's no media found for the request !!", "rtmedia" ); ?></p>
+        <p><?php _e( "Oops !! There's no media found for the request !!", "rtmedia" ); ?></p>
     <?php } ?>
 </ul>
 <?php do_action ( 'rtmedia_after_media_gallery' ); ?>

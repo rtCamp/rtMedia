@@ -76,7 +76,7 @@ if (!class_exists('RTMediaSettings')) {
             return $options;
         }
         function add_max_video_thumb_notice(){
-             echo '<div class="error"><p>' . __("Max Video thumbnail size is ") .' <strong>10</strong></p></div>';
+             echo '<div class="error"><p>' . __( 'Max Video thumbnail size is ', 'rtmedia' ) .' <strong>10</strong></p></div>';
         }
         /**
          *

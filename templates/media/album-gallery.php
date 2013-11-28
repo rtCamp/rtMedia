@@ -1,7 +1,7 @@
 <div class="rtmedia-container">
     <?php do_action ( 'rtmedia_before_album_gallery' ); ?>
     <div id="rtm-gallery-title-container">
-        <h2 class="rtm-gallery-title"><?php echo __ ( 'Album Gallery' , 'rtmedia' ) ; ?></h2>
+        <h2 class="rtm-gallery-title"><?php _e( 'Album Gallery' , 'rtmedia' ) ; ?></h2>
         <div id="rtm-media-options"><?php do_action ( 'rtmedia_album_gallery_actions' ); ?></div>
     </div>   
     
@@ -31,7 +31,7 @@
             else
                 $display = 'style="display:none;"' ;
             ?>
-            <a id="rtMedia-galary-prev" <?php echo $display ; ?> href="<?php echo rtmedia_pagination_prev_link () ; ?>"><?php echo __ ( 'Prev' , 'rtmedia' ) ; ?></a>
+            <a id="rtMedia-galary-prev" <?php echo $display ; ?> href="<?php echo rtmedia_pagination_prev_link () ; ?>"><?php _e( 'Prev' , 'rtmedia' ) ; ?></a>
 
             <?php
             $display = '' ;
@@ -40,12 +40,12 @@
             else
                 $display = 'style="display:none;"' ;
             ?>
-            <a id="rtMedia-galary-next" <?php echo $display ; ?> href="<?php echo rtmedia_pagination_next_link () ; ?>"><?php echo __ ( 'Next' , 'rtmedia' ) ; ?></a>
+            <a id="rtMedia-galary-next" <?php echo $display ; ?> href="<?php echo rtmedia_pagination_next_link () ; ?>"><?php _e( 'Next' , 'rtmedia' ) ; ?></a>
 
         </div><!--/.rtmedia_next_prev-->
 
     <?php } else { ?>
-        <p><?php echo __ ( "Oops !! No album found for the request !!" , "rtmedia" ) ; ?></p>
+        <p><?php _e( "Oops !! No album found for the request !!" , "rtmedia" ) ; ?></p>
     <?php } ?>
     <?php do_action ( 'rtmedia_after_album_gallery' ) ; ?>
 

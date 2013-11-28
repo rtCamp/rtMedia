@@ -145,7 +145,7 @@ class RTMediaBuddyPressActivity {
             'browse_button' => 'rtmedia-add-media-button-post-update',// browse button assigned to "Attach Files" Button.
             'container' => 'rtmedia-whts-new-upload-container',
             'drop_element' => 'whats-new-textarea',// drag-drop area assigned to activity update textarea
-            'filters' => apply_filters ( 'rtmedia_plupload_files_filter', array( array( 'title' => "Media Files", 'extensions' => get_rtmedia_allowed_upload_type () ) ) ),
+            'filters' => apply_filters ( 'rtmedia_plupload_files_filter', array( array( 'title' => __( 'Media Files', 'rtmedia' ), 'extensions' => get_rtmedia_allowed_upload_type () ) ) ),
             'max_file_size' => min ( array( ini_get ( 'upload_max_filesize' ), ini_get ( 'post_max_size' ) ) ),
             'multipart' => true,
             'urlstream_upload' => true,
