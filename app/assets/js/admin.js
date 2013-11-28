@@ -636,3 +636,17 @@ jQuery(document).ready(function($) {
     if(jQuery(document).foundation !== undefined)
         jQuery(document).foundation('section');
 });
+
+function rtmedia_addon_do_not_show() {
+    var data = {
+	action: 'rtmedia_addon_popup_not_show_again'
+    };
+    jQuery.post(rtmedia_admin_ajax, data, function(response) {
+	jQuery('#TB_window').remove();
+	jQuery('#TB_overlay').remove();
+    });
+}
+
+jQuery(window).load(function(){
+    jQuery('.rtmedia-addon-thickbox').trigger('click');
+});

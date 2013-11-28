@@ -657,12 +657,12 @@ abbr {
    width:100%;
 }
 
-.bp-media-admin .rtm-premium {	 
-		background-color: #DDD;	
+.bp-media-admin .rtm-premium {
+		background-color: #DDD;
 }
 
-.bp-media-admin .premium-title {	 
-		color: #444;	
+.bp-media-admin .premium-title {
+		color: #444;
 		border-bottom: 1px solid #DDD ;
 		padding-bottom: 10px;
 }
@@ -675,3 +675,31 @@ abbr {
 	margin-top: 9px;
 	width: 40px;
 }
+#TB_window #rtmedia-addon-add-container #rtmedia-flat-50-message, #TB_window #rtmedia-addon-add-container #rtmedia-flat-50-link,#TB_window #rtmedia-addon-add-container #rtmedia-flat-50-code {
+	text-align: center;
+}
+#TB_window #rtmedia-addon-add-container #rtmedia-flat-50-message {
+	color: #3481C4;
+}
+#TB_window #rtmedia-addon-add-container #rtmedia-flat-50-message .alert, #TB_window #rtmedia-addon-add-container #rtmedia-flat-50-link .alert, #TB_window #rtmedia-addon-add-container #rtmedia-flat-50-code .alert, #TB_window #rtmedia-addon-add-container #rtmedia-flat-50-valid .alert {
+	color: #E6321F;
+}
+#TB_window #rtmedia-addon-add-container #rtmedia-flat-50-message .regular, #TB_window #rtmedia-addon-add-container #rtmedia-flat-50-link .regular, #TB_window #rtmedia-addon-add-container #rtmedia-flat-50-code .regular, #TB_window #rtmedia-addon-add-container #rtmedia-flat-50-valid .regular {
+	color: #6B757E;
+}
+#TB_window #rtmedia-addon-add-container #rtmedia-flat-50-link span a:hover{
+    color:#49A600;
+}
+#TB_window #rtmedia-addon-add-container #rtmedia-flat-50-link span a{
+    text-decoration: none;
+    font-size: 20px;
+    color:#125DAC;
+}
+#rtmedia-flat-50-valid {
+	text-align: right;
+}
+#rtmedia-addon-do-not-show {
+    text-decoration: none;
+    font-size: 15px;
+}
+

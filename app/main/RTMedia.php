@@ -901,9 +901,9 @@ function get_rtmedia_user_link($id) {
 
 function rtmedia_update_site_option($option_name, $option_value) {
     if( is_multisite() ) {
-	update_option($option_name, $option_value);
+	return update_option($option_name, $option_value);
     } else {
-	update_site_option($option_name, $option_value);
+	return update_site_option($option_name, $option_value);
     }
 }
 
