@@ -1502,14 +1502,14 @@ function rtmedia_admin_premium_page($page) {
         <div class="columns large-1 rtm-premium-icon-pro"><i class="icon-edit icon-3x"></i></div>
         <div class="columns large-10">
             <h2><?php _e( 'Post-editor button', 'rtmedia'); ?></h2>
-            <p><?php _e( 'With this button, a UI appears to quickly generate shortcodes for special pages like ‘Editorial Picks’.', 'rtmedia'); ?></p>
+            <p><?php _e( 'With this button, a UI appears to quickly generate shortcodes for special pages like "Editorial Picks".', 'rtmedia'); ?></p>
         </div>
         </div>
         <div class="row">
         <div class="columns large-1 rtm-premium-icon-pro"><i class="icon-star icon-3x"></i></div>
         <div class="columns large-10">
             <h2><?php _e( 'Star-Rating option', 'rtmedia'); ?></h2>
-            <p><?php _e( 'Users can give up to five stars to rate media. This data can be used for ‘Most Rated Media’ in sidebars.', 'rtmedia'); ?></p>
+            <p><?php _e( 'Users can give up to five stars to rate media. This data can be used for "Most Rated Media" in sidebars.', 'rtmedia'); ?></p>
         </div>
         </div>
         <div class="row">
@@ -1530,7 +1530,7 @@ function rtmedia_admin_premium_page($page) {
         <div class="columns large-1 rtm-premium-icon-pro"><i class="icon-code icon-3x"></i></div>
         <div class="columns large-10">
             <h2><?php _e( 'Premium & Open-Source', 'rtmedia'); ?></h2>
-            <p><?php sprintf( _e( "Developers get full control over rtMedia-PRO’s source. They’ll get access to <a href='%s' target='_blank'>%s</a> to dive into the code.", 'rtmedia'), 'http://git.rtcamp.com/', 'git.rtcamp.com' ); ?></p>
+            <p><?php sprintf( _e( "Developers get full control over rtMedia-PRO's source. They'll get access to <a href='%s' target='_blank'>%s</a> to dive into the code.", 'rtmedia'), 'http://git.rtcamp.com/', 'git.rtcamp.com' ); ?></p>
         </div>
         </div>
     </div>
