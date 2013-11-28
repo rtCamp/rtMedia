@@ -132,7 +132,7 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "Visit rtMedia's Features page") to get some details about future releases.
 
 = 3.2.10 =
-* Update translation
+* Add support in some strings translations thanks to [rafaelfunchal](profiles.wordpress.org/rafaelfunchal) for pull request
 * Bug Fixes
 
 = 3.2.9 =
