@@ -37,19 +37,19 @@ if (!class_exists('RTMediaSupport')) {
 	    $tabs = array();
 			global $rtmedia_admin;
 			$tabs[] = array(
-				'title' => 'Premium Support',
+				'title' => __('Premium Support', 'rtmedia'),
 				'name' => __('Premium Support', 'rtmedia'),
 				'href' => '#support',
 				'callback' => array($this, 'call_get_form')
 			);
 			$tabs[] = array(
-				'title' => 'Debug Info',
+				'title' => __('Debug Info', 'rtmedia'),
 				'name' => __('Debug Info', 'rtmedia'),
 				'href' => '#debug',
 				'callback' => array($this, 'debug_info_html')
 			);
 			$tabs[] = array(
-				'title' => 'Migration',
+				'title' => __('Migration', 'rtmedia'),
 				'name' => __('Migration', 'rtmedia'),
 				'href' => '#migration',
 				'callback' => array($this, 'migration_html')
@@ -103,11 +103,11 @@ if (!class_exists('RTMediaSupport')) {
 		    <p>
 			<label class="bp-media-label" for="select_support"><?php _e('Service', 'rtmedia'); ?>:</label>
 			<select name="rtmedia_service_select">
-			    <option value="premium_support" <?php if($_POST['form']=="premium_support") echo "selected"; ?>>Premium Support</option>
-			    <option value="bug_report" <?php if($_POST['form']=="bug_report") echo "selected"; ?>>Bug Report</option>
-			    <option value="new_feature" <?php if($_POST['form']=="new_feature") echo "selected"; ?>>New Feature</option>
+			    <option value="premium_support" <?php if($_POST['form']=="premium_support") echo "selected"; ?>><?php _e( 'Premium Support', 'rtmedia' ); ?></option>
+			    <option value="bug_report" <?php if($_POST['form']=="bug_report") echo "selected"; ?>><?php _e( 'Bug Report', 'rtmedia' ); ?></option>
+			    <option value="new_feature" <?php if($_POST['form']=="new_feature") echo "selected"; ?>><?php _e( 'New Feature', 'rtmedia' ); ?></option>
 			</select>
-			<input name="support_submit" value="Submit" type="submit" class="button" />
+			<input name="support_submit" value="<?php esc_attr_e( 'Submit', 'rtmedia' ); ?>" type="submit" class="button" />
 		    </p>
 		</form>
 	    </div>
@@ -298,7 +298,7 @@ if (!class_exists('RTMediaSupport')) {
 	    $content = apply_filters("rtmedia_migration_content_filter", $content);
 	    if( $flag ) {
 		$content.= ' <div class="rtmedia-migration-support">';
-		$content.=' <p>'.__('Click','rtmedia').' <a href="'.get_admin_url().'admin.php?page=rtmedia-migration">'. _e('here','rtmedia').'</a>'. __('here to migrate media from rtMedia 2.x to rtMedia 3.0+.','rtmedia').'</p>';
+		$content.=' <p>'.__('Click','rtmedia').' <a href="'.get_admin_url().'admin.php?page=rtmedia-migration">'. __('here','rtmedia').'</a>'. __('here to migrate media from rtMedia 2.x to rtMedia 3.0+.','rtmedia').'</p>';
 		$content.='</div>';
 	    }
 ?>

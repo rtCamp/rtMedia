@@ -57,7 +57,7 @@ class RTMediaMigration {
 
     function add_migration_notice () {
         if ( current_user_can ( 'manage_options' ) )
-            $this->create_notice ( "<p><strong>rtMedia</strong> : Please Migrate your Database <a href='" . admin_url ( "admin.php?page=rtmedia-migration&force=true" ) . "'>Click Here</a>.  <a href='" . admin_url ( "admin.php?page=rtmedia-migration&hide=true" ) . "' style='float:right'>" . __ ( "Hide" ) . "</a> </p>" );
+            $this->create_notice ( "<p><strong>rtMedia</strong>: ". __( 'Please Migrate your Database', 'rtmedia' ) ." <a href='" . admin_url ( "admin.php?page=rtmedia-migration&force=true" ) . "'>". __( 'Click Here', 'rtmedia' ) ."</a>.  <a href='" . admin_url ( "admin.php?page=rtmedia-migration&hide=true" ) . "' style='float:right'>". __( 'Hide', 'rtmedia' ) ."</a> </p>" );
     }
 
     function create_notice ( $message, $type = "error" ) {
@@ -75,7 +75,7 @@ class RTMediaMigration {
     }
 
     function menu () {
-        add_submenu_page ( 'rtmedia-setting', __ ( 'Migration', 'buddypress-media' ), __ ( 'Migration', 'buddypress-media' ), 'manage_options', 'rtmedia-migration', array( $this, 'test' ) );
+        add_submenu_page ( 'rtmedia-setting', __ ( 'Migration', 'rtmedia' ), __ ( 'Migration', 'rtmedia' ), 'manage_options', 'rtmedia-migration', array( $this, 'test' ) );
     }
 
     function get_total_count () {
@@ -359,14 +359,14 @@ class RTMediaMigration {
             $done = $total;
         } else {
             ?>
-            <div class="error"><p> Please Backup your <strong>DATABASE</strong> and <strong>UPLOAD</strong> folder before Migration.</p></div>
+            <div class="error"><p><?php _e( 'Please Backup your <strong>DATABASE</strong> and <strong>UPLOAD</strong> folder before Migration.', 'rtmedia' ); ?></p></div>
         <?php }
         ?>
 
         <div class="wrap">
 
-            <h2>rtMedia Migration</h2>
-            <h3><?php _e ( "It will migrate following things" ); ?> </h3>
+            <h2><?php _e( 'rtMedia Migration', 'rtmedia' ); ?></h2>
+            <h3><?php _e( 'It will migrate following things', 'rtmedia' ); ?> </h3>
             User Albums : <?php echo $_SESSION[ "migration_user_album" ]; ?><br />
             <?php if ( isset ( $_SESSION[ "migration_group_album" ] ) ) { ?>
                 Groups Albums : <?php echo $_SESSION[ "migration_group_album" ]; ?><br />
@@ -434,7 +434,7 @@ class RTMediaMigration {
                                 }
                             },
                             error: function() {
-                                alert("Error During Migration, Please Refresh Page then try again");
+                                alert("<?php _e( 'Error During Migration, Please Refresh Page then try again', 'rtmedia'); ?>");
                                 jQuery("#submit").removeAttr('disabled');
                             }
                         });
@@ -454,7 +454,7 @@ class RTMediaMigration {
             </script>
             <hr />
             <?php if ( ! (isset ( $rtmedia_error ) && $rtmedia_error === true) ) { ?>
-                <input type="button" id="submit" value="start" class="button button-primary" />
+                <input type="button" id="submit" value="<?php esc_attr_e( 'Start', 'rtmedia' ); ?>" class="button button-primary" />
             <?php } ?>
 
         </div>
@@ -999,25 +999,25 @@ class RTMediaMigration {
         $timeComponents = array( );
 
         if ( $days > 0 ) {
-            $timeComponents[ ] = $days . " day" . ($days > 1 ? "s" : "");
+            $timeComponents[ ] = $days . __( ' day', 'rtmedia' ) . ($days > 1 ? "s" : "");
         }
 
         if ( $hours > 0 ) {
-            $timeComponents[ ] = $hours . " hour" . ($hours > 1 ? "s" : "");
+            $timeComponents[ ] = $hours . __( ' hour', 'rtmedia' ) . ($hours > 1 ? "s" : "");
         }
 
         if ( $minutes > 0 ) {
-            $timeComponents[ ] = $minutes . " minute" . ($minutes > 1 ? "s" : "");
+            $timeComponents[ ] = $minutes . __( ' minute', 'rtmedia' ) . ($minutes > 1 ? "s" : "");
         }
 
         if ( $seconds > 0 ) {
-            $timeComponents[ ] = $seconds . " second" . ($seconds > 1 ? "s" : "");
+            $timeComponents[ ] = $seconds . __( ' second', 'rtmedia' ) . ($seconds > 1 ? "s" : "");
         }
         if ( count ( $timeComponents ) > 0 ) {
             $formattedTimeRemaining = implode ( ", ", $timeComponents );
             $formattedTimeRemaining = trim ( $formattedTimeRemaining );
         } else {
-            $formattedTimeRemaining = "No time remaining.";
+            $formattedTimeRemaining = __( 'No time remaining.', 'rtmedia' );
         }
 
         return $formattedTimeRemaining;

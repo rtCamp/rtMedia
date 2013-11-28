@@ -48,20 +48,20 @@ if (!class_exists('RTMediaAddon')) {
 			$tabs = array();
 			global $rtmedia_admin;
 			$tabs[] = array(
-				'title' => 'Audio/Video Encoding',
+				'title' => __('Audio/Video  Encoding', 'rtmedia'),
 				'name' => __('Audio/Video  Encoding', 'rtmedia'),
 				'href' => '#rtm-services',
 				'callback' => array($rtmedia_admin->rtmedia_encoding, 'encoding_service_intro')
 			);
 			$tabs[] = array(
-				'title' => 'Plugins',
+				'title' => __('Plugins', 'rtmedia'),
 				'name' => __('Plugins', 'rtmedia'),
 				'href' => '#rtm-plugins',
 				'callback' => array($this, 'plugins_content')
 			);
 
 /*			$tabs[] = array(
-				'title' => 'Themes',
+				'title' => __('Themes', 'rtmedia'),
 				'name' => __('Themes', 'rtmedia'),
 				'href' => '#bpm-themes',
 				'callback' => array($this, 'themes_content')
@@ -139,11 +139,11 @@ if (!class_exists('RTMediaAddon')) {
 
 				if($key == 0) {
 					echo '<h3>';
-					_e('rtMedia Addons for Photos');
+					_e( 'rtMedia Addons for Photos', 'rtmedia' );
 					echo '</h3>';
 				} else if($key == 2) {
 					echo '<h3>';
-					_e('rtMedia Addons for Audio/Video');
+					_e( 'rtMedia Addons for Audio/Video', 'rtmedia' );
 					echo '</h3>';
 				}
 				$this->addon($value);
@@ -157,7 +157,7 @@ if (!class_exists('RTMediaAddon')) {
 		}
 
 		public function themes_content($args = '') {
-			echo '<h3>Coming Soon !!</h3>';
+			echo '<h3>'. __( 'Coming Soon !!', 'rtmedia' ) .'</h3>';
 		}
 
 

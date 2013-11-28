@@ -120,7 +120,7 @@ class rtPluginUpdateChecker {
             $scheduleName = 'every' . $this->checkPeriod . 'hours';
             $schedules[$scheduleName] = array(
                 'interval' => $this->checkPeriod * 3600,
-                'display' => sprintf('Every %d hours', $this->checkPeriod),
+                'display' => sprintf( __( "Every %d hours", 'rtmedia' ), $this->checkPeriod),
             );
         }
         return $schedules;
@@ -193,13 +193,13 @@ class rtPluginUpdateChecker {
         if (!is_wp_error($result) && isset($result['response']['code']) && ($result['response']['code'] == 200) && !empty($result['body'])) {
             $pluginInfo = rtPluginInfo::fromJson($result['body'], $this->debugMode);
         } else if ($this->debugMode) {
-            $message = sprintf("The URL %s does not point to a valid plugin metadata file. ", $url);
+            $message = sprintf( __( "The URL %s does not point to a valid plugin metadata file.", 'rtmedia'), $url );
             if (is_wp_error($result)) {
-                $message .= "WP HTTP error: " . $result->get_error_message();
+                $message .= sprintf( __( "WP HTTP error: %s", 'rtmedia'), $result->get_error_message() );
             } else if (isset($result['response']['code'])) {
-                $message .= "HTTP response code is " . $result['response']['code'] . " (expected: 200)";
+                $message .= sprintf( __( "HTTP response code is %s (expected: 200)", 'rtmedia'), $result['response']['code'] );
             } else {
-                $message .= "wp_remote_get() returned an unexpected result.";
+                $message .= __( 'wp_remote_get() returned an unexpected result.', 'rtmedia' );
             }
             trigger_error($message, E_USER_WARNING);
         }
@@ -256,9 +256,7 @@ class rtPluginUpdateChecker {
             //This can happen if the filename is wrong or the plugin is installed in mu-plugins.
             if ($this->debugMode) {
                 trigger_error(
-                        sprintf(
-                                "Can't to read the Version header for %s. The filename may be incorrect, or the file is not present in /wp-content/plugins.", $this->pluginFile
-                        ), E_USER_WARNING
+                        sprintf( __( "Can't to read the Version header for %s. The filename may be incorrect, or the file is not present in /wp-content/plugins.", 'rtmedia' ), $this->pluginFile ), E_USER_WARNING
                 );
             }
             return null;
@@ -282,7 +280,7 @@ class rtPluginUpdateChecker {
         if ($installedVersion === null) {
             if ($this->debugMode) {
                 trigger_error(
-                        sprintf('Skipping update check for %s - installed version unknown.', $this->pluginFile), E_USER_WARNING
+                        sprintf( __( "Skipping update check for %s - installed version unknown.", 'rtmedia'), $this->pluginFile ), E_USER_WARNING
                 );
             }
             return null;
@@ -510,7 +508,7 @@ class rtPluginUpdateChecker {
                     ), 'puc_check_for_updates'
             );
 
-            $linkText = apply_filters('puc_manual_check_link-' . $this->slug, 'Check for updates');
+            $linkText = apply_filters('puc_manual_check_link-' . $this->slug, __( 'Check for updates', 'rtmedia' ) );
             if (!empty($linkText)) {
                 $pluginMeta[] = sprintf('<a href="%s">%s</a>', esc_attr($linkUrl), $linkText);
             }
@@ -553,11 +551,11 @@ class rtPluginUpdateChecker {
         if (isset($_GET['puc_update_check_result'], $_GET['puc_slug']) && ($_GET['puc_slug'] == $this->slug)) {
             $status = strval($_GET['puc_update_check_result']);
             if ($status == 'no_update') {
-                $message = 'This plugin is up to date.';
+                $message = __( 'This plugin is up to date.', 'rtmedia' );
             } else if ($status == 'update_available') {
-                $message = 'A new version of this plugin is available.';
+                $message = __( 'A new version of this plugin is available.', 'rtmedia' );
             } else {
-                $message = sprintf('Unknown update checker status "%s"', htmlentities($status));
+                $message = sprintf( __( "Unknown update checker status \"%s\"", 'rtmedia' ), htmlentities($status));
             }
             printf(
                     '<div class="updated"><p>%s</p></div>', apply_filters('puc_manual_check_message-' . $this->slug, $message, $status)
