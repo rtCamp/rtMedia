@@ -14,19 +14,25 @@
  */
 class RTMediaGalleryShortcode {
 
-    static $add_script;
-
     /**
      *
      */
     public function __construct () {
 
         add_shortcode ( 'rtmedia_gallery', array( 'RTMediaGalleryShortcode', 'render' ) );
-        //add_action('init', array($this, 'register_scripts'));
-        //add_action('wp_footer', array($this, 'print_script'));
     }
 
-    static function register_scripts () {
+	/**
+	 * Enqueue the scripts for the shortcode.
+	 *
+	 * This is called by RTMediaGalleryShortcode::render() when the shortcode is
+	 * being displayed.
+	 */
+    static function enqueue_scripts() {
+    	if ( wp_script_is( 'rtmedia-backbone' ) ) {
+    		return;
+    	}
+
         wp_enqueue_script ( 'plupload-all' );
         wp_enqueue_script ( 'rtmedia-backbone', RTMEDIA_URL . 'app/assets/js/rtMedia.backbone.js', array( 'plupload', 'backbone' ), false, true );
 
@@ -90,7 +96,7 @@ class RTMediaGalleryShortcode {
      */
     static function render ( $attr ) {
         if ( self::display_allowed () ) {
-            self::$add_script = true;
+            self::enqueue_scripts();
 
             ob_start ();
 
@@ -121,13 +127,4 @@ class RTMediaGalleryShortcode {
             return ob_get_clean ();
         }
     }
-
-    static function print_script () {
-        if ( ! self::$add_script )
-            return;
-        if ( ! wp_script_is ( 'rtmedia-backbone' ) ) {
-            wp_print_scripts ( 'rtmedia-backbone' );
-        }
-    }
-
 }

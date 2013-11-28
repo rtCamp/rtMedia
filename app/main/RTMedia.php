@@ -88,7 +88,6 @@ class RTMedia
         add_action('plugins_loaded', array($this, 'init'), 20);
         add_action('plugins_loaded', array($this, 'load_translation'), 10);
         add_action('plugins_loaded', array($this, 'admin_init'));
-        add_action('wp_enqueue_scripts', array('RTMediaGalleryShortcode', 'register_scripts'));
         add_action('wp_enqueue_scripts', array(&$this, 'enqueue_scripts_styles'), 999);
         add_action('rt_db_upgrade', array($this, 'fix_parent_id'));
         add_action('rt_db_upgrade', array($this, 'fix_privacy'));
