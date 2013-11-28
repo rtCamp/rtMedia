@@ -514,6 +514,10 @@ class RTMediaMedia {
 
         if ( $media->context == 'group' || 'profile' ) {
             $activity_args[ 'component' ] = $media->context;
+	    if( $media->context == 'group' ) {
+		$activity_args[ 'component' ] = "groups";
+		$activity_args[ 'item_id' ] = $media->context_id;
+	    }
         }
 
         $activity_id = bp_activity_add ( $activity_args );
