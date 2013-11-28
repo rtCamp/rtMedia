@@ -1530,7 +1530,7 @@ function rtmedia_admin_premium_page($page) {
         <div class="columns large-1 rtm-premium-icon-pro"><i class="icon-code icon-3x"></i></div>
         <div class="columns large-10">
             <h2><?php _e( 'Premium & Open-Source', 'rtmedia'); ?></h2>
-            <p><?php sprintf( _e( "Developers get full control over rtMedia-PRO’s source. They’ll get access to <a href='%s' target='_blank'>%s</a> to dive into the code.", 'rtmedia'), 'http://git.rtcamp.com/', 'git.rtcamp.com' ); ?></p>
+            <p><?php sprintf( _e( "Developers get full control over rtMedia-PRO's source. They'll get access to <a href='%s' target='_blank'>%s</a> to dive into the code.", 'rtmedia'), 'http://git.rtcamp.com/', 'git.rtcamp.com' ); ?></p>
         </div>
         </div>
     </div>
