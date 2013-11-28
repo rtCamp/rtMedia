@@ -33,7 +33,7 @@
                 <?php if ( rtmedia_comments_enabled () ) { ?>
                     <div class="rtmedia-item-comments row">
                         <div class="large-12 columns">
-                            <h2><?php echo __( "Comments", "rtmedia" ); ?></h2>
+                            <h2><?php echo __( 'Comments', 'rtmedia' ); ?></h2>
                             <div class="rtmedia-comments-container">
                                 <?php rtmedia_comments (); ?>
                             </div>
