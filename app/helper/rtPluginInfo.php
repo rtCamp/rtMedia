@@ -47,7 +47,7 @@ class rtPluginInfo {
         if (empty($apiResponse) || !is_object($apiResponse)) {
             if ($triggerErrors) {
                 trigger_error(
-                        "Failed to parse plugin metadata. Try validating your .json file with http://jsonlint.com/", E_USER_NOTICE
+                        sprintf( __( "Failed to parse plugin metadata. Try validating your .json file with %s", 'rtmedia' ), 'http://jsonlint.com/' ), E_USER_NOTICE
                 );
             }
             return null;
@@ -58,7 +58,7 @@ class rtPluginInfo {
         if (!$valid) {
             if ($triggerErrors) {
                 trigger_error(
-                        "The plugin metadata file does not contain the required 'name' and/or 'version' keys.", E_USER_NOTICE
+                        __( "The plugin metadata file does not contain the required 'name' and/or 'version' keys.", 'rtmedia'), E_USER_NOTICE
                 );
             }
             return null;
