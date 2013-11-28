@@ -67,9 +67,7 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
                 add_action ( 'admin_enqueue_scripts', array( $this, 'ui' ) );
                 //bp_core_admin_hook();
                 add_action ( 'admin_menu', array( $this, 'menu' ), 1 );
-
-                if ( current_user_can ( 'manage_options' ) )
-                    add_action ( 'bp_admin_tabs', array( $this, 'tab' ) );
+		add_action( 'init', array( $this,'bp_admin_tabs' ) );
                 if ( is_multisite () )
                     add_action ( 'network_admin_edit_rtmedia', array( $this, 'save_multisite_options' ) );
             }
@@ -78,6 +76,13 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
             if(! defined("RTMEDIA_PRO_VERSION"))
                 add_action ( 'rtmedia_before_default_admin_widgets', array( $this, 'rtmedia_advertisement' ),1);
         }
+
+	function bp_admin_tabs() {
+	    if ( current_user_can ( 'manage_options' ) ) {
+		add_action ( 'bp_admin_tabs', array( $this, 'tab' ) );
+	    }
+	}
+
         function rtmedia_advertisement(){ ?>
     <div class='rtmedia-admin-ad'>
         <a href='http://rtcamp.com/store/rtmedia-pro/' target='_blank' title='rtMedia Pro'>
