@@ -39,7 +39,8 @@ if (!class_exists('RTMediaSettings')) {
                 'general_showAdminMenu' => 0,
                 'general_videothumbs' => 2,
 		'general_uniqueviewcount' => 0,
-		'general_viewcount' => 0
+		'general_viewcount' => 0,
+		'general_AllowUserData' => 0
             );
 
             $defaults = apply_filters('rtmedia_general_content_default_values', $defaults);
@@ -98,7 +99,7 @@ if (!class_exists('RTMediaSettings')) {
             }
             $rtmedia_addon = new RTMediaAddon();
             add_settings_section('rtm-addons', __('BuddyPress Media Addons for Photos', 'rtmedia'), array($rtmedia_addon, 'get_addons'), 'rtmedia-addons');
-	    $rtmedia_support = new RTMediaSupport(false);
+        $rtmedia_support = new RTMediaSupport(false);
             add_settings_section('rtm-support', __('Support', 'rtmedia'), array($rtmedia_support, 'get_support_content'), 'rtmedia-support');
 
 //            if (!BPMediaPrivacy::is_installed()) {
@@ -236,11 +237,11 @@ if (!class_exists('RTMediaSettings')) {
                 );
 
                 $notice = '
-				<div class="error">
-				<p>' . __('BuddyPress Media 2.6 requires a database upgrade. ', 'rtmedia')
+                <div class="error">
+                <p>' . __('BuddyPress Media 2.6 requires a database upgrade. ', 'rtmedia')
                         . '<a href="' . $url . '">' . __('Update Database', 'rtmedia') . '.</a></p>
-				</div>
-				';
+                </div>
+                ';
                 echo $notice;
             }
         }
