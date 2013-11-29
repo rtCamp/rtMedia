@@ -248,6 +248,15 @@ class RTMediaFormHandler {
 					'desc' => __('Enable menu in WordPress admin bar','rtmedia')
 				),
 				'group' => "10"
+			),
+			'general_AllowUserData' => array(
+				'title' => __('Allow User Data Tracking','rtmedia'),
+				'callback' => array('RTMediaFormHandler', 'checkbox'),
+				'args' => array(
+					'key' => 'general_AllowUserData',
+					'value' => $options['general_AllowUserData'],
+					'desc' => __('Enable user Data tracking','rtmedia')
+				)
 			)
 		);
 

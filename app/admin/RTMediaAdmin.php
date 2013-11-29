@@ -19,7 +19,7 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
         public function __construct () {
             global $rtmedia;
             add_action ( 'init', array( $this, 'video_transcoding_survey_response' ) );
-            add_action ( 'admin_init', array( $this, 'presstrends_plugin' ) );
+	    add_action ( 'admin_init', array( $this, 'presstrends_plugin' ) );
             if ( is_multisite () ) {
                 add_action ( 'network_admin_notices', array( $this, 'upload_filetypes_error' ) );
                 add_action ( 'admin_notices', array( $this, 'upload_filetypes_error' ) );
@@ -75,17 +75,7 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
             $this->rtmedia_encoding = new RTMediaEncoding();
             if(! defined("RTMEDIA_PRO_VERSION"))
                 add_action ( 'rtmedia_before_default_admin_widgets', array( $this, 'rtmedia_advertisement' ),1);
-	    add_action ( 'wp_ajax_rtmedia_addon_popup_not_show_again', array( $this, 'rtmedia_addon_popup_not_show_again' ), 1 );
         }
-
-	function rtmedia_addon_popup_not_show_again() {
-	    if( rtmedia_update_site_option( "rtmedia-addon-popup", "hide" ) ) {
-		echo "1";
-	    } else {
-		echo "0";
-	    }
-	    die();
-	}
 
 	function bp_admin_tabs() {
 	    if ( current_user_can ( 'manage_options' ) ) {
@@ -93,10 +83,12 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
 	    }
 	}
 
-        function rtmedia_advertisement(){ ?>
+        function rtmedia_advertisement(){
+	    $src = RTMEDIA_URL."app/assets/img/rtMedia-pro-ad-300x300px-2-RS.png"
+    ?>
     <div class='rtmedia-admin-ad'>
         <a href='http://rtcamp.com/store/rtmedia-pro/' target='_blank' title='rtMedia Pro'>
-            <img src='http://rtcamp.com/wp-content/uploads/2013/09/rtMedia-pro-ad-300x300px-2-RS.png' alt='rtMedia Pro is released' />
+            <img src='<?php echo $src; ?>' alt='rtMedia Pro is released' />
         </a>
     </div>
         <?php }
@@ -335,7 +327,6 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
                 wp_enqueue_style ( 'grid-foundation', RTMEDIA_URL . 'app/assets/css/grid-foundation.css', '', RTMEDIA_VERSION );
                 wp_enqueue_style ( 'rtmedia-main', RTMEDIA_URL . 'app/assets/css/main.css', '', RTMEDIA_VERSION );
                 wp_enqueue_style ( 'rtmedia-admin', RTMEDIA_URL . 'app/assets/css/admin.css', '', RTMEDIA_VERSION );
-                wp_enqueue_style ( 'rtmedia-admin', RTMEDIA_URL . 'app/assets/css/rtmedia-addon-popup.css', '', RTMEDIA_VERSION );
                 if(isset($_REQUEST['page']) && $_REQUEST['page']== "rtmedia-settings") {
                     wp_enqueue_style ( 'foundation-admin-css', RTMEDIA_URL . 'app/assets/css/settings.css', '', RTMEDIA_VERSION );
                 }
@@ -655,27 +646,6 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
                         <?php $this->admin_sidebar (); ?>
                     </div>
                 </div><!-- .metabox-holder -->
-		<!-- rtmedia addon popup -->
-		<?php
-		    $site_option  = rtmedia_get_site_option("rtmedia-addon-popup");
-		    if(!$site_option || $site_option != "hide") {
-			rtmedia_update_site_option("rtmedia-addon-popup", "show");
-		?>
-		    <?php add_thickbox(); ?>
-		    <div id="rtmedia-addon-add-parent" style="display:none;">
-			<div id="rtmedia-addon-add-container">
-			    <div style="text-align:right"><a href="#" id="rtmedia-addon-do-not-show" onclick="return rtmedia_addon_do_not_show();"><?php _e('Do not show again','rtmedia');?></a></div>
-			    <h1 id="rtmedia-flat-50-message"><?php _e('Flat','rtmedia'); ?> <span class="alert"><?php _e('50%','rtmedia'); ?></span> <?php _e('Discount On All rtMedia Addons','rtmedia'); ?></h1>
-			    <h3 id="rtmedia-flat-50-link"><span class="regular"><a href="http://rtcamp.com/promo/flat-50-discount-rtcamp-products" target="_blank"><?php _e('Read More','rtmedia') ?></a><span></h3>
-			    <h2 id="rtmedia-flat-50-code"><span class="regular"><?php _e('Use Promo Code:','rtmedia'); ?></span> <span class="alert">RTMEDIA50</span></h2>
-			    <h5 id="rtmedia-flat-50-valid"><span class="regular"> <?php _e('Offer Valid Till:','rtmedia');?> December 3, 11:59PM PST</span></h5>
-			</div>
-		    </div>
-		    <a href="#TB_inline?width=600&height=170&inlineId=rtmedia-addon-add-parent" style="display:none;" class="thickbox rtmedia-addon-thickbox">rtMedia Addons</a>
-		<?php
-		    }
-		?>
-		<!-- E.O. rtMedia addon popup -->
             </div><!-- .bp-media-admin --><?php
         }
 
@@ -1190,6 +1160,12 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
 	}
 
         function presstrends_plugin() {
+	    global $rtmedia;
+	    $option = $rtmedia->options;
+	    if(!isset($option['general_AllowUserData'] )) return;
+	    if($option['general_AllowUserData'] == "0" ) {
+		return;
+	    }
             // PressTrends Account API Key
             $api_key = 'djbzu1no2tdz4qq4u2fpgaemuup2zzmtjulb';
             $auth    = 'o3w063qppl7ha022jyc3bjpi7usrmczho';
