@@ -38,9 +38,9 @@ if (!class_exists('RTMediaSettings')) {
                 'general_enableMediaEndPoint' => 0,
                 'general_showAdminMenu' => 0,
                 'general_videothumbs' => 2,
-        'general_uniqueviewcount' => 0,
-        'general_viewcount' => 0,
-        'general_AllowUserData' => 0
+		'general_uniqueviewcount' => 0,
+		'general_viewcount' => 0,
+		'general_AllowUserData' => 0
             );
 
             $defaults = apply_filters('rtmedia_general_content_default_values', $defaults);
