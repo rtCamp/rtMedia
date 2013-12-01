@@ -209,7 +209,7 @@ class RTMediaMigration {
                 $album_count = 0;
             }
         }
-        if ( intval ( $_SESSION[ "migration_media" ] ) == intval ( $media_count ) ) {
+        if ( isset($_SESSION[ "migration_activity" ]) &&  intval ( $_SESSION[ "migration_media" ] ) == intval ( $media_count ) ) {
             $comment_sql = $_SESSION[ "migration_activity" ];
         } else {
             $comment_sql = $wpdb->get_var ( "select count(*)
