@@ -712,6 +712,10 @@ class RTMedia
         if ($update->check_upgrade()) {
             $update->do_upgrade();
         }
+        if(! $update->  table_exists ( $update->  genrate_table_name ( "rtm_media" ) )){
+            delete_site_option($update->get_db_version_option_name());
+            $update->do_upgrade();
+        }
     }
 
     function create_table_error_notice() {
