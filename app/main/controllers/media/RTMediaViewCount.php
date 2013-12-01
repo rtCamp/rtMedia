@@ -17,17 +17,17 @@ class RTMediaViewCount extends RTMediaUserInteraction {
 	    'label' => 'view',
 	    'privacy' => 0
 	    );
-	add_action( 'init', array( $this,'register_session' ) );
+	//add_action( 'init', array( $this,'register_session' ) );
 	parent::__construct ($args);
 	remove_filter('rtmedia_action_buttons_before_delete', array($this,'button_filter'));
         add_filter ( 'rtmedia_action_buttons_after_delete', array( $this, 'button_filter' ), 99 );
     }
 
-    function register_session(){
-        if( !session_id() ) {
-	    session_start();
-	}
-    }
+//    function register_session(){
+//        if( !session_id() ) {
+//	    session_start();
+//	}
+//    }
 
     function render () {
 	if(isset($_SESSION['rtmedia_media_view']) && $_SESSION['rtmedia_media_view'] != "" && sizeof($_SESSION['rtmedia_media_view'] > 0)) {

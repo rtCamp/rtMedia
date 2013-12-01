@@ -54,6 +54,13 @@ if ( ! defined ( 'RTMEDIA_BASE_NAME' ) ) {
 }
 
 /**
+ * Start session here to avoid header notice
+ */
+if( !session_id() ) {
+    session_start();
+}
+
+/**
  * Auto Loader Function
  *
  * Autoloads classes on instantiation. Used by spl_autoload_register.
