@@ -22,21 +22,30 @@ class RTMediaGalleryShortcode {
     public function __construct () {
 
         add_shortcode ( 'rtmedia_gallery', array( 'RTMediaGalleryShortcode', 'render' ) );
+        add_action( 'wp_ajax_rtmedia_get_template',array(&$this,'ajax_rtmedia_get_template' ));
+        add_action( 'wp_ajax_nopriv_rtmedia_get_template', array(&$this,'ajax_rtmedia_get_template' ));
         //add_action('init', array($this, 'register_scripts'));
         //add_action('wp_footer', array($this, 'print_script'));
     }
-
+    
+    function ajax_rtmedia_get_template(){
+        if(isset($_REQUEST["template"])){
+            $template_url = RTMediaTemplate::locate_template( $_REQUEST["template"], "media/", false );
+            require_once $template_url ;
+        }
+        die();
+    }
     static function register_scripts () {
         wp_enqueue_script ( 'plupload-all' );
         wp_enqueue_script ( 'rtmedia-backbone', RTMEDIA_URL . 'app/assets/js/rtMedia.backbone.js', array( 'plupload', 'backbone' ), false, true );
 
-	if(is_rtmedia_album_gallery()) {
-	    $template_url = RTMediaTemplate::locate_template ( "album-gallery-item", "media/", true );
+    	if(is_rtmedia_album_gallery()) {
+    	    $template_url = add_query_arg(array("action" => 'rtmedia_get_template', "template" => "album-gallery-item"),admin_url("admin-ajax.php"));
         }else{
-            $template_url = RTMediaTemplate::locate_template ( apply_filters('rtmedia_backbone_template_filter',"media-gallery-item"), "media/", true );
+                $template_url = add_query_arg(array("action" => 'rtmedia_get_template', "template" => apply_filters('rtmedia_backbone_template_filter',"media-gallery-item")),admin_url("admin-ajax.php"));
         }
         wp_localize_script ( 'rtmedia-backbone', 'template_url', $template_url );
-	$url = trailingslashit ( $_SERVER[ "REQUEST_URI" ] );
+    	$url = trailingslashit ( $_SERVER[ "REQUEST_URI" ] );
 
         if ( strpos ( $url, "/media" ) !== false ) {
             $url_array = explode ( "/media", $url );
@@ -64,7 +73,7 @@ class RTMediaGalleryShortcode {
         if ( wp_is_mobile () )
             $params[ 'multi_selection' ] = false;
 
-	$params = apply_filters("rtmedia_modify_upload_params",$params);
+	   $params = apply_filters("rtmedia_modify_upload_params",$params);
 
         wp_localize_script ( 'rtmedia-backbone', 'rtMedia_plupload_config', $params );
         wp_localize_script ( 'rtmedia-backbone', 'rMedia_loading_file', admin_url ( "/images/loading.gif" ) );
