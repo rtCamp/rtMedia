@@ -169,7 +169,7 @@ class BPMediaAlbumimporter extends BPMediaImporter {
                 echo '<strong>' . __('Why don\'t you try adding some instagram like effects to your images?', 'rtmedia') . '</strong>';
                 echo '<div class="bp-media-addon">
                 <a href="http://rtcamp.com/store/buddypress-media-instagram/?utm_source=dashboard&amp;utm_medium=plugin&amp;utm_campaign=buddypress-media&amp;utm_content=bp-album-importer" title="BuddyPress-Media Instagram" target="_blank">
-                    <img width="240" height="184" title="BuddyPress-Media Instagram" alt="BuddyPress-Media Instagram" src="http://rtcamp.com/wp-content/uploads/2013/03/BuddyPressMedia-Instagram.png?ref=bp-album-importer">
+                    <img width="240" height="184" title="BuddyPress-Media Instagram" alt="BuddyPress-Media Instagram" src="'.$img_src.'BuddyPressMedia-Instagram.png?ref=bp-album-importer">
                 </a>
                 <h4><a href="http://rtcamp.com/store/buddypress-media-instagram/?utm_source=dashboard&amp;utm_medium=plugin&amp;utm_campaign=buddypress-media&amp;utm_content=bp-album-importer" title="BuddyPress-Media Instagram" target="_blank">BuddyPress-Media Instagram</a></h4>
                 <div class="product_desc">
