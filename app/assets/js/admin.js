@@ -11,15 +11,15 @@ jQuery(document).ready(function($) {
     })
 
     /* Fetch Feed */
-    var rtmedia_news_section = jQuery('#latest-news');
-    if (rtmedia_news_section.length > 0) {
-        var data = {
-            action: 'rtmedia_fetch_feed'
-        };
-        jQuery.post(rtmedia_admin_ajax, data, function(response) {
-            rtmedia_news_section.find('.inside').html(response);
-        });
-    }
+//    var rtmedia_news_section = jQuery('#latest-news');
+//    if (rtmedia_news_section.length > 0) {
+//        var data = {
+//            action: 'rtmedia_fetch_feed'
+//        };
+//        jQuery.post(rtmedia_admin_ajax, data, function(response) {
+//            rtmedia_news_section.find('.inside').html(response);
+//        });
+//    }
 
     /* Select Request */
     jQuery('#bp-media-settings-boxes').on('change', '#select-request', function() {
