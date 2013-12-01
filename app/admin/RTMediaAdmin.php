@@ -24,14 +24,14 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
                 add_action ( 'network_admin_notices', array( $this, 'upload_filetypes_error' ) );
                 add_action ( 'admin_notices', array( $this, 'upload_filetypes_error' ) );
             }
-            $rtmedia_feed = new RTMediaFeed();
+            //$rtmedia_feed = new RTMediaFeed();
             add_filter ( "plugin_action_links_" . RTMEDIA_BASE_NAME, array( &$this, 'plugin_add_settings_link' ) );
-            add_action ( 'wp_ajax_rtmedia_fetch_feed', array( $rtmedia_feed, 'fetch_feed' ), 1 );
+            //add_action ( 'wp_ajax_rtmedia_fetch_feed', array( $rtmedia_feed, 'fetch_feed' ), 1 );
             $this->rtmedia_support = new RTMediaSupport();
             add_action ( 'wp_ajax_rtmedia_select_request', array( $this->rtmedia_support, 'get_form' ), 1 );
             add_action ( 'wp_ajax_rtmedia_cancel_request', create_function ( '', 'do_settings_sections("rtmedia-support"); die();' ), 1 );
             add_action ( 'wp_ajax_rtmedia_submit_request', array( $this->rtmedia_support, 'submit_request' ), 1 );
-            add_action ( 'wp_ajax_rtmedia_fetch_feed', array( $rtmedia_feed, 'fetch_feed' ), 1 );
+            //add_action ( 'wp_ajax_rtmedia_fetch_feed', array( $rtmedia_feed, 'fetch_feed' ), 1 );
             add_action ( 'wp_ajax_rtmedia_linkback', array( $this, 'linkback' ), 1 );
             add_action ( 'wp_ajax_rtmedia_rt_album_deactivate', 'BPMediaAlbumimporter::bp_album_deactivate', 1 );
             add_action ( 'wp_ajax_rtmedia_rt_album_import', 'BPMediaAlbumimporter::bpmedia_ajax_import_callback', 1 );
@@ -953,7 +953,7 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
             new RTMediaAdminWidget ( 'branding', __( 'Subscribe', 'rtmedia' ), $branding );
 
             $news = '<img src ="' . admin_url ( '/images/wpspin_light.gif' ) . '" /> Loading...';
-            new RTMediaAdminWidget ( 'latest-news', __( 'Latest News', 'rtmedia' ), $news );
+            //new RTMediaAdminWidget ( 'latest-news', __( 'Latest News', 'rtmedia' ), $news );
             do_action ( 'rtmedia_after_default_admin_widgets' );
         }
 

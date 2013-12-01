@@ -8,7 +8,8 @@
  */
 class RTMediaFeed {
 
-    public $feed_url = 'http://rtcamp.com/tag/buddypress/feed/';
+    //public $feed_url = 'http://rtcamp.com/tag/buddypress/feed/';
+    public $feed_url = '';
 
     public function __construct($feed_url = '') {
         if ($feed_url)
