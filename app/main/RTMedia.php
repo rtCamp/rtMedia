@@ -274,7 +274,13 @@ class RTMedia
                 unset($allowed_types[$key]); // if not unset this type
                 continue;
             }
-
+	    $slug = strtoupper($type['name']);
+	    if( defined("RTMEDIA_".$slug."_LABEL" ) ) {
+		$type['label'] = constant( "RTMEDIA_".$slug."_LABEL" );
+	    }
+	    if( defined( "RTMEDIA_".$slug."_PLURAL_LABEL" ) ) {
+		$type['plural_label'] = constant( "RTMEDIA_".$slug."_PLURAL_LABEL" );
+	    }
             // if thumbnail is not supplied, use the default thumbnail
             if (!isset($type['thumbnail']) || empty($type['thumbnail'])) {
                 $type['thumbnail'] = $this->default_thumbnail;

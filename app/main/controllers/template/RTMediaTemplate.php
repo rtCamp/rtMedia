@@ -82,8 +82,15 @@ class RTMediaTemplate {
             $this->check_return_comments ();
 
             $this->check_delete_comments ();
-
-            return $this->get_default_template ();
+	    if( isset($rtmedia_query->is_gallery_shortcode) && $rtmedia_query->is_gallery_shortcode == true && isset( $shortcode_attr[ 'name' ] ) && $shortcode_attr[ 'name' ] == 'gallery' ) {
+		echo "<div class='rtmedia_gallery_wrapper'>";
+                $this->add_hidden_fields_in_gallery ();
+                $gallery_template = apply_filters("rtmedia-before-template",$template,$shortcode_attr);
+                include $this->locate_template ( $gallery_template );
+		echo "</div>";
+	    } else {
+		return $this->get_default_template ();
+	    }
         } else if ( ! $shortcode_attr ) {
             return $this->get_default_template ();
         } else if ( $shortcode_attr[ 'name' ] == 'gallery' ) {
