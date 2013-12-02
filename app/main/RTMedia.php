@@ -393,7 +393,8 @@ class RTMedia
             'general_perPageMedia' => (isset($bp_media_options['default_count'])) ? $bp_media_options['default_count'] : 10,
             'general_enableMediaEndPoint' => 0,
             'general_showAdminMenu' => (isset($bp_media_options['show_admin_menu'])) ? $bp_media_options['show_admin_menu'] : 0,
-            'general_videothumbs' => 2
+            'general_videothumbs' => 2,
+	    'general_AllowUserData' => 1
         );
 
 
