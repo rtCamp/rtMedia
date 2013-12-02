@@ -336,11 +336,19 @@ function rtmedia_image_alt($id = false, $echo = true) {
         else
             return false;
 	$post_object = get_post($media_object->media_id);
-	$img_alt = $post_object->post_name;
+	if( isset($post_object->post_name) ) {
+	    $img_alt = $post_object->post_name;
+	} else {
+	    $img_alt = " ";
+	}
     } else {
         global $rtmedia_media;
         $media_object = $rtmedia_media;
-	$img_alt = $media_object->post_name;
+	if( isset($media_object->post_name) ) {
+	    $img_alt = $media_object->post_name;
+	} else {
+	    $img_alt = " ";
+	}
     }
     if( $echo ) {
 	echo $img_alt;
