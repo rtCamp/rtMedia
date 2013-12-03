@@ -737,8 +737,9 @@ class RTMedia
 
         wp_enqueue_style('rtmedia-main', RTMEDIA_URL . 'app/assets/css/main.css', '', RTMEDIA_VERSION);
         wp_enqueue_style('rtmedia-font-awesome', RTMEDIA_URL . 'app/assets/css/font-awesome.min.css', '', RTMEDIA_VERSION);
-        wp_enqueue_script('rtmedia-foundation', RTMEDIA_URL . 'lib/foundation/foundation.min.js', array('jquery'), RTMEDIA_VERSION);
-        wp_enqueue_script('rtmedia-foundation-reveal', RTMEDIA_URL . 'lib/foundation/foundation.reveal.js', array('jquery'), RTMEDIA_VERSION);
+        if(! wp_script_is("rtp-foundation-js"))
+            wp_enqueue_script('rtp-foundation-js', RTMEDIA_URL . 'lib/foundation/foundation.min.js', array('jquery'), RTMEDIA_VERSION);
+        wp_enqueue_script('rtmedia-foundation-reveal', RTMEDIA_URL . 'lib/foundation/foundation.reveal.js', array('jquery','rtp-foundation-js'), RTMEDIA_VERSION);
         wp_enqueue_script('rtmedia-main', RTMEDIA_URL . 'app/assets/js/rtMedia.js', array('jquery', 'wp-mediaelement'), RTMEDIA_VERSION);
         wp_enqueue_style('rtmedia-magnific', RTMEDIA_URL . 'lib/magnific/magnific.css', '', RTMEDIA_VERSION);
         wp_enqueue_script('rtmedia-magnific', RTMEDIA_URL . 'lib/magnific/magnific.js', '', RTMEDIA_VERSION);
