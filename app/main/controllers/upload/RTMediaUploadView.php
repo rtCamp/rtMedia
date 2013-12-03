@@ -42,14 +42,14 @@ class RTMediaUploadView {
 
         global $rtmedia_query;
 	$album = '';
-        if ( $rtmedia_query && is_rtmedia_album () ) {
+        if ( $rtmedia_query && is_rtmedia_album () && isset( $rtmedia_query->media_query[ 'album_id' ] ) ) {
             $album = '<input class="rtmedia-current-album" type="hidden" name="rtmedia-current-album" value="' . $rtmedia_query->media_query[ 'album_id' ] . '" />';
         } elseif ( is_rtmedia_album_enable () && $rtmedia_query && is_rtmedia_gallery () ) {
 
-            if ( $rtmedia_query->query[ 'context' ] == 'profile' ) {
+            if ( isset( $rtmedia_query->query[ 'context' ] ) && $rtmedia_query->query[ 'context' ] == 'profile' ) {
                 $album = '<label>' . __('Album','rtmedia') . ': </label><select name="album" class="rtmedia-user-album-list">' . rtmedia_user_album_list () . '</select>';
             }
-            if ( $rtmedia_query->query[ 'context' ] == 'group' ) {
+            if (isset( $rtmedia_query->query[ 'context' ] ) && $rtmedia_query->query[ 'context' ] == 'group' ) {
                 $album = '<label>' . __('Album','rtmedia') . '</label><select name="album" class="rtmedia-user-album-list">' . rtmedia_group_album_list () . '</select>';
             }
         }
@@ -60,9 +60,9 @@ class RTMediaUploadView {
         }
         $tabs = array(
             'file_upload' => array(
-                'default' => array( 'title' => __ ( 'File Upload', 'rtmedia' ), 'content' => '<div id="rtmedia-upload-container" ><div id="drag-drop-area" class="drag-drop">' . $album . $up_privacy . '<input id="rtMedia-upload-button" value="' . __ ( "Select", "rtmedia" ) . '" type="button" class="rtmedia-upload-input rtmedia-file" /></div><table id="rtMedia-queue-list"><tbody></tbody></table></div>' ),
+                'default' => array( 'title' => __( 'File Upload', 'rtmedia' ), 'content' => '<div id="rtmedia-upload-container" ><div id="drag-drop-area" class="drag-drop">' . $album . $up_privacy . '<input id="rtMedia-upload-button" value="' . __( "Select", "rtmedia" ) . '" type="button" class="rtmedia-upload-input rtmedia-file" /></div><table id="rtMedia-queue-list"><tbody></tbody></table></div>' ),
                 //'activity' => array( 'title' => __ ( 'File Upload', 'rtmedia' ), 'content' => '<div class="rtmedia-container"><div id="rtmedia-action-update"><input type="button" class="rtmedia-add-media-button" id="rtmedia-add-media-button-post-update"  value="' . __ ( "Attach Files", "rtmedia" ) . '" /></div><div id="div-attache-rtmedia"><div id="rtmedia-whts-new-upload-container" ><div id="rtmedia-whts-new-drag-drop-area" class="drag-drop"><input id="rtmedia-whts-new-upload-button" value="' . __ ( "Select", "rtmedia" ) . '" type="button" class="rtmedia-upload-input rtmedia-file" /></div><div id="rtMedia-update-queue-list"></div></div></div></div>' )
-                'activity' => array( 'title' => __ ( 'File Upload', 'rtmedia' ), 'content' => '<div class="rtmedia-container"><div id="rtmedia-action-update"><button class="rtmedia-add-media-button" id="rtmedia-add-media-button-post-update"><i class="icon-plus-sign"></i>' . __ ( " Attach Files ", "rtmedia " ) . '</button>' . $up_privacy . '</div><div id="rtmedia-whts-new-upload-container"><div id="rtm-upload-start-notice"><span>' . __('Upload will start only after you enter content and click Post Update.', "rtmedia" ) . '</span></div><table id="rtMedia-queue-list"><tbody></tbody></table></div></div>')
+                'activity' => array( 'title' => __( 'File Upload', 'rtmedia' ), 'content' => '<div class="rtmedia-container"><div id="rtmedia-action-update"><button class="rtmedia-add-media-button" id="rtmedia-add-media-button-post-update"><i class="icon-plus-sign"></i>' . __( 'Attach Files', 'rtmedia' ) . '</button>' . $up_privacy . '</div><div id="rtmedia-whts-new-upload-container"><div id="rtm-upload-start-notice"><span>' . __('Upload will start only after you enter content and click Post Update.', 'rtmedia' ) . '</span></div><table id="rtMedia-queue-list"><tbody></tbody></table></div></div>')
             ),
 //			'file_upload' => array( 'title' => __('File Upload','rtmedia'), 'content' => '<div id="rtmedia-uploader"><p>Your browser does not have HTML5 support.</p></div>'),
             'link_input' => array( 'title' => __ ( 'Insert from URL', 'rtmedia' ), 'content' => '<input type="url" name="bp-media-url" class="rtmedia-upload-input rtmedia-url" />' ),

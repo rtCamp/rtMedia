@@ -78,6 +78,7 @@ class RTMediaRouter {
                 $return = false;
             if ( isset ( $wp_query->query_vars[ 'pagename' ] ) && $wp_query->query_vars[ 'pagename' ] == 'group-avatar' )
                 $return = false;
+	    $wp_query->is_feed = false;
         }
 
         if ( $return ) {

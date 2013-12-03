@@ -24,7 +24,7 @@ class RTMediaFeatured extends RTMediaUserInteraction {
             'action' => 'featured',
             'label' => __('Set as Featured'),
             'plural' => '',
-            'undo_label' => __('Unset Featured'),
+            'undo_label' => __( 'Unset Featured', 'rtmedia' ),
             'privacy' => 60,
             'countable' => false,
             'single' => true,

@@ -34,10 +34,10 @@ $rtmedia_media = $media[0];
             <?php wp_nonce_field('rtmedia_bulk_delete_nonce', 'rtmedia_bulk_delete_nonce'); ?>
             <?php RTMediaMedia::media_nonce_generator($rtmedia_query->media_query['album_id']); ?>
             <span class="rtmedia-selection"><a class="select-all" href="#"><?php echo __('Select All Visible','rtmedia'); ?></a> |
-                <a class="unselect-all" href="#"><?php echo __('Unselect All Visible','rtmedia'); ?></a> | </span>
+                <a class="unselect-all" href="#"><?php _e('Unselect All Visible','rtmedia'); ?></a> | </span>
             <br />
-            <input type="button" class="button rtmedia-move" value="<?php echo __('Move','rtmedia'); ?>" />
-            <input type="submit" name="delete-selected" class="button rtmedia-delete-selected" value="<?php echo __('Delete Selected','rtmedia'); ?>" />
+            <input type="button" class="button rtmedia-move" value="<?php _e('Move','rtmedia'); ?>" />
+            <input type="submit" name="delete-selected" class="button rtmedia-delete-selected" value="<?php _e('Delete Selected','rtmedia'); ?>" />
             <div class="rtmedia-move-container">
                 <?php $global_albums = rtmedia_get_site_option('rtmedia-global-albums'); ?>
                 <?php _e('Move selected media to', 'rtmedia'); ?>
@@ -66,7 +66,7 @@ $rtmedia_media = $media[0];
             else
                 $display = 'style="display:none;"';
             ?>
-            <a id="rtMedia-galary-prev" <?php echo $display; ?> href="<?php echo rtmedia_pagination_prev_link(); ?>"><?php echo __('Prev','rtmedia'); ?></a>
+            <a id="rtMedia-galary-prev" <?php echo $display; ?> href="<?php echo rtmedia_pagination_prev_link(); ?>"><?php _e('Prev','rtmedia'); ?></a>
 
             <?php
             $display = '';
@@ -75,10 +75,10 @@ $rtmedia_media = $media[0];
             else
                 $display = 'style="display:none;"';
             ?>
-            <a id="rtMedia-galary-next" <?php echo $display; ?> href="<?php echo rtmedia_pagination_next_link(); ?>"><?php echo __('Next','rtmedia'); ?></a>
+            <a id="rtMedia-galary-next" <?php echo $display; ?> href="<?php echo rtmedia_pagination_next_link(); ?>"><?php _e('Next','rtmedia'); ?></a>
 
         <?php } else { ?>
-            <p><?php echo __("The album is empty.", "rtmedia"); ?></p>
+            <p><?php _e('The album is empty.', 'rtmedia'); ?></p>
         <?php } ?>
     <?php } ?>
     </form>

@@ -14,9 +14,9 @@ class RTMediaLike extends RTMediaUserInteraction {
     function __construct() {
 	    $args = array(
 	    'action' => 'like',
-	    'label' => __('Like'),
-	    'plural' => __('Likes'),
-	    'undo_label' => __('Unlike'),
+	    'label' => __( 'Like', 'rtmedia' ),
+	    'plural' => __( 'Likes', 'rtmedia' ),
+	    'undo_label' => __( 'Unlike', 'rtmedia' ),
 	    'privacy' => 20,
 	    'countable' => true,
 	    'single' => false,

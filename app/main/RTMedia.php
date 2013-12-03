@@ -83,6 +83,11 @@ class RTMedia
      * @global int $bp_media_counter Media counter
      */
     public function __construct() {
+        /**
+         *
+         * Buddypress Media Auto Upgradation
+         */
+        $this->update_db();
         $this->default_thumbnail = apply_filters('rtmedia_default_thumbnail', RTMEDIA_URL . 'assets/thumb_default.png');
         add_action('init', array($this, 'check_global_album'));
         add_action('plugins_loaded', array($this, 'init'), 20);
@@ -91,6 +96,7 @@ class RTMedia
         add_action('wp_enqueue_scripts', array('RTMediaGalleryShortcode', 'register_scripts'));
         add_action('wp_enqueue_scripts', array(&$this, 'enqueue_scripts_styles'), 999);
         add_action('rt_db_upgrade', array($this, 'fix_parent_id'));
+        add_action('rt_db_upgrade', array($this, 'fix_privacy'));
         include(RTMEDIA_PATH . 'app/main/controllers/template/rt-template-functions.php');
         add_filter('intermediate_image_sizes_advanced', array($this, 'filter_image_sizes_details'));
         add_filter('intermediate_image_sizes', array($this, 'filter_image_sizes'));
@@ -139,6 +145,11 @@ class RTMedia
 		}
             }
         }
+    }
+
+    function fix_privacy() {
+	$model = new RTMediaModel();
+	$update_sql = "UPDATE $model->table_name SET privacy = '80' where privacy = '-1' ";
     }
 
     function set_site_options() {
@@ -553,11 +564,6 @@ class RTMedia
          */
         $this->set_site_options();
 
-        /**
-         *
-         * Buddypress Media Auto Upgradation
-         */
-        $this->update_db();
 
         /**
          * Add a settings link to the Plugin list screen
@@ -706,12 +712,16 @@ class RTMedia
         if ($update->check_upgrade()) {
             $update->do_upgrade();
         }
+        if(! $update->  table_exists ( $update->  genrate_table_name ( "rtm_media" ) )){
+            delete_site_option($update->get_db_version_option_name());
+            $update->do_upgrade();
+        }
     }
 
     function create_table_error_notice() {
         global $rtmedia_error;
         $rtmedia_error = true;
-        echo "<div class='error'><p><strong>rtMedia</strong>" . __(": Can't Create Database table. Please check create table permission.") . "</p></div>";
+        echo "<div class='error'><p><strong>rtMedia</strong>" . __(": Can't Create Database table. Please check create table permission.", "rtmedia") . "</p></div>";
     }
 
     function enqueue_scripts_styles() {
@@ -844,6 +854,10 @@ function parentlink_global_album($id) {
             } else {
                 $parent_link = get_rtmedia_user_link($disp_user);
             }
+	    global $rtmedia_query;
+	    if( isset( $rtmedia_query->is_gallery_shortcode ) && $rtmedia_query->is_gallery_shortcode == true) {
+		$parent_link = get_rtmedia_user_link( get_current_user_id() );
+	    }
         }
     }
     return $parent_link;
@@ -892,9 +906,9 @@ function get_rtmedia_user_link($id) {
 
 function rtmedia_update_site_option($option_name, $option_value) {
     if( is_multisite() ) {
-	update_option($option_name, $option_value);
+	return update_option($option_name, $option_value);
     } else {
-	update_site_option($option_name, $option_value);
+	return update_site_option($option_name, $option_value);
     }
 }
 

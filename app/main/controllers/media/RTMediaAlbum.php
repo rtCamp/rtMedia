@@ -124,7 +124,7 @@ class RTMediaAlbum {
 
         /* Album Details which will be passed to Database query to add the album */
         $post_vars = array(
-            'post_title' => (empty ( $title )) ? 'Untitled Album' : $title,
+            'post_title' => (empty ( $title )) ? __( 'Untitled Album', 'rtmedia' ) : $title,
             'post_type' => 'rtmedia_album',
             'post_author' => $author_id,
             'post_status' => 'publish'

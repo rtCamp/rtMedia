@@ -237,7 +237,7 @@ class RTMediaPrivacy {
         <form method='post'>
             <div class="">
                 <div class="section">
-                    <div class="columns large-2"><h2><?php echo __ ( "Default Privacy" , "rtmedia" ) ; ?></h2></div>
+                    <div class="columns large-2"><h2><?php _e( "Default Privacy" , "rtmedia" ) ; ?></h2></div>
                     <div class="columns large-5">
                         <?php foreach ( $rtmedia -> privacy_settings[ 'levels' ] as $level => $data ) { ?>
                             <label><input type='radio' value='<?php echo $level ; ?>' name ='rtmedia-default-privacy' <?php echo ($default_privacy == $level) ? "checked" : "" ; ?> /> <?php _e ( $data ) ; ?></label><br/>
@@ -247,14 +247,14 @@ class RTMediaPrivacy {
             </div>
             <br/>
             <div class="submit">
-                <input type="submit" name="submit" value="<?php _e ( "Save Changes" ) ; ?>" id="submit" class="auto">
+                <input type="submit" name="submit" value="<?php esc_attr_e( 'Save Changes', 'rtmedia' ); ?>" id="submit" class="auto">
             </div>
         </form>
         <?php
     }
 
     function title () {
-        return __ ( 'Privacy' , 'rtmedia' ) ;
+        return __( 'Privacy', 'rtmedia' ) ;
     }
 
     function activity_privacy ( $sql , $select_sql , $from_sql , $where_sql , $sort , $pag_sql = '' ) {

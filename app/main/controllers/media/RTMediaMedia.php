@@ -398,7 +398,7 @@ class RTMediaMedia {
                 wp_update_attachment_metadata ( $attachment_id, wp_generate_attachment_metadata ( $attachment_id, $file_object[ $key ][ 'file' ] ) );
             } else {
                 unlink ( $file_object[ $key ][ 'file' ] );
-                throw new Exception ( __ ( 'Error creating attachment for the media file, please try again', 'buddypress-media' ) );
+                throw new Exception ( __( 'Error creating attachment for the media file, please try again', 'rtmedia' ) );
             }
             $updated_attachment_ids[ ] = $attachment_id;
         }
@@ -495,7 +495,7 @@ class RTMediaMedia {
         $media_str = constant ( $media_const );
 
         $action = sprintf (
-                _n (
+                _n(
                         '%s added a %s', '%s added %d %s.', $count, 'rtmedia'
                 ), $username, $media->media_type, $media_str
         );
@@ -514,6 +514,10 @@ class RTMediaMedia {
 
         if ( $media->context == 'group' || 'profile' ) {
             $activity_args[ 'component' ] = $media->context;
+	    if( $media->context == 'group' ) {
+		$activity_args[ 'component' ] = "groups";
+		$activity_args[ 'item_id' ] = $media->context_id;
+	    }
         }
 
         $activity_id = bp_activity_add ( $activity_args );
