@@ -70,7 +70,7 @@ class RTMediaTemplate {
 
         $this->check_return_upload ();
 
-        if ( in_array ( $rtmedia_interaction->context->type, array( "profile", "group" ) ) ) {
+        if ( $rtmedia_interaction && isset( $rtmedia_interaction->context ) && in_array ( $rtmedia_interaction->context->type, array( "profile", "group" ) ) ) {
 
 
             $this->check_return_edit ();

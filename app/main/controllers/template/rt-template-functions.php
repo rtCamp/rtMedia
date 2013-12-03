@@ -616,12 +616,12 @@ function rtmedia_pagination_prev_link () {
     $author_name = get_query_var ( 'author_name' );
     $link = '';
 
-    if ( $rtmedia_interaction->context->type == "profile" ) {
+    if ( $rtmedia_interaction && isset( $rtmedia_interaction->context ) && $rtmedia_interaction->context->type == "profile" ) {
         if ( function_exists ( "bp_core_get_user_domain" ) )
             $link .= trailingslashit ( bp_core_get_user_domain ( $rtmedia_media->media_author ) );
         else
             $link = $site_url . 'author/' . $author_name . '/';
-    } else if ( $rtmedia_interaction->context->type == 'group' ) {
+    } else if ( $rtmedia_interaction && isset( $rtmedia_interaction->context ) && $rtmedia_interaction->context->type == 'group' ) {
         if ( function_exists ( "bp_get_current_group_slug" ) )
             $link .= $site_url . bp_get_groups_root_slug () . '/' . bp_get_current_group_slug () . '/';
     } else {
@@ -649,12 +649,12 @@ function rtmedia_pagination_next_link () {
     $author_name = get_query_var ( 'author_name' );
     $link = '';
 
-    if ( $rtmedia_interaction->context->type == "profile" ) {
+    if ( $rtmedia_interaction && isset( $rtmedia_interaction->context ) && $rtmedia_interaction->context->type == "profile" ) {
         if ( function_exists ( "bp_core_get_user_domain" ) )
             $link .= trailingslashit ( bp_core_get_user_domain ( $rtmedia_media->media_author ) );
         else
             $link .= $site_url . 'author/' . $author_name . '/';
-    } else if ( $rtmedia_interaction->context->type == 'group' ) {
+    } else if ( $rtmedia_interaction && isset( $rtmedia_interaction->context ) && $rtmedia_interaction->context->type == 'group' ) {
         if ( function_exists ( "bp_get_current_group_slug" ) )
             $link .= $site_url . bp_get_groups_root_slug () . '/' . bp_get_current_group_slug () . '/';
     } else {
