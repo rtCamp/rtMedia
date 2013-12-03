@@ -1,4 +1,12 @@
 @import "compass/css3";
+@mixin font-size-line-height($fontsize,$lineheight){
+    font-size: $fontsize;
+    line-height: $lineheight;
+}
+@mixin element-height-width( $height, $width){
+    height: $height;
+    width : $width;
+}
 .rtmedia-container{
 	@import "compass/reset";
         @import "foundation/variables";
@@ -221,7 +229,7 @@
 						margin-right: 5px;
 					}
 					.rtmedia-action-buttons{
-						span{
+						span.like-count{
 							background: #EEE;
 							@include border-radius(50%);
 							border: 1px solid #CCC;
@@ -235,6 +243,9 @@
 							vertical-align: middle;
 
 						}
+                                                i{
+                                                    margin-right : 5px;
+                                                }
 					}
 				}
                                 .rtmedia-media-description {
@@ -375,6 +386,10 @@
 .mfp-ready, .mfp-bg{
 	z-index:9999;
 }
+div.mfp-bg{
+    background-color: #222222;
+    opacity: 0.7;
+}
 
 .bp_media_content{
 	video{
@@ -405,10 +420,6 @@
 
 button.mfp-arrow,button.mfp-arrow:active {
     margin-top:-30px;
-}
-//
-.mfp-content .rtm-lightbox-container {
-    position: relative;
 }
 button.rtp-lb-close {
  top: 0;
@@ -581,10 +592,14 @@ button.rtp-lb-close {
     word-wrap: break;
     line-height : 20px;
     
-    &:hover .rtmedia-delte-comment {
+    &:hover .rtmedia-delete-comment {
         display: block;
     }
-
+    .rtmedia-comment-details {
+        overflow: hidden;
+        margin: 0;
+        padding : 0;
+    }
     .rtmedia-comment-user-pic {
 
         float: left;
@@ -627,7 +642,7 @@ button.rtp-lb-close {
             color : #808080;
     }
 
-    .rtmedia-delte-comment{
+    .rtmedia-delete-comment{
         text-decoration: none;
         position : absolute;
         right: 4px;
@@ -654,46 +669,78 @@ button.rtp-lb-close {
     
         .rtm-lightbox-container {
             background: #333;
+            position: relative;
+            @include box-shadow(0 0 10px rgba(0, 0, 0, 0.5) );
+            border : 1px solid #222222;
             
             .rtmedia-media .tagcontainer {
                 display: inline-block;
                 max-width: calc(100% - 4px);
             }
-        }
-        .rtmedia-single-meta {
+            
+          .rtmedia-single-meta {
             background: #fff;
             overflow: hidden;
             padding : 20px 0 0 10px;
             
             .rtm-single-meta-contents {
                 max-height : calc(97% - 100px);
-                height : calc(97% - 90px);
+                height : calc(97% - 80px);
                 overflow-y: auto;
                 overflow-x: hidden;
                 padding: 0 10px;
                 
                 .rtmedia-media-title {
-                    font-size: 16px;
-                    line-height: 22px;
+                    @include font-size-line-height( 16px, 22px);
                     margin: 5px 0 10px 0;
                 }
                 .rtmedia-media-description {
-                    font-size: 13px;
-                    line-height: 20px;
+                    @include font-size-line-height( 13px, 20px);
                     margin-bottom: 10px;
+                }
+                
+                .rtmedia-like-comment-link {
+                    color : #6D84B4;
+                    line-height : 18px;
+                    margin-bottom : 5px;
+                    a{
+                        @include font-size-line-height( 12px, 14px);                    
+                        text-decoration: none;
+                        &:hover {
+                            text-decoration: underline;
+                        }
+                    }
+                }
+                .rtmedia-like-counter {
+                    background-color: #EDEFF4;
+                    @include font-size-line-height( 12px, 16px);
+                    padding: 3px 5px;
+                    position : relative;
+                    
+                    i {
+                        margin-right : 4px;
+                    }
+                    
+                    &:before {
+                        content: '';
+                        border-width: 5px;
+                        border-style: inset inset solid;
+                        display: block;
+                        position: absolute;
+                        top: -10px;
+                        border-color: rgba(0, 0, 0, 0) rgba(0, 0, 0, 0) #EDEFF4;
+                    }
                 }
             }
             .rtm-single-meta-contents .rtmedia-comment {
                 .rtmedia-comment-content {
-                    font-size: 12px;
-                    line-height: 18px;
+                    @include font-size-line-height( 12px, 18px);
                 }
                 .rtmedia-comment-date {
                     font-size: 11px;
                 }
                 .rtmedia-comment-author {
-                    font-size: 13px;
-                    line-height: 18px;
+                    @include font-size-line-height( 13px, 18px);
                 }
             }
             
@@ -723,20 +770,19 @@ button.rtp-lb-close {
                 textarea {
                     min-height : 30px;
                     max-height: 40px;
-                    line-height: 14px;
-                    font-size: 12px;
+                    @include font-size-line-height( 12px, 14px);
                     padding: 4px;
                 }
             }
         }
+        
         .rtm-mfp-close {
 /*            height: 20px;
             text-align: right;
             font-weight : normal;*/
             
             .mfp-close {
-                height :20px;
-                width: 24px;
+                @include element-height-width( 20px, 24px);
                 font-size: 20px;
                 color : grey;
                 line-height: 22px;
@@ -750,6 +796,7 @@ button.rtp-lb-close {
             border : none;
             display: none;
         }
+        
         #rtmedia-single-media-container {
             padding: 0!important; 
             
@@ -762,25 +809,37 @@ button.rtp-lb-close {
                 }
             }
             .rtm-pro-actions {
-                background: #000;
-                opacity : 0.6;
-                padding: 10px;
+                background-color: rgba( 0, 0, 0, 0.8); 
+                padding:0 10px;
                 color : #fff;
-                display: none;
                 position: absolute;
                 bottom : 0;
                 width: 100%;
                 text-align : right;
                 
-                buttons {
-                    border: none;
-                    background: none;
-                    font-weight: bold;
-                    opacity:1;
+                ul li{
+                    display: inline-block;
+                    list-style: none;
+                    .rtmedia-action-buttons {
+                        border: none;
+                        background: none;
+                        font-weight: bold;
+                        color : #fff;
+                        font-size: 12px;
+                        opacity: 0.7;
+                        
+                        &:hover {
+                            opacity: 1;
+                        }
+                        i {
+                            margin-right: 5px;
+                        }
+                    }
                 }
                 
             }
         }
+        
         .rtmedia-media:before {
             content: '';
             display: inline-block;
@@ -797,6 +856,8 @@ button.rtp-lb-close {
         .mejs-audio {
             display: inline-block;
         }
+    }
+        
     }
 }
 
@@ -850,10 +911,10 @@ button.rtp-lb-close {
         form{
             display: block
         }
-        button.rtmedia-action-buttons {
-            transition:background-color 0.2s ease-in-out;
+        .rtmedia-action-buttons {
+/*            transition:background-color 0.2s ease-in-out;
             -webkit-transition:background-color 0.2s ease-in-out;
-            -moz-transition:background-color 0.2s ease-in-out;
+            -moz-transition:background-color 0.2s ease-in-out;*/
             display:block;
             padding:8px;
             background:none;
@@ -862,12 +923,14 @@ button.rtp-lb-close {
             width: 100%;
             text-align: left;
             margin: 0;
+            font-size: 12px;
             @include border-radius(6px);
             
             &:hover {
                 background-color: #EDEFF4;
                 color : #2284B5;
             }
+            
         }
     }
 }
@@ -875,3 +938,9 @@ button.rtp-lb-close {
 /* Fallbacks */
 .click-nav .no-js ul {display:none;}
 .click-nav .no-js:hover ul {display:block;}
+
+
+//hide the default content initially. (shows when user clicks more link)
+.morecontent span {
+    display: none;
+}

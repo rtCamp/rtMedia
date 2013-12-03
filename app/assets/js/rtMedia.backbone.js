@@ -647,7 +647,7 @@ jQuery(document).ready(function($) {
     });
 
     //Delete comment
-    jQuery(document).on('click', '.rtmedia-delte-comment', function(e){
+    jQuery(document).on('click', '.rtmedia-delete-comment', function(e){
        e.preventDefault();
        var ask_confirmation = true
        ask_confirmation = rtMediaHook.call('rtmedia_js_delete_comment_confirmation', [ask_confirmation]);

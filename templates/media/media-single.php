@@ -2,12 +2,7 @@
     <div class="row rtm-lightbox-container">
         <?php
         global $rt_ajax_request;
-        
-        if ( $rt_ajax_request ) { ?>
-            <div class='rtm-mfp-close'>
-                <i class='icon-remove mfp-close'title='Close (Esc)'></i>
-            </div>
-        <?php  }
+        do_action('rtmedia_before_media');
         
         if ( have_rtmedia () ) : rtmedia ();
             ?>
@@ -24,8 +19,10 @@
                     <?php rtmedia_media ( true ); ?>
                 </div>
                 <?php if ( $rt_ajax_request ) { ?>
-<!--                    <button class="mfp-arrow mfp-arrow-left mfp-prevent-close rtm-lightbox-arrows" type="button" title="Previous Media"></button>
-                    <button class="mfp-arrow mfp-arrow-right mfp-prevent-close" type="button" title="Next Media"></button>-->
+                <div class='rtm-pro-actions'>
+                    <?php rtmedia_addons_actions_lightbox ();?>
+                    
+                </div>
                 <?php } ?>
             </div>
             <div class="rtmedia-single-meta columns <?php echo ($rt_ajax_request) ? "large-4" : "large-12"; ?>">
@@ -39,6 +36,9 @@
                             <?php rtmedia_author_name ( true ); ?>
                         </div>
                     </div>
+                    <div class="rtm-time-privacy">
+                        <?php echo get_rtmedia_date_gmt();?> <?php echo get_rtmedia_privacy_symbol(); ?>
+                    </div>
                     
                     <div class="rtmedia-item-actions">
                         <?php rtmedia_actions (); ?>
@@ -48,13 +48,15 @@
                             <?php echo rtmedia_title (); ?>
                     </h2>
                     
-                    <div class="rtmedia-media-description">
+                    <div class="rtmedia-media-description rtm-more">
                         <?php rtmedia_description (); ?>
                     </div>
                 
                     <?php if ( rtmedia_comments_enabled () ) { ?>
                         <div class="rtmedia-item-comments row">
                             <div class="large-12 columns">
+                                <div class='rtmedia-like-comment-link'><a href='#'>Like</a> &sdot; <a href='#' class="rtmedia-comment-link">comment</a></div>
+                                <div class='rtmedia-like-counter'><i class="icon-thumbs-up"></i>  <?php echo get_rtmedia_like(); ?>  people like this</div>
                                 <div class="rtmedia-comments-container">
                                     <?php rtmedia_comments (); ?>
                                 </div>
@@ -68,12 +70,12 @@
                     </div>
                 <?php } ?>
                     
-                <?php } else { ?>
+                <?php } else { // else for if ( $rt_ajax_request )?>
 
                 <div class="rtmedia-item-actions">
                     <?php rtmedia_actions (); ?>
                 </div>
-                <div class="rtmedia-media-description">
+                <div class="rtmedia-media-description more">
                     <?php rtmedia_description (); ?>
                 </div>
                 
@@ -95,6 +97,7 @@
         <?php else: ?>
             <p><?php echo __ ( "Oops !! There's no media found for the request !!", "rtmedia" ); ?></p>
         <?php endif; ?>
-
+        
+       <?php do_action('rtmedia_after_media'); ?>
     </div>
 </div>

@@ -66,7 +66,8 @@ class RTMediaUserInteraction {
 		'countable' => false,
 		'single' => false,
 		'repeatable' => false,
-		'undoable' => false
+		'undoable' => false,
+                'icon_class' => ''
 		);
 
 		$args = wp_parse_args($args,$defaults);
@@ -186,18 +187,29 @@ class RTMediaUserInteraction {
                 $before_render = $this->before_render();
                 if($before_render === false )
                     return false;
-		$button = '';
+		$button = $button_start = $button_end = '';
 		if($this->is_visible()){
 			$link = trailingslashit(get_rtmedia_permalink($this->media->id)).
 					$this->action.'/';
-			$disabled = '';
+			$disabled = $icon = '';
 			if(!$this->is_clickable()){
 				$disabled = ' disabled';
 			}
-			$button = '<form action="'. $link .'"><button type="submit" id="rtmedia-action-button-'
-					.$this->media->id.'" class="rtmedia-'.$this->action
-					.' rtmedia-action-buttons button'.$disabled.'">'
-					.$this->label.'</button></form>';
+                        
+                        if( isset( $this->icon_class ) && $this->icon_class != "" ) {
+                            $icon = "<i class='" . $this->icon_class . "'></i>";
+                        }
+			$button_start = '<form action="'. $link .'">';
+                        $button = '<button type="submit" id="rtmedia-action-button-'.$this->media->id.'" class="rtmedia-'.$this->action
+					.' rtmedia-action-buttons button'.$disabled.'">' . $icon . '<span>' . $this->label.'</span></button>';
+                        
+                        //filter the button as required
+                        $button = apply_filters( 'rtmedia_' . $this->action . '_button_filter', $button);
+                        
+                        $button_end = '</form>';
+                        
+                        $button = $button_start . $button . $button_end;
+                        
 		}
 
 		return $button;

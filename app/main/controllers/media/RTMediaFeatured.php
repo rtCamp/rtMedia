@@ -29,7 +29,8 @@ class RTMediaFeatured extends RTMediaUserInteraction {
             'countable' => false,
             'single' => true,
             'repeatable' => false,
-            'undoable' => true
+            'undoable' => true,
+            'icon_class' => 'icon-star'
         );
 
 

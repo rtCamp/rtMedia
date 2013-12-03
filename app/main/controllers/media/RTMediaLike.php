@@ -169,6 +169,6 @@ class RTMediaLike extends RTMediaUserInteraction {
 	}else{
 	    $actions = 0;
 	}
-	$this->label =  "<span>" .$actions ."</span>" . $this->label;
+	$this->label =  "<span class='like-count'>" .$actions ."</span>" . $this->label;
     }
 }

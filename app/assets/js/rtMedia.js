@@ -230,13 +230,21 @@ jQuery('document').ready(function($) {
                 rtmedia_init_media_deleting();
                 rtmedia_init_popup_navigation();
                 var height = $(window).height() ;
-                console.log( height );
+                //console.log( height );
                 //   , .mfp-content #buddypress .rtmedia-container,
-                jQuery('.mfp-content .rtmedia-single-meta, .mfp-content #rtmedia-single-media-container .rtmedia-media, .mejs-video').css({ 'height' : height*0.8, 'max-height' : height*0.8, 'over-flow' : 'hidden' });
+                jQuery('.mfp-content .rtm-lightbox-container .rtmedia-single-meta, .mfp-content .rtm-lightbox-container #rtmedia-single-media-container .rtmedia-media, .rtm-lightbox-container .mejs-video').css({ 'height' : height*0.8, 'max-height' : height*0.8, 'over-flow' : 'hidden' });
                 //mejs-video
                 //init the options dropdown menu
                 init_action_dropdown();
+                //get focus on comment textarea when comment-link is clicked
+                jQuery('.rtmedia-comment-link').on('click', function(e){
+                    e.preventDefault();
+                    jQuery('#comment_content').focus();
+                });
                 
+                $(".rtm-more").shorten({ // shorten the media description to 100 characters 
+                    "showChars" : 130
+                });
 		return true;
 	    }
     );
@@ -336,6 +344,16 @@ jQuery('document').ready(function($) {
         if ($('.click-nav ul').is(':visible')) {
             $('.click-nav ul', this).hide();
         }
+    });
+    
+    //get focus on comment textarea when comment-link is clicked
+    jQuery('.rtmedia-comment-link').on('click', function(e){
+        e.preventDefault();
+        jQuery('#comment_content').focus();
+    });
+    
+    $(".rtm-more").shorten({ // shorten the media description to 100 characters 
+        "showChars" : 200
     });
 });
 
