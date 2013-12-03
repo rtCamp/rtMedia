@@ -159,6 +159,8 @@ class RTMediaNav {
 
         foreach ( $rtmedia->allowed_types as $type ) {
             //print_r($type);
+	    if( ! isset( $rtmedia->options[ 'allowedTypes_' . $type[ 'name' ] . '_enabled' ] ) )
+		continue;
             if ( ! $rtmedia->options[ 'allowedTypes_' . $type[ 'name' ] . '_enabled' ] )
                 continue;
 

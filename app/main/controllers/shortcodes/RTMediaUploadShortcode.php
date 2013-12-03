@@ -48,6 +48,8 @@ class RTMediaUploadShortcode {
     static function pre_render ( $attr ) {
         global $post;
         global $rtmedia_query;
+	if( ! $rtmedia_query )
+		$rtmedia_query = new RTMediaQuery ();
         if( !isset($attr['is_up_shortcode']) || $attr['is_up_shortcode'] !== false) {
             $rtmedia_query->is_upload_shortcode = true;// set is_upload_shortcode in rtmedia query as true
         } else {
