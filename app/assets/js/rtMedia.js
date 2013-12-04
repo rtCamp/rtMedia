@@ -61,6 +61,19 @@ function apply_rtMagnificPopup(selector){
                 }
             }
         });
+
+	if (jQuery(window).width() < 600) {
+	    jQuery('#whats-new').focus( function(){
+		jQuery("#whats-new-options").animate({
+		    height:'100px'
+		});
+	    });
+	    jQuery('#whats-new').blur( function(){
+		jQuery("#whats-new-options").animate({
+		    height:'100px'
+		});
+	    });
+	}
     });
 }
 var rtMediaHook = {

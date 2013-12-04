@@ -239,7 +239,7 @@ jQuery(function($) {
                 zIndex: 2
             });
             if(a!==false)
-                $("#rtMedia-upload-button").after("<span>(" + rtmedia_max_file_msg + plupload.formatSize(this.uploader.settings.max_file_size) + ")</span>")
+                $("#rtMedia-upload-button").after("<span>( <strong>" + rtmedia_max_file_msg + "</strong> "+ this.uploader.settings.max_file_size_msg + ")</span>")
 
             return this;
         },
