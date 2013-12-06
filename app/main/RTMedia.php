@@ -87,6 +87,9 @@ class RTMedia
          *
          * Buddypress Media Auto Upgradation
          */
+	add_action('rt_db_upgrade', array($this, 'fix_parent_id'));
+        add_action('rt_db_upgrade', array($this, 'fix_privacy'));
+        add_action('rt_db_upgrade', array($this, 'fix_db_collation'));
         $this->update_db();
         $this->default_thumbnail = apply_filters('rtmedia_default_thumbnail', RTMEDIA_URL . 'assets/thumb_default.png');
         add_action('init', array($this, 'check_global_album'));
@@ -95,12 +98,11 @@ class RTMedia
         add_action('plugins_loaded', array($this, 'admin_init'));
         add_action('wp_enqueue_scripts', array('RTMediaGalleryShortcode', 'register_scripts'));
         add_action('wp_enqueue_scripts', array(&$this, 'enqueue_scripts_styles'), 999);
-        add_action('rt_db_upgrade', array($this, 'fix_parent_id'));
-        add_action('rt_db_upgrade', array($this, 'fix_privacy'));
         include(RTMEDIA_PATH . 'app/main/controllers/template/rt-template-functions.php');
         add_filter('intermediate_image_sizes_advanced', array($this, 'filter_image_sizes_details'));
         add_filter('intermediate_image_sizes', array($this, 'filter_image_sizes'));
         add_filter("site_option_upload_filetypes",array(&$this, "filter_allow_mime_type_mu"),1,1);
+	add_filter( 'image_size_names_choose', array($this,'rtmedia_custom_image_sizes_choose' ));
     }
     function filter_allow_mime_type_mu($options){
         $allowed_types = array();
@@ -148,8 +150,22 @@ class RTMedia
     }
 
     function fix_privacy() {
+	global $wpdb;
 	$model = new RTMediaModel();
 	$update_sql = "UPDATE $model->table_name SET privacy = '80' where privacy = '-1' ";
+	$wpdb->query($update_sql);
+    }
+
+    function fix_db_collation() {
+	global $wpdb;
+	$model = new RTMediaModel();
+	$interaction_model = new RTMediaInteractionModel();
+	$update_media_sql = "ALTER TABLE ".$model->table_name." CONVERT TO CHARACTER SET utf8 COLLATE utf8_general_ci";
+	$wpdb->query($update_media_sql);
+	$update_media_meta_sql = "ALTER TABLE ".$wpdb->base_prefix.$model->meta_table_name." CONVERT TO CHARACTER SET utf8 COLLATE utf8_general_ci";
+	$wpdb->query($update_media_meta_sql);
+	$update_media_interaction_sql = "ALTER TABLE ".$interaction_model->table_name." CONVERT TO CHARACTER SET utf8 COLLATE utf8_general_ci";
+	$wpdb->query($update_media_interaction_sql);
     }
 
     function set_site_options() {
@@ -274,7 +290,13 @@ class RTMedia
                 unset($allowed_types[$key]); // if not unset this type
                 continue;
             }
-
+	    $slug = strtoupper($type['name']);
+	    if( defined("RTMEDIA_".$slug."_LABEL" ) ) {
+		$type['label'] = constant( "RTMEDIA_".$slug."_LABEL" );
+	    }
+	    if( defined( "RTMEDIA_".$slug."_PLURAL_LABEL" ) ) {
+		$type['plural_label'] = constant( "RTMEDIA_".$slug."_PLURAL_LABEL" );
+	    }
             // if thumbnail is not supplied, use the default thumbnail
             if (!isset($type['thumbnail']) || empty($type['thumbnail'])) {
                 $type['thumbnail'] = $this->default_thumbnail;
@@ -393,7 +415,8 @@ class RTMedia
             'general_perPageMedia' => (isset($bp_media_options['default_count'])) ? $bp_media_options['default_count'] : 10,
             'general_enableMediaEndPoint' => 0,
             'general_showAdminMenu' => (isset($bp_media_options['show_admin_menu'])) ? $bp_media_options['show_admin_menu'] : 0,
-            'general_videothumbs' => 2
+            'general_videothumbs' => 2,
+	    'general_AllowUserData' => 1
         );
 
 
@@ -737,8 +760,9 @@ class RTMedia
 
         wp_enqueue_style('rtmedia-main', RTMEDIA_URL . 'app/assets/css/main.css', '', RTMEDIA_VERSION);
         wp_enqueue_style('rtmedia-font-awesome', RTMEDIA_URL . 'app/assets/css/font-awesome.min.css', '', RTMEDIA_VERSION);
-        wp_enqueue_script('rtmedia-foundation', RTMEDIA_URL . 'lib/foundation/foundation.min.js', array('jquery'), RTMEDIA_VERSION);
-        wp_enqueue_script('rtmedia-foundation-reveal', RTMEDIA_URL . 'lib/foundation/foundation.reveal.js', array('jquery'), RTMEDIA_VERSION);
+        if(! wp_script_is("rtp-foundation-js"))
+            wp_enqueue_script('rtp-foundation-js', RTMEDIA_URL . 'lib/foundation/foundation.min.js', array('jquery'), RTMEDIA_VERSION);
+        wp_enqueue_script('rtmedia-foundation-reveal', RTMEDIA_URL . 'lib/foundation/foundation.reveal.js', array('jquery','rtp-foundation-js'), RTMEDIA_VERSION);
         wp_enqueue_script('rtmedia-main', RTMEDIA_URL . 'app/assets/js/rtMedia.js', array('jquery', 'wp-mediaelement'), RTMEDIA_VERSION);
         wp_enqueue_style('rtmedia-magnific', RTMEDIA_URL . 'lib/magnific/magnific.css', '', RTMEDIA_VERSION);
         wp_enqueue_script('rtmedia-magnific', RTMEDIA_URL . 'lib/magnific/magnific.js', '', RTMEDIA_VERSION);
@@ -756,7 +780,7 @@ class RTMedia
         wp_localize_script('rtmedia-main', 'rtmedia_album_created_msg', ' ' . __('album created successfully.',"rtMedia"));
         wp_localize_script('rtmedia-main', 'rtmedia_something_wrong_msg', __('Something went wrong. Please try again.',"rtMedia"));
         wp_localize_script('rtmedia-main', 'rtmedia_empty_album_name_msg', __('Enter an album name.',"rtMedia"));
-        wp_localize_script('rtmedia-main', 'rtmedia_max_file_msg', __('Max file size is',"rtMedia"));
+        wp_localize_script('rtmedia-main', 'rtmedia_max_file_msg', __('Max file Limit',"rtMedia"));
     }
 
     function set_bp_bar() {
@@ -795,6 +819,16 @@ class RTMedia
             }
         }
         return $sizes;
+    }
+
+    function rtmedia_custom_image_sizes_choose( $sizes ) {
+	$custom_sizes = array(
+                        'rt_media_thumbnail' => "rtMedia Thumbnail",
+                        'rt_media_activity_image' => "rtMedia Activity Image",
+                        'rt_media_single_image' => "rtMedia Single Image",
+                        'rt_media_featured_image' => "rtMedia Fetured Image",
+                    );
+	return array_merge( $sizes, $custom_sizes );
     }
 
     function filter_image_sizes($sizes) {

@@ -192,17 +192,20 @@ jQuery(function($) {
     } else {
         o_is_edit_allowed = is_edit_allowed;
     }
-    $("#rtmedia-gallery-item-template").load(template_url, {
-        backbone: true,
-        is_album: o_is_album,
-        is_edit_allowed: o_is_edit_allowed
-    }, function(response, status, xhr) {
-
-        $(document).on("click", "#rtMedia-galary-next", function(e) {
-            $(this).hide();
-            e.preventDefault();
-            galleryObj.getNext(nextpage, $(this).parent().parent().parent(), $(this));
-        });
+    var rtmedia_load_template_flag = true;
+    $(document).on("click", "#rtMedia-galary-next", function(e) {
+	if( rtmedia_load_template_flag == true ) {
+	    $("#rtmedia-gallery-item-template").load(template_url, {
+		backbone: true,
+		is_album: o_is_album,
+		is_edit_allowed: o_is_edit_allowed
+		},function(){
+		rtmedia_load_template_flag = false;
+	    });
+	}
+	$(this).hide();
+	e.preventDefault();
+	galleryObj.getNext(nextpage, $(this).parent().parent().parent(), $(this));
     });
 
 
@@ -239,7 +242,7 @@ jQuery(function($) {
                 zIndex: 2
             });
             if(a!==false)
-                $("#rtMedia-upload-button").after("<span>(" + rtmedia_max_file_msg + plupload.formatSize(this.uploader.settings.max_file_size) + ")</span>")
+                $("#rtMedia-upload-button").after("<span>( <strong>" + rtmedia_max_file_msg + "</strong> "+ this.uploader.settings.max_file_size_msg + ")</span>")
 
             return this;
         },

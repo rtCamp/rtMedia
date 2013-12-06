@@ -227,7 +227,7 @@ function rtmedia_media ( $size_flag = true, $echo = true, $media_size = "rt_medi
     if ( isset ( $rtmedia_media->media_type ) ) {
         if ( $rtmedia_media->media_type == 'photo' ) {
             $src = wp_get_attachment_image_src ( $rtmedia_media->media_id, $media_size );
-            $html = "<img src='" . $src[ 0 ] . "' alt='' />";
+            $html = "<img src='" . $src[ 0 ] . "' alt='".$rtmedia_media->post_name."' />";
         } elseif ( $rtmedia_media->media_type == 'video' ) {
             $size = " width=\"" . $rtmedia->options[ "defaultSizes_video_singlePlayer_width" ] . "\" height=\"" . $rtmedia->options[ "defaultSizes_video_singlePlayer_height" ] . "\" ";
             $html = "<div id='rtm-mejs-video-container' style='width:" . $rtmedia->options[ "defaultSizes_video_singlePlayer_width" ] . "px;max-width:96%'>";
@@ -289,12 +289,12 @@ function rtmedia_image ( $size = 'rt_media_thumbnail', $id = false ,$recho = tru
         } else {
             $thumbnail_id = false;
         }
-    if($media_object->media_type == 'music' && $thumbnail_id == "") {
-        $thumbnail_id = get_music_cover_art(get_attached_file($media_object->media_id),$media_object->id);
-    }
-    if($media_object->media_type == 'music' && $thumbnail_id == "-1") {
-        $thumbnail_id = false;
-    }
+	if($media_object->media_type == 'music' && $thumbnail_id == "") {
+	    $thumbnail_id = get_music_cover_art(get_attached_file($media_object->media_id),$media_object->id);
+	}
+	if($media_object->media_type == 'music' && $thumbnail_id == "-1") {
+	    $thumbnail_id = false;
+	}
 
     } else {
         $src = false;
@@ -323,6 +323,38 @@ function rtmedia_image ( $size = 'rt_media_thumbnail', $id = false ,$recho = tru
         echo $src;
     }else{
         return $src;
+    }
+}
+
+function rtmedia_image_alt($id = false, $echo = true) {
+    global $rtmedia_media;
+    $model = new RTMediaModel();
+    if ( $id ) {
+        $model = new RTMediaModel();
+        $media = $model->get_media ( array( 'id' => $id ), false, false );
+        if ( isset ( $media[ 0 ] ) )
+            $media_object = $media[ 0 ];
+        else
+            return false;
+	$post_object = get_post($media_object->media_id);
+	if( isset($post_object->post_name) ) {
+	    $img_alt = $post_object->post_name;
+	} else {
+	    $img_alt = " ";
+	}
+    } else {
+        global $rtmedia_media;
+        $media_object = $rtmedia_media;
+	if( isset($media_object->post_name) ) {
+	    $img_alt = $media_object->post_name;
+	} else {
+	    $img_alt = " ";
+	}
+    }
+    if( $echo ) {
+	echo $img_alt;
+    } else {
+	return $img_alt;
     }
 }
 
@@ -720,12 +752,12 @@ function rtmedia_pagination_prev_link () {
     $author_name = get_query_var ( 'author_name' );
     $link = '';
 
-    if ( $rtmedia_interaction->context->type == "profile" ) {
+    if ( $rtmedia_interaction && isset( $rtmedia_interaction->context ) && $rtmedia_interaction->context->type == "profile" ) {
         if ( function_exists ( "bp_core_get_user_domain" ) )
             $link .= trailingslashit ( bp_core_get_user_domain ( $rtmedia_media->media_author ) );
         else
             $link = $site_url . 'author/' . $author_name . '/';
-    } else if ( $rtmedia_interaction->context->type == 'group' ) {
+    } else if ( $rtmedia_interaction && isset( $rtmedia_interaction->context ) && $rtmedia_interaction->context->type == 'group' ) {
         if ( function_exists ( "bp_get_current_group_slug" ) )
             $link .= $site_url . bp_get_groups_root_slug () . '/' . bp_get_current_group_slug () . '/';
     } else {
@@ -753,12 +785,12 @@ function rtmedia_pagination_next_link () {
     $author_name = get_query_var ( 'author_name' );
     $link = '';
 
-    if ( $rtmedia_interaction->context->type == "profile" ) {
+    if ( $rtmedia_interaction && isset( $rtmedia_interaction->context ) && $rtmedia_interaction->context->type == "profile" ) {
         if ( function_exists ( "bp_core_get_user_domain" ) )
             $link .= trailingslashit ( bp_core_get_user_domain ( $rtmedia_media->media_author ) );
         else
             $link .= $site_url . 'author/' . $author_name . '/';
-    } else if ( $rtmedia_interaction->context->type == 'group' ) {
+    } else if ( $rtmedia_interaction && isset( $rtmedia_interaction->context ) && $rtmedia_interaction->context->type == 'group' ) {
         if ( function_exists ( "bp_get_current_group_slug" ) )
             $link .= $site_url . bp_get_groups_root_slug () . '/' . bp_get_current_group_slug () . '/';
     } else {
@@ -1175,7 +1207,7 @@ function rtmedia_user_album_list ( $get_all = false ) {
     $option = "$global_option";
     if($profile_option != "")
     $option.= "<optgroup label='".__("Profile Albums","rtmedia")." ' value = 'profile'>$profile_option</optgroup>";
-    if($option_group != "")
+    if($option_group != "" && class_exists('BuddyPress') )
     $option.="<optgroup label='".__("Group Albums","rtmedia")."' value = 'group'>$option_group</optgroup>";
     if ( $option )
         return $option;

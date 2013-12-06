@@ -27,7 +27,7 @@ class RTMediaGalleryShortcode {
         //add_action('init', array($this, 'register_scripts'));
         //add_action('wp_footer', array($this, 'print_script'));
     }
-    
+
     function ajax_rtmedia_get_template(){
         if(isset($_REQUEST["template"])){
             $template_url = RTMediaTemplate::locate_template( $_REQUEST["template"], "media/", false );
@@ -68,7 +68,8 @@ class RTMediaGalleryShortcode {
             'silverlight_xap_url' => includes_url ( 'js/plupload/plupload.silverlight.xap' ),
             'file_data_name' => 'rtmedia_file', // key passed to $_FILE.
             'multi_selection' => true,
-            'multipart_params' => apply_filters ( 'rtmedia-multi-params', array( 'redirect' => 'no', 'action' => 'wp_handle_upload', '_wp_http_referer' => $_SERVER[ 'REQUEST_URI' ], 'mode' => 'file_upload', 'rtmedia_upload_nonce' => RTMediaUploadView::upload_nonce_generator ( false, true ) ) )
+            'multipart_params' => apply_filters ( 'rtmedia-multi-params', array( 'redirect' => 'no', 'action' => 'wp_handle_upload', '_wp_http_referer' => $_SERVER[ 'REQUEST_URI' ], 'mode' => 'file_upload', 'rtmedia_upload_nonce' => RTMediaUploadView::upload_nonce_generator ( false, true ) ) ),
+	    'max_file_size_msg' => apply_filters("rtmedia_plupload_file_size_msg",min ( array( ini_get ( 'upload_max_filesize' ), ini_get ( 'post_max_size' ) ) ))
         );
         if ( wp_is_mobile () )
             $params[ 'multi_selection' ] = false;
@@ -121,6 +122,9 @@ class RTMediaGalleryShortcode {
             }
 
             global $rtmedia_query;
+	    if(!$rtmedia_query) {
+		$rtmedia_query = new RTMediaQuery();
+	    }
             $rtmedia_query->is_gallery_shortcode = true;// to check if gallery shortcode is executed to display the gallery.
 
             $template = new RTMediaTemplate();

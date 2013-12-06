@@ -44,9 +44,10 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
             add_action ( 'wp_dashboard_setup', array( &$this, 'add_dashboard_widgets' ), 0 );
             add_filter("attachment_fields_to_edit", array($this,"edit_video_thumbnail"), null, 2);
             add_filter("attachment_fields_to_save", array($this,"save_video_thumbnail"), null, 2);
-        add_action ( 'admin_notices', array( $this, 'rtmedia_regenerate_thumbnail_notice' ) );
-        add_action ( 'wp_ajax_rtmedia_hide_video_thumb_admin_notice', array( $this, 'rtmedia_hide_video_thumb_admin_notice' ), 1 );
-        $obj_encoding =  new RTMediaEncoding(true);
+	    add_action ( 'admin_notices', array( $this, 'rtmedia_regenerate_thumbnail_notice' ) );
+	    add_action ( 'wp_ajax_rtmedia_hide_video_thumb_admin_notice', array( $this, 'rtmedia_hide_video_thumb_admin_notice' ), 1 );
+	    add_action ( 'wp_ajax_rtmedia_hide_addon_update_notice', array( $this, 'rtmedia_hide_addon_update_notice' ), 1 );
+	    $obj_encoding =  new RTMediaEncoding(true);
             if ($obj_encoding->api_key){
                 add_filter ("media_row_actions", array($this,"add_reencode_link"), null, 2);
                 add_action( 'admin_head-upload.php', array( $this, 'add_bulk_actions_regenerate' ) );
@@ -54,7 +55,7 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
                 add_action( 'admin_action_bulk_video_regenerate_thumbnails', array( $this, 'bulk_action_handler' ) );
                 add_action( 'admin_action_-1', array( $this, 'bulk_action_handler' ) );
             }
-        add_action ( 'wp_ajax_rt_media_regeneration', array( $this, 'rt_media_regeneration' ), 1 );
+	    add_action ( 'wp_ajax_rt_media_regeneration', array( $this, 'rt_media_regeneration' ), 1 );
 
             if ( isset ( $_POST[ "rtmedia-options" ] ) ) {
                 if ( isset ( $_POST[ "rtmedia-options" ][ "general_showAdminMenu" ] ) && $_POST[ "rtmedia-options" ][ "general_showAdminMenu" ] == "1" )
@@ -73,9 +74,68 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
             }
             $this->rtmedia_settings = new RTMediaSettings();
             $this->rtmedia_encoding = new RTMediaEncoding();
-            if(! defined("RTMEDIA_PRO_VERSION"))
+            if(! defined("RTMEDIA_PRO_VERSION") )
                 add_action ( 'rtmedia_before_default_admin_widgets', array( $this, 'rtmedia_advertisement' ),1);
+	    if( $this->check_for_addon_update_notice() ) {
+		add_action ( 'admin_notices', array( $this, 'rtmedia_addon_update_notice' ) );
+	    }
         }
+
+	function rtmedia_addon_update_notice() {
+	    $site_option  = rtmedia_get_site_option("rtmedia-addon-update-notice");
+	    if(!$site_option || $site_option != "hide") {
+		rtmedia_update_site_option("rtmedia-addon-update-notice", "show");
+		echo '<div class="error rtmedia-addon-upate-notice">
+                <p> <b>'.__('rtMedia:').'</b> '.__('Please update all premium add-ons that you had purchased from rtCamp from your ','rtmedia').' <a href="https://rtcamp.com/my-account/" target="_blank">'.__('account',"rtmedia").'</a>. <a href="#" onclick="rtmedia_hide_addon_update_notice()" style="float:right">Hide</a> </p>
+                </div>';
+	    }
+
+	    ?>
+		<script type="text/javascript">
+		    function rtmedia_hide_addon_update_notice() {
+			var data = {
+			    action: 'rtmedia_hide_addon_update_notice'
+			};
+			jQuery.post(ajaxurl, data, function(response) {
+			    response = response.trim();
+			    if(response === "1")
+				jQuery('.rtmedia-addon-upate-notice').remove();
+			});
+		    }
+		</script>
+	    <?php
+	}
+
+	function check_for_addon_update_notice() {
+	    $return_falg = false;
+	    if( defined( 'RTMEDIA_INSTAGRAM_PATH' ) ) {
+		$plugin_info = get_plugin_data(RTMEDIA_INSTAGRAM_PATH.'index.php');
+		if( isset( $plugin_info['Version'] ) && $plugin_info['Version'] < "2.1.2" ) {
+		    $return_falg = true;
+		}
+	    } else if( defined( 'RTMEDIA_PHOTO_TAGGING_PATH' ) ) {
+		$plugin_info = get_plugin_data(RTMEDIA_PHOTO_TAGGING_PATH.'index.php');
+		if( isset( $plugin_info['Version'] ) && $plugin_info['Version'] < "2.2.1" ) {
+		    $return_falg = true;
+		}
+	    } else if( defined( 'RTMEDIA_PRO_PATH' ) ) {
+		$plugin_info = get_plugin_data(RTMEDIA_PRO_PATH.'index.php');
+		if( isset( $plugin_info['Version'] ) && $plugin_info['Version'] < "1.8.1" ) {
+		    $return_falg = true;
+		}
+	    } else if( defined( 'RTMEDIA_FFMPEG_PATH' ) ) {
+		$plugin_info = get_plugin_data(RTMEDIA_FFMPEG_PATH.'index.php');
+		if( isset( $plugin_info['Version'] ) && $plugin_info['Version'] < "2.1.1" ) {
+		    $return_falg = true;
+		}
+	    } else if( defined( 'RTMEDIA_KALTURA_PATH' ) ) {
+		$plugin_info = get_plugin_data(RTMEDIA_KALTURA_PATH.'index.php');
+		if( isset( $plugin_info['Version'] ) && $plugin_info['Version'] < "3.0.3" ) {
+		    $return_falg = true;
+		}
+	    }
+	    return $return_falg;
+	}
 
 	function bp_admin_tabs() {
 	    if ( current_user_can ( 'manage_options' ) ) {
@@ -492,9 +552,17 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
 
     function rtmedia_hide_video_thumb_admin_notice() {
         if(rtmedia_update_site_option("rtmedia-video-thumb-notice", "hide"))
-        echo "1";
+	    echo "1";
         else
-        echo "0";
+	    echo "0";
+        die();
+    }
+
+    function rtmedia_hide_addon_update_notice() {
+	if(rtmedia_update_site_option("rtmedia-addon-update-notice", "hide"))
+	    echo "1";
+        else
+	    echo "0";
         die();
     }
 
