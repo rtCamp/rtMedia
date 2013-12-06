@@ -6,7 +6,7 @@
 
 * **License:** [GPL v2 or later] ( http://www.gnu.org/licenses/gpl-2.0.html)
 
-* **Donate Link:** http://rtcamp.com/store/rtmedia-pro/
+* **Donate Link:** http://rtcamp.com/donate/
 
 Add albums, photo, audio/video encoding, privacy, sharing, front-end uploads & more. All this works mobile/tablets devices.
 
@@ -130,6 +130,9 @@ http://www.youtube.com/watch?v####dJrykKQGDcs
 ## Changelog ##
 
 Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "Visit rtMedia's Features page") to get some details about future releases.
+
+#### 3.2.12 ####
+* lib updated for magnific popup and media-element, bug fixes
 
 #### 3.2.11 ####
 * Updated Spanish translation, bug fixes
@@ -621,8 +624,8 @@ Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_sou
 * HTML5 Audio Tag Support (with fallback)
 * HTML5 Video Tag Support (with fallback)
 
-#### 3.2.11 ####
-Requires BuddyPress 1.7 or higher, if using BuddyPress.Updated Spainsh translation,bug fixes
+#### 3.2.12 ####
+Requires BuddyPress 1.7 or higher, if using BuddyPress.lib updated and bug fixes
 
 ## Sponsors ##
 
