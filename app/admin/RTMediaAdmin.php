@@ -75,37 +75,51 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
             $this->rtmedia_encoding = new RTMediaEncoding();
             if(! defined("RTMEDIA_PRO_VERSION") )
                 add_action ( 'rtmedia_before_default_admin_widgets', array( $this, 'rtmedia_advertisement' ),1);
-//	    if( $this->check_for_addon_update_notice() ) {
-//		add_action ( 'admin_notices', array( $this, 'rtmedia_addon_update_notice' ) );
-//	    }
+	    if( $this->check_for_addon_update_notice() ) {
+		add_action ( 'admin_notices', array( $this, 'rtmedia_addon_update_notice' ) );
+	    }
         }
 
-//	function rtmedia_addon_update_notice() {
-//	    echo '<div class="error rtmedia-addon-upate-notice">
-//                <p> <b>'.__('rtMedia:').'</b> '.__('Please update all premium add-ons that you had purchased from rtCamp from your ','rtmedia').' <a href="https://rtcamp.com/my-account/" target="_blank">'.__('account',"rtmedia").'</a> </p>
-//                </div>';
-//	}
+	function rtmedia_addon_update_notice() {
+	    $site_option  = rtmedia_get_site_option("rtmedia-addon-update-notice");
+	    if(!$site_option || $site_option != "hide") {
+		rtmedia_update_site_option("rtmedia-addon-update-notice", "show");
+		echo '<div class="error rtmedia-addon-upate-notice">
+                <p> <b>'.__('rtMedia:').'</b> '.__('Please update all premium add-ons that you had purchased from rtCamp from your ','rtmedia').' <a href="https://rtcamp.com/my-account/" target="_blank">'.__('account',"rtmedia").'</a> <a href="#" onclick="rtmedia_hide_addon_update_notice()" style="float:right">Hide</a> </p>
+                </div>';
+	    }
+	}
 
-//	function check_for_addon_update_notice() {
-//	    $return_falg = false;
-//	    if( defined( 'RTMEDIA_INSTAGRAM_PATH' ) ) {
-//		$plugin_info = get_plugin_data(RTMEDIA_INSTAGRAM_PATH.'index.php');
-//		if( isset( $plugin_info['Version'] ) && $plugin_info['Version'] < "2.1.2" ) {
-//		    $return_falg = true;
-//		}
-//	    } else if( defined( 'RTMEDIA_PHOTO_TAGGING_PATH' ) ) {
-//		$plugin_info = get_plugin_data(RTMEDIA_PHOTO_TAGGING_PATH.'index.php');
-//		if( isset( $plugin_info['Version'] ) && $plugin_info['Version'] < "2.2.1" ) {
-//		    $return_falg = true;
-//		}
-//	    } else if( defined( 'RTMEDIA_PRO_PATH' ) ) {
-//		$plugin_info = get_plugin_data(RTMEDIA_PRO_PATH.'index.php');
-//		if( isset( $plugin_info['Version'] ) && $plugin_info['Version'] < "1.8.1" ) {
-//		    $return_falg = true;
-//		}
-//	    }
-//	    return $return_falg;
-//	}
+	function check_for_addon_update_notice() {
+	    $return_falg = false;
+	    if( defined( 'RTMEDIA_INSTAGRAM_PATH' ) ) {
+		$plugin_info = get_plugin_data(RTMEDIA_INSTAGRAM_PATH.'index.php');
+		if( isset( $plugin_info['Version'] ) && $plugin_info['Version'] < "2.1.2" ) {
+		    $return_falg = true;
+		}
+	    } else if( defined( 'RTMEDIA_PHOTO_TAGGING_PATH' ) ) {
+		$plugin_info = get_plugin_data(RTMEDIA_PHOTO_TAGGING_PATH.'index.php');
+		if( isset( $plugin_info['Version'] ) && $plugin_info['Version'] < "2.2.1" ) {
+		    $return_falg = true;
+		}
+	    } else if( defined( 'RTMEDIA_PRO_PATH' ) ) {
+		$plugin_info = get_plugin_data(RTMEDIA_PRO_PATH.'index.php');
+		if( isset( $plugin_info['Version'] ) && $plugin_info['Version'] < "1.8.1" ) {
+		    $return_falg = true;
+		}
+	    } else if( defined( 'RTMEDIA_FFMPEG_PATH' ) ) {
+		$plugin_info = get_plugin_data(RTMEDIA_FFMPEG_PATH.'index.php');
+		if( isset( $plugin_info['Version'] ) && $plugin_info['Version'] < "2.1.1" ) {
+		    $return_falg = true;
+		}
+	    } else if( defined( 'RTMEDIA_KALTURA_PATH' ) ) {
+		$plugin_info = get_plugin_data(RTMEDIA_KALTURA_PATH.'index.php');
+		if( isset( $plugin_info['Version'] ) && $plugin_info['Version'] < "3.0.3" ) {
+		    $return_falg = true;
+		}
+	    }
+	    return $return_falg;
+	}
 
 	function bp_admin_tabs() {
 	    if ( current_user_can ( 'manage_options' ) ) {
