@@ -131,6 +131,9 @@ http://www.youtube.com/watch?v####dJrykKQGDcs
 
 Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "Visit rtMedia's Features page") to get some details about future releases.
 
+#### 3.2.11 ####
+* Updated Spanish translation, bug fixes
+
 #### 3.2.10.2 ####
 * Remove Unused file, remove wp_load and add admin_ajax
 
@@ -618,8 +621,8 @@ Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_sou
 * HTML5 Audio Tag Support (with fallback)
 * HTML5 Video Tag Support (with fallback)
 
-#### 3.2.10.2 ####
-Requires BuddyPress 1.7 or higher, if using BuddyPress.Remove Unused file, remove wp_load and add admin_ajax
+#### 3.2.11 ####
+Requires BuddyPress 1.7 or higher, if using BuddyPress.Updated Spainsh translation,bug fixes
 
 ## Sponsors ##
 
