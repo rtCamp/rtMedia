@@ -46,6 +46,7 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
             add_filter("attachment_fields_to_save", array($this,"save_video_thumbnail"), null, 2);
 	    add_action ( 'admin_notices', array( $this, 'rtmedia_regenerate_thumbnail_notice' ) );
 	    add_action ( 'wp_ajax_rtmedia_hide_video_thumb_admin_notice', array( $this, 'rtmedia_hide_video_thumb_admin_notice' ), 1 );
+	    add_action ( 'wp_ajax_rtmedia_hide_addon_update_notice', array( $this, 'rtmedia_hide_addon_update_notice' ), 1 );
 	    $obj_encoding =  new RTMediaEncoding(true);
             if ($obj_encoding->api_key){
                 add_filter ("media_row_actions", array($this,"add_reencode_link"), null, 2);
@@ -85,9 +86,24 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
 	    if(!$site_option || $site_option != "hide") {
 		rtmedia_update_site_option("rtmedia-addon-update-notice", "show");
 		echo '<div class="error rtmedia-addon-upate-notice">
-                <p> <b>'.__('rtMedia:').'</b> '.__('Please update all premium add-ons that you had purchased from rtCamp from your ','rtmedia').' <a href="https://rtcamp.com/my-account/" target="_blank">'.__('account',"rtmedia").'</a> <a href="#" onclick="rtmedia_hide_addon_update_notice()" style="float:right">Hide</a> </p>
+                <p> <b>'.__('rtMedia:').'</b> '.__('Please update all premium add-ons that you had purchased from rtCamp from your ','rtmedia').' <a href="https://rtcamp.com/my-account/" target="_blank">'.__('account',"rtmedia").'</a>. <a href="#" onclick="rtmedia_hide_addon_update_notice()" style="float:right">Hide</a> </p>
                 </div>';
 	    }
+
+	    ?>
+		<script type="text/javascript">
+		    function rtmedia_hide_addon_update_notice() {
+			var data = {
+			    action: 'rtmedia_hide_addon_update_notice'
+			};
+			jQuery.post(ajaxurl, data, function(response) {
+			    response = response.trim();
+			    if(response === "1")
+				jQuery('.rtmedia-addon-upate-notice').remove();
+			});
+		    }
+		</script>
+	    <?php
 	}
 
 	function check_for_addon_update_notice() {
@@ -536,9 +552,17 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
 
     function rtmedia_hide_video_thumb_admin_notice() {
         if(rtmedia_update_site_option("rtmedia-video-thumb-notice", "hide"))
-        echo "1";
+	    echo "1";
         else
-        echo "0";
+	    echo "0";
+        die();
+    }
+
+    function rtmedia_hide_addon_update_notice() {
+	if(rtmedia_update_site_option("rtmedia-addon-update-notice", "hide"))
+	    echo "1";
+        else
+	    echo "0";
         die();
     }
 
