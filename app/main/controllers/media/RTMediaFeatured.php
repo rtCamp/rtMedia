@@ -39,6 +39,8 @@ class RTMediaFeatured extends RTMediaUserInteraction {
         $this->settings ();
         remove_filter('rtmedia_action_buttons_before_delete', array($this,'button_filter'));
         add_filter ( 'rtmedia_addons_action_buttons', array( $this, 'button_filter' ) );
+        add_filter ( 'rtmedia_author_media_options', array( $this, 'button_filter' ),12, 1 );
+        
         //$this->get();
     }
 

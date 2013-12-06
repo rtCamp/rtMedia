@@ -34,7 +34,35 @@ function apply_rtMagnificPopup(selector){
             },
             callbacks: {
                 ajaxContentAdded: function() {
-
+                    
+                    // When last second media is encountered in lightbox, load more medias if available
+                    var mfp = jQuery.magnificPopup.instance;
+                    var current_media = mfp.currItem.el;
+                    var li = current_media.parent();
+                    if(li.is(':nth-last-child(2)')){ // if its last second media
+                        var last_li = li.next();
+                        if(jQuery('#rtMedia-galary-next').css('display') == 'block'){ // if more medias are available
+                            jQuery('#rtMedia-galary-next').click(); // load more
+                           // var new_items = last_li.nextAll();
+                           // console.log(new_items);
+                           // new_items.each(function(index){
+                               // console.log(index);
+                               // mfp.items.push({
+                                 //  src: jQuery(this).children('a')
+                                //});
+                                //console.log(jQuery('>a'));
+                          //  });
+                            //apply_rtMagnificPopup(selector);
+                            //mfp.updateItemHTML();
+                        }
+                    }
+                    
+                    var items = mfp.items.length;
+                    if(mfp.index == (items -1) && !(li.is(":last-child"))){
+                        current_media.click();
+                        return;
+                    }
+                    
                     $container = this.content.find('.tagcontainer');
                     if ($container.length > 0) {
                         $context = $container.find('img');
@@ -242,9 +270,29 @@ jQuery('document').ready(function($) {
                     jQuery('#comment_content').focus();
                 });
                 
-                $(".rtm-more").shorten({ // shorten the media description to 100 characters 
+                jQuery(".rtm-more").shorten({ // shorten the media description to 100 characters 
                     "showChars" : 130
                 });
+                
+                //show gallery title in lightbox at bottom
+                var gal_title = $('.rtm-gallery-title'), title = "";
+                if(! $.isEmptyObject(gal_title) ){
+                    title = gal_title.html();
+                }else {
+                    title = $('#subnav.item-list-tabs li.selected ').html();
+                }
+                if( title != ""){
+                    $('.rtm-ltb-gallery-title .ltb-title').html(title);
+                }
+                
+                //show the index of the current image
+                var index = jQuery.magnificPopup.instance.index;
+                $('.media-index').html(index+1);
+                
+                //show image counts
+                var counts = $('#subnav.item-list-tabs li.selected span').html();
+                $('li.total').html(counts);
+                
 		return true;
 	    }
     );

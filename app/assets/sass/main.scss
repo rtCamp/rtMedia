@@ -7,6 +7,20 @@
     height: $height;
     width : $width;
 }
+.rtm-link-button {
+    border: none;
+    background: none;
+    text-decoration : none;
+}
+.rtm-top-notch {
+    content: '';
+    border-width: 5px;
+    border-style: inset inset solid;
+    display: block;
+    position: absolute;
+    border-color: rgba(0, 0, 0, 0) rgba(0, 0, 0, 0) #EDEFF4;
+}
+
 .rtmedia-container{
 	@import "compass/reset";
         @import "foundation/variables";
@@ -201,8 +215,35 @@
 						padding: 10px;
 					}
 					&.username{
-						padding: 10px;
+						padding: 0 10px;
+                                                 line-height: 16px;
+                                                //margin-bottom: 10px;
+                                                font-weight: bold;
+                                                
+                                                a{
+                                                    text-decoration: none;
+                                                    &:hover {
+                                                        text-decoration: underline;
+                                                    }
+                                                }
+                                                
 					}
+                                        &.rtm-time-privacy {
+                                            font-size: 12px;
+                                            line-height: 24px;
+                                            margin-bottom: 7px;
+                                            color : #808080;
+                                            i {
+                                                margin-left: 4px;
+                                            }
+                                        }
+                                        &.rtmedia-actions-before-description > div{
+                                            float: left;
+                                            line-height: 20px;
+                                            display: inline-block;
+                                            
+                                        }
+                                        
 				}
 				padding: 10px;
 				button{
@@ -220,6 +261,15 @@
 					margin:10px;
 				}
 				.rtmedia-item-actions{
+                                    &>ul >li{
+                                        display: inline-block;
+                                        float: left;
+                                        margin-right: 5px;
+                                        
+                                        .rtmedia-like{
+                                            display: none;
+                                        }
+                                    }
 					&>a{
 						display: inline-block;
 						float:left;
@@ -241,7 +291,6 @@
 							padding: 3px 6px;
 							text-align: center;
 							vertical-align: middle;
-
 						}
                                                 i{
                                                     margin-right : 5px;
@@ -249,8 +298,8 @@
 					}
 				}
                                 .rtmedia-media-description {
-                                    line-height: 22px;
-                                    margin-top: 10px;
+                                    line-height: 22px;                                    
+                                    margin: 10px 0;
                                 }
 			}
 			.rtmedia-item-comments{
@@ -258,6 +307,31 @@
 				div{
 					background-color:transparent;
 				}
+                                
+                                .rtm-like-comments-info {
+                                        &:before{
+                                        @extend .rtm-top-notch;
+
+                                        top:13px;
+                                        left :  20px;
+                                        }
+                                     width: 100%;
+                                    }
+                                    .rtmedia-like-info {
+                                        background-color: #EDEFF4;
+                                        @include font-size-line-height( 12px, 16px);
+                                        padding: 3px 5px;
+                                        position : relative;
+                                        margin-bottom : 2px;
+                                        i {
+                                            margin-right : 4px;
+                                        }
+
+                                /*                    &:before {
+                                            @extend .rtm-top-notch;
+                                            top: -10px;
+                                        }*/
+                                    }
 			}
 		}
 	}
@@ -294,6 +368,40 @@
 }
 .rtmedia-activity-container {
             @extend .rtmedia-container;
+}
+#buddypress{
+     .rtmedia-single-container .rtmedia-single-meta{
+        div.rtmedia-actions-before-comments{
+            color : #6D84B4;
+            line-height : 18px;
+            margin-bottom : 5px;
+
+            &> span{
+                display : inline-block;
+                
+/*                &:after {
+                    content : '\22c5';
+                }
+                &:last-child:after {
+                    content : "";
+                }*/
+
+                a, button, button.rtmedia-action-buttons {
+                   @extend .rtm-link-button;
+                   padding: 0;
+                   color : #21759B;
+                    @include font-size-line-height( 12px, 14px);                    
+                    text-decoration: none;
+                    &:hover {
+                        text-decoration: underline;
+                    }
+                    &.rtmedia-like i{
+                        display: none;
+                    }
+                }
+            }
+        }
+    }
 }
 #buddypress{
     div{
@@ -582,15 +690,21 @@ button.rtp-lb-close {
     }
 }
 
- .rtmedia-container ul#rtmedia_comment_ul li.rtmedia-comment {
+ .rtmedia-container ul#rtmedia_comment_ul { 
+       
+    li {
     list-style: none;
     background: #EDEFF4;
-    margin: 2px 0;
+    margin: 0 0 2px 0;
     padding: 5px 5px 1px 5px;
     width: 100%;
     position: relative;
     word-wrap: break;
     line-height : 20px;
+    
+    &.rtmedia-no-comments {
+        padding: 5px;
+    }
     
     &:hover .rtmedia-delete-comment {
         display: block;
@@ -651,6 +765,7 @@ button.rtp-lb-close {
         display: none;
     }
 }
+ }
 
 .rtmedia-item-comments .rt_media_comment_form {
     textarea{
@@ -683,12 +798,14 @@ button.rtp-lb-close {
             overflow: hidden;
             padding : 20px 0 0 10px;
             
-            .rtm-single-meta-contents {
-                max-height : calc(97% - 100px);
-                height : calc(97% - 80px);
-                overflow-y: auto;
+            .rtm-single-meta-contents{
+                &.logged-in{
+                    height : calc(97% - 80px);
+                }
+                max-height : 100%;
                 overflow-x: hidden;
-                padding: 0 10px;
+                overflow-y: auto;
+                padding: 0 20px 0 10px;
                 
                 .rtmedia-media-title {
                     @include font-size-line-height( 16px, 22px);
@@ -699,38 +816,12 @@ button.rtp-lb-close {
                     margin-bottom: 10px;
                 }
                 
-                .rtmedia-like-comment-link {
-                    color : #6D84B4;
-                    line-height : 18px;
-                    margin-bottom : 5px;
-                    a{
-                        @include font-size-line-height( 12px, 14px);                    
-                        text-decoration: none;
-                        &:hover {
-                            text-decoration: underline;
-                        }
-                    }
+                .rtm-like-comments-info {
+                    &:before{
+                    top:13px;
+                    }                
                 }
-                .rtmedia-like-counter {
-                    background-color: #EDEFF4;
-                    @include font-size-line-height( 12px, 16px);
-                    padding: 3px 5px;
-                    position : relative;
-                    
-                    i {
-                        margin-right : 4px;
-                    }
-                    
-                    &:before {
-                        content: '';
-                        border-width: 5px;
-                        border-style: inset inset solid;
-                        display: block;
-                        position: absolute;
-                        top: -10px;
-                        border-color: rgba(0, 0, 0, 0) rgba(0, 0, 0, 0) #EDEFF4;
-                    }
-                }
+                
             }
             .rtm-single-meta-contents .rtmedia-comment {
                 .rtmedia-comment-content {
@@ -747,14 +838,12 @@ button.rtp-lb-close {
             
             .username {
                 padding: 0 10px;
-                line-height: 16px;
-                margin-bottom: 10px;
             }
             .userprofile {
                 padding : 0 10px 10px 0 ;
                 
                 .avatar {
-                    width: 55px;
+                    width: 40px;
                 }
             }
             
@@ -772,6 +861,12 @@ button.rtp-lb-close {
                     max-height: 40px;
                     @include font-size-line-height( 12px, 14px);
                     padding: 4px;
+                }
+                .rt_media_comment_submit {
+                    background-color: #5B74A8;
+                    border-color: #29447E #1A356E;
+                    color: #FFFFFF;
+                    font-weight: bold;
                 }
             }
         }
@@ -801,42 +896,103 @@ button.rtp-lb-close {
             padding: 0!important; 
             
             &:hover {
-                .mfp-arrow {
-                    display: block;
-                }
-                .rtm-pro-actions {
+                .mfp-arrow, .rtm-ltb-title-container, .rtm-ltb-action-container {
                     display: block;
                 }
             }
-            .rtm-pro-actions {
-                background-color: rgba( 0, 0, 0, 0.8); 
+            
+            .rtm-ltb-title-container, .rtm-ltb-action-container {
+                background-color: rgba( 0, 0, 0, 0.6); 
                 padding:0 10px;
                 color : #fff;
                 position: absolute;
-                bottom : 0;
                 width: 100%;
-                text-align : right;
+                //display : none;
                 
-                ul li{
+                .rtmedia-actions,.rtmedia-author-actions{
                     display: inline-block;
-                    list-style: none;
-                    .rtmedia-action-buttons {
-                        border: none;
-                        background: none;
+                    vertical-align : middle;
+                    text-align : right;
+                    
+                    form{
+                        display : inline;
+                    }
+                    .click-nav {
+                        float : right;
+                        margin-right: 0;
+                    }
+                    .rtmedia-action-buttons, a, button {
                         font-weight: bold;
                         color : #fff;
                         font-size: 12px;
                         opacity: 0.7;
-                        
+                        padding : 4px 8px;
                         &:hover {
                             opacity: 1;
                         }
+                        @extend .rtm-link-button;
                         i {
                             margin-right: 5px;
                         }
+                    }                
+                    
+                    .rtm-options{
+                        background-color : white;
+                        &:before {
+                            border-color: rgba(0, 0, 0, 0) rgba(0, 0, 0, 0) #fff;
+                        }
+                        li {
+                            display : block;
+                            .rtmedia-action-buttons { //buttons in dropdown
+                            width : 100%;
+                            color : #000;
+                                &:hover {
+                                    color : #21759B;
+                                }
+                            }
+                        }
                     }
                 }
+            }
+            
+            .rtm-ltb-title-container{
+                top: 0;
                 
+                .rtm-ltb-title {
+                    font-size: 14px;
+                    width: 59%;
+                    overflow : hidden;
+                    float : left;
+                    line-height: 30px;
+                    max-height: 30px;
+                    opacity: 0.7;
+                    &:hover {
+                        opacity : 1;
+                    }
+                    a {
+                        text-decoration: none;
+                        color : #fff;
+                    }
+                }
+                .rtmedia-author-actions{
+                    text-align: right;
+                    width: 40%
+                }
+            }
+            
+            .rtm-ltb-action-container {
+                bottom : 0;
+                .rtmedia-actions{
+                 text-align : right;
+                 display: inline-block;
+                 max-width: 60%;
+                 float: right;
+                }
+                
+                .rtm-ltb-gallery-title {
+                    display: inline-block;
+                    width: 39%;
+                }
             }
         }
         
@@ -917,13 +1073,12 @@ button.rtp-lb-close {
             -moz-transition:background-color 0.2s ease-in-out;*/
             display:block;
             padding:8px;
-            background:none;
             color:#fff;
-            border: none;
             width: 100%;
             text-align: left;
             margin: 0;
             font-size: 12px;
+            @extend .rtm-link-button;
             @include border-radius(6px);
             
             &:hover {

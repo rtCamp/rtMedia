@@ -22,10 +22,10 @@
 
                 </div>
                 <div class="rtmedia-editor-description columns large-12 small">
-                <label><?php _e('Description: ', 'rtmedia') ?></label>
+                    <div><label><?php _e('Description: ', 'rtmedia') ?></label></div>
                 <?php
 
-                        echo rtmedia_description_input();
+                        echo rtmedia_description_input( $editor = false);
                                 RTMediaMedia::media_nonce_generator(rtmedia_id());
                 ?>
                 </div>

@@ -683,7 +683,7 @@ jQuery(document).ready(function($) {
         var that = this;
         $(this).attr('disabled', 'disabled');
         var url = $(this).parent().attr("action");
-        $(that).prepend("<img src='" + rMedia_loading_file + "' />");
+        $(that).prepend("<img class='rtm-like-loading' src='" + rMedia_loading_file + "' style='width:10px' />");
         $.ajax({
             url: url,
             type: 'post',
@@ -694,8 +694,16 @@ jQuery(document).ready(function($) {
                 } catch (e) {
 
                 }
-                $(that).html(data.next);
+                $('.rtmedia-like span').html(data.next);
+                $('.rtm-like-loading').remove();    
                 $(that).removeAttr('disabled');
+                //update the like counter
+                $('.rtmedia-like-counter').html(data.count);
+                if(data.count > 0){
+                    $('.rtmedia-like-info').removeClass('hide');
+                }else {
+                    $('.rtmedia-like-info').addClass('hide');
+                }
             }
         });
 
@@ -706,7 +714,7 @@ jQuery(document).ready(function($) {
         var that = this;
         $(this).attr('disabled', 'disabled');
         var url = $(this).parent().attr("action");
-        $(that).prepend("<img src='" + rMedia_loading_file + "' />");
+        $(that).prepend("<img class='rtm-featured-loading' src='" + rMedia_loading_file + "' />");
         $.ajax({
             url: url,
             type: 'post',
@@ -717,7 +725,8 @@ jQuery(document).ready(function($) {
                 } catch (e) {
 
                 }
-                $(that).html(data.next);
+                $(that).find('span').html(data.next);
+                $('.rtm-featured-loading').remove();
                 $(that).removeAttr('disabled');
             }
         });

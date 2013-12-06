@@ -21,11 +21,26 @@ class RTMediaLike extends RTMediaUserInteraction {
 	    'countable' => true,
 	    'single' => false,
 	    'repeatable' => false,
-	    'undoable' => true
+	    'undoable' => true,
+            'icon_class' => 'icon-thumbs-up'
 	);
 	parent::__construct($args);
+        remove_filter( 'rtmedia_action_buttons_before_delete', array($this,'button_filter') );
+        add_action('rtmedia_action_buttons_after_media',array($this, 'button_filter'),12);
+        add_action('rtmedia_actions_before_comments',array($this, 'like_button_filter'),10);
+        
     }
-
+    
+    function like_button_filter() {
+        if(empty($this->media)){
+                $this->init();
+        }
+        $button = $this->render();
+        
+        if($button)
+            echo "<span>" . $button . "</span> &sdot; ";
+    }
+    
     function process() {
 	$actions = $this->model->get( array( 'id' => $this->action_query->id ) );
 
@@ -72,10 +87,10 @@ class RTMediaLike extends RTMediaUserInteraction {
 	$actions = intval($actions[ 0 ]->{$actionwa});
 	if ( $this->increase === true ) {
 		$actions ++;
-		$return["next"] = "<span>" .$actions ."</span>" . $this->undo_label;
+		$return["next"] = $this->undo_label;
 	} else {
 		$actions --;
-		$return["next"] = "<span>" .$actions ."</span>" .  $this->label;
+		$return["next"] = $this->label;
 	}
 	if($actions <0)
 	    $actions = 0;
@@ -94,6 +109,18 @@ class RTMediaLike extends RTMediaUserInteraction {
 	    die();
 	}
 	return $actions;
+    }
+    
+    function button_filter(){
+        
+        if(empty($this->media)){
+                $this->init();
+        }
+        $button = $this->render();
+        
+        if($button)
+           // echo "<li>" . $button . "</li>";
+            echo  $button ;
     }
 
     function is_like_migrated( ) {
@@ -163,12 +190,13 @@ class RTMediaLike extends RTMediaUserInteraction {
 	if($this->is_liked()){
 	    $this->label =  $this->undo_label;
 	}
-	$actions = $this->model->get( array( 'id' => $this->action_query->id ) );
-	if(isset($actions[ 0 ]->likes)){
-	    $actions = intval($actions[ 0 ]->likes);
-	}else{
-	    $actions = 0;
-	}
-	$this->label =  "<span class='like-count'>" .$actions ."</span>" . $this->label;
+//	$actions = $this->model->get( array( 'id' => $this->action_query->id ) );
+//	if(isset($actions[ 0 ]->likes)){
+//	    $actions = intval($actions[ 0 ]->likes);
+//	}else{
+//	    $actions = 0;
+//	}
+	//$this->label =  "<span class='like-count'>" .$actions ."</span>" . $this->label;
+
     }
 }
