@@ -102,6 +102,7 @@ class RTMedia
         add_filter('intermediate_image_sizes_advanced', array($this, 'filter_image_sizes_details'));
         add_filter('intermediate_image_sizes', array($this, 'filter_image_sizes'));
         add_filter("site_option_upload_filetypes",array(&$this, "filter_allow_mime_type_mu"),1,1);
+	add_filter( 'image_size_names_choose', array($this,'rtmedia_custom_image_sizes_choose' ));
     }
     function filter_allow_mime_type_mu($options){
         $allowed_types = array();
@@ -817,6 +818,16 @@ class RTMedia
             }
         }
         return $sizes;
+    }
+
+    function rtmedia_custom_image_sizes_choose( $sizes ) {
+	$custom_sizes = array(
+                        'rt_media_thumbnail' => "rtMedia Thumbnail",
+                        'rt_media_activity_image' => "rtMedia Activity Image",
+                        'rt_media_single_image' => "rtMedia Single Image",
+                        'rt_media_featured_image' => "rtMedia Fetured Image",
+                    );
+	return array_merge( $sizes, $custom_sizes );
     }
 
     function filter_image_sizes($sizes) {
