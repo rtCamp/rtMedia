@@ -82,28 +82,30 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
         }
 
 	function rtmedia_addon_update_notice() {
-	    $site_option  = rtmedia_get_site_option("rtmedia-addon-update-notice");
-	    if(!$site_option || $site_option != "hide") {
-		rtmedia_update_site_option("rtmedia-addon-update-notice", "show");
-		echo '<div class="error rtmedia-addon-upate-notice">
-                <p> <b>'.__('rtMedia:').'</b> '.__('Please update all premium add-ons that you had purchased from rtCamp from your ','rtmedia').' <a href="https://rtcamp.com/my-account/" target="_blank">'.__('account',"rtmedia").'</a>. <a href="#" onclick="rtmedia_hide_addon_update_notice()" style="float:right">Hide</a> </p>
-                </div>';
-	    }
+	    if(is_rt_admin() ) {
+		$site_option  = rtmedia_get_site_option("rtmedia-addon-update-notice");
+		if(!$site_option || $site_option != "hide") {
+		    rtmedia_update_site_option("rtmedia-addon-update-notice", "show");
+		    echo '<div class="error rtmedia-addon-upate-notice">
+		    <p> <b>'.__('rtMedia:').'</b> '.__('Please update all premium add-ons that you had purchased from rtCamp from your ','rtmedia').' <a href="https://rtcamp.com/my-account/" target="_blank">'.__('account',"rtmedia").'</a>. <a href="#" onclick="rtmedia_hide_addon_update_notice()" style="float:right">Hide</a> </p>
+		    </div>';
+		}
 
-	    ?>
-		<script type="text/javascript">
-		    function rtmedia_hide_addon_update_notice() {
-			var data = {
-			    action: 'rtmedia_hide_addon_update_notice'
-			};
-			jQuery.post(ajaxurl, data, function(response) {
-			    response = response.trim();
-			    if(response === "1")
-				jQuery('.rtmedia-addon-upate-notice').remove();
-			});
-		    }
-		</script>
-	    <?php
+		?>
+		    <script type="text/javascript">
+			function rtmedia_hide_addon_update_notice() {
+			    var data = {
+				action: 'rtmedia_hide_addon_update_notice'
+			    };
+			    jQuery.post(ajaxurl, data, function(response) {
+				response = response.trim();
+				if(response === "1")
+				    jQuery('.rtmedia-addon-upate-notice').remove();
+			    });
+			}
+		    </script>
+		<?php
+	    }
 	}
 
 	function check_for_addon_update_notice() {
