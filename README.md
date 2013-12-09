@@ -32,7 +32,7 @@ If you're in a hurry, you can skip the long list of features in subsequent secti
 
 Since rtMedia has many features video doesn't include all features:
 
-http://www.youtube.com/watch?v####dJrykKQGDcs
+http://www.youtube.com/watch?v=dJrykKQGDcs
 
 #### rtMedia Features ####
 
