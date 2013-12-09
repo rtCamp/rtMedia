@@ -8,6 +8,17 @@ var rtmedia_load_template_flag = true;
 
 jQuery(function($) {
 
+    var o_is_album, o_is_edit_allowed;
+    if (typeof(is_album) == "undefined") {
+        o_is_album = new Array("");
+    } else {
+        o_is_album = is_album
+    }
+    if (typeof(is_edit_allowed) == "undefined") {
+        o_is_edit_allowed = new Array("")
+    } else {
+        o_is_edit_allowed = is_edit_allowed;
+    }
 
     rtMedia = window.rtMedia || {};
 
@@ -75,6 +86,16 @@ jQuery(function($) {
             return url;
         },
         getNext: function(page, el, element) {
+	    if( rtmedia_load_template_flag == true ) {
+		$("#rtmedia-gallery-item-template").load(template_url, {
+		    backbone: true,
+		    is_album: o_is_album,
+		    is_edit_allowed: o_is_edit_allowed
+		    },function(){
+		    rtmedia_load_template_flag = false;
+		});
+	    }
+
             var query = {
                 json: true,
                 rtmedia_page: nextpage
@@ -182,28 +203,8 @@ jQuery(function($) {
     galleryObj = new rtMedia.Gallery();
 
     $("body").append('<script id="rtmedia-gallery-item-template" type="text/template"></script>');
-    var o_is_album, o_is_edit_allowed;
-    if (typeof(is_album) == "undefined") {
-        o_is_album = new Array("");
-    } else {
-        o_is_album = is_album
-    }
-    if (typeof(is_edit_allowed) == "undefined") {
-        o_is_edit_allowed = new Array("")
-    } else {
-        o_is_edit_allowed = is_edit_allowed;
-    }
 
     $(document).on("click", "#rtMedia-galary-next", function(e) {
-	if( rtmedia_load_template_flag == true ) {
-	    $("#rtmedia-gallery-item-template").load(template_url, {
-		backbone: true,
-		is_album: o_is_album,
-		is_edit_allowed: o_is_edit_allowed
-		},function(){
-		rtmedia_load_template_flag = false;
-	    });
-	}
 	$(this).hide();
 	e.preventDefault();
 	galleryObj.getNext(nextpage, $(this).parent().parent().parent(), $(this));
