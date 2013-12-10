@@ -104,11 +104,17 @@ class RTMediaTemplate {
                     $rtaccount = 0;
                 }
                 //add_action("rtmedia_before_media_gallery",array(&$this,"")) ;
+		if( isset( $shortcode_attr[ 'attr' ] ) && isset( $shortcode_attr[ 'attr' ]['uploader'] ) && $shortcode_attr[ 'attr' ]['uploader'] == "before" ) {
+		    echo RTMediaUploadShortcode::pre_render($shortcode_attr[ 'attr' ]);
+		}
 		echo "<div class='rtmedia_gallery_wrapper'>";
                 $this->add_hidden_fields_in_gallery ();
                 $gallery_template = apply_filters("rtmedia-before-template",$template,$shortcode_attr);
                 include $this->locate_template ( $gallery_template );
 		echo "</div>";
+	    if( isset( $shortcode_attr[ 'attr' ] ) && isset( $shortcode_attr[ 'attr' ]['uploader'] ) && ( $shortcode_attr[ 'attr' ]['uploader'] == "after" || $shortcode_attr[ 'attr' ]['uploader'] == "true" ) ) {
+		    echo RTMediaUploadShortcode::pre_render($shortcode_attr[ 'attr' ]);
+		}
             } else {
                 echo __ ( 'Invalid attribute passed for rtmedia_gallery shortcode.', 'rtmedia' );
                 return false;
