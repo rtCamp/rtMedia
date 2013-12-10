@@ -139,7 +139,7 @@ class RTMediaFeatured extends RTMediaUserInteraction {
             default :
                 return false;
         }
-        return $content;
+        return apply_filters("rtmedia_featured_media_content",$content);
     }
 
     function process () {

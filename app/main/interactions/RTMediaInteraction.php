@@ -136,7 +136,7 @@ class RTMediaInteraction {
             'context' => $this->context->type,
             'context_id' => $this->context->id
         );
-
+	$args = apply_filters( "rtmedia_query_filter", $args );
         $rtmedia_query = new RTMediaQuery ( $args );
     }
 
