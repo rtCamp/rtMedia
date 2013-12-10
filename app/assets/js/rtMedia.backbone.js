@@ -266,16 +266,7 @@ jQuery(function($) {
 
 
         uploaderObj.uploader.bind('UploadComplete', function(up, files) {
-	    if( rtmedia_load_template_flag == true ) {
-		$("#rtmedia-gallery-item-template").load(template_url, {
-		    backbone: true,
-		    is_album: o_is_album,
-		    is_edit_allowed: o_is_edit_allowed
-		    },function(){
-		    rtmedia_load_template_flag = false;
-		});
-	    }
-            activity_id = -1;
+	    activity_id = -1;
             galleryObj.reloadView();
         });
 

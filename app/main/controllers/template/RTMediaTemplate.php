@@ -105,7 +105,9 @@ class RTMediaTemplate {
                 }
                 //add_action("rtmedia_before_media_gallery",array(&$this,"")) ;
 		if( isset( $shortcode_attr[ 'attr' ] ) && isset( $shortcode_attr[ 'attr' ]['uploader'] ) && $shortcode_attr[ 'attr' ]['uploader'] == "before" ) {
+		    add_filter('rtmedia_plupload_files_filter',array($this,'rtmedia_plupload_files_filter'), 30, 1);
 		    echo RTMediaUploadShortcode::pre_render($shortcode_attr[ 'attr' ]);
+		    remove_filter('rtmedia_plupload_files_filter',array($this,'rtmedia_plupload_files_filter'), 30, 1);
 		}
 		echo "<div class='rtmedia_gallery_wrapper'>";
                 $this->add_hidden_fields_in_gallery ();
@@ -113,13 +115,19 @@ class RTMediaTemplate {
                 include $this->locate_template ( $gallery_template );
 		echo "</div>";
 	    if( isset( $shortcode_attr[ 'attr' ] ) && isset( $shortcode_attr[ 'attr' ]['uploader'] ) && ( $shortcode_attr[ 'attr' ]['uploader'] == "after" || $shortcode_attr[ 'attr' ]['uploader'] == "true" ) ) {
+		    add_filter('rtmedia_plupload_files_filter',array($this,'rtmedia_plupload_files_filter'), 30, 1);
 		    echo RTMediaUploadShortcode::pre_render($shortcode_attr[ 'attr' ]);
+		    remove_filter('rtmedia_plupload_files_filter',array($this,'rtmedia_plupload_files_filter'), 30, 1);
 		}
             } else {
                 echo __ ( 'Invalid attribute passed for rtmedia_gallery shortcode.', 'rtmedia' );
                 return false;
             }
         }
+    }
+
+    function rtmedia_plupload_files_filter($types) {
+	return $types;
     }
 
     function add_hidden_fields_in_gallery () {

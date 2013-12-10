@@ -43,7 +43,7 @@ class RTMediaEncoding {
                             add_filter('rtmedia_after_add_media', array($this, 'encoding'), 10, 3);
                         $blacklist = array('localhost', '127.0.0.1');
                         if (!in_array($_SERVER['HTTP_HOST'], $blacklist)) {
-                            add_filter('rtmedia_plupload_files_filter', array($this, 'allowed_types'));
+                            add_filter('rtmedia_plupload_files_filter', array($this, 'allowed_types'), 10, 1);
                             add_filter('rtmedia_allowed_types', array($this, 'allowed_types_admin_settings'), 10, 1);
                             add_filter('rtmedia_valid_type_check', array($this, 'bypass_video_audio'), 10, 2);
                         }
