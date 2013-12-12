@@ -702,4 +702,11 @@ abbr {
     text-decoration: none;
     font-size: 15px;
 }
-
+.rtm-custom-css {
+    margin-top : 10px;
+}
+.rtm-custom-css textarea#rtmedia-custom-css {
+    display: block;
+    width : 100%;
+    height : 300px;
+}
