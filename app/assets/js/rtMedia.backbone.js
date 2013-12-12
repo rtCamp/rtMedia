@@ -241,8 +241,13 @@ jQuery(function($) {
             $("#rtMedia-upload-button").css({
                 zIndex: 2
             });
-            if(a!==false)
-                $("#rtMedia-upload-button").after("<span>( <strong>" + rtmedia_max_file_msg + "</strong> "+ this.uploader.settings.max_file_size_msg + ")</span>")
+            if(a!==false){
+                window.file_size_info = rtmedia_max_file_msg + " : " + this.uploader.settings.max_file_size_msg ;
+                window.file_extn_info = rtmedia_allowed_file_formats + " : " + this.uploader.settings.filters[0].extensions;
+                var info = window.file_size_info + ", " + window.file_extn_info;
+                $(".rtm-file-size-limit").attr('title', info);
+ //$("#rtMedia-upload-button").after("<span>( <strong>" + rtmedia_max_file_msg + "</strong> "+ this.uploader.settings.max_file_size_msg + ")</span>");
+            }
 
             return this;
         },
@@ -259,15 +264,16 @@ jQuery(function($) {
 
     if ($("#rtMedia-upload-button").length > 0) {
         uploaderObj = new UploadView(rtMedia_plupload_config);
-
+        
         uploaderObj.initUploader();
 
 
         uploaderObj.uploader.bind('UploadComplete', function(up, files) {
             activity_id = -1;
             galleryObj.reloadView();
+            jQuery('.start-media-upload').hide();
         });
-
+        
         uploaderObj.uploader.bind('FilesAdded', function(up, files) {
             var upload_size_error = false;
             var upload_error = "";
@@ -280,37 +286,55 @@ jQuery(function($) {
                     upload_remove_array.push(file.id);
                     return true;
                 }
+                jQuery('.rtmedia-upload-input').attr('value','Add more files');
+                jQuery('.start-media-upload').show();
                 if (uploaderObj.uploader.settings.max_file_size < file.size) {
-                    upload_size_error = true
-                    upload_error += upload_error_sep + file.name;
-                    upload_error_sep = ",";
-                    var tr = "<tr style='background-color:lightpink;color:black' id='" + file.id + "'><td>" + file.name + "(" + plupload.formatSize(file.size) + ")" + "</td><td colspan='3'> " + rtmedia_max_file_msg + plupload.formatSize(uploaderObj.uploader.settings.max_file_size) + "</td></tr>"
-                    $("#rtMedia-queue-list tbody").append(tr);
+//                    upload_size_error = true
+//                    upload_error += upload_error_sep + file.name;
+//                    upload_error_sep = ",";
+//                    var tr = "<tr style='background-color:lightpink;color:black' id='" + file.id + "'><td>" + file.name + "(" + plupload.formatSize(file.size) + ")" + "</td><td colspan='4'> " + rtmedia_max_file_msg + plupload.formatSize(uploaderObj.uploader.settings.max_file_size) + "</td></tr>"
+//                    $("#rtMedia-queue-list tbody").append(tr);
                     return true;
                 }
+                var tmp_array =  file.name.split(".");
+                var ext_array = uploaderObj.uploader.settings.filters[0].extensions.split(',');
+                if(tmp_array.length > 1){
+                    var ext= tmp_array[tmp_array.length - 1];
+                    if( jQuery.inArray( ext ,ext_array) === -1){
+                        return true;
+                    }
+                }else{
+                    return true;
+                } 
+                
+                uploaderObj.uploader.settings.filters[0].title;
                 tdName = document.createElement("td");
                 tdName.innerHTML = file.name;
+                tdName.className = "plupload_file_name";
                 tdStatus = document.createElement("td");
                 tdStatus.className = "plupload_file_status";
-                tdStatus.innerHTML = "0%";
+                tdStatus.innerHTML = "Waiting";
                 tdSize = document.createElement("td");
                 tdSize.className = "plupload_file_size";
                 tdSize.innerHTML = plupload.formatSize(file.size);
                 tdDelete = document.createElement("td");
                 tdDelete.innerHTML = "<i class='icon-remove'></i>";
                 tdDelete.title = "Close";
-                tdDelete.className = "close plupload_delete"
+                tdDelete.className = "close plupload_delete right";
+                tdEdit = document.createElement("td");
+                tdEdit.innerHTML = "";
+                tdEdit.className = "plupload_media_edit";
                 tr = document.createElement("tr");
                 tr.id = file.id;
                 tr.appendChild(tdName);
                 tr.appendChild(tdStatus);
                 tr.appendChild(tdSize);
+                tr.appendChild(tdEdit);
                 tr.appendChild(tdDelete);
                 $("#rtMedia-queue-list").append(tr);
                 //Delete Function
                 $("#" + file.id + " td.plupload_delete").click(function(e) {
                     e.preventDefault();
-                    //console.log(up.getFile(file.id));
                     uploaderObj.uploader.removeFile(up.getFile(file.id));
                     $("#" + file.id).remove();
                     return false;
@@ -318,21 +342,62 @@ jQuery(function($) {
 
             });
             $.each(upload_remove_array, function(i, rfile) {
-                up.removeFile(up.getFile(rfile));
+               if(up.getFile(rfile))
+                    up.removeFile(up.getFile(rfile));
             });
 
-            if (upload_size_error) {
-                // alert(upload_error + " because max file size is " + plupload.formatSize(uploaderObj.uploader.settings.max_file_size) );
+//            if (upload_size_error) {
+//                // alert(upload_error + " because max file size is " + plupload.formatSize(uploaderObj.uploader.settings.max_file_size) );
+//            }
+        });
+        
+        uploaderObj.uploader.bind('Error', function(up, err) {
+            
+            if(err.code== -600){ //file size error // if file size is greater than server's max allowed size
+                var tmp_array;
+                var ext = tr = '';
+                tmp_array =  err.file.name.split(".");
+                if(tmp_array.length > 1){
+                    ext= tmp_array[tmp_array.length - 1];
+                    if( !(typeof(up.settings.upload_size) != "undefined" && typeof(up.settings.upload_size[ext]) != "undefined" &&  typeof(up.settings.upload_size[ext]['size']) )){
+                        tr = "<tr style='background-color:lightpink;color:black'><td>" + err.file.name + "</td><td> " + rtmedia_max_file_msg + plupload.formatSize( up.settings.max_file_size / 1024 * 1024) + " <i class='icon-info-sign' title='" + window.file_size_info + "'></i></td><td>" + plupload.formatSize(err.file.size) + "</td><td></td><td class='close error_delete right'><i class='icon-remove'></i></td></tr>";
+                    }
+                }
+                //append the message to the file queue
+                $("#rtMedia-queue-list tbody").append(tr);
             }
+            else { 
+            
+                if( err.code == -601) { // file extension error 
+                    err.message = 'File extension not supported';
+                }
+                var tr = "<tr style='background-color:lightpink;color:black'><td>" + (err.file ? err.file.name : "") + "</td><td>" + err.message + " <i class='icon-info-sign' title='" + window.file_extn_info + "'></i></td><td>" + plupload.formatSize(err.file.size) + "</td><td></td><td class='close error_delete right'><i class='icon-remove'></i></td></tr>";
+                $("#rtMedia-queue-list tbody").append(tr);  
+            }
+                   
+            jQuery('.error_delete').on('click',function(e){
+                e.preventDefault();
+                jQuery(this).parent('tr').remove();
+            });
+            return false;
+            
+        });
+        
+        jQuery('.start-media-upload').on('click', function(e){
+            e.preventDefault();
+            uploaderObj.uploadFiles();
         });
 
         uploaderObj.uploader.bind('QueueChanged', function(up) {
-            uploaderObj.uploadFiles()
-
+            
+//            jQuery('.rtmedia-upload-input').attr('value','Add more files');
+//            jQuery('.start-media-upload').show();
+           
         });
 
         uploaderObj.uploader.bind('UploadProgress', function(up, file) {
-            $("#" + file.id + " .plupload_file_status").html(file.percent + "%");
+            //$("#" + file.id + " .plupload_file_status").html(file.percent + "%");
+            $("#" + file.id + " .plupload_file_status").html('Uploading( ' + file.percent + '% )');
             if (file.percent == 100) {
                 $("#" + file.id).css("background-color", "lightgreen");
                 $("#" + file.id).css("color", "#000");
@@ -356,7 +421,6 @@ jQuery(function($) {
         });
 
         uploaderObj.uploader.bind('FileUploaded', function(up, file, res) {
-
             if (/MSIE (\d+\.\d+);/.test(navigator.userAgent)) { //test for MSIE x.x;
                 var ieversion=new Number(RegExp.$1) // capture x.x portion and store as a number
 
@@ -371,6 +435,11 @@ jQuery(function($) {
                 rtnObj = JSON.parse(res.response);
                 uploaderObj.uploader.settings.multipart_params.activity_id = rtnObj.activity_id;
                 activity_id = rtnObj.activity_id;
+                if(rtnObj.permalink != ''){
+                    $("#" + file.id + " .plupload_file_name").html("<a href='" + rtnObj.permalink + "' target='_blank' title='" + rtnObj.permalink + "'>" + file.name + "</a>");
+                    $("#" + file.id + " .plupload_media_edit").html("<a href='" + rtnObj.permalink + "edit' target='_blank'><span title='Edit media'><i class='icon-edit'></i> Edit</span></a>");
+                }
+                
             } catch (e) {
                 // console.log('Invalid Activity ID');
             }
@@ -383,6 +452,11 @@ jQuery(function($) {
                 if (uploaderObj.upload_count == up.files.length && jQuery("#rt_upload_hf_redirect").length > 0 && jQuery.trim(rtnObj.redirect_url.indexOf("http") == 0)) {
                     window.location = rtnObj.redirect_url;
                 }
+                
+                $("#" + file.id + " .plupload_file_status").html('Uploaded');
+                
+            }else {
+                $("#" + file.id + " .plupload_file_status").html('Failed');
             }
 
             files = up.files;
@@ -407,7 +481,7 @@ jQuery(function($) {
             jQuery('#rtm-media-gallery-uploader').slideToggle();
 	});
     }
-
+        
 
 });
 /** History Code for route
@@ -458,14 +532,27 @@ jQuery(document).ready(function($) {
 
     objUploadView.uploader.bind('FilesAdded', function(upl, rfiles) {
         //$("#aw-whats-new-submit").attr('disabled', 'disabled');
-        objUploadView.upload_remove_array= [];
+        var upload_remove_array = [];
         $.each(rfiles, function(i, file) {
-            var hook_respo = rtMediaHook.call('rtmedia_js_file_added', [upl,file, "#rtMedia-update-queue-list"]);
+            var hook_respo = rtMediaHook.call('rtmedia_js_file_added', [upl,file, "#rtMedia-queue-list tbody"]);
             if( hook_respo == false){
                     file.status = -1;
                     upload_remove_array.push(file.id);
                     return true;
             }
+            if (objUploadView.uploader.settings.max_file_size < file.size) {
+                return true;
+            }
+            var tmp_array =  file.name.split(".");
+            var ext_array = objUploadView.uploader.settings.filters[0].extensions.split(',');
+            if(tmp_array.length > 1){
+                var ext= tmp_array[tmp_array.length - 1];
+                if( jQuery.inArray( ext ,ext_array) === -1){
+                    return true;
+                }
+            }else{
+                return true;
+            } 
             tdName = document.createElement("td");
             tdName.innerHTML = file.name;
             tdStatus = document.createElement("td");
@@ -478,12 +565,15 @@ jQuery(document).ready(function($) {
             tdDelete.innerHTML = "<i class='icon-remove'></i>";
             tdDelete.title = "Remove from queue";
             tdDelete.className = "close plupload_delete right";
+            tdEdit = document.createElement("td");
+            tdEdit.innerHTML = "";
             tr = document.createElement("tr");
             tr.id = file.id;
             tr.appendChild(tdName);
             tr.appendChild(tdStatus);
             tr.appendChild(tdSize);
-            tr.appendChild(tdDelete);
+            tr.appendChild(tdEdit);
+            tr.appendChild(tdDelete);                        
             jQuery('#whats-new-content').css('padding-bottom','0px');
             $("#rtm-upload-start-notice").css('display','block'); // show the file upload notice to the user
             $("#rtMedia-queue-list").append(tr);
@@ -494,9 +584,11 @@ jQuery(document).ready(function($) {
                     return false;
                 });
         });
-        $.each(objUploadView.upload_remove_array, function(i, rfile) {
-                objUploadView.uploader.removeFile(objUploadView.uploader.getFile(rfile));
-        });
+        
+         $.each(upload_remove_array, function(i, rfile) {
+                if(upl.getFile(rfile))
+                    upl.removeFile(upl.getFile(rfile));
+            });
     });
 
     objUploadView.uploader.bind('FileUploaded', function(up, file, res) {
@@ -527,6 +619,41 @@ jQuery(document).ready(function($) {
             }
         }
     });
+    
+    objUploadView.uploader.bind('Error', function(up, err) {
+                
+                    if(err.code== -600){ //file size error // if file size is greater than server's max allowed size
+                       var tmp_array;
+                       var ext = tr = '';
+                       tmp_array =  err.file.name.split(".");
+                       if(tmp_array.length > 1){
+
+                           ext= tmp_array[tmp_array.length - 1];
+                           if( !(typeof(up.settings.upload_size) != "undefined" && typeof(up.settings.upload_size[ext]) != "undefined" && (up.settings.upload_size[ext]["size"] <  1 || (up.settings.upload_size[ext]["size"] * 1024 * 1024) >= err.file.size ))){
+                               //tr = "<tr style='background-color:lightpink;color:black'><td>" + err.file.name + "(" + plupload.formatSize(err.file.size) + ")" + "</td><td colspan='3'> " + rtmedia_pro_max_file_size + plupload.formatSize(up.settings.upload_size[ext]["size"] * 1024 * 1024) + " <i class='icon-info-sign' title='" + window.file_size_info + "'></i></td><td class='close error_delete right'><i class='icon-remove'></i></td></tr>";
+                               tr = "<tr style='background-color:lightpink;color:black'><td>" + err.file.name + "(" + plupload.formatSize(err.file.size) + ")" + "</td><td> " + rtmedia_max_file_msg + plupload.formatSize( up.settings.max_file_size / 1024 * 1024) + " <i class='icon-info-sign' title='" + window.file_size_info + "'></i></td><td>" + plupload.formatSize(err.file.size) + "</td><td></td><td class='close error_delete right'><i class='icon-remove'></i></td></tr>";
+                           }
+                       }
+                       //append the message to the file queue
+                       $("#rtMedia-queue-list tbody").append(tr);
+                   }
+                   else { 
+                       if( err.code == -601) { // file extension error
+                           err.message = 'File extension not supported';
+                       }
+                       var tr = "<tr style='background-color:lightpink;color:black'><td>" + (err.file ? err.file.name : "") + "</td><td>" + err.message + " <i class='icon-info-sign' title='" + window.file_extn_info + "'></i></td><td>" + plupload.formatSize(err.file.size) + "</td><td></td><td class='close error_delete right'><i class='icon-remove'></i></td></tr>";
+                       $("#rtMedia-queue-list tbody").append(tr);
+                   }
+            
+                jQuery('.error_delete').on('click',function(e){
+                    e.preventDefault();
+                    jQuery(this).parent('tr').remove();
+                });
+                $("#rtm-upload-start-notice").css('display','block'); // show the file upload notice to the user
+                return false;
+            
+        });
+        
     objUploadView.uploader.bind('BeforeUpload', function(up, files) {
 
         var object = '';
