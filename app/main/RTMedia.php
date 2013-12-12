@@ -615,7 +615,7 @@ class RTMedia
             'nav' => true,
             'like' => false,
             'featured' => false,
-            'Group' => false,
+//            'Group' => false, will be constructed after rtmedia pro classes are constructed.
             'ViewCount' => false
                 //'query'		=> false
         );
@@ -636,7 +636,9 @@ class RTMedia
         }
         /** ------------------- * */
         $class_construct = apply_filters('rtmedia_class_construct', $class_construct);
-
+       
+        $class_construct['Group'] = false; // will be constructed after rtmedia pro class.
+        
         foreach ($class_construct as $key => $global_scope) {
             $classname = '';
             $ck = explode('_', $key);
