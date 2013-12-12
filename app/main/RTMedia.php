@@ -416,7 +416,7 @@ class RTMedia
             'general_enableMediaEndPoint' => 0,
             'general_showAdminMenu' => (isset($bp_media_options['show_admin_menu'])) ? $bp_media_options['show_admin_menu'] : 0,
             'general_videothumbs' => 2,
-	    'general_AllowUserData' => 1
+	    'general_AllowUserData' => 1            
         );
 
 
@@ -459,7 +459,10 @@ class RTMedia
         $defaults['privacy_enabled'] = (isset($bp_media_options['privacy_enabled'])) ? $bp_media_options['privacy_enabled'] : 0;
         $defaults['privacy_default'] = (isset($bp_media_options['default_privacy_level'])) ? $bp_media_options['default_privacy_level'] : 0;
         $defaults['privacy_userOverride'] = (isset($bp_media_options['privacy_override_enabled'])) ? $bp_media_options['privacy_override_enabled'] : 0;
-
+        
+        $defaults['styles_custom'] = (isset($bp_media_options['styles_custom'])) ? $bp_media_options['styles_custom'] : '';
+        $defaults['styles_enabled'] = (isset($bp_media_options['styles_enabled'])) ? $bp_media_options['styles_enabled'] : 1;
+        
         $this->options = $defaults;
 
         $this->init_buddypress_options();
@@ -757,8 +760,12 @@ class RTMedia
             wp_enqueue_style('wp-mediaelement', RTMEDIA_URL . 'lib/media-element/mediaelementplayer.min.css', '', RTMEDIA_VERSION);
             wp_enqueue_script('wp-mediaelement-start', RTMEDIA_URL . 'lib/media-element/wp-mediaelement.js', 'wp-mediaelement', RTMEDIA_VERSION, true);
         }
-
-        wp_enqueue_style('rtmedia-main', RTMEDIA_URL . 'app/assets/css/main.css', '', RTMEDIA_VERSION);
+        
+        global $rtmedia;
+        // Dont enqueue main.css if default styles is checked false in rtmedia settings
+        if( !( isset($rtmedia->options) && isset($rtmedia->options['styles_enabled']) && $rtmedia->options['styles_enabled']== 0)){
+            wp_enqueue_style('rtmedia-main', RTMEDIA_URL . 'app/assets/css/main.css', '', RTMEDIA_VERSION);
+        }
         wp_enqueue_style('rtmedia-font-awesome', RTMEDIA_URL . 'app/assets/css/font-awesome.min.css', '', RTMEDIA_VERSION);
         if(! wp_script_is("rtp-foundation-js"))
             wp_enqueue_script('rtp-foundation-js', RTMEDIA_URL . 'lib/foundation/foundation.min.js', array('jquery'), RTMEDIA_VERSION);
@@ -780,7 +787,8 @@ class RTMedia
         wp_localize_script('rtmedia-main', 'rtmedia_album_created_msg', ' ' . __('album created successfully.',"rtMedia"));
         wp_localize_script('rtmedia-main', 'rtmedia_something_wrong_msg', __('Something went wrong. Please try again.',"rtMedia"));
         wp_localize_script('rtmedia-main', 'rtmedia_empty_album_name_msg', __('Enter an album name.',"rtMedia"));
-        wp_localize_script('rtmedia-main', 'rtmedia_max_file_msg', __('Max file Limit',"rtMedia"));
+        wp_localize_script('rtmedia-main', 'rtmedia_max_file_msg', __('Max file Size Limit : ',"rtMedia"));
+        wp_localize_script('rtmedia-main', 'rtmedia_allowed_file_formats', __('Allowed File Formats',"rtMedia"));
     }
 
     function set_bp_bar() {

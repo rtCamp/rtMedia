@@ -867,7 +867,14 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
                     'callback' => array( 'RTMediaFormHandler', 'buddypress_content' ) //change it to BuddyPress Content
                 );
             }
-
+            $tabs[ ] = array(
+                'href' => '#rtmedia-custom-css',
+                'icon' => 'icon-css3',
+                'title' => __( 'rtMedia Custom CSS', 'rtmedia' ),
+                'name' => __( 'Custom CSS', 'rtmedia' ),
+                'callback' => array( 'RTMediaFormHandler', 'custom_css_content' )
+            );
+            
             $tabs = apply_filters ( 'rtmedia_add_settings_sub_tabs', $tabs, $tab );
             $tabs_html .= '<ul>';
             foreach ( $tabs as $tab ) {

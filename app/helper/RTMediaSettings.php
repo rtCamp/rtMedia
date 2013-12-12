@@ -68,6 +68,9 @@ if (!class_exists('RTMediaSettings')) {
             $defaults['buddypress_enableOnActivity'] = 0;
             $defaults['buddypress_enableOnProfile'] = 0;
             $defaults['buddypress_limitOnActivity'] = 0;
+            $defaults['styles_custom'] = '';
+            $defaults['styles_enabled'] = 1;
+            
             if(isset($options["general_videothumbs"]) && is_numeric($options["general_videothumbs"]) && intval($options["general_videothumbs"]) > 10){
                 $options["general_videothumbs"] = 10;
                 add_action ( 'admin_notices', array( &$this, 'add_max_video_thumb_notice' ) );

@@ -325,7 +325,7 @@ class RTMediaFormHandler {
 		$render = array();
 		$allowed_media_type = $rtmedia->allowed_types;
 		$allowed_media_type = apply_filters("rtmedia_allowed_types", $allowed_media_type);
-
+                
 		foreach ($options as $key => $value) {
 			$data = explode('_', $key);
 			if(!isset($render[$data[1]])) {
@@ -465,6 +465,63 @@ class RTMediaFormHandler {
 
 		echo '</div>';
 	}
+        
+        public static function custom_css_content() {
+            
+            global $rtmedia;
+            $options = self::extract_settings('styles', $rtmedia->options);
+            $render_data = self::custom_css_render_options($options);
+            
+            echo '<div class="large-12">';
+            foreach ($render_data as $option) { ?>
+                    
+                <div class="row section">
+                    <?php if( $option['args']['key'] == "styles_custom"){ ?>
+                        <div class="columns large-12 rtm-custom-css">
+                            <strong class="<?php echo $option['args']['key'];?>"><?php echo $option['title']; ?></strong>
+                            <?php call_user_func($option['callback'], $option['args']); ?>
+                            <div><?php _e("If you want to add some custom CSS code to the plugin and don't want to modify any files, then it's a good place to enter your code at this field.");?></div>
+                        </div>
+                    <?php } else { ?>
+                    <div class="columns large-5">
+                        <strong class="<?php echo $option['args']['key'];?>"><?php echo $option['title']; ?></strong>
+                    </div>
+                    <div class="columns large-7">
+                        <?php call_user_func($option['callback'], $option['args']); ?>
+                    </div>
+                    <?php } ?>
+                </div>
+            <?php }
+            echo '</div>';
+            
+        }
+        
+        static function custom_css_render_options($options) {
+            global $rtmedia;
+            
+            $render = array(
+                        'disable_styles' => array(
+                                'title' => __("rtMedia default styles","rtmedia"),
+				'callback' => array("RTMediaFormHandler", "checkbox"),
+				'args' => array(
+					'id' => 'rtmedia-disable-styles',
+					'key' => 'styles_enabled',
+					'value' => $options['styles_enabled']  
+                                )
+                        ),
+                        'custom_styles' => array(
+                                'title' => __("Paste your CSS code","rtmedia"),
+				'callback' => array("RTMediaFormHandler", "textarea"),
+				'args' => array(
+					'id' => 'rtmedia-custom-css',
+					'key' => 'styles_custom',
+					'value' => $options['styles_custom']  
+                                )
+                        )
+                );
+            
+            return $render;
+        }
 
 	static function privacy_render_options($options) {
 
