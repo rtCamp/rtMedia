@@ -362,7 +362,7 @@ jQuery(function($) {
                 if(tmp_array.length > 1){
                     ext= tmp_array[tmp_array.length - 1];
                     if( !(typeof(up.settings.upload_size) != "undefined" && typeof(up.settings.upload_size[ext]) != "undefined" &&  typeof(up.settings.upload_size[ext]['size']) )){
-                        tr = "<tr style='background-color:lightpink;color:black'><td>" + err.file.name + "</td><td> " + rtmedia_max_file_msg + plupload.formatSize( up.settings.max_file_size / 1024 * 1024) + " <i class='icon-info-sign' title='" + window.file_size_info + "'></i></td><td>" + plupload.formatSize(err.file.size) + "</td><td></td><td class='close error_delete right'><i class='icon-remove'></i></td></tr>";
+                        tr = "<tr class='upload-error'><td>" + err.file.name + "</td><td> " + rtmedia_max_file_msg + plupload.formatSize( up.settings.max_file_size / 1024 * 1024) + " <i class='icon-info-sign' title='" + window.file_size_info + "'></i></td><td>" + plupload.formatSize(err.file.size) + "</td><td></td><td class='close error_delete right'><i class='icon-remove'></i></td></tr>";
                     }
                 }
                 //append the message to the file queue
@@ -373,7 +373,7 @@ jQuery(function($) {
                 if( err.code == -601) { // file extension error 
                     err.message = 'File extension not supported';
                 }
-                var tr = "<tr style='background-color:lightpink;color:black'><td>" + (err.file ? err.file.name : "") + "</td><td>" + err.message + " <i class='icon-info-sign' title='" + window.file_extn_info + "'></i></td><td>" + plupload.formatSize(err.file.size) + "</td><td></td><td class='close error_delete right'><i class='icon-remove'></i></td></tr>";
+                var tr = "<tr class='upload-error'><td>" + (err.file ? err.file.name : "") + "</td><td>" + err.message + " <i class='icon-info-sign' title='" + window.file_extn_info + "'></i></td><td>" + plupload.formatSize(err.file.size) + "</td><td></td><td class='close error_delete right'><i class='icon-remove'></i></td></tr>";
                 $("#rtMedia-queue-list tbody").append(tr);  
             }
                    
@@ -400,9 +400,9 @@ jQuery(function($) {
         uploaderObj.uploader.bind('UploadProgress', function(up, file) {
             //$("#" + file.id + " .plupload_file_status").html(file.percent + "%");
             $("#" + file.id + " .plupload_file_status").html('Uploading( ' + file.percent + '% )');
+            $("#" + file.id).addClass('upload-progress');
             if (file.percent == 100) {
-                $("#" + file.id).css("background-color", "lightgreen");
-                $("#" + file.id).css("color", "#000");
+                 $("#" + file.id).toggleClass('upload-success');
             }
         });
         uploaderObj.uploader.bind('BeforeUpload', function(up, file) {
@@ -477,10 +477,12 @@ jQuery(function($) {
         jQuery(document).on('click', '#rtm_show_upload_ui', function(){
             jQuery('#rtm-media-gallery-uploader').slideToggle();
             uploaderObj.uploader.refresh();//refresh the uploader for opera/IE fix on media page
+            jQuery('#rtm_show_upload_ui').toggleClass('primary');
         });
     } else {
 	jQuery(document).on('click', '#rtm_show_upload_ui', function(){
             jQuery('#rtm-media-gallery-uploader').slideToggle();
+            jQuery('#rtm_show_upload_ui').toggleClass('primary');
 	});
     }
         
@@ -559,7 +561,7 @@ jQuery(document).ready(function($) {
             tdName.innerHTML = file.name;
             tdStatus = document.createElement("td");
             tdStatus.className = "plupload_file_status";
-            tdStatus.innerHTML = "0%";
+            tdStatus.innerHTML = "Waiting";
             tdSize = document.createElement("td");
             tdSize.className = "plupload_file_size";
             tdSize.innerHTML = plupload.formatSize(file.size);
@@ -633,7 +635,7 @@ jQuery(document).ready(function($) {
                            ext= tmp_array[tmp_array.length - 1];
                            if( !(typeof(up.settings.upload_size) != "undefined" && typeof(up.settings.upload_size[ext]) != "undefined" && (up.settings.upload_size[ext]["size"] <  1 || (up.settings.upload_size[ext]["size"] * 1024 * 1024) >= err.file.size ))){
                                //tr = "<tr style='background-color:lightpink;color:black'><td>" + err.file.name + "(" + plupload.formatSize(err.file.size) + ")" + "</td><td colspan='3'> " + rtmedia_pro_max_file_size + plupload.formatSize(up.settings.upload_size[ext]["size"] * 1024 * 1024) + " <i class='icon-info-sign' title='" + window.file_size_info + "'></i></td><td class='close error_delete right'><i class='icon-remove'></i></td></tr>";
-                               tr = "<tr style='background-color:lightpink;color:black'><td>" + err.file.name + "(" + plupload.formatSize(err.file.size) + ")" + "</td><td> " + rtmedia_max_file_msg + plupload.formatSize( up.settings.max_file_size / 1024 * 1024) + " <i class='icon-info-sign' title='" + window.file_size_info + "'></i></td><td>" + plupload.formatSize(err.file.size) + "</td><td></td><td class='close error_delete right'><i class='icon-remove'></i></td></tr>";
+                               tr = "<tr class='upload-error'><td>" + err.file.name + "(" + plupload.formatSize(err.file.size) + ")" + "</td><td> " + rtmedia_max_file_msg + plupload.formatSize( up.settings.max_file_size / 1024 * 1024) + " <i class='icon-info-sign' title='" + window.file_size_info + "'></i></td><td>" + plupload.formatSize(err.file.size) + "</td><td></td><td class='close error_delete right'><i class='icon-remove'></i></td></tr>";
                            }
                        }
                        //append the message to the file queue
@@ -643,7 +645,7 @@ jQuery(document).ready(function($) {
                        if( err.code == -601) { // file extension error
                            err.message = 'File extension not supported';
                        }
-                       var tr = "<tr style='background-color:lightpink;color:black'><td>" + (err.file ? err.file.name : "") + "</td><td>" + err.message + " <i class='icon-info-sign' title='" + window.file_extn_info + "'></i></td><td>" + plupload.formatSize(err.file.size) + "</td><td></td><td class='close error_delete right'><i class='icon-remove'></i></td></tr>";
+                       var tr = "<tr class='upload-error'><td>" + (err.file ? err.file.name : "") + "</td><td>" + err.message + " <i class='icon-info-sign' title='" + window.file_extn_info + "'></i></td><td>" + plupload.formatSize(err.file.size) + "</td><td></td><td class='close error_delete right'><i class='icon-remove'></i></td></tr>";
                        $("#rtMedia-queue-list tbody").append(tr);
                    }
             
@@ -681,7 +683,11 @@ jQuery(document).ready(function($) {
         //$("#aw-whats-new-submit").removeAttr('disabled');
     });
     objUploadView.uploader.bind('UploadProgress', function(up, file) {
-        $("#" + file.id + " .plupload_file_status").html(file.percent + "%");
+        $("#" + file.id + " .plupload_file_status").html('Uploading( ' + file.percent + '% )');
+        $("#" + file.id).addClass('upload-progress');
+        if (file.percent == 100) {
+                $("#" + file.id).toggleClass('upload-success');
+            }
 
     });
 

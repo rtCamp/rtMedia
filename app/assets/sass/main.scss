@@ -20,6 +20,20 @@
     position: absolute;
     border-color: rgba(0, 0, 0, 0) rgba(0, 0, 0, 0) #EDEFF4;
 }
+.rtm-primary-button {
+    background-color: #3475BA;
+    border-radius: 5px 5px 5px 5px;
+    text-transform: uppercase;
+    box-shadow: 0 0 0 rgba(255, 255, 255, 0) inset;
+    transition: background-color 300ms ease-out 0s;
+    color : white;
+    border: none;
+    padding: 10px 20px;
+    background-image : none;
+    &:hover {
+        background-color: #306BAA;
+    }
+}
 
 .rtmedia-container{
 	@import "compass/reset";
@@ -30,6 +44,13 @@
 	@import "foundation/components/flex-video";
         @import 'foundation_reveal_settings';
         @import "foundation/components/reveal";
+        
+        .primary{
+            color : #3475BA;
+        }
+        .secondary {
+            color : #82909D;
+        }
         
         #buddypress{
             li{
@@ -72,10 +93,43 @@
 		text-align: center;
 		background: #fafafa;
 		overflow: hidden;
-		padding: 15px 0;
+                color : #AAAAAA;
+                padding: 25px 0;
+                
 		&.dragover{
 			border-color: #83b4d8;
 		}
+                .drag-drop-info {
+                    font-size: 20px;
+                    line-height: 24px;
+                }
+                .rtm-album-privacy span {
+                        margin : 0 30px 20px 30px;
+                        display : inline-block;
+                        &:last-child {
+                            margin-bottom: 0;
+                        }
+                }
+                .rtm-select-files {
+                    //margin-bottom: 20px;
+                    span {
+                        vertical-align: middle;
+                    }
+                }
+                .rtm-seperator {
+                    margin : 0px 20px;
+                }
+                .start-media-upload {
+                    display: none;
+                    margin-top: 20px;
+                    @extend .rtm-primary-button; 
+                }
+                
+                .rtm-file-size-limit{
+                    vertical-align: middle;
+                    font-size: 16px;
+                    line-height: 24px;
+                }
 	}
 
 	.rtmedia-action-update{
@@ -370,6 +424,12 @@
             @extend .rtmedia-container;
 }
 #buddypress{
+    
+    .rtmedia-container .rtmedia-uploader .drag-drop {
+        .start-media-upload {
+            @extend .rtm-primary-button;
+        }
+    }
      .rtmedia-single-container .rtmedia-single-meta{
         div.rtmedia-actions-before-comments{
             color : #6D84B4;
@@ -548,8 +608,39 @@ button.rtp-lb-close {
 .mfp-content #rtmedia-single-media-container .wp-audio-shortcode{
     height: 0px!important;
 }
-.rtmedia-single-container .rtmedia-editor-description {
+/*.rtmedia-single-container .rtmedia-editor-description {
     margin-top: 15px;
+}*/
+
+//styles for media-single-edit template
+.rtmedia-media-edit {
+    .rtmedia-title {
+        margin-bottom: 20px;
+    }
+    .rtmedia-edit-title{
+        margin-bottom: 15px;
+    }
+    .rtmedia-edit-privacy {
+        margin-bottom: 10px;
+    }
+    .rtmedia-title-editor {
+        display: inline-block;
+        width: 50%;
+    }
+    
+    .rtmedia-editor-description {
+        margin-bottom : 20px;
+        &>label {
+            display: block;
+        }
+       .rtmedia-desc-textarea {
+            width: 100%;
+            display: inline-block;
+        } 
+    }
+    .rtmedia-image-editor-cotnainer {
+        margin-bottom : 10px;
+    }
 }
 
 .rtmedia-container #rtm-media-options, .rtmedia-container {
@@ -590,6 +681,9 @@ button.rtp-lb-close {
         margin-left: 10px;
         color : #444444;
     }
+    .rtmedia-upload-media-link {
+        font-size: 16px;
+    }
 }
 
 .rtmedia-inline{
@@ -629,7 +723,24 @@ button.rtp-lb-close {
     margin-bottom : 10px;
     line-height : 20px;
     tr td, tr th {
-        padding: 3px 5px;
+        padding: 3px 8px;
+    }
+    tr{
+        background-color: #FFFFCC;
+        color : #333;
+        &.upload-error {
+            background-color:#FCC8CA;
+        }
+        &.upload-success {
+            background-color : #A9FAA5;
+        }
+        &.upload-progress {
+            background-color : #D0FCCE;
+        }
+    }
+    .plupload_media_edit a {
+        text-decoration: none;
+        color : #181818;
     }
 }
 
@@ -648,6 +759,9 @@ button.rtp-lb-close {
             display: block;
             z-index: 9999;
         }
+        .drag-drop p {
+            margin: 10px 0;
+        }        
 #drag-drop-title {
         position: absolute;
         margin-top: -30px;
@@ -696,7 +810,7 @@ button.rtp-lb-close {
     list-style: none;
     background: #EDEFF4;
     margin: 0 0 2px 0;
-    padding: 5px 5px 1px 5px;
+    padding: 5px;
     width: 100%;
     position: relative;
     word-wrap: break;
@@ -717,12 +831,13 @@ button.rtp-lb-close {
     .rtmedia-comment-user-pic {
 
         float: left;
+        margin: 0 10px 0 0;
+        padding : 2px 0 0 2px;
         img {
             height: 35px!important;
             width : 35px!important;
             //importants are provided to override the inline style that comes when buddypress is not active and image is set as profile pic
-            @include border-radius(0); 
-            margin: 0 5px 0 0; 
+            @include border-radius(0);
         }
     }
 
@@ -960,7 +1075,7 @@ button.rtp-lb-close {
                 
                 .rtm-ltb-title {
                     font-size: 14px;
-                    width: 59%;
+                    width: 55%;
                     overflow : hidden;
                     float : left;
                     line-height: 30px;
@@ -976,7 +1091,7 @@ button.rtp-lb-close {
                 }
                 .rtmedia-author-actions{
                     text-align: right;
-                    width: 40%
+                    width: 44%
                 }
             }
             
