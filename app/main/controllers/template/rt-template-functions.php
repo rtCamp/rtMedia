@@ -1620,6 +1620,13 @@ function rtmedia_admin_premium_tab($tabs) {
     return $tabs;
 }
 
+function rtmedia_bp_activity_get_types($actions) {
+    $actions['rtmedia_update'] = "rtMedia update";
+    return $actions;
+}
+
+add_filter('bp_activity_get_types','rtmedia_bp_activity_get_types',10,1);
+
 add_action("rtmedia_admin_page_insert", "rtmedia_admin_premium_page", 99, 1);
 
 function rtmedia_admin_premium_page($page) {
