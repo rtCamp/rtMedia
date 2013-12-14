@@ -737,6 +737,7 @@ class RTMedia
         }
         if(! $update->  table_exists ( $update->  genrate_table_name ( "rtm_media" ) )){
             delete_site_option($update->get_db_version_option_name());
+	    $update->install_db_version = "0";
             $update->do_upgrade();
         }
     }
