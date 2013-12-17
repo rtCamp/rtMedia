@@ -3,7 +3,7 @@
         <?php
         global $rt_ajax_request;
         do_action('rtmedia_before_media');
-        
+
         if ( have_rtmedia () ) : rtmedia ();
             ?>
             <div id="rtmedia-single-media-container" class="rtmedia-single-media columns <?php echo ($rt_ajax_request) ? "large-8" : "large-12"; ?>">
@@ -32,9 +32,9 @@
                     <div class="rtmedia-actions">
                         <?php do_action('rtmedia_action_buttons_after_media', rtmedia_id());?>
                     </div>
-                        
-                    
-                    
+
+
+
                 </div>
                 <?php } ?>
             </div>
@@ -52,19 +52,19 @@
                     <div class="rtm-time-privacy clear">
                         <?php echo get_rtmedia_date_gmt();?> <?php echo get_rtmedia_privacy_symbol(); ?>
                     </div>
-                    
+
                     <div class="rtmedia-actions-before-description clear">
                         <?php do_action('rtmedia_actions_after_user_info', rtmedia_id()) ;?>
                     </div>
-                    
+
                     <div class="rtmedia-item-actions">
                         <?php //rtmedia_actions (); ?>
                     </div>
-                    
+
                     <div class="rtmedia-media-description rtm-more">
                         <?php echo strip_tags(rtmedia_description ( $echo = false)); ?>
                     </div>
-                
+
                     <?php if ( rtmedia_comments_enabled () ) { ?>
                         <div class="rtmedia-item-comments row">
                             <div class="large-12 columns">
@@ -89,21 +89,22 @@
                         <?php rtmedia_comment_form (); ?>
                     </div>
                 <?php } ?>
-                    
+
                 <?php } else { // else for if ( $rt_ajax_request )?>
 
                 <div class="rtmedia-item-actions clear">
                     <?php rtmedia_actions (); ?>
-                    <?php// do_action('rtmedia_actions_after_user_info', rtmedia_id()) ;?>
-                    <ul>
-                        <?php // do_action('rtmedia_action_buttons_after_media', rtmedia_id());?>
-                        <?php do_action('rtmedia_author_media_actions'); ?>
-                    </ul>
-                </div>
+		    <?php //do_action('rtmedia_action_buttons_after_media', rtmedia_id());?>
+		    <?php do_action('rtmedia_author_media_actions'); ?>
+		</div>
+		<div class="rtmedia-item-actions clear">
+		    <?php do_action('rtmedia_actions_after_user_info', rtmedia_id()) ;?>
+		</div>
+
                 <div class="rtmedia-media-description more">
                     <?php rtmedia_description (); ?>
                 </div>
-                
+
                 <?php if ( rtmedia_comments_enabled () ) { ?>
                     <div class="rtmedia-item-comments row">
                         <div class="large-12 columns">
@@ -122,7 +123,7 @@
                             <?php if(is_user_logged_in ()) { rtmedia_comment_form (); } ?>
                         </div>
                     </div>
-                
+
                 <?php } ?>
                 <?php } ?>
             </div>
@@ -130,7 +131,7 @@
         <?php else: ?>
             <p><?php echo __ ( "Oops !! There's no media found for the request !!", "rtmedia" ); ?></p>
         <?php endif; ?>
-        
+
        <?php do_action('rtmedia_after_media'); ?>
     </div>
 </div>

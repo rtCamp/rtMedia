@@ -535,26 +535,26 @@ function rtmedia_current_media () {
 //rtmedia media_author actions
 add_action('rtmedia_author_media_actions', 'rtmedia_author_actions');
 function rtmedia_author_actions () {
-    
+
     $edit_button = $delete_button = "";
-    
+
     $edit_button = rtmedia_edit_form();
-    
+
     if($edit_button){
         echo $edit_button;
     }
-    
+
     $delete_button = rtmedia_delete_form( $echo = false);
     if( $delete_button ){
         echo $delete_button;
     }
-    
+
     $options_start = $options_end = $option_buttons = $output = "";
     $options = array();
     $options = apply_filters('rtmedia_author_media_options',$options );
-    
+
     if( !empty($options)){
-        
+
         $options_start = '<span class="click-nav" id="rtm-media-options-list">
                 <span class="no-js">
                 <button class="clicker rtmedia-action-buttons button"><i class="rtmicon-cog"></i>Options</button>
@@ -563,14 +563,14 @@ function rtmedia_author_actions () {
             if($action != ""){
                 $option_buttons .= "<li>" . $action . "</li>";
             }
-        } 
-        
+        }
+
         $options_end = "</ul></span></span>";
-        
+
         if( $option_buttons != ""){
             $output = $options_start . $option_buttons . $options_end;
         }
-        
+
         if( $output != "") {
             echo $output ;
         }
@@ -578,18 +578,18 @@ function rtmedia_author_actions () {
 }
 
 function rtmedia_edit_form() {
-     
+
     if ( is_user_logged_in () && rtmedia_edit_allowed () ) {
 
         $edit_button = '<button type="submit" class="rtmedia-edit rtmedia-action-buttons" ><i class="rtmicon-edit"></i>' . __ ( 'Edit', 'rtmedia' ) . '</button>';
-        
+
         $edit_button = apply_filters( 'rtmedia_edit_button_filter' , $edit_button);
-        
+
         $button = '<form action="' . get_rtmedia_permalink ( rtmedia_id () ) . 'edit/">' . $edit_button . "</form>";
-        
+
         return $button;
     }
-    
+
     return false;
 }
 
@@ -600,29 +600,29 @@ function rtmedia_actions () {
 
     $actions = array( );
 
-    if ( is_user_logged_in () && rtmedia_edit_allowed () ) {
-
-        $edit_button = '<button type="submit" class="rtmedia-edit rtmedia-action-buttons" ><i class="rtmicon-edit"></i>' . __ ( 'Edit', 'rtmedia' ) . '</button>';
-        
-        $edit_button = apply_filters( 'rtmedia_edit_button_filter' , $edit_button);
-        
-        $actions[] = '<form action="' . get_rtmedia_permalink ( rtmedia_id () ) . 'edit/">' . $edit_button . "</form>";
-    }
+//    if ( is_user_logged_in () && rtmedia_edit_allowed () ) {
+//
+//        $edit_button = '<button type="submit" class="rtmedia-edit rtmedia-action-buttons" ><i class="rtmicon-edit"></i>' . __ ( 'Edit', 'rtmedia' ) . '</button>';
+//
+//        $edit_button = apply_filters( 'rtmedia_edit_button_filter' , $edit_button);
+//
+//        $actions[] = '<form action="' . get_rtmedia_permalink ( rtmedia_id () ) . 'edit/">' . $edit_button . "</form>";
+//    }
     $actions = apply_filters ( 'rtmedia_action_buttons_before_delete', $actions );
     foreach ( $actions as $action ) {
         echo $action;
-    } 
+    }
     $actions = array( );
-    
+
     if ( rtmedia_delete_allowed () ) {
        add_filter('rtmedia_addons_action_buttons','rtmedia_delete_action_button',10,1);
     }
-    
+
     $actions = apply_filters ( 'rtmedia_action_buttons_after_delete', $actions );
-     
+
     foreach ( $actions as $action ) {
         echo $action;
-    } 
+    }
     do_action ( "after_rtmedia_action_buttons" );
 }
 
@@ -646,14 +646,14 @@ function rtmedia_addons_actions () {
         foreach ( $pro_actions as $action ) {
             if($action != "")
                 $option_buttons .= "<li>" . $action . "</li>";
-        } 
-        
+        }
+
         $options_end = "</ul></span></span>";
-        
+
         if( $option_buttons != ""){
             $output = $options_start . $option_buttons . $options_end;
         }
-        
+
         echo $output;
     }
 }
@@ -663,25 +663,25 @@ function rtmedia_addons_actions_lightbox () {
     $pro_actions = apply_filters ( 'rtmedia_addons_action_buttons', $pro_actions );
     $output = "";
     if( !empty($pro_actions)){
-        
+
         if ( is_user_logged_in () && rtmedia_edit_allowed () ) {
 
             $output .= '<li>' . '<form action="' . get_rtmedia_permalink ( rtmedia_id () ) . 'edit/">
                             <button type="submit" class="rtmedia-action-buttons button rtmedia-edit-action-button" ><i class="rtmicon-edit"></i>' . __ ( 'Edit', 'rtmedia' ) . '</button></form>' . '</li>';
-            
+
         }
         foreach ( $pro_actions as $action ) {
             if($action != "")
                 $output .=  "<li>" . $action . "</li>";
-        }         
-        
+        }
+
         $delete_button = rtmedia_delete_form( $echo = false);
         $output .= "<li>" . $delete_button . "</li>";
-        
+
         if($output != "") {
             $output = "<ul>" . $output . "</ul>";
         }
-        
+
         echo $output;
     }
 }
@@ -709,7 +709,7 @@ function rtmedia_comments ( $echo = true ) {
     }
 
     $html .= '</ul>';
-    
+
     if( $html )
         echo $html;
     else
@@ -736,7 +736,7 @@ function rmedia_single_comment ( $comment ) {
     if(isset( $comment['user_id'] ) && ( is_rt_admin() || ( get_current_user_id() == $comment['user_id'] )) ){ // show delete button for comment author and admins
         $html .= '<i data-id="' . $comment['comment_ID'] . '" class = "rtmedia-delete-comment rtmicon-cancel" title="Delete Comment"></i>';
     }
-    
+
     $html .= '<span class ="rtmedia-comment-date"> ' . rtmedia_convert_date($comment[ 'comment_date_gmt' ]) . '</span>';
     $html .= '<div class="clear"></div></div></div></li>';
     return apply_filters( 'rtmedia_single_comment', $html, $comment );
@@ -899,7 +899,7 @@ add_action ( 'rtmedia_add_edit_fields', 'rtmedia_image_editor', 12 );
 add_action ( 'rtmedia_add_edit_fields', 'rtmedia_vedio_editor', 1000 );
 add_action ('rtmedia_after_update_media', 'set_video_thumbnail', 12);
 add_filter ('rtmedia_single_content_filter', 'change_poster', 99, 2);
-    
+
 function change_poster($html,$media){
     global $rtmedia_media;
     if ( $rtmedia_media->media_type == 'video' ) {
@@ -1040,7 +1040,7 @@ function rtmedia_image_editor () {
         echo '<div class="rtmedia-image-editor-cotnainer" id="rtmedia-image-editor-cotnainer" >';
         echo '<div class="rtmedia-image-editor" id="image-editor-' . $media_id . '"></div>';
         $thumb_url = wp_get_attachment_image_src ( $media_id, 'thumbnail', true );
-        
+
         echo '<div id="imgedit-response-' . $media_id . '"></div>';
         echo '<div class="wp_attachment_image" id="media-head-' . $media_id . '">'
                . '<p id="thumbnail-head-' . $id . '"><img class="thumbnail" src="' . set_url_scheme ( $thumb_url[ 0 ] ) . '" alt="" /></p>'
@@ -1105,7 +1105,7 @@ function rtmedia_get_cover_art_src($id) {
 }
 
 function rtmedia_delete_form ( $echo = true) {
-    
+
     if ( rtmedia_delete_allowed () ) {
 
         $html = '<form method="post" action="' . get_rtmedia_permalink ( rtmedia_id () ) . 'delete/">';
@@ -1127,7 +1127,7 @@ function rtmedia_delete_form ( $echo = true) {
         }
     }
     return false;
-    
+
 }
 
 /**
@@ -1578,7 +1578,7 @@ function get_rtmedia_like($media_id = false) {
     return $actions;
 }
 
-function show_rtmedia_like_counts(){ 
+function show_rtmedia_like_counts(){
     global $rtmedia;
     $options = $rtmedia->options;
     $count =  get_rtmedia_like();
@@ -1586,7 +1586,7 @@ function show_rtmedia_like_counts(){
     ?>
     <div class='rtmedia-like-info<?php if($count == 0) echo " hide";?>'><i class="rtmicon-thumbs-up"></i>  <span class="rtmedia-like-counter"><?php echo $count; ?></span>  people like this</div>
     <?php }
-    
+
     }
 
 add_action('rtmedia_media_gallery_actions', 'add_upload_button');
@@ -1770,7 +1770,7 @@ function rtmedia_admin_premium_page($page) {
 add_action('rtmedia_before_media', 'rtmedia_content_before_media',10 );
 function  rtmedia_content_before_media() {
     global $rt_ajax_request;
-    
+
     if ( $rt_ajax_request ) { ?>
             <div class='rtm-mfp-close'>
                 <i class='rtmicon-cancel mfp-close'title='Close (Esc)'></i>
@@ -1785,7 +1785,7 @@ function get_rtmedia_privacy_symbol( $rtmedia_id = false){
     $privacy = "";
     if(isset($actions[0]->privacy) && $actions[0]->privacy != ""){
          $title = $icon = "";
-         
+
         switch ( $actions[0]->privacy ) {
             case 0://public
                 $title = "Public";
@@ -1811,7 +1811,7 @@ function get_rtmedia_privacy_symbol( $rtmedia_id = false){
         if( $title != "" && $icon != ""){
             $privacy = "<i class='" . $icon . "' title='" . $title . "'></i>";
         }
-        
+
     }
     return $privacy;
 }
@@ -1821,7 +1821,7 @@ function get_rtmedia_date_gmt( $rtmedia_id = false ) {
     $media = get_post( rtmedia_media_id( rtmedia_id($rtmedia_id) ) );
     $date_time = "";
    if(isset( $media->post_date_gmt) && $media->post_date_gmt != ""){
-      $date_time = rtmedia_convert_date($media->post_date_gmt);    
+      $date_time = rtmedia_convert_date($media->post_date_gmt);
     }
     return $date_time;
 }
@@ -1839,12 +1839,12 @@ function rtmedia_convert_date($_date) // $date --> time(); value
     //$length = array(1,60,3600,86400,604800,2630880,31570560,315705600);
     $length = array(1,60,3600,86400);
 
-    for($i =sizeof($length)-1; ($i >=0) && (($no = $diff/$length[$i])<= 1); $i--); 
+    for($i =sizeof($length)-1; ($i >=0) && (($no = $diff/$length[$i])<= 1); $i--);
     if($i < 0) $i=0;
     if($i<=2){ //if posted in last 24 hours
         $_time = $cur_time -($diff%$length[$i]);
-    
-        $no = floor($no); if($no > 1) $phrase[$i] .='s'; 
+
+        $no = floor($no); if($no > 1) $phrase[$i] .='s';
         $value=sprintf("%d %s ",$no,$phrase[$i]);
 
         if(($stf == 1) && ($i >= 1) && (($cur_tm-$_time) > 0)) $value .= rtmedia_convert_date($_time);
@@ -1870,14 +1870,14 @@ function get_media_counts(){
     $user_media_counts = $media_nav->get_counts($user_id);
     //var_dump($user_media_counts);
     $temp = $media_nav->actual_counts($user_id);
-    
+
     return $temp;
-    
+
     //return $user_counts;
 }
 
 add_action('wp_head','rtmedia_custom_css');
-function rtmedia_custom_css() {    
+function rtmedia_custom_css() {
     global $rtmedia;
     $options = $rtmedia->options;
     if(isset($options['styles_custom']) && $options['styles_custom'] != ""){
