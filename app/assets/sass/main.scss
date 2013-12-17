@@ -145,9 +145,6 @@
                 .rtm-album-privacy span {
                         margin : 0 30px 20px 30px;
                         display : inline-block;
-                        &:last-child {
-                            margin-bottom: 0;
-                        }
                 }
                 .rtm-select-files {
                     //margin-bottom: 20px;
@@ -771,8 +768,18 @@ button.rtp-lb-close {
         margin-left: 10px;
         color : #444444;
     }
-    .rtmedia-upload-media-link {
-        font-size: 16px;
+    
+    .rtmedia-upload-media-link, i, a, button,span {
+        font-size: 18px;
+        cursor : pointer;
+        color : #444444;
+        text-decoration: none;
+    }
+    .primary, .primary i {
+         color : #3475BA;
+    }
+    .rtmedia-delete-album {
+        margin-left : 0;
     }
 }
 
@@ -831,8 +838,8 @@ button.rtp-lb-close {
              border-bottom : 1px solid #ffcccc;
         }
         &.upload-success, &.upload-progress {
-            background-color : #e5ffe5;
-             border-bottom : 1px solid #b2ffb2;
+            background-color : #C2FAC1;
+             border-bottom : 1px solid #8EE888;
         }
 /*        &.upload-progress {
             background-color : #fffae5;
@@ -889,7 +896,7 @@ button.rtp-lb-close {
     margin-bottom : 15px;
     
     .rtm-gallery-title {
-        width : 69%;
+        width : 59%;
         display : inline-block;
         margin :0;
         overflow: hidden;
@@ -898,7 +905,7 @@ button.rtp-lb-close {
     }
     
     #rtm-media-options {
-        width: 30%;
+        width: 40%;
         padding: 5px 0;
         display: inline-block;
         
@@ -975,10 +982,11 @@ button.rtp-lb-close {
     .rtmedia-delete-comment{
         text-decoration: none;
         position : absolute;
-        right: 4px;
+        right: 0;
         top : 0; 
         color : #3B59A1;
         display: none;
+        cursor: pointer;
     }
 }
  }

@@ -1299,7 +1299,7 @@ function rtmedia_create_album () {
     }
     if ( $display === true ) {
         ?>
-        <i class="rtmedia-reveal-modal rtmicon-plus-circled icon-2x" data-reveal-id="rtmedia-create-album-modal" title="<?php _e( 'Create New Album', 'rtmedia' ); ?>"></i>
+        <i class="rtmedia-reveal-modal rtmicon-plus-circled" data-reveal-id="rtmedia-create-album-modal" title="<?php _e( 'Create New Album', 'rtmedia' ); ?>"></i>
         <div class="reveal-modal rtm-modal small" id='rtmedia-create-album-modal'>
             <div id="rtm-modal-container">
                 <h2 class="rtm-modal-title"><?php _e('Create New Album', 'rtmedia'); ?></h2>
@@ -1351,10 +1351,10 @@ function rtmedia_album_edit () {
         //if ( isset ( $rtmedia_query->media_query[ 'media_author' ] ) && get_current_user_id () == $rtmedia_query->media_query[ 'media_author' ] ) {
     if ( rtmedia_is_album_editable() || is_rt_admin() ) {
             ?>
-            <a href="edit/" class="rtmicon-edit rtmedia-edit icon-2x" title="<?php _e ( 'Edit', 'rtmedia' ); ?>"></a>
+            <a href="edit/" class="rtmicon-edit rtmedia-edit" title="<?php _e ( 'Edit', 'rtmedia' ); ?>"></a>
             <form method="post" class="album-delete-form rtmedia-inline" action="delete/">
                 <?php wp_nonce_field ( 'rtmedia_delete_album_' . $rtmedia_query->media_query[ 'album_id' ], 'rtmedia_delete_album_nonce' ); ?>
-                <button type="submit" name="album-delete" class="icon-button icon-2x rtmicon-cancel rtmedia-delete-album" title="<?php _e ( 'Delete', 'rtmedia' ); ?>"></button>
+                <button type="submit" name="album-delete" class="icon-button rtmicon-cancel rtmedia-delete-album" title="<?php _e ( 'Delete', 'rtmedia' ); ?>"></button>
             </form>
 
             <?php
@@ -1364,7 +1364,7 @@ function rtmedia_album_edit () {
             $album_list = rtmedia_user_album_list();
         if ( $album_list ) {
         ?>
-                <i class="rtmicon-fork rtmedia-reveal-modal icon-2x" data-reveal-id="rtmedia-merge" title="<?php _e( 'Merge', 'rtmedia' ); ?>" ></i>
+                <i class="rtmicon-fork rtmedia-reveal-modal" data-reveal-id="rtmedia-merge" title="<?php _e( 'Merge', 'rtmedia' ); ?>" ></i>
                 <div class="rtmedia-merge-container reveal-modal small rtm-modal" id="rtmedia-merge">
                     <div id="rtm-modal-container">
                         <h2 class="rtm-modal-title"><?php _e( 'Merge Album', 'rtmedia' ); ?></h2>
