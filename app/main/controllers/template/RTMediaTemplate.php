@@ -106,7 +106,7 @@ class RTMediaTemplate {
                 //add_action("rtmedia_before_media_gallery",array(&$this,"")) ;
 		if( isset( $shortcode_attr[ 'attr' ] ) && isset( $shortcode_attr[ 'attr' ]['uploader'] ) && $shortcode_attr[ 'attr' ]['uploader'] == "before" ) {
 		    if( isset( $shortcode_attr[ 'attr' ]['media_type'] ) ) {
-			wp_enqueue_script ( 'rtmedia-upload-filter', RTMEDIA_URL . 'app/assets/js/rtmedia_uploader_fitler.js', array( 'plupload', 'backbone' ), false, true );
+//			wp_enqueue_script ( 'rtmedia-upload-filter', RTMEDIA_URL . 'app/assets/js/rtmedia_uploader_fitler.js', array( 'plupload', 'backbone' ), false, true );
 		    }
 		    echo RTMediaUploadShortcode::pre_render($shortcode_attr[ 'attr' ]);
 		}
@@ -117,7 +117,7 @@ class RTMediaTemplate {
 		echo "</div>";
 		if( isset( $shortcode_attr[ 'attr' ] ) && isset( $shortcode_attr[ 'attr' ]['uploader'] ) && ( $shortcode_attr[ 'attr' ]['uploader'] == "after" || $shortcode_attr[ 'attr' ]['uploader'] == "true" ) ) {
 		    if( isset( $shortcode_attr[ 'attr' ]['media_type'] ) ) {
-			wp_enqueue_script ( 'rtmedia-upload-filter', RTMEDIA_URL . 'app/assets/js/rtmedia_uploader_fitler.js', array( 'plupload', 'backbone' ), false, true );
+//			wp_enqueue_script ( 'rtmedia-upload-filter', RTMEDIA_URL . 'app/assets/js/rtmedia_uploader_fitler.js', array( 'plupload', 'backbone' ), false, true );
 		    }
 		    echo RTMediaUploadShortcode::pre_render($shortcode_attr[ 'attr' ]);
 		}
