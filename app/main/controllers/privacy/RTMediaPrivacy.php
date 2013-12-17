@@ -21,20 +21,31 @@ class RTMediaPrivacy {
     function __construct ($flag = true) {
         if ( is_rtmedia_privacy_enable () && $flag ) {
             //add_action ( 'rtmedia_after_file_upload_ui' , array ( $this , 'uploader_privacy_ui' ) ) ;
-            add_action ( 'rtmedia_add_edit_fields' , array ( $this , 'select_privacy_ui' ) ) ;
+            //add_action ( 'rtmedia_add_edit_fields' , array ( $this , 'edit_media_privacy_ui' ),2 ) ;
             add_action ( 'bp_init' , array ( $this , 'add_nav' ) ) ;
             add_action ( 'bp_template_content' , array ( $this , 'content' ) ) ;
             add_filter ( 'bp_activity_get_user_join_filter' , array ( $this , 'activity_privacy' ) , 10 , 6 ) ;
         }
     }
+    
+    function edit_media_privacy_ui($echo = true) {
+        $privacy = "";
+        $privacy = $this->select_privacy_ui ($echo = false);
+        if( $privacy != ""){
+            if($echo)
+                echo "<div class='rtmedia-edit-privacy'><label>Privacy : </label>" . $privacy . "</div>";
+            else
+                return "<div class='rtmedia-edit-privacy'><label>Privacy : </label>" . $privacy . "</div>";
+        }
+    }
 
     function uploader_privacy_ui ( $attr ) {
-        if ( ! isset ( $attr[ 'privacy' ] ) ) {            
+        if ( ! isset ( $attr[ 'privacy' ] ) ) {
                 $this -> select_privacy_ui () ;
         }
     }
 
-    function select_privacy_ui ( $echo = true, $select_id = false ) { 
+    function select_privacy_ui ( $echo = true, $select_id = false ) {
         global $rtmedia ;
 
         if ( ! is_rtmedia_privacy_enable () )
@@ -237,7 +248,7 @@ class RTMediaPrivacy {
         <form method='post'>
             <div class="">
                 <div class="section">
-                    <div class="columns large-2"><h2><?php echo __ ( "Default Privacy" , "rtmedia" ) ; ?></h2></div>
+                    <div class="columns large-2"><h2><?php _e( "Default Privacy" , "rtmedia" ) ; ?></h2></div>
                     <div class="columns large-5">
                         <?php foreach ( $rtmedia -> privacy_settings[ 'levels' ] as $level => $data ) { ?>
                             <label><input type='radio' value='<?php echo $level ; ?>' name ='rtmedia-default-privacy' <?php echo ($default_privacy == $level) ? "checked" : "" ; ?> /> <?php _e ( $data ) ; ?></label><br/>
@@ -247,14 +258,14 @@ class RTMediaPrivacy {
             </div>
             <br/>
             <div class="submit">
-                <input type="submit" name="submit" value="<?php _e ( "Save Changes" ) ; ?>" id="submit" class="auto">
+                <input type="submit" name="submit" value="<?php esc_attr_e( 'Save Changes', 'rtmedia' ); ?>" id="submit" class="auto">
             </div>
         </form>
         <?php
     }
 
     function title () {
-        return __ ( 'Privacy' , 'rtmedia' ) ;
+        return __( 'Privacy', 'rtmedia' ) ;
     }
 
     function activity_privacy ( $sql , $select_sql , $from_sql , $where_sql , $sort , $pag_sql = '' ) {
@@ -272,7 +283,7 @@ class RTMediaPrivacy {
             $user = 0 ;
         }
 
-        $where .= " (m.privacy is NULL OR m.privacy <= 0)" ;
+        $where .= " (m.privacy is NULL OR m.privacy <= 0) " ;
 
         if ( $user ) {
             $where .= "OR ((m.privacy=20)" ;
@@ -299,7 +310,7 @@ class RTMediaPrivacy {
             $select_sql = str_replace ( "SELECT" , "SELECT DISTINCT" , $select_sql ) ;
         }
 
-        $from_sql = " FROM {$bp->activity->table_name} a LEFT JOIN {$wpdb->users} u ON a.user_id = u.ID LEFT JOIN {$rtmedia_model->table_name} m ON a.id = m.activity_id";
+        $from_sql = " FROM {$bp->activity->table_name} a LEFT JOIN {$wpdb->users} u ON a.user_id = u.ID LEFT JOIN {$rtmedia_model->table_name} m ON ( a.id = m.activity_id AND m.blog_id = '".  get_current_blog_id()."' ) ";
         $where_sql = $where_sql . " AND (NOT EXISTS (SELECT m.activity_id FROM {$bp_prefix}bp_activity_meta m WHERE m.meta_key='rtmedia_privacy' AND m.activity_id=a.id) OR ( {$where} ) )";
         $newsql = "{$select_sql} {$from_sql} {$where_sql} ORDER BY a.date_recorded {$sort} {$pag_sql}";
         return $newsql;

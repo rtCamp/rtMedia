@@ -248,6 +248,15 @@ class RTMediaFormHandler {
 					'desc' => __('Enable menu in WordPress admin bar','rtmedia')
 				),
 				'group' => "10"
+			),
+			'general_AllowUserData' => array(
+				'title' => __('Allow User Data Tracking','rtmedia'),
+				'callback' => array('RTMediaFormHandler', 'checkbox'),
+				'args' => array(
+					'key' => 'general_AllowUserData',
+					'value' => $options['general_AllowUserData'],
+					'desc' => __('Enable user Data tracking','rtmedia')
+				)
 			)
 		);
 
@@ -261,7 +270,7 @@ class RTMediaFormHandler {
                 $render_options = apply_filters("rtmedia_general_content_add_itmes",$render_options, $options);
 		$general_group = array();
 		$general_group[10] = "UI";
-		$general_group[30] = "Miscellaneous";
+		$general_group[90] = "Miscellaneous";
 		$general_group = apply_filters("rtmedia_general_content_groups", $general_group);
 		ksort($general_group);
 		$html = '';
@@ -273,7 +282,7 @@ class RTMediaFormHandler {
 		    foreach ($render_options as $tab => $option) {
 
 			if(!isset($option['group'])) {
-			    $option['group'] = "30";
+			    $option['group'] = "90";
 			}
 
 			if($option['group'] != $key) {
@@ -316,7 +325,7 @@ class RTMediaFormHandler {
 		$render = array();
 		$allowed_media_type = $rtmedia->allowed_types;
 		$allowed_media_type = apply_filters("rtmedia_allowed_types", $allowed_media_type);
-
+                
 		foreach ($options as $key => $value) {
 			$data = explode('_', $key);
 			if(!isset($render[$data[1]])) {
@@ -341,10 +350,10 @@ class RTMediaFormHandler {
 		<div class="rt-table large-12">
 			<div class="row rt-header">
 			    <?php do_action("rtmedia_type_settings_before_heading"); ?>
-				<h4 class="columns large-3"><?php echo __("Media Type","rtmedia") ?></h4>
-				<h4 class="columns large-3 rtm-show-tooltip" title="<?php echo __("Allows you to upload a particular media type on your post.","rtmedia"); ?>"><abbr><?php echo __("Allow Upload","rtmedia"); ?></abbr></h4>
-				<h4 class="columns large-3 rtm-show-tooltip" title="<?php echo __("Put a specific media as a featured content on the post.","rtmedia"); ?>"><abbr><?php echo __("Set Featured","rtmedia"); ?></abbr></h4>
-				<h4 class="columns large-3 rtm-show-tooltip" title="<?php echo __("File extensions that can be uploaded on the website.","rtmedia"); ?>"><abbr><?php echo __("File Extensions","rtmedia"); ?></abbr></h4>
+				<h4 class="columns large-3"><?php _e("Media Type","rtmedia") ?></h4>
+				<h4 class="columns large-3 rtm-show-tooltip" title="<?php _e("Allows you to upload a particular media type on your post.","rtmedia"); ?>"><abbr><?php _e("Allow Upload","rtmedia"); ?></abbr></h4>
+				<h4 class="columns large-3 rtm-show-tooltip" title="<?php _e("Put a specific media as a featured content on the post.","rtmedia"); ?>"><abbr><?php _e("Set Featured","rtmedia"); ?></abbr></h4>
+				<h4 class="columns large-3 rtm-show-tooltip" title="<?php _e("File extensions that can be uploaded on the website.","rtmedia"); ?>"><abbr><?php _e("File Extensions","rtmedia"); ?></abbr></h4>
 				<?php do_action("rtmedia_type_settings_after_heading"); ?>
 			</div>
 
@@ -456,6 +465,63 @@ class RTMediaFormHandler {
 
 		echo '</div>';
 	}
+        
+        public static function custom_css_content() {
+            
+            global $rtmedia;
+            $options = self::extract_settings('styles', $rtmedia->options);
+            $render_data = self::custom_css_render_options($options);
+            
+            echo '<div class="large-12">';
+            foreach ($render_data as $option) { ?>
+                    
+                <div class="row section">
+                    <?php if( $option['args']['key'] == "styles_custom"){ ?>
+                        <div class="columns large-12 rtm-custom-css">
+                            <strong class="<?php echo $option['args']['key'];?>"><?php echo $option['title']; ?></strong>
+                            <?php call_user_func($option['callback'], $option['args']); ?>
+                            <div><?php _e("If you want to add some custom CSS code to the plugin and don't want to modify any files, then it's a good place to enter your code at this field.");?></div>
+                        </div>
+                    <?php } else { ?>
+                    <div class="columns large-5">
+                        <strong class="<?php echo $option['args']['key'];?>"><?php echo $option['title']; ?></strong>
+                    </div>
+                    <div class="columns large-7">
+                        <?php call_user_func($option['callback'], $option['args']); ?>
+                    </div>
+                    <?php } ?>
+                </div>
+            <?php }
+            echo '</div>';
+            
+        }
+        
+        static function custom_css_render_options($options) {
+            global $rtmedia;
+            
+            $render = array(
+                        'disable_styles' => array(
+                                'title' => __("rtMedia default styles","rtmedia"),
+				'callback' => array("RTMediaFormHandler", "checkbox"),
+				'args' => array(
+					'id' => 'rtmedia-disable-styles',
+					'key' => 'styles_enabled',
+					'value' => $options['styles_enabled']  
+                                )
+                        ),
+                        'custom_styles' => array(
+                                'title' => __("Paste your CSS code","rtmedia"),
+				'callback' => array("RTMediaFormHandler", "textarea"),
+				'args' => array(
+					'id' => 'rtmedia-custom-css',
+					'key' => 'styles_custom',
+					'value' => $options['styles_custom']  
+                                )
+                        )
+                );
+            
+            return $render;
+        }
 
 	static function privacy_render_options($options) {
 

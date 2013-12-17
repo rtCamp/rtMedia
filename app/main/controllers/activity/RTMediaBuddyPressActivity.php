@@ -21,6 +21,7 @@ class RTMediaBuddyPressActivity {
         }
         add_action ( "bp_init", array( $this, 'non_threaded_comments' ) );
         add_action ( "bp_activity_comment_posted", array( $this, "comment_sync" ), 10, 2 );
+        add_action ( "bp_activity_delete_comment", array( $this, "delete_comment_sync" ), 10, 2 );
         add_filter ( 'bp_activity_allowed_tags', array( &$this, 'override_allowed_tags' ) );
         add_filter ( 'bp_get_activity_parent_content', array( &$this, 'bp_get_activity_parent_content' ) );
         add_action ( 'bp_activity_deleted_activities', array( &$this, 'bp_activity_deleted_activities' ) );
@@ -65,25 +66,30 @@ class RTMediaBuddyPressActivity {
         $content = str_replace ( '<span class="time-since">%s</span>', '', $content );
         return $content;
     }
-
+    function delete_comment_sync($activity_id, $comment_id){
+        global $wpdb;
+        $comment_id = $wpdb->get_var($wpdb->prepare("select comment_id from {$wpdb->commentmeta} where meta_key = 'activity_id' and meta_value=%s",$comment_id));
+        if($comment_id){
+            wp_delete_comment($comment_id , true);
+        }
+    }
     function comment_sync ( $comment_id, $param ) {
 
-        // comment_id 40
-        // Array( [id] => [content] => testing [user_id] => 1 [activity_id] => 26 [parent_id] => 26)
-
-//        $activity = new BP_Activity_Activity ( $param[ 'activity_id' ] );
-//        if ( $activity->type == 'rtmedia_update' ) {
-//            $media_id = $activity->item_id;
-//            $comment = new RTMediaComment();
-//            $comment->add ( array( 'comment_content' => $param[ 'content' ], 'comment_post_ID' => $media_id ) );
-//        }
+        $user_id = '';
+	$comment_author = '';
+        extract($param);
+	if( !empty($user_id) ){
+		$user_data = get_userdata($user_id);
+		$comment_author = $user_data->data->user_login;
+	}
 	$mediamodel = new RTMediaModel();
 	$media = $mediamodel->get(array('activity_id' => $param[ 'activity_id' ]));
 	// if there is only single media in activity
 	if(sizeof($media) == 1 && isset($media[0]->media_id)) {
 	    $media_id = $media[0]->media_id;
 	    $comment = new RTMediaComment();
-            $comment->add ( array( 'comment_content' => $param[ 'content' ], 'comment_post_ID' => $media_id ) );
+            $id = $comment->add ( array( 'comment_content' => $param[ 'content' ], 'comment_post_ID' => $media_id, 'user_id' => $user_id, 'comment_author' => $comment_author ) );
+            update_comment_meta($id, 'activity_id', $comment_id);
 	}
     }
 
@@ -112,7 +118,7 @@ class RTMediaBuddyPressActivity {
             bp_activity_update_meta($activity_id, "bp_activity_text", $updated_content);
             $wpdb->update ( $bp->activity->table_name, array( "type" => "rtmedia_update", "content" => $html_content ), array( "id" => $activity_id ) );
             $mediaObj = new RTMediaModel();
-            $sql = "update $mediaObj->table_name set activity_id = '" . $activity_id . "' where id in (" . implode ( ",", $_POST[ "rtMedia_attached_files" ] ) . ")";
+            $sql = "update $mediaObj->table_name set activity_id = '" . $activity_id . "' where blog_id = '".get_current_blog_id()."' and id in (" . implode ( ",", $_POST[ "rtMedia_attached_files" ] ) . ")";
             $wpdb->query ( $sql );
         }
         if ( isset ( $_POST[ 'rtmedia-privacy' ] ) ) {
@@ -137,7 +143,7 @@ class RTMediaBuddyPressActivity {
             'browse_button' => 'rtmedia-add-media-button-post-update',// browse button assigned to "Attach Files" Button.
             'container' => 'rtmedia-whts-new-upload-container',
             'drop_element' => 'whats-new-textarea',// drag-drop area assigned to activity update textarea
-            'filters' => apply_filters ( 'rtmedia_plupload_files_filter', array( array( 'title' => "Media Files", 'extensions' => get_rtmedia_allowed_upload_type () ) ) ),
+            'filters' => apply_filters ( 'rtmedia_plupload_files_filter', array( array( 'title' => __( 'Media Files', 'rtmedia' ), 'extensions' => get_rtmedia_allowed_upload_type () ) ) ),
             'max_file_size' => min ( array( ini_get ( 'upload_max_filesize' ), ini_get ( 'post_max_size' ) ) ),
             'multipart' => true,
             'urlstream_upload' => true,
@@ -145,7 +151,8 @@ class RTMediaBuddyPressActivity {
             'silverlight_xap_url' => includes_url ( 'js/plupload/plupload.silverlight.xap' ),
             'file_data_name' => 'rtmedia_file', // key passed to $_FILE.
             'multi_selection' => true,
-            'multipart_params' => apply_filters ( 'rtmedia-multi-params', array( 'redirect' => 'no', 'rtmedia_update' => 'true', 'action' => 'wp_handle_upload', '_wp_http_referer' => $_SERVER[ 'REQUEST_URI' ], 'mode' => 'file_upload', 'rtmedia_upload_nonce' => RTMediaUploadView::upload_nonce_generator ( false, true ) ) )
+            'multipart_params' => apply_filters ( 'rtmedia-multi-params', array( 'redirect' => 'no', 'rtmedia_update' => 'true', 'action' => 'wp_handle_upload', '_wp_http_referer' => $_SERVER[ 'REQUEST_URI' ], 'mode' => 'file_upload', 'rtmedia_upload_nonce' => RTMediaUploadView::upload_nonce_generator ( false, true ) ) ),
+	    'max_file_size_msg' => apply_filters("rtmedia_plupload_file_size_msg",min ( array( ini_get ( 'upload_max_filesize' ), ini_get ( 'post_max_size' ) ) ))
         );
         if ( wp_is_mobile () )
             $params[ 'multi_selection' ] = false;

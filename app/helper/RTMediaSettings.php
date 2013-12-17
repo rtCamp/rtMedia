@@ -39,7 +39,8 @@ if (!class_exists('RTMediaSettings')) {
                 'general_showAdminMenu' => 0,
                 'general_videothumbs' => 2,
 		'general_uniqueviewcount' => 0,
-		'general_viewcount' => 0
+		'general_viewcount' => 0,
+		'general_AllowUserData' => 0
             );
 
             $defaults = apply_filters('rtmedia_general_content_default_values', $defaults);
@@ -67,6 +68,9 @@ if (!class_exists('RTMediaSettings')) {
             $defaults['buddypress_enableOnActivity'] = 0;
             $defaults['buddypress_enableOnProfile'] = 0;
             $defaults['buddypress_limitOnActivity'] = 0;
+            $defaults['styles_custom'] = '';
+            $defaults['styles_enabled'] = 1;
+            
             if(isset($options["general_videothumbs"]) && is_numeric($options["general_videothumbs"]) && intval($options["general_videothumbs"]) > 10){
                 $options["general_videothumbs"] = 10;
                 add_action ( 'admin_notices', array( &$this, 'add_max_video_thumb_notice' ) );
@@ -76,7 +80,7 @@ if (!class_exists('RTMediaSettings')) {
             return $options;
         }
         function add_max_video_thumb_notice(){
-             echo '<div class="error"><p>' . __("Max Video thumbnail size is ") .' <strong>10</strong></p></div>';
+             echo '<div class="error"><p>' . __( 'Max Video thumbnail size is ', 'rtmedia' ) .' <strong>10</strong></p></div>';
         }
         /**
          *
@@ -98,8 +102,8 @@ if (!class_exists('RTMediaSettings')) {
             }
             $rtmedia_addon = new RTMediaAddon();
             add_settings_section('rtm-addons', __('BuddyPress Media Addons for Photos', 'rtmedia'), array($rtmedia_addon, 'get_addons'), 'rtmedia-addons');
-
-            add_settings_section('rtm-support', __('Support', 'rtmedia'), array($this, 'rtmedia_support_intro'), 'rtmedia-support');
+        $rtmedia_support = new RTMediaSupport(false);
+            add_settings_section('rtm-support', __('Support', 'rtmedia'), array($rtmedia_support, 'get_support_content'), 'rtmedia-support');
 
 //            if (!BPMediaPrivacy::is_installed()) {
 //                $rtmedia_privacy = new BPMediaPrivacySettings();
@@ -147,7 +151,7 @@ if (!class_exists('RTMediaSettings')) {
         }
 
         public function allowed_types() {
-            $allowed_types = get_site_option('upload_filetypes', 'jpg jpeg png gif');
+            $allowed_types = rtmedia_get_site_option('upload_filetypes', 'jpg jpeg png gif');
             $allowed_types = explode(' ', $allowed_types);
             $allowed_types = implode(', ', $allowed_types);
             echo '<span class="description">' . sprintf(__('Currently your network allows uploading of the following file types. You can change the settings <a href="%s">here</a>.<br /><code>%s</code></span>', 'rtmedia'), network_admin_url('settings.php#upload_filetypes'), $allowed_types);
@@ -168,12 +172,12 @@ if (!class_exists('RTMediaSettings')) {
             if (isset($_POST['refresh-count'])) {
                 if ($rtmedia_admin->update_count()) {
                     if (is_multisite())
-                        update_site_option('rtm-recount-success', __('Recounting of media files done successfully', 'rtmedia'));
+                        rtmedia_update_site_option('rtm-recount-success', __('Recounting of media files done successfully', 'rtmedia'));
                     else
                         add_settings_error(__('Recount Success', 'rtmedia'), 'rtm-recount-success', __('Recounting of media files done successfully', 'rtmedia'), 'updated');
                 } else {
                     if (is_multisite())
-                        update_site_option('rtm-recount-fail', __('Recounting Failed', 'rtmedia'));
+                        rtmedia_update_site_option('rtm-recount-fail', __('Recounting Failed', 'rtmedia'));
                     else
                         add_settings_error(__('Recount Fail', 'rtmedia'), 'rtm-recount-fail', __('Recounting Failed', 'rtmedia'));
                 }
@@ -187,7 +191,7 @@ if (!class_exists('RTMediaSettings')) {
 //            }
             if (!isset($_POST['rtmedia_options']['videos_enabled']) && !isset($_POST['rtmedia_options']['audio_enabled']) && !isset($_POST['rtmedia_options']['images_enabled'])) {
                 if (is_multisite())
-                    update_site_option('rtm-media-type', __('Atleast one Media Type Must be selected', 'rtmedia'));
+                    rtmedia_update_site_option('rtm-media-type', __('Atleast one Media Type Must be selected', 'rtmedia'));
                 else
                     add_settings_error(__('Media Type', 'rtmedia'), 'rtm-media-type', __('Atleast one Media Type Must be selected', 'rtmedia'));
                 $input['images_enabled'] = 1;
@@ -196,13 +200,13 @@ if (!class_exists('RTMediaSettings')) {
             $input['default_count'] = intval($_POST['rtmedia_options']['default_count']);
             if (!is_int($input['default_count']) || ($input['default_count'] < 0 ) || empty($input['default_count'])) {
                 if (is_multisite())
-                    update_site_option('rtm-media-default-count', __('"Number of media" count value should be numeric and greater than 0.', 'rtmedia'));
+                    rtmedia_update_site_option('rtm-media-default-count', __('"Number of media" count value should be numeric and greater than 0.', 'rtmedia'));
                 else
                     add_settings_error(__('Default Count', 'rtmedia'), 'rtm-media-default-count', __('"Number of media" count value should be numeric and greater than 0.', 'rtmedia'));
                 $input['default_count'] = 10;
             }
             if (is_multisite())
-                update_site_option('rtm-settings-saved', __('Settings saved.', 'rtmedia'));
+                rtmedia_update_site_option('rtm-settings-saved', __('Settings saved.', 'rtmedia'));
             do_action('rtmedia_sanitize_settings', $_POST, $input);
             return $input;
         }
@@ -236,11 +240,11 @@ if (!class_exists('RTMediaSettings')) {
                 );
 
                 $notice = '
-				<div class="error">
-				<p>' . __('BuddyPress Media 2.6 requires a database upgrade. ', 'rtmedia')
+                <div class="error">
+                <p>' . __('BuddyPress Media 2.6 requires a database upgrade. ', 'rtmedia')
                         . '<a href="' . $url . '">' . __('Update Database', 'rtmedia') . '.</a></p>
-				</div>
-				';
+                </div>
+                ';
                 echo $notice;
             }
         }

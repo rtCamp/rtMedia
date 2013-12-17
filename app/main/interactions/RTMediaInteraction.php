@@ -24,6 +24,7 @@ class RTMediaInteraction {
         add_action ( 'init', array( $this, 'rewrite_rules' ) );
         add_action ( 'init', array( $this, 'rewrite_tags' ) );
         add_action ( 'init', array( $this, 'endpoint' ) );
+	add_action ( 'init', array( $this, 'flush_rules' ) );
 
 
         // set up interaction and routes
@@ -33,6 +34,22 @@ class RTMediaInteraction {
         add_filter ( 'wpseo_opengraph_title', array( $this, 'set_title' ), 9999, 1 );
         add_filter ( 'wpseo_opengraph', array( $this, 'rtmedia_wpseo_og_image' ), 999, 1 );
         add_filter ( 'wpseo_opengraph_url', array( $this, 'rtmedia_wpseo_og_url' ), 999, 1 );
+    }
+
+    function flush_rules() {
+	$rtmedia_version  = rtmedia_get_site_option("rtmedia_flush_rules_plugin_version");
+	if( !$rtmedia_version ) {
+	    $rtmedia_version = "0";
+	}
+	$plugin_data = get_plugin_data(RTMEDIA_PATH.'index.php');
+	$new_version = "0";
+	if( isset( $plugin_data ) && isset( $plugin_data['Version'] ) ) {
+	    $new_version = $plugin_data['Version'];
+	}
+	if( version_compare( $new_version, $rtmedia_version, '>' ) ) {
+	    flush_rewrite_rules( false );
+	    rtmedia_update_site_option('rtmedia_flush_rules_plugin_version', $new_version);
+	}
     }
 
     function init () {
@@ -136,7 +153,7 @@ class RTMediaInteraction {
             'context' => $this->context->type,
             'context_id' => $this->context->id
         );
-
+	$args = apply_filters( "rtmedia_query_filter", $args );
         $rtmedia_query = new RTMediaQuery ( $args );
     }
 
@@ -191,7 +208,13 @@ class RTMediaInteraction {
         if ( function_exists ( "bp_get_displayed_user_fullname" ) && bp_displayed_user_id () != 0 ) {
             $title .= $sep . bp_get_displayed_user_fullname ();
             $sep = $oldSep;
-        }
+        } else {
+	    $user_info = get_userdata( get_current_user_id() );
+	    if( isset( $user_info->data->display_name ) ) {
+		$title .= $sep . $user_info->data->display_name;
+		$sep = $oldSep;
+	    }
+	}
 
         $title .= $sep . RTMEDIA_MEDIA_LABEL;
         $sep = $oldSep;

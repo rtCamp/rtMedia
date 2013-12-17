@@ -48,6 +48,8 @@ class RTMediaUploadShortcode {
     static function pre_render ( $attr ) {
         global $post;
         global $rtmedia_query;
+	if( ! $rtmedia_query )
+		$rtmedia_query = new RTMediaQuery ();
         if( !isset($attr['is_up_shortcode']) || $attr['is_up_shortcode'] !== false) {
             $rtmedia_query->is_upload_shortcode = true;// set is_upload_shortcode in rtmedia query as true
         } else {
@@ -65,9 +67,9 @@ class RTMediaUploadShortcode {
             }
         }
 
-        if ( self::display_allowed () ) {
+        if ( self::display_allowed () || ( isset( $attr['allow_anonymous'] ) && $attr['allow_anonymous'] === true ) ) {
             if ( ! _device_can_upload () ) {
-                echo '<p>' . __ ( 'The web browser on your device cannot be used to upload files.' ) . '</p>';
+                echo '<p>' . __( 'The web browser on your device cannot be used to upload files.', 'rtmedia' ) . '</p>';
                 return;
             }
             ob_start ();

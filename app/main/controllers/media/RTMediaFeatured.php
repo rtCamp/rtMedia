@@ -22,20 +22,25 @@ class RTMediaFeatured extends RTMediaUserInteraction {
     function __construct ( $user_id = false, $flag = false ) {
         $args = array(
             'action' => 'featured',
-            'label' => __('Set Featured'),
+            'label' => __('Set as Featured'),
             'plural' => '',
-            'undo_label' => __('Unset Featured'),
+            'undo_label' => __( 'Unset Featured', 'rtmedia' ),
             'privacy' => 60,
             'countable' => false,
             'single' => true,
             'repeatable' => false,
-            'undoable' => true
+            'undoable' => true,
+            'icon_class' => 'rtmicon-star'
         );
 
 
         $this->user_id = $user_id;
         parent::__construct ( $args );
         $this->settings ();
+        remove_filter('rtmedia_action_buttons_before_delete', array($this,'button_filter'));
+        add_filter ( 'rtmedia_addons_action_buttons', array( $this, 'button_filter' ) );
+        add_filter ( 'rtmedia_author_media_options', array( $this, 'button_filter' ),12, 1 );
+        
         //$this->get();
     }
 
@@ -139,7 +144,7 @@ class RTMediaFeatured extends RTMediaUserInteraction {
             default :
                 return false;
         }
-        return $content;
+        return apply_filters("rtmedia_featured_media_content",$content);
     }
 
     function process () {

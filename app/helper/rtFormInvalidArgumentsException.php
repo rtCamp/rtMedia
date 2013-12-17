@@ -18,8 +18,7 @@ if(!class_exists("rtFormsInvalidArgumentsException")) {
 	    public function __construct($msg) {
 
 	    	//Error Message
-	    	$errorMsg = 'Error on line ' . $this->getLine() . ' in ' . $this->getFile() .
-	                        ' : <b>The method expects an array in arguments for ' . $msg . ' provided.</b>';
+	    	$errorMsg = sprintf( __( "Error on line %s in %s : <b>The method expects an array in arguments for %s provided.</b>", 'rtmedia'), $this->getLine(), $this->getFile(), $msg );
 
 	        echo $errorMsg;
 	    }

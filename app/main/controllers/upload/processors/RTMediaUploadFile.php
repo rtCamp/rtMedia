@@ -38,30 +38,35 @@ class RTMediaUploadFile {
         include_once(ABSPATH . 'wp-admin/includes/image.php');
 
         $upload_type = $this->fake ? 'wp_handle_sideload' : 'wp_handle_upload';
-
-        add_filter ( 'upload_dir', array( $this, 'upload_dir' ) );
-        foreach ( $this->files as $key => $file ) {
-
-            $uploaded_file[ ] = $upload_type ( $file, array( 'test_form' => false ) );
-            try {
-                if ( isset ( $uploaded_file[ $key ][ 'error' ] ) || $uploaded_file[ $key ] === null ) {
-                    array_pop ( $uploaded_file );
-
-                    throw new RTMediaUploadException ( 0, __ ( 'Error Uploading File', 'rtmedia' ) );
-                }
-                $uploaded_file[ $key ][ 'name' ] = $file[ 'name' ];
-            } catch ( RTMediaUploadException $e ) {
-                echo $e->getMessage ();
-            }
-
-            if ( strpos ( $file[ 'type' ], 'image' ) !== false ) {
-                if ( function_exists ( 'read_exif_data' ) ) {
-                    $file = $this->exif ( $uploaded_file[ $key ] );
-                }
-            }
+        global $rt_set_filter_uplaod_dir;
+        if(!isset($rt_set_filter_uplaod_dir)){
+            add_filter ( 'upload_dir', array( $this, 'upload_dir' ) );
+            $rt_set_filter_uplaod_dir = true;
         }
+	if(isset($this->files) && sizeof($this->files) > 0) {
+	    foreach ( $this->files as $key => $file ) {
 
-        return $uploaded_file;
+		$uploaded_file[ ] = $upload_type ( $file, array( 'test_form' => false ) );
+		try {
+		    if ( isset ( $uploaded_file[ $key ][ 'error' ] ) || $uploaded_file[ $key ] === null ) {
+			array_pop ( $uploaded_file );
+
+			throw new RTMediaUploadException ( 0, __ ( 'Error Uploading File', 'rtmedia' ) );
+		    }
+		    $uploaded_file[ $key ][ 'name' ] = $file[ 'name' ];
+		} catch ( RTMediaUploadException $e ) {
+		    echo $e->getMessage ();
+		}
+
+		if ( strpos ( $file[ 'type' ], 'image' ) !== false ) {
+		    if ( function_exists ( 'read_exif_data' ) ) {
+			$file = $this->exif ( $uploaded_file[ $key ] );
+		    }
+		}
+	    }
+	    return $uploaded_file;
+	}
+	return false;
     }
 
     function upload_dir ( $upload_dir ) {
@@ -85,14 +90,17 @@ class RTMediaUploadFile {
         }
 
 
-        $upload_dir[ 'path' ] = trailingslashit (
+       if(  strpos ( $upload_dir[ 'path' ] , 'rtMedia/' . $rtmedia_upload_prefix ) === false ){
+            $upload_dir[ 'path' ] = trailingslashit (
                         str_replace ( $upload_dir[ 'subdir' ], '', $upload_dir[ 'path' ] ) )
                 . 'rtMedia/' . $rtmedia_upload_prefix . $id .
                 $upload_dir[ 'subdir' ];
-        $upload_dir[ 'url' ] = trailingslashit (
+            $upload_dir[ 'url' ] = trailingslashit (
                         str_replace ( $upload_dir[ 'subdir' ], '', $upload_dir[ 'url' ] ) )
                 . 'rtMedia/' . $rtmedia_upload_prefix . $id
                 . $upload_dir[ 'subdir' ];
+        }        
+	$upload_dir = apply_filters("rtmedia_filter_upload_dir",$upload_dir);
 
         return $upload_dir;
     }
@@ -192,24 +200,24 @@ class RTMediaUploadFile {
                 } catch ( Exception $e ) {
                     $this->safe_unlink ( $file[ 'tmp_name' ] );
                     $activity_content = false;
-                    throw new RTMediaUploadException ( 0, __ ( 'MP4 file you have uploaded is corrupt.', 'buddypress-media' ) );
+                    throw new RTMediaUploadException ( 0, __ ( 'MP4 file you have uploaded is corrupt.', 'rtmedia' ) );
                 }
                 if ( is_array ( $vid_info ) ) {
                     if ( ! array_key_exists ( 'error', $vid_info ) && array_key_exists ( 'fileformat', $vid_info ) && array_key_exists ( 'video', $vid_info ) && array_key_exists ( 'fourcc', $vid_info[ 'video' ] ) ) {
                         if ( ! ($vid_info[ 'fileformat' ] == 'mp4' && $vid_info[ 'video' ][ 'fourcc' ] == 'avc1') ) {
                             $this->safe_unlink ( $file[ 'tmp_name' ] );
                             $activity_content = false;
-                            throw new RTMediaUploadException ( 0, __ ( 'The MP4 file you have uploaded is using an unsupported video codec. Supported video codec is H.264.', 'buddypress-media' ) );
+                            throw new RTMediaUploadException ( 0, __ ( 'The MP4 file you have uploaded is using an unsupported video codec. Supported video codec is H.264.', 'rtmedia' ) );
                         }
                     } else {
                         $this->safe_unlink ( $file[ 'tmp_name' ] );
                         $activity_content = false;
-                        throw new RTMediaUploadException ( 0, __ ( 'The MP4 file you have uploaded is using an unsupported video codec. Supported video codec is H.264.', 'buddypress-media' ) );
+                        throw new RTMediaUploadException ( 0, __ ( 'The MP4 file you have uploaded is using an unsupported video codec. Supported video codec is H.264.', 'rtmedia' ) );
                     }
                 } else {
                     $this->safe_unlink ( $file[ 'tmp_name' ] );
                     $activity_content = false;
-                    throw new RTMediaUploadException ( 0, __ ( 'The MP4 file you have uploaded is not a video file.', 'buddypress-media' ) );
+                    throw new RTMediaUploadException ( 0, __ ( 'The MP4 file you have uploaded is not a video file.', 'rtmedia' ) );
                 }
                 break;
             case 'audio' :
@@ -221,24 +229,24 @@ class RTMediaUploadFile {
                 } catch ( Exception $e ) {
                     $this->safe_unlink ( $file[ 'tmp_name' ] );
                     $activity_content = false;
-                    throw new RTMediaUploadException ( 0, __ ( 'MP3 file you have uploaded is currupt.', 'buddypress-media' ) );
+                    throw new RTMediaUploadException ( 0, __ ( 'MP3 file you have uploaded is currupt.', 'rtmedia' ) );
                 }
                 if ( is_array ( $file_info ) ) {
                     if ( ! array_key_exists ( 'error', $file_info ) && array_key_exists ( 'fileformat', $file_info ) && array_key_exists ( 'audio', $file_info ) && array_key_exists ( 'dataformat', $file_info[ 'audio' ] ) ) {
                         if ( ! ($file_info[ 'fileformat' ] == 'mp3' && $file_info[ 'audio' ][ 'dataformat' ] == 'mp3') ) {
                             $this->safe_unlink ( $file[ 'tmp_name' ] );
                             $activity_content = false;
-                            throw new RTMediaUploadException ( 0, __ ( 'The MP3 file you have uploaded is using an unsupported audio format. Supported audio format is MP3.', 'buddypress-media' ) );
+                            throw new RTMediaUploadException ( 0, __ ( 'The MP3 file you have uploaded is using an unsupported audio format. Supported audio format is MP3.', 'rtmedia' ) );
                         }
                     } else {
                         $this->safe_unlink ( $file[ 'tmp_name' ] );
                         $activity_content = false;
-                        throw new RTMediaUploadException ( 0, __ ( 'The MP3 file you have uploaded is using an unsupported audio format. Supported audio format is MP3.', 'buddypress-media' ) );
+                        throw new RTMediaUploadException ( 0, __ ( 'The MP3 file you have uploaded is using an unsupported audio format. Supported audio format is MP3.', 'rtmedia' ) );
                     }
                 } else {
                     $this->safe_unlink ( $file[ 'tmp_name' ] );
                     $activity_content = false;
-                    throw new RTMediaUploadException ( 0, __ ( 'The MP3 file you have uploaded is not an audio file.', 'buddypress-media' ) );
+                    throw new RTMediaUploadException ( 0, __ ( 'The MP3 file you have uploaded is not an audio file.', 'rtmedia' ) );
                 }
                 break;
             case 'image' :
@@ -246,7 +254,7 @@ class RTMediaUploadFile {
             default :
                 $this->safe_unlink ( $file[ 'tmp_name' ] );
                 $activity_content = false;
-                throw new RTMediaUploadException ( 0, __ ( 'Media File you have tried to upload is not supported. Supported media files are .jpg, .png, .gif, .mp3, .mov and .mp4.', 'buddypress-media' ) );
+                throw new RTMediaUploadException ( 0, __ ( 'Media File you have tried to upload is not supported. Supported media files are .jpg, .png, .gif, .mp3, .mov and .mp4.', 'rtmedia' ) );
         }
 
         return true;

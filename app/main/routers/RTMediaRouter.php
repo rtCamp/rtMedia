@@ -78,6 +78,7 @@ class RTMediaRouter {
                 $return = false;
             if ( isset ( $wp_query->query_vars[ 'pagename' ] ) && $wp_query->query_vars[ 'pagename' ] == 'group-avatar' )
                 $return = false;
+	    $wp_query->is_feed = false;
         }
 
         if ( $return ) {
@@ -95,7 +96,7 @@ class RTMediaRouter {
         // if it is not our route, return early
         if ( ! $this->is_template () )
             return;
-         
+
         status_header ( 200 );
         //set up the query variables
         $this->set_query_vars ();
@@ -121,7 +122,7 @@ class RTMediaRouter {
         // otherwise, apply a filter to the template,
         // pass the template  and slug to the function hooking here
         // so it can load a custom template
-        
+
         $template_load = new RTMediaTemplate();
         global $new_rt_template;
         $new_rt_template = $template_load->set_template ( $template );
@@ -136,16 +137,16 @@ class RTMediaRouter {
                         strtolower( $_SERVER[ 'HTTP_X_REQUESTED_WITH' ] ) == 'xmlhttprequest'
          ){
                 $rt_ajax_request = true;
-         }
+        }
          if($rt_ajax_request)
              return $new_rt_template;
         if(  function_exists ('bp_set_theme_compat_active'))
         	bp_set_theme_compat_active( apply_filters( 'rtmedia_main_template_set_theme_compat', true ) );
         add_filter( 'the_content', array(&$this,'rt_replace_the_content') );
         $this ->rt_theme_compat_reset_post();
-        
+
         return apply_filters( 'rtmedia_main_template_include', $template, $new_rt_template );
-        
+
     }
 
     /**
@@ -163,7 +164,7 @@ class RTMediaRouter {
         load_template($new_rt_template);
         return '';
 	$new_content = apply_filters( 'bp_replace_the_content', $content );
-        
+
 	// Juggle the content around and try to prevent unsightly comments
         if ( !empty( $new_content ) && ( $new_content !== $content ) ) {
 
@@ -184,13 +185,24 @@ function rt_theme_compat_reset_post( $args = array() ) {
 	global $wp_query, $post;
 
 	// Switch defaults if post is set
-	if ( isset( $wp_query->post ) ) {
+        global $rtmedia_query;
+	 if ( isset( $wp_query->post ) ) {
+             if(isset($rtmedia_query->query) && isset( $rtmedia_query->query["media_type"] ) && $rtmedia_query->query["media_type"] == "album" && isset( $rtmedia_query->media_query["album_id"])){
+                 foreach($rtmedia_query->album as $al){
+                     if($al->id == $rtmedia_query->media_query["album_id"]){
+                         $wp_query->post = get_post($al->media_id);
+                         break;
+                     }
+                 }
+             }else if( isset($rtmedia_query->media) && count($rtmedia_query->media) ==  1 && $rtmedia_query->media ){
+		 $wp_query->post = get_post($rtmedia_query->media[0]->media_id);
+             }
 		$dummy = wp_parse_args( $args, array(
 			'ID'                    => $wp_query->post->ID,
 			'post_status'           => $wp_query->post->post_status,
 			'post_author'           => $wp_query->post->post_author,
 			'post_parent'           => $wp_query->post->post_parent,
-			'post_type'             => $wp_query->post->post_type,
+			'post_type'             => 'rtmedia', //$wp_query->post->post_type,
 			'post_date'             => $wp_query->post->post_date,
 			'post_date_gmt'         => $wp_query->post->post_date_gmt,
 			'post_modified'         => $wp_query->post->post_modified,
@@ -260,9 +272,21 @@ function rt_theme_compat_reset_post( $args = array() ) {
                 if("bp-default" != get_option( 'stylesheet' ))
                     $dummy['post_title'] =  '<a href="' . bp_get_displayed_user_link() . '">' . bp_get_displayed_user_fullname() . '</a>';
             }
+        }else{
+            global $rtmedia_query;
+            $dummy['comment_status'] = 'closed';
+            if(isset($rtmedia_query->media_query)){
+                if(isset($rtmedia_query->media_query["media_author"])){
+                    $dummy["post_author"] =$rtmedia_query->media_query["media_author"];
+                }
+                if(isset($rtmedia_query->media_query["id"])){
+                    //var_dump($rtmedia_query);
+                    //echo $rtmedia_query->media_query["id"];
+                }
+            }
         }
-            
-        
+
+
 	// Bail if dummy post is empty
 	if ( empty( $dummy ) ) {
 		return;
@@ -295,7 +319,7 @@ function rt_theme_compat_reset_post( $args = array() ) {
 		status_header( 200 );
 	}
 
-	
+
 }
 
 

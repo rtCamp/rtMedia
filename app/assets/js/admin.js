@@ -11,15 +11,15 @@ jQuery(document).ready(function($) {
     })
 
     /* Fetch Feed */
-    var rtmedia_news_section = jQuery('#latest-news');
-    if (rtmedia_news_section.length > 0) {
-        var data = {
-            action: 'rtmedia_fetch_feed'
-        };
-        jQuery.post(rtmedia_admin_ajax, data, function(response) {
-            rtmedia_news_section.find('.inside').html(response);
-        });
-    }
+//    var rtmedia_news_section = jQuery('#latest-news');
+//    if (rtmedia_news_section.length > 0) {
+//        var data = {
+//            action: 'rtmedia_fetch_feed'
+//        };
+//        jQuery.post(rtmedia_admin_ajax, data, function(response) {
+//            rtmedia_news_section.find('.inside').html(response);
+//        });
+//    }
 
     /* Select Request */
     jQuery('#bp-media-settings-boxes').on('change', '#select-request', function() {
@@ -496,6 +496,12 @@ jQuery(document).ready(function($) {
         defaultTab: manageHash()
     });
 
+    jQuery("#rtm-support").sliderTabs({
+        autoplay: false,
+        mousewheel: false,
+        defaultTab: manageHash()
+    });
+
     if (jQuery('#rtmedia-privacy-enable').is(":checked")) {
         jQuery(".privacy-driven-disable label input").prop("disabled", false);
         jQuery(".privacy-driven-disable label .rt-switch").bootstrapSwitch("setActive", true);
@@ -629,4 +635,18 @@ jQuery(document).ready(function($) {
     });
     if(jQuery(document).foundation !== undefined)
         jQuery(document).foundation('section');
+});
+
+function rtmedia_addon_do_not_show() {
+    var data = {
+	action: 'rtmedia_addon_popup_not_show_again'
+    };
+    jQuery.post(rtmedia_admin_ajax, data, function(response) {
+	jQuery('#TB_window').remove();
+	jQuery('#TB_overlay').remove();
+    });
+}
+
+jQuery(window).load(function(){
+    jQuery('.rtmedia-addon-thickbox').trigger('click');
 });

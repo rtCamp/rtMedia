@@ -43,7 +43,7 @@ class RTMediaEncoding {
                             add_filter('rtmedia_after_add_media', array($this, 'encoding'), 10, 3);
                         $blacklist = array('localhost', '127.0.0.1');
                         if (!in_array($_SERVER['HTTP_HOST'], $blacklist)) {
-                            add_filter('rtmedia_plupload_files_filter', array($this, 'allowed_types'));
+                            add_filter('rtmedia_plupload_files_filter', array($this, 'allowed_types'), 10, 1);
                             add_filter('rtmedia_allowed_types', array($this, 'allowed_types_admin_settings'), 10, 1);
                             add_filter('rtmedia_valid_type_check', array($this, 'bypass_video_audio'), 10, 2);
                         }
@@ -192,6 +192,7 @@ class RTMediaEncoding {
             $usage_info = $this->update_usage($_GET['apikey']);
             $return_page = add_query_arg(array('page' => 'rtmedia-addons', 'api_key_updated' => $usage_info->plan->name), (is_multisite() ? network_admin_url('admin.php') : admin_url('admin.php')));
             wp_safe_redirect($return_page);
+            die();
         }
     }
 
@@ -463,7 +464,7 @@ class RTMediaEncoding {
             $response = $_POST['thumbs'];
             $flag = false;
             global $wpdb;
-            $model = new RTDBModel('rtm_media_meta');
+            $model = new RTDBModel('rtm_media_meta', false, 10, true);
             $meta_details = $model->get(array('meta_value' => $_REQUEST['job_id'], 'meta_key' => 'rtmedia-encoding-job-id'));
 	    if(!isset($meta_details[0])){
 		$id = intval($_REQUEST["rt_id"]);

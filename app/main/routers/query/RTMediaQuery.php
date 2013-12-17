@@ -192,8 +192,12 @@ class RTMediaQuery {
     }
 
     function set_action_query () {
+	if(isset( $this->interaction ) && isset( $this->interaction->query_vars ) ) {
+	    $raw_query = $this->interaction->query_vars;
+	} else {
+	    $raw_query = array();
+	}
 
-        $raw_query = $this->interaction->query_vars;
 
         if ( isset ( $raw_query ) && is_array ( $raw_query ) && count ( $raw_query ) > 1 ) {
             if ( empty ( $raw_query[ 0 ] ) && ! empty ( $raw_query[ 1 ] ) ) {
@@ -279,6 +283,8 @@ class RTMediaQuery {
             }
         }
 
+	$modifier_type = apply_filters( "rtmedia_action_query_modifier_type", $modifier_type, $raw_query );
+	$modifier_value = apply_filters( "rtmedia_action_query_modifier_value", $modifier_value, $raw_query );
 
 
         if ( isset ( $raw_query[ 1 ] ) ) {
@@ -391,6 +397,7 @@ class RTMediaQuery {
          * setting parameters in action query object for pagination
          */
         $per_page_media = intval ( $rtmedia->options[ 'general_perPageMedia' ] );
+	$per_page_media = apply_filters( "rtmedia_per_page_media", $per_page_media );
 
 
         $this->action_query = ( object ) array(
@@ -419,16 +426,22 @@ class RTMediaQuery {
         $this->original_query = $query;
         $this->query = wp_parse_args ( $query, $this->query );
         //Set Json
+	$allowed_query = array( "id", "media_id", "media_type", "media_author", "album_id", "context", "context_id", "global", "privacy" );
         if ( isset ( $_REQUEST[ "rtmedia_shortcode" ] ) ) {
             $query_data = $_REQUEST;
-            $allowed_query = array( "id", "media_id", "media_type", "media_author", "albume_id", "context", "context_id", "global" );
             foreach ( $query_data as $key => $val ) {
                 if ( ! in_array ( $key, $allowed_query ) ) {
                     unset ( $query_data[ $key ] );
                 }
             }
             $this->query = wp_parse_args ( $query_data, $this->query );
-        }
+	} else if(isset($this->is_gallery_shortcode) && $this->is_gallery_shortcode === true) {
+	    foreach ( $this->query as $key => $val ) {
+                if ( ! in_array ( $key, $allowed_query ) ) {
+                    unset ( $this->query[ $key ] );
+                }
+            }
+	}
 
         if ( isset ( $this->query[ "context" ] ) && $this->query[ "context" ] == "activity" ) {
             $this->query[ "activity_id" ] = array( "value" );

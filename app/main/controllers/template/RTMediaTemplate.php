@@ -70,7 +70,7 @@ class RTMediaTemplate {
 
         $this->check_return_upload ();
 
-        if ( in_array ( $rtmedia_interaction->context->type, array( "profile", "group" ) ) ) {
+        if ( $rtmedia_interaction && isset( $rtmedia_interaction->context ) && in_array ( $rtmedia_interaction->context->type, array( "profile", "group" ) ) ) {
 
 
             $this->check_return_edit ();
@@ -82,8 +82,15 @@ class RTMediaTemplate {
             $this->check_return_comments ();
 
             $this->check_delete_comments ();
-
-            return $this->get_default_template ();
+	    if( isset($rtmedia_query->is_gallery_shortcode) && $rtmedia_query->is_gallery_shortcode == true && isset( $shortcode_attr[ 'name' ] ) && $shortcode_attr[ 'name' ] == 'gallery' ) {
+		echo "<div class='rtmedia_gallery_wrapper'>";
+                $this->add_hidden_fields_in_gallery ();
+                $gallery_template = apply_filters("rtmedia-before-template",$template,$shortcode_attr);
+                include $this->locate_template ( $gallery_template );
+		echo "</div>";
+	    } else {
+		return $this->get_default_template ();
+	    }
         } else if ( ! $shortcode_attr ) {
             return $this->get_default_template ();
         } else if ( $shortcode_attr[ 'name' ] == 'gallery' ) {
@@ -97,16 +104,30 @@ class RTMediaTemplate {
                     $rtaccount = 0;
                 }
                 //add_action("rtmedia_before_media_gallery",array(&$this,"")) ;
+		if( isset( $shortcode_attr[ 'attr' ] ) && isset( $shortcode_attr[ 'attr' ]['uploader'] ) && $shortcode_attr[ 'attr' ]['uploader'] == "before" ) {
+		    add_filter('rtmedia_plupload_files_filter',array($this,'rtmedia_plupload_files_filter'), 30, 1);
+		    echo RTMediaUploadShortcode::pre_render($shortcode_attr[ 'attr' ]);
+		    remove_filter('rtmedia_plupload_files_filter',array($this,'rtmedia_plupload_files_filter'), 30, 1);
+		}
 		echo "<div class='rtmedia_gallery_wrapper'>";
                 $this->add_hidden_fields_in_gallery ();
                 $gallery_template = apply_filters("rtmedia-before-template",$template,$shortcode_attr);
                 include $this->locate_template ( $gallery_template );
 		echo "</div>";
+	    if( isset( $shortcode_attr[ 'attr' ] ) && isset( $shortcode_attr[ 'attr' ]['uploader'] ) && ( $shortcode_attr[ 'attr' ]['uploader'] == "after" || $shortcode_attr[ 'attr' ]['uploader'] == "true" ) ) {
+		    add_filter('rtmedia_plupload_files_filter',array($this,'rtmedia_plupload_files_filter'), 30, 1);
+		    echo RTMediaUploadShortcode::pre_render($shortcode_attr[ 'attr' ]);
+		    remove_filter('rtmedia_plupload_files_filter',array($this,'rtmedia_plupload_files_filter'), 30, 1);
+		}
             } else {
                 echo __ ( 'Invalid attribute passed for rtmedia_gallery shortcode.', 'rtmedia' );
                 return false;
             }
         }
+    }
+
+    function rtmedia_plupload_files_filter($types) {
+	return $types;
     }
 
     function add_hidden_fields_in_gallery () {
@@ -196,18 +217,18 @@ class RTMediaTemplate {
                 add_action ( "rtmedia_before_template_load", array( &$this, "media_update_success_error" ) );
             }
         } else {
-            echo __ ( "Ooops !!! Invalid access. No nonce was found !!", "rtmedia" );
+            _e( 'Ooops !!! Invalid access. No nonce was found !!', 'rtmedia' );
         }
     }
 
     function media_update_success_messege () {
-        $message = apply_filters ( "rtmedia_update_media_message", "Media updated Sucessfully", false );
+        $message = apply_filters ( "rtmedia_update_media_message", __( 'Media updated Sucessfully', 'rtmedia' ), false );
         $html = "<div class='rtmedia-success media-edit-messge'>" . __ ( $message, "rtmedia" ) . "</div>";
         echo apply_filters ( "rtmedia_update_media_message_html", $html, $message, false );
     }
 
     function media_update_success_error () {
-        $message = apply_filters ( "rtmedia_update_media_message", "Error in updating Media", true );
+        $message = apply_filters ( "rtmedia_update_media_message", __( 'Error in updating Media', 'rtmedia' ), true );
         $html = "<div class='rtmedia-error  media-edit-messge'>" . __ ( $message, "rtmedia" ) . "</div>";
         echo apply_filters ( "rtmedia_update_media_message_html", $html, $message, true );
     }
@@ -256,8 +277,9 @@ class RTMediaTemplate {
                     $rtMediaNav->refresh_counts ( $rtmedia_query->media[ 0 ]->media_author, array( "context" => "profile", 'media_author' => $rtmedia_query->media[ 0 ]->media_author ) );
             }
             wp_safe_redirect ( get_rtmedia_permalink ( $rtmedia_query->media_query[ 'album_id' ] ) . 'edit/' );
+            die();
         } else {
-            echo __ ( "Ooops !!! Invalid access. No nonce was found !!", "rtmedia" );
+            _e( 'Ooops !!! Invalid access. No nonce was found !!', 'rtmedia' );
         }
     }
 
@@ -292,6 +314,7 @@ class RTMediaTemplate {
             }
         }
         wp_safe_redirect ( $_POST[ '_wp_http_referer' ] );
+        die();
     }
 
     function single_delete () {
@@ -315,8 +338,6 @@ class RTMediaTemplate {
             } else {
                 $parent_link = get_author_posts_url ( $post->media_author );
             }
-
-//                        do_action('rtmedia_after_delete_media',$rtmedia_query->media[ 0 ]->id);
             $redirect_url = $_SERVER[ "HTTP_REFERER" ];
 
 
@@ -327,10 +348,11 @@ class RTMediaTemplate {
                     $redirect_url = trailingslashit ( $parent_link ) . "media/";
                 }
             }
-
-            wp_redirect ( $redirect_url );
+            $redirect_url = apply_filters( 'rtmedia_before_delete_media_redirect', $redirect_url );
+            wp_safe_redirect ( $redirect_url );
+            die();
         } else {
-            echo __ ( "Ooops !!! Invalid access. No nonce was found !!", "rtmedia" );
+            _e( 'Ooops !!! Invalid access. No nonce was found !!', 'rtmedia' );
         }
     }
 
@@ -428,7 +450,7 @@ class RTMediaTemplate {
                     exit;
                 }
             } else {
-                echo "Ooops !!! Invalid access. No nonce was found !!";
+                _e ( 'Ooops !!! Invalid access. No nonce was found !!', 'rtmedia' );
             }
         }
     }
@@ -437,25 +459,25 @@ class RTMediaTemplate {
 
         if ( $rtmedia_query->action_query->action != 'delete-comment' )
             return;
-
+        
         if ( count ( $_POST ) ) {
             /**
              * /media/id/delete-comment [POST]
              * Delete Comment by Comment ID
              */
-
+            
             if ( empty ( $_POST[ 'comment_id' ] ) ) {
                 return false;
             }
             $comment = new RTMediaComment();
             $id = $_POST['comment_id'];
             $activity_id = get_comment_meta($id, 'activity_id',true);
-
+            
             if(!empty($activity_id)){
-                $activity_deleted = bp_activity_delete_comment ($activity_id, $id);
-
-                $delete = bp_activity_delete( array( 'id' => $activity_id, 'type' => 'activity_comment' ) );
-
+                if(function_exists('bp_activity_delete_comment')){ //if buddypress is active
+                    $activity_deleted = bp_activity_delete_comment ($activity_id, $id);
+                    $delete = bp_activity_delete( array( 'id' => $activity_id, 'type' => 'activity_comment' ) );
+                }
             }
             $comment_deleted = $comment->remove ( $id );
 

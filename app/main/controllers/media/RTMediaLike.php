@@ -14,18 +14,33 @@ class RTMediaLike extends RTMediaUserInteraction {
     function __construct() {
 	    $args = array(
 	    'action' => 'like',
-	    'label' => __('Like'),
-	    'plural' => __('Likes'),
-	    'undo_label' => __('Unlike'),
+	    'label' => __( 'Like', 'rtmedia' ),
+	    'plural' => __( 'Likes', 'rtmedia' ),
+	    'undo_label' => __( 'Unlike', 'rtmedia' ),
 	    'privacy' => 20,
 	    'countable' => true,
 	    'single' => false,
 	    'repeatable' => false,
-	    'undoable' => true
+	    'undoable' => true,
+            'icon_class' => 'rtmicon-thumbs-up-alt'
 	);
 	parent::__construct($args);
+        remove_filter( 'rtmedia_action_buttons_before_delete', array($this,'button_filter') );
+        add_action('rtmedia_action_buttons_after_media',array($this, 'button_filter'),12);
+        add_action('rtmedia_actions_before_comments',array($this, 'like_button_filter'),10);
+        
     }
-
+    
+    function like_button_filter() {
+        if(empty($this->media)){
+                $this->init();
+        }
+        $button = $this->render();
+        
+        if($button)
+            echo "<span>" . $button . "</span> &sdot; ";
+    }
+    
     function process() {
 	$actions = $this->model->get( array( 'id' => $this->action_query->id ) );
 
@@ -72,10 +87,10 @@ class RTMediaLike extends RTMediaUserInteraction {
 	$actions = intval($actions[ 0 ]->{$actionwa});
 	if ( $this->increase === true ) {
 		$actions ++;
-		$return["next"] = "<span>" .$actions ."</span>" . $this->undo_label;
+		$return["next"] = $this->undo_label;
 	} else {
 		$actions --;
-		$return["next"] = "<span>" .$actions ."</span>" .  $this->label;
+		$return["next"] = $this->label;
 	}
 	if($actions <0)
 	    $actions = 0;
@@ -91,8 +106,21 @@ class RTMediaLike extends RTMediaUserInteraction {
 	}
 	else{
 	    wp_safe_redirect ($_SERVER["HTTP_REFERER"]);
+	    die();
 	}
 	return $actions;
+    }
+    
+    function button_filter(){
+        
+        if(empty($this->media)){
+                $this->init();
+        }
+        $button = $this->render();
+        
+        if($button)
+           // echo "<li>" . $button . "</li>";
+            echo  $button ;
     }
 
     function is_like_migrated( ) {
@@ -162,12 +190,13 @@ class RTMediaLike extends RTMediaUserInteraction {
 	if($this->is_liked()){
 	    $this->label =  $this->undo_label;
 	}
-	$actions = $this->model->get( array( 'id' => $this->action_query->id ) );
-	if(isset($actions[ 0 ]->likes)){
-	    $actions = intval($actions[ 0 ]->likes);
-	}else{
-	    $actions = 0;
-	}
-	$this->label =  "<span>" .$actions ."</span>" . $this->label;
+//	$actions = $this->model->get( array( 'id' => $this->action_query->id ) );
+//	if(isset($actions[ 0 ]->likes)){
+//	    $actions = intval($actions[ 0 ]->likes);
+//	}else{
+//	    $actions = 0;
+//	}
+	//$this->label =  "<span class='like-count'>" .$actions ."</span>" . $this->label;
+
     }
 }

@@ -9,9 +9,21 @@ class RTMediaGroup{
     function __construct() {
 	global $rtmedia;
 	$options = $rtmedia->options;
-	if( ! ( isset ( $options [ 'buddypress_enableOnGroup' ] ) && $options [ 'buddypress_enableOnGroup' ] == "1" ) ) {
-	    return;
-	}
+	if(  isset ( $options [ 'buddypress_enableOnGroup' ] ) && $options [ 'buddypress_enableOnGroup' ] == "1" ) {
+	   // return;
+            $extension = true;
+            if( isset($options['general_enableAlbums']) && $options['general_enableAlbums'] == 0){
+                $extension = false;
+            }
+            $extension = apply_filters('rtmedia_group_media_extension', $extension);
+            if(!$extension){
+                return;
+            }
+            
+        }else {
+            return;
+        }
+        
         if(function_exists("bp_is_active") &&  bp_is_active("groups")){
             bp_register_group_extension("RTMediaGroupExtension");
         }

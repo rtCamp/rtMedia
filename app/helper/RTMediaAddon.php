@@ -48,20 +48,20 @@ if (!class_exists('RTMediaAddon')) {
 			$tabs = array();
 			global $rtmedia_admin;
 			$tabs[] = array(
-				'title' => 'Audio/Video Encoding',
+				'title' => __('Audio/Video  Encoding', 'rtmedia'),
 				'name' => __('Audio/Video  Encoding', 'rtmedia'),
 				'href' => '#rtm-services',
 				'callback' => array($rtmedia_admin->rtmedia_encoding, 'encoding_service_intro')
 			);
 			$tabs[] = array(
-				'title' => 'Plugins',
+				'title' => __('Plugins', 'rtmedia'),
 				'name' => __('Plugins', 'rtmedia'),
 				'href' => '#rtm-plugins',
 				'callback' => array($this, 'plugins_content')
 			);
 
 /*			$tabs[] = array(
-				'title' => 'Themes',
+				'title' => __('Themes', 'rtmedia'),
 				'name' => __('Themes', 'rtmedia'),
 				'href' => '#bpm-themes',
 				'callback' => array($this, 'themes_content')
@@ -90,11 +90,11 @@ if (!class_exists('RTMediaAddon')) {
 
 
 		public function plugins_content($args = '') {
-
+		    $img_src = RTMEDIA_URL .'app/assets/img/';
 			$addons = array(
 				 array(
                     'title' => __('rtMedia Photo Tagging', 'rtmedia'),
-                    'img_src' => 'http://rtcamp.com/wp-content/uploads/2013/04/bpm-photo-tagging.png',
+                    'img_src' => $img_src.'bpm-photo-tagging.png',
                     'product_link' => 'http://rtcamp.com/store/buddypress-media-photo-tagging/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media',
                     'desc' => '<p>' . __('rtMedia Photo Tagging add-on enables tagging on photos uploaded using BuddyPress Media.', 'rtmedia') . '</p>
                     <p><strong>' . __('Important', 'rtmedia') . ':</strong> ' . __('You need to have ImageMagick installed on your server for this addon to work.', 'rtmedia') . '</p>',
@@ -104,7 +104,7 @@ if (!class_exists('RTMediaAddon')) {
                 ),
                 array(
                     'title' => __('rtMedia Instagram', 'rtmedia'),
-                    'img_src' => 'http://cdn.rtcamp.com/wp-content/uploads/2013/03/BuddyPressMedia-Instagram.png',
+                    'img_src' => $img_src.'BuddyPressMedia-Instagram.png',
                     'product_link' => 'http://rtcamp.com/store/buddypress-media-instagram/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media',
                     'desc' => '<p>' . __('rtMedia Instagram adds Instagram like filters to images uploaded with rtMedia.', 'rtmedia') . '</p>
                     <p><strong>' . __('Important', 'rtmedia') . ':</strong> ' . __('You need to have ImageMagick installed on your server for this addon to work.', 'rtmedia') . '</p>',
@@ -114,7 +114,7 @@ if (!class_exists('RTMediaAddon')) {
                 ),
                 array(
                     'title' => __('rtMedia Kaltura Add-on', 'rtmedia'),
-                    'img_src' => 'http://cdn.rtcamp.com/files/2012/10/new-buddypress-media-kaltura-logo-240x184.png',
+                    'img_src' => $img_src.'new-buddypress-media-kaltura-logo-240x184.png',
                     'product_link' => 'http://rtcamp.com/store/buddypress-media-kaltura/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media',
                     'desc' => '<p>' . __('Add support for more video formats using Kaltura video solution.', 'rtmedia') . '</p>
                     <p>' . __('Works with Kaltura.com, self-hosted Kaltura-CE and Kaltura-on-premise.', 'rtmedia') . '</p>',
@@ -124,7 +124,7 @@ if (!class_exists('RTMediaAddon')) {
                 ),
                 array(
                     'title' => __('rtMedia FFMPEG Add-on', 'rtmedia'),
-                    'img_src' => 'http://cdn.rtcamp.com/files/2012/09/ffmpeg-logo-240x184.png',
+                    'img_src' => $img_src.'ffmpeg-logo-240x184.png',
                     'product_link' => 'http://rtcamp.com/store/buddypress-media-ffmpeg-converter/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media',
                     'desc' => '<p>' . __('Add supports for more audio & video formats using open-source media-node.', 'rtmedia') . '</p>
                         <p>' . __('Media node comes with automated setup script for Ubuntu/Debian.', 'rtmedia') . '</p>',
@@ -139,11 +139,11 @@ if (!class_exists('RTMediaAddon')) {
 
 				if($key == 0) {
 					echo '<h3>';
-					_e('rtMedia Addons for Photos');
+					_e( 'rtMedia Addons for Photos', 'rtmedia' );
 					echo '</h3>';
 				} else if($key == 2) {
 					echo '<h3>';
-					_e('rtMedia Addons for Audio/Video');
+					_e( 'rtMedia Addons for Audio/Video', 'rtmedia' );
 					echo '</h3>';
 				}
 				$this->addon($value);
@@ -157,7 +157,7 @@ if (!class_exists('RTMediaAddon')) {
 		}
 
 		public function themes_content($args = '') {
-			echo '<h3>Coming Soon !!</h3>';
+			echo '<h3>'. __( 'Coming Soon !!', 'rtmedia' ) .'</h3>';
 		}
 
 
