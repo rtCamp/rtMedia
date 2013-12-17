@@ -79,7 +79,23 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
 	    if( $this->check_for_addon_update_notice() ) {
 		add_action ( 'admin_notices', array( $this, 'rtmedia_addon_update_notice' ) );
 	    }
-        }
+	    if( !class_exists("BuddyPress") ) {
+		add_action( 'admin_init',array( $this,'check_permalink_admin_notice' ) );
+	    }
+	}
+
+	function check_permalink_admin_notice() {
+	    global $wp_rewrite;
+	    if ( empty( $wp_rewrite->permalink_structure ) ) {
+		add_action( 'admin_notices', array( $this, 'rtmedia_permalink_notice' ) );
+	    }
+	}
+
+	function rtmedia_permalink_notice() {
+	    echo '<div class="error rtmedia-permalink-change-notice">
+		    <p> <b>'.__('rtMedia:').'</b> '.__(' You must ').'<a href="'.admin_url( 'options-permalink.php' ).'">'.__('update permalink structure').'</a>'.__(' to something other than the default for it to work.','rtmedia').' </p>
+		    </div>';
+	}
 
 	function rtmedia_addon_update_notice() {
 	    if(is_rt_admin() ) {

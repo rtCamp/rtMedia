@@ -854,7 +854,15 @@ function is_rtmedia_single () {
  *
  * @return boolean
  */
-function is_rtmedia_album () {
+function is_rtmedia_album ( $album_id = false) {
+    if( $album_id ) {
+	$rtmedia_model = new RTMediaModel();
+	$media = $rtmedia_model->get( array( "id" => $album_id ) );
+	if( is_array( $media ) && isset( $media[0] )  && isset( $media[0]->media_type ) && $media[0]->media_type == "album" ) {
+	    return true;
+	}
+	return false;
+    }
     global $rtmedia_query;
     if ( $rtmedia_query )
         return $rtmedia_query->is_album ();
