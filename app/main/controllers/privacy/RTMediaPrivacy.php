@@ -21,18 +21,22 @@ class RTMediaPrivacy {
     function __construct ($flag = true) {
         if ( is_rtmedia_privacy_enable () && $flag ) {
             //add_action ( 'rtmedia_after_file_upload_ui' , array ( $this , 'uploader_privacy_ui' ) ) ;
-            add_action ( 'rtmedia_add_edit_fields' , array ( $this , 'edit_media_privacy_ui' ),2 ) ;
+            //add_action ( 'rtmedia_add_edit_fields' , array ( $this , 'edit_media_privacy_ui' ),2 ) ;
             add_action ( 'bp_init' , array ( $this , 'add_nav' ) ) ;
             add_action ( 'bp_template_content' , array ( $this , 'content' ) ) ;
             add_filter ( 'bp_activity_get_user_join_filter' , array ( $this , 'activity_privacy' ) , 10 , 6 ) ;
         }
     }
     
-    function edit_media_privacy_ui() {
+    function edit_media_privacy_ui($echo = true) {
         $privacy = "";
         $privacy = $this->select_privacy_ui ($echo = false);
-        if( $privacy != "")
-            echo "<div class='rtmedia-edit-privacy'><label>Privacy : </label>" . $privacy . "</div>";
+        if( $privacy != ""){
+            if($echo)
+                echo "<div class='rtmedia-edit-privacy'><label>Privacy : </label>" . $privacy . "</div>";
+            else
+                return "<div class='rtmedia-edit-privacy'><label>Privacy : </label>" . $privacy . "</div>";
+        }
     }
 
     function uploader_privacy_ui ( $attr ) {
