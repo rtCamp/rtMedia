@@ -86,6 +86,7 @@ jQuery(function($) {
             return url;
         },
         getNext: function(page, el, element) {
+	    that = this;
 	    if( rtmedia_load_template_flag == true ) {
 		$("#rtmedia-gallery-item-template").load(template_url, {
 		    backbone: true,
@@ -93,44 +94,46 @@ jQuery(function($) {
 		    is_edit_allowed: o_is_edit_allowed
 		    },function(){
 		    rtmedia_load_template_flag = false;
+		    that.getNext();
 		});
 	    }
-
-            var query = {
+	    if( !rtmedia_load_template_flag ) {
+		var query = {
                 json: true,
                 rtmedia_page: nextpage
-            };
-            if (el == undefined){
-                el = jQuery(".rtmedia-list").parent().parent();
-            }
-            if (el != undefined) {
-		if(element != undefined) {
-		    $(element).parent().parent().prevAll("input[type=hidden]").each(function(e) {
-			query[$(this).attr("name")] = $(this).val();
-		    });
-		} else {
-		    $(el).find("input[type=hidden]").each(function(e) {
-			query[$(this).attr("name")] = $(this).val();
-		    });
+		};
+		if (el == undefined){
+		    el = jQuery(".rtmedia-list").parent().parent();
 		}
+		if (el != undefined) {
+		    if(element != undefined) {
+			$(element).parent().parent().prevAll("input[type=hidden]").each(function(e) {
+			    query[$(this).attr("name")] = $(this).val();
+			});
+		    } else {
+			$(el).find("input[type=hidden]").each(function(e) {
+			    query[$(this).attr("name")] = $(this).val();
+			});
+		    }
 
-            }
-            this.fetch({
-                data: query,
-                success: function(model, response) {
-		    var list_el = "";
-		    if(typeof(element) === "undefined" )
-			list_el = $(".rtmedia-list")[0];
-		    else
-			list_el = element.parent().siblings('.rtmedia-list');
-                    nextpage = response.next;
-                    var galleryViewObj = new rtMedia.GalleryView({
-                        collection: new rtMedia.Gallery(response.data),
-                        el: list_el
-                    });
-		    //element.show();
-                }
-            });
+		}
+		this.fetch({
+		    data: query,
+		    success: function(model, response) {
+			var list_el = "";
+			if(typeof(element) === "undefined" )
+			    list_el = $(".rtmedia-list")[0];
+			else
+			    list_el = element.parent().siblings('.rtmedia-list');
+			nextpage = response.next;
+			var galleryViewObj = new rtMedia.GalleryView({
+			    collection: new rtMedia.Gallery(response.data),
+			    el: list_el
+			});
+			//element.show();
+		    }
+		});
+	    }
         },
         reloadView: function() {
             upload_sync = true;
