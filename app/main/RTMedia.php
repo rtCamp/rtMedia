@@ -768,11 +768,12 @@ class RTMedia
         if( !( isset($rtmedia->options) && isset($rtmedia->options['styles_enabled']) && $rtmedia->options['styles_enabled']== 0)){
             wp_enqueue_style('rtmedia-main', RTMEDIA_URL . 'app/assets/css/main.css', '', RTMEDIA_VERSION);
         }
-        wp_enqueue_style('rtmedia-font-awesome', RTMEDIA_URL . 'app/assets/css/font-awesome.min.css', '', RTMEDIA_VERSION);
+        //wp_enqueue_style('rtmedia-font-awesome', RTMEDIA_URL . 'app/assets/css/font-awesome.min.css', '', RTMEDIA_VERSION);
         wp_enqueue_style('rtmedia-font-icons', RTMEDIA_URL . 'app/assets/css/rtmedia-icons/rtm_font_icons.min.css', '', RTMEDIA_VERSION);
         if(! wp_script_is("rtp-foundation-js"))
             wp_enqueue_script('rtp-foundation-js', RTMEDIA_URL . 'lib/foundation/foundation.min.js', array('jquery'), RTMEDIA_VERSION);
         wp_enqueue_script('rtmedia-foundation-reveal', RTMEDIA_URL . 'lib/foundation/foundation.reveal.js', array('jquery','rtp-foundation-js'), RTMEDIA_VERSION);
+        wp_enqueue_script('rtmedia-foundation-section', RTMEDIA_URL . 'lib/foundation/foundation.section.js', array('jquery','rtp-foundation-js'), RTMEDIA_VERSION);
         wp_enqueue_script('rtmedia-main', RTMEDIA_URL . 'app/assets/js/rtMedia.js', array('jquery', 'wp-mediaelement'), RTMEDIA_VERSION);
         wp_enqueue_style('rtmedia-magnific', RTMEDIA_URL . 'lib/magnific/magnific.css', '', RTMEDIA_VERSION);
         wp_enqueue_script('rtmedia-magnific', RTMEDIA_URL . 'lib/magnific/magnific.js', '', RTMEDIA_VERSION);
@@ -792,6 +793,11 @@ class RTMedia
         wp_localize_script('rtmedia-main', 'rtmedia_empty_album_name_msg', __('Enter an album name.',"rtMedia"));
         wp_localize_script('rtmedia-main', 'rtmedia_max_file_msg', __('Max file Size Limit : ',"rtMedia"));
         wp_localize_script('rtmedia-main', 'rtmedia_allowed_file_formats', __('Allowed File Formats',"rtMedia"));
+        wp_localize_script('rtmedia-main', 'rtmedia_select_all_visible', __('Select All Visible',"rtMedia"));
+        wp_localize_script('rtmedia-main', 'rtmedia_unselect_all_visible', __('Unselect All Visible',"rtMedia"));
+        wp_localize_script('rtmedia-main', 'rtmedia_no_media_selected', __('Please select some media.',"rtMedia"));
+        wp_localize_script('rtmedia-main', 'rtmedia_selected_media_delete_confirmation', __('Are you sure you want to delete the selected medias?',"rtMedia"));
+        wp_localize_script('rtmedia-main', 'rtmedia_selected_media_move_confirmation', __('Are you sure you want to move the selected medias?',"rtMedia"));
     }
 
     function set_bp_bar() {

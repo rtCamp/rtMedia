@@ -134,7 +134,9 @@ var rtMediaHook = {
     }
 }
 jQuery('document').ready(function($) {
-
+    
+    $('.rtmedia-single-container').foundation(); //for foundation Section(tabs) single media edit.
+     
     $("#rt_media_comment_form").submit(function(e) {
         if ($.trim($("#comment_content").val()) == "") {
             alert( rtmedia_empty_comment_msg );
@@ -153,9 +155,12 @@ jQuery('document').ready(function($) {
     if (typeof(rtmedia_lightbox_enabled) != 'undefined' && rtmedia_lightbox_enabled == "1") {
         apply_rtMagnificPopup('.rtmedia-list-media, .rtmedia-activity-container ul.rtmedia-list, #bp-media-list,.widget-item-listing,.bp-media-sc-list, li.media.album_updated ul,ul.bp-media-list-media, li.activity-item div.activity-content div.activity-inner div.bp_media_content, .rtm-bbp-container');
     }
-
+    
     jQuery('.rtmedia-container').on('click', '.select-all', function(e) {
         e.preventDefault();
+        jQuery(this).toggleClass('unselect-all').toggleClass('select-all');
+        jQuery(this).attr('title', rtmedia_unselect_all_visible);
+        jQuery(this).html('<i class="rtmicon-check"></i>');
         jQuery('.rtmedia-list input').each(function() {
             jQuery(this).prop('checked', true);
         });
@@ -163,6 +168,9 @@ jQuery('document').ready(function($) {
 
     jQuery('.rtmedia-container').on('click', '.unselect-all', function(e) {
         e.preventDefault();
+        jQuery(this).toggleClass('select-all').toggleClass('unselect-all');
+        jQuery(this).attr('title', rtmedia_select_all_visible);
+        jQuery(this).html('<i class="rtmicon-check-empty"></i>');
         jQuery('.rtmedia-list input').each(function() {
             jQuery(this).prop('checked', false);
         });
@@ -244,11 +252,24 @@ jQuery('document').ready(function($) {
     });
 
     jQuery('.rtmedia-container').on('click', '.rtmedia-delete-selected', function(e) {
-        jQuery('.rtmedia-bulk-actions').attr('action', '../../../media/delete');
+        if( jQuery('.rtmedia-list :checkbox:checked').length > 0 ){
+            if(confirm(rtmedia_selected_media_delete_confirmation)){
+                jQuery(this).closest('form').attr('action', '../../../media/delete').submit();
+            }
+        }else{
+            alert(rtmedia_no_media_selected);
+        }
     });
 
     jQuery('.rtmedia-container').on('click', '.rtmedia-move-selected', function(e) {
-        jQuery('.rtmedia-bulk-actions').attr('action', '');
+        if( jQuery('.rtmedia-list :checkbox:checked').length > 0 ){
+            if(confirm(rtmedia_selected_media_move_confirmation)){
+                jQuery(this).closest('form').attr('action', '').submit();
+            }
+        }else{
+            alert(rtmedia_no_media_selected);
+        }
+        
     });
 
     function rtmedia_media_view_counts() {
