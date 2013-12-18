@@ -132,7 +132,7 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "Visit rtMedia's Features page") to get some details about future releases.
 
 = 3.2.13 =
-* Improved and improved Lightbox UI.
+* Improved Lightbox UI.
 * More enhanced Uploader with new features, better error handling and notification.
 * Enhanced UI for media edit screen.
 * Fixed 404 permalink issue.
