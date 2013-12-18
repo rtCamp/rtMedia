@@ -33,9 +33,9 @@ class RTMediaPrivacy {
         $privacy = $this->select_privacy_ui ($echo = false);
         if( $privacy != ""){
             if($echo)
-                echo "<div class='rtmedia-edit-privacy'><label>Privacy : </label>" . $privacy . "</div>";
+                echo "<div class='rtmedia-edit-privacy'><label for='privacy'>Privacy : </label>" . $privacy . "</div>";
             else
-                return "<div class='rtmedia-edit-privacy'><label>Privacy : </label>" . $privacy . "</div>";
+                return "<div class='rtmedia-edit-privacy'><label for='privacy'>Privacy : </label>" . $privacy . "</div>";
         }
     }
 

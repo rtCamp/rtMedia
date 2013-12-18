@@ -25,11 +25,10 @@
                 <div class="rtmedia-editor-main columns large-12 small">
                     <div class="rtmedia-edit-media-tabs auto section-container" data-section='tabs'>
                     <section class="active">
-                      <p class="tab-title" data-section-title><a href="#panel1"><i class="rtmicon-edit"></i>Details</a></p>
-                      <div class="tab-content" data-section-content>
+                      <p class="tab-title" data-section-title><a href="#panel1"><i class="rtmicon-edit"></i><?php _e('Details', 'rtmedia'); ?></a></p>
+                      <div class="tab-content rtmedia-details" data-section-content>
                           <div class="rtmedia-edit-title">
-                                <label><?php _e('Title : ', 'rtmedia'); ?></label>
-                                <?php rtmedia_title_input(); ?>
+                                <label><?php _e('Title : ', 'rtmedia'); ?></label><?php rtmedia_title_input(); ?>
                             </div>
                             <?php echo rtmedia_edit_media_privacy_ui(); ?>
 

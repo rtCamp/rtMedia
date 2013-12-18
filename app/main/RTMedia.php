@@ -778,7 +778,6 @@ class RTMedia
         wp_enqueue_script('rtmedia-main', RTMEDIA_URL . 'app/assets/js/rtMedia.js', array('jquery', 'wp-mediaelement'), RTMEDIA_VERSION);
         wp_enqueue_style('rtmedia-magnific', RTMEDIA_URL . 'lib/magnific/magnific.css', '', RTMEDIA_VERSION);
         wp_enqueue_script('rtmedia-magnific', RTMEDIA_URL . 'lib/magnific/magnific.js', '', RTMEDIA_VERSION);
-        wp_enqueue_script('rtmedia-shorten-text', RTMEDIA_URL . 'app/assets/js/jquery-shorten-text.js', '', RTMEDIA_VERSION);
         wp_localize_script('rtmedia-main', 'rtmedia_ajax_url', admin_url('admin-ajax.php'));
         wp_localize_script('rtmedia-main', 'rtmedia_media_slug', RTMEDIA_MEDIA_SLUG);
         wp_localize_script('rtmedia-main', 'rtmedia_lightbox_enabled', strval($this->options["general_enableLightbox"]));
@@ -787,6 +786,7 @@ class RTMedia
         wp_localize_script('rtmedia-main', 'rtmedia_empty_activity_msg', __('Please enter some content to post.',"rtMedia"));
         wp_localize_script('rtmedia-main', 'rtmedia_empty_comment_msg', __('Empty Comment is not allowed.',"rtMedia"));
         wp_localize_script('rtmedia-main', 'rtmedia_media_delete_confirmation', __('Are you sure you want to delete this media?',"rtMedia"));
+        wp_localize_script('rtmedia-main', 'rtmedia_media_comment_delete_confirmation', __('Are you sure you want to delete this comment?',"rtMedia"));
         wp_localize_script('rtmedia-main', 'rtmedia_album_delete_confirmation', __('Are you sure you want to delete this Album?',"rtMedia"));
         wp_localize_script('rtmedia-main', 'rtmedia_drop_media_msg', __('Drop files here',"rtMedia"));
         wp_localize_script('rtmedia-main', 'rtmedia_album_created_msg', ' ' . __('album created successfully.',"rtMedia"));
@@ -799,6 +799,18 @@ class RTMedia
         wp_localize_script('rtmedia-main', 'rtmedia_no_media_selected', __('Please select some media.',"rtMedia"));
         wp_localize_script('rtmedia-main', 'rtmedia_selected_media_delete_confirmation', __('Are you sure you want to delete the selected medias?',"rtMedia"));
         wp_localize_script('rtmedia-main', 'rtmedia_selected_media_move_confirmation', __('Are you sure you want to move the selected medias?',"rtMedia"));
+        wp_localize_script('rtmedia-main', 'rtmedia_waiting_msg', __('Waiting',"rtMedia"));
+        wp_localize_script('rtmedia-main', 'rtmedia_uploaded_msg', __('Uploaded',"rtMedia"));
+        wp_localize_script('rtmedia-main', 'rtmedia_uploading_msg', __('Uploading',"rtMedia"));
+        wp_localize_script('rtmedia-main', 'rtmedia_upload_failed_msg', __('Failed',"rtMedia"));
+        wp_localize_script('rtmedia-main', 'rtmedia_close', __('Close',"rtMedia"));
+        wp_localize_script('rtmedia-main', 'rtmedia_edit', __('Edit',"rtMedia"));
+        wp_localize_script('rtmedia-main', 'rtmedia_edit_media', __('Edit Media',"rtMedia"));
+        wp_localize_script('rtmedia-main', 'rtmedia_remove_from_queue', __('Remove from queue',"rtMedia"));
+        wp_localize_script('rtmedia-main', 'rtmedia_add_more_files_msg', __('Add more files',"rtMedia"));
+        wp_localize_script('rtmedia-main', 'rtmedia_file_extension_error_msg', __('File not supported',"rtMedia"));
+        wp_localize_script('rtmedia-main', 'rtmedia_more', __('more',"rtMedia"));
+        wp_localize_script('rtmedia-main', 'rtmedia_less', __('less',"rtMedia"));
     }
 
     function set_bp_bar() {

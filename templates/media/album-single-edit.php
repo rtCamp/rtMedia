@@ -13,8 +13,8 @@ $rtmedia_media = $media[0];
         
         <div class="rtmedia-edit-media-tabs auto section-container" data-section='tabs'>
             <section class="active">
-              <p class="tab-title" data-section-title><a href="#panel1"><i class="rtmicon-edit"></i>Details</a></p>
-              <div class="tab-content" data-section-content>
+              <p class="tab-title" data-section-title><a href="#panel1"><i class="rtmicon-edit"></i><?php _e('Details', 'rtmedia');?></a></p>
+              <div class="tab-content rtmedia-details" data-section-content>
                <form method="post">
                 <?php
                     RTMediaMedia::media_nonce_generator($rtmedia_query->media_query['album_id']);
@@ -23,8 +23,7 @@ $rtmedia_media = $media[0];
                     $content = $post_details->post_content;
                 ?>
                 <div class="rtmedia-edit-title">
-                    <label for="media_title"><?php _e('Title : ', 'rtmedia'); ?></label>
-                    <?php rtmedia_title_input(); ?>
+                    <label for="media_title"><?php _e('Title : ', 'rtmedia'); ?></label><?php rtmedia_title_input(); ?>
                 </div>
                 <?php do_action("rtmedia_add_album_privacy", 'album-edit'); ?>
                 
@@ -45,7 +44,7 @@ $rtmedia_media = $media[0];
             
             <?php if(!is_rtmedia_group_album()) { ?>
                 <section>
-                    <p class="tab-title" data-section-title><a href="#panel2"><i class="rtmicon-cog"></i>Manage Media</a></p>
+                    <p class="tab-title" data-section-title><a href="#panel2"><i class="rtmicon-cog"></i><?php _e('Manage Media', 'rtmedia');?></a></p>
                     <div class="tab-content" data-section-content>
                 <?php if (have_rtmedia()) { ?>
 

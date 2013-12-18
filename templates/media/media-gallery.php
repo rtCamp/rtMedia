@@ -25,8 +25,6 @@
     <ul class="rtmedia-list rtmedia-list-media <?php echo rtmedia_media_gallery_class (); ?>">
         <?php if ( have_rtmedia () ) { ?>
 
-
-
             <?php while ( have_rtmedia () ) : rtmedia (); ?>
 
                 <?php include ('media-gallery-item.php'); ?>

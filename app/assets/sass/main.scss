@@ -79,9 +79,18 @@
                 .tab-content {
                     z-index : 99;
                 }
+                .rtmedia-title-editor {
+                    display: block;
+                    width: 100%;
+                }
+                .rtmedia-edit-title {
+                    label {
+                        display: block;
+                    }
+                }
             }
             
-
+           
           }
           
         .primary{
@@ -333,13 +342,14 @@
                                                 margin-left: 4px;
                                             }
                                         }
-                                        &.rtmedia-actions-before-description > div{
-                                            float: left;
-                                            line-height: 20px;
-                                            display: inline-block;
-                                            
+                                        &.rtmedia-actions-before-description {
+                                            margin-top : 10px;
+                                            > div{
+                                                float: left;
+                                                line-height: 20px;
+                                                display: inline-block;
+                                            }
                                         }
-                                        
 				}
 				padding: 10px;
 				button{
@@ -388,9 +398,9 @@
 							text-align: center;
 							vertical-align: middle;
 						}
-                                                i{
+/*                                                i{
                                                     margin-right : 5px;
-                                                }
+                                                }*/
 					}
 				}
                                 .rtmedia-media-description {
@@ -578,9 +588,17 @@
 
 .mfp-content{
 	#rtmedia-single-media-container{
+            
 		.rtmedia-media{
 			text-align: center;
 			background-color: #333;
+                        overflow : hidden;
+/*                        .tagcontainer {
+                            
+                            img {
+                                max-height: 95%;
+                            }
+                        }*/
 			img{
 				max-height: 95%;
 			}
@@ -690,10 +708,10 @@ button.rtp-lb-close {
     .rtmedia-edit-privacy {
         margin-bottom: 10px;
     }
-    .rtmedia-title-editor {
+/*    .rtmedia-title-editor {
         display: inline-block;
         width: 50%;
-    }
+    }*/
     
     .rtmedia-editor-description {
         //margin-bottom : 20px;
@@ -770,7 +788,7 @@ button.rtp-lb-close {
     }
     
     .rtmedia-upload-media-link, i, a, button,span {
-        font-size: 18px;
+        font-size: 16px;
         cursor : pointer;
         color : #444444;
         text-decoration: none;
@@ -909,6 +927,37 @@ button.rtp-lb-close {
         padding: 5px 0;
         display: inline-block;
         
+        .click-nav {
+            float : none;
+            .clicker, .clicker >i {
+                font-size: 16px;
+            }
+            .rtm-options li {
+                a, span,button, input {
+                    padding: 2px 5px;
+                    @include border-radius(4px);
+                    background: none;
+                    color : #fff;
+                    display: block;
+                    width : 100%;
+                    text-align: left;
+                    font-size: 13px;
+                    line-height : 24px;
+                    &:hover {
+                        background-color : #fff;
+                        color :#37454D;
+                        i {
+                            color :#37454D;
+                        }
+                    }
+                }
+                i {
+                    font-size: 13px;
+                    color : #fff;
+                }
+            }
+        }
+        
     }
 }
 
@@ -926,6 +975,7 @@ button.rtp-lb-close {
     
     &.rtmedia-no-comments {
         padding: 5px;
+        font-size: 12px;
     }
     
     &:hover .rtmedia-delete-comment {
@@ -1015,6 +1065,12 @@ button.rtp-lb-close {
             .rtmedia-media .tagcontainer {
                 display: inline-block;
                 max-width: calc(100% - 4px);
+/*                max-height: calc(100% -4px);
+                overflow: hidden;*/
+                
+                img {
+                    max-height: calc(100% - 4px);
+                }
             }
             
           .rtmedia-single-meta {
@@ -1104,12 +1160,13 @@ button.rtp-lb-close {
                 @include element-height-width( 20px, 24px);
                 font-size: 20px;
                 color : grey;
-                line-height: 22px;
+                line-height: 20px;
                 position : absolute;
                 right: 0;
                 z-index: 2;
-                top : -3px;
+                top : 0;
                 cursor : pointer;
+                font-weight: bold;
             }
         }
         .mfp-arrow {
@@ -1124,6 +1181,7 @@ button.rtp-lb-close {
             &:hover {
                 .mfp-arrow, .rtm-ltb-title-container, .rtm-ltb-action-container {
                     display: block;
+                    z-index : 99;
                 }
             }
             
@@ -1133,7 +1191,7 @@ button.rtp-lb-close {
                 color : #fff;
                 position: absolute;
                 width: 100%;
-                //display : none;
+                display : none;
                 
                 .rtmedia-actions,.rtmedia-author-actions{
                     display: inline-block;
@@ -1211,13 +1269,13 @@ button.rtp-lb-close {
                 .rtmedia-actions{
                  text-align : right;
                  display: inline-block;
-                 max-width: 60%;
+                 max-width: 69%;
                  float: right;
                 }
                 
                 .rtm-ltb-gallery-title {
                     display: inline-block;
-                    width: 39%;
+                    width: 30%;
                 }
             }
         }
@@ -1294,9 +1352,6 @@ button.rtp-lb-close {
             display: block
         }
         .rtmedia-action-buttons {
-/*            transition:background-color 0.2s ease-in-out;
-            -webkit-transition:background-color 0.2s ease-in-out;
-            -moz-transition:background-color 0.2s ease-in-out;*/
             display:block;
             padding:8px;
             color:#fff;
