@@ -21,6 +21,7 @@
             </div>
         <?php }
         ?>
+     <?php do_action ( 'rtmedia_after_media_gallery_title' ); ?>
     
     <ul class="rtmedia-list rtmedia-list-media <?php echo rtmedia_media_gallery_class (); ?>">
         <?php if ( have_rtmedia () ) { ?>

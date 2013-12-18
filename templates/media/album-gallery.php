@@ -4,7 +4,7 @@
         <h2 class="rtm-gallery-title"><?php _e( 'Album Gallery' , 'rtmedia' ) ; ?></h2>
         <div id="rtm-media-options"><?php do_action ( 'rtmedia_album_gallery_actions' ); ?></div>
     </div>   
-    
+    <?php do_action ( 'rtmedia_after_album_gallery_title' ); ?>
     <div id="rtm-media-gallery-uploader">
         <?php rtmedia_uploader ( array('is_up_shortcode'=> false) ); ?>
     </div>
