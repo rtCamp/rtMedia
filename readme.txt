@@ -6,7 +6,7 @@ License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires at least: WordPress 3.6
 Tested up to: WordPress 3.7 + BuddyPress 1.8.1
-Stable tag: 3.2.12
+Stable tag: 3.2.13
 
 Add albums, photo, audio/video encoding, privacy, sharing, front-end uploads & more. All this works mobile/tablets devices.
 
@@ -133,8 +133,9 @@ Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_sou
 
 = 3.2.13 =
 * Improved and improved Lightbox UI.
-* More enhanced Uploader with new features, better error handling and notification, improved UI.
+* More enhanced Uploader with new features, better error handling and notification.
 * Enhanced UI for media edit screen.
+* Fixed 404 permalink issue.
 * Bug fixes
 
 = 3.2.12 =
