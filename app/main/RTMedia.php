@@ -770,7 +770,7 @@ class RTMedia
             wp_enqueue_style('rtmedia-main', RTMEDIA_URL . 'app/assets/css/main.css', '', RTMEDIA_VERSION);
         }
         //wp_enqueue_style('rtmedia-font-awesome', RTMEDIA_URL . 'app/assets/css/font-awesome.min.css', '', RTMEDIA_VERSION);
-        wp_enqueue_style('rtmedia-font-icons', RTMEDIA_URL . 'app/assets/css/rtmedia-icons/rtm_font_icons.min.css', '', RTMEDIA_VERSION);
+        wp_enqueue_style('rtmedia-font-icons', RTMEDIA_URL . 'app/assets/css/rtmedia-icons/rtm_font_icons.css', '', RTMEDIA_VERSION);
         if(! wp_script_is("rtp-foundation-js"))
             wp_enqueue_script('rtp-foundation-js', RTMEDIA_URL . 'lib/foundation/foundation.min.js', array('jquery'), RTMEDIA_VERSION);
         wp_enqueue_script('rtmedia-foundation-reveal', RTMEDIA_URL . 'lib/foundation/foundation.reveal.js', array('jquery','rtp-foundation-js'), RTMEDIA_VERSION);
