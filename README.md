@@ -131,6 +131,10 @@ http://www.youtube.com/watch?v####dJrykKQGDcs
 
 Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "Visit rtMedia's Features page") to get some details about future releases.
 
+
+#### 3.2.13.1 ####
+* Update po files.
+
 #### 3.2.13 ####
 * Improved Lightbox UI.
 * More enhanced Uploader with new features, better error handling and notification.
@@ -631,8 +635,8 @@ Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_sou
 * HTML5 Audio Tag Support (with fallback)
 * HTML5 Video Tag Support (with fallback)
 
-#### 3.2.12 ####
-Requires BuddyPress 1.7 or higher, if using BuddyPress.lib updated and bug fixes
+#### 3.2.13.1 ####
+Requires BuddyPress 1.7 or higher, if using BuddyPress. Update po files
 
 ## Sponsors ##
 
