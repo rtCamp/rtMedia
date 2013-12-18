@@ -68,7 +68,7 @@
                                     <div class='rtmedia-actions-before-comments'>
                                         <?php do_action('rtmedia_actions_before_comments'); ?>
                                         <?php if(is_user_logged_in ()) {?>
-                                            <span><a href='#' class='rtmedia-comment-link'>Comment</a></span>
+                                            <span><a href='#' class='rtmedia-comment-link'><?php _e('Comment', 'rtmedia');?></a></span>
                                         <?php }?>
                                     </div>
                                     <div class="rtm-like-comments-info">
