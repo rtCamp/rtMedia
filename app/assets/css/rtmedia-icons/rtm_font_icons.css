@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'rtm_font_icons';
-  src: url('../../font/rtm_font_icons.eot?21456257');
-  src: url('../../font/rtm_font_icons.eot?21456257#iefix') format('embedded-opentype'),
-       url('../../font/rtm_font_icons.woff?21456257') format('woff'),
-       url('../../font/rtm_font_icons.ttf?21456257') format('truetype'),
-       url('../../font/rtm_font_icons.svg?21456257#rtm_font_icons') format('svg');
+  src: url('../font/rtm_font_icons.eot?21456257');
+  src: url('../font/rtm_font_icons.eot?21456257#iefix') format('embedded-opentype'),
+       url('../font/rtm_font_icons.woff?21456257') format('woff'),
+       url('../font/rtm_font_icons.ttf?21456257') format('truetype'),
+       url('../font/rtm_font_icons.svg?21456257#rtm_font_icons') format('svg');
   font-weight: normal;
   font-style: normal;
 }
