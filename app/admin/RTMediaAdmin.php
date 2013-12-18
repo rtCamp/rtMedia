@@ -82,6 +82,9 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
 	    if( !class_exists("BuddyPress") ) {
 		add_action( 'admin_init',array( $this,'check_permalink_admin_notice' ) );
 	    }
+            
+            add_action ( 'wp_ajax_rtmedia_hide_template_override_notice', array( $this, 'rtmedia_hide_template_override_notice' ), 1 );
+            add_action ( 'admin_notices', array( $this, 'rtmedia_update_template_notice' ) );
 	}
 
 	function check_permalink_admin_notice() {
@@ -1308,6 +1311,39 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
                 set_transient( 'presstrends_cache_data', $data, 60 * 60 * 24 );
             }
         }
+        
+        function rtmedia_update_template_notice(){
+	    $site_option  = rtmedia_get_site_option("rtmedia-update-template-notice");
+            if(!$site_option || $site_option != "hide") {
+		rtmedia_update_site_option("rtmedia-update-template-notice", "show");
+		echo '<div class="error rtmedia-update-template-notice"><p>' 
+                . __('Template files of rtMedia Plugin are updated, so please update your rtmedia template files if you have overridden the default rtmedia templates in your theme.')
+                . '<a href="#" onclick="rtmedia_hide_template_override_notice()" style="float:right">' .__('Hide', 'rtmedia') .'</a>"'
+                . ' </p></div>';
+	    ?>
+		<script type="text/javascript">
+		    function rtmedia_hide_template_override_notice() {
+			var data = {action : 'rtmedia_hide_template_override_notice'};
+			jQuery.post(ajaxurl,data,function(response){
+			    response = response.trim();
+			    if(response === "1")
+				jQuery('.rtmedia-update-template-notice').remove();
+			});
+		    }
+		</script>
+	    <?php
+	    }
+	}
+        
+         function rtmedia_hide_template_override_notice() {
+
+	    if(rtmedia_update_site_option("rtmedia-update-template-notice", "hide"))
+		echo "1";
+	    else
+		echo "0";
+	    die();
+	}
+        
     }
 
 }
