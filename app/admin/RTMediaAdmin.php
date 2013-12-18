@@ -1317,8 +1317,8 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
             if(!$site_option || $site_option != "hide") {
 		rtmedia_update_site_option("rtmedia-update-template-notice", "show");
 		echo '<div class="error rtmedia-update-template-notice"><p>' 
-                . __('Template files of rtMedia Plugin are updated, so please update your rtmedia template files if you have overridden the default rtmedia templates in your theme.')
-                . '<a href="#" onclick="rtmedia_hide_template_override_notice()" style="float:right">' .__('Hide', 'rtmedia') .'</a>"'
+                . __('Template files of rtMedia Plugin are updated, so please update your rtMedia template files if you have overridden the default rtMedia templates in your theme.')
+                . '<a href="#" onclick="rtmedia_hide_template_override_notice()" style="float:right">' .__('Hide', 'rtmedia') .'</a>'
                 . ' </p></div>';
 	    ?>
 		<script type="text/javascript">
