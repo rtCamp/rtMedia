@@ -32,7 +32,7 @@ If you're in a hurry, you can skip the long list of features in subsequent secti
 
 Since rtMedia has many features video doesn't include all features:
 
-http://www.youtube.com/watch?v=dJrykKQGDcs
+http://www.youtube.com/watch?v####dJrykKQGDcs
 
 #### rtMedia Features ####
 
@@ -130,6 +130,13 @@ http://www.youtube.com/watch?v####dJrykKQGDcs
 ## Changelog ##
 
 Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "Visit rtMedia's Features page") to get some details about future releases.
+
+#### 3.2.13 ####
+* Improved Lightbox UI.
+* More enhanced Uploader with new features, better error handling and notification.
+* Enhanced UI for media edit screen.
+* Fixed 404 permalink issue.
+* Bug fixes
 
 #### 3.2.12 ####
 * lib updated for magnific popup and media-element, bug fixes
