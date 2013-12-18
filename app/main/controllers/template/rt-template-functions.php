@@ -1434,7 +1434,7 @@ function rtmedia_edit_media_privacy_ui(){
     $privacymodel = new RTMediaPrivacy();
     $privacy = $privacymodel->select_privacy_ui( $echo = false);
     if($privacy){
-        return "<div class='rtmedia-edit-privacy'><label for='privacy'>" . __('Privacy :', 'rtmedia') . "</label>" . $privacy . "</div>";
+        return "<div class='rtmedia-edit-privacy'><label for='privacy'>" . __('Privacy : ', 'rtmedia') . "</label>" . $privacy . "</div>";
     }
 }
 

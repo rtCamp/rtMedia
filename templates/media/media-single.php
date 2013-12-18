@@ -24,13 +24,13 @@
                             <a href="<?php echo rtmedia_permalink();?>" title="<?php echo rtmedia_title (); ?>"><?php echo rtmedia_title (); ?></a>
                         </h2>
                         <div class='rtmedia-author-actions'>
-                            <?php rtmedia_actions();//do_action('rtmedia_author_media_actions'); ?>
+                            <?php rtmedia_actions(); ?>
                         </div>
                     </div>
                     <div class="rtmedia-media" id ="rtmedia-media-<?php echo rtmedia_id (); ?>"><?php rtmedia_media ( true ); ?></div>
 
                     <div class='rtm-ltb-action-container clear'>
-                        <div class="rtm-ltb-gallery-title"><span class='ltb-title'><?php //echo __('Wall Photos');?></span> <span class='media-index'></span><span class='total-medias'></span></div>
+                        <div class="rtm-ltb-gallery-title"><span class='ltb-title'></span><span class='media-index'></span><span class='total-medias'></span></div>
                         <div class="rtmedia-actions">
                             <?php do_action('rtmedia_action_buttons_after_media', rtmedia_id());?>
                         </div>
@@ -90,8 +90,8 @@
                 <?php } else { // else for if ( $rt_ajax_request )?>
 
                 <div class="rtmedia-item-actions clear">
-                    <?php rtmedia_actions (); ?>
 		    <?php do_action('rtmedia_actions_without_lightbox'); ?>
+                    <?php rtmedia_actions (); ?>
 		</div>
 		<div class="rtmedia-actions-before-description clear">
                     <?php do_action('rtmedia_actions_before_description', rtmedia_id()) ;?>
