@@ -38,7 +38,7 @@ class RTMediaLike extends RTMediaUserInteraction {
         $button = $this->render();
 
         if($button)
-            echo "<span>" . $button . "</span> &sdot; ";
+            echo "<span>" . $button . "</span>";
     }
 
     function process() {
