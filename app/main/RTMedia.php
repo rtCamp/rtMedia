@@ -773,8 +773,8 @@ class RTMedia
         wp_enqueue_style('rtmedia-font-icons', RTMEDIA_URL . 'app/assets/css/rtmedia-icons/rtm_font_icons.css', '', RTMEDIA_VERSION);
         if(! wp_script_is("rtp-foundation-js"))
             wp_enqueue_script('rtp-foundation-js', RTMEDIA_URL . 'lib/foundation/foundation.min.js', array('jquery'), RTMEDIA_VERSION);
-        wp_enqueue_script('rtmedia-foundation-reveal', RTMEDIA_URL . 'lib/foundation/foundation.reveal.js', array('jquery','rtp-foundation-js'), RTMEDIA_VERSION);
-        wp_enqueue_script('rtmedia-foundation-section', RTMEDIA_URL . 'lib/foundation/foundation.section.js', array('jquery','rtp-foundation-js'), RTMEDIA_VERSION);
+//        wp_enqueue_script('rtmedia-foundation-reveal', RTMEDIA_URL . 'lib/foundation/foundation.reveal.js', array('jquery','rtp-foundation-js'), RTMEDIA_VERSION);
+//        wp_enqueue_script('rtmedia-foundation-section', RTMEDIA_URL . 'lib/foundation/foundation.section.js', array('jquery','rtp-foundation-js'), RTMEDIA_VERSION);
         wp_enqueue_script('rtmedia-main', RTMEDIA_URL . 'app/assets/js/rtMedia.js', array('jquery', 'wp-mediaelement'), RTMEDIA_VERSION);
         wp_enqueue_style('rtmedia-magnific', RTMEDIA_URL . 'lib/magnific/magnific.css', '', RTMEDIA_VERSION);
         wp_enqueue_script('rtmedia-magnific', RTMEDIA_URL . 'lib/magnific/magnific.js', '', RTMEDIA_VERSION);
