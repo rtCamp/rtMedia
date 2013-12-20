@@ -323,7 +323,7 @@ jQuery(function($) {
                 tdSize.className = "plupload_file_size";
                 tdSize.innerHTML = plupload.formatSize(file.size);
                 tdDelete = document.createElement("td");
-                tdDelete.innerHTML = "&times;";
+                tdDelete.innerHTML = "<span class='remove-from-queue'>&times;</span>";
                 tdDelete.title = rtmedia_close;
                 tdDelete.className = "close plupload_delete";
                 tdEdit = document.createElement("td");
@@ -339,7 +339,7 @@ jQuery(function($) {
                 tr.appendChild(tdDelete);
                 $("#rtMedia-queue-list").append(tr);
                 //Delete Function
-                $("#" + file.id + " td.plupload_delete").click(function(e) {
+                $("#" + file.id + " td.plupload_delete .remove-from-queue").click(function(e) {
                     e.preventDefault();
                     uploaderObj.uploader.removeFile(up.getFile(file.id));
                     $("#" + file.id).remove();
@@ -444,6 +444,7 @@ jQuery(function($) {
                 if(rtnObj.permalink != ''){
                     $("#" + file.id + " .plupload_file_name").html("<a href='" + rtnObj.permalink + "' target='_blank' title='" + rtnObj.permalink + "'>" + file.name + "</a>");
                     $("#" + file.id + " .plupload_media_edit").html("<a href='" + rtnObj.permalink + "edit' target='_blank'><span title='" + rtmedia_edit_media + "'><i class='rtmicon-edit'></i> " + rtmedia_edit + "</span></a>");
+                    $("#" + file.id + " .plupload_delete").html("<span id='" + rtnObj.media_id + "' class='rtmedia-delete-uploaded-media' title='" + rtmedia_delete + "'>&times;</span>");
                 }
                 
             } catch (e) {
@@ -489,6 +490,26 @@ jQuery(function($) {
             jQuery('#rtm_show_upload_ui').toggleClass('primary');
 	});
     }
+    
+    jQuery(document).on( 'click','.plupload_delete .rtmedia-delete-uploaded-media',function(){
+        var that = $(this);
+        if(confirm(rtmedia_delete_uploaded_media)){
+            var nonce = $('#rtmedia-upload-container #rtmedia_media_delete_nonce').val();
+            var media_id = $(this).attr('id');
+            var data = {
+                action : 'delete_uploaded_media',
+                nonce : nonce,
+                media_id : media_id
+            }
+            
+            $.post( ajaxurl, data, function(response){
+                if(response == '1'){
+                    that.closest('tr').remove();
+                    $('#'+media_id).remove();
+                }
+            });
+        }
+    });
         
 
 });

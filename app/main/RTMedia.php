@@ -804,12 +804,15 @@ class RTMedia
         wp_localize_script('rtmedia-main', 'rtmedia_upload_failed_msg', __('Failed',"rtMedia"));
         wp_localize_script('rtmedia-main', 'rtmedia_close', __('Close',"rtMedia"));
         wp_localize_script('rtmedia-main', 'rtmedia_edit', __('Edit',"rtMedia"));
+        wp_localize_script('rtmedia-main', 'rtmedia_delete', __('Delete',"rtMedia"));
         wp_localize_script('rtmedia-main', 'rtmedia_edit_media', __('Edit Media',"rtMedia"));
         wp_localize_script('rtmedia-main', 'rtmedia_remove_from_queue', __('Remove from queue',"rtMedia"));
         wp_localize_script('rtmedia-main', 'rtmedia_add_more_files_msg', __('Add more files',"rtMedia"));
         wp_localize_script('rtmedia-main', 'rtmedia_file_extension_error_msg', __('File not supported',"rtMedia"));
         wp_localize_script('rtmedia-main', 'rtmedia_more', __('more',"rtMedia"));
         wp_localize_script('rtmedia-main', 'rtmedia_less', __('less',"rtMedia"));
+        wp_localize_script('rtmedia-main', 'rtmedia_delete_uploaded_media', __('This media is uploaded. Are you sure you want to delete this media?',"rtMedia"));
+        
     }
 
     function set_bp_bar() {

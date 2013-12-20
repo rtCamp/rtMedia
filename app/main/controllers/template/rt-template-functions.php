@@ -149,11 +149,17 @@ function rtmedia_media_gallery_class () {
 }
 
 function rtmedia_id ( $media_id = false ) {
+    global $rtmedia_backbone;
+    
+     if ( $rtmedia_backbone[ 'backbone' ] ) {
+        return '<%= id %>';
+    }
+   
     if ( $media_id ) {
         $model = new RTMediaModel();
         $media = $model->get_media ( array( 'media_id' => $media_id ), 0, 1 );
     if(isset($media) && sizeof($media) > 0 ) {
-        return $media[ 0 ]->id;
+       return $media[ 0 ]->id;
     }
         return false;
     } else {
@@ -1658,6 +1664,13 @@ function rtmedia_admin_premium_page($page) {
         <h1 class="premium-title"><?php _e('Reasons to buy rtMedia-PRO', 'rtmedia'); ?></h1>
         </div>
         <div class="row">
+        <div class="columns large-1 rtm-premium-icon-pro"><i class="rtmicon-rss rtmicon-3x"></i></div>
+        <div class="columns large-10">
+            <h2><?php _e( 'RSS Feed/Podcasting Support', 'rtmedia'); ?></h2>
+            <p><?php _e( 'You can consume rtMedia uploads from iTunes as well as any feed-reader/podcasting software.', 'rtmedia'); ?></p>
+        </div>
+        </div>
+        <div class="row">
         <div class="columns large-1 rtm-premium-icon-pro"><i class="rtmicon-comments rtmicon-3x"></i></div>
         <div class="columns large-10">
             <h2><?php _e( 'WordPress Comment Attachment', 'rtmedia'); ?></h2>
@@ -1752,13 +1765,26 @@ function rtmedia_admin_premium_page($page) {
         <div class="columns large-1 rtm-premium-icon-pro"><i class="rtmicon-code rtmicon-3x"></i></div>
         <div class="columns large-10">
             <h2><?php _e( 'Premium & Open-Source', 'rtmedia'); ?></h2>
-            <p><?php sprintf( _e( "Developers get full control over rtMedia-PRO's source. They'll get access to <a href='%s' target='_blank'>%s</a> to dive into the code.", 'rtmedia'), 'http://git.rtcamp.com/', 'git.rtcamp.com' ); ?></p>
+            <p><?php echo __("Developers get full control over rtMedia-PRO's source. They'll get access to ") . "<a href='http://git.rtcamp.com/' target='_blank'>git.rtcamp.com</a>"; ?></p>
+        </div>
+        </div>
+        </br>
+        <div class="row">
+        <div class="columns large-12 rtmedia-upgrade">
+            <a href="http://rtcamp.com/store/rtmedia-pro/" class='upgrade-button' title='<?php _e('Upgrade to rtMedia PRO Now ', 'rtMedia'); ?>'><?php _e('Upgrade to rtMedia PRO Now ', 'rtMedia'); ?></a>
         </div>
         </div>
     </div>
     <?php
     }
 }
+add_action('wp_footer', 'rtmedia_link_in_footer');
+function rtmedia_link_in_footer(){
+   $link =  rtmedia_get_site_option ( 'rtmedia-add-linkback', false );
+   if($link) {
+       echo "<div class='rtmedia-footer-link'>" . __("Empower your community with ", 'rtmedia') . "<a href='https://rtcamp.com/rtmedia/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media' title='" . __('The only complete media solution for WordPress, BuddyPress and bbPress', 'rtmedia') . ">rtMedia</a>" . "</div>";
+   }
+}    
 
 //add content before the media in single media page
 add_action('rtmedia_before_media', 'rtmedia_content_before_media',10 );
@@ -1878,4 +1904,26 @@ function rtmedia_custom_css() {
     if(isset($options['styles_custom']) && $options['styles_custom'] != ""){
         echo "<style type='text/css'> " . $options['styles_custom'] . " </style>";
     }
+}
+
+
+add_action('wp_ajax_delete_uploaded_media', 'rtmedia_delete_uploaded_media');
+function rtmedia_delete_uploaded_media() {
+    
+    if(isset($_POST) && isset($_POST['action']) && $_POST['action'] == 'delete_uploaded_media' && isset($_POST['media_id']) && $_POST['media_id'] != ""){
+        
+        if ( wp_verify_nonce ( $_POST['nonce'], 'rtmedia_' . get_current_user_id() ) ){
+            
+            $media = new RTMediaMedia();
+            $media_id = $_POST['media_id'];
+
+            $delete = $media->delete( $media_id );
+                echo "1" ;
+                die();
+            }
+    }
+    
+    echo "0";
+    die();
+    
 }
