@@ -851,14 +851,14 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
             /* rtMedia */
             $tabs[ ] = array(
                 'href' => '#rtmedia-general',
-                'icon' => 'icon-cogs',
+                'icon' => 'rtmicon-cogs',
                 'title' => __( 'rtMedia General', 'rtmedia' ),
                 'name' => __( 'General', 'rtmedia' ),
                 'callback' => array( 'RTMediaFormHandler', 'general_content' )
             );
             $tabs[ ] = array(
                 'href' => '#rtmedia-types',
-                'icon' => 'icon-film',
+                'icon' => 'rtmicon-film',
                 'title' => __( 'rtMedia Types', 'rtmedia' ),
                 'name' => __( 'Types', 'rtmedia' ),
                 'callback' => array( 'RTMediaFormHandler', 'types_content' )
@@ -866,7 +866,7 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
 
             $tabs[ ] = array(
                 'href' => '#rtmedia-sizes',
-                'icon' => 'icon-resize-full',
+                'icon' => 'rtmicon-expand',
                 'title' => __( 'rtMedia Sizes', 'rtmedia' ),
                 'name' => __( 'Sizes', 'rtmedia' ),
                 'callback' => array( 'RTMediaFormHandler', 'sizes_content' )
@@ -874,7 +874,7 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
 
             $tabs[ ] = array(
                 'href' => '#rtmedia-privacy',
-                'icon' => 'icon-lock',
+                'icon' => 'rtmicon-lock',
                 'title' => __( 'rtMedia Privacy', 'rtmedia' ),
                 'name' => __( 'Privacy', 'rtmedia' ),
                 'callback' => array( 'RTMediaFormHandler', 'privacy_content' )
@@ -882,7 +882,7 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
             if ( class_exists ( "BuddyPress" ) ) {
                 $tabs[ ] = array(
                     'href' => '#rtmedia-bp',
-                    'icon' => 'icon-group',
+                    'icon' => 'rtmicon-group',
                     'title' => __( 'rtMedia BuddyPress', 'rtmedia' ),
                     'name' => __( 'BuddyPress', 'rtmedia' ),
                     'callback' => array( 'RTMediaFormHandler', 'buddypress_content' ) //change it to BuddyPress Content
@@ -890,7 +890,7 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
             }
             $tabs[ ] = array(
                 'href' => '#rtmedia-custom-css',
-                'icon' => 'icon-css3',
+                'icon' => 'rtmicon-css3',
                 'title' => __( 'rtMedia Custom CSS', 'rtmedia' ),
                 'name' => __( 'Custom CSS', 'rtmedia' ),
                 'callback' => array( 'RTMediaFormHandler', 'custom_css_content' )
@@ -1002,11 +1002,11 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
                             <label class="columns large-6 large-offset-3" for="bp-media-add-linkback"><input' . checked ( rtmedia_get_site_option ( 'rtmedia-add-linkback', false ), true, false ) . ' type="checkbox" name="bp-media-add-linkback" value="1" id="bp-media-add-linkback"/> ' . __( 'Add link to footer', 'rtmedia' ) . '</label>
                             <div class="row">
                                 <div class="columns large-6"><iframe src="//www.facebook.com/plugins/like.php?href=http%3A%2F%2Frtcamp.com%2Fbuddypress-media%2F&amp;send=false&amp;layout=button_count&amp;width=72&amp;show_faces=false&amp;font&amp;colorscheme=light&amp;action=like&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:80px; height:21px; margin-top: 5px;" allowTransparency="true"></iframe></div>
-                                <div class="columns large-6"><a href="https://www.facebook.com/sharer/sharer.php?u=http://rtcamp.com/buddypress-media/" class="button" target="_blank"> <i class="icon-facebook"></i> ' . __ ( 'Share', 'rtmedia' ) . '</a></div>
+                                <div class="columns large-6"><a href="https://www.facebook.com/sharer/sharer.php?u=http://rtcamp.com/buddypress-media/" class="button" target="_blank"> <i class="rtmicon-facebook"></i> ' . __ ( 'Share', 'rtmedia' ) . '</a></div>
                                 <div class="columns large-6"><iframe allowtransparency="true" frameborder="0" scrolling="no" src="//platform.twitter.com/widgets/follow_button.html?screen_name=buddypressmedia&show_count=false" style="width:62px; height:21px; margin-top: 5px;"></iframe></div>
-                                <div class="columns large-6"><a href="http://twitter.com/home/?status=' . $message . '" class="button button-tweet" target= "_blank"><i class="icon-twitter"></i> ' . __( 'Tweet', 'rtmedia' ) . '</a></div>
+                                <div class="columns large-6"><a href="http://twitter.com/home/?status=' . $message . '" class="button button-tweet" target= "_blank"><i class="rtmicon-twitter"></i> ' . __( 'Tweet', 'rtmedia' ) . '</a></div>
                                 <div class="columns large-6"><a href="http://wordpress.org/support/view/plugin-reviews/buddypress-media?rate=5#postform" class="button bpm-wp-button" target= "_blank"><span class="bpm-wp-icon">&nbsp;</span> ' . __( 'Review', 'rtmedia' ) . '</a></div>
-                                <div class="columns large-6"><a href="' . sprintf ( '%s', 'http://feeds.feedburner.com/rtcamp/' ) . '"  title="' . __ ( 'Subscribe to our feeds', 'rtmedia' ) . '" class="button" target="_blank"><i class="bp-media-rss icon-rss"></i> ' . __ ( 'Feeds', 'rtmedia' ) . '</a></div>
+                                <div class="columns large-6"><a href="' . sprintf ( '%s', 'http://feeds.feedburner.com/rtcamp/' ) . '"  title="' . __ ( 'Subscribe to our feeds', 'rtmedia' ) . '" class="button" target="_blank"><i class="bp-media-rss rtmicon-rss"></i> ' . __ ( 'Feeds', 'rtmedia' ) . '</a></div>
                             </div>
                         </div>';
             //<li><a href="' . sprintf('%s', 'http://www.facebook.com/rtCamp.solutions/') . '"  title="' . __('Become a fan on Facebook', 'rtmedia') . '" class="bp-media-facebook bp-media-social">' . __('Facebook', 'rtmedia') . '</a></li>

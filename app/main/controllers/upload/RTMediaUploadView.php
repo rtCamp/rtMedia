@@ -47,17 +47,19 @@ class RTMediaUploadView {
         } elseif ( is_rtmedia_album_enable () && $rtmedia_query && is_rtmedia_gallery () ) {
 
             if ( isset( $rtmedia_query->query[ 'context' ] ) && $rtmedia_query->query[ 'context' ] == 'profile' ) {
-                $album = '<span><i class="rtmicon-picture-1"></i> <label>' . __('Album ','rtmedia') . ': </label><select name="album" class="rtmedia-user-album-list">' . rtmedia_user_album_list () . '</select></span>';
+                $album = '<span><i class="rtmicon-picture-o"></i> <label>' . __('Album ','rtmedia') . ': </label><select name="album" class="rtmedia-user-album-list">' . rtmedia_user_album_list () . '</select></span>';
             }
             if (isset( $rtmedia_query->query[ 'context' ] ) && $rtmedia_query->query[ 'context' ] == 'group' ) {
-                $album = '<span><i class="rtmicon-picture-1"></i> <label>' . __('Album ','rtmedia') . ': </label><select name="album" class="rtmedia-user-album-list">' . rtmedia_group_album_list () . '</select></span>';
+                $album = '<span><i class="rtmicon-picture-o"></i> <label>' . __('Album ','rtmedia') . ': </label><select name="album" class="rtmedia-user-album-list">' . rtmedia_group_album_list () . '</select></span>';
             }
         }
         $up_privacy = $privacy = ""; //uploader privacy dropdown for uploader under rtMedia Media tab.
         if( is_rtmedia_privacy_enable () && ( ! isset( $rtmedia_query->is_upload_shortcode ) || $rtmedia_query->is_upload_shortcode === false) ) {
             $up_privacy = new RTMediaPrivacy();
             $up_privacy = $up_privacy->select_privacy_ui( false, 'rtSelectPrivacy') ;
-            $privacy = "<span><i class='rtmicon-eye'></i> <label for='privacy'> " . __('Privacy : ', 'rtmedia') . "</label>" . $up_privacy . "</span>";
+            if($up_privacy){
+                $privacy = "<span><i class='rtmicon-eye'></i> <label for='privacy'> " . __('Privacy : ', 'rtmedia') . "</label>" . $up_privacy . "</span>";
+            }
         }
         $tabs = array(
             'file_upload' => array(
@@ -67,7 +69,7 @@ class RTMediaUploadView {
                         . '<div id="drag-drop-area" class="drag-drop row">'
                                 ."<div class='rtm-album-privacy'>" . $album . $privacy . "</div>" 
                                 . '<div class="rtm-select-files"><input id="rtMedia-upload-button" value="' . __( "Select your files", "rtmedia" ) . '" type="button" class="rtmedia-upload-input rtmedia-file" />'
-                                . '<span class="rtm-seperator">' . __('or','rtmedia') .'</span><span class="drag-drop-info">' . __('Drop your files here', 'rtmedia') . '</span> <i class="rtm-file-size-limit rtmicon-info-circled"></i></div>'
+                                . '<span class="rtm-seperator">' . __('or','rtmedia') .'</span><span class="drag-drop-info">' . __('Drop your files here', 'rtmedia') . '</span> <i class="rtm-file-size-limit rtmicon-info-circle"></i></div>'
                                 . '<input type="button" class="start-media-upload" value="' . __('Start upload', 'rtmedia') .'"/>'
                         . '</div>'
                         . '<div class="row"><table id="rtMedia-queue-list" class="rtMedia-queue-list"><tbody></tbody></table></div>'

@@ -366,7 +366,7 @@ jQuery(function($) {
                 if(tmp_array.length > 1){
                     ext= tmp_array[tmp_array.length - 1];
                     if( !(typeof(up.settings.upload_size) != "undefined" && typeof(up.settings.upload_size[ext]) != "undefined" &&  typeof(up.settings.upload_size[ext]['size']) )){
-                        tr = "<tr class='upload-error'><td>" + err.file.name + "</td><td> " + rtmedia_max_file_msg + plupload.formatSize( up.settings.max_file_size / 1024 * 1024) + " <i class='rtmicon-info-circled' title='" + window.file_size_info + "'></i></td><td>" + plupload.formatSize(err.file.size) + "</td><td></td><td class='close error_delete'>&times;</td></tr>";
+                        tr = "<tr class='upload-error'><td>" + err.file.name + "</td><td> " + rtmedia_max_file_msg + plupload.formatSize( up.settings.max_file_size / 1024 * 1024) + " <i class='rtmicon-info-circle' title='" + window.file_size_info + "'></i></td><td>" + plupload.formatSize(err.file.size) + "</td><td></td><td class='close error_delete'>&times;</td></tr>";
                     }
                 }
                 //append the message to the file queue
@@ -377,7 +377,7 @@ jQuery(function($) {
                 if( err.code == -601) { // file extension error 
                     err.message = rtmedia_file_extension_error_msg;
                 }
-                var tr = "<tr class='upload-error'><td>" + (err.file ? err.file.name : "") + "</td><td>" + err.message + " <i class='rtmicon-info-circled' title='" + window.file_extn_info + "'></i></td><td>" + plupload.formatSize(err.file.size) + "</td><td></td><td class='close error_delete'>&times;</td></tr>";
+                var tr = "<tr class='upload-error'><td>" + (err.file ? err.file.name : "") + "</td><td>" + err.message + " <i class='rtmicon-info-circle' title='" + window.file_extn_info + "'></i></td><td>" + plupload.formatSize(err.file.size) + "</td><td></td><td class='close error_delete'>&times;</td></tr>";
                 $("#rtMedia-queue-list tbody").append(tr);  
             }
                    
