@@ -13,7 +13,7 @@ if ( isset( $_POST[ 'is_album' ] ) )
 if ( isset( $_POST[ 'is_edit_allowed' ] ) )
 	$rtmedia_backbone['is_edit_allowed'] = $_POST[ 'is_edit_allowed' ][0];
 ?>
-<li class="rtmedia-list-item">
+<li class="rtmedia-list-item" id="<?php echo rtmedia_id(); ?>">
 	<?php do_action( 'rtmedia_before_item' ); ?>
 	<a href ="<?php rtmedia_permalink(); ?>">
 		<div class="rtmedia-item-thumbnail">
