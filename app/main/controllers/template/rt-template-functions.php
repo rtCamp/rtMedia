@@ -1771,7 +1771,7 @@ function rtmedia_admin_premium_page($page) {
         </br>
         <div class="row">
         <div class="columns large-12 rtmedia-upgrade">
-            <a href="http://rtcamp.com/store/rtmedia-pro/" class='upgrade-button' title='<?php _e('Upgrade to rtMedia PRO Now ', 'rtMedia'); ?>'><?php _e('Upgrade to rtMedia PRO Now ', 'rtMedia'); ?></a>
+            <a href="http://rtcamp.com/store/rtmedia-pro/" target="_blank" class='upgrade-button' title='<?php _e('Upgrade to rtMedia PRO Now ', 'rtMedia'); ?>'><?php _e('Upgrade to rtMedia PRO Now ', 'rtMedia'); ?></a>
         </div>
         </div>
     </div>
