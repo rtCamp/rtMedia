@@ -283,7 +283,7 @@ class RTMediaMedia {
             }
         }
 
-        if ( $status == 0 ) {
+        if ( !$status ) {
             return false;
         } else {
 	    global $rtmedia_points_media_id;
