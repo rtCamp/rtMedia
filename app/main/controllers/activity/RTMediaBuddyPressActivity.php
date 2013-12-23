@@ -14,7 +14,7 @@ class RTMediaBuddyPressActivity {
 
     function __construct () {
         global $rtmedia;
-        if ( $rtmedia->options[ "buddypress_enableOnActivity" ] !== 0 ) {
+        if ( $rtmedia->options[ "buddypress_enableOnActivity" ] != 0 ) {
             add_action ( "bp_after_activity_post_form", array( &$this, "bp_after_activity_post_form" ) );
             add_action ( "bp_activity_posted_update", array( &$this, "bp_activity_posted_update" ), 99, 3 );
             add_action ( "bp_groups_posted_update", array( &$this, "bp_groups_posted_update" ), 99, 4 );
