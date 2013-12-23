@@ -50,6 +50,8 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 = rtMedia-PRO Features =
 
+ * **RSS Feed/Podcasting Support** - Integrates RSS Feed Support that can be used for podcasting to listen audio and video to your podcast supported player(e.g. iTunes).
+ * **WordPress Comment Attachment** -  Attach photos, videos, music, documents and other files to native WordPress comments.
  * **bbPress Integration** - Integrates with profiles. Also adds attachment support for topics and replies.
  * **Moderation Feature** - "Report Abuse" button for users. Interface to manage reported media and optionally block users from future uploads.
  * **MyCRED/CubePoints Integration** - You can reward users for media uploads. Out of box integration for MyCRED and CubePoints.
@@ -132,8 +134,9 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "Visit rtMedia's Features page") to get some details about future releases.
 
 = 3.3 =
-* Bug fixes
+* Updated uploader with media delete functionality.
 * Improved UI
+* Bug fixes
 
 = 3.2.13.1 =
 * Update po files.
