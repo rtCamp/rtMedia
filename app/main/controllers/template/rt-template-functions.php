@@ -1781,9 +1781,14 @@ function rtmedia_admin_premium_page($page) {
 add_action('wp_footer', 'rtmedia_link_in_footer');
 function rtmedia_link_in_footer(){
    $link =  rtmedia_get_site_option ( 'rtmedia-add-linkback', false );
-   if($link) {
-       echo "<div class='rtmedia-footer-link'>" . __("Empower your community with ", 'rtmedia') . "<a href='https://rtcamp.com/rtmedia/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media' title='" . __('The only complete media solution for WordPress, BuddyPress and bbPress', 'rtmedia') . ">rtMedia</a>" . "</div>";
-   }
+   if($link) { ?>
+       
+       <div class='rtmedia-footer-link'>
+          <?php echo __("Empowering your community with ", 'rtmedia') ;?>
+          <a href='https://rtcamp.com/rtmedia/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media' title='<?php echo __('The only complete media solution for WordPress, BuddyPress and bbPress', 'rtmedia');?> '>
+              rtMedia</a>
+       </div>
+   <?php }
 }    
 
 //add content before the media in single media page
