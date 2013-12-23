@@ -5,20 +5,12 @@
 
 	<?php
         
-//            if( rtmedia_delete_allowed() ) {
-//                    rtmedia_delete_form();
-//            }
             if(rtmedia_edit_allowed ()) {
                 global $rtmedia_media;
             ?>
     
             <div class="rtmedia-single-edit-title-container">
                 <h2 class="rtmedia-title"><?php echo __ ( 'Edit Media' , 'rtmedia' ); ?></h2>
-<!--                <div id="rtm-media-options" class="rtm-media-options">
-                    <span class="rtmedia-instagram-effects primary" title="Add Instagram Effects"><i class="rtmicon-instagramm"></i>Instagram Effects</span>
-                    <?php //do_action('rtmedia_single_media_edit_actions');?>
-                    <span title="Modify Image" class="rtmedia-modify-image primary"><i class="rtmicon-edit"></i>Modify Image</span>
-                </div>-->
             </div>    
             
             <form method="post" action="">

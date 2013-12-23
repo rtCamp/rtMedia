@@ -34,7 +34,7 @@ class RTMediaNav {
                 $profile_counts = $this->actual_counts ( $bp->displayed_user->id );
             }
 
-            if ( $rtmedia->options[ "buddypress_enableOnProfile" ] !== 0 ) {
+            if ( $rtmedia->options[ "buddypress_enableOnProfile" ] != 0 ) {
                 bp_core_new_nav_item ( array(
                     'name' => RTMEDIA_MEDIA_LABEL . '<span>' . $profile_counts[ 'total' ][ 'all' ] . '</span>',
                     'slug' => RTMEDIA_MEDIA_SLUG,
@@ -43,7 +43,7 @@ class RTMediaNav {
                 ) );
             }
         }
-        if ( bp_is_group () && $rtmedia->options[ "buddypress_enableOnGroup" ] !== 0 ) {
+        if ( bp_is_group () && $rtmedia->options[ "buddypress_enableOnGroup" ] != 0 ) {
             global $bp;
             $group_counts = $this->actual_counts ( $bp->groups->current_group->id, "group" );
             $bp->bp_options_nav[ bp_get_current_group_slug () ][ 'media' ] = array(

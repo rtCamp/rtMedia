@@ -22,7 +22,7 @@ class RTMediaLike extends RTMediaUserInteraction {
 	    'single' => false,
 	    'repeatable' => false,
 	    'undoable' => true,
-            'icon_class' => 'rtmicon-thumbs-up-alt'
+            'icon_class' => 'rtmicon-thumbs-up'
 	);
 	parent::__construct($args);
         remove_filter( 'rtmedia_action_buttons_before_delete', array($this,'button_filter') );

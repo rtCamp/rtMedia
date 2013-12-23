@@ -6,7 +6,7 @@ License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires at least: WordPress 3.6
 Tested up to: WordPress 3.7 + BuddyPress 1.8.1
-Stable tag: 3.2.13.1
+Stable tag: 3.3
 
 Add albums, photo, audio/video encoding, privacy, sharing, front-end uploads & more. All this works mobile/tablets devices.
 
@@ -50,6 +50,8 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 = rtMedia-PRO Features =
 
+ * **RSS Feed/Podcasting Support** - Integrates RSS Feed Support that can be used for podcasting to listen audio and video to your podcast supported player(e.g. iTunes).
+ * **WordPress Comment Attachment** -  Attach photos, videos, music, documents and other files to native WordPress comments.
  * **bbPress Integration** - Integrates with profiles. Also adds attachment support for topics and replies.
  * **Moderation Feature** - "Report Abuse" button for users. Interface to manage reported media and optionally block users from future uploads.
  * **MyCRED/CubePoints Integration** - You can reward users for media uploads. Out of box integration for MyCRED and CubePoints.
@@ -131,6 +133,10 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "Visit rtMedia's Features page") to get some details about future releases.
 
+= 3.3 =
+* Updated uploader with media delete functionality.
+* Improved UI
+* Bug fixes
 
 = 3.2.13.1 =
 * Update po files.
@@ -637,8 +643,8 @@ Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_sou
 
 == Upgrade Notice ==
 
-= 3.2.13.1 =
-Requires BuddyPress 1.7 or higher, if using BuddyPress. Update po files
+= 3.3 =
+Requires BuddyPress 1.7 or higher, if using BuddyPress. Bug fixes and UI changes
 
 == Sponsors ==
 

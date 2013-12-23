@@ -130,7 +130,7 @@ class RTMediaUploadEndpoint {
                         echo json_encode ( $rtupload->media_ids );
                     } else {
                         // Media Upload Case - on album/post/profile/group
-                        $data = array( 'activity_id' => $activity_id, 'redirect_url' => $redirect_url, 'permalink' => $perma_link, 'cover_art' => $thumb_image  );
+                        $data = array( 'media_id' => $media[ 0 ]->id, 'activity_id' => $activity_id, 'redirect_url' => $redirect_url, 'permalink' => $perma_link, 'cover_art' => $thumb_image  );
                         if(preg_match('/(?i)msie [1-9]/',$_SERVER['HTTP_USER_AGENT'])) { // if IE(<=9) set content type = text/plain
                            header ( 'Content-type: text/plain' );
                         } else {

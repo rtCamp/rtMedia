@@ -20,14 +20,8 @@ if (!class_exists('RTMediaSettings')) {
 //            }
         }
 
-        /**
-         * Register Settings
-         *
-         * @global string 'rtmedia'
-         */
-        function sanitize_options($options) {
-
-            global $rtmedia;
+	function get_default_options() {
+	    global $rtmedia;
 
             $defaults = array(
                 'general_enableAlbums' => 0,
@@ -40,7 +34,7 @@ if (!class_exists('RTMediaSettings')) {
                 'general_videothumbs' => 2,
 		'general_uniqueviewcount' => 0,
 		'general_viewcount' => 0,
-		'general_AllowUserData' => 0
+		'general_AllowUserData' => 1
             );
 
             $defaults = apply_filters('rtmedia_general_content_default_values', $defaults);
@@ -69,16 +63,36 @@ if (!class_exists('RTMediaSettings')) {
             $defaults['buddypress_enableOnProfile'] = 0;
             $defaults['buddypress_limitOnActivity'] = 0;
             $defaults['styles_custom'] = '';
-            $defaults['styles_enabled'] = 0;
-            
+            $defaults['styles_enabled'] = 1;
+
             if(isset($options["general_videothumbs"]) && is_numeric($options["general_videothumbs"]) && intval($options["general_videothumbs"]) > 10){
                 $options["general_videothumbs"] = 10;
                 add_action ( 'admin_notices', array( &$this, 'add_max_video_thumb_notice' ) );
             }
-            $options = wp_parse_args($options, $defaults);
+	    return $defaults;
+	}
 
+        /**
+         * Register Settings
+         *
+         * @global string 'rtmedia'
+         */
+        function sanitize_options($options) {
+	    $defaults = $this->get_default_options();
+            $options = wp_parse_args($options, $defaults);
             return $options;
         }
+
+	function sanitize_before_save_options($options) {
+	    $defaults = $this->get_default_options();
+	    foreach($defaults as $key => $value) {
+		if( !isset( $options[$key] ) ) {
+		    $options[$key] = "0";
+		}
+	    }
+	    return $options;
+	}
+
         function add_max_video_thumb_notice(){
              echo '<div class="error"><p>' . __( 'Max Video thumbnail size is ', 'rtmedia' ) .' <strong>10</strong></p></div>';
         }
@@ -94,7 +108,7 @@ if (!class_exists('RTMediaSettings')) {
             // Save Settings first then proceed.
             if (isset($_POST['rtmedia-options-save'])) {
                 $options = $_POST['rtmedia-options'];
-                $options = $this->sanitize_options($options);
+                $options = $this->sanitize_before_save_options($options);
                 $options = apply_filters("rtmedia_pro_options_save_settings", $options);
                 rtmedia_update_site_option('rtmedia-options', $options);
                 global $rtmedia;

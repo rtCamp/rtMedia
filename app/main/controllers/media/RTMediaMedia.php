@@ -283,7 +283,7 @@ class RTMediaMedia {
             }
         }
 
-        if ( $status == 0 ) {
+        if ( !$status ) {
             return false;
         } else {
 	    global $rtmedia_points_media_id;
@@ -501,6 +501,7 @@ class RTMediaMedia {
         );
 	$action = apply_filters('rtmedia_buddypress_action_text_fitler',$action,$username,$count,$user->user_nicename,$media->media_type);
         $activity_args = array(
+            'user_id' => $user->ID,
             'action' => $action,
             'content' => $activity_content,
             'type' => 'rtmedia_update',

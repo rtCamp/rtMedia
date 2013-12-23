@@ -48,12 +48,14 @@ if (!class_exists('RTMediaSupport')) {
 				'href' => '#debug',
 				'callback' => array($this, 'debug_info_html')
 			);
-			$tabs[] = array(
-				'title' => __('Migration', 'rtmedia'),
-				'name' => __('Migration', 'rtmedia'),
-				'href' => '#migration',
-				'callback' => array($this, 'migration_html')
-			);
+                        if( $this->is_migration_required() ){ //if any un-migrated media is there
+                            $tabs[] = array(
+                                    'title' => __('Migration', 'rtmedia'),
+                                    'name' => __('Migration', 'rtmedia'),
+                                    'href' => '#migration',
+                                    'callback' => array($this, 'migration_html')
+                            );
+                        }
 		?>
 			<div id="rtm-support">
 				<ul>
@@ -284,6 +286,14 @@ if (!class_exists('RTMediaSupport')) {
                     </table>
                 </div><?php
 
+        }
+        
+        public function is_migration_required(){
+            $pending_rtmedia_migrate = rtmedia_get_site_option ( "rtMigration-pending-count" );
+            if( ( $pending_rtmedia_migrate === false || $pending_rtmedia_migrate == 0 ) ) {
+                return false;
+            }
+            return true;
         }
 
 	public function migration_html($page = '') {

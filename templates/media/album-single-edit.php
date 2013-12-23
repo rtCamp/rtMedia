@@ -51,15 +51,9 @@ $rtmedia_media = $media[0];
                     <form class="rtmedia-bulk-actions" method="post">
                         <?php wp_nonce_field('rtmedia_bulk_delete_nonce', 'rtmedia_bulk_delete_nonce'); ?>
                         <?php RTMediaMedia::media_nonce_generator($rtmedia_query->media_query['album_id']); ?>
-<!--                        <span class="rtmedia-selection">
-                            <input type='button' class='select-all' value='<?php echo __('Select All Visible','rtmedia'); ?>'/>
-                            <input type='button' class='unselect-all' value='<?php echo __('Unselect All Visible','rtmedia'); ?>'/>
-                        </span>-->
-<!--                        <input type="button" class="button rtmedia-move" value="" />-->
                         <button type='button' class="select-all" title="<?php echo __('Select All Visible','rtmedia'); ?>"><i class='rtmicon-check-empty'></i></button>
                         <button class="button rtmedia-move" type='button' title='<?php echo __('Move Selected media to another album.');?>' ><i class='rtmicon-move'></i> <?php _e('Move','rtmedia'); ?></button>
                         <button type="button" name="delete-selected" class="button rtmedia-delete-selected" title='<?php echo __('Delete Selected media from the album.');?>'><i class='rtmicon-trash'></i><?php _e('Delete','rtmedia'); ?></button>
-<!--                        <input type="submit" name="delete-selected" class="button rtmedia-delete-selected" value="<?php _e('Delete','rtmedia'); ?>" />-->
                         <div class="rtmedia-move-container">
                             <?php $global_albums = rtmedia_get_site_option('rtmedia-global-albums'); ?>
                             <?php _e('Move selected media to the album : ', 'rtmedia'); ?>
@@ -109,18 +103,5 @@ $rtmedia_media = $media[0];
                 
         </div>
        
-<!--        <label for='media_title'><?php _e('Album Name : ', 'rtmedia'); ?></label>
-        <input type="text" name="media_title" id='media_title' value="<?php echo esc_attr($media[0]->media_title); ?>" class="rtm-album-name-field" />
-	<?php// do_action("rtmedia_add_album_privacy"); ?>
-        <div class="rtmedia-editor-description">
-            <label for='media_title'><?php _e('Description: ', 'rtmedia'); ?></label>
-            <?php // wp_editor($content, 'description', array('media_buttons' => false, 'textarea_rows' => 4, 'quicktags' => false)); ?>
-            <input type="submit" name="submit" value="<?php _e('Save Changes', 'rtmedia'); ?>" />
-        </div>-->
-
-
-    
-    
-
 
 </div>

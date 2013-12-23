@@ -149,11 +149,17 @@ function rtmedia_media_gallery_class () {
 }
 
 function rtmedia_id ( $media_id = false ) {
+    global $rtmedia_backbone;
+    
+     if ( $rtmedia_backbone[ 'backbone' ] ) {
+        return '<%= id %>';
+    }
+   
     if ( $media_id ) {
         $model = new RTMediaModel();
         $media = $model->get_media ( array( 'media_id' => $media_id ), 0, 1 );
     if(isset($media) && sizeof($media) > 0 ) {
-        return $media[ 0 ]->id;
+       return $media[ 0 ]->id;
     }
         return false;
     } else {
@@ -663,7 +669,7 @@ function rmedia_single_comment ( $comment ) {
             . '' . $user_name . '</span>';
     $html .= '<span class="rtmedia-comment-content">' . $comment[ 'comment_content' ] . '</span>';
     if(isset( $comment['user_id'] ) && ( is_rt_admin() || ( get_current_user_id() == $comment['user_id'] )) ){ // show delete button for comment author and admins
-        $html .= '<i data-id="' . $comment['comment_ID'] . '" class = "rtmedia-delete-comment rtmicon-cancel" title="' . __('Delete Comment') .'"></i>';
+        $html .= '<i data-id="' . $comment['comment_ID'] . '" class = "rtmedia-delete-comment rtmicon-times" title="' . __('Delete Comment') .'"></i>';
     }
 
     $html .= '<span class ="rtmedia-comment-date"> ' . rtmedia_convert_date($comment[ 'comment_date_gmt' ]) . '</span>';
@@ -854,7 +860,7 @@ function rtmedia_vedio_editor() {
         if(is_array($thumbnail_array)) {
     ?>
         <section class="active">
-            <p class="tab-title" data-section-title><a href="#panel1"><i class="rtmicon-picture"></i><?php _e('Video Thumbnail', 'rtmedia');?></a></p>
+            <p class="tab-title" data-section-title><a href="#panel1"><i class="rtmicon-picture-o"></i><?php _e('Video Thumbnail', 'rtmedia');?></a></p>
             <div class="tab-content" data-section-content>
                 <div class="rtmedia-change-cover-arts">
                     <ul>
@@ -964,7 +970,7 @@ function rtmedia_image_editor () {
             $nonce = wp_create_nonce ( "image_editor-$media_id" );
             $modify_button = '<p><input type="button" class="rtmedia-image-edit" id="imgedit-open-btn-' . $media_id . '" onclick="imageEdit.open( \'' . $media_id . '\', \'' . $nonce . '\' )" class="button" value="' . __('Modify Image', 'rtmedia') . '"> <span class="spinner"></span></p>';
         }
-        echo '<section><p class="tab-title" data-section-title><a href="#panel2" class="rtmedia-modify-image"><i class="rtmicon-picture"></i>'. __('Image', 'rtmedia') . '</a></p>
+        echo '<section><p class="tab-title" data-section-title><a href="#panel2" class="rtmedia-modify-image"><i class="rtmicon-picture-o"></i>'. __('Image', 'rtmedia') . '</a></p>
                   <div class="tab-content" data-section-content>';
         echo '<div class="rtmedia-image-editor-cotnainer" id="rtmedia-image-editor-cotnainer" >';
         echo '<div class="rtmedia-image-editor" id="image-editor-' . $media_id . '"></div>';
@@ -1044,14 +1050,14 @@ function rtmedia_delete_form ( $echo = true) {
             echo $html;
             RTMediaMedia::media_nonce_generator ( rtmedia_id (), true );
             do_action("rtmedia_media_single_delete_form");
-            echo '<button type="submit" title="' . __('Delete Media', 'rtmedia') . '" class="rtmedia-delete-media rtmedia-action-buttons"><i class="rtmicon-trash"></i>' . __ ( 'Delete', 'rtmedia' ) . '</button></form>';
+            echo '<button type="submit" title="' . __('Delete Media', 'rtmedia') . '" class="rtmedia-delete-media rtmedia-action-buttons"><i class="rtmicon-trash-o"></i>' . __ ( 'Delete', 'rtmedia' ) . '</button></form>';
         } else {
             $output = $html;
             $rtm_nonce = RTMediaMedia::media_nonce_generator ( rtmedia_id (), false );
             $rtm_nonce = json_decode($rtm_nonce);
             $rtm_nonce_field = wp_nonce_field ( 'rtmedia_' .rtmedia_id () , $rtm_nonce->action, true, false );
             do_action("rtmedia_media_single_delete_form");
-            $output .= $rtm_nonce_field . '<button type="submit" title="' . __('Delete Media', 'rtmedia') . '" class="rtmedia-delete-media rtmedia-action-buttons"><i class="rtmicon-trash"></i>' . __ ( 'Delete', 'rtmedia' ) . '</button></form>';
+            $output .= $rtm_nonce_field . '<button type="submit" title="' . __('Delete Media', 'rtmedia') . '" class="rtmedia-delete-media rtmedia-action-buttons"><i class="rtmicon-trash-o"></i>' . __ ( 'Delete', 'rtmedia' ) . '</button></form>';
             return $output;
         }
     }
@@ -1260,7 +1266,7 @@ function rtmedia_create_album ( $options) {
     if ( $display === true ) {
         
         add_action('rtmedia_before_media_gallery','rtmedia_create_album_modal');
-        $options[] = "<span class='rtmedia-reveal-modal' data-reveal-id='rtmedia-create-album-modal' title='".  __( 'Create New Album', 'rtmedia' ) ."'><i class='rtmicon-plus-circled'></i>" . __('Add Album') . "</span>";
+        $options[] = "<span class='rtmedia-reveal-modal' data-reveal-id='rtmedia-create-album-modal' title='".  __( 'Create New Album', 'rtmedia' ) ."'><i class='rtmicon-plus-circle'></i>" . __('Add Album') . "</span>";
         return $options;
         
     }
@@ -1269,8 +1275,9 @@ add_action('rtmedia_before_media_gallery','rtmedia_create_album_modal');
 add_action('rtmedia_before_album_gallery','rtmedia_create_album_modal');
 function rtmedia_create_album_modal(){
     global $rtmedia_query;
+    if( is_rtmedia_album_enable () && !( isset( $rtmedia_query->is_gallery_shortcode ) && $rtmedia_query->is_gallery_shortcode == true)  && isset($rtmedia_query->query[ 'context_id' ]) && isset( $rtmedia_query->query[ 'context' ] )) {
     ?>
-    <div class="reveal-modal rtm-modal small" id='rtmedia-create-album-modal'>
+        <div class="reveal-modal rtm-modal small" id='rtmedia-create-album-modal'>
             <div id="rtm-modal-container">
                 <h2 class="rtm-modal-title"><?php _e('Create New Album', 'rtmedia'); ?></h2>
                 <p>
@@ -1287,6 +1294,8 @@ function rtmedia_create_album_modal(){
         <div class="reveal-modal-bg" style="display: none"></div>
         
  <?php }
+ 
+}
  
  add_action('rtmedia_before_media_gallery','rtmedia_merge_album_modal');
  add_action('rtmedia_before_album_gallery','rtmedia_merge_album_modal');
@@ -1306,18 +1315,18 @@ function rtmedia_create_album_modal(){
             
      ?>
         <div class="reveal-modal-bg" style="display: none"></div>
-     <div class="rtmedia-merge-container reveal-modal small rtm-modal" id="rtmedia-merge">
-        <div id="rtm-modal-container">
-            <h2 class="rtm-modal-title"><?php _e( 'Merge Album', 'rtmedia' ); ?></h2>
-            <form method="post" class="album-merge-form" action="merge/">
-                <?php _e('Select Album to merge with : ','rtmedia'); ?>
-                <?php echo '<select name="album" class="rtmedia-merge-user-album-list">' . $album_list . '</select>'; ?>
-                <?php wp_nonce_field ( 'rtmedia_merge_album_' . $rtmedia_query->media_query[ 'album_id' ], 'rtmedia_merge_album_nonce' ); ?>
-                <input type="submit" class="rtmedia-move-selected" name="merge-album" value="<?php _e( 'Merge Album', 'rtmedia' ); ?>" />
-            </form>
-        </div>
-        <a class="close-reveal-modal" >&#215;</a>
-    </div>
+        <div class="rtmedia-merge-container reveal-modal small rtm-modal" id="rtmedia-merge">
+           <div id="rtm-modal-container">
+               <h2 class="rtm-modal-title"><?php _e( 'Merge Album', 'rtmedia' ); ?></h2>
+               <form method="post" class="album-merge-form" action="merge/">
+                   <?php _e('Select Album to merge with : ','rtmedia'); ?>
+                   <?php echo '<select name="album" class="rtmedia-merge-user-album-list">' . $album_list . '</select>'; ?>
+                   <?php wp_nonce_field ( 'rtmedia_merge_album_' . $rtmedia_query->media_query[ 'album_id' ], 'rtmedia_merge_album_nonce' ); ?>
+                   <input type="submit" class="rtmedia-move-selected" name="merge-album" value="<?php _e( 'Merge Album', 'rtmedia' ); ?>" />
+               </form>
+           </div>
+           <a class="close-reveal-modal" >&#215;</a>
+       </div>
         
  <?php } 
  
@@ -1357,7 +1366,7 @@ function rtmedia_album_edit ($options) {
         $options[] = "<a href='edit/' class='rtmedia-edit' title='" . __( 'Edit Album', 'rtmedia' ) . "' ><i class='rtmicon-edit'></i>" . __('Edit Album') . "</a>";
         $options[] = '<form method="post" class="album-delete-form rtmedia-inline" action="delete/">'
                 . wp_nonce_field ( 'rtmedia_delete_album_' . $rtmedia_query->media_query[ 'album_id' ], 'rtmedia_delete_album_nonce' )
-                . '<button type="submit" name="album-delete" class="icon-button rtmedia-delete-album" title="' . __( 'Delete Album', 'rtmedia' ) . '"><i class="rtmicon-cancel"></i>Delete Album</button></form>';
+                . '<button type="submit" name="album-delete" class="icon-button rtmedia-delete-album" title="' . __( 'Delete Album', 'rtmedia' ) . '"><i class="rtmicon-trash-o"></i>Delete Album</button></form>';
 
         if(is_rtmedia_group_album())
             $album_list = rtmedia_group_album_list();
@@ -1365,7 +1374,7 @@ function rtmedia_album_edit ($options) {
             $album_list = rtmedia_user_album_list();
         if ( $album_list ) {
             
-            $options[] = '<span class="rtmedia-reveal-modal" data-reveal-id="rtmedia-merge" title="' . __('Merge Album', 'rtmedia') . '"><i class="rtmicon-fork"></i>' . __('Merge Album','rtmedia') . '</span>';
+            $options[] = '<span class="rtmedia-reveal-modal" data-reveal-id="rtmedia-merge" title="' . __('Merge Album', 'rtmedia') . '"><i class="rtmicon-code-fork"></i>' . __('Merge Album','rtmedia') . '</span>';
 
             }
         }
@@ -1575,7 +1584,7 @@ function show_rtmedia_like_counts(){
     $count =  get_rtmedia_like();
     if( !(isset($options['general_enableLikes']) && $options['general_enableLikes'] == 0)){
     ?>
-    <div class='rtmedia-like-info<?php if($count == 0) echo " hide";?>'><i class="rtmicon-thumbs-up"></i>  <span class="rtmedia-like-counter"><?php echo $count; ?></span> <?php _e('people like this');?></div>
+    <div class='rtmedia-like-info<?php if($count == 0) echo " hide";?>'><i class="rtmicon-thumbs-up"></i>  <span class="rtmedia-like-counter-wrap"><span class="rtmedia-like-counter"><?php echo $count; ?></span> <?php _e('people like this');?></span></div>
     <?php }
 
     }
@@ -1655,107 +1664,132 @@ function rtmedia_admin_premium_page($page) {
         <h1 class="premium-title"><?php _e('Reasons to buy rtMedia-PRO', 'rtmedia'); ?></h1>
         </div>
         <div class="row">
-        <div class="columns large-1 rtm-premium-icon-pro"><i class="icon-comments icon-3x"></i></div>
+        <div class="columns large-1 rtm-premium-icon-pro"><i class="rtmicon-rss rtmicon-3x"></i></div>
+        <div class="columns large-10">
+            <h2><?php _e( 'RSS Feed/Podcasting Support', 'rtmedia'); ?></h2>
+            <p><?php _e( 'You can consume rtMedia uploads from iTunes as well as any feed-reader/podcasting software.', 'rtmedia'); ?></p>
+        </div>
+        </div>
+        <div class="row">
+        <div class="columns large-1 rtm-premium-icon-pro"><i class="rtmicon-comments rtmicon-3x"></i></div>
         <div class="columns large-10">
             <h2><?php _e( 'WordPress Comment Attachment', 'rtmedia'); ?></h2>
             <p><?php _e( 'You can attach files to WordPress comments.', 'rtmedia'); ?></p>
         </div>
         </div>
         <div class="row">
-        <div class="columns large-1 rtm-premium-icon-pro"><i class="icon-user icon-3x"></i></div>
+        <div class="columns large-1 rtm-premium-icon-pro"><i class="rtmicon-user rtmicon-3x"></i></div>
         <div class="columns large-10">
             <h2><?php _e( 'bbPress Attachment', 'rtmedia'); ?></h2>
             <p><?php _e( 'You can attach files to bbPress topic and reply.', 'rtmedia'); ?></p>
         </div>
         </div>
         <div class="row">
-        <div class="columns large-1 rtm-premium-icon-pro"><i class="icon-file-alt icon-3x"></i></div>
+        <div class="columns large-1 rtm-premium-icon-pro"><i class="rtmicon-file rtmicon-3x"></i></div>
         <div class="columns large-10">
             <h2><?php _e( 'Document Support', 'rtmedia'); ?></h2>
             <p><?php _e( 'You can add, view and download documents like txt, doc, pdf, also add and upload other file types like zip, tar and tar.gz etc.', 'rtmedia'); ?></p>
         </div>
         </div>
         <div class="row">
-        <div class="columns large-1 rtm-premium-icon-pro"><i class="icon-gamepad icon-3x"></i></div>
+        <div class="columns large-1 rtm-premium-icon-pro"><i class="rtmicon-gamepad rtmicon-3x"></i></div>
         <div class="columns large-10">
             <h2><?php _e( 'CubePoints & MyCRED Integration', 'rtmedia'); ?></h2>
             <p><?php _e( 'Integrating CubePoints/myCRED with rtMedia, you can reward users with virtual points on rtMedia activities.', 'rtmedia'); ?></p>
         </div>
         </div>
         <div class="row">
-        <div class="columns large-1 rtm-premium-icon-pro"><i class="icon-lock icon-3x"></i></div>
+        <div class="columns large-1 rtm-premium-icon-pro"><i class="rtmicon-lock rtmicon-3x"></i></div>
         <div class="columns large-10">
             <h2><?php _e( 'Album Privacy', 'rtmedia'); ?></h2>
             <p><?php _e( 'This will allow you to set album privacy while creating albums or change album privacy with editing albums too.', 'rtmedia'); ?></p>
         </div>
         </div>
         <div class="row">
-        <div class="columns large-1 rtm-premium-icon-pro"><i class="icon-play icon-3x"></i></div>
+        <div class="columns large-1 rtm-premium-icon-pro"><i class="rtmicon-play rtmicon-3x"></i></div>
         <div class="columns large-10">
             <h2><?php _e( 'Audio Playlist', 'rtmedia'); ?></h2>
             <p><?php _e( 'With this feature you can create your audio playlists and listen to your favorite music at will.', 'rtmedia'); ?></p>
         </div>
         </div>
         <div class="row">
-        <div class="columns large-1 rtm-premium-icon-pro"><i class="icon-warning-sign icon-3x"></i></div>
+        <div class="columns large-1 rtm-premium-icon-pro"><i class="rtmicon-warning rtmicon-3x"></i></div>
         <div class="columns large-10">
             <h2><?php _e( 'Report Button & Moderation Tools', 'rtmedia'); ?></h2>
             <p><?php _e( 'Users can report media if they find it offensive. Set number of reports to automatically take down media.', 'rtmedia'); ?></p>
         </div>
         </div>
         <div class="row">
-        <div class="columns large-1 rtm-premium-icon-pro"><i class="icon-download-alt icon-3x"></i></div>
+        <div class="columns large-1 rtm-premium-icon-pro"><i class="rtmicon-download rtmicon-3x"></i></div>
         <div class="columns large-10">
             <h2><?php _e( 'Download Button For Media', 'rtmedia'); ?></h2>
             <p><?php _e( 'Users can download photos, videos and music. Admin has option to allow download the media.', 'rtmedia'); ?></p>
         </div>
         </div>
         <div class="row">
-        <div class="columns large-1 rtm-premium-icon-pro"><i class="icon-align-right icon-3x"></i></div>
+        <div class="columns large-1 rtm-premium-icon-pro"><i class="rtmicon-align-right rtmicon-3x"></i></div>
         <div class="columns large-10">
             <h2><?php _e( 'Sidebar widgets', 'rtmedia'); ?></h2>
             <p><?php _e( 'These will let you display a gallery or an uploader in a sidebar. Several of them can be used in a single sidebar.', 'rtmedia'); ?></p>
         </div>
         </div>
         <div class="row">
-        <div class="columns large-1 rtm-premium-icon-pro"><i class="icon-edit icon-3x"></i></div>
+        <div class="columns large-1 rtm-premium-icon-pro"><i class="rtmicon-edit rtmicon-3x"></i></div>
         <div class="columns large-10">
             <h2><?php _e( 'Post-editor button', 'rtmedia'); ?></h2>
             <p><?php _e( 'With this button, a UI appears to quickly generate shortcodes for special pages like "Editorial Picks".', 'rtmedia'); ?></p>
         </div>
         </div>
         <div class="row">
-        <div class="columns large-1 rtm-premium-icon-pro"><i class="icon-star icon-3x"></i></div>
+        <div class="columns large-1 rtm-premium-icon-pro"><i class="rtmicon-star rtmicon-3x"></i></div>
         <div class="columns large-10">
             <h2><?php _e( 'Star-Rating option', 'rtmedia'); ?></h2>
             <p><?php _e( 'Users can give up to five stars to rate media. This data can be used for "Most Rated Media" in sidebars.', 'rtmedia'); ?></p>
         </div>
         </div>
         <div class="row">
-        <div class="columns large-1 rtm-premium-icon-pro"><i class="icon-picture icon-3x"></i></div>
+        <div class="columns large-1 rtm-premium-icon-pro"><i class="rtmicon-picture-o rtmicon-3x"></i></div>
         <div class="columns large-10">
             <h2><?php _e( 'Global Albums', 'rtmedia'); ?></h2>
             <p><?php _e( 'Multiple global albums can be created beforehand. One of these can be chosen as the default album.', 'rtmedia'); ?></p>
         </div>
         </div>
         <div class="row">
-        <div class="columns large-1 rtm-premium-icon-pro"><i class="icon-wrench icon-3x"></i></div>
+        <div class="columns large-1 rtm-premium-icon-pro"><i class="rtmicon-wrench rtmicon-3x"></i></div>
         <div class="columns large-10">
             <h2><?php _e( 'Premium one-to-one support', 'rtmedia'); ?></h2>
             <p><?php _e( 'Without leaving your WordPress dashboard, you can contact us for help using a support form.', 'rtmedia'); ?></p>
         </div>
         </div>
         <div class="row">
-        <div class="columns large-1 rtm-premium-icon-pro"><i class="icon-code icon-3x"></i></div>
+        <div class="columns large-1 rtm-premium-icon-pro"><i class="rtmicon-code rtmicon-3x"></i></div>
         <div class="columns large-10">
             <h2><?php _e( 'Premium & Open-Source', 'rtmedia'); ?></h2>
-            <p><?php sprintf( _e( "Developers get full control over rtMedia-PRO's source. They'll get access to <a href='%s' target='_blank'>%s</a> to dive into the code.", 'rtmedia'), 'http://git.rtcamp.com/', 'git.rtcamp.com' ); ?></p>
+            <p><?php echo __("Developers get full control over rtMedia-PRO's source. They'll get access to ") . "<a href='http://git.rtcamp.com/' target='_blank'>git.rtcamp.com</a>"; ?></p>
+        </div>
+        </div>
+        </br>
+        <div class="row">
+        <div class="columns large-12 rtmedia-upgrade">
+            <a href="http://rtcamp.com/store/rtmedia-pro/" target="_blank" class='upgrade-button' title='<?php _e('Upgrade to rtMedia PRO Now ', 'rtMedia'); ?>'><?php _e('Upgrade to rtMedia PRO Now ', 'rtMedia'); ?></a>
         </div>
         </div>
     </div>
     <?php
     }
 }
+add_action('wp_footer', 'rtmedia_link_in_footer');
+function rtmedia_link_in_footer(){
+   $link =  rtmedia_get_site_option ( 'rtmedia-add-linkback', false );
+   if($link) { ?>
+       
+       <div class='rtmedia-footer-link'>
+          <?php echo __("Empowering your community with ", 'rtmedia') ;?>
+          <a href='https://rtcamp.com/rtmedia/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media' title='<?php echo __('The only complete media solution for WordPress, BuddyPress and bbPress', 'rtmedia');?> '>
+              rtMedia</a>
+       </div>
+   <?php }
+}    
 
 //add content before the media in single media page
 add_action('rtmedia_before_media', 'rtmedia_content_before_media',10 );
@@ -1797,7 +1831,7 @@ function get_rtmedia_privacy_symbol( $rtmedia_id = false){
                 break;
             case 80:// private
                 $title = __("Blocked Temperorily",'rtmedia');
-                $icon = 'rtmicon-block';
+                $icon = 'rtmicon-ban';
                 break;
         }
         if( $title != "" && $icon != ""){
@@ -1823,7 +1857,7 @@ function rtmedia_convert_date($_date) // $date --> time(); value
 {
     $stf = 0;
     $date = new DateTime($_date);
-    $date = $date->getTimestamp();
+    $date = $date->format('U');
     $cur_time = time();
     $diff = $cur_time - $date;
     $phrase = array( __('second'), __('minute'), __('hour') );
@@ -1875,4 +1909,26 @@ function rtmedia_custom_css() {
     if(isset($options['styles_custom']) && $options['styles_custom'] != ""){
         echo "<style type='text/css'> " . $options['styles_custom'] . " </style>";
     }
+}
+
+
+add_action('wp_ajax_delete_uploaded_media', 'rtmedia_delete_uploaded_media');
+function rtmedia_delete_uploaded_media() {
+    
+    if(isset($_POST) && isset($_POST['action']) && $_POST['action'] == 'delete_uploaded_media' && isset($_POST['media_id']) && $_POST['media_id'] != ""){
+        
+        if ( wp_verify_nonce ( $_POST['nonce'], 'rtmedia_' . get_current_user_id() ) ){
+            
+            $media = new RTMediaMedia();
+            $media_id = $_POST['media_id'];
+
+            $delete = $media->delete( $media_id );
+                echo "1" ;
+                die();
+            }
+    }
+    
+    echo "0";
+    die();
+    
 }
