@@ -34,7 +34,7 @@ if (!class_exists('RTMediaSettings')) {
                 'general_videothumbs' => 2,
 		'general_uniqueviewcount' => 0,
 		'general_viewcount' => 0,
-		'general_AllowUserData' => 0
+		'general_AllowUserData' => 1
             );
 
             $defaults = apply_filters('rtmedia_general_content_default_values', $defaults);
@@ -63,7 +63,7 @@ if (!class_exists('RTMediaSettings')) {
             $defaults['buddypress_enableOnProfile'] = 0;
             $defaults['buddypress_limitOnActivity'] = 0;
             $defaults['styles_custom'] = '';
-            $defaults['styles_enabled'] = 0;
+            $defaults['styles_enabled'] = 1;
 
             if(isset($options["general_videothumbs"]) && is_numeric($options["general_videothumbs"]) && intval($options["general_videothumbs"]) > 10){
                 $options["general_videothumbs"] = 10;
