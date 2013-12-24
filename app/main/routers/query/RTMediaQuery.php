@@ -524,6 +524,9 @@ class RTMediaQuery {
 
         $order_by = $this->order_by ();
         
+        //add filter to filter group media when context is profile
+        add_filter('rtmedia-model-where-query',array($this,'rtmedia_model_where_query'), 10, 3);
+        
         if ( isset ( $this->media_query[ 'context' ] ) ) {
 
             if ( $this->media_query[ 'context' ] == 'profile' ) {
@@ -533,8 +536,8 @@ class RTMediaQuery {
                 else
                     $author = $this->media_query[ 'context_id' ];
 
-                //unset ( $this->media_query[ 'context' ] ); //commented out so that group media are not shown in profile context
-                //unset ( $this->media_query[ 'context_id' ] );
+                unset ( $this->media_query[ 'context' ] );
+                unset ( $this->media_query[ 'context_id' ] );
             } else if ( $this->media_query[ 'context' ] == 'group' ) {
                 $group_id = $this->media_query[ 'context_id' ];
             } else {
@@ -572,7 +575,9 @@ class RTMediaQuery {
              */
             $media_for_total_count = $this->model->get_media ( $this->media_query, false, false, false , true );
         }
-
+        //add filter that was added to filter group media when context is profile
+        remove_filter('rtmedia-model-where-query',array($this,'rtmedia_model_where_query'), 10, 3);
+        
         $this->media_count = intval( $media_for_total_count );
 
         if ( ! $pre_media )
@@ -584,6 +589,14 @@ class RTMediaQuery {
           foreach ( $pre_media as $pre_medium ) {
           $this->media[ $pre_medium->media_id ] = $pre_medium;
           } */
+    }
+    // add a where condition to filter group media when context is profile
+    function rtmedia_model_where_query($where, $table_name, $join) {
+       
+	if( isset( $this->original_query ) && isset( $this->original_query[ 'context' ] ) && $this->original_query[ 'context' ] == "profile" ) {
+	    $where .= ' AND ' . $table_name . '.context <> "group" ';
+	}
+	return $where;
     }
 
     function album_or_media () {
