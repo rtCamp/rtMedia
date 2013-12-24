@@ -471,6 +471,13 @@
 			padding: 5px 0;
 		}
 	}
+        .rt-clear:after{
+            display: block;
+            height: 0;
+            line-height: 0;
+            clear: both;
+            content: '.';
+        }
 }
 .rtmedia-activity-container {
             @extend .rtmedia-container;
