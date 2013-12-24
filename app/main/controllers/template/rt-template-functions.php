@@ -1153,8 +1153,10 @@ function rtmedia_user_album_list ( $get_all = false ) {
             )
                 if($album->context == 'profile')
                     $profile_option .= '<option value="' . $album->id . '">' . $album->media_title . '</option>';
-                else
-                    $option_group .= '<option value="' . $album->id . '">' . $album->media_title . '</option>';
+//                else
+//                    $option_group .= '<option value="' . $album->id . '">' . $album->media_title . '</option>';
+                //commented out group album section from album dropdown as user will be able to upload to profile albums from profile
+                // and group albums from group
 
         }
     }
