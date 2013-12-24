@@ -51,7 +51,7 @@ function rtmedia_title () {
 
 function get_rtmedia_gallery_title () {
     global $rtmedia_query;
-    $title = '';
+    $title = false;
     if( isset( $rtmedia_query->media_query['media_type'] ) && !is_array( $rtmedia_query->media_query['media_type']) && $rtmedia_query->media_query['media_type'] != "") {
 
         if($rtmedia_query->media_query['media_type'] == "music") {
@@ -66,7 +66,8 @@ function get_rtmedia_gallery_title () {
         $id = $rtmedia_query->media_query['album_id'];
         return get_rtmedia_title($id);
     }
-    return false;
+    $title = apply_filters('rtmedia_gallery_title',$title);
+    return $title;
 }
 
 function get_rtmedia_title($id) {
@@ -150,11 +151,11 @@ function rtmedia_media_gallery_class () {
 
 function rtmedia_id ( $media_id = false ) {
     global $rtmedia_backbone;
-    
+
      if ( $rtmedia_backbone[ 'backbone' ] ) {
         return '<%= id %>';
     }
-   
+
     if ( $media_id ) {
         $model = new RTMediaModel();
         $media = $model->get_media ( array( 'media_id' => $media_id ), 0, 1 );
@@ -568,7 +569,7 @@ function rtmedia_author_actions () {
             echo $output ;
         }
     }
-}   
+}
 
 function rtmedia_edit_form() {
 
@@ -1203,7 +1204,7 @@ function rtmedia_group_album_list () {
 add_action('rtmedia_media_gallery_actions', 'rtmedia_gallery_options');
 add_action('rtmedia_album_gallery_actions', 'rtmedia_gallery_options');
 function rtmedia_gallery_options() {
-    
+
     $options_start = $options_end = $option_buttons = $output = "";
     $options = array();
     $options = apply_filters('rtmedia_gallery_actions',$options );
@@ -1264,11 +1265,11 @@ function rtmedia_create_album ( $options) {
         }
     }
     if ( $display === true ) {
-        
+
         add_action('rtmedia_before_media_gallery','rtmedia_create_album_modal');
         $options[] = "<span class='rtmedia-reveal-modal' data-reveal-id='rtmedia-create-album-modal' title='".  __( 'Create New Album', 'rtmedia' ) ."'><i class='rtmicon-plus-circle'></i>" . __('Add Album') . "</span>";
         return $options;
-        
+
     }
 }
 add_action('rtmedia_before_media_gallery','rtmedia_create_album_modal');
@@ -1292,27 +1293,27 @@ function rtmedia_create_album_modal(){
             <a class="close-reveal-modal" >&#215;</a>
         </div>
         <div class="reveal-modal-bg" style="display: none"></div>
-        
+
  <?php }
- 
+
 }
- 
+
  add_action('rtmedia_before_media_gallery','rtmedia_merge_album_modal');
  add_action('rtmedia_before_album_gallery','rtmedia_merge_album_modal');
- function rtmedia_merge_album_modal() { 
-     
+ function rtmedia_merge_album_modal() {
+
      if ( ! is_rtmedia_album () || ! is_user_logged_in () )
         return;
     if ( ! is_rtmedia_album_enable () )
         return;
     global $rtmedia_query;
-    
+
      if(is_rtmedia_group_album())
             $album_list = rtmedia_group_album_list();
         else
             $album_list = rtmedia_user_album_list();
         if ( $album_list ) {
-            
+
      ?>
         <div class="reveal-modal-bg" style="display: none"></div>
         <div class="rtmedia-merge-container reveal-modal small rtm-modal" id="rtmedia-merge">
@@ -1327,9 +1328,9 @@ function rtmedia_create_album_modal(){
            </div>
            <a class="close-reveal-modal" >&#215;</a>
        </div>
-        
- <?php } 
- 
+
+ <?php }
+
 }
 
  function rtmedia_is_album_editable() {
@@ -1350,15 +1351,15 @@ function rtmedia_create_album_modal(){
 add_filter ( 'rtmedia_gallery_actions', 'rtmedia_album_edit',11 );
 
 function rtmedia_album_edit ($options) {
-   
+
     if ( ! is_rtmedia_album () || ! is_user_logged_in () )
         return;
     if ( ! is_rtmedia_album_enable () )
         return;
     global $rtmedia_query;
-   
+
     ?>
-        
+
         <?php
     if ( isset ( $rtmedia_query->media_query ) && ! in_array ( $rtmedia_query->media_query[ 'album_id' ], rtmedia_get_site_option ( 'rtmedia-global-albums' ) ) ) {
         //if ( isset ( $rtmedia_query->media_query[ 'media_author' ] ) && get_current_user_id () == $rtmedia_query->media_query[ 'media_author' ] ) {
@@ -1373,13 +1374,13 @@ function rtmedia_album_edit ($options) {
         else
             $album_list = rtmedia_user_album_list();
         if ( $album_list ) {
-            
+
             $options[] = '<span class="rtmedia-reveal-modal" data-reveal-id="rtmedia-merge" title="' . __('Merge Album', 'rtmedia') . '"><i class="rtmicon-code-fork"></i>' . __('Merge Album','rtmedia') . '</span>';
 
             }
         }
     }
-    
+
     return $options;
 }
 
@@ -1782,14 +1783,14 @@ add_action('wp_footer', 'rtmedia_link_in_footer');
 function rtmedia_link_in_footer(){
    $link =  rtmedia_get_site_option ( 'rtmedia-add-linkback', false );
    if($link) { ?>
-       
+
        <div class='rtmedia-footer-link'>
           <?php echo __("Empowering your community with ", 'rtmedia') ;?>
           <a href='https://rtcamp.com/rtmedia/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media' title='<?php echo __('The only complete media solution for WordPress, BuddyPress and bbPress', 'rtmedia');?> '>
               rtMedia</a>
        </div>
    <?php }
-}    
+}
 
 //add content before the media in single media page
 add_action('rtmedia_before_media', 'rtmedia_content_before_media',10 );
@@ -1914,11 +1915,11 @@ function rtmedia_custom_css() {
 
 add_action('wp_ajax_delete_uploaded_media', 'rtmedia_delete_uploaded_media');
 function rtmedia_delete_uploaded_media() {
-    
+
     if(isset($_POST) && isset($_POST['action']) && $_POST['action'] == 'delete_uploaded_media' && isset($_POST['media_id']) && $_POST['media_id'] != ""){
-        
+
         if ( wp_verify_nonce ( $_POST['nonce'], 'rtmedia_' . get_current_user_id() ) ){
-            
+
             $media = new RTMediaMedia();
             $media_id = $_POST['media_id'];
 
@@ -1927,8 +1928,25 @@ function rtmedia_delete_uploaded_media() {
                 die();
             }
     }
-    
+
     echo "0";
     die();
-    
+
+}
+
+function rtmedia_is_edit_page($new_edit = null){
+    global $pagenow;
+    //make sure we are on the backend
+    if (!is_admin()) {
+	return false;
+    }
+    if($new_edit == "edit") {
+	return in_array( $pagenow, array( 'post.php',  ) );
+    }
+    elseif($new_edit == "new") { //check for new post page
+	return in_array( $pagenow, array( 'post-new.php' ) );
+    }
+    else { //check for either new or edit
+	return in_array( $pagenow, array( 'post.php', 'post-new.php' ) );
+    }
 }

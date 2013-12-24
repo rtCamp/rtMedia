@@ -11,8 +11,9 @@ if (!class_exists('RTMediaSettings')) {
     class RTMediaSettings {
 
         public function __construct() {
-            if (!(defined('DOING_AJAX') && DOING_AJAX))
-                add_action('admin_init', array($this, 'settings'));
+            if (!(defined('DOING_AJAX') && DOING_AJAX)) {
+		add_action('admin_init', array($this, 'settings'));
+	    }
 //            if (is_multisite()) {
 //                add_action('network_admin_notices', array($this, 'privacy_notice'));
 //            } else {
@@ -111,12 +112,13 @@ if (!class_exists('RTMediaSettings')) {
                 $options = $this->sanitize_before_save_options($options);
                 $options = apply_filters("rtmedia_pro_options_save_settings", $options);
                 rtmedia_update_site_option('rtmedia-options', $options);
+		wp_redirect($_SERVER['HTTP_REFERER']);
                 global $rtmedia;
                 $rtmedia->options = $options;
             }
             $rtmedia_addon = new RTMediaAddon();
             add_settings_section('rtm-addons', __('BuddyPress Media Addons for Photos', 'rtmedia'), array($rtmedia_addon, 'get_addons'), 'rtmedia-addons');
-        $rtmedia_support = new RTMediaSupport(false);
+	    $rtmedia_support = new RTMediaSupport(false);
             add_settings_section('rtm-support', __('Support', 'rtmedia'), array($rtmedia_support, 'get_support_content'), 'rtmedia-support');
 
 //            if (!BPMediaPrivacy::is_installed()) {
@@ -129,7 +131,7 @@ if (!class_exists('RTMediaSettings')) {
             //register_setting('rtmedia', 'rtmedia_options', array($this, 'sanitize'));
         }
 
-        public function network_notices() {
+	public function network_notices() {
             $flag = 1;
             if (rtmedia_get_site_option('rtm-media-enable', false)) {
                 echo '<div id="setting-error-bpm-media-enable" class="error"><p><strong>' . rtmedia_get_site_option('rtm-media-enable') . '</strong></p></div>';

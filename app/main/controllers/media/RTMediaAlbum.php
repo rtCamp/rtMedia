@@ -26,8 +26,22 @@ class RTMediaAlbum {
      */
     public function __construct () {
         add_action ( 'init', array( &$this, 'register_post_types' ), 12 );
+	add_action( 'init', array(&$this,'rtmedia_album_custom_post_status', 13 ));
         $this->media = new RTMediaMedia();
     }
+
+    function rtmedia_album_custom_post_status() {
+	$args = array(
+	    'label'                     => _x( 'hidden', 'Status General Name', 'rtmedia' ),
+	    'label_count'               => _n_noop( 'Hidden (%s)',  'Hidden (%s)', 'rtmedia' ),
+	    'public'                    => false,
+	    'show_in_admin_all_list'    => false,
+	    'show_in_admin_status_list' => false,
+	    'exclude_from_search'       => true,
+	);
+	register_post_status( 'hidden', $args );
+    }
+
 
     /**
      * Register Custom Post Types required by rtMedia
@@ -47,9 +61,18 @@ class RTMediaAlbum {
             'search_items' => __ ( 'Search Albums', 'rtmedia' ),
             'not_found' => __ ( 'No album found', 'rtmedia' ),
             'not_found_in_trash' => __ ( 'No album found in Trash', 'rtmedia' ),
-            'parent_item_colon' => '',
+            'parent_item_colon' => __('Parent','rtmedia'),
             'menu_name' => __ ( 'Albums', 'rtmedia' )
         );
+
+	$album_slug = apply_filters('rtmedia_album_rewrite_slug','rtmedia-album');
+
+	$rewrite = array(
+	    'slug'                => $album_slug,
+	    'with_front'          => false,
+	    'pages'               => false,
+	    'feeds'               => false,
+	);
 
         /* Set up Album post type arguments */
         $album_args = array(
@@ -58,12 +81,12 @@ class RTMediaAlbum {
             'publicly_queryable' => false,
             'show_ui' => false,
             'show_in_menu' => false,
-            'query_var' => false,
+            'query_var' => "rtmedia_album",
             'capability_type' => 'post',
             'has_archive' => false,
-            'hierarchical' => false,
+            'hierarchical' => true,
             'menu_position' => null,
-            'rewrite' => false,
+            'rewrite' => $rewrite,
             'supports' => array(
                 'title',
                 'author',
@@ -72,6 +95,7 @@ class RTMediaAlbum {
                 'comments'
             )
         );
+	$album_args = apply_filters('rtmedia_albums_args',$album_args);
 
         /* register Album post type */
         register_post_type ( 'rtmedia_album', $album_args );
@@ -127,7 +151,7 @@ class RTMediaAlbum {
             'post_title' => (empty ( $title )) ? __( 'Untitled Album', 'rtmedia' ) : $title,
             'post_type' => 'rtmedia_album',
             'post_author' => $author_id,
-            'post_status' => 'publish'
+            'post_status' => 'hidden'
         );
 
         /* Check whether to create a new album in wp_post table

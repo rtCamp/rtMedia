@@ -73,6 +73,7 @@ class RTMediaRouter {
         global $wp_query;
 
         $return = isset ( $wp_query->query_vars[ $this->slug ] );
+	$return = apply_filters('rtmedia_return_is_template',$return,$this->slug);
         if ( $return ) {
             if ( isset ( $wp_query->query_vars[ 'action' ] ) && $wp_query->query_vars[ 'action' ] == 'bp_avatar_upload' )
                 $return = false;
@@ -331,8 +332,10 @@ function rt_theme_compat_reset_post( $args = array() ) {
     function set_query_vars () {
 
         global $wp_query;
-        $query_vars_array = explode ( '/', $wp_query->query_vars[ $this->slug ] );
-
+	$query_vars_array = "";
+	if( isset( $wp_query->query_vars[ $this->slug ] ) ) {
+	    $query_vars_array = explode ( '/', $wp_query->query_vars[ $this->slug ] );
+	}
         $this->query_vars = apply_filters ( 'rtmedia_query_vars', $query_vars_array );
     }
 

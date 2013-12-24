@@ -17,7 +17,7 @@ function apply_rtMagnificPopup(selector){
             gallery: {
                 enabled: true,
                 navigateByImgClick: true,
-                arrowMarkup: '',// disabled default arrows 
+                arrowMarkup: '',// disabled default arrows
                 preload: [0, 1] // Will preload 0 - before current, and 1 after the current image
             },
             image: {
@@ -34,7 +34,7 @@ function apply_rtMagnificPopup(selector){
             },
             callbacks: {
                 ajaxContentAdded: function() {
-                    
+
                     // When last second media is encountered in lightbox, load more medias if available
                     var mfp = jQuery.magnificPopup.instance;
                     var current_media = mfp.currItem.el;
@@ -56,13 +56,13 @@ function apply_rtMagnificPopup(selector){
                             //mfp.updateItemHTML();
                         }
                     }
-                    
+
                     var items = mfp.items.length;
                     if(mfp.index == (items -1) && !(li.is(":last-child"))){
                         current_media.click();
                         return;
                     }
-                    
+
                     $container = this.content.find('.tagcontainer');
                     if ($container.length > 0) {
                         $context = $container.find('img');
@@ -76,7 +76,7 @@ function apply_rtMagnificPopup(selector){
                     var settings = {};
 
                     if (typeof _wpmejsSettings !== 'undefined')
-                        settings.pluginPath = _wpmejsSettings.pluginPath;                    
+                        settings.pluginPath = _wpmejsSettings.pluginPath;
                     $('.mfp-content .wp-audio-shortcode,.mfp-content .wp-video-shortcode,.mfp-content .bp_media_content video').mediaelementplayer({
                         // if the <video width> is not specified, this is the default
                         defaultVideoWidth: 480,
@@ -134,9 +134,10 @@ var rtMediaHook = {
     }
 }
 jQuery('document').ready(function($) {
-    
-    $('.rtmedia-single-container').foundation(); //for foundation Section(tabs) single media edit.
-     
+    if( jQuery('.rtmedia-single-container').length > 0 ){
+	$('.rtmedia-single-container').foundation(); //for foundation Section(tabs) single media edit.
+    }
+
     $("#rt_media_comment_form").submit(function(e) {
         if ($.trim($("#comment_content").val()) == "") {
             alert( rtmedia_empty_comment_msg );
@@ -155,7 +156,7 @@ jQuery('document').ready(function($) {
     if (typeof(rtmedia_lightbox_enabled) != 'undefined' && rtmedia_lightbox_enabled == "1") {
         apply_rtMagnificPopup('.rtmedia-list-media, .rtmedia-activity-container ul.rtmedia-list, #bp-media-list,.widget-item-listing,.bp-media-sc-list, li.media.album_updated ul,ul.bp-media-list-media, li.activity-item div.activity-content div.activity-inner div.bp_media_content, .rtm-bbp-container');
     }
-    
+
     jQuery('.rtmedia-container').on('click', '.select-all', function(e) {
         e.preventDefault();
         jQuery(this).toggleClass('unselect-all').toggleClass('select-all');
@@ -269,7 +270,7 @@ jQuery('document').ready(function($) {
         }else{
             alert(rtmedia_no_media_selected);
         }
-        
+
     });
 
     function rtmedia_media_view_counts() {
@@ -303,11 +304,11 @@ jQuery('document').ready(function($) {
                     e.preventDefault();
                     jQuery('#comment_content').focus();
                 });
-                
-                jQuery(".rtm-more").shorten({ // shorten the media description to 100 characters 
+
+                jQuery(".rtm-more").shorten({ // shorten the media description to 100 characters
                     "showChars" : 130
                 });
-                
+
                 //show gallery title in lightbox at bottom
                 var gal_title = $('.rtm-gallery-title'), title = "";
                 if(! $.isEmptyObject(gal_title) ){
@@ -318,19 +319,19 @@ jQuery('document').ready(function($) {
                 if( title != ""){
                     $('.rtm-ltb-gallery-title .ltb-title').html(title);
                 }
-                
+
                 //show the index of the current image
 //                var index = jQuery.magnificPopup.instance.index;
 //                $('.media-index').html(index+1);
-                
+
                 //show image counts
                 var counts = $('#subnav.item-list-tabs li.selected span').html();
                 $('li.total').html(counts);
-                
+
 		return true;
 	    }
     );
-   
+
    function rtmedia_init_popup_navigation() {
         var rtm_mfp = jQuery.magnificPopup.instance;
         jQuery('.mfp-arrow-right').on('click', function(e) {
@@ -411,7 +412,7 @@ jQuery('document').ready(function($) {
 //    jQuery(document).on('click', '#rtm_show_upload_ui', function(){
 //        jQuery('#rtm-media-gallery-uploader').slideToggle();
 //    });
-    
+
     //drop-down js
     function init_action_dropdown() {
         $('.click-nav > span').toggleClass('no-js js');
@@ -428,16 +429,18 @@ jQuery('document').ready(function($) {
             $('.click-nav ul', this).hide();
         }
     });
-    
+
     //get focus on comment textarea when comment-link is clicked
     jQuery('.rtmedia-comment-link').on('click', function(e){
         e.preventDefault();
         jQuery('#comment_content').focus();
     });
-    
-    $(".rtm-more").shorten({ // shorten the media description to 100 characters 
-        "showChars" : 200
-    });
+
+    if( jQuery('.rtm-more').length > 0 ){
+	$(".rtm-more").shorten({ // shorten the media description to 100 characters
+	    "showChars" : 200
+	});
+    }
 });
 
 
@@ -447,29 +450,29 @@ function bp_media_create_element(id) {
     return false;
 }
 
-/* 
+/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
 (function($) {
     $.fn.shorten = function (settings) {
-     
+
         var config = {
             showChars: 100,
             ellipsesText: "...",
             moreText: "more",
             lessText: "less"
         };
- 
+
         if (settings) {
             $.extend(config, settings);
         }
-         
+
         $(document).off("click", '.morelink');
-         
+
         $(document).on({click: function () {
- 
+
                 var $this = $(this);
                 if ($this.hasClass('less')) {
                     $this.removeClass('less');
@@ -483,11 +486,11 @@ function bp_media_create_element(id) {
                 return false;
             }
         }, '.morelink');
- 
+
         return this.each(function () {
             var $this = $(this);
             if($this.hasClass("shortened")) return;
-             
+
             $this.addClass("shortened");
             var content = $this.html();
             if (content.length > config.showChars) {
@@ -498,7 +501,7 @@ function bp_media_create_element(id) {
                 $(".morecontent span").hide();
             }
         });
-         
+
     };
- 
+
  })(jQuery);

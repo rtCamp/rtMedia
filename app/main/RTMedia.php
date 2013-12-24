@@ -90,6 +90,7 @@ class RTMedia
 	add_action('rt_db_upgrade', array($this, 'fix_parent_id'));
         add_action('rt_db_upgrade', array($this, 'fix_privacy'));
         add_action('rt_db_upgrade', array($this, 'fix_db_collation'));
+        add_action('rt_db_upgrade', array($this, 'change_album_post_status'));
         $this->update_db();
         $this->default_thumbnail = apply_filters('rtmedia_default_thumbnail', RTMEDIA_URL . 'assets/thumb_default.png');
         add_action('init', array($this, 'check_global_album'));
@@ -147,6 +148,12 @@ class RTMedia
 		}
             }
         }
+    }
+
+    function change_album_post_status() {
+	global $wpdb;
+	$update_sql = "UPDATE $wpdb->posts SET post_status = 'hidden' WHERE post_type = 'rtmedia_album'";
+	$wpdb->query($update_sql);
     }
 
     function fix_privacy() {
@@ -416,7 +423,7 @@ class RTMedia
             'general_enableMediaEndPoint' => 0,
             'general_showAdminMenu' => (isset($bp_media_options['show_admin_menu'])) ? $bp_media_options['show_admin_menu'] : 0,
             'general_videothumbs' => 2,
-	    'general_AllowUserData' => 1            
+	    'general_AllowUserData' => 1
         );
 
 
@@ -459,10 +466,10 @@ class RTMedia
         $defaults['privacy_enabled'] = (isset($bp_media_options['privacy_enabled'])) ? $bp_media_options['privacy_enabled'] : 0;
         $defaults['privacy_default'] = (isset($bp_media_options['default_privacy_level'])) ? $bp_media_options['default_privacy_level'] : 0;
         $defaults['privacy_userOverride'] = (isset($bp_media_options['privacy_override_enabled'])) ? $bp_media_options['privacy_override_enabled'] : 0;
-        
+
         $defaults['styles_custom'] = (isset($bp_media_options['styles_custom'])) ? $bp_media_options['styles_custom'] : '';
         $defaults['styles_enabled'] = (isset($bp_media_options['styles_enabled'])) ? $bp_media_options['styles_enabled'] : 1;
-        
+
         $this->options = $defaults;
 
         $this->init_buddypress_options();
@@ -636,9 +643,9 @@ class RTMedia
         }
         /** ------------------- * */
         $class_construct = apply_filters('rtmedia_class_construct', $class_construct);
-       
+
         $class_construct['Group'] = false; // will be constructed after rtmedia pro class.
-        
+
         foreach ($class_construct as $key => $global_scope) {
             $classname = '';
             $ck = explode('_', $key);
@@ -763,7 +770,7 @@ class RTMedia
             wp_enqueue_style('wp-mediaelement', RTMEDIA_URL . 'lib/media-element/mediaelementplayer.min.css', '', RTMEDIA_VERSION);
             wp_enqueue_script('wp-mediaelement-start', RTMEDIA_URL . 'lib/media-element/wp-mediaelement.js', 'wp-mediaelement', RTMEDIA_VERSION, true);
         }
-        
+
         global $rtmedia;
         // Dont enqueue main.css if default styles is checked false in rtmedia settings
         if( !( isset($rtmedia->options) && isset($rtmedia->options['styles_enabled']) && $rtmedia->options['styles_enabled']== 0)){

@@ -168,6 +168,31 @@ class RTMediaFormHandler {
 		echo $numObj->get_number($args);
 	}
 
+	public static function textbox($args) {
+		global $rtmedia;
+		$options = $rtmedia->options;
+		$defaults = array(
+			'key' => '',
+			'desc' => ''
+		);
+		$args = wp_parse_args($args, $defaults);
+		extract($args);
+
+		if (!isset($value)) {
+			trigger_error(__('Please provide "value" in the argument.', 'rtmedia'));
+			return;
+		}
+
+		if (!empty($key)) {
+			$args['name'] = 'rtmedia-options[' . $key . ']';
+		}
+
+		$args['value'] = $value;
+
+		$numObj = new rtForm();
+		echo $numObj->get_textbox($args);
+	}
+
 	static function extract_settings($section_name,$options) {
 		$section = array();
 		foreach ($options as $key => $value) {
@@ -325,7 +350,7 @@ class RTMediaFormHandler {
 		$render = array();
 		$allowed_media_type = $rtmedia->allowed_types;
 		$allowed_media_type = apply_filters("rtmedia_allowed_types", $allowed_media_type);
-                
+
 		foreach ($options as $key => $value) {
 			$data = explode('_', $key);
 			if(!isset($render[$data[1]])) {
@@ -465,16 +490,16 @@ class RTMediaFormHandler {
 
 		echo '</div>';
 	}
-        
+
         public static function custom_css_content() {
-            
+
             global $rtmedia;
             $options = self::extract_settings('styles', $rtmedia->options);
             $render_data = self::custom_css_render_options($options);
-            
+
             echo '<div class="large-12">';
             foreach ($render_data as $option) { ?>
-                    
+
                 <div class="row section">
                     <?php if( $option['args']['key'] == "styles_custom"){ ?>
                         <div class="columns large-12 rtm-custom-css">
@@ -493,12 +518,12 @@ class RTMediaFormHandler {
                 </div>
             <?php }
             echo '</div>';
-            
+
         }
-        
+
         static function custom_css_render_options($options) {
             global $rtmedia;
-            
+
             $render = array(
                         'disable_styles' => array(
                                 'title' => __("rtMedia default styles","rtmedia"),
@@ -506,7 +531,7 @@ class RTMediaFormHandler {
 				'args' => array(
 					'id' => 'rtmedia-disable-styles',
 					'key' => 'styles_enabled',
-					'value' => $options['styles_enabled']  
+					'value' => $options['styles_enabled']
                                 )
                         ),
                         'custom_styles' => array(
@@ -515,11 +540,11 @@ class RTMediaFormHandler {
 				'args' => array(
 					'id' => 'rtmedia-custom-css',
 					'key' => 'styles_custom',
-					'value' => $options['styles_custom']  
+					'value' => $options['styles_custom']
                                 )
                         )
                 );
-            
+
             return $render;
         }
 
