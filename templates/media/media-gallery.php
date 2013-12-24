@@ -56,7 +56,12 @@
             <a id="rtMedia-galary-next" <?php echo $display; ?> href="<?php echo rtmedia_pagination_next_link (); ?>"><?php echo __ ( 'Load more', 'rtmedia' ); ?></a>
         </div>
     <?php } else { ?>
-        <p><?php _e( "Oops !! There's no media found for the request !!", "rtmedia" ); ?></p>
+        <p>
+            <?php 
+                $message = __ ( "Oops !! There's no media found for the request !!", "rtmedia" );
+                echo apply_filters('rtmedia_no_media_found_message_filter', $message);
+                ?>
+            </p>
     <?php } ?>
 </ul>
 <?php do_action ( 'rtmedia_after_media_gallery' ); ?>

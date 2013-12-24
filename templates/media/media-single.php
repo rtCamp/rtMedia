@@ -19,7 +19,7 @@
                     <button class="mfp-arrow mfp-arrow-left mfp-prevent-close rtm-lightbox-arrows" type="button" title="Previous Media"></button>
                     <button class="mfp-arrow mfp-arrow-right mfp-prevent-close" type="button" title="Next Media"></button>
                     <!--author actions-->
-                    <div class='rtm-ltb-title-container clear'>
+                    <div class='rtm-ltb-title-container rt-clear'>
                         <h2 class='rtm-ltb-title'>
                             <a href="<?php echo rtmedia_permalink();?>" title="<?php echo rtmedia_title (); ?>"><?php echo rtmedia_title (); ?></a>
                         </h2>
@@ -29,7 +29,7 @@
                     </div>
                     <div class="rtmedia-media" id ="rtmedia-media-<?php echo rtmedia_id (); ?>"><?php rtmedia_media ( true ); ?></div>
 
-                    <div class='rtm-ltb-action-container clear'>
+                    <div class='rtm-ltb-action-container rt-clear'>
                         <div class="rtm-ltb-gallery-title"><span class='ltb-title'></span><span class='media-index'></span><span class='total-medias'></span></div>
                         <div class="rtmedia-actions">
                             <?php do_action('rtmedia_action_buttons_after_media', rtmedia_id());?>
@@ -50,11 +50,11 @@
                                 <?php rtmedia_author_name ( true ); ?>
                             </div>
                         </div>
-                        <div class="rtm-time-privacy clear">
+                        <div class="rtm-time-privacy rt-clear">
                             <?php echo get_rtmedia_date_gmt();?> <?php echo get_rtmedia_privacy_symbol(); ?>
                         </div>
 
-                        <div class="rtmedia-actions-before-description clear">
+                        <div class="rtmedia-actions-before-description rt-clear">
                             <?php do_action('rtmedia_actions_before_description', rtmedia_id()) ;?>
                         </div>
 
@@ -89,11 +89,11 @@
 
                 <?php } else { // else for if ( $rt_ajax_request )?>
 
-                <div class="rtmedia-item-actions clear">
+                <div class="rtmedia-item-actions rt-clear">
 		    <?php do_action('rtmedia_actions_without_lightbox'); ?>
                     <?php rtmedia_actions (); ?>
 		</div>
-		<div class="rtmedia-actions-before-description clear">
+		<div class="rtmedia-actions-before-description rt-clear">
                     <?php do_action('rtmedia_actions_before_description', rtmedia_id()) ;?>
                 </div>
 
@@ -125,7 +125,11 @@
             </div>
 
         <?php else: ?>
-            <p><?php echo __ ( "Oops !! There's no media found for the request !!", "rtmedia" ); ?></p>
+            <p><?php 
+                $message = __ ( "Sorry !! There's no media found for the request !!", "rtmedia" );
+                echo apply_filters('rtmedia_no_media_found_message_filter', $message);
+                ?>
+            </p>
         <?php endif; ?>
 
        <?php do_action('rtmedia_after_media'); ?>
