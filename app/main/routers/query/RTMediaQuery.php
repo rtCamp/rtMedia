@@ -523,7 +523,7 @@ class RTMediaQuery {
         $this->album_or_media ();
 
         $order_by = $this->order_by ();
-
+        
         if ( isset ( $this->media_query[ 'context' ] ) ) {
 
             if ( $this->media_query[ 'context' ] == 'profile' ) {
@@ -533,7 +533,7 @@ class RTMediaQuery {
                 else
                     $author = $this->media_query[ 'context_id' ];
 
-                unset ( $this->media_query[ 'context' ] );
+                //unset ( $this->media_query[ 'context' ] ); commented out so that group media are not shown in profile context
                 unset ( $this->media_query[ 'context_id' ] );
             } else if ( $this->media_query[ 'context' ] == 'group' ) {
                 $group_id = $this->media_query[ 'context_id' ];
@@ -663,7 +663,7 @@ class RTMediaQuery {
         if ( $this->is_album () && !$this->shorcode_global ) {
             $this->media = $this->populate_album ();
         }
-
+        
         if ( empty ( $this->media ) )
             return;
 

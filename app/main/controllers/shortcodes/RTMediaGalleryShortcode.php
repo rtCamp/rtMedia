@@ -101,9 +101,10 @@ class RTMediaGalleryShortcode {
     static function render ( $attr ) {
         if ( self::display_allowed () ) {
             self::$add_script = true;
-
+                    
             ob_start ();
-
+            $authorized_member = true; //by default, viewer is authorized
+            
             if ( ( ! isset ( $attr )) || empty ( $attr ) )
                 $attr = true;
 
@@ -116,25 +117,65 @@ class RTMediaGalleryShortcode {
                 if ( ! isset ( $attr[ "attr" ][ "context_id" ] ) && isset ( $post->ID ) ) {
                     $attr[ "attr" ][ "context_id" ] = $post->ID;
                 }
+                
+                //check if context is group, then the gallery should only be visible to users according to the group privacy
+                if(isset($attr['attr']['context']) && $attr['attr']['context'] == 'group'){
+                    
+                    if(function_exists('groups_get_group')){ //if buddypress group is enabled
+                        $group = groups_get_group( array( 'group_id' => $attr[ "attr" ][ "context_id" ] ) );
+                        if( isset($group->status) && $group->status != 'public'){
+                            if(is_user_logged_in()){
+                                $is_member = groups_is_user_member( get_current_user_id() , $attr[ "attr" ][ "context_id" ] ) ;
+                                if(!$is_member){
+                                   $authorized_member = false;
+                                   //if user doesnot have access to the specified group
+                                }   
+                            }else {
+                                $authorized_member = false;
+                                //if user is  groupnot logged in and visits group media gallery 
+                            }
+                            
+                        }
+                    }
+
+                }
+                
                 if ( ! isset ( $attr[ "attr" ][ "context" ] ) && isset ( $post->post_type ) ) {
                     $attr[ "attr" ][ "context" ] = $post->post_type;
                 }
             }
-	    
-            global $rtmedia_query;
-	    if(!$rtmedia_query) {
-		$rtmedia_query = new RTMediaQuery($attr[ "attr" ]);
-	    }
-            $rtmedia_query->is_gallery_shortcode = true;// to check if gallery shortcode is executed to display the gallery.
-
-            $template = new RTMediaTemplate();
-            $gallery_template = false;
-            $template->set_template ( $gallery_template, $attr );
+           
+            if( $authorized_member ){ // if current user has access to view the gallery (when context is 'group')
+                global $rtmedia_query;
+                if(!$rtmedia_query) {
+                    $rtmedia_query = new RTMediaQuery($attr[ "attr" ]);
+                }
+                $rtmedia_query->is_gallery_shortcode = true;// to check if gallery shortcode is executed to display the gallery.
+                
+                $template = new RTMediaTemplate();
+                $gallery_template = false;
+                if( isset( $attr[ "attr" ][ "global"]) &&  $attr[ "attr" ][ "global"] == true){
+                    add_filter('rtmedia-model-where-query', array( 'RTMediaGalleryShortcode' , 'rtmedia_query_where_filter'), 10 ,3 );
+                }
+                $template->set_template ( $gallery_template, $attr );
+                if( isset( $attr[ "attr" ][ "global"]) &&  $attr[ "attr" ][ "global"] == true){
+                    remove_filter('rtmedia-model-where-query', array( 'RTMediaGalleryShortcode' , 'rtmedia_query_where_filter'), 10 ,3 );
+                }
+                
+            } else { //if user cannot view the media gallery (when context is 'group'), show message
+                echo __ ( 'You do not have sufficient privileges to view this gallery', 'rtmedia' );
+                return false;
+            }
 
             return ob_get_clean ();
         }
     }
-
+    // for gallery shortcode having attribute global as true, include all media except ones having context as "group"
+    static function rtmedia_query_where_filter($where, $table_name, $join) {
+        $where .= ' AND ' . $table_name . '.context <> "group" ';
+        return $where;
+    }
+    
     static function print_script () {
         if ( ! self::$add_script )
             return;

@@ -55,10 +55,15 @@ class RTMediaUploadView {
         }
         $up_privacy = $privacy = ""; //uploader privacy dropdown for uploader under rtMedia Media tab.
         if( is_rtmedia_privacy_enable () && ( ! isset( $rtmedia_query->is_upload_shortcode ) || $rtmedia_query->is_upload_shortcode === false) ) {
-            $up_privacy = new RTMediaPrivacy();
-            $up_privacy = $up_privacy->select_privacy_ui( false, 'rtSelectPrivacy') ;
-            if($up_privacy){
-                $privacy = "<span><i class='rtmicon-eye'></i> <label for='privacy'> " . __('Privacy : ', 'rtmedia') . "</label>" . $up_privacy . "</span>";
+            if( isset( $rtmedia_query->query[ 'context' ] ) && $rtmedia_query->query[ 'context' ] == 'group'){
+                // if the context is group, then set the media privacy to public 
+                $privacy = "<input type='hidden' name='privacy' value='0'/>";
+            }else { 
+                $up_privacy = new RTMediaPrivacy();
+                $up_privacy = $up_privacy->select_privacy_ui( false, 'rtSelectPrivacy') ;
+                if($up_privacy){
+                    $privacy = "<span><i class='rtmicon-eye'></i> <label for='privacy'> " . __('Privacy : ', 'rtmedia') . "</label>" . $up_privacy . "</span>";
+                }
             }
         }
         $tabs = array(

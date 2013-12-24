@@ -1440,6 +1440,11 @@ function is_rtmedia_privacy_user_overide () {
 }
 
 function rtmedia_edit_media_privacy_ui(){
+    global $rtmedia_query;
+    if( isset( $rtmedia_query->query[ 'context' ] ) && $rtmedia_query->query[ 'context' ] == 'group'){
+        //if context is group i.e editing a group media, dont show the privacy dropdown
+        return false;
+    }
     $privacymodel = new RTMediaPrivacy();
     $privacy = $privacymodel->select_privacy_ui( $echo = false);
     if($privacy){
@@ -1931,4 +1936,13 @@ function rtmedia_delete_uploaded_media() {
     echo "0";
     die();
     
+}
+
+
+add_action('wp_footer','testing',11);
+function testing(){
+    
+//    echo "<pre>";
+//    var_dump($counts);
+//    echo "</pre>";
 }
