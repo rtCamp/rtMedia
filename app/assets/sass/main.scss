@@ -37,7 +37,11 @@
 .rtm-primary-font-color {
     color : #3475BA
 }
-
+#rtmedia-add-media-button-post-update{
+		float: left;
+		margin-top: 12px;
+		margin-right: 20px;
+	}
 
 .rtmedia-container{
 	@import "compass/reset";
