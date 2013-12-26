@@ -483,6 +483,10 @@
             content: '.';
             visibility : hidden;
         }
+        .rtm-media-loading {
+            text-align: center;
+            padding : 20px 0;
+        }
 }
 .rtmedia-activity-container {
             @extend .rtmedia-container;

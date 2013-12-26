@@ -831,7 +831,7 @@ class RTMedia
         wp_localize_script('rtmedia-main', 'rtmedia_more', __('more',"rtMedia"));
         wp_localize_script('rtmedia-main', 'rtmedia_less', __('less',"rtMedia"));
         wp_localize_script('rtmedia-main', 'rtmedia_delete_uploaded_media', __('This media is uploaded. Are you sure you want to delete this media?',"rtMedia"));
-        
+        wp_localize_script ( 'rtmedia-backbone', 'rMedia_loading_media', RTMEDIA_URL . "app/assets/img/boxspinner.gif" );
     }
 
     function set_bp_bar() {

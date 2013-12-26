@@ -120,6 +120,7 @@ jQuery(function($) {
 		this.fetch({
 		    data: query,
 		    success: function(model, response) {
+                        jQuery('.rtm-media-loading').hide();
 			var list_el = "";
 			if(typeof(element) === "undefined" )
 			    list_el = $(".rtmedia-list")[0];
@@ -208,6 +209,7 @@ jQuery(function($) {
     $("body").append('<script id="rtmedia-gallery-item-template" type="text/template"></script>');
 
     $(document).on("click", "#rtMedia-galary-next", function(e) {
+        $( this ).before( "<div class='rtm-media-loading'><img src='" + rMedia_loading_media + "' /></div>" );
 	$(this).hide();
 	e.preventDefault();
 	galleryObj.getNext(nextpage, $(this).parent().parent().parent(), $(this));
