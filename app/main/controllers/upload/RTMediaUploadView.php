@@ -55,10 +55,15 @@ class RTMediaUploadView {
         }
         $up_privacy = $privacy = ""; //uploader privacy dropdown for uploader under rtMedia Media tab.
         if( is_rtmedia_privacy_enable () && ( ! isset( $rtmedia_query->is_upload_shortcode ) || $rtmedia_query->is_upload_shortcode === false) ) {
-            $up_privacy = new RTMediaPrivacy();
-            $up_privacy = $up_privacy->select_privacy_ui( false, 'rtSelectPrivacy') ;
-            if($up_privacy){
-                $privacy = "<span><i class='rtmicon-eye'></i> <label for='privacy'> " . __('Privacy : ', 'rtmedia') . "</label>" . $up_privacy . "</span>";
+            if( isset( $rtmedia_query->query[ 'context' ] ) && $rtmedia_query->query[ 'context' ] == 'group'){
+                // if the context is group, then set the media privacy to public 
+                $privacy = "<input type='hidden' name='privacy' value='0'/>";
+            }else { 
+                $up_privacy = new RTMediaPrivacy();
+                $up_privacy = $up_privacy->select_privacy_ui( false, 'rtSelectPrivacy') ;
+                if($up_privacy){
+                    $privacy = "<span><i class='rtmicon-eye'></i> <label for='privacy'> " . __('Privacy : ', 'rtmedia') . "</label>" . $up_privacy . "</span>";
+                }
             }
         }
         $tabs = array(
@@ -77,7 +82,7 @@ class RTMediaUploadView {
                     . '<table id="rtMedia-queue-list" class="rtMedia-queue-list"><tbody></tbody></table></div>'
                     . '</div>' ),
                 //'activity' => array( 'title' => __ ( 'File Upload', 'rtmedia' ), 'content' => '<div class="rtmedia-container"><div id="rtmedia-action-update"><input type="button" class="rtmedia-add-media-button" id="rtmedia-add-media-button-post-update"  value="' . __ ( "Attach Files", "rtmedia" ) . '" /></div><div id="div-attache-rtmedia"><div id="rtmedia-whts-new-upload-container" ><div id="rtmedia-whts-new-drag-drop-area" class="drag-drop"><input id="rtmedia-whts-new-upload-button" value="' . __ ( "Select", "rtmedia" ) . '" type="button" class="rtmedia-upload-input rtmedia-file" /></div><div id="rtMedia-update-queue-list"></div></div></div></div>' )
-                'activity' => array( 'title' => __( 'File Upload', 'rtmedia' ), 'content' => '<div class="rtmedia-container"><div id="rtmedia-action-update"><button class="rtmedia-add-media-button" id="rtmedia-add-media-button-post-update"><i class="rtmicon-plus-circle"></i>' . __( 'Attach Files', 'rtmedia' ) . '</button>' . $up_privacy . '</div><div id="rtmedia-whts-new-upload-container"><div id="rtm-upload-start-notice"><span>' . __('Upload will start only after you enter content and click Post Update.', 'rtmedia' ) . '</span></div><table id="rtMedia-queue-list" class="rtMedia-queue-list"><tbody></tbody></table></div></div>')
+                'activity' => array( 'title' => __( 'File Upload', 'rtmedia' ), 'content' => '<div class="rtmedia-container"><div id="rtmedia-action-update"><button type="button" class="rtmedia-add-media-button" id="rtmedia-add-media-button-post-update"><i class="rtmicon-plus-circle"></i>' . __( 'Attach Files', 'rtmedia' ) . '</button>' . $up_privacy . '</div><div id="rtmedia-whts-new-upload-container"><div id="rtm-upload-start-notice"><span>' . __('Upload will start only after you enter content and click Post Update.', 'rtmedia' ) . '</span></div><table id="rtMedia-queue-list" class="rtMedia-queue-list"><tbody></tbody></table></div></div>')
             ),
 //			'file_upload' => array( 'title' => __('File Upload','rtmedia'), 'content' => '<div id="rtmedia-uploader"><p>Your browser does not have HTML5 support.</p></div>'),
             'link_input' => array( 'title' => __ ( 'Insert from URL', 'rtmedia' ), 'content' => '<input type="url" name="bp-media-url" class="rtmedia-upload-input rtmedia-url" />' ),

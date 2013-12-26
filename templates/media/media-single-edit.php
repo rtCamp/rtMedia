@@ -45,20 +45,17 @@
                         <input type="submit" value="<?php _e('Save', 'rtmedia')?>">
                                 <a href="<?php rtmedia_permalink(); ?>"><input type="button" value="<?php _e('Back','rtmedia') ?>"></a>
                 </div>
-           </form>
+           </div></form>
     
-    
-
-       
             <?php } else { 
                 
                 ?>
             
-            <p><?php echo __("Oops !! You do not have rights to edit this media","rtmedia"); ?></p>
+            <p><?php echo __("Sorry !! You do not have rights to edit this media","rtmedia"); ?></p>
             
             <?php } ?>
             
     <?php else: ?>
-        <p><?php echo __("Oops !! There's no media found for the request !!","rtmedia"); ?></p>
+        <p><?php echo __("Sorry !! There's no media found for the request !!","rtmedia"); ?></p>
     <?php endif; ?>
 </div>
