@@ -528,15 +528,16 @@ class RTMediaQuery {
         //add_filter('rtmedia-model-where-query',array($this,'rtmedia_model_where_query'), 10, 3);
         
         if ( isset ( $this->media_query[ 'context' ] ) ) {
-
+            
             if ( $this->media_query[ 'context' ] == 'profile' ) {
-
+                
                 if ( ! $this->is_album_gallery () )
                     $this->media_query[ 'media_author' ] = $this->media_query[ 'context_id' ];
                 else
                     $author = $this->media_query[ 'context_id' ];
                 
-                if(!$this->is_single()){
+                //if it is a media single page, then unset the context and context id
+                if($this->is_single()){
                     unset ( $this->media_query[ 'context' ] );
                     unset ( $this->media_query[ 'context_id' ] );
                 }
@@ -545,7 +546,7 @@ class RTMediaQuery {
             } else if ( $this->media_query[ 'context' ] == 'group' ) {
                 $group_id = $this->media_query[ 'context_id' ];
             } else {
-
+                
             }
         }
 
