@@ -239,11 +239,13 @@ class RTMediaModel extends RTDBModel {
                         $query .= " AND {$this->table_name}.{$colname} {$compare} ('" . implode ( "','", $colvalue[ 'value' ] ) . "')";
                     } else {
 
-                        if ( $colname == "context" && $colvalue == "profile" ) {
-                               $query .= " AND {$this->table_name}.{$colname} <> 'group'";
-                        } else {
-                            $query .= " AND {$this->table_name}.{$colname} = '{$colvalue}'";
-                        }
+//                        if ( $colname == "context" && $colvalue == "profile" ) {
+//                               $query .= " AND {$this->table_name}.{$colname} <> 'group'";
+//                        } else {
+//                            $query .= " AND {$this->table_name}.{$colname} = '{$colvalue}'";
+//                        }
+                        //profile now shows only profile media so conditional check removed and counts will be fetched according to the available context
+                        $query .= " AND {$this->table_name}.{$colname} = '{$colvalue}'";
                     }
                 }
             }
