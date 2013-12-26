@@ -89,6 +89,7 @@ class RTMedia
          */
 	add_action('rt_db_upgrade', array($this, 'fix_parent_id'));
         add_action('rt_db_upgrade', array($this, 'fix_privacy'));
+        add_action('rt_db_upgrade', array($this, 'fix_group_media_privacy'));
         add_action('rt_db_upgrade', array($this, 'fix_db_collation'));
         $this->update_db();
         $this->default_thumbnail = apply_filters('rtmedia_default_thumbnail', RTMEDIA_URL . 'assets/thumb_default.png');
@@ -154,6 +155,24 @@ class RTMedia
 	$model = new RTMediaModel();
 	$update_sql = "UPDATE $model->table_name SET privacy = '80' where privacy = '-1' ";
 	$wpdb->query($update_sql);
+    }
+    
+    /*
+     * Update media privacy of the medias having context=group
+     * update privacy of groups medias according to the privacy of the group 0->public, 20-> private/hidden
+     */
+    function fix_group_media_privacy(){
+        //if buddypress is active and groups are enabled
+       if(function_exists('groups_get_groups')){
+           //get all groups
+           $groups = groups_get_groups();
+           if( $groups['groups'] ){
+               foreach ( $groups['groups'] as $group ){
+                   //for each group, update the group media privacy
+                   update_group_media_privacy( $group->id );
+                }
+           }
+       }
     }
 
     function fix_db_collation() {

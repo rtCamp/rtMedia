@@ -37,19 +37,22 @@ class RTMediaUploadEndpoint {
                     $this->upload[ 'activity_id' ] = $_POST[ 'activity_id' ];
                     $activity_id = $_POST[ 'activity_id' ];
                     
-                    ////if media upload is being made for a group, identify the group privacy and set media privacy accordingly
-                    if( isset( $_POST[ 'context' ] ) && isset( $_POST[ 'context_id' ] ) && $_POST[ 'context' ] = 'group' && function_exists('groups_get_group') ){
-                        $group = groups_get_group( array( 'group_id' => $_POST[ 'context_id' ] ) );
-                        if( isset($group->status) && $group->status != 'public'){
-                            // if group is not public, then set media privacy as 20, so only the group members can see the images
-                            $this->upload[ 'privacy' ] = 20;
-                        }else {
-                            // if group is not public, then set media privacy as 0
-                            $this->upload[ 'privacy' ] = 0;
-                        }
-                    
-                    }
                 }
+                
+//                ////if media upload is being made for a group, identify the group privacy and set media privacy accordingly
+                if( isset( $this->upload[ 'context' ] ) && isset( $this->upload[ 'context_id' ] ) && $this->upload[ 'context' ] == 'group' && function_exists('groups_get_group') ){
+                    
+                    $group = groups_get_group( array( 'group_id' => $this->upload[ 'context_id' ] ) );
+                    if( isset($group->status) && $group->status != 'public'){
+                        // if group is not public, then set media privacy as 20, so only the group members can see the images
+                        $this->upload[ 'privacy' ] = '20';
+                    }else {
+                        // if group is public, then set media privacy as 0
+                        $this->upload[ 'privacy' ] = '0';
+                    }
+                    
+                }
+                
                 $rtupload = new RTMediaUpload ( $this->upload );
                 $mediaObj = new RTMediaMedia();
                 $media = $mediaObj->model->get ( array( 'id' => $rtupload->media_ids[ 0 ] ) );

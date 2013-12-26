@@ -1940,11 +1940,28 @@ function rtmedia_delete_uploaded_media() {
     
 }
 
-
-add_action('wp_footer','testing',11);
-function testing(){
-    
-//    echo "<pre>";
-//    var_dump($counts);
-//    echo "</pre>";
+//update the group media privacy according to the group privacy settings when group settings are changed
+add_action( 'groups_settings_updated', 'update_group_media_privacy', 99,1);
+function update_group_media_privacy( $group_id ) {
+    if(isset( $group_id ) && $group_id != "" && function_exists('groups_get_group')) {
+        //get the buddybress group
+        $group = groups_get_group( array( 'group_id' => $group_id ) );
+        if(isset($group->status)){
+            $update_sql = '';
+            $model = new RTMediaModel();
+            global $wpdb;
+            if( $group->status != 'public'){ 
+                // when group settings are updated and is private/hidden, set media privacy to 20
+                $update_sql = "UPDATE $model->table_name SET privacy = '20' where context='group' AND context_id=" . $group_id ;
+                 
+            }else{ 
+               
+                // when group settings are updated and is private/hidden, set media privacy to 0
+                $update_sql = "UPDATE $model->table_name SET privacy = '0' where context='group' AND context_id=" . $group_id ;
+            }
+            //update the medias
+            $wpdb->query($update_sql);
+        }
+        
+    }
 }
