@@ -541,6 +541,15 @@ jQuery(document).ready(function($) {
         jQuery('#aw-whats-new-submit').on('click', function(e){
             setTimeout(function(){ jQuery('#aw-whats-new-submit').removeAttr('disabled'); },100);
         });
+    
+    // when user changes the value in activity "post in" dropdown, hide the privacy dropdown and show when posting in profile.
+    jQuery('#whats-new-post-in').on('change', function(e){
+        if( jQuery(this).val() == '0' ){
+            jQuery("#rtmedia-action-update .privacy").prop('disabled',false).show();
+        }else{
+            jQuery("#rtmedia-action-update .privacy").prop('disabled',true).hide();
+        }
+    });
 
     if (typeof rtMedia_update_plupload_config == 'undefined') {
         return false;
@@ -694,10 +703,13 @@ jQuery(document).ready(function($) {
         } else {
             object = "profile";
         }
-
+ 
         up.settings.multipart_params.context = object;
         up.settings.multipart_params.context_id = item_id;
-        up.settings.multipart_params.privacy = jQuery("select.privacy").val();
+        // if privacy dropdown is not disabled, then get the privacy value of the update
+        if( jQuery("select.privacy").prop('disabled') === false ){
+            up.settings.multipart_params.privacy = jQuery("select.privacy").val();
+        }
     });
     objUploadView.uploader.bind('UploadComplete', function(up, files) {
         media_uploading = true;
