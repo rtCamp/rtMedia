@@ -156,24 +156,21 @@ class RTMedia
 	$update_sql = "UPDATE $model->table_name SET privacy = '80' where privacy = '-1' ";
 	$wpdb->query($update_sql);
     }
-    
+
     /*
      * Update media privacy of the medias having context=group
      * update privacy of groups medias according to the privacy of the group 0->public, 20-> private/hidden
      */
     function fix_group_media_privacy(){
         //if buddypress is active and groups are enabled
-       if(function_exists('groups_get_groups')){
-           //get all groups
-           $groups = groups_get_groups();
-           if( $groups['groups'] ){
-               foreach ( $groups['groups'] as $group ){
-                   //for each group, update the group media privacy
-                   update_group_media_privacy( $group->id );
-                }
-           }
-       }
+	global $wpdb;
+	$model = new RTMediaModel();
+	$sql_group = " UPDATE $model->table_name m join {$wpdb->prefix}bp_groups bp on m.context_id = bp.id SET m.privacy = 0 where m.context = 'group' and bp.status = 'public' ";
+	$wpdb->query($sql_group);
+	$sql_group = " UPDATE $model->table_name m join {$wpdb->prefix}bp_groups bp on m.context_id = bp.id SET m.privacy = 20 where m.context = 'group' and ( bp.status = 'private' OR bp.status = 'hidden' ) ";
+	$wpdb->query($sql_group);
     }
+
 
     function fix_db_collation() {
 	global $wpdb;
@@ -435,7 +432,7 @@ class RTMedia
             'general_enableMediaEndPoint' => 0,
             'general_showAdminMenu' => (isset($bp_media_options['show_admin_menu'])) ? $bp_media_options['show_admin_menu'] : 0,
             'general_videothumbs' => 2,
-	    'general_AllowUserData' => 1            
+	    'general_AllowUserData' => 1
         );
 
 
@@ -478,10 +475,10 @@ class RTMedia
         $defaults['privacy_enabled'] = (isset($bp_media_options['privacy_enabled'])) ? $bp_media_options['privacy_enabled'] : 0;
         $defaults['privacy_default'] = (isset($bp_media_options['default_privacy_level'])) ? $bp_media_options['default_privacy_level'] : 0;
         $defaults['privacy_userOverride'] = (isset($bp_media_options['privacy_override_enabled'])) ? $bp_media_options['privacy_override_enabled'] : 0;
-        
+
         $defaults['styles_custom'] = (isset($bp_media_options['styles_custom'])) ? $bp_media_options['styles_custom'] : '';
         $defaults['styles_enabled'] = (isset($bp_media_options['styles_enabled'])) ? $bp_media_options['styles_enabled'] : 1;
-        
+
         $this->options = $defaults;
 
         $this->init_buddypress_options();
@@ -655,9 +652,9 @@ class RTMedia
         }
         /** ------------------- * */
         $class_construct = apply_filters('rtmedia_class_construct', $class_construct);
-       
+
         $class_construct['Group'] = false; // will be constructed after rtmedia pro class.
-        
+
         foreach ($class_construct as $key => $global_scope) {
             $classname = '';
             $ck = explode('_', $key);
@@ -782,7 +779,7 @@ class RTMedia
             wp_enqueue_style('wp-mediaelement', RTMEDIA_URL . 'lib/media-element/mediaelementplayer.min.css', '', RTMEDIA_VERSION);
             wp_enqueue_script('wp-mediaelement-start', RTMEDIA_URL . 'lib/media-element/wp-mediaelement.js', 'wp-mediaelement', RTMEDIA_VERSION, true);
         }
-        
+
         global $rtmedia;
         // Dont enqueue main.css if default styles is checked false in rtmedia settings
         if( !( isset($rtmedia->options) && isset($rtmedia->options['styles_enabled']) && $rtmedia->options['styles_enabled']== 0)){
