@@ -172,7 +172,7 @@ class RTMediaGalleryShortcode {
     }
     // for gallery shortcode having attribute global as true, include all media except ones having context as "group"
     static function rtmedia_query_where_filter($where, $table_name, $join) {
-        $where .= ' AND ' . $table_name . '.context <> "group" ';
+        $where .= ' AND (' . $table_name . '.privacy = "0" OR ' . $table_name . '.privacy is NULL ) ';
         return $where;
     }
     
