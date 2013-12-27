@@ -161,16 +161,22 @@ class RTMediaRouter {
  */
     function rt_replace_the_content( $content = '' ) {
 	// Do we have new content to replace the old content?
-        global $new_rt_template;
-        load_template($new_rt_template);
-        return '';
-	$new_content = apply_filters( 'bp_replace_the_content', $content );
+	global $new_rt_template, $rt_template_content;
+	//var_dump($new_rt_template);
+	if( !isset( $rt_template_content ) ) {
+	    ob_start();
+	    load_template($new_rt_template);
+	    $rt_template_content = ob_get_contents ();
+	    ob_end_clean();
+	}
+	return $rt_template_content;
+        $new_content = apply_filters( 'bp_replace_the_content', $rt_template_content );
 
 	// Juggle the content around and try to prevent unsightly comments
-        if ( !empty( $new_content ) && ( $new_content !== $content ) ) {
+        if ( !empty( $new_content ) && ( $new_content !== $rt_template_content ) ) {
 
 		// Set the content to be the new content
-		$content = $new_content;
+		$rt_template_content = $new_content;
 
 		// Clean up after ourselves
 		unset( $new_content );
