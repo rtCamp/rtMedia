@@ -84,13 +84,21 @@ class RTMediaComment {
                     $comment = get_comment( $id );
                 }
                 
-                if(!is_rt_admin() && isset( $comment->user_id ) && $comment->user_id != get_current_user_id() )
-                    return;
-                
-                $comment_deleted = $this->rtmedia_comment_model->delete($id);
-                
-                do_action('rtmedia_after_remove_comment', $id);
-                
-                return $comment_deleted;
+                if(isset($comment->comment_post_ID) && isset( $comment->user_id )){
+                    $model = new RTMediaModel();
+                    //get the current media from the comment_post_ID
+                    $media  = $model->get(array('media_id' => $comment->comment_post_ID));
+                    $media_author = $media[0]->media_author;
+                    // if user is comment creator, or media uploader or admin, allow to delete
+                    if( isset( $media[0]->media_author ) && ( is_rt_admin() || $comment->user_id == get_current_user_id() || $media[0]->media_author = get_current_user_id()) ) {
+                    
+                        $comment_deleted = $this->rtmedia_comment_model->delete($id);
+
+                        do_action('rtmedia_after_remove_comment', $id);
+
+                        return $comment_deleted;
+                    }
+                }
+                return false;
 	}
 }
