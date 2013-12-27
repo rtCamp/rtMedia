@@ -400,11 +400,15 @@ function rtmedia_delete_allowed () {
 
     $flag = $rtmedia_media->media_author == get_current_user_id ();
 
+    if( isset($rtmedia_media->context) && $rtmedia_media->context == 'group' && function_exists('bp_group_is_admin')){
+            $flag = ( bp_group_is_admin() || bp_group_is_mod());        
+    }
+    
     if(!$flag)
         $flag = is_super_admin ();
 
     $flag = apply_filters ( 'rtmedia_media_delete_priv', $flag );
-
+    
     return $flag;
 }
 
@@ -669,7 +673,9 @@ function rmedia_single_comment ( $comment ) {
     $html .= '<span class ="rtmedia-comment-author">'
             . '' . $user_name . '</span>';
     $html .= '<span class="rtmedia-comment-content">' . $comment[ 'comment_content' ] . '</span>';
-    if(isset( $comment['user_id'] ) && ( is_rt_admin() || ( get_current_user_id() == $comment['user_id'] )) ){ // show delete button for comment author and admins
+    
+    global $rtmedia_media;
+    if(isset( $comment['user_id'] ) && isset( $rtmedia_media->media_author) && ( is_rt_admin() || ( get_current_user_id() == $comment['user_id'] || $rtmedia_media->media_author == get_current_user_id() )) ){ // show delete button for comment author and admins
         $html .= '<i data-id="' . $comment['comment_ID'] . '" class = "rtmedia-delete-comment rtmicon-times" title="' . __('Delete Comment') .'"></i>';
     }
 
