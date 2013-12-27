@@ -89,8 +89,8 @@ class RTMedia
          */
 	add_action('rt_db_upgrade', array($this, 'fix_parent_id'));
         add_action('rt_db_upgrade', array($this, 'fix_privacy'));
+        add_action('rt_db_upgrade', array($this, 'fix_group_media_privacy'));
         add_action('rt_db_upgrade', array($this, 'fix_db_collation'));
-        add_action('rt_db_upgrade', array($this, 'change_album_post_status'));
         $this->update_db();
         $this->default_thumbnail = apply_filters('rtmedia_default_thumbnail', RTMEDIA_URL . 'assets/thumb_default.png');
         add_action('init', array($this, 'check_global_album'));
@@ -150,18 +150,27 @@ class RTMedia
         }
     }
 
-    function change_album_post_status() {
-	global $wpdb;
-	$update_sql = "UPDATE $wpdb->posts SET post_status = 'hidden' WHERE post_type = 'rtmedia_album'";
-	$wpdb->query($update_sql);
-    }
-
     function fix_privacy() {
 	global $wpdb;
 	$model = new RTMediaModel();
 	$update_sql = "UPDATE $model->table_name SET privacy = '80' where privacy = '-1' ";
 	$wpdb->query($update_sql);
     }
+
+    /*
+     * Update media privacy of the medias having context=group
+     * update privacy of groups medias according to the privacy of the group 0->public, 20-> private/hidden
+     */
+    function fix_group_media_privacy(){
+        //if buddypress is active and groups are enabled
+	global $wpdb;
+	$model = new RTMediaModel();
+	$sql_group = " UPDATE $model->table_name m join {$wpdb->prefix}bp_groups bp on m.context_id = bp.id SET m.privacy = 0 where m.context = 'group' and bp.status = 'public' and m.privacy <> 80 ";
+	$wpdb->query($sql_group);
+	$sql_group = " UPDATE $model->table_name m join {$wpdb->prefix}bp_groups bp on m.context_id = bp.id SET m.privacy = 20 where m.context = 'group' and ( bp.status = 'private' OR bp.status = 'hidden' ) and m.privacy <> 80 ";
+	$wpdb->query($sql_group);
+    }
+
 
     function fix_db_collation() {
 	global $wpdb;
@@ -819,7 +828,7 @@ class RTMedia
         wp_localize_script('rtmedia-main', 'rtmedia_more', __('more',"rtMedia"));
         wp_localize_script('rtmedia-main', 'rtmedia_less', __('less',"rtMedia"));
         wp_localize_script('rtmedia-main', 'rtmedia_delete_uploaded_media', __('This media is uploaded. Are you sure you want to delete this media?',"rtMedia"));
-        
+        wp_localize_script ( 'rtmedia-backbone', 'rMedia_loading_media', RTMEDIA_URL . "app/assets/img/boxspinner.gif" );
     }
 
     function set_bp_bar() {

@@ -133,6 +133,9 @@ http://www.youtube.com/watch?v####dJrykKQGDcs
 
 Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "Visit rtMedia's Features page") to get some details about future releases.
 
+#### 3.4.1 ####
+* Bug fixes related to media privacy
+
 #### 3.4 ####
 * Separate media handling for group and profile
 * Bug fixes
@@ -645,8 +648,8 @@ Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_sou
 * HTML5 Audio Tag Support (with fallback)
 * HTML5 Video Tag Support (with fallback)
 
-#### 3.3 ####
-Requires BuddyPress 1.7 or higher, if using BuddyPress. Bug fixes and Separate media handling for group and profile
+#### 3.4.1 ####
+Requires BuddyPress 1.7 or higher, if using BuddyPress. Bug fixes related to media privacy.
 
 ## Sponsors ##
 

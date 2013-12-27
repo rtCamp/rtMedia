@@ -37,7 +37,11 @@
 .rtm-primary-font-color {
     color : #3475BA
 }
-
+#rtmedia-add-media-button-post-update{
+		float: left;
+		margin-top: 12px;
+		margin-right: 20px;
+	}
 
 .rtmedia-container{
 	@import "compass/reset";
@@ -478,6 +482,10 @@
             clear: both;
             content: '.';
             visibility : hidden;
+        }
+        .rtm-media-loading {
+            text-align: center;
+            padding : 20px 0;
         }
 }
 .rtmedia-activity-container {
