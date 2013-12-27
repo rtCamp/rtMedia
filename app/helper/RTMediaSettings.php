@@ -13,6 +13,9 @@ if (!class_exists('RTMediaSettings')) {
         public function __construct() {
             if (!(defined('DOING_AJAX') && DOING_AJAX)) {
 		add_action('admin_init', array($this, 'settings'));
+		if (isset($_POST['rtmedia-options-save'])) {
+		    add_action('init', array($this, 'settings'));
+		}
 	    }
 //            if (is_multisite()) {
 //                add_action('network_admin_notices', array($this, 'privacy_notice'));
@@ -112,6 +115,7 @@ if (!class_exists('RTMediaSettings')) {
                 $options = $this->sanitize_before_save_options($options);
                 $options = apply_filters("rtmedia_pro_options_save_settings", $options);
                 rtmedia_update_site_option('rtmedia-options', $options);
+		flush_rewrite_rules(false);
 		wp_redirect($_SERVER['HTTP_REFERER']);
                 global $rtmedia;
                 $rtmedia->options = $options;
