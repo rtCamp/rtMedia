@@ -276,7 +276,7 @@ class RTMedia
 
         // filter for hooking additional media types
         $allowed_types = apply_filters('rtmedia_allowed_types', $allowed_types);
-
+        
         // sanitize all the types
         $allowed_types = $this->sanitize_allowed_types($allowed_types);
 
@@ -566,8 +566,8 @@ class RTMedia
                 $label = ucfirst($name);
             }
 
-            if (isset($type['label_plural']) && $type['label_plural'] != '') {
-                $label_plural = $type['label_plural'];
+            if (isset($type['plural_label']) && $type['plural_label'] != '') {
+                $label_plural = $type['plural_label'];
             } else {
                 $label_plural = ucfirst($plural);
             }
