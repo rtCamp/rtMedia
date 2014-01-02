@@ -1400,3 +1400,11 @@ button.rtp-lb-close {
     text-align: center;
     padding : 7px;
 }
+
+// videoplayer fix for buddypress default theme
+#bp-default {
+    .rtmedia-container {
+        embed { height :100%;}
+        .me-plugin { height : 100%; }
+    }
+}

@@ -250,7 +250,7 @@ class RTMedia
                 'plural' => 'photos',
                 'label' => __('Photo', 'rtmedia'),
                 'plural_label' => __('Photos', 'rtmedia'),
-                'extn' => array('jpg', 'jpeg', 'png', 'gif'),
+                'extn' => array('jpg', 'jpeg', 'png', 'gif', 'JPG', 'JPEG', 'PNG', 'GIF'),
                 'thumbnail' => RTMEDIA_URL . 'app/assets/img/image_thumb.png',
 		'settings_visibility' => true
             ),
@@ -259,7 +259,7 @@ class RTMedia
                 'plural' => 'videos',
                 'label' => __('Video', 'rtmedia'),
                 'plural_label' => __('Videos', 'rtmedia'),
-                'extn' => array('mp4'),
+                'extn' => array('mp4', 'MP4'),
                 'thumbnail' => RTMEDIA_URL . 'app/assets/img/video_thumb.png',
 		'settings_visibility' => true
             ),
@@ -268,7 +268,7 @@ class RTMedia
                 'plural' => 'music',
                 'label' => __('Music', 'rtmedia'),
                 'plural_label' => __('Music', 'rtmedia'),
-                'extn' => array('mp3'),
+                'extn' => array('mp3', 'MP3'),
                 'thumbnail' => RTMEDIA_URL . 'app/assets/img/audio_thumb.png',
 		'settings_visibility' => true
             )
@@ -276,7 +276,7 @@ class RTMedia
 
         // filter for hooking additional media types
         $allowed_types = apply_filters('rtmedia_allowed_types', $allowed_types);
-
+        
         // sanitize all the types
         $allowed_types = $this->sanitize_allowed_types($allowed_types);
 
@@ -566,8 +566,8 @@ class RTMedia
                 $label = ucfirst($name);
             }
 
-            if (isset($type['label_plural']) && $type['label_plural'] != '') {
-                $label_plural = $type['label_plural'];
+            if (isset($type['plural_label']) && $type['plural_label'] != '') {
+                $label_plural = $type['plural_label'];
             } else {
                 $label_plural = ucfirst($plural);
             }
@@ -791,8 +791,11 @@ class RTMedia
 //        wp_enqueue_script('rtmedia-foundation-reveal', RTMEDIA_URL . 'lib/foundation/foundation.reveal.js', array('jquery','rtp-foundation-js'), RTMEDIA_VERSION);
 //        wp_enqueue_script('rtmedia-foundation-section', RTMEDIA_URL . 'lib/foundation/foundation.section.js', array('jquery','rtp-foundation-js'), RTMEDIA_VERSION);
         wp_enqueue_script('rtmedia-main', RTMEDIA_URL . 'app/assets/js/rtMedia.js', array('jquery', 'wp-mediaelement'), RTMEDIA_VERSION);
-        wp_enqueue_style('rtmedia-magnific', RTMEDIA_URL . 'lib/magnific/magnific.css', '', RTMEDIA_VERSION);
-        wp_enqueue_script('rtmedia-magnific', RTMEDIA_URL . 'lib/magnific/magnific.js', '', RTMEDIA_VERSION);
+        // if lightbox is disabled, dont enqueue the lightbox css and js
+        if( isset($rtmedia->options) && isset($rtmedia->options['general_enableLightbox']) && $rtmedia->options['general_enableLightbox'] == 1){
+            wp_enqueue_style('rtmedia-magnific', RTMEDIA_URL . 'lib/magnific/magnific.css', '', RTMEDIA_VERSION);
+            wp_enqueue_script('rtmedia-magnific', RTMEDIA_URL . 'lib/magnific/magnific.js', '', RTMEDIA_VERSION);
+        }
         wp_localize_script('rtmedia-main', 'rtmedia_ajax_url', admin_url('admin-ajax.php'));
         wp_localize_script('rtmedia-main', 'rtmedia_media_slug', RTMEDIA_MEDIA_SLUG);
         wp_localize_script('rtmedia-main', 'rtmedia_lightbox_enabled', strval($this->options["general_enableLightbox"]));
