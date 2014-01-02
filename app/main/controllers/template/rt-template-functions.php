@@ -145,8 +145,11 @@ function rtmedia_get_author_name ( $user_id ) {
 
 function rtmedia_media_gallery_class () {
     global $rtmedia_query;
+    $classes = '';
     if ( isset ( $rtmedia_query->media_query ) && isset ( $rtmedia_query->media_query[ "context_id" ] ) )
-        echo "context-id-" . $rtmedia_query->media_query[ "context_id" ];
+        $classes = "context-id-" . $rtmedia_query->media_query[ "context_id" ];
+    
+    echo apply_filters('rtmedia_gallery_class_filter', $classes );
 }
 
 function rtmedia_id ( $media_id = false ) {
