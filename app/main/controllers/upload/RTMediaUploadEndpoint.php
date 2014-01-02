@@ -95,9 +95,10 @@ class RTMediaUploadEndpoint {
 			    $wpdb->update ( $bp->activity->table_name, array( "type" => "rtmedia_update", "content" => $objActivity->create_activity_html () ), array( "id" => $activity_id ) );
 			}
 		    }
+		}
 
-		    if(isset($this->upload['rtmedia_simple_file_upload']) && $this->upload['rtmedia_simple_file_upload'] == true ) {
-
+		if(isset($this->upload['rtmedia_simple_file_upload']) && $this->upload['rtmedia_simple_file_upload'] == true ) {
+		    if(isset($media) && sizeof($media) > 0) {
 			if ( isset ( $_POST[ "redirect" ] ) ) {
 			    if ( intval ( $_POST[ "redirect" ] ) > 1 ) {
 				//bulkurl
@@ -115,22 +116,23 @@ class RTMediaUploadEndpoint {
 			}
 			return $media;
 		    }
-
-		    $redirect_url = "";
-		    if ( isset ( $_POST[ "redirect" ] ) && is_numeric ( $_POST[ "redirect" ] ) ) {
-			    if ( intval ( $_POST[ "redirect" ] ) > 1 ) {
-				//bulkurl
-				if ( $media[ 0 ]->context == "group" ) {
-				    $redirect_url =  trailingslashit ( get_rtmedia_group_link ( $media[ 0 ]->context_id ) ) . RTMEDIA_MEDIA_SLUG;
-				} else {
-				    $redirect_url =  trailingslashit ( get_rtmedia_user_link ( $media[ 0 ]->media_author ) ) . RTMEDIA_MEDIA_SLUG;
-				}
-			    } else {
-				$redirect_url = get_rtmedia_permalink ( $media[ 0 ]->id );
-			    }
-		    }
+		    return false;
 		}
             }
+
+	    $redirect_url = "";
+	    if ( isset ( $_POST[ "redirect" ] ) && is_numeric ( $_POST[ "redirect" ] ) ) {
+		    if ( intval ( $_POST[ "redirect" ] ) > 1 ) {
+			//bulkurl
+			if ( $media[ 0 ]->context == "group" ) {
+			    $redirect_url =  trailingslashit ( get_rtmedia_group_link ( $media[ 0 ]->context_id ) ) . RTMEDIA_MEDIA_SLUG;
+			} else {
+			    $redirect_url =  trailingslashit ( get_rtmedia_user_link ( $media[ 0 ]->media_author ) ) . RTMEDIA_MEDIA_SLUG;
+			}
+		    } else {
+			$redirect_url = get_rtmedia_permalink ( $media[ 0 ]->id );
+		    }
+	    }
 
 
                           // Ha ha ha

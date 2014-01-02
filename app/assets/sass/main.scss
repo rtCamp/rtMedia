@@ -474,19 +474,19 @@
 		p {
 			padding: 5px 0;
 		}
-	}
-        .rt-clear:after{
-            display: block;
-            height: 0;
-            line-height: 0;
-            clear: both;
-            content: '.';
-            visibility : hidden;
-        }
+	}        
         .rtm-media-loading {
             text-align: center;
             padding : 20px 0;
         }
+}
+.rt-clear:after{
+    display: block;
+    height: 0;
+    line-height: 0;
+    clear: both;
+    content: '.';
+    visibility : hidden;
 }
 .rtmedia-activity-container {
             @extend .rtmedia-container;
