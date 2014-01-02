@@ -83,9 +83,9 @@ function apply_rtMagnificPopup(selector){
                         // if the <video height> is not specified, this is the default
                         defaultVideoHeight: 270,
                         // if set, overrides <video width>
-                        videoWidth: 1,
+                        //videoWidth: 1,
                         // if set, overrides <video height>
-                        videoHeight: 1
+                        //videoHeight: 1
                     });
                     $('.mfp-content .mejs-audio .mejs-controls').css('position', 'relative');
                     rtMediaHook.call('rtmedia_js_popup_after_content_added', []);
