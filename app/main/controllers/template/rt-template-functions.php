@@ -603,7 +603,7 @@ function rtmedia_actions () {
 
     if ( is_user_logged_in () && rtmedia_edit_allowed () ) {
 
-        $edit_button = '<button type="submit" class="rtmedia-edit rtmedia-action-buttons" ><i class="rtmicon-edit"></i>' . __ ( 'Edit', 'rtmedia' ) . '</button>';
+        $edit_button = '<button type="submit" class="rtmedia-edit rtmedia-action-buttons button" ><i class="rtmicon-edit"></i>' . __ ( 'Edit', 'rtmedia' ) . '</button>';
 
         $edit_button = apply_filters( 'rtmedia_edit_button_filter' , $edit_button);
 
@@ -1060,14 +1060,14 @@ function rtmedia_delete_form ( $echo = true) {
             echo $html;
             RTMediaMedia::media_nonce_generator ( rtmedia_id (), true );
             do_action("rtmedia_media_single_delete_form");
-            echo '<button type="submit" title="' . __('Delete Media', 'rtmedia') . '" class="rtmedia-delete-media rtmedia-action-buttons"><i class="rtmicon-trash-o"></i>' . __ ( 'Delete', 'rtmedia' ) . '</button></form>';
+            echo '<button type="submit" title="' . __('Delete Media', 'rtmedia') . '" class="rtmedia-delete-media rtmedia-action-buttons button"><i class="rtmicon-trash-o"></i>' . __ ( 'Delete', 'rtmedia' ) . '</button></form>';
         } else {
             $output = $html;
             $rtm_nonce = RTMediaMedia::media_nonce_generator ( rtmedia_id (), false );
             $rtm_nonce = json_decode($rtm_nonce);
             $rtm_nonce_field = wp_nonce_field ( 'rtmedia_' .rtmedia_id () , $rtm_nonce->action, true, false );
             do_action("rtmedia_media_single_delete_form");
-            $output .= $rtm_nonce_field . '<button type="submit" title="' . __('Delete Media', 'rtmedia') . '" class="rtmedia-delete-media rtmedia-action-buttons"><i class="rtmicon-trash-o"></i>' . __ ( 'Delete', 'rtmedia' ) . '</button></form>';
+            $output .= $rtm_nonce_field . '<button type="submit" title="' . __('Delete Media', 'rtmedia') . '" class="rtmedia-delete-media rtmedia-action-buttons button"><i class="rtmicon-trash-o"></i>' . __ ( 'Delete', 'rtmedia' ) . '</button></form>';
             return $output;
         }
     }
