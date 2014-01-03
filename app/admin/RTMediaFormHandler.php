@@ -301,8 +301,8 @@ class RTMediaFormHandler {
 		$html = '';
 		foreach($general_group as $key => $value) {
 		?>
-		    <fieldset>
-			<legend><?php echo $value; ?></legend>
+		    <div class="postbox metabox-holder">
+			<h3 class="hndle"><span><?php echo $value; ?></span></h3>
 		<?php
 		    foreach ($render_options as $tab => $option) {
 
@@ -323,7 +323,7 @@ class RTMediaFormHandler {
 		    <?php
 		    }
 		    ?>
-			</fieldset>
+			</div>
 		    <?php
 		}
 
