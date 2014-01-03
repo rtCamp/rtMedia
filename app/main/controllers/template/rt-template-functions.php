@@ -1895,7 +1895,7 @@ function rtmedia_convert_date($_date) // $date --> time(); value
         return $value. __('ago ', 'rtmedia');
     }
     else {
-       return __( date("F d, Y ", strtotime($_date)) );
+       return __( date("F d, Y ", strtotime($_date)), 'rtmedia' );
     }
 }
 
