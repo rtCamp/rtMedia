@@ -661,6 +661,9 @@ abbr {
 		color: #FFF;
 }
 
+.bp-media-admin .nav-tab-active.rtm-premium{
+		background-color: #E6311E;
+}
 .bp-media-admin .rtm-premium:hover {
 		background-color: #E6311E;
 }
