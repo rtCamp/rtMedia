@@ -1893,25 +1893,40 @@ function rtmedia_convert_date($_date) // $date --> time(); value
     $date = $date->format('U');
     $cur_time = time();
     $diff = $cur_time - $date;
-    $phrase = array( __('second'), __('minute'), __('hour') );
+    $time_unit = array( 'second', 'minute', 'hour' );
     //$phrase = array('second','minute','hour','day','week','month','year','decade');
     //$length = array(1,60,3600,86400,604800,2630880,31570560,315705600);
     $length = array(1,60,3600,86400);
+    $ago_text = __('%s ago ', 'rtmedia');
 
     for($i =sizeof($length)-1; ($i >=0) && (($no = $diff/$length[$i])<= 1); $i--);
     if($i < 0) $i=0;
     if($i<=2){ //if posted in last 24 hours
         $_time = $cur_time -($diff%$length[$i]);
 
-        $no = floor($no); if($no > 1) $phrase[$i] .='s';
-        $value=sprintf("%d %s ",$no,$phrase[$i]);
+        $no = floor($no);
+        switch($time_unit[$i]) {
+            case 'second':
+                $time_unit_phrase = _n( '1 second', '%s seconds', $no, 'rtmedia');
+                break;
+            case 'minute':
+                $time_unit_phrase = _n( '1 minute', '%s minutes', $no, 'rtmedia');
+                break;
+            case 'hour':
+                $time_unit_phrase = _n( '1 hour', '%s hours', $no, 'rtmedia');
+                break;
+            default:
+                // should not happen
+                $time_unit_phrase = '%s unknown';
+        }
+        $value=sprintf($time_unit_phrase.' ',$no);
 
         if(($stf == 1) && ($i >= 1) && (($cur_tm-$_time) > 0)) $value .= rtmedia_convert_date($_time);
-
-        return $value. __('ago ', 'rtmedia');
+        return sprintf($ago_text, $value);
     }
     else {
-       return date_i18n("F d, Y ", strtotime($_date));
+       /* translators: date format, see http://php.net/date */
+       return date_i18n( __("d F Y ", 'rtmedia' ), strtotime($_date));
     }
 }
 
