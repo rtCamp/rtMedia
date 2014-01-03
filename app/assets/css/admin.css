@@ -656,13 +656,13 @@ abbr {
 			font-size: 14px
 }
 .bp-media-admin .rtm-premium {
-		background-color: #39AFE7;
-		border-color: #39AFE7;
+		background-color: #EB5B4C;
+		border-color: #EB5B4C;
 		color: #FFF;
 }
 
 .bp-media-admin .rtm-premium:hover {
-		background-color: #2ea2cc;
+		background-color: #E6311E;
 }
 .rtmedia-admin-ad {
     margin-bottom : 15px;
@@ -742,6 +742,6 @@ abbr {
     margin-top : 20px;
 }
 .upgrade-button:hover {
-        background-color:  #195791; //#306BAA;
+        background-color:  #195791;
         color : #fff;
     }
