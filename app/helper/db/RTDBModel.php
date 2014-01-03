@@ -88,15 +88,15 @@ if(!class_exists('RTDBModel')) {
                 if ($return_array["total"] > 0) {
                     $other = "";
                     if ($paging) {
-                        $offset = ($page - 1) * $this->per_page;
+                        if( intval ( $this->per_page ) < 0 )
+                            $this->per_page = 1;
                         
+                        $offset = ($page - 1) * $this->per_page;
+
                         if(! is_integer($offset))
                             $offset = 0;
                         if( intval ( $offset ) < 0 )
                             $offset = 0;
-
-                        if( intval ( $this->per_page ) < 0 )
-                            $per_page = 1;
                         
                         if ($offset <= $return_array["total"]) {
                             $other = " LIMIT " . $offset . "," . $this->per_page;
