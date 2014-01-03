@@ -1793,6 +1793,22 @@ function rtmedia_admin_premium_page($page) {
         </div>
     </div>
     <?php
+    } else if( $page == "rtmedia-theme") {
+    ?>
+	<div class="rtmedia-theme-page-container">
+	    <h2><?php _e('Coming Soon...!!!','rtmedia'); ?></h2>
+	    <p><?php  _e('Are you a developer and want your rtMedia compatible theme to be listed here? just mail us at','rtmedia') ?> <a href="mailto:product@rtcamp.com"><?php _e('product@rtcamp.com','rtmedia') ?></a>.</p>
+	</div>
+    <?php
+    } else if( $page == "rtmedia-hire-us" ) {
+     $url = admin_url()."admin.php?page=rtmedia-premium";
+    ?>
+	<div class="rtmedia-hire-us-page-container">
+	    <p>
+		<?php  _e('Looking for some custom features with the rtMedia? Go ','rtmedia'); ?> <a href="<?php echo $url; ?>"><?php _e('Premium now','rtmedia') ?></a> <?php _e('or reach us','rtmedia') ?> <a href="https://rtcamp.com/contact/?purpose=hire" target="_blank"><?php  _e('here','rtmedia'); ?> </a>.
+	    </p>
+	</div>
+    <?php
     }
 }
 add_action('wp_footer', 'rtmedia_link_in_footer');

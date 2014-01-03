@@ -74,8 +74,9 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
             }
             $this->rtmedia_settings = new RTMediaSettings();
             $this->rtmedia_encoding = new RTMediaEncoding();
-            if(! defined("RTMEDIA_PRO_VERSION") )
-                add_action ( 'rtmedia_before_default_admin_widgets', array( $this, 'rtmedia_advertisement' ),1);
+//	    show rtmedia advertisement
+//            if(! defined("RTMEDIA_PRO_VERSION") )
+//                add_action ( 'rtmedia_before_default_admin_widgets', array( $this, 'rtmedia_advertisement' ),1);
 	    if( $this->check_for_addon_update_notice() ) {
 		add_action ( 'admin_notices', array( $this, 'rtmedia_addon_update_notice' ) );
 	    }
@@ -363,6 +364,8 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
                 'toplevel_page_rtmedia-settings',
                 'rtmedia_page_rtmedia-addons',
                 'rtmedia_page_rtmedia-support',
+                'rtmedia_page_rtmedia-theme',
+                'rtmedia_page_rtmedia-hire-us',
                 'rtmedia_page_rtmedia-importer',
                 'rtmedia_page_rtmedia-regenerate',
                 'rtmedia_page_rtmedia-premium'
@@ -427,6 +430,8 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
             add_submenu_page ( 'rtmedia-settings', __( 'Settings', 'rtmedia' ), __( 'Settings', 'rtmedia' ), 'manage_options', 'rtmedia-settings', array( $this, 'settings_page' ) );
             add_submenu_page ( 'rtmedia-settings', __( 'Addons', 'rtmedia' ), __( 'Addons', 'rtmedia' ), 'manage_options', 'rtmedia-addons', array( $this, 'addons_page' ) );
             add_submenu_page ( 'rtmedia-settings', __( 'Support', 'rtmedia' ), __( 'Support', 'rtmedia' ), 'manage_options', 'rtmedia-support', array( $this, 'support_page' ) );
+            add_submenu_page ( 'rtmedia-settings', __( 'Theme', 'rtmedia' ), __( 'Theme', 'rtmedia' ), 'manage_options', 'rtmedia-theme', array( $this, 'theme_page' ) );
+            add_submenu_page ( 'rtmedia-settings', __( 'Hire Us', 'rtmedia' ), __( 'Hire Us', 'rtmedia' ), 'manage_options', 'rtmedia-hire-us', array( $this, 'hire_us_page' ) );
         if(! defined("RTMEDIA_PRO_VERSION")) {
         add_submenu_page ( 'rtmedia-settings', __( 'Premium', 'rtmedia' ), __( 'Premium ', 'rtmedia' ), 'manage_options', 'rtmedia-premium', array( $this, 'premium_page' ) );
         }
@@ -649,9 +654,17 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
             $this->render_page ( 'rtmedia-support' );
         }
 
-    public function premium_page() {
-        $this->render_page ( 'rtmedia-premium' );
-    }
+	public function premium_page() {
+	    $this->render_page ( 'rtmedia-premium' );
+	}
+
+	public function theme_page() {
+	    $this->render_page ( 'rtmedia-theme' );
+	}
+
+	public function hire_us_page() {
+	    $this->render_page ( 'rtmedia-hire-us' );
+	}
 
     /**
          *
@@ -719,10 +732,10 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
                                 if ( $page == 'rtmedia-addons' )
                                     RTMediaAddon::render_addons ( $page );
                                 else if ( $page == 'rtmedia-support' ) {
-                    $rtmedia_support = new RTMediaSupport(false);
-                    $rtmedia_support->render_support($page);
-                }
-                else
+				    $rtmedia_support = new RTMediaSupport(false);
+				    $rtmedia_support->render_support($page);
+				}
+				else
                                     do_settings_sections ( $page );
                                 ?>
                                 <?php
@@ -793,12 +806,22 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
                     'href' => get_admin_url ( null, add_query_arg ( array( 'page' => 'rtmedia-support' ), 'admin.php' ) ),
                     'name' => __( 'Support', 'rtmedia' ),
                     'slug' => 'rtmedia-support'
-                )//,
+                ),
 //              array(
 //                  'href' => get_admin_url(null, add_query_arg(array('page' => 'rtmedia-importer'), 'admin.php')),
 //                  'name' => __('Importer', 'rtmedia'),
 //                  'slug' => 'rtmedia-importer'
 //                        )
+		array(
+                    'href' => get_admin_url ( null, add_query_arg ( array( 'page' => 'rtmedia-theme' ), 'admin.php' ) ),
+                    'name' => __( 'Theme', 'rtmedia' ),
+                    'slug' => 'rtmedia-theme'
+                ),
+		array(
+                    'href' => get_admin_url ( null, add_query_arg ( array( 'page' => 'rtmedia-hire-us' ), 'admin.php' ) ),
+                    'name' => __( 'Hire Us', 'rtmedia' ),
+                    'slug' => 'rtmedia-hire-us'
+                )
             );
 
             $tabs = apply_filters ( 'media_add_tabs', $tabs );
