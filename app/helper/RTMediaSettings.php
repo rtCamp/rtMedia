@@ -114,16 +114,24 @@ if (!class_exists('RTMediaSettings')) {
                 $options = $_POST['rtmedia-options'];
                 $options = $this->sanitize_before_save_options($options);
                 $options = apply_filters("rtmedia_pro_options_save_settings", $options);
+		$is_rewrite_rule_flush = apply_filters('rtmedia_flush_rewrite_rule',false);
                 rtmedia_update_site_option('rtmedia-options', $options);
-		flush_rewrite_rules(false);
-		wp_redirect($_SERVER['HTTP_REFERER']);
+		if( $is_rewrite_rule_flush ) {
+		    flush_rewrite_rules(false);
+		}
+                wp_redirect($_SERVER['HTTP_REFERER']);
                 global $rtmedia;
                 $rtmedia->options = $options;
             }
-            $rtmedia_addon = new RTMediaAddon();
-            add_settings_section('rtm-addons', __('BuddyPress Media Addons for Photos', 'rtmedia'), array($rtmedia_addon, 'get_addons'), 'rtmedia-addons');
-	    $rtmedia_support = new RTMediaSupport(false);
-            add_settings_section('rtm-support', __('Support', 'rtmedia'), array($rtmedia_support, 'get_support_content'), 'rtmedia-support');
+
+	    if(function_exists('add_settings_section') ) {
+		$rtmedia_addon = new RTMediaAddon();
+		add_settings_section('rtm-addons', __('BuddyPress Media Addons for Photos', 'rtmedia'), array($rtmedia_addon, 'get_addons'), 'rtmedia-addons');
+		$rtmedia_support = new RTMediaSupport(false);
+		add_settings_section('rtm-support', __('Support', 'rtmedia'), array($rtmedia_support, 'get_support_content'), 'rtmedia-support');
+	    }
+
+
 
 //            if (!BPMediaPrivacy::is_installed()) {
 //                $rtmedia_privacy = new BPMediaPrivacySettings();
