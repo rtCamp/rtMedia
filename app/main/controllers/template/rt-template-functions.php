@@ -148,7 +148,7 @@ function rtmedia_media_gallery_class () {
     $classes = '';
     if ( isset ( $rtmedia_query->media_query ) && isset ( $rtmedia_query->media_query[ "context_id" ] ) )
         $classes = "context-id-" . $rtmedia_query->media_query[ "context_id" ];
-    
+
     echo apply_filters('rtmedia_gallery_class_filter', $classes );
 }
 
@@ -1895,7 +1895,7 @@ function rtmedia_convert_date($_date) // $date --> time(); value
         return $value. __('ago ', 'rtmedia');
     }
     else {
-       return date("F d, Y ", strtotime($_date));
+       return __( date("F d, Y ", strtotime($_date)) );
     }
 }
 
