@@ -666,7 +666,7 @@ Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_sou
 
 == Upgrade Notice ==
 
-= 3.4.5 =
+= 3.4.6 =
 Requires BuddyPress 1.7 or higher, if using BuddyPress. Fix paging query bug fixes
 
 == Sponsors ==
