@@ -133,6 +133,9 @@ http://www.youtube.com/watch?v####dJrykKQGDcs
 
 Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "Visit rtMedia's Features page") to get some details about future releases.
 
+#### 3.4.5 ####
+* Fix pagging query sql issues
+
 #### 3.4.4 ####
 * Update german trasalation
 * Add support in some strings translations again thanks to [jonasnick](https://github.com/jonasnick) for pull request
@@ -658,8 +661,8 @@ Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_sou
 * HTML5 Audio Tag Support (with fallback)
 * HTML5 Video Tag Support (with fallback)
 
-#### 3.4.4 ####
-Requires BuddyPress 1.7 or higher, if using BuddyPress. Add some strings in translations
+#### 3.4.5 ####
+Requires BuddyPress 1.7 or higher, if using BuddyPress. Fix pagging query sql issues
 
 ## Sponsors ##
 
