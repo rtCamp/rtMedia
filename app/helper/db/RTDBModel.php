@@ -88,7 +88,16 @@ if(!class_exists('RTDBModel')) {
                 if ($return_array["total"] > 0) {
                     $other = "";
                     if ($paging) {
+                        if( intval ( $this->per_page ) < 0 )
+                            $this->per_page = 1;
+                        
                         $offset = ($page - 1) * $this->per_page;
+
+                        if(! is_integer($offset))
+                            $offset = 0;
+                        if( intval ( $offset ) < 0 )
+                            $offset = 0;
+                        
                         if ($offset <= $return_array["total"]) {
                             $other = " LIMIT " . $offset . "," . $this->per_page;
     					}else{
@@ -161,10 +170,19 @@ if(!class_exists('RTDBModel')) {
             $sql = $select . $where ;
 
     		$sql .= " ORDER BY {$this->table_name}.$order_by";
+            if($offset !== false){
+                if(! is_integer($offset))
+                    $offset = 0;
+                if( intval ( $offset ) < 0 )
+                    $offset = 0;
 
-    		if(is_integer($offset) && is_integer($per_page)) {
-    			$sql .= ' LIMIT ' . $offset . ',' . $per_page;
-    		}
+                if(! is_integer($per_page))
+                    $per_page = 0;
+                if( intval ( $per_page ) < 0 )
+                    $per_page = 1;
+                $sql .= ' LIMIT ' . $offset . ',' . $per_page;
+        	
+            }
             global $wpdb;
             return $wpdb->get_results($sql);
         }

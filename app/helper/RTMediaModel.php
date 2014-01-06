@@ -98,9 +98,22 @@ class RTMediaModel extends RTDBModel {
         $qorder_by = apply_filters ( 'rtmedia-model-order-by-query', $qorder_by, $this->table_name );
 
         $sql = $select . $from . $join . $where . $qgroup_by . $qorder_by;
-        if ( is_integer ( $offset ) && is_integer ( $per_page ) ) {
+        if($offset !== false){
+            if(! is_integer($offset))
+                $offset = 0;
+            
+            if( intval ( $offset ) < 0 )
+                $offset = 0;
+
+            if( ! is_integer($per_page) )
+                $per_page = 0;
+            
+            if( intval ( $per_page ) < 0 )
+                $per_page = 1;
+                
             $sql .= ' LIMIT ' . $offset . ',' . $per_page;
         }
+
         if( ! $count_flag )
             return $wpdb->get_results ( $sql );
         else
@@ -178,8 +191,17 @@ class RTMediaModel extends RTDBModel {
 	$where = apply_filters ( 'rtmedia-get-album-where-query', $where, $this->table_name );
 	$qorder_by = " ORDER BY {$this->table_name}.$order_by ";
         $sql .= $where . $qorder_by ;
+        if($offset !== false){
+            if(! is_integer($offset))
+                $offset = 0;
+            if( intval ( $offset ) < 0 )
+                $offset = 0;
 
-        if ( is_integer ( $offset ) && is_integer ( $per_page ) ) {
+            if(! is_integer($per_page))
+                $per_page = 0;
+            if( intval ( $per_page ) < 0 )
+                $per_page = 1;
+                
             $sql .= ' LIMIT ' . $offset . ',' . $per_page;
         }
 
@@ -197,7 +219,15 @@ class RTMediaModel extends RTDBModel {
 	    $sql.= " AND  {$this->table_name}.blog_id = '".get_current_blog_id()."' ";
 	}
         $sql .= " ORDER BY {$this->table_name}.$order_by";
+        if(! is_integer($offset))
+            $offset = 0;
+        if( intval ( $offset ) < 0 )
+            $offset = 0;
 
+        if(! is_integer($per_page))
+            $per_page = 0;
+        if( intval ( $per_page ) < 0 )
+            $per_page = 1;
         if ( is_integer ( $offset ) && is_integer ( $per_page ) ) {
             $sql .= ' LIMIT ' . $offset . ',' . $per_page;
         }
