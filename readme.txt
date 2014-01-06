@@ -6,7 +6,7 @@ License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires at least: WordPress 3.6
 Tested up to: WordPress 3.7 + BuddyPress 1.8.1
-Stable tag: 3.4.5
+Stable tag: 3.4.6
 
 Add albums, photo, audio/video encoding, privacy, sharing, front-end uploads & more. All this works mobile/tablets devices.
 
@@ -132,6 +132,9 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 == Changelog ==
 
 Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "Visit rtMedia's Features page") to get some details about future releases.
+
+= 3.4.6 =
+* Fix paging query and bug fixes
 
 = 3.4.5 =
 * Fix pagging query sql issues
@@ -664,7 +667,7 @@ Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_sou
 == Upgrade Notice ==
 
 = 3.4.5 =
-Requires BuddyPress 1.7 or higher, if using BuddyPress. Fix pagging query sql issues
+Requires BuddyPress 1.7 or higher, if using BuddyPress. Fix paging query bug fixes
 
 == Sponsors ==
 
