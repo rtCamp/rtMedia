@@ -1334,7 +1334,7 @@ function rtmedia_create_album_modal(){
                    <?php _e('Select Album to merge with : ','rtmedia'); ?>
                    <?php echo '<select name="album" class="rtmedia-merge-user-album-list">' . $album_list . '</select>'; ?>
                    <?php wp_nonce_field ( 'rtmedia_merge_album_' . $rtmedia_query->media_query[ 'album_id' ], 'rtmedia_merge_album_nonce' ); ?>
-                   <input type="submit" class="rtmedia-move-selected" name="merge-album" value="<?php _e( 'Merge Album', 'rtmedia' ); ?>" />
+                   <input type="submit" class="rtmedia-merge-selected" name="merge-album" value="<?php _e( 'Merge Album', 'rtmedia' ); ?>" />
                </form>
            </div>
            <a class="close-reveal-modal" >&#215;</a>
