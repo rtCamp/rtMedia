@@ -106,9 +106,9 @@ class RTMediaModel extends RTDBModel {
                 $offset = 0;
 
             if( ! is_integer($per_page) )
-                $per_page = 0;
+                $per_page = 1;
             
-            if( intval ( $per_page ) < 0 )
+            if( intval ( $per_page ) < 1 )
                 $per_page = 1;
                 
             $sql .= ' LIMIT ' . $offset . ',' . $per_page;
@@ -198,8 +198,8 @@ class RTMediaModel extends RTDBModel {
                 $offset = 0;
 
             if(! is_integer($per_page))
-                $per_page = 0;
-            if( intval ( $per_page ) < 0 )
+                $per_page = 1;
+            if( intval ( $per_page ) < 1 )
                 $per_page = 1;
                 
             $sql .= ' LIMIT ' . $offset . ',' . $per_page;
@@ -227,8 +227,8 @@ class RTMediaModel extends RTDBModel {
                 $offset = 0;
 
             if(! is_integer($per_page))
-                $per_page = 0;
-            if( intval ( $per_page ) < 0 )
+                $per_page = 1;
+            if( intval ( $per_page ) < 1 )
                 $per_page = 1;
                 
             $sql .= ' LIMIT ' . $offset . ',' . $per_page;
