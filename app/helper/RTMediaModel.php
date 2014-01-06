@@ -209,7 +209,7 @@ class RTMediaModel extends RTDBModel {
         return $results;
     }
 
-    function get_group_albums ( $group_id, $offset, $per_page, $order_by = 'media_id desc' ) {
+    function get_group_albums ( $group_id, $offset, $per_page, $order_by = 'media_id desc' ) {        
         global $wpdb;
         if ( is_multisite () )
             $order_by = "blog_id" . (($order_by)? "," . $order_by :'');
@@ -219,16 +219,18 @@ class RTMediaModel extends RTDBModel {
 	    $sql.= " AND  {$this->table_name}.blog_id = '".get_current_blog_id()."' ";
 	}
         $sql .= " ORDER BY {$this->table_name}.$order_by";
-        if(! is_integer($offset))
-            $offset = 0;
-        if( intval ( $offset ) < 0 )
-            $offset = 0;
+        
+        if($offset !== false){
+            if(! is_integer($offset))
+                $offset = 0;
+            if( intval ( $offset ) < 0 )
+                $offset = 0;
 
-        if(! is_integer($per_page))
-            $per_page = 0;
-        if( intval ( $per_page ) < 0 )
-            $per_page = 1;
-        if ( is_integer ( $offset ) && is_integer ( $per_page ) ) {
+            if(! is_integer($per_page))
+                $per_page = 0;
+            if( intval ( $per_page ) < 0 )
+                $per_page = 1;
+                
             $sql .= ' LIMIT ' . $offset . ',' . $per_page;
         }
         $results = $wpdb->get_results ( $sql );
