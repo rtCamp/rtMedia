@@ -105,7 +105,7 @@ if (!class_exists('RTMediaSettings')) {
          * @global BPMediaAddon $rtmedia_addon
          */
         public function settings() {
-            global $rtmedia, $rtmedia_addon;
+            global $rtmedia, $rtmedia_addon, $rtmedia_save_setting_single;
             $options = rtmedia_get_site_option('rtmedia-options');
             $options = $this->sanitize_options($options);
             $rtmedia->options = $options;
@@ -141,6 +141,9 @@ if (!class_exists('RTMediaSettings')) {
             //$rtmedia_album_importer = new BPMediaAlbumimporter();
             //add_settings_section('rtm-rt-album-importer', __('BP-Album Importer', 'rtmedia'), array($rtmedia_album_importer, 'ui'), 'rtmedia-importer');
             //register_setting('rtmedia', 'rtmedia_options', array($this, 'sanitize'));
+	    if( !isset($rtmedia_save_setting_single) ) {
+		$rtmedia_save_setting_single = true;
+	    }
         }
 
 	public function network_notices() {

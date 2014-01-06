@@ -397,7 +397,7 @@ class RTMediaQuery {
          * setting parameters in action query object for pagination
          */
         $per_page_media = intval ( $rtmedia->options[ 'general_perPageMedia' ] );
-	$per_page_media = apply_filters( "rtmedia_per_page_media", $per_page_media );
+	$per_page_media = intval ( apply_filters( "rtmedia_per_page_media", $per_page_media ) );
 
 
         $this->action_query = ( object ) array(
@@ -523,19 +523,19 @@ class RTMediaQuery {
         $this->album_or_media ();
 
         $order_by = $this->order_by ();
-        
+
         //add filter to filter group media when context is profile
         //add_filter('rtmedia-model-where-query',array($this,'rtmedia_model_where_query'), 10, 3);
-        
+
         if ( isset ( $this->media_query[ 'context' ] ) ) {
-            
+
             if ( $this->media_query[ 'context' ] == 'profile' ) {
-                
+
                 if ( ! $this->is_album_gallery () )
                     $this->media_query[ 'media_author' ] = $this->media_query[ 'context_id' ];
                 else
                     $author = $this->media_query[ 'context_id' ];
-                
+
                 //if it is a media single page, then unset the context and context id
                 if($this->is_single()){
                     unset ( $this->media_query[ 'context' ] );
@@ -546,7 +546,7 @@ class RTMediaQuery {
             } else if ( $this->media_query[ 'context' ] == 'group' ) {
                 $group_id = $this->media_query[ 'context_id' ];
             } else {
-                
+
             }
         }
 
@@ -582,7 +582,7 @@ class RTMediaQuery {
         }
         //add filter that was added to filter group media when context is profile
        // remove_filter('rtmedia-model-where-query',array($this,'rtmedia_model_where_query'), 10, 3);
-        
+
         $this->media_count = intval( $media_for_total_count );
 
         if ( ! $pre_media )
@@ -597,7 +597,7 @@ class RTMediaQuery {
     }
     // add a where condition to filter group media when context is profile
 //    function rtmedia_model_where_query($where, $table_name, $join) {
-//       
+//
 //	if( isset( $this->original_query ) && isset( $this->original_query[ 'context' ] ) && $this->original_query[ 'context' ] == "profile" ) {
 //	    $where .= ' AND ' . $table_name . '.context <> "group" ';
 //	}
@@ -681,7 +681,7 @@ class RTMediaQuery {
         if ( $this->is_album () && !$this->shorcode_global ) {
             $this->media = $this->populate_album ();
         }
-        
+
         if ( empty ( $this->media ) )
             return;
 

@@ -748,3 +748,7 @@ abbr {
         background-color:  #195791;
         color : #fff;
     }
+.rtmedia-theme-page-container, .rtmedia-hire-us-page-container {
+    background-color: #FFF;
+    border: 1px solid #CCC;
+}

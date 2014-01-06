@@ -1334,7 +1334,7 @@ function rtmedia_create_album_modal(){
                    <?php _e('Select Album to merge with : ','rtmedia'); ?>
                    <?php echo '<select name="album" class="rtmedia-merge-user-album-list">' . $album_list . '</select>'; ?>
                    <?php wp_nonce_field ( 'rtmedia_merge_album_' . $rtmedia_query->media_query[ 'album_id' ], 'rtmedia_merge_album_nonce' ); ?>
-                   <input type="submit" class="rtmedia-move-selected" name="merge-album" value="<?php _e( 'Merge Album', 'rtmedia' ); ?>" />
+                   <input type="submit" class="rtmedia-merge-selected" name="merge-album" value="<?php _e( 'Merge Album', 'rtmedia' ); ?>" />
                </form>
            </div>
            <a class="close-reveal-modal" >&#215;</a>
@@ -1657,7 +1657,7 @@ function rtmedia_admin_premium_tab($tabs) {
     }
     $tabs[] = array(
                     'href' => get_admin_url ( null, add_query_arg ( array( 'page' => 'rtmedia-premium' ), 'admin.php' ) ),
-                    'name' => __ ( 'Premium', 'rtmedia' ),
+                    'name' => __ ( 'Go PRO!', 'rtmedia' ),
                     'slug' => 'rtmedia-premium',
             'class' => array('rtm-premium')
                 );
@@ -1793,20 +1793,26 @@ function rtmedia_admin_premium_page($page) {
         </div>
     </div>
     <?php
-    } else if( $page == "rtmedia-theme") {
+    } else if( $page == "rtmedia-themes") {
     ?>
 	<div class="rtmedia-theme-page-container">
-	    <h2><?php _e('Coming Soon...!!!','rtmedia'); ?></h2>
-	    <p><?php  _e('Are you a developer and want your rtMedia compatible theme to be listed here? just mail us at','rtmedia') ?> <a href="mailto:product@rtcamp.com"><?php _e('product@rtcamp.com','rtmedia') ?></a>.</p>
+	    <div class="row">
+		<h3><?php _e('Coming Soon...','rtmedia'); ?></h3>
+		<p><?php _e('We are working on some rtMedia themes which will be available shortly.','rtmedia'); ?></p>
+		<h3><?php _e('Are you a developer?','rtmedia'); ?></h3>
+		<p><?php  _e('If you have developed a rtMedia compatible theme and would like it to list here, please email us at','rtmedia') ?> <a href="mailto:product@rtcamp.com"><?php _e('product@rtcamp.com','rtmedia') ?></a>.</p>
+	    </div>
 	</div>
     <?php
     } else if( $page == "rtmedia-hire-us" ) {
      $url = admin_url()."admin.php?page=rtmedia-premium";
     ?>
 	<div class="rtmedia-hire-us-page-container">
-	    <p>
-		<?php  _e('Looking for some custom features with the rtMedia? Go ','rtmedia'); ?> <a href="<?php echo $url; ?>"><?php _e('Premium now','rtmedia') ?></a> <?php _e('or reach us','rtmedia') ?> <a href="https://rtcamp.com/contact/?purpose=hire" target="_blank"><?php  _e('here','rtmedia'); ?> </a>.
-	    </p>
+	    <div class="row">
+		<p>
+		    <?php  _e('Looking for some custom features with the rtMedia?','rtmedia'); ?> <a href="<?php echo $url; ?>"><?php _e('Go Premium now','rtmedia') ?></a> <?php _e('or reach us','rtmedia') ?> <a href="https://rtcamp.com/contact/?purpose=hire" target="_blank"><?php  _e('here','rtmedia'); ?> </a>.
+		</p>
+	    </div>
 	</div>
     <?php
     }
