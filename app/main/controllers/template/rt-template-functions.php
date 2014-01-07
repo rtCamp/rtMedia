@@ -959,7 +959,7 @@ function update_activity_after_thumb_set($id) {
 
 function set_video_thumbnail($id) {
     $media_type = rtmedia_type($id);
-    if ('video' == $media_type) {
+    if ('video' == $media_type && isset( $_POST['rtmedia-thumbnail'] )) {
         $model = new RTMediaModel();
         $model->update(array('cover_art' => $_POST['rtmedia-thumbnail']), array('id' => $id));
     update_activity_after_thumb_set($id);
@@ -1788,7 +1788,7 @@ function rtmedia_admin_premium_page($page) {
         </br>
         <div class="row">
         <div class="columns large-12 rtmedia-upgrade">
-            <a href="http://rtcamp.com/store/rtmedia-pro/" target="_blank" class='upgrade-button' title='<?php _e('Upgrade to rtMedia PRO Now ', 'rtMedia'); ?>'><?php _e('Upgrade to rtMedia PRO Now ', 'rtMedia'); ?></a>
+            <a href="http://rtcamp.com/store/rtmedia-pro/" target="_blank" class='upgrade-button' title='<?php _e('Upgrade to rtMedia PRO Now ', 'rtmedia'); ?>'><?php _e('Upgrade to rtMedia PRO Now ', 'rtmedia'); ?></a>
         </div>
         </div>
     </div>
