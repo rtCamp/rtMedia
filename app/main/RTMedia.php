@@ -276,7 +276,7 @@ class RTMedia
 
         // filter for hooking additional media types
         $allowed_types = apply_filters('rtmedia_allowed_types', $allowed_types);
-        
+
         // sanitize all the types
         $allowed_types = $this->sanitize_allowed_types($allowed_types);
 
@@ -800,37 +800,37 @@ class RTMedia
         wp_localize_script('rtmedia-main', 'rtmedia_media_slug', RTMEDIA_MEDIA_SLUG);
         wp_localize_script('rtmedia-main', 'rtmedia_lightbox_enabled', strval($this->options["general_enableLightbox"]));
         //javascript messages
-        wp_localize_script('rtmedia-magnific', 'rtmedia_load_more', __('Loading media',"rtMedia"));
-        wp_localize_script('rtmedia-main', 'rtmedia_empty_activity_msg', __('Please enter some content to post.',"rtMedia"));
-        wp_localize_script('rtmedia-main', 'rtmedia_empty_comment_msg', __('Empty Comment is not allowed.',"rtMedia"));
-        wp_localize_script('rtmedia-main', 'rtmedia_media_delete_confirmation', __('Are you sure you want to delete this media?',"rtMedia"));
-        wp_localize_script('rtmedia-main', 'rtmedia_media_comment_delete_confirmation', __('Are you sure you want to delete this comment?',"rtMedia"));
-        wp_localize_script('rtmedia-main', 'rtmedia_album_delete_confirmation', __('Are you sure you want to delete this Album?',"rtMedia"));
-        wp_localize_script('rtmedia-main', 'rtmedia_drop_media_msg', __('Drop files here',"rtMedia"));
-        wp_localize_script('rtmedia-main', 'rtmedia_album_created_msg', ' ' . __('album created successfully.',"rtMedia"));
-        wp_localize_script('rtmedia-main', 'rtmedia_something_wrong_msg', __('Something went wrong. Please try again.',"rtMedia"));
-        wp_localize_script('rtmedia-main', 'rtmedia_empty_album_name_msg', __('Enter an album name.',"rtMedia"));
-        wp_localize_script('rtmedia-main', 'rtmedia_max_file_msg', __('Max file Size Limit : ',"rtMedia"));
-        wp_localize_script('rtmedia-main', 'rtmedia_allowed_file_formats', __('Allowed File Formats',"rtMedia"));
-        wp_localize_script('rtmedia-main', 'rtmedia_select_all_visible', __('Select All Visible',"rtMedia"));
-        wp_localize_script('rtmedia-main', 'rtmedia_unselect_all_visible', __('Unselect All Visible',"rtMedia"));
-        wp_localize_script('rtmedia-main', 'rtmedia_no_media_selected', __('Please select some media.',"rtMedia"));
-        wp_localize_script('rtmedia-main', 'rtmedia_selected_media_delete_confirmation', __('Are you sure you want to delete the selected medias?',"rtMedia"));
-        wp_localize_script('rtmedia-main', 'rtmedia_selected_media_move_confirmation', __('Are you sure you want to move the selected medias?',"rtMedia"));
-        wp_localize_script('rtmedia-main', 'rtmedia_waiting_msg', __('Waiting',"rtMedia"));
-        wp_localize_script('rtmedia-main', 'rtmedia_uploaded_msg', __('Uploaded',"rtMedia"));
-        wp_localize_script('rtmedia-main', 'rtmedia_uploading_msg', __('Uploading',"rtMedia"));
-        wp_localize_script('rtmedia-main', 'rtmedia_upload_failed_msg', __('Failed',"rtMedia"));
-        wp_localize_script('rtmedia-main', 'rtmedia_close', __('Close',"rtMedia"));
-        wp_localize_script('rtmedia-main', 'rtmedia_edit', __('Edit',"rtMedia"));
-        wp_localize_script('rtmedia-main', 'rtmedia_delete', __('Delete',"rtMedia"));
-        wp_localize_script('rtmedia-main', 'rtmedia_edit_media', __('Edit Media',"rtMedia"));
-        wp_localize_script('rtmedia-main', 'rtmedia_remove_from_queue', __('Remove from queue',"rtMedia"));
-        wp_localize_script('rtmedia-main', 'rtmedia_add_more_files_msg', __('Add more files',"rtMedia"));
-        wp_localize_script('rtmedia-main', 'rtmedia_file_extension_error_msg', __('File not supported',"rtMedia"));
-        wp_localize_script('rtmedia-main', 'rtmedia_more', __('more',"rtMedia"));
-        wp_localize_script('rtmedia-main', 'rtmedia_less', __('less',"rtMedia"));
-        wp_localize_script('rtmedia-main', 'rtmedia_delete_uploaded_media', __('This media is uploaded. Are you sure you want to delete this media?',"rtMedia"));
+        wp_localize_script('rtmedia-magnific', 'rtmedia_load_more', __('Loading media',"rtmedia"));
+        wp_localize_script('rtmedia-main', 'rtmedia_empty_activity_msg', __('Please enter some content to post.',"rtmedia"));
+        wp_localize_script('rtmedia-main', 'rtmedia_empty_comment_msg', __('Empty Comment is not allowed.',"rtmedia"));
+        wp_localize_script('rtmedia-main', 'rtmedia_media_delete_confirmation', __('Are you sure you want to delete this media?',"rtmedia"));
+        wp_localize_script('rtmedia-main', 'rtmedia_media_comment_delete_confirmation', __('Are you sure you want to delete this comment?',"rtmedia"));
+        wp_localize_script('rtmedia-main', 'rtmedia_album_delete_confirmation', __('Are you sure you want to delete this Album?',"rtmedia"));
+        wp_localize_script('rtmedia-main', 'rtmedia_drop_media_msg', __('Drop files here',"rtmedia"));
+        wp_localize_script('rtmedia-main', 'rtmedia_album_created_msg', ' ' . __('album created successfully.',"rtmedia"));
+        wp_localize_script('rtmedia-main', 'rtmedia_something_wrong_msg', __('Something went wrong. Please try again.',"rtmedia"));
+        wp_localize_script('rtmedia-main', 'rtmedia_empty_album_name_msg', __('Enter an album name.',"rtmedia"));
+        wp_localize_script('rtmedia-main', 'rtmedia_max_file_msg', __('Max file Size Limit : ',"rtmedia"));
+        wp_localize_script('rtmedia-main', 'rtmedia_allowed_file_formats', __('Allowed File Formats',"rtmedia"));
+        wp_localize_script('rtmedia-main', 'rtmedia_select_all_visible', __('Select All Visible',"rtmedia"));
+        wp_localize_script('rtmedia-main', 'rtmedia_unselect_all_visible', __('Unselect All Visible',"rtmedia"));
+        wp_localize_script('rtmedia-main', 'rtmedia_no_media_selected', __('Please select some media.',"rtmedia"));
+        wp_localize_script('rtmedia-main', 'rtmedia_selected_media_delete_confirmation', __('Are you sure you want to delete the selected medias?',"rtmedia"));
+        wp_localize_script('rtmedia-main', 'rtmedia_selected_media_move_confirmation', __('Are you sure you want to move the selected medias?',"rtmedia"));
+        wp_localize_script('rtmedia-main', 'rtmedia_waiting_msg', __('Waiting',"rtmedia"));
+        wp_localize_script('rtmedia-main', 'rtmedia_uploaded_msg', __('Uploaded',"rtmedia"));
+        wp_localize_script('rtmedia-main', 'rtmedia_uploading_msg', __('Uploading',"rtmedia"));
+        wp_localize_script('rtmedia-main', 'rtmedia_upload_failed_msg', __('Failed',"rtmedia"));
+        wp_localize_script('rtmedia-main', 'rtmedia_close', __('Close',"rtmedia"));
+        wp_localize_script('rtmedia-main', 'rtmedia_edit', __('Edit',"rtmedia"));
+        wp_localize_script('rtmedia-main', 'rtmedia_delete', __('Delete',"rtmedia"));
+        wp_localize_script('rtmedia-main', 'rtmedia_edit_media', __('Edit Media',"rtmedia"));
+        wp_localize_script('rtmedia-main', 'rtmedia_remove_from_queue', __('Remove from queue',"rtmedia"));
+        wp_localize_script('rtmedia-main', 'rtmedia_add_more_files_msg', __('Add more files',"rtmedia"));
+        wp_localize_script('rtmedia-main', 'rtmedia_file_extension_error_msg', __('File not supported',"rtmedia"));
+        wp_localize_script('rtmedia-main', 'rtmedia_more', __('more',"rtmedia"));
+        wp_localize_script('rtmedia-main', 'rtmedia_less', __('less',"rtmedia"));
+        wp_localize_script('rtmedia-main', 'rtmedia_delete_uploaded_media', __('This media is uploaded. Are you sure you want to delete this media?',"rtmedia"));
         wp_localize_script ( 'rtmedia-backbone', 'rMedia_loading_media', RTMEDIA_URL . "app/assets/img/boxspinner.gif" );
     }
 

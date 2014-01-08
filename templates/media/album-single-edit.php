@@ -8,9 +8,9 @@ global $rtmedia_media;
 $rtmedia_media = $media[0];
 ?>
 <div class="rtmedia-container rtmedia-single-container rtmedia-media-edit">
-    
+
         <h2><?php echo __ ( 'Edit Album : ' , 'rtmedia' ) . esc_attr($media[0]->media_title) ; ?></h2>
-        
+
         <div class="rtmedia-edit-media-tabs auto section-container" data-section='tabs'>
             <section class="active">
               <p class="tab-title" data-section-title><a href="#panel1"><i class="rtmicon-edit"></i><?php _e('Details', 'rtmedia');?></a></p>
@@ -26,7 +26,7 @@ $rtmedia_media = $media[0];
                     <label for="media_title"><?php _e('Title : ', 'rtmedia'); ?></label><?php rtmedia_title_input(); ?>
                 </div>
                 <?php do_action("rtmedia_add_album_privacy", 'album-edit'); ?>
-                
+
                 <div class="rtmedia-editor-description">
                     <label for='description'><?php _e('Description: ', 'rtmedia') ?></label>
                     <?php
@@ -34,21 +34,21 @@ $rtmedia_media = $media[0];
                             echo rtmedia_description_input( $editor = false);
                                     RTMediaMedia::media_nonce_generator(rtmedia_id());
                     ?>
-                </div> 
+                </div>
                    <input type="submit" name="submit" value="<?php _e('Save Changes', 'rtmedia'); ?>" />
                </form>
               </div>
-               
+
             </section>
             <!--media management-->
-            
+
             <?php if(!is_rtmedia_group_album()) { ?>
                 <section>
                     <p class="tab-title" data-section-title><a href="#panel2"><i class="rtmicon-cog"></i><?php _e('Manage Media', 'rtmedia');?></a></p>
                     <div class="tab-content" data-section-content>
                 <?php if (have_rtmedia()) { ?>
 
-                    <form class="rtmedia-bulk-actions" method="post">
+                    <form class="rtmedia-album-edit rtmedia-bulk-actions" method="post" name="rtmedia_album_edit">
                         <?php wp_nonce_field('rtmedia_bulk_delete_nonce', 'rtmedia_bulk_delete_nonce'); ?>
                         <?php RTMediaMedia::media_nonce_generator($rtmedia_query->media_query['album_id']); ?>
                         <button type='button' class="select-all" title="<?php echo __('Select All Visible','rtmedia'); ?>"><i class='rtmicon-check-empty'></i></button>
@@ -99,9 +99,9 @@ $rtmedia_media = $media[0];
                     </div>
                 </section>
                 <?php } ?>
-                        
-                
+
+
         </div>
-       
+
 
 </div>

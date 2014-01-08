@@ -1,19 +1,19 @@
 <div class="rtmedia-container rtmedia-single-container row rtmedia-media-edit">
 
-    
+
     <?php if (have_rtmedia()) : rtmedia(); ?>
 
 	<?php
-        
+
             if(rtmedia_edit_allowed ()) {
                 global $rtmedia_media;
             ?>
-    
+
             <div class="rtmedia-single-edit-title-container">
                 <h2 class="rtmedia-title"><?php echo __ ( 'Edit Media' , 'rtmedia' ); ?></h2>
-            </div>    
-            
-            <form method="post" action="">
+            </div>
+
+            <form method="post" action="" name="rtmedia_media_single_edit" id="rtmedia_media_single_edit">
                 <div class="rtmedia-editor-main columns large-12 small">
                     <div class="rtmedia-edit-media-tabs auto section-container" data-section='tabs'>
                     <section class="active">
@@ -31,12 +31,12 @@
                                     echo rtmedia_description_input( $editor = false);
                                             RTMediaMedia::media_nonce_generator(rtmedia_id());
                             ?>
-                        </div> 
+                        </div>
                     </div>
                     </section>
                     <?php do_action('rtmedia_add_edit_fields', rtmedia_type()); ?>
                     </div>
-                
+
                 <div class="rtmedia-editor-main columns large-12 small">
                     <?php do_action('rtmedia_add_edit_fields_after_description', rtmedia_type()); ?>
                 </div>
@@ -46,15 +46,15 @@
                                 <a href="<?php rtmedia_permalink(); ?>"><input type="button" value="<?php _e('Back','rtmedia') ?>"></a>
                 </div>
            </div></form>
-    
-            <?php } else { 
-                
+
+            <?php } else {
+
                 ?>
-            
+
             <p><?php echo __("Sorry !! You do not have rights to edit this media","rtmedia"); ?></p>
-            
+
             <?php } ?>
-            
+
     <?php else: ?>
         <p><?php echo __("Sorry !! There's no media found for the request !!","rtmedia"); ?></p>
     <?php endif; ?>
