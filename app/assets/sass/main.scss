@@ -45,21 +45,25 @@
 
 .rtmedia-container{
 	@import "compass/reset";
-        @import "foundation/variables";
-	@import "foundation/components/global"; // *always required
-	@import "foundation/components/grid";
-	@import "foundation/components/visibility";
-	@import "foundation/components/flex-video";
+        //@import "bower_components/foundation/variables";
+        //@import "bower_components/foundation/scss/foundation/components/variables";
+	//@import "foundation/components/global"; // *always required
+	@import "bower_components/foundation/scss/foundation/components/grid";
+	//@import "foundation/components/visibility";
+	@import "bower_components/foundation/scss/foundation/components/visibility";
+	//@import "foundation/components/flex-video";
+	@import "bower_components/foundation/scss/foundation/components/flex-video";
         @import 'foundation_reveal_settings';
-        @import "foundation/components/reveal";
-        @import 'foundation_section_settings';
-        @import "foundation/components/section";
+        @import "bower_components/foundation/scss/foundation/components/reveal";
+        //@import "foundation/components/reveal";
+        //@import 'foundation_section_settings';
+        //@import "foundation/components/section";
         
         
         .rtmedia-edit-media-tabs {
-            @include section-container($section-type:tabs);
+          //  @include section-container($section-type:tabs);
             & > section { 
-                @include section(
+/*                @include section(
                 $section-type:tabs,
                 $title-selector:".tab-title",
                 $content-selector:".tab-content",
@@ -69,7 +73,7 @@
                 $title-bg:#F1F1F1,
                 $title-bg-hover:darken(#F5F5F5,5%),
                 $title-bg-active: #50A1D7,
-                $title-color-active: #fff);
+                $title-color-active: #fff);*/
                 
                 p.tab-title {
                     &>a {

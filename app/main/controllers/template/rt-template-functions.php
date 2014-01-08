@@ -1289,7 +1289,7 @@ function rtmedia_create_album_modal(){
     global $rtmedia_query;
     if( is_rtmedia_album_enable () && !( isset( $rtmedia_query->is_gallery_shortcode ) && $rtmedia_query->is_gallery_shortcode == true)  && isset($rtmedia_query->query[ 'context_id' ]) && isset( $rtmedia_query->query[ 'context' ] )) {
     ?>
-        <div class="reveal-modal rtm-modal small" id='rtmedia-create-album-modal'>
+        <div class="reveal-modal rtm-modal small" id="rtmedia-create-album-modal" data-reveal>
             <div id="rtm-modal-container">
                 <h2 class="rtm-modal-title"><?php _e('Create New Album', 'rtmedia'); ?></h2>
                 <p>
@@ -1327,7 +1327,7 @@ function rtmedia_create_album_modal(){
 
      ?>
         <div class="reveal-modal-bg" style="display: none"></div>
-        <div class="rtmedia-merge-container reveal-modal small rtm-modal" id="rtmedia-merge">
+        <div class="rtmedia-merge-container reveal-modal small rtm-modal" data-reveal id="rtmedia-merge">
            <div id="rtm-modal-container">
                <h2 class="rtm-modal-title"><?php _e( 'Merge Album', 'rtmedia' ); ?></h2>
                <form method="post" class="album-merge-form" action="merge/">

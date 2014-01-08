@@ -787,9 +787,8 @@ class RTMedia
         }
         wp_enqueue_style('rtmedia-font-awesome', RTMEDIA_URL . 'app/assets/css/font-awesome.min.css', '', RTMEDIA_VERSION);
         if(! wp_script_is("rtp-foundation-js"))
-            wp_enqueue_script('rtp-foundation-js', RTMEDIA_URL . 'lib/foundation/foundation.min.js', array('jquery'), RTMEDIA_VERSION);
-//        wp_enqueue_script('rtmedia-foundation-reveal', RTMEDIA_URL . 'lib/foundation/foundation.reveal.js', array('jquery','rtp-foundation-js'), RTMEDIA_VERSION);
-//        wp_enqueue_script('rtmedia-foundation-section', RTMEDIA_URL . 'lib/foundation/foundation.section.js', array('jquery','rtp-foundation-js'), RTMEDIA_VERSION);
+            wp_enqueue_script('rtp-foundation-js', RTMEDIA_URL . 'app/assets/sass/bower_components/foundation/js/foundation.min.js', array('jquery'), RTMEDIA_VERSION);
+        
         wp_enqueue_script('rtmedia-main', RTMEDIA_URL . 'app/assets/js/rtMedia.js', array('jquery', 'wp-mediaelement'), RTMEDIA_VERSION);
         // if lightbox is disabled, dont enqueue the lightbox css and js
         if( isset($rtmedia->options) && isset($rtmedia->options['general_enableLightbox']) && $rtmedia->options['general_enableLightbox'] == 1){
