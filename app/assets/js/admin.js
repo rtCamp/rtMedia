@@ -552,12 +552,23 @@ jQuery(document).ready(function($) {
         window.location.hash = hash.substring(1, hash.length);
     });
     function manageHash() {
+        
+        if( rtmediaGetParameterByName('page') == 'rtmedia-settings' ){
+            return 1;
+        }
 
         hash = window.location.hash;
         $('#tab-' + hash.substr(1, hash.length)).click();
         if ($('#tab-' + hash.substr(1, hash.length)).length < 1)
             return 1;
         return $('#tab-' + hash.substr(1, hash.length)).parent().index() + 1;
+    }
+    
+    function rtmediaGetParameterByName(name) {
+        name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
+        var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+            results = regex.exec(location.search);
+        return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
     }
 
     jQuery('#submit-request').click(function(){
@@ -634,7 +645,7 @@ jQuery(document).ready(function($) {
         manageHash();
     });
     if(jQuery(document).foundation !== undefined)
-        jQuery(document).foundation('section');
+        jQuery(document).foundation();
 });
 
 function rtmedia_addon_do_not_show() {
