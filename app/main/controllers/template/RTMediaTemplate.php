@@ -208,7 +208,7 @@ class RTMediaTemplate {
             } else {
                     $rtMediaNav->refresh_counts ( $rtmedia_query->media[ 0 ]->media_author, array( "context" => "profile", 'media_author' => $rtmedia_query->media[ 0 ]->media_author ) );
             }
-
+	    $state = apply_filters('rtmedia_single_edit_state',$state);
             if ( $state !== false ) {
                 add_action ( "rtmedia_before_template_load", array( &$this, "media_update_success_messege" ) );
             } else {
@@ -457,20 +457,20 @@ class RTMediaTemplate {
 
         if ( $rtmedia_query->action_query->action != 'delete-comment' )
             return;
-        
+
         if ( count ( $_POST ) ) {
             /**
              * /media/id/delete-comment [POST]
              * Delete Comment by Comment ID
              */
-            
+
             if ( empty ( $_POST[ 'comment_id' ] ) ) {
                 return false;
             }
             $comment = new RTMediaComment();
             $id = $_POST['comment_id'];
             $activity_id = get_comment_meta($id, 'activity_id',true);
-            
+
             if(!empty($activity_id)){
                 if(function_exists('bp_activity_delete_comment')){ //if buddypress is active
                     $activity_deleted = bp_activity_delete_comment ($activity_id, $id);
