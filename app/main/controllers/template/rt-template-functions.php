@@ -1932,7 +1932,7 @@ function rtmedia_convert_date($_date) // $date --> time(); value
     }
     else {
        /* translators: date format, see http://php.net/date */
-       return date_i18n( "d F Y ", strtotime($_date) );
+       return date_i18n( "d F Y ", strtotime($_date), true );
     }
 }
 
