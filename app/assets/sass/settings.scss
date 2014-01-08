@@ -1,6 +1,9 @@
 #bp-media-settings-boxes{
-    @import "foundation/components/global"; // *always required    
-    @import "foundation/components/section";
+   // @import "foundation/components/global"; // *always required    
+   @import "bower_components/foundation/scss/foundation/components/global"; // *always required
+    //@import "foundation/components/section";
+    @import "bower_components/foundation/scss/foundation/components/grid";
+    @import "bower_components/foundation/scss/foundation/components/tabs";
     margin: 0;    
 	.has-switch { 
 		border-radius: 0
@@ -22,6 +25,42 @@
 	.rtmedia-setting-select-box {
 		width: auto;		
 	}
+        
+        .tabs dd {
+            margin-left :0;
+                a {
+                padding : 12px;
+                font-size : 13px;
+                text-decoration: none;
+            }
+        }
+        .tabs.vertical {
+            margin-top :0;
+            width : 22%;
+            border-right : 1px solid #c1c1c1;
+            dd {
+                border-bottom: 1px solid #c1c1c1;
+                &.active a{
+                    background: #D5D5D5;
+                }
+            }
+        }
+        .rtm-settings-tab-container {
+            border: 1px solid #c1c1c1;
+        }
+        #rtm-settings-tabs .tabs-content {
+            background: #fff;
+            padding : 10px;
+            
+            &.tabs-content.vertical {
+                width : 78%;
+                margin :0;
+            }
+            .content {
+                background: #fff;
+                float: none;
+            }
+        }
 	.section-container {
 		section {
 				.title {

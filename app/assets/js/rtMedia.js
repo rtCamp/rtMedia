@@ -134,8 +134,9 @@ var rtMediaHook = {
     }
 }
 jQuery('document').ready(function($) {
-    if( jQuery('.rtmedia-single-container').length > 0 ){
+    if( jQuery('.rtmedia-container').length > 0 ){
 	//$('.rtmedia-single-container').foundation(); //for foundation Section(tabs) single media edit.
+        jQuery('.rtmedia-single-container').foundation();
     }
 
     $("#rt_media_comment_form").submit(function(e) {
@@ -393,21 +394,22 @@ jQuery('document').ready(function($) {
             jQuery(this).closest('form').submit();
         }
     });
-    jQuery(document).foundation();
-//       jQuery(document).on('click', '.rtmedia-reveal-modal', function(e){
-//        e.preventDefault();
-//        var modalId = jQuery(this).data('reveal-id');
-//        jQuery('.reveal-modal-bg').css('display', 'block');
-//        jQuery('.reveal-modal-bg').css('opacity', '0.5');
-//        jQuery("#"+modalId).foundation('reveal', 'open');
-//    });
+    
+ 
+       jQuery(document).on('click', '.rtmedia-reveal-modal', function(e){
+        e.preventDefault();
+        var modalId = jQuery(this).data('reveal-id');
+        jQuery('.reveal-modal-bg').css('display', 'block');
+        jQuery('.reveal-modal-bg').css('opacity', '0.5');
+        jQuery("#"+modalId).foundation('reveal', 'open');
+    });
 
-//    jQuery(document).on('click', '.close-reveal-modal', function(e){
-//        e.preventDefault();
-//        var modalId = jQuery(this).parent('.reveal-modal');
-//        jQuery(modalId).foundation('reveal', 'close');
-//        jQuery('.reveal-modal-bg').fadeOut();
-//    });
+    jQuery(document).on('click', '.close-reveal-modal', function(e){
+        e.preventDefault();
+        var modalId = jQuery(this).parent('.reveal-modal');
+        jQuery(modalId).foundation('reveal', 'close');
+        jQuery('.reveal-modal-bg').fadeOut();
+    });
 
 //    jQuery(document).on('click', '#rtm_show_upload_ui', function(){
 //        jQuery('#rtm-media-gallery-uploader').slideToggle();

@@ -45,9 +45,10 @@
 
 .rtmedia-container{
 	@import "compass/reset";
+        //updated for foundation 5
         //@import "bower_components/foundation/variables";
         //@import "bower_components/foundation/scss/foundation/components/variables";
-	//@import "foundation/components/global"; // *always required
+	@import "bower_components/foundation/scss/foundation/components/global"; // *always required
 	@import "bower_components/foundation/scss/foundation/components/grid";
 	//@import "foundation/components/visibility";
 	@import "bower_components/foundation/scss/foundation/components/visibility";
@@ -55,14 +56,15 @@
 	@import "bower_components/foundation/scss/foundation/components/flex-video";
         @import 'foundation_reveal_settings';
         @import "bower_components/foundation/scss/foundation/components/reveal";
+        @import "bower_components/foundation/scss/foundation/components/tabs";
         //@import "foundation/components/reveal";
         //@import 'foundation_section_settings';
         //@import "foundation/components/section";
         
         
-        .rtmedia-edit-media-tabs {
+        .rtmedia-editor-main {
           //  @include section-container($section-type:tabs);
-            & > section { 
+          //  & > section { 
 /*                @include section(
                 $section-type:tabs,
                 $title-selector:".tab-title",
@@ -75,7 +77,7 @@
                 $title-bg-active: #50A1D7,
                 $title-color-active: #fff);*/
                 
-                p.tab-title {
+                dd.tabs {
                     &>a {
                         font-size: 14px;
                         text-decoration : none;
@@ -84,8 +86,13 @@
                         }
                     }   
                 }
+
                 .tab-content {
                     z-index : 99;
+                    margin-bottom : 5px;
+                    .content {
+                        float: none;
+                    }
                 }
                 .rtmedia-title-editor {
                     display: block;
@@ -96,7 +103,7 @@
                         display: block;
                     }
                 }
-            }
+            //}
             
            
           }

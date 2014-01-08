@@ -387,8 +387,8 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
                 if(isset($_REQUEST['page']) && $_REQUEST['page']== "rtmedia-settings")
                 {
                     wp_enqueue_script ( 'rtmedia-foundation-modernizr', RTMEDIA_URL . 'lib/foundation/custom.modernizr.js', array('jquery'), RTMEDIA_VERSION );
-                     wp_enqueue_script ( 'rtmedia-foundation', RTMEDIA_URL . 'lib/foundation/foundation.js', array('jquery'), RTMEDIA_VERSION );
-                     wp_enqueue_script ( 'rtmedia-foundation-section', RTMEDIA_URL . 'lib/foundation/foundation.section.js', array('jquery'), RTMEDIA_VERSION );
+                    wp_enqueue_script ( 'rtmedia-foundation', RTMEDIA_BOWER_COMPONENTS_URL . 'js/foundation.js', array('jquery'), RTMEDIA_VERSION );
+                     //wp_enqueue_script ( 'rtmedia-foundation-section', RTMEDIA_URL . 'lib/foundation/foundation.section.js', array('jquery'), RTMEDIA_VERSION );
                 }
 
                 $rtmedia_admin_strings = array(
