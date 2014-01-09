@@ -7,8 +7,7 @@ function apply_rtMagnificPopup(selector){
 	} else {
 	    rt_load_more = rtmedia_load_more;
 	}
-
-        if( rtmedia_lightbox_enabled === 1){ // if lightbox is enabled.
+       if( rtmedia_lightbox_enabled == '1'){ // if lightbox is enabled.
 
             rtMagnificPopup = jQuery(selector).magnificPopup({
                 delegate: 'a:not(".no-popup")',
