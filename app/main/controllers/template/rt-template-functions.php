@@ -1316,7 +1316,7 @@ function rtmedia_create_album ( $options) {
     if ( $display === true ) {
 
         add_action('rtmedia_before_media_gallery','rtmedia_create_album_modal');
-        $options[] = "<span class='rtmedia-reveal-modal' data-reveal-id='rtmedia-create-album-modal' title='".  __( 'Create New Album', 'rtmedia' ) ."'><i class='rtmicon-plus-circle'></i>" . __('Add Album') . "</span>";
+        $options[] = "<span><a href='#rtmedia-create-album-modal' class='rtmedia-reveal-modal rtmedia-modal-link'  title='".  __( 'Create New Album', 'rtmedia' ) ."'><i class='rtmicon-plus-circle'></i>" . __('Add Album') . "</a></span>";
         return $options;
 
     }
@@ -1327,7 +1327,7 @@ function rtmedia_create_album_modal(){
     global $rtmedia_query;
     if( is_rtmedia_album_enable () && !( isset( $rtmedia_query->is_gallery_shortcode ) && $rtmedia_query->is_gallery_shortcode == true)  && isset($rtmedia_query->query[ 'context_id' ]) && isset( $rtmedia_query->query[ 'context' ] )) {
     ?>
-        <div class="reveal-modal rtm-modal small" id="rtmedia-create-album-modal" data-reveal>
+        <div class="mfp-hide rtmedia-popup" id="rtmedia-create-album-modal">
             <div id="rtm-modal-container">
                 <h2 class="rtm-modal-title"><?php _e('Create New Album', 'rtmedia'); ?></h2>
                 <p>
@@ -1339,9 +1339,7 @@ function rtmedia_create_album_modal(){
                 </p>
                 <?php do_action("rtmedia_add_album_privacy"); ?>
             </div>
-            <a class="close-reveal-modal" >&#215;</a>
         </div>
-        <div class="reveal-modal-bg" style="display: none"></div>
 
  <?php }
 
@@ -1364,8 +1362,7 @@ function rtmedia_create_album_modal(){
         if ( $album_list ) {
 
      ?>
-        <div class="reveal-modal-bg" style="display: none"></div>
-        <div class="rtmedia-merge-container reveal-modal small rtm-modal" data-reveal id="rtmedia-merge">
+        <div class="rtmedia-merge-container rtmedia-popup mfp-hide" id="rtmedia-merge">
            <div id="rtm-modal-container">
                <h2 class="rtm-modal-title"><?php _e( 'Merge Album', 'rtmedia' ); ?></h2>
                <form method="post" class="album-merge-form" action="merge/">
@@ -1375,7 +1372,6 @@ function rtmedia_create_album_modal(){
                    <input type="submit" class="rtmedia-merge-selected" name="merge-album" value="<?php _e( 'Merge Album', 'rtmedia' ); ?>" />
                </form>
            </div>
-           <a class="close-reveal-modal" >&#215;</a>
        </div>
 
  <?php }
@@ -1424,7 +1420,7 @@ function rtmedia_album_edit ($options) {
             $album_list = rtmedia_user_album_list();
         if ( $album_list ) {
 
-            $options[] = '<span class="rtmedia-reveal-modal" data-reveal-id="rtmedia-merge" title="' . __('Merge Album', 'rtmedia') . '"><i class="rtmicon-code-fork"></i>' . __('Merge Album','rtmedia') . '</span>';
+            $options[] = '<span><a href="#rtmedia-merge" class="rtmedia-reveal-modal rtmedia-modal-link" title="' . __('Merge Album', 'rtmedia') . '"><i class="rtmicon-code-fork"></i>' . __('Merge Album','rtmedia') . '</a></span>';
 
             }
         }
