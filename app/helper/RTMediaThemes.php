@@ -88,11 +88,11 @@ class RTMediaThemes {
 	    </div>
 	    <hr>
 	    <div class="row">
-		<div class="columns large-4 rtmedia-theme-image"><a href="http://themeforest.net/item/sweet-date-more-than-a-wordpress-dating-theme/4994573?ref=rtCamp" target="_blank"><img src="<?php echo RTMEDIA_URL.'app/assets/img/rtmedia-theme-sweetdate.png' ?>" /></a> </div>
+		<div class="columns large-4 rtmedia-theme-image"><a href="http://rt.cx/sweetdate" target="_blank"><img src="<?php echo RTMEDIA_URL.'app/assets/img/rtmedia-theme-sweetdate.png' ?>" /></a> </div>
 		<div class="columns large-7">
-		    <h3 class="rtmedia-theme-3rd-party-title"><a href="http://themeforest.net/item/sweet-date-more-than-a-wordpress-dating-theme/4994573?ref=rtCamp" target="_blank">Sweet Date</a></h3>
+		    <h3 class="rtmedia-theme-3rd-party-title"><a href="http://rt.cx/sweetdate" target="_blank">Sweet Date</a></h3>
 		    <div><span><?php _e('SweetDate is a unique, clean and modern Premium Wordpress theme. It is perfect for a dating or community website but can be used as well for any other domain. They added all the things you need to create a perfect community system.','rtmedia'); ?></span></div>
-		    <div><h4><?php echo __('Click','rtmedia') . " <a href='http://themeforest.net/item/sweet-date-more-than-a-wordpress-dating-theme/4994573?ref=rtCamp' target='_blank'>".__('here','rtmedia')."</a> ". __('for preview.','rtmedia'); ?></h4></div>
+		    <div><h4><?php echo __('Click','rtmedia') . " <a href='http://rt.cx/sweetdate' target='_blank'>".__('here','rtmedia')."</a> ". __('for preview.','rtmedia'); ?></h4></div>
 		</div>
 	    </div>
 	    <hr>
