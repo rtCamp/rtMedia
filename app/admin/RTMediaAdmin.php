@@ -346,6 +346,26 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
                     'target' => '_self',
                 ),
             ) );
+            $admin_bar->add_menu ( array(
+                'id' => 'rt-media-themes',
+                'parent' => 'rtMedia',
+                'title' => __ ( 'Themes', 'rtmedia' ),
+                'href' => admin_url ( 'admin.php?page=rtmedia-themes' ),
+                'meta' => array(
+                    'title' => __ ( 'Themes', 'rtmedia' ),
+                    'target' => '_self',
+                ),
+            ) );
+            $admin_bar->add_menu ( array(
+                'id' => 'rt-media-hire-us',
+                'parent' => 'rtMedia',
+                'title' => __ ( 'Hire Us', 'rtmedia' ),
+                'href' => admin_url ( 'admin.php?page=rtmedia-hire-us' ),
+                'meta' => array(
+                    'title' => __ ( 'Hire Us', 'rtmedia' ),
+                    'target' => '_self',
+                ),
+            ) );
         }
 
         /**
