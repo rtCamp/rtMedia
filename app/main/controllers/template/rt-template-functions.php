@@ -864,7 +864,7 @@ function change_poster($html,$media){
 add_action ( 'rtmedia_add_edit_tab_title', 'rtmedia_vedio_editor_title', 1000 );
 function rtmedia_vedio_editor_title(){
     global $rtmedia_query;
-    if ( $rtmedia_query->media[ 0 ]->media_type == 'video' ) {
+    if ( isset( $rtmedia_query->media[ 0 ]->media_type) && $rtmedia_query->media[ 0 ]->media_type == 'video' ) {
 	$flag = false;
 	$media_id = $rtmedia_query->media[ 0 ]->media_id;
         $thumbnail_array = get_post_meta($media_id, "rtmedia_media_thumbnails", true);
@@ -889,7 +889,7 @@ add_action ( 'rtmedia_add_edit_tab_content', 'rtmedia_vedio_editor_content', 100
 
 function rtmedia_vedio_editor_content() {
     global $rtmedia_query;
-    if ( $rtmedia_query->media[ 0 ]->media_type == 'video' ) {
+    if ( isset($rtmedia_query->media[ 0 ]->media_type) && $rtmedia_query->media[ 0 ]->media_type == 'video' ) {
         $media_id = $rtmedia_query->media[ 0 ]->media_id;
         $thumbnail_array = get_post_meta($media_id, "rtmedia_media_thumbnails", true);
         echo '<div class="content" id="panel2">';
@@ -1000,7 +1000,7 @@ add_action('rtmedia_add_edit_tab_title','rtmedia_image_editor_title',12);
 //add the tab title media on media edit screen
 function rtmedia_image_editor_title(){
     global $rtmedia_query;
-    if ( $rtmedia_query->media[ 0 ]->media_type == 'photo' ) {
+    if ( isset($rtmedia_query->media[ 0 ]->media_type) && $rtmedia_query->media[ 0 ]->media_type == 'photo' ) {
         echo '<dd><a href="#panel2" class="rtmedia-modify-image"><i class="rtmicon-picture-o"></i>' . __("Image", "rtmedia") . '</a></dd>';
     }
 }
@@ -1008,7 +1008,7 @@ function rtmedia_image_editor_title(){
 add_action ( 'rtmedia_add_edit_tab_content', 'rtmedia_image_editor_content', 12 );
 function rtmedia_image_editor_content () {
     global $rtmedia_query;
-    if ( $rtmedia_query->media[ 0 ]->media_type == 'photo' ) {
+    if ( isset($rtmedia_query->media[ 0 ]->media_type) && $rtmedia_query->media[ 0 ]->media_type == 'photo' ) {
         $media_id = $rtmedia_query->media[ 0 ]->media_id;
         $id = $rtmedia_query->media[ 0 ]->id;
         //$editor = wp_get_image_editor(get_attached_file($id));
