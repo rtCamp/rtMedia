@@ -7,9 +7,9 @@ function apply_rtMagnificPopup(selector){
 	} else {
 	    rt_load_more = rtmedia_load_more;
 	}
-        
+
         if( rtmedia_lightbox_enabled === 1){ // if lightbox is enabled.
-        
+
             rtMagnificPopup = jQuery(selector).magnificPopup({
                 delegate: 'a:not(".no-popup")',
                 type: 'ajax',
@@ -138,20 +138,22 @@ var rtMediaHook = {
     }
 }
 jQuery('document').ready(function($) {
-    
-    // open magnific popup as modal for create album/playlist
-    $('.rtmedia-modal-link').magnificPopup({
-        type:'inline',
-        midClick: true, // Allow opening popup on middle mouse click. Always set it to true if you don't provide alternative source in href
-        closeBtnInside:true,        
 
-      });
+    // open magnific popup as modal for create album/playlist
+    if( jQuery('.rtmedia-modal-link').length > 0 ){
+	$('.rtmedia-modal-link').magnificPopup({
+	    type:'inline',
+	    midClick: true, // Allow opening popup on middle mouse click. Always set it to true if you don't provide alternative source in href
+	    closeBtnInside:true,
+
+	  });
+    }
 
     if( jQuery('.rtmedia-media-edit').length > 0 ){
 	//for foundation tabs on single media edit.
         jQuery('.rtmedia-media-edit').foundation();
     }
-    
+
     $("#rt_media_comment_form").submit(function(e) {
         if ($.trim($("#comment_content").val()) == "") {
             alert( rtmedia_empty_comment_msg );
@@ -407,7 +409,7 @@ jQuery('document').ready(function($) {
             jQuery(this).closest('form').submit();
         }
     });
-    
+
 
 //    jQuery(document).on('click', '#rtm_show_upload_ui', function(){
 //        jQuery('#rtm-media-gallery-uploader').slideToggle();
