@@ -16,7 +16,8 @@
             <form method="post" action="" name="rtmedia_media_single_edit" id="rtmedia_media_single_edit">
                 <div class="rtmedia-editor-main columns large-12 small">
                     <dl class="tabs" data-tab>
-                        <dd class="active"><a href="#panel1"><i class='rtmicon-edit'></i><?php _e('Details', 'rtmedia') ;?></a></dd>                        
+                        <dd class="active"><a href="#panel1"><i class='rtmicon-edit'></i><?php _e('Details', 'rtmedia') ;?></a></dd>
+                        <!-- use this hook to add title of a new tab-->
                         <?php do_action('rtmedia_add_edit_tab_title', rtmedia_type());?>
                     </dl>
                     
@@ -40,6 +41,7 @@
                                 <!-- Use this hook to add new fields to the edit form-->
                                 <?php do_action('rtmedia_add_edit_fields', rtmedia_type()); ?>
                         </div>
+                        <!-- use this hook to add content of a new tab-->
                         <?php do_action('rtmedia_add_edit_tab_content', rtmedia_type());?>
                     </div>
                     

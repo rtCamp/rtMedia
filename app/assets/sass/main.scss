@@ -54,8 +54,6 @@
 	@import "bower_components/foundation/scss/foundation/components/visibility";
 	//@import "foundation/components/flex-video";
 	@import "bower_components/foundation/scss/foundation/components/flex-video";
-        @import 'foundation_reveal_settings';
-        @import "bower_components/foundation/scss/foundation/components/reveal";
         @import "bower_components/foundation/scss/foundation/components/tabs";
         //@import "foundation/components/reveal";
         //@import 'foundation_section_settings';
@@ -829,34 +827,11 @@ button.rtp-lb-close {
     display: inline;
 }
 
-.rtm-modal {
+/*.rtm-modal {
     text-align: left;
-    
-    #rtm-modal-container {
-        
-        .rtm-modal-title{
-            font-size: 24px;
-            line-height : 24px;
-            margin-bottom : 30px;
-        }
-        .rtm-input-medium {
-            width: 55%;
-        }
-        
-        input,select {
-            margin-right: 10px;
-        }
-        
-        p {
-            margin-bottom: 10px;
-        }
-
-        label{
-               min-width: 90px;
-               display:inline-block;
-        }
-    }
-}
+    */
+   
+/*}*/
 
 .rtmedia-container #rtMedia-queue-list {
     margin-bottom : 10px;
@@ -1420,6 +1395,9 @@ button.rtp-lb-close {
     }
 }
 
+.rtmedia-save-album {
+    margin-top : 15px;
+}
 //style for magnific popup used as modal for create album/playlist
 .rtmedia-popup {
   position: relative;
@@ -1428,4 +1406,28 @@ button.rtp-lb-close {
   width: auto;
   max-width: 500px;
   margin: 20px auto;
+        
+    .rtm-modal-title{
+        font-size: 24px;
+        line-height : 24px;
+        margin-bottom : 30px;
+        margin-top : 0;
+    }
+    .rtm-input-medium {
+        width: 55%;
+    }
+
+    input,select {
+        margin-right: 10px;
+    }
+
+    p {
+        margin-bottom: 10px;
+    }
+
+    label{
+           min-width: 90px;
+           display:inline-block;
+    }
+    
 }

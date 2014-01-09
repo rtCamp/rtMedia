@@ -175,7 +175,7 @@ jQuery('document').ready(function($) {
         e.preventDefault();
         jQuery(this).toggleClass('unselect-all').toggleClass('select-all');
         jQuery(this).attr('title', rtmedia_unselect_all_visible);
-        jQuery(this).html('<i class="rtmicon-check"></i>');
+        jQuery(this).html('<i class="rtmicon-check-square-o"></i>');
         jQuery('.rtmedia-list input').each(function() {
             jQuery(this).prop('checked', true);
         });
@@ -185,7 +185,7 @@ jQuery('document').ready(function($) {
         e.preventDefault();
         jQuery(this).toggleClass('select-all').toggleClass('unselect-all');
         jQuery(this).attr('title', rtmedia_select_all_visible);
-        jQuery(this).html('<i class="rtmicon-check-empty"></i>');
+        jQuery(this).html('<i class="rtmicon-square-o"></i>');
         jQuery('.rtmedia-list input').each(function() {
             jQuery(this).prop('checked', false);
         });
