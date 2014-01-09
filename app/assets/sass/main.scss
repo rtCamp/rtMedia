@@ -63,35 +63,32 @@
         
         
         .rtmedia-editor-main {
-          //  @include section-container($section-type:tabs);
-          //  & > section { 
-/*                @include section(
-                $section-type:tabs,
-                $title-selector:".tab-title",
-                $content-selector:".tab-content",
-                $title-padding: 5px 12px,
-                $title-color:#333,
-                //$title-color:#3475BA,
-                $title-bg:#F1F1F1,
-                $title-bg-hover:darken(#F5F5F5,5%),
-                $title-bg-active: #50A1D7,
-                $title-color-active: #fff);*/
                 
-                dd.tabs {
-                    &>a {
+                dl.tabs dd{
+                    & > a {
                         font-size: 14px;
                         text-decoration : none;
-                        &:first-child {
-                            margin-left : 0;
+                        padding : 5px 15px;
+                        background : #f1f1f1;
+                        &:hover {
+                            background : darken(#F5F5F5,10%);
                         }
+/*                        &:first-child {
+                            margin-left : 0;
+                        }*/
                     }   
+                    &.active > a{
+                        background: #50A1D7;
+                        color : #fff;
+                    }
                 }
 
-                .tab-content {
-                    z-index : 99;
+                .tabs-content {
+/*                    z-index : 99;*/
                     margin-bottom : 5px;
                     .content {
                         float: none;
+                        padding : 10px;
                     }
                 }
                 .rtmedia-title-editor {

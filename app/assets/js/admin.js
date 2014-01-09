@@ -552,10 +552,6 @@ jQuery(document).ready(function($) {
         window.location.hash = hash.substring(1, hash.length);
     });
     function manageHash() {
-        
-        if( rtmediaGetParameterByName('page') == 'rtmedia-settings' ){
-            return 1;
-        }
 
         hash = window.location.hash;
         $('#tab-' + hash.substr(1, hash.length)).click();

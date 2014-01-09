@@ -151,7 +151,7 @@ jQuery('document').ready(function($) {
 	//for foundation tabs on single media edit.
         jQuery('.rtmedia-media-edit').foundation();
     }
-
+    
     $("#rt_media_comment_form").submit(function(e) {
         if ($.trim($("#comment_content").val()) == "") {
             alert( rtmedia_empty_comment_msg );
