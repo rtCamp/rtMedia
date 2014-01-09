@@ -674,8 +674,8 @@ class RTMediaFormHandler {
 
 	public static function rtForm_settings_tabs_content($page, $sub_tabs) {
               //  $rtmedia_admin_ui_handler = "<div class='section-container auto' data-options='deep_linking: true' data-section=''>";
-                echo "<div class='clearfix rtm-settings-tab-container'>";
-                $rtmedia_admin_ui_handler = "<dl class='tabs' data-tab>";
+                //echo "<div class='clearfix rtm-settings-tab-container'>";
+                $rtmedia_admin_ui_handler = "<div class='clearfix rtm-settings-tab-container'><dl class='tabs' data-tab>";
                 $rtmedia_admin_ui_handler = apply_filters("rtmedia_admin_ui_handler_filter",$rtmedia_admin_ui_handler);
                 echo $rtmedia_admin_ui_handler ;
                 $i = 1;
