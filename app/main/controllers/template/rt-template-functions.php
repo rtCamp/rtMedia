@@ -840,8 +840,7 @@ function is_rtmedia_edit_allowed () {
     }
 }
 
-add_action ( 'rtmedia_add_edit_fields', 'rtmedia_image_editor', 12 );
-add_action ( 'rtmedia_add_edit_fields', 'rtmedia_vedio_editor', 1000 );
+//add_action ( 'rtmedia_add_edit_fields', 'rtmedia_vedio_editor', 1000 );
 add_action ('rtmedia_after_update_media', 'set_video_thumbnail', 12);
 add_filter ('rtmedia_single_content_filter', 'change_poster', 99, 2);
 
@@ -861,17 +860,42 @@ function change_poster($html,$media){
     }
     return $html;
 }
-
-function rtmedia_vedio_editor() {
+// add title for video editor in tabs
+add_action ( 'rtmedia_add_edit_tab_title', 'rtmedia_vedio_editor_title', 1000 );
+function rtmedia_vedio_editor_title(){
     global $rtmedia_query;
-    if ( $rtmedia_query->media[ 0 ]->media_type == 'video' ) {
+    if ( isset( $rtmedia_query->media[ 0 ]->media_type) && $rtmedia_query->media[ 0 ]->media_type == 'video' ) {
+	$flag = false;
+	$media_id = $rtmedia_query->media[ 0 ]->media_id;
+        $thumbnail_array = get_post_meta($media_id, "rtmedia_media_thumbnails", true);
+	if(is_array($thumbnail_array)) {
+	    $flag = true;
+	} else {
+	    global $rtmedia_media;
+            $curr_cover_art = $rtmedia_media->cover_art;
+            if($curr_cover_art != "") {
+                $rtmedia_video_thumbs = get_rtmedia_meta($rtmedia_query->media[ 0 ]->media_id, "rtmedia-thumbnail-ids");
+                if(is_array($rtmedia_video_thumbs)) {
+		    $flag = true;
+		}
+	    }
+	}
+	if( $flag ) {
+	    echo '<dd><a href="#panel2"><i class="rtmicon-picture-o"></i>' . __('Video Thumbnail', 'rtmedia') .'</a></dd>';
+	}
+    }
+}
+add_action ( 'rtmedia_add_edit_tab_content', 'rtmedia_vedio_editor_content', 1000 );
+
+function rtmedia_vedio_editor_content() {
+    global $rtmedia_query;
+    if ( isset($rtmedia_query->media[ 0 ]->media_type) && $rtmedia_query->media[ 0 ]->media_type == 'video' ) {
         $media_id = $rtmedia_query->media[ 0 ]->media_id;
         $thumbnail_array = get_post_meta($media_id, "rtmedia_media_thumbnails", true);
+        echo '<div class="content" id="panel2">';
         if(is_array($thumbnail_array)) {
     ?>
-        <section class="active">
-            <p class="tab-title" data-section-title><a href="#panel1"><i class="rtmicon-picture-o"></i><?php _e('Video Thumbnail', 'rtmedia');?></a></p>
-            <div class="tab-content" data-section-content>
+
                 <div class="rtmedia-change-cover-arts">
                     <ul>
                 <?php
@@ -888,8 +912,8 @@ function rtmedia_vedio_editor() {
                 ?>
                     </ul>
                 </div>
-            </div>
-        </section>
+
+
     <?php
         }
         else {  // check for array of thumbs stored as attachement ids
@@ -900,7 +924,7 @@ function rtmedia_vedio_editor() {
                 if(is_array($rtmedia_video_thumbs)) {
             ?>
                 <div class="rtmedia-change-cover-arts">
-                    <p> Video Thumbnail:</p>
+                    <p><?php _e('Video Thumbnail:', 'rtmedia');?></p>
                     <ul>
             <?php
                     foreach($rtmedia_video_thumbs as $key=>$attachment_id) {
@@ -917,11 +941,15 @@ function rtmedia_vedio_editor() {
             ?>
                     </ul>
                 </div>
+
             <?php
 
                 }
+
             }
+
         }
+         echo "</div>";
     }
 }
 
@@ -968,9 +996,19 @@ function set_video_thumbnail($id) {
     }
 }
 
-function rtmedia_image_editor () {
+add_action('rtmedia_add_edit_tab_title','rtmedia_image_editor_title',12,1);
+//add the tab title media on media edit screen
+function rtmedia_image_editor_title( $type = 'photo' ){
     global $rtmedia_query;
-    if ( $rtmedia_query->media[ 0 ]->media_type == 'photo' ) {
+    if ( isset($rtmedia_query->media[ 0 ]->media_type) && $rtmedia_query->media[ 0 ]->media_type == 'photo' && $type == 'photo') {
+        echo '<dd><a href="#panel2" class="rtmedia-modify-image"><i class="rtmicon-picture-o"></i>' . __("Image", "rtmedia") . '</a></dd>';
+    }
+}
+// add the content for the image editor tab
+add_action ( 'rtmedia_add_edit_tab_content', 'rtmedia_image_editor_content', 12,1 );
+function rtmedia_image_editor_content ( $type = 'photo') {
+    global $rtmedia_query;
+    if ( isset($rtmedia_query->media[ 0 ]->media_type) && $rtmedia_query->media[ 0 ]->media_type == 'photo' && $type == 'photo') {
         $media_id = $rtmedia_query->media[ 0 ]->media_id;
         $id = $rtmedia_query->media[ 0 ]->id;
         //$editor = wp_get_image_editor(get_attached_file($id));
@@ -980,8 +1018,8 @@ function rtmedia_image_editor () {
             $nonce = wp_create_nonce ( "image_editor-$media_id" );
             $modify_button = '<p><input type="button" class="rtmedia-image-edit" id="imgedit-open-btn-' . $media_id . '" onclick="imageEdit.open( \'' . $media_id . '\', \'' . $nonce . '\' )" class="button" value="' . __('Modify Image', 'rtmedia') . '"> <span class="spinner"></span></p>';
         }
-        echo '<section><p class="tab-title" data-section-title><a href="#panel2" class="rtmedia-modify-image"><i class="rtmicon-picture-o"></i>'. __('Image', 'rtmedia') . '</a></p>
-                  <div class="tab-content" data-section-content>';
+        echo '<div class="content" id="panel2">';
+                  //<div class="tab-content" data-section-content>';
         echo '<div class="rtmedia-image-editor-cotnainer" id="rtmedia-image-editor-cotnainer" >';
         echo '<div class="rtmedia-image-editor" id="image-editor-' . $media_id . '"></div>';
         $thumb_url = wp_get_attachment_image_src ( $media_id, 'thumbnail', true );
@@ -991,7 +1029,7 @@ function rtmedia_image_editor () {
                . '<p id="thumbnail-head-' . $id . '"><img class="thumbnail" src="' . set_url_scheme ( $thumb_url[ 0 ] ) . '" alt="" /></p>'
                 . $modify_button .'</div>';
         echo '</div>';
-        echo '</div></section>';
+        echo '</div>';
     }
 
 }
@@ -1278,7 +1316,7 @@ function rtmedia_create_album ( $options) {
     if ( $display === true ) {
 
         add_action('rtmedia_before_media_gallery','rtmedia_create_album_modal');
-        $options[] = "<span class='rtmedia-reveal-modal' data-reveal-id='rtmedia-create-album-modal' title='".  __( 'Create New Album', 'rtmedia' ) ."'><i class='rtmicon-plus-circle'></i>" . __('Add Album') . "</span>";
+        $options[] = "<span><a href='#rtmedia-create-album-modal' class='rtmedia-reveal-modal rtmedia-modal-link'  title='".  __( 'Create New Album', 'rtmedia' ) ."'><i class='rtmicon-plus-circle'></i>" . __('Add Album') . "</a></span>";
         return $options;
 
     }
@@ -1289,7 +1327,7 @@ function rtmedia_create_album_modal(){
     global $rtmedia_query;
     if( is_rtmedia_album_enable () && !( isset( $rtmedia_query->is_gallery_shortcode ) && $rtmedia_query->is_gallery_shortcode == true)  && isset($rtmedia_query->query[ 'context_id' ]) && isset( $rtmedia_query->query[ 'context' ] )) {
     ?>
-        <div class="reveal-modal rtm-modal small" id='rtmedia-create-album-modal'>
+        <div class="mfp-hide rtmedia-popup" id="rtmedia-create-album-modal">
             <div id="rtm-modal-container">
                 <h2 class="rtm-modal-title"><?php _e('Create New Album', 'rtmedia'); ?></h2>
                 <p>
@@ -1301,9 +1339,7 @@ function rtmedia_create_album_modal(){
                 </p>
                 <?php do_action("rtmedia_add_album_privacy"); ?>
             </div>
-            <a class="close-reveal-modal" >&#215;</a>
         </div>
-        <div class="reveal-modal-bg" style="display: none"></div>
 
  <?php }
 
@@ -1326,8 +1362,7 @@ function rtmedia_create_album_modal(){
         if ( $album_list ) {
 
      ?>
-        <div class="reveal-modal-bg" style="display: none"></div>
-        <div class="rtmedia-merge-container reveal-modal small rtm-modal" id="rtmedia-merge">
+        <div class="rtmedia-merge-container rtmedia-popup mfp-hide" id="rtmedia-merge">
            <div id="rtm-modal-container">
                <h2 class="rtm-modal-title"><?php _e( 'Merge Album', 'rtmedia' ); ?></h2>
                <form method="post" class="album-merge-form" action="merge/">
@@ -1337,7 +1372,6 @@ function rtmedia_create_album_modal(){
                    <input type="submit" class="rtmedia-merge-selected" name="merge-album" value="<?php _e( 'Merge Album', 'rtmedia' ); ?>" />
                </form>
            </div>
-           <a class="close-reveal-modal" >&#215;</a>
        </div>
 
  <?php }
@@ -1386,7 +1420,7 @@ function rtmedia_album_edit ($options) {
             $album_list = rtmedia_user_album_list();
         if ( $album_list ) {
 
-            $options[] = '<span class="rtmedia-reveal-modal" data-reveal-id="rtmedia-merge" title="' . __('Merge Album', 'rtmedia') . '"><i class="rtmicon-code-fork"></i>' . __('Merge Album','rtmedia') . '</span>';
+            $options[] = '<span><a href="#rtmedia-merge" class="rtmedia-reveal-modal rtmedia-modal-link" title="' . __('Merge Album', 'rtmedia') . '"><i class="rtmicon-code-fork"></i>' . __('Merge Album','rtmedia') . '</a></span>';
 
             }
         }
@@ -1792,17 +1826,6 @@ function rtmedia_admin_premium_page($page) {
         </div>
         </div>
     </div>
-    <?php
-    } else if( $page == "rtmedia-themes") {
-    ?>
-	<div class="rtmedia-theme-page-container">
-	    <div class="row">
-		<h3><?php _e('Coming Soon...','rtmedia'); ?></h3>
-		<p><?php _e('We are working on some rtMedia themes which will be available shortly.','rtmedia'); ?></p>
-		<h3><?php _e('Are you a developer?','rtmedia'); ?></h3>
-		<p><?php  _e('If you have developed a rtMedia compatible theme and would like it to list here, please email us at','rtmedia') ?> <a href="mailto:product@rtcamp.com"><?php _e('product@rtcamp.com','rtmedia') ?></a>.</p>
-	    </div>
-	</div>
     <?php
     } else if( $page == "rtmedia-hire-us" ) {
      $url = admin_url()."admin.php?page=rtmedia-premium";

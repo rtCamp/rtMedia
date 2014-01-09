@@ -7,97 +7,100 @@ function apply_rtMagnificPopup(selector){
 	} else {
 	    rt_load_more = rtmedia_load_more;
 	}
-        rtMagnificPopup = jQuery(selector).magnificPopup({
-            delegate: 'a:not(".no-popup")',
-            type: 'ajax',
-            tLoading: rt_load_more + ' #%curr%...',
-            mainClass: 'mfp-img-mobile',
-            preload: [1, 3],
-            closeOnBgClick: false,
-            gallery: {
-                enabled: true,
-                navigateByImgClick: true,
-                arrowMarkup: '',// disabled default arrows
-                preload: [0, 1] // Will preload 0 - before current, and 1 after the current image
-            },
-            image: {
-                tError: '<a href="%url%">The image #%curr%</a> could not be loaded.',
-                titleSrc: function(item) {
-                    return item.el.attr('title') + '<small>by Marsel Van Oosten</small>';
-                }
-            },
-            disableOn: function() {
-                if (jQuery(window).width() < 600) {
-                    return false;
-                }
-                return true;
-            },
-            callbacks: {
-                ajaxContentAdded: function() {
+       if( rtmedia_lightbox_enabled == '1'){ // if lightbox is enabled.
 
-                    // When last second media is encountered in lightbox, load more medias if available
-                    var mfp = jQuery.magnificPopup.instance;
-                    var current_media = mfp.currItem.el;
-                    var li = current_media.parent();
-                    if(li.is(':nth-last-child(2)')){ // if its last second media
-                        var last_li = li.next();
-                        if(jQuery('#rtMedia-galary-next').css('display') == 'block'){ // if more medias are available
-                            jQuery('#rtMedia-galary-next').click(); // load more
-                           // var new_items = last_li.nextAll();
-                           // console.log(new_items);
-                           // new_items.each(function(index){
-                               // console.log(index);
-                               // mfp.items.push({
-                                 //  src: jQuery(this).children('a')
-                                //});
-                                //console.log(jQuery('>a'));
-                          //  });
-                            //apply_rtMagnificPopup(selector);
-                            //mfp.updateItemHTML();
+            rtMagnificPopup = jQuery(selector).magnificPopup({
+                delegate: 'a:not(".no-popup")',
+                type: 'ajax',
+                tLoading: rt_load_more + ' #%curr%...',
+                mainClass: 'mfp-img-mobile',
+                preload: [1, 3],
+                closeOnBgClick: false,
+                gallery: {
+                    enabled: true,
+                    navigateByImgClick: true,
+                    arrowMarkup: '',// disabled default arrows
+                    preload: [0, 1] // Will preload 0 - before current, and 1 after the current image
+                },
+                image: {
+                    tError: '<a href="%url%">The image #%curr%</a> could not be loaded.',
+                    titleSrc: function(item) {
+                        return item.el.attr('title') + '<small>by Marsel Van Oosten</small>';
+                    }
+                },
+                disableOn: function() {
+                    if (jQuery(window).width() < 600) {
+                        return false;
+                    }
+                    return true;
+                },
+                callbacks: {
+                    ajaxContentAdded: function() {
+
+                        // When last second media is encountered in lightbox, load more medias if available
+                        var mfp = jQuery.magnificPopup.instance;
+                        var current_media = mfp.currItem.el;
+                        var li = current_media.parent();
+                        if(li.is(':nth-last-child(2)')){ // if its last second media
+                            var last_li = li.next();
+                            if(jQuery('#rtMedia-galary-next').css('display') == 'block'){ // if more medias are available
+                                jQuery('#rtMedia-galary-next').click(); // load more
+                               // var new_items = last_li.nextAll();
+                               // console.log(new_items);
+                               // new_items.each(function(index){
+                                   // console.log(index);
+                                   // mfp.items.push({
+                                     //  src: jQuery(this).children('a')
+                                    //});
+                                    //console.log(jQuery('>a'));
+                              //  });
+                                //apply_rtMagnificPopup(selector);
+                                //mfp.updateItemHTML();
+                            }
                         }
+
+                        var items = mfp.items.length;
+                        if(mfp.index == (items -1) && !(li.is(":last-child"))){
+                            current_media.click();
+                            return;
+                        }
+
+                        $container = this.content.find('.tagcontainer');
+                        if ($container.length > 0) {
+                            $context = $container.find('img');
+                            $container.find('.tagcontainer').css(
+                                    {
+                                        'height': $context.css('height'),
+                                        'width': $context.css('width')
+                                    });
+
+                        }
+                        var settings = {};
+
+                        if (typeof _wpmejsSettings !== 'undefined')
+                            settings.pluginPath = _wpmejsSettings.pluginPath;
+                        $('.mfp-content .wp-audio-shortcode,.mfp-content .wp-video-shortcode,.mfp-content .bp_media_content video').mediaelementplayer({
+                            // if the <video width> is not specified, this is the default
+                            defaultVideoWidth: 480,
+                            // if the <video height> is not specified, this is the default
+                            defaultVideoHeight: 270,
+                            // if set, overrides <video width>
+                            //videoWidth: 1,
+                            // if set, overrides <video height>
+                            //videoHeight: 1
+                        });
+                        $('.mfp-content .mejs-audio .mejs-controls').css('position', 'relative');
+                        rtMediaHook.call('rtmedia_js_popup_after_content_added', []);
+                    },
+                    close: function(e) {
+                        //console.log(e);
+                    },
+                    BeforeChange: function(e) {
+                        //console.log(e);
                     }
-
-                    var items = mfp.items.length;
-                    if(mfp.index == (items -1) && !(li.is(":last-child"))){
-                        current_media.click();
-                        return;
-                    }
-
-                    $container = this.content.find('.tagcontainer');
-                    if ($container.length > 0) {
-                        $context = $container.find('img');
-                        $container.find('.tagcontainer').css(
-                                {
-                                    'height': $context.css('height'),
-                                    'width': $context.css('width')
-                                });
-
-                    }
-                    var settings = {};
-
-                    if (typeof _wpmejsSettings !== 'undefined')
-                        settings.pluginPath = _wpmejsSettings.pluginPath;
-                    $('.mfp-content .wp-audio-shortcode,.mfp-content .wp-video-shortcode,.mfp-content .bp_media_content video').mediaelementplayer({
-                        // if the <video width> is not specified, this is the default
-                        defaultVideoWidth: 480,
-                        // if the <video height> is not specified, this is the default
-                        defaultVideoHeight: 270,
-                        // if set, overrides <video width>
-                        //videoWidth: 1,
-                        // if set, overrides <video height>
-                        //videoHeight: 1
-                    });
-                    $('.mfp-content .mejs-audio .mejs-controls').css('position', 'relative');
-                    rtMediaHook.call('rtmedia_js_popup_after_content_added', []);
-                },
-                close: function(e) {
-                    //console.log(e);
-                },
-                BeforeChange: function(e) {
-                    //console.log(e);
                 }
-            }
-        });
+            });
+        }
 
 	if (jQuery(window).width() < 600) {
 	    jQuery('#whats-new').focus( function(){
@@ -134,8 +137,20 @@ var rtMediaHook = {
     }
 }
 jQuery('document').ready(function($) {
-    if( jQuery('.rtmedia-single-container').length > 0 ){
-	$('.rtmedia-single-container').foundation(); //for foundation Section(tabs) single media edit.
+
+    // open magnific popup as modal for create album/playlist
+    if( jQuery('.rtmedia-modal-link').length > 0 ){
+	$('.rtmedia-modal-link').magnificPopup({
+	    type:'inline',
+	    midClick: true, // Allow opening popup on middle mouse click. Always set it to true if you don't provide alternative source in href
+	    closeBtnInside:true,
+
+	  });
+    }
+
+    if( jQuery('.rtmedia-media-edit').length > 0 ){
+	//for foundation tabs on single media edit.
+        jQuery('.rtmedia-media-edit').foundation();
     }
 
     $("#rt_media_comment_form").submit(function(e) {
@@ -161,7 +176,7 @@ jQuery('document').ready(function($) {
         e.preventDefault();
         jQuery(this).toggleClass('unselect-all').toggleClass('select-all');
         jQuery(this).attr('title', rtmedia_unselect_all_visible);
-        jQuery(this).html('<i class="rtmicon-check"></i>');
+        jQuery(this).html('<i class="rtmicon-check-square-o"></i>');
         jQuery('.rtmedia-list input').each(function() {
             jQuery(this).prop('checked', true);
         });
@@ -171,7 +186,7 @@ jQuery('document').ready(function($) {
         e.preventDefault();
         jQuery(this).toggleClass('select-all').toggleClass('unselect-all');
         jQuery(this).attr('title', rtmedia_select_all_visible);
-        jQuery(this).html('<i class="rtmicon-check-empty"></i>');
+        jQuery(this).html('<i class="rtmicon-square-o"></i>');
         jQuery('.rtmedia-list input').each(function() {
             jQuery(this).prop('checked', false);
         });
@@ -190,7 +205,7 @@ jQuery('document').ready(function($) {
 //        jQuery('.rtmedia-create-new-album-container').slideToggle();
 //    });
 
-    jQuery('.rtmedia-container').on('click', '#rtmedia_create_new_album', function(e) {
+    jQuery('#rtmedia-create-album-modal').on('click', '#rtmedia_create_new_album', function(e) {
         $albumname = jQuery.trim(jQuery('#rtmedia_album_name').val());
         $context = jQuery.trim(jQuery('#rtmedia_album_context').val());
         $context_id = jQuery.trim(jQuery('#rtmedia_album_context_id').val());
@@ -394,20 +409,6 @@ jQuery('document').ready(function($) {
         }
     });
 
-       jQuery(document).on('click', '.rtmedia-reveal-modal', function(e){
-        e.preventDefault();
-        var modalId = jQuery(this).data('reveal-id');
-        jQuery('.reveal-modal-bg').css('display', 'block');
-        jQuery('.reveal-modal-bg').css('opacity', '0.5');
-        jQuery("#"+modalId).foundation('reveal', 'open');
-    });
-
-    jQuery(document).on('click', '.close-reveal-modal', function(e){
-        e.preventDefault();
-        var modalId = jQuery(this).parent('.reveal-modal');
-        jQuery(modalId).foundation('reveal', 'close');
-        jQuery('.reveal-modal-bg').fadeOut();
-    });
 
 //    jQuery(document).on('click', '#rtm_show_upload_ui', function(){
 //        jQuery('#rtm-media-gallery-uploader').slideToggle();

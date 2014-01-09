@@ -45,43 +45,49 @@
 
 .rtmedia-container{
 	@import "compass/reset";
-        @import "foundation/variables";
-	@import "foundation/components/global"; // *always required
-	@import "foundation/components/grid";
-	@import "foundation/components/visibility";
-	@import "foundation/components/flex-video";
-        @import 'foundation_reveal_settings';
-        @import "foundation/components/reveal";
-        @import 'foundation_section_settings';
-        @import "foundation/components/section";
+        //updated for foundation 5
+        //@import "bower_components/foundation/variables";
+        //@import "bower_components/foundation/scss/foundation/components/variables";
+	@import "bower_components/foundation/scss/foundation/components/global"; // *always required
+	@import "bower_components/foundation/scss/foundation/components/grid";
+	//@import "foundation/components/visibility";
+	@import "bower_components/foundation/scss/foundation/components/visibility";
+	//@import "foundation/components/flex-video";
+	@import "bower_components/foundation/scss/foundation/components/flex-video";
+        @import "bower_components/foundation/scss/foundation/components/tabs";
+        //@import "foundation/components/reveal";
+        //@import 'foundation_section_settings';
+        //@import "foundation/components/section";
         
         
-        .rtmedia-edit-media-tabs {
-            @include section-container($section-type:tabs);
-            & > section { 
-                @include section(
-                $section-type:tabs,
-                $title-selector:".tab-title",
-                $content-selector:".tab-content",
-                $title-padding: 5px 12px,
-                $title-color:#333,
-                //$title-color:#3475BA,
-                $title-bg:#F1F1F1,
-                $title-bg-hover:darken(#F5F5F5,5%),
-                $title-bg-active: #50A1D7,
-                $title-color-active: #fff);
+        .rtmedia-editor-main {
                 
-                p.tab-title {
-                    &>a {
+                dl.tabs dd{
+                    & > a {
                         font-size: 14px;
                         text-decoration : none;
-                        &:first-child {
-                            margin-left : 0;
+                        padding : 5px 15px;
+                        background : #f1f1f1;
+                        &:hover {
+                            background : darken(#F5F5F5,10%);
                         }
+/*                        &:first-child {
+                            margin-left : 0;
+                        }*/
                     }   
+                    &.active > a{
+                        background: #50A1D7;
+                        color : #fff;
+                    }
                 }
-                .tab-content {
-                    z-index : 99;
+
+                .tabs-content {
+/*                    z-index : 99;*/
+                    margin-bottom : 5px;
+                    .content {
+                        float: none;
+                        padding : 10px;
+                    }
                 }
                 .rtmedia-title-editor {
                     display: block;
@@ -92,7 +98,7 @@
                         display: block;
                     }
                 }
-            }
+            //}
             
            
           }
@@ -821,34 +827,11 @@ button.rtp-lb-close {
     display: inline;
 }
 
-.rtm-modal {
+/*.rtm-modal {
     text-align: left;
-    
-    #rtm-modal-container {
-        
-        .rtm-modal-title{
-            font-size: 24px;
-            line-height : 24px;
-            margin-bottom : 30px;
-        }
-        .rtm-input-medium {
-            width: 55%;
-        }
-        
-        input,select {
-            margin-right: 10px;
-        }
-        
-        p {
-            margin-bottom: 10px;
-        }
-
-        label{
-               min-width: 90px;
-               display:inline-block;
-        }
-    }
-}
+    */
+   
+/*}*/
 
 .rtmedia-container #rtMedia-queue-list {
     margin-bottom : 10px;
@@ -1410,4 +1393,41 @@ button.rtp-lb-close {
     .rtmedia-activity-container .mejs-overlay-button{
         margin-left : -50px;
     }
+}
+
+.rtmedia-save-album {
+    margin-top : 15px;
+}
+//style for magnific popup used as modal for create album/playlist
+.rtmedia-popup {
+  position: relative;
+  background: #FFF;
+  padding: 20px;
+  width: auto;
+  max-width: 500px;
+  margin: 20px auto;
+        
+    .rtm-modal-title{
+        font-size: 24px;
+        line-height : 24px;
+        margin-bottom : 30px;
+        margin-top : 0;
+    }
+    .rtm-input-medium {
+        width: 55%;
+    }
+
+    input,select {
+        margin-right: 10px;
+    }
+
+    p {
+        margin-bottom: 10px;
+    }
+
+    label{
+           min-width: 90px;
+           display:inline-block;
+    }
+    
 }

@@ -502,6 +502,12 @@ jQuery(document).ready(function($) {
         defaultTab: manageHash()
     });
 
+    jQuery("#rtm-themes").sliderTabs({
+        autoplay: false,
+        mousewheel: false,
+        defaultTab: manageHash()
+    });
+
     if (jQuery('#rtmedia-privacy-enable').is(":checked")) {
         jQuery(".privacy-driven-disable label input").prop("disabled", false);
         jQuery(".privacy-driven-disable label .rt-switch").bootstrapSwitch("setActive", true);
@@ -558,6 +564,13 @@ jQuery(document).ready(function($) {
         if ($('#tab-' + hash.substr(1, hash.length)).length < 1)
             return 1;
         return $('#tab-' + hash.substr(1, hash.length)).parent().index() + 1;
+    }
+
+    function rtmediaGetParameterByName(name) {
+        name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
+        var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+            results = regex.exec(location.search);
+        return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
     }
 
     jQuery('#submit-request').click(function(){
@@ -634,7 +647,7 @@ jQuery(document).ready(function($) {
         manageHash();
     });
     if(jQuery(document).foundation !== undefined)
-        jQuery(document).foundation('section');
+        jQuery(document).foundation();
 });
 
 function rtmedia_addon_do_not_show() {

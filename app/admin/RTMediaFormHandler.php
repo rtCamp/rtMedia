@@ -673,22 +673,43 @@ class RTMediaFormHandler {
 	}
 
 	public static function rtForm_settings_tabs_content($page, $sub_tabs) {
-                $rtmedia_admin_ui_handler = "<div class='section-container auto' data-options='deep_linking: true' data-section=''>";
+              //  $rtmedia_admin_ui_handler = "<div class='section-container auto' data-options='deep_linking: true' data-section=''>";
+                //echo "<div class='clearfix rtm-settings-tab-container'>";
+                $rtmedia_admin_ui_handler = "<div class='clearfix rtm-settings-tab-container horizontal-tabs'><dl class='tabs' data-tab>";
                 $rtmedia_admin_ui_handler = apply_filters("rtmedia_admin_ui_handler_filter",$rtmedia_admin_ui_handler);
-                echo $rtmedia_admin_ui_handler;
+                echo $rtmedia_admin_ui_handler ;
+                $i = 1;
                 $sub_tabs = apply_filters("rtmedia_pro_settings_tabs_content",$sub_tabs);
 		foreach ($sub_tabs as $tab) {
+                    $active_class = '';
+                    if( $i == 1){ $active_class = 'active';} $i++;
+                    if ( isset ( $tab[ 'icon' ] ) && ! empty ( $tab[ 'icon' ] ) )
+                        $icon = '<i class="' . $tab[ 'icon' ] . '"></i>';                    
+                    echo '<dd class="' . $active_class . '"><a id="tab-' . substr ( $tab[ 'href' ], 1 ) . '" title="' . $tab[ 'title' ] . '" href="' . $tab[ 'href' ] . '" class="rtmedia-tab-title ' . sanitize_title ( $tab[ 'name' ] ) . '">' . $icon . ' ' . $tab[ 'name' ] . '</a></dd>';
+		}
+                echo "</dl>";
+            ?>
+                
+                <?php 
+                $rtmedia_admin_tab_content_handler = "<div class='tabs-content'>";
+                $rtmedia_admin_tab_content_handler = apply_filters("rtmedia_admin_tab_content_handler",$rtmedia_admin_tab_content_handler);
+                echo $rtmedia_admin_tab_content_handler;
+                $k = 1;
+                foreach ($sub_tabs as $tab) {
+                    $active_class = '';
+                    if( $k == 1){ $active_class = ' active';} $k++;
                     if ( isset ( $tab[ 'icon' ] ) && ! empty ( $tab[ 'icon' ] ) )
                         $icon = '<i class="' . $tab[ 'icon' ] . '"></i>';
                     $tab_without_hash = explode("#", $tab[ 'href' ]);
                     $tab_without_hash  = $tab_without_hash[1];
-                    echo '<section> <p class="title" data-section-title><a id="tab-' . substr ( $tab[ 'href' ], 1 ) . '" title="' . $tab[ 'title' ] . '" href="' . $tab[ 'href' ] . '" class="rtmedia-tab-title ' . sanitize_title ( $tab[ 'name' ] ) . '">' . $icon . ' ' . $tab[ 'name' ] . '</a> </p> <div class="content" data-section-content data-slug="' . $tab_without_hash . '">';
+                    echo '<div class="content' . $active_class .'" id="' . $tab_without_hash . '">';
 				call_user_func($tab['callback'], $page);
-                    echo '</div> </section>';
+                    echo '</div>';
 		}
-            ?>
+                echo "</div>";
+                ?>
                 </div>
-                     <div class="clearfix"></div>
+                <div class="clearfix"></div>
             <?php
 	}
 

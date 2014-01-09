@@ -752,3 +752,18 @@ abbr {
     background-color: #FFF;
     border: 1px solid #CCC;
 }
+#rtm-themes .rtmedia-theme-image img {
+    width: 100%;
+}
+
+#rtm-themes h3.rtmedia-theme-3rd-party-title {
+    margin: 5px 0;
+}
+
+#rtm-themes h3.rtmedia-theme-3rd-party-title a {
+    text-decoration: none;
+}
+
+#rtm-themes .rtmedia-theme-warning {
+    color: red;
+}

@@ -53,6 +53,14 @@ if ( ! defined ( 'RTMEDIA_BASE_NAME' ) ) {
     define ( 'RTMEDIA_BASE_NAME', plugin_basename ( __FILE__ ) );
 }
 
+if ( ! defined ( 'RTMEDIA_BOWER_COMPONENTS_URL' ) ) {
+    /**
+     * The url to the foundation resources 
+     *
+     */
+    define ( 'RTMEDIA_BOWER_COMPONENTS_URL', RTMEDIA_URL . 'app/assets/sass/bower_components/foundation/' );
+}
+
 /**
  * Start session here to avoid header notice
  */
