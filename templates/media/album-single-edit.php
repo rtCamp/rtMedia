@@ -18,7 +18,7 @@ $rtmedia_media = $media[0];
                 <dd class=""><a href="#manage-media-tab"><i class='rtmicon-edit'></i><?php _e('Manage Media', 'rtmedia') ;?></a></dd>
                 <?php } ?>
                 <!-- use this hook to add title of a new tab-->
-                <?php do_action('rtmedia_add_edit_tab_title', rtmedia_type());?>
+                <?php do_action('rtmedia_add_edit_tab_title', 'album');?>
             </dl>
             
             <div class="tabs-content">
@@ -104,7 +104,7 @@ $rtmedia_media = $media[0];
                     <?php } ?>
             
             <!-- use this hook to add content of a new tab-->
-            <?php do_action('rtmedia_add_edit_tab_content', rtmedia_type());?>
+            <?php do_action('rtmedia_add_edit_tab_content', 'album');?>
             </div>
         </div>
 

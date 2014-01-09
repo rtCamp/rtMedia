@@ -996,19 +996,19 @@ function set_video_thumbnail($id) {
     }
 }
 
-add_action('rtmedia_add_edit_tab_title','rtmedia_image_editor_title',12);
+add_action('rtmedia_add_edit_tab_title','rtmedia_image_editor_title',12,1);
 //add the tab title media on media edit screen
-function rtmedia_image_editor_title(){
+function rtmedia_image_editor_title( $type = 'photo' ){
     global $rtmedia_query;
-    if ( isset($rtmedia_query->media[ 0 ]->media_type) && $rtmedia_query->media[ 0 ]->media_type == 'photo' ) {
+    if ( isset($rtmedia_query->media[ 0 ]->media_type) && $rtmedia_query->media[ 0 ]->media_type == 'photo' && $type == 'photo') {
         echo '<dd><a href="#panel2" class="rtmedia-modify-image"><i class="rtmicon-picture-o"></i>' . __("Image", "rtmedia") . '</a></dd>';
     }
 }
 // add the content for the image editor tab
-add_action ( 'rtmedia_add_edit_tab_content', 'rtmedia_image_editor_content', 12 );
-function rtmedia_image_editor_content () {
+add_action ( 'rtmedia_add_edit_tab_content', 'rtmedia_image_editor_content', 12,1 );
+function rtmedia_image_editor_content ( $type = 'photo') {
     global $rtmedia_query;
-    if ( isset($rtmedia_query->media[ 0 ]->media_type) && $rtmedia_query->media[ 0 ]->media_type == 'photo' ) {
+    if ( isset($rtmedia_query->media[ 0 ]->media_type) && $rtmedia_query->media[ 0 ]->media_type == 'photo' && $type == 'photo') {
         $media_id = $rtmedia_query->media[ 0 ]->media_id;
         $id = $rtmedia_query->media[ 0 ]->id;
         //$editor = wp_get_image_editor(get_attached_file($id));
