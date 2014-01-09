@@ -751,6 +751,10 @@ abbr {
 .rtmedia-theme-page-container, .rtmedia-hire-us-page-container {
     background-color: #FFF;
     border: 1px solid #CCC;
+    padding: 0 10px 15px 10px;
+}
+.rtmedia-theme-page-container, .rtmedia-hire-us-page-container ol{
+    margin-bottom : 20px;
 }
 #rtm-themes .rtmedia-theme-image img {
     width: 100%;

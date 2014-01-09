@@ -1832,9 +1832,17 @@ function rtmedia_admin_premium_page($page) {
     ?>
 	<div class="rtmedia-hire-us-page-container">
 	    <div class="row">
-		<p>
-		    <?php  _e('Looking for some custom features with the rtMedia?','rtmedia'); ?> <a href="<?php echo $url; ?>"><?php _e('Go Premium now','rtmedia') ?></a> <?php _e('or reach us','rtmedia') ?> <a href="https://rtcamp.com/contact/?purpose=hire" target="_blank"><?php  _e('here','rtmedia'); ?> </a>.
-		</p>
+                <div class='clearfix'>
+                    <h3><?php _e('You can consider rtMedia Team for following :', 'rtmedia');?></h3>
+                    <ol>
+                        <li><?php _e('rtMedia Customization ( in Upgrade Safe manner )', 'rtmedia');?></li>
+                        <li><?php _e('Wordpress/BuddyPress Theme Design and Development', 'rtmedia');?></li>
+                        <li><?php _e('Wordpress/BuddyPress Plugin Development', 'rtmedia');?></li>
+                    </ol>
+                </div>
+                <p class='contact'>
+                    <a href="https://rtcamp.com/contact" class='upgrade-button' target="_blank"><?php _e('Contact Us', 'rtmedia');?></a>
+                </p>
 	    </div>
 	</div>
     <?php
