@@ -1404,7 +1404,7 @@ button.rtp-lb-close {
   background: #FFF;
   padding: 20px;
   width: auto;
-  max-width: 500px;
+  max-width: 600px;
   margin: 20px auto;
         
     .rtm-modal-title{
@@ -1428,6 +1428,16 @@ button.rtp-lb-close {
     label{
            min-width: 90px;
            display:inline-block;
+    }
+    & > div button {
+        font-size: 13px;
+        color : #777;
+        padding: 6px 14px;
+        background: #fff;
+        border : 1px solid #c1c1c1;
+        &:hover {
+            background: #EDEDED;
+        }
     }
     
 }
