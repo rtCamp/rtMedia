@@ -56,7 +56,9 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
                 add_action( 'admin_action_-1', array( $this, 'bulk_action_handler' ) );
             }
 	    add_action ( 'wp_ajax_rt_media_regeneration', array( $this, 'rt_media_regeneration' ), 1 );
-
+	    if( ! isset($rtmedia->options)) {
+		$rtmedia->options = rtmedia_get_site_option('rtmedia-options');
+	    }
             if ( isset ( $_POST[ "rtmedia-options" ] ) ) {
                 if ( isset ( $_POST[ "rtmedia-options" ][ "general_showAdminMenu" ] ) && $_POST[ "rtmedia-options" ][ "general_showAdminMenu" ] == "1" )
                     add_action ( 'admin_bar_menu', array( $this, 'admin_bar_menu' ), 100, 1 );
