@@ -756,6 +756,8 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
                                 else if ( $page == 'rtmedia-support' ) {
 				    $rtmedia_support = new RTMediaSupport(false);
 				    $rtmedia_support->render_support($page);
+				} else if ( $page == 'rtmedia-themes' ) {
+				    RTMediaThemes::render_themes($page);
 				}
 				else
                                     do_settings_sections ( $page );
@@ -1363,9 +1365,9 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
         }
 
         function rtmedia_update_template_notice(){
-	    $site_option  = rtmedia_get_site_option("rtmedia-update-template-notice-v3_4_7");
+	    $site_option  = rtmedia_get_site_option("rtmedia-update-template-notice-v3_5");
             if(!$site_option || $site_option != "hide") {
-		rtmedia_update_site_option("rtmedia-update-template-notice-v3_4_7", "show");
+		rtmedia_update_site_option("rtmedia-update-template-notice-v3_5", "show");
 		if( is_dir(get_template_directory().'/rtmedia') ) {
 		    echo '<div class="error rtmedia-update-template-notice"><p>' . __('rtMedia just updated to Foundation 5. Please update rtMedia template files if you have overridden the default rtMedia templates in your theme.') . '<a href="#" onclick="rtmedia_hide_template_override_notice()" style="float:right">' .__('Hide', 'rtmedia') .'</a>' . ' </p></div>';
 	    ?>
@@ -1386,7 +1388,7 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
 
          function rtmedia_hide_template_override_notice() {
 
-	    if(rtmedia_update_site_option("rtmedia-update-template-notice-v3_4_7", "hide"))
+	    if(rtmedia_update_site_option("rtmedia-update-template-notice-v3_5", "hide"))
 		echo "1";
 	    else
 		echo "0";

@@ -129,6 +129,8 @@ if (!class_exists('RTMediaSettings')) {
 		add_settings_section('rtm-addons', __('BuddyPress Media Addons for Photos', 'rtmedia'), array($rtmedia_addon, 'get_addons'), 'rtmedia-addons');
 		$rtmedia_support = new RTMediaSupport(false);
 		add_settings_section('rtm-support', __('Support', 'rtmedia'), array($rtmedia_support, 'get_support_content'), 'rtmedia-support');
+		$rtmedia_themes = new RTMediaThemes();
+		add_settings_section('rtm-themes', __('rtMedia Themes', 'rtmedia'), array($rtmedia_themes, 'get_themes'), 'rtmedia-themes');
 	    }
 
 

@@ -502,6 +502,12 @@ jQuery(document).ready(function($) {
         defaultTab: manageHash()
     });
 
+    jQuery("#rtm-themes").sliderTabs({
+        autoplay: false,
+        mousewheel: false,
+        defaultTab: manageHash()
+    });
+
     if (jQuery('#rtmedia-privacy-enable').is(":checked")) {
         jQuery(".privacy-driven-disable label input").prop("disabled", false);
         jQuery(".privacy-driven-disable label .rt-switch").bootstrapSwitch("setActive", true);
@@ -559,7 +565,7 @@ jQuery(document).ready(function($) {
             return 1;
         return $('#tab-' + hash.substr(1, hash.length)).parent().index() + 1;
     }
-    
+
     function rtmediaGetParameterByName(name) {
         name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
         var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),

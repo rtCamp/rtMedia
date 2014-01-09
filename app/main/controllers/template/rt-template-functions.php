@@ -1827,17 +1827,6 @@ function rtmedia_admin_premium_page($page) {
         </div>
     </div>
     <?php
-    } else if( $page == "rtmedia-themes") {
-    ?>
-	<div class="rtmedia-theme-page-container">
-	    <div class="row">
-		<h3><?php _e('Coming Soon...','rtmedia'); ?></h3>
-		<p><?php _e('We are working on some rtMedia themes which will be available shortly.','rtmedia'); ?></p>
-		<h3><?php _e('Are you a developer?','rtmedia'); ?></h3>
-		<p><?php  _e('If you have developed a rtMedia compatible theme and would like it to list here, please email us at','rtmedia') ?> <a href="mailto:product@rtcamp.com"><?php _e('product@rtcamp.com','rtmedia') ?></a>.</p>
-	    </div>
-	</div>
-    <?php
     } else if( $page == "rtmedia-hire-us" ) {
      $url = admin_url()."admin.php?page=rtmedia-premium";
     ?>
