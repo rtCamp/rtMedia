@@ -25,6 +25,22 @@
 	.rtmedia-setting-select-box {
 		width: auto;		
 	}
+        #rtm-settings-tabs .horizontal-tabs {
+            dd {
+                border : 1px solid #c1c1c1;
+                border-right: none;
+                
+                &:last-child{
+                    border-right: 1px solid #c1c1c1;
+                }
+                &.active{
+                    border-color: #fff;
+                }
+                &:not(:first-child).active{
+                    border-left: 1px solid #c1c1c1;
+                }
+            }
+        }
         
         .tabs dd {
             margin-left :0;
