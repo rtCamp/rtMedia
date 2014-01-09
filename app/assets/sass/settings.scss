@@ -34,11 +34,14 @@
                     border-right: 1px solid #c1c1c1;
                 }
                 &.active{
-                    border-color: #fff;
+                    border-bottom-color: #fff;
                 }
-                &:not(:first-child).active{
+/*                &:not(:first-child).active{
                     border-left: 1px solid #c1c1c1;
-                }
+                }*/
+            }
+            .tabs-content {
+                border: 1px solid #c1c1c1;
             }
         }
         
