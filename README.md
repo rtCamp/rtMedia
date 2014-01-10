@@ -133,6 +133,10 @@ http://www.youtube.com/watch?v####dJrykKQGDcs
 
 Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "Visit rtMedia's Features page") to get some details about future releases.
 
+#### 3.5 ####
+* updated too foundation 5
+* Bug Fixes
+
 #### 3.4.6 ####
 * Fix paging query and bug fixes
 
@@ -664,8 +668,8 @@ Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_sou
 * HTML5 Audio Tag Support (with fallback)
 * HTML5 Video Tag Support (with fallback)
 
-#### 3.4.6 ####
-Requires BuddyPress 1.7 or higher, if using BuddyPress. Fix paging query bug fixes
+#### 3.5 ####
+Requires BuddyPress 1.7 or higher, if using BuddyPress. Updated to foundation 5, bug fixes
 
 ## Sponsors ##
 
