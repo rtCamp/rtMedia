@@ -42,7 +42,10 @@ class RTMediaJsonApi{
         $this->rtmediajsonapifunction = new RTMediaJsonApiFunctions();
 
         if(!empty($_POST['token'])){
+            $this->rtmediajsonapifunction->rtmedia_api_verfiy_token();
             $this->user_id = $this->rtmediajsonapifunction->rtmedia_api_get_user_id_from_token($_POST['token']);
+            //add filter
+            add_filter('rtmedia_current_user', array($this, create_function ('', 'return $this->user_id;')));
         }
         //Process Request
         $method = $_POST['method'];
@@ -1030,19 +1033,20 @@ class RTMediaJsonApi{
         global $rtmedia;
         $rtmediamodel = new RTMediaModel();
         //Media type to fetch
-        $media_types = $allowed_media_types = array_keys($rtmedia->allowed_types);
-
-        if( !empty($_POST['media_types']) ) {
-            if(!is_array( $_POST['media_types'] ) ){
-                $media_types = explode(',', $_POST['media_types']);
+        $media_type = $allowed_types = array_keys($rtmedia->allowed_types);
+        $media_type[] = 'album';
+        $allowed_types[] = 'album';
+        if( !empty($_POST['media_type']) ) {
+            if(!is_array( $_POST['media_type'] ) ){
+                $media_type = explode(',', $_POST['media_type']);
             }else{
-                $media_types = $_POST['media_types'];
+                $media_type = $_POST['media_type'];
             }
             //Check array for currently allowed media types
-            $media_types = array_intersect($media_types, $allowed_media_types);
+            $media_type = array_intersect($media_type, $allowed_types);
         }
         $args = array(
-            'media_type'    =>  $media_types
+            'media_type'    =>  $media_type
         );
         $offset = !empty($_POST['page']) ? (int)$_POST['page'] : 0;
         $per_page = isset($_POST['per_page']) ? (int)$_POST['per_page'] : 10;
@@ -1051,14 +1055,20 @@ class RTMediaJsonApi{
         $media_list = $rtmediamodel->get($args, $offset, $per_page, $order_by );
         $media_result = array();
         foreach($media_list as $media ){
-            $media_result[] = array(
+            $data = array(
                 'id'    => $media->id,
                 'media_title'   => $media->media_title,
                 'album_id'  => $media->album_id,
                 'media_type'    => $media->media_type,
                 'url'   => get_rtmedia_permalink($media->id),
-                'privacy'   =>  $media->privacy
+                'privacy'   =>  $media->privacy,
+                'cover'     => rtmedia_image('rt_media_thumbnail', $media->media_id, FALSE)
             );
+            //for album list all medias
+            if($media->media_type == 'album'){
+                $data['media'] = $this->rtmediajsonapifunction->rtmedia_api_album_media($media->id);
+            }
+            $media_result[] = $data;
         }
         if(!empty($media_result)){
             echo $this->rtmedia_api_response_object("TRUE", $ec_media, $msg_media, $media_result);

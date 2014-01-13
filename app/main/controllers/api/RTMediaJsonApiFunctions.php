@@ -243,4 +243,24 @@ class RTMediaJsonApiFunctions{
         $likers = $rtmediainteractionmodel->get( $media_like_cols, FALSE, FALSE, 'action_date');
         return $likers;
     }
+    function rtmedia_api_album_media($album_id){
+        if(empty($album_id)) return false;
+        $rtmediamodel = new RTMediaModel();
+        $args = array(
+            'album_id'  => $album_id
+        );
+        $media_list = $rtmediamodel->get($args);
+        $media_data = array();
+        if(!empty($media_list) && is_array($media_list)){
+            foreach($media_list as $media ){
+                $media_data[] = array(
+                    'id'    =>  $media->id,
+                    'media_title'   => $media->media_title,
+                    'media_url' => get_rtmedia_permalink($media->media_id),
+                    'cover' => rtmedia_image('rt_media_thumbnail', $media->media_id, FALSE)
+                );
+            }
+        }
+        return $media_data;
+    }
 }
