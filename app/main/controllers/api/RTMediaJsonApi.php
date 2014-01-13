@@ -64,38 +64,38 @@ class RTMediaJsonApi{
             case 'wp_forgot_password':
                $this->rtmedia_api_process_wp_forgot_password_request();
                break;
-           case 'profile':
-               $this->rtmedia_api_process_profile_request();
+           case 'bp_get_profile':
+               $this->rtmedia_api_process_bp_get_profile_request();
                break;
            case 'bp_activity_feed':
                $this->rtmedia_api_process_bp_activity_feed_request();
                break;
-           case 'post_comment':
-               $this->rtmedia_api_process_post_comment_request();
+           case 'add_rtmedia_comment':
+               $this->rtmedia_api_process_add_rtmedia_comment_request();
                break;
            case 'like_media':
                $this->rtmedia_api_process_like_media_request();
                break;
-           case 'fetch_comments':
-               $this->rtmedia_api_process_fetch_comments_request();
+           case 'get_rtmedia_comments':
+               $this->rtmedia_api_process_get_rtmedia_comments_request();
                break;
-           case 'fetch_likes':
-               $this->rtmedia_api_process_fetch_likes_request();
+           case 'get_likes_rtmedia':
+               $this->rtmedia_api_process_get_likes_rtmedia_request();
                break;
-           case 'delete_comment':
-               $this->rtmedia_api_process_delete_comment_request();
+           case 'remove_comment':
+               $this->rtmedia_api_process_remove_comment_request();
                break;
            case 'update_profile':
                $this->rtmedia_api_process_update_profile_request();
                break;
-           case 'new_media':
-               $this->rtmedia_api_process_new_media_request();
+           case 'rtmedia_upload_media':
+               $this->rtmedia_api_process_rtmedia_upload_media_request();
                break;
-           case 'fetch_media':
-               $this->rtmedia_api_process_fetch_media_request();
+           case 'rtmedia_gallery':
+               $this->rtmedia_api_process_rtmedia_gallery_request();
                break;
-           case 'fetch_media_details':
-               $this->rtmedia_api_process_fetch_media_details_request();
+           case 'rtmedia_get_media_details':
+               $this->rtmedia_api_process_rtmedia_get_media_details_request();
                break;
            default:
                echo $this->rtmedia_api_response_object( 'FALSE', $this->ec_invalid_request_type, $this->msg_invalid_request_type );
@@ -364,7 +364,7 @@ class RTMediaJsonApi{
      * @global int $this->ec_invalid_media_id
      * @global type $this->msg_invalid_media_id
      */
-    function rtmedia_api_process_post_comment_request(){
+    function rtmedia_api_process_add_rtmedia_comment_request(){
 
         $this->rtmediajsonapifunction->rtmedia_api_verfiy_token();
         $this->rtmediajsonapifunction->rtmedia_api_media_activity_id_missing();
@@ -503,7 +503,7 @@ class RTMediaJsonApi{
      * Fetch Comments by media id
      * @global type $wpdb
      */
-    function rtmedia_api_process_fetch_comments_request(){
+    function rtmedia_api_process_get_rtmedia_comments_request(){
         $this->rtmediajsonapifunction->rtmedia_api_verfiy_token();
         //Errors Fetching comment
         $ec_no_comments = 800003;
@@ -557,7 +557,7 @@ class RTMediaJsonApi{
      * Fetch Likes by media id
      * @global type $wpdb
      */
-    function rtmedia_api_process_fetch_likes_request(){
+    function rtmedia_api_process_get_likes_rtmedia_request(){
         $this->rtmediajsonapifunction->rtmedia_api_verfiy_token();
         $this->rtmediajsonapifunction->rtmedia_api_media_activity_id_missing();
         global $wpdb;
@@ -601,7 +601,7 @@ class RTMediaJsonApi{
     /**
      * Delete comment by activity id or media id
      */
-    function rtmedia_api_process_delete_comment_request(){
+    function rtmedia_api_process_remove_comment_request(){
         global $wpdb;
         $this->rtmediajsonapifunction->rtmedia_api_verfiy_token();
         $this->rtmediajsonapifunction->rtmedia_api_media_activity_id_missing();
@@ -653,7 +653,7 @@ class RTMediaJsonApi{
             exit;
         }
     }
-    function rtmedia_api_process_profile_request(){
+    function rtmedia_api_process_bp_get_profile_request(){
         $this->rtmediajsonapifunction->rtmedia_api_verfiy_token();
         //Errors
         $ec_no_fields = 400001;
@@ -881,7 +881,7 @@ class RTMediaJsonApi{
         }
     }
 
-    function rtmedia_api_process_new_media_request(){
+    function rtmedia_api_process_rtmedia_upload_media_request(){
 
         $this->rtmediajsonapifunction->rtmedia_api_verfiy_token();
         //Error Codes for new look
@@ -1018,7 +1018,7 @@ class RTMediaJsonApi{
             exit;
         }
     }
-    function rtmedia_api_process_fetch_media_request(){
+    function rtmedia_api_process_rtmedia_gallery_request(){
         $this->rtmediajsonapifunction->rtmedia_api_verfiy_token();
         //Errors
         $ec_media = 160002;
@@ -1089,7 +1089,7 @@ class RTMediaJsonApi{
             echo $this->rtmedia_api_response_object("FALSE", $ec_no_media, $msg_no_media);
         }
     }
-    function rtmedia_api_process_fetch_media_details_request(){
+    function rtmedia_api_process_rtmedia_get_media_details_request(){
 
         $this->rtmediajsonapifunction->rtmedia_api_verfiy_token();
         $this->rtmediajsonapifunction->rtmedia_api_media_activity_id_missing();
