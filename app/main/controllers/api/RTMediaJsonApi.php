@@ -49,29 +49,29 @@ class RTMediaJsonApi{
 
         switch ( $method ){
 
-            case 'login':
-                $this->rtmedia_api_process_login_request();
+            case 'wp_login':
+                $this->rtmedia_api_process_wp_login_request();
                 break;
-            case 'logout':
-               $this->rtmedia_api_process_logout_request();
+            case 'wp_logout':
+               $this->rtmedia_api_process_wp_logout_request();
                 break;
-            case 'register':
-                $this->rtmedia_api_process_register_request();
+            case 'wp_register':
+                $this->rtmedia_api_process_wp_register_request();
                 break;
-            case 'forgot_password':
-               $this->rtmedia_api_process_forgot_password_request();
+            case 'wp_forgot_password':
+               $this->rtmedia_api_process_wp_forgot_password_request();
                break;
            case 'profile':
                $this->rtmedia_api_process_profile_request();
                break;
-           case 'feed':
-               $this->rtmedia_api_process_feed_request();
+           case 'bp_activtity_feed':
+               $this->rtmedia_api_process_bp_activtity_feed_request();
                break;
            case 'post_comment':
                $this->rtmedia_api_process_post_comment_request();
                break;
-           case 'like_image':
-               $this->rtmedia_api_process_like_image_request();
+           case 'like_media':
+               $this->rtmedia_api_process_like_media_request();
                break;
            case 'fetch_comments':
                $this->rtmedia_api_process_fetch_comments_request();
@@ -82,22 +82,13 @@ class RTMediaJsonApi{
            case 'delete_comment':
                $this->rtmedia_api_process_delete_comment_request();
                break;
-//           case 'follow':
-//               $this->rtmedia_api_process_follow_request();
-//               break;
-//           case 'unfollow':
-//               $this->rtmedia_api_process_unfollow_request();
-//               break;
            case 'update_profile':
                $this->rtmedia_api_process_update_profile_request();
                break;
-    //       case 'update_avatar':
-    //           rtmedia_api_process_update_avatar_request();
-    //           break;
-           case 'new_image':
-               $this->rtmedia_api_process_new_image_request();
+           case 'new_media':
+               $this->rtmedia_api_process_new_media_request();
                break;
-           case 'fetch_image':
+           case 'fetch_media':
                $this->rtmedia_api_process_fetch_media_request();
                break;
            default:
@@ -143,7 +134,7 @@ class RTMediaJsonApi{
     /**
      * Takes username and password, if succesful returns a access token
      */
-    function rtmedia_api_process_login_request(){
+    function rtmedia_api_process_wp_login_request(){
         //Login Errors and Messages
         $ec_user_pass_missing = 200001;
         $msg_user_pass_missing = __('username/password empty', 'rtmedia' );
@@ -198,7 +189,7 @@ class RTMediaJsonApi{
      * register a user through api request
      * requires signup_* => display_name, username, password, confirm password, location,
      */
-    function rtmedia_api_process_register_request(){
+    function rtmedia_api_process_wp_register_request(){
         //Registration errors and messages
         $ec_register_fields_missing = 300001;
         $msg_register_fields_missing = __('fields empty', 'rtmedia' );
@@ -274,7 +265,7 @@ class RTMediaJsonApi{
      * Sends a reset link to user email
      * @global type $wpdb
      */
-    function rtmedia_api_process_forgot_password_request(){
+    function rtmedia_api_process_wp_forgot_password_request(){
         global $wpdb;
          //Registration errors and messages
         $ec_email_missing = 500001;
@@ -333,7 +324,7 @@ class RTMediaJsonApi{
      * Sends a reset link to user email
      * @global type $wpdb
      */
-    function rtmedia_api_process_feed_request(){
+    function rtmedia_api_process_bp_activtity_feed_request(){
         $this->rtmediajsonapifunction->rtmedia_api_verfiy_token();
         //Feed Errors
         $ec_latest_feed = 700001;
@@ -416,7 +407,7 @@ class RTMediaJsonApi{
      * @global int $this->ec_invalid_media_id
      * @global type $this->msg_invalid_media_id
      */
-    function rtmedia_api_process_like_image_request(){
+    function rtmedia_api_process_like_media_request(){
         $this->rtmediajsonapifunction->rtmedia_api_verfiy_token();
         $this->rtmediajsonapifunction->rtmedia_api_media_activity_id_missing();
 
@@ -883,7 +874,7 @@ class RTMediaJsonApi{
         }
     }
 
-    function rtmedia_api_process_new_image_request(){
+    function rtmedia_api_process_new_media_request(){
 
         $this->rtmediajsonapifunction->rtmedia_api_verfiy_token();
         //Error Codes for new look
