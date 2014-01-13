@@ -155,7 +155,7 @@ class RTMediaJsonApiFunctions{
         $i = 0;
         $args = array (
             'user_id'   => $activity_user_id,
-            'action'=>'rtmedia_update', /* or rtmedia_update for fetching only rtmedia updates */
+            'action'=>'', /* or rtmedia_update for fetching only rtmedia updates */
             'page' => !empty( $_POST['page'] ) ? $_POST['page'] : 1, 
             'per_page' => $per_page, 
             'in'   => $activity_id 
@@ -167,8 +167,9 @@ class RTMediaJsonApiFunctions{
              while ( bp_activities() ) : bp_the_activity();
                 //Activity basic details
                 $activity_feed[$i]['id']    = $activities_template->activity->id;
-                //Activity_time
+                $activity_feed[$i]['activity_type']    = $activities_template->activity->type;
                 $activity_feed[$i]['activity_time'] = bp_get_activity_date_recorded();
+                $activity_feed[$i]['activity_content'] = $activities_template->activity->content;
                 $activity_feed[$i]['activity_time_human'] = strip_tags(bp_insert_activity_meta( '' ));
                 //activity User
                 if ( !$activity_user_id ) {
