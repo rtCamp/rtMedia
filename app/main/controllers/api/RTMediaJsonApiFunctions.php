@@ -112,11 +112,46 @@ class RTMediaJsonApiFunctions{
         $followers = bp_follow_get_following( array( 'user_id'  => $user_id ) );
         return $followers;
     }
+    /**
+     * Accepts a rtmedia media object and returns a array of media details
+     */
+    function rtmedia_api_media_details( $media_list ){
+        global $rtmediajsonapi;
+        if(empty($media_list)) return false;
+        $result = array();
+        if(is_array($media_list)){
+            foreach($media_list as $media ){
+                //Media likes
+                $rtmediainteraction = new RTMediaInteractionModel();
+                $action = 'like';
+                $results = $rtmediainteraction->get_row( $rtmediajsonapi->user_id, $media['id'], $action);
+                $row = !empty($results )? $results[0] : '';
+                $current_user = ( !empty( $row ) && $row->value == 1 ) ? 'TRUE' : 'FALSE';
+                
+
+                $result[] = array(
+                    'id'    => $media['id'],
+                    'title'    => $media['media_title'],
+                    'src'    => rtmedia_image('rt_media_activity_image', $media["id"], false),
+                    'likes'    => $media['likes'],
+                    'current_user'    => $current_user,
+                    
+                ); 
+            }
+        }
+        return $result;
+    }
+    /**
+     * Fetches Activity for rtmedia updates, if user id for activity is provided fetches the user specific rtmedia updates
+     * @global type $activities_template
+     * @param type $activity_user_id
+     * @param type $activity_id
+     * @return array(), Activity data
+     */
     function rtmedia_api_get_feed($activity_user_id = FALSE, $activity_id = FALSE ){
-        global $activities_template;
+        global $activities_template, $rtmediajsonapi;
         $activity_feed = array();
         extract($_POST);
-        $rtmediajsonapi = new RTMediaJsonApi();
         $i = 0;
         $args = array (
             'user_id'   => $activity_user_id,
@@ -126,46 +161,41 @@ class RTMediaJsonApiFunctions{
             'in'   => $activity_id 
         );
         if ( bp_has_activities($args) ) :
+            $activity_feed['activity_count'] = bp_get_activity_count();
+            $activity_feed['total_pages'] = ceil( (int) $activities_template->total_activity_count / (int) $activities_template->pag_num );
+            $activity_feed['current_page'] = $activities_template->pag_page;
              while ( bp_activities() ) : bp_the_activity();
+                //Activity basic details
+                $activity_feed[$i]['id']    = $activities_template->activity->id;
+                //Activity_time
+                $activity_feed[$i]['activity_time'] = bp_get_activity_date_recorded();
+                $activity_feed[$i]['activity_time_human'] = strip_tags(bp_insert_activity_meta( '' ));
+                //activity User
+                if ( !$activity_user_id ) {
+                    //Activity User data
+                    $activity_feed[$i]['user'] = $this->rtmedia_api_user_data_from_id( bp_get_activity_user_id() );
+                }
+                if ( $activity_id ){;
+                    //Activity Comment Count
+                    $id = $media['id'];
+                    $activity_feed[$i]['comments'] = $this->rtmedia_api_get_media_comments($id) ;
+                }
+
+                //Media Details
                 if (class_exists("RTMediaModel")) {
                     $model = new RTMediaModel();
                     $media = $model->get_by_activity_id($activities_template->activity->id);
 
-                    if (isset($media["result"]) && count($media["result"]) > 0)
-                        $media = $media["result"][0];
+                    if (isset($media['result']) && count($media['result']) > 0){
+                        //Create media array
+                        $media = $this->rtmedia_api_media_details($media['result']);
+                    }
                     else
                         $media = false;
                 }
-                $activity_feed[$i]['id']    = $activities_template->activity->id;
-                //Activity_time
-                $activity_feed[$i]['activity_time'] = strip_tags(bp_insert_activity_meta( '' ));
 
                 //Activity Image
-                $activity_feed[$i]['media'] = $this->rtmedia_api_media_data_from_object($media);
-                //like count
-                //Activity likes
-                $rtmediainteraction = new RTMediaInteractionModel();
-                $action = 'like';
-                $results = $rtmediainteraction->get_row( $rtmediajsonapi->user_id, $media["id"], $action);
-                $row = !empty($results )? $results[0] : '';
-
-                $activity_feed[$i]["like"]["current_user"] = "FALSE";
-                if( !empty( $row ) && $row->value == 1 ){
-                    $activity_feed[$i]["like"]["current_user"] = "TRUE";
-                }
-                $activity_feed[$i]["like"]["count"] = $media['likes'];
-
-                if ( !$activity_user_id ) {
-                    //Activity User data
-                    $activity_feed[$i]['user'] = $this->rtmedia_api_user_data_from_id( bp_get_activity_user_id() );
-
-                }
-                if ( $activity_id ){;
-                    //Activity Comment
-                    $id = $media['id'];
-
-                    $activity_feed[$i]['comments'] = $this->rtmedia_api_get_media_comments($id) ;
-                }
+                $activity_feed[$i]['media'] = $media;
                 $i++;
             endwhile;
         endif;

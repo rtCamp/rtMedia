@@ -5,8 +5,8 @@
  */
 class RTMediaJsonApi{
 
-    var $ec_request_type_missing = 600001,
-        $msg_request_type_missing = 'missing parameter "type" in request',
+    var $ec_method_missing = 600001,
+        $msg_method_missing = 'no method specified',
         $ec_token_missing = 600002, 
         $msg_token_missing = 'token empty', 
         $ec_token_invalid = 600003, 
@@ -32,8 +32,8 @@ class RTMediaJsonApi{
     }
 
     function rtmedia_api_process_request(){
-        if ( empty ( $_POST['type'] )  ){
-            echo $this->rtmedia_api_response_object( 'FALSE', $this->ec_request_type_missing, $this->msg_request_type_missing );
+        if ( empty ( $_POST['method'] )  ){
+            echo $this->rtmedia_api_response_object( 'FALSE', $this->$ec_method_missing, $this->msg_method_missing );
         }
         if (!class_exists('BuddyPress')) {
             echo $this->rtmedia_api_response_object( 'FALSE', '600008', 'buddypress not active' );
@@ -43,6 +43,7 @@ class RTMediaJsonApi{
 
         if(!empty($_POST['token'])){
             $this->user_id = $this->rtmediajsonapifunction->rtmedia_api_get_user_id_from_token($_POST['token']);
+            echo '1';
         }
         //Process Request
         $method = $_POST['method'];
@@ -64,8 +65,8 @@ class RTMediaJsonApi{
            case 'profile':
                $this->rtmedia_api_process_profile_request();
                break;
-           case 'bp_activtity_feed':
-               $this->rtmedia_api_process_bp_activtity_feed_request();
+           case 'bp_activity_feed':
+               $this->rtmedia_api_process_bp_activity_feed_request();
                break;
            case 'post_comment':
                $this->rtmedia_api_process_post_comment_request();
@@ -324,7 +325,7 @@ class RTMediaJsonApi{
      * Sends a reset link to user email
      * @global type $wpdb
      */
-    function rtmedia_api_process_bp_activtity_feed_request(){
+    function rtmedia_api_process_bp_activity_feed_request(){
         $this->rtmediajsonapifunction->rtmedia_api_verfiy_token();
         //Feed Errors
         $ec_latest_feed = 700001;

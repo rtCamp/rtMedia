@@ -686,6 +686,7 @@ class RTMedia
         global $rtmedia_ajax;
         $rtmedia_ajax = new RTMediaAJAX();
         //API Classes
+        global $rtmediajsonapi;
         $rtmediajsonapi = new RTMediaJsonApi();
 
         do_action('bp_media_init'); // legacy For plugin using this actions
