@@ -1045,9 +1045,22 @@ class RTMediaJsonApi{
             //Check array for currently allowed media types
             $media_type = array_intersect($media_type, $allowed_types);
         }
+
         $args = array(
-            'media_type'    =>  $media_type
+            'media_type'    =>  $media_type,
         );
+        //Media Author
+        $media_author = '';
+        if(!is_super_admin()){
+            $media_author = $this->user_id;
+            $args['media_author'] = $media_author;
+        }
+        if( !empty($_POST['media_author'])){
+            if( is_super_admin( $this->user_id ) ){
+                $media_author = (int)$_POST['media_author'];
+                $args['media_author'] = $media_author;
+            }
+        }
         $offset = !empty($_POST['page']) ? (int)$_POST['page'] : 0;
         $per_page = isset($_POST['per_page']) ? (int)$_POST['per_page'] : 10;
         $order_by = !empty($_POST['order_by']) ? $_POST['order_by'] : 'media_id desc';
@@ -1060,8 +1073,8 @@ class RTMediaJsonApi{
                 'media_title'   => $media->media_title,
                 'album_id'  => $media->album_id,
                 'media_type'    => $media->media_type,
+                'media_author'  => $media->media_author,
                 'url'   => get_rtmedia_permalink($media->id),
-                'privacy'   =>  $media->privacy,
                 'cover'     => rtmedia_image('rt_media_thumbnail', $media->media_id, FALSE)
             );
             //for album list all medias

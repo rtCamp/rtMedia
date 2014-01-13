@@ -257,6 +257,7 @@ class RTMediaJsonApiFunctions{
                     'id'    =>  $media->id,
                     'media_title'   => $media->media_title,
                     'media_url' => get_rtmedia_permalink($media->media_id),
+                    'media_author'  => $media->media_author,
                     'cover' => rtmedia_image('rt_media_thumbnail', $media->media_id, FALSE)
                 );
             }
