@@ -558,7 +558,7 @@ function rtmedia_author_actions () {
 
         $options_start = '<span class="click-nav" id="rtm-media-options-list">
                 <span class="no-js">
-                <button class="clicker rtmedia-action-buttons button"><i class="rtmicon-cog"></i>'. __('Options', 'rtmedia') . '</button>
+                <button class="clicker rtmedia-media-options rtmedia-action-buttons button"><i class="rtmicon-cog"></i>'. __('Options', 'rtmedia') . '</button>
                 <ul class="rtm-options">';
         foreach ( $options as $action ) {
             if($action != ""){
