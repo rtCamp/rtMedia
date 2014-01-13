@@ -340,7 +340,8 @@ class RTMediaJsonApi{
         if ( !empty( $feed_type ) && $feed_type == 'me' ) {
             $activity_user_id = $this->user_id;
         }
-        $activity_feed = $this->rtmediajsonapifunction->rtmedia_api_get_feed($activity_user_id);
+        $per_page = !empty($_POST['per_page']) ? $_POST['per_page'] : 10;
+        $activity_feed = $this->rtmediajsonapifunction->rtmedia_api_get_feed($activity_user_id, '', $per_page);
         if( empty($activity_feed) ){
             $activity_feed = 'no rtmedia updates';
         }

@@ -148,7 +148,7 @@ class RTMediaJsonApiFunctions{
      * @param type $activity_id
      * @return array(), Activity data
      */
-    function rtmedia_api_get_feed($activity_user_id = FALSE, $activity_id = FALSE ){
+    function rtmedia_api_get_feed($activity_user_id = FALSE, $activity_id = FALSE, $per_page = 10 ){
         global $activities_template, $rtmediajsonapi;
         $activity_feed = array();
         extract($_POST);
@@ -157,13 +157,13 @@ class RTMediaJsonApiFunctions{
             'user_id'   => $activity_user_id,
             'action'=>'rtmedia_update', /* or rtmedia_update for fetching only rtmedia updates */
             'page' => !empty( $_POST['page'] ) ? $_POST['page'] : 1, 
-            'per_page' => 10, 
+            'per_page' => $per_page, 
             'in'   => $activity_id 
         );
         if ( bp_has_activities($args) ) :
-            $activity_feed['activity_count'] = bp_get_activity_count();
-            $activity_feed['total_pages'] = ceil( (int) $activities_template->total_activity_count / (int) $activities_template->pag_num );
-            $activity_feed['current_page'] = $activities_template->pag_page;
+            $activity_feed['total_activity_count'] = $activities_template->total_activity_count;
+            $activity_feed['total'] = ceil( (int) $activities_template->total_activity_count / (int) $activities_template->pag_num );
+            $activity_feed['current'] = $activities_template->pag_page;
              while ( bp_activities() ) : bp_the_activity();
                 //Activity basic details
                 $activity_feed[$i]['id']    = $activities_template->activity->id;
