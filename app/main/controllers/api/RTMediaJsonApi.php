@@ -43,7 +43,6 @@ class RTMediaJsonApi{
 
         if(!empty($_POST['token'])){
             $this->user_id = $this->rtmediajsonapifunction->rtmedia_api_get_user_id_from_token($_POST['token']);
-            echo '1';
         }
         //Process Request
         $method = $_POST['method'];
@@ -91,6 +90,9 @@ class RTMediaJsonApi{
                break;
            case 'fetch_media':
                $this->rtmedia_api_process_fetch_media_request();
+               break;
+           case 'fetch_media_details':
+               $this->rtmedia_api_process_fetch_media_details_request();
                break;
            default:
                echo $this->rtmedia_api_response_object( 'FALSE', $this->ec_invalid_request_type, $this->msg_invalid_request_type );
@@ -1014,6 +1016,57 @@ class RTMediaJsonApi{
         }
     }
     function rtmedia_api_process_fetch_media_request(){
+        $this->rtmediajsonapifunction->rtmedia_api_verfiy_token();
+        //Errors
+        $ec_media = 160002;
+        $msg_media = __('media list', 'rtmedia' );
+
+        $ec_no_media = 160003;
+        $msg_no_media = __('no media found for requested media type', 'rtmedia' );
+
+        $ec_invalid_media_type = 160004;
+        $msg_invalid_media_type = __('media_type not allowed', 'rtmedia' );
+
+        global $rtmedia;
+        $rtmediamodel = new RTMediaModel();
+        //Media type to fetch
+        $media_types = $allowed_media_types = array_keys($rtmedia->allowed_types);
+
+        if( !empty($_POST['media_types']) ) {
+            if(!is_array( $_POST['media_types'] ) ){
+                $media_types = explode(',', $_POST['media_types']);
+            }else{
+                $media_types = $_POST['media_types'];
+            }
+            //Check array for currently allowed media types
+            $media_types = array_intersect($media_types, $allowed_media_types);
+        }
+        $args = array(
+            'media_type'    =>  $media_types
+        );
+        $offset = !empty($_POST['page']) ? (int)$_POST['page'] : 0;
+        $per_page = isset($_POST['per_page']) ? (int)$_POST['per_page'] : 10;
+        $order_by = !empty($_POST['order_by']) ? $_POST['order_by'] : 'media_id desc';
+
+        $media_list = $rtmediamodel->get($args, $offset, $per_page, $order_by );
+        $media_result = array();
+        foreach($media_list as $media ){
+            $media_result[] = array(
+                'id'    => $media->id,
+                'media_title'   => $media->media_title,
+                'album_id'  => $media->album_id,
+                'media_type'    => $media->media_type,
+                'url'   => get_rtmedia_permalink($media->id),
+                'privacy'   =>  $media->privacy
+            );
+        }
+        if(!empty($media_result)){
+            echo $this->rtmedia_api_response_object("TRUE", $ec_media, $msg_media, $media_result);
+        }else{
+            echo $this->rtmedia_api_response_object("FALSE", $ec_no_media, $msg_no_media);
+        }
+    }
+    function rtmedia_api_process_fetch_media_details_request(){
 
         $this->rtmediajsonapifunction->rtmedia_api_verfiy_token();
         $this->rtmediajsonapifunction->rtmedia_api_media_activity_id_missing();
