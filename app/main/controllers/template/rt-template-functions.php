@@ -1359,7 +1359,7 @@ function rtmedia_create_album_modal(){
             $album_list = rtmedia_group_album_list();
         else
             $album_list = rtmedia_user_album_list();
-        if ( $album_list ) {
+        if ( $album_list && isset($rtmedia_query->media_query[ 'album_id' ]) &&  $rtmedia_query->media_query[ 'album_id' ] != '') {
 
      ?>
         <div class="rtmedia-merge-container rtmedia-popup mfp-hide" id="rtmedia-merge">
@@ -1406,7 +1406,7 @@ function rtmedia_album_edit ($options) {
     ?>
 
         <?php
-    if ( isset ( $rtmedia_query->media_query ) && ! in_array ( $rtmedia_query->media_query[ 'album_id' ], rtmedia_get_site_option ( 'rtmedia-global-albums' ) ) ) {
+    if ( isset ( $rtmedia_query->media_query ) && isset( $rtmedia_query->media_query[ 'album_id' ] ) && ! in_array ( $rtmedia_query->media_query[ 'album_id' ], rtmedia_get_site_option ( 'rtmedia-global-albums' ) ) ) {
         //if ( isset ( $rtmedia_query->media_query[ 'media_author' ] ) && get_current_user_id () == $rtmedia_query->media_query[ 'media_author' ] ) {
     if ( rtmedia_is_album_editable() || is_rt_admin() ) {
         $options[] = "<a href='edit/' class='rtmedia-edit' title='" . __( 'Edit Album', 'rtmedia' ) . "' ><i class='rtmicon-edit'></i>" . __('Edit Album') . "</a>";
