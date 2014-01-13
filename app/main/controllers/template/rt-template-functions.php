@@ -1515,6 +1515,33 @@ function is_rtmedia_group_media_enable () {
     return false;
 }
 
+// check if media is enabled in profile
+function is_rtmedia_profile_media_enable () {
+    global $rtmedia;
+    if ( isset ( $rtmedia->options[ "buddypress_enableOnProfile" ] ) && $rtmedia->options[ "buddypress_enableOnProfile" ] != "0" ) {
+        return true;
+    }
+    return false;
+}
+
+//function to check if user is on bp group
+function is_rtmedia_bp_group(){
+     global $rtmedia_query;
+     if( isset( $rtmedia_query->query['context'] ) && $rtmedia_query->query['context'] == 'group'){
+         return true;
+     }
+     return false;
+}
+
+//function to check if user is on bp group
+function is_rtmedia_bp_profile(){
+     global $rtmedia_query;
+     if( isset( $rtmedia_query->query['context'] ) && $rtmedia_query->query['context'] == 'profile'){
+         return true;
+     }
+     return false;
+}
+
 function can_user_upload_in_group () {
     $group = groups_get_current_group ();
     $upload_level = groups_get_groupmeta ( $group->id, "rt_upload_media_control_level" );
