@@ -1049,6 +1049,8 @@ class RTMediaJsonApi{
         $args = array(
             'media_type'    =>  $media_type,
         );
+        
+        //global
         if(isset($_POST['global'])){
             if( $_POST['global'] == 'false' ){
                 $args['context'] = array(
@@ -1056,6 +1058,14 @@ class RTMediaJsonApi{
                     'value' => 'NULL'
                 );
             }
+        }
+        //context
+        if(isset($_POST['context'])){
+            $args['context'] = $_POST['context'];
+        }
+        //context Id
+        if(isset($_POST['context_id'])){
+            $args['context_id'] = $_POST['context_id'];
         }
         //Media Author
         $media_author = '';

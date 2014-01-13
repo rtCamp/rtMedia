@@ -115,7 +115,6 @@ class RTMediaModel extends RTDBModel {
 
             $sql .= ' LIMIT ' . $offset . ',' . $per_page;
         }
-        echo $sql;die;
         if( ! $count_flag )
             return $wpdb->get_results ( $sql );
         else
