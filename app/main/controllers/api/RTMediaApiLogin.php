@@ -9,6 +9,6 @@ if(!class_exists('RTDBModel')){
 class RTMediaApiLogin extends RTDBModel {
 
     function __construct () {
-        parent::__construct ( 'rtm_api' );
+        parent::__construct ( 'rtmedia_api' );
     }
 }
