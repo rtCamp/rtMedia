@@ -1045,10 +1045,18 @@ class RTMediaJsonApi{
             //Check array for currently allowed media types
             $media_type = array_intersect($media_type, $allowed_types);
         }
-
+        //Args for fetching media
         $args = array(
             'media_type'    =>  $media_type,
         );
+        if(isset($_POST['global'])){
+            if( $_POST['global'] == 'false' ){
+                $args['context'] = array(
+                    'compare'   => 'IS NOT',
+                    'value' => 'NULL'
+                );
+            }
+        }
         //Media Author
         $media_author = '';
         if(!is_super_admin()){
