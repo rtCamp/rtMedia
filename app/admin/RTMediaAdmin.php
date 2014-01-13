@@ -88,6 +88,13 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
 
             add_action ( 'wp_ajax_rtmedia_hide_template_override_notice', array( $this, 'rtmedia_hide_template_override_notice' ), 1 );
             add_action ( 'admin_notices', array( $this, 'rtmedia_update_template_notice' ) );
+	    add_action ( 'admin_init', array( $this, 'rtmedia_bp_add_update_type' ) );
+	}
+
+	function rtmedia_bp_add_update_type() {
+	    if( class_exists( 'BuddyPress' ) && function_exists( 'bp_activity_set_action' ) ) {
+		bp_activity_set_action( 'rtmedia_update','rtmedia_update','rtMedia Update' );
+	    }
 	}
 
 	function check_permalink_admin_notice() {
