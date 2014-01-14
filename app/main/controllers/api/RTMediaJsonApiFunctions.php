@@ -151,12 +151,12 @@ class RTMediaJsonApiFunctions{
     function rtmedia_api_get_feed($activity_user_id = FALSE, $activity_id = FALSE, $per_page = 10 ){
         global $activities_template, $rtmediajsonapi;
         $activity_feed = array();
-        extract($_POST);
+        extract($_REQUEST);
         $i = 0;
         $args = array (
             'user_id'   => $activity_user_id,
             'action'=>'', /* or rtmedia_update for fetching only rtmedia updates */
-            'page' => !empty( $_POST['page'] ) ? $_POST['page'] : 1, 
+            'page' => !empty( $_REQUEST['page'] ) ? $_REQUEST['page'] : 1, 
             'per_page' => $per_page, 
             'in'   => $activity_id 
         );
@@ -169,17 +169,13 @@ class RTMediaJsonApiFunctions{
                 $activity_feed[$i]['id']    = $activities_template->activity->id;
                 $activity_feed[$i]['activity_type']    = $activities_template->activity->type;
                 $activity_feed[$i]['activity_time'] = bp_get_activity_date_recorded();
-                $activity_feed[$i]['activity_content'] = $activities_template->activity->content;
                 $activity_feed[$i]['activity_time_human'] = strip_tags(bp_insert_activity_meta( '' ));
+                $activity_feed[$i]['activity_content'] = $activities_template->activity->content;
+                
                 //activity User
                 if ( !$activity_user_id ) {
                     //Activity User data
                     $activity_feed[$i]['user'] = $this->rtmedia_api_user_data_from_id( bp_get_activity_user_id() );
-                }
-                if ( $activity_id ){;
-                    //Activity Comment Count
-                    $id = $media['id'];
-                    $activity_feed[$i]['comments'] = $this->rtmedia_api_get_media_comments($id) ;
                 }
 
                 //Media Details
@@ -194,7 +190,11 @@ class RTMediaJsonApiFunctions{
                     else
                         $media = false;
                 }
-
+                if ( $activity_id ){;
+                    //Activity Comment Count
+                    $id = $media[0]['id'];
+                    $activity_feed[$i]['comments'] = $this->rtmedia_api_get_media_comments($id) ;
+                }
                 //Activity Image
                 $activity_feed[$i]['media'] = $media;
                 $i++;

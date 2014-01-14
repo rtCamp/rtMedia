@@ -67,8 +67,8 @@ class RTMediaJsonApi{
            case 'bp_get_profile':
                $this->rtmedia_api_process_bp_get_profile_request();
                break;
-           case 'bp_activity_feed':
-               $this->rtmedia_api_process_bp_activity_feed_request();
+           case 'bp_get_activities':
+               $this->rtmedia_api_process_bp_get_activities_request();
                break;
            case 'add_rtmedia_comment':
                $this->rtmedia_api_process_add_rtmedia_comment_request();
@@ -217,7 +217,7 @@ class RTMediaJsonApi{
 
         $registration_fields = array('username', 'email', 'password', 'password_confirm');
         //fields empty field_1, field_4
-        if ( empty( $_POST['field_1'] ) || empty( $_POST['field_4'] ) ) {
+        if ( empty( $_POST['field_1'] ) ) {
             echo $this->rtmedia_api_response_object( 'FALSE', $ec_register_fields_missing, $msg_register_fields_missing );
             exit;
         }
@@ -257,7 +257,6 @@ class RTMediaJsonApi{
             if ( !is_wp_error( $user_id )){
                 echo xprofile_get_field_id_from_name('field_1');
                 xprofile_set_field_data( 1, $user_id, $_POST['field_1'] );
-                xprofile_set_field_data( 4, $user_id, $_POST['field_4'] );
                 update_user_meta( $user_id, 'register_source', 'site_api' );
                 echo $this->rtmedia_api_response_object('TRUE', $ec_user_insert_success, $msg_user_insert_success );
                 exit;
@@ -330,25 +329,22 @@ class RTMediaJsonApi{
      * Sends a reset link to user email
      * @global type $wpdb
      */
-    function rtmedia_api_process_bp_activity_feed_request(){
+    function rtmedia_api_process_bp_get_activities_request(){
         $this->rtmediajsonapifunction->rtmedia_api_verfiy_token();
         //Feed Errors
         $ec_latest_feed = 700001;
-        $msg_latest_feed = __('feed data', 'rtmedia' );
+        $msg_latest_feed = __('bp activities', 'rtmedia' );
 
         $ec_my_looks = 700002;
-        $msg_my_looks = __('my looks', 'rtmedia' );
+        $msg_my_looks = __('user activities', 'rtmedia' );
 
         //Fetch user id from token
-        extract($_POST);
         $activity_user_id = '';
-        if ( !empty( $feed_type ) && $feed_type == 'me' ) {
-            $activity_user_id = $this->user_id;
-        }
-        $per_page = !empty($_POST['per_page']) ? $_POST['per_page'] : 10;
+        extract($_REQUEST);
+        $per_page = !empty($_REQUEST['per_page']) ? $_REQUEST['per_page'] : 10;
         $activity_feed = $this->rtmediajsonapifunction->rtmedia_api_get_feed($activity_user_id, '', $per_page);
         if( empty($activity_feed) ){
-            $activity_feed = 'no rtmedia updates';
+            $activity_feed = 'no updates';
         }
         if ( !empty( $activity_user_id ) ){
             echo $this->rtmedia_api_response_object('TRUE', $ec_my_looks, $msg_my_looks, $activity_feed ); 
@@ -515,7 +511,7 @@ class RTMediaJsonApi{
         $ec_my_comments = 800005;
         $msg_my_comments = __('my comments', 'rtmedia' );
 
-        extract($_POST);
+        extract($_REQUEST);
         global $wpdb;
         if ( empty( $media_id ) ){
 
@@ -664,7 +660,7 @@ class RTMediaJsonApi{
 
         $profile_fields = array();
         $user_id = $loggedin_user_id = '';
-        extract($_POST);
+        extract($_REQUEST);
         if(empty($user_id)){
             $user_id    = $this->user_id;
         }else{
@@ -726,7 +722,7 @@ class RTMediaJsonApi{
                 );
             }
         }
-        if(!empty($_POST['user_id']) && $loggedin_user_id != $user_id ){
+        if(!empty($_REQUEST['user_id']) && $loggedin_user_id != $user_id ){
             $args   = array(
                 'leader_id' =>  $user_id,
                 'follower_id'   => $loggedin_user_id
@@ -901,7 +897,7 @@ class RTMediaJsonApi{
         $msg_invalid_image = __('upload failed, check size and file type', 'rtmedia' );
 
         $ec_look_updated = 140004;
-        $msg_look_updated = __('look updated', 'rtmedia' );
+        $msg_look_updated = __('media uploaded', 'rtmedia' );
 
         $description = '';
         extract($_POST);
@@ -1036,11 +1032,11 @@ class RTMediaJsonApi{
         $media_type = $allowed_types = array_keys($rtmedia->allowed_types);
         $media_type[] = 'album';
         $allowed_types[] = 'album';
-        if( !empty($_POST['media_type']) ) {
-            if(!is_array( $_POST['media_type'] ) ){
-                $media_type = explode(',', $_POST['media_type']);
+        if( !empty($_REQUEST['media_type']) ) {
+            if(!is_array( $_REQUEST['media_type'] ) ){
+                $media_type = explode(',', $_REQUEST['media_type']);
             }else{
-                $media_type = $_POST['media_type'];
+                $media_type = $_REQUEST['media_type'];
             }
             //Check array for currently allowed media types
             $media_type = array_intersect($media_type, $allowed_types);
@@ -1051,8 +1047,8 @@ class RTMediaJsonApi{
         );
         
         //global
-        if(isset($_POST['global'])){
-            if( $_POST['global'] == 'false' ){
+        if(isset($_REQUEST['global'])){
+            if( $_REQUEST['global'] == 'false' ){
                 $args['context'] = array(
                     'compare'   => 'IS NOT',
                     'value' => 'NULL'
@@ -1060,12 +1056,12 @@ class RTMediaJsonApi{
             }
         }
         //context
-        if(isset($_POST['context'])){
-            $args['context'] = $_POST['context'];
+        if(isset($_REQUEST['context'])){
+            $args['context'] = $_REQUEST['context'];
         }
         //context Id
         if(isset($_POST['context_id'])){
-            $args['context_id'] = $_POST['context_id'];
+            $args['context_id'] = $_REQUEST['context_id'];
         }
         //Media Author
         $media_author = '';
@@ -1073,15 +1069,15 @@ class RTMediaJsonApi{
             $media_author = $this->user_id;
             $args['media_author'] = $media_author;
         }
-        if( !empty($_POST['media_author'])){
+        if( !empty($_REQUEST['media_author'])){
             if( is_super_admin( $this->user_id ) ){
-                $media_author = (int)$_POST['media_author'];
+                $media_author = (int)$_REQUEST['media_author'];
                 $args['media_author'] = $media_author;
             }
         }
-        $offset = !empty($_POST['page']) ? (int)$_POST['page'] : 0;
-        $per_page = isset($_POST['per_page']) ? (int)$_POST['per_page'] : 10;
-        $order_by = !empty($_POST['order_by']) ? $_POST['order_by'] : 'media_id desc';
+        $offset = !empty($_REQUEST['page']) ? (int)$_REQUEST['page'] : 0;
+        $per_page = isset($_REQUEST['per_page']) ? (int)$_REQUEST['per_page'] : 10;
+        $order_by = !empty($_REQUEST['order_by']) ? $_REQUEST['order_by'] : 'media_id desc';
 
         $media_list = $rtmediamodel->get($args, $offset, $per_page, $order_by );
         $media_result = array();
@@ -1115,7 +1111,7 @@ class RTMediaJsonApi{
         $ec_single_media = 150002;
         $msg_single_media = __('single media', 'rtmedia' );
 
-        extract($_POST);
+        extract($_REQUEST);
         $id = rtmedia_media_id( $media_id );
         if (empty( $id ) ){
             echo $this->rtmedia_api_response_object( 'TRUE', $this->ec_invalid_media_id, $this->msg_invalid_media_id );
@@ -1134,7 +1130,7 @@ class RTMediaJsonApi{
            echo $this->rtmedia_api_response_object( 'FALSE', $this->ec_invalid_media_id, $this->msg_invalid_media_id );
            exit;
        }
-       $media_single = $this->rtmediajsonapifunction->rtmedia_api_get_feed('', $activity_id );
+       $media_single = $this->rtmediajsonapifunction->rtmedia_api_get_feed(FALSE, $activity_id );
 
        if( $media_single ){
            echo $this->rtmedia_api_response_object( 'TRUE', $ec_single_media, $msg_single_media, $media_single );
