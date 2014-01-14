@@ -897,7 +897,7 @@ class RTMediaJsonApi{
         $msg_invalid_image = __('upload failed, check size and file type', 'rtmedia' );
 
         $ec_look_updated = 140004;
-        $msg_look_updated = __('media uploaded', 'rtmedia' );
+        $msg_look_updated = __('media updated', 'rtmedia' );
 
         $description = '';
         extract($_POST);
