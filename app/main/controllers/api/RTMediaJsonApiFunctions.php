@@ -264,4 +264,8 @@ class RTMediaJsonApiFunctions{
         }
         return $media_data;
     }
+    function  rtmedia_api_set_user_id(){
+        global $rtmediajsonapi;
+        return $rtmediajsonapi->user_id;
+    }
 }

@@ -45,7 +45,7 @@ class RTMediaJsonApi{
             $this->rtmediajsonapifunction->rtmedia_api_verfiy_token();
             $this->user_id = $this->rtmediajsonapifunction->rtmedia_api_get_user_id_from_token($_POST['token']);
             //add filter
-            add_filter('rtmedia_current_user', array($this, create_function ('', 'return $this->user_id;')));
+            add_filter('rtmedia_current_user', array($this->rtmediajsonapifunction, 'rtmedia_api_set_user_id'));
         }
         //Process Request
         $method = $_POST['method'];
@@ -924,7 +924,6 @@ class RTMediaJsonApi{
             $_POST['context_id']   = $_REQUEST['context_id'] = !empty($_REQUEST['context_id']) ? $_REQUEST['context_id'] : $this->user_id;
             $_POST['mode']  =   $_REQUEST['mode'] = 'file_upload';
             $_POST['media_author'] = $_REQUEST['media_author'] = $this->user_id;
-
             $upload = new RTMediaUploadEndpoint();
             $uploaded_look = $upload->template_redirect ();
         }else{
