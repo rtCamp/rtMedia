@@ -2135,3 +2135,18 @@ function update_group_media_privacy( $group_id ) {
 
     }
 }
+
+/* check if rtMedia page */
+function is_rtmedia_page() {
+    if( ! defined ( 'RTMEDIA_MEDIA_SLUG' ) ) {
+        return false;
+    }
+    
+    global $rtmedia_interaction;
+
+    if( ! isset( $rtmedia_interaction ) ) {
+        return false;
+    }
+
+    return $rtmedia_interaction->routes[RTMEDIA_MEDIA_SLUG]->is_template();
+}
