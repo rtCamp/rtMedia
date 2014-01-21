@@ -205,16 +205,16 @@ class RTMediaFormHandler {
 	static function general_render_options($options) {
 
 		$render = array(
-			'general_enableAlbums' => array(
-				'title' => __('Albums','rtmedia'),
-				'callback' => array('RTMediaFormHandler', 'checkbox'),
-				'args' => array(
-					'id' => 'rtmedia-album-enable',
-					'key' => 'general_enableAlbums',
-					'value' => $options['general_enableAlbums'],
-					'desc' => __('Enable Albums in rtMedia','rtmedia')
-				)
-			),
+//			'general_enableAlbums' => array(
+//				'title' => __('Albums','rtmedia'),
+//				'callback' => array('RTMediaFormHandler', 'checkbox'),
+//				'args' => array(
+//					'id' => 'rtmedia-album-enable',
+//					'key' => 'general_enableAlbums',
+//					'value' => $options['general_enableAlbums'],
+//					'desc' => __('Enable Albums in rtMedia','rtmedia')
+//				)
+//			),
 			'general_enableComments' => array(
 				'title' => __('Comments','rtmedia'),
 				'callback' => array('RTMediaFormHandler', 'checkbox'),
@@ -290,7 +290,8 @@ class RTMediaFormHandler {
 
 	public static function general_content() {
 		global $rtmedia;
-		$options = self::extract_settings('general', $rtmedia->options);
+//		$options = self::extract_settings('general', $rtmedia->options);
+		$options = $rtmedia->options;
 		$render_options = self::general_render_options($options);
                 $render_options = apply_filters("rtmedia_general_content_add_itmes",$render_options, $options);
 		$general_group = array();
@@ -420,6 +421,7 @@ class RTMediaFormHandler {
                     }
 		}
 		echo '</div>';
+                do_action('rtmedia_after_bp_settings');
                 do_action('rtmedia_after_media_types_settings');
 	}
 
@@ -594,8 +596,8 @@ class RTMediaFormHandler {
 		echo '<div class="large-12">';
 			foreach ($render_data as $key=>$privacy) {
 				echo '<div class="row section">';
-					echo '<div class="columns large-4">' . $privacy['title'] . '</div>';
-					echo '<div class="columns large-8">';
+					echo '<div class="columns large-6">' . $privacy['title'] . '</div>';
+					echo '<div class="columns large-6">';
 						if($key != "enable")
 							call_user_func($privacy['callback'], array_merge_recursive($privacy['args'], array('class' => array("privacy-driven-disable"))));
 						else
@@ -657,19 +659,55 @@ class RTMediaFormHandler {
 
 		global $rtmedia;
 		$options = self::extract_settings('buddypress', $rtmedia->options);
-
+	    ?>
+		<div class="postbox metabox-holder">
+		    <h3 class="hndle"><span>BuddyPress Integration</span></h3>
+	    <?php
 		$render_data = self::buddypress_render_options($options);
 
 		echo '<div class="large-12">';
 		foreach ($render_data as $option) { ?>
 			<div class="row section">
-				<div class="columns large-4"><?php echo $option['title']; ?></div>
-				<div class="columns large-8">
+				<div class="columns large-6"><?php echo $option['title']; ?></div>
+				<div class="columns large-6">
 					<?php call_user_func($option['callback'], $option['args']); ?>
 				</div>
 			</div>
 		<?php }
 		echo '</div>';
+	    echo '</div>';
+	    ?>
+		    <div class="postbox metabox-holder">
+		    <h3 class="hndle"><span>Album Control</span></h3>
+		    <?php
+		    $options = $rtmedia->options;
+		    $render_options = array(
+			'general_enableAlbums' => array(
+				    'title' => __('Enable Albums','rtmedia'),
+				    'callback' => array('RTMediaFormHandler', 'checkbox'),
+				    'args' => array(
+					    'id' => 'rtmedia-album-enable',
+					    'key' => 'general_enableAlbums',
+					    'value' => $options['general_enableAlbums'],
+					    'desc' => __('Enable Albums in rtMedia','rtmedia')
+				    )
+			),
+		    );
+		    $render_options = apply_filters('rtmedia_album_control_setting',$render_options, $options);
+		    foreach ($render_options as $tab => $option) {
+		    ?>
+			    <div class="row section">
+				    <div class="columns large-6"> <?php echo $option['title']; ?> </div>
+				    <div class="columns large-6">
+					    <?php call_user_func($option['callback'], $option['args']); ?>
+				    </div>
+			    </div>
+		    <?php
+		    }
+		    ?>
+		</div>
+	    <?php
+	    do_action('rtmedia_buddypress_setting_content');
 	}
 
 	public static function rtForm_settings_tabs_content($page, $sub_tabs) {
@@ -680,17 +718,18 @@ class RTMediaFormHandler {
                 echo $rtmedia_admin_ui_handler ;
                 $i = 1;
                 $sub_tabs = apply_filters("rtmedia_pro_settings_tabs_content",$sub_tabs);
+		ksort($sub_tabs);
 		foreach ($sub_tabs as $tab) {
                     $active_class = '';
                     if( $i == 1){ $active_class = 'active';} $i++;
                     if ( isset ( $tab[ 'icon' ] ) && ! empty ( $tab[ 'icon' ] ) )
-                        $icon = '<i class="' . $tab[ 'icon' ] . '"></i>';                    
+                        $icon = '<i class="' . $tab[ 'icon' ] . '"></i>';
                     echo '<dd class="' . $active_class . '"><a id="tab-' . substr ( $tab[ 'href' ], 1 ) . '" title="' . $tab[ 'title' ] . '" href="' . $tab[ 'href' ] . '" class="rtmedia-tab-title ' . sanitize_title ( $tab[ 'name' ] ) . '">' . $icon . ' ' . $tab[ 'name' ] . '</a></dd>';
 		}
                 echo "</dl>";
             ?>
-                
-                <?php 
+
+                <?php
                 $rtmedia_admin_tab_content_handler = "<div class='tabs-content'>";
                 $rtmedia_admin_tab_content_handler = apply_filters("rtmedia_admin_tab_content_handler",$rtmedia_admin_tab_content_handler);
                 echo $rtmedia_admin_tab_content_handler;

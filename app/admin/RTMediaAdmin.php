@@ -908,38 +908,16 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
             // Check to see which tab we are on
             $tab = $this->get_current_tab ();
             /* rtMedia */
-            $tabs[ ] = array(
+            $tabs[10] = array(
                 'href' => '#rtmedia-general',
                 'icon' => 'rtmicon-cogs',
-                'title' => __( 'rtMedia General', 'rtmedia' ),
-                'name' => __( 'General', 'rtmedia' ),
+                'title' => __( 'WordPress', 'rtmedia' ),
+                'name' => __( 'WordPress', 'rtmedia' ),
                 'callback' => array( 'RTMediaFormHandler', 'general_content' )
             );
-            $tabs[ ] = array(
-                'href' => '#rtmedia-types',
-                'icon' => 'rtmicon-film',
-                'title' => __( 'rtMedia Types', 'rtmedia' ),
-                'name' => __( 'Types', 'rtmedia' ),
-                'callback' => array( 'RTMediaFormHandler', 'types_content' )
-            );
 
-            $tabs[ ] = array(
-                'href' => '#rtmedia-sizes',
-                'icon' => 'rtmicon-expand',
-                'title' => __( 'rtMedia Sizes', 'rtmedia' ),
-                'name' => __( 'Sizes', 'rtmedia' ),
-                'callback' => array( 'RTMediaFormHandler', 'sizes_content' )
-            );
-
-            $tabs[ ] = array(
-                'href' => '#rtmedia-privacy',
-                'icon' => 'rtmicon-lock',
-                'title' => __( 'rtMedia Privacy', 'rtmedia' ),
-                'name' => __( 'Privacy', 'rtmedia' ),
-                'callback' => array( 'RTMediaFormHandler', 'privacy_content' )
-            );
-            if ( class_exists ( "BuddyPress" ) ) {
-                $tabs[ ] = array(
+	    if ( class_exists ( "BuddyPress" ) ) {
+                $tabs[20] = array(
                     'href' => '#rtmedia-bp',
                     'icon' => 'rtmicon-group',
                     'title' => __( 'rtMedia BuddyPress', 'rtmedia' ),
@@ -947,7 +925,31 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
                     'callback' => array( 'RTMediaFormHandler', 'buddypress_content' ) //change it to BuddyPress Content
                 );
             }
-            $tabs[ ] = array(
+
+            $tabs[30] = array(
+                'href' => '#rtmedia-types',
+                'icon' => 'rtmicon-film',
+                'title' => __( 'rtMedia Types', 'rtmedia' ),
+                'name' => __( 'Types', 'rtmedia' ),
+                'callback' => array( 'RTMediaFormHandler', 'types_content' )
+            );
+
+            $tabs[40] = array(
+                'href' => '#rtmedia-sizes',
+                'icon' => 'rtmicon-expand',
+                'title' => __( 'rtMedia Sizes', 'rtmedia' ),
+                'name' => __( 'Sizes', 'rtmedia' ),
+                'callback' => array( 'RTMediaFormHandler', 'sizes_content' )
+            );
+
+            $tabs[50] = array(
+                'href' => '#rtmedia-privacy',
+                'icon' => 'rtmicon-lock',
+                'title' => __( 'rtMedia Privacy', 'rtmedia' ),
+                'name' => __( 'Privacy', 'rtmedia' ),
+                'callback' => array( 'RTMediaFormHandler', 'privacy_content' )
+            );
+            $tabs[60] = array(
                 'href' => '#rtmedia-custom-css-settings',
                 'icon' => 'rtmicon-css3',
                 'title' => __( 'rtMedia Custom CSS', 'rtmedia' ),
