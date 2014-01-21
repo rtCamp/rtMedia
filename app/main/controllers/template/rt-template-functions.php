@@ -1046,7 +1046,7 @@ function rtmedia_add_album_selection_field( $media_type ){
             $curr_album_id = $rtmedia_query->media[0]->album_id;
         }
         ?>
-    <div>
+    <div class="rtmedia-edit-change-album">
         <label for=""><?php _e('Album', 'rtmedia');?> : </label>
         <?php if( isset( $rtmedia_query->query['context']) && $rtmedia_query->query['context'] == 'group' ){
             //show group album list.
