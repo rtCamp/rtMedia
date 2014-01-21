@@ -1359,7 +1359,7 @@ function rtmedia_create_album_modal(){
             $album_list = rtmedia_group_album_list();
         else
             $album_list = rtmedia_user_album_list();
-        if ( $album_list ) {
+        if ( $album_list && isset($rtmedia_query->media_query[ 'album_id' ]) &&  $rtmedia_query->media_query[ 'album_id' ] != '') {
 
      ?>
         <div class="rtmedia-merge-container rtmedia-popup mfp-hide" id="rtmedia-merge">
@@ -1406,7 +1406,7 @@ function rtmedia_album_edit ($options) {
     ?>
 
         <?php
-    if ( isset ( $rtmedia_query->media_query ) && ! in_array ( $rtmedia_query->media_query[ 'album_id' ], rtmedia_get_site_option ( 'rtmedia-global-albums' ) ) ) {
+    if ( isset ( $rtmedia_query->media_query ) && isset( $rtmedia_query->media_query[ 'album_id' ] ) && ! in_array ( $rtmedia_query->media_query[ 'album_id' ], rtmedia_get_site_option ( 'rtmedia-global-albums' ) ) ) {
         //if ( isset ( $rtmedia_query->media_query[ 'media_author' ] ) && get_current_user_id () == $rtmedia_query->media_query[ 'media_author' ] ) {
     if ( rtmedia_is_album_editable() || is_rt_admin() ) {
         $options[] = "<a href='edit/' class='rtmedia-edit' title='" . __( 'Edit Album', 'rtmedia' ) . "' ><i class='rtmicon-edit'></i>" . __('Edit Album') . "</a>";
@@ -1513,6 +1513,33 @@ function is_rtmedia_group_media_enable () {
         return true;
     }
     return false;
+}
+
+// check if media is enabled in profile
+function is_rtmedia_profile_media_enable () {
+    global $rtmedia;
+    if ( isset ( $rtmedia->options[ "buddypress_enableOnProfile" ] ) && $rtmedia->options[ "buddypress_enableOnProfile" ] != "0" ) {
+        return true;
+    }
+    return false;
+}
+
+//function to check if user is on bp group
+function is_rtmedia_bp_group(){
+     global $rtmedia_query;
+     if( isset( $rtmedia_query->query['context'] ) && $rtmedia_query->query['context'] == 'group'){
+         return true;
+     }
+     return false;
+}
+
+//function to check if user is on bp group
+function is_rtmedia_bp_profile(){
+     global $rtmedia_query;
+     if( isset( $rtmedia_query->query['context'] ) && $rtmedia_query->query['context'] == 'profile'){
+         return true;
+     }
+     return false;
 }
 
 function can_user_upload_in_group () {
