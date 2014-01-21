@@ -540,7 +540,7 @@ class RTMediaFormHandler {
 				'args' => array(
 					'id' => 'rtmedia-custom-css',
 					'key' => 'styles_custom',
-					'value' => $options['styles_custom']
+					'value' => stripcslashes( $options['styles_custom'] )
                                 )
                         )
                 );
