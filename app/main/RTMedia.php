@@ -787,7 +787,7 @@ class RTMedia
         }
         wp_enqueue_style('rtmedia-font-awesome', RTMEDIA_URL . 'app/assets/css/font-awesome.min.css', '', RTMEDIA_VERSION);
         if(! wp_script_is("rtp-foundation-js"))
-            wp_enqueue_script('rtp-foundation-js', RTMEDIA_BOWER_COMPONENTS_URL . 'js/foundation.js', array('jquery'), RTMEDIA_VERSION);
+            wp_enqueue_script('rtp-foundation-js', RTMEDIA_BOWER_COMPONENTS_URL . 'js/foundation.min.js', array('jquery'), RTMEDIA_VERSION);
         
         wp_enqueue_script('rtmedia-main', RTMEDIA_URL . 'app/assets/js/rtMedia.js', array('jquery', 'wp-mediaelement'), RTMEDIA_VERSION);
         

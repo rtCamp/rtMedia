@@ -134,7 +134,10 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "Visit rtMedia's Features page") to get some details about future releases.
 
 = 3.5.1 =
-* Fix for AudioPlayer under LightBox in WordPress TwentyTwelve Theme
+* Fix for AudioPlayer under LightBox in WordPress TwentyFourteen Theme
+* Fix for mobile uploads
+* Album selection in media edit
+* Bug fixes
 
 = 3.5 =
 * updated too foundation 5
@@ -674,7 +677,7 @@ Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_sou
 == Upgrade Notice ==
 
 = 3.5.1 =
-Requires BuddyPress 1.7 or higher, if using BuddyPress. Fix for AudioPlayer under LightBox in WordPress TwentyTwelve Theme
+Requires BuddyPress 1.7 or higher, if using BuddyPress. Fix for AudioPlayer under LightBox in WordPress TwentyFourteen Theme, Fix for mobile uploads, Bug fixes
 
 == Sponsors ==
 
