@@ -204,17 +204,7 @@ class RTMediaFormHandler {
 
 	static function general_render_options($options) {
 
-		$render = array(
-//			'general_enableAlbums' => array(
-//				'title' => __('Albums','rtmedia'),
-//				'callback' => array('RTMediaFormHandler', 'checkbox'),
-//				'args' => array(
-//					'id' => 'rtmedia-album-enable',
-//					'key' => 'general_enableAlbums',
-//					'value' => $options['general_enableAlbums'],
-//					'desc' => __('Enable Albums in rtMedia','rtmedia')
-//				)
-//			),
+		$render = array(//
 			'general_enableComments' => array(
 				'title' => __('Comments','rtmedia'),
 				'callback' => array('RTMediaFormHandler', 'checkbox'),
@@ -246,15 +236,23 @@ class RTMediaFormHandler {
 				),
 				'group' => "10"
 			),
-//			'general_enableMediaEndPoint' => array(
-//				'title' => __('Enable Media End Point for users','rtmedia'),
-//				'callback' => array('RTMediaFormHandler', 'checkbox'),
-//				'args' => array(
-//					'key' => 'general_enableMediaEndPoint',
-//					'value' => $options['general_enableMediaEndPoint'],
-//					'desc' => __('Users can access their media on media end point','rtmedia')
-//				)
-//			),
+			'general_showAdminMenu' => array(
+				'title' => __('Admin Bar Menu','rtmedia'),
+				'callback' => array('RTMediaFormHandler', 'checkbox'),
+				'args' => array(
+					'key' => 'general_showAdminMenu',
+					'value' => $options['general_showAdminMenu'],
+					'desc' => __('Enable menu in WordPress admin bar','rtmedia')
+				),
+				'group' => "10"
+			),//
+		);
+
+		return $render;
+	}
+	static function render_wordpress_content($options) {
+
+		$render = array(
                         'general_videothumbs' => array(
                                 'title' => __('Number of Video Thumbnails','rtmedia'),
                                 'callback' => array('RTMediaFormHandler', 'number'),
@@ -266,16 +264,6 @@ class RTMediaFormHandler {
                                 )
 
                         ),
-			'general_showAdminMenu' => array(
-				'title' => __('Admin Bar Menu','rtmedia'),
-				'callback' => array('RTMediaFormHandler', 'checkbox'),
-				'args' => array(
-					'key' => 'general_showAdminMenu',
-					'value' => $options['general_showAdminMenu'],
-					'desc' => __('Enable menu in WordPress admin bar','rtmedia')
-				),
-				'group' => "10"
-			),
 			'general_AllowUserData' => array(
 				'title' => __('Allow User Data Tracking','rtmedia'),
 				'callback' => array('RTMediaFormHandler', 'checkbox'),
@@ -290,16 +278,61 @@ class RTMediaFormHandler {
 		return $render;
 	}
 
+	public static function wordpress_content() {
+		global $rtmedia;
+//		$options = self::extract_settings('general', $rtmedia->options);
+		$options = $rtmedia->options;
+		$render_options = self::render_wordpress_content($options);
+                $render_options = apply_filters("rtmedia_general_content_add_itmes",$render_options, $options);
+		$general_group = array();
+//		$general_group[10] = "UI";
+		$general_group[90] = "Miscellaneous";
+		$general_group = apply_filters("rtmedia_general_content_groups", $general_group);
+		ksort($general_group);
+		$html = '';
+		foreach($general_group as $key => $value) {
+		?>
+		    <div class="postbox metabox-holder">
+			<h3 class="hndle"><span><?php echo $value; ?></span></h3>
+		<?php
+		    foreach ($render_options as $tab => $option) {
+
+			if(!isset($option['group'])) {
+			    $option['group'] = "90";
+			}
+
+			if($option['group'] != $key) {
+			    continue;
+			}
+		?>
+			<div class="row section">
+			    <div class="columns large-6">
+				<?php echo $option['title']; ?>
+				<span data-tooltip class="has-tip" title="<?php echo (isset($option['args']['desc'])) ? $option['args']['desc'] : "NA"; ?>"><i class="rtmicon-info-circle"></i></span>
+			    </div>
+				<div class="columns large-6">
+					<?php call_user_func($option['callback'], $option['args']); ?>
+				</div>
+			</div>
+		    <?php
+		    }
+		    ?>
+			</div>
+		    <?php
+		}
+
+	}
+
 	public static function general_content() {
 		global $rtmedia;
 //		$options = self::extract_settings('general', $rtmedia->options);
 		$options = $rtmedia->options;
 		$render_options = self::general_render_options($options);
-                $render_options = apply_filters("rtmedia_general_content_add_itmes",$render_options, $options);
+//                $render_options = apply_filters("rtmedia_general_content_add_itmes",$render_options, $options);
 		$general_group = array();
 		$general_group[10] = "UI";
-		$general_group[90] = "Miscellaneous";
-		$general_group = apply_filters("rtmedia_general_content_groups", $general_group);
+//		$general_group[90] = "Miscellaneous";
+//		$general_group = apply_filters("rtmedia_general_content_groups", $general_group);
 		ksort($general_group);
 		$html = '';
 		foreach($general_group as $key => $value) {
@@ -673,7 +706,10 @@ class RTMediaFormHandler {
 		echo '<div class="large-12">';
 		foreach ($render_data as $option) { ?>
 			<div class="row section">
-				<div class="columns large-6"><?php echo $option['title']; ?></div>
+				<div class="columns large-6">
+				    <?php echo $option['title']; ?>
+				    <span data-tooltip class="has-tip" title="<?php echo (isset($option['args']['desc'])) ? $option['args']['desc'] : "NA"; ?>"><i class="rtmicon-info-circle"></i></span>
+				</div>
 				<div class="columns large-6">
 					<?php call_user_func($option['callback'], $option['args']); ?>
 				</div>
@@ -702,7 +738,10 @@ class RTMediaFormHandler {
 		    foreach ($render_options as $tab => $option) {
 		    ?>
 			    <div class="row section">
-				    <div class="columns large-6"> <?php echo $option['title']; ?> </div>
+				    <div class="columns large-6">
+					<?php echo $option['title']; ?>
+					<span data-tooltip class="has-tip" title="<?php echo (isset($option['args']['desc'])) ? $option['args']['desc'] : "NA"; ?>"><i class="rtmicon-info-circle"></i></span>
+				    </div>
 				    <div class="columns large-6">
 					    <?php call_user_func($option['callback'], $option['args']); ?>
 				    </div>
