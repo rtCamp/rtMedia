@@ -277,7 +277,9 @@ jQuery(function($) {
 
         uploaderObj.uploader.bind('UploadComplete', function(up, files) {
 	    activity_id = -1;
-            galleryObj.reloadView();
+            if( rtmedia_gallery_reload_on_upload =='1'){ //reload gallery view when upload completes if enabled( by default enabled)
+                galleryObj.reloadView();
+            }
             jQuery('.start-media-upload').hide();
         });
         
