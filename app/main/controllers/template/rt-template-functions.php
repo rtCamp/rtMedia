@@ -1609,6 +1609,7 @@ function can_user_upload_in_group () {
 //        }
         $display_flag = true;
     }
+    $display_flag = apply_filters('rtm_can_user_upload_in_group', $display_flag );
     return $display_flag;
 }
 
@@ -1645,6 +1646,7 @@ function can_user_create_album_in_group ( $group_id = false, $user_id = false ) 
             $display_flag = true;
         }
     }
+    $display_flag = apply_filters('can_user_create_album_in_group', $display_flag );
     return $display_flag;
 }
 
