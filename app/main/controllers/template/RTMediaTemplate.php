@@ -105,9 +105,6 @@ class RTMediaTemplate {
                 }
                 //add_action("rtmedia_before_media_gallery",array(&$this,"")) ;
 		if( isset( $shortcode_attr[ 'attr' ] ) && isset( $shortcode_attr[ 'attr' ]['uploader'] ) && $shortcode_attr[ 'attr' ]['uploader'] == "before" ) {
-		    if( isset( $shortcode_attr[ 'attr' ]['media_type'] ) ) {
-//			wp_enqueue_script ( 'rtmedia-upload-filter', RTMEDIA_URL . 'app/assets/js/rtmedia_uploader_fitler.js', array( 'plupload', 'backbone' ), false, true );
-		    }
 		    echo RTMediaUploadShortcode::pre_render($shortcode_attr[ 'attr' ]);
 		}
 		echo "<div class='rtmedia_gallery_wrapper'>";
@@ -116,9 +113,6 @@ class RTMediaTemplate {
                 include $this->locate_template ( $gallery_template );
 		echo "</div>";
 		if( isset( $shortcode_attr[ 'attr' ] ) && isset( $shortcode_attr[ 'attr' ]['uploader'] ) && ( $shortcode_attr[ 'attr' ]['uploader'] == "after" || $shortcode_attr[ 'attr' ]['uploader'] == "true" ) ) {
-		    if( isset( $shortcode_attr[ 'attr' ]['media_type'] ) ) {
-//			wp_enqueue_script ( 'rtmedia-upload-filter', RTMEDIA_URL . 'app/assets/js/rtmedia_uploader_fitler.js', array( 'plupload', 'backbone' ), false, true );
-		    }
 		    echo RTMediaUploadShortcode::pre_render($shortcode_attr[ 'attr' ]);
 		}
             } else {
@@ -195,7 +189,7 @@ class RTMediaTemplate {
             do_action ( 'rtmedia_before_update_media', $rtmedia_query->action_query->id );
             $data_array = array( 'media_title', 'description', 'privacy' );
             //for medias except album and playlist, if album_is is found, then update album_id for the media also
-            if( isset( $_POST['album_id'] ) && $_POST['album_id'] != ''){ 
+            if( isset( $_POST['album_id'] ) && $_POST['album_id'] != ''){
                 $data_array[] = 'album_id';
             }
             $data = rtmedia_sanitize_object ( $_POST, $data_array );
