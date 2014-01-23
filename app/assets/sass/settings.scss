@@ -1,3 +1,7 @@
+.toplevel_page_rtmedia-settings {
+	// import tooltip in rtmedia-settings page only
+	@import "bower_components/foundation/scss/foundation/components/tooltips"; 
+}
 #bp-media-settings-boxes{
    // @import "foundation/components/global"; // *always required    
    @import "bower_components/foundation/scss/foundation/components/global"; // *always required

@@ -241,7 +241,8 @@ class RTMediaFormHandler {
 				'args' => array(
 					'key' => 'general_perPageMedia',
 					'value' => $options['general_perPageMedia'],
-					'class' => array('rtmedia-setting-text-box')
+					'class' => array('rtmedia-setting-text-box'),
+					'desc' => __('Number of media to view in page','rtmedia')
 				),
 				'group' => "10"
 			),
@@ -260,7 +261,8 @@ class RTMediaFormHandler {
                                 'args' => array(
                                         'key' => 'general_videothumbs',
                                         'value' => $options['general_videothumbs'],
-					'class' => array('rtmedia-setting-text-box')
+					'class' => array('rtmedia-setting-text-box'),
+					'desc' => __('NUmber video thumbnails to be generated from encoding service','rtmedia')
                                 )
 
                         ),
@@ -316,8 +318,11 @@ class RTMediaFormHandler {
 			}
 		?>
 			<div class="row section">
-				<div class="columns large-5"> <?php echo $option['title']; ?> </div>
-				<div class="columns large-7">
+			    <div class="columns large-6">
+				<?php echo $option['title']; ?>
+				<span data-tooltip class="has-tip" title="<?php echo (isset($option['args']['desc'])) ? $option['args']['desc'] : "NA"; ?>"><i class="rtmicon-info-circle"></i></span>
+			    </div>
+				<div class="columns large-6">
 					<?php call_user_func($option['callback'], $option['args']); ?>
 				</div>
 			</div>
