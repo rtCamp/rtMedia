@@ -110,8 +110,11 @@ class RTMediaModel extends RTDBModel {
 
             if( intval ( $per_page ) < 1 )
                 $per_page = 1;
-
-            $sql .= ' LIMIT ' . $offset . ',' . $per_page;
+            
+            //filter added to change the LIMIT
+            $limit = apply_filters('rtmedia-model-limit-query', ' LIMIT ' . $offset . ',' . $per_page, $offset, $per_page);
+            
+            $sql .= $limit;
         }
 
         if( ! $count_flag )
