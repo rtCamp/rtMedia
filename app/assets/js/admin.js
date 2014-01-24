@@ -546,13 +546,6 @@ jQuery(document).ready(function($) {
         offData = 'data-off-label="' + rtmedia_off_label + '"';
     jQuery("[data-toggle='switch']").wrap('<div class="rt-switch" ' + onData + ' ' + offData + ' />').parent().bootstrapSwitch();
 
-    try {
-        jQuery('.rtm-show-tooltip').powerTip({
-            followMouse: true
-        });
-    } catch (e) {
-        // no tooltip is defined
-    }
     $(".rtmedia-tab-title").click(function() {
         hash = $(this).attr('href');
         window.location.hash = hash.substring(1, hash.length);
@@ -648,6 +641,15 @@ jQuery(document).ready(function($) {
     });
     if(jQuery(document).foundation !== undefined)
         jQuery(document).foundation();
+
+    if(window.location.hash){
+	jQuery('#rtm-settings-tabs dl.tabs dd a').each(function(){
+	    var hash = '#' + jQuery(this).attr('href').split('#')[1];
+	    if(hash == window.location.hash){
+		jQuery(this).click();
+	    }
+	});
+    }
 });
 
 function rtmedia_addon_do_not_show() {

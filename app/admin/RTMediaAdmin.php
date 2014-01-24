@@ -405,7 +405,6 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
 
                 wp_enqueue_script ( 'bootstrap-switch', RTMEDIA_URL . 'app/assets/js/bootstrap-switch.js', array( 'jquery' ), RTMEDIA_VERSION );
                 wp_enqueue_script ( 'slider-tabs', RTMEDIA_URL . 'app/assets/js/jquery.sliderTabs.min.js', array( 'jquery', 'jquery-effects-core' ), RTMEDIA_VERSION );
-                wp_enqueue_script ( 'power-tip', RTMEDIA_URL . 'app/assets/js/jquery.powertip.min.js', array( 'jquery' ), RTMEDIA_VERSION );
                 wp_enqueue_script ( 'observe-hashchange', RTMEDIA_URL . 'app/assets/js/jquery.observehashchange.pack.js', array( 'jquery' ), RTMEDIA_VERSION );
                 wp_enqueue_script ( 'rtmedia-admin', RTMEDIA_URL . 'app/assets/js/admin.js', array( 'jquery-ui-dialog' ), RTMEDIA_VERSION );
                 wp_localize_script ( 'rtmedia-admin', 'rtmedia_on_label', __ ( 'ON', 'rtmedia' ) );
@@ -436,7 +435,6 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
                 wp_enqueue_style ( 'font-awesome', RTMEDIA_URL . 'app/assets/css/font-awesome.min.css', '', RTMEDIA_VERSION );
                 wp_enqueue_style ( 'bootstrap-switch', RTMEDIA_URL . 'app/assets/css/bootstrap-switch.css', '', RTMEDIA_VERSION );
                 wp_enqueue_style ( 'slider-tabs', RTMEDIA_URL . 'app/assets/css/jquery.sliderTabs.min.css', '', RTMEDIA_VERSION );
-                wp_enqueue_style ( 'power-tip', RTMEDIA_URL . 'app/assets/css/jquery.powertip.min.css', '', RTMEDIA_VERSION );
                 wp_enqueue_style ( 'grid-foundation', RTMEDIA_URL . 'app/assets/css/grid-foundation.css', '', RTMEDIA_VERSION );
                 wp_enqueue_style ( 'rtmedia-main', RTMEDIA_URL . 'app/assets/css/main.css', '', RTMEDIA_VERSION );
                 wp_enqueue_style ( 'rtmedia-admin', RTMEDIA_URL . 'app/assets/css/admin.css', '', RTMEDIA_VERSION );

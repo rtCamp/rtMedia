@@ -206,24 +206,24 @@ class RTMediaFormHandler {
 
 		$render = array(//
 			'general_enableComments' => array(
-				'title' => __('Comments','rtmedia'),
+				'title' => __('Allow user to comment on uploaded media','rtmedia'),
 				'callback' => array('RTMediaFormHandler', 'checkbox'),
 				'args' => array(
 					'key' => 'general_enableComments',
 					'value' => $options['general_enableComments'],
-					'desc' => __('Enable Comments in rtMedia','rtmedia')
+					'desc' => __('This will display comment form and comment listing on single media pages as well as inside lightbox (if lightbox is enabled)','rtmedia')
 				),
 				'group' => "10"
 			),
 			'general_enableLightbox' => array(
-				'title' => __('Lightbox','rtmedia'),
+				'title' => __('Use Lightbox to display media','rtmedia'),
 				'callback' => array('RTMediaFormHandler', 'checkbox'),
 				'args' => array(
 					'key' => 'general_enableLightbox',
 					'value' => $options['general_enableLightbox'],
 					'desc' => __('Enable Lighbox on Media','rtmedia')
 				),
-				'group' => "10"
+				'group' => "20"
 			),
 			'general_perPageMedia' => array(
 				'title' => __('Number of Media Per Page','rtmedia'),
@@ -234,7 +234,7 @@ class RTMediaFormHandler {
 					'class' => array('rtmedia-setting-text-box'),
 					'desc' => __('Number of media to view in page','rtmedia')
 				),
-				'group' => "10"
+				'group' => "20"
 			),
 			'general_showAdminMenu' => array(
 				'title' => __('Admin Bar Menu','rtmedia'),
@@ -244,12 +244,59 @@ class RTMediaFormHandler {
 					'value' => $options['general_showAdminMenu'],
 					'desc' => __('Enable menu in WordPress admin bar','rtmedia')
 				),
-				'group' => "10"
+				'group' => "20"
 			),//
 		);
 
 		return $render;
 	}
+
+	public static function general_content() {
+		global $rtmedia;
+//		$options = self::extract_settings('general', $rtmedia->options);
+		$options = $rtmedia->options;
+		$render_options = self::general_render_options($options);
+//		$render_options = apply_filters('rtmedia_general_content_single_view_add_itmes',$render_options, $options);
+                $render_options = apply_filters("rtmedia_general_content_add_itmes",$render_options, $options);
+		$general_group = array();
+		$general_group[10] = "Displaying Media";
+		$general_group[20] = "Miscellaneous";
+//		$general_group = apply_filters("rtmedia_general_content_groups", $general_group);
+		ksort($general_group);
+		$html = '';
+		foreach($general_group as $key => $value) {
+		?>
+		    <div class="postbox metabox-holder">
+			<h3 class="hndle"><span><?php echo $value; ?></span></h3>
+		<?php
+		    foreach ($render_options as $tab => $option) {
+
+			if(!isset($option['group'])) {
+			    $option['group'] = "20";
+			}
+
+			if($option['group'] != $key) {
+			    continue;
+			}
+		?>
+			<div class="row section">
+			    <div class="columns large-9">
+				<?php echo $option['title']; ?>
+				<span data-tooltip class="has-tip" title="<?php echo (isset($option['args']['desc'])) ? $option['args']['desc'] : "NA"; ?>"><i class="rtmicon-info-circle"></i></span>
+			    </div>
+				<div class="columns large-3">
+					<?php call_user_func($option['callback'], $option['args']); ?>
+				</div>
+			</div>
+		    <?php
+		    }
+		    ?>
+			</div>
+		    <?php
+		}
+
+	}
+
 	static function render_wordpress_content($options) {
 
 		$render = array(
@@ -260,7 +307,7 @@ class RTMediaFormHandler {
                                         'key' => 'general_videothumbs',
                                         'value' => $options['general_videothumbs'],
 					'class' => array('rtmedia-setting-text-box'),
-					'desc' => __('NUmber video thumbnails to be generated from encoding service','rtmedia')
+					'desc' => __('Number of video thumbnails to be generated from encoding service','rtmedia')
                                 )
 
                         ),
@@ -283,56 +330,11 @@ class RTMediaFormHandler {
 //		$options = self::extract_settings('general', $rtmedia->options);
 		$options = $rtmedia->options;
 		$render_options = self::render_wordpress_content($options);
-                $render_options = apply_filters("rtmedia_general_content_add_itmes",$render_options, $options);
+                $render_options = apply_filters("rtmedia_wordpress_content_add_itmes",$render_options, $options);
 		$general_group = array();
 //		$general_group[10] = "UI";
 		$general_group[90] = "Miscellaneous";
-		$general_group = apply_filters("rtmedia_general_content_groups", $general_group);
-		ksort($general_group);
-		$html = '';
-		foreach($general_group as $key => $value) {
-		?>
-		    <div class="postbox metabox-holder">
-			<h3 class="hndle"><span><?php echo $value; ?></span></h3>
-		<?php
-		    foreach ($render_options as $tab => $option) {
-
-			if(!isset($option['group'])) {
-			    $option['group'] = "90";
-			}
-
-			if($option['group'] != $key) {
-			    continue;
-			}
-		?>
-			<div class="row section">
-			    <div class="columns large-6">
-				<?php echo $option['title']; ?>
-				<span data-tooltip class="has-tip" title="<?php echo (isset($option['args']['desc'])) ? $option['args']['desc'] : "NA"; ?>"><i class="rtmicon-info-circle"></i></span>
-			    </div>
-				<div class="columns large-6">
-					<?php call_user_func($option['callback'], $option['args']); ?>
-				</div>
-			</div>
-		    <?php
-		    }
-		    ?>
-			</div>
-		    <?php
-		}
-
-	}
-
-	public static function general_content() {
-		global $rtmedia;
-//		$options = self::extract_settings('general', $rtmedia->options);
-		$options = $rtmedia->options;
-		$render_options = self::general_render_options($options);
-//                $render_options = apply_filters("rtmedia_general_content_add_itmes",$render_options, $options);
-		$general_group = array();
-		$general_group[10] = "UI";
-//		$general_group[90] = "Miscellaneous";
-//		$general_group = apply_filters("rtmedia_general_content_groups", $general_group);
+		$general_group = apply_filters("rtmedia_wordpress_content_groups", $general_group);
 		ksort($general_group);
 		$html = '';
 		foreach($general_group as $key => $value) {
@@ -415,9 +417,9 @@ class RTMediaFormHandler {
 			<div class="row rt-header">
 			    <?php do_action("rtmedia_type_settings_before_heading"); ?>
 				<h4 class="columns large-3"><?php _e("Media Type","rtmedia") ?></h4>
-				<h4 class="columns large-3 rtm-show-tooltip" title="<?php _e("Allows you to upload a particular media type on your post.","rtmedia"); ?>"><abbr><?php _e("Allow Upload","rtmedia"); ?></abbr></h4>
-				<h4 class="columns large-3 rtm-show-tooltip" title="<?php _e("Put a specific media as a featured content on the post.","rtmedia"); ?>"><abbr><?php _e("Set Featured","rtmedia"); ?></abbr></h4>
-				<h4 class="columns large-3 rtm-show-tooltip" title="<?php _e("File extensions that can be uploaded on the website.","rtmedia"); ?>"><abbr><?php _e("File Extensions","rtmedia"); ?></abbr></h4>
+				<h4 data-tooltip class="columns large-3 has-tip" title="<?php _e("Allows you to upload a particular media type on your post.","rtmedia"); ?>"><abbr><?php _e("Allow Upload","rtmedia"); ?></abbr></h4>
+				<h4 data-tooltip class="columns large-3 has-tip" title="<?php _e("Put a specific media as a featured content on the post.","rtmedia"); ?>"><abbr><?php _e("Set Featured","rtmedia"); ?></abbr></h4>
+				<h4 data-tooltip class="columns large-3 has-tip" title="<?php _e("File extensions that can be uploaded on the website.","rtmedia"); ?>"><abbr><?php _e("File Extensions","rtmedia"); ?></abbr></h4>
 				<?php do_action("rtmedia_type_settings_after_heading"); ?>
 			</div>
 
@@ -550,6 +552,7 @@ class RTMediaFormHandler {
                     <?php } else { ?>
                     <div class="columns large-5">
                         <strong class="<?php echo $option['args']['key'];?>"><?php echo $option['title']; ?></strong>
+			<span data-tooltip class="has-tip" title="<?php echo (isset($option['args']['desc'])) ? $option['args']['desc'] : "NA"; ?>"><i class="rtmicon-info-circle"></i></span>
                     </div>
                     <div class="columns large-7">
                         <?php call_user_func($option['callback'], $option['args']); ?>
@@ -571,7 +574,8 @@ class RTMediaFormHandler {
 				'args' => array(
 					'id' => 'rtmedia-disable-styles',
 					'key' => 'styles_enabled',
-					'value' => $options['styles_enabled']
+					'value' => $options['styles_enabled'],
+					'desc' => __('Load default rtMedia styles. You need to write your own style for rtMedia if you disable it.','rtmedia')
                                 )
                         ),
                         'custom_styles' => array(
@@ -580,7 +584,8 @@ class RTMediaFormHandler {
 				'args' => array(
 					'id' => 'rtmedia-custom-css',
 					'key' => 'styles_custom',
-					'value' => stripcslashes( $options['styles_custom'] )
+					'value' => stripcslashes( $options['styles_custom'] ),
+					'desc' => __('Custom rtMedia CSS container','rtmedia')
                                 )
                         )
                 );
@@ -599,7 +604,8 @@ class RTMediaFormHandler {
 				'args' => array(
 					'id' => 'rtmedia-privacy-enable',
 					'key' => 'privacy_enabled',
-					'value' => $options['privacy_enabled']
+					'value' => $options['privacy_enabled'],
+					'desc' => __('Enable privacy in rtMedia','rtmedia')
 				)
 			),
 			'default' => array(
@@ -608,7 +614,8 @@ class RTMediaFormHandler {
 				'args' => array(
 					'key' => 'privacy_default',
 					'radios' => $rtmedia->privacy_settings['levels'],
-					'default' => $options['privacy_default']
+					'default' => $options['privacy_default'],
+					'desc' => __('Set default privacy for media','rtmedia')
 				),
 			),
 			'user_override' => array(
@@ -616,7 +623,8 @@ class RTMediaFormHandler {
 				'callback' => array("RTMediaFormHandler", "checkbox"),
 				'args' => array(
 					'key' => 'privacy_userOverride',
-					'value' => $options['privacy_userOverride']
+					'value' => $options['privacy_userOverride'],
+					'desc' => __('Allow users to select privacy for media','rtmedia')
 				)
 			)
 		);
@@ -634,7 +642,12 @@ class RTMediaFormHandler {
 		echo '<div class="large-12">';
 			foreach ($render_data as $key=>$privacy) {
 				echo '<div class="row section">';
-					echo '<div class="columns large-6">' . $privacy['title'] . '</div>';
+				?>
+					<div class="columns large-6">
+					    <?php echo $privacy['title']  ?>
+					    <span data-tooltip class="has-tip" title="<?php echo (isset($privacy['args']['desc'])) ? $privacy['args']['desc'] : "NA"; ?>"><i class="rtmicon-info-circle"></i></span>
+					</div>
+				<?php
 					echo '<div class="columns large-6">';
 						if($key != "enable")
 							call_user_func($privacy['callback'], array_merge_recursive($privacy['args'], array('class' => array("privacy-driven-disable"))));
