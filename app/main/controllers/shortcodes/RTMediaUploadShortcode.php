@@ -17,9 +17,7 @@ class RTMediaUploadShortcode {
      *
      */
     public function __construct () {
-
-
-
+        
         add_shortcode ( 'rtmedia_uploader', array( 'RTMediaUploadShortcode', 'pre_render' ) );
         $method_name = strtolower ( str_replace ( 'RTMedia', '', __CLASS__ ) );
 
@@ -34,8 +32,18 @@ class RTMediaUploadShortcode {
      * @return type
      */
     static function display_allowed () {
-
-        $flag = ( ! (is_home () || is_post_type_archive () || is_author ())) && is_user_logged_in () && (is_rtmedia_upload_music_enabled () || is_rtmedia_upload_photo_enabled () || is_rtmedia_upload_video_enabled ());
+        global $rtmedia_query;
+        
+      
+        
+$flag = ( ! (  is_home () || is_post_type_archive () || is_author ()))
+        && is_user_logged_in () 
+        && (is_rtmedia_upload_music_enabled () || is_rtmedia_upload_photo_enabled () || is_rtmedia_upload_video_enabled ())
+         //added condition to disable upload when media is disabled in profile/group but user visits media tab
+        && ( ( isset($rtmedia_query->is_upload_shortcode) && $rtmedia_query->is_upload_shortcode == true ) 
+                || ( is_rtmedia_bp_profile() && is_rtmedia_profile_media_enable() ) 
+                ||  (is_rtmedia_bp_group() && is_rtmedia_group_media_enable()) );
+               
         $flag = apply_filters ( 'before_rtmedia_uploader_display', $flag );
         return $flag;
     }

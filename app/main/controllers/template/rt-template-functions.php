@@ -558,7 +558,7 @@ function rtmedia_author_actions () {
 
         $options_start = '<span class="click-nav" id="rtm-media-options-list">
                 <span class="no-js">
-                <button class="clicker rtmedia-action-buttons button"><i class="rtmicon-cog"></i>'. __('Options', 'rtmedia') . '</button>
+                <button class="clicker rtmedia-media-options rtmedia-action-buttons button"><i class="rtmicon-cog"></i>'. __('Options', 'rtmedia') . '</button>
                 <ul class="rtm-options">';
         foreach ( $options as $action ) {
             if($action != ""){
@@ -1033,6 +1033,34 @@ function rtmedia_image_editor_content ( $type = 'photo') {
     }
 
 }
+// provide dropdown to user to change the album of the media in media edit screen.
+add_action('rtmedia_add_edit_fields' , 'rtmedia_add_album_selection_field', 14, 1);
+function rtmedia_add_album_selection_field( $media_type ){
+
+    if( is_rtmedia_album_enable () &&  isset( $media_type ) && $media_type != 'album' && $media_type != 'playlist' ) {
+        
+        global $rtmedia_query;
+        $album_list = '';
+        $curr_album_id = '';
+        if( isset (  $rtmedia_query->media[0] ) && isset (  $rtmedia_query->media[0]->album_id ) && $rtmedia_query->media[0]->album_id != '' ) {
+            $curr_album_id = $rtmedia_query->media[0]->album_id;
+        }
+        ?>
+    <div class="rtmedia-edit-change-album">
+        <label for=""><?php _e('Album', 'rtmedia');?> : </label>
+        <?php if( isset( $rtmedia_query->query['context']) && $rtmedia_query->query['context'] == 'group' ){
+            //show group album list.
+            $album_list = rtmedia_group_album_list ( $selected_album_id = $curr_album_id );
+            
+        }else {
+            //show profile album list
+           $album_list = rtmedia_user_album_list ( $get_all = false, $selected_album_id = $curr_album_id );
+        } 
+        echo '<select name="album_id" class="rtmedia-merge-user-album-list">' . $album_list . '</select>';
+        ?>
+    </div>
+    <?php }
+}
 
 function update_video_poster($html,$media,$activity=false){
     if ( $media->media_type == 'video' ) {
@@ -1156,7 +1184,7 @@ function rtmedia_global_albums () {
     return RTMediaAlbum::get_globals (); //get_site_option('rtmedia-global-albums');
 }
 
-function rtmedia_global_album_list () {
+function rtmedia_global_album_list ( $selected_album_id = false) {
     global $rtmedia_query;
     $model = new RTMediaModel();
     $global_albums = rtmedia_global_albums ();
@@ -1174,8 +1202,14 @@ function rtmedia_global_album_list () {
 
     if ( $album_objects ) {
         foreach ( $album_objects as $album ) {
+            //if selected_album_id is provided, keep that album_id selected by default
+            $selected = '';
+            if ( $selected_album_id != false &&  $selected_album_id != '' && $selected_album_id == $album->id ) {
+                $selected = 'selected="selected"';
+            }
+            
             if ( (isset ( $rtmedia_query->media_query[ 'album_id' ] ) && ($album_objects[ 0 ]->id != $rtmedia_query->media_query[ 'album_id' ])) || ! isset ( $rtmedia_query->media_query[ 'album_id' ] ) )
-                $option .= '<option value="' . $album->id . '">' . $album->media_title . '</option>';
+                $option .= '<option value="' . $album->id . '" ' . $selected . '>' . $album->media_title . '</option>';
         }
     }
 
@@ -1183,10 +1217,10 @@ function rtmedia_global_album_list () {
     return $option;
 }
 
-function rtmedia_user_album_list ( $get_all = false ) {
+function rtmedia_user_album_list ( $get_all = false, $selected_album_id = false ) {
     global $rtmedia_query;
     $model = new RTMediaModel();
-    $global_option = rtmedia_global_album_list ();
+    $global_option = rtmedia_global_album_list ( $selected_album_id );
     $global_albums = rtmedia_global_albums ();
 
     $global_album = rtmedia_get_site_option ( 'rtmedia-global-albums' );
@@ -1198,15 +1232,24 @@ function rtmedia_user_album_list ( $get_all = false ) {
             if ( ! in_array ( $album->id, $global_albums ) && (( isset ( $rtmedia_query->media_query[ 'album_id' ] ) && (
                     $album->id != $rtmedia_query->media_query[ 'album_id' ] || $get_all )) || ! isset ( $rtmedia_query->media_query[ 'album_id' ] )
                     )
-            )
-                if($album->context == 'profile')
-                    $profile_option .= '<option value="' . $album->id . '">' . $album->media_title . '</option>';
+            ){
+                $selected = '';
+                if( $selected_album_id != false && $selected_album_id != '' && $album->id ==  $selected_album_id ){
+                    //if an album_id is specified to be shown as selected, select that album_id by default
+                    $selected = 'selected="selected"';
+                }
+                if($album->context == 'profile') {
+                    
+                    $profile_option .= '<option value="' . $album->id . '" ' . $selected . '>' . $album->media_title . '</option>';
+                }
 //                else
 //                    $option_group .= '<option value="' . $album->id . '">' . $album->media_title . '</option>';
                 //commented out group album section from album dropdown as user will be able to upload to profile albums from profile
                 // and group albums from group
 
         }
+        
+      }
     }
     $option = "$global_option";
     if($profile_option != "")
@@ -1219,11 +1262,11 @@ function rtmedia_user_album_list ( $get_all = false ) {
         return false;
 }
 
-function rtmedia_group_album_list () {
+function rtmedia_group_album_list ( $selected_album_id = false ) { //by default, first album in list will be selected
     global $rtmedia_query;
     $model = new RTMediaModel();
 
-    $global_option = rtmedia_global_album_list ();
+    $global_option = rtmedia_global_album_list ( $selected_album_id );
     $global_albums = rtmedia_global_albums ();
 
     $album_objects = $model->get_media (
@@ -1236,8 +1279,13 @@ function rtmedia_group_album_list () {
     $option_group = "";
     if ( $album_objects ) {
         foreach ( $album_objects as $album ) {
+            $selected = '';
+            if ( $selected_album_id != false &&  $selected_album_id != '' && $selected_album_id == $album->id ) {
+                $selected = 'selected="selected"';
+            }
+
             if ( ! in_array ( $album->id, $global_albums ) && (( isset ( $rtmedia_query->media_query[ 'album_id' ] ) && ($album->id != $rtmedia_query->media_query[ 'album_id' ])) || ! isset ( $rtmedia_query->media_query[ 'album_id' ] ) ) )
-        $option_group .= '<option value="' . $album->id . '">' . $album->media_title . '</option>';
+        $option_group .= '<option value="' . $album->id . '" ' . $selected . '>' . $album->media_title . '</option>';
 
         }
     }
@@ -1359,7 +1407,7 @@ function rtmedia_create_album_modal(){
             $album_list = rtmedia_group_album_list();
         else
             $album_list = rtmedia_user_album_list();
-        if ( $album_list ) {
+        if ( $album_list && isset($rtmedia_query->media_query[ 'album_id' ]) &&  $rtmedia_query->media_query[ 'album_id' ] != '') {
 
      ?>
         <div class="rtmedia-merge-container rtmedia-popup mfp-hide" id="rtmedia-merge">
@@ -1406,7 +1454,7 @@ function rtmedia_album_edit ($options) {
     ?>
 
         <?php
-    if ( isset ( $rtmedia_query->media_query ) && ! in_array ( $rtmedia_query->media_query[ 'album_id' ], rtmedia_get_site_option ( 'rtmedia-global-albums' ) ) ) {
+    if ( isset ( $rtmedia_query->media_query ) && isset( $rtmedia_query->media_query[ 'album_id' ] ) && ! in_array ( $rtmedia_query->media_query[ 'album_id' ], rtmedia_get_site_option ( 'rtmedia-global-albums' ) ) ) {
         //if ( isset ( $rtmedia_query->media_query[ 'media_author' ] ) && get_current_user_id () == $rtmedia_query->media_query[ 'media_author' ] ) {
     if ( rtmedia_is_album_editable() || is_rt_admin() ) {
         $options[] = "<a href='edit/' class='rtmedia-edit' title='" . __( 'Edit Album', 'rtmedia' ) . "' ><i class='rtmicon-edit'></i>" . __('Edit Album') . "</a>";
@@ -1513,6 +1561,33 @@ function is_rtmedia_group_media_enable () {
         return true;
     }
     return false;
+}
+
+// check if media is enabled in profile
+function is_rtmedia_profile_media_enable () {
+    global $rtmedia;
+    if ( isset ( $rtmedia->options[ "buddypress_enableOnProfile" ] ) && $rtmedia->options[ "buddypress_enableOnProfile" ] != "0" ) {
+        return true;
+    }
+    return false;
+}
+
+//function to check if user is on bp group
+function is_rtmedia_bp_group(){
+     global $rtmedia_query;
+     if( isset( $rtmedia_query->query['context'] ) && $rtmedia_query->query['context'] == 'group'){
+         return true;
+     }
+     return false;
+}
+
+//function to check if user is on bp group
+function is_rtmedia_bp_profile(){
+     global $rtmedia_query;
+     if( isset( $rtmedia_query->query['context'] ) && $rtmedia_query->query['context'] == 'profile'){
+         return true;
+     }
+     return false;
 }
 
 function can_user_upload_in_group () {
@@ -1992,7 +2067,7 @@ function rtmedia_custom_css() {
     global $rtmedia;
     $options = $rtmedia->options;
     if(isset($options['styles_custom']) && $options['styles_custom'] != ""){
-        echo "<style type='text/css'> " . $options['styles_custom'] . " </style>";
+        echo "<style type='text/css'> " . stripslashes( $options['styles_custom'] ) . " </style>";
     }
 }
 
@@ -2059,4 +2134,19 @@ function update_group_media_privacy( $group_id ) {
         }
 
     }
+}
+
+/* check if rtMedia page */
+function is_rtmedia_page() {
+    if( ! defined ( 'RTMEDIA_MEDIA_SLUG' ) ) {
+        return false;
+    }
+    
+    global $rtmedia_interaction;
+
+    if( ! isset( $rtmedia_interaction ) ) {
+        return false;
+    }
+
+    return $rtmedia_interaction->routes[RTMEDIA_MEDIA_SLUG]->is_template();
 }

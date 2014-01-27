@@ -19,32 +19,35 @@ if ( class_exists ( 'BP_Group_Extension' ) ) :// Recommended, to prevent problem
 
             if ( ! bp_is_group_creation_step ( $this->slug ) )
                 return false;
+            // HOOK to add PER GROUP MEDIA enable/diable option in rtMedia PRO
+            do_action('rtmedia_group_media_control_create');
             
             global $rtmedia;
-            $options = $rtmedia->options;
-            if( isset($options['general_enableAlbums']) && $options['general_enableAlbums'] == 1){  // album is enabled ?>
-                
-                <h4><?php _e( 'Album Creation Control', 'rtmedia' ); ?></h4>
-                <p><?php _e( 'Who can create Albums in this group?', 'rtmedia' ); ?></p>
-                <div class="radio">
-                    <label>
-                        <input name="rt_album_creation_control" type="radio" id="rt_media_group_level_all" checked="checked" value="all">
-                        <strong><?php _e( 'All Group Members', 'rtmedia' ); ?></strong>
-                    </label>
-                    <label>
-                        <input name="rt_album_creation_control" type="radio" id="rt_media_group_level_moderators" value="moderators">
-                        <strong><?php _e( 'Group Admins and Mods only', 'rtmedia' ); ?></strong>
-                    </label>
-                    <label>
-                        <input name="rt_album_creation_control" type="radio" id="rt_media_group_level_admin" value="admin">
-                        <strong><?php _e( 'Group Admin only', 'rtmedia' ); ?></strong>
-                    </label>
-                </div>
-                
-            <?php } ?>
-            
-            <?php do_action('rtmedia_playlist_creation_settings_create_group'); ?>
+            $options = $rtmedia->options; ?>
+            <div class='rtmedia-group-media-settings'>
+            <?php if( isset($options['general_enableAlbums']) && $options['general_enableAlbums'] == 1){  // album is enabled ?>
 
+                    <h4><?php _e( 'Album Creation Control', 'rtmedia' ); ?></h4>
+                    <p><?php _e( 'Who can create Albums in this group?', 'rtmedia' ); ?></p>
+                    <div class="radio">
+                        <label>
+                            <input name="rt_album_creation_control" type="radio" id="rt_media_group_level_all" checked="checked" value="all">
+                            <strong><?php _e( 'All Group Members', 'rtmedia' ); ?></strong>
+                        </label>
+                        <label>
+                            <input name="rt_album_creation_control" type="radio" id="rt_media_group_level_moderators" value="moderators">
+                            <strong><?php _e( 'Group Admins and Mods only', 'rtmedia' ); ?></strong>
+                        </label>
+                        <label>
+                            <input name="rt_album_creation_control" type="radio" id="rt_media_group_level_admin" value="admin">
+                            <strong><?php _e( 'Group Admin only', 'rtmedia' ); ?></strong>
+                        </label>
+                    </div>
+
+                <?php } ?>
+
+                <?php do_action('rtmedia_playlist_creation_settings_create_group'); ?>
+            </div>
             <?php
             wp_nonce_field ( 'groups_create_save_' . $this->slug );
         }
@@ -77,30 +80,36 @@ if ( class_exists ( 'BP_Group_Extension' ) ) :// Recommended, to prevent problem
                 $current_level = "all";
             }
             
-            global $rtmedia;
-            $options = $rtmedia->options;
-            if( isset($options['general_enableAlbums']) && $options['general_enableAlbums'] == 1){ // album is enabled ?>
-                
-                <h4><?php _e( 'Album Creation Control', 'rtmedia' ); ?></h4>
-                <p><?php _e( 'Who can create Albums in this group?', 'rtmedia' ); ?></p>
-                <div class="radio">
-                    <label>
-                        <input name="rt_album_creation_control" type="radio" id="rt_media_group_level_moderators"  value="all"<?php checked ( $current_level, 'all', true ) ?>>
-                        <strong><?php _e( 'All Group Members', 'rtmedia' ); ?></strong>
-                    </label>
-                    <label>
-                        <input name="rt_album_creation_control" type="radio" id="rt_media_group_level_moderators" value="moderators" <?php checked ( $current_level, 'moderators', true ) ?>>
-                        <strong><?php _e( 'Group Admins and Mods only', 'rtmedia' ); ?></strong>
-                    </label>
-                    <label>
-                        <input name="rt_album_creation_control" type="radio" id="rt_media_group_level_admin" value="admin" <?php checked ( $current_level, 'admin', true ) ?>>
-                        <strong><?php _e ( 'Group Admin only', 'rtmedia' ); ?></strong>
-                    </label>
-                </div>
-                <hr>
-            <?php } ?>
+            // HOOK to add PER GROUP MEDIA enable/diable option in rtMedia PRO
+            do_action('rtmedia_group_media_control_edit'); ?>
+
+            <div class='rtmedia-group-media-settings'>
             
-            <?php do_action('rtmedia_playlist_creation_settings_groups_edit'); ?>
+                <?php global $rtmedia;
+                $options = $rtmedia->options;
+                if( isset($options['general_enableAlbums']) && $options['general_enableAlbums'] == 1){ // album is enabled ?>
+
+                    <h4><?php _e( 'Album Creation Control', 'rtmedia' ); ?></h4>
+                    <p><?php _e( 'Who can create Albums in this group?', 'rtmedia' ); ?></p>
+                    <div class="radio">
+                        <label>
+                            <input name="rt_album_creation_control" type="radio" id="rt_media_group_level_moderators"  value="all"<?php checked ( $current_level, 'all', true ) ?>>
+                            <strong><?php _e( 'All Group Members', 'rtmedia' ); ?></strong>
+                        </label>
+                        <label>
+                            <input name="rt_album_creation_control" type="radio" id="rt_media_group_level_moderators" value="moderators" <?php checked ( $current_level, 'moderators', true ) ?>>
+                            <strong><?php _e( 'Group Admins and Mods only', 'rtmedia' ); ?></strong>
+                        </label>
+                        <label>
+                            <input name="rt_album_creation_control" type="radio" id="rt_media_group_level_admin" value="admin" <?php checked ( $current_level, 'admin', true ) ?>>
+                            <strong><?php _e ( 'Group Admin only', 'rtmedia' ); ?></strong>
+                        </label>
+                    </div>
+                    <hr>
+                <?php } ?>
+
+                <?php do_action('rtmedia_playlist_creation_settings_groups_edit'); ?>
+            </div>
             <input type="submit" name="save" value="<?php _e( 'Save Changes', 'rtmedia' ); ?>" />
             <?php
             wp_nonce_field ( 'groups_edit_save_' . $this->slug );

@@ -45,17 +45,23 @@ class RTMediaNav {
         }
         if ( bp_is_group () && $rtmedia->options[ "buddypress_enableOnGroup" ] != 0 ) {
             global $bp;
-            $group_counts = $this->actual_counts ( $bp->groups->current_group->id, "group" );
-            $bp->bp_options_nav[ bp_get_current_group_slug () ][ 'media' ] = array(
-                'name' => RTMEDIA_MEDIA_LABEL . '<span>' . $group_counts[ 'total' ][ 'all' ] . '</span>',
-                'link' => trailingslashit ( bp_get_root_domain () . '/' . bp_get_groups_root_slug () . '/' . bp_get_current_group_slug () . '/' ) . RTMEDIA_MEDIA_SLUG,
-                'slug' => RTMEDIA_MEDIA_SLUG,
-                'user_has_access' => true,
-                'css_id' => 'rtmedia-media-nav',
-                'position' => 99,
-                'screen_function' => array( $this, 'media_screen' ),
-                'default_subnav_slug' => 'all'
-            );
+            $media_enabled = true;
+            //filter for rtMedia PRO for PER GROUP MEDIA enable/disable functionality
+            $media_enabled = apply_filters('rtmedia_media_enabled_for_current_group', $media_enabled);
+            
+            if( $media_enabled ){
+                $group_counts = $this->actual_counts ( $bp->groups->current_group->id, "group" );
+                $bp->bp_options_nav[ bp_get_current_group_slug () ][ 'media' ] = array(
+                    'name' => RTMEDIA_MEDIA_LABEL . '<span>' . $group_counts[ 'total' ][ 'all' ] . '</span>',
+                    'link' => trailingslashit ( bp_get_root_domain () . '/' . bp_get_groups_root_slug () . '/' . bp_get_current_group_slug () . '/' ) . RTMEDIA_MEDIA_SLUG,
+                    'slug' => RTMEDIA_MEDIA_SLUG,
+                    'user_has_access' => true,
+                    'css_id' => 'rtmedia-media-nav',
+                    'position' => 99,
+                    'screen_function' => array( $this, 'media_screen' ),
+                    'default_subnav_slug' => 'all'
+                );
+            }
         }
     }
 
