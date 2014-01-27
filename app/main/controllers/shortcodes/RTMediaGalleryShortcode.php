@@ -56,7 +56,7 @@ class RTMediaGalleryShortcode {
 
         $params = array(
             'url' => $url,
-            'runtimes' => 'html5,silverlight,flash,html4',
+            'runtimes' => 'html5,flash,html4',
             'browse_button' => 'rtMedia-upload-button',
             'container' => 'rtmedia-upload-container',
             'drop_element' => 'drag-drop-area',
