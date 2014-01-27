@@ -416,10 +416,10 @@ class RTMediaFormHandler {
 		<div class="rt-table large-12">
 			<div class="row rt-header">
 			    <?php do_action("rtmedia_type_settings_before_heading"); ?>
-				<h4 class="columns large-3"><?php _e("Media Type","rtmedia") ?></h4>
-				<h4 data-tooltip class="columns large-3 has-tip" title="<?php _e("Allows you to upload a particular media type on your post.","rtmedia"); ?>"><abbr><?php _e("Allow Upload","rtmedia"); ?></abbr></h4>
-				<h4 data-tooltip class="columns large-3 has-tip" title="<?php _e("Put a specific media as a featured content on the post.","rtmedia"); ?>"><abbr><?php _e("Set Featured","rtmedia"); ?></abbr></h4>
-				<h4 data-tooltip class="columns large-3 has-tip" title="<?php _e("File extensions that can be uploaded on the website.","rtmedia"); ?>"><abbr><?php _e("File Extensions","rtmedia"); ?></abbr></h4>
+				<div class="columns large-4"><h4><?php _e("Media Type","rtmedia") ?></h4></div>
+				<div class="columns large-4"><h4 data-tooltip class="has-tip" title="<?php _e("Allows you to upload a particular media type on your post.","rtmedia"); ?>"><abbr><?php _e("Allow Upload","rtmedia"); ?></abbr></h4></div>
+				<div class="columns large-4"><h4 data-tooltip class="has-tip" title="<?php _e("Put a specific media as a featured content on the post.","rtmedia"); ?>"><abbr><?php _e("Set Featured","rtmedia"); ?></abbr></h4></div>
+
 				<?php do_action("rtmedia_type_settings_after_heading"); ?>
 			</div>
 
@@ -433,27 +433,32 @@ class RTMediaFormHandler {
 			else {
 			    echo '<div class="row rt-even">';
 			}
-			    do_action("rtmedia_type_settings_before_body");
-				echo '<div class="columns large-3">' . $section['name'] . '</div>';
-				$args = array('key' => 'allowedTypes_'.$key.'_enabled', 'value' => $section['enabled']);
-				echo '<div class="columns large-3">';
-                                $allow_upload_checkbox = self::checkbox($args, $echo = false );
-                                $allow_upload_checkbox = apply_filters('rtmedia_filter_allow_upload_checkbox', $allow_upload_checkbox , $key, $args);
-                                echo $allow_upload_checkbox;
-				echo '</div>';
-				$args = array('key' => 'allowedTypes_'.$key.'_featured', 'value' => $section['featured']);
-				echo '<div class="columns large-3">';
-                                $featured_checkbox = self::checkbox($args , $echo = false );
-                                $featured_checkbox = apply_filters('rtmedia_filter_featured_checkbox', $featured_checkbox, $key);
-				echo $featured_checkbox;
-				echo ' </div>';
-                                 if(!isset($section['extn']) || !is_array($section['extn'])) {
-				    $section['extn'] = array();
-				}
-                                $extensions = implode(', ', $section['extn']);
-                                $extensions = apply_filters('rtmedia_type_settings_filter_extension', $extensions , $key) ;
-				echo '<div class="columns large-3">' . $extensions . '</div>';
-			    do_action("rtmedia_type_settings_after_body",$key, $section);
+			    echo '<div class="row">';
+				do_action("rtmedia_type_settings_before_body");
+				    echo '<div class="columns large-4">' . $section['name'] . '</div>';
+				    $args = array('key' => 'allowedTypes_'.$key.'_enabled', 'value' => $section['enabled']);
+				    echo '<div class="columns large-4">';
+				    $allow_upload_checkbox = self::checkbox($args, $echo = false );
+				    $allow_upload_checkbox = apply_filters('rtmedia_filter_allow_upload_checkbox', $allow_upload_checkbox , $key, $args);
+				    echo $allow_upload_checkbox;
+				    echo '</div>';
+				    $args = array('key' => 'allowedTypes_'.$key.'_featured', 'value' => $section['featured']);
+				    echo '<div class="columns large-4">';
+				    $featured_checkbox = self::checkbox($args , $echo = false );
+				    $featured_checkbox = apply_filters('rtmedia_filter_featured_checkbox', $featured_checkbox, $key);
+				    echo $featured_checkbox;
+				    echo ' </div>';
+				     if(!isset($section['extn']) || !is_array($section['extn'])) {
+					$section['extn'] = array();
+				    }
+				    $extensions = implode(', ', $section['extn']);
+				    $extensions = apply_filters('rtmedia_type_settings_filter_extension', $extensions , $key) ;
+				do_action("rtmedia_type_settings_after_body",$key, $section);
+			    echo '</div>';
+			    echo '<div class="row">';
+				echo '<label class="columns large-3"><strong>'.__("File Extensions","rtmedia").':</strong></label>';
+				echo '<label class="columns large-9">' . $extensions . '</label>';
+			    echo '</div>';
 			echo '</div>';
                     } else {
                         echo "<input type='hidden' value='1' name='rtmedia-options[allowedTypes_" . $key . "_enabled]'>";
