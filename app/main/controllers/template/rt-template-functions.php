@@ -1104,7 +1104,7 @@ function rtmedia_get_cover_art_src($id) {
     $cover_art = $media[0]->cover_art;
     if($cover_art != "") {
         if(is_numeric($cover_art)) {
-            $thumbnail_info = wp_get_attachment_image_src($thumbnail_id, 'full');
+            $thumbnail_info = wp_get_attachment_image_src($cover_art, 'full');
             return $thumbnail_info[0];
         }
         else
