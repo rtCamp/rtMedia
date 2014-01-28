@@ -642,10 +642,10 @@ class RTMediaFormHandler {
                             <div><?php _e("If you want to add some custom CSS code to the plugin and don't want to modify any files, then it's a good place to enter your code at this field.");?></div>
                         </div>
                     <?php } else { ?>
-                    <div class="columns large-5">
+                    <div class="columns large-6">
                         <strong class="<?php echo $option['args']['key'];?>"><?php echo $option['title']; ?></strong>
                     </div>
-                    <div class="columns large-7">
+                    <div class="columns large-6">
                         <?php call_user_func($option['callback'], $option['args']); ?>
 			<span data-tooltip class="has-tip" title="<?php echo (isset($option['args']['desc'])) ? $option['args']['desc'] : "NA"; ?>"><i class="rtmicon-info-circle"></i></span>
                     </div>
@@ -818,10 +818,10 @@ class RTMediaFormHandler {
 		echo '<div class="large-12">';
 		foreach ($render_data as $option) { ?>
 			<div class="row section">
-				<div class="columns large-8">
+				<div class="columns large-9">
 				    <?php echo $option['title']; ?>
 				</div>
-				<div class="columns large-4">
+				<div class="columns large-3">
 				    <?php call_user_func($option['callback'], $option['args']); ?>
 				    <span data-tooltip class="has-tip" title="<?php echo (isset($option['args']['desc'])) ? $option['args']['desc'] : "NA"; ?>"><i class="rtmicon-info-circle"></i></span>
 				</div>
@@ -850,10 +850,10 @@ class RTMediaFormHandler {
 		    foreach ($render_options as $tab => $option) {
 		    ?>
 			    <div class="row section">
-				    <div class="columns large-8">
+				    <div class="columns large-9">
 					<?php echo $option['title']; ?>
 				    </div>
-				    <div class="columns large-4">
+				    <div class="columns large-3">
 					<?php call_user_func($option['callback'], $option['args']); ?>
 					<span data-tooltip class="has-tip" title="<?php echo (isset($option['args']['desc'])) ? $option['args']['desc'] : "NA"; ?>"><i class="rtmicon-info-circle"></i></span>
 				    </div>
