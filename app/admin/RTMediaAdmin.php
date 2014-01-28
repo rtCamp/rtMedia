@@ -748,7 +748,7 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
                                     <div class="clearfix">&nbsp;</div>
                                     <div class="row">
                                         <input type="hidden" name="rtmedia-options-save" value="true">
-                                        <input type="submit" id="rtmedia-settings-submit" class="rtmedia-settings-submit button" value="<?php _e( 'Save Settings', 'rtmedia' ); ?>">
+                                        <input type="submit" id="rtmedia-settings-submit" class="rtmedia-settings-submit button button-primary button-big" value="<?php _e( 'Save Settings', 'rtmedia' ); ?>">
                                     </div>
                                 </div>
                             </form><?php } else {
