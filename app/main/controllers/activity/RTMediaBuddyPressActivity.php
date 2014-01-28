@@ -139,7 +139,7 @@ class RTMediaBuddyPressActivity {
         $url = trailingslashit ( $url );
         $params = array(
             'url' => (isset ( $url ) && (strpos ( $url, "/media/" ) !== false)) ? str_replace ( "/media/", "/upload/", $url ) : 'upload/',
-            'runtimes' => 'html5,silverlight,flash,html4',
+            'runtimes' => 'html5,flash,html4',
             'browse_button' => 'rtmedia-add-media-button-post-update',// browse button assigned to "Attach Files" Button.
             'container' => 'rtmedia-whts-new-upload-container',
             'drop_element' => 'whats-new-textarea',// drag-drop area assigned to activity update textarea
