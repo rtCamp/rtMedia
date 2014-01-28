@@ -216,7 +216,7 @@ class RTMediaFormHandler {
 				'group' => "10"
 			),
 			'general_enableLightbox' => array(
-				'title' => __('Use Lightbox to display media','rtmedia'),
+				'title' => __('Use lightbox to display media','rtmedia'),
 				'callback' => array('RTMediaFormHandler', 'checkbox'),
 				'args' => array(
 					'key' => 'general_enableLightbox',
@@ -226,7 +226,7 @@ class RTMediaFormHandler {
 				'group' => "15"
 			),
 			'general_perPageMedia' => array(
-				'title' => __('Number of Media Per Page','rtmedia'),
+				'title' => __('Number of media per page','rtmedia'),
 				'callback' => array('RTMediaFormHandler', 'number'),
 				'args' => array(
 					'key' => 'general_perPageMedia',
@@ -290,19 +290,8 @@ class RTMediaFormHandler {
 
 	static function render_general_content($options) {
 		$render = array(
-                        'general_videothumbs' => array(
-                                'title' => __('Number of Video Thumbnails','rtmedia'),
-                                'callback' => array('RTMediaFormHandler', 'number'),
-                                'args' => array(
-                                        'key' => 'general_videothumbs',
-                                        'value' => $options['general_videothumbs'],
-					'class' => array('rtmedia-setting-text-box'),
-					'desc' => __('Number of video thumbnails to be generated from encoding service','rtmedia'),
-					'min' => 1
-                                )
-                        ),
 			'general_AllowUserData' => array(
-				'title' => __('Allow User Data Tracking','rtmedia'),
+				'title' => __('Allow user data tracking','rtmedia'),
 				'callback' => array('RTMediaFormHandler', 'checkbox'),
 				'args' => array(
 					'key' => 'general_AllowUserData',
@@ -311,7 +300,7 @@ class RTMediaFormHandler {
 				)
 			),
 			'general_showAdminMenu' => array(
-				    'title' => __('Admin Bar Menu','rtmedia'),
+				    'title' => __('Admin bar menu','rtmedia'),
 				    'callback' => array('RTMediaFormHandler', 'checkbox'),
 				    'args' => array(
 					    'key' => 'general_showAdminMenu',
@@ -619,6 +608,32 @@ class RTMediaFormHandler {
 		}
 
 		echo '</div>';
+		$options = $rtmedia->options;
+		$render_video_thumb =array(
+                                'title' => __('Number of video thumbnails','rtmedia'),
+                                'callback' => array('RTMediaFormHandler', 'number'),
+                                'args' => array(
+                                        'key' => 'general_videothumbs',
+                                        'value' => $options['general_videothumbs'],
+					'class' => array('rtmedia-setting-text-box'),
+					'desc' => __('Number of video thumbnails to be generated from encoding service','rtmedia'),
+					'min' => 1
+                                )
+                        );
+		?>
+		<div class="postbox metabox-holder">
+		    <h3 class="hndle"><span>Encoding Settings</span></h3>
+		</div>
+		<div class="row section">
+		    <div class="columns large-6">
+			<?php echo $render_video_thumb['title']; ?>
+		    </div>
+		    <div class="columns large-6">
+			<?php call_user_func($render_video_thumb['callback'], $render_video_thumb['args']); ?>
+			<span data-tooltip class="has-tip" title="<?php echo (isset($render_video_thumb['args']['desc'])) ? $render_video_thumb['args']['desc'] : "NA"; ?>"><i class="rtmicon-info-circle"></i></span>
+		    </div>
+		</div>
+		<?php
 	}
 
         public static function custom_css_content() {
@@ -691,7 +706,7 @@ class RTMediaFormHandler {
 
 		$render = array(
 			'enable' => array(
-				'title' => __("Enable Privacy","rtmedia"),
+				'title' => __("Enable privacy","rtmedia"),
 				'callback' => array("RTMediaFormHandler", "checkbox"),
 				'args' => array(
 					'id' => 'rtmedia-privacy-enable',
@@ -701,7 +716,7 @@ class RTMediaFormHandler {
 				)
 			),
 			'default' => array(
-				'title' => __("Default Privacy","rtmedia"),
+				'title' => __("Default privacy","rtmedia"),
 				'callback' => array("RTMediaFormHandler","radio"),
 				'args' => array(
 					'key' => 'privacy_default',
@@ -711,7 +726,7 @@ class RTMediaFormHandler {
 				),
 			),
 			'user_override' => array(
-				'title' => __("User Override","rtmedia"),
+				'title' => __("User override","rtmedia"),
 				'callback' => array("RTMediaFormHandler", "checkbox"),
 				'args' => array(
 					'key' => 'privacy_userOverride',
@@ -762,7 +777,7 @@ class RTMediaFormHandler {
 
 		$render = array(
 			'rtmedia-enable-on-profile' => array(
-				'title' => __('Enable Media in Profile','rtmedia'),
+				'title' => __('Enable media in profile','rtmedia'),
 				'callback' => array('RTMediaFormHandler', 'checkbox'),
 				'args' => array(
 					'key' => 'buddypress_enableOnProfile',
@@ -771,7 +786,7 @@ class RTMediaFormHandler {
 				)
 			),
 			'rtmedia-enable-on-group' => array(
-				'title' => __('Enable Media in Group','rtmedia'),
+				'title' => __('Enable media in group','rtmedia'),
 				'callback' => array('RTMediaFormHandler', 'checkbox'),
 				'args' => array(
 					'key' => 'buddypress_enableOnGroup',

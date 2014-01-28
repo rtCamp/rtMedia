@@ -946,7 +946,7 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
                 'href' => '#rtmedia-sizes',
                 'icon' => 'rtmicon-expand',
                 'title' => __( 'rtMedia Sizes', 'rtmedia' ),
-                'name' => __( 'Sizes', 'rtmedia' ),
+                'name' => __( 'Image Sizes', 'rtmedia' ),
                 'callback' => array( 'RTMediaFormHandler', 'sizes_content' )
             );
 
