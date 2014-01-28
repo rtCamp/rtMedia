@@ -149,11 +149,12 @@
 	    position: absolute;
 	}
 	.rt-form-checkbox + .has-tip {
-		padding-top: 3px;
+		padding-top: 1px;
 	}
 	.rt-form-number, .rt-form-text, .rt-form-select {
 		+ .has-tip {
-			padding-top: 8px;
+			padding-top: 5px;
+			margin-left: 2px;
 		}
 	}
 	.rt-form-textarea + .has-tip {
@@ -184,14 +185,18 @@
 			.metabox-holder h3.hndle + div.row {								
 				padding-top: 3px;
 			}
-			.metabox-holder div.row {				
+			.metabox-holder div.row {		
+				line-height: 150%;	
 				&:last-child {
-					padding-bottom: 6px;
+					padding-bottom: 3px;
 				}
 			}
 		}
 		.rt-form-text {
 			width: 150px;
+		}
+		.rtmedia-size-content-setting .rt-form-text {
+			width: 50px;
 		}
 	}
 	.section {
