@@ -315,7 +315,7 @@ class RTMediaFormHandler {
 				    'args' => array(
 					    'key' => 'rtmedia_add_linkback',
 					    'value' => $options['rtmedia_add_linkback'],
-					    'desc' => __('Help us promote rtMedia.','rtmedia')
+					    'desc' => __('Help us to promote rtMedia.','rtmedia')
 				    ),
 				    'group' => 100
 			),//
