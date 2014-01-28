@@ -1,5 +1,10 @@
 /* Grid HTML Classes */
 /* line 116, ../../../../../../../usr/lib/ruby/gems/1.8/gems/zurb-foundation-4.1.6/scss/foundation/components/_grid.scss */
+ *, *:before, *:after {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+ }
 .row {
   width: 100%;
   margin-left: auto;
@@ -196,7 +201,7 @@
     margin-left: 91.66667%;
   }
 
- 
+
 
   /* line 174, ../../../../../../../usr/lib/ruby/gems/1.8/gems/zurb-foundation-4.1.6/scss/foundation/components/_grid.scss */
   .column.large-centered,

@@ -412,7 +412,7 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
                 wp_localize_script ( 'rtmedia-admin', 'rtmedia_admin_ajax', $admin_ajax );
                 wp_localize_script ( 'rtmedia-admin', 'rtmedia_admin_url', admin_url () );
                 wp_localize_script ( 'rtmedia-admin', 'rtmedia_admin_url', admin_url () );
-                if(isset($_REQUEST['page']) && $_REQUEST['page']== "rtmedia-settings")
+                if(isset($_REQUEST['page']) && ( in_array($_REQUEST['page'] , array("rtmedia-settings", "rtmedia-addons" , "rtmedia-themes" ,"rtmedia-support", "rtmedia-hire-us"))) )
                 {
                     wp_enqueue_script ( 'rtmedia-foundation-modernizr', RTMEDIA_URL . 'lib/foundation/custom.modernizr.js', array('jquery'), RTMEDIA_VERSION );
                     wp_enqueue_script ( 'rtmedia-foundation', RTMEDIA_BOWER_COMPONENTS_URL . 'js/foundation.js', array('jquery'), RTMEDIA_VERSION );
@@ -438,7 +438,7 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
                 wp_enqueue_style ( 'grid-foundation', RTMEDIA_URL . 'app/assets/css/grid-foundation.css', '', RTMEDIA_VERSION );
                 wp_enqueue_style ( 'rtmedia-main', RTMEDIA_URL . 'app/assets/css/main.css', '', RTMEDIA_VERSION );
                 wp_enqueue_style ( 'rtmedia-admin', RTMEDIA_URL . 'app/assets/css/admin.css', '', RTMEDIA_VERSION );
-                if(isset($_REQUEST['page']) && $_REQUEST['page']== "rtmedia-settings") {
+                if(isset($_REQUEST['page']) && ( in_array($_REQUEST['page'] , array("rtmedia-settings", "rtmedia-addons" , "rtmedia-themes" ,"rtmedia-support", "rtmedia-hire-us"))) ) {
                     wp_enqueue_style ( 'foundation-admin-css', RTMEDIA_URL . 'app/assets/css/settings.css', '', RTMEDIA_VERSION );
                 }
                 wp_enqueue_style ( 'wp-jquery-ui-dialog' );
@@ -726,17 +726,7 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
 
                 <?php //settings_errors (); ?>
                 <div class="row bp-media-settings-boxes-container">
-		    <?php
-			if ( $page == "rtmedia-settings" ) {
-		    ?>
-			    <div id="bp-media-settings-boxes" class="columns large-9">
-		    <?php
-			} else {
-		    ?>
-			    <div id="bp-media-settings-boxes" class="columns large-8">
-		    <?php
-			}
-		    ?>
+		    <div id="bp-media-settings-boxes" class="columns large-9">
 
                         <?php
                         $settings_url = ( is_multisite () ) ? network_admin_url ( 'edit.php?action=' . $option_group ) : 'options.php';
@@ -1079,7 +1069,7 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
 //                        $contest = '<a target="_blank" href="http://rtcamp.com/news/buddypress-media-review-contest/?utm_source=dashboard&#038;utm_medium=plugin&#038;utm_campaign=buddypress-media"><img src="'.RTMEDIA_URL.'app/assets/img/bpm-contest-banner.jpg" alt="BuddyPress Media Review Contest" /></a>';
 //                        new BPMediaAdminWidget('bpm-contest', __('', 'rtmedia'), $contest);
 	    $setting_page_url = admin_url( 'admin.php?page=rtmedia-settings#rtmedia-general');
-            $message = sprintf ( __( 'I use @buddypressmedia http://goo.gl/8Upmv on %s', 'rtmedia' ), home_url() );
+            $message = sprintf ( __( 'I use @buddypressmedia http://rt.cx/rtmedia on %s', 'rtmedia' ), home_url() );
             $addons = '<div id="social" class="">
                             <div class="row">
                                 <div class="columns large-11">

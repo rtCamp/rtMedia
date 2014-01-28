@@ -133,6 +133,9 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "Visit rtMedia's Features page") to get some details about future releases.
 
+= 3.5.2.1 =
+* Admin UI bug fixes
+
 = 3.5.2 =
 * Updated dutch translation, thanks to [carry2web] (http://profiles.wordpress.org/carry2web)
 * Enable / disable media per group
@@ -684,8 +687,8 @@ Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_sou
 
 == Upgrade Notice ==
 
-= 3.5.2 =
-Requires BuddyPress 1.7 or higher, if using BuddyPress. Dutch translation updated, Updaed gallery shortcode for album, Custom thumbnail for media, Bug fixes
+= 3.5.2.1 =
+Requires BuddyPress 1.7 or higher, if using BuddyPress. Admin UI bug fixes
 
 == Sponsors ==
 
