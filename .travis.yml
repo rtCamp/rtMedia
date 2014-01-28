@@ -1,50 +1,35 @@
-# Travis CI Configuration File
-
-# Tell Travis CI we're using PHP
 language: php
 
-# PHP version used in first build configuration.
 php:
-    - "5.5"
+    - 5.3
+    - 5.4
 
-# WordPress version used in first build configuration.
 env:
-    - WP_VERSION=master
+    - WP_VERSION=master WP_MULTISITE=0
+    - WP_VERSION=master WP_MULTISITE=1
+    - WP_VERSION=3.5.1 WP_MULTISITE=0
+    - WP_VERSION=3.5.1 WP_MULTISITE=1
 
-# Next we define our matrix of additional build configurations to test against.
-# The versions listed above will automatically create our first configuration,
-# so it doesn't need to be re-defined below.
+before_install:
+    - git submodule update --init --recursive
 
-# WP_VERSION specifies the tag to use. The way these tests are configured to run
-# requires at least WordPress 3.8. Specify "master" to test against SVN trunk.
-
-# Note that Travis CI supports listing these above to automatically build a
-# matrix of configurations, but we're being nice here by manually building a
-# total of four configurations even though we're testing 4 versions of PHP
-# along with 2 versions of WordPress (which would build 8 configs otherwise).
-# This takes half as long to run while still providing adequate coverage.
-
-matrix:
-  include:
-    - php: "5.3"
-      env: WP_VERSION=master
-    - php: "5.4"
-      env: WP_VERSION=3.8
-    - php: "5.2"
-      env: WP_VERSION=3.8
-
-# Clones WordPress and configures our testing environment.
 before_script:
-    - export PLUGIN_SLUG=$(basename $(pwd))
-    - git clone https://github.com/tierra/wordpress.git /tmp/wordpress
-    - git clone . "/tmp/wordpress/src/wp-content/plugins/$PLUGIN_SLUG --depth 9999"
-    - cd /tmp/wordpress
-    - git checkout $WP_VERSION
-    - mysql -e "CREATE DATABASE wordpress_tests;" -uroot
+    # set up WP install
+    - WP_CORE_DIR=/tmp/wordpress/
+    - mkdir -p $WP_CORE_DIR
+    - wget -nv -O /tmp/wordpress.tar.gz https://github.com/WordPress/WordPress/tarball/$WP_VERSION
+    - tar --strip-components=1 -zxmf /tmp/wordpress.tar.gz -C $WP_CORE_DIR
+    # set up testing suite
+    - export WP_TESTS_DIR=/tmp/wordpress-tests/
+    - svn co --ignore-externals --quiet http://unit-tests.svn.wordpress.org/trunk/ $WP_TESTS_DIR
+    - cd $WP_TESTS_DIR
     - cp wp-tests-config-sample.php wp-tests-config.php
-    - sed -i "s/youremptytestdbnamehere/wordpress_tests/" wp-tests-config.php
-    - sed -i "s/faishal/travis/" wp-tests-config.php
-    - sed -i "s/faishal//" wp-tests-config.php
-    - cd "/tmp/wordpress/src/wp-content/plugins/$PLUGIN_SLUG"
+    - sed -i "s:dirname( __FILE__ ) . '/wordpress/':'$WP_CORE_DIR':" wp-tests-config.php
+    - sed -i "s/yourdbnamehere/wordpress_test/" wp-tests-config.php
+    - sed -i "s/yourusernamehere/root/" wp-tests-config.php
+    - sed -i "s/yourpasswordhere//" wp-tests-config.php
+    - cd -
+    # set up database
+    - mysql -e 'CREATE DATABASE wordpress_test;' -uroot
 
 script: phpunit
