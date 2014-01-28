@@ -291,23 +291,45 @@ class RTMediaFormHandler {
 	static function render_general_content($options) {
 		$render = array(
 			'general_AllowUserData' => array(
-				'title' => __('Allow user data tracking','rtmedia'),
+				'title' => __('Allow usage data tracking','rtmedia'),
 				'callback' => array('RTMediaFormHandler', 'checkbox'),
 				'args' => array(
 					'key' => 'general_AllowUserData',
 					'value' => $options['general_AllowUserData'],
-					'desc' => __('Enable user data tracking','rtmedia')
+					'desc' => __('You can help rtMedia team learn what themes and plugins you are using to make rtMedia better compatible with yotu sites. No private information about your setup will be sent during tracking.','rtmedia')
 				)
 			),
 			'general_showAdminMenu' => array(
-				    'title' => __('Admin bar menu','rtmedia'),
+				    'title' => __('Admin bar menu intergation','rtmedia'),
 				    'callback' => array('RTMediaFormHandler', 'checkbox'),
 				    'args' => array(
 					    'key' => 'general_showAdminMenu',
 					    'value' => $options['general_showAdminMenu'],
 					    'desc' => __('Enable menu in WordPress admin bar','rtmedia')
 				    ),
-			    ),//
+				    'group' => 10
+			),//
+			'rtmedia_add_linkback' => array(
+				    'title' => __('Add a link to rtMedia in footer','rtmedia'),
+				    'callback' => array('RTMediaFormHandler', 'checkbox'),
+				    'args' => array(
+					    'key' => 'rtmedia_add_linkback',
+					    'value' => $options['rtmedia_add_linkback'],
+					    'desc' => __('Add a link to rtMedia in footer.','rtmedia')
+				    ),
+				    'group' => 100
+			),//
+			'rtmedia_affiliate_id' => array(
+				    'title' => __('Also add my affiliate-id to rtMedia footer link','rtmedia'),
+				    'callback' => array('RTMediaFormHandler', 'textbox'),
+				    'args' => array(
+					    'key' => 'rtmedia_affiliate_id',
+					    'value' => $options['rtmedia_affiliate_id'],
+					    'desc' => __('Add your affiliate-id along with footer link.','rtmedia')
+				    ),
+				    'group' => 100,
+				    'after_content' => __('You can signup for rtMedia affiliate program from <a href="https://rtcamp.com/affiliates">here</a>'),
+			),//
 		);
 
 		return $render;
@@ -319,8 +341,9 @@ class RTMediaFormHandler {
 		$render_options = self::render_general_content($options);
                 $render_options = apply_filters("rtmedia_general_content_add_itmes",$render_options, $options);
 		$general_group = array();
-//		$general_group[10] = "UI";
-		$general_group[90] = "General Settings";
+		$general_group[10] = "Admin Settings";
+		$general_group[90] = "Miscellaneous";
+		$general_group[100] = "Footer Link";
 		$general_group = apply_filters("rtmedia_general_content_groups", $general_group);
 		ksort($general_group);
 		$html = '';
@@ -368,72 +391,6 @@ class RTMediaFormHandler {
 		    <?php
 		}
 	}
-
-	static function render_wordpress_content($options) {
-
-		$render = array();
-		return $render;
-	}
-
-	public static function wordpress_content() {
-		global $rtmedia;
-//		$options = self::extract_settings('general', $rtmedia->options);
-		$options = $rtmedia->options;
-		$render_options = self::render_wordpress_content($options);
-		$render_options = apply_filters("rtmedia_wordpress_content_add_itmes",$render_options, $options);
-		$general_group = array();
-//		$general_group[10] = "UI";
-		$general_group = apply_filters("rtmedia_wordpress_content_groups", $general_group);
-		ksort($general_group);
-		$html = '';
-		if( ! ( sizeof($render_options) > 0 && sizeof($general_group) > 0 ) ) {
-		    return;
-		}
-		foreach($general_group as $key => $value) {
-		?>
-		    <div class="postbox metabox-holder">
-			<h3 class="hndle"><span><?php echo $value; ?></span></h3>
-		<?php
-		    foreach ($render_options as $tab => $option) {
-
-			if(!isset($option['group'])) {
-			    $option['group'] = "90";
-			}
-
-			if($option['group'] != $key) {
-			    continue;
-			}
-		?>
-			<div class="row section">
-			    <div class="columns large-6">
-				<?php echo $option['title']; ?>
-			    </div>
-			    <div class="columns large-6">
-				<?php call_user_func($option['callback'], $option['args']); ?>
-				<span data-tooltip class="has-tip" title="<?php echo (isset($option['args']['desc'])) ? $option['args']['desc'] : "NA"; ?>"><i class="rtmicon-info-circle"></i></span>
-			    </div>
-			</div>
-		    <?php
-			if( isset( $option['after_content'] ) ) {
-		    ?>
-			    <div class="row">
-				<div class="columns large-12">
-				    <p class="rtmedia-info rtmedia-admin-notice">
-					<?php echo $option['after_content']; ?>
-				    </p>
-				</div>
-			    </div>
-		    <?php
-			}
-		    ?>
-		    <?php
-		    }
-		    ?>
-			</div>
-		    <?php
-		}
-
- }
 
     static function get_type_details($allowed_types, $key) {
 	    foreach ($allowed_types as $type) {
@@ -610,13 +567,13 @@ class RTMediaFormHandler {
 		echo '</div>';
 		$options = $rtmedia->options;
 		$render_video_thumb =array(
-                                'title' => __('Number of video thumbnails','rtmedia'),
+                                'title' => __('Number of thumbnails to generate on video upload','rtmedia'),
                                 'callback' => array('RTMediaFormHandler', 'number'),
                                 'args' => array(
                                         'key' => 'general_videothumbs',
                                         'value' => $options['general_videothumbs'],
 					'class' => array('rtmedia-setting-text-box'),
-					'desc' => __('Number of video thumbnails to be generated from encoding service','rtmedia'),
+					'desc' => __(' If you choose more than 1 thumbnail, your users will be able to change thumbnail by going to video "edit" section.','rtmedia'),
 					'min' => 1
                                 )
                         );
@@ -625,10 +582,10 @@ class RTMediaFormHandler {
 		    <h3 class="hndle"><span>Encoding Settings</span></h3>
 		</div>
 		<div class="row section">
-		    <div class="columns large-6">
+		    <div class="columns large-9">
 			<?php echo $render_video_thumb['title']; ?>
 		    </div>
-		    <div class="columns large-6">
+		    <div class="columns large-3">
 			<?php call_user_func($render_video_thumb['callback'], $render_video_thumb['args']); ?>
 			<span data-tooltip class="has-tip" title="<?php echo (isset($render_video_thumb['args']['desc'])) ? $render_video_thumb['args']['desc'] : "NA"; ?>"><i class="rtmicon-info-circle"></i></span>
 		    </div>
@@ -726,13 +683,14 @@ class RTMediaFormHandler {
 				),
 			),
 			'user_override' => array(
-				'title' => __("User override","rtmedia"),
+				'title' => __("Allow users to set privacy for their content","rtmedia"),
 				'callback' => array("RTMediaFormHandler", "checkbox"),
 				'args' => array(
 					'key' => 'privacy_userOverride',
 					'value' => $options['privacy_userOverride'],
-					'desc' => __('Allow users to select privacy for media','rtmedia')
-				)
+					'desc' => __('If you choose this, user will be able to change privacy of their own uploads.','rtmedia')
+				),
+				'after_content' => __('For group uploads, BuddyPress groups privacy is used.','rtmedia')
 			)
 		);
 
@@ -768,6 +726,18 @@ class RTMediaFormHandler {
 						<?php
 					echo '</div>';
 				echo '</div>';
+
+			    if( isset( $privacy['after_content'] ) ) {
+			?>
+				<div class="row">
+				    <div class="columns large-12">
+					<p class="rtmedia-info rtmedia-admin-notice">
+					    <?php echo $privacy['after_content']; ?>
+					</p>
+				    </div>
+				</div>
+			<?php
+			    }
 			}
 		echo '</div>';
 	}

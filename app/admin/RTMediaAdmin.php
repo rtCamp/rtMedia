@@ -906,20 +906,22 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
             // Check to see which tab we are on
             $tab = $this->get_current_tab ();
             /* rtMedia */
-            $tabs[5] = array(
+
+	    $tabs[5] = array(
+                'href' => '#rtmedia-general',
+                'icon' => 'rtmicon-wrench',
+                'title' => __( 'Other Settings', 'rtmedia' ),
+                'name' => __( 'Other Settings', 'rtmedia' ),
+                'callback' => array( 'RTMediaFormHandler', 'general_content' )
+            );
+
+
+            $tabs[7] = array(
                 'href' => '#rtmedia-display',
                 'icon' => 'rtmicon-desktop',
                 'title' => __( 'Display', 'rtmedia' ),
                 'name' => __( 'Display', 'rtmedia' ),
                 'callback' => array( 'RTMediaFormHandler', 'display_content' )
-            );
-
-            $tabs[7] = array(
-                'href' => '#rtmedia-general',
-                'icon' => 'rtmicon-wrench',
-                'title' => __( 'General', 'rtmedia' ),
-                'name' => __( 'General', 'rtmedia' ),
-                'callback' => array( 'RTMediaFormHandler', 'general_content' )
             );
 
 
@@ -1074,7 +1076,6 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
                                     <p><a href="https://www.facebook.com/sharer/sharer.php?u=http://rtcamp.com/buddypress-media/" class="button" target="_blank" title="' . __( 'Share on Facebook Now', 'rtmedia' ) . '">' . __ ( 'Share on Facebook', 'rtmedia' ) . '</a></p>
                                     <p><a href="http://wordpress.org/support/view/plugin-reviews/buddypress-media?rate=5#postform" class="button" target= "_blank" title="' . __( 'Rate rtMedia on Wordpress.org', 'rtmedia' ) . '">' . __( 'Rate on Wordpress.org', 'rtmedia' ) . '</a></p>
                                     <p><a href="' . sprintf ( '%s', 'http://feeds.feedburner.com/rtcamp/' ) . '"  title="' . __ ( 'Subscribe to our feeds', 'rtmedia' ) . '" class="button" target="_blank" title="' . __( 'Subscribe to our Feeds', 'rtmedia' ) . '">' . __ ( 'Subscribe to our Feeds', 'rtmedia' ) . '</a></p>
-                                    <p class="link-footer"><label class="" title="' . __( "Add a link to rtMedia plugin in footer", 'rtmedia' ) . '" for="bp-media-add-linkback"><input' . checked ( rtmedia_get_site_option ( 'rtmedia-add-linkback', false ), true, false ) . ' type="checkbox" name="bp-media-add-linkback" value="1" id="bp-media-add-linkback" /> ' . __( 'Add link to footer', 'rtmedia' ) . '</label></p>
                                 </div>
                             </div>
                         </div>';

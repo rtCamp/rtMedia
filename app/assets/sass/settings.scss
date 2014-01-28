@@ -181,6 +181,17 @@
 		}
 		div.tabs-content {
 			margin-bottom: 0;
+			.metabox-holder h3.hndle + div.row {								
+				padding-top: 3px;
+			}
+			.metabox-holder div.row {				
+				&:last-child {
+					padding-bottom: 6px;
+				}
+			}
+		}
+		.rt-form-text {
+			width: 150px;
 		}
 	}
 	.section {

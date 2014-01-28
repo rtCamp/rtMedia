@@ -1038,7 +1038,7 @@ add_action('rtmedia_add_edit_fields' , 'rtmedia_add_album_selection_field', 14, 
 function rtmedia_add_album_selection_field( $media_type ){
 
     if( is_rtmedia_album_enable () &&  isset( $media_type ) && $media_type != 'album' && $media_type != 'playlist' ) {
-        
+
         global $rtmedia_query;
         $album_list = '';
         $curr_album_id = '';
@@ -1051,11 +1051,11 @@ function rtmedia_add_album_selection_field( $media_type ){
         <?php if( isset( $rtmedia_query->query['context']) && $rtmedia_query->query['context'] == 'group' ){
             //show group album list.
             $album_list = rtmedia_group_album_list ( $selected_album_id = $curr_album_id );
-            
+
         }else {
             //show profile album list
            $album_list = rtmedia_user_album_list ( $get_all = false, $selected_album_id = $curr_album_id );
-        } 
+        }
         echo '<select name="album_id" class="rtmedia-merge-user-album-list">' . $album_list . '</select>';
         ?>
     </div>
@@ -1207,7 +1207,7 @@ function rtmedia_global_album_list ( $selected_album_id = false) {
             if ( $selected_album_id != false &&  $selected_album_id != '' && $selected_album_id == $album->id ) {
                 $selected = 'selected="selected"';
             }
-            
+
             if ( (isset ( $rtmedia_query->media_query[ 'album_id' ] ) && ($album_objects[ 0 ]->id != $rtmedia_query->media_query[ 'album_id' ])) || ! isset ( $rtmedia_query->media_query[ 'album_id' ] ) )
                 $option .= '<option value="' . $album->id . '" ' . $selected . '>' . $album->media_title . '</option>';
         }
@@ -1239,7 +1239,7 @@ function rtmedia_user_album_list ( $get_all = false, $selected_album_id = false 
                     $selected = 'selected="selected"';
                 }
                 if($album->context == 'profile') {
-                    
+
                     $profile_option .= '<option value="' . $album->id . '" ' . $selected . '>' . $album->media_title . '</option>';
                 }
 //                else
@@ -1248,7 +1248,7 @@ function rtmedia_user_album_list ( $get_all = false, $selected_album_id = false 
                 // and group albums from group
 
         }
-        
+
       }
     }
     $option = "$global_option";
@@ -1927,12 +1927,17 @@ function rtmedia_admin_premium_page($page) {
 }
 add_action('wp_footer', 'rtmedia_link_in_footer');
 function rtmedia_link_in_footer(){
-   $link =  rtmedia_get_site_option ( 'rtmedia-add-linkback', false );
-   if($link) { ?>
+    global $rtmedia;
+    $option = $rtmedia->options;
+   $link =  $option['rtmedia_add_linkback'];
+   if($link) {
+       $aff_id = ( $option['rtmedia_affiliate_id'] != "")? '&ref='.$option['rtmedia_affiliate_id'] : "";
+       $href = 'https://rtcamp.com/rtmedia/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media'.$aff_id;
+    ?>
 
        <div class='rtmedia-footer-link'>
           <?php echo __("Empowering your community with ", 'rtmedia') ;?>
-          <a href='https://rtcamp.com/rtmedia/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media' title='<?php echo __('The only complete media solution for WordPress, BuddyPress and bbPress', 'rtmedia');?> '>
+          <a href='<?php echo $href ?>' title='<?php echo __('The only complete media solution for WordPress, BuddyPress and bbPress', 'rtmedia');?> '>
               rtMedia</a>
        </div>
    <?php }
@@ -2143,7 +2148,7 @@ function is_rtmedia_page() {
     if( ! defined ( 'RTMEDIA_MEDIA_SLUG' ) ) {
         return false;
     }
-    
+
     global $rtmedia_interaction;
 
     if( ! isset( $rtmedia_interaction ) ) {
