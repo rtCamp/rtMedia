@@ -305,7 +305,7 @@ class RTMediaFormHandler {
 				    'args' => array(
 					    'key' => 'general_showAdminMenu',
 					    'value' => $options['general_showAdminMenu'],
-					    'desc' => __('Enable menu in WordPress admin bar','rtmedia')
+					    'desc' => __('Add rtMedia menu to wordpress admin bar for easy access to settings and moderation page (if enabled).','rtmedia')
 				    ),
 				    'group' => 10
 			),//
