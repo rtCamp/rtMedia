@@ -211,7 +211,7 @@ class RTMediaFormHandler {
 				'args' => array(
 					'key' => 'general_enableComments',
 					'value' => $options['general_enableComments'],
-					'desc' => __('This will display comment form and comment listing on single media pages as well as inside lightbox (if lightbox is enabled)','rtmedia')
+					'desc' => __('This will display comment form and comment listing on single media pages as well as inside lightbox (if lightbox is enabled).','rtmedia')
 				),
 				'group' => "10"
 			),
@@ -221,7 +221,7 @@ class RTMediaFormHandler {
 				'args' => array(
 					'key' => 'general_enableLightbox',
 					'value' => $options['general_enableLightbox'],
-					'desc' => __('Enable Lighbox on Media','rtmedia')
+					'desc' => __('View single media in facebook style lightbox.','rtmedia')
 				),
 				'group' => "15"
 			),
@@ -232,7 +232,8 @@ class RTMediaFormHandler {
 					'key' => 'general_perPageMedia',
 					'value' => $options['general_perPageMedia'],
 					'class' => array('rtmedia-setting-text-box'),
-					'desc' => __('Number of media to view in page','rtmedia'),
+					'desc' => __('Number of media you want to show per page on front end.','rtmedia'),
+					'min' => 1
 				),
 				'group' => "15"
 			)
@@ -296,7 +297,8 @@ class RTMediaFormHandler {
                                         'key' => 'general_videothumbs',
                                         'value' => $options['general_videothumbs'],
 					'class' => array('rtmedia-setting-text-box'),
-					'desc' => __('Number of video thumbnails to be generated from encoding service','rtmedia')
+					'desc' => __('Number of video thumbnails to be generated from encoding service','rtmedia'),
+					'min' => 1
                                 )
                         ),
 			'general_AllowUserData' => array(
