@@ -307,7 +307,7 @@ class RTMediaFormHandler {
 				'args' => array(
 					'key' => 'general_AllowUserData',
 					'value' => $options['general_AllowUserData'],
-					'desc' => __('Enable user Data tracking','rtmedia')
+					'desc' => __('Enable user data tracking','rtmedia')
 				)
 			),
 			'general_showAdminMenu' => array(
