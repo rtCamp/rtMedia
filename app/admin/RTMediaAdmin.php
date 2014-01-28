@@ -726,7 +726,7 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
 
                 <?php //settings_errors (); ?>
                 <div class="row bp-media-settings-boxes-container" >
-                    <div id="bp-media-settings-boxes" class="columns large-8">
+                    <div id="bp-media-settings-boxes" class="columns large-9">
                         <?php
                         $settings_url = ( is_multisite () ) ? network_admin_url ( 'edit.php?action=' . $option_group ) : 'options.php';
                         ?>
