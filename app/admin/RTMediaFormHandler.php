@@ -296,7 +296,7 @@ class RTMediaFormHandler {
 				'args' => array(
 					'key' => 'general_AllowUserData',
 					'value' => $options['general_AllowUserData'],
-					'desc' => __('You can help rtMedia team learn what themes and plugins you are using to make rtMedia better compatible with yotu sites. No private information about your setup will be sent during tracking.','rtmedia')
+					'desc' => __('You can help rtMedia team learn what themes and plugins you are using to make rtMedia better compatible with your sites. No private information about your setup will be sent during tracking.','rtmedia')
 				)
 			),
 			'general_showAdminMenu' => array(
@@ -305,7 +305,7 @@ class RTMediaFormHandler {
 				    'args' => array(
 					    'key' => 'general_showAdminMenu',
 					    'value' => $options['general_showAdminMenu'],
-					    'desc' => __('Add rtMedia menu to wordpress admin bar for easy access to settings and moderation page (if enabled).','rtmedia')
+					    'desc' => __('Add rtMedia menu to WordPress admin bar for easy access to settings and moderation page (if enabled).','rtmedia')
 				    ),
 				    'group' => 10
 			),//
@@ -315,7 +315,7 @@ class RTMediaFormHandler {
 				    'args' => array(
 					    'key' => 'rtmedia_add_linkback',
 					    'value' => $options['rtmedia_add_linkback'],
-					    'desc' => __('Add a link to rtMedia in footer.','rtmedia')
+					    'desc' => __('Help us promote rtMedia.','rtmedia')
 				    ),
 				    'group' => 100
 			),//
@@ -325,7 +325,7 @@ class RTMediaFormHandler {
 				    'args' => array(
 					    'key' => 'rtmedia_affiliate_id',
 					    'value' => $options['rtmedia_affiliate_id'],
-					    'desc' => __('Add your affiliate-id along with footer link.','rtmedia')
+					    'desc' => __('Add your affiliate-id along with footer link and get benefited from our affiliation program.','rtmedia')
 				    ),
 				    'group' => 100,
 				    'after_content' => __('You can signup for rtMedia affiliate program from <a href="https://rtcamp.com/affiliates">here</a>'),
