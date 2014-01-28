@@ -12,12 +12,22 @@ $GLOBALS['wp_tests_options'] = array(
 	'active_plugins' => array( 'rtMedia/index.php' ),
 );
 
-// If the develop repo location is defined (as WP_DEVELOP_DIR), use that
-// location. Otherwise, we'll just assume that this plugin is installed in a
-// WordPress develop SVN checkout.
+require_once getenv( 'WP_TESTS_DIR' ) . '/includes/functions.php';
 
-if( false !== getenv( 'WP_DEVELOP_DIR' ) ) {
-	require getenv( 'WP_DEVELOP_DIR' ) . '/tests/phpunit/includes/bootstrap.php';
-} else {
-	require '../../../../tests/phpunit/includes/bootstrap.php';
+function _manually_load_plugin() {
+        require dirname( __FILE__ ) . '/../wp-seo.php';
+}
+tests_add_filter( 'muplugins_loaded', '_manually_load_plugin' );
+
+require getenv( 'WP_TESTS_DIR' ) . '/includes/bootstrap.php';
+class RTMEDIA_TestCase extends WP_UnitTestCase {
+        // Put convenience methods here
+        // Here are two I use for faking things for save_post hooks, et al
+        function set_post( $key, $value ) {
+                $_POST[$key] = $_REQUEST[$key] = addslashes( $value );
+        }
+
+        function unset_post( $key ) {
+                unset( $_POST[$key], $_REQUEST[$key] );
+        }
 }
