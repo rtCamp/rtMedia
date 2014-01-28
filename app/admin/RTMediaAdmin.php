@@ -725,8 +725,19 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
 
 
                 <?php //settings_errors (); ?>
-                <div class="row bp-media-settings-boxes-container" >
-                    <div id="bp-media-settings-boxes" class="columns large-9">
+                <div class="row bp-media-settings-boxes-container">
+		    <?php
+			if ( $page == "rtmedia-settings" ) {
+		    ?>
+			    <div id="bp-media-settings-boxes" class="columns large-9">
+		    <?php
+			} else {
+		    ?>
+			    <div id="bp-media-settings-boxes" class="columns large-8">
+		    <?php
+			}
+		    ?>
+
                         <?php
                         $settings_url = ( is_multisite () ) ? network_admin_url ( 'edit.php?action=' . $option_group ) : 'options.php';
                         ?>
@@ -907,7 +918,7 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
             $tab = $this->get_current_tab ();
             /* rtMedia */
 
-	    $tabs[5] = array(
+	    $tabs[999] = array(
                 'href' => '#rtmedia-general',
                 'icon' => 'rtmicon-wrench',
                 'title' => __( 'Other Settings', 'rtmedia' ),
@@ -1067,7 +1078,7 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
 //            echo '<p><a target="_blank" href="http://rtcamp.com/news/buddypress-media-review-contest/?utm_source=dashboard&#038;utm_medium=plugin&#038;utm_campaign=buddypress-media"><img src="' . RTMEDIA_URL . 'app/assets/img/bpm-contest-banner.jpg" alt="BuddyPress Media Review Contest" /></a></p>';
 //                        $contest = '<a target="_blank" href="http://rtcamp.com/news/buddypress-media-review-contest/?utm_source=dashboard&#038;utm_medium=plugin&#038;utm_campaign=buddypress-media"><img src="'.RTMEDIA_URL.'app/assets/img/bpm-contest-banner.jpg" alt="BuddyPress Media Review Contest" /></a>';
 //                        new BPMediaAdminWidget('bpm-contest', __('', 'rtmedia'), $contest);
-
+	    $setting_page_url = admin_url( 'admin.php?page=rtmedia-settings#rtmedia-general');
             $message = sprintf ( __( 'I use @buddypressmedia http://goo.gl/8Upmv on %s', 'rtmedia' ), home_url() );
             $addons = '<div id="social" class="">
                             <div class="row">
@@ -1076,6 +1087,7 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
                                     <p><a href="https://www.facebook.com/sharer/sharer.php?u=http://rtcamp.com/buddypress-media/" class="button" target="_blank" title="' . __( 'Share on Facebook Now', 'rtmedia' ) . '">' . __ ( 'Share on Facebook', 'rtmedia' ) . '</a></p>
                                     <p><a href="http://wordpress.org/support/view/plugin-reviews/buddypress-media?rate=5#postform" class="button" target= "_blank" title="' . __( 'Rate rtMedia on Wordpress.org', 'rtmedia' ) . '">' . __( 'Rate on Wordpress.org', 'rtmedia' ) . '</a></p>
                                     <p><a href="' . sprintf ( '%s', 'http://feeds.feedburner.com/rtcamp/' ) . '"  title="' . __ ( 'Subscribe to our feeds', 'rtmedia' ) . '" class="button" target="_blank" title="' . __( 'Subscribe to our Feeds', 'rtmedia' ) . '">' . __ ( 'Subscribe to our Feeds', 'rtmedia' ) . '</a></p>
+                                    <p><a href="' . $setting_page_url . '"  title="' . __ ( 'Add link to footer', 'rtmedia' ) . '" class="button" title="' . __( 'Add link to footer', 'rtmedia' ) . '">' . __ ( 'Add link to footer', 'rtmedia' ) . '</a></p>
                                 </div>
                             </div>
                         </div>';
