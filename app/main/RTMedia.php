@@ -250,7 +250,7 @@ class RTMedia
                 'plural' => 'photos',
                 'label' => __('Photo', 'rtmedia'),
                 'plural_label' => __('Photos', 'rtmedia'),
-                'extn' => array('jpg', 'jpeg', 'png', 'gif', 'JPG', 'JPEG', 'PNG', 'GIF'),
+                'extn' => array('jpg', 'jpeg', 'png', 'gif'),
                 'thumbnail' => RTMEDIA_URL . 'app/assets/img/image_thumb.png',
 		'settings_visibility' => true
             ),
@@ -259,7 +259,7 @@ class RTMedia
                 'plural' => 'videos',
                 'label' => __('Video', 'rtmedia'),
                 'plural_label' => __('Videos', 'rtmedia'),
-                'extn' => array('mp4', 'MP4'),
+                'extn' => array('mp4'),
                 'thumbnail' => RTMEDIA_URL . 'app/assets/img/video_thumb.png',
 		'settings_visibility' => true
             ),
@@ -268,7 +268,7 @@ class RTMedia
                 'plural' => 'music',
                 'label' => __('Music', 'rtmedia'),
                 'plural_label' => __('Music', 'rtmedia'),
-                'extn' => array('mp3', 'MP3'),
+                'extn' => array('mp3'),
                 'thumbnail' => RTMEDIA_URL . 'app/assets/img/audio_thumb.png',
 		'settings_visibility' => true
             )
@@ -788,12 +788,12 @@ class RTMedia
         wp_enqueue_style('rtmedia-font-awesome', RTMEDIA_URL . 'app/assets/css/font-awesome.min.css', '', RTMEDIA_VERSION);
         if(! wp_script_is("rtp-foundation-js"))
             wp_enqueue_script('rtp-foundation-js', RTMEDIA_BOWER_COMPONENTS_URL . 'js/foundation.min.js', array('jquery'), RTMEDIA_VERSION);
-        
+
         wp_enqueue_script('rtmedia-main', RTMEDIA_URL . 'app/assets/js/rtMedia.js', array('jquery', 'wp-mediaelement'), RTMEDIA_VERSION);
-        
+
         wp_enqueue_style('rtmedia-magnific', RTMEDIA_URL . 'lib/magnific/magnific.css', '', RTMEDIA_VERSION);
         wp_enqueue_script('rtmedia-magnific', RTMEDIA_URL . 'lib/magnific/magnific.js', '', RTMEDIA_VERSION);
-        
+
         wp_localize_script('rtmedia-main', 'rtmedia_ajax_url', admin_url('admin-ajax.php'));
         wp_localize_script('rtmedia-main', 'rtmedia_media_slug', RTMEDIA_MEDIA_SLUG);
         wp_localize_script('rtmedia-main', 'rtmedia_lightbox_enabled', strval($this->options["general_enableLightbox"]));

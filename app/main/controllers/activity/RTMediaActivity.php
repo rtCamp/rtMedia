@@ -38,9 +38,9 @@ class RTMediaActivity {
         $html .='<div class="rtmedia-activity-container">';
 
         if ( ! empty ( $this->activity_text ) ) {
-            $html .= '<span class="rtmedia-activity-text">';
+            $html .= '<div class="rtmedia-activity-text">';
             $html .= $this->activity_text;
-            $html .= '</span>';
+            $html .= '</div>';
         }
 
         global $rtmedia;

@@ -583,10 +583,6 @@ float:left;
 }
 
 /* line 25, ../sass/admin.scss */
-.section {
-  margin-top: 5px !important;
-  margin-bottom: 5px !important;
-}
 
 /* line 32, ../sass/admin.scss */
 .rt-table div.rt-header {
@@ -723,7 +719,8 @@ abbr {
 .rtm-custom-css textarea#rtmedia-custom-css {
     display: block;
     width : 100%;
-    height : 300px;
+    height : 200px;
+    margin-bottom: 10px;
 }
 #social .link-footer { margin : 12px 0 5px 0;}
 

@@ -907,20 +907,22 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
             $tab = $this->get_current_tab ();
             /* rtMedia */
             $tabs[5] = array(
+                'href' => '#rtmedia-display',
+                'icon' => 'rtmicon-desktop',
+                'title' => __( 'Display', 'rtmedia' ),
+                'name' => __( 'Display', 'rtmedia' ),
+                'callback' => array( 'RTMediaFormHandler', 'display_content' )
+            );
+
+            $tabs[7] = array(
                 'href' => '#rtmedia-general',
-                'icon' => 'rtmicon-cogs',
+                'icon' => 'rtmicon-wrench',
                 'title' => __( 'General', 'rtmedia' ),
                 'name' => __( 'General', 'rtmedia' ),
                 'callback' => array( 'RTMediaFormHandler', 'general_content' )
             );
 
-            $tabs[10] = array(
-                'href' => '#rtmedia-wordpress',
-                'icon' => 'rtmicon-cogs',
-                'title' => __( 'WordPress', 'rtmedia' ),
-                'name' => __( 'WordPress', 'rtmedia' ),
-                'callback' => array( 'RTMediaFormHandler', 'wordpress_content' )
-            );
+
 
 	    if ( class_exists ( "BuddyPress" ) ) {
                 $tabs[20] = array(
