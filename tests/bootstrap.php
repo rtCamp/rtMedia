@@ -9,7 +9,7 @@
 
 // Activates this plugin in WordPress so it can be tested.
 $GLOBALS['wp_tests_options'] = array(
-	'active_plugins' => array( 'buddypress-media/index.php' ),
+	'active_plugins' => array( 'rtMedia/index.php' ),
 );
 
 // If the develop repo location is defined (as WP_DEVELOP_DIR), use that
