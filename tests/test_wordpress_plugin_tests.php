@@ -22,7 +22,7 @@ class WP_Test_WordPress_Plugin_Tests extends WP_UnitTestCase {
 	 *
 	 * @requires PHP 5.3
 	 */
-	function test_wp_version() {
+/**	function test_wp_version() {
 
 		if ( !getenv( 'TRAVIS' ) )
 			$this->markTestSkipped( 'Test skipped since Travis CI was not detected.' );
@@ -38,7 +38,7 @@ class WP_Test_WordPress_Plugin_Tests extends WP_UnitTestCase {
 
 		$this->assertEquals( get_bloginfo( 'version' ), $requested_version );
 
-	}
+	} **/
 
 	/**
 	 * Ensure that the plugin has been installed and activated.
