@@ -147,7 +147,7 @@ class BPMediaAlbumimporter extends BPMediaImporter {
                 } else {
                     echo '<div class="bp-album-import-accept i-accept">';
                     echo '<p class="info">';
-                    $message = sprintf(__('I just imported bp-album to @buddypressmedia http://goo.gl/8Upmv on %s', 'rtmedia'), home_url());
+                    $message = sprintf(__('I just imported bp-album to @buddypressmedia http://rt.cx/rtmedia on %s', 'rtmedia'), home_url());
                     echo '<strong>' . __('Congratulations!', 'rtmedia') . '</strong> ' . __('All media from BP Album has been imported.', 'rtmedia');
                     echo ' <a href="http://twitter.com/home/?status=' . $message . '" class="button button-import-tweet" target= "_blank">' . __('Tweet this', 'rtmedia') . '</a>';
                     echo '</p>';

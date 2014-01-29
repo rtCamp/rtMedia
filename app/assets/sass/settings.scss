@@ -29,25 +29,27 @@
 	.rtmedia-setting-select-box {
 		width: auto;
 	}
-        #rtm-settings-tabs .horizontal-tabs {
-            dd {
-                border : 1px solid #c1c1c1;
-                border-right: none;
+        #rtm-settings-tabs, #rtm-themes, #rtm-addons, #rtm-support {
+    		.horizontal-tabs {
+	            dd {
+	                border : 1px solid #c1c1c1;
+	                border-right: none;
 
-                &:last-child{
-                    border-right: 1px solid #c1c1c1;
-                }
-                &.active{
-                    border-bottom-color: #fff;
-                }
-/*                &:not(:first-child).active{
-                    border-left: 1px solid #c1c1c1;
-                }*/
-            }
-            .tabs-content {
-                border: 1px solid #c1c1c1;
-            }
-        }
+	                &:last-child{
+	                    border-right: 1px solid #c1c1c1;
+	                }
+	                &.active{
+	                    border-bottom-color: #fff;
+	                }
+	/*                &:not(:first-child).active{
+	                    border-left: 1px solid #c1c1c1;
+	                }*/
+	            }
+	            .tabs-content {
+	                border: 1px solid #c1c1c1;
+	            }
+        	}
+		} 
 
         .tabs dd {
             margin-left :0;
@@ -174,7 +176,7 @@
 		padding-top: 0;
 		border: none;
 	}
-	.rtm-settings-tab-container {
+	.rtm-settings-tab-container, #rtm-themes, #rtm-addons, #rtm-support {
 		background-color: #FFF;
 		dl.tabs {
 			background-color: #F1F1F1;
