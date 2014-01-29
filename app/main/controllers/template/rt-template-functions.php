@@ -1364,7 +1364,7 @@ function rtmedia_create_album ( $options) {
     if ( $display === true ) {
 
         add_action('rtmedia_before_media_gallery','rtmedia_create_album_modal');
-        $options[] = "<span><a href='#rtmedia-create-album-modal' class='rtmedia-reveal-modal rtmedia-modal-link'  title='".  __( 'Create New Album', 'rtmedia' ) ."'><i class='rtmicon-plus-circle'></i>" . __('Add Album') . "</a></span>";
+        $options[] = "<a href='#rtmedia-create-album-modal' class='rtmedia-reveal-modal rtmedia-modal-link'  title='".  __( 'Create New Album', 'rtmedia' ) ."'><i class='rtmicon-plus-circle'></i>" . __('Add Album') . "</a>";
         return $options;
 
     }
