@@ -36,13 +36,13 @@ div#icon-buddypress-media { background: url('../img/bpm-icon-32.png'); backgroun
 /*.metabox-holder .postbox#latest-news .inside ul li{background: transparent url('../img/bpm-icon-32.png') -5px 0px no-repeat; padding-left: 32px;}*/
 /*.metabox-holder .postbox#latest-news .inside ul li:hover{background-position-y: -96px;}*/
 #branding{min-height: 25px;}
-#branding .inside{min-height: 25px; margin-bottom: 4px;}
+#branding .inside{min-height: 25px; margin: 10px 0;}
 #branding #logo{text-align:center;padding: 10px 0;display:block;}
 #social{display:block;margin:0;clear: both;}
 #branding #mc-embedded-subscribe-form{float: left;width: 100%;}
 #branding label{float: right;}
 #branding #mc-embedded-subscribe{float: right;padding: 0 3px;}
-#branding #mce-EMAIL{float: left; max-width : 170px;}
+#branding #mce-EMAIL{float: left; max-width : 160px;}
 #social .row .large-6{display:inline; vertical-align: middle; padding:0; text-align:center;}
 #social .label{display : inline-block; width : 55px;}
 #social p { margin : 6px 0;}
@@ -583,10 +583,6 @@ float:left;
 }
 
 /* line 25, ../sass/admin.scss */
-.section {
-  margin-top: 5px !important;
-  margin-bottom: 5px !important;
-}
 
 /* line 32, ../sass/admin.scss */
 .rt-table div.rt-header {
@@ -723,7 +719,8 @@ abbr {
 .rtm-custom-css textarea#rtmedia-custom-css {
     display: block;
     width : 100%;
-    height : 300px;
+    height : 200px;
+    margin-bottom: 10px;
 }
 #social .link-footer { margin : 12px 0 5px 0;}
 
@@ -770,4 +767,7 @@ abbr {
 
 #rtm-themes .rtmedia-theme-warning {
     color: red;
+}
+div.bp-media-metabox-holder #branding #mce-responses {
+    display: inline;
 }

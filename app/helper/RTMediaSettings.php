@@ -38,7 +38,9 @@ if (!class_exists('RTMediaSettings')) {
                 'general_videothumbs' => 2,
 		'general_uniqueviewcount' => 0,
 		'general_viewcount' => 0,
-		'general_AllowUserData' => 1
+		'general_AllowUserData' => 1,
+		'rtmedia_add_linkback' => 0,
+		'rtmedia_affiliate_id' => ''
             );
 
             $defaults = apply_filters('rtmedia_general_content_default_values', $defaults);

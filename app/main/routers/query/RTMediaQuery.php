@@ -456,8 +456,9 @@ class RTMediaQuery {
 		    unset ( $this->query[ "context_id" ] );
 		if ( isset ( $this->query[ "context" ] ) )
 		    unset ( $this->query[ "context" ] );
-		if ( isset ( $this->query[ "album_id" ] ) )
-		    unset ( $this->query[ "album_id" ] );
+                //dont unset album id when provided, to show content of a single album
+//		if ( isset ( $this->query[ "album_id" ] ) )
+//		    unset ( $this->query[ "album_id" ] );
                 if(isset($this->query[ "media_type" ]) && $this->query[ "media_type" ] == "album"){
                    //$this->action_query->media_type = "album";
                     add_filter("rtmedia-before-template", array(&$this,"register_set_gallery_template_filter"),10,2);

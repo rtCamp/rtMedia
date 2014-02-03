@@ -1,50 +1,56 @@
+.toplevel_page_rtmedia-settings {
+	// import tooltip in rtmedia-settings page only
+	@import "bower_components/foundation/scss/foundation/components/tooltips";
+}
 #bp-media-settings-boxes{
-   // @import "foundation/components/global"; // *always required    
+   // @import "foundation/components/global"; // *always required
    @import "bower_components/foundation/scss/foundation/components/global"; // *always required
     //@import "foundation/components/section";
     @import "bower_components/foundation/scss/foundation/components/grid";
     @import "bower_components/foundation/scss/foundation/components/tabs";
-    margin: 0;    
-	.has-switch { 
+    margin: 0;
+	.has-switch {
 		border-radius: 0
 	}
-	.has-switch label { 
-		padding: 6px; 
-		border-radius: 0; 
+	.has-switch label {
+		padding: 6px;
+		border-radius: 0;
 	}
-	.has-switch span.switch-left { 
-		border-radius: 0; 
+	.has-switch span.switch-left {
+		border-radius: 0;
 	}
-	.has-switch span.switch-right { 
-		border-radius: 0; 
+	.has-switch span.switch-right {
+		border-radius: 0;
 	}
 	.rtmedia-setting-text-box {
 		width: 55px;
 		text-align: right;
 	}
 	.rtmedia-setting-select-box {
-		width: auto;		
+		width: auto;
 	}
-        #rtm-settings-tabs .horizontal-tabs {
-            dd {
-                border : 1px solid #c1c1c1;
-                border-right: none;
-                
-                &:last-child{
-                    border-right: 1px solid #c1c1c1;
-                }
-                &.active{
-                    border-bottom-color: #fff;
-                }
-/*                &:not(:first-child).active{
-                    border-left: 1px solid #c1c1c1;
-                }*/
-            }
-            .tabs-content {
-                border: 1px solid #c1c1c1;
-            }
-        }
-        
+        #rtm-settings-tabs, #rtm-themes, #rtm-addons, #rtm-support {
+    		.horizontal-tabs {
+	            dd {
+	                border : 1px solid #c1c1c1;
+	                border-right: none;
+
+	                &:last-child{
+	                    border-right: 1px solid #c1c1c1;
+	                }
+	                &.active{
+	                    border-bottom-color: #fff;
+	                }
+	/*                &:not(:first-child).active{
+	                    border-left: 1px solid #c1c1c1;
+	                }*/
+	            }
+	            .tabs-content {
+	                border: 1px solid #c1c1c1;
+	            }
+        	}
+		} 
+
         .tabs dd {
             margin-left :0;
                 a {
@@ -70,7 +76,7 @@
         #rtm-settings-tabs .tabs-content {
             background: #fff;
             padding : 10px;
-            
+
             &.tabs-content.vertical {
                 width : 78%;
                 margin :0;
@@ -84,23 +90,23 @@
 		section {
 				.title {
 					a {
-						font-size: 13px;						
+						font-size: 13px;
 						text-decoration: none;
 						font-weight: bold;
 						color: #555;
-						&:hover {							
+						&:hover {
 							color: #000;
 						}
 					}
 				}
-		}		
+		}
 		section.active {
 			.title {
 				a {
 					color: #000;
 				}
 			}
-		}		
+		}
 	}
 	.rtmedia-size-content-setting {
 			.rt-form-dimension  {
@@ -111,12 +117,13 @@
 					margin-left: 14%;
 				}
 			}
+			margin-bottom: 10px;
 		}
 	.section-container.vertical-tabs, .section-container.auto {
 		section {
 				.title {
 					a {
-						font-size: 13px;						
+						font-size: 13px;
 					}
 				}
 		}
@@ -125,18 +132,9 @@
 					a {
 						color: #000;
 					}
-				}	
+				}
 		}
 	}
-    .global-album-settings {
-            .default-global-albums {
-            	padding: 5px 0;             
-                overflow: hidden;
-                &:hover {
-                	background-color: #EEE;
-                }
-            }
-    }
     fieldset {
 		border: solid 1px #dddddd;
 		padding: 10px;
@@ -145,5 +143,82 @@
 			font-weight: bold;
 		}
 	}
+	.rt-form-checkbox, .rt-form-radio {
+		display: inline-block
+	}
+	.has-tip {
+	    border: none;
+	    position: absolute;
+	}
+	.rt-form-checkbox + .has-tip {
+		padding-top: 1px;
+	}
+	.rt-form-number, .rt-form-text, .rt-form-select {
+		+ .has-tip {
+			padding-top: 5px;
+			margin-left: 2px;
+		}
+	}
+	.rt-form-textarea + .has-tip {
+		padding-top: 18px;
+	}
+	.tabs-content.vertical {
+		> .content {
+			padding: 0;
+		}
+	}
+	#rtm-settings-tabs {
+		.tabs-content {
+			padding: 0;
+		}
+	}
+	.metabox-holder {
+		padding-top: 0;
+		border: none;
+	}
+	.rtm-settings-tab-container, #rtm-themes, #rtm-addons, #rtm-support {
+		background-color: #FFF;
+		dl.tabs {
+			background-color: #F1F1F1;
+			margin-top: 0;
+		}
+		div.tabs-content {
+			margin-bottom: 0;
+			.metabox-holder h3.hndle + div.row {								
+				padding-top: 3px;
+			}
+			.metabox-holder div.row {		
+				line-height: 150%;	
+				&:last-child {
+					padding-bottom: 3px;
+				}
+			}
+		}
+		.rt-form-text {
+			width: 150px;
+		}
+		.rtmedia-size-content-setting .rt-form-text {
+			width: 50px;
+		}
+	}
+	.section {
+	  	margin-top: 5px;
+	  	margin-bottom: 5px;
+	}
+	.tabs-content {
+		> div:first-child {
+			margin-top: 10px;
+		}
+	}
+	#rtmedia-types {
+		.rtmedia-file-extension-wrap {
+			font-size: 10px;
+		}
+		.rtmedia-file-extension-info {
+			color: #777;
+		}
+	}
+	.rtmedia-settings-submit {
+		padding: 0 20px;
+	}
 }
-

@@ -58,21 +58,41 @@ if (!class_exists('RTMediaSupport')) {
                         }
 		?>
 			<div id="rtm-support">
-				<ul>
-					<?php
-						foreach ($tabs as $tab) {?>
-							<li><a id="tab-<?php echo substr ( $tab[ 'href' ], 1 ); ?>" title="<?php echo $tab['title'] ?>" href="<?php echo $tab['href']; ?>" class="rtmedia-tab-title"><?php echo $tab['name']; ?></a></li>
-						<?php }
-					?>
-				</ul>
-
-				<?php
-					foreach ($tabs as $tab) {
-						echo '<div id="' . substr($tab['href'],1) . '">';
-							call_user_func($tab['callback']);
-						echo '</div>';
-					}
-				?>
+			    <div class="horizontal-tabs">
+				<dl class='tabs' data-tab>
+		    <?php
+				$i = 1;
+				foreach ($tabs as $tab) {
+				$active_class = '';
+				if( $i == 1){ $active_class = 'active';} $i++;
+		    ?>
+				<dd class="<?php echo $active_class  ?>">
+				    <a id="tab-<?php echo substr ( $tab[ 'href' ], 1 ) ?>" title="<?php echo $tab[ 'title' ] ?>" href="<?php  echo $tab[ 'href' ] ?>" class="rtmedia-tab-title <?php echo sanitize_title ( $tab[ 'name' ] ) ?>"><?php echo $tab[ 'name' ]?></a>
+				</dd>
+		    <?php
+			    }
+		    ?>
+				</dl>
+			<?php
+			    $k = 1;
+			    $active_class = '';
+			    echo "<div class='tabs-content'>";
+			    foreach ($tabs as $tab) {
+				    $active_class = '';
+				    if( $k == 1){ $active_class = ' active';} $k++;
+				    if ( isset ( $tab[ 'icon' ] ) && ! empty ( $tab[ 'icon' ] ) )
+					$icon = '<i class="' . $tab[ 'icon' ] . '"></i>';
+				    $tab_without_hash = explode("#", $tab[ 'href' ]);
+				    $tab_without_hash  = $tab_without_hash[1];
+				    echo '<div class="row content' . $active_class .'" id="' . $tab_without_hash . '">';
+				    echo '<div class="large-12 columns">';
+						call_user_func($tab['callback']);
+				    echo '</div>';
+				    echo '</div>';
+			    }
+			    echo "</div>";
+		    ?>
+			    </div>
 			</div>
 <?php
 
@@ -231,7 +251,7 @@ if (!class_exists('RTMediaSupport')) {
             $debug_info['rtMedia'] = RTMEDIA_VERSION;
             $debug_info['OS'] = PHP_OS;
             if (extension_loaded('imagick')) {
-								$imagickobj = new Imagick();
+		$imagickobj = new Imagick();
                 $imagick = $message = preg_replace(" #((http|https|ftp)://(\S*?\.\S*?))(\s|\;|\)|\]|\[|\{|\}|,|\"|'|:|\<|$|\.\s)#ie", "'<a href=\"$1\" target=\"_blank\">$3</a>$4'", $imagickobj->getversion() );
             } else {
                 $imagick['versionString'] = 'Not Installed';
@@ -287,7 +307,7 @@ if (!class_exists('RTMediaSupport')) {
                 </div><?php
 
         }
-        
+
         public function is_migration_required(){
             $pending_rtmedia_migrate = rtmedia_get_site_option ( "rtMigration-pending-count" );
             if( ( $pending_rtmedia_migrate === false || $pending_rtmedia_migrate == 0 ) ) {

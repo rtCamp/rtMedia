@@ -38,9 +38,9 @@ class RTMediaActivity {
         $html .='<div class="rtmedia-activity-container">';
 
         if ( ! empty ( $this->activity_text ) ) {
-            $html .= '<span class="rtmedia-activity-text">';
+            $html .= '<div class="rtmedia-activity-text">';
             $html .= $this->activity_text;
-            $html .= '</span>';
+            $html .= '</div>';
         }
 
         global $rtmedia;
@@ -55,8 +55,8 @@ class RTMediaActivity {
 
         if( intval( $limitActivityFeed ) > 0 )
             $media_details = array_slice( $media_details, 0, $limitActivityFeed, true);
-
-        $html .= '<ul class="rtmedia-list large-block-grid-3">';
+	$rtmedia_activity_ul_class = apply_filters("rtmedia_activity_ul_class","large-block-grid-3");
+        $html .= '<ul class="rtmedia-list '.$rtmedia_activity_ul_class.'">';
         foreach ( $media_details as $media ) {
             $html .= '<li class="rtmedia-list-item media-type-' . $media->media_type . '">';
             if ( $media->media_type == 'photo' )

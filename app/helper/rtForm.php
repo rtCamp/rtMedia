@@ -422,7 +422,9 @@ if(!class_exists("rtForm")) {
 
 				/* generating attributes */
 				$html .= $this->processAttributes($element, $attributes);
-
+				if( isset($attributes['min']) ) {
+				    $html.= " min='".$attributes['min']."' ";
+				}
 				/* ending the tag */
 				$html .= ' />';
 

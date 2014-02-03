@@ -51,21 +51,40 @@ class RTMediaThemes {
 			);
 		?>
 			<div id="rtm-themes">
-				<ul>
-					<?php
-						foreach ($tabs as $tab) {?>
-							<li><a id="tab-<?php echo substr ( $tab[ 'href' ], 1 ); ?>" title="<?php echo $tab['title'] ?>" href="<?php echo $tab['href']; ?>" class="rtmedia-tab-title"><?php echo $tab['name']; ?></a></li>
-						<?php }
-					?>
-				</ul>
+			    <div class="horizontal-tabs">
+			    <dl class='tabs' data-tab>
+		    <?php
+			    $i = 1;
+			    foreach ($tabs as $tab) {
+				$active_class = '';
+				if( $i == 1){ $active_class = 'active';} $i++;
+		    ?>
+				<dd class="<?php echo $active_class  ?>">
+				    <a id="tab-<?php echo substr ( $tab[ 'href' ], 1 ) ?>" title="<?php echo $tab[ 'title' ] ?>" href="<?php  echo $tab[ 'href' ] ?>" class="rtmedia-tab-title <?php echo sanitize_title ( $tab[ 'name' ] ) ?>"><?php echo $tab[ 'name' ]?></a>
+				</dd>
+		    <?php
+			    }
+		    ?>
+			    </dl>
 
-				<?php
-					foreach ($tabs as $tab) {
-						echo '<div id="' . substr($tab['href'],1) . '">';
-							call_user_func($tab['callback']);
-						echo '</div>';
-					}
-				?>
+		    <?php
+			    $k = 1;
+			    $active_class = '';
+			    echo "<div class='tabs-content'>";
+			    foreach ($tabs as $tab) {
+				    $active_class = '';
+				    if( $k == 1){ $active_class = ' active';} $k++;
+				    if ( isset ( $tab[ 'icon' ] ) && ! empty ( $tab[ 'icon' ] ) )
+					$icon = '<i class="' . $tab[ 'icon' ] . '"></i>';
+				    $tab_without_hash = explode("#", $tab[ 'href' ]);
+				    $tab_without_hash  = $tab_without_hash[1];
+				    echo '<div class="content' . $active_class .'" id="' . $tab_without_hash . '">';
+						call_user_func($tab['callback'], $page);
+				    echo '</div>';
+			    }
+			    echo "</div>";
+		    ?>
+			    </div>
 			</div>
 			<?php
         }
@@ -84,7 +103,9 @@ class RTMediaThemes {
 	function rtmedia_3rd_party_themes_content() {
 	?>
 	    <div class="row">
-		<h4 class="rtmedia-theme-warning"><?php _e('These are the third party themes. For any issues or queries regarding these themes please contact theme developers.','rtmedia') ?></h4>
+		<div class="columns large-12">
+		    <h4 class="rtmedia-theme-warning"><?php _e('These are the third party themes. For any issues or queries regarding these themes please contact theme developers.','rtmedia') ?></h4>
+		</div>
 	    </div>
 	    <hr>
 	    <div class="row">
@@ -97,8 +118,10 @@ class RTMediaThemes {
 	    </div>
 	    <hr>
 	    <div class="row">
-		<h3><?php _e('Are you a developer?','rtmedia'); ?></h3>
-		<p><?php  _e('If you have developed a rtMedia compatible theme and would like it to list here, please email us at','rtmedia') ?> <a href="mailto:product@rtcamp.com"><?php _e('product@rtcamp.com','rtmedia') ?></a>.</p>
+		<div class="columns large-12">
+		    <h3><?php _e('Are you a developer?','rtmedia'); ?></h3>
+		    <p><?php  _e('If you have developed a rtMedia compatible theme and would like it to list here, please email us at','rtmedia') ?> <a href="mailto:product@rtcamp.com"><?php _e('product@rtcamp.com','rtmedia') ?></a>.</p>
+		</div>
 	    </div>
 	<?php
 	}

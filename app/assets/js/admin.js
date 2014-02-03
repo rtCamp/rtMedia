@@ -490,45 +490,32 @@ jQuery(document).ready(function($) {
     });
 
 
-    jQuery("#rtm-addons").sliderTabs({
-        autoplay: false,
-        mousewheel: false,
-        defaultTab: manageHash()
-    });
-
-    jQuery("#rtm-support").sliderTabs({
-        autoplay: false,
-        mousewheel: false,
-        defaultTab: manageHash()
-    });
-
-    jQuery("#rtm-themes").sliderTabs({
-        autoplay: false,
-        mousewheel: false,
-        defaultTab: manageHash()
-    });
-
     if (jQuery('#rtmedia-privacy-enable').is(":checked")) {
         jQuery(".privacy-driven-disable label input").prop("disabled", false);
         jQuery(".privacy-driven-disable label .rt-switch").bootstrapSwitch("setActive", true);
     } else {
         jQuery(".privacy-driven-disable label input").prop("disabled", true);
         jQuery(".privacy-driven-disable label .rt-switch").bootstrapSwitch("setActive", false);
+        jQuery(".privacy-driven-disable").parent().parent().css("display", "none");
     }
 
     if (jQuery('#rtmedia-bp-enable-activity').is(":checked")) {
         jQuery(".rtmedia-bp-activity-setting").prop("disabled", false);
+        jQuery(".privacy-driven-disable label .rt-switch").bootstrapSwitch("setActive", true);
     } else {
-	jQuery(".rtmedia-bp-activity-setting").prop("disabled", true);
+	   jQuery(".rtmedia-bp-activity-setting").prop("disabled", true);
+       jQuery(".privacy-driven-disable label .rt-switch").bootstrapSwitch("setActive", false);
     }
 
     jQuery('#rtmedia-privacy-enable').on("click", function(e) {
         if (jQuery(this).is(":checked")) {
             jQuery(".privacy-driven-disable label input").prop("disabled", false);
             jQuery(".privacy-driven-disable label .rt-switch").bootstrapSwitch("setActive", true);
+            jQuery(".privacy-driven-disable").parent().parent().css("display", "block");
         } else {
             jQuery(".privacy-driven-disable label input").prop("disabled", true);
             jQuery(".privacy-driven-disable label .rt-switch").bootstrapSwitch("setActive", false);
+            jQuery(".privacy-driven-disable").parent().parent().css("display", "none");
         }
     });
     jQuery('#rtmedia-bp-enable-activity').on("click", function(e){
@@ -546,13 +533,6 @@ jQuery(document).ready(function($) {
         offData = 'data-off-label="' + rtmedia_off_label + '"';
     jQuery("[data-toggle='switch']").wrap('<div class="rt-switch" ' + onData + ' ' + offData + ' />').parent().bootstrapSwitch();
 
-    try {
-        jQuery('.rtm-show-tooltip').powerTip({
-            followMouse: true
-        });
-    } catch (e) {
-        // no tooltip is defined
-    }
     $(".rtmedia-tab-title").click(function() {
         hash = $(this).attr('href');
         window.location.hash = hash.substring(1, hash.length);
@@ -648,6 +628,15 @@ jQuery(document).ready(function($) {
     });
     if(jQuery(document).foundation !== undefined)
         jQuery(document).foundation();
+
+    if(window.location.hash){
+	jQuery('#bp-media-settings-boxes dl.tabs dd a').each(function(){
+	    var hash = '#' + jQuery(this).attr('href').split('#')[1];
+	    if(hash == window.location.hash){
+		jQuery(this).click();
+	    }
+	});
+    }
 });
 
 function rtmedia_addon_do_not_show() {

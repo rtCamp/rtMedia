@@ -88,6 +88,13 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
 
             add_action ( 'wp_ajax_rtmedia_hide_template_override_notice', array( $this, 'rtmedia_hide_template_override_notice' ), 1 );
             add_action ( 'admin_notices', array( $this, 'rtmedia_update_template_notice' ) );
+	    add_action ( 'admin_init', array( $this, 'rtmedia_bp_add_update_type' ) );
+	}
+
+	function rtmedia_bp_add_update_type() {
+	    if( class_exists( 'BuddyPress' ) && function_exists( 'bp_activity_set_action' ) ) {
+		bp_activity_set_action( 'rtmedia_update','rtmedia_update','rtMedia Update' );
+	    }
 	}
 
 	function check_permalink_admin_notice() {
@@ -398,7 +405,6 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
 
                 wp_enqueue_script ( 'bootstrap-switch', RTMEDIA_URL . 'app/assets/js/bootstrap-switch.js', array( 'jquery' ), RTMEDIA_VERSION );
                 wp_enqueue_script ( 'slider-tabs', RTMEDIA_URL . 'app/assets/js/jquery.sliderTabs.min.js', array( 'jquery', 'jquery-effects-core' ), RTMEDIA_VERSION );
-                wp_enqueue_script ( 'power-tip', RTMEDIA_URL . 'app/assets/js/jquery.powertip.min.js', array( 'jquery' ), RTMEDIA_VERSION );
                 wp_enqueue_script ( 'observe-hashchange', RTMEDIA_URL . 'app/assets/js/jquery.observehashchange.pack.js', array( 'jquery' ), RTMEDIA_VERSION );
                 wp_enqueue_script ( 'rtmedia-admin', RTMEDIA_URL . 'app/assets/js/admin.js', array( 'jquery-ui-dialog' ), RTMEDIA_VERSION );
                 wp_localize_script ( 'rtmedia-admin', 'rtmedia_on_label', __ ( 'ON', 'rtmedia' ) );
@@ -406,7 +412,7 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
                 wp_localize_script ( 'rtmedia-admin', 'rtmedia_admin_ajax', $admin_ajax );
                 wp_localize_script ( 'rtmedia-admin', 'rtmedia_admin_url', admin_url () );
                 wp_localize_script ( 'rtmedia-admin', 'rtmedia_admin_url', admin_url () );
-                if(isset($_REQUEST['page']) && $_REQUEST['page']== "rtmedia-settings")
+                if(isset($_REQUEST['page']) && ( in_array($_REQUEST['page'] , array("rtmedia-settings", "rtmedia-addons" , "rtmedia-themes" ,"rtmedia-support", "rtmedia-hire-us"))) )
                 {
                     wp_enqueue_script ( 'rtmedia-foundation-modernizr', RTMEDIA_URL . 'lib/foundation/custom.modernizr.js', array('jquery'), RTMEDIA_VERSION );
                     wp_enqueue_script ( 'rtmedia-foundation', RTMEDIA_BOWER_COMPONENTS_URL . 'js/foundation.js', array('jquery'), RTMEDIA_VERSION );
@@ -429,11 +435,10 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
                 wp_enqueue_style ( 'font-awesome', RTMEDIA_URL . 'app/assets/css/font-awesome.min.css', '', RTMEDIA_VERSION );
                 wp_enqueue_style ( 'bootstrap-switch', RTMEDIA_URL . 'app/assets/css/bootstrap-switch.css', '', RTMEDIA_VERSION );
                 wp_enqueue_style ( 'slider-tabs', RTMEDIA_URL . 'app/assets/css/jquery.sliderTabs.min.css', '', RTMEDIA_VERSION );
-                wp_enqueue_style ( 'power-tip', RTMEDIA_URL . 'app/assets/css/jquery.powertip.min.css', '', RTMEDIA_VERSION );
                 wp_enqueue_style ( 'grid-foundation', RTMEDIA_URL . 'app/assets/css/grid-foundation.css', '', RTMEDIA_VERSION );
                 wp_enqueue_style ( 'rtmedia-main', RTMEDIA_URL . 'app/assets/css/main.css', '', RTMEDIA_VERSION );
                 wp_enqueue_style ( 'rtmedia-admin', RTMEDIA_URL . 'app/assets/css/admin.css', '', RTMEDIA_VERSION );
-                if(isset($_REQUEST['page']) && $_REQUEST['page']== "rtmedia-settings") {
+                if(isset($_REQUEST['page']) && ( in_array($_REQUEST['page'] , array("rtmedia-settings", "rtmedia-addons" , "rtmedia-themes" ,"rtmedia-support", "rtmedia-hire-us"))) ) {
                     wp_enqueue_style ( 'foundation-admin-css', RTMEDIA_URL . 'app/assets/css/settings.css', '', RTMEDIA_VERSION );
                 }
                 wp_enqueue_style ( 'wp-jquery-ui-dialog' );
@@ -720,8 +725,9 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
 
 
                 <?php //settings_errors (); ?>
-                <div class="row bp-media-settings-boxes-container" >
-                    <div id="bp-media-settings-boxes" class="columns large-8">
+                <div class="row bp-media-settings-boxes-container">
+		    <div id="bp-media-settings-boxes" class="columns large-9">
+
                         <?php
                         $settings_url = ( is_multisite () ) ? network_admin_url ( 'edit.php?action=' . $option_group ) : 'options.php';
                         ?>
@@ -743,7 +749,7 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
                                     <div class="clearfix">&nbsp;</div>
                                     <div class="row">
                                         <input type="hidden" name="rtmedia-options-save" value="true">
-                                        <input type="submit" id="rtmedia-settings-submit" class="rtmedia-settings-submit button" value="<?php _e( 'Save Settings', 'rtmedia' ); ?>">
+                                        <input type="submit" id="rtmedia-settings-submit" class="rtmedia-settings-submit button button-primary button-big" value="<?php _e( 'Save Settings', 'rtmedia' ); ?>">
                                     </div>
                                 </div>
                             </form><?php } else {
@@ -901,38 +907,28 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
             // Check to see which tab we are on
             $tab = $this->get_current_tab ();
             /* rtMedia */
-            $tabs[ ] = array(
+
+	    $tabs[999] = array(
                 'href' => '#rtmedia-general',
-                'icon' => 'rtmicon-cogs',
-                'title' => __( 'rtMedia General', 'rtmedia' ),
-                'name' => __( 'General', 'rtmedia' ),
+                'icon' => 'rtmicon-wrench',
+                'title' => __( 'Other Settings', 'rtmedia' ),
+                'name' => __( 'Other Settings', 'rtmedia' ),
                 'callback' => array( 'RTMediaFormHandler', 'general_content' )
             );
-            $tabs[ ] = array(
-                'href' => '#rtmedia-types',
-                'icon' => 'rtmicon-film',
-                'title' => __( 'rtMedia Types', 'rtmedia' ),
-                'name' => __( 'Types', 'rtmedia' ),
-                'callback' => array( 'RTMediaFormHandler', 'types_content' )
+
+
+            $tabs[7] = array(
+                'href' => '#rtmedia-display',
+                'icon' => 'rtmicon-desktop',
+                'title' => __( 'Display', 'rtmedia' ),
+                'name' => __( 'Display', 'rtmedia' ),
+                'callback' => array( 'RTMediaFormHandler', 'display_content' )
             );
 
-            $tabs[ ] = array(
-                'href' => '#rtmedia-sizes',
-                'icon' => 'rtmicon-expand',
-                'title' => __( 'rtMedia Sizes', 'rtmedia' ),
-                'name' => __( 'Sizes', 'rtmedia' ),
-                'callback' => array( 'RTMediaFormHandler', 'sizes_content' )
-            );
 
-            $tabs[ ] = array(
-                'href' => '#rtmedia-privacy',
-                'icon' => 'rtmicon-lock',
-                'title' => __( 'rtMedia Privacy', 'rtmedia' ),
-                'name' => __( 'Privacy', 'rtmedia' ),
-                'callback' => array( 'RTMediaFormHandler', 'privacy_content' )
-            );
-            if ( class_exists ( "BuddyPress" ) ) {
-                $tabs[ ] = array(
+
+	    if ( class_exists ( "BuddyPress" ) ) {
+                $tabs[20] = array(
                     'href' => '#rtmedia-bp',
                     'icon' => 'rtmicon-group',
                     'title' => __( 'rtMedia BuddyPress', 'rtmedia' ),
@@ -940,7 +936,31 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
                     'callback' => array( 'RTMediaFormHandler', 'buddypress_content' ) //change it to BuddyPress Content
                 );
             }
-            $tabs[ ] = array(
+
+            $tabs[30] = array(
+                'href' => '#rtmedia-types',
+                'icon' => 'rtmicon-film',
+                'title' => __( 'rtMedia Types', 'rtmedia' ),
+                'name' => __( 'Types', 'rtmedia' ),
+                'callback' => array( 'RTMediaFormHandler', 'types_content' )
+            );
+
+            $tabs[40] = array(
+                'href' => '#rtmedia-sizes',
+                'icon' => 'rtmicon-expand',
+                'title' => __( 'rtMedia Sizes', 'rtmedia' ),
+                'name' => __( 'Image Sizes', 'rtmedia' ),
+                'callback' => array( 'RTMediaFormHandler', 'sizes_content' )
+            );
+
+            $tabs[50] = array(
+                'href' => '#rtmedia-privacy',
+                'icon' => 'rtmicon-lock',
+                'title' => __( 'rtMedia Privacy', 'rtmedia' ),
+                'name' => __( 'Privacy', 'rtmedia' ),
+                'callback' => array( 'RTMediaFormHandler', 'privacy_content' )
+            );
+            $tabs[60] = array(
                 'href' => '#rtmedia-custom-css-settings',
                 'icon' => 'rtmicon-css3',
                 'title' => __( 'rtMedia Custom CSS', 'rtmedia' ),
@@ -1048,16 +1068,16 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
 //            echo '<p><a target="_blank" href="http://rtcamp.com/news/buddypress-media-review-contest/?utm_source=dashboard&#038;utm_medium=plugin&#038;utm_campaign=buddypress-media"><img src="' . RTMEDIA_URL . 'app/assets/img/bpm-contest-banner.jpg" alt="BuddyPress Media Review Contest" /></a></p>';
 //                        $contest = '<a target="_blank" href="http://rtcamp.com/news/buddypress-media-review-contest/?utm_source=dashboard&#038;utm_medium=plugin&#038;utm_campaign=buddypress-media"><img src="'.RTMEDIA_URL.'app/assets/img/bpm-contest-banner.jpg" alt="BuddyPress Media Review Contest" /></a>';
 //                        new BPMediaAdminWidget('bpm-contest', __('', 'rtmedia'), $contest);
-
-            $message = sprintf ( __( 'I use @buddypressmedia http://goo.gl/8Upmv on %s', 'rtmedia' ), home_url() );
+	    $setting_page_url = admin_url( 'admin.php?page=rtmedia-settings#rtmedia-general');
+            $message = sprintf ( __( 'I use @buddypressmedia http://rt.cx/rtmedia on %s', 'rtmedia' ), home_url() );
             $addons = '<div id="social" class="">
                             <div class="row">
                                 <div class="columns large-11">
-                                    <p><span class="label">' . __('Tweet : ', 'rtmedia') . '</span><a href="http://twitter.com/home/?status=' . $message . '" class="button" target= "_blank" title="' . __( 'Post to Twitter Now', 'rtmedia' ) . '">' . __( 'Post to Twitter', 'rtmedia' ) . '</a></p>
-                                    <p><span class="label">' . __('Share : ', 'rtmedia') . '</span><a href="https://www.facebook.com/sharer/sharer.php?u=http://rtcamp.com/buddypress-media/" class="button" target="_blank" title="' . __( 'Share on Facebook Now', 'rtmedia' ) . '">' . __ ( 'Share on Facebook', 'rtmedia' ) . '</a></p>
-                                    <p><span class="label">' . __('Rate : ', 'rtmedia') . '</span><a href="http://wordpress.org/support/view/plugin-reviews/buddypress-media?rate=5#postform" class="button" target= "_blank" title="' . __( 'Rate rtMedia on Wordpress.org', 'rtmedia' ) . '">' . __( 'Rate on Wordpress.org', 'rtmedia' ) . '</a></p>
-                                    <p><span class="label">' . __('Feeds : ', 'rtmedia') . '</span><a href="' . sprintf ( '%s', 'http://feeds.feedburner.com/rtcamp/' ) . '"  title="' . __ ( 'Subscribe to our feeds', 'rtmedia' ) . '" class="button" target="_blank" title="' . __( 'Subscribe to our Feeds', 'rtmedia' ) . '">' . __ ( 'Subscribe to our Feeds', 'rtmedia' ) . '</a></p>
-                                    <p class="link-footer"><label class="" title="' . __( "Add a link to rtMedia plugin in footer", 'rtmedia' ) . '" for="bp-media-add-linkback"><input' . checked ( rtmedia_get_site_option ( 'rtmedia-add-linkback', false ), true, false ) . ' type="checkbox" name="bp-media-add-linkback" value="1" id="bp-media-add-linkback" /> ' . __( 'Add link to footer', 'rtmedia' ) . '</label></p>
+                                    <p><a href="http://twitter.com/home/?status=' . $message . '" class="button" target= "_blank" title="' . __( 'Post to Twitter Now', 'rtmedia' ) . '">' . __( 'Post to Twitter', 'rtmedia' ) . '</a></p>
+                                    <p><a href="https://www.facebook.com/sharer/sharer.php?u=http://rtcamp.com/buddypress-media/" class="button" target="_blank" title="' . __( 'Share on Facebook Now', 'rtmedia' ) . '">' . __ ( 'Share on Facebook', 'rtmedia' ) . '</a></p>
+                                    <p><a href="http://wordpress.org/support/view/plugin-reviews/buddypress-media?rate=5#postform" class="button" target= "_blank" title="' . __( 'Rate rtMedia on Wordpress.org', 'rtmedia' ) . '">' . __( 'Rate on Wordpress.org', 'rtmedia' ) . '</a></p>
+                                    <p><a href="' . sprintf ( '%s', 'http://feeds.feedburner.com/rtcamp/' ) . '"  title="' . __ ( 'Subscribe to our feeds', 'rtmedia' ) . '" class="button" target="_blank" title="' . __( 'Subscribe to our Feeds', 'rtmedia' ) . '">' . __ ( 'Subscribe to our Feeds', 'rtmedia' ) . '</a></p>
+                                    <p><a href="' . $setting_page_url . '"  title="' . __ ( 'Add link to footer', 'rtmedia' ) . '" class="button" title="' . __( 'Add link to footer', 'rtmedia' ) . '">' . __ ( 'Add link to footer', 'rtmedia' ) . '</a></p>
                                 </div>
                             </div>
                         </div>';
@@ -1090,7 +1110,7 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
             $branding = '<form action="http://rtcamp.us1.list-manage1.com/subscribe/post?u=85b65c9c71e2ba3fab8cb1950&amp;id=9e8ded4470" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
                             <div class="mc-field-group">
                                     <input type="email" value="' . $current_user->user_email . '" name="EMAIL" placeholder="Email" class="required email" id="mce-EMAIL">
-                                    <input style="display:none;" type="checkbox" checked="checked" value="1" name="group[1721][1]" id="mce-group[1721]-1721-0"><label for="mce-group[1721]-1721-0">
+                                    <input style="display:none;" type="checkbox" checked="checked" value="1" name="group[1721][1]" id="mce-group[1721]-1721-0">
                                     <div id="mce-responses" class="clear">
                                         <div class="response" id="mce-error-response" style="display:none"></div>
                                         <div class="response" id="mce-success-response" style="display:none"></div>
