@@ -27,7 +27,7 @@ class RTMediaPrivacy {
             add_filter ( 'bp_activity_get_user_join_filter' , array ( $this , 'activity_privacy' ) , 10 , 6 ) ;
         }
     }
-    
+
     function edit_media_privacy_ui($echo = true) {
         $privacy = "";
         $privacy = $this->select_privacy_ui ($echo = false);
@@ -246,7 +246,7 @@ class RTMediaPrivacy {
         global $rtmedia ;
         ?>
         <form method='post'>
-            <div class="">
+            <div class="rtm_bp_default_privacy">
                 <div class="section">
                     <div class="columns large-2"><h2><?php _e( "Default Privacy" , "rtmedia" ) ; ?></h2></div>
                     <div class="columns large-5">
