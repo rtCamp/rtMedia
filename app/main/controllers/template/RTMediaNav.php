@@ -33,13 +33,14 @@ class RTMediaNav {
             if ( isset ( $bp->displayed_user ) && isset ( $bp->displayed_user->id ) ) {
                 $profile_counts = $this->actual_counts ( $bp->displayed_user->id );
             }
-
+	    $tab_position = apply_filters('rtmedia_media_tab_position',99);
             if ( $rtmedia->options[ "buddypress_enableOnProfile" ] != 0 ) {
                 bp_core_new_nav_item ( array(
                     'name' => RTMEDIA_MEDIA_LABEL . '<span>' . $profile_counts[ 'total' ][ 'all' ] . '</span>',
                     'slug' => RTMEDIA_MEDIA_SLUG,
                     'screen_function' => array( $this, 'media_screen' ),
-                    'default_subnav_slug' => 'all'
+                    'default_subnav_slug' => 'all',
+		    'position' => $tab_position
                 ) );
             }
         }
