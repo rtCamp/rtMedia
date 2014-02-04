@@ -517,9 +517,9 @@ class RTMediaEncoding {
 
                     $activity_id = $media[0]->activity_id;
                     if ($activity_id) {
-                        $content = $wpdb->get_var("SELECT content FROM {$wpdb->prefix}bp_activity WHERE id = $activity_id");
+                        $content = $wpdb->get_var("SELECT content FROM {$wpdb->base_prefix}bp_activity WHERE id = $activity_id");
                         $activity_content = str_replace($attachemnt_post->guid, $upload_info['url'], $content);
-                        $wpdb->update($wpdb->prefix . 'bp_activity', array('content' => $activity_content), array('id' => $activity_id));
+                        $wpdb->update($wpdb->base_prefix . 'bp_activity', array('content' => $activity_content), array('id' => $activity_id));
                     }
                 }
                 else {
