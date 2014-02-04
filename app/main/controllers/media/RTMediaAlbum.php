@@ -126,7 +126,7 @@ class RTMediaAlbum {
      */
     function get_current_author () {
 
-        return get_current_user_id ();
+        return apply_filters('rtmedia_current_user', 'get_current_user_id');
     }
 
     /**

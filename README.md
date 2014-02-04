@@ -132,6 +132,8 @@ http://www.youtube.com/watch?v####dJrykKQGDcs
 ## Changelog ##
 
 Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "Visit rtMedia's Features page") to get some details about future releases.
+#### 3.5.2 ####
+* Added JSON API for rtMedia
 
 #### 3.5.2.1 ####
 * Admin UI bug fixes

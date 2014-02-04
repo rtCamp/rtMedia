@@ -102,6 +102,7 @@ function rtmedia_autoloader ( $class_name ) {
         'app/main/template/' . $class_name . '.php',
         'app/log/' . $class_name . '.php',
         'app/importers/' . $class_name . '.php',
+        'app/main/controllers/api/' . $class_name . '.php',
     );
     foreach ( $rtlibpath as $path ) {
         $path = RTMEDIA_PATH . $path;
