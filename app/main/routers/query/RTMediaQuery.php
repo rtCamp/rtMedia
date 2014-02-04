@@ -496,7 +496,7 @@ class RTMediaQuery {
 
     function get_user () {
         if ( is_user_logged_in () ) {
-            $user = get_current_user_id ();
+            $user = apply_filters('rtmedia_current_user', 'get_current_user_id');
         } else {
             $user = 0;
         }
