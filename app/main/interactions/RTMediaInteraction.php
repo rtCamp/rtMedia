@@ -75,6 +75,7 @@ class RTMediaInteraction {
         add_rewrite_rule ( '^/' . RTMEDIA_MEDIA_SLUG . '/nonce/([^/]*)/?', 'index.php?nonce_type=$matches[1]', 'bottom' );
         add_rewrite_rule ( '^/' . RTMEDIA_MEDIA_SLUG . '/([A-Za-z]*)/pg/([0-9]*)/?', 'index.php?media_type=$matches[1]&pg=$matches[2]', 'bottom' );
         add_rewrite_rule ( '^/' . RTMEDIA_MEDIA_SLUG . '/pg/([0-9]*)/?', 'index.php?pg=$matches[1]', 'bottom' );
+	do_action('rtmedia_add_rewrite_rules');
     }
 
     static function rewrite_tags () {
@@ -83,6 +84,7 @@ class RTMediaInteraction {
         add_rewrite_tag ( '%nonce_type%', '([^/]*)' );
         add_rewrite_tag ( '%media_type%', '([A-Za-z]*)' );
         add_rewrite_tag ( '%pg%', '([0-9]*)' );
+	do_action('rtmedia_add_rewrite_tags');
     }
 
     /**

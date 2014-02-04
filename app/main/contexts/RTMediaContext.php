@@ -62,6 +62,8 @@ class RTMediaContext {
             $this->type = 'profile';
             $this->id = get_current_user_id ();
         }
+	$this->type = apply_filters('rtmedia_wp_context_type',$this->type);
+	$this->id = apply_filters('rtmedia_wp_context_id',$this->id);
     }
 
     /**
