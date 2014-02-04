@@ -30,7 +30,7 @@ class RTMediaUploadTemplate {
             return;
         $params = array(
             'url' => 'upload',
-            'runtimes' => 'gears,html5,flash,silverlight,browserplus',
+            'runtimes' => 'gears,html5,flash,browserplus,html4',
             'browse_button' => 'browse-button',
             'container' => 'bpm-file_upload-ui',
             'drop_element' => 'drag-drop-area',
