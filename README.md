@@ -1,4 +1,4 @@
-![alt text](https://plugins.svn.wordpress.org/buddypress-media//assets/banner-772x250.jpg)
+![alt text](https://plugins.svn.wordpress.org/buddypress-media/assets/banner-772x250.jpg)
 
 # rtMedia for WordPress, BuddyPress and bbPress #
 
