@@ -375,7 +375,7 @@ function rtmedia_album_image ( $size = 'thumbnail', $id = false) {
         $id = $rtmedia_media->id;
     }
     global $rtmedia_query;
-    if(isset($rtmedia_query->query['context_id'])){
+    if(isset($rtmedia_query->query['context_id']) && isset( $rtmedia_query->query['context'] ) && $rtmedia_query->query['context'] != "group" ){
         $media = $model->get_media ( array( 'album_id' => $id, 'media_type' => 'photo', 'media_author' => $rtmedia_query->query['context_id'] ), 0, 1 );
     } else {
         $media = $model->get_media ( array( 'album_id' => $id, 'media_type' => 'photo'), 0, 1 );
@@ -1364,7 +1364,7 @@ function rtmedia_create_album ( $options) {
     if ( $display === true ) {
 
         add_action('rtmedia_before_media_gallery','rtmedia_create_album_modal');
-        $options[] = "<span><a href='#rtmedia-create-album-modal' class='rtmedia-reveal-modal rtmedia-modal-link'  title='".  __( 'Create New Album', 'rtmedia' ) ."'><i class='rtmicon-plus-circle'></i>" . __('Add Album') . "</a></span>";
+        $options[] = "<a href='#rtmedia-create-album-modal' class='rtmedia-reveal-modal rtmedia-modal-link'  title='".  __( 'Create New Album', 'rtmedia' ) ."'><i class='rtmicon-plus-circle'></i>" . __('Add Album') . "</a>";
         return $options;
 
     }

@@ -795,6 +795,7 @@ jQuery(document).ready(function($) {
                     $('#rtMedia-update-queue-list').html('');
                     //$("#div-attache-rtmedia").hide();
                     apply_rtMagnificPopup(jQuery('.rtmedia-list-media, .rtmedia-activity-container ul.rtmedia-list, #bp-media-list,.widget-item-listing,.bp-media-sc-list, li.media.album_updated ul,ul.bp-media-list-media, li.activity-item div.activity-content div.activity-inner div.bp_media_content'));
+		    rtMediaHook.call('rtmedia_js_after_activity_added', []);
                 }
                 $("#whats-new-post-in").removeAttr('disabled');
                 $("#rtmedia-add-media-button-post-update").removeAttr('disabled');
