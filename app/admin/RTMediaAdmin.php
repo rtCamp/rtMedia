@@ -908,16 +908,7 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
             $tab = $this->get_current_tab ();
             /* rtMedia */
 
-	    $tabs[999] = array(
-                'href' => '#rtmedia-general',
-                'icon' => 'rtmicon-wrench',
-                'title' => __( 'Other Settings', 'rtmedia' ),
-                'name' => __( 'Other Settings', 'rtmedia' ),
-                'callback' => array( 'RTMediaFormHandler', 'general_content' )
-            );
-
-
-            $tabs[7] = array(
+	    $tabs[7] = array(
                 'href' => '#rtmedia-display',
                 'icon' => 'rtmicon-desktop',
                 'title' => __( 'Display', 'rtmedia' ),
@@ -969,18 +960,14 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
             );
 
             $tabs = apply_filters ( 'rtmedia_add_settings_sub_tabs', $tabs, $tab );
-            $tabs_html .= '<ul>';
-            foreach ( $tabs as $tab ) {
 
-                $icon = '';
-                if ( isset ( $tab[ 'icon' ] ) && ! empty ( $tab[ 'icon' ] ) )
-                    $icon = '<i class="' . $tab[ 'icon' ] . '"></i>';
-
-                $tabs_html.= '<li><a id="tab-' . substr ( $tab[ 'href' ], 1 ) . '" title="' . $tab[ 'title' ] . '" href="' . $tab[ 'href' ] . '" class="rtmedia-tab-title ' . sanitize_title ( $tab[ 'name' ] ) . '">' . $icon . ' ' . $tab[ 'name' ] . '</a></li>';
-            }
-            $tabs_html .= '</ul>';
-
-            //echo $tabs_html;
+	    $tabs[] = array(
+                'href' => '#rtmedia-general',
+                'icon' => 'rtmicon-wrench',
+                'title' => __( 'Other Settings', 'rtmedia' ),
+                'name' => __( 'Other Settings', 'rtmedia' ),
+                'callback' => array( 'RTMediaFormHandler', 'general_content' )
+            );
             return $tabs;
         }
 
