@@ -40,7 +40,7 @@ class RTMediaFeatured extends RTMediaUserInteraction {
         remove_filter('rtmedia_action_buttons_before_delete', array($this,'button_filter'));
         add_filter ( 'rtmedia_addons_action_buttons', array( $this, 'button_filter' ) );
         add_filter ( 'rtmedia_author_media_options', array( $this, 'button_filter' ),12, 1 );
-        
+
         //$this->get();
     }
 
@@ -117,15 +117,15 @@ class RTMediaFeatured extends RTMediaUserInteraction {
     function content () {
         $this->get ();
         $actions = $this->model->get ( array( 'id' => $this->featured ) );
-        if ( ! $actions )
-            return false;
+        if ( ! $actions ) {
+	    $content = false;
+	} else {
+	    $featured = $actions[ 0 ];
+	    $type = $featured->media_type;
 
-        $featured = $actions[ 0 ];
-        $type = $featured->media_type;
-
-        $content_xtra = '';
-        switch ( $type ) {
-            case 'video' :
+	    $content_xtra = '';
+	    switch ( $type ) {
+		case 'video' :
                 $this->generate_featured_size ( $this->featured );
                 if ( $featured->media_id ) {
                     $image_array = image_downsize ( $featured->media_id, 'rt_media_thumbnail' );
@@ -133,17 +133,18 @@ class RTMediaFeatured extends RTMediaUserInteraction {
                 }
                 $content = '<video class="bp-media-featured-media wp-video-shortcode"' . $content_xtra . 'src="' . wp_get_attachment_url ( $featured->media_id ) . '" width="' . $this->settings[ 'width' ] . '" height="' . $this->settings[ 'height' ] . '" type="video/mp4" id="bp_media_video_' . $this->featured . '" controls="controls" preload="true"></video>';
                 break;
-            case 'music' :
-                $content = '<audio class="bp-media-featured-media wp-audio-shortcode"' . $content_xtra . 'src="' . wp_get_attachment_url ( $featured->media_id ) . '" width="' . $this->settings[ 'width' ] . '" type="audio/mp3" id="bp_media_audio_' . $this->featured . '" controls="controls" preload="none"></video>';
-                break;
-            case 'photo' :
-                $this->generate_featured_size ( $featured->media_id );
-                $image_array = image_downsize ( $featured->media_id, 'rt_media_featured_image' );
-                $content = '<img src="' . $image_array[ 0 ] . '" alt="' . $featured->media_title . '" />';
-                break;
-            default :
-                return false;
-        }
+		case 'music' :
+		    $content = '<audio class="bp-media-featured-media wp-audio-shortcode"' . $content_xtra . 'src="' . wp_get_attachment_url ( $featured->media_id ) . '" width="' . $this->settings[ 'width' ] . '" type="audio/mp3" id="bp_media_audio_' . $this->featured . '" controls="controls" preload="none"></video>';
+		    break;
+		case 'photo' :
+		    $this->generate_featured_size ( $featured->media_id );
+		    $image_array = image_downsize ( $featured->media_id, 'rt_media_featured_image' );
+		    $content = '<img src="' . $image_array[ 0 ] . '" alt="' . $featured->media_title . '" />';
+		    break;
+		default :
+		    return false;
+	    }
+	}
         return apply_filters("rtmedia_featured_media_content",$content);
     }
 
