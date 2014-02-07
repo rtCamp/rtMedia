@@ -56,35 +56,39 @@ class RTMediaActivity {
         if( intval( $limitActivityFeed ) > 0 )
             $media_details = array_slice( $media_details, 0, $limitActivityFeed, true);
 	$rtmedia_activity_ul_class = apply_filters("rtmedia_activity_ul_class","large-block-grid-3");
-        $html .= '<ul class="rtmedia-list '.$rtmedia_activity_ul_class.'">';
+	   $li_content = "";
+       $count = 0;
         foreach ( $media_details as $media ) {
-            $html .= '<li class="rtmedia-list-item media-type-' . $media->media_type . '">';
+            $li_content .= '<li class="rtmedia-list-item media-type-' . $media->media_type . '">';
             if ( $media->media_type == 'photo' )
-                $html .= '<a href ="' . get_rtmedia_permalink ( $media->id ) . '">';
-            $html .= '<div class="rtmedia-item-thumbnail">';
+                $li_content .= '<a href ="' . get_rtmedia_permalink ( $media->id ) . '">';
+            $li_content .= '<div class="rtmedia-item-thumbnail">';
 
-            $html .= $this->media ( $media );
+            $li_content .= $this->media ( $media );
 
-            $html .= '</div>';
+            $li_content .= '</div>';
 
-            $html .= '<div class="rtmedia-item-title">';
-            $html .= '<h4 title="' . $media->media_title . '">';
+            $li_content .= '<div class="rtmedia-item-title">';
+            $li_content .= '<h4 title="' . $media->media_title . '">';
             if ( $media->media_type != 'photo' )
-                $html .= '<a href="' . get_rtmedia_permalink ( $media->id ) . '">';
+                $li_content .= '<a href="' . get_rtmedia_permalink ( $media->id ) . '">';
 
-            $html .= $media->media_title;
+            $li_content .= $media->media_title;
             if ( $media->media_type != 'photo' )
-                $html .= '</a>';
-            $html .= '</h4>';
-            $html .= '</div>';
+                $li_content .= '</a>';
+            $li_content .= '</h4>';
+            $li_content .= '</div>';
             if ( $media->media_type == 'photo' )
-                $html .= '</a>';
+                $li_content .= '</a>';
 
-            $html .= '<div class="rtmedia-item-actions">';
-            $html .= $this->actions ();
-            $html .= '</div>';
-            $html .= '</li>';
+            $li_content .= '<div class="rtmedia-item-actions">';
+            $li_content .= $this->actions ();
+            $li_content .= '</div>';
+            $li_content .= '</li>';
+            $count++;
         }
+        $html .= '<ul class="rtmedia-list '.$rtmedia_activity_ul_class.' rtmedia-activity-media-length-'.$count.'">';
+        $html .= $li_content;
         $html .= '</ul>';
         $html .= '</div>';
         return $html;
