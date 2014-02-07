@@ -74,7 +74,7 @@ class RTMediaUploadFile {
         if ( isset ( $this->uploaded[ "context" ] ) && isset ( $this->uploaded[ "context_id" ] ) ) {
             if ( $this->uploaded[ "context" ] != 'group' ) {
                 $rtmedia_upload_prefix = 'users/';
-                $id = apply_filters('rtmedia_current_user', 'get_current_user_id');
+                $id = apply_filters('rtmedia_current_user', get_current_user_id());
             } else {
                 $rtmedia_upload_prefix = 'groups/';
                 $id = $this->uploaded[ "context_id" ];
@@ -82,7 +82,7 @@ class RTMediaUploadFile {
         } else {
             if ( $rtmedia_interaction->context->type != 'group' ) {
                 $rtmedia_upload_prefix = 'users/';
-                $id = apply_filters('rtmedia_current_user', 'get_current_user_id');
+                $id = apply_filters('rtmedia_current_user', get_current_user_id());
             } else {
                 $rtmedia_upload_prefix = 'groups/';
                 $id = $rtmedia_interaction->context->id;
@@ -98,7 +98,7 @@ class RTMediaUploadFile {
                         str_replace ( $upload_dir[ 'subdir' ], '', $upload_dir[ 'url' ] ) )
                 . 'rtMedia/' . $rtmedia_upload_prefix . $id
                 . $upload_dir[ 'subdir' ];
-        }        
+        }
 	$upload_dir = apply_filters("rtmedia_filter_upload_dir",$upload_dir);
         return $upload_dir;
     }
