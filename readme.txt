@@ -14,7 +14,7 @@ Add albums, photo, audio/video encoding, privacy, sharing, front-end uploads & m
 
 > **rtMedia-PRO**
 >
-> If you are looking for more features, priority support, please consider [rtMedia-PRO](https://rtcamp.com/store/rtmedia-pro/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media). [rtMedia-PRO](https://rtcamp.com/store/rtmedia-pro/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media) is premiun & open-source (and of-course GPL too).
+> If you are looking for more features, priority support, please consider [rtMedia-PRO](https://rtcamp.com/store/rtmedia-pro/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media). [rtMedia-PRO](https://rtcamp.com/store/rtmedia-pro/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media) is premium & open-source (and of-course GPL too).
 
 rtMedia is the **only** complete media solution for WordPress, BuddyPress and bbPress.
 
