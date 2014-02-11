@@ -118,6 +118,15 @@ class RTMediaThemes {
 	    </div>
 	    <hr>
 	    <div class="row">
+		<div class="columns large-4 rtmedia-theme-image"><a href="http://rt.cx/kleo" target="_blank"><img src="<?php echo RTMEDIA_URL.'app/assets/img/rtmedia-theme-kleo.png' ?>" /></a> </div>
+		<div class="columns large-7">
+		    <h3 class="rtmedia-theme-3rd-party-title"><a href="http://rt.cx/kleo" target="_blank">KLEO</a></h3>
+		    <div><span><?php _e('You no longer need to be a professional developer or designer to create an awesome website. Let your imagination run wild and create the site of your dreams. KLEO has all the tools to get you started.','rtmedia'); ?></span></div>
+		    <div><h4><?php echo __('Click','rtmedia') . " <a href='http://rt.cx/kleo' target='_blank'>".__('here','rtmedia')."</a> ". __('for preview.','rtmedia'); ?></h4></div>
+		</div>
+	    </div>
+	    <hr>
+	    <div class="row">
 		<div class="columns large-12">
 		    <h3><?php _e('Are you a developer?','rtmedia'); ?></h3>
 		    <p><?php  _e('If you have developed a rtMedia compatible theme and would like it to list here, please email us at','rtmedia') ?> <a href="mailto:product@rtcamp.com"><?php _e('product@rtcamp.com','rtmedia') ?></a>.</p>
