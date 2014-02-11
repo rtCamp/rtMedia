@@ -3,3 +3,4 @@
 *.bak
 /nbproject/private/
 */.sass-cache/
+.idea

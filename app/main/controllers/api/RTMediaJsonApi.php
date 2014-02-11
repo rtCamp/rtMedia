@@ -19,6 +19,10 @@ class RTMediaJsonApi{
         $msg_invalid_media_id = 'invalid media id',
         $ec_invalid_request_type = 600007,
         $msg_invalid_request_type = 'invalid request type',
+        $ec_bp_missing = 600008,
+        $msg_bp_missing = 'buddypress not found',
+        $ec_api_disabled = 600009,
+        $msg_api_disabled = 'API disabled by site administrator',
         $rtmediajsonapifunction,
         $user_id = '';
 
@@ -32,11 +36,25 @@ class RTMediaJsonApi{
     }
 
     function rtmedia_api_process_request(){
+        $rtmedia_enable_json_api = FALSE;
+        if(function_exists('rtmedia_get_site_option')){
+            $rtmedia_options = rtmedia_get_site_option('rtmedia-options');
+            if(!empty($rtmedia_options)){
+                if($rtmedia_options['rtmedia_enable_api']){
+                    $rtmedia_enable_json_api = TRUE;
+                }
+            }
+        }
+        if(!$rtmedia_enable_json_api){
+            echo $this->rtmedia_api_response_object( 'FALSE', $this->ec_api_disabled, $this->msg_api_disabled );
+            die;
+        }
         if ( empty ( $_POST['method'] )  ){
-            echo $this->rtmedia_api_response_object( 'FALSE', $this->$ec_method_missing, $this->msg_method_missing );
+            echo $this->rtmedia_api_response_object( 'FALSE', $this->ec_method_missing, $this->msg_method_missing );
+            die;
         }
         if (!class_exists('BuddyPress')) {
-            echo $this->rtmedia_api_response_object( 'FALSE', '600008', 'buddypress not active' );
+            echo $this->rtmedia_api_response_object( 'FALSE', $this->ec_bp_missing, $this->msg_bp_missing );
             die;
         }
         $this->rtmediajsonapifunction = new RTMediaJsonApiFunctions();
@@ -48,7 +66,7 @@ class RTMediaJsonApi{
             add_filter('rtmedia_current_user', array($this->rtmediajsonapifunction, 'rtmedia_api_set_user_id'));
         }
         //Process Request
-        $method = $_POST['method'];
+        $method = !empty( $_POST['method'] ) ? $_POST['method']: '';
 
         switch ( $method ){
 
@@ -118,7 +136,9 @@ class RTMediaJsonApi{
             exit;
         }
 
-        ob_end_clean();
+        if (ob_get_contents()) {
+            ob_end_clean();
+        }
         global $wpdb;
         $rtmapilogin = new RTMediaApiLogin();
         $login_details = array( 'last_access'   => $wpdb->get_var("SELECT current_timestamp();") );
