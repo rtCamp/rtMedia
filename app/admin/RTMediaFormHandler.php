@@ -339,6 +339,7 @@ class RTMediaFormHandler {
 					    'desc' => __('This will allow handling API requests for rtMedia sent through any mobile app.','rtmedia')
 				    ),
 				    'group' => 80,
+				    'after_content' => __('You can refer API document from <a href="https://rtcamp.com/rtmedia/docs/developer/json-api/">here</a>'),
 			),//
 		);
 
