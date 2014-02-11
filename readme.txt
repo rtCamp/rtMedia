@@ -6,7 +6,7 @@ License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires at least: WordPress 3.6
 Tested up to: WordPress 3.7 + BuddyPress 1.8.1
-Stable tag: 3.5.3
+Stable tag: 3.6
 
 Add albums, photo, audio/video encoding, privacy, sharing, front-end uploads & more. All this works mobile/tablets devices.
 
@@ -14,7 +14,7 @@ Add albums, photo, audio/video encoding, privacy, sharing, front-end uploads & m
 
 > **rtMedia-PRO**
 >
-> If you are looking for more features, priority support, please consider [rtMedia-PRO](https://rtcamp.com/store/rtmedia-pro/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media). [rtMedia-PRO](https://rtcamp.com/store/rtmedia-pro/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media) is premiun & open-source (and of-course GPL too).
+> If you are looking for more features, priority support, please consider [rtMedia-PRO](https://rtcamp.com/store/rtmedia-pro/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media). [rtMedia-PRO](https://rtcamp.com/store/rtmedia-pro/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media) is premium & open-source (and of-course GPL too).
 
 rtMedia is the **only** complete media solution for WordPress, BuddyPress and bbPress.
 
@@ -132,8 +132,8 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 == Changelog ==
 
 Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "Visit rtMedia's Features page") to get some details about future releases.
-= 3.5.3 =
-* JSON API support
+= 3.6 =
+* rtMedia JSON API added
 * Updated russian translations
 * Bug fixes
 
@@ -691,8 +691,8 @@ Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_sou
 
 == Upgrade Notice ==
 
-= 3.5.3 =
-Requires BuddyPress 1.7 or higher, if using BuddyPress. API support, updated russian translations, bug fixes.
+= 3.6 =
+Requires BuddyPress 1.7 or higher, if using BuddyPress. rtMedia API added, updated russian translations, bug fixes.
 
 == Sponsors ==
 
