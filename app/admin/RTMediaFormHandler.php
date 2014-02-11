@@ -330,6 +330,16 @@ class RTMediaFormHandler {
 				    'group' => 100,
 				    'after_content' => __('You can signup for rtMedia affiliate program from <a href="https://rtcamp.com/affiliates">here</a>'),
 			),//
+			'rtmedia_enable_api' => array(
+				    'title' => __('Enable JSON API','rtmedia'),
+				    'callback' => array('RTMediaFormHandler', 'checkbox'),
+				    'args' => array(
+					    'key' => 'rtmedia_enable_api',
+					    'value' => $options['rtmedia_enable_api'],
+					    'desc' => __('This will allow handling API requests for rtMedia sent through any mobile app.','rtmedia')
+				    ),
+				    'group' => 80,
+			),//
 		);
 
 		return $render;
@@ -342,6 +352,7 @@ class RTMediaFormHandler {
                 $render_options = apply_filters("rtmedia_general_content_add_itmes",$render_options, $options);
 		$general_group = array();
 		$general_group[10] = "Admin Settings";
+		$general_group[80] = "API Settings";
 		$general_group[90] = "Miscellaneous";
 		$general_group[100] = "Footer Link";
 		$general_group = apply_filters("rtmedia_general_content_groups", $general_group);
