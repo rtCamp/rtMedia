@@ -115,7 +115,7 @@ if (!class_exists('RTMediaAddon')) {
 			$addons = array(
 				 array(
                     'title' => __('rtMedia Photo Tagging', 'rtmedia'),
-                    'img_src' => $img_src.'bpm-photo-tagging.png',
+                    'img_src' => $img_src.'rtmedia-phototagging-240x184.png',
                     'product_link' => 'http://rtcamp.com/store/buddypress-media-photo-tagging/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media',
                     'desc' => '<p>' . __('rtMedia Photo Tagging add-on enables tagging on photos uploaded using BuddyPress Media.', 'rtmedia') . '</p>
                     <p><strong>' . __('Important', 'rtmedia') . ':</strong> ' . __('You need to have ImageMagick installed on your server for this addon to work.', 'rtmedia') . '</p>',
@@ -125,7 +125,7 @@ if (!class_exists('RTMediaAddon')) {
                 ),
                 array(
                     'title' => __('rtMedia Instagram', 'rtmedia'),
-                    'img_src' => $img_src.'BuddyPressMedia-Instagram.png',
+                    'img_src' => $img_src.'rtmedia-instagram-240x184.png',
                     'product_link' => 'http://rtcamp.com/store/buddypress-media-instagram/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media',
                     'desc' => '<p>' . __('rtMedia Instagram adds Instagram like filters to images uploaded with rtMedia.', 'rtmedia') . '</p>
                     <p><strong>' . __('Important', 'rtmedia') . ':</strong> ' . __('You need to have ImageMagick installed on your server for this addon to work.', 'rtmedia') . '</p>',
@@ -135,21 +135,21 @@ if (!class_exists('RTMediaAddon')) {
                 ),
                 array(
                     'title' => __('rtMedia Kaltura Add-on', 'rtmedia'),
-                    'img_src' => $img_src.'new-buddypress-media-kaltura-logo-240x184.png',
+                    'img_src' => $img_src.'rtmedia-kaltura-240x184.png',
                     'product_link' => 'http://rtcamp.com/store/buddypress-media-kaltura/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media',
                     'desc' => '<p>' . __('Add support for more video formats using Kaltura video solution.', 'rtmedia') . '</p>
                     <p>' . __('Works with Kaltura.com, self-hosted Kaltura-CE and Kaltura-on-premise.', 'rtmedia') . '</p>',
-                    'price' => '$149',
+                    'price' => '$199',
                     'demo_link' => 'http://demo.rtcamp.com/bpm-kaltura/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media',
                     'buy_now' => 'http://rtcamp.com/store/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media&add-to-cart=15446'
                 ),
                 array(
                     'title' => __('rtMedia FFMPEG Add-on', 'rtmedia'),
-                    'img_src' => $img_src.'ffmpeg-logo-240x184.png',
+                    'img_src' => $img_src.'rtmedia-ffmpeg-240x184.png',
                     'product_link' => 'http://rtcamp.com/store/buddypress-media-ffmpeg-converter/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media',
                     'desc' => '<p>' . __('Add supports for more audio & video formats using open-source media-node.', 'rtmedia') . '</p>
                         <p>' . __('Media node comes with automated setup script for Ubuntu/Debian.', 'rtmedia') . '</p>',
-                    'price' => '$99',
+                    'price' => '$199',
                     'demo_link' => 'http://demo.rtcamp.com/bpm-media/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media',
                     'buy_now' => 'http://rtcamp.com/store/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media&add-to-cart=13677'
                 )
