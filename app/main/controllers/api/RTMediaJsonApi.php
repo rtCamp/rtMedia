@@ -32,6 +32,15 @@ class RTMediaJsonApi{
     }
 
     function rtmedia_api_process_request(){
+        $rtmedia_enable_json_api = FALSE;
+        if(function_exists('rtmedia_get_site_option')){
+            $rtmedia_options = rtmedia_get_site_option('rtmedia-options');
+            if(!empty($rtmedia_options))
+        }
+        
+        echo "<pre>";
+        print_r($rtmedia_options);
+        echo "</pre>";die;
         if ( empty ( $_POST['method'] )  ){
             echo $this->rtmedia_api_response_object( 'FALSE', $this->$ec_method_missing, $this->msg_method_missing );
         }
