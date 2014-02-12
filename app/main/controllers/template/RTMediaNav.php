@@ -68,7 +68,10 @@ class RTMediaNav {
 
     function admin_nav () {
         global $wp_admin_bar;
-
+	global $rtmedia;
+	if( ( ! isset( $rtmedia->options['buddypress_enableOnProfile'] ) ) || ( isset( $rtmedia->options['buddypress_enableOnProfile'] ) && $rtmedia->options['buddypress_enableOnProfile'] == '0' ) ) {
+	    return;
+	}
         if ( function_exists ( "bp_use_wp_admin_bar" ) && ! bp_use_wp_admin_bar () )
             return;
 

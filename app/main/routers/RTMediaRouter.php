@@ -77,10 +77,10 @@ class RTMediaRouter {
 		$wp_query->is_404 = true;
 		return false;
 	    }
-	    if( ( ! isset( $rtmedia->options['buddypress_enableOnProfile'] ) ) || ( $rtmedia_query->query['context'] == "profile" && isset( $rtmedia->options['buddypress_enableOnProfile'] ) && $rtmedia->options['buddypress_enableOnProfile'] == '0' ) ) {
-		$wp_query->is_404 = true;
-		return false;
-	    }
+//	    if( ( ! isset( $rtmedia->options['buddypress_enableOnProfile'] ) ) || ( $rtmedia_query->query['context'] == "profile" && isset( $rtmedia->options['buddypress_enableOnProfile'] ) && $rtmedia->options['buddypress_enableOnProfile'] == '0' ) ) {
+//		$wp_query->is_404 = true;
+//		return false;
+//	    }
 	}
         $return = isset ( $wp_query->query_vars[ $this->slug ] );
 	$return = apply_filters('rtmedia_return_is_template',$return,$this->slug);
