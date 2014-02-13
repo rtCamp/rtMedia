@@ -69,6 +69,14 @@ jQuery(document).ready(function($) {
             }
 
         });
+	var general_videothumb = jQuery('input[name^="rtmedia-options[general_videothumbs]"]');
+	if( return_code && typeof general_videothumb != "undefined" ) {
+	    if( general_videothumb.val() <= 0 ) {
+		alert("Number of video thumbnails to be generated should be greater than 0 in image sizes settings. ");
+		return_code = false;
+                return false;
+	    }
+	}
         if (!return_code) {
             e.preventDefault();
         }

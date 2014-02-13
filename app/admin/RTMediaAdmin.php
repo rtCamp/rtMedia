@@ -453,7 +453,7 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
          * @global string 'rtmedia'
          */
         public function menu () {
-            add_menu_page ( 'rtMedia', 'rtMedia', 'manage_options', 'rtmedia-settings', array( $this, 'settings_page' ),RTMEDIA_URL."app/assets/img/rtmedia-logo.png" );
+            add_menu_page ( 'rtMedia', 'rtMedia', 'manage_options', 'rtmedia-settings', array( $this, 'settings_page' ),RTMEDIA_URL."app/assets/img/rtmedia-logo.png", "90.1" );
             add_submenu_page ( 'rtmedia-settings', __( 'Settings', 'rtmedia' ), __( 'Settings', 'rtmedia' ), 'manage_options', 'rtmedia-settings', array( $this, 'settings_page' ) );
             add_submenu_page ( 'rtmedia-settings', __( 'Addons', 'rtmedia' ), __( 'Addons', 'rtmedia' ), 'manage_options', 'rtmedia-addons', array( $this, 'addons_page' ) );
             add_submenu_page ( 'rtmedia-settings', __( 'Support', 'rtmedia' ), __( 'Support', 'rtmedia' ), 'manage_options', 'rtmedia-support', array( $this, 'support_page' ) );
