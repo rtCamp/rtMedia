@@ -593,6 +593,7 @@ jQuery(document).ready(function($) {
             var ext_array = objUploadView.uploader.settings.filters[0].extensions.split(',');
             if(tmp_array.length > 1){
                 var ext= tmp_array[tmp_array.length - 1];
+		ext = ext.toLowerCase();
                 if( jQuery.inArray( ext ,ext_array) === -1){
                     return true;
                 }
