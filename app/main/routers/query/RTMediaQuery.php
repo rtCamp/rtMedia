@@ -551,6 +551,8 @@ class RTMediaQuery {
             }
         }
 
+	$this->media_query = apply_filters( 'rtmedia_media_query', $this->media_query );
+
         if ( $this->is_album_gallery () ) {
 
             if ( isset ( $author ) ) {

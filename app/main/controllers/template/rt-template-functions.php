@@ -378,8 +378,12 @@ function rtmedia_album_image ( $size = 'thumbnail', $id = false) {
     if(isset($rtmedia_query->query['context_id']) && isset( $rtmedia_query->query['context'] ) && $rtmedia_query->query['context'] != "group" ){
         $media = $model->get_media ( array( 'album_id' => $id, 'media_type' => 'photo', 'media_author' => $rtmedia_query->query['context_id'] ), 0, 1 );
     } else {
-        $media = $model->get_media ( array( 'album_id' => $id, 'media_type' => 'photo'), 0, 1 );
-        }
+	if( isset( $rtmedia_query->query['context_id'] ) && isset( $rtmedia_query->query['context'] ) && $rtmedia_query->query['context'] == "group" ) {
+	    $media = $model->get_media ( array( 'album_id' => $id, 'media_type' => 'photo', 'context_id' => $rtmedia_query->query['context_id'] ), 0, 1 );
+	} else {
+	    $media = $model->get_media ( array( 'album_id' => $id, 'media_type' => 'photo'), 0, 1 );
+	}
+    }
 
     if ( $media ) {
         $src = rtmedia_image ( $size, $media[ 0 ]->id ,false);

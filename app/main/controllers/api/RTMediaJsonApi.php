@@ -960,11 +960,11 @@ class RTMediaJsonApi{
             $tmp_name = UPLOAD_DIR_LOOK . $title;
             $file = $tmp_name . '.'.$image_type;
             $success = file_put_contents($file, $rtmedia_file);
-            add_filter('upload_dir', 'api_new_look_upload_dir');
+            add_filter('upload_dir', array($this, 'api_new_media_upload_dir'));
         //    echo $file;
             $new_look = wp_upload_bits($title.'.'.$image_type, '', $rtmedia_file);
             $new_look['type'] = 'image/'.$image_type;
-            remove_filter('upload_dir', 'api_new_look_upload_dir');
+            remove_filter('upload_dir', array($this, 'api_new_media_upload_dir'));
             foreach ( $new_look as $key => $value ){
                 $new_look[0][$key] = $value;
                 unset($new_look[$key]);
@@ -988,7 +988,9 @@ class RTMediaJsonApi{
             $rtmedia = new RTMediaMedia();
             $rtupload = $rtmedia->add( $uploaded, $new_look );
             $id = rtmedia_media_id($rtupload[0]);
-            wp_set_post_terms( $id , $_POST["tags"] , 'media-category',true);
+            if(!empty($_POST['tags'])){
+                wp_set_post_terms( $id , $_POST["tags"] , 'media-category',true);
+            }
             $media = $rtmedia->model->get ( array( 'id' => $rtupload[ 0 ] ) );
             $rtMediaNav = new RTMediaNav();
             $perma_link = "";
@@ -1173,7 +1175,7 @@ class RTMediaJsonApi{
         }
 
     }
-    function api_new_look_upload_dir($args){
+    function api_new_media_upload_dir($args){
        if( !empty($args) || !is_array($args) || empty($_POST['token']) ){
            foreach( $args as $key => $arg ){
                $replacestring = 'uploads/rtMedia/users/'.$this->rtmediajsonapifunction->rtmedia_api_get_user_id_from_token($_POST['token']);
