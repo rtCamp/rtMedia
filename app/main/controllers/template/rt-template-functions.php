@@ -407,7 +407,7 @@ function rtmedia_delete_allowed () {
 
     $flag = $rtmedia_media->media_author == get_current_user_id ();
 
-    if( isset($rtmedia_media->context) && $rtmedia_media->context == 'group' && function_exists('bp_group_is_admin')){
+    if( !$flag && isset($rtmedia_media->context) && $rtmedia_media->context == 'group' && function_exists('bp_group_is_admin')){
             $flag = ( bp_group_is_admin() || bp_group_is_mod());
     }
 
