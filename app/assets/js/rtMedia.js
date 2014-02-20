@@ -136,6 +136,18 @@ var rtMediaHook = {
             return true;
     }
 }
+
+//drop-down js
+function rtmedia_init_action_dropdown() {
+    $('.click-nav > span').toggleClass('no-js js');
+    $('.click-nav .js ul').hide();
+    $('.click-nav .clicker').click(function(e) {
+	$(this).next('ul').toggle();
+	//$('.click-nav ul').toggle();
+	e.stopPropagation();
+    });
+}
+
 jQuery('document').ready(function($) {
 
     // open magnific popup as modal for create album/playlist
@@ -331,7 +343,7 @@ jQuery('document').ready(function($) {
                 jQuery('.mfp-content .rtm-lightbox-container .rtmedia-single-meta, .mfp-content .rtm-lightbox-container #rtmedia-single-media-container .rtmedia-media, .rtm-lightbox-container .mejs-video').css({ 'height' : height*0.8, 'max-height' : height*0.8, 'over-flow' : 'hidden' });
                 //mejs-video
                 //init the options dropdown menu
-                init_action_dropdown();
+                rtmedia_init_action_dropdown();
                 //get focus on comment textarea when comment-link is clicked
                 jQuery('.rtmedia-comment-link').on('click', function(e){
                     e.preventDefault();
@@ -432,17 +444,7 @@ jQuery('document').ready(function($) {
 //        jQuery('#rtm-media-gallery-uploader').slideToggle();
 //    });
 
-    //drop-down js
-    function init_action_dropdown() {
-        $('.click-nav > span').toggleClass('no-js js');
-        $('.click-nav .js ul').hide();
-        $('.click-nav .clicker').click(function(e) {
-            $(this).next('ul').toggle();
-            //$('.click-nav ul').toggle();
-            e.stopPropagation();
-        });
-    }
-    init_action_dropdown();
+    rtmedia_init_action_dropdown();
     $(document).click(function() {
         if ($('.click-nav ul').is(':visible')) {
             $('.click-nav ul', this).hide();
