@@ -139,9 +139,9 @@ var rtMediaHook = {
 
 //drop-down js
 function rtmedia_init_action_dropdown() {
-    $('.click-nav > span').toggleClass('no-js js');
-    $('.click-nav .js ul').hide();
-    $('.click-nav .clicker').click(function(e) {
+    jQuery('.click-nav > span').toggleClass('no-js js');
+    jQuery('.click-nav .js ul').hide();
+    jQuery('.click-nav .clicker').click(function(e) {
 	$(this).next('ul').toggle();
 	//$('.click-nav ul').toggle();
 	e.stopPropagation();
