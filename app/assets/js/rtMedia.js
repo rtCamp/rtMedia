@@ -94,6 +94,7 @@ function apply_rtMagnificPopup(selector){
                     },
                     close: function(e) {
                         //console.log(e);
+			rtmedia_init_action_dropdown();
                     },
                     BeforeChange: function(e) {
                         //console.log(e);
