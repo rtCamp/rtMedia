@@ -172,6 +172,24 @@ jQuery('document').ready(function($) {
         apply_rtMagnificPopup('.rtmedia-list-media, .rtmedia-activity-container ul.rtmedia-list, #bp-media-list,.widget-item-listing,.bp-media-sc-list, li.media.album_updated ul,ul.bp-media-list-media, li.activity-item div.activity-content div.activity-inner div.bp_media_content, .rtm-bbp-container');
     }
 
+    jQuery.ajaxPrefilter(function(options, originalOptions, jqXHR) {
+	try{
+            if (originalOptions.data == null || typeof(originalOptions.data) == "undefined" || typeof(originalOptions.data.action) == "undefined" ) {
+                return true;
+            }
+        }catch(e){
+            return true;
+        }
+	if (originalOptions.data.action == 'activity_get_older_updates') {
+	    var orignalSuccess = originalOptions.success;
+	    options.success = function(response) {
+		orignalSuccess(response);
+		apply_rtMagnificPopup('.rtmedia-activity-container ul.rtmedia-list, #bp-media-list, .bp-media-sc-list, li.media.album_updated ul,ul.bp-media-list-media, li.activity-item div.activity-content div.activity-inner div.bp_media_content');
+		rtMediaHook.call('rtmedia_js_after_activity_added', []);
+	    }
+	}
+    });
+
     jQuery('.rtmedia-container').on('click', '.select-all', function(e) {
         e.preventDefault();
         jQuery(this).toggleClass('unselect-all').toggleClass('select-all');
