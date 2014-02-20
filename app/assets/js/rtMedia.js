@@ -211,6 +211,7 @@ jQuery('document').ready(function($) {
         jQuery('.rtmedia-list input').each(function() {
             jQuery(this).prop('checked', true);
         });
+	jQuery('.rtmedia-list-item').addClass('bulk-selected');
     });
 
     jQuery('.rtmedia-container').on('click', '.unselect-all', function(e) {
@@ -221,6 +222,7 @@ jQuery('document').ready(function($) {
         jQuery('.rtmedia-list input').each(function() {
             jQuery(this).prop('checked', false);
         });
+	jQuery('.rtmedia-list-item').removeClass('bulk-selected');
     });
 
     jQuery('.rtmedia-container').on('click', '.rtmedia-move', function(e) {
