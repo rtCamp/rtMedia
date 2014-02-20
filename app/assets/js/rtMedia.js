@@ -142,7 +142,7 @@ function rtmedia_init_action_dropdown() {
     jQuery('.click-nav > span').toggleClass('no-js js');
     jQuery('.click-nav .js ul').hide();
     jQuery('.click-nav .clicker').click(function(e) {
-	$(this).next('ul').toggle();
+	jQuery(this).next('ul').toggle();
 	//$('.click-nav ul').toggle();
 	e.stopPropagation();
     });
