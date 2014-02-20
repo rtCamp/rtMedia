@@ -618,9 +618,8 @@ class RTMediaTemplate {
             } else {
                 $located = trailingslashit ( RTMEDIA_PATH ) . $ogpath . $template_name;
             }
+	    $located = apply_filters('rtmedia_located_template', $located , $url, $ogpath, $template_name );// filter for rtmedia pro
         }
-
-        $located = apply_filters('rtmedia_located_template', $located , $url, $ogpath, $template_name );// filter for rtmedia pro
         return $located;
     }
 
