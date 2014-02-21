@@ -681,11 +681,8 @@ function rmedia_single_comment ( $comment ) {
     $html .= "<div><div class='rtmedia-comment-details'>";
     $html .= '<span class ="rtmedia-comment-author">'
             . '' . $user_name . '</span>';
-    if(function_exists('nl2br') ) {
-	$html .= '<span class="rtmedia-comment-content">' . nl2br( make_clickable( $comment[ 'comment_content' ] ) ) . '</span>';
-    } else {
-	$html .= '<span class="rtmedia-comment-content">' . make_clickable( $comment[ 'comment_content' ] ) . '</span>';
-    }
+
+    $html .= '<div class="rtmedia-comment-content">' . wpautop( make_clickable( $comment[ 'comment_content' ] ) ) . '</div>';
 
     global $rtmedia_media;
     if(isset( $comment['user_id'] ) && isset( $rtmedia_media->media_author) && ( is_rt_admin() || ( get_current_user_id() == $comment['user_id'] || $rtmedia_media->media_author == get_current_user_id() )) ){ // show delete button for comment author and admins
