@@ -682,9 +682,9 @@ function rmedia_single_comment ( $comment ) {
     $html .= '<span class ="rtmedia-comment-author">'
             . '' . $user_name . '</span>';
     if(function_exists('nl2br') ) {
-	$html .= '<span class="rtmedia-comment-content">' . nl2br( $comment[ 'comment_content' ] ) . '</span>';
+	$html .= '<span class="rtmedia-comment-content">' . nl2br( make_clickable( $comment[ 'comment_content' ] ) ) . '</span>';
     } else {
-	$html .= '<span class="rtmedia-comment-content">' . $comment[ 'comment_content' ] . '</span>';
+	$html .= '<span class="rtmedia-comment-content">' . make_clickable( $comment[ 'comment_content' ] ) . '</span>';
     }
 
     global $rtmedia_media;
