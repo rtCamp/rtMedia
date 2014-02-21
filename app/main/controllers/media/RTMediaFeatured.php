@@ -19,7 +19,7 @@ class RTMediaFeatured extends RTMediaUserInteraction {
     public $featured;
     public $settings;
 
-    function __construct ( $user_id = false, $flag = false ) {
+    function __construct ( $user_id = false, $flag = true ) {
         $args = array(
             'action' => 'featured',
             'label' => __('Set as Featured'),
@@ -38,9 +38,10 @@ class RTMediaFeatured extends RTMediaUserInteraction {
         parent::__construct ( $args );
         $this->settings ();
         remove_filter('rtmedia_action_buttons_before_delete', array($this,'button_filter'));
-        add_filter ( 'rtmedia_addons_action_buttons', array( $this, 'button_filter' ) );
-        add_filter ( 'rtmedia_author_media_options', array( $this, 'button_filter' ),12, 1 );
-        
+	if( $flag ) {
+	    add_filter ( 'rtmedia_addons_action_buttons', array( $this, 'button_filter' ) );
+	    add_filter ( 'rtmedia_author_media_options', array( $this, 'button_filter' ),12, 1 );
+	}
         //$this->get();
     }
 
