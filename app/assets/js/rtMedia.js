@@ -94,6 +94,7 @@ function apply_rtMagnificPopup(selector){
                     },
                     close: function(e) {
                         //console.log(e);
+			rtmedia_init_action_dropdown();
                     },
                     BeforeChange: function(e) {
                         //console.log(e);
@@ -136,6 +137,18 @@ var rtMediaHook = {
             return true;
     }
 }
+
+//drop-down js
+function rtmedia_init_action_dropdown() {
+    jQuery('.click-nav > span').toggleClass('no-js js');
+    jQuery('.click-nav .js ul').hide();
+    jQuery('.click-nav .clicker').click(function(e) {
+	jQuery(this).next('ul').toggle();
+	//$('.click-nav ul').toggle();
+	e.stopPropagation();
+    });
+}
+
 jQuery('document').ready(function($) {
 
     // open magnific popup as modal for create album/playlist
@@ -172,6 +185,24 @@ jQuery('document').ready(function($) {
         apply_rtMagnificPopup('.rtmedia-list-media, .rtmedia-activity-container ul.rtmedia-list, #bp-media-list,.widget-item-listing,.bp-media-sc-list, li.media.album_updated ul,ul.bp-media-list-media, li.activity-item div.activity-content div.activity-inner div.bp_media_content, .rtm-bbp-container');
     }
 
+    jQuery.ajaxPrefilter(function(options, originalOptions, jqXHR) {
+	try{
+            if (originalOptions.data == null || typeof(originalOptions.data) == "undefined" || typeof(originalOptions.data.action) == "undefined" ) {
+                return true;
+            }
+        }catch(e){
+            return true;
+        }
+	if (originalOptions.data.action == 'activity_get_older_updates') {
+	    var orignalSuccess = originalOptions.success;
+	    options.success = function(response) {
+		orignalSuccess(response);
+		apply_rtMagnificPopup('.rtmedia-activity-container ul.rtmedia-list, #bp-media-list, .bp-media-sc-list, li.media.album_updated ul,ul.bp-media-list-media, li.activity-item div.activity-content div.activity-inner div.bp_media_content');
+		rtMediaHook.call('rtmedia_js_after_activity_added', []);
+	    }
+	}
+    });
+
     jQuery('.rtmedia-container').on('click', '.select-all', function(e) {
         e.preventDefault();
         jQuery(this).toggleClass('unselect-all').toggleClass('select-all');
@@ -180,6 +211,7 @@ jQuery('document').ready(function($) {
         jQuery('.rtmedia-list input').each(function() {
             jQuery(this).prop('checked', true);
         });
+	jQuery('.rtmedia-list-item').addClass('bulk-selected');
     });
 
     jQuery('.rtmedia-container').on('click', '.unselect-all', function(e) {
@@ -190,6 +222,7 @@ jQuery('document').ready(function($) {
         jQuery('.rtmedia-list input').each(function() {
             jQuery(this).prop('checked', false);
         });
+	jQuery('.rtmedia-list-item').removeClass('bulk-selected');
     });
 
     jQuery('.rtmedia-container').on('click', '.rtmedia-move', function(e) {
@@ -313,7 +346,7 @@ jQuery('document').ready(function($) {
                 jQuery('.mfp-content .rtm-lightbox-container .rtmedia-single-meta, .mfp-content .rtm-lightbox-container #rtmedia-single-media-container .rtmedia-media, .rtm-lightbox-container .mejs-video').css({ 'height' : height*0.8, 'max-height' : height*0.8, 'over-flow' : 'hidden' });
                 //mejs-video
                 //init the options dropdown menu
-                init_action_dropdown();
+                rtmedia_init_action_dropdown();
                 //get focus on comment textarea when comment-link is clicked
                 jQuery('.rtmedia-comment-link').on('click', function(e){
                     e.preventDefault();
@@ -414,17 +447,7 @@ jQuery('document').ready(function($) {
 //        jQuery('#rtm-media-gallery-uploader').slideToggle();
 //    });
 
-    //drop-down js
-    function init_action_dropdown() {
-        $('.click-nav > span').toggleClass('no-js js');
-        $('.click-nav .js ul').hide();
-        $('.click-nav .clicker').click(function(e) {
-            $(this).next('ul').toggle();
-            //$('.click-nav ul').toggle();
-            e.stopPropagation();
-        });
-    }
-    init_action_dropdown();
+    rtmedia_init_action_dropdown();
     $(document).click(function() {
         if ($('.click-nav ul').is(':visible')) {
             $('.click-nav ul', this).hide();
