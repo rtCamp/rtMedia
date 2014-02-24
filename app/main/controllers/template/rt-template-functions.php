@@ -53,7 +53,9 @@ function get_rtmedia_gallery_title () {
     global $rtmedia_query;
     $title = false;
     if( isset( $rtmedia_query->media_query['media_type'] ) && !is_array( $rtmedia_query->media_query['media_type']) && $rtmedia_query->media_query['media_type'] != "") {
-
+	$photos_title =  __( 'All photos','rtmedia' );
+	$videos_title =  __( 'All videos','rtmedia' );
+	$music_title =  __( 'All music','rtmedia' );
         if($rtmedia_query->media_query['media_type'] == "music") {
             $title = __('All '. $rtmedia_query->media_query['media_type'] , 'rtmedia');
         } else {
@@ -679,7 +681,8 @@ function rmedia_single_comment ( $comment ) {
     $html .= "<div><div class='rtmedia-comment-details'>";
     $html .= '<span class ="rtmedia-comment-author">'
             . '' . $user_name . '</span>';
-    $html .= '<span class="rtmedia-comment-content">' . $comment[ 'comment_content' ] . '</span>';
+
+    $html .= '<div class="rtmedia-comment-content">' . wpautop( make_clickable( $comment[ 'comment_content' ] ) ) . '</div>';
 
     global $rtmedia_media;
     if(isset( $comment['user_id'] ) && isset( $rtmedia_media->media_author) && ( is_rt_admin() || ( get_current_user_id() == $comment['user_id'] || $rtmedia_media->media_author == get_current_user_id() )) ){ // show delete button for comment author and admins

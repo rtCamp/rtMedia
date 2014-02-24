@@ -220,21 +220,23 @@ class RTMediaInteraction {
 
         $title .= $sep . RTMEDIA_MEDIA_LABEL;
         $sep = $oldSep;
-        switch ( $this->context->type ) {
-            case 'group':
-                $title .= $sep . ucfirst ( $bp->groups->slug );
-                break;
-            case 'profile':
-                if ( class_exists ( 'BuddyPress' ) ) {
-                    $title .= $sep . ucfirst ( $bp->profile->slug );
-                } else {
-                    $title .= $sep . get_query_var ( 'author_name' );
-                }
-                break;
-            default:
-                $title .= $sep . get_post_field ( 'post_title', $this->context->id );
-                break;
-        }
+	if( isset( $this->context->type ) ) {
+	    switch ( $this->context->type ) {
+		case 'group':
+		    $title .= $sep . ucfirst ( $bp->groups->slug );
+		    break;
+		case 'profile':
+		    if ( class_exists ( 'BuddyPress' ) ) {
+			$title .= $sep . ucfirst ( $bp->profile->slug );
+		    } else {
+			$title .= $sep . get_query_var ( 'author_name' );
+		    }
+		    break;
+		default:
+		    $title .= $sep . get_post_field ( 'post_title', $this->context->id );
+		    break;
+	    }
+	}
         $title .= $sep . get_bloginfo ( 'name' );
         $rtmedia_seo_title = $title;
         return apply_filters ( "rtmedia_wp_title", $title, $default, $sep );
