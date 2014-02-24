@@ -53,13 +53,13 @@ function get_rtmedia_gallery_title () {
     global $rtmedia_query;
     $title = false;
     if( isset( $rtmedia_query->media_query['media_type'] ) && !is_array( $rtmedia_query->media_query['media_type']) && $rtmedia_query->media_query['media_type'] != "") {
-	$photos_title =  __( 'All photos','rtmedia' );
-	$videos_title =  __( 'All videos','rtmedia' );
-	$music_title =  __( 'All music','rtmedia' );
+	$photos_title =  __( 'All Photos','rtmedia' );
+	$videos_title =  __( 'All Videos','rtmedia' );
+	$music_title =  __( 'All Music','rtmedia' );
         if($rtmedia_query->media_query['media_type'] == "music") {
-            $title = __('All '. $rtmedia_query->media_query['media_type'] , 'rtmedia');
+            $title = ucwords( __('All '. $rtmedia_query->media_query['media_type'] , 'rtmedia') );
         } else {
-            $title = __('All '. $rtmedia_query->media_query['media_type'] . "s" , 'rtmedia');
+            $title = ucwords( __('All '. $rtmedia_query->media_query['media_type'] . "s" , 'rtmedia') );
         }
         return $title;
     }
