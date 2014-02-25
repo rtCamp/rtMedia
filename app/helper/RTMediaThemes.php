@@ -93,8 +93,21 @@ class RTMediaThemes {
 	?>
 	    <div class="row">
 		<div class="columns large-12">
-		    <h3><?php _e('Coming Soon...','rtmedia'); ?></h3>
-		    <p><?php _e('We are working on some rtMedia themes which will be available shortly.','rtmedia'); ?></p>
+		    <div class="columns large-4 rtmedia-theme-image"><a href="https://rtcamp.com/store/inspirebook/" target="_blank"><img src="<?php echo RTMEDIA_URL.'app/assets/img/rtmedia-theme-InspireBook.png' ?>" /></a> </div>
+		    <div class="columns large-7 rtmedia-theme-content">
+			<h3 class="rtmedia-theme-title"><a href="https://rtcamp.com/store/inspirebook/" target="_blank">InspireBook</a></h3>
+			<div>
+			    <p>
+				<span><a href="https://rtcamp.com/store/inspirebook/" target="_blank"><b>Meet InspireBook</b></a> - First official rtMedia premium theme.</span>
+			    </p>
+			    <p>
+				<span>InspireBook is a premium WordPress theme, designed especially for BuddyPress and rtMedia powered social-networks. <a href="https://rtcamp.com/introducing-inspirebook/" class="rtmedia-theme-inner-a" target="_blank">Read More</a> </span>
+			    </p>
+			    <p>
+				<span>Links: <a href="https://rtcamp.com/store/inspirebook/" target="_blank">Buy InspireBook</a> | <a href="http://demo.rtcamp.com/rtmedia/?theme=InspireBook" target="_blank">Live Demo</a> | <a href="https://rtcamp.com/docs/inspirebook/" target="_blank">Documentation</a> | <a href="https://rtcamp.com/support/forum/premium-themes/" target="_blank">Support Forum</a></span>
+			    </p>
+			</div>
+		    </div>
 		</div>
 	    </div>
 	<?php

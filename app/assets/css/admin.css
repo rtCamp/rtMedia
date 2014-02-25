@@ -757,11 +757,11 @@ abbr {
     width: 100%;
 }
 
-#rtm-themes h3.rtmedia-theme-3rd-party-title {
+#rtm-themes h3.rtmedia-theme-3rd-party-title, #rtm-themes h3.rtmedia-theme-title {
     margin: 5px 0;
 }
 
-#rtm-themes h3.rtmedia-theme-3rd-party-title a {
+#rtm-themes h3.rtmedia-theme-3rd-party-title a, #rtm-themes h3.rtmedia-theme-title a, #rtm-themes .rtmedia-theme-content a {
     text-decoration: none;
 }
 
