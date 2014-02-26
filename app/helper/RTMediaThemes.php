@@ -79,7 +79,7 @@ class RTMediaThemes {
 				    $tab_without_hash = explode("#", $tab[ 'href' ]);
 				    $tab_without_hash  = $tab_without_hash[1];
 				    echo '<div class="content' . $active_class .'" id="' . $tab_without_hash . '">';
-						call_user_func($tab['callback'], $page);
+						call_user_func($tab['callback']);
 				    echo '</div>';
 			    }
 			    echo "</div>";
