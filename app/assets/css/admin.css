@@ -63,7 +63,7 @@ div#icon-buddypress-media { background: url('../img/bpm-icon-32.png'); backgroun
 .wrap.bp-media-admin .bp-media-settings-tabs a.nav-tab.convert-videos{background-position-y:-214px;}
 .wrap.bp-media-admin .bp-media-settings-tabs a.nav-tab.insta{background-position-y:-244px;}
 .wrap.bp-media-admin .bp-media-settings-tabs a.nav-tab.watermark{background-position-y:-274px;}
-.wrap.bp-media-admin .row {max-width: 97%;}
+.wrap.bp-media-admin .row {max-width: 100%;}
 #bpm-unsubscribe-dialog { display: none; }
 #bpm-unsubscribe-dialog p { margin: 10px; }
 
@@ -770,4 +770,15 @@ abbr {
 }
 div.bp-media-metabox-holder #branding #mce-responses {
     display: inline;
+}
+.bp-media-settings-boxes-container {
+    max-width: 100%;
+    width: 100%;
+    margin: 0;
+}
+.bp-media-settings-boxes-container #bp-media-settings-boxes {
+    padding-left: 0;
+}
+.bp-media-settings-boxes-container .bp-media-metabox-holder {
+    padding-right: 0;
 }
