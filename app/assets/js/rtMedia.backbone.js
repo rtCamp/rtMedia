@@ -756,7 +756,7 @@ jQuery(document).ready(function($) {
         }catch(e){
             return true;
         }
-        if (originalOptions.data.action == 'post_update') {
+        if (originalOptions.data.action == 'post_update' || originalOptions.data.action == 'activity_widget_filter') {
             var temp = activity_attachemnt_ids;
             while (activity_attachemnt_ids.length > 0) {
                 options.data += "&rtMedia_attached_files[]=" + activity_attachemnt_ids.pop();
@@ -765,11 +765,13 @@ jQuery(document).ready(function($) {
             activity_attachemnt_ids = temp;
             var orignalSuccess = originalOptions.success;
             options.beforeSend = function() {
-                if ($.trim($("#whats-new").val()) == "") {
-                    alert(rtmedia_empty_activity_msg);
+		if (originalOptions.data.action == 'post_update') {
+		    if ($.trim($("#whats-new").val()) == "") {
+			alert(rtmedia_empty_activity_msg);
                    // $("#aw-whats-new-submit").prop("disabled", true).removeClass('loading');
-                    return false;
-                }
+			return false;
+		    }
+		}
                 if (!media_uploading && objUploadView.uploader.files.length > 0) {
                     $("#whats-new-post-in").attr('disabled', 'disabled');
                     $("#rtmedia-add-media-button-post-update").attr('disabled', 'disabled');
@@ -789,6 +791,13 @@ jQuery(document).ready(function($) {
                     //Error
 
                 } else {
+		    if( originalOptions.data.action == 'activity_widget_filter' ) {
+			$("div.activity").bind("fadeIn",function(){
+			    apply_rtMagnificPopup(jQuery('.rtmedia-list-media, .rtmedia-activity-container ul.rtmedia-list, #bp-media-list,.widget-item-listing,.bp-media-sc-list, li.media.album_updated ul,ul.bp-media-list-media, li.activity-item div.activity-content div.activity-inner div.bp_media_content'));
+			    rtMediaHook.call('rtmedia_js_after_activity_added', []);
+			});
+			$("div.activity").fadeIn(100);
+		    }
                     jQuery("input[data-mode=rtMedia-update]").remove();
                     while (objUploadView.uploader.files.pop() != undefined) {
                     }
@@ -939,4 +948,10 @@ jQuery(document).ready(function($) {
         // $(this).attr("accept", $(this).attr("accept") + ';capture=camera');
 
     });
+
+    // manually trigger fadein event so that we can bind some function on this event. It is used in activity when content getting load via ajax
+    var _old_fadein = $.fn.fadeIn;
+    jQuery.fn.fadeIn = function(){
+	return _old_fadein.apply(this,arguments).trigger("fadeIn");
+    };
 });
