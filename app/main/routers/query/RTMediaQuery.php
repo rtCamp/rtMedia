@@ -52,7 +52,7 @@ class RTMediaQuery {
     public $current_media = -1;
     public $in_the_media_loop = false;
     public $format = false;
-    public $shorcode_global = false;
+    public $shortcode_global = false;
 
     /**
      * Initialise the query
@@ -451,7 +451,7 @@ class RTMediaQuery {
         }
         if ( isset ( $this->query ) && isset ( $this->query[ "global" ] ) ) {
 	    if ( $this->query[ "global" ] == "true" ) {
-                $this->shorcode_global = true;
+                $this->shortcode_global = true;
 		if ( isset ( $this->query[ "context_id" ] ) )
 		    unset ( $this->query[ "context_id" ] );
 		if ( isset ( $this->query[ "context" ] ) )
@@ -681,7 +681,7 @@ class RTMediaQuery {
         else
             $this->media = $this->populate_media ();
 
-        if ( $this->is_album () && !$this->shorcode_global ) {
+        if ( $this->is_album () && !$this->shortcode_global ) {
             $this->media = $this->populate_album ();
         }
 

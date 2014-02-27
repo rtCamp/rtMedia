@@ -98,7 +98,12 @@ class RTMediaRouter {
 
 	if( isset( $rtmedia_query ) && isset( $rtmedia_query->query ) && ! isset($rtmedia_query->query['context']) ) {
 	    $wp_query->is_404 = true;
-	    return false;
+	    $return = false;
+	}
+
+	if( isset( $rtmedia_query->shortcode_global ) && $rtmedia_query->shortcode_global ) {
+	    $wp_query->is_404 = false;
+	    $return = true;
 	}
         return $return;
     }
