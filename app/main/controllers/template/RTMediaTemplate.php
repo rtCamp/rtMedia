@@ -195,7 +195,7 @@ class RTMediaTemplate {
             $data = rtmedia_sanitize_object ( $_POST, $data_array );
             $media = new RTMediaMedia();
 	    $image_path = get_attached_file( $rtmedia_query->media[ 0 ]->media_id );
-	    if( $image_path ) {
+	    if( $image_path && $rtmedia_query->media[ 0 ]->media_type == "photo" ) {
 		$image_meta_data = wp_generate_attachment_metadata( $rtmedia_query->media[ 0 ]->media_id, $image_path );
 		wp_update_attachment_metadata( $rtmedia_query->media[ 0 ]->media_id, $image_meta_data );
 	    }
