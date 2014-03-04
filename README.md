@@ -132,6 +132,10 @@ http://www.youtube.com/watch?v####dJrykKQGDcs
 ## Changelog ##
 
 Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "Visit rtMedia's Features page") to get some details about future releases.
+#### 3.6.7 ####
+* Update Spanish language files
+* Bug fix for media single edit
+
 #### 3.6.6 ####
 * Fix audio/video js issue after activity update
 * Fix activity after ajax load content
@@ -716,8 +720,8 @@ Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_sou
 * HTML5 Audio Tag Support (with fallback)
 * HTML5 Video Tag Support (with fallback)
 
-#### 3.6.6 ####
-Requires BuddyPress 1.7 or higher, if using BuddyPress. Fix image edit issue, fix activity issue, fix CSS issue.
+#### 3.6.7 ####
+Requires BuddyPress 1.7 or higher, if using BuddyPress. Update Spanish language files, bug fix for single media edit.
 
 ## Sponsors ##
 
