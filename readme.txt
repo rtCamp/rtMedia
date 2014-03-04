@@ -133,6 +133,7 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "Visit rtMedia's Features page") to get some details about future releases.
 = 3.6.7 =
+* Update Spanish language files
 * Bug fix for media single edit
 
 = 3.6.6 =
@@ -722,7 +723,7 @@ Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_sou
 == Upgrade Notice ==
 
 = 3.6.7 =
-Requires BuddyPress 1.7 or higher, if using BuddyPress. Bug fix for single media edit.
+Requires BuddyPress 1.7 or higher, if using BuddyPress. Update Spanish language files, bug fix for single media edit.
 
 == Sponsors ==
 
