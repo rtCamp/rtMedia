@@ -470,7 +470,7 @@ class RTMediaFormHandler {
 			else {
 			    echo '<div class="row rt-even">';
 			}
-			    echo '<div class="row">';
+
 				do_action("rtmedia_type_settings_before_body");
 				    echo '<div class="columns large-4">' . $section['name'] . '</div>';
 				    $args = array('key' => 'allowedTypes_'.$key.'_enabled', 'value' => $section['enabled']);
@@ -496,7 +496,7 @@ class RTMediaFormHandler {
 				echo '<label class="columns large-3">'.__("File Extensions","rtmedia").':</label>';
 				echo '<label class="columns large-9 rtmedia_type_settings_filter_extension">' . $extensions . '</label>';
 			    echo '</div>';
-			echo '</div>';
+
                     } else {
                         echo "<input type='hidden' value='1' name='rtmedia-options[allowedTypes_" . $key . "_enabled]'>";
                         echo "<input type='hidden' value='0' name='rtmedia-options[allowedTypes_" . $key . "_featured]'>";
@@ -877,7 +877,7 @@ class RTMediaFormHandler {
                     if( $i == 1){ $active_class = 'active';} $i++;
                     if ( isset ( $tab[ 'icon' ] ) && ! empty ( $tab[ 'icon' ] ) )
                         $icon = '<i class="' . $tab[ 'icon' ] . '"></i>';
-                    echo '<dd class="' . $active_class . '"><a id="tab-' . substr ( $tab[ 'href' ], 1 ) . '" title="' . $tab[ 'title' ] . '" href="' . $tab[ 'href' ] . '" class="rtmedia-tab-title ' . sanitize_title ( $tab[ 'name' ] ) . '">' . $icon . ' ' . $tab[ 'name' ] . '</a></dd>';
+                    echo '<dd class="' . $active_class . '"><a id="tab-' . substr ( $tab[ 'href' ], 1 ) . '" title="' . $tab[ 'title' ] . '" href="' . $tab[ 'href' ] . '" class="rtmedia-tab-title ' . sanitize_title ( $tab[ 'name' ] ) . '">' . $icon . $tab[ 'name' ] . '</a></dd>';
 		}
                 echo "</dl>";
             ?>
