@@ -589,8 +589,6 @@ float:left;
   border-bottom-color: #F3F3F3;
   border-bottom-width: 1px;
   border-bottom-style: solid;
-  margin-bottom: 5px !important;
-  padding-bottom: 5px !important;
 }
 /* line 39, ../sass/admin.scss */
 .rt-table div.rt-header h4 {
