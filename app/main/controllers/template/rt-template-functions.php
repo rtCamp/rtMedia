@@ -2164,3 +2164,47 @@ function is_rtmedia_page() {
 
     return $rtmedia_interaction->routes[RTMEDIA_MEDIA_SLUG]->is_template();
 }
+
+// formatseconds function to be used in migration in importing
+function rtmedia_migrate_formatseconds ( $secondsLeft ) {
+
+        $minuteInSeconds = 60;
+        $hourInSeconds = $minuteInSeconds * 60;
+        $dayInSeconds = $hourInSeconds * 24;
+
+        $days = floor ( $secondsLeft / $dayInSeconds );
+        $secondsLeft = $secondsLeft % $dayInSeconds;
+
+        $hours = floor ( $secondsLeft / $hourInSeconds );
+        $secondsLeft = $secondsLeft % $hourInSeconds;
+
+        $minutes = floor ( $secondsLeft / $minuteInSeconds );
+
+        $seconds = $secondsLeft % $minuteInSeconds;
+
+        $timeComponents = array( );
+
+        if ( $days > 0 ) {
+            $timeComponents[ ] = $days . " day" . ($days > 1 ? "s" : "");
+        }
+
+        if ( $hours > 0 ) {
+            $timeComponents[ ] = $hours . " hour" . ($hours > 1 ? "s" : "");
+        }
+
+        if ( $minutes > 0 ) {
+            $timeComponents[ ] = $minutes . " minute" . ($minutes > 1 ? "s" : "");
+        }
+
+        if ( $seconds > 0 ) {
+            $timeComponents[ ] = $seconds . " second" . ($seconds > 1 ? "s" : "");
+        }
+        if ( count ( $timeComponents ) > 0 ) {
+            $formattedTimeRemaining = implode ( ", ", $timeComponents );
+            $formattedTimeRemaining = trim ( $formattedTimeRemaining );
+        } else {
+            $formattedTimeRemaining = "No time remaining.";
+        }
+
+        return $formattedTimeRemaining;
+    }
