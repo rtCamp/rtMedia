@@ -91,6 +91,7 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
 	    add_action ( 'admin_init', array( $this, 'rtmedia_bp_add_update_type' ) );
 	    add_action ( 'admin_notices', array( $this, 'rtmedia_inspirebook_release_notice' ) );
 	    add_action ( 'wp_ajax_rtmedia_hide_inspirebook_release_notice', array( $this, 'rtmedia_hide_inspirebook_release_notice' ), 1 );
+	    $rtmedia_media_import = new RTMediaMediaSizeImporter(); // do not delete this line. We only need to create object of this class if we are in admin section
 	}
 
 	function rtmedia_inspirebook_release_notice() {
