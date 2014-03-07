@@ -164,9 +164,13 @@ class RTMediaBuddyPressActivity {
         wp_localize_script ( 'rtmedia-backbone', 'is_edit_allowed', $is_edit_allowed );
         wp_localize_script ( 'rtmedia-backbone', 'rtMedia_update_plupload_config', $params );
 
-
-        $uploadView = new RTMediaUploadView ( array( 'activity' => true ) );
-        $uploadView->render ( 'uploader' );
+	$allow_upload = apply_filters( 'rtmedia_allow_uploader_view', true, 'activity' );
+	if( $allow_upload ) {
+	    $uploadView = new RTMediaUploadView ( array( 'activity' => true ) );
+	    $uploadView->render ( 'uploader' );
+	} else {
+	    echo "<div class='rtmedia-upload-not-allowed'>" . apply_filters( 'rtmedia_upload_not_allowed_message', __('You are not allowed to upload/attach media.','rtmedia'), 'activity' ) . "</div>";
+	}
     }
 
     function override_allowed_tags ( $activity_allowedtags ) {
