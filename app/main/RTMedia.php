@@ -862,7 +862,7 @@ class RTMedia
             $sizes = $this->unset_bp_media_image_sizes_details($sizes);
         } elseif (isset($_REQUEST['id'])) { //For Regenerate Thumbnails Plugin
             $model = new RTMediaModel();
-            $result = $model->get_by_media_id($_REQUEST['id']);
+            $result = $model->get( array( 'media_id' => $_REQUEST['id'] ) );
             if ($result) {
                 if (isset($result["result"]) && count($result["result"]) > 0) {
                     $bp_media_sizes = $this->image_sizes();
