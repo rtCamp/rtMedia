@@ -1165,7 +1165,7 @@ function rtmedia_uploader ( $attr = '' ) {
 	    }
 	}
     } else {
-	echo "<div class='rtmedia-upload-not-allowed'>" . apply_filters( 'rtmedia_upload_not_allowed_message', __('You are not allowed to upload/attach media.','rtmedia'), 'activity' ) . "</div>";
+	echo "<div class='rtmedia-upload-not-allowed'>" . apply_filters( 'rtmedia_upload_not_allowed_message', __('You are not allowed to upload/attach media.','rtmedia'), 'media_gallery' ) . "</div>";
     }
 }
 
