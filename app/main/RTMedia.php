@@ -862,9 +862,8 @@ class RTMedia
             $sizes = $this->unset_bp_media_image_sizes_details($sizes);
         } elseif (isset($_REQUEST['id'])) { //For Regenerate Thumbnails Plugin
             $model = new RTMediaModel();
-            $result = $model->get_by_media_id($_REQUEST['id']);
-            if ($result) {
-                if (isset($result["result"]) && count($result["result"]) > 0) {
+            $result = $model->get( array( 'media_id' => $_REQUEST['id'] ) );
+            if (! empty( $result ) ) {
                     $bp_media_sizes = $this->image_sizes();
                     $sizes = array(
                         'rt_media_thumbnail' => $bp_media_sizes['thumbnail'],
@@ -872,9 +871,6 @@ class RTMedia
                         'rt_media_single_image' => $bp_media_sizes['single'],
                         'rt_media_featured_image' => $bp_media_sizes['featured'],
                     );
-                } else {
-                    $sizes = $this->unset_bp_media_image_sizes_details($sizes);
-                }
             } else {
                 $sizes = $this->unset_bp_media_image_sizes_details($sizes);
             }
