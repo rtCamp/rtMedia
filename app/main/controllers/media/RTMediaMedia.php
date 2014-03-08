@@ -472,7 +472,10 @@ class RTMediaMedia {
                 'context_id' => $uploaded[ 'context_id' ],
                 'privacy' => $uploaded[ 'privacy' ]
             );
-
+	    if( isset( $file_object ) && isset( $file_object[0] ) && isset( $file_object[0]['file'] ) ) {
+		$media['file_size'] = filesize( $file_object[0]['file'] );
+	    }
+	    $media['upload_date'] = $attachment['post_date'];
             $media_id[ ] = $this->model->insert ( $media );
         }
         return $media_id;
