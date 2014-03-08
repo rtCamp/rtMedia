@@ -1153,13 +1153,19 @@ function rtmedia_delete_form ( $echo = true) {
  * @param type $attr
  */
 function rtmedia_uploader ( $attr = '' ) {
-    if ( function_exists ( 'bp_is_blog_page' ) && ! bp_is_blog_page () ) {
-        if ( function_exists ( 'bp_is_user' ) && bp_is_user () && function_exists ( 'bp_displayed_user_id' ) && bp_displayed_user_id () == get_current_user_id () )
-            echo RTMediaUploadShortcode::pre_render ( $attr );
-        else if ( function_exists ( 'bp_is_group' ) && bp_is_group () ) {
-            if ( can_user_upload_in_group () )
-                echo RTMediaUploadShortcode::pre_render ( $attr );
-        }
+    $allow_upload = apply_filters( 'rtmedia_allow_uploader_view', true, 'media_gallery' );
+    if( $allow_upload ) {
+	if ( function_exists ( 'bp_is_blog_page' ) && ! bp_is_blog_page () ) {
+	    if ( function_exists ( 'bp_is_user' ) && bp_is_user () && function_exists ( 'bp_displayed_user_id' ) && bp_displayed_user_id () == get_current_user_id () ) {
+		echo RTMediaUploadShortcode::pre_render ( $attr );
+	    } else if ( function_exists ( 'bp_is_group' ) && bp_is_group () ) {
+		if ( can_user_upload_in_group () ) {
+		    echo RTMediaUploadShortcode::pre_render ( $attr );
+		}
+	    }
+	}
+    } else {
+	echo "<div class='rtmedia-upload-not-allowed'>" . apply_filters( 'rtmedia_upload_not_allowed_message', __('You are not allowed to upload/attach media.','rtmedia'), 'activity' ) . "</div>";
     }
 }
 
