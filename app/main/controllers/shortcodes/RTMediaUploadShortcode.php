@@ -54,49 +54,54 @@ $flag = ( ! (  is_home () || is_post_type_archive () || is_author ()))
      * @param type $attr
      */
     static function pre_render ( $attr ) {
-        global $post;
-        global $rtmedia_query;
-	if( ! $rtmedia_query )
-		$rtmedia_query = new RTMediaQuery ();
-        if( !isset($attr['is_up_shortcode']) || $attr['is_up_shortcode'] !== false) {
-            $rtmedia_query->is_upload_shortcode = true;// set is_upload_shortcode in rtmedia query as true
-        } else {
-            $rtmedia_query->is_upload_shortcode = false;// set is_upload_shortcode in rtmedia query as true
-        }
-	
-	if( isset( $attr['media_type'] ) ) {
-	    global $rtmedia;
-	    $allowed_media_type = $rtmedia->allowed_types;
-	    if( isset($allowed_media_type[$attr['media_type']]) ) {
-		wp_localize_script('rtmedia-backbone', "rtmedia_upload_type_filter", $allowed_media_type[$attr['media_type']]['extn']);
+	$allow_upload = apply_filters( 'rtmedia_allow_uploader_view', true, 'uploader_shortcode' );
+	if( $allow_upload ) {
+	    global $post;
+	    global $rtmedia_query;
+	    if( ! $rtmedia_query )
+		    $rtmedia_query = new RTMediaQuery ();
+	    if( !isset($attr['is_up_shortcode']) || $attr['is_up_shortcode'] !== false) {
+		$rtmedia_query->is_upload_shortcode = true;// set is_upload_shortcode in rtmedia query as true
+	    } else {
+		$rtmedia_query->is_upload_shortcode = false;// set is_upload_shortcode in rtmedia query as true
 	    }
+
+	    if( isset( $attr['media_type'] ) ) {
+		global $rtmedia;
+		$allowed_media_type = $rtmedia->allowed_types;
+		if( isset($allowed_media_type[$attr['media_type']]) ) {
+		    wp_localize_script('rtmedia-backbone', "rtmedia_upload_type_filter", $allowed_media_type[$attr['media_type']]['extn']);
+		}
+	    }
+
+	    if ( isset ( $attr ) && !empty($attr)) {
+		if ( ! is_array ( $attr ) ) {
+		    $attr = Array( );
+		}
+		if ( ! isset ( $attr[ "context_id" ] ) && isset ( $post->ID ) ) {
+		    $attr[ "context_id" ] = $post->ID;
+		}
+		if ( ! isset ( $attr[ "context" ] ) && isset ( $post->post_type ) ) {
+		    $attr[ "context" ] = $post->post_type;
+		}
+	    }
+
+	    if ( self::display_allowed () || ( isset( $attr['allow_anonymous'] ) && $attr['allow_anonymous'] === true ) ) {
+		if ( ! _device_can_upload () ) {
+		    echo '<p>' . __( 'The web browser on your device cannot be used to upload files.', 'rtmedia' ) . '</p>';
+		    return;
+		}
+		ob_start ();
+
+		self::$add_sc_script = true;
+		RTMediaUploadTemplate::render ( $attr );
+
+		self::$uploader_displayed = true;
+		return ob_get_clean ();
+	    }
+	} else {
+	    echo "<div class='rtmedia-upload-not-allowed'>" . apply_filters( 'rtmedia_upload_not_allowed_message', __('You are not allowed to upload/attach media.','rtmedia'), 'uploader_shortcode' ) . "</div>";
 	}
-
-        if ( isset ( $attr ) && !empty($attr)) {
-            if ( ! is_array ( $attr ) ) {
-                $attr = Array( );
-            }
-            if ( ! isset ( $attr[ "context_id" ] ) && isset ( $post->ID ) ) {
-                $attr[ "context_id" ] = $post->ID;
-            }
-            if ( ! isset ( $attr[ "context" ] ) && isset ( $post->post_type ) ) {
-                $attr[ "context" ] = $post->post_type;
-            }
-        }
-
-        if ( self::display_allowed () || ( isset( $attr['allow_anonymous'] ) && $attr['allow_anonymous'] === true ) ) {
-            if ( ! _device_can_upload () ) {
-                echo '<p>' . __( 'The web browser on your device cannot be used to upload files.', 'rtmedia' ) . '</p>';
-                return;
-            }
-            ob_start ();
-
-            self::$add_sc_script = true;
-            RTMediaUploadTemplate::render ( $attr );
-
-            self::$uploader_displayed = true;
-            return ob_get_clean ();
-        }
     }
 
 }
