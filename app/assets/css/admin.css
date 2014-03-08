@@ -682,7 +682,7 @@ abbr {
 
 .bp-media-admin .premium-page-container .rtm-premium-icon-pro {
 	margin-top: 9px;
-	width: 40px;
+	min-width: 50px;
 }
 #TB_window #rtmedia-addon-add-container #rtmedia-flat-50-message, #TB_window #rtmedia-addon-add-container #rtmedia-flat-50-link,#TB_window #rtmedia-addon-add-container #rtmedia-flat-50-code {
 	text-align: center;
