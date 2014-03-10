@@ -86,6 +86,9 @@ jQuery(function($) {
             return url;
         },
         getNext: function(page, el, element) {
+        if(jQuery('#bulk-edit-form').find("p:nth-of-type(2)").length > 0){
+            jQuery('#bulk-edit-form p:nth-of-type(2)').replaceWith("<ul class='rtmedia-list rtmedia-list-media'></ul>");
+        }
 	    that = this;
 	    if( rtmedia_load_template_flag == true ) {
 		$("#rtmedia-gallery-item-template").load(template_url, {
