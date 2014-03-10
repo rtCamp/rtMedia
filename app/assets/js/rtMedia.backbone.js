@@ -351,6 +351,7 @@ jQuery(function($) {
                     e.preventDefault();
                     uploaderObj.uploader.removeFile(up.getFile(file.id));
                     $("#" + file.id).remove();
+                    rtMediaHook.call('rtmedia_js_file_remove', [up,file]);
                     return false;
                 });
 
