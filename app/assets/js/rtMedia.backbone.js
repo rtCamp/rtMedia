@@ -325,7 +325,7 @@ jQuery(function($) {
 
                 uploaderObj.uploader.settings.filters[0].title;
                 tdName = document.createElement("td");
-                tdName.innerHTML = file.name;
+                tdName.innerHTML = file.name.substring(0,40);
                 tdName.className = "plupload_file_name";
                 tdStatus = document.createElement("td");
                 tdStatus.className = "plupload_file_status";
@@ -378,7 +378,7 @@ jQuery(function($) {
                 if(tmp_array.length > 1){
                     ext= tmp_array[tmp_array.length - 1];
                     if( !(typeof(up.settings.upload_size) != "undefined" && typeof(up.settings.upload_size[ext]) != "undefined" &&  typeof(up.settings.upload_size[ext]['size']) )){
-                        tr = "<tr class='upload-error'><td>" + err.file.name + "</td><td> " + rtmedia_max_file_msg + plupload.formatSize( up.settings.max_file_size / 1024 * 1024) + " <i class='rtmicon-info-circle' title='" + window.file_size_info + "'></i></td><td>" + plupload.formatSize(err.file.size) + "</td><td></td><td class='close error_delete'>&times;</td></tr>";
+                        tr = "<tr class='upload-error'><td>" + err.file.name.substring(0,40) + "</td><td> " + rtmedia_max_file_msg + plupload.formatSize( up.settings.max_file_size / 1024 * 1024) + " <i class='rtmicon-info-circle' title='" + window.file_size_info + "'></i></td><td>" + plupload.formatSize(err.file.size) + "</td><td></td><td class='close error_delete'>&times;</td></tr>";
                     }
                 }
                 //append the message to the file queue
@@ -389,7 +389,7 @@ jQuery(function($) {
                 if( err.code == -601) { // file extension error
                     err.message = rtmedia_file_extension_error_msg;
                 }
-                var tr = "<tr class='upload-error'><td>" + (err.file ? err.file.name : "") + "</td><td>" + err.message + " <i class='rtmicon-info-circle' title='" + window.file_extn_info + "'></i></td><td>" + plupload.formatSize(err.file.size) + "</td><td></td><td class='close error_delete'>&times;</td></tr>";
+                var tr = "<tr class='upload-error'><td>" + (err.file ? err.file.name.substring(0,40) : "") + "</td><td>" + err.message + " <i class='rtmicon-info-circle' title='" + window.file_extn_info + "'></i></td><td>" + plupload.formatSize(err.file.size) + "</td><td></td><td class='close error_delete'>&times;</td></tr>";
                 $("#rtMedia-queue-list tbody").append(tr);
             }
 
@@ -454,7 +454,7 @@ jQuery(function($) {
                 uploaderObj.uploader.settings.multipart_params.activity_id = rtnObj.activity_id;
                 activity_id = rtnObj.activity_id;
                 if(rtnObj.permalink != ''){
-                    $("#" + file.id + " .plupload_file_name").html("<a href='" + rtnObj.permalink + "' target='_blank' title='" + rtnObj.permalink + "'>" + file.name + "</a>");
+                    $("#" + file.id + " .plupload_file_name").html("<a href='" + rtnObj.permalink + "' target='_blank' title='" + rtnObj.permalink + "'>" + file.name.substring(0,40) + "</a>");
                     $("#" + file.id + " .plupload_media_edit").html("<a href='" + rtnObj.permalink + "edit' target='_blank'><span title='" + rtmedia_edit_media + "'><i class='rtmicon-edit'></i> " + rtmedia_edit + "</span></a>");
                     $("#" + file.id + " .plupload_delete").html("<span id='" + rtnObj.media_id + "' class='rtmedia-delete-uploaded-media' title='" + rtmedia_delete + "'>&times;</span>");
                 }
@@ -605,7 +605,7 @@ jQuery(document).ready(function($) {
                 return true;
             }
             tdName = document.createElement("td");
-            tdName.innerHTML = file.name;
+            tdName.innerHTML = file.name.substring(0,40);
             tdStatus = document.createElement("td");
             tdStatus.className = "plupload_file_status";
             tdStatus.innerHTML = rtmedia_waiting_msg;
@@ -682,7 +682,7 @@ jQuery(document).ready(function($) {
 
                            ext= tmp_array[tmp_array.length - 1];
                            if( !(typeof(up.settings.upload_size) != "undefined" && typeof(up.settings.upload_size[ext]) != "undefined" && (up.settings.upload_size[ext]["size"] <  1 || (up.settings.upload_size[ext]["size"] * 1024 * 1024) >= err.file.size ))){
-                               tr = "<tr class='upload-error'><td>" + err.file.name + "(" + plupload.formatSize(err.file.size) + ")" + "</td><td> " + rtmedia_max_file_msg + plupload.formatSize( up.settings.max_file_size / 1024 * 1024) + " <i class='rtmicon-info-circled' title='" + window.file_size_info + "'></i></td><td>" + plupload.formatSize(err.file.size) + "</td><td></td><td class='close error_delete'>&times;</td></tr>";
+                               tr = "<tr class='upload-error'><td>" + err.file.name.substring(0,40) + "(" + plupload.formatSize(err.file.size) + ")" + "</td><td> " + rtmedia_max_file_msg + plupload.formatSize( up.settings.max_file_size / 1024 * 1024) + " <i class='rtmicon-info-circled' title='" + window.file_size_info + "'></i></td><td>" + plupload.formatSize(err.file.size) + "</td><td></td><td class='close error_delete'>&times;</td></tr>";
                            }
                        }
                        //append the message to the file queue
@@ -692,7 +692,7 @@ jQuery(document).ready(function($) {
                        if( err.code == -601) { // file extension error
                            err.message = rtmedia_file_extension_error_msg;
                        }
-                       var tr = "<tr class='upload-error'><td>" + (err.file ? err.file.name : "") + "</td><td>" + err.message + " <i class='rtmicon-info-circled' title='" + window.file_extn_info + "'></i></td><td>" + plupload.formatSize(err.file.size) + "</td><td></td><td class='close error_delete'>&times;</td></tr>";
+                       var tr = "<tr class='upload-error'><td>" + (err.file ? err.file.name.substring(0,40) : "") + "</td><td>" + err.message + " <i class='rtmicon-info-circled' title='" + window.file_extn_info + "'></i></td><td>" + plupload.formatSize(err.file.size) + "</td><td></td><td class='close error_delete'>&times;</td></tr>";
                        $("#rtMedia-queue-list tbody").append(tr);
                    }
 
