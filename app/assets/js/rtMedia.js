@@ -340,6 +340,7 @@ jQuery('document').ready(function($) {
 		rtmedia_media_view_counts();
                 rtmedia_init_media_deleting();
                 rtmedia_init_popup_navigation();
+                rtmedia_disable_popup_navigation_comment_focus();
                 var height = $(window).height() ;
                 //console.log( height );
                 //   , .mfp-content #buddypress .rtmedia-container,
@@ -389,6 +390,23 @@ jQuery('document').ready(function($) {
             rtm_mfp.prev();
         });
    }
+
+    function rtmedia_disable_popup_navigation_comment_focus() {
+        jQuery('#comment_content').live('focusin',function(){
+            jQuery(document).unbind('keydown');
+        });
+        jQuery('#comment_content').live('focusout',function(){
+            var rtm_mfp = jQuery.magnificPopup.instance;
+            jQuery(document).on('keydown',function(e) {
+                if (e.keyCode === 37) {
+                    rtm_mfp.prev();
+                } else if (e.keyCode === 39) {
+                    rtm_mfp.next();
+                }
+            });
+        });
+    }
+
    var dragArea = jQuery("#drag-drop-area");
    var activityArea = jQuery('#whats-new');
    var content = dragArea.html();
