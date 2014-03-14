@@ -252,6 +252,7 @@ jQuery(function($) {
             });
             if(a!==false){
                 window.file_size_info = rtmedia_max_file_msg + " : " + this.uploader.settings.max_file_size_msg ;
+                console.log(this.uploader);
                 if( rtmedia_version_compare( rtm_wp_version, "3.9" ) ) { // plupload getting updated in 3.9
                     window.file_extn_info = rtmedia_allowed_file_formats + " : " + this.uploader.settings.filters.mime_types[0].extensions;
                 } else {
