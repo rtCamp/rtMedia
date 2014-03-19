@@ -2214,3 +2214,23 @@ function rtmedia_migrate_formatseconds ( $secondsLeft ) {
 
         return $formattedTimeRemaining;
     }
+
+
+/**
+ * echo the size of the media file
+ * @global type $rtmedia_media
+ */
+function rtmedia_file_size () {
+
+	global $rtmedia_backbone;
+	if ( $rtmedia_backbone[ 'backbone' ] ) {
+		echo '<%= file_size %>';
+	} else {
+		global $rtmedia_media;
+		if( isset( $rtmedia_media->file_size ) ){
+			return $rtmedia_media->file_size;
+		}else{
+			return filesize( get_attached_file( $rtmedia_media->media_id ) );
+		}
+	}
+}
