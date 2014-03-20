@@ -95,7 +95,7 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
 
 	function rtmedia_inspirebook_release_notice() {
 	    $site_option  = rtmedia_get_site_option("rtmedia_inspirebook_release_notice");
-            if(!$site_option || $site_option != "hide") {
+		if( ( !$site_option || $site_option != "hide") && ( get_stylesheet() != 'inspirebook' ) ) {
 		rtmedia_update_site_option("rtmedia_inspirebook_release_notice", "show");
 		?>
 		    <div class="updated rtmedia-inspire-book-notice">
