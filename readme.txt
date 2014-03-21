@@ -135,6 +135,7 @@ Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_sou
 
 = 3.6.9 =
 * Fix single activity video lightbox issue
+* Update german translations
 
 = 3.6.8 =
 * Fix Regenerate Thumbnail plugin image sizes issue
@@ -730,8 +731,8 @@ Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_sou
 
 == Upgrade Notice ==
 
-= 3.6.8 =
-Requires BuddyPress 1.7 or higher, if using BuddyPress. Fix Regenerate Thumbnail plugin image sizes issue.
+= 3.6.9 =
+Requires BuddyPress 1.7 or higher, if using BuddyPress. Fix single activity video lightbox issue, update german translations.
 
 == Sponsors ==
 
