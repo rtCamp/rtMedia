@@ -109,6 +109,7 @@ class RTMediaBuddyPressActivity {
 
     function bp_activity_posted_update ( $content, $user_id, $activity_id ) {
 		global $wpdb, $bp;
+		$updated_content = "";
         if ( isset ( $_POST[ "rtMedia_attached_files" ] ) && is_array ( $_POST[ "rtMedia_attached_files" ] ) ) {
             $updated_content = $wpdb->get_var ( "select content from  {$bp->activity->table_name} where  id= $activity_id" );
 
@@ -121,25 +122,9 @@ class RTMediaBuddyPressActivity {
             $sql = "update $mediaObj->table_name set activity_id = '" . $activity_id . "' where blog_id = '".get_current_blog_id()."' and id in (" . implode ( ",", $_POST[ "rtMedia_attached_files" ] ) . ")";
             $wpdb->query ( $sql );
         }
-		if( isset( $_POST[ 'rtmp_link_url' ] ) && $_POST[ 'rtmp_link_url' ] != '' ){
+		// hook for rtmedia buddypress activity posted
+		do_action( 'rtmedia_bp_activity_posted', $updated_content, $content, $user_id, $activity_id );
 
-			$updated_content .= '<div class="rtmp_final_link">';
-			$updated_content .= '<div class="rtmp_link_preview_container">';
-			$updated_content .= '<a href="'.$_POST[ 'rtmp_link_url' ].'"><img src="'.$_POST[ 'rtmp_link_img' ].'" /></a>';
-			$updated_content .= '</div>';
-			$updated_content .= '<div class="rtmp_link_contents">';
-			$updated_content .= '<div class="rtmp_link_preview_title"><b>'.$_POST[ 'rtmp_link_title' ].'</b></div>';
-			$updated_content .= '<div class="rtmp_link_preview_url">';
-			$updated_content .= '</div>';
-			$updated_content .= '<div class="rtmp_link_preview_body">'.$_POST[ 'rtmp_link_description' ].'</div>';
-			$updated_content .= '</div>';
-			$updated_content .= '</div>';
-			$updated_content .= '<br/>';
-			$updated_content .= $wpdb->get_var ( "select content from  {$bp->activity->table_name} where  id= $activity_id" );
-
-			bp_activity_update_meta($activity_id, "bp_activity_text", $updated_content);
-			$wpdb->update ( $bp->activity->table_name, array( "type" => "rtmedia_update", "content" => $updated_content ), array( "id" => $activity_id ) );
-		}
         if ( isset ( $_POST[ 'rtmedia-privacy' ] ) ) {
             $privacy = -1;
             if ( is_rtmedia_privacy_enable () ) {
