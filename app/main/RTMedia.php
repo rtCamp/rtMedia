@@ -92,6 +92,9 @@ class RTMedia
         add_action('rt_db_upgrade', array($this, 'fix_group_media_privacy'));
         add_action('rt_db_upgrade', array($this, 'fix_db_collation'));
         $this->update_db();
+		remove_action('rt_db_upgrade', array($this, 'fix_privacy'));
+		remove_action('rt_db_upgrade', array($this, 'fix_group_media_privacy'));
+		remove_action('rt_db_upgrade', array($this, 'fix_db_collation'));
         $this->default_thumbnail = apply_filters('rtmedia_default_thumbnail', RTMEDIA_URL . 'assets/thumb_default.png');
         add_action('init', array($this, 'check_global_album'));
         add_action('plugins_loaded', array($this, 'init'), 20);
