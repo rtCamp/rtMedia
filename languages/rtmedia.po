@@ -581,6 +581,24 @@ msgstr ""
 msgid "%s ago "
 msgstr ""
 
+#: app/main/controllers/template/rt-template-functions.php:2036
+msgid "1 second"
+msgid_plural "%s seconds"
+msgstr[0] ""
+msgstr[1] ""
+
+#: app/main/controllers/template/rt-template-functions.php:2039
+msgid "1 minute"
+msgid_plural "%s minutes"
+msgstr[0] ""
+msgstr[1] ""
+
+#: app/main/controllers/template/rt-template-functions.php:2041
+msgid "1 hour"
+msgid_plural "%s hours"
+msgstr[0] ""
+msgstr[1] ""
+
 #: app/main/controllers/api/RTMediaJsonApi.php:166
 msgid "username/password empty"
 msgstr ""
@@ -1005,6 +1023,12 @@ msgstr ""
 #: app/main/controllers/media/RTMediaMedia.php:401
 msgid "Error creating attachment for the media file, please try again"
 msgstr ""
+
+#: app/main/controllers/media/RTMediaMedia.php:499
+msgid "%s added a %s"
+msgid_plural "%s added %d %s."
+msgstr[0] ""
+msgstr[1] ""
 
 #: app/importers/RTMediaMigration.php:60
 msgid "Please Migrate your Database"
