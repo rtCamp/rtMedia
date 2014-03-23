@@ -1006,6 +1006,12 @@ msgstr ""
 msgid "Error creating attachment for the media file, please try again"
 msgstr ""
 
+#: app/main/controllers/media/RTMediaMedia.php:499
+msgid "%s added a %s"
+msgid_plural "%s added %d %s."
+msgstr[0] ""
+msgstr[1] ""
+
 #: app/importers/RTMediaMigration.php:60
 msgid "Please Migrate your Database"
 msgstr ""
