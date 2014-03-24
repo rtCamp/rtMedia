@@ -41,6 +41,9 @@ function apply_rtMagnificPopup(selector){
                         var mfp = jQuery.magnificPopup.instance;
                         var current_media = mfp.currItem.el;
                         var li = current_media.parent();
+                        if( ! li.is('li') ) {
+                            li = li.parent();
+                        }
                         if(li.is(':nth-last-child(2)')){ // if its last second media
                             var last_li = li.next();
                             if(jQuery('#rtMedia-galary-next').css('display') == 'block'){ // if more medias are available
