@@ -837,6 +837,7 @@ class RTMedia
         wp_localize_script('rtmedia-main', 'rtmedia_more', __('more',"rtmedia"));
         wp_localize_script('rtmedia-main', 'rtmedia_less', __('less',"rtmedia"));
         wp_localize_script('rtmedia-main', 'rtmedia_delete_uploaded_media', __('This media is uploaded. Are you sure you want to delete this media?',"rtmedia"));
+		wp_localize_script('rtmedia-main', 'rtm_wp_version', get_bloginfo('version') );
         wp_localize_script ( 'rtmedia-backbone', 'rMedia_loading_media', RTMEDIA_URL . "app/assets/img/boxspinner.gif" );
 	global $rtmedia_query;
 	if( class_exists('BuddyPress') ) {

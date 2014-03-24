@@ -241,7 +241,6 @@ jQuery(function($) {
 
         },
         initUploader: function(a) {
-
             if(typeof(a)!=="undefined") a=false;// if rtmediapro widget calls the function, dont show max size note.
             this.uploader.init();
             //The plupload HTML5 code gives a negative z-index making add files button unclickable
@@ -253,7 +252,12 @@ jQuery(function($) {
             });
             if(a!==false){
                 window.file_size_info = rtmedia_max_file_msg + " : " + this.uploader.settings.max_file_size_msg ;
-                window.file_extn_info = rtmedia_allowed_file_formats + " : " + this.uploader.settings.filters[0].extensions;
+                if( rtmedia_version_compare( rtm_wp_version, "3.9" ) ) { // plupload getting updated in 3.9
+                    window.file_extn_info = rtmedia_allowed_file_formats + " : " + this.uploader.settings.filters.mime_types[0].extensions;
+                } else {
+                    window.file_extn_info = rtmedia_allowed_file_formats + " : " + this.uploader.settings.filters[0].extensions;
+                }
+
                 var info = window.file_size_info + ", " + window.file_extn_info;
                 $(".rtm-file-size-limit").attr('title', info);
  //$("#rtMedia-upload-button").after("<span>( <strong>" + rtmedia_max_file_msg + "</strong> "+ this.uploader.settings.max_file_size_msg + ")</span>");
@@ -274,7 +278,11 @@ jQuery(function($) {
 
     if ($("#rtMedia-upload-button").length > 0) {
 	if( typeof rtmedia_upload_type_filter == "object" && rtmedia_upload_type_filter.length > 0 ) {
-	    rtMedia_plupload_config.filters[0].extensions = rtmedia_upload_type_filter.join();
+        if( rtmedia_version_compare( rtm_wp_version, "3.9" ) ) { // plupload getting updated in 3.9
+            rtMedia_plupload_config.filters.mime_types[0].extensions = rtmedia_upload_type_filter.join();
+        } else {
+            rtMedia_plupload_config.filters[0].extensions = rtmedia_upload_type_filter.join();
+        }
 	}
 	uploaderObj = new UploadView(rtMedia_plupload_config);
 
@@ -312,7 +320,11 @@ jQuery(function($) {
                     return true;
                 }
                 var tmp_array =  file.name.split(".");
-                var ext_array = uploaderObj.uploader.settings.filters[0].extensions.split(',');
+                if( rtmedia_version_compare( rtm_wp_version, "3.9" ) ) { // plupload getting updated in 3.9
+                    var ext_array = uploaderObj.uploader.settings.filters.mime_types[0].extensions.split(',');
+                } else {
+                    var ext_array = uploaderObj.uploader.settings.filters[0].extensions.split(',');
+                }
                 if(tmp_array.length > 1){
                     var ext= tmp_array[tmp_array.length - 1];
 		    ext = ext.toLowerCase();
@@ -323,7 +335,11 @@ jQuery(function($) {
                     return true;
                 }
 
-                uploaderObj.uploader.settings.filters[0].title;
+                if( rtmedia_version_compare( rtm_wp_version, "3.9" ) ) { // plupload getting updated in 3.9
+                    uploaderObj.uploader.settings.filters.mime_types[0].title;
+                } else {
+                    uploaderObj.uploader.settings.filters[0].title;
+                }
                 tdName = document.createElement("td");
                 tdName.innerHTML = file.name.substring(0,40);
                 tdName.className = "plupload_file_name";
@@ -594,7 +610,11 @@ jQuery(document).ready(function($) {
                 return true;
             }
             var tmp_array =  file.name.split(".");
-            var ext_array = objUploadView.uploader.settings.filters[0].extensions.split(',');
+            if( rtmedia_version_compare( rtm_wp_version, "3.9" ) ) { // plupload getting updated in 3.9
+                var ext_array = objUploadView.uploader.settings.filters.mime_types[0].extensions.split(',');
+            } else {
+                var ext_array = objUploadView.uploader.settings.filters[0].extensions.split(',');
+            }
             if(tmp_array.length > 1){
                 var ext= tmp_array[tmp_array.length - 1];
 		ext = ext.toLowerCase();
@@ -767,6 +787,12 @@ jQuery(document).ready(function($) {
             }
             options.data += "&rtmedia-privacy=" + jQuery("select.privacy").val();
             activity_attachemnt_ids = temp;
+            if(jQuery('#rtmp-url-no-scrapper').length > 0 && jQuery('#rtmp-url-no-scrapper').val() != '0'){
+                options.data += "&rtmp_link_url=" + jQuery("#rtmp-url-scrapper-url-hidden").val(); // URL link preview
+                options.data += "&rtmp_link_title=" + jQuery("#rtmp-url-scrapper-title-hidden").val();  // URL link preview
+                options.data += "&rtmp_link_img=" +  jQuery('#rtmp-url-scrapper-img-hidden').val(); // URL link preview
+                options.data += "&rtmp_link_description=" + jQuery("#rtmp-url-scrapper-description-hidden").val();  // URL link preview
+            }
             var orignalSuccess = originalOptions.success;
             options.beforeSend = function() {
 		if (originalOptions.data.action == 'post_update') {
@@ -790,6 +816,10 @@ jQuery(document).ready(function($) {
 
             }
             options.success = function(response) {
+                if(jQuery('#rtmp-url-no-scrapper').length > 0){
+                    jQuery('#rtmp-url-scrapper').hide(); // URL link preview
+                    jQuery('#rtmp-url-no-scrapper').val("1") // URL link preview
+                }
                 orignalSuccess(response);
                 if (response[0] + response[1] == '-1') {
                     //Error
