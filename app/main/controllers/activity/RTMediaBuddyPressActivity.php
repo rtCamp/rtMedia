@@ -110,6 +110,10 @@ class RTMediaBuddyPressActivity {
     function bp_activity_posted_update ( $content, $user_id, $activity_id ) {
 		global $wpdb, $bp;
 		$updated_content = "";
+
+		// hook for rtmedia buddypress before activity posted
+		do_action( 'rtmedia_bp_before_activity_posted', $content, $user_id, $activity_id );
+
         if ( isset ( $_POST[ "rtMedia_attached_files" ] ) && is_array ( $_POST[ "rtMedia_attached_files" ] ) ) {
             $updated_content = $wpdb->get_var ( "select content from  {$bp->activity->table_name} where  id= $activity_id" );
 
@@ -122,8 +126,8 @@ class RTMediaBuddyPressActivity {
             $sql = "update $mediaObj->table_name set activity_id = '" . $activity_id . "' where blog_id = '".get_current_blog_id()."' and id in (" . implode ( ",", $_POST[ "rtMedia_attached_files" ] ) . ")";
             $wpdb->query ( $sql );
         }
-		// hook for rtmedia buddypress activity posted
-		do_action( 'rtmedia_bp_activity_posted', $updated_content, $content, $user_id, $activity_id );
+		// hook for rtmedia buddypress after activity posted
+		do_action( 'rtmedia_bp_activity_posted', $updated_content, $user_id, $activity_id );
 
         if ( isset ( $_POST[ 'rtmedia-privacy' ] ) ) {
             $privacy = -1;
