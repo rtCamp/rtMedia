@@ -154,7 +154,8 @@ class RTMediaMediaSizeImporter {
 					}
 				}
 				function rtm_show_file_error( done, total ) {
-					jQuery( 'span.pending' ).html( "File size of "+total - done+" file(s) are not imported. Don't worry, you can end importing media size now :)" );
+					jQuery( 'span.pending' ).html( "File size of " + ( total - done ) + " file(s) are not imported. Don't worry, you can end importing media size now :)" );
+					jQuery( "#rtMediaSyncing" ).hide();
 				}
 				var db_done = <?php echo $done; ?>;
 				var db_total = <?php echo $total; ?>;
