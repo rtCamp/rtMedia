@@ -448,7 +448,10 @@ class RTMediaFormHandler {
 	    $render_data = self::types_render_options($options);
 ?>
 	    <div class="postbox metabox-holder">
-		    <h3 class="hndle"><span>Media Types Settings</span></h3>
+		    <h3 class="hndle">
+				<span>Media Types Settings</span>
+				<?php do_action( 'rtmedia_media_type_setting_message' ); ?>
+			</h3>
 	    </div>
 	    <div class="rt-table large-12">
 		    <div class="row rt-header">
