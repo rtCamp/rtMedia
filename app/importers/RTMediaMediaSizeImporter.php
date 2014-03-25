@@ -86,6 +86,8 @@ class RTMediaMediaSizeImporter {
 			$prog->progress_ui( $temp, true );
 			?>
 			<script type="text/javascript">
+				var false_count = 0;
+				var curr_done = 0;
 				jQuery( document ).ready( function ( e ) {
 					jQuery( "#toplevel_page_rtmedia-settings" ).addClass( "wp-has-current-submenu" )
 					jQuery( "#toplevel_page_rtmedia-settings" ).removeClass( "wp-not-current-submenu" )
@@ -125,7 +127,16 @@ class RTMediaMediaSizeImporter {
 									jQuery( 'span.finished' ).html( done );
 									jQuery( 'span.total' ).html( total );
 									jQuery( 'span.pending' ).html( data.pending );
-									db_start_migration( done, total );
+									if( curr_done == done ) {
+										false_count+++;
+									} else {
+										false_count = 0;
+									}
+									if( false_count > 5 ) {
+										rtm_show_file_error( done, total );
+									} else {
+										db_start_migration( done, total );
+									}
 								} else {
 									alert( "Migration completed." );
 									jQuery( "#rtMediaSyncing" ).hide();
@@ -140,6 +151,9 @@ class RTMediaMediaSizeImporter {
 						alert( "Migration completed." );
 						jQuery( "#rtMediaSyncing" ).hide();
 					}
+				}
+				function rtm_show_file_error( done, total ) {
+					jQuery( 'span.pending' ).html( "File size of "+total - done+" file(s) are not imported. Those files weren't exist." );
 				}
 				var db_done = <?php echo $done; ?>;
 				var db_total = <?php echo $total; ?>;
@@ -220,7 +234,7 @@ class RTMediaMediaSizeImporter {
 			$done = $total;
 		}
 		rtmedia_update_site_option( 'rtmedia_media_size_import_pending_count', $pending );
-		$pending_time = rtmedia_migrate_formatseconds( $pending );
+		$pending_time = rtmedia_migrate_formatseconds( $pending ). " (estimated)";
 		echo json_encode( array( "status" => true, "done" => $done, "total" => $total, "pending" => $pending_time ) );
 		die();
 	}
