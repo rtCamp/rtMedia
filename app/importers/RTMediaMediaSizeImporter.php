@@ -128,7 +128,7 @@ class RTMediaMediaSizeImporter {
 									jQuery( 'span.total' ).html( total );
 									jQuery( 'span.pending' ).html( data.pending );
 									if( curr_done == done ) {
-										false_count+++;
+										false_count++;
 									} else {
 										false_count = 0;
 									}
