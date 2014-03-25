@@ -132,6 +132,7 @@ class RTMediaMediaSizeImporter {
 									} else {
 										false_count = 0;
 									}
+									curr_done = done;
 									if( false_count > 5 ) {
 										rtm_show_file_error( done, total );
 									} else {
