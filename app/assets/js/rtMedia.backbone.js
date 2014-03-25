@@ -816,10 +816,6 @@ jQuery(document).ready(function($) {
 
             }
             options.success = function(response) {
-                if(jQuery('#rtmp-url-no-scrapper').length > 0){
-                    jQuery('#rtmp-url-scrapper').hide(); // URL link preview
-                    jQuery('#rtmp-url-no-scrapper').val("1") // URL link preview
-                }
                 orignalSuccess(response);
                 if (response[0] + response[1] == '-1') {
                     //Error
