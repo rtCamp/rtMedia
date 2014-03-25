@@ -367,7 +367,7 @@ class RTMediaMedia {
             $attachments[ ] = array(
                 'post_mime_type' => $file[ 'type' ],
                 'guid' => $file[ 'url' ],
-                'post_title' => $uploaded[ 'title' ] ? $uploaded[ 'title' ] : $file[ 'name' ],
+                'post_title' => $uploaded[ 'title' ] ? $uploaded[ 'title' ] : preg_replace("/\\.[^.\\s]{3,4}$/", "", $file[ 'name' ]),
                 'post_content' => $uploaded[ 'description' ] ? $uploaded[ 'description' ] : '',
                 'post_parent' => $album_id,
                 'post_author' => $uploaded[ 'media_author' ]
