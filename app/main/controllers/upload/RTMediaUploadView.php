@@ -75,6 +75,7 @@ class RTMediaUploadView {
                                 ."<div class='rtm-album-privacy'>" . $album . $privacy . "</div>"
                                 . '<div class="rtm-select-files"><input id="rtMedia-upload-button" value="' . __( "Select your files", "rtmedia" ) . '" type="button" class="rtmedia-upload-input rtmedia-file" />'
                                 . '<span class="rtm-seperator">' . __('or','rtmedia') .'</span><span class="drag-drop-info">' . __('Drop your files here', 'rtmedia') . '</span> <i class="rtm-file-size-limit rtmicon-info-circle"></i></div>'
+								. apply_filters( 'rtmedia_uploader_before_start_upload_button', "" )
                                 . '<input type="button" class="start-media-upload" value="' . __('Start upload', 'rtmedia') .'"/>'
                         . '</div>'
                         . '<div class="row">'

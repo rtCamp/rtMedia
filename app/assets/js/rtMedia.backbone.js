@@ -489,7 +489,7 @@ jQuery(function($) {
                 }
 
                 $("#" + file.id + " .plupload_file_status").html( rtmedia_uploaded_msg);
-
+                rtMediaHook.call('rtmedia_js_after_file_upload', [up, file, res]);
             }else {
                 $("#" + file.id + " .plupload_file_status").html( rtmedia_upload_failed_msg );
             }
@@ -689,6 +689,7 @@ jQuery(document).ready(function($) {
             } catch (e) {
 
             }
+            rtMediaHook.call('rtmedia_js_after_file_upload', [up, file, res]);
         }
     });
 
