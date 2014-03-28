@@ -18,6 +18,7 @@ class RTMediaMediaSizeImporter {
 		add_action( 'wp_ajax_rtmedia_media_size_import', array( $this, "rtmedia_media_size_import" ) );
 		add_action( 'admin_init', array( $this, 'add_admin_notice' ) );
 		add_action( 'admin_menu', array( $this, 'menu' ), 10 );
+		add_action( 'wp_ajax_rtmedia_hide_media_size_import_notice', array( $this, "rtmedia_hide_media_size_import_notice" ) );
 	}
 
 	function menu() {
@@ -28,6 +29,10 @@ class RTMediaMediaSizeImporter {
 		$admin_pages[ ] = "rtmedia_page_rtmedia-media-size-import";
 
 		return $admin_pages;
+	}
+
+	function rtmedia_hide_media_size_import_notice() {
+		rtmedia_update_site_option( "rtmedia_media_size_import_pending_count", '0' );
 	}
 
 	function add_admin_notice() {
@@ -49,18 +54,8 @@ class RTMediaMediaSizeImporter {
 
 	function add_rtmedia_media_size_import_notice() {
 		if ( current_user_can( 'manage_options' ) ){
-			$this->create_notice( "<p><strong>rtMedia</strong>: <a href='" . admin_url( "admin.php?page=rtmedia-migration-media-size-import&force=true" ) . "'>Click Here</a> to import media sizes.  <a href='#' onclick='rtmedia_hide_media_size_import_notice()' style='float:right'>" . __( "Hide" ) . "</a> </p>" );
+			$this->create_notice( "<p><strong>rtMedia</strong>: Database table structure for rtMedia has been updated. Please <a href='" . admin_url( "admin.php?page=rtmedia-migration-media-size-import&force=true" ) . "'>Click Here</a> to import media sizes. </p>" );
 			?>
-			<script type="text/javascript">
-				function rtmedia_hide_media_size_import_notice() {
-					var data = {action: 'rtmedia_hide_media_size_import_notice'};
-					jQuery.post( ajaxurl, data, function ( response ) {
-						response = response.trim();
-						if ( response === "1" )
-							jQuery( '.rtmedia-media-size-import-error' ).remove();
-					} );
-				}
-			</script>
 		<?php
 		}
 	}
@@ -77,6 +72,7 @@ class RTMediaMediaSizeImporter {
 		?>
 		<div class="wrap">
 			<h2>rtMedia Media Size Import</h2>
+			<p>Table structure for rtMedia has been updated. </p>
 			<?php
 			echo '<span class="pending">' . rtmedia_migrate_formatseconds( $total - $done ) . '</span><br />';
 			echo '<span class="finished">' . $done . '</span>/<span class="total">' . $total . '</span>';
@@ -155,6 +151,8 @@ class RTMediaMediaSizeImporter {
 				}
 				function rtm_show_file_error( done, total ) {
 					jQuery( 'span.pending' ).html( "File size of " + ( total - done ) + " file(s) are not imported. Don't worry, you can end importing media size now :)" );
+					var data = {action: 'rtmedia_hide_media_size_import_notice'};
+					jQuery.post( ajaxurl, data, function ( response ) { } );
 					jQuery( "#rtMediaSyncing" ).hide();
 				}
 				var db_done = <?php echo $done; ?>;
