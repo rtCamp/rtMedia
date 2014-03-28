@@ -32,7 +32,7 @@ class RTMediaMediaSizeImporter {
 	}
 
 	function rtmedia_hide_media_size_import_notice() {
-		rtmedia_update_site_option( "rtmedia_media_size_import_pending_count", '0' );
+		rtmedia_update_site_option( "rtmedia_media_hide_import_pending_count", true );
 	}
 
 	function add_admin_notice() {
@@ -41,6 +41,10 @@ class RTMediaMediaSizeImporter {
 			$pending = 0;
 		}
 		rtmedia_update_site_option( "rtmedia_media_size_import_pending_count", $pending );
+		$hide_admin_option = rtmedia_get_site_option( 'rtmedia_media_hide_import_pending_count' );
+		if( $hide_admin_option ) {
+			return;
+		}
 		if ( $pending > 0 ){
 			if ( ! ( isset ( $_REQUEST[ "page" ] ) && $_REQUEST[ "page" ] == "rtmedia-migration-media-size-import" ) ){
 				$site_option = get_site_option( "rtmedia_media_size_import_notice" );
