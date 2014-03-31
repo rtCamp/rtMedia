@@ -1377,7 +1377,7 @@ function rtmedia_create_album ( $options) {
     if ( $display === true ) {
 
         add_action('rtmedia_before_media_gallery','rtmedia_create_album_modal');
-        $options[] = "<a href='#rtmedia-create-album-modal' class='rtmedia-reveal-modal rtmedia-modal-link'  title='".  __( 'Create New Album', 'rtmedia' ) ."'><i class='rtmicon-plus-circle'></i>" . __('Add Album') . "</a>";
+        $options[] = "<a href='#rtmedia-create-album-modal' class='rtmedia-reveal-modal rtmedia-modal-link'  title='".  __( 'Create New Album', 'rtmedia' ) ."'><i class='rtmicon-plus-circle'></i>" . __('Add Album', 'rtmedia') . "</a>";
         return $options;
 
     }
@@ -1725,7 +1725,7 @@ function show_rtmedia_like_counts(){
     $count =  get_rtmedia_like();
     if( !(isset($options['general_enableLikes']) && $options['general_enableLikes'] == 0)){
     ?>
-    <div class='rtmedia-like-info<?php if($count == 0) echo " hide";?>'><i class="rtmicon-thumbs-up"></i>  <span class="rtmedia-like-counter-wrap"><span class="rtmedia-like-counter"><?php echo $count; ?></span> <?php _e('people like this');?></span></div>
+    <div class='rtmedia-like-info<?php if($count == 0) echo " hide";?>'><i class="rtmicon-thumbs-up"></i>  <span class="rtmedia-like-counter-wrap"><span class="rtmedia-like-counter"><?php echo $count; ?></span> <?php _e('people like this', 'rtmedia');?></span></div>
     <?php }
 
     }
