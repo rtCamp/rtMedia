@@ -33,10 +33,11 @@ class RTMediaMediaSizeImporter {
 
 	function rtmedia_hide_media_size_import_notice() {
 		if( rtmedia_update_site_option( "rtmedia_hide_media_size_import_notice", true ) ) {
-			return '1';
+			echo '1';
 		} else {
-			return '0';
+			echo '0';
 		}
+		wp_die();
 	}
 
 	function add_admin_notice() {
