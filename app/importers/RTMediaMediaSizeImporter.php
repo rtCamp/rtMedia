@@ -32,7 +32,11 @@ class RTMediaMediaSizeImporter {
 	}
 
 	function rtmedia_hide_media_size_import_notice() {
-		rtmedia_update_site_option( "rtmedia_media_hide_import_pending_count", true );
+		if( rtmedia_update_site_option( "rtmedia_hide_media_size_import_notice", true ) ) {
+			return '1';
+		} else {
+			return '0';
+		}
 	}
 
 	function add_admin_notice() {
@@ -41,7 +45,7 @@ class RTMediaMediaSizeImporter {
 			$pending = 0;
 		}
 		rtmedia_update_site_option( "rtmedia_media_size_import_pending_count", $pending );
-		$hide_admin_option = rtmedia_get_site_option( 'rtmedia_media_hide_import_pending_count' );
+		$hide_admin_option = rtmedia_get_site_option( 'rtmedia_hide_media_size_import_notice' );
 		if( $hide_admin_option ) {
 			return;
 		}
@@ -58,8 +62,18 @@ class RTMediaMediaSizeImporter {
 
 	function add_rtmedia_media_size_import_notice() {
 		if ( current_user_can( 'manage_options' ) ){
-			$this->create_notice( "<p><strong>rtMedia</strong>: Database table structure for rtMedia has been updated. Please <a href='" . admin_url( "admin.php?page=rtmedia-migration-media-size-import&force=true" ) . "'>Click Here</a> to import media sizes. </p>" );
-			?>
+			$this->create_notice( "<p><strong>rtMedia</strong>: Database table structure for rtMedia has been updated. Please <a href='" . admin_url( "admin.php?page=rtmedia-migration-media-size-import&force=true" ) . "'>Click Here</a> to import media sizes. <a href='#' onclick='rtmedia_hide_media_size_import_notice()' style='float:right'>" . __( "Hide" ) . "</a>  </p>" );
+		?>
+			<script type="text/javascript">
+				function rtmedia_hide_media_size_import_notice() {
+					var data = {action: 'rtmedia_hide_media_size_import_notice'};
+					jQuery.post( ajaxurl, data, function ( response ) {
+						response = response.trim();
+						if ( response === "1" )
+							jQuery( '.rtmedia-media-size-import-error' ).remove();
+					} );
+				}
+			</script>
 		<?php
 		}
 	}
@@ -78,7 +92,7 @@ class RTMediaMediaSizeImporter {
 			<h2>rtMedia Media Size Import</h2>
 			<p>Table structure for rtMedia has been updated. </p>
 			<?php
-			echo '<span class="pending">' . rtmedia_migrate_formatseconds( $total - $done ) . '</span><br />';
+			echo '<span class="pending">' . rtmedia_migrate_formatseconds( $total - $done ) . ' (estimated)</span><br />';
 			echo '<span class="finished">' . $done . '</span>/<span class="total">' . $total . '</span>';
 			echo '<img src="images/loading.gif" alt="syncing" id="rtMediaSyncing" style="display:none" />';
 
@@ -88,6 +102,7 @@ class RTMediaMediaSizeImporter {
 			<script type="text/javascript">
 				var false_count = 0;
 				var curr_done = 0;
+				var fail_id = new Array();
 				jQuery( document ).ready( function ( e ) {
 					jQuery( "#toplevel_page_rtmedia-settings" ).addClass( "wp-has-current-submenu" )
 					jQuery( "#toplevel_page_rtmedia-settings" ).removeClass( "wp-not-current-submenu" )
@@ -127,6 +142,9 @@ class RTMediaMediaSizeImporter {
 									jQuery( 'span.finished' ).html( done );
 									jQuery( 'span.total' ).html( total );
 									jQuery( 'span.pending' ).html( data.pending );
+									if( data.imported === false ) {
+										fail_id.push(data.media_id);
+									}
 									if( curr_done == done ) {
 										false_count++;
 									} else {
@@ -150,14 +168,17 @@ class RTMediaMediaSizeImporter {
 						} );
 					} else {
 						alert( "Migration completed." );
+						if( fail_id.length > 0 ) {
+							rtm_show_file_error();
+						}
 						jQuery( "#rtMediaSyncing" ).hide();
 					}
 				}
-				function rtm_show_file_error( done, total ) {
-					jQuery( 'span.pending' ).html( "File size of " + ( total - done ) + " file(s) are not imported. Don't worry, you can end importing media size now :)" );
-					var data = {action: 'rtmedia_hide_media_size_import_notice'};
-					jQuery.post( ajaxurl, data, function ( response ) { } );
-					jQuery( "#rtMediaSyncing" ).hide();
+				function rtm_show_file_error() {
+					jQuery( 'span.pending' ).html( "Media with ID: " + fail_id.join() + " can not be imported. Don't worry, you can end importing media size now :)" );
+//					var data = {action: 'rtmedia_hide_media_size_import_notice'};
+//					jQuery.post( ajaxurl, data, function ( response ) { } );
+//					jQuery( "#rtMediaSyncing" ).hide();
 				}
 				var db_done = <?php echo $done; ?>;
 				var db_total = <?php echo $total; ?>;
@@ -208,25 +229,30 @@ class RTMediaMediaSizeImporter {
 		}
 		$result = $wpdb->get_results( $get_media_sql );
 		if ( $result && sizeof( $result ) > 0 ){
-			$this->migrate_single_media( $result[ 0 ] );
+			$migrate = $this->migrate_single_media( $result[ 0 ] );
 		}
-		$this->return_migration();
+		$this->return_migration( $migrate, $result[ 0 ] );
 	}
 
 	function migrate_single_media( $result ) {
 		global $wpdb;
 		$rtmedia_model = new RTMediaModel();
 		$attached_file = get_attached_file( $result->media_id );
-		if ( ! file_exists( $attached_file ) ){
-			$this->rtmedia_media_size_import( $result->id );
+		$return = true;
+		if ( file_exists( $attached_file ) ){
+			$file_size = filesize( $attached_file );
+		} else {
+			$file_size = '0';
+			error_log( 'rtMedia size import file not exist: Media ID: '.$result->id.' File: '.$attached_file );
+			$return = false;
 		}
-		$file_size = filesize( $attached_file );
 		$post      = get_post( $result->media_id );
 		$post_date = $post->post_date;
 		$rtmedia_model->update( array( 'upload_date' => $post_date, 'file_size' => $file_size ), array( 'id' => $result->id ) );
+		return $return;
 	}
 
-	function return_migration() {
+	function return_migration( $migrate = true, $media ) {
 		$total   = $this->get_total_count();
 		$pending = $this->get_pending_count();
 		$done    = $total - $pending;
@@ -239,7 +265,7 @@ class RTMediaMediaSizeImporter {
 		}
 		rtmedia_update_site_option( 'rtmedia_media_size_import_pending_count', $pending );
 		$pending_time = rtmedia_migrate_formatseconds( $pending ). " (estimated)";
-		echo json_encode( array( "status" => true, "done" => $done, "total" => $total, "pending" => $pending_time ) );
+		echo json_encode( array( "status" => true, "done" => $done, "total" => $total, "pending" => $pending_time, "media_id" => $media->id, "imported" => $migrate ) );
 		die();
 	}
 }
