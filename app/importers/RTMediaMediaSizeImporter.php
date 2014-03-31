@@ -232,7 +232,7 @@ class RTMediaMediaSizeImporter {
 		if ( $result && sizeof( $result ) > 0 ){
 			$migrate = $this->migrate_single_media( $result[ 0 ] );
 		}
-		$this->return_migration( $migrate, $result[ 0 ] );
+		$this->return_migration( $result[ 0 ], $migrate );
 	}
 
 	function migrate_single_media( $result ) {
@@ -253,7 +253,7 @@ class RTMediaMediaSizeImporter {
 		return $return;
 	}
 
-	function return_migration( $migrate = true, $media ) {
+	function return_migration( $media, $migrate = true ) {
 		$total   = $this->get_total_count();
 		$pending = $this->get_pending_count();
 		$done    = $total - $pending;
