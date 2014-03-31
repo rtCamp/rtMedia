@@ -85,11 +85,23 @@ class RTMediaTemplate {
 
 			$this->check_delete_comments();
 			if ( isset( $rtmedia_query->is_gallery_shortcode ) && $rtmedia_query->is_gallery_shortcode == true && isset( $shortcode_attr[ 'name' ] ) && $shortcode_attr[ 'name' ] == 'gallery' ){
-				echo "<div class='rtmedia_gallery_wrapper'>";
-				$this->add_hidden_fields_in_gallery();
-				$gallery_template = apply_filters( "rtmedia-before-template", $template, $shortcode_attr );
-				include $this->locate_template( $gallery_template );
-				echo "</div>";
+
+				$valid = $this->sanitize_gallery_attributes( $shortcode_attr[ 'attr' ] );
+
+				if ( $valid ) {
+					if ( is_array( $shortcode_attr[ 'attr' ] ) ) {
+						$this->update_global_query( $shortcode_attr[ 'attr' ] );
+					}
+					echo "<div class='rtmedia_gallery_wrapper'>";
+					$this->add_hidden_fields_in_gallery();
+					$gallery_template = apply_filters( "rtmedia-before-template", $template, $shortcode_attr );
+					include $this->locate_template( $gallery_template );
+					echo "</div>";
+				} else {
+					echo __( 'Invalid attribute passed for rtmedia_gallery shortcode.', 'rtmedia' );
+
+					return false;
+				}
 			} else {
 				return $this->get_default_template();
 			}
