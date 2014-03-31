@@ -90,20 +90,18 @@ class RTMediaMediaSizeImporter {
 		$done    = $total - $pending;
 		?>
 		<div class="wrap">
-			<h2>rtMedia Media Size Import</h2>
-			<p>Table structure for rtMedia has been updated. </p>
-			<?php
+			<h2>rtMedia: Import Media Size</h2>
+		<?php
 			echo '<span class="pending">' . rtmedia_migrate_formatseconds( $total - $done ) . ' (estimated)</span><br />';
 			echo '<span class="finished">' . $done . '</span>/<span class="total">' . $total . '</span>';
 			echo '<img src="images/loading.gif" alt="syncing" id="rtMediaSyncing" style="display:none" />';
 
 			$temp = $prog->progress( $done, $total );
 			$prog->progress_ui( $temp, true );
-			?>
+		?>
 			<script type="text/javascript">
-				var false_count = 0;
-				var curr_done = 0;
 				var fail_id = new Array();
+				var ajax_data;
 				jQuery( document ).ready( function ( e ) {
 					jQuery( "#toplevel_page_rtmedia-settings" ).addClass( "wp-has-current-submenu" )
 					jQuery( "#toplevel_page_rtmedia-settings" ).removeClass( "wp-not-current-submenu" )
@@ -113,17 +111,19 @@ class RTMediaMediaSizeImporter {
 					if ( db_total < 1 )
 						jQuery( "#submit" ).attr( 'disabled', "disabled" );
 				} )
-				function db_start_migration( db_done, db_total ) {
+				function db_start_migration( db_done, db_total, last_id ) {
 
 					if ( db_done < db_total ) {
 						jQuery( "#rtMediaSyncing" ).show();
+						ajax_data = {
+							"action": "rtmedia_media_size_import",
+							"done": db_done,
+							"last_id" : last_id
+						}
 						jQuery.ajax( {
 							url: rtmedia_admin_ajax,
 							type: 'post',
-							data: {
-								"action": "rtmedia_media_size_import",
-								"done": db_done
-							},
+							data: ajax_data,
 							success: function ( sdata ) {
 
 								try {
@@ -146,17 +146,7 @@ class RTMediaMediaSizeImporter {
 									if( data.imported === false ) {
 										fail_id.push(data.media_id);
 									}
-									if( curr_done == done ) {
-										false_count++;
-									} else {
-										false_count = 0;
-									}
-									curr_done = done;
-									if( false_count > 5 ) {
-										rtm_show_file_error( done, total );
-									} else {
-										db_start_migration( done, total );
-									}
+									db_start_migration( done, total, parseInt( data.media_id ) );
 								} else {
 									alert( "Migration completed." );
 									jQuery( "#rtMediaSyncing" ).hide();
@@ -176,7 +166,7 @@ class RTMediaMediaSizeImporter {
 					}
 				}
 				function rtm_show_file_error() {
-					jQuery( 'span.pending' ).html( "Media with ID: " + fail_id.join() + " can not be imported. Don't worry, you can end importing media size now :)" );
+					jQuery( 'span.pending' ).html( "Media with ID: " + fail_id.join() + " can not be imported. Please check your server error log for more details. Don't worry, you can end importing media size now :)" );
 //					var data = {action: 'rtmedia_hide_media_size_import_notice'};
 //					jQuery.post( ajaxurl, data, function ( response ) { } );
 //					jQuery( "#rtMediaSyncing" ).hide();
@@ -185,7 +175,7 @@ class RTMediaMediaSizeImporter {
 				var db_total = <?php echo $total; ?>;
 				jQuery( document ).on( 'click', '#submit', function ( e ) {
 					e.preventDefault();
-					db_start_migration( db_done, db_total );
+					db_start_migration( db_done, db_total, 0 );
 					jQuery( this ).attr( 'disabled', 'disabled' );
 				} );
 			</script>
@@ -197,10 +187,13 @@ class RTMediaMediaSizeImporter {
 	<?php
 	}
 
-	function get_pending_count() {
+	function get_pending_count( $media_id = false ) {
 		global $wpdb;
 		$rtmedia_model = new RTMediaModel();
 		$query_pending = "SELECT COUNT(*) as pending from {$rtmedia_model->table_name} where file_size IS NULL AND media_type in ('photo','video','document','music','other')";
+		if( $media_id ) {
+			$query_pending = "SELECT COUNT(*) as pending from {$rtmedia_model->table_name} where file_size IS NULL AND media_type in ('photo','video','document','music','other') AND id > '" . $media_id . "'";
+		}
 		$pending_count = $wpdb->get_results( $query_pending );
 		if ( $pending_count && sizeof( $pending_count ) > 0 ){
 			return $pending_count[ 0 ]->pending;
@@ -225,6 +218,9 @@ class RTMediaMediaSizeImporter {
 		global $wpdb;
 		$rtmedia_model = new RTMediaModel();
 		$get_media_sql = "SELECT * from {$rtmedia_model->table_name} where file_size is NULL and media_type in ('photo','video','document','music','other') order by id limit " . $limit;
+		if( isset( $_REQUEST['last_id'] ) ) {
+			$lastid = $_REQUEST['last_id'];
+		}
 		if ( $lastid ){
 			$get_media_sql = "SELECT * from {$rtmedia_model->table_name} where id > '" . $lastid . "' AND file_size is NULL and media_type in ('photo','video','document','music','other') order by id limit " . $limit;
 		}
@@ -244,8 +240,9 @@ class RTMediaMediaSizeImporter {
 			$file_size = filesize( $attached_file );
 		} else {
 			$file_size = '0';
-			error_log( 'rtMedia size import file not exist: Media ID: '.$result->id.' File: '.$attached_file );
+			error_log( 'rtMedia size importer: file not exist. Media ID: '.$result->id.', File: '.$attached_file );
 			$return = false;
+			return false;
 		}
 		$post      = get_post( $result->media_id );
 		$post_date = $post->post_date;
@@ -255,7 +252,7 @@ class RTMediaMediaSizeImporter {
 
 	function return_migration( $media, $migrate = true ) {
 		$total   = $this->get_total_count();
-		$pending = $this->get_pending_count();
+		$pending = $this->get_pending_count( $media->id );
 		$done    = $total - $pending;
 		if ( $pending < 0 ){
 			$pending = 0;
