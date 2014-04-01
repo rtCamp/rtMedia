@@ -37,7 +37,7 @@ class RTMediaNav {
             if ( $rtmedia->options[ "buddypress_enableOnProfile" ] != 0 ) {
                 bp_core_new_nav_item ( array(
                     'name' => RTMEDIA_MEDIA_LABEL . '<span>' . $profile_counts[ 'total' ][ 'all' ] . '</span>',
-                    'slug' => RTMEDIA_MEDIA_SLUG,
+                    'slug' => apply_filters('rtmedia_media_tab_slug', RTMEDIA_MEDIA_SLUG ),
                     'screen_function' => array( $this, 'media_screen' ),
                     'default_subnav_slug' => 'all',
 		    'position' => $tab_position
