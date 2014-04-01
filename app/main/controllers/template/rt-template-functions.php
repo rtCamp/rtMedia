@@ -2168,6 +2168,10 @@ function is_rtmedia_page() {
         return false;
     }
 
+	if( ! isset( $rtmedia_interaction->routes ) ) {
+		return false;
+	}
+
     return $rtmedia_interaction->routes[RTMEDIA_MEDIA_SLUG]->is_template();
 }
 
