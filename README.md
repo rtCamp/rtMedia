@@ -133,6 +133,10 @@ http://www.youtube.com/watch?v####dJrykKQGDcs
 
 Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "Visit rtMedia's Features page") to get some details about future releases.
 
+#### 3.6.11 ####
+* Update Russian and Polish translations
+* Bug fixes
+
 #### 3.6.10 ####
 * Update German and Swedish translations
 * JS fix for WordPress 3.9 Beta
@@ -734,8 +738,8 @@ Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_sou
 * HTML5 Audio Tag Support (with fallback)
 * HTML5 Video Tag Support (with fallback)
 
-#### 3.6.10 ####
-Requires BuddyPress 1.7 or higher, if using BuddyPress. Update German and Swedish translations, js fix for WordPress 3.9 Beta, bug fixes.
+#### 3.6.11 ####
+Requires BuddyPress 1.7 or higher, if using BuddyPress. Update Russian and Polish translations and bug fixes.
 
 ## Sponsors ##
 
