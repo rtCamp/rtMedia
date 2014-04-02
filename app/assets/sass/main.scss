@@ -1326,8 +1326,12 @@ button.rtp-lb-close {
 
 
 // options dropdown styles
-#rtm-media-options-list.click-nav, #rtm-media-sort-list.click-nav {position:relative;float:left; margin-right: 10px;}
-#rtm-media-options-list, #rtm-media-sort-list {
+#rtm-media-options {
+  .click-nav {
+      position:relative;
+      float:left;
+      margin-right: 10px;
+  }
   ul {
       position:absolute;left:0;right:0;
       width: 170px;
@@ -1382,12 +1386,6 @@ button.rtp-lb-close {
     ul {
       left: -85px;
     }
-}
-
-#rtm-media-sort-list {
-  ul {
-    left: -105px;
-  }
 }
 
 /* Fallbacks */

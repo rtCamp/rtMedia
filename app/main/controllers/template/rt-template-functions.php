@@ -973,10 +973,10 @@ function rtmedia_vedio_editor_content() {
 						?>
 						<li<?php echo checked( $thumbnail_src, $rtmedia_query->media[ 0 ]->cover_art, false ) ? ' class="selected"' : ''; ?>
 							style="width: 150px;display: inline-block;">
-							<label for="rtmedia-upload-select-thumbnail-<?php echo $key + 1; ?>" class="alignleft">
+							<label for="rtmedia-upload-select-thumbnail-<?php echo intval( sanitize_text_field( $key ) ) + 1; ?>" class="alignleft">
 								<input
 									type="radio"<?php checked( $thumbnail_src, $rtmedia_query->media[ 0 ]->cover_art ); ?>
-									id="rtmedia-upload-select-thumbnail-<?php echo $key + 1; ?>"
+									id="rtmedia-upload-select-thumbnail-<?php echo intval( sanitize_text_field( $key ) ) + 1; ?>"
 									value="<?php echo $thumbnail_src; ?>" name="rtmedia-thumbnail"/>
 								<img src="<?php echo $thumbnail_src; ?>" style="max-height: 120px;max-width: 120px"/>
 							</label>
@@ -1005,12 +1005,12 @@ function rtmedia_vedio_editor_content() {
 								?>
 								<li<?php echo checked( $attachment_id, $curr_cover_art, false ) ? ' class="selected"' : ''; ?>
 									style="width: 150px;display: inline-block;">
-									<label for="rtmedia-upload-select-thumbnail-<?php echo $key + 1; ?>"
+									<label for="rtmedia-upload-select-thumbnail-<?php echo intval( sanitize_text_field( $key ) ) + 1; ?>"
 										   class="alignleft">
 										<input type="radio"<?php checked( $attachment_id, $curr_cover_art ); ?>
-											   id="rtmedia-upload-select-thumbnail-<?php echo $key + 1; ?>"
-											   value="<?php echo $attachment_id; ?>" name="rtmedia-thumbnail"/>
-										<img src="<?php echo $thumbnail_src; ?>"
+											   id="rtmedia-upload-select-thumbnail-<?php echo intval( sanitize_text_field( $key ) ) + 1; ?>"
+											   value="<?php echo sanitize_text_field( $attachment_id ); ?>" name="rtmedia-thumbnail"/>
+										<img src="<?php echo sanitize_text_field( $thumbnail_src ); ?>"
 											 style="max-height: 120px;max-width: 120px"/>
 									</label>
 								</li>
@@ -1167,7 +1167,7 @@ function rtmedia_comment_form() {
 	if ( is_user_logged_in() ){
 		?>
 		<form method="post" id="rt_media_comment_form" class="rt_media_comment_form"
-			  action="<?php echo get_rtmedia_permalink( rtmedia_id() ); ?>comment/">
+			  action="<?php echo esc_url( get_rtmedia_permalink( rtmedia_id() ) ); ?>comment/">
 			<div class="row">
 				<div class="large-12 columns">
 					<textarea style="width:100%" placeholder="<?php _e( 'Type Comment...', 'rtmedia' ); ?>"
@@ -2105,7 +2105,7 @@ function rtmedia_link_in_footer() {
 
 		<div class='rtmedia-footer-link'>
 			<?php echo __( "Empowering your community with ", 'rtmedia' ); ?>
-			<a href='<?php echo $href ?>'
+			<a href='<?php echo esc_url( $href) ?>'
 			   title='<?php echo __( 'The only complete media solution for WordPress, BuddyPress and bbPress', 'rtmedia' ); ?> '>
 				rtMedia</a>
 		</div>
