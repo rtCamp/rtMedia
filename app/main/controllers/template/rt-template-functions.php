@@ -1398,8 +1398,8 @@ function rtmedia_group_album_list( $selected_album_id = false ) { //by default, 
 	}
 }
 
-add_action( 'rtmedia_media_gallery_actions', 'rtmedia_gallery_options', 20 );
-add_action( 'rtmedia_album_gallery_actions', 'rtmedia_gallery_options', 20 );
+add_action( 'rtmedia_media_gallery_actions', 'rtmedia_gallery_options', 80 );
+add_action( 'rtmedia_album_gallery_actions', 'rtmedia_gallery_options', 80 );
 function rtmedia_gallery_options() {
 
 	$options_start = $options_end = $option_buttons = $output = "";
@@ -1861,8 +1861,8 @@ function show_rtmedia_like_counts() {
 
 }
 
-add_action( 'rtmedia_media_gallery_actions', 'add_upload_button' );
-add_action( 'rtmedia_album_gallery_actions', 'add_upload_button' );
+add_action( 'rtmedia_media_gallery_actions', 'add_upload_button', 99 );
+add_action( 'rtmedia_album_gallery_actions', 'add_upload_button', 99 );
 function add_upload_button() {
 	if ( function_exists( 'bp_is_blog_page' ) && ! bp_is_blog_page() ){
 		if ( function_exists( 'bp_is_user' ) && bp_is_user() && function_exists( 'bp_displayed_user_id' ) && bp_displayed_user_id() == get_current_user_id() ){

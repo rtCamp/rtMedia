@@ -143,12 +143,21 @@ var rtMediaHook = {
 
 //drop-down js
 function rtmedia_init_action_dropdown() {
+    var all_ul;
+    var curr_ul;
     jQuery('.click-nav > span').toggleClass('no-js js');
     jQuery('.click-nav .js ul').hide();
     jQuery('.click-nav .clicker').click(function(e) {
-	jQuery(this).next('ul').toggle();
-	//$('.click-nav ul').toggle();
-	e.stopPropagation();
+        all_ul = jQuery('#rtm-media-options .click-nav .clicker').next('ul');
+        curr_ul = jQuery(this).next('ul');
+        jQuery.each( all_ul, function ( index, value ) {
+            if( jQuery(value ).html() != curr_ul.html() ) {     // check clicked option with other options
+                jQuery(value).hide();
+            }
+        });
+        jQuery(curr_ul).toggle();
+        //$('.click-nav ul').toggle();
+        e.stopPropagation();
     });
 }
 
