@@ -575,3 +575,11 @@ function rtmedia_version_compare( left, right ) {
     }
     return true;
 }
+
+function rtm_is_element_exist( el ) {
+    if( jQuery( el ).length > 0 ) {
+        return true;
+    } else {
+        return false;
+    }
+}
