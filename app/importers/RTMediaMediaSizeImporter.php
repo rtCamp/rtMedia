@@ -166,7 +166,7 @@ class RTMediaMediaSizeImporter {
 					}
 				}
 				function rtm_show_file_error() {
-					jQuery( 'span.pending' ).html( "Media with ID: " + fail_id.join() + " can not be imported. Please check your server error log for more details. Don't worry, you can end importing media size now :)" );
+					jQuery( 'span.pending' ).html( "Media with ID: " + fail_id.join(', ') + " can not be imported. Please check your server error log for more details. Don't worry, you can end importing media size now :)" );
 //					var data = {action: 'rtmedia_hide_media_size_import_notice'};
 //					jQuery.post( ajaxurl, data, function ( response ) { } );
 //					jQuery( "#rtMediaSyncing" ).hide();

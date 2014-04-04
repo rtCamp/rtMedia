@@ -1328,12 +1328,26 @@ button.rtp-lb-close {
 // options dropdown styles
 #rtm-media-options {
   .click-nav {
-      position:relative;
-      float:left;
-      margin-right: 10px;
+  		position: relative;
+	    float:left;
+	    margin-right: 10px;
   }
-  ul {
-      position:absolute;left:0;right:0;
+}
+
+.rtm-lightbox-container #rtm-media-options-list.click-nav {
+	position: relative;
+}
+
+.rtm-lightbox-container #rtm-media-options-list {
+    ul {
+      left: -85px;
+    }
+}
+
+#rtm-media-options, .rtm-lightbox-container #rtm-media-options-list {
+	ul {
+      position:absolute;
+      right:0;
       width: 170px;
       z-index: 9;
       padding: 10px 5px;
@@ -1381,11 +1395,6 @@ button.rtp-lb-close {
           }
       }
   }
-}
-#rtm-media-options-list {
-    ul {
-      left: -85px;
-    }
 }
 
 /* Fallbacks */
