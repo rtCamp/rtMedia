@@ -135,6 +135,7 @@ jQuery( function ( $ ) {
                             el: list_el
                         } );
                         //element.show();
+                        jQuery('.rtmedia-container .rtmedia-list-media' ).css('opacity', '1');
                     }
                 } );
             }
@@ -142,6 +143,7 @@ jQuery( function ( $ ) {
         reloadView: function () {
             upload_sync = true;
             nextpage = 1;
+            jQuery('.rtmedia-container .rtmedia-list-media' ).css('opacity', '0.5');
             this.getNext();
         }
 
@@ -215,7 +217,7 @@ jQuery( function ( $ ) {
         $( this ).before( "<div class='rtm-media-loading'><img src='" + rMedia_loading_media + "' /></div>" );
         $( this ).hide();
         e.preventDefault();
-        galleryObj.getNext( nextpage, $( this ).parent().parent().parent(), $( this ) );
+        galleryObj.getNext( nextpage );
     } );
 
 
