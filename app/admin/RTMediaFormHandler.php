@@ -375,10 +375,10 @@ class RTMediaFormHandler {
 			}
 		?>
 			<div class="row section">
-			    <div class="columns large-6">
+			    <div class="columns large-7">
 				<?php echo $option['title']; ?>
 			    </div>
-			    <div class="columns large-6">
+			    <div class="columns large-5">
 				<?php call_user_func($option['callback'], $option['args']); ?>
 				<span data-tooltip class="has-tip" title="<?php echo (isset($option['args']['desc'])) ? $option['args']['desc'] : "NA"; ?>"><i class="rtmicon-info-circle"></i></span>
 			    </div>
