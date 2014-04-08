@@ -417,6 +417,10 @@ jQuery( function ( $ ) {
 
         jQuery( '.start-media-upload' ).on( 'click', function ( e ) {
             e.preventDefault();
+            var allow_upload = rtMediaHook.call( 'rtmedia_js_upload_file', true );
+            if ( allow_upload == false ) {
+                return false;
+            }
             uploaderObj.uploadFiles();
         } );
 
