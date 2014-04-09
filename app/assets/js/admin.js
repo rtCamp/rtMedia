@@ -561,7 +561,7 @@ jQuery(document).ready(function($) {
         return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
     }
 
-    jQuery('#submit-request').click(function(){
+    jQuery('#rtmedia-submit-request').click(function(){
 	var flag = true;
 	var name = jQuery('#name').val();
 	var email = jQuery('#email').val();

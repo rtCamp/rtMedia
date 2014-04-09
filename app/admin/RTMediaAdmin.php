@@ -20,10 +20,7 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
             global $rtmedia;
             add_action ( 'init', array( $this, 'video_transcoding_survey_response' ) );
 	    add_action ( 'admin_init', array( $this, 'presstrends_plugin' ) );
-            if ( is_multisite () ) {
-                add_action ( 'network_admin_notices', array( $this, 'upload_filetypes_error' ) );
-                add_action ( 'admin_notices', array( $this, 'upload_filetypes_error' ) );
-            }
+
             //$rtmedia_feed = new RTMediaFeed();
             add_filter ( "plugin_action_links_" . RTMEDIA_BASE_NAME, array( &$this, 'plugin_add_settings_link' ) );
             //add_action ( 'wp_ajax_rtmedia_fetch_feed', array( $rtmedia_feed, 'fetch_feed' ), 1 );
@@ -44,7 +41,6 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
             add_action ( 'wp_dashboard_setup', array( &$this, 'add_dashboard_widgets' ), 0 );
             add_filter("attachment_fields_to_edit", array($this,"edit_video_thumbnail"), null, 2);
             add_filter("attachment_fields_to_save", array($this,"save_video_thumbnail"), null, 2);
-	    add_action ( 'admin_notices', array( $this, 'rtmedia_regenerate_thumbnail_notice' ) );
 	    add_action ( 'wp_ajax_rtmedia_hide_video_thumb_admin_notice', array( $this, 'rtmedia_hide_video_thumb_admin_notice' ), 1 );
 	    add_action ( 'wp_ajax_rtmedia_hide_addon_update_notice', array( $this, 'rtmedia_hide_addon_update_notice' ), 1 );
 	    $obj_encoding =  new RTMediaEncoding(true);
@@ -79,19 +75,31 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
 //	    show rtmedia advertisement
 //            if(! defined("RTMEDIA_PRO_VERSION") )
 //                add_action ( 'rtmedia_before_default_admin_widgets', array( $this, 'rtmedia_advertisement' ),1);
-	    if( $this->check_for_addon_update_notice() ) {
-		add_action ( 'admin_notices', array( $this, 'rtmedia_addon_update_notice' ) );
-	    }
 	    if( !class_exists("BuddyPress") ) {
 		add_action( 'admin_init',array( $this,'check_permalink_admin_notice' ) );
 	    }
 
-            add_action ( 'wp_ajax_rtmedia_hide_template_override_notice', array( $this, 'rtmedia_hide_template_override_notice' ), 1 );
-            add_action ( 'admin_notices', array( $this, 'rtmedia_update_template_notice' ) );
+		add_action ( 'wp_ajax_rtmedia_hide_template_override_notice', array( $this, 'rtmedia_hide_template_override_notice' ), 1 );
 	    add_action ( 'admin_init', array( $this, 'rtmedia_bp_add_update_type' ) );
-	    add_action ( 'admin_notices', array( $this, 'rtmedia_inspirebook_release_notice' ) );
 	    add_action ( 'wp_ajax_rtmedia_hide_inspirebook_release_notice', array( $this, 'rtmedia_hide_inspirebook_release_notice' ), 1 );
 	    $rtmedia_media_import = new RTMediaMediaSizeImporter(); // do not delete this line. We only need to create object of this class if we are in admin section
+		add_action( 'admin_notices', array( $this, 'rtmedia_admin_notices' ) );
+		add_action( 'network_admin_notices', array( $this, 'rtmedia_network_admin_notices' ) );
+
+	}
+
+	function rtmedia_network_admin_notices() {
+		if ( is_multisite () ){
+			$this->upload_filetypes_error();
+		}
+	}
+
+	function rtmedia_admin_notices() {
+		$this->upload_filetypes_error();
+		$this->rtmedia_regenerate_thumbnail_notice();
+		$this->rtmedia_addon_update_notice();
+		$this->rtmedia_update_template_notice();
+		$this->rtmedia_inspirebook_release_notice();
 	}
 
 	function rtmedia_inspirebook_release_notice() {
@@ -147,6 +155,9 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
 	}
 
 	function rtmedia_addon_update_notice() {
+		if( ! $this->check_for_addon_update_notice() ) {
+			return;
+		}
 	    if(is_rt_admin() ) {
 		$site_option  = rtmedia_get_site_option("rtmedia-addon-update-notice");
 		if(!$site_option || $site_option != "hide") {
@@ -1408,11 +1419,11 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
         }
 
         function rtmedia_update_template_notice(){
-	    $site_option  = rtmedia_get_site_option("rtmedia-update-template-notice-v3_5");
+	    $site_option  = rtmedia_get_site_option("rtmedia-update-template-notice-v3_12");
             if(!$site_option || $site_option != "hide") {
-		rtmedia_update_site_option("rtmedia-update-template-notice-v3_5", "show");
+		rtmedia_update_site_option("rtmedia-update-template-notice-v3_12", "show");
 		if( is_dir(get_template_directory().'/rtmedia') ) {
-		    echo '<div class="error rtmedia-update-template-notice"><p>' . __('rtMedia just updated to Foundation 5. Please update rtMedia template files if you have overridden the default rtMedia templates in your theme.') . '<a href="#" onclick="rtmedia_hide_template_override_notice()" style="float:right">' .__('Hide', 'rtmedia') .'</a>' . ' </p></div>';
+		    echo '<div class="error rtmedia-update-template-notice"><p>' . __('Please update rtMedia template files if you have overridden the default rtMedia templates in your theme. If not, you can ignore and hide this notice.') . '<a href="#" onclick="rtmedia_hide_template_override_notice()" style="float:right">' .__('Hide', 'rtmedia') .'</a>' . ' </p></div>';
 	    ?>
 		<script type="text/javascript">
 		    function rtmedia_hide_template_override_notice() {
@@ -1431,7 +1442,7 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
 
          function rtmedia_hide_template_override_notice() {
 
-	    if(rtmedia_update_site_option("rtmedia-update-template-notice-v3_5", "hide"))
+	    if(rtmedia_update_site_option("rtmedia-update-template-notice-v3_12", "hide"))
 		echo "1";
 	    else
 		echo "0";
