@@ -45,12 +45,12 @@
         </div><!--/.rtmedia_next_prev-->
 
     <?php } else { ?>
-        <p>
+        <p class="rtmedia-no-media-found">
             <?php 
                 $message = __ ( "Sorry !! There's no media found for the request !!", "rtmedia" );
                 echo apply_filters('rtmedia_no_media_found_message_filter', $message);
                 ?>
-            </p>
+		</p>
     <?php } ?>
     <?php do_action ( 'rtmedia_after_album_gallery' ) ; ?>
 

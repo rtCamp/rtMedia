@@ -125,7 +125,7 @@
             </div>
 
         <?php else: ?>
-            <p><?php 
+            <p class="rtmedia-no-media-found"><?php
                 $message = __ ( "Sorry !! There's no media found for the request !!", "rtmedia" );
                 echo apply_filters('rtmedia_no_media_found_message_filter', $message);
                 ?>

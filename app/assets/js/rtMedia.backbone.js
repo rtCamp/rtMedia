@@ -86,8 +86,8 @@ jQuery( function ( $ ) {
             return url;
         },
         getNext: function ( page, el, element ) {
-            if ( jQuery( '#bulk-edit-form' ).find( "p:nth-of-type(2)" ).length > 0 ) {
-                jQuery( '#bulk-edit-form p:nth-of-type(2)' ).replaceWith( "<ul class='rtmedia-list rtmedia-list-media'></ul>" );
+            if ( jQuery( '.rtmedia-no-media-found' ).length > 0 ) {
+                jQuery( '.rtmedia-no-media-found' ).replaceWith( "<ul class='rtmedia-list rtmedia-list-media'></ul>" );
             }
             that = this;
             if ( rtmedia_load_template_flag == true ) {
