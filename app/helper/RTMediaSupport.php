@@ -423,7 +423,7 @@ if (!class_exists('RTMediaSupport')) {
 			</ul>
 		    </div><!-- .submit-bug-box --><?php } ?>
 
-		<?php submit_button('Submit', 'primary', 'submit-request', false); ?>
+		<?php submit_button('Submit', 'primary', 'rtmedia-submit-request', false); ?>
 		<?php submit_button('Cancel', 'secondary', 'cancel-request', false); ?>
 	<?php
 		}
@@ -439,6 +439,7 @@ if (!class_exists('RTMediaSupport')) {
          * @global type $rtmedia
          */
         public function submit_request() {
+			$this->debug_info();
             global $rtmedia;
             $form_data = wp_parse_args($_POST['form_data']);
 	    foreach($form_data as $key=>$formdata) {
