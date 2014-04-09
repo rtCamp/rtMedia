@@ -549,6 +549,9 @@ class RTMediaQuery {
             } else {
 
             }
+			if( sizeof( explode( ',', $this->media_query[ 'context_id' ]  ) ) > 1 ) {
+				$this->media_query[ 'context_id' ] = array( 'compare' => 'in', 'value' => explode( ',', $this->media_query[ 'context_id' ]  ) );
+			}
         }
 
 	$this->media_query = apply_filters( 'rtmedia_media_query', $this->media_query );
