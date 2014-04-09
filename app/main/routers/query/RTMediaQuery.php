@@ -401,7 +401,7 @@ class RTMediaQuery {
 
 
 		$this->action_query = ( object )array(
-			$modifier_type => $modifier_value, 'action' => $action, 'bulk' => $bulk, 'page' => $pageno, 'per_page_media' => $per_page_media, 'attributes' => $attributes
+			$modifier_type => $modifier_value, 'action' => $action, 'bulk' => $bulk, 'page' => $pageno, 'per_page_media' => $per_page_media, 'attributes' => $attributes,
 		);
 	}
 
@@ -772,7 +772,7 @@ class RTMediaQuery {
 			 * setting up query vars for WP_Query
 			 */
 			$media_post_query_args = array(
-				'orderby' => 'ID', 'order' => 'DESC', 'post_type' => 'any', 'post_status' => 'any', 'post__in' => array_map( array( $this, 'get_media_id' ), $media ), 'ignore_sticky_posts' => 1, 'posts_per_page' => $this->action_query->per_page_media
+				'orderby' => 'ID', 'order' => 'DESC', 'post_type' => 'any', 'post_status' => 'any', 'post__in' => array_map( array( $this, 'get_media_id' ), $media ), 'ignore_sticky_posts' => 1, 'posts_per_page' => $this->action_query->per_page_media,
 			);
 
 			/**
