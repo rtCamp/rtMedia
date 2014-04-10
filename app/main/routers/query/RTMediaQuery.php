@@ -561,7 +561,7 @@ class RTMediaQuery {
 
 				}
 			}
-			if ( sizeof( explode( ',', $this->media_query[ 'context_id' ] ) ) > 1 ){
+			if ( isset( $this->media_query[ 'context_id' ] ) && sizeof( explode( ',', $this->media_query[ 'context_id' ] ) ) > 1 ){
 				$this->media_query[ 'context_id' ] = array( 'compare' => 'in', 'value' => explode( ',', $this->media_query[ 'context_id' ] ) );
 			}
 		}
