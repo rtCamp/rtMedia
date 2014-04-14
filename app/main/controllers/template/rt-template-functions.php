@@ -1470,10 +1470,10 @@ function rtmedia_album_edit ($options) {
     if ( isset ( $rtmedia_query->media_query ) && isset( $rtmedia_query->media_query[ 'album_id' ] ) && ! in_array ( $rtmedia_query->media_query[ 'album_id' ], rtmedia_get_site_option ( 'rtmedia-global-albums' ) ) ) {
         //if ( isset ( $rtmedia_query->media_query[ 'media_author' ] ) && get_current_user_id () == $rtmedia_query->media_query[ 'media_author' ] ) {
     if ( rtmedia_is_album_editable() || is_rt_admin() ) {
-        $options[] = "<a href='edit/' class='rtmedia-edit' title='" . __( 'Edit Album', 'rtmedia' ) . "' ><i class='rtmicon-edit'></i>" . __('Edit Album') . "</a>";
+        $options[] = "<a href='edit/' class='rtmedia-edit' title='" . __( 'Edit Album', 'rtmedia' ) . "' ><i class='rtmicon-edit'></i>" . __( 'Edit Album', 'rtmedia' ) . "</a>";
         $options[] = '<form method="post" class="album-delete-form rtmedia-inline" action="delete/">'
                 . wp_nonce_field ( 'rtmedia_delete_album_' . $rtmedia_query->media_query[ 'album_id' ], 'rtmedia_delete_album_nonce' )
-                . '<button type="submit" name="album-delete" class="icon-button rtmedia-delete-album" title="' . __( 'Delete Album', 'rtmedia' ) . '"><i class="rtmicon-trash-o"></i>Delete Album</button></form>';
+                . '<button type="submit" name="album-delete" class="icon-button rtmedia-delete-album" title="' . __( 'Delete Album', 'rtmedia' ) . '"><i class="rtmicon-trash-o"></i>' . __( 'Delete Album', 'rtmedia' ) . '</button></form>';
 
         if(is_rtmedia_group_album())
             $album_list = rtmedia_group_album_list();
