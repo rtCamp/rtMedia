@@ -53,7 +53,7 @@ class RTMediaUploadEndpoint {
 					}
 
 				}
-
+				$this->upload = apply_filters( 'rtmedia_media_param_before_upload', $this->upload );
 				$rtupload   = new RTMediaUpload ( $this->upload );
 				$mediaObj   = new RTMediaMedia();
 				$media      = $mediaObj->model->get( array( 'id' => $rtupload->media_ids[ 0 ] ) );
