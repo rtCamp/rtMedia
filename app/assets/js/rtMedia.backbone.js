@@ -289,8 +289,11 @@ jQuery( function ( $ ) {
 
         uploaderObj.uploader.bind( 'UploadComplete', function ( up, files ) {
             activity_id = -1;
+            var hook_respo = rtMediaHook.call( 'rtmedia_js_after_files_uploaded' );
             if ( typeof rtmedia_gallery_reload_on_upload != "undefined" && rtmedia_gallery_reload_on_upload == '1' ) { //reload gallery view when upload completes if enabled( by default enabled)
-                galleryObj.reloadView();
+                if( hook_respo != false ) {
+                    galleryObj.reloadView();
+                }
             }
             jQuery( '.start-media-upload' ).hide();
         } );
