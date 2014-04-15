@@ -109,7 +109,7 @@ class RTMediaUploadFile {
          */
         if ( $files ) {
             $this->fake = true;
-            $this->populate_file_array ( ( array ) $uploaded[ 'files' ] );
+            $this->populate_file_array ( ( array ) $this->uploaded[ 'files' ] );
             /**
              * otherwise check for $_FILES global object from the form submitted
              */
