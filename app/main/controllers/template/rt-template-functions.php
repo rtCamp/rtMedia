@@ -2097,7 +2097,7 @@ add_action( 'wp_footer', 'rtmedia_link_in_footer' );
 function rtmedia_link_in_footer() {
 	global $rtmedia;
 	$option = $rtmedia->options;
-	$link   = $option[ 'rtmedia_add_linkback' ];
+	$link   = ( isset( $option[ 'rtmedia_add_linkback' ]) ) ? $option[ 'rtmedia_add_linkback' ] : false ;
 	if ( $link ){
 		$aff_id = ( $option[ 'rtmedia_affiliate_id' ] != "" ) ? '&ref=' . $option[ 'rtmedia_affiliate_id' ] : "";
 		$href   = 'https://rtcamp.com/rtmedia/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media' . $aff_id;
