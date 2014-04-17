@@ -47,10 +47,10 @@ class RTMediaUploadView {
         } elseif ( is_rtmedia_album_enable () && $rtmedia_query && is_rtmedia_gallery () ) {
 
             if ( isset( $rtmedia_query->query[ 'context' ] ) && $rtmedia_query->query[ 'context' ] == 'profile' ) {
-                $album = '<span> <label> <i class="rtmicon-picture-o"></i>' . __('Album ','rtmedia') . ': </label><select name="album" class="rtmedia-user-album-list">' . rtmedia_user_album_list () . '</select></span>';
+                $album = '<span> <label> <i class="rtmicon-picture-o"></i>' . __('Album','rtmedia') . ': </label><select name="album" class="rtmedia-user-album-list">' . rtmedia_user_album_list () . '</select></span>';
             }
             if (isset( $rtmedia_query->query[ 'context' ] ) && $rtmedia_query->query[ 'context' ] == 'group' ) {
-                $album = '<span> <label> <i class="rtmicon-picture-o"></i>' . __('Album ','rtmedia') . ': </label><select name="album" class="rtmedia-user-album-list">' . rtmedia_group_album_list () . '</select></span>';
+                $album = '<span> <label> <i class="rtmicon-picture-o"></i>' . __('Album','rtmedia') . ': </label><select name="album" class="rtmedia-user-album-list">' . rtmedia_group_album_list () . '</select></span>';
             }
         }
         $up_privacy = $privacy = ""; //uploader privacy dropdown for uploader under rtMedia Media tab.
@@ -62,7 +62,7 @@ class RTMediaUploadView {
                 $up_privacy = new RTMediaPrivacy();
                 $up_privacy = $up_privacy->select_privacy_ui( false, 'rtSelectPrivacy') ;
                 if($up_privacy){
-                    $privacy = "<span><i class='rtmicon-eye'></i> <label for='privacy'> " . __('Privacy : ', 'rtmedia') . "</label>" . $up_privacy . "</span>";
+                    $privacy = "<span><i class='rtmicon-eye'></i> <label for='privacy'> " . __('Privacy: ', 'rtmedia') . "</label>" . $up_privacy . "</span>";
                 }
             }
         }
@@ -73,10 +73,13 @@ class RTMediaUploadView {
                     '<div id="rtmedia-upload-container" >'
                         . '<div id="drag-drop-area" class="drag-drop row">'
                                 ."<div class='rtm-album-privacy'>" . $album . $privacy . "</div>"
+								. apply_filters( 'rtmedia_uploader_before_select_files', "" )
                                 . '<div class="rtm-select-files"><input id="rtMedia-upload-button" value="' . __( "Select your files", "rtmedia" ) . '" type="button" class="rtmedia-upload-input rtmedia-file" />'
                                 . '<span class="rtm-seperator">' . __('or','rtmedia') .'</span><span class="drag-drop-info">' . __('Drop your files here', 'rtmedia') . '</span> <i class="rtm-file-size-limit rtmicon-info-circle"></i></div>'
+								. apply_filters( 'rtmedia_uploader_after_select_files', "" )
 								. apply_filters( 'rtmedia_uploader_before_start_upload_button', "" )
                                 . '<input type="button" class="start-media-upload" value="' . __('Start upload', 'rtmedia') .'"/>'
+								. apply_filters( 'rtmedia_uploader_after_start_upload_button', "" )
                         . '</div>'
                         . '<div class="row">'
                         . wp_nonce_field ( 'rtmedia_' . get_current_user_id(), 'rtmedia_media_delete_nonce' )
