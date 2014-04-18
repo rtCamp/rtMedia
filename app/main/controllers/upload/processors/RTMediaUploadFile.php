@@ -69,6 +69,7 @@ class RTMediaUploadFile {
 
 			return $uploaded_file;
 		}
+
 		return false;
 	}
 
@@ -117,7 +118,11 @@ class RTMediaUploadFile {
 			/**
 			 * No files could be found to upload
 			 */
-			throw new RTMediaUploadException ( UPLOAD_ERR_NO_FILE );
+			try {
+				throw new RTMediaUploadException ( UPLOAD_ERR_NO_FILE );
+			} catch ( Exception $e ) {
+
+			}
 		}
 	}
 
@@ -165,8 +170,10 @@ class RTMediaUploadFile {
 			//            $is_valid = $this->id3_validate_type($file);
 		} catch ( RTMediaUploadException $e ) {
 			echo $e->getMessage();
+
 			return false;
 		}
+
 		return true;
 	}
 
@@ -254,6 +261,7 @@ class RTMediaUploadFile {
 				$activity_content = false;
 				throw new RTMediaUploadException ( 0, __( 'Media File you have tried to upload is not supported. Supported media files are .jpg, .png, .gif, .mp3, .mov and .mp4.', 'rtmedia' ) );
 		}
+
 		return true;
 	}
 
@@ -327,6 +335,7 @@ class RTMediaUploadFile {
 				foreach ( $array as $index => $value ) $updated_files[ $index ][ $key ] = $value;
 			}
 		}
+
 		return $updated_files;
 	}
 }
