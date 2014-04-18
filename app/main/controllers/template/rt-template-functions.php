@@ -2404,3 +2404,17 @@ function rtmedia_file_size() {
 		}
 	}
 }
+
+/*
+ * get rtmedia media type from file extension
+ */
+function rtmedia_get_media_type_from_extn( $extn ) {
+	global $rtmedia;
+	$allowed_type = $rtmedia->allowed_types;
+	foreach( $allowed_type as $type => $param ) {
+		if( isset( $param['extn'] ) && is_array( $param['extn'] ) && in_array( $extn,  $param['extn'] ) ) {
+			return $type;
+		}
+	}
+	return false;
+}
