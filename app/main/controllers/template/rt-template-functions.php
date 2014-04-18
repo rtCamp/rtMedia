@@ -973,7 +973,9 @@ function rtmedia_vedio_editor_content() {
 						?>
 						<li<?php echo checked( $thumbnail_src, $rtmedia_query->media[ 0 ]->cover_art, false ) ? ' class="selected"' : ''; ?>
 							style="width: 150px;display: inline-block;">
-							<label for="rtmedia-upload-select-thumbnail-<?php echo intval( sanitize_text_field( $key ) ) + 1; ?>" class="alignleft">
+							<label
+								for="rtmedia-upload-select-thumbnail-<?php echo intval( sanitize_text_field( $key ) ) + 1; ?>"
+								class="alignleft">
 								<input
 									type="radio"<?php checked( $thumbnail_src, $rtmedia_query->media[ 0 ]->cover_art ); ?>
 									id="rtmedia-upload-select-thumbnail-<?php echo intval( sanitize_text_field( $key ) ) + 1; ?>"
@@ -1005,11 +1007,13 @@ function rtmedia_vedio_editor_content() {
 								?>
 								<li<?php echo checked( $attachment_id, $curr_cover_art, false ) ? ' class="selected"' : ''; ?>
 									style="width: 150px;display: inline-block;">
-									<label for="rtmedia-upload-select-thumbnail-<?php echo intval( sanitize_text_field( $key ) ) + 1; ?>"
-										   class="alignleft">
+									<label
+										for="rtmedia-upload-select-thumbnail-<?php echo intval( sanitize_text_field( $key ) ) + 1; ?>"
+										class="alignleft">
 										<input type="radio"<?php checked( $attachment_id, $curr_cover_art ); ?>
 											   id="rtmedia-upload-select-thumbnail-<?php echo intval( sanitize_text_field( $key ) ) + 1; ?>"
-											   value="<?php echo sanitize_text_field( $attachment_id ); ?>" name="rtmedia-thumbnail"/>
+											   value="<?php echo sanitize_text_field( $attachment_id ); ?>"
+											   name="rtmedia-thumbnail"/>
 										<img src="<?php echo sanitize_text_field( $thumbnail_src ); ?>"
 											 style="max-height: 120px;max-width: 120px"/>
 									</label>
@@ -1371,8 +1375,8 @@ function rtmedia_group_album_list( $selected_album_id = false ) { //by default, 
 	$global_albums = rtmedia_global_albums();
 
 	$album_objects = $model->get_media( array(
-			'context' => $rtmedia_query->media_query[ 'context' ], 'context_id' => $rtmedia_query->media_query[ 'context_id' ], 'media_type' => 'album'
-		), false, false );
+		'context' => $rtmedia_query->media_query[ 'context' ], 'context_id' => $rtmedia_query->media_query[ 'context_id' ], 'media_type' => 'album'
+	), false, false );
 	$option_group  = "";
 	if ( $album_objects ){
 		foreach ( $album_objects as $album ) {
@@ -1574,7 +1578,7 @@ function rtmedia_album_edit( $options ) {
 		//if ( isset ( $rtmedia_query->media_query[ 'media_author' ] ) && get_current_user_id () == $rtmedia_query->media_query[ 'media_author' ] ) {
 		if ( rtmedia_is_album_editable() || is_rt_admin() ){
 			$options[ ] = "<a href='edit/' class='rtmedia-edit' title='" . __( 'Edit Album', 'rtmedia' ) . "' ><i class='rtmicon-edit'></i>" . __( 'Edit Album', 'rtmedia' ) . "</a>";
-			$options[ ] = '<form method="post" class="album-delete-form rtmedia-inline" action="delete/">' . wp_nonce_field( 'rtmedia_delete_album_' . $rtmedia_query->media_query[ 'album_id' ], 'rtmedia_delete_album_nonce' ) . '<button type="submit" name="album-delete" class="icon-button rtmedia-delete-album" title="' . __( 'Delete Album', 'rtmedia' ) . '"><i class="rtmicon-trash-o"></i>' . __( 'Delete Album', 'rtmedia') . '</button></form>';
+			$options[ ] = '<form method="post" class="album-delete-form rtmedia-inline" action="delete/">' . wp_nonce_field( 'rtmedia_delete_album_' . $rtmedia_query->media_query[ 'album_id' ], 'rtmedia_delete_album_nonce' ) . '<button type="submit" name="album-delete" class="icon-button rtmedia-delete-album" title="' . __( 'Delete Album', 'rtmedia' ) . '"><i class="rtmicon-trash-o"></i>' . __( 'Delete Album', 'rtmedia' ) . '</button></form>';
 
 			if ( is_rtmedia_group_album() ){
 				$album_list = rtmedia_group_album_list();
@@ -2097,7 +2101,7 @@ add_action( 'wp_footer', 'rtmedia_link_in_footer' );
 function rtmedia_link_in_footer() {
 	global $rtmedia;
 	$option = $rtmedia->options;
-	$link   = ( isset( $option[ 'rtmedia_add_linkback' ]) ) ? $option[ 'rtmedia_add_linkback' ] : false ;
+	$link   = ( isset( $option[ 'rtmedia_add_linkback' ] ) ) ? $option[ 'rtmedia_add_linkback' ] : false;
 	if ( $link ){
 		$aff_id = ( $option[ 'rtmedia_affiliate_id' ] != "" ) ? '&ref=' . $option[ 'rtmedia_affiliate_id' ] : "";
 		$href   = 'https://rtcamp.com/rtmedia/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media' . $aff_id;
@@ -2105,7 +2109,7 @@ function rtmedia_link_in_footer() {
 
 		<div class='rtmedia-footer-link'>
 			<?php echo __( "Empowering your community with ", 'rtmedia' ); ?>
-			<a href='<?php echo esc_url( $href) ?>'
+			<a href='<?php echo esc_url( $href ) ?>'
 			   title='<?php echo __( 'The only complete media solution for WordPress, BuddyPress and bbPress', 'rtmedia' ); ?> '>
 				rtMedia</a>
 		</div>
@@ -2411,8 +2415,8 @@ function rtmedia_file_size() {
 function rtmedia_get_media_type_from_extn( $extn ) {
 	global $rtmedia;
 	$allowed_type = $rtmedia->allowed_types;
-	foreach( $allowed_type as $type => $param ) {
-		if( isset( $param['extn'] ) && is_array( $param['extn'] ) && in_array( $extn,  $param['extn'] ) ) {
+	foreach ( $allowed_type as $type => $param ) {
+		if ( isset( $param[ 'extn' ] ) && is_array( $param[ 'extn' ] ) && in_array( $extn, $param[ 'extn' ] ) ){
 			return $type;
 		}
 	}
