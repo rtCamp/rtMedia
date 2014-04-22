@@ -1944,6 +1944,62 @@ function rtmedia_admin_premium_page( $page ) {
 				<h1 class="premium-title"><?php _e( 'Reasons to buy rtMedia-PRO', 'rtmedia' ); ?></h1>
 			</div>
 			<div class="row">
+				<div class="columns large-1 rtm-premium-icon-pro"><i class="rtmicon-tags rtmicon-3x"></i></div>
+				<div class="columns large-10">
+					<h2><?php _e( 'Media Attributes', 'rtmedia' ); ?></h2>
+
+					<p><?php _e( 'Add media attributes and categories them.', 'rtmedia' ); ?></p>
+				</div>
+			</div>
+			<div class="row">
+				<div class="columns large-1 rtm-premium-icon-pro"><i class="rtmicon-sort rtmicon-3x"></i></div>
+				<div class="columns large-10">
+					<h2><?php _e( 'Sort Media', 'rtmedia' ); ?></h2>
+
+					<p><?php _e( 'You can sort media from media gallery according to media size and the date of media upload.', 'rtmedia' ); ?></p>
+				</div>
+			</div>
+			<div class="row">
+				<div class="columns large-1 rtm-premium-icon-pro"><i class="rtmicon-link rtmicon-3x"></i></div>
+				<div class="columns large-10">
+					<h2><?php _e( 'Direct URL upload', 'rtmedia' ); ?></h2>
+
+					<p><?php _e( 'You no longer need to download media from URL and then upload it. Just provide link and rtMedia will handle it.', 'rtmedia' ); ?></p>
+				</div>
+			</div>
+			<div class="row">
+				<div class="columns large-1 rtm-premium-icon-pro"><i class="rtmicon-upload rtmicon-3x"></i></div>
+				<div class="columns large-10">
+					<h2><?php _e( 'Per user upload quota', 'rtmedia' ); ?></h2>
+
+					<p><?php _e( 'You can set upload quota for users on the daily, monthly and lifetime basis.', 'rtmedia' ); ?></p>
+				</div>
+			</div>
+			<div class="row">
+				<div class="columns large-1 rtm-premium-icon-pro"><i class="rtmicon-camera-retro rtmicon-3x"></i></div>
+				<div class="columns large-10">
+					<h2><?php _e( 'URL preview in BuddyPress activity', 'rtmedia' ); ?></h2>
+
+					<p><?php _e( 'Show URL previews in BuddyPress activity.', 'rtmedia' ); ?></p>
+				</div>
+			</div>
+			<div class="row">
+				<div class="columns large-1 rtm-premium-icon-pro"><i class="rtmicon-edit rtmicon-3x"></i></div>
+				<div class="columns large-10">
+					<h2><?php _e( 'Bulk media edit', 'rtmedia' ); ?></h2>
+
+					<p><?php _e( 'You can edit media in bulk mode.', 'rtmedia' ); ?></p>
+				</div>
+			</div>
+			<div class="row">
+				<div class="columns large-1 rtm-premium-icon-pro"><i class="rtmicon-thumbs-up rtmicon-3x"></i></div>
+				<div class="columns large-10">
+					<h2><?php _e( 'User\'s liked media page', 'rtmedia' ); ?></h2>
+
+					<p><?php _e( 'Now you can see user\'s liked media page. A new tab "Likes" has been added.', 'rtmedia' ); ?></p>
+				</div>
+			</div>
+			<div class="row">
 				<div class="columns large-1 rtm-premium-icon-pro"><i class="rtmicon-rss rtmicon-3x"></i></div>
 				<div class="columns large-10">
 					<h2><?php _e( 'RSS Feed/Podcasting Support', 'rtmedia' ); ?></h2>
