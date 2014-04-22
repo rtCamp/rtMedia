@@ -66,7 +66,9 @@ class RTMediaUpload {
 	function upload( $uploaded ) {
 		switch ( $uploaded[ 'mode' ] ) {
 			case 'file_upload':
-				return $this->file->init( $uploaded[ 'files' ] );
+				if( isset( $uploaded[ 'files' ] ) ) {
+					return $this->file->init( $uploaded[ 'files' ] );
+				}
 				break;
 			case 'link_input':
 				return $this->url->init( $uploaded );
