@@ -133,6 +133,12 @@ http://www.youtube.com/watch?v####dJrykKQGDcs
 
 Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "Visit rtMedia's Features page") to get some details about future releases.
 
+#### 3.6.13 ####
+* Media template update
+* New hooks added
+* Translation update
+* Bug fixes
+
 #### 3.6.12 ####
 * Tested with WordPress 3.9 and BuddyPress 2.0
 
@@ -741,8 +747,8 @@ Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_sou
 * HTML5 Audio Tag Support (with fallback)
 * HTML5 Video Tag Support (with fallback)
 
-#### 3.6.12 ####
-Requires BuddyPress 1.7 or higher, if using BuddyPress. Tested with WordPress 3.9 and BuddyPress 2.0.
+#### 3.6.13 ####
+Requires BuddyPress 1.7 or higher, if using BuddyPress. Media template update, translation update, bug fixes
 
 ## Sponsors ##
 
