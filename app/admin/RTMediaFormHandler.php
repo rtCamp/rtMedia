@@ -280,6 +280,17 @@ class RTMediaFormHandler {
 				</div>
 			</div>
 		    <?php
+				if( isset( $option['after_content'] ) ) {
+					?>
+					<div class="row">
+						<div class="columns large-12">
+							<p class="rtmedia-info rtmedia-admin-notice">
+								<?php echo $option['after_content']; ?>
+							</p>
+						</div>
+					</div>
+				<?php
+				}
 		    }
 		    ?>
 			</div>
