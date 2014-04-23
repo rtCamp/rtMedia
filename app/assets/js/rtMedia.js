@@ -404,10 +404,10 @@ jQuery('document').ready(function($) {
    }
 
     function rtmedia_disable_popup_navigation_comment_focus() {
-        jQuery('#comment_content').live('focusin',function(){
+        jQuery(document).on('focusin','#comment_content', function(){
             jQuery(document).unbind('keydown');
         });
-        jQuery('#comment_content').live('focusout',function(){
+        jQuery(document).on('focusout','#comment_content',function(){
             var rtm_mfp = jQuery.magnificPopup.instance;
             jQuery(document).on('keydown',function(e) {
                 if (e.keyCode === 37) {
