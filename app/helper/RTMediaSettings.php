@@ -119,6 +119,7 @@ if (!class_exists('RTMediaSettings')) {
                 $options = apply_filters("rtmedia_pro_options_save_settings", $options);
 		$is_rewrite_rule_flush = apply_filters('rtmedia_flush_rewrite_rule',false);
                 rtmedia_update_site_option('rtmedia-options', $options);
+				do_action ( 'rtmedia_save_admin_settings', $options );
 		if( $is_rewrite_rule_flush ) {
 		    flush_rewrite_rules(false);
 		}
