@@ -15,7 +15,7 @@ function apply_rtMagnificPopup(selector){
                 tLoading: rt_load_more + ' #%curr%...',
                 mainClass: 'mfp-img-mobile',
                 preload: [1, 3],
-                closeOnBgClick: true,
+                closeOnBgClick: false,
                 gallery: {
                     enabled: true,
                     navigateByImgClick: true,
