@@ -849,6 +849,13 @@ class RTMedia
 
 		// Enqueue touchswipe
 		wp_enqueue_script( 'rtmedia-touchswipe', RTMEDIA_URL . 'lib/touchswipe/jquery.touchSwipe.min.js', array('jquery'), RTMEDIA_VERSION, true);
+
+		if ( wp_script_is( "jquery-masonry", "registered" ) ) {
+			wp_enqueue_style( 'jquery-masonry' );
+			wp_enqueue_script( 'jquery-masonry' );
+		} else {
+
+		}
     }
 
     function set_bp_bar() {

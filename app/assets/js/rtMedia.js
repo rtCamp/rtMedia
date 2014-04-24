@@ -508,6 +508,12 @@ jQuery('document').ready(function($) {
 	    "showChars" : 200
 	});
     }
+
+//    masonry code
+//    jQuery('.rtmedia-list-media').masonry({
+//        columnWidth: 200,
+//        itemSelector: '.item'
+//    });
 });
 
 
