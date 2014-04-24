@@ -401,6 +401,19 @@ jQuery('document').ready(function($) {
         jQuery('.mfp-arrow-left').on('click', function(e) {
             rtm_mfp.prev();
         });
+
+       jQuery('.mfp-content .rtmedia-media').swipe({
+           //Generic swipe handler for all directions
+           swipeLeft:function(event, direction, distance, duration, fingerCount) 	// bind leftswipe
+           {
+               rtm_mfp.next();
+           },
+           swipeRight:function(event, direction, distance, duration, fingerCount) 	// bind rightswipe
+           {
+               rtm_mfp.prev();
+           },
+           threshold:0
+       });
    }
 
     function rtmedia_disable_popup_navigation_comment_focus() {
