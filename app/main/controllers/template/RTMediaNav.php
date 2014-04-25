@@ -116,15 +116,20 @@ class RTMediaNav {
     }
 
     public function sub_nav () {
+		global $rtmedia, $rtmedia_query;
+		if ( function_exists ( 'bp_is_group' ) && bp_is_group () ) {
+			if( isset( $rtmedia->options['buddypress_enableOnGroup'] ) && $rtmedia->options['buddypress_enableOnGroup'] == '0' ) {
+				return;
+			}
+			global $bp;
+			$counts = $this->actual_counts ( $bp->groups->current_group->id, "group" );
+		} else {
+			if( class_exists( 'BuddyPress' ) && isset( $rtmedia->options['buddypress_enableOnProfile'] ) && $rtmedia->options['buddypress_enableOnProfile'] == '0' ) {
+				return;
+			}
+			$counts = $this->actual_counts ();
+		}
 
-        if ( bp_is_group () ) {
-            global $bp;
-            $counts = $this->actual_counts ( $bp->groups->current_group->id, "group" );
-        } else {
-            $counts = $this->actual_counts ();
-        }
-
-        global $rtmedia, $rtmedia_query;
         $default = false;
 	if ( function_exists ( 'bp_is_group' ) && bp_is_group () ) {
 	    $link = get_rtmedia_group_link ( bp_get_group_id () );
