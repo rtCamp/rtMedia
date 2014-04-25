@@ -36,12 +36,13 @@ if (!class_exists('RTMediaSettings')) {
                 'general_enableMediaEndPoint' => 0,
                 'general_showAdminMenu' => 0,
                 'general_videothumbs' => 2,
-		'general_uniqueviewcount' => 0,
-		'general_viewcount' => 0,
-		'general_AllowUserData' => 1,
-		'rtmedia_add_linkback' => 0,
-		'rtmedia_affiliate_id' => '',
-		'rtmedia_enable_api' => 0,
+				'general_uniqueviewcount' => 0,
+				'general_viewcount' => 0,
+				'general_AllowUserData' => 1,
+				'rtmedia_add_linkback' => 0,
+				'rtmedia_affiliate_id' => '',
+				'rtmedia_enable_api' => 0,
+				'general_masonry_layout' => 0,
             );
 
             $defaults = apply_filters('rtmedia_general_content_default_values', $defaults);

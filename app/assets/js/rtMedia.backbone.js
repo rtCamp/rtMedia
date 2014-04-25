@@ -136,6 +136,9 @@ jQuery( function ( $ ) {
                         } );
                         //element.show();
                         jQuery('.rtmedia-container .rtmedia-list-media' ).css('opacity', '1');
+                        if( typeof rtmedia_masonry_layout != "undefined" && rtmedia_masonry_layout == "true" ) {
+                            jQuery('.rtmedia-list-media').masonry( 'reload' );
+                        }
                     }
                 } );
             }
@@ -214,7 +217,11 @@ jQuery( function ( $ ) {
     $( "body" ).append( '<script id="rtmedia-gallery-item-template" type="text/template"></script>' );
 
     $( document ).on( "click", "#rtMedia-galary-next", function ( e ) {
-        $( this ).before( "<div class='rtm-media-loading'><img src='" + rMedia_loading_media + "' /></div>" );
+        if( jQuery('.rtm-media-loading').length == 0 ) {
+            $( this ).before( "<div class='rtm-media-loading'><img src='" + rMedia_loading_media + "' /></div>" );
+        } else {
+            jQuery('.rtm-media-loading' ).show();
+        }
         $( this ).hide();
         e.preventDefault();
         galleryObj.getNext( nextpage );

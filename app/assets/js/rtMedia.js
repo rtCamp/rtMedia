@@ -510,10 +510,12 @@ jQuery('document').ready(function($) {
     }
 
 //    masonry code
-//    jQuery('.rtmedia-list-media').masonry({
-//        columnWidth: 200,
-//        itemSelector: '.item'
-//    });
+    if( typeof rtmedia_masonry_layout != "undefined" && rtmedia_masonry_layout == "true" ) {
+        jQuery('.rtmedia-list-media').masonry({
+            columnWidth: 190,
+            itemSelector: '.rtmedia-list-item'
+        });
+    }
 });
 
 
