@@ -70,20 +70,20 @@ class RTMediaRouter {
      * @return boolean
      */
     function is_template () {
-        global $wp_query;
-	global $rtmedia, $rtmedia_query;
-	if( isset( $rtmedia_query ) && isset( $rtmedia_query->query ) && isset($rtmedia_query->query['context']) ) {
-	    if( ( ! isset( $rtmedia->options['buddypress_enableOnGroup'] ) ) || ( $rtmedia_query->query['context'] == "group" && isset( $rtmedia->options['buddypress_enableOnGroup'] ) && $rtmedia->options['buddypress_enableOnGroup'] == '0' ) ) {
-		$wp_query->is_404 = true;
-		return false;
-	    }
-//	    if( ( ! isset( $rtmedia->options['buddypress_enableOnProfile'] ) ) || ( $rtmedia_query->query['context'] == "profile" && isset( $rtmedia->options['buddypress_enableOnProfile'] ) && $rtmedia->options['buddypress_enableOnProfile'] == '0' ) ) {
-//		$wp_query->is_404 = true;
-//		return false;
-//	    }
-	}
+		global $wp_query;
+		global $rtmedia, $rtmedia_query;
+		//		if( isset( $rtmedia_query ) && isset( $rtmedia_query->query ) && isset($rtmedia_query->query['context']) ) {
+		//	    	if( ( ! isset( $rtmedia->options['buddypress_enableOnGroup'] ) ) || ( $rtmedia_query->query['context'] == "group" && isset( $rtmedia->options['buddypress_enableOnGroup'] ) && $rtmedia->options['buddypress_enableOnGroup'] == '0' ) ) {
+		//				$wp_query->is_404 = true;
+		//				return false;
+		//	    	}
+		//	    	if( ( ! isset( $rtmedia->options['buddypress_enableOnProfile'] ) ) || ( $rtmedia_query->query['context'] == "profile" && isset( $rtmedia->options['buddypress_enableOnProfile'] ) && $rtmedia->options['buddypress_enableOnProfile'] == '0' ) ) {
+		//				$wp_query->is_404 = true;
+		//				return false;
+		//	    	}
+		//		}
         $return = isset ( $wp_query->query_vars[ $this->slug ] );
-	$return = apply_filters('rtmedia_return_is_template',$return,$this->slug);
+		$return = apply_filters('rtmedia_return_is_template',$return,$this->slug);
         if ( $return ) {
             if ( isset ( $wp_query->query_vars[ 'action' ] ) && $wp_query->query_vars[ 'action' ] == 'bp_avatar_upload' )
                 $return = false;
@@ -96,15 +96,15 @@ class RTMediaRouter {
             $wp_query->is_404 = false;
         }
 
-	if( isset( $rtmedia_query ) && isset( $rtmedia_query->query ) && ! isset($rtmedia_query->query['context']) ) {
-	    $wp_query->is_404 = true;
-	    $return = false;
-	}
+		if( isset( $rtmedia_query ) && isset( $rtmedia_query->query ) && ! isset($rtmedia_query->query['context']) ) {
+			$wp_query->is_404 = true;
+			$return = false;
+		}
 
-	if( isset( $rtmedia_query->shortcode_global ) && $rtmedia_query->shortcode_global ) {
-	    $wp_query->is_404 = false;
-	    $return = true;
-	}
+		if( isset( $rtmedia_query->shortcode_global ) && $rtmedia_query->shortcode_global ) {
+			$wp_query->is_404 = false;
+			$return = true;
+		}
         return $return;
     }
 
