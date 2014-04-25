@@ -216,32 +216,60 @@ class RTMedia
         add_image_size("rt_media_activity_image", $bp_media_sizes['activity']["width"], $bp_media_sizes['activity']["height"], $bp_media_sizes['activity']["crop"]);
         add_image_size("rt_media_single_image", $bp_media_sizes['single']["width"], $bp_media_sizes['single']["height"], $bp_media_sizes['single']["crop"]);
         add_image_size("rt_media_featured_image", $bp_media_sizes['featured']["width"], $bp_media_sizes['featured']["height"], $bp_media_sizes['featured']["crop"]);
-        add_action('wp_head', array(&$this, 'custome_style_for_activity_image_size'));
+        add_action('wp_head', array(&$this, 'custom_style_for_image_size'));
     }
 
-    function custome_style_for_activity_image_size() {
+	function custom_style_for_image_size() {
+	?>
+		<style type="text/css">
+	<?php
+		$this->custom_style_for_activity_image_size();
+		global $rtmedia;
+		if( isset( $rtmedia->options['general_masonry_layout'] ) && $rtmedia->options['general_masonry_layout'] == '0' ) {
+			$this->custom_style_for_gallery_image_size();
+		} else {
+			$this->custom_style_for_gallery_image_size_masonry();
+		}
+		do_action( 'rtmedia_custom_styles' );
+	?>
+		</style>
+	<?php
+	}
+
+    function custom_style_for_activity_image_size() {
         ?>
-        <style>
             .rtmedia-activity-container .rtmedia-list .rtmedia-item-thumbnail,.bp_media_content img{
                 max-width: <?php echo $this->options["defaultSizes_photo_medium_width"]; ?>px;
                 max-height: <?php echo $this->options["defaultSizes_photo_medium_height"]; ?>px;
             }
-            .rtmedia-container ul.rtmedia-list li.rtmedia-list-item div.rtmedia-item-thumbnail {
-                width: <?php echo $this->options["defaultSizes_photo_thumbnail_width"]; ?>px;
-                height: <?php echo $this->options["defaultSizes_photo_thumbnail_height"]; ?>px;
-                line-height: <?php echo $this->options["defaultSizes_photo_thumbnail_height"]; ?>px;
-            }
-            .rtmedia-container ul.rtmedia-list li.rtmedia-list-item div.rtmedia-item-thumbnail img {
-                max-width: <?php echo $this->options["defaultSizes_photo_thumbnail_width"]; ?>px;
-                max-height: <?php echo $this->options["defaultSizes_photo_thumbnail_height"]; ?>px;
-            }
-            .rtmedia-container .rtmedia-list  .rtmedia-list-item {
-                width: <?php echo intval($this->options["defaultSizes_photo_thumbnail_width"]) + 20; ?>px;
-                height: <?php echo intval($this->options["defaultSizes_photo_thumbnail_height"]) + 20; ?>px;
-            }
-        </style>
         <?php
     }
+
+	function custom_style_for_gallery_image_size() {
+		?>
+			.rtmedia-container ul.rtmedia-list li.rtmedia-list-item div.rtmedia-item-thumbnail {
+				width: <?php echo $this->options["defaultSizes_photo_thumbnail_width"]; ?>px;
+				height: <?php echo $this->options["defaultSizes_photo_thumbnail_height"]; ?>px;
+				line-height: <?php echo $this->options["defaultSizes_photo_thumbnail_height"]; ?>px;
+			}
+			.rtmedia-container ul.rtmedia-list li.rtmedia-list-item div.rtmedia-item-thumbnail img {
+				max-width: <?php echo $this->options["defaultSizes_photo_thumbnail_width"]; ?>px;
+				max-height: <?php echo $this->options["defaultSizes_photo_thumbnail_height"]; ?>px;
+			}
+			.rtmedia-container .rtmedia-list  .rtmedia-list-item {
+				width: <?php echo intval($this->options["defaultSizes_photo_thumbnail_width"]) + 20; ?>px;
+				height: <?php echo intval($this->options["defaultSizes_photo_thumbnail_height"]) + 20; ?>px;
+			}
+	<?php
+	}
+
+	function custom_style_for_gallery_image_size_masonry() {
+	?>
+		.rtmedia-container .rtmedia-list .rtmedia-list-item .rtmedia-item-title {
+				width: <?php echo intval($this->options["defaultSizes_photo_thumbnail_width"]) + 20; ?>px;
+		}
+	<?php
+	}
 
     /**
      *  Default allowed media types array
@@ -776,7 +804,7 @@ class RTMedia
     }
 
     function enqueue_scripts_styles() {
-
+		global $rtmedia;
         if (wp_script_is("wp-mediaelement", "registered")) {
             wp_enqueue_style('wp-mediaelement');
             wp_enqueue_script('wp-mediaelement');
@@ -786,7 +814,6 @@ class RTMedia
             wp_enqueue_script('wp-mediaelement-start', RTMEDIA_URL . 'lib/media-element/wp-mediaelement.js', 'wp-mediaelement', RTMEDIA_VERSION, true);
         }
 
-        global $rtmedia;
         // Dont enqueue main.css if default styles is checked false in rtmedia settings
         if( !( isset($rtmedia->options) && isset($rtmedia->options['styles_enabled']) && $rtmedia->options['styles_enabled']== 0)){
             wp_enqueue_style('rtmedia-main', RTMEDIA_URL . 'app/assets/css/main.css', '', RTMEDIA_VERSION);
@@ -850,11 +877,16 @@ class RTMedia
 		// Enqueue touchswipe
 		wp_enqueue_script( 'rtmedia-touchswipe', RTMEDIA_URL . 'lib/touchswipe/jquery.touchSwipe.min.js', array('jquery'), RTMEDIA_VERSION, true);
 
-		if ( wp_script_is( "jquery-masonry", "registered" ) ) {
-			wp_enqueue_style( 'jquery-masonry' );
-			wp_enqueue_script( 'jquery-masonry' );
+		if(  isset( $rtmedia->options ) && isset( $rtmedia->options['general_masonry_layout' ] ) && $rtmedia->options['general_masonry_layout'] == 1 ) {
+			if ( wp_script_is( "jquery-masonry", "registered" ) ) {
+				wp_enqueue_style( 'jquery-masonry' );
+				wp_enqueue_script( 'jquery-masonry' );
+				wp_localize_script ( 'rtmedia-main', 'rtmedia_masonry_layout', 'true' );
+			} else {
+				wp_localize_script ( 'rtmedia-main', 'rtmedia_masonry_layout', 'false' );
+			}
 		} else {
-
+			wp_localize_script ( 'rtmedia-main', 'rtmedia_masonry_layout', 'false' );
 		}
     }
 
