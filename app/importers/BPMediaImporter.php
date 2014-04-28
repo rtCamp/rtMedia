@@ -49,10 +49,10 @@ class BPMediaImporter {
     static function file_array($filepath) {
 
         $path_info = pathinfo($filepath);
-
+		$filetype = wp_check_filetype($filepath);
         $file['error'] = '';
         $file['name'] = $path_info['basename'];
-        $file['type'] = mime_content_type($filepath);
+        $file['type'] = $filetype['type'];
         $file['tmp_name'] = $filepath;
         $file['size'] = filesize($filepath);
 
