@@ -1483,6 +1483,7 @@ function rtmedia_create_album_modal() {
 		?>
 		<div class="mfp-hide rtmedia-popup" id="rtmedia-create-album-modal">
 			<div id="rtm-modal-container">
+				<?php do_action( "rtmedia_before_create_album_modal" ); ?>
 				<h2 class="rtm-modal-title"><?php _e( 'Create New Album', 'rtmedia' ); ?></h2>
 
 				<p>
@@ -1496,6 +1497,7 @@ function rtmedia_create_album_modal() {
 							id="rtmedia_create_new_album"><?php _e( "Create Album", "rtmedia" ); ?></button>
 				</p>
 				<?php do_action( "rtmedia_add_album_privacy" ); ?>
+				<?php do_action( "rtmedia_after_create_album_modal" ); ?>
 			</div>
 		</div>
 
