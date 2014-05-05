@@ -30,8 +30,12 @@ class RTMediaPrivacy {
     }
 
 	function enable_buddypress_privacy( $flag, $method, $func_args ) {
-		if( $method == "BP_Activity_Activity::get" ) {
-			$flag = true;
+		global $rtmedia;
+		$option = $rtmedia->options;
+		if( isset( $option['privacy_enabled'] ) && $option['privacy_enabled'] != '0' ) {
+			if( $method == "BP_Activity_Activity::get" ) {
+				$flag = true;
+			}
 		}
 		return $flag;
 	}
