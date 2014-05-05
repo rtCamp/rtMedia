@@ -22,11 +22,23 @@ class RTMediaPrivacy {
         if ( is_rtmedia_privacy_enable () && $flag ) {
             //add_action ( 'rtmedia_after_file_upload_ui' , array ( $this , 'uploader_privacy_ui' ) ) ;
             //add_action ( 'rtmedia_add_edit_fields' , array ( $this , 'edit_media_privacy_ui' ),2 ) ;
-            add_action ( 'bp_init' , array ( $this , 'add_nav' ) ) ;
-            add_action ( 'bp_template_content' , array ( $this , 'content' ) ) ;
-            add_filter ( 'bp_activity_get_user_join_filter' , array ( $this , 'activity_privacy' ) , 10 , 6 ) ;
+            add_action ( 'bp_init' , array( $this , 'add_nav' ) ) ;
+            add_action ( 'bp_template_content' , array( $this , 'content' ) ) ;
+            add_filter ( 'bp_activity_get_user_join_filter' , array( $this , 'activity_privacy' ), 10, 6 ) ;
+            add_filter ( 'bp_use_legacy_activity_query' , array( $this , 'enable_buddypress_privacy' ), 10, 3 ) ;
         }
     }
+
+	function enable_buddypress_privacy( $flag, $method, $func_args ) {
+		global $rtmedia;
+		$option = $rtmedia->options;
+		if( isset( $option['privacy_enabled'] ) && $option['privacy_enabled'] != '0' ) {
+			if( $method == "BP_Activity_Activity::get" ) {
+				$flag = true;
+			}
+		}
+		return $flag;
+	}
 
     function edit_media_privacy_ui($echo = true) {
         $privacy = "";
