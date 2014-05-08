@@ -128,7 +128,7 @@ function rtmedia_author_name( $show_link = true ) {
 
 	global $rtmedia_backbone;
 	if ( $rtmedia_backbone[ 'backbone' ] ){
-		echo '';
+		echo apply_filters( 'rtmedia_media_author_backbone', '',$show_link );
 	} else {
 		global $rtmedia_media;
 		$show_link = apply_filters( "rtmedia_single_media_show_profile_name_link", $show_link );
@@ -733,6 +733,22 @@ function rmedia_single_comment( $comment ) {
 	$html .= '<div class="clear"></div></div></div></li>';
 
 	return apply_filters( 'rtmedia_single_comment', $html, $comment );
+}
+
+function rtmedia_get_media_comment_count( $media_id = false ) {
+	global $wpdb, $rtmedia_media;
+	if( ! $media_id ) {
+		$post_id = $rtmedia_media->media_id;
+	} else {
+		$post_id = rtmedia_media_id( $media_id );
+	}
+	$query = "SELECT count(*) FROM $wpdb->comments WHERE comment_post_ID = '" . $post_id . "'";
+	$comment_count = $wpdb->get_results( $query, ARRAY_N );
+	if( is_array( $comment_count ) && is_array( $comment_count[0] ) && isset( $comment_count[0][0] ) ) {
+		return $comment_count[0][0];
+	} else {
+		return 0;
+	}
 }
 
 function rtmedia_pagination_prev_link() {
@@ -1841,6 +1857,7 @@ function is_rt_admin() {
 function get_rtmedia_like( $media_id = false ) {
 	$mediamodel = new RTMediaModel();
 	$actions    = $mediamodel->get( array( 'id' => rtmedia_id( $media_id ) ) );
+
 	if ( isset( $actions[ 0 ]->likes ) ){
 		$actions = intval( $actions[ 0 ]->likes );
 	} else {
