@@ -97,7 +97,7 @@ jQuery( function ( $ ) {
                     is_edit_allowed: o_is_edit_allowed
                 }, function () {
                     rtmedia_load_template_flag = false;
-                    that.getNext();
+                    that.getNext( page, el, element );
                 } );
             }
             if ( !rtmedia_load_template_flag ) {
@@ -139,6 +139,7 @@ jQuery( function ( $ ) {
                         if( typeof rtmedia_masonry_layout != "undefined" && rtmedia_masonry_layout == "true" ) {
                             jQuery('.rtmedia-list-media').masonry( 'reload' );
                         }
+                        rtMediaHook.call( 'rtmedia_after_gallery_load' );
                     }
                 } );
             }
@@ -224,7 +225,7 @@ jQuery( function ( $ ) {
         }
         $( this ).hide();
         e.preventDefault();
-        galleryObj.getNext( nextpage );
+        galleryObj.getNext( nextpage, $(this).parent().parent().parent(), $(this) );
     } );
 
 
@@ -387,6 +388,8 @@ jQuery( function ( $ ) {
                 if ( up.getFile( rfile ) )
                     up.removeFile( up.getFile( rfile ) );
             } );
+
+            rtMediaHook.call( 'rtmedia_js_after_files_added', [up, files] );
 
 //            if (upload_size_error) {
 //                // alert(upload_error + " because max file size is " + plupload.formatSize(uploaderObj.uploader.settings.max_file_size) );
