@@ -668,7 +668,11 @@ class RTMediaQuery {
 	function populate_album() {
 		$this->album                     = $this->media;
 		$this->media_query[ 'album_id' ] = $this->action_query->id;
-		unset ( $this->action_query->id );
+
+		if( apply_filters( 'rtmedia_unset_action_query_id_album', true ) ) {
+			unset ( $this->action_query->id );
+		}
+
 		unset ( $this->media_query[ 'id' ] );
 		unset ( $this->media_query[ 'media_type' ] );
 
