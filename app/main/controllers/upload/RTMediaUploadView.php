@@ -42,17 +42,19 @@ class RTMediaUploadView {
 
         global $rtmedia_query;
 	$album = '';
-        if ( $rtmedia_query && isset( $rtmedia_query->media_query ) && isset( $rtmedia_query->media_query[ 'album_id' ] ) && is_rtmedia_album ()  ) {
-            $album = '<input class="rtmedia-current-album" type="hidden" name="rtmedia-current-album" value="' . $rtmedia_query->media_query[ 'album_id' ] . '" />';
-        } elseif ( is_rtmedia_album_enable () && $rtmedia_query && is_rtmedia_gallery () ) {
+		if( apply_filters( 'rtmedia_render_select_album_upload', true ) ) {
+			if ( $rtmedia_query && isset( $rtmedia_query->media_query ) && isset( $rtmedia_query->media_query[ 'album_id' ] ) && is_rtmedia_album ()  ) {
+				$album = '<input class="rtmedia-current-album" type="hidden" name="rtmedia-current-album" value="' . $rtmedia_query->media_query[ 'album_id' ] . '" />';
+			} elseif ( is_rtmedia_album_enable () && $rtmedia_query && is_rtmedia_gallery () ) {
 
-            if ( isset( $rtmedia_query->query[ 'context' ] ) && $rtmedia_query->query[ 'context' ] == 'profile' ) {
-                $album = '<span> <label> <i class="rtmicon-picture-o"></i>' . __('Album','rtmedia') . ': </label><select name="album" class="rtmedia-user-album-list">' . rtmedia_user_album_list () . '</select></span>';
-            }
-            if (isset( $rtmedia_query->query[ 'context' ] ) && $rtmedia_query->query[ 'context' ] == 'group' ) {
-                $album = '<span> <label> <i class="rtmicon-picture-o"></i>' . __('Album','rtmedia') . ': </label><select name="album" class="rtmedia-user-album-list">' . rtmedia_group_album_list () . '</select></span>';
-            }
-        }
+				if ( isset( $rtmedia_query->query[ 'context' ] ) && $rtmedia_query->query[ 'context' ] == 'profile' ) {
+					$album = '<span> <label> <i class="rtmicon-picture-o"></i>' . __('Album','rtmedia') . ': </label><select name="album" class="rtmedia-user-album-list">' . rtmedia_user_album_list () . '</select></span>';
+				}
+				if (isset( $rtmedia_query->query[ 'context' ] ) && $rtmedia_query->query[ 'context' ] == 'group' ) {
+					$album = '<span> <label> <i class="rtmicon-picture-o"></i>' . __('Album','rtmedia') . ': </label><select name="album" class="rtmedia-user-album-list">' . rtmedia_group_album_list () . '</select></span>';
+				}
+			}
+		}
         $up_privacy = $privacy = ""; //uploader privacy dropdown for uploader under rtMedia Media tab.
         if( is_rtmedia_privacy_enable () && ( ! isset( $rtmedia_query->is_upload_shortcode ) || $rtmedia_query->is_upload_shortcode === false) ) {
             if( isset( $rtmedia_query->query[ 'context' ] ) && $rtmedia_query->query[ 'context' ] == 'group'){
