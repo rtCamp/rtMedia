@@ -123,28 +123,36 @@ class RTMediaLike extends RTMediaUserInteraction {
             echo  $button ;
     }
 
-    function is_like_migrated( ) {
-	$rtmediainteraction = new RTMediaInteractionModel();
-	$user_id = $this->interactor;
-	$media_id = $this->action_query->id;
-	$action = $this->action;
-	return $rtmediainteraction->check($user_id, $media_id, $action);
+    function is_like_migrated( $media_id = false, $user_id = false ) {
+		$rtmediainteraction = new RTMediaInteractionModel();
+		if( ! $user_id ) {
+			$user_id = $this->interactor;
+		}
+		if( ! $media_id ) {
+			$media_id = $this->action_query->id;
+		}
+		$action = $this->action;
+		return $rtmediainteraction->check($user_id, $media_id, $action);
     }
 
-    function get_like_value( ) {
-	$rtmediainteraction = new RTMediaInteractionModel();
-	$user_id = $this->interactor;
-	$media_id = $this->action_query->id;
-	$action = $this->action;
-	$results = $rtmediainteraction->get_row($user_id, $media_id, $action);
-	$row = $results[0];
-	if( $row->value == "1" ) {
-	    $this->increase = false;
-	    return true;
-	} else {
-	    $this->increase = true;
-	    return false;
-	}
+    function get_like_value( $media_id = false, $user_id = false ) {
+		$rtmediainteraction = new RTMediaInteractionModel();
+		if( ! $user_id ) {
+			$user_id = $this->interactor;
+		}
+		if( ! $media_id ) {
+			$media_id = $this->action_query->id;
+		}
+		$action = $this->action;
+		$results = $rtmediainteraction->get_row($user_id, $media_id, $action);
+		$row = $results[0];
+		if( $row->value == "1" ) {
+			$this->increase = false;
+			return true;
+		} else {
+			$this->increase = true;
+			return false;
+		}
     }
 
     function migrate_likes( $like_media ) {
@@ -165,21 +173,27 @@ class RTMediaLike extends RTMediaUserInteraction {
 	return $insert_id;
     }
 
-    function is_liked() {
-	$like_media = get_user_meta($this->interactor, "rtmedia_liked_media", true);
-	if ( $this->is_like_migrated( ) ) {
-	    return $this->get_like_value( );
-	}
-	else {
-	    if (strpos("," . $like_media . ",", "," . $this->action_query->id . ",") === false) {
-		$this->increase = true;
-		return false;
-	    } else {
-		$this->migrate_likes( $like_media );
-		$this->increase = false;
-		return true;
-	    }
-	}
+    function is_liked( $media_id = false, $interactor = false ) {
+		if( ! $interactor ) {
+			$interactor = $this->interactor;
+		}
+		if( ! $media_id ) {
+			$media_id = $this->action_query->id;
+		}
+		$like_media = get_user_meta( $interactor, "rtmedia_liked_media", true);
+		if ( $this->is_like_migrated( $media_id, $interactor ) ) {
+			return $this->get_like_value( $media_id, $interactor );
+		}
+		else {
+			if (strpos("," . $like_media . ",", "," . $media_id . ",") === false) {
+			$this->increase = true;
+			return false;
+			} else {
+			$this->migrate_likes( $like_media );
+			$this->increase = false;
+			return true;
+			}
+		}
     }
 
     function before_render(){
