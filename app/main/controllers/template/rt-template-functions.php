@@ -710,7 +710,8 @@ function rmedia_single_comment( $comment ) {
 	$html = "";
 	$html .= '<li class="rtmedia-comment">';
 	if ( $comment[ 'user_id' ] ){
-		$user_name   = "<a href='" . get_rtmedia_user_link( $comment[ 'user_id' ] ) . "' title='" . rtmedia_get_author_name( $comment[ 'user_id' ] ) . "'>" . rtmedia_get_author_name( $comment[ 'user_id' ] ) . "</a>";
+		$user_link = "<a href='" . get_rtmedia_user_link( $comment[ 'user_id' ] ) . "' title='" . rtmedia_get_author_name( $comment[ 'user_id' ] ) . "'>" . rtmedia_get_author_name( $comment[ 'user_id' ] ) . "</a>";
+		$user_name   =  apply_filters( 'rtmedia_comment_author_name',$user_link, $comment  ) ;
 		$profile_pic = rtmedia_author_profile_pic( $show_link = true, $echo = false, $comment[ 'user_id' ] );
 	} else {
 		$user_name   = "Annonymous";
@@ -729,7 +730,7 @@ function rmedia_single_comment( $comment ) {
 		$html .= '<i data-id="' . $comment[ 'comment_ID' ] . '" class = "rtmedia-delete-comment rtmicon-times" title="' . __( 'Delete Comment' ) . '"></i>';
 	}
 
-	$html .= '<span class ="rtmedia-comment-date"> ' . rtmedia_convert_date( $comment[ 'comment_date_gmt' ] ) . '</span>';
+	$html .= '<span class ="rtmedia-comment-date"> ' . apply_filters( 'rtmedia_comment_date_format', rtmedia_convert_date( $comment[ 'comment_date_gmt' ] ), $comment ) . '</span>';
 	$html .= '<div class="clear"></div></div></div></li>';
 
 	return apply_filters( 'rtmedia_single_comment', $html, $comment );
