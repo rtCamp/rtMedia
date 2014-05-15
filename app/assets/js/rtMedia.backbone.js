@@ -276,14 +276,9 @@ jQuery( function ( $ ) {
 
     if ( $( "#rtMedia-upload-button" ).length > 0 ) {
         if ( typeof rtmedia_upload_type_filter == "object" && rtmedia_upload_type_filter.length > 0 ) {
-            if ( rtmedia_version_compare( rtm_wp_version, "3.9" ) ) { // plupload getting updated in 3.9
-                rtMedia_plupload_config.filters.mime_types[0].extensions = rtmedia_upload_type_filter.join();
-            } else {
-                rtMedia_plupload_config.filters[0].extensions = rtmedia_upload_type_filter.join();
-            }
+            rtMedia_plupload_config.filters[0].extensions = rtmedia_upload_type_filter.join();
         }
         uploaderObj = new UploadView( rtMedia_plupload_config );
-
         uploaderObj.initUploader();
 
 
