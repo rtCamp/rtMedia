@@ -683,6 +683,9 @@ if(!class_exists("rtForm")) {
 				else
 					$html .= $this->embedd_class($element);
 
+				if(isset($attributes['misc']))
+					$html.= ' ' . $this->embedd_misc_attributes($attributes['misc']);
+
 				$html .= '>';
 
 				$meta = $this->parse_multiple_options($element, $attributes);
