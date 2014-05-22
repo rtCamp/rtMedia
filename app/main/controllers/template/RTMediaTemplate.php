@@ -355,21 +355,31 @@ class RTMediaTemplate {
 			unset ( $id[ 'rtmedia_media_nonce' ] );
 			unset ( $id[ '_wp_http_referer' ] );
 			$media = new RTMediaMedia();
+			$media_model = new RTMediaModel();
+			$media_obj = $media_model->get( array( 'id' => $rtmedia_query->media[ 0 ]->id ) );
 			$media->delete( $rtmedia_query->media[ 0 ]->id );
 
 			$post = get_post( $rtmedia_query->media[ 0 ] );
 
 			$parent_link = '';
-			if ( function_exists( 'bp_core_get_user_domain' ) ){
+			$context = "";
+			if( function_exists( 'bp_get_group_permalink' ) && isset( $media_obj[0] ) && isset( $media_obj[0]->context ) &&  $media_obj[0]->context == "group" ){
+				$group = groups_get_group( array( 'group_id' => $media_obj[0]->context_id ) );
+				$parent_link = bp_get_group_permalink( $group );
+				$context = 'group';
+			} else if ( function_exists( 'bp_core_get_user_domain' ) ){
 				$parent_link = bp_core_get_user_domain( $post->media_author );
+				$context = 'profile';
 			} else {
 				$parent_link = get_author_posts_url( $post->media_author );
 			}
+
+
 			$redirect_url = $_SERVER[ "HTTP_REFERER" ];
 
 
 			if ( strpos( $_SERVER[ "HTTP_REFERER" ], "/" . $rtmedia_query->media[ 0 ]->id ) > 0 ){
-				if ( isset ( $rtmedia_query->media[ 0 ]->album_id ) && intval( $rtmedia_query->media[ 0 ]->album_id ) > 0 ){
+				if ( $context == 'profile' && isset ( $rtmedia_query->media[ 0 ]->album_id ) && intval( $rtmedia_query->media[ 0 ]->album_id ) > 0 ){
 					$redirect_url = trailingslashit( $parent_link ) . "media/" . $rtmedia_query->media[ 0 ]->album_id;
 				} else {
 					$redirect_url = trailingslashit( $parent_link ) . "media/";
