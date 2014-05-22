@@ -428,7 +428,7 @@ jQuery('document').ready(function($) {
            .on('dragover', function(e) {
                jQuery('#rtm-media-gallery-uploader').show();
                 activityArea.addClass('rtm-drag-drop-active');
-                activityArea.css('height','150px');
+//                activityArea.css('height','150px');
                 dragArea.addClass('rtm-drag-drop-active');
                 jQuery('#rtm-drop-files-title').css('display', 'block');
                 })
