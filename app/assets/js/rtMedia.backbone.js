@@ -130,6 +130,13 @@ jQuery( function ( $ ) {
                         else
                             list_el = element.parent().siblings( '.rtmedia-list' );
                         nextpage = response.next;
+
+                        if ( nextpage < 1 ) {
+                            if( typeof el == "object" ) {
+                                jQuery( el ).find( '.rtmedia_next_prev' ).children( '#rtMedia-galary-next' ).hide();
+                            }
+                            //$("#rtMedia-galary-next").show();
+                        }
                         var galleryViewObj = new rtMedia.GalleryView( {
                             collection: new rtMedia.Gallery( response.data ),
                             el: list_el
