@@ -62,7 +62,7 @@ class RTMediaUploadView {
                 $up_privacy = new RTMediaPrivacy();
                 $up_privacy = $up_privacy->select_privacy_ui( false, 'rtSelectPrivacy') ;
                 if($up_privacy){
-                    $privacy = "<span><i class='rtmicon-eye'></i> <label for='privacy'> " . __('Privacy: ', 'rtmedia') . "</label>" . $up_privacy . "</span>";
+                    $privacy = "<span> <label for='privacy'> <i class='rtmicon-eye'></i> " . __('Privacy: ', 'rtmedia') . "</label>" . $up_privacy . "</span>";
                 }
             }
         }
