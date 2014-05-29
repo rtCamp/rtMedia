@@ -587,15 +587,24 @@ jQuery( document ).ready( function ( $ ) {
         return false;
     }
     var activity_attachemnt_ids = [];
-    if ( $( "#rtmedia-add-media-button-post-update" ).length > 0 ) {
-        $( "#whats-new-options" ).prepend( $( "#rtmedia-action-update" ) );
-        if ( $( "#rtm-file_upload-ui .privacy" ).length > 0 ) {
-            $( "#rtmedia-action-update" ).append( $( "#rtm-file_upload-ui .privacy" ) );
-        }
-    }
+
     objUploadView = new UploadView( rtMedia_update_plupload_config );
+
+    setTimeout( function(){
+        if ( $( "#rtmedia-add-media-button-post-update" ).length > 0 ) {
+            $( "#whats-new-options" ).prepend( $( ".rtmedia-plupload-container" ) );
+            if ( $( "#rtm-file_upload-ui .privacy" ).length > 0 ) {
+                $( ".rtmedia-plupload-container" ).append( $( "#rtm-file_upload-ui .privacy" ) );
+            }
+            $('#rtmedia-whts-new-upload-container > div' ).css( 'top','0' );
+            $('#rtmedia-whts-new-upload-container > div' ).css( 'left','0' );
+        }
+    }, 1000);
+
     $( "#whats-new-form" ).on( 'click', '#rtmedia-add-media-button-post-update', function ( e ) {
         objUploadView.uploader.refresh();
+        $('#rtmedia-whts-new-upload-container > div' ).css( 'top','0' );
+        $('#rtmedia-whts-new-upload-container > div' ).css( 'left','0' );
     } );
     //whats-new-post-in
 
@@ -837,7 +846,9 @@ jQuery( document ).ready( function ( $ ) {
                     jQuery( "input[data-mode=rtMedia-update]" ).remove();
                     while ( objUploadView.uploader.files.pop() != undefined ) {
                     }
-                    objUploadView.uploader.refresh()
+                    objUploadView.uploader.refresh();
+                    $('#rtmedia-whts-new-upload-container > div' ).css( 'top','0' );
+                    $('#rtmedia-whts-new-upload-container > div' ).css( 'left','0' );
                     $( '#rtMedia-update-queue-list' ).html( '' );
                     //$("#div-attache-rtmedia").hide();
                     apply_rtMagnificPopup( jQuery( '.rtmedia-list-media, .rtmedia-activity-container ul.rtmedia-list, #bp-media-list,.widget-item-listing,.bp-media-sc-list, li.media.album_updated ul,ul.bp-media-list-media, li.activity-item div.activity-content div.activity-inner div.bp_media_content' ) );
