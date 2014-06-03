@@ -6,7 +6,7 @@ License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires at least: WordPress 3.6
 Tested up to: WordPress 3.9 + BuddyPress 2.0
-Stable tag: 3.6.14
+Stable tag: 3.6.15
 
 Add albums, photo, audio/video encoding, privacy, sharing, front-end uploads & more. All this works mobile/tablets devices.
 
@@ -132,6 +132,15 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 == Changelog ==
 
 Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "Visit rtMedia's Features page") to get some details about future releases.
+
+= 3.6.15 =
+* Fix activity issue in safari browser
+* Romanian, Russian, French and Hungarian translation update
+* Fix 404 page and nav menu issue when media disable for BuddyPress profile and group
+* Added new hook in create album modal
+* New js hooks in rtMedia backbone js file
+* Fix js error for upload type filter
+* remove deprecated mime_type_content
 
 = 3.6.14 =
 * Fix BuddyPress privacy issue
@@ -752,8 +761,8 @@ Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_sou
 
 == Upgrade Notice ==
 
-= 3.6.14 =
-Requires BuddyPress 1.7 or higher, if using BuddyPress. Fix BuddyPress privacy issue.
+= 3.6.15 =
+Requires BuddyPress 1.7 or higher, if using BuddyPress. Fix activity issue in safari browser. Romanian, Russian, French and Hungarian translation update.
 
 == Sponsors ==
 
