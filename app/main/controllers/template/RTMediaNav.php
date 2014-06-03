@@ -26,7 +26,7 @@ class RTMediaNav {
         global $bp;
         if ( ! function_exists ( "bp_core_new_nav_item" ) )
             return;
-        if ( bp_is_blog_page () || ( ! bp_is_group () && ! ( isset ( $bp->displayed_user ) && isset ( $bp->displayed_user->id )) ) )
+        if ( bp_is_blog_page () || ( ! bp_is_group () && ! ( isset ( $bp->displayed_user ) && isset ( $bp->displayed_user->id )) ) || apply_filters( 'rtmedia_render_bp_nav', false ) )
             return;
         global $rtmedia;
         if ( function_exists ( "bp_is_group" ) && ! bp_is_group () ) {
