@@ -134,11 +134,11 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "Visit rtMedia's Features page") to get some details about future releases.
 
 = 3.6.15 =
-* Fix activity issue in safari browser
+* Fix activity issue in safari browser (For Mobile and Desktop)
 * Romanian, Russian, French and Hungarian translation update
 * Fix 404 page and nav menu issue when media disable for BuddyPress profile and group
 * Added new hook in create album modal
-* New js hooks in rtMedia backbone js file
+* New js hooks in rtMedia's backbone js file
 * Fix js error for upload type filter
 * remove deprecated mime_type_content
 
