@@ -1471,3 +1471,18 @@ button.rtp-lb-close {
 .media{
   overflow-y: scroll;
 }
+#buddypress {
+  #whats-new-options {
+    .rtmedia-plupload-container {
+      float: left;
+    }
+    #rtmedia-whts-new-upload-container {
+      margin-top: 12px;
+    }
+    #rtmedia-add-media-button-post-update {
+      margin-top: 12px;
+      float: left;
+      margin-right: 20px;
+    }
+  }
+}
