@@ -28,12 +28,12 @@ function apply_rtMagnificPopup(selector){
                         return item.el.attr('title') + '<small>by Marsel Van Oosten</small>';
                     }
                 },
-//                disableOn: function() {
-//                    if (jQuery(window).width() < 600) {
-//                        return false;
-//                    }
-//                    return true;
-//                },
+                disableOn: function() {
+                    if (jQuery(window).width() < 600) {
+                        return false;
+                    }
+                    return true;
+                },
                 callbacks: {
                     ajaxContentAdded: function() {
 
