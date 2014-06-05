@@ -220,20 +220,23 @@ class RTMedia
     }
 
 	function custom_style_for_image_size() {
-	?>
-		<style type="text/css">
-	<?php
-		$this->custom_style_for_activity_image_size();
-		global $rtmedia;
-		if( isset( $rtmedia->options['general_masonry_layout'] ) && $rtmedia->options['general_masonry_layout'] == '1' ) {
-			$this->custom_style_for_gallery_image_size_masonry();
-		} else {
-			$this->custom_style_for_gallery_image_size();
+		if( apply_filters( 'rtmedia_custom_image_style', true ) ) {
+		?>
+			<style type="text/css">
+				<?php
+					$this->custom_style_for_activity_image_size();
+					global $rtmedia;
+					if( isset( $rtmedia->options['general_masonry_layout'] ) && $rtmedia->options['general_masonry_layout'] == '1' ) {
+						$this->custom_style_for_gallery_image_size_masonry();
+					} else {
+						$this->custom_style_for_gallery_image_size();
+					}
+					do_action( 'rtmedia_custom_styles' );
+				?>
+			</style>
+		<?php
 		}
-		do_action( 'rtmedia_custom_styles' );
-	?>
-		</style>
-	<?php
+
 	}
 
     function custom_style_for_activity_image_size() {
