@@ -60,11 +60,11 @@ function get_rtmedia_gallery_title() {
 	if ( isset( $rtmedia_query->media_query[ 'media_type' ] ) && ! is_array( $rtmedia_query->media_query[ 'media_type' ] ) && $rtmedia_query->media_query[ 'media_type' ] != "" ){
 		switch ($rtmedia_query->media_query['media_type']) {
 			case 'music':
-				return __( 'All Photos', 'rtmedia' );
-			case 'photo':
-				return __( 'All Videos', 'rtmedia' );
-			case 'video':
 				return __( 'All Music', 'rtmedia' );
+			case 'photo':
+				return __( 'All Photos', 'rtmedia' );
+			case 'video':
+				return __( 'All Videos', 'rtmedia' );
 			default:
 				return __( 'Media Gallery', 'rtmedia' );
 		}
