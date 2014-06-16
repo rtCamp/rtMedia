@@ -58,16 +58,16 @@ function get_rtmedia_gallery_title() {
 	global $rtmedia_query;
 	$title = false;
 	if ( isset( $rtmedia_query->media_query[ 'media_type' ] ) && ! is_array( $rtmedia_query->media_query[ 'media_type' ] ) && $rtmedia_query->media_query[ 'media_type' ] != "" ){
-		$photos_title = __( 'All Photos', 'rtmedia' );
-		$videos_title = __( 'All Videos', 'rtmedia' );
-		$music_title  = __( 'All Music', 'rtmedia' );
-		if ( $rtmedia_query->media_query[ 'media_type' ] == "music" ){
-			$title = ucwords( __( 'All ' . $rtmedia_query->media_query[ 'media_type' ], 'rtmedia' ) );
-		} else {
-			$title = ucwords( __( 'All ' . $rtmedia_query->media_query[ 'media_type' ] . "s", 'rtmedia' ) );
+		switch ($rtmedia_query->media_query['media_type']) {
+			case 'music':
+				return __( 'All Music', 'rtmedia' );
+			case 'photo':
+				return __( 'All Photos', 'rtmedia' );
+			case 'video':
+				return __( 'All Videos', 'rtmedia' );
+			default:
+				return __( 'Media Gallery', 'rtmedia' );
 		}
-
-		return $title;
 	}
 	if ( isset( $rtmedia_query->query[ 'media_type' ] ) && $rtmedia_query->query[ 'media_type' ] == "album" && isset( $rtmedia_query->media_query[ 'album_id' ] ) && $rtmedia_query->media_query[ 'album_id' ] != "" ){
 		$id = $rtmedia_query->media_query[ 'album_id' ];
