@@ -851,8 +851,8 @@ class RTMedia
         wp_localize_script('rtmedia-main', 'rtmedia_select_all_visible', __('Select All Visible',"rtmedia"));
         wp_localize_script('rtmedia-main', 'rtmedia_unselect_all_visible', __('Unselect All Visible',"rtmedia"));
         wp_localize_script('rtmedia-main', 'rtmedia_no_media_selected', __('Please select some media.',"rtmedia"));
-        wp_localize_script('rtmedia-main', 'rtmedia_selected_media_delete_confirmation', __('Are you sure you want to delete the selected medias?',"rtmedia"));
-        wp_localize_script('rtmedia-main', 'rtmedia_selected_media_move_confirmation', __('Are you sure you want to move the selected medias?',"rtmedia"));
+        wp_localize_script('rtmedia-main', 'rtmedia_selected_media_delete_confirmation', __('Are you sure you want to delete the selected media?',"rtmedia"));
+        wp_localize_script('rtmedia-main', 'rtmedia_selected_media_move_confirmation', __('Are you sure you want to move the selected media?',"rtmedia"));
         wp_localize_script('rtmedia-main', 'rtmedia_waiting_msg', __('Waiting',"rtmedia"));
         wp_localize_script('rtmedia-main', 'rtmedia_uploaded_msg', __('Uploaded',"rtmedia"));
         wp_localize_script('rtmedia-main', 'rtmedia_uploading_msg', __('Uploading',"rtmedia"));
