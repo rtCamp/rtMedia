@@ -58,13 +58,10 @@ function get_rtmedia_gallery_title() {
 	global $rtmedia_query;
 	$title = false;
 	if ( isset( $rtmedia_query->media_query[ 'media_type' ] ) && ! is_array( $rtmedia_query->media_query[ 'media_type' ] ) && $rtmedia_query->media_query[ 'media_type' ] != "" ){
-		$photos_title = __( 'All Photos', 'rtmedia' );
-		$videos_title = __( 'All Videos', 'rtmedia' );
-		$music_title  = __( 'All Music', 'rtmedia' );
-		if ( $rtmedia_query->media_query[ 'media_type' ] == "music" ){
-			$title = ucwords( __( 'All ' . $rtmedia_query->media_query[ 'media_type' ], 'rtmedia' ) );
-		} else {
-			$title = ucwords( __( 'All ' . $rtmedia_query->media_query[ 'media_type' ] . "s", 'rtmedia' ) );
+		global $rtmedia;
+		$current_media_type = $rtmedia_query->media_query[ 'media_type' ];
+		if( $current_media_type != "" && is_array( $rtmedia->allowed_types ) && is_array( $rtmedia->allowed_types[ $current_media_type ] ) && isset( $rtmedia->allowed_types[ $current_media_type ][ 'plural_label' ] ) ) {
+			$title = sprintf( '%s %s', __( 'All', 'rtmedia' ), $rtmedia->allowed_types[ $current_media_type ][ 'plural_label' ] );
 		}
 
 		return $title;
