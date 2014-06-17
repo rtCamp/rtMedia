@@ -209,7 +209,10 @@ class RTMediaPrivacy {
             return ;
         }
 
-        if ( ! is_rtmedia_privacy_enable () ) {
+        if ( ! is_rtmedia_profile_media_enable () ) {
+            return ;
+        }
+		if ( ! is_rtmedia_privacy_enable () ) {
             return ;
         }
         if ( ! is_rtmedia_privacy_user_overide () ) {
