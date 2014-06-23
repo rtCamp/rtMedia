@@ -321,7 +321,7 @@ class RTMediaFormHandler {
 				)
 			),
 			'general_showAdminMenu' => array(
-				    'title' => __('Admin bar menu intergation','rtmedia'),
+				    'title' => __('Admin bar menu integration','rtmedia'),
 				    'callback' => array('RTMediaFormHandler', 'checkbox'),
 				    'args' => array(
 					    'key' => 'general_showAdminMenu',
