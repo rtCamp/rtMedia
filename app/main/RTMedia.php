@@ -878,7 +878,7 @@ class RTMedia
 		wp_localize_script ( 'rtmedia-backbone', 'rtmedia_user_domain', $rtmedia_user_domain );
 
 		// Enqueue touchswipe
-//		wp_enqueue_script( 'rtmedia-touchswipe', RTMEDIA_URL . 'lib/touchswipe/jquery.touchSwipe.min.js', array('jquery'), RTMEDIA_VERSION, true);
+		wp_enqueue_script( 'rtmedia-touchswipe', RTMEDIA_URL . 'lib/touchswipe/jquery.touchSwipe.min.js', array('jquery'), RTMEDIA_VERSION, true);
 
 		if(  isset( $rtmedia->options ) && isset( $rtmedia->options['general_masonry_layout' ] ) && $rtmedia->options['general_masonry_layout'] == 1 ) {
 			if ( wp_script_is( "jquery-masonry", "registered" ) ) {

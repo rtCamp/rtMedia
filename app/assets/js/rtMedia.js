@@ -28,12 +28,12 @@ function apply_rtMagnificPopup(selector){
                         return item.el.attr('title') + '<small>by Marsel Van Oosten</small>';
                     }
                 },
-                disableOn: function() {
-                    if (jQuery(window).width() < 600) {
-                        return false;
-                    }
-                    return true;
-                },
+//                disableOn: function() {
+//                    if (jQuery(window).width() < 600) {
+//                        return false;
+//                    }
+//                    return true;
+//                },
                 callbacks: {
                     ajaxContentAdded: function() {
 
@@ -402,18 +402,18 @@ jQuery('document').ready(function($) {
             rtm_mfp.prev();
         });
 
-//       jQuery('.mfp-content .rtmedia-media').swipe({
-//           //Generic swipe handler for all directions
-//           swipeLeft:function(event, direction, distance, duration, fingerCount) 	// bind leftswipe
-//           {
-//               rtm_mfp.next();
-//           },
-//           swipeRight:function(event, direction, distance, duration, fingerCount) 	// bind rightswipe
-//           {
-//               rtm_mfp.prev();
-//           },
-//           threshold:0
-//       });
+       jQuery('.mfp-content .rtmedia-media').swipe({
+           //Generic swipe handler for all directions
+           swipeLeft:function(event, direction, distance, duration, fingerCount) 	// bind leftswipe
+           {
+               rtm_mfp.next();
+           },
+           swipeRight:function(event, direction, distance, duration, fingerCount) 	// bind rightswipe
+           {
+               rtm_mfp.prev();
+           },
+           threshold:0
+       });
    }
 
     function rtmedia_disable_popup_navigation_comment_focus() {
