@@ -237,16 +237,16 @@ class RTMediaFormHandler {
 				),
 				'group' => "15"
 			),
-//			'general_masonry_layout' => array(
-//				'title' => __('Use <a href="http://masonry.desandro.com/" target="_blank">Masonry</a> Cascading grid layout','rtmedia'),
-//				'callback' => array('RTMediaFormHandler', 'checkbox'),
-//				'args' => array(
-//					'key' => 'general_masonry_layout',
-//					'value' => $options['general_masonry_layout'],
-//					'desc' => __('Masonry works by placing elements in optimal position based on available vertical space, sort of like a mason fitting stones in a wall.','rtmedia'),
-//				),
-//				'group' => "15"
-//			),
+			'general_masonry_layout' => array(
+				'title' => __('Use <a href="http://masonry.desandro.com/" target="_blank">Masonry</a> Cascading grid layout','rtmedia'),
+				'callback' => array('RTMediaFormHandler', 'checkbox'),
+				'args' => array(
+					'key' => 'general_masonry_layout',
+					'value' => $options['general_masonry_layout'],
+					'desc' => __('Masonry works by placing elements in optimal position based on available vertical space, sort of like a mason fitting stones in a wall.','rtmedia'),
+				),
+				'group' => "15"
+			),
 		);
 
 		return $render;

@@ -144,7 +144,7 @@ jQuery( function ( $ ) {
                         //element.show();
                         jQuery('.rtmedia-container .rtmedia-list-media' ).css('opacity', '1');
                         if( typeof rtmedia_masonry_layout != "undefined" && rtmedia_masonry_layout == "true" ) {
-                            jQuery('.rtmedia-list-media').masonry( 'reload' );
+                            rtm_masonry_reload( rtm_masonry_container );
                         }
                         rtMediaHook.call( 'rtmedia_after_gallery_load' );
                     }

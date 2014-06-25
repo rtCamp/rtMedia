@@ -42,7 +42,7 @@ if (!class_exists('RTMediaSettings')) {
 				'rtmedia_add_linkback' => 0,
 				'rtmedia_affiliate_id' => '',
 				'rtmedia_enable_api' => 0,
-//				'general_masonry_layout' => 0,
+				'general_masonry_layout' => 0,
             );
 
             $defaults = apply_filters('rtmedia_general_content_default_values', $defaults);

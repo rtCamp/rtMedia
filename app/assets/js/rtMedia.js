@@ -1,4 +1,5 @@
 var rtMagnificPopup;
+var rtm_masonry_container;
 function apply_rtMagnificPopup(selector){
     jQuery('document').ready(function($) {
 	var rt_load_more = "";
@@ -511,7 +512,8 @@ jQuery('document').ready(function($) {
 
 //    masonry code
     if( typeof rtmedia_masonry_layout != "undefined" && rtmedia_masonry_layout == "true" ) {
-        jQuery('.rtmedia-list-media').masonry({
+        rtm_masonry_container = jQuery('.rtmedia-list-media')
+        rtm_masonry_container.masonry({
             columnWidth: 190,
             itemSelector: '.rtmedia-list-item'
         });
@@ -604,3 +606,14 @@ function rtm_is_element_exist( el ) {
         return false;
     }
 }
+
+function rtm_masonry_reload( el ) {
+    setTimeout(function(){
+        // we make masonry recalculate the element based on their current state.
+        el.masonry('reload');
+    }, 250);
+}
+
+window.onload=function(){
+    rtm_masonry_reload( rtm_masonry_container );
+};
