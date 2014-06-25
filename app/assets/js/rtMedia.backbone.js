@@ -113,12 +113,10 @@ jQuery( function ( $ ) {
                         $( element ).parent().parent().prevAll( "input[type=hidden]" ).each( function ( e ) {
                             query[$( this ).attr( "name" )] = $( this ).val();
                         } );
-                    } else {
-                        $( el ).find( "input[type=hidden]" ).each( function ( e ) {
-                            query[$( this ).attr( "name" )] = $( this ).val();
-                        } );
                     }
-
+                    $( el ).find( "input[type=hidden]" ).each( function ( e ) {
+                        query[$( this ).attr( "name" )] = $( this ).val();
+                    } );
                 }
                 this.fetch( {
                     data: query,
