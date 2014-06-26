@@ -514,7 +514,6 @@ jQuery('document').ready(function($) {
     if( typeof rtmedia_masonry_layout != "undefined" && rtmedia_masonry_layout == "true" ) {
         rtm_masonry_container = jQuery('.rtmedia-list-media')
         rtm_masonry_container.masonry({
-            columnWidth: 190,
             itemSelector: '.rtmedia-list-item'
         });
     }

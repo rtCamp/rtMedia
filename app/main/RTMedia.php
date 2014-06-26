@@ -268,8 +268,16 @@ class RTMedia
 
 	function custom_style_for_gallery_image_size_masonry() {
 	?>
+		.rtmedia-container .rtmedia-list  .rtmedia-list-item {
+			width: <?php echo intval($this->options["defaultSizes_photo_thumbnail_width"]) + 20; ?>px;
+			max-height: <?php echo intval($this->options["defaultSizes_photo_thumbnail_height"]) + 20; ?>px;
+		}
+		.rtmedia-container ul.rtmedia-list li.rtmedia-list-item div.rtmedia-item-thumbnail img {
+			max-width: <?php echo $this->options["defaultSizes_photo_thumbnail_width"]; ?>px;
+			max-height: <?php echo $this->options["defaultSizes_photo_thumbnail_height"]; ?>px;
+		}
 		.rtmedia-container .rtmedia-list .rtmedia-list-item .rtmedia-item-title {
-				width: <?php echo intval($this->options["defaultSizes_photo_thumbnail_width"]) + 20; ?>px;
+			width: <?php echo intval($this->options["defaultSizes_photo_thumbnail_width"]) + 20; ?>px;
 		}
 	<?php
 	}
