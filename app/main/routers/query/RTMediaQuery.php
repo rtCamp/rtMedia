@@ -469,7 +469,7 @@ class RTMediaQuery {
 		}
 		$this->set_media_type();
 		$this->media_query = $this->query;
-
+		do_action( 'rtmedia_set_query' );
 		return $this->get_data();
 	}
 
