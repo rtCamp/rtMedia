@@ -512,7 +512,7 @@ jQuery('document').ready(function($) {
 
 //    masonry code
     if( typeof rtmedia_masonry_layout != "undefined" && rtmedia_masonry_layout == "true" ) {
-        rtm_masonry_container = jQuery('.rtmedia-list-media')
+        rtm_masonry_container = jQuery('.rtmedia-list')
         rtm_masonry_container.masonry({
             itemSelector: '.rtmedia-list-item'
         });
