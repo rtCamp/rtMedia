@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: BuddyPress Media\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-05-27 18:04+0530\n"
-"PO-Revision-Date: 2014-05-27 18:04+0530\n"
+"POT-Creation-Date: 2014-07-07 20:21+0530\n"
+"PO-Revision-Date: 2014-07-07 20:22+0530\n"
 "Last-Translator: faishal <faishal.saiyed@rtcamp.com>\n"
 "Language-Team: rtCamp <info@rtcamp.com>\n"
 "Language: en_IN\n"
@@ -15,209 +15,210 @@ msgstr ""
 "X-Generator: Poedit 1.5.4\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: app/main/RTMedia.php:254
+#: app/main/RTMedia.php:294
 msgid "Photo"
 msgstr ""
 
-#: app/main/RTMedia.php:255
+#: app/main/RTMedia.php:295
 msgid "Photos"
 msgstr ""
 
-#: app/main/RTMedia.php:263
+#: app/main/RTMedia.php:303
 msgid "Video"
 msgstr ""
 
-#: app/main/RTMedia.php:264
+#: app/main/RTMedia.php:304
 msgid "Videos"
 msgstr ""
 
-#: app/main/RTMedia.php:272 app/main/RTMedia.php:273
+#: app/main/RTMedia.php:312 app/main/RTMedia.php:313
 msgid "Music"
 msgstr ""
 
-#: app/main/RTMedia.php:360
+#: app/main/RTMedia.php:400
 msgid "<strong>Private</strong> - Visible only to the user"
 msgstr ""
 
-#: app/main/RTMedia.php:361
+#: app/main/RTMedia.php:401
 msgid "<strong>Friends</strong> - Visible to user's friends"
 msgstr ""
 
-#: app/main/RTMedia.php:362
+#: app/main/RTMedia.php:402
 msgid "<strong>Logged in Users</strong> - Visible to registered users"
 msgstr ""
 
-#: app/main/RTMedia.php:363
+#: app/main/RTMedia.php:403
 msgid "<strong>Public</strong> - Visible to the world"
 msgstr ""
 
-#: app/main/RTMedia.php:514 app/importers/BPMediaAlbumimporter.php:91
+#: app/main/RTMedia.php:554 app/importers/BPMediaAlbumimporter.php:91
 msgid "Media"
 msgstr ""
 
-#: app/main/RTMedia.php:520 app/main/controllers/template/RTMediaNav.php:146
+#: app/main/RTMedia.php:560 app/main/controllers/template/RTMediaNav.php:151
+#: app/main/controllers/template/rt-template-functions.php:64
 msgid "All"
 msgstr ""
 
-#: app/main/RTMedia.php:529
-#: app/main/controllers/template/rt-template-functions.php:1132
-#: app/main/controllers/upload/RTMediaUploadView.php:50
-#: app/main/controllers/upload/RTMediaUploadView.php:53
+#: app/main/RTMedia.php:569
+#: app/main/controllers/template/rt-template-functions.php:1146
+#: app/main/controllers/upload/RTMediaUploadView.php:51
+#: app/main/controllers/upload/RTMediaUploadView.php:54
 #: app/main/controllers/media/RTMediaAlbum.php:54
 msgid "Album"
 msgstr ""
 
-#: app/main/RTMedia.php:532 app/main/controllers/template/RTMediaNav.php:95
-#: app/main/controllers/template/RTMediaNav.php:167
+#: app/main/RTMedia.php:572 app/main/controllers/template/RTMediaNav.php:95
+#: app/main/controllers/template/RTMediaNav.php:172
 #: app/main/controllers/media/RTMediaAlbum.php:53
 #: app/main/controllers/media/RTMediaAlbum.php:65
 msgid "Albums"
 msgstr ""
 
-#: app/main/RTMedia.php:540
-#: app/main/controllers/template/rt-template-functions.php:1873
-#: app/main/controllers/template/rt-template-functions.php:1877
+#: app/main/RTMedia.php:580
+#: app/main/controllers/template/rt-template-functions.php:1890
+#: app/main/controllers/template/rt-template-functions.php:1894
 msgid "Upload"
 msgstr ""
 
-#: app/main/RTMedia.php:544
+#: app/main/RTMedia.php:584
 msgid "Wall Post"
 msgstr ""
 
-#: app/main/RTMedia.php:735
+#: app/main/RTMedia.php:775
 msgid "Wall Posts"
 msgstr ""
 
-#: app/main/RTMedia.php:775
+#: app/main/RTMedia.php:815
 msgid ": Can't Create Database table. Please check create table permission."
 msgstr ""
 
-#: app/main/RTMedia.php:809
+#: app/main/RTMedia.php:848
 msgid "Loading media"
 msgstr ""
 
-#: app/main/RTMedia.php:810
+#: app/main/RTMedia.php:849
 msgid "Please enter some content to post."
 msgstr ""
 
-#: app/main/RTMedia.php:811
+#: app/main/RTMedia.php:850
 msgid "Empty Comment is not allowed."
 msgstr ""
 
-#: app/main/RTMedia.php:812
+#: app/main/RTMedia.php:851
 msgid "Are you sure you want to delete this media?"
 msgstr ""
 
-#: app/main/RTMedia.php:813
+#: app/main/RTMedia.php:852
 msgid "Are you sure you want to delete this comment?"
 msgstr ""
 
-#: app/main/RTMedia.php:814
+#: app/main/RTMedia.php:853
 msgid "Are you sure you want to delete this Album?"
 msgstr ""
 
-#: app/main/RTMedia.php:815
+#: app/main/RTMedia.php:854
 msgid "Drop files here"
 msgstr ""
 
-#: app/main/RTMedia.php:816
+#: app/main/RTMedia.php:855
 msgid "album created successfully."
 msgstr ""
 
-#: app/main/RTMedia.php:817
+#: app/main/RTMedia.php:856
 msgid "Something went wrong. Please try again."
 msgstr ""
 
-#: app/main/RTMedia.php:818
+#: app/main/RTMedia.php:857
 msgid "Enter an album name."
 msgstr ""
 
-#: app/main/RTMedia.php:819
+#: app/main/RTMedia.php:858
 msgid "Max file Size Limit : "
 msgstr ""
 
-#: app/main/RTMedia.php:820
+#: app/main/RTMedia.php:859
 msgid "Allowed File Formats"
 msgstr ""
 
-#: app/main/RTMedia.php:821 templates/media/album-single-edit.php:58
+#: app/main/RTMedia.php:860 templates/media/album-single-edit.php:58
 msgid "Select All Visible"
 msgstr ""
 
-#: app/main/RTMedia.php:822
+#: app/main/RTMedia.php:861
 msgid "Unselect All Visible"
 msgstr ""
 
-#: app/main/RTMedia.php:823
+#: app/main/RTMedia.php:862
 msgid "Please select some media."
 msgstr ""
 
-#: app/main/RTMedia.php:824
-msgid "Are you sure you want to delete the selected medias?"
+#: app/main/RTMedia.php:863
+msgid "Are you sure you want to delete the selected media?"
 msgstr ""
 
-#: app/main/RTMedia.php:825
-msgid "Are you sure you want to move the selected medias?"
+#: app/main/RTMedia.php:864
+msgid "Are you sure you want to move the selected media?"
 msgstr ""
 
-#: app/main/RTMedia.php:826
+#: app/main/RTMedia.php:865
 msgid "Waiting"
 msgstr ""
 
-#: app/main/RTMedia.php:827
+#: app/main/RTMedia.php:866
 msgid "Uploaded"
 msgstr ""
 
-#: app/main/RTMedia.php:828
+#: app/main/RTMedia.php:867
 msgid "Uploading"
 msgstr ""
 
-#: app/main/RTMedia.php:829
+#: app/main/RTMedia.php:868
 msgid "Failed"
 msgstr ""
 
-#: app/main/RTMedia.php:830
+#: app/main/RTMedia.php:869
 msgid "Close"
 msgstr ""
 
-#: app/main/RTMedia.php:831
-#: app/main/controllers/template/rt-template-functions.php:631
-#: app/main/controllers/template/rt-template-functions.php:652
+#: app/main/RTMedia.php:870
+#: app/main/controllers/template/rt-template-functions.php:628
+#: app/main/controllers/template/rt-template-functions.php:649
 msgid "Edit"
 msgstr ""
 
-#: app/main/RTMedia.php:832
-#: app/main/controllers/template/rt-template-functions.php:1218
-#: app/main/controllers/template/rt-template-functions.php:1225
+#: app/main/RTMedia.php:871
+#: app/main/controllers/template/rt-template-functions.php:1232
+#: app/main/controllers/template/rt-template-functions.php:1239
 #: templates/media/album-single-edit.php:60
 msgid "Delete"
 msgstr ""
 
-#: app/main/RTMedia.php:833 templates/media/media-single-edit.php:13
+#: app/main/RTMedia.php:872 templates/media/media-single-edit.php:13
 msgid "Edit Media"
 msgstr ""
 
-#: app/main/RTMedia.php:834
+#: app/main/RTMedia.php:873
 msgid "Remove from queue"
 msgstr ""
 
-#: app/main/RTMedia.php:835
+#: app/main/RTMedia.php:874
 msgid "Add more files"
 msgstr ""
 
-#: app/main/RTMedia.php:836
+#: app/main/RTMedia.php:875
 msgid "File not supported"
 msgstr ""
 
-#: app/main/RTMedia.php:837
+#: app/main/RTMedia.php:876
 msgid "more"
 msgstr ""
 
-#: app/main/RTMedia.php:838
+#: app/main/RTMedia.php:877
 msgid "less"
 msgstr ""
 
-#: app/main/RTMedia.php:839
+#: app/main/RTMedia.php:878
 msgid "This media is uploaded. Are you sure you want to delete this media?"
 msgstr ""
 
@@ -231,435 +232,418 @@ msgstr ""
 msgid "Invalid attribute passed for rtmedia_gallery shortcode."
 msgstr ""
 
-#: app/main/controllers/template/RTMediaTemplate.php:244
-#: app/main/controllers/template/RTMediaTemplate.php:306
-#: app/main/controllers/template/RTMediaTemplate.php:391
-#: app/main/controllers/template/RTMediaTemplate.php:492
+#: app/main/controllers/template/RTMediaTemplate.php:245
+#: app/main/controllers/template/RTMediaTemplate.php:307
+#: app/main/controllers/template/RTMediaTemplate.php:392
+#: app/main/controllers/template/RTMediaTemplate.php:493
 msgid "Ooops !!! Invalid access. No nonce was found !!"
 msgstr ""
 
-#: app/main/controllers/template/RTMediaTemplate.php:249
+#: app/main/controllers/template/RTMediaTemplate.php:250
 msgid "Media updated Sucessfully"
 msgstr ""
 
-#: app/main/controllers/template/RTMediaTemplate.php:255
+#: app/main/controllers/template/RTMediaTemplate.php:256
 msgid "Error in updating Media"
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:61
-msgid "All Photos"
-msgstr ""
-
-#: app/main/controllers/template/rt-template-functions.php:62
-msgid "All Videos"
-msgstr ""
-
-#: app/main/controllers/template/rt-template-functions.php:63
-msgid "All Music"
-msgstr ""
-
-#: app/main/controllers/template/rt-template-functions.php:65
-#: app/main/controllers/template/rt-template-functions.php:67
-msgid "All "
-msgstr ""
-
-#: app/main/controllers/template/rt-template-functions.php:607
-#: app/main/controllers/template/rt-template-functions.php:1416
+#: app/main/controllers/template/rt-template-functions.php:604
+#: app/main/controllers/template/rt-template-functions.php:1430
 msgid "Options"
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:697
+#: app/main/controllers/template/rt-template-functions.php:694
 msgid "There are no comments on this media yet."
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:729
+#: app/main/controllers/template/rt-template-functions.php:727
 msgid "Delete Comment"
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:953
+#: app/main/controllers/template/rt-template-functions.php:967
 msgid "Video Thumbnail"
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:1002
+#: app/main/controllers/template/rt-template-functions.php:1016
 msgid "Video Thumbnail:"
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:1086
+#: app/main/controllers/template/rt-template-functions.php:1100
 msgid "Image"
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:1102
+#: app/main/controllers/template/rt-template-functions.php:1116
 msgid "Modify Image"
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:1177
+#: app/main/controllers/template/rt-template-functions.php:1191
 msgid "Type Comment..."
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:1182
+#: app/main/controllers/template/rt-template-functions.php:1196
 #: templates/media/media-single.php:71 templates/media/media-single.php:110
 msgid "Comment"
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:1218
-#: app/main/controllers/template/rt-template-functions.php:1225
+#: app/main/controllers/template/rt-template-functions.php:1232
+#: app/main/controllers/template/rt-template-functions.php:1239
 msgid "Delete Media"
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:1254
+#: app/main/controllers/template/rt-template-functions.php:1268
 #: app/main/controllers/activity/RTMediaBuddyPressActivity.php:180
 #: app/main/controllers/shortcodes/RTMediaUploadShortcode.php:104
 msgid "You are not allowed to upload/attach media."
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:1358
+#: app/main/controllers/template/rt-template-functions.php:1372
 msgid "Profile Albums"
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:1361
-#: app/main/controllers/template/rt-template-functions.php:1396
+#: app/main/controllers/template/rt-template-functions.php:1375
+#: app/main/controllers/template/rt-template-functions.php:1410
 msgid "Group Albums"
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:1471
-#: app/main/controllers/template/rt-template-functions.php:1486
+#: app/main/controllers/template/rt-template-functions.php:1485
+#: app/main/controllers/template/rt-template-functions.php:1501
 msgid "Create New Album"
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:1471
+#: app/main/controllers/template/rt-template-functions.php:1485
 msgid "Add Album"
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:1489
+#: app/main/controllers/template/rt-template-functions.php:1504
 msgid "Album Title : "
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:1496
+#: app/main/controllers/template/rt-template-functions.php:1511
 #: app/main/controllers/media/RTMediaAlbum.php:56
 msgid "Create Album"
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:1529
-#: app/main/controllers/template/rt-template-functions.php:1536
-#: app/main/controllers/template/rt-template-functions.php:1590
+#: app/main/controllers/template/rt-template-functions.php:1545
+#: app/main/controllers/template/rt-template-functions.php:1552
+#: app/main/controllers/template/rt-template-functions.php:1606
 msgid "Merge Album"
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:1532
+#: app/main/controllers/template/rt-template-functions.php:1548
 msgid "Select Album to merge with : "
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:1580
+#: app/main/controllers/template/rt-template-functions.php:1596
 #: app/main/controllers/media/RTMediaAlbum.php:57
 msgid "Edit Album"
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:1581
+#: app/main/controllers/template/rt-template-functions.php:1597
 msgid "Delete Album"
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:1619
+#: app/main/controllers/template/rt-template-functions.php:1635
 msgid "Merge"
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:1672
+#: app/main/controllers/template/rt-template-functions.php:1688
 msgid "Privacy : "
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:1861
+#: app/main/controllers/template/rt-template-functions.php:1878
 msgid "people like this"
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:1873
-#: app/main/controllers/template/rt-template-functions.php:1877
+#: app/main/controllers/template/rt-template-functions.php:1890
+#: app/main/controllers/template/rt-template-functions.php:1894
 msgid "Upload Media"
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:1923
+#: app/main/controllers/template/rt-template-functions.php:1940
 msgid "Go PRO!"
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:1944
+#: app/main/controllers/template/rt-template-functions.php:1961
 msgid "Reasons to buy rtMedia-PRO"
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:1949
+#: app/main/controllers/template/rt-template-functions.php:1966
 msgid "Media Attributes"
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:1951
+#: app/main/controllers/template/rt-template-functions.php:1968
 msgid "Add media attributes and categories them."
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:1957
+#: app/main/controllers/template/rt-template-functions.php:1974
 msgid "Sort Media"
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:1959
+#: app/main/controllers/template/rt-template-functions.php:1976
 msgid ""
 "You can sort media from media gallery according to media size and the date "
 "of media upload."
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:1965
+#: app/main/controllers/template/rt-template-functions.php:1982
 msgid "Direct URL upload"
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:1967
+#: app/main/controllers/template/rt-template-functions.php:1984
 msgid ""
 "You no longer need to download media from URL and then upload it. Just "
 "provide link and rtMedia will handle it."
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:1973
+#: app/main/controllers/template/rt-template-functions.php:1990
 msgid "Per user upload quota"
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:1975
+#: app/main/controllers/template/rt-template-functions.php:1992
 msgid ""
 "You can set upload quota for users on the daily, monthly and lifetime basis."
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:1981
+#: app/main/controllers/template/rt-template-functions.php:1998
 msgid "URL preview in BuddyPress activity"
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:1983
+#: app/main/controllers/template/rt-template-functions.php:2000
 msgid "Show URL previews in BuddyPress activity."
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:1989
+#: app/main/controllers/template/rt-template-functions.php:2006
 msgid "Bulk media edit"
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:1991
+#: app/main/controllers/template/rt-template-functions.php:2008
 msgid "You can edit media in bulk mode."
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:1997
+#: app/main/controllers/template/rt-template-functions.php:2014
 msgid "User's liked media page"
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:1999
+#: app/main/controllers/template/rt-template-functions.php:2016
 msgid ""
 "Now you can see user's liked media page. A new tab \"Likes\" has been added."
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:2005
+#: app/main/controllers/template/rt-template-functions.php:2022
 msgid "RSS Feed/Podcasting Support"
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:2007
+#: app/main/controllers/template/rt-template-functions.php:2024
 msgid ""
 "You can consume rtMedia uploads from iTunes as well as any feed-reader/"
 "podcasting software."
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:2013
+#: app/main/controllers/template/rt-template-functions.php:2030
 msgid "WordPress Comment Attachment"
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:2015
+#: app/main/controllers/template/rt-template-functions.php:2032
 msgid "You can attach files to WordPress comments."
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:2021
+#: app/main/controllers/template/rt-template-functions.php:2038
 msgid "bbPress Attachment"
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:2023
+#: app/main/controllers/template/rt-template-functions.php:2040
 msgid "You can attach files to bbPress topic and reply."
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:2029
+#: app/main/controllers/template/rt-template-functions.php:2046
 msgid "Document Support"
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:2031
+#: app/main/controllers/template/rt-template-functions.php:2048
 msgid ""
 "You can add, view and download documents like txt, doc, pdf, also add and "
 "upload other file types like zip, tar and tar.gz etc."
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:2037
+#: app/main/controllers/template/rt-template-functions.php:2054
 msgid "CubePoints & MyCRED Integration"
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:2039
+#: app/main/controllers/template/rt-template-functions.php:2056
 msgid ""
 "Integrating CubePoints/myCRED with rtMedia, you can reward users with "
 "virtual points on rtMedia activities."
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:2045
+#: app/main/controllers/template/rt-template-functions.php:2062
 msgid "Album Privacy"
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:2047
+#: app/main/controllers/template/rt-template-functions.php:2064
 msgid ""
 "This will allow you to set album privacy while creating albums or change "
 "album privacy with editing albums too."
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:2053
+#: app/main/controllers/template/rt-template-functions.php:2070
 msgid "Audio Playlist"
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:2055
+#: app/main/controllers/template/rt-template-functions.php:2072
 msgid ""
 "With this feature you can create your audio playlists and listen to your "
 "favorite music at will."
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:2061
+#: app/main/controllers/template/rt-template-functions.php:2078
 msgid "Report Button & Moderation Tools"
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:2063
+#: app/main/controllers/template/rt-template-functions.php:2080
 msgid ""
 "Users can report media if they find it offensive. Set number of reports to "
 "automatically take down media."
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:2069
+#: app/main/controllers/template/rt-template-functions.php:2086
 msgid "Download Button For Media"
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:2071
+#: app/main/controllers/template/rt-template-functions.php:2088
 msgid ""
 "Users can download photos, videos and music. Admin has option to allow "
 "download the media."
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:2077
+#: app/main/controllers/template/rt-template-functions.php:2094
 msgid "Sidebar widgets"
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:2079
+#: app/main/controllers/template/rt-template-functions.php:2096
 msgid ""
 "These will let you display a gallery or an uploader in a sidebar. Several of "
 "them can be used in a single sidebar."
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:2085
+#: app/main/controllers/template/rt-template-functions.php:2102
 msgid "Post-editor button"
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:2087
+#: app/main/controllers/template/rt-template-functions.php:2104
 msgid ""
 "With this button, a UI appears to quickly generate shortcodes for special "
 "pages like \"Editorial Picks\"."
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:2093
+#: app/main/controllers/template/rt-template-functions.php:2110
 msgid "Star-Rating option"
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:2095
+#: app/main/controllers/template/rt-template-functions.php:2112
 msgid ""
 "Users can give up to five stars to rate media. This data can be used for "
 "\"Most Rated Media\" in sidebars."
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:2101
+#: app/main/controllers/template/rt-template-functions.php:2118
 msgid "Global Albums"
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:2103
+#: app/main/controllers/template/rt-template-functions.php:2120
 msgid ""
 "Multiple global albums can be created beforehand. One of these can be chosen "
 "as the default album."
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:2109
+#: app/main/controllers/template/rt-template-functions.php:2126
 msgid "Premium one-to-one support"
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:2111
+#: app/main/controllers/template/rt-template-functions.php:2128
 msgid ""
 "Without leaving your WordPress dashboard, you can contact us for help using "
 "a support form."
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:2117
+#: app/main/controllers/template/rt-template-functions.php:2134
 msgid "Premium & Open-Source"
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:2119
+#: app/main/controllers/template/rt-template-functions.php:2136
 msgid ""
 "Developers get full control over rtMedia-PRO's source. They'll get access to "
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:2126
+#: app/main/controllers/template/rt-template-functions.php:2143
 msgid "Upgrade to rtMedia PRO Now "
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:2138
+#: app/main/controllers/template/rt-template-functions.php:2155
 msgid "You can consider rtMedia Team for following :"
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:2140
+#: app/main/controllers/template/rt-template-functions.php:2157
 msgid "rtMedia Customization ( in Upgrade Safe manner )"
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:2141
+#: app/main/controllers/template/rt-template-functions.php:2158
 msgid "Wordpress/BuddyPress Theme Design and Development"
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:2142
+#: app/main/controllers/template/rt-template-functions.php:2159
 msgid "Wordpress/BuddyPress Plugin Development"
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:2147
+#: app/main/controllers/template/rt-template-functions.php:2164
 msgid "Contact Us"
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:2167
+#: app/main/controllers/template/rt-template-functions.php:2184
 msgid "Empowering your community with "
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:2169
+#: app/main/controllers/template/rt-template-functions.php:2186
 msgid "The only complete media solution for WordPress, BuddyPress and bbPress"
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:2185
+#: app/main/controllers/template/rt-template-functions.php:2202
 msgid "Close (Esc)"
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:2201
+#: app/main/controllers/template/rt-template-functions.php:2218
 msgid "Public"
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:2205
+#: app/main/controllers/template/rt-template-functions.php:2222
 msgid "All members"
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:2209
+#: app/main/controllers/template/rt-template-functions.php:2226
 msgid "Your friends"
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:2213
+#: app/main/controllers/template/rt-template-functions.php:2230
 msgid "Only you"
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:2217
+#: app/main/controllers/template/rt-template-functions.php:2234
 msgid "Blocked Temperorily"
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:2253
+#: app/main/controllers/template/rt-template-functions.php:2270
 #, php-format
 msgid "%s ago "
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:2265
+#: app/main/controllers/template/rt-template-functions.php:2282
 msgid "1 second"
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:2268
+#: app/main/controllers/template/rt-template-functions.php:2285
 msgid "1 minute"
 msgstr ""
 
-#: app/main/controllers/template/rt-template-functions.php:2271
+#: app/main/controllers/template/rt-template-functions.php:2288
 msgid "1 hour"
 msgstr ""
 
@@ -878,40 +862,40 @@ msgstr ""
 msgid "single media"
 msgstr ""
 
-#: app/main/controllers/upload/RTMediaUploadView.php:65
+#: app/main/controllers/upload/RTMediaUploadView.php:67
 msgid "Privacy: "
 msgstr ""
 
-#: app/main/controllers/upload/RTMediaUploadView.php:71
-#: app/main/controllers/upload/RTMediaUploadView.php:89
+#: app/main/controllers/upload/RTMediaUploadView.php:73
+#: app/main/controllers/upload/RTMediaUploadView.php:91
 msgid "File Upload"
 msgstr ""
 
-#: app/main/controllers/upload/RTMediaUploadView.php:77
+#: app/main/controllers/upload/RTMediaUploadView.php:79
 msgid "Select your files"
 msgstr ""
 
-#: app/main/controllers/upload/RTMediaUploadView.php:78
+#: app/main/controllers/upload/RTMediaUploadView.php:80
 msgid "or"
 msgstr ""
 
-#: app/main/controllers/upload/RTMediaUploadView.php:78
+#: app/main/controllers/upload/RTMediaUploadView.php:80
 msgid "Drop your files here"
 msgstr ""
 
-#: app/main/controllers/upload/RTMediaUploadView.php:81
+#: app/main/controllers/upload/RTMediaUploadView.php:83
 msgid "Start upload"
 msgstr ""
 
-#: app/main/controllers/upload/RTMediaUploadView.php:89
+#: app/main/controllers/upload/RTMediaUploadView.php:91
 msgid "Attach Files"
 msgstr ""
 
-#: app/main/controllers/upload/RTMediaUploadView.php:89
+#: app/main/controllers/upload/RTMediaUploadView.php:91
 msgid "Upload will start only after you enter content and click Post Update."
 msgstr ""
 
-#: app/main/controllers/upload/RTMediaUploadView.php:92
+#: app/main/controllers/upload/RTMediaUploadView.php:94
 msgid "Insert from URL"
 msgstr ""
 
@@ -1005,11 +989,11 @@ msgid ""
 "\t                home screen."
 msgstr ""
 
-#: app/main/controllers/privacy/RTMediaPrivacy.php:263
+#: app/main/controllers/privacy/RTMediaPrivacy.php:266
 msgid "Default Privacy"
 msgstr ""
 
-#: app/main/controllers/privacy/RTMediaPrivacy.php:280
+#: app/main/controllers/privacy/RTMediaPrivacy.php:283
 #: app/admin/RTMediaAdmin.php:963
 msgid "Privacy"
 msgstr ""
@@ -1294,240 +1278,280 @@ msgstr ""
 msgid "Need to specify atleast to radios else use a checkbox instead"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:209
+#: app/admin/RTMediaFormHandler.php:217
 msgid "Allow user to comment on uploaded media"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:214
+#: app/admin/RTMediaFormHandler.php:222
 msgid ""
 "This will display comment form and comment listing on single media pages as "
 "well as inside lightbox (if lightbox is enabled)."
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:219
+#: app/admin/RTMediaFormHandler.php:227
 msgid "Use lightbox to display media"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:224
+#: app/admin/RTMediaFormHandler.php:232
 msgid "View single media in facebook style lightbox."
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:229
+#: app/admin/RTMediaFormHandler.php:237
 msgid "Number of media per page"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:235
+#: app/admin/RTMediaFormHandler.php:243
 msgid "Number of media you want to show per page on front end."
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:305
+#: app/admin/RTMediaFormHandler.php:249
+msgid "Enable"
+msgstr ""
+
+#: app/admin/RTMediaFormHandler.php:249
+msgid "Cascading grid layout"
+msgstr ""
+
+#: app/admin/RTMediaFormHandler.php:254
+msgid ""
+"Masonry works by placing elements in optimal position based on available "
+"vertical space, sort of like a mason fitting stones in a wall."
+msgstr ""
+
+#: app/admin/RTMediaFormHandler.php:258
+msgid "You might need to"
+msgstr ""
+
+#: app/admin/RTMediaFormHandler.php:258
+msgid "change thumbnail size"
+msgstr ""
+
+#: app/admin/RTMediaFormHandler.php:258
+msgid "and uncheck the crop box for thumbnails."
+msgstr ""
+
+#: app/admin/RTMediaFormHandler.php:258
+msgid "If you enable masonry view, it is advisable to"
+msgstr ""
+
+#: app/admin/RTMediaFormHandler.php:258
+msgid "for masonry view."
+msgstr ""
+
+#: app/admin/RTMediaFormHandler.php:258
+msgid ""
+"To set gallery for fixed width, set image height to 0 and width as per your "
+"requirement and vice-versa."
+msgstr ""
+
+#: app/admin/RTMediaFormHandler.php:326
 msgid "Allow usage data tracking"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:310
+#: app/admin/RTMediaFormHandler.php:331
 msgid ""
 "You can help rtMedia team learn what themes and plugins you are using to "
 "make rtMedia better compatible with your sites. No private information about "
 "your setup will be sent during tracking."
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:314
-msgid "Admin bar menu intergation"
+#: app/admin/RTMediaFormHandler.php:335
+msgid "Admin bar menu integration"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:319
+#: app/admin/RTMediaFormHandler.php:340
 msgid ""
 "Add rtMedia menu to WordPress admin bar for easy access to settings and "
 "moderation page (if enabled)."
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:324
+#: app/admin/RTMediaFormHandler.php:345
 msgid "Add a link to rtMedia in footer"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:329
+#: app/admin/RTMediaFormHandler.php:350
 msgid "Help us to promote rtMedia."
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:334
+#: app/admin/RTMediaFormHandler.php:355
 msgid "Also add my affiliate-id to rtMedia footer link"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:339
+#: app/admin/RTMediaFormHandler.php:360
 msgid ""
 "Add your affiliate-id along with footer link and get benefited from our "
 "affiliation program."
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:342
+#: app/admin/RTMediaFormHandler.php:363
 msgid ""
 "You can signup for rtMedia affiliate program from <a href=\"https://rtcamp."
 "com/affiliates\">here</a>"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:345
+#: app/admin/RTMediaFormHandler.php:366
 msgid "Enable JSON API"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:350
+#: app/admin/RTMediaFormHandler.php:371
 msgid ""
 "This will allow handling API requests for rtMedia sent through any mobile "
 "app."
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:353
+#: app/admin/RTMediaFormHandler.php:374
 msgid ""
 "You can refer API document from <a href=\"https://rtcamp.com/rtmedia/docs/"
 "developer/json-api/\">here</a>"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:470 app/helper/RTMediaSettings.php:233
+#: app/admin/RTMediaFormHandler.php:491 app/helper/RTMediaSettings.php:234
 msgid "Media Type"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:471
+#: app/admin/RTMediaFormHandler.php:492
 msgid "Allows you to upload a particular media type on your post."
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:471
+#: app/admin/RTMediaFormHandler.php:492
 msgid "Allow Upload"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:472
+#: app/admin/RTMediaFormHandler.php:493
 msgid "Put a specific media as a featured content on the post."
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:472
+#: app/admin/RTMediaFormHandler.php:493
 msgid "Set Featured"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:510
+#: app/admin/RTMediaFormHandler.php:531
 msgid "File Extensions"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:557
+#: app/admin/RTMediaFormHandler.php:578
 msgid "Category"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:558
+#: app/admin/RTMediaFormHandler.php:579
 msgid "Entity"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:559
+#: app/admin/RTMediaFormHandler.php:580
 msgid "Width"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:559
+#: app/admin/RTMediaFormHandler.php:580
 msgid "Height"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:559
+#: app/admin/RTMediaFormHandler.php:580
 msgid "Crop"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:596
+#: app/admin/RTMediaFormHandler.php:617
 msgid "Number of thumbnails to generate on video upload"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:602
+#: app/admin/RTMediaFormHandler.php:623
 msgid ""
 " If you choose more than 1 thumbnail, your users will be able to change "
 "thumbnail by going to video \"edit\" section."
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:640
+#: app/admin/RTMediaFormHandler.php:661
 msgid ""
 "If you want to add some custom CSS code to the plugin and don't want to "
 "modify any files, then it's a good place to enter your code at this field."
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:662
+#: app/admin/RTMediaFormHandler.php:683
 msgid "rtMedia default styles"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:668
+#: app/admin/RTMediaFormHandler.php:689
 msgid ""
 "Load default rtMedia styles. You need to write your own style for rtMedia if "
 "you disable it."
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:672
+#: app/admin/RTMediaFormHandler.php:693
 msgid "Paste your CSS code"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:678
+#: app/admin/RTMediaFormHandler.php:699
 msgid "Custom rtMedia CSS container"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:692
+#: app/admin/RTMediaFormHandler.php:713
 msgid "Enable privacy"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:698
+#: app/admin/RTMediaFormHandler.php:719
 msgid "Enable privacy in rtMedia"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:702
+#: app/admin/RTMediaFormHandler.php:723
 msgid "Default privacy"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:708
+#: app/admin/RTMediaFormHandler.php:729
 msgid "Set default privacy for media"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:712
+#: app/admin/RTMediaFormHandler.php:733
 msgid "Allow users to set privacy for their content"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:717
+#: app/admin/RTMediaFormHandler.php:738
 msgid ""
 "If you choose this, user will be able to change privacy of their own uploads."
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:719
+#: app/admin/RTMediaFormHandler.php:740
 msgid "For group uploads, BuddyPress groups privacy is used."
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:776
+#: app/admin/RTMediaFormHandler.php:797
 msgid "Enable media in profile"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:781
+#: app/admin/RTMediaFormHandler.php:802
 msgid "Enable Media on BuddyPress Profile"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:785
+#: app/admin/RTMediaFormHandler.php:806
 msgid "Enable media in group"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:790
+#: app/admin/RTMediaFormHandler.php:811
 msgid "Enable Media on BuddyPress Groups"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:794
+#: app/admin/RTMediaFormHandler.php:815
 msgid "Allow upload from activity stream"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:799
+#: app/admin/RTMediaFormHandler.php:820
 msgid "Allow upload using status update box present on activity stream page"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:804
+#: app/admin/RTMediaFormHandler.php:825
 msgid "Number of media items to show in activity stream"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:809
+#: app/admin/RTMediaFormHandler.php:830
 msgid ""
 "With bulk uploads activity stream may get flooded. You can control maximum "
 "number of medias/files per activity. This limit will not affect the actual "
 "number of uplaods. Only display. <em>0</em> means unlimited."
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:850
+#: app/admin/RTMediaFormHandler.php:871
 msgid "Organize media into albums"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:856
+#: app/admin/RTMediaFormHandler.php:877
 msgid ""
 "This will add 'album' tab to BuddyPress profile and group depending on "
 "^above^ settings."
@@ -1619,7 +1643,7 @@ msgstr ""
 
 #: app/admin/RTMediaAdmin.php:403 app/admin/RTMediaAdmin.php:404
 #: app/admin/RTMediaAdmin.php:482 app/admin/RTMediaAdmin.php:877
-#: app/helper/RTMediaSettings.php:135
+#: app/helper/RTMediaSettings.php:136
 msgid "Support"
 msgstr ""
 
@@ -2230,73 +2254,73 @@ msgstr ""
 msgid "Posted "
 msgstr ""
 
-#: app/helper/RTMediaSettings.php:104
+#: app/helper/RTMediaSettings.php:105
 msgid "Max Video thumbnail size is "
 msgstr ""
 
-#: app/helper/RTMediaSettings.php:133
+#: app/helper/RTMediaSettings.php:134
 msgid "BuddyPress Media Addons for Photos"
 msgstr ""
 
-#: app/helper/RTMediaSettings.php:137
+#: app/helper/RTMediaSettings.php:138
 msgid "rtMedia Themes"
 msgstr ""
 
-#: app/helper/RTMediaSettings.php:194
+#: app/helper/RTMediaSettings.php:195
 #, php-format
 msgid ""
 "Currently your network allows uploading of the following file types. You can "
 "change the settings <a href=\"%s\">here</a>.<br /><code>%s</code></span>"
 msgstr ""
 
-#: app/helper/RTMediaSettings.php:212 app/helper/RTMediaSettings.php:214
+#: app/helper/RTMediaSettings.php:213 app/helper/RTMediaSettings.php:215
 msgid "Recounting of media files done successfully"
 msgstr ""
 
-#: app/helper/RTMediaSettings.php:214
+#: app/helper/RTMediaSettings.php:215
 msgid "Recount Success"
 msgstr ""
 
-#: app/helper/RTMediaSettings.php:217 app/helper/RTMediaSettings.php:219
+#: app/helper/RTMediaSettings.php:218 app/helper/RTMediaSettings.php:220
 msgid "Recounting Failed"
 msgstr ""
 
-#: app/helper/RTMediaSettings.php:219
+#: app/helper/RTMediaSettings.php:220
 msgid "Recount Fail"
 msgstr ""
 
-#: app/helper/RTMediaSettings.php:231 app/helper/RTMediaSettings.php:233
+#: app/helper/RTMediaSettings.php:232 app/helper/RTMediaSettings.php:234
 msgid "Atleast one Media Type Must be selected"
 msgstr ""
 
-#: app/helper/RTMediaSettings.php:240 app/helper/RTMediaSettings.php:242
+#: app/helper/RTMediaSettings.php:241 app/helper/RTMediaSettings.php:243
 msgid "\"Number of media\" count value should be numeric and greater than 0."
 msgstr ""
 
-#: app/helper/RTMediaSettings.php:242
+#: app/helper/RTMediaSettings.php:243
 msgid "Default Count"
 msgstr ""
 
-#: app/helper/RTMediaSettings.php:246
+#: app/helper/RTMediaSettings.php:247
 msgid "Settings saved."
 msgstr ""
 
-#: app/helper/RTMediaSettings.php:261
+#: app/helper/RTMediaSettings.php:262
 #, php-format
 msgid ""
 "If you make changes to width, height or crop settings, you must use \"<a "
 "href=\"%s\">Regenerate Thumbnail Plugin</a>\" to regenerate old images.\""
 msgstr ""
 
-#: app/helper/RTMediaSettings.php:281
+#: app/helper/RTMediaSettings.php:282
 msgid "BuddyPress Media 2.6 requires a database upgrade. "
 msgstr ""
 
-#: app/helper/RTMediaSettings.php:282
+#: app/helper/RTMediaSettings.php:283
 msgid "Update Database"
 msgstr ""
 
-#: app/helper/RTMediaSettings.php:290 app/helper/RTMediaSupport.php:386
+#: app/helper/RTMediaSettings.php:291 app/helper/RTMediaSupport.php:386
 msgid ""
 "If your site has some issues due to BuddyPress Media and you want one on one "
 "support then you can create a support topic on the <a target=\"_blank\" href="
@@ -2305,7 +2329,7 @@ msgid ""
 "\">rtCamp Support Forum</a>."
 msgstr ""
 
-#: app/helper/RTMediaSettings.php:291 app/helper/RTMediaSupport.php:387
+#: app/helper/RTMediaSettings.php:292 app/helper/RTMediaSupport.php:387
 msgid ""
 "If you have any suggestions, enhancements or bug reports, then you can open "
 "a new issue on <a target=\"_blank\" href=\"https://github.com/rtCamp/"
