@@ -516,6 +516,9 @@ jQuery('document').ready(function($) {
         rtm_masonry_container.masonry({
             itemSelector: '.rtmedia-list-item'
         });
+        setInterval( function(){
+            rtm_masonry_reload( rtm_masonry_container );
+        } , 2000);
     }
 });
 

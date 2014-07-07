@@ -203,9 +203,7 @@ jQuery( function ( $ ) {
                 //$("#rtMedia-galary-next").show();
             }
             if( typeof rtmedia_masonry_layout != "undefined" && rtmedia_masonry_layout == "true" ) {
-                setTimeout(function(){
                     rtm_masonry_reload( rtm_masonry_container );
-                }, 500);
             }
         },
         appendTo: function ( media ) {
