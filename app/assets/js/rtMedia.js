@@ -517,8 +517,14 @@ jQuery('document').ready(function($) {
             itemSelector: '.rtmedia-list-item'
         });
         setInterval( function(){
+            jQuery.each( jQuery('.rtmedia-list.masonry .rtmedia-item-title' ), function( i, item ) {
+                jQuery(item ).width( jQuery(item).siblings('.rtmedia-item-thumbnail' ).children('img').width());
+            });
             rtm_masonry_reload( rtm_masonry_container );
-        } , 2000);
+        } , 1000);
+        jQuery.each( jQuery('.rtmedia-list.masonry .rtmedia-item-title' ), function( i, item ) {
+            jQuery(item ).width( jQuery(item).siblings('.rtmedia-item-thumbnail' ).children('img').width());
+        });
     }
 });
 

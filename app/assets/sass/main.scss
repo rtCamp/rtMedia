@@ -1484,10 +1484,34 @@ button.rtp-lb-close {
   }
 }
 .rtmedia-list.masonry {
+	.rtmedia-list-item {
+		> a {
+			display: block;
+			position: relative;
+			&:hover {
+				.rtmedia-item-title {
+					display: block;
+				}
+			}
+		}
+	}
 	.rtmedia-item-title {
+		position: absolute;
+		bottom: 0;
 		display: none;
-	}	
+		background-color :rgba(0, 0, 0, 0.6);
+		h4 {
+			font-size: inherit;		
+			color: white;	
+		}
+	}
 	.rtmedia-list-item {
 		margin: 3px;
+		a {
+			h4 {
+				font-size: inherit;
+				padding: 5px 2px;
+			}
+		}
 	}
 }
