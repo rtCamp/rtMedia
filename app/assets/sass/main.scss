@@ -1484,7 +1484,7 @@ button.rtp-lb-close {
 }
 .rtmedia-list.masonry {
 	.rtmedia-list-item, .rtmedia-list-item .rtmedia-item-thumbnail {
-		> a {
+		
 			display: block;
 			position: relative;
 			&:hover {
@@ -1492,7 +1492,7 @@ button.rtp-lb-close {
 					display: block;
 				}
 			}
-		}
+		
 	}
 	.rtmedia-item-title {
 		position: absolute;
