@@ -255,7 +255,7 @@ class RTMediaFormHandler {
 					'class' => array('rtm_enable_masonry_view'),
 				),
 				'group' => "18",
-				'after_content' => __( 'You might need to', 'rtmedia') . ' <a href="' . get_admin_url() . 'admin.php?page=rtmedia-settings#rtmedia-sizes">' . __( 'change thumbnail size', 'rtmedia' ) . '</a> ' . __( 'and uncheck the crop box for thumbnails.', 'rtmedia' ) . '<br />' . __( 'If you enable masonry view it is advisable to', 'rtmedia' ) . ' <a href="'.$regenerate_link.'">regenerate thumbnail</a> ' . __( 'for masonry view.', 'rtmedia' ) . '<br />' . __( 'To set gallery for fixed width, set image height to 0 and width as per your requirement and vice-versa.', 'rtmedia'),
+				'after_content' => __( 'You might need to', 'rtmedia') . ' <a id="rtm-masonry-change-thumbnail-info" href="' . get_admin_url() . 'admin.php?page=rtmedia-settings#rtmedia-sizes">' . __( 'change thumbnail size', 'rtmedia' ) . '</a> ' . __( 'and uncheck the crop box for thumbnails.', 'rtmedia' ) . '<br />' . __( 'If you enable masonry view, it is advisable to', 'rtmedia' ) . ' <a href="'.$regenerate_link.'">regenerate thumbnail</a> ' . __( 'for masonry view.', 'rtmedia' ) . '<br />' . __( 'To set gallery for fixed width, set image height to 0 and width as per your requirement and vice-versa.', 'rtmedia'),
 			),
 		);
 

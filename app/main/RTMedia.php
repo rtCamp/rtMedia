@@ -227,7 +227,7 @@ class RTMedia
 					$this->custom_style_for_activity_image_size();
 					global $rtmedia;
 					if( isset( $rtmedia->options['general_masonry_layout'] ) && $rtmedia->options['general_masonry_layout'] == '1' ) {
-//						$this->custom_style_for_gallery_image_size_masonry();
+						$this->custom_style_for_gallery_image_size_masonry();
 					} else {
 						$this->custom_style_for_gallery_image_size();
 					}
@@ -267,19 +267,20 @@ class RTMedia
 	}
 
 	function custom_style_for_gallery_image_size_masonry() {
+		if( intval( $this->options['defaultSizes_photo_thumbnail_height'] ) > 0 ) {
 	?>
-		.rtmedia-container .rtmedia-list  .rtmedia-list-item {
-			width: <?php echo intval($this->options["defaultSizes_photo_thumbnail_width"]) + 20; ?>px;
-			max-height: <?php echo intval($this->options["defaultSizes_photo_thumbnail_height"]) + 20; ?>px;
-		}
-		.rtmedia-container ul.rtmedia-list li.rtmedia-list-item div.rtmedia-item-thumbnail img {
-			max-width: <?php echo $this->options["defaultSizes_photo_thumbnail_width"]; ?>px;
-			max-height: <?php echo $this->options["defaultSizes_photo_thumbnail_height"]; ?>px;
-		}
-		.rtmedia-container .rtmedia-list .rtmedia-list-item .rtmedia-item-title {
-			width: <?php echo intval($this->options["defaultSizes_photo_thumbnail_width"]) + 20; ?>px;
-		}
+			.rtmedia-container .rtmedia-list  .rtmedia-list-item .rtmedia-item-thumbnail {
+				max-height: <?php echo intval($this->options["defaultSizes_photo_thumbnail_height"]); ?>px;
+			}
 	<?php
+		}
+		if( intval( $this->options['defaultSizes_photo_thumbnail_width'] ) > 0 ) {
+			?>
+			.rtmedia-container .rtmedia-list  .rtmedia-list-item .rtmedia-item-thumbnail {
+				max-width: <?php echo intval($this->options["defaultSizes_photo_thumbnail_width"]); ?>px;
+			}
+		<?php
+		}
 	}
 
     /**

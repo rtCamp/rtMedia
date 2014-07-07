@@ -658,6 +658,9 @@ jQuery(document).ready(function($) {
             jQuery('.rtm_enable_masonry_view' ).parents('.metabox-holder' ).find('.rtmedia-info' ).hide();
         }
     });
+    jQuery("#rtm-masonry-change-thumbnail-info").click(function(e) {
+        jQuery("html, body").animate( {scrollTop:0}, '500', 'swing' );
+    });
 });
 
 function rtmedia_addon_do_not_show() {
