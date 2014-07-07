@@ -919,14 +919,14 @@ button.rtp-lb-close {
 
 #rtm-gallery-title-container {
 
-    margin-bottom : 15px;
+    margin : 0 0 15px 0;
 
     .rtm-gallery-title {
         display : inline-block;
         margin :0;
         overflow: hidden;
         vertical-align: bottom;
-
+		padding-left: 0;
     }
 
     #rtm-media-options {
