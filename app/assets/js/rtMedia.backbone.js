@@ -142,7 +142,9 @@ jQuery( function ( $ ) {
                         //element.show();
                         jQuery('.rtmedia-container .rtmedia-list-media' ).css('opacity', '1');
                         if( typeof rtmedia_masonry_layout != "undefined" && rtmedia_masonry_layout == "true" ) {
-                            rtm_masonry_reload( rtm_masonry_container );
+                            setTimeout(function(){
+                                rtm_masonry_reload( rtm_masonry_container );
+                            }, 500);
                         }
                         rtMediaHook.call( 'rtmedia_after_gallery_load' );
                     }
