@@ -252,9 +252,10 @@ class RTMediaFormHandler {
 					'key' => 'general_masonry_layout',
 					'value' => $options['general_masonry_layout'],
 					'desc' => __('Masonry works by placing elements in optimal position based on available vertical space, sort of like a mason fitting stones in a wall.','rtmedia'),
+					'class' => array('rtm_enable_masonry_view'),
 				),
 				'group' => "18",
-				'after_content' => __( 'You may want to') . ' <a href="' . get_admin_url() . 'admin.php?page=rtmedia-settings#rtmedia-sizes">' . __( 'change thumbnail size', 'rtmedia' ) . '</a> ' . __( 'if you enable masonry view and you must use', 'rtmedia' ) . ' <br /><a href="'.$regenerate_link.'">Regenerate Thumbnail Plugin</a> ' . __( 'to regenerate thumbnials for Masonry view.', 'rtmedia' ),
+				'after_content' => __( 'You might need to', 'rtmedia') . ' <a href="' . get_admin_url() . 'admin.php?page=rtmedia-settings#rtmedia-sizes">' . __( 'change thumbnail size', 'rtmedia' ) . '</a> ' . __( 'and uncheck the crop box for thumbnails.', 'rtmedia' ) . '<br />' . __( 'If you enable masonry view it is advisable to', 'rtmedia' ) . ' <a href="'.$regenerate_link.'">regenerate thumbnail</a> ' . __( 'for masonry view.', 'rtmedia' ) . '<br />' . __( 'To set gallery for fixed width, set image height to 0 and width as per your requirement and vice-versa.', 'rtmedia'),
 			),
 		);
 

@@ -1484,7 +1484,7 @@ button.rtp-lb-close {
   }
 }
 .rtmedia-list.masonry {
-	.rtmedia-list-item {
+	.rtmedia-list-item, .rtmedia-list-item .rtmedia-item-thumbnail {
 		> a {
 			display: block;
 			position: relative;
@@ -1498,6 +1498,7 @@ button.rtp-lb-close {
 	.rtmedia-item-title {
 		position: absolute;
 		bottom: 0;
+		max-width: 100%;
 		display: none;
 		background-color :rgba(0, 0, 0, 0.6);
 		h4 {

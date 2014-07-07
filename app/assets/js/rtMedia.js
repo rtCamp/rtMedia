@@ -623,5 +623,7 @@ function rtm_masonry_reload( el ) {
 }
 
 window.onload=function(){
-    rtm_masonry_reload( rtm_masonry_container );
+    if( typeof rtmedia_masonry_layout != "undefined" && rtmedia_masonry_layout == "true" ) {
+        rtm_masonry_reload( rtm_masonry_container );
+    }
 };
