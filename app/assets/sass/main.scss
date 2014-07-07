@@ -1483,3 +1483,11 @@ button.rtp-lb-close {
     }
   }
 }
+.rtmedia-list.masonry {
+	.rtmedia-item-title {
+		display: none;
+	}	
+	.rtmedia-list-item {
+		margin: 3px;
+	}
+}

@@ -203,7 +203,15 @@ class RTMediaFormHandler {
 	}
 
 	static function display_render_options($options) {
-
+		if (is_plugin_active('regenerate-thumbnails/regenerate-thumbnails.php')) {
+			$regenerate_link = admin_url('/tools.php?page=regenerate-thumbnails');
+		}
+		elseif (array_key_exists('regenerate-thumbnails/regenerate-thumbnails.php', get_plugins())) {
+			$regenerate_link = admin_url('/plugins.php#regenerate-thumbnails');
+		}
+		else {
+			$regenerate_link = wp_nonce_url(admin_url('update.php?action=install-plugin&plugin=regenerate-thumbnails'), 'install-plugin_regenerate-thumbnails');
+		}
 		$render = array(//
 			'general_enableComments' => array(
 				'title' => __('Allow user to comment on uploaded media','rtmedia'),
@@ -238,14 +246,15 @@ class RTMediaFormHandler {
 				'group' => "15"
 			),
 			'general_masonry_layout' => array(
-				'title' => __('Use <a href="http://masonry.desandro.com/" target="_blank">Masonry</a> Cascading grid layout','rtmedia'),
+				'title' => __('Enable','rtmedia') . ' <a href="http://masonry.desandro.com/" target="_blank">Masonry</a> '. __( 'Cascading grid layout', 'rtmedia'),
 				'callback' => array('RTMediaFormHandler', 'checkbox'),
 				'args' => array(
 					'key' => 'general_masonry_layout',
 					'value' => $options['general_masonry_layout'],
 					'desc' => __('Masonry works by placing elements in optimal position based on available vertical space, sort of like a mason fitting stones in a wall.','rtmedia'),
 				),
-				'group' => "15"
+				'group' => "18",
+				'after_content' => __( 'You may want to') . ' <a href="' . get_admin_url() . 'admin.php?page=rtmedia-settings#rtmedia-sizes">' . __( 'change thumbnail size', 'rtmedia' ) . '</a> ' . __( 'if you enable masonry view and you must use', 'rtmedia' ) . ' <br /><a href="'.$regenerate_link.'">Regenerate Thumbnail Plugin</a> ' . __( 'to regenerate thumbnials for Masonry view.', 'rtmedia' ),
 			),
 		);
 
@@ -262,6 +271,7 @@ class RTMediaFormHandler {
 		$general_group = array();
 		$general_group[10] = "Single Media View";
 		$general_group[15] = "List Media View";
+		$general_group[18] = "Masonry View";
 		$general_group = apply_filters("rtmedia_display_content_groups", $general_group);
 		ksort($general_group);
 		$html = '';
