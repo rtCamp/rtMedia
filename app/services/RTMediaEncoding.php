@@ -14,6 +14,7 @@ class RTMediaEncoding {
     public $api_key = false;
 
     public function __construct($no_init = false) {
+		add_filter('rtmedia_allowed_types', array($this, 'allowed_types_admin_settings'), 10, 1);
         $this->api_key = get_site_option('rtmedia-encoding-api-key');
         if ($no_init)
             return;
@@ -207,12 +208,12 @@ class RTMediaEncoding {
     }
 
     public function allowed_types_admin_settings($types) {
-	$allowed_video_string = implode(",", $types['video']['extn']);
-	$allowed_audio_string = implode(",", $types['music']['extn']);
-	$allowed_video = explode(",",$allowed_video_string.',mov,m4v,m2v,avi,mpg,flv,wmv,mkv,webm,ogv,mxf,asf,vob,mts,qt,mpeg,x-msvideo');
-	$allowed_audio = explode(",",$allowed_audio_string.',wma,ogg,wav,m4a');
-	$types['video']['extn'] = $allowed_video;
-	$types['music']['extn'] = $allowed_audio;
+		$allowed_video_string = implode(",", $types['video']['extn']);
+		$allowed_audio_string = implode(",", $types['music']['extn']);
+		$allowed_video = explode(",",$allowed_video_string.',mov,m4v,m2v,avi,mpg,flv,wmv,mkv,webm,ogv,mxf,asf,vob,mts,qt,mpeg,x-msvideo');
+		$allowed_audio = explode(",",$allowed_audio_string.',wma,ogg,wav,m4a');
+		$types['video']['extn'] = array_unique( $allowed_video );
+		$types['music']['extn'] = array_unique( $allowed_audio );
         return $types;
     }
 
