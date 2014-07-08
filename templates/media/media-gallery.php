@@ -15,6 +15,7 @@
                 </h2>
                 <div id="rtm-media-options" class="columns large-5 small-12 medium-5"><?php do_action ( 'rtmedia_media_gallery_actions' ); ?></div>
             </div>
+			<div class="clear"></div>
 
             <div id="rtm-media-gallery-uploader">
                 <?php rtmedia_uploader ( array('is_up_shortcode'=> false) ); ?>
