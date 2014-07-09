@@ -856,6 +856,9 @@ button.rtp-lb-close {
         >td.close {
             text-align: right;
         }
+        >td.plupload_file_size {
+          text-transform: uppercase;
+        }
         &.upload-waiting {
             background-color: #FFFFCC;
             border-bottom : 1px solid #ffeca0;
