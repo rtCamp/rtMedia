@@ -566,7 +566,7 @@ class RTMediaQuery {
 			}
 		}
 
-		$this->media_query = apply_filters( 'rtmedia_media_query', $this->media_query );
+		$this->media_query = apply_filters( 'rtmedia_media_query', $this->media_query, $this->action_query, $this->query );
 
 		if ( $this->is_album_gallery() ){
 
