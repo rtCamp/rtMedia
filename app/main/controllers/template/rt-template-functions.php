@@ -1133,7 +1133,7 @@ function rtmedia_image_editor_content( $type = 'photo' ) {
 add_action( 'rtmedia_add_edit_fields', 'rtmedia_add_album_selection_field', 14, 1 );
 function rtmedia_add_album_selection_field( $media_type ) {
 
-	if ( is_rtmedia_album_enable() && isset( $media_type ) && $media_type != 'album' && $media_type != 'playlist' ){
+	if ( is_rtmedia_album_enable() && isset( $media_type ) && $media_type != 'album' && apply_filters( 'rtmedia_edit_media_album_select', true ) ){
 
 		global $rtmedia_query;
 		$album_list    = '';
