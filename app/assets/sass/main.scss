@@ -1506,7 +1506,13 @@ button.rtp-lb-close {
 		background-color :rgba(0, 0, 0, 0.6);
 		h4 {
 			font-size: inherit;		
-			color: white;	
+			color: #ffffff;
+		}
+		a {
+			color: #ffffff;
+			&:hover{
+				color: #ffffff;
+			}
 		}
 	}
 	.rtmedia-list-item {
