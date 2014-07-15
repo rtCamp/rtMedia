@@ -54,6 +54,25 @@ function rtmedia_title() {
 	}
 }
 
+/**
+ * echo the album name of the media
+ *
+ * @global type $rtmedia_media
+ */
+function rtmedia_album_name() {
+    global $rtmedia_media;
+    
+    if($rtmedia_media->album_id) {
+        if(rtmedia_type($rtmedia_media->album_id) == 'album') {
+            return get_rtmedia_title( $rtmedia_media->album_id );
+        } else {
+            return false;
+        }
+    } else {
+        return false;
+    }
+}
+
 function get_rtmedia_gallery_title() {
 	global $rtmedia_query;
 	$title = false;
@@ -248,6 +267,16 @@ function rtmedia_permalink( $media_id = false ) {
 	} else {
 		echo get_rtmedia_permalink( rtmedia_id( $media_id ) );
 	}
+}
+
+/**
+ * echo parmalink of the album
+ *
+ * @global type $rtmedia_media
+ */
+function rtmedia_album_permalink( ) {
+    global $rtmedia_media;
+		echo get_rtmedia_permalink(  $rtmedia_media->album_id ) ;
 }
 
 function rtmedia_media( $size_flag = true, $echo = true, $media_size = "rt_media_single_image" ) {

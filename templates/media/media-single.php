@@ -21,7 +21,21 @@
                     <!--author actions-->
                     <div class='rtm-ltb-title-container rt-clear'>
                         <h2 class='rtm-ltb-title'>
-                            <a href="<?php echo rtmedia_permalink();?>" title="<?php echo rtmedia_title (); ?>"><?php echo rtmedia_title (); ?></a>
+                            <?php if(rtmedia_album_name()) { 
+                                $rtmedia_media_width = '50%';
+                            } else {
+                                $rtmedia_media_width = '100%';
+                            }
+                            ?>
+                            <div style="max-width: <?php echo $rtmedia_media_width; ?>; float: left; overflow: hidden;">
+                                <a href="<?php echo rtmedia_permalink();?>" title="<?php echo rtmedia_title (); ?>"><?php echo rtmedia_title (); ?></a>
+                            </div>
+                            <?php if(rtmedia_album_name()) { ?>
+                            <div class="rtmedia-album" style="max-width: 50%; display: inline-block; overflow: hidden;">
+                                    <span>&nbsp;<?php echo __("under"); ?></span>
+                                    <a href="<?php echo rtmedia_album_permalink();?>" title="<?php echo rtmedia_album_name(); ?>"><?php echo rtmedia_album_name(); ?></a>
+                                </div>
+                            <?php } ?>
                         </h2>
                         <div class='rtmedia-author-actions'>
                             <?php rtmedia_actions(); ?>
