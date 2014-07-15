@@ -6,7 +6,7 @@ License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires at least: WordPress 3.6
 Tested up to: WordPress 3.9 + BuddyPress 2.0
-Stable tag: 3.7
+Stable tag: 3.7.1
 
 Add albums, photo, audio/video encoding, privacy, sharing, front-end uploads & more. All this works mobile/tablets devices.
 
@@ -132,6 +132,12 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 == Changelog ==
 
 Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "Visit rtMedia's Features page") to get some details about future releases.
+
+= 3.7.1 =
+* Fix multiple file extension info in uploader
+* Update CSS for masonry
+* Added filters in query model
+* Templates updated
 
 = 3.7 =
 * Masonry style cascading grid layout for media gallery
@@ -768,8 +774,8 @@ Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_sou
 
 == Upgrade Notice ==
 
-= 3.7 =
-Requires BuddyPress 1.7 or higher, if using BuddyPress. Masonry style cascading grid layout, Lightbox and swipe support for mobile device, Norwegian translation added, bug fixes.
+= 3.7.1 =
+Requires BuddyPress 1.7 or higher, if using BuddyPress. Update CSS for masonry, added new filters, templates updated, bug fixes.
 
 == Sponsors ==
 

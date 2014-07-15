@@ -75,7 +75,8 @@ class RTMediaUploadEndpoint {
 						$rtMediaNav->refresh_counts( $media[ 0 ]->media_author, array( "context" => "profile", 'media_author' => $media[ 0 ]->media_author ) );
 					}
 					if ( $create_activity !== false && class_exists( 'BuddyPress' ) ){
-						if ( $activity_id == - 1 && ( ! ( isset ( $_POST[ "rtmedia_update" ] ) && $_POST[ "rtmedia_update" ] == "true" ) ) ){
+						$allow_single_activity = apply_filters( 'rtmedia_media_single_activity', false );
+						if ( ( $activity_id == - 1 && ( ! ( isset ( $_POST[ "rtmedia_update" ] ) && $_POST[ "rtmedia_update" ] == "true" ) ) ) || $allow_single_activity ){
 							$activity_id = $mediaObj->insert_activity( $media[ 0 ]->media_id, $media[ 0 ] );
 						} else {
 							$mediaObj->model->update( array( 'activity_id' => $activity_id ), array( 'id' => $rtupload->media_ids[ 0 ] ) );

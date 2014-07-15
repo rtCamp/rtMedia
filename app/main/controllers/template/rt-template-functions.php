@@ -1162,7 +1162,7 @@ function rtmedia_image_editor_content( $type = 'photo' ) {
 add_action( 'rtmedia_add_edit_fields', 'rtmedia_add_album_selection_field', 14, 1 );
 function rtmedia_add_album_selection_field( $media_type ) {
 
-	if ( is_rtmedia_album_enable() && isset( $media_type ) && $media_type != 'album' && $media_type != 'playlist' ){
+	if ( is_rtmedia_album_enable() && isset( $media_type ) && $media_type != 'album' && apply_filters( 'rtmedia_edit_media_album_select', true ) ){
 
 		global $rtmedia_query;
 		$album_list    = '';
@@ -1990,10 +1990,16 @@ function rtmedia_admin_premium_page( $page ) {
 				<h1 class="premium-title"><?php _e( 'Reasons to buy rtMedia-PRO', 'rtmedia' ); ?></h1>
 			</div>
 			<div class="row">
+				<div class="columns large-1 rtm-premium-icon-pro"><i class="rtmicon-heart rtmicon-3x"></i></div>
+				<div class="columns large-10">
+					<h2><?php _e( 'FavList', 'rtmedia' ); ?></h2>
+					<p><?php _e( 'Users can create their own list of favorite media.', 'rtmedia' ); ?></p>
+				</div>
+			</div>
+			<div class="row">
 				<div class="columns large-1 rtm-premium-icon-pro"><i class="rtmicon-tags rtmicon-3x"></i></div>
 				<div class="columns large-10">
 					<h2><?php _e( 'Media Attributes', 'rtmedia' ); ?></h2>
-
 					<p><?php _e( 'Add media attributes and categories them.', 'rtmedia' ); ?></p>
 				</div>
 			</div>
@@ -2001,7 +2007,6 @@ function rtmedia_admin_premium_page( $page ) {
 				<div class="columns large-1 rtm-premium-icon-pro"><i class="rtmicon-sort rtmicon-3x"></i></div>
 				<div class="columns large-10">
 					<h2><?php _e( 'Sort Media', 'rtmedia' ); ?></h2>
-
 					<p><?php _e( 'You can sort media from media gallery according to media size and the date of media upload.', 'rtmedia' ); ?></p>
 				</div>
 			</div>
@@ -2009,7 +2014,6 @@ function rtmedia_admin_premium_page( $page ) {
 				<div class="columns large-1 rtm-premium-icon-pro"><i class="rtmicon-link rtmicon-3x"></i></div>
 				<div class="columns large-10">
 					<h2><?php _e( 'Direct URL upload', 'rtmedia' ); ?></h2>
-
 					<p><?php _e( 'You no longer need to download media from URL and then upload it. Just provide link and rtMedia will handle it.', 'rtmedia' ); ?></p>
 				</div>
 			</div>
@@ -2017,7 +2021,6 @@ function rtmedia_admin_premium_page( $page ) {
 				<div class="columns large-1 rtm-premium-icon-pro"><i class="rtmicon-upload rtmicon-3x"></i></div>
 				<div class="columns large-10">
 					<h2><?php _e( 'Per user upload quota', 'rtmedia' ); ?></h2>
-
 					<p><?php _e( 'You can set upload quota for users on the daily, monthly and lifetime basis.', 'rtmedia' ); ?></p>
 				</div>
 			</div>
@@ -2025,7 +2028,6 @@ function rtmedia_admin_premium_page( $page ) {
 				<div class="columns large-1 rtm-premium-icon-pro"><i class="rtmicon-camera-retro rtmicon-3x"></i></div>
 				<div class="columns large-10">
 					<h2><?php _e( 'URL preview in BuddyPress activity', 'rtmedia' ); ?></h2>
-
 					<p><?php _e( 'Show URL previews in BuddyPress activity.', 'rtmedia' ); ?></p>
 				</div>
 			</div>
@@ -2033,7 +2035,6 @@ function rtmedia_admin_premium_page( $page ) {
 				<div class="columns large-1 rtm-premium-icon-pro"><i class="rtmicon-edit rtmicon-3x"></i></div>
 				<div class="columns large-10">
 					<h2><?php _e( 'Bulk media edit', 'rtmedia' ); ?></h2>
-
 					<p><?php _e( 'You can edit media in bulk mode.', 'rtmedia' ); ?></p>
 				</div>
 			</div>
@@ -2041,7 +2042,6 @@ function rtmedia_admin_premium_page( $page ) {
 				<div class="columns large-1 rtm-premium-icon-pro"><i class="rtmicon-thumbs-up rtmicon-3x"></i></div>
 				<div class="columns large-10">
 					<h2><?php _e( 'User\'s liked media page', 'rtmedia' ); ?></h2>
-
 					<p><?php _e( 'Now you can see user\'s liked media page. A new tab "Likes" has been added.', 'rtmedia' ); ?></p>
 				</div>
 			</div>
@@ -2049,7 +2049,6 @@ function rtmedia_admin_premium_page( $page ) {
 				<div class="columns large-1 rtm-premium-icon-pro"><i class="rtmicon-rss rtmicon-3x"></i></div>
 				<div class="columns large-10">
 					<h2><?php _e( 'RSS Feed/Podcasting Support', 'rtmedia' ); ?></h2>
-
 					<p><?php _e( 'You can consume rtMedia uploads from iTunes as well as any feed-reader/podcasting software.', 'rtmedia' ); ?></p>
 				</div>
 			</div>
@@ -2057,7 +2056,6 @@ function rtmedia_admin_premium_page( $page ) {
 				<div class="columns large-1 rtm-premium-icon-pro"><i class="rtmicon-comments rtmicon-3x"></i></div>
 				<div class="columns large-10">
 					<h2><?php _e( 'WordPress Comment Attachment', 'rtmedia' ); ?></h2>
-
 					<p><?php _e( 'You can attach files to WordPress comments.', 'rtmedia' ); ?></p>
 				</div>
 			</div>
@@ -2065,7 +2063,6 @@ function rtmedia_admin_premium_page( $page ) {
 				<div class="columns large-1 rtm-premium-icon-pro"><i class="rtmicon-user rtmicon-3x"></i></div>
 				<div class="columns large-10">
 					<h2><?php _e( 'bbPress Attachment', 'rtmedia' ); ?></h2>
-
 					<p><?php _e( 'You can attach files to bbPress topic and reply.', 'rtmedia' ); ?></p>
 				</div>
 			</div>
@@ -2073,7 +2070,6 @@ function rtmedia_admin_premium_page( $page ) {
 				<div class="columns large-1 rtm-premium-icon-pro"><i class="rtmicon-file rtmicon-3x"></i></div>
 				<div class="columns large-10">
 					<h2><?php _e( 'Document Support', 'rtmedia' ); ?></h2>
-
 					<p><?php _e( 'You can add, view and download documents like txt, doc, pdf, also add and upload other file types like zip, tar and tar.gz etc.', 'rtmedia' ); ?></p>
 				</div>
 			</div>
@@ -2081,7 +2077,6 @@ function rtmedia_admin_premium_page( $page ) {
 				<div class="columns large-1 rtm-premium-icon-pro"><i class="rtmicon-gamepad rtmicon-3x"></i></div>
 				<div class="columns large-10">
 					<h2><?php _e( 'CubePoints & MyCRED Integration', 'rtmedia' ); ?></h2>
-
 					<p><?php _e( 'Integrating CubePoints/myCRED with rtMedia, you can reward users with virtual points on rtMedia activities.', 'rtmedia' ); ?></p>
 				</div>
 			</div>
@@ -2089,7 +2084,6 @@ function rtmedia_admin_premium_page( $page ) {
 				<div class="columns large-1 rtm-premium-icon-pro"><i class="rtmicon-lock rtmicon-3x"></i></div>
 				<div class="columns large-10">
 					<h2><?php _e( 'Album Privacy', 'rtmedia' ); ?></h2>
-
 					<p><?php _e( 'This will allow you to set album privacy while creating albums or change album privacy with editing albums too.', 'rtmedia' ); ?></p>
 				</div>
 			</div>
@@ -2097,7 +2091,6 @@ function rtmedia_admin_premium_page( $page ) {
 				<div class="columns large-1 rtm-premium-icon-pro"><i class="rtmicon-play rtmicon-3x"></i></div>
 				<div class="columns large-10">
 					<h2><?php _e( 'Audio Playlist', 'rtmedia' ); ?></h2>
-
 					<p><?php _e( 'With this feature you can create your audio playlists and listen to your favorite music at will.', 'rtmedia' ); ?></p>
 				</div>
 			</div>
@@ -2105,7 +2098,6 @@ function rtmedia_admin_premium_page( $page ) {
 				<div class="columns large-1 rtm-premium-icon-pro"><i class="rtmicon-warning rtmicon-3x"></i></div>
 				<div class="columns large-10">
 					<h2><?php _e( 'Report Button & Moderation Tools', 'rtmedia' ); ?></h2>
-
 					<p><?php _e( 'Users can report media if they find it offensive. Set number of reports to automatically take down media.', 'rtmedia' ); ?></p>
 				</div>
 			</div>
@@ -2113,7 +2105,6 @@ function rtmedia_admin_premium_page( $page ) {
 				<div class="columns large-1 rtm-premium-icon-pro"><i class="rtmicon-download rtmicon-3x"></i></div>
 				<div class="columns large-10">
 					<h2><?php _e( 'Download Button For Media', 'rtmedia' ); ?></h2>
-
 					<p><?php _e( 'Users can download photos, videos and music. Admin has option to allow download the media.', 'rtmedia' ); ?></p>
 				</div>
 			</div>
@@ -2121,7 +2112,6 @@ function rtmedia_admin_premium_page( $page ) {
 				<div class="columns large-1 rtm-premium-icon-pro"><i class="rtmicon-align-right rtmicon-3x"></i></div>
 				<div class="columns large-10">
 					<h2><?php _e( 'Sidebar widgets', 'rtmedia' ); ?></h2>
-
 					<p><?php _e( 'These will let you display a gallery or an uploader in a sidebar. Several of them can be used in a single sidebar.', 'rtmedia' ); ?></p>
 				</div>
 			</div>
@@ -2129,7 +2119,6 @@ function rtmedia_admin_premium_page( $page ) {
 				<div class="columns large-1 rtm-premium-icon-pro"><i class="rtmicon-edit rtmicon-3x"></i></div>
 				<div class="columns large-10">
 					<h2><?php _e( 'Post-editor button', 'rtmedia' ); ?></h2>
-
 					<p><?php _e( 'With this button, a UI appears to quickly generate shortcodes for special pages like "Editorial Picks".', 'rtmedia' ); ?></p>
 				</div>
 			</div>
@@ -2137,7 +2126,6 @@ function rtmedia_admin_premium_page( $page ) {
 				<div class="columns large-1 rtm-premium-icon-pro"><i class="rtmicon-star rtmicon-3x"></i></div>
 				<div class="columns large-10">
 					<h2><?php _e( 'Star-Rating option', 'rtmedia' ); ?></h2>
-
 					<p><?php _e( 'Users can give up to five stars to rate media. This data can be used for "Most Rated Media" in sidebars.', 'rtmedia' ); ?></p>
 				</div>
 			</div>
@@ -2145,7 +2133,6 @@ function rtmedia_admin_premium_page( $page ) {
 				<div class="columns large-1 rtm-premium-icon-pro"><i class="rtmicon-picture-o rtmicon-3x"></i></div>
 				<div class="columns large-10">
 					<h2><?php _e( 'Global Albums', 'rtmedia' ); ?></h2>
-
 					<p><?php _e( 'Multiple global albums can be created beforehand. One of these can be chosen as the default album.', 'rtmedia' ); ?></p>
 				</div>
 			</div>
@@ -2153,7 +2140,6 @@ function rtmedia_admin_premium_page( $page ) {
 				<div class="columns large-1 rtm-premium-icon-pro"><i class="rtmicon-wrench rtmicon-3x"></i></div>
 				<div class="columns large-10">
 					<h2><?php _e( 'Premium one-to-one support', 'rtmedia' ); ?></h2>
-
 					<p><?php _e( 'Without leaving your WordPress dashboard, you can contact us for help using a support form.', 'rtmedia' ); ?></p>
 				</div>
 			</div>
@@ -2161,7 +2147,6 @@ function rtmedia_admin_premium_page( $page ) {
 				<div class="columns large-1 rtm-premium-icon-pro"><i class="rtmicon-code rtmicon-3x"></i></div>
 				<div class="columns large-10">
 					<h2><?php _e( 'Premium & Open-Source', 'rtmedia' ); ?></h2>
-
 					<p><?php echo __( "Developers get full control over rtMedia-PRO's source. They'll get access to " ) . "<a href='http://git.rtcamp.com/' target='_blank'>git.rtcamp.com</a>"; ?></p>
 				</div>
 			</div>
@@ -2184,8 +2169,8 @@ function rtmedia_admin_premium_page( $page ) {
 						<h3><?php _e( 'You can consider rtMedia Team for following :', 'rtmedia' ); ?></h3>
 						<ol>
 							<li><?php _e( 'rtMedia Customization ( in Upgrade Safe manner )', 'rtmedia' ); ?></li>
-							<li><?php _e( 'Wordpress/BuddyPress Theme Design and Development', 'rtmedia' ); ?></li>
-							<li><?php _e( 'Wordpress/BuddyPress Plugin Development', 'rtmedia' ); ?></li>
+							<li><?php _e( 'WordPress/BuddyPress Theme Design and Development', 'rtmedia' ); ?></li>
+							<li><?php _e( 'WordPress/BuddyPress Plugin Development', 'rtmedia' ); ?></li>
 						</ol>
 					</div>
 					<p class='contact'>

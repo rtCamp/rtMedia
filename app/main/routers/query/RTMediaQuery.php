@@ -423,7 +423,7 @@ class RTMediaQuery {
 		$this->original_query = $query;
 		$this->query          = wp_parse_args( $query, $this->query );
 		//Set Json
-		$allowed_query = array( "id", "media_id", "media_type", "media_author", "album_id", "context", "context_id", "global", "privacy" );
+		$allowed_query = apply_filters( 'rtmedia_allowed_query', array( "id", "media_id", "media_type", "media_author", "album_id", "context", "context_id", "global", "privacy" ) );
 		if ( isset ( $_REQUEST[ "rtmedia_shortcode" ] ) ){
 			$query_data = $_REQUEST;
 			foreach ( $query_data as $key => $val ) {
@@ -566,7 +566,7 @@ class RTMediaQuery {
 			}
 		}
 
-		$this->media_query = apply_filters( 'rtmedia_media_query', $this->media_query );
+		$this->media_query = apply_filters( 'rtmedia_media_query', $this->media_query, $this->action_query, $this->query );
 
 		if ( $this->is_album_gallery() ){
 
