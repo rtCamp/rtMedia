@@ -423,7 +423,7 @@ class RTMediaQuery {
 		$this->original_query = $query;
 		$this->query          = wp_parse_args( $query, $this->query );
 		//Set Json
-		$allowed_query = apply_filters( 'rtmedia_allowed_query', array( "id", "media_id", "media_type", "media_author", "album_id", "context", "context_id", "global", "privacy" ) );
+		$allowed_query = apply_filters( 'rtmedia_allowed_query', array( "id", "media_id", "media_type", "media_author", "album_id", "context", "context_id", "global", "privacy", "per_page" ) );
 		if ( isset ( $_REQUEST[ "rtmedia_shortcode" ] ) ){
 			$query_data = $_REQUEST;
 			foreach ( $query_data as $key => $val ) {
@@ -565,7 +565,13 @@ class RTMediaQuery {
 				$this->media_query[ 'context_id' ] = array( 'compare' => 'in', 'value' => explode( ',', $this->media_query[ 'context_id' ] ) );
 			}
 		}
-
+                
+                if( isset( $this->media_query['per_page'] ) ){
+                    //Do not include per_page in sql query to get media                    
+                    $this->action_query->per_page_media = intval( $this->media_query['per_page'] );
+                    unset( $this->media_query['per_page'] );
+                }
+                
 		$this->media_query = apply_filters( 'rtmedia_media_query', $this->media_query, $this->action_query, $this->query );
 
 		if ( $this->is_album_gallery() ){
@@ -583,7 +589,7 @@ class RTMediaQuery {
 			} else {
 				$pre_media = $this->model->{$query_function} ( $context_id, ( $this->action_query->page - 1 ) * $this->action_query->per_page_media, $this->action_query->per_page_media, $order_by );
 			}
-
+                        
 			$media_for_total_count = count( $this->model->{$query_function} ( $context_id, false, false ) );
 		} else {
 			/**
@@ -820,13 +826,14 @@ class RTMediaQuery {
 	 * @return boolean
 	 */
 	function have_media() {
-
+                global $media_query_clone_per_page;
+                
 		$total    = $this->media_count;
-		$curr     = $this->current_media;
-		$per_page = $this->action_query->per_page_media;
+		$curr     = $this->current_media;                
+		$per_page = $this->action_query->per_page_media;                
 		$offset   = ( $this->action_query->page - 1 ) * $this->action_query->per_page_media;
-
-		if ( $curr + 1 < $per_page && $total > $offset + $curr + 1 ){
+                
+                if ( $curr + 1 < $per_page && $total > $offset + $curr + 1 ){
 			return true;
 		} elseif ( $curr + 1 == $per_page && $per_page > 0 ) {
 			do_action_ref_array( 'rtmedia_loop_end', array( &$this ) );
