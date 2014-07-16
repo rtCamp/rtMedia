@@ -470,6 +470,7 @@ class RTMediaQuery {
 		$this->set_media_type();
 		$this->media_query = $this->query;
 		do_action( 'rtmedia_set_query' );
+
 		return $this->get_data();
 	}
 
@@ -565,13 +566,13 @@ class RTMediaQuery {
 				$this->media_query[ 'context_id' ] = array( 'compare' => 'in', 'value' => explode( ',', $this->media_query[ 'context_id' ] ) );
 			}
 		}
-                
-		if( isset( $this->media_query['per_page'] ) ){
+
+		if ( isset( $this->media_query[ 'per_page' ] ) ){
 			//Do not include per_page in sql query to get media
-			$this->action_query->per_page_media = intval( $this->media_query['per_page'] );
-			unset( $this->media_query['per_page'] );
+			$this->action_query->per_page_media = intval( $this->media_query[ 'per_page' ] );
+			unset( $this->media_query[ 'per_page' ] );
 		}
-                
+
 		$this->media_query = apply_filters( 'rtmedia_media_query', $this->media_query, $this->action_query, $this->query );
 
 		if ( $this->is_album_gallery() ){
@@ -680,7 +681,7 @@ class RTMediaQuery {
 		$this->album                     = $this->media;
 		$this->media_query[ 'album_id' ] = $this->action_query->id;
 
-		if( apply_filters( 'rtmedia_unset_action_query_id_album', true ) ) {
+		if ( apply_filters( 'rtmedia_unset_action_query_id_album', true ) ){
 			unset ( $this->action_query->id );
 		}
 

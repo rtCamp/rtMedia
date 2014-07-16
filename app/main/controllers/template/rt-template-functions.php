@@ -61,7 +61,6 @@ function rtmedia_title() {
  */
 function rtmedia_album_name() {
     global $rtmedia_media;
-    
     if($rtmedia_media->album_id) {
         if(rtmedia_type($rtmedia_media->album_id) == 'album') {
             return get_rtmedia_title( $rtmedia_media->album_id );
