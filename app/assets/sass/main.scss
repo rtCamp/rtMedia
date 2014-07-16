@@ -1259,13 +1259,33 @@ button.rtp-lb-close {
                     float : left;
                     line-height: 30px;
                     max-height: 30px;
-                    opacity: 0.7;
-                    &:hover {
-                        opacity : 1;
-                    }
                     a {
                         text-decoration: none;
                         color : #fff;
+                        opacity: 0.7;
+                        &:hover {
+                            opacity : 1;
+                        }
+                    }
+                    span {
+                        opacity: 0.5;
+                    }
+                    .rtmedia-media-name {
+                        float: left;
+                        overflow: hidden;
+                    }
+                    .rtmedia-media-name-width-50 {
+                        @extend .rtmedia-media-name;
+                        max-width: 50%;
+                    }
+                    .rtmedia-media-name-width-100 {
+                        @extend .rtmedia-media-name;
+                        max-width: 100%;
+                    }
+                    .rtmedia-album-name {
+                        max-width: 50%;
+                        display: inline-block;
+                        overflow: hidden;
                     }
                 }
                 .rtmedia-author-actions{
