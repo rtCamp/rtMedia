@@ -22,7 +22,7 @@ if ( ! empty ( $_SERVER[ 'HTTP_X_REQUESTED_WITH' ] ) &&
     if ( ! $rt_ajax_request ) {
         // if this is a BuddyPress page, set template type to
         // buddypress to load appropriate headers
-        if ( class_exists ( 'BuddyPress' ) && ! bp_is_blog_page () ) {
+        if ( class_exists ( 'BuddyPress' ) && ! bp_is_blog_page () && apply_filters( 'rtm_main_template_buddypress_enable', true ) ) {
             $template_type = 'buddypress' ;
         }
         else {
