@@ -2509,3 +2509,15 @@ function rtmedia_get_media_type_from_extn( $extn ) {
 	}
 	return false;
 }
+
+add_filter( 'rtm_main_template_buddypress_enable', 'rtm_is_buddypress_enable', 10, 1);
+
+function rtm_is_buddypress_enable( $flag ){
+	global $rtmedia_query;
+	if( isset( $rtmedia_query->query ) && isset( $rtmedia_query->query['context'] ) && $rtmedia_query->query['context'] == "group"  && is_rtmedia_group_media_enable() ){
+		return $flag;
+	} else if( isset( $rtmedia_query->query ) && isset( $rtmedia_query->query['context'] ) && $rtmedia_query->query['context'] == "profile" && is_rtmedia_profile_media_enable() ){
+		return $flag;
+	}
+	return false;
+}
