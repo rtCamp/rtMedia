@@ -298,17 +298,17 @@ class RTMediaPrivacy {
             $user = 0 ;
         }
 
-        $where .= " (m.privacy is NULL OR m.privacy <= 0) " ;
+        $where .= " (m.max_privacy is NULL OR m.max_privacy <= 0) " ;
 
         if ( $user ) {
-            $where .= "OR ((m.privacy=20)" ;
-            $where .= " OR (a.user_id={$user} AND m.privacy >= 40)" ;
+            $where .= "OR ((m.max_privacy=20)" ;
+            $where .= " OR (a.user_id={$user} AND m.max_privacy >= 40)" ;
             if ( class_exists ( 'BuddyPress' ) ) {
                 if ( bp_is_active ( 'friends' ) ) {
                     $friendship = new RTMediaFriends() ;
                     $friends    = $friendship -> get_friends_cache ( $user ) ;
                     if ( isset($friends) && ! empty ( $friends ) != "" ){
-                        $where .= " OR (m.privacy=40 AND a.user_id IN ('" . implode ( "','" , $friends ) . "'))" ;
+                        $where .= " OR (m.max_privacy=40 AND a.user_id IN ('" . implode ( "','" , $friends ) . "'))" ;
                     }
                 }
             }
@@ -325,7 +325,9 @@ class RTMediaPrivacy {
             $select_sql = str_replace ( "SELECT" , "SELECT DISTINCT" , $select_sql ) ;
         }
 
-        $from_sql = " FROM {$bp->activity->table_name} a LEFT JOIN {$wpdb->users} u ON a.user_id = u.ID LEFT JOIN {$rtmedia_model->table_name} m ON ( a.id = m.activity_id AND m.blog_id = '".  get_current_blog_id()."' ) ";
+		$media_table = "SELECT *, max( privacy ) as max_privacy from {$rtmedia_model->table_name} group by activity_id";
+
+        $from_sql = " FROM {$bp->activity->table_name} a LEFT JOIN {$wpdb->users} u ON a.user_id = u.ID LEFT JOIN ( $media_table ) m ON ( a.id = m.activity_id AND m.blog_id = '".  get_current_blog_id()."' ) ";
         $where_sql = $where_sql . " AND (NOT EXISTS (SELECT m.activity_id FROM {$bp_prefix}bp_activity_meta m WHERE m.meta_key='rtmedia_privacy' AND m.activity_id=a.id) OR ( {$where} ) )";
         $newsql = "{$select_sql} {$from_sql} {$where_sql} ORDER BY a.date_recorded {$sort} {$pag_sql}";
         return $newsql;
