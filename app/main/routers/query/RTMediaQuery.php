@@ -423,7 +423,7 @@ class RTMediaQuery {
 		$this->original_query = $query;
 		$this->query          = wp_parse_args( $query, $this->query );
 		//Set Json
-		$allowed_query = apply_filters( 'rtmedia_allowed_query', array( "id", "media_id", "media_type", "media_author", "album_id", "context", "context_id", "global", "privacy" ) );
+		$allowed_query = apply_filters( 'rtmedia_allowed_query', array( "id", "media_id", "media_type", "media_author", "album_id", "context", "context_id", "global", "privacy", "per_page" ) );
 		if ( isset ( $_REQUEST[ "rtmedia_shortcode" ] ) ){
 			$query_data = $_REQUEST;
 			foreach ( $query_data as $key => $val ) {
@@ -565,7 +565,13 @@ class RTMediaQuery {
 				$this->media_query[ 'context_id' ] = array( 'compare' => 'in', 'value' => explode( ',', $this->media_query[ 'context_id' ] ) );
 			}
 		}
-
+                
+		if( isset( $this->media_query['per_page'] ) ){
+			//Do not include per_page in sql query to get media
+			$this->action_query->per_page_media = intval( $this->media_query['per_page'] );
+			unset( $this->media_query['per_page'] );
+		}
+                
 		$this->media_query = apply_filters( 'rtmedia_media_query', $this->media_query, $this->action_query, $this->query );
 
 		if ( $this->is_album_gallery() ){
