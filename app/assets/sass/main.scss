@@ -1270,6 +1270,23 @@ button.rtp-lb-close {
                     span {
                         opacity: 0.5;
                     }
+                    .rtmedia-media-name {
+                        float: left;
+                        overflow: hidden;
+                    }
+                    .rtmedia-media-name-width-50 {
+                        @extend .rtmedia-media-name;
+                        max-width: 50%;
+                    }
+                    .rtmedia-media-name-width-100 {
+                        @extend .rtmedia-media-name;
+                        max-width: 100%;
+                    }
+                    .rtmedia-album-name {
+                        max-width: 50%;
+                        display: inline-block;
+                        overflow: hidden;
+                    }
                 }
                 .rtmedia-author-actions{
                     text-align: right;
