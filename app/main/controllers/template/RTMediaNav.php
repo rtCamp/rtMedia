@@ -304,13 +304,15 @@ class RTMediaNav {
     function process_count ( $media_count, $privacy ) {
         $total = array( 'all' => 0 );
         $media_count = !empty( $media_count ) ? $media_count : array();
-
+		$exclude_type_count = apply_filters( 'rtmedia_media_count_exclude_type', array( 'album' ) );
         foreach ( $media_count as $private => $ind_count ) {
             if ( $private <= $privacy ) {
                 foreach ( $ind_count as $type => $ind_ind_count ) {
-                    if ( $type != 'album' ) {
-                        $total[ 'all' ]+= ( int ) $ind_ind_count;
-                    }
+                    if ( in_array( $type, $exclude_type_count ) ) {
+						// do nothing
+                    } else {
+						$total[ 'all' ]+= ( int ) $ind_ind_count;
+					}
                     if ( ! isset ( $total[ $type ] ) )
                         $total[ $type ] = 0;
                     $total[ $type ]+=( int ) $ind_ind_count;
