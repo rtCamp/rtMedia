@@ -578,14 +578,24 @@ class RTMediaQuery {
 				$context_id     = $group_id;
 			}
 
+			$media_for_total_count = count( $this->model->{$query_function} ( $context_id, false, false ) );
+
+			$this->action_query = apply_filters( 'rtmedia_action_query_in_populate_media', $this->action_query, $media_for_total_count );
+
 			if ( $order_by == ' ' ){
 				$pre_media = $this->model->{$query_function} ( $context_id, ( $this->action_query->page - 1 ) * $this->action_query->per_page_media, $this->action_query->per_page_media );
 			} else {
 				$pre_media = $this->model->{$query_function} ( $context_id, ( $this->action_query->page - 1 ) * $this->action_query->per_page_media, $this->action_query->per_page_media, $order_by );
 			}
-
-			$media_for_total_count = count( $this->model->{$query_function} ( $context_id, false, false ) );
 		} else {
+
+			/**
+			 * count total medias in album irrespective of pagination
+			 */
+			$media_for_total_count = $this->model->get_media( $this->media_query, false, false, false, true );
+
+			$this->action_query = apply_filters( 'rtmedia_action_query_in_populate_media', $this->action_query, $media_for_total_count );
+
 			/**
 			 * fetch media entries from rtMedia context
 			 */
@@ -594,11 +604,6 @@ class RTMediaQuery {
 			} else {
 				$pre_media = $this->model->get_media( $this->media_query, ( $this->action_query->page - 1 ) * $this->action_query->per_page_media, $this->action_query->per_page_media, $order_by );
 			}
-
-			/**
-			 * count total medias in album irrespective of pagination
-			 */
-			$media_for_total_count = $this->model->get_media( $this->media_query, false, false, false, true );
 		}
 		//add filter that was added to filter group media when context is profile
 		// remove_filter('rtmedia-model-where-query',array($this,'rtmedia_model_where_query'), 10, 3);
