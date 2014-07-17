@@ -46,14 +46,19 @@ class RTMediaUploadModel {
      * @global type $rtmedia_interaction
      */
     function sanitize_object () {
+        
         if ( ! $this->has_context () ) {
+            // Set context_id to Logged in user id if context is profile and context_id is not provided
+            if( $this->upload[ 'context' ] == 'profile' ) {
+                $this->upload[ 'context_id' ] = get_current_user_id();
+            } else {
+                global $rtmedia_interaction;
 
-            global $rtmedia_interaction;
-
-            $this->upload[ 'context' ] = $rtmedia_interaction->context->type;
-            $this->upload[ 'context_id' ] = $rtmedia_interaction->context->id;
+                $this->upload[ 'context' ] = $rtmedia_interaction->context->type;
+                $this->upload[ 'context_id' ] = $rtmedia_interaction->context->id;
+            }
         }
-
+        
         if ( ! is_array ( $this->upload[ 'taxonomy' ] ) )
             $this->upload[ 'taxonomy' ] = array( $this->upload[ 'taxonomy' ] );
 
@@ -147,10 +152,15 @@ class RTMediaUploadModel {
      * @throws RTMediaUploadException
      */
     function set_wp_album_id () {
-        if ( isset ( $this->upload[ 'context' ] ) )
-            $this->upload[ 'album_id' ] = $this->upload[ 'context_id' ];
-        else
+        if ( isset ( $this->upload[ 'context' ] ) ) {
+            $this->upload[ 'album_id' ] = $this->upload[ 'context_id' ];               
+            // If context is profile then set album_id to default global album
+            if( $this->upload[ 'context' ] == 'profile' ){
+                $this->upload[ 'album_id' ] = RTMediaAlbum::get_default();
+            }
+        } else {
             throw new RTMediaUploadException ( 9 ); // Invalid Context
+        }
     }
 
     /**

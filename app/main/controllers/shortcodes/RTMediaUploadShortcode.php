@@ -78,9 +78,9 @@ $flag = ( ! (  is_home () || is_post_type_archive () || is_author ()))
 		if ( ! is_array ( $attr ) ) {
 		    $attr = Array( );
 		}
-		if ( ! isset ( $attr[ "context_id" ] ) && isset ( $post->ID ) ) {
-		    $attr[ "context_id" ] = $post->ID;
-		}
+//		if ( ! isset ( $attr[ "context_id" ] ) && isset ( $post->ID ) ) {
+//		    $attr[ "context_id" ] = $post->ID;
+//		}
 		if ( ! isset ( $attr[ "context" ] ) && isset ( $post->post_type ) ) {
 		    $attr[ "context" ] = $post->post_type;
 		}
