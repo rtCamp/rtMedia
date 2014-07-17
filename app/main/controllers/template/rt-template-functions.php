@@ -428,7 +428,11 @@ function rtmedia_album_image( $size = 'thumbnail', $id = false ) {
 	}
 	global $rtmedia_query;
 	if ( isset( $rtmedia_query->query[ 'context_id' ] ) && isset( $rtmedia_query->query[ 'context' ] ) && $rtmedia_query->query[ 'context' ] != "group" ){
+            if( $rtmedia_query->query[ 'context' ] == "profile" ) {
+                $media = $model->get_media( array( 'album_id' => $id, 'media_type' => 'photo', 'media_author' => $rtmedia_query->query[ 'context_id' ], 'context' => 'profile', 'context_id' => $rtmedia_query->query[ 'context_id' ] ), 0, 1 );
+            } else {
 		$media = $model->get_media( array( 'album_id' => $id, 'media_type' => 'photo', 'media_author' => $rtmedia_query->query[ 'context_id' ] ), 0, 1 );
+            }
 	} else {
 		if ( isset( $rtmedia_query->query[ 'context_id' ] ) && isset( $rtmedia_query->query[ 'context' ] ) && $rtmedia_query->query[ 'context' ] == "group" ){
 			$media = $model->get_media( array( 'album_id' => $id, 'media_type' => 'photo', 'context_id' => $rtmedia_query->query[ 'context_id' ] ), 0, 1 );
