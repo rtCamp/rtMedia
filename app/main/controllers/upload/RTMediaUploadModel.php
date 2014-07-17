@@ -47,17 +47,16 @@ class RTMediaUploadModel {
      */
     function sanitize_object () {
         
-        // Set context_id to Logged in user id if context is profile and context_id is not provided     
-        if( $this->upload[ 'context' ] == 'profile' && ! $this->has_context () ){
-            $this->upload[ 'context_id' ] = get_current_user_id();
-        }
-        
         if ( ! $this->has_context () ) {
+            // Set context_id to Logged in user id if context is profile and context_id is not provided
+            if( $this->upload[ 'context' ] == 'profile' ) {
+                $this->upload[ 'context_id' ] = get_current_user_id();
+            } else {
+                global $rtmedia_interaction;
 
-            global $rtmedia_interaction;
-
-            $this->upload[ 'context' ] = $rtmedia_interaction->context->type;
-            $this->upload[ 'context_id' ] = $rtmedia_interaction->context->id;
+                $this->upload[ 'context' ] = $rtmedia_interaction->context->type;
+                $this->upload[ 'context_id' ] = $rtmedia_interaction->context->id;
+            }
         }
         
         if ( ! is_array ( $this->upload[ 'taxonomy' ] ) )
