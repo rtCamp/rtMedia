@@ -143,6 +143,8 @@ jQuery( function ( $ ) {
                         } );
                         //element.show();
                         jQuery('.rtmedia-container .rtmedia-list-media' ).css('opacity', '1');
+                        rtMediaHook.call( 'rtmedia_after_gallery_load' );
+                        
                         jQuery('.rtmedia-container .rtmedia_next_prev .pagination' ).remove();
                         jQuery('.rtmedia-container .rtmedia_next_prev .clear' ).remove();
                         jQuery('.rtmedia-container .rtmedia_next_prev .rtm-media-loading' ).remove();
