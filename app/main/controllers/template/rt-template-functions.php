@@ -945,7 +945,7 @@ function rtmedia_get_pagination_values(){
         $rtmedia_media_pages .= "<div class='pagination text-right'>";
         
         //if( $pages > 100 ) {
-            $rtmedia_media_pages .= "<div style='display: inline; float: left;'>";
+            $rtmedia_media_pages .= "<div class='rtmedia-page-no'>";
             $rtmedia_media_pages .= apply_filters( 'rtmedia_goto_page_label', __( "Go to page no : ", 'rtmedia' ) ) ;
             $rtmedia_media_pages .= "<input type='hidden' id='rtmedia_first_page' value='1' />";
             $rtmedia_media_pages .= "<input type='hidden' id='rtmedia_last_page' value='" . $pages . "' />";

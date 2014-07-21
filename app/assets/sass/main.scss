@@ -278,8 +278,15 @@
                     background: #bc360a;
                     color:#fff;
                 }
-                input {
-                    padding: 3px;
+                .rtmedia-page-no {
+                    display: inline;
+                    float: left;        
+                    font-size: 13px; 
+                    color: #888;
+                    input {
+                        padding: 3px;
+                        max-width: 50px;
+                    }
                 }
             }
         }
