@@ -17,6 +17,7 @@ class RTMediaTemplate {
 		if ( $rtmedia_query ){
 			add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 			add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_image_editor_scripts' ) );
+                        add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_check_media_load_type' ) );
 		}
 	}
 
@@ -38,6 +39,16 @@ class RTMediaTemplate {
 		wp_enqueue_style( 'rtmedia-image-edit', RTMEDIA_URL . 'app/assets/css/image-edit.css' );
 		wp_enqueue_style( 'rtmedia-image-area-select', includes_url( '/js/imgareaselect/imgareaselect.css' ) );
 	}
+        
+        /*
+         *  Checking Media View if load_more or pagination
+         */
+        function enqueue_check_media_load_type() {
+            global $rtmedia;
+            $general_options = $rtmedia->options;
+            
+            wp_localize_script( 'rtmedia-backbone', 'rtmedia_load_more_or_pagination', $general_options['general_display_media'] );
+        }
 
 	/**
 	 * redirects to the template according to the page request
@@ -171,7 +182,8 @@ class RTMediaTemplate {
 	}
 
 	function json_output() {
-		global $rtmedia_query;
+		global $rtmedia_query, $rtmedia;
+                $options = $rtmedia->options;
 		$media_array = array();
 		if ( $rtmedia_query->media ){
 			foreach ( $rtmedia_query->media as $key => $media ) {
@@ -184,6 +196,9 @@ class RTMediaTemplate {
 		$return_array[ 'data' ] = $media_array;
 		$return_array[ 'prev' ] = rtmedia_page() - 1;
 		$return_array[ 'next' ] = ( rtmedia_offset() + rtmedia_per_page_media() < rtmedia_count() ) ? ( rtmedia_page() + 1 ) : - 1;
+                if( $options[ 'general_display_media' ] == 'pagination' ) {
+                    $return_array ['pagination'] = rtmedia_get_pagination_values();
+                }
 		echo json_encode( $return_array );
 		die;
 	}

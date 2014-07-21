@@ -792,7 +792,7 @@ function rtmedia_pagination_prev_link() {
 
 	if ( $rtmedia_interaction && isset( $rtmedia_interaction->context ) && $rtmedia_interaction->context->type == "profile" ){
 		if ( function_exists( "bp_core_get_user_domain" ) ){
-			$link .= trailingslashit( bp_core_get_user_domain( $rtmedia_media->media_author ) );
+			$link .= trailingslashit( bp_core_get_user_domain( $rtmedia_query->media_query[ 'media_author' ] ) );
 		} else {
 			$link = $site_url . 'author/' . $author_name . '/';
 		}
@@ -823,7 +823,7 @@ function rtmedia_pagination_prev_link() {
 function rtmedia_pagination_next_link() {
 
 	global $rtmedia_media, $rtmedia_interaction, $rtmedia_query;
-
+        
 	$page_url    = 'pg/' . ( rtmedia_page() + 1 );
 	$site_url    = ( is_multisite() ) ? trailingslashit( get_site_url( get_current_blog_id() ) ) : trailingslashit( get_site_url() );
 	$author_name = get_query_var( 'author_name' );
@@ -831,7 +831,7 @@ function rtmedia_pagination_next_link() {
 
 	if ( $rtmedia_interaction && isset( $rtmedia_interaction->context ) && $rtmedia_interaction->context->type == "profile" ){
 		if ( function_exists( "bp_core_get_user_domain" ) ){
-			$link .= trailingslashit( bp_core_get_user_domain( $rtmedia_media->media_author ) );
+			$link .= trailingslashit( bp_core_get_user_domain( $rtmedia_query->media_query[ 'media_author' ] ) );
 		} else {
 			$link .= $site_url . 'author/' . $author_name . '/';
 		}
@@ -858,6 +858,117 @@ function rtmedia_pagination_next_link() {
 	}
 
 	return $link . $page_url;
+}
+
+function rtmedia_pagination_page_link( $page_no ) {
+
+	global $rtmedia_media, $rtmedia_interaction, $rtmedia_query;
+
+	$page_url    = 'pg/' . $page_no;
+	$site_url    = ( is_multisite() ) ? trailingslashit( get_site_url( get_current_blog_id() ) ) : trailingslashit( get_site_url() );
+	$author_name = get_query_var( 'author_name' );
+	$link        = '';
+
+	if ( $rtmedia_interaction && isset( $rtmedia_interaction->context ) && $rtmedia_interaction->context->type == "profile" ){
+		if ( function_exists( "bp_core_get_user_domain" ) ){
+			$link .= trailingslashit( bp_core_get_user_domain( $rtmedia_query->media_query[ 'media_author' ] ) );
+		} else {
+			$link .= $site_url . 'author/' . $author_name . '/';
+		}
+	} else {
+		if ( $rtmedia_interaction && isset( $rtmedia_interaction->context ) && $rtmedia_interaction->context->type == 'group' ){
+			if ( function_exists( "bp_get_current_group_slug" ) ){
+				$link .= $site_url . bp_get_groups_root_slug() . '/' . bp_get_current_group_slug() . '/';
+			}
+		} else {
+			//$post = get_post ( $rtmedia_media->post_parent );
+			$post = get_post( get_post_field( "post_parent", $rtmedia_media->media_id ) );
+
+			$link .= $site_url . $post->post_name . '/';
+		}
+	}
+	$link .= RTMEDIA_MEDIA_SLUG . '/';
+	if ( isset ( $rtmedia_query->media_query[ "album_id" ] ) && intval( $rtmedia_query->media_query[ "album_id" ] ) > 0 ){
+		$link .= $rtmedia_query->media_query[ "album_id" ] . "/";
+	}
+	if ( isset ( $rtmedia_query->action_query->media_type ) ){
+		if ( in_array( $rtmedia_query->action_query->media_type, array( "photo", "music", "video", "album", "playlist" ) ) ){
+			$link .= $rtmedia_query->action_query->media_type . '/';
+		}
+	}
+
+	return $link . $page_url;
+}
+
+// Function for pagination
+function rtmedia_media_pagination() {      
+     global $rtmedia, $rtmedia_backbone;
+     if( $rtmedia_backbone[ 'backbone' ] ){
+         echo "<%= pagination %>";
+     } else {
+        echo rtmedia_get_pagination_values();
+    }          
+}
+
+function rtmedia_get_pagination_values(){
+    global $rtmedia;
+    $general_options = $rtmedia->options;
+
+    $range = 1;
+    
+    $showitems = ( $range * 2 )+1;  
+    $rtmedia_media_pages = '';
+    
+    global $paged;
+    
+    if( rtmedia_offset() == 0 ) 
+        $paged = 1;
+    else if ( rtmedia_offset() == $general_options['general_perPageMedia'] ) 
+        $paged = 2;
+    else 
+        $paged = ( rtmedia_offset() / $general_options['general_perPageMedia'] ) + 1;
+    
+    $pages = ceil( rtmedia_count() / $general_options['general_perPageMedia'] );
+    if( !$pages ) {
+        $pages = 1;
+    }
+
+    if( 1 != $pages ) {
+        $rtmedia_media_pages .= "<div class='clear'></div><br />";        
+        $rtmedia_media_pages .= "<div class='pagination text-right'>";
+        
+        //if( $pages > 100 ) {
+            $rtmedia_media_pages .= "<div style='display: inline; float: left;'>";
+            $rtmedia_media_pages .= apply_filters( 'rtmedia_goto_page_label', __( "Go to page no : ", 'rtmedia' ) ) ;
+            $rtmedia_media_pages .= "<input type='hidden' id='rtmedia_first_page' value='1' />";
+            $rtmedia_media_pages .= "<input type='hidden' id='rtmedia_last_page' value='" . $pages . "' />";
+            $rtmedia_media_pages .= "<input type='number' value='" . $paged . "' min='1' max='" . $pages . "' id='rtmedia_go_to_num' />";
+            $rtmedia_media_pages .= "<a class='rtmedia-page-link' data-page-type='num' href='#'>Go</a>";
+            $rtmedia_media_pages .= "</div>";
+        //}
+                
+        if( $paged > 1 && $showitems < $pages ) 
+            $rtmedia_media_pages .= "<a class='rtmedia-page-link' data-page-type='prev' href='".rtmedia_pagination_prev_link ()."'>&lsaquo;</a>";
+        
+        if( $paged > 2 && $paged > $range+1 && $showitems < $pages ) 
+            $rtmedia_media_pages .= "<a class='rtmedia-page-link' data-page-type='page' data-page='1' href='" . rtmedia_pagination_page_link (1) . "'>1</a><span>...</span>";
+        
+        for ( $i=1; $i <= $pages; $i++ ) {
+            if ( 1 != $pages && ( !($i >= $paged+$range+1 || $i <= $paged-$range-1) || $pages <= $showitems ) ) {
+                $rtmedia_media_pages .= ($paged == $i)? "<span class='current'>".$i."</span>":"<a class='rtmedia-page-link' data-page-type='page' data-page='" . $i . "' href='" . rtmedia_pagination_page_link ( $i ) . "' class='inactive' >".$i."</a>";
+            }
+        }
+        
+        if ( $paged < $pages-1 &&  $paged+$range-1 < $pages && $showitems < $pages ) 
+            $rtmedia_media_pages .= "<span>...</span><a class='rtmedia-page-link' data-page-type='page' data-page='" . $pages . "' href='".rtmedia_pagination_page_link ( $pages )."'>" . $pages . "</a>";
+        
+        if ( $paged < $pages && $showitems < $pages ) 
+            $rtmedia_media_pages .= "<a class='rtmedia-page-link' data-page-type='next' href='" . rtmedia_pagination_next_link () . "'>&rsaquo;</a>"; 
+        
+        $rtmedia_media_pages .= "</div>\n";
+    }
+
+    return $rtmedia_media_pages;
 }
 
 function rtmedia_comments_enabled() {
