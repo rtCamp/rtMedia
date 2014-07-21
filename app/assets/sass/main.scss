@@ -976,6 +976,7 @@ button.rtp-lb-close {
             }
             .rtm-options li {
                 a, span,button, input {
+					border: none;
                     padding: 2px 5px;
                     @include border-radius(4px);
                     background: none;
