@@ -33,6 +33,7 @@ if (!class_exists('RTMediaSettings')) {
                 'general_downloadButton' => 0,
                 'general_enableLightbox' => 0,
                 'general_perPageMedia' => 10,
+                'general_display_media' => 'load_more',
                 'general_enableMediaEndPoint' => 0,
                 'general_showAdminMenu' => 0,
                 'general_videothumbs' => 2,
