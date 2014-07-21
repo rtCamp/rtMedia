@@ -249,15 +249,15 @@ class RTMediaFormHandler {
 				),
 				'group' => "15"
 			),
-                        'general_display_media' => array(
-				'title' => __('Media Display Option','rtmedia'),
+			'general_display_media' => array(
+				'title' => __('Media display pagination option','rtmedia'),
 				'callback' => array('RTMediaFormHandler', 'radio'),
 				'args' => array(
 					'key' => 'general_display_media',
 					'radios' => $radios,
 					'default' => $options['general_display_media'],
-					'desc' => __('Set Media view for displaying medias','rtmedia'),
-                                        'class' => array( 'rtmedia-load-more-radio' )
+					'desc' => __('Choose whether you want load more button or pagination buttons.','rtmedia'),
+					'class' => array( 'rtmedia-load-more-radio' )
 				),
 				'group' => "15"
 			),

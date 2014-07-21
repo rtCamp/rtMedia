@@ -34,20 +34,22 @@
             ?>
 <!--            <a id="rtMedia-galary-prev" <?php //echo $display ; ?> href="<?php //echo rtmedia_pagination_prev_link () ; ?>"><?php //_e( 'Prev' , 'rtmedia' ) ; ?></a>-->
 
-            <?php
-            global $rtmedia;
-            $general_options = $rtmedia->options;
-            if($general_options[ 'general_display_media' ] == 'load_more') {
-                $display = '' ;
-                if ( rtmedia_offset () + rtmedia_per_page_media () < rtmedia_count () )
-                    $display = 'style="display:block;"' ;
-                else
-                    $display = 'style="display:none;"' ;
-                ?>
-                <a id="rtMedia-galary-next" <?php echo $display ; ?> href="<?php echo rtmedia_pagination_next_link () ; ?>"><?php _e( 'Load More' , 'rtmedia' ) ; ?></a>
-            <?php } else { ?>
-                <?php echo rtmedia_media_pagination(); ?>
-            <?php } ?>
+			<?php
+				global $rtmedia;
+				$general_options = $rtmedia->options;
+				if($general_options[ 'general_display_media' ] == 'pagination') {
+					echo rtmedia_media_pagination();
+				} else {
+					$display = '';
+					if ( rtmedia_offset () + rtmedia_per_page_media () < rtmedia_count () )
+						$display = 'style="display:block;"';
+					else
+						$display = 'style="display:none;"';
+			?>
+					<a id="rtMedia-galary-next" <?php echo $display; ?> href="<?php echo rtmedia_pagination_next_link (); ?>"><?php echo __( 'Load More', 'rtmedia' ); ?></a>
+			<?php
+				}
+			?>
 
         </div><!--/.rtmedia_next_prev-->
 
