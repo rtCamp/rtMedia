@@ -6,8 +6,11 @@
  * @subpackage Admin
  *
  */
-if ( ! class_exists( 'RTMediaAdmin' ) ){
-
+if ( ! class_exists( 'RTMediaAdmin' ) ) {
+		
+	/**
+	 * RTMediaAdmin class.
+	 */
 	class RTMediaAdmin {
 
 		public $rtmedia_upgrade;
@@ -16,8 +19,13 @@ if ( ! class_exists( 'RTMediaAdmin' ) ){
 		public $rtmedia_support;
 		public $rtmedia_feed;
 
+		/**
+		 * Constructor - get the plugin hooked in and ready
+		 */
 		public function __construct() {
 			global $rtmedia;
+			
+			// Actions and filters
 			add_action( 'init', array( $this, 'video_transcoding_survey_response' ) );
 			add_action( 'admin_init', array( $this, 'presstrends_plugin' ) );
 
@@ -43,19 +51,24 @@ if ( ! class_exists( 'RTMediaAdmin' ) ){
 			add_filter( "attachment_fields_to_save", array( $this, "save_video_thumbnail" ), null, 2 );
 			add_action( 'wp_ajax_rtmedia_hide_video_thumb_admin_notice', array( $this, 'rtmedia_hide_video_thumb_admin_notice' ), 1 );
 			add_action( 'wp_ajax_rtmedia_hide_addon_update_notice', array( $this, 'rtmedia_hide_addon_update_notice' ), 1 );
+			
 			$obj_encoding = new RTMediaEncoding( true );
-			if ( $obj_encoding->api_key ){
+			
+			if ( $obj_encoding->api_key ) {
 				add_filter( "media_row_actions", array( $this, "add_reencode_link" ), null, 2 );
 				add_action( 'admin_head-upload.php', array( $this, 'add_bulk_actions_regenerate' ) );
 				add_action( 'admin_footer', array( $this, 'rtmedia_regenerate_thumb_js' ) );
 				add_action( 'admin_action_bulk_video_regenerate_thumbnails', array( $this, 'bulk_action_handler' ) );
 				add_action( 'admin_action_-1', array( $this, 'bulk_action_handler' ) );
 			}
+			
 			add_action( 'wp_ajax_rt_media_regeneration', array( $this, 'rt_media_regeneration' ), 1 );
+			
 			if ( ! isset( $rtmedia->options ) ){
 				$rtmedia->options = rtmedia_get_site_option( 'rtmedia-options' );
 			}
-			if ( isset ( $_POST[ "rtmedia-options" ] ) ){
+			
+			if ( isset ( $_POST[ "rtmedia-options" ] ) ) {
 				if ( isset ( $_POST[ "rtmedia-options" ][ "general_showAdminMenu" ] ) && $_POST[ "rtmedia-options" ][ "general_showAdminMenu" ] == "1" ){
 					add_action( 'admin_bar_menu', array( $this, 'admin_bar_menu' ), 100, 1 );
 				}
@@ -65,15 +78,18 @@ if ( ! class_exists( 'RTMediaAdmin' ) ){
 				}
 			}
 
-			if ( is_admin() ){
+			if ( is_admin() ) {
 				add_action( 'admin_enqueue_scripts', array( $this, 'ui' ) );
 				//bp_core_admin_hook();
 				add_action( 'admin_menu', array( $this, 'menu' ), 1 );
 				add_action( 'init', array( $this, 'bp_admin_tabs' ) );
-				if ( is_multisite() ){
+				
+				if ( is_multisite() ) {
 					add_action( 'network_admin_edit_rtmedia', array( $this, 'save_multisite_options' ) );
 				}
+
 			}
+
 			$this->rtmedia_settings = new RTMediaSettings();
 			$this->rtmedia_encoding = new RTMediaEncoding();
 			//	    show rtmedia advertisement
