@@ -882,7 +882,7 @@ function rtmedia_pagination_page_link( $page_no ) {
 			}
 		} else {
 			//$post = get_post ( $rtmedia_media->post_parent );
-			$post = get_post( get_post_field( "post_parent", $rtmedia_media->media_id ) );
+			$post = get_post( get_post_field( "post_parent", $rtmedia_query->media->media_id ) );
 
 			$link .= $site_url . $post->post_name . '/';
 		}
@@ -911,9 +911,16 @@ function rtmedia_media_pagination() {
 }
 
 function rtmedia_get_pagination_values(){
-    global $rtmedia;
+    global $rtmedia, $rtmedia_query;
+    
     $general_options = $rtmedia->options;
-
+    
+    $per_page = $general_options[ 'general_perPageMedia' ];
+    
+    if( isset( $rtmedia_query->query[ 'per_page' ] ) ) {
+        $per_page = $rtmedia_query->query[ 'per_page' ];
+    }
+    
     $range = 1;
     
     $showitems = ( $range * 2 )+1;  
@@ -923,12 +930,12 @@ function rtmedia_get_pagination_values(){
     
     if( rtmedia_offset() == 0 ) 
         $paged = 1;
-    else if ( rtmedia_offset() == $general_options['general_perPageMedia'] ) 
+    else if ( rtmedia_offset() == $per_page ) 
         $paged = 2;
     else 
-        $paged = ( rtmedia_offset() / $general_options['general_perPageMedia'] ) + 1;
+        $paged = ceil( rtmedia_offset() / $per_page ) + 1;
     
-    $pages = ceil( rtmedia_count() / $general_options['general_perPageMedia'] );
+    $pages = ceil( rtmedia_count() / $per_page );
     if( !$pages ) {
         $pages = 1;
     }

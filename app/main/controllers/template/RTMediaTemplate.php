@@ -17,7 +17,6 @@ class RTMediaTemplate {
 		if ( $rtmedia_query ){
 			add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 			add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_image_editor_scripts' ) );
-                        add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_check_media_load_type' ) );
 		}
 	}
 
@@ -39,16 +38,6 @@ class RTMediaTemplate {
 		wp_enqueue_style( 'rtmedia-image-edit', RTMEDIA_URL . 'app/assets/css/image-edit.css' );
 		wp_enqueue_style( 'rtmedia-image-area-select', includes_url( '/js/imgareaselect/imgareaselect.css' ) );
 	}
-        
-        /*
-         *  Checking Media View if load_more or pagination
-         */
-        function enqueue_check_media_load_type() {
-            global $rtmedia;
-            $general_options = $rtmedia->options;
-            
-            wp_localize_script( 'rtmedia-backbone', 'rtmedia_load_more_or_pagination', $general_options['general_display_media'] );
-        }
 
 	/**
 	 * redirects to the template according to the page request
