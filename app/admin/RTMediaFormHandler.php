@@ -45,7 +45,7 @@ class RTMediaFormHandler {
 	    global $rtmedia;
 		$options = $rtmedia->options;
 		$defaults = array(
-                        'id' => '',
+            'id' => '',
 			'key' => '',
 			'desc' => '',
 			'show_desc' => false
@@ -199,7 +199,7 @@ class RTMediaFormHandler {
 	static function extract_settings($section_name,$options) {
 		$section = array();
 		foreach ($options as $key => $value) {
-			if( strncmp($key, $section_name, strlen($section_name))==0 )
+			if( strncmp($key, $section_name, strlen($section_name)) == 0 )
 				$section[$key] = $value;
 		}
 		return $section;
@@ -305,7 +305,7 @@ class RTMediaFormHandler {
 			    $option['group'] = "20";
 			}
 
-			if( $option['group'] ! = $key ){
+			if( $option['group'] != $key ){
 			    continue;
 			}
 		?>
@@ -420,7 +420,7 @@ class RTMediaFormHandler {
 				    $option['group'] = "90";
 				}
 
-				if( $option['group'] ! = $key ){
+				if( $option['group'] != $key ){
 				    continue;
 				}
 			?>
@@ -456,7 +456,7 @@ class RTMediaFormHandler {
 
     static function get_type_details( $allowed_types, $key ) {
 	    foreach ( $allowed_types as $type ) {
-		    if( $type['name']==$key){
+		    if( $type['name'] == $key){
 			    $data = array(
 				    'name' => $type['label'],
 				    'extn' => $type['extn']
@@ -516,7 +516,7 @@ class RTMediaFormHandler {
 
 		<?php
 		$even = 0;
-		foreach ( $render_data as $key=>$section ) {
+		foreach ( $render_data as $key => $section ) {
             if( isset($section['settings_visibility']) && $section['settings_visibility'] == true ) {
 
 				if( ++$even%2 ) {
@@ -627,8 +627,8 @@ class RTMediaFormHandler {
 				$args = array(
 					'key' => 'defaultSizes_'.$parent_key.'_'.$entity['title'],
 				);
-				foreach ( $entity as $child_key=>$value ) {
-					if( $child_key ! ='title' ) {
+				foreach ( $entity as $child_key => $value ) {
+					if( $child_key != 'title' ) {
 						$args[$child_key] = $value;
 					}
 				}
@@ -640,7 +640,7 @@ class RTMediaFormHandler {
 
 		echo '</div>';
 		$options = $rtmedia->options;
-		$render_video_thumb =array(
+		$render_video_thumb = array(
                                 'title' => __('Number of thumbnails to generate on video upload','rtmedia'),
                                 'callback' => array('RTMediaFormHandler', 'number'),
                                 'args' => array(
@@ -791,7 +791,7 @@ class RTMediaFormHandler {
 					</div>
 				<?php
 					echo '<div class="columns large-6">';
-						if( $key ! = "enable" )
+						if( $key != "enable" )
 							call_user_func($privacy['callback'], array_merge_recursive($privacy['args'], array('class' => array("privacy-driven-disable"))));
 						else
 							call_user_func($privacy['callback'], $privacy['args']);
