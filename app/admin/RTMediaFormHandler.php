@@ -25,7 +25,7 @@ class RTMediaFormHandler {
 		$args = wp_parse_args($args, $defaults);
 		extract($args);
 
-		if (!empty($key)) {
+		if (!empty($key)){
 			$args['name'] = 'rtmedia-options[' . $key . ']';
 		}
 
@@ -53,23 +53,24 @@ class RTMediaFormHandler {
 		$args = wp_parse_args($args, $defaults);
 		extract($args);
 
-		if (!isset($value)) {
+		if (!isset($value)){
 			trigger_error(__('Please provide "value" in the argument.', 'rtmedia'));
 			return;
 		}
 
-		if (!empty($key)) {
+		if (!empty($key)){
 			$args['name'] = 'rtmedia-options[' . $key . ']';
 		}
 
 		$args['rtForm_options'] = array(array('' => 1, 'checked' => $value));
 
 		$chkObj = new rtForm();
-                if( $echo ) {
-                    echo $chkObj->get_textarea($args);
-                } else {
-                    return $chkObj->get_textarea($args);
-                }
+		
+        if( $echo ){
+            echo $chkObj->get_textarea($args);
+        } else {
+            return $chkObj->get_textarea($args);
+        }
 	}
 
 	public static function checkbox($args, $echo = true) {
@@ -84,12 +85,12 @@ class RTMediaFormHandler {
 		$args = wp_parse_args($args, $defaults);
 		extract($args);
 
-		if (!isset($value)) {
+		if (!isset($value)){
 			trigger_error(__('Please provide "value" in the argument.', 'rtmedia'));
 			return;
 		}
 
-		if (!empty($key)) {
+		if (!empty($key)){
 			$args['name'] = 'rtmedia-options[' . $key . ']';
 		}
 
@@ -97,17 +98,18 @@ class RTMediaFormHandler {
 
 		$chkObj = new rtForm();
 //		echo $chkObj->get_checkbox($args);
-                if( $echo )
-                    echo $chkObj->get_switch($args);
-                else
-                    return $chkObj->get_switch($args);
+        if( $echo ){
+            echo $chkObj->get_switch($args);
+		} else {
+            return $chkObj->get_switch($args);
+		}
 //		echo $chkObj->get_switch_square($args);
 	}
 
 	public static function radio($args) {
 
 		global $rtmedia;
-            $options = $rtmedia->options;
+        $options = $rtmedia->options;
 		$defaults = array(
 			'key' => '',
 			'radios' => array(),
@@ -117,13 +119,14 @@ class RTMediaFormHandler {
 		$args = wp_parse_args($args, $defaults);
 		extract($args);
 
-		if (2 > count($radios)) {
+		if (2 > count($radios)){
 			trigger_error(__('Need to specify atleast to radios else use a checkbox instead', 'rtmedia'));
 			return;
 		}
 
-		if (!empty($key))
+		if (!empty($key)){
 			$args['name'] = 'rtmedia-options[' . $key . ']';
+		}
 
 		$args['rtForm_options'] = array();
 		foreach ($radios as $value => $key) {
@@ -153,12 +156,12 @@ class RTMediaFormHandler {
 		$args = wp_parse_args($args, $defaults);
 		extract($args);
 
-		if (!isset($value)) {
+		if (!isset($value)){
 			trigger_error(__('Please provide "value" in the argument.', 'rtmedia'));
 			return;
 		}
 
-		if (!empty($key)) {
+		if (!empty($key)){
 			$args['name'] = 'rtmedia-options[' . $key . ']';
 		}
 
@@ -178,12 +181,12 @@ class RTMediaFormHandler {
 		$args = wp_parse_args($args, $defaults);
 		extract($args);
 
-		if (!isset($value)) {
+		if (!isset($value)){
 			trigger_error(__('Please provide "value" in the argument.', 'rtmedia'));
 			return;
 		}
 
-		if (!empty($key)) {
+		if (!empty($key)){
 			$args['name'] = 'rtmedia-options[' . $key . ']';
 		}
 
@@ -203,20 +206,19 @@ class RTMediaFormHandler {
 	}
 
 	static function display_render_options($options) {
-                $radios = array();
-                $radios[ 'load_more' ] = "<strong>Load More</strong>";
-                $radios[ 'pagination' ] = "<strong>Pagination</strong>";
+        $radios = array();
+        $radios[ 'load_more' ] = "<strong>Load More</strong>";
+        $radios[ 'pagination' ] = "<strong>Pagination</strong>";
             
-		if (is_plugin_active('regenerate-thumbnails/regenerate-thumbnails.php')) {
+		if (is_plugin_active('regenerate-thumbnails/regenerate-thumbnails.php')){
 			$regenerate_link = admin_url('/tools.php?page=regenerate-thumbnails');
-		}
-		elseif (array_key_exists('regenerate-thumbnails/regenerate-thumbnails.php', get_plugins())) {
+		} elseif (array_key_exists('regenerate-thumbnails/regenerate-thumbnails.php', get_plugins())){
 			$regenerate_link = admin_url('/plugins.php#regenerate-thumbnails');
-		}
-		else {
+		} else {
 			$regenerate_link = wp_nonce_url(admin_url('update.php?action=install-plugin&plugin=regenerate-thumbnails'), 'install-plugin_regenerate-thumbnails');
 		}
-		$render = array(//
+		
+		$render = array(
 			'general_enableComments' => array(
 				'title' => __('Allow user to comment on uploaded media','rtmedia'),
 				'callback' => array('RTMediaFormHandler', 'checkbox'),
@@ -299,11 +301,11 @@ class RTMediaFormHandler {
 		<?php
 		    foreach ($render_options as $tab => $option) {
 
-			if(!isset($option['group'])) {
+			if(!isset($option['group'])){
 			    $option['group'] = "20";
 			}
 
-			if($option['group'] != $key) {
+			if($option['group'] != $key){
 			    continue;
 			}
 		?>
@@ -317,7 +319,7 @@ class RTMediaFormHandler {
 				</div>
 			</div>
 		    <?php
-				if( isset( $option['after_content'] ) ) {
+				if( isset( $option['after_content'] ) ){
 					?>
 					<div class="row">
 						<div class="columns large-12">
@@ -398,7 +400,7 @@ class RTMediaFormHandler {
 //		$options = self::extract_settings('general', $rtmedia->options);
 		$options = $rtmedia->options;
 		$render_options = self::render_general_content($options);
-                $render_options = apply_filters("rtmedia_general_content_add_itmes",$render_options, $options);
+        $render_options = apply_filters("rtmedia_general_content_add_itmes",$render_options, $options);
 		$general_group = array();
 		$general_group[10] = "Admin Settings";
 		$general_group[80] = "API Settings";
@@ -414,37 +416,37 @@ class RTMediaFormHandler {
 		<?php
 		    foreach ($render_options as $tab => $option) {
 
-			if(!isset($option['group'])) {
-			    $option['group'] = "90";
-			}
-
-			if($option['group'] != $key) {
-			    continue;
-			}
-		?>
-			<div class="row section">
-			    <div class="columns large-7">
-				<?php echo $option['title']; ?>
-			    </div>
-			    <div class="columns large-5">
-				<?php call_user_func($option['callback'], $option['args']); ?>
-				<span data-tooltip class="has-tip" title="<?php echo (isset($option['args']['desc'])) ? $option['args']['desc'] : "NA"; ?>"><i class="rtmicon-info-circle"></i></span>
-			    </div>
-			</div>
-		    <?php
-			if( isset( $option['after_content'] ) ) {
-		    ?>
-			    <div class="row">
-				<div class="columns large-12">
-				    <p class="rtmedia-info rtmedia-admin-notice">
-					<?php echo $option['after_content']; ?>
-				    </p>
+				if(!isset($option['group'])){
+				    $option['group'] = "90";
+				}
+	
+				if($option['group'] != $key){
+				    continue;
+				}
+			?>
+				<div class="row section">
+				    <div class="columns large-7">
+					<?php echo $option['title']; ?>
+				    </div>
+				    <div class="columns large-5">
+					<?php call_user_func($option['callback'], $option['args']); ?>
+					<span data-tooltip class="has-tip" title="<?php echo (isset($option['args']['desc'])) ? $option['args']['desc'] : "NA"; ?>"><i class="rtmicon-info-circle"></i></span>
+				    </div>
 				</div>
-			    </div>
-		    <?php
-			}
-		    ?>
-		    <?php
+			    <?php
+				if( isset( $option['after_content'] ) ){
+			    ?>
+				    <div class="row">
+					<div class="columns large-12">
+					    <p class="rtmedia-info rtmedia-admin-notice">
+						<?php echo $option['after_content']; ?>
+					    </p>
+					</div>
+				    </div>
+			    <?php
+				}
+			    ?>
+			    <?php
 		    }
 		    ?>
 			</div>
@@ -454,13 +456,13 @@ class RTMediaFormHandler {
 
     static function get_type_details($allowed_types, $key) {
 	    foreach ($allowed_types as $type) {
-		    if($type['name']==$key) {
+		    if($type['name']==$key){
 			    $data = array(
 				    'name' => $type['label'],
 				    'extn' => $type['extn']
 			    );
-			    if ( isset ( $type['settings_visibility'] ) ) {
-				$data['settings_visibility'] = $type['settings_visibility'];
+			    if ( isset ( $type['settings_visibility'] ) ){
+					$data['settings_visibility'] = $type['settings_visibility'];
 			    }
 			    return $data;
 		    }
@@ -476,10 +478,11 @@ class RTMediaFormHandler {
 
 	    foreach ($options as $key => $value) {
 		    $data = explode('_', $key);
-		    if(!isset($render[$data[1]])) {
-			$render[$data[1]] = self::get_type_details($allowed_media_type, $data[1]);
+		    if(!isset($render[$data[1]])){
+				$render[$data[1]] = self::get_type_details($allowed_media_type, $data[1]);
 		    }
 	    }
+
 	    foreach ($options as $key => $value) {
 		    $data = explode('_', $key);
 		    $render[$data[1]][$data[2]] = $value;
@@ -494,7 +497,7 @@ class RTMediaFormHandler {
 	    $options = self::extract_settings('allowedTypes', $rtmedia->options);
 
 	    $render_data = self::types_render_options($options);
-?>
+		?>
 	    <div class="postbox metabox-holder">
 		    <h3 class="hndle">
 				<span>Media Types Settings</span>
@@ -511,36 +514,39 @@ class RTMediaFormHandler {
 				<?php do_action("rtmedia_type_settings_after_heading"); ?>
 			</div>
 
-<?php
+		<?php
 		$even = 0;
 		foreach ($render_data as $key=>$section) {
-                    if( isset($section['settings_visibility']) && $section['settings_visibility'] == true ) {
-			if( ++$even%2 ) {
-			    echo '<div class="row rt-odd">';
-			}
-			else {
-			    echo '<div class="row rt-even">';
-			}
+            if( isset($section['settings_visibility']) && $section['settings_visibility'] == true ) {
+            	
+				if( ++$even%2 ) {
+				    echo '<div class="row rt-odd">';
+				}
+				else {
+				    echo '<div class="row rt-even">';
+				}
 
 				do_action("rtmedia_type_settings_before_body");
-				    echo '<div class="columns large-4">' . $section['name'] . '</div>';
-				    $args = array('key' => 'allowedTypes_'.$key.'_enabled', 'value' => $section['enabled']);
-				    echo '<div class="columns large-4">';
-				    $allow_upload_checkbox = self::checkbox($args, $echo = false );
-				    $allow_upload_checkbox = apply_filters('rtmedia_filter_allow_upload_checkbox', $allow_upload_checkbox , $key, $args);
-				    echo $allow_upload_checkbox;
-				    echo '</div>';
-				    $args = array('key' => 'allowedTypes_'.$key.'_featured', 'value' => $section['featured']);
-				    echo '<div class="columns large-4">';
-				    $featured_checkbox = self::checkbox($args , $echo = false );
-				    $featured_checkbox = apply_filters('rtmedia_filter_featured_checkbox', $featured_checkbox, $key);
-				    echo $featured_checkbox;
-				    echo ' </div>';
-				     if(!isset($section['extn']) || !is_array($section['extn'])) {
+			    echo '<div class="columns large-4">' . $section['name'] . '</div>';
+			    $args = array('key' => 'allowedTypes_'.$key.'_enabled', 'value' => $section['enabled']);
+			    echo '<div class="columns large-4">';
+			    $allow_upload_checkbox = self::checkbox($args, $echo = false );
+			    $allow_upload_checkbox = apply_filters('rtmedia_filter_allow_upload_checkbox', $allow_upload_checkbox , $key, $args);
+			    echo $allow_upload_checkbox;
+			    echo '</div>';
+			    $args = array('key' => 'allowedTypes_'.$key.'_featured', 'value' => $section['featured']);
+			    echo '<div class="columns large-4">';
+			    $featured_checkbox = self::checkbox($args , $echo = false );
+			    $featured_checkbox = apply_filters('rtmedia_filter_featured_checkbox', $featured_checkbox, $key);
+			    echo $featured_checkbox;
+			    echo ' </div>';
+				
+			    if(!isset($section['extn']) || !is_array($section['extn'])){
 					$section['extn'] = array();
-				    }
-				    $extensions = implode(', ', $section['extn']);
-				    $extensions = apply_filters('rtmedia_type_settings_filter_extension', $extensions , $key) ;
+			    }
+				
+			    $extensions = implode(', ', $section['extn']);
+			    $extensions = apply_filters('rtmedia_type_settings_filter_extension', $extensions , $key) ;
 				do_action("rtmedia_type_settings_after_body",$key, $section);
 			    echo '</div>';
 			    echo '<div class="row rtmedia-file-extension-wrap">';
@@ -548,10 +554,10 @@ class RTMediaFormHandler {
 				echo '<label class="columns large-9 rtmedia_type_settings_filter_extension">' . $extensions . '</label>';
 			    echo '</div>';
 
-                    } else {
-                        echo "<input type='hidden' value='1' name='rtmedia-options[allowedTypes_" . $key . "_enabled]'>";
-                        echo "<input type='hidden' value='0' name='rtmedia-options[allowedTypes_" . $key . "_featured]'>";
-                    }
+            } else {
+                echo "<input type='hidden' value='1' name='rtmedia-options[allowedTypes_" . $key . "_enabled]'>";
+                echo "<input type='hidden' value='0' name='rtmedia-options[allowedTypes_" . $key . "_featured]'>";
+            }
 		}
 		echo '</div>';
                 do_action('rtmedia_after_bp_settings');
@@ -563,16 +569,18 @@ class RTMediaFormHandler {
 		$render = array();
 		foreach ($options as $key => $value) {
 			$data = explode('_', $key);
-			if(!isset($render[$data[1]])) {
+			if(!isset($render[$data[1]])){
 				$render[$data[1]] = array();
 				$render[$data[1]]['title'] = __($data[1],"rtmedia");
 			}
-			if(!isset($render[$data[1]][$data[2]])) {
+			if(!isset($render[$data[1]][$data[2]])){
 				$render[$data[1]][$data[2]] = array();
 				$render[$data[1]][$data[2]]['title'] = __($data[2],"rtmedia");
 			}
+			
 			$render[$data[1]][$data[2]][$data[3]] = $value;
 		}
+		
 		return $render;
 	}
 
@@ -582,9 +590,11 @@ class RTMediaFormHandler {
 		$options = self::extract_settings('defaultSizes',$rtmedia->options);
 		$render_data = self::sizes_render_options($options);
 		?>
-		    <div class="postbox metabox-holder">
-			<h3 class="hndle"><span>Media Size Settings</span></h3>
-		    </div>
+	    <div class="postbox metabox-holder">
+			<h3 class="hndle">
+				<span>Media Size Settings</span>
+			</h3>
+	    </div>
 		<?php
 		//container
 		echo '<div class="rt-table large-12 rtmedia-size-content-setting">';
