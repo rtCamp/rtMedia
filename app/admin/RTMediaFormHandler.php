@@ -25,7 +25,7 @@ class RTMediaFormHandler {
 		$args = wp_parse_args($args, $defaults);
 		extract($args);
 
-		if (!empty($key)){
+		if ( ! empty($key)){
 			$args['name'] = 'rtmedia-options[' . $key . ']';
 		}
 
@@ -53,12 +53,12 @@ class RTMediaFormHandler {
 		$args = wp_parse_args($args, $defaults);
 		extract($args);
 
-		if ( !isset($value)){
+		if ( ! isset($value)){
 			trigger_error(__('Please provide "value" in the argument.', 'rtmedia'));
 			return;
 		}
 
-		if ( !empty($key)){
+		if ( ! empty($key)){
 			$args['name'] = 'rtmedia-options[' . $key . ']';
 		}
 
@@ -85,12 +85,12 @@ class RTMediaFormHandler {
 		$args = wp_parse_args($args, $defaults);
 		extract($args);
 
-		if (!isset($value)){
+		if ( ! isset($value)){
 			trigger_error(__('Please provide "value" in the argument.', 'rtmedia'));
 			return;
 		}
 
-		if ( !empty($key)){
+		if ( ! empty($key)){
 			$args['name'] = 'rtmedia-options[' . $key . ']';
 		}
 
@@ -124,7 +124,7 @@ class RTMediaFormHandler {
 			return;
 		}
 
-		if ( !empty($key)){
+		if ( ! empty($key)){
 			$args['name'] = 'rtmedia-options[' . $key . ']';
 		}
 
@@ -156,12 +156,12 @@ class RTMediaFormHandler {
 		$args = wp_parse_args($args, $defaults);
 		extract($args);
 
-		if ( !isset($value)){
+		if ( ! isset($value)){
 			trigger_error(__('Please provide "value" in the argument.', 'rtmedia'));
 			return;
 		}
 
-		if ( !empty($key)){
+		if ( ! empty($key)){
 			$args['name'] = 'rtmedia-options[' . $key . ']';
 		}
 
@@ -181,12 +181,12 @@ class RTMediaFormHandler {
 		$args = wp_parse_args($args, $defaults);
 		extract($args);
 
-		if ( !isset($value)){
+		if ( ! isset($value)){
 			trigger_error(__('Please provide "value" in the argument.', 'rtmedia'));
 			return;
 		}
 
-		if ( !empty($key)){
+		if ( ! empty($key)){
 			$args['name'] = 'rtmedia-options[' . $key . ']';
 		}
 
@@ -301,11 +301,11 @@ class RTMediaFormHandler {
 		<?php
 		    foreach ($render_options as $tab => $option) {
 
-			if( !isset($option['group']) ){
+			if( ! isset($option['group']) ){
 			    $option['group'] = "20";
 			}
 
-			if( $option['group'] != $key ){
+			if( $option['group'] ! = $key ){
 			    continue;
 			}
 		?>
@@ -416,11 +416,11 @@ class RTMediaFormHandler {
 		<?php
 		    foreach ($render_options as $tab => $option) {
 
-				if( !isset($option['group']) ){
+				if( ! isset($option['group']) ){
 				    $option['group'] = "90";
 				}
 
-				if( $option['group'] != $key ){
+				if( $option['group'] ! = $key ){
 				    continue;
 				}
 			?>
@@ -478,7 +478,7 @@ class RTMediaFormHandler {
 
 	    foreach ($options as $key => $value) {
 		    $data = explode('_', $key);
-		    if( !isset($render[$data[1]])){
+		    if( ! isset($render[$data[1]])){
 				$render[$data[1]] = self::get_type_details($allowed_media_type, $data[1]);
 		    }
 	    }
@@ -541,7 +541,7 @@ class RTMediaFormHandler {
 			    echo $featured_checkbox;
 			    echo ' </div>';
 
-			    if( !isset($section['extn']) || !is_array($section['extn']) ){
+			    if( ! isset($section['extn']) || ! is_array($section['extn']) ){
 					$section['extn'] = array();
 			    }
 
@@ -569,11 +569,11 @@ class RTMediaFormHandler {
 		$render = array();
 		foreach ($options as $key => $value) {
 			$data = explode('_', $key);
-			if( !isset($render[$data[1]]) ){
+			if( ! isset($render[$data[1]]) ){
 				$render[$data[1]] = array();
 				$render[$data[1]]['title'] = __($data[1],"rtmedia");
 			}
-			if( !isset($render[$data[1]][$data[2]]) ){
+			if( ! isset($render[$data[1]][$data[2]]) ){
 				$render[$data[1]][$data[2]] = array();
 				$render[$data[1]][$data[2]]['title'] = __($data[2],"rtmedia");
 			}
@@ -628,7 +628,7 @@ class RTMediaFormHandler {
 					'key' => 'defaultSizes_'.$parent_key.'_'.$entity['title'],
 				);
 				foreach ( $entity as $child_key=>$value ) {
-					if( $child_key!='title' ) {
+					if( $child_key ! ='title' ) {
 						$args[$child_key] = $value;
 					}
 				}
@@ -791,7 +791,7 @@ class RTMediaFormHandler {
 					</div>
 				<?php
 					echo '<div class="columns large-6">';
-						if( $key != "enable" )
+						if( $key ! = "enable" )
 							call_user_func($privacy['callback'], array_merge_recursive($privacy['args'], array('class' => array("privacy-driven-disable"))));
 						else
 							call_user_func($privacy['callback'], $privacy['args']);
@@ -970,16 +970,16 @@ class RTMediaFormHandler {
 	public static function rtForm_do_settings_fields($page, $section) {
 		global $wp_settings_fields;
 
-		if (!isset($wp_settings_fields) || !isset($wp_settings_fields[$page]) || !isset($wp_settings_fields[$page][$section]))
+		if ( ! isset($wp_settings_fields) || ! isset($wp_settings_fields[$page]) || ! isset($wp_settings_fields[$page][$section]))
 			return;
 
 		foreach ( (array) $wp_settings_fields[$page][$section] as $field ) {
 			echo '<div class="row">';
 			echo '<div class="large-11 columns">';
 
-			if ( isset($field['args']['label_for']) && !empty($field['args']['label_for']) )
+			if ( isset($field['args']['label_for']) && ! empty($field['args']['label_for']) )
 				call_user_func($field['callback'], array_merge($field['args'], array('label' => $field['args']['label_for'])));
-			else if ( isset($field['title']) && !empty($field['title']) )
+			else if ( isset($field['title']) && ! empty($field['title']) )
 				call_user_func($field['callback'], array_merge($field['args'], array('label' => $field['title'])));
 			else
 				call_user_func($field['callback'], $field['args']);
