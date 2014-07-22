@@ -146,7 +146,7 @@ class RTMediaGalleryShortcode {
                     $attr[ "attr" ][ "context" ] = $post->post_type;
                 }
             }
-           
+
             if( $authorized_member ){ // if current user has access to view the gallery (when context is 'group')
                 global $rtmedia_query;
                 if(!$rtmedia_query) {

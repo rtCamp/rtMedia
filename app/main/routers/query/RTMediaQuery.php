@@ -451,6 +451,7 @@ class RTMediaQuery {
 		if ( isset ( $this->query ) && isset ( $this->query[ "global" ] ) ){
 			if ( $this->query[ "global" ] == "true" ){
 				$this->shortcode_global = true;
+				add_filter('rtmedia-model-where-query', array( 'RTMediaGalleryShortcode' , 'rtmedia_query_where_filter'), 10 ,3 );
 				if ( isset ( $this->query[ "context_id" ] ) ){
 					unset ( $this->query[ "context_id" ] );
 				}
@@ -745,6 +746,10 @@ class RTMediaQuery {
 				$this->populate_post_data( $this->media );
 			}
 		}
+		if( $this->shortcode_global ){
+			remove_filter('rtmedia-model-where-query', array( 'RTMediaGalleryShortcode' , 'rtmedia_query_where_filter'), 10 ,3 );
+		}
+
 	}
 
 	/**

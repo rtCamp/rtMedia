@@ -250,6 +250,45 @@
                 color: #000;
                 margin: 15px;
             }
+            .pagination {
+                clear:both;
+                padding:0;
+                position:relative;
+                font-size:11px;
+                line-height:13px;
+                span, a {
+                    display:inline;
+                    float:left;
+                    margin: 2px 2px 2px 0;
+                    padding:6px 9px 5px 9px;
+                    text-decoration:none;
+                    width:auto;
+                    color:#fff;
+                    background: #555;
+                    float: none;
+                    font-size: 13px;
+                    line-height: 30px;
+                    &:hover {
+                        color:#fff;
+                        background: #bc360a;
+                    }
+                }
+                .current{
+                    padding:6px 9px 5px 9px;
+                    background: #bc360a;
+                    color:#fff;
+                }
+                .rtmedia-page-no {
+                    display: inline;
+                    float: left;        
+                    font-size: 13px; 
+                    color: #888;
+                    input {
+                        padding: 3px;
+                        max-width: 50px;
+                    }
+                }
+            }
         }
 	.rtmedia-item-comments-container {
 		margin: 3% 3%;

@@ -100,6 +100,7 @@ jQuery( function ( $ ) {
                     that.getNext( page, el, element );
                 } );
             }
+            
             if ( !rtmedia_load_template_flag ) {
                 var query = {
                     json: true,
@@ -128,13 +129,14 @@ jQuery( function ( $ ) {
                         else
                             list_el = element.parent().siblings( '.rtmedia-list' );
                         nextpage = response.next;
-
+                        
                         if ( nextpage < 1 ) {
                             if( typeof el == "object" ) {
                                 jQuery( el ).find( '.rtmedia_next_prev' ).children( '#rtMedia-galary-next' ).hide();
                             }
                             //$("#rtMedia-galary-next").show();
                         }
+                        
                         var galleryViewObj = new rtMedia.GalleryView( {
                             collection: new rtMedia.Gallery( response.data ),
                             el: list_el
@@ -142,6 +144,12 @@ jQuery( function ( $ ) {
                         //element.show();
                         jQuery('.rtmedia-container .rtmedia-list-media' ).css('opacity', '1');
                         rtMediaHook.call( 'rtmedia_after_gallery_load' );
+                        
+                        jQuery('.rtmedia-container .rtmedia_next_prev .pagination' ).remove();
+                        jQuery('.rtmedia-container .rtmedia_next_prev .clear' ).remove();
+                        jQuery('.rtmedia-container .rtmedia_next_prev .rtm-media-loading' ).remove();
+                        jQuery('.rtmedia-container .rtmedia_next_prev br' ).remove();
+                        jQuery('.rtmedia-container .rtmedia_next_prev' ).append( response.pagination );
                     }
                 } );
             }
@@ -191,10 +199,15 @@ jQuery( function ( $ ) {
             if ( upload_sync ) {
                 $( that.el ).html( '' );
             }
-
+            
+            if( typeof( rtmedia_load_more_or_pagination ) != 'undefined' && rtmedia_load_more_or_pagination == 'pagination' ) {
+                $( that.el ).html( '' );
+            }
+            
             $.each( this.collection.toJSON(), function ( key, media ) {
                 $( that.el ).append( that.template( media ) );
             } );
+            
             if ( upload_sync ) {
                 upload_sync = false;
             }
@@ -230,7 +243,38 @@ jQuery( function ( $ ) {
         e.preventDefault();
         galleryObj.getNext( nextpage, $(this).parent().parent().parent(), $(this) );
     } );
-
+    
+    $( document ).on( "click", ".rtmedia-page-link", function ( e ) {
+        if( jQuery('.rtm-media-loading').length == 0 ) {
+            $( '.pagination' ).before( "<div class='rtm-media-loading'><img src='" + rMedia_loading_media + "' /></div>" );
+        } else {
+            jQuery('.rtm-media-loading' ).show();
+        }
+        
+        e.preventDefault();
+        if( $(this).data( 'page-type' ) == 'page' ) {
+            nextpage = $(this).data( 'page' );
+        } else if( $(this).data( 'page-type' ) == 'prev' ) {
+            if( nextpage == -1 ) {
+                nextpage = parseInt( $( '#rtmedia_last_page' ).val() ) - 1;
+            } else {
+                nextpage -= 2;
+            }
+        } else if( $(this).data( 'page-type' ) == 'num' ) {
+            if( parseInt( $( '#rtmedia_go_to_num' ).val() ) > parseInt( $( '#rtmedia_last_page' ).val() ) ) {
+                nextpage = parseInt( $( '#rtmedia_last_page' ).val() );
+            } else {
+                nextpage = parseInt( $( '#rtmedia_go_to_num' ).val() );
+            }
+            console.log( nextpage );
+        }
+        
+        if( $(this).data( 'page-type' ) == 'num' ) {
+            galleryObj.getNext( nextpage, $(this).parent().parent().parent().parent().parent(), $(this).parent().parent() );
+        } else {
+            galleryObj.getNext( nextpage, $(this).parent().parent().parent().parent(), $(this).parent() );
+        }
+    } );
 
     if ( window.location.pathname.indexOf( rtmedia_media_slug ) != -1 ) {
         var tempNext = window.location.pathname.substring( window.location.pathname.lastIndexOf( "pg/" ) + 5, window.location.pathname.lastIndexOf( "/" ) );

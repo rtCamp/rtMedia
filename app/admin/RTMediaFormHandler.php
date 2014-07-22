@@ -203,6 +203,10 @@ class RTMediaFormHandler {
 	}
 
 	static function display_render_options($options) {
+                $radios = array();
+                $radios[ 'load_more' ] = "<strong>Load More</strong>";
+                $radios[ 'pagination' ] = "<strong>Pagination</strong>";
+            
 		if (is_plugin_active('regenerate-thumbnails/regenerate-thumbnails.php')) {
 			$regenerate_link = admin_url('/tools.php?page=regenerate-thumbnails');
 		}
@@ -242,6 +246,18 @@ class RTMediaFormHandler {
 					'class' => array('rtmedia-setting-text-box'),
 					'desc' => __('Number of media you want to show per page on front end.','rtmedia'),
 					'min' => 1
+				),
+				'group' => "15"
+			),
+			'general_display_media' => array(
+				'title' => __('Media display pagination option','rtmedia'),
+				'callback' => array('RTMediaFormHandler', 'radio'),
+				'args' => array(
+					'key' => 'general_display_media',
+					'radios' => $radios,
+					'default' => $options['general_display_media'],
+					'desc' => __('Choose whether you want load more button or pagination buttons.','rtmedia'),
+					'class' => array( 'rtmedia-load-more-radio' )
 				),
 				'group' => "15"
 			),

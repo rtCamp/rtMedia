@@ -900,6 +900,8 @@ class RTMedia
 		} else {
 			wp_localize_script ( 'rtmedia-main', 'rtmedia_masonry_layout', 'false' );
 		}
+                
+                wp_localize_script( 'rtmedia-backbone', 'rtmedia_load_more_or_pagination', $rtmedia->options['general_display_media'] );
     }
 
     function set_bp_bar() {
