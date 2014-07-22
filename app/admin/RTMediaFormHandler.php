@@ -65,7 +65,7 @@ class RTMediaFormHandler {
 		$args['rtForm_options'] = array(array('' => 1, 'checked' => $value));
 
 		$chkObj = new rtForm();
-		
+
         if( $echo ){
             echo $chkObj->get_textarea($args);
         } else {
@@ -209,7 +209,7 @@ class RTMediaFormHandler {
         $radios = array();
         $radios[ 'load_more' ] = "<strong>Load More</strong>";
         $radios[ 'pagination' ] = "<strong>Pagination</strong>";
-            
+
 		if (is_plugin_active('regenerate-thumbnails/regenerate-thumbnails.php')){
 			$regenerate_link = admin_url('/tools.php?page=regenerate-thumbnails');
 		} elseif (array_key_exists('regenerate-thumbnails/regenerate-thumbnails.php', get_plugins())){
@@ -217,7 +217,7 @@ class RTMediaFormHandler {
 		} else {
 			$regenerate_link = wp_nonce_url(admin_url('update.php?action=install-plugin&plugin=regenerate-thumbnails'), 'install-plugin_regenerate-thumbnails');
 		}
-		
+
 		$render = array(
 			'general_enableComments' => array(
 				'title' => __('Allow user to comment on uploaded media','rtmedia'),
@@ -419,7 +419,7 @@ class RTMediaFormHandler {
 				if(!isset($option['group'])){
 				    $option['group'] = "90";
 				}
-	
+
 				if($option['group'] != $key){
 				    continue;
 				}
@@ -518,7 +518,7 @@ class RTMediaFormHandler {
 		$even = 0;
 		foreach ($render_data as $key=>$section) {
             if( isset($section['settings_visibility']) && $section['settings_visibility'] == true ) {
-            	
+
 				if( ++$even%2 ) {
 				    echo '<div class="row rt-odd">';
 				}
@@ -540,11 +540,11 @@ class RTMediaFormHandler {
 			    $featured_checkbox = apply_filters('rtmedia_filter_featured_checkbox', $featured_checkbox, $key);
 			    echo $featured_checkbox;
 			    echo ' </div>';
-				
+
 			    if(!isset($section['extn']) || !is_array($section['extn'])){
 					$section['extn'] = array();
 			    }
-				
+
 			    $extensions = implode(', ', $section['extn']);
 			    $extensions = apply_filters('rtmedia_type_settings_filter_extension', $extensions , $key) ;
 				do_action("rtmedia_type_settings_after_body",$key, $section);
@@ -577,10 +577,10 @@ class RTMediaFormHandler {
 				$render[$data[1]][$data[2]] = array();
 				$render[$data[1]][$data[2]]['title'] = __($data[2],"rtmedia");
 			}
-			
+
 			$render[$data[1]][$data[2]][$data[3]] = $value;
 		}
-		
+
 		return $render;
 	}
 
@@ -609,10 +609,11 @@ class RTMediaFormHandler {
 		//body
 		$even = 0;
 		foreach ($render_data as $parent_key => $section) {
-			if( ++$even%2 )
+			if( ++$even%2 ){
 				echo '<div class="row rt-odd">';
-			else
+			} else {
 				echo '<div class="row rt-even">';
+			}
 			echo '<div class="columns large-3">' . ucfirst($section['title']) . '</div>';
 			$entities = $section;
 			unset($entities['title']);
