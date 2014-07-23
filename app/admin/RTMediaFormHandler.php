@@ -47,7 +47,7 @@ class RTMediaFormHandler {
 	 * @access static
 	 * @param  array  $args
 	 * @param  bool   $echo
-	 * @return type   $chkObj->get_textarea( $args )
+	 * @return string $chkObj->get_textarea( $args )
 	 */
 	public static function textarea( $args, $echo = true ) {
 	    global $rtmedia;
@@ -87,7 +87,7 @@ class RTMediaFormHandler {
 	 * @access static
 	 * @param  array  $args
 	 * @param  bool   $echo
-	 * @return type   $chkObj->get_switch( $args )
+	 * @return string $chkObj->get_switch( $args )
 	 */
 	public static function checkbox( $args, $echo = true ) {
 		global $rtmedia;
@@ -126,7 +126,7 @@ class RTMediaFormHandler {
 	 *
 	 * @access static
 	 * @param  array  $args
-	 * @return type   $objRad->get_radio( $args )
+	 * @return void
 	 */
 	public static function radio( $args ) {
 		global $rtmedia;
@@ -166,7 +166,7 @@ class RTMediaFormHandler {
 	 *
 	 * @access static
 	 * @param  array  $args
-	 * @return type   $dmnObj->get_dimensions($args)
+	 * @return void
 	 */
 	public static function dimensions( $args ) {
 		$dmnObj = new rtDimensions();
@@ -178,7 +178,7 @@ class RTMediaFormHandler {
 	 *
 	 * @access static
 	 * @param  array  $args
-	 * @return type   $numObj->get_number( $args )
+	 * @return void
 	 */
 	public static function number( $args ) {
 		global $rtmedia;
@@ -210,7 +210,7 @@ class RTMediaFormHandler {
 	 *
 	 * @access static
 	 * @param  array  $args
-	 * @return type   $numObj->get_textbox( $args )
+	 * @return void
 	 */
 	public static function textbox( $args ) {
 		global $rtmedia;
