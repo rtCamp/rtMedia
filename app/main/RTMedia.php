@@ -1065,7 +1065,7 @@ function rtmedia_update_site_option($option_name, $option_value) {
 
 function get_rtmedia_group_link($group_id) {
     $group = groups_get_group(array('group_id' => $group_id));
-    return apply_filters( 'rtmedia_get_group_link', home_url( trailingslashit( bp_get_groups_root_slug() ) . $group->slug) );
+    return apply_filters( 'rtmedia_get_group_link', bp_get_group_permalink( $group ) );
 }
 
 function rtmedia_get_site_option($option_name, $default = false) {
