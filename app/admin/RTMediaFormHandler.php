@@ -165,7 +165,6 @@ class RTMediaFormHandler {
 	 * Show rtmedia dimensions in admin options.
 	 *
 	 * @access static
-	 * @param  type  $args
 	 * @return void
 	 */
 	public static function dimensions( $args ) {
