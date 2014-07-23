@@ -41,6 +41,14 @@ class RTMediaFormHandler {
 		echo $chkObj->get_select( $args );
 	}
 
+	/**
+	 * Show rtmedia textarea in admin options.
+	 *
+	 * @access static
+	 * @param  array  $args
+	 * @param  bool   $echo
+	 * @return type   $chkObj->get_textarea( $args )
+	 */
 	public static function textarea( $args, $echo = true ) {
 	    global $rtmedia;
 		$options = $rtmedia->options;
@@ -73,6 +81,14 @@ class RTMediaFormHandler {
         }
 	}
 
+	/**
+	 * Show rtmedia checkbox in admin options.
+	 *
+	 * @access static
+	 * @param  array  $args
+	 * @param  bool   $echo
+	 * @return type   $chkObj->get_switch( $args )
+	 */
 	public static function checkbox( $args, $echo = true ) {
 		global $rtmedia;
 		$options = $rtmedia->options;
@@ -105,6 +121,13 @@ class RTMediaFormHandler {
 //		echo $chkObj->get_switch_square($args);
 	}
 
+	/**
+	 * Show rtmedia radio in admin options.
+	 *
+	 * @access static
+	 * @param  array  $args
+	 * @return type   $objRad->get_radio( $args )
+	 */
 	public static function radio( $args ) {
 		global $rtmedia;
         $options = $rtmedia->options;
@@ -138,11 +161,25 @@ class RTMediaFormHandler {
 		echo $objRad->get_radio( $args );
 	}
 
+	/**
+	 * Show rtmedia dimensions in admin options.
+	 *
+	 * @access static
+	 * @param  array  $args
+	 * @return type   $dmnObj->get_dimensions($args)
+	 */
 	public static function dimensions( $args ) {
 		$dmnObj = new rtDimensions();
-		echo $dmnObj->get_dimensions($args);
+		echo $dmnObj->get_dimensions( $args );
 	}
 
+	/**
+	 * Show rtmedia number in admin options.
+	 *
+	 * @access static
+	 * @param  array  $args
+	 * @return type   $numObj->get_number( $args )
+	 */
 	public static function number( $args ) {
 		global $rtmedia;
 		$options = $rtmedia->options;
@@ -168,6 +205,13 @@ class RTMediaFormHandler {
 		echo $numObj->get_number( $args );
 	}
 
+	/**
+	 * Show rtmedia textbox in admin options.
+	 *
+	 * @access static
+	 * @param  array  $args
+	 * @return type   $numObj->get_textbox( $args )
+	 */
 	public static function textbox( $args ) {
 		global $rtmedia;
 		$options = $rtmedia->options;
@@ -193,15 +237,31 @@ class RTMediaFormHandler {
 		echo $numObj->get_textbox( $args );
 	}
 
-	static function extract_settings( $section_name,$options ) {
+	/**
+	 * extract settings.
+	 *
+	 * @access static
+	 * @param  array  $options
+	 * @param  string $section_name
+	 * @return array  $section
+	 */
+	static function extract_settings( $section_name, $options ) {
 		$section = array();
 		foreach ( $options as $key => $value ) {
 			if( strncmp( $key, $section_name, strlen( $section_name ) ) == 0 )
 				$section[$key] = $value;
 		}
+
 		return $section;
 	}
 
+	/**
+	 * display render options.
+	 *
+	 * @access static
+	 * @param  array  $options
+	 * @return array  $render
+	 */
 	static function display_render_options( $options ) {
         $radios = array();
         $radios[ 'load_more' ] = "<strong>Load More</strong>";
@@ -277,6 +337,13 @@ class RTMediaFormHandler {
 		return $render;
 	}
 
+	/**
+	 * display content.
+	 *
+	 * @access static
+	 * @param  void
+	 * @return void
+	 */
 	public static function display_content() {
 		global $rtmedia;
 //		$options = self::extract_settings('general', $rtmedia->options);
@@ -298,23 +365,23 @@ class RTMediaFormHandler {
 		<?php
 		    foreach ( $render_options as $tab => $option ) {
 
-			if( ! isset($option['group']) ){
-			    $option['group'] = "20";
-			}
+				if( ! isset($option['group']) ){
+				    $option['group'] = "20";
+				}
 
-			if( $option['group'] != $key ){
-			    continue;
-			}
-		?>
-			<div class="row section">
-			    <div class="columns large-9">
-				<?php echo $option['title']; ?>
-			    </div>
-				<div class="columns large-3">
-				    <?php call_user_func( $option['callback'], $option['args'] ); ?>
-				    <span data-tooltip class="has-tip" title="<?php echo ( isset( $option['args']['desc'] ) ) ? $option['args']['desc'] : "NA"; ?>"><i class="rtmicon-info-circle"></i></span>
+				if( $option['group'] != $key ){
+				    continue;
+				}
+			?>
+				<div class="row section">
+				    <div class="columns large-9">
+					<?php echo $option['title']; ?>
+				    </div>
+					<div class="columns large-3">
+					    <?php call_user_func( $option['callback'], $option['args'] ); ?>
+					    <span data-tooltip class="has-tip" title="<?php echo ( isset( $option['args']['desc'] ) ) ? $option['args']['desc'] : "NA"; ?>"><i class="rtmicon-info-circle"></i></span>
+					</div>
 				</div>
-			</div>
 		    <?php
 				if( isset( $option['after_content'] ) ){
 					?>
@@ -325,7 +392,7 @@ class RTMediaFormHandler {
 							</p>
 						</div>
 					</div>
-				<?php
+					<?php
 				}
 		    }
 		    ?>
@@ -335,6 +402,13 @@ class RTMediaFormHandler {
 
 	}
 
+	/**
+	 * render general content.
+	 *
+	 * @access static
+	 * @param  array $options
+	 * @return array $render
+	 */
 	static function render_general_content( $options ) {
 		$render = array(
 			'general_AllowUserData' => array(
@@ -392,6 +466,14 @@ class RTMediaFormHandler {
 
 		return $render;
 	}
+
+	/**
+	 * Define general_content
+	 *
+	 * @access static
+	 * @param  array $options
+	 * @return void
+	 */
 	static function general_content( $options ) {
 	    global $rtmedia;
 //		$options = self::extract_settings('general', $rtmedia->options);
@@ -451,6 +533,14 @@ class RTMediaFormHandler {
 		}
 	}
 
+    /**
+	 * Get type details
+	 *
+	 * @access static
+	 * @param  array  $allowed_types
+	 * @param  string $key
+	 * @return array  $data
+	 */
     static function get_type_details( $allowed_types, $key ) {
 	    foreach ( $allowed_types as $type ) {
 		    if( $type['name'] == $key ){
@@ -466,6 +556,13 @@ class RTMediaFormHandler {
 	    }
     }
 
+    /**
+	 * Define types_render_options.
+	 *
+	 * @access static
+	 * @param  array  $options
+	 * @return array  $render
+	 */
     static function types_render_options( $options ) {
 	    global $rtmedia;
 
@@ -474,7 +571,7 @@ class RTMediaFormHandler {
 	    $allowed_media_type = apply_filters( "rtmedia_allowed_types", $allowed_media_type );
 
 	    foreach ( $options as $key => $value ) {
-		    $data = explode('_', $key);
+		    $data = explode( '_', $key );
 		    if( ! isset( $render[$data[1]] ) ){
 				$render[$data[1]] = self::get_type_details( $allowed_media_type, $data[1] );
 		    }
@@ -488,6 +585,13 @@ class RTMediaFormHandler {
 	    return $render;
     }
 
+    /**
+	 * Define types_content.
+	 *
+	 * @access static
+	 * @param  void
+	 * @return void
+	 */
     public static function types_content() {
 	    global $rtmedia;
 	    $options = self::extract_settings( 'allowedTypes', $rtmedia->options );
@@ -559,6 +663,13 @@ class RTMediaFormHandler {
                 do_action( "rtmedia_after_media_types_settings" );
 	}
 
+	/**
+	 * Define sizes_render_options.
+	 *
+	 * @access static
+	 * @param  array $options
+	 * @return array $render
+	 */
 	static function sizes_render_options( $options ) {
 		$render = array();
 		foreach ( $options as $key => $value ) {
@@ -578,6 +689,13 @@ class RTMediaFormHandler {
 		return $render;
 	}
 
+	/**
+	 * Define sizes_content.
+	 *
+	 * @access static
+	 * @param  void
+	 * @return void
+	 */
 	public static function sizes_content() {
 		global $rtmedia;
 		$options = self::extract_settings( 'defaultSizes', $rtmedia->options );
@@ -660,69 +778,90 @@ class RTMediaFormHandler {
 		<?php
 	}
 
-        public static function custom_css_content() {
-            global $rtmedia;
-            $options = self::extract_settings( 'styles', $rtmedia->options );
-            $render_data = self::custom_css_render_options( $options );
-	    ?>
-		<div class="postbox metabox-holder">
-		    <h3 class="hndle"><span>Custom CSS settings</span></h3>
-		</div>
-	    <?php
-            echo '<div class="large-12">';
-            foreach ( $render_data as $option ) { ?>
+    /**
+	 * Define custom css content.
+	 *
+	 * @access static
+	 * @param  void
+	 * @return void
+	 */
+    public static function custom_css_content() {
+        global $rtmedia;
+        $options = self::extract_settings( 'styles', $rtmedia->options );
+        $render_data = self::custom_css_render_options( $options );
+    ?>
+	<div class="postbox metabox-holder">
+	    <h3 class="hndle"><span>Custom CSS settings</span></h3>
+	</div>
+    <?php
+        echo '<div class="large-12">';
+        foreach ( $render_data as $option ) { ?>
 
-                <div class="row section">
-                    <?php if( $option['args']['key'] == "styles_custom" ){ ?>
-                        <div class="columns large-12 rtm-custom-css">
-                            <strong class="<?php echo $option['args']['key'];?>"><?php echo $option['title']; ?></strong>
-                            <?php call_user_func( $option['callback'], $option['args'] ); ?>
-                            <div><?php _e( "If you want to add some custom CSS code to the plugin and don't want to modify any files, then it's a good place to enter your code at this field." );?></div>
-                        </div>
-                    <?php } else { ?>
-                    <div class="columns large-6">
+            <div class="row section">
+                <?php if( $option['args']['key'] == "styles_custom" ){ ?>
+                    <div class="columns large-12 rtm-custom-css">
                         <strong class="<?php echo $option['args']['key'];?>"><?php echo $option['title']; ?></strong>
-                    </div>
-                    <div class="columns large-6">
                         <?php call_user_func( $option['callback'], $option['args'] ); ?>
-						<span data-tooltip class="has-tip" title="<?php echo ( isset( $option['args']['desc'] ) ) ? $option['args']['desc'] : "NA"; ?>"><i class="rtmicon-info-circle"></i></span>
+                        <div><?php _e( "If you want to add some custom CSS code to the plugin and don't want to modify any files, then it's a good place to enter your code at this field." );?></div>
                     </div>
-                    <?php } ?>
+                <?php } else { ?>
+                <div class="columns large-6">
+                    <strong class="<?php echo $option['args']['key'];?>"><?php echo $option['title']; ?></strong>
                 </div>
-            <?php }
-            echo '</div>';
+                <div class="columns large-6">
+                    <?php call_user_func( $option['callback'], $option['args'] ); ?>
+					<span data-tooltip class="has-tip" title="<?php echo ( isset( $option['args']['desc'] ) ) ? $option['args']['desc'] : "NA"; ?>"><i class="rtmicon-info-circle"></i></span>
+                </div>
+                <?php } ?>
+            </div>
+        <?php }
+        echo '</div>';
 
-        }
-
-        static function custom_css_render_options( $options ) {
-            global $rtmedia;
-
-            $render = array(
-	        	'disable_styles' => array(
-					'title' => __( "rtMedia default styles", "rtmedia" ),
-					'callback' => array( "RTMediaFormHandler", "checkbox" ),
-					'args' => array(
-						'id' => 'rtmedia-disable-styles',
-						'key' => 'styles_enabled',
-						'value' => $options['styles_enabled'],
-						'desc' => __( 'Load default rtMedia styles. You need to write your own style for rtMedia if you disable it.', 'rtmedia' )
-	                )
-	            ),
-	            'custom_styles' => array(
-	    			'title' => __( "Paste your CSS code", "rtmedia" ),
-					'callback' => array( "RTMediaFormHandler", "textarea" ),
-					'args' => array(
-						'id' => 'rtmedia-custom-css',
-						'key' => 'styles_custom',
-						'value' => stripcslashes( $options['styles_custom'] ),
-						'desc' => __( 'Custom rtMedia CSS container', 'rtmedia' )
-	                )
-	            )
-            );
-
-            return $render;
     }
 
+	/**
+	 * Render custom css options.
+	 *
+	 * @access static
+	 * @param  array $options
+	 * @return array $render
+	 */
+	static function custom_css_render_options( $options ) {
+	    global $rtmedia;
+
+	    $render = array(
+	    	'disable_styles' => array(
+				'title' => __( "rtMedia default styles", "rtmedia" ),
+				'callback' => array( "RTMediaFormHandler", "checkbox" ),
+				'args' => array(
+					'id' => 'rtmedia-disable-styles',
+					'key' => 'styles_enabled',
+					'value' => $options['styles_enabled'],
+					'desc' => __( 'Load default rtMedia styles. You need to write your own style for rtMedia if you disable it.', 'rtmedia' )
+	            )
+	        ),
+	        'custom_styles' => array(
+				'title' => __( "Paste your CSS code", "rtmedia" ),
+				'callback' => array( "RTMediaFormHandler", "textarea" ),
+				'args' => array(
+					'id' => 'rtmedia-custom-css',
+					'key' => 'styles_custom',
+					'value' => stripcslashes( $options['styles_custom'] ),
+					'desc' => __( 'Custom rtMedia CSS container', 'rtmedia' )
+	            )
+	        )
+	    );
+
+	    return $render;
+    }
+
+	/**
+	 * Render privacy options.
+	 *
+	 * @access static
+	 * @param  array $options
+	 * @return array $render
+	 */
 	static function privacy_render_options( $options ) {
 		global $rtmedia;
 
@@ -762,6 +901,13 @@ class RTMediaFormHandler {
 		return $render;
 	}
 
+	/**
+	 * Render privacy content.
+	 *
+	 * @access static
+	 * @param  void
+	 * @return void
+	 */
 	public static function privacy_content() {
 		global $rtmedia;
 		$options = self::extract_settings( 'privacy', $rtmedia->options );
@@ -807,6 +953,13 @@ class RTMediaFormHandler {
 		echo '</div>';
 	}
 
+	/**
+	 * Render buddypress options.
+	 *
+	 * @access static
+	 * @param  array $options
+	 * @return array $render
+	 */
 	static function buddypress_render_options( $options ) {
 		$render = array(
 			'rtmedia-enable-on-profile' => array(
@@ -853,6 +1006,13 @@ class RTMediaFormHandler {
 		return $render;
 	}
 
+	/**
+	 * Define buddypress content.
+	 *
+	 * @access static
+	 * @param  void
+	 * @return void
+	 */
 	public static function buddypress_content() {
 		global $rtmedia;
 		$options = self::extract_settings( 'buddypress', $rtmedia->options );
@@ -913,6 +1073,14 @@ class RTMediaFormHandler {
 	    do_action( "rtmedia_buddypress_setting_content" );
 	}
 
+	/**
+	 * Define rtForm settings tabs content.
+	 *
+	 * @access static
+	 * @param  type $page
+	 * @param  array $sub_tabs
+	 * @return void
+	 */
 	public static function rtForm_settings_tabs_content( $page, $sub_tabs ) {
 	  	//  $rtmedia_admin_ui_handler = "<div class='section-container auto' data-options='deep_linking: true' data-section=''>";
 	    //	echo "<div class='clearfix rtm-settings-tab-container'>";
@@ -963,6 +1131,14 @@ class RTMediaFormHandler {
             <?php
 	}
 
+	/**
+	 * Define rtForm do_settings_fields.
+	 *
+	 * @access static
+	 * @param  type $page
+	 * @param  type $section
+	 * @return void
+	 */
 	public static function rtForm_do_settings_fields( $page, $section ) {
 		global $wp_settings_fields;
 
