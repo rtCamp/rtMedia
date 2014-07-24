@@ -72,8 +72,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ){
 			}
 
 			if ( isset ( $_POST[ "rtmedia-options" ] ) ){
-				if ( isset ( $_POST[ "rtmedia-options" ][ "general_showAdminMenu" ] )
-				&& $_POST[ "rtmedia-options" ][ "general_showAdminMenu" ] == "1" ){
+				if ( isset ( $_POST[ "rtmedia-options" ][ "general_showAdminMenu" ] ) && $_POST[ "rtmedia-options" ][ "general_showAdminMenu" ] == "1" ){
 					add_action( 'admin_bar_menu', array( $this, 'admin_bar_menu' ), 100, 1 );
 				}
 			} else {
@@ -513,7 +512,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ){
 		 * Add admin bar menu
 		 *
 		 * @access public
-		 * @param  array $admin_bar
+		 * @param  type $admin_bar
 		 * @return void
 		 */
 		public function admin_bar_menu( $admin_bar ) {
