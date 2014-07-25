@@ -248,27 +248,27 @@ if ( ! class_exists( 'RTMediaSettings' ) ) {
 
         /**
          * Sanitizes the settings
-         */
-
-        /**
-         *
+		 *
+		 * @access public
          * @global type $rtmedia_admin
-         * @param type $input
-         * @return type
+         * @param  type $input
+         * @return type $input
          */
-        public function sanitize($input) {
+        public function sanitize( $input ) {
             global $rtmedia_admin;
-            if (isset($_POST['refresh-count'])) {
-                if ($rtmedia_admin->update_count()) {
-                    if (is_multisite())
-                        rtmedia_update_site_option('rtm-recount-success', __('Recounting of media files done successfully', 'rtmedia'));
-                    else
-                        add_settings_error(__('Recount Success', 'rtmedia'), 'rtm-recount-success', __('Recounting of media files done successfully', 'rtmedia'), 'updated');
+            if ( isset( $_POST['refresh-count'] ) ){
+                if ( $rtmedia_admin->update_count() ){
+                    if ( is_multisite() ){
+                        rtmedia_update_site_option( 'rtm-recount-success', __( 'Recounting of media files done successfully', 'rtmedia' ) );
+					} else {
+                        add_settings_error( __( 'Recount Success', 'rtmedia' ), 'rtm-recount-success', __( 'Recounting of media files done successfully', 'rtmedia' ), 'updated' );
+					}
                 } else {
-                    if (is_multisite())
-                        rtmedia_update_site_option('rtm-recount-fail', __('Recounting Failed', 'rtmedia'));
-                    else
-                        add_settings_error(__('Recount Fail', 'rtmedia'), 'rtm-recount-fail', __('Recounting Failed', 'rtmedia'));
+                    if ( is_multisite() ){
+                        rtmedia_update_site_option( 'rtm-recount-fail', __( 'Recounting Failed', 'rtmedia' ) );
+					} else {
+                        add_settings_error( __( 'Recount Fail', 'rtmedia' ), 'rtm-recount-fail', __( 'Recounting Failed', 'rtmedia' ) );
+					}
                 }
             }
 //            if (!isset($_POST['rtmedia_options']['enable_on_profile']) && !isset($_POST['rtmedia_options']['enable_on_group'])) {
@@ -278,69 +278,86 @@ if ( ! class_exists( 'RTMediaSettings' ) ) {
 //                    add_settings_error(__('Enable BuddyPress Media', 'rtmedia'), 'rtm-media-enable', __('Enable BuddyPress Media on either User Profiles or Groups or both. Atleast one should be selected.', 'rtmedia'));
 //                $input['enable_on_profile'] = 1;
 //            }
-            if (!isset($_POST['rtmedia_options']['videos_enabled']) && !isset($_POST['rtmedia_options']['audio_enabled']) && !isset($_POST['rtmedia_options']['images_enabled'])) {
-                if (is_multisite())
-                    rtmedia_update_site_option('rtm-media-type', __('Atleast one Media Type Must be selected', 'rtmedia'));
-                else
-                    add_settings_error(__('Media Type', 'rtmedia'), 'rtm-media-type', __('Atleast one Media Type Must be selected', 'rtmedia'));
+            if (!isset( $_POST['rtmedia_options']['videos_enabled'] ) && !isset( $_POST['rtmedia_options']['audio_enabled'] ) && !isset( $_POST['rtmedia_options']['images_enabled'] ) ){
+                if ( is_multisite() ){
+                    rtmedia_update_site_option( 'rtm-media-type', __( 'Atleast one Media Type Must be selected', 'rtmedia' ) );
+				} else {
+                    add_settings_error( __( 'Media Type', 'rtmedia' ), 'rtm-media-type', __( 'Atleast one Media Type Must be selected', 'rtmedia' ) );
+				}
                 $input['images_enabled'] = 1;
             }
 
-            $input['default_count'] = intval($_POST['rtmedia_options']['default_count']);
-            if (!is_int($input['default_count']) || ($input['default_count'] < 0 ) || empty($input['default_count'])) {
-                if (is_multisite())
-                    rtmedia_update_site_option('rtm-media-default-count', __('"Number of media" count value should be numeric and greater than 0.', 'rtmedia'));
-                else
-                    add_settings_error(__('Default Count', 'rtmedia'), 'rtm-media-default-count', __('"Number of media" count value should be numeric and greater than 0.', 'rtmedia'));
+            $input['default_count'] = intval( $_POST['rtmedia_options']['default_count'] );
+
+            if ( ! is_int( $input['default_count'] ) || ( $input['default_count'] < 0 ) || empty( $input['default_count'] ) ){
+                if ( is_multisite() ){
+                    rtmedia_update_site_option( 'rtm-media-default-count', __( '"Number of media" count value should be numeric and greater than 0.', 'rtmedia' ) );
+				} else {
+                    add_settings_error( __( 'Default Count', 'rtmedia' ), 'rtm-media-default-count', __( '"Number of media" count value should be numeric and greater than 0.', 'rtmedia' ) );
+				}
                 $input['default_count'] = 10;
             }
-            if (is_multisite())
-                rtmedia_update_site_option('rtm-settings-saved', __('Settings saved.', 'rtmedia'));
-            do_action('rtmedia_sanitize_settings', $_POST, $input);
+            if ( is_multisite() ){
+                rtmedia_update_site_option( 'rtm-settings-saved', __( 'Settings saved.', 'rtmedia' ) );
+            }
+            do_action( 'rtmedia_sanitize_settings', $_POST, $input );
             return $input;
         }
 
+        /**
+         * Show image settings intro.
+         *
+		 * @access public
+         * @param  void
+         * @return void
+         */
         public function image_settings_intro() {
-            if (is_plugin_active('regenerate-thumbnails/regenerate-thumbnails.php')) {
-                $regenerate_link = admin_url('/tools.php?page=regenerate-thumbnails');
+            if ( is_plugin_active( 'regenerate-thumbnails/regenerate-thumbnails.php' ) ){
+                $regenerate_link = admin_url( '/tools.php?page=regenerate-thumbnails' );
+            } elseif ( array_key_exists( 'regenerate-thumbnails/regenerate-thumbnails.php', get_plugins() ) ) {
+                $regenerate_link = admin_url( '/plugins.php#regenerate-thumbnails' );
+            } else {
+                $regenerate_link = wp_nonce_url( admin_url( 'update.php?action=install-plugin&plugin=regenerate-thumbnails' ), 'install-plugin_regenerate-thumbnails' );
             }
-            elseif (array_key_exists('regenerate-thumbnails/regenerate-thumbnails.php', get_plugins())) {
-                $regenerate_link = admin_url('/plugins.php#regenerate-thumbnails');
-            }
-            else {
-                $regenerate_link = wp_nonce_url(admin_url('update.php?action=install-plugin&plugin=regenerate-thumbnails'), 'install-plugin_regenerate-thumbnails');
-            }
-            echo '<span class="description">' . sprintf(__('If you make changes to width, height or crop settings, you must use "<a href="%s">Regenerate Thumbnail Plugin</a>" to regenerate old images."', 'rtmedia'), $regenerate_link) . '</span>';
+            echo '<span class="description">' . sprintf( __( 'If you make changes to width, height or crop settings, you must use "<a href="%s">Regenerate Thumbnail Plugin</a>" to regenerate old images."', 'rtmedia' ), $regenerate_link ) . '</span>';
             echo '<div class="clearfix">&nbsp;</div>';
         }
 
         /**
-         * Output a checkbox
+         * Output a checkbox for privacy_notice.
          *
-         * @global array $rtmedia
-         * @param array $args
+		 * @access public
+         * @param  void
+		 * @return string $notice
          */
         public function privacy_notice() {
-            if (current_user_can('create_users')) {
+            if ( current_user_can( 'create_users' ) ){
 //                if (BPMediaPrivacy::is_installed())
 //                    return;
                 $url = add_query_arg(
-                        array('page' => 'rtmedia-privacy'), (is_multisite() ? network_admin_url('admin.php') : admin_url('admin.php'))
+                        array('page' => 'rtmedia-privacy'), ( is_multisite() ? network_admin_url( 'admin.php' ) : admin_url( 'admin.php' ) )
                 );
 
                 $notice = '
                 <div class="error">
-                <p>' . __('BuddyPress Media 2.6 requires a database upgrade. ', 'rtmedia')
-                        . '<a href="' . $url . '">' . __('Update Database', 'rtmedia') . '.</a></p>
+                <p>' . __( 'BuddyPress Media 2.6 requires a database upgrade. ', 'rtmedia' )
+                        . '<a href="' . $url . '">' . __( 'Update Database', 'rtmedia' ) . '.</a></p>
                 </div>
                 ';
                 echo $notice;
             }
         }
 
+        /**
+         * Output rtmedia_support_intro.
+         *
+		 * @access public
+         * @param  void
+		 * @return void
+         */
         public function rtmedia_support_intro() {
-            echo '<p>' . __('If your site has some issues due to BuddyPress Media and you want one on one support then you can create a support topic on the <a target="_blank" href="http://rtcamp.com/groups/buddypress-media/forum/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media">rtCamp Support Forum</a>.', 'rtmedia') . '</p>';
-            echo '<p>' . __('If you have any suggestions, enhancements or bug reports, then you can open a new issue on <a target="_blank" href="https://github.com/rtCamp/buddypress-media/issues/new">GitHub</a>.', 'rtmedia') . '</p>';
+            echo '<p>' . __( 'If your site has some issues due to BuddyPress Media and you want one on one support then you can create a support topic on the <a target="_blank" href="http://rtcamp.com/groups/buddypress-media/forum/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media">rtCamp Support Forum</a>.', 'rtmedia' ) . '</p>';
+            echo '<p>' . __( 'If you have any suggestions, enhancements or bug reports, then you can open a new issue on <a target="_blank" href="https://github.com/rtCamp/buddypress-media/issues/new">GitHub</a>.', 'rtmedia' ) . '</p>';
         }
 
     }
