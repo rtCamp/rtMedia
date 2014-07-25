@@ -901,7 +901,11 @@ class RTMedia
 			wp_localize_script ( 'rtmedia-main', 'rtmedia_masonry_layout', 'false' );
 		}
                 
-                wp_localize_script( 'rtmedia-backbone', 'rtmedia_load_more_or_pagination', $rtmedia->options['general_display_media'] );
+                if( isset( $rtmedia->options['general_display_media'] ) ) {
+                    wp_localize_script( 'rtmedia-backbone', 'rtmedia_load_more_or_pagination', $rtmedia->options['general_display_media'] );
+                } else {
+                    wp_localize_script( 'rtmedia-backbone', 'rtmedia_load_more_or_pagination', 'load_more' );
+                }
     }
 
     function set_bp_bar() {
