@@ -274,7 +274,7 @@ if ( ! class_exists( 'RTMediaSupport' ) ){
 		}
 
 		/**
-		 * Scan rtmedia template files.
+		 * Scan the rtmedia template files.
 		 *
 		 * @access public
 		 * @param  string $template_path
