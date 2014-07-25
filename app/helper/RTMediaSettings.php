@@ -9,7 +9,7 @@
 if ( ! class_exists( 'RTMediaSettings' ) ) {
 
     class RTMediaSettings {
-        	
+
 		/**
 		 * Constructor
 		 *
@@ -40,7 +40,7 @@ if ( ! class_exists( 'RTMediaSettings' ) ) {
 		 */
 		public function get_default_options() {
 		    global $rtmedia;
-	
+
             $defaults = array(
                 'general_enableAlbums' => 0,
                 'general_enableComments' => 0,
@@ -92,7 +92,7 @@ if ( ! class_exists( 'RTMediaSettings' ) ) {
                 $options["general_videothumbs"] = 10;
                 add_action ( 'admin_notices', array( &$this, 'add_max_video_thumb_notice' ) );
             }
-				
+
 		    return $defaults;
 		}
 
@@ -136,7 +136,7 @@ if ( ! class_exists( 'RTMediaSettings' ) ) {
         public function add_max_video_thumb_notice(){
              echo '<div class="error"><p>' . __( 'Max Video thumbnail size is ', 'rtmedia' ) .' <strong>10</strong></p></div>';
         }
-		
+
         /**
 		 * rtmedia settings.
 		 *
@@ -214,7 +214,7 @@ if ( ! class_exists( 'RTMediaSettings' ) ) {
 			    delete_site_option( 'rtm-media-default-count' );
 			    $flag = 0;
 			}
-			
+
 			if ( rtmedia_get_site_option( 'rtm-recount-success', false ) ){
 			    echo '<div id="setting-error-bpm-recount-success" class="updated"><p><strong>' . rtmedia_get_site_option( 'rtm-recount-success' ) . '</strong></p></div>';
 			    delete_site_option( 'rtm-recount-success' );
@@ -224,7 +224,7 @@ if ( ! class_exists( 'RTMediaSettings' ) ) {
 			    delete_site_option( 'rtm-recount-fail' );
 			    $flag = 0;
 			}
-			
+
 			if ( get_site_option( 'rtm-settings-saved' ) && $flag ){
 			    echo '<div id="setting-error-bpm-settings-saved" class="updated"><p><strong>' . get_site_option( 'rtm-settings-saved' ) . '</strong></p></div>';
 			}
