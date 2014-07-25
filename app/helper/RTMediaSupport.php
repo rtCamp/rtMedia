@@ -277,8 +277,8 @@ if ( ! class_exists( 'RTMediaSupport' ) ){
 		 * Scan rtmedia template files.
 		 *
 		 * @access public
-		 * @param  type  $template_path
-		 * @return array $result
+		 * @param  string $template_path
+		 * @return array  $result
 		 */
 		public function rtmedia_scan_template_files( $template_path ) {
 			$files  = scandir( $template_path );
@@ -437,8 +437,8 @@ if ( ! class_exists( 'RTMediaSupport' ) ){
 		 * 
 		 * @global type $current_user
 		 *
-		 * @param  type $form
-		 * @return bool
+		 * @param  string $form
+		 * @return void
 		 */
 		public function get_form( $form = '' ) {
 			if ( empty( $form ) ){
