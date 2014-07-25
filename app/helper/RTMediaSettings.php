@@ -6,17 +6,23 @@
  * @author Gagandeep Singh <gagandeep.singh@rtcamp.com>
  * @author Joshua Abenazer <joshua.abenazer@rtcamp.com>
  */
-if (!class_exists('RTMediaSettings')) {
+if ( ! class_exists( 'RTMediaSettings' ) ) {
 
     class RTMediaSettings {
-
+        	
+		/**
+		 * Constructor
+		 *
+		 * @access public
+		 * @return void
+		 */
         public function __construct() {
-            if (!(defined('DOING_AJAX') && DOING_AJAX)) {
-		add_action('admin_init', array($this, 'settings'));
-		if (isset($_POST['rtmedia-options-save'])) {
-		    add_action('init', array($this, 'settings'));
-		}
-	    }
+            if ( ! ( defined( 'DOING_AJAX' ) && DOING_AJAX ) ){
+				add_action( 'admin_init', array( $this, 'settings' ) );
+				if ( isset( $_POST['rtmedia-options-save'] ) ){
+				    add_action( 'init', array( $this, 'settings' ) );
+				}
+	    	}
 //            if (is_multisite()) {
 //                add_action('network_admin_notices', array($this, 'privacy_notice'));
 //            } else {
@@ -24,9 +30,17 @@ if (!class_exists('RTMediaSettings')) {
 //            }
         }
 
-	function get_default_options() {
-	    global $rtmedia;
-
+		/**
+		 * Get default options.
+		 *
+		 * @access public
+		 * @global string 'rtmedia'
+		 * @param  void
+		 * @return array  $defaults
+		 */
+		public function get_default_options() {
+		    global $rtmedia;
+	
             $defaults = array(
                 'general_enableAlbums' => 0,
                 'general_enableComments' => 0,
@@ -46,17 +60,17 @@ if (!class_exists('RTMediaSettings')) {
 				'general_masonry_layout' => 0,
             );
 
-            $defaults = apply_filters('rtmedia_general_content_default_values', $defaults);
-            foreach ($rtmedia->allowed_types as $type) {
+            $defaults = apply_filters( 'rtmedia_general_content_default_values', $defaults );
+            foreach ( $rtmedia->allowed_types as $type ) {
                 // invalid keys handled in sanitize method
                 $defaults['allowedTypes_' . $type['name'] . '_enabled'] = 0;
                 $defaults['allowedTypes_' . $type['name'] . '_featured'] = 0;
             }
 
             /* Previous Sizes values from buddypress is migrated */
-            foreach ($rtmedia->default_sizes as $type => $typeValue) {
-                foreach ($typeValue as $size => $sizeValue) {
-                    foreach ($sizeValue as $dimension => $value) {
+            foreach ( $rtmedia->default_sizes as $type => $typeValue ) {
+                foreach ( $typeValue as $size => $sizeValue ) {
+                    foreach ( $sizeValue as $dimension => $value ) {
                         $defaults['defaultSizes_' . $type . '_' . $size . '_' . $dimension] = 0;
                     }
                 }
@@ -74,70 +88,92 @@ if (!class_exists('RTMediaSettings')) {
             $defaults['styles_custom'] = '';
             $defaults['styles_enabled'] = 1;
 
-            if(isset($options["general_videothumbs"]) && is_numeric($options["general_videothumbs"]) && intval($options["general_videothumbs"]) > 10){
+            if( isset( $options["general_videothumbs"] ) && is_numeric( $options["general_videothumbs"] ) && intval( $options["general_videothumbs"] ) > 10 ){
                 $options["general_videothumbs"] = 10;
                 add_action ( 'admin_notices', array( &$this, 'add_max_video_thumb_notice' ) );
             }
-	    return $defaults;
-	}
+				
+		    return $defaults;
+		}
 
         /**
-         * Register Settings
-         *
-         * @global string 'rtmedia'
-         */
-        function sanitize_options($options) {
-	    $defaults = $this->get_default_options();
-            $options = wp_parse_args($options, $defaults);
+		 * Register Settings.
+		 *
+		 * @access public
+		 * @param  type $options
+		 * @return type $options
+		 */
+        public function sanitize_options( $options ) {
+	    	$defaults = $this->get_default_options();
+            $options = wp_parse_args( $options, $defaults );
             return $options;
         }
 
-	function sanitize_before_save_options($options) {
-	    $defaults = $this->get_default_options();
-	    foreach($defaults as $key => $value) {
-		if( !isset( $options[$key] ) ) {
-		    $options[$key] = "0";
+		/**
+		 * Sanitize before saving the options.
+		 *
+		 * @access public
+		 * @param  type $options
+		 * @return type $options
+		 */
+		public function sanitize_before_save_options( $options ) {
+		    $defaults = $this->get_default_options();
+		    foreach( $defaults as $key => $value ) {
+				if( ! isset( $options[$key] ) ){
+				    $options[$key] = "0";
+				}
+		    }
+		    return $options;
 		}
-	    }
-	    return $options;
-	}
 
-        function add_max_video_thumb_notice(){
+        /**
+		 * Add max_video_thumb_notice.
+		 *
+		 * @access public
+		 * @param  void
+		 * @return void
+		 */
+        public function add_max_video_thumb_notice(){
              echo '<div class="error"><p>' . __( 'Max Video thumbnail size is ', 'rtmedia' ) .' <strong>10</strong></p></div>';
         }
+		
         /**
-         *
-         * @global BPMediaAddon $rtmedia_addon
-         */
+		 * rtmedia settings.
+		 *
+		 * @access public
+		 * @global BPMediaAddon $rtmedia_addon
+		 * @param  void
+		 * @return void
+		 */
         public function settings() {
             global $rtmedia, $rtmedia_addon, $rtmedia_save_setting_single;
             $options = rtmedia_get_site_option('rtmedia-options');
-            $options = $this->sanitize_options($options);
+            $options = $this->sanitize_options( $options );
             $rtmedia->options = $options;
             // Save Settings first then proceed.
-            if (isset($_POST['rtmedia-options-save'])) {
+            if ( isset( $_POST['rtmedia-options-save'] ) ){
                 $options = $_POST['rtmedia-options'];
-                $options = $this->sanitize_before_save_options($options);
-                $options = apply_filters("rtmedia_pro_options_save_settings", $options);
-		$is_rewrite_rule_flush = apply_filters('rtmedia_flush_rewrite_rule',false);
-                rtmedia_update_site_option('rtmedia-options', $options);
+                $options = $this->sanitize_before_save_options( $options );
+                $options = apply_filters( "rtmedia_pro_options_save_settings", $options );
+				$is_rewrite_rule_flush = apply_filters( 'rtmedia_flush_rewrite_rule', false );
+                rtmedia_update_site_option( 'rtmedia-options', $options );
 				do_action ( 'rtmedia_save_admin_settings', $options );
-		if( $is_rewrite_rule_flush ) {
-		    flush_rewrite_rules(false);
-		}
-                wp_redirect($_SERVER['HTTP_REFERER']);
+				if( $is_rewrite_rule_flush ){
+				    flush_rewrite_rules( false );
+				}
+                wp_redirect( $_SERVER['HTTP_REFERER'] );
                 global $rtmedia;
                 $rtmedia->options = $options;
             }
 
-	    if(function_exists('add_settings_section') ) {
-		$rtmedia_addon = new RTMediaAddon();
-		add_settings_section('rtm-addons', __('BuddyPress Media Addons for Photos', 'rtmedia'), array($rtmedia_addon, 'get_addons'), 'rtmedia-addons');
-		$rtmedia_support = new RTMediaSupport(false);
-		add_settings_section('rtm-support', __('Support', 'rtmedia'), array($rtmedia_support, 'get_support_content'), 'rtmedia-support');
-		$rtmedia_themes = new RTMediaThemes();
-		add_settings_section('rtm-themes', __('rtMedia Themes', 'rtmedia'), array($rtmedia_themes, 'get_themes'), 'rtmedia-themes');
-	    }
+		    if( function_exists( 'add_settings_section' ) ){
+				$rtmedia_addon = new RTMediaAddon();
+				add_settings_section( 'rtm-addons', __( 'BuddyPress Media Addons for Photos', 'rtmedia' ), array( $rtmedia_addon, 'get_addons' ), 'rtmedia-addons' );
+				$rtmedia_support = new RTMediaSupport( false );
+				add_settings_section( 'rtm-support', __( 'Support', 'rtmedia' ), array( $rtmedia_support, 'get_support_content' ), 'rtmedia-support' );
+				$rtmedia_themes = new RTMediaThemes();
+				add_settings_section( 'rtm-themes', __( 'rtMedia Themes', 'rtmedia' ), array( $rtmedia_themes, 'get_themes' ), 'rtmedia-themes' );
+		    }
 
 
 
@@ -149,50 +185,64 @@ if (!class_exists('RTMediaSettings')) {
             //$rtmedia_album_importer = new BPMediaAlbumimporter();
             //add_settings_section('rtm-rt-album-importer', __('BP-Album Importer', 'rtmedia'), array($rtmedia_album_importer, 'ui'), 'rtmedia-importer');
             //register_setting('rtmedia', 'rtmedia_options', array($this, 'sanitize'));
-	    if( !isset($rtmedia_save_setting_single) ) {
-		$rtmedia_save_setting_single = true;
-	    }
+		    if( ! isset( $rtmedia_save_setting_single ) ){
+				$rtmedia_save_setting_single = true;
+		    }
         }
 
-	public function network_notices() {
-            $flag = 1;
-            if (rtmedia_get_site_option('rtm-media-enable', false)) {
-                echo '<div id="setting-error-bpm-media-enable" class="error"><p><strong>' . rtmedia_get_site_option('rtm-media-enable') . '</strong></p></div>';
-                delete_site_option('rtm-media-enable');
-                $flag = 0;
-            }
-            if (rtmedia_get_site_option('rtm-media-type', false)) {
-                echo '<div id="setting-error-bpm-media-type" class="error"><p><strong>' . rtmedia_get_site_option('rtm-media-type') . '</strong></p></div>';
-                delete_site_option('rtm-media-type');
-                $flag = 0;
-            }
-            if (rtmedia_get_site_option('rtm-media-default-count', false)) {
-                echo '<div id="setting-error-bpm-media-default-count" class="error"><p><strong>' . rtmedia_get_site_option('rtm-media-default-count') . '</strong></p></div>';
-                delete_site_option('rtm-media-default-count');
-                $flag = 0;
-            }
+		/**
+		 * Show network notices.
+		 *
+		 * @access public
+		 * @param  void
+		 * @return void
+		 */
+		public function network_notices() {
+			$flag = 1;
+			if ( rtmedia_get_site_option( 'rtm-media-enable', false ) ){
+			    echo '<div id="setting-error-bpm-media-enable" class="error"><p><strong>' . rtmedia_get_site_option( 'rtm-media-enable' ) . '</strong></p></div>';
+			    delete_site_option( 'rtm-media-enable' );
+			    $flag = 0;
+			}
+			if ( rtmedia_get_site_option( 'rtm-media-type', false ) ){
+			    echo '<div id="setting-error-bpm-media-type" class="error"><p><strong>' . rtmedia_get_site_option( 'rtm-media-type' ) . '</strong></p></div>';
+			    delete_site_option( 'rtm-media-type' );
+			    $flag = 0;
+			}
+			if ( rtmedia_get_site_option( 'rtm-media-default-count', false ) ){
+			    echo '<div id="setting-error-bpm-media-default-count" class="error"><p><strong>' . rtmedia_get_site_option( 'rtm-media-default-count' ) . '</strong></p></div>';
+			    delete_site_option( 'rtm-media-default-count' );
+			    $flag = 0;
+			}
+			
+			if ( rtmedia_get_site_option( 'rtm-recount-success', false ) ){
+			    echo '<div id="setting-error-bpm-recount-success" class="updated"><p><strong>' . rtmedia_get_site_option( 'rtm-recount-success' ) . '</strong></p></div>';
+			    delete_site_option( 'rtm-recount-success' );
+			    $flag = 0;
+			} elseif ( rtmedia_get_site_option( 'rtm-recount-fail', false ) ){
+			    echo '<div id="setting-error-bpm-recount-fail" class="error"><p><strong>' . rtmedia_get_site_option( 'rtm-recount-fail' ) . '</strong></p></div>';
+			    delete_site_option( 'rtm-recount-fail' );
+			    $flag = 0;
+			}
+			
+			if ( get_site_option( 'rtm-settings-saved' ) && $flag ){
+			    echo '<div id="setting-error-bpm-settings-saved" class="updated"><p><strong>' . get_site_option( 'rtm-settings-saved' ) . '</strong></p></div>';
+			}
 
-            if (rtmedia_get_site_option('rtm-recount-success', false)) {
-                echo '<div id="setting-error-bpm-recount-success" class="updated"><p><strong>' . rtmedia_get_site_option('rtm-recount-success') . '</strong></p></div>';
-                delete_site_option('rtm-recount-success');
-                $flag = 0;
-            }
-            elseif (rtmedia_get_site_option('rtm-recount-fail', false)) {
-                echo '<div id="setting-error-bpm-recount-fail" class="error"><p><strong>' . rtmedia_get_site_option('rtm-recount-fail') . '</strong></p></div>';
-                delete_site_option('rtm-recount-fail');
-                $flag = 0;
-            }
+			delete_site_option( 'rtm-settings-saved' );
+		}
 
-            if (get_site_option('rtm-settings-saved') && $flag) {
-                echo '<div id="setting-error-bpm-settings-saved" class="updated"><p><strong>' . get_site_option('rtm-settings-saved') . '</strong></p></div>';
-            }
-            delete_site_option('rtm-settings-saved');
-        }
-
+        /**
+		 * Show allowed types.
+		 *
+		 * @access public
+		 * @param  void
+		 * @return void
+		 */
         public function allowed_types() {
-            $allowed_types = rtmedia_get_site_option('upload_filetypes', 'jpg jpeg png gif');
-            $allowed_types = explode(' ', $allowed_types);
-            $allowed_types = implode(', ', $allowed_types);
+            $allowed_types = rtmedia_get_site_option( 'upload_filetypes', 'jpg jpeg png gif' );
+            $allowed_types = explode( ' ', $allowed_types );
+            $allowed_types = implode( ', ', $allowed_types );
             echo '<span class="description">' . sprintf(__('Currently your network allows uploading of the following file types. You can change the settings <a href="%s">here</a>.<br /><code>%s</code></span>', 'rtmedia'), network_admin_url('settings.php#upload_filetypes'), $allowed_types);
         }
 
