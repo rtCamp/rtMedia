@@ -177,6 +177,14 @@ class RTMediaModel extends RTDBModel {
         return $results;
     }
 
+    /**
+     *
+     * @param  type $author_id
+     * @param  type $offset
+     * @param  type $per_page
+     * @param  type $order_by
+     * @return type $results
+     */
     function get_user_albums ( $author_id, $offset, $per_page, $order_by = 'media_id desc' ) {
         global $wpdb;
         if ( is_multisite () )
