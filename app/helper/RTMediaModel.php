@@ -299,7 +299,7 @@ class RTMediaModel extends RTDBModel {
 	if ( is_multisite () ){
 	    $sql.= " AND {$this->table_name}.blog_id = '".get_current_blog_id()."' ";
 	}
-        if ( is_array ( $global ) && count ( $global ) > 0 ) {
+        if ( is_array ( $global ) && count ( $global ) > 0 ){
             $sql .= " and album_id in (";
             $sep = "";
             foreach ( $global as $id ) {
@@ -308,14 +308,14 @@ class RTMediaModel extends RTDBModel {
             }
             $sql .= ")";
         }
-        if ( $context == "profile" ) {
+        if ( $context == "profile" ){
             $sql .= " AND media_author=$profile_id ";
         } else if ( $context == "group" ) {
             $sql .= " AND context_id=$profile_id ";
         }
         global $wpdb;
         $result = $wpdb->get_results ( $sql );
-        if ( isset ( $result ) ) {
+        if ( isset ( $result ) ){
             return count ( $result );
         } else {
             return 0;
