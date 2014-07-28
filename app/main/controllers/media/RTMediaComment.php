@@ -58,15 +58,15 @@ class RTMediaComment {
 	}
 
 	function add($attr) {
-
+                global $allowedtags;
 	       do_action('rtmedia_before_add_comment', $attr);
                $defaults = array(
                         'user_id'           => $this->get_current_id(),
                         'comment_author'    => $this->get_current_author(),
                         'comment_date'      =>  current_time('mysql')
                 );
+		$attr[ 'comment_content' ] = wp_kses($attr[ 'comment_content' ], $allowedtags);
                 $params = wp_parse_args( $attr, $defaults );
-		
 		$id = $this->rtmedia_comment_model->insert($params);
 		global $rtmedia_points_media_id;
 		$rtmedia_points_media_id = rtmedia_id($params['comment_post_ID']);
