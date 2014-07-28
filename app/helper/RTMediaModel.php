@@ -26,7 +26,7 @@ class RTMediaModel extends RTDBModel {
      */
     function __call ( $name, $arguments ) {
         $result = parent::__call ( $name, $arguments );
-        if ( ! $result[ 'result' ] ) {
+        if ( ! $result[ 'result' ] ){
             $result[ 'result' ] = $this->populate_results_fallback ( $name, $arguments );
         }
         return $result;
@@ -44,18 +44,18 @@ class RTMediaModel extends RTDBModel {
     function get ( $columns, $offset = false, $per_page = false, $order_by = 'media_id desc' , $count_flag = false ) {
         global $wpdb;
         $select = "SELECT ";
-        if($count_flag){
+        if( $count_flag ){
             $select .= "count(*) ";
-        }else{
+        } else {
             $select .= "{$this->table_name}.* " ;
         }
 
-	$from = " FROM {$this->table_name} ";
+	    $from = " FROM {$this->table_name} ";
         $join = "";
         $where = " where 2=2 ";
-	if( is_multisite() ) {
-	    $where.= " AND {$this->table_name}.blog_id = '".get_current_blog_id()."' ";
-	}
+	    if( is_multisite() ) {
+	        $where.= " AND {$this->table_name}.blog_id = '".get_current_blog_id()."' ";
+	    }
         $temp = 65;
         foreach ( $columns as $colname => $colvalue ) {
             if ( strtolower ( $colname ) == "meta_query" ) {
