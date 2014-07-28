@@ -92,7 +92,7 @@ class RTMediaNav {
                 $wp_admin_bar->add_menu ( array(
                     'parent' => 'my-account-' . RTMEDIA_MEDIA_SLUG,
                     'id' => 'my-account-media-' . RTMEDIA_ALBUM_SLUG,
-                    'title' => __ ( 'Albums', 'rtmedia' ),
+                    'title' => RTMEDIA_ALBUM_PLURAL_LABEL,
                     'href' => trailingslashit ( get_rtmedia_user_link ( get_current_user_id () ) ) . RTMEDIA_MEDIA_SLUG . '/album/'
                 ) );
             }
