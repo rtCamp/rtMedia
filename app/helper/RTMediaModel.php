@@ -20,7 +20,7 @@ class RTMediaModel extends RTDBModel {
      */
     function __call ( $name, $arguments ) {
         $result = parent::__call ( $name, $arguments );
-        if ( ! $result[ 'result' ] ) {
+        if ( ! $result[ 'result' ] ){
             $result[ 'result' ] = $this->populate_results_fallback ( $name, $arguments );
         }
         return $result;
@@ -38,27 +38,27 @@ class RTMediaModel extends RTDBModel {
     function get ( $columns, $offset = false, $per_page = false, $order_by = 'media_id desc' , $count_flag = false ) {
         global $wpdb;
         $select = "SELECT ";
-        if($count_flag){
+        if( $count_flag ){
             $select .= "count(*) ";
-        }else{
+        } else {
             $select .= "{$this->table_name}.* " ;
         }
 
 	$from = " FROM {$this->table_name} ";
         $join = "";
         $where = " where 2=2 ";
-	if( is_multisite() ) {
+	if( is_multisite() ){
 	    $where.= " AND {$this->table_name}.blog_id = '".get_current_blog_id()."' ";
 	}
         $temp = 65;
         foreach ( $columns as $colname => $colvalue ) {
             if ( strtolower ( $colname ) == "meta_query" ) {
                 foreach ( $colvalue as $meta_query ) {
-                    if ( ! isset ( $meta_query[ "compare" ] ) ) {
+                    if ( ! isset ( $meta_query[ "compare" ] ) ){
                         $meta_query[ "compare" ] = "=";
                     }
                     $tbl_alias = chr ( $temp ++  );
-		    if(is_multisite() ) {
+		    if(is_multisite() ){
 			$join .= " LEFT JOIN {$wpdb->base_prefix}{$this->meta_table_name} as {$tbl_alias} ON {$this->table_name}.id = {$tbl_alias}.media_id ";
 		    } else {
 			$join .= " LEFT JOIN {$wpdb->prefix}{$this->meta_table_name} as {$tbl_alias} ON {$this->table_name}.id = {$tbl_alias}.media_id ";
@@ -69,7 +69,7 @@ class RTMediaModel extends RTDBModel {
                         $where .= " AND  {$tbl_alias}.meta_key = '{$meta_query[ "key" ]}' ";
                 }
             } else {
-                if ( is_array ( $colvalue ) ) {
+                if ( is_array ( $colvalue ) ){
                     if ( ! isset ( $colvalue[ 'compare' ] ) )
                         $compare = 'IN';
                     else
@@ -87,7 +87,7 @@ class RTMediaModel extends RTDBModel {
             }
         }
         $qgroup_by = " ";
-        if($order_by){
+        if( $order_by ){
             $qorder_by = " ORDER BY {$this->table_name}.{$order_by}";
         } else {
             $qorder_by = "";
@@ -100,21 +100,21 @@ class RTMediaModel extends RTDBModel {
         $qorder_by = apply_filters ( 'rtmedia-model-order-by-query', $qorder_by, $this->table_name );
 
         $sql = $select . $from . $join . $where . $qgroup_by . $qorder_by;
-        if($offset !== false){
-            if(! is_integer($offset))
+        if( $offset !== false ){
+            if( ! is_integer( $offset ) )
                 $offset = 0;
 
             if( intval ( $offset ) < 0 )
                 $offset = 0;
 
-            if( ! is_integer($per_page) )
+            if( ! is_integer( $per_page ) )
                 $per_page = 1;
 
             if( intval ( $per_page ) < 1 )
                 $per_page = 1;
             
             //filter added to change the LIMIT
-            $limit = apply_filters('rtmedia-model-limit-query', ' LIMIT ' . $offset . ',' . $per_page, $offset, $per_page);
+            $limit = apply_filters( 'rtmedia-model-limit-query', ' LIMIT ' . $offset . ',' . $per_page, $offset, $per_page );
             
             $sql .= $limit;
         }
