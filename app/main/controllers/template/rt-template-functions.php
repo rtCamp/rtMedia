@@ -363,7 +363,12 @@ function rtmedia_image( $size = 'rt_media_thumbnail', $id = false, $recho = true
 
 	if ( ! $thumbnail_id ){
 		global $rtmedia;
-		if ( isset ( $rtmedia->allowed_types[ $media_object->media_type ] ) && isset ( $rtmedia->allowed_types[ $media_object->media_type ][ 'thumbnail' ] ) ){
+                // Getting the extension of the uploaded file
+                $extension = rtmedia_get_extension();
+                // Checking if custom thumbnail for this file extension is set or not
+		if ( isset ( $rtmedia->allowed_types[ $media_object->media_type ] )  && isset ( $rtmedia->allowed_types[ $media_object->media_type ][ 'ext_thumb' ] ) && isset ( $rtmedia->allowed_types[ $media_object->media_type ][ 'ext_thumb' ][ $extension ] ) ){
+                    $src = $rtmedia->allowed_types[ $media_object->media_type ][ 'ext_thumb' ][ $extension ];
+                } else if ( isset ( $rtmedia->allowed_types[ $media_object->media_type ] ) && isset ( $rtmedia->allowed_types[ $media_object->media_type ][ 'thumbnail' ] ) ){
 			$src = $rtmedia->allowed_types[ $media_object->media_type ][ 'thumbnail' ];
 		} elseif ( $media_object->media_type == 'album' ) {
 			$src = rtmedia_album_image( $size, $id );
@@ -2654,4 +2659,25 @@ function rtm_is_buddypress_enable( $flag ){
 		return $flag;
 	}
 	return false;
+}
+
+/*
+ * Function for getting extension from media id
+ */
+function rtmedia_get_extension( $media_id = false ) {
+    // If media_id is false then use global media_id
+    if( ! $media_id ) {
+        global $rtmedia_media;
+        
+        $media_id = $rtmedia_media->media_id;
+    }
+    
+    // Getting filename from media id
+    $filename = basename( wp_get_attachment_url( $media_id ) );
+    
+    // Checking file type of uploaded document
+    $file_type = wp_check_filetype($filename);
+    
+    // return the extension of the filename
+    return $file_type[ 'ext' ];
 }
