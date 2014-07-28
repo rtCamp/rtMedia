@@ -8,10 +8,11 @@
 class RTMediaModel extends RTDBModel {
 
     /**
-	 * Constructor
-	 * @access public
-	 * @return void
-	 */
+     *
+     * Constructor
+     * @access public
+     * @return void
+     */
     function __construct () {
         parent::__construct ( 'rtm_media', false, 10, true );
         $this->meta_table_name = "rt_rtm_media_meta";
