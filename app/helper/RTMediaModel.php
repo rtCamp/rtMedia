@@ -315,6 +315,12 @@ class RTMediaModel extends RTDBModel {
         return $result;
     }
 
+    /**
+     *
+     * @param  type $profile_id
+     * @param  type $context
+     * @return int
+     */
     function get_other_album_count ( $profile_id, $context = "profile" ) {
         $global = RTMediaAlbum::get_globals ();
 	$sql = "select distinct album_id from {$this->table_name} where 2=2 AND context = '{$context}' ";
