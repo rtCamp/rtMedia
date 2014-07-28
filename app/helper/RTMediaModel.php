@@ -221,6 +221,14 @@ class RTMediaModel extends RTDBModel {
         return $results;
     }
 
+    /**
+     *
+     * @param  type $group_id
+     * @param  type $offset
+     * @param  type $per_page
+     * @param  type $order_by
+     * @return type $results
+     */
     function get_group_albums ( $group_id, $offset, $per_page, $order_by = 'media_id desc' ) {
         global $wpdb;
         if ( is_multisite () )
@@ -249,6 +257,12 @@ class RTMediaModel extends RTDBModel {
         return $results;
     }
 
+    /**
+     *
+     * @param  type $user_id
+     * @param  type $where_query
+	 * @return type $results
+     */
     function get_counts ( $user_id = false, $where_query = false ) {
 
         if ( ! $user_id && ! $where_query )
