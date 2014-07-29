@@ -11,7 +11,7 @@
  * @author ritz
  */
 class RTMediaInteractionModel extends RTDBModel {
-	
+
 	/**
 	 * Constructor
 	 *
@@ -32,22 +32,22 @@ class RTMediaInteractionModel extends RTDBModel {
 	 * @return bool
 	 */
 	public function check( $user_id = "", $media_id = "", $action = "" ) {
-	    if( $user_id == "" || $media_id == "" || $action == "" ){
-	        return false;
+		if( $user_id == "" || $media_id == "" || $action == "" ){
+    		return false;
 		}
-		
+
 	    $columns = array(
 	        'user_id' => $user_id,
 	        'media_id' => $media_id,
 	        'action' => $action
 	    );
-		
+
 	    $results = $this->get( $columns );
-		
-	    if( $results ){
-	        return true;
+
+		if( $results ){
+			return true;
 		} else {
-	        return false;
+			return false;
 		}
 	}
 
@@ -61,18 +61,18 @@ class RTMediaInteractionModel extends RTDBModel {
 	 * @return type $results
 	 */
 	function get_row( $user_id = "", $media_id = "", $action = "" ) {
-	    if( $user_id == "" || $media_id == "" || $action == "" ){
-	        return false;
+		if( $user_id == "" || $media_id == "" || $action == "" ){
+			return false;
 		}
-		
+
 	    $columns = array(
 	        'user_id' => $user_id,
 	        'media_id' => $media_id,
 	        'action' => $action
 	    );
-		
+
 	    $results = $this->get( $columns );
-		
+
 	    return $results;
 	}
 }
