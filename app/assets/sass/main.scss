@@ -618,6 +618,13 @@
 
 #buddypress, .rtmedia-container {
 	.mejs-controls {
+                margin-left: 25px; width: 79%;
+                .mejs-time-rail {
+                    width: 134px;
+                    .mejs-time-total {
+                        width: 124px;
+                    }
+                }
 		button {
 			padding: 4px 8px;
 			border: none;
