@@ -39,25 +39,25 @@ class RTMediaFeed {
 		$maxitems = 0;
 		// Get a SimplePie feed object from the specified feed source.
 		$rss = fetch_feed( $this->feed_url );
-		if ( ! is_wp_error( $rss ) ) { // Checks that the object is created correctly
-		    // Figure out how many total items there are, but limit it to 5.
-		//            $maxitems = $rss->get_item_quantity(5);
+		if ( ! is_wp_error( $rss ) ){ // Checks that the object is created correctly
+			// Figure out how many total items there are, but limit it to 5.
+			// $maxitems = $rss->get_item_quantity(5);
 			$maxitems = $rss->get_item_quantity( 3 );
-		
-		    // Build an array of all the items, starting with element 0 (first element).
-		    $rss_items = $rss->get_items( 0, $maxitems );
+			
+			// Build an array of all the items, starting with element 0 (first element).
+			$rss_items = $rss->get_items( 0, $maxitems );
 		}
 		?>
 		<ul><?php
-		if ($maxitems == 0) {
+		if ( $maxitems == 0 ){
 			echo '<li>' . __('No items', 'rtmedia') . '.</li>';
 		} else {
 			// Loop through each feed item and display each item as a hyperlink.
-			foreach ($rss_items as $item) {
-				?>
-				    <li>
-				        <a href='<?php echo $item->get_permalink(); ?>?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media' title='<?php echo __('Posted ', 'rtmedia') . $item->get_date('j F Y | g:i a'); ?>'><?php echo $item->get_title(); ?></a>
-				    </li><?php
+			foreach ( $rss_items as $item ) {
+			?>
+			    <li>
+			        <a href='<?php echo $item->get_permalink(); ?>?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media' title='<?php echo __('Posted ', 'rtmedia') . $item->get_date('j F Y | g:i a'); ?>'><?php echo $item->get_title(); ?></a>
+			    </li><?php
 			}
 		}
 		?>
