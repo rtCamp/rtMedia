@@ -12,31 +12,68 @@
  */
 class RTMediaCommentModel {
 
+	/**
+	 * Constructor
+	 *
+	 * @access public
+	 * @return void
+	 */
 	public function __construct() {
 		//initialization
 	}
 
-	function insert($attr) {
-		return wp_insert_comment($attr);
+	/**
+	 * Insert attr
+	 *
+	 * @access public
+	 * @param  array $attr
+	 */
+	public function insert( $attr ) {
+
+		return wp_insert_comment( $attr );
 	}
 
-	function update($attr) {
+	/**
+	 * Update comment.
+	 *
+	 * @access public
+	 * @param  array $attr
+	 */
+	public function update( $attr ) {
 
-		return wp_update_comment($attr, ARRAY_A);
+		return wp_update_comment( $attr, ARRAY_A );
 	}
 
-	function get($where) {
+	/**
+	 * Get comments.
+	 *
+	 * @access public
+	 * @param  string $where
+	 */
+	public function get( $where ) {
 
-		return get_comments($where);
+		return get_comments( $where );
 	}
 
-	function get_by_id($id) {
+	/**
+	 * Get comments by id.
+	 *
+	 * @access public
+	 * @param  int    $id
+	 */
+	public function get_by_id( $id ) {
 
-		return get_comment($id);
+		return get_comment( $id );
 	}
 
-	function delete($id) {
+	/**
+	 * Delete comments by id.
+	 *
+	 * @access public
+	 * @param  int    $id
+	 */
+	public function delete( $id ) {
 
-		return wp_delete_comment($id, true);
+		return wp_delete_comment( $id, true );
 	}
 }
