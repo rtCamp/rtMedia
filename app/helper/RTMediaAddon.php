@@ -22,29 +22,29 @@ if ( ! class_exists( 'RTMediaAddon' ) ){
 			        //<a></a>
 			        . '</a>';
 		}
-
+		
 		public static function render_addons( $page = '' ) {
 			global $wp_settings_sections, $wp_settings_fields;
-
+			
 			if ( ! isset( $wp_settings_sections ) || !isset( $wp_settings_sections[$page] ) )
 				return;
-
+			
 			foreach ( (array) $wp_settings_sections[$page] as $section ) {
-
+			
 				if ( $section['callback'] )
 					call_user_func( $section['callback'], $section );
-
+			
 				if ( ! isset( $wp_settings_fields ) || !isset( $wp_settings_fields[$page] ) || !isset( $wp_settings_fields[$page][$section['id']] ) )
 					continue;
-
+			
 				echo '<table class="form-table">';
 				do_settings_fields( $page, $section['id'] );
 				echo '</table>';
 			}
 		}
-
-	    public function get_addons() {
-
+		
+		public function get_addons() {
+		
 			$tabs = array();
 			global $rtmedia_admin;
 			$tabs[] = array(
@@ -59,14 +59,14 @@ if ( ! class_exists( 'RTMediaAddon' ) ){
 				'href' => '#rtm-plugins',
 				'callback' => array( $this, 'plugins_content' )
 			);
-
+		
 			/*			$tabs[] = array(
 							'title' => __('Themes', 'rtmedia'),
 							'name' => __('Themes', 'rtmedia'),
 							'href' => '#bpm-themes',
 							'callback' => array($this, 'themes_content')
 						);*/
-
+		
 			?>
 			<div id="rtm-addons">
 			    <div class="horizontal-tabs">
@@ -84,7 +84,7 @@ if ( ! class_exists( 'RTMediaAddon' ) ){
 			    }
 			?>
 			    </dl>
-
+		
 			<?php
 			    $k = 1;
 			    $active_class = '';
@@ -107,7 +107,7 @@ if ( ! class_exists( 'RTMediaAddon' ) ){
 			    </div>
 			</div>
 			<?php
-	    }
+		}
 
 
 		public function plugins_content($args = '') {
