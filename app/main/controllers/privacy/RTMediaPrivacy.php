@@ -229,7 +229,7 @@ class RTMediaPrivacy {
             'item_css_id'     => 'rtmedia-privacy-settings' , // The CSS ID to apply to the HTML of the nav item
             'user_has_access' => true , // Can the logged in user see this nav item?
             'site_admin_only' => false , // Can only site admins see this nav item?
-            'position'        => 900 , // Index of where this nav item should be positioned
+            'position'        => 80 , // Index of where this nav item should be positioned
             'screen_function' => array ( $this , 'settings_ui' ) , // The name of the function to run when clicked
             'link'            => ''     // The link for the subnav item; optional, not usually required.
                 ) ;

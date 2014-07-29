@@ -274,7 +274,7 @@ class RTMediaUploadFile {
 	function exif( $file ) {
 		$file_parts = pathinfo( $file[ 'file' ] );
 		if ( in_array( strtolower( $file_parts[ 'extension' ] ), array( 'jpg', 'jpeg', 'tiff' ) ) ){
-			$exif        = read_exif_data( $file[ 'file' ] );
+			$exif        = @read_exif_data( $file[ 'file' ] );
 			$exif_orient = isset ( $exif[ 'Orientation' ] ) ? $exif[ 'Orientation' ] : 0;
 			$rotateImage = 0;
 
