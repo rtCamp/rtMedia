@@ -12,34 +12,67 @@
  */
 class RTMediaInteractionModel extends RTDBModel {
 
-    function __construct () {
-        parent::__construct ( 'rtm_media_interaction', false, 10, true );
-    }
+	/**
+	 * Constructor
+	 *
+	 * @access public
+	 * @return void
+	 */
+	public function __construct () {
+	    parent::__construct ( 'rtm_media_interaction', false, 10, true );
+	}
 
-    function check($user_id = "", $media_id = "", $action = "") {
-        if($user_id == "" || $media_id == "" || $action == "")
-            return false;
-        $columns = array(
-            'user_id' => $user_id,
-            'media_id' => $media_id,
-            'action' => $action
-        );
-        $results = $this->get($columns);
-        if($results)
-            return true;
-        else
-            return false;
-    }
+	/**
+	 * Check user id and media id.
+	 *
+	 * @access public
+	 * @param  int  $user_id
+	 * @param  int  $media_id
+	 * @param  type $action
+	 * @return bool
+	 */
+	public function check( $user_id = "", $media_id = "", $action = "" ) {
+		if( $user_id == "" || $media_id == "" || $action == "" ){
+			return false;
+		}
 
-    function get_row($user_id = "", $media_id = "", $action = "") {
-        if($user_id == "" || $media_id == "" || $action == "")
-            return false;
-        $columns = array(
-            'user_id' => $user_id,
-            'media_id' => $media_id,
-            'action' => $action
-        );
-        $results = $this->get($columns);
-        return $results;
-    }
+		$columns = array(
+		    'user_id' => $user_id,
+		    'media_id' => $media_id,
+		    'action' => $action
+		);
+
+		$results = $this->get( $columns );
+
+		if( $results ){
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	/**
+	 * get_row.
+	 *
+	 * @access public
+	 * @param  int  $user_id
+	 * @param  int  $media_id
+	 * @param  type $action
+	 * @return type $results
+	 */
+	function get_row( $user_id = "", $media_id = "", $action = "" ) {
+		if( $user_id == "" || $media_id == "" || $action == "" ){
+			return false;
+		}
+		
+		$columns = array(
+		    'user_id' => $user_id,
+		    'media_id' => $media_id,
+		    'action' => $action
+		);
+		
+		$results = $this->get( $columns );
+		
+		return $results;
+	}
 }

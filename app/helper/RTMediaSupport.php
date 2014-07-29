@@ -12,6 +12,13 @@ if ( ! class_exists( 'RTMediaSupport' ) ){
 		var $debug_info;
 		var $curr_sub_tab;
 
+		/**
+		 * Constructor
+		 *
+		 * @access public
+		 * @param  bool $init
+		 * @return void
+		 */
 		public function __construct( $init = true ) {
 
 			if ( ! is_admin() ){
@@ -34,6 +41,13 @@ if ( ! class_exists( 'RTMediaSupport' ) ){
 			//add_action('admin_init', array($this,'load_service_form'),99);
 		}
 
+		/**
+		 * Get support content.
+		 *
+		 * @access public
+		 * @param  void
+		 * @return void
+		 */
 		public function get_support_content() {
 			$tabs = array();
 			global $rtmedia_admin;
@@ -99,6 +113,13 @@ if ( ! class_exists( 'RTMediaSupport' ) ){
 
 		}
 
+		/**
+		 * Render support.
+		 *
+		 * @access public
+		 * @param  type $page
+		 * @return void
+		 */
 		public function render_support( $page = '' ) {
 			global $wp_settings_sections, $wp_settings_fields;
 
@@ -122,6 +143,13 @@ if ( ! class_exists( 'RTMediaSupport' ) ){
 			}
 		}
 
+		/**
+		 * Define Service Selector.
+		 *
+		 * @access public
+		 * @param  void
+		 * @return void
+		 */
 		public function service_selector() {
 			?>
 			<div>
@@ -194,7 +222,14 @@ if ( ! class_exists( 'RTMediaSupport' ) ){
 		////            do_action('bp_media_admin_tabs');
 		//        }
 
-		function call_get_form() {
+		/**
+		 * Call rtmedia admin support form.
+		 *
+		 * @access public
+		 * @param  void
+		 * @return void
+		 */
+		public function call_get_form() {
 			if ( isset( $_REQUEST[ 'page' ] ) && $_REQUEST[ 'page' ] == 'rtmedia-support' ){
 				//echo "<h2 class='nav-tab-wrapper'>".$this->rtmedia_support_sub_tabs()."</h2>";
 				if ( $this->curr_sub_tab == "support" ){
@@ -211,6 +246,13 @@ if ( ! class_exists( 'RTMediaSupport' ) ){
 		//	    }
 		//	}
 
+		/**
+		 * Get plugin_info.
+		 *
+		 * @access public
+		 * @param  void
+		 * @return array $rtmedia_plugins
+		 */
 		public function get_plugin_info() {
 			$active_plugins = (array)get_option( 'active_plugins', array() );
 			if ( is_multisite() ){
@@ -231,7 +273,14 @@ if ( ! class_exists( 'RTMediaSupport' ) ){
 			}
 		}
 
-		function rtmedia_scan_template_files( $template_path ) {
+		/**
+		 * Scan the rtmedia template files.
+		 *
+		 * @access public
+		 * @param  string $template_path
+		 * @return array  $result
+		 */
+		public function rtmedia_scan_template_files( $template_path ) {
 			$files  = scandir( $template_path );
 			$result = array();
 			if ( $files ){
@@ -255,6 +304,13 @@ if ( ! class_exists( 'RTMediaSupport' ) ){
 			return $result;
 		}
 
+		/**
+		 * Show debug_info.
+		 *
+		 * @access public
+		 * @param  void
+		 * @return void
+		 */
 		public function debug_info() {
 			global $wpdb, $wp_version, $bp;
 			$debug_info                 = array();
@@ -301,6 +357,13 @@ if ( ! class_exists( 'RTMediaSupport' ) ){
 			$this->debug_info = $debug_info;
 		}
 
+		/**
+		 * Generate debug_info html.
+		 *
+		 * @access public
+		 * @param  void
+		 * @return void
+		 */
 		public function debug_info_html() {
 			$this->debug_info();
 			?>
@@ -324,6 +387,13 @@ if ( ! class_exists( 'RTMediaSupport' ) ){
 
 		}
 
+		/**
+		 * Check for migration_required.
+		 *
+		 * @access public
+		 * @param  void
+		 * @return bool
+		 */
 		public function is_migration_required() {
 			$pending_rtmedia_migrate = rtmedia_get_site_option( "rtMigration-pending-count" );
 			if ( ( $pending_rtmedia_migrate === false || $pending_rtmedia_migrate == 0 ) ){
@@ -333,6 +403,13 @@ if ( ! class_exists( 'RTMediaSupport' ) ){
 			return true;
 		}
 
+		/**
+		 * Generate migration_html.
+		 *
+		 * @access public
+		 * @param  type $page
+		 * @return bool
+		 */
 		public function migration_html( $page = '' ) {
 			$pending_rtmedia_migrate = rtmedia_get_site_option( "rtMigration-pending-count" );
 
@@ -356,10 +433,12 @@ if ( ! class_exists( 'RTMediaSupport' ) ){
 		}
 
 		/**
-		 *
+		 * Generate rtmedia admin form.
+		 * 
 		 * @global type $current_user
 		 *
-		 * @param type  $form
+		 * @param  string $form
+		 * @return void
 		 */
 		public function get_form( $form = '' ) {
 			if ( empty( $form ) ){
@@ -490,8 +569,12 @@ if ( ! class_exists( 'RTMediaSupport' ) ){
 		}
 
 		/**
-		 *
+		 * Now submit request.
+		 * 
 		 * @global type $rtmedia
+		 *
+		 * @param  void
+		 * @return void
 		 */
 		public function submit_request() {
 			$this->debug_info();
