@@ -36,13 +36,13 @@ class RTMediaInteractionModel extends RTDBModel {
     		return false;
 		}
 
-	    $columns = array(
-	        'user_id' => $user_id,
-	        'media_id' => $media_id,
-	        'action' => $action
-	    );
+		$columns = array(
+		    'user_id' => $user_id,
+		    'media_id' => $media_id,
+		    'action' => $action
+		);
 
-	    $results = $this->get( $columns );
+		$results = $this->get( $columns );
 
 		if( $results ){
 			return true;
@@ -64,15 +64,15 @@ class RTMediaInteractionModel extends RTDBModel {
 		if( $user_id == "" || $media_id == "" || $action == "" ){
 			return false;
 		}
-
-	    $columns = array(
-	        'user_id' => $user_id,
-	        'media_id' => $media_id,
-	        'action' => $action
-	    );
-
-	    $results = $this->get( $columns );
-
-	    return $results;
+		
+		$columns = array(
+		    'user_id' => $user_id,
+		    'media_id' => $media_id,
+		    'action' => $action
+		);
+		
+		$results = $this->get( $columns );
+		
+		return $results;
 	}
 }
