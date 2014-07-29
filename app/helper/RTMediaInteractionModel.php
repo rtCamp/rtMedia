@@ -11,10 +11,16 @@
  * @author ritz
  */
 class RTMediaInteractionModel extends RTDBModel {
-
-    function __construct () {
-        parent::__construct ( 'rtm_media_interaction', false, 10, true );
-    }
+	
+	/**
+	 * Constructor
+	 *
+	 * @access public
+	 * @return void
+	 */
+	public function __construct () {
+	    parent::__construct ( 'rtm_media_interaction', false, 10, true );
+	}
 
     function check($user_id = "", $media_id = "", $action = "") {
         if($user_id == "" || $media_id == "" || $action == "")
