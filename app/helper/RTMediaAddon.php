@@ -30,6 +30,13 @@ if ( ! class_exists( 'RTMediaAddon' ) ){
 			        . '</a>';
 		}
 
+		/**
+		 * Render addons.
+		 *
+		 * @access public
+		 * @param  type $page
+		 * @return void
+		 */
 		public static function render_addons( $page = '' ) {
 			global $wp_settings_sections, $wp_settings_fields;
 
@@ -50,8 +57,14 @@ if ( ! class_exists( 'RTMediaAddon' ) ){
 			}
 		}
 
+		/**
+		 * Get addons.
+		 *
+		 * @access public
+		 * @param  void
+		 * @return void
+		 */
 		public function get_addons() {
-
 			$tabs = array();
 			global $rtmedia_admin;
 			$tabs[] = array(
@@ -117,6 +130,13 @@ if ( ! class_exists( 'RTMediaAddon' ) ){
 		}
 
 
+		/**
+		 * plugins_content.
+		 *
+		 * @access public
+		 * @param  array $args
+		 * @return void
+		 */
 		public function plugins_content( $args = '' ) {
 			$img_src = RTMEDIA_URL .'app/assets/img/';
 			$addons = array(
@@ -178,11 +198,24 @@ if ( ! class_exists( 'RTMediaAddon' ) ){
 			}
 		}
 
+		/**
+		 * services_content.
+		 *
+		 * @access public
+		 * @param  array $args
+		 * @return void
+		 */
 		public function services_content( $args = '' ) {
-			
 			$objEncoding->encoding_service_intro();
 		}
 
+		/**
+		 * themes_content.
+		 *
+		 * @access public
+		 * @param  array $args
+		 * @return void
+		 */
 		public function themes_content( $args = '' ) {
 			echo '<h3>'. __( 'Coming Soon !!', 'rtmedia' ) .'</h3>';
 		}
@@ -190,13 +223,14 @@ if ( ! class_exists( 'RTMediaAddon' ) ){
 
 
 		/**
+		 * Define addon.
 		 *
-		 * @global type $rtmedia
-		 * @param type $args
+		 * @global type  $rtmedia
+		 * @param  array $args
 		 */
 		public function addon( $args ) {
 			global $rtmedia;
-			
+
 			$defaults = array(
 			    'title' => '',
 			    'img_src' => '',
@@ -209,9 +243,9 @@ if ( ! class_exists( 'RTMediaAddon' ) ){
 			);
 			$args = wp_parse_args( $args, $defaults );
 			extract( $args );
-			
+
 			$coming_soon ? ' coming-soon' : '';
-			
+
 			$coming_soon_div = ( $coming_soon ) ? $this->coming_soon_div() : '';
 			$addon = '<div class="bp-media-addon">
 			    <a href="' . $product_link . '"  title="' . $title . '" target="_blank">
