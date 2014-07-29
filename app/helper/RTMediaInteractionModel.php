@@ -33,7 +33,7 @@ class RTMediaInteractionModel extends RTDBModel {
 	 */
 	public function check( $user_id = "", $media_id = "", $action = "" ) {
 		if( $user_id == "" || $media_id == "" || $action == "" ){
-    		return false;
+			return false;
 		}
 
 		$columns = array(
