@@ -12,39 +12,39 @@
 if ( ! class_exists( 'RTMediaAddon' ) ){
 
 	class RTMediaAddon {
-	
-	    public $enquiry_link = 'http://rtcamp.com/contact/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media';
-	
-	    public function coming_soon_div() {
+
+		public $enquiry_link = 'http://rtcamp.com/contact/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media';
+
+		public function coming_soon_div() {
 			return
 			        '<div class="coming-soon coming-soon-l"></div>
 				<a class="coming-soon coming-soon-r" href="' . $this->enquiry_link . '" target="_blank">'
 			        //<a></a>
 			        . '</a>';
-	    }
-	
+		}
+
 		public static function render_addons( $page = '' ) {
 			global $wp_settings_sections, $wp_settings_fields;
-			
+
 			if ( ! isset( $wp_settings_sections ) || !isset( $wp_settings_sections[$page] ) )
 				return;
-			
+
 			foreach ( (array) $wp_settings_sections[$page] as $section ) {
-			
+
 				if ( $section['callback'] )
 					call_user_func( $section['callback'], $section );
-			
+
 				if ( ! isset( $wp_settings_fields ) || !isset( $wp_settings_fields[$page] ) || !isset( $wp_settings_fields[$page][$section['id']] ) )
 					continue;
-			
+
 				echo '<table class="form-table">';
 				do_settings_fields( $page, $section['id'] );
 				echo '</table>';
 			}
 		}
-	
+
 	    public function get_addons() {
-			
+
 			$tabs = array();
 			global $rtmedia_admin;
 			$tabs[] = array(
@@ -59,14 +59,14 @@ if ( ! class_exists( 'RTMediaAddon' ) ){
 				'href' => '#rtm-plugins',
 				'callback' => array( $this, 'plugins_content' )
 			);
-			
+
 			/*			$tabs[] = array(
 							'title' => __('Themes', 'rtmedia'),
 							'name' => __('Themes', 'rtmedia'),
 							'href' => '#bpm-themes',
 							'callback' => array($this, 'themes_content')
 						);*/
-			
+
 			?>
 			<div id="rtm-addons">
 			    <div class="horizontal-tabs">
@@ -84,7 +84,7 @@ if ( ! class_exists( 'RTMediaAddon' ) ){
 			    }
 			?>
 			    </dl>
-			
+
 			<?php
 			    $k = 1;
 			    $active_class = '';
@@ -108,8 +108,8 @@ if ( ! class_exists( 'RTMediaAddon' ) ){
 			</div>
 			<?php
 	    }
-	
-	
+
+
 		public function plugins_content($args = '') {
 			$img_src = RTMEDIA_URL .'app/assets/img/';
 			$addons = array(
@@ -170,19 +170,19 @@ if ( ! class_exists( 'RTMediaAddon' ) ){
 				$this->addon($value);
 			}
 		}
-	
+
 		public function services_content($args = '') {
-	
-	
+
+
 			$objEncoding->encoding_service_intro();
 		}
-	
+
 		public function themes_content($args = '') {
 			echo '<h3>'. __( 'Coming Soon !!', 'rtmedia' ) .'</h3>';
 		}
-	
-	
-	
+
+
+
 	    /**
 	     *
 	     * @global type $rtmedia
@@ -190,7 +190,7 @@ if ( ! class_exists( 'RTMediaAddon' ) ){
 	     */
 	    public function addon($args) {
 			global $rtmedia;
-			
+
 			$defaults = array(
 			    'title' => '',
 			    'img_src' => '',
@@ -203,9 +203,9 @@ if ( ! class_exists( 'RTMediaAddon' ) ){
 			);
 			$args = wp_parse_args($args, $defaults);
 			extract($args);
-			
+
 			$coming_soon ? ' coming-soon' : '';
-			
+
 			$coming_soon_div = ($coming_soon) ? $this->coming_soon_div() : '';
 			$addon = '<div class="bp-media-addon">
 			    <a href="' . $product_link . '"  title="' . $title . '" target="_blank">
@@ -224,7 +224,7 @@ if ( ! class_exists( 'RTMediaAddon' ) ){
 			        '</div>';
 			echo $addon;
 	    }
-	
+
 	}
 
 }
