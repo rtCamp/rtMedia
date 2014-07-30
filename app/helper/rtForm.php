@@ -300,15 +300,15 @@ if( ! class_exists( "rtForm" ) ){
 
 				switch( $element ) {
 					case "rtRadio" :
-									$data = '<input type="radio" ' . $checked . " ";
-									break;
+						$data = '<input type="radio" ' . $checked . " ";
+						break;
 					case "rtCheckbox" :
-										$data = '<input type="checkbox" ' . $checked . " " . $switch . " ";
-										break;
+						$data = '<input type="checkbox" ' . $checked . " " . $switch . " ";
+						break;
 					case "rtSelect" :
-										$selected = ( $attrib['selected'] ) ? "selected=selected" : "";
-										$data = '<option value="' . $attrib['value'] . '"' . $selected . '>' . $attrib['key'] . '</option><br />';
-										break;
+						$selected = ( $attrib['selected'] ) ? "selected=selected" : "";
+						$data = '<option value="' . $attrib['value'] . '"' . $selected . '>' . $attrib['key'] . '</option><br />';
+						break;
 				}
 
 				if( $element != "rtSelect" ){
