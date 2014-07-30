@@ -688,9 +688,9 @@ if( ! class_exists( "rtForm" ) ){
 			return $this->generate_checkbox($attributes);
 		}
 
-		protected function generate_select($attributes) {
+		protected function generate_select( $attributes ) {
 
-			if( is_array($attributes) ) {
+			if( is_array( $attributes ) ) {
 				$element = 'rtSelect';
 				$html = '<select ';
 
@@ -704,13 +704,13 @@ if( ! class_exists( "rtForm" ) ){
 				$multiple = ( isset($attributes['multiple']) && $attributes['multiple'] ) ? true : false;
 				$name = ( isset($attributes['name']) ) ? $attributes['name'] : $element;
 				$html .= $this->generate_element_name($element, $multiple, $name) . ' ';
-				if(isset($attributes['class']))
-					$html .= $this->embedd_class($element, $attributes['class']);
+				if( isset( $attributes['class'] ) )
+					$html .= $this->embedd_class( $element, $attributes['class'] );
 				else
-					$html .= $this->embedd_class($element);
+					$html .= $this->embedd_class( $element );
 
-				if(isset($attributes['misc']))
-					$html.= ' ' . $this->embedd_misc_attributes($attributes['misc']);
+				if( isset( $attributes['misc'] ) )
+					$html.= ' ' . $this->embedd_misc_attributes( $attributes['misc'] );
 
 				$html .= '>';
 
@@ -719,15 +719,15 @@ if( ! class_exists( "rtForm" ) ){
 
 				$html .= '</select>';
 
-				if( isset($attributes['label']) ) {
-					if( isset($attributes['labelClass']) )
-						$html = $this->enclose_label($element, $html, $attributes['label'], $attributes['labelClass']);
+				if( isset( $attributes['label'] ) ) {
+					if( isset( $attributes['labelClass'] ) )
+						$html = $this->enclose_label( $element, $html, $attributes['label'], $attributes['labelClass'] );
 					else
-						$html = $this->enclose_label($element, $html, $attributes['label']);
+						$html = $this->enclose_label( $element, $html, $attributes['label'] );
 				}
 
-				if( isset($attributes['show_desc']) && $attributes['show_desc'] )
-					$html .= $this->generate_element_desc($attributes);
+				if( isset( $attributes['show_desc'] ) && $attributes['show_desc'] )
+					$html .= $this->generate_element_desc( $attributes );
 
 				return $html;
 			} else
@@ -737,7 +737,7 @@ if( ! class_exists( "rtForm" ) ){
 
 		public function get_select( $attributes = '' ) {
 
-			return $this->generate_select($attributes);
+			return $this->generate_select( $attributes );
 		}
 	}
 }
