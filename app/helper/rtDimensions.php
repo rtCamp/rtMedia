@@ -16,18 +16,47 @@ class rtDimensions extends rtForm {
 	private static $id_count = 0;
 	private static $default_class = "rt-form-dimension";
 
+	/**
+	 * get_default_id.
+	 *
+	 * @access private
+	 * @param  void
+	 * @return int $id_count
+	 */
 	private function get_default_id () {
 		return self::$id_count;
 	}
 
+	/**
+	 * update_default_id.
+	 *
+	 * @access private
+	 * @param  void
+	 * @return int $id_count
+	 */
 	private function update_default_id () {
 		self::$id_count ++;
 	}
 
+	/**
+	 * get_default_class.
+	 *
+	 * @access private
+	 * @param  void
+	 * @return string $default_class
+	 */
 	private function get_default_class () {
 		return self::$default_class;
 	}
 
+	/**
+	 * embedd_class.
+	 *
+	 * @access private
+	 * @param  string $element
+	 * @param  array  $class
+	 * @return string $html
+	 */
 	private function embedd_class ( $element, $class = null ) {
 		$html = 'class = "' . $this->get_default_class ();
 
@@ -44,6 +73,13 @@ class rtDimensions extends rtForm {
 		return $html;
 	}
 
+	/**
+	 * generate_dimensions.
+	 *
+	 * @access protected
+	 * @param  array  $attributes
+	 * @return string $html
+	 */
 	protected function generate_dimensions ( $attributes ) {
 		$element = "rtDimension";
 		global $rtmedia;
@@ -112,6 +148,13 @@ class rtDimensions extends rtForm {
 		return $html;
 	}
 
+	/**
+	 * generate_dimensions.
+	 *
+	 * @access public
+	 * @param  array  $attributes
+	 * @return void
+	 */
 	public function get_dimensions ( $attributes = '' ) {
 		return $this->generate_dimensions ( $attributes );
 	}
