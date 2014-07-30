@@ -312,24 +312,24 @@ if( ! class_exists( "rtForm" ) ){
 
 				if( $element != "rtSelect" ){
 					$data .= $this->processAttributes( $element, $attrib, true );
-					
+
 					if( isset( $attrib['switch_square'] ) && $attrib['switch_square'] ){
-					
+
 						$data = '<div class="rt-switch switch-square" data-on-label="<i class=\'fui-check\'></i>" data-off-label="<i class=\'fui-cross\'></i>">' . $data . '</div>';
-					
+
 					} else if( ( isset( $attrib['switch'] ) && $attrib['switch'] ) ||
 								( isset( $attrib['switch_square'] ) && $attrib['switch_square'] ) ) {
-					
+
 						if( $size > 1 ){
 							$data = '<div>' . $this->enclose_label( $element, $data, $attrib['key'] ) . '</div>';
 						} else {
 							$data = $this->enclose_label( $element, $data, $attrib['key'] );
 						}
-					
+
 					} else {
 						$data = $this->enclose_label( $element, $data, $attrib['key'] );
 					}
-					
+
 					$data .= '<br>';
 				}
 
