@@ -71,10 +71,9 @@
  * @author udit
  */
 
-if(!class_exists("rtForm")) {
+if( ! class_exists( "rtForm" ) ){
 
 	class rtForm {
-
 
 		private $element_id;
 		/**
@@ -106,70 +105,71 @@ if(!class_exists("rtForm")) {
 		);
 
 
-		private function get_default_id($element) {
+		private function get_default_id( $element ) {
 			return self::$id_counts[$element];
 		}
 
-		private function update_default_id($element) {
+		private function update_default_id( $element ) {
 			self::$id_counts[$element] ++;
 		}
 
-		private function get_default_class($element) {
+		private function get_default_class( $element ) {
 			return self::$default_classes[$element];
 		}
 
 
-		private function embedd_class($element, $class = NULL) {
+		private function embedd_class( $element, $class = NULL ) {
 
-			$html = 'class="' . $this->get_default_class($element);
+			$html = 'class="' . $this->get_default_class( $element );
 
-			if( isset( $class ) ) {
+			if( isset( $class ) ){
 
-				if( is_array( $class ) )
+				if( is_array( $class ) ){
 					$html .= ' ' . implode(" ", $class);
-				else
+				} else {
 					throw new rtFormInvalidArgumentsException( "class [". $element ."]" );
+				}
 			}
 			$html .= '" ';
 
 			return $html;
 		}
 
-		private function generate_element_id($element, $id = NULL) {
+		private function generate_element_id( $element, $id = NULL ) {
 
 			$html = 'id="';
-			if( isset( $id ) ) {
+			if( isset( $id ) ){
 				$html .= $id . '"';
 				$this->element_id = $id;
 			} else {
-				$html .= $this->get_default_class($element) . "-" . $this->get_default_id($element) . '"';
-				$this->element_id = $this->get_default_class($element) . "-" . $this->get_default_id($element);
+				$html .= $this->get_default_class( $element ) . "-" . $this->get_default_id( $element ) . '"';
+				$this->element_id = $this->get_default_class( $element ) . "-" . $this->get_default_id( $element );
 				$this->update_default_id($element);
 			}
 
 			return $html;
 		}
 
-		private function generate_element_name($element, $multiple, $name) {
+		private function generate_element_name( $element, $multiple, $name ) {
 
 			$html = 'name="';
-			if( $multiple ) {
+			if( $multiple ){
 
 				$html .= isset( $name ) ? $name . '[]' : $element . '[]';
 
 				// for select - add multiple = multiple
-				if( $element == "rtSelect" ) {
+				if( $element == "rtSelect" ){
 					$html .= 'multiple = "multiple"';
 				}
-			}
-			else
+			} else {
 				$html .= isset( $name ) ? $name : $element;
+			}
 			$html .= '"';
 
 			return $html;
 		}
 
-		private function generate_element_value($element, $attributes) {
+		private function generate_element_value( $element, $attributes ) {
 
 			$html = '';
 			switch( $element ) {
@@ -177,7 +177,7 @@ if(!class_exists("rtForm")) {
 				case "rtNumber"://number
 				case "rtText" :	//text
 								$html .= 'value="';
-								$html .= ( isset($attributes['value']) ) ? $attributes['value'] : '';
+								$html .= ( isset( $attributes['value'] ) ) ? $attributes['value'] : '';
 								$html .= '" ';
 								break;
 
@@ -195,9 +195,9 @@ if(!class_exists("rtForm")) {
 			return $html;
 		}
 
-		private function generate_element_desc($attributes) {
+		private function generate_element_desc( $attributes ) {
 
-			if( isset($attributes['desc']) ) {
+			if( isset( $attributes['desc'] ) ) {
 
 				$html = '<span class="clearfix large-offset-3 description">' . $attributes['desc'] . '</span>';
 
@@ -207,51 +207,54 @@ if(!class_exists("rtForm")) {
 			return "";
 		}
 
-		private function embedd_misc_attributes($misc) {
+		private function embedd_misc_attributes( $misc ) {
 
-			if(!is_array($misc)) {
-				throw new rtFormInvalidArgumentsException("attributes : misc");
+			if( ! is_array( $misc ) ) {
+				throw new rtFormInvalidArgumentsException( "attributes : misc" );
 				return;
 			}
 
 			$html = '';
 
-			foreach ($misc as $key => $value) {
+			foreach ( $misc as $key => $value ) {
 				$html .= $key . '="' . $value . '" ';
 			}
 
 			return $html;
 		}
 
-		private function processAttributes($element, $attributes, $container = false) {
+		private function processAttributes( $element, $attributes, $container = false ) {
 
 			/* generating the id on its own if not provided otherwise taken from the parameter provided */
-			if( isset($attributes['id']) )
-				$html = $this->generate_element_id($element, $attributes['id']) . ' ';
-			else
-				$html = $this->generate_element_id($element) . ' ';
+			if( isset( $attributes['id'] ) ){
+				$html = $this->generate_element_id( $element, $attributes['id'] ) . ' ';
+			} else {
+				$html = $this->generate_element_id( $element ) . ' ';
+			}
 
 			/* name attrbute according to multiple flag */
-			$multiple = ( isset($attributes['multiple']) && $attributes['multiple'] ) ? true : false;
-			$name = ( isset($attributes['name']) ) ? $attributes['name'] : $element;
-			$html .= $this->generate_element_name($element, $multiple, $name) . ' ';
+			$multiple = ( isset( $attributes['multiple'] ) && $attributes['multiple'] ) ? true : false;
+			$name = ( isset( $attributes['name'] ) ) ? $attributes['name'] : $element;
+			$html .= $this->generate_element_name( $element, $multiple, $name ) . ' ';
 
 			/*
 			 *  list down all the classes provided along with the default class of rtForms.
 			 *  default class of rtForms will always be attached irrespective of the attributes provided.
 			 */
-			if(!$container) {
+			if( ! $container ){
 
-				if(isset($attributes['class']))
-					$html .= $this->embedd_class($element, $attributes['class']);
-				else
-					$html .= $this->embedd_class($element);
+				if( isset( $attributes['class'] ) ){
+					$html .= $this->embedd_class( $element, $attributes['class'] );
+				} else {
+					$html .= $this->embedd_class( $element );
+				}
 			}
 
-			if(isset($attributes['misc']))
-				$html.= ' ' . $this->embedd_misc_attributes($attributes['misc']);
+			if( isset( $attributes['misc'] ) ){
+				$html.= ' ' . $this->embedd_misc_attributes( $attributes['misc'] );
+			}
 
-			$html .= $this->generate_element_value($element, $attributes);
+			$html .= $this->generate_element_value( $element, $attributes );
 
 			return $html;
 		}
@@ -377,7 +380,7 @@ if(!class_exists("rtForm")) {
 		}
 
 
-        protected function generate_textbox($attributes) {
+	    protected function generate_textbox($attributes) {
 
 			$element = 'rtText';
 			if( is_array( $attributes ) ) {
@@ -555,32 +558,32 @@ if(!class_exists("rtForm")) {
 		 * functionality and flow needs to be decided
 		 *
 		 *  */
-//		protected function generate_wysiwyg($attributes) {
-//
-//			$element = 'rtWysiwyg';
-//			if( is_array($attributes) ) {
-//
-//				$id = isset( $attributes['id'] ) ? $attributes['id'] : $this->get_default_class($element) . "-" . $this->get_default_id($element);
-//				$name = isset( $attributes['name'] ) ? $attributes['name'] : $element;
-//				if(isset($attributes['class']))
-//					$class = $this->embedd_class($element, $attributes['class']);
-//				else
-//					$class = $this->embedd_class($element);
-//				$value = isset( $attributes['value'] ) ? $attributes['value'] : "";
-//
-//				echo '<label for="' . $id . '">';
-//					wp_editor( $value, $id, array('textarea_name' =>  $name, 'editor_class' => $class) );
-//				echo '</label>';
-//			} else
-//				throw new rtFormInvalidArgumentsException( "attributes" );
-//		}
-//
-//		public function get_wysiwyg( $attributes = '' ) {
-//
-//			ob_start();
-//			$this->generate_wysiwyg($attributes);
-//			return ob_get_clean();
-//		}
+	//		protected function generate_wysiwyg($attributes) {
+	//
+	//			$element = 'rtWysiwyg';
+	//			if( is_array($attributes) ) {
+	//
+	//				$id = isset( $attributes['id'] ) ? $attributes['id'] : $this->get_default_class($element) . "-" . $this->get_default_id($element);
+	//				$name = isset( $attributes['name'] ) ? $attributes['name'] : $element;
+	//				if(isset($attributes['class']))
+	//					$class = $this->embedd_class($element, $attributes['class']);
+	//				else
+	//					$class = $this->embedd_class($element);
+	//				$value = isset( $attributes['value'] ) ? $attributes['value'] : "";
+	//
+	//				echo '<label for="' . $id . '">';
+	//					wp_editor( $value, $id, array('textarea_name' =>  $name, 'editor_class' => $class) );
+	//				echo '</label>';
+	//			} else
+	//				throw new rtFormInvalidArgumentsException( "attributes" );
+	//		}
+	//
+	//		public function get_wysiwyg( $attributes = '' ) {
+	//
+	//			ob_start();
+	//			$this->generate_wysiwyg($attributes);
+	//			return ob_get_clean();
+	//		}
 
 
 		protected function generate_radio($attributes) {
@@ -605,8 +608,8 @@ if(!class_exists("rtForm")) {
 
 			$container .= '</span>';
 
-//			if( isset($attributes['label']) )
-//				$container = $this->enclose_label('container', $container, $attributes['label']);
+	//			if( isset($attributes['label']) )
+	//				$container = $this->enclose_label('container', $container, $attributes['label']);
 
 			return $container;
 		}
@@ -639,8 +642,8 @@ if(!class_exists("rtForm")) {
 
 			$container .= '</span>';
 
-//			if( isset($attributes['label']) )
-//				$container = $this->enclose_label('container', $container, $attributes['label']);
+	//			if( isset($attributes['label']) )
+	//				$container = $this->enclose_label('container', $container, $attributes['label']);
 
 			return $container;
 		}
