@@ -259,29 +259,29 @@ if( ! class_exists( "rtForm" ) ){
 			return $html;
 		}
 
-		private function container_enclosed_elements($element, $attrib, $rtForm_options) {
+		private function container_enclosed_elements( $element, $attrib, $rtForm_options ) {
 
 			$html = '';
-			$size = count($rtForm_options);
-			if( isset($attrib['id']) )
+			$size = count( $rtForm_options );
+			if( isset( $attrib['id'] ) )
 				$id = $attrib['id'];
 
-			foreach ($rtForm_options as $opt) {
+			foreach ( $rtForm_options as $opt ) {
 
-				if( isset($attrib['id']) && $size>1 ) {
-					$attrib['id'] = $id . "-" . $this->get_default_id($element);
-					$this->update_default_id($element);
+				if( isset( $attrib['id'] ) && $size>1 ){
+					$attrib['id'] = $id . "-" . $this->get_default_id( $element );
+					$this->update_default_id( $element );
 				}
 
-				foreach ((array)$opt as $key => $val) {
+				foreach ( (array)$opt as $key => $val ) {
 
-					if($key == "checked")
+					if( $key == "checked" )
 						$attrib['checked'] = $val;
-					else if($key == "selected")
+					else if( $key == "selected" )
 						$attrib['selected'] = $val;
-					else if($key == "desc")
+					else if( $key == "desc" )
 						$attrib['desc'] = $val;
-					else if($key == "id")
+					else if( $key == "id" )
 						$attrib['id'] = $val;
 					else {
 						$attrib['key'] = $key;
@@ -289,13 +289,14 @@ if( ! class_exists( "rtForm" ) ){
 					}
 				}
 
-				$checked = (isset($attrib['checked']) && $attrib['checked']) ? "checked=checked" : "";
-				if( isset($attrib['switch']) && $attrib['switch'])
+				$checked = ( isset( $attrib['checked'] ) && $attrib['checked'] ) ? "checked=checked" : "";
+				if( isset( $attrib['switch'] ) && $attrib['switch'] ){
 					$switch = 'data-toggle="switch"';
-				else
+				} else {
 					$switch = '';
+				}
 
-				switch($element) {
+				switch( $element ) {
 					case "rtRadio" :
 									$data = '<input type="radio" ' . $checked . " ";
 									break;
@@ -303,15 +304,15 @@ if( ! class_exists( "rtForm" ) ){
 										$data = '<input type="checkbox" ' . $checked . " " . $switch . " ";
 										break;
 					case "rtSelect" :
-										$selected = ($attrib['selected']) ? "selected=selected" : "";
+										$selected = ( $attrib['selected'] ) ? "selected=selected" : "";
 										$data = '<option value="' . $attrib['value'] . '"' . $selected . '>' . $attrib['key'] . '</option><br />';
 										break;
 				}
 
-				if($element != "rtSelect") {
-					$data .= $this->processAttributes($element, $attrib, true);
+				if( $element != "rtSelect" ){
+					$data .= $this->processAttributes( $element, $attrib, true );
 
-					if( isset($attrib['switch_square']) && $attrib['switch_square'] ) {
+					if( isset($attrib['switch_square']) && $attrib['switch_square'] ){
 
 						$data = '<div class="rt-switch switch-square" data-on-label="<i class=\'fui-check\'></i>" data-off-label="<i class=\'fui-cross\'></i>">' . $data . '</div>';
 
@@ -323,31 +324,32 @@ if( ! class_exists( "rtForm" ) ){
 						else
 							$data = $this->enclose_label($element, $data, $attrib['key']);
 
-					} else
+					} else {
 						$data = $this->enclose_label($element, $data, $attrib['key']);
+					}
 
 					$data .= '<br>';
 				}
 
 				$html .= $data;
 
-				unset($attrib['id']);
-				unset($attrib['key']);
-				unset($attrib['value']);
+				unset( $attrib['id'] );
+				unset( $attrib['key'] );
+				unset( $attrib['value'] );
 			}
 			return $html;
 		}
 
-		private function parse_multiple_options($element, $attributes) {
+		private function parse_multiple_options( $element, $attributes ) {
 
-			if( is_array($attributes) ) {
+			if( is_array( $attributes ) ){
 
-				if( isset($attributes['rtForm_options']) && is_array($attributes['rtForm_options']) ) {
+				if( isset($attributes['rtForm_options']) && is_array($attributes['rtForm_options']) ){
 
-					$attribKeys = array_keys($attributes);
+					$attribKeys = array_keys( $attributes );
 					$attrib = array();
 
-					foreach ($attribKeys as $key) {
+					foreach ( $attribKeys as $key ) {
 						if( $key != "rtForm_options" )
 							$attrib[$key] = $attributes[$key];
 					}
@@ -355,24 +357,28 @@ if( ! class_exists( "rtForm" ) ){
 					$rtForm_options = (array) $attributes['rtForm_options'];
 
 					return array( 'attrib' => $attrib, 'rtForm_options' => $rtForm_options );
-				} else
+				} else {
 					throw new rtFormInvalidArgumentsException( "rtForm_options [" . $element . "]" );
-			} else
+				}
+			} else {
 				throw new rtFormInvalidArgumentsException( "attributes" );
+			}
 		}
 
-		protected function enclose_label($element, $html, $label, $class=false) {
+		protected function enclose_label( $element, $html, $label, $class=false ) {
 
 			$labelClass = '';
-			if(!empty($class) && is_array($class))
-				$labelClass = 'class="'.implode(' ', $class).'"';
+			if( ! empty( $class ) && is_array( $class ) ){
+				$labelClass = 'class="'.implode( ' ', $class ).'"';
+			}
 
 			$data = '<label for="' . $this->element_id . '" '.$labelClass.'>';
 
-			if( $element == "rtRadio" || $element == "rtCheckbox" )
+			if( $element == "rtRadio" || $element == "rtCheckbox" ){
 				$data .= $html . ' ' . $label;
-			else
+			} else {
 				$data .= $label . ' ' . $html;
+			}
 
 			$data .= '</label>';
 
@@ -380,42 +386,45 @@ if( ! class_exists( "rtForm" ) ){
 		}
 
 
-	    protected function generate_textbox($attributes) {
+	    protected function generate_textbox( $attributes ) {
 
 			$element = 'rtText';
-			if( is_array( $attributes ) ) {
+			if( is_array( $attributes ) ){
 
 				/* Starting the input tag */
 				$html = '<input type="text" ';
 
 				/* generating attributes */
-				$html .= $this->processAttributes($element, $attributes);
+				$html .= $this->processAttributes( $element, $attributes );
 
 				/* ending the tag */
 				$html .= ' />';
 
-				if( isset($attributes['label']) ) {
-					if( isset($attributes['labelClass']) )
-						$html = $this->enclose_label($element, $html, $attributes['label'], $attributes['labelClass']);
-					else
-						$html = $this->enclose_label($element, $html, $attributes['label']);
+				if( isset( $attributes['label'] ) ){
+					if( isset( $attributes['labelClass'] ) ){
+						$html = $this->enclose_label( $element, $html, $attributes['label'], $attributes['labelClass'] );
+					} else {
+						$html = $this->enclose_label( $element, $html, $attributes['label'] );
+					}
 				}
 
-				if( isset($attributes['show_desc']) && $attributes['show_desc'] )
+				if( isset( $attributes['show_desc'] ) && $attributes['show_desc'] ){
 					$html .= $this->generate_element_desc($attributes);
+				}
 
 				return $html;
-			} else
+			} else {
 				throw new rtFormInvalidArgumentsException( "attributes" );
+			}
 		}
 
 		public function get_textbox( $attributes = '' ) {
 
-			return $this->generate_textbox($attributes);
+			return $this->generate_textbox( $attributes );
 		}
 
 
-		protected function generate_number($attributes) {
+		protected function generate_number( $attributes ) {
 
 			$element = 'rtNumber';
 			if( is_array( $attributes ) ) {
@@ -424,22 +433,24 @@ if( ! class_exists( "rtForm" ) ){
 				$html = '<input type="number" ';
 
 				/* generating attributes */
-				$html .= $this->processAttributes($element, $attributes);
-				if( isset($attributes['min']) ) {
+				$html .= $this->processAttributes( $element, $attributes );
+				if( isset( $attributes['min'] ) ){
 				    $html.= " min='".$attributes['min']."' ";
 				}
 				/* ending the tag */
 				$html .= ' />';
 
-				if( isset($attributes['label']) ) {
-					if( isset($attributes['labelClass']) )
-						$html = $this->enclose_label($element, $html, $attributes['label'], $attributes['labelClass']);
-					else
-						$html = $this->enclose_label($element, $html, $attributes['label']);
+				if( isset( $attributes['label'] ) ){
+					if( isset( $attributes['labelClass'] ) ){
+						$html = $this->enclose_label( $element, $html, $attributes['label'], $attributes['labelClass'] );
+					} else {
+						$html = $this->enclose_label( $element, $html, $attributes['label'] );
+					}
 				}
 
-				if( isset($attributes['show_desc']) && $attributes['show_desc'] )
-					$html .= $this->generate_element_desc($attributes);
+				if( isset( $attributes['show_desc'] ) && $attributes['show_desc'] ){
+					$html .= $this->generate_element_desc( $attributes );
+				}
 
 				return $html;
 			} else
@@ -448,20 +459,20 @@ if( ! class_exists( "rtForm" ) ){
 
 		public function get_number( $attributes = '' ) {
 
-			return $this->generate_number($attributes);
+			return $this->generate_number( $attributes );
 		}
 
-		protected function generate_date($attributes) {
+		protected function generate_date( $attributes ) {
 
 			$element = 'rtDate';
-			if( is_array( $attributes ) ) {
+			if( is_array( $attributes ) ){
 				$html = '<input type="date" ';
 
 				$html .= $this->processAttributes($element, $attributes);
 
 				$html .= ' />';
 
-				if( isset($attributes['label']) ) {
+				if( isset($attributes['label']) ){
 					if( isset($attributes['labelClass']) )
 						$html = $this->enclose_label($element, $html, $attributes['label'], $attributes['labelClass']);
 					else
@@ -472,8 +483,9 @@ if( ! class_exists( "rtForm" ) ){
 					$html .= $this->generate_element_desc($attributes);
 
 				return $html;
-			} else
+			} else {
 				throw new rtFormInvalidArgumentsException( "attributes" );
+			}
 		}
 
 		public function get_date($attributes) {
