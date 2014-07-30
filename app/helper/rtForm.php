@@ -173,24 +173,25 @@ if( ! class_exists( "rtForm" ) ){
 
 			$html = '';
 			switch( $element ) {
-				case "rtHidden"://hidden
-				case "rtNumber"://number
+				case "rtHidden": //hidden
+				case "rtNumber": //number
 				case "rtText" :	//text
-								$html .= 'value="';
-								$html .= ( isset( $attributes['value'] ) ) ? $attributes['value'] : '';
-								$html .= '" ';
-								break;
+					$html .= 'value="';
+					$html .= ( isset( $attributes['value'] ) ) ? $attributes['value'] : '';
+					$html .= '" ';
+					break;
 
-				case "rtTextarea" : /**textarea
-									 * no process --- handled in between the start tab and end tag.
-									 * <textarea> value </textarea>
-									 */
-									break;
+				case "rtTextarea" :
+					/**textarea
+					 * no process --- handled in between the start tab and end tag.
+					 * <textarea> value </textarea>
+					 */
+					break;
 
 				case "rtCheckbox" :	//checkbox
-				case "rtRadio" ://radio
-								$html .= 'value = "' . $attributes['value'] . '">';
-								break;
+				case "rtRadio" : //radio
+					$html .= 'value = "' . $attributes['value'] . '">';
+					break;
 			}
 			return $html;
 		}
