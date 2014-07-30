@@ -31,12 +31,13 @@ class rtDimensions extends rtForm {
 	private function embedd_class ( $element, $class = null ) {
 		$html = 'class = "' . $this->get_default_class ();
 
-		if ( isset ( $class ) ) {
+		if ( isset ( $class ) ){
 
-		    if ( is_array ( $class ) )
-		        $html .= ' ' . implode ( " ", $class );
-		    else
-		        throw new rtFormsInvalidArgumentsException ( "class [" . $element . "]" );
+			if ( is_array ( $class ) ){
+				$html .= ' ' . implode ( " ", $class );
+			} else {
+				throw new rtFormsInvalidArgumentsException ( "class [" . $element . "]" );
+			}
 		}
 		$html .= '"';
 
@@ -56,17 +57,18 @@ class rtDimensions extends rtForm {
 
 		$html = '<div ';
 
-		if ( isset ( $attributes[ 'id' ] ) )
-		    $html .= 'id="' . $attributes[ 'id' ] . '" ';
-		else {
-		    $html .= 'id="' . $this->get_default_class () . '-' . $this->get_default_id () . '" ';
-		    $this->update_default_id ();
+		if ( isset ( $attributes[ 'id' ] ) ){
+			$html .= 'id="' . $attributes[ 'id' ] . '" ';
+		} else {
+			$html .= 'id="' . $this->get_default_class () . '-' . $this->get_default_id () . '" ';
+			$this->update_default_id ();
 		}
 
-		if ( isset ( $attributes[ 'class' ] ) )
-		    $html .= self::embedd_class ( $element, $attributes[ 'class' ] );
-		else
-		    $html .= self::embedd_class ( $element );
+		if ( isset ( $attributes[ 'class' ] ) ){
+			$html .= self::embedd_class ( $element, $attributes[ 'class' ] );
+		} else {
+			$html .= self::embedd_class ( $element );
+		}
 		$html .= '>';
 
 		$html .= parent::get_textbox ( array(
@@ -76,34 +78,36 @@ class rtDimensions extends rtForm {
 		            'show_desc' => $show_desc
 		) );
 
-		if ( isset ( $height ) ) {
-		    $html .= parent::get_textbox ( array(
-		                'name' => "rtmedia-options[{$key}_height]",
-		                'value' => $height,
-		                'class' => array( "small-text large-offset-1" ),
-		                'show_desc' => $show_desc
-		    ) );
+		if ( isset ( $height ) ){
+			$html .= parent::get_textbox ( array(
+			            'name' => "rtmedia-options[{$key}_height]",
+			            'value' => $height,
+			            'class' => array( "small-text large-offset-1" ),
+			            'show_desc' => $show_desc
+			) );
 		}
 
-		if ( isset ( $crop ) ) {
-		    $html .= parent::get_checkbox ( array(
-		                'name' => "rtmedia-options[{$key}_crop]",
-		                'rtForm_options' => array( array(
-		                        '' => 1, //label would be blank
-		                        'checked' => $crop
-		                    ) ),
-		                'class' => array( "large-offset-1" ),
-		                'show_desc' => $show_desc
-		    ) );
+		if ( isset ( $crop ) ){
+			$html .= parent::get_checkbox ( array(
+			            'name' => "rtmedia-options[{$key}_crop]",
+			            'rtForm_options' => array( array(
+			                    '' => 1, //label would be blank
+			                    'checked' => $crop
+			                ) ),
+			            'class' => array( "large-offset-1" ),
+			            'show_desc' => $show_desc
+			) );
 		}
 
-		if ( $desc && $show_desc )
-		    $html .= '<span class="clearfix large-offset-3 description">' . $desc . '</span>';
+		if ( $desc && $show_desc ){
+			$html .= '<span class="clearfix large-offset-3 description">' . $desc . '</span>';
+		}
 
 		$html .= '</div>';
 
-		if ( isset ( $attributes[ 'label' ] ) )
-		    $html = parent::enclose_label ( 'container', $html, $attributes[ 'label' ] );
+		if ( isset ( $attributes[ 'label' ] ) ){
+			$html = parent::enclose_label ( 'container', $html, $attributes[ 'label' ] );
+		}
 
 		return $html;
 	}
