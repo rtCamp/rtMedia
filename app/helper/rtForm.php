@@ -198,7 +198,7 @@ if( ! class_exists( "rtForm" ) ){
 
 		private function generate_element_desc( $attributes ) {
 
-			if( isset( $attributes['desc'] ) ) {
+			if( isset( $attributes['desc'] ) ){
 
 				$html = '<span class="clearfix large-offset-3 description">' . $attributes['desc'] . '</span>';
 
@@ -210,7 +210,7 @@ if( ! class_exists( "rtForm" ) ){
 
 		private function embedd_misc_attributes( $misc ) {
 
-			if( ! is_array( $misc ) ) {
+			if( ! is_array( $misc ) ){
 				throw new rtFormInvalidArgumentsException( "attributes : misc" );
 				return;
 			}
@@ -430,7 +430,7 @@ if( ! class_exists( "rtForm" ) ){
 		protected function generate_number( $attributes ) {
 
 			$element = 'rtNumber';
-			if( is_array( $attributes ) ) {
+			if( is_array( $attributes ) ){
 
 				/* Starting the input tag */
 				$html = '<input type="number" ';
