@@ -2683,3 +2683,16 @@ function rtmedia_get_extension( $media_id = false ) {
     // return the extension of the filename
     return $file_type[ 'ext' ];
 }
+
+/*
+ *  Function for no-popup class for rtmedia media gallery
+ */
+function rtmedia_add_no_popup_class( $class = '' ) {
+    return $class .= ' no-popup';
+}
+
+add_action( 'rtmedia_after_media_gallery', 'rtmedia_remove_no_popup_class_hook' );
+
+function rtmedia_remove_no_popup_class_hook() {
+    remove_filter( 'rtmedia_gallery_list_item_a_class', 'rtmedia_add_no_popup_class', 10, 1 );
+}
