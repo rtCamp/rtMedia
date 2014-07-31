@@ -149,7 +149,7 @@ class rtDimensions extends rtForm {
 	}
 
 	/**
-	 * generate_dimensions.
+	 * get_dimensions.
 	 *
 	 * @access public
 	 * @param  mixed  $attributes
