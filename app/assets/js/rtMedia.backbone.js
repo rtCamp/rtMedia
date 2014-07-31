@@ -142,7 +142,7 @@ jQuery( function ( $ ) {
                             el: list_el
                         } );
                         //element.show();
-                        jQuery('.rtmedia-container .rtmedia-list-media' ).css('opacity', '1');
+                        jQuery('.rtmedia-container .rtmedia-list' ).css('opacity', '1');
                         rtMediaHook.call( 'rtmedia_after_gallery_load' );
                         
                         jQuery('.rtmedia-container .rtmedia_next_prev .pagination' ).remove();
@@ -157,7 +157,7 @@ jQuery( function ( $ ) {
         reloadView: function () {
             upload_sync = true;
             nextpage = 1;
-            jQuery('.rtmedia-container .rtmedia-list-media' ).css('opacity', '0.5');
+            jQuery('.rtmedia-container .rtmedia-list' ).css('opacity', '0.5');
             this.getNext();
         }
 

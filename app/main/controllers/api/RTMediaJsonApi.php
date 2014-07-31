@@ -1084,6 +1084,11 @@ class RTMediaJsonApi{
         if(isset($_POST['context_id'])){
             $args['context_id'] = $_REQUEST['context_id'];
         }
+
+        //album id
+        if(isset($_POST['album_id'])){
+            $args['album_id'] = $_REQUEST['album_id'];
+        }
         //Media Author
         $media_author = '';
         if(!is_super_admin()){
