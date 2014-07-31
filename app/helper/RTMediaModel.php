@@ -264,7 +264,7 @@ class RTMediaModel extends RTDBModel {
 	 * @param  type $where_query
 	 * @return type $result
 	 */
-    function get_counts ( $user_id = false, $where_query = false ) {
+	function get_counts ( $user_id = false, $where_query = false ) {
 
 		if ( ! $user_id && ! $where_query )
 		    return false;
@@ -303,7 +303,7 @@ class RTMediaModel extends RTDBModel {
 //                        } else {
 //                            $query .= " AND {$this->table_name}.{$colname} = '{$colvalue}'";
 //                        }
-                        //profile now shows only profile media so conditional check removed and counts will be fetched according to the available context
+	                    //profile now shows only profile media so conditional check removed and counts will be fetched according to the available context
 		                $query .= " AND {$this->table_name}.{$colname} = '{$colvalue}'";
 		            }
 		        }
@@ -314,7 +314,7 @@ class RTMediaModel extends RTDBModel {
 		if ( ! is_array ( $result ) )
 		    return false;
 		return $result;
-    }
+	}
 
 	/**
 	 *
