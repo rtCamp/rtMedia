@@ -730,8 +730,9 @@ if( ! class_exists( "rtForm" ) ){
 					$html .= $this->generate_element_desc( $attributes );
 
 				return $html;
-			} else
+			} else {
 				throw new rtFormInvalidArgumentsException( "attributes" );
+			}
 
 		}
 
