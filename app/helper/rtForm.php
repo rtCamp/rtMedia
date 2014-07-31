@@ -277,15 +277,15 @@ if( ! class_exists( "rtForm" ) ){
 
 				foreach ( (array)$opt as $key => $val ) {
 
-					if( $key == "checked" )
+					if( $key == "checked" ){
 						$attrib['checked'] = $val;
-					else if( $key == "selected" )
+					} else if( $key == "selected" ) {
 						$attrib['selected'] = $val;
-					else if( $key == "desc" )
+					} else if( $key == "desc" ) {
 						$attrib['desc'] = $val;
-					else if( $key == "id" )
+					} else if( $key == "id" ) {
 						$attrib['id'] = $val;
-					else {
+					} else {
 						$attrib['key'] = $key;
 						$attrib['value'] = $val;
 					}
@@ -353,8 +353,9 @@ if( ! class_exists( "rtForm" ) ){
 					$attrib = array();
 
 					foreach ( $attribKeys as $key ) {
-						if( $key != "rtForm_options" )
+						if( $key != "rtForm_options" ){
 							$attrib[$key] = $attributes[$key];
+						}
 					}
 
 					$rtForm_options = (array) $attributes['rtForm_options'];
@@ -609,22 +610,24 @@ if( ! class_exists( "rtForm" ) ){
 	//		}
 
 
-		protected function generate_radio($attributes) {
+		protected function generate_radio( $attributes ) {
 
 			$element = 'rtRadio';
 			$html = '';
 
-			$meta = $this->parse_multiple_options($element, $attributes);
-			$html .= $this->container_enclosed_elements($element, $meta['attrib'], $meta['rtForm_options']);
+			$meta = $this->parse_multiple_options( $element, $attributes );
+			$html .= $this->container_enclosed_elements( $element, $meta['attrib'], $meta['rtForm_options'] );
 
-			if( isset($attributes['show_desc']) && $attributes['show_desc'] )
-				$html .= $this->generate_element_desc($attributes);
+			if( isset($attributes['show_desc']) && $attributes['show_desc'] ){
+				$html .= $this->generate_element_desc( $attributes );
+			}
 
 			$container = '<span ';
-			if(isset($attributes['class']))
-				$container .= $this->embedd_class($element, $attributes['class']);
-			else
-				$container .= $this->embedd_class($element);
+			if( isset( $attributes['class'] ) ){
+				$container .= $this->embedd_class( $element, $attributes['class'] );
+			} else {
+				$container .= $this->embedd_class( $element );
+			}
 			$container .= '>';
 
 			$container .= $html;
@@ -639,7 +642,7 @@ if( ! class_exists( "rtForm" ) ){
 
 		public function get_radio( $attributes = '' ) {
 
-			return $this->generate_radio($attributes);
+			return $this->generate_radio( $attributes );
 		}
 
 
@@ -651,14 +654,16 @@ if( ! class_exists( "rtForm" ) ){
 			$meta = $this->parse_multiple_options( $element, $attributes );
 			$html .= $this->container_enclosed_elements( $element, $meta['attrib'], $meta['rtForm_options'] );
 
-			if( isset($attributes['show_desc']) && $attributes['show_desc'] )
-				$html .= $this->generate_element_desc($attributes);
+			if( isset( $attributes['show_desc'] ) && $attributes['show_desc'] ){
+				$html .= $this->generate_element_desc( $attributes );
+			}
 
 			$container = '<span ';
-			if(isset($attributes['class']))
-				$container .= $this->embedd_class($element, $attributes['class']);
-			else
-				$container .= $this->embedd_class($element);
+			if( isset( $attributes['class'] ) ){
+				$container .= $this->embedd_class( $element, $attributes['class'] );
+			} else {
+				$container .= $this->embedd_class( $element );
+			}
 			$container .= '>';
 
 			$container .= $html;
