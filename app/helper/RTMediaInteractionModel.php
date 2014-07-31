@@ -52,7 +52,7 @@ class RTMediaInteractionModel extends RTDBModel {
 	}
 
 	/**
-	 * get_row.
+	 * get a array of media details.
 	 *
 	 * @access public
 	 * @param  int  $user_id
@@ -64,15 +64,15 @@ class RTMediaInteractionModel extends RTDBModel {
 		if( $user_id == "" || $media_id == "" || $action == "" ){
 			return false;
 		}
-		
+
 		$columns = array(
 		    'user_id' => $user_id,
 		    'media_id' => $media_id,
 		    'action' => $action
 		);
-		
+
 		$results = $this->get( $columns );
-		
+
 		return $results;
 	}
 }
