@@ -47,13 +47,13 @@ if( ! class_exists( 'rt_plugin_info' ) ){
             $this->network = $this->plugin_data["Network"];
         }
 
-        public function set_current_plugin_path( $path ) {
-            if ( $path != NULL ){
-                $this->plugin_path = $path;
-            } else {
-                $this->plugin_path = realpath( plugin_dir_path(__FILE__) . "../../index.php" );
+		public function set_current_plugin_path( $path ) {
+			if ( $path != NULL ){
+			    $this->plugin_path = $path;
+			} else {
+			    $this->plugin_path = realpath( plugin_dir_path(__FILE__) . "../../index.php" );
 			}
-        }
+		}
 
     }
 }
