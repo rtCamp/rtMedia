@@ -6,7 +6,7 @@
  * @author udit
  */
 
-if(!class_exists('rt_plugin_info')) {
+if( ! class_exists( 'rt_plugin_info' ) ){
     class rt_plugin_info {
 
         //put your code here
@@ -23,17 +23,17 @@ if(!class_exists('rt_plugin_info')) {
         public $network; //'Network' - Boolean. Whether the plugin can only be activated network wide.
         public $plugin_data;
 
-        public function __construct($path = NULL) {
-            $this->set_current_plugin_path($path);
+        public function __construct( $path = NULL ) {
+            $this->set_current_plugin_path( $path );
             $this->set_plugin_data();
         }
 
-        function get_plugin_data() {
-            require_once(ABSPATH . 'wp-admin/includes/plugin.php');
-            return @get_plugin_data($this->plugin_path);
+        public function get_plugin_data() {
+            require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+            return @get_plugin_data( $this->plugin_path );
         }
 
-        function set_plugin_data() {
+        public function set_plugin_data() {
             $this->plugin_data = $this->get_plugin_data();
             $this->name = $this->plugin_data["Name"];
             $this->title = $this->plugin_data["Title"];
@@ -47,13 +47,13 @@ if(!class_exists('rt_plugin_info')) {
             $this->network = $this->plugin_data["Network"];
         }
 
-        function set_current_plugin_path($path) {
-            if ($path != NULL)
+        public function set_current_plugin_path( $path ) {
+            if ( $path != NULL ){
                 $this->plugin_path = $path;
-            else
-                $this->plugin_path = realpath(plugin_dir_path(__FILE__) . "../../index.php");
+            } else {
+                $this->plugin_path = realpath( plugin_dir_path(__FILE__) . "../../index.php" );
+			}
         }
 
     }
 }
-
