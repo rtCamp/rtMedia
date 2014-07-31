@@ -15,6 +15,7 @@ class RTMediaUploadException extends Exception {
 	var $upload_err_invalid_context = 9;
 
 	/**
+	 * Constructs the class.
 	 *
 	 * @param type $code
 	 * @param type $msg
