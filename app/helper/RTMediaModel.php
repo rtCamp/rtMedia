@@ -52,38 +52,39 @@ class RTMediaModel extends RTDBModel {
 		}
 		$temp = 65;
 		foreach ( $columns as $colname => $colvalue ) {
-		    if ( strtolower ( $colname ) == "meta_query" ) {
-		        foreach ( $colvalue as $meta_query ) {
-		            if ( ! isset ( $meta_query[ "compare" ] ) ){
-		                $meta_query[ "compare" ] = "=";
-		            }
-		            $tbl_alias = chr ( $temp ++  );
-				    if(is_multisite() ){
+		    if ( strtolower ( $colname ) == "meta_query" ){
+				foreach ( $colvalue as $meta_query ) {
+					if ( ! isset ( $meta_query[ "compare" ] ) ){
+						$meta_query[ "compare" ] = "=";
+					}
+					$tbl_alias = chr ( $temp ++  );
+					if(is_multisite() ){
 						$join .= " LEFT JOIN {$wpdb->base_prefix}{$this->meta_table_name} as {$tbl_alias} ON {$this->table_name}.id = {$tbl_alias}.media_id ";
-				    } else {
+					} else {
 						$join .= " LEFT JOIN {$wpdb->prefix}{$this->meta_table_name} as {$tbl_alias} ON {$this->table_name}.id = {$tbl_alias}.media_id ";
-				    }
-		            if ( isset ( $meta_query[ "value" ] ) )
-		                $where .= " AND  ({$tbl_alias}.meta_key = '{$meta_query[ "key" ]}' and  {$tbl_alias}.meta_value  {$meta_query[ "compare" ]}  '{$meta_query[ "value" ]}' ) ";
-		            else
-		                $where .= " AND  {$tbl_alias}.meta_key = '{$meta_query[ "key" ]}' ";
-		        }
+					}
+					if ( isset ( $meta_query[ "value" ] ) ){
+						$where .= " AND  ({$tbl_alias}.meta_key = '{$meta_query[ "key" ]}' and  {$tbl_alias}.meta_value  {$meta_query[ "compare" ]}  '{$meta_query[ "value" ]}' ) ";
+					} else {
+						$where .= " AND  {$tbl_alias}.meta_key = '{$meta_query[ "key" ]}' ";
+					}
+				}
 		    } else {
-		        if ( is_array ( $colvalue ) ){
-		            if ( ! isset ( $colvalue[ 'compare' ] ) )
-		                $compare = 'IN';
-		            else
-		                $compare = $colvalue[ 'compare' ];
+				if ( is_array ( $colvalue ) ){
+					if ( ! isset ( $colvalue[ 'compare' ] ) )
+						$compare = 'IN';
+					else
+						$compare = $colvalue[ 'compare' ];
 
-		            $tmpVal = isset ( $colvalue[ 'value' ] ) ? $colvalue[ 'value' ] : $colvalue;
-		            $col_val_comapare = ( is_array( $tmpVal ) ) ? '(\'' . implode ( "','", $tmpVal ) . '\')' : '(\''.$tmpVal.'\')';
-		            if( $compare == 'IS NOT' ){
-		                $col_val_comapare = !empty( $colvalue[ 'value' ] ) ? $colvalue[ 'value' ] : $col_val_comapare;
-		            }
-		            $where .= " AND {$this->table_name}.{$colname} {$compare} {$col_val_comapare}";
-		        }
-		        else
-		            $where .= " AND {$this->table_name}.{$colname} = '{$colvalue}'";
+					$tmpVal = isset ( $colvalue[ 'value' ] ) ? $colvalue[ 'value' ] : $colvalue;
+					$col_val_comapare = ( is_array( $tmpVal ) ) ? '(\'' . implode ( "','", $tmpVal ) . '\')' : '(\''.$tmpVal.'\')';
+					if( $compare == 'IS NOT' ){
+						$col_val_comapare = !empty( $colvalue[ 'value' ] ) ? $colvalue[ 'value' ] : $col_val_comapare;
+					}
+					$where .= " AND {$this->table_name}.{$colname} {$compare} {$col_val_comapare}";
+				} else {
+					$where .= " AND {$this->table_name}.{$colname} = '{$colvalue}'";
+				}
 		    }
 		}
 		$qgroup_by = " ";
