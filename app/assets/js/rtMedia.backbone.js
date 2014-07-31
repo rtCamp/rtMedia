@@ -694,8 +694,14 @@ jQuery( document ).ready( function ( $ ) {
             } else {
                 return true;
             }
+            
+           // Creating table row to display selected files
             tdName = document.createElement( "td" );
-            tdName.innerHTML = file.name.substring( 0, 40 );
+            tdName.id = "td_" + file.id;
+            labelName = document.createElement( "label" );
+            labelName.id = "label_" + file.id;
+            labelName.innerHTML = file.name.substring( 0, 40 );
+            tdName.appendChild( labelName );
             tdStatus = document.createElement( "td" );
             tdStatus.className = "plupload_file_status";
             tdStatus.innerHTML = rtmedia_waiting_msg;
@@ -724,6 +730,48 @@ jQuery( document ).ready( function ( $ ) {
                 objUploadView.uploader.removeFile( upl.getFile( file.id ) );
                 $( "#" + file.id ).remove();
                 return false;
+            } );
+            // To change the name of the uploading file
+            $( "#label_" + file.id ).click( function ( e ) {
+                e.preventDefault();
+                label_name = document.getElementById( "label_" + file.id );
+                // Get td for editing
+                td_name = document.getElementById( "td_" + file.id );
+                td_name.innerHTML = '';
+                // Getting the filename
+                file_name = upl.getFile( file.id ).name;
+                // Split name and extension
+                file_name_array = file_name.split( '.' );
+                // Create input box
+                inputName = document.createElement("input");
+                inputName.type = "text";
+                inputName.value = file_name_array[ 0 ];
+                // Adding keyup event to textbox
+                inputName.addEventListener('keyup', function() {
+                    if( this.value != '' ) {
+                        file_name = this.value + "." + file_name_array[ 1 ];
+                        file_name_array[ 0 ] = this.value;
+                    } else {
+                        file_name = file_name_array[ 0 ] + "." + file_name_array[ 1 ];
+                    }
+                });
+                // Creating textnode for extension
+                text = document.createTextNode( "." + file_name_array[ 1 ] );
+                // Appending textbox and extension textnode to td
+                td_name.appendChild( inputName );
+                td_name.appendChild( text );
+                // Blur event to change the name after editing
+                inputName.addEventListener('blur', function() {
+                    td_name.innerHTML = '';
+                    label_name.innerHTML = file_name.substring( 0, 40 );
+                    // Set uploader object name attribute to textbox value
+                    upl.getFile( file.id ).title = file_name;
+                    console.log( upl );
+                    td_name.appendChild( label_name );
+//                    objUploadView.uploader.refresh();
+                });
+                // Focusing when displays the textbox
+                inputName.focus();
             } );
         } );
 
@@ -798,7 +846,7 @@ jQuery( document ).ready( function ( $ ) {
     } );
 
     objUploadView.uploader.bind( 'BeforeUpload', function ( up, files ) {
-
+        
         $.each( objUploadView.upload_remove_array, function ( i, rfile ) {
             if ( up.getFile( rfile ) )
                 up.removeFile( up.getFile( rfile ) );
@@ -816,6 +864,7 @@ jQuery( document ).ready( function ( $ ) {
 
         up.settings.multipart_params.context = object;
         up.settings.multipart_params.context_id = item_id;
+        up.settings.multipart_params.title = files.title;
         // if privacy dropdown is not disabled, then get the privacy value of the update
         if ( jQuery( "select.privacy" ).prop( 'disabled' ) === false ) {
             up.settings.multipart_params.privacy = jQuery( "select.privacy" ).val();
