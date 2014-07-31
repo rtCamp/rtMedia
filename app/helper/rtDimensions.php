@@ -17,7 +17,7 @@ class rtDimensions extends rtForm {
 	private static $default_class = "rt-form-dimension";
 
 	/**
-	 * get_default_id.
+	 * Get default html id count.
 	 *
 	 * @access private
 	 * @param  void
@@ -28,7 +28,7 @@ class rtDimensions extends rtForm {
 	}
 
 	/**
-	 * update_default_id.
+	 * Update default html id count.
 	 *
 	 * @access private
 	 * @param  void
@@ -39,7 +39,7 @@ class rtDimensions extends rtForm {
 	}
 
 	/**
-	 * get_default_class.
+	 * Get default html class.
 	 *
 	 * @access private
 	 * @param  void
@@ -50,7 +50,7 @@ class rtDimensions extends rtForm {
 	}
 
 	/**
-	 * embedd_class.
+	 * Embedd html class to html output.
 	 *
 	 * @access private
 	 * @param  string $element
@@ -74,7 +74,7 @@ class rtDimensions extends rtForm {
 	}
 
 	/**
-	 * generate_dimensions.
+	 * Generate rtmedia dimensions in admin options.
 	 *
 	 * @access protected
 	 * @param  array  $attributes
@@ -149,7 +149,7 @@ class rtDimensions extends rtForm {
 	}
 
 	/**
-	 * get_dimensions.
+	 * Get rtmedia dimensions in admin options.
 	 *
 	 * @access public
 	 * @param  mixed  $attributes
