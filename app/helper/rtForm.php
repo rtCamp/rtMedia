@@ -643,13 +643,13 @@ if( ! class_exists( "rtForm" ) ){
 		}
 
 
-		protected function generate_checkbox($attributes) {
+		protected function generate_checkbox( $attributes ) {
 
 			$element = 'rtCheckbox';
 			$html = '';
 
-			$meta = $this->parse_multiple_options($element, $attributes);
-			$html .= $this->container_enclosed_elements($element, $meta['attrib'], $meta['rtForm_options']);
+			$meta = $this->parse_multiple_options( $element, $attributes );
+			$html .= $this->container_enclosed_elements( $element, $meta['attrib'], $meta['rtForm_options'] );
 
 			if( isset($attributes['show_desc']) && $attributes['show_desc'] )
 				$html .= $this->generate_element_desc($attributes);
@@ -673,61 +673,65 @@ if( ! class_exists( "rtForm" ) ){
 
 		public function get_checkbox( $attributes = '' ) {
 
-			return $this->generate_checkbox($attributes);
+			return $this->generate_checkbox( $attributes );
 		}
 
-		public function get_switch($attributes = '') {
+		public function get_switch( $attributes = '' ) {
 
 			$attributes['switch'] = true;
-			return $this->generate_checkbox($attributes);
+			return $this->generate_checkbox( $attributes );
 		}
 
-		public function get_switch_square($attributes = '') {
+		public function get_switch_square( $attributes = '' ) {
 
 			$attributes['switch_square'] = true;
-			return $this->generate_checkbox($attributes);
+			return $this->generate_checkbox( $attributes );
 		}
 
 		protected function generate_select( $attributes ) {
 
-			if( is_array( $attributes ) ) {
+			if( is_array( $attributes ) ){
 				$element = 'rtSelect';
 				$html = '<select ';
 
-				if(isset($attributes['id']))
+				if( isset( $attributes['id'] ) ){
 					$id = $attributes['id'];
-				else {
-					$id = $element.$this->get_default_id ($element);
-					$this->update_default_id($element);
+				} else {
+					$id = $element.$this->get_default_id( $element );
+					$this->update_default_id( $element );
 				}
-				$html .= $this->generate_element_id($element, $id) . ' ';
-				$multiple = ( isset($attributes['multiple']) && $attributes['multiple'] ) ? true : false;
-				$name = ( isset($attributes['name']) ) ? $attributes['name'] : $element;
-				$html .= $this->generate_element_name($element, $multiple, $name) . ' ';
-				if( isset( $attributes['class'] ) )
+				$html .= $this->generate_element_id( $element, $id ) . ' ';
+				$multiple = ( isset( $attributes['multiple'] ) && $attributes['multiple'] ) ? true : false;
+				$name = ( isset( $attributes['name'] ) ) ? $attributes['name'] : $element;
+				$html .= $this->generate_element_name( $element, $multiple, $name ) . ' ';
+				if( isset( $attributes['class'] ) ){
 					$html .= $this->embedd_class( $element, $attributes['class'] );
-				else
+				} else {
 					$html .= $this->embedd_class( $element );
+				}
 
-				if( isset( $attributes['misc'] ) )
+				if( isset( $attributes['misc'] ) ){
 					$html.= ' ' . $this->embedd_misc_attributes( $attributes['misc'] );
+				}
 
 				$html .= '>';
 
-				$meta = $this->parse_multiple_options($element, $attributes);
-				$html .= $this->container_enclosed_elements($element, $meta['attrib'], $meta['rtForm_options']);
+				$meta = $this->parse_multiple_options( $element, $attributes );
+				$html .= $this->container_enclosed_elements( $element, $meta['attrib'], $meta['rtForm_options'] );
 
 				$html .= '</select>';
 
-				if( isset( $attributes['label'] ) ) {
-					if( isset( $attributes['labelClass'] ) )
+				if( isset( $attributes['label'] ) ){
+					if( isset( $attributes['labelClass'] ) ){
 						$html = $this->enclose_label( $element, $html, $attributes['label'], $attributes['labelClass'] );
-					else
+					} else {
 						$html = $this->enclose_label( $element, $html, $attributes['label'] );
+					}
 				}
 
-				if( isset( $attributes['show_desc'] ) && $attributes['show_desc'] )
+				if( isset( $attributes['show_desc'] ) && $attributes['show_desc'] ){
 					$html .= $this->generate_element_desc( $attributes );
+				}
 
 				return $html;
 			} else {
