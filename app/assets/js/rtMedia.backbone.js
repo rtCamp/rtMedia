@@ -670,6 +670,11 @@ jQuery( document ).ready( function ( $ ) {
         //$("#aw-whats-new-submit").attr('disabled', 'disabled');
 
         $.each( rfiles, function ( i, file ) {
+
+            //set file title along with file
+            rtm_file_name_array = file.name.split( '.' );
+            file.title = rtm_file_name_array[0];
+
             var hook_respo = rtMediaHook.call( 'rtmedia_js_file_added', [upl, file, "#rtMedia-queue-list tbody"] );
             if ( hook_respo == false ) {
                 file.status = -1;
@@ -733,45 +738,43 @@ jQuery( document ).ready( function ( $ ) {
             } );
             // To change the name of the uploading file
             $( "#label_" + file.id ).click( function ( e ) {
+
                 e.preventDefault();
-                label_name = document.getElementById( "label_" + file.id );
+
+                rtm_file_label = this;
                 // Get td for editing
-                td_name = document.getElementById( "td_" + file.id );
-                td_name.innerHTML = '';
-                // Getting the filename
-                file_name = upl.getFile( file.id ).name;
-                // Split name and extension
-                file_name_array = file_name.split( '.' );
-                // Create input box
-                inputName = document.createElement("input");
-                inputName.type = "text";
-                inputName.value = file_name_array[ 0 ];
-                // Adding keyup event to textbox
-                inputName.addEventListener('keyup', function() {
+                rtm_file_td = "#td_" + file.id;
+
+                jQuery( rtm_file_label ).hide();
+
+                rtm_file_title_input = '#text_' + file.id;
+
+                // show/create text box to edit media title
+                if( jQuery( rtm_file_title_input ).length == 0 ){
+                    jQuery( rtm_file_td ).append( '<input type="text" id="text_' + file.id + '" value="' + file.title + '" />' );
+                } else {
+                    jQuery( rtm_file_title_input ).show();
+                }
+                jQuery( rtm_file_title_input ).focus();
+
+                // set new media title
+                jQuery( rtm_file_title_input ).keyup( function( e ){
                     if( this.value != '' ) {
-                        file_name = this.value + "." + file_name_array[ 1 ];
-                        file_name_array[ 0 ] = this.value;
-                    } else {
-                        file_name = file_name_array[ 0 ] + "." + file_name_array[ 1 ];
+                        file.title = this.value;
+                    }
+                    if( e.keyCode == '13' ){
+                        return false;
                     }
                 });
-                // Creating textnode for extension
-                text = document.createTextNode( "." + file_name_array[ 1 ] );
-                // Appending textbox and extension textnode to td
-                td_name.appendChild( inputName );
-                td_name.appendChild( text );
-                // Blur event to change the name after editing
-                inputName.addEventListener('blur', function() {
-                    td_name.innerHTML = '';
-                    label_name.innerHTML = file_name.substring( 0, 40 );
-                    // Set uploader object name attribute to textbox value
-                    upl.getFile( file.id ).title = file_name;
-                    console.log( upl );
-                    td_name.appendChild( label_name );
-//                    objUploadView.uploader.refresh();
+
+                // hide input box for media title and show label of media title
+                jQuery( rtm_file_title_input ).blur( function( e ){
+                    if( this.value != '' ) {
+                        jQuery( rtm_file_title_input ).hide();
+                        jQuery( rtm_file_label ).text( file.title + "." + rtm_file_name_array[1] );
+                    }
+                    jQuery( rtm_file_label ).show();
                 });
-                // Focusing when displays the textbox
-                inputName.focus();
             } );
         } );
 
