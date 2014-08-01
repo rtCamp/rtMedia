@@ -761,8 +761,8 @@ function rmedia_single_comment( $comment ) {
         $comment_string = wp_kses($comment[ 'comment_content' ], $allowedtags);
 	$html .= '<div class="rtmedia-comment-content">' . wpautop( make_clickable( $comment_string ) ) . '</div>';
 
-	global $rtmedia_media;
-	if ( isset( $comment[ 'user_id' ] ) && isset( $rtmedia_media->media_author ) && ( is_rt_admin() || ( get_current_user_id() == $comment[ 'user_id' ] || $rtmedia_media->media_author == get_current_user_id() ) ) ){ // show delete button for comment author and admins
+	global $rtmedia_media;        
+        if ( is_rt_admin() || ( isset( $comment[ 'user_id' ] ) && ( get_current_user_id() == $comment[ 'user_id' ] || $rtmedia_media->media_author == get_current_user_id() ) ) ){ // show delete button for comment author and admins
 		$html .= '<i data-id="' . $comment[ 'comment_ID' ] . '" class = "rtmedia-delete-comment rtmicon-times" title="' . __( 'Delete Comment' ) . '"></i>';
 	}
 
