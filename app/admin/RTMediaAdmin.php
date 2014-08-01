@@ -673,7 +673,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ){
 				if ( ! isset( $requested ) ){
 					?>
 					<br/>
-					<p>You can see this page because you had <a href="<?php echo admin_url('admin.php?page=rtmedia-addons') ?>">subscribed</a> for <a href="https://rtcamp.com/rtmedia/docs/admin/addons/audio-video-encoding/" target="_blank">rtMedia audio/video encoding service</a>.</p>
+					<p>You can see this page because you have <a href="<?php echo admin_url('admin.php?page=rtmedia-addons') ?>">subscribed</a> for <a href="https://rtcamp.com/rtmedia/docs/admin/addons/audio-video-encoding/" target="_blank">rtMedia audio/video encoding service</a>.</p>
 					<p>You can regenerate thumbnails of specific video by visiting <a href="<?php echo admin_url('upload.php?post_mime_type=video'); ?>" >media page</a> and click on <b>Regenerate Thumbnail</b> option for that particular video.</p>
 					<p>Press <b>Regenerate Pending Thumbnails</b> button to regenerate thumbnails of pending videos.</p>
 					<p><input type="button" class="button button-primary" id="rt-start-media-regenerate" value="<?php _e( 'Regenerate Pending Thumbnails', 'rtmedia' ); ?>"/></p>

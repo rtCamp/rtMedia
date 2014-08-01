@@ -423,7 +423,7 @@ class RTMediaQuery {
 		$this->original_query = $query;
 		$this->query          = wp_parse_args( $query, $this->query );
 		//Set Json
-		$allowed_query = apply_filters( 'rtmedia_allowed_query', array( "id", "media_id", "media_type", "media_author", "album_id", "context", "context_id", "global", "privacy", "per_page", "lightbox", "show_title" ) );
+		$allowed_query = apply_filters( 'rtmedia_allowed_query', array( "id", "media_id", "media_type", "media_author", "album_id", "context", "context_id", "global", "privacy", "per_page", "lightbox", "media_title" ) );
 		if ( isset ( $_REQUEST[ "rtmedia_shortcode" ] ) ){
 			$query_data = $_REQUEST;
 			foreach ( $query_data as $key => $val ) {
@@ -585,13 +585,13 @@ class RTMediaQuery {
 		}
 
 		// media title option
-		if ( isset( $this->media_query[ 'show_title' ] ) ){
-			if( $this->media_query[ 'show_title' ] == 'false' ) {
+		if ( isset( $this->media_query[ 'media_title' ] ) ){
+			if( $this->media_query[ 'media_title' ] == 'false' ) {
 				// Add filter show media title
-				add_filter( 'rtmedia_media_gallery_show_title', 'rtmedia_gallery_do_not_show_title', 10, 1 );
+				add_filter( 'rtmedia_media_gallery_show_media_title', 'rtmedia_gallery_do_not_show_media_title', 10, 1 );
 			}
 			// Unset the media title parameter from media query
-			unset( $this->media_query[ 'show_title' ] );
+			unset( $this->media_query[ 'media_title' ] );
 		}
 
 		$this->media_query = apply_filters( 'rtmedia_media_query', $this->media_query, $this->action_query, $this->query );

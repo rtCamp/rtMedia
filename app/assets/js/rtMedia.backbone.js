@@ -91,8 +91,8 @@ jQuery( function ( $ ) {
             }
             that = this;
             if ( rtmedia_load_template_flag == true ) {
-                if( jQuery( '.rtmedia_gallery_wrapper' ).find( 'input[name=show_title]' ).length > 0 ){
-                    template_url += '&show_title=' + jQuery( '.rtmedia_gallery_wrapper' ).find( 'input[name=show_title]' ).val();
+                if( jQuery( '.rtmedia_gallery_wrapper' ).find( 'input[name=media_title]' ).length > 0 ){
+                    template_url += '&media_title=' + jQuery( '.rtmedia_gallery_wrapper' ).find( 'input[name=media_title]' ).val();
                 }
                 if( jQuery( '.rtmedia_gallery_wrapper' ).find( 'input[name=lightbox]' ).length > 0 ){
                     template_url += '&lightbox=' + jQuery( '.rtmedia_gallery_wrapper' ).find( 'input[name=lightbox]' ).val();

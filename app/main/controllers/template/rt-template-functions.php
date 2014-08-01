@@ -2696,19 +2696,19 @@ add_action( 'rtmedia_after_media_gallery', 'rtmedia_remove_media_query_hooks_aft
 
 function rtmedia_remove_media_query_hooks_after_gallery() {
     remove_filter( 'rtmedia_gallery_list_item_a_class', 'rtmedia_add_no_popup_class', 10, 1 );
-	remove_filter( 'rtmedia_media_gallery_show_title', 'rtmedia_gallery_do_not_show_title', 10, 1 );
+	remove_filter( 'rtmedia_media_gallery_show_media_title', 'rtmedia_gallery_do_not_show_media_title', 10, 1 );
 }
 
 // this function is used in RTMediaQuery.php file for show title filter
-function rtmedia_gallery_do_not_show_title( $flag ){
+function rtmedia_gallery_do_not_show_media_title( $flag ){
 	return false;
 }
 
 // we need to use show title filter when there is a request for template from rtMedia.backbone.js
-add_filter( 'rtmedia_media_gallery_show_title', 'rtmedia_media_gallery_show_title_template_request', 10, 1 );
+add_filter( 'rtmedia_media_gallery_show_media_title', 'rtmedia_media_gallery_show_title_template_request', 10, 1 );
 
 function rtmedia_media_gallery_show_title_template_request( $flag ){
-	if( isset( $_REQUEST['show_title'] ) && $_REQUEST['show_title'] == 'false' ){
+	if( isset( $_REQUEST['media_title'] ) && $_REQUEST['media_title'] == 'false' ){
 		return false;
 	}
 	return $flag;
