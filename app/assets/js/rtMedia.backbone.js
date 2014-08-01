@@ -354,6 +354,9 @@ jQuery( function ( $ ) {
             var upload_error_sep = "";
             var upload_remove_array = [];
             $.each( files, function ( i, file ) {
+                // For passing title as an argument to file name is not renamed
+                file.title = file.name;
+                
                 var hook_respo = rtMediaHook.call( 'rtmedia_js_file_added', [up, file, "#rtMedia-queue-list tbody"] );
                 if ( hook_respo == false ) {
                     file.status = -1;
@@ -391,31 +394,18 @@ jQuery( function ( $ ) {
                 } else {
                     uploaderObj.uploader.settings.filters[0].title;
                 }
-                tdName = document.createElement( "td" );
-                tdName.innerHTML = file.name.substring( 0, 40 );
-                tdName.className = "plupload_file_name";
-                tdStatus = document.createElement( "td" );
-                tdStatus.className = "plupload_file_status";
-                tdStatus.innerHTML = rtmedia_waiting_msg;
-                tdSize = document.createElement( "td" );
-                tdSize.className = "plupload_file_size";
-                tdSize.innerHTML = plupload.formatSize( file.size );
-                tdDelete = document.createElement( "td" );
-                tdDelete.innerHTML = "<span class='remove-from-queue'>&times;</span>";
-                tdDelete.title = rtmedia_close;
-                tdDelete.className = "close plupload_delete";
-                tdEdit = document.createElement( "td" );
-                tdEdit.innerHTML = "";
-                tdEdit.className = "plupload_media_edit";
-                tr = document.createElement( "tr" );
-                tr.className = 'upload-waiting';
-                tr.id = file.id;
-                tr.appendChild( tdName );
-                tr.appendChild( tdStatus );
-                tr.appendChild( tdSize );
-                tr.appendChild( tdEdit );
-                tr.appendChild( tdDelete );
-                $( "#rtMedia-queue-list" ).append( tr );
+                
+                // Creating table row to display selected files
+            var $tr = $( "<tr id='" + file.id + "' class='upload-waiting'>" )
+                      .append( $( "<td id='td_" + file.id + "' class='plupload_file_name'>" )
+                               .append( $( "<label id='label_" + file.id + "'>" ).text( file.name.substring( 0, 40 ) ) ),
+                               $( "<td class='plupload_file_status'>" ).text( rtmedia_waiting_msg ),
+                               $( "<td class='plupload_file_size'>" ).text( plupload.formatSize( file.size ) ),
+                               $( "<td title='" + rtmedia_close + "' class='close plupload_delete'>" ).html( $( "<span class='remove-from-queue'>" ).html( "&times;" ) ),
+                               $( "<td class='plupload_media_edit'>" ).text( "" )
+                       )
+                       .appendTo( "#rtMedia-queue-list" );                 
+
                 //Delete Function
                 $( "#" + file.id + " td.plupload_delete .remove-from-queue" ).click( function ( e ) {
                     e.preventDefault();
@@ -424,7 +414,52 @@ jQuery( function ( $ ) {
                     rtMediaHook.call( 'rtmedia_js_file_remove', [up, file] );
                     return false;
                 } );
-
+                
+                // To change the name of the uploading file
+                $( "#label_" + file.id ).click( function ( e ) {
+                    e.preventDefault();
+                    label_name = document.getElementById( "label_" + file.id );
+                    // Get td for editing
+                    td_name = document.getElementById( "td_" + file.id );
+                    td_name.innerHTML = '';
+                    // Getting the filename
+                    if(typeof up.getFile( file.id ).title == "undefined") {
+                        file_name = up.getFile( file.id ).name;
+                    } else {
+                        file_name = up.getFile( file.id ).title;
+                    }
+                    // Split name and extension
+                    file_name_array = file_name.split( '.' );
+                    // Create input box
+                    inputName = document.createElement("input");
+                    inputName.type = "text";
+                    inputName.value = file_name_array[ 0 ];
+                    // Adding keyup event to textbox
+                    inputName.addEventListener('keyup', function() {
+                        if( this.value != '' ) {
+                            file_name = this.value + "." + file_name_array[ 1 ];
+                            file_name_array[ 0 ] = this.value;
+                        } else {
+                            file_name = file_name_array[ 0 ] + "." + file_name_array[ 1 ];
+                        }
+                    });
+                    // Creating textnode for extension
+                    text = document.createTextNode( "." + file_name_array[ 1 ] );
+                    // Appending textbox and extension textnode to td
+                    td_name.appendChild( inputName );
+                    td_name.appendChild( text );
+                    // Blur event to change the name after editing
+                    inputName.addEventListener('blur', function() {
+                        td_name.innerHTML = '';
+                        label_name.innerHTML = file_name.substring( 0, 40 );
+                        // Set uploader object name attribute to textbox value
+                        up.getFile( file.id ).title = file_name;
+                        td_name.appendChild( label_name );
+    //                    objUploadView.uploader.refresh();
+                    });
+                    // Focusing when displays the textbox
+                    inputName.focus();
+                } );
             } );
             $.each( upload_remove_array, function ( i, rfile ) {
                 if ( up.getFile( rfile ) )
@@ -494,7 +529,8 @@ jQuery( function ( $ ) {
                 $( "#" + file.id ).toggleClass( 'upload-success' );
             }
         } );
-        uploaderObj.uploader.bind( 'BeforeUpload', function ( up, file ) {
+        uploaderObj.uploader.bind( 'BeforeUpload', function ( up, file ) {            
+            up.settings.multipart_params.title = file.title.split( '.' )[ 0 ];
             var privacy = $( "#rtm-file_upload-ui select.privacy" ).val();
             if ( privacy !== undefined ) {
                 up.settings.multipart_params.privacy = $( "#rtm-file_upload-ui select.privacy" ).val();
@@ -700,45 +736,28 @@ jQuery( document ).ready( function ( $ ) {
                 return true;
             }
             
-           // Creating table row to display selected files
-            tdName = document.createElement( "td" );
-            tdName.id = "td_" + file.id;
-            labelName = document.createElement( "label" );
-            labelName.id = "label_" + file.id;
-            labelName.innerHTML = file.name.substring( 0, 40 );
-            tdName.appendChild( labelName );
-            tdStatus = document.createElement( "td" );
-            tdStatus.className = "plupload_file_status";
-            tdStatus.innerHTML = rtmedia_waiting_msg;
-            tdSize = document.createElement( "td" );
-            tdSize.className = "plupload_file_size";
-            tdSize.innerHTML = plupload.formatSize( file.size );
-            tdDelete = document.createElement( "td" );
-            tdDelete.innerHTML = "&times;";
-            tdDelete.title = rtmedia_remove_from_queue;
-            tdDelete.className = "close plupload_delete";
-            tdEdit = document.createElement( "td" );
-            tdEdit.innerHTML = "";
-            tr = document.createElement( "tr" );
-            tr.className = 'upload-waiting';
-            tr.id = file.id;
-            tr.appendChild( tdName );
-            tr.appendChild( tdStatus );
-            tr.appendChild( tdSize );
-            tr.appendChild( tdEdit );
-            tr.appendChild( tdDelete );
+            // Creating table row to display selected files
+            var $tr = $( "<tr id='" + file.id + "' class='upload-waiting'>" )
+                      .append( $( "<td id='td_" + file.id + "'>" )
+                               .append( $( "<label id='label_" + file.id + "'>" ).text( file.name.substring( 0, 40 ) ) ),
+                               $( "<td class='plupload_file_status'>" ).text( rtmedia_waiting_msg ),
+                               $( "<td class='plupload_file_size'>" ).text( plupload.formatSize( file.size ) ),
+                               $( "<td title='" + rtmedia_remove_from_queue + "' class='close plupload_delete'>" ).html( "&times;" ),
+                               $( "<td>" ).text( "" )
+                             ).appendTo( "#rtMedia-queue-list" );
+                     
             jQuery( '#whats-new-content' ).css( 'padding-bottom', '0px' );
             $( "#rtm-upload-start-notice" ).css( 'display', 'block' ); // show the file upload notice to the user
-            $( "#rtMedia-queue-list" ).append( tr );
+            
             $( "#" + file.id + " td.plupload_delete" ).click( function ( e ) {
                 e.preventDefault();
                 objUploadView.uploader.removeFile( upl.getFile( file.id ) );
                 $( "#" + file.id ).remove();
                 return false;
             } );
+            
             // To change the name of the uploading file
             $( "#label_" + file.id ).click( function ( e ) {
-
                 e.preventDefault();
 
                 rtm_file_label = this;
@@ -867,7 +886,7 @@ jQuery( document ).ready( function ( $ ) {
 
         up.settings.multipart_params.context = object;
         up.settings.multipart_params.context_id = item_id;
-        up.settings.multipart_params.title = files.title;
+        up.settings.multipart_params.title = files.title.split( '.' )[ 0 ];
         // if privacy dropdown is not disabled, then get the privacy value of the update
         if ( jQuery( "select.privacy" ).prop( 'disabled' ) === false ) {
             up.settings.multipart_params.privacy = jQuery( "select.privacy" ).val();
