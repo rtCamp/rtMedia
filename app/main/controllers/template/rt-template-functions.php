@@ -363,12 +363,12 @@ function rtmedia_image( $size = 'rt_media_thumbnail', $id = false, $recho = true
 
 	if ( ! $thumbnail_id ){
 		global $rtmedia;
-                // Getting the extension of the uploaded file
-                $extension = rtmedia_get_extension();
-                // Checking if custom thumbnail for this file extension is set or not
+		// Getting the extension of the uploaded file
+		$extension = rtmedia_get_extension();
+		// Checking if custom thumbnail for this file extension is set or not
 		if ( isset ( $rtmedia->allowed_types[ $media_object->media_type ] )  && isset ( $rtmedia->allowed_types[ $media_object->media_type ][ 'ext_thumb' ] ) && isset ( $rtmedia->allowed_types[ $media_object->media_type ][ 'ext_thumb' ][ $extension ] ) ){
-                    $src = $rtmedia->allowed_types[ $media_object->media_type ][ 'ext_thumb' ][ $extension ];
-                } else if ( isset ( $rtmedia->allowed_types[ $media_object->media_type ] ) && isset ( $rtmedia->allowed_types[ $media_object->media_type ][ 'thumbnail' ] ) ){
+			$src = $rtmedia->allowed_types[ $media_object->media_type ][ 'ext_thumb' ][ $extension ];
+		} else if ( isset ( $rtmedia->allowed_types[ $media_object->media_type ] ) && isset ( $rtmedia->allowed_types[ $media_object->media_type ][ 'thumbnail' ] ) ){
 			$src = $rtmedia->allowed_types[ $media_object->media_type ][ 'thumbnail' ];
 		} elseif ( $media_object->media_type == 'album' ) {
 			$src = rtmedia_album_image( $size, $id );
@@ -377,7 +377,6 @@ function rtmedia_image( $size = 'rt_media_thumbnail', $id = false, $recho = true
 		}
 	} else {
 		if ( is_numeric( $thumbnail_id ) && $thumbnail_id != "0" ){
-
 			list( $src, $width, $height ) = wp_get_attachment_image_src( $thumbnail_id, $size );
 		} else {
 			$src = $thumbnail_id;
@@ -2670,8 +2669,11 @@ function rtmedia_get_extension( $media_id = false ) {
     // If media_id is false then use global media_id
     if( ! $media_id ) {
         global $rtmedia_media;
-        
-        $media_id = $rtmedia_media->media_id;
+        if( isset( $rtmedia_media->media_id ) ){
+			$media_id = $rtmedia_media->media_id;
+		} else {
+			return false;
+		}
     }
     
     // Getting filename from media id
