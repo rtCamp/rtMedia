@@ -423,7 +423,7 @@ class RTMediaQuery {
 		$this->original_query = $query;
 		$this->query          = wp_parse_args( $query, $this->query );
 		//Set Json
-		$allowed_query = apply_filters( 'rtmedia_allowed_query', array( "id", "media_id", "media_type", "media_author", "album_id", "context", "context_id", "global", "privacy", "per_page" ) );
+		$allowed_query = apply_filters( 'rtmedia_allowed_query', array( "id", "media_id", "media_type", "media_author", "album_id", "context", "context_id", "global", "privacy", "per_page", "lightbox", "media_title" ) );
 		if ( isset ( $_REQUEST[ "rtmedia_shortcode" ] ) ){
 			$query_data = $_REQUEST;
 			foreach ( $query_data as $key => $val ) {
@@ -572,6 +572,26 @@ class RTMediaQuery {
 			//Do not include per_page in sql query to get media
 			$this->action_query->per_page_media = intval( $this->media_query[ 'per_page' ] );
 			unset( $this->media_query[ 'per_page' ] );
+		}
+                
+		// lightbox option
+		if ( isset( $this->media_query[ 'lightbox' ] ) ){
+			if( $this->media_query[ 'lightbox' ] == 'false' ) {
+				// Add filter to add no-popup class in a tag
+				add_filter( 'rtmedia_gallery_list_item_a_class', 'rtmedia_add_no_popup_class', 10, 1 );
+			}
+			// Unset the lightbox parameter from media query
+			unset( $this->media_query[ 'lightbox' ] );
+		}
+
+		// media title option
+		if ( isset( $this->media_query[ 'media_title' ] ) ){
+			if( $this->media_query[ 'media_title' ] == 'false' ) {
+				// Add filter show media title
+				add_filter( 'rtmedia_media_gallery_show_media_title', 'rtmedia_gallery_do_not_show_media_title', 10, 1 );
+			}
+			// Unset the media title parameter from media query
+			unset( $this->media_query[ 'media_title' ] );
 		}
 
 		$this->media_query = apply_filters( 'rtmedia_media_query', $this->media_query, $this->action_query, $this->query );

@@ -20,12 +20,13 @@ if ( isset( $_POST[ 'is_edit_allowed' ] ) )
         </a>
     </div>
 
-    <div class="rtmedia-item-title">
-        <h4 title="<?php echo rtmedia_title (); ?>">
-            <a href="<?php rtmedia_permalink (); ?>" title="<?php echo rtmedia_title (); ?>">
-                <?php echo rtmedia_title (); ?>
-            </a>
-        </h4>
-    </div>
-
+	<?php if( apply_filters( 'rtmedia_media_gallery_show_media_title', true ) ){ ?>
+		<div class="rtmedia-item-title">
+			<h4 title="<?php echo rtmedia_title (); ?>">
+				<a href="<?php rtmedia_permalink (); ?>" title="<?php echo rtmedia_title (); ?>">
+					<?php echo rtmedia_title (); ?>
+				</a>
+			</h4>
+		</div>
+	<?php } ?>
 </li>
