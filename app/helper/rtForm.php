@@ -105,19 +105,48 @@ if( ! class_exists( "rtForm" ) ){
 		);
 
 
+		/**
+		 * Get default html id.
+		 *
+		 * @access private
+		 * @param  string $element
+		 *
+		 */
 		private function get_default_id( $element ) {
 			return self::$id_counts[$element];
 		}
 
+		/**
+		 * Update default html id.
+		 *
+		 * @access private
+		 * @param  string $element
+		 *
+		 */
 		private function update_default_id( $element ) {
 			self::$id_counts[$element] ++;
 		}
 
+		/**
+		 * Get default html class.
+		 *
+		 * @access private
+		 * @param  string $element
+		 *
+		 */
 		private function get_default_class( $element ) {
 			return self::$default_classes[$element];
 		}
 
 
+		/**
+		 * Embedd html class to html output.
+		 *
+		 * @access private
+		 * @param  string $element
+		 * @param  array  $class
+		 * @return string $html
+		 */
 		private function embedd_class( $element, $class = NULL ) {
 
 			$html = 'class="' . $this->get_default_class( $element );
@@ -135,6 +164,14 @@ if( ! class_exists( "rtForm" ) ){
 			return $html;
 		}
 
+		/**
+		 * Generate rtmedia html element id attribute in admin options.
+		 *
+		 * @access private
+		 * @param  string $element
+		 * @param  string $id
+		 * @return string $html
+		 */
 		private function generate_element_id( $element, $id = NULL ) {
 
 			$html = 'id="';
@@ -150,6 +187,15 @@ if( ! class_exists( "rtForm" ) ){
 			return $html;
 		}
 
+		/**
+		 * Generate rtmedia html name attribute in admin options.
+		 *
+		 * @access private
+		 * @param  string $element
+		 * @param  string $multiple
+		 * @param  string $name
+		 * @return string $html
+		 */
 		private function generate_element_name( $element, $multiple, $name ) {
 
 			$html = 'name="';
