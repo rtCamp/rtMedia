@@ -493,8 +493,14 @@ if( ! class_exists( "rtForm" ) ){
 			return $data;
 		}
 
-
-	    protected function generate_textbox( $attributes ) {
+		/**
+		 * Generate rtmedia html textbox in admin options.
+		 *
+		 * @access protected
+		 * @param  array  $attributes
+		 * @return string $html
+		 */
+		protected function generate_textbox( $attributes ) {
 
 			$element = 'rtText';
 			if( is_array( $attributes ) ){
@@ -526,12 +532,25 @@ if( ! class_exists( "rtForm" ) ){
 			}
 		}
 
+		/**
+		 * Get rtmedia html textbox in admin options.
+		 *
+		 * @access public
+		 * @param  array  $attributes
+		 * @return string
+		 */
 		public function get_textbox( $attributes = '' ) {
 
 			return $this->generate_textbox( $attributes );
 		}
 
-
+		/**
+		 * Generate rtmedia html number field in admin options.
+		 *
+		 * @access protected
+		 * @param  array  $attributes
+		 * @return string $html
+		 */
 		protected function generate_number( $attributes ) {
 
 			$element = 'rtNumber';
@@ -566,11 +585,25 @@ if( ! class_exists( "rtForm" ) ){
 			}
 		}
 
+		/**
+		 * Get rtmedia html number field in admin options.
+		 *
+		 * @access public
+		 * @param  array  $attributes
+		 * @return string
+		 */
 		public function get_number( $attributes = '' ) {
 
 			return $this->generate_number( $attributes );
 		}
 
+		/**
+		 * Generate rtmedia html date field in admin options.
+		 *
+		 * @access protected
+		 * @param  array  $attributes
+		 * @return string $html
+		 */
 		protected function generate_date( $attributes ) {
 
 			$element = 'rtDate';
@@ -599,6 +632,13 @@ if( ! class_exists( "rtForm" ) ){
 			}
 		}
 
+		/**
+		 * Get rtmedia html date field in admin options.
+		 *
+		 * @access public
+		 * @param  array  $attributes
+		 * @return string
+		 */
 		public function get_date( $attributes ) {
 			return $this->generate_date( $attributes );
 		}
