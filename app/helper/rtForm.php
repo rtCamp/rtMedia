@@ -643,7 +643,13 @@ if( ! class_exists( "rtForm" ) ){
 			return $this->generate_date( $attributes );
 		}
 
-
+		/**
+		 * Generate rtmedia html hidden field in admin options.
+		 *
+		 * @access protected
+		 * @param  array  $attributes
+		 * @return string $html
+		 */
 		protected function generate_hidden( $attributes ) {
 
 			$element = 'rtHidden';
@@ -675,12 +681,25 @@ if( ! class_exists( "rtForm" ) ){
 				throw new rtFormInvalidArgumentsException( "attributes" );
 		}
 
+		/**
+		 * Get rtmedia html hidden field in admin options.
+		 *
+		 * @access public
+		 * @param  array  $attributes
+		 * @return string
+		 */
 		public function get_hidden( $attributes = '' ) {
 
 			return $this->generate_hidden( $attributes );
 		}
 
-
+		/**
+		 * Generate rtmedia html textarea in admin options.
+		 *
+		 * @access protected
+		 * @param  array  $attributes
+		 * @return string $html
+		 */
 		protected function generate_textarea( $attributes ) {
 
 			$element = 'rtTextarea';
