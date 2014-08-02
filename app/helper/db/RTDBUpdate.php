@@ -71,35 +71,35 @@ if ( ! class_exists( 'RTDBUpdate' ) ){
 		public function do_upgrade() {
 			global $wpdb;
 			if ( version_compare( $this->db_version, $this->install_db_version, '>' ) ){
-			    $path = $this->schema_path;
-			    if ( $handle = opendir( $path ) ){
-			        while ( false !== ( $entry = readdir( $handle ) ) ) {
-			            if ( $entry != "." && $entry != ".." ){
-			                if ( strpos( $entry, ".schema" ) !== false && file_exists( $path . "/" . $entry ) ){
+				$path = $this->schema_path;
+				if ( $handle = opendir( $path ) ){
+					while ( false !== ( $entry = readdir( $handle ) ) ) {
+						if ( $entry != "." && $entry != ".." ){
+							if ( strpos( $entry, ".schema" ) !== false && file_exists( $path . "/" . $entry ) ){
 								if( is_multisite() ){
-								    $table_name = str_replace( ".schema", "", strtolower( $entry ) );
-								    $check_table = "SHOW TABLES LIKE '%rt_" . $table_name."'";
-								    $check_res = $wpdb->get_results( $check_table , ARRAY_N );
-								    if( $check_res && sizeof( $check_res ) > 0 && is_array( $check_res ) && isset( $check_res[0][0] ) ) {
+									$table_name = str_replace( ".schema", "", strtolower( $entry ) );
+									$check_table = "SHOW TABLES LIKE '%rt_" . $table_name."'";
+									$check_res = $wpdb->get_results( $check_table , ARRAY_N );
+									if( $check_res && sizeof( $check_res ) > 0 && is_array( $check_res ) && isset( $check_res[0][0] ) ) {
 										$tb_name = $check_res[0][0];
 										$table_name = ( ( $this->mu_single_table ) ? $wpdb->base_prefix : $wpdb->prefix ) . "rt_" . $table_name;
 										if( $tb_name != $table_name ){
-										    $alter_sql = "ALTER TABLE ".$tb_name." RENAME TO ".$table_name;
-										    $wpdb->query( $alter_sql );
+											$alter_sql = "ALTER TABLE ".$tb_name." RENAME TO ".$table_name;
+											$wpdb->query( $alter_sql );
 										}
-								    }
+									}
 								}
 								$this->create_table( $this->genrate_sql( $entry, file_get_contents( $path . "/" . $entry ) ) );
-			                }
-			            }
-			        }
-			        closedir( $handle );
-			    }
-			    if ( $this->mu_single_table ){
-			        update_site_option( $this->db_version_option_name, $this->db_version );
-			    } else {
-			        update_option( $this->db_version_option_name, $this->db_version );
-			    }
+							}
+						}
+					}
+					closedir( $handle );
+				}
+				if ( $this->mu_single_table ){
+				    update_site_option( $this->db_version_option_name, $this->db_version );
+				} else {
+				    update_option( $this->db_version_option_name, $this->db_version );
+				}
 				do_action( "rt_db_upgrade" );
 			}
 		}
