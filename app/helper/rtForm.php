@@ -215,6 +215,14 @@ if( ! class_exists( "rtForm" ) ){
 			return $html;
 		}
 
+		/**
+		 * Generate rtmedia html value attribute in admin options.
+		 *
+		 * @access private
+		 * @param  string $element
+		 * @param  mixed  $attributes
+		 * @return string $html
+		 */
 		private function generate_element_value( $element, $attributes ) {
 
 			$html = '';
@@ -242,6 +250,13 @@ if( ! class_exists( "rtForm" ) ){
 			return $html;
 		}
 
+		/**
+		 * Generate rtmedia html element description in admin options.
+		 *
+		 * @access private
+		 * @param  mixed  $attributes
+		 * @return string $html
+		 */
 		private function generate_element_desc( $attributes ) {
 
 			if( isset( $attributes['desc'] ) ){
@@ -254,6 +269,13 @@ if( ! class_exists( "rtForm" ) ){
 			return "";
 		}
 
+		/**
+		 * Embedd html misc attributes in admin options.
+		 *
+		 * @access private
+		 * @param  mixed  $misc
+		 * @return string $html
+		 */
 		private function embedd_misc_attributes( $misc ) {
 
 			if( ! is_array( $misc ) ){
@@ -270,6 +292,15 @@ if( ! class_exists( "rtForm" ) ){
 			return $html;
 		}
 
+		/**
+		 * Process html attributes in admin options.
+		 *
+		 * @access private
+		 * @param  string $element
+		 * @param  mixed  $attributes
+		 * @param  string $container
+		 * @return string $html
+		 */
 		private function processAttributes( $element, $attributes, $container = false ) {
 
 			/* generating the id on its own if not provided otherwise taken from the parameter provided */
@@ -306,6 +337,15 @@ if( ! class_exists( "rtForm" ) ){
 			return $html;
 		}
 
+		/**
+		 * container enclosed elements in admin options.
+		 *
+		 * @access private
+		 * @param  string $element
+		 * @param  array  $attrib
+		 * @param  int 	  $rtForm_options
+		 * @return string $html
+		 */
 		private function container_enclosed_elements( $element, $attrib, $rtForm_options ) {
 
 			$html = '';
@@ -389,6 +429,14 @@ if( ! class_exists( "rtForm" ) ){
 			return $html;
 		}
 
+		/**
+		 * Parse multiple options in admin options.
+		 *
+		 * @access private
+		 * @param  string $element
+		 * @param  array  $attributes
+		 *
+		 */
 		private function parse_multiple_options( $element, $attributes ) {
 
 			if( is_array( $attributes ) ){
@@ -415,6 +463,16 @@ if( ! class_exists( "rtForm" ) ){
 			}
 		}
 
+		/**
+		 * Enclose html label.
+		 *
+		 * @access protected
+		 * @param  string $element
+		 * @param  string $html
+		 * @param  string $label
+		 * @param  array  $class
+		 * @return string $data
+		 */
 		protected function enclose_label( $element, $html, $label, $class=false ) {
 
 			$labelClass = '';
