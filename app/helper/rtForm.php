@@ -731,6 +731,13 @@ if( ! class_exists( "rtForm" ) ){
 			}
 		}
 
+		/**
+		 * Get rtmedia html textarea in admin options.
+		 *
+		 * @access public
+		 * @param  array  $attributes
+		 * @return string
+		 */
 		public function get_textarea( $attributes = '' ) {
 
 			return $this->generate_textarea( $attributes );
@@ -772,7 +779,13 @@ if( ! class_exists( "rtForm" ) ){
 	//			return ob_get_clean();
 	//		}
 
-
+		/**
+		 * Generate rtmedia html input type radio in admin options.
+		 *
+		 * @access protected
+		 * @param  array  $attributes
+		 * @return string $container
+		 */
 		protected function generate_radio( $attributes ) {
 
 			$element = 'rtRadio';
@@ -797,18 +810,31 @@ if( ! class_exists( "rtForm" ) ){
 
 			$container .= '</span>';
 
-	//			if( isset($attributes['label']) )
-	//				$container = $this->enclose_label('container', $container, $attributes['label']);
+		//			if( isset($attributes['label']) )
+		//				$container = $this->enclose_label('container', $container, $attributes['label']);
 
 			return $container;
 		}
 
+		/**
+		 * Get rtmedia html input type radio in admin options.
+		 *
+		 * @access public
+		 * @param  array  $attributes
+		 * @return string
+		 */
 		public function get_radio( $attributes = '' ) {
 
 			return $this->generate_radio( $attributes );
 		}
 
-
+		/**
+		 * Generate rtmedia html input type checkbox in admin options.
+		 *
+		 * @access protected
+		 * @param  array  $attributes
+		 * @return string $container
+		 */
 		protected function generate_checkbox( $attributes ) {
 
 			$element = 'rtCheckbox';
@@ -833,29 +859,57 @@ if( ! class_exists( "rtForm" ) ){
 
 			$container .= '</span>';
 
-	//			if( isset($attributes['label']) )
-	//				$container = $this->enclose_label('container', $container, $attributes['label']);
+		//			if( isset($attributes['label']) )
+		//				$container = $this->enclose_label('container', $container, $attributes['label']);
 
 			return $container;
 		}
 
+		/**
+		 * Get rtmedia html input type checkbox in admin options.
+		 *
+		 * @access public
+		 * @param  array  $attributes
+		 * @return string
+		 */
 		public function get_checkbox( $attributes = '' ) {
 
 			return $this->generate_checkbox( $attributes );
 		}
 
+		/**
+		 * Get rtmedia html input type checkbox (get_switch) in admin options.
+		 *
+		 * @access public
+		 * @param  array  $attributes
+		 * @return string
+		 */
 		public function get_switch( $attributes = '' ) {
 
 			$attributes['switch'] = true;
 			return $this->generate_checkbox( $attributes );
 		}
 
+		/**
+		 * Get rtmedia html input type checkbox (get_switch_square) in admin options.
+		 *
+		 * @access public
+		 * @param  array  $attributes
+		 * @return string
+		 */
 		public function get_switch_square( $attributes = '' ) {
 
 			$attributes['switch_square'] = true;
 			return $this->generate_checkbox( $attributes );
 		}
 
+		/**
+		 * Generate rtmedia html input type select in admin options.
+		 *
+		 * @access protected
+		 * @param  array  $attributes
+		 * @return string $html
+		 */
 		protected function generate_select( $attributes ) {
 
 			if( is_array( $attributes ) ){
@@ -908,6 +962,13 @@ if( ! class_exists( "rtForm" ) ){
 
 		}
 
+		/**
+		 * Get rtmedia html input type select in admin options.
+		 *
+		 * @access public
+		 * @param  array  $attributes
+		 * @return string
+		 */
 		public function get_select( $attributes = '' ) {
 
 			return $this->generate_select( $attributes );
