@@ -89,7 +89,7 @@ if ( ! class_exists( 'RTDBUpdate' ) ){
 										}
 								    }
 								}
-			                    $this->create_table( $this->genrate_sql( $entry, file_get_contents( $path . "/" . $entry ) ) );
+								$this->create_table( $this->genrate_sql( $entry, file_get_contents( $path . "/" . $entry ) ) );
 			                }
 			            }
 			        }
