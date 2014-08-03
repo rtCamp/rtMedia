@@ -272,7 +272,6 @@ jQuery( function ( $ ) {
             } else {
                 nextpage = parseInt( $( '#rtmedia_go_to_num' ).val() );
             }
-            console.log( nextpage );
         }
         
         if( $(this).data( 'page-type' ) == 'num' ) {
