@@ -554,13 +554,6 @@ jQuery(document).ready(function($) {
         return $('#tab-' + hash.substr(1, hash.length)).parent().index() + 1;
     }
 
-    function rtmediaGetParameterByName(name) {
-        name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
-        var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
-            results = regex.exec(location.search);
-        return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
-    }
-
     jQuery('#rtmedia-submit-request').click(function(){
 	var flag = true;
 	var name = jQuery('#name').val();

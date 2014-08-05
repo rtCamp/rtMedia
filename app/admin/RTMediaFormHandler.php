@@ -995,7 +995,7 @@ class RTMediaFormHandler {
 				'args' => array(
 					'key' => 'buddypress_limitOnActivity',
 					'value' => $options['buddypress_limitOnActivity'],
-					'desc' => __( 'With bulk uploads activity stream may get flooded. You can control maximum number of medias/files per activity. This limit will not affect the actual number of uplaods. Only display. <em>0</em> means unlimited.', 'rtmedia' ),
+					'desc' => __( 'With bulk uploads activity stream may get flooded. You can control maximum number of medias/files per activity. This limit will not affect the actual number of uploads. Only display. <em>0</em> means unlimited.', 'rtmedia' ),
 					'class' => array( 'rtmedia-setting-text-box rtmedia-bp-activity-setting' ),
 					'min' => 0
 				)
