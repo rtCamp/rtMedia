@@ -105,19 +105,48 @@ if( ! class_exists( "rtForm" ) ){
 		);
 
 
+		/**
+		 * Get default html id.
+		 *
+		 * @access private
+		 * @param  string $element
+		 *
+		 */
 		private function get_default_id( $element ) {
 			return self::$id_counts[$element];
 		}
 
+		/**
+		 * Update default html id.
+		 *
+		 * @access private
+		 * @param  string $element
+		 *
+		 */
 		private function update_default_id( $element ) {
 			self::$id_counts[$element] ++;
 		}
 
+		/**
+		 * Get default html class.
+		 *
+		 * @access private
+		 * @param  string $element
+		 *
+		 */
 		private function get_default_class( $element ) {
 			return self::$default_classes[$element];
 		}
 
 
+		/**
+		 * Embedd html class to html output.
+		 *
+		 * @access private
+		 * @param  string $element
+		 * @param  array  $class
+		 * @return string $html
+		 */
 		private function embedd_class( $element, $class = NULL ) {
 
 			$html = 'class="' . $this->get_default_class( $element );
@@ -135,6 +164,14 @@ if( ! class_exists( "rtForm" ) ){
 			return $html;
 		}
 
+		/**
+		 * Generate rtmedia html element id attribute in admin options.
+		 *
+		 * @access private
+		 * @param  string $element
+		 * @param  string $id
+		 * @return string $html
+		 */
 		private function generate_element_id( $element, $id = NULL ) {
 
 			$html = 'id="';
@@ -150,6 +187,15 @@ if( ! class_exists( "rtForm" ) ){
 			return $html;
 		}
 
+		/**
+		 * Generate rtmedia html name attribute in admin options.
+		 *
+		 * @access private
+		 * @param  string $element
+		 * @param  string $multiple
+		 * @param  string $name
+		 * @return string $html
+		 */
 		private function generate_element_name( $element, $multiple, $name ) {
 
 			$html = 'name="';
@@ -169,6 +215,14 @@ if( ! class_exists( "rtForm" ) ){
 			return $html;
 		}
 
+		/**
+		 * Generate rtmedia html value attribute in admin options.
+		 *
+		 * @access private
+		 * @param  string $element
+		 * @param  mixed  $attributes
+		 * @return string $html
+		 */
 		private function generate_element_value( $element, $attributes ) {
 
 			$html = '';
@@ -196,6 +250,13 @@ if( ! class_exists( "rtForm" ) ){
 			return $html;
 		}
 
+		/**
+		 * Generate rtmedia html element description in admin options.
+		 *
+		 * @access private
+		 * @param  mixed  $attributes
+		 * @return string $html
+		 */
 		private function generate_element_desc( $attributes ) {
 
 			if( isset( $attributes['desc'] ) ){
@@ -208,6 +269,13 @@ if( ! class_exists( "rtForm" ) ){
 			return "";
 		}
 
+		/**
+		 * Embedd html misc attributes in admin options.
+		 *
+		 * @access private
+		 * @param  mixed  $misc
+		 * @return string $html
+		 */
 		private function embedd_misc_attributes( $misc ) {
 
 			if( ! is_array( $misc ) ){
@@ -224,6 +292,15 @@ if( ! class_exists( "rtForm" ) ){
 			return $html;
 		}
 
+		/**
+		 * Process html attributes in admin options.
+		 *
+		 * @access private
+		 * @param  string $element
+		 * @param  mixed  $attributes
+		 * @param  string $container
+		 * @return string $html
+		 */
 		private function processAttributes( $element, $attributes, $container = false ) {
 
 			/* generating the id on its own if not provided otherwise taken from the parameter provided */
@@ -260,6 +337,15 @@ if( ! class_exists( "rtForm" ) ){
 			return $html;
 		}
 
+		/**
+		 * container enclosed elements in admin options.
+		 *
+		 * @access private
+		 * @param  string $element
+		 * @param  array  $attrib
+		 * @param  int 	  $rtForm_options
+		 * @return string $html
+		 */
 		private function container_enclosed_elements( $element, $attrib, $rtForm_options ) {
 
 			$html = '';
@@ -343,6 +429,14 @@ if( ! class_exists( "rtForm" ) ){
 			return $html;
 		}
 
+		/**
+		 * Parse multiple options in admin options.
+		 *
+		 * @access private
+		 * @param  string $element
+		 * @param  array  $attributes
+		 *
+		 */
 		private function parse_multiple_options( $element, $attributes ) {
 
 			if( is_array( $attributes ) ){
@@ -369,6 +463,16 @@ if( ! class_exists( "rtForm" ) ){
 			}
 		}
 
+		/**
+		 * Enclose html label.
+		 *
+		 * @access protected
+		 * @param  string $element
+		 * @param  string $html
+		 * @param  string $label
+		 * @param  array  $class
+		 * @return string $data
+		 */
 		protected function enclose_label( $element, $html, $label, $class=false ) {
 
 			$labelClass = '';
@@ -389,8 +493,14 @@ if( ! class_exists( "rtForm" ) ){
 			return $data;
 		}
 
-
-	    protected function generate_textbox( $attributes ) {
+		/**
+		 * Generate rtmedia html textbox in admin options.
+		 *
+		 * @access protected
+		 * @param  array  $attributes
+		 * @return string $html
+		 */
+		protected function generate_textbox( $attributes ) {
 
 			$element = 'rtText';
 			if( is_array( $attributes ) ){
@@ -422,12 +532,25 @@ if( ! class_exists( "rtForm" ) ){
 			}
 		}
 
+		/**
+		 * Get rtmedia html textbox in admin options.
+		 *
+		 * @access public
+		 * @param  array  $attributes
+		 * @return string
+		 */
 		public function get_textbox( $attributes = '' ) {
 
 			return $this->generate_textbox( $attributes );
 		}
 
-
+		/**
+		 * Generate rtmedia html number field in admin options.
+		 *
+		 * @access protected
+		 * @param  array  $attributes
+		 * @return string $html
+		 */
 		protected function generate_number( $attributes ) {
 
 			$element = 'rtNumber';
@@ -462,11 +585,25 @@ if( ! class_exists( "rtForm" ) ){
 			}
 		}
 
+		/**
+		 * Get rtmedia html number field in admin options.
+		 *
+		 * @access public
+		 * @param  array  $attributes
+		 * @return string
+		 */
 		public function get_number( $attributes = '' ) {
 
 			return $this->generate_number( $attributes );
 		}
 
+		/**
+		 * Generate rtmedia html date field in admin options.
+		 *
+		 * @access protected
+		 * @param  array  $attributes
+		 * @return string $html
+		 */
 		protected function generate_date( $attributes ) {
 
 			$element = 'rtDate';
@@ -495,11 +632,24 @@ if( ! class_exists( "rtForm" ) ){
 			}
 		}
 
+		/**
+		 * Get rtmedia html date field in admin options.
+		 *
+		 * @access public
+		 * @param  array  $attributes
+		 * @return string
+		 */
 		public function get_date( $attributes ) {
 			return $this->generate_date( $attributes );
 		}
 
-
+		/**
+		 * Generate rtmedia html hidden field in admin options.
+		 *
+		 * @access protected
+		 * @param  array  $attributes
+		 * @return string $html
+		 */
 		protected function generate_hidden( $attributes ) {
 
 			$element = 'rtHidden';
@@ -531,12 +681,25 @@ if( ! class_exists( "rtForm" ) ){
 				throw new rtFormInvalidArgumentsException( "attributes" );
 		}
 
+		/**
+		 * Get rtmedia html hidden field in admin options.
+		 *
+		 * @access public
+		 * @param  array  $attributes
+		 * @return string
+		 */
 		public function get_hidden( $attributes = '' ) {
 
 			return $this->generate_hidden( $attributes );
 		}
 
-
+		/**
+		 * Generate rtmedia html textarea in admin options.
+		 *
+		 * @access protected
+		 * @param  array  $attributes
+		 * @return string $html
+		 */
 		protected function generate_textarea( $attributes ) {
 
 			$element = 'rtTextarea';
@@ -568,6 +731,13 @@ if( ! class_exists( "rtForm" ) ){
 			}
 		}
 
+		/**
+		 * Get rtmedia html textarea in admin options.
+		 *
+		 * @access public
+		 * @param  array  $attributes
+		 * @return string
+		 */
 		public function get_textarea( $attributes = '' ) {
 
 			return $this->generate_textarea( $attributes );
@@ -609,7 +779,13 @@ if( ! class_exists( "rtForm" ) ){
 	//			return ob_get_clean();
 	//		}
 
-
+		/**
+		 * Generate rtmedia html input type radio in admin options.
+		 *
+		 * @access protected
+		 * @param  array  $attributes
+		 * @return string $container
+		 */
 		protected function generate_radio( $attributes ) {
 
 			$element = 'rtRadio';
@@ -634,18 +810,31 @@ if( ! class_exists( "rtForm" ) ){
 
 			$container .= '</span>';
 
-	//			if( isset($attributes['label']) )
-	//				$container = $this->enclose_label('container', $container, $attributes['label']);
+		//			if( isset($attributes['label']) )
+		//				$container = $this->enclose_label('container', $container, $attributes['label']);
 
 			return $container;
 		}
 
+		/**
+		 * Get rtmedia html input type radio in admin options.
+		 *
+		 * @access public
+		 * @param  array  $attributes
+		 * @return string
+		 */
 		public function get_radio( $attributes = '' ) {
 
 			return $this->generate_radio( $attributes );
 		}
 
-
+		/**
+		 * Generate rtmedia html input type checkbox in admin options.
+		 *
+		 * @access protected
+		 * @param  array  $attributes
+		 * @return string $container
+		 */
 		protected function generate_checkbox( $attributes ) {
 
 			$element = 'rtCheckbox';
@@ -670,29 +859,57 @@ if( ! class_exists( "rtForm" ) ){
 
 			$container .= '</span>';
 
-	//			if( isset($attributes['label']) )
-	//				$container = $this->enclose_label('container', $container, $attributes['label']);
+		//			if( isset($attributes['label']) )
+		//				$container = $this->enclose_label('container', $container, $attributes['label']);
 
 			return $container;
 		}
 
+		/**
+		 * Get rtmedia html input type checkbox in admin options.
+		 *
+		 * @access public
+		 * @param  array  $attributes
+		 * @return string
+		 */
 		public function get_checkbox( $attributes = '' ) {
 
 			return $this->generate_checkbox( $attributes );
 		}
 
+		/**
+		 * Get rtmedia html input type checkbox (get_switch) in admin options.
+		 *
+		 * @access public
+		 * @param  array  $attributes
+		 * @return string
+		 */
 		public function get_switch( $attributes = '' ) {
 
 			$attributes['switch'] = true;
 			return $this->generate_checkbox( $attributes );
 		}
 
+		/**
+		 * Get rtmedia html input type checkbox (get_switch_square) in admin options.
+		 *
+		 * @access public
+		 * @param  array  $attributes
+		 * @return string
+		 */
 		public function get_switch_square( $attributes = '' ) {
 
 			$attributes['switch_square'] = true;
 			return $this->generate_checkbox( $attributes );
 		}
 
+		/**
+		 * Generate rtmedia html input type select in admin options.
+		 *
+		 * @access protected
+		 * @param  array  $attributes
+		 * @return string $html
+		 */
 		protected function generate_select( $attributes ) {
 
 			if( is_array( $attributes ) ){
@@ -745,6 +962,13 @@ if( ! class_exists( "rtForm" ) ){
 
 		}
 
+		/**
+		 * Get rtmedia html input type select in admin options.
+		 *
+		 * @access public
+		 * @param  array  $attributes
+		 * @return string
+		 */
 		public function get_select( $attributes = '' ) {
 
 			return $this->generate_select( $attributes );

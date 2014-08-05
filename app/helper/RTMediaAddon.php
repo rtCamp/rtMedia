@@ -58,7 +58,7 @@ if ( ! class_exists( 'RTMediaAddon' ) ){
 		}
 
 		/**
-		 * Get addons.
+		 * Get addons for Audio/Video  Encoding and Plugins.
 		 *
 		 * @access public
 		 * @param  void
@@ -131,7 +131,7 @@ if ( ! class_exists( 'RTMediaAddon' ) ){
 
 
 		/**
-		 * plugins_content.
+		 * Display plugins in Addons Section.
 		 *
 		 * @access public
 		 * @param  array $args
