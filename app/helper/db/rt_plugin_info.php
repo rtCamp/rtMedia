@@ -23,16 +23,37 @@ if( ! class_exists( 'rt_plugin_info' ) ){
 		public $network; //'Network' - Boolean. Whether the plugin can only be activated network wide.
 		public $plugin_data;
 
+		/**
+		 * __construct.
+		 *
+		 * @access public
+		 * @param  void
+		 *
+		 */
 		public function __construct( $path = NULL ) {
 		    $this->set_current_plugin_path( $path );
 		    $this->set_plugin_data();
 		}
 
+		/**
+		 * get_plugin_data.
+		 *
+		 * @access public
+		 * @param  void
+		 *
+		 */
 		public function get_plugin_data() {
 		    require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 		    return @get_plugin_data( $this->plugin_path );
 		}
 
+		/**
+		 * set_plugin_data.
+		 *
+		 * @access public
+		 * @param  void
+		 *
+		 */
 		public function set_plugin_data() {
 		    $this->plugin_data = $this->get_plugin_data();
 		    $this->name = $this->plugin_data["Name"];
@@ -47,6 +68,13 @@ if( ! class_exists( 'rt_plugin_info' ) ){
 		    $this->network = $this->plugin_data["Network"];
 		}
 
+		/**
+		 * set_current_plugin_path.
+		 *
+		 * @access public
+		 * @param  string $path
+		 *
+		 */
 		public function set_current_plugin_path( $path ) {
 			if ( $path != NULL ){
 			    $this->plugin_path = $path;

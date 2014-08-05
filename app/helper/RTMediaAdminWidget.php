@@ -10,6 +10,7 @@ if ( ! class_exists( 'RTMediaAdminWidget' ) ){
 	class RTMediaAdminWidget {
 
 		/**
+		 * Constructs the RTMediaAdminWidget.
 		 *
 		 * @global type  $rtmedia
 		 * @param  type  $id
