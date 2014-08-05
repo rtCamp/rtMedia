@@ -631,3 +631,11 @@ window.onload=function(){
         rtm_masonry_reload( rtm_masonry_container );
     }
 };
+
+// Get query string parameters from url
+function rtmediaGetParameterByName(name) {
+    name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
+    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+        results = regex.exec(location.search);
+    return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+}
