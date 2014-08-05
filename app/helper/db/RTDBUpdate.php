@@ -51,23 +51,59 @@ if ( ! class_exists( 'RTDBUpdate' ) ){
 		    $this->install_db_version = $this->get_install_db_version();
 		}
 
+		/**
+		 * Create table using dbDelta.
+		 *
+		 * @access public
+		 * @param  string  $sql
+		 * @return void
+		 */
 		public function create_table( $sql ) {
 		    require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
 		    dbDelta( $sql );
 		}
 
+		/**
+		 * Get db_version option name.
+		 *
+		 * @access public
+		 * @param  void
+		 * @return string
+		 */
 		public function get_db_version_option_name() {
 		    return strtoupper( "RT_" . str_replace( "-", "_", sanitize_title( $this->rt_plugin_info->name ) ) . "_DB_VERSIONS" );
 		}
 
+		/**
+		 * Get installed db_version.
+		 *
+		 * @access public
+		 * @param  void
+		 * @return string
+		 */
 		public function get_install_db_version() {
 		    return ( $this->mu_single_table ) ? get_site_option( $this->db_version_option_name, "0.0" ) : get_option( $this->db_version_option_name, "0.0" );
 		}
 
+		/**
+		 * Check upgrade by comparing version db_version.
+		 *
+		 * @access public
+		 * @param  void
+		 * @return bool
+		 */
 		public function check_upgrade() {
 		    return version_compare( $this->db_version, $this->install_db_version, '>' );
 		}
 
+		/**
+		 * Do upgrade by comparing version db_version.
+		 * If db_version > install_db_version, then perform.
+		 *
+		 * @access public
+		 * @param  void
+		 * @return void
+		 */
 		public function do_upgrade() {
 			global $wpdb;
 			if ( version_compare( $this->db_version, $this->install_db_version, '>' ) ){
@@ -104,6 +140,13 @@ if ( ! class_exists( 'RTDBUpdate' ) ){
 			}
 		}
 
+		/**
+		 * Check if table_exists.
+		 *
+		 * @access static
+		 * @param  string $table
+		 * @return bool
+		 */
 		static function table_exists( $table ) {
 		    global $wpdb;
 
@@ -114,10 +157,25 @@ if ( ! class_exists( 'RTDBUpdate' ) ){
 		    return false;
 		}
 
+		/**
+		 * Genrate sql query.
+		 *
+		 * @access public
+		 * @param  string $file_name
+		 * @param  string $file_content
+		 * @return string sql query
+		 */
 		public function genrate_sql( $file_name, $file_content ) {
 		    return sprintf( $file_content, $this->genrate_table_name( $file_name ) );
 		}
 
+		/**
+		 * Genrate table_name.
+		 *
+		 * @access public
+		 * @param  string $file_name
+		 * @return string
+		 */
 		public function genrate_table_name( $file_name ) {
 		    global $wpdb;
 		    return ( ( $this->mu_single_table ) ? $wpdb->base_prefix : $wpdb->prefix ) . "rt_" . str_replace( ".schema", "", strtolower( $file_name ) );
