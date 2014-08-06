@@ -222,12 +222,16 @@
 			width: 100%;
 			.mejs-controls {
 				.mejs-time-rail {
-					margin: 8px 2px 2px 0;
+					margin: 8px 4px 0px 4px;
+					height: 0px;
 				}
+				.mejs-time {
+					height: 24px;
+				}				
 			}
 		}
 	}
-
+	
 	.rtmedia-media img {
 		max-width: 100%;
 	}
@@ -618,7 +622,7 @@
 
 #buddypress, .rtmedia-container {
 	.mejs-controls {
-                margin-left: 25px; width: 79%;
+		     margin-left: 25px; width: 79%;
                 .mejs-time-rail {
                     width: 134px;
                     .mejs-time-total {
