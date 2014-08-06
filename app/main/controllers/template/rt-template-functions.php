@@ -2725,3 +2725,9 @@ function rtmedia_media_gallery_lightbox_template_request( $class ){
 	}
 	return $class;
 }
+
+// Function to get permalink for current blog
+function rtmedia_get_current_blog_url( $domain ) {
+    $domain = get_home_url(get_current_blog_id() );
+    return $domain;
+}

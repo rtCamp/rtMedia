@@ -1023,6 +1023,8 @@ function get_rtmedia_permalink($id) {
     $media = $mediaModel->get(array('id' => intval($id)));
     global $rtmedia_query;
 
+    // Adding filter to get permalink for current blog
+    add_filter( 'bp_get_root_domain', 'rtmedia_get_current_blog_url');
 
     if (!isset($media[0]->context)) {
         if (function_exists("bp_get_groups_root_slug") && isset($rtmedia_query->query) && isset($rtmedia_query->query["context"]) && $rtmedia_query->query["context"] == "group") {
@@ -1047,6 +1049,10 @@ function get_rtmedia_permalink($id) {
     }
 
     $parent_link = trailingslashit($parent_link);
+    
+    // Removing filter so that doesn't affect other calls to this function
+    remove_filter( 'bp_get_root_domain', 'rtmedia_get_current_blog_url');
+    
     return trailingslashit($parent_link . RTMEDIA_MEDIA_SLUG . '/' . $id);
 }
 
