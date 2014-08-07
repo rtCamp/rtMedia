@@ -62,7 +62,7 @@ function rtmedia_title() {
 function rtmedia_album_name() {
     global $rtmedia_media;
     if($rtmedia_media->album_id) {
-        if(rtmedia_type($rtmedia_media->album_id) == 'album') {
+        if( rtmedia_type($rtmedia_media->album_id) == 'album' ) {
             return get_rtmedia_title( $rtmedia_media->album_id );
         } else {
             return false;
@@ -230,8 +230,12 @@ function rtmedia_type( $id = false ) {
 	if ( $id ){
 		$model = new RTMediaModel();
 		$media = $model->get_media( array( 'id' => $id ), 0, 1 );
+		if( isset( $media[ 0 ] ) && isset( $media[ 0 ]->media_type ) ){
+			return $media[ 0 ]->media_type;
+		} else {
+			return false;
+		}
 
-		return $media[ 0 ]->media_type;
 	} else {
 		global $rtmedia_media;
 

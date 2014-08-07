@@ -21,10 +21,10 @@
                     <!--author actions-->
                     <div class='rtm-ltb-title-container rt-clear'>
                         <h2 class='rtm-ltb-title'>
-                            <div class="rtmedia-media-name <?php if(rtmedia_album_name()) { ?>rtmedia-media-name-width-50<?php } else { ?>rtmedia-media-name-width-100<?php } ?>">
+                            <div class="rtmedia-media-name <?php if( rtmedia_album_name() ) { ?>rtmedia-media-name-width-50<?php } else { ?>rtmedia-media-name-width-100<?php } ?>">
                                 <a href="<?php echo rtmedia_permalink();?>" title="<?php echo rtmedia_title (); ?>"><?php echo rtmedia_title (); ?></a>
                             </div>
-                            <?php if(rtmedia_album_name()) { ?>
+                            <?php if( rtmedia_album_name() ) { ?>
                                 <div class="rtmedia-album-name">
                                     <span>&nbsp;<?php echo __("under"); ?></span>
                                     <a href="<?php echo rtmedia_album_permalink();?>" title="<?php echo rtmedia_album_name(); ?>"><?php echo rtmedia_album_name(); ?></a>
