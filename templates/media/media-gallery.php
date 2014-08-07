@@ -50,7 +50,7 @@
             <?php
 				global $rtmedia;
 				$general_options = $rtmedia->options;
-				if($general_options[ 'general_display_media' ] == 'pagination') {
+				if( isset( $rtmedia->options['general_display_media'] ) && $general_options[ 'general_display_media' ] == 'pagination') {
 						echo rtmedia_media_pagination();
 				 } else {
 					$display = '';

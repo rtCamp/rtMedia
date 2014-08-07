@@ -185,7 +185,7 @@ class RTMediaTemplate {
 		$return_array[ 'data' ] = $media_array;
 		$return_array[ 'prev' ] = rtmedia_page() - 1;
 		$return_array[ 'next' ] = ( rtmedia_offset() + rtmedia_per_page_media() < rtmedia_count() ) ? ( rtmedia_page() + 1 ) : - 1;
-		if( $options[ 'general_display_media' ] == 'pagination' ) {
+		if( isset( $rtmedia->options['general_display_media'] ) && $options[ 'general_display_media' ] == 'pagination' ) {
 			$return_array ['pagination'] = rtmedia_get_pagination_values();
 		}
 		echo json_encode( $return_array );
