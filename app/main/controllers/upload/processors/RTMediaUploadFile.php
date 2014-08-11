@@ -36,6 +36,9 @@ class RTMediaUploadFile {
 	 * core process of upload
 	 */
 	function process() {
+		// hook for before file upload process
+		do_action( 'rtmedia_before_file_upload_process' );
+		
 		include_once( ABSPATH . 'wp-admin/includes/file.php' );
 		include_once( ABSPATH . 'wp-admin/includes/image.php' );
 
