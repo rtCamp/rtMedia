@@ -1498,9 +1498,9 @@ function rtmedia_global_album_list( $selected_album_id = false ) {
 				$selected = 'selected="selected"';
 			}
 
-			if ( ( isset ( $rtmedia_query->media_query[ 'album_id' ] ) && ( $album_objects[ 0 ]->id != $rtmedia_query->media_query[ 'album_id' ] ) ) || ! isset ( $rtmedia_query->media_query[ 'album_id' ] ) ){
-				$option .= '<option value="' . $album->id . '" ' . $selected . '>' . $album->media_title . '</option>';
-			}
+			//if ( ( isset ( $rtmedia_query->media_query[ 'album_id' ] ) && ( $album_objects[ 0 ]->id != $rtmedia_query->media_query[ 'album_id' ] ) ) || ! isset ( $rtmedia_query->media_query[ 'album_id' ] ) ){
+			$option .= '<option value="' . $album->id . '" ' . $selected . '>' . $album->media_title . '</option>';
+			//}
 		}
 	}
 
