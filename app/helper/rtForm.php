@@ -564,6 +564,13 @@ if( ! class_exists( "rtForm" ) ){
 				if( isset( $attributes['min'] ) ){
 				    $html.= " min='".$attributes['min']."' ";
 				}
+				if( isset( $attributes['max'] ) ){
+				    $html.= " max='".$attributes['max']."' ";
+				}
+				if( isset( $attributes['step'] ) ){
+				    $html.= " step='".$attributes['step']."' ";
+				}
+				
 				/* ending the tag */
 				$html .= ' />';
 
