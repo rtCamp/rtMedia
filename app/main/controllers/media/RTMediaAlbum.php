@@ -70,7 +70,7 @@ class RTMediaAlbum {
 	$rewrite = array(
 	    'slug'                => $album_slug,
 	    'with_front'          => false,
-	    'pages'               => false,
+	    'pages'               => true,
 	    'feeds'               => false,
 	);
 
