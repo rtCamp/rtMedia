@@ -179,7 +179,7 @@ class BPMediaAlbumimporter extends BPMediaImporter {
                 <div class="product_footer">
                     <span class="price alignleft"><span class="amount">$19</span></span>
                     <a class="add_to_cart_button  alignright product_type_simple" href="http://rtcamp.com/store/?utm_source=dashboard&amp;utm_medium=plugin&amp;utm_campaign=buddypress-media&amp;utm_content=bp-album-importer&amp;add-to-cart=34379" target="_blank">'.__('Buy Now','rtmedia').'</a>
-                    <a class="alignleft product_demo_link" href="http://demo.rtcamp.com/buddypress-media/?utm_source=dashboard&amp;utm_medium=plugin&amp;utm_campaign=buddypress-media&amp;utm_content=bp-album-importer" title="BuddyPress-Media Instagram" target="_blank">'.__('Live Demo','rtmedia').'</a>
+                    <a class="alignleft product_demo_link" href="http://demo.rtcamp.com/rtmedia/?utm_source=dashboard&amp;utm_medium=plugin&amp;utm_campaign=buddypress-media&amp;utm_content=bp-album-importer" title="BuddyPress-Media Instagram" target="_blank">'.__('Live Demo','rtmedia').'</a>
                 </div></div>';
             }
             echo '</div>';

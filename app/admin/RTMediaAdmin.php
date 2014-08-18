@@ -1332,9 +1332,9 @@ if ( ! class_exists( 'RTMediaAdmin' ) ){
                             <div class="row">
                                 <div class="columns large-11">
                                     <p><a href="http://twitter.com/home/?status=' . $message . '" class="button" target= "_blank" title="' . __( 'Post to Twitter Now', 'rtmedia' ) . '">' . __( 'Post to Twitter', 'rtmedia' ) . '</a></p>
-                                    <p><a href="https://www.facebook.com/sharer/sharer.php?u=http://rtcamp.com/buddypress-media/" class="button" target="_blank" title="' . __( 'Share on Facebook Now', 'rtmedia' ) . '">' . __( 'Share on Facebook', 'rtmedia' ) . '</a></p>
+                                    <p><a href="https://www.facebook.com/sharer/sharer.php?u=http://rtcamp.com/rtmedia/" class="button" target="_blank" title="' . __( 'Share on Facebook Now', 'rtmedia' ) . '">' . __( 'Share on Facebook', 'rtmedia' ) . '</a></p>
                                     <p><a href="http://wordpress.org/support/view/plugin-reviews/buddypress-media?rate=5#postform" class="button" target= "_blank" title="' . __( 'Rate rtMedia on Wordpress.org', 'rtmedia' ) . '">' . __( 'Rate on Wordpress.org', 'rtmedia' ) . '</a></p>
-                                    <p><a href="' . sprintf( '%s', 'http://feeds.feedburner.com/rtcamp/' ) . '"  title="' . __( 'Subscribe to our feeds', 'rtmedia' ) . '" class="button" target="_blank" title="' . __( 'Subscribe to our Feeds', 'rtmedia' ) . '">' . __( 'Subscribe to our Feeds', 'rtmedia' ) . '</a></p>
+                                    <p><a href="' . sprintf( '%s', 'https://rtcamp.com/feed/' ) . '"  title="' . __( 'Subscribe to our feeds', 'rtmedia' ) . '" class="button" target="_blank" title="' . __( 'Subscribe to our Feeds', 'rtmedia' ) . '">' . __( 'Subscribe to our Feeds', 'rtmedia' ) . '</a></p>
                                     <p><a href="' . $setting_page_url . '"  title="' . __( 'Add link to footer', 'rtmedia' ) . '" class="button" title="' . __( 'Add link to footer', 'rtmedia' ) . '">' . __( 'Add link to footer', 'rtmedia' ) . '</a></p>
                                 </div>
                             </div>
