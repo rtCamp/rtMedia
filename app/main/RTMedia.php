@@ -122,7 +122,7 @@ class RTMedia
         $ext_arr = explode("," ,$ext[0]["extensions"]);
         $options =  trim($options);
         foreach($ext_arr as $f_ext){
-            if(  strpos( $options , $f_ext ) === false){
+            if( $f_ext && strpos( $options , $f_ext ) === false){
                 $options .= " " . $f_ext;
             }
         }
