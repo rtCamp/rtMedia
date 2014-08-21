@@ -141,6 +141,16 @@ if ( ! class_exists( 'RTMediaAddon' ) ){
 			$img_src = RTMEDIA_URL .'app/assets/img/';
 			$addons = array(
 					array(
+						'title' => __( 'rtMedia Photo Watermark', 'rtmedia' ),
+						'img_src' => $img_src.'rtmedia-watermark-240x184.png',
+						'product_link' => 'http://rtcamp.com/store/rtmedia-photo-watermark/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media',
+						'desc' => '<p>' . __( 'rtMedia Photo Watermark add-on let you add text or copyright your images uploaded using rtMedia..', 'rtmedia' ) . '</p>
+						<p><strong>' . __( 'Important', 'rtmedia' ) . ':</strong> ' . __( 'You need to have either ImageMagick or GD library installed on your server for this addon to work.', 'rtmedia' ) . '</p>',
+						'price' => '$49',
+						'demo_link' => 'http://demo.rtcamp.com/rtmedia/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media',
+						'buy_now' => 'http://rtcamp.com/store/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media&add-to-cart=70305'
+					),
+					array(
 						'title' => __( 'rtMedia Photo Tagging', 'rtmedia' ),
 						'img_src' => $img_src.'rtmedia-phototagging-240x184.png',
 						'product_link' => 'http://rtcamp.com/store/buddypress-media-photo-tagging/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media',
