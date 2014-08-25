@@ -217,8 +217,8 @@ class RTMediaBuddyPressActivity {
         $activity_allowedtags[ 'li' ][ 'class' ] = array( );
 
         /* Legacy Code */
-        $activity_allowedtags[ 'script' ] = array( );
-        $activity_allowedtags[ 'script' ][ 'type' ] = array( );
+        //$activity_allowedtags[ 'script' ] = array( );
+        //$activity_allowedtags[ 'script' ][ 'type' ] = array( );
 
         return $activity_allowedtags;
     }
