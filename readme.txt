@@ -134,6 +134,7 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "Visit rtMedia's Features page") to get some details about future releases.
 
 = 3.7.6 =
+* FontAwesome updated(v4.2.0)
 * Added new filters
 * Updated Swedish and Italian translations
 
@@ -797,7 +798,7 @@ Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_sou
 == Upgrade Notice ==
 
 = 3.7.6 =
-Requires BuddyPress 1.7 or higher, if using BuddyPress. Added new filters, Updated Swedish and Italian translations.
+Requires BuddyPress 1.7 or higher, if using BuddyPress. FontAwesome updated(v4.2.0), Added new filters, Updated Swedish and Italian translations.
 
 == Sponsors ==
 
