@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: BuddyPress Media\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-08-18 16:29+0530\n"
-"PO-Revision-Date: 2014-08-18 16:29+0530\n"
+"POT-Creation-Date: 2014-09-03 16:09+0530\n"
+"PO-Revision-Date: 2014-09-03 16:09+0530\n"
 "Last-Translator: faishal <faishal.saiyed@rtcamp.com>\n"
 "Language-Team: rtCamp <info@rtcamp.com>\n"
 "Language: en_IN\n"
@@ -919,37 +919,37 @@ msgstr ""
 msgid "Error Uploading File"
 msgstr ""
 
-#: app/main/controllers/upload/processors/RTMediaUploadFile.php:210
+#: app/main/controllers/upload/processors/RTMediaUploadFile.php:213
 msgid "MP4 file you have uploaded is corrupt."
 msgstr ""
 
-#: app/main/controllers/upload/processors/RTMediaUploadFile.php:217
-#: app/main/controllers/upload/processors/RTMediaUploadFile.php:222
+#: app/main/controllers/upload/processors/RTMediaUploadFile.php:220
+#: app/main/controllers/upload/processors/RTMediaUploadFile.php:225
 msgid ""
 "The MP4 file you have uploaded is using an unsupported video codec. "
 "Supported video codec is H.264."
 msgstr ""
 
-#: app/main/controllers/upload/processors/RTMediaUploadFile.php:227
+#: app/main/controllers/upload/processors/RTMediaUploadFile.php:230
 msgid "The MP4 file you have uploaded is not a video file."
 msgstr ""
 
-#: app/main/controllers/upload/processors/RTMediaUploadFile.php:240
+#: app/main/controllers/upload/processors/RTMediaUploadFile.php:243
 msgid "MP3 file you have uploaded is currupt."
 msgstr ""
 
-#: app/main/controllers/upload/processors/RTMediaUploadFile.php:247
-#: app/main/controllers/upload/processors/RTMediaUploadFile.php:252
+#: app/main/controllers/upload/processors/RTMediaUploadFile.php:250
+#: app/main/controllers/upload/processors/RTMediaUploadFile.php:255
 msgid ""
 "The MP3 file you have uploaded is using an unsupported audio format. "
 "Supported audio format is MP3."
 msgstr ""
 
-#: app/main/controllers/upload/processors/RTMediaUploadFile.php:257
+#: app/main/controllers/upload/processors/RTMediaUploadFile.php:260
 msgid "The MP3 file you have uploaded is not an audio file."
 msgstr ""
 
-#: app/main/controllers/upload/processors/RTMediaUploadFile.php:265
+#: app/main/controllers/upload/processors/RTMediaUploadFile.php:268
 msgid ""
 "Media File you have tried to upload is not supported. Supported media files "
 "are .jpg, .png, .gif, .mp3, .mov and .mp4."
@@ -1250,22 +1250,22 @@ msgid ""
 "with BuddyPress Media."
 msgstr ""
 
-#: app/importers/BPMediaAlbumimporter.php:177 app/helper/RTMediaAddon.php:148
-#: app/helper/RTMediaAddon.php:158
+#: app/importers/BPMediaAlbumimporter.php:177 app/helper/RTMediaAddon.php:149
+#: app/helper/RTMediaAddon.php:159 app/helper/RTMediaAddon.php:169
 msgid "Important"
 msgstr ""
 
-#: app/importers/BPMediaAlbumimporter.php:177 app/helper/RTMediaAddon.php:148
-#: app/helper/RTMediaAddon.php:158
+#: app/importers/BPMediaAlbumimporter.php:177 app/helper/RTMediaAddon.php:159
+#: app/helper/RTMediaAddon.php:169
 msgid ""
 "You need to have ImageMagick installed on your server for this addon to work."
 msgstr ""
 
-#: app/importers/BPMediaAlbumimporter.php:181 app/helper/RTMediaAddon.php:261
+#: app/importers/BPMediaAlbumimporter.php:181 app/helper/RTMediaAddon.php:272
 msgid "Buy Now"
 msgstr ""
 
-#: app/importers/BPMediaAlbumimporter.php:182 app/helper/RTMediaAddon.php:262
+#: app/importers/BPMediaAlbumimporter.php:182 app/helper/RTMediaAddon.php:273
 msgid "Live Demo"
 msgstr ""
 
@@ -2201,67 +2201,83 @@ msgid "Argument missing. id is required."
 msgstr ""
 
 #: app/helper/RTMediaAddon.php:71 app/helper/RTMediaAddon.php:72
-msgid "Audio/Video  Encoding"
-msgstr ""
-
-#: app/helper/RTMediaAddon.php:77 app/helper/RTMediaAddon.php:78
 msgid "Plugins"
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:144
+#: app/helper/RTMediaAddon.php:78 app/helper/RTMediaAddon.php:79
+msgid "Audio/Video  Encoding"
+msgstr ""
+
+#: app/helper/RTMediaAddon.php:145
+msgid "rtMedia Photo Watermark"
+msgstr ""
+
+#: app/helper/RTMediaAddon.php:148
+msgid ""
+"rtMedia Photo Watermark add-on let you add text or copyright on your images "
+"uploaded using rtMedia."
+msgstr ""
+
+#: app/helper/RTMediaAddon.php:149
+msgid ""
+"You need to have either ImageMagick or GD library installed on your server "
+"for this addon to work."
+msgstr ""
+
+#: app/helper/RTMediaAddon.php:155
 msgid "rtMedia Photo Tagging"
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:147
+#: app/helper/RTMediaAddon.php:158
 msgid ""
 "rtMedia Photo Tagging add-on enables tagging on photos uploaded using "
 "BuddyPress Media."
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:154
+#: app/helper/RTMediaAddon.php:165
 msgid "rtMedia Instagram"
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:157
+#: app/helper/RTMediaAddon.php:168
 msgid ""
 "rtMedia Instagram adds Instagram like filters to images uploaded with "
 "rtMedia."
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:164
+#: app/helper/RTMediaAddon.php:175
 msgid "rtMedia Kaltura Add-on"
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:167
+#: app/helper/RTMediaAddon.php:178
 msgid "Add support for more video formats using Kaltura video solution."
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:168
+#: app/helper/RTMediaAddon.php:179
 msgid "Works with Kaltura.com, self-hosted Kaltura-CE and Kaltura-on-premise."
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:174
+#: app/helper/RTMediaAddon.php:185
 msgid "rtMedia FFMPEG Add-on"
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:177
+#: app/helper/RTMediaAddon.php:188
 msgid ""
 "Add supports for more audio & video formats using open-source media-node."
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:178
+#: app/helper/RTMediaAddon.php:189
 msgid "Media node comes with automated setup script for Ubuntu/Debian."
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:190
+#: app/helper/RTMediaAddon.php:201
 msgid "rtMedia Addons for Photos"
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:194
+#: app/helper/RTMediaAddon.php:205
 msgid "rtMedia Addons for Audio/Video"
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:220
+#: app/helper/RTMediaAddon.php:231
 msgid "Coming Soon !!"
 msgstr ""
 
