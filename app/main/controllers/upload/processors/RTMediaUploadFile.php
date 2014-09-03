@@ -95,11 +95,14 @@ class RTMediaUploadFile {
 				$id                    = $rtmedia_interaction->context->id;
 			}
 		}
-
-		if ( strpos( $upload_dir[ 'path' ], 'rtMedia/' . $rtmedia_upload_prefix ) === false ){
-			$upload_dir[ 'path' ] = trailingslashit( str_replace( $upload_dir[ 'subdir' ], '', $upload_dir[ 'path' ] ) ) . 'rtMedia/' . $rtmedia_upload_prefix . $id . $upload_dir[ 'subdir' ];
-			$upload_dir[ 'url' ]  = trailingslashit( str_replace( $upload_dir[ 'subdir' ], '', $upload_dir[ 'url' ] ) ) . 'rtMedia/' . $rtmedia_upload_prefix . $id . $upload_dir[ 'subdir' ];
+		
+		$rtmedia_folder_name = apply_filters( 'rtmedia_upload_folder_name', 'rtMedia' );
+		 
+		if ( strpos( $upload_dir[ 'path' ], $rtmedia_folder_name . '/' . $rtmedia_upload_prefix ) === false ){
+			$upload_dir[ 'path' ] = trailingslashit( str_replace( $upload_dir[ 'subdir' ], '', $upload_dir[ 'path' ] ) ) . $rtmedia_folder_name . '/' . $rtmedia_upload_prefix . $id . $upload_dir[ 'subdir' ];
+			$upload_dir[ 'url' ]  = trailingslashit( str_replace( $upload_dir[ 'subdir' ], '', $upload_dir[ 'url' ] ) ) . $rtmedia_folder_name . '/' . $rtmedia_upload_prefix . $id . $upload_dir[ 'subdir' ];
 		}
+
 		$upload_dir = apply_filters( "rtmedia_filter_upload_dir", $upload_dir );
 
 		return $upload_dir;
