@@ -4,3 +4,8 @@
 *.jpg binary
 *.gif binary
 *.swf binary
+*.otf binary
+*.eot binary
+*.svg binary
+*.ttf binary
+*.woff binary
