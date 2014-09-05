@@ -11,9 +11,12 @@
 class RTMediaTemplate {
 
 	public $media_args;
-
+	public $options;
+	
+	
 	function __construct() {
-		global $rtmedia_query;
+		global $rtmedia_query,$rtmedia;
+		$this->options = $rtmedia->options;
 		if ( $rtmedia_query ){
 			add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 			add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_image_editor_scripts' ) );
@@ -691,30 +694,14 @@ class RTMediaTemplate {
 	 * @return type $sizes
 	 */
 	function filter_image_sizes_details( $sizes ) {
-			
-			$bp_media_sizes = $this->image_sizes();
-			$sizes = array(
-				'rt_media_thumbnail' => $bp_media_sizes[ 'thumbnail' ],
-				'rt_media_activity_image' => $bp_media_sizes[ 'activity' ],
-				'rt_media_single_image' => $bp_media_sizes[ 'single' ],
-				'rt_media_featured_image' => $bp_media_sizes[ 'featured' ],
-			);
 		
+			$sizes = array(
+				'rt_media_thumbnail' => array( "width" => $this->options[ "defaultSizes_photo_thumbnail_width" ],	"height" => $this->options[ "defaultSizes_photo_thumbnail_height" ], "crop" => ($this->options[ "defaultSizes_photo_thumbnail_crop" ] == "0") ? false : true ),
+				'rt_media_activity_image' => array( "width" => $this->options[ "defaultSizes_photo_medium_width" ], "height" => $this->options[ "defaultSizes_photo_medium_height" ], "crop" => ($this->options[ "defaultSizes_photo_medium_crop" ] == "0") ? false : true ),
+				'rt_media_single_image' => array( "width" => $this->options[ "defaultSizes_photo_large_width" ], "height" => $this->options[ "defaultSizes_photo_large_height" ], "crop" => ($this->options[ "defaultSizes_photo_large_crop" ] == "0") ? false : true ),
+				'rt_media_featured_image' => array( "width" => $this->options[ "defaultSizes_featured_default_width" ], "height" => $this->options[ "defaultSizes_featured_default_height" ], "crop" => ($this->options[ "defaultSizes_featured_default_crop" ] == "0") ? false : true ),
+			);
+			
 		return $sizes;
 	}
-
-	/**
-	 * Get supported thumbnail sizes from rtmedia options
-	 * 
-	 * @return type $image_sizes
-	 */
-	public function image_sizes() {
-		$image_sizes = array();
-		$image_sizes[ "thumbnail" ] = array( "width" => $this->options[ "defaultSizes_photo_thumbnail_width" ],	"height" => $this->options[ "defaultSizes_photo_thumbnail_height" ], "crop" => ($this->options[ "defaultSizes_photo_thumbnail_crop" ] == "0") ? false : true );
-		$image_sizes[ "activity" ] = array( "width" => $this->options[ "defaultSizes_photo_medium_width" ], "height" => $this->options[ "defaultSizes_photo_medium_height" ], "crop" => ($this->options[ "defaultSizes_photo_medium_crop" ] == "0") ? false : true );
-		$image_sizes[ "single" ] = array( "width" => $this->options[ "defaultSizes_photo_large_width" ], "height" => $this->options[ "defaultSizes_photo_large_height" ], "crop" => ($this->options[ "defaultSizes_photo_large_crop" ] == "0") ? false : true );
-		$image_sizes[ "featured" ] = array( "width" => $this->options[ "defaultSizes_featured_default_width" ], "height" => $this->options[ "defaultSizes_featured_default_height" ], "crop" => ($this->options[ "defaultSizes_featured_default_crop" ] == "0") ? false : true );
-		return $image_sizes;
-	}
-
 }
