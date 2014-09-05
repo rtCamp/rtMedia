@@ -11,12 +11,9 @@
 class RTMediaTemplate {
 
 	public $media_args;
-	public $options;
-	
-	
+
 	function __construct() {
-		global $rtmedia_query,$rtmedia;
-		$this->options = $rtmedia->options;
+		global $rtmedia_query;
 		if ( $rtmedia_query ){
 			add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 			add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_image_editor_scripts' ) );
@@ -694,14 +691,13 @@ class RTMediaTemplate {
 	 * @return type $sizes
 	 */
 	function filter_image_sizes_details( $sizes ) {
-		
+			global $rtmedia;
 			$sizes = array(
-				'rt_media_thumbnail' => array( "width" => $this->options[ "defaultSizes_photo_thumbnail_width" ],	"height" => $this->options[ "defaultSizes_photo_thumbnail_height" ], "crop" => ($this->options[ "defaultSizes_photo_thumbnail_crop" ] == "0") ? false : true ),
-				'rt_media_activity_image' => array( "width" => $this->options[ "defaultSizes_photo_medium_width" ], "height" => $this->options[ "defaultSizes_photo_medium_height" ], "crop" => ($this->options[ "defaultSizes_photo_medium_crop" ] == "0") ? false : true ),
-				'rt_media_single_image' => array( "width" => $this->options[ "defaultSizes_photo_large_width" ], "height" => $this->options[ "defaultSizes_photo_large_height" ], "crop" => ($this->options[ "defaultSizes_photo_large_crop" ] == "0") ? false : true ),
-				'rt_media_featured_image' => array( "width" => $this->options[ "defaultSizes_featured_default_width" ], "height" => $this->options[ "defaultSizes_featured_default_height" ], "crop" => ($this->options[ "defaultSizes_featured_default_crop" ] == "0") ? false : true ),
+				'rt_media_thumbnail' => array( "width" => $rtmedia->options[ "defaultSizes_photo_thumbnail_width" ],	"height" => $rtmedia->options[ "defaultSizes_photo_thumbnail_height" ], "crop" => ($rtmedia->options[ "defaultSizes_photo_thumbnail_crop" ] == "0") ? false : true ),
+				'rt_media_activity_image' => array( "width" => $rtmedia->options[ "defaultSizes_photo_medium_width" ], "height" => $rtmedia->options[ "defaultSizes_photo_medium_height" ], "crop" => ($rtmedia->options[ "defaultSizes_photo_medium_crop" ] == "0") ? false : true ),
+				'rt_media_single_image' => array( "width" => $rtmedia->options[ "defaultSizes_photo_large_width" ], "height" => $rtmedia->options[ "defaultSizes_photo_large_height" ], "crop" => ($rtmedia->options[ "defaultSizes_photo_large_crop" ] == "0") ? false : true ),
+				'rt_media_featured_image' => array( "width" => $rtmedia->options[ "defaultSizes_featured_default_width" ], "height" => $rtmedia->options[ "defaultSizes_featured_default_height" ], "crop" => ($rtmedia->options[ "defaultSizes_featured_default_crop" ] == "0") ? false : true ),
 			);
-			
 		return $sizes;
 	}
 }
