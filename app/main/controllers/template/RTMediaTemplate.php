@@ -210,6 +210,7 @@ class RTMediaTemplate {
 	}
 
 	function save_single_edit() {
+		add_filter( 'intermediate_image_sizes_advanced', array( $this, 'filter_image_sizes_details' ) );
 		global $rtmedia_query;
 		$nonce = $_POST[ 'rtmedia_media_nonce' ];
 		if ( wp_verify_nonce( $nonce, 'rtmedia_' . $rtmedia_query->action_query->id ) ){
@@ -248,6 +249,7 @@ class RTMediaTemplate {
 		} else {
 			_e( 'Ooops !!! Invalid access. No nonce was found !!', 'rtmedia' );
 		}
+		remove_filter( 'intermediate_image_sizes_advanced', array( $this, 'filter_image_sizes_details' ) );
 	}
 
 	function media_update_success_messege() {
@@ -680,6 +682,39 @@ class RTMediaTemplate {
 		}
 
 		return $located;
+	}
+	
+	/**
+	 * Declares array of rtMedia supported thumbnail sizes
+	 * 
+	 * @param type $sizes
+	 * @return type $sizes
+	 */
+	function filter_image_sizes_details( $sizes ) {
+			
+			$bp_media_sizes = $this->image_sizes();
+			$sizes = array(
+				'rt_media_thumbnail' => $bp_media_sizes[ 'thumbnail' ],
+				'rt_media_activity_image' => $bp_media_sizes[ 'activity' ],
+				'rt_media_single_image' => $bp_media_sizes[ 'single' ],
+				'rt_media_featured_image' => $bp_media_sizes[ 'featured' ],
+			);
+		
+		return $sizes;
+	}
+
+	/**
+	 * Get supported thumbnail sizes from rtmedia options
+	 * 
+	 * @return type $image_sizes
+	 */
+	public function image_sizes() {
+		$image_sizes = array();
+		$image_sizes[ "thumbnail" ] = array( "width" => $this->options[ "defaultSizes_photo_thumbnail_width" ],	"height" => $this->options[ "defaultSizes_photo_thumbnail_height" ], "crop" => ($this->options[ "defaultSizes_photo_thumbnail_crop" ] == "0") ? false : true );
+		$image_sizes[ "activity" ] = array( "width" => $this->options[ "defaultSizes_photo_medium_width" ], "height" => $this->options[ "defaultSizes_photo_medium_height" ], "crop" => ($this->options[ "defaultSizes_photo_medium_crop" ] == "0") ? false : true );
+		$image_sizes[ "single" ] = array( "width" => $this->options[ "defaultSizes_photo_large_width" ], "height" => $this->options[ "defaultSizes_photo_large_height" ], "crop" => ($this->options[ "defaultSizes_photo_large_crop" ] == "0") ? false : true );
+		$image_sizes[ "featured" ] = array( "width" => $this->options[ "defaultSizes_featured_default_width" ], "height" => $this->options[ "defaultSizes_featured_default_height" ], "crop" => ($this->options[ "defaultSizes_featured_default_crop" ] == "0") ? false : true );
+		return $image_sizes;
 	}
 
 }
