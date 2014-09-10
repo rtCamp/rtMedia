@@ -682,7 +682,8 @@ jQuery( document ).ready( function ( $ ) {
     var activity_attachemnt_ids = [];
 
     objUploadView = new UploadView( rtMedia_update_plupload_config );
-
+    objUploadView.initUploader();
+    
     setTimeout( function(){
         if ( $( "#rtmedia-add-media-button-post-update" ).length > 0 ) {
             $( "#whats-new-options" ).prepend( $( ".rtmedia-plupload-container" ) );
@@ -911,7 +912,6 @@ jQuery( document ).ready( function ( $ ) {
 
     $( "#rtMedia-start-upload" ).hide();
 
-    objUploadView.initUploader();
     var change_flag = false
     var media_uploading = false;
     $.ajaxPrefilter( function ( options, originalOptions, jqXHR ) {
