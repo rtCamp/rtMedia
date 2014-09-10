@@ -685,7 +685,7 @@ class RTMediaTemplate {
 	}
 	
 	/**
-	 * Declares array of rtMedia supported thumbnail sizes
+	 * Filters array of rtMedia supported thumbnail sizes
 	 * 
 	 * @param type $sizes
 	 * @return type $sizes
