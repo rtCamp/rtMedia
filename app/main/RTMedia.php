@@ -83,19 +83,7 @@ class RTMedia
      * @global int $bp_media_counter Media counter
      */
     public function __construct() {
-        /**
-         *
-         * Buddypress Media Auto Upgradation
-         */
-	add_action('rt_db_upgrade', array($this, 'fix_parent_id'));
-        add_action('rt_db_upgrade', array($this, 'fix_privacy'));
-        add_action('rt_db_upgrade', array($this, 'fix_group_media_privacy'));
-        add_action('rt_db_upgrade', array($this, 'fix_db_collation'));
-        $this->update_db();
-		remove_action('rt_db_upgrade', array($this, 'fix_privacy'));
-		remove_action('rt_db_upgrade', array($this, 'fix_group_media_privacy'));
-		remove_action('rt_db_upgrade', array($this, 'fix_db_collation'));
-        $this->default_thumbnail = apply_filters('rtmedia_default_thumbnail', RTMEDIA_URL . 'assets/thumb_default.png');
+		$this->default_thumbnail = apply_filters('rtmedia_default_thumbnail', RTMEDIA_URL . 'assets/thumb_default.png');
         add_action('init', array($this, 'check_global_album'));
         add_action('plugins_loaded', array($this, 'init'), 20);
         add_action('plugins_loaded', array($this, 'load_translation'), 10);
@@ -166,12 +154,14 @@ class RTMedia
      */
     function fix_group_media_privacy(){
         //if buddypress is active and groups are enabled
-	global $wpdb;
-	$model = new RTMediaModel();
-	$sql_group = " UPDATE $model->table_name m join {$wpdb->prefix}bp_groups bp on m.context_id = bp.id SET m.privacy = 0 where m.context = 'group' and bp.status = 'public' and m.privacy <> 80 ";
-	$wpdb->query($sql_group);
-	$sql_group = " UPDATE $model->table_name m join {$wpdb->prefix}bp_groups bp on m.context_id = bp.id SET m.privacy = 20 where m.context = 'group' and ( bp.status = 'private' OR bp.status = 'hidden' ) and m.privacy <> 80 ";
-	$wpdb->query($sql_group);
+		if( class_exists( 'BuddyPress' ) ){
+			global $wpdb;
+			$model = new RTMediaModel();
+			$sql_group = " UPDATE $model->table_name m join {$wpdb->prefix}bp_groups bp on m.context_id = bp.id SET m.privacy = 0 where m.context = 'group' and bp.status = 'public' and m.privacy <> 80 ";
+			$wpdb->query($sql_group);
+			$sql_group = " UPDATE $model->table_name m join {$wpdb->prefix}bp_groups bp on m.context_id = bp.id SET m.privacy = 20 where m.context = 'group' and ( bp.status = 'private' OR bp.status = 'hidden' ) and m.privacy <> 80 ";
+			$wpdb->query($sql_group);
+		}
     }
 
 
@@ -642,6 +632,17 @@ class RTMedia
      * @global BPMediaAdmin $bp_media_admin
      */
     function init() {
+		// rtMedia db upgrade
+		add_action('rt_db_upgrade', array($this, 'fix_parent_id'));
+		add_action('rt_db_upgrade', array($this, 'fix_privacy'));
+		add_action('rt_db_upgrade', array($this, 'fix_group_media_privacy'));
+		add_action('rt_db_upgrade', array($this, 'fix_db_collation'));
+		$this->update_db();
+		remove_action('rt_db_upgrade', array($this, 'fix_parent_id'));
+		remove_action('rt_db_upgrade', array($this, 'fix_privacy'));
+		remove_action('rt_db_upgrade', array($this, 'fix_group_media_privacy'));
+		remove_action('rt_db_upgrade', array($this, 'fix_db_collation'));
+
         $this->set_allowed_types(); // Define allowed types
         $this->constants(); // Define constants
         $this->redirect_on_change_slug();
