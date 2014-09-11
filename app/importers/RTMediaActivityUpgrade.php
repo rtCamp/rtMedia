@@ -33,6 +33,10 @@ class RTMediaActivityUpgrade {
 
 	function add_admin_notice(){
 		$pending = $this->get_pending_count();
+		$upgrade_done = rtmedia_get_site_option( 'rtmedia_activity_done_upgrade' );
+		if( $upgrade_done ){
+			return;
+		}
 		if ( $pending < 0 ){
 			$pending = 0;
 		}
@@ -94,8 +98,9 @@ class RTMediaActivityUpgrade {
 		$rtmedia_activity_model = new RTMediaActivityModel();
 		$rtmedia_model = new RTMediaModel();
 		$query_pending = " SELECT count( DISTINCT activity_id) as pending from {$rtmedia_model->table_name} where activity_id NOT IN( SELECT activity_id from {$rtmedia_activity_model->table_name} ) AND activity_id > 0  ";
-		if( $activity_id ){
-			$query_pending .= " AND activity_id>{$activity_id} ";
+		$last_imported = $this->get_last_imported();
+		if( $last_imported ){
+			$query_pending .= " AND activity_id>{$last_imported} ";
 		}
 		$pending_count = $wpdb->get_results( $query_pending );
 		if ( $pending_count && sizeof( $pending_count ) > 0 ){
