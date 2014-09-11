@@ -291,45 +291,76 @@ class RTMediaPrivacy {
         $where         = '' ;
         global $bp , $wpdb ;
         $rtmedia_model = new RTMediaModel() ;
-        if ( is_user_logged_in () ) {
-            $user = get_current_user_id () ;
-        }
-        else {
-            $user = 0 ;
-        }
 
-        $where .= " (m.max_privacy is NULL OR m.max_privacy <= 0) " ;
+		if ( is_user_logged_in () ) {
+			$user = get_current_user_id () ;
+		}
+		else {
+			$user = 0 ;
+		}
 
-        if ( $user ) {
-            $where .= "OR ((m.max_privacy=20)" ;
-            $where .= " OR (a.user_id={$user} AND m.max_privacy >= 40)" ;
-            if ( class_exists ( 'BuddyPress' ) ) {
-                if ( bp_is_active ( 'friends' ) ) {
-                    $friendship = new RTMediaFriends() ;
-                    $friends    = $friendship -> get_friends_cache ( $user ) ;
-                    if ( isset($friends) && ! empty ( $friends ) != "" ){
-                        $where .= " OR (m.max_privacy=40 AND a.user_id IN ('" . implode ( "','" , $friends ) . "'))" ;
-                    }
-                }
-            }
-            $where .= ')' ;
-        }
-        if ( function_exists ( "bp_core_get_table_prefix" ) ){
-            $bp_prefix = bp_core_get_table_prefix () ;
-        }
-        else{
-            $bp_prefix = "" ;
-        }
+		$activity_upgrade_done = rtmedia_get_site_option( 'rtmedia_activity_done_upgrade' );
 
-        if ( strpos ( $select_sql , "SELECT DISTINCT" ) === false ){
-            $select_sql = str_replace ( "SELECT" , "SELECT DISTINCT" , $select_sql ) ;
-        }
-
-		$media_table = "SELECT *, max( privacy ) as max_privacy from {$rtmedia_model->table_name} group by activity_id";
-
-        $from_sql = " FROM {$bp->activity->table_name} a LEFT JOIN {$wpdb->users} u ON a.user_id = u.ID LEFT JOIN ( $media_table ) m ON ( a.id = m.activity_id AND m.blog_id = '".  get_current_blog_id()."' ) ";
-        $where_sql = $where_sql . " AND (NOT EXISTS (SELECT m.activity_id FROM {$bp_prefix}bp_activity_meta m WHERE m.meta_key='rtmedia_privacy' AND m.activity_id=a.id) OR ( {$where} ) )";
-        $newsql = "{$select_sql} {$from_sql} {$where_sql} ORDER BY a.date_recorded {$sort} {$pag_sql}";
+		// admin has upgraded rtmedia activity so we can use rt_rtm_activity table for rtmedia related activity filters
+		if( $activity_upgrade_done ){
+			$rtmedia_activity_model = new RTMediaActivityModel();
+			$where .= " (ra.privacy is NULL OR ra.privacy <= 0) " ;
+			if ( $user ) {
+				$where .= "OR ((ra.privacy=20)" ;
+				$where .= " OR (a.user_id={$user} AND ra.privacy >= 40)" ;
+				if ( class_exists ( 'BuddyPress' ) ) {
+					if ( bp_is_active ( 'friends' ) ) {
+						$friendship = new RTMediaFriends() ;
+						$friends    = $friendship -> get_friends_cache ( $user ) ;
+						if ( isset($friends) && ! empty ( $friends ) != "" ){
+							$where .= " OR (ra.privacy=40 AND a.user_id IN ('" . implode ( "','" , $friends ) . "'))" ;
+						}
+					}
+				}
+				$where .= ')' ;
+			}
+			if ( function_exists ( "bp_core_get_table_prefix" ) ){
+				$bp_prefix = bp_core_get_table_prefix () ;
+			}
+			else{
+				$bp_prefix = "" ;
+			}
+			if ( strpos ( $select_sql , "SELECT DISTINCT" ) === false ){
+				$select_sql = str_replace ( "SELECT" , "SELECT DISTINCT" , $select_sql ) ;
+			}
+			$from_sql = " FROM {$bp->activity->table_name} a LEFT JOIN {$wpdb->users} u ON a.user_id = u.ID LEFT JOIN {$rtmedia_model->table_name} m ON ( a.id = m.activity_id AND m.blog_id = '".  get_current_blog_id()."' ) LEFT JOIN {$rtmedia_activity_model->table_name} ra ON ( a.id = ra.activity_id and ra.blog_id = '".  get_current_blog_id()."' ) ";
+			$where_sql = $where_sql . " AND (NOT EXISTS (SELECT m.activity_id FROM {$bp_prefix}bp_activity_meta m WHERE m.meta_key='rtmedia_privacy' AND m.activity_id=a.id) OR ( {$where} ) )";
+			$newsql = "{$select_sql} {$from_sql} {$where_sql} ORDER BY a.date_recorded {$sort} {$pag_sql}";
+		} else {
+			$where .= " (m.max_privacy is NULL OR m.max_privacy <= 0) " ;
+			if ( $user ) {
+				$where .= "OR ((m.max_privacy=20)" ;
+				$where .= " OR (a.user_id={$user} AND m.max_privacy >= 40)" ;
+				if ( class_exists ( 'BuddyPress' ) ) {
+					if ( bp_is_active ( 'friends' ) ) {
+						$friendship = new RTMediaFriends() ;
+						$friends    = $friendship -> get_friends_cache ( $user ) ;
+						if ( isset($friends) && ! empty ( $friends ) != "" ){
+							$where .= " OR (m.max_privacy=40 AND a.user_id IN ('" . implode ( "','" , $friends ) . "'))" ;
+						}
+					}
+				}
+				$where .= ')' ;
+			}
+			if ( function_exists ( "bp_core_get_table_prefix" ) ){
+				$bp_prefix = bp_core_get_table_prefix () ;
+			}
+			else{
+				$bp_prefix = "" ;
+			}
+			if ( strpos ( $select_sql , "SELECT DISTINCT" ) === false ){
+				$select_sql = str_replace ( "SELECT" , "SELECT DISTINCT" , $select_sql ) ;
+			}
+			$media_table = "SELECT *, max( privacy ) as max_privacy from {$rtmedia_model->table_name} group by activity_id";
+			$from_sql = " FROM {$bp->activity->table_name} a LEFT JOIN {$wpdb->users} u ON a.user_id = u.ID LEFT JOIN ( $media_table ) m ON ( a.id = m.activity_id AND m.blog_id = '".  get_current_blog_id()."' ) ";
+			$where_sql = $where_sql . " AND (NOT EXISTS (SELECT m.activity_id FROM {$bp_prefix}bp_activity_meta m WHERE m.meta_key='rtmedia_privacy' AND m.activity_id=a.id) OR ( {$where} ) )";
+			$newsql = "{$select_sql} {$from_sql} {$where_sql} ORDER BY a.date_recorded {$sort} {$pag_sql}";
+		}
         return $newsql;
     }
 
