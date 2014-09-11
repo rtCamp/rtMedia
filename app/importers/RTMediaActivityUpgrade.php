@@ -93,7 +93,7 @@ class RTMediaActivityUpgrade {
 		global $wpdb;
 		$rtmedia_activity_model = new RTMediaActivityModel();
 		$rtmedia_model = new RTMediaModel();
-		$query_pending = " SELECT count( DISTINCT activity_id) as pending from {$rtmedia_model->table_name} where activity_id NOT IN( SELECT activity_id from {$rtmedia_activity_model->table_name} )  ";
+		$query_pending = " SELECT count( DISTINCT activity_id) as pending from {$rtmedia_model->table_name} where activity_id NOT IN( SELECT activity_id from {$rtmedia_activity_model->table_name} ) AND activity_id > 0  ";
 		if( $activity_id ){
 			$query_pending .= " AND activity_id>{$activity_id} ";
 		}
@@ -107,7 +107,7 @@ class RTMediaActivityUpgrade {
 	function get_total_count(){
 		global $wpdb;
 		$rtmedia_model = new RTMediaModel();
-		$query_total = " SELECT count( DISTINCT activity_id) as total FROM {$rtmedia_model->table_name} ";
+		$query_total = " SELECT count( DISTINCT activity_id) as total FROM {$rtmedia_model->table_name} WHERE activity_id > 0 ";
 		$total_count = $wpdb->get_results( $query_total );
 		if ( $total_count && sizeof( $total_count ) > 0 ){
 			return $total_count[ 0 ]->total;
