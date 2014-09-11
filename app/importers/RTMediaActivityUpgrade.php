@@ -207,7 +207,7 @@ class RTMediaActivityUpgrade {
 						action: 'rtmedia_activity_done_upgrade'
 					}
 					jQuery.post( '<?php echo $admin_ajax; ?>', data, function(){
-						alert( "Migration completed." );
+						alert( "Database upgrade completed." );
 					} );
 					if( fail_id.length > 0 ) {
 						rtm_show_file_error();
