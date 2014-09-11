@@ -139,6 +139,13 @@ class RTMediaBuddyPressActivity {
                 }
             }
             bp_activity_update_meta ( $activity_id, 'rtmedia_privacy', $privacy );
+			// insert/update activity details in rtmedia activity table
+			$rtmedia_activity_model = new RTMediaActivityModel();
+			if( ! $rtmedia_activity_model->check( $activity_id ) ){
+				$rtmedia_activity_model->insert( array( 'activity_id' => $activity_id, 'user_id' => $user_id, 'privacy' => $privacy ) );
+			} else {
+				$rtmedia_activity_model->update( array( 'activity_id' => $activity_id, 'user_id' => $user_id, 'privacy' => $privacy ), array( 'activity_id' => $activity_id ) );
+			}
         }
     }
 
