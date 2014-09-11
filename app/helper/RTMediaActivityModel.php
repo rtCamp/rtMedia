@@ -16,16 +16,32 @@ class RTMediaActivityModel extends RTDBModel {
 		parent::__construct ( 'rtm_activity' );
 	}
 
+	function get( $columns, $offset=false, $per_page=false, $order_by= 'activity_id DESC' ) {
+		$columns['blog_id'] = get_current_blog_id();
+		return parent::get( $columns, $offset, $per_page, $order_by );
+	}
+
+	function insert( $row ) {
+		$row['blog_id'] = get_current_blog_id();
+		return parent::insert( $row );
+	}
+
+	function update( $data, $where ) {
+		$where['blog_id'] = get_current_blog_id();
+		return parent::update( $data, $where );
+	}
+
 	public function check( $activity_id = "") {
 		if( $activity_id == ""  ){
 			return false;
 		}
 
 		$columns = array(
-			'activity_id' => $activity_id
+			'activity_id' => $activity_id,
+			'blog_id' => get_current_blog_id(),
 		);
 
-		$results = $this->get( $columns, false, false, 'activity_id DESC' );
+		$results = $this->get( $columns );
 
 		if( $results ){
 			return true;
