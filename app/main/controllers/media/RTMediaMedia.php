@@ -207,6 +207,25 @@ class RTMediaMedia {
 
         $status = $this->model->update ( $data, $where );
 
+		// insert/update activity details in rtmedia activity table
+		$media_model = new RTMediaModel();
+		$media = $media_model->get( array( 'id' => $id ) );
+		$rtmedia_activity_model = new RTMediaActivityModel();
+		$similar_media = $media_model->get( array( 'activity_id' => $media[0]->activity_id ) );
+		$max_privacy = 0;
+
+		foreach( $similar_media as $s_media ){
+			if( $s_media->privacy > $max_privacy ){
+				$max_privacy = $s_media->privacy;
+			}
+		}
+
+		if( ! $rtmedia_activity_model->check( $media[0]->activity_id ) ){
+			$rtmedia_activity_model->insert( array( 'activity_id' => $media[0]->activity_id, 'user_id' => $media[0]->media_author, 'privacy' => $max_privacy ) );
+		} else {
+			$rtmedia_activity_model->update( array( 'activity_id' => $media[0]->activity_id, 'user_id' => $media[0]->media_author, 'privacy' => $max_privacy ), array( 'activity_id' => $media[0]->activity_id ) );
+		}
+
         /* action to perform any task after updating a media */
         do_action ( 'rtmedia_after_update_media', $id );
 
@@ -531,6 +550,14 @@ class RTMediaMedia {
         $this->model->update (
                 array( 'activity_id' => $activity_id ), array( 'id' => $media->id )
         );
+
+		// insert/update activity details in rtmedia activity table
+		$rtmedia_activity_model = new RTMediaActivityModel();
+		if( ! $rtmedia_activity_model->check( $activity_id ) ){
+			$rtmedia_activity_model->insert( array( 'activity_id' => $activity_id, 'user_id' => $media->media_author, 'privacy' => $media->privacy ) );
+		} else {
+			$rtmedia_activity_model->update( array( 'activity_id' => $activity_id, 'user_id' => $media->media_author, 'privacy' => $media->privacy ), array( 'activity_id' => $activity_id ) );
+		}
 
         return $activity_id;
     }
