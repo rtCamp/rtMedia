@@ -133,6 +133,9 @@ http://www.youtube.com/watch?v####dJrykKQGDcs
 
 Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "Visit rtMedia's Features page") to get some details about future releases.
 
+#### 3.7.9 ####
+* Added new database table to store activity privacy
+
 #### 3.7.8 ####
 * Fix video player issue in BuddyPress activity
 
@@ -802,8 +805,8 @@ Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_sou
 * HTML5 Audio Tag Support (with fallback)
 * HTML5 Video Tag Support (with fallback)
 
-#### 3.7.8 ####
-Requires BuddyPress 1.7 or higher, if using BuddyPress. Fix video player issue in BuddyPress activity.
+#### 3.7.9 ####
+Requires BuddyPress 1.7 or higher, if using BuddyPress. Added new database table to store activity privacy.
 
 ## Sponsors ##
 
