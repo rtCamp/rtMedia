@@ -9,11 +9,11 @@
         <?php }
         else { ?>
             <div id="rtm-gallery-title-container" class="row">
-                <h2 class="rtm-gallery-title columns large-7 small-12 medium-7">
+                <h2 class="rtm-gallery-title columns large-5 small-12 medium-5">
                     <?php if( $title ) { echo $title; }
                             else { _e( 'Media Gallery', 'rtmedia' ); } ?>
                 </h2>
-                <div id="rtm-media-options" class="columns large-5 small-12 medium-5"><?php do_action ( 'rtmedia_media_gallery_actions' ); ?></div>
+                <div id="rtm-media-options" class="columns large-7 small-12 medium-7"><?php do_action ( 'rtmedia_media_gallery_actions' ); ?></div>
             </div>
 			<div class="clear"></div>
 
