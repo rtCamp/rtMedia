@@ -780,3 +780,24 @@ div.bp-media-metabox-holder #branding #mce-responses {
 .bp-media-settings-boxes-container .bp-media-metabox-holder {
     padding-right: 0;
 }
+.rtm-addon-license{
+    background: #FFF;
+    margin-bottom: 10px;
+    padding: 10px;
+}
+.rtm-addon-license .rtm-addon-license-status {
+    font-size: 20px;
+    margin: 10px 0;
+}.rtm-addon-license .rtm-addon-license-status .rtm-addon-license-status-label{
+    font-weight: bold;
+    color: #222;
+}
+.rtm-addon-license .rtm-addon-status-activated {
+    color: green;
+}
+.rtm-addon-license .rtm-addon-status-deactivated {
+    color: red;
+}
+.rtm-addon-license table th{
+    width: 35%;
+}
