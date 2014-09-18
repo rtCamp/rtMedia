@@ -149,6 +149,21 @@ class RTMediaActivityUpgrade {
 			$temp = $prog->progress( $done, $total );
 			$prog->progress_ui( $temp, true );
 			?>
+			<style type="text/css">
+				#rtprogressbar {
+					background-color: #444;
+					border-radius: 13px;
+					margin-bottom: 10px;
+					padding: 3px;
+				}
+
+				#rtprogressbar div {
+					background-color: #fb6003;
+					border-radius: 10px;
+					height: 20px;
+					width: 0;
+				}
+			</style>
 		<script type="text/javascript">
 			var fail_id = new Array();
 			var ajax_data;
