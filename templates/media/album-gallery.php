@@ -1,8 +1,8 @@
 <div class="rtmedia-container">
     <?php do_action ( 'rtmedia_before_album_gallery' ); ?>
     <div id="rtm-gallery-title-container" class="row">
-        <h2 class="rtm-gallery-title columns large-7 small-12 medium-7"><?php _e( 'Album List' , 'rtmedia' ) ; ?></h2>
-        <div id="rtm-media-options" class="columns large-5 small-12 medium-5"><?php do_action ( 'rtmedia_album_gallery_actions' ); ?></div>
+        <h2 class="rtm-gallery-title columns large-5 small-12 medium-5"><?php _e( 'Album List' , 'rtmedia' ) ; ?></h2>
+        <div id="rtm-media-options" class="columns large-7 small-12 medium-7"><?php do_action ( 'rtmedia_album_gallery_actions' ); ?></div>
     </div>
 	<div class="clear"></div>
     <?php do_action ( 'rtmedia_after_album_gallery_title' ); ?>
