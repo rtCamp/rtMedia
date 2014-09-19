@@ -111,7 +111,11 @@ if ( ! class_exists( 'RTMediaAdmin' ) ){
 			}
 			add_action( 'admin_notices', array( $this, 'rtmedia_admin_notices' ) );
 			add_action( 'network_admin_notices', array( $this, 'rtmedia_network_admin_notices' ) );
+			add_action( 'admin_init', array( $this, 'rtmedia_addon_license_save_hook' ) );
+		}
 
+		function rtmedia_addon_license_save_hook(){
+			do_action( 'rtmedia_addon_license_save_hook' );
 		}
 
 		/**
@@ -553,6 +557,11 @@ if ( ! class_exists( 'RTMediaAdmin' ) ){
 					'title' => __( 'Hire Us', 'rtmedia' ), 'target' => '_self',
 				),
 			) );
+			$admin_bar->add_menu( array(
+				'id' => 'rt-media-license', 'parent' => 'rtMedia', 'title' => __( 'License', 'rtmedia' ), 'href' => admin_url( 'admin.php?page=rtmedia-license' ), 'meta' => array(
+					'title' => __( 'License', 'rtmedia' ), 'target' => '_self',
+				),
+			) );
 		}
 
 		/**
@@ -564,7 +573,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ){
 		 */
 		public function ui( $hook ) {
 			$admin_pages = array(
-				'rtmedia_page_rtmedia-migration', 'rtmedia_page_rtmedia-kaltura-settings', 'rtmedia_page_rtmedia-ffmpeg-settings', 'toplevel_page_rtmedia-settings', 'rtmedia_page_rtmedia-addons', 'rtmedia_page_rtmedia-support', 'rtmedia_page_rtmedia-themes', 'rtmedia_page_rtmedia-hire-us', 'rtmedia_page_rtmedia-importer', 'rtmedia_page_rtmedia-regenerate', 'rtmedia_page_rtmedia-premium'
+				'rtmedia_page_rtmedia-migration', 'rtmedia_page_rtmedia-kaltura-settings', 'rtmedia_page_rtmedia-ffmpeg-settings', 'toplevel_page_rtmedia-settings', 'rtmedia_page_rtmedia-addons', 'rtmedia_page_rtmedia-support', 'rtmedia_page_rtmedia-themes', 'rtmedia_page_rtmedia-hire-us', 'rtmedia_page_rtmedia-importer', 'rtmedia_page_rtmedia-regenerate', 'rtmedia_page_rtmedia-premium', 'rtmedia_page_rtmedia-license'
 			);
 
 			$admin_pages = apply_filters( 'rtmedia_filter_admin_pages_array', $admin_pages );
@@ -583,7 +592,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ){
 				wp_localize_script( 'rtmedia-admin', 'rtmedia_admin_url', admin_url() );
 				wp_localize_script( 'rtmedia-admin', 'rtmedia_admin_url', admin_url() );
 
-				if ( isset( $_REQUEST[ 'page' ] ) && ( in_array( $_REQUEST[ 'page' ], array( "rtmedia-settings", "rtmedia-addons", "rtmedia-themes", "rtmedia-support", "rtmedia-hire-us" ) ) ) ){
+				if ( isset( $_REQUEST[ 'page' ] ) && ( in_array( $_REQUEST[ 'page' ], array( "rtmedia-settings", "rtmedia-addons", "rtmedia-themes", "rtmedia-support", "rtmedia-hire-us", "rtmedia-license" ) ) ) ){
 					wp_enqueue_script( 'rtmedia-foundation-modernizr', RTMEDIA_URL . 'lib/foundation/custom.modernizr.js', array( 'jquery' ), RTMEDIA_VERSION );
 					wp_enqueue_script( 'rtmedia-foundation', RTMEDIA_BOWER_COMPONENTS_URL . 'js/foundation.js', array( 'jquery' ), RTMEDIA_VERSION );
 					//wp_enqueue_script ( 'rtmedia-foundation-section', RTMEDIA_URL . 'lib/foundation/foundation.section.js', array('jquery'), RTMEDIA_VERSION );
@@ -603,7 +612,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ){
 				wp_enqueue_style( 'rtmedia-main', RTMEDIA_URL . 'app/assets/css/main.css', '', RTMEDIA_VERSION );
 				wp_enqueue_style( 'rtmedia-admin', RTMEDIA_URL . 'app/assets/css/admin.css', '', RTMEDIA_VERSION );
 
-				if ( isset( $_REQUEST[ 'page' ] ) && ( in_array( $_REQUEST[ 'page' ], array( "rtmedia-settings", "rtmedia-addons", "rtmedia-themes", "rtmedia-support", "rtmedia-hire-us" ) ) ) ){
+				if ( isset( $_REQUEST[ 'page' ] ) && ( in_array( $_REQUEST[ 'page' ], array( "rtmedia-settings", "rtmedia-addons", "rtmedia-themes", "rtmedia-support", "rtmedia-hire-us", "rtmedia-license" ) ) ) ){
 					wp_enqueue_style( 'foundation-admin-css', RTMEDIA_URL . 'app/assets/css/settings.css', '', RTMEDIA_VERSION );
 				}
 
@@ -629,6 +638,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ){
 			add_submenu_page( 'rtmedia-settings', __( 'Support', 'rtmedia' ), __( 'Support', 'rtmedia' ), 'manage_options', 'rtmedia-support', array( $this, 'support_page' ) );
 			add_submenu_page( 'rtmedia-settings', __( 'Themes', 'rtmedia' ), __( 'Themes', 'rtmedia' ), 'manage_options', 'rtmedia-themes', array( $this, 'theme_page' ) );
 			add_submenu_page( 'rtmedia-settings', __( 'Hire Us', 'rtmedia' ), __( 'Hire Us', 'rtmedia' ), 'manage_options', 'rtmedia-hire-us', array( $this, 'hire_us_page' ) );
+			add_submenu_page( 'rtmedia-settings', __( 'License', 'rtmedia' ), __( 'License', 'rtmedia' ), 'manage_options', 'rtmedia-license', array( $this, 'license_page' ) );
 
 			if ( ! defined( "RTMEDIA_PRO_VERSION" ) ){
 				add_submenu_page( 'rtmedia-settings', __( 'Premium', 'rtmedia' ), __( 'Premium ', 'rtmedia' ), 'manage_options', 'rtmedia-premium', array( $this, 'premium_page' ) );
@@ -968,6 +978,10 @@ if ( ! class_exists( 'RTMediaAdmin' ) ){
 			$this->render_page( 'rtmedia-hire-us' );
 		}
 
+		public function license_page() {
+			$this->render_page( 'rtmedia-license' );
+		}
+
 		/**
 		 * Render the rtmedia hire us page.
 		 *
@@ -1039,21 +1053,18 @@ if ( ! class_exists( 'RTMediaAdmin' ) ){
 						} else {
 							?>
 							<div class="bp-media-metabox-holder">
-
 							<?php
 							if ( $page == 'rtmedia-addons' ){
 								RTMediaAddon::render_addons( $page );
+							} else if ( $page == 'rtmedia-support' ){
+								$rtmedia_support = new RTMediaSupport( false );
+								$rtmedia_support->render_support( $page );
+							} else if ( $page == 'rtmedia-themes' ){
+								RTMediaThemes::render_themes( $page );
+							} else if( $page == 'rtmedia-license'  ){
+								RTMediaLicense::render_themes( $page );
 							} else {
-								if ( $page == 'rtmedia-support' ){
-									$rtmedia_support = new RTMediaSupport( false );
-									$rtmedia_support->render_support( $page );
-								} else {
-									if ( $page == 'rtmedia-themes' ){
-										RTMediaThemes::render_themes( $page );
-									} else {
-										do_settings_sections( $page );
-									}
-								}
+								do_settings_sections( $page );
 							}
 							?>
 							<?php
@@ -1062,9 +1073,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ){
 							</div><?php
 							do_action( 'rtmedia_admin_page_append', $page );
 						}
-						?>
-
-
+				?>
 					</div>
 					<!-- .bp-media-settings-boxes -->
 					<div class="metabox-holder bp-media-metabox-holder columns large-3">
@@ -1130,12 +1139,9 @@ if ( ! class_exists( 'RTMediaAdmin' ) ){
 					'href' => get_admin_url( null, add_query_arg( array( 'page' => 'rtmedia-hire-us' ), 'admin.php' ) ), 'name' => __( 'Hire Us', 'rtmedia' ), 'slug' => 'rtmedia-hire-us'
 				), array(
 					'href' => get_admin_url( null, add_query_arg( array( 'page' => 'rtmedia-support' ), 'admin.php' ) ), 'name' => __( 'Support', 'rtmedia' ), 'slug' => 'rtmedia-support'
-				), //              array(
-				//                  'href' => get_admin_url(null, add_query_arg(array('page' => 'rtmedia-importer'), 'admin.php')),
-				//                  'name' => __('Importer', 'rtmedia'),
-				//                  'slug' => 'rtmedia-importer'
-				//                        )
-
+				), array(
+					'href' => get_admin_url( null, add_query_arg( array( 'page' => 'rtmedia-license' ), 'admin.php' ) ), 'name' => __( 'License', 'rtmedia' ), 'slug' => 'rtmedia-license'
+				),
 			);
 
 			$tabs = apply_filters( 'media_add_tabs', $tabs );

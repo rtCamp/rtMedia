@@ -26,7 +26,7 @@
                             </div>
                             <?php if( rtmedia_album_name() ) { ?>
                                 <div class="rtmedia-album-name">
-                                    <span>&nbsp;<?php echo __("under"); ?></span>
+                                    <span>&nbsp;<?php echo __( "under", 'rtmedia' ); ?></span>
                                     <a href="<?php echo rtmedia_album_permalink();?>" title="<?php echo rtmedia_album_name(); ?>"><?php echo rtmedia_album_name(); ?></a>
                                 </div>
                             <?php } ?>

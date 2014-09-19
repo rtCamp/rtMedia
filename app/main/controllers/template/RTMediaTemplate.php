@@ -210,6 +210,7 @@ class RTMediaTemplate {
 	}
 
 	function save_single_edit() {
+		add_filter( 'intermediate_image_sizes_advanced', array( $this, 'filter_image_sizes_details' ) );
 		global $rtmedia_query;
 		$nonce = $_POST[ 'rtmedia_media_nonce' ];
 		if ( wp_verify_nonce( $nonce, 'rtmedia_' . $rtmedia_query->action_query->id ) ){
@@ -248,6 +249,7 @@ class RTMediaTemplate {
 		} else {
 			_e( 'Ooops !!! Invalid access. No nonce was found !!', 'rtmedia' );
 		}
+		remove_filter( 'intermediate_image_sizes_advanced', array( $this, 'filter_image_sizes_details' ) );
 	}
 
 	function media_update_success_messege() {
@@ -681,5 +683,21 @@ class RTMediaTemplate {
 
 		return $located;
 	}
-
+	
+	/**
+	 * Filters array of rtMedia supported thumbnail sizes
+	 * 
+	 * @param type $sizes
+	 * @return type $sizes
+	 */
+	function filter_image_sizes_details( $sizes ) {
+			global $rtmedia;
+			$sizes = array(
+				'rt_media_thumbnail' => array( "width" => $rtmedia->options[ "defaultSizes_photo_thumbnail_width" ],	"height" => $rtmedia->options[ "defaultSizes_photo_thumbnail_height" ], "crop" => ($rtmedia->options[ "defaultSizes_photo_thumbnail_crop" ] == "0") ? false : true ),
+				'rt_media_activity_image' => array( "width" => $rtmedia->options[ "defaultSizes_photo_medium_width" ], "height" => $rtmedia->options[ "defaultSizes_photo_medium_height" ], "crop" => ($rtmedia->options[ "defaultSizes_photo_medium_crop" ] == "0") ? false : true ),
+				'rt_media_single_image' => array( "width" => $rtmedia->options[ "defaultSizes_photo_large_width" ], "height" => $rtmedia->options[ "defaultSizes_photo_large_height" ], "crop" => ($rtmedia->options[ "defaultSizes_photo_large_crop" ] == "0") ? false : true ),
+				'rt_media_featured_image' => array( "width" => $rtmedia->options[ "defaultSizes_featured_default_width" ], "height" => $rtmedia->options[ "defaultSizes_featured_default_height" ], "crop" => ($rtmedia->options[ "defaultSizes_featured_default_crop" ] == "0") ? false : true ),
+			);
+		return $sizes;
+	}
 }
