@@ -133,6 +133,13 @@ http://www.youtube.com/watch?v####dJrykKQGDcs
 
 Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "Visit rtMedia's Features page") to get some details about future releases.
 
+#### 3.7.10 ####
+* Travis CI Config added
+* Fix CSS for audio/video player
+* Change uploader object initialization in rtMedia.backbone.js
+* Fix media player issue in activity
+* Added license tab for premium addons
+
 #### 3.7.9 ####
 * Added new database table to store activity privacy
 
@@ -805,8 +812,8 @@ Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_sou
 * HTML5 Audio Tag Support (with fallback)
 * HTML5 Video Tag Support (with fallback)
 
-#### 3.7.9 ####
-Requires BuddyPress 1.7 or higher, if using BuddyPress. Added new database table to store activity privacy.
+#### 3.7.10 ####
+Requires BuddyPress 1.7 or higher, if using BuddyPress. Fix CSS issue for media player and other bug fixes.
 
 ## Sponsors ##
 

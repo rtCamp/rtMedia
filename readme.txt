@@ -138,6 +138,7 @@ Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_sou
 * Fix CSS for audio/video player
 * Change uploader object initialization in rtMedia.backbone.js
 * Fix media player issue in activity
+* Added license tab for premium addons
 
 = 3.7.9 =
 * Added new database table to store activity privacy
