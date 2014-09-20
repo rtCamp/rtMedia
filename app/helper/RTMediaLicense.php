@@ -25,7 +25,7 @@ class RTMediaLicense {
 		<?php
 		} else {
 	?>
-			<div>You may interested in <a href="<?php echo admin_url( 'admin.php?page=rtmedia-addons' ) ?>">rtMedia Addons</a>.</div>
+			<div>You may be interested in <a href="<?php echo admin_url( 'admin.php?page=rtmedia-addons' ) ?>">rtMedia Addons</a>.</div>
 	<?php
 		}
 	}
