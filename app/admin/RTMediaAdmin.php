@@ -558,8 +558,8 @@ if ( ! class_exists( 'RTMediaAdmin' ) ){
 				),
 			) );
 			$admin_bar->add_menu( array(
-				'id' => 'rt-media-license', 'parent' => 'rtMedia', 'title' => __( 'License', 'rtmedia' ), 'href' => admin_url( 'admin.php?page=rtmedia-license' ), 'meta' => array(
-					'title' => __( 'License', 'rtmedia' ), 'target' => '_self',
+				'id' => 'rt-media-license', 'parent' => 'rtMedia', 'title' => __( 'Licenses', 'rtmedia' ), 'href' => admin_url( 'admin.php?page=rtmedia-license' ), 'meta' => array(
+					'title' => __( 'Licenses', 'rtmedia' ), 'target' => '_self',
 				),
 			) );
 		}
@@ -638,7 +638,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ){
 			add_submenu_page( 'rtmedia-settings', __( 'Support', 'rtmedia' ), __( 'Support', 'rtmedia' ), 'manage_options', 'rtmedia-support', array( $this, 'support_page' ) );
 			add_submenu_page( 'rtmedia-settings', __( 'Themes', 'rtmedia' ), __( 'Themes', 'rtmedia' ), 'manage_options', 'rtmedia-themes', array( $this, 'theme_page' ) );
 			add_submenu_page( 'rtmedia-settings', __( 'Hire Us', 'rtmedia' ), __( 'Hire Us', 'rtmedia' ), 'manage_options', 'rtmedia-hire-us', array( $this, 'hire_us_page' ) );
-			add_submenu_page( 'rtmedia-settings', __( 'License', 'rtmedia' ), __( 'License', 'rtmedia' ), 'manage_options', 'rtmedia-license', array( $this, 'license_page' ) );
+			add_submenu_page( 'rtmedia-settings', __( 'Licenses', 'rtmedia' ), __( 'Licenses', 'rtmedia' ), 'manage_options', 'rtmedia-license', array( $this, 'license_page' ) );
 
 			if ( ! defined( "RTMEDIA_PRO_VERSION" ) ){
 				add_submenu_page( 'rtmedia-settings', __( 'Premium', 'rtmedia' ), __( 'Premium ', 'rtmedia' ), 'manage_options', 'rtmedia-premium', array( $this, 'premium_page' ) );
@@ -1140,7 +1140,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ){
 				), array(
 					'href' => get_admin_url( null, add_query_arg( array( 'page' => 'rtmedia-support' ), 'admin.php' ) ), 'name' => __( 'Support', 'rtmedia' ), 'slug' => 'rtmedia-support'
 				), array(
-					'href' => get_admin_url( null, add_query_arg( array( 'page' => 'rtmedia-license' ), 'admin.php' ) ), 'name' => __( 'License', 'rtmedia' ), 'slug' => 'rtmedia-license'
+					'href' => get_admin_url( null, add_query_arg( array( 'page' => 'rtmedia-license' ), 'admin.php' ) ), 'name' => __( 'Licenses', 'rtmedia' ), 'slug' => 'rtmedia-license'
 				),
 			);
 
