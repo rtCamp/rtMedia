@@ -33,6 +33,7 @@ class RTMediaUploadEndpoint {
 			$redirect_url = "";
 			if ( wp_verify_nonce( $nonce, 'rtmedia_upload_nonce' ) ){
 				$model        = new RTMediaUploadModel();
+                do_action( 'rtmedia_upload_set_post_object' );
 				$this->upload = $model->set_post_object();
 				if ( isset ( $_POST[ 'activity_id' ] ) && $_POST[ 'activity_id' ] != - 1 ){
 					$this->upload[ 'activity_id' ] = $_POST[ 'activity_id' ];
