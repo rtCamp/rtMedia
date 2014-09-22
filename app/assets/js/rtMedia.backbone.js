@@ -693,8 +693,8 @@ jQuery( document ).ready( function ( $ ) {
             $('#rtmedia-whts-new-upload-container > div' ).css( 'top','0' );
             $('#rtmedia-whts-new-upload-container > div' ).css( 'left','0' );
         }
-    }, 1000);
-
+	}, 100 );
+	
     $( "#whats-new-form" ).on( 'click', '#rtmedia-add-media-button-post-update', function ( e ) {
         objUploadView.uploader.refresh();
         $('#rtmedia-whts-new-upload-container > div' ).css( 'top','0' );
