@@ -133,6 +133,9 @@ http://www.youtube.com/watch?v####dJrykKQGDcs
 
 Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "Visit rtMedia's Features page") to get some details about future releases.
 
+#### 3.7.11 ####
+* Fix BuddyPress load more issue
+
 #### 3.7.10 ####
 * Travis CI Config added
 * Fix CSS for audio/video player
@@ -812,8 +815,8 @@ Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_sou
 * HTML5 Audio Tag Support (with fallback)
 * HTML5 Video Tag Support (with fallback)
 
-#### 3.7.10 ####
-Requires BuddyPress 1.7 or higher, if using BuddyPress. Fix CSS issue for media player and other bug fixes.
+#### 3.7.11 ####
+Requires BuddyPress 1.7 or higher, if using BuddyPress. Fix BuddyPress load more issue.
 
 ## Sponsors ##
 
