@@ -2730,7 +2730,11 @@ function rtmedia_get_current_blog_url( $domain ) {
 }
 
 //Removing special characters and replacing accent characters with ASCII characters in filename before upload to server
-add_filter( 'sanitize_file_name', 'sanitize_filename_before_upload', 10, 1 );
+add_action( 'rtmedia_upload_set_post_object', 'rtmedia_upload_sanitize_filename_before_upload', 10 );
+
+function rtmedia_upload_sanitize_filename_before_upload() {
+    add_action( 'sanitize_file_name', 'sanitize_filename_before_upload', 10, 1 );
+}
 
 function sanitize_filename_before_upload( $filename ) {
     $info = pathinfo( $filename );
@@ -2742,6 +2746,8 @@ function sanitize_filename_before_upload( $filename ) {
     $special_chars = apply_filters( 'sanitize_file_name_chars', $special_chars, $finalFileName );
     $string = str_replace( $special_chars, '-', $finalFileName );
     $string = preg_replace( '/\+/', '', $string );
+
+    error_log( var_export( remove_accents( $string ) . $ext, true ) );
 
     return remove_accents( $string ) . $ext;
 }
