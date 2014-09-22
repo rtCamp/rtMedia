@@ -2287,13 +2287,6 @@ function rtmedia_admin_premium_page( $page ) {
 					<p><?php _e( 'Without leaving your WordPress dashboard, you can contact us for help using a support form.', 'rtmedia' ); ?></p>
 				</div>
 			</div>
-			<div class="row">
-				<div class="columns large-1 rtm-premium-icon-pro"><i class="rtmicon-code rtmicon-3x rtmicon-fw"></i></div>
-				<div class="columns large-10">
-					<h2><?php _e( 'Premium & Open-Source', 'rtmedia' ); ?></h2>
-					<p><?php echo __( "Developers get full control over rtMedia-PRO's source. They'll get access to " ) . "<a href='http://git.rtcamp.com/' target='_blank'>git.rtcamp.com</a>"; ?></p>
-				</div>
-			</div>
 			</br>
 			<div class="row">
 				<div class="columns large-12 rtmedia-upgrade">
