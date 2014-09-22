@@ -5,8 +5,8 @@ Tags: BuddyPress, media, multimedia, album, audio, songs, music, video, photo, i
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires at least: WordPress 3.6
-Tested up to: WordPress 3.9 + BuddyPress 2.0
-Stable tag: 3.7.10
+Tested up to: WordPress 4.0 + BuddyPress 2.0
+Stable tag: 3.7.11
 
 Add albums, photo, audio/video encoding, privacy, sharing, front-end uploads & more. All this works mobile/tablets devices.
 
@@ -132,6 +132,9 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 == Changelog ==
 
 Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "Visit rtMedia's Features page") to get some details about future releases.
+
+= 3.7.11 =
+* Fix BuddyPress load more issue
 
 = 3.7.10 =
 * Travis CI Config added
@@ -814,8 +817,8 @@ Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_sou
 
 == Upgrade Notice ==
 
-= 3.7.10 =
-Requires BuddyPress 1.7 or higher, if using BuddyPress. Fix CSS issue for media player and other bug fixes.
+= 3.7.11 =
+Requires BuddyPress 1.7 or higher, if using BuddyPress. Fix BuddyPress load more issue.
 
 == Sponsors ==
 
