@@ -2740,7 +2740,7 @@ function sanitize_filename_before_upload( $filename ) {
 
     $special_chars = array( "?", "[", "]", "/", "\\", "=", "<", ">", ":", ";", ",", "'", "\"", "&", "$", "#", "*", "(", ")", "|", "~", "`", "!", "{", "}", chr( 0 ) );
     $special_chars = apply_filters( 'sanitize_file_name_chars', $special_chars, $finalFileName );
-    $string = str_replace( $special_chars, '', $finalFileName );
+    $string = str_replace( $special_chars, '-', $finalFileName );
     $string = preg_replace( '/\+/', '', $string );
 
     return remove_accents( $string ) . $ext;
