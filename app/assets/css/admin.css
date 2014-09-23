@@ -785,19 +785,32 @@ div.bp-media-metabox-holder #branding #mce-responses {
     margin-bottom: 10px;
     padding: 10px;
 }
-.rtm-addon-license .rtm-addon-license-status {
-    font-size: 20px;
-    margin: 10px 0;
+.rtm-addon-license .large-12.rtm-addon-license-status {
+    font-size: 15px;
+    padding: 10px 0;
+    background: none repeat scroll 0 0 #f5f5f5;
+    border: 1px solid #eee;
 }.rtm-addon-license .rtm-addon-license-status .rtm-addon-license-status-label{
     font-weight: bold;
     color: #222;
 }
 .rtm-addon-license .rtm-addon-status-activated {
-    color: green;
+    color: #7ad03a;
 }
 .rtm-addon-license .rtm-addon-status-deactivated {
-    color: red;
+    color: #dd3d36;
+}
+.rtm-addon-license form h3{
+    font-size: 14px;
+    border-bottom: 1px dotted #DDD;
+    padding-bottom: 5px;
+    font-weight: bold;
 }
 .rtm-addon-license table th{
     width: 35%;
+    font-weight: normal;
+    font-size: 13px;
+}
+.rtm-addon-license table td img{
+    margin-left: 10px;
 }
