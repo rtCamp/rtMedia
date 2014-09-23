@@ -149,7 +149,7 @@ if ( ! class_exists( 'RTMediaAddon' ) ){
 						<p><strong>' . __( 'Important', 'rtmedia' ) . ':</strong> ' . __( 'You need to have either ImageMagick or GD library installed on your server for this addon to work.', 'rtmedia' ) . '</p>',
 						'price' => '$49',
 						'demo_link' => 'http://demo.rtcamp.com/rtmedia/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media',
-						'buy_now' => 'http://rtcamp.com/store/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media&add-to-cart=70305'
+						'buy_now' => 'https://rtcamp.com/store/rtmedia-photo-watermark/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media'
 					),
 					array(
 						'title' => __( 'rtMedia Photo Tagging', 'rtmedia' ),
@@ -159,7 +159,7 @@ if ( ! class_exists( 'RTMediaAddon' ) ){
 						<p><strong>' . __( 'Important', 'rtmedia' ) . ':</strong> ' . __( 'You need to have ImageMagick installed on your server for this addon to work.', 'rtmedia' ) . '</p>',
 						'price' => '$49',
 						'demo_link' => 'http://demo.rtcamp.com/rtmedia/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media',
-						'buy_now' => 'http://rtcamp.com/store/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media&add-to-cart=37506'
+						'buy_now' => 'https://rtcamp.com/store/rtmedia-photo-tagging/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media'
 					),
 					array(
 						'title' => __( 'rtMedia Instagram', 'rtmedia' ),
@@ -169,7 +169,7 @@ if ( ! class_exists( 'RTMediaAddon' ) ){
 						<p><strong>' . __( 'Important', 'rtmedia' ) . ':</strong> ' . __( 'You need to have ImageMagick installed on your server for this addon to work.', 'rtmedia' ) . '</p>',
 						'price' => '$49',
 						'demo_link' => 'http://demo.rtcamp.com/rtmedia/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media',
-						'buy_now' => 'http://rtcamp.com/store/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media&add-to-cart=34379'
+						'buy_now' => 'https://rtcamp.com/store/rtmedia-instagram/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media'
 					),
 					array(
 						'title' => __( 'rtMedia Kaltura Add-on', 'rtmedia' ),
@@ -179,7 +179,7 @@ if ( ! class_exists( 'RTMediaAddon' ) ){
 						<p>' . __( 'Works with Kaltura.com, self-hosted Kaltura-CE and Kaltura-on-premise.', 'rtmedia' ) . '</p>',
 						'price' => '$199',
 						'demo_link' => 'http://demo.rtcamp.com/bpm-kaltura/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media',
-						'buy_now' => 'http://rtcamp.com/store/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media&add-to-cart=15446'
+						'buy_now' => 'https://rtcamp.com/store/rtmedia-kaltura/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media'
 					),
 					array(
 						'title' => __( 'rtMedia FFMPEG Add-on', 'rtmedia' ),
@@ -189,7 +189,7 @@ if ( ! class_exists( 'RTMediaAddon' ) ){
 						    <p>' . __( 'Media node comes with automated setup script for Ubuntu/Debian.', 'rtmedia' ) . '</p>',
 						'price' => '$199',
 						'demo_link' => 'http://demo.rtcamp.com/bpm-media/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media',
-						'buy_now' => 'http://rtcamp.com/store/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media&add-to-cart=13677'
+						'buy_now' => 'https://rtcamp.com/store/rtmedia-ffmpeg/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media'
 					)
 			);
 			$addons = apply_filters( 'rtmedia_addons', $addons );
