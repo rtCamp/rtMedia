@@ -133,6 +133,10 @@ http://www.youtube.com/watch?v####dJrykKQGDcs
 
 Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "Visit rtMedia's Features page") to get some details about future releases.
 
+#### 3.7.13 ####
+* Fix rtMedia addon Buy Now url
+* Updated CSS for rtMedia addon licenses
+
 #### 3.7.12 ####
 * Fix rename non-english characters to valid english characters for file upload
 * Fix Add media button glitches in BuddyPress activity
@@ -819,8 +823,8 @@ Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_sou
 * HTML5 Audio Tag Support (with fallback)
 * HTML5 Video Tag Support (with fallback)
 
-#### 3.7.12 ####
-Requires BuddyPress 1.7 or higher, if using BuddyPress. Fix rename non-english characters to valid english characters for file upload, fix Add media button glitches in BuddyPress activity.
+#### 3.7.13 ####
+Requires BuddyPress 1.7 or higher, if using BuddyPress. Updated rtMedia addon Buy Now url and license page CSS.
 
 ## Sponsors ##
 
