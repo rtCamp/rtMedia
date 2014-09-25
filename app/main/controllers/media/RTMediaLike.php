@@ -30,28 +30,27 @@ class RTMediaLike extends RTMediaUserInteraction {
         add_action('rtmedia_actions_before_comments',array($this, 'like_button_filter'),10);
 		if ( !rtmedia_comments_enabled () ) {
 					add_action( 'rtmedia_actions_without_lightbox', array( $this, 'like_button_without_lightbox_filter' ) );
-		}
-		
+		}		
     }
 	
-	function like_button_without_lightbox_filter() {
-		if( empty( $this->media ) ) {
-			$this->init();
-		}
-		$button = $this->render();
-		if($button)
-			echo $button;
-	}
-
-    function like_button_filter() {
+	function like_button_filter() {
         if(empty($this->media)){
                 $this->init();
         }
         $button = $this->render();
 
         if($button)
-            echo "<span>" . $button . "</span>";
-    }
+				echo "<span>" . $button . "</span>";
+			}
+			
+	function like_button_without_lightbox_filter() {
+        if( empty( $this->media ) ) {
+            $this->init();
+        }
+        $button = $this->render();
+        if($button)
+			echo $button;
+	}
 
     function process() {
 	$actions = $this->model->get( array( 'id' => $this->action_query->id ) );
