@@ -757,8 +757,9 @@ class RTMediaFormHandler {
                         'key' => 'general_videothumbs',
                         'value' => $options['general_videothumbs'],
 						'class' => array( 'rtmedia-setting-text-box' ),
-						'desc' => __( ' If you choose more than 1 thumbnail, your users will be able to change thumbnail by going to video "edit" section.', 'rtmedia' ),
-						'min' => 1
+						'desc' => __( ' If you choose more than 1 thumbnail, your users will be able to change thumbnail by going to video \'edit\' section. Maximum value is 10.', 'rtmedia' ),
+						'min' => 1,
+						'max' => 10
                 )
         );
 		?>

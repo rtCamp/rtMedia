@@ -40,6 +40,7 @@ if ( ! class_exists( 'RTMediaSettings' ) ) {
 		 */
 		public function get_default_options() {
 		    global $rtmedia;
+			$options = $rtmedia->options;
 
             $defaults = array(
                 'general_enableAlbums' => 0,
@@ -89,8 +90,7 @@ if ( ! class_exists( 'RTMediaSettings' ) ) {
             $defaults['styles_enabled'] = 1;
 
             if( isset( $options["general_videothumbs"] ) && is_numeric( $options["general_videothumbs"] ) && intval( $options["general_videothumbs"] ) > 10 ){
-                $options["general_videothumbs"] = 10;
-                add_action ( 'admin_notices', array( &$this, 'add_max_video_thumb_notice' ) );
+				$defaults["general_videothumbs"] = 10;
             }
 
 		    return $defaults;
@@ -123,19 +123,11 @@ if ( ! class_exists( 'RTMediaSettings' ) ) {
 				    $options[$key] = "0";
 				}
 		    }
+			if( isset( $options[ 'general_videothumbs' ] ) && intval( $options[ 'general_videothumbs' ] ) > 10 ){
+				$options[ 'general_videothumbs' ] = 10;
+			}
 		    return $options;
 		}
-
-        /**
-		 * Add max_video_thumb_notice.
-		 *
-		 * @access public
-		 * @param  void
-		 * @return void
-		 */
-        public function add_max_video_thumb_notice(){
-             echo '<div class="error"><p>' . __( 'Max Video thumbnail size is ', 'rtmedia' ) .' <strong>10</strong></p></div>';
-        }
 
         /**
 		 * rtmedia settings.
