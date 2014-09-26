@@ -200,7 +200,7 @@ class RTMediaUserInteraction {
                             $icon = "<i class='" . $this->icon_class . "'></i>";
                         }
 			$button_start = '<form action="'. $link .'">';
-                        $button = '<button type="submit" id="rtmedia-action-button-'.$this->media->id.'" class="rtmedia-'.$this->action
+                        $button = '<button type="submit" id="rtmedia-'. $this->action .'-button-'.$this->media->id.'" class="rtmedia-'.$this->action
 					.' rtmedia-action-buttons button'.$disabled.'">' . $icon . '<span>' . $this->label.'</span></button>';
                         
                         //filter the button as required
