@@ -13,7 +13,7 @@ if( !class_exists( 'RTDBModel' ) ){
 class RTMediaActivityModel extends RTDBModel {
 
 	function __construct () {
-		parent::__construct ( 'rtm_activity' );
+		parent::__construct ( 'rtm_activity', false, 10, true );
 	}
 
 	function get( $columns, $offset=false, $per_page=false, $order_by= 'activity_id DESC' ) {
