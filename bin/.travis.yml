@@ -25,7 +25,7 @@ before_script:
     - cd $(pear config-get php_dir)/PHP/CodeSniffer/Standards/
     - ln -s WordPress-Coding-Standards/WordPress WordPress
     - rm -rf WordPress/Sniffs/VIP
-    - cd PLUGIN_DIR
+    - cd $PLUGIN_DIR
     - phpenv rehash
     - npm install -g jshint
     - if [ -e phpunit.xml ] || [ -e phpunit.xml.dist ]; then bash bin/install-wp-tests.sh wordpress_test root '' localhost $WP_VERSION; fi
