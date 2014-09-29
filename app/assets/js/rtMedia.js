@@ -515,7 +515,7 @@ jQuery('document').ready(function($) {
     }
 
 //    masonry code
-    if( typeof rtmedia_masonry_layout != "undefined" && rtmedia_masonry_layout == "true" ) {
+    if( typeof rtmedia_masonry_layout != "undefined" && rtmedia_masonry_layout == "true" && jQuery( '.rtmedia-container .rtmedia-list.rtm-no-masonry' ).length == 0 ) {
         rtm_masonry_container = jQuery('.rtmedia-container .rtmedia-list')
         rtm_masonry_container.masonry({
             itemSelector: '.rtmedia-list-item'
@@ -627,7 +627,7 @@ function rtm_masonry_reload( el ) {
 }
 
 window.onload=function(){
-    if( typeof rtmedia_masonry_layout != "undefined" && rtmedia_masonry_layout == "true" ) {
+    if( typeof rtmedia_masonry_layout != "undefined" && rtmedia_masonry_layout == "true" && jQuery( '.rtmedia-container .rtmedia-list.rtm-no-masonry' ).length == 0 ) {
         rtm_masonry_reload( rtm_masonry_container );
     }
 };

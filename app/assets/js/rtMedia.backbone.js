@@ -221,7 +221,7 @@ jQuery( function ( $ ) {
                 $( that.el ).siblings( '.rtmedia_next_prev' ).children( '#rtMedia-galary-next' ).show();
                 //$("#rtMedia-galary-next").show();
             }
-            if( typeof rtmedia_masonry_layout != "undefined" && rtmedia_masonry_layout == "true" ) {
+            if( typeof rtmedia_masonry_layout != "undefined" && rtmedia_masonry_layout == "true" && jQuery( '.rtmedia-container .rtmedia-list.rtm-no-masonry' ).length == 0 ) {
                     rtm_masonry_reload( rtm_masonry_container );
             }
         },
