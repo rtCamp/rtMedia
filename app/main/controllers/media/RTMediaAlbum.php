@@ -141,6 +141,7 @@ class RTMediaAlbum {
      */
     function add ( $title = '', $author_id = false, $new = true, $post_id = false, $context = false, $context_id = false ) {
 
+		global $rtmedia_interaction;
         /* action to perform any task before adding the album */
         do_action ( 'rtmedia_before_add_album' );
 
@@ -180,7 +181,7 @@ class RTMediaAlbum {
         }
         // add in the media since album is also a media
         //defaults
-        global $rtmedia_interaction;
+
         $attributes = array(
             'blog_id' => get_current_blog_id (),
             'media_id' => $album_id,
@@ -457,71 +458,72 @@ class RTMediaAlbum {
         return $primary_album_id;
     }
 
-    /**
-     * Convert a post which is not indexed in rtMedia to an album.
-     *
-     * All the attachments from that post will become media of the new album.
-     *
-     * @global type $wpdb
-     * @param type $post_id
-     * @return boolean
-     */
-    function convert_post ( $post_id ) {
-
-        global $wpdb;
-        /**
-         * Fetch all the attachments from the given post
-         */
-        $attachment_ids = $wpdb->get_results ( "SELECT ID
-								FROM $wpdb->posts
-								WHERE post_parent = $post_id" );
-
-        /**
-         * Create a album. Not a new album. Just give index to this post in rtMedia
-         */
-        $album_id = $this->add ( $post[ 'post_title' ], $post[ 'post_author' ], false, $post_id );
-
-        $album_data = $this->model->get_by_media_id ( $album_id );
-
-        /* Album details */
-        $album_meta = array(
-            'album_id' => $album_id,
-            'context' => $album_data[ 'results' ][ 0 ][ 'context' ],
-            'context_id' => $album_data[ 'results' ][ 0 ][ 'context_id' ],
-            'activity_id' => $album_data[ 'results' ][ 0 ][ 'activity_id' ],
-            'privacy' => $album_data[ 'results' ][ 0 ][ 'privacy' ]
-        );
-
-        /**
-         * Index attachments in rtMedia
-         */
-        $this->media->insertmedia ( $attachment_ids, $album_meta );
-
-        return true;
-    }
-
-    /**
-     * Check if a post is being indexed as an rtMedia album
-     * @param integer $post_id the post id to check
-     * @return boolean if a post is an rtmedia album
-     */
-    function is_post_album ( $post_id ) {
-        $album = $this->model->get ( array( 'album_id' => $post_id ) );
-        if ( ! empty ( $album ) && count ( $album ) > 0 ) {
-            return true;
-        }
-        return false;
-    }
-
-    /**
-     * Convert an existing post, with attachments indexed by rtMedia to rtMedia album
-     * @param integer $post_id The post id to convert
-     */
-    function post_to_album ( $post_id ) {
-        $album_id = $this->add ( $post[ 'post_title' ], $post[ 'post_author' ], false, $post_id );
-        $this->model->update (
-                array( 'album_id' => $album_id ), array( 'context' => $post[ 'post_type' ], 'context_id' => $post_id )
-        );
-    }
+//		Legacy code
+//    /**
+//     * Convert a post which is not indexed in rtMedia to an album.
+//     *
+//     * All the attachments from that post will become media of the new album.
+//     *
+//     * @global type $wpdb
+//     * @param type $post_id
+//     * @return boolean
+//     */
+//    function convert_post ( $post_id ) {
+//
+//        global $wpdb;
+//        /**
+//         * Fetch all the attachments from the given post
+//         */
+//        $attachment_ids = $wpdb->get_results ( "SELECT ID
+//								FROM $wpdb->posts
+//								WHERE post_parent = $post_id" );
+//
+//        /**
+//         * Create a album. Not a new album. Just give index to this post in rtMedia
+//         */
+//        $album_id = $this->add ( $post[ 'post_title' ], $post[ 'post_author' ], false, $post_id );
+//
+//        $album_data = $this->model->get_by_media_id ( $album_id );
+//
+//        /* Album details */
+//        $album_meta = array(
+//            'album_id' => $album_id,
+//            'context' => $album_data[ 'results' ][ 0 ][ 'context' ],
+//            'context_id' => $album_data[ 'results' ][ 0 ][ 'context_id' ],
+//            'activity_id' => $album_data[ 'results' ][ 0 ][ 'activity_id' ],
+//            'privacy' => $album_data[ 'results' ][ 0 ][ 'privacy' ]
+//        );
+//
+//        /**
+//         * Index attachments in rtMedia
+//         */
+//        $this->media->insertmedia ( $attachment_ids, $album_meta );
+//
+//        return true;
+//    }
+//
+//    /**
+//     * Check if a post is being indexed as an rtMedia album
+//     * @param integer $post_id the post id to check
+//     * @return boolean if a post is an rtmedia album
+//     */
+//    function is_post_album ( $post_id ) {
+//        $album = $this->model->get ( array( 'album_id' => $post_id ) );
+//        if ( ! empty ( $album ) && count ( $album ) > 0 ) {
+//            return true;
+//        }
+//        return false;
+//    }
+//
+//    /**
+//     * Convert an existing post, with attachments indexed by rtMedia to rtMedia album
+//     * @param integer $post_id The post id to convert
+//     */
+//    function post_to_album ( $post_id ) {
+//        $album_id = $this->add ( $post[ 'post_title' ], $post[ 'post_author' ], false, $post_id );
+//        $this->model->update (
+//                array( 'album_id' => $album_id ), array( 'context' => $post[ 'post_type' ], 'context_id' => $post_id )
+//        );
+//    }
 
 }
