@@ -940,7 +940,7 @@ jQuery( document ).ready( function ( $ ) {
             options.beforeSend = function () {
                 if ( originalOptions.data.action == 'post_update' ) {
                     if ( $.trim( $( "#whats-new" ).val() ) == "" ) {
-                        alert( rtmedia_empty_activity_msg );
+                        $('#whats-new-form' ).prepend( '<div id="message" class="error"><p>' + rtmedia_empty_activity_msg + '</p></div>' );
                         $("#aw-whats-new-submit").prop("disabled", true).removeClass('loading');
                         return false;
                     }
