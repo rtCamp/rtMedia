@@ -292,9 +292,7 @@ class RTMediaMedia {
 						}
 						$objActivity = new RTMediaActivity ( $activity_media );
 						global $wpdb, $bp;
-						$wpdb->update( $bp->activity->table_name, array(
-							"type" => "rtmedia_update", "content" => $objActivity->create_activity_html()
-						), array( "id" => $media[ 0 ]->activity_id ) );
+						$wpdb->update( $bp->activity->table_name, array( "type" => "rtmedia_update", "content" => $objActivity->create_activity_html() ), array( "id" => $media[ 0 ]->activity_id ) );
 					} else {
 						bp_activity_delete_by_activity_id( $media[ 0 ]->activity_id );
 					}
@@ -363,7 +361,7 @@ class RTMediaMedia {
 				'privacy' => $album_data->privacy
 			);
 
-			return $this->update( $id, $media_id, $data );
+			return $this->update( $id, $data, $media_id );
 		}
 	}
 
@@ -435,7 +433,7 @@ class RTMediaMedia {
 	 * @param type $attachments
 	 * @param type $file_object
 	 *
-	 * @return type
+	 * @return array $updated_attachment_ids
 	 * @throws Exception
 	 */
 	function insert_attachment( $attachments, $file_object ) {
@@ -500,8 +498,8 @@ class RTMediaMedia {
 
 	/**
 	 *
-	 * @param type $attachment_ids
-	 * @param type $uploaded
+	 * @param array $attachment_ids
+	 * @param array $uploaded
 	 */
 	function insertmedia( $attachment_ids, $uploaded, $file_object /* added for file extension */ ) {
 
