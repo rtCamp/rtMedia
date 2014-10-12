@@ -459,6 +459,41 @@ function rtmedia_album_image( $size = 'thumbnail', $id = false ) {
 	return $src;
 }
 
+function rtmedia_duration( $id = false ) {
+		
+	include_once( trailingslashit( RTMEDIA_PATH ) . 'lib/getid3/getid3.php' );
+	global $rtmedia_backbone;
+
+	if ( $rtmedia_backbone[ 'backbone' ] ){
+		echo '<%= duration %>';
+		return;
+	}
+		
+	if ( $id ){
+		$model = new RTMediaModel();
+		$media = $model->get_media( array( 'id' => $id ), false, false );
+		if ( isset ( $media[ 0 ] ) ) {
+			$media_object = $media[ 0 ];
+		} else {
+			return false;
+		}
+	} else {
+		global $rtmedia_media;
+		$media_object = $rtmedia_media;
+	}
+		
+	$duration = '';
+	if( ($media_object->media_type == 'video') || ( $media_object->media_type == 'music' ) ) {
+		$getID3 = new getID3;
+		$filepath = get_attached_file( $media_object->media_id );
+		$file = $getID3->analyze($filepath);
+		if ( isset( $file['playtime_string'] ) ) {	
+			$duration = $file['playtime_string'];
+		}
+	}	
+	return $duration;
+}
+	
 function rtmedia_sanitize_object( $data, $exceptions = array() ) {
 	foreach ( $data as $key => $value ) {
 		if ( ! in_array( $key, array_merge( RTMediaMedia::$default_object, $exceptions ) ) ){

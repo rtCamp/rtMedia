@@ -58,7 +58,8 @@ jQuery( function ( $ ) {
             "guid": false,
             "width": 0,
             "height": 0,
-            "rt_permalink": false
+            "rt_permalink": false,
+			"duration": "0:00"
             //			"next"			: -1,
             //			"prev"			: -1
         }
