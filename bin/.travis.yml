@@ -24,7 +24,9 @@ before_script:
     - git clone git://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards.git
     - cd $(pear config-get php_dir)/PHP/CodeSniffer/Standards/
     - ln -s WordPress-Coding-Standards/WordPress WordPress
-    - rm -rf WordPress/Sniffs/VIP
+    - ln -s WordPress-Coding-Standards/WordPress-Core WordPress-Core
+    - ln -s WordPress-Coding-Standards/WordPress-Extra WordPress-Extra
+    - ln -s WordPress-Coding-Standards/WordPress-VIP WordPress-VIP
     - cd $PLUGIN_DIR
     - phpenv rehash
     - npm install -g jshint
