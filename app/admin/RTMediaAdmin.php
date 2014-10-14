@@ -389,24 +389,25 @@ if ( ! class_exists( 'RTMediaAdmin' ) ){
 				<div class="table table_content">
 					<p class="sub"><?php _e( 'Media Stats' ); ?></p>
 					<table>
-						<tbody> <?php
-						$rtMedia_model = new RTMediaModel();
-						$sql = "select media_type, count(id) as count from {$rtMedia_model->table_name} where blog_id='" . get_current_blog_id() . "' group by media_type";
-						global $wpdb;
-						$results = $wpdb->get_results( $sql );
-						if ( $results ){
-							foreach ( $results as $media ) {
-								if ( defined( strtoupper( 'RTMEDIA_' . $media->media_type . '_PLURAL_LABEL' ) ) ){
-									?>
+						<tbody>
+			<?php
+				$rtMedia_model = new RTMediaModel();
+				$sql = "select media_type, count(id) as count from {$rtMedia_model->table_name} where blog_id='" . get_current_blog_id() . "' group by media_type";
+				global $wpdb;
+				$results = $wpdb->get_results( $sql );
+			if ( $results ){
+				foreach ( $results as $media ) {
+					if ( defined( strtoupper( 'RTMEDIA_' . $media->media_type . '_PLURAL_LABEL' ) ) ){
+						?>
 									<tr>
 										<td class="b"> <?php echo $media->count; ?> </td>
 										<td class="t"><?php echo constant( strtoupper( 'RTMEDIA_' . $media->media_type . '_PLURAL_LABEL' ) ); ?></td>
 									</tr>
-								<?php
-								}
-							}
-						}
-						?>
+			<?php
+					}
+				}
+			}
+			?>
 						</tbody>
 					</table>
 				</div>
@@ -759,25 +760,27 @@ if ( ! class_exists( 'RTMediaAdmin' ) ){
 			?>
 			<div class="wrap">
 				<h2> rtMedia: <?php _e( 'Regenerate Video Thumbnails', 'rtmedia' ); ?> </h2>
-				<?php
-				if ( isset( $_REQUEST['media_ids'] ) && trim( $_REQUEST['media_ids'] ) != '' ){
-					$requested = false;
-					$media_ids = explode( ',', $_REQUEST['media_ids'] );
-					$total     = count( $media_ids );
-				} else {
-					$media_ids = $this->get_video_without_thumbs();
-					$total     = count( $media_ids );
-				}
-				?>
+			<?php
+			if ( isset( $_REQUEST['media_ids'] ) && trim( $_REQUEST['media_ids'] ) != '' ){
+				$requested = false;
+				$media_ids = explode( ',', $_REQUEST['media_ids'] );
+				$total     = count( $media_ids );
+			} else {
+				$media_ids = $this->get_video_without_thumbs();
+				$total     = count( $media_ids );
+			}
+			?>
 				<script>
 					var rt_thumb_all_media = <?php echo json_encode( $media_ids ); ?>;
 				</script>
 			<?php
-				if ( ! isset( $requested ) ){
-			?>
+			if ( ! isset( $requested ) ){
+				?>
 					<br/>
 					<p>You can see this page because you have <a href="<?php echo admin_url( 'admin.php?page=rtmedia-addons' ) ?>">subscribed</a> for <a href="https://rtcamp.com/rtmedia/docs/admin/addons/audio-video-encoding/" target="_blank">rtMedia audio/video encoding service</a>.</p> <p>You can regenerate thumbnails of specific video by visiting <a href="<?php echo admin_url( 'upload.php?post_mime_type=video' ); ?>">media page</a> and click on <b>Regenerate Thumbnail</b> option for that particular video.</p> <p>Press <b>Regenerate Pending Thumbnails</b> button to regenerate thumbnails of pending videos.</p> <p><input type="button" class="button button-primary" id="rt-start-media-regenerate" value="<?php echo __( 'Regenerate Pending Thumbnails', 'rtmedia' ) . ' (' . $total . ')'; ?>"/> </p>
-			<?php } ?>
+				<?php
+				}
+			?>
 				<div id="rt-migration-progress">
 					<br/> <br/>
 					<?php
@@ -1136,28 +1139,27 @@ if ( ! class_exists( 'RTMediaAdmin' ) ){
 					</h2>
 				</div>
 
-
-				<?php //settings_errors (); ?>
 				<div class="row bp-media-settings-boxes-container">
 					<div id="bp-media-settings-boxes" class="columns large-9">
 
-						<?php
-						$settings_url = ( is_multisite() ) ? network_admin_url( 'edit.php?action=' . $option_group ) : 'options.php';
-						?>
-						<?php if ( $option_group ){ //$option_group if ($page == "bp-media-settings") action="<?php echo $settings_url;   ?>
+			<?php
+				$settings_url = ( is_multisite() ) ? network_admin_url( 'edit.php?action=' . $option_group ) : 'options.php';
+			if ( $option_group ){ //$option_group if ($page == "bp-media-settings") action="<?php echo $settings_url;
+				?>
 							<form id="bp_media_settings_form" name="bp_media_settings_form" method="post"
 								  enctype="multipart/form-data">
-							<div class="bp-media-metabox-holder"><?php
-								settings_fields( $option_group );
-								if ( 'rtmedia-settings' == $page ){
-									echo '<div id="rtm-settings-tabs">';
-									$sub_tabs = $this->settings_sub_tabs();
-									RTMediaFormHandler::rtForm_settings_tabs_content( $page, $sub_tabs );
-									echo '</div>';
-								} else {
-									do_settings_sections( $page );
-								}
-								?>
+							<div class="bp-media-metabox-holder">
+				<?php
+				settings_fields( $option_group );
+				if ( 'rtmedia-settings' == $page ){
+					echo '<div id="rtm-settings-tabs">';
+					$sub_tabs = $this->settings_sub_tabs();
+					RTMediaFormHandler::rtForm_settings_tabs_content( $page, $sub_tabs );
+					echo '</div>';
+				} else {
+					do_settings_sections( $page );
+				}
+				?>
 								<div class="clearfix">&nbsp;</div>
 								<div class="row">
 									<input type="hidden" name="rtmedia-options-save" value="true">
@@ -1165,32 +1167,31 @@ if ( ! class_exists( 'RTMediaAdmin' ) ){
 								</div>
 							</div>
 							</form><?php
-						} else {
-							?>
+			} else {
+				?>
 							<div class="bp-media-metabox-holder">
-							<?php
-							if ( 'rtmedia-addons' == $page ){
-								RTMediaAddon::render_addons( $page );
-							} else if ( 'rtmedia-support' == $page ){
-								$rtmedia_support = new RTMediaSupport( false );
-								$rtmedia_support->render_support( $page );
-							} else if ( 'rtmedia-themes' == $page ){
-								RTMediaThemes::render_themes( $page );
-							} else {
-								if ( 'rtmedia-license' == $page ){
-									RTMediaLicense::render_themes( $page );
-								} else {
-									do_settings_sections( $page );
-								}
-							}
-							?>
-							<?php
-							do_action( 'rtmedia_admin_page_insert', $page );
-							?>
-							</div><?php
-							do_action( 'rtmedia_admin_page_append', $page );
-						}
-						?>
+				<?php
+				if ( 'rtmedia-addons' == $page ){
+					RTMediaAddon::render_addons( $page );
+				} else if ( 'rtmedia-support' == $page ){
+					$rtmedia_support = new RTMediaSupport( false );
+					$rtmedia_support->render_support( $page );
+				} else if ( 'rtmedia-themes' == $page ){
+					RTMediaThemes::render_themes( $page );
+				} else {
+					if ( 'rtmedia-license' == $page ){
+						RTMediaLicense::render_themes( $page );
+					} else {
+						do_settings_sections( $page );
+					}
+				}
+				do_action( 'rtmedia_admin_page_insert', $page );
+				?>
+							</div>
+				<?php
+				do_action( 'rtmedia_admin_page_append', $page );
+			}
+				?>
 					</div>
 					<!-- .bp-media-settings-boxes -->
 					<div class="metabox-holder bp-media-metabox-holder columns large-3">
