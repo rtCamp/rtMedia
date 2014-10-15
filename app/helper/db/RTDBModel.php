@@ -168,7 +168,7 @@ if ( ! class_exists( 'RTDBModel' ) ){
 		 * @return type
 		 */
 		function get( $columns, $offset = false, $per_page = false, $order_by = 'id desc' ){
-			$select = 'SELECT * FROM {$this->table_name}';
+			$select = "SELECT * FROM {$this->table_name}";
 			$where  = ' where 2=2 ';
 			foreach ( $columns as $colname => $colvalue ) {
 				if ( is_array( $colvalue ) ){
