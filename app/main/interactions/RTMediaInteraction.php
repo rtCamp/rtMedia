@@ -150,13 +150,14 @@ class RTMediaInteraction {
 
     function set_query () {
         global $rtmedia_query;
-
-        $args = array(
-            'context' => $this->context->type,
-            'context_id' => $this->context->id
-        );
-	$args = apply_filters( "rtmedia_query_filter", $args );
-        $rtmedia_query = new RTMediaQuery ( $args );
+		if( $this->routes[ RTMEDIA_MEDIA_SLUG ]->is_template() ){
+			$args = array(
+				'context' => $this->context->type,
+				'context_id' => $this->context->id
+			);
+			$args = apply_filters( "rtmedia_query_filter", $args );
+			$rtmedia_query = new RTMediaQuery ( $args );
+		}
     }
 
     function set_title ( $default, $sep = "|" ) {
