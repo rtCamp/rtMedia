@@ -484,12 +484,18 @@ function rtmedia_duration( $id = false ) {
 		
 	$duration = '';
 	if( ($media_object->media_type == 'video') || ( $media_object->media_type == 'music' ) ) {
-		$getID3 = new getID3;
-		$filepath = get_attached_file( $media_object->media_id );
-		$file = $getID3->analyze($filepath);
-		if ( isset( $file['playtime_string'] ) ) {	
-			$duration = $file['playtime_string'];
-		}
+		$media_time = get_rtmedia_meta( $media_object->id, 'duration_time' );
+		if ( $media_time == false ) {
+			$getID3 = new getID3;
+			$filepath = get_attached_file( $media_object->media_id );
+			$file = $getID3->analyze( $filepath );
+			if ( isset( $file['playtime_string'] ) ) {	
+				$duration = $file['playtime_string'];
+				add_rtmedia_meta( $media_object->id, 'duration_time', $duration );
+			}
+		} else {
+			$duration = $media_time;	
+		}	
 	}	
 	return $duration;
 }
