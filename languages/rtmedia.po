@@ -2,8 +2,13 @@ msgid ""
 msgstr ""
 "Project-Id-Version: BuddyPress Media\n"
 "Report-Msgid-Bugs-To: \n"
+<<<<<<< HEAD
 "POT-Creation-Date: 2014-09-30 01:32+0530\n"
 "PO-Revision-Date: 2014-09-30 01:33+0530\n"
+=======
+"POT-Creation-Date: 2014-10-20 15:39+0530\n"
+"PO-Revision-Date: 2014-10-20 15:39+0530\n"
+>>>>>>> master
 "Last-Translator: faishal <faishal.saiyed@rtcamp.com>\n"
 "Language-Team: rtCamp <info@rtcamp.com>\n"
 "Language: en_IN\n"
@@ -55,7 +60,11 @@ msgstr ""
 msgid "Media"
 msgstr ""
 
+<<<<<<< HEAD
 #: app/main/RTMedia.php:554 app/main/controllers/template/RTMediaNav.php:151
+=======
+#: app/main/RTMedia.php:554 app/main/controllers/template/RTMediaNav.php:155
+>>>>>>> master
 #: app/main/controllers/template/rt-template-functions.php:82
 msgid "All"
 msgstr ""
@@ -68,7 +77,11 @@ msgstr ""
 msgid "Album"
 msgstr ""
 
+<<<<<<< HEAD
 #: app/main/RTMedia.php:566 app/main/controllers/template/RTMediaNav.php:172
+=======
+#: app/main/RTMedia.php:566 app/main/controllers/template/RTMediaNav.php:176
+>>>>>>> master
 #: app/main/controllers/media/RTMediaAlbum.php:53
 #: app/main/controllers/media/RTMediaAlbum.php:65
 msgid "Albums"
@@ -1060,7 +1073,11 @@ msgstr ""
 msgid "Like"
 msgstr ""
 
+<<<<<<< HEAD
 #: app/main/controllers/media/RTMediaLike.php:16
+=======
+#: app/main/controllers/media/RTMediaLike.php:18
+>>>>>>> master
 #: app/admin/RTMediaAdmin.php:423
 msgid "Likes"
 msgstr ""
@@ -1657,7 +1674,11 @@ msgstr ""
 
 #: app/admin/RTMediaAdmin.php:546 app/admin/RTMediaAdmin.php:547
 #: app/admin/RTMediaAdmin.php:638 app/admin/RTMediaAdmin.php:1141
+<<<<<<< HEAD
 #: app/helper/RTMediaSettings.php:165
+=======
+#: app/helper/RTMediaSettings.php:173
+>>>>>>> master
 msgid "Support"
 msgstr ""
 
