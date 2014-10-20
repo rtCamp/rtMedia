@@ -50,7 +50,11 @@ class RTMediaNav {
             //filter for rtMedia PRO for PER GROUP MEDIA enable/disable functionality
             $media_enabled = apply_filters('rtmedia_media_enabled_for_current_group', $media_enabled);
 
-            if( $media_enabled ){
+			// check if current user can view this group
+			$current_group      = groups_get_current_group();
+			$is_visible_to_current_user = $current_group->is_visible;
+
+			if( $media_enabled && $is_visible_to_current_user ){
                 $group_counts = $this->actual_counts ( $bp->groups->current_group->id, "group" );
                 $bp->bp_options_nav[ bp_get_current_group_slug () ][ 'media' ] = array(
                     'name' => RTMEDIA_MEDIA_LABEL . '<span>' . $group_counts[ 'total' ][ 'all' ] . '</span>',
