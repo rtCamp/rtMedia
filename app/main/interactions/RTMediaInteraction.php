@@ -248,7 +248,6 @@ class RTMediaInteraction {
 		
 		if ( class_exists( "BuddyPress" ) ) {
 			global $bp;
-			global $activities_template;
 			if ( bp_is_single_activity() ){
 				$array = bp_activity_get($bp->current_action);
 				$mediaObj      = new RTMediaModel();
@@ -265,7 +264,7 @@ class RTMediaInteraction {
 					}
 				}
 			}
-		}
+		} 		
 		if ( ( array_key_exists ( 'media', $wp_query->query_vars ) ) ){
 			global $rtmedia_query;
 			if ( isset ( $rtmedia_query->media ) && $rtmedia_query->media && count ( $rtmedia_query->media ) > 0 ) {
@@ -280,10 +279,9 @@ class RTMediaInteraction {
 						}
 				}
 			}
-		} else {
-				return $data;
 		}
-    }
+		return $data;
+	}
 
     function rtmedia_wpseo_og_url ( $url ) {
         global $wp_query;
