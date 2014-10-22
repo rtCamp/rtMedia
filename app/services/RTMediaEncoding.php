@@ -14,7 +14,6 @@ class RTMediaEncoding {
     public $api_key = false;
 
     public function __construct($no_init = false) {
-		add_filter('rtmedia_allowed_types', array($this, 'allowed_types_admin_settings'), 10, 1);
         $this->api_key = get_site_option('rtmedia-encoding-api-key');
         if ($no_init)
             return;
@@ -28,6 +27,7 @@ class RTMediaEncoding {
 
         add_action('admin_init', array($this, 'save_api_key'), 1);
         if ($this->api_key) {
+			add_filter('rtmedia_allowed_types', array($this, 'allowed_types_admin_settings'), 10, 1);
             $usage_info = get_site_option('rtmedia-encoding-usage');
 
             if ($usage_info) {

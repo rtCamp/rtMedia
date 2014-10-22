@@ -437,34 +437,43 @@ jQuery('document').ready(function($) {
         });
     }
 
-   var dragArea = jQuery("#drag-drop-area");
-   var activityArea = jQuery('#whats-new');
-   var content = dragArea.html();
-   jQuery('#rtmedia-upload-container').after("<h2 id='rtm-drop-files-title'>" + rtmedia_drop_media_msg + "</h2>");
-   jQuery('#whats-new-textarea').after("<h2 id='rtm-drop-files-title'>" + rtmedia_drop_media_msg + "</h2>");
-   jQuery(document)
-           .on('dragover', function(e) {
-               jQuery('#rtm-media-gallery-uploader').show();
+    var dragArea = jQuery("#drag-drop-area");
+    var activityArea = jQuery('#whats-new');
+    var content = dragArea.html();
+    jQuery('#rtmedia-upload-container').after("<h2 id='rtm-drop-files-title'>" + rtmedia_drop_media_msg + "</h2>");
+    if( typeof rtmedia_bp_enable_activity != "undefined" && rtmedia_bp_enable_activity == "1" ){
+        jQuery('#whats-new-textarea').after("<h2 id='rtm-drop-files-title'>" + rtmedia_drop_media_msg + "</h2>");
+    }
+    jQuery(document)
+        .on('dragover', function(e) {
+            jQuery('#rtm-media-gallery-uploader').show();
+            if( typeof rtmedia_bp_enable_activity != "undefined" && rtmedia_bp_enable_activity == "1" ){
                 activityArea.addClass('rtm-drag-drop-active');
-//                activityArea.css('height','150px');
-                dragArea.addClass('rtm-drag-drop-active');
-                jQuery('#rtm-drop-files-title').css('display', 'block');
-                })
-           .on("dragleave", function(e){
-               e.preventDefault();
-               activityArea.removeClass('rtm-drag-drop-active');
-               activityArea.removeAttr('style');
-               dragArea.removeClass('rtm-drag-drop-active');
-                jQuery('#rtm-drop-files-title').hide();
+            }
 
-                })
-           .on("drop", function(e){
-                e.preventDefault();
-                 activityArea.removeClass('rtm-drag-drop-active');
-                 activityArea.removeAttr('style');
-                 dragArea.removeClass('rtm-drag-drop-active');
-                jQuery('#rtm-drop-files-title').hide();
-                });
+//            activityArea.css('height','150px');
+            dragArea.addClass('rtm-drag-drop-active');
+            jQuery('#rtm-drop-files-title').css('display', 'block');
+        })
+        .on("dragleave", function(e){
+            e.preventDefault();
+            if( typeof rtmedia_bp_enable_activity != "undefined" && rtmedia_bp_enable_activity == "1" ){
+                activityArea.removeClass('rtm-drag-drop-active');
+                activityArea.removeAttr('style');
+            }
+            dragArea.removeClass('rtm-drag-drop-active');
+            jQuery('#rtm-drop-files-title').hide();
+
+        })
+        .on("drop", function(e){
+            e.preventDefault();
+            if( typeof rtmedia_bp_enable_activity != "undefined" && rtmedia_bp_enable_activity == "1" ){
+                activityArea.removeClass('rtm-drag-drop-active');
+                activityArea.removeAttr('style');
+            }
+            dragArea.removeClass('rtm-drag-drop-active');
+            jQuery('#rtm-drop-files-title').hide();
+        });
 
 
     function rtmedia_init_media_deleting() {
@@ -515,7 +524,7 @@ jQuery('document').ready(function($) {
     }
 
 //    masonry code
-    if( typeof rtmedia_masonry_layout != "undefined" && rtmedia_masonry_layout == "true" ) {
+    if( typeof rtmedia_masonry_layout != "undefined" && rtmedia_masonry_layout == "true" && jQuery( '.rtmedia-container .rtmedia-list.rtm-no-masonry' ).length == 0 ) {
         rtm_masonry_container = jQuery('.rtmedia-container .rtmedia-list')
         rtm_masonry_container.masonry({
             itemSelector: '.rtmedia-list-item'
@@ -627,7 +636,7 @@ function rtm_masonry_reload( el ) {
 }
 
 window.onload=function(){
-    if( typeof rtmedia_masonry_layout != "undefined" && rtmedia_masonry_layout == "true" ) {
+    if( typeof rtmedia_masonry_layout != "undefined" && rtmedia_masonry_layout == "true" && jQuery( '.rtmedia-container .rtmedia-list.rtm-no-masonry' ).length == 0 ) {
         rtm_masonry_reload( rtm_masonry_container );
     }
 };

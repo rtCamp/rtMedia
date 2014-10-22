@@ -230,6 +230,9 @@
 				}				
 			}
 		}
+		.rtmedia-list-item.media-type-photo {
+			width: 100%;
+		}
 	}
 	
 	.rtmedia-media img {
@@ -600,6 +603,7 @@
                        padding:10px;
 						.rtmedia-item-thumbnail{
                                 overflow:hidden;
+								margin: 0 auto;
 						}
 
                        &.media-type-video{

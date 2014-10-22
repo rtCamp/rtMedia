@@ -54,7 +54,7 @@ install_test_suite() {
 
 install_db() {
 	# parse DB_HOST for port or socket references
-	local PARTS=(${DB_HOST//\:/ })
+	local PARTS=${DB_HOST//\:/ }
 	local DB_HOSTNAME=${PARTS[0]};
 	local DB_SOCK_OR_PORT=${PARTS[1]};
 	local EXTRA=""
