@@ -244,17 +244,46 @@ class RTMediaInteraction {
 
     function rtmedia_wpseo_og_image ( $data ) {
         global $wp_query;
-        if ( ! array_key_exists ( 'media', $wp_query->query_vars ) )
-            return $data;
-        global $rtmedia_query;
-        if ( isset ( $rtmedia_query->media ) && $rtmedia_query->media && count ( $rtmedia_query->media ) > 0 ) {
+		$flag = false;
+		
+		if ( class_exists( "BuddyPress" ) ) {
+			global $bp;
+			global $activities_template;
+			if ( bp_is_single_activity() ){
+				$flag = true;
+				$array = bp_activity_get($bp->current_action);
+				$mediaObj      = new RTMediaModel();
+				$media_details = $mediaObj->get( array( 'activity_id' => $bp->current_action ) );
+				foreach ( $media_details as $media ) {
+					if ( $media->media_type == 'photo' ) {
+						$image = get_attached_file( $media->media_id );
+						$extension = pathinfo( basename( $image ), PATHINFO_EXTENSION );
+						if ( 'jpeg' == $extension || 'png' == $extension || 'jpg' == $extension ){
+							$img = wp_get_attachment_image_src ( $media->media_id, "full" );
+							if ( $img && isset ( $img[ 0 ] ) && $img[ 0 ] != "" )
+								echo "<meta property='og:image' content='" . esc_url ( $img[ 0 ] ) . "'/>";
+						}
+					}
+				}
+			}
+		}
+		if ( ( array_key_exists ( 'media', $wp_query->query_vars ) ) || $flag ){
+			global $rtmedia_query;
+			if ( isset ( $rtmedia_query->media ) && $rtmedia_query->media && count ( $rtmedia_query->media ) > 0 ) {
 
-            foreach ( $rtmedia_query->media as $media ) {
-                $img = wp_get_attachment_image_src ( $media->media_id, "full" );
-                if ( $img && isset ( $img[ 0 ] ) && $img[ 0 ] != "" )
-                    echo "<meta property='og:image' content='" . esc_url ( $img[ 0 ] ) . "'/>";
-            }
-        }
+				foreach ( $rtmedia_query->media as $media ) {
+					$image = get_attached_file( $media->media_id );
+						$extension = pathinfo( basename( $image ), PATHINFO_EXTENSION );
+						if ( 'jpeg' == $extension || 'png' == $extension || 'jpg' == $extension ){
+							$img = wp_get_attachment_image_src ( $media->media_id, "full" );
+							if ( $img && isset ( $img[ 0 ] ) && $img[ 0 ] != "" )
+								echo "<meta property='og:image' content='" . esc_url ( $img[ 0 ] ) . "'/>";
+						}
+				}
+			}
+		} else {
+				return $data;
+		}
     }
 
     function rtmedia_wpseo_og_url ( $url ) {
