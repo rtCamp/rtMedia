@@ -254,13 +254,9 @@ class RTMediaInteraction {
 				$media_details = $mediaObj->get( array( 'activity_id' => $bp->current_action ) );
 				foreach ( $media_details as $media ) {
 					if ( $media->media_type == 'photo' ) {
-						$image = get_attached_file( $media->media_id );
-						$extension = pathinfo( basename( $image ), PATHINFO_EXTENSION );
-						if ( 'jpeg' == $extension || 'png' == $extension || 'jpg' == $extension ){
-							$img = wp_get_attachment_image_src ( $media->media_id, "full" );
-							if ( $img && isset ( $img[ 0 ] ) && $img[ 0 ] != "" )
-								echo "<meta property='og:image' content='" . esc_url ( $img[ 0 ] ) . "'/>";
-						}
+						$img = wp_get_attachment_image_src ( $media->media_id, "full" );
+						if ( $img && isset ( $img[ 0 ] ) && $img[ 0 ] != "" )
+							echo "<meta property='og:image' content='" . esc_url ( $img[ 0 ] ) . "'/>";
 					}
 				}
 			}
@@ -270,13 +266,9 @@ class RTMediaInteraction {
 			if ( isset ( $rtmedia_query->media ) && $rtmedia_query->media && count ( $rtmedia_query->media ) > 0 ) {
 
 				foreach ( $rtmedia_query->media as $media ) {
-					$image = get_attached_file( $media->media_id );
-						$extension = pathinfo( basename( $image ), PATHINFO_EXTENSION );
-						if ( 'jpeg' == $extension || 'png' == $extension || 'jpg' == $extension ){
-							$img = wp_get_attachment_image_src ( $media->media_id, "full" );
-							if ( $img && isset ( $img[ 0 ] ) && $img[ 0 ] != "" )
-								echo "<meta property='og:image' content='" . esc_url ( $img[ 0 ] ) . "'/>";
-						}
+					$img = wp_get_attachment_image_src ( $media->media_id, "full" );
+					if ( $img && isset ( $img[ 0 ] ) && $img[ 0 ] != "" )
+						echo "<meta property='og:image' content='" . esc_url ( $img[ 0 ] ) . "'/>";
 				}
 			}
 		}
