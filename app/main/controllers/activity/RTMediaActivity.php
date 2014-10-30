@@ -19,11 +19,11 @@ class RTMediaActivity {
 	/**
 	 *
 	 */
-	function __construct( $media, $privacy = 0, $activity_text = false ) {
-		if ( !isset ( $media ) ) {
+	function __construct( $media, $privacy = 0, $activity_text = false ){
+		if ( ! isset( $media ) ){
 			return false;
 		}
-		if ( !is_array( $media ) ) {
+		if ( ! is_array( $media ) ){
 			$media = array( $media );
 		}
 
@@ -32,22 +32,21 @@ class RTMediaActivity {
 		$this->privacy       = $privacy;
 	}
 
-	function create_activity_html() {
-
+	function create_activity_html(){
 
 		$html = '';
 
 		$html .= '<div class="rtmedia-activity-container">';
 
-		if ( !empty ( $this->activity_text ) ) {
+		if ( ! empty( $this->activity_text ) ){
 			$html .= '<div class="rtmedia-activity-text">';
 			$html .= $this->activity_text;
 			$html .= '</div>';
 		}
 
 		global $rtmedia;
-		if ( isset( $rtmedia->options[ 'buddypress_limitOnActivity' ] ) ) {
-			$limitActivityFeed = $rtmedia->options[ 'buddypress_limitOnActivity' ];
+		if ( isset( $rtmedia->options['buddypress_limitOnActivity'] ) ){
+			$limitActivityFeed = $rtmedia->options['buddypress_limitOnActivity'];
 		} else {
 			$limitActivityFeed = 0;
 		}
@@ -55,15 +54,15 @@ class RTMediaActivity {
 		$mediaObj      = new RTMediaModel();
 		$media_details = $mediaObj->get( array( 'id' => $this->media ) );
 
-		if ( intval( $limitActivityFeed ) > 0 ) {
+		if ( intval( $limitActivityFeed ) > 0 ){
 			$media_details = array_slice( $media_details, 0, $limitActivityFeed, true );
 		}
-		$rtmedia_activity_ul_class = apply_filters( "rtmedia_activity_ul_class", "large-block-grid-3" );
-		$li_content                = "";
+		$rtmedia_activity_ul_class = apply_filters( 'rtmedia_activity_ul_class', 'large-block-grid-3' );
+		$li_content                = '';
 		$count                     = 0;
 		foreach ( $media_details as $media ) {
 			$li_content .= '<li class="rtmedia-list-item media-type-' . $media->media_type . '">';
-			if ( $media->media_type == 'photo' ) {
+			if ( 'photo' == $media->media_type ){
 				$li_content .= '<a href ="' . get_rtmedia_permalink( $media->id ) . '">';
 			}
 			$li_content .= '<div class="rtmedia-item-thumbnail">';
@@ -74,17 +73,17 @@ class RTMediaActivity {
 
 			$li_content .= '<div class="rtmedia-item-title">';
 			$li_content .= '<h4 title="' . $media->media_title . '">';
-			if ( $media->media_type != 'photo' ) {
+			if ( 'photo' != $media->media_type ){
 				$li_content .= '<a href="' . get_rtmedia_permalink( $media->id ) . '">';
 			}
 
 			$li_content .= $media->media_title;
-			if ( $media->media_type != 'photo' ) {
+			if ( 'photo' != $media->media_type ){
 				$li_content .= '</a>';
 			}
 			$li_content .= '</h4>';
 			$li_content .= '</div>';
-			if ( $media->media_type == 'photo' ) {
+			if ( 'photo' == $media->media_type ){
 				$li_content .= '</a>';
 			}
 
@@ -101,15 +100,16 @@ class RTMediaActivity {
 
 		return bp_activity_filter_kses( $html );
 	}
+
 	/**
 	 * @fixme me Why this function is required ?
 	 */
-	function actions() {
+	function actions(){
 
 	}
 
-	function media( $media ) {
-		if ( isset ( $media->media_type ) ) {
+	function media( $media ){
+		if ( isset( $media->media_type ) ){
 			//			if ($media->media_type == 'album' ||
 			//					$media->media_type != 'photo') {
 			//				$thumbnail_id = get_rtmedia_meta($media->media_id,'cover_art');
@@ -119,22 +119,22 @@ class RTMediaActivity {
 			//                                }
 			//			}
 			global $rtmedia;
-			if ( $media->media_type == 'photo' ) {
+			if ( 'photo' == $media->media_type ){
 				$thumbnail_id = $media->media_id;
-				if ( $thumbnail_id ) {
-					list( $src, $width, $height ) = wp_get_attachment_image_src( $thumbnail_id, "rt_media_activity_image" );
+				if ( $thumbnail_id ){
+					list( $src, $width, $height ) = wp_get_attachment_image_src( $thumbnail_id, 'rt_media_activity_image' );
 					$html = '<img src="' . $src . '" />';
 				}
-			} elseif ( $media->media_type == 'video' ) {
+			} elseif ( 'video' == $media->media_type ) {
 				$cover_art = rtmedia_get_cover_art_src( $media->id );
-				if ( $cover_art ) {
+				if ( $cover_art ){
 					$poster = 'poster = "' . $cover_art . '"';
 				} else {
-					$poster = "";
+					$poster = '';
 				}
-				$html = '<video ' . $poster . ' src="' . wp_get_attachment_url( $media->media_id ) . '" width="' . $rtmedia->options[ "defaultSizes_video_activityPlayer_width" ] . '" height="' . $rtmedia->options[ "defaultSizes_video_activityPlayer_height" ] . '" type="video/mp4" class="wp-video-shortcode" id="rt_media_video_' . $media->id . '" controls="controls" preload="none"></video>';
-			} elseif ( $media->media_type == 'music' ) {
-				$html = '<audio src="' . wp_get_attachment_url( $media->media_id ) . '" width="' . $rtmedia->options[ "defaultSizes_music_activityPlayer_width" ] . '" height="0" type="audio/mp3" class="wp-audio-shortcode" id="rt_media_audio_' . $media->id . '" controls="controls" preload="none"></audio>';
+				$html = '<video ' . $poster . ' src="' . wp_get_attachment_url( $media->media_id ) . '" width="' . $rtmedia->options['defaultSizes_video_activityPlayer_width'] . '" height="' . $rtmedia->options['defaultSizes_video_activityPlayer_height'] . '" type="video/mp4" class="wp-video-shortcode" id="rt_media_video_' . $media->id . '" controls="controls" preload="none"></video>';
+			} elseif ( 'music' == $media->media_type ) {
+				$html = '<audio src="' . wp_get_attachment_url( $media->media_id ) . '" width="' . $rtmedia->options['defaultSizes_music_activityPlayer_width'] . '" height="0" type="audio/mp3" class="wp-audio-shortcode" id="rt_media_audio_' . $media->id . '" controls="controls" preload="none"></audio>';
 			} else {
 				$html = false;
 			}
