@@ -1278,7 +1278,7 @@ function rtmedia_image_editor_title( $type = 'photo' ) {
 add_action( 'rtmedia_add_edit_tab_content', 'rtmedia_image_editor_content', 12, 1 );
 function rtmedia_image_editor_content( $type = 'photo' ) {
 	global $rtmedia_query;
-	if ( isset( $rtmedia_query->media[ 0 ]->media_type ) && $rtmedia_query->media[ 0 ]->media_type == 'photo' && $type == 'photo' ){
+	if ( isset( $rtmedia_query->media) && is_array( $rtmedia_query->media ) && isset( $rtmedia_query->media[ 0 ]->media_type ) && $rtmedia_query->media[ 0 ]->media_type == 'photo' && $type == 'photo' ){
 		$media_id = $rtmedia_query->media[ 0 ]->media_id;
 		$id       = $rtmedia_query->media[ 0 ]->id;
 		//$editor = wp_get_image_editor(get_attached_file($id));
@@ -2382,7 +2382,7 @@ function get_rtmedia_privacy_symbol( $rtmedia_id = false ) {
 				$icon  = 'rtmicon-lock rtmicon-fw';
 				break;
 			case 80: // private
-				$title = __( "Blocked Temperorily", 'rtmedia' );
+				$title = __( "Blocked temporarily", 'rtmedia' );
 				$icon  = 'rtmicon-ban rtmicon-fw';
 				break;
 		}

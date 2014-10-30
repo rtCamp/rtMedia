@@ -207,11 +207,15 @@ class RTMediaModel extends RTDBModel {
 			$order_by = 'blog_id' . ( ( $order_by ) ? ',' . $order_by : '' );
 		}
 
-		$sql   = "SELECT * FROM {$this->table_name}  ";
-		$where = " WHERE (id IN(SELECT DISTINCT (album_id)
-				    FROM {$this->table_name} WHERE media_author = $author_id
-		                            AND album_id IS NOT NULL
-		                            AND media_type <> 'album' AND context <> 'group') OR (media_author = $author_id ))
+		$sql = "SELECT * FROM {$this->table_name}  ";
+
+		if( is_multisite() ){
+			$sub_sql = "SELECT DISTINCT (album_id) FROM {$this->table_name} WHERE media_author = $author_id AND album_id IS NOT NULL AND media_type <> 'album' AND context <> 'group' AND blog_id = '".get_current_blog_id()."'";
+		} else {
+			$sub_sql = "SELECT DISTINCT (album_id) FROM {$this->table_name} WHERE media_author = $author_id AND album_id IS NOT NULL AND media_type <> 'album' AND context <> 'group'";
+		}
+
+		$where = " WHERE (id IN( $sub_sql ) OR (media_author = $author_id ))
 			    AND media_type = 'album'
 			    AND (context = 'profile' or context is NULL) ";
 		if ( is_multisite() ){
@@ -254,10 +258,15 @@ class RTMediaModel extends RTDBModel {
 	 */
 	function get_group_albums( $group_id, $offset, $per_page, $order_by = 'media_id desc' ){
 		global $wpdb;
-		if ( is_multisite() ){
-			$order_by = 'blog_id' . ( ( $order_by ) ? ',' . $order_by : '' );
+		if ( is_multisite () )
+		    $order_by = "blog_id" . (($order_by)? "," . $order_by :'');
+
+		if( is_multisite() ){
+			$sub_sql = "SELECT DISTINCT (album_id) FROM {$this->table_name} WHERE context_id = $group_id AND album_id IS NOT NULL AND media_type != 'album' AND context = 'group' AND blog_id = '".get_current_blog_id()."'";
+		} else {
+			$sub_sql = "SELECT DISTINCT (album_id) FROM {$this->table_name} WHERE context_id = $group_id AND album_id IS NOT NULL AND media_type != 'album' AND context = 'group'";
 		}
-		$sql = "SELECT * FROM {$this->table_name} WHERE id IN(SELECT DISTINCT (album_id) FROM {$this->table_name} WHERE context_id = $group_id AND album_id IS NOT NULL AND media_type != 'album' AND context = 'group') OR (media_type = 'album' AND context_id = $group_id AND context = 'group')";
+		$sql = "SELECT * FROM {$this->table_name} WHERE id IN( $sub_sql ) OR (media_type = 'album' AND context_id = $group_id AND context = 'group')";
 
 		if ( is_multisite() ){
 			$sql .= " AND  {$this->table_name}.blog_id = '" . get_current_blog_id() . "' ";
