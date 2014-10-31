@@ -227,8 +227,8 @@ class RTMediaTemplate {
 				$image_meta_data = wp_generate_attachment_metadata( $rtmedia_query->media[ 0 ]->media_id, $image_path );
 				wp_update_attachment_metadata( $rtmedia_query->media[ 0 ]->media_id, $image_meta_data );
 			}
-            
-            if( isset( $_POST[ 'rtmedia-filepath-old' ] ) ) {
+            $is_valid_url = preg_match( "/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i", $_POST[ 'rtmedia-filepath-old' ] );
+            if( isset( $_POST[ 'rtmedia-filepath-old' ] ) && $is_valid_url ) {
                 $thumbnailinfo = wp_get_attachment_image_src($rtmedia_query->media[ 0 ]->media_id, 'rt_media_activity_image');
                 $activity_id = rtmedia_activity_id($rtmedia_query->media[ 0 ]->id);
 
