@@ -351,6 +351,7 @@ jQuery( function ( $ ) {
                 }
             }
             jQuery( '.start-media-upload' ).hide();
+            window.onbeforeunload = null;
         } );
 
         uploaderObj.uploader.bind( 'FilesAdded', function ( up, files ) {
@@ -528,6 +529,11 @@ jQuery( function ( $ ) {
             if ( file.percent == 100 ) {
                 $( "#" + file.id ).toggleClass( 'upload-success' );
             }
+            
+            window.onbeforeunload = function (evt) {                
+                 var message = 'There are some uploads in progress. Do you want to cancel them?';
+                 return message;                
+            };
         } );
         uploaderObj.uploader.bind( 'BeforeUpload', function ( up, file ) {            
             up.settings.multipart_params.title = file.title.split( '.' )[ 0 ];
@@ -900,6 +906,7 @@ jQuery( document ).ready( function ( $ ) {
         $( "#rtMedia-queue-list tr" ).remove();
         $( "#rtm-upload-start-notice" ).hide();
         //$("#aw-whats-new-submit").removeAttr('disabled');
+        window.onbeforeunload = null;
     } );
     objUploadView.uploader.bind( 'UploadProgress', function ( up, file ) {
         $( "#" + file.id + " .plupload_file_status" ).html( rtmedia_uploading_msg + '( ' + file.percent + '% )' );
@@ -908,6 +915,10 @@ jQuery( document ).ready( function ( $ ) {
             $( "#" + file.id ).toggleClass( 'upload-success' );
         }
 
+        window.onbeforeunload = function (evt) {                
+            var message = 'There are some uploads in progress. Do you want to cancel them?';
+            return message;                
+        };
     } );
 
     $( "#rtMedia-start-upload" ).hide();
