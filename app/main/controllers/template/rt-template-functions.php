@@ -2384,7 +2384,7 @@ function get_rtmedia_privacy_symbol( $rtmedia_id = false ) {
 				$icon  = 'rtmicon-lock rtmicon-fw';
 				break;
 			case 80: // private
-				$title = __( "Blocked Temperorily", 'rtmedia' );
+				$title = __( "Blocked temporarily", 'rtmedia' );
 				$icon  = 'rtmicon-ban rtmicon-fw';
 				break;
 		}

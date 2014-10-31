@@ -96,7 +96,7 @@ class RTMediaLike extends RTMediaUserInteraction {
 		}
 
 		$return[ "count" ] = $actions;
-		$this->model->update( array( $this->plural => $actions ), array( 'id' => $this->action_query->id ) );
+		$this->model->update( array( 'likes' => $actions ), array( 'id' => $this->action_query->id ) );
 		global $rtmedia_points_media_id;
 		$rtmedia_points_media_id = $this->action_query->id;
 		do_action( "rtmedia_after_like_media", $this );
