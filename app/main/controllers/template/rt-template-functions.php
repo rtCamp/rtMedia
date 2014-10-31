@@ -1288,9 +1288,11 @@ function rtmedia_image_editor_content( $type = 'photo' ) {
 			$nonce         = wp_create_nonce( "image_editor-$media_id" );
 			$modify_button = '<p><input type="button" class="rtmedia-image-edit" id="imgedit-open-btn-' . $media_id . '" onclick="imageEdit.open( \'' . $media_id . '\', \'' . $nonce . '\' )" class="button" value="' . __( 'Modify Image', 'rtmedia' ) . '"> <span class="spinner"></span></p>';
 		}
+        $image_path = rtmedia_image( 'rt_media_activity_image', $id, false );
 		echo '<div class="content" id="panel2">';
 		//<div class="tab-content" data-section-content>';
 		echo '<div class="rtmedia-image-editor-cotnainer" id="rtmedia-image-editor-cotnainer" >';
+        echo '<input type="hidden" id="rtmedia-filepath-old" name="rtmedia-filepath-old" value="' . $image_path . '" />';
 		echo '<div class="rtmedia-image-editor" id="image-editor-' . $media_id . '"></div>';
 		$thumb_url = wp_get_attachment_image_src( $media_id, 'thumbnail', true );
 
