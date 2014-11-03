@@ -531,7 +531,7 @@ jQuery( function ( $ ) {
             }
             
             window.onbeforeunload = function (evt) {                
-                 var message = 'There are some uploads in progress. Do you want to cancel them?';
+                 var message = rtmedia_upload_progress_error_message;
                  return message;                
             };
         } );
@@ -916,7 +916,7 @@ jQuery( document ).ready( function ( $ ) {
         }
 
         window.onbeforeunload = function (evt) {                
-            var message = 'There are some uploads in progress. Do you want to cancel them?';
+            var message = rtmedia_upload_progress_error_message;
             return message;                
         };
     } );
