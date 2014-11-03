@@ -919,6 +919,8 @@ class RTMedia
 		} else {
 			wp_localize_script( 'rtmedia-backbone', 'rtmedia_bp_enable_activity', '0' );
 		}
+        
+        wp_localize_script( 'rtmedia-backbone', 'rtmedia_upload_progress_error_message', __( "There are some uploads in progress. Do you want to cancel them?", 'rtmedia' ) );
     }
 
     function set_bp_bar() {

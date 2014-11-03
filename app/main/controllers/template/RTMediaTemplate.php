@@ -227,6 +227,20 @@ class RTMediaTemplate {
 				$image_meta_data = wp_generate_attachment_metadata( $rtmedia_query->media[ 0 ]->media_id, $image_path );
 				wp_update_attachment_metadata( $rtmedia_query->media[ 0 ]->media_id, $image_meta_data );
 			}
+            $is_valid_url = preg_match( "/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i", $_POST[ 'rtmedia-filepath-old' ] );
+            if( isset( $_POST[ 'rtmedia-filepath-old' ] ) && $is_valid_url ) {
+                $thumbnailinfo = wp_get_attachment_image_src($rtmedia_query->media[ 0 ]->media_id, 'rt_media_activity_image');
+                $activity_id = rtmedia_activity_id($rtmedia_query->media[ 0 ]->id);
+
+                if ( $rtmedia_query->media[ 0 ]->media_id ) {
+                    global $wpdb;
+                    $content = $wpdb->get_var("SELECT content FROM {$wpdb->prefix}bp_activity WHERE id = $activity_id");
+                    // Replacing the filename with new effected filename
+                    $activity_content = str_replace( $_POST[ 'rtmedia-filepath-old' ], $thumbnailinfo[ 0 ], $content );
+                    $wpdb->update($wpdb->prefix . 'bp_activity', array('content' => $activity_content), array('id' => $activity_id));
+                }
+            }
+                    
 			$state = $media->update( $rtmedia_query->action_query->id, $data, $rtmedia_query->media[ 0 ]->media_id );
 			$rtmedia_query->query( false );
 			global $rtmedia_points_media_id;
