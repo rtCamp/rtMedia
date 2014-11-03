@@ -133,6 +133,17 @@ http://www.youtube.com/watch?v####dJrykKQGDcs
 
 Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "Visit rtMedia's Features page") to get some details about future releases.
 
+#### 3.7.15 ####
+* Fix like button when comments are disabled
+* Fix max regenerate video thumb admin setting
+* masonry layout fixes
+* Fix drag n drop in activity page when attachment for activity is disabled
+* Added missing og:image property in single rtMedia BuddyPress activity
+* Fix likes translated in SQL query
+* Fix activity photo after media edit
+* Added JS alert when uploading is in progress
+* Added membership add-on information
+
 #### 3.7.14 ####
 * Fix media tab link shown to non members user of a private group
 * Update Dutch, Japanese, French, Portuguese and Danish translations
@@ -827,8 +838,9 @@ Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_sou
 * HTML5 Audio Tag Support (with fallback)
 * HTML5 Video Tag Support (with fallback)
 
-#### 3.7.14 ####
-Requires BuddyPress 1.7 or higher, if using BuddyPress. Fix media tab link shown to non members user of a private group and translation update.
+#### 3.7.15 ####
+Requires BuddyPress 1.7 or higher, if using BuddyPress. Fix like button when comments are disabled, added missing og:image property in single rtMedia BuddyPress activity, fix activity photo after media edit
+
 
 ## Sponsors ##
 
