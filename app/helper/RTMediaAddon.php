@@ -209,11 +209,23 @@ if ( ! class_exists( 'RTMediaAddon' ) ){
 						'category' => 'video',
 					),
 				),
+				'membership'=> array(
+					array(
+						'title' => __( 'rtMedia Membership Add-on', 'rtmedia' ),
+						'img_src' => $img_src . 'rtmedia-membership-240x184.png',
+						'product_link' => 'https://rtcamp.com/products/rtmedia-membership/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media',
+						'desc' => '<p>' . __( 'rtMedia Membership addon provides membership functionality in your site.', 'rtmedia' ) . '</p> <p>' . __( 'It controls the number of files a member can upload and size of the files uploaded based on membership group.', 'rtmedia' ) . '</p>',
+						'price' => '$99',
+						'buy_now' => 'https://rtcamp.com/products/rtmedia-membership/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media',
+						'category' => 'membership',
+					),
+				),
 			);
 			$addons  = apply_filters( 'rtmedia_addons', $addons );
 
 			$photo_addons = $addons['photo'];
 			$video_addons = $addons['video'];
+			$membership_addons = $addons['membership'];
 
 			echo '<h3>';
 			_e( 'rtMedia Addons for Photos', 'rtmedia' );
@@ -228,6 +240,14 @@ if ( ! class_exists( 'RTMediaAddon' ) ){
 			echo '</h3>';
 
 			foreach ( $video_addons as $key => $value ) {
+				$this->addon( $value );
+			}
+
+			echo '<h3>';
+			_e( 'rtMedia Addon for Membership', 'rtmedia' );
+			echo '</h3>';
+
+			foreach ( $membership_addons as $key => $value ) {
 				$this->addon( $value );
 			}
 		}
@@ -297,9 +317,11 @@ if ( ! class_exists( 'RTMediaAddon' ) ){
 			    </div>
 			    <div class="product_footer">
 			        <span class="price alignleft"><span class="amount">' . $price . '</span></span>
-			        <a class="add_to_cart_button  alignright product_type_simple"  href="' . $buy_now . '" target="_blank">' . __( 'Buy Now', 'rtmedia' ) . '</a>
-			        <a class="alignleft product_demo_link"  href="' . $demo_link . '" title="' . $title . '" target="_blank">' . __( 'Live Demo', 'rtmedia' ) . '</a>
-			    </div>' . $coming_soon_div . '</div>';
+			        <a class="add_to_cart_button  alignright product_type_simple"  href="' . $buy_now . '" target="_blank">' . __( 'Buy Now', 'rtmedia' ) . '</a>';
+			if( $demo_link != '' ){
+				$addon .= '<a class="alignleft product_demo_link"  href="' . $demo_link . '" title="' . $title . '" target="_blank">' . __( 'Live Demo', 'rtmedia' ) . '</a>';
+			}
+			$addon .= '</div>' . $coming_soon_div . '</div>';
 			echo $addon;
 		}
 
