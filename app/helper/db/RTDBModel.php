@@ -89,7 +89,7 @@ if ( ! class_exists( 'RTDBModel' ) ){
 				$return_array             = array();
 				$return_array['result'] = false;
 				global $wpdb;
-				$return_array['total'] = intval( $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM ' . $this->table_name . ' WHERE {$column_name} = %s", $arguments[0] ) ) );
+				$return_array['total'] = intval( $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM " . $this->table_name . " WHERE {$column_name} = %s", $arguments[0] ) ) );
 				if ( $return_array['total'] > 0 ){
 					$other = '';
 					if ( $paging ){
