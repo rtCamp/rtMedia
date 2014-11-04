@@ -133,6 +133,9 @@ http://www.youtube.com/watch?v####dJrykKQGDcs
 
 Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "Visit rtMedia's Features page") to get some details about future releases.
 
+#### 3.7.16 ####
+* Fix scalar value warning
+
 #### 3.7.15 ####
 * Fix like button when comments are disabled
 * Fix max regenerate video thumb admin setting
@@ -838,8 +841,8 @@ Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_sou
 * HTML5 Audio Tag Support (with fallback)
 * HTML5 Video Tag Support (with fallback)
 
-#### 3.7.15 ####
-Requires BuddyPress 1.7 or higher, if using BuddyPress. Fix like button when comments are disabled, added missing og:image property in single rtMedia BuddyPress activity, fix activity photo after media edit
+#### 3.7.16 ####
+Requires BuddyPress 1.7 or higher, if using BuddyPress. Fix scalar value warning
 
 
 ## Sponsors ##
