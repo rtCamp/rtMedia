@@ -77,14 +77,14 @@ rtMedia has 3 premium solutions to take care of audio/video conversion.
 
 = rtMedia Premium Addons for Photos =
 
- * **[Instagram-Effects](http://rtcamp.com/store/rtmedia-instagram/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "rtMedia Instagram Addon")** - Users can apply Instagram like filters to photos.
- * **[Photo-Tagging](http://rtcamp.com/store/rtmedia-photo-tagging/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "rtMedia Photo-Tagging Addon")** - Users can tag their friends/other users in photos.
+ * **[Instagram-Effects](https://rtcamp.com/products/rtmedia-instagram/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "rtMedia Instagram Addon")** - Users can apply Instagram like filters to photos.
+ * **[Photo-Tagging](https://rtcamp.com/products/rtmedia-photo-tagging/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "rtMedia Photo-Tagging Addon")** - Users can tag their friends/other users in photos.
+ * **[Watermark-Addon](https://rtcamp.com/products/rtmedia-photo-watermark/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "rtMedia Watermark Addon")** - User can add customised watermark text to photos. It supports Google Fonts.
 
 
-= *Coming Soon* - Premium Addons on the way =
+= rtMedia Membership Addon =
 
-* **Watermark Addon** - Adds advanced, customised watermark text to photos. Supports Google Fonts. *(Development completed. Under testing)*
-* **Membership Addon** - Users can be given controlled upload quotas and media type access on their profiles and groups. *(Planning stage)*
+ * **[Membership-Addon](https://rtcamp.com/products/rtmedia-membership/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "rtMedia Watermark Addon")** - Users can be given controlled upload quotas and media type access on their profiles and groups.
 
 
 = Important Links =
