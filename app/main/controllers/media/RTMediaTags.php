@@ -36,7 +36,7 @@ class RTMediaTags
 
 	private $duration_info =  array( 'duration' );
 	private $tags =  array( 'title', 'artist', 'album', 'year', 'genre', 'comment', 'track', 'track_total', 'attached_picture', 'image' );
-	private $readonly_tags =  array( 'attached_picture', 'image' );
+	private $readonly_tags =  array( 'track_total', 'attached_picture', 'image' );
                                 
 
 
