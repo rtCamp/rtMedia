@@ -249,7 +249,6 @@ class RTMediaInteraction {
 		if ( class_exists( "BuddyPress" ) ) {
 			global $bp;
 			if ( bp_is_single_activity() ){
-				$array = bp_activity_get($bp->current_action);
 				$mediaObj      = new RTMediaModel();
 				$media_details = $mediaObj->get( array( 'activity_id' => $bp->current_action ) );
 				foreach ( $media_details as $media ) {
@@ -257,10 +256,10 @@ class RTMediaInteraction {
 						$img = wp_get_attachment_image_src ( $media->media_id, "full" );
 						if ( $img && isset ( $img[ 0 ] ) && $img[ 0 ] != "" )
 							echo "<meta property='og:image' content='" . esc_url ( $img[ 0 ] ) . "'/>";
+						}
 					}
 				}
 			}
-		} 		
 		if ( ( array_key_exists ( 'media', $wp_query->query_vars ) ) ){
 			global $rtmedia_query;
 			if ( isset ( $rtmedia_query->media ) && $rtmedia_query->media && count ( $rtmedia_query->media ) > 0 ) {
