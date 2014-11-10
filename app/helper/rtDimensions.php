@@ -14,16 +14,18 @@ class rtDimensions extends rtForm {
 
 	private $element_id;
 	private static $id_count = 0;
-	private static $default_class = "rt-form-dimension";
+	private static $default_class = 'rt-form-dimension';
 
 	/**
 	 * Get default html id count.
 	 *
 	 * @access private
+	 *
 	 * @param  void
+	 *
 	 * @return int $id_count
 	 */
-	private function get_default_id () {
+	private function get_default_id(){
 		return self::$id_count;
 	}
 
@@ -31,10 +33,12 @@ class rtDimensions extends rtForm {
 	 * Update default html id count.
 	 *
 	 * @access private
+	 *
 	 * @param  void
+	 *
 	 * @return int $id_count
 	 */
-	private function update_default_id () {
+	private function update_default_id(){
 		self::$id_count ++;
 	}
 
@@ -42,10 +46,12 @@ class rtDimensions extends rtForm {
 	 * Get default html class.
 	 *
 	 * @access private
+	 *
 	 * @param  void
+	 *
 	 * @return string $default_class
 	 */
-	private function get_default_class () {
+	private function get_default_class(){
 		return self::$default_class;
 	}
 
@@ -53,19 +59,21 @@ class rtDimensions extends rtForm {
 	 * Embedd html class to html output.
 	 *
 	 * @access private
+	 *
 	 * @param  string $element
 	 * @param  array  $class
+	 *
 	 * @return string $html
 	 */
-	private function embedd_class ( $element, $class = null ) {
-		$html = 'class = "' . $this->get_default_class ();
+	private function embedd_class( $element, $class = null ){
+		$html = 'class = "' . $this->get_default_class();
 
-		if ( isset ( $class ) ){
+		if ( isset( $class ) ){
 
-			if ( is_array ( $class ) ){
-				$html .= ' ' . implode ( " ", $class );
+			if ( is_array( $class ) ){
+				$html .= ' ' . implode( ' ', $class );
 			} else {
-				throw new rtFormsInvalidArgumentsException ( "class [" . $element . "]" );
+				throw new rtFormsInvalidArgumentsException( 'class [' . $element . ']' );
 			}
 		}
 		$html .= '"';
@@ -77,61 +85,55 @@ class rtDimensions extends rtForm {
 	 * Generate rtmedia dimensions in admin options.
 	 *
 	 * @access protected
-	 * @param  array  $attributes
+	 *
+	 * @param  array $attributes
+	 *
 	 * @return string $html
 	 */
-	protected function generate_dimensions ( $attributes ) {
-		$element = "rtDimension";
+	protected function generate_dimensions( $attributes ){
+		$element = 'rtDimension';
 		global $rtmedia;
 		$defaults = array(
-		    'desc' => '',
-		    'show_desc' => false
+			'desc' => '', 'show_desc' => false,
 		);
 
-		$attributes = wp_parse_args ( $attributes, $defaults );
-		extract ( $attributes );
+		$attributes = wp_parse_args( $attributes, $defaults );
+		extract( $attributes );
 
 		$html = '<div ';
 
-		if ( isset ( $attributes[ 'id' ] ) ){
-			$html .= 'id="' . $attributes[ 'id' ] . '" ';
+		if ( isset( $attributes['id'] ) ){
+			$html .= 'id="' . $attributes['id'] . '" ';
 		} else {
-			$html .= 'id="' . $this->get_default_class () . '-' . $this->get_default_id () . '" ';
-			$this->update_default_id ();
+			$html .= 'id="' . $this->get_default_class() . '-' . $this->get_default_id() . '" ';
+			$this->update_default_id();
 		}
 
-		if ( isset ( $attributes[ 'class' ] ) ){
-			$html .= self::embedd_class ( $element, $attributes[ 'class' ] );
+		if ( isset( $attributes['class'] ) ){
+			$html .= self::embedd_class( $element, $attributes['class'] );
 		} else {
-			$html .= self::embedd_class ( $element );
+			$html .= self::embedd_class( $element );
 		}
 		$html .= '>';
 
-		$html .= parent::get_textbox ( array(
-		            'name' => "rtmedia-options[{$key}_width]",
-		            'value' => $width,
-		            'class' => array( "small-text large-offset-1" ),
-		            'show_desc' => $show_desc
+		$html .= parent::get_textbox( array(
+			'name' => "rtmedia-options[{$key}_width]", 'value' => $width, 'class' => array( 'small-text large-offset-1' ), 'show_desc' => $show_desc,
 		) );
 
-		if ( isset ( $height ) ){
-			$html .= parent::get_textbox ( array(
-			            'name' => "rtmedia-options[{$key}_height]",
-			            'value' => $height,
-			            'class' => array( "small-text large-offset-1" ),
-			            'show_desc' => $show_desc
+		if ( isset( $height ) ){
+			$html .= parent::get_textbox( array(
+				'name' => "rtmedia-options[{$key}_height]", 'value' => $height, 'class' => array( 'small-text large-offset-1' ), 'show_desc' => $show_desc,
 			) );
 		}
 
-		if ( isset ( $crop ) ){
-			$html .= parent::get_checkbox ( array(
-			            'name' => "rtmedia-options[{$key}_crop]",
-			            'rtForm_options' => array( array(
-			                    '' => 1, //label would be blank
-			                    'checked' => $crop
-			                ) ),
-			            'class' => array( "large-offset-1" ),
-			            'show_desc' => $show_desc
+		if ( isset( $crop ) ){
+			$html .= parent::get_checkbox( array(
+				'name'     => "rtmedia-options[{$key}_crop]", 'rtForm_options' => array(
+					array(
+						''        => 1, //label would be blank
+						'checked' => $crop,
+					),
+				), 'class' => array( 'large-offset-1' ), 'show_desc' => $show_desc,
 			) );
 		}
 
@@ -141,8 +143,8 @@ class rtDimensions extends rtForm {
 
 		$html .= '</div>';
 
-		if ( isset ( $attributes[ 'label' ] ) ){
-			$html = parent::enclose_label ( 'container', $html, $attributes[ 'label' ] );
+		if ( isset( $attributes['label'] ) ){
+			$html = parent::enclose_label( 'container', $html, $attributes['label'] );
 		}
 
 		return $html;
@@ -152,11 +154,13 @@ class rtDimensions extends rtForm {
 	 * Get rtmedia dimensions in admin options.
 	 *
 	 * @access public
-	 * @param  mixed  $attributes
+	 *
+	 * @param  mixed $attributes
+	 *
 	 * @return void
 	 */
-	public function get_dimensions ( $attributes = '' ) {
-		return $this->generate_dimensions ( $attributes );
+	public function get_dimensions( $attributes = '' ){
+		return $this->generate_dimensions( $attributes );
 	}
 
 }

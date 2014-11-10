@@ -1319,7 +1319,7 @@ function rtmedia_image_editor_title( $type = 'photo' ) {
 add_action( 'rtmedia_add_edit_tab_content', 'rtmedia_image_editor_content', 12, 1 );
 function rtmedia_image_editor_content( $type = 'photo' ) {
 	global $rtmedia_query;
-	if ( isset( $rtmedia_query->media[ 0 ]->media_type ) && $rtmedia_query->media[ 0 ]->media_type == 'photo' && $type == 'photo' ){
+	if ( isset( $rtmedia_query->media) && is_array( $rtmedia_query->media ) && isset( $rtmedia_query->media[ 0 ]->media_type ) && $rtmedia_query->media[ 0 ]->media_type == 'photo' && $type == 'photo' ){
 		$media_id = $rtmedia_query->media[ 0 ]->media_id;
 		$id       = $rtmedia_query->media[ 0 ]->id;
 		//$editor = wp_get_image_editor(get_attached_file($id));
@@ -1329,9 +1329,11 @@ function rtmedia_image_editor_content( $type = 'photo' ) {
 			$nonce         = wp_create_nonce( "image_editor-$media_id" );
 			$modify_button = '<p><input type="button" class="rtmedia-image-edit" id="imgedit-open-btn-' . $media_id . '" onclick="imageEdit.open( \'' . $media_id . '\', \'' . $nonce . '\' )" class="button" value="' . __( 'Modify Image', 'rtmedia' ) . '"> <span class="spinner"></span></p>';
 		}
+        $image_path = rtmedia_image( 'rt_media_activity_image', $id, false );
 		echo '<div class="content" id="panel2">';
 		//<div class="tab-content" data-section-content>';
 		echo '<div class="rtmedia-image-editor-cotnainer" id="rtmedia-image-editor-cotnainer" >';
+        echo '<input type="hidden" id="rtmedia-filepath-old" name="rtmedia-filepath-old" value="' . $image_path . '" />';
 		echo '<div class="rtmedia-image-editor" id="image-editor-' . $media_id . '"></div>';
 		$thumb_url = wp_get_attachment_image_src( $media_id, 'thumbnail', true );
 
@@ -2423,7 +2425,7 @@ function get_rtmedia_privacy_symbol( $rtmedia_id = false ) {
 				$icon  = 'rtmicon-lock rtmicon-fw';
 				break;
 			case 80: // private
-				$title = __( "Blocked Temperorily", 'rtmedia' );
+				$title = __( "Blocked temporarily", 'rtmedia' );
 				$icon  = 'rtmicon-ban rtmicon-fw';
 				break;
 		}

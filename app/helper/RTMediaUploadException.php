@@ -20,10 +20,10 @@ class RTMediaUploadException extends Exception {
 	 * @param type $code
 	 * @param type $msg
 	 */
-    public function __construct( $code, $msg=false ) {
-        $message = $this->codeToMessage( $code, $msg );
-        parent::__construct( $message, $code );
-    }
+	public function __construct( $code, $msg = false ){
+		$message = $this->codeToMessage( $code, $msg );
+		parent::__construct( $message, $code );
+	}
 
 	/**
 	 * Error specific Message generated for the exception depending upon the code passed.
@@ -31,34 +31,36 @@ class RTMediaUploadException extends Exception {
 	 *
 	 * @param type $code
 	 * @param type $msg
+	 *
 	 * @return type
 	 */
-    private function codeToMessage( $code, $msg ) {
-        switch ( $code ) {
-            case UPLOAD_ERR_INI_SIZE:
-            case UPLOAD_ERR_FORM_SIZE:
-                $message = apply_filters( 'bp_media_file_size_error', __( 'The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form', 'rtmedia' ) );
-                break;
-            case UPLOAD_ERR_NO_FILE:
-                $message = apply_filters( 'bp_media_file_null_error', __( 'No file was uploaded', 'rtmedia' ) );
-                break;
-            case UPLOAD_ERR_PARTIAL:
-            case UPLOAD_ERR_NO_TMP_DIR:
-            case UPLOAD_ERR_CANT_WRITE: $message = apply_filters( 'bp_media_file_internal_error', __( 'Uploade failed due to internal server error.', 'rtmedia' ) );
-                break;
-            case UPLOAD_ERR_EXTENSION:
-                $message = apply_filters( 'bp_media_file_extension_error', __( 'File type not allowed.', 'rtmedia' ) );
-                break;
+	private function codeToMessage( $code, $msg ){
+		switch ( $code ) {
+			case UPLOAD_ERR_INI_SIZE:
+			case UPLOAD_ERR_FORM_SIZE:
+				$message = apply_filters( 'bp_media_file_size_error', __( 'The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form', 'rtmedia' ) );
+				break;
+			case UPLOAD_ERR_NO_FILE:
+				$message = apply_filters( 'bp_media_file_null_error', __( 'No file was uploaded', 'rtmedia' ) );
+				break;
+			case UPLOAD_ERR_PARTIAL:
+			case UPLOAD_ERR_NO_TMP_DIR:
+			case UPLOAD_ERR_CANT_WRITE:
+				$message = apply_filters( 'bp_media_file_internal_error', __( 'Uploade failed due to internal server error.', 'rtmedia' ) );
+				break;
+			case UPLOAD_ERR_EXTENSION:
+				$message = apply_filters( 'bp_media_file_extension_error', __( 'File type not allowed.', 'rtmedia' ) );
+				break;
 
 			case $this->upload_err_invalid_context:
 				$message = apply_filters( 'rtmedia_invalid_context_error', __( 'Invalid Context for upload.', 'rtmedia' ) );
 				break;
-            default:
-                $msg = $msg ? $msg : __( 'Unknown file upload error.', 'rtmedia' );
-                $message = apply_filters( 'bp_media_file_unknown_error', $msg );
-                break;
-        }
+			default:
+				$msg     = $msg ? $msg : __( 'Unknown file upload error.', 'rtmedia' );
+				$message = apply_filters( 'bp_media_file_unknown_error', $msg );
+				break;
+		}
 
-        return $message;
-    }
+		return $message;
+	}
 }

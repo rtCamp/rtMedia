@@ -6,17 +6,17 @@
  * Time: 2:32 PM
  */
 
-if( !class_exists( 'RTDBModel' ) ){
+if ( ! class_exists( 'RTDBModel' ) ){
 	return;
 }
 
 class RTMediaActivityModel extends RTDBModel {
 
-	function __construct () {
-		parent::__construct ( 'rtm_activity', false, 10, true );
+	function __construct() {
+		parent::__construct( 'rtm_activity', false, 10, true );
 	}
 
-	function get( $columns, $offset=false, $per_page=false, $order_by= 'activity_id DESC' ) {
+	function get( $columns, $offset = false, $per_page = false, $order_by = 'activity_id DESC' ) {
 		$columns['blog_id'] = get_current_blog_id();
 		return parent::get( $columns, $offset, $per_page, $order_by );
 	}
@@ -31,8 +31,8 @@ class RTMediaActivityModel extends RTDBModel {
 		return parent::update( $data, $where );
 	}
 
-	public function check( $activity_id = "") {
-		if( $activity_id == ""  ){
+	public function check( $activity_id = '' ) {
+		if ( $activity_id == '' ){
 			return false;
 		}
 
@@ -43,7 +43,7 @@ class RTMediaActivityModel extends RTDBModel {
 
 		$results = $this->get( $columns );
 
-		if( $results ){
+		if ( $results ){
 			return true;
 		} else {
 			return false;

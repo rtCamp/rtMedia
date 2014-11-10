@@ -42,8 +42,6 @@
  *                   "op3"=>3
  *           )
  *   ))."\n";
-
-
  *   ----checkbox test
  *   echo $obj->get_checkbox(array(
  *           "id"=>"myid",
@@ -55,7 +53,6 @@
  *                   "op3"=>3
  *           )
  *   ))."\n";
-
  *   ----select test
  *   echo $obj->get_select(array(
  *           "id"=>"myid",
@@ -71,7 +68,7 @@
  * @author udit
  */
 
-if( ! class_exists( "rtForm" ) ){
+if ( ! class_exists( 'rtForm' ) ){
 
 	class rtForm {
 
@@ -81,27 +78,27 @@ if( ! class_exists( "rtForm" ) ){
 		 * if id for any element is not given then these count will be used in id generation
 		 */
 		private static $id_counts = array(
-			"rtText" => 0,
-			"rtNumber" => 0,
-			"rtDate" => 0,
-			"rtRadio" => 0,
-			"rtCheckbox" => 0,
-			"rtSelect" => 0,
-			"rtTextarea" => 0,
-			"rtHidden" => 0,
-			"rtWysiwyg" => 0
+			'rtText' => 0,
+			'rtNumber' => 0,
+			'rtDate' => 0,
+			'rtRadio' => 0,
+			'rtCheckbox' => 0,
+			'rtSelect' => 0,
+			'rtTextarea' => 0,
+			'rtHidden' => 0,
+			'rtWysiwyg' => 0,
 		);
 
 		private static $default_classes = array(
-			"rtText" => "rt-form-text",
-			"rtNumber" => "rt-form-number",
-			"rtDate" => "rt-form-date",
-			"rtRadio" => "rt-form-radio",
-			"rtCheckbox" => "rt-form-checkbox",
-			"rtSelect" => "rt-form-select",
-			"rtTextarea" => "rt-form-textarea",
-			"rtHidden" => "rt-form-hidden",
-			"rtWysiwyg" => "rt-form-wysiwyg"
+			'rtText' => 'rt-form-text',
+			'rtNumber' => 'rt-form-number',
+			'rtDate' => 'rt-form-date',
+			'rtRadio' => 'rt-form-radio',
+			'rtCheckbox' => 'rt-form-checkbox',
+			'rtSelect' => 'rt-form-select',
+			'rtTextarea' => 'rt-form-textarea',
+			'rtHidden' => 'rt-form-hidden',
+			'rtWysiwyg' => 'rt-form-wysiwyg',
 		);
 
 
@@ -109,33 +106,36 @@ if( ! class_exists( "rtForm" ) ){
 		 * Get default html id.
 		 *
 		 * @access private
+		 *
 		 * @param  string $element
 		 *
 		 */
-		private function get_default_id( $element ) {
-			return self::$id_counts[$element];
+		private function get_default_id( $element ){
+			return self::$id_counts[ $element ];
 		}
 
 		/**
 		 * Update default html id.
 		 *
 		 * @access private
+		 *
 		 * @param  string $element
 		 *
 		 */
-		private function update_default_id( $element ) {
-			self::$id_counts[$element] ++;
+		private function update_default_id( $element ){
+			self::$id_counts[ $element ] ++;
 		}
 
 		/**
 		 * Get default html class.
 		 *
 		 * @access private
+		 *
 		 * @param  string $element
 		 *
 		 */
-		private function get_default_class( $element ) {
-			return self::$default_classes[$element];
+		private function get_default_class( $element ){
+			return self::$default_classes[ $element ];
 		}
 
 
@@ -143,20 +143,22 @@ if( ! class_exists( "rtForm" ) ){
 		 * Embedd html class to html output.
 		 *
 		 * @access private
+		 *
 		 * @param  string $element
 		 * @param  array  $class
+		 *
 		 * @return string $html
 		 */
-		private function embedd_class( $element, $class = NULL ) {
+		private function embedd_class( $element, $class = null ){
 
 			$html = 'class="' . $this->get_default_class( $element );
 
-			if( isset( $class ) ){
+			if ( isset( $class ) ){
 
-				if( is_array( $class ) ){
-					$html .= ' ' . implode( " ", $class );
+				if ( is_array( $class ) ){
+					$html .= ' ' . implode( ' ', $class );
 				} else {
-					throw new rtFormInvalidArgumentsException( "class [". $element ."]" );
+					throw new rtFormInvalidArgumentsException( 'class [' . $element . ']' );
 				}
 			}
 			$html .= '" ';
@@ -168,19 +170,21 @@ if( ! class_exists( "rtForm" ) ){
 		 * Generate rtmedia html element id attribute in admin options.
 		 *
 		 * @access private
+		 *
 		 * @param  string $element
 		 * @param  string $id
+		 *
 		 * @return string $html
 		 */
-		private function generate_element_id( $element, $id = NULL ) {
+		private function generate_element_id( $element, $id = null ){
 
 			$html = 'id="';
-			if( isset( $id ) ){
+			if ( isset( $id ) ){
 				$html .= $id . '"';
 				$this->element_id = $id;
 			} else {
-				$html .= $this->get_default_class( $element ) . "-" . $this->get_default_id( $element ) . '"';
-				$this->element_id = $this->get_default_class( $element ) . "-" . $this->get_default_id( $element );
+				$html .= $this->get_default_class( $element ) . '-' . $this->get_default_id( $element ) . '"';
+				$this->element_id = $this->get_default_class( $element ) . '-' . $this->get_default_id( $element );
 				$this->update_default_id( $element );
 			}
 
@@ -191,20 +195,22 @@ if( ! class_exists( "rtForm" ) ){
 		 * Generate rtmedia html name attribute in admin options.
 		 *
 		 * @access private
+		 *
 		 * @param  string $element
 		 * @param  string $multiple
 		 * @param  string $name
+		 *
 		 * @return string $html
 		 */
-		private function generate_element_name( $element, $multiple, $name ) {
+		private function generate_element_name( $element, $multiple, $name ){
 
 			$html = 'name="';
-			if( $multiple ){
+			if ( $multiple ){
 
 				$html .= isset( $name ) ? $name . '[]' : $element . '[]';
 
 				// for select - add multiple = multiple
-				if( $element == "rtSelect" ){
+				if ( 'rtSelect' == $element ){
 					$html .= 'multiple = "multiple"';
 				}
 			} else {
@@ -219,34 +225,37 @@ if( ! class_exists( "rtForm" ) ){
 		 * Generate rtmedia html value attribute in admin options.
 		 *
 		 * @access private
+		 *
 		 * @param  string $element
 		 * @param  mixed  $attributes
+		 *
 		 * @return string $html
 		 */
-		private function generate_element_value( $element, $attributes ) {
+		private function generate_element_value( $element, $attributes ){
 
 			$html = '';
-			switch( $element ) {
-				case "rtHidden": //hidden
-				case "rtNumber": //number
-				case "rtText" :	//text
+			switch ( $element ) {
+				case 'rtHidden': //hidden
+				case 'rtNumber': //number
+				case 'rtText' : //text
 					$html .= 'value="';
 					$html .= ( isset( $attributes['value'] ) ) ? $attributes['value'] : '';
 					$html .= '" ';
 					break;
 
-				case "rtTextarea" :
+				case 'rtTextarea' :
 					/**textarea
 					 * no process --- handled in between the start tab and end tag.
 					 * <textarea> value </textarea>
 					 */
 					break;
 
-				case "rtCheckbox" :	//checkbox
-				case "rtRadio" : //radio
+				case 'rtCheckbox' : //checkbox
+				case 'rtRadio' : //radio
 					$html .= 'value = "' . $attributes['value'] . '">';
 					break;
 			}
+
 			return $html;
 		}
 
@@ -254,32 +263,37 @@ if( ! class_exists( "rtForm" ) ){
 		 * Generate rtmedia html element description in admin options.
 		 *
 		 * @access private
-		 * @param  mixed  $attributes
+		 *
+		 * @param  mixed $attributes
+		 *
 		 * @return string $html
 		 */
-		private function generate_element_desc( $attributes ) {
+		private function generate_element_desc( $attributes ){
 
-			if( isset( $attributes['desc'] ) ){
+			if ( isset( $attributes['desc'] ) ){
 
 				$html = '<span class="clearfix large-offset-3 description">' . $attributes['desc'] . '</span>';
 
 				return $html;
 			}
 
-			return "";
+			return '';
 		}
 
 		/**
 		 * Embedd html misc attributes in admin options.
 		 *
 		 * @access private
-		 * @param  mixed  $misc
+		 *
+		 * @param  mixed $misc
+		 *
 		 * @return string $html
 		 */
-		private function embedd_misc_attributes( $misc ) {
+		private function embedd_misc_attributes( $misc ){
 
-			if( ! is_array( $misc ) ){
-				throw new rtFormInvalidArgumentsException( "attributes : misc" );
+			if ( ! is_array( $misc ) ){
+				throw new rtFormInvalidArgumentsException( 'attributes : misc' );
+
 				return;
 			}
 
@@ -296,15 +310,17 @@ if( ! class_exists( "rtForm" ) ){
 		 * Process html attributes in admin options.
 		 *
 		 * @access private
+		 *
 		 * @param  string $element
 		 * @param  mixed  $attributes
 		 * @param  string $container
+		 *
 		 * @return string $html
 		 */
-		private function processAttributes( $element, $attributes, $container = false ) {
+		private function processAttributes( $element, $attributes, $container = false ){
 
 			/* generating the id on its own if not provided otherwise taken from the parameter provided */
-			if( isset( $attributes['id'] ) ){
+			if ( isset( $attributes['id'] ) ){
 				$html = $this->generate_element_id( $element, $attributes['id'] ) . ' ';
 			} else {
 				$html = $this->generate_element_id( $element ) . ' ';
@@ -312,24 +328,24 @@ if( ! class_exists( "rtForm" ) ){
 
 			/* name attrbute according to multiple flag */
 			$multiple = ( isset( $attributes['multiple'] ) && $attributes['multiple'] ) ? true : false;
-			$name = ( isset( $attributes['name'] ) ) ? $attributes['name'] : $element;
+			$name     = ( isset( $attributes['name'] ) ) ? $attributes['name'] : $element;
 			$html .= $this->generate_element_name( $element, $multiple, $name ) . ' ';
 
 			/*
 			 *  list down all the classes provided along with the default class of rtForms.
 			 *  default class of rtForms will always be attached irrespective of the attributes provided.
 			 */
-			if( ! $container ){
+			if ( ! $container ){
 
-				if( isset( $attributes['class'] ) ){
+				if ( isset( $attributes['class'] ) ){
 					$html .= $this->embedd_class( $element, $attributes['class'] );
 				} else {
 					$html .= $this->embedd_class( $element );
 				}
 			}
 
-			if( isset( $attributes['misc'] ) ){
-				$html.= ' ' . $this->embedd_misc_attributes( $attributes['misc'] );
+			if ( isset( $attributes['misc'] ) ){
+				$html .= ' ' . $this->embedd_misc_attributes( $attributes['misc'] );
 			}
 
 			$html .= $this->generate_element_value( $element, $attributes );
@@ -341,80 +357,88 @@ if( ! class_exists( "rtForm" ) ){
 		 * container enclosed elements in admin options.
 		 *
 		 * @access private
+		 *
 		 * @param  string $element
 		 * @param  array  $attrib
-		 * @param  int 	  $rtForm_options
+		 * @param  int    $rtForm_options
+		 *
 		 * @return string $html
 		 */
-		private function container_enclosed_elements( $element, $attrib, $rtForm_options ) {
+		private function container_enclosed_elements( $element, $attrib, $rtForm_options ){
 
 			$html = '';
 			$size = count( $rtForm_options );
-			if( isset( $attrib['id'] ) ){
+			if ( isset( $attrib['id'] ) ){
 				$id = $attrib['id'];
 			}
 
 			foreach ( $rtForm_options as $opt ) {
 
-				if( isset( $attrib['id'] ) && $size>1 ){
-					$attrib['id'] = $id . "-" . $this->get_default_id( $element );
+				if ( isset( $attrib['id'] ) && $size > 1 ){
+					$attrib['id'] = $id . '-' . $this->get_default_id( $element );
 					$this->update_default_id( $element );
 				}
 
-				foreach ( (array)$opt as $key => $val ) {
+				foreach ( (array) $opt as $key => $val ) {
 
-					if( $key == "checked" ){
+					if ( 'checked' == $key ){
 						$attrib['checked'] = $val;
-					} else if( $key == "selected" ) {
-						$attrib['selected'] = $val;
-					} else if( $key == "desc" ) {
-						$attrib['desc'] = $val;
-					} else if( $key == "id" ) {
-						$attrib['id'] = $val;
 					} else {
-						$attrib['key'] = $key;
-						$attrib['value'] = $val;
+						if ( 'selected' == $key ){
+							$attrib['selected'] = $val;
+						} else {
+							if ( 'desc' == $key ){
+								$attrib['desc'] = $val;
+							} else {
+								if ( 'id' == $key ){
+									$attrib['id'] = $val;
+								} else {
+									$attrib['key']   = $key;
+									$attrib['value'] = $val;
+								}
+							}
+						}
 					}
 				}
 
-				$checked = ( isset( $attrib['checked'] ) && $attrib['checked'] ) ? "checked=checked" : "";
-				if( isset( $attrib['switch'] ) && $attrib['switch'] ){
+				$checked = ( isset( $attrib['checked'] ) && $attrib['checked'] ) ? 'checked=checked' : '';
+				if ( isset( $attrib['switch'] ) && $attrib['switch'] ){
 					$switch = 'data-toggle="switch"';
 				} else {
 					$switch = '';
 				}
 
-				switch( $element ) {
-					case "rtRadio" :
-						$data = '<input type="radio" ' . $checked . " ";
+				switch ( $element ) {
+					case 'rtRadio' :
+						$data = '<input type="radio" ' . $checked . ' ';
 						break;
-					case "rtCheckbox" :
-						$data = '<input type="checkbox" ' . $checked . " " . $switch . " ";
+					case 'rtCheckbox' :
+						$data = '<input type="checkbox" ' . $checked . ' ' . $switch . ' ';
 						break;
-					case "rtSelect" :
-						$selected = ( $attrib['selected'] ) ? "selected=selected" : "";
-						$data = '<option value="' . $attrib['value'] . '"' . $selected . '>' . $attrib['key'] . '</option><br />';
+					case 'rtSelect' :
+						$selected = ( $attrib['selected'] ) ? 'selected=selected' : '';
+						$data     = '<option value="' . $attrib['value'] . '"' . $selected . '>' . $attrib['key'] . '</option><br />';
 						break;
 				}
 
-				if( $element != "rtSelect" ){
+				if ( 'rtSelect' != $element ){
 					$data .= $this->processAttributes( $element, $attrib, true );
 
-					if( isset( $attrib['switch_square'] ) && $attrib['switch_square'] ){
+					if ( isset( $attrib['switch_square'] ) && $attrib['switch_square'] ){
 
 						$data = '<div class="rt-switch switch-square" data-on-label="<i class=\'fui-check\'></i>" data-off-label="<i class=\'fui-cross\'></i>">' . $data . '</div>';
 
-					} else if( ( isset( $attrib['switch'] ) && $attrib['switch'] ) ||
-								( isset( $attrib['switch_square'] ) && $attrib['switch_square'] ) ) {
+					} else {
+						if ( ( isset( $attrib['switch'] ) && $attrib['switch'] ) || ( isset( $attrib['switch_square'] ) && $attrib['switch_square'] ) ){
 
-						if( $size > 1 ){
-							$data = '<div>' . $this->enclose_label( $element, $data, $attrib['key'] ) . '</div>';
+							if ( $size > 1 ){
+								$data = '<div>' . $this->enclose_label( $element, $data, $attrib['key'] ) . '</div>';
+							} else {
+								$data = $this->enclose_label( $element, $data, $attrib['key'] );
+							}
 						} else {
 							$data = $this->enclose_label( $element, $data, $attrib['key'] );
 						}
-
-					} else {
-						$data = $this->enclose_label( $element, $data, $attrib['key'] );
 					}
 
 					$data .= '<br>';
@@ -426,6 +450,7 @@ if( ! class_exists( "rtForm" ) ){
 				unset( $attrib['key'] );
 				unset( $attrib['value'] );
 			}
+
 			return $html;
 		}
 
@@ -433,33 +458,34 @@ if( ! class_exists( "rtForm" ) ){
 		 * Parse multiple options in admin options.
 		 *
 		 * @access private
+		 *
 		 * @param  string $element
 		 * @param  array  $attributes
 		 *
 		 */
-		private function parse_multiple_options( $element, $attributes ) {
+		private function parse_multiple_options( $element, $attributes ){
 
-			if( is_array( $attributes ) ){
+			if ( is_array( $attributes ) ){
 
-				if( isset( $attributes['rtForm_options'] ) && is_array( $attributes['rtForm_options'] ) ){
+				if ( isset( $attributes['rtForm_options'] ) && is_array( $attributes['rtForm_options'] ) ){
 
 					$attribKeys = array_keys( $attributes );
-					$attrib = array();
+					$attrib     = array();
 
 					foreach ( $attribKeys as $key ) {
-						if( $key != "rtForm_options" ){
-							$attrib[$key] = $attributes[$key];
+						if ( 'rtForm_options' != $key ){
+							$attrib[ $key ] = $attributes[ $key ];
 						}
 					}
 
 					$rtForm_options = (array) $attributes['rtForm_options'];
 
-					return array( 'attrib' => $attrib, 'rtForm_options' => $rtForm_options );
+					return array( 'attrib' => $attrib, 'rtForm_options' => $rtForm_options, );
 				} else {
-					throw new rtFormInvalidArgumentsException( "rtForm_options [" . $element . "]" );
+					throw new rtFormInvalidArgumentsException( 'rtForm_options [' . $element . ']' );
 				}
 			} else {
-				throw new rtFormInvalidArgumentsException( "attributes" );
+				throw new rtFormInvalidArgumentsException( 'attributes' );
 			}
 		}
 
@@ -467,22 +493,24 @@ if( ! class_exists( "rtForm" ) ){
 		 * Enclose html label.
 		 *
 		 * @access protected
+		 *
 		 * @param  string $element
 		 * @param  string $html
 		 * @param  string $label
 		 * @param  array  $class
+		 *
 		 * @return string $data
 		 */
-		protected function enclose_label( $element, $html, $label, $class=false ) {
+		protected function enclose_label( $element, $html, $label, $class = false ){
 
 			$labelClass = '';
-			if( ! empty( $class ) && is_array( $class ) ){
-				$labelClass = 'class="'.implode( ' ', $class ).'"';
+			if ( ! empty( $class ) && is_array( $class ) ){
+				$labelClass = 'class="' . implode( ' ', $class ) . '"';
 			}
 
-			$data = '<label for="' . $this->element_id . '" '.$labelClass.'>';
+			$data = '<label for="' . $this->element_id . '" ' . $labelClass . '>';
 
-			if( $element == "rtRadio" || $element == "rtCheckbox" ){
+			if ( 'rtRadio' == $element || 'rtCheckbox' == $element ){
 				$data .= $html . ' ' . $label;
 			} else {
 				$data .= $label . ' ' . $html;
@@ -497,13 +525,15 @@ if( ! class_exists( "rtForm" ) ){
 		 * Generate rtmedia html textbox in admin options.
 		 *
 		 * @access protected
-		 * @param  array  $attributes
+		 *
+		 * @param  array $attributes
+		 *
 		 * @return string $html
 		 */
-		protected function generate_textbox( $attributes ) {
+		protected function generate_textbox( $attributes ){
 
 			$element = 'rtText';
-			if( is_array( $attributes ) ){
+			if ( is_array( $attributes ) ){
 
 				/* Starting the input tag */
 				$html = '<input type="text" ';
@@ -514,21 +544,21 @@ if( ! class_exists( "rtForm" ) ){
 				/* ending the tag */
 				$html .= ' />';
 
-				if( isset( $attributes['label'] ) ){
-					if( isset( $attributes['labelClass'] ) ){
+				if ( isset( $attributes['label'] ) ){
+					if ( isset( $attributes['labelClass'] ) ){
 						$html = $this->enclose_label( $element, $html, $attributes['label'], $attributes['labelClass'] );
 					} else {
 						$html = $this->enclose_label( $element, $html, $attributes['label'] );
 					}
 				}
 
-				if( isset( $attributes['show_desc'] ) && $attributes['show_desc'] ){
+				if ( isset( $attributes['show_desc'] ) && $attributes['show_desc'] ){
 					$html .= $this->generate_element_desc( $attributes );
 				}
 
 				return $html;
 			} else {
-				throw new rtFormInvalidArgumentsException( "attributes" );
+				throw new rtFormInvalidArgumentsException( 'attributes' );
 			}
 		}
 
@@ -536,10 +566,12 @@ if( ! class_exists( "rtForm" ) ){
 		 * Get rtmedia html textbox in admin options.
 		 *
 		 * @access public
-		 * @param  array  $attributes
+		 *
+		 * @param  array $attributes
+		 *
 		 * @return string
 		 */
-		public function get_textbox( $attributes = '' ) {
+		public function get_textbox( $attributes = '' ){
 
 			return $this->generate_textbox( $attributes );
 		}
@@ -548,47 +580,49 @@ if( ! class_exists( "rtForm" ) ){
 		 * Generate rtmedia html number field in admin options.
 		 *
 		 * @access protected
-		 * @param  array  $attributes
+		 *
+		 * @param  array $attributes
+		 *
 		 * @return string $html
 		 */
-		protected function generate_number( $attributes ) {
+		protected function generate_number( $attributes ){
 
 			$element = 'rtNumber';
-			if( is_array( $attributes ) ){
+			if ( is_array( $attributes ) ){
 
 				/* Starting the input tag */
 				$html = '<input type="number" ';
 
 				/* generating attributes */
 				$html .= $this->processAttributes( $element, $attributes );
-				if( isset( $attributes['min'] ) ){
-				    $html.= " min='".$attributes['min']."' ";
+				if ( isset( $attributes['min'] ) ){
+					$html .= " min='" . $attributes['min'] . "' ";
 				}
-				if( isset( $attributes['max'] ) ){
-				    $html.= " max='".$attributes['max']."' ";
+				if ( isset( $attributes['max'] ) ){
+					$html .= " max='" . $attributes['max'] . "' ";
 				}
-				if( isset( $attributes['step'] ) ){
-				    $html.= " step='".$attributes['step']."' ";
+				if ( isset( $attributes['step'] ) ){
+					$html .= " step='" . $attributes['step'] . "' ";
 				}
-				
+
 				/* ending the tag */
 				$html .= ' />';
 
-				if( isset( $attributes['label'] ) ){
-					if( isset( $attributes['labelClass'] ) ){
+				if ( isset( $attributes['label'] ) ){
+					if ( isset( $attributes['labelClass'] ) ){
 						$html = $this->enclose_label( $element, $html, $attributes['label'], $attributes['labelClass'] );
 					} else {
 						$html = $this->enclose_label( $element, $html, $attributes['label'] );
 					}
 				}
 
-				if( isset( $attributes['show_desc'] ) && $attributes['show_desc'] ){
+				if ( isset( $attributes['show_desc'] ) && $attributes['show_desc'] ){
 					$html .= $this->generate_element_desc( $attributes );
 				}
 
 				return $html;
 			} else {
-				throw new rtFormInvalidArgumentsException( "attributes" );
+				throw new rtFormInvalidArgumentsException( 'attributes' );
 			}
 		}
 
@@ -596,10 +630,12 @@ if( ! class_exists( "rtForm" ) ){
 		 * Get rtmedia html number field in admin options.
 		 *
 		 * @access public
-		 * @param  array  $attributes
+		 *
+		 * @param  array $attributes
+		 *
 		 * @return string
 		 */
-		public function get_number( $attributes = '' ) {
+		public function get_number( $attributes = '' ){
 
 			return $this->generate_number( $attributes );
 		}
@@ -608,34 +644,36 @@ if( ! class_exists( "rtForm" ) ){
 		 * Generate rtmedia html date field in admin options.
 		 *
 		 * @access protected
-		 * @param  array  $attributes
+		 *
+		 * @param  array $attributes
+		 *
 		 * @return string $html
 		 */
-		protected function generate_date( $attributes ) {
+		protected function generate_date( $attributes ){
 
 			$element = 'rtDate';
-			if( is_array( $attributes ) ){
+			if ( is_array( $attributes ) ){
 				$html = '<input type="date" ';
 
 				$html .= $this->processAttributes( $element, $attributes );
 
 				$html .= ' />';
 
-				if( isset( $attributes['label'] ) ){
-					if( isset( $attributes['labelClass'] ) ){
+				if ( isset( $attributes['label'] ) ){
+					if ( isset( $attributes['labelClass'] ) ){
 						$html = $this->enclose_label( $element, $html, $attributes['label'], $attributes['labelClass'] );
 					} else {
 						$html = $this->enclose_label( $element, $html, $attributes['label'] );
 					}
 				}
 
-				if( isset( $attributes['show_desc'] ) && $attributes['desc'] ){
+				if ( isset( $attributes['show_desc'] ) && $attributes['desc'] ){
 					$html .= $this->generate_element_desc( $attributes );
 				}
 
 				return $html;
 			} else {
-				throw new rtFormInvalidArgumentsException( "attributes" );
+				throw new rtFormInvalidArgumentsException( 'attributes' );
 			}
 		}
 
@@ -643,10 +681,12 @@ if( ! class_exists( "rtForm" ) ){
 		 * Get rtmedia html date field in admin options.
 		 *
 		 * @access public
-		 * @param  array  $attributes
+		 *
+		 * @param  array $attributes
+		 *
 		 * @return string
 		 */
-		public function get_date( $attributes ) {
+		public function get_date( $attributes ){
 			return $this->generate_date( $attributes );
 		}
 
@@ -654,13 +694,15 @@ if( ! class_exists( "rtForm" ) ){
 		 * Generate rtmedia html hidden field in admin options.
 		 *
 		 * @access protected
-		 * @param  array  $attributes
+		 *
+		 * @param  array $attributes
+		 *
 		 * @return string $html
 		 */
-		protected function generate_hidden( $attributes ) {
+		protected function generate_hidden( $attributes ){
 
 			$element = 'rtHidden';
-			if( is_array( $attributes ) ){
+			if ( is_array( $attributes ) ){
 
 				/* Starting the input tag */
 				$html = '<input type="hidden" ';
@@ -671,31 +713,34 @@ if( ! class_exists( "rtForm" ) ){
 				/* ending the tag */
 				$html .= ' />';
 
-				if( isset( $attributes['label'] ) ){
-					if( isset( $attributes['labelClass'] ) ){
+				if ( isset( $attributes['label'] ) ){
+					if ( isset( $attributes['labelClass'] ) ){
 						$html = $this->enclose_label( $element, $html, $attributes['label'], $attributes['labelClass'] );
 					} else {
 						$html = $this->enclose_label( $element, $html, $attributes['label'] );
 					}
 				}
 
-				if( isset( $attributes['show_desc'] ) && $attributes['show_desc'] ){
+				if ( isset( $attributes['show_desc'] ) && $attributes['show_desc'] ){
 					$html .= $this->generate_element_desc( $attributes );
 				}
 
 				return $html;
-			} else
-				throw new rtFormInvalidArgumentsException( "attributes" );
+			} else {
+				throw new rtFormInvalidArgumentsException( 'attributes' );
+			}
 		}
 
 		/**
 		 * Get rtmedia html hidden field in admin options.
 		 *
 		 * @access public
-		 * @param  array  $attributes
+		 *
+		 * @param  array $attributes
+		 *
 		 * @return string
 		 */
-		public function get_hidden( $attributes = '' ) {
+		public function get_hidden( $attributes = '' ){
 
 			return $this->generate_hidden( $attributes );
 		}
@@ -704,37 +749,39 @@ if( ! class_exists( "rtForm" ) ){
 		 * Generate rtmedia html textarea in admin options.
 		 *
 		 * @access protected
-		 * @param  array  $attributes
+		 *
+		 * @param  array $attributes
+		 *
 		 * @return string $html
 		 */
-		protected function generate_textarea( $attributes ) {
+		protected function generate_textarea( $attributes ){
 
 			$element = 'rtTextarea';
-			if( is_array( $attributes ) ){
+			if ( is_array( $attributes ) ){
 
 				$html = '<textarea ';
 				$html .= $this->processAttributes( $element, $attributes );
 				$html .= '>';
 
-				$html .= ( isset( $attributes['value'] ) ) ? $attributes['value'] : "" ;
+				$html .= ( isset( $attributes['value'] ) ) ? $attributes['value'] : '';
 
 				$html .= '</textarea>';
 
-				if( isset( $attributes['label'] ) ){
-					if( isset( $attributes['labelClass'] ) ){
+				if ( isset( $attributes['label'] ) ){
+					if ( isset( $attributes['labelClass'] ) ){
 						$html = $this->enclose_label( $element, $html, $attributes['label'], $attributes['labelClass'] );
 					} else {
 						$html = $this->enclose_label( $element, $html, $attributes['label'] );
 					}
 				}
 
-				if( isset( $attributes['show_desc'] ) && $attributes['show_desc'] ){
+				if ( isset( $attributes['show_desc'] ) && $attributes['show_desc'] ){
 					$html .= $this->generate_element_desc( $attributes );
 				}
 
 				return $html;
 			} else {
-				throw new rtFormInvalidArgumentsException( "attributes" );
+				throw new rtFormInvalidArgumentsException( 'attributes' );
 			}
 		}
 
@@ -742,10 +789,12 @@ if( ! class_exists( "rtForm" ) ){
 		 * Get rtmedia html textarea in admin options.
 		 *
 		 * @access public
-		 * @param  array  $attributes
+		 *
+		 * @param  array $attributes
+		 *
 		 * @return string
 		 */
-		public function get_textarea( $attributes = '' ) {
+		public function get_textarea( $attributes = '' ){
 
 			return $this->generate_textarea( $attributes );
 		}
@@ -759,54 +808,56 @@ if( ! class_exists( "rtForm" ) ){
 		 * functionality and flow needs to be decided
 		 *
 		 *  */
-	//		protected function generate_wysiwyg($attributes) {
-	//
-	//			$element = 'rtWysiwyg';
-	//			if( is_array($attributes) ) {
-	//
-	//				$id = isset( $attributes['id'] ) ? $attributes['id'] : $this->get_default_class($element) . "-" . $this->get_default_id($element);
-	//				$name = isset( $attributes['name'] ) ? $attributes['name'] : $element;
-	//				if(isset($attributes['class']))
-	//					$class = $this->embedd_class($element, $attributes['class']);
-	//				else
-	//					$class = $this->embedd_class($element);
-	//				$value = isset( $attributes['value'] ) ? $attributes['value'] : "";
-	//
-	//				echo '<label for="' . $id . '">';
-	//					wp_editor( $value, $id, array('textarea_name' =>  $name, 'editor_class' => $class) );
-	//				echo '</label>';
-	//			} else
-	//				throw new rtFormInvalidArgumentsException( "attributes" );
-	//		}
-	//
-	//		public function get_wysiwyg( $attributes = '' ) {
-	//
-	//			ob_start();
-	//			$this->generate_wysiwyg($attributes);
-	//			return ob_get_clean();
-	//		}
+		//		protected function generate_wysiwyg($attributes) {
+		//
+		//			$element = 'rtWysiwyg';
+		//			if( is_array($attributes) ) {
+		//
+		//				$id = isset( $attributes['id'] ) ? $attributes['id'] : $this->get_default_class($element) . "-" . $this->get_default_id($element);
+		//				$name = isset( $attributes['name'] ) ? $attributes['name'] : $element;
+		//				if(isset($attributes['class']))
+		//					$class = $this->embedd_class($element, $attributes['class']);
+		//				else
+		//					$class = $this->embedd_class($element);
+		//				$value = isset( $attributes['value'] ) ? $attributes['value'] : "";
+		//
+		//				echo '<label for="' . $id . '">';
+		//					wp_editor( $value, $id, array('textarea_name' =>  $name, 'editor_class' => $class) );
+		//				echo '</label>';
+		//			} else
+		//				throw new rtFormInvalidArgumentsException( "attributes" );
+		//		}
+		//
+		//		public function get_wysiwyg( $attributes = '' ) {
+		//
+		//			ob_start();
+		//			$this->generate_wysiwyg($attributes);
+		//			return ob_get_clean();
+		//		}
 
 		/**
 		 * Generate rtmedia html input type radio in admin options.
 		 *
 		 * @access protected
-		 * @param  array  $attributes
+		 *
+		 * @param  array $attributes
+		 *
 		 * @return string $container
 		 */
-		protected function generate_radio( $attributes ) {
+		protected function generate_radio( $attributes ){
 
 			$element = 'rtRadio';
-			$html = '';
+			$html    = '';
 
 			$meta = $this->parse_multiple_options( $element, $attributes );
 			$html .= $this->container_enclosed_elements( $element, $meta['attrib'], $meta['rtForm_options'] );
 
-			if( isset($attributes['show_desc']) && $attributes['show_desc'] ){
+			if ( isset( $attributes['show_desc'] ) && $attributes['show_desc'] ){
 				$html .= $this->generate_element_desc( $attributes );
 			}
 
 			$container = '<span ';
-			if( isset( $attributes['class'] ) ){
+			if ( isset( $attributes['class'] ) ){
 				$container .= $this->embedd_class( $element, $attributes['class'] );
 			} else {
 				$container .= $this->embedd_class( $element );
@@ -817,8 +868,8 @@ if( ! class_exists( "rtForm" ) ){
 
 			$container .= '</span>';
 
-		//			if( isset($attributes['label']) )
-		//				$container = $this->enclose_label('container', $container, $attributes['label']);
+			//			if( isset($attributes['label']) )
+			//				$container = $this->enclose_label('container', $container, $attributes['label']);
 
 			return $container;
 		}
@@ -827,10 +878,12 @@ if( ! class_exists( "rtForm" ) ){
 		 * Get rtmedia html input type radio in admin options.
 		 *
 		 * @access public
-		 * @param  array  $attributes
+		 *
+		 * @param  array $attributes
+		 *
 		 * @return string
 		 */
-		public function get_radio( $attributes = '' ) {
+		public function get_radio( $attributes = '' ){
 
 			return $this->generate_radio( $attributes );
 		}
@@ -839,23 +892,25 @@ if( ! class_exists( "rtForm" ) ){
 		 * Generate rtmedia html input type checkbox in admin options.
 		 *
 		 * @access protected
-		 * @param  array  $attributes
+		 *
+		 * @param  array $attributes
+		 *
 		 * @return string $container
 		 */
-		protected function generate_checkbox( $attributes ) {
+		protected function generate_checkbox( $attributes ){
 
 			$element = 'rtCheckbox';
-			$html = '';
+			$html    = '';
 
 			$meta = $this->parse_multiple_options( $element, $attributes );
 			$html .= $this->container_enclosed_elements( $element, $meta['attrib'], $meta['rtForm_options'] );
 
-			if( isset( $attributes['show_desc'] ) && $attributes['show_desc'] ){
+			if ( isset( $attributes['show_desc'] ) && $attributes['show_desc'] ){
 				$html .= $this->generate_element_desc( $attributes );
 			}
 
 			$container = '<span ';
-			if( isset( $attributes['class'] ) ){
+			if ( isset( $attributes['class'] ) ){
 				$container .= $this->embedd_class( $element, $attributes['class'] );
 			} else {
 				$container .= $this->embedd_class( $element );
@@ -866,8 +921,8 @@ if( ! class_exists( "rtForm" ) ){
 
 			$container .= '</span>';
 
-		//			if( isset($attributes['label']) )
-		//				$container = $this->enclose_label('container', $container, $attributes['label']);
+			//			if( isset($attributes['label']) )
+			//				$container = $this->enclose_label('container', $container, $attributes['label']);
 
 			return $container;
 		}
@@ -876,10 +931,12 @@ if( ! class_exists( "rtForm" ) ){
 		 * Get rtmedia html input type checkbox in admin options.
 		 *
 		 * @access public
-		 * @param  array  $attributes
+		 *
+		 * @param  array $attributes
+		 *
 		 * @return string
 		 */
-		public function get_checkbox( $attributes = '' ) {
+		public function get_checkbox( $attributes = '' ){
 
 			return $this->generate_checkbox( $attributes );
 		}
@@ -888,12 +945,15 @@ if( ! class_exists( "rtForm" ) ){
 		 * Get rtmedia html input type checkbox (get_switch) in admin options.
 		 *
 		 * @access public
-		 * @param  array  $attributes
+		 *
+		 * @param  array $attributes
+		 *
 		 * @return string
 		 */
-		public function get_switch( $attributes = '' ) {
+		public function get_switch( $attributes = '' ){
 
 			$attributes['switch'] = true;
+
 			return $this->generate_checkbox( $attributes );
 		}
 
@@ -901,12 +961,15 @@ if( ! class_exists( "rtForm" ) ){
 		 * Get rtmedia html input type checkbox (get_switch_square) in admin options.
 		 *
 		 * @access public
-		 * @param  array  $attributes
+		 *
+		 * @param  array $attributes
+		 *
 		 * @return string
 		 */
-		public function get_switch_square( $attributes = '' ) {
+		public function get_switch_square( $attributes = '' ){
 
 			$attributes['switch_square'] = true;
+
 			return $this->generate_checkbox( $attributes );
 		}
 
@@ -914,33 +977,35 @@ if( ! class_exists( "rtForm" ) ){
 		 * Generate rtmedia html input type select in admin options.
 		 *
 		 * @access protected
-		 * @param  array  $attributes
+		 *
+		 * @param  array $attributes
+		 *
 		 * @return string $html
 		 */
-		protected function generate_select( $attributes ) {
+		protected function generate_select( $attributes ){
 
-			if( is_array( $attributes ) ){
+			if ( is_array( $attributes ) ){
 				$element = 'rtSelect';
-				$html = '<select ';
+				$html    = '<select ';
 
-				if( isset( $attributes['id'] ) ){
+				if ( isset( $attributes['id'] ) ){
 					$id = $attributes['id'];
 				} else {
-					$id = $element.$this->get_default_id( $element );
+					$id = $element . $this->get_default_id( $element );
 					$this->update_default_id( $element );
 				}
 				$html .= $this->generate_element_id( $element, $id ) . ' ';
 				$multiple = ( isset( $attributes['multiple'] ) && $attributes['multiple'] ) ? true : false;
-				$name = ( isset( $attributes['name'] ) ) ? $attributes['name'] : $element;
+				$name     = ( isset( $attributes['name'] ) ) ? $attributes['name'] : $element;
 				$html .= $this->generate_element_name( $element, $multiple, $name ) . ' ';
-				if( isset( $attributes['class'] ) ){
+				if ( isset( $attributes['class'] ) ){
 					$html .= $this->embedd_class( $element, $attributes['class'] );
 				} else {
 					$html .= $this->embedd_class( $element );
 				}
 
-				if( isset( $attributes['misc'] ) ){
-					$html.= ' ' . $this->embedd_misc_attributes( $attributes['misc'] );
+				if ( isset( $attributes['misc'] ) ){
+					$html .= ' ' . $this->embedd_misc_attributes( $attributes['misc'] );
 				}
 
 				$html .= '>';
@@ -950,21 +1015,21 @@ if( ! class_exists( "rtForm" ) ){
 
 				$html .= '</select>';
 
-				if( isset( $attributes['label'] ) ){
-					if( isset( $attributes['labelClass'] ) ){
+				if ( isset( $attributes['label'] ) ){
+					if ( isset( $attributes['labelClass'] ) ){
 						$html = $this->enclose_label( $element, $html, $attributes['label'], $attributes['labelClass'] );
 					} else {
 						$html = $this->enclose_label( $element, $html, $attributes['label'] );
 					}
 				}
 
-				if( isset( $attributes['show_desc'] ) && $attributes['show_desc'] ){
+				if ( isset( $attributes['show_desc'] ) && $attributes['show_desc'] ){
 					$html .= $this->generate_element_desc( $attributes );
 				}
 
 				return $html;
 			} else {
-				throw new rtFormInvalidArgumentsException( "attributes" );
+				throw new rtFormInvalidArgumentsException( 'attributes' );
 			}
 
 		}
@@ -973,10 +1038,12 @@ if( ! class_exists( "rtForm" ) ){
 		 * Get rtmedia html input type select in admin options.
 		 *
 		 * @access public
-		 * @param  array  $attributes
+		 *
+		 * @param  array $attributes
+		 *
 		 * @return string
 		 */
-		public function get_select( $attributes = '' ) {
+		public function get_select( $attributes = '' ){
 
 			return $this->generate_select( $attributes );
 		}

@@ -150,13 +150,14 @@ class RTMediaInteraction {
 
     function set_query () {
         global $rtmedia_query;
-
-        $args = array(
-            'context' => $this->context->type,
-            'context_id' => $this->context->id
-        );
-	$args = apply_filters( "rtmedia_query_filter", $args );
-        $rtmedia_query = new RTMediaQuery ( $args );
+		if( $this->routes[ RTMEDIA_MEDIA_SLUG ]->is_template() ){
+			$args = array(
+				'context' => $this->context->type,
+				'context_id' => $this->context->id
+			);
+			$args = apply_filters( "rtmedia_query_filter", $args );
+			$rtmedia_query = new RTMediaQuery ( $args );
+		}
     }
 
     function set_title ( $default, $sep = "|" ) {
@@ -244,18 +245,35 @@ class RTMediaInteraction {
 
     function rtmedia_wpseo_og_image ( $data ) {
         global $wp_query;
-        if ( ! array_key_exists ( 'media', $wp_query->query_vars ) )
-            return $data;
-        global $rtmedia_query;
-        if ( isset ( $rtmedia_query->media ) && $rtmedia_query->media && count ( $rtmedia_query->media ) > 0 ) {
+		
+		if ( class_exists( "BuddyPress" ) ) {
+			global $bp;
+			if ( bp_is_single_activity() ){
+				$array = bp_activity_get($bp->current_action);
+				$mediaObj      = new RTMediaModel();
+				$media_details = $mediaObj->get( array( 'activity_id' => $bp->current_action ) );
+				foreach ( $media_details as $media ) {
+					if ( $media->media_type == 'photo' ) {
+						$img = wp_get_attachment_image_src ( $media->media_id, "full" );
+						if ( $img && isset ( $img[ 0 ] ) && $img[ 0 ] != "" )
+							echo "<meta property='og:image' content='" . esc_url ( $img[ 0 ] ) . "'/>";
+					}
+				}
+			}
+		} 		
+		if ( ( array_key_exists ( 'media', $wp_query->query_vars ) ) ){
+			global $rtmedia_query;
+			if ( isset ( $rtmedia_query->media ) && $rtmedia_query->media && count ( $rtmedia_query->media ) > 0 ) {
 
-            foreach ( $rtmedia_query->media as $media ) {
-                $img = wp_get_attachment_image_src ( $media->media_id, "full" );
-                if ( $img && isset ( $img[ 0 ] ) && $img[ 0 ] != "" )
-                    echo "<meta property='og:image' content='" . esc_url ( $img[ 0 ] ) . "'/>";
-            }
-        }
-    }
+				foreach ( $rtmedia_query->media as $media ) {
+					$img = wp_get_attachment_image_src ( $media->media_id, "full" );
+					if ( $img && isset ( $img[ 0 ] ) && $img[ 0 ] != "" )
+						echo "<meta property='og:image' content='" . esc_url ( $img[ 0 ] ) . "'/>";
+				}
+			}
+		}
+		return $data;
+	}
 
     function rtmedia_wpseo_og_url ( $url ) {
         global $wp_query;

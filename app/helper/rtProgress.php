@@ -37,10 +37,10 @@ class rtProgress {
 			</div>
 			';
 
-        if ( $echo ){
-            echo $progress_ui;
+		if ( $echo ){
+			echo $progress_ui;
 		} else {
-            return $progress_ui;
+			return $progress_ui;
 		}
 	}
 
@@ -53,11 +53,11 @@ class rtProgress {
 	 * @return float
 	 */
 	public function progress( $progress, $total ) {
-	    if( $total < 1 ){
-	        return 100;
+		if ( $total < 1 ){
+			return 100;
 		}
 
-		return ( $progress/$total ) * 100;
+		return ( $progress / $total ) * 100;
 	}
 
 }
