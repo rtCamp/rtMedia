@@ -502,11 +502,10 @@ function rtmedia_duration( $id = false ) {
 	if( ($media_object->media_type == 'video') || ( $media_object->media_type == 'music' ) ) {
 		$media_time = get_rtmedia_meta( $media_object->id, 'duration_time' );
 		if ( $media_time == false ) {
-			$getID3 = new getID3;
 			$filepath = get_attached_file( $media_object->media_id );
 			$media_tags = new RTMediaTags(  $filepath ) ;
-			$duration = $media_tags->duration;
-			add_rtmedia_meta( $media_object->id, 'duration_time', $duration );
+			$media_duration = $media_tags->duration;
+			add_rtmedia_meta( $media_object->id, 'duration_time', $media_duration );
 		} else {
 			$duration = $media_time;	
 		}	
