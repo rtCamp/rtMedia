@@ -1024,6 +1024,12 @@ class RTMediaJsonApi{
 
                 global $wpdb, $bp;
                 $updated = $wpdb->update ( $bp->activity->table_name, array( "type" => "rtmedia_update", "content" => $objActivity->create_activity_html () ), array( "id" => $activity_id ) );
+
+				// if there is only single media the $updated value will be false even if the value we are passing to check is correct.
+				// So we need to hardcode the $updated to true if there is only single media for same activity
+				if( sizeof( $same_medias ) == 1 && $activity_id ){
+					$updated = true;
+				}
             }
         }
 
