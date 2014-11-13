@@ -1534,14 +1534,11 @@ function rtmedia_global_album_list( $selected_album_id = false ) {
 	global $rtmedia_query;
 	$model         = new RTMediaModel();
 	$global_albums = rtmedia_global_albums();
-	if ( ! empty ( $global_albums ) ){
-		if ( is_array( $global_albums ) ){
-			$albums = implode( ',', $global_albums );
-		} else {
-			//return;
-		}
-		//return;
+
+	if( false === $selected_album_id && ! empty ( $global_albums ) && is_array( $global_albums ) ){
+		$selected_album_id = $global_albums[0];
 	}
+
 	$option = null;
 
 	$album_objects = $model->get_media( array( 'id' => ( $global_albums ) ), false, false );
