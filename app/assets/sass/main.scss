@@ -241,6 +241,19 @@
 
 	.rtmedia-item-thumbnail {
 		text-align: center;
+		.rtmedia_time{
+			position: absolute;
+			top: 2px;
+			right: 2px;
+			padding: 0 4px;
+			font-weight: bold;
+			font-size: 11px;
+			background-color: #000;
+			color: #fff;
+			line-height: 14px;
+			opacity: .75;
+			display: inline-block;
+		}
 		img {
 			vertical-align: middle;
 		}
