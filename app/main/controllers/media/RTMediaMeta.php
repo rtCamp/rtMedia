@@ -6,20 +6,29 @@
  */
 
 /**
- * Description of RTMediaMetaQuery
+ * Description of RTMediaMeta
  *
  * @author saurabh
  */
 class RTMediaMeta {
 
 	/**
-	 *
+	 * Initialises the model object of the media object for meta.
 	 */
-	public function __construct() {
+	public function __construct(){
 		$this->model = new RTDBModel( 'rtm_media_meta', false, 10, true );
 	}
 
-	public function get_meta( $id = false, $key = false ) {
+	/**
+	 * Get Meta
+	 *
+	 * @param boolean $id
+	 *
+	 * @param boolean $key
+	 *
+	 * @return boolean
+	 */
+	public function get_meta( $id = false, $key = false ){
 		if ( $id === false ){
 			return false;
 		}
@@ -30,7 +39,14 @@ class RTMediaMeta {
 		}
 	}
 
-	private function get_all_meta( $id = false ) {
+	/**
+	 * Get all meta data.
+	 *
+	 * @param boolean $id
+	 *
+	 * @return mixed unserialized data
+	 */
+	private function get_all_meta( $id = false ){
 		if ( $id === false ){
 			return false;
 		}
@@ -38,7 +54,7 @@ class RTMediaMeta {
 		return maybe_unserialize( $this->model->get( array( 'media_id' => $id ) ) );
 	}
 
-	private function get_single_meta( $id = false, $key = false ) {
+	private function get_single_meta( $id = false, $key = false ){
 		if ( $id === false ){
 			return false;
 		}
@@ -53,11 +69,11 @@ class RTMediaMeta {
 		}
 	}
 
-	public function add_meta( $id = false, $key = false, $value = false, $duplicate = false ) {
+	public function add_meta( $id = false, $key = false, $value = false, $duplicate = false ){
 		return $this->update_meta( $id, $key, $value, $duplicate );
 	}
 
-	public function update_meta( $id = false, $key = false, $value = false, $duplicate = false ) {
+	public function update_meta( $id = false, $key = false, $value = false, $duplicate = false ){
 		if ( $id === false ){
 			return false;
 		}
@@ -84,7 +100,7 @@ class RTMediaMeta {
 		return $media_meta;
 	}
 
-	public function delete_meta( $id = false, $key = false ) {
+	public function delete_meta( $id = false, $key = false ){
 		if ( $id === false ){
 			return false;
 		}
