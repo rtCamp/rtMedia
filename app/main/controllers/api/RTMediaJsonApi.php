@@ -7,7 +7,25 @@
  */
 class RTMediaJsonApi {
 
-	var $ec_method_missing = 600001, $msg_method_missing = 'no method specified', $ec_token_missing = 600002, $msg_token_missing = 'token empty', $ec_token_invalid = 600003, $msg_token_invalid = 'token invalid', $ec_server_error = 600004, $msg_server_error = 'server error', $ec_media_activity_id_missing = 600005, $msg_media_activity_id_missing = 'media/activity id missing', $ec_invalid_media_id = 600006, $msg_invalid_media_id = 'invalid media id', $ec_invalid_request_type = 600007, $msg_invalid_request_type = 'invalid request type', $ec_bp_missing = 600008, $msg_bp_missing = 'buddypress not found', $ec_api_disabled = 600009, $msg_api_disabled = 'API disabled by site administrator', $rtmediajsonapifunction, $user_id = '';
+	var $ec_method_missing = 600001,
+		$msg_method_missing = 'no method specified',
+		$ec_token_missing = 600002,
+		$msg_token_missing = 'token empty',
+		$ec_token_invalid = 600003,
+		$msg_token_invalid = 'token invalid',
+		$ec_server_error = 600004,
+		$msg_server_error = 'server error',
+		$ec_media_activity_id_missing = 600005,
+		$msg_media_activity_id_missing = 'media/activity id missing',
+		$ec_invalid_media_id = 600006,
+		$msg_invalid_media_id = 'invalid media id',
+		$ec_invalid_request_type = 600007,
+		$msg_invalid_request_type = 'invalid request type',
+		$ec_bp_missing = 600008,
+		$msg_bp_missing = 'buddypress not found',
+		$ec_api_disabled = 600009,
+		$msg_api_disabled = 'API disabled by site administrator',
+		$rtmediajsonapifunction, $user_id = '';
 
 	function __construct(){
 		if ( ! class_exists( 'RTMediaApiLogin' ) || ! class_exists( 'RTMediaJsonApiFunctions' ) ){
@@ -190,7 +208,10 @@ class RTMediaJsonApi {
 				//update all tokens for user to exired on each login
 				$rtmapilogin->update( array( 'status' => 'FALSE' ), array( 'user_id' => $user_login->ID ) );
 				$login_details = array(
-					'user_id' => $user_login->ID, 'ip' => $_SERVER['REMOTE_ADDR'], 'token' => $access_token, 'token_time' => date( 'Y-m-d H:i:s' )
+					'user_id' => $user_login->ID,
+					'ip' => $_SERVER['REMOTE_ADDR'],
+					'token' => $access_token,
+					'token_time' => date( 'Y-m-d H:i:s' )
 				);
 				$rtmapilogin->insert( $login_details );
 			}
@@ -1021,6 +1042,12 @@ class RTMediaJsonApi {
 
 				global $wpdb, $bp;
 				$updated = $wpdb->update( $bp->activity->table_name, array( 'type' => 'rtmedia_update', 'content' => $objActivity->create_activity_html() ), array( 'id' => $activity_id ) );
+
+				// if there is only single media the $updated value will be false even if the value we are passing to check is correct.
+				// So we need to hardcode the $updated to true if there is only single media for same activity
+				if( sizeof( $same_medias ) == 1 && $activity_id ){
+					$updated = true;
+				}
 			}
 		}
 
