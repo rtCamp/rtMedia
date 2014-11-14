@@ -249,7 +249,6 @@ class RTMediaInteraction {
 		if ( class_exists( "BuddyPress" ) ) {
 			global $bp;
 			if ( bp_is_single_activity() ){
-				$array = bp_activity_get($bp->current_action);
 				$mediaObj      = new RTMediaModel();
 				$media_details = $mediaObj->get( array( 'activity_id' => $bp->current_action ) );
 				foreach ( $media_details as $media ) {
