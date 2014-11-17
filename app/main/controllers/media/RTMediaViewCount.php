@@ -27,15 +27,15 @@ class RTMediaViewCount extends RTMediaUserInteraction {
         parent::__construct( $args );
         remove_filter( 'rtmedia_action_buttons_before_delete', array( $this, 'button_filter' ) );
         add_filter( 'rtmedia_action_buttons_after_delete', array( $this, 'button_filter' ), 99 );
-    }
+    }//end __construct()
 
-	//    function register_session(){
-	//        if( !session_id() ) {
-	//	    session_start();
-	//	}
-	//    }
+    //    function register_session(){
+    //        if( !session_id() ) {
+    //	    session_start();
+    //	}
+    //    }
 
-	/**
+    /**
      * Render the form.
      *
      * @param null
@@ -44,19 +44,19 @@ class RTMediaViewCount extends RTMediaUserInteraction {
      */
      function render(){
          if ( isset( $_SESSION[ 'rtmedia_media_view' ] ) && $_SESSION[ 'rtmedia_media_view' ] != "" && sizeof( $_SESSION[ 'rtmedia_media_view' ] > 0 ) ){
-	         $key = array_search( $this->media->id, $_SESSION[ 'rtmedia_media_view' ] );
-	         if ( ! $key ){
-		         $_SESSION[ 'rtmedia_media_view' ][ ] = $this->media->id;
-		         $this->rtmedia_update_view_meta( $this->media->id, $this->action );
-	         }
-			 
+                $key = array_search( $this->media->id, $_SESSION[ 'rtmedia_media_view' ] );
+                if ( ! $key ){
+                    $_SESSION[ 'rtmedia_media_view' ][ ] = $this->media->id;
+                    $this->rtmedia_update_view_meta( $this->media->id, $this->action );
+                }
+
          } else {
 	         $_SESSION[ 'rtmedia_media_view' ]    = array();
 	         $_SESSION[ 'rtmedia_media_view' ][ ] = "do not consider 0 index in php";
 	         $_SESSION[ 'rtmedia_media_view' ][ ] = $this->media->id;
 	         $this->rtmedia_update_view_meta( $this->media->id, $this->action );
          }
-		 
+
          $link = trailingslashit( get_rtmedia_permalink( $this->media->id ) ) . $this->action . '/';
          //echo '<div style="clear:both"></div><form action="'. $link .'" id="rtmedia-media-view-form"></form>';
          echo '<form action="' . $link . '" id="rtmedia-media-view-form"></form>';
