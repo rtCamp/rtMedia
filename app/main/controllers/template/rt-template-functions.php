@@ -504,13 +504,13 @@ function rtmedia_duration( $id = false ) {
 		if ( $media_time == false ) {
 			$filepath = get_attached_file( $media_object->media_id );
 			$media_tags = new RTMediaTags(  $filepath ) ;
-			$media_duration = $media_tags->duration;
-			add_rtmedia_meta( $media_object->id, 'duration_time', $media_duration );
+			$duration = $media_tags->duration;
+			add_rtmedia_meta( $media_object->id, 'duration_time', $duration );
 		} else {
 			$duration = $media_time;	
 		}	
 	}	
-	return $duration;
+	return '<span class="rtmedia_time" >'. $duration .'</span>';
 }
 
 function rtmedia_sanitize_object( $data, $exceptions = array() ) {
