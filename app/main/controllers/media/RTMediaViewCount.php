@@ -86,33 +86,42 @@ class RTMediaViewCount extends RTMediaUserInteraction {
 	 *
 	 * @return boolean
 	 */
-	function process(){
-		$user_id = $this->interactor;
-		if ( ! $user_id ){
-			$user_id = - 1;
-		}
+    function process(){
+        $user_id = $this->interactor;
+        if ( ! $user_id ){
+        	$user_id = - 1;
+        }
 		$media_id           = $this->action_query->id;
 		$action             = $this->action_query->action;
 		$rtmediainteraction = new RTMediaInteractionModel();
 		$check_action       = $rtmediainteraction->check( $user_id, $media_id, $action );
-		if ( $check_action ){
-			$results       = $rtmediainteraction->get_row( $user_id, $media_id, $action );
-			$row           = $results[ 0 ];
-			$curr_value    = $row->value;
-			$update_data   = array( 'value' => ++$curr_value );
-			$where_columns = array(
-				'user_id' => $user_id, 'media_id' => $media_id, 'action' => $action
-			);
-			$update        = $rtmediainteraction->update( $update_data, $where_columns );
-		} else {
-			$columns   = array(
-				'user_id' => $user_id, 'media_id' => $media_id, 'action' => $action, 'value' => "1"
-			);
-			$insert_id = $rtmediainteraction->insert( $columns );
-		}
-		global $rtmedia_points_media_id;
-		$rtmedia_points_media_id = $this->action_query->id;
-		do_action( "rtmedia_after_view_media", $this );
-		die();
-	}
-}
+        if ( $check_action ){
+            $results       = $rtmediainteraction->get_row( $user_id, $media_id, $action );
+            $row           = $results[ 0 ];
+            $curr_value    = $row->value;
+            $update_data   = array( 'value' => ++$curr_value );
+            $where_columns = array(
+                              'user_id'  => $user_id,
+                              'media_id' => $media_id,
+                              'action'   => $action
+                             );
+            $update        = $rtmediainteraction->update( $update_data, $where_columns );
+        } else {
+            $columns   = array(
+                          'user_id'  => $user_id,
+                          'media_id' => $media_id,
+                          'action'   => $action,
+                          'value'    => "1",
+                         );
+            $insert_id = $rtmediainteraction->insert( $columns );
+        }
+
+        global $rtmedia_points_media_id;
+        $rtmedia_points_media_id = $this->action_query->id;
+        do_action( "rtmedia_after_view_media", $this );
+        die();
+
+    }//end process()
+
+
+}//end class
