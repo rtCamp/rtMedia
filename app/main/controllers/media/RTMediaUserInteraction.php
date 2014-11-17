@@ -56,44 +56,40 @@ class RTMediaUserInteraction {
 	 * @param string $label The label for the button
 	 * @param boolean $increase Increase or decrease the action count
 	 */
-	function __construct($args = array()) {
+	function __construct( $args = array() ){
 		$defaults = array(
-		'action' => '',
-		'label' => '',
-		'plural' => '',
-		'undo_label' => '',
-		'privacy' => 60,
-		'countable' => false,
-		'single' => false,
-		'repeatable' => false,
-		'undoable' => false,
-                'icon_class' => ''
+			'action' => '',
+			'label' => '',
+			'plural' => '',
+			'undo_label' => '',
+			'privacy' => 60,
+			'countable' => false,
+			'single' => false,
+			'repeatable' => false,
+			'undoable' => false,
+            'icon_class' => ''
 		);
 
-		$args = wp_parse_args($args,$defaults);
-		foreach($args as $key=>$val){
+		$args = wp_parse_args( $args, $defaults );
+		foreach( $args as $key => $val ){
 			$this->{$key} = $val;
 		}
 
-
-
 		$this->init();
-
-
 
 		// filter the default actions with this new one
 		add_filter( 'rtmedia_query_actions', array( $this, 'register' ) );
 		// hook into the template for this action
 		add_action( 'rtmedia_pre_action_' . $this->action, array( $this, 'preprocess' ) );
-		add_filter( 'rtmedia_action_buttons_before_delete', array($this,'button_filter') );
+		add_filter( 'rtmedia_action_buttons_before_delete', array( $this,'button_filter') );
 	}
 
 
 	function init(){
-                $this->model = new RTMediaModel();
-                global $rtmedia_query;
-		if(!isset($rtmedia_query->action_query)) return;
-		if(!isset($rtmedia_query->action_query->id)) return;
+        $this->model = new RTMediaModel();
+        global $rtmedia_query;
+		if( ! isset( $rtmedia_query->action_query ) ) return;
+		if( ! isset( $rtmedia_query->action_query->id ) ) return;
 
 		$this->set_label();
 		$this->set_plural();
@@ -195,21 +191,21 @@ class RTMediaUserInteraction {
 			if(!$this->is_clickable()){
 				$disabled = ' disabled';
 			}
-                        
+
                         if( isset( $this->icon_class ) && $this->icon_class != "" ) {
                             $icon = "<i class='" . $this->icon_class . "'></i>";
                         }
 			$button_start = '<form action="'. $link .'">';
                         $button = '<button type="submit" id="rtmedia-'. $this->action .'-button-'.$this->media->id.'" class="rtmedia-'.$this->action
 					.' rtmedia-action-buttons button'.$disabled.'">' . $icon . '<span>' . $this->label.'</span></button>';
-                        
+
                         //filter the button as required
                         $button = apply_filters( 'rtmedia_' . $this->action . '_button_filter', $button);
-                        
+
                         $button_end = '</form>';
-                        
+
                         $button = $button_start . $button . $button_end;
-                        
+
 		}
 
 		return $button;
@@ -249,12 +245,12 @@ class RTMediaUserInteraction {
 		if ( $this->action_query->action != $this->action ){
 			return false;
 		}
-		
+
 
 		if ( ! isset( $this->action_query->id ) ){
 			return false;
 		}
-			
+
 		$result = false;
 
 		do_action( 'rtmedia_pre_process_' . $this->action );
