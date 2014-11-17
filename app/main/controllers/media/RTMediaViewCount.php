@@ -77,7 +77,8 @@ class RTMediaViewCount extends RTMediaUserInteraction {
 	    } else {
 		    $curr_count ++;
 	    }
-	        update_rtmedia_meta( $media_id, $action, $curr_count, false );
+
+        update_rtmedia_meta( $media_id, $action, $curr_count, false );
     }
 
     /**
@@ -94,10 +95,10 @@ class RTMediaViewCount extends RTMediaUserInteraction {
         if ( ! $user_id ){
         	$user_id = - 1;
         }
-		$media_id           = $this->action_query->id;
-		$action             = $this->action_query->action;
-		$rtmediainteraction = new RTMediaInteractionModel();
-		$check_action       = $rtmediainteraction->check( $user_id, $media_id, $action );
+        $media_id           = $this->action_query->id;
+        $action             = $this->action_query->action;
+        $rtmediainteraction = new RTMediaInteractionModel();
+        $check_action       = $rtmediainteraction->check( $user_id, $media_id, $action );
         if ( $check_action ){
             $results       = $rtmediainteraction->get_row( $user_id, $media_id, $action );
             $row           = $results[ 0 ];
