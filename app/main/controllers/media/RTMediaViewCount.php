@@ -13,18 +13,21 @@
 
 class RTMediaViewCount extends RTMediaUserInteraction {
 
-	/**
-	 * Initialises the __construct.
-	 */
-	function __construct(){
-		$args = array(
-			'action' => 'view', 'label' => 'view', 'privacy' => 0
-		);
-		//add_action( 'init', array( $this,'register_session' ) );
-		parent::__construct( $args );
-		remove_filter( 'rtmedia_action_buttons_before_delete', array( $this, 'button_filter' ) );
-		add_filter( 'rtmedia_action_buttons_after_delete', array( $this, 'button_filter' ), 99 );
-	}
+
+    /**
+     * Initialises the __construct.
+     */
+    public function __construct(){
+        $args = array(
+                 'action'  => 'view',
+                 'label'   => 'view',
+                 'privacy' => 0
+                );
+        //add_action( 'init', array( $this,'register_session' ) );
+        parent::__construct( $args );
+        remove_filter( 'rtmedia_action_buttons_before_delete', array( $this, 'button_filter' ) );
+        add_filter( 'rtmedia_action_buttons_after_delete', array( $this, 'button_filter' ), 99 );
+    }
 
 	//    function register_session(){
 	//        if( !session_id() ) {
