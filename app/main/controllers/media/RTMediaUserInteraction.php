@@ -215,8 +215,8 @@ class RTMediaUserInteraction {
 		return $button;
 	}
 
-	function button_filter($buttons){
-		if(empty($this->media)){
+	function button_filter( $buttons ){
+		if( empty( $this->media ) ){
 			$this->init();
 		}
 		$buttons[] = $this->render();
@@ -228,7 +228,7 @@ class RTMediaUserInteraction {
 	 * @return array $actions Filtered actions array
 	 */
 	function register( $actions ) {
-		if(empty($this->media)){
+		if( empty( $this->media ) ){
 			$this->init();
 		}
 
@@ -246,19 +246,23 @@ class RTMediaUserInteraction {
 		global $rtmedia_query;
 		$this->action_query = $rtmedia_query->action_query;
 
-		if ( $this->action_query->action != $this->action )
+		if ( $this->action_query->action != $this->action ){
 			return false;
+		}
+		
 
-		if ( ! isset( $this->action_query->id ) )
+		if ( ! isset( $this->action_query->id ) ){
 			return false;
+		}
+			
 		$result = false;
 
 		do_action( 'rtmedia_pre_process_' . $this->action );
-		if(empty($this->media)){
+		if( empty( $this->media ) ){
 			$this->init();
 		}
 
-		if($this->interactor_privacy >=$this->privacy){
+		if( $this->interactor_privacy >=$this->privacy ){
 			$result = $this->process();
 		}
 
