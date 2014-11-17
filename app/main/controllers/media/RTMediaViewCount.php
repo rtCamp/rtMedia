@@ -1,6 +1,6 @@
 <?php
 
-/*
+/**
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
@@ -10,7 +10,12 @@
  *
  * @author ritz
  */
+
 class RTMediaViewCount extends RTMediaUserInteraction {
+
+	/**
+	 * Initialises the __construct.
+	 */
 	function __construct(){
 		$args = array(
 			'action' => 'view', 'label' => 'view', 'privacy' => 0
@@ -27,6 +32,13 @@ class RTMediaViewCount extends RTMediaUserInteraction {
 	//	}
 	//    }
 
+	/**
+	 * Render the form.
+	 *
+	 * @param null
+	 *
+	 * @return form
+	 */
 	function render(){
 		if ( isset( $_SESSION[ 'rtmedia_media_view' ] ) && $_SESSION[ 'rtmedia_media_view' ] != "" && sizeof( $_SESSION[ 'rtmedia_media_view' ] > 0 ) ){
 			$key = array_search( $this->media->id, $_SESSION[ 'rtmedia_media_view' ] );
@@ -46,6 +58,15 @@ class RTMediaViewCount extends RTMediaUserInteraction {
 		do_action( "rtmedia_view_media_counts", $this );
 	}
 
+	/**
+	 * Update rtmedia view_meta
+	 *
+	 * @param int $media_id
+	 *
+	 * @param string $action
+	 *
+	 * @return null
+	 */
 	function rtmedia_update_view_meta( $media_id, $action ){
 		$curr_count = get_rtmedia_meta( $media_id, $action );
 		if ( ! $curr_count ){
@@ -56,6 +77,15 @@ class RTMediaViewCount extends RTMediaUserInteraction {
 		update_rtmedia_meta( $media_id, $action, $curr_count, false );
 	}
 
+	/**
+	 * Process
+	 *
+	 * @param boolean $id
+	 *
+	 * @param boolean $key
+	 *
+	 * @return boolean
+	 */
 	function process(){
 		$user_id = $this->interactor;
 		if ( ! $user_id ){
