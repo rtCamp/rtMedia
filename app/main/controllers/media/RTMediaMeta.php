@@ -54,6 +54,15 @@ class RTMediaMeta {
 		return maybe_unserialize( $this->model->get( array( 'media_id' => $id ) ) );
 	}
 
+	/**
+	 * Get single meta data.
+	 *
+	 * @param boolean $id
+	 *
+	 * @param boolean $key
+	 *
+	 * @return mixed unserialized data if true, or boolean false
+	 */
 	private function get_single_meta( $id = false, $key = false ){
 		if ( $id === false ){
 			return false;
@@ -69,10 +78,36 @@ class RTMediaMeta {
 		}
 	}
 
+	/**
+	 * Add meta
+	 *
+	 * @param boolean $id
+	 *
+	 * @param boolean $key
+	 *
+	 * @param boolean $value
+	 *
+	 * @param boolean $duplicate
+	 *
+	 * @return mixed unserialized data
+	 */
 	public function add_meta( $id = false, $key = false, $value = false, $duplicate = false ){
 		return $this->update_meta( $id, $key, $value, $duplicate );
 	}
 
+	/**
+	 * Update meta
+	 *
+	 * @param boolean $id
+	 *
+	 * @param boolean $key
+	 *
+	 * @param boolean $value
+	 *
+	 * @param boolean $duplicate
+	 *
+	 * @return mixed $media_meta
+	 */
 	public function update_meta( $id = false, $key = false, $value = false, $duplicate = false ){
 		if ( $id === false ){
 			return false;
@@ -100,6 +135,15 @@ class RTMediaMeta {
 		return $media_meta;
 	}
 
+	/**
+	 * Delete meta
+	 *
+	 * @param boolean $id
+	 *
+	 * @param boolean $key
+	 *
+	 * @return null
+	 */
 	public function delete_meta( $id = false, $key = false ){
 		if ( $id === false ){
 			return false;
