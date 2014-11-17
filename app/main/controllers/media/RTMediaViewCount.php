@@ -71,12 +71,12 @@ class RTMediaViewCount extends RTMediaUserInteraction {
      * @return null
      */
     function rtmedia_update_view_meta( $media_id, $action ){
-	    $curr_count = get_rtmedia_meta( $media_id, $action );
-	    if ( ! $curr_count ){
-		    $curr_count = 1;
-	    } else {
-		    $curr_count ++;
-	    }
+        $curr_count = get_rtmedia_meta( $media_id, $action );
+        if ( ! $curr_count ){
+            $curr_count = 1;
+        } else {
+            $curr_count ++;
+        }
 
         update_rtmedia_meta( $media_id, $action, $curr_count, false );
     }
