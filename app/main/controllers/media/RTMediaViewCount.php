@@ -13,6 +13,7 @@
 
 class RTMediaViewCount extends RTMediaUserInteraction {
 
+
 	/**
 	 * Initialises the __construct.
 	 */
@@ -74,6 +75,7 @@ class RTMediaViewCount extends RTMediaUserInteraction {
 		} else {
 			$curr_count ++;
 		}
+
 		update_rtmedia_meta( $media_id, $action, $curr_count, false );
 	}
 
@@ -114,5 +116,8 @@ class RTMediaViewCount extends RTMediaUserInteraction {
 		$rtmedia_points_media_id = $this->action_query->id;
 		do_action( "rtmedia_after_view_media", $this );
 		die();
+
 	}
+
+
 }
