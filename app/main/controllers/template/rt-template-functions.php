@@ -508,9 +508,10 @@ function rtmedia_duration( $id = false ) {
 			add_rtmedia_meta( $media_object->id, 'duration_time', $duration );
 		} else {
 			$duration = $media_time;	
-		}	
+		}
+		$duration = '<span class="rtmedia_time" >'. $duration .'</span>';
 	}	
-	return '<span class="rtmedia_time" >'. $duration .'</span>';
+	return $duration;
 }
 
 function rtmedia_sanitize_object( $data, $exceptions = array() ) {
