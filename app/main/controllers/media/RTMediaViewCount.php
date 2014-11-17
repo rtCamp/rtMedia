@@ -61,34 +61,34 @@ class RTMediaViewCount extends RTMediaUserInteraction {
 		do_action( "rtmedia_view_media_counts", $this );
 	}
 
-	/**
-	 * Update rtmedia view_meta
-	 *
-	 * @param int $media_id
-	 *
-	 * @param string $action
-	 *
-	 * @return null
-	 */
-	function rtmedia_update_view_meta( $media_id, $action ){
-		$curr_count = get_rtmedia_meta( $media_id, $action );
-		if ( ! $curr_count ){
-			$curr_count = 1;
-		} else {
-			$curr_count ++;
-		}
-		update_rtmedia_meta( $media_id, $action, $curr_count, false );
-	}
+    /**
+     * Update rtmedia view_meta
+     *
+     * @param int $media_id
+     *
+     * @param string $action
+     *
+     * @return null
+     */
+    function rtmedia_update_view_meta( $media_id, $action ){
+	    $curr_count = get_rtmedia_meta( $media_id, $action );
+	    if ( ! $curr_count ){
+		    $curr_count = 1;
+	    } else {
+		    $curr_count ++;
+	    }
+	        update_rtmedia_meta( $media_id, $action, $curr_count, false );
+    }
 
-	/**
-	 * Process
-	 *
-	 * @param boolean $id
-	 *
-	 * @param boolean $key
-	 *
-	 * @return boolean
-	 */
+    /**
+     * Process
+     *
+     * @param boolean $id
+     *
+     * @param boolean $key
+     *
+     * @return boolean
+     */
     function process(){
         $user_id = $this->interactor;
         if ( ! $user_id ){
