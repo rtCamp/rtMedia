@@ -40,7 +40,7 @@ class RTMediaViewCount extends RTMediaUserInteraction {
 	 *
 	 * @return form
 	 */
-	function render(){
+	public function render(){
 		if ( isset( $_SESSION[ 'rtmedia_media_view' ] ) && $_SESSION[ 'rtmedia_media_view' ] != "" && sizeof( $_SESSION[ 'rtmedia_media_view' ] > 0 ) ){
 			$key = array_search( $this->media->id, $_SESSION[ 'rtmedia_media_view' ] );
 			if ( ! $key ){
