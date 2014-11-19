@@ -11,6 +11,10 @@
  * @author saurabh
  */
 class RTMediaLike extends RTMediaUserInteraction {
+
+	/**
+	 * Initialises the __construct
+	 */
 	function __construct(){
 		$args = array(
 			'action' => 'like',
