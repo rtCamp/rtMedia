@@ -1107,7 +1107,7 @@ jQuery( document ).ready( function ( $ ) {
 
 
     } );
-    $( document ).on( "click", '.rtmedia-featured', function ( e ) {
+    $( document ).on( "click", '.rtmedia-featured, .rtmedia-group-featured', function ( e ) {
         e.preventDefault();
         var that = this;
         $( this ).attr( 'disabled', 'disabled' );
