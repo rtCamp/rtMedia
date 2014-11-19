@@ -37,6 +37,13 @@ class RTMediaLike extends RTMediaUserInteraction {
 		}
 	}
 
+	/**
+	 * Added like button filter.
+	 *
+	 * @param null
+	 *
+	 * @return html
+	 */
 	function like_button_filter(){
 		if ( empty( $this->media ) ){
 			$this->init();
@@ -48,6 +55,13 @@ class RTMediaLike extends RTMediaUserInteraction {
 		}
 	}
 
+	/**
+	 * Add filter for like button without light box
+	 *
+	 * @param null
+	 *
+	 * @return html $button
+	 */
 	function like_button_without_lightbox_filter(){
 		if ( empty( $this->media ) ){
 			$this->init();
@@ -58,6 +72,13 @@ class RTMediaLike extends RTMediaUserInteraction {
 		}
 	}
 
+	/**
+	 * Process the request for media like.
+	 *
+	 * @param null
+	 *
+	 * @return $action
+	 */
 	function process(){
 		$actions = $this->model->get( array( 'id' => $this->action_query->id ) );
 
@@ -128,6 +149,13 @@ class RTMediaLike extends RTMediaUserInteraction {
 		return $actions;
 	}
 
+	/**
+	 * Add filter for button
+	 *
+	 * @param html $buttons
+	 *
+	 * @return html $buttons
+	 */
 	function button_filter( $buttons ){
 
 		if ( empty( $this->media ) ){
@@ -140,6 +168,15 @@ class RTMediaLike extends RTMediaUserInteraction {
 		}
 	}
 
+	/**
+	 * Function to check like migrated or not.
+	 *
+	 * @param int $media_id
+	 *
+	 * @param int $user_id
+	 *
+	 * @return boolean
+	 */
 	function is_like_migrated( $media_id = false, $user_id = false ){
 		$rtmediainteraction = new RTMediaInteractionModel();
 		if ( ! $user_id ){
