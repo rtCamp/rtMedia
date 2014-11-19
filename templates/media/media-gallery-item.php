@@ -17,7 +17,7 @@ if ( isset( $_POST[ 'is_edit_allowed' ] ) )
 	<?php do_action( 'rtmedia_before_item' ); ?>
     <a href ="<?php rtmedia_permalink(); ?>" title="<?php echo rtmedia_title(); ?>" class="<?php echo apply_filters( 'rtmedia_gallery_list_item_a_class', 'rtmedia-list-item-a' ); ?>">
 		<div class="rtmedia-item-thumbnail">
-            		<span class="rtmedia_time" ><?php echo rtmedia_duration(); ?></span>
+            		<?php echo rtmedia_duration(); ?>
             		<img src="<?php rtmedia_image("rt_media_thumbnail"); ?>" alt="<?php rtmedia_image_alt(); ?>" >
 		</div>
 
