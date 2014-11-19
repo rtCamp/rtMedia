@@ -15,7 +15,7 @@ class RTMediaViewCount extends RTMediaUserInteraction {
 
 
 	/**
-	 * Initialises the __construct.
+	 * Initialises the __construct .
 	 */
 	function __construct(){
 		$args = array(
@@ -29,8 +29,8 @@ class RTMediaViewCount extends RTMediaUserInteraction {
 
 	//    function register_session(){
 	//        if( !session_id() ) {
-	//	    session_start();
-	//	}
+	//	    		session_start();
+	//			}
 	//    }
 
 	/**
