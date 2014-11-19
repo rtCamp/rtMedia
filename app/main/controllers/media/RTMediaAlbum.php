@@ -32,16 +32,15 @@ class RTMediaAlbum {
 
 	function rtmedia_album_custom_post_status(){
 		$args = array(
-			'label' => _x( 'hidden', 'Status General Name', 'rtmedia' ),
-			'label_count' => _n_noop( 'Hidden (%s)', 'Hidden (%s)', 'rtmedia' ),
-			'public' => false,
-			'show_in_admin_all_list' => false,
+			'label'                     => _x( 'hidden', 'Status General Name', 'rtmedia' ),
+			'label_count'               => _n_noop( 'Hidden (%s)', 'Hidden (%s)', 'rtmedia' ),
+			'public'                    => false,
+			'show_in_admin_all_list'    => false,
 			'show_in_admin_status_list' => false,
-			'exclude_from_search' => true,
+			'exclude_from_search'       => true,
 		);
 		register_post_status( 'hidden', $args );
 	}
-
 
 	/**
 	 * Register Custom Post Types required by rtMedia
@@ -50,43 +49,44 @@ class RTMediaAlbum {
 
 		/* Set up Album labels */
 		$album_labels = array(
-			'name' => __( 'Albums', 'rtmedia' ),
-			'singular_name' => __( 'Album', 'rtmedia' ),
-			'add_new' => __( 'Create', 'rtmedia' ),
-			'add_new_item' => __( 'Create Album', 'rtmedia' ),
-			'edit_item' => __( 'Edit Album', 'rtmedia' ),
-			'new_item' => __( 'New Album', 'rtmedia' ),
-			'all_items' => __( 'All Albums', 'rtmedia' ),
-			'view_item' => __( 'View Album', 'rtmedia' ),
-			'search_items' => __( 'Search Albums', 'rtmedia' ),
-			'not_found' => __( 'No album found', 'rtmedia' ),
+			'name'               => __( 'Albums', 'rtmedia' ),
+			'singular_name'      => __( 'Album', 'rtmedia' ),
+			'add_new'            => __( 'Create', 'rtmedia' ),
+			'add_new_item'       => __( 'Create Album', 'rtmedia' ),
+			'edit_item'          => __( 'Edit Album', 'rtmedia' ),
+			'new_item'           => __( 'New Album', 'rtmedia' ),
+			'all_items'          => __( 'All Albums', 'rtmedia' ),
+			'view_item'          => __( 'View Album', 'rtmedia' ),
+			'search_items'       => __( 'Search Albums', 'rtmedia' ),
+			'not_found'          => __( 'No album found', 'rtmedia' ),
 			'not_found_in_trash' => __( 'No album found in Trash', 'rtmedia' ),
-			'parent_item_colon' => __( 'Parent', 'rtmedia' ),
-			'menu_name' => __( 'Albums', 'rtmedia' ),
+			'parent_item_colon'  => __( 'Parent', 'rtmedia' ),
+			'menu_name'          => __( 'Albums', 'rtmedia' ),
 		);
 
 		$album_slug = apply_filters( 'rtmedia_album_rewrite_slug', 'rtmedia-album' );
 
 		$rewrite = array(
-			'slug' => $album_slug,
+			'slug'       => $album_slug,
 			'with_front' => false,
-			'pages' => true, 'feeds' => false,
+			'pages'      => true,
+			'feeds'      => false,
 		);
 
 		/* Set up Album post type arguments */
 		$album_args = array(
-			'labels' => $album_labels,
-			'public' => false,
+			'labels'             => $album_labels,
+			'public'             => false,
 			'publicly_queryable' => false,
-			'show_ui' => false,
-			'show_in_menu' => false,
-			'query_var' => 'rtmedia_album',
-			'capability_type' => 'post',
-			'has_archive' => false,
-			'hierarchical' => true,
-			'menu_position' => null,
-			'rewrite' => $rewrite,
-			'supports' => array( 'title', 'author', 'thumbnail', 'excerpt', 'comments' ),
+			'show_ui'            => false,
+			'show_in_menu'       => false,
+			'query_var'          => 'rtmedia_album',
+			'capability_type'    => 'post',
+			'has_archive'        => false,
+			'hierarchical'       => true,
+			'menu_position'      => null,
+			'rewrite'            => $rewrite,
+			'supports'           => array( 'title', 'author', 'thumbnail', 'excerpt', 'comments' ),
 		);
 		$album_args = apply_filters( 'rtmedia_albums_args', $album_args );
 
@@ -104,7 +104,7 @@ class RTMediaAlbum {
 	 */
 	function verify_nonce( $mode ){
 
-		$nonce = $_REQUEST[ "rtmedia_{$mode}_album_nonce" ];
+		$nonce = $_REQUEST["rtmedia_{$mode}_album_nonce"];
 		$mode  = $_REQUEST['mode'];
 		if ( wp_verify_nonce( $nonce, 'rtmedia_' . $mode ) ){
 			return true;
@@ -129,10 +129,10 @@ class RTMediaAlbum {
 	 *
 	 * @global type $rtmedia_interaction
 	 *
-	 * @param type  $title
-	 * @param type  $author_id
-	 * @param type  $new
-	 * @param type  $post_id
+	 * @param type $title
+	 * @param type $author_id
+	 * @param type $new
+	 * @param type $post_id
 	 *
 	 * @return type
 	 */
@@ -146,8 +146,8 @@ class RTMediaAlbum {
 
 		/* Album Details which will be passed to Database query to add the album */
 		$post_vars = array(
-			'post_title' => ( empty( $title ) ) ? __( 'Untitled Album', 'rtmedia' ) : $title,
-			'post_type' => 'rtmedia_album',
+			'post_title'  => ( empty( $title ) ) ? __( 'Untitled Album', 'rtmedia' ) : $title,
+			'post_type'   => 'rtmedia_album',
 			'post_author' => $author_id,
 			'post_status' => 'hidden',
 		);
@@ -165,8 +165,7 @@ class RTMediaAlbum {
 		 * post then the context in which the user is uploading a media becomes
 		 * an album in itself. We do not need to create a separate album in this
 		 * case.
-		 */
-		else {
+		 */ else {
 			$album_id = $post_id;
 		}
 
@@ -181,21 +180,23 @@ class RTMediaAlbum {
 		//defaults
 
 		$attributes  = array(
-			'blog_id' => get_current_blog_id(),
-			'media_id' => $album_id,
-			'album_id' => null,
-			'media_title' => $current_album['post_title'],
+			'blog_id'      => get_current_blog_id(),
+			'media_id'     => $album_id,
+			'album_id'     => null,
+			'media_title'  => $current_album['post_title'],
 			'media_author' => $current_album['post_author'],
-			'media_type' => 'album',
-			'context' => $context,
-			'context_id' => $context_id,
-			'activity_id' => null,
-			'privacy' => null,
+			'media_type'   => 'album',
+			'context'      => $context,
+			'context_id'   => $context_id,
+			'activity_id'  => null,
+			'privacy'      => null,
 		);
 		$attributes  = apply_filters( 'rtmedia_before_save_album_attributes', $attributes, $_POST );
 		$rtmedia_id  = $this->media->insert_album( $attributes );
 		$rtMediaNav  = new RTMediaNav();
-		$media_count = $rtMediaNav->refresh_counts( $context_id, array( 'context' => $context, 'media_author' => $context_id ) );
+		$media_count = $rtMediaNav->refresh_counts( $context_id, array( 'context'      => $context,
+																		'media_author' => $context_id
+			) );
 		/* action to perform any task after adding the album */
 		global $rtmedia_points_media_id;
 		$rtmedia_points_media_id = $rtmedia_id;
@@ -318,7 +319,7 @@ class RTMediaAlbum {
 			return false;
 		} else {
 			$args   = array(
-				'ID' => $id,
+				'ID'         => $id,
 				'post_title' => $title,
 			);
 			$status = wp_insert_post( $args );
@@ -327,6 +328,7 @@ class RTMediaAlbum {
 			} else {
 				/* Action to perform after updating the album */
 				do_action( 'rtmedia_after_update_album', $this );
+
 				return true;
 			}
 		}
@@ -420,7 +422,7 @@ class RTMediaAlbum {
 	/**
 	 * Helper function to set number of queries in pagination
 	 *
-	 * @param int  $per_page
+	 * @param int $per_page
 	 * @param type $table_name
 	 *
 	 * @return int

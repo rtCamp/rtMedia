@@ -316,9 +316,9 @@ class RTMediaMedia {
 						$objActivity = new RTMediaActivity( $activity_media );
 						global $wpdb, $bp;
 						$wpdb->update( $bp->activity->table_name, array(
-								'type'    => 'rtmedia_update',
-								'content' => $objActivity->create_activity_html()
-							), array( 'id' => $media[0]->activity_id ) );
+							'type'    => 'rtmedia_update',
+							'content' => $objActivity->create_activity_html()
+						), array( 'id' => $media[0]->activity_id ) );
 					} else {
 						bp_activity_delete_by_activity_id( $media[0]->activity_id );
 					}
@@ -619,16 +619,16 @@ class RTMediaMedia {
 		$rtmedia_activity_model = new RTMediaActivityModel();
 		if ( ! $rtmedia_activity_model->check( $activity_id ) ){
 			$rtmedia_activity_model->insert( array(
-					'activity_id' => $activity_id,
-					'user_id'     => $media->media_author,
-					'privacy'     => $media->privacy
-				) );
+				'activity_id' => $activity_id,
+				'user_id'     => $media->media_author,
+				'privacy'     => $media->privacy
+			) );
 		} else {
 			$rtmedia_activity_model->update( array(
-					'activity_id' => $activity_id,
-					'user_id'     => $media->media_author,
-					'privacy'     => $media->privacy
-				), array( 'activity_id' => $activity_id ) );
+				'activity_id' => $activity_id,
+				'user_id'     => $media->media_author,
+				'privacy'     => $media->privacy
+			), array( 'activity_id' => $activity_id ) );
 		}
 
 		return $activity_id;

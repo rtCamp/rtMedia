@@ -24,7 +24,7 @@ class RTMediaComment {
 		} else {
 			$token = array(
 				'action' => 'rtmedia_comment_nonce',
-				'nonce' => wp_create_nonce( 'rtmedia_comment_nonce' ),
+				'nonce'  => wp_create_nonce( 'rtmedia_comment_nonce' ),
 			);
 
 			return json_encode( $token );
@@ -62,14 +62,14 @@ class RTMediaComment {
 	function add( $attr ){
 		global $allowedtags;
 		do_action( 'rtmedia_before_add_comment', $attr );
-		$defaults                  = array(
-			'user_id' => $this->get_current_id(),
+		$defaults                = array(
+			'user_id'        => $this->get_current_id(),
 			'comment_author' => $this->get_current_author(),
-			'comment_date' => current_time( 'mysql' ),
+			'comment_date'   => current_time( 'mysql' ),
 		);
 		$attr['comment_content'] = wp_kses( $attr['comment_content'], $allowedtags );
-		$params                    = wp_parse_args( $attr, $defaults );
-		$id                        = $this->rtmedia_comment_model->insert( $params );
+		$params                  = wp_parse_args( $attr, $defaults );
+		$id                      = $this->rtmedia_comment_model->insert( $params );
 		global $rtmedia_points_media_id;
 		$rtmedia_points_media_id = rtmedia_id( $params['comment_post_ID'] );
 		do_action( 'rtmedia_after_add_comment', $params );
