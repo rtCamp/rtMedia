@@ -29,10 +29,10 @@ class RTMediaMeta {
 	 * @return boolean
 	 */
 	public function get_meta( $id = false, $key = false ){
-		if ( $id === false ){
+		if ( false === $id ){
 			return false;
 		}
-		if ( $key === false ){
+		if ( false === $key ){
 			return $this->get_all_meta( $id );
 		} else {
 			return $this->get_single_meta( $id, $key );
