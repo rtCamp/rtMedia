@@ -949,7 +949,9 @@ class RTMediaJsonApi{
         }else{
             //Process rtmedia_file
             $img = $rtmedia_file;
-            $img = str_replace('data:image/png;base64,', '', $img);
+			$image_type = $_POST['image_type'];
+			$str_replace = 'data:image/'.$image_type.';base64,';
+            $img = str_replace($str_replace, '', $img);
         //    $img = str_replace(' ', '+', $img);
             $rtmedia_file = base64_decode($img);
             if( !$rtmedia_file ){
