@@ -104,7 +104,7 @@ class RTMediaAlbum {
 	 */
 	function verify_nonce( $mode ){
 
-		$nonce = $_REQUEST["rtmedia_{$mode}_album_nonce"];
+		$nonce = $_REQUEST['rtmedia_{$mode}_album_nonce'];
 		$mode  = $_REQUEST['mode'];
 		if ( wp_verify_nonce( $nonce, 'rtmedia_' . $mode ) ){
 			return true;
@@ -194,9 +194,10 @@ class RTMediaAlbum {
 		$attributes  = apply_filters( 'rtmedia_before_save_album_attributes', $attributes, $_POST );
 		$rtmedia_id  = $this->media->insert_album( $attributes );
 		$rtMediaNav  = new RTMediaNav();
-		$media_count = $rtMediaNav->refresh_counts( $context_id, array( 'context'      => $context,
-																		'media_author' => $context_id
-			) );
+		$media_count = $rtMediaNav->refresh_counts( $context_id, array(
+			'context'      => $context,
+			'media_author' => $context_id,
+		) );
 		/* action to perform any task after adding the album */
 		global $rtmedia_points_media_id;
 		$rtmedia_points_media_id = $rtmedia_id;
