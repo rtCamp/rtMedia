@@ -38,9 +38,24 @@ class RTMediaGroupFeatured extends RTMediaUserInteraction {
 
 	function before_render(){
 		$this->get();
+
+		// if group id is not set, don't render "Set featured"
+		if( empty( $this->group_id ) ){
+			return false;
+		}
+
+		$user_id = get_current_user_id();
+
+		// if current is not group moderator or group admin, don't render "Set featured"
+		if ( ! groups_is_user_mod( $user_id, $this->group_id ) && ! groups_is_user_admin( $user_id, $this->group_id ) ){
+			return false;
+		}
+
+		// if current media is not any group media, don't render "Set featured"
 		if ( ( ! ( isset( $this->settings[ $this->media->media_type ] ) && $this->settings[ $this->media->media_type ] ) ) || ( isset( $this->media->context ) && ( 'group' != $this->media->context ) ) ){
 			return false;
 		}
+
 		if ( isset( $this->action_query ) && isset( $this->action_query->id ) && $this->action_query->id == $this->featured ){
 			$this->label = $this->undo_label;
 		}
@@ -51,26 +66,17 @@ class RTMediaGroupFeatured extends RTMediaUserInteraction {
 			return;
 		}
 		if ( false === $this->group_id ){
-			if ( function_exists( 'bp_get_group_id' ) ){
-				$this->group_id = bp_get_group_id();
-			} else {
-				return;
-			}
+			return;
 		}
 		groups_update_groupmeta( $this->group_id, 'rtmedia_group_featured_media', $media_id );
 	}
 
 	function get(){
 		if ( false === $this->group_id ){
-			if ( function_exists( 'bp_get_group_id' ) ){
-				$this->group_id = bp_get_group_id();
-			}
-			if ( ! $this->group_id ){
-				if ( isset( $this->media ) && isset( $this->media->context_id ) ){
-					$this->group_id = $this->media->context_id;
-				} else {
-					return false;
-				}
+			if ( isset( $this->media ) && isset( $this->media->context_id ) ){
+				$this->group_id = $this->media->context_id;
+			} else {
+				return false;
 			}
 		}
 		$this->featured = groups_get_groupmeta( $this->group_id, 'rtmedia_group_featured_media', true );
