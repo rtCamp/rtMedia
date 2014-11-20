@@ -67,7 +67,7 @@ class RTMediaUserInteraction {
 			'single'     => false,
 			'repeatable' => false,
 			'undoable'   => false,
-			'icon_class' => ''
+			'icon_class' => '',
 		);
 
 		$args = wp_parse_args( $args, $defaults );
@@ -148,7 +148,7 @@ class RTMediaUserInteraction {
 		if ( ! isset( $this->interactor ) ){
 			return 0;
 		}
-		if ( $this->interactor === false ){
+		if ( false === $this->interactor ){
 			return 0;
 		}
 		if ( $this->interactor == $this->owner ){
@@ -195,7 +195,7 @@ class RTMediaUserInteraction {
 
 	function render(){
 		$before_render = $this->before_render();
-		if ( $before_render === false ){
+		if ( false === $before_render ){
 			return false;
 		}
 		$button = $button_start = $button_end = '';
@@ -206,7 +206,7 @@ class RTMediaUserInteraction {
 				$disabled = ' disabled';
 			}
 
-			if ( isset( $this->icon_class ) && $this->icon_class != "" ){
+			if ( isset( $this->icon_class ) && $this->icon_class != '' ){
 				$icon = "<i class='" . $this->icon_class . "'></i>";
 			}
 			$button_start = '<form action="' . $link . '">';
