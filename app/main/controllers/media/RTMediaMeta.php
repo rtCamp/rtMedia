@@ -44,7 +44,7 @@ class RTMediaMeta {
 	 *
 	 * @param boolean $id
 	 *
-	 * @return mixed unserialized data
+	 * @return mixed
 	 */
 	private function get_all_meta( $id = false ){
 		if ( $id === false ){
@@ -61,7 +61,7 @@ class RTMediaMeta {
 	 *
 	 * @param boolean $key
 	 *
-	 * @return mixed unserialized data if true, or boolean false
+	 * @return mixed
 	 */
 	private function get_single_meta( $id = false, $key = false ){
 		if ( $id === false ){
@@ -89,7 +89,7 @@ class RTMediaMeta {
 	 *
 	 * @param boolean $duplicate
 	 *
-	 * @return mixed unserialized data
+	 * @return mixed
 	 */
 	public function add_meta( $id = false, $key = false, $value = false, $duplicate = false ){
 		return $this->update_meta( $id, $key, $value, $duplicate );
