@@ -19,7 +19,7 @@ class RTMediaViewCount extends RTMediaUserInteraction {
 		$args = array(
 			'action'  => 'view',
 			'label'   => 'view',
-			'privacy' => 0
+			'privacy' => 0,
 		);
 		//add_action( 'init', array( $this,'register_session' ) );
 		parent::__construct( $args );
@@ -41,7 +41,7 @@ class RTMediaViewCount extends RTMediaUserInteraction {
 	 * @return form
 	 */
 	public function render(){
-		if ( isset( $_SESSION['rtmedia_media_view'] ) && $_SESSION['rtmedia_media_view'] != "" && sizeof( $_SESSION['rtmedia_media_view'] > 0 ) ){
+		if ( isset( $_SESSION['rtmedia_media_view'] ) && $_SESSION['rtmedia_media_view'] != '' && sizeof( $_SESSION['rtmedia_media_view'] > 0 ) ){
 			$key = array_search( $this->media->id, $_SESSION['rtmedia_media_view'] );
 			if ( ! $key ){
 				$_SESSION['rtmedia_media_view'][] = $this->media->id;
@@ -49,14 +49,14 @@ class RTMediaViewCount extends RTMediaUserInteraction {
 			}
 		} else {
 			$_SESSION['rtmedia_media_view']   = array();
-			$_SESSION['rtmedia_media_view'][] = "do not consider 0 index in php";
+			$_SESSION['rtmedia_media_view'][] = 'do not consider 0 index in php';
 			$_SESSION['rtmedia_media_view'][] = $this->media->id;
 			$this->rtmedia_update_view_meta( $this->media->id, $this->action );
 		}
 		$link = trailingslashit( get_rtmedia_permalink( $this->media->id ) ) . $this->action . '/';
 		//echo '<div style="clear:both"></div><form action="'. $link .'" id="rtmedia-media-view-form"></form>';
 		echo '<form action="' . $link . '" id="rtmedia-media-view-form"></form>';
-		do_action( "rtmedia_view_media_counts", $this );
+		do_action( 'rtmedia_view_media_counts', $this );
 	}
 
 	/**
@@ -105,7 +105,7 @@ class RTMediaViewCount extends RTMediaUserInteraction {
 			$where_columns = array(
 				'user_id'  => $user_id,
 				'media_id' => $media_id,
-				'action'   => $action
+				'action'   => $action,
 			);
 			$update        = $rtmediainteraction->update( $update_data, $where_columns );
 		} else {
@@ -113,13 +113,13 @@ class RTMediaViewCount extends RTMediaUserInteraction {
 				'user_id'  => $user_id,
 				'media_id' => $media_id,
 				'action'   => $action,
-				'value'    => "1"
+				'value'    => '1',
 			);
 			$insert_id = $rtmediainteraction->insert( $columns );
 		}
 		global $rtmedia_points_media_id;
 		$rtmedia_points_media_id = $this->action_query->id;
-		do_action( "rtmedia_after_view_media", $this );
+		do_action( 'rtmedia_after_view_media', $this );
 		die();
 
 	}
