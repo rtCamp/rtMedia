@@ -47,7 +47,7 @@ class RTMediaMeta {
 	 * @return mixed
 	 */
 	private function get_all_meta( $id = false ){
-		if ( $id === false ){
+		if ( false === $id ){
 			return false;
 		}
 
@@ -64,10 +64,10 @@ class RTMediaMeta {
 	 * @return mixed
 	 */
 	private function get_single_meta( $id = false, $key = false ){
-		if ( $id === false ){
+		if ( false === $id ){
 			return false;
 		}
-		if ( $key === false ){
+		if ( false === $key ){
 			return false;
 		}
 		$value = $this->model->get( array( 'media_id' => $id, 'meta_key' => $key ) );
@@ -109,18 +109,18 @@ class RTMediaMeta {
 	 * @return mixed $media_meta
 	 */
 	public function update_meta( $id = false, $key = false, $value = false, $duplicate = false ){
-		if ( $id === false ){
+		if ( false === $id ){
 			return false;
 		}
-		if ( $key === false ){
+		if ( false === $key ){
 			return false;
 		}
-		if ( $value === false ){
+		if ( false === $value ){
 			return false;
 		}
 		$value = maybe_serialize( $value );
 
-		if ( $duplicate === true ){
+		if ( true === $duplicate ){
 			$media_meta = $this->model->insert( array( 'media_id'   => $id,
 													   'meta_key'   => $key,
 													   'meta_value' => $value
@@ -151,10 +151,10 @@ class RTMediaMeta {
 	 * @return null
 	 */
 	public function delete_meta( $id = false, $key = false ){
-		if ( $id === false ){
+		if ( false === $id ){
 			return false;
 		}
-		if ( $key === false ){
+		if ( false === $key ){
 			$where = array( 'media_id' => $id );
 		} else {
 			$where = array( 'media_id' => $id, 'meta_key' => $key );
