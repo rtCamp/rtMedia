@@ -42,7 +42,7 @@ class RTMediaTags {
 		'track',
 		'track_total',
 		'attached_picture',
-		'image'
+		'image',
 	);
 	private $readonly_tags = array( 'track_total', 'attached_picture', 'image' );
 
@@ -127,10 +127,10 @@ class RTMediaTags {
 			$this->analyze();
 		}
 
-		if ( $key == 'image' ){
+		if ( 'image' == $key ){
 			return isset( $this->data['attached_picture'] ) ? array(
 				'data' => $this->data['attached_picture'][0]['data'],
-				'mime' => $this->data['attached_picture'][0]['mime']
+				'mime' => $this->data['attached_picture'][0]['mime'],
 			) : null;
 		} else {
 			if ( isset( $this->duration_info[ $key ] ) ){
