@@ -30,7 +30,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ){
 
 			// Actions and filters
 			add_action( 'init', array( $this, 'video_transcoding_survey_response' ) );
-			add_action( 'admin_init', array( $this, 'presstrends_plugin' ) );
+//			add_action( 'admin_init', array( $this, 'presstrends_plugin' ) );
 
 			//$rtmedia_feed = new RTMediaFeed();
 			add_filter( 'plugin_action_links_' . RTMEDIA_BASE_NAME, array( &$this, 'plugin_add_settings_link' ) );
