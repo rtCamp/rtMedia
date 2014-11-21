@@ -80,7 +80,7 @@ class RTMediaMedia {
 	 */
 	function verify_nonce( $mode ){
 
-		$nonce = $_REQUEST["rtmedia_{$mode}_media_nonce"];
+		$nonce = $_REQUEST['rtmedia_{$mode}_media_nonce'];
 		$mode  = $_REQUEST['mode'];
 
 		if ( wp_verify_nonce( $nonce, 'rtmedia_' . $mode ) ){
@@ -621,13 +621,13 @@ class RTMediaMedia {
 			$rtmedia_activity_model->insert( array(
 				'activity_id' => $activity_id,
 				'user_id'     => $media->media_author,
-				'privacy'     => $media->privacy
+				'privacy'     => $media->privacy,
 			) );
 		} else {
 			$rtmedia_activity_model->update( array(
 				'activity_id' => $activity_id,
 				'user_id'     => $media->media_author,
-				'privacy'     => $media->privacy
+				'privacy'     => $media->privacy,
 			), array( 'activity_id' => $activity_id ) );
 		}
 

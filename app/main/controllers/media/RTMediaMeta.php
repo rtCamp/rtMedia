@@ -121,20 +121,22 @@ class RTMediaMeta {
 		$value = maybe_serialize( $value );
 
 		if ( true === $duplicate ){
-			$media_meta = $this->model->insert( array( 'media_id'   => $id,
-													   'meta_key'   => $key,
-													   'meta_value' => $value
-				) );
+			$media_meta = $this->model->insert( array(
+				'media_id'   => $id,
+				'meta_key'   => $key,
+				'meta_value' => $value,
+			) );
 		} else {
 			if ( $this->get_single_meta( $id, $key ) ){
 				$meta       = array( 'meta_value' => $value );
 				$where      = array( 'media_id' => $id, 'meta_key' => $key );
 				$media_meta = $this->model->update( $meta, $where );
 			} else {
-				$media_meta = $this->model->insert( array( 'media_id'   => $id,
-														   'meta_key'   => $key,
-														   'meta_value' => $value
-					) );
+				$media_meta = $this->model->insert( array(
+					'media_id'   => $id,
+					'meta_key'   => $key,
+					'meta_value' => $value,
+				) );
 			}
 		}
 
