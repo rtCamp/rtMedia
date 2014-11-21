@@ -499,7 +499,7 @@ class RTMediaMedia {
 			'rt_media_thumbnail',
 			'rt_media_activity_image',
 			'rt_media_single_image',
-			'rt_media_featured_image'
+			'rt_media_featured_image',
 		);
 	}
 
