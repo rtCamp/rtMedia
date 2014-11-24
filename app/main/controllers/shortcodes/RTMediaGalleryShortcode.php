@@ -17,7 +17,7 @@ class RTMediaGalleryShortcode {
 	static $add_script;
 
 	/**
-	 *
+	 * Initialises the __construct
 	 */
 	public function __construct(){
 
@@ -28,6 +28,13 @@ class RTMediaGalleryShortcode {
 		//add_action('wp_footer', array($this, 'print_script'));
 	}
 
+	/**
+	 * Load rtmedia template url
+	 *
+	 * @param null
+	 *
+	 * @return null
+	 */
 	function ajax_rtmedia_get_template(){
 		if ( isset( $_REQUEST["template"] ) ){
 			$template_url = RTMediaTemplate::locate_template( $_REQUEST["template"], "media/", false );
@@ -36,6 +43,13 @@ class RTMediaGalleryShortcode {
 		die();
 	}
 
+	/**
+	 * Register scripts
+	 *
+	 * @param null
+	 *
+	 * @return null
+	 */
 	static function register_scripts(){
 		if ( ! wp_script_is( 'plupload-all' ) ){
 			wp_enqueue_script( 'plupload-all' );
@@ -207,13 +221,31 @@ class RTMediaGalleryShortcode {
 		}
 	}
 
-	// for gallery shortcode having attribute global as true, include all media except ones having context as "group"
+	/**
+	 * for gallery shortcode having attribute global as true,
+	 * include all media except ones having context as "group"
+	 *
+	 * @param string $where
+	 *
+	 * @param string $table_name
+	 *
+	 * @param string $join
+	 *
+	 * @return string $where
+	 */
 	static function rtmedia_query_where_filter( $where, $table_name, $join ){
 		$where .= ' AND (' . $table_name . '.privacy = "0" OR ' . $table_name . '.privacy is NULL ) ';
 
 		return $where;
 	}
 
+	/**
+	 * Print Script
+	 *
+	 * @param null
+	 *
+	 * @return null
+	 */
 	static function print_script(){
 		if ( ! self::$add_script ){
 			return;
