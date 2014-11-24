@@ -84,6 +84,13 @@ class RTMediaUserInteraction {
 		add_filter( 'rtmedia_action_buttons_before_delete', array( $this, 'button_filter' ) );
 	}
 
+	/**
+	 * Initialises the RTMediaModel
+	 *
+	 * @param null
+	 *
+	 * @return null
+	 */
 	function init(){
 		$this->model = new RTMediaModel();
 		global $rtmedia_query;
@@ -103,6 +110,10 @@ class RTMediaUserInteraction {
 
 	/**
 	 * Checks if there's a label, if not creates from the action name
+	 *
+	 * @param null
+	 *
+	 * @return null
 	 */
 	function set_label(){
 		if ( empty( $this->label ) ){
@@ -110,12 +121,27 @@ class RTMediaUserInteraction {
 		}
 	}
 
+	/**
+	 * Set plural for label
+	 *
+	 * @param null
+	 *
+	 * @return null
+	 *
+	 */
 	function set_plural(){
 		if ( empty( $this->plural ) ){
 			$this->plural = $this->label . 's';
 		}
 	}
 
+	/**
+	 * Set media type
+	 *
+	 * @param null
+	 *
+	 * @return null
+	 */
 	function set_media(){
 
 		$media_id    = false;
@@ -135,6 +161,14 @@ class RTMediaUserInteraction {
 
 	}
 
+	/**
+	 * Set Interactor.
+	 *
+	 * @param null
+	 *
+	 * @return null
+	 *
+	 */
 	function set_interactor(){
 		$this->interactor = false;
 		if ( is_user_logged_in() ){
@@ -143,6 +177,13 @@ class RTMediaUserInteraction {
 		$this->interactor_privacy = $this->interactor_privacy();
 	}
 
+	/**
+	 * Check interactor_privacy.
+	 *
+	 * @param null
+	 *
+	 * @return int
+	 */
 	function interactor_privacy(){
 
 		if ( ! isset( $this->interactor ) ){
@@ -165,6 +206,14 @@ class RTMediaUserInteraction {
 		return 20;
 	}
 
+	/**
+	 * Check is_visible or not
+	 *
+	 * @param null
+	 *
+	 * @return boolean
+	 *
+	 */
 	function is_visible(){
 		if ( $this->interactor_privacy >= $this->privacy ){
 			return true;
@@ -173,6 +222,14 @@ class RTMediaUserInteraction {
 		return false;
 	}
 
+	/**
+	 * Check is_clickable or not
+	 *
+	 * @param null
+	 *
+	 * @return boolean $clickable
+	 *
+	 */
 	function is_clickable(){
 		$clickable = false;
 		if ( $this->repeatable ){
@@ -189,10 +246,20 @@ class RTMediaUserInteraction {
 		return $clickable;
 	}
 
+	/**
+	 * before_render
+	 */
 	function before_render(){
 
 	}
 
+	/**
+	 * Render the form now.
+	 *
+	 * @param null
+	 *
+	 * @return mixed $button
+	 */
 	function render(){
 		$before_render = $this->before_render();
 		if ( false === $before_render ){
@@ -224,6 +291,14 @@ class RTMediaUserInteraction {
 		return $button;
 	}
 
+	/**
+	 * Add button_filter
+	 *
+	 * @param mixed $buttons
+	 *
+	 * @return mixed $buttons
+	 *
+	 */
 	function button_filter( $buttons ){
 		if ( empty( $this->media ) ){
 			$this->init();
@@ -253,6 +328,10 @@ class RTMediaUserInteraction {
 	 * Checks if an id is set
 	 * Creates pre and post process hooks for the action
 	 * Calls the process
+	 *
+	 * @param null
+	 *
+	 * @return mixed
 	 *
 	 */
 	function preprocess(){
@@ -287,6 +366,8 @@ class RTMediaUserInteraction {
 
 	/**
 	 * Updates count of the action
+	 *
+	 * @param null
 	 *
 	 * @return integer New count
 	 */
