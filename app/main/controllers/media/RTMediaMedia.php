@@ -504,6 +504,7 @@ class RTMediaMedia {
 	}
 
 	/**
+	 * Insert album attributes
 	 *
 	 * @param type $attributes
 	 */
@@ -512,6 +513,16 @@ class RTMediaMedia {
 		return $this->model->insert( $attributes );
 	}
 
+	/**
+	 * Set media type
+	 *
+	 * @param string $mime_type
+	 *
+	 * @param object $file_object
+	 *
+	 * @return string
+	 *
+	 */
 	function set_media_type( $mime_type, $file_object ){
 		switch ( $mime_type ) {
 			case 'image':
@@ -530,9 +541,13 @@ class RTMediaMedia {
 	}
 
 	/**
+	 * Insert Media.
 	 *
 	 * @param array $attachment_ids
+	 *
 	 * @param array $uploaded
+	 *
+	 * @return array $media_id
 	 */
 	function insertmedia( $attachment_ids, $uploaded, $file_object /* added for file extension */ ){
 
@@ -570,6 +585,15 @@ class RTMediaMedia {
 		return $media_id;
 	}
 
+	/**
+	 * Insert Activity.
+	 *
+	 * @param int $id
+	 *
+	 * @param object $media
+	 *
+	 * @return int $activity_id
+	 */
 	function insert_activity( $id, $media ){
 		if ( ! $this->activity_enabled() ){
 			return false;
