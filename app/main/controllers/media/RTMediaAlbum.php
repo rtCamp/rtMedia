@@ -22,7 +22,7 @@ class RTMediaAlbum {
 	var $media;
 
 	/**
-	 *
+	 * Initialises the model object for media.
 	 */
 	public function __construct(){
 		add_action( 'init', array( &$this, 'register_post_types' ), 12 );
@@ -30,6 +30,13 @@ class RTMediaAlbum {
 		$this->media = new RTMediaMedia();
 	}
 
+	/**
+	 * Register new post type hidden.
+	 *
+	 * @param null
+	 *
+	 * @return null
+	 */
 	function rtmedia_album_custom_post_status(){
 		$args = array(
 			'label'                     => _x( 'hidden', 'Status General Name', 'rtmedia' ),
@@ -44,6 +51,10 @@ class RTMediaAlbum {
 
 	/**
 	 * Register Custom Post Types required by rtMedia
+	 *
+	 * @param null
+	 *
+	 * @return null
 	 */
 	function register_post_types(){
 
