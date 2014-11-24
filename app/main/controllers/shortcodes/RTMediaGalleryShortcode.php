@@ -29,8 +29,8 @@ class RTMediaGalleryShortcode {
     }
 
     function ajax_rtmedia_get_template(){
-        if(isset($_POST["template"])){
-            $template_url = RTMediaTemplate::locate_template( $_POST["template"], "media/", false );
+        if(isset($_REQUEST["template"])){
+            $template_url = RTMediaTemplate::locate_template( $_REQUEST["template"], "media/", false );
             require_once $template_url ;
         }
         die();
