@@ -14,176 +14,245 @@
  */
 class RTMediaGalleryShortcode {
 
-    static $add_script;
+	static $add_script;
 
-    /**
-     *
-     */
-    public function __construct () {
+	/**
+	 * Initialises the __construct
+	 */
+	public function __construct(){
 
-        add_shortcode ( 'rtmedia_gallery', array( 'RTMediaGalleryShortcode', 'render' ) );
-        add_action( 'wp_ajax_rtmedia_get_template',array(&$this,'ajax_rtmedia_get_template' ));
-        add_action( 'wp_ajax_nopriv_rtmedia_get_template', array(&$this,'ajax_rtmedia_get_template' ));
-        //add_action('init', array($this, 'register_scripts'));
-        //add_action('wp_footer', array($this, 'print_script'));
-    }
+		add_shortcode( 'rtmedia_gallery', array( 'RTMediaGalleryShortcode', 'render' ) );
+		add_action( 'wp_ajax_rtmedia_get_template', array( &$this, 'ajax_rtmedia_get_template' ) );
+		add_action( 'wp_ajax_nopriv_rtmedia_get_template', array( &$this, 'ajax_rtmedia_get_template' ) );
+		//add_action('init', array($this, 'register_scripts'));
+		//add_action('wp_footer', array($this, 'print_script'));
+	}
 
-    function ajax_rtmedia_get_template(){
-        if(isset($_REQUEST["template"])){
-            $template_url = RTMediaTemplate::locate_template( $_REQUEST["template"], "media/", false );
-            require_once $template_url ;
-        }
-        die();
-    }
-    static function register_scripts () {
-		if( ! wp_script_is ( 'plupload-all' ) ) {
-			wp_enqueue_script ( 'plupload-all' );
+	/**
+	 * Load rtmedia template url
+	 *
+	 * @param null
+	 *
+	 * @return null
+	 */
+	function ajax_rtmedia_get_template(){
+		if ( isset( $_REQUEST["template"] ) ){
+			$template_url = RTMediaTemplate::locate_template( $_REQUEST["template"], "media/", false );
+			require_once $template_url;
 		}
-        wp_enqueue_script ( 'rtmedia-backbone', RTMEDIA_URL . 'app/assets/js/rtMedia.backbone.js', array( 'plupload-all', 'backbone' ), false, true );
+		die();
+	}
 
-    	if(is_rtmedia_album_gallery()) {
-    	    $template_url = add_query_arg(array("action" => 'rtmedia_get_template', "template" => "album-gallery-item"),admin_url("admin-ajax.php"));
-        }else{
-                $template_url = add_query_arg(array("action" => 'rtmedia_get_template', "template" => apply_filters('rtmedia_backbone_template_filter',"media-gallery-item")),admin_url("admin-ajax.php"));
-        }
-        wp_localize_script ( 'rtmedia-backbone', 'template_url', $template_url );
-    	$url = trailingslashit ( $_SERVER[ "REQUEST_URI" ] );
+	/**
+	 * Register scripts
+	 *
+	 * @param null
+	 *
+	 * @return null
+	 */
+	static function register_scripts(){
+		if ( ! wp_script_is( 'plupload-all' ) ){
+			wp_enqueue_script( 'plupload-all' );
+		}
+		wp_enqueue_script( 'rtmedia-backbone', RTMEDIA_URL . 'app/assets/js/rtMedia.backbone.js', array(
+			'plupload-all',
+			'backbone'
+		), false, true );
 
-        if ( strpos ( $url, "/media" ) !== false ) {
-            $url_array = explode ( "/media", $url );
-            $url = trailingslashit ( $url_array[ 0 ] ) . "upload/";
-        } else {
-            $url = trailingslashit ( $url ) . "upload/";
-        }
+		if ( is_rtmedia_album_gallery() ){
+			$template_url = add_query_arg( array(
+				"action"   => 'rtmedia_get_template',
+				"template" => "album-gallery-item"
+			), admin_url( "admin-ajax.php" ) );
+		} else {
+			$template_url = add_query_arg( array(
+				"action"   => 'rtmedia_get_template',
+				"template" => apply_filters( 'rtmedia_backbone_template_filter', "media-gallery-item" )
+			), admin_url( "admin-ajax.php" ) );
+		}
+		wp_localize_script( 'rtmedia-backbone', 'template_url', $template_url );
+		$url = trailingslashit( $_SERVER["REQUEST_URI"] );
 
-        $params = array(
-            'url' => $url,
-            'runtimes' => 'html5,flash,html4',
-            'browse_button' => 'rtMedia-upload-button',
-            'container' => 'rtmedia-upload-container',
-            'drop_element' => 'drag-drop-area',
-            'filters' => apply_filters ( 'rtmedia_plupload_files_filter', array( array( 'title' => "Media Files", 'extensions' => get_rtmedia_allowed_upload_type () ) ) ),
-            'max_file_size' => min ( array( ini_get ( 'upload_max_filesize' ), ini_get ( 'post_max_size' ) ) ),
-            'multipart' => true,
-            'urlstream_upload' => true,
-            'flash_swf_url' => includes_url ( 'js/plupload/plupload.flash.swf' ),
-            'silverlight_xap_url' => includes_url ( 'js/plupload/plupload.silverlight.xap' ),
-            'file_data_name' => 'rtmedia_file', // key passed to $_FILE.
-            'multi_selection' => true,
-            'multipart_params' => apply_filters ( 'rtmedia-multi-params', array( 'redirect' => 'no', 'action' => 'wp_handle_upload', '_wp_http_referer' => $_SERVER[ 'REQUEST_URI' ], 'mode' => 'file_upload', 'rtmedia_upload_nonce' => RTMediaUploadView::upload_nonce_generator ( false, true ) ) ),
-	    'max_file_size_msg' => apply_filters("rtmedia_plupload_file_size_msg",min ( array( ini_get ( 'upload_max_filesize' ), ini_get ( 'post_max_size' ) ) ))
-        );
-        if ( wp_is_mobile () )
-            $params[ 'multi_selection' ] = false;
+		if ( strpos( $url, "/media" ) !== false ){
+			$url_array = explode( "/media", $url );
+			$url       = trailingslashit( $url_array[0] ) . "upload/";
+		} else {
+			$url = trailingslashit( $url ) . "upload/";
+		}
 
-	   $params = apply_filters("rtmedia_modify_upload_params",$params);
+		$params = array(
+			'url'                 => $url,
+			'runtimes'            => 'html5,flash,html4',
+			'browse_button'       => 'rtMedia-upload-button',
+			'container'           => 'rtmedia-upload-container',
+			'drop_element'        => 'drag-drop-area',
+			'filters'             => apply_filters( 'rtmedia_plupload_files_filter', array(
+				array(
+					'title'      => "Media Files",
+					'extensions' => get_rtmedia_allowed_upload_type()
+				)
+			) ),
+			'max_file_size'       => min( array( ini_get( 'upload_max_filesize' ), ini_get( 'post_max_size' ) ) ),
+			'multipart'           => true,
+			'urlstream_upload'    => true,
+			'flash_swf_url'       => includes_url( 'js/plupload/plupload.flash.swf' ),
+			'silverlight_xap_url' => includes_url( 'js/plupload/plupload.silverlight.xap' ),
+			'file_data_name'      => 'rtmedia_file', // key passed to $_FILE.
+			'multi_selection'     => true,
+			'multipart_params'    => apply_filters( 'rtmedia-multi-params', array(
+				'redirect'             => 'no',
+				'action'               => 'wp_handle_upload',
+				'_wp_http_referer'     => $_SERVER['REQUEST_URI'],
+				'mode'                 => 'file_upload',
+				'rtmedia_upload_nonce' => RTMediaUploadView::upload_nonce_generator( false, true )
+			) ),
+			'max_file_size_msg'   => apply_filters( "rtmedia_plupload_file_size_msg", min( array(
+				ini_get( 'upload_max_filesize' ),
+				ini_get( 'post_max_size' )
+			) ) )
+		);
+		if ( wp_is_mobile() ){
+			$params['multi_selection'] = false;
+		}
 
-        wp_localize_script ( 'rtmedia-backbone', 'rtMedia_plupload_config', $params );
-        wp_localize_script ( 'rtmedia-backbone', 'rMedia_loading_file', admin_url ( "/images/loading.gif" ) );
-    }
+		$params = apply_filters( "rtmedia_modify_upload_params", $params );
 
-    /**
-     * Helper function to check whether the shortcode should be rendered or not
-     *
-     * @return type
-     */
-    static function display_allowed () {
-        $flag = true;
+		wp_localize_script( 'rtmedia-backbone', 'rtMedia_plupload_config', $params );
+		wp_localize_script( 'rtmedia-backbone', 'rMedia_loading_file', admin_url( "/images/loading.gif" ) );
+	}
 
-        //$flag = !(is_home() || is_post_type_archive() || is_author());
-        $flag = apply_filters ( 'before_rtmedia_gallery_display', $flag );
-        return $flag;
-    }
+	/**
+	 * Helper function to check whether the shortcode should be rendered or not
+	 *
+	 * @return type
+	 */
+	static function display_allowed(){
+		$flag = true;
 
-    /**
-     * Render a shortcode according to the attributes passed with it
-     *
-     * @param boolean $attr
-     */
-    static function render ( $attr ) {
-        if ( self::display_allowed () ) {
-            self::$add_script = true;
-                    
-            ob_start ();
-            $authorized_member = true; //by default, viewer is authorized
-            
-            if ( ( ! isset ( $attr )) || empty ( $attr ) )
-                $attr = true;
+		//$flag = !(is_home() || is_post_type_archive() || is_author());
+		$flag = apply_filters( 'before_rtmedia_gallery_display', $flag );
 
-            $attr = array( 'name' => 'gallery', 'attr' => $attr );
-            global $post;
-            if ( isset ( $attr ) && isset ( $attr[ "attr" ] ) ) {
-                if ( ! is_array ( $attr[ "attr" ] ) ) {
-                    $attr[ "attr" ] = Array( );
-                }
-                if ( ! isset ( $attr[ "attr" ][ "context_id" ] ) && isset ( $post->ID ) ) {
-                    $attr[ "attr" ][ "context_id" ] = $post->ID;
-                }
-                
-                //check if context is group, then the gallery should only be visible to users according to the group privacy
-                if(isset($attr['attr']['context']) && $attr['attr']['context'] == 'group'){
-                    
-                    if(function_exists('groups_get_group')){ //if buddypress group is enabled
-                        $group = groups_get_group( array( 'group_id' => $attr[ "attr" ][ "context_id" ] ) );
-                        if( isset($group->status) && $group->status != 'public'){
-                            if(is_user_logged_in()){
-                                $is_member = groups_is_user_member( get_current_user_id() , $attr[ "attr" ][ "context_id" ] ) ;
-                                if(!$is_member){
-                                   $authorized_member = false;
-                                   //if user doesnot have access to the specified group
-                                }   
-                            }else {
-                                $authorized_member = false;
-                                //if user is  groupnot logged in and visits group media gallery 
-                            }
-                            
-                        }
-                    }
+		return $flag;
+	}
 
-                }
-                
-                if ( ! isset ( $attr[ "attr" ][ "context" ] ) && isset ( $post->post_type ) ) {
-                    $attr[ "attr" ][ "context" ] = $post->post_type;
-                }
-            }
+	/**
+	 * Render a shortcode according to the attributes passed with it
+	 *
+	 * @param boolean $attr
+	 */
+	static function render( $attr ){
+		if ( self::display_allowed() ){
+			self::$add_script = true;
 
-            if( $authorized_member ){ // if current user has access to view the gallery (when context is 'group')
-                global $rtmedia_query;
-                if(!$rtmedia_query) {
-                    $rtmedia_query = new RTMediaQuery($attr[ "attr" ]);
-                }
-                $rtmedia_query->is_gallery_shortcode = true;// to check if gallery shortcode is executed to display the gallery.
-                
-                $template = new RTMediaTemplate();
-                $gallery_template = false;
-                if( isset( $attr[ "attr" ][ "global"]) &&  $attr[ "attr" ][ "global"] == true){
-                    add_filter('rtmedia-model-where-query', array( 'RTMediaGalleryShortcode' , 'rtmedia_query_where_filter'), 10 ,3 );
-                }
-                $template->set_template ( $gallery_template, $attr );
-                if( isset( $attr[ "attr" ][ "global"]) &&  $attr[ "attr" ][ "global"] == true){
-                    remove_filter('rtmedia-model-where-query', array( 'RTMediaGalleryShortcode' , 'rtmedia_query_where_filter'), 10 ,3 );
-                }
-                
-            } else { //if user cannot view the media gallery (when context is 'group'), show message
-                echo __ ( 'You do not have sufficient privileges to view this gallery', 'rtmedia' );
-                return false;
-            }
+			ob_start();
+			$authorized_member = true; //by default, viewer is authorized
 
-            return ob_get_clean ();
-        }
-    }
-    // for gallery shortcode having attribute global as true, include all media except ones having context as "group"
-    static function rtmedia_query_where_filter($where, $table_name, $join) {
-        $where .= ' AND (' . $table_name . '.privacy = "0" OR ' . $table_name . '.privacy is NULL ) ';
-        return $where;
-    }
-    
-    static function print_script () {
-        if ( ! self::$add_script )
-            return;
-        if ( ! wp_script_is ( 'rtmedia-backbone' ) ) {
-            wp_print_scripts ( 'rtmedia-backbone' );
-        }
-    }
+			if ( ( ! isset ( $attr ) ) || empty ( $attr ) ){
+				$attr = true;
+			}
+
+			$attr = array( 'name' => 'gallery', 'attr' => $attr );
+			global $post;
+			if ( isset ( $attr ) && isset ( $attr["attr"] ) ){
+				if ( ! is_array( $attr["attr"] ) ){
+					$attr["attr"] = Array();
+				}
+				if ( ! isset ( $attr["attr"]["context_id"] ) && isset ( $post->ID ) ){
+					$attr["attr"]["context_id"] = $post->ID;
+				}
+
+				//check if context is group, then the gallery should only be visible to users according to the group privacy
+				if ( isset( $attr['attr']['context'] ) && $attr['attr']['context'] == 'group' ){
+
+					if ( function_exists( 'groups_get_group' ) ){ //if buddypress group is enabled
+						$group = groups_get_group( array( 'group_id' => $attr["attr"]["context_id"] ) );
+						if ( isset( $group->status ) && $group->status != 'public' ){
+							if ( is_user_logged_in() ){
+								$is_member = groups_is_user_member( get_current_user_id(), $attr["attr"]["context_id"] );
+								if ( ! $is_member ){
+									$authorized_member = false;
+									//if user doesnot have access to the specified group
+								}
+							} else {
+								$authorized_member = false;
+								//if user is  groupnot logged in and visits group media gallery
+							}
+
+						}
+					}
+
+				}
+
+				if ( ! isset ( $attr["attr"]["context"] ) && isset ( $post->post_type ) ){
+					$attr["attr"]["context"] = $post->post_type;
+				}
+			}
+
+			if ( $authorized_member ){ // if current user has access to view the gallery (when context is 'group')
+				global $rtmedia_query;
+				if ( ! $rtmedia_query ){
+					$rtmedia_query = new RTMediaQuery( $attr["attr"] );
+				}
+				$rtmedia_query->is_gallery_shortcode = true;// to check if gallery shortcode is executed to display the gallery.
+
+				$template         = new RTMediaTemplate();
+				$gallery_template = false;
+				if ( isset( $attr["attr"]["global"] ) && $attr["attr"]["global"] == true ){
+					add_filter( 'rtmedia-model-where-query', array(
+						'RTMediaGalleryShortcode',
+						'rtmedia_query_where_filter'
+					), 10, 3 );
+				}
+				$template->set_template( $gallery_template, $attr );
+				if ( isset( $attr["attr"]["global"] ) && $attr["attr"]["global"] == true ){
+					remove_filter( 'rtmedia-model-where-query', array(
+						'RTMediaGalleryShortcode',
+						'rtmedia_query_where_filter'
+					), 10, 3 );
+				}
+
+			} else { //if user cannot view the media gallery (when context is 'group'), show message
+				echo __( 'You do not have sufficient privileges to view this gallery', 'rtmedia' );
+
+				return false;
+			}
+
+			return ob_get_clean();
+		}
+	}
+
+	/**
+	 * for gallery shortcode having attribute global as true,
+	 * include all media except ones having context as "group"
+	 *
+	 * @param string $where
+	 *
+	 * @param string $table_name
+	 *
+	 * @param string $join
+	 *
+	 * @return string $where
+	 */
+	static function rtmedia_query_where_filter( $where, $table_name, $join ){
+		$where .= ' AND (' . $table_name . '.privacy = "0" OR ' . $table_name . '.privacy is NULL ) ';
+
+		return $where;
+	}
+
+	/**
+	 * Print Script
+	 *
+	 * @param null
+	 *
+	 * @return null
+	 */
+	static function print_script(){
+		if ( ! self::$add_script ){
+			return;
+		}
+		if ( ! wp_script_is( 'rtmedia-backbone' ) ){
+			wp_print_scripts( 'rtmedia-backbone' );
+		}
+	}
 
 }

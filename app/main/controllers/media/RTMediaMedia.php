@@ -13,7 +13,27 @@
 class RTMediaMedia {
 
 	static $default_object = array(
-		'id', 'blog_id', 'media_id', 'media_author', 'media_title', 'album_id', 'media_type', 'context', 'context_id', 'source', 'source_id', 'activity_id', 'cover_art', 'privacy', 'views', 'downloads', 'ratings_total', 'ratings_count', 'ratings_average', 'likes', 'dislikes',
+		'id',
+		'blog_id',
+		'media_id',
+		'media_author',
+		'media_title',
+		'album_id',
+		'media_type',
+		'context',
+		'context_id',
+		'source',
+		'source_id',
+		'activity_id',
+		'cover_art',
+		'privacy',
+		'views',
+		'downloads',
+		'ratings_total',
+		'ratings_count',
+		'ratings_average',
+		'likes',
+		'dislikes',
 	);
 
 	/**
@@ -43,8 +63,9 @@ class RTMediaMedia {
 		} else {
 			$token = array(
 				'action' => 'rtmedia_media_nonce',
-				'nonce' => wp_create_nonce( 'rtmedia_' . $id ),
+				'nonce'  => wp_create_nonce( 'rtmedia_' . $id ),
 			);
+
 			return json_encode( $token );
 		}
 	}
@@ -59,7 +80,7 @@ class RTMediaMedia {
 	 */
 	function verify_nonce( $mode ){
 
-		$nonce = $_REQUEST[ "rtmedia_{$mode}_media_nonce" ];
+		$nonce = $_REQUEST['rtmedia_{$mode}_media_nonce'];
 		$mode  = $_REQUEST['mode'];
 
 		if ( wp_verify_nonce( $nonce, 'rtmedia_' . $mode ) ){
@@ -81,7 +102,7 @@ class RTMediaMedia {
 	 * Adds taxonomy
 	 *
 	 * @param array $attachments ids of the attachments created after upload
-	 * @param array $taxonomies  array of terms indexed by a taxonomy
+	 * @param array $taxonomies array of terms indexed by a taxonomy
 	 */
 	function add_taxonomy( $attachments, $taxonomies ){
 
@@ -99,7 +120,7 @@ class RTMediaMedia {
 
 	/**
 	 *
-	 * @param array $attachments   attachment ids
+	 * @param array $attachments attachment ids
 	 * @param array $custom_fields array of key value pairs of meta
 	 *
 	 * @return boolean success of meta
@@ -114,7 +135,7 @@ class RTMediaMedia {
 				if ( ! is_null( $value ) ){
 					$row['meta_key']   = $key;
 					$row['meta_value'] = $value;
-					$status              = add_rtmedia_meta( $id, $key, $value );
+					$status            = add_rtmedia_meta( $id, $key, $value );
 
 					if ( is_wp_error( $status ) || 0 == $status ){
 						return false;
@@ -228,14 +249,14 @@ class RTMediaMedia {
 		if ( ! $rtmedia_activity_model->check( $media[0]->activity_id ) ){
 			$rtmedia_activity_model->insert( array(
 				'activity_id' => $media[0]->activity_id,
-				'user_id' => $media[0]->media_author,
-				'privacy' => $max_privacy,
+				'user_id'     => $media[0]->media_author,
+				'privacy'     => $max_privacy,
 			) );
 		} else {
 			$rtmedia_activity_model->update( array(
 				'activity_id' => $media[0]->activity_id,
-				'user_id' => $media[0]->media_author,
-				'privacy' => $max_privacy,
+				'user_id'     => $media[0]->media_author,
+				'privacy'     => $max_privacy,
 			), array( 'activity_id' => $media[0]->activity_id ) );
 		}
 
@@ -294,7 +315,10 @@ class RTMediaMedia {
 						}
 						$objActivity = new RTMediaActivity( $activity_media );
 						global $wpdb, $bp;
-						$wpdb->update( $bp->activity->table_name, array( 'type' => 'rtmedia_update', 'content' => $objActivity->create_activity_html() ), array( 'id' => $media[0]->activity_id ) );
+						$wpdb->update( $bp->activity->table_name, array(
+							'type'    => 'rtmedia_update',
+							'content' => $objActivity->create_activity_html()
+						), array( 'id' => $media[0]->activity_id ) );
 					} else {
 						bp_activity_delete_by_activity_id( $media[0]->activity_id );
 					}
@@ -314,12 +338,12 @@ class RTMediaMedia {
 			$rtMediaNav = new RTMediaNav();
 			if ( 'group' == $media[0]->context ){
 				$rtMediaNav->refresh_counts( $media[0]->context_id, array(
-					'context' => $media[0]->context,
+					'context'    => $media[0]->context,
 					'context_id' => $media[0]->context_id,
 				) );
 			} else {
 				$rtMediaNav->refresh_counts( $media[0]->media_author, array(
-					'context' => 'profile',
+					'context'      => 'profile',
 					'media_author' => $media[0]->media_author,
 				) );
 			}
@@ -341,8 +365,8 @@ class RTMediaMedia {
 	 *
 	 * @global type $wpdb
 	 *
-	 * @param type  $media_id
-	 * @param type  $album_id
+	 * @param type $media_id
+	 * @param type $album_id
 	 *
 	 * @return boolean
 	 */
@@ -359,10 +383,10 @@ class RTMediaMedia {
 			/* update album_id, context, context_id and privacy in rtMedia context */
 			$album_data = $this->model->get( array( 'media_id' => $media_id ) );
 			$data       = array(
-				'album_id' => $album_id,
-				'context' => $album_data->context,
+				'album_id'   => $album_id,
+				'context'    => $album_data->context,
 				'context_id' => $album_data->context_id,
-				'privacy' => $album_data->privacy,
+				'privacy'    => $album_data->privacy,
 			);
 
 			return $this->update( $id, $data, $media_id );
@@ -421,11 +445,11 @@ class RTMediaMedia {
 		foreach ( $file_object as $file ) {
 			$attachments[] = array(
 				'post_mime_type' => $file['type'],
-				'guid' => $file['url'],
-				'post_title' => $uploaded['title'] ? $uploaded['title'] : preg_replace( '/\\.[^.\\s]{3,4}$/', '', $file['name'] ),
-				'post_content' => $uploaded['description'] ? $uploaded['description'] : '',
-				'post_parent' => $album_id,
-				'post_author' => $uploaded['media_author'],
+				'guid'           => $file['url'],
+				'post_title'     => $uploaded['title'] ? $uploaded['title'] : preg_replace( '/\\.[^.\\s]{3,4}$/', '', $file['name'] ),
+				'post_content'   => $uploaded['description'] ? $uploaded['description'] : '',
+				'post_parent'    => $album_id,
+				'post_author'    => $uploaded['media_author'],
 			);
 		}
 
@@ -471,10 +495,16 @@ class RTMediaMedia {
 	 * @return type
 	 */
 	function image_sizes( $sizes ){
-		return array( 'rt_media_thumbnail', 'rt_media_activity_image', 'rt_media_single_image', 'rt_media_featured_image' );
+		return array(
+			'rt_media_thumbnail',
+			'rt_media_activity_image',
+			'rt_media_single_image',
+			'rt_media_featured_image',
+		);
 	}
 
 	/**
+	 * Insert album attributes
 	 *
 	 * @param type $attributes
 	 */
@@ -483,6 +513,16 @@ class RTMediaMedia {
 		return $this->model->insert( $attributes );
 	}
 
+	/**
+	 * Set media type
+	 *
+	 * @param string $mime_type
+	 *
+	 * @param object $file_object
+	 *
+	 * @return string
+	 *
+	 */
 	function set_media_type( $mime_type, $file_object ){
 		switch ( $mime_type ) {
 			case 'image':
@@ -501,15 +541,19 @@ class RTMediaMedia {
 	}
 
 	/**
+	 * Insert Media.
 	 *
 	 * @param array $attachment_ids
+	 *
 	 * @param array $uploaded
+	 *
+	 * @return array $media_id
 	 */
 	function insertmedia( $attachment_ids, $uploaded, $file_object /* added for file extension */ ){
 
 		$defaults = array(
 			'activity_id' => $this->activity_enabled(),
-			'privacy' => 0,
+			'privacy'     => 0,
 		);
 
 		$uploaded = wp_parse_args( $uploaded, $defaults );
@@ -521,26 +565,35 @@ class RTMediaMedia {
 			$mime_type  = explode( '/', $attachment['post_mime_type'] );
 
 			$media = array(
-				'blog_id' => $blog_id,
-				'media_id' => $id,
-				'album_id' => $uploaded['album_id'],
+				'blog_id'      => $blog_id,
+				'media_id'     => $id,
+				'album_id'     => $uploaded['album_id'],
 				'media_author' => $attachment['post_author'],
-				'media_title' => $attachment['post_title'],
-				'media_type' => $this->set_media_type( $mime_type[0], $file_object /* added for file extension */ ),
-				'context' => $uploaded['context'],
-				'context_id' => $uploaded['context_id'],
-				'privacy' => $uploaded['privacy'],
+				'media_title'  => $attachment['post_title'],
+				'media_type'   => $this->set_media_type( $mime_type[0], $file_object /* added for file extension */ ),
+				'context'      => $uploaded['context'],
+				'context_id'   => $uploaded['context_id'],
+				'privacy'      => $uploaded['privacy'],
 			);
 			if ( isset( $file_object ) && isset( $file_object[0] ) && isset( $file_object[0]['file'] ) ){
 				$media['file_size'] = filesize( $file_object[0]['file'] );
 			}
 			$media['upload_date'] = $attachment['post_date'];
-			$media_id[]            = $this->model->insert( $media );
+			$media_id[]           = $this->model->insert( $media );
 		}
 
 		return $media_id;
 	}
 
+	/**
+	 * Insert Activity.
+	 *
+	 * @param int $id
+	 *
+	 * @param object $media
+	 *
+	 * @return int $activity_id
+	 */
 	function insert_activity( $id, $media ){
 		if ( ! $this->activity_enabled() ){
 			return false;
@@ -561,12 +614,12 @@ class RTMediaMedia {
 		$action        = sprintf( _n( '%s added a %s', '%s added %d %s.', $count, 'rtmedia' ), $username, $media->media_type, $media_str );
 		$action        = apply_filters( 'rtmedia_buddypress_action_text_fitler', $action, $username, $count, $user->user_nicename, $media->media_type );
 		$activity_args = array(
-			'user_id' => $user->ID,
-			'action' => $action,
-			'content' => $activity_content,
-			'type' => 'rtmedia_update',
+			'user_id'      => $user->ID,
+			'action'       => $action,
+			'content'      => $activity_content,
+			'type'         => 'rtmedia_update',
 			'primary_link' => '',
-			'item_id' => $id,
+			'item_id'      => $id,
 		);
 
 		if ( 'group' == $media->context && function_exists( 'bp_get_group_status' ) && 'public' != bp_get_group_status( groups_get_group( array( 'group_id' => $media->context_id ) ) ) ){
@@ -589,9 +642,17 @@ class RTMediaMedia {
 		// insert/update activity details in rtmedia activity table
 		$rtmedia_activity_model = new RTMediaActivityModel();
 		if ( ! $rtmedia_activity_model->check( $activity_id ) ){
-			$rtmedia_activity_model->insert( array( 'activity_id' => $activity_id, 'user_id' => $media->media_author, 'privacy' => $media->privacy ) );
+			$rtmedia_activity_model->insert( array(
+				'activity_id' => $activity_id,
+				'user_id'     => $media->media_author,
+				'privacy'     => $media->privacy,
+			) );
 		} else {
-			$rtmedia_activity_model->update( array( 'activity_id' => $activity_id, 'user_id' => $media->media_author, 'privacy' => $media->privacy ), array( 'activity_id' => $activity_id ) );
+			$rtmedia_activity_model->update( array(
+				'activity_id' => $activity_id,
+				'user_id'     => $media->media_author,
+				'privacy'     => $media->privacy,
+			), array( 'activity_id' => $activity_id ) );
 		}
 
 		return $activity_id;

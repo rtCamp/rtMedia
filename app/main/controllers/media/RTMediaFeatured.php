@@ -13,12 +13,15 @@
 class RTMediaFeatured extends RTMediaUserInteraction {
 
 	/**
-	 *
+	 * Declare the public vars
 	 */
 	public $user_id;
 	public $featured;
 	public $settings;
 
+	/**
+	 * call the __construct
+	 */
 	function __construct( $user_id = false, $flag = true ){
 		$args = array(
 			'action' => 'featured',
@@ -44,6 +47,13 @@ class RTMediaFeatured extends RTMediaUserInteraction {
 		//$this->get();
 	}
 
+	/**
+	 * Before rendering checks settings.
+	 *
+	 * @param null
+	 *
+	 * @return null
+	 */
 	function before_render(){
 		$this->get();
 		if ( ! ( isset( $this->settings[ $this->media->media_type ] ) && $this->settings[ $this->media->media_type ] ) ){
@@ -54,6 +64,14 @@ class RTMediaFeatured extends RTMediaUserInteraction {
 		}
 	}
 
+	/**
+	 * Set $media_id to update_user_meta
+	 * update_user_meta
+	 *
+	 * @param int $media_id
+	 *
+	 * @return null
+	 */
 	function set( $media_id = false ){
 		if ( false === $media_id ){
 			return;
@@ -64,6 +82,13 @@ class RTMediaFeatured extends RTMediaUserInteraction {
 		update_user_meta( $this->user_id, 'rtmedia_featured_media', $media_id );
 	}
 
+	/**
+	 * Get user defined featured from user meta
+	 *
+	 * @param null
+	 *
+	 * @return boolean $this->featured
+	 */
 	function get(){
 		if ( false === $this->user_id ){
 			if ( function_exists( 'bp_displayed_user_id' ) ){
@@ -81,6 +106,13 @@ class RTMediaFeatured extends RTMediaUserInteraction {
 		return $this->featured;
 	}
 
+	/**
+	 * Update settings
+	 *
+	 * @param null
+	 *
+	 * @return null
+	 */
 	function settings(){
 		global $rtmedia;
 		$this->settings['photo']  = isset( $rtmedia->options['allowedTypes_photo_featured'] ) ? $rtmedia->options['allowedTypes_photo_featured'] : 0;
@@ -91,6 +123,13 @@ class RTMediaFeatured extends RTMediaUserInteraction {
 		$this->settings['crop']   = isset( $rtmedia->options['defaultSizes_featured_default_crop'] ) ? $rtmedia->options['defaultSizes_featured_default_crop'] : 1;
 	}
 
+	/**
+	 * Check valid type media
+	 *
+	 * @param type $type
+	 *
+	 * @return boolean
+	 */
 	function valid_type( $type ){
 		if ( isset( $this->settings[ $type ] ) && $this->settings[ $type ] > 0 ){
 			return true;
@@ -99,10 +138,24 @@ class RTMediaFeatured extends RTMediaUserInteraction {
 		return false;
 	}
 
+	/**
+	 * Get the last media
+	 *
+	 * @param type $type
+	 *
+	 * @return boolean
+	 */
 	function get_last_media(){
 
 	}
 
+	/**
+	 * Generate Media size.
+	 *
+	 * @param int $media_id
+	 *
+	 * @return null
+	 */
 	function generate_featured_size( $media_id ){
 		$metadata = wp_get_attachment_metadata( $media_id );
 		$resized  = image_make_intermediate_size( get_attached_file( $media_id ), $this->settings['width'], $this->settings['height'], $this->settings['crop'] );
@@ -112,6 +165,13 @@ class RTMediaFeatured extends RTMediaUserInteraction {
 		}
 	}
 
+	/**
+	 * Check Media exists or not.
+	 *
+	 * @param int $id
+	 *
+	 * @return boolean
+	 */
 	function media_exists( $id ){
 		global $wpdb;
 		$post_exists = $wpdb->get_row( "SELECT * FROM $wpdb->posts WHERE id = '" . $id . "'", 'ARRAY_A' );
@@ -122,6 +182,13 @@ class RTMediaFeatured extends RTMediaUserInteraction {
 		}
 	}
 
+	/**
+	 * Generate media content.
+	 *
+	 * @param null
+	 *
+	 * @return html
+	 */
 	function content(){
 		$this->get();
 		$actions = $this->model->get( array( 'id' => $this->featured ) );
@@ -157,6 +224,13 @@ class RTMediaFeatured extends RTMediaUserInteraction {
 		return apply_filters( 'rtmedia_featured_media_content', $content );
 	}
 
+	/**
+	 * Process the media featured.
+	 *
+	 * @param null
+	 *
+	 * @return mixed
+	 */
 	function process(){
 		if ( ! isset( $this->action_query->id ) ){
 			return;
@@ -191,10 +265,24 @@ class RTMediaFeatured extends RTMediaUserInteraction {
 
 }
 
+/**
+ * Echo rtmedia_featured media by user id.
+ *
+ * @param int $user_id
+ *
+ * @return html
+ */
 function rtmedia_featured( $user_id = false ){
 	echo rtmedia_get_featured( $user_id );
 }
 
+/**
+ * Get rtmedia_featured media by user id.
+ *
+ * @param int $user_id
+ *
+ * @return html
+ */
 function rtmedia_get_featured( $user_id = false ){
 	$featured = new RTMediaFeatured( $user_id, false );
 
@@ -203,10 +291,24 @@ function rtmedia_get_featured( $user_id = false ){
 
 if ( ! function_exists( 'bp_media_featured' ) ){
 
+	/**
+	 * Print bp_media_featured.
+	 *
+	 * @param $user_id
+	 *
+	 * @return html
+	 */
 	function bp_media_featured( $user_id = false ){
 		echo rtmedia_get_featured( $user_id );
 	}
 
+	/**
+	 * Return bp_media_get_featured.
+	 *
+	 * @param $user_id
+	 *
+	 * @return html
+	 */
 	function bp_media_get_featured( $user_id = false ){
 		return rtmedia_get_featured( $user_id );
 	}

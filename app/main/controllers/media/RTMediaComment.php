@@ -14,17 +14,27 @@ class RTMediaComment {
 
 	var $rtmedia_comment_model;
 
+	/**
+	 * Initialises the model object for RTMediaCommentModel.
+	 */
 	public function __construct(){
 		$this->rtmedia_comment_model = new RTMediaCommentModel();
 	}
 
+	/**
+	 * Generate nonce generator.
+	 *
+	 * @param boolean $echo
+	 *
+	 * @return jsonObj
+	 */
 	static function comment_nonce_generator( $echo = true ){
 		if ( $echo ){
 			wp_nonce_field( 'rtmedia_comment_nonce', 'rtmedia_comment_nonce' );
 		} else {
 			$token = array(
 				'action' => 'rtmedia_comment_nonce',
-				'nonce' => wp_create_nonce( 'rtmedia_comment_nonce' ),
+				'nonce'  => wp_create_nonce( 'rtmedia_comment_nonce' ),
 			);
 
 			return json_encode( $token );
@@ -59,17 +69,24 @@ class RTMediaComment {
 		return $current_user->user_login;
 	}
 
+	/**
+	 * Add attribute to rtmedia comments.
+	 *
+	 * @param array $attr
+	 *
+	 * @return int $id
+	 */
 	function add( $attr ){
 		global $allowedtags;
 		do_action( 'rtmedia_before_add_comment', $attr );
-		$defaults                  = array(
-			'user_id' => $this->get_current_id(),
+		$defaults                = array(
+			'user_id'        => $this->get_current_id(),
 			'comment_author' => $this->get_current_author(),
-			'comment_date' => current_time( 'mysql' ),
+			'comment_date'   => current_time( 'mysql' ),
 		);
 		$attr['comment_content'] = wp_kses( $attr['comment_content'], $allowedtags );
-		$params                    = wp_parse_args( $attr, $defaults );
-		$id                        = $this->rtmedia_comment_model->insert( $params );
+		$params                  = wp_parse_args( $attr, $defaults );
+		$id                      = $this->rtmedia_comment_model->insert( $params );
 		global $rtmedia_points_media_id;
 		$rtmedia_points_media_id = rtmedia_id( $params['comment_post_ID'] );
 		do_action( 'rtmedia_after_add_comment', $params );
@@ -77,6 +94,13 @@ class RTMediaComment {
 		return $id;
 	}
 
+	/**
+	 * Remove comment.
+	 *
+	 * @param int $id
+	 *
+	 * @return boolean
+	 */
 	function remove( $id ){
 
 		do_action( 'rtmedia_before_remove_comment', $id );
