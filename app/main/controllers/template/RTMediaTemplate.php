@@ -661,7 +661,7 @@ class RTMediaTemplate {
 		$context = apply_filters( 'rtmedia_context_filter', $context );
 
 		// check and exit if $template contains relative path
-		if( strpos( $template, '.' ) ){
+		if( false !== strpos( $template, '.' ) ){
 			die('No Cheating');
 		}
 
