@@ -14,7 +14,7 @@ class RTMediaUploadShortcode {
 	static $uploader_displayed = false;
 
 	/**
-	 *
+	 * Initialises the __construct
 	 */
 	public function __construct(){
 
@@ -28,6 +28,8 @@ class RTMediaUploadShortcode {
 
 	/**
 	 * Helper function to check whether the shortcode should be rendered or not
+	 *
+	 * @param null
 	 *
 	 * @return type
 	 */
@@ -46,6 +48,8 @@ class RTMediaUploadShortcode {
 	 * Render the uploader shortcode and attach the uploader panel
 	 *
 	 * @param type $attr
+	 *
+	 * @return mixed
 	 */
 	static function pre_render( $attr ){
 		$allow_upload = apply_filters( 'rtmedia_allow_uploader_view', true, 'uploader_shortcode' );
