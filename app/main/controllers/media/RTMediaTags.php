@@ -31,7 +31,16 @@ class RTMediaTags {
 	 */
 	private $data = null;
 
+	/**
+	 * @var array $duration_info
+	 */
 	private $duration_info = array( 'duration' );
+
+	/**
+	 * Define media tags
+	 *
+	 * @var array $tags
+	 */
 	private $tags = array(
 		'title',
 		'artist',
@@ -44,14 +53,28 @@ class RTMediaTags {
 		'attached_picture',
 		'image',
 	);
+
+	/**
+	 * Define media tags
+	 *
+	 * @var array $readonly_tags
+	 */
 	private $readonly_tags = array( 'track_total', 'attached_picture', 'image' );
 
+	/**
+	 * Initialises the __construct.
+	 */
 	public function __construct( $file ){
 
 		$this->file = $file;
 		$this->id3  = self::id3();
 	}
 
+	/**
+	 * Update file path
+	 *
+	 * @param $file
+	 */
 	public function update_filepath( $file ){
 
 		$this->file = $file;
@@ -60,6 +83,10 @@ class RTMediaTags {
 	/**
 	 *
 	 * Writes data inside  the files after manipulation, mainly mp3 files.
+	 *
+	 * @param null
+	 *
+	 * @return boolean
 	 */
 	public function save(){
 
@@ -86,6 +113,8 @@ class RTMediaTags {
 	 *
 	 * Initialize the getid3 class
 	 *
+	 * @param null
+	 *
 	 * @return object
 	 */
 	public static function id3(){
@@ -102,6 +131,14 @@ class RTMediaTags {
 	/**
 	 *
 	 * Sets cover art for mp3 files
+	 *
+	 * @param array $data
+	 *
+	 * @param file_type $mime
+	 *
+	 * @param string $description
+	 *
+	 * @return null
 	 */
 	public function set_art( $data, $mime = 'jpeg', $description = 'Description' ){
 
@@ -117,6 +154,12 @@ class RTMediaTags {
 		$this->data['attached_picture'][0]['mime']          = 'image/' . $mime;
 	}
 
+	/**
+	 * Analyze data to get media tag info.
+	 *
+	 * @param string $key
+	 *
+	 */
 	public function __get( $key ){
 
 		if ( ! in_array( $key, $this->tags ) && ! in_array( $key, $this->duration_info ) && ! isset( $this->duration_info[ $key ] ) ){
@@ -141,6 +184,15 @@ class RTMediaTags {
 		}
 	}
 
+	/**
+	 * Setting the value.
+	 *
+	 * @param string $key
+	 *
+	 * @param string $value
+	 *
+	 * @return mixed string|error_obj
+	 */
 	public function __set( $key, $value ){
 
 		if ( ! in_array( $key, $this->tags ) ){
@@ -160,6 +212,11 @@ class RTMediaTags {
 	/**
 	 *
 	 * Analyze file
+	 *
+	 * @param null
+	 *
+	 * @return null
+	 *
 	 */
 	private function analyze(){
 
