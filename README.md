@@ -133,6 +133,9 @@ http://www.youtube.com/watch?v####dJrykKQGDcs
 
 Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "Visit rtMedia's Features page") to get some details about future releases.
 
+#### 3.7.18 ####
+* Fix for template include for relative paths
+
 #### 3.7.17 ####
 * Removed unwanted database call on BuddyPress single activity page
 
@@ -844,8 +847,8 @@ Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_sou
 * HTML5 Audio Tag Support (with fallback)
 * HTML5 Video Tag Support (with fallback)
 
-#### 3.7.17 ####
-Requires BuddyPress 1.7 or higher, if using BuddyPress. Removed unwanted database call on BuddyPress single activity page.
+#### 3.7.18 ####
+Requires BuddyPress 1.7 or higher, if using BuddyPress. Fix for template include for relative paths
 
 
 ## Sponsors ##
