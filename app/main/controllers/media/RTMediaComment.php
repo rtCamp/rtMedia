@@ -14,10 +14,20 @@ class RTMediaComment {
 
 	var $rtmedia_comment_model;
 
+	/**
+	 * Initialises the model object for RTMediaCommentModel.
+	 */
 	public function __construct(){
 		$this->rtmedia_comment_model = new RTMediaCommentModel();
 	}
 
+	/**
+	 * Generate nonce generator.
+	 *
+	 * @param boolean $echo
+	 *
+	 * @return jsonObj
+	 */
 	static function comment_nonce_generator( $echo = true ){
 		if ( $echo ){
 			wp_nonce_field( 'rtmedia_comment_nonce', 'rtmedia_comment_nonce' );
@@ -59,6 +69,13 @@ class RTMediaComment {
 		return $current_user->user_login;
 	}
 
+	/**
+	 * Add attribute to rtmedia comments.
+	 *
+	 * @param array $attr
+	 *
+	 * @return int $id
+	 */
 	function add( $attr ){
 		global $allowedtags;
 		do_action( 'rtmedia_before_add_comment', $attr );
@@ -77,6 +94,13 @@ class RTMediaComment {
 		return $id;
 	}
 
+	/**
+	 * Remove comment.
+	 *
+	 * @param int $id
+	 *
+	 * @return boolean
+	 */
 	function remove( $id ){
 
 		do_action( 'rtmedia_before_remove_comment', $id );
