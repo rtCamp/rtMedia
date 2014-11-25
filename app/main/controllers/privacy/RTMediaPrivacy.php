@@ -235,6 +235,15 @@ class RTMediaPrivacy {
 		return true;
 	}
 
+	/**
+	 * save user_default and update user_meta
+	 *
+	 * @param int $level
+	 *
+	 * @param int $user_id
+	 *
+	 * @return mixed
+	 */
 	static function save_user_default( $level = 0, $user_id = false ){
 		if ( $user_id == false ){
 			global $bp;
@@ -244,6 +253,14 @@ class RTMediaPrivacy {
 		return update_user_meta( $user_id, 'bp_media_privacy', $level );
 	}
 
+	/**
+	 * get_user_default i.e user meta
+	 *
+	 * @param int $user_id
+	 *
+	 * @return boolean $user_privacy
+	 *
+	 */
 	static function get_user_default( $user_id = false ){
 		if ( $user_id == false ){
 			global $bp;
@@ -257,6 +274,9 @@ class RTMediaPrivacy {
 		return $user_privacy;
 	}
 
+	/**
+	 * For checking required_access
+	 */
 	static function required_access( $object_id = false ){
 		if ( BPMediaPrivacy::is_enabled() == false ){
 			return;
@@ -279,6 +299,13 @@ class RTMediaPrivacy {
 		return $privacy;
 	}
 
+	/**
+	 * Add nav
+	 *
+	 * @param null
+	 *
+	 * @return null
+	 */
 	function add_nav(){
 
 		if ( bp_displayed_user_domain() ){
@@ -316,6 +343,13 @@ class RTMediaPrivacy {
 		bp_core_new_subnav_item( $defaults );
 	}
 
+	/**
+	 * settings ui
+	 *
+	 * @param null
+	 *
+	 * @return null
+	 */
 	function settings_ui(){
 		if ( bp_action_variables() ){
 			bp_do_404();
