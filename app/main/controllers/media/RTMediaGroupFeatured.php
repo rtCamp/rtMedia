@@ -47,7 +47,7 @@ class RTMediaGroupFeatured extends RTMediaUserInteraction {
 		$user_id = get_current_user_id();
 
 		// if current is not group moderator or group admin, don't render "Set featured"
-		if ( ! groups_is_user_mod( $user_id, $this->group_id ) && ! groups_is_user_admin( $user_id, $this->group_id ) ){
+		if ( ! groups_is_user_mod( $user_id, $this->group_id ) && ! groups_is_user_admin( $user_id, $this->group_id ) && ! is_rt_admin() ){
 			return false;
 		}
 
