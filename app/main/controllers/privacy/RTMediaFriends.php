@@ -13,7 +13,7 @@
 class RTMediaFriends {
 
 	/**
-	 *
+	 * Initialises the model object for RTMediaFriends.
 	 */
 	function __construct(){
 		if ( ! class_exists( 'BuddyPress' ) ){
@@ -26,6 +26,13 @@ class RTMediaFriends {
 		add_action( 'friends_friendship_deleted', array( $this, 'refresh_friends_cache' ) );
 	}
 
+	/**
+	 * Get friends cache.
+	 * 
+	 * @param object $user
+	 * 
+	 * @return mixed $friends
+	 */
 	function get_friends_cache( $user ){
 
 		if ( ! class_exists( 'BuddyPress' ) ){
@@ -46,6 +53,13 @@ class RTMediaFriends {
 		return $friends;
 	}
 
+	/**
+	 * Refresh friends cache.
+	 * 
+	 * @param object $user
+	 * 
+	 * @return mixed $friends
+	 */
 	function refresh_friends_cache( $user ){
 		if ( ! class_exists( 'BuddyPress' ) ){
 			return;
