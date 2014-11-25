@@ -160,20 +160,48 @@ class RTMediaPrivacy {
 		}
 	}
 
+	/**
+	 * Reset to system_default
+	 *
+	 * @param null
+	 *
+	 * @return int
+	 */
 	public function system_default(){
 		return 0;
 	}
 
+	/**
+	 * Return the site_default
+	 *
+	 * @param null
+	 *
+	 * @return mixed
+	 */
 	public function site_default(){
 		global $rtmedia;
 
 		return rtmedia_get_site_option( 'privacy_settings' );
 	}
 
+	/**
+	 * Return the user_default
+	 *
+	 * @param null
+	 *
+	 * @return null
+	 */
 	public function user_default(){
 		return;
 	}
 
+	/**
+	 * Return the get_default
+	 *
+	 * @param null
+	 *
+	 * @return null
+	 */
 	public function get_default(){
 		$default_privacy = $this->user_default();
 
@@ -186,6 +214,13 @@ class RTMediaPrivacy {
 		}
 	}
 
+	/**
+	 * Check for privacy is_enabled or not.
+	 *
+	 * @param null
+	 *
+	 * @return boolean
+	 */
 	static function is_enabled(){
 		global $bp_media;
 		$options = $bp_media->options;
