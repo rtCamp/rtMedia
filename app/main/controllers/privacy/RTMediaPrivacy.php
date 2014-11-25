@@ -17,6 +17,9 @@ class RTMediaPrivacy {
 	 */
 	public $default_privacy;
 
+	/**
+	 * Initialises the __construct.
+	 */
 	function __construct( $flag = true ){
 		if ( is_rtmedia_privacy_enable() && $flag ){
 			//add_action ( 'rtmedia_after_file_upload_ui' , array ( $this , 'uploader_privacy_ui' ) ) ;
@@ -29,12 +32,30 @@ class RTMediaPrivacy {
 		}
 	}
 
+	/**
+	 * Enable buddypress load_more
+	 *
+	 * @param boolean $has_more_items
+	 *
+	 * @return boolean
+	 */
 	function enable_buddypress_load_more( $has_more_items ){
 		global $activities_template;
 
 		return true;
 	}
 
+	/**
+	 * Enable buddypress privacy
+	 *
+	 * @param boolean $flag
+	 *
+	 * @param method $method
+	 *
+	 * @param array $func_args
+	 *
+	 * @return boolean $flag
+	 */
 	function enable_buddypress_privacy( $flag, $method, $func_args ){
 		global $rtmedia;
 		$option = $rtmedia->options;
@@ -47,6 +68,13 @@ class RTMediaPrivacy {
 		return $flag;
 	}
 
+	/**
+	 * Edit media privacy ui
+	 *
+	 * @param boolean $echo
+	 *
+	 * @return mixed null|html
+	 */
 	function edit_media_privacy_ui( $echo = true ){
 		$privacy = "";
 		$privacy = $this->select_privacy_ui( $echo = false );
@@ -59,14 +87,28 @@ class RTMediaPrivacy {
 		}
 	}
 
+	/**
+	 * Uploader privacy_ui
+	 *
+	 * @param array $attr
+	 *
+	 * @return null
+	 */
 	function uploader_privacy_ui( $attr ){
 		if ( ! isset ( $attr['privacy'] ) ){
 			$this->select_privacy_ui();
 		}
 	}
 
+	/**
+	 * Select privacy_ui
+	 *
+	 * @param boolean $echo
+	 *
+	 * @param boolean $select_id
+	 */
 	function select_privacy_ui( $echo = true, $select_id = false ){
-		global $rtmedia;
+		global $rtmedia, $rtmedia_media;
 
 		if ( ! is_rtmedia_privacy_enable() ){
 			return false;
@@ -76,7 +118,6 @@ class RTMediaPrivacy {
 			return false;
 		}
 
-		global $rtmedia_media;
 		$default = 0;
 		if ( isset ( $rtmedia_media->privacy ) ){
 			$default = $rtmedia_media->privacy;
@@ -95,7 +136,7 @@ class RTMediaPrivacy {
 		if ( $select_id && $select_id != "" ){
 			$attributes['id'] = $select_id;
 		}
-		global $rtmedia;
+
 		$privacy_levels = $rtmedia->privacy_settings['levels'];
 		if ( class_exists( 'BuddyPress' ) ){
 			if ( ! bp_is_active( 'friends' ) ){
