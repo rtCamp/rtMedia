@@ -6,7 +6,7 @@ License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires at least: WordPress 3.6
 Tested up to: WordPress 4.0 + BuddyPress 2.1.1
-Stable tag: 3.7.17
+Stable tag: 3.7.21
 
 Add albums, photo, audio/video encoding, privacy, sharing, front-end uploads & more. All this works mobile/tablets devices.
 
@@ -77,14 +77,14 @@ rtMedia has 3 premium solutions to take care of audio/video conversion.
 
 = rtMedia Premium Addons for Photos =
 
- * **[Instagram-Effects](https://rtcamp.com/products/rtmedia-instagram/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "rtMedia Instagram Addon")** - Users can apply Instagram like filters to photos.
- * **[Photo-Tagging](https://rtcamp.com/products/rtmedia-photo-tagging/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "rtMedia Photo-Tagging Addon")** - Users can tag their friends/other users in photos.
- * **[Watermark-Addon](https://rtcamp.com/products/rtmedia-photo-watermark/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "rtMedia Watermark Addon")** - User can add customised watermark text to photos. It supports Google Fonts.
+ * **[Instagram-Effects](http://rtcamp.com/store/rtmedia-instagram/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "rtMedia Instagram Addon")** - Users can apply Instagram like filters to photos.
+ * **[Photo-Tagging](http://rtcamp.com/store/rtmedia-photo-tagging/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "rtMedia Photo-Tagging Addon")** - Users can tag their friends/other users in photos.
 
 
-= rtMedia Membership Addon =
+= *Coming Soon* - Premium Addons on the way =
 
- * **[Membership-Addon](https://rtcamp.com/products/rtmedia-membership/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "rtMedia Watermark Addon")** - Users can be given controlled upload quotas and media type access on their profiles and groups.
+* **Watermark Addon** - Adds advanced, customised watermark text to photos. Supports Google Fonts. *(Development completed. Under testing)*
+* **Membership Addon** - Users can be given controlled upload quotas and media type access on their profiles and groups. *(Planning stage)*
 
 
 = Important Links =
@@ -132,6 +132,22 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 == Changelog ==
 
 Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "Visit rtMedia's Features page") to get some details about future releases.
+
+= 3.7.21 =
+* Fixed group featured media
+
+= 3.7.20 =
+* Featured media option for group
+* Track length for audio/video in media gallery
+* Italian and Portuguese translation update
+* Fix for JSON API
+* Other bug fixes
+
+= 3.7.19 =
+* Security fix for template include
+
+= 3.7.18 =
+* Fix for template include for relative paths
 
 = 3.7.17 =
 * Removed unwanted database call on BuddyPress single activity page
@@ -846,9 +862,8 @@ Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_sou
 
 == Upgrade Notice ==
 
-= 3.7.17 =
-Requires BuddyPress 1.7 or higher, if using BuddyPress. Removed unwanted database call on BuddyPress single activity page.
-
+= 3.7.21 =
+Requires BuddyPress 1.7 or higher, if using BuddyPress. Fixed group featured media
 
 == Sponsors ==
 
