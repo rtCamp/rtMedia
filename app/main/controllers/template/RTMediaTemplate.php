@@ -234,7 +234,7 @@ class RTMediaTemplate {
 					$thumbnailinfo = wp_get_attachment_image_src( $rtmedia_query->media[ 0 ]->media_id, 'rt_media_activity_image' );
 					$activity_id = rtmedia_activity_id( $rtmedia_query->media[ 0 ]->id );
 
-					if ( $rtmedia_query->media[ 0 ]->media_id ) {
+					if ( $rtmedia_query->media[ 0 ]->media_id && !empty( $activity_id ) ) {
 						global $wpdb;
 						$content = $wpdb->get_var("SELECT content FROM {$wpdb->prefix}bp_activity WHERE id = $activity_id");
 						// Replacing the filename with new effected filename
@@ -662,6 +662,11 @@ class RTMediaTemplate {
 		}
 
 		$context = apply_filters( 'rtmedia_context_filter', $context );
+
+		// check and exit if $template contains relative path
+		if( false !== strpos( $template, '.' ) ){
+			die('No Cheating');
+		}
 
 		$template_name = $template . '.php';
 

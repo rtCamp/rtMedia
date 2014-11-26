@@ -24,6 +24,7 @@ class RTMediaTags {
 	 */
 	private $id3;
 
+
 	/**
 	 *
 	 *
@@ -31,50 +32,18 @@ class RTMediaTags {
 	 */
 	private $data = null;
 
-	/**
-	 * @var array $duration_info
-	 */
+
 	private $duration_info = array( 'duration' );
-
-	/**
-	 * Define media tags
-	 *
-	 * @var array $tags
-	 */
-	private $tags = array(
-		'title',
-		'artist',
-		'album',
-		'year',
-		'genre',
-		'comment',
-		'track',
-		'track_total',
-		'attached_picture',
-		'image',
-	);
-
-	/**
-	 * Define media tags
-	 *
-	 * @var array $readonly_tags
-	 */
+	private $tags = array( 'title', 'artist', 'album', 'year', 'genre', 'comment', 'track', 'track_total', 'attached_picture', 'image' );
 	private $readonly_tags = array( 'track_total', 'attached_picture', 'image' );
 
-	/**
-	 * Initialises the __construct.
-	 */
+
 	public function __construct( $file ){
 
 		$this->file = $file;
 		$this->id3  = self::id3();
 	}
 
-	/**
-	 * Update file path
-	 *
-	 * @param $file
-	 */
 	public function update_filepath( $file ){
 
 		$this->file = $file;
@@ -83,10 +52,6 @@ class RTMediaTags {
 	/**
 	 *
 	 * Writes data inside  the files after manipulation, mainly mp3 files.
-	 *
-	 * @param null
-	 *
-	 * @return boolean
 	 */
 	public function save(){
 
@@ -109,11 +74,10 @@ class RTMediaTags {
 		}
 	}
 
+
 	/**
 	 *
 	 * Initialize the getid3 class
-	 *
-	 * @param null
 	 *
 	 * @return object
 	 */
@@ -128,17 +92,10 @@ class RTMediaTags {
 		return self::$_id3;
 	}
 
+
 	/**
 	 *
 	 * Sets cover art for mp3 files
-	 *
-	 * @param array $data
-	 *
-	 * @param file_type $mime
-	 *
-	 * @param string $description
-	 *
-	 * @return null
 	 */
 	public function set_art( $data, $mime = 'jpeg', $description = 'Description' ){
 
@@ -146,20 +103,14 @@ class RTMediaTags {
 			$this->analyze();
 		}
 
-		$this->data['attached_picture'] = array();
+		$this->data[ 'attached_picture' ] = array();
 
-		$this->data['attached_picture'][0]['data']          = $data;
-		$this->data['attached_picture'][0]['picturetypeid'] = 0x03;    // 'Cover (front)'
-		$this->data['attached_picture'][0]['description']   = $description;
-		$this->data['attached_picture'][0]['mime']          = 'image/' . $mime;
+		$this->data[ 'attached_picture' ][ 0 ][ 'data' ]          = $data;
+		$this->data[ 'attached_picture' ][ 0 ][ 'picturetypeid' ] = 0x03; // 'Cover (front)'
+		$this->data[ 'attached_picture' ][ 0 ][ 'description' ]   = $description;
+		$this->data[ 'attached_picture' ][ 0 ][ 'mime' ]          = 'image/' . $mime;
 	}
 
-	/**
-	 * Analyze data to get media tag info.
-	 *
-	 * @param string $key
-	 *
-	 */
 	public function __get( $key ){
 
 		if ( ! in_array( $key, $this->tags ) && ! in_array( $key, $this->duration_info ) && ! isset( $this->duration_info[ $key ] ) ){
@@ -170,29 +121,17 @@ class RTMediaTags {
 			$this->analyze();
 		}
 
-		if ( 'image' == $key ){
-			return isset( $this->data['attached_picture'] ) ? array(
-				'data' => $this->data['attached_picture'][0]['data'],
-				'mime' => $this->data['attached_picture'][0]['mime'],
-			) : null;
+		if ( $key == 'image' ){
+			return isset( $this->data[ 'attached_picture' ] ) ? array( 'data' => $this->data[ 'attached_picture' ][ 0 ][ 'data' ], 'mime' => $this->data[ 'attached_picture' ][ 0 ][ 'mime' ] ) : null;
 		} else {
 			if ( isset( $this->duration_info[ $key ] ) ){
 				return $this->duration_info[ $key ];
 			} else {
-				return isset( $this->data[ $key ] ) ? $this->data[ $key ][0] : null;
+				return isset( $this->data[ $key ] ) ? $this->data[ $key ][ 0 ] : null;
 			}
 		}
 	}
 
-	/**
-	 * Setting the value.
-	 *
-	 * @param string $key
-	 *
-	 * @param string $value
-	 *
-	 * @return mixed string|error_obj
-	 */
 	public function __set( $key, $value ){
 
 		if ( ! in_array( $key, $this->tags ) ){
@@ -209,14 +148,10 @@ class RTMediaTags {
 		$this->data[ $key ] = array( $value );
 	}
 
+
 	/**
 	 *
 	 * Analyze file
-	 *
-	 * @param null
-	 *
-	 * @return null
-	 *
 	 */
 	private function analyze(){
 
@@ -225,21 +160,21 @@ class RTMediaTags {
 
 		$data = $this->id3->analyze( $this->file );
 
-		$this->duration_info = array( 'duration' => isset( $data['playtime_string'] ) ? ( $data['playtime_string'] ) : '-:--', );
+		$this->duration_info = array( 'duration' => isset( $data[ 'playtime_string' ] ) ? ( $data[ 'playtime_string' ] ) : '-:--', );
 
-		if ( ! in_array( $path_parts['extension'], $array_ext ) ){
-			$this->data = isset( $data['tags'] ) ? array_intersect_key( $data['tags']['id3v2'], array_flip( $this->tags ) ) : array();
+		if ( ! in_array( $path_parts[ 'extension' ], $array_ext ) ){
+			$this->data = isset( $data[ 'tags' ] ) ? array_intersect_key( $data[ 'tags' ][ 'id3v2' ], array_flip( $this->tags ) ) : array();
 		}
 
-		if ( isset( $data['id3v2']['APIC'] ) ){
-			$this->data['attached_picture'] = array( $data['id3v2']['APIC'][0] );
+		if ( isset( $data[ 'id3v2' ][ 'APIC' ] ) ){
+			$this->data[ 'attached_picture' ] = array( $data[ 'id3v2' ][ 'APIC' ][ 0 ] );
 		}
 
-		if ( isset( $data['tags']['id3v2']['track_number'] ) ){
-			$track = $data['tags']['id3v2']['track_number'][0];
+		if ( isset( $data[ 'tags' ][ 'id3v2' ][ 'track_number' ] ) ){
+			$track = $data[ 'tags' ][ 'id3v2' ][ 'track_number' ][ 0 ];
 		} else {
-			if ( isset( $data['tags']['id3v1']['track'] ) ){
-				$track = $data['tags']['id3v1']['track'][0];
+			if ( isset( $data[ 'tags' ][ 'id3v1' ][ 'track' ] ) ){
+				$track = $data[ 'tags' ][ 'id3v1' ][ 'track' ][ 0 ];
 			} else {
 				$track = null;
 			}
@@ -247,12 +182,10 @@ class RTMediaTags {
 
 		if ( strstr( $track, '/' ) ){
 			list( $track, $track_total ) = explode( '/', $track );
-			$this->data['track_total'] = array( $track_total );
+			$this->data[ 'track_total' ] = array( $track_total );
 		}
 
-		$this->data['track'] = array( $track );
+		$this->data[ 'track' ] = array( $track );
 
 	}
 }
-
-?>
