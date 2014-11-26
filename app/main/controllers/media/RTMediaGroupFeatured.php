@@ -37,6 +37,11 @@ class RTMediaGroupFeatured extends RTMediaUserInteraction {
 	}
 
 	function before_render(){
+
+		if( ! class_exists( 'BuddyPress' ) || ! bp_is_active( 'groups' ) ){
+			return false;
+		}
+
 		$this->get();
 
 		// if group id is not set, don't render "Set featured"
