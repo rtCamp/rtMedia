@@ -28,9 +28,9 @@ class RTMediaFriends {
 
 	/**
 	 * Get friends cache.
-	 * 
+	 *
 	 * @param object $user
-	 * 
+	 *
 	 * @return mixed $friends
 	 */
 	function get_friends_cache( $user ){
@@ -46,7 +46,7 @@ class RTMediaFriends {
 			return array();
 		}
 		$friends = wp_cache_get( 'rtmedia-user-friends-' . $user );
-		if ( $friends === false ){
+		if ( false === $friends ){
 			$friends = $this->refresh_friends_cache( $user );
 		}
 
@@ -55,9 +55,9 @@ class RTMediaFriends {
 
 	/**
 	 * Refresh friends cache.
-	 * 
+	 *
 	 * @param object $user
-	 * 
+	 *
 	 * @return mixed $friends
 	 */
 	function refresh_friends_cache( $user ){
