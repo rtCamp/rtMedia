@@ -133,6 +133,9 @@ http://www.youtube.com/watch?v####dJrykKQGDcs
 
 Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "Visit rtMedia's Features page") to get some details about future releases.
 
+#### 3.7.21 ####
+* Fixed group featured media
+
 #### 3.7.20 ####
 * Featured media option for group
 * Track length for audio/video in media gallery
@@ -857,8 +860,8 @@ Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_sou
 * HTML5 Audio Tag Support (with fallback)
 * HTML5 Video Tag Support (with fallback)
 
-#### 3.7.20 ####
-Requires BuddyPress 1.7 or higher, if using BuddyPress. Featured media option for group, track length for audio/video in media gallery, Italian and Portuguese translation update
+#### 3.7.21 ####
+Requires BuddyPress 1.7 or higher, if using BuddyPress. Fixed group featured media
 
 ## Sponsors ##
 
