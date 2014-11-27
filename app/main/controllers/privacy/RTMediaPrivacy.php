@@ -88,7 +88,7 @@ class RTMediaPrivacy {
 	}
 
 	/**
-	 * Uploader privacy_ui
+	 * Show privacy in Uploader
 	 *
 	 * @param array $attr
 	 *
@@ -101,7 +101,7 @@ class RTMediaPrivacy {
 	}
 
 	/**
-	 * Select privacy_ui
+	 * Select privacy in Uploader
 	 *
 	 * @param boolean $echo
 	 *
@@ -300,7 +300,7 @@ class RTMediaPrivacy {
 	}
 
 	/**
-	 * Add nav
+	 * Add nav to BuddyPress Profile.
 	 *
 	 * @param null
 	 *
@@ -344,7 +344,7 @@ class RTMediaPrivacy {
 	}
 
 	/**
-	 * settings ui
+	 * Display settings ui
 	 *
 	 * @param null
 	 *
