@@ -33,7 +33,7 @@ class RTMediaPrivacy {
 	}
 
 	/**
-	 * Enable buddypress load_more
+	 * Enable buddypress load more option.
 	 *
 	 * @param boolean $has_more_items
 	 *
@@ -161,7 +161,7 @@ class RTMediaPrivacy {
 	}
 
 	/**
-	 * Reset to system_default
+	 * Reset to system default
 	 *
 	 * @param null
 	 *
@@ -172,7 +172,7 @@ class RTMediaPrivacy {
 	}
 
 	/**
-	 * Return the site_default
+	 * Return the site default
 	 *
 	 * @param null
 	 *
@@ -185,7 +185,7 @@ class RTMediaPrivacy {
 	}
 
 	/**
-	 * Return the user_default
+	 * Return the user default
 	 *
 	 * @param null
 	 *
@@ -196,7 +196,9 @@ class RTMediaPrivacy {
 	}
 
 	/**
-	 * Return the get_default
+	 * Get the default Settings
+	 * if default privacy is not set, then set to site default
+	 * else set to system default
 	 *
 	 * @param null
 	 *
@@ -215,7 +217,7 @@ class RTMediaPrivacy {
 	}
 
 	/**
-	 * Check for privacy is_enabled or not.
+	 * Check for privacy is enabled or not.
 	 *
 	 * @param null
 	 *
@@ -236,7 +238,7 @@ class RTMediaPrivacy {
 	}
 
 	/**
-	 * save user_default and update user_meta
+	 * save user default settings and update user meta
 	 *
 	 * @param int $level
 	 *
@@ -254,7 +256,7 @@ class RTMediaPrivacy {
 	}
 
 	/**
-	 * get_user_default i.e user meta
+	 * Get user default i.e user meta
 	 *
 	 * @param int $user_id
 	 *
@@ -275,7 +277,7 @@ class RTMediaPrivacy {
 	}
 
 	/**
-	 * For checking required_access
+	 * For checking required access settings.
 	 */
 	static function required_access( $object_id = false ){
 		if ( BPMediaPrivacy::is_enabled() == false ){
@@ -300,7 +302,7 @@ class RTMediaPrivacy {
 	}
 
 	/**
-	 * Add nav to BuddyPress Profile.
+	 * Add navigation to BuddyPress Profile.
 	 *
 	 * @param null
 	 *
@@ -344,7 +346,7 @@ class RTMediaPrivacy {
 	}
 
 	/**
-	 * Display settings ui
+	 * Display settings user interface.
 	 *
 	 * @param null
 	 *
@@ -361,6 +363,13 @@ class RTMediaPrivacy {
 		bp_core_load_template( apply_filters( 'bp_settings_screen_delete_account', 'members/single/plugins' ) );
 	}
 
+	/**
+	 * Display form for Privacy settings.
+	 *
+	 * @param null
+	 *
+	 * @return null
+	 */
 	function content(){
 		if ( buddypress()->current_action != 'privacy' ){
 			return;
@@ -398,10 +407,20 @@ class RTMediaPrivacy {
 	<?php
 	}
 
+	/**
+	 * Return Privacy Text.
+	 *
+	 * @param null
+	 *
+	 * @return string
+	 */
 	function title(){
 		return __( 'Privacy', 'rtmedia' );
 	}
 
+	/**
+	 * Track privacy activity.
+	 */
 	function activity_privacy( $sql, $select_sql, $from_sql, $where_sql, $sort, $pag_sql = '' ){
 		if ( is_rt_admin() ){
 			return $sql;
