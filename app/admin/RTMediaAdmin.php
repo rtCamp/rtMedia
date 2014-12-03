@@ -30,7 +30,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ){
 
 			// Actions and filters
 			add_action( 'init', array( $this, 'video_transcoding_survey_response' ) );
-			add_action( 'admin_init', array( $this, 'presstrends_plugin' ) );
+//			add_action( 'admin_init', array( $this, 'presstrends_plugin' ) );
 
 			//$rtmedia_feed = new RTMediaFeed();
 			add_filter( 'plugin_action_links_' . RTMEDIA_BASE_NAME, array( &$this, 'plugin_add_settings_link' ) );
@@ -1591,7 +1591,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ){
 
 		public function plugin_meta_premium_addon_link( $plugin_meta, $plugin_file, $plugin_data, $status ){
 			if ( plugin_basename( RTMEDIA_PATH . 'index.php' ) == $plugin_file ){
-				$plugin_meta[] = '<a href="https://rtcamp.com/store/product-category/buddypress/?utm_source=dashboard&#038;utm_medium=plugin&#038;utm_campaign=buddypress-media" title="' . __( 'Premium Add-ons', 'rtmedia' ) . '">' . __( 'Premium Add-ons', 'rtmedia' ) . '</a>';
+				$plugin_meta[] = '<a href="https://rtcamp.com/rtmedia/addons/?utm_source=dashboard&#038;utm_medium=plugin&#038;utm_campaign=buddypress-media" title="' . __( 'Premium Add-ons', 'rtmedia' ) . '">' . __( 'Premium Add-ons', 'rtmedia' ) . '</a>';
 			}
 
 			return $plugin_meta;
@@ -1825,10 +1825,10 @@ if ( ! class_exists( 'RTMediaAdmin' ) ){
 		}
 
 		function rtmedia_update_template_notice(){
-			$site_option = rtmedia_get_site_option( 'rtmedia-update-template-notice-v3_7_3' );
+			$site_option = rtmedia_get_site_option( 'rtmedia-update-template-notice-v3_7_20' );
 
 			if ( ! $site_option || 'hide' != $site_option ){
-				rtmedia_update_site_option( 'rtmedia-update-template-notice-v3_7_3', 'show' );
+				rtmedia_update_site_option( 'rtmedia-update-template-notice-v3_7_20', 'show' );
 				if ( is_dir( get_template_directory() . '/rtmedia' ) ){
 					echo '<div class="error rtmedia-update-template-notice"><p>' . __( 'Please update rtMedia template files if you have overridden the default rtMedia templates in your theme. If not, you can ignore and hide this notice.' ) . '<a href="#" onclick="rtmedia_hide_template_override_notice()" style="float:right">' . __( 'Hide', 'rtmedia' ) . '</a>' . ' </p></div>';
 					?>
@@ -1849,7 +1849,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ){
 
 		function rtmedia_hide_template_override_notice(){
 
-			if ( rtmedia_update_site_option( 'rtmedia-update-template-notice-v3_7_3', 'hide' ) ){
+			if ( rtmedia_update_site_option( 'rtmedia-update-template-notice-v3_7_20', 'hide' ) ){
 				echo '1';
 			} else {
 				echo '0';

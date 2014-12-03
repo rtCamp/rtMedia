@@ -949,7 +949,9 @@ class RTMediaJsonApi{
         }else{
             //Process rtmedia_file
             $img = $rtmedia_file;
-            $img = str_replace('data:image/png;base64,', '', $img);
+			$image_type = $_POST['image_type'];
+			$str_replace = 'data:image/'.$image_type.';base64,';
+            $img = str_replace($str_replace, '', $img);
         //    $img = str_replace(' ', '+', $img);
             $rtmedia_file = base64_decode($img);
             if( !$rtmedia_file ){
@@ -1024,6 +1026,12 @@ class RTMediaJsonApi{
 
                 global $wpdb, $bp;
                 $updated = $wpdb->update ( $bp->activity->table_name, array( "type" => "rtmedia_update", "content" => $objActivity->create_activity_html () ), array( "id" => $activity_id ) );
+
+				// if there is only single media the $updated value will be false even if the value we are passing to check is correct.
+				// So we need to hardcode the $updated to true if there is only single media for same activity
+				if( sizeof( $same_medias ) == 1 && $activity_id ){
+					$updated = true;
+				}
             }
         }
 

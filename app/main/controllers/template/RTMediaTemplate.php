@@ -179,6 +179,7 @@ class RTMediaTemplate {
 				$media_array[ $key ]               = $media;
 				$media_array[ $key ]->guid         = rtmedia_image( 'rt_media_thumbnail', $media->id, false );
 				$media_array[ $key ]->rt_permalink = get_rtmedia_permalink( $media->id );
+				$media_array[ $key ]->duration     = rtmedia_duration( $media->id );
 				$media_array[ $key ] = apply_filters( 'rtmedia_media_array_backbone', $media_array[ $key ] );
 			}
 		}
@@ -227,18 +228,20 @@ class RTMediaTemplate {
 				$image_meta_data = wp_generate_attachment_metadata( $rtmedia_query->media[ 0 ]->media_id, $image_path );
 				wp_update_attachment_metadata( $rtmedia_query->media[ 0 ]->media_id, $image_meta_data );
 			}
-            $is_valid_url = preg_match( "/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i", $_POST[ 'rtmedia-filepath-old' ] );
-            if( isset( $_POST[ 'rtmedia-filepath-old' ] ) && $is_valid_url ) {
-                $thumbnailinfo = wp_get_attachment_image_src($rtmedia_query->media[ 0 ]->media_id, 'rt_media_activity_image');
-                $activity_id = rtmedia_activity_id($rtmedia_query->media[ 0 ]->id);
+			if( isset( $_POST[ 'rtmedia-filepath-old' ] ) ) {
+            	$is_valid_url = preg_match( "/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i", $_POST[ 'rtmedia-filepath-old' ] );
+				if( $is_valid_url ) {
+					$thumbnailinfo = wp_get_attachment_image_src( $rtmedia_query->media[ 0 ]->media_id, 'rt_media_activity_image' );
+					$activity_id = rtmedia_activity_id( $rtmedia_query->media[ 0 ]->id );
 
-                if ( $rtmedia_query->media[ 0 ]->media_id ) {
-                    global $wpdb;
-                    $content = $wpdb->get_var("SELECT content FROM {$wpdb->prefix}bp_activity WHERE id = $activity_id");
-                    // Replacing the filename with new effected filename
-                    $activity_content = str_replace( $_POST[ 'rtmedia-filepath-old' ], $thumbnailinfo[ 0 ], $content );
-                    $wpdb->update($wpdb->prefix . 'bp_activity', array('content' => $activity_content), array('id' => $activity_id));
-                }
+					if ( $rtmedia_query->media[ 0 ]->media_id && !empty( $activity_id ) ) {
+						global $wpdb;
+						$content = $wpdb->get_var("SELECT content FROM {$wpdb->prefix}bp_activity WHERE id = $activity_id");
+						// Replacing the filename with new effected filename
+						$activity_content = str_replace( $_POST[ 'rtmedia-filepath-old' ], $thumbnailinfo[ 0 ], $content );
+						$wpdb->update($wpdb->prefix . 'bp_activity', array('content' => $activity_content), array('id' => $activity_id));
+					}
+				}
             }
                     
 			$state = $media->update( $rtmedia_query->action_query->id, $data, $rtmedia_query->media[ 0 ]->media_id );
@@ -659,6 +662,11 @@ class RTMediaTemplate {
 		}
 
 		$context = apply_filters( 'rtmedia_context_filter', $context );
+
+		// check and exit if $template contains relative path
+		if( false !== strpos( $template, '.' ) ){
+			die('No Cheating');
+		}
 
 		$template_name = $template . '.php';
 

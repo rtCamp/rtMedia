@@ -58,7 +58,8 @@ jQuery( function ( $ ) {
             "guid": false,
             "width": 0,
             "height": 0,
-            "rt_permalink": false
+            "rt_permalink": false,
+            "duration": "0:00"
             //			"next"			: -1,
             //			"prev"			: -1
         }
@@ -569,7 +570,7 @@ jQuery( function ( $ ) {
                 uploaderObj.uploader.settings.multipart_params.activity_id = rtnObj.activity_id;
                 activity_id = rtnObj.activity_id;
                 if ( rtnObj.permalink != '' ) {
-                    $( "#" + file.id + " .plupload_file_name" ).html( "<a href='" + rtnObj.permalink + "' target='_blank' title='" + rtnObj.permalink + "'>" + file.title.substring( 0, 40 ) + "</a>" );
+                    $( "#" + file.id + " .plupload_file_name" ).html( "<a href='" + rtnObj.permalink + "' target='_blank' title='" + rtnObj.permalink + "'>" + file.title.substring( 0, 40 ).replace( /(<([^>]+)>)/ig, "" ) + "</a>" );
                     $( "#" + file.id + " .plupload_media_edit" ).html( "<a href='" + rtnObj.permalink + "edit' target='_blank'><span title='" + rtmedia_edit_media + "'><i class='rtmicon-edit'></i> " + rtmedia_edit + "</span></a>" );
                     $( "#" + file.id + " .plupload_delete" ).html( "<span id='" + rtnObj.media_id + "' class='rtmedia-delete-uploaded-media' title='" + rtmedia_delete + "'>&times;</span>" );
                 }
@@ -1106,7 +1107,7 @@ jQuery( document ).ready( function ( $ ) {
 
 
     } );
-    $( document ).on( "click", '.rtmedia-featured', function ( e ) {
+    $( document ).on( "click", '.rtmedia-featured, .rtmedia-group-featured', function ( e ) {
         e.preventDefault();
         var that = this;
         $( this ).attr( 'disabled', 'disabled' );

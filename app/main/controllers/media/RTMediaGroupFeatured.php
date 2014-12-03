@@ -1,31 +1,23 @@
 <?php
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
- * Description of RTMediaFeatured
+ * Description of RTMediaGroupFeatured
  *
- * @author saurabh
+ * @author ritz <ritesh.patel@rtcamp.com>
  */
-class RTMediaFeatured extends RTMediaUserInteraction {
+class RTMediaGroupFeatured extends RTMediaUserInteraction {
 
-	/**
-	 *
-	 */
-	public $user_id;
+	public $group_id;
 	public $featured;
 	public $settings;
 
-	function __construct( $user_id = false, $flag = true ){
+	function __construct( $group_id = false, $flag = true ){
 		$args = array(
-			'action' => 'featured',
+			'action' => 'group-featured',
 			'label' => __( 'Set as Featured', 'rtmedia' ),
 			'plural' => '',
 			'undo_label' => __( 'Unset Featured', 'rtmedia' ),
-			'privacy' => 60,
+			'privacy' => 20,
 			'countable' => false,
 			'single' => true,
 			'repeatable' => false,
@@ -33,7 +25,7 @@ class RTMediaFeatured extends RTMediaUserInteraction {
 			'icon_class' => 'rtmicon-star rtmicon-fw',
 		);
 
-		$this->user_id = $user_id;
+		$this->group_id = $group_id;
 		parent::__construct( $args );
 		$this->settings();
 		remove_filter( 'rtmedia_action_buttons_before_delete', array( $this, 'button_filter' ) );
@@ -45,10 +37,30 @@ class RTMediaFeatured extends RTMediaUserInteraction {
 	}
 
 	function before_render(){
-		$this->get();
-		if ( ( ! ( isset( $this->settings[ $this->media->media_type ] ) && $this->settings[ $this->media->media_type ] ) ) || ( isset( $this->media->context ) && ( 'profile' != $this->media->context ) ) ){
+
+		if( ! class_exists( 'BuddyPress' ) || ! bp_is_active( 'groups' ) ){
 			return false;
 		}
+
+		$this->get();
+
+		// if group id is not set, don't render "Set featured"
+		if( empty( $this->group_id ) ){
+			return false;
+		}
+
+		$user_id = get_current_user_id();
+
+		// if current is not group moderator or group admin, don't render "Set featured"
+		if ( ! groups_is_user_mod( $user_id, $this->group_id ) && ! groups_is_user_admin( $user_id, $this->group_id ) && ! is_rt_admin() ){
+			return false;
+		}
+
+		// if current media is not any group media, don't render "Set featured"
+		if ( ( ! ( isset( $this->settings[ $this->media->media_type ] ) && $this->settings[ $this->media->media_type ] ) ) || ( isset( $this->media->context ) && ( 'group' != $this->media->context ) ) ){
+			return false;
+		}
+
 		if ( isset( $this->action_query ) && isset( $this->action_query->id ) && $this->action_query->id == $this->featured ){
 			$this->label = $this->undo_label;
 		}
@@ -58,27 +70,21 @@ class RTMediaFeatured extends RTMediaUserInteraction {
 		if ( false === $media_id ){
 			return;
 		}
-		if ( false === $this->user_id ){
-			$this->user_id = get_current_user_id();
+		if ( false === $this->group_id ){
+			return;
 		}
-
-		update_user_meta( $this->user_id, 'rtmedia_featured_media', $media_id );
+		groups_update_groupmeta( $this->group_id, 'rtmedia_group_featured_media', $media_id );
 	}
 
 	function get(){
-		if ( false === $this->user_id ){
-			if ( function_exists( 'bp_displayed_user_id' ) ){
-				$this->user_id = bp_displayed_user_id();
-			}
-			if ( ! $this->user_id ){
-				$this->user_id = get_current_user_id();
+		if ( false === $this->group_id ){
+			if ( isset( $this->media ) && isset( $this->media->context_id ) ){
+				$this->group_id = $this->media->context_id;
+			} else {
+				return false;
 			}
 		}
-		$this->featured = get_user_meta( $this->user_id, 'rtmedia_featured_media', true );
-		if ( '' == $this->featured ){
-			$this->featured = get_user_meta( $this->user_id, 'bp_media_featured_media', true );
-		}
-
+		$this->featured = groups_get_groupmeta( $this->group_id, 'rtmedia_group_featured_media', true );
 		return $this->featured;
 	}
 
@@ -191,24 +197,11 @@ class RTMediaFeatured extends RTMediaUserInteraction {
 
 }
 
-function rtmedia_featured( $user_id = false ){
-	echo rtmedia_get_featured( $user_id );
+function rtmedia_group_featured( $group_id = false ){
+	echo rtmedia_get_group_featured( $group_id );
 }
 
-function rtmedia_get_featured( $user_id = false ){
-	$featured = new RTMediaFeatured( $user_id, false );
-
+function rtmedia_get_group_featured( $group_id = false ){
+	$featured = new RTMediaGroupFeatured( $group_id, false );
 	return $featured->content();
-}
-
-if ( ! function_exists( 'bp_media_featured' ) ){
-
-	function bp_media_featured( $user_id = false ){
-		echo rtmedia_get_featured( $user_id );
-	}
-
-	function bp_media_get_featured( $user_id = false ){
-		return rtmedia_get_featured( $user_id );
-	}
-
 }
