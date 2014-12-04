@@ -133,6 +133,9 @@ http://www.youtube.com/watch?v####dJrykKQGDcs
 
 Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "Visit rtMedia's Features page") to get some details about future releases.
 
+#### 3.7.24 ####
+* Bug fix for encoding service
+
 #### 3.7.23 ####
 * Fix group featured media
 * Fix database warning on first time install
@@ -867,8 +870,8 @@ Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_sou
 * HTML5 Audio Tag Support (with fallback)
 * HTML5 Video Tag Support (with fallback)
 
-#### 3.7.23 ####
-Requires BuddyPress 1.7 or higher, if using BuddyPress. Fix group featured media and fix database warnings on first time install
+#### 3.7.24 ####
+Requires BuddyPress 1.7 or higher, if using BuddyPress. Bug fix for encoding service
 
 ## Sponsors ##
 
