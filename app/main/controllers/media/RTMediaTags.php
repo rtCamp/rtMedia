@@ -162,7 +162,7 @@ class RTMediaTags {
 
 		$this->duration_info = array( 'duration' => isset( $data[ 'playtime_string' ] ) ? ( $data[ 'playtime_string' ] ) : '-:--', );
 
-		if ( ! in_array( $path_parts[ 'extension' ], $array_ext ) ){
+		if ( ! in_array( $path_parts[ 'extension' ], $array_ext ) && ! empty( $data[ 'tags' ][ 'id3v2' ] ) ){
 			$this->data = isset( $data[ 'tags' ] ) ? array_intersect_key( $data[ 'tags' ][ 'id3v2' ], array_flip( $this->tags ) ) : array();
 		}
 

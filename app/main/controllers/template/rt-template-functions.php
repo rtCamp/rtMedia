@@ -2144,7 +2144,7 @@ function get_music_cover_art( $file, $id ) {
 	$mime = explode( "/", $image_mime );
 	
 	$thumb_upload_info = wp_upload_bits( $title_info . "." . $mime[ sizeof( $mime ) - 1 ], null, $image_info['data'] );
-	if ( is_array( $thumb_upload_info ) && $thumb_upload_info[ 'url' ] != "" ){
+	if ( is_array( $thumb_upload_info ) && !empty( $thumb_upload_info[ 'url' ] ) ){
 		$mediaObj->model->update( array( 'cover_art' => $thumb_upload_info[ 'url' ] ), array( 'id' => $id ) );
 
 		return $thumb_upload_info[ 'url' ];

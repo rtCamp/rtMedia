@@ -202,7 +202,7 @@ class RTMediaMedia {
 		if ( array_key_exists( 'media_title', $data ) || array_key_exists( 'description', $data ) ){
 			$post_data[ 'ID' ] = $media_id;
 			if ( isset ( $data[ 'media_title' ] ) ){
-				$data[ 'media_title' ] = sanitize_title( $data[ 'media_title' ] );
+				$data[ 'media_title' ] = wp_kses( $data[ 'media_title' ], wp_kses_allowed_html() );
 				$post_data[ 'post_title' ] = $data[ 'media_title' ];
 				$post_data[ 'post_name' ]  = $data[ 'media_title' ];
 			}
@@ -417,7 +417,7 @@ class RTMediaMedia {
 		$attachments = array();
 
 		foreach ( $file_object as $file ) {
-			$uploaded[ 'title' ] = sanitize_title( $uploaded[ 'title' ], 'media' );
+			$uploaded[ 'title' ] = wp_kses( $uploaded[ 'title' ], wp_kses_allowed_html() );
 			$uploaded[ 'description' ] = sanitize_text_field( $uploaded[ 'description' ] );
 			$attachments[ ] = array(
 				'post_mime_type' => $file[ 'type' ],
