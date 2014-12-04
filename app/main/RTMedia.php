@@ -85,9 +85,9 @@ class RTMedia
     public function __construct() {
 		$this->default_thumbnail = apply_filters('rtmedia_default_thumbnail', RTMEDIA_URL . 'app/assets/img/thumb_default.png');
         add_action('init', array($this, 'check_global_album'));
-        add_action('plugins_loaded', array($this, 'init'), 20);
-        add_action('plugins_loaded', array($this, 'load_translation'), 10);
-        add_action('plugins_loaded', array($this, 'admin_init'), 30);
+		add_action('plugins_loaded', array($this, 'admin_init'));
+		add_action('plugins_loaded', array($this, 'load_translation'), 10);
+		add_action('plugins_loaded', array($this, 'init'), 20);
         add_action('wp_enqueue_scripts', array('RTMediaGalleryShortcode', 'register_scripts'));
         add_action('wp_enqueue_scripts', array(&$this, 'enqueue_scripts_styles'), 999);
         include(RTMEDIA_PATH . 'app/main/controllers/template/rt-template-functions.php');
@@ -414,7 +414,6 @@ class RTMedia
     function admin_init() {
         global $rtmedia_admin;
         $rtmedia_admin = new RTMediaAdmin();
-        $rtMigration = new RTMediaMigration();
     }
 
     function media_screen() {
