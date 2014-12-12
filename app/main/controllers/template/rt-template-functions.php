@@ -2800,3 +2800,13 @@ function sanitize_filename_before_upload( $filename ) {
 
     return remove_accents( $string ) . $ext;
 }
+
+function rtmedia_is_global_album( $album_id ) {
+    $rtmedia_global_albums = rtmedia_global_albums();
+    
+    if( !in_array( $album_id, $rtmedia_global_albums ) ) {
+        return true;
+    } else {
+        return false;
+    }
+}
