@@ -68,12 +68,10 @@ div#icon-buddypress-media { background: url('../img/bpm-icon-32.png'); backgroun
 #bpm-unsubscribe-dialog p { margin: 10px; }
 
 table.bp-media-encoding-table td, table.bp-media-encoding-table th {
-	border-left-color: #fff;
-	border-right-color: #dfdfdf;
 	border-width: 1px;
 	vertical-align: middle;
 	text-align: center;
-	font-family: sans-serif;
+    border: 1px solid #CCC;
 }
 table.bp-media-encoding-table th {
 	font-weight: bold;
