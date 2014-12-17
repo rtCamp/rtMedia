@@ -1726,18 +1726,17 @@ function rtmedia_create_album_modal() {
 			<div id="rtm-modal-container">
 				<?php do_action( "rtmedia_before_create_album_modal" ); ?>
 				<h2 class="rtm-modal-title"><?php _e( 'Create New Album', 'rtmedia' ); ?></h2>
-
-				<p>
-					<label for="rtmedia_album_name"><?php _e( 'Album Title : ', 'rtmedia' ); ?></label>
+                <p>
+                    <label class="rtm-modal-grid-title-column" for="rtmedia_album_name"><?php _e( 'Album Title : ', 'rtmedia' ); ?></label>
 					<input type="text" id="rtmedia_album_name" value="" class="rtm-input-medium"/>
-					<input type="hidden" id="rtmedia_album_context"
-						   value="<?php echo $rtmedia_query->query[ 'context' ]; ?>">
-					<input type="hidden" id="rtmedia_album_context_id"
-						   value="<?php echo $rtmedia_query->query[ 'context_id' ]; ?>">
-					<button type="button"
-							id="rtmedia_create_new_album"><?php _e( "Create Album", "rtmedia" ); ?></button>
+                </p>
+                <?php do_action( "rtmedia_add_album_privacy" ); ?>
+                <input type="hidden" id="rtmedia_album_context" value="<?php echo $rtmedia_query->query[ 'context' ]; ?>">
+                <input type="hidden" id="rtmedia_album_context_id" value="<?php echo $rtmedia_query->query[ 'context_id' ]; ?>">                
+                <p>
+					<button type="button" id="rtmedia_create_new_album"><?php _e( "Create Album", "rtmedia" ); ?></button>
 				</p>
-				<?php do_action( "rtmedia_add_album_privacy" ); ?>
+				
 				<?php do_action( "rtmedia_after_create_album_modal" ); ?>
 			</div>
 		</div>
