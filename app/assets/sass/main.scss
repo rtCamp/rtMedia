@@ -995,9 +995,8 @@ button.rtp-lb-close {
     }
 
     #rtm-media-options {
-        padding: 13px 0;
+        padding: 5px 0;
         display: inline-block;
-        float: right;
 
         .click-nav {
             float : none;
@@ -1534,29 +1533,15 @@ button.rtp-lb-close {
 
     input,select {
         margin-right: 10px;
-        font-size: 16px;
-    }
-    input {
-        max-height: 34px;
-    }
-    select {
-        margin-left: 4px;
     }
 
     p {
         margin-bottom: 10px;
-        label.rtm-modal-grid-title-column {
-            width: 20%;
-        }
-        #rtmedia_create_new_album {
-            margin-top: 10px;
-        }
     }
 
     label{
            min-width: 90px;
            display:inline-block;
-           font-size: 16px;
     }
     & > div button {
         font-size: 13px;
