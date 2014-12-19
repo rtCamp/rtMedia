@@ -1678,7 +1678,10 @@ function rtm_is_album_create_allowed(){
     return apply_filters( 'rtm_is_album_create_enable', true );
 }
 
-function rtm_is_user_allowed_to_create_album( $user_id ){
+function rtm_is_user_allowed_to_create_album( $user_id = false ){
+    if( ! $user_id ){
+        $user_id = get_current_user_id();
+    }
     return apply_filters( 'rtm_display_create_album_button', true, $user_id );
 }
 
@@ -1700,7 +1703,7 @@ function rtmedia_create_album( $options ) {
 		switch ( $rtmedia_query->query[ 'context' ] ) {
 			case 'profile':
 				if ( $rtmedia_query->query[ 'context_id' ] == $user_id ){
-					$display = rtm_is_user_allowed_to_create_album( $user_id );
+					$display = rtm_is_user_allowed_to_create_album();
 				}
 				break;
 			case 'group':
