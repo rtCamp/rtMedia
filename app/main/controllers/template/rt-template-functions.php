@@ -1728,31 +1728,28 @@ add_action( 'rtmedia_before_media_gallery', 'rtmedia_create_album_modal' );
 add_action( 'rtmedia_before_album_gallery', 'rtmedia_create_album_modal' );
 function rtmedia_create_album_modal() {
 	global $rtmedia_query;
-	if ( is_rtmedia_album_enable() && ! ( isset( $rtmedia_query->is_gallery_shortcode ) && $rtmedia_query->is_gallery_shortcode == true ) && isset( $rtmedia_query->query[ 'context_id' ] ) && isset( $rtmedia_query->query[ 'context' ] ) ){
+	if ( is_rtmedia_album_enable() && !( isset( $rtmedia_query->is_gallery_shortcode ) && $rtmedia_query->is_gallery_shortcode == true ) && isset( $rtmedia_query->query[ 'context_id' ] ) && isset( $rtmedia_query->query[ 'context' ] ) ) {
 		?>
 		<div class="mfp-hide rtmedia-popup" id="rtmedia-create-album-modal">
 			<div id="rtm-modal-container">
 				<?php do_action( "rtmedia_before_create_album_modal" ); ?>
 				<h2 class="rtm-modal-title"><?php _e( 'Create New Album', 'rtmedia' ); ?></h2>
-
 				<p>
-					<label for="rtmedia_album_name"><?php _e( 'Album Title : ', 'rtmedia' ); ?></label>
+					<label class="rtm-modal-grid-title-column" for="rtmedia_album_name"><?php _e( 'Album Title : ', 'rtmedia' ); ?></label>
 					<input type="text" id="rtmedia_album_name" value="" class="rtm-input-medium"/>
-					<input type="hidden" id="rtmedia_album_context"
-						   value="<?php echo $rtmedia_query->query[ 'context' ]; ?>">
-					<input type="hidden" id="rtmedia_album_context_id"
-						   value="<?php echo $rtmedia_query->query[ 'context_id' ]; ?>">
-					<button type="button"
-							id="rtmedia_create_new_album"><?php _e( "Create Album", "rtmedia" ); ?></button>
 				</p>
 				<?php do_action( "rtmedia_add_album_privacy" ); ?>
+				<input type="hidden" id="rtmedia_album_context" value="<?php echo $rtmedia_query->query[ 'context' ]; ?>">
+				<input type="hidden" id="rtmedia_album_context_id" value="<?php echo $rtmedia_query->query[ 'context_id' ]; ?>">
+				<?php wp_nonce_field( 'rtmedia_create_album_nonce', 'rtmedia_create_album_nonce' ); ?>
+				<p>
+					<button type="button" id="rtmedia_create_new_album"><?php _e( "Create Album", "rtmedia" ); ?></button>
+				</p>
 				<?php do_action( "rtmedia_after_create_album_modal" ); ?>
 			</div>
 		</div>
-
-	<?php
+		<?php
 	}
-
 }
 
 add_action( 'rtmedia_before_media_gallery', 'rtmedia_merge_album_modal' );
@@ -2807,4 +2804,14 @@ function sanitize_filename_before_upload( $filename ) {
     $string = preg_replace( '/\+/', '', $string );
 
     return remove_accents( $string ) . $ext;
+}
+
+function rtmedia_is_global_album( $album_id ) {
+    $rtmedia_global_albums = rtmedia_global_albums();
+    
+    if( !in_array( $album_id, $rtmedia_global_albums ) ) {
+        return true;
+    } else {
+        return false;
+    }
 }
