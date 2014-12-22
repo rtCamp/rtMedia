@@ -320,7 +320,7 @@ class RTMediaModel extends RTDBModel {
 		if ( is_multisite() ){
 			$query .= " AND {$this->table_name}.blog_id = '" . get_current_blog_id() . "' ";
 		}
-
+        $where_query_sql = '';
 		if ( $where_query ){
 			foreach ( $where_query as $colname => $colvalue ) {
 				if ( 'meta_query' != strtolower( $colname ) ){
@@ -334,7 +334,7 @@ class RTMediaModel extends RTDBModel {
 							$colvalue['value'] = $colvalue;
 						}
 
-						$query .= " AND {$this->table_name}.{$colname} {$compare} ('" . implode( "','", $colvalue['value'] ) . "')";
+                        $where_query_sql .= " AND {$this->table_name}.{$colname} {$compare} ('" . implode( "','", $colvalue['value'] ) . "')";
 					} else {
 
 						//                        if ( $colname == "context" && $colvalue == "profile" ) {
@@ -343,12 +343,13 @@ class RTMediaModel extends RTDBModel {
 						//                            $query .= " AND {$this->table_name}.{$colname} = '{$colvalue}'";
 						//                        }
 						//profile now shows only profile media so conditional check removed and counts will be fetched according to the available context
-						$query .= " AND {$this->table_name}.{$colname} = '{$colvalue}'";
+                        $where_query_sql .= " AND {$this->table_name}.{$colname} = '{$colvalue}'";
 					}
 				}
 			}
 		}
-		$query .= 'GROUP BY privacy';
+        $where_query_sql = apply_filters( 'rtmedia-get-counts-where-query', $where_query_sql );
+        $query = $query . $where_query_sql . ' GROUP BY privacy';
 		$result = $wpdb->get_results( $query );
 		if ( ! is_array( $result ) ){
 			return false;
