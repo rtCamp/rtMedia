@@ -1015,7 +1015,7 @@ function rtmedia_get_pagination_values(){
             $rtmedia_media_pages .= "<input type='hidden' id='rtmedia_first_page' value='1' />";
             $rtmedia_media_pages .= "<input type='hidden' id='rtmedia_last_page' value='" . $pages . "' />";
             $rtmedia_media_pages .= "<input type='number' value='" . $paged . "' min='1' max='" . $pages . "' id='rtmedia_go_to_num' />";
-            $rtmedia_media_pages .= "<a class='rtmedia-page-link' data-page-type='num' href='#'>Go</a>";
+            $rtmedia_media_pages .= "<a class='rtmedia-page-link' data-page-type='num' href='#'>" . __( 'Go', 'rtmedia' ) . "</a>";
             $rtmedia_media_pages .= "</div>";
         //}
                 

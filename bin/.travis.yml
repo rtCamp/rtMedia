@@ -1,3 +1,6 @@
+notifications:
+  slack: rtcamp:BU5oabVFvVoFxDefYtBjTLcW
+
 language:
     - php
     - node_js

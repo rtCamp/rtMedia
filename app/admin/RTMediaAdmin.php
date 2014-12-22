@@ -392,7 +392,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ){
 			<div class="inside">
 
 				<div class="table table_content">
-					<p class="sub"><?php _e( 'Media Stats' ); ?></p>
+					<p class="sub"><?php _e( 'Media Stats', 'rtmedia' ); ?></p>
 					<table>
 						<tbody>
 			<?php
