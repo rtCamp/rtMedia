@@ -51,11 +51,10 @@ $flag = ( ! (  is_home () || is_post_type_archive () || is_author ()))
     /**
      * Render the uploader shortcode and attach the uploader panel
      *
-     * @param type $attr
+     * @param mixed $attr
      */
     static function pre_render ( $attr ) {
-	$allow_upload = apply_filters( 'rtmedia_allow_uploader_view', true, 'uploader_shortcode' );
-	if( $allow_upload ) {
+	if( rtmedia_is_uploader_view_allowed( true, 'uploader_shortcode' ) ) {
 	    global $post;
 	    global $rtmedia_query;
 	    if( ! $rtmedia_query )

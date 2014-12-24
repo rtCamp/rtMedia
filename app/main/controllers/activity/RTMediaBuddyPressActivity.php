@@ -163,8 +163,7 @@ class RTMediaBuddyPressActivity {
 	function bp_after_activity_post_form(){
 		$url          = $_SERVER['REQUEST_URI'];
 		$url          = trailingslashit( $url );
-		$allow_upload = apply_filters( 'rtmedia_allow_uploader_view', true, 'activity' );
-		if ( $allow_upload ){
+		if ( rtmedia_is_uploader_view_allowed( true, 'activity' ) ){
 			$params = array(
 				'url'             => ( isset( $url ) && ( false !== strpos( $url, '/media/' ) ) ) ? str_replace( '/media/', '/upload/', $url ) : 'upload/', 'runtimes' => 'html5,flash,html4', 'browse_button' => 'rtmedia-add-media-button-post-update', // browse button assigned to "Attach Files" Button.
 				'container'       => 'rtmedia-whts-new-upload-container', 'drop_element' => 'whats-new-textarea', // drag-drop area assigned to activity update textarea
