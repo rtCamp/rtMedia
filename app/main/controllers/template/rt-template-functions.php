@@ -896,7 +896,12 @@ function rtmedia_pagination_next_link() {
 
 	if ( $rtmedia_interaction && isset( $rtmedia_interaction->context ) && $rtmedia_interaction->context->type == "profile" ){
 		if ( function_exists( "bp_core_get_user_domain" ) ){
-			$link .= trailingslashit( bp_core_get_user_domain( $rtmedia_query->media_query[ 'media_author' ] ) );
+            if( isset( $rtmedia_query->media_query[ 'context' ] ) &&  $rtmedia_query->media_query[ 'context' ] == 'profile' && isset(  $rtmedia_query->media_query[ 'context_id' ] ) ){
+                $user_id = $rtmedia_query->media_query[ 'context_id' ];
+            } else {
+                $user_id = $rtmedia_query->media_query[ 'media_author' ];
+            }
+			$link .= trailingslashit( bp_core_get_user_domain( $user_id ) );
 		} else {
 			$link .= $site_url . 'author/' . $author_name . '/';
 		}
