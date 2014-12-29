@@ -25,6 +25,9 @@ class RTMediaBuddyPressActivity {
 		add_filter( 'bp_activity_allowed_tags', array( &$this, 'override_allowed_tags' ) );
 		add_filter( 'bp_get_activity_parent_content', array( &$this, 'bp_get_activity_parent_content' ) );
 		add_action( 'bp_activity_deleted_activities', array( &$this, 'bp_activity_deleted_activities' ) );
+        
+        // Filter bp_activity_prefetch_object_data for translatable activity actions
+        add_filter( 'bp_activity_prefetch_object_data', array( $this, 'bp_prefetch_activity_object_data' ), 10, 1 );
 	}
 
 	function bp_activity_deleted_activities( $activity_ids_deleted ){
@@ -160,8 +163,7 @@ class RTMediaBuddyPressActivity {
 	function bp_after_activity_post_form(){
 		$url          = $_SERVER['REQUEST_URI'];
 		$url          = trailingslashit( $url );
-		$allow_upload = apply_filters( 'rtmedia_allow_uploader_view', true, 'activity' );
-		if ( $allow_upload ){
+		if ( rtmedia_is_uploader_view_allowed( true, 'activity' ) ){
 			$params = array(
 				'url'             => ( isset( $url ) && ( false !== strpos( $url, '/media/' ) ) ) ? str_replace( '/media/', '/upload/', $url ) : 'upload/', 'runtimes' => 'html5,flash,html4', 'browse_button' => 'rtmedia-add-media-button-post-update', // browse button assigned to "Attach Files" Button.
 				'container'       => 'rtmedia-whts-new-upload-container', 'drop_element' => 'whats-new-textarea', // drag-drop area assigned to activity update textarea
@@ -226,5 +228,90 @@ class RTMediaBuddyPressActivity {
 
 		return $activity_allowedtags;
 	}
+    
+    /*
+     * To add dynamic activity actions for translation of activity items
+     */
+    function bp_prefetch_activity_object_data( $activities ) {
+        // If activities array is empty then return
+        if( empty( $activities ) ) {
+            return;
+        }
+        
+        // To store activity_id
+        $activity_ids = array();
+        $activity_index_array = array();
+        
+        foreach ( $activities as $i => $activity ) {
+            // Checking if activity_type is of rtmedia and component must be profile
+            if( $activity->type == 'rtmedia_update' && $activity->component == 'profile' ) {
+                // Storing activity_id
+                $activity_ids[] = $activity->id;
+                // Storing index of activity from activities array
+                $activity_index_array[] = $i;
+            }
+        }
+        
+        // Checking if media is linked with any of activity
+        if( !empty( $activity_ids ) ) {
+            $rtmedia_model = new RTMediaModel();
+            
+            // Where condition array to get media using activity_id from rtm_media table
+            $rtmedia_media_where_array = array();
+            $rtmedia_media_where_array[ 'activity_id' ] = array(
+                'compare' => 'IN',
+                'value' => $activity_ids
+            );            
+            $rtmedia_media_query = $rtmedia_model->get( $rtmedia_media_where_array );
+            
+            // Array to store media_type in simplified manner with activity_id as key
+            $rtmedia_media_type_array = array();            
+            for( $i = 0; $i < sizeof( $rtmedia_media_query ); $i++ ) {
+                // Storing media_type of uploaded media to check whether all media are of same type or different and key is activity_id
+                // Making activity_id array because there might be more then 1 media linked with activity
+                if( !is_array( $rtmedia_media_type_array[ $rtmedia_media_query[ $i ]->activity_id ] ) ) {
+                    $rtmedia_media_type_array[ $rtmedia_media_query[ $i ]->activity_id ] = array();
+                }
+                
+                array_push( $rtmedia_media_type_array[ $rtmedia_media_query[ $i ]->activity_id ], $rtmedia_media_query[ $i ]->media_type );
+            }
+            
+            // Updating action
+            for( $a = 0; $a < sizeof( $activity_ids ); $a++ ) {
+                // Getting index of activity which is being updated
+                $index = $activity_index_array[ $a ];
+                
+                // This pattern is for getting name. User might have change display name as first name or something instead on nicename.
+                $pattern = "/<a ?.*>(.*)<\/a>/";
+                preg_match( $pattern, $activities[ $index ]->action, $matches );
+
+                // Generating user_link with name
+                $user_link = '<a href="' . $activities[ $index ]->primary_link . '">' . $matches[ 1 ] . '</a>';
+                // Counting media linked with activity
+                $count = sizeof( $rtmedia_media_type_array[ $activities[ $index ]->id ] );
+                // Getting constant with single label or plural label
+                $media_const      = 'RTMEDIA_' . strtoupper( $rtmedia_media_type_array[ $activities[ $index ]->id ][ 0 ] );
+                if ( $count > 1 ){
+                    $media_const .= '_PLURAL';
+                }
+                $media_const .= '_LABEL';
+                $media_str = constant( $media_const );
+
+                // Updating activity based on count
+                if( $count == 1 ) {
+                    $activities[ $index ]->action = sprintf( __( '%s added a %s', 'rtmedia' ), $user_link, $media_str );
+                } else {
+                    // Checking all the media linked with activity are of same type
+                    if( count( array_unique( $rtmedia_media_type_array[ $activities[ $index ]->id ] ) ) == 1 ) {
+                        $activities[ $index ]->action = sprintf( __( '%s added %d %s', 'rtmedia' ), $user_link, $count, $media_str );
+                    } else {
+                        $activities[ $index ]->action = sprintf( __( '%s added %d %s', 'rtmedia' ), $user_link, $count, __( 'media', 'rtmedia' ) );
+                    }
+                }
+            }
+        }
+        
+        return $activities;
+    }
 
 }

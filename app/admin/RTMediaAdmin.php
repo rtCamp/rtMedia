@@ -111,6 +111,11 @@ if ( ! class_exists( 'RTMediaAdmin' ) ){
 			add_action( 'admin_notices', array( $this, 'rtmedia_admin_notices' ) );
 			add_action( 'network_admin_notices', array( $this, 'rtmedia_network_admin_notices' ) );
 			add_action( 'admin_init', array( $this, 'rtmedia_addon_license_save_hook' ) );
+			add_action( 'admin_init', array( $this, 'rtmedia_migration' ) );
+		}
+
+		function rtmedia_migration(){
+			$rtMigration = new RTMediaMigration();
 		}
 
 		function rtmedia_addon_license_save_hook(){
@@ -387,7 +392,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ){
 			<div class="inside">
 
 				<div class="table table_content">
-					<p class="sub"><?php _e( 'Media Stats' ); ?></p>
+					<p class="sub"><?php _e( 'Media Stats', 'rtmedia' ); ?></p>
 					<table>
 						<tbody>
 			<?php

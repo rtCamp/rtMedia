@@ -255,67 +255,81 @@ jQuery('document').ready(function($) {
 //        jQuery('.rtmedia-create-new-album-container').slideToggle();
 //    });
 
-    jQuery('#rtmedia-create-album-modal').on('click', '#rtmedia_create_new_album', function(e) {
-        $albumname = jQuery.trim(jQuery('#rtmedia_album_name').val());
-        $context = jQuery.trim(jQuery('#rtmedia_album_context').val());
-        $context_id = jQuery.trim(jQuery('#rtmedia_album_context_id').val());
-	$privacy = jQuery.trim(jQuery('#rtmedia_select_album_privacy').val());
-        if ($albumname != '') {
+    jQuery( '#rtmedia-create-album-modal' ).on( 'click', '#rtmedia_create_new_album', function( e ) {
+        $albumname = jQuery.trim( jQuery( '#rtmedia_album_name' ).val() );
+        $context = jQuery.trim( jQuery( '#rtmedia_album_context' ).val() );
+        $context_id = jQuery.trim( jQuery( '#rtmedia_album_context_id' ).val() );
+	    $privacy = jQuery.trim( jQuery( '#rtmedia_select_album_privacy' ).val() );
+        $create_album_nonce = jQuery.trim( jQuery( '#rtmedia_create_album_nonce' ).val() );
+
+        if ( $albumname != '' ) {
             var data = {
                 action: 'rtmedia_create_album',
                 name: $albumname,
                 context: $context,
-                context_id: $context_id
+                context_id: $context_id,
+                create_album_nonce: $create_album_nonce
             };
-	   if($privacy !== "") {
-	       data['privacy'] = $privacy;
-	   }
+
+            if( $privacy !== "" ) {
+                data[ 'privacy' ] = $privacy;
+            }
+
             // since 2.8 ajaxurl is always defined in the admin header and points to admin-ajax.php
-            $("#rtmedia_create_new_album").attr('disabled', 'disabled');
-            var old_val = $("#rtmedia_create_new_album").html();
-            $("#rtmedia_create_new_album").prepend("<img src='" + rMedia_loading_file + "'/>");
-            jQuery.post(rtmedia_ajax_url, data, function(response) {
-		response = response.trim();
-                if (response) {
-		    response = response.trim();
-		    var flag = true;
-		    jQuery('.rtmedia-user-album-list').each(function() {
-			jQuery(this).children('optgroup').each(function(){
-			    if(jQuery(this).attr('value') === $context) {
-				flag = false;
-				jQuery(this).append('<option value="' + response + '">' + $albumname + '</option>');
-				return;
-			    }
-			});
-			if(flag) {
-			    var label = $context.charAt(0).toUpperCase() + $context	.slice(1);
-			    var opt_html = '<optgroup value="' + $context + '" label="' + label + ' Albums"><option value="' + response + '">' + $albumname + '</option></optgroup>';
-			    jQuery(this).append(opt_html);
-			}
+            $( "#rtmedia_create_new_album" ).attr( 'disabled', 'disabled' );
+            var old_val = $( "#rtmedia_create_new_album" ).html();
+            $( "#rtmedia_create_new_album" ).prepend( "<img src='" + rMedia_loading_file + "' />" );
 
-		    });
-                    jQuery('select.rtmedia-user-album-list option[value="' + response + '"]').prop('selected', true);
-                    jQuery('.rtmedia-create-new-album-container').slideToggle();
-                    jQuery('#rtmedia_album_name').val("");
-                    jQuery("#rtmedia-create-album-modal").append("<span class='rtmedia-success rtmedia-create-album-alert'><b>" + $albumname + "</b>" + rtmedia_album_created_msg + "</span>");
-                    setTimeout(function() {
-                        jQuery(".rtmedia-create-album-alert").remove();
-                    }, 4000);
-                    setTimeout(function() {
+            jQuery.post( rtmedia_ajax_url, data, function( response ) {
+		        response = response.trim();
+
+                if ( response ) {
+		            response = response.trim();
+		            var flag = true;
+
+                    jQuery( '.rtmedia-user-album-list' ).each( function() {
+			            jQuery( this ).children( 'optgroup' ).each( function() {
+			                if( jQuery( this ).attr( 'value' ) === $context ) {
+				                flag = false;
+
+                                jQuery( this ).append( '<option value="' + response + '">' + $albumname + '</option>');
+
+                                return;
+			                }
+			            } );
+
+                        if( flag ) {
+			                var label = $context.charAt( 0 ).toUpperCase() + $context.slice( 1 );
+			                var opt_html = '<optgroup value="' + $context + '" label="' + label + ' Albums"><option value="' + response + '">' + $albumname + '</option></optgroup>';
+
+                            jQuery( this ).append( opt_html );
+			            }
+		            } );
+
+                    jQuery( 'select.rtmedia-user-album-list option[value="' + response + '"]' ).prop( 'selected', true );
+                    jQuery( '.rtmedia-create-new-album-container' ).slideToggle();
+                    jQuery( '#rtmedia_album_name' ).val( "" );
+                    jQuery( "#rtmedia-create-album-modal" ).append( "<span class='rtmedia-success rtmedia-create-album-alert'><b>" + $albumname + "</b>" + rtmedia_album_created_msg + "</span>" );
+
+                    setTimeout( function() {
+                        jQuery( ".rtmedia-create-album-alert" ).remove();
+                    }, 4000 );
+
+                    setTimeout( function() {
                         galleryObj.reloadView();
-                        jQuery(".close-reveal-modal").click();
-                    }, 2000);
-
+                        jQuery( ".close-reveal-modal" ).click();
+                    }, 2000 );
                 } else {
-                    alert(rtmedia_something_wrong_msg);
+                    alert( rtmedia_something_wrong_msg );
                 }
-                $("#rtmedia_create_new_album").removeAttr('disabled');
-                $("#rtmedia_create_new_album").html(old_val);
-            });
+
+                $( "#rtmedia_create_new_album" ).removeAttr( 'disabled' );
+                $( "#rtmedia_create_new_album" ).html( old_val );
+            } );
         } else {
-            alert(rtmedia_empty_album_name_msg);
+            alert( rtmedia_empty_album_name_msg );
         }
-    });
+    } );
 
     jQuery('.rtmedia-container').on('click', '.rtmedia-delete-selected', function(e) {
         if( jQuery('.rtmedia-list :checkbox:checked').length > 0 ){

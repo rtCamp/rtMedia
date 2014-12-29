@@ -78,7 +78,13 @@ class RTMediaGroupFeatured extends RTMediaUserInteraction {
 
 	function get(){
 		if ( false === $this->group_id ){
-			if ( isset( $this->media ) && isset( $this->media->context_id ) ){
+			global $groups_template;
+			if( !empty( $groups_template->group ) ){
+				$group_id = bp_get_group_id();
+				if ( !empty( $group_id ) ){
+					$this->group_id = $group_id;
+				}
+			} else if ( isset( $this->media ) && isset( $this->media->context_id ) ){
 				$this->group_id = $this->media->context_id;
 			} else {
 				return false;

@@ -8,7 +8,7 @@ global $rtmedia_media;
 $rtmedia_media = $media[0];
 ?>
 <div class="rtmedia-container rtmedia-single-container row rtmedia-media-edit">
-
+    <?php if( rtmedia_is_global_album( $rtmedia_query->media_query['album_id'] ) ) { ?>
         <h2><?php echo __ ( 'Edit Album : ' , 'rtmedia' ) . esc_attr($media[0]->media_title) ; ?></h2>
 
         <div class="rtmedia-edit-media-tabs rtmedia-editor-main columns large-12 small">
@@ -107,5 +107,7 @@ $rtmedia_media = $media[0];
             <?php do_action('rtmedia_add_edit_tab_content', 'album');?>
             </div>
         </div>
-
+    <?php } else { ?>
+        <p><?php echo __("Sorry !! You can not edit this album.","rtmedia"); ?></p>
+    <?php } ?>
 </div>
