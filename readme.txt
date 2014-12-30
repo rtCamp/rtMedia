@@ -133,6 +133,7 @@ Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_sou
 * Added new function rtmedia_is_uploader_view_allowed
 * Added dynamic activity actions rtMedia activities
 * CSS and markup changes
+* Bug fix for '\' in media title
 
 = 3.7.24 =
 * Bug fix for encoding service
