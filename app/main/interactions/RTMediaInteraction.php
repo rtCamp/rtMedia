@@ -178,7 +178,7 @@ class RTMediaInteraction {
 	                if ( is_array( $rtmedia_query->album ) && count ( $rtmedia_query->album ) > 0 ) {
 						foreach ( $rtmedia_query->album as $single_album ) {
 							if ( intval ( $single_album->id ) == intval ( $rtmedia_query->media_query[ "album_id" ] ) ) {
-								$title .= $sep . ucfirst ( $single_album->media_title );
+								$title .= $sep . stripslashes( htmlentities( ucfirst ( $single_album->media_title ) ) );
 								$sep = $oldSep;
 							}
 						}
@@ -186,7 +186,7 @@ class RTMediaInteraction {
                 }
             } else {
                 if ( isset ( $rtmedia_query->media ) && count ( $rtmedia_query->media ) > 0 ) {
-                    $title .= $sep . ucfirst ( $rtmedia_query->media[ 0 ]->media_title );
+                    $title .= $sep . stripslashes( htmlentities( ucfirst ( $rtmedia_query->media[ 0 ]->media_title ) ) );
                     $sep = $oldSep;
                 }
                 $title .= $sep . ucfirst ( $rtmedia_query->query[ "media_type" ] );
@@ -256,10 +256,10 @@ class RTMediaInteraction {
 						$img = wp_get_attachment_image_src ( $media->media_id, "full" );
 						if ( $img && isset ( $img[ 0 ] ) && $img[ 0 ] != "" )
 							echo "<meta property='og:image' content='" . esc_url ( $img[ 0 ] ) . "'/>";
+						}
 					}
 				}
 			}
-		} 		
 		if ( ( array_key_exists ( 'media', $wp_query->query_vars ) ) ){
 			global $rtmedia_query;
 			if ( isset ( $rtmedia_query->media ) && $rtmedia_query->media && count ( $rtmedia_query->media ) > 0 ) {
