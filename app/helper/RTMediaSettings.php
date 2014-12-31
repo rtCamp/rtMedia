@@ -158,7 +158,9 @@ if ( ! class_exists( 'RTMediaSettings' ) ){
 				if ( $is_rewrite_rule_flush ){
 					flush_rewrite_rules( false );
 				}
-				wp_redirect( $_SERVER['HTTP_REFERER'] );
+				if( isset( $_SERVER['HTTP_REFERER'] ) ){
+					wp_redirect( $_SERVER['HTTP_REFERER'] );
+				}
 				global $rtmedia;
 				$rtmedia->options = $options;
 			}
