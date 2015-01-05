@@ -1185,7 +1185,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ){
 					RTMediaThemes::render_themes( $page );
 				} else {
 					if ( 'rtmedia-license' == $page ){
-						RTMediaLicense::render_themes( $page );
+						RTMediaLicense::render_license( $page );
 					} else {
 						do_settings_sections( $page );
 					}
