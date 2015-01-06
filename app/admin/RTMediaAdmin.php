@@ -147,11 +147,13 @@ if ( ! class_exists( 'RTMediaAdmin' ) ){
 		 * @return void
 		 */
 		public function rtmedia_admin_notices(){
-			$this->upload_filetypes_error();
-			$this->rtmedia_regenerate_thumbnail_notice();
-			$this->rtmedia_addon_update_notice();
-			$this->rtmedia_update_template_notice();
-			$this->rtmedia_inspirebook_release_notice();
+			if ( current_user_can( 'list_users' ) ){
+				$this->upload_filetypes_error();
+				$this->rtmedia_regenerate_thumbnail_notice();
+				$this->rtmedia_addon_update_notice();
+				$this->rtmedia_update_template_notice();
+				$this->rtmedia_inspirebook_release_notice();
+			}
 		}
 
 		/**
