@@ -1830,10 +1830,10 @@ if ( ! class_exists( 'RTMediaAdmin' ) ){
 		}
 
 		function rtmedia_update_template_notice(){
-			$site_option = rtmedia_get_site_option( 'rtmedia-update-template-notice-v3_7_20' );
+			$site_option = rtmedia_get_site_option( 'rtmedia-update-template-notice-v3_7_26' );
 
 			if ( ! $site_option || 'hide' != $site_option ){
-				rtmedia_update_site_option( 'rtmedia-update-template-notice-v3_7_20', 'show' );
+				rtmedia_update_site_option( 'rtmedia-update-template-notice-v3_7_26', 'show' );
 				if ( is_dir( get_template_directory() . '/rtmedia' ) ){
 					echo '<div class="error rtmedia-update-template-notice"><p>' . __( 'Please update rtMedia template files if you have overridden the default rtMedia templates in your theme. If not, you can ignore and hide this notice.' ) . '<a href="#" onclick="rtmedia_hide_template_override_notice()" style="float:right">' . __( 'Hide', 'rtmedia' ) . '</a>' . ' </p></div>';
 					?>
@@ -1854,7 +1854,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ){
 
 		function rtmedia_hide_template_override_notice(){
 
-			if ( rtmedia_update_site_option( 'rtmedia-update-template-notice-v3_7_20', 'hide' ) ){
+			if ( rtmedia_update_site_option( 'rtmedia-update-template-notice-v3_7_26', 'hide' ) ){
 				echo '1';
 			} else {
 				echo '0';
