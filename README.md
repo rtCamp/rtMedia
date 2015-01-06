@@ -128,6 +128,10 @@ http://www.youtube.com/watch?v####dJrykKQGDcs
 
 Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "Visit rtMedia's Features page") to get some details about future releases.
 
+## 3.7.26 ####
+* Fix persian and swedish translations
+* Update CSS and templates
+
 #### 3.7.25 ####
 * Update spainsh translations
 * Added new function rtmedia_is_uploader_view_allowed
@@ -872,8 +876,8 @@ Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_sou
 * HTML5 Audio Tag Support (with fallback)
 * HTML5 Video Tag Support (with fallback)
 
-#### 3.7.25 ####
-Requires BuddyPress 1.7 or higher, if using BuddyPress. Translatable activity action, updated spainsh translations
+#### 3.7.26 ####
+Requires BuddyPress 1.7 or higher, if using BuddyPress. Fix persian and swedish translations, update CSS and templates
 
 ## Sponsors ##
 
