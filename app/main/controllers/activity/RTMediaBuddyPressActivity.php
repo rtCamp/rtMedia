@@ -295,7 +295,12 @@ class RTMediaBuddyPressActivity {
                     $media_const .= '_PLURAL';
                 }
                 $media_const .= '_LABEL';
-                $media_str = constant( $media_const );
+				if( defined( $media_const ) ){
+					$media_str = constant( $media_const );
+				} else {
+					$media_str = __( 'media', 'rtmedia' );
+				}
+
 
                 // Updating activity based on count
                 if( $count == 1 ) {
