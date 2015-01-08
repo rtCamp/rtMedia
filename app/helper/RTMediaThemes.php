@@ -120,6 +120,22 @@ class RTMediaThemes {
 	 * @return void
 	 */
 	public function rtmedia_themes_content(){
+
+
+		$rtdating = wp_get_theme( 'rtdating' );
+		if( $rtdating->exists() ){
+			$rtdating_purchase = '';
+		} else {
+			$rtdating_purchase = '<a href="https://rtcamp.com/products/rtdating/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media" target="_blank">Buy rtDating</a> | ';
+		}
+
+		$inspirebook = wp_get_theme( 'inspirebook' );
+		if( $inspirebook->exists() ){
+			$inspirebook_purchase = '';
+		} else {
+			$inspirebook_purchase = '<a href="https://rtcamp.com/products/inspirebook/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media" target="_blank">Buy InspireBook</a> | ';
+		}
+
 		?>
 		<div class="row">
 			<div class="columns large-12">
@@ -135,7 +151,7 @@ class RTMediaThemes {
 						</p>
 
 						<p>
-							<span>Links: <a href="https://rtcamp.com/products/rtdating/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media" target="_blank">Buy rtDating</a> | <a href="http://demo.rtcamp.com/rtmedia/?theme=rtDating" target="_blank">Live Demo</a> | <a href="http://docs.rtcamp.com/rtdating/" target="_blank">Documentation</a> | <a href="https://rtcamp.com/support/forum/premium-themes/" target="_blank">Support Forum</a></span>
+							<span>Links: <?php echo $rtdating_purchase; ?> <a href="http://demo.rtcamp.com/rtmedia/?theme=rtDating" target="_blank">Live Demo</a> | <a href="http://docs.rtcamp.com/rtdating/" target="_blank">Documentation</a> | <a href="https://rtcamp.com/support/forum/premium-themes/" target="_blank">Support Forum</a></span>
 						</p>
 					</div>
 				</div>
@@ -160,7 +176,7 @@ class RTMediaThemes {
 						</p>
 
 						<p>
-							<span>Links: <a href="https://rtcamp.com/products/inspirebook/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media" target="_blank">Buy InspireBook</a> | <a href="http://demo.rtcamp.com/rtmedia/?theme=InspireBook" target="_blank">Live Demo</a> | <a href="http://docs.rtcamp.com/inspirebook" target="_blank">Documentation</a> | <a href="http://community.rtcamp.com/c/premium-themes" target="_blank">Support Forum</a></span>
+							<span>Links: <?php echo $inspirebook_purchase; ?> <a href="http://demo.rtcamp.com/rtmedia/?theme=InspireBook" target="_blank">Live Demo</a> | <a href="http://docs.rtcamp.com/inspirebook" target="_blank">Documentation</a> | <a href="http://community.rtcamp.com/c/premium-themes" target="_blank">Support Forum</a></span>
 						</p>
 					</div>
 				</div>

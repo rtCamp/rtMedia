@@ -165,7 +165,7 @@ if ( ! class_exists( 'RTMediaAddon' ) ){
 						'demo_link' => 'http://demo.rtcamp.com/rtmedia/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media',
 						'buy_now' => 'https://rtcamp.com/store/rtmedia-photo-watermark/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media',
 						'category' => 'photo',
-						'purchased' => ( defined( 'RTMEDIA_WATERMARK_URL' ) ) ? true : false,
+						'purchased' => ( defined( 'RTMEDIA_WATERMARK_URL' ) || file_exists( WP_PLUGIN_DIR . '/rtmedia-photo-watermak/index.php' ) ) ? true : false,
 					),
 					array(
 						'title' => __( 'rtMedia Photo Tagging', 'rtmedia' ),
@@ -176,7 +176,7 @@ if ( ! class_exists( 'RTMediaAddon' ) ){
 						'demo_link' => 'http://demo.rtcamp.com/rtmedia/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media',
 						'buy_now' => 'https://rtcamp.com/store/rtmedia-photo-tagging/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media',
 						'category' => 'photo',
-						'purchased' => ( defined( 'RTMEDIA_PHOTO_TAGGING_URL' ) ) ? true : false,
+						'purchased' => ( defined( 'RTMEDIA_PHOTO_TAGGING_URL' ) || file_exists( WP_PLUGIN_DIR . '/bpm-photo-tag/index.php' ) ) ? true : false,
 					),
 					array(
 						'title' => __( 'rtMedia Instagram', 'rtmedia' ),
@@ -187,7 +187,7 @@ if ( ! class_exists( 'RTMediaAddon' ) ){
 						'demo_link' => 'http://demo.rtcamp.com/rtmedia/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media',
 						'buy_now' => 'https://rtcamp.com/store/rtmedia-instagram/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media',
 						'category' => 'photo',
-						'purchased' => ( defined( 'RTMEDIA_INSTAGRAM_URL' ) ) ? true : false,
+						'purchased' => ( defined( 'RTMEDIA_INSTAGRAM_URL' ) || file_exists( WP_PLUGIN_DIR . '/bpm-instagram/index.php' ) ) ? true : false,
 					),
 				),
 				'video'=> array(
@@ -200,7 +200,7 @@ if ( ! class_exists( 'RTMediaAddon' ) ){
 						'demo_link' => 'http://demo.rtcamp.com/bpm-kaltura/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media',
 						'buy_now' => 'https://rtcamp.com/store/rtmedia-kaltura/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media',
 						'category' => 'video',
-						'purchased' => ( defined( 'RTMEDIA_KALTURA_PATH' ) ) ? true : false,
+						'purchased' => ( defined( 'RTMEDIA_KALTURA_PATH' ) || file_exists( WP_PLUGIN_DIR . '/bpm-kaltura/index.php' ) ) ? true : false,
 					),
 					array(
 						'title' => __( 'rtMedia FFMPEG Add-on', 'rtmedia' ),
@@ -211,7 +211,7 @@ if ( ! class_exists( 'RTMediaAddon' ) ){
 						'demo_link' => 'http://demo.rtcamp.com/bpm-media/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media',
 						'buy_now' => 'https://rtcamp.com/store/rtmedia-ffmpeg/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media',
 						'category' => 'video',
-						'purchased' => ( defined( 'RTMEDIA_FFMPEG_URL' ) ) ? true : false,
+						'purchased' => ( defined( 'RTMEDIA_FFMPEG_URL' ) || file_exists( WP_PLUGIN_DIR . '/bpm-ffmpeg/index.php' ) ) ? true : false,
 					),
 				),
 				'membership'=> array(
@@ -223,7 +223,7 @@ if ( ! class_exists( 'RTMediaAddon' ) ){
 						'price' => '$99',
 						'buy_now' => 'https://rtcamp.com/products/rtmedia-membership/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media',
 						'category' => 'membership',
-						'purchased' => ( defined( 'RTMEDIA_MEMBERSHIP_URL' ) ) ? true : false,
+						'purchased' => ( defined( 'RTMEDIA_MEMBERSHIP_URL' ) || file_exists( WP_PLUGIN_DIR . '/rtmedia-membership/index.php' ) ) ? true : false,
 					),
 				),
 			);
