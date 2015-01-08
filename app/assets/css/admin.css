@@ -111,7 +111,9 @@ a.toplevel_page_bp-media-settings div.wp-menu-image{
 .coming-soon.coming-soon-r:hover{background-position: 175px 0;}
 
 .bp-media-addon .product_footer{margin: 20px 0 0;overflow: hidden;}
-.bp-media-addon .add_to_cart_button{background: #C45200; color: #FFFFFF;display: inline-block;font-size: 18px;font-weight: bold; line-height: 1.4em; margin: 0 20px; padding: 4px 15px;text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.6)}
+.bp-media-addon .add_to_cart_button, .bp-media-addon .rtm-addon-purchased{color: #FFFFFF;display: inline-block;font-size: 18px;font-weight: bold; line-height: 1.4em; margin: 0 20px; padding: 4px 15px;text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.6)}
+.bp-media-addon .add_to_cart_button{background: #C45200; }
+.bp-media-addon .rtm-addon-purchased{background: #2EA2CC; `}
 .bp-media-addon .product_footer .product_demo_link{font-size: 16px;margin: 8px 20px; font-weight: bold}
 
 .bp-media-addon .add_to_cart_button:hover{background: none repeat scroll 0 0 #D75A00;
