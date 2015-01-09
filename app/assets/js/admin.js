@@ -58,30 +58,48 @@ jQuery(document).ready(function($) {
 
     /* Submit Request */
 
-    jQuery('#bp-media-settings-boxes').on('submit', '#bp_media_settings_form,#rtmedia-settings-submit', function(e) {
+    jQuery( '#bp-media-settings-boxes' ).on( 'submit', '#bp_media_settings_form, #rtmedia-settings-submit', function( e ) {
         var return_code = true;
-        var reg = new RegExp('^auto$|^[+-]?[0-9]+\\.?([0-9]+)?(px|em|ex|%|in|cm|mm|pt|pc)?$');
-        jQuery("input[name*='defaultSizes']").each(function(el) {
-            if (!reg.test(jQuery(this).val())) {
-                alert("Invalid value for " + jQuery(this).attr('name').replace('rtmedia-options[', '').replace(']', '').replace(/_/g, ' '));
+        var reg = new RegExp( '^auto$|^[+-]?[0-9]+\\.?([0-9]+)?(px|em|ex|%|in|cm|mm|pt|pc)?$' );
+
+        jQuery( "input[name*='defaultSizes']" ).each( function( el ) {
+            if ( !reg.test( jQuery( this ).val() ) ) {
+                alert( "Invalid value for " + jQuery( this ).attr( 'name' ).replace( 'rtmedia-options[', '' ).replace( ']', '' ).replace( /_/g, ' ' ) );
                 return_code = false;
                 return false;
             }
+        } );
 
-        });
-	var general_videothumb = jQuery('input[name^="rtmedia-options[general_videothumbs]"]');
-	if( return_code && typeof general_videothumb != "undefined" ) {
-	    if( general_videothumb.val() <= 0 ) {
-		alert("Number of video thumbnails to be generated should be greater than 0 in image sizes settings. ");
-		return_code = false;
+	    var general_videothumb = jQuery( 'input[name^="rtmedia-options[general_videothumbs]"]' );
+        if( return_code && typeof general_videothumb != "undefined" ) {
+            if( general_videothumb.val() <= 0 ) {
+                alert( "Number of video thumbnails to be generated should be greater than 0 in image sizes settings." );
+                return_code = false;
                 return false;
+            }
 	    }
-	}
-        if (!return_code) {
-            e.preventDefault();
+
+        var general_perPageMedia = jQuery( 'input[name^="rtmedia-options[general_perPageMedia]"]' );
+        if( return_code && typeof general_perPageMedia != "undefined" ) {
+            var error_msg = "Please enter positive integer value only. ";
+            if( general_perPageMedia.val() < 1 ) {
+                general_perPageMedia.val( 10 );
+                error_msg += "Setting this value to default value (10) ";
+            } else if( jQuery.isNumeric( general_perPageMedia.val() ) && ( Math.floor( general_perPageMedia.val() ) != general_perPageMedia.val() ) ) {
+                general_perPageMedia.val( Math.round( general_perPageMedia.val() ) );
+                error_msg += "Setting this value to round value (" + Math.round( general_perPageMedia.val() ) + ") ";
+            }
+            error_msg += "for number of media per page.";
+            alert( error_msg );
+
+            return_code = false;
+            return false;
         }
 
-    });
+        if ( !return_code ) {
+            e.preventDefault();
+        }
+    } );
 
     jQuery(document).on('click', "#bpm-services .encoding-try-now,#rtm-services .encoding-try-now", function(e) {
         e.preventDefault();
