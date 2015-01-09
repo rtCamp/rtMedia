@@ -73,13 +73,17 @@ jQuery(document).ready(function($) {
 	    var general_videothumb = jQuery( 'input[name^="rtmedia-options[general_videothumbs]"]' );
         if( return_code && typeof general_videothumb != "undefined" ) {
             var error_msg = "";
+            var general_videothumb_val = 0;
             if( general_videothumb.val() <= 0 ) {
-                error_msg += "Number of video thumbnails to be generated should be greater than 0 in image sizes settings.";
+                error_msg += "Number of video thumbnails to be generated should be greater than 0 in image sizes settings. Setting it to round value 2.";
+                general_videothumb_val = 2;
             } else if( !reg.test( general_videothumb.val() ) ) {
-                error_msg += 'Invalid value for Number of video thumbnails in image sizes settings.';
+                error_msg += 'Invalid value for Number of video thumbnails in image sizes settings. Setting it to round value ' + Math.round( general_videothumb.val() ) + ".";
+                general_videothumb_val = Math.round( general_videothumb.val() );
             }
             if( error_msg != "" ) {
                 alert( error_msg );
+                general_videothumb.val( general_videothumb_val );
                 return_code = false;
                 return false;
             }
