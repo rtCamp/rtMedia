@@ -81,11 +81,19 @@ jQuery(document).ready(function($) {
 
         var general_perPageMedia = jQuery( 'input[name^="rtmedia-options[general_perPageMedia]"]' );
         if( return_code && typeof general_perPageMedia != "undefined" ) {
+            var error_msg = "Please enter positive integer value only. ";
             if( general_perPageMedia.val() < 1 ) {
                 general_perPageMedia.val( 10 );
+                error_msg += "Setting this value to default value (10) ";
             } else if( jQuery.isNumeric( general_perPageMedia.val() ) && ( Math.floor( general_perPageMedia.val() ) != general_perPageMedia.val() ) ) {
                 general_perPageMedia.val( Math.round( general_perPageMedia.val() ) );
+                error_msg += "Setting this value to round value (" + Math.round( general_perPageMedia.val() ) + ") ";
             }
+            error_msg += "for number of media per page.";
+            alert( error_msg );
+
+            return_code = false;
+            return false;
         }
 
         if ( !return_code ) {
