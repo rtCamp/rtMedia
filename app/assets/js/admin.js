@@ -64,7 +64,7 @@ jQuery(document).ready(function($) {
 
         jQuery( "input[name*='defaultSizes']" ).each( function( el ) {
             if ( !reg.test( jQuery( this ).val() ) ) {
-                alert( "Invalid value for " + jQuery( this ).attr( 'name' ).replace( 'rtmedia-options[', '' ).replace( ']', '' ).replace( /_/g, ' ' ) );
+                alert( "Invalid value for " + jQuery( this ).attr( 'name' ).replace( 'rtmedia-options[defaultSizes_', '' ).replace( ']', '' ).replace( /_/g, ' ').replace( /(\b)([a-zA-Z] )/g, function( firstLetter ) { return firstLetter.toUpperCase(); } ) );
                 return_code = false;
                 return false;
             }
