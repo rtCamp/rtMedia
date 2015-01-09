@@ -120,13 +120,24 @@ if ( ! class_exists( 'RTMediaSettings' ) ){
 		 */
 		public function sanitize_before_save_options( $options ){
 			$defaults = $this->get_default_options();
+
 			foreach ( $defaults as $key => $value ) {
 				if ( ! isset( $options[ $key ] ) ){
 					$options[ $key ] = '0';
 				}
 			}
+
 			if ( isset( $options['general_videothumbs'] ) && intval( $options['general_videothumbs'] ) > 10 ){
 				$options['general_videothumbs'] = 10;
+			}
+
+			// Checking if number of media perpage is integer or not
+			if( isset( $options[ 'general_perPageMedia' ] ) ) {
+				if( $options[ 'general_perPageMedia' ] < 1 ) {
+					$options[ 'general_perPageMedia' ] = 10;
+				} else if( !is_int( $options[ 'general_perPageMedia' ] ) ) {
+					$options[ 'general_perPageMedia' ] = round( $options[ 'general_perPageMedia' ] );
+				}
 			}
 
 			return $options;
