@@ -72,8 +72,14 @@ jQuery(document).ready(function($) {
 
 	    var general_videothumb = jQuery( 'input[name^="rtmedia-options[general_videothumbs]"]' );
         if( return_code && typeof general_videothumb != "undefined" ) {
+            var error_msg = "";
             if( general_videothumb.val() <= 0 ) {
-                alert( "Number of video thumbnails to be generated should be greater than 0 in image sizes settings." );
+                error_msg += "Number of video thumbnails to be generated should be greater than 0 in image sizes settings.";
+            } else if( !reg.test( general_videothumb.val() ) ) {
+                error_msg += 'Invalid value for Number of video thumbnails in image sizes settings.';
+            }
+            if( error_msg != "" ) {
+                alert( error_msg );
                 return_code = false;
                 return false;
             }
