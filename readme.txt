@@ -6,7 +6,7 @@ License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires at least: WordPress 3.6
 Tested up to: WordPress 4.1 + BuddyPress 2.1.1
-Stable tag: 3.7.26
+Stable tag: 3.7.27
 
 Add albums, photo, audio/video encoding, privacy, sharing, front-end uploads & more. All this works mobile/tablets devices.
 
@@ -128,7 +128,13 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "Visit rtMedia's Features page") to get some details about future releases.
 
-== 3.7.26 =
+= 3.7.27 =
+* Fix warnings on BuddyPress activity page
+* Show add-on purchase link only when add-on is not purchased
+* More validations for admin settings
+* Fix for translations
+
+= 3.7.26 =
 * Fix persian and swedish translations
 * Update CSS and templates
 
@@ -878,8 +884,8 @@ Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_sou
 
 == Upgrade Notice ==
 
-= 3.7.26 =
-Requires BuddyPress 1.7 or higher, if using BuddyPress. Fix persian and swedish translations, update CSS and templates
+= 3.7.27 =
+Requires BuddyPress 1.7 or higher, if using BuddyPress. Fix warnings on BuddyPress activity page, more validations for admin settings, fix for translations.
 
 == Sponsors ==
 
