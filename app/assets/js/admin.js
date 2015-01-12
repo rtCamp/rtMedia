@@ -60,11 +60,11 @@ jQuery(document).ready(function($) {
 
     jQuery( '#bp-media-settings-boxes' ).on( 'submit', '#bp_media_settings_form, #rtmedia-settings-submit', function( e ) {
         var return_code = true;
-        var reg = new RegExp( '^auto$|^[+-]?[0-9]+\\.?([0-9]+)?(px|em|ex|%|in|cm|mm|pt|pc)?$' );
+        var reg = new RegExp( '^[0-9]+$' );
 
         jQuery( "input[name*='defaultSizes']" ).each( function( el ) {
             if ( !reg.test( jQuery( this ).val() ) ) {
-                alert( "Invalid value for " + jQuery( this ).attr( 'name' ).replace( 'rtmedia-options[', '' ).replace( ']', '' ).replace( /_/g, ' ' ) );
+                alert( "Invalid value for " + jQuery( this ).attr( 'name' ).replace( 'rtmedia-options[defaultSizes_', '' ).replace( ']', '' ).replace( /_/g, ' ').replace( /(\b)([a-zA-Z] )/g, function( firstLetter ) { return firstLetter.toUpperCase(); } ) );
                 return_code = false;
                 return false;
             }
@@ -72,8 +72,18 @@ jQuery(document).ready(function($) {
 
 	    var general_videothumb = jQuery( 'input[name^="rtmedia-options[general_videothumbs]"]' );
         if( return_code && typeof general_videothumb != "undefined" ) {
+            var error_msg = "";
+            var general_videothumb_val = 0;
             if( general_videothumb.val() <= 0 ) {
-                alert( "Number of video thumbnails to be generated should be greater than 0 in image sizes settings." );
+                error_msg += "Number of video thumbnails to be generated should be greater than 0 in image sizes settings. Setting it to round value 2.";
+                general_videothumb_val = 2;
+            } else if( !reg.test( general_videothumb.val() ) ) {
+                error_msg += 'Invalid value for Number of video thumbnails in image sizes settings. Setting it to round value ' + Math.round( general_videothumb.val() ) + ".";
+                general_videothumb_val = Math.round( general_videothumb.val() );
+            }
+            if( error_msg != "" ) {
+                alert( error_msg );
+                general_videothumb.val( general_videothumb_val );
                 return_code = false;
                 return false;
             }
