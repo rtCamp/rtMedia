@@ -2823,7 +2823,7 @@ function rtmedia_is_uploader_view_allowed( $allow, $section = 'media_gallery' ){
     return apply_filters( 'rtmedia_allow_uploader_view', $allow, $section );
 }
 
-function rtmedia_get_next_media( $media_id ) {
+function rtm_single_media_next( $media_id ) {
 	$rtmedia_model    = new RTMediaModel();
 	$columns          = array(
 		'id' => array(
@@ -2833,13 +2833,15 @@ function rtmedia_get_next_media( $media_id ) {
 	);
 	$rtmedia_next_row = $rtmedia_model->get( $columns, 0, false, 'media_id asc' );
 	if ( ! empty( $rtmedia_next_row ) ) {
-		$rtmedia_next_link = rtmedia_permalink( $rtmedia_next_row[ 0 ]->media_id );
+		$rtmedia_next_link = '<a class="rtm-media-single-nav-arrow" href="' . get_rtmedia_permalink( $rtmedia_next_row[ 0 ]->id ) . '">></a>';
 
 		return $rtmedia_next_link;
+	} else {
+		return '';
 	}
 }
 
-function rtmedia_get_prev_media( $media_id ) {
+function rtm_single_media_prev( $media_id ) {
 	$rtmedia_model = new RTMediaModel();
 	$columns = array(
 		'id' => array(
@@ -2849,8 +2851,10 @@ function rtmedia_get_prev_media( $media_id ) {
 	);
 	$rtmedia_prev_row = $rtmedia_model->get( $columns, 0 );
 	if ( ! empty( $rtmedia_prev_row ) ) {
-		$rtmedia_prev_link = rtmedia_permalink( $rtmedia_prev_row[ 0 ]->media_id );
+		$rtmedia_prev_link = '<a class="rtm-media-single-nav-arrow" href="' . get_rtmedia_permalink( $rtmedia_prev_row[ 0 ]->id ) . '"><</a>';
 
 		return $rtmedia_prev_link;
+	} else {
+		return '';
 	}
 }
