@@ -64,7 +64,7 @@ class RTMediaFormHandler {
 		extract( $args );
 
 		if ( ! isset( $value ) ){
-			trigger_error( __( 'Please provide "value" in the argument.', 'rtmedia' ) );
+			trigger_error( __( 'Please provide a "value" in the argument.', 'rtmedia' ) );
 
 			return;
 		}
@@ -106,7 +106,7 @@ class RTMediaFormHandler {
 		extract( $args );
 
 		if ( ! isset( $value ) ){
-			trigger_error( __( 'Please provide "value" in the argument.', 'rtmedia' ) );
+			trigger_error( __( 'Please provide a "value" in the argument.', 'rtmedia' ) );
 
 			return;
 		}
@@ -149,7 +149,7 @@ class RTMediaFormHandler {
 		extract( $args );
 
 		if ( 2 > count( $radios ) ){
-			trigger_error( __( 'Need to specify atleast to radios else use a checkbox instead', 'rtmedia' ) );
+			trigger_error( __( 'Need to specify atleast two radios, else use a checkbox instead', 'rtmedia' ) );
 
 			return;
 		}
@@ -201,7 +201,7 @@ class RTMediaFormHandler {
 		extract( $args );
 
 		if ( ! isset( $value ) ){
-			trigger_error( __( 'Please provide "value" in the argument.', 'rtmedia' ) );
+			trigger_error( __( 'Please provide a "value" in the argument.', 'rtmedia' ) );
 
 			return;
 		}
@@ -236,7 +236,7 @@ class RTMediaFormHandler {
 		extract( $args );
 
 		if ( ! isset( $value ) ){
-			trigger_error( __( 'Please provide "value" in the argument.', 'rtmedia' ) );
+			trigger_error( __( 'Please provide a "value" in the argument.', 'rtmedia' ) );
 
 			return;
 		}
@@ -302,7 +302,7 @@ class RTMediaFormHandler {
 				'args' => array(
 					'key' => 'general_enableComments',
 					'value' => $options['general_enableComments'],
-					'desc' => __( 'This will display comment form and comment listing on single media pages as well as inside lightbox (if lightbox is enabled).', 'rtmedia' ),
+					'desc' => __( 'This will display the comment form and comment listing on single media pages as well as inside lightbox (if lightbox is enabled).', 'rtmedia' ),
 				),
 				'group' => '10',
 			),
@@ -323,7 +323,7 @@ class RTMediaFormHandler {
 					'key' => 'general_perPageMedia',
 					'value' => $options['general_perPageMedia'],
 					'class' => array( 'rtmedia-setting-text-box' ),
-					'desc' => __( 'Number of media you want to show per page on front end.', 'rtmedia' ),
+					'desc' => __( 'Number of media items you want to show per page on front end.', 'rtmedia' ),
 					'min' => 1,
 				),
 				'group' => '15',
@@ -335,7 +335,7 @@ class RTMediaFormHandler {
 					'key' => 'general_display_media',
 					'radios' => $radios,
 					'default' => $options['general_display_media'],
-					'desc' => __( 'Choose whether you want load more button or pagination buttons.', 'rtmedia' ),
+					'desc' => __( 'Choose whether you want the load more button or pagination buttons.', 'rtmedia' ),
 					'class' => array( 'rtmedia-load-more-radio' ),
 				),
 				'group' => '15',
@@ -345,7 +345,7 @@ class RTMediaFormHandler {
 				'args' => array(
 					'key' => 'general_masonry_layout',
 					'value' => $options['general_masonry_layout'],
-					'desc' => __( 'Masonry works by placing elements in optimal position based on available vertical space, sort of like a mason fitting stones in a wall.', 'rtmedia' ),
+					'desc' => __( 'Masonry works by placing elements in an optimal position based on available vertical space, similar to a mason fitting stones in a wall.', 'rtmedia' ),
 					'class' => array( 'rtm_enable_masonry_view' ),
 				),
 				'group' => '18',
@@ -442,7 +442,7 @@ class RTMediaFormHandler {
 				'args' => array(
 					'key' => 'general_AllowUserData',
 					'value' => $options['general_AllowUserData'],
-					'desc' => __( 'You can help rtMedia team learn what themes and plugins you are using to make rtMedia better compatible with your sites. No private information about your setup will be sent during tracking.', 'rtmedia' ),
+					'desc' => __( 'To make rtMedia better compatible with your sites, you can help the rtMedia team learn what themes and plugins you are using. No private information about your setup will be sent during tracking.', 'rtmedia' ),
 				)
 			),
 			'general_showAdminMenu' => array(
@@ -461,7 +461,7 @@ class RTMediaFormHandler {
 				'args' => array(
 					'key' => 'rtmedia_add_linkback',
 					'value' => $options['rtmedia_add_linkback'],
-					'desc' => __( 'Help us to promote rtMedia.', 'rtmedia' ),
+					'desc' => __( 'Help us promote rtMedia.', 'rtmedia' ),
 				),
 				'group' => 100,
 			), //
@@ -471,7 +471,7 @@ class RTMediaFormHandler {
 				'args' => array(
 					'key' => 'rtmedia_affiliate_id',
 					'value' => $options['rtmedia_affiliate_id'],
-					'desc' => __( 'Add your affiliate-id along with footer link and get benefited from our affiliation program.', 'rtmedia' ),
+					'desc' => __( 'Add your affiliate-id along with footer link and get rewarded by our affiliation program.', 'rtmedia' ),
 				),
 				'group' => 100,
 				'after_content' => __( 'You can signup for rtMedia affiliate program from <a href="https://rtcamp.com/affiliates">here</a>' ),
@@ -485,7 +485,7 @@ class RTMediaFormHandler {
 					'desc' => __( 'This will allow handling API requests for rtMedia sent through any mobile app.', 'rtmedia' ),
 				),
 				'group' => 80,
-				'after_content' => __( 'You can refer API document from <a href="https://rtcamp.com/rtmedia/docs/developer/json-api/">here</a>' ),
+				'after_content' => __( 'You can refer to the API document from <a href="https://rtcamp.com/rtmedia/docs/developer/json-api/">here</a>' ),
 			), //
 		);
 
@@ -650,7 +650,7 @@ class RTMediaFormHandler {
 				</h4>
 			</div>
 			<div class="columns large-4">
-				<h4 data-tooltip class="has-tip" title="<?php _e( 'Put a specific media as a featured content on the post.', 'rtmedia' ); ?>">
+				<h4 data-tooltip class="has-tip" title="<?php _e( 'Place a specific media as a featured content on the post.', 'rtmedia' ); ?>">
 					<abbr><?php _e( 'Set Featured', 'rtmedia' ); ?></abbr>
 				</h4>
 			</div>
@@ -806,7 +806,7 @@ class RTMediaFormHandler {
 				'key' => 'general_videothumbs',
 				'value' => $options['general_videothumbs'],
 				'class' => array( 'rtmedia-setting-text-box' ),
-				'desc' => __( ' If you choose more than 1 thumbnail, your users will be able to change thumbnail by going to video \'edit\' section. Maximum value is 10.', 'rtmedia' ),
+				'desc' => __( ' If you choose more than 1 thumbnail, your users will be able to change the thumbnail by going to video \'edit\' section. Maximum value is 10.', 'rtmedia' ),
 				'min' => 1,
 				'max' => 10,
 			)
@@ -857,7 +857,7 @@ class RTMediaFormHandler {
 						<strong
 							class="<?php echo $option['args']['key']; ?>"><?php echo $option['title']; ?></strong>
 						<?php call_user_func( $option['callback'], $option['args'] ); ?>
-						<div><?php _e( "If you want to add some custom CSS code to the plugin and don't want to modify any files, then it's a good place to enter your code at this field." ); ?></div>
+						<div><?php _e( "If you want to add some custom CSS code to the plugin and do not want to modify any files, then this is a good place to enter your code." ); ?></div>
 					</div>
 				<?php } else { ?>
 					<div class="columns large-6">
@@ -954,7 +954,7 @@ class RTMediaFormHandler {
 				'args' => array(
 					'key' => 'privacy_userOverride',
 					'value' => $options['privacy_userOverride'],
-					'desc' => __( 'If you choose this, user will be able to change privacy of their own uploads.', 'rtmedia' ),
+					'desc' => __( 'If you choose this, users will be able to change privacy of their own uploads.', 'rtmedia' ),
 				),
 				'after_content' => __( 'For group uploads, BuddyPress groups privacy is used.', 'rtmedia' ),
 			),
@@ -1064,7 +1064,7 @@ class RTMediaFormHandler {
 				'args' => array(
 					'key' => 'buddypress_limitOnActivity',
 					'value' => $options['buddypress_limitOnActivity'],
-					'desc' => __( 'With bulk uploads activity stream may get flooded. You can control maximum number of medias/files per activity. This limit will not affect the actual number of uploads. Only display. <em>0</em> means unlimited.', 'rtmedia' ),
+					'desc' => __( 'With bulk uploads activity, the stream may get flooded. You can control the maximum number of media items or files per activity. This limit will not affect the actual number of uploads. This is only for display. <em>0</em> means unlimited.', 'rtmedia' ),
 					'class' => array( 'rtmedia-setting-text-box rtmedia-bp-activity-setting' ),
 					'min' => 0,
 				),
@@ -1124,7 +1124,7 @@ class RTMediaFormHandler {
 						'id' => 'rtmedia-album-enable',
 						'key' => 'general_enableAlbums',
 						'value' => $options['general_enableAlbums'],
-						'desc' => __( 'This will add \'album\' tab to BuddyPress profile and group depending on ^above^ settings.', 'rtmedia' ),
+						'desc' => __( 'This will add \'album\' tab to BuddyPress profile and group depending on the ^above^ settings.', 'rtmedia' ),
 					),
 				),
 			);

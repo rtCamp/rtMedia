@@ -273,7 +273,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ){
 				if ( ! $site_option || 'hide' != $site_option  ){
 					rtmedia_update_site_option( 'rtmedia-addon-update-notice', 'show' );
 					echo '<div class="error rtmedia-addon-upate-notice">
-		    <p> <b>' . __( 'rtMedia:' ) . '</b> ' . __( 'Please update all premium add-ons that you had purchased from rtCamp from your ', 'rtmedia' ) . ' <a href="https://rtcamp.com/my-account/" target="_blank">' . __( 'account', 'rtmedia' ) . '</a>. <a href="#" onclick="rtmedia_hide_addon_update_notice()" style="float:right">Hide</a> </p>
+		    <p> <b>' . __( 'rtMedia:' ) . '</b> ' . __( 'Please update all premium add-ons that you have purchased from rtCamp from your ', 'rtmedia' ) . ' <a href="https://rtcamp.com/my-account/" target="_blank">' . __( 'account', 'rtmedia' ) . '</a>. <a href="#" onclick="rtmedia_hide_addon_update_notice()" style="float:right">Hide</a> </p>
 		    </div>';
 				}
 
@@ -693,7 +693,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ){
 				}
 
 				$rtmedia_admin_strings = array(
-					'no_refresh' => __( 'Please do not refresh this page.', 'rtmedia' ), 'something_went_wrong' => __( 'Something went wronng. Please <a href onclick="location.reload();">refresh</a> page.', 'rtmedia' ), 'are_you_sure' => __( 'This will subscribe you to the free plan.', 'rtmedia' ), 'disable_encoding' => __( 'Are you sure you want to disable the encoding service? Make sure you note your api key before disabling it incase you want to activate it in future.', 'rtmedia' )
+					'no_refresh' => __( 'Please do not refresh this page.', 'rtmedia' ), 'something_went_wrong' => __( 'Something went wrong. Please <a href onclick="location.reload();">refresh</a> page.', 'rtmedia' ), 'are_you_sure' => __( 'This will subscribe you to the free plan.', 'rtmedia' ), 'disable_encoding' => __( 'Are you sure you want to disable the encoding service? Make sure you note your api key before disabling it, incase you want to activate it in future.', 'rtmedia' )
 				);
 
 				wp_localize_script( 'rtmedia-admin', 'rtmedia_admin_strings', $rtmedia_admin_strings );
@@ -784,7 +784,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ){
 			if ( ! isset( $requested ) ){
 				?>
 					<br/>
-					<p>You can see this page because you have <a href="<?php echo admin_url( 'admin.php?page=rtmedia-addons' ) ?>">subscribed</a> for <a href="https://rtcamp.com/rtmedia/docs/admin/addons/audio-video-encoding/" target="_blank">rtMedia audio/video encoding service</a>.</p> <p>You can regenerate thumbnails of specific video by visiting <a href="<?php echo admin_url( 'upload.php?post_mime_type=video' ); ?>">media page</a> and click on <b>Regenerate Thumbnail</b> option for that particular video.</p> <p>Press <b>Regenerate Pending Thumbnails</b> button to regenerate thumbnails of pending videos.</p> <p><input type="button" class="button button-primary" id="rt-start-media-regenerate" value="<?php echo __( 'Regenerate Pending Thumbnails', 'rtmedia' ) . ' (' . $total . ')'; ?>"/> </p>
+					<p>You can see this page because you have <a href="<?php echo admin_url( 'admin.php?page=rtmedia-addons' ) ?>">subscribed</a> for <a href="https://rtcamp.com/rtmedia/docs/admin/addons/audio-video-encoding/" target="_blank">rtMedia audio/video encoding service</a>.</p> <p>You can regenerate thumbnails of a specific video by visiting <a href="<?php echo admin_url( 'upload.php?post_mime_type=video' ); ?>">media page</a> and clicking the <b>Regenerate Thumbnail</b> option for that particular video.</p> <p>Click <b>Regenerate Pending Thumbnails</b> to regenerate thumbnails of pending videos.</p> <p><input type="button" class="button button-primary" id="rt-start-media-regenerate" value="<?php echo __( 'Regenerate Pending Thumbnails', 'rtmedia' ) . ' (' . $total . ')'; ?>"/> </p>
 				<?php
 				}
 			?>
@@ -882,7 +882,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ){
 					if ( isset( $videos_without_thumbs ) && is_array( $videos_without_thumbs ) && sizeof( $videos_without_thumbs ) > 0 ){
 						echo '<div class="error rtmedia-regenerate-video-thumb-error">
 								<p>
-								' . sprintf( __( "You have total %s videos without thumbnails. Click <a href='%s'> here </a> to generate thumbnails. <a href='#' onclick='rtmedia_hide_video_thumb_notice()' style='float:right'>Hide</a>", 'rtmedia' ), sizeof( $videos_without_thumbs ), admin_url( 'admin.php?page=rtmedia-regenerate' ) ) . '
+								' . sprintf( __( "You have %s videos without thumbnails. Click <a href='%s'> here </a> to generate thumbnails. <a href='#' onclick='rtmedia_hide_video_thumb_notice()' style='float:right'>Hide</a>", 'rtmedia' ), sizeof( $videos_without_thumbs ), admin_url( 'admin.php?page=rtmedia-regenerate' ) ) . '
 								</p>
 								</div>';
 						?>
@@ -1614,7 +1614,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ){
 				if ( ! empty( $not_supported_image ) ){
 					echo '<div class="error upload-filetype-network-settings-error">
                         <p>
-                        ' . sprintf( __( 'You have images enabled on rtMedia but your network allowed filetypes does not allow uploading of %s. Click <a href="%s">here</a> to change your settings manually.', 'rtmedia' ), implode( ', ', $not_supported_image ), network_admin_url( 'settings.php#upload_filetypes' ) ) . '
+                        ' . sprintf( __( 'You have images enabled on rtMedia but your network allowed filetypes do not permit uploading of %s. Click <a href="%s">here</a> to change your settings manually.', 'rtmedia' ), implode( ', ', $not_supported_image ), network_admin_url( 'settings.php#upload_filetypes' ) ) . '
                             <br /><strong>' . __( 'Recommended', 'rtmedia' ) . ':</strong> <input type="button" class="button update-network-settings-upload-filetypes" class="button" value="' . __( 'Update Network Settings Automatically', 'rtmedia' ) . '"> <img style="display:none;" src="' . admin_url( 'images/wpspin_light.gif' ) . '" />
                         </p>
                         </div>';
@@ -1625,7 +1625,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ){
 				if ( ! in_array( 'mp4', $upload_filetypes ) ){
 					echo '<div class="error upload-filetype-network-settings-error">
                         <p>
-                        ' . sprintf( __( 'You have video enabled on BuddyPress Media but your network allowed filetypes does not allow uploading of mp4. Click <a href="%s">here</a> to change your settings manually.', 'rtmedia' ), network_admin_url( 'settings.php#upload_filetypes' ) ) . '
+                        ' . sprintf( __( 'You have video enabled on BuddyPress Media but your network allowed filetypes do not permit uploading of mp4. Click <a href="%s">here</a> to change your settings manually.', 'rtmedia' ), network_admin_url( 'settings.php#upload_filetypes' ) ) . '
                             <br /><strong>' . __( 'Recommended', 'rtmedia' ) . ':</strong> <input type="button" class="button update-network-settings-upload-filetypes" class="button" value="' . __( 'Update Network Settings Automatically', 'rtmedia' ) . '"> <img style="display:none;" src="' . admin_url( 'images/wpspin_light.gif' ) . '" />
                         </p>
                         </div>';
@@ -1634,7 +1634,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ){
 			}
 			if ( isset( $rtmedia->options['audio_enabled'] ) && $rtmedia->options['audio_enabled'] ){
 				if ( ! in_array( 'mp3', $upload_filetypes ) ){
-					echo '<div class="error upload-filetype-network-settings-error"><p>' . sprintf( __( 'You have audio enabled on BuddyPress Media but your network allowed filetypes does not allow uploading of mp3. Click <a href="%s">here</a> to change your settings manually.', 'rtmedia' ), network_admin_url( 'settings.php#upload_filetypes' ) ) . '
+					echo '<div class="error upload-filetype-network-settings-error"><p>' . sprintf( __( 'You have audio enabled on BuddyPress Media but your network allowed filetypes do not permit uploading of mp3. Click <a href="%s">here</a> to change your settings manually.', 'rtmedia' ), network_admin_url( 'settings.php#upload_filetypes' ) ) . '
                             <br /><strong>' . __( 'Recommended', 'rtmedia' ) . ':</strong> <input type="button" class="button update-network-settings-upload-filetypes" class="button" value="' . __( 'Update Network Settings Automatically', 'rtmedia' ) . '"> <img style="display:none;" src="' . admin_url( 'images/wpspin_light.gif' ) . '" />
                         </p>
                         </div>';
@@ -1758,7 +1758,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ){
 								if ( data.status === true ) {
 									alert( "<?php _e( 'Video is sent to generate thumbnails.', 'rtmedia' ) ?>" );
 								} else {
-									alert( "<?php _e( 'Video can\'t be sent to generate thumbnails.', 'rtmedia' ) ?>" );
+									alert( "<?php _e( 'Video cannot be sent to generate thumbnails.', 'rtmedia' ) ?>" );
 								}
 							} );
 						}
