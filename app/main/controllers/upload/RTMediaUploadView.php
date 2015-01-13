@@ -85,15 +85,19 @@ class RTMediaUploadView {
 		$upload_tabs = apply_filters( 'rtmedia_uploader_tabs', $upload_tabs );
 
 		if( is_array( $upload_tabs ) && ! empty( $upload_tabs ) ){
-			$upload_tab_html = '<div class="rtm-uploader-main-wrapper"><div class="rtm-uploader-tabs"><ul>';
-			foreach( $upload_tabs as $single_tab ){
-				$upload_tab_html .= '<li class="'. implode( ' ', $single_tab['class'] ) .'">' . $single_tab['title'] . '</li>';
+			if( sizeof( $upload_tabs ) == 1 && isset( $upload_tabs['file_upload'] ) ){
+				$upload_tab_html = $upload_tabs['file_upload']['content'];
+			} else {
+				$upload_tab_html = '<div class="rtm-uploader-main-wrapper"><div class="rtm-uploader-tabs"><ul>';
+				foreach( $upload_tabs as $single_tab ){
+					$upload_tab_html .= '<li class="'. implode( ' ', $single_tab['class'] ) .'">' . $single_tab['title'] . '</li>';
+				}
+				$upload_tab_html .= '</ul></div>';
+				foreach( $upload_tabs as $single_tab ){
+					$upload_tab_html .= $single_tab['content'];
+				}
+				$upload_tab_html .= '</div>';
 			}
-			$upload_tab_html .= '</ul></div>';
-			foreach( $upload_tabs as $single_tab ){
-				$upload_tab_html .= $single_tab['content'];
-			}
-			$upload_tab_html .= '</div>';
 		} else {
 			$upload_tab_html = '';
 		}
