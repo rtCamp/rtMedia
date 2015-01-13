@@ -8,12 +8,12 @@
             ?>
             <div id="rtmedia-single-media-container" class="rtmedia-single-media columns <?php echo ($rt_ajax_request) ? "large-8" : "large-12"; ?>">
                 <?php if ( !$rt_ajax_request ) { ?>
-                
+
                     <span class="rtmedia-media-title">
                         <?php  echo rtmedia_title (); ?>
-	                    <span style="float: right;">
-		                    <button class="rtm-lightbox-arrows" type="button" title="Previous Media" onclick="window.location = '<?php rtmedia_get_prev_media( rtmedia_id() ); ?>'"><</button>
-		                    <button class="rtm-lightbox-arrows" type="button" title="Next Media" onclick="window.location = '<?php rtmedia_get_next_media( rtmedia_id() ); ?>'">></button>
+	                    <span class='rtm-single-media-nav'>
+		                    <?php echo rtm_single_media_prev( rtmedia_id() ); ?>
+		                    <?php echo rtm_single_media_next( rtmedia_id() ); ?>
 	                    </span>
                     </span>
                     <div class="rtmedia-media" id ="rtmedia-media-<?php echo rtmedia_id (); ?>"><?php rtmedia_media ( true ); ?></div>

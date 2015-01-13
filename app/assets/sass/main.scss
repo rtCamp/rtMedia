@@ -384,6 +384,21 @@
 					display: block;
 					font-weight: bold;
 					letter-spacing: 1px;
+                    .rtm-single-media-nav {
+                        float: right;
+                        .rtm-media-single-nav-arrow {
+                            font-size: .8rem;
+                            color: #777;
+                            background: #fff;
+                            border: 1px solid #ccc;
+                            border-radius: 2px;
+                            padding: 4px 10px;
+                            &:hover {
+                                text-decoration: none;
+                                background: #eee;
+                            }
+                        }
+                    }
 				}
 			}
 			.rtmedia-single-meta{
