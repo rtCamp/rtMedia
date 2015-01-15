@@ -2822,3 +2822,13 @@ function rtmedia_is_global_album( $album_id ) {
 function rtmedia_is_uploader_view_allowed( $allow, $section = 'media_gallery' ){
     return apply_filters( 'rtmedia_allow_uploader_view', $allow, $section );
 }
+
+function rtmedia_modify_activity_upload_url( $params ){
+	if( class_exists( 'BuddyPress' ) && ( bp_is_activity_component() || bp_is_groups_component() ) ) {
+		$params['url'] = '/' . bp_get_activity_root_slug() . '/upload/';
+	}
+	return $params;
+}
+
+// Fix for BuddyPress multilingual plugin on activity pages
+add_filter( 'rtmedia_modify_upload_params','rtmedia_modify_activity_upload_url', 999, 1 );
