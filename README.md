@@ -128,6 +128,10 @@ http://www.youtube.com/watch?v####dJrykKQGDcs
 
 Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "Visit rtMedia's Features page") to get some details about future releases.
 
+#### 3.7.28 ####
+* Fixed activity upload issue when BuddyPress Multilingual plugin is active
+* Update admin settings help text
+
 #### 3.7.27 ####
 * Fix warnings on BuddyPress activity page
 * Show add-on purchase link only when add-on is not purchased
@@ -882,8 +886,8 @@ Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_sou
 * HTML5 Audio Tag Support (with fallback)
 * HTML5 Video Tag Support (with fallback)
 
-#### 3.7.27 ####
-Requires BuddyPress 1.7 or higher, if using BuddyPress. Fix warnings on BuddyPress activity page, more validations for admin settings, fix for translations.
+#### 3.7.28 ####
+Requires BuddyPress 1.7 or higher, if using BuddyPress. Fixed activity upload issue when BuddyPress Multilingual plugin is active, update admin settings help text
 
 ## Sponsors ##
 
