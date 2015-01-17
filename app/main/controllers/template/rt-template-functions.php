@@ -2825,7 +2825,9 @@ function rtmedia_is_uploader_view_allowed( $allow, $section = 'media_gallery' ){
 
 function rtmedia_modify_activity_upload_url( $params ){
 	if( class_exists( 'BuddyPress' ) && ( bp_is_activity_component() || bp_is_groups_component() ) ) {
-		$params['url'] =  bp_get_activity_directory_permalink() . 'upload/';
+		if( function_exists( 'bp_get_activity_directory_permalink' ) ){
+			$params['url'] =  bp_get_activity_directory_permalink() . 'upload/';
+		}
 	}
 	return $params;
 }
