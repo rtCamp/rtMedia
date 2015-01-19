@@ -128,6 +128,9 @@ http://www.youtube.com/watch?v####dJrykKQGDcs
 
 Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "Visit rtMedia's Features page") to get some details about future releases.
 
+#### 3.7.31 ####
+* Fix BuddyPress group media gets upload to user profile issue
+
 #### 3.7.30 ####
 * Change activity upload URL when activity component is enabled
 
@@ -892,8 +895,8 @@ Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_sou
 * HTML5 Audio Tag Support (with fallback)
 * HTML5 Video Tag Support (with fallback)
 
-#### 3.7.30 ####
-Requires BuddyPress 1.7 or higher, if using BuddyPress. Change activity upload URL when activity component is enabled.
+#### 3.7.31 ####
+Requires BuddyPress 1.7 or higher, if using BuddyPress. Fix BuddyPress group media gets upload to user profile issue.
 
 ## Sponsors ##
 
