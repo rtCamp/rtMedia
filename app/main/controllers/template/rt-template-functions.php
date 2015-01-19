@@ -2825,6 +2825,7 @@ function rtmedia_is_uploader_view_allowed( $allow, $section = 'media_gallery' ){
 
 function rtmedia_modify_activity_upload_url( $params ){
 	// return original params if BuddyPress multilingual plugin is not active
+	include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 	if( function_exists( 'is_plugin_active' ) && is_plugin_active( 'buddypress-multilingual/sitepress-bp.php' ) ){
 		if( class_exists( 'BuddyPress' ) ) {
 			// change upload url only if it's activity page and if it's group page than it shouldn't group media page
