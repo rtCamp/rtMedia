@@ -2824,8 +2824,17 @@ function rtmedia_is_uploader_view_allowed( $allow, $section = 'media_gallery' ){
 }
 
 function rtmedia_modify_activity_upload_url( $params ){
-	if( class_exists( 'BuddyPress' ) && ( bp_is_activity_component() || bp_is_groups_component() ) ) {
-		$params['url'] =  bp_get_activity_directory_permalink() . 'upload/';
+	// return original params if BuddyPress multilingual plugin is not active
+	include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+	if( function_exists( 'is_plugin_active' ) && is_plugin_active( 'buddypress-multilingual/sitepress-bp.php' ) ){
+		if( class_exists( 'BuddyPress' ) ) {
+			// change upload url only if it's activity page and if it's group page than it shouldn't group media page
+			if( bp_is_activity_component() || ( bp_is_groups_component() && ! is_rtmedia_page() ) ){
+				if( function_exists( 'bp_get_activity_directory_permalink' ) ){
+					$params['url'] =  bp_get_activity_directory_permalink() . 'upload/';
+				}
+			}
+		}
 	}
 	return $params;
 }
