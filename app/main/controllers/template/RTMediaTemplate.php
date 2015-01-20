@@ -319,10 +319,10 @@ class RTMediaTemplate {
 			}
 			//refresh
 			$rtMediaNav = new RTMediaNav();
-			if ( $rtmedia_query->media[ 0 ]->context == "group" ){
-				$rtMediaNav->refresh_counts( $rtmedia_query->media[ 0 ]->context_id, array( "context" => $rtmedia_query->media[ 0 ]->context, 'context_id' => $rtmedia_query->media[ 0 ]->context_id ) );
+			if ( $rtmedia_query->media_query['context'] == "group" ){
+				$rtMediaNav->refresh_counts( $rtmedia_query->media_query['context_id'], array( "context" => $rtmedia_query->media_query['context'], 'context_id' => $rtmedia_query->media_query['context_id'] ) );
 			} else {
-				$rtMediaNav->refresh_counts( $rtmedia_query->media[ 0 ]->media_author, array( "context" => "profile", 'media_author' => $rtmedia_query->media[ 0 ]->media_author ) );
+				$rtMediaNav->refresh_counts( $rtmedia_query->media_query['media_author'], array( "context" => "profile", 'media_author' => $rtmedia_query->media_query['media_author'] ) );
 			}
 			wp_safe_redirect( get_rtmedia_permalink( $rtmedia_query->media_query[ 'album_id' ] ) . 'edit/' );
 			die();
