@@ -10,6 +10,7 @@
 				<div id="rtm-media-options" class="columns large-7 small-12 medium-7">
 					<?php do_action ( 'rtmedia_media_gallery_shortcode_actions' ); ?>
 				</div>
+                <?php do_action ( 'rtmedia_media_gallery_shortcode_sort_params' ); ?>
 			</div>
 			<div class="clear"></div>
         <?php }
