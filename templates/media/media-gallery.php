@@ -11,6 +11,7 @@
 					<?php do_action ( 'rtmedia_media_gallery_shortcode_actions' ); ?>
 				</div>
 			</div>
+            <?php do_action ( 'rtmedia_gallery_after_title' ); ?>
 			<div class="clear"></div>
         <?php }
         else { ?>
@@ -21,6 +22,7 @@
                 </h2>
                 <div id="rtm-media-options" class="columns large-7 small-12 medium-7"><?php do_action ( 'rtmedia_media_gallery_actions' ); ?></div>
             </div>
+            <?php do_action ( 'rtmedia_gallery_after_title' ); ?>
 			<div class="clear"></div>
 
             <div id="rtm-media-gallery-uploader">
