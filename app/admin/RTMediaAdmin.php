@@ -1363,7 +1363,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ){
 
 			$tabs[7] = array(
 					'href' => '#rtmedia-display',
-					'icon' => 'rtmicon-desktop',
+					'icon' => 'dashicons-desktop',
 					'title' => __( 'Display', 'rtmedia' ),
 					'name' => __( 'Display', 'rtmedia' ),
 					'callback' => array( 'RTMediaFormHandler', 'display_content' )
@@ -1372,7 +1372,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ){
 			if ( class_exists( 'BuddyPress' ) ){
 				$tabs[20] = array(
 					'href' => '#rtmedia-bp',
-					'icon' => 'rtmicon-group',
+					'icon' => 'dashicons-groups',
 					'title' => __( 'rtMedia BuddyPress', 'rtmedia' ),
 					'name' => __( 'BuddyPress', 'rtmedia' ),
 					'callback' => array( 'RTMediaFormHandler', 'buddypress_content' ) //change it to BuddyPress Content
@@ -1381,7 +1381,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ){
 
 			$tabs[30] = array(
 					'href' => '#rtmedia-types',
-					'icon' => 'rtmicon-film',
+					'icon' => 'dashicons-editor-video',
 					'title' => __( 'rtMedia Types', 'rtmedia' ),
 					'name' => __( 'Types', 'rtmedia' ),
 					'callback' => array( 'RTMediaFormHandler', 'types_content' )
@@ -1389,7 +1389,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ){
 
 			$tabs[40] = array(
 					'href' => '#rtmedia-sizes',
-					'icon' => 'rtmicon-expand',
+					'icon' => 'dashicons-editor-expand',
 					'title' => __( 'rtMedia Sizes', 'rtmedia' ),
 					'name' => __( 'Image Sizes', 'rtmedia' ),
 					'callback' => array( 'RTMediaFormHandler', 'sizes_content' )
@@ -1397,14 +1397,14 @@ if ( ! class_exists( 'RTMediaAdmin' ) ){
 
 			$tabs[50] = array(
 					'href' => '#rtmedia-privacy',
-					'icon' => 'rtmicon-lock',
+					'icon' => 'dashicons-lock',
 					'title' => __( 'rtMedia Privacy', 'rtmedia' ),
 					'name' => __( 'Privacy', 'rtmedia' ),
 					'callback' => array( 'RTMediaFormHandler', 'privacy_content' )
 			);
 			$tabs[60] = array(
 					'href' => '#rtmedia-custom-css-settings',
-					'icon' => 'rtmicon-css3',
+					'icon' => 'dashicons-clipboard',
 					'title' => __( 'rtMedia Custom CSS', 'rtmedia' ),
 					'name' => __( 'Custom CSS', 'rtmedia' ),
 					'callback' => array( 'RTMediaFormHandler', 'custom_css_content' )
@@ -1414,7 +1414,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ){
 
 			$tabs[] = array(
 					'href' => '#rtmedia-general',
-					'icon' => 'rtmicon-wrench',
+					'icon' => 'dashicons-admin-tools',
 					'title' => __( 'Other Settings', 'rtmedia' ),
 					'name' => __( 'Other Settings', 'rtmedia' ),
 					'callback' => array( 'RTMediaFormHandler', 'general_content' )
