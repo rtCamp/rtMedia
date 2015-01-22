@@ -1176,7 +1176,7 @@ class RTMediaFormHandler {
 			}
 			$i ++;
 			if ( isset( $tab['icon'] ) && ! empty( $tab['icon'] ) ){
-				$icon = '<i class="' . $tab['icon'] . ' rtmicon-fw"></i>';
+				$icon = '<i class="' . $tab['icon'] . ' dashicons"></i>';
 			}
 			echo '<dd class="' . $active_class . '"><a id="tab-' . substr( $tab['href'], 1 ) . '" title="' . $tab['title'] . '" href="' . $tab['href'] . '" class="rtmedia-tab-title ' . sanitize_title( $tab['name'] ) . '">' . $icon . $tab['name'] . '</a></dd>';
 		}
