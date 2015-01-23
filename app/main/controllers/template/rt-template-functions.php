@@ -910,8 +910,10 @@ function rtmedia_pagination_next_link() {
 				$link .= $site_url . bp_get_groups_root_slug() . '/' . bp_get_current_group_slug() . '/';
 			}
 		} else {
-			//$post = get_post ( $rtmedia_media->post_parent );
-			$post = get_post( get_post_field( "post_parent", $rtmedia_query->media->media_id ) );
+			// if there are more media than number of media per page to show than $rtmedia_query->media->media_id will be set other wise take media_id of very first media
+			// For more understanding why array became object check rewind_media() in RTMediaQuery.php file and check it's call
+			$post_id = ( isset( $rtmedia_query->media->media_id ) ? $rtmedia_query->media->media_id : $rtmedia_query->media[0]->media_id );
+			$post = get_post( get_post_field( "post_parent", $post_id ) );
 
 			$link .= $site_url . $post->post_name . '/';
 		}
