@@ -48,10 +48,10 @@ class RTMediaUploadView {
 			} elseif ( is_rtmedia_album_enable () && $rtmedia_query && is_rtmedia_gallery () ) {
 
 				if ( isset( $rtmedia_query->query[ 'context' ] ) && $rtmedia_query->query[ 'context' ] == 'profile' ) {
-					$album = '<span> <label> <i class="rtmicon-picture-o rtmicon-fw"></i>' . __('Album','rtmedia') . ': </label><select name="album" class="rtmedia-user-album-list">' . rtmedia_user_album_list () . '</select></span>';
+					$album = '<span> <label> <i class="dashicons dashicons-format-image rtmicon"></i>' . __('Album','rtmedia') . ': </label><select name="album" class="rtmedia-user-album-list">' . rtmedia_user_album_list () . '</select></span>';
 				}
 				if (isset( $rtmedia_query->query[ 'context' ] ) && $rtmedia_query->query[ 'context' ] == 'group' ) {
-					$album = '<span> <label> <i class="rtmicon-picture-o rtmicon-fw"></i>' . __('Album','rtmedia') . ': </label><select name="album" class="rtmedia-user-album-list">' . rtmedia_group_album_list () . '</select></span>';
+					$album = '<span> <label> <i class="dashicons dashicons-format-image rtmicon"></i>' . __('Album','rtmedia') . ': </label><select name="album" class="rtmedia-user-album-list">' . rtmedia_group_album_list () . '</select></span>';
 				}
 			}
 		}
@@ -64,7 +64,7 @@ class RTMediaUploadView {
                 $up_privacy = new RTMediaPrivacy();
                 $up_privacy = $up_privacy->select_privacy_ui( false, 'rtSelectPrivacy') ;
                 if($up_privacy){
-                    $privacy = "<span> <label for='privacy'> <i class='rtmicon-eye rtmicon-fw'></i> " . __('Privacy: ', 'rtmedia') . "</label>" . $up_privacy . "</span>";
+                    $privacy = "<span> <label for='privacy'> <i class='dashicons dashicons-visibility rtmicon'></i> " . __('Privacy: ', 'rtmedia') . "</label>" . $up_privacy . "</span>";
                 }
             }
         }

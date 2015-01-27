@@ -2228,7 +2228,7 @@ function rtmedia_admin_premium_page( $page ) {
 				</div>
 			</div>
 			<div class="row">
-				<div class="columns large-1 rtm-premium-icon-pro"><i class="rtmicon-camera-retro rtmicon-3x rtmicon-fw"></i></div>
+				<div class="columns large-1 rtm-premium-icon-pro"><i class="dashicons dashicons-camera rtmicon-3x rtmicon"></i></div>
 				<div class="columns large-10">
 					<h2><?php _e( 'URL preview in BuddyPress activity', 'rtmedia' ); ?></h2>
 					<p><?php _e( 'Show URL previews in BuddyPress activity.', 'rtmedia' ); ?></p>
@@ -2249,28 +2249,28 @@ function rtmedia_admin_premium_page( $page ) {
 				</div>
 			</div>
 			<div class="row">
-				<div class="columns large-1 rtm-premium-icon-pro"><i class="rtmicon-rss rtmicon-3x rtmicon-fw"></i></div>
+				<div class="columns large-1 rtm-premium-icon-pro"><i class="dashicons dashicons-rss rtmicon-3x rtmicon"></i></div>
 				<div class="columns large-10">
 					<h2><?php _e( 'RSS Feed/Podcasting Support', 'rtmedia' ); ?></h2>
 					<p><?php _e( 'You can consume rtMedia uploads from iTunes as well as any feed-reader/podcasting software.', 'rtmedia' ); ?></p>
 				</div>
 			</div>
 			<div class="row">
-				<div class="columns large-1 rtm-premium-icon-pro"><i class="rtmicon-comments rtmicon-3x rtmicon-fw"></i></div>
+				<div class="columns large-1 rtm-premium-icon-pro"><i class="dashicons dashicons-admin-comments rtmicon-3x rtmicon"></i></div>
 				<div class="columns large-10">
 					<h2><?php _e( 'WordPress Comment Attachment', 'rtmedia' ); ?></h2>
 					<p><?php _e( 'You can attach files to WordPress comments.', 'rtmedia' ); ?></p>
 				</div>
 			</div>
 			<div class="row">
-				<div class="columns large-1 rtm-premium-icon-pro"><i class="rtmicon-user rtmicon-3x rtmicon-fw"></i></div>
+				<div class="columns large-1 rtm-premium-icon-pro"><i class="dashicons dashicons-admin-users rtmicon-3x rtmicon"></i></div>
 				<div class="columns large-10">
 					<h2><?php _e( 'bbPress Attachment', 'rtmedia' ); ?></h2>
 					<p><?php _e( 'You can attach files to bbPress topic and reply.', 'rtmedia' ); ?></p>
 				</div>
 			</div>
 			<div class="row">
-				<div class="columns large-1 rtm-premium-icon-pro"><i class="rtmicon-file rtmicon-3x rtmicon-fw"></i></div>
+				<div class="columns large-1 rtm-premium-icon-pro"><i class="dashicons dashicons-media-default rtmicon-3x rtmicon"></i></div>
 				<div class="columns large-10">
 					<h2><?php _e( 'Document Support', 'rtmedia' ); ?></h2>
 					<p><?php _e( 'You can add, view and download documents like txt, doc, pdf, also add and upload other file types like zip, tar and tar.gz etc.', 'rtmedia' ); ?></p>
@@ -2284,14 +2284,14 @@ function rtmedia_admin_premium_page( $page ) {
 				</div>
 			</div>
 			<div class="row">
-				<div class="columns large-1 rtm-premium-icon-pro"><i class="rtmicon-lock rtmicon-3x rtmicon-fw"></i></div>
+				<div class="columns large-1 rtm-premium-icon-pro"><i class="dashicons dashicons-lock rtmicon-3x rtmicon"></i></div>
 				<div class="columns large-10">
 					<h2><?php _e( 'Album Privacy', 'rtmedia' ); ?></h2>
 					<p><?php _e( 'This will allow you to set album privacy while creating albums or change album privacy with editing albums too.', 'rtmedia' ); ?></p>
 				</div>
 			</div>
 			<div class="row">
-				<div class="columns large-1 rtm-premium-icon-pro"><i class="rtmicon-play rtmicon-3x rtmicon-fw"></i></div>
+				<div class="columns large-1 rtm-premium-icon-pro"><i class="dashicons dashicons-controls-play rtmicon-3x rtmicon"></i></div>
 				<div class="columns large-10">
 					<h2><?php _e( 'Audio Playlist', 'rtmedia' ); ?></h2>
 					<p><?php _e( 'With this feature you can create your audio playlists and listen to your favorite music at will.', 'rtmedia' ); ?></p>
@@ -2305,14 +2305,14 @@ function rtmedia_admin_premium_page( $page ) {
 				</div>
 			</div>
 			<div class="row">
-				<div class="columns large-1 rtm-premium-icon-pro"><i class="rtmicon-download rtmicon-3x rtmicon-fw"></i></div>
+				<div class="columns large-1 rtm-premium-icon-pro"><i class="dashicons dashicons-download rtmicon-3x rtmicon"></i></div>
 				<div class="columns large-10">
 					<h2><?php _e( 'Download Button For Media', 'rtmedia' ); ?></h2>
 					<p><?php _e( 'Users can download photos, videos and music. Admin has option to allow download the media.', 'rtmedia' ); ?></p>
 				</div>
 			</div>
 			<div class="row">
-				<div class="columns large-1 rtm-premium-icon-pro"><i class="rtmicon-align-right rtmicon-3x rtmicon-fw"></i></div>
+				<div class="columns large-1 rtm-premium-icon-pro"><i class="dashicons dashicons-editor-alignright rtmicon-3x rtmicon"></i></div>
 				<div class="columns large-10">
 					<h2><?php _e( 'Sidebar widgets', 'rtmedia' ); ?></h2>
 					<p><?php _e( 'These will let you display a gallery or an uploader in a sidebar. Several of them can be used in a single sidebar.', 'rtmedia' ); ?></p>
@@ -2333,14 +2333,14 @@ function rtmedia_admin_premium_page( $page ) {
 				</div>
 			</div>
 			<div class="row">
-				<div class="columns large-1 rtm-premium-icon-pro"><i class="rtmicon-picture-o rtmicon-3x rtmicon-fw"></i></div>
+				<div class="columns large-1 rtm-premium-icon-pro"><i class="dashicons dashicons-format-image rtmicon-3x rtmicon"></i></div>
 				<div class="columns large-10">
 					<h2><?php _e( 'Global Albums', 'rtmedia' ); ?></h2>
 					<p><?php _e( 'Multiple global albums can be created beforehand. One of these can be chosen as the default album.', 'rtmedia' ); ?></p>
 				</div>
 			</div>
 			<div class="row">
-				<div class="columns large-1 rtm-premium-icon-pro"><i class="rtmicon-wrench rtmicon-3x rtmicon-fw"></i></div>
+				<div class="columns large-1 rtm-premium-icon-pro"><i class="dashicons dashicons-admin-tools rtmicon-3x rtmicon"></i></div>
 				<div class="columns large-10">
 					<h2><?php _e( 'Premium one-to-one support', 'rtmedia' ); ?></h2>
 					<p><?php _e( 'Without leaving your WordPress dashboard, you can contact us for help using a support form.', 'rtmedia' ); ?></p>
@@ -2426,11 +2426,11 @@ function get_rtmedia_privacy_symbol( $rtmedia_id = false ) {
 		switch ( $actions[ 0 ]->privacy ) {
 			case 0: //public
 				$title = __( "Public", 'rtmedia' );
-				$icon  = 'rtmicon-globe rtmicon-fw';
+				$icon  = 'dashicons dashicons-admin-site rtmicon';
 				break;
 			case 20: //users
 				$title = __( "All members", 'rtmedia' );
-				$icon  = 'rtmicon-users rtmicon-fw';
+				$icon  = 'dashicons dashicons-groups rtmicon';
 				break;
 			case 40: // friends
 				$title = __( "Your friends", 'rtmedia' );
@@ -2438,7 +2438,7 @@ function get_rtmedia_privacy_symbol( $rtmedia_id = false ) {
 				break;
 			case 60: // private
 				$title = __( "Only you", 'rtmedia' );
-				$icon  = 'rtmicon-lock rtmicon-fw';
+				$icon  = 'dashicons dashicons-lock rtmicon';
 				break;
 			case 80: // private
 				$title = __( "Blocked temporarily", 'rtmedia' );
