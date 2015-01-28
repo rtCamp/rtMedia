@@ -178,7 +178,7 @@ class RTMediaInteraction {
 	                if ( is_array( $rtmedia_query->album ) && count ( $rtmedia_query->album ) > 0 ) {
 						foreach ( $rtmedia_query->album as $single_album ) {
 							if ( intval ( $single_album->id ) == intval ( $rtmedia_query->media_query[ "album_id" ] ) ) {
-								$title .= $sep . stripslashes( htmlentities( ucfirst ( $single_album->media_title ) ) );
+								$title .= $sep . stripslashes( esc_html( ucfirst ( $single_album->media_title ) ) );
 								$sep = $oldSep;
 							}
 						}
@@ -186,7 +186,7 @@ class RTMediaInteraction {
                 }
             } else {
                 if ( isset ( $rtmedia_query->media ) && count ( $rtmedia_query->media ) > 0 ) {
-                    $title .= $sep . stripslashes( htmlentities( ucfirst ( $rtmedia_query->media[ 0 ]->media_title ) ) );
+                    $title .= $sep . stripslashes( esc_html( ucfirst ( $rtmedia_query->media[ 0 ]->media_title ) ) );
                     $sep = $oldSep;
                 }
                 $title .= $sep . ucfirst ( $rtmedia_query->query[ "media_type" ] );
