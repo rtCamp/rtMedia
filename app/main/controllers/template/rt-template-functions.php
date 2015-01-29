@@ -49,7 +49,7 @@ function rtmedia_title() {
 		echo '<%= media_title %>';
 	} else {
 		global $rtmedia_media;
-		return stripslashes( htmlentities( $rtmedia_media->media_title ) );
+		return stripslashes( esc_html( $rtmedia_media->media_title ) );
 	}
 }
 
@@ -566,7 +566,7 @@ function rtmedia_title_input() {
 	global $rtmedia_media;
 
 	$name  = 'media_title';
-	$value = stripslashes( htmlentities( $rtmedia_media->media_title ) );
+	$value = stripslashes( esc_html( $rtmedia_media->media_title ) );
 
 	$html = '';
 
