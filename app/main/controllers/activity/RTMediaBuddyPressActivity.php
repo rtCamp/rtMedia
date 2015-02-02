@@ -269,7 +269,7 @@ class RTMediaBuddyPressActivity {
             for( $i = 0; $i < sizeof( $rtmedia_media_query ); $i++ ) {
                 // Storing media_type of uploaded media to check whether all media are of same type or different and key is activity_id
                 // Making activity_id array because there might be more then 1 media linked with activity
-                if( !is_array( $rtmedia_media_type_array[ $rtmedia_media_query[ $i ]->activity_id ] ) ) {
+				if( ! isset( $rtmedia_media_type_array[ $rtmedia_media_query[ $i ]->activity_id ] ) || ! is_array( $rtmedia_media_type_array[ $rtmedia_media_query[ $i ]->activity_id ] ) ) {
                     $rtmedia_media_type_array[ $rtmedia_media_query[ $i ]->activity_id ] = array();
                 }
                 
@@ -295,7 +295,12 @@ class RTMediaBuddyPressActivity {
                     $media_const .= '_PLURAL';
                 }
                 $media_const .= '_LABEL';
-                $media_str = constant( $media_const );
+				if( defined( $media_const ) ){
+					$media_str = constant( $media_const );
+				} else {
+					$media_str = __( 'media', 'rtmedia' );
+				}
+
 
                 // Updating activity based on count
                 if( $count == 1 ) {

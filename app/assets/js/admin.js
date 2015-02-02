@@ -58,30 +58,60 @@ jQuery(document).ready(function($) {
 
     /* Submit Request */
 
-    jQuery('#bp-media-settings-boxes').on('submit', '#bp_media_settings_form,#rtmedia-settings-submit', function(e) {
+    jQuery( '#bp-media-settings-boxes' ).on( 'submit', '#bp_media_settings_form, #rtmedia-settings-submit', function( e ) {
         var return_code = true;
-        var reg = new RegExp('^auto$|^[+-]?[0-9]+\\.?([0-9]+)?(px|em|ex|%|in|cm|mm|pt|pc)?$');
-        jQuery("input[name*='defaultSizes']").each(function(el) {
-            if (!reg.test(jQuery(this).val())) {
-                alert("Invalid value for " + jQuery(this).attr('name').replace('rtmedia-options[', '').replace(']', '').replace(/_/g, ' '));
+        var reg = new RegExp( '^[0-9]+$' );
+
+        jQuery( "input[name*='defaultSizes']" ).each( function( el ) {
+            if ( !reg.test( jQuery( this ).val() ) ) {
+                alert( "Invalid value for " + jQuery( this ).attr( 'name' ).replace( 'rtmedia-options[defaultSizes_', '' ).replace( ']', '' ).replace( /_/g, ' ').replace( /(\b)([a-zA-Z] )/g, function( firstLetter ) { return firstLetter.toUpperCase(); } ) );
                 return_code = false;
                 return false;
             }
+        } );
 
-        });
-	var general_videothumb = jQuery('input[name^="rtmedia-options[general_videothumbs]"]');
-	if( return_code && typeof general_videothumb != "undefined" ) {
-	    if( general_videothumb.val() <= 0 ) {
-		alert("Number of video thumbnails to be generated should be greater than 0 in image sizes settings. ");
-		return_code = false;
+	    var general_videothumb = jQuery( 'input[name^="rtmedia-options[general_videothumbs]"]' );
+        if( return_code && typeof general_videothumb != "undefined" ) {
+            var error_msg = "";
+            var general_videothumb_val = 0;
+            if( general_videothumb.val() <= 0 ) {
+                error_msg += "Number of video thumbnails to be generated should be greater than 0 in image sizes settings. Setting it to round value 2.";
+                general_videothumb_val = 2;
+            } else if( !reg.test( general_videothumb.val() ) ) {
+                error_msg += 'Invalid value for Number of video thumbnails in image sizes settings. Setting it to round value ' + Math.round( general_videothumb.val() ) + ".";
+                general_videothumb_val = Math.round( general_videothumb.val() );
+            }
+            if( error_msg != "" ) {
+                alert( error_msg );
+                general_videothumb.val( general_videothumb_val );
+                return_code = false;
                 return false;
+            }
 	    }
-	}
-        if (!return_code) {
-            e.preventDefault();
+
+        var general_perPageMedia = jQuery( 'input[name^="rtmedia-options[general_perPageMedia]"]' );
+        if( return_code && typeof general_perPageMedia != "undefined" ) {
+            var error_msg = "";
+            var general_perPageMedia_val = 0;
+            if( general_perPageMedia.val() < 1 ) {
+                error_msg += "Please enter positive integer value only. Setting number of media per page value to default value 10.";
+                general_perPageMedia_val = 10;
+            } else if( jQuery.isNumeric( general_perPageMedia.val() ) && ( Math.floor( general_perPageMedia.val() ) != general_perPageMedia.val() ) ) {
+                error_msg += "Please enter positive integer value only. Setting number of media per page value to round value " + Math.round( general_perPageMedia.val() ) + ".";
+                general_perPageMedia_val = Math.round( general_perPageMedia.val() );
+            }
+            if( error_msg != "" ){
+                alert( error_msg );
+                general_perPageMedia.val( general_perPageMedia_val );
+                return_code = false;
+                return false;
+            }
         }
 
-    });
+        if ( !return_code ) {
+            e.preventDefault();
+        }
+    } );
 
     jQuery(document).on('click', "#bpm-services .encoding-try-now,#rtm-services .encoding-try-now", function(e) {
         e.preventDefault();

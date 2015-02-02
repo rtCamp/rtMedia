@@ -5,7 +5,14 @@
         global $rtmedia_query;
         if( isset($rtmedia_query->is_gallery_shortcode) && $rtmedia_query->is_gallery_shortcode == true) { // if gallery is displayed using gallery shortcode
         ?>
-            <h2><?php _e( 'Media Gallery', 'rtmedia' ); ?></h2>
+			<div id="rtm-gallery-title-container" class="row">
+				<h2 class="rtm-gallery-title columns large-5 small-12 medium-5"><?php _e( 'Media Gallery', 'rtmedia' ); ?></h2>
+				<div id="rtm-media-options" class="columns large-7 small-12 medium-7">
+					<?php do_action ( 'rtmedia_media_gallery_shortcode_actions' ); ?>
+				</div>
+			</div>
+            <?php do_action ( 'rtmedia_gallery_after_title' ); ?>
+			<div class="clear"></div>
         <?php }
         else { ?>
             <div id="rtm-gallery-title-container" class="row">
@@ -15,6 +22,7 @@
                 </h2>
                 <div id="rtm-media-options" class="columns large-7 small-12 medium-7"><?php do_action ( 'rtmedia_media_gallery_actions' ); ?></div>
             </div>
+            <?php do_action ( 'rtmedia_gallery_after_title' ); ?>
 			<div class="clear"></div>
 
             <div id="rtm-media-gallery-uploader">

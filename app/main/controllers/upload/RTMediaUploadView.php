@@ -57,7 +57,7 @@ class RTMediaUploadView {
 		}
         $up_privacy = $privacy = ""; //uploader privacy dropdown for uploader under rtMedia Media tab.
         if( is_rtmedia_privacy_enable () && ( ! isset( $rtmedia_query->is_upload_shortcode ) || $rtmedia_query->is_upload_shortcode === false) ) {
-            if( isset( $rtmedia_query->query[ 'context' ] ) && $rtmedia_query->query[ 'context' ] == 'group'){
+            if( ( isset( $rtmedia_query->query[ 'context' ] ) && $rtmedia_query->query[ 'context' ] == 'group' ) || ( function_exists( 'bp_is_groups_component' ) &&  bp_is_groups_component() ) ){
                 // if the context is group, then set the media privacy to public
                 $privacy = "<input type='hidden' name='privacy' value='0'/>";
             }else {

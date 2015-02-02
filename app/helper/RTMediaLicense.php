@@ -8,7 +8,7 @@
  */
 class RTMediaLicense {
 
-	static function render_themes( $page = '' ){
+	static function render_license( $page = '' ){
 		global $wp_actions;
 
 		if ( has_action( 'rtmedia_addon_license_details' ) ){

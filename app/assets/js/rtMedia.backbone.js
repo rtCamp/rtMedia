@@ -311,14 +311,15 @@ jQuery( function ( $ ) {
                 zIndex: 2
             } );
             if ( a !== false ) {
-                window.file_size_info = rtmedia_max_file_msg + " : " + this.uploader.settings.max_file_size_msg;
+                window.file_size_info = rtmedia_max_file_msg + this.uploader.settings.max_file_size_msg;
                 if ( rtmedia_version_compare( rtm_wp_version, "3.9" ) ) { // plupload getting updated in 3.9
-                    window.file_extn_info = rtmedia_allowed_file_formats + " : " + this.uploader.settings.filters.mime_types[0].extensions;
+                    file_extn = this.uploader.settings.filters.mime_types[0].extensions;
                 } else {
-                    window.file_extn_info = rtmedia_allowed_file_formats + " : " + this.uploader.settings.filters[0].extensions;
+                    file_extn = this.uploader.settings.filters[0].extensions;
                 }
+                window.file_extn_info = rtmedia_allowed_file_formats + " : " + file_extn.split(',').join(', ');
 
-                var info = window.file_size_info + ", " + window.file_extn_info;
+                var info = window.file_size_info + "\n" + window.file_extn_info;
                 $( ".rtm-file-size-limit" ).attr( 'title', info );
                 //$("#rtMedia-upload-button").after("<span>( <strong>" + rtmedia_max_file_msg + "</strong> "+ this.uploader.settings.max_file_size_msg + ")</span>");
             }

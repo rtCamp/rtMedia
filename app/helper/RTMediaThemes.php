@@ -1,11 +1,5 @@
 <?php
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
  * Description of RTMediaThemes
  *
@@ -18,7 +12,7 @@ class RTMediaThemes {
 	 *
 	 * @access public
 	 *
-	 * @param  type $page
+	 * @param $page
 	 *
 	 * @return void
 	 */
@@ -126,27 +120,63 @@ class RTMediaThemes {
 	 * @return void
 	 */
 	public function rtmedia_themes_content(){
+
+
+		$rtdating = wp_get_theme( 'rtdating' );
+		if( $rtdating->exists() ){
+			$rtdating_purchase = '';
+		} else {
+			$rtdating_purchase = '<a href="https://rtcamp.com/products/rtdating/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media" target="_blank">Buy rtDating</a> | ';
+		}
+
+		$inspirebook = wp_get_theme( 'inspirebook' );
+		if( $inspirebook->exists() ){
+			$inspirebook_purchase = '';
+		} else {
+			$inspirebook_purchase = '<a href="https://rtcamp.com/products/inspirebook/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media" target="_blank">Buy InspireBook</a> | ';
+		}
+
 		?>
 		<div class="row">
 			<div class="columns large-12">
 				<div class="columns large-4 rtmedia-theme-image">
-					<a href="https://rtcamp.com/store/inspirebook/" target="_blank"><img src="<?php echo RTMEDIA_URL . 'app/assets/img/rtmedia-theme-InspireBook.png' ?>"/></a>
+					<a href="https://rtcamp.com/products/rtdating/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media" target="_blank"><img src="<?php echo RTMEDIA_URL . 'app/assets/img/rtDating.png' ?>"/></a>
 				</div>
 				<div class="columns large-7 rtmedia-theme-content">
-					<h3 class="rtmedia-theme-title"><a href="https://rtcamp.com/store/inspirebook/" target="_blank">InspireBook</a>
-					</h3>
+					<h3 class="rtmedia-theme-title"><a href="https://rtcamp.com/products/rtdating/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media" target="_blank">rtDating</a></h3>
 
 					<div>
 						<p>
-							<span><a href="https://rtcamp.com/store/inspirebook/" target="_blank"><b>Meet InspireBook</b></a> - First official rtMedia premium theme.</span>
+							<span>rtDating is a unique, clean and modern theme only for WordPress. This theme is mostly useful for dating sites and community websites. It can also be use for any other WordPress based website. <a href="https://rtcamp.com/products/rtdating/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media" class="rtmedia-theme-inner-a" target="_blank">Read More</a></span>
 						</p>
 
 						<p>
-							<span>InspireBook is a premium WordPress theme, designed especially for BuddyPress and rtMedia powered social-networks. <a href="https://rtcamp.com/introducing-inspirebook/" class="rtmedia-theme-inner-a" target="_blank">Read More</a> </span>
+							<span>Links: <?php echo $rtdating_purchase; ?> <a href="http://demo.rtcamp.com/rtmedia/?theme=rtDating" target="_blank">Live Demo</a> | <a href="http://docs.rtcamp.com/rtdating/" target="_blank">Documentation</a> | <a href="https://rtcamp.com/support/forum/premium-themes/" target="_blank">Support Forum</a></span>
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+		<hr>
+		<div class="row">
+			<div class="columns large-12">
+				<div class="columns large-4 rtmedia-theme-image">
+					<a href="https://rtcamp.com/products/inspirebook/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media" target="_blank"><img src="<?php echo RTMEDIA_URL . 'app/assets/img/rtmedia-theme-InspireBook.png' ?>"/></a>
+				</div>
+				<div class="columns large-7 rtmedia-theme-content">
+					<h3 class="rtmedia-theme-title"><a href="https://rtcamp.com/products/inspirebook/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media" target="_blank">InspireBook</a></h3>
+
+					<div>
+						<p>
+							<span><a href="https://rtcamp.com/products/inspirebook/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media" target="_blank"><b>Meet InspireBook</b></a> - First official rtMedia premium theme.</span>
 						</p>
 
 						<p>
-							<span>Links: <a href="https://rtcamp.com/store/inspirebook/" target="_blank">Buy InspireBook</a> | <a href="http://demo.rtcamp.com/rtmedia/?theme=InspireBook" target="_blank">Live Demo</a> | <a href="https://rtcamp.com/docs/inspirebook/" target="_blank">Documentation</a> | <a href="https://rtcamp.com/support/forum/premium-themes/" target="_blank">Support Forum</a></span>
+							<span>InspireBook is a premium WordPress theme, designed especially for BuddyPress and rtMedia powered social-networks. <a href="https://rtcamp.com/products/inspirebook/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media" class="rtmedia-theme-inner-a" target="_blank">Read More</a> </span>
+						</p>
+
+						<p>
+							<span>Links: <?php echo $inspirebook_purchase; ?> <a href="http://demo.rtcamp.com/rtmedia/?theme=InspireBook" target="_blank">Live Demo</a> | <a href="http://docs.rtcamp.com/inspirebook" target="_blank">Documentation</a> | <a href="http://community.rtcamp.com/c/premium-themes" target="_blank">Support Forum</a></span>
 						</p>
 					</div>
 				</div>
