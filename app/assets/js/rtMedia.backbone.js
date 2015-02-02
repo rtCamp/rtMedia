@@ -470,6 +470,12 @@ jQuery( function ( $ ) {
             } );
 
             rtMediaHook.call( 'rtmedia_js_after_files_added', [up, files] );
+            
+            var allow_upload = rtMediaHook.call( 'rtmedia_js_upload_file', true );
+            if ( allow_upload == false ) {
+                return false;
+            }
+            uploaderObj.uploadFiles();
 
 //            if (upload_size_error) {
 //                // alert(upload_error + " because max file size is " + plupload.formatSize(uploaderObj.uploader.settings.max_file_size) );
@@ -508,14 +514,14 @@ jQuery( function ( $ ) {
 
         } );
 
-        jQuery( '.start-media-upload' ).on( 'click', function ( e ) {
-            e.preventDefault();
-            var allow_upload = rtMediaHook.call( 'rtmedia_js_upload_file', true );
-            if ( allow_upload == false ) {
-                return false;
-            }
-            uploaderObj.uploadFiles();
-        } );
+//        jQuery( '.start-media-upload' ).on( 'click', function ( e ) {
+//            e.preventDefault();
+//            var allow_upload = rtMediaHook.call( 'rtmedia_js_upload_file', true );
+//            if ( allow_upload == false ) {
+//                return false;
+//            }
+//            uploaderObj.uploadFiles();
+//        } );
 
         uploaderObj.uploader.bind( 'QueueChanged', function ( up ) {
 
@@ -756,7 +762,11 @@ jQuery( document ).ready( function ( $ ) {
                              ).appendTo( "#rtMedia-queue-list" );
                      
             jQuery( '#whats-new-content' ).css( 'padding-bottom', '0px' );
-            $( "#rtm-upload-start-notice" ).css( 'display', 'block' ); // show the file upload notice to the user
+            if ( $.trim( $( "#whats-new" ).val() ) == "" ) {
+                $( "#rtm-upload-start-notice" ).css( 'display', 'block' ); // show the file upload notice to the user
+            } else {
+                $( "#rtm-upload-start-notice" ).css( 'display', 'none' );
+            }
             
             $( "#" + file.id + " td.plupload_delete" ).click( function ( e ) {
                 e.preventDefault();
@@ -810,6 +820,14 @@ jQuery( document ).ready( function ( $ ) {
             if ( upl.getFile( rfile ) )
                 upl.removeFile( upl.getFile( rfile ) );
         } );
+        
+        if ( $.trim( $( "#whats-new" ).val() ) != "" ) {
+            var allow_upload = rtMediaHook.call( 'rtmedia_js_upload_file', true );
+            if ( allow_upload == false ) {
+                return false;
+            }
+            objUploadView.uploadFiles();
+        }
     } );
 
     objUploadView.uploader.bind( 'FileUploaded', function ( up, file, res ) {
