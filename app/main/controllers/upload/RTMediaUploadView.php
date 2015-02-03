@@ -71,7 +71,7 @@ class RTMediaUploadView {
 
 		$upload_tabs = array(
 			'file_upload' => array(
-				'title' => __( 'Upload', 'rtmedia' ),
+				'title' => __( 'File Upload', 'rtmedia' ),
 				'class' => array( 'rtm-upload-tab', 'active' ),
 				'content' => '<div class="rtm-upload-tab-content" data-id="rtm-upload-tab">'
 					. apply_filters( 'rtmedia_uploader_before_select_files', "" )
