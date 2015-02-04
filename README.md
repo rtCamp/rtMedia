@@ -742,7 +742,7 @@ Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_sou
 * Added Privacy for Media.
 * Added crude support for activity privacy (due for revision)
 * Revised media count functionality
-* Fixed widget to recognise enabled/disabled media types
+* Fixed widget to recognize enabled/disabled media types
 * Renamed 'Featured' to 'Set as Album Cover' in the UI for clarity
 * Fixed featured functionality
 * Fixed download functionality
