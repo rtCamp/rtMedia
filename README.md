@@ -8,7 +8,7 @@
 
 * **Donate Link:** http://rtcamp.com/donate/
 
-Add albums, photo, audio/video encoding, privacy, sharing, front-end uploads & more. All this works mobile/tablets devices.
+Add albums, photo, audio/video encoding, privacy, sharing, front-end uploads & more. All this works on mobile/tablets devices.
 
 ## Description ##
 
@@ -32,11 +32,11 @@ If you're in a hurry, you can skip the long list of features in subsequent secti
 
 Since rtMedia has many features video doesn't include all features:
 
-http://www.youtube.com/watch?v####dJrykKQGDcs
+https://www.youtube.com/watch?v=dJrykKQGDcs
 
 #### rtMedia Features ####
 
- * **[Free Audio/Video conversion](http://rtcamp.com/rtmedia/addons/audio-video-encoding-service/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "Free Audio/Video Encoding Service")** - rtCamp (company behind rtMedia) has setup dedicated serves to provide free audio/video encoding services for all sites running rtMedia.
+ * **[Free Audio/Video conversion](http://rtcamp.com/rtmedia/addons/audio-video-encoding-service/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "Free Audio/Video Encoding Service")** - rtCamp (company behind rtMedia) has setup dedicated servers to provide free audio/video encoding services for all sites running rtMedia.
  * **WordPress Integration** - Display media on WordPress author pages ( eg: http://demo.rtcamp.com/rtmedia/author/admin/media/ )
  * **BuddyPress Integration** - Find a new media tab under BuddyPress Profiles & Groups.
  * **BuddyPress Activity Stream** - Attach media to activity status updates just like Facebook.
@@ -108,7 +108,7 @@ Read rtMedia [Documentation](http://rtcamp.com/rtmedia/docs/?utm_source####readm
 
 You can also check [rtMedia's Live Demo](http://demo.rtcamp.com/rtmedia/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "Visit rtMedia's Live Demo") or video below:
 
-http://www.youtube.com/watch?v####dJrykKQGDcs
+https://www.youtube.com/watch?v=dJrykKQGDcs
 
 
 1. Media Settings
