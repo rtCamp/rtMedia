@@ -7,4 +7,5 @@ CREATE TABLE %s (
     status varchar(255),
     last_access TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY  (id)
-);
+)
+DEFAULT CHARACTER SET = utf8 COLLATE = utf8_general_ci;
