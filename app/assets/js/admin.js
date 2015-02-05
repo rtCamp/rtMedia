@@ -166,8 +166,10 @@ jQuery(document).ready(function($) {
                 document.location.href = tempUrl + hash;
             } else {
                 jQuery( '#settings-error-api-key-error' ).remove();
-                jQuery( 'h2:first' ).after( '<div class="error" id="settings-error-api-key-error"><p>' + response.error + '</p></div>' );                
+                jQuery( 'h2:first' ).after( '<div class="error" id="settings-error-api-key-error"><p>' + response.error + '</p></div>' );
             }
+            
+            jQuery( '#api-key-submit' ).next( 'img' ).remove();
         } );
     } );
 
