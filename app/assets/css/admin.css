@@ -215,6 +215,7 @@ div.bp-album-import-accept{ padding: 1px 2px; margin-bottom: 15px; }
 .template_select_label{float: left}
 .template_select_container{overflow-x:scroll; width:405px;float: left}
 #bp_media_settings_form .support_form_loader{height: 100px; width: 200px; background:  url("../img/loader.gif") no-repeat }
+#bp_media_settings_form .dashicons { font-size: 16px; }
 /* Miscellaneous */
 #normal-sortables .postbox .bp-media-form .submit{float: none; margin-left: 150px}
 .rt-success{background-color: #E1FFDF;border-color: #2ACF2A;}

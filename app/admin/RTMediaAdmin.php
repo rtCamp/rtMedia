@@ -699,7 +699,6 @@ if ( ! class_exists( 'RTMediaAdmin' ) ){
 				wp_localize_script( 'rtmedia-admin', 'rtmedia_admin_strings', $rtmedia_admin_strings );
 				wp_localize_script( 'rtmedia-admin', 'settings_url', add_query_arg( array( 'page' => 'rtmedia-settings' ), ( is_multisite() ? network_admin_url( 'admin.php' ) : admin_url( 'admin.php' ) ) ) . '#privacy_enabled' );
 				wp_localize_script( 'rtmedia-admin', 'settings_rt_album_import_url', add_query_arg( array( 'page' => 'rtmedia-settings' ), ( is_multisite() ? network_admin_url( 'admin.php' ) : admin_url( 'admin.php' ) ) ) );
-				wp_enqueue_style( 'font-awesome', RTMEDIA_URL . 'app/assets/css/font-awesome.min.css', '', RTMEDIA_VERSION );
 				wp_enqueue_style( 'bootstrap-switch', RTMEDIA_URL . 'app/assets/css/vendor/bootstrap-switch.css', '', RTMEDIA_VERSION );
 				wp_enqueue_style( 'slider-tabs', RTMEDIA_URL . 'app/assets/css/vendor/jquery.sliderTabs.min.css', '', RTMEDIA_VERSION );
 				wp_enqueue_style( 'grid-foundation', RTMEDIA_URL . 'app/assets/css/vendor/grid-foundation.css', '', RTMEDIA_VERSION );

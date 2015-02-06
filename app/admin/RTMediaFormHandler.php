@@ -401,7 +401,7 @@ class RTMediaFormHandler {
 					<div class="columns large-3">
 						<?php call_user_func( $option['callback'], $option['args'] ); ?>
 						<span data-tooltip class="has-tip" title="<?php echo ( isset( $option['args']['desc'] ) ) ? $option['args']['desc'] : 'NA'; ?>">
-							<i class="rtmicon-info-circle"></i>
+							<i class="dashicons dashicons-info"></i>
 						</span>
 					</div>
 				</div>
@@ -537,7 +537,7 @@ class RTMediaFormHandler {
 					<div class="columns large-5">
 						<?php call_user_func( $option['callback'], $option['args'] ); ?>
 						<span data-tooltip class="has-tip" title="<?php echo ( isset( $option['args']['desc'] ) ) ? $option['args']['desc'] : 'NA'; ?>">
-							<i class="rtmicon-info-circle"></i>
+							<i class="dashicons dashicons-info"></i>
 						</span>
 					</div>
 				</div>
@@ -822,7 +822,7 @@ class RTMediaFormHandler {
 			<div class="columns large-3">
 				<?php call_user_func( $render_video_thumb['callback'], $render_video_thumb['args'] ); ?>
 				<span data-tooltip class="has-tip" title="<?php echo ( isset( $render_video_thumb['args']['desc'] ) ) ? $render_video_thumb['args']['desc'] : 'NA'; ?>">
-					<i class="rtmicon-info-circle"></i>
+					<i class="dashicons dashicons-info"></i>
 				</span>
 			</div>
 		</div>
@@ -866,7 +866,7 @@ class RTMediaFormHandler {
 					<div class="columns large-6">
 						<?php call_user_func( $option['callback'], $option['args'] ); ?>
 						<span data-tooltip class="has-tip" title="<?php echo ( isset( $option['args']['desc'] ) ) ? $option['args']['desc'] : 'NA'; ?>">
-							<i class="rtmicon-info-circle"></i>
+							<i class="dashicons dashicons-info"></i>
 						</span>
 					</div>
 				<?php } ?>
@@ -998,7 +998,7 @@ class RTMediaFormHandler {
 			}
 			?>
 			<span data-tooltip class="has-tip" title="<?php echo ( isset( $privacy['args']['desc'] ) ) ? $privacy['args']['desc'] : 'NA'; ?>">
-				<i class="rtmicon-info-circle"></i>
+				<i class="dashicons dashicons-info"></i>
 			</span>
 			<?php
 			echo '</div>';
@@ -1103,7 +1103,7 @@ class RTMediaFormHandler {
 				<div class="columns large-3">
 					<?php call_user_func( $option['callback'], $option['args'] ); ?>
 					<span data-tooltip class="has-tip" title="<?php echo ( isset( $option['args']['desc'] ) ) ? $option['args']['desc'] : 'NA'; ?>">
-						<i class="rtmicon-info-circle"></i>
+						<i class="dashicons dashicons-info"></i>
 					</span>
 				</div>
 			</div>
@@ -1138,7 +1138,7 @@ class RTMediaFormHandler {
 				<div class="columns large-3">
 					<?php call_user_func( $option['callback'], $option['args'] ); ?>
 					<span data-tooltip class="has-tip" title="<?php echo ( isset( $option['args']['desc'] ) ) ? $option['args']['desc'] : 'NA'; ?>">
-						<i class="rtmicon-info-circle"></i>
+						<i class="dashicons dashicons-info"></i>
 					</span>
 				</div>
 			</div>
