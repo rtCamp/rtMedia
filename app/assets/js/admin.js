@@ -75,7 +75,7 @@ jQuery(document).ready(function($) {
             var error_msg = "";
             var general_videothumb_val = 0;
             if( general_videothumb.val() <= 0 ) {
-                error_msg += "Number of video thumbnails to be generated should be greater than 0 in image sizes settings. Setting it to round value 2.";
+                error_msg += "Number of video thumbnails to be generated should be greater than 0 in image sizes settings. Setting it to default value 2.";
                 general_videothumb_val = 2;
             } else if( !reg.test( general_videothumb.val() ) ) {
                 error_msg += 'Invalid value for Number of video thumbnails in image sizes settings. Setting it to round value ' + Math.round( general_videothumb.val() ) + ".";
@@ -137,32 +137,41 @@ jQuery(document).ready(function($) {
         }
     });
 
-    jQuery(document).on('click', '#api-key-submit', function(e) {
+    jQuery( document ).on( 'click', '#api-key-submit', function( e ) {
         e.preventDefault();
-        jQuery(this).after('<img style="margin: 0 0 0 10px" src="' + rtmedia_admin_url + 'images/wpspin_light.gif" />')
+        
+        if( jQuery( this ).next( 'img' ).length == 0 ) {
+            jQuery( this ).after( '<img style="margin: 0 0 0 10px" src="' + rtmedia_admin_url + 'images/wpspin_light.gif" />' );
+        }
+        
         var data = {
             action: 'rtmedia_enter_api_key',
-            apikey: jQuery('#new-api-key').val()
+            apikey: jQuery( '#new-api-key' ).val()
         };
 
         // since 2.8 ajaxurl is always defined in the admin header and points to admin-ajax.php
-        jQuery.getJSON(ajaxurl, data, function(response) {
-            if (response.error === undefined && response.apikey) {
+        jQuery.getJSON( ajaxurl, data, function( response ) {
+            if ( response.error === undefined && response.apikey ) {
                 var tempUrl = window.location.href;
                 var hash = window.location.hash;
-                tempUrl = tempUrl.replace(hash, '');
-                if (tempUrl.toString().indexOf('&apikey=' + response.apikey) == -1)
+                tempUrl = tempUrl.replace( hash, '' );
+                
+                if ( tempUrl.toString().indexOf( '&apikey=' + response.apikey ) == -1 ) {
                     tempUrl += '&apikey=' + response.apikey;
-                if (tempUrl.toString().indexOf('&update=true') == -1)
+                }
+                if ( tempUrl.toString().indexOf( '&update=true' ) == -1 ) {
                     tempUrl += '&update=true';
+                }
+                
                 document.location.href = tempUrl + hash;
-
             } else {
-                jQuery('#settings-error-api-key-error').remove();
-                jQuery('h2:first').after('<div class="error" id="settings-error-api-key-error"><p>' + response.error + '</p></div>');
+                jQuery( '#settings-error-api-key-error' ).remove();
+                jQuery( 'h2:first' ).after( '<div class="error" id="settings-error-api-key-error"><p>' + response.error + '</p></div>' );
             }
-        });
-    });
+            
+            jQuery( '#api-key-submit' ).next( 'img' ).remove();
+        } );
+    } );
 
     jQuery(document).on('click', '#disable-encoding', function(e) {
         e.preventDefault();

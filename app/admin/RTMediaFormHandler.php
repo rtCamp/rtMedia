@@ -640,16 +640,16 @@ class RTMediaFormHandler {
 				<?php do_action( 'rtmedia_media_type_setting_message' ); ?>
 			</h3>
 		</div>
-		<div class="rt-table large-12">
+		<div class="rt-table large-12 medium-12 small-12">
 		<div class="row rt-header">
 			<?php do_action( 'rtmedia_type_settings_before_heading' ); ?>
-			<div class="columns large-4"><h4><?php _e( 'Media Type', 'rtmedia' ) ?></h4></div>
-			<div class="columns large-4">
+			<div class="columns large-4 medium-4 small-4"><h4><?php _e( 'Media Type', 'rtmedia' ) ?></h4></div>
+			<div class="columns large-4 medium-4 small-4">
 				<h4 data-tooltip class="has-tip" title="<?php _e( 'Allows you to upload a particular media type on your post.', 'rtmedia' ); ?>">
 					<abbr><?php _e( 'Allow Upload', 'rtmedia' ); ?></abbr>
 				</h4>
 			</div>
-			<div class="columns large-4">
+			<div class="columns large-4 medium-4 small-4">
 				<h4 data-tooltip class="has-tip" title="<?php _e( 'Place a specific media as a featured content on the post.', 'rtmedia' ); ?>">
 					<abbr><?php _e( 'Set Featured', 'rtmedia' ); ?></abbr>
 				</h4>
@@ -670,15 +670,15 @@ class RTMediaFormHandler {
 				}
 
 				do_action( 'rtmedia_type_settings_before_body' );
-				echo '<div class="columns large-4">' . $section['name'] . '</div>';
+				echo '<div class="columns large-4 medium-4 small-4">' . $section['name'] . '</div>';
 				$args = array( 'key' => 'allowedTypes_' . $key . '_enabled', 'value' => $section['enabled'] );
-				echo '<div class="columns large-4">';
+				echo '<div class="columns large-4 medium-4 small-4">';
 				$allow_upload_checkbox = self::checkbox( $args, $echo = false );
 				$allow_upload_checkbox = apply_filters( 'rtmedia_filter_allow_upload_checkbox', $allow_upload_checkbox, $key, $args );
 				echo $allow_upload_checkbox;
 				echo '</div>';
 				$args = array( 'key' => 'allowedTypes_' . $key . '_featured', 'value' => $section['featured'] );
-				echo '<div class="columns large-4">';
+				echo '<div class="columns large-4 medium-4 small-4">';
 				$featured_checkbox = self::checkbox( $args, $echo = false );
 				$featured_checkbox = apply_filters( 'rtmedia_filter_featured_checkbox', $featured_checkbox, $key );
 				echo $featured_checkbox;
@@ -693,8 +693,8 @@ class RTMediaFormHandler {
 				do_action( 'rtmedia_type_settings_after_body', $key, $section );
 				echo '</div>';
 				echo '<div class="row rtmedia-file-extension-wrap">';
-				echo '<label class="columns large-3">' . __( 'File Extensions', 'rtmedia' ) . ':</label>';
-				echo '<label class="columns large-9 rtmedia_type_settings_filter_extension">' . $extensions . '</label>';
+				echo '<label class="columns large-3 medium-3 small-3">' . __( 'File Extensions', 'rtmedia' ) . ':</label>';
+				echo '<label class="columns large-9 medium-9 small-9 rtmedia_type_settings_filter_extension">' . $extensions . '</label>';
 				echo '</div>';
 
 			} else {

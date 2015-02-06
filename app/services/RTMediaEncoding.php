@@ -619,7 +619,7 @@ class RTMediaEncoding {
     }
 
     public function enter_api_key() {
-        if (isset($_GET['apikey'])) {
+        if (isset($_GET['apikey']) && $_GET['apikey'] != '') {
             echo json_encode(array('apikey' => $_GET['apikey']));
         }
         else {
