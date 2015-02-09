@@ -5,10 +5,10 @@ Tags: BuddyPress, media, multimedia, album, audio, songs, music, video, photo, i
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires at least: WordPress 3.6
-Tested up to: WordPress 4.1 + BuddyPress 2.1.1
-Stable tag: 3.7.31
+Tested up to: WordPress 4.1 + BuddyPress 2.2.0
+Stable tag: 3.7.32
 
-Add albums, photo, audio/video encoding, privacy, sharing, front-end uploads & more. All this works mobile/tablets devices.
+Add albums, photo, audio/video encoding, privacy, sharing, front-end uploads & more. All this works on mobile/tablets devices.
 
 == Description ==
 
@@ -36,7 +36,7 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 = rtMedia Features =
 
- * **[Free Audio/Video conversion](http://rtcamp.com/rtmedia/addons/audio-video-encoding-service/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "Free Audio/Video Encoding Service")** - rtCamp (company behind rtMedia) has setup dedicated serves to provide free audio/video encoding services for all sites running rtMedia.
+ * **[Free Audio/Video conversion](http://rtcamp.com/rtmedia/addons/audio-video-encoding-service/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "Free Audio/Video Encoding Service")** - rtCamp (company behind rtMedia) has setup dedicated servers to provide free audio/video encoding services for all sites running rtMedia.
  * **WordPress Integration** - Display media on WordPress author pages ( eg: http://demo.rtcamp.com/rtmedia/author/admin/media/ )
  * **BuddyPress Integration** - Find a new media tab under BuddyPress Profiles & Groups.
  * **BuddyPress Activity Stream** - Attach media to activity status updates just like Facebook.
@@ -127,6 +127,12 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 == Changelog ==
 
 Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "Visit rtMedia's Features page") to get some details about future releases.
+
+= 3.7.32 =
+* Update all translation files
+* Update templates
+* Fix media title issue
+* Fix warnings
 
 = 3.7.31 =
 * Fix BuddyPress group media gets upload to user profile issue
@@ -742,7 +748,7 @@ Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_sou
 * Added Privacy for Media.
 * Added crude support for activity privacy (due for revision)
 * Revised media count functionality
-* Fixed widget to recognise enabled/disabled media types
+* Fixed widget to recognize enabled/disabled media types
 * Renamed 'Featured' to 'Set as Album Cover' in the UI for clarity
 * Fixed featured functionality
 * Fixed download functionality
@@ -897,8 +903,8 @@ Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_sou
 
 == Upgrade Notice ==
 
-= 3.7.31 =
-Requires BuddyPress 1.7 or higher, if using BuddyPress. Fix BuddyPress group media gets upload to user profile issue.
+= 3.7.32 =
+Requires BuddyPress 1.7 or higher, if using BuddyPress. Update all translation files, update templates, fix media title issue.
 
 == Sponsors ==
 
