@@ -13,7 +13,16 @@
 class RTMediaLike extends RTMediaUserInteraction {
 	function __construct() {
 		$args = array(
-			'action' => 'like', 'label' => __( 'Like', 'rtmedia' ), 'plural' => __( 'Likes', 'rtmedia' ), 'undo_label' => __( 'Unlike', 'rtmedia' ), 'privacy' => 20, 'countable' => true, 'single' => false, 'repeatable' => false, 'undoable' => true, 'icon_class' => 'rtmicon-thumbs-up rtmicon-fw'
+			'action' => 'like',
+			'label' => __( 'Like', 'rtmedia' ),
+			'plural' => __( 'Likes', 'rtmedia' ),
+			'undo_label' => __( 'Unlike', 'rtmedia' ),
+			'privacy' => 20,
+			'countable' => true,
+			'single' => false,
+			'repeatable' => false,
+			'undoable' => true,
+			'icon_class' => 'rtmicon-thumbs-up rtmicon-fw'
 		);
 		parent::__construct( $args );
 		remove_filter( 'rtmedia_action_buttons_before_delete', array( $this, 'button_filter' ) );

@@ -49,7 +49,6 @@
 	margin-top: 12px;
 	margin-right: 20px;
 }
-
 .rtmedia-container {
 	@import "compass/reset";
 	//updated for foundation 5
@@ -1640,4 +1639,10 @@ button.rtp-lb-close {
 			}
 		}
 	}
+}
+i.rtmicon {
+	font-family: dashicons;
+}
+.rtmicon-3x{
+	font-size: 300%;
 }

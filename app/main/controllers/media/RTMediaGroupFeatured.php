@@ -22,7 +22,7 @@ class RTMediaGroupFeatured extends RTMediaUserInteraction {
 			'single' => true,
 			'repeatable' => false,
 			'undoable' => true,
-			'icon_class' => 'rtmicon-star rtmicon-fw',
+			'icon_class' => 'dashicons dashicons-star-filled rtmicon',
 		);
 
 		$this->group_id = $group_id;
