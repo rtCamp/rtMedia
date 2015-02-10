@@ -55,9 +55,9 @@ $rtmedia_media = $media[0];
                         <form class="rtmedia-album-edit rtmedia-bulk-actions" method="post" name="rtmedia_album_edit">
                             <?php wp_nonce_field('rtmedia_bulk_delete_nonce', 'rtmedia_bulk_delete_nonce'); ?>
                             <?php RTMediaMedia::media_nonce_generator($rtmedia_query->media_query['album_id']); ?>
-                            <button type='button' class="select-all" title="<?php echo __('Select All Visible','rtmedia'); ?>"><i class='rtmicon-square-o rtmicon-fw'></i></button>
-                            <button class="button rtmedia-move" type='button' title='<?php echo __('Move Selected media to another album.');?>' ><i class='dashicons dashicons-randomize rtmicon'></i> <?php _e('Move','rtmedia'); ?></button>
-                            <button type="button" name="delete-selected" class="button rtmedia-delete-selected" title='<?php echo __('Delete Selected media from the album.');?>'><i class='dashicons dashicons-trash rtmicon'></i><?php _e('Delete','rtmedia'); ?></button>
+							<span><input type="checkbox" name="rtm-select-all" class="select-all" title="<?php _e( 'Select All Visible', 'rtmedia' ); ?>" /></span>
+                            <button class="button rtmedia-move" type='button' title='<?php echo __('Move Selected media to another album.');?>' ><?php _e('Move','rtmedia'); ?></button>
+                            <button type="button" name="delete-selected" class="button rtmedia-delete-selected" title='<?php echo __('Delete Selected media from the album.');?>'><?php _e('Delete','rtmedia'); ?></button>
                             <div class="rtmedia-move-container">
                                 <?php $global_albums = rtmedia_get_site_option('rtmedia-global-albums'); ?>
                                 <?php _e('Move selected media to the album : ', 'rtmedia'); ?>
