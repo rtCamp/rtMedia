@@ -122,7 +122,7 @@ class RTMediaActivity {
 			if ( 'photo' == $media->media_type ){
 				$thumbnail_id = $media->media_id;
 				if ( $thumbnail_id ){
-					list( $src, $width, $height ) = wp_get_attachment_image_src( $thumbnail_id, 'rt_media_activity_image' );
+					list( $src, $width, $height ) = wp_get_attachment_image_src( $thumbnail_id, apply_filters( 'rtmedia_activity_image_size', 'rt_media_activity_image' ) );
 					$html = '<img src="' . $src . '" />';
 				}
 			} elseif ( 'video' == $media->media_type ) {
