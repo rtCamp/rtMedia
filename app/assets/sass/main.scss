@@ -1038,7 +1038,7 @@ button.rtp-lb-close {
 					}
 				}
 				i {
-					font-size: 13px;
+					font-size: 14px;
 					color: #fff;
 				}
 			}
@@ -1641,7 +1641,10 @@ button.rtp-lb-close {
 	}
 }
 i.rtmicon {
-	font-family: dashicons;
+	display: inline-block;
+	-webkit-font-smoothing: antialiased;
+	font: normal 14px/1 'dashicons';
+	vertical-align: middle;
 }
 .rtmicon-3x{
 	font-size: 300%;
