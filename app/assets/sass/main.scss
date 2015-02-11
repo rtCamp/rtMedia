@@ -415,7 +415,16 @@
 						margin-bottom: 7px;
 						color: #808080;
 						i {
-							margin-left: 4px;
+							margin-left: 2px;
+							font-size: 12px;
+							vertical-align: middle;
+							line-height: 22px;
+						}
+						span {
+							display: inline-block;
+							vertical-align: middle;
+							font-size: 12px;
+							line-height: 25px;
 						}
 					}
 					&.rtmedia-actions-before-description {
@@ -474,9 +483,11 @@
 							text-align: center;
 							vertical-align: middle;
 						}
-						/*                                                i{
-																			margin-right : 5px;
-																		}*/
+						i.rtmicon{
+							height: auto;
+							width: auto;
+							line-height: 15px;
+						}
 					}
 				}
 				.rtmedia-media-description {
@@ -1296,9 +1307,9 @@ button.rtp-lb-close {
 								opacity: 1;
 							}
 							@extend .rtm-link-button;
-							/*                        i {
-														margin-right: 5px;
-													}*/
+							span{
+								vertical-align: top;
+							}
 						}
 
 						.rtm-options {

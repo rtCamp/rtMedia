@@ -2464,7 +2464,7 @@ function get_rtmedia_date_gmt( $rtmedia_id = false ) {
 		$date_time = rtmedia_convert_date( $media->post_date_gmt );
 	}
 
-	return $date_time;
+	return '<span>' . $date_time . '</span>';
 }
 
 //function to convert comment datetime to "time ago" format.
