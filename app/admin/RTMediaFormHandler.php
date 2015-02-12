@@ -834,7 +834,7 @@ class RTMediaFormHandler {
 				'key' => 'general_jpeg_image_quality',
 				'value' => $options['general_jpeg_image_quality'],
 				'class' => array( 'rtmedia-setting-text-box' ),
-				'desc' => __( 'Enter jpeg Image Quality. Minimum value is 1. Maximum value is 100.', 'rtmedia' ),
+				'desc' => __( 'Enter jpeg Image Quality. Minimum value is 1. 100 is original quality.', 'rtmedia' ),
 				'min' => 1,
 				'max' => 100,
 			)
