@@ -826,6 +826,34 @@ class RTMediaFormHandler {
 				</span>
 			</div>
 		</div>
+        <?php
+        $render_jpeg_image_quality = array(
+			'title' => __( 'JPEG image quality in percentage', 'rtmedia' ),
+			'callback' => array( 'RTMediaFormHandler', 'number' ),
+			'args' => array(
+				'key' => 'general_jpeg_image_quality',
+				'value' => $options['general_jpeg_image_quality'],
+				'class' => array( 'rtmedia-setting-text-box' ),
+				'desc' => __( 'Enter jpeg Image Quality. Minimum value is 1. Maximum value is 100.', 'rtmedia' ),
+				'min' => 1,
+				'max' => 100,
+			)
+		);
+        ?>
+        <div class="postbox metabox-holder">
+			<h3 class="hndle"><span>JPEG Image Quality</span></h3>
+		</div>
+        <div class="row section">
+			<div class="columns large-9">
+				<?php echo $render_jpeg_image_quality['title']; ?>
+			</div>
+			<div class="columns large-3">
+				<?php call_user_func( $render_jpeg_image_quality['callback'], $render_jpeg_image_quality['args'] ); ?>
+				<span data-tooltip class="has-tip" title="<?php echo ( isset( $render_jpeg_image_quality['args']['desc'] ) ) ? $render_jpeg_image_quality['args']['desc'] : 'NA'; ?>">
+					<i class="rtmicon-info-circle"></i>
+				</span>
+			</div>
+		</div>
 	<?php
 	}
 

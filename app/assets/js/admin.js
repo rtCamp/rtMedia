@@ -88,6 +88,28 @@ jQuery(document).ready(function($) {
                 return false;
             }
 	    }
+        
+        var general_jpeg_image_quality = jQuery( 'input[name^="rtmedia-options[general_jpeg_image_quality]"]' );
+        if( return_code && typeof general_jpeg_image_quality != "undefined" ) {
+            var error_msg = "";
+            var general_jpeg_image_quality_val = 0;
+            if( general_jpeg_image_quality.val() <= 0 ) {
+                error_msg += "Number of percentage in JPEG image quality should be greater than 0 in image sizes settings. Setting it to default value 90.";
+                general_jpeg_image_quality_val = 90;
+            } else if( general_jpeg_image_quality.val() > 100 ) {
+                error_msg += "Number of percentage in JPEG image quality should be less than 100 in image sizes settings. Setting it to 100.";
+                general_jpeg_image_quality_val = 100;
+            } else if( !reg.test( general_jpeg_image_quality.val() ) ) {
+                error_msg += 'Invalid value for percentage in JPEG image quality in image sizes settings. Setting it to round value ' + Math.round( general_jpeg_image_quality.val() ) + ".";
+                general_jpeg_image_quality_val = Math.round( general_jpeg_image_quality.val() );
+            }
+            if( error_msg != "" ) {
+                alert( error_msg );
+                general_jpeg_image_quality.val( general_jpeg_image_quality_val );
+                return_code = false;
+                return false;
+            }
+	    }
 
         var general_perPageMedia = jQuery( 'input[name^="rtmedia-options[general_perPageMedia]"]' );
         if( return_code && typeof general_perPageMedia != "undefined" ) {

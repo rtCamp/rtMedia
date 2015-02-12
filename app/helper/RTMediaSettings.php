@@ -49,6 +49,7 @@ if ( ! class_exists( 'RTMediaSettings' ) ){
 				'general_enableMediaEndPoint' => 0,
 				'general_showAdminMenu' => 0,
 				'general_videothumbs' => 2,
+                'general_jpeg_image_quality' => 90,
 				'general_uniqueviewcount' => 0,
 				'general_viewcount' => 0,
 				'general_AllowUserData' => 1,
@@ -89,6 +90,18 @@ if ( ! class_exists( 'RTMediaSettings' ) ){
 			if ( isset( $options['general_videothumbs'] ) && is_numeric( $options['general_videothumbs'] ) && intval( $options['general_videothumbs'] ) > 10 ){
 				$defaults['general_videothumbs'] = 10;
 			}
+            
+            if( isset( $options['general_jpeg_image_quality'] ) ) {
+                if( is_numeric( $options['general_jpeg_image_quality'] ) ) {
+                    if( $options['general_jpeg_image_quality'] > 100 ) {
+                        $defaults['general_jpeg_image_quality'] = 100;
+                    } else if( $options['general_jpeg_image_quality'] < 1 ) {
+                        $defaults['general_jpeg_image_quality'] = 90;
+                    }
+                } else {
+                    $defaults['general_jpeg_image_quality'] = 90;
+                }                
+            }
 
 			return $defaults;
 		}

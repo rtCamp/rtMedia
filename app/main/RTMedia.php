@@ -191,6 +191,17 @@ class RTMedia
             $this->options = $rtmedia_options;
         }
         $this->add_image_sizes();
+        $this->set_image_quality();
+    }
+    
+    public function set_image_quality() {
+        add_filter( 'jpeg_quality', array ($this, 'rtmedia_jpeg_quality' ) );
+    }
+    
+    public function rtmedia_jpeg_quality( $quality ) {
+        $quality = isset( $this->options[ 'general_jpeg_image_quality' ] ) ? $this->options[ 'general_jpeg_image_quality' ] : 90;
+        
+        return $quality;
     }
 
     public function image_sizes() {
@@ -470,7 +481,8 @@ class RTMedia
             'general_enableMediaEndPoint' => 0,
             'general_showAdminMenu' => (isset($bp_media_options['show_admin_menu'])) ? $bp_media_options['show_admin_menu'] : 0,
             'general_videothumbs' => 2,
-	    'general_AllowUserData' => 1
+            'general_jpeg_image_quality' => 90,
+            'general_AllowUserData' => 1
         );
 
 
