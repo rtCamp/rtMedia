@@ -828,20 +828,20 @@ class RTMediaFormHandler {
 		</div>
         <?php
         $render_jpeg_image_quality = array(
-			'title' => __( 'JPEG image quality in percentage', 'rtmedia' ),
+			'title' => __( 'JPEG/JPG image quality (1-100)', 'rtmedia' ),
 			'callback' => array( 'RTMediaFormHandler', 'number' ),
 			'args' => array(
 				'key' => 'general_jpeg_image_quality',
 				'value' => $options['general_jpeg_image_quality'],
 				'class' => array( 'rtmedia-setting-text-box' ),
-				'desc' => __( 'Enter jpeg Image Quality. Minimum value is 1. 100 is original quality.', 'rtmedia' ),
+				'desc' => __( 'Enter JPEG/JPG Image Quality. Minimum value is 1. 100 is original quality.', 'rtmedia' ),
 				'min' => 1,
 				'max' => 100,
 			)
 		);
         ?>
         <div class="postbox metabox-holder">
-			<h3 class="hndle"><span>JPEG Image Quality</span></h3>
+			<h3 class="hndle"><span>Image Quality</span></h3>
 		</div>
         <div class="row section">
 			<div class="columns large-9">
