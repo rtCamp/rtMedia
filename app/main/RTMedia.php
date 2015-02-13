@@ -645,6 +645,9 @@ class RTMedia
      * @global BPMediaAdmin $bp_media_admin
      */
     function init() {
+		// set metatable in $wpdb
+		$this->set_rtmedia_meta_wpdbfix();
+
 		// rtMedia db upgrade
 		add_action('rt_db_upgrade', array($this, 'fix_parent_id'));
 		add_action('rt_db_upgrade', array($this, 'fix_privacy'));
@@ -754,6 +757,12 @@ class RTMedia
         do_action('bp_media_init'); // legacy For plugin using this actions
         do_action('rtmedia_init');
     }
+
+	function set_rtmedia_meta_wpdbfix() {
+		global $wpdb;
+		$wpdb->mediameta = $wpdb->prefix . 'rt_rtm_media_meta';
+		$wpdb->tables[] = 'mediameta';
+	}
 
     function redirect_on_change_slug() {
         $old_slugs = rtmedia_get_site_option("rtmedia_old_media_slug", false, true);

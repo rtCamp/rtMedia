@@ -1509,27 +1509,64 @@ function rtmedia_gallery( $attr = '' ) {
 }
 
 function get_rtmedia_meta( $id = false, $key = false ) {
-	$rtmediameta = new RTMediaMeta();
+	if( apply_filters( 'rtmedia_use_legacy_meta_function', false ) ){
+		$rtmediameta = new RTMediaMeta();
 
-	return $rtmediameta->get_meta( $id, $key );
+		return $rtmediameta->get_meta( $id, $key );
+	} else {
+		// check whether to get single value or multiple
+		$single = ( $key === false ) ? false : true;
+
+		// use WP's default get_metadata function replace column name from "media_id" to "id" in query
+		add_filter( 'query', 'rtm_filter_metaid_column_name' );
+		$meta =  get_metadata( 'media', $id, $key, $single );
+		remove_filter( 'query', 'rtm_filter_metaid_column_name' );
+		return $meta;
+	}
 }
 
 function add_rtmedia_meta( $id = false, $key = false, $value = false, $duplicate = false ) {
-	$rtmediameta = new RTMediaMeta ( $id, $key, $value, $duplicate );
+	if( apply_filters( 'rtmedia_use_legacy_meta_function', false ) ){
+		$rtmediameta = new RTMediaMeta ( $id, $key, $value, $duplicate );
 
-	return $rtmediameta->add_meta( $id, $key, $value, $duplicate );
+		return $rtmediameta->add_meta( $id, $key, $value, $duplicate );
+	} else {
+		// use WP's default get_metadata function replace column name from "media_id" to "id" in query
+		add_filter( 'query', 'rtm_filter_metaid_column_name' );
+		$meta =  add_metadata( 'media', $id, $key, $value, !$duplicate );
+		remove_filter( 'query', 'rtm_filter_metaid_column_name' );
+		return $meta;
+	}
+
 }
 
 function update_rtmedia_meta( $id = false, $key = false, $value = false, $duplicate = false ) {
-	$rtmediameta = new RTMediaMeta();
+	if( apply_filters( 'rtmedia_use_legacy_meta_function', false ) ){
+		$rtmediameta = new RTMediaMeta();
 
-	return $rtmediameta->update_meta( $id, $key, $value, $duplicate );
+		return $rtmediameta->update_meta( $id, $key, $value, $duplicate );
+	} else {
+		// use WP's default get_metadata function replace column name from "media_id" to "id" in query
+		add_filter( 'query', 'rtm_filter_metaid_column_name' );
+		$meta =  update_metadata( 'media', $id, $key, $value, $duplicate );
+		remove_filter( 'query', 'rtm_filter_metaid_column_name' );
+		return $meta;
+	}
+
 }
 
 function delete_rtmedia_meta( $id = false, $key = false ) {
-	$rtmediameta = new RTMediaMeta();
+	if( apply_filters( 'rtmedia_use_legacy_meta_function', false ) ){
+		$rtmediameta = new RTMediaMeta();
 
-	return $rtmediameta->delete_meta( $id, $key );
+		return $rtmediameta->delete_meta( $id, $key );
+	} else {
+		// use WP's default get_metadata function replace column name from "media_id" to "id" in query
+		add_filter( 'query', 'rtm_filter_metaid_column_name' );
+		$meta =  delete_metadata( 'media', $id, $key );
+		remove_filter( 'query', 'rtm_filter_metaid_column_name' );
+		return $meta;
+	}
 }
 
 function rtmedia_global_albums() {
@@ -2847,4 +2884,33 @@ add_filter( 'rtmedia_modify_upload_params','rtmedia_modify_activity_upload_url',
 // Get rtMedia Encoding API Key
 function get_rtmedia_encoding_api_key() {
     return get_site_option( 'rtmedia-encoding-api-key' );
+}
+
+/*
+ * Filter SQL query strings to swap out the 'meta_id' column.
+ *
+ * WordPress uses the meta_id column for commentmeta and postmeta, and so
+ * hardcodes the column name into its *_metadata() functions. rtMedia
+ * uses 'id' for the primary column. To make WP's functions usable for rtMedia,
+ * we use this filter on 'query' to swap all 'meta_id' with 'id.
+ */
+function rtm_filter_metaid_column_name( $q ){
+	/*
+	 * Replace quoted content with __QUOTE__ to avoid false positives.
+	 * This regular expression will match nested quotes.
+	 */
+	$quoted_regex = "/'[^'\\\\]*(?:\\\\.[^'\\\\]*)*'/s";
+	preg_match_all( $quoted_regex, $q, $quoted_matches );
+	$q = preg_replace( $quoted_regex, '__QUOTE__', $q );
+
+	$q = str_replace( 'meta_id', 'id', $q );
+
+	// Put quoted content back into the string.
+	if ( ! empty( $quoted_matches[0] ) ) {
+		for ( $i = 0; $i < count( $quoted_matches[0] ); $i++ ) {
+			$quote_pos = strpos( $q, '__QUOTE__' );
+			$q = substr_replace( $q, $quoted_matches[0][ $i ], $quote_pos, 9 );
+		}
+	}
+	return $q;
 }
