@@ -178,21 +178,27 @@ class RTMediaEncoding {
     }
 
     public function save_api_key() {
-        if (isset($_GET['api_key_updated']) && $_GET['api_key_updated']) {
-            if (is_multisite()) {
-                add_action('network_admin_notices', array($this, 'successfully_subscribed_notice'));
+        if( isset( $_GET[ 'api_key_updated' ] ) && $_GET[ 'api_key_updated' ] ) {
+            if( is_multisite() ) {
+                add_action( 'network_admin_notices', array( $this, 'successfully_subscribed_notice' ) );
             }
-            add_action('admin_notices', array($this, 'successfully_subscribed_notice'));
+            
+            add_action( 'admin_notices', array( $this, 'successfully_subscribed_notice' ) );
         }
-        if (isset($_GET['apikey']) && is_admin() && isset($_GET['page']) && ($_GET['page'] == 'rtmedia-addons') && $this->is_valid_key($_GET['apikey'])) {
-            if ($this->api_key && !(isset($_GET['update']) && $_GET['update'])) {
-                $unsubscribe_url = trailingslashit($this->api_url) . 'api/cancel/' . $this->api_key;
-                wp_remote_post($unsubscribe_url, array('timeout' => 120, 'body' => array('note' => 'Direct URL Input (API Key: ' . $_GET['apikey'] . ')')));
+        
+        if( isset( $_GET[ 'apikey' ] ) && is_admin() && isset( $_GET[ 'page' ] ) && ( $_GET[ 'page' ] == 'rtmedia-addons' ) && $this->is_valid_key( $_GET[ 'apikey' ] ) ) {
+            if( $this->api_key && !( isset( $_GET[ 'update' ] ) && $_GET[ 'update' ] ) ) {
+                $unsubscribe_url = trailingslashit( $this->api_url ) . 'api/cancel/' . $this->api_key;
+                wp_remote_post( $unsubscribe_url, array( 'timeout' => 120, 'body' => array( 'note' => 'Direct URL Input (API Key: ' . $_GET[ 'apikey' ] . ')' ) ) );
             }
-            update_site_option('rtmedia-encoding-api-key', $_GET['apikey']);
-            $usage_info = $this->update_usage($_GET['apikey']);
-            $return_page = add_query_arg(array('page' => 'rtmedia-addons', 'api_key_updated' => $usage_info->plan->name), (is_multisite() ? network_admin_url('admin.php') : admin_url('admin.php')));
-            wp_safe_redirect($return_page);
+            
+            update_site_option( 'rtmedia-encoding-api-key', $_GET[ 'apikey' ] );
+            
+            $usage_info = $this->update_usage( $_GET[ 'apikey' ] );
+            $return_page = add_query_arg( array( 'page' => 'rtmedia-addons', 'api_key_updated' => $usage_info->plan->name ), admin_url( 'admin.php' ) );
+            
+            wp_safe_redirect( $return_page );
+            
             die();
         }
     }
