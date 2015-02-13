@@ -800,7 +800,7 @@ class RTMediaFormHandler {
 		echo '</div>';
 		$options = $rtmedia->options;
         
-        // Checking if user has subscribed any for any plan
+        // Checking if user has subscribed any plan for encoding
         $rtmedia_encoding_api_key = get_rtmedia_encoding_api_key();
         
         if( isset( $rtmedia_encoding_api_key ) && $rtmedia_encoding_api_key != '' && $rtmedia_encoding_api_key ) {
