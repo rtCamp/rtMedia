@@ -6,7 +6,7 @@ This guide details how to use issues and pull requests to improve rtMedia.
 
 Github issue-tracker is used **only** for developer & contributor discussion.
 
-For support-request/feature-request, please use - http://rtcamp.com/rtmedia/support/
+For support-request/feature-request, please use - http://community.rtcamp.com/c/rtmedia
 
 ## Translation
 
