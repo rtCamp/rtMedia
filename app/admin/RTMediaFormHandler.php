@@ -640,16 +640,16 @@ class RTMediaFormHandler {
 				<?php do_action( 'rtmedia_media_type_setting_message' ); ?>
 			</h3>
 		</div>
-		<div class="rt-table large-12">
+		<div class="rt-table large-12 medium-12 small-12">
 		<div class="row rt-header">
 			<?php do_action( 'rtmedia_type_settings_before_heading' ); ?>
-			<div class="columns large-4"><h4><?php _e( 'Media Type', 'rtmedia' ) ?></h4></div>
-			<div class="columns large-4">
+			<div class="columns large-4 medium-4 small-4"><h4><?php _e( 'Media Type', 'rtmedia' ) ?></h4></div>
+			<div class="columns large-4 medium-4 small-4">
 				<h4 data-tooltip class="has-tip" title="<?php _e( 'Allows you to upload a particular media type on your post.', 'rtmedia' ); ?>">
 					<abbr><?php _e( 'Allow Upload', 'rtmedia' ); ?></abbr>
 				</h4>
 			</div>
-			<div class="columns large-4">
+			<div class="columns large-4 medium-4 small-4">
 				<h4 data-tooltip class="has-tip" title="<?php _e( 'Place a specific media as a featured content on the post.', 'rtmedia' ); ?>">
 					<abbr><?php _e( 'Set Featured', 'rtmedia' ); ?></abbr>
 				</h4>
@@ -670,15 +670,15 @@ class RTMediaFormHandler {
 				}
 
 				do_action( 'rtmedia_type_settings_before_body' );
-				echo '<div class="columns large-4">' . $section['name'] . '</div>';
+				echo '<div class="columns large-4 medium-4 small-4">' . $section['name'] . '</div>';
 				$args = array( 'key' => 'allowedTypes_' . $key . '_enabled', 'value' => $section['enabled'] );
-				echo '<div class="columns large-4">';
+				echo '<div class="columns large-4 medium-4 small-4">';
 				$allow_upload_checkbox = self::checkbox( $args, $echo = false );
 				$allow_upload_checkbox = apply_filters( 'rtmedia_filter_allow_upload_checkbox', $allow_upload_checkbox, $key, $args );
 				echo $allow_upload_checkbox;
 				echo '</div>';
 				$args = array( 'key' => 'allowedTypes_' . $key . '_featured', 'value' => $section['featured'] );
-				echo '<div class="columns large-4">';
+				echo '<div class="columns large-4 medium-4 small-4">';
 				$featured_checkbox = self::checkbox( $args, $echo = false );
 				$featured_checkbox = apply_filters( 'rtmedia_filter_featured_checkbox', $featured_checkbox, $key );
 				echo $featured_checkbox;
@@ -693,8 +693,8 @@ class RTMediaFormHandler {
 				do_action( 'rtmedia_type_settings_after_body', $key, $section );
 				echo '</div>';
 				echo '<div class="row rtmedia-file-extension-wrap">';
-				echo '<label class="columns large-3">' . __( 'File Extensions', 'rtmedia' ) . ':</label>';
-				echo '<label class="columns large-9 rtmedia_type_settings_filter_extension">' . $extensions . '</label>';
+				echo '<label class="columns large-3 medium-3 small-3">' . __( 'File Extensions', 'rtmedia' ) . ':</label>';
+				echo '<label class="columns large-9 medium-9 small-9 rtmedia_type_settings_filter_extension">' . $extensions . '</label>';
 				echo '</div>';
 
 			} else {
@@ -799,29 +799,64 @@ class RTMediaFormHandler {
 
 		echo '</div>';
 		$options = $rtmedia->options;
-		$render_video_thumb = array(
-			'title' => __( 'Number of thumbnails to generate on video upload', 'rtmedia' ),
+        
+        // Checking if user has subscribed any plan for encoding
+        $rtmedia_encoding_api_key = get_rtmedia_encoding_api_key();
+        
+        if( isset( $rtmedia_encoding_api_key ) && $rtmedia_encoding_api_key != '' && $rtmedia_encoding_api_key ) {
+            $render_video_thumb = array(
+                'title' => __( 'Number of thumbnails to generate on video upload', 'rtmedia' ),
+                'callback' => array( 'RTMediaFormHandler', 'number' ),
+                'args' => array(
+                    'key' => 'general_videothumbs',
+                    'value' => $options['general_videothumbs'],
+                    'class' => array( 'rtmedia-setting-text-box' ),
+                    'desc' => __( ' If you choose more than 1 thumbnail, your users will be able to change the thumbnail by going to video \'edit\' section. Maximum value is 10.', 'rtmedia' ),
+                    'min' => 1,
+                    'max' => 10,
+                )
+            );
+            ?>
+            <div class="postbox metabox-holder">
+                <h3 class="hndle"><span>Encoding Settings</span></h3>
+            </div>
+            <div class="row section">
+                <div class="columns large-9">
+                    <?php echo $render_video_thumb['title']; ?>
+                </div>
+                <div class="columns large-3">
+                    <?php call_user_func( $render_video_thumb['callback'], $render_video_thumb['args'] ); ?>
+                    <span data-tooltip class="has-tip" title="<?php echo ( isset( $render_video_thumb['args']['desc'] ) ) ? $render_video_thumb['args']['desc'] : 'NA'; ?>">
+                        <i class="rtmicon-info-circle"></i>
+                    </span>
+                </div>
+            </div>
+            <?php
+        }
+        
+        $render_jpeg_image_quality = array(
+			'title' => __( 'JPEG/JPG image quality (1-100)', 'rtmedia' ),
 			'callback' => array( 'RTMediaFormHandler', 'number' ),
 			'args' => array(
-				'key' => 'general_videothumbs',
-				'value' => $options['general_videothumbs'],
+				'key' => 'general_jpeg_image_quality',
+				'value' => $options['general_jpeg_image_quality'],
 				'class' => array( 'rtmedia-setting-text-box' ),
-				'desc' => __( ' If you choose more than 1 thumbnail, your users will be able to change the thumbnail by going to video \'edit\' section. Maximum value is 10.', 'rtmedia' ),
+				'desc' => __( 'Enter JPEG/JPG Image Quality. Minimum value is 1. 100 is original quality.', 'rtmedia' ),
 				'min' => 1,
-				'max' => 10,
+				'max' => 100,
 			)
 		);
-		?>
-		<div class="postbox metabox-holder">
-			<h3 class="hndle"><span>Encoding Settings</span></h3>
+        ?>
+        <div class="postbox metabox-holder">
+			<h3 class="hndle"><span>Image Quality</span></h3>
 		</div>
-		<div class="row section">
+        <div class="row section">
 			<div class="columns large-9">
-				<?php echo $render_video_thumb['title']; ?>
+				<?php echo $render_jpeg_image_quality['title']; ?>
 			</div>
 			<div class="columns large-3">
-				<?php call_user_func( $render_video_thumb['callback'], $render_video_thumb['args'] ); ?>
-				<span data-tooltip class="has-tip" title="<?php echo ( isset( $render_video_thumb['args']['desc'] ) ) ? $render_video_thumb['args']['desc'] : 'NA'; ?>">
+				<?php call_user_func( $render_jpeg_image_quality['callback'], $render_jpeg_image_quality['args'] ); ?>
+				<span data-tooltip class="has-tip" title="<?php echo ( isset( $render_jpeg_image_quality['args']['desc'] ) ) ? $render_jpeg_image_quality['args']['desc'] : 'NA'; ?>">
 					<i class="rtmicon-info-circle"></i>
 				</span>
 			</div>

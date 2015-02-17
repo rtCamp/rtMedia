@@ -32,8 +32,8 @@
   text-align: left;
   width: 55px;
   height: 20px;
-  -webkit-mask: url("../img/mask.png") 0 0 no-repeat;
-  mask: url("../img/mask.png") 0 0 no-repeat;
+  -webkit-mask: url("../../img/mask.png") 0 0 no-repeat;
+  mask: url("../../img/mask.png") 0 0 no-repeat;
   -webkit-user-select: none;
   -moz-user-select: none;
   user-select: none;
@@ -146,8 +146,8 @@
 /* line 150, ../sass/bootstrap-switch.scss */
 .switch-square {
   border-radius: 6px;
-  -webkit-mask: url("../img/mask.png") 0 0 no-repeat;
-  mask: url("../img/mask.png") 0 0 no-repeat;
+  -webkit-mask: url("../../img/mask.png") 0 0 no-repeat;
+  mask: url("../../img/mask.png") 0 0 no-repeat;
 }
 /* line 157, ../sass/bootstrap-switch.scss */
 .switch-square > div.switch-off label {

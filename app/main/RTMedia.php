@@ -191,6 +191,17 @@ class RTMedia
             $this->options = $rtmedia_options;
         }
         $this->add_image_sizes();
+        $this->set_image_quality();
+    }
+    
+    public function set_image_quality() {
+        add_filter( 'jpeg_quality', array ($this, 'rtmedia_jpeg_quality' ) );
+    }
+    
+    public function rtmedia_jpeg_quality( $quality ) {
+        $quality = isset( $this->options[ 'general_jpeg_image_quality' ] ) ? $this->options[ 'general_jpeg_image_quality' ] : 90;
+        
+        return $quality;
     }
 
     public function image_sizes() {
@@ -470,7 +481,8 @@ class RTMedia
             'general_enableMediaEndPoint' => 0,
             'general_showAdminMenu' => (isset($bp_media_options['show_admin_menu'])) ? $bp_media_options['show_admin_menu'] : 0,
             'general_videothumbs' => 2,
-	    'general_AllowUserData' => 1
+            'general_jpeg_image_quality' => 90,
+            'general_AllowUserData' => 1
         );
 
 
@@ -885,13 +897,15 @@ class RTMedia
         wp_localize_script('rtmedia-main', 'rtmedia_delete_uploaded_media', __('This media is uploaded. Are you sure you want to delete this media?',"rtmedia"));
 		wp_localize_script('rtmedia-main', 'rtm_wp_version', get_bloginfo('version') );
         wp_localize_script ( 'rtmedia-backbone', 'rMedia_loading_media', RTMEDIA_URL . "app/assets/img/boxspinner.gif" );
-		global $rtmedia_query;
-		if( class_exists('BuddyPress') ) {
-			$rtmedia_user_domain  = trailingslashit ( bp_displayed_user_domain() . constant('RTMEDIA_MEDIA_SLUG') );
-		} else {
-			$rtmedia_user_domain = trailingslashit( trailingslashit( get_author_posts_url($rtmedia_query->query['context_id'] ) ). constant('RTMEDIA_MEDIA_SLUG') );
-		}
-		wp_localize_script ( 'rtmedia-backbone', 'rtmedia_user_domain', $rtmedia_user_domain );
+        
+//      We are not using it anymore and hence commenting
+//		global $rtmedia_query;
+//		if( class_exists('BuddyPress') ) {
+//			$rtmedia_user_domain  = trailingslashit ( bp_displayed_user_domain() . constant('RTMEDIA_MEDIA_SLUG') );
+//		} else {
+//			$rtmedia_user_domain = trailingslashit( trailingslashit( get_author_posts_url($rtmedia_query->query['context_id'] ) ). constant('RTMEDIA_MEDIA_SLUG') );
+//		}
+//		wp_localize_script ( 'rtmedia-backbone', 'rtmedia_user_domain', $rtmedia_user_domain );
 
 		// Enqueue touchswipe
 		wp_enqueue_script( 'rtmedia-touchswipe', RTMEDIA_URL . 'lib/touchswipe/jquery.touchSwipe.min.js', array('jquery'), RTMEDIA_VERSION, true);

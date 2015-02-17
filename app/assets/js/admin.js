@@ -71,7 +71,7 @@ jQuery(document).ready(function($) {
         } );
 
 	    var general_videothumb = jQuery( 'input[name^="rtmedia-options[general_videothumbs]"]' );
-        if( return_code && typeof general_videothumb != "undefined" ) {
+        if( return_code && general_videothumb.length > 0 && typeof general_videothumb != "undefined" ) {
             var error_msg = "";
             var general_videothumb_val = 0;
             if( general_videothumb.val() <= 0 ) {
@@ -88,9 +88,31 @@ jQuery(document).ready(function($) {
                 return false;
             }
 	    }
+        
+        var general_jpeg_image_quality = jQuery( 'input[name^="rtmedia-options[general_jpeg_image_quality]"]' );
+        if( return_code && general_jpeg_image_quality.length > 0 && typeof general_jpeg_image_quality != "undefined" ) {
+            var error_msg = "";
+            var general_jpeg_image_quality_val = 0;
+            if( general_jpeg_image_quality.val() <= 0 ) {
+                error_msg += "Number of percentage in JPEG image quality should be greater than 0 in image sizes settings. Setting it to default value 90.";
+                general_jpeg_image_quality_val = 90;
+            } else if( general_jpeg_image_quality.val() > 100 ) {
+                error_msg += "Number of percentage in JPEG image quality should be less than 100 in image sizes settings. Setting it to 100.";
+                general_jpeg_image_quality_val = 100;
+            } else if( !reg.test( general_jpeg_image_quality.val() ) ) {
+                error_msg += 'Invalid value for percentage in JPEG image quality in image sizes settings. Setting it to round value ' + Math.round( general_jpeg_image_quality.val() ) + ".";
+                general_jpeg_image_quality_val = Math.round( general_jpeg_image_quality.val() );
+            }
+            if( error_msg != "" ) {
+                alert( error_msg );
+                general_jpeg_image_quality.val( general_jpeg_image_quality_val );
+                return_code = false;
+                return false;
+            }
+	    }
 
         var general_perPageMedia = jQuery( 'input[name^="rtmedia-options[general_perPageMedia]"]' );
-        if( return_code && typeof general_perPageMedia != "undefined" ) {
+        if( return_code && general_perPageMedia.length > 0 && typeof general_perPageMedia != "undefined" ) {
             var error_msg = "";
             var general_perPageMedia_val = 0;
             if( general_perPageMedia.val() < 1 ) {
@@ -137,32 +159,41 @@ jQuery(document).ready(function($) {
         }
     });
 
-    jQuery(document).on('click', '#api-key-submit', function(e) {
+    jQuery( document ).on( 'click', '#api-key-submit', function( e ) {
         e.preventDefault();
-        jQuery(this).after('<img style="margin: 0 0 0 10px" src="' + rtmedia_admin_url + 'images/wpspin_light.gif" />')
+        
+        if( jQuery( this ).next( 'img' ).length == 0 ) {
+            jQuery( this ).after( '<img style="margin: 0 0 0 10px" src="' + rtmedia_admin_url + 'images/wpspin_light.gif" />' );
+        }
+        
         var data = {
             action: 'rtmedia_enter_api_key',
-            apikey: jQuery('#new-api-key').val()
+            apikey: jQuery( '#new-api-key' ).val()
         };
 
         // since 2.8 ajaxurl is always defined in the admin header and points to admin-ajax.php
-        jQuery.getJSON(ajaxurl, data, function(response) {
-            if (response.error === undefined && response.apikey) {
+        jQuery.getJSON( ajaxurl, data, function( response ) {
+            if ( response.error === undefined && response.apikey ) {
                 var tempUrl = window.location.href;
                 var hash = window.location.hash;
-                tempUrl = tempUrl.replace(hash, '');
-                if (tempUrl.toString().indexOf('&apikey=' + response.apikey) == -1)
+                tempUrl = tempUrl.replace( hash, '' );
+                
+                if ( tempUrl.toString().indexOf( '&apikey=' + response.apikey ) == -1 ) {
                     tempUrl += '&apikey=' + response.apikey;
-                if (tempUrl.toString().indexOf('&update=true') == -1)
+                }
+                if ( tempUrl.toString().indexOf( '&update=true' ) == -1 ) {
                     tempUrl += '&update=true';
+                }
+                
                 document.location.href = tempUrl + hash;
-
             } else {
-                jQuery('#settings-error-api-key-error').remove();
-                jQuery('h2:first').after('<div class="error" id="settings-error-api-key-error"><p>' + response.error + '</p></div>');
+                jQuery( '#settings-error-api-key-error' ).remove();
+                jQuery( 'h2:first' ).after( '<div class="error" id="settings-error-api-key-error"><p>' + response.error + '</p></div>' );
             }
-        });
-    });
+            
+            jQuery( '#api-key-submit' ).next( 'img' ).remove();
+        } );
+    } );
 
     jQuery(document).on('click', '#disable-encoding', function(e) {
         e.preventDefault();
