@@ -2843,3 +2843,8 @@ function rtmedia_modify_activity_upload_url( $params ){
 
 // Fix for BuddyPress multilingual plugin on activity pages
 add_filter( 'rtmedia_modify_upload_params','rtmedia_modify_activity_upload_url', 999, 1 );
+
+// Get rtMedia Encoding API Key
+function get_rtmedia_encoding_api_key() {
+    return get_site_option( 'rtmedia-encoding-api-key' );
+}
