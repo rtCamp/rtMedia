@@ -1289,30 +1289,32 @@ function update_activity_after_thumb_set( $id ) {
 	$media                 = $model->get( array( 'id' => $id ) );
 	$privacy               = $media[ 0 ]->privacy;
 	$activity_id           = rtmedia_activity_id( $id );
-	$same_medias           = $mediaObj->model->get( array( 'activity_id' => $activity_id ) );
-	$update_activity_media = Array();
-	foreach ( $same_medias as $a_media ) {
-		$update_activity_media[ ] = $a_media->id;
+	if( !empty( $activity_id ) ){
+		$same_medias           = $mediaObj->model->get( array( 'activity_id' => $activity_id ) );
+		$update_activity_media = Array();
+		foreach ( $same_medias as $a_media ) {
+			$update_activity_media[ ] = $a_media->id;
+		}
+		$objActivity = new RTMediaActivity ( $update_activity_media, $privacy, false );
+		global $wpdb, $bp;
+		$activity_old_content = bp_activity_get_meta( $activity_id, "bp_old_activity_content" );
+		$activity_text        = bp_activity_get_meta( $activity_id, "bp_activity_text" );
+		if ( $activity_old_content == "" ){
+			// get old activity content and save in activity meta
+			$activity_get  = bp_activity_get_specific( array( 'activity_ids' => $activity_id ) );
+			$activity      = $activity_get[ 'activities' ][ 0 ];
+			$activity_body = $activity->content;
+			bp_activity_update_meta( $activity_id, "bp_old_activity_content", $activity_body );
+			//extract activity text from old content
+			$activity_text = strip_tags( $activity_body, '<span>' );
+			$activity_text = explode( "</span>", $activity_text );
+			$activity_text = strip_tags( $activity_text[ 0 ] );
+			bp_activity_update_meta( $activity_id, "bp_activity_text", $activity_text );
+		}
+		$activity_text              = bp_activity_get_meta( $activity_id, "bp_activity_text" );
+		$objActivity->activity_text = $activity_text;
+		$wpdb->update( $bp->activity->table_name, array( "type" => "rtmedia_update", "content" => $objActivity->create_activity_html() ), array( "id" => $activity_id ) );
 	}
-	$objActivity = new RTMediaActivity ( $update_activity_media, $privacy, false );
-	global $wpdb, $bp;
-	$activity_old_content = bp_activity_get_meta( $activity_id, "bp_old_activity_content" );
-	$activity_text        = bp_activity_get_meta( $activity_id, "bp_activity_text" );
-	if ( $activity_old_content == "" ){
-		// get old activity content and save in activity meta
-		$activity_get  = bp_activity_get_specific( array( 'activity_ids' => $activity_id ) );
-		$activity      = $activity_get[ 'activities' ][ 0 ];
-		$activity_body = $activity->content;
-		bp_activity_update_meta( $activity_id, "bp_old_activity_content", $activity_body );
-		//extract activity text from old content
-		$activity_text = strip_tags( $activity_body, '<span>' );
-		$activity_text = explode( "</span>", $activity_text );
-		$activity_text = strip_tags( $activity_text[ 0 ] );
-		bp_activity_update_meta( $activity_id, "bp_activity_text", $activity_text );
-	}
-	$activity_text              = bp_activity_get_meta( $activity_id, "bp_activity_text" );
-	$objActivity->activity_text = $activity_text;
-	$wpdb->update( $bp->activity->table_name, array( "type" => "rtmedia_update", "content" => $objActivity->create_activity_html() ), array( "id" => $activity_id ) );
 }
 
 function set_video_thumbnail( $id ) {
