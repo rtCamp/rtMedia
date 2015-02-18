@@ -128,7 +128,7 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "Visit rtMedia's Features page") to get some details about future releases.
 
-= 3.7.33=
+= 3.7.33 =
 * Fix media move in album edit
 * JPEG image quality option
 * Use WordPress' *_metadata functions for meta data
