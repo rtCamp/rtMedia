@@ -128,6 +128,12 @@ http://www.youtube.com/watch?v####dJrykKQGDcs
 
 Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "Visit rtMedia's Features page") to get some details about future releases.
 
+#### 3.7.33 ####
+* Fix media move in album edit
+* JPEG image quality option
+* Use WordPress' *_metadata functions for meta data
+* Fix update activity after thumb set
+
 #### 3.7.32 ####
 * Update all translation files
 * Update templates
@@ -901,8 +907,8 @@ Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_sou
 * HTML5 Audio Tag Support (with fallback)
 * HTML5 Video Tag Support (with fallback)
 
-#### 3.7.32 ####
-Requires BuddyPress 1.7 or higher, if using BuddyPress. Update all translation files, update templates, fix media title issue.
+#### 3.7.33 ####
+Requires BuddyPress 1.7 or higher, if using BuddyPress. Fix media move in album edit, JPEG image quality option,use WordPress' *_metadata functions for meta data.
 
 ## Sponsors ##
 
