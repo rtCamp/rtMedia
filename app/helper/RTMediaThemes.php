@@ -151,7 +151,7 @@ class RTMediaThemes {
 						</p>
 
 						<p>
-							<span>Links: <?php echo $rtdating_purchase; ?> <a href="http://demo.rtcamp.com/rtmedia/?theme=rtDating" target="_blank">Live Demo</a> | <a href="http://docs.rtcamp.com/rtdating/" target="_blank">Documentation</a> | <a href="https://rtcamp.com/support/forum/premium-themes/" target="_blank">Support Forum</a></span>
+							<span>Links: <?php echo $rtdating_purchase; ?> <a href="http://demo.rtcamp.com/rtdating/" target="_blank">Live Demo</a> | <a href="http://docs.rtcamp.com/rtdating/" target="_blank">Documentation</a> | <a href="https://rtcamp.com/support/forum/premium-themes/" target="_blank">Support Forum</a></span>
 						</p>
 					</div>
 				</div>
@@ -176,7 +176,7 @@ class RTMediaThemes {
 						</p>
 
 						<p>
-							<span>Links: <?php echo $inspirebook_purchase; ?> <a href="http://demo.rtcamp.com/rtmedia/?theme=InspireBook" target="_blank">Live Demo</a> | <a href="http://docs.rtcamp.com/inspirebook" target="_blank">Documentation</a> | <a href="http://community.rtcamp.com/c/premium-themes" target="_blank">Support Forum</a></span>
+							<span>Links: <?php echo $inspirebook_purchase; ?> <a href="http://demo.rtcamp.com/inspirebook/" target="_blank">Live Demo</a> | <a href="http://docs.rtcamp.com/inspirebook" target="_blank">Documentation</a> | <a href="http://community.rtcamp.com/c/premium-themes" target="_blank">Support Forum</a></span>
 						</p>
 					</div>
 				</div>
