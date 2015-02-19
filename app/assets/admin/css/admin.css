@@ -1,0 +1,162 @@
+.alignleft {
+  float: left;
+}
+
+.alignright {
+  float: right;
+}
+
+.aligncenter {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+.clear-both {
+  clear: both;
+}
+
+.clear-none {
+  clear: none;
+}
+
+.clear-left {
+  clear: left;
+}
+
+.clear-right {
+  clear: right;
+}
+
+.rtp-inline-block {
+  display: inline-block;
+}
+
+.rtp-text-left {
+  text-align: left;
+}
+
+.rtp-text-right {
+  text-align: right;
+}
+
+.rtp-text-center {
+  text-align: center;
+}
+
+.rtp-border-0 {
+  border: 0 !important;
+}
+
+.hide {
+  display: none;
+}
+
+/*------------------------------------*\
+    #CLEARFIX
+\*------------------------------------*/
+/**
+ * Micro clearfix, as per: css-101.org/articles/clearfix/latest-new-clearfix-so-far.php
+ * Extend the clearfix class with Sass to avoid the `.clearfix` class appearing
+ * over and over in your markup.
+ */
+.clearfix:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.rtm-tabs {
+  float: left;
+  list-style: none;
+  margin: 0;
+  width: 202px;
+  min-height: 300px;
+}
+.rtm-tabs li {
+  margin: 0;
+}
+.rtm-tabs a {
+  background: none repeat scroll 0 0 transparent;
+  border-bottom: 1px solid #e7e7e7;
+  border-style: solid;
+  border-top: 1px solid #f9f9f9;
+  border-width: 1px 0;
+  color: #555;
+  display: block;
+  font-weight: 700;
+  outline: none;
+  opacity: 0.7;
+  padding: 10px 4px 10px 14px;
+  position: relative;
+  text-decoration: none;
+  transition: none 0s ease 0s;
+}
+.rtm-tabs a:hover {
+  background: none repeat scroll 0 0 #eee;
+  color: #269ad6;
+  margin-right: 0;
+  opacity: 1;
+  width: auto;
+}
+.rtm-tabs a:focus {
+  background: #fff;
+  box-shadow: 0 0 0;
+}
+.rtm-tabs .active {
+  background: white;
+  position: relative;
+}
+.rtm-tabs .active:after {
+  background: none repeat scroll 0 0 white;
+  content: " ";
+  height: 100%;
+  position: absolute;
+  right: -1px;
+  top: 0;
+  width: 1px;
+}
+.rtm-tabs span {
+  display: block;
+  padding: 0 0 0 25px;
+}
+.rtm-tabs .dashicons {
+  height: auto;
+  margin-top: 4px;
+  position: absolute;
+  vertical-align: middle;
+  width: auto;
+}
+
+.rtm-settings-tab-container .tabs-content {
+  background: none repeat scroll 0 0 white;
+  border-left: 1px solid #e7e7e7;
+  margin-left: 202px;
+  padding: 20px;
+  min-height: 300px;
+}
+
+.rtm-setting-container {
+  background-color: #f5f5f5;
+  border: 1px solid #dedede;
+  -moz-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
+  -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
+  margin-top: 20px;
+  overflow: hidden;
+}
+
+.rtm-button-container {
+  background: none repeat scroll 0 0 #f3f3f3;
+  border-bottom: 1px solid #dedede;
+  box-shadow: 0 1px 0 #fcfcfc inset;
+  padding: 6px 10px 6px 6px;
+  text-align: right;
+}
+.rtm-button-container.bottom {
+  background: none repeat scroll 0 0 #eee;
+  border-top: 1px solid #e7e7e7;
+  box-shadow: 0 0 0;
+  z-index: 999;
+}
