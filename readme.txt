@@ -6,7 +6,7 @@ License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires at least: WordPress 3.6
 Tested up to: WordPress 4.1 + BuddyPress 2.2.0
-Stable tag: 3.7.32
+Stable tag: 3.7.33
 
 Add albums, photo, audio/video encoding, privacy, sharing, front-end uploads & more. All this works on mobile/tablets devices.
 
@@ -127,6 +127,12 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 == Changelog ==
 
 Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "Visit rtMedia's Features page") to get some details about future releases.
+
+= 3.7.33 =
+* Fix media move in album edit
+* JPEG image quality option
+* Use WordPress' *_metadata functions for meta data
+* Fix update activity after thumb set
 
 = 3.7.32 =
 * Update all translation files
@@ -903,8 +909,8 @@ Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_sou
 
 == Upgrade Notice ==
 
-= 3.7.32 =
-Requires BuddyPress 1.7 or higher, if using BuddyPress. Update all translation files, update templates, fix media title issue.
+= 3.7.33 =
+Requires BuddyPress 1.7 or higher, if using BuddyPress. Fix media move in album edit, JPEG image quality option,use WordPress' *_metadata functions for meta data.
 
 == Sponsors ==
 

@@ -1289,30 +1289,32 @@ function update_activity_after_thumb_set( $id ) {
 	$media                 = $model->get( array( 'id' => $id ) );
 	$privacy               = $media[ 0 ]->privacy;
 	$activity_id           = rtmedia_activity_id( $id );
-	$same_medias           = $mediaObj->model->get( array( 'activity_id' => $activity_id ) );
-	$update_activity_media = Array();
-	foreach ( $same_medias as $a_media ) {
-		$update_activity_media[ ] = $a_media->id;
+	if( !empty( $activity_id ) ){
+		$same_medias           = $mediaObj->model->get( array( 'activity_id' => $activity_id ) );
+		$update_activity_media = Array();
+		foreach ( $same_medias as $a_media ) {
+			$update_activity_media[ ] = $a_media->id;
+		}
+		$objActivity = new RTMediaActivity ( $update_activity_media, $privacy, false );
+		global $wpdb, $bp;
+		$activity_old_content = bp_activity_get_meta( $activity_id, "bp_old_activity_content" );
+		$activity_text        = bp_activity_get_meta( $activity_id, "bp_activity_text" );
+		if ( $activity_old_content == "" ){
+			// get old activity content and save in activity meta
+			$activity_get  = bp_activity_get_specific( array( 'activity_ids' => $activity_id ) );
+			$activity      = $activity_get[ 'activities' ][ 0 ];
+			$activity_body = $activity->content;
+			bp_activity_update_meta( $activity_id, "bp_old_activity_content", $activity_body );
+			//extract activity text from old content
+			$activity_text = strip_tags( $activity_body, '<span>' );
+			$activity_text = explode( "</span>", $activity_text );
+			$activity_text = strip_tags( $activity_text[ 0 ] );
+			bp_activity_update_meta( $activity_id, "bp_activity_text", $activity_text );
+		}
+		$activity_text              = bp_activity_get_meta( $activity_id, "bp_activity_text" );
+		$objActivity->activity_text = $activity_text;
+		$wpdb->update( $bp->activity->table_name, array( "type" => "rtmedia_update", "content" => $objActivity->create_activity_html() ), array( "id" => $activity_id ) );
 	}
-	$objActivity = new RTMediaActivity ( $update_activity_media, $privacy, false );
-	global $wpdb, $bp;
-	$activity_old_content = bp_activity_get_meta( $activity_id, "bp_old_activity_content" );
-	$activity_text        = bp_activity_get_meta( $activity_id, "bp_activity_text" );
-	if ( $activity_old_content == "" ){
-		// get old activity content and save in activity meta
-		$activity_get  = bp_activity_get_specific( array( 'activity_ids' => $activity_id ) );
-		$activity      = $activity_get[ 'activities' ][ 0 ];
-		$activity_body = $activity->content;
-		bp_activity_update_meta( $activity_id, "bp_old_activity_content", $activity_body );
-		//extract activity text from old content
-		$activity_text = strip_tags( $activity_body, '<span>' );
-		$activity_text = explode( "</span>", $activity_text );
-		$activity_text = strip_tags( $activity_text[ 0 ] );
-		bp_activity_update_meta( $activity_id, "bp_activity_text", $activity_text );
-	}
-	$activity_text              = bp_activity_get_meta( $activity_id, "bp_activity_text" );
-	$objActivity->activity_text = $activity_text;
-	$wpdb->update( $bp->activity->table_name, array( "type" => "rtmedia_update", "content" => $objActivity->create_activity_html() ), array( "id" => $activity_id ) );
 }
 
 function set_video_thumbnail( $id ) {
@@ -1509,27 +1511,64 @@ function rtmedia_gallery( $attr = '' ) {
 }
 
 function get_rtmedia_meta( $id = false, $key = false ) {
-	$rtmediameta = new RTMediaMeta();
+	if( apply_filters( 'rtmedia_use_legacy_meta_function', false ) ){
+		$rtmediameta = new RTMediaMeta();
 
-	return $rtmediameta->get_meta( $id, $key );
+		return $rtmediameta->get_meta( $id, $key );
+	} else {
+		// check whether to get single value or multiple
+		$single = ( $key === false ) ? false : true;
+
+		// use WP's default get_metadata function replace column name from "media_id" to "id" in query
+		add_filter( 'query', 'rtm_filter_metaid_column_name' );
+		$meta =  get_metadata( 'media', $id, $key, $single );
+		remove_filter( 'query', 'rtm_filter_metaid_column_name' );
+		return $meta;
+	}
 }
 
 function add_rtmedia_meta( $id = false, $key = false, $value = false, $duplicate = false ) {
-	$rtmediameta = new RTMediaMeta ( $id, $key, $value, $duplicate );
+	if( apply_filters( 'rtmedia_use_legacy_meta_function', false ) ){
+		$rtmediameta = new RTMediaMeta ( $id, $key, $value, $duplicate );
 
-	return $rtmediameta->add_meta( $id, $key, $value, $duplicate );
+		return $rtmediameta->add_meta( $id, $key, $value, $duplicate );
+	} else {
+		// use WP's default get_metadata function replace column name from "media_id" to "id" in query
+		add_filter( 'query', 'rtm_filter_metaid_column_name' );
+		$meta =  add_metadata( 'media', $id, $key, $value, !$duplicate );
+		remove_filter( 'query', 'rtm_filter_metaid_column_name' );
+		return $meta;
+	}
+
 }
 
 function update_rtmedia_meta( $id = false, $key = false, $value = false, $duplicate = false ) {
-	$rtmediameta = new RTMediaMeta();
+	if( apply_filters( 'rtmedia_use_legacy_meta_function', false ) ){
+		$rtmediameta = new RTMediaMeta();
 
-	return $rtmediameta->update_meta( $id, $key, $value, $duplicate );
+		return $rtmediameta->update_meta( $id, $key, $value, $duplicate );
+	} else {
+		// use WP's default get_metadata function replace column name from "media_id" to "id" in query
+		add_filter( 'query', 'rtm_filter_metaid_column_name' );
+		$meta =  update_metadata( 'media', $id, $key, $value, $duplicate );
+		remove_filter( 'query', 'rtm_filter_metaid_column_name' );
+		return $meta;
+	}
+
 }
 
 function delete_rtmedia_meta( $id = false, $key = false ) {
-	$rtmediameta = new RTMediaMeta();
+	if( apply_filters( 'rtmedia_use_legacy_meta_function', false ) ){
+		$rtmediameta = new RTMediaMeta();
 
-	return $rtmediameta->delete_meta( $id, $key );
+		return $rtmediameta->delete_meta( $id, $key );
+	} else {
+		// use WP's default get_metadata function replace column name from "media_id" to "id" in query
+		add_filter( 'query', 'rtm_filter_metaid_column_name' );
+		$meta =  delete_metadata( 'media', $id, $key );
+		remove_filter( 'query', 'rtm_filter_metaid_column_name' );
+		return $meta;
+	}
 }
 
 function rtmedia_global_albums() {
@@ -2843,3 +2882,37 @@ function rtmedia_modify_activity_upload_url( $params ){
 
 // Fix for BuddyPress multilingual plugin on activity pages
 add_filter( 'rtmedia_modify_upload_params','rtmedia_modify_activity_upload_url', 999, 1 );
+
+// Get rtMedia Encoding API Key
+function get_rtmedia_encoding_api_key() {
+    return get_site_option( 'rtmedia-encoding-api-key' );
+}
+
+/*
+ * Filter SQL query strings to swap out the 'meta_id' column.
+ *
+ * WordPress uses the meta_id column for commentmeta and postmeta, and so
+ * hardcodes the column name into its *_metadata() functions. rtMedia
+ * uses 'id' for the primary column. To make WP's functions usable for rtMedia,
+ * we use this filter on 'query' to swap all 'meta_id' with 'id.
+ */
+function rtm_filter_metaid_column_name( $q ){
+	/*
+	 * Replace quoted content with __QUOTE__ to avoid false positives.
+	 * This regular expression will match nested quotes.
+	 */
+	$quoted_regex = "/'[^'\\\\]*(?:\\\\.[^'\\\\]*)*'/s";
+	preg_match_all( $quoted_regex, $q, $quoted_matches );
+	$q = preg_replace( $quoted_regex, '__QUOTE__', $q );
+
+	$q = str_replace( 'meta_id', 'id', $q );
+
+	// Put quoted content back into the string.
+	if ( ! empty( $quoted_matches[0] ) ) {
+		for ( $i = 0; $i < count( $quoted_matches[0] ); $i++ ) {
+			$quote_pos = strpos( $q, '__QUOTE__' );
+			$q = substr_replace( $q, $quoted_matches[0][ $i ], $quote_pos, 9 );
+		}
+	}
+	return $q;
+}

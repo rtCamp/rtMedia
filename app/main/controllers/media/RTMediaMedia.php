@@ -219,24 +219,27 @@ class RTMediaMedia {
 		// insert/update activity details in rtmedia activity table
 		$media_model            = new RTMediaModel();
 		$media                  = $media_model->get( array( 'id' => $id ) );
-		$rtmedia_activity_model = new RTMediaActivityModel();
-		$similar_media          = $media_model->get( array( 'activity_id' => $media[ 0 ]->activity_id ) );
-		$max_privacy            = 0;
 
-		foreach ( $similar_media as $s_media ) {
-			if ( $s_media->privacy > $max_privacy ){
-				$max_privacy = $s_media->privacy;
+		if( !empty( $media ) ){
+			$rtmedia_activity_model = new RTMediaActivityModel();
+			$similar_media          = $media_model->get( array( 'activity_id' => $media[ 0 ]->activity_id ) );
+			$max_privacy            = 0;
+
+			foreach ( $similar_media as $s_media ) {
+				if ( $s_media->privacy > $max_privacy ){
+					$max_privacy = $s_media->privacy;
+				}
 			}
-		}
 
-		if ( ! $rtmedia_activity_model->check( $media[ 0 ]->activity_id ) ){
-			$rtmedia_activity_model->insert( array(
-				'activity_id' => $media[ 0 ]->activity_id, 'user_id' => $media[ 0 ]->media_author, 'privacy' => $max_privacy
-			) );
-		} else {
-			$rtmedia_activity_model->update( array(
-				'activity_id' => $media[ 0 ]->activity_id, 'user_id' => $media[ 0 ]->media_author, 'privacy' => $max_privacy
-			), array( 'activity_id' => $media[ 0 ]->activity_id ) );
+			if ( ! $rtmedia_activity_model->check( $media[ 0 ]->activity_id ) ){
+				$rtmedia_activity_model->insert( array(
+					'activity_id' => $media[ 0 ]->activity_id, 'user_id' => $media[ 0 ]->media_author, 'privacy' => $max_privacy
+				) );
+			} else {
+				$rtmedia_activity_model->update( array(
+					'activity_id' => $media[ 0 ]->activity_id, 'user_id' => $media[ 0 ]->media_author, 'privacy' => $max_privacy
+				), array( 'activity_id' => $media[ 0 ]->activity_id ) );
+			}
 		}
 
 		/* action to perform any task after updating a media */
