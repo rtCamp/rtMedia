@@ -724,7 +724,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 		 * @return void
 		 */
 		public function menu() {
-			add_menu_page( 'rtMedia', 'rtMedia', 'manage_options', 'rtmedia-settings', array( $this, 'settings_page' ), RTMEDIA_URL . 'app/assets/img/rtmedia-logo.png', '40.1111' );
+			add_menu_page( 'rtMedia', 'rtMedia', 'manage_options', 'rtmedia-settings', array( $this, 'settings_page' ), RTMEDIA_URL . 'app/assets/admin/img/rtmedia-logo.png', '40.1111' );
 			add_submenu_page( 'rtmedia-settings', __( 'Settings', 'rtmedia' ), __( 'Settings', 'rtmedia' ), 'manage_options', 'rtmedia-settings', array( $this, 'settings_page' ) );
 			add_submenu_page( 'rtmedia-settings', __( 'Addons', 'rtmedia' ), __( 'Addons', 'rtmedia' ), 'manage_options', 'rtmedia-addons', array( $this, 'addons_page' ) );
 			add_submenu_page( 'rtmedia-settings', __( 'Support', 'rtmedia' ), __( 'Support', 'rtmedia' ), 'manage_options', 'rtmedia-support', array( $this, 'support_page' ) );
@@ -1135,7 +1135,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 					<h2 class="nav-tab-wrapper"><?php $this->rtmedia_tabs(); ?>
 						<span class="alignright by">
 							<a class="rt-link" href="http://rtcamp.com/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media" target="_blank" title="rtCamp : <?php _e( 'Empowering The Web With WordPress', 'rtmedia' ); ?>">
-								<img src="<?php echo RTMEDIA_URL; ?>app/assets/img/rtcamp-logo.png">
+								<img src="<?php echo RTMEDIA_URL; ?>app/assets/admin/img/rtcamp-logo.png">
 							</a>
 						</span>
 					</h2>
@@ -1168,9 +1168,9 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 
 								<div class="rtm-button-container bottom">
 									<?php $message = sprintf( __( 'I use @buddypressmedia http://rt.cx/rtmedia on %s', 'rtmedia' ), home_url() ); ?>
-									<div class="social alignleft">
+									<div class="rtm-social-links alignleft">
 										<a href="http://twitter.com/home/?status=<?php echo $message; ?>" class="twitter" target= "_blank" title="<?php _e( 'Post to Twitter Now', 'rtmedia' ); ?>"><span class="dashicons dashicons-twitter"></span></a>
-										<a href="https://www.facebook.com/sharer/sharer.php?u=http://rtcamp.com/rtmedia/" class="facebook" target="_blank" title="<?php _e( 'Share on Facebook Now', 'rtmedia' ); ?>"><span class="dashicons dashicons-facebook-alt"></span></a>
+										<a href="https://www.facebook.com/sharer/sharer.php?u=http://rtcamp.com/rtmedia/" class="facebook" target="_blank" title="<?php _e( 'Share on Facebook Now', 'rtmedia' ); ?>"><span class="dashicons dashicons-facebook"></span></a>
 										<a href="http://wordpress.org/support/view/plugin-reviews/buddypress-media?rate=5#postform" class="wordpress" target= "_blank" title="<?php _e( 'Rate rtMedia on Wordpress.org', 'rtmedia' ); ?>"><span class="dashicons dashicons-wordpress"></span></a>
 										<a href="<?php sprintf( '%s', 'https://rtcamp.com/feed/' ); ?>" class="rss" target="_blank" title="<?php _e( 'Subscribe to our Feeds', 'rtmedia' ); ?>"><span class="dashicons dashicons-rss"></span></a>
 									</div>

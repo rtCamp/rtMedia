@@ -29,23 +29,23 @@
   clear: right;
 }
 
-.rtp-inline-block {
+.rtm-inline-block {
   display: inline-block;
 }
 
-.rtp-text-left {
+.rtm-text-left {
   text-align: left;
 }
 
-.rtp-text-right {
+.rtm-text-right {
   text-align: right;
 }
 
-.rtp-text-center {
+.rtm-text-center {
   text-align: center;
 }
 
-.rtp-border-0 {
+.rtm-border-0 {
   border: 0 !important;
 }
 
@@ -67,74 +67,12 @@
   clear: both;
 }
 
-.rtm-tabs {
-  float: left;
-  list-style: none;
-  margin: 0;
-  width: 202px;
-  min-height: 300px;
-}
-.rtm-tabs li {
-  margin: 0;
-}
-.rtm-tabs a {
-  background: none repeat scroll 0 0 transparent;
-  border-bottom: 1px solid #e7e7e7;
-  border-style: solid;
-  border-top: 1px solid #f9f9f9;
-  border-width: 1px 0;
-  color: #555;
-  display: block;
-  font-weight: 700;
-  outline: none;
-  opacity: 0.7;
-  padding: 10px 4px 10px 14px;
-  position: relative;
-  text-decoration: none;
-  transition: none 0s ease 0s;
-}
-.rtm-tabs a:hover {
-  background: none repeat scroll 0 0 #eee;
-  color: #269ad6;
-  margin-right: 0;
-  opacity: 1;
-  width: auto;
-}
-.rtm-tabs a:focus {
-  background: #fff;
-  box-shadow: 0 0 0;
-}
-.rtm-tabs .active {
-  background: white;
-  position: relative;
-}
-.rtm-tabs .active:after {
-  background: none repeat scroll 0 0 white;
-  content: " ";
-  height: 100%;
-  position: absolute;
-  right: -1px;
-  top: 0;
-  width: 1px;
-}
-.rtm-tabs span {
-  display: block;
-  padding: 0 0 0 25px;
-}
-.rtm-tabs .dashicons {
-  height: auto;
-  margin-top: 4px;
-  position: absolute;
-  vertical-align: middle;
-  width: auto;
-}
-
 .rtm-settings-tab-container .tabs-content {
-  background: none repeat scroll 0 0 white;
+  background: #FFFFFF;
   border-left: 1px solid #e7e7e7;
   margin-left: 202px;
-  padding: 20px;
   min-height: 300px;
+  padding: 20px;
 }
 
 .rtm-setting-container {
@@ -147,16 +85,85 @@
   overflow: hidden;
 }
 
+.rtm-tabs {
+  float: left;
+  list-style: none;
+  margin: 0;
+  min-height: 300px;
+  width: 202px;
+}
+
 .rtm-button-container {
-  background: none repeat scroll 0 0 #f3f3f3;
+  background: #f3f3f3;
   border-bottom: 1px solid #dedede;
   box-shadow: 0 1px 0 #fcfcfc inset;
   padding: 6px 10px 6px 6px;
   text-align: right;
 }
 .rtm-button-container.bottom {
-  background: none repeat scroll 0 0 #eee;
+  background: #EEEEEE;
   border-top: 1px solid #e7e7e7;
   box-shadow: 0 0 0;
   z-index: 999;
+}
+
+.rtm-social-links a {
+  display: inline-block;
+  margin: 5px 0 5px 5px;
+  text-decoration: none;
+}
+
+.rtm-tabs li {
+  margin: 0;
+}
+.rtm-tabs a {
+  border-bottom: 1px solid #e7e7e7;
+  border-top: 1px solid #f9f9f9;
+  color: #666666;
+  display: block;
+  font-weight: 700;
+  outline: none;
+  opacity: 0.75;
+  padding: 10px 4px 10px 14px;
+  position: relative;
+  text-decoration: none;
+}
+.rtm-tabs a:hover {
+  background: #EEEEEE;
+  color: #269ad6;
+  margin-right: 0;
+  opacity: 1;
+  width: auto;
+}
+.rtm-tabs a:focus {
+  background: #FFFFFF;
+  box-shadow: 0 0 0;
+}
+.rtm-tabs .active {
+  background: white;
+  position: relative;
+}
+.rtm-tabs .active:after {
+  background: #FFFFFF;
+  content: ' ';
+  height: 100%;
+  position: absolute;
+  right: -1px;
+  top: 0;
+  width: 1px;
+}
+.rtm-tabs .active a {
+  color: #222222;
+  opacity: 1;
+}
+.rtm-tabs span {
+  display: block;
+  padding: 0 0 0 25px;
+}
+.rtm-tabs .dashicons {
+  height: auto;
+  margin-top: 4px;
+  position: absolute;
+  vertical-align: middle;
+  width: auto;
 }

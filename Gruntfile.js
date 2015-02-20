@@ -18,7 +18,7 @@ module.exports = function ( grunt ) {
 			// Admin Panel CSS
 			backend: {
 				options: {
-					sassDir: 'app/assets/admin/css/',
+					sassDir: 'app/assets/admin/css/sass/',
 					cssDir: 'app/assets/admin/css/'
 				}
 			}

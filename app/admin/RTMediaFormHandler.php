@@ -380,8 +380,8 @@ class RTMediaFormHandler {
 		$html = '';
 		foreach ( $general_group as $key => $value ) {
 			?>
-			<div class="postbox metabox-holder">
-				<h3 class="hndle"><span><?php echo $value; ?></span></h3>
+			<div class="">
+				<h3 class=""><span><?php echo $value; ?></span></h3>
 				<?php
 				foreach ( $render_options as $tab => $option ) {
 
@@ -1215,7 +1215,7 @@ class RTMediaFormHandler {
 				?>
 
 				<?php
-				$rtmedia_admin_tab_content_handler = "<div class='tabs-content'>";
+				$rtmedia_admin_tab_content_handler = "<div class='tabs-content rtm-tab-content'>";
 				$rtmedia_admin_tab_content_handler = apply_filters( 'rtmedia_admin_tab_content_handler', $rtmedia_admin_tab_content_handler );
 				echo $rtmedia_admin_tab_content_handler;
 				$k = 1;
@@ -1231,6 +1231,7 @@ class RTMediaFormHandler {
 					$tab_without_hash = explode( '#', $tab[ 'href' ] );
 					$tab_without_hash = $tab_without_hash[ 1 ];
 					echo '<div class="content' . $active_class . '" id="' . $tab_without_hash . '">';
+					echo '<h3>' . $tab[ 'name' ] . '</h3>';
 					call_user_func( $tab[ 'callback' ], $page );
 					echo '</div>';
 				}
