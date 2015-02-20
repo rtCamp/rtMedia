@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Description of RTMediaAddon
  *
@@ -9,7 +8,7 @@
  * @author     Gagandeep Singh <gagandeep.singh@rtcamp.com>
  * @author     Joshua Abenazer <joshua.abenazer@rtcamp.com>
  */
-if ( ! class_exists( 'RTMediaAddon' ) ){
+if ( ! class_exists( 'RTMediaAddon' ) ) {
 
 	class RTMediaAddon {
 
@@ -24,7 +23,7 @@ if ( ! class_exists( 'RTMediaAddon' ) ){
 		 *
 		 * @return void
 		 */
-		public function coming_soon_div(){
+		public function coming_soon_div() {
 			return '<div class="coming-soon coming-soon-l"></div> <a class="coming-soon coming-soon-r" href="' . $this->enquiry_link . '" target="_blank"></a>';
 		}
 
@@ -37,25 +36,25 @@ if ( ! class_exists( 'RTMediaAddon' ) ){
 		 *
 		 * @return void
 		 */
-		public static function render_addons( $page = '' ){
+		public static function render_addons( $page = '' ) {
 			global $wp_settings_sections, $wp_settings_fields;
 
-			if ( ! isset( $wp_settings_sections ) || ! isset( $wp_settings_sections[ $page ] ) ){
+			if ( ! isset( $wp_settings_sections ) || ! isset( $wp_settings_sections[ $page ] ) ) {
 				return;
 			}
 
-			foreach ( (array) $wp_settings_sections[ $page ] as $section ) {
+			foreach ( ( array ) $wp_settings_sections[ $page ] as $section ) {
 
-				if ( $section['callback'] ){
-					call_user_func( $section['callback'], $section );
+				if ( $section[ 'callback' ] ) {
+					call_user_func( $section[ 'callback' ], $section );
 				}
 
-				if ( ! isset( $wp_settings_fields ) || ! isset( $wp_settings_fields[ $page ] ) || ! isset( $wp_settings_fields[ $page ][ $section['id'] ] ) ){
+				if ( ! isset( $wp_settings_fields ) || ! isset( $wp_settings_fields[ $page ] ) || ! isset( $wp_settings_fields[ $page ][ $section[ 'id' ] ] ) ) {
 					continue;
 				}
 
 				echo '<table class="form-table">';
-				do_settings_fields( $page, $section['id'] );
+				do_settings_fields( $page, $section[ 'id' ] );
 				echo '</table>';
 			}
 		}
@@ -69,7 +68,7 @@ if ( ! class_exists( 'RTMediaAddon' ) ){
 		 *
 		 * @return void
 		 */
-		public function get_addons(){
+		public function get_addons() {
 			$tabs = array();
 			global $rtmedia_admin;
 			$tabs[] = array(
@@ -86,13 +85,12 @@ if ( ! class_exists( 'RTMediaAddon' ) ){
 				'callback' => array( $rtmedia_admin->rtmedia_encoding, 'encoding_service_intro' )
 			);
 
-			/*			$tabs[] = array(
-							'title' => __('Themes', 'rtmedia'),
-							'name' => __('Themes', 'rtmedia'),
-							'href' => '#bpm-themes',
-							'callback' => array($this, 'themes_content')
-						);*/
-
+			/* 			$tabs[] = array(
+			  'title' => __('Themes', 'rtmedia'),
+			  'name' => __('Themes', 'rtmedia'),
+			  'href' => '#bpm-themes',
+			  'callback' => array($this, 'themes_content')
+			  ); */
 			?>
 			<div id="rtm-addons">
 				<div class="horizontal-tabs">
@@ -101,15 +99,15 @@ if ( ! class_exists( 'RTMediaAddon' ) ){
 			$i = 1;
 			foreach ( $tabs as $tab ) {
 				$active_class = '';
-				if ( 1 == $i ){
+				if ( 1 == $i ) {
 					$active_class = 'active';
 				}
 				$i ++;
 				?>
-						<dd class="<?php echo $active_class ?>">
-							<a id="tab-<?php echo substr( $tab['href'], 1 ) ?>" title="<?php echo $tab['title'] ?>" href="<?php echo $tab['href'] ?>" class="rtmedia-tab-title <?php echo sanitize_title( $tab['name'] ) ?>"><?php echo $tab['name'] ?></a>
-						</dd>
-			<?php
+							<dd class="<?php echo $active_class ?>">
+								<a id="tab-<?php echo substr( $tab[ 'href' ], 1 ) ?>" title="<?php echo $tab[ 'title' ] ?>" href="<?php echo $tab[ 'href' ] ?>" class="rtmedia-tab-title <?php echo sanitize_title( $tab[ 'name' ] ) ?>"><?php echo $tab[ 'name' ] ?></a>
+							</dd>
+				<?php
 			}
 			?>
 					</dl>
@@ -120,18 +118,18 @@ if ( ! class_exists( 'RTMediaAddon' ) ){
 			echo "<div class='tabs-content'>";
 			foreach ( $tabs as $tab ) {
 				$active_class = '';
-				if ( 1 == $k ){
+				if ( 1 == $k ) {
 					$active_class = ' active';
 				}
 				$k ++;
-				if ( isset( $tab['icon'] ) && ! empty( $tab['icon'] ) ){
-					$icon = '<i class="' . $tab['icon'] . '"></i>';
+				if ( isset( $tab[ 'icon' ] ) && ! empty( $tab[ 'icon' ] ) ) {
+					$icon = '<i class="' . $tab[ 'icon' ] . '"></i>';
 				}
-				$tab_without_hash = explode( '#', $tab['href'] );
-				$tab_without_hash = $tab_without_hash[1];
+				$tab_without_hash = explode( '#', $tab[ 'href' ] );
+				$tab_without_hash = $tab_without_hash[ 1 ];
 				echo '<div class="row content' . $active_class . '" id="' . $tab_without_hash . '">';
 				echo '<div class="large-12 columns">';
-				call_user_func( $tab['callback'] );
+				call_user_func( $tab[ 'callback' ] );
 				echo '</div>';
 				echo '</div>';
 			}
@@ -139,9 +137,8 @@ if ( ! class_exists( 'RTMediaAddon' ) ){
 			?>
 				</div>
 			</div>
-		<?php
+			<?php
 		}
-
 
 		/**
 		 * Display plugins in Addons Section.
@@ -152,9 +149,9 @@ if ( ! class_exists( 'RTMediaAddon' ) ){
 		 *
 		 * @return void
 		 */
-		public function plugins_content( $args = '' ){
-			$img_src = RTMEDIA_URL . 'app/assets/img/';
-			$addons  = array(
+		public function plugins_content( $args = '' ) {
+			$img_src = RTMEDIA_URL . 'app/assets/admin/img/';
+			$addons = array(
 				'photo' => array(
 					array(
 						'title' => __( 'rtMedia Photo Watermark', 'rtmedia' ),
@@ -190,7 +187,7 @@ if ( ! class_exists( 'RTMediaAddon' ) ){
 						'purchased' => ( defined( 'RTMEDIA_INSTAGRAM_URL' ) || file_exists( WP_PLUGIN_DIR . '/bpm-instagram/index.php' ) ) ? true : false,
 					),
 				),
-				'video'=> array(
+				'video' => array(
 					array(
 						'title' => __( 'rtMedia Kaltura Add-on', 'rtmedia' ),
 						'img_src' => $img_src . 'rtmedia-kaltura-240x184.png',
@@ -214,7 +211,7 @@ if ( ! class_exists( 'RTMediaAddon' ) ){
 						'purchased' => ( defined( 'RTMEDIA_FFMPEG_URL' ) || file_exists( WP_PLUGIN_DIR . '/bpm-ffmpeg/index.php' ) ) ? true : false,
 					),
 				),
-				'membership'=> array(
+				'membership' => array(
 					array(
 						'title' => __( 'rtMedia Membership Add-on', 'rtmedia' ),
 						'img_src' => $img_src . 'rtmedia-membership-240x184.png',
@@ -227,11 +224,11 @@ if ( ! class_exists( 'RTMediaAddon' ) ){
 					),
 				),
 			);
-			$addons  = apply_filters( 'rtmedia_addons', $addons );
+			$addons = apply_filters( 'rtmedia_addons', $addons );
 
-			$photo_addons = $addons['photo'];
-			$video_addons = $addons['video'];
-			$membership_addons = $addons['membership'];
+			$photo_addons = $addons[ 'photo' ];
+			$video_addons = $addons[ 'video' ];
+			$membership_addons = $addons[ 'membership' ];
 
 			echo '<h3>';
 			_e( 'rtMedia Addons for Photos', 'rtmedia' );
@@ -267,7 +264,7 @@ if ( ! class_exists( 'RTMediaAddon' ) ){
 		 *
 		 * @return void
 		 */
-		public function services_content( $args = '' ){
+		public function services_content( $args = '' ) {
 			$objEncoding->encoding_service_intro();
 		}
 
@@ -280,10 +277,9 @@ if ( ! class_exists( 'RTMediaAddon' ) ){
 		 *
 		 * @return void
 		 */
-		public function themes_content( $args = '' ){
+		public function themes_content( $args = '' ) {
 			echo '<h3>' . __( 'Coming Soon !!', 'rtmedia' ) . '</h3>';
 		}
-
 
 		/**
 		 * Define addon.
@@ -294,7 +290,7 @@ if ( ! class_exists( 'RTMediaAddon' ) ){
 		 *
 		 * @return void
 		 */
-		public function addon( $args ){
+		public function addon( $args ) {
 			global $rtmedia;
 
 			$defaults = array(
@@ -309,19 +305,19 @@ if ( ! class_exists( 'RTMediaAddon' ) ){
 				'category' => 'photo',
 				'purchased' => false,
 			);
-			$args     = wp_parse_args( $args, $defaults );
+			$args = wp_parse_args( $args, $defaults );
 			extract( $args );
 
 			$coming_soon ? ' coming-soon' : '';
 
-			if( $purchased ){
+			if ( $purchased ) {
 				$purchase_link = '<span class="rtm-addon-purchased alignright product_type_simple">' . __( 'Purchased', 'rtmedia' ) . '</span>';
 			} else {
 				$purchase_link = '<a class="add_to_cart_button  alignright product_type_simple"  href="' . $buy_now . '" target="_blank">' . __( 'Buy Now', 'rtmedia' ) . '</a>';
 			}
 
 			$coming_soon_div = ( $coming_soon ) ? $this->coming_soon_div() : '';
-			$addon           = '<div class="bp-media-addon">
+			$addon = '<div class="bp-media-addon">
 			    <a href="' . $product_link . '"  title="' . $title . '" target="_blank">
 			        <img width="240" height="184" title="' . $title . '" alt="' . $title . '" src="' . $img_src . '">
 			    </a>
@@ -330,8 +326,8 @@ if ( ! class_exists( 'RTMediaAddon' ) ){
 			        ' . $desc . '
 			    </div>
 			    <div class="product_footer">
-			        <span class="price alignleft"><span class="amount">' . $price . '</span></span>' . $purchase_link ;
-			if( $demo_link != '' ){
+			        <span class="price alignleft"><span class="amount">' . $price . '</span></span>' . $purchase_link;
+			if ( $demo_link != '' ) {
 				$addon .= '<a class="alignleft product_demo_link"  href="' . $demo_link . '" title="' . $title . '" target="_blank">' . __( 'Live Demo', 'rtmedia' ) . '</a>';
 			}
 			$addon .= '</div>' . $coming_soon_div . '</div>';

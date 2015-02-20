@@ -113,6 +113,12 @@
   text-decoration: none;
 }
 
+.nav-tab.rtm-premium {
+  background: none repeat scroll 0 0 #34bf49;
+  color: white;
+  letter-spacing: 0.5px;
+}
+
 .rtm-tabs li {
   margin: 0;
 }

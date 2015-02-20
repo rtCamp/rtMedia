@@ -16,25 +16,25 @@ class RTMediaThemes {
 	 *
 	 * @return void
 	 */
-	public static function render_themes( $page = '' ){
+	public static function render_themes( $page = '' ) {
 		global $wp_settings_sections, $wp_settings_fields;
 
-		if ( ! isset( $wp_settings_sections ) || ! isset( $wp_settings_sections[ $page ] ) ){
+		if ( ! isset( $wp_settings_sections ) || ! isset( $wp_settings_sections[ $page ] ) ) {
 			return;
 		}
 
-		foreach ( (array) $wp_settings_sections[ $page ] as $section ) {
+		foreach ( ( array ) $wp_settings_sections[ $page ] as $section ) {
 
-			if ( $section['callback'] ){
-				call_user_func( $section['callback'], $section );
+			if ( $section[ 'callback' ] ) {
+				call_user_func( $section[ 'callback' ], $section );
 			}
 
-			if ( ! isset( $wp_settings_fields ) || ! isset( $wp_settings_fields[ $page ] ) || ! isset( $wp_settings_fields[ $page ][ $section['id'] ] ) ){
+			if ( ! isset( $wp_settings_fields ) || ! isset( $wp_settings_fields[ $page ] ) || ! isset( $wp_settings_fields[ $page ][ $section[ 'id' ] ] ) ) {
 				continue;
 			}
 
 			echo '<table class="form-table">';
-			do_settings_fields( $page, $section['id'] );
+			do_settings_fields( $page, $section[ 'id' ] );
 			echo '</table>';
 		}
 	}
@@ -48,7 +48,7 @@ class RTMediaThemes {
 	 *
 	 * @return void
 	 */
-	public function get_themes(){
+	public function get_themes() {
 		$tabs = array();
 		global $rtmedia_admin;
 		$tabs[] = array(
@@ -67,47 +67,47 @@ class RTMediaThemes {
 		<div id="rtm-themes">
 			<div class="horizontal-tabs">
 				<dl class='tabs' data-tab>
-		<?php
-		$i = 1;
-		foreach ( $tabs as $tab ) {
-			$active_class = '';
-			if ( 1 == $i ){
-				$active_class = 'active';
-			}
-			$i ++;
-			?>
-			<dd class="<?php echo $active_class ?>">
-				<a id="tab-<?php echo substr( $tab['href'], 1 ) ?>" title="<?php echo $tab['title'] ?>" href="<?php echo $tab['href'] ?>" class="rtmedia-tab-title <?php echo sanitize_title( $tab['name'] ) ?>"><?php echo $tab['name'] ?></a>
-			</dd>
-		<?php
-		}
-		?>
+					<?php
+					$i = 1;
+					foreach ( $tabs as $tab ) {
+						$active_class = '';
+						if ( 1 == $i ) {
+							$active_class = 'active';
+						}
+						$i ++;
+						?>
+						<dd class="<?php echo $active_class ?>">
+							<a id="tab-<?php echo substr( $tab[ 'href' ], 1 ) ?>" title="<?php echo $tab[ 'title' ] ?>" href="<?php echo $tab[ 'href' ] ?>" class="rtmedia-tab-title <?php echo sanitize_title( $tab[ 'name' ] ) ?>"><?php echo $tab[ 'name' ] ?></a>
+						</dd>
+						<?php
+					}
+					?>
 				</dl>
 
-		<?php
-		$k = 1;
-		$active_class = '';
-		echo "<div class='tabs-content'>";
-		foreach ( $tabs as $tab ) {
-			$active_class = '';
-			if ( 1 == $k ){
-				$active_class = ' active';
-			}
-			$k ++;
-			if ( isset( $tab['icon'] ) && ! empty( $tab['icon'] ) ){
-				$icon = '<i class="' . $tab['icon'] . '"></i>';
-			}
-			$tab_without_hash = explode( '#', $tab['href'] );
-			$tab_without_hash = $tab_without_hash[1];
-			echo '<div class="content' . $active_class . '" id="' . $tab_without_hash . '">';
-			call_user_func( $tab['callback'] );
-			echo '</div>';
-		}
-		echo '</div>';
-		?>
+				<?php
+				$k = 1;
+				$active_class = '';
+				echo "<div class='tabs-content'>";
+				foreach ( $tabs as $tab ) {
+					$active_class = '';
+					if ( 1 == $k ) {
+						$active_class = ' active';
+					}
+					$k ++;
+					if ( isset( $tab[ 'icon' ] ) && ! empty( $tab[ 'icon' ] ) ) {
+						$icon = '<i class="' . $tab[ 'icon' ] . '"></i>';
+					}
+					$tab_without_hash = explode( '#', $tab[ 'href' ] );
+					$tab_without_hash = $tab_without_hash[ 1 ];
+					echo '<div class="content' . $active_class . '" id="' . $tab_without_hash . '">';
+					call_user_func( $tab[ 'callback' ] );
+					echo '</div>';
+				}
+				echo '</div>';
+				?>
 			</div>
 		</div>
-	<?php
+		<?php
 	}
 
 	/**
@@ -119,28 +119,27 @@ class RTMediaThemes {
 	 *
 	 * @return void
 	 */
-	public function rtmedia_themes_content(){
+	public function rtmedia_themes_content() {
 
 
 		$rtdating = wp_get_theme( 'rtdating' );
-		if( $rtdating->exists() ){
+		if ( $rtdating->exists() ) {
 			$rtdating_purchase = '';
 		} else {
 			$rtdating_purchase = '<a href="https://rtcamp.com/products/rtdating/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media" target="_blank">Buy rtDating</a> | ';
 		}
 
 		$inspirebook = wp_get_theme( 'inspirebook' );
-		if( $inspirebook->exists() ){
+		if ( $inspirebook->exists() ) {
 			$inspirebook_purchase = '';
 		} else {
 			$inspirebook_purchase = '<a href="https://rtcamp.com/products/inspirebook/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media" target="_blank">Buy InspireBook</a> | ';
 		}
-
 		?>
 		<div class="row">
 			<div class="columns large-12">
 				<div class="columns large-4 rtmedia-theme-image">
-					<a href="https://rtcamp.com/products/rtdating/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media" target="_blank"><img src="<?php echo RTMEDIA_URL . 'app/assets/img/rtDating.png' ?>"/></a>
+					<a href="https://rtcamp.com/products/rtdating/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media" target="_blank"><img src="<?php echo RTMEDIA_URL . 'app/assets/admin/img/rtDating.png' ?>"/></a>
 				</div>
 				<div class="columns large-7 rtmedia-theme-content">
 					<h3 class="rtmedia-theme-title"><a href="https://rtcamp.com/products/rtdating/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media" target="_blank">rtDating</a></h3>
@@ -161,7 +160,7 @@ class RTMediaThemes {
 		<div class="row">
 			<div class="columns large-12">
 				<div class="columns large-4 rtmedia-theme-image">
-					<a href="https://rtcamp.com/products/inspirebook/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media" target="_blank"><img src="<?php echo RTMEDIA_URL . 'app/assets/img/rtmedia-theme-InspireBook.png' ?>"/></a>
+					<a href="https://rtcamp.com/products/inspirebook/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media" target="_blank"><img src="<?php echo RTMEDIA_URL . 'app/assets/admin/img/rtmedia-theme-InspireBook.png' ?>"/></a>
 				</div>
 				<div class="columns large-7 rtmedia-theme-content">
 					<h3 class="rtmedia-theme-title"><a href="https://rtcamp.com/products/inspirebook/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media" target="_blank">InspireBook</a></h3>
@@ -182,7 +181,7 @@ class RTMediaThemes {
 				</div>
 			</div>
 		</div>
-	<?php
+		<?php
 	}
 
 	/**
@@ -194,7 +193,7 @@ class RTMediaThemes {
 	 *
 	 * @return void
 	 */
-	public function rtmedia_3rd_party_themes_content(){
+	public function rtmedia_3rd_party_themes_content() {
 		?>
 		<div class="row">
 			<div class="columns large-12">
@@ -204,7 +203,7 @@ class RTMediaThemes {
 		<hr>
 		<div class="row">
 			<div class="columns large-4 rtmedia-theme-image">
-				<a href="http://rt.cx/sweetdate" target="_blank"><img src="<?php echo RTMEDIA_URL . 'app/assets/img/rtmedia-theme-sweetdate.png' ?>"/></a>
+				<a href="http://rt.cx/sweetdate" target="_blank"><img src="<?php echo RTMEDIA_URL . 'app/assets/admin/img/rtmedia-theme-sweetdate.png' ?>"/></a>
 			</div>
 			<div class="columns large-7">
 				<h3 class="rtmedia-theme-3rd-party-title"><a href="http://rt.cx/sweetdate" target="_blank">Sweet Date</a></h3>
@@ -220,7 +219,7 @@ class RTMediaThemes {
 		<hr>
 		<div class="row">
 			<div class="columns large-4 rtmedia-theme-image">
-				<a href="http://rt.cx/kleo" target="_blank"><img src="<?php echo RTMEDIA_URL . 'app/assets/img/rtmedia-theme-kleo.png' ?>"/></a>
+				<a href="http://rt.cx/kleo" target="_blank"><img src="<?php echo RTMEDIA_URL . 'app/assets/admin/img/rtmedia-theme-kleo.png' ?>"/></a>
 			</div>
 			<div class="columns large-7">
 				<h3 class="rtmedia-theme-3rd-party-title"><a href="http://rt.cx/kleo" target="_blank">KLEO</a></h3>
@@ -242,6 +241,7 @@ class RTMediaThemes {
 					<a href="mailto:product@rtcamp.com"><?php _e( 'product@rtcamp.com', 'rtmedia' ) ?></a>.</p>
 			</div>
 		</div>
-	<?php
+		<?php
 	}
+
 }
