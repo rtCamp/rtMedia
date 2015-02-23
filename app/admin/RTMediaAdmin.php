@@ -367,7 +367,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 		 * @return void
 		 */
 		public function rtmedia_advertisement() {
-			$src = RTMEDIA_URL . 'app/assets/img/rtMedia-pro-ad.png'
+			$src = RTMEDIA_URL . 'app/assets/admin/img/rtMedia-pro-ad.png'
 			?>
 			<div class='rtmedia-admin-ad'>
 				<a href='http://rtcamp.com/store/rtmedia-pro/' target='_blank' title='rtMedia Pro'>
@@ -1511,9 +1511,6 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 		public function admin_sidebar() {
 			do_action( 'rtmedia_before_default_admin_widgets' );
 			$current_user = wp_get_current_user();
-			//            echo '<p><a target="_blank" href="http://rtcamp.com/news/buddypress-media-review-contest/?utm_source=dashboard&#038;utm_medium=plugin&#038;utm_campaign=buddypress-media"><img src="' . RTMEDIA_URL . 'app/assets/img/bpm-contest-banner.jpg" alt="BuddyPress Media Review Contest" /></a></p>';
-			//                        $contest = '<a target="_blank" href="http://rtcamp.com/news/buddypress-media-review-contest/?utm_source=dashboard&#038;utm_medium=plugin&#038;utm_campaign=buddypress-media"><img src="'.RTMEDIA_URL.'app/assets/img/bpm-contest-banner.jpg" alt="BuddyPress Media Review Contest" /></a>';
-			//                        new BPMediaAdminWidget('bpm-contest', __('', 'rtmedia'), $contest);
 			$setting_page_url = admin_url( 'admin.php?page=rtmedia-settings#rtmedia-general' );
 			$message = sprintf( __( 'I use @buddypressmedia http://rt.cx/rtmedia on %s', 'rtmedia' ), home_url() );
 			$addons = '<div id="social" class="">
@@ -1543,7 +1540,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 			//                         <input type="text" name="amount" size="3">
 			//                           <input type="hidden" name="currency_code" value="USD">
 			//                           <!-- Display the payment button. -->
-			//                           <input type="hidden" name="cpp_header_image" value="' . RTMEDIA_URL . 'app/assets/img/rtcamp-logo.png">
+			//                           <input type="hidden" name="cpp_header_image" value="' . RTMEDIA_URL . 'app/assets/admin/img/rtcamp-logo.png">
 			//                           <input type="image" id="rt-donate-button" name="submit" border="0"
 			//                           src="' . RTMEDIA_URL . 'app/assets/img/paypal-donate-button.png"
 			//                           alt="PayPal - The safer, easier way to pay online">
