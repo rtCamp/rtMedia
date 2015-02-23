@@ -1168,7 +1168,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 
 								<div class="rtm-button-container bottom">
 									<?php $message = sprintf( __( 'I use @buddypressmedia http://rt.cx/rtmedia on %s', 'rtmedia' ), home_url() ); ?>
-									<div class="rtm-social-links alignleft">
+									<div class="rtm-social-links alignright">
 										<a href="http://twitter.com/home/?status=<?php echo $message; ?>" class="twitter" target= "_blank" title="<?php _e( 'Post to Twitter Now', 'rtmedia' ); ?>"><span class="dashicons dashicons-twitter"></span></a>
 										<a href="https://www.facebook.com/sharer/sharer.php?u=http://rtcamp.com/rtmedia/" class="facebook" target="_blank" title="<?php _e( 'Share on Facebook Now', 'rtmedia' ); ?>"><span class="dashicons dashicons-facebook"></span></a>
 										<a href="http://wordpress.org/support/view/plugin-reviews/buddypress-media?rate=5#postform" class="wordpress" target= "_blank" title="<?php _e( 'Rate rtMedia on Wordpress.org', 'rtmedia' ); ?>"><span class="dashicons dashicons-wordpress"></span></a>

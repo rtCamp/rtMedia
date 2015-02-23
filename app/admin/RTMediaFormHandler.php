@@ -380,8 +380,8 @@ class RTMediaFormHandler {
 		$html = '';
 		foreach ( $general_group as $key => $value ) {
 			?>
-			<div class="">
-				<h3 class=""><span><?php echo $value; ?></span></h3>
+			<div class="rtm-option-wrapper">
+				<h3 class="rtm-option-title"><span><?php echo $value; ?></span></h3>
 				<?php
 				foreach ( $render_options as $tab => $option ) {
 
@@ -1140,7 +1140,7 @@ class RTMediaFormHandler {
 					$tab_without_hash = explode( '#', $tab[ 'href' ] );
 					$tab_without_hash = $tab_without_hash[ 1 ];
 					echo '<div class="content' . $active_class . '" id="' . $tab_without_hash . '">';
-					echo '<h3>' . $tab[ 'name' ] . '</h3>';
+					echo '<h3 class="rtm-setting-title">' . $tab[ 'name' ] . '</h3>';
 					call_user_func( $tab[ 'callback' ], $page );
 					echo '</div>';
 				}
@@ -1185,22 +1185,29 @@ class RTMediaFormHandler {
 			}
 		}
 
-		public static function render_option_content( $option ){
-		?>
-			<div class="row section">
-				<div class="columns large-9">
-					<?php echo $option[ 'title' ]; ?>
-				</div>
-				<div class="columns large-3">
-					<?php call_user_func( $option[ 'callback' ], $option[ 'args' ] ); ?>
-					<span data-tooltip class="has-tip" title="<?php echo ( isset( $option[ 'args' ][ 'desc' ] ) ) ? $option[ 'args' ][ 'desc' ] : 'NA'; ?>">
-						<i class="dashicons dashicons-info rtmicon"></i>
-					</span>
-				</div>
+		public static function render_option_content( $option ) {
+			?>
+			<div class="rtp-option-content">
+
+				<table class="form-table">
+					<tr>
+						<th>
+							<?php echo $option[ 'title' ]; ?>
+						</th>
+						<td>
+							<fieldset data-type="text" data-id="theme_branding" class="redux-field-container redux-field redux-field-init redux-container-text " id="wpex_options-theme_branding">
+								<?php call_user_func( $option[ 'callback' ], $option[ 'args' ] ); ?>
+								<span data-tooltip class="has-tip" title="<?php echo ( isset( $option[ 'args' ][ 'desc' ] ) ) ? $option[ 'args' ][ 'desc' ] : 'NA'; ?>">
+									<i class="dashicons dashicons-info rtmicon"></i>
+								</span>
+							</fieldset>
+						</td>
+					</tr>
+				</table>
 			</div>
-		<?php
+			<?php
 			if ( isset( $option[ 'after_content' ] ) ) {
-		?>
+				?>
 				<div class="row">
 					<div class="columns large-12">
 						<p class="rtmedia-info rtmedia-admin-notice">
@@ -1208,7 +1215,7 @@ class RTMediaFormHandler {
 						</p>
 					</div>
 				</div>
-		<?php
+				<?php
 			}
 		}
 
