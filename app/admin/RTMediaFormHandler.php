@@ -392,30 +392,7 @@ class RTMediaFormHandler {
 					if ( $option[ 'group' ] != $key ) {
 						continue;
 					}
-					?>
-					<div class="row section">
-						<div class="columns large-9">
-							<?php echo $option[ 'title' ]; ?>
-						</div>
-						<div class="columns large-3">
-							<?php call_user_func( $option[ 'callback' ], $option[ 'args' ] ); ?>
-							<span data-tooltip class="has-tip" title="<?php echo ( isset( $option[ 'args' ][ 'desc' ] ) ) ? $option[ 'args' ][ 'desc' ] : 'NA'; ?>">
-								<i class="dashicons dashicons-info rtmicon"></i>
-							</span>
-						</div>
-					</div>
-					<?php
-					if ( isset( $option[ 'after_content' ] ) ) {
-						?>
-						<div class="row">
-							<div class="columns large-12">
-								<p class="rtmedia-info rtmedia-admin-notice">
-									<?php echo $option[ 'after_content' ]; ?>
-								</p>
-							</div>
-						</div>
-						<?php
-					}
+					self::render_option_content( $option );
 				}
 				?>
 			</div>
@@ -527,32 +504,7 @@ class RTMediaFormHandler {
 					if ( $option[ 'group' ] != $key ) {
 						continue;
 					}
-					?>
-					<div class="row section">
-						<div class="columns large-7">
-							<?php echo $option[ 'title' ]; ?>
-						</div>
-						<div class="columns large-5">
-							<?php call_user_func( $option[ 'callback' ], $option[ 'args' ] ); ?>
-							<span data-tooltip class="has-tip" title="<?php echo ( isset( $option[ 'args' ][ 'desc' ] ) ) ? $option[ 'args' ][ 'desc' ] : 'NA'; ?>">
-								<i class="dashicons dashicons-info rtmicon"></i>
-							</span>
-						</div>
-					</div>
-					<?php
-					if ( isset( $option[ 'after_content' ] ) ) {
-						?>
-						<div class="row">
-							<div class="columns large-12">
-								<p class="rtmedia-info rtmedia-admin-notice">
-									<?php echo $option[ 'after_content' ]; ?>
-								</p>
-							</div>
-						</div>
-						<?php
-					}
-					?>
-					<?php
+					self::render_option_content( $option );
 				}
 				?>
 			</div>
@@ -881,29 +833,7 @@ class RTMediaFormHandler {
 			<?php
 			echo '<div class="large-12">';
 			foreach ( $render_data as $option ) {
-				?>
-
-				<div class="row section">
-					<?php if ( 'styles_custom' == $option[ 'args' ][ 'key' ] ) { ?>
-						<div class="columns large-12 rtm-custom-css">
-							<strong
-								class="<?php echo $option[ 'args' ][ 'key' ]; ?>"><?php echo $option[ 'title' ]; ?></strong>
-								<?php call_user_func( $option[ 'callback' ], $option[ 'args' ] ); ?>
-							<div><?php _e( "If you want to add some custom CSS code to the plugin and do not want to modify any files, then this is a good place to enter your code." ); ?></div>
-						</div>
-					<?php } else { ?>
-						<div class="columns large-6">
-							<strong class="<?php echo $option[ 'args' ][ 'key' ]; ?>"><?php echo $option[ 'title' ]; ?></strong>
-						</div>
-						<div class="columns large-6">
-							<?php call_user_func( $option[ 'callback' ], $option[ 'args' ] ); ?>
-							<span data-tooltip class="has-tip" title="<?php echo ( isset( $option[ 'args' ][ 'desc' ] ) ) ? $option[ 'args' ][ 'desc' ] : 'NA'; ?>">
-								<i class="dashicons dashicons-info rtmicon"></i>
-							</span>
-						</div>
-					<?php } ?>
-				</div>
-				<?php
+				self::render_option_content( $option );
 			}
 			echo '</div>';
 		}
@@ -1016,6 +946,9 @@ class RTMediaFormHandler {
 			echo '<div class="large-12">';
 			foreach ( $render_data as $key => $privacy ) {
 				echo '<div class="row section">';
+				if ( 'enable' != $key ) {
+					array_merge_recursive( $privacy[ 'args' ], array( 'class' => array( 'privacy-driven-disable' ) ) );
+				}
 				?>
 				<div class="columns large-6">
 					<?php echo $privacy[ 'title' ] ?>
@@ -1126,19 +1059,7 @@ class RTMediaFormHandler {
 
 				echo '<div class="large-12">';
 				foreach ( $render_data as $option ) {
-					?>
-					<div class="row section">
-						<div class="columns large-9">
-							<?php echo $option[ 'title' ]; ?>
-						</div>
-						<div class="columns large-3">
-							<?php call_user_func( $option[ 'callback' ], $option[ 'args' ] ); ?>
-							<span data-tooltip class="has-tip" title="<?php echo ( isset( $option[ 'args' ][ 'desc' ] ) ) ? $option[ 'args' ][ 'desc' ] : 'NA'; ?>">
-								<i class="dashicons dashicons-info rtmicon"></i>
-							</span>
-						</div>
-					</div>
-					<?php
+					self::render_option_content( $option );
 				}
 				echo '</div>';
 				echo '</div>';
@@ -1161,19 +1082,7 @@ class RTMediaFormHandler {
 					);
 					$render_options = apply_filters( 'rtmedia_album_control_setting', $render_options, $options );
 					foreach ( $render_options as $tab => $option ) {
-						?>
-						<div class="row section">
-							<div class="columns large-9">
-								<?php echo $option[ 'title' ]; ?>
-							</div>
-							<div class="columns large-3">
-								<?php call_user_func( $option[ 'callback' ], $option[ 'args' ] ); ?>
-								<span data-tooltip class="has-tip" title="<?php echo ( isset( $option[ 'args' ][ 'desc' ] ) ) ? $option[ 'args' ][ 'desc' ] : 'NA'; ?>">
-									<i class="dashicons dashicons-info rtmicon"></i>
-								</span>
-							</div>
-						</div>
-						<?php
+						self::render_option_content( $option );
 					}
 					?>
 				</div>
@@ -1273,6 +1182,33 @@ class RTMediaFormHandler {
 				}
 				echo '</div>';
 				echo '</div>';
+			}
+		}
+
+		public static function render_option_content( $option ){
+		?>
+			<div class="row section">
+				<div class="columns large-9">
+					<?php echo $option[ 'title' ]; ?>
+				</div>
+				<div class="columns large-3">
+					<?php call_user_func( $option[ 'callback' ], $option[ 'args' ] ); ?>
+					<span data-tooltip class="has-tip" title="<?php echo ( isset( $option[ 'args' ][ 'desc' ] ) ) ? $option[ 'args' ][ 'desc' ] : 'NA'; ?>">
+						<i class="dashicons dashicons-info rtmicon"></i>
+					</span>
+				</div>
+			</div>
+		<?php
+			if ( isset( $option[ 'after_content' ] ) ) {
+		?>
+				<div class="row">
+					<div class="columns large-12">
+						<p class="rtmedia-info rtmedia-admin-notice">
+							<?php echo $option[ 'after_content' ]; ?>
+						</p>
+					</div>
+				</div>
+		<?php
 			}
 		}
 
