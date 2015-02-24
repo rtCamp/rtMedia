@@ -67,12 +67,16 @@
   clear: both;
 }
 
+.rtp-row-container {
+  padding-top: 10px;
+}
+
 .rtm-settings-tab-container .tabs-content {
   background: #FFFFFF;
   border-left: 1px solid #e7e7e7;
   margin-left: 202px;
   min-height: 300px;
-  padding: 20px;
+  padding: 20px 30px;
 }
 
 .rtm-setting-container {
@@ -81,8 +85,18 @@
   -moz-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
   -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
-  margin-top: 20px;
+  margin-top: 10px;
   overflow: hidden;
+  float: left;
+  width: 76%;
+}
+
+.rtm-sidebar {
+  float: right;
+  width: 22%;
+}
+.rtm-sidebar .postbox {
+  background: rgba(255, 255, 255, 0.8);
 }
 
 .rtm-tabs {
@@ -104,8 +118,17 @@
   background: #EEEEEE;
   border-top: 1px solid #e7e7e7;
   box-shadow: 0 0 0;
-  text-align: left;
   z-index: 999;
+}
+
+#mce-EMAIL {
+  width: 100%;
+}
+
+#mc-embedded-subscribe {
+  display: block;
+  margin: 10px auto 0;
+  width: 100%;
 }
 
 .rtm-social-links a {
@@ -115,14 +138,14 @@
 }
 
 .nav-tab.rtm-premium {
-  background: none repeat scroll 0 0 #34bf49;
+  background: #e74c3c;
   color: white;
   letter-spacing: 0.5px;
 }
 
 .rtm-setting-title {
   border-bottom: 1px solid #e7e7e7;
-  font-size: 24px;
+  font-size: 22px;
   font-weight: 400;
   line-height: 1;
   margin-bottom: 0;
@@ -132,7 +155,6 @@
 
 .rtp-option-content {
   overflow: hidden;
-  border-bottom: 1px solid #e7e7e7;
 }
 .rtp-option-content:last-child {
   border-bottom: 0;
@@ -142,7 +164,7 @@
   font-weight: 400;
   line-height: 1.6;
   padding-right: 30px;
-  width: 32%;
+  width: 50%;
 }
 .rtp-option-content .form-table th span {
   color: #666;
@@ -153,11 +175,38 @@
 }
 
 .rtm-option-title {
-  background: #f9f9f9;
+  border-bottom: 1px solid #EEEEEE;
   font-size: 14px;
+  letter-spacing: 0.02rem;
   margin-bottom: 0;
   margin-top: 30px;
-  padding: 10px;
+  padding: 0 0 10px;
+  text-transform: uppercase;
+}
+
+.rtm-social-share .button {
+  display: block;
+  opacity: 0.8;
+  position: relative;
+  text-decoration: none;
+}
+.rtm-social-share .dashicons {
+  font-size: 18px;
+  position: absolute;
+  right: 10px;
+  top: 4px;
+}
+.rtm-social-share .twitter .dashicons {
+  color: #45b0e3;
+}
+.rtm-social-share .facebook .dashicons {
+  color: #3b5998;
+}
+.rtm-social-share .wordpress .dashicons {
+  color: #21759b;
+}
+.rtm-social-share .rss .dashicons {
+  color: #FF6600;
 }
 
 .rtm-tabs li {
@@ -208,7 +257,9 @@
   padding: 0 0 0 25px;
 }
 .rtm-tabs .dashicons {
+  font-size: 14px;
   height: auto;
+  line-height: 1;
   margin-top: 4px;
   position: absolute;
   vertical-align: middle;
@@ -217,8 +268,7 @@
 
 /* Main block */
 .rtm-switch-options {
-  display: block;
-  margin-bottom: 10px;
+  float: left;
   /* Main block clearfix */
   /* Options */
 }
@@ -238,7 +288,7 @@
 .rtm-switch-options span {
   display: inline-block;
   float: left;
-  padding: 5px 10px;
+  padding: 3px 10px;
   margin: 0;
   color: #333;
   cursor: pointer;
@@ -246,15 +296,7 @@
   font-weight: 700;
   border: 1px solid #ccc;
   text-transform: uppercase;
-  background-color: #f5f5f5 !important;
-  background-image: -khtml-gradient(linear, left top, left bottom, from(#f8f8f8), to(#f5f5f5)) !important;
-  background-image: -moz-linear-gradient(top, #f8f8f8, #f5f5f5) !important;
-  background-image: -ms-linear-gradient(top, #f8f8f8, #f5f5f5) !important;
-  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #f8f8f8), color-stop(100%, #f5f5f5)) !important;
-  background-image: -webkit-linear-gradient(top, #f8f8f8, #f5f5f5) !important;
-  background-image: -o-linear-gradient(top, #f8f8f8, #f5f5f5) !important;
-  background-image: linear-gradient(top, #f8f8f8, #f5f5f5) !important;
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f8f8f8', endColorstr='#f5f5f5', GradientType=0) !important;
+  background-color: #f5f5f5;
 }
 .rtm-switch-options span:first-of-type {
   border-radius: 2px 0 0 2px;
@@ -264,43 +306,18 @@
   border-radius: 0 2px 2px 0;
   border-left: 0;
 }
-.rtm-switch-options span:hover {
-  background: #fafafa;
-}
 .rtm-switch-options input[type=checkbox] {
   display: none;
 }
 
 .switch_enable.selected {
-  background-color: #0074a2 !important;
-  background-image: -khtml-gradient(linear, left top, left bottom, from(#008ec6), to(#0074a2)) !important;
-  background-image: -moz-linear-gradient(top, #008ec6, #0074a2) !important;
-  background-image: -ms-linear-gradient(top, #008ec6, #0074a2) !important;
-  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #008ec6), color-stop(100%, #0074a2)) !important;
-  background-image: -webkit-linear-gradient(top, #008ec6, #0074a2) !important;
-  background-image: -o-linear-gradient(top, #008ec6, #0074a2) !important;
-  background-image: linear-gradient(top, #008ec6, #0074a2) !important;
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#008ec6', endColorstr='#0074a2', GradientType=0) !important;
-  border-color: #003d55 !important;
-  border-color: #004f6f !important;
-  -webkit-box-shadow: inset 0 1px 0 #00abef, 0 1px 0 rgba(0, 0, 0, 0.15) !important;
-  box-shadow: inset 0 1px 0 #00abef, 0 1px 0 rgba(0, 0, 0, 0.15) !important;
+  background-color: #2a95c5;
+  border-color: #2a95c5;
   color: #FFFFFF;
 }
 
 .switch_disable.selected {
-  background-color: #646464 !important;
-  background-image: -khtml-gradient(linear, left top, left bottom, from(#767676), to(#646464)) !important;
-  background-image: -moz-linear-gradient(top, #767676, #646464) !important;
-  background-image: -ms-linear-gradient(top, #767676, #646464) !important;
-  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #767676), color-stop(100%, #646464)) !important;
-  background-image: -webkit-linear-gradient(top, #767676, #646464) !important;
-  background-image: -o-linear-gradient(top, #767676, #646464) !important;
-  background-image: linear-gradient(top, #767676, #646464) !important;
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#767676', endColorstr='#646464', GradientType=0) !important;
-  border-color: #3e3e3e !important;
-  border-color: #4b4b4b !important;
-  -webkit-box-shadow: inset 0 1px 0 #8a8a8a, 0 1px 0 rgba(0, 0, 0, 0.15) !important;
-  box-shadow: inset 0 1px 0 #8a8a8a, 0 1px 0 rgba(0, 0, 0, 0.15) !important;
+  background-color: #999;
+  border-color: #999;
   color: #FFFFFF;
 }

@@ -1141,71 +1141,78 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 					</h2>
 				</div>
 
-				<div class="bp-media-settings-boxes-container rtm-setting-container">
+				<div class="clearfix rtp-row-container">
+					<div class="bp-media-settings-boxes-container rtm-setting-container">
 
-					<?php
-					$settings_url = ( is_multisite() ) ? network_admin_url( 'edit.php?action=' . $option_group ) : 'options.php';
-					if ( $option_group ) { //$option_group if ($page == "bp-media-settings") action="<?php echo $settings_url;
-						?>
-						<form id="bp_media_settings_form" name="bp_media_settings_form" method="post"
-							  enctype="multipart/form-data">
-							<div class="bp-media-metabox-holder">
-								<div class="rtm-button-container top">
-									<input type="hidden" name="rtmedia-options-save" value="true">
-									<input type="submit" id="rtmedia-settings-submit" class="rtmedia-settings-submit button button-primary button-big" value="<?php _e( 'Save Settings', 'rtmedia' ); ?>">
-								</div>
-								<?php
-								settings_fields( $option_group );
-								if ( 'rtmedia-settings' == $page ) {
-									echo '<div id="rtm-settings-tabs">';
-									$sub_tabs = $this->settings_sub_tabs();
-									RTMediaFormHandler::rtForm_settings_tabs_content( $page, $sub_tabs );
-									echo '</div>';
-								} else {
-									do_settings_sections( $page );
-								}
-								?>
-
-								<div class="rtm-button-container bottom">
-									<?php $message = sprintf( __( 'I use @buddypressmedia http://rt.cx/rtmedia on %s', 'rtmedia' ), home_url() ); ?>
-									<div class="rtm-social-links alignright">
-										<a href="http://twitter.com/home/?status=<?php echo $message; ?>" class="twitter" target= "_blank" title="<?php _e( 'Post to Twitter Now', 'rtmedia' ); ?>"><span class="dashicons dashicons-twitter"></span></a>
-										<a href="https://www.facebook.com/sharer/sharer.php?u=http://rtcamp.com/rtmedia/" class="facebook" target="_blank" title="<?php _e( 'Share on Facebook Now', 'rtmedia' ); ?>"><span class="dashicons dashicons-facebook"></span></a>
-										<a href="http://wordpress.org/support/view/plugin-reviews/buddypress-media?rate=5#postform" class="wordpress" target= "_blank" title="<?php _e( 'Rate rtMedia on Wordpress.org', 'rtmedia' ); ?>"><span class="dashicons dashicons-wordpress"></span></a>
-										<a href="<?php sprintf( '%s', 'https://rtcamp.com/feed/' ); ?>" class="rss" target="_blank" title="<?php _e( 'Subscribe to our Feeds', 'rtmedia' ); ?>"><span class="dashicons dashicons-rss"></span></a>
-									</div>
-
-									<input type="hidden" name="rtmedia-options-save" value="true">
-									<input type="submit" id="rtmedia-settings-submit" class="rtmedia-settings-submit button button-primary button-big" value="<?php _e( 'Save Settings', 'rtmedia' ); ?>">
-								</div>
-							</div>
-						</form><?php
-					} else {
-						?>
-						<div class="bp-media-metabox-holder">
-							<?php
-							if ( 'rtmedia-addons' == $page ) {
-								RTMediaAddon::render_addons( $page );
-							} else if ( 'rtmedia-support' == $page ) {
-								$rtmedia_support = new RTMediaSupport( false );
-								$rtmedia_support->render_support( $page );
-							} else if ( 'rtmedia-themes' == $page ) {
-								RTMediaThemes::render_themes( $page );
-							} else {
-								if ( 'rtmedia-license' == $page ) {
-									RTMediaLicense::render_license( $page );
-								} else {
-									do_settings_sections( $page );
-								}
-							}
-							do_action( 'rtmedia_admin_page_insert', $page );
-							?>
-						</div>
 						<?php
-						do_action( 'rtmedia_admin_page_append', $page );
-					}
-					?>
+						$settings_url = ( is_multisite() ) ? network_admin_url( 'edit.php?action=' . $option_group ) : 'options.php';
+						if ( $option_group ) { //$option_group if ($page == "bp-media-settings") action="<?php echo $settings_url;
+							?>
+							<form id="bp_media_settings_form" name="bp_media_settings_form" method="post"
+								  enctype="multipart/form-data">
+								<div class="bp-media-metabox-holder">
+									<div class="rtm-button-container top">
+										<input type="hidden" name="rtmedia-options-save" value="true">
+										<input type="submit" id="rtmedia-settings-submit" class="rtmedia-settings-submit button button-primary button-big" value="<?php _e( 'Save Settings', 'rtmedia' ); ?>">
+									</div>
+									<?php
+									settings_fields( $option_group );
+									if ( 'rtmedia-settings' == $page ) {
+										echo '<div id="rtm-settings-tabs">';
+										$sub_tabs = $this->settings_sub_tabs();
+										RTMediaFormHandler::rtForm_settings_tabs_content( $page, $sub_tabs );
+										echo '</div>';
+									} else {
+										do_settings_sections( $page );
+									}
+									?>
+
+									<div class="rtm-button-container bottom">
+										<div class="rtm-social-links alignleft">
+											<a href="http://twitter.com/rtcamp" class="twitter" target= "_blank"><span class="dashicons dashicons-twitter"></span></a>
+											<a href="https://www.facebook.com/rtCamp.solutions" class="facebook" target="_blank"><span class="dashicons dashicons-facebook"></span></a>
+											<a href="http://profiles.wordpress.org/rtcamp" class="wordpress" target= "_blank"><span class="dashicons dashicons-wordpress"></span></a>
+											<a href="https://rtcamp.com/feed" class="rss" target="_blank"><span class="dashicons dashicons-rss"></span></a>
+										</div>
+
+										<input type="hidden" name="rtmedia-options-save" value="true">
+										<input type="submit" id="rtmedia-settings-submit" class="rtmedia-settings-submit button button-primary button-big" value="<?php _e( 'Save Settings', 'rtmedia' ); ?>">
+									</div>
+								</div>
+							</form><?php
+						} else {
+							?>
+							<div class="bp-media-metabox-holder">
+								<?php
+								if ( 'rtmedia-addons' == $page ) {
+									RTMediaAddon::render_addons( $page );
+								} else if ( 'rtmedia-support' == $page ) {
+									$rtmedia_support = new RTMediaSupport( false );
+									$rtmedia_support->render_support( $page );
+								} else if ( 'rtmedia-themes' == $page ) {
+									RTMediaThemes::render_themes( $page );
+								} else {
+									if ( 'rtmedia-license' == $page ) {
+										RTMediaLicense::render_license( $page );
+									} else {
+										do_settings_sections( $page );
+									}
+								}
+								do_action( 'rtmedia_admin_page_insert', $page );
+								?>
+							</div>
+							<?php
+							do_action( 'rtmedia_admin_page_append', $page );
+						}
+						?>
+					</div>
+
+					<div class="metabox-holder bp-media-metabox-holder rtm-sidebar">
+						<?php $this->admin_sidebar(); ?>
+					</div>
+
 				</div>
+
 			</div><!-- .bp-media-admin --><?php
 		}
 
@@ -1511,54 +1518,25 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 		public function admin_sidebar() {
 			do_action( 'rtmedia_before_default_admin_widgets' );
 			$current_user = wp_get_current_user();
-			$setting_page_url = admin_url( 'admin.php?page=rtmedia-settings#rtmedia-general' );
 			$message = sprintf( __( 'I use @buddypressmedia http://rt.cx/rtmedia on %s', 'rtmedia' ), home_url() );
-			$addons = '<div id="social" class="">
-									<div class="row">
-										<div class="columns large-11">
-											<p><a href="http://twitter.com/home/?status=' . $message . '" class="button" target= "_blank" title="' . __( 'Post to Twitter Now', 'rtmedia' ) . '">' . __( 'Post to Twitter', 'rtmedia' ) . '</a></p>
-											<p><a href="https://www.facebook.com/sharer/sharer.php?u=http://rtcamp.com/rtmedia/" class="button" target="_blank" title="' . __( 'Share on Facebook Now', 'rtmedia' ) . '">' . __( 'Share on Facebook', 'rtmedia' ) . '</a></p>
-											<p><a href="http://wordpress.org/support/view/plugin-reviews/buddypress-media?rate=5#postform" class="button" target= "_blank" title="' . __( 'Rate rtMedia on Wordpress.org', 'rtmedia' ) . '">' . __( 'Rate on Wordpress.org', 'rtmedia' ) . '</a></p>
-											<p><a href="' . sprintf( '%s', 'https://rtcamp.com/feed/' ) . '"  title="' . __( 'Subscribe to our feeds', 'rtmedia' ) . '" class="button" target="_blank" title="' . __( 'Subscribe to our Feeds', 'rtmedia' ) . '">' . __( 'Subscribe to our Feeds', 'rtmedia' ) . '</a></p>
-											<p><a href="' . $setting_page_url . '"  title="' . __( 'Add link to footer', 'rtmedia' ) . '" class="button" title="' . __( 'Add link to footer', 'rtmedia' ) . '">' . __( 'Add link to footer', 'rtmedia' ) . '</a></p>
-										</div>
-									</div>
+			$addons = '<div id="social" class="rtm-social-share">
+											<p><a href="http://twitter.com/home/?status=' . $message . '" class="button twitter" target= "_blank" title="' . __( 'Post to Twitter Now', 'rtmedia' ) . '">' . __( 'Post to Twitter', 'rtmedia' ) . '<span class="dashicons dashicons-twitter"></span></a></p>
+											<p><a href="https://www.facebook.com/sharer/sharer.php?u=http://rtcamp.com/rtmedia/" class="button facebook" target="_blank" title="' . __( 'Share on Facebook Now', 'rtmedia' ) . '">' . __( 'Share on Facebook', 'rtmedia' ) . '<span class="dashicons dashicons-facebook"></span></a></p>
+											<p><a href="http://wordpress.org/support/view/plugin-reviews/buddypress-media?rate=5#postform" class="button wordpress" target= "_blank" title="' . __( 'Rate rtMedia on Wordpress.org', 'rtmedia' ) . '">' . __( 'Rate on Wordpress.org', 'rtmedia' ) . '<span class="dashicons dashicons-wordpress"></span></a></p>
+											<p><a href="' . sprintf( '%s', 'https://rtcamp.com/feed/' ) . '"  title="' . __( 'Subscribe to our feeds', 'rtmedia' ) . '" class="button rss" target="_blank" title="' . __( 'Subscribe to our Feeds', 'rtmedia' ) . '">' . __( 'Subscribe to our Feeds', 'rtmedia' ) . '<span class="dashicons dashicons-rss"></span></a></p>
 								</div>';
-			//<li><a href="' . sprintf('%s', 'http://www.facebook.com/rtCamp.solutions/') . '"  title="' . __('Become a fan on Facebook', 'rtmedia') . '" class="bp-media-facebook bp-media-social">' . __('Facebook', 'rtmedia') . '</a></li>
-			//<li><a href="' . sprintf('%s', 'https://twitter.com/rtcamp/') . '"  title="' . __('Follow us on Twitter', 'rtmedia') . '" class="bp-media-twitter bp-media-social">' . __('Twitter', 'rtmedia') . '</a></li>  ;
-			new RTMediaAdminWidget( 'spread-the-word', __( 'Spread the Word', 'rtmedia' ), $addons );
 
-			//                        $donate = '<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
-			//                           <!-- Identify your business so that you can collect the payments. -->
-			//                           <input type="hidden" name="business"
-			//                           value="paypal@rtcamp.com">
-			//                           <!-- Specify a Donate button. -->
-			//                           <input type="hidden" name="cmd" value="_donations">
-			//                           <!-- Specify details about the contribution -->
-			//                           <input type="hidden" name="item_name" value="BuddyPress Media">
-			//                           <label><b>' . __('USD', 'rtmedia') . '</b></label>
-			//                         <input type="text" name="amount" size="3">
-			//                           <input type="hidden" name="currency_code" value="USD">
-			//                           <!-- Display the payment button. -->
-			//                           <input type="hidden" name="cpp_header_image" value="' . RTMEDIA_URL . 'app/assets/admin/img/rtcamp-logo.png">
-			//                           <input type="image" id="rt-donate-button" name="submit" border="0"
-			//                           src="' . RTMEDIA_URL . 'app/assets/img/paypal-donate-button.png"
-			//                           alt="PayPal - The safer, easier way to pay online">
-			//                       </form><br />
-			//                       <center><b>' . __('OR', 'rtmedia') . '</b></center><br />
-			//                       <center>' . __('Use <a href="https://rtcamp.com/store/product-category/buddypress/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media">premium add-ons</a> starting from $9', 'rtmedia') . '</center>';
-			//                        ;
-			//                        new BPMediaAdminWidget('donate', __('Donate', 'rtmedia'), $donate);
+			new RTMediaAdminWidget( 'spread-the-word', __( 'Spread the Word', 'rtmedia' ), $addons );
 
 			$branding = '<form action="http://rtcamp.us1.list-manage1.com/subscribe/post?u=85b65c9c71e2ba3fab8cb1950&amp;id=9e8ded4470" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
                             <div class="mc-field-group">
                                     <input type="email" value="' . $current_user->user_email . '" name="EMAIL" placeholder="Email" class="required email" id="mce-EMAIL">
                                     <input style="display:none;" type="checkbox" checked="checked" value="1" name="group[1721][1]" id="mce-group[1721]-1721-0">
+									<input type="submit" value="' . __( 'Subscribe', 'rtmedia' ) . '" name="subscribe" id="mc-embedded-subscribe" class="button">
                                     <div id="mce-responses" class="clear">
                                         <div class="response" id="mce-error-response" style="display:none"></div>
                                         <div class="response" id="mce-success-response" style="display:none"></div>
                                     </div>
-                                    <input type="submit" value="' . __( 'Subscribe', 'rtmedia' ) . '" name="subscribe" id="mc-embedded-subscribe" class="button">
                             </div>
                         </form>';
 			new RTMediaAdminWidget( 'branding', __( 'Subscribe', 'rtmedia' ), $branding );

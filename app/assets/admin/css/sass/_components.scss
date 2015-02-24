@@ -11,14 +11,14 @@
 
 // Go Pro button
 .nav-tab.rtm-premium {
-    background: none repeat scroll 0 0 #34bf49;
+    background: #e74c3c;
     color: white;
     letter-spacing: 0.5px;
 }
 
 .rtm-setting-title {
 	border-bottom: 1px solid $border;
-    font-size: 24px;
+    font-size: 22px;
     font-weight: 400;
     line-height: 1;
     margin-bottom: 0;
@@ -28,7 +28,6 @@
 
 .rtp-option-content {
 	overflow: hidden;
-	border-bottom: 1px solid $border;
 
 	&:last-child {
 		border-bottom: 0;
@@ -40,7 +39,7 @@
 			font-weight: 400;
 			line-height: 1.6;
 			padding-right: 30px;
-			width: 32%;
+			width: 50%;
 
 			span {
 				color: #666;
@@ -54,9 +53,54 @@
 }
 
 .rtm-option-title {
-    background: $light-extra;
+	border-bottom: 1px solid $light;
     font-size: 14px;
+    letter-spacing: 0.02rem;
     margin-bottom: 0;
     margin-top: 30px;
-    padding: 10px;
+    padding: 0 0 10px;
+    text-transform: uppercase;
+}
+
+.rtm-social-share {
+	.button {
+		display: block;
+		opacity: 0.8;
+		position: relative;
+		text-decoration: none;
+	}
+
+	.dashicons {
+		font-size: 18px;
+		position: absolute;
+		right: 10px;
+		top: 4px;
+	}
+
+	.twitter {
+		.dashicons {
+			color: #45b0e3;
+		}
+	}
+
+	.facebook {
+		.dashicons {
+			color: #3b5998;
+		}
+	}
+
+
+	.wordpress {
+		.dashicons {
+			color: #21759b;
+		}
+	}
+
+	.rss {
+		.dashicons {
+			color: #FF6600;
+		}
+	}
+
+
 }
