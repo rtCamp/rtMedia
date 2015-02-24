@@ -26,7 +26,7 @@ class RTMediaAJAX {
 
 		if( wp_verify_nonce( $nonce, 'rtmedia_create_album_nonce' ) && isset( $_POST[ 'name' ] ) && $_POST[ 'name' ] && is_rtmedia_album_enable() ) {
 			if( isset( $_POST[ 'context' ] ) && $_POST[ 'context' ] == "group" ) {
-				$group_id = !empty( $_POST[ 'group_id' ] ) ? $_POST[ 'group_id' ] : '';
+				$group_id = !empty( $_POST[ 'context_id' ] ) ? $_POST[ 'context_id' ] : '';
 
 				if( can_user_create_album_in_group( $group_id ) == false ) {
 					echo false;
