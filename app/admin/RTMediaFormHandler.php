@@ -381,8 +381,8 @@ class RTMediaFormHandler {
 		foreach ( $general_group as $key => $value ) {
 			?>
 			<div class="">
-				<h3 class=""><span><?php echo $value; ?></span></h3>
 				<?php
+				self::render_option_group( $value );
 				foreach ( $render_options as $tab => $option ) {
 
 					if ( ! isset( $option[ 'group' ] ) ) {
@@ -493,8 +493,8 @@ class RTMediaFormHandler {
 		foreach ( $general_group as $key => $value ) {
 			?>
 			<div class="postbox metabox-holder">
-				<h3 class="hndle"><span><?php echo $value; ?></span></h3>
 				<?php
+				self::render_option_group( $value );
 				foreach ( $render_options as $tab => $option ) {
 
 					if ( ! isset( $option[ 'group' ] ) ) {
@@ -767,19 +767,9 @@ class RTMediaFormHandler {
 				);
 				?>
 				<div class="postbox metabox-holder">
-					<h3 class="hndle"><span>Encoding Settings</span></h3>
+					<?php self::render_option_group( __( 'Encoding Settings', 'rtmedia' ) ); ?>
 				</div>
-				<div class="row section">
-					<div class="columns large-9">
-						<?php echo $render_video_thumb[ 'title' ]; ?>
-					</div>
-					<div class="columns large-3">
-						<?php call_user_func( $render_video_thumb[ 'callback' ], $render_video_thumb[ 'args' ] ); ?>
-						<span data-tooltip class="has-tip" title="<?php echo ( isset( $render_video_thumb[ 'args' ][ 'desc' ] ) ) ? $render_video_thumb[ 'args' ][ 'desc' ] : 'NA'; ?>">
-							<i class="rtmicon-info-circle"></i>
-						</span>
-					</div>
-				</div>
+				<?php self::render_option_content( $render_video_thumb ); ?>
 				<?php
 			}
 
@@ -828,7 +818,7 @@ class RTMediaFormHandler {
 			$render_data = self::custom_css_render_options( $options );
 			?>
 			<div class="postbox metabox-holder">
-				<h3 class="hndle"><span>Custom CSS settings</span></h3>
+				<?php self::render_option_group( __( 'Custom CSS settings', 'rtmedia' ) ); ?>
 			</div>
 			<?php
 			echo '<div class="large-12">';
@@ -1053,8 +1043,8 @@ class RTMediaFormHandler {
 			$options = self::extract_settings( 'buddypress', $rtmedia->options );
 			?>
 			<div class="postbox metabox-holder">
-				<h3 class="hndle"><span>Integration With BuddyPress Features</span></h3>
 				<?php
+				self::render_option_group( __( 'Integration With BuddyPress Features', 'rtmedia' ) );
 				$render_data = self::buddypress_render_options( $options );
 
 				echo '<div class="large-12">';
@@ -1065,8 +1055,8 @@ class RTMediaFormHandler {
 				echo '</div>';
 				?>
 				<div class="postbox metabox-holder">
-					<h3 class="hndle"><span>Album Settings</span></h3>
 					<?php
+					self::render_option_group( __( 'Album Settings', 'rtmedia' ) );
 					$options = $rtmedia->options;
 					$render_options = array(
 						'general_enableAlbums' => array(
@@ -1183,6 +1173,12 @@ class RTMediaFormHandler {
 				echo '</div>';
 				echo '</div>';
 			}
+		}
+
+		public static function render_option_group( $group ){
+		?>
+			<h3 class=""><span><?php echo $group; ?></span></h3>
+		<?php
 		}
 
 		public static function render_option_content( $option ){
