@@ -961,14 +961,12 @@ class RTMediaFormHandler {
 		public static function buddypress_content() {
 			global $rtmedia;
 
-			$options = self::extract_settings( 'buddypress', $rtmedia->options );
-
 			$general_group = array();
 			$general_group[ 10 ] = 'Integration With BuddyPress Features';
 			$general_group[ 50 ] = 'Album Settings';
 			$general_group = apply_filters( 'rtmedia_buddypress_setting_group', $general_group );
 
-			$render_options = self::buddypress_render_options( $options );
+			$render_options = self::buddypress_render_options( $rtmedia->options );
 			$render_options = apply_filters( 'rtmedia_album_control_setting', $render_options, $rtmedia->options );
 
 			$render_options = apply_filters( 'rtmedia_buddypress_setting_options', $render_options );
