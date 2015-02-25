@@ -283,8 +283,8 @@ class RTMediaFormHandler {
 	 */
 	static function display_render_options( $options ) {
 		$radios = array();
-		$radios[ 'load_more' ] = '<strong>Load More</strong>';
-		$radios[ 'pagination' ] = '<strong>Pagination</strong>';
+		$radios[ 'load_more' ] = 'Load More';
+		$radios[ 'pagination' ] = 'Pagination';
 
 		if ( is_plugin_active( 'regenerate-thumbnails/regenerate-thumbnails.php' ) ) {
 			$regenerate_link = admin_url( '/tools.php?page=regenerate-thumbnails' );
@@ -1140,7 +1140,7 @@ class RTMediaFormHandler {
 			<table class="form-table">
 				<tr>
 					<th>
-		<?php echo $option[ 'title' ]; ?>
+						<?php echo $option[ 'title' ]; ?>
 					</th>
 					<td>
 						<fieldset data-type="text">
@@ -1159,7 +1159,7 @@ class RTMediaFormHandler {
 			<div class="row">
 				<div class="columns large-12">
 					<p class="rtmedia-info rtmedia-admin-notice">
-			<?php echo $option[ 'after_content' ]; ?>
+						<?php echo $option[ 'after_content' ]; ?>
 					</p>
 				</div>
 			</div>

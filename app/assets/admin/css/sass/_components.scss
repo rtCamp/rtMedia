@@ -17,21 +17,23 @@
 }
 
 .rtm-setting-title {
-	border-bottom: 1px solid $border;
+	border-bottom: 1px solid $light;
     font-size: 22px;
     font-weight: 400;
     line-height: 1;
     margin-bottom: 0;
     margin-top: 0;
-    padding-bottom: 25px;
+    padding-bottom: 14px;
 }
 
 .rtm-option-wrapper {
 	margin-bottom: 60px;
+	margin-top: 40px;
 }
 
 .rtp-option-content {
 	overflow: hidden;
+	margin-bottom: 10px;
 
 	&:last-child {
 		border-bottom: 0;
@@ -61,6 +63,7 @@
 		}
 
 		td {
+			font-size: 13px;
 			padding: 0;
 
 			fieldset label {
@@ -80,6 +83,21 @@
 		display: inline-block;
 		margin-left: 5px;
 	}
+
+	input[type="number"] {
+		width: 82px;
+	}
+
+	.rt-form-radio {
+		height: 28px;
+		line-height: 24px;
+
+		label {
+			&:first-child {
+				margin-right: 12px !important;
+			}
+		}
+	}
 }
 
 .rtm-option-title {
@@ -87,8 +105,8 @@
     font-size: 14px;
     letter-spacing: 0.02rem;
     margin-bottom: 12px;
-    margin-top: 30px;
-    padding: 0 0 10px;
+    margin-top: 0;
+    padding: 0 0 8px;
     text-transform: uppercase;
 }
 
