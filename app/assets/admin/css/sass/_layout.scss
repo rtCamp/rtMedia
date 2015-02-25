@@ -23,15 +23,16 @@ $container-min-height: 300px;
 	overflow: hidden;
 
 	float: left;
-	width: 76%;
+	width: 78.2%;
 }
 
 .rtm-sidebar {
 	float: right;
-	width: 22%;
+	width: 20%;
 
 	.postbox {
 		background: rgba($white, 0.8);
+		min-width: auto;
 	}
 }
 

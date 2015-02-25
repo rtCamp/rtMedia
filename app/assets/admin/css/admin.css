@@ -88,15 +88,16 @@
   margin-top: 10px;
   overflow: hidden;
   float: left;
-  width: 76%;
+  width: 78.2%;
 }
 
 .rtm-sidebar {
   float: right;
-  width: 22%;
+  width: 20%;
 }
 .rtm-sidebar .postbox {
   background: rgba(255, 255, 255, 0.8);
+  min-width: auto;
 }
 
 .rtm-tabs {

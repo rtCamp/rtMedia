@@ -389,79 +389,78 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 		public function rtmedia_dashboard_widget_function() {
 			?>
 
-			<div class="inside">
+			<div class="table table_content">
+				<h4 class="sub"><?php _e( 'Media Stats', 'rtmedia' ); ?></h4>
 
-				<div class="table table_content">
-					<p class="sub"><?php _e( 'Media Stats', 'rtmedia' ); ?></p>
-					<table>
-						<tbody>
-							<?php
-							$rtMedia_model = new RTMediaModel();
-							$sql = "select media_type, count(id) as count from {$rtMedia_model->table_name} where blog_id='" . get_current_blog_id() . "' group by media_type";
-							global $wpdb;
-							$results = $wpdb->get_results( $sql );
-							if ( $results ) {
-								foreach ( $results as $media ) {
-									if ( defined( strtoupper( 'RTMEDIA_' . $media->media_type . '_PLURAL_LABEL' ) ) ) {
-										?>
-										<tr>
-											<td class="b"> <?php echo $media->count; ?> </td>
-											<td class="t"><?php echo constant( strtoupper( 'RTMEDIA_' . $media->media_type . '_PLURAL_LABEL' ) ); ?></td>
-										</tr>
-										<?php
-									}
+				<table>
+					<tbody>
+						<?php
+						$rtMedia_model = new RTMediaModel();
+						$sql = "select media_type, count(id) as count from {$rtMedia_model->table_name} where blog_id='" . get_current_blog_id() . "' group by media_type";
+						global $wpdb;
+						$results = $wpdb->get_results( $sql );
+						if ( $results ) {
+							foreach ( $results as $media ) {
+								if ( defined( strtoupper( 'RTMEDIA_' . $media->media_type . '_PLURAL_LABEL' ) ) ) {
+									?>
+									<tr>
+										<td class="b"> <?php echo $media->count; ?> </td>
+										<td class="t"><?php echo constant( strtoupper( 'RTMEDIA_' . $media->media_type . '_PLURAL_LABEL' ) ); ?></td>
+									</tr>
+									<?php
 								}
 							}
-							?>
-						</tbody>
-					</table>
-				</div>
-				<div class="table table_discussion">
-					<p class="sub"><?php _e( 'Usage Stats', 'rtmedia' ); ?></p>
-					<table>
-						<tbody> <?php
-							$sql = "select count(*) from {$wpdb->users}";
-							$results = $wpdb->get_var( $sql );
-							?>
-							<tr>
-								<td class="b"> <?php echo $results; ?> </td>
-								<td class="t"><?php _e( 'Total ', 'rtmedia' ) ?></td>
-							</tr>
-							<?php
-							$sql = "select count(distinct media_author) from {$rtMedia_model->table_name}";
-							$results = $wpdb->get_var( $sql );
-							?>
-							<tr>
-								<td class="b"> <?php echo $results; ?> </td>
-								<td class="t"><?php _e( 'With Media', 'rtmedia' ) ?></td>
-							</tr>
-							<?php
-							$sql = "select count(*) from $wpdb->comments where comment_post_ID in (select media_id from {$rtMedia_model->table_name})";
-							$results = $wpdb->get_var( $sql );
-							?>
-							<tr>
-								<td class="b"> <?php echo $results; ?> </td>
-								<td class="t"><?php _e( 'Comments ', 'rtmedia' ) ?></td>
-							</tr>
-							<?php
-							$sql = "select sum(likes) from {$rtMedia_model->table_name}";
-							$results = $wpdb->get_var( $sql );
-							?>
-							<tr>
-								<td class="b"> <?php echo $results; ?> </td>
-								<td class="t"><?php _e( 'Likes', 'rtmedia' ) ?></td>
-							</tr>
+						}
+						?>
+					</tbody>
+				</table>
+			</div>
 
-						</tbody>
-					</table>
-				</div>
-				<div class="versions">
-					<p>
-						<b>rtMedia Links:</b> <a href="http://rtcamp.com"><?php _e( 'Homepage', 'rtmedia' ); ?></a> | <a
-							href="admin.php?page=rtmedia-support#rtmedia-general"><?php _e( 'Free Support', 'rtmedia' ); ?></a>
-						| <a href="http://rtcamp.com/rtmedia/addons/"><?php _e( 'Premium Addons', 'rtmedia' ); ?></a>
-					</p>
-				</div>
+			<div class="table table_discussion">
+				<h4 class="sub"><?php _e( 'Usage Stats', 'rtmedia' ); ?></h4>
+				<table>
+					<tbody> <?php
+						$sql = "select count(*) from {$wpdb->users}";
+						$results = $wpdb->get_var( $sql );
+						?>
+						<tr>
+							<td class="b"> <?php echo $results; ?> </td>
+							<td class="t"><?php _e( 'Total ', 'rtmedia' ) ?></td>
+						</tr>
+						<?php
+						$sql = "select count(distinct media_author) from {$rtMedia_model->table_name}";
+						$results = $wpdb->get_var( $sql );
+						?>
+						<tr>
+							<td class="b"> <?php echo $results; ?> </td>
+							<td class="t"><?php _e( 'With Media', 'rtmedia' ) ?></td>
+						</tr>
+						<?php
+						$sql = "select count(*) from $wpdb->comments where comment_post_ID in (select media_id from {$rtMedia_model->table_name})";
+						$results = $wpdb->get_var( $sql );
+						?>
+						<tr>
+							<td class="b"> <?php echo $results; ?> </td>
+							<td class="t"><?php _e( 'Comments ', 'rtmedia' ) ?></td>
+						</tr>
+						<?php
+						$sql = "select sum(likes) from {$rtMedia_model->table_name}";
+						$results = $wpdb->get_var( $sql );
+						?>
+						<tr>
+							<td class="b"> <?php echo $results; ?> </td>
+							<td class="t"><?php _e( 'Likes', 'rtmedia' ) ?></td>
+						</tr>
+
+					</tbody>
+				</table>
+			</div>
+			<div class="versions">
+				<p>
+					<b>rtMedia Links:</b> <a href="http://rtcamp.com"><?php _e( 'Homepage', 'rtmedia' ); ?></a> | <a
+						href="admin.php?page=rtmedia-support#rtmedia-general"><?php _e( 'Free Support', 'rtmedia' ); ?></a>
+					| <a href="http://rtcamp.com/rtmedia/addons/"><?php _e( 'Premium Addons', 'rtmedia' ); ?></a>
+				</p>
 			</div>
 			<?php
 		}
@@ -674,21 +673,14 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 
 				$admin_ajax = admin_url( 'admin-ajax.php' );
 
-				wp_enqueue_script( 'bootstrap-switch', RTMEDIA_URL . 'app/assets/js/vendor/bootstrap-switch.js', array( 'jquery' ), RTMEDIA_VERSION );
-				wp_enqueue_script( 'slider-tabs', RTMEDIA_URL . 'app/assets/js/vendor/jquery.sliderTabs.min.js', array( 'jquery', 'jquery-effects-core' ), RTMEDIA_VERSION );
-				wp_enqueue_script( 'observe-hashchange', RTMEDIA_URL . 'app/assets/js/vendor/jquery.observehashchange.pack.js', array( 'jquery' ), RTMEDIA_VERSION );
+				/* Only one JS file should enqueue */
 				wp_enqueue_script( 'rtmedia-admin', RTMEDIA_URL . 'app/assets/admin/js/admin-min.js', array( 'jquery-ui-dialog' ), RTMEDIA_VERSION );
+
 				wp_localize_script( 'rtmedia-admin', 'rtmedia_on_label', __( 'ON', 'rtmedia' ) );
 				wp_localize_script( 'rtmedia-admin', 'rtmedia_off_label', __( 'OFF', 'rtmedia' ) );
 				wp_localize_script( 'rtmedia-admin', 'rtmedia_admin_ajax', $admin_ajax );
 				wp_localize_script( 'rtmedia-admin', 'rtmedia_admin_url', admin_url() );
 				wp_localize_script( 'rtmedia-admin', 'rtmedia_admin_url', admin_url() );
-
-				if ( isset( $_REQUEST[ 'page' ] ) && ( in_array( $_REQUEST[ 'page' ], array( 'rtmedia-settings', 'rtmedia-addons', 'rtmedia-themes', 'rtmedia-support', 'rtmedia-hire-us', 'rtmedia-license' ) ) ) ) {
-					wp_enqueue_script( 'rtmedia-foundation-modernizr', RTMEDIA_URL . 'lib/foundation/custom.modernizr.js', array( 'jquery' ), RTMEDIA_VERSION );
-					wp_enqueue_script( 'rtmedia-foundation', RTMEDIA_BOWER_COMPONENTS_URL . 'js/foundation.js', array( 'jquery' ), RTMEDIA_VERSION );
-					//wp_enqueue_script ( 'rtmedia-foundation-section', RTMEDIA_URL . 'lib/foundation/foundation.section.js', array('jquery'), RTMEDIA_VERSION );
-				}
 
 				$rtmedia_admin_strings = array(
 					'no_refresh' => __( 'Please do not refresh this page.', 'rtmedia' ), 'something_went_wrong' => __( 'Something went wrong. Please <a href onclick="location.reload();">refresh</a> page.', 'rtmedia' ), 'are_you_sure' => __( 'This will subscribe you to the free plan.', 'rtmedia' ), 'disable_encoding' => __( 'Are you sure you want to disable the encoding service? Make sure you note your api key before disabling it, incase you want to activate it in future.', 'rtmedia' )
@@ -697,19 +689,13 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 				wp_localize_script( 'rtmedia-admin', 'rtmedia_admin_strings', $rtmedia_admin_strings );
 				wp_localize_script( 'rtmedia-admin', 'settings_url', add_query_arg( array( 'page' => 'rtmedia-settings' ), ( is_multisite() ? network_admin_url( 'admin.php' ) : admin_url( 'admin.php' ) ) ) . '#privacy_enabled' );
 				wp_localize_script( 'rtmedia-admin', 'settings_rt_album_import_url', add_query_arg( array( 'page' => 'rtmedia-settings' ), ( is_multisite() ? network_admin_url( 'admin.php' ) : admin_url( 'admin.php' ) ) ) );
-				wp_enqueue_style( 'bootstrap-switch', RTMEDIA_URL . 'app/assets/css/vendor/bootstrap-switch.css', '', RTMEDIA_VERSION );
-				wp_enqueue_style( 'slider-tabs', RTMEDIA_URL . 'app/assets/css/vendor/jquery.sliderTabs.min.css', '', RTMEDIA_VERSION );
-				wp_enqueue_style( 'grid-foundation', RTMEDIA_URL . 'app/assets/css/vendor/grid-foundation.css', '', RTMEDIA_VERSION );
-				wp_enqueue_style( 'rtmedia-main', RTMEDIA_URL . 'app/assets/css/main.css', '', RTMEDIA_VERSION );
-				wp_enqueue_style( 'rtmedia-admin', RTMEDIA_URL . 'app/assets/css/admin.css', '', RTMEDIA_VERSION );
 
-				if ( isset( $_REQUEST[ 'page' ] ) && ( in_array( $_REQUEST[ 'page' ], array( 'rtmedia-settings', 'rtmedia-addons', 'rtmedia-themes', 'rtmedia-support', 'rtmedia-hire-us', 'rtmedia-license' ) ) ) ) {
-					wp_enqueue_style( 'foundation-admin-css', RTMEDIA_URL . 'app/assets/admin/css/admin.css', '', RTMEDIA_VERSION );
-				}
-
-				wp_enqueue_style( 'wp-jquery-ui-dialog' );
+				/* Only one CSS file should enqueue */
+				wp_enqueue_style( 'rtmedia-admin', RTMEDIA_URL . 'app/assets/admin/css/admin.css', '', RTMEDIA_VERSION );
 			} else {
-				wp_enqueue_style( 'rtmedia-widget', RTMEDIA_URL . 'app/assets/css/widget.css', '', RTMEDIA_VERSION );
+
+				/* This CSS is using for "Right Now in rtMedia" Widget section on Dashboard */
+				wp_enqueue_style( 'rtmedia-widget', RTMEDIA_URL . 'app/assets/admin/css/widget.css', '', RTMEDIA_VERSION );
 			}
 		}
 
@@ -741,11 +727,6 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 			if ( $obj_encoding->api_key ) {
 				add_submenu_page( 'rtmedia-settings', __( 'Regenerate Thumbnail', 'rtmedia' ), __( 'Regen. Thumbnail ', 'rtmedia' ), 'manage_options', 'rtmedia-regenerate', array( $this, 'rt_regenerate_thumbnail' ) );
 			}
-
-			//            add_submenu_page('rtmedia-settings', __('Importer', 'rtmedia'), __('Importer', 'rtmedia'), 'manage_options', 'rtmedia-importer', array($this, 'rt_importer_page'));
-			//            if (!BPMediaPrivacy::is_installed()) {
-			//          add_submenu_page('rtmedia-settings', __('rtMedia Database Update', 'rtmedia'), __('Update Database', 'rtmedia'), 'manage_options', 'rtmedia-db-update', array($this, 'privacy_page'));
-			//            }
 		}
 
 		/**

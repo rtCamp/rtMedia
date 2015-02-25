@@ -1175,10 +1175,10 @@ class RTMediaFormHandler {
 			}
 		}
 
-		public static function render_option_group( $group ){
-		?>
-			<h3 class=""><span><?php echo $group; ?></span></h3>
-		<?php
+		public static function render_option_group( $group ) {
+			?>
+			<h3 class="rtm-option-title"><span><?php echo $group; ?></span></h3>
+			<?php
 		}
 
 		public static function render_option_content( $option ) {
