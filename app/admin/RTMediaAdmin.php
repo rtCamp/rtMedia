@@ -389,78 +389,85 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 		public function rtmedia_dashboard_widget_function() {
 			?>
 
-			<div class="table table_content">
-				<h4 class="sub"><?php _e( 'Media Stats', 'rtmedia' ); ?></h4>
+			<div class="clearfix">
 
-				<table>
-					<tbody>
-						<?php
-						$rtMedia_model = new RTMediaModel();
-						$sql = "select media_type, count(id) as count from {$rtMedia_model->table_name} where blog_id='" . get_current_blog_id() . "' group by media_type";
-						global $wpdb;
-						$results = $wpdb->get_results( $sql );
-						if ( $results ) {
-							foreach ( $results as $media ) {
-								if ( defined( strtoupper( 'RTMEDIA_' . $media->media_type . '_PLURAL_LABEL' ) ) ) {
-									?>
-									<tr>
-										<td class="b"> <?php echo $media->count; ?> </td>
-										<td class="t"><?php echo constant( strtoupper( 'RTMEDIA_' . $media->media_type . '_PLURAL_LABEL' ) ); ?></td>
-									</tr>
-									<?php
+				<div class="rtm-column alignleft">
+					<h4 class="sub"><?php _e( 'Media Stats', 'rtmedia' ); ?></h4>
+
+					<table>
+						<tbody>
+							<?php
+							$rtMedia_model = new RTMediaModel();
+							$sql = "select media_type, count(id) as count from {$rtMedia_model->table_name} where blog_id='" . get_current_blog_id() . "' group by media_type";
+							global $wpdb;
+							$results = $wpdb->get_results( $sql );
+							if ( $results ) {
+								foreach ( $results as $media ) {
+									if ( defined( strtoupper( 'RTMEDIA_' . $media->media_type . '_PLURAL_LABEL' ) ) ) {
+										?>
+										<tr>
+											<td class="b"> <?php echo $media->count; ?> </td>
+											<td class="t"><?php echo constant( strtoupper( 'RTMEDIA_' . $media->media_type . '_PLURAL_LABEL' ) ); ?></td>
+										</tr>
+										<?php
+									}
 								}
 							}
-						}
-						?>
-					</tbody>
-				</table>
+							?>
+						</tbody>
+					</table>
+				</div>
+
+				<div class="rtm-column alignright">
+					<h4 class="sub"><?php _e( 'Usage Stats', 'rtmedia' ); ?></h4>
+
+					<table>
+						<tbody> <?php
+							$sql = "select count(*) from {$wpdb->users}";
+							$results = $wpdb->get_var( $sql );
+							?>
+							<tr>
+								<td class="b"> <?php echo $results; ?> </td>
+								<td class="t"><?php _e( 'Total ', 'rtmedia' ) ?></td>
+							</tr>
+							<?php
+							$sql = "select count(distinct media_author) from {$rtMedia_model->table_name}";
+							$results = $wpdb->get_var( $sql );
+							?>
+							<tr>
+								<td class="b"> <?php echo $results; ?> </td>
+								<td class="t"><?php _e( 'With Media', 'rtmedia' ) ?></td>
+							</tr>
+							<?php
+							$sql = "select count(*) from $wpdb->comments where comment_post_ID in (select media_id from {$rtMedia_model->table_name})";
+							$results = $wpdb->get_var( $sql );
+							?>
+							<tr>
+								<td class="b"> <?php echo $results; ?> </td>
+								<td class="t"><?php _e( 'Comments ', 'rtmedia' ) ?></td>
+							</tr>
+							<?php
+							$sql = "select sum(likes) from {$rtMedia_model->table_name}";
+							$results = $wpdb->get_var( $sql );
+							?>
+							<tr>
+								<td class="b"> <?php echo $results; ?> </td>
+								<td class="t"><?php _e( 'Likes', 'rtmedia' ) ?></td>
+							</tr>
+
+						</tbody>
+					</table>
+				</div>
+
 			</div>
 
-			<div class="table table_discussion">
-				<h4 class="sub"><?php _e( 'Usage Stats', 'rtmedia' ); ?></h4>
-				<table>
-					<tbody> <?php
-						$sql = "select count(*) from {$wpdb->users}";
-						$results = $wpdb->get_var( $sql );
-						?>
-						<tr>
-							<td class="b"> <?php echo $results; ?> </td>
-							<td class="t"><?php _e( 'Total ', 'rtmedia' ) ?></td>
-						</tr>
-						<?php
-						$sql = "select count(distinct media_author) from {$rtMedia_model->table_name}";
-						$results = $wpdb->get_var( $sql );
-						?>
-						<tr>
-							<td class="b"> <?php echo $results; ?> </td>
-							<td class="t"><?php _e( 'With Media', 'rtmedia' ) ?></td>
-						</tr>
-						<?php
-						$sql = "select count(*) from $wpdb->comments where comment_post_ID in (select media_id from {$rtMedia_model->table_name})";
-						$results = $wpdb->get_var( $sql );
-						?>
-						<tr>
-							<td class="b"> <?php echo $results; ?> </td>
-							<td class="t"><?php _e( 'Comments ', 'rtmedia' ) ?></td>
-						</tr>
-						<?php
-						$sql = "select sum(likes) from {$rtMedia_model->table_name}";
-						$results = $wpdb->get_var( $sql );
-						?>
-						<tr>
-							<td class="b"> <?php echo $results; ?> </td>
-							<td class="t"><?php _e( 'Likes', 'rtmedia' ) ?></td>
-						</tr>
-
-					</tbody>
-				</table>
-			</div>
-			<div class="versions">
-				<p>
-					<b>rtMedia Links:</b> <a href="http://rtcamp.com"><?php _e( 'Homepage', 'rtmedia' ); ?></a> | <a
-						href="admin.php?page=rtmedia-support#rtmedia-general"><?php _e( 'Free Support', 'rtmedia' ); ?></a>
-					| <a href="http://rtcamp.com/rtmedia/addons/"><?php _e( 'Premium Addons', 'rtmedia' ); ?></a>
-				</p>
+			<div class="rtm-meta-container">
+				<ul class="rtm-meta-links">
+					<li><b><?php _e( 'rtMedia Links:', 'rtmedia' ); ?></b></li>
+					<li><a href="http://rtcamp.com"><?php _e( 'Homepage', 'rtmedia' ); ?></a></li>
+					<li><a href="admin.php?page=rtmedia-support#rtmedia-general"><?php _e( 'Free Support', 'rtmedia' ); ?></a></li>
+					<li><a href="http://rtcamp.com/rtmedia/addons/"><?php _e( 'Premium Addons', 'rtmedia' ); ?></a></li>
+				</ul>
 			</div>
 			<?php
 		}
@@ -1122,7 +1129,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 					</h2>
 				</div>
 
-				<div class="clearfix rtp-row-container">
+				<div class="clearfix rtm-row-container">
 					<div class="bp-media-settings-boxes-container rtm-setting-container">
 
 						<?php

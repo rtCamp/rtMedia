@@ -67,7 +67,7 @@
   clear: both;
 }
 
-.rtp-row-container {
+.rtm-row-container {
   padding-top: 10px;
 }
 
@@ -85,19 +85,19 @@
   -moz-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
   -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
+  float: left;
   margin-top: 10px;
   overflow: hidden;
-  float: left;
-  width: 78.2%;
 }
 
 .rtm-sidebar {
   float: right;
-  width: 20%;
 }
 .rtm-sidebar .postbox {
   background: rgba(255, 255, 255, 0.8);
-  min-width: auto;
+}
+.rtm-sidebar .postbox .hndle {
+  cursor: default;
 }
 
 .rtm-tabs {
@@ -154,17 +154,26 @@
   padding-bottom: 25px;
 }
 
+.rtm-option-wrapper {
+  margin-bottom: 60px;
+}
+
 .rtp-option-content {
   overflow: hidden;
 }
 .rtp-option-content:last-child {
   border-bottom: 0;
 }
+.rtp-option-content .rtm-field-wrap {
+  float: left;
+}
 .rtp-option-content .form-table th {
+  color: #444;
   font-size: 13px;
   font-weight: 400;
   line-height: 1.6;
-  padding-right: 30px;
+  padding: 0 30px 0 0;
+  vertical-align: middle;
   width: 50%;
 }
 .rtp-option-content .form-table th span {
@@ -174,12 +183,28 @@
   font-weight: 400;
   margin-top: 7px;
 }
+.rtp-option-content .form-table td {
+  padding: 0;
+}
+.rtp-option-content .form-table td fieldset label {
+  margin: 0 !important;
+}
+.rtp-option-content .dashicons-info {
+  color: #aaa;
+  font-size: 14px;
+  height: 28px;
+  line-height: 28px;
+}
+.rtp-option-content .has-tip {
+  display: inline-block;
+  margin-left: 5px;
+}
 
 .rtm-option-title {
   border-bottom: 1px solid #EEEEEE;
   font-size: 14px;
   letter-spacing: 0.02rem;
-  margin-bottom: 0;
+  margin-bottom: 12px;
   margin-top: 30px;
   padding: 0 0 10px;
   text-transform: uppercase;
@@ -318,7 +343,33 @@
 }
 
 .switch_disable.selected {
-  background-color: #999;
-  border-color: #999;
+  background-color: #888;
+  border-color: #888;
   color: #FFFFFF;
+}
+
+@media only screen and (min-width: 1025px) {
+  .rtm-setting-container {
+    width: 78.2%;
+  }
+
+  .rtm-sidebar {
+    width: 20%;
+  }
+  .rtm-sidebar .postbox {
+    min-width: 0;
+  }
+}
+@media only screen and (min-width: 641px) and (max-width: 1024px) {
+  .rtm-sidebar {
+    width: 100%;
+  }
+  .rtm-sidebar .postbox {
+    display: inline-block;
+    margin-left: 10px;
+    vertical-align: top;
+  }
+  .rtm-sidebar .postbox:first-child {
+    margin-left: 0;
+  }
 }

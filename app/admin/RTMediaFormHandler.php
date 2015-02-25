@@ -1191,9 +1191,9 @@ class RTMediaFormHandler {
 							<?php echo $option[ 'title' ]; ?>
 						</th>
 						<td>
-							<fieldset data-type="text" data-id="theme_branding" class="redux-field-container redux-field redux-field-init redux-container-text " id="wpex_options-theme_branding">
-								<?php call_user_func( $option[ 'callback' ], $option[ 'args' ] ); ?>
-								<span data-tooltip class="has-tip" title="<?php echo ( isset( $option[ 'args' ][ 'desc' ] ) ) ? $option[ 'args' ][ 'desc' ] : 'NA'; ?>">
+							<fieldset data-type="text">
+								<span class="rtm-field-wrap"><?php call_user_func( $option[ 'callback' ], $option[ 'args' ] ); ?></span>
+								<span class="has-tip" title="<?php echo ( isset( $option[ 'args' ][ 'desc' ] ) ) ? $option[ 'args' ][ 'desc' ] : 'NA'; ?>">
 									<i class="dashicons dashicons-info rtmicon"></i>
 								</span>
 							</fieldset>

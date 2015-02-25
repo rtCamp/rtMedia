@@ -1,0 +1,34 @@
+@media #{$large-up} {
+
+	.rtm-setting-container {
+		width: 78.2%;
+	}
+
+	.rtm-sidebar {
+		width: 20%;
+
+		.postbox {
+			min-width: 0;
+		}
+	}
+
+}
+
+
+@media #{$medium-only} {
+
+	.rtm-sidebar {
+		width: 100%;
+
+		.postbox {
+			display: inline-block;
+			margin-left: 10px;
+			vertical-align: top;
+
+			&:first-child {
+				margin-left: 0;
+			}
+		}
+	}
+
+}
