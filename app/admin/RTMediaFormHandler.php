@@ -978,100 +978,100 @@ class RTMediaFormHandler {
 			do_action( 'rtmedia_buddypress_setting_content' );
 		}
 
-			/**
-			 * Define rtForm settings tabs content.
-			 *
-			 * @access static
-			 *
-			 * @param  type  $page
-			 * @param  array $sub_tabs
-			 *
-			 * @return void
-			 */
-			public static function rtForm_settings_tabs_content( $page, $sub_tabs ) {
-				//  $rtmedia_admin_ui_handler = "<div class='section-container auto' data-options='deep_linking: true' data-section=''>";
-				//	echo "<div class='clearfix rtm-settings-tab-container'>";
-				$rtmedia_admin_ui_handler = "<div class='clearfix rtm-settings-tab-container vertical-tabs'><ul class='rtm-tabs' data-tab>";
-				$rtmedia_admin_ui_handler = apply_filters( 'rtmedia_admin_ui_handler_filter', $rtmedia_admin_ui_handler );
-				echo $rtmedia_admin_ui_handler;
-				$i = 1;
-				$sub_tabs = apply_filters( 'rtmedia_pro_settings_tabs_content', $sub_tabs );
-				ksort( $sub_tabs );
-				foreach ( $sub_tabs as $tab ) {
-					$active_class = '';
-					if ( 1 == $i ) {
-						$active_class = 'active';
-					}
-					$i ++;
-					if ( isset( $tab[ 'icon' ] ) && ! empty( $tab[ 'icon' ] ) ) {
-						$icon = '<i class="' . $tab[ 'icon' ] . ' dashicons rtmicon"></i>';
-					}
-					echo '<li class="' . $active_class . '"><a id="tab-' . substr( $tab[ 'href' ], 1 ) . '" title="' . $tab[ 'title' ] . '" href="' . $tab[ 'href' ] . '" class="rtmedia-tab-title ' . sanitize_title( $tab[ 'name' ] ) . '">' . $icon . '<span>' . $tab[ 'name' ] . '</span></a></li>';
-				}
-				echo '</ul>';
-				?>
-
-				<?php
-				$rtmedia_admin_tab_content_handler = "<div class='tabs-content rtm-tab-content'>";
-				$rtmedia_admin_tab_content_handler = apply_filters( 'rtmedia_admin_tab_content_handler', $rtmedia_admin_tab_content_handler );
-				echo $rtmedia_admin_tab_content_handler;
-				$k = 1;
-				foreach ( $sub_tabs as $tab ) {
-					$active_class = '';
-					if ( 1 == $k ) {
-						$active_class = ' active';
-					}
-					$k ++;
-					if ( isset( $tab[ 'icon' ] ) && ! empty( $tab[ 'icon' ] ) ) {
-						$icon = '<i class="' . $tab[ 'icon' ] . '"></i>';
-					}
-					$tab_without_hash = explode( '#', $tab[ 'href' ] );
-					$tab_without_hash = $tab_without_hash[ 1 ];
-					echo '<div class="content' . $active_class . '" id="' . $tab_without_hash . '">';
-					echo '<h3 class="rtm-setting-title">' . $tab[ 'name' ] . '</h3>';
-					call_user_func( $tab[ 'callback' ], $page );
-					echo '</div>';
-				}
-				echo '</div>';
-				?>
-			</div>
-			<?php
-		}
-
 		/**
-		 * Define rtForm do_settings_fields.
+		 * Define rtForm settings tabs content.
 		 *
 		 * @access static
 		 *
-		 * @param  type $page
-		 * @param  type $section
+		 * @param  type  $page
+		 * @param  array $sub_tabs
 		 *
 		 * @return void
 		 */
-		public static function rtForm_do_settings_fields( $page, $section ) {
-			global $wp_settings_fields;
-
-			if ( ! isset( $wp_settings_fields ) || ! isset( $wp_settings_fields[ $page ] ) || ! isset( $wp_settings_fields[ $page ][ $section ] ) ) {
-				return;
-			}
-
-			foreach ( ( array ) $wp_settings_fields[ $page ][ $section ] as $field ) {
-				echo '<div class="row">';
-				echo '<div class="large-11 columns">';
-
-				if ( isset( $field[ 'args' ][ 'label_for' ] ) && ! empty( $field[ 'args' ][ 'label_for' ] ) ) {
-					call_user_func( $field[ 'callback' ], array_merge( $field[ 'args' ], array( 'label' => $field[ 'args' ][ 'label_for' ] ) ) );
-				} else {
-					if ( isset( $field[ 'title' ] ) && ! empty( $field[ 'title' ] ) ) {
-						call_user_func( $field[ 'callback' ], array_merge( $field[ 'args' ], array( 'label' => $field[ 'title' ] ) ) );
-					} else {
-						call_user_func( $field[ 'callback' ], $field[ 'args' ] );
-					}
+		public static function rtForm_settings_tabs_content( $page, $sub_tabs ) {
+			//  $rtmedia_admin_ui_handler = "<div class='section-container auto' data-options='deep_linking: true' data-section=''>";
+			//	echo "<div class='clearfix rtm-settings-tab-container'>";
+			$rtmedia_admin_ui_handler = "<div class='clearfix rtm-settings-tab-container vertical-tabs'><ul class='rtm-tabs' data-tab>";
+			$rtmedia_admin_ui_handler = apply_filters( 'rtmedia_admin_ui_handler_filter', $rtmedia_admin_ui_handler );
+			echo $rtmedia_admin_ui_handler;
+			$i = 1;
+			$sub_tabs = apply_filters( 'rtmedia_pro_settings_tabs_content', $sub_tabs );
+			ksort( $sub_tabs );
+			foreach ( $sub_tabs as $tab ) {
+				$active_class = '';
+				if ( 1 == $i ) {
+					$active_class = 'active';
 				}
-				echo '</div>';
+				$i ++;
+				if ( isset( $tab[ 'icon' ] ) && ! empty( $tab[ 'icon' ] ) ) {
+					$icon = '<i class="' . $tab[ 'icon' ] . ' dashicons rtmicon"></i>';
+				}
+				echo '<li class="' . $active_class . '"><a id="tab-' . substr( $tab[ 'href' ], 1 ) . '" title="' . $tab[ 'title' ] . '" href="' . $tab[ 'href' ] . '" class="rtmedia-tab-title ' . sanitize_title( $tab[ 'name' ] ) . '">' . $icon . '<span>' . $tab[ 'name' ] . '</span></a></li>';
+			}
+			echo '</ul>';
+			?>
+
+			<?php
+			$rtmedia_admin_tab_content_handler = "<div class='tabs-content rtm-tab-content'>";
+			$rtmedia_admin_tab_content_handler = apply_filters( 'rtmedia_admin_tab_content_handler', $rtmedia_admin_tab_content_handler );
+			echo $rtmedia_admin_tab_content_handler;
+			$k = 1;
+			foreach ( $sub_tabs as $tab ) {
+				$active_class = '';
+				if ( 1 == $k ) {
+					$active_class = ' active';
+				}
+				$k ++;
+				if ( isset( $tab[ 'icon' ] ) && ! empty( $tab[ 'icon' ] ) ) {
+					$icon = '<i class="' . $tab[ 'icon' ] . '"></i>';
+				}
+				$tab_without_hash = explode( '#', $tab[ 'href' ] );
+				$tab_without_hash = $tab_without_hash[ 1 ];
+				echo '<div class="content' . $active_class . '" id="' . $tab_without_hash . '">';
+				echo '<h3 class="rtm-setting-title">' . $tab[ 'name' ] . '</h3>';
+				call_user_func( $tab[ 'callback' ], $page );
 				echo '</div>';
 			}
+			echo '</div>';
+			?>
+		</div>
+		<?php
+	}
+
+	/**
+	 * Define rtForm do_settings_fields.
+	 *
+	 * @access static
+	 *
+	 * @param  type $page
+	 * @param  type $section
+	 *
+	 * @return void
+	 */
+	public static function rtForm_do_settings_fields( $page, $section ) {
+		global $wp_settings_fields;
+
+		if ( ! isset( $wp_settings_fields ) || ! isset( $wp_settings_fields[ $page ] ) || ! isset( $wp_settings_fields[ $page ][ $section ] ) ) {
+			return;
 		}
+
+		foreach ( ( array ) $wp_settings_fields[ $page ][ $section ] as $field ) {
+			echo '<div class="row">';
+			echo '<div class="large-11 columns">';
+
+			if ( isset( $field[ 'args' ][ 'label_for' ] ) && ! empty( $field[ 'args' ][ 'label_for' ] ) ) {
+				call_user_func( $field[ 'callback' ], array_merge( $field[ 'args' ], array( 'label' => $field[ 'args' ][ 'label_for' ] ) ) );
+			} else {
+				if ( isset( $field[ 'title' ] ) && ! empty( $field[ 'title' ] ) ) {
+					call_user_func( $field[ 'callback' ], array_merge( $field[ 'args' ], array( 'label' => $field[ 'title' ] ) ) );
+				} else {
+					call_user_func( $field[ 'callback' ], $field[ 'args' ] );
+				}
+			}
+			echo '</div>';
+			echo '</div>';
+		}
+	}
 
 	/*
 	 * render each tab content
@@ -1080,8 +1080,9 @@ class RTMediaFormHandler {
 	 * @param array $groups
 	 * @param int $default_group
 	 */
-	public static function render_tab_content( $options, $groups = array(), $default_group = 0 ){
-		if( !empty( $groups ) ){
+
+	public static function render_tab_content( $options, $groups = array(), $default_group = 0 ) {
+		if ( ! empty( $groups ) ) {
 			foreach ( $groups as $key => $value ) {
 				?>
 				<div class="rtm-option-wrapper">
@@ -1100,19 +1101,18 @@ class RTMediaFormHandler {
 					}
 					?>
 				</div>
-			<?php
+				<?php
 			}
-		} else{
+		} else {
 			?>
 			<div class="rtm-option-wrapper">
 				<?php
-					foreach ( $options as $tab => $option ) {
-						self::render_option_content( $option );
-					}
+				foreach ( $options as $tab => $option ) {
+					self::render_option_content( $option );
+				}
 				?>
 			</div>
 			<?php
-
 		}
 	}
 
@@ -1121,6 +1121,7 @@ class RTMediaFormHandler {
 	 *
 	 * @param string $group
 	 */
+
 	public static function render_option_group( $group ) {
 		?>
 		<h3 class="rtm-option-title"><span><?php echo $group; ?></span></h3>
@@ -1131,6 +1132,7 @@ class RTMediaFormHandler {
 	 * render options
 	 * @param array $option
 	 */
+
 	public static function render_option_content( $option ) {
 		?>
 		<div class="rtp-option-content">
@@ -1138,12 +1140,12 @@ class RTMediaFormHandler {
 			<table class="form-table">
 				<tr>
 					<th>
-						<?php echo $option[ 'title' ]; ?>
+		<?php echo $option[ 'title' ]; ?>
 					</th>
 					<td>
-						<fieldset data-type="text" data-id="theme_branding" class="redux-field-container redux-field redux-field-init redux-container-text " id="wpex_options-theme_branding">
-							<?php call_user_func( $option[ 'callback' ], $option[ 'args' ] ); ?>
-							<span data-tooltip class="has-tip" title="<?php echo ( isset( $option[ 'args' ][ 'desc' ] ) ) ? $option[ 'args' ][ 'desc' ] : 'NA'; ?>">
+						<fieldset data-type="text">
+							<span class="rtm-field-wrap"><?php call_user_func( $option[ 'callback' ], $option[ 'args' ] ); ?></span>
+							<span class="has-tip" title="<?php echo ( isset( $option[ 'args' ][ 'desc' ] ) ) ? $option[ 'args' ][ 'desc' ] : 'NA'; ?>">
 								<i class="dashicons dashicons-info rtmicon"></i>
 							</span>
 						</fieldset>
@@ -1157,7 +1159,7 @@ class RTMediaFormHandler {
 			<div class="row">
 				<div class="columns large-12">
 					<p class="rtmedia-info rtmedia-admin-notice">
-						<?php echo $option[ 'after_content' ]; ?>
+			<?php echo $option[ 'after_content' ]; ?>
 					</p>
 				</div>
 			</div>
