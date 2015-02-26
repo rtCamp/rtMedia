@@ -28,9 +28,14 @@ if ( typeof Object.create !== 'function' ) {
 
 			/* Tab Active */
 			self.$elem.find( 'li:nth-child(' + showTab + ')' ).addClass( 'active' );
-
 			self.rtTabContent( activeTabContent = 'yes' );
 			self.rtClick();
+
+			/* This will keep on same tab as in hashtag */
+			var hashTag = window.location.hash;
+			if ( hashTag ) {
+				self.$elem.find( 'li' ).find( 'a[href=' + hashTag + ']' ).trigger( 'click' );
+			}
 
 		},
 		rtClick: function () {
@@ -55,6 +60,12 @@ if ( typeof Object.create !== 'function' ) {
 				var activeTab = $( this ).attr( 'href' );
 				$( activeTab ).removeClass( 'hide' );
 
+				//------->
+				var pos = $( window ).scrollTop();
+				location.hash = $( this ).attr( 'href' );
+				$( window ).scrollTop( pos );
+				//------>
+
 				if ( typeof self.options.onComplete === 'function' ) {
 					self.options.onComplete.apply( self.elem, arguments );
 				}
@@ -70,8 +81,9 @@ if ( typeof Object.create !== 'function' ) {
 				var link = $( this ),
 						tabContent = link.attr( 'href' );
 				if ( activeTabContent === 'yes' ) {
-					if ( ! link.parent().hasClass( 'active' ) )
+					if ( ! link.parent().hasClass( 'active' ) ) {
 						$( tabContent ).addClass( 'hide' );
+					}
 				} else {
 					$( tabContent ).addClass( 'hide' );
 				}

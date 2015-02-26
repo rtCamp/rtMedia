@@ -48,6 +48,11 @@
 		a {
 			color: $dark;
 			opacity: 1;
+
+			&:hover {
+				background: $white;
+			}
+
 		}
 	}
 

@@ -10,7 +10,7 @@
 
 .rtm-tip {
 	background: #fffAF0;
-	border: 1px solid #dca;
+	border: 1px solid #f5deaf;
     border-radius: 3px;
     font-size: 12px;
     left: 24px;
@@ -20,6 +20,7 @@
     opacity: 0;
     padding: 6px 12px;
     position: absolute;
+	top: 0;
     visibility: hidden;
     width: 210px;
     z-index: 10;
@@ -47,7 +48,7 @@
 
 	&:before {
 		border-color: rgba(221, 204, 170, 0);
-		border-right-color: #DCA;
+		border-right-color: #f5deaf;
 		border-width: 7px;
 		margin-top: -7px;
 	}

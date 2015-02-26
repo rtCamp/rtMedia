@@ -5,4 +5,5 @@ jQuery( document ).ready( function ( $ ) {
 
 	// Tabs
 	$( '.rtm-tabs' ).rtTab();
+
 } );
