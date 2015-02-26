@@ -24,23 +24,32 @@
     margin-bottom: 0;
     margin-top: 0;
     padding-bottom: 14px;
+
+	display: none;
 }
 
 .rtm-option-wrapper {
-	margin-bottom: 60px;
+	margin-bottom: 40px;
 	margin-top: 40px;
 
 	&:last-child {
 		margin-bottom: 20px;
 	}
+
+	.rtm-setting-title + & {
+		margin-top: 0;
+	}
 }
 
 .rtp-option-content {
-	overflow: hidden;
-	margin-bottom: 10px;
+	margin-bottom: 12px;
 
 	&:last-child {
 		border-bottom: 0;
+	}
+
+	.form-table {
+		clear: none;
 	}
 
 	.rtm-field-wrap {
@@ -76,18 +85,6 @@
 		}
 	}
 
-	.dashicons-info {
-		color: #aaa;
-		font-size: 14px;
-		height: 28px;
-		line-height: 28px;
-	}
-
-	.has-tip {
-		display: inline-block;
-		margin-left: 5px;
-	}
-
 	input[type="number"] {
 		width: 82px;
 	}
@@ -102,6 +99,18 @@
 			}
 		}
 	}
+
+	.dashicons-info {
+		color: #aaa;
+		font-size: 14px;
+		height: 26px;
+		line-height: 26px;
+	}
+}
+
+.rtm-tooltip {
+	display: inline-block;
+	margin-left: 5px;
 }
 
 .rtm-option-title {
@@ -110,7 +119,7 @@
     letter-spacing: 0.02rem;
     margin-bottom: 12px;
     margin-top: 0;
-    padding: 0 0 8px;
+    padding: 0 0 6px;
     text-transform: uppercase;
 }
 
@@ -152,6 +161,10 @@
 		.dashicons {
 			color: #FF6600;
 		}
+	}
+
+	p:last-child {
+		margin-bottom: 0;
 	}
 }
 

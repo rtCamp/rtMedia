@@ -1,0 +1,54 @@
+.rtm-tooltip {
+    position: relative;
+
+	.dashicons:hover + .rtm-tip {
+		margin-left: 0;
+		opacity: 1;
+		visibility: visible;
+	}
+}
+
+.rtm-tip {
+	background: #fffAF0;
+	border: 1px solid #dca;
+    border-radius: 3px;
+    font-size: 12px;
+    left: 24px;
+	margin-top: -4px;
+	margin-left: -10px;
+    line-height: 1.5;
+    opacity: 0;
+    padding: 6px 12px;
+    position: absolute;
+    visibility: hidden;
+    width: 210px;
+    z-index: 10;
+
+	@include transition(all ease-in-out 0.4s);
+
+
+	&:after, &:before {
+		right: 100%;
+		top: 15px;
+		border: solid transparent;
+		content: " ";
+		height: 0;
+		width: 0;
+		position: absolute;
+		pointer-events: none;
+	}
+
+	&:after {
+		border-color: rgba(255, 250, 240, 0);
+		border-right-color: #fffAF0;
+		border-width: 6px;
+		margin-top: -6px;
+	}
+
+	&:before {
+		border-color: rgba(221, 204, 170, 0);
+		border-right-color: #DCA;
+		border-width: 7px;
+		margin-top: -7px;
+	}
+}

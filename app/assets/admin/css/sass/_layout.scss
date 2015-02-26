@@ -21,7 +21,6 @@ $container-min-height: 300px;
 	@include box-shadow( 0 1px 1px rgba( $black, 0.04 ) );
 	float: left;
 	margin-top: 10px;
-	overflow: hidden;
 }
 
 .rtm-sidebar {

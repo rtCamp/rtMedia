@@ -1143,8 +1143,11 @@ class RTMediaFormHandler {
 					<td>
 						<fieldset data-type="text">
 							<span class="rtm-field-wrap"><?php call_user_func( $option[ 'callback' ], $option[ 'args' ] ); ?></span>
-							<span class="has-tip" title="<?php echo ( isset( $option[ 'args' ][ 'desc' ] ) ) ? $option[ 'args' ][ 'desc' ] : 'NA'; ?>">
+							<span class="rtm-tooltip">
 								<i class="dashicons dashicons-info rtmicon"></i>
+								<span class="rtm-tip">
+									<?php echo ( isset( $option[ 'args' ][ 'desc' ] ) ) ? $option[ 'args' ][ 'desc' ] : 'NA'; ?>
+								</span>
 							</span>
 						</fieldset>
 					</td>
