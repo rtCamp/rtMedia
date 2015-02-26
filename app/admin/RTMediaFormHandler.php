@@ -545,77 +545,76 @@ class RTMediaFormHandler {
 
 		$render_data = self::types_render_options( $options );
 		?>
-		<div class="postbox metabox-holder">
-			<h3 class="hndle">
-				<span>Media Types Settings</span>
+		<div class="rtm-option-wrapper">
+			<h3 class="rtm-option-title">
+				<span><?php _e( 'Media Types Settings', 'rtmedia'); ?></span>
 				<?php do_action( 'rtmedia_media_type_setting_message' ); ?>
 			</h3>
-		</div>
-		<div class="rt-table large-12">
-			<div class="row rt-header">
+			<table class="form-table">
 				<?php do_action( 'rtmedia_type_settings_before_heading' ); ?>
-				<div class="columns large-4"><h4><?php _e( 'Media Type', 'rtmedia' ) ?></h4></div>
-				<div class="columns large-4">
-					<h4 data-tooltip class="has-tip" title="<?php _e( 'Allows you to upload a particular media type on your post.', 'rtmedia' ); ?>">
-						<abbr><?php _e( 'Allow Upload', 'rtmedia' ); ?></abbr>
-					</h4>
-				</div>
-				<div class="columns large-4">
-					<h4 data-tooltip class="has-tip" title="<?php _e( 'Place a specific media as a featured content on the post.', 'rtmedia' ); ?>">
-						<abbr><?php _e( 'Set Featured', 'rtmedia' ); ?></abbr>
-					</h4>
-				</div>
-
-				<?php do_action( 'rtmedia_type_settings_after_heading' ); ?>
-			</div>
-
+				<tr>
+					<th>
+						<h4>
+							<?php _e( 'Media Type', 'rtmedia' ) ?>
+						</h4>
+					</th>
+					<th>
+						<h4 data-tooltip class="has-tip" title="<?php _e( 'Allows you to upload a particular media type on your post.', 'rtmedia' ); ?>">
+							<abbr><?php _e( 'Allow Upload', 'rtmedia' ); ?></abbr>
+						</h4>
+					</th>
+					<th>
+						<h4 data-tooltip class="has-tip" title="<?php _e( 'Place a specific media as a featured content on the post.', 'rtmedia' ); ?>">
+							<abbr><?php _e( 'Set Featured', 'rtmedia' ); ?></abbr>
+						</h4>
+					</th>
+					<?php do_action( 'rtmedia_type_setting_columns_title' ) ?>
+				</tr>
 			<?php
-			$even = 0;
-			foreach ( $render_data as $key => $section ) {
-				if ( isset( $section[ 'settings_visibility' ] ) && true == $section[ 'settings_visibility' ] ) {
+				do_action( 'rtmedia_type_settings_after_heading' );
+				foreach ( $render_data as $key => $section ) {
+					if ( isset( $section[ 'settings_visibility' ] ) && true == $section[ 'settings_visibility' ] ) {
+						do_action( 'rtmedia_type_settings_before_body' );
 
-					if ( ++ $even % 2 ) {
-						echo '<div class="row rt-odd">';
+						// allow upload
+						$uplaod_args = array( 'key' => 'allowedTypes_' . $key . '_enabled', 'value' => $section[ 'enabled' ] );
+						$allow_upload_checkbox = self::checkbox( $uplaod_args, $echo = false );
+						$allow_upload_checkbox = apply_filters( 'rtmedia_filter_allow_upload_checkbox', $allow_upload_checkbox, $key, $uplaod_args );
+
+						// allow featured
+						$featured_args = array( 'key' => 'allowedTypes_' . $key . '_featured', 'value' => $section[ 'featured' ] );
+						$featured_checkbox = self::checkbox( $featured_args, $echo = false );
+						$featured_checkbox = apply_filters( 'rtmedia_filter_featured_checkbox', $featured_checkbox, $key );
+
+						if ( ! isset( $section[ 'extn' ] ) || ! is_array( $section[ 'extn' ] ) ) {
+							$section[ 'extn' ] = array();
+						}
+					?>
+						<tr>
+							<td>
+								<?php echo $section['name']; ?>
+							</td>
+							<td>
+								<?php echo $allow_upload_checkbox; ?>
+							</td>
+							<td>
+								<?php echo $featured_checkbox; ?>
+							</td>
+						</tr>
+					<?php
+						do_action( 'rtmedia_type_settings_after_body', $key, $section );
 					} else {
-						echo '<div class="row rt-even">';
+						echo "<input type='hidden' value='1' name='rtmedia-options[allowedTypes_" . $key . "_enabled]'>";
+						echo "<input type='hidden' value='0' name='rtmedia-options[allowedTypes_" . $key . "_featured]'>";
 					}
-
-					do_action( 'rtmedia_type_settings_before_body' );
-					echo '<div class="columns large-4 medium-4 small-4">' . $section[ 'name' ] . '</div>';
-					$args = array( 'key' => 'allowedTypes_' . $key . '_enabled', 'value' => $section[ 'enabled' ] );
-					echo '<div class="columns large-4 medium-4 small-4">';
-					$allow_upload_checkbox = self::checkbox( $args, $echo = false );
-					$allow_upload_checkbox = apply_filters( 'rtmedia_filter_allow_upload_checkbox', $allow_upload_checkbox, $key, $args );
-					echo $allow_upload_checkbox;
-					echo '</div>';
-					$args = array( 'key' => 'allowedTypes_' . $key . '_featured', 'value' => $section[ 'featured' ] );
-					echo '<div class="columns large-4 medium-4 small-4">';
-					$featured_checkbox = self::checkbox( $args, $echo = false );
-					$featured_checkbox = apply_filters( 'rtmedia_filter_featured_checkbox', $featured_checkbox, $key );
-					echo $featured_checkbox;
-					echo '</div>';
-
-					if ( ! isset( $section[ 'extn' ] ) || ! is_array( $section[ 'extn' ] ) ) {
-						$section[ 'extn' ] = array();
-					}
-
-					$extensions = implode( ', ', $section[ 'extn' ] );
-					$extensions = apply_filters( 'rtmedia_type_settings_filter_extension', $extensions, $key );
-					do_action( 'rtmedia_type_settings_after_body', $key, $section );
-					echo '</div>';
-					echo '<div class="row rtmedia-file-extension-wrap">';
-					echo '<label class="columns large-3 medium-3 small-3">' . __( 'File Extensions', 'rtmedia' ) . ':</label>';
-					echo '<label class="columns large-9 medium-9 small-9 rtmedia_type_settings_filter_extension">' . $extensions . '</label>';
-					echo '</div>';
-				} else {
-					echo "<input type='hidden' value='1' name='rtmedia-options[allowedTypes_" . $key . "_enabled]'>";
-					echo "<input type='hidden' value='0' name='rtmedia-options[allowedTypes_" . $key . "_featured]'>";
 				}
-			}
-			echo '</div>';
+			?>
+			</table>
+		</div>
+			<?php
 			do_action( 'rtmedia_after_bp_settings' );
 			do_action( 'rtmedia_after_media_types_settings' );
-		}
+	}
 
 		/**
 		 * Define sizes_render_options.
