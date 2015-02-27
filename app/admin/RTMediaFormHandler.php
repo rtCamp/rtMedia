@@ -840,46 +840,51 @@ class RTMediaFormHandler {
 		return $render;
 	}
 
-	/**
-	 * Render privacy options.
-	 *
-	 * @access static
-	 *
-	 * @param  array $options
-	 *
-	 * @return array $render
-	 */
-	static function privacy_render_options( $options ) {
-		global $rtmedia;
+		/**
+		 * Render privacy options.
+		 *
+		 * @access static
+		 *
+		 * @param  array $options
+		 *
+		 * @return array $render
+		 */
+		static function privacy_render_options( $options ) {
+			global $rtmedia;
 
-		$render = array(
-			'enable' => array(
-				'title' => __( 'Enable privacy', 'rtmedia' ),
-				'callback' => array( 'RTMediaFormHandler', 'checkbox' ),
-				'args' => array(
-					'id' => 'rtmedia-privacy-enable',
-					'key' => 'privacy_enabled',
-					'value' => $options[ 'privacy_enabled' ],
-					'desc' => __( 'Enable privacy in rtMedia', 'rtmedia' ),
-				)
-			),
-			'default' => array(
-				'title' => __( 'Default privacy', 'rtmedia' ),
-				'callback' => array( 'RTMediaFormHandler', 'radio' ),
-				'args' => array(
-					'key' => 'privacy_default',
-					'radios' => $rtmedia->privacy_settings[ 'levels' ],
-					'default' => $options[ 'privacy_default' ],
-					'desc' => __( 'Set default privacy for media', 'rtmedia' ),
+			$render = array(
+				'enable' => array(
+					'title' => __( 'Enable privacy', 'rtmedia' ),
+					'callback' => array( 'RTMediaFormHandler', 'checkbox' ),
+					'args' => array(
+						'id' => 'rtmedia-privacy-enable',
+						'key' => 'privacy_enabled',
+						'value' => $options[ 'privacy_enabled' ],
+						'desc' => __( 'Enable privacy in rtMedia', 'rtmedia' ),
+					),
+					'group' => 10,
 				),
-			),
-			'user_override' => array(
-				'title' => __( 'Allow users to set privacy for their content', 'rtmedia' ),
-				'callback' => array( 'RTMediaFormHandler', 'checkbox' ),
-				'args' => array(
-					'key' => 'privacy_userOverride',
-					'value' => $options[ 'privacy_userOverride' ],
-					'desc' => __( 'If you choose this, users will be able to change privacy of their own uploads.', 'rtmedia' ),
+				'default' => array(
+					'title' => __( 'Default privacy', 'rtmedia' ),
+					'callback' => array( 'RTMediaFormHandler', 'radio' ),
+					'args' => array(
+						'key' => 'privacy_default',
+						'radios' => $rtmedia->privacy_settings[ 'levels' ],
+						'default' => $options[ 'privacy_default' ],
+						'desc' => __( 'Set default privacy for media', 'rtmedia' ),
+					),
+					'group' => 10,
+				),
+				'user_override' => array(
+					'title' => __( 'Allow users to set privacy for their content', 'rtmedia' ),
+					'callback' => array( 'RTMediaFormHandler', 'checkbox' ),
+					'args' => array(
+						'key' => 'privacy_userOverride',
+						'value' => $options[ 'privacy_userOverride' ],
+						'desc' => __( 'If you choose this, users will be able to change privacy of their own uploads.', 'rtmedia' ),
+					),
+					'group' => 10,
+					'after_content' => __( 'For group uploads, BuddyPress groups privacy is used.', 'rtmedia' ),
 				),
 				'after_content' => __( 'For group uploads, BuddyPress groups privacy is used.', 'rtmedia' ),
 			),
@@ -888,22 +893,28 @@ class RTMediaFormHandler {
 		return $render;
 	}
 
-	/**
-	 * Render privacy content.
-	 *
-	 * @access static
-	 *
-	 * @param  void
-	 *
-	 * @return void
-	 */
-	public static function privacy_content() {
-		global $rtmedia;
-		$options = self::extract_settings( 'privacy', $rtmedia->options );
+		/**
+		 * Render privacy content.
+		 *
+		 * @access static
+		 *
+		 * @param  void
+		 *
+		 * @return void
+		 */
+		public static function privacy_content() {
+			global $rtmedia;
 
-		$render_data = self::privacy_render_options( $options );
-		self::render_tab_content( $render_data );
-	}
+			$general_group = array();
+			$general_group[ 10 ] = 'Privacy Settings';
+			$general_group = apply_filters( 'rtmedia_privacy_settings_groups', $general_group );
+
+			$options = self::extract_settings( 'privacy', $rtmedia->options );
+			$render_options = self::privacy_render_options( $options );
+			$render_options = apply_filters( 'rtmedia_privacy_settings_options', $render_options );
+
+			self::render_tab_content( $render_options, $general_group, 10 );
+		}
 
 	/**
 	 * Render buddypress options.
