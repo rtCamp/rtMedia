@@ -1752,7 +1752,7 @@ function rtmedia_create_album( $options ) {
 				break;
 			case 'group':
 				$group_id = $rtmedia_query->query[ 'context_id' ];
-				if ( can_user_create_album_in_group() ){
+				if ( can_user_create_album_in_group( $group_id ) ){
 					$display = true;
 				}
 				break;
@@ -1772,7 +1772,7 @@ add_action( 'rtmedia_before_media_gallery', 'rtmedia_create_album_modal' );
 add_action( 'rtmedia_before_album_gallery', 'rtmedia_create_album_modal' );
 function rtmedia_create_album_modal() {
 	global $rtmedia_query;
-	if ( is_rtmedia_album_enable() && !( isset( $rtmedia_query->is_gallery_shortcode ) && $rtmedia_query->is_gallery_shortcode == true ) && isset( $rtmedia_query->query[ 'context_id' ] ) && isset( $rtmedia_query->query[ 'context' ] ) ) {
+	if ( is_rtmedia_album_enable() && isset( $rtmedia_query->query[ 'context_id' ] ) && isset( $rtmedia_query->query[ 'context' ] ) && ( !( isset( $rtmedia_query->is_gallery_shortcode ) && $rtmedia_query->is_gallery_shortcode == true ) ) || apply_filters( 'rtmedia_load_add_album_modal', false ) ) {
 		?>
 		<div class="mfp-hide rtmedia-popup" id="rtmedia-create-album-modal">
 			<div id="rtm-modal-container">
