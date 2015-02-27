@@ -1134,7 +1134,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 
 						<?php
 						$settings_url = ( is_multisite() ) ? network_admin_url( 'edit.php?action=' . $option_group ) : 'options.php';
-						if ( $option_group ) { //$option_group if ($page == "bp-media-settings") action="<?php echo $settings_url;
+						if ( $page == 'rtmedia-settings' ) { //$option_group if ($page == "bp-media-settings") action="<?php echo $settings_url;
 							?>
 							<form id="bp_media_settings_form" name="bp_media_settings_form" method="post"
 								  enctype="multipart/form-data">

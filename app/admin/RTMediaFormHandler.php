@@ -690,42 +690,43 @@ class RTMediaFormHandler {
 					<th><strong><?php _e( 'Crop', 'rtmedia' ); ?></strong></th>
 				</tr>
 
-				<?php foreach ( $render_data as $parent_key => $section ) { ?>
-					<?php $entities = $section; ?>
-					<tr>
-						<td>
-							<?php echo ucfirst( $section[ 'title' ] ); ?>
-						</td>
-						<td>
-							<?php
-							unset( $entities[ 'title' ] );
-							foreach ( $entities as $entity ) {
-								echo '<div>';
-								echo ucfirst( $entity[ 'title' ] );
-								echo '</div>';
-							}
-							?>
-						</td>
-						<?php
+				<?php
+					foreach ( $render_data as $parent_key => $section ) {
+						$entities = $section;
+						unset( $entities[ 'title' ] );
+						$count = 0;
+						$row_span = sizeof( $entities );
 						foreach ( $entities as $entity ) {
-
-							echo '<td>';
-
-							$args = array(
-								'key' => 'defaultSizes_' . $parent_key . '_' . $entity[ 'title' ],
-							);
-							foreach ( $entity as $child_key => $value ) {
-								if ( 'title' != $child_key ) {
-									$args[ $child_key ] = $value;
-								}
-							}
-							self::dimensions( $args );
-							echo '</td>';
-						}
 						?>
-					</tr>
-					<?php
-				}
+							<tr>
+							<?php
+								if( $count == 0 ){
+								?>
+									<td rowspan="<?php echo $row_span; ?>">
+										<?php echo ucfirst( $section[ 'title' ] ); ?>
+									</td>
+								<?php
+								}
+							?>
+								<td>
+									<?php echo ucfirst( $entity[ 'title' ] ); ?>
+								</td>
+							<?php
+								$args = array(
+									'key' => 'defaultSizes_' . $parent_key . '_' . $entity[ 'title' ],
+								);
+								foreach ( $entity as $child_key => $value ) {
+									if ( 'title' != $child_key ) {
+										$args[ $child_key ] = $value;
+									}
+								}
+								self::dimensions( $args );
+							?>
+							</tr>
+						<?php
+							$count++;
+						}
+					}
 				?>
 			</table>
 

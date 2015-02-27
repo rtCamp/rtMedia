@@ -100,48 +100,50 @@ class rtDimensions extends rtForm {
 		$attributes = wp_parse_args( $attributes, $defaults );
 		extract( $attributes );
 
-		$html = '<div ';
+//		$html = '<div ';
+//
+//		if ( isset( $attributes['id'] ) ){
+//			$html .= 'id="' . $attributes['id'] . '" ';
+//		} else {
+//			$html .= 'id="' . $this->get_default_class() . '-' . $this->get_default_id() . '" ';
+//			$this->update_default_id();
+//		}
+//
+//		if ( isset( $attributes['class'] ) ){
+//			$html .= self::embedd_class( $element, $attributes['class'] );
+//		} else {
+//			$html .= self::embedd_class( $element );
+//		}
+//		$html .= '>';
 
-		if ( isset( $attributes['id'] ) ){
-			$html .= 'id="' . $attributes['id'] . '" ';
-		} else {
-			$html .= 'id="' . $this->get_default_class() . '-' . $this->get_default_id() . '" ';
-			$this->update_default_id();
-		}
+		$html = '';
 
-		if ( isset( $attributes['class'] ) ){
-			$html .= self::embedd_class( $element, $attributes['class'] );
-		} else {
-			$html .= self::embedd_class( $element );
-		}
-		$html .= '>';
-
-		$html .= parent::get_textbox( array(
+		$html .= '<td>' . parent::get_textbox( array(
 			'name' => "rtmedia-options[{$key}_width]", 'value' => $width, 'class' => array( 'small-text large-offset-1' ), 'show_desc' => $show_desc,
-		) );
+		) ) . '</td>';
 
 		if ( isset( $height ) ){
-			$html .= parent::get_textbox( array(
+			$html .= '<td>' . parent::get_textbox( array(
 				'name' => "rtmedia-options[{$key}_height]", 'value' => $height, 'class' => array( 'small-text large-offset-1' ), 'show_desc' => $show_desc,
-			) );
+			) ) . '</td>';
 		}
 
 		if ( isset( $crop ) ){
-			$html .= parent::get_checkbox( array(
+			$html .= '<td>' . parent::get_checkbox( array(
 				'name'     => "rtmedia-options[{$key}_crop]", 'rtForm_options' => array(
 					array(
 						''        => 1, //label would be blank
 						'checked' => $crop,
 					),
 				), 'class' => array( 'large-offset-1' ), 'show_desc' => $show_desc,
-			) );
+			) ) . '</td>';
 		}
 
 		if ( $desc && $show_desc ){
 			$html .= '<span class="clearfix large-offset-3 description">' . $desc . '</span>';
 		}
 
-		$html .= '</div>';
+//		$html .= '</div>';
 
 		if ( isset( $attributes['label'] ) ){
 			$html = parent::enclose_label( 'container', $html, $attributes['label'] );
