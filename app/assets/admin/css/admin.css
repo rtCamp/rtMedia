@@ -450,6 +450,17 @@
   margin-top: -7px;
 }
 
+.rtm-encoding-table {
+  border-collapse: collapse;
+}
+.rtm-encoding-table th, .rtm-encoding-table td {
+  border: 1px solid #ddd;
+}
+.rtm-encoding-table th {
+  font-size: 13px;
+  font-weight: 600;
+}
+
 @media only screen and (min-width: 1025px) {
   .rtm-setting-container {
     width: 78.2%;
