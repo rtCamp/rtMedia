@@ -164,53 +164,41 @@
 .rtm-setting-title + .rtm-option-wrapper {
   margin-top: 0;
 }
-
-.rtp-option-content {
-  margin-bottom: 12px;
-}
-.rtp-option-content:last-child {
+.rtm-option-wrapper:last-child {
   border-bottom: 0;
 }
-.rtp-option-content .form-table {
+.rtm-option-wrapper .form-table {
   clear: none;
 }
-.rtp-option-content .rtm-field-wrap {
+.rtm-option-wrapper .rtm-field-wrap {
   float: left;
 }
-.rtp-option-content .form-table th {
+.rtm-option-wrapper .form-table th {
   color: #444;
   font-size: 13px;
   font-weight: 400;
-  line-height: 1.6;
-  padding: 0 30px 0 0;
-  vertical-align: middle;
+  padding: 5px 30px 5px 0;
+  vertical-align: top;
   width: 50%;
 }
-.rtp-option-content .form-table th span {
-  color: #666;
-  display: block;
-  font-size: 12px;
-  font-weight: 400;
-  margin-top: 7px;
-}
-.rtp-option-content .form-table td {
+.rtm-option-wrapper .form-table td {
   font-size: 13px;
-  padding: 0;
+  padding: 0 0 5px;
 }
-.rtp-option-content .form-table td fieldset label {
+.rtm-option-wrapper .form-table td fieldset label {
   margin: 0 !important;
 }
-.rtp-option-content input[type="number"] {
+.rtm-option-wrapper input[type="number"] {
   width: 82px;
 }
-.rtp-option-content .rt-form-radio {
+.rtm-option-wrapper .rt-form-radio {
   height: 28px;
   line-height: 24px;
 }
-.rtp-option-content .rt-form-radio label:first-child {
+.rtm-option-wrapper .rt-form-radio label:first-child {
   margin-right: 12px !important;
 }
-.rtp-option-content .dashicons-info {
+.rtm-option-wrapper .dashicons-info {
   color: #aaa;
   font-size: 14px;
   height: 26px;
@@ -260,12 +248,37 @@
   margin-bottom: 0;
 }
 
-.rtmedia-admin-notice {
+.rtm-notice {
   background: #EEEEEE;
   color: #666;
+  font-size: 12px;
   line-height: 1.6;
-  margin-top: 20px;
-  padding: 12px 16px;
+  margin-top: 10px;
+  padding: 5px 10px;
+}
+
+#rtmedia-types .form-table th {
+  line-height: 1.8;
+  padding: 5px 0 20px;
+  width: 33%;
+}
+#rtmedia-types .form-table td {
+  padding: 0 0 12px;
+}
+
+#rtmedia-custom-css-settings .form-table th {
+  width: 40%;
+}
+#rtmedia-custom-css-settings .form-table:last-child .rtm-field-wrap {
+  width: 92%;
+}
+#rtmedia-custom-css-settings textarea {
+  height: 200px;
+  width: 100%;
+}
+
+.rtm-img-size-setting .form-table th {
+  width: 20%;
 }
 
 .rtm-tabs li {

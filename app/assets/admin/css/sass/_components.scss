@@ -39,10 +39,6 @@
 	.rtm-setting-title + & {
 		margin-top: 0;
 	}
-}
-
-.rtp-option-content {
-	margin-bottom: 12px;
 
 	&:last-child {
 		border-bottom: 0;
@@ -61,23 +57,14 @@
 			color: #444;
 			font-size: 13px;
 			font-weight: 400;
-			line-height: 1.6;
-			padding: 0 30px 0 0;
-			vertical-align: middle;
+			padding: 5px 30px 5px 0;
+			vertical-align: top;
 			width: 50%;
-
-			span {
-				color: #666;
-				display: block;
-				font-size: 12px;
-				font-weight: 400;
-				margin-top: 7px;
-			}
 		}
 
 		td {
 			font-size: 13px;
-			padding: 0;
+			padding: 0 0 5px;
 
 			fieldset label {
 				margin: 0 !important;
@@ -168,10 +155,47 @@
 	}
 }
 
-.rtmedia-admin-notice {
+.rtm-notice {
 	background: $light;
 	color: #666;
+	font-size: 12px;
     line-height: 1.6;
-    margin-top: 20px;
-    padding: 12px 16px;
+    margin-top: 10px;
+    padding: 5px 10px;
+}
+
+// Types table needs different styles
+#rtmedia-types {
+	.form-table {
+		th {
+			line-height: 1.8;
+			padding: 5px 0 20px;
+			width: 33%;
+		}
+
+		td {
+			padding: 0 0 12px;
+		}
+	}
+}
+
+#rtmedia-custom-css-settings {
+	.form-table th {
+		width: 40%;
+	}
+
+	.form-table:last-child .rtm-field-wrap {
+		width: 92%;
+	}
+
+	textarea {
+		height: 200px;
+		width: 100%;
+	}
+}
+
+.rtm-img-size-setting {
+	.form-table th {
+		width: 20%;
+	}
 }

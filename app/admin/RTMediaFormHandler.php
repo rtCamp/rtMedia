@@ -546,32 +546,45 @@ class RTMediaFormHandler {
 		$render_data = self::types_render_options( $options );
 		?>
 		<div class="rtm-option-wrapper">
+			<?php do_action( 'rtmedia_media_type_setting_message' ); ?>
+
 			<h3 class="rtm-option-title">
-				<span><?php _e( 'Media Types Settings', 'rtmedia'); ?></span>
-				<?php do_action( 'rtmedia_media_type_setting_message' ); ?>
+				<?php _e( 'Media Types Settings', 'rtmedia' ); ?>
 			</h3>
+
 			<table class="form-table">
+
 				<?php do_action( 'rtmedia_type_settings_before_heading' ); ?>
+
 				<tr>
+					<th><strong><?php _e( 'Media Type', 'rtmedia' ) ?></strong></th>
+
 					<th>
-						<h4>
-							<?php _e( 'Media Type', 'rtmedia' ) ?>
-						</h4>
+						<strong><?php _e( 'Allow Upload', 'rtmedia' ); ?></strong>
+						<span class="rtm-tooltip">
+							<i class="dashicons dashicons-info rtmicon"></i>
+							<span class="rtm-tip">
+								<?php _e( 'Allows you to upload a particular media type on your post.', 'rtmedia' ); ?>
+							</span>
+						</span>
 					</th>
+
 					<th>
-						<h4 data-tooltip class="has-tip" title="<?php _e( 'Allows you to upload a particular media type on your post.', 'rtmedia' ); ?>">
-							<abbr><?php _e( 'Allow Upload', 'rtmedia' ); ?></abbr>
-						</h4>
+						<strong><?php _e( 'Set Featured', 'rtmedia' ); ?></strong>
+						<span class="rtm-tooltip">
+							<i class="dashicons dashicons-info rtmicon"></i>
+							<span class="rtm-tip">
+								<?php _e( 'Place a specific media as a featured content on the post.', 'rtmedia' ); ?>
+							</span>
+						</span>
 					</th>
-					<th>
-						<h4 data-tooltip class="has-tip" title="<?php _e( 'Place a specific media as a featured content on the post.', 'rtmedia' ); ?>">
-							<abbr><?php _e( 'Set Featured', 'rtmedia' ); ?></abbr>
-						</h4>
-					</th>
+
 					<?php do_action( 'rtmedia_type_setting_columns_title' ) ?>
 				</tr>
-			<?php
+
+				<?php
 				do_action( 'rtmedia_type_settings_after_heading' );
+
 				foreach ( $render_data as $key => $section ) {
 					if ( isset( $section[ 'settings_visibility' ] ) && true == $section[ 'settings_visibility' ] ) {
 						do_action( 'rtmedia_type_settings_before_body' );
@@ -589,448 +602,462 @@ class RTMediaFormHandler {
 						if ( ! isset( $section[ 'extn' ] ) || ! is_array( $section[ 'extn' ] ) ) {
 							$section[ 'extn' ] = array();
 						}
-					?>
+						?>
+
 						<tr>
 							<td>
-								<?php echo $section['name']; ?>
+								<?php echo $section[ 'name' ]; ?>
 							</td>
+
 							<td>
 								<?php echo $allow_upload_checkbox; ?>
 							</td>
+
 							<td>
 								<?php echo $featured_checkbox; ?>
 							</td>
 						</tr>
-					<?php
+
+						<?php
 						do_action( 'rtmedia_type_settings_after_body', $key, $section );
 					} else {
 						echo "<input type='hidden' value='1' name='rtmedia-options[allowedTypes_" . $key . "_enabled]'>";
 						echo "<input type='hidden' value='0' name='rtmedia-options[allowedTypes_" . $key . "_featured]'>";
 					}
 				}
-			?>
+				?>
 			</table>
 		</div>
-			<?php
-			do_action( 'rtmedia_after_bp_settings' );
-			do_action( 'rtmedia_after_media_types_settings' );
+		<?php
+		do_action( 'rtmedia_after_bp_settings' );
+		do_action( 'rtmedia_after_media_types_settings' );
 	}
 
-		/**
-		 * Define sizes_render_options.
-		 *
-		 * @access static
-		 *
-		 * @param  array $options
-		 *
-		 * @return array $render
-		 */
-		static function sizes_render_options( $options ) {
-			$render = array();
-			foreach ( $options as $key => $value ) {
-				$data = explode( '_', $key );
-				if ( ! isset( $render[ $data[ 1 ] ] ) ) {
-					$render[ $data[ 1 ] ] = array();
-					$render[ $data[ 1 ] ][ 'title' ] = __( $data[ 1 ], 'rtmedia' );
-				}
-				if ( ! isset( $render[ $data[ 1 ] ][ $data[ 2 ] ] ) ) {
-					$render[ $data[ 1 ] ][ $data[ 2 ] ] = array();
-					$render[ $data[ 1 ] ][ $data[ 2 ] ][ 'title' ] = __( $data[ 2 ], 'rtmedia' );
-				}
-
-				$render[ $data[ 1 ] ][ $data[ 2 ] ][ $data[ 3 ] ] = $value;
+	/**
+	 * Define sizes_render_options.
+	 *
+	 * @access static
+	 *
+	 * @param  array $options
+	 *
+	 * @return array $render
+	 */
+	static function sizes_render_options( $options ) {
+		$render = array();
+		foreach ( $options as $key => $value ) {
+			$data = explode( '_', $key );
+			if ( ! isset( $render[ $data[ 1 ] ] ) ) {
+				$render[ $data[ 1 ] ] = array();
+				$render[ $data[ 1 ] ][ 'title' ] = __( $data[ 1 ], 'rtmedia' );
+			}
+			if ( ! isset( $render[ $data[ 1 ] ][ $data[ 2 ] ] ) ) {
+				$render[ $data[ 1 ] ][ $data[ 2 ] ] = array();
+				$render[ $data[ 1 ] ][ $data[ 2 ] ][ 'title' ] = __( $data[ 2 ], 'rtmedia' );
 			}
 
-			return $render;
+			$render[ $data[ 1 ] ][ $data[ 2 ] ][ $data[ 3 ] ] = $value;
 		}
 
-		/**
-		 * Define sizes_content.
-		 *
-		 * @access static
-		 *
-		 * @param  void
-		 *
-		 * @return void
-		 */
-		public static function sizes_content() {
-			global $rtmedia;
-			$options = self::extract_settings( 'defaultSizes', $rtmedia->options );
-			$render_data = self::sizes_render_options( $options );
-			?>
-			<div class="postbox metabox-holder">
-				<h3 class="hndle">
-					<span>Media Size Settings</span>
-				</h3>
-			</div>
-			<?php
-			//container
-			echo '<div class="rt-table large-12 rtmedia-size-content-setting">';
+		return $render;
+	}
 
-			//header
-			echo '<div class="rt-header row">';
-			echo '<h4 class="columns large-3">' . __( 'Category', 'rtmedia' ) . '</h4>';
-			echo '<h4 class="columns large-3">' . __( 'Entity', 'rtmedia' ) . '</h4>';
-			echo '<h4 class="columns large-6"><span class="large-offset-2">' . __( 'Width', 'rtmedia' ) . '</span><span class="large-offset-2">' . __( 'Height', 'rtmedia' ) . '</span><span class="large-offset-2">' . __( 'Crop', 'rtmedia' ) . '</span></h4>';
-			echo '</div>';
+	/**
+	 * Define sizes_content.
+	 *
+	 * @access static
+	 *
+	 * @param  void
+	 *
+	 * @return void
+	 */
+	public static function sizes_content() {
+		global $rtmedia;
+		$options = self::extract_settings( 'defaultSizes', $rtmedia->options );
+		$render_data = self::sizes_render_options( $options );
+		?>
 
-			//body
-			$even = 0;
-			foreach ( $render_data as $parent_key => $section ) {
-				if ( ++ $even % 2 ) {
-					echo '<div class="row rt-odd">';
-				} else {
-					echo '<div class="row rt-even">';
-				}
-				echo '<div class="columns large-3">' . ucfirst( $section[ 'title' ] ) . '</div>';
-				$entities = $section;
-				unset( $entities[ 'title' ] );
-				echo '<div class="columns large-3">';
-				foreach ( $entities as $entity ) {
-					echo '<div class="row">' . ucfirst( $entity[ 'title' ] ) . '</div>';
-				}
-				echo '</div>';
-				echo '<div class="columns large-6">';
-				foreach ( $entities as $entity ) {
-					$args = array(
-						'key' => 'defaultSizes_' . $parent_key . '_' . $entity[ 'title' ],
-					);
-					foreach ( $entity as $child_key => $value ) {
-						if ( 'title' != $child_key ) {
-							$args[ $child_key ] = $value;
+		<div class="rtm-option-wrapper rtm-img-size-setting">
+			<h3 class="rtm-option-title">
+				<?php _e( 'Media Size Settings', 'rtmedia' ); ?>
+			</h3>
+
+			<table class="form-table">
+				<tr>
+					<th><strong><?php _e( 'Category', 'rtmedia' ) ?></strong></th>
+					<th><strong><?php _e( 'Entity', 'rtmedia' ); ?></strong></th>
+					<th><strong><?php _e( 'Width', 'rtmedia' ); ?></strong></th>
+					<th><strong><?php _e( 'Height', 'rtmedia' ); ?></strong></th>
+					<th><strong><?php _e( 'Crop', 'rtmedia' ); ?></strong></th>
+				</tr>
+
+				<?php foreach ( $render_data as $parent_key => $section ) { ?>
+					<?php $entities = $section; ?>
+					<tr>
+						<td>
+							<?php echo ucfirst( $section[ 'title' ] ); ?>
+						</td>
+						<td>
+							<?php
+							unset( $entities[ 'title' ] );
+							foreach ( $entities as $entity ) {
+								echo '<div>';
+								echo ucfirst( $entity[ 'title' ] );
+								echo '</div>';
+							}
+							?>
+						</td>
+						<?php
+						foreach ( $entities as $entity ) {
+
+							echo '<td>';
+
+							$args = array(
+								'key' => 'defaultSizes_' . $parent_key . '_' . $entity[ 'title' ],
+							);
+							foreach ( $entity as $child_key => $value ) {
+								if ( 'title' != $child_key ) {
+									$args[ $child_key ] = $value;
+								}
+							}
+							self::dimensions( $args );
+							echo '</td>';
 						}
-					}
-					self::dimensions( $args );
+						?>
+					</tr>
+					<?php
 				}
-				echo '</div>';
-				echo '</div>';
-			}
-
-			echo '</div>';
-			$options = $rtmedia->options;
-
-			// Checking if user has subscribed any plan for encoding
-			$rtmedia_encoding_api_key = get_rtmedia_encoding_api_key();
-
-			if ( isset( $rtmedia_encoding_api_key ) && $rtmedia_encoding_api_key != '' && $rtmedia_encoding_api_key ) {
-				$render_video_thumb = array(
-					'title' => __( 'Number of thumbnails to generate on video upload', 'rtmedia' ),
-					'callback' => array( 'RTMediaFormHandler', 'number' ),
-					'args' => array(
-						'key' => 'general_videothumbs',
-						'value' => $options[ 'general_videothumbs' ],
-						'class' => array( 'rtmedia-setting-text-box' ),
-						'desc' => __( ' If you choose more than 1 thumbnail, your users will be able to change the thumbnail by going to video \'edit\' section. Maximum value is 10.', 'rtmedia' ),
-						'min' => 1,
-						'max' => 10,
-					)
-				);
 				?>
-				<div class="postbox metabox-holder">
-					<?php self::render_option_group( __( 'Encoding Settings', 'rtmedia' ) ); ?>
-				</div>
-				<?php self::render_option_content( $render_video_thumb ); ?>
-				<?php
-			}
+			</table>
 
-			$render_jpeg_image_quality = array(
-				'title' => __( 'JPEG/JPG image quality (1-100)', 'rtmedia' ),
+		</div>
+
+		<?php
+		$options = $rtmedia->options;
+
+		// Checking if user has subscribed any plan for encoding
+		$rtmedia_encoding_api_key = get_rtmedia_encoding_api_key();
+
+		if ( isset( $rtmedia_encoding_api_key ) && $rtmedia_encoding_api_key != '' && $rtmedia_encoding_api_key ) {
+			$render_video_thumb = array(
+				'title' => __( 'Number of thumbnails to generate on video upload', 'rtmedia' ),
 				'callback' => array( 'RTMediaFormHandler', 'number' ),
 				'args' => array(
-					'key' => 'general_jpeg_image_quality',
-					'value' => $options[ 'general_jpeg_image_quality' ],
+					'key' => 'general_videothumbs',
+					'value' => $options[ 'general_videothumbs' ],
 					'class' => array( 'rtmedia-setting-text-box' ),
-					'desc' => __( 'Enter JPEG/JPG Image Quality. Minimum value is 1. 100 is original quality.', 'rtmedia' ),
+					'desc' => __( ' If you choose more than 1 thumbnail, your users will be able to change the thumbnail by going to video \'edit\' section. Maximum value is 10.', 'rtmedia' ),
 					'min' => 1,
-					'max' => 100,
+					'max' => 10,
 				)
 			);
 			?>
 			<div class="postbox metabox-holder">
-				<?php self::render_option_group( __( 'Image Quality', 'rtmedia' ) ); ?>
+				<?php self::render_option_group( __( 'Encoding Settings', 'rtmedia' ) ); ?>
 			</div>
+			<?php self::render_option_content( $render_video_thumb ); ?>
+			<?php
+		}
+
+		$render_jpeg_image_quality = array(
+			'title' => __( 'JPEG/JPG image quality (1-100)', 'rtmedia' ),
+			'callback' => array( 'RTMediaFormHandler', 'number' ),
+			'args' => array(
+				'key' => 'general_jpeg_image_quality',
+				'value' => $options[ 'general_jpeg_image_quality' ],
+				'class' => array( 'rtmedia-setting-text-box' ),
+				'desc' => __( 'Enter JPEG/JPG Image Quality. Minimum value is 1. 100 is original quality.', 'rtmedia' ),
+				'min' => 1,
+				'max' => 100,
+			)
+		);
+		?>
+
+		<div class="rtm-option-wrapper">
+			<?php self::render_option_group( __( 'Image Quality', 'rtmedia' ) ); ?>
 			<?php self::render_option_content( $render_jpeg_image_quality ); ?>
-			<?php
-		}
+		</div>
 
-		/**
-		 * Define custom css content.
-		 *
-		 * @access static
-		 *
-		 * @param  void
-		 *
-		 * @return void
-		 */
-		public static function custom_css_content() {
-			global $rtmedia;
-			$options = self::extract_settings( 'styles', $rtmedia->options );
-			$render_data = self::custom_css_render_options( $options );
+		<?php
+	}
 
-			$render_groups = array();
-			$render_groups[ 10 ] = __( 'Custom CSS settings', 'rtmedia' );
+	/**
+	 * Define custom css content.
+	 *
+	 * @access static
+	 *
+	 * @param  void
+	 *
+	 * @return void
+	 */
+	public static function custom_css_content() {
+		global $rtmedia;
+		$options = self::extract_settings( 'styles', $rtmedia->options );
+		$render_data = self::custom_css_render_options( $options );
 
-			self::render_tab_content( $render_data, $render_groups, 10 );
-		}
+		$render_groups = array();
+		$render_groups[ 10 ] = __( 'Custom CSS settings', 'rtmedia' );
 
-		/**
-		 * Render custom css options.
-		 *
-		 * @access static
-		 *
-		 * @param  array $options
-		 *
-		 * @return array $render
-		 */
-		static function custom_css_render_options( $options ) {
-			global $rtmedia;
+		self::render_tab_content( $render_data, $render_groups, 10 );
+	}
 
-			$render = array(
-				'disable_styles' => array(
-					'title' => __( 'rtMedia default styles', 'rtmedia' ),
-					'callback' => array( 'RTMediaFormHandler', 'checkbox' ),
-					'args' => array(
-						'id' => 'rtmedia-disable-styles',
-						'key' => 'styles_enabled',
-						'value' => $options[ 'styles_enabled' ],
-						'desc' => __( 'Load default rtMedia styles. You need to write your own style for rtMedia if you disable it.', 'rtmedia' ),
-					),
-					'group' => 10,
+	/**
+	 * Render custom css options.
+	 *
+	 * @access static
+	 *
+	 * @param  array $options
+	 *
+	 * @return array $render
+	 */
+	static function custom_css_render_options( $options ) {
+		global $rtmedia;
+
+		$render = array(
+			'disable_styles' => array(
+				'title' => __( 'rtMedia default styles', 'rtmedia' ),
+				'callback' => array( 'RTMediaFormHandler', 'checkbox' ),
+				'args' => array(
+					'id' => 'rtmedia-disable-styles',
+					'key' => 'styles_enabled',
+					'value' => $options[ 'styles_enabled' ],
+					'desc' => __( 'Load default rtMedia styles. You need to write your own style for rtMedia if you disable it.', 'rtmedia' ),
 				),
-				'custom_styles' => array(
-					'title' => __( 'Paste your CSS code', 'rtmedia' ),
-					'callback' => array( 'RTMediaFormHandler', 'textarea' ),
-					'args' => array(
-						'id' => 'rtmedia-custom-css',
-						'key' => 'styles_custom',
-						'value' => stripcslashes( $options[ 'styles_custom' ] ),
-						'desc' => __( 'Custom rtMedia CSS container', 'rtmedia' ),
-					),
-					'group' => 10,
+				'group' => 10,
+			),
+			'custom_styles' => array(
+				'title' => __( 'Paste your CSS code', 'rtmedia' ),
+				'callback' => array( 'RTMediaFormHandler', 'textarea' ),
+				'args' => array(
+					'id' => 'rtmedia-custom-css',
+					'key' => 'styles_custom',
+					'value' => stripcslashes( $options[ 'styles_custom' ] ),
+					'desc' => __( 'Custom rtMedia CSS container', 'rtmedia' ),
 				),
-			);
+				'group' => 10,
+			),
+		);
 
-			return $render;
-		}
+		return $render;
+	}
 
-		/**
-		 * Render privacy options.
-		 *
-		 * @access static
-		 *
-		 * @param  array $options
-		 *
-		 * @return array $render
-		 */
-		static function privacy_render_options( $options ) {
-			global $rtmedia;
+	/**
+	 * Render privacy options.
+	 *
+	 * @access static
+	 *
+	 * @param  array $options
+	 *
+	 * @return array $render
+	 */
+	static function privacy_render_options( $options ) {
+		global $rtmedia;
 
-			$render = array(
-				'enable' => array(
-					'title' => __( 'Enable privacy', 'rtmedia' ),
-					'callback' => array( 'RTMediaFormHandler', 'checkbox' ),
-					'args' => array(
-						'id' => 'rtmedia-privacy-enable',
-						'key' => 'privacy_enabled',
-						'value' => $options[ 'privacy_enabled' ],
-						'desc' => __( 'Enable privacy in rtMedia', 'rtmedia' ),
-					)
+		$render = array(
+			'enable' => array(
+				'title' => __( 'Enable privacy', 'rtmedia' ),
+				'callback' => array( 'RTMediaFormHandler', 'checkbox' ),
+				'args' => array(
+					'id' => 'rtmedia-privacy-enable',
+					'key' => 'privacy_enabled',
+					'value' => $options[ 'privacy_enabled' ],
+					'desc' => __( 'Enable privacy in rtMedia', 'rtmedia' ),
+				)
+			),
+			'default' => array(
+				'title' => __( 'Default privacy', 'rtmedia' ),
+				'callback' => array( 'RTMediaFormHandler', 'radio' ),
+				'args' => array(
+					'key' => 'privacy_default',
+					'radios' => $rtmedia->privacy_settings[ 'levels' ],
+					'default' => $options[ 'privacy_default' ],
+					'desc' => __( 'Set default privacy for media', 'rtmedia' ),
 				),
-				'default' => array(
-					'title' => __( 'Default privacy', 'rtmedia' ),
-					'callback' => array( 'RTMediaFormHandler', 'radio' ),
-					'args' => array(
-						'key' => 'privacy_default',
-						'radios' => $rtmedia->privacy_settings[ 'levels' ],
-						'default' => $options[ 'privacy_default' ],
-						'desc' => __( 'Set default privacy for media', 'rtmedia' ),
-					),
+			),
+			'user_override' => array(
+				'title' => __( 'Allow users to set privacy for their content', 'rtmedia' ),
+				'callback' => array( 'RTMediaFormHandler', 'checkbox' ),
+				'args' => array(
+					'key' => 'privacy_userOverride',
+					'value' => $options[ 'privacy_userOverride' ],
+					'desc' => __( 'If you choose this, users will be able to change privacy of their own uploads.', 'rtmedia' ),
 				),
-				'user_override' => array(
-					'title' => __( 'Allow users to set privacy for their content', 'rtmedia' ),
-					'callback' => array( 'RTMediaFormHandler', 'checkbox' ),
-					'args' => array(
-						'key' => 'privacy_userOverride',
-						'value' => $options[ 'privacy_userOverride' ],
-						'desc' => __( 'If you choose this, users will be able to change privacy of their own uploads.', 'rtmedia' ),
-					),
-					'after_content' => __( 'For group uploads, BuddyPress groups privacy is used.', 'rtmedia' ),
+				'after_content' => __( 'For group uploads, BuddyPress groups privacy is used.', 'rtmedia' ),
+			),
+		);
+
+		return $render;
+	}
+
+	/**
+	 * Render privacy content.
+	 *
+	 * @access static
+	 *
+	 * @param  void
+	 *
+	 * @return void
+	 */
+	public static function privacy_content() {
+		global $rtmedia;
+		$options = self::extract_settings( 'privacy', $rtmedia->options );
+
+		$render_data = self::privacy_render_options( $options );
+		self::render_tab_content( $render_data );
+	}
+
+	/**
+	 * Render buddypress options.
+	 *
+	 * @access static
+	 *
+	 * @param  array $options
+	 *
+	 * @return array $render
+	 */
+	static function buddypress_render_options( $options ) {
+		$render = array(
+			'rtmedia-enable-on-profile' => array(
+				'title' => __( 'Enable media in profile', 'rtmedia' ),
+				'callback' => array( 'RTMediaFormHandler', 'checkbox' ),
+				'args' => array(
+					'key' => 'buddypress_enableOnProfile',
+					'value' => $options[ 'buddypress_enableOnProfile' ],
+					'desc' => __( 'Enable Media on BuddyPress Profile', 'rtmedia' ),
 				),
-			);
-
-			return $render;
-		}
-
-		/**
-		 * Render privacy content.
-		 *
-		 * @access static
-		 *
-		 * @param  void
-		 *
-		 * @return void
-		 */
-		public static function privacy_content() {
-			global $rtmedia;
-			$options = self::extract_settings( 'privacy', $rtmedia->options );
-
-			$render_data = self::privacy_render_options( $options );
-			self::render_tab_content( $render_data );
-		}
-
-		/**
-		 * Render buddypress options.
-		 *
-		 * @access static
-		 *
-		 * @param  array $options
-		 *
-		 * @return array $render
-		 */
-		static function buddypress_render_options( $options ) {
-			$render = array(
-				'rtmedia-enable-on-profile' => array(
-					'title' => __( 'Enable media in profile', 'rtmedia' ),
-					'callback' => array( 'RTMediaFormHandler', 'checkbox' ),
-					'args' => array(
-						'key' => 'buddypress_enableOnProfile',
-						'value' => $options[ 'buddypress_enableOnProfile' ],
-						'desc' => __( 'Enable Media on BuddyPress Profile', 'rtmedia' ),
-					),
-					'group' => 10,
+				'group' => 10,
+			),
+			'rtmedia-enable-on-group' => array(
+				'title' => __( 'Enable media in group', 'rtmedia' ),
+				'callback' => array( 'RTMediaFormHandler', 'checkbox' ),
+				'args' => array(
+					'key' => 'buddypress_enableOnGroup',
+					'value' => $options[ 'buddypress_enableOnGroup' ],
+					'desc' => __( 'Enable Media on BuddyPress Groups', 'rtmedia' ),
 				),
-				'rtmedia-enable-on-group' => array(
-					'title' => __( 'Enable media in group', 'rtmedia' ),
-					'callback' => array( 'RTMediaFormHandler', 'checkbox' ),
-					'args' => array(
-						'key' => 'buddypress_enableOnGroup',
-						'value' => $options[ 'buddypress_enableOnGroup' ],
-						'desc' => __( 'Enable Media on BuddyPress Groups', 'rtmedia' ),
-					),
-					'group' => 10,
+				'group' => 10,
+			),
+			'rtmedia-enable-on-activity' => array(
+				'title' => __( 'Allow upload from activity stream', 'rtmedia' ),
+				'callback' => array( 'RTMediaFormHandler', 'checkbox' ),
+				'args' => array(
+					'key' => 'buddypress_enableOnActivity',
+					'value' => $options[ 'buddypress_enableOnActivity' ],
+					'desc' => __( 'Allow upload using status update box present on activity stream page', 'rtmedia' ),
+					'id' => 'rtmedia-bp-enable-activity',
 				),
-				'rtmedia-enable-on-activity' => array(
-					'title' => __( 'Allow upload from activity stream', 'rtmedia' ),
-					'callback' => array( 'RTMediaFormHandler', 'checkbox' ),
-					'args' => array(
-						'key' => 'buddypress_enableOnActivity',
-						'value' => $options[ 'buddypress_enableOnActivity' ],
-						'desc' => __( 'Allow upload using status update box present on activity stream page', 'rtmedia' ),
-						'id' => 'rtmedia-bp-enable-activity',
-					),
-					'group' => 10,
+				'group' => 10,
+			),
+			'rtmedia-activity-feed-limit' => array(
+				'title' => __( 'Number of media items to show in activity stream', 'rtmedia' ),
+				'callback' => array( 'RTMediaFormHandler', 'number' ),
+				'args' => array(
+					'key' => 'buddypress_limitOnActivity',
+					'value' => $options[ 'buddypress_limitOnActivity' ],
+					'desc' => __( 'With bulk uploads activity, the stream may get flooded. You can control the maximum number of media items or files per activity. This limit will not affect the actual number of uploads. This is only for display. <em>0</em> means unlimited.', 'rtmedia' ),
+					'class' => array( 'rtmedia-setting-text-box rtmedia-bp-activity-setting' ),
+					'min' => 0,
 				),
-				'rtmedia-activity-feed-limit' => array(
-					'title' => __( 'Number of media items to show in activity stream', 'rtmedia' ),
-					'callback' => array( 'RTMediaFormHandler', 'number' ),
-					'args' => array(
-						'key' => 'buddypress_limitOnActivity',
-						'value' => $options[ 'buddypress_limitOnActivity' ],
-						'desc' => __( 'With bulk uploads activity, the stream may get flooded. You can control the maximum number of media items or files per activity. This limit will not affect the actual number of uploads. This is only for display. <em>0</em> means unlimited.', 'rtmedia' ),
-						'class' => array( 'rtmedia-setting-text-box rtmedia-bp-activity-setting' ),
-						'min' => 0,
-					),
-					'group' => 10,
+				'group' => 10,
+			),
+			'general_enableAlbums' => array(
+				'title' => __( 'Organize media into albums', 'rtmedia' ),
+				'callback' => array( 'RTMediaFormHandler', 'checkbox' ),
+				'args' => array(
+					'id' => 'rtmedia-album-enable',
+					'key' => 'general_enableAlbums',
+					'value' => $options[ 'general_enableAlbums' ],
+					'desc' => __( 'This will add \'album\' tab to BuddyPress profile and group depending on the ^above^ settings.', 'rtmedia' ),
 				),
-				'general_enableAlbums' => array(
-					'title' => __( 'Organize media into albums', 'rtmedia' ),
-					'callback' => array( 'RTMediaFormHandler', 'checkbox' ),
-					'args' => array(
-						'id' => 'rtmedia-album-enable',
-						'key' => 'general_enableAlbums',
-						'value' => $options[ 'general_enableAlbums' ],
-						'desc' => __( 'This will add \'album\' tab to BuddyPress profile and group depending on the ^above^ settings.', 'rtmedia' ),
-					),
-					'group' => 50,
-				),
-			);
+				'group' => 50,
+			),
+		);
 
-			return $render;
-		}
+		return $render;
+	}
 
-		/**
-		 * Define buddypress content.
-		 *
-		 * @access static
-		 *
-		 * @param  void
-		 *
-		 * @return void
-		 */
-		public static function buddypress_content() {
-			global $rtmedia;
+	/**
+	 * Define buddypress content.
+	 *
+	 * @access static
+	 *
+	 * @param  void
+	 *
+	 * @return void
+	 */
+	public static function buddypress_content() {
+		global $rtmedia;
 
-			$general_group = array();
-			$general_group[ 10 ] = 'Integration With BuddyPress Features';
-			$general_group[ 50 ] = 'Album Settings';
-			$general_group = apply_filters( 'rtmedia_buddypress_setting_group', $general_group );
+		$general_group = array();
+		$general_group[ 10 ] = 'Integration With BuddyPress Features';
+		$general_group[ 50 ] = 'Album Settings';
+		$general_group = apply_filters( 'rtmedia_buddypress_setting_group', $general_group );
 
-			$render_options = self::buddypress_render_options( $rtmedia->options );
-			$render_options = apply_filters( 'rtmedia_album_control_setting', $render_options, $rtmedia->options );
+		$render_options = self::buddypress_render_options( $rtmedia->options );
+		$render_options = apply_filters( 'rtmedia_album_control_setting', $render_options, $rtmedia->options );
 
-			$render_options = apply_filters( 'rtmedia_buddypress_setting_options', $render_options );
+		$render_options = apply_filters( 'rtmedia_buddypress_setting_options', $render_options );
 
-			self::render_tab_content( $render_options, $general_group, 10 );
+		self::render_tab_content( $render_options, $general_group, 10 );
 
-			do_action( 'rtmedia_buddypress_setting_content' );
-		}
+		do_action( 'rtmedia_buddypress_setting_content' );
+	}
 
-		/**
-		 * Define rtForm settings tabs content.
-		 *
-		 * @access static
-		 *
-		 * @param  type  $page
-		 * @param  array $sub_tabs
-		 *
-		 * @return void
-		 */
-		public static function rtForm_settings_tabs_content( $page, $sub_tabs ) {
-			//  $rtmedia_admin_ui_handler = "<div class='section-container auto' data-options='deep_linking: true' data-section=''>";
-			//	echo "<div class='clearfix rtm-settings-tab-container'>";
-			$rtmedia_admin_ui_handler = "<div class='clearfix rtm-settings-tab-container vertical-tabs'><ul class='rtm-tabs' data-tab>";
-			$rtmedia_admin_ui_handler = apply_filters( 'rtmedia_admin_ui_handler_filter', $rtmedia_admin_ui_handler );
-			echo $rtmedia_admin_ui_handler;
-			$i = 1;
-			$sub_tabs = apply_filters( 'rtmedia_pro_settings_tabs_content', $sub_tabs );
-			ksort( $sub_tabs );
-			foreach ( $sub_tabs as $tab ) {
-				$active_class = '';
-				if ( 1 == $i ) {
-					$active_class = 'active';
-				}
-				$i ++;
-				if ( isset( $tab[ 'icon' ] ) && ! empty( $tab[ 'icon' ] ) ) {
-					$icon = '<i class="' . $tab[ 'icon' ] . ' dashicons rtmicon"></i>';
-				}
-				echo '<li class="' . $active_class . '"><a id="tab-' . substr( $tab[ 'href' ], 1 ) . '" title="' . $tab[ 'title' ] . '" href="' . $tab[ 'href' ] . '" class="rtmedia-tab-title ' . sanitize_title( $tab[ 'name' ] ) . '">' . $icon . '<span>' . $tab[ 'name' ] . '</span></a></li>';
+	/**
+	 * Define rtForm settings tabs content.
+	 *
+	 * @access static
+	 *
+	 * @param  type  $page
+	 * @param  array $sub_tabs
+	 *
+	 * @return void
+	 */
+	public static function rtForm_settings_tabs_content( $page, $sub_tabs ) {
+		//  $rtmedia_admin_ui_handler = "<div class='section-container auto' data-options='deep_linking: true' data-section=''>";
+		//	echo "<div class='clearfix rtm-settings-tab-container'>";
+		$rtmedia_admin_ui_handler = "<div class='clearfix rtm-settings-tab-container vertical-tabs'><ul class='rtm-tabs' data-tab>";
+		$rtmedia_admin_ui_handler = apply_filters( 'rtmedia_admin_ui_handler_filter', $rtmedia_admin_ui_handler );
+		echo $rtmedia_admin_ui_handler;
+		$i = 1;
+		$sub_tabs = apply_filters( 'rtmedia_pro_settings_tabs_content', $sub_tabs );
+		ksort( $sub_tabs );
+		foreach ( $sub_tabs as $tab ) {
+			$active_class = '';
+			if ( 1 == $i ) {
+				$active_class = 'active';
 			}
-			echo '</ul>';
-			?>
-
-			<?php
-			$rtmedia_admin_tab_content_handler = "<div class='tabs-content rtm-tab-content'>";
-			$rtmedia_admin_tab_content_handler = apply_filters( 'rtmedia_admin_tab_content_handler', $rtmedia_admin_tab_content_handler );
-			echo $rtmedia_admin_tab_content_handler;
-			$k = 1;
-			foreach ( $sub_tabs as $tab ) {
-				$active_class = '';
-				if ( 1 == $k ) {
-					$active_class = ' active';
-				}
-				$k ++;
-				if ( isset( $tab[ 'icon' ] ) && ! empty( $tab[ 'icon' ] ) ) {
-					$icon = '<i class="' . $tab[ 'icon' ] . '"></i>';
-				}
-				$tab_without_hash = explode( '#', $tab[ 'href' ] );
-				$tab_without_hash = $tab_without_hash[ 1 ];
-				echo '<div class="content' . $active_class . '" id="' . $tab_without_hash . '">';
-				echo '<h3 class="rtm-setting-title">' . $tab[ 'name' ] . '</h3>';
-				call_user_func( $tab[ 'callback' ], $page );
-				echo '</div>';
+			$i ++;
+			if ( isset( $tab[ 'icon' ] ) && ! empty( $tab[ 'icon' ] ) ) {
+				$icon = '<i class="' . $tab[ 'icon' ] . ' dashicons rtmicon"></i>';
 			}
+			echo '<li class="' . $active_class . '"><a id="tab-' . substr( $tab[ 'href' ], 1 ) . '" title="' . $tab[ 'title' ] . '" href="' . $tab[ 'href' ] . '" class="rtmedia-tab-title ' . sanitize_title( $tab[ 'name' ] ) . '">' . $icon . '<span>' . $tab[ 'name' ] . '</span></a></li>';
+		}
+		echo '</ul>';
+		?>
+
+		<?php
+		$rtmedia_admin_tab_content_handler = "<div class='tabs-content rtm-tab-content'>";
+		$rtmedia_admin_tab_content_handler = apply_filters( 'rtmedia_admin_tab_content_handler', $rtmedia_admin_tab_content_handler );
+		echo $rtmedia_admin_tab_content_handler;
+		$k = 1;
+		foreach ( $sub_tabs as $tab ) {
+			$active_class = '';
+			if ( 1 == $k ) {
+				$active_class = ' active';
+			}
+			$k ++;
+			if ( isset( $tab[ 'icon' ] ) && ! empty( $tab[ 'icon' ] ) ) {
+				$icon = '<i class="' . $tab[ 'icon' ] . '"></i>';
+			}
+			$tab_without_hash = explode( '#', $tab[ 'href' ] );
+			$tab_without_hash = $tab_without_hash[ 1 ];
+			echo '<div class="content' . $active_class . '" id="' . $tab_without_hash . '">';
+			echo '<h3 class="rtm-setting-title">' . $tab[ 'name' ] . '</h3>';
+			call_user_func( $tab[ 'callback' ], $page );
 			echo '</div>';
-			?>
+		}
+		echo '</div>';
+		?>
 		</div>
 		<?php
 	}
@@ -1121,7 +1148,7 @@ class RTMediaFormHandler {
 
 	public static function render_option_group( $group ) {
 		?>
-		<h3 class="rtm-option-title"><span><?php echo $group; ?></span></h3>
+		<h3 class="rtm-option-title"><?php echo $group; ?></h3>
 		<?php
 	}
 
@@ -1132,31 +1159,29 @@ class RTMediaFormHandler {
 
 	public static function render_option_content( $option ) {
 		?>
-		<div class="rtp-option-content">
 
-			<table class="form-table">
-				<tr>
-					<th>
-						<?php echo $option[ 'title' ]; ?>
-					</th>
-					<td>
-						<fieldset data-type="text">
-							<span class="rtm-field-wrap"><?php call_user_func( $option[ 'callback' ], $option[ 'args' ] ); ?></span>
-							<span class="rtm-tooltip">
-								<i class="dashicons dashicons-info rtmicon"></i>
-								<span class="rtm-tip">
-									<?php echo ( isset( $option[ 'args' ][ 'desc' ] ) ) ? $option[ 'args' ][ 'desc' ] : 'NA'; ?>
-								</span>
+		<table class="form-table">
+			<tr>
+				<th>
+					<?php echo $option[ 'title' ]; ?>
+				</th>
+				<td>
+					<fieldset>
+						<span class="rtm-field-wrap"><?php call_user_func( $option[ 'callback' ], $option[ 'args' ] ); ?></span>
+						<span class="rtm-tooltip">
+							<i class="dashicons dashicons-info rtmicon"></i>
+							<span class="rtm-tip">
+								<?php echo ( isset( $option[ 'args' ][ 'desc' ] ) ) ? $option[ 'args' ][ 'desc' ] : 'NA'; ?>
 							</span>
-						</fieldset>
-					</td>
-				</tr>
-			</table>
-		</div>
+						</span>
+					</fieldset>
+				</td>
+			</tr>
+		</table>
 		<?php
 		if ( isset( $option[ 'after_content' ] ) ) {
 			?>
-			<div class="rtmedia-info rtmedia-admin-notice">
+			<div class="rtm-message rtm-notice">
 				<?php echo $option[ 'after_content' ]; ?>
 			</div>
 			<?php
