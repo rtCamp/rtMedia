@@ -25,7 +25,7 @@ class rtDimensions extends rtForm {
 	 *
 	 * @return int $id_count
 	 */
-	private function get_default_id(){
+	private function get_default_id() {
 		return self::$id_count;
 	}
 
@@ -38,7 +38,7 @@ class rtDimensions extends rtForm {
 	 *
 	 * @return int $id_count
 	 */
-	private function update_default_id(){
+	private function update_default_id() {
 		self::$id_count ++;
 	}
 
@@ -51,7 +51,7 @@ class rtDimensions extends rtForm {
 	 *
 	 * @return string $default_class
 	 */
-	private function get_default_class(){
+	private function get_default_class() {
 		return self::$default_class;
 	}
 
@@ -65,12 +65,12 @@ class rtDimensions extends rtForm {
 	 *
 	 * @return string $html
 	 */
-	private function embedd_class( $element, $class = null ){
+	private function embedd_class( $element, $class = null ) {
 		$html = 'class = "' . $this->get_default_class();
 
-		if ( isset( $class ) ){
+		if ( isset( $class ) ) {
 
-			if ( is_array( $class ) ){
+			if ( is_array( $class ) ) {
 				$html .= ' ' . implode( ' ', $class );
 			} else {
 				throw new rtFormsInvalidArgumentsException( 'class [' . $element . ']' );
@@ -90,7 +90,7 @@ class rtDimensions extends rtForm {
 	 *
 	 * @return string $html
 	 */
-	protected function generate_dimensions( $attributes ){
+	protected function generate_dimensions( $attributes ) {
 		$element = 'rtDimension';
 		global $rtmedia;
 		$defaults = array(
@@ -139,14 +139,14 @@ class rtDimensions extends rtForm {
 			) ) . '</td>';
 		}
 
-		if ( $desc && $show_desc ){
+		if ( $desc && $show_desc ) {
 			$html .= '<span class="clearfix large-offset-3 description">' . $desc . '</span>';
 		}
 
 //		$html .= '</div>';
 
-		if ( isset( $attributes['label'] ) ){
-			$html = parent::enclose_label( 'container', $html, $attributes['label'] );
+		if ( isset( $attributes[ 'label' ] ) ) {
+			$html = parent::enclose_label( 'container', $html, $attributes[ 'label' ] );
 		}
 
 		return $html;
@@ -161,7 +161,7 @@ class rtDimensions extends rtForm {
 	 *
 	 * @return void
 	 */
-	public function get_dimensions( $attributes = '' ){
+	public function get_dimensions( $attributes = '' ) {
 		return $this->generate_dimensions( $attributes );
 	}
 
