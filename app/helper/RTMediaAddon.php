@@ -85,59 +85,7 @@ if ( ! class_exists( 'RTMediaAddon' ) ) {
 				'callback' => array( $rtmedia_admin->rtmedia_encoding, 'encoding_service_intro' )
 			);
 
-			/* 			$tabs[] = array(
-			  'title' => __('Themes', 'rtmedia'),
-			  'name' => __('Themes', 'rtmedia'),
-			  'href' => '#bpm-themes',
-			  'callback' => array($this, 'themes_content')
-			  ); */
-			?>
-			<div id="rtm-addons">
-				<div class="horizontal-tabs">
-					<dl class='tabs' data-tab>
-			<?php
-			$i = 1;
-			foreach ( $tabs as $tab ) {
-				$active_class = '';
-				if ( 1 == $i ) {
-					$active_class = 'active';
-				}
-				$i ++;
-				?>
-							<dd class="<?php echo $active_class ?>">
-								<a id="tab-<?php echo substr( $tab[ 'href' ], 1 ) ?>" title="<?php echo $tab[ 'title' ] ?>" href="<?php echo $tab[ 'href' ] ?>" class="rtmedia-tab-title <?php echo sanitize_title( $tab[ 'name' ] ) ?>"><?php echo $tab[ 'name' ] ?></a>
-							</dd>
-				<?php
-			}
-			?>
-					</dl>
-
-			<?php
-			$k = 1;
-			$active_class = '';
-			echo "<div class='tabs-content'>";
-			foreach ( $tabs as $tab ) {
-				$active_class = '';
-				if ( 1 == $k ) {
-					$active_class = ' active';
-				}
-				$k ++;
-				if ( isset( $tab[ 'icon' ] ) && ! empty( $tab[ 'icon' ] ) ) {
-					$icon = '<i class="' . $tab[ 'icon' ] . '"></i>';
-				}
-				$tab_without_hash = explode( '#', $tab[ 'href' ] );
-				$tab_without_hash = $tab_without_hash[ 1 ];
-				echo '<div class="row content' . $active_class . '" id="' . $tab_without_hash . '">';
-				echo '<div class="large-12 columns">';
-				call_user_func( $tab[ 'callback' ] );
-				echo '</div>';
-				echo '</div>';
-			}
-			echo '</div>';
-			?>
-				</div>
-			</div>
-			<?php
+			RTMediaAdmin::render_admin_ui( 'rtmedia-addons', $tabs );
 		}
 
 		/**

@@ -1023,53 +1023,12 @@ class RTMediaFormHandler {
 	 * @return void
 	 */
 	public static function rtForm_settings_tabs_content( $page, $sub_tabs ) {
-		//  $rtmedia_admin_ui_handler = "<div class='section-container auto' data-options='deep_linking: true' data-section=''>";
-		//	echo "<div class='clearfix rtm-settings-tab-container'>";
-		$rtmedia_admin_ui_handler = "<div class='clearfix rtm-settings-tab-container vertical-tabs'><ul class='rtm-tabs' data-tab>";
-		$rtmedia_admin_ui_handler = apply_filters( 'rtmedia_admin_ui_handler_filter', $rtmedia_admin_ui_handler );
-		echo $rtmedia_admin_ui_handler;
-		$i = 1;
-		$sub_tabs = apply_filters( 'rtmedia_pro_settings_tabs_content', $sub_tabs );
-		ksort( $sub_tabs );
-		foreach ( $sub_tabs as $tab ) {
-			$active_class = '';
-			if ( 1 == $i ) {
-				$active_class = 'active';
-			}
-			$i ++;
-			if ( isset( $tab[ 'icon' ] ) && ! empty( $tab[ 'icon' ] ) ) {
-				$icon = '<i class="' . $tab[ 'icon' ] . ' dashicons rtmicon"></i>';
-			}
-			echo '<li class="' . $active_class . '"><a id="tab-' . substr( $tab[ 'href' ], 1 ) . '" title="' . $tab[ 'title' ] . '" href="' . $tab[ 'href' ] . '" class="rtmedia-tab-title ' . sanitize_title( $tab[ 'name' ] ) . '">' . $icon . '<span>' . $tab[ 'name' ] . '</span></a></li>';
-		}
-		echo '</ul>';
-		?>
-
-		<?php
-		$rtmedia_admin_tab_content_handler = "<div class='tabs-content rtm-tab-content'>";
-		$rtmedia_admin_tab_content_handler = apply_filters( 'rtmedia_admin_tab_content_handler', $rtmedia_admin_tab_content_handler );
-		echo $rtmedia_admin_tab_content_handler;
-		$k = 1;
-		foreach ( $sub_tabs as $tab ) {
-			$active_class = '';
-			if ( 1 == $k ) {
-				$active_class = ' active';
-			}
-			$k ++;
-			if ( isset( $tab[ 'icon' ] ) && ! empty( $tab[ 'icon' ] ) ) {
-				$icon = '<i class="' . $tab[ 'icon' ] . '"></i>';
-			}
-			$tab_without_hash = explode( '#', $tab[ 'href' ] );
-			$tab_without_hash = $tab_without_hash[ 1 ];
-			echo '<div class="content' . $active_class . '" id="' . $tab_without_hash . '">';
-			echo '<h3 class="rtm-setting-title">' . $tab[ 'name' ] . '</h3>';
-			call_user_func( $tab[ 'callback' ], $page );
-			echo '</div>';
-		}
-		echo '</div>';
-		?>
-		</div>
-		<?php
+		$args = array(
+			'wrapper_class' => array(
+				'rtm-settings-tab-container',
+			),
+		);
+		RTMediaAdmin::render_admin_ui( $page, $sub_tabs, $args );
 	}
 
 	/**
