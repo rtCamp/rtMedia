@@ -1,14 +1,48 @@
 @media #{$large-up} {
 
 	.rtm-setting-container {
+		float: left;
 		width: 78.2%;
 	}
 
 	.rtm-sidebar {
+		float: right;
 		width: 20%;
 
 		.postbox {
 			min-width: 0;
+		}
+	}
+
+	.rtm-field-wrap {
+		max-width: 92%;
+	}
+
+	.rtm-tip {
+
+		&:after, &:before {
+			right: 100%;
+			top: 15px;
+			border: solid transparent;
+			content: " ";
+			height: 0;
+			width: 0;
+			position: absolute;
+			pointer-events: none;
+		}
+
+		&:after {
+			border-color: rgba(255, 250, 240, 0);
+			border-right-color: #fffAF0;
+			border-width: 6px;
+			margin-top: -6px;
+		}
+
+		&:before {
+			border-color: rgba(221, 204, 170, 0);
+			border-right-color: #f5deaf;
+			border-width: 7px;
+			margin-top: -7px;
 		}
 	}
 
@@ -31,4 +65,100 @@
 		}
 	}
 
+}
+
+@media screen and (max-width: 1024px) {
+	.rtm-tip {
+		bottom: 26px;
+		left: auto;
+		right: -102px;
+		top: auto;
+		width: 200px;
+
+		&:after, &:before {
+			right: auto;
+			top: 100%;
+			left: 50%;
+			border: solid transparent;
+			content: ' ';
+			height: 0;
+			width: 0;
+			position: absolute;
+			pointer-events: none;
+		}
+
+		&:after {
+			border-color: rgba(255, 250, 240, 0);
+			border-top-color: #fffAF0;
+			border-width: 6px;
+			margin-left: -6px;
+		}
+
+		&:before {
+			border-color: rgba(245, 222, 175, 0);
+			border-top-color: #f5deaf;
+			border-width: 7px;
+			margin-left: -7px;
+		}
+	}
+
+	#rtmedia-custom-css-settings .form-table:last-child .rtm-field-wrap {
+		width: 100%;
+	}
+
+	.rtm-field-wrap {
+		input[type=text] {
+			max-width: 140px !important;
+		}
+	}
+}
+
+@media screen and (max-width: 782px) {
+	.rtm-tabs {
+		width: 40px;
+
+		a {
+			height: 18px;
+
+			&:hover {
+				width: 140px;
+
+				span {
+					display: block;
+				}
+			}
+		}
+
+		span {
+			display: none;
+			padding: 0 0 0 28px;
+			position: absolute;
+		}
+	}
+
+	.rtm-settings-tab-container .tabs-content {
+		margin-left: 40px;
+	}
+}
+
+@media screen and (min-width: 421px) and (max-width: 782px) {
+	.rtm-option-wrapper .form-table td {
+		display: table-cell;
+	}
+
+	.rtm-option-wrapper .form-table th {
+		display: table-cell;
+	}
+}
+
+@media screen and (max-width: 420px) {
+	.rtm-option-wrapper .form-table th {
+		padding-bottom: 15px;
+		width: 100%;
+	}
+
+	#rtmedia-types .form-table th,
+	#rtmedia-custom-css-settings .form-table th {
+		width: 100%;
+	}
 }
