@@ -14,6 +14,9 @@ if ( ! class_exists( 'RTMediaAddon' ) ) {
 
 		public $enquiry_link = 'http://rtcamp.com/contact/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media';
 
+		// current page
+		public static $page;
+
 		/**
 		 * Show coming_soon_div.
 		 *
@@ -38,6 +41,8 @@ if ( ! class_exists( 'RTMediaAddon' ) ) {
 		 */
 		public static function render_addons( $page = '' ) {
 			global $wp_settings_sections, $wp_settings_fields;
+
+			self::$page = $page;
 
 			if ( ! isset( $wp_settings_sections ) || ! isset( $wp_settings_sections[ $page ] ) ) {
 				return;
@@ -85,7 +90,7 @@ if ( ! class_exists( 'RTMediaAddon' ) ) {
 				'callback' => array( $rtmedia_admin->rtmedia_encoding, 'encoding_service_intro' )
 			);
 
-			RTMediaAdmin::render_admin_ui( 'rtmedia-addons', $tabs );
+			RTMediaAdmin::render_admin_ui( self::$page, $tabs );
 		}
 
 		/**
