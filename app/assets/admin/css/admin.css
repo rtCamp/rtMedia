@@ -172,6 +172,7 @@
 }
 .rtm-option-wrapper .rtm-field-wrap {
   float: left;
+  max-width: 90%;
 }
 .rtm-option-wrapper .form-table th {
   color: #444;
@@ -273,12 +274,51 @@
   width: 92%;
 }
 #rtmedia-custom-css-settings textarea {
-  height: 200px;
+  height: 300px;
   width: 100%;
 }
 
 .rtm-img-size-setting .form-table th {
+  border-bottom: 1px solid #EEEEEE;
+  padding-bottom: 10px;
+  padding-top: 10px;
   width: 20%;
+}
+.rtm-img-size-setting .form-table tr:nth-child(2) td {
+  padding-top: 20px;
+}
+.rtm-img-size-setting .form-table tr:nth-child(4) {
+  border-bottom: 1px solid #EEEEEE;
+}
+.rtm-img-size-setting .form-table tr:nth-child(4) td {
+  padding-bottom: 20px;
+}
+.rtm-img-size-setting .form-table tr:nth-child(5) td {
+  padding-top: 20px;
+}
+.rtm-img-size-setting .form-table tr:nth-child(6) td {
+  padding-bottom: 20px;
+}
+.rtm-img-size-setting .form-table tr:nth-child(7) {
+  border-top: 1px solid #EEEEEE;
+}
+.rtm-img-size-setting .form-table tr:nth-child(7) td {
+  padding-top: 20px;
+}
+.rtm-img-size-setting .form-table tr:nth-last-child(2) td {
+  padding-bottom: 20px;
+}
+.rtm-img-size-setting .form-table tr:last-child {
+  border-top: 1px solid #EEEEEE;
+}
+.rtm-img-size-setting .form-table tr:last-child td {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+.rtm-img-size-setting .form-table .rtm-row-title {
+  font-weight: 600;
+  padding-top: 25px !important;
+  vertical-align: top;
 }
 
 .rtm-tabs li {

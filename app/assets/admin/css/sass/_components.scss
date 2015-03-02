@@ -50,6 +50,7 @@
 
 	.rtm-field-wrap {
 		float: left;
+		max-width: 90%;
 	}
 
 	.form-table {
@@ -189,13 +190,74 @@
 	}
 
 	textarea {
-		height: 200px;
+		height: 300px;
 		width: 100%;
 	}
 }
 
 .rtm-img-size-setting {
-	.form-table th {
-		width: 20%;
+	.form-table {
+		th {
+			border-bottom: 1px solid $light;
+			padding-bottom: 10px;
+			padding-top: 10px;
+			width: 20%;
+		}
+
+		tr:nth-child(2) {
+			td {
+				padding-top: 20px;
+			}
+		}
+
+		tr:nth-child(4) {
+			border-bottom: 1px solid $light;
+
+			td {
+				padding-bottom: 20px;
+			}
+		}
+
+		tr:nth-child(5) {
+			td {
+				padding-top: 20px;
+			}
+		}
+
+		tr:nth-child(6) {
+			td {
+				padding-bottom: 20px;
+			}
+		}
+
+		tr:nth-child(7) {
+			border-top: 1px solid $light;
+
+			td {
+				padding-top: 20px;
+			}
+		}
+
+		tr:nth-last-child(2) {
+			td {
+				padding-bottom: 20px;
+			}
+		}
+
+
+		tr:last-child {
+			border-top: 1px solid $light;
+
+			td {
+				padding-top: 20px;
+				padding-bottom: 20px;
+			}
+		}
+
+		.rtm-row-title {
+			font-weight: 600;
+			padding-top: 25px !important;
+			vertical-align: top;
+		}
 	}
 }
