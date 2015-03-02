@@ -50,7 +50,6 @@
 
 	.rtm-field-wrap {
 		float: left;
-		max-width: 90%;
 	}
 
 	.form-table {
@@ -111,13 +110,16 @@
     text-transform: uppercase;
 }
 
-.rtm-social-share {
+.rtm-sidebar {
 	.button {
 		display: block;
 		opacity: 0.8;
 		position: relative;
 		text-decoration: none;
 	}
+}
+
+.rtm-social-share {
 
 	.dashicons {
 		font-size: 18px;
@@ -258,6 +260,16 @@
 			font-weight: 600;
 			padding-top: 25px !important;
 			vertical-align: top;
+		}
+	}
+}
+
+#rtmedia-privacy {
+	.rt-form-radio {
+		font-size: 12px;
+
+		strong {
+			font-size: 13px;
 		}
 	}
 }

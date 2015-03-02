@@ -307,7 +307,11 @@ class RTMediaEncoding {
 
 	public function encoding_service_intro() {
 		?>
+
+		<h3 class="rtm-option-title"><?php _e( 'Audio/Video encoding service', 'rtmedia' ); ?></h3>
+
 		<p><?php _e( 'rtMedia team has started offering an audio/video encoding service.', 'rtmedia' ); ?></p>
+
 		<p>
 			<label for="new-api-key"><?php _e( 'Enter API KEY', 'rtmedia' ); ?></label>
 			<input id="new-api-key" type="text" name="new-api-key" value="<?php echo $this->api_key; ?>" size="60" />
@@ -316,7 +320,7 @@ class RTMediaEncoding {
 		</p>
 
 		<!-- Results table headers -->
-		<table  class="bp-media-encoding-table widefat fixed rtm-encoding-table" cellspacing="0">
+		<table  class="bp-media-encoding-table widefat rtm-encoding-table" cellspacing="0">
 			<thead>
 				<tr>
 					<th><?php _e( 'Feature\Plan', 'rtmedia' ); ?></th>
