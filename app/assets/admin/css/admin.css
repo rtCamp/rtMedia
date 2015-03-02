@@ -71,7 +71,7 @@
   padding-top: 10px;
 }
 
-.rtm-settings-tab-container .tabs-content {
+.rtm-admin-tab-container .tabs-content {
   background: #FFFFFF;
   border-left: 1px solid #e7e7e7;
   margin-left: 202px;
@@ -473,6 +473,7 @@
 
 .rtm-encoding-table {
   border-collapse: collapse;
+  clear: none;
 }
 .rtm-encoding-table th, .rtm-encoding-table td {
   border: 1px solid #ddd;
@@ -595,7 +596,7 @@
     position: absolute;
   }
 
-  .rtm-settings-tab-container .tabs-content {
+  .rtm-admin-tab-container .tabs-content {
     margin-left: 40px;
   }
 }

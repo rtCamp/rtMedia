@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Description of RTMediaAddon
  *
@@ -75,6 +76,7 @@ if ( ! class_exists( 'RTMediaAddon' ) ) {
 				'title' => __( 'Plugins', 'rtmedia' ),
 				'name' => __( 'Plugins', 'rtmedia' ),
 				'href' => '#rtm-plugins',
+				'icon' => 'dashicons-admin-plugins',
 				'callback' => array( $this, 'plugins_content' )
 			);
 
@@ -82,6 +84,7 @@ if ( ! class_exists( 'RTMediaAddon' ) ) {
 				'title' => __( 'Audio/Video  Encoding', 'rtmedia' ),
 				'name' => __( 'Audio/Video  Encoding', 'rtmedia' ),
 				'href' => '#rtm-services',
+				'icon' => 'dashicons-playlist-video',
 				'callback' => array( $rtmedia_admin->rtmedia_encoding, 'encoding_service_intro' )
 			);
 
@@ -178,7 +181,7 @@ if ( ! class_exists( 'RTMediaAddon' ) ) {
 			$video_addons = $addons[ 'video' ];
 			$membership_addons = $addons[ 'membership' ];
 
-			echo '<h3>';
+			echo '<h3 class="rtm-option-title">';
 			_e( 'rtMedia Addons for Photos', 'rtmedia' );
 			echo '</h3>';
 
@@ -186,7 +189,7 @@ if ( ! class_exists( 'RTMediaAddon' ) ) {
 				$this->addon( $value );
 			}
 
-			echo '<h3>';
+			echo '<h3 class="rtm-option-title">';
 			_e( 'rtMedia Addons for Audio/Video', 'rtmedia' );
 			echo '</h3>';
 
@@ -194,7 +197,7 @@ if ( ! class_exists( 'RTMediaAddon' ) ) {
 				$this->addon( $value );
 			}
 
-			echo '<h3>';
+			echo '<h3 class="rtm-option-title">';
 			_e( 'rtMedia Addon for Membership', 'rtmedia' );
 			echo '</h3>';
 
@@ -265,7 +268,7 @@ if ( ! class_exists( 'RTMediaAddon' ) ) {
 			}
 
 			$coming_soon_div = ( $coming_soon ) ? $this->coming_soon_div() : '';
-			$addon = '<div class="bp-media-addon">
+			$addon = '<div class="bp-media-addon clearfix">
 			    <a href="' . $product_link . '"  title="' . $title . '" target="_blank">
 			        <img width="240" height="184" title="' . $title . '" alt="' . $title . '" src="' . $img_src . '">
 			    </a>

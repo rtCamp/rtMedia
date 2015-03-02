@@ -48,11 +48,9 @@ module.exports = function ( grunt ) {
 			uglify: {
 				files: '<%= uglify.build.src %>',
 				tasks: [ 'uglify' ]
-			} },
+			}
+		}
 	} );
-
-	// WordPress Deploy Task
-	// grunt.registerTask('default', ['wordpressdeploy']);
 
 	// Register Task
 	grunt.registerTask( 'default', [ 'watch' ] );
