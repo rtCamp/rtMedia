@@ -157,7 +157,7 @@ if ( ! class_exists( 'RTMediaSupport' ) ){
 		 *
 		 * @return void
 		 */
-		public function call_get_form(){
+		public function call_get_form( $page = '' ){
 			if ( isset( $_REQUEST['page'] ) && 'rtmedia-support' == $_REQUEST['page'] ){
 				//echo "<h2 class='nav-tab-wrapper'>".$this->rtmedia_support_sub_tabs()."</h2>";
 				if ( 'support' == $this->curr_sub_tab ){
@@ -293,7 +293,7 @@ if ( ! class_exists( 'RTMediaSupport' ) ){
 		 *
 		 * @return void
 		 */
-		public function debug_info_html(){
+		public function debug_info_html( $page = '' ){
 			$this->debug_info();
 			?>
 			<div id="debug-info">
