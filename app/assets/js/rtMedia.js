@@ -553,6 +553,18 @@ jQuery('document').ready(function($) {
             jQuery(item ).width( jQuery(item).siblings('.rtmedia-item-thumbnail' ).children('img').width());
         });
     }
+
+    if( jQuery( '.rtm-uploader-tabs' ).length > 0 ){
+        jQuery( '.rtm-uploader-tabs li' ).click( function( e ){
+            if( ! jQuery( this ).hasClass( 'active' ) ){
+                jQuery( this ).siblings().removeClass( 'active' );
+                jQuery( '.rtm-uploader-tabs' ).siblings().hide();
+                class_name = jQuery( this ).attr( 'class' );
+                jQuery( '.rtm-uploader-tabs' ).siblings('[data-id="' + class_name + '"]').show();
+                jQuery( this ).addClass( 'active' );
+            }
+        });
+    }
 });
 
 

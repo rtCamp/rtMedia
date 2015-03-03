@@ -68,17 +68,49 @@ class RTMediaUploadView {
                 }
             }
         }
+
+		$upload_tabs = array(
+			'file_upload' => array(
+				'title' => __( 'File Upload', 'rtmedia' ),
+				'class' => array( 'rtm-upload-tab', 'active' ),
+				'content' => '<div class="rtm-upload-tab-content" data-id="rtm-upload-tab">'
+					. apply_filters( 'rtmedia_uploader_before_select_files', "" )
+					. '<div class="rtm-select-files"><input id="rtMedia-upload-button" value="' . __( "Select your files", "rtmedia" ) . '" type="button" class="rtmedia-upload-input rtmedia-file" />'
+					. '<span class="rtm-seperator">' . __('or','rtmedia') .'</span><span class="drag-drop-info">' . __('Drop your files here', 'rtmedia') . '</span> <i class="rtm-file-size-limit rtmicon-info-circle rtmicon-fw"></i></div>'
+					. apply_filters( 'rtmedia_uploader_after_select_files', "" )
+					. '</div>',
+			),
+		);
+
+		$upload_tabs = apply_filters( 'rtmedia_uploader_tabs', $upload_tabs );
+
+		if( is_array( $upload_tabs ) && ! empty( $upload_tabs ) ){
+			if( sizeof( $upload_tabs ) == 1 && isset( $upload_tabs['file_upload'] ) ){
+				$upload_tab_html = $upload_tabs['file_upload']['content'];
+			} else {
+				$upload_tab_html = '<div class="rtm-uploader-main-wrapper"><div class="rtm-uploader-tabs"><ul>';
+				foreach( $upload_tabs as $single_tab ){
+					$upload_tab_html .= '<li class="'. implode( ' ', $single_tab['class'] ) .'">' . $single_tab['title'] . '</li>';
+				}
+				$upload_tab_html .= '</ul></div>';
+				foreach( $upload_tabs as $single_tab ){
+					$upload_tab_html .= $single_tab['content'];
+				}
+				$upload_tab_html .= '</div>';
+			}
+		} else {
+			$upload_tab_html = '';
+		}
+
         $tabs = array(
             'file_upload' => array(
                 'default' => array( 'title' => __( 'File Upload', 'rtmedia' ),
                     'content' =>
                     '<div id="rtmedia-upload-container" >'
                         . '<div id="drag-drop-area" class="drag-drop row">'
-                                ."<div class='rtm-album-privacy'>" . $album . $privacy . "</div>"
-								. apply_filters( 'rtmedia_uploader_before_select_files', "" )
-                                . '<div class="rtm-select-files"><input id="rtMedia-upload-button" value="' . __( "Select your files", "rtmedia" ) . '" type="button" class="rtmedia-upload-input rtmedia-file" />'
-                                . '<span class="rtm-seperator">' . __('or','rtmedia') .'</span><span class="drag-drop-info">' . __('Drop your files here', 'rtmedia') . '</span> <i class="rtm-file-size-limit rtmicon-info-circle rtmicon-fw"></i></div>'
-								. apply_filters( 'rtmedia_uploader_after_select_files', "" )
+								. apply_filters( 'rtmedia_uploader_before_album_privacy', "" )
+                                . "<div class='rtm-album-privacy'>" . $album . $privacy . "</div>"
+								. $upload_tab_html
 								. apply_filters( 'rtmedia_uploader_before_start_upload_button', "" )
                                 . '<input type="button" class="start-media-upload" value="' . __('Start upload', 'rtmedia') .'"/>'
 								. apply_filters( 'rtmedia_uploader_after_start_upload_button', "" )
