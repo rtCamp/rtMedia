@@ -320,7 +320,7 @@ class RTMediaEncoding {
 		</p>
 
 		<!-- Results table headers -->
-		<table  class="bp-media-encoding-table widefat rtm-encoding-table" cellspacing="0">
+		<table  class="bp-media-encoding-table fixed widefat rtm-encoding-table" cellspacing="0">
 			<thead>
 				<tr>
 					<th><?php _e( 'Feature\Plan', 'rtmedia' ); ?></th>
