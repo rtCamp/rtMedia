@@ -11,6 +11,8 @@ class RTMediaLicense {
 	static function render_license( $page = '' ){
 		global $wp_actions;
 
+		$tabs = apply_filters( 'rtmedia_license_tabs', array() );
+
 		if ( has_action( 'rtmedia_addon_license_details' ) ){
 			?>
 			<div id="rtm-licenses">
