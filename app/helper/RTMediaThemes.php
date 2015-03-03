@@ -23,7 +23,7 @@ class RTMediaThemes {
 		global $wp_settings_sections, $wp_settings_fields;
 
 		self::$page = $page;
-		
+
 		if ( ! isset( $wp_settings_sections ) || ! isset( $wp_settings_sections[ $page ] ) ) {
 			return;
 		}
@@ -57,8 +57,8 @@ class RTMediaThemes {
 		$tabs = array();
 		global $rtmedia_admin;
 		$tabs[] = array(
-			'title' => __( 'rtMedia Themes By rtCamp', 'rtmedia' ),
-			'name' => __( 'rtMedia Themes By rtCamp', 'rtmedia' ),
+			'title' => __( 'Themes By rtCamp', 'rtmedia' ),
+			'name' => __( 'Themes By rtCamp', 'rtmedia' ),
 			'href' => '#rtmedia-themes',
 			'callback' => array( $this, 'rtmedia_themes_content' )
 		);
