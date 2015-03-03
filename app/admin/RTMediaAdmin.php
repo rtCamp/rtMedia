@@ -1826,72 +1826,73 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 			die();
 		}
 
-		public static function render_admin_ui( $page, $sub_tabs, $args = array() ){
+		public static function render_admin_ui( $page, $sub_tabs, $args = array() ) {
 
 			// wrapper class
 			$wrapper_class = '';
-			if( !empty( $args['wrapper_class'] ) && is_array( $args['wrapper_class'] ) ){
-				$wrapper_class = implode( ' ', $args['wrapper_class'] );
+			if ( ! empty( $args[ 'wrapper_class' ] ) && is_array( $args[ 'wrapper_class' ] ) ) {
+				$wrapper_class = implode( ' ', $args[ 'wrapper_class' ] );
 			}
 
 			// tabs
-			if( $page == 'rtmedia-settings' ){
+			if ( $page == 'rtmedia-settings' ) {
 				$sub_tabs = apply_filters( 'rtmedia_pro_settings_tabs_content', $sub_tabs );
 				ksort( $sub_tabs );
 			}
 			?>
-				<div class='clearfix vertical-tabs rtm-admin-tab-container <?php echo $wrapper_class; ?>'>
-					<ul class='rtm-tabs' data-tab>
-						<?php
-						$i = 1;
-						foreach ( $sub_tabs as $tab ) {
 
-							// tab status
-							$active_class = '';
-							if ( 1 == $i ) {
-								$active_class = 'active';
-							}
+			<div class="clearfix rtm-vertical-tabs rtm-admin-tab-container <?php echo $wrapper_class; ?>">
+				<ul class="rtm-tabs">
+					<?php
+					$i = 1;
+					foreach ( $sub_tabs as $tab ) {
 
-							// tab icon
-							$icon = '';
-							if ( isset( $tab[ 'icon' ] ) && ! empty( $tab[ 'icon' ] ) ) {
-								$icon = '<i class="' . $tab[ 'icon' ] . ' dashicons rtmicon"></i>';
-							}
-							?>
-							<li class="<?php echo $active_class ?>">
-								<a id="tab-<?php echo substr( $tab[ 'href' ], 1 ) ?>" title="<?php echo $tab[ 'title' ] ?>" href="<?php echo $tab[ 'href' ] ?>" class="rtmedia-tab-title <?php echo sanitize_title( $tab[ 'name' ] ) ?>">
-									<?php echo $icon ?><span><?php echo $tab[ 'name' ] ?></span>
-								</a>
-							</li>
-						<?php
-							$i++;
+						// tab status
+						$active_class = '';
+						if ( 1 == $i ) {
+							$active_class = 'active';
+						}
+
+						// tab icon
+						$icon = '';
+						if ( isset( $tab[ 'icon' ] ) && ! empty( $tab[ 'icon' ] ) ) {
+							$icon = '<i class="' . $tab[ 'icon' ] . ' dashicons rtmicon"></i>';
 						}
 						?>
-					</ul>
-
-					<div class='tabs-content rtm-tab-content'>
+						<li class="<?php echo $active_class ?>">
+							<a id="tab-<?php echo substr( $tab[ 'href' ], 1 ) ?>" title="<?php echo $tab[ 'title' ] ?>" href="<?php echo $tab[ 'href' ] ?>" class="rtmedia-tab-title <?php echo sanitize_title( $tab[ 'name' ] ) ?>">
+								<?php echo $icon ?><span><?php echo $tab[ 'name' ] ?></span>
+							</a>
+						</li>
 						<?php
-							$k = 1;
-							foreach ( $sub_tabs as $tab ) {
-								$active_class = '';
-								if ( 1 == $k ) {
-									$active_class = ' active';
-								}
-								$k ++;
-								if ( isset( $tab[ 'icon' ] ) && ! empty( $tab[ 'icon' ] ) ) {
-									$icon = '<i class="' . $tab[ 'icon' ] . '"></i>';
-								}
-								$tab_without_hash = explode( '#', $tab[ 'href' ] );
-								$tab_without_hash = $tab_without_hash[ 1 ];
-								echo '<div class="content' . $active_class . '" id="' . $tab_without_hash . '">';
-								echo '<h3 class="rtm-setting-title">' . $tab[ 'name' ] . '</h3>';
-								call_user_func( $tab[ 'callback' ], $page );
-								echo '</div>';
-							}
-						?>
-					</div>
+						$i ++;
+					}
+					?>
+				</ul>
 
+				<div class="tabs-content rtm-tab-content">
+					<?php
+					$k = 1;
+					foreach ( $sub_tabs as $tab ) {
+						$active_class = '';
+						if ( 1 == $k ) {
+							$active_class = ' active';
+						}
+						$k ++;
+						if ( isset( $tab[ 'icon' ] ) && ! empty( $tab[ 'icon' ] ) ) {
+							$icon = '<i class="' . $tab[ 'icon' ] . '"></i>';
+						}
+						$tab_without_hash = explode( '#', $tab[ 'href' ] );
+						$tab_without_hash = $tab_without_hash[ 1 ];
+						echo '<div class="content' . $active_class . '" id="' . $tab_without_hash . '">';
+						echo '<h3 class="rtm-setting-title">' . $tab[ 'name' ] . '</h3>';
+						call_user_func( $tab[ 'callback' ], $page );
+						echo '</div>';
+					}
+					?>
 				</div>
+
+			</div>
 			<?php
 		}
 
