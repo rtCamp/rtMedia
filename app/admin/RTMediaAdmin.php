@@ -681,7 +681,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 				$admin_ajax = admin_url( 'admin-ajax.php' );
 
 				/* Only one JS file should enqueue */
-				wp_enqueue_script( 'rtmedia-admin', RTMEDIA_URL . 'app/assets/admin/js/admin-min.js', array( 'jquery-ui-dialog' ), RTMEDIA_VERSION );
+				wp_enqueue_script( 'rtmedia-admin', RTMEDIA_URL . 'app/assets/admin/js/admin-min.js', array( 'backbone' ), RTMEDIA_VERSION );
 
 				wp_localize_script( 'rtmedia-admin', 'rtmedia_on_label', __( 'ON', 'rtmedia' ) );
 				wp_localize_script( 'rtmedia-admin', 'rtmedia_off_label', __( 'OFF', 'rtmedia' ) );

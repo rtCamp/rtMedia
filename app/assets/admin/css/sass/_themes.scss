@@ -1,0 +1,20 @@
+.rtm-theme-browser {
+
+	.rtm-themes {
+		clear: none;
+
+		.rtm-theme {
+			width: 48%;
+
+			&:nth-child(even) {
+				margin-right: 0 !important;
+			}
+
+			&:nth-child(3n) {
+				margin-right: 4%;
+			}
+		}
+
+	}
+
+}

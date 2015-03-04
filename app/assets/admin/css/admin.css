@@ -483,6 +483,19 @@
   font-weight: 600;
 }
 
+.rtm-theme-browser .rtm-themes {
+  clear: none;
+}
+.rtm-theme-browser .rtm-themes .rtm-theme {
+  width: 48%;
+}
+.rtm-theme-browser .rtm-themes .rtm-theme:nth-child(even) {
+  margin-right: 0 !important;
+}
+.rtm-theme-browser .rtm-themes .rtm-theme:nth-child(3n) {
+  margin-right: 4%;
+}
+
 @media only screen and (min-width: 1025px) {
   .rtm-setting-container {
     float: left;
@@ -530,7 +543,7 @@
   }
   .rtm-sidebar .postbox {
     display: inline-block;
-    margin-left: 10px;
+    margin-left: 5px;
     vertical-align: top;
   }
   .rtm-sidebar .postbox:first-child {
