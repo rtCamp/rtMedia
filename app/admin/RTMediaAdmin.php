@@ -1853,11 +1853,29 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 							$active_class = 'active';
 						}
 
-						// tab icon
-						$icon = '';
-						if ( isset( $tab[ 'icon' ] ) && ! empty( $tab[ 'icon' ] ) ) {
-							$icon = '<i class="' . $tab[ 'icon' ] . ' dashicons rtmicon"></i>';
-						}
+					<div class='tabs-content rtm-tab-content'>
+						<?php
+							$k = 1;
+							foreach ( $sub_tabs as $tab ) {
+								$active_class = '';
+								if ( 1 == $k ) {
+									$active_class = ' active';
+								}
+								$k ++;
+								if ( isset( $tab[ 'icon' ] ) && ! empty( $tab[ 'icon' ] ) ) {
+									$icon = '<i class="' . $tab[ 'icon' ] . '"></i>';
+								}
+								$tab_without_hash = explode( '#', $tab[ 'href' ] );
+								$tab_without_hash = $tab_without_hash[ 1 ];
+								echo '<div class="content' . $active_class . '" id="' . $tab_without_hash . '">';
+								echo '<h3 class="rtm-setting-title">' . $tab[ 'name' ] . '</h3>';
+								if( isset( $tab['args'] ) ){
+									call_user_func( $tab[ 'callback' ], $page, $tab['args'] );
+								} else {
+									call_user_func( $tab[ 'callback' ], $page );
+								}
+								echo '</div>';
+							}
 						?>
 						<li class="<?php echo $active_class ?>">
 							<a id="tab-<?php echo substr( $tab[ 'href' ], 1 ) ?>" title="<?php echo $tab[ 'title' ] ?>" href="<?php echo $tab[ 'href' ] ?>" class="rtmedia-tab-title <?php echo sanitize_title( $tab[ 'name' ] ) ?>">
