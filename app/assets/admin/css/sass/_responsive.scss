@@ -170,6 +170,12 @@
 	}
 }
 
+@media screen and (max-width: 481px) {
+	.rtm-plugin-card.plugin-card .rtm-logo {
+		display: inline-block;
+		float: none;
+	}
+}
 
 @media screen and (max-width: 420px) {
 	.rtm-option-wrapper .form-table th {

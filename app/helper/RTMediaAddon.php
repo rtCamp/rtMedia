@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Description of RTMediaAddon
  *
@@ -14,7 +13,6 @@ if ( ! class_exists( 'RTMediaAddon' ) ) {
 	class RTMediaAddon {
 
 		public $enquiry_link = 'http://rtcamp.com/contact/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media';
-
 		// current page
 		public static $page;
 
@@ -269,25 +267,41 @@ if ( ! class_exists( 'RTMediaAddon' ) ) {
 			if ( $purchased ) {
 				$purchase_link = '<span class="rtm-addon-purchased alignright product_type_simple">' . __( 'Purchased', 'rtmedia' ) . '</span>';
 			} else {
-				$purchase_link = '<a class="add_to_cart_button  alignright product_type_simple"  href="' . $buy_now . '" target="_blank">' . __( 'Buy Now', 'rtmedia' ) . '</a>';
+				$purchase_link = '<a class="button-primary alignright product_type_simple"  href="' . $buy_now . '" target="_blank">' . __( 'Buy Now', 'rtmedia' ) . '</a>';
 			}
 
 			$coming_soon_div = ( $coming_soon ) ? $this->coming_soon_div() : '';
-			$addon = '<div class="bp-media-addon clearfix">
-			    <a href="' . $product_link . '"  title="' . $title . '" target="_blank">
-			        <img width="240" height="184" title="' . $title . '" alt="' . $title . '" src="' . $img_src . '">
-			    </a>
-			    <h4><a href="' . $product_link . '"  title="' . $title . '" target="_blank">' . $title . '</a></h4>
-			    <div class="product_desc">
-			        ' . $desc . '
-			    </div>
-			    <div class="product_footer">
-			        <span class="price alignleft"><span class="amount">' . $price . '</span></span>' . $purchase_link;
-			if ( $demo_link != '' ) {
-				$addon .= '<a class="alignleft product_demo_link"  href="' . $demo_link . '" title="' . $title . '" target="_blank">' . __( 'Live Demo', 'rtmedia' ) . '</a>';
-			}
-			$addon .= '</div>' . $coming_soon_div . '</div>';
-			echo $addon;
+			?>
+			<div class="plugin-card clearfix rtm-plugin-card">
+
+				<div class="plugin-card-top">
+					<a class="rtm-logo" href="<?php echo $product_link; ?>" title="<?php echo $title; ?>" target="_blank">
+						<img width="240" height="184" title="<?php echo $title; ?>" alt="<?php echo $title; ?>" src="<?php echo $img_src; ?>" />
+					</a>
+
+					<div class="name column-name">
+						<h4><a href="<?php echo $product_link; ?>" title="<?php echo $title; ?>" target="_blank"><?php echo $title; ?></a></h4>
+					</div>
+
+					<div class="desc column-description">
+						<?php echo $desc; ?>
+					</div>
+				</div>
+
+				<div class="plugin-card-bottom">
+					<span class="price alignleft">
+						<span class="amount"><?php echo $price; ?></span>
+					</span>
+					<?php
+					echo $purchase_link;
+
+					if ( $demo_link != '' ) {
+						echo '<a class="alignright rtm-live-demo button"  href="' . $demo_link . '" title="' . $title . '" target="_blank">' . __( 'Live Demo', 'rtmedia' ) . '</a>';
+					}
+					?>
+				</div>
+			</div>
+			<?php
 		}
 
 	}

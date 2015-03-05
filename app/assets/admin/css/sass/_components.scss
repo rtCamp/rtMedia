@@ -300,6 +300,11 @@
 			vertical-align: top;
 		}
 	}
+
+	input[type=text],
+	input[type=number] {
+		text-align: right;
+	}
 }
 
 #rtmedia-privacy {
