@@ -1898,7 +1898,11 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 						$tab_without_hash = $tab_without_hash[ 1 ];
 						echo '<div class="content' . $active_class . '" id="' . $tab_without_hash . '">';
 						echo '<h3 class="rtm-setting-title">' . $tab[ 'name' ] . '</h3>';
-						call_user_func( $tab[ 'callback' ], $page );
+						if( isset( $tab['args'] ) ){
+							call_user_func( $tab[ 'callback' ], $page, $tab['args'] );
+						} else {
+							call_user_func( $tab[ 'callback' ], $page );
+						}
 						echo '</div>';
 					}
 					?>
