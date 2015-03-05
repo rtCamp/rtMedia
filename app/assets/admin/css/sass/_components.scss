@@ -21,11 +21,14 @@
     font-size: 22px;
     font-weight: 400;
     line-height: 1;
-    margin-bottom: 0;
+    margin-bottom: 20px;
     margin-top: 0;
     padding-bottom: 14px;
-
 	display: none;
+
+	&.rtm-show {
+		display: block;
+	}
 }
 
 .rtm-option-wrapper {
@@ -92,6 +95,33 @@
 		font-size: 14px;
 		height: 26px;
 		line-height: 26px;
+	}
+
+	.rtm-debug-info {
+		margin-top: 32px;
+
+		tr {
+			border-bottom: 1px solid $light;
+
+			&:first-child {
+				border-top: 1px solid $light;
+			}
+
+			&:nth-child(2n) {
+				background-color: #f8f8f8;
+			}
+		}
+
+		th {
+			border-right: 1px solid $light;
+			font-weight: 600;
+			width: auto;
+		}
+
+		th,
+		td {
+			padding: 10px;
+		}
 	}
 }
 
@@ -165,6 +195,14 @@
     line-height: 1.6;
     margin-top: 10px;
     padding: 5px 10px;
+}
+
+.rtm-warning {
+	background-color: #fcf8e3;
+    border-bottom: 1px solid #e7e7e7;
+    color: #c09853;
+	margin-bottom: 30px;
+    padding: 10px 15px;
 }
 
 // Types table needs different styles

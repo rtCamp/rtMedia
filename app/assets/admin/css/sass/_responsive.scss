@@ -141,6 +141,14 @@
 	}
 }
 
+@media #{$medium-up} {
+	.rtm-pro-feature-list li {
+		&:nth-child(3n+1) {
+			clear: left;
+		}
+	}
+}
+
 @media screen and (min-width: 421px) and (max-width: 782px) {
 	.rtm-option-wrapper .form-table td {
 		display: table-cell;
@@ -151,6 +159,18 @@
 	}
 }
 
+@media #{$small-only} {
+
+	.rtm-pro-feature-list li {
+		width: 50%;
+
+		&:nth-child(2n+1) {
+			clear: left;
+		}
+	}
+}
+
+
 @media screen and (max-width: 420px) {
 	.rtm-option-wrapper .form-table th {
 		padding-bottom: 15px;
@@ -159,6 +179,10 @@
 
 	#rtmedia-types .form-table th,
 	#rtmedia-custom-css-settings .form-table th {
+		width: 100%;
+	}
+
+	.rtm-pro-feature-list li {
 		width: 100%;
 	}
 }

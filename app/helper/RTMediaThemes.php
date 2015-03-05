@@ -162,7 +162,7 @@ class RTMediaThemes {
 									</div>
 
 									<div class="theme-info">
-										<!--<span class="theme-version">Version: <?php //echo $theme[ 'version' ];  ?></span>-->
+										<!--<span class="theme-version">Version: <?php //echo $theme[ 'version' ];     ?></span>-->
 										<h3 class="theme-name"><?php echo $theme[ 'name' ]; ?></h3>
 										<h4 class="theme-author">By <a href="https://rtcamp.com/"><?php echo $theme[ 'author' ]; ?></a></h4>
 										<p class="theme-description"><?php echo $theme[ 'description' ]; ?> <a href="<?php echo $theme[ 'buy_url' ]; ?>" class="rtmedia-theme-inner-a" target="_blank"><?php _e( 'Read More' ); ?></a></p>
@@ -278,15 +278,15 @@ class RTMediaThemes {
 			</div>
 		</div>
 
-		<h4 class="rtmedia-theme-warning"><?php _e( 'These are the third party themes. For any issues or queries regarding these themes please contact theme developers.', 'rtmedia' ) ?></h4>
+		<div class="rtmedia-theme-warning rtm-warning"><?php _e( 'These are the third party themes. For any issues or queries regarding these themes please contact theme developers.', 'rtmedia' ) ?></div>
 
-		<div class="row">
-			<div class="columns large-12">
-				<h3><?php _e( 'Are you a developer?', 'rtmedia' ); ?></h3>
+		<div>
+			<h3 class="rtm-option-title"><?php _e( 'Are you a developer?', 'rtmedia' ); ?></h3>
 
-				<p><?php _e( 'If you have developed a rtMedia compatible theme and would like it to list here, please email us at', 'rtmedia' ) ?>
-					<a href="mailto:product@rtcamp.com"><?php _e( 'product@rtcamp.com', 'rtmedia' ) ?></a>.</p>
-			</div>
+			<p>
+				<?php _e( 'If you have developed a rtMedia compatible theme and would like it to list here, please email us at', 'rtmedia' ) ?>
+				<a href="mailto:product@rtcamp.com"><?php _e( 'product@rtcamp.com', 'rtmedia' ) ?></a>.
+			</p>
 		</div>
 		<?php
 	}
