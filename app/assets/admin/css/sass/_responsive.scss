@@ -111,6 +111,10 @@
 			max-width: 140px !important;
 		}
 	}
+
+	.theme-browser .theme:nth-child(2n+1) {
+		margin-right: 4%;
+	}
 }
 
 @media screen and (max-width: 782px) {
@@ -174,6 +178,11 @@
 	.rtm-plugin-card.plugin-card .rtm-logo {
 		display: inline-block;
 		float: none;
+	}
+
+	.rtm-theme-browser .rtm-themes .rtm-theme {
+		margin: 0 0 20px;
+		width: 100%;
 	}
 }
 

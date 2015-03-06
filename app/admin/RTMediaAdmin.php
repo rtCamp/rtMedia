@@ -636,7 +636,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 				),
 					)
 			);
-			if( has_filter( 'rtmedia_license_tabs' ) || did_action( 'rtmedia_addon_license_details' ) ){
+			if ( has_filter( 'rtmedia_license_tabs' ) || did_action( 'rtmedia_addon_license_details' ) ) {
 				$admin_bar->add_menu( array(
 					'id' => 'rt-media-license',
 					'parent' => 'rtMedia',
@@ -646,10 +646,9 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 						'title' => __( 'Licenses', 'rtmedia' ),
 						'target' => '_self',
 					),
-				)
+						)
 				);
 			}
-
 		}
 
 		/**
@@ -676,7 +675,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 				'rtmedia_page_rtmedia-premium',
 			);
 
-			if( has_filter( 'rtmedia_license_tabs' ) || did_action( 'rtmedia_addon_license_details' ) ){
+			if ( has_filter( 'rtmedia_license_tabs' ) || did_action( 'rtmedia_addon_license_details' ) ) {
 				$admin_pages[] = 'rtmedia_page_rtmedia-license';
 			}
 
@@ -729,7 +728,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 			add_submenu_page( 'rtmedia-settings', __( 'Support', 'rtmedia' ), __( 'Support', 'rtmedia' ), 'manage_options', 'rtmedia-support', array( $this, 'support_page' ) );
 			add_submenu_page( 'rtmedia-settings', __( 'Themes', 'rtmedia' ), __( 'Themes', 'rtmedia' ), 'manage_options', 'rtmedia-themes', array( $this, 'theme_page' ) );
 			add_submenu_page( 'rtmedia-settings', __( 'Hire Us', 'rtmedia' ), __( 'Hire Us', 'rtmedia' ), 'manage_options', 'rtmedia-hire-us', array( $this, 'hire_us_page' ) );
-			if( has_filter( 'rtmedia_license_tabs' ) || did_action( 'rtmedia_addon_license_details' ) ){
+			if ( has_filter( 'rtmedia_license_tabs' ) || did_action( 'rtmedia_addon_license_details' ) ) {
 				add_submenu_page( 'rtmedia-settings', __( 'Licenses', 'rtmedia' ), __( 'Licenses', 'rtmedia' ), 'manage_options', 'rtmedia-license', array( $this, 'license_page' ) );
 			}
 
@@ -1138,18 +1137,19 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 				</div>
 
 				<div class="clearfix rtm-row-container">
-					<div class="bp-media-settings-boxes-container rtm-setting-container">
+
+					<div id="bp-media-settings-boxes" class="bp-media-settings-boxes-container rtm-setting-container">
 
 						<?php
 						$settings_url = ( is_multisite() ) ? network_admin_url( 'edit.php?action=' . $option_group ) : 'options.php';
-						if ( $page == 'rtmedia-settings' ) { //$option_group if ($page == "bp-media-settings") action="<?php echo $settings_url;
+						if ( $page == 'rtmedia-settings' ) {
 							?>
 							<form id="bp_media_settings_form" name="bp_media_settings_form" method="post"
 								  enctype="multipart/form-data">
 								<div class="bp-media-metabox-holder">
 									<div class="rtm-button-container top">
 										<input type="hidden" name="rtmedia-options-save" value="true">
-										<input type="submit" id="rtmedia-settings-submit" class="rtmedia-settings-submit button button-primary button-big" value="<?php _e( 'Save Settings', 'rtmedia' ); ?>">
+										<input type="submit" class="rtmedia-settings-submit button button-primary button-big" value="<?php _e( 'Save Settings', 'rtmedia' ); ?>">
 									</div>
 									<?php
 									settings_fields( $option_group );
@@ -1172,7 +1172,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 										</div>
 
 										<input type="hidden" name="rtmedia-options-save" value="true">
-										<input type="submit" id="rtmedia-settings-submit" class="rtmedia-settings-submit button button-primary button-big" value="<?php _e( 'Save Settings', 'rtmedia' ); ?>">
+										<input type="submit" class="rtmedia-settings-submit button button-primary button-big" value="<?php _e( 'Save Settings', 'rtmedia' ); ?>">
 									</div>
 								</div>
 							</form><?php
@@ -1286,7 +1286,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 				),
 			);
 
-			if( has_filter( 'rtmedia_license_tabs' ) || did_action( 'rtmedia_addon_license_details' ) ){
+			if ( has_filter( 'rtmedia_license_tabs' ) || did_action( 'rtmedia_addon_license_details' ) ) {
 				$tabs[] = array(
 					'href' => get_admin_url( null, add_query_arg( array( 'page' => 'rtmedia-license' ), 'admin.php' ) ),
 					'name' => __( 'Licenses', 'rtmedia' ),
@@ -1898,8 +1898,8 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 						$tab_without_hash = $tab_without_hash[ 1 ];
 						echo '<div class="content' . $active_class . '" id="' . $tab_without_hash . '">';
 						echo '<h3 class="rtm-setting-title">' . $tab[ 'name' ] . '</h3>';
-						if( isset( $tab['args'] ) ){
-							call_user_func( $tab[ 'callback' ], $page, $tab['args'] );
+						if ( isset( $tab[ 'args' ] ) ) {
+							call_user_func( $tab[ 'callback' ], $page, $tab[ 'args' ] );
 						} else {
 							call_user_func( $tab[ 'callback' ], $page );
 						}

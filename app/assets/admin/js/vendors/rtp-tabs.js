@@ -32,9 +32,11 @@ if ( typeof Object.create !== 'function' ) {
 			self.rtClick();
 
 			/* This will keep on same tab as in hashtag */
-			var hashTag = window.location.hash;
-			if ( hashTag ) {
-				self.$elem.find( 'li' ).find( 'a[href=' + hashTag + ']' ).trigger( 'click' );
+			if ( self.options.hashTag === true ) {
+				var hashTag = window.location.hash;
+				if ( hashTag ) {
+					self.$elem.find( 'li' ).find( 'a[href=' + hashTag + ']' ).trigger( 'click' );
+				}
 			}
 
 		},
@@ -60,12 +62,14 @@ if ( typeof Object.create !== 'function' ) {
 				var activeTab = $( this ).attr( 'href' );
 				$( activeTab ).removeClass( 'hide' );
 
-				//------->
-				var pos = $( window ).scrollTop();
-				location.hash = $( this ).attr( 'href' );
-				$( window ).scrollTop( pos );
-				//------>
+				/* Hash tag in URL */
+				if ( self.options.hashTag === true ) {
+					var pos = $( window ).scrollTop();
+					location.hash = $( this ).attr( 'href' );
+					$( window ).scrollTop( pos );
+				}
 
+				/* On complete function */
 				if ( typeof self.options.onComplete === 'function' ) {
 					self.options.onComplete.apply( self.elem, arguments );
 				}
@@ -103,6 +107,7 @@ if ( typeof Object.create !== 'function' ) {
 
 	$.fn.rtTab.options = {
 		activeTab: 1,
+		hashTag: true,
 		onComplete: null
 	};
 

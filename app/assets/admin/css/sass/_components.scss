@@ -75,7 +75,7 @@
 		}
 	}
 
-	input[type="number"] {
+	input[type=number] {
 		width: 82px;
 	}
 
@@ -203,6 +203,10 @@
     color: #c09853;
 	margin-bottom: 30px;
     padding: 10px 15px;
+}
+
+.rtm-fly-warning {
+	margin-bottom: 0;
 }
 
 // Types table needs different styles
