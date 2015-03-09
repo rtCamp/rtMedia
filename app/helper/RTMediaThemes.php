@@ -162,7 +162,7 @@ class RTMediaThemes {
 									</div>
 
 									<div class="theme-info">
-										<!--<span class="theme-version">Version: <?php //echo $theme[ 'version' ];     ?></span>-->
+										<!--<span class="theme-version">Version: <?php //echo $theme[ 'version' ];      ?></span>-->
 										<h3 class="theme-name"><?php echo $theme[ 'name' ]; ?></h3>
 										<h4 class="theme-author">By <a href="https://rtcamp.com/"><?php echo $theme[ 'author' ]; ?></a></h4>
 										<p class="theme-description"><?php echo $theme[ 'description' ]; ?> <a href="<?php echo $theme[ 'buy_url' ]; ?>" class="rtmedia-theme-inner-a" target="_blank"><?php _e( 'Read More' ); ?></a></p>
@@ -171,7 +171,7 @@ class RTMediaThemes {
 								</div>
 
 								<div class="theme-actions">
-									<a class="button button-primary load-customize hide-if-no-customize" href="<?php echo $theme[ 'demo_url' ]; ?>"><?php _e( 'Live Demo' ); ?></a>
+									<a class="button load-customize hide-if-no-customize" href="<?php echo $theme[ 'demo_url' ]; ?>"><?php _e( 'Live Demo' ); ?></a>
 									<a class="button button-primary load-customize hide-if-no-customize" href="<?php echo $theme[ 'buy_url' ]; ?>"><?php _e( 'Buy Now' ); ?></a>
 								</div>
 							</div>

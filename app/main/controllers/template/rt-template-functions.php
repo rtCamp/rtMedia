@@ -2370,7 +2370,7 @@ function rtmedia_admin_premium_page( $page ) {
 				</ol>
 
 				<div class="clearfix">
-					<a href="https://rtcamp.com/contact" class="rtm-button rtm-success" target="_blank"><?php _e( 'Contact Us', 'rtmedia' ); ?></a>
+					<a href="https://rtcamp.com/contact" class="rtm-button button-primary" target="_blank"><?php _e( 'Contact Us', 'rtmedia' ); ?></a>
 				</div>
 			</div>
 			<?php
