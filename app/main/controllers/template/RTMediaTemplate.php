@@ -292,6 +292,7 @@ class RTMediaTemplate {
 				unset ( $data[ 'rtmedia_media_nonce' ] );
 				unset ( $data[ '_wp_http_referer' ] );
 				unset ( $data[ 'submit' ] );
+				$data       = rtmedia_sanitize_object( $_POST, $data );
 				$album = $model->get_media( array( 'id' => $rtmedia_query->media_query[ 'album_id' ] ), false, false );
 				$state = $media->update( $album[ 0 ]->id, $data, $album[ 0 ]->media_id );
 				global $rtmedia_points_media_id;
