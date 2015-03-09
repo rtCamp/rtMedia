@@ -8,7 +8,7 @@ sass_dir = "app/assets/sass"
 images_dir = "app/assets/img"
 javascripts_dir = "app/assets/js"
 
-output_style = :expanded
+output_style = :compressed
 
 relative_assets = true
 

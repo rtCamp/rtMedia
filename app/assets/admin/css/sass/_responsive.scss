@@ -111,34 +111,14 @@
 			max-width: 140px !important;
 		}
 	}
+
+	.theme-browser .theme:nth-child(2n+1) {
+		margin-right: 4%;
+	}
 }
 
 @media screen and (max-width: 782px) {
-	.rtm-tabs {
-		width: 40px;
 
-		a {
-			height: 18px;
-
-			&:hover {
-				width: 140px;
-
-				span {
-					display: block;
-				}
-			}
-		}
-
-		span {
-			display: none;
-			padding: 0 0 0 28px;
-			position: absolute;
-		}
-	}
-
-	.rtm-admin-tab-container .tabs-content {
-		margin-left: 40px;
-	}
 }
 
 @media #{$medium-up} {
@@ -168,8 +148,45 @@
 			clear: left;
 		}
 	}
+
+	.rtm-tabs {
+		width: 40px;
+
+		li {
+			width: 40px;
+		}
+
+		a {
+			height: 18px;
+
+			&:hover {
+				width: 140px;
+
+				span {
+					display: block;
+				}
+			}
+		}
+
+		span {
+			display: none;
+			padding: 0 0 0 28px;
+			position: absolute;
+		}
+	}
 }
 
+@media screen and (max-width: 481px) {
+	.rtm-plugin-card.plugin-card .rtm-logo {
+		display: inline-block;
+		float: none;
+	}
+
+	.rtm-theme-browser .rtm-themes .rtm-theme {
+		margin: 0 0 20px;
+		width: 100%;
+	}
+}
 
 @media screen and (max-width: 420px) {
 	.rtm-option-wrapper .form-table th {

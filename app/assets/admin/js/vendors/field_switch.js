@@ -26,14 +26,14 @@ jQuery( document ).ready( function ( $ ) {
 		enb.on( 'click', function () {
 			$( dsb ).removeClass( 'selected' ); //remove "selected" from other elements in this object class(OFF)
 			$( this ).addClass( 'selected' ); //add "selected" to the element which was just clicked in this object class(ON)
-			$( input ).val( true ).change(); //Finally change the value to 1
+			//$( input ).val( true ).change(); //Finally change the value to 1
 		} );
 
 		//Action on user's click(OFF)
 		dsb.on( 'click', function () {
 			$( enb ).removeClass( 'selected' ); //remove "selected" from other elements in this object class(ON)
 			$( this ).addClass( 'selected' ); //add "selected" to the element which was just clicked in this object class(OFF)
-			$( input ).val( false ).change(); // //Finally change the value to 0
+			//$( input ).val( false ).change(); // //Finally change the value to 0
 		} );
 
 	} );

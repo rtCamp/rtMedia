@@ -75,7 +75,7 @@
 		}
 	}
 
-	input[type="number"] {
+	input[type=number] {
 		width: 82px;
 	}
 
@@ -205,6 +205,10 @@
     padding: 10px 15px;
 }
 
+.rtm-fly-warning {
+	margin-bottom: 0;
+}
+
 // Types table needs different styles
 #rtmedia-types {
 	.form-table {
@@ -299,6 +303,11 @@
 			padding-top: 25px !important;
 			vertical-align: top;
 		}
+	}
+
+	input[type=text],
+	input[type=number] {
+		text-align: right;
 	}
 }
 

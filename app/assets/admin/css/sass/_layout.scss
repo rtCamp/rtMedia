@@ -6,12 +6,16 @@ $container-min-height: 300px;
 }
 
 .rtm-admin-tab-container {
+	display: table;
+    width: 100%;
+
 	.tabs-content {
 		background: $white;
 		border-left: 1px solid $border;
-		margin-left: $tab-panel-width;
+		display: table-cell;
 		min-height: $container-min-height;
 		padding: 20px 30px;
+		vertical-align: top;
 	}
 }
 
@@ -34,7 +38,7 @@ $container-min-height: 300px;
 }
 
 .rtm-tabs {
-	float: left;
+	display: table-cell;
 	list-style: none;
 	margin: 0;
 	min-height: $container-min-height;

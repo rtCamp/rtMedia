@@ -58,7 +58,7 @@
     text-decoration: none;
     text-transform: uppercase;
 
-	&:hover {
+	&:hover, &:focus {
 		background-color: darken($link, 5);
 		color: $white;
 	}
@@ -70,9 +70,9 @@
 	}
 
 	&.rtm-success {
-		background-color: #34bf49;
+		background-color: #2ecc71;
 
-		&:hover {
+		&:hover, &:focus {
 			background-color: darken(#34bf49, 5);
 		}
 	}

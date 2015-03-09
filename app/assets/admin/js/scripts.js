@@ -6,6 +6,14 @@ jQuery( document ).ready( function ( $ ) {
 	// Tabs
 	$( '.rtm-tabs' ).rtTab();
 
+	$( 'input[name^="rtmedia-options"]' ).on( 'change', function () {
+		if ( $( '.rtm-fly-warning' ).length === 0 ) {
+			$( '#bp-media-settings-boxes' ).prepend( '<div class="rtm-warning rtm-fly-warning hide">Settings have changed, you should save them!</div>' );
+			$( '.rtm-fly-warning' ).slideDown();
+		}
+	} );
+
+	// Theme section lightbox like WordPress
 	// May be not like Backbone, But I will surely update this code. ;)
 	var ListView = Backbone.View.extend( {
 		el: $( '.bp-media-admin' ), // attaches `this.el` to an existing element.
