@@ -388,7 +388,7 @@ if ( ! class_exists( 'rtForm' ) ) {
 					} elseif( 'val' == $key ){
 						$attrib[ 'value' ] = $val;
 					} else {
-						$attrib[ $key ] = $val;
+						$attrib[ 'key' ] = $key;
 					}
 				}
 
@@ -425,19 +425,16 @@ if ( ! class_exists( 'rtForm' ) ) {
 
 						$data = '<div class="rt-switch switch-square" data-on-label="<i class=\'fui-check\'></i>" data-off-label="<i class=\'fui-cross\'></i>">' . $data . '</div>';
 					} else {
-						if( !isset( $attrib[ 'label' ] ) ){
-							$attrib[ 'label' ] = '';
-						}
 						if ( ( isset( $attrib[ 'switch' ] ) && $attrib[ 'switch' ] ) || ( isset( $attrib[ 'switch_square' ] ) && $attrib[ 'switch_square' ] ) ) {
 
 							$label_class = array( 'switch' );
 
-							$data = $this->enclose_label( $element, $data, $attrib[ 'label' ], $label_class );
+							$data = $this->enclose_label( $element, $data, $attrib[ 'key' ], $label_class );
 							if ( $size > 1 ) {
 								$data = '<div>' . $data . '</div>';
 							}
 						} else {
-							$data = $this->enclose_label( $element, $data, $attrib[ 'label' ] );
+							$data = $this->enclose_label( $element, $data, $attrib[ 'key' ] );
 						}
 					}
 
