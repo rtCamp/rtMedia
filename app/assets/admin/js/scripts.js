@@ -8,7 +8,7 @@ jQuery( document ).ready( function ( $ ) {
 
 	$( 'input[name^="rtmedia-options"]' ).on( 'change', function () {
 		if ( $( '.rtm-fly-warning' ).length === 0 ) {
-			$( '#bp-media-settings-boxes' ).prepend( '<div class="rtm-warning rtm-fly-warning hide">Settings have changed, you should save them!</div>' );
+			$( '.rtm-button-container.top' ).prepend( '<div class="rtm-warning rtm-fly-warning hide">Settings have changed, you should save them!</div>' );
 			$( '.rtm-fly-warning' ).slideDown();
 		}
 	} );

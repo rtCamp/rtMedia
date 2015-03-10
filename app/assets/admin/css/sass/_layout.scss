@@ -49,7 +49,9 @@ $container-min-height: 300px;
 	background: #f3f3f3;
     border-bottom: 1px solid $border-dark;
     box-shadow: 0 1px 0 #fcfcfc inset;
+	overflow: hidden;
     padding: 6px 10px 6px 6px;
+	position: relative;
     text-align: right;
 
 	&.bottom {

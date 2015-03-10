@@ -207,15 +207,31 @@
     padding: 10px 15px;
 }
 
+.rtm-success {
+	background-color: #dff0d8;
+    border-bottom: 1px solid #e7e7e7;
+    color: #468847;
+    margin: 0;
+    padding: 8px 35px 8px 14px;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
 .rtm-fly-warning {
-	margin-bottom: 0;
+	border-bottom: 0;
+    left: -10px;
+    letter-spacing: 1px;
+    line-height: 22px;
+    margin-bottom: 0;
+    padding: 14px 25px;
+    position: absolute;
+    top: -5px;
 }
 
 // Types table needs different styles
 #rtmedia-types {
 	.form-table {
 		th {
-			line-height: 1.8;
+			line-height: 26px;
 			padding: 5px 0 20px;
 			width: 33%;
 		}
