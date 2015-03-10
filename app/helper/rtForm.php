@@ -376,19 +376,25 @@ if ( ! class_exists( 'rtForm' ) ) {
 					$this->update_default_id( $element );
 				}
 
-				foreach ( ( array ) $opt as $key => $val ) {
-					if( 'checked' == $key ){
-						$attrib[ 'checked' ] = $val;
-					} elseif( 'selected' == $key ){
-						$attrib[ 'selected' ] = $val;
-					} elseif( 'desc' == $key ){
-						$attrib[ 'desc' ] = $val;
-					} elseif( 'id' == $key ){
-						$attrib[ 'id' ] = $val;
-					} elseif( 'val' == $key ){
-						$attrib[ 'value' ] = $val;
+				foreach ( (array) $opt as $key => $val ) {
+
+					if ( 'checked' == $key ){
+						$attrib['checked'] = $val;
 					} else {
-						$attrib[ 'key' ] = $key;
+						if ( 'selected' == $key ){
+							$attrib['selected'] = $val;
+						} else {
+							if ( 'desc' == $key ){
+								$attrib['desc'] = $val;
+							} else {
+								if ( 'id' == $key ){
+									$attrib['id'] = $val;
+								} else {
+									$attrib['key']   = $key;
+									$attrib['value'] = $val;
+								}
+							}
+						}
 					}
 				}
 
