@@ -55,6 +55,10 @@
 		float: left;
 	}
 
+	a {
+		text-decoration: none;
+	}
+
 	.form-table {
 		th {
 			color: #444;
@@ -62,21 +66,29 @@
 			font-weight: 400;
 			padding: 5px 30px 5px 0;
 			vertical-align: top;
-			width: 50%;
+			width: 48%;
 		}
 
 		td {
 			font-size: 13px;
 			padding: 0 0 5px;
+			vertical-align: top;
 
 			fieldset label {
+				display: block;
 				margin: 0 !important;
+			}
+		}
+
+		.rt-form-radio {
+			label {
+				margin-top: 5px !important;
 			}
 		}
 	}
 
 	input[type=number] {
-		width: 82px;
+		width: 60px;
 	}
 
 	.rt-form-radio {
@@ -244,7 +256,7 @@
 
 #rtmedia-custom-css-settings {
 	.form-table th {
-		width: 40%;
+		width: 35%;
 	}
 
 	.form-table:last-child .rtm-field-wrap {
@@ -321,11 +333,6 @@
 			padding-top: 25px !important;
 			vertical-align: top;
 		}
-	}
-
-	input[type=text],
-	input[type=number] {
-		text-align: right;
 	}
 }
 

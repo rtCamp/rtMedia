@@ -1133,28 +1133,25 @@ class RTMediaFormHandler {
 			<tr>
 				<th>
 					<?php echo $option[ 'title' ]; ?>
-				</th>
-				<td>
-					<fieldset>
-						<span class="rtm-field-wrap"><?php call_user_func( $option[ 'callback' ], $option[ 'args' ] ); ?></span>
-						<span class="rtm-tooltip">
-							<i class="dashicons dashicons-info rtmicon"></i>
-							<span class="rtm-tip">
-								<?php echo ( isset( $option[ 'args' ][ 'desc' ] ) ) ? $option[ 'args' ][ 'desc' ] : 'NA'; ?>
-							</span>
-						</span>
-					</fieldset>
-				</td>
-			</tr>
+
+					<?php if ( isset( $option[ 'after_content' ] ) ) { ?>
+				<div class="rtm-message rtm-notice"><?php echo $option[ 'after_content' ]; ?></div>
+			<?php } ?>
+		</th>
+		<td>
+			<fieldset>
+				<span class="rtm-field-wrap"><?php call_user_func( $option[ 'callback' ], $option[ 'args' ] ); ?></span>
+				<span class="rtm-tooltip">
+					<i class="dashicons dashicons-info rtmicon"></i>
+					<span class="rtm-tip">
+						<?php echo ( isset( $option[ 'args' ][ 'desc' ] ) ) ? $option[ 'args' ][ 'desc' ] : 'NA'; ?>
+					</span>
+				</span>
+			</fieldset>
+		</td>
+		</tr>
 		</table>
 		<?php
-		if ( isset( $option[ 'after_content' ] ) ) {
-			?>
-			<div class="rtm-message rtm-notice">
-				<?php echo $option[ 'after_content' ]; ?>
-			</div>
-			<?php
-		}
 	}
 
 }
