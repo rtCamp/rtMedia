@@ -116,8 +116,12 @@ class RTMediaGalleryShortcode {
                 if ( ! is_array ( $attr[ "attr" ] ) ) {
                     $attr[ "attr" ] = Array( );
                 }
-                if ( ! isset ( $attr[ "attr" ][ "context_id" ] ) && isset ( $post->ID ) ) {
-                    $attr[ "attr" ][ "context_id" ] = $post->ID;
+                if ( ! isset ( $attr[ "attr" ][ "context_id" ] )
+	                && isset ( $attr[ "attr" ][ "context" ] )
+	                && $attr[ "attr" ][ "context" ] == 'profile' ) {
+	                $attr[ "attr" ][ "context_id" ] = get_current_user_id();
+                } elseif( ! isset ( $attr[ "attr" ][ "context_id" ] ) && isset ( $post->ID ) ){
+	                $attr[ "attr" ][ "context_id" ] = $post->ID;
                 }
                 
                 //check if context is group, then the gallery should only be visible to users according to the group privacy
