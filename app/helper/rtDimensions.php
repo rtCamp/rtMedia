@@ -93,6 +93,7 @@ class rtDimensions extends rtForm {
 	protected function generate_dimensions( $attributes ) {
 		$element = 'rtDimension';
 		global $rtmedia;
+		$options = $rtmedia->options;
 		$defaults = array(
 			'desc' => '', 'show_desc' => false,
 		);
@@ -118,24 +119,28 @@ class rtDimensions extends rtForm {
 
 		$html = '';
 
-		$html .= '<td>' . parent::get_textbox( array(
+		$html .= '<td>' . parent::get_number( array(
 					'name' => "rtmedia-options[{$key}_width]", 'value' => $width, 'class' => array( 'small-text large-offset-1' ), 'show_desc' => $show_desc,
 				) ) . '</td>';
 
 		if ( isset( $height ) ) {
-			$html .= '<td>' . parent::get_textbox( array(
+			$html .= '<td>' . parent::get_number( array(
 						'name' => "rtmedia-options[{$key}_height]", 'value' => $height, 'class' => array( 'small-text large-offset-1' ), 'show_desc' => $show_desc,
 					) ) . '</td>';
 		}
 
 		if ( isset( $crop ) ) {
-			$html .= '<td>' . parent::get_checkbox( array(
-						'name' => "rtmedia-options[{$key}_crop]", 'rtForm_options' => array(
+			$html .= '<td>' . parent::get_switch(
+					array(
+						'name' => "rtmedia-options[{$key}_crop]",
+						'rtForm_options' => array(
 							array(
 								'' => 1, //label would be blank
 								'checked' => $crop,
 							),
-						), 'class' => array( 'large-offset-1' ), 'show_desc' => $show_desc,
+						),
+						'value' => ( isset( $options[ "rtmedia-options[{$key}_crop]" ] ) ) ? $options[ "rtmedia-options[{$key}_crop]" ] : '0',
+						'show_desc' => $show_desc,
 					) ) . '</td>';
 		}
 
