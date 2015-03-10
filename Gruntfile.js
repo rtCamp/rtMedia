@@ -31,7 +31,6 @@ module.exports = function ( grunt ) {
 			},
 			build: {
 				src: [
-					'app/assets/admin/js/vendors/field_switch.js',
 					'app/assets/admin/js/vendors/rtp-tabs.js',
 					'app/assets/admin/js/scripts.js',
 					'app/assets/admin/js/admin.js'

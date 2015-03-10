@@ -265,7 +265,7 @@ if ( ! class_exists( 'RTMediaAddon' ) ) {
 			$coming_soon ? ' coming-soon' : '';
 
 			if ( $purchased ) {
-				$purchase_link = '<span class="rtm-addon-purchased alignright product_type_simple">' . __( 'Purchased', 'rtmedia' ) . '</span>';
+				$purchase_link = '<span class="rtm-addon-purchased button-primary disabled alignright product_type_simple">' . __( 'Purchased', 'rtmedia' ) . '</span>';
 			} else {
 				$purchase_link = '<a class="button-primary alignright product_type_simple"  href="' . $buy_now . '" target="_blank">' . __( 'Buy Now', 'rtmedia' ) . '</a>';
 			}
