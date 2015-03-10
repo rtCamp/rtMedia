@@ -357,7 +357,7 @@ if ( ! class_exists( 'rtForm' ) ) {
 		 *
 		 * @param  string $element
 		 * @param  array  $attrib
-		 * @param  int    $rtForm_options
+		 * @param  array    $rtForm_options
 		 *
 		 * @return string $html
 		 */
@@ -388,7 +388,7 @@ if ( ! class_exists( 'rtForm' ) ) {
 					} elseif( 'val' == $key ){
 						$attrib[ 'value' ] = $val;
 					} else {
-						$attrib[ 'key' ] = $val;
+						$attrib[ 'key' ] = $key;
 					}
 				}
 
