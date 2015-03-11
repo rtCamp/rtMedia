@@ -1,7 +1,7 @@
 .rtm-tooltip {
     position: relative;
 
-	.dashicons:hover + .rtm-tip {
+	&:hover .rtm-tip {
 		margin-left: 0;
 		opacity: 1;
 		visibility: visible;

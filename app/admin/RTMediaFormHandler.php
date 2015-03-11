@@ -344,11 +344,11 @@ class RTMediaFormHandler {
 				'args' => array(
 					'key' => 'general_masonry_layout',
 					'value' => $options[ 'general_masonry_layout' ],
-					'desc' => __( 'Masonry works by placing elements in an optimal position based on available vertical space, similar to a mason fitting stones in a wall.', 'rtmedia' ),
+					'desc' => __( 'If you enable masonry view, it is advisable to', 'rtmedia' ) . ' <a href="' . $regenerate_link . '">regenerate thumbnail</a> ' . __( 'for masonry view.', 'rtmedia' ),
 					'class' => array( 'rtm_enable_masonry_view' ),
 				),
 				'group' => '18',
-				'after_content' => __( 'You might need to', 'rtmedia' ) . ' <a id="rtm-masonry-change-thumbnail-info" href="' . get_admin_url() . 'admin.php?page=rtmedia-settings#rtmedia-sizes">' . __( 'change thumbnail size', 'rtmedia' ) . '</a> ' . __( 'and uncheck the crop box for thumbnails.', 'rtmedia' ) . '<br />' . __( 'If you enable masonry view, it is advisable to', 'rtmedia' ) . ' <a href="' . $regenerate_link . '">regenerate thumbnail</a> ' . __( 'for masonry view.', 'rtmedia' ) . '<br />' . __( 'To set gallery for fixed width, set image height to 0 and width as per your requirement and vice-versa.', 'rtmedia' ),
+				'after_content' => __( 'You might need to', 'rtmedia' ) . ' <a id="rtm-masonry-change-thumbnail-info" href="' . get_admin_url() . 'admin.php?page=rtmedia-settings#rtmedia-sizes">' . __( 'change thumbnail size', 'rtmedia' ) . '</a> ' . __( 'and uncheck the crop box for thumbnails.', 'rtmedia' ) . '<br /><br />' . __( 'To set gallery for fixed width, set image height to 0 and width as per your requirement and vice-versa.', 'rtmedia' ),
 			),
 		);
 
@@ -429,7 +429,7 @@ class RTMediaFormHandler {
 					'desc' => __( 'Add your affiliate-id along with footer link and get rewarded by our affiliation program.', 'rtmedia' ),
 				),
 				'group' => 100,
-				'after_content' => __( 'You can signup for rtMedia affiliate program from <a href="https://rtcamp.com/affiliates">here</a>' ),
+				'after_content' => __( 'Signup for rtMedia affiliate program <a href="https://rtcamp.com/affiliates">here</a>' ),
 			), //
 			'rtmedia_enable_api' => array(
 				'title' => __( 'Enable JSON API', 'rtmedia' ),
@@ -1135,7 +1135,7 @@ class RTMediaFormHandler {
 					<?php echo $option[ 'title' ]; ?>
 
 					<?php if ( isset( $option[ 'after_content' ] ) ) { ?>
-				<div class="rtm-message rtm-notice"><?php echo $option[ 'after_content' ]; ?></div>
+				<div class="rtm-message rtm-notice"><?php echo wpautop( $option[ 'after_content' ] ); ?></div>
 			<?php } ?>
 		</th>
 		<td>

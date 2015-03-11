@@ -34,9 +34,17 @@ if ( typeof Object.create !== 'function' ) {
 			/* This will keep on same tab as in hashtag */
 			if ( self.options.hashTag === true ) {
 				var hashTag = window.location.hash;
+
 				if ( hashTag ) {
 					self.$elem.find( 'li' ).find( 'a[href=' + hashTag + ']' ).trigger( 'click' );
 				}
+
+				// Detect change in hash value of URL
+				$( window ).on( 'hashchange', function () {
+					var hashTag = window.location.hash;
+					// Iterate over all nav links, setting the "selected" class as-appropriate.
+					self.$elem.find( 'li' ).find( 'a[href=' + hashTag + ']' ).trigger( 'click' );
+				} );
 			}
 
 		},
