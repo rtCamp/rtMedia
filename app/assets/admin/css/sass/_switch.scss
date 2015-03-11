@@ -28,7 +28,7 @@ $switchTransition: .15s ease-out;
 	color: $white;
 	font-size: 12px;
 	text-transform: uppercase;
-	background: #bbb;
+	background: #b4b4b4;
 	border-radius: inherit;
 	@include transition($switchTransition);
 	@include transition-property(opacity background);
@@ -54,7 +54,7 @@ $switchTransition: .15s ease-out;
 	}
 
 	input[type=checkbox]:checked ~ & {
-		background: #47a8d8;
+		background: #47a8d8; //#2ea2cc
 		//background: lighten(#2ecc71, 5); #2ea2cc
 
 		&:before { opacity: 0; }
