@@ -51,19 +51,7 @@
 }
 .rtmedia-container {
 	@import "compass/reset";
-	//updated for foundation 5
-	//@import "bower_components/foundation/variables";
-	//@import "bower_components/foundation/scss/foundation/components/variables";
-	//@import "bower_components/foundation/scss/foundation/components/global"; // *always required
-	//@import "bower_components/foundation/scss/foundation/components/grid";
-	//@import "foundation/components/visibility";
-	//@import "bower_components/foundation/scss/foundation/components/visibility";
-	//@import "foundation/components/flex-video";
-	//@import "bower_components/foundation/scss/foundation/components/flex-video";
-	//@import "bower_components/foundation/scss/foundation/components/tabs";
-	//@import "foundation/components/reveal";
-	//@import 'foundation_section_settings';
-	//@import "foundation/components/section";
+
 
 	.rtmedia-editor-main {
 
@@ -76,9 +64,7 @@
 				&:hover {
 					background: darken(#F5F5F5, 10%);
 				}
-				/*                        &:first-child {
-											margin-left : 0;
-										}*/
+
 			}
 			&.active > a {
 				background: #50A1D7;

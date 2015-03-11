@@ -24,12 +24,20 @@ module.exports = function ( grunt ) {
 			}
 		},
 		// Uglify
-		// Compress and Minify JS files in js/rtp-main-lib.js
+		// Compress and Minify JS files
 		// Ref. https://npmjs.org/package/grunt-contrib-uglify
 		uglify: {
-			options: { banner: '/*! \n * rtMedia JavaScript Library \n * @package rtMedia \n */'
+			options: {
+				banner: '/*! \n * rtMedia JavaScript Library \n * @package rtMedia \n */'
 			},
-			build: {
+			frontend: {
+				src: [
+					'app/assets/js/vendors/magnific-popup.js',
+					'app/assets/js/rtMedia.js'
+				],
+				dest: 'app/assets/js/main.js'
+			},
+			backend: {
 				src: [
 					'app/assets/admin/js/vendors/rtp-tabs.js',
 					'app/assets/admin/js/scripts.js',
@@ -45,7 +53,7 @@ module.exports = function ( grunt ) {
 				tasks: [ 'compass' ]
 			},
 			uglify: {
-				files: '<%= uglify.build.src %>',
+				files: [ '<%= uglify.frontend.src %>', '<%= uglify.backend.src %>' ],
 				tasks: [ 'uglify' ]
 			}
 		}

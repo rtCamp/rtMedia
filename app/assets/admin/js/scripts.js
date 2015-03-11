@@ -16,7 +16,7 @@ jQuery( document ).ready( function ( $ ) {
 
 	$( '.rtm-field-wrap .switch input[type=checkbox]' ).on( 'change', function () {
 		var self = $( this );
-			self.parents( 'tr' ).find( '.rtm-notice' ).slideToggle();
+		self.parents( 'tr' ).find( '.rtm-notice' ).slideToggle();
 	} );
 
 	// Theme section lightbox like WordPress

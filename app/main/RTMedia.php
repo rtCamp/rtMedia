@@ -823,8 +823,9 @@ class RTMedia {
 	function update_db() {
 		$update = new RTDBUpdate( false, RTMEDIA_PATH . "index.php", RTMEDIA_PATH . "app/schema/", true );
 		/* Current Version. */
-		if ( ! defined( 'RTMEDIA_VERSION' ) )
+		if ( ! defined( 'RTMEDIA_VERSION' ) ) {
 			define( 'RTMEDIA_VERSION', $update->db_version );
+		}
 		if ( $update->check_upgrade() ) {
 			$update->do_upgrade();
 		}
@@ -843,7 +844,7 @@ class RTMedia {
 
 	function enqueue_scripts_styles() {
 		global $rtmedia;
-		if ( wp_script_is( "wp-mediaelement", "registered" ) ) {
+		if ( wp_script_is( 'wp-mediaelement', 'registered' ) ) {
 			wp_enqueue_style( 'wp-mediaelement' );
 			wp_enqueue_script( 'wp-mediaelement' );
 		} else {
@@ -856,20 +857,16 @@ class RTMedia {
 		if ( ! ( isset( $rtmedia->options ) && isset( $rtmedia->options[ 'styles_enabled' ] ) && $rtmedia->options[ 'styles_enabled' ] == 0) ) {
 			wp_enqueue_style( 'rtmedia-main', RTMEDIA_URL . 'app/assets/css/main.css', '', RTMEDIA_VERSION );
 		}
-		wp_enqueue_style( 'rtmedia-font-awesome', RTMEDIA_URL . 'app/assets/css/font-awesome.min.css', '', RTMEDIA_VERSION );
-		if ( ! wp_script_is( "rtp-foundation-js" ) )
-			wp_enqueue_script( 'rtp-foundation-js', RTMEDIA_BOWER_COMPONENTS_URL . 'js/foundation.min.js', array( 'jquery' ), RTMEDIA_VERSION );
 
-		wp_enqueue_script( 'rtmedia-main', RTMEDIA_URL . 'app/assets/js/rtMedia.js', array( 'jquery', 'wp-mediaelement' ), RTMEDIA_VERSION );
-
-		wp_enqueue_style( 'rtmedia-magnific', RTMEDIA_URL . 'lib/magnific/magnific.css', '', RTMEDIA_VERSION );
-		wp_enqueue_script( 'rtmedia-magnific', RTMEDIA_URL . 'lib/magnific/magnific.js', '', RTMEDIA_VERSION );
+		wp_enqueue_script( 'rtmedia-main', RTMEDIA_URL . 'app/assets/js/main.js', array( 'jquery', 'wp-mediaelement' ), RTMEDIA_VERSION );
 
 		wp_localize_script( 'rtmedia-main', 'rtmedia_ajax_url', admin_url( 'admin-ajax.php' ) );
 		wp_localize_script( 'rtmedia-main', 'rtmedia_media_slug', RTMEDIA_MEDIA_SLUG );
 		wp_localize_script( 'rtmedia-main', 'rtmedia_lightbox_enabled', strval( $this->options[ "general_enableLightbox" ] ) );
+
 		//gallery reload after media upload, by default true
 		wp_localize_script( 'rtmedia-main', 'rtmedia_gallery_reload_on_upload', '1' );
+
 		//javascript messages
 		wp_localize_script( 'rtmedia-magnific', 'rtmedia_load_more', __( 'Loading media', "rtmedia" ) );
 		wp_localize_script( 'rtmedia-main', 'rtmedia_empty_activity_msg', __( 'Please enter some content to post.', "rtmedia" ) );
