@@ -1,0 +1,47 @@
+// BuddyPress Overwites
+
+#buddypress form#whats-new-form textarea {
+	height: 60px !important;
+	width: 100%;
+}
+
+#buddypress #whats-new-options {
+    height: auto !important;
+    overflow: hidden;
+}
+
+.rtm-drag-drop-active {
+    border: 4px dashed green !important;
+    display: block;
+    height: 100%;
+    opacity: 0.5;
+    z-index: 9999;
+}
+
+#rtm-drop-files-title {
+	background: rgba(0, 0, 0, 0.2);
+    display: none;
+    font-size: 14px;
+    height: 100%;
+    padding: 20px;
+    position: absolute;
+    top: 0;
+    width: 100%;
+}
+
+#rtSelectPrivacy {
+	float: right;
+}
+
+.rtmedia-plupload-container {
+	@extend %clearfix;
+    position: relative;
+}
+
+.rtm-upload-button-wrapper {
+	float: left;
+}
+
+#whats-new-post-in-box {
+	float: left;
+}

@@ -448,9 +448,9 @@ jQuery( 'document' ).ready( function ( $ ) {
 	var dragArea = jQuery( "#drag-drop-area" );
 	var activityArea = jQuery( '#whats-new' );
 	var content = dragArea.html();
-	jQuery( '#rtmedia-upload-container' ).after( "<h2 id='rtm-drop-files-title'>" + rtmedia_drop_media_msg + "</h2>" );
+	jQuery( '#rtmedia-upload-container' ).after( "<div id='rtm-drop-files-title'>" + rtmedia_drop_media_msg + "</div>" );
 	if ( typeof rtmedia_bp_enable_activity != "undefined" && rtmedia_bp_enable_activity == "1" ) {
-		jQuery( '#whats-new-textarea' ).after( "<h2 id='rtm-drop-files-title'>" + rtmedia_drop_media_msg + "</h2>" );
+		jQuery( '#whats-new-textarea' ).append( "<div id='rtm-drop-files-title'>" + rtmedia_drop_media_msg + "</div>" );
 	}
 	jQuery( document )
 			.on( 'dragover', function ( e ) {
@@ -461,7 +461,7 @@ jQuery( 'document' ).ready( function ( $ ) {
 
 //            activityArea.css('height','150px');
 				dragArea.addClass( 'rtm-drag-drop-active' );
-				jQuery( '#rtm-drop-files-title' ).css( 'display', 'block' );
+				jQuery( '#rtm-drop-files-title' ).show();
 			} )
 			.on( "dragleave", function ( e ) {
 				e.preventDefault();
