@@ -204,6 +204,22 @@ class RTMediaThemes {
 		<hr>
 		<div class="row">
 			<div class="columns large-4 rtmedia-theme-image">
+				<a href="http://rt.cx/klein" target="_blank"><img src="<?php echo RTMEDIA_URL . 'app/assets/img/rtmedia-theme-klein.jpg' ?>"/></a>
+			</div>
+			<div class="columns large-7">
+				<h3 class="rtmedia-theme-3rd-party-title"><a href="http://rt.cx/klein" target="_blank">Klein</a></h3>
+
+				<div>
+					<span><?php _e( 'Klein is an innovative WordPress theme built to support BuddyPress, bbPress, and WooCommerce out of the box. Perfect for websites that interacts with many users.', 'rtmedia' ); ?></span>
+				</div>
+				<div>
+					<h4><?php echo __( 'Click', 'rtmedia' ) . " <a href='http://rt.cx/klein' target='_blank'>" . __( 'here', 'rtmedia' ) . '</a> ' . __( 'for preview.', 'rtmedia' ); ?></h4>
+				</div>
+			</div>
+		</div>
+		<hr>
+		<div class="row">
+			<div class="columns large-4 rtmedia-theme-image">
 				<a href="http://rt.cx/sweetdate" target="_blank"><img src="<?php echo RTMEDIA_URL . 'app/assets/img/rtmedia-theme-sweetdate.png' ?>"/></a>
 			</div>
 			<div class="columns large-7">
