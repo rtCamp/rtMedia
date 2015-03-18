@@ -376,22 +376,22 @@ if ( ! class_exists( 'rtForm' ) ) {
 					$this->update_default_id( $element );
 				}
 
-				foreach ( (array) $opt as $key => $val ) {
+				foreach ( ( array ) $opt as $key => $val ) {
 
-					if ( 'checked' == $key ){
-						$attrib['checked'] = $val;
+					if ( 'checked' == $key ) {
+						$attrib[ 'checked' ] = $val;
 					} else {
-						if ( 'selected' == $key ){
-							$attrib['selected'] = $val;
+						if ( 'selected' == $key ) {
+							$attrib[ 'selected' ] = $val;
 						} else {
-							if ( 'desc' == $key ){
-								$attrib['desc'] = $val;
+							if ( 'desc' == $key ) {
+								$attrib[ 'desc' ] = $val;
 							} else {
-								if ( 'id' == $key ){
-									$attrib['id'] = $val;
+								if ( 'id' == $key ) {
+									$attrib[ 'id' ] = $val;
 								} else {
-									$attrib['key']   = $key;
-									$attrib['value'] = $val;
+									$attrib[ 'key' ] = $key;
+									$attrib[ 'value' ] = $val;
 								}
 							}
 						}
@@ -415,7 +415,7 @@ if ( ! class_exists( 'rtForm' ) ) {
 						break;
 					case 'rtSelect' :
 						$selected = ( $attrib[ 'selected' ] ) ? 'selected=selected' : '';
-						$data = '<option value="' . $attrib[ 'value' ] . '"' . $selected . '>' . $attrib[ 'key' ] . '</option>';
+						$data = '<option value="' . $attrib[ 'value' ] . '" ' . $selected . '>' . $attrib[ 'key' ] . '</option>';
 						break;
 				}
 
@@ -423,7 +423,7 @@ if ( ! class_exists( 'rtForm' ) ) {
 					$data .= $this->processAttributes( $element, $attrib, true );
 
 					// span elements for checkbox on/off switch
-					if( 'rtCheckbox' == $element ){
+					if ( 'rtCheckbox' == $element ) {
 						$data .= '<span class="switch-label" data-on="On" data-off="Off"></span><span class="switch-handle"></span>';
 					}
 

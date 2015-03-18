@@ -11,13 +11,16 @@
 @import "buddypress";
 
 // *** Grid *** //
-@import "functions";
+//@import "functions";
 
 // *** Grid *** //
-@import "grid";
+//@import "grid";
 
-// *** Magnific popup *** //
+// *** Default Magnific Popup *** //
 @import "magnific";
 
+// *** Customize Magnific Popup *** //
+@import "popup";
+
 // *** test *** //
-@import "backup-main";
+//@import "backup-main";

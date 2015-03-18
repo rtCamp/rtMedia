@@ -402,15 +402,15 @@ class RTMedia {
 
 		$this->privacy_settings = array(
 			'levels' => array(
-				60 => __( '<strong>Private</strong> - Visible only to the user', 'rtmedia' ),
-				40 => __( '<strong>Friends</strong> - Visible to user\'s friends', 'rtmedia' ),
-				20 => __( '<strong>Logged in Users</strong> - Visible to registered users', 'rtmedia' ),
-				0 => __( '<strong>Public</strong> - Visible to the world', 'rtmedia' )
+				60 => __( 'Private - Visible only to the user', 'rtmedia' ),
+				40 => __( 'Friends - Visible to user\'s friends', 'rtmedia' ),
+				20 => __( 'Logged in Users - Visible to registered users', 'rtmedia' ),
+				0 => __( 'Public - Visible to the world', 'rtmedia' )
 			)
 		);
 		$this->privacy_settings = apply_filters( 'rtmedia_privacy_levels', $this->privacy_settings );
 
-		if ( function_exists( "bp_is_active" ) && ! bp_is_active( 'friends' ) ) {
+		if ( function_exists( 'bp_is_active' ) && ! bp_is_active( 'friends' ) ) {
 			unset( $this->privacy_settings[ 'levels' ][ 40 ] );
 		}
 	}

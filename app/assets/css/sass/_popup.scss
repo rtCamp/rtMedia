@@ -1,0 +1,38 @@
+.rtm-lightbox-container {
+	background: #333;
+	border: 1px solid #222222;
+	@include box-shadow(0 0 10px rgba(0, 0, 0, 0.5));
+
+	display: table;
+	margin: 0 auto;
+	max-width: 90%;
+	position: relative;
+
+	table-layout: fixed;
+    width: 100%;
+}
+
+.rtm-single-media {
+	display: table-cell;
+	position: relative;
+	width: 66.6667%;
+}
+
+.rtm-single-meta {
+	background: $white;
+	display: table-cell;
+	overflow: hidden;
+    padding: 20px;
+	position: relative;
+	width: 33.3333%;
+}
+
+.rtm-ltb-title-container,
+.rtm-ltb-action-container {
+    background-color: rgba($black, 0.6);
+    color: $white;
+    //display: none;
+    padding: 0 10px;
+    position: absolute;
+    width: 100%;
+}

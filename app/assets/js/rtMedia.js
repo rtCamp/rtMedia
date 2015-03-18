@@ -369,7 +369,7 @@ jQuery( 'document' ).ready( function ( $ ) {
 				var height = $( window ).height();
 				//console.log( height );
 				//   , .mfp-content #buddypress .rtmedia-container,
-				jQuery( '.mfp-content .rtm-lightbox-container .rtmedia-single-meta, .mfp-content .rtm-lightbox-container #rtmedia-single-media-container .rtmedia-media, .rtm-lightbox-container .mejs-video' ).css( { 'height': height * 0.8, 'max-height': height * 0.8, 'over-flow': 'hidden' } );
+				jQuery( '.rtm-lightbox-container .mejs-video' ).css( { 'height': height * 0.8, 'max-height': height * 0.8, 'over-flow': 'hidden' } );
 				//mejs-video
 				//init the options dropdown menu
 				rtmedia_init_action_dropdown();
