@@ -7,6 +7,7 @@
  * Time: 4:30 PM
  */
 class RT_WP_TestCase extends WP_UnitTestCase {
+    
 	/**
 	 * Ensure that the plugin has been installed and activated.
 	 */
