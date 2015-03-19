@@ -1,5 +1,5 @@
 <div class="rtmedia-container rtmedia-single-container">
-    <div class="row rtm-lightbox-container">
+    <div class="row rtm-lightbox-container clearfix">
 		<?php
 		global $rt_ajax_request;
 		do_action( 'rtmedia_before_media' );
@@ -16,30 +16,27 @@
 
 				<?php } else { ?>
 
-					<button class="mfp-arrow mfp-arrow-left mfp-prevent-close rtm-lightbox-arrows" type="button" title="Previous Media"></button>
-					<button class="mfp-arrow mfp-arrow-right mfp-prevent-close" type="button" title="Next Media"></button>
-					<!--author actions-->
-					<div class='rtm-ltb-title-container rt-clear'>
-						<h2 class='rtm-ltb-title'>
-							<div class="rtmedia-media-name <?php if ( rtmedia_album_name() ) { ?>rtmedia-media-name-width-50<?php } else { ?>rtmedia-media-name-width-100<?php } ?>">
-								<a href="<?php echo rtmedia_permalink(); ?>" title="<?php echo rtmedia_title(); ?>"><?php echo rtmedia_title(); ?></a>
-							</div>
-							<?php if ( rtmedia_album_name() ) { ?>
-								<div class="rtmedia-album-name">
-									<span>&nbsp;<?php echo __( "under", 'rtmedia' ); ?></span>
-									<a href="<?php echo rtmedia_album_permalink(); ?>" title="<?php echo rtmedia_album_name(); ?>"><?php echo rtmedia_album_name(); ?></a>
-								</div>
-							<?php } ?>
-						</h2>
-						<div class='rtmedia-author-actions'>
-							<?php rtmedia_actions(); ?>
-						</div>
-					</div>
+					<span class="mfp-arrow mfp-arrow-left mfp-prevent-close rtm-lightbox-arrows" type="button" title="Previous Media"></span>
+					<span class="mfp-arrow mfp-arrow-right mfp-prevent-close" type="button" title="Next Media"></span>
+
 					<div class="rtmedia-media" id ="rtmedia-media-<?php echo rtmedia_id(); ?>"><?php rtmedia_media( true ); ?></div>
 
 					<div class='rtm-ltb-action-container rt-clear'>
-						<div class="rtm-ltb-gallery-title"><span class='ltb-title'></span><span class='media-index'></span><span class='total-medias'></span></div>
-						<div class="rtmedia-actions">
+						<div class='rtm-ltb-title'>
+							<span class="rtmedia-media-name <?php if ( rtmedia_album_name() ) { ?>rtmedia-media-name-width-50<?php } else { ?>rtmedia-media-name-width-100<?php } ?>">
+								<a href="<?php echo rtmedia_permalink(); ?>" title="<?php echo rtmedia_title(); ?>"><?php echo rtmedia_title(); ?></a>
+							</span>
+
+							<?php if ( rtmedia_album_name() ) { ?>
+								<span class="rtmedia-album-name">
+									<span>&nbsp;<?php echo __( 'under', 'rtmedia' ); ?></span>
+									<a href="<?php echo rtmedia_album_permalink(); ?>" title="<?php echo rtmedia_album_name(); ?>"><?php echo rtmedia_album_name(); ?></a>
+								</span>
+							<?php } ?>
+						</div>
+
+						<div class="rtmedia-actions rtmedia-author-actions rtm-author-actions">
+							<?php rtmedia_actions(); ?>
 							<?php do_action( 'rtmedia_action_buttons_after_media', rtmedia_id() ); ?>
 						</div>
 					</div>
@@ -51,7 +48,7 @@
 
 					<div class="rtm-single-meta-contents<?php if ( is_user_logged_in() ) echo " logged-in"; ?>">
 						<div>
-							<div class="userprofile">
+							<div class="userprofile rtm-user-avatar">
 								<?php rtmedia_author_profile_pic( true ); ?>
 							</div>
 							<div class="username">
@@ -132,11 +129,11 @@
 							</div>
 						</div>
 
-		<?php } ?>
-			<?php } ?>
+					<?php } ?>
+				<?php } ?>
 			</div>
 
-			<?php else: ?>
+		<?php else: ?>
 			<p class="rtmedia-no-media-found"><?php
 				$message = __( "Sorry !! There's no media found for the request !!", "rtmedia" );
 				echo apply_filters( 'rtmedia_no_media_found_message_filter', $message );
@@ -144,6 +141,6 @@
 			</p>
 		<?php endif; ?>
 
-<?php do_action( 'rtmedia_after_media' ); ?>
+		<?php do_action( 'rtmedia_after_media' ); ?>
     </div>
 </div>

@@ -20,7 +20,7 @@ function apply_rtMagnificPopup( selector ) {
 				tLoading: rt_load_more + ' #%curr%...',
 				mainClass: 'mfp-img-mobile',
 				preload: [ 1, 3 ],
-				closeOnBgClick: false,
+				closeOnBgClick: true,
 				gallery: {
 					enabled: true,
 					navigateByImgClick: true,
@@ -367,9 +367,8 @@ jQuery( 'document' ).ready( function ( $ ) {
 				rtmedia_init_popup_navigation();
 				rtmedia_disable_popup_navigation_comment_focus();
 				var height = $( window ).height();
-				//console.log( height );
-				//   , .mfp-content #buddypress .rtmedia-container,
 				jQuery( '.rtm-lightbox-container .mejs-video' ).css( { 'height': height * 0.8, 'max-height': height * 0.8, 'over-flow': 'hidden' } );
+				jQuery( '.mfp-content .rtmedia-media' ).css( { 'max-height': height * 0.87, 'over-flow': 'hidden' } );
 				//mejs-video
 				//init the options dropdown menu
 				rtmedia_init_action_dropdown();
