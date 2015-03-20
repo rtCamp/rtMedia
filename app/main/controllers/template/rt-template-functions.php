@@ -694,7 +694,7 @@ function rtmedia_author_actions() {
 
 		$options_start = '<span class="click-nav" id="rtm-media-options-list">
                 <span class="no-js">
-                <button class="clicker rtmedia-media-options rtmedia-action-buttons button"><i class="dashicons dashicons-admin-generic rtmicon"></i>' . __( 'Options', 'rtmedia' ) . '</button>
+                <button class="clicker rtmedia-media-options rtmedia-action-buttons button">' . __( 'Options', 'rtmedia' ) . '</button>
                 <ul class="rtm-options">';
 		foreach ( $options as $action ) {
 			if ( $action != "" ) {
@@ -718,7 +718,7 @@ function rtmedia_edit_form() {
 
 	if ( is_user_logged_in() && rtmedia_edit_allowed() ) {
 
-		$edit_button = '<button type="submit" class="rtmedia-edit rtmedia-action-buttons" ><i class="rtmicon dashicons dashicons-edit"></i>' . __( 'Edit', 'rtmedia' ) . '</button>';
+		$edit_button = '<button type="submit" class="rtmedia-edit rtmedia-action-buttons" >' . __( 'Edit', 'rtmedia' ) . '</button>';
 
 		$edit_button = apply_filters( 'rtmedia_edit_button_filter', $edit_button );
 
@@ -739,7 +739,7 @@ function rtmedia_actions() {
 
 	if ( is_user_logged_in() && rtmedia_edit_allowed() ) {
 
-		$edit_button = '<button type="submit" class="rtmedia-edit rtmedia-action-buttons button" ><i class="rtmicon dashicons dashicons-edit"></i>' . __( 'Edit', 'rtmedia' ) . '</button>';
+		$edit_button = '<button type="submit" class="rtmedia-edit rtmedia-action-buttons button" >' . __( 'Edit', 'rtmedia' ) . '</button>';
 
 		$edit_button = apply_filters( 'rtmedia_edit_button_filter', $edit_button );
 
@@ -769,7 +769,7 @@ function rtmedia_actions() {
  */
 function rtmedia_comments( $echo = true ) {
 
-	$html = '<ul id="rtmedia_comment_ul" class="large-block-grid-1" data-action="' . get_rtmedia_permalink( rtmedia_id() ) . 'delete-comment/">';
+	$html = '<ul id="rtmedia_comment_ul" class="large-block-grid-1 rtm-comment-list" data-action="' . get_rtmedia_permalink( rtmedia_id() ) . 'delete-comment/">';
 
 	global $wpdb, $rtmedia_media;
 
@@ -810,7 +810,7 @@ function rmedia_single_comment( $comment ) {
 	if ( $profile_pic != "" ) {
 		$html .= "<div class='rtmedia-comment-user-pic cleafix'>" . $profile_pic . "</div>";
 	}
-	$html .= "<div><div class='rtmedia-comment-details'>";
+	$html .= "<div class='rtm-comment-wrap'><div class='rtmedia-comment-details'>";
 	$html .= '<span class ="rtmedia-comment-author">' . '' . $user_name . '</span>';
 
 	$comment_string = wp_kses( $comment[ 'comment_content' ], $allowedtags );
@@ -818,7 +818,7 @@ function rmedia_single_comment( $comment ) {
 
 	global $rtmedia_media;
 	if ( is_rt_admin() || ( isset( $comment[ 'user_id' ] ) && ( get_current_user_id() == $comment[ 'user_id' ] || $rtmedia_media->media_author == get_current_user_id() ) ) || apply_filters( 'rtmedia_allow_comment_delete', false ) ) { // show delete button for comment author and admins
-		$html .= '<i data-id="' . $comment[ 'comment_ID' ] . '" class = "rtmedia-delete-comment dashicons dashicons-no rtmicon" title="' . __( 'Delete Comment' ) . '"></i>';
+		$html .= '<i data-id="' . $comment[ 'comment_ID' ] . '" class = "rtmedia-delete-comment dashicons dashicons-no-alt rtmicon" title="' . __( 'Delete Comment' ) . '"></i>';
 	}
 
 	$html .= '<span class ="rtmedia-comment-date"> ' . apply_filters( 'rtmedia_comment_date_format', rtmedia_convert_date( $comment[ 'comment_date_gmt' ] ), $comment ) . '</span>';
@@ -1461,14 +1461,14 @@ function rtmedia_delete_form( $echo = true ) {
 			echo $html;
 			RTMediaMedia::media_nonce_generator( rtmedia_id(), true );
 			do_action( "rtmedia_media_single_delete_form" );
-			echo '<button type="submit" title="' . __( 'Delete Media', 'rtmedia' ) . '" class="rtmedia-delete-media rtmedia-action-buttons button"><i class="dashicons dashicons-trash rtmicon"></i>' . __( 'Delete', 'rtmedia' ) . '</button></form>';
+			echo '<button type="submit" title="' . __( 'Delete Media', 'rtmedia' ) . '" class="rtmedia-delete-media rtmedia-action-buttons button">' . __( 'Delete', 'rtmedia' ) . '</button></form>';
 		} else {
 			$output = $html;
 			$rtm_nonce = RTMediaMedia::media_nonce_generator( rtmedia_id(), false );
 			$rtm_nonce = json_decode( $rtm_nonce );
 			$rtm_nonce_field = wp_nonce_field( 'rtmedia_' . rtmedia_id(), $rtm_nonce->action, true, false );
 			do_action( "rtmedia_media_single_delete_form" );
-			$output .= $rtm_nonce_field . '<button type="submit" title="' . __( 'Delete Media', 'rtmedia' ) . '" class="rtmedia-delete-media rtmedia-action-buttons button"><i class="dashicons dashicons-trash rtmicon"></i>' . __( 'Delete', 'rtmedia' ) . '</button></form>';
+			$output .= $rtm_nonce_field . '<button type="submit" title="' . __( 'Delete Media', 'rtmedia' ) . '" class="rtmedia-delete-media rtmedia-action-buttons button">' . __( 'Delete', 'rtmedia' ) . '</button></form>';
 
 			return $output;
 		}
@@ -2407,11 +2407,7 @@ function rtmedia_content_before_media() {
 
 	if ( $rt_ajax_request ) {
 		?>
-		<div class='rtm-mfp-close'>
-			<!--                <i class='rtmicon-cancel mfp-close'title='Close (Esc)'></i>-->
-			<span class="mfp-close" title="<?php _e( 'Close (Esc)' ); ?>">x</span>
-		</div>
-		<?php
+		<span class="rtm-mfp-close mfp-close dashicons dashicons-no-alt" title="<?php _e( "Close (Esc)" ); ?>"></span><?php
 	}
 }
 

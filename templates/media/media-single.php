@@ -47,16 +47,19 @@
 				<?php if ( $rt_ajax_request ) { ?>
 
 					<div class="rtm-single-meta-contents<?php if ( is_user_logged_in() ) echo " logged-in"; ?>">
-						<div>
+
+						<div class="rtm-user-meta-details">
 							<div class="userprofile rtm-user-avatar">
 								<?php rtmedia_author_profile_pic( true ); ?>
 							</div>
+
 							<div class="username">
 								<?php rtmedia_author_name( true ); ?>
 							</div>
-						</div>
-						<div class="rtm-time-privacy rt-clear">
-							<?php echo get_rtmedia_date_gmt(); ?> <?php echo get_rtmedia_privacy_symbol(); ?>
+
+							<div class="rtm-time-privacy rt-clear">
+								<?php echo get_rtmedia_date_gmt(); ?> <?php echo get_rtmedia_privacy_symbol(); ?>
+							</div>
 						</div>
 
 						<div class="rtmedia-actions-before-description rt-clear">
@@ -70,7 +73,7 @@
 						<?php if ( rtmedia_comments_enabled() ) { ?>
 							<div class="rtmedia-item-comments row">
 								<div class="large-12 columns">
-									<div class='rtmedia-actions-before-comments'>
+									<div class="rtmedia-actions-before-comments clearfix">
 										<?php do_action( 'rtmedia_actions_before_comments' ); ?>
 										<?php if ( is_user_logged_in() ) { ?>
 											<span><a href='#' class='rtmedia-comment-link'><?php _e( 'Comment', 'rtmedia' ); ?></a></span>
@@ -85,6 +88,8 @@
 								</div>
 							</div>
 						<?php } ?>
+
+
 					</div>
 					<?php if ( rtmedia_comments_enabled() && is_user_logged_in() ) { ?>
 						<div class='rtm-media-single-comments'>

@@ -245,20 +245,20 @@ button::-moz-focus-inner {
 }
 
 .mfp-close {
-  width: 44px;
-  height: 44px;
-  line-height: 44px;
+  color: #999;
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  line-height: 30px;
   position: absolute;
   right: 0;
   top: 0;
   text-decoration: none;
   text-align: center;
-  opacity: 0.65;
-  filter: alpha(opacity=65);
   padding: 0 0 18px 10px;
-  color: #FFF;
   font-style: normal;
-  font-size: 28px;
+  font-size: 24px;
+  z-index: 12;
 }
 
 .mfp-close:hover,
@@ -269,10 +269,6 @@ button::-moz-focus-inner {
 
 .mfp-close:active {
   top: 1px;
-}
-
-.mfp-close-btn-in .mfp-close {
-  color: #333;
 }
 
 .mfp-image-holder .mfp-close,
@@ -295,6 +291,7 @@ button::-moz-focus-inner {
 }
 
 .mfp-arrow {
+  cursor: pointer;
   position: absolute;
   opacity: 0.65;
   filter: alpha(opacity=65);
@@ -305,6 +302,14 @@ button::-moz-focus-inner {
   width: 90px;
   height: 110px;
   -webkit-tap-highlight-color: transparent;
+  opacity: 0;
+  -moz-transition: all 300ms ease-out;
+  -o-transition: all 300ms ease-out;
+  -webkit-transition: all 300ms ease-out;
+  transition: all 300ms ease-out;
+}
+.rtm-single-media:hover .mfp-arrow {
+  opacity: 1;
 }
 
 .mfp-arrow:active {
@@ -601,6 +606,8 @@ img.mfp-img {
   display: table;
   margin: 0 auto;
   position: relative;
+  table-layout: fixed;
+  width: 100%;
 }
 
 .rtm-single-media {
@@ -622,32 +629,239 @@ img.mfp-img {
 }
 
 .rtm-ltb-action-container {
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: rgba(0, 0, 0, 0.6);
   bottom: 0;
   color: #FFFFFF;
+  height: 38px;
+  line-height: 38px;
   opacity: 0;
   padding: 0 10px;
   position: absolute;
   width: 100%;
+  -moz-transition: all 300ms ease-out;
+  -o-transition: all 300ms ease-out;
+  -webkit-transition: all 300ms ease-out;
+  transition: all 300ms ease-out;
+}
+.rtm-single-media:hover .rtm-ltb-action-container {
+  opacity: 1;
+}
+#rtmedia-single-media-container .rtm-ltb-action-container .button {
+  background: transparent;
+  border: 0 none;
+  border-radius: 2px;
+  color: rgba(255, 255, 255, 0.5);
+  display: block;
+  font-family: inherit;
+  font-weight: normal;
+  line-height: 24px;
+  padding: 0 6px;
+  text-shadow: 0 0 0;
+  text-transform: none;
+}
+#rtmedia-single-media-container .rtm-ltb-action-container .button:hover {
+  background: rgba(255, 255, 255, 0.2);
+  color: rgba(255, 255, 255, 0.8);
+}
+#rtmedia-single-media-container .rtm-ltb-action-container .rtm-options .button {
+  color: #333;
+}
+
+.rtm-options {
+  background: #FFFFFF;
+  bottom: 38px;
+  color: #333;
+  list-style: outside none none;
+  margin: 0;
+  padding: 10px;
+  position: absolute;
+  right: 0;
+  width: 150px;
+}
+.rtm-options:after {
+  top: 100%;
+  right: 22px;
+  border: solid transparent;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+  border-color: rgba(255, 255, 255, 0);
+  border-top-color: #ffffff;
+  border-width: 6px;
+  margin-left: -6px;
+}
+.rtm-options .dashicons {
+  font-size: 14px;
+  line-height: 24px;
+  margin-right: 2px;
 }
 
 .rtm-ltb-title {
+  color: rgba(255, 255, 255, 0.7);
   float: left;
   font-size: 13px;
 }
 .rtm-ltb-title a {
   color: inherit;
 }
+.rtm-ltb-title a:hover {
+  border-bottom: 1px dotted;
+  color: #FFFFFF;
+}
 
 .rtm-author-actions {
   float: right;
 }
-.rtm-author-actions form {
-  display: inline-block;
+.rtm-author-actions .click-nav, .rtm-author-actions > form {
+  float: left;
+  margin: 0 2px;
+  padding: 7px 0;
+  position: relative;
 }
 
 .rtmedia-media img {
   display: inline-block;
   max-height: inherit;
   width: auto;
+}
+
+.rtm-user-meta-details .username {
+  font-size: 16px;
+  line-height: 1;
+  margin-bottom: 5px;
+}
+
+.rtm-user-avatar {
+  float: left;
+  margin: 0 16px 16px 0;
+  max-width: 54px;
+}
+.rtm-user-avatar a {
+  display: block;
+}
+
+.rtm-time-privacy {
+  color: #999;
+  font-size: 13px;
+}
+.rtm-time-privacy .dashicons {
+  font-size: 14px;
+  line-height: 24px;
+}
+
+.rtmedia-actions-before-comments > span {
+  float: left;
+  margin-right: 10px;
+}
+.rtmedia-actions-before-comments .rtmedia-comment-link, #buddypress .rtmedia-actions-before-comments .rtmedia-like {
+  border: 0;
+  font-size: 13px;
+  font-weight: normal;
+  padding: 0;
+  text-transform: none;
+}
+.rtmedia-actions-before-comments .rtmedia-comment-link:hover, #buddypress .rtmedia-actions-before-comments .rtmedia-like:hover {
+  background: transparent;
+}
+
+.rtm-like-comments-info .rtmedia-comment-user-pic {
+  float: left;
+  margin-right: 10px;
+  max-width: 36px;
+}
+
+.rtm-like-comments-info {
+  position: relative;
+}
+.rtm-like-comments-info:after {
+  bottom: 100%;
+  left: 15px;
+  border: solid transparent;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+  border-color: rgba(237, 239, 244, 0);
+  border-bottom-color: #edeff4;
+  border-width: 4px;
+  margin-left: -4px;
+}
+
+.rtm-comment-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.rtm-comment-list li {
+  background: #edeff4;
+  font-size: 12px;
+  margin-bottom: 1px;
+  padding: 10px;
+  position: relative;
+}
+.rtm-comment-list li:hover .rtmedia-delete-comment {
+  opacity: 1;
+}
+
+.rtmedia-like-info {
+  background: #edeff4;
+  font-size: 12px;
+  margin-bottom: 1px;
+  padding: 10px;
+  position: relative;
+}
+
+.rtm-comment-wrap {
+  overflow: hidden;
+}
+.rtm-comment-wrap .rtmedia-comment-author {
+  font-weight: 700;
+}
+.rtm-comment-wrap .rtmedia-comment-date {
+  color: #999;
+  display: block;
+  font-size: 11px;
+}
+
+.rtmedia-delete-comment {
+  color: #999;
+  cursor: pointer;
+  font-size: 16px;
+  opacity: 0;
+  position: absolute;
+  right: 5px;
+  top: 5px;
+}
+
+.rtmedia-comment-content p {
+  margin: 0;
+}
+
+.rtmedia-comment-details {
+  line-height: 1.5;
+  margin-top: -3px;
+}
+
+.rtm-single-meta-contents {
+  max-height: 400px;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.rtm-media-single-comments {
+  background-color: #edeff4;
+  bottom: 10px;
+  padding: 4px;
+  position: absolute;
+  width: calc(100% - 40px);
+}
+.rtm-media-single-comments textarea {
+  font-size: 12px;
+  line-height: 14px;
+  max-height: 40px;
+  min-height: 30px;
+  padding: 4px;
 }
