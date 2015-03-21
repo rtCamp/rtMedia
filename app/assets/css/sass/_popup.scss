@@ -1,31 +1,22 @@
 // Additional Styles
 .rtm-lightbox-container {
 	background: $black;
-	display: table;
 	margin: 0 auto;
 	position: relative;
-
-	// Fixed issue in Firefox and Opera
-	table-layout: fixed;
-    width: 100%;
 }
 
 .rtm-single-media {
-	display: table-cell;
     position: relative;
     text-align: center;
     vertical-align: middle;
-    width: 66.6667%;
 }
 
 .rtm-single-meta {
 	background: $white;
-	display: table-cell;
 	overflow: hidden;
     padding: 20px;
 	position: relative;
 	vertical-align: top;
-	width: 33.3333%;
 }
 
 .rtm-ltb-action-container {
@@ -147,13 +138,18 @@
 	}
 }
 
-.rtm-user-avatar {
+.userprofile {
     float: left;
     margin: 0 16px 16px 0;
     max-width: 54px;
 
 	a {
 		display: block;
+	}
+
+	img {
+		height: auto; // Theme 2014/2013
+		max-width: 100%; // Theme 2014/2013
 	}
 }
 
@@ -188,11 +184,14 @@
 	}
 }
 
-.rtm-like-comments-info {
-	.rtmedia-comment-user-pic {
-		float: left;
-		margin-right: 10px;
-		max-width: 36px;
+.rtmedia-comment-user-pic {
+	float: left;
+	margin-right: 10px;
+	max-width: 36px;
+
+	img {
+		height: auto; // Theme 2014/2013
+		max-width: 100%; // Theme 2014/2013
 	}
 }
 
@@ -276,12 +275,6 @@
 .rtmedia-comment-details {
     line-height: 1.5;
     margin-top: -3px;
-}
-
-.rtm-single-meta-contents {
-	max-height: 400px;
-	overflow-x: hidden;
-	overflow-y: auto;
 }
 
 .rtm-media-single-comments {

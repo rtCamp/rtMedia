@@ -195,7 +195,8 @@ jQuery( 'document' ).ready( function ( $ ) {
 	//Remove title from popup duplication
 	$( "li.rtmedia-list-item p a" ).each( function ( e ) {
 		$( this ).addClass( "no-popup" );
-	} )
+	} );
+
 	//rtmedia_lightbox_enabled from setting
 	if ( typeof ( rtmedia_lightbox_enabled ) != 'undefined' && rtmedia_lightbox_enabled == "1" ) {
 		apply_rtMagnificPopup( '.rtmedia-list-media, .rtmedia-activity-container ul.rtmedia-list, #bp-media-list,.bp-media-sc-list, li.media.album_updated ul,ul.bp-media-list-media, li.activity-item div.activity-content div.activity-inner div.bp_media_content, .rtm-bbp-container' );

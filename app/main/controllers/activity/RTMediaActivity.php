@@ -87,9 +87,6 @@ class RTMediaActivity {
 				$li_content .= '</a>';
 			}
 
-			$li_content .= '<div class="rtmedia-item-actions">';
-			$li_content .= $this->actions();
-			$li_content .= '</div>';
 			$li_content .= '</li>';
 			$count ++;
 		}

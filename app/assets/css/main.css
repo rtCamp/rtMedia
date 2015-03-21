@@ -62,7 +62,6 @@
  * Extend the clearfix class with Sass to avoid the `.clearfix` class appearing
  * over and over in your markup.
  */
-.rt-clear:after,
 .clearfix:after,
 .rtmedia-plupload-container:after {
   content: "";
@@ -113,6 +112,38 @@
 
 #whats-new-post-in-box {
   float: left;
+}
+
+.rtmedia-list {
+  margin: 0;
+  padding: 0;
+}
+
+.rtmedia-list-item > a {
+  border: 0;
+  display: inline-block;
+}
+.rtmedia-list-item > a:focus {
+  outline: 0;
+}
+.rtmedia-list-item > a + p {
+  display: none;
+}
+.rtmedia-list-item > a .rtmedia-item-thumbnail img {
+  display: inline-block;
+}
+
+.rtmedia-item-title {
+  display: none;
+}
+
+#buddypress ul.rtmedia-list li {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+
+.rtmedia-activity-container .rtmedia-item-actions {
+  display: none;
 }
 
 /* Magnific Popup CSS */
@@ -603,29 +634,22 @@ img.mfp-img {
 }
 .rtm-lightbox-container {
   background: #000000;
-  display: table;
   margin: 0 auto;
   position: relative;
-  table-layout: fixed;
-  width: 100%;
 }
 
 .rtm-single-media {
-  display: table-cell;
   position: relative;
   text-align: center;
   vertical-align: middle;
-  width: 66.6667%;
 }
 
 .rtm-single-meta {
   background: #FFFFFF;
-  display: table-cell;
   overflow: hidden;
   padding: 20px;
   position: relative;
   vertical-align: top;
-  width: 33.3333%;
 }
 
 .rtm-ltb-action-container {
@@ -733,13 +757,17 @@ img.mfp-img {
   margin-bottom: 5px;
 }
 
-.rtm-user-avatar {
+.userprofile {
   float: left;
   margin: 0 16px 16px 0;
   max-width: 54px;
 }
-.rtm-user-avatar a {
+.userprofile a {
   display: block;
+}
+.userprofile img {
+  height: auto;
+  max-width: 100%;
 }
 
 .rtm-time-privacy {
@@ -766,10 +794,14 @@ img.mfp-img {
   background: transparent;
 }
 
-.rtm-like-comments-info .rtmedia-comment-user-pic {
+.rtmedia-comment-user-pic {
   float: left;
   margin-right: 10px;
   max-width: 36px;
+}
+.rtmedia-comment-user-pic img {
+  height: auto;
+  max-width: 100%;
 }
 
 .rtm-like-comments-info {
@@ -845,12 +877,6 @@ img.mfp-img {
   margin-top: -3px;
 }
 
-.rtm-single-meta-contents {
-  max-height: 400px;
-  overflow-x: hidden;
-  overflow-y: auto;
-}
-
 .rtm-media-single-comments {
   background-color: #edeff4;
   bottom: 10px;
@@ -864,4 +890,28 @@ img.mfp-img {
   max-height: 40px;
   min-height: 30px;
   padding: 4px;
+}
+
+@media only screen and (min-width: 1025px) {
+  .rtm-lightbox-container {
+    display: table;
+    table-layout: fixed;
+    width: 100%;
+  }
+
+  .rtm-single-media {
+    display: table-cell;
+    width: 66.6667%;
+  }
+
+  .rtm-single-meta {
+    display: table-cell;
+    width: 33.3333%;
+  }
+
+  .rtm-single-meta-contents {
+    max-height: 400px;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
 }

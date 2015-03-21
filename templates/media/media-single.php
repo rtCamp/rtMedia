@@ -21,7 +21,7 @@
 
 					<div class="rtmedia-media" id ="rtmedia-media-<?php echo rtmedia_id(); ?>"><?php rtmedia_media( true ); ?></div>
 
-					<div class='rtm-ltb-action-container rt-clear'>
+					<div class='rtm-ltb-action-container clearfix'>
 						<div class='rtm-ltb-title'>
 							<span class="rtmedia-media-name <?php if ( rtmedia_album_name() ) { ?>rtmedia-media-name-width-50<?php } else { ?>rtmedia-media-name-width-100<?php } ?>">
 								<a href="<?php echo rtmedia_permalink(); ?>" title="<?php echo rtmedia_title(); ?>"><?php echo rtmedia_title(); ?></a>
@@ -57,12 +57,12 @@
 								<?php rtmedia_author_name( true ); ?>
 							</div>
 
-							<div class="rtm-time-privacy rt-clear">
+							<div class="rtm-time-privacy clearfix">
 								<?php echo get_rtmedia_date_gmt(); ?> <?php echo get_rtmedia_privacy_symbol(); ?>
 							</div>
 						</div>
 
-						<div class="rtmedia-actions-before-description rt-clear">
+						<div class="rtmedia-actions-before-description clearfix">
 							<?php do_action( 'rtmedia_actions_before_description', rtmedia_id() ); ?>
 						</div>
 
@@ -99,11 +99,11 @@
 
 				<?php } else { // else for if ( $rt_ajax_request )?>
 
-					<div class="rtmedia-item-actions rt-clear">
+					<div class="rtmedia-item-actions clearfix">
 						<?php do_action( 'rtmedia_actions_without_lightbox' ); ?>
 						<?php rtmedia_actions(); ?>
 					</div>
-					<div class="rtmedia-actions-before-description rt-clear">
+					<div class="rtmedia-actions-before-description clearfix">
 						<?php do_action( 'rtmedia_actions_before_description', rtmedia_id() ); ?>
 					</div>
 
