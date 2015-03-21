@@ -406,15 +406,68 @@ jQuery( function ( $ ) {
 				}
 
 				// Creating table row to display selected files
-				var $tr = $( "<tr id='" + file.id + "' class='upload-waiting'>" )
-						.append( $( "<td id='td_" + file.id + "' class='plupload_file_name'>" )
-								.append( $( "<label id='label_" + file.id + "'>" ).text( file.name.substring( 0, 40 ) ) ),
-								$( "<td class='plupload_file_status'>" ).text( rtmedia_waiting_msg ),
-								$( "<td class='plupload_file_size'>" ).text( plupload.formatSize( file.size ) ),
-								$( "<td class='plupload_media_edit'>" ).text( "" ),
-								$( "<td title='" + rtmedia_close + "' class='close plupload_delete'>" ).html( $( "<span class='remove-from-queue'>" ).html( "&times;" ) )
-								)
-						.appendTo( "#rtMedia-queue-list" );
+//				var $tr = $( "<tr id='" + file.id + "' class='upload-waiting'>" )
+//						.append( $( "<td id='td_" + file.id + "' class='plupload_file_name'>" )
+//								.append( $( "<label id='label_" + file.id + "'>" ).text( file.name.substring( 0, 40 ) ) ),
+//								$( "<td class='plupload_file_status'>" ).text( rtmedia_waiting_msg ),
+//								$( "<td class='plupload_file_size'>" ).text( plupload.formatSize( file.size ) ),
+//								$( "<td class='plupload_media_edit'>" ).text( "" ),
+//								$( "<td title='" + rtmedia_close + "' class='close plupload_delete'>" ).html( $( "<span class='remove-from-queue'>" ).html( "&times;" ) )
+//								)
+//						.appendTo( "#rtMedia-queue-list" );
+                
+                var rtmedia_plupload_file = '<li class="plupload_file ui-state-default plupload_delete"id="' + file.id + '" style="width: 100px;">';
+                rtmedia_plupload_file += '<div id="file_thumb_' + file.id + '" class="plupload_file_thumb">';
+                rtmedia_plupload_file += '</div>';
+                rtmedia_plupload_file += '<div class="plupload_file_status">';
+                rtmedia_plupload_file += '<div class="plupload_file_progress ui-widget-header" style="width: 0%;">';
+                rtmedia_plupload_file += '</div>';
+                rtmedia_plupload_file += '<span class="plupload_file_percent">';
+                rtmedia_plupload_file += '</span>';
+                rtmedia_plupload_file += '</div>';
+                rtmedia_plupload_file += '<div class="plupload_file_name" title="' + file.name + '">';
+                rtmedia_plupload_file += '<span class="plupload_file_name_wrapper">';
+                rtmedia_plupload_file += file.name;
+                rtmedia_plupload_file += '</span>';
+                rtmedia_plupload_file += '</div>';
+                rtmedia_plupload_file += '<div class="plupload_file_action">';
+                rtmedia_plupload_file += '<div class="plupload_action_icon ui-icon ui-icon-circle-minus">';
+                rtmedia_plupload_file += '</div>';
+                rtmedia_plupload_file += '</div>';
+                rtmedia_plupload_file += '<div class="plupload_file_size">';
+                rtmedia_plupload_file += plupload.formatSize( file.size );
+                rtmedia_plupload_file += '</div>';
+                rtmedia_plupload_file += '<div class="plupload_file_fields">';
+                rtmedia_plupload_file += '</div>';
+                rtmedia_plupload_file += '</li>';
+
+                jQuery( rtmedia_plupload_file ).appendTo( '#rtmedia_uploader_filelist' );
+                var type = file.type;
+                if( /image/i.test( type ) ) {
+                    var img = new mOxie.Image();
+
+                    img.onload = function() {
+                        this.embed($('#file_thumb_' + file.id).get(0), {
+                            width: 100,
+                            height: 100,
+                            crop: true
+                        });
+                    };
+
+                    img.onembedded = function() {
+                        this.destroy();
+                    };
+
+                    img.onerror = function() {
+                        this.destroy();
+                    };
+
+                    img.load(this.getSource()); 
+                } else if( /video/i.test( type ) ) {
+                    jQuery( '<img src="' + rtmedia_media_thumbs[ 'video' ] + '" />' ).appendTo( '#file_thumb_' + file.id );
+                } else if( /audio/i.test( type ) ) {
+                    jQuery( '<img src="' + rtmedia_media_thumbs[ 'music' ] + '" />' ).appendTo( '#file_thumb_' + file.id );
+                }
 
 				//Delete Function
 				$( "#" + file.id + " td.plupload_delete .remove-from-queue" ).click( function ( e ) {
@@ -747,14 +800,68 @@ jQuery( document ).ready( function ( $ ) {
 			}
 
 			// Creating table row to display selected files
-			var $tr = $( "<tr id='" + file.id + "' class='upload-waiting'>" )
-					.append( $( "<td id='td_" + file.id + "'>" )
-							.append( $( "<label id='label_" + file.id + "'>" ).text( file.name.substring( 0, 40 ) ) ),
-							$( "<td class='plupload_file_status'>" ).text( rtmedia_waiting_msg ),
-							$( "<td class='plupload_file_size'>" ).text( plupload.formatSize( file.size ) ),
-							$( "<td>" ).text( "" ),
-							$( "<td title='" + rtmedia_remove_from_queue + "' class='close plupload_delete'>" ).html( "&times;" )
-							).appendTo( "#rtMedia-queue-list" );
+//			var $tr = $( "<tr id='" + file.id + "' class='upload-waiting'>" )
+//					.append( $( "<td id='td_" + file.id + "'>" )
+//							.append( $( "<label id='label_" + file.id + "'>" ).text( file.name.substring( 0, 40 ) ) ),
+//							$( "<td class='plupload_file_status'>" ).text( rtmedia_waiting_msg ),
+//							$( "<td class='plupload_file_size'>" ).text( plupload.formatSize( file.size ) ),
+//							$( "<td>" ).text( "" ),
+//							$( "<td title='" + rtmedia_remove_from_queue + "' class='close plupload_delete'>" ).html( "&times;" )
+//							).appendTo( "#rtMedia-queue-list" );
+
+            var rtmedia_plupload_file = '<li class="plupload_file ui-state-default plupload_delete"id="' + file.id + '" style="width: 100px;">';
+            rtmedia_plupload_file += '<div id="file_thumb_' + file.id + '" class="plupload_file_thumb">';
+            rtmedia_plupload_file += '</div>';
+            rtmedia_plupload_file += '<div class="plupload_file_status">';
+            rtmedia_plupload_file += '<div class="plupload_file_progress ui-widget-header" style="width: 0%;">';
+            rtmedia_plupload_file += '</div>';
+            rtmedia_plupload_file += '<span class="plupload_file_percent">';
+            rtmedia_plupload_file += '</span>';
+            rtmedia_plupload_file += '</div>';
+            rtmedia_plupload_file += '<div class="plupload_file_name" title="' + file.name + '">';
+            rtmedia_plupload_file += '<span class="plupload_file_name_wrapper">';
+            rtmedia_plupload_file += file.name;
+            rtmedia_plupload_file += '</span>';
+            rtmedia_plupload_file += '</div>';
+            rtmedia_plupload_file += '<div class="plupload_file_action">';
+            rtmedia_plupload_file += '<div class="plupload_action_icon ui-icon ui-icon-circle-minus">';
+            rtmedia_plupload_file += '</div>';
+            rtmedia_plupload_file += '</div>';
+            rtmedia_plupload_file += '<div class="plupload_file_size">';
+            rtmedia_plupload_file += plupload.formatSize( file.size );
+            rtmedia_plupload_file += '</div>';
+            rtmedia_plupload_file += '<div class="plupload_file_fields">';
+            rtmedia_plupload_file += '</div>';
+            rtmedia_plupload_file += '</li>';
+            
+            jQuery( rtmedia_plupload_file ).appendTo( '#rtmedia_uploader_filelist' );
+            var type = file.type;
+            console.log( /image/i.test( type ) );
+            if( /image/i.test( type ) ) {
+                var img = new mOxie.Image();
+
+                img.onload = function() {
+                    this.embed($('#file_thumb_' + file.id).get(0), {
+                        width: 100,
+                        height: 100,
+                        crop: true
+                    });
+                };
+
+                img.onembedded = function() {
+                    this.destroy();
+                };
+
+                img.onerror = function() {
+                    this.destroy();
+                };
+
+                img.load(this.getSource()); 
+            } else if( /video/i.test( type ) ) {
+                jQuery( '<img src="' + rtmedia_media_thumbs[ 'video' ] + '" />' ).appendTo( '#file_thumb_' + file.id );
+            } else if( /audio/i.test( type ) ) {
+                jQuery( '<img src="' + rtmedia_media_thumbs[ 'music' ] + '" />' ).appendTo( '#file_thumb_' + file.id );
+            }
 
 			jQuery( '#whats-new-content' ).css( 'padding-bottom', '0px' );
 			$( "#rtm-upload-start-notice" ).css( 'display', 'block' ); // show the file upload notice to the user
