@@ -114,6 +114,17 @@
   float: left;
 }
 
+.rtmedia-container {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+.rtmedia-container *, .rtmedia-container *:before, .rtmedia-container *:after {
+  -webkit-box-sizing: inherit;
+  -moz-box-sizing: inherit;
+  box-sizing: inherit;
+}
+
 .rtmedia-list {
   margin: 0;
   padding: 0;
@@ -748,13 +759,15 @@ img.mfp-img {
 .rtmedia-media img {
   display: inline-block;
   max-height: inherit;
+  height: auto;
+  max-width: 100%;
   width: auto;
 }
 
 .rtm-user-meta-details .username {
   font-size: 16px;
   line-height: 1;
-  margin-bottom: 5px;
+  margin-bottom: 6px;
 }
 
 .userprofile {
@@ -772,11 +785,11 @@ img.mfp-img {
 
 .rtm-time-privacy {
   color: #999;
-  font-size: 13px;
+  font-size: 12px;
 }
 .rtm-time-privacy .dashicons {
   font-size: 14px;
-  line-height: 24px;
+  line-height: 1.5;
 }
 
 .rtmedia-actions-before-comments > span {
@@ -787,6 +800,7 @@ img.mfp-img {
   border: 0;
   font-size: 13px;
   font-weight: normal;
+  line-height: 2;
   padding: 0;
   text-transform: none;
 }
@@ -910,6 +924,7 @@ img.mfp-img {
   }
 
   .rtm-single-meta-contents {
+    min-height: 400px;
     max-height: 400px;
     overflow-x: hidden;
     overflow-y: auto;

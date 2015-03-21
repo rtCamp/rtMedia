@@ -126,6 +126,8 @@
 	img {
 		display: inline-block;
 		max-height: inherit;
+		height: auto; // Theme 2014/2013
+		max-width: 100%; // Theme 2014/2013
 		width: auto;
 	}
 }
@@ -134,7 +136,7 @@
 	.username {
 		font-size: 16px;
 		line-height: 1;
-		margin-bottom: 5px;
+		margin-bottom: 6px;
 	}
 }
 
@@ -155,11 +157,11 @@
 
 .rtm-time-privacy {
     color: #999;
-    font-size: 13px;
+    font-size: 12px;
 
 	.dashicons {
 		font-size: 14px;
-		line-height: 24px;
+		line-height: 1.5;
 	}
 }
 
@@ -175,6 +177,7 @@
 		border: 0;
 		font-size: 13px;
 		font-weight: normal;
+		line-height: 2;
 		padding: 0;
 		text-transform: none;
 
