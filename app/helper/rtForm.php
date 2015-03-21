@@ -67,12 +67,12 @@
  *
  * @author udit
  */
-
-if ( ! class_exists( 'rtForm' ) ){
+if ( ! class_exists( 'rtForm' ) ) {
 
 	class rtForm {
 
 		private $element_id;
+
 		/**
 		 * default id counts
 		 * if id for any element is not given then these count will be used in id generation
@@ -88,7 +88,6 @@ if ( ! class_exists( 'rtForm' ) ){
 			'rtHidden' => 0,
 			'rtWysiwyg' => 0,
 		);
-
 		private static $default_classes = array(
 			'rtText' => 'rt-form-text',
 			'rtNumber' => 'rt-form-number',
@@ -101,7 +100,6 @@ if ( ! class_exists( 'rtForm' ) ){
 			'rtWysiwyg' => 'rt-form-wysiwyg',
 		);
 
-
 		/**
 		 * Get default html id.
 		 *
@@ -110,7 +108,7 @@ if ( ! class_exists( 'rtForm' ) ){
 		 * @param  string $element
 		 *
 		 */
-		private function get_default_id( $element ){
+		private function get_default_id( $element ) {
 			return self::$id_counts[ $element ];
 		}
 
@@ -122,7 +120,7 @@ if ( ! class_exists( 'rtForm' ) ){
 		 * @param  string $element
 		 *
 		 */
-		private function update_default_id( $element ){
+		private function update_default_id( $element ) {
 			self::$id_counts[ $element ] ++;
 		}
 
@@ -134,10 +132,9 @@ if ( ! class_exists( 'rtForm' ) ){
 		 * @param  string $element
 		 *
 		 */
-		private function get_default_class( $element ){
+		private function get_default_class( $element ) {
 			return self::$default_classes[ $element ];
 		}
-
 
 		/**
 		 * Embedd html class to html output.
@@ -149,13 +146,13 @@ if ( ! class_exists( 'rtForm' ) ){
 		 *
 		 * @return string $html
 		 */
-		private function embedd_class( $element, $class = null ){
+		private function embedd_class( $element, $class = null ) {
 
 			$html = 'class="' . $this->get_default_class( $element );
 
-			if ( isset( $class ) ){
+			if ( isset( $class ) ) {
 
-				if ( is_array( $class ) ){
+				if ( is_array( $class ) ) {
 					$html .= ' ' . implode( ' ', $class );
 				} else {
 					throw new rtFormInvalidArgumentsException( 'class [' . $element . ']' );
@@ -176,10 +173,10 @@ if ( ! class_exists( 'rtForm' ) ){
 		 *
 		 * @return string $html
 		 */
-		private function generate_element_id( $element, $id = null ){
+		private function generate_element_id( $element, $id = null ) {
 
 			$html = 'id="';
-			if ( isset( $id ) ){
+			if ( isset( $id ) ) {
 				$html .= $id . '"';
 				$this->element_id = $id;
 			} else {
@@ -202,15 +199,15 @@ if ( ! class_exists( 'rtForm' ) ){
 		 *
 		 * @return string $html
 		 */
-		private function generate_element_name( $element, $multiple, $name ){
+		private function generate_element_name( $element, $multiple, $name ) {
 
 			$html = 'name="';
-			if ( $multiple ){
+			if ( $multiple ) {
 
 				$html .= isset( $name ) ? $name . '[]' : $element . '[]';
 
 				// for select - add multiple = multiple
-				if ( 'rtSelect' == $element ){
+				if ( 'rtSelect' == $element ) {
 					$html .= 'multiple = "multiple"';
 				}
 			} else {
@@ -231,7 +228,7 @@ if ( ! class_exists( 'rtForm' ) ){
 		 *
 		 * @return string $html
 		 */
-		private function generate_element_value( $element, $attributes ){
+		private function generate_element_value( $element, $attributes ) {
 
 			$html = '';
 			switch ( $element ) {
@@ -239,12 +236,12 @@ if ( ! class_exists( 'rtForm' ) ){
 				case 'rtNumber': //number
 				case 'rtText' : //text
 					$html .= 'value="';
-					$html .= ( isset( $attributes['value'] ) ) ? $attributes['value'] : '';
+					$html .= ( isset( $attributes[ 'value' ] ) ) ? $attributes[ 'value' ] : '';
 					$html .= '" ';
 					break;
 
 				case 'rtTextarea' :
-					/**textarea
+					/*					 * textarea
 					 * no process --- handled in between the start tab and end tag.
 					 * <textarea> value </textarea>
 					 */
@@ -252,7 +249,7 @@ if ( ! class_exists( 'rtForm' ) ){
 
 				case 'rtCheckbox' : //checkbox
 				case 'rtRadio' : //radio
-					$html .= 'value = "' . $attributes['value'] . '">';
+					$html .= 'value = "' . $attributes[ 'value' ] . '">';
 					break;
 			}
 
@@ -268,11 +265,11 @@ if ( ! class_exists( 'rtForm' ) ){
 		 *
 		 * @return string $html
 		 */
-		private function generate_element_desc( $attributes ){
+		private function generate_element_desc( $attributes ) {
 
-			if ( isset( $attributes['desc'] ) ){
+			if ( isset( $attributes[ 'desc' ] ) ) {
 
-				$html = '<span class="clearfix large-offset-3 description">' . $attributes['desc'] . '</span>';
+				$html = '<span class="clearfix large-offset-3 description">' . $attributes[ 'desc' ] . '</span>';
 
 				return $html;
 			}
@@ -289,9 +286,9 @@ if ( ! class_exists( 'rtForm' ) ){
 		 *
 		 * @return string $html
 		 */
-		private function embedd_misc_attributes( $misc ){
+		private function embedd_misc_attributes( $misc ) {
 
-			if ( ! is_array( $misc ) ){
+			if ( ! is_array( $misc ) ) {
 				throw new rtFormInvalidArgumentsException( 'attributes : misc' );
 
 				return;
@@ -317,35 +314,35 @@ if ( ! class_exists( 'rtForm' ) ){
 		 *
 		 * @return string $html
 		 */
-		private function processAttributes( $element, $attributes, $container = false ){
+		private function processAttributes( $element, $attributes, $container = false ) {
 
 			/* generating the id on its own if not provided otherwise taken from the parameter provided */
-			if ( isset( $attributes['id'] ) ){
-				$html = $this->generate_element_id( $element, $attributes['id'] ) . ' ';
+			if ( isset( $attributes[ 'id' ] ) ) {
+				$html = $this->generate_element_id( $element, $attributes[ 'id' ] ) . ' ';
 			} else {
 				$html = $this->generate_element_id( $element ) . ' ';
 			}
 
 			/* name attrbute according to multiple flag */
-			$multiple = ( isset( $attributes['multiple'] ) && $attributes['multiple'] ) ? true : false;
-			$name     = ( isset( $attributes['name'] ) ) ? $attributes['name'] : $element;
+			$multiple = ( isset( $attributes[ 'multiple' ] ) && $attributes[ 'multiple' ] ) ? true : false;
+			$name = ( isset( $attributes[ 'name' ] ) ) ? $attributes[ 'name' ] : $element;
 			$html .= $this->generate_element_name( $element, $multiple, $name ) . ' ';
 
 			/*
 			 *  list down all the classes provided along with the default class of rtForms.
 			 *  default class of rtForms will always be attached irrespective of the attributes provided.
 			 */
-			if ( ! $container ){
+			if ( ! $container ) {
 
-				if ( isset( $attributes['class'] ) ){
-					$html .= $this->embedd_class( $element, $attributes['class'] );
+				if ( isset( $attributes[ 'class' ] ) ) {
+					$html .= $this->embedd_class( $element, $attributes[ 'class' ] );
 				} else {
 					$html .= $this->embedd_class( $element );
 				}
 			}
 
-			if ( isset( $attributes['misc'] ) ){
-				$html .= ' ' . $this->embedd_misc_attributes( $attributes['misc'] );
+			if ( isset( $attributes[ 'misc' ] ) ) {
+				$html .= ' ' . $this->embedd_misc_attributes( $attributes[ 'misc' ] );
 			}
 
 			$html .= $this->generate_element_value( $element, $attributes );
@@ -360,54 +357,55 @@ if ( ! class_exists( 'rtForm' ) ){
 		 *
 		 * @param  string $element
 		 * @param  array  $attrib
-		 * @param  int    $rtForm_options
+		 * @param  array    $rtForm_options
 		 *
 		 * @return string $html
 		 */
-		private function container_enclosed_elements( $element, $attrib, $rtForm_options ){
+		private function container_enclosed_elements( $element, $attrib, $rtForm_options ) {
 
 			$html = '';
 			$size = count( $rtForm_options );
-			if ( isset( $attrib['id'] ) ){
-				$id = $attrib['id'];
+			if ( isset( $attrib[ 'id' ] ) ) {
+				$id = $attrib[ 'id' ];
 			}
 
 			foreach ( $rtForm_options as $opt ) {
 
-				if ( isset( $attrib['id'] ) && $size > 1 ){
-					$attrib['id'] = $id . '-' . $this->get_default_id( $element );
+				if ( isset( $attrib[ 'id' ] ) && $size > 1 ) {
+					$attrib[ 'id' ] = $id . '-' . $this->get_default_id( $element );
 					$this->update_default_id( $element );
 				}
 
-				foreach ( (array) $opt as $key => $val ) {
+				foreach ( ( array ) $opt as $key => $val ) {
 
-					if ( 'checked' == $key ){
-						$attrib['checked'] = $val;
+					if ( 'checked' == $key ) {
+						$attrib[ 'checked' ] = $val;
 					} else {
-						if ( 'selected' == $key ){
-							$attrib['selected'] = $val;
+						if ( 'selected' == $key ) {
+							$attrib[ 'selected' ] = $val;
 						} else {
-							if ( 'desc' == $key ){
-								$attrib['desc'] = $val;
+							if ( 'desc' == $key ) {
+								$attrib[ 'desc' ] = $val;
 							} else {
-								if ( 'id' == $key ){
-									$attrib['id'] = $val;
+								if ( 'id' == $key ) {
+									$attrib[ 'id' ] = $val;
 								} else {
-									$attrib['key']   = $key;
-									$attrib['value'] = $val;
+									$attrib[ 'key' ] = $key;
+									$attrib[ 'value' ] = $val;
 								}
 							}
 						}
 					}
 				}
 
-				$checked = ( isset( $attrib['checked'] ) && $attrib['checked'] ) ? 'checked=checked' : '';
-				if ( isset( $attrib['switch'] ) && $attrib['switch'] ){
+				$checked = ( isset( $attrib[ 'checked' ] ) && $attrib[ 'checked' ] ) ? 'checked=checked' : '';
+				if ( isset( $attrib[ 'switch' ] ) && $attrib[ 'switch' ] ) {
 					$switch = 'data-toggle="switch"';
 				} else {
 					$switch = '';
 				}
 
+				$data = '';
 				switch ( $element ) {
 					case 'rtRadio' :
 						$data = '<input type="radio" ' . $checked . ' ';
@@ -416,39 +414,44 @@ if ( ! class_exists( 'rtForm' ) ){
 						$data = '<input type="checkbox" ' . $checked . ' ' . $switch . ' ';
 						break;
 					case 'rtSelect' :
-						$selected = ( $attrib['selected'] ) ? 'selected=selected' : '';
-						$data     = '<option value="' . $attrib['value'] . '"' . $selected . '>' . $attrib['key'] . '</option><br />';
+						$selected = ( $attrib[ 'selected' ] ) ? 'selected=selected' : '';
+						$data = '<option value="' . $attrib[ 'value' ] . '" ' . $selected . '>' . $attrib[ 'key' ] . '</option>';
 						break;
 				}
 
-				if ( 'rtSelect' != $element ){
+				if ( 'rtSelect' != $element ) {
 					$data .= $this->processAttributes( $element, $attrib, true );
 
-					if ( isset( $attrib['switch_square'] ) && $attrib['switch_square'] ){
+					// span elements for checkbox on/off switch
+					if ( 'rtCheckbox' == $element ) {
+						$data .= '<span class="switch-label" data-on="On" data-off="Off"></span><span class="switch-handle"></span>';
+					}
+
+					if ( isset( $attrib[ 'switch_square' ] ) && $attrib[ 'switch_square' ] ) {
 
 						$data = '<div class="rt-switch switch-square" data-on-label="<i class=\'fui-check\'></i>" data-off-label="<i class=\'fui-cross\'></i>">' . $data . '</div>';
-
 					} else {
-						if ( ( isset( $attrib['switch'] ) && $attrib['switch'] ) || ( isset( $attrib['switch_square'] ) && $attrib['switch_square'] ) ){
+						if ( ( isset( $attrib[ 'switch' ] ) && $attrib[ 'switch' ] ) || ( isset( $attrib[ 'switch_square' ] ) && $attrib[ 'switch_square' ] ) ) {
 
-							if ( $size > 1 ){
-								$data = '<div>' . $this->enclose_label( $element, $data, $attrib['key'] ) . '</div>';
-							} else {
-								$data = $this->enclose_label( $element, $data, $attrib['key'] );
+							$label_class = array( 'switch' );
+
+							$data = $this->enclose_label( $element, $data, $attrib[ 'key' ], $label_class );
+							if ( $size > 1 ) {
+								$data = '<div>' . $data . '</div>';
 							}
 						} else {
-							$data = $this->enclose_label( $element, $data, $attrib['key'] );
+							$data = $this->enclose_label( $element, $data, $attrib[ 'key' ] );
 						}
 					}
 
-					$data .= '<br>';
+					$data .= '';
 				}
 
 				$html .= $data;
 
-				unset( $attrib['id'] );
-				unset( $attrib['key'] );
-				unset( $attrib['value'] );
+				unset( $attrib[ 'id' ] );
+				unset( $attrib[ 'key' ] );
+				unset( $attrib[ 'value' ] );
 			}
 
 			return $html;
@@ -463,22 +466,22 @@ if ( ! class_exists( 'rtForm' ) ){
 		 * @param  array  $attributes
 		 *
 		 */
-		private function parse_multiple_options( $element, $attributes ){
+		private function parse_multiple_options( $element, $attributes ) {
 
-			if ( is_array( $attributes ) ){
+			if ( is_array( $attributes ) ) {
 
-				if ( isset( $attributes['rtForm_options'] ) && is_array( $attributes['rtForm_options'] ) ){
+				if ( isset( $attributes[ 'rtForm_options' ] ) && is_array( $attributes[ 'rtForm_options' ] ) ) {
 
 					$attribKeys = array_keys( $attributes );
-					$attrib     = array();
+					$attrib = array();
 
 					foreach ( $attribKeys as $key ) {
-						if ( 'rtForm_options' != $key ){
+						if ( 'rtForm_options' != $key ) {
 							$attrib[ $key ] = $attributes[ $key ];
 						}
 					}
 
-					$rtForm_options = (array) $attributes['rtForm_options'];
+					$rtForm_options = ( array ) $attributes[ 'rtForm_options' ];
 
 					return array( 'attrib' => $attrib, 'rtForm_options' => $rtForm_options, );
 				} else {
@@ -501,16 +504,16 @@ if ( ! class_exists( 'rtForm' ) ){
 		 *
 		 * @return string $data
 		 */
-		protected function enclose_label( $element, $html, $label, $class = false ){
+		protected function enclose_label( $element, $html, $label, $class = false ) {
 
 			$labelClass = '';
-			if ( ! empty( $class ) && is_array( $class ) ){
+			if ( ! empty( $class ) && is_array( $class ) ) {
 				$labelClass = 'class="' . implode( ' ', $class ) . '"';
 			}
 
 			$data = '<label for="' . $this->element_id . '" ' . $labelClass . '>';
 
-			if ( 'rtRadio' == $element || 'rtCheckbox' == $element ){
+			if ( 'rtRadio' == $element || 'rtCheckbox' == $element ) {
 				$data .= $html . ' ' . $label;
 			} else {
 				$data .= $label . ' ' . $html;
@@ -530,10 +533,10 @@ if ( ! class_exists( 'rtForm' ) ){
 		 *
 		 * @return string $html
 		 */
-		protected function generate_textbox( $attributes ){
+		protected function generate_textbox( $attributes ) {
 
 			$element = 'rtText';
-			if ( is_array( $attributes ) ){
+			if ( is_array( $attributes ) ) {
 
 				/* Starting the input tag */
 				$html = '<input type="text" ';
@@ -544,15 +547,15 @@ if ( ! class_exists( 'rtForm' ) ){
 				/* ending the tag */
 				$html .= ' />';
 
-				if ( isset( $attributes['label'] ) ){
-					if ( isset( $attributes['labelClass'] ) ){
-						$html = $this->enclose_label( $element, $html, $attributes['label'], $attributes['labelClass'] );
+				if ( isset( $attributes[ 'label' ] ) ) {
+					if ( isset( $attributes[ 'labelClass' ] ) ) {
+						$html = $this->enclose_label( $element, $html, $attributes[ 'label' ], $attributes[ 'labelClass' ] );
 					} else {
-						$html = $this->enclose_label( $element, $html, $attributes['label'] );
+						$html = $this->enclose_label( $element, $html, $attributes[ 'label' ] );
 					}
 				}
 
-				if ( isset( $attributes['show_desc'] ) && $attributes['show_desc'] ){
+				if ( isset( $attributes[ 'show_desc' ] ) && $attributes[ 'show_desc' ] ) {
 					$html .= $this->generate_element_desc( $attributes );
 				}
 
@@ -571,7 +574,7 @@ if ( ! class_exists( 'rtForm' ) ){
 		 *
 		 * @return string
 		 */
-		public function get_textbox( $attributes = '' ){
+		public function get_textbox( $attributes = '' ) {
 
 			return $this->generate_textbox( $attributes );
 		}
@@ -585,38 +588,38 @@ if ( ! class_exists( 'rtForm' ) ){
 		 *
 		 * @return string $html
 		 */
-		protected function generate_number( $attributes ){
+		protected function generate_number( $attributes ) {
 
 			$element = 'rtNumber';
-			if ( is_array( $attributes ) ){
+			if ( is_array( $attributes ) ) {
 
 				/* Starting the input tag */
 				$html = '<input type="number" ';
 
 				/* generating attributes */
 				$html .= $this->processAttributes( $element, $attributes );
-				if ( isset( $attributes['min'] ) ){
-					$html .= " min='" . $attributes['min'] . "' ";
+				if ( isset( $attributes[ 'min' ] ) ) {
+					$html .= " min='" . $attributes[ 'min' ] . "' ";
 				}
-				if ( isset( $attributes['max'] ) ){
-					$html .= " max='" . $attributes['max'] . "' ";
+				if ( isset( $attributes[ 'max' ] ) ) {
+					$html .= " max='" . $attributes[ 'max' ] . "' ";
 				}
-				if ( isset( $attributes['step'] ) ){
-					$html .= " step='" . $attributes['step'] . "' ";
+				if ( isset( $attributes[ 'step' ] ) ) {
+					$html .= " step='" . $attributes[ 'step' ] . "' ";
 				}
 
 				/* ending the tag */
 				$html .= ' />';
 
-				if ( isset( $attributes['label'] ) ){
-					if ( isset( $attributes['labelClass'] ) ){
-						$html = $this->enclose_label( $element, $html, $attributes['label'], $attributes['labelClass'] );
+				if ( isset( $attributes[ 'label' ] ) ) {
+					if ( isset( $attributes[ 'labelClass' ] ) ) {
+						$html = $this->enclose_label( $element, $html, $attributes[ 'label' ], $attributes[ 'labelClass' ] );
 					} else {
-						$html = $this->enclose_label( $element, $html, $attributes['label'] );
+						$html = $this->enclose_label( $element, $html, $attributes[ 'label' ] );
 					}
 				}
 
-				if ( isset( $attributes['show_desc'] ) && $attributes['show_desc'] ){
+				if ( isset( $attributes[ 'show_desc' ] ) && $attributes[ 'show_desc' ] ) {
 					$html .= $this->generate_element_desc( $attributes );
 				}
 
@@ -635,7 +638,7 @@ if ( ! class_exists( 'rtForm' ) ){
 		 *
 		 * @return string
 		 */
-		public function get_number( $attributes = '' ){
+		public function get_number( $attributes = '' ) {
 
 			return $this->generate_number( $attributes );
 		}
@@ -649,25 +652,25 @@ if ( ! class_exists( 'rtForm' ) ){
 		 *
 		 * @return string $html
 		 */
-		protected function generate_date( $attributes ){
+		protected function generate_date( $attributes ) {
 
 			$element = 'rtDate';
-			if ( is_array( $attributes ) ){
+			if ( is_array( $attributes ) ) {
 				$html = '<input type="date" ';
 
 				$html .= $this->processAttributes( $element, $attributes );
 
 				$html .= ' />';
 
-				if ( isset( $attributes['label'] ) ){
-					if ( isset( $attributes['labelClass'] ) ){
-						$html = $this->enclose_label( $element, $html, $attributes['label'], $attributes['labelClass'] );
+				if ( isset( $attributes[ 'label' ] ) ) {
+					if ( isset( $attributes[ 'labelClass' ] ) ) {
+						$html = $this->enclose_label( $element, $html, $attributes[ 'label' ], $attributes[ 'labelClass' ] );
 					} else {
-						$html = $this->enclose_label( $element, $html, $attributes['label'] );
+						$html = $this->enclose_label( $element, $html, $attributes[ 'label' ] );
 					}
 				}
 
-				if ( isset( $attributes['show_desc'] ) && $attributes['desc'] ){
+				if ( isset( $attributes[ 'show_desc' ] ) && $attributes[ 'desc' ] ) {
 					$html .= $this->generate_element_desc( $attributes );
 				}
 
@@ -686,7 +689,7 @@ if ( ! class_exists( 'rtForm' ) ){
 		 *
 		 * @return string
 		 */
-		public function get_date( $attributes ){
+		public function get_date( $attributes ) {
 			return $this->generate_date( $attributes );
 		}
 
@@ -699,10 +702,10 @@ if ( ! class_exists( 'rtForm' ) ){
 		 *
 		 * @return string $html
 		 */
-		protected function generate_hidden( $attributes ){
+		protected function generate_hidden( $attributes ) {
 
 			$element = 'rtHidden';
-			if ( is_array( $attributes ) ){
+			if ( is_array( $attributes ) ) {
 
 				/* Starting the input tag */
 				$html = '<input type="hidden" ';
@@ -713,15 +716,15 @@ if ( ! class_exists( 'rtForm' ) ){
 				/* ending the tag */
 				$html .= ' />';
 
-				if ( isset( $attributes['label'] ) ){
-					if ( isset( $attributes['labelClass'] ) ){
-						$html = $this->enclose_label( $element, $html, $attributes['label'], $attributes['labelClass'] );
+				if ( isset( $attributes[ 'label' ] ) ) {
+					if ( isset( $attributes[ 'labelClass' ] ) ) {
+						$html = $this->enclose_label( $element, $html, $attributes[ 'label' ], $attributes[ 'labelClass' ] );
 					} else {
-						$html = $this->enclose_label( $element, $html, $attributes['label'] );
+						$html = $this->enclose_label( $element, $html, $attributes[ 'label' ] );
 					}
 				}
 
-				if ( isset( $attributes['show_desc'] ) && $attributes['show_desc'] ){
+				if ( isset( $attributes[ 'show_desc' ] ) && $attributes[ 'show_desc' ] ) {
 					$html .= $this->generate_element_desc( $attributes );
 				}
 
@@ -740,7 +743,7 @@ if ( ! class_exists( 'rtForm' ) ){
 		 *
 		 * @return string
 		 */
-		public function get_hidden( $attributes = '' ){
+		public function get_hidden( $attributes = '' ) {
 
 			return $this->generate_hidden( $attributes );
 		}
@@ -754,28 +757,28 @@ if ( ! class_exists( 'rtForm' ) ){
 		 *
 		 * @return string $html
 		 */
-		protected function generate_textarea( $attributes ){
+		protected function generate_textarea( $attributes ) {
 
 			$element = 'rtTextarea';
-			if ( is_array( $attributes ) ){
+			if ( is_array( $attributes ) ) {
 
 				$html = '<textarea ';
 				$html .= $this->processAttributes( $element, $attributes );
 				$html .= '>';
 
-				$html .= ( isset( $attributes['value'] ) ) ? $attributes['value'] : '';
+				$html .= ( isset( $attributes[ 'value' ] ) ) ? $attributes[ 'value' ] : '';
 
 				$html .= '</textarea>';
 
-				if ( isset( $attributes['label'] ) ){
-					if ( isset( $attributes['labelClass'] ) ){
-						$html = $this->enclose_label( $element, $html, $attributes['label'], $attributes['labelClass'] );
+				if ( isset( $attributes[ 'label' ] ) ) {
+					if ( isset( $attributes[ 'labelClass' ] ) ) {
+						$html = $this->enclose_label( $element, $html, $attributes[ 'label' ], $attributes[ 'labelClass' ] );
 					} else {
-						$html = $this->enclose_label( $element, $html, $attributes['label'] );
+						$html = $this->enclose_label( $element, $html, $attributes[ 'label' ] );
 					}
 				}
 
-				if ( isset( $attributes['show_desc'] ) && $attributes['show_desc'] ){
+				if ( isset( $attributes[ 'show_desc' ] ) && $attributes[ 'show_desc' ] ) {
 					$html .= $this->generate_element_desc( $attributes );
 				}
 
@@ -794,12 +797,10 @@ if ( ! class_exists( 'rtForm' ) ){
 		 *
 		 * @return string
 		 */
-		public function get_textarea( $attributes = '' ){
+		public function get_textarea( $attributes = '' ) {
 
 			return $this->generate_textarea( $attributes );
 		}
-
-
 
 		/* wysiwyg
 		 *
@@ -844,21 +845,21 @@ if ( ! class_exists( 'rtForm' ) ){
 		 *
 		 * @return string $container
 		 */
-		protected function generate_radio( $attributes ){
+		protected function generate_radio( $attributes ) {
 
 			$element = 'rtRadio';
-			$html    = '';
+			$html = '';
 
 			$meta = $this->parse_multiple_options( $element, $attributes );
-			$html .= $this->container_enclosed_elements( $element, $meta['attrib'], $meta['rtForm_options'] );
+			$html .= $this->container_enclosed_elements( $element, $meta[ 'attrib' ], $meta[ 'rtForm_options' ] );
 
-			if ( isset( $attributes['show_desc'] ) && $attributes['show_desc'] ){
+			if ( isset( $attributes[ 'show_desc' ] ) && $attributes[ 'show_desc' ] ) {
 				$html .= $this->generate_element_desc( $attributes );
 			}
 
 			$container = '<span ';
-			if ( isset( $attributes['class'] ) ){
-				$container .= $this->embedd_class( $element, $attributes['class'] );
+			if ( isset( $attributes[ 'class' ] ) ) {
+				$container .= $this->embedd_class( $element, $attributes[ 'class' ] );
 			} else {
 				$container .= $this->embedd_class( $element );
 			}
@@ -883,7 +884,7 @@ if ( ! class_exists( 'rtForm' ) ){
 		 *
 		 * @return string
 		 */
-		public function get_radio( $attributes = '' ){
+		public function get_radio( $attributes = '' ) {
 
 			return $this->generate_radio( $attributes );
 		}
@@ -897,21 +898,21 @@ if ( ! class_exists( 'rtForm' ) ){
 		 *
 		 * @return string $container
 		 */
-		protected function generate_checkbox( $attributes ){
+		protected function generate_checkbox( $attributes ) {
 
 			$element = 'rtCheckbox';
-			$html    = '';
+			$html = '';
 
 			$meta = $this->parse_multiple_options( $element, $attributes );
-			$html .= $this->container_enclosed_elements( $element, $meta['attrib'], $meta['rtForm_options'] );
+			$html .= $this->container_enclosed_elements( $element, $meta[ 'attrib' ], $meta[ 'rtForm_options' ] );
 
-			if ( isset( $attributes['show_desc'] ) && $attributes['show_desc'] ){
+			if ( isset( $attributes[ 'show_desc' ] ) && $attributes[ 'show_desc' ] ) {
 				$html .= $this->generate_element_desc( $attributes );
 			}
 
 			$container = '<span ';
-			if ( isset( $attributes['class'] ) ){
-				$container .= $this->embedd_class( $element, $attributes['class'] );
+			if ( isset( $attributes[ 'class' ] ) ) {
+				$container .= $this->embedd_class( $element, $attributes[ 'class' ] );
 			} else {
 				$container .= $this->embedd_class( $element );
 			}
@@ -936,7 +937,7 @@ if ( ! class_exists( 'rtForm' ) ){
 		 *
 		 * @return string
 		 */
-		public function get_checkbox( $attributes = '' ){
+		public function get_checkbox( $attributes = '' ) {
 
 			return $this->generate_checkbox( $attributes );
 		}
@@ -950,9 +951,9 @@ if ( ! class_exists( 'rtForm' ) ){
 		 *
 		 * @return string
 		 */
-		public function get_switch( $attributes = '' ){
+		public function get_switch( $attributes = '' ) {
 
-			$attributes['switch'] = true;
+			$attributes[ 'switch' ] = true;
 
 			return $this->generate_checkbox( $attributes );
 		}
@@ -966,9 +967,9 @@ if ( ! class_exists( 'rtForm' ) ){
 		 *
 		 * @return string
 		 */
-		public function get_switch_square( $attributes = '' ){
+		public function get_switch_square( $attributes = '' ) {
 
-			$attributes['switch_square'] = true;
+			$attributes[ 'switch_square' ] = true;
 
 			return $this->generate_checkbox( $attributes );
 		}
@@ -982,48 +983,48 @@ if ( ! class_exists( 'rtForm' ) ){
 		 *
 		 * @return string $html
 		 */
-		protected function generate_select( $attributes ){
+		protected function generate_select( $attributes ) {
 
-			if ( is_array( $attributes ) ){
+			if ( is_array( $attributes ) ) {
 				$element = 'rtSelect';
-				$html    = '<select ';
+				$html = '<select ';
 
-				if ( isset( $attributes['id'] ) ){
-					$id = $attributes['id'];
+				if ( isset( $attributes[ 'id' ] ) ) {
+					$id = $attributes[ 'id' ];
 				} else {
 					$id = $element . $this->get_default_id( $element );
 					$this->update_default_id( $element );
 				}
 				$html .= $this->generate_element_id( $element, $id ) . ' ';
-				$multiple = ( isset( $attributes['multiple'] ) && $attributes['multiple'] ) ? true : false;
-				$name     = ( isset( $attributes['name'] ) ) ? $attributes['name'] : $element;
+				$multiple = ( isset( $attributes[ 'multiple' ] ) && $attributes[ 'multiple' ] ) ? true : false;
+				$name = ( isset( $attributes[ 'name' ] ) ) ? $attributes[ 'name' ] : $element;
 				$html .= $this->generate_element_name( $element, $multiple, $name ) . ' ';
-				if ( isset( $attributes['class'] ) ){
-					$html .= $this->embedd_class( $element, $attributes['class'] );
+				if ( isset( $attributes[ 'class' ] ) ) {
+					$html .= $this->embedd_class( $element, $attributes[ 'class' ] );
 				} else {
 					$html .= $this->embedd_class( $element );
 				}
 
-				if ( isset( $attributes['misc'] ) ){
-					$html .= ' ' . $this->embedd_misc_attributes( $attributes['misc'] );
+				if ( isset( $attributes[ 'misc' ] ) ) {
+					$html .= ' ' . $this->embedd_misc_attributes( $attributes[ 'misc' ] );
 				}
 
 				$html .= '>';
 
 				$meta = $this->parse_multiple_options( $element, $attributes );
-				$html .= $this->container_enclosed_elements( $element, $meta['attrib'], $meta['rtForm_options'] );
+				$html .= $this->container_enclosed_elements( $element, $meta[ 'attrib' ], $meta[ 'rtForm_options' ] );
 
 				$html .= '</select>';
 
-				if ( isset( $attributes['label'] ) ){
-					if ( isset( $attributes['labelClass'] ) ){
-						$html = $this->enclose_label( $element, $html, $attributes['label'], $attributes['labelClass'] );
+				if ( isset( $attributes[ 'label' ] ) ) {
+					if ( isset( $attributes[ 'labelClass' ] ) ) {
+						$html = $this->enclose_label( $element, $html, $attributes[ 'label' ], $attributes[ 'labelClass' ] );
 					} else {
-						$html = $this->enclose_label( $element, $html, $attributes['label'] );
+						$html = $this->enclose_label( $element, $html, $attributes[ 'label' ] );
 					}
 				}
 
-				if ( isset( $attributes['show_desc'] ) && $attributes['show_desc'] ){
+				if ( isset( $attributes[ 'show_desc' ] ) && $attributes[ 'show_desc' ] ) {
 					$html .= $this->generate_element_desc( $attributes );
 				}
 
@@ -1031,7 +1032,6 @@ if ( ! class_exists( 'rtForm' ) ){
 			} else {
 				throw new rtFormInvalidArgumentsException( 'attributes' );
 			}
-
 		}
 
 		/**
@@ -1043,9 +1043,11 @@ if ( ! class_exists( 'rtForm' ) ){
 		 *
 		 * @return string
 		 */
-		public function get_select( $attributes = '' ){
+		public function get_select( $attributes = '' ) {
 
 			return $this->generate_select( $attributes );
 		}
+
 	}
+
 }

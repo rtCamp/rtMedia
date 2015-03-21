@@ -1,0 +1,301 @@
+// Additional Styles
+.rtm-lightbox-container {
+	background: $black;
+	display: table;
+	margin: 0 auto;
+	position: relative;
+
+	// Fixed issue in Firefox and Opera
+	table-layout: fixed;
+    width: 100%;
+}
+
+.rtm-single-media {
+	display: table-cell;
+    position: relative;
+    text-align: center;
+    vertical-align: middle;
+    width: 66.6667%;
+}
+
+.rtm-single-meta {
+	background: $white;
+	display: table-cell;
+	overflow: hidden;
+    padding: 20px;
+	position: relative;
+	vertical-align: top;
+	width: 33.3333%;
+}
+
+.rtm-ltb-action-container {
+    background-color: rgba($black, 0.6);
+	bottom: 0;
+    color: $white;
+	height: 38px;
+	line-height: 38px;
+	opacity: 0;
+    padding: 0 10px;
+    position: absolute;
+    width: 100%;
+	@include transition(all 300ms ease-out);
+
+
+	.rtm-single-media:hover & {
+		opacity: 1;
+	}
+
+	#rtmedia-single-media-container & {
+		.button {
+			background: transparent;
+			border: 0 none;
+			border-radius: 2px;
+			color: rgba($white, 0.5);
+			display: block;
+			font-family: inherit;
+			font-weight: normal;
+			line-height: 24px;
+			padding: 0 6px;
+			text-shadow: 0 0 0;
+			text-transform: none;
+
+			&:hover {
+				background: rgba($white, .2);
+				color: rgba($white, 0.8);
+			}
+		}
+
+		.rtm-options .button {
+			color: #333;
+		}
+	}
+}
+
+.rtm-options {
+	background: $white;
+	bottom: 38px;
+	color: #333;
+	list-style: outside none none;
+	margin: 0;
+	padding: 10px;
+	position: absolute;
+	right: 0;
+	width: 150px;
+
+	&:after {
+		top: 100%;
+		right: 22px;
+		border: solid transparent;
+		content: " ";
+		height: 0;
+		width: 0;
+		position: absolute;
+		pointer-events: none;
+		border-color: rgba(255, 255, 255, 0);
+		border-top-color: #ffffff;
+		border-width: 6px;
+		margin-left: -6px;
+	}
+
+	.dashicons {
+		font-size: 14px;
+		line-height: 24px;
+		margin-right: 2px;
+	}
+}
+
+.rtm-ltb-title {
+	color: rgba($white, 0.7);
+    float: left;
+    font-size: 13px;
+
+	a {
+		color: inherit;
+
+		&:hover {
+			border-bottom: 1px dotted;
+			color: $white;
+		}
+	}
+}
+
+.rtm-author-actions {
+	float: right;
+
+	.click-nav,
+	& > form {
+		float: left;
+		margin: 0 2px;
+		padding: 7px 0;
+		position: relative;
+	}
+}
+
+.rtmedia-media {
+	img {
+		display: inline-block;
+		max-height: inherit;
+		width: auto;
+	}
+}
+
+.rtm-user-meta-details {
+	.username {
+		font-size: 16px;
+		line-height: 1;
+		margin-bottom: 5px;
+	}
+}
+
+.rtm-user-avatar {
+    float: left;
+    margin: 0 16px 16px 0;
+    max-width: 54px;
+
+	a {
+		display: block;
+	}
+}
+
+.rtm-time-privacy {
+    color: #999;
+    font-size: 13px;
+
+	.dashicons {
+		font-size: 14px;
+		line-height: 24px;
+	}
+}
+
+.rtmedia-actions-before-comments {
+
+	& > span {
+		float: left;
+		margin-right: 10px;
+	}
+
+	.rtmedia-comment-link,
+	#buddypress & .rtmedia-like {
+		border: 0;
+		font-size: 13px;
+		font-weight: normal;
+		padding: 0;
+		text-transform: none;
+
+		&:hover {
+			background: transparent;
+		}
+	}
+}
+
+.rtm-like-comments-info {
+	.rtmedia-comment-user-pic {
+		float: left;
+		margin-right: 10px;
+		max-width: 36px;
+	}
+}
+
+.rtm-like-comments-info {
+	position: relative;
+
+	&:after {
+		bottom: 100%;
+		left: 15px;
+		border: solid transparent;
+		content: " ";
+		height: 0;
+		width: 0;
+		position: absolute;
+		pointer-events: none;
+		border-color: rgba(237, 239, 244, 0);
+		border-bottom-color: #edeff4;
+		border-width: 4px;
+		margin-left: -4px;
+	}
+}
+
+.rtm-comment-list {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+
+	li {
+		background: #edeff4;
+		font-size: 12px;
+		margin-bottom: 1px;
+		padding: 10px;
+		position: relative;
+
+		&:hover {
+			.rtmedia-delete-comment {
+				opacity: 1;
+			}
+		}
+	}
+}
+
+.rtmedia-like-info {
+	background: #edeff4;
+	font-size: 12px;
+	margin-bottom: 1px;
+	padding: 10px;
+	position: relative;
+}
+
+.rtm-comment-wrap {
+	overflow: hidden;
+
+	.rtmedia-comment-author {
+		font-weight: 700;
+	}
+
+	.rtmedia-comment-date {
+		color: #999;
+		display: block;
+		font-size: 11px;
+	}
+}
+
+.rtmedia-delete-comment {
+	color: #999;
+    cursor: pointer;
+	font-size: 16px;
+    opacity: 0;
+    position: absolute;
+    right: 5px;
+    top: 5px;
+}
+
+.rtmedia-comment-content {
+	p {
+		margin: 0;
+	}
+}
+
+.rtmedia-comment-details {
+    line-height: 1.5;
+    margin-top: -3px;
+}
+
+.rtm-single-meta-contents {
+	max-height: 400px;
+	overflow-x: hidden;
+	overflow-y: auto;
+}
+
+.rtm-media-single-comments {
+	background-color: #edeff4;
+    bottom: 10px;
+    padding: 4px;
+    position: absolute;
+    width: calc(100% - 40px);
+
+	textarea {
+		font-size: 12px;
+		line-height: 14px;
+		max-height: 40px;
+		min-height: 30px;
+		padding: 4px;
+	}
+}

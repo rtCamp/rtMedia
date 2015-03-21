@@ -66,8 +66,8 @@ class RTMediaGalleryShortcode {
             'max_file_size' => min ( array( ini_get ( 'upload_max_filesize' ), ini_get ( 'post_max_size' ) ) ),
             'multipart' => true,
             'urlstream_upload' => true,
-            'flash_swf_url' => includes_url ( 'js/plupload/plupload.flash.swf' ),
-            'silverlight_xap_url' => includes_url ( 'js/plupload/plupload.silverlight.xap' ),
+            'flash_swf_url' => includes_url ( '/plupload/js/Moxie.swf' ),
+            'silverlight_xap_url' => includes_url ( '/plupload/js/Moxie.xap' ),
             'file_data_name' => 'rtmedia_file', // key passed to $_FILE.
             'multi_selection' => true,
             'multipart_params' => apply_filters ( 'rtmedia-multi-params', array( 'redirect' => 'no', 'action' => 'wp_handle_upload', '_wp_http_referer' => $_SERVER[ 'REQUEST_URI' ], 'mode' => 'file_upload', 'rtmedia_upload_nonce' => RTMediaUploadView::upload_nonce_generator ( false, true ) ) ),

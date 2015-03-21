@@ -1,0 +1,29 @@
+.rtm-tooltip {
+    position: relative;
+
+	&:hover .rtm-tip {
+		margin-left: 0;
+		opacity: 1;
+		visibility: visible;
+	}
+}
+
+.rtm-tip {
+	background: #fffAF0;
+	border: 1px solid #f5deaf;
+    border-radius: 3px;
+    font-size: 12px;
+    left: 24px;
+	margin-top: -4px;
+	margin-left: -10px;
+    line-height: 1.5;
+    opacity: 0;
+    padding: 6px 12px;
+    position: absolute;
+	top: 0;
+    visibility: hidden;
+    width: 210px;
+    z-index: 10;
+
+	@include transition(all ease-in-out 0.4s);
+}
