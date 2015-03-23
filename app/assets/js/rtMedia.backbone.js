@@ -395,7 +395,7 @@ jQuery( function ( $ ) {
 				}
 
 				// Creating list of media to preview selected files                
-                var rtmedia_plupload_file = '<li class="plupload_file ui-state-default plupload_delete" id="' + file.id + '" style="width: 100px;">';
+                var rtmedia_plupload_file = '<li class="plupload_file ui-state-default" id="' + file.id + '" style="width: 100px;">';
                 rtmedia_plupload_file += '<div id="file_thumb_' + file.id + '" class="plupload_file_thumb">';
                 rtmedia_plupload_file += '</div>';
                 rtmedia_plupload_file += '<div class="plupload_file_status">';
@@ -410,7 +410,8 @@ jQuery( function ( $ ) {
                 rtmedia_plupload_file += '</span>';
                 rtmedia_plupload_file += '</div>';
                 rtmedia_plupload_file += '<div class="plupload_file_action">';
-                rtmedia_plupload_file += '<div class="plupload_action_icon ui-icon ui-icon-circle-minus">';
+                rtmedia_plupload_file += '<div class="plupload_action_icon ui-icon plupload_delete">';
+                rtmedia_plupload_file += '<span class="remove-from-queue dashicons dashicons-dismiss"></span>';
                 rtmedia_plupload_file += '</div>';
                 rtmedia_plupload_file += '</div>';
                 rtmedia_plupload_file += '<div class="plupload_file_size">';
@@ -449,7 +450,7 @@ jQuery( function ( $ ) {
                 }
 
 				//Delete Function
-				$( "#" + file.id + " td.plupload_delete .remove-from-queue" ).click( function ( e ) {
+				$( "#" + file.id + " .plupload_delete .remove-from-queue" ).click( function ( e ) {
 					e.preventDefault();
 					uploaderObj.uploader.removeFile( up.getFile( file.id ) );
 					$( "#" + file.id ).remove();
@@ -870,7 +871,7 @@ jQuery( document ).ready( function ( $ ) {
 				return true;
 			}
 
-            var rtmedia_plupload_file = '<li class="plupload_file ui-state-default plupload_delete" id="' + file.id + '" style="width: 100px;">';
+            var rtmedia_plupload_file = '<li class="plupload_file ui-state-default" id="' + file.id + '" style="width: 100px;">';
             rtmedia_plupload_file += '<div id="file_thumb_' + file.id + '" class="plupload_file_thumb">';
             rtmedia_plupload_file += '</div>';
             rtmedia_plupload_file += '<div class="plupload_file_status">';
@@ -885,7 +886,8 @@ jQuery( document ).ready( function ( $ ) {
             rtmedia_plupload_file += '</span>';
             rtmedia_plupload_file += '</div>';
             rtmedia_plupload_file += '<div class="plupload_file_action">';
-            rtmedia_plupload_file += '<div class="plupload_action_icon ui-icon ui-icon-circle-minus">';
+            rtmedia_plupload_file += '<div class="plupload_action_icon ui-icon plupload_delete">';
+            rtmedia_plupload_file += '<span class="remove-from-queue dashicons dashicons-dismiss"></span>';
             rtmedia_plupload_file += '</div>';
             rtmedia_plupload_file += '</div>';
             rtmedia_plupload_file += '<div class="plupload_file_size">';
@@ -927,7 +929,7 @@ jQuery( document ).ready( function ( $ ) {
 			jQuery( '#whats-new-content' ).css( 'padding-bottom', '0px' );
 			$( "#rtm-upload-start-notice" ).css( 'display', 'block' ); // show the file upload notice to the user
 
-			$( "#" + file.id + " td.plupload_delete" ).click( function ( e ) {
+			$( "#" + file.id + " .plupload_delete" ).click( function ( e ) {
 				e.preventDefault();
 				objUploadView.uploader.removeFile( upl.getFile( file.id ) );
 				$( "#" + file.id ).remove();
