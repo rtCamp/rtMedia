@@ -1,67 +1,68 @@
 <div class="rtmedia-container">
-    <?php do_action ( 'rtmedia_before_album_gallery' ); ?>
-    <div id="rtm-gallery-title-container" class="row">
-        <h2 class="rtm-gallery-title columns large-5 small-12 medium-5"><?php _e( 'Album List' , 'rtmedia' ) ; ?></h2>
-        <div id="rtm-media-options" class="columns large-7 small-12 medium-7"><?php do_action ( 'rtmedia_album_gallery_actions' ); ?></div>
-    </div>
-	<div class="clear"></div>
-    <?php do_action ( 'rtmedia_after_album_gallery_title' ); ?>
-    <div id="rtm-media-gallery-uploader">
-        <?php rtmedia_uploader ( array('is_up_shortcode'=> false) ); ?>
+	<?php do_action( 'rtmedia_before_album_gallery' ); ?>
+
+	<div id="rtm-gallery-title-container" class="clearfix">
+        <h2 class="rtm-gallery-title"><?php _e( 'Album List', 'rtmedia' ); ?></h2>
+        <div id="rtm-media-options" class="rtm-media-options"><?php do_action( 'rtmedia_album_gallery_actions' ); ?></div>
     </div>
 
-    <?php if ( have_rtmedia () ) { ?>
+	<?php do_action( 'rtmedia_after_album_gallery_title' ); ?>
+    <div id="rtm-media-gallery-uploader" class="rtm-media-gallery-uploader">
+		<?php rtmedia_uploader( array( 'is_up_shortcode' => false ) ); ?>
+    </div>
 
-        <ul class="rtmedia-list rtmedia-album-list">
+	<?php if ( have_rtmedia() ) { ?>
 
-            <?php while ( have_rtmedia () ) : rtmedia () ; ?>
+		<ul class="rtmedia-list rtmedia-album-list">
 
-                <?php include ('album-gallery-item.php') ; ?>
+			<?php while ( have_rtmedia() ) : rtmedia(); ?>
 
-            <?php endwhile ; ?>
+				<?php include ('album-gallery-item.php'); ?>
 
-        </ul>
+			<?php endwhile; ?>
 
-        <div class='rtmedia_next_prev row'>
-            <!--  these links will be handled by backbone later
-                            -- get request parameters will be removed  -->
-            <?php
+		</ul>
+
+		<div class='rtmedia_next_prev row'>
+			<!--  these links will be handled by backbone later
+							-- get request parameters will be removed  -->
+			<?php
 //            $display = '' ;
 //            if ( rtmedia_offset () != 0 )
 //                $display = 'style="display:block;"' ;
 //            else
 //                $display = 'style="display:none;"' ;
-            ?>
-<!--            <a id="rtMedia-galary-prev" <?php //echo $display ; ?> href="<?php //echo rtmedia_pagination_prev_link () ; ?>"><?php //_e( 'Prev' , 'rtmedia' ) ; ?></a>-->
+			?>
+	<!--            <a id="rtMedia-galary-prev" <?php //echo $display ;     ?> href="<?php //echo rtmedia_pagination_prev_link () ;     ?>"><?php //_e( 'Prev' , 'rtmedia' ) ;     ?></a>-->
 
 			<?php
-				global $rtmedia;
-				$general_options = $rtmedia->options;
-				if( isset( $rtmedia->options['general_display_media'] ) && $general_options[ 'general_display_media' ] == 'pagination') {
-					echo rtmedia_media_pagination();
-				} else {
-					$display = '';
-					if ( rtmedia_offset () + rtmedia_per_page_media () < rtmedia_count () )
-						$display = 'style="display:block;"';
-					else
-						$display = 'style="display:none;"';
+			global $rtmedia;
+			$general_options = $rtmedia->options;
+			if ( isset( $rtmedia->options[ 'general_display_media' ] ) && $general_options[ 'general_display_media' ] == 'pagination' ) {
+				echo rtmedia_media_pagination();
+			} else {
+				$display = '';
+				if ( rtmedia_offset() + rtmedia_per_page_media() < rtmedia_count() )
+					$display = 'style="display:block;"';
+				else
+					$display = 'style="display:none;"';
+				?>
+				<a id="rtMedia-galary-next" <?php echo $display; ?> href="<?php echo rtmedia_pagination_next_link(); ?>"><?php echo __( 'Load More', 'rtmedia' ); ?></a>
+				<?php
+			}
 			?>
-					<a id="rtMedia-galary-next" <?php echo $display; ?> href="<?php echo rtmedia_pagination_next_link (); ?>"><?php echo __( 'Load More', 'rtmedia' ); ?></a>
+
+		</div><!--/.rtmedia_next_prev-->
+
+	<?php } else { ?>
+		<p class="rtmedia-no-media-found">
 			<?php
-				}
+			$message = __( "Sorry !! There's no media found for the request !!", "rtmedia" );
+			echo apply_filters( 'rtmedia_no_media_found_message_filter', $message );
 			?>
-
-        </div><!--/.rtmedia_next_prev-->
-
-    <?php } else { ?>
-        <p class="rtmedia-no-media-found">
-            <?php 
-                $message = __ ( "Sorry !! There's no media found for the request !!", "rtmedia" );
-                echo apply_filters('rtmedia_no_media_found_message_filter', $message);
-                ?>
 		</p>
-    <?php } ?>
-    <?php do_action ( 'rtmedia_after_album_gallery' ) ; ?>
+	<?php } ?>
+	<?php do_action( 'rtmedia_after_album_gallery' ); ?>
 
 </div>
 

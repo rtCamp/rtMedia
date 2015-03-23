@@ -73,7 +73,7 @@ class RTMediaUploadView {
 				'default' => array( 'title' => __( 'File Upload', 'rtmedia' ),
 					'content' =>
 					'<div id="rtmedia-upload-container" >'
-					. '<div id="drag-drop-area" class="drag-drop row">'
+					. '<div id="drag-drop-area" class="drag-drop clearfix">'
 					. "<div class='rtm-album-privacy'>" . $album . $privacy . "</div>"
 					. apply_filters( 'rtmedia_uploader_before_select_files', "" )
 					. '<div class="rtm-select-files"><input id="rtMedia-upload-button" value="' . __( "Select your files", "rtmedia" ) . '" type="button" class="rtmedia-upload-input rtmedia-file" />'

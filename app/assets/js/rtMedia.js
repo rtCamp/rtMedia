@@ -161,7 +161,6 @@ function rtmedia_init_action_dropdown() {
 			}
 		} );
 		jQuery( curr_ul ).toggle();
-		//$('.click-nav ul').toggle();
 		e.stopPropagation();
 	} );
 }
@@ -507,12 +506,8 @@ jQuery( 'document' ).ready( function ( $ ) {
 		}
 	} );
 
-
-//    jQuery(document).on('click', '#rtm_show_upload_ui', function(){
-//        jQuery('#rtm-media-gallery-uploader').slideToggle();
-//    });
-
 	rtmedia_init_action_dropdown();
+
 	$( document ).click( function () {
 		if ( $( '.click-nav ul' ).is( ':visible' ) ) {
 			$( '.click-nav ul', this ).hide();

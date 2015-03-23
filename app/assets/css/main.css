@@ -115,6 +115,7 @@
 }
 
 .rtmedia-list {
+  list-style: none;
   margin: 0;
   padding: 0;
 }
@@ -1016,6 +1017,45 @@ img.mfp-img {
 
 #rtmedia-action-update {
   margin-right: 10px;
+}
+
+.rtm-media-gallery-uploader {
+  display: none;
+}
+
+.drag-drop {
+  border: 4px dashed #DDD;
+  text-align: center;
+  background: #fafafa;
+  overflow: hidden;
+  color: #AAAAAA;
+  padding: 25px 0;
+}
+.drag-drop.dragover {
+  border-color: #83b4d8;
+}
+.drag-drop .drag-drop-info {
+  font-size: 20px;
+  line-height: 24px;
+}
+.drag-drop .rtm-album-privacy span {
+  margin: 0 20px 20px 20px;
+  display: inline-block;
+}
+.drag-drop .rtm-select-files span {
+  vertical-align: middle;
+}
+.drag-drop .rtm-seperator {
+  margin: 0px 20px;
+}
+.drag-drop .start-media-upload {
+  display: none;
+  margin-top: 20px;
+}
+.drag-drop .rtm-file-size-limit {
+  vertical-align: middle;
+  font-size: 16px;
+  line-height: 24px;
 }
 
 @media only screen and (min-width: 1025px) {
