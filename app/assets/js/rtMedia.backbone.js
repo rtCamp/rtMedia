@@ -394,60 +394,109 @@ jQuery( function ( $ ) {
 					uploaderObj.uploader.settings.filters[0].title;
 				}
 
-				// Creating list of media to preview selected files                
-                var rtmedia_plupload_file = '<li class="plupload_file ui-state-default" id="' + file.id + '" style="width: 100px;">';
-                rtmedia_plupload_file += '<div id="file_thumb_' + file.id + '" class="plupload_file_thumb">';
-                rtmedia_plupload_file += '</div>';
-                rtmedia_plupload_file += '<div class="plupload_file_status">';
-                rtmedia_plupload_file += '<div class="plupload_file_progress ui-widget-header" style="width: 0%;">';
-                rtmedia_plupload_file += '</div>';
-                rtmedia_plupload_file += '<span class="plupload_file_percent">';
-                rtmedia_plupload_file += '</span>';
-                rtmedia_plupload_file += '</div>';
-                rtmedia_plupload_file += '<div class="plupload_file_name" title="' + file.name + '">';
-                rtmedia_plupload_file += '<span class="plupload_file_name_wrapper">';
-                rtmedia_plupload_file += file.name;
-                rtmedia_plupload_file += '</span>';
-                rtmedia_plupload_file += '</div>';
-                rtmedia_plupload_file += '<div class="plupload_file_action">';
-                rtmedia_plupload_file += '<div class="plupload_action_icon ui-icon plupload_delete">';
-                rtmedia_plupload_file += '<span class="remove-from-queue dashicons dashicons-dismiss"></span>';
-                rtmedia_plupload_file += '</div>';
-                rtmedia_plupload_file += '</div>';
-                rtmedia_plupload_file += '<div class="plupload_file_size">';
-                rtmedia_plupload_file += plupload.formatSize( file.size );
-                rtmedia_plupload_file += '</div>';
-                rtmedia_plupload_file += '<div class="plupload_file_fields">';
-                rtmedia_plupload_file += '</div>';
-                rtmedia_plupload_file += '</li>';
+				// Creating list of media to preview selected files
+				var rtmedia_plupload_file = '<li class="plupload_file ui-state-default" id="' + file.id + '">';
+				rtmedia_plupload_file += '<div id="file_thumb_' + file.id + '" class="plupload_file_thumb">';
+				rtmedia_plupload_file += '</div>';
+				rtmedia_plupload_file += '<div class="plupload_file_status">';
+				rtmedia_plupload_file += '<div class="plupload_file_progress ui-widget-header" style="width: 0%;">';
+				rtmedia_plupload_file += '</div>';
+				rtmedia_plupload_file += '</div>';
+				rtmedia_plupload_file += '<div class="plupload_file_name" title="' + file.name + '">';
+				rtmedia_plupload_file += '<span class="plupload_file_name_wrapper">';
+				rtmedia_plupload_file += file.name;
+				rtmedia_plupload_file += '</span>';
+				rtmedia_plupload_file += '</div>';
+				rtmedia_plupload_file += '<div class="plupload_file_action">';
+				rtmedia_plupload_file += '<div class="plupload_action_icon ui-icon plupload_delete">';
+				rtmedia_plupload_file += '<span class="remove-from-queue dashicons dashicons-dismiss"></span>';
+				rtmedia_plupload_file += '</div>';
+				rtmedia_plupload_file += '</div>';
+				rtmedia_plupload_file += '<div class="plupload_file_size">';
+				rtmedia_plupload_file += plupload.formatSize( file.size );
+				rtmedia_plupload_file += '</div>';
+				rtmedia_plupload_file += '<div class="plupload_file_fields">';
+				rtmedia_plupload_file += '</div>';
+				rtmedia_plupload_file += '</li>';
 
-                jQuery( rtmedia_plupload_file ).appendTo( '#rtmedia_uploader_filelist' );
-                var type = file.type;
-                if( /image/i.test( type ) ) {
-                    var img = new mOxie.Image();
+				jQuery( rtmedia_plupload_file ).appendTo( '#rtmedia_uploader_filelist' );
+				var type = file.type;
+				if ( /image/i.test( type ) ) {
+					var img = new mOxie.Image();
 
-                    img.onload = function() {
-                        this.embed($('#file_thumb_' + file.id).get(0), {
-                            width: 100,
-                            height: 100,
-                            crop: true
-                        });
-                    };
+					img.onload = function () {
+						this.embed( $( '#file_thumb_' + file.id ).get( 0 ), {
+							width: 100,
+							height: 60,
+							crop: true
+						} );
+					};
 
-                    img.onembedded = function() {
-                        this.destroy();
-                    };
+					img.onembedded = function () {
+						this.destroy();
+					};
 
-                    img.onerror = function() {
-                        this.destroy();
-                    };
+					img.onerror = function () {
+						this.destroy();
+					};
 
-                    img.load(this.getSource()); 
-                } else if( /video/i.test( type ) ) {
-                    jQuery( '<img src="' + rtmedia_media_thumbs[ 'video' ] + '" />' ).appendTo( '#file_thumb_' + file.id );
-                } else if( /audio/i.test( type ) ) {
-                    jQuery( '<img src="' + rtmedia_media_thumbs[ 'music' ] + '" />' ).appendTo( '#file_thumb_' + file.id );
-                }
+					img.load( this.getSource() );
+				} else if ( /video/i.test( type ) ) {
+					jQuery( '<img src="' + rtmedia_media_thumbs[ 'video' ] + '" />' ).appendTo( '#file_thumb_' + file.id );
+				} else if ( /audio/i.test( type ) ) {
+					jQuery( '<img src="' + rtmedia_media_thumbs[ 'music' ] + '" />' ).appendTo( '#file_thumb_' + file.id );
+				}
+				// Creating list of media to preview selected files
+				var rtmedia_plupload_file = '<li class="plupload_file ui-state-default plupload_delete" id="' + file.id + '">';
+				rtmedia_plupload_file += '<div id="file_thumb_' + file.id + '" class="plupload_file_thumb">';
+				rtmedia_plupload_file += '</div>';
+				rtmedia_plupload_file += '<div class="plupload_file_status">';
+				rtmedia_plupload_file += '<div class="plupload_file_progress ui-widget-header" style="width: 0%;">';
+				rtmedia_plupload_file += '</div>';
+				rtmedia_plupload_file += '</div>';
+				rtmedia_plupload_file += '<div class="plupload_file_name" title="' + file.name + '">';
+				rtmedia_plupload_file += '<span class="plupload_file_name_wrapper">';
+				rtmedia_plupload_file += file.name;
+				rtmedia_plupload_file += '</span>';
+				rtmedia_plupload_file += '</div>';
+				rtmedia_plupload_file += '<div class="plupload_file_action">';
+				rtmedia_plupload_file += '<div class="plupload_action_icon ui-icon ui-icon-circle-minus">';
+				rtmedia_plupload_file += '</div>';
+				rtmedia_plupload_file += '</div>';
+				rtmedia_plupload_file += '<div class="plupload_file_size">';
+				rtmedia_plupload_file += plupload.formatSize( file.size );
+				rtmedia_plupload_file += '</div>';
+				rtmedia_plupload_file += '<div class="plupload_file_fields">';
+				rtmedia_plupload_file += '</div>';
+				rtmedia_plupload_file += '</li>';
+
+				jQuery( rtmedia_plupload_file ).appendTo( '#rtmedia_uploader_filelist' );
+				var type = file.type;
+				if ( /image/i.test( type ) ) {
+					var img = new mOxie.Image();
+
+					img.onload = function () {
+						this.embed( $( '#file_thumb_' + file.id ).get( 0 ), {
+							width: 100,
+							height: 60,
+							crop: true
+						} );
+					};
+
+					img.onembedded = function () {
+						this.destroy();
+					};
+
+					img.onerror = function () {
+						this.destroy();
+					};
+
+					img.load( this.getSource() );
+				} else if ( /video/i.test( type ) ) {
+					jQuery( '<img src="' + rtmedia_media_thumbs[ 'video' ] + '" />' ).appendTo( '#file_thumb_' + file.id );
+				} else if ( /audio/i.test( type ) ) {
+					jQuery( '<img src="' + rtmedia_media_thumbs[ 'music' ] + '" />' ).appendTo( '#file_thumb_' + file.id );
+				}
 
 				//Delete Function
 				$( "#" + file.id + " .plupload_delete .remove-from-queue" ).click( function ( e ) {
@@ -519,56 +568,56 @@ jQuery( function ( $ ) {
 				if ( tmp_array.length > 1 ) {
 					ext = tmp_array[tmp_array.length - 1];
 					if ( ! ( typeof ( up.settings.upload_size ) != "undefined" && typeof ( up.settings.upload_size[ext] ) != "undefined" && typeof ( up.settings.upload_size[ext]['size'] ) ) ) {
-                        var rtmedia_plupload_file = '<li class="plupload_file ui-state-default plupload_delete upload-error" id="' + err.file.id + '" style="width: 100px;">';
-                        rtmedia_plupload_file += '<div id="file_thumb_' + err.file.id + '" class="plupload_file_thumb">';
-                        rtmedia_plupload_file += '</div>';
-                        rtmedia_plupload_file += '<div class="plupload_file_status">';
-                        rtmedia_plupload_file += rtmedia_max_file_msg + plupload.formatSize( up.settings.max_file_size / 1024 * 1024 );
-                        rtmedia_plupload_file += '<i class="dashicons dashicons-info rtmicon" title="' + window.file_size_info + '"></i>';
-                        rtmedia_plupload_file += '</div>';
-                        rtmedia_plupload_file += '<div class="plupload_file_name" title="' + err.file.name + '">';
-                        rtmedia_plupload_file += '<span class="plupload_file_name_wrapper">';
-                        rtmedia_plupload_file += err.file.name;
-                        rtmedia_plupload_file += '</span>';
-                        rtmedia_plupload_file += '</div>';
-                        rtmedia_plupload_file += '<div class="plupload_file_action">';
-                        rtmedia_plupload_file += '<div class="plupload_action_icon ui-icon ui-icon-circle-minus">';
-                        rtmedia_plupload_file += '</div>';
-                        rtmedia_plupload_file += '</div>';
-                        rtmedia_plupload_file += '<div class="plupload_file_size">';
-                        rtmedia_plupload_file += plupload.formatSize( err.file.size );
-                        rtmedia_plupload_file += '</div>';
-                        rtmedia_plupload_file += '<div class="plupload_file_fields">';
-                        rtmedia_plupload_file += '</div>';
-                        rtmedia_plupload_file += '</li>';
+						var rtmedia_plupload_file = '<li class="plupload_file ui-state-default plupload_delete upload-error" id="' + err.file.id + '">';
+						rtmedia_plupload_file += '<div id="file_thumb_' + err.file.id + '" class="plupload_file_thumb">';
+						rtmedia_plupload_file += '</div>';
+						rtmedia_plupload_file += '<div class="plupload_file_status">';
+						rtmedia_plupload_file += rtmedia_max_file_msg + plupload.formatSize( up.settings.max_file_size / 1024 * 1024 );
+						rtmedia_plupload_file += '<i class="dashicons dashicons-info rtmicon" title="' + window.file_size_info + '"></i>';
+						rtmedia_plupload_file += '</div>';
+						rtmedia_plupload_file += '<div class="plupload_file_name" title="' + err.file.name + '">';
+						rtmedia_plupload_file += '<span class="plupload_file_name_wrapper">';
+						rtmedia_plupload_file += err.file.name;
+						rtmedia_plupload_file += '</span>';
+						rtmedia_plupload_file += '</div>';
+						rtmedia_plupload_file += '<div class="plupload_file_action">';
+						rtmedia_plupload_file += '<div class="plupload_action_icon ui-icon ui-icon-circle-minus">';
+						rtmedia_plupload_file += '</div>';
+						rtmedia_plupload_file += '</div>';
+						rtmedia_plupload_file += '<div class="plupload_file_size">';
+						rtmedia_plupload_file += plupload.formatSize( err.file.size );
+						rtmedia_plupload_file += '</div>';
+						rtmedia_plupload_file += '<div class="plupload_file_fields">';
+						rtmedia_plupload_file += '</div>';
+						rtmedia_plupload_file += '</li>';
 
-                        jQuery( rtmedia_plupload_file ).appendTo( '#rtmedia_uploader_filelist' );
-                        var type = err.file.type;
-                        if( /image/i.test( type ) ) {
-                            var img = new mOxie.Image();
+						jQuery( rtmedia_plupload_file ).appendTo( '#rtmedia_uploader_filelist' );
+						var type = err.file.type;
+						if ( /image/i.test( type ) ) {
+							var img = new mOxie.Image();
 
-                            img.onload = function() {
-                                this.embed($('#file_thumb_' + err.file.id).get(0), {
-                                    width: 100,
-                                    height: 100,
-                                    crop: true
-                                });
-                            };
+							img.onload = function () {
+								this.embed( $( '#file_thumb_' + err.file.id ).get( 0 ), {
+									width: 100,
+									height: 60,
+									crop: true
+								} );
+							};
 
-                            img.onembedded = function() {
-                                this.destroy();
-                            };
+							img.onembedded = function () {
+								this.destroy();
+							};
 
-                            img.onerror = function() {
-                                this.destroy();
-                            };
+							img.onerror = function () {
+								this.destroy();
+							};
 
-                            img.load(this.getSource()); 
-                        } else if( /video/i.test( type ) ) {
-                            jQuery( '<img src="' + rtmedia_media_thumbs[ 'video' ] + '" />' ).appendTo( '#file_thumb_' + err.file.id );
-                        } else if( /audio/i.test( type ) ) {
-                            jQuery( '<img src="' + rtmedia_media_thumbs[ 'music' ] + '" />' ).appendTo( '#file_thumb_' + err.file.id );
-                        }
+							img.load( this.getSource() );
+						} else if ( /video/i.test( type ) ) {
+							jQuery( '<img src="' + rtmedia_media_thumbs[ 'video' ] + '" />' ).appendTo( '#file_thumb_' + err.file.id );
+						} else if ( /audio/i.test( type ) ) {
+							jQuery( '<img src="' + rtmedia_media_thumbs[ 'music' ] + '" />' ).appendTo( '#file_thumb_' + err.file.id );
+						}
 					}
 				}
 			}
@@ -576,58 +625,58 @@ jQuery( function ( $ ) {
 
 				if ( err.code == - 601 ) { // file extension error
 					err.message = rtmedia_file_extension_error_msg;
-				}                
-                
-                var rtmedia_plupload_file = '<li class="plupload_file ui-state-default plupload_delete upload-error" id="' + err.file.id + '" style="width: 100px;">';
-                rtmedia_plupload_file += '<div id="file_thumb_' + err.file.id + '" class="plupload_file_thumb">';
-                rtmedia_plupload_file += '</div>';
-                rtmedia_plupload_file += '<div class="plupload_file_status">';
-                rtmedia_plupload_file += err.message;
-                rtmedia_plupload_file += '<i class="dashicons dashicons-info rtmicon" title="' + window.file_size_info + '"></i>';
-                rtmedia_plupload_file += '</div>';
-                rtmedia_plupload_file += '<div class="plupload_file_name" title="' + err.file ? err.file.name : "" + '">';
-                rtmedia_plupload_file += '<span class="plupload_file_name_wrapper">';
-                rtmedia_plupload_file += err.file ? err.file.name : "";
-                rtmedia_plupload_file += '</span>';
-                rtmedia_plupload_file += '</div>';
-                rtmedia_plupload_file += '<div class="plupload_file_action">';
-                rtmedia_plupload_file += '<div class="plupload_action_icon ui-icon ui-icon-circle-minus">';
-                rtmedia_plupload_file += '</div>';
-                rtmedia_plupload_file += '</div>';
-                rtmedia_plupload_file += '<div class="plupload_file_size">';
-                rtmedia_plupload_file += plupload.formatSize( err.file.size );
-                rtmedia_plupload_file += '</div>';
-                rtmedia_plupload_file += '<div class="plupload_file_fields">';
-                rtmedia_plupload_file += '</div>';
-                rtmedia_plupload_file += '</li>';
+				}
 
-                jQuery( rtmedia_plupload_file ).appendTo( '#rtmedia_uploader_filelist' );
-                var type = err.file.type;
-                if( /image/i.test( type ) ) {
-                    var img = new mOxie.Image();
+				var rtmedia_plupload_file = '<li class="plupload_file ui-state-default plupload_delete upload-error" id="' + err.file.id + '">';
+				rtmedia_plupload_file += '<div id="file_thumb_' + err.file.id + '" class="plupload_file_thumb">';
+				rtmedia_plupload_file += '</div>';
+				rtmedia_plupload_file += '<div class="plupload_file_status">';
+				rtmedia_plupload_file += err.message;
+				rtmedia_plupload_file += '<i class="dashicons dashicons-info rtmicon" title="' + window.file_size_info + '"></i>';
+				rtmedia_plupload_file += '</div>';
+				rtmedia_plupload_file += '<div class="plupload_file_name" title="' + err.file ? err.file.name : "" + '">';
+				rtmedia_plupload_file += '<span class="plupload_file_name_wrapper">';
+				rtmedia_plupload_file += err.file ? err.file.name : "";
+				rtmedia_plupload_file += '</span>';
+				rtmedia_plupload_file += '</div>';
+				rtmedia_plupload_file += '<div class="plupload_file_action">';
+				rtmedia_plupload_file += '<div class="plupload_action_icon ui-icon ui-icon-circle-minus">';
+				rtmedia_plupload_file += '</div>';
+				rtmedia_plupload_file += '</div>';
+				rtmedia_plupload_file += '<div class="plupload_file_size">';
+				rtmedia_plupload_file += plupload.formatSize( err.file.size );
+				rtmedia_plupload_file += '</div>';
+				rtmedia_plupload_file += '<div class="plupload_file_fields">';
+				rtmedia_plupload_file += '</div>';
+				rtmedia_plupload_file += '</li>';
 
-                    img.onload = function() {
-                        this.embed($('#file_thumb_' + err.file.id).get(0), {
-                            width: 100,
-                            height: 100,
-                            crop: true
-                        });
-                    };
+				jQuery( rtmedia_plupload_file ).appendTo( '#rtmedia_uploader_filelist' );
+				var type = err.file.type;
+				if ( /image/i.test( type ) ) {
+					var img = new mOxie.Image();
 
-                    img.onembedded = function() {
-                        this.destroy();
-                    };
+					img.onload = function () {
+						this.embed( $( '#file_thumb_' + err.file.id ).get( 0 ), {
+							width: 100,
+							height: 60,
+							crop: true
+						} );
+					};
 
-                    img.onerror = function() {
-                        this.destroy();
-                    };
+					img.onembedded = function () {
+						this.destroy();
+					};
 
-                    img.load(this.getSource()); 
-                } else if( /video/i.test( type ) ) {
-                    jQuery( '<img src="' + rtmedia_media_thumbs[ 'video' ] + '" />' ).appendTo( '#file_thumb_' + err.file.id );
-                } else if( /audio/i.test( type ) ) {
-                    jQuery( '<img src="' + rtmedia_media_thumbs[ 'music' ] + '" />' ).appendTo( '#file_thumb_' + err.file.id );
-                }
+					img.onerror = function () {
+						this.destroy();
+					};
+
+					img.load( this.getSource() );
+				} else if ( /video/i.test( type ) ) {
+					jQuery( '<img src="' + rtmedia_media_thumbs[ 'video' ] + '" />' ).appendTo( '#file_thumb_' + err.file.id );
+				} else if ( /audio/i.test( type ) ) {
+					jQuery( '<img src="' + rtmedia_media_thumbs[ 'music' ] + '" />' ).appendTo( '#file_thumb_' + err.file.id );
+				}
 			}
 
 			jQuery( '.error_delete' ).on( 'click', function ( e ) {
@@ -656,7 +705,8 @@ jQuery( function ( $ ) {
 
 		uploaderObj.uploader.bind( 'UploadProgress', function ( up, file ) {
 			//$("#" + file.id + " .plupload_file_status").html(file.percent + "%");
-			$( "#" + file.id + " .plupload_file_status" ).html( rtmedia_uploading_msg + '( ' + file.percent + '% )' );
+			//$( "#" + file.id + " .plupload_file_status" ).html( rtmedia_uploading_msg + '( ' + file.percent + '% )' );
+			$( "#" + file.id + " .plupload_file_status" ).html( '<div class="plupload_file_progress ui-widget-header" style="width: ' + file.percent + '%;"></div>' );
 			$( "#" + file.id ).addClass( 'upload-progress' );
 			if ( file.percent == 100 ) {
 				$( "#" + file.id ).toggleClass( 'upload-success' );
@@ -821,19 +871,19 @@ jQuery( document ).ready( function ( $ ) {
 
 	objUploadView = new UploadView( rtMedia_update_plupload_config );
 	objUploadView.initUploader();
-    
-    setTimeout( function () {		
-		if ( $( "#rtmedia-add-media-button-post-update" ).length > 0 ) {		
-			$( "#whats-new-options" ).prepend( $( ".rtmedia-plupload-container" ) );		
-			if ( $( "#rtm-file_upload-ui .privacy" ).length > 0 ) {		
-				$( ".rtmedia-plupload-container" ).append( $( "#rtm-file_upload-ui .privacy" ) );		
-			}		
-			$( '#rtmedia-whts-new-upload-container > div' ).css( 'top', '0' );		
-			$( '#rtmedia-whts-new-upload-container > div' ).css( 'left', '0' );		
-		}		
+
+	setTimeout( function () {
+		if ( $( "#rtmedia-add-media-button-post-update" ).length > 0 ) {
+			$( "#whats-new-options" ).prepend( $( ".rtmedia-plupload-container" ) );
+			if ( $( "#rtm-file_upload-ui .privacy" ).length > 0 ) {
+				$( ".rtmedia-plupload-container" ).append( $( "#rtm-file_upload-ui .privacy" ) );
+			}
+			$( '#rtmedia-whts-new-upload-container > div' ).css( 'top', '0' );
+			$( '#rtmedia-whts-new-upload-container > div' ).css( 'left', '0' );
+		}
 	}, 100 );
-    
-    $( '#whats-new-options' ).append( $( '.rtmedia-container' ) );
+
+	$( '#whats-new-options' ).append( $( '.rtmedia-container' ) );
 
 	$( "#whats-new-form" ).on( 'click', '#rtmedia-add-media-button-post-update', function ( e ) {
 		objUploadView.uploader.refresh();
@@ -851,7 +901,7 @@ jQuery( document ).ready( function ( $ ) {
 			//set file title along with file
 			rtm_file_name_array = file.name.split( '.' );
 			file.title = rtm_file_name_array[0];
-            
+
 			if ( objUploadView.uploader.settings.max_file_size < file.size ) {
 				return true;
 			}
@@ -871,60 +921,58 @@ jQuery( document ).ready( function ( $ ) {
 				return true;
 			}
 
-            var rtmedia_plupload_file = '<li class="plupload_file ui-state-default" id="' + file.id + '" style="width: 100px;">';
-            rtmedia_plupload_file += '<div id="file_thumb_' + file.id + '" class="plupload_file_thumb">';
-            rtmedia_plupload_file += '</div>';
-            rtmedia_plupload_file += '<div class="plupload_file_status">';
-            rtmedia_plupload_file += '<div class="plupload_file_progress ui-widget-header" style="width: 0%;">';
-            rtmedia_plupload_file += '</div>';
-            rtmedia_plupload_file += '<span class="plupload_file_percent">';
-            rtmedia_plupload_file += '</span>';
-            rtmedia_plupload_file += '</div>';
-            rtmedia_plupload_file += '<div class="plupload_file_name" title="' + file.name + '">';
-            rtmedia_plupload_file += '<span class="plupload_file_name_wrapper">';
-            rtmedia_plupload_file += file.name;
-            rtmedia_plupload_file += '</span>';
-            rtmedia_plupload_file += '</div>';
-            rtmedia_plupload_file += '<div class="plupload_file_action">';
-            rtmedia_plupload_file += '<div class="plupload_action_icon ui-icon plupload_delete">';
-            rtmedia_plupload_file += '<span class="remove-from-queue dashicons dashicons-dismiss"></span>';
-            rtmedia_plupload_file += '</div>';
-            rtmedia_plupload_file += '</div>';
-            rtmedia_plupload_file += '<div class="plupload_file_size">';
-            rtmedia_plupload_file += plupload.formatSize( file.size );
-            rtmedia_plupload_file += '</div>';
-            rtmedia_plupload_file += '<div class="plupload_file_fields">';
-            rtmedia_plupload_file += '</div>';
-            rtmedia_plupload_file += '</li>';
-            
-            jQuery( rtmedia_plupload_file ).appendTo( '#rtmedia_uploader_filelist' );
-            var type = file.type;
-            console.log( /image/i.test( type ) );
-            if( /image/i.test( type ) ) {
-                var img = new mOxie.Image();
+			var rtmedia_plupload_file = '<li class="plupload_file ui-state-default" id="' + file.id + '">';
+			rtmedia_plupload_file += '<div id="file_thumb_' + file.id + '" class="plupload_file_thumb">';
+			rtmedia_plupload_file += '</div>';
+			rtmedia_plupload_file += '<div class="plupload_file_status">';
+			rtmedia_plupload_file += '<div class="plupload_file_progress ui-widget-header" style="width: 0%;">';
+			rtmedia_plupload_file += '</div>';
+			rtmedia_plupload_file += '</div>';
+			rtmedia_plupload_file += '<div class="plupload_file_name" title="' + file.name + '">';
+			rtmedia_plupload_file += '<span class="plupload_file_name_wrapper">';
+			rtmedia_plupload_file += file.name;
+			rtmedia_plupload_file += '</span>';
+			rtmedia_plupload_file += '</div>';
+			rtmedia_plupload_file += '<div class="plupload_file_action">';
+			rtmedia_plupload_file += '<div class="plupload_action_icon ui-icon plupload_delete">';
+			rtmedia_plupload_file += '<span class="remove-from-queue dashicons dashicons-dismiss"></span>';
+			rtmedia_plupload_file += '</div>';
+			rtmedia_plupload_file += '</div>';
+			rtmedia_plupload_file += '<div class="plupload_file_size">';
+			rtmedia_plupload_file += plupload.formatSize( file.size );
+			rtmedia_plupload_file += '</div>';
+			rtmedia_plupload_file += '<div class="plupload_file_fields">';
+			rtmedia_plupload_file += '</div>';
+			rtmedia_plupload_file += '</li>';
 
-                img.onload = function() {
-                    this.embed($('#file_thumb_' + file.id).get(0), {
-                        width: 100,
-                        height: 100,
-                        crop: true
-                    });
-                };
+			jQuery( rtmedia_plupload_file ).appendTo( '#rtmedia_uploader_filelist' );
+			var type = file.type;
+			console.log( /image/i.test( type ) );
+			if ( /image/i.test( type ) ) {
+				var img = new mOxie.Image();
 
-                img.onembedded = function() {
-                    this.destroy();
-                };
+				img.onload = function () {
+					this.embed( $( '#file_thumb_' + file.id ).get( 0 ), {
+						width: 100,
+						height: 60,
+						crop: true
+					} );
+				};
 
-                img.onerror = function() {
-                    this.destroy();
-                };
+				img.onembedded = function () {
+					this.destroy();
+				};
 
-                img.load(this.getSource()); 
-            } else if( /video/i.test( type ) ) {
-                jQuery( '<img src="' + rtmedia_media_thumbs[ 'video' ] + '" />' ).appendTo( '#file_thumb_' + file.id );
-            } else if( /audio/i.test( type ) ) {
-                jQuery( '<img src="' + rtmedia_media_thumbs[ 'music' ] + '" />' ).appendTo( '#file_thumb_' + file.id );
-            }
+				img.onerror = function () {
+					this.destroy();
+				};
+
+				img.load( this.getSource() );
+			} else if ( /video/i.test( type ) ) {
+				jQuery( '<img src="' + rtmedia_media_thumbs[ 'video' ] + '" />' ).appendTo( '#file_thumb_' + file.id );
+			} else if ( /audio/i.test( type ) ) {
+				jQuery( '<img src="' + rtmedia_media_thumbs[ 'music' ] + '" />' ).appendTo( '#file_thumb_' + file.id );
+			}
 
 			jQuery( '#whats-new-content' ).css( 'padding-bottom', '0px' );
 			$( "#rtm-upload-start-notice" ).css( 'display', 'block' ); // show the file upload notice to the user
@@ -1024,56 +1072,56 @@ jQuery( document ).ready( function ( $ ) {
 
 				ext = tmp_array[tmp_array.length - 1];
 				if ( ! ( typeof ( up.settings.upload_size ) != "undefined" && typeof ( up.settings.upload_size[ext] ) != "undefined" && ( up.settings.upload_size[ext]["size"] < 1 || ( up.settings.upload_size[ext]["size"] * 1024 * 1024 ) >= err.file.size ) ) ) {
-                    var rtmedia_plupload_file = '<li class="plupload_file ui-state-default plupload_delete upload-error" id="' + err.file.id + '" style="width: 100px;">';
-                    rtmedia_plupload_file += '<div id="file_thumb_' + err.file.id + '" class="plupload_file_thumb">';
-                    rtmedia_plupload_file += '</div>';
-                    rtmedia_plupload_file += '<div class="plupload_file_status">';
-                    rtmedia_plupload_file += rtmedia_max_file_msg + plupload.formatSize( up.settings.max_file_size / 1024 * 1024 );
-                    rtmedia_plupload_file += '<i class="dashicons dashicons-info rtmicon" title="' + window.file_size_info + '"></i>';
-                    rtmedia_plupload_file += '</div>';
-                    rtmedia_plupload_file += '<div class="plupload_file_name" title="' + err.file.name + '">';
-                    rtmedia_plupload_file += '<span class="plupload_file_name_wrapper">';
-                    rtmedia_plupload_file += err.file.name;
-                    rtmedia_plupload_file += '</span>';
-                    rtmedia_plupload_file += '</div>';
-                    rtmedia_plupload_file += '<div class="plupload_file_action">';
-                    rtmedia_plupload_file += '<div class="plupload_action_icon ui-icon ui-icon-circle-minus">';
-                    rtmedia_plupload_file += '</div>';
-                    rtmedia_plupload_file += '</div>';
-                    rtmedia_plupload_file += '<div class="plupload_file_size">';
-                    rtmedia_plupload_file += plupload.formatSize( err.file.size );
-                    rtmedia_plupload_file += '</div>';
-                    rtmedia_plupload_file += '<div class="plupload_file_fields">';
-                    rtmedia_plupload_file += '</div>';
-                    rtmedia_plupload_file += '</li>';
+					var rtmedia_plupload_file = '<li class="plupload_file ui-state-default plupload_delete upload-error" id="' + err.file.id + '">';
+					rtmedia_plupload_file += '<div id="file_thumb_' + err.file.id + '" class="plupload_file_thumb">';
+					rtmedia_plupload_file += '</div>';
+					rtmedia_plupload_file += '<div class="plupload_file_status">';
+					rtmedia_plupload_file += rtmedia_max_file_msg + plupload.formatSize( up.settings.max_file_size / 1024 * 1024 );
+					rtmedia_plupload_file += '<i class="dashicons dashicons-info rtmicon" title="' + window.file_size_info + '"></i>';
+					rtmedia_plupload_file += '</div>';
+					rtmedia_plupload_file += '<div class="plupload_file_name" title="' + err.file.name + '">';
+					rtmedia_plupload_file += '<span class="plupload_file_name_wrapper">';
+					rtmedia_plupload_file += err.file.name;
+					rtmedia_plupload_file += '</span>';
+					rtmedia_plupload_file += '</div>';
+					rtmedia_plupload_file += '<div class="plupload_file_action">';
+					rtmedia_plupload_file += '<div class="plupload_action_icon ui-icon ui-icon-circle-minus">';
+					rtmedia_plupload_file += '</div>';
+					rtmedia_plupload_file += '</div>';
+					rtmedia_plupload_file += '<div class="plupload_file_size">';
+					rtmedia_plupload_file += plupload.formatSize( err.file.size );
+					rtmedia_plupload_file += '</div>';
+					rtmedia_plupload_file += '<div class="plupload_file_fields">';
+					rtmedia_plupload_file += '</div>';
+					rtmedia_plupload_file += '</li>';
 
-                    jQuery( rtmedia_plupload_file ).appendTo( '#rtmedia_uploader_filelist' );
-                    var type = err.file.type;
-                    if( /image/i.test( type ) ) {
-                        var img = new mOxie.Image();
+					jQuery( rtmedia_plupload_file ).appendTo( '#rtmedia_uploader_filelist' );
+					var type = err.file.type;
+					if ( /image/i.test( type ) ) {
+						var img = new mOxie.Image();
 
-                        img.onload = function() {
-                            this.embed($('#file_thumb_' + err.file.id).get(0), {
-                                width: 100,
-                                height: 100,
-                                crop: true
-                            });
-                        };
+						img.onload = function () {
+							this.embed( $( '#file_thumb_' + err.file.id ).get( 0 ), {
+								width: 100,
+								height: 60,
+								crop: true
+							} );
+						};
 
-                        img.onembedded = function() {
-                            this.destroy();
-                        };
+						img.onembedded = function () {
+							this.destroy();
+						};
 
-                        img.onerror = function() {
-                            this.destroy();
-                        };
+						img.onerror = function () {
+							this.destroy();
+						};
 
-                        img.load(this.getSource()); 
-                    } else if( /video/i.test( type ) ) {
-                        jQuery( '<img src="' + rtmedia_media_thumbs[ 'video' ] + '" />' ).appendTo( '#file_thumb_' + err.file.id );
-                    } else if( /audio/i.test( type ) ) {
-                        jQuery( '<img src="' + rtmedia_media_thumbs[ 'music' ] + '" />' ).appendTo( '#file_thumb_' + err.file.id );
-                    }
+						img.load( this.getSource() );
+					} else if ( /video/i.test( type ) ) {
+						jQuery( '<img src="' + rtmedia_media_thumbs[ 'video' ] + '" />' ).appendTo( '#file_thumb_' + err.file.id );
+					} else if ( /audio/i.test( type ) ) {
+						jQuery( '<img src="' + rtmedia_media_thumbs[ 'music' ] + '" />' ).appendTo( '#file_thumb_' + err.file.id );
+					}
 				}
 			}
 		}
@@ -1081,57 +1129,57 @@ jQuery( document ).ready( function ( $ ) {
 			if ( err.code == - 601 ) { // file extension error
 				err.message = rtmedia_file_extension_error_msg;
 			}
-            
-            var rtmedia_plupload_file = '<li class="plupload_file ui-state-default plupload_delete upload-error" id="' + err.file.id + '" style="width: 100px;">';
-            rtmedia_plupload_file += '<div id="file_thumb_' + err.file.id + '" class="plupload_file_thumb">';
-            rtmedia_plupload_file += '</div>';
-            rtmedia_plupload_file += '<div class="plupload_file_status">';
-            rtmedia_plupload_file += err.message;
-            rtmedia_plupload_file += '<i class="dashicons dashicons-info rtmicon" title="' + window.file_size_info + '"></i>';
-            rtmedia_plupload_file += '</div>';
-            rtmedia_plupload_file += '<div class="plupload_file_name" title="' + err.file ? err.file.name : "" + '">';
-            rtmedia_plupload_file += '<span class="plupload_file_name_wrapper">';
-            rtmedia_plupload_file += err.file ? err.file.name : "";
-            rtmedia_plupload_file += '</span>';
-            rtmedia_plupload_file += '</div>';
-            rtmedia_plupload_file += '<div class="plupload_file_action">';
-            rtmedia_plupload_file += '<div class="plupload_action_icon ui-icon ui-icon-circle-minus">';
-            rtmedia_plupload_file += '</div>';
-            rtmedia_plupload_file += '</div>';
-            rtmedia_plupload_file += '<div class="plupload_file_size">';
-            rtmedia_plupload_file += plupload.formatSize( err.file.size );
-            rtmedia_plupload_file += '</div>';
-            rtmedia_plupload_file += '<div class="plupload_file_fields">';
-            rtmedia_plupload_file += '</div>';
-            rtmedia_plupload_file += '</li>';
 
-            jQuery( rtmedia_plupload_file ).appendTo( '#rtmedia_uploader_filelist' );
-            var type = err.file.type;
-            if( /image/i.test( type ) ) {
-                var img = new mOxie.Image();
+			var rtmedia_plupload_file = '<li class="plupload_file ui-state-default plupload_delete upload-error" id="' + err.file.id + '">';
+			rtmedia_plupload_file += '<div id="file_thumb_' + err.file.id + '" class="plupload_file_thumb">';
+			rtmedia_plupload_file += '</div>';
+			rtmedia_plupload_file += '<div class="plupload_file_status">';
+			rtmedia_plupload_file += err.message;
+			rtmedia_plupload_file += '<i class="dashicons dashicons-info rtmicon" title="' + window.file_size_info + '"></i>';
+			rtmedia_plupload_file += '</div>';
+			rtmedia_plupload_file += '<div class="plupload_file_name" title="' + err.file ? err.file.name : "" + '">';
+			rtmedia_plupload_file += '<span class="plupload_file_name_wrapper">';
+			rtmedia_plupload_file += err.file ? err.file.name : "";
+			rtmedia_plupload_file += '</span>';
+			rtmedia_plupload_file += '</div>';
+			rtmedia_plupload_file += '<div class="plupload_file_action">';
+			rtmedia_plupload_file += '<div class="plupload_action_icon ui-icon ui-icon-circle-minus">';
+			rtmedia_plupload_file += '</div>';
+			rtmedia_plupload_file += '</div>';
+			rtmedia_plupload_file += '<div class="plupload_file_size">';
+			rtmedia_plupload_file += plupload.formatSize( err.file.size );
+			rtmedia_plupload_file += '</div>';
+			rtmedia_plupload_file += '<div class="plupload_file_fields">';
+			rtmedia_plupload_file += '</div>';
+			rtmedia_plupload_file += '</li>';
 
-                img.onload = function() {
-                    this.embed($('#file_thumb_' + err.file.id).get(0), {
-                        width: 100,
-                        height: 100,
-                        crop: true
-                    });
-                };
+			jQuery( rtmedia_plupload_file ).appendTo( '#rtmedia_uploader_filelist' );
+			var type = err.file.type;
+			if ( /image/i.test( type ) ) {
+				var img = new mOxie.Image();
 
-                img.onembedded = function() {
-                    this.destroy();
-                };
+				img.onload = function () {
+					this.embed( $( '#file_thumb_' + err.file.id ).get( 0 ), {
+						width: 100,
+						height: 60,
+						crop: true
+					} );
+				};
 
-                img.onerror = function() {
-                    this.destroy();
-                };
+				img.onembedded = function () {
+					this.destroy();
+				};
 
-                img.load(this.getSource()); 
-            } else if( /video/i.test( type ) ) {
-                jQuery( '<img src="' + rtmedia_media_thumbs[ 'video' ] + '" />' ).appendTo( '#file_thumb_' + err.file.id );
-            } else if( /audio/i.test( type ) ) {
-                jQuery( '<img src="' + rtmedia_media_thumbs[ 'music' ] + '" />' ).appendTo( '#file_thumb_' + err.file.id );
-            }
+				img.onerror = function () {
+					this.destroy();
+				};
+
+				img.load( this.getSource() );
+			} else if ( /video/i.test( type ) ) {
+				jQuery( '<img src="' + rtmedia_media_thumbs[ 'video' ] + '" />' ).appendTo( '#file_thumb_' + err.file.id );
+			} else if ( /audio/i.test( type ) ) {
+				jQuery( '<img src="' + rtmedia_media_thumbs[ 'music' ] + '" />' ).appendTo( '#file_thumb_' + err.file.id );
+			}
 		}
 
 		jQuery( '.error_delete' ).on( 'click', function ( e ) {
@@ -1171,12 +1219,13 @@ jQuery( document ).ready( function ( $ ) {
 	objUploadView.uploader.bind( 'UploadComplete', function ( up, files ) {
 		media_uploading = true;
 		$( "#aw-whats-new-submit" ).click();
-        $( '#rtmedia_uploader_filelist li' ).remove();
+		$( '#rtmedia_uploader_filelist li' ).remove();
 		//$("#aw-whats-new-submit").removeAttr('disabled');
 		window.onbeforeunload = null;
 	} );
 	objUploadView.uploader.bind( 'UploadProgress', function ( up, file ) {
-		$( "#" + file.id + " .plupload_file_status" ).html( rtmedia_uploading_msg + '( ' + file.percent + '% )' );
+		//$( "#" + file.id + " .plupload_file_status" ).html( rtmedia_uploading_msg + '( ' + file.percent + '% )' );
+		$( "#" + file.id + " .plupload_file_status" ).html( '<div class="plupload_file_progress ui-widget-header" style="width: ' + file.percent + '%;"></div>' );
 		$( "#" + file.id ).addClass( 'upload-progress' );
 		if ( file.percent == 100 ) {
 			$( "#" + file.id ).toggleClass( 'upload-success' );

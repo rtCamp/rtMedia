@@ -14,7 +14,7 @@
 .rtm-single-meta {
 	background: $white;
 	overflow: hidden;
-    padding: 20px;
+    padding: 20px 20px 110px;
 	position: relative;
 	vertical-align: top;
 }
@@ -235,13 +235,17 @@
 			}
 		}
 	}
+
+	.rtmedia-no-comments {
+		padding: 5px 10px;
+	}
 }
 
 .rtmedia-like-info {
 	background: #edeff4;
 	font-size: 12px;
 	margin-bottom: 1px;
-	padding: 10px;
+	padding: 5px 10px;
 	position: relative;
 }
 
@@ -254,9 +258,12 @@
 
 	.rtmedia-comment-date {
 		color: #999;
-		display: block;
 		font-size: 11px;
 	}
+}
+
+.rtmedia-comment-content {
+    margin-top: 2px;
 }
 
 .rtmedia-delete-comment {
@@ -282,8 +289,8 @@
 
 .rtm-media-single-comments {
 	background-color: #edeff4;
-    bottom: 10px;
-    padding: 4px;
+    bottom: 20px;
+    padding: 10px;
     position: absolute;
     width: calc(100% - 40px);
 
