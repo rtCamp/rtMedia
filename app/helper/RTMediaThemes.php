@@ -7,6 +7,9 @@
  */
 class RTMediaThemes {
 
+	// current page
+	public static $page;
+
 	/**
 	 * Render themes
 	 *
@@ -16,25 +19,27 @@ class RTMediaThemes {
 	 *
 	 * @return void
 	 */
-	public static function render_themes( $page = '' ){
+	public static function render_themes( $page = '' ) {
 		global $wp_settings_sections, $wp_settings_fields;
 
-		if ( ! isset( $wp_settings_sections ) || ! isset( $wp_settings_sections[ $page ] ) ){
+		self::$page = $page;
+
+		if ( ! isset( $wp_settings_sections ) || ! isset( $wp_settings_sections[ $page ] ) ) {
 			return;
 		}
 
-		foreach ( (array) $wp_settings_sections[ $page ] as $section ) {
+		foreach ( ( array ) $wp_settings_sections[ $page ] as $section ) {
 
-			if ( $section['callback'] ){
-				call_user_func( $section['callback'], $section );
+			if ( $section[ 'callback' ] ) {
+				call_user_func( $section[ 'callback' ], $section );
 			}
 
-			if ( ! isset( $wp_settings_fields ) || ! isset( $wp_settings_fields[ $page ] ) || ! isset( $wp_settings_fields[ $page ][ $section['id'] ] ) ){
+			if ( ! isset( $wp_settings_fields ) || ! isset( $wp_settings_fields[ $page ] ) || ! isset( $wp_settings_fields[ $page ][ $section[ 'id' ] ] ) ) {
 				continue;
 			}
 
 			echo '<table class="form-table">';
-			do_settings_fields( $page, $section['id'] );
+			do_settings_fields( $page, $section[ 'id' ] );
 			echo '</table>';
 		}
 	}
@@ -48,66 +53,24 @@ class RTMediaThemes {
 	 *
 	 * @return void
 	 */
-	public function get_themes(){
+	public function get_themes() {
 		$tabs = array();
 		global $rtmedia_admin;
 		$tabs[] = array(
-			'title' => __( 'rtMedia Themes By rtCamp', 'rtmedia' ),
-			'name' => __( 'rtMedia Themes By rtCamp', 'rtmedia' ),
+			'title' => __( 'Themes By rtCamp', 'rtmedia' ),
+			'name' => __( 'Themes By rtCamp', 'rtmedia' ),
 			'href' => '#rtmedia-themes',
+			'icon' => 'dashicons-admin-appearance',
 			'callback' => array( $this, 'rtmedia_themes_content' )
 		);
 		$tabs[] = array(
 			'title' => __( '3rd Party Themes', 'rtmedia' ),
 			'name' => __( '3rd Party Themes', 'rtmedia' ),
 			'href' => '#rtmedia-themes-3',
+			'icon' => 'dashicons-randomize',
 			'callback' => array( $this, 'rtmedia_3rd_party_themes_content' )
 		);
-		?>
-		<div id="rtm-themes">
-			<div class="horizontal-tabs">
-				<dl class='tabs' data-tab>
-		<?php
-		$i = 1;
-		foreach ( $tabs as $tab ) {
-			$active_class = '';
-			if ( 1 == $i ){
-				$active_class = 'active';
-			}
-			$i ++;
-			?>
-			<dd class="<?php echo $active_class ?>">
-				<a id="tab-<?php echo substr( $tab['href'], 1 ) ?>" title="<?php echo $tab['title'] ?>" href="<?php echo $tab['href'] ?>" class="rtmedia-tab-title <?php echo sanitize_title( $tab['name'] ) ?>"><?php echo $tab['name'] ?></a>
-			</dd>
-		<?php
-		}
-		?>
-				</dl>
-
-		<?php
-		$k = 1;
-		$active_class = '';
-		echo "<div class='tabs-content'>";
-		foreach ( $tabs as $tab ) {
-			$active_class = '';
-			if ( 1 == $k ){
-				$active_class = ' active';
-			}
-			$k ++;
-			if ( isset( $tab['icon'] ) && ! empty( $tab['icon'] ) ){
-				$icon = '<i class="' . $tab['icon'] . '"></i>';
-			}
-			$tab_without_hash = explode( '#', $tab['href'] );
-			$tab_without_hash = $tab_without_hash[1];
-			echo '<div class="content' . $active_class . '" id="' . $tab_without_hash . '">';
-			call_user_func( $tab['callback'] );
-			echo '</div>';
-		}
-		echo '</div>';
-		?>
-			</div>
-		</div>
-	<?php
+		RTMediaAdmin::render_admin_ui( self::$page, $tabs );
 	}
 
 	/**
@@ -119,70 +82,107 @@ class RTMediaThemes {
 	 *
 	 * @return void
 	 */
-	public function rtmedia_themes_content(){
+	public function rtmedia_themes_content() {
 
 
 		$rtdating = wp_get_theme( 'rtdating' );
-		if( $rtdating->exists() ){
+		if ( $rtdating->exists() ) {
 			$rtdating_purchase = '';
 		} else {
 			$rtdating_purchase = '<a href="https://rtcamp.com/products/rtdating/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media" target="_blank">Buy rtDating</a> | ';
 		}
 
 		$inspirebook = wp_get_theme( 'inspirebook' );
-		if( $inspirebook->exists() ){
+		if ( $inspirebook->exists() ) {
 			$inspirebook_purchase = '';
 		} else {
 			$inspirebook_purchase = '<a href="https://rtcamp.com/products/inspirebook/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media" target="_blank">Buy InspireBook</a> | ';
 		}
 
+
+		$themes = array(
+			'rtdating' => array(
+				'name' => __( 'rtDating', 'rtmedia' ),
+				'version' => '1.0',
+				'image' => RTMEDIA_URL . 'app/assets/admin/img/rtDating.png',
+				'demo_url' => 'http://demo.rtcamp.com/rtdating/',
+				'author' => __( 'rtCamp', 'rtmedia' ),
+				'author_url' => 'https://rtcamp.com/',
+				'buy_url' => 'https://rtcamp.com/products/rtdating/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media',
+				'description' => __( 'rtDating is a unique, clean and modern theme only for WordPress. This theme is mostly useful for dating sites and community websites. It can also be use for any other WordPress based website.', 'rtmedia' ),
+				'tags' => 'black, green, white, light, dark, two-columns, three-columns, left-sidebar, right-sidebar, fixed-layout, responsive-layout, custom-background, custom-header, custom-menu, editor-style, featured-images, flexible-header, full-width-template, microformats, post-formats, rtl-language-support, sticky-post, theme-options, translation-ready, accessibility-ready',
+			),
+			'inspirebook' => array(
+				'name' => __( 'InspireBook', 'rtmedia' ),
+				'version' => '1.0',
+				'image' => RTMEDIA_URL . 'app/assets/admin/img/rtmedia-theme-InspireBook.png',
+				'demo_url' => 'http://demo.rtcamp.com/inspirebook/',
+				'author' => __( 'rtCamp', 'rtmedia' ),
+				'author_url' => 'https://rtcamp.com/',
+				'buy_url' => 'https://rtcamp.com/products/inspirebook/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media',
+				'description' => __( 'InspireBook is a premium WordPress theme, designed especially for BuddyPress and rtMedia powered social-networks.', 'rtmedia' ),
+				'tags' => 'black, blue, white, light, one-column, two-columns, right-sidebar, custom-header, custom-background, custom-menu, editor-style, theme-options, threaded-comments, sticky-post, translation-ready, responsive-layout, full-width-template, buddypress',
+			)
+		);
 		?>
-		<div class="row">
-			<div class="columns large-12">
-				<div class="columns large-4 rtmedia-theme-image">
-					<a href="https://rtcamp.com/products/rtdating/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media" target="_blank"><img src="<?php echo RTMEDIA_URL . 'app/assets/img/rtDating.png' ?>"/></a>
-				</div>
-				<div class="columns large-7 rtmedia-theme-content">
-					<h3 class="rtmedia-theme-title"><a href="https://rtcamp.com/products/rtdating/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media" target="_blank">rtDating</a></h3>
 
-					<div>
-						<p>
-							<span>rtDating is a unique, clean and modern theme only for WordPress. This theme is mostly useful for dating sites and community websites. It can also be use for any other WordPress based website. <a href="https://rtcamp.com/products/rtdating/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media" class="rtmedia-theme-inner-a" target="_blank">Read More</a></span>
-						</p>
+		<div class="theme-browser rtm-theme-browser rendered">
+			<div class="themes rtm-themes clearfix">
 
-						<p>
-							<span>Links: <?php echo $rtdating_purchase; ?> <a href="http://demo.rtcamp.com/rtmedia/?theme=rtDating" target="_blank">Live Demo</a> | <a href="http://docs.rtcamp.com/rtdating/" target="_blank">Documentation</a> | <a href="https://rtcamp.com/support/forum/premium-themes/" target="_blank">Support Forum</a></span>
-						</p>
+				<?php
+				foreach ( $themes as $theme ) {
+					?>
+
+					<div class="theme rtm-theme">
+						<div class="theme-screenshot">
+							<img src="<?php echo $theme[ 'image' ]; ?>" />
+						</div>
+
+						<span class="more-details"><?php _e( 'Theme Details' ); ?></span>
+
+						<h3 class="theme-name"><?php echo $theme[ 'name' ]; ?></h3>
+
+						<div class="theme-actions">
+							<a class="button button-primary load-customize hide-if-no-customize" href="<?php echo $theme[ 'demo_url' ]; ?>"><?php _e( 'Live Demo' ); ?></a>
+						</div>
+
+						<div class="rtm-theme-content hide">
+							<div class="theme-wrap">
+								<div class="theme-header">
+									<button class="left rtm-previous dashicons dashicons-no"><span class="screen-reader-text"><?php _e( 'Show previous theme' ); ?></span></button>
+									<button class="right rtm-next dashicons dashicons-no"><span class="screen-reader-text"><?php _e( 'Show next theme' ); ?></span></button>
+									<button class="close rtm-close dashicons dashicons-no"><span class="screen-reader-text"><?php _e( 'Close overlay' ); ?></span></button>
+								</div>
+
+								<div class="theme-about">
+									<div class="theme-screenshots">
+										<div class="screenshot">
+											<a href="<?php echo $theme[ 'buy_url' ]; ?>" target="_blank"><img src="<?php echo $theme[ 'image' ]; ?>"/></a>
+										</div>
+									</div>
+
+									<div class="theme-info">
+										<!--<span class="theme-version">Version: <?php //echo $theme[ 'version' ];      ?></span>-->
+										<h3 class="theme-name"><?php echo $theme[ 'name' ]; ?></h3>
+										<h4 class="theme-author">By <a href="https://rtcamp.com/"><?php echo $theme[ 'author' ]; ?></a></h4>
+										<p class="theme-description"><?php echo $theme[ 'description' ]; ?> <a href="<?php echo $theme[ 'buy_url' ]; ?>" class="rtmedia-theme-inner-a" target="_blank"><?php _e( 'Read More' ); ?></a></p>
+										<p class="theme-tags"><span><?php _e( 'Tags:' ); ?></span><?php echo $theme[ 'tags' ]; ?></p>
+									</div>
+								</div>
+
+								<div class="theme-actions">
+									<a class="button load-customize hide-if-no-customize" href="<?php echo $theme[ 'demo_url' ]; ?>"><?php _e( 'Live Demo' ); ?></a>
+									<a class="button button-primary load-customize hide-if-no-customize" href="<?php echo $theme[ 'buy_url' ]; ?>"><?php _e( 'Buy Now' ); ?></a>
+								</div>
+							</div>
+						</div>
 					</div>
-				</div>
+
+				<?php } ?>
 			</div>
 		</div>
-		<hr>
-		<div class="row">
-			<div class="columns large-12">
-				<div class="columns large-4 rtmedia-theme-image">
-					<a href="https://rtcamp.com/products/inspirebook/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media" target="_blank"><img src="<?php echo RTMEDIA_URL . 'app/assets/img/rtmedia-theme-InspireBook.png' ?>"/></a>
-				</div>
-				<div class="columns large-7 rtmedia-theme-content">
-					<h3 class="rtmedia-theme-title"><a href="https://rtcamp.com/products/inspirebook/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media" target="_blank">InspireBook</a></h3>
 
-					<div>
-						<p>
-							<span><a href="https://rtcamp.com/products/inspirebook/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media" target="_blank"><b>Meet InspireBook</b></a> - First official rtMedia premium theme.</span>
-						</p>
-
-						<p>
-							<span>InspireBook is a premium WordPress theme, designed especially for BuddyPress and rtMedia powered social-networks. <a href="https://rtcamp.com/products/inspirebook/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media" class="rtmedia-theme-inner-a" target="_blank">Read More</a> </span>
-						</p>
-
-						<p>
-							<span>Links: <?php echo $inspirebook_purchase; ?> <a href="http://demo.rtcamp.com/rtmedia/?theme=InspireBook" target="_blank">Live Demo</a> | <a href="http://docs.rtcamp.com/inspirebook" target="_blank">Documentation</a> | <a href="http://community.rtcamp.com/c/premium-themes" target="_blank">Support Forum</a></span>
-						</p>
-					</div>
-				</div>
-			</div>
-		</div>
-	<?php
+		<?php
 	}
 
 	/**
@@ -194,54 +194,101 @@ class RTMediaThemes {
 	 *
 	 * @return void
 	 */
-	public function rtmedia_3rd_party_themes_content(){
+	public function rtmedia_3rd_party_themes_content() {
+
+		$themes = array(
+			'sweetdate' => array(
+				'name' => __( 'SweetDate', 'rtmedia' ),
+				'version' => '1.0',
+				'image' => RTMEDIA_URL . 'app/assets/admin/img/rtmedia-theme-sweetdate.png',
+				'demo_url' => 'http://rt.cx/sweetdate',
+				'author' => __( 'SeventhQueen', 'rtmedia' ),
+				'author_url' => 'http://themeforest.net/user/SeventhQueen',
+				'buy_url' => 'http://rt.cx/sweetdate',
+				'description' => __( 'SweetDate is a unique, clean and modern Premium Wordpress theme. It is perfect for a dating or community website but can be used as well for any other domain. They added all the things you need to create a perfect community system.', 'rtmedia' ),
+				'tags' => 'dating, clean, responsive, creative, minimal, modern, landing page, social, BuddyPress, bbpress, woocommerce',
+			),
+			'kelo' => array(
+				'name' => __( 'KLEO', 'rtmedia' ),
+				'version' => '1.0',
+				'image' => RTMEDIA_URL . 'app/assets/admin/img/rtmedia-theme-kleo.png',
+				'demo_url' => 'http://rt.cx/kleo',
+				'author' => __( 'SeventhQueen', 'rtmedia' ),
+				'author_url' => 'http://themeforest.net/user/SeventhQueen',
+				'buy_url' => 'http://rt.cx/kleo',
+				'description' => __( 'You no longer need to be a professional developer or designer to create an awesome website. Let your imagination run wild and create the site of your dreams. KLEO has all the tools to get you started.', 'rtmedia' ),
+				'tags' => 'bbpress, Bootstrap 3, buddypress, clean design, community theme, e-commerce theme, multi-purpose, responsive design, retina, woocommerce, wordpress theme',
+			)
+		);
 		?>
-		<div class="row">
-			<div class="columns large-12">
-				<h4 class="rtmedia-theme-warning"><?php _e( 'These are the third party themes. For any issues or queries regarding these themes please contact theme developers.', 'rtmedia' ) ?></h4>
-			</div>
-		</div>
-		<hr>
-		<div class="row">
-			<div class="columns large-4 rtmedia-theme-image">
-				<a href="http://rt.cx/sweetdate" target="_blank"><img src="<?php echo RTMEDIA_URL . 'app/assets/img/rtmedia-theme-sweetdate.png' ?>"/></a>
-			</div>
-			<div class="columns large-7">
-				<h3 class="rtmedia-theme-3rd-party-title"><a href="http://rt.cx/sweetdate" target="_blank">Sweet Date</a></h3>
 
-				<div>
-					<span><?php _e( 'SweetDate is a unique, clean and modern Premium Wordpress theme. It is perfect for a dating or community website but can be used as well for any other domain. They added all the things you need to create a perfect community system.', 'rtmedia' ); ?></span>
-				</div>
-				<div>
-					<h4><?php echo __( 'Click', 'rtmedia' ) . " <a href='http://rt.cx/sweetdate' target='_blank'>" . __( 'here', 'rtmedia' ) . '</a> ' . __( 'for preview.', 'rtmedia' ); ?></h4>
-				</div>
-			</div>
-		</div>
-		<hr>
-		<div class="row">
-			<div class="columns large-4 rtmedia-theme-image">
-				<a href="http://rt.cx/kleo" target="_blank"><img src="<?php echo RTMEDIA_URL . 'app/assets/img/rtmedia-theme-kleo.png' ?>"/></a>
-			</div>
-			<div class="columns large-7">
-				<h3 class="rtmedia-theme-3rd-party-title"><a href="http://rt.cx/kleo" target="_blank">KLEO</a></h3>
 
-				<div>
-					<span><?php _e( 'You no longer need to be a professional developer or designer to create an awesome website. Let your imagination run wild and create the site of your dreams. KLEO has all the tools to get you started.', 'rtmedia' ); ?></span>
-				</div>
-				<div>
-					<h4><?php echo __( 'Click', 'rtmedia' ) . " <a href='http://rt.cx/kleo' target='_blank'>" . __( 'here', 'rtmedia' ) . '</a> ' . __( 'for preview.', 'rtmedia' ); ?></h4>
-				</div>
-			</div>
-		</div>
-		<hr>
-		<div class="row">
-			<div class="columns large-12">
-				<h3><?php _e( 'Are you a developer?', 'rtmedia' ); ?></h3>
+		<div class="theme-browser rtm-theme-browser rendered">
+			<div class="themes rtm-themes clearfix">
 
-				<p><?php _e( 'If you have developed a rtMedia compatible theme and would like it to list here, please email us at', 'rtmedia' ) ?>
-					<a href="mailto:product@rtcamp.com"><?php _e( 'product@rtcamp.com', 'rtmedia' ) ?></a>.</p>
+				<?php
+				foreach ( $themes as $theme ) {
+					?>
+
+					<div class="theme rtm-theme">
+						<div class="theme-screenshot">
+							<img src="<?php echo $theme[ 'image' ]; ?>" />
+						</div>
+
+						<span class="more-details"><?php _e( 'Theme Details' ); ?></span>
+
+						<h3 class="theme-name"><?php echo $theme[ 'name' ]; ?></h3>
+
+						<div class="theme-actions">
+							<a class="button button-primary load-customize hide-if-no-customize" href="<?php echo $theme[ 'demo_url' ]; ?>"><?php _e( 'Live Demo' ); ?></a>
+						</div>
+
+						<div class="rtm-theme-content hide">
+							<div class="theme-wrap">
+								<div class="theme-header">
+									<button class="left rtm-previous dashicons dashicons-no"><span class="screen-reader-text"><?php _e( 'Show previous theme' ); ?></span></button>
+									<button class="right rtm-next dashicons dashicons-no"><span class="screen-reader-text"><?php _e( 'Show next theme' ); ?></span></button>
+									<button class="close rtm-close dashicons dashicons-no"><span class="screen-reader-text"><?php _e( 'Close overlay' ); ?></span></button>
+								</div>
+
+								<div class="theme-about">
+									<div class="theme-screenshots">
+										<div class="screenshot">
+											<a href="<?php echo $theme[ 'buy_url' ]; ?>" target="_blank"><img src="<?php echo $theme[ 'image' ]; ?>"/></a>
+										</div>
+									</div>
+
+									<div class="theme-info">
+										<h3 class="theme-name"><?php echo $theme[ 'name' ]; ?></h3>
+										<h4 class="theme-author">By <a href="https://rtcamp.com/"><?php echo $theme[ 'author' ]; ?></a></h4>
+										<p class="theme-description"><?php echo $theme[ 'description' ]; ?> <a href="<?php echo $theme[ 'buy_url' ]; ?>" class="rtmedia-theme-inner-a" target="_blank"><?php _e( 'Read More' ); ?></a></p>
+										<p class="theme-tags"><span><?php _e( 'Tags:' ); ?></span><?php echo $theme[ 'tags' ]; ?></p>
+									</div>
+								</div>
+
+								<div class="theme-actions">
+									<a class="button button-primary load-customize hide-if-no-customize" href="<?php echo $theme[ 'demo_url' ]; ?>"><?php _e( 'Live Demo' ); ?></a>
+									<a class="button button-primary load-customize hide-if-no-customize" href="<?php echo $theme[ 'buy_url' ]; ?>"><?php _e( 'Buy Now' ); ?></a>
+								</div>
+							</div>
+						</div>
+					</div>
+
+				<?php } ?>
 			</div>
 		</div>
-	<?php
+
+		<div class="rtmedia-theme-warning rtm-warning"><?php _e( 'These are the third party themes. For any issues or queries regarding these themes please contact theme developers.', 'rtmedia' ) ?></div>
+
+		<div>
+			<h3 class="rtm-option-title"><?php _e( 'Are you a developer?', 'rtmedia' ); ?></h3>
+
+			<p>
+				<?php _e( 'If you have developed a rtMedia compatible theme and would like it to list here, please email us at', 'rtmedia' ) ?>
+				<a href="mailto:product@rtcamp.com"><?php _e( 'product@rtcamp.com', 'rtmedia' ) ?></a>.
+			</p>
+		</div>
+		<?php
 	}
+
 }

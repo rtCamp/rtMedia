@@ -5,3 +5,5 @@
 */.sass-cache/
 .idea
 *.sass-cache
+node_modules
+npm-debug.log

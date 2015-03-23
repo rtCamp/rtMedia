@@ -1,0 +1,57 @@
+// rtMedia Defaults
+
+.rtmedia-container {
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+
+	* {
+		&,
+		&:before,
+			&:after {
+			-webkit-box-sizing: inherit;
+			-moz-box-sizing: inherit;
+			box-sizing: inherit;
+		}
+
+	}
+}
+
+.rtmedia-list {
+	margin: 0; // theme 2015/2014
+	padding: 0; // theme 2013
+}
+
+.rtmedia-list-item > a {
+    border: 0;
+    display: inline-block;
+
+	&:focus {
+		outline: 0; // theme 2015
+	}
+
+	& + p {
+		display: none;
+	}
+
+	.rtmedia-item-thumbnail {
+		img {
+			display: inline-block; // Remove extra white space below image.
+		}
+	}
+}
+
+.rtmedia-item-title {
+	display: none;
+}
+
+#buddypress ul.rtmedia-list li {
+	border-bottom: 0;
+	padding-bottom: 0;
+}
+
+.rtmedia-activity-container {
+	.rtmedia-item-actions {
+		display: none;
+	}
+}
