@@ -1224,7 +1224,7 @@ jQuery( document ).ready( function ( $ ) {
 	objUploadView.uploader.bind( 'UploadComplete', function ( up, files ) {
 		media_uploading = true;
 		$( "#aw-whats-new-submit" ).click();
-		$( "#rtm-upload-start-notice" ).hide();
+        $( '#rtmedia_uploader_filelist li' ).remove();
 		//$("#aw-whats-new-submit").removeAttr('disabled');
 		window.onbeforeunload = null;
 	} );
