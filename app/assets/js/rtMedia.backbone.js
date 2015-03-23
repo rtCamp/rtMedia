@@ -394,6 +394,60 @@ jQuery( function ( $ ) {
 					uploaderObj.uploader.settings.filters[0].title;
 				}
 
+				// Creating list of media to preview selected files                
+                var rtmedia_plupload_file = '<li class="plupload_file ui-state-default" id="' + file.id + '" style="width: 100px;">';
+                rtmedia_plupload_file += '<div id="file_thumb_' + file.id + '" class="plupload_file_thumb">';
+                rtmedia_plupload_file += '</div>';
+                rtmedia_plupload_file += '<div class="plupload_file_status">';
+                rtmedia_plupload_file += '<div class="plupload_file_progress ui-widget-header" style="width: 0%;">';
+                rtmedia_plupload_file += '</div>';
+                rtmedia_plupload_file += '<span class="plupload_file_percent">';
+                rtmedia_plupload_file += '</span>';
+                rtmedia_plupload_file += '</div>';
+                rtmedia_plupload_file += '<div class="plupload_file_name" title="' + file.name + '">';
+                rtmedia_plupload_file += '<span class="plupload_file_name_wrapper">';
+                rtmedia_plupload_file += file.name;
+                rtmedia_plupload_file += '</span>';
+                rtmedia_plupload_file += '</div>';
+                rtmedia_plupload_file += '<div class="plupload_file_action">';
+                rtmedia_plupload_file += '<div class="plupload_action_icon ui-icon plupload_delete">';
+                rtmedia_plupload_file += '<span class="remove-from-queue dashicons dashicons-dismiss"></span>';
+                rtmedia_plupload_file += '</div>';
+                rtmedia_plupload_file += '</div>';
+                rtmedia_plupload_file += '<div class="plupload_file_size">';
+                rtmedia_plupload_file += plupload.formatSize( file.size );
+                rtmedia_plupload_file += '</div>';
+                rtmedia_plupload_file += '<div class="plupload_file_fields">';
+                rtmedia_plupload_file += '</div>';
+                rtmedia_plupload_file += '</li>';
+
+                jQuery( rtmedia_plupload_file ).appendTo( '#rtmedia_uploader_filelist' );
+                var type = file.type;
+                if( /image/i.test( type ) ) {
+                    var img = new mOxie.Image();
+
+                    img.onload = function() {
+                        this.embed($('#file_thumb_' + file.id).get(0), {
+                            width: 100,
+                            height: 100,
+                            crop: true
+                        });
+                    };
+
+                    img.onembedded = function() {
+                        this.destroy();
+                    };
+
+                    img.onerror = function() {
+                        this.destroy();
+                    };
+
+                    img.load(this.getSource()); 
+                } else if( /video/i.test( type ) ) {
+                    jQuery( '<img src="' + rtmedia_media_thumbs[ 'video' ] + '" />' ).appendTo( '#file_thumb_' + file.id );
+                } else if( /audio/i.test( type ) ) {
+                    jQuery( '<img src="' + rtmedia_media_thumbs[ 'music' ] + '" />' ).appendTo( '#file_thumb_' + file.id );
+                }
 				// Creating list of media to preview selected files
 				var rtmedia_plupload_file = '<li class="plupload_file ui-state-default plupload_delete" id="' + file.id + '" style="width: 100px;">';
 				rtmedia_plupload_file += '<div id="file_thumb_' + file.id + '" class="plupload_file_thumb">';
@@ -449,7 +503,7 @@ jQuery( function ( $ ) {
 				}
 
 				//Delete Function
-				$( "#" + file.id + " td.plupload_delete .remove-from-queue" ).click( function ( e ) {
+				$( "#" + file.id + " .plupload_delete .remove-from-queue" ).click( function ( e ) {
 					e.preventDefault();
 					uploaderObj.uploader.removeFile( up.getFile( file.id ) );
 					$( "#" + file.id ).remove();
@@ -870,64 +924,65 @@ jQuery( document ).ready( function ( $ ) {
 				return true;
 			}
 
-			var rtmedia_plupload_file = '<li class="plupload_file ui-state-default plupload_delete" id="' + file.id + '" style="width: 100px;">';
-			rtmedia_plupload_file += '<div id="file_thumb_' + file.id + '" class="plupload_file_thumb">';
-			rtmedia_plupload_file += '</div>';
-			rtmedia_plupload_file += '<div class="plupload_file_status">';
-			rtmedia_plupload_file += '<div class="plupload_file_progress ui-widget-header" style="width: 0%;">';
-			rtmedia_plupload_file += '</div>';
-			rtmedia_plupload_file += '<span class="plupload_file_percent">';
-			rtmedia_plupload_file += '</span>';
-			rtmedia_plupload_file += '</div>';
-			rtmedia_plupload_file += '<div class="plupload_file_name" title="' + file.name + '">';
-			rtmedia_plupload_file += '<span class="plupload_file_name_wrapper">';
-			rtmedia_plupload_file += file.name;
-			rtmedia_plupload_file += '</span>';
-			rtmedia_plupload_file += '</div>';
-			rtmedia_plupload_file += '<div class="plupload_file_action">';
-			rtmedia_plupload_file += '<div class="plupload_action_icon ui-icon ui-icon-circle-minus">';
-			rtmedia_plupload_file += '</div>';
-			rtmedia_plupload_file += '</div>';
-			rtmedia_plupload_file += '<div class="plupload_file_size">';
-			rtmedia_plupload_file += plupload.formatSize( file.size );
-			rtmedia_plupload_file += '</div>';
-			rtmedia_plupload_file += '<div class="plupload_file_fields">';
-			rtmedia_plupload_file += '</div>';
-			rtmedia_plupload_file += '</li>';
+            var rtmedia_plupload_file = '<li class="plupload_file ui-state-default" id="' + file.id + '" style="width: 100px;">';
+            rtmedia_plupload_file += '<div id="file_thumb_' + file.id + '" class="plupload_file_thumb">';
+            rtmedia_plupload_file += '</div>';
+            rtmedia_plupload_file += '<div class="plupload_file_status">';
+            rtmedia_plupload_file += '<div class="plupload_file_progress ui-widget-header" style="width: 0%;">';
+            rtmedia_plupload_file += '</div>';
+            rtmedia_plupload_file += '<span class="plupload_file_percent">';
+            rtmedia_plupload_file += '</span>';
+            rtmedia_plupload_file += '</div>';
+            rtmedia_plupload_file += '<div class="plupload_file_name" title="' + file.name + '">';
+            rtmedia_plupload_file += '<span class="plupload_file_name_wrapper">';
+            rtmedia_plupload_file += file.name;
+            rtmedia_plupload_file += '</span>';
+            rtmedia_plupload_file += '</div>';
+            rtmedia_plupload_file += '<div class="plupload_file_action">';
+            rtmedia_plupload_file += '<div class="plupload_action_icon ui-icon plupload_delete">';
+            rtmedia_plupload_file += '<span class="remove-from-queue dashicons dashicons-dismiss"></span>';
+            rtmedia_plupload_file += '</div>';
+            rtmedia_plupload_file += '</div>';
+            rtmedia_plupload_file += '<div class="plupload_file_size">';
+            rtmedia_plupload_file += plupload.formatSize( file.size );
+            rtmedia_plupload_file += '</div>';
+            rtmedia_plupload_file += '<div class="plupload_file_fields">';
+            rtmedia_plupload_file += '</div>';
+            rtmedia_plupload_file += '</li>';
+            
+            jQuery( rtmedia_plupload_file ).appendTo( '#rtmedia_uploader_filelist' );
+            var type = file.type;
+            console.log( /image/i.test( type ) );
+            if( /image/i.test( type ) ) {
+                var img = new mOxie.Image();
 
-			jQuery( rtmedia_plupload_file ).appendTo( '#rtmedia_uploader_filelist' );
-			var type = file.type;
-			console.log( /image/i.test( type ) );
-			if ( /image/i.test( type ) ) {
-				var img = new mOxie.Image();
+                img.onload = function() {
+                    this.embed($('#file_thumb_' + file.id).get(0), {
+                        width: 100,
+                        height: 100,
+                        crop: true
+                    });
+                };
 
-				img.onload = function () {
-					this.embed( $( '#file_thumb_' + file.id ).get( 0 ), {
-						width: 100,
-						height: 100,
-						crop: true
-					} );
-				};
+                img.onembedded = function() {
+                    this.destroy();
+                };
 
-				img.onembedded = function () {
-					this.destroy();
-				};
+                img.onerror = function() {
+                    this.destroy();
+                };
 
-				img.onerror = function () {
-					this.destroy();
-				};
-
-				img.load( this.getSource() );
-			} else if ( /video/i.test( type ) ) {
-				jQuery( '<img src="' + rtmedia_media_thumbs[ 'video' ] + '" />' ).appendTo( '#file_thumb_' + file.id );
-			} else if ( /audio/i.test( type ) ) {
-				jQuery( '<img src="' + rtmedia_media_thumbs[ 'music' ] + '" />' ).appendTo( '#file_thumb_' + file.id );
-			}
+                img.load(this.getSource()); 
+            } else if( /video/i.test( type ) ) {
+                jQuery( '<img src="' + rtmedia_media_thumbs[ 'video' ] + '" />' ).appendTo( '#file_thumb_' + file.id );
+            } else if( /audio/i.test( type ) ) {
+                jQuery( '<img src="' + rtmedia_media_thumbs[ 'music' ] + '" />' ).appendTo( '#file_thumb_' + file.id );
+            }
 
 			jQuery( '#whats-new-content' ).css( 'padding-bottom', '0px' );
 			$( "#rtm-upload-start-notice" ).css( 'display', 'block' ); // show the file upload notice to the user
 
-			$( "#" + file.id + " td.plupload_delete" ).click( function ( e ) {
+			$( "#" + file.id + " .plupload_delete" ).click( function ( e ) {
 				e.preventDefault();
 				objUploadView.uploader.removeFile( upl.getFile( file.id ) );
 				$( "#" + file.id ).remove();
