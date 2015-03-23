@@ -13,10 +13,16 @@ jQuery( document ).ready( function ( $ ) {
 			$( '.rtm-fly-warning' ).slideDown();
 		}
 	} );
-
+    
 	$( '.rtm-field-wrap .switch input[type=checkbox]' ).on( 'change', function () {
 		var self = $( this );
 		self.parents( 'tr' ).find( '.rtm-notice' ).slideToggle();
+        
+        self.parents( 'table' ).siblings( 'table' ).each( function() {
+            if( $( this ).attr( 'data-depends' ) ) {
+                $( this ).slideToggle();
+            }
+        } );
 	} );
 
 	// Theme section lightbox like WordPress
