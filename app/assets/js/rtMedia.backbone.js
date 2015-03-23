@@ -821,17 +821,6 @@ jQuery( document ).ready( function ( $ ) {
 	objUploadView = new UploadView( rtMedia_update_plupload_config );
 	objUploadView.initUploader();
 
-	setTimeout( function () {
-		if ( $( "#rtmedia-add-media-button-post-update" ).length > 0 ) {
-			$( "#whats-new-options" ).prepend( $( ".rtmedia-plupload-container" ) );
-			if ( $( "#rtm-file_upload-ui .privacy" ).length > 0 ) {
-				$( ".rtmedia-plupload-container" ).append( $( "#rtm-file_upload-ui .privacy" ) );
-			}
-			$( '#rtmedia-whts-new-upload-container > div' ).css( 'top', '0' );
-			$( '#rtmedia-whts-new-upload-container > div' ).css( 'left', '0' );
-		}
-	}, 100 );
-
 	$( "#whats-new-form" ).on( 'click', '#rtmedia-add-media-button-post-update', function ( e ) {
 		objUploadView.uploader.refresh();
 		$( '#rtmedia-whts-new-upload-container > div' ).css( 'top', '0' );
