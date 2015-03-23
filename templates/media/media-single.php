@@ -71,19 +71,17 @@
 						</div>
 
 						<?php if ( rtmedia_comments_enabled() ) { ?>
-							<div class="rtmedia-item-comments row">
-								<div class="large-12 columns">
-									<div class="rtmedia-actions-before-comments clearfix">
-										<?php do_action( 'rtmedia_actions_before_comments' ); ?>
-										<?php if ( is_user_logged_in() ) { ?>
-											<span><a href='#' class='rtmedia-comment-link'><?php _e( 'Comment', 'rtmedia' ); ?></a></span>
-										<?php } ?>
-									</div>
-									<div class="rtm-like-comments-info">
-										<?php show_rtmedia_like_counts(); ?>
-										<div class="rtmedia-comments-container">
-											<?php rtmedia_comments(); ?>
-										</div>
+							<div class="rtmedia-item-comments">
+								<div class="rtmedia-actions-before-comments clearfix">
+									<?php do_action( 'rtmedia_actions_before_comments' ); ?>
+									<?php if ( is_user_logged_in() ) { ?>
+										<span><a href='#' class='rtmedia-comment-link'><?php _e( 'Comment', 'rtmedia' ); ?></a></span>
+									<?php } ?>
+								</div>
+								<div class="rtm-like-comments-info">
+									<?php show_rtmedia_like_counts(); ?>
+									<div class="rtmedia-comments-container">
+										<?php rtmedia_comments(); ?>
 									</div>
 								</div>
 							</div>
@@ -112,26 +110,26 @@
 					</div>
 
 					<?php if ( rtmedia_comments_enabled() ) { ?>
-						<div class="rtmedia-item-comments row">
-							<div class="large-12 columns">
-								<div class='rtmedia-actions-before-comments'>
-									<?php do_action( 'rtmedia_actions_before_comments' ); ?>
-									<?php if ( is_user_logged_in() ) { ?>
-										<span><a href='#' class='rtmedia-comment-link'><?php _e( 'Comment', 'rtmedia' ); ?></a></span>
-									<?php } ?>
-								</div>
-								<div class="rtm-like-comments-info">
-									<?php show_rtmedia_like_counts(); ?>
-									<div class="rtmedia-comments-container">
-										<?php rtmedia_comments(); ?>
-									</div>
-								</div>
-								<?php
-								if ( is_user_logged_in() ) {
-									rtmedia_comment_form();
-								}
-								?>
+						<div class="rtmedia-item-comments">
+							<div class='rtmedia-actions-before-comments'>
+								<?php do_action( 'rtmedia_actions_before_comments' ); ?>
+								<?php if ( is_user_logged_in() ) { ?>
+									<span><a href='#' class='rtmedia-comment-link'><?php _e( 'Comment', 'rtmedia' ); ?></a></span>
+								<?php } ?>
 							</div>
+
+							<div class="rtm-like-comments-info">
+								<?php show_rtmedia_like_counts(); ?>
+								<div class="rtmedia-comments-container">
+									<?php rtmedia_comments(); ?>
+								</div>
+							</div>
+
+							<?php
+							if ( is_user_logged_in() ) {
+								rtmedia_comment_form();
+							}
+							?>
 						</div>
 
 					<?php } ?>

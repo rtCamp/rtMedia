@@ -114,12 +114,16 @@
   float: left;
 }
 
-.rtmedia-container {
+.rtmedia-container,
+.rtmedia-activity-container {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
-.rtmedia-container *, .rtmedia-container *:before, .rtmedia-container *:after {
+.rtmedia-container *, .rtmedia-container *:before, .rtmedia-container *:after,
+.rtmedia-activity-container *,
+.rtmedia-activity-container *:before,
+.rtmedia-activity-container *:after {
   -webkit-box-sizing: inherit;
   -moz-box-sizing: inherit;
   box-sizing: inherit;
@@ -658,7 +662,7 @@ img.mfp-img {
 .rtm-single-meta {
   background: #FFFFFF;
   overflow: hidden;
-  padding: 20px;
+  padding: 20px 20px 110px;
   position: relative;
   vertical-align: top;
 }
@@ -851,12 +855,15 @@ img.mfp-img {
 .rtm-comment-list li:hover .rtmedia-delete-comment {
   opacity: 1;
 }
+.rtm-comment-list .rtmedia-no-comments {
+  padding: 5px 10px;
+}
 
 .rtmedia-like-info {
   background: #edeff4;
   font-size: 12px;
   margin-bottom: 1px;
-  padding: 10px;
+  padding: 5px 10px;
   position: relative;
 }
 
@@ -868,8 +875,11 @@ img.mfp-img {
 }
 .rtm-comment-wrap .rtmedia-comment-date {
   color: #999;
-  display: block;
   font-size: 11px;
+}
+
+.rtmedia-comment-content {
+  margin-top: 2px;
 }
 
 .rtmedia-delete-comment {
@@ -893,8 +903,8 @@ img.mfp-img {
 
 .rtm-media-single-comments {
   background-color: #edeff4;
-  bottom: 10px;
-  padding: 4px;
+  bottom: 20px;
+  padding: 10px;
   position: absolute;
   width: calc(100% - 40px);
 }
@@ -923,9 +933,8 @@ img.mfp-img {
     width: 33.3333%;
   }
 
-  .rtm-single-meta-contents {
-    min-height: 400px;
-    max-height: 400px;
+  .rtmedia-item-comments {
+    max-height: 330px;
     overflow-x: hidden;
     overflow-y: auto;
   }

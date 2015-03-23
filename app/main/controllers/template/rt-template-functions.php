@@ -812,6 +812,7 @@ function rmedia_single_comment( $comment ) {
 	}
 	$html .= "<div class='rtm-comment-wrap'><div class='rtmedia-comment-details'>";
 	$html .= '<span class ="rtmedia-comment-author">' . '' . $user_name . '</span>';
+	$html .= '<span class ="rtmedia-comment-date"> ' . apply_filters( 'rtmedia_comment_date_format', rtmedia_convert_date( $comment[ 'comment_date_gmt' ] ), $comment ) . '</span>';
 
 	$comment_string = wp_kses( $comment[ 'comment_content' ], $allowedtags );
 	$html .= '<div class="rtmedia-comment-content">' . wpautop( make_clickable( $comment_string ) ) . '</div>';
@@ -821,7 +822,6 @@ function rmedia_single_comment( $comment ) {
 		$html .= '<i data-id="' . $comment[ 'comment_ID' ] . '" class = "rtmedia-delete-comment dashicons dashicons-no-alt rtmicon" title="' . __( 'Delete Comment' ) . '"></i>';
 	}
 
-	$html .= '<span class ="rtmedia-comment-date"> ' . apply_filters( 'rtmedia_comment_date_format', rtmedia_convert_date( $comment[ 'comment_date_gmt' ] ), $comment ) . '</span>';
 	$html .= '<div class="clear"></div></div></div></li>';
 
 	return apply_filters( 'rtmedia_single_comment', $html, $comment );
