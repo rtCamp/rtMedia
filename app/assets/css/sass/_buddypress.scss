@@ -14,39 +14,7 @@
     border: 1px solid #ccc;
     font-size: 13px;
     margin-top: 0;
-}
-
-.rtm-drag-drop-active {
-    border: 4px dashed green !important;
-    display: block;
-    height: 100%;
-    opacity: 0.5;
-    z-index: 9999;
-}
-
-#rtm-drop-files-title {
-	background: rgba(0, 0, 0, 0.2);
-    display: none;
-    font-size: 14px;
-    height: 100%;
-    padding: 20px;
-    position: absolute;
-    top: 0;
-    width: 100%;
-}
-
-#rtSelectPrivacy {
-	float: right;
-}
-
-.rtmedia-plupload-container {
-	@extend %clearfix;
-    position: relative;
-	float: left;
-}
-
-.rtm-upload-button-wrapper {
-	float: left;
+	padding: 4px 2px;
 }
 
 #whats-new-post-in-box {
@@ -56,4 +24,8 @@
 
 #buddypress form#whats-new-form #whats-new-submit {
 	margin-top: 0;
+}
+
+#whats-new-textarea {
+	margin-bottom: 10px;
 }

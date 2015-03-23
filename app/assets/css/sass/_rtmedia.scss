@@ -42,29 +42,75 @@
 	}
 }
 
-.rtmedia-item-title {
-	display: none;
-}
+// Uploader
+.rtm-plupload-list {
+	list-style: none;
+	margin-left: -4px;
+	margin-right: -4px;
+	padding-left: 0;
+	padding-top: 10px;
 
-#buddypress ul.rtmedia-list li {
-	border-bottom: 0;
-	padding-bottom: 0;
-}
+	li {
+		background: $light;
+		float: left;
+		margin: 4px;
+		max-width: 110px;
+		padding: 5px;
+		position: relative;
+	}
 
-.rtmedia-activity-container {
-	.rtmedia-item-actions {
-		display: none;
+	canvas {
+		display: block;
+		max-width: 100%;
 	}
 }
 
-// Uploader Button
-#rtmedia-whts-new-upload-container div {
-    left: 0 !important;
-    position: absolute;
-    top: 0 !important;
+.rtmedia-uploader {
+	clear: both;
 }
 
-#aw-whats-new-submit,
-.rtmedia-add-media-button {
-	display: block; // Remove extra space
+.plupload_file_name {
+	font-size: 11px;
+	font-weight: bold;
+	line-height: 1.2;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.plupload_file_size {
+	color: #666;
+	font-size: 10px;
+}
+
+.plupload_file_action {
+	background: $light;
+    position: absolute;
+	height: 18px;
+    right: 0;
+    top: 0;
+	width: 18px;
+    z-index: 10;
+
+	.dashicons {
+		color: $error;
+		cursor: pointer;
+		font-size: 16px;
+		height: 18px;
+		padding: 2px 1px;
+		width: 18px;
+	}
+}
+
+.plupload_file_status {
+    height: 8px;
+    overflow: hidden;
+    position: relative;
+}
+
+.plupload_file_progress {
+	background: $success;
+	height: 4px;
+    position: absolute;
+    top: 0;
 }
