@@ -56,3 +56,15 @@
 		display: none;
 	}
 }
+
+// Uploader Button
+#rtmedia-whts-new-upload-container div {
+    left: 0 !important;
+    position: absolute;
+    top: 0 !important;
+}
+
+#aw-whats-new-submit,
+.rtmedia-add-media-button {
+	display: block; // Remove extra space
+}

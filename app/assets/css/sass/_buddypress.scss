@@ -1,13 +1,19 @@
 // BuddyPress Overwites
 
 #buddypress form#whats-new-form textarea {
-	height: 60px !important;
+	min-height: 70px;
 	width: 100%;
 }
 
 #buddypress #whats-new-options {
     height: auto !important;
     overflow: hidden;
+}
+
+#buddypress form#whats-new-form #whats-new-options select {
+    border: 1px solid #ccc;
+    font-size: 13px;
+    margin-top: 0;
 }
 
 .rtm-drag-drop-active {
@@ -36,6 +42,7 @@
 .rtmedia-plupload-container {
 	@extend %clearfix;
     position: relative;
+	float: left;
 }
 
 .rtm-upload-button-wrapper {
@@ -44,4 +51,9 @@
 
 #whats-new-post-in-box {
 	float: left;
+	font-size: 13px;
+}
+
+#buddypress form#whats-new-form #whats-new-submit {
+	margin-top: 0;
 }
