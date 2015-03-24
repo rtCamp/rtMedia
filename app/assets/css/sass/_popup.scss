@@ -63,35 +63,68 @@
 }
 
 .rtm-options {
-	background: $white;
-	bottom: 38px;
-	color: #333;
-	list-style: outside none none;
+	background: $gray;
+	display: none;
+	list-style: none;
 	margin: 0;
 	padding: 10px;
 	position: absolute;
-	right: 0;
+	left: 0;
+	top: 38px;
 	width: 150px;
+	z-index: 10;
 
-	&:after {
-		top: 100%;
-		right: 22px;
-		border: solid transparent;
-		content: " ";
-		height: 0;
-		width: 0;
-		position: absolute;
-		pointer-events: none;
-		border-color: rgba(255, 255, 255, 0);
-		border-top-color: #ffffff;
-		border-width: 6px;
-		margin-left: -6px;
+
+	.rtm-media-options & {
+		&:after {
+			bottom: 100%;
+			left: 20px;
+			border: solid transparent;
+			content: ' ';
+			height: 0;
+			width: 0;
+			position: absolute;
+			pointer-events: none;
+			border-color: rgba(255, 255, 255, 0);
+			border-bottom-color: $gray;
+			border-width: 6px;
+			margin-left: -6px;
+		}
+	}
+
+	.mfp-content & {
+		background: $white;
+		color: #333;
+		bottom: 38px;
+		right: 0;
+		left: auto;
+		top: auto;
+
+		&:after {
+			top: 100%;
+			right: 22px;
+			border: solid transparent;
+			content: ' ';
+			height: 0;
+			width: 0;
+			position: absolute;
+			pointer-events: none;
+			border-color: rgba(255, 255, 255, 0);
+			border-top-color: $white;
+			border-width: 6px;
+			margin-left: -6px;
+		}
 	}
 
 	.dashicons {
 		font-size: 14px;
 		line-height: 24px;
 		margin-right: 2px;
+	}
+
+	.rtm-media-options & a {
+		border: 0;
+		color: #fff;
 	}
 }
 
@@ -301,4 +334,13 @@
 		min-height: 30px;
 		padding: 4px;
 	}
+}
+
+.rtmedia-popup {
+	background: $white;
+	margin: 20px auto;
+	max-width: 600px;
+	padding: 20px;
+	position: relative;
+	width: auto;
 }

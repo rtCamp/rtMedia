@@ -1,6 +1,16 @@
 // Hide media title in activity
 .rtmedia-item-title {
 	display: none;
+
+	.rtmedia-activity-container & {
+		color: $gray;
+		font-size: 13px;
+		margin: 5px 0 0;
+		overflow: hidden;
+		text-align: center;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
 }
 
 // remove border and padding

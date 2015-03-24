@@ -8,6 +8,7 @@
 	background: #fafafa;
 	overflow: hidden;
 	color: #AAAAAA;
+	margin-top: 20px;
 	padding: 25px 0;
 
 	&.dragover {
@@ -48,12 +49,16 @@
 
 .rtmedia-list-media {
 
-	margin: 10px -10px;
+	margin: 10px -5px;
 
-	li {
+	.rtmedia-list-item {
 		float: left;
-		margin: 10px;
+		margin: 5px;
 		position: relative;
+
+		& > a {
+			display: block;
+		}
 	}
 
 	.rtmedia_time {
@@ -73,6 +78,21 @@
 	img {
 		vertical-align: top;
 	}
+
+	.rtmedia-item-title {
+		//display: block;
+
+		h4 {
+			color: $gray;
+			font-size: 12px;
+			font-weight: normal;
+			margin: 5px 0 0;
+			overflow: hidden;
+			text-align: center;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
+	}
 }
 
 .rtm-load-more {
@@ -87,4 +107,40 @@
 	.rtm-media-loading {
 		padding: 10px 0;
 	}
+}
+
+.rtm-media-options {
+	font-size: 16px;
+	line-height: 1.4;
+	margin-bottom: 10px;
+
+	& > div {
+		display: inline-block;
+		cursor: pointer;
+
+		&:first-child {
+			margin-right: 10px;
+			padding-right: 10px;
+			position: relative;
+
+			&:after {
+				background: #999;
+				content: ' ';
+				bottom: 3px;
+				position: absolute;
+				height: 14px;
+				right: 0;
+				width: 1px;
+			}
+		}
+	}
+
+	.dashicons {
+		font-size: inherit;
+		line-height: 1.6;
+	}
+}
+
+.rtmedia-upload-media-link {
+	cursor: pointer;
 }

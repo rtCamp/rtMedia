@@ -692,8 +692,8 @@ function rtmedia_author_actions() {
 
 	if ( ! empty( $options ) ) {
 
-		$options_start = '<span class="click-nav" id="rtm-media-options-list">
-                <span class="no-js">
+		$options_start = '<div class="click-nav" id="rtm-media-options-list">
+                <div class="no-js">
                 <button class="clicker rtmedia-media-options rtmedia-action-buttons button">' . __( 'Options', 'rtmedia' ) . '</button>
                 <ul class="rtm-options">';
 		foreach ( $options as $action ) {
@@ -702,7 +702,7 @@ function rtmedia_author_actions() {
 			}
 		}
 
-		$options_end = "</ul></span></span>";
+		$options_end = "</ul></div></div>";
 
 		if ( $option_buttons != "" ) {
 			$output = $options_start . $option_buttons . $options_end;
@@ -1685,8 +1685,8 @@ function rtmedia_gallery_options() {
 	$options = apply_filters( 'rtmedia_gallery_actions', $options );
 	if ( ! empty( $options ) ) {
 
-		$options_start = '<span class="click-nav" id="rtm-media-options-list">
-                <span class="no-js">
+		$options_start = '<div class="click-nav" id="rtm-media-options-list">
+                <div class="no-js">
                 <span class="clicker rtmedia-action-buttons"><i class="dashicons dashicons-admin-generic rtmicon"></i>' . __( 'Options', 'rtmedia' ) . '</span>
                 <ul class="rtm-options">';
 		foreach ( $options as $action ) {
@@ -1695,7 +1695,7 @@ function rtmedia_gallery_options() {
 			}
 		}
 
-		$options_end = "</ul></span></span>";
+		$options_end = "</ul></div></div>";
 
 		if ( $option_buttons != "" ) {
 			$output = $options_start . $option_buttons . $options_end;

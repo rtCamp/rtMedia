@@ -266,7 +266,6 @@ class RTMedia {
 		}
 		.rtmedia-container .rtmedia-list  .rtmedia-list-item {
 		width: <?php echo intval( $this->options[ "defaultSizes_photo_thumbnail_width" ] ); ?>px;
-		height: <?php echo intval( $this->options[ "defaultSizes_photo_thumbnail_height" ] ); ?>px;
 		}
 		<?php
 	}

@@ -49,8 +49,7 @@
 		</ul>
 
 		<div class="rtmedia_next_prev rtm-load-more">
-			<!--  these links will be handled by backbone later
-											-- get request parameters will be removed  -->
+			<!-- these links will be handled by backbone -->
 			<?php
 			global $rtmedia;
 			$general_options = $rtmedia->options;

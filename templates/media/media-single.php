@@ -1,12 +1,12 @@
 <div class="rtmedia-container rtmedia-single-container">
-    <div class="row rtm-lightbox-container clearfix">
+    <div class="rtm-lightbox-container clearfix">
 		<?php
 		global $rt_ajax_request;
 		do_action( 'rtmedia_before_media' );
 
 		if ( have_rtmedia() ) : rtmedia();
 			?>
-			<div id="rtmedia-single-media-container" class="rtmedia-single-media rtm-single-media columns <?php echo ($rt_ajax_request) ? "large-8" : "large-12"; ?>">
+			<div id="rtmedia-single-media-container" class="rtmedia-single-media rtm-single-media">
 				<?php if ( ! $rt_ajax_request ) { ?>
 
 					<span class="rtmedia-media-title">
@@ -42,7 +42,8 @@
 					</div>
 				<?php } ?>
 			</div>
-			<div class="rtmedia-single-meta rtm-single-meta columns <?php echo ($rt_ajax_request) ? "large-4" : "large-12"; ?>">
+
+			<div class="rtmedia-single-meta rtm-single-meta">
 
 				<?php if ( $rt_ajax_request ) { ?>
 
@@ -145,5 +146,5 @@
 		<?php endif; ?>
 
 		<?php do_action( 'rtmedia_after_media' ); ?>
-    </div>
+	</div>
 </div>
