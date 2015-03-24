@@ -38,8 +38,7 @@
 	?>
 	<?php do_action( 'rtmedia_after_media_gallery_title' ); ?>
 	<?php if ( have_rtmedia() ) { ?>
-		<ul class="rtmedia-list rtmedia-list-media <?php echo rtmedia_media_gallery_class(); ?>">
-
+		<ul class="rtmedia-list rtmedia-list-media rtm-gallery-list clearfix <?php echo rtmedia_media_gallery_class(); ?>">
 
 			<?php while ( have_rtmedia() ) : rtmedia(); ?>
 
@@ -49,18 +48,9 @@
 
 		</ul>
 
-		<div class='rtmedia_next_prev row'>
+		<div class="rtmedia_next_prev rtm-load-more">
 			<!--  these links will be handled by backbone later
 											-- get request parameters will be removed  -->
-			<?php
-//            $display = '';
-//            if ( rtmedia_offset () != 0 )
-//                $display = 'style="display:block;"';
-//            else
-//                $display = 'style="display:none;"';
-			?>
-	<!--            <a id="rtMedia-galary-prev" <?php //echo $display;       ?> href="<?php //echo rtmedia_pagination_prev_link ();       ?>"><?php //_e( 'Prev', 'rtmedia' );       ?></a>-->
-
 			<?php
 			global $rtmedia;
 			$general_options = $rtmedia->options;

@@ -265,8 +265,8 @@ class RTMedia {
 		max-height: <?php echo $this->options[ "defaultSizes_photo_thumbnail_height" ]; ?>px;
 		}
 		.rtmedia-container .rtmedia-list  .rtmedia-list-item {
-		width: <?php echo intval( $this->options[ "defaultSizes_photo_thumbnail_width" ] ) + 20; ?>px;
-		height: <?php echo intval( $this->options[ "defaultSizes_photo_thumbnail_height" ] ) + 20; ?>px;
+		width: <?php echo intval( $this->options[ "defaultSizes_photo_thumbnail_width" ] ); ?>px;
+		height: <?php echo intval( $this->options[ "defaultSizes_photo_thumbnail_height" ] ); ?>px;
 		}
 		<?php
 	}
@@ -901,11 +901,11 @@ class RTMedia {
 		wp_localize_script( 'rtmedia-main', 'rtmedia_delete_uploaded_media', __( 'This media is uploaded. Are you sure you want to delete this media?', "rtmedia" ) );
 		wp_localize_script( 'rtmedia-main', 'rtm_wp_version', get_bloginfo( 'version' ) );
 		wp_localize_script( 'rtmedia-backbone', 'rMedia_loading_media', RTMEDIA_URL . "app/assets/admin/img/boxspinner.gif" );
-        $rtmedia_media_thumbs = array();
-        foreach( $this->allowed_types as $key_type => $value_type ) {
-            $rtmedia_media_thumbs[ $key_type ] = $value_type[ 'thumbnail' ];
-        }
-        wp_localize_script( 'rtmedia-backbone', 'rtmedia_media_thumbs', $rtmedia_media_thumbs );
+		$rtmedia_media_thumbs = array();
+		foreach ( $this->allowed_types as $key_type => $value_type ) {
+			$rtmedia_media_thumbs[ $key_type ] = $value_type[ 'thumbnail' ];
+		}
+		wp_localize_script( 'rtmedia-backbone', 'rtmedia_media_thumbs', $rtmedia_media_thumbs );
 
 //      We are not using it anymore and hence commenting
 //		global $rtmedia_query;

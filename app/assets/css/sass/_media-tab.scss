@@ -45,3 +45,46 @@
 		line-height: 24px;
 	}
 }
+
+.rtmedia-list-media {
+
+	margin: 10px -10px;
+
+	li {
+		float: left;
+		margin: 10px;
+		position: relative;
+	}
+
+	.rtmedia_time {
+		background-color: #000;
+		color: #fff;
+		display: inline-block;
+		font-size: 11px;
+		font-weight: bold;
+		line-height: 14px;
+		opacity: 0.75;
+		padding: 0 4px;
+		position: absolute;
+		right: 2px;
+		top: 2px;
+	}
+
+	img {
+		vertical-align: top;
+	}
+}
+
+.rtm-load-more {
+	background: $light;
+	text-align: center;
+
+	.rtmedia-container & a {
+		border: 0;
+		padding: 10px 0;
+	}
+
+	.rtm-media-loading {
+		padding: 10px 0;
+	}
+}

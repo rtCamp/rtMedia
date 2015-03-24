@@ -333,19 +333,21 @@ button::-moz-focus-inner {
 }
 
 .mfp-close {
+  background: #FFFFFF;
   color: #999;
   cursor: pointer;
-  width: 40px;
-  height: 40px;
+  font-size: 24px;
+  font-style: normal;
+  height: 30px;
   line-height: 30px;
+  padding: 0;
   position: absolute;
   right: 0;
-  top: 0;
-  text-decoration: none;
   text-align: center;
-  padding: 0 0 18px 10px;
-  font-style: normal;
-  font-size: 24px;
+  text-decoration: none;
+  text-indent: 2px;
+  top: 0;
+  width: 32px;
   z-index: 12;
 }
 
@@ -1056,6 +1058,43 @@ img.mfp-img {
   vertical-align: middle;
   font-size: 16px;
   line-height: 24px;
+}
+
+.rtmedia-list-media {
+  margin: 10px -10px;
+}
+.rtmedia-list-media li {
+  float: left;
+  margin: 10px;
+  position: relative;
+}
+.rtmedia-list-media .rtmedia_time {
+  background-color: #000;
+  color: #fff;
+  display: inline-block;
+  font-size: 11px;
+  font-weight: bold;
+  line-height: 14px;
+  opacity: 0.75;
+  padding: 0 4px;
+  position: absolute;
+  right: 2px;
+  top: 2px;
+}
+.rtmedia-list-media img {
+  vertical-align: top;
+}
+
+.rtm-load-more {
+  background: #EEEEEE;
+  text-align: center;
+}
+.rtmedia-container .rtm-load-more a {
+  border: 0;
+  padding: 10px 0;
+}
+.rtm-load-more .rtm-media-loading {
+  padding: 10px 0;
 }
 
 @media only screen and (min-width: 1025px) {
