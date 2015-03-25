@@ -1,0 +1,60 @@
+.rtm-tabs {
+	border-bottom: 1px solid $light;
+	list-style: none;
+	margin: 0 0 20px;
+	padding: 0;
+
+	li {
+		border: 1px solid $light;
+		border-bottom: 0;
+		float: left;
+		margin: 0 5px;
+	}
+
+	a {
+		display: block;
+		padding: 5px 15px;
+
+		&:hover {
+
+		}
+
+		&:focus {
+			background: $white;
+			box-shadow: 0 0 0;
+		}
+
+	}
+
+	.active {
+		position: relative;
+
+		&:after {
+			background: $white;
+			bottom: -1px;
+			content: ' ';
+			height: 1px;
+			left: 0;
+			position: absolute;
+			width: 100%;
+		}
+	}
+
+	.dashicons {
+		font-size: 16px;
+		height: auto;
+		line-height: 2;
+		margin-right: 8px;
+		width: auto;
+	}
+
+}
+
+.rtmedia-edit-media-tabs {
+	.rtm-tabs {
+		a {
+			border-bottom: 0 none;
+
+		}
+	}
+}

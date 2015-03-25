@@ -34,13 +34,14 @@ module.exports = function ( grunt ) {
 				src: [
 					//'app/assets/js/vendors/foundation.min.js',
 					'app/assets/js/vendors/magnific-popup.js',
+					'app/assets/admin/js/vendors/tabs.js',
 					'app/assets/js/rtMedia.js'
 				],
 				dest: 'app/assets/js/main.js'
 			},
 			backend: {
 				src: [
-					'app/assets/admin/js/vendors/rtp-tabs.js',
+					'app/assets/admin/js/vendors/tabs.js',
 					'app/assets/admin/js/scripts.js',
 					'app/assets/admin/js/admin.js'
 				],

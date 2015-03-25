@@ -852,6 +852,10 @@ class RTMedia {
 			wp_enqueue_script( 'wp-mediaelement-start', RTMEDIA_URL . 'lib/media-element/wp-mediaelement.js', 'wp-mediaelement', RTMEDIA_VERSION, true );
 		}
 
+
+		// Dashicons: Needs if not loaded by WP
+		wp_enqueue_style( 'dashicons' );
+
 		// Dont enqueue main.css if default styles is checked false in rtmedia settings
 		if ( ! ( isset( $rtmedia->options ) && isset( $rtmedia->options[ 'styles_enabled' ] ) && $rtmedia->options[ 'styles_enabled' ] == 0) ) {
 			wp_enqueue_style( 'rtmedia-main', RTMEDIA_URL . 'app/assets/css/main.css', '', RTMEDIA_VERSION );

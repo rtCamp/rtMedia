@@ -7,19 +7,19 @@ $media = $model->get_media( array( 'id' => $rtmedia_query->media_query[ 'album_i
 global $rtmedia_media;
 $rtmedia_media = $media[ 0 ];
 ?>
-<div class="rtmedia-container rtmedia-single-container row rtmedia-media-edit">
+<div class="rtmedia-container rtmedia-single-container rtmedia-media-edit">
 	<?php if ( rtmedia_is_global_album( $rtmedia_query->media_query[ 'album_id' ] ) ) { ?>
 		<h2><?php echo __( 'Edit Album : ', 'rtmedia' ) . esc_attr( $media[ 0 ]->media_title ); ?></h2>
 
-		<div class="rtmedia-edit-media-tabs rtmedia-editor-main columns large-12 small">
-			<dl class="tabs" data-tab>
-				<dd class="active"><a href="#details-tab"><i class='dashicons dashicons-edit rtmicon'></i><?php _e( 'Details', 'rtmedia' ); ?></a></dd>
+		<div class="rtmedia-edit-media-tabs rtmedia-editor-main">
+			<ul class="tabs rtm-tabs clearfix">
+				<li class="active"><a href="#details-tab"><i class='dashicons dashicons-edit rtmicon'></i><?php _e( 'Details', 'rtmedia' ); ?></a></li>
 				<?php if ( ! is_rtmedia_group_album() ) { ?>
-					<dd class=""><a href="#manage-media-tab"><i class='dashicons dashicons-list-view rtmicon'></i><?php _e( 'Manage Media', 'rtmedia' ); ?></a></dd>
+					<li class=""><a href="#manage-media-tab"><i class='dashicons dashicons-list-view rtmicon'></i><?php _e( 'Manage Media', 'rtmedia' ); ?></a></li>
 				<?php } ?>
 				<!-- use this hook to add title of a new tab-->
 				<?php do_action( 'rtmedia_add_edit_tab_title', 'album' ); ?>
-			</dl>
+			</ul>
 
 			<div class="tabs-content">
 				<div class="content active" id="details-tab">
@@ -30,19 +30,25 @@ $rtmedia_media = $media[ 0 ];
 						$content = apply_filters( 'the_content', $post_details->post_content );
 						$content = $post_details->post_content;
 						?>
-						<div class="rtmedia-edit-title">
-							<label for="media_title"><?php _e( 'Title : ', 'rtmedia' ); ?></label><?php rtmedia_title_input(); ?>
-						</div>
+
+						<p class="rtmedia-edit-title">
+							<label for="media_title"><?php _e( 'Title : ', 'rtmedia' ); ?></label>
+							<?php rtmedia_title_input(); ?>
+						</p>
+
 						<?php do_action( "rtmedia_add_album_privacy", 'album-edit' ); ?>
 
-						<div class="rtmedia-editor-description">
+						<p class="rtmedia-editor-description">
 							<label for='description'><?php _e( 'Description: ', 'rtmedia' ) ?></label>
 							<?php
 							echo rtmedia_description_input( $editor = false );
 							RTMediaMedia::media_nonce_generator( rtmedia_id() );
 							?>
-						</div>
-						<input type="submit" name="submit" class='rtmedia-save-album' value="<?php _e( 'Save Changes', 'rtmedia' ); ?>" />
+						</p>
+
+						<p>
+							<input type="submit" name="submit" class='rtmedia-save-album' value="<?php _e( 'Save Changes', 'rtmedia' ); ?>" />
+						</p>
 					</form>
 				</div>
 

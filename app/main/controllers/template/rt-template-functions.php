@@ -692,7 +692,7 @@ function rtmedia_author_actions() {
 
 	if ( ! empty( $options ) ) {
 
-		$options_start = '<div class="click-nav" id="rtm-media-options-list">
+		$options_start = '<div class="click-nav rtm-media-options-list" id="rtm-media-options-list">
                 <div class="no-js">
                 <button class="clicker rtmedia-media-options rtmedia-action-buttons button">' . __( 'Options', 'rtmedia' ) . '</button>
                 <ul class="rtm-options">';
@@ -1685,9 +1685,9 @@ function rtmedia_gallery_options() {
 	$options = apply_filters( 'rtmedia_gallery_actions', $options );
 	if ( ! empty( $options ) ) {
 
-		$options_start = '<div class="click-nav" id="rtm-media-options-list">
+		$options_start = '<div class="click-nav rtm-media-options-list" id="rtm-media-options-list">
                 <div class="no-js">
-                <span class="clicker rtmedia-action-buttons"><i class="dashicons dashicons-admin-generic rtmicon"></i>' . __( 'Options', 'rtmedia' ) . '</span>
+                <div class="clicker rtmedia-action-buttons"><i class="dashicons dashicons-admin-generic rtmicon"></i>' . __( 'Options', 'rtmedia' ) . '</div>
                 <ul class="rtm-options">';
 		foreach ( $options as $action ) {
 			if ( $action != "" ) {
@@ -1810,11 +1810,11 @@ function rtmedia_merge_album_modal() {
 				<h2 class="rtm-modal-title"><?php _e( 'Merge Album', 'rtmedia' ); ?></h2>
 
 				<form method="post" class="album-merge-form" action="merge/">
-					<?php _e( 'Select Album to merge with : ', 'rtmedia' ); ?>
-					<?php echo '<select name="album" class="rtmedia-merge-user-album-list">' . $album_list . '</select>'; ?>
+					<p><span><?php _e( 'Select Album to merge with : ', 'rtmedia' ); ?></span>
+						<?php echo '<select name="album" class="rtmedia-merge-user-album-list">' . $album_list . '</select>'; ?>
+					</p>
 					<?php wp_nonce_field( 'rtmedia_merge_album_' . $rtmedia_query->media_query[ 'album_id' ], 'rtmedia_merge_album_nonce' ); ?>
-					<input type="submit" class="rtmedia-merge-selected" name="merge-album"
-						   value="<?php _e( 'Merge Album', 'rtmedia' ); ?>"/>
+					<input type="submit" class="rtmedia-merge-selected" name="merge-album" value="<?php _e( 'Merge Album', 'rtmedia' ); ?>" />
 				</form>
 			</div>
 		</div>
@@ -1866,7 +1866,7 @@ function rtmedia_album_edit( $options ) {
 			}
 			if ( $album_list ) {
 
-				$options[] = '<a href="#rtmedia-merge" class="rtmedia-reveal-modal rtmedia-modal-link" title="' . __( 'Merge Album', 'rtmedia' ) . '"><i class="rtmicon-code-fork rtmicon-fw"></i>' . __( 'Merge Album', 'rtmedia' ) . '</a>';
+				$options[] = '<a href="#rtmedia-merge" class="rtmedia-reveal-modal rtmedia-modal-link" title="' . __( 'Merge Album', 'rtmedia' ) . '"><i class="dashicons dashicons-randomize"></i>' . __( 'Merge Album', 'rtmedia' ) . '</a>';
 			}
 		}
 	}

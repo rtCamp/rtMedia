@@ -20,11 +20,6 @@
 		line-height: 24px;
 	}
 
-	.rtm-album-privacy span {
-		margin: 0 20px 20px 20px;
-		display: inline-block;
-	}
-
 	.rtm-select-files {
 		span {
 			vertical-align: middle;
@@ -110,28 +105,27 @@
 }
 
 .rtm-media-options {
-	font-size: 16px;
 	line-height: 1.4;
 	margin-bottom: 10px;
 
 	& > div {
 		display: inline-block;
 		cursor: pointer;
+	}
 
-		&:first-child {
-			margin-right: 10px;
-			padding-right: 10px;
-			position: relative;
+	.rtm-media-options-list {
+		margin-right: 10px;
+		padding-right: 10px;
+		position: relative;
 
-			&:after {
-				background: #999;
-				content: ' ';
-				bottom: 3px;
-				position: absolute;
-				height: 14px;
-				right: 0;
-				width: 1px;
-			}
+		&:after {
+			background: #999;
+			content: ' ';
+			bottom: 3px;
+			position: absolute;
+			height: 14px;
+			right: 0;
+			width: 1px;
 		}
 	}
 
@@ -143,4 +137,43 @@
 
 .rtmedia-upload-media-link {
 	cursor: pointer;
+}
+
+
+.rtm-album-privacy {
+	span {
+		font-size: 16px;
+		display: inline-block;
+		margin: 0 20px 20px 20px;
+		vertical-align: top;
+	}
+
+	label {
+		margin-right: 8px;
+	}
+
+	.dashicons {
+		font-size: 16px;
+		line-height: 1.5;
+		margin-right: 5px;
+	}
+}
+
+#rtm-media-options-list {
+	.rtmedia-delete-album {
+		background: transparent;
+		border: 0;
+		color: $white;
+		font-family: inherit;
+		font-size: inherit;
+		font-weight: inherit;
+		padding: 0;
+		text-transform: inherit;
+
+		&:hover {
+			background: transparent;
+			border: 0;
+			color: $white;
+		}
+	}
 }

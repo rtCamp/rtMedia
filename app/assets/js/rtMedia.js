@@ -125,6 +125,7 @@ function apply_rtMagnificPopup( selector ) {
 		}
 	} );
 }
+
 var rtMediaHook = {
 	hooks: [ ],
 	is_break: false,
@@ -167,6 +168,9 @@ function rtmedia_init_action_dropdown() {
 
 jQuery( 'document' ).ready( function ( $ ) {
 
+	// Tabs
+	$( '.rtm-tabs' ).rtTab();
+
 	// open magnific popup as modal for create album/playlist
 	if ( jQuery( '.rtmedia-modal-link' ).length > 0 ) {
 		$( '.rtmedia-modal-link' ).magnificPopup( {
@@ -174,11 +178,6 @@ jQuery( 'document' ).ready( function ( $ ) {
 			midClick: true, // Allow opening popup on middle mouse click. Always set it to true if you don't provide alternative source in href
 			closeBtnInside: true,
 		} );
-	}
-
-	if ( jQuery( '.rtmedia-media-edit' ).length > 0 ) {
-		//for foundation tabs on single media edit.
-		jQuery( '.rtmedia-media-edit' ).foundation();
 	}
 
 	$( "#rt_media_comment_form" ).submit( function ( e ) {
@@ -304,7 +303,7 @@ jQuery( 'document' ).ready( function ( $ ) {
 					jQuery( 'select.rtmedia-user-album-list option[value="' + response + '"]' ).prop( 'selected', true );
 					jQuery( '.rtmedia-create-new-album-container' ).slideToggle();
 					jQuery( '#rtmedia_album_name' ).val( "" );
-					jQuery( "#rtmedia-create-album-modal" ).append( "<span class='rtmedia-success rtmedia-create-album-alert'><b>" + $albumname + "</b>" + rtmedia_album_created_msg + "</span>" );
+					jQuery( "#rtmedia-create-album-modal" ).append( "<div class='rtmedia-success rtmedia-create-album-alert'><b>" + $albumname + "</b>" + rtmedia_album_created_msg + "</div>" );
 
 					setTimeout( function () {
 						jQuery( ".rtmedia-create-album-alert" ).remove();

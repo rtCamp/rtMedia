@@ -1,3 +1,5 @@
+// Written by S@G@R
+
 /* Utility : Object.create dosen't work all browsers. */
 if ( typeof Object.create !== 'function' ) {
 	Object.create = function ( obj ) {
