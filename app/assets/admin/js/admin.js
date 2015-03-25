@@ -677,23 +677,6 @@ jQuery( document ).ready( function ( $ ) {
 		return false;
 	} );
 
-//	$( window ).hashchange( function ( e, data ) {
-//		e.preventDefault();
-//		manageHash();
-//	} );
-
-	if ( jQuery( document ).foundation !== undefined )
-		jQuery( document ).foundation();
-
-//	if ( window.location.hash ) {
-//		jQuery( '#bp-media-settings-boxes dl.tabs dd a' ).each( function () {
-//			var hash = '#' + jQuery( this ).attr( 'href' ).split( '#' )[1];
-//			if ( hash == window.location.hash ) {
-//				jQuery( this ).click();
-//			}
-//		} );
-//	}
-
 	if ( jQuery( '.rtm_enable_masonry_view input[type=checkbox]' ).is( ":checked" ) ) {
 		jQuery( '.rtm_enable_masonry_view' ).parents( '.metabox-holder' ).find( '.rtmedia-info' ).show();
 	} else {
