@@ -32,7 +32,6 @@ module.exports = function ( grunt ) {
 			},
 			frontend: {
 				src: [
-					//'app/assets/js/vendors/foundation.min.js',
 					'app/assets/js/vendors/magnific-popup.js',
 					'app/assets/admin/js/vendors/tabs.js',
 					'app/assets/js/rtMedia.js'
