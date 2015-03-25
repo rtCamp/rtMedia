@@ -4,7 +4,7 @@
   Plugin Name: rtMedia for WordPress, BuddyPress and bbPress
   Plugin URI: http://rtcamp.com/rtmedia/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media
   Description: This plugin adds missing media rich features like photos, videos and audio uploading to BuddyPress which are essential if you are building social network, seriously!
-  Version: 3.7.33
+  Version: 3.7.34
   Author: rtCamp
   Text Domain: rtmedia
   Author URI: http://rtcamp.com/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media
@@ -86,7 +86,23 @@ function rtmedia_autoloader( $class_name ){
 		'app/main/routers/query/' . $class_name . '.php',
 		'app/main/controllers/upload/' . $class_name . '.php',
 		'app/main/controllers/upload/processors/' . $class_name . '.php',
-		'app/main/controllers/shortcodes/' . $class_name . '.php', 'app/main/controllers/template/' . $class_name . '.php', 'app/main/controllers/media/' . $class_name . '.php', 'app/main/controllers/group/' . $class_name . '.php', 'app/main/controllers/privacy/' . $class_name . '.php', 'app/main/controllers/activity/' . $class_name . '.php', 'app/main/deprecated/' . $class_name . '.php', 'app/main/contexts/' . $class_name . '.php', 'app/main/' . $class_name . '.php', 'app/main/includes/' . $class_name . '.php', 'app/main/widgets/' . $class_name . '.php', 'app/main/upload/' . $class_name . '.php', 'app/main/upload/processors/' . $class_name . '.php', 'app/main/template/' . $class_name . '.php', 'app/log/' . $class_name . '.php', 'app/importers/' . $class_name . '.php', 'app/main/controllers/api/' . $class_name . '.php',
+		'app/main/controllers/shortcodes/' . $class_name . '.php',
+		'app/main/controllers/template/' . $class_name . '.php',
+		'app/main/controllers/media/' . $class_name . '.php',
+		'app/main/controllers/group/' . $class_name . '.php',
+		'app/main/controllers/privacy/' . $class_name . '.php',
+		'app/main/controllers/activity/' . $class_name . '.php',
+		'app/main/deprecated/' . $class_name . '.php',
+		'app/main/contexts/' . $class_name . '.php',
+		'app/main/' . $class_name . '.php',
+		'app/main/includes/' . $class_name . '.php',
+		'app/main/widgets/' . $class_name . '.php',
+		'app/main/upload/' . $class_name . '.php',
+		'app/main/upload/processors/' . $class_name . '.php',
+		'app/main/template/' . $class_name . '.php',
+		'app/log/' . $class_name . '.php',
+		'app/importers/' . $class_name . '.php',
+		'app/main/controllers/api/' . $class_name . '.php',
 	);
 	foreach ( $rtlibpath as $path ) {
 		$path = RTMEDIA_PATH . $path;

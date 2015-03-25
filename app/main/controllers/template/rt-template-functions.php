@@ -72,25 +72,20 @@ function rtmedia_album_name() {
 }
 
 function get_rtmedia_gallery_title() {
-	global $rtmedia_query;
-	$title = false;
-	if ( isset( $rtmedia_query->media_query[ 'media_type' ] ) && ! is_array( $rtmedia_query->media_query[ 'media_type' ] ) && $rtmedia_query->media_query[ 'media_type' ] != "" ){
-		global $rtmedia;
-		$current_media_type = $rtmedia_query->media_query[ 'media_type' ];
-		if( $current_media_type != "" && is_array( $rtmedia->allowed_types ) && is_array( $rtmedia->allowed_types[ $current_media_type ] ) && isset( $rtmedia->allowed_types[ $current_media_type ][ 'plural_label' ] ) ) {
-			$title = sprintf( '%s %s', __( 'All', 'rtmedia' ), $rtmedia->allowed_types[ $current_media_type ][ 'plural_label' ] );
-		}
+    global $rtmedia_query, $rtmedia;
+    $title = false;
+    if( isset( $rtmedia_query->query[ 'media_type' ] ) && $rtmedia_query->query[ 'media_type' ] == "album" && isset( $rtmedia_query->media_query[ 'album_id' ] ) && $rtmedia_query->media_query[ 'album_id' ] != "" ){
+        $id = $rtmedia_query->media_query[ 'album_id' ];
+        $title = get_rtmedia_title( $id );
+    } elseif( isset( $rtmedia_query->media_query[ 'media_type' ] ) && ! is_array( $rtmedia_query->media_query[ 'media_type' ] ) && $rtmedia_query->media_query[ 'media_type' ] != "" ){
+        $current_media_type = $rtmedia_query->media_query[ 'media_type' ];
+        if( $current_media_type != "" && is_array( $rtmedia->allowed_types ) && is_array( $rtmedia->allowed_types[ $current_media_type ] ) && isset( $rtmedia->allowed_types[ $current_media_type ][ 'plural_label' ] ) ) {
+            $title = sprintf( '%s %s', __( 'All', 'rtmedia' ), $rtmedia->allowed_types[ $current_media_type ][ 'plural_label' ] );
+        }
+    }
+    $title = apply_filters( 'rtmedia_gallery_title', $title );
 
-		return $title;
-	}
-	if ( isset( $rtmedia_query->query[ 'media_type' ] ) && $rtmedia_query->query[ 'media_type' ] == "album" && isset( $rtmedia_query->media_query[ 'album_id' ] ) && $rtmedia_query->media_query[ 'album_id' ] != "" ){
-		$id = $rtmedia_query->media_query[ 'album_id' ];
-
-		return get_rtmedia_title( $id );
-	}
-	$title = apply_filters( 'rtmedia_gallery_title', $title );
-
-	return $title;
+    return $title;
 }
 
 function get_rtmedia_title( $id ) {
@@ -1752,7 +1747,7 @@ function rtmedia_create_album( $options ) {
 				break;
 			case 'group':
 				$group_id = $rtmedia_query->query[ 'context_id' ];
-				if ( can_user_create_album_in_group() ){
+				if ( can_user_create_album_in_group( $group_id ) ){
 					$display = true;
 				}
 				break;
@@ -1772,7 +1767,7 @@ add_action( 'rtmedia_before_media_gallery', 'rtmedia_create_album_modal' );
 add_action( 'rtmedia_before_album_gallery', 'rtmedia_create_album_modal' );
 function rtmedia_create_album_modal() {
 	global $rtmedia_query;
-	if ( is_rtmedia_album_enable() && !( isset( $rtmedia_query->is_gallery_shortcode ) && $rtmedia_query->is_gallery_shortcode == true ) && isset( $rtmedia_query->query[ 'context_id' ] ) && isset( $rtmedia_query->query[ 'context' ] ) ) {
+	if ( is_rtmedia_album_enable() && isset( $rtmedia_query->query[ 'context_id' ] ) && isset( $rtmedia_query->query[ 'context' ] ) && ( !( isset( $rtmedia_query->is_gallery_shortcode ) && $rtmedia_query->is_gallery_shortcode == true ) ) || apply_filters( 'rtmedia_load_add_album_modal', false ) ) {
 		?>
 		<div class="mfp-hide rtmedia-popup" id="rtmedia-create-album-modal">
 			<div id="rtm-modal-container">
