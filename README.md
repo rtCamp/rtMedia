@@ -128,6 +128,13 @@ http://www.youtube.com/watch?v####dJrykKQGDcs
 
 Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "Visit rtMedia's Features page") to get some details about future releases.
 
+#### 3.7.34 ####
+* Added tabs support in rtMedia
+* Fix activity upgrade
+* Add klein theme in 3rd party theme list
+* Fix uplaoder param in gallery shortcode database error
+* Other bug fixes
+
 #### 3.7.33 ####
 * Fix media move in album edit
 * JPEG image quality option
@@ -907,8 +914,8 @@ Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_sou
 * HTML5 Audio Tag Support (with fallback)
 * HTML5 Video Tag Support (with fallback)
 
-#### 3.7.33 ####
-Requires BuddyPress 1.7 or higher, if using BuddyPress. Fix media move in album edit, JPEG image quality option,use WordPress' *_metadata functions for meta data.
+#### 3.7.34 ####
+Requires BuddyPress 1.7 or higher, if using BuddyPress. Added tabs support in rtMedia, fix activity upgrade, add klein theme in 3rd party theme list, other bug fixes.
 
 ## Sponsors ##
 
