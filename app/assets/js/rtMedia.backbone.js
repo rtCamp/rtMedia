@@ -353,6 +353,7 @@ jQuery( function ( $ ) {
 					galleryObj.reloadView();
 				}
 			}
+			jQuery( '#rtmedia_uploader_filelist li' ).remove();
 			jQuery( '.start-media-upload' ).hide();
 			window.onbeforeunload = null;
 		} );
@@ -930,8 +931,7 @@ jQuery( document ).ready( function ( $ ) {
 					while ( objUploadView.uploader.files.pop() != undefined ) {
 					}
 					objUploadView.uploader.refresh();
-					$( '#rtmedia-whts-new-upload-container > div' ).css( 'top', '0' );
-					$( '#rtmedia-whts-new-upload-container > div' ).css( 'left', '0' );
+					$( '#rtmedia-whts-new-upload-container > div' ).css( { 'top': '0', 'left': '0' } );
 					$( '#rtMedia-update-queue-list' ).html( '' );
 					//$("#div-attache-rtmedia").hide();
 					apply_rtMagnificPopup( jQuery( '.rtmedia-list-media, .rtmedia-activity-container ul.rtmedia-list, #bp-media-list,.widget-item-listing,.bp-media-sc-list, li.media.album_updated ul,ul.bp-media-list-media, li.activity-item div.activity-content div.activity-inner div.bp_media_content' ) );

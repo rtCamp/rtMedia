@@ -1,8 +1,19 @@
 // Additional Styles
-.rtm-lightbox-container {
-	background: $black;
-	margin: 0 auto;
-	position: relative;
+.mfp-content {
+	.rtm-lightbox-container {
+		background: $black;
+		margin: 0 auto;
+		position: relative;
+	}
+
+	.rtm-single-meta {
+		background: $white;
+		overflow: hidden;
+		padding: 20px 20px 110px;
+		position: relative;
+		vertical-align: top;
+	}
+
 }
 
 .rtm-single-media {
@@ -13,14 +24,6 @@
 	.mejs-container {
 		margin: 0 auto;
 	}
-}
-
-.rtm-single-meta {
-	background: $white;
-	overflow: hidden;
-    padding: 20px 20px 110px;
-	position: relative;
-	vertical-align: top;
 }
 
 .rtm-ltb-action-container {
@@ -39,32 +42,48 @@
 	.rtm-single-media:hover & {
 		opacity: 1;
 	}
+}
 
-	#rtmedia-single-media-container & {
-		.button {
-			background: transparent;
-			border: 0 none;
-			border-radius: 2px;
-			color: rgba($white, 0.5);
-			display: block;
-			font-family: inherit;
-			font-weight: normal;
-			line-height: 24px;
-			padding: 0 6px;
-			text-shadow: 0 0 0;
-			text-transform: none;
+#buddypress #rtmedia-single-media-container {
+	.button {
+		background: transparent;
+		border: 0 none;
+		border-radius: 2px;
+		color: rgba($white, 0.5);
+		display: block;
+		font-family: inherit;
+		font-weight: normal;
+		line-height: 24px;
+		padding: 0 6px;
+		text-shadow: 0 0 0;
+		text-transform: none;
 
-			&:hover {
-				background: rgba($white, .2);
-				color: rgba($white, 0.8);
-			}
+		&:hover {
+			background: rgba($white, .2);
+			color: rgba($white, 0.8);
 		}
+	}
 
-		.rtm-options .button {
-			color: #333;
-			margin: 0 auto;
-			padding: 0 4px 0 0;
-		}
+	.rtm-options .button {
+		color: #333;
+		margin: 0 auto;
+		padding: 0 4px 0 0;
+	}
+}
+
+#buddypress #rtm-media-options-list {
+	.rtm-options .button {
+		background: transparent;
+		border: 0 none;
+		border-radius: 2px;
+		color: rgba($white, 0.5);
+		display: block;
+		font-family: inherit;
+		font-weight: normal;
+		line-height: 24px;
+		padding: 0 6px;
+		text-shadow: 0 0 0;
+		text-transform: none;
 	}
 }
 
@@ -154,7 +173,7 @@
 	}
 }
 
-.rtm-author-actions {
+.rtm-item-actions {
 	float: right;
 
 	.click-nav,
@@ -329,6 +348,13 @@
 .rtmedia-comment-details {
     line-height: 1.5;
     margin-top: -3px;
+}
+
+.rtmedia-item-comments {
+	textarea {
+		font-size: 14px;
+		padding: 4px;
+	}
 }
 
 .rtm-media-single-comments {

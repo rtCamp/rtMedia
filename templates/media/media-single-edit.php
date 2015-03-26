@@ -12,7 +12,7 @@
 				<h2 class="rtmedia-title"><?php echo __( 'Edit Media', 'rtmedia' ); ?></h2>
 			</div>
 
-			<form method="post" action="" name="rtmedia_media_single_edit" id="rtmedia_media_single_edit">
+			<form method="post" action="" name="rtmedia_media_single_edit" id="rtmedia_media_single_edit" class="rtm-form">
 				<div class="rtmedia-editor-main">
 					<ul class="tabs rtm-tabs clearfix">
 						<li class="active"><a href="#panel1"><i class='dashicons dashicons-edit rtmicon'></i><?php _e( 'Details', 'rtmedia' ); ?></a></li>
@@ -23,19 +23,22 @@
 					<div class="tabs-content">
 						<div class="content active" id="panel1">
 							<!-- First tab i.e Details tab. Active by default-->
-							<div class="rtmedia-edit-title">
-								<label><?php _e( 'Title : ', 'rtmedia' ); ?></label><?php rtmedia_title_input(); ?>
+							<div class="rtmedia-edit-title rtm-field-wrap">
+								<label><?php _e( 'Title : ', 'rtmedia' ); ?></label>
+								<?php rtmedia_title_input(); ?>
 							</div>
+
 							<!--This function shows the privacy dropdown-->
 							<?php echo rtmedia_edit_media_privacy_ui(); ?>
 
-							<div class="rtmedia-editor-description">
+							<div class="rtmedia-editor-description rtm-field-wrap">
 								<label><?php _e( 'Description: ', 'rtmedia' ) ?></label>
 								<?php
 								echo rtmedia_description_input( $editor = false );
 								RTMediaMedia::media_nonce_generator( rtmedia_id() );
 								?>
 							</div>
+
 							<!-- Use this hook to add new fields to the edit form-->
 							<?php do_action( 'rtmedia_add_edit_fields', rtmedia_type() ); ?>
 						</div>

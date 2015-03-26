@@ -1328,7 +1328,7 @@ add_action( 'rtmedia_add_edit_tab_title', 'rtmedia_image_editor_title', 12, 1 );
 function rtmedia_image_editor_title( $type = 'photo' ) {
 	global $rtmedia_query;
 	if ( isset( $rtmedia_query->media[ 0 ]->media_type ) && $rtmedia_query->media[ 0 ]->media_type == 'photo' && $type == 'photo' ) {
-		echo '<dd><a href="#panel2" class="rtmedia-modify-image"><i class="dashicons dashicons-format-image rtmicon"></i>' . __( "Image", "rtmedia" ) . '</a></dd>';
+		echo '<li><a href="#panel2" class="rtmedia-modify-image"><i class="dashicons dashicons-format-image rtmicon"></i>' . __( "Image", "rtmedia" ) . '</a></li>';
 	}
 }
 
@@ -1376,7 +1376,7 @@ function rtmedia_add_album_selection_field( $media_type ) {
 			$curr_album_id = $rtmedia_query->media[ 0 ]->album_id;
 		}
 		?>
-		<div class="rtmedia-edit-change-album">
+		<div class="rtmedia-edit-change-album rtm-field-wrap">
 			<label for=""><?php _e( 'Album', 'rtmedia' ); ?> : </label>
 			<?php
 			if ( isset( $rtmedia_query->query[ 'context' ] ) && $rtmedia_query->query[ 'context' ] == 'group' ) {
@@ -1880,12 +1880,12 @@ function rtmedia_item_select() {
 	global $rtmedia_query, $rtmedia_backbone;
 	if ( $rtmedia_backbone[ 'backbone' ] ) {
 		if ( $rtmedia_backbone[ 'is_album' ] && $rtmedia_backbone[ 'is_edit_allowed' ] ) {
-			echo '<input type="checkbox" name="move[]" class="rtmedia-item-selector" value="<%= id %>" />';
+			echo '<span class="rtm-checkbox-wrap"><input type="checkbox" name="move[]" class="rtmedia-item-selector" value="<%= id %>" /></span>';
 		}
 	} else {
 		if ( is_rtmedia_album() && isset( $rtmedia_query->media_query ) && $rtmedia_query->action_query->action == 'edit' ) {
 			if ( isset( $rtmedia_query->media_query[ 'media_author' ] ) && get_current_user_id() == $rtmedia_query->media_query[ 'media_author' ] ) {
-				echo '<input type="checkbox" class="rtmedia-item-selector" name="selected[]" value="' . rtmedia_id() . '" />';
+				echo '<span class="rtm-checkbox-wrap"><input type="checkbox" class="rtmedia-item-selector" name="selected[]" value="' . rtmedia_id() . '" /></span>';
 			}
 		}
 	}
@@ -1947,7 +1947,7 @@ function rtmedia_edit_media_privacy_ui() {
 	$privacymodel = new RTMediaPrivacy();
 	$privacy = $privacymodel->select_privacy_ui( $echo = false );
 	if ( $privacy ) {
-		return "<div class='rtmedia-edit-privacy'><label for='privacy'>" . __( 'Privacy : ', 'rtmedia' ) . "</label>" . $privacy . "</div>";
+		return "<div class='rtmedia-edit-privacy rtm-field-wrap'><label for='privacy'>" . __( 'Privacy : ', 'rtmedia' ) . "</label>" . $privacy . "</div>";
 	}
 }
 

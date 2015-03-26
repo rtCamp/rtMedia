@@ -23,7 +23,7 @@ $rtmedia_media = $media[ 0 ];
 
 			<div class="tabs-content">
 				<div class="content active" id="details-tab">
-					<form method="post">
+					<form method="post" class="rtm-form">
 						<?php
 						RTMediaMedia::media_nonce_generator( $rtmedia_query->media_query[ 'album_id' ] );
 						$post_details = get_post( $media[ 0 ]->media_id );
@@ -31,24 +31,24 @@ $rtmedia_media = $media[ 0 ];
 						$content = $post_details->post_content;
 						?>
 
-						<p class="rtmedia-edit-title">
+						<div class="rtmedia-edit-title rtm-field-wrap">
 							<label for="media_title"><?php _e( 'Title : ', 'rtmedia' ); ?></label>
 							<?php rtmedia_title_input(); ?>
-						</p>
+						</div>
 
 						<?php do_action( "rtmedia_add_album_privacy", 'album-edit' ); ?>
 
-						<p class="rtmedia-editor-description">
+						<div class="rtmedia-editor-description rtm-field-wrap">
 							<label for='description'><?php _e( 'Description: ', 'rtmedia' ) ?></label>
 							<?php
 							echo rtmedia_description_input( $editor = false );
 							RTMediaMedia::media_nonce_generator( rtmedia_id() );
 							?>
-						</p>
+						</div>
 
-						<p>
+						<div>
 							<input type="submit" name="submit" class='rtmedia-save-album' value="<?php _e( 'Save Changes', 'rtmedia' ); ?>" />
-						</p>
+						</div>
 					</form>
 				</div>
 
@@ -60,17 +60,19 @@ $rtmedia_media = $media[ 0 ];
 							<form class="rtmedia-album-edit rtmedia-bulk-actions" method="post" name="rtmedia_album_edit">
 								<?php wp_nonce_field( 'rtmedia_bulk_delete_nonce', 'rtmedia_bulk_delete_nonce' ); ?>
 								<?php RTMediaMedia::media_nonce_generator( $rtmedia_query->media_query[ 'album_id' ] ); ?>
-								<span><input type="checkbox" name="rtm-select-all" class="select-all" title="<?php _e( 'Select All Visible', 'rtmedia' ); ?>" /></span>
-								<button class="button rtmedia-move" type='button' title='<?php echo __( 'Move Selected media to another album.' ); ?>' ><?php _e( 'Move', 'rtmedia' ); ?></button>
-								<input type="hidden" name="move-selected" value="move">
-								<button type="button" name="delete-selected" class="button rtmedia-delete-selected" title='<?php echo __( 'Delete Selected media from the album.' ); ?>'><?php _e( 'Delete', 'rtmedia' ); ?></button>
-								<div class="rtmedia-move-container">
+								<p>
+									<span><input type="checkbox" name="rtm-select-all" class="select-all" title="<?php _e( 'Select All Visible', 'rtmedia' ); ?>" /></span>
+									<button class="button rtmedia-move" type='button' title='<?php echo __( 'Move Selected media to another album.' ); ?>' ><?php _e( 'Move', 'rtmedia' ); ?></button>
+									<input type="hidden" name="move-selected" value="move">
+									<button type="button" name="delete-selected" class="button rtmedia-delete-selected" title='<?php echo __( 'Delete Selected media from the album.' ); ?>'><?php _e( 'Delete', 'rtmedia' ); ?></button>
+								</p>
+
+								<p class="rtmedia-move-container">
 									<?php $global_albums = rtmedia_get_site_option( 'rtmedia-global-albums' ); ?>
-									<?php _e( 'Move selected media to the album : ', 'rtmedia' ); ?>
+									<span><?php _e( 'Move selected media to the album : ', 'rtmedia' ); ?></span>
 									<?php echo '<select name="album" class="rtmedia-user-album-list">' . rtmedia_user_album_list() . '</select>'; ?>
 									<input type="button" class="rtmedia-move-selected" name="move-selected" value="<?php _e( 'Move Selected', 'rtmedia' ); ?>" />
-								</div>
-
+								</p>
 
 								<ul class="rtmedia-list  large-block-grid-4 ">
 
