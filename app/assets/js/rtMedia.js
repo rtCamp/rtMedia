@@ -33,12 +33,6 @@ function apply_rtMagnificPopup( selector ) {
 						return item.el.attr( 'title' ) + '<small>by Marsel Van Oosten</small>';
 					}
 				},
-//                disableOn: function() {
-//                    if (jQuery(window).width() < 600) {
-//                        return false;
-//                    }
-//                    return true;
-//                },
 				callbacks: {
 					ajaxContentAdded: function () {
 
@@ -53,17 +47,6 @@ function apply_rtMagnificPopup( selector ) {
 							var last_li = li.next();
 							if ( jQuery( '#rtMedia-galary-next' ).css( 'display' ) == 'block' ) { // if more medias are available
 								jQuery( '#rtMedia-galary-next' ).click(); // load more
-								// var new_items = last_li.nextAll();
-								// console.log(new_items);
-								// new_items.each(function(index){
-								// console.log(index);
-								// mfp.items.push({
-								//  src: jQuery(this).children('a')
-								//});
-								//console.log(jQuery('>a'));
-								//  });
-								//apply_rtMagnificPopup(selector);
-								//mfp.updateItemHTML();
 							}
 						}
 
@@ -241,14 +224,6 @@ jQuery( 'document' ).ready( function ( $ ) {
 		jQuery( '.rtmedia-move-container' ).slideToggle();
 	} );
 
-//    jQuery('.rtmedia-container').on('click', '.rtmedia-merge', function(e) {
-//        jQuery('.rtmedia-merge-container').slideToggle();
-//    });
-
-//    jQuery('.rtmedia-container').on('click', '.rtmedia-create-new-album-button', function(e) {
-//        jQuery('.rtmedia-create-new-album-container').slideToggle();
-//    });
-
 	jQuery( '#rtmedia-create-album-modal' ).on( 'click', '#rtmedia_create_new_album', function ( e ) {
 		$albumname = jQuery.trim( jQuery( '#rtmedia_album_name' ).val() );
 		$context = jQuery.trim( jQuery( '#rtmedia_album_context' ).val() );
@@ -391,10 +366,6 @@ jQuery( 'document' ).ready( function ( $ ) {
 				if ( title != "" ) {
 					$( '.rtm-ltb-gallery-title .ltb-title' ).html( title );
 				}
-
-				//show the index of the current image
-//                var index = jQuery.magnificPopup.instance.index;
-//                $('.media-index').html(index+1);
 
 				//show image counts
 				var counts = $( '#subnav.item-list-tabs li.selected span' ).html();
