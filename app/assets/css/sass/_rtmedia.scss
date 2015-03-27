@@ -1,7 +1,6 @@
 // rtMedia Defaults
 
-.rtmedia-container,
-.rtmedia-activity-container {
+.rtmedia-container {
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
@@ -114,4 +113,10 @@
 	height: 4px;
     position: absolute;
     top: 0;
+}
+
+.rtm-form {
+	.rtm-field-wrap {
+		margin-bottom: 20px;
+	}
 }

@@ -42,7 +42,7 @@
 	}
 }
 
-.rtmedia-list-media {
+.rtmedia-container .rtmedia-list {
 
 	margin: 10px -5px;
 
@@ -75,7 +75,7 @@
 	}
 
 	.rtmedia-item-title {
-		//display: block;
+		display: none;
 
 		h4 {
 			color: $gray;

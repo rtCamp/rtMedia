@@ -1,15 +1,17 @@
-// Hide media title in activity
-.rtmedia-item-title {
-	display: none;
+.rtmedia-activity-container {
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
 
-	.rtmedia-activity-container & {
-		color: $gray;
-		font-size: 13px;
-		margin: 5px 0 0;
-		overflow: hidden;
-		text-align: center;
-		text-overflow: ellipsis;
-		white-space: nowrap;
+	* {
+		&,
+		&:before,
+			&:after {
+			-webkit-box-sizing: inherit;
+			-moz-box-sizing: inherit;
+			box-sizing: inherit;
+		}
+
 	}
 }
 
@@ -21,9 +23,25 @@
 
 // hide unnecessory div
 .rtmedia-activity-container {
+
 	.rtmedia-item-actions {
 		display: none;
 	}
+
+	.rtmedia-item-title {
+
+		&, a {
+			border: 0;
+			color: $gray;
+			font-size: 13px;
+			margin: 5px 0 0;
+			overflow: hidden;
+			text-align: center;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
+	}
+
 }
 
 // Uploader Button
@@ -62,7 +80,6 @@
 }
 
 .rtmedia-plupload-container {
-	@extend %clearfix;
     position: relative;
 	float: left;
 }
@@ -74,4 +91,9 @@
 
 #rtmedia-action-update {
 	margin-right: 10px;
+}
+
+// Video title make center align
+.rtmedia-list-item.media-type-video {
+	display: inline-block;
 }

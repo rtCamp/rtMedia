@@ -35,7 +35,7 @@
 							<?php } ?>
 						</div>
 
-						<div class="rtmedia-actions rtmedia-author-actions rtm-author-actions">
+						<div class="rtmedia-actions rtmedia-author-actions rtm-item-actions">
 							<?php rtmedia_actions(); ?>
 							<?php do_action( 'rtmedia_action_buttons_after_media', rtmedia_id() ); ?>
 						</div>
@@ -98,10 +98,11 @@
 
 				<?php } else { // else for if ( $rt_ajax_request )?>
 
-					<div class="rtmedia-item-actions clearfix">
+					<div class="rtmedia-item-actions rtm-single-actions rtm-item-actions clearfix">
 						<?php do_action( 'rtmedia_actions_without_lightbox' ); ?>
 						<?php rtmedia_actions(); ?>
 					</div>
+
 					<div class="rtmedia-actions-before-description clearfix">
 						<?php do_action( 'rtmedia_actions_before_description', rtmedia_id() ); ?>
 					</div>
@@ -112,7 +113,7 @@
 
 					<?php if ( rtmedia_comments_enabled() ) { ?>
 						<div class="rtmedia-item-comments">
-							<div class='rtmedia-actions-before-comments'>
+							<div class="rtmedia-actions-before-comments clearfix">
 								<?php do_action( 'rtmedia_actions_before_comments' ); ?>
 								<?php if ( is_user_logged_in() ) { ?>
 									<span><a href='#' class='rtmedia-comment-link'><?php _e( 'Comment', 'rtmedia' ); ?></a></span>
