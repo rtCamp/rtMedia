@@ -17,6 +17,7 @@
 }
 
 .rtm-single-media {
+	overflow: hidden; // Safari 1px issue
     position: relative;
     text-align: center;
     vertical-align: middle;

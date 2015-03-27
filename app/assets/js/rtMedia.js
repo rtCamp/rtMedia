@@ -15,7 +15,7 @@ function apply_rtMagnificPopup( selector ) {
 			}
 
 			rtMagnificPopup = jQuery( selector ).magnificPopup( {
-				delegate: 'a:not(".no-popup")',
+				delegate: 'a:not(.no-popup, .mejs-time-slider, .mejs-volume-slider, .mejs-horizontal-volume-slider)',
 				type: 'ajax',
 				tLoading: rt_load_more + ' #%curr%...',
 				mainClass: 'mfp-img-mobile',
@@ -134,7 +134,7 @@ var rtMediaHook = {
 function rtmedia_init_action_dropdown() {
 	var all_ul;
 	var curr_ul;
-	jQuery( '.click-nav > span' ).toggleClass( 'no-js js' );
+	jQuery( '.click-nav > span, .click-nav > div' ).toggleClass( 'no-js js' );
 	jQuery( '.click-nav .js ul' ).hide();
 	jQuery( '.click-nav .clicker' ).click( function ( e ) {
 		all_ul = jQuery( '#rtm-media-options .click-nav .clicker' ).next( 'ul' );
