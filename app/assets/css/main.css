@@ -71,8 +71,7 @@
  * Extend the clearfix class with Sass to avoid the `.clearfix` class appearing
  * over and over in your markup.
  */
-.clearfix:after,
-.rtmedia-plupload-container:after {
+.clearfix:after {
   content: "";
   display: table;
   clear: both;
@@ -108,16 +107,12 @@
   margin-bottom: 10px;
 }
 
-.rtmedia-container,
-.rtmedia-activity-container {
+.rtmedia-container {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
-.rtmedia-container *, .rtmedia-container *:before, .rtmedia-container *:after,
-.rtmedia-activity-container *,
-.rtmedia-activity-container *:before,
-.rtmedia-activity-container *:after {
+.rtmedia-container *, .rtmedia-container *:before, .rtmedia-container *:after {
   -webkit-box-sizing: inherit;
   -moz-box-sizing: inherit;
   box-sizing: inherit;
@@ -1100,17 +1095,15 @@ img.mfp-img {
   margin: 0 auto;
 }
 
-.rtmedia-item-title {
-  display: none;
+.rtmedia-activity-container {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
 }
-.rtmedia-activity-container .rtmedia-item-title {
-  color: #666666;
-  font-size: 13px;
-  margin: 5px 0 0;
-  overflow: hidden;
-  text-align: center;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+.rtmedia-activity-container *, .rtmedia-activity-container *:before, .rtmedia-activity-container *:after {
+  -webkit-box-sizing: inherit;
+  -moz-box-sizing: inherit;
+  box-sizing: inherit;
 }
 
 #buddypress ul.rtmedia-list li {
@@ -1120,6 +1113,16 @@ img.mfp-img {
 
 .rtmedia-activity-container .rtmedia-item-actions {
   display: none;
+}
+.rtmedia-activity-container .rtmedia-item-title, .rtmedia-activity-container .rtmedia-item-title a {
+  border: 0;
+  color: #666666;
+  font-size: 13px;
+  margin: 5px 0 0;
+  overflow: hidden;
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 #rtmedia-whts-new-upload-container div {
@@ -1168,6 +1171,10 @@ img.mfp-img {
 
 #rtmedia-action-update {
   margin-right: 10px;
+}
+
+.rtmedia-list-item.media-type-video {
+  display: inline-block;
 }
 
 .rtmedia-album-edit .rtm-checkbox-wrap {
@@ -1961,6 +1968,9 @@ span.imgedit-scale-warn {
 .rtmedia-container .rtmedia-list img {
   vertical-align: top;
 }
+.rtmedia-container .rtmedia-list .rtmedia-item-title {
+  display: none;
+}
 .rtmedia-container .rtmedia-list .rtmedia-item-title h4 {
   color: #666666;
   font-size: 12px;
@@ -2044,6 +2054,34 @@ span.imgedit-scale-warn {
   background: transparent;
   border: 0;
   color: #FFFFFF;
+}
+
+#buddypress .mejs-controls button {
+  padding: 4px 8px;
+  border: none;
+  background: transparent url("../../../lib/media-element/controls.png") no-repeat;
+}
+#buddypress .mejs-controls .mejs-play button {
+  background-position: 0 0;
+}
+#buddypress .mejs-controls .mejs-pause button {
+  background-position: 0 -16px;
+}
+#buddypress .mejs-controls .mejs-unmute button {
+  background-position: -16px 0;
+}
+#buddypress .mejs-controls .mejs-mute button {
+  background-position: -16px -16px;
+}
+#buddypress .mejs-controls .mejs-fullscreen-button button {
+  background-position: -32px 0;
+}
+#buddypress .mejs-controls .mejs-unfullscreen button {
+  background-position: -32px -16px;
+}
+
+.mejs-container .mejs-controls .mejs-time {
+  padding: 10px 3px 0;
 }
 
 @media only screen and (min-width: 1025px) {
