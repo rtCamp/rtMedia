@@ -1129,7 +1129,7 @@ class RTMediaFormHandler {
 	public static function render_option_content( $option ) {
 		?>
 
-		<table class="form-table">
+        <table class="form-table" <?php if( isset( $option[ 'depends' ] ) && $option[ 'depends' ] != '' ) { echo 'data-depends="' . $option[ 'depends' ] . '"'; } ?>>
 			<tr>
 				<th>
 					<?php echo $option[ 'title' ]; ?>
