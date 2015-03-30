@@ -877,6 +877,7 @@ class RTMediaFormHandler {
 					'desc' => __( 'Set default privacy for media', 'rtmedia' ),
 				),
 				'group' => 10,
+                'depends' => 'privacy_enabled'
 			),
 			'user_override' => array(
 				'title' => __( 'Allow users to set privacy for their content', 'rtmedia' ),
@@ -887,6 +888,7 @@ class RTMediaFormHandler {
 					'desc' => __( 'If you choose this, users will be able to change privacy of their own uploads.', 'rtmedia' ),
 				),
 				'group' => 10,
+                'depends' => 'privacy_enabled',
 				'after_content' => __( 'For group uploads, BuddyPress groups privacy is used.', 'rtmedia' ),
 			),
 		);
