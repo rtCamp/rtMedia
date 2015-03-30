@@ -17,6 +17,7 @@
 }
 
 .rtm-single-media {
+	overflow: hidden; // Safari 1px issue
     position: relative;
     text-align: center;
     vertical-align: middle;
@@ -44,7 +45,7 @@
 	}
 }
 
-#buddypress #rtmedia-single-media-container {
+#buddypress #rtmedia-single-media-container.rtmedia-single-media {
 	.button {
 		background: transparent;
 		border: 0 none;
