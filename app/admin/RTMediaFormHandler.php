@@ -616,6 +616,8 @@ class RTMediaFormHandler {
 							<td>
 								<?php echo $featured_checkbox; ?>
 							</td>
+                            
+                            <?php do_action( 'rtmedia_type_setting_columns_body', $key, $section ) ?>
 						</tr>
 
 						<?php
