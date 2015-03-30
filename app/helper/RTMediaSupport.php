@@ -309,7 +309,7 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 						if ( $this->debug_info ) {
 							foreach ( $this->debug_info as $configuration => $value ) {
 								?>
-								<tr valign="top">
+								<tr>
 									<th scope="row"><?php echo $configuration; ?></th>
 									<td><?php echo $value; ?></td>
 								</tr><?php
@@ -409,7 +409,7 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 				} else {
 					?>
 					<h3 class="rtm-option-title"><?php echo $meta_title; ?></h3>
-					<div id="support-form" class="bp-media-form">
+					<div id="support-form" class="bp-media-form rtm-support-form">
 						<ul>
 							<li>
 								<label class="bp-media-label" for="name"><?php _e( 'Name', 'rtmedia' ); ?> :</label>
@@ -417,67 +417,39 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 							</li>
 							<li>
 								<label class="bp-media-label" for="email"><?php _e( 'Email', 'rtmedia' ); ?> :</label>
-								<input id="email" class="bp-media-input" type="text" name="email" value="<?php echo ( isset( $_REQUEST[ 'email' ] ) ) ? esc_attr( stripslashes( trim( $_REQUEST[ 'email' ] ) ) ) : get_option( 'admin_email' ); ?>" required/>
+								<input id="email" class="bp-media-input" type="text" name="email" value="<?php echo ( isset( $_REQUEST[ 'email' ] ) ) ? esc_attr( stripslashes( trim( $_REQUEST[ 'email' ] ) ) ) : get_option( 'admin_email' ); ?>" required />
 							</li>
 							<li>
 								<label class="bp-media-label" for="website"><?php _e( 'Website', 'rtmedia' ); ?> :</label>
-								<input id="website" class="bp-media-input" type="text" name="website" value="<?php echo ( isset( $_REQUEST[ 'website' ] ) ) ? esc_attr( stripslashes( trim( $_REQUEST[ 'website' ] ) ) ) : get_bloginfo( 'url' ); ?>" required/>
+								<input id="website" class="bp-media-input" type="text" name="website" value="<?php echo ( isset( $_REQUEST[ 'website' ] ) ) ? esc_attr( stripslashes( trim( $_REQUEST[ 'website' ] ) ) ) : get_bloginfo( 'url' ); ?>" required />
 							</li>
 							<li>
 								<label class="bp-media-label" for="phone"><?php _e( 'Phone', 'rtmedia' ); ?> :</label>
-								<input class="bp-media-input" id="phone" type="text" name="phone" value="<?php echo ( isset( $_REQUEST[ 'phone' ] ) ) ? esc_attr( stripslashes( trim( $_REQUEST[ 'phone' ] ) ) ) : ''; ?>"/>
+								<input class="bp-media-input" id="phone" type="text" name="phone" value="<?php echo ( isset( $_REQUEST[ 'phone' ] ) ) ? esc_attr( stripslashes( trim( $_REQUEST[ 'phone' ] ) ) ) : ''; ?>" />
 							</li>
 							<li>
 								<label class="bp-media-label" for="subject"><?php _e( 'Subject', 'rtmedia' ); ?> :</label>
-								<input id="subject" class="bp-media-input" type="text" name="subject" value="<?php echo ( isset( $_REQUEST[ 'subject' ] ) ) ? esc_attr( stripslashes( trim( $_REQUEST[ 'subject' ] ) ) ) : ''; ?>" required/>
+								<input id="subject" class="bp-media-input" type="text" name="subject" value="<?php echo ( isset( $_REQUEST[ 'subject' ] ) ) ? esc_attr( stripslashes( trim( $_REQUEST[ 'subject' ] ) ) ) : ''; ?>" required />
 							</li>
 							<li>
 								<label class="bp-media-label" for="details"><?php _e( 'Details', 'rtmedia' ); ?> :</label>
-								<textarea id="details" class="bp-media-textarea" type="text" name="details" required/><?php echo ( isset( $_REQUEST[ 'details' ] ) ) ? esc_textarea( stripslashes( trim( $_REQUEST[ 'details' ] ) ) ) : ''; ?></textarea>
+								<textarea id="details" class="bp-media-textarea" name="details" required><?php echo ( isset( $_REQUEST[ 'details' ] ) ) ? esc_textarea( stripslashes( trim( $_REQUEST[ 'details' ] ) ) ) : ''; ?></textarea>
+
+								<input type="hidden" name="request_type" value="<?php echo $form; ?>" />
+								<input type="hidden" name="request_id" value="<?php echo wp_create_nonce( date( 'YmdHis' ) ); ?>" />
+								<input type="hidden" name="server_address" value="<?php echo $_SERVER[ 'SERVER_ADDR' ]; ?>" />
+								<input type="hidden" name="ip_address" value="<?php echo $_SERVER[ 'REMOTE_ADDR' ]; ?>" />
+								<input type="hidden" name="server_type" value="<?php echo $_SERVER[ 'SERVER_SOFTWARE' ]; ?>" />
+								<input type="hidden" name="user_agent" value="<?php echo $_SERVER[ 'HTTP_USER_AGENT' ]; ?>" />
 							</li>
-							<input type="hidden" name="request_type" value="<?php echo $form; ?>"/>
-							<input type="hidden" name="request_id" value="<?php echo wp_create_nonce( date( 'YmdHis' ) ); ?>"/>
-							<input type="hidden" name="server_address" value="<?php echo $_SERVER[ 'SERVER_ADDR' ]; ?>"/>
-							<input type="hidden" name="ip_address" value="<?php echo $_SERVER[ 'REMOTE_ADDR' ]; ?>"/>
-							<input type="hidden" name="server_type" value="<?php echo $_SERVER[ 'SERVER_SOFTWARE' ]; ?>"/>
-							<input type="hidden" name="user_agent" value="<?php echo $_SERVER[ 'HTTP_USER_AGENT' ]; ?>"/>
 						</ul>
-					</div><!-- .submit-bug-box --><?php if ( 'bug_report' == $form ) { ?>
-						<h3><?php _e( 'Additional Information', 'rtmedia' ); ?></h3>
-						<div id="support-form" class="bp-media-form">
-							<ul>
-								<li>
-									<label class="bp-media-label" for="wp_admin_username"><?php _e( 'Your WP Admin Login:', 'rtmedia' ); ?></label>
-									<input class="bp-media-input" id="wp_admin_username" type="text" name="wp_admin_username" value="<?php echo ( isset( $_REQUEST[ 'wp_admin_username' ] ) ) ? esc_attr( stripslashes( trim( $_REQUEST[ 'wp_admin_username' ] ) ) ) : $current_user->user_login; ?>"/>
-								</li>
-								<li>
-									<label class="bp-media-label" for="wp_admin_pwd"><?php _e( 'Your WP Admin password:', 'rtmedia' ); ?></label>
-									<input class="bp-media-input" id="wp_admin_pwd" type="password" name="wp_admin_pwd" value="<?php echo ( isset( $_REQUEST[ 'wp_admin_pwd' ] ) ) ? esc_attr( stripslashes( trim( $_REQUEST[ 'wp_admin_pwd' ] ) ) ) : ''; ?>"/>
-								</li>
-								<li>
-									<label class="bp-media-label" for="ssh_ftp_host"><?php _e( 'Your SSH / FTP host:', 'rtmedia' ); ?></label>
-									<input class="bp-media-input" id="ssh_ftp_host" type="text" name="ssh_ftp_host" value="<?php echo ( isset( $_REQUEST[ 'ssh_ftp_host' ] ) ) ? esc_attr( stripslashes( trim( $_REQUEST[ 'ssh_ftp_host' ] ) ) ) : ''; ?>"/>
-								</li>
-								<li>
-									<label class="bp-media-label" for="ssh_ftp_username"><?php _e( 'Your SSH / FTP login:', 'rtmedia' ); ?></label>
-									<input class="bp-media-input" id="ssh_ftp_username" type="text" name="ssh_ftp_username" value="<?php echo ( isset( $_REQUEST[ 'ssh_ftp_username' ] ) ) ? esc_attr( stripslashes( trim( $_REQUEST[ 'ssh_ftp_username' ] ) ) ) : ''; ?>"/>
-								</li>
-								<li>
-									<label class="bp-media-label" for="ssh_ftp_pwd"><?php _e( 'Your SSH / FTP password:', 'rtmedia' ); ?></label>
-									<input class="bp-media-input" id="ssh_ftp_pwd" type="password" name="ssh_ftp_pwd" value="<?php echo ( isset( $_REQUEST[ 'ssh_ftp_pwd' ] ) ) ? esc_attr( stripslashes( trim( $_REQUEST[ 'ssh_ftp_pwd' ] ) ) ) : ''; ?>"/>
-								</li>
-							</ul>
-						</div><!-- .submit-bug-box --><?php } ?>
+					</div><!-- .submit-bug-box -->
 
 					<?php submit_button( 'Submit', 'primary', 'rtmedia-submit-request', false ); ?>
 					<?php submit_button( 'Cancel', 'secondary', 'cancel-request', false ); ?>
 					<?php
 				}
 			}
-
-			//            if (DOING_AJAX) {
-			//                die();
-			//            }
 		}
 
 		/**

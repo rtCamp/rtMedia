@@ -1130,7 +1130,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 					<h2 class="nav-tab-wrapper"><?php $this->rtmedia_tabs(); ?>
 						<span class="alignright by">
 							<a class="rt-link" href="http://rtcamp.com/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media" target="_blank" title="rtCamp : <?php _e( 'Empowering The Web With WordPress', 'rtmedia' ); ?>">
-								<img src="<?php echo RTMEDIA_URL; ?>app/assets/admin/img/rtcamp-logo.png">
+								<img src="<?php echo RTMEDIA_URL; ?>app/assets/admin/img/rtcamp-logo.png" alt="rtCamp" />
 							</a>
 						</span>
 					</h2>
@@ -1523,7 +1523,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 											<p><a href="http://twitter.com/home/?status=' . $message . '" class="button twitter" target= "_blank" title="' . __( 'Post to Twitter Now', 'rtmedia' ) . '">' . __( 'Post to Twitter', 'rtmedia' ) . '<span class="dashicons dashicons-twitter"></span></a></p>
 											<p><a href="https://www.facebook.com/sharer/sharer.php?u=http://rtcamp.com/rtmedia/" class="button facebook" target="_blank" title="' . __( 'Share on Facebook Now', 'rtmedia' ) . '">' . __( 'Share on Facebook', 'rtmedia' ) . '<span class="dashicons dashicons-facebook"></span></a></p>
 											<p><a href="http://wordpress.org/support/view/plugin-reviews/buddypress-media?rate=5#postform" class="button wordpress" target= "_blank" title="' . __( 'Rate rtMedia on Wordpress.org', 'rtmedia' ) . '">' . __( 'Rate on Wordpress.org', 'rtmedia' ) . '<span class="dashicons dashicons-wordpress"></span></a></p>
-											<p><a href="' . sprintf( '%s', 'https://rtcamp.com/feed/' ) . '"  title="' . __( 'Subscribe to our feeds', 'rtmedia' ) . '" class="button rss" target="_blank" title="' . __( 'Subscribe to our Feeds', 'rtmedia' ) . '">' . __( 'Subscribe to our Feeds', 'rtmedia' ) . '<span class="dashicons dashicons-rss"></span></a></p>
+											<p><a href="' . sprintf( '%s', 'https://rtcamp.com/feed/' ) . '" class="button rss" target="_blank" title="' . __( 'Subscribe to our Feeds', 'rtmedia' ) . '">' . __( 'Subscribe to our Feeds', 'rtmedia' ) . '<span class="dashicons dashicons-rss"></span></a></p>
 								</div>';
 
 			new RTMediaAdminWidget( 'spread-the-word', __( 'Spread the Word', 'rtmedia' ), $addons );

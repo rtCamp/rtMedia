@@ -89,15 +89,15 @@ if ( ! class_exists( 'rtForm' ) ) {
 			'rtWysiwyg' => 0,
 		);
 		private static $default_classes = array(
-			'rtText' => 'rt-form-text',
-			'rtNumber' => 'rt-form-number',
-			'rtDate' => 'rt-form-date',
-			'rtRadio' => 'rt-form-radio',
-			'rtCheckbox' => 'rt-form-checkbox',
-			'rtSelect' => 'rt-form-select',
-			'rtTextarea' => 'rt-form-textarea',
-			'rtHidden' => 'rt-form-hidden',
-			'rtWysiwyg' => 'rt-form-wysiwyg',
+			'rtText' => 'rtm-form-text',
+			'rtNumber' => 'rtm-form-number',
+			'rtDate' => 'rtm-form-date',
+			'rtRadio' => 'rtm-form-radio',
+			'rtCheckbox' => 'rtm-form-checkbox',
+			'rtSelect' => 'rtm-form-select',
+			'rtTextarea' => 'rtm-form-textarea',
+			'rtHidden' => 'rtm-form-hidden',
+			'rtWysiwyg' => 'rtm-form-wysiwyg',
 		);
 
 		/**

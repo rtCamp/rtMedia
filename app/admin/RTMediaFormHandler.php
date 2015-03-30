@@ -616,15 +616,19 @@ class RTMediaFormHandler {
 							<td>
 								<?php echo $featured_checkbox; ?>
 							</td>
-                            
-                            <?php do_action( 'rtmedia_type_setting_columns_body', $key, $section ) ?>
+
+							<?php do_action( 'rtmedia_type_setting_columns_body', $key, $section ) ?>
 						</tr>
 
 						<?php
 						do_action( 'rtmedia_type_settings_after_body', $key, $section );
 					} else {
+						echo '<tr class="hide">';
+						echo '<td colspan="3">';
 						echo "<input type='hidden' value='1' name='rtmedia-options[allowedTypes_" . $key . "_enabled]'>";
 						echo "<input type='hidden' value='0' name='rtmedia-options[allowedTypes_" . $key . "_featured]'>";
+						echo '</td>';
+						echo '</tr>';
 					}
 				}
 				?>
@@ -877,7 +881,7 @@ class RTMediaFormHandler {
 					'desc' => __( 'Set default privacy for media', 'rtmedia' ),
 				),
 				'group' => 10,
-                'depends' => 'privacy_enabled'
+				'depends' => 'privacy_enabled'
 			),
 			'user_override' => array(
 				'title' => __( 'Allow users to set privacy for their content', 'rtmedia' ),
@@ -888,7 +892,7 @@ class RTMediaFormHandler {
 					'desc' => __( 'If you choose this, users will be able to change privacy of their own uploads.', 'rtmedia' ),
 				),
 				'group' => 10,
-                'depends' => 'privacy_enabled',
+				'depends' => 'privacy_enabled',
 				'after_content' => __( 'For group uploads, BuddyPress groups privacy is used.', 'rtmedia' ),
 			),
 		);
@@ -1133,7 +1137,11 @@ class RTMediaFormHandler {
 	public static function render_option_content( $option ) {
 		?>
 
-        <table class="form-table" <?php if( isset( $option[ 'depends' ] ) && $option[ 'depends' ] != '' ) { echo 'data-depends="' . $option[ 'depends' ] . '"'; } ?>>
+		<table class="form-table" <?php
+		if ( isset( $option[ 'depends' ] ) && $option[ 'depends' ] != '' ) {
+			echo 'data-depends="' . $option[ 'depends' ] . '"';
+		}
+		?>>
 			<tr>
 				<th>
 					<?php echo $option[ 'title' ]; ?>

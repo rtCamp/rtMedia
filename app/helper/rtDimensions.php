@@ -101,22 +101,6 @@ class rtDimensions extends rtForm {
 		$attributes = wp_parse_args( $attributes, $defaults );
 		extract( $attributes );
 
-//		$html = '<div ';
-//
-//		if ( isset( $attributes['id'] ) ){
-//			$html .= 'id="' . $attributes['id'] . '" ';
-//		} else {
-//			$html .= 'id="' . $this->get_default_class() . '-' . $this->get_default_id() . '" ';
-//			$this->update_default_id();
-//		}
-//
-//		if ( isset( $attributes['class'] ) ){
-//			$html .= self::embedd_class( $element, $attributes['class'] );
-//		} else {
-//			$html .= self::embedd_class( $element );
-//		}
-//		$html .= '>';
-
 		$html = '';
 
 		$html .= '<td>' . parent::get_number( array(
@@ -131,16 +115,16 @@ class rtDimensions extends rtForm {
 
 		if ( isset( $crop ) ) {
 			$html .= '<td>' . parent::get_switch(
-					array(
-						'name' => "rtmedia-options[{$key}_crop]",
-						'rtForm_options' => array(
 							array(
-								'' => 1, //label would be blank
-								'checked' => $crop,
-							),
-						),
-						'value' => ( isset( $options[ "rtmedia-options[{$key}_crop]" ] ) ) ? $options[ "rtmedia-options[{$key}_crop]" ] : '0',
-						'show_desc' => $show_desc,
+								'name' => "rtmedia-options[{$key}_crop]",
+								'rtForm_options' => array(
+									array(
+										'' => 1, //label would be blank
+										'checked' => $crop,
+									),
+								),
+								'value' => ( isset( $options[ "rtmedia-options[{$key}_crop]" ] ) ) ? $options[ "rtmedia-options[{$key}_crop]" ] : '0',
+								'show_desc' => $show_desc,
 					) ) . '</td>';
 		}
 

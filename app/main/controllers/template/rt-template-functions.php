@@ -1419,15 +1419,11 @@ function rtmedia_comment_form() {
 		?>
 		<form method="post" id="rt_media_comment_form" class="rt_media_comment_form"
 			  action="<?php echo esc_url( get_rtmedia_permalink( rtmedia_id() ) ); ?>comment/">
-			<div class="row">
-				<div class="large-12 columns">
-					<textarea style="width:100%" placeholder="<?php _e( 'Type Comment...', 'rtmedia' ); ?>"
-							  name="comment_content" id="comment_content"></textarea>
-				</div>
-			</div>
-			<input type="submit" id="rt_media_comment_submit" class="rt_media_comment_submit"
-				   value="<?php _e( 'Comment', 'rtmedia' ); ?>">
-				   <?php RTMediaComment::comment_nonce_generator(); ?>
+
+			<textarea style="width:100%" placeholder="<?php _e( 'Type Comment...', 'rtmedia' ); ?>" name="comment_content" id="comment_content"></textarea>
+			<input type="submit" id="rt_media_comment_submit" class="rt_media_comment_submit" value="<?php _e( 'Comment', 'rtmedia' ); ?>">
+
+			<?php RTMediaComment::comment_nonce_generator(); ?>
 		</form>
 		<?php
 	}

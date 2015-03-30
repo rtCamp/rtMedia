@@ -10,7 +10,7 @@ class RTMediaLicense {
 
 	static $page;
 
-	static function render_license( $page = '' ){
+	static function render_license( $page = '' ) {
 
 		self::$page = $page;
 
@@ -18,102 +18,98 @@ class RTMediaLicense {
 
 		$tabs = apply_filters( 'rtmedia_license_tabs', array() );
 		$addon_installed = false;
-		if ( !empty( $tabs ) && is_array( $tabs ) ) {
+		if ( ! empty( $tabs ) && is_array( $tabs ) ) {
 			$addon_installed = true;
-			foreach( $tabs as $key => $tab ) {
+			foreach ( $tabs as $key => $tab ) {
 				$tabs[ $key ][ 'callback' ] = array( 'RTMediaLicense', 'render_license_section' );
 			}
-		?>
+			?>
 			<div id="rtm-licenses">
 				<?php RTMediaAdmin::render_admin_ui( self::$page, $tabs ); ?>
 			</div>
-		<?php
+			<?php
 		}
 
 		// For add-on which aren't updated with the latest code
-		if( did_action( 'rtmedia_addon_license_details' ) ){
+		if ( did_action( 'rtmedia_addon_license_details' ) ) {
 			$addon_installed = true;
-		?>
+			?>
 			<div id="rtm-licenses">
 				<?php do_action( 'rtmedia_addon_license_details' ); ?>
 			</div>
-		<?php
+			<?php
 		}
-		if( ! $addon_installed ){
-		?>
+		if ( ! $addon_installed ) {
+			?>
 			<div class="rtm-license-404">You may be interested in <a href="<?php echo admin_url( 'admin.php?page=rtmedia-addons' ); ?>">rtMedia Addons</a>.</div>
-		<?php
+			<?php
 		}
 	}
 
-	static function render_license_section( $page = '', $args = '' ){
+	static function render_license_section( $page = '', $args = '' ) {
 
-		$license = ( isset( $args['license_key'] ) ) ? $args['license_key'] : false;
-		$status = ( isset( $args['status'] ) ) ? $args['status'] : false;
+		$license = ( isset( $args[ 'license_key' ] ) ) ? $args[ 'license_key' ] : false;
+		$status = ( isset( $args[ 'status' ] ) ) ? $args[ 'status' ] : false;
 
-		if ( $status !== false && $status == 'valid' ){
-			$status_class = 'rtm-addon-status-activated';
+		if ( $status !== false && $status == 'valid' ) {
+			$status_class = 'activated rtm-success';
 			$status_value = __( 'Activated', 'rtmedia' );
 		} else {
-			$status_class = 'rtm-addon-status-deactivated';
+			$status_class = 'deactivated rtm-warning';
 			$status_value = __( 'Deactivated', 'rtmedia' );
 		}
 
-		$el_id = $args['addon_id'];
-		$license_key_id = $args['key_id'];
-		$license_status_id = $args['status_id'];
-	?>
+		$el_id = $args[ 'addon_id' ];
+		$license_key_id = $args[ 'key_id' ];
+		$license_status_id = $args[ 'status_id' ];
+		?>
 		<div class="rtm-addon-license">
-			<div class="row">
-				<div class="columns large-12 rtm-addon-license-status"><span class="rtm-addon-license-status-label">Status:</span>
-					<span
-						class="rtm-addon-license-status <?php echo $status_class ?>"><?php echo $status_value; ?></span>
-				</div>
+			<div class="rtm-license-status-wrap <?php echo $status_class ?>">
+				<span class="rtm-addon-license-status-label"><?php _e( 'Status: ', 'rtmedia' ); ?></span>
+				<span class="rtm-addon-license-status"><?php echo $status_value; ?></span>
 			</div>
-			<div class="row">
-				<div class="columns large-12">
-					<form method="post">
-						<table class="form-table">
-							<tbody>
+
+			<form method="post">
+				<table class="form-table">
+					<tbody>
+						<tr valign="top">
+							<th scope="row" valign="top">
+								<?php _e( 'License Key', 'rtmedia' ); ?>
+							</th>
+							<td>
+								<input id="<?php echo $license_key_id ?>" name="<?php echo $license_key_id ?>" type="text"
+									   class="regular-text" value="<?php esc_attr_e( $license ); ?>"/>
+							</td>
+						</tr>
+
+						<?php if ( false !== $license ) { ?>
 							<tr valign="top">
 								<th scope="row" valign="top">
-									<?php _e( 'License Key', 'rtmedia' ); ?>
+									<?php _e( 'Activate / Deactivate License', 'rtmedia' ); ?>
 								</th>
 								<td>
-									<input id="<?php echo $license_key_id ?>" name="<?php echo $license_key_id ?>" type="text"
-									       class="regular-text" value="<?php esc_attr_e( $license ); ?>"/>
+									<?php
+									$nonce_action = 'edd_' . $el_id . '_nonce';
+									$nonce_name = 'edd_' . $el_id . '_nonce';
+									if ( $status !== false && $status == 'valid' ) {
+										$btn_name = 'edd_' . $el_id . '_license_deactivate';
+										$btn_val = __( 'Deactivate License', 'rtmedia' );
+									} else {
+										$btn_name = 'edd_' . $el_id . '_license_activate';
+										$btn_val = __( 'Activate License', 'rtmedia' );
+									}
+									?>
+									<?php wp_nonce_field( $nonce_action, $nonce_name ); ?>
+									<input type="submit" class="button-secondary" name="<?php echo $btn_name; ?>" value="<?php echo $btn_val; ?>"/>
 								</td>
 							</tr>
-							<?php if ( false !== $license ){ ?>
-								<tr valign="top">
-									<th scope="row" valign="top">
-										<?php _e( 'Activate / Deactivate License', 'rtmedia' ); ?>
-									</th>
-									<td>
-										<?php
-											$nonce_action = 'edd_' . $el_id . '_nonce';
-											$nonce_name = 'edd_' . $el_id . '_nonce';
-											if ( $status !== false && $status == 'valid' ) {
-												$btn_name = 'edd_' . $el_id . '_license_deactivate';
-												$btn_val = __( 'Deactivate License', 'rtmedia' );
-											} else {
-												$btn_name = 'edd_' . $el_id . '_license_activate';
-												$btn_val = __( 'Activate License', 'rtmedia' );
-											}
-										?>
-											<?php wp_nonce_field( $nonce_action, $nonce_name ); ?>
-											<input type="submit" class="button-secondary" name="<?php echo $btn_name; ?>" value="<?php echo $btn_val; ?>"/>
-									</td>
-								</tr>
-							<?php } ?>
-							</tbody>
-						</table>
-						<?php submit_button( 'Save Key' ); ?>
-					</form>
-				</div>
-			</div>
+						<?php } ?>
+					</tbody>
+				</table>
+				<?php submit_button( 'Save Key' ); ?>
+			</form>
 		</div>
-	<?php
+		<?php
 	}
 
-} 
+}
