@@ -982,7 +982,7 @@ class RTMediaJsonApi{
             $uploaded['mode'] = 'file_upload';
             $uploaded['media_author'] = $this->user_id;
             $uploaded['album_id'] = !empty($_POST['album_id']) ? $_POST['album_id'] : RTMediaAlbum::get_default();
-            $uploaded['privacy'] = !empty($_POST['privacy']) ? $_POST['privacy'] : 0;
+            $uploaded['privacy'] = !empty($_POST['privacy']) ? $_POST['privacy'] : get_rtmedia_default_privacy();
             $uploaded['title']  = $title;
             $uploaded['description']    = $description;
             $uploaded['taxonomy'] = array();
