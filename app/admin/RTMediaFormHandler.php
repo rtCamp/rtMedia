@@ -54,7 +54,6 @@ class RTMediaFormHandler {
 		global $rtmedia;
 		$options = $rtmedia->options;
 		$defaults = array(
-			'id' => '',
 			'key' => '',
 			'desc' => '',
 			'show_desc' => false,
