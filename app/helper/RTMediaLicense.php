@@ -72,8 +72,8 @@ class RTMediaLicense {
 			<form method="post">
 				<table class="form-table">
 					<tbody>
-						<tr valign="top">
-							<th scope="row" valign="top">
+						<tr>
+							<th scope="row">
 								<?php _e( 'License Key', 'rtmedia' ); ?>
 							</th>
 							<td>
@@ -83,8 +83,8 @@ class RTMediaLicense {
 						</tr>
 
 						<?php if ( false !== $license ) { ?>
-							<tr valign="top">
-								<th scope="row" valign="top">
+							<tr>
+								<th scope="row">
 									<?php _e( 'Activate / Deactivate License', 'rtmedia' ); ?>
 								</th>
 								<td>

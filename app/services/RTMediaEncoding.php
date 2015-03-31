@@ -277,7 +277,7 @@ class RTMediaEncoding {
                         <input type="hidden" name="src" value="1">
                         <input type="hidden" name="sra" value="1">
 
-                        <input type="image" src="http://www.paypal.com/en_US/i/btn/btn_subscribe_SM.gif" border="0" name="submit" alt="Make payments with PayPal - it\'s fast, free and secure!">
+                        <input type="image" src="http://www.paypal.com/en_US/i/btn/btn_subscribe_SM.gif" name="submit" alt="Make payments with PayPal - it\'s fast, free and secure!">
                     </form>';
 		}
 		return $form;
@@ -320,7 +320,7 @@ class RTMediaEncoding {
 		</p>
 
 		<!-- Results table headers -->
-		<table  class="bp-media-encoding-table fixed widefat rtm-encoding-table" cellspacing="0">
+		<table  class="bp-media-encoding-table fixed widefat rtm-encoding-table">
 			<thead>
 				<tr>
 					<th><?php _e( 'Feature\Plan', 'rtmedia' ); ?></th>
@@ -380,7 +380,7 @@ class RTMediaEncoding {
 							echo '<button disabled="disabled" type="submit" class="encoding-try-now button button-primary">' . __( 'Current Plan', 'rtmedia' ) . '</button>';
 						} else {
 							?>
-							<form id="encoding-try-now-form" method="get" action="">
+							<form id="encoding-try-now-form" method="get">
 								<button type="submit" class="encoding-try-now button button-primary"><?php _e( 'Try Now', 'rtmedia' ); ?></button>
 							</form><?php }
 						?>
