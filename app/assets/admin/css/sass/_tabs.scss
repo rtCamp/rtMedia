@@ -15,6 +15,7 @@
 		padding: 10px 4px 10px 14px;
 		position: relative;
 		text-decoration: none;
+		z-index: 10;
 
 		&:hover {
 			background: $light;

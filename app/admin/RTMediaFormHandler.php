@@ -559,20 +559,20 @@ class RTMediaFormHandler {
 					<th><strong><?php _e( 'Media Type', 'rtmedia' ) ?></strong></th>
 
 					<th>
-						<strong><?php _e( 'Allow Upload', 'rtmedia' ); ?></strong>
-						<span class="rtm-tooltip">
-							<i class="dashicons dashicons-info rtmicon"></i>
-							<span class="rtm-tip">
+
+						<span class="rtm-tooltip bottom">
+							<strong class="rtm-title"><?php _e( 'Allow Upload', 'rtmedia' ); ?></strong>
+							<span class="rtm-tip-top">
 								<?php _e( 'Allows you to upload a particular media type on your post.', 'rtmedia' ); ?>
 							</span>
 						</span>
 					</th>
 
 					<th>
-						<strong><?php _e( 'Set Featured', 'rtmedia' ); ?></strong>
-						<span class="rtm-tooltip">
-							<i class="dashicons dashicons-info rtmicon"></i>
-							<span class="rtm-tip">
+
+						<span class="rtm-tooltip bottom">
+							<strong class="rtm-title"><?php _e( 'Set Featured', 'rtmedia' ); ?></strong>
+							<span class="rtm-tip-top">
 								<?php _e( 'Place a specific media as a featured content on the post.', 'rtmedia' ); ?>
 							</span>
 						</span>

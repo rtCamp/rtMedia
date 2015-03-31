@@ -1,13 +1,25 @@
 .rtm-tooltip {
+	display: inline-block;
+	margin-left: 3px;
     position: relative;
 
-	&:hover .rtm-tip {
-		margin-left: 0;
-		opacity: 1;
-		visibility: visible;
+	&:hover {
+
+		.rtm-tip-top,
+		.rtm-tip {
+			margin-left: 0;
+			opacity: 1;
+			visibility: visible;
+		}
+
+	}
+	.rtm-title {
+		border-bottom: 1px dotted;
+		padding-bottom: 2px;
 	}
 }
 
+.rtm-tip-top,
 .rtm-tip {
 	background: #fffAF0;
 	border: 1px solid #f5deaf;
@@ -26,4 +38,38 @@
     z-index: 10;
 
 	@include transition(all ease-in-out 0.4s);
+}
+
+.rtm-tip-top {
+	bottom: 26px;
+	left: auto;
+	right: -66px;
+	top: auto;
+	width: 200px;
+
+	&:after, &:before {
+		right: auto;
+		top: 100%;
+		left: 50%;
+		border: solid transparent;
+		content: ' ';
+		height: 0;
+		width: 0;
+		position: absolute;
+		pointer-events: none;
+	}
+
+	&:after {
+		border-color: rgba(255, 250, 240, 0);
+		border-top-color: #fffAF0;
+		border-width: 6px;
+		margin-left: -6px;
+	}
+
+	&:before {
+		border-color: rgba(245, 222, 175, 0);
+		border-top-color: #f5deaf;
+		border-width: 7px;
+		margin-left: -7px;
+	}
 }

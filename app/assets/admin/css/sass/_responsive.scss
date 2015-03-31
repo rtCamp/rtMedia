@@ -117,10 +117,6 @@
 	}
 }
 
-@media screen and (max-width: 782px) {
-
-}
-
 @media #{$medium-up} {
 	.rtm-pro-feature-list li {
 		&:nth-child(3n+1) {
@@ -201,5 +197,9 @@
 
 	.rtm-pro-feature-list li {
 		width: 100%;
+	}
+
+	.rtm-tip-top {
+		right: -115px;
 	}
 }
