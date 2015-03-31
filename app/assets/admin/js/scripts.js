@@ -14,15 +14,52 @@ jQuery( document ).ready( function ( $ ) {
 		}
 	} );
 
+	$( '.rtm-field-wrap .switch input[type=checkbox]' ).each( function() {
+        var self = $( this );
+        
+        if( !self.parents( 'table' ).attr( 'data-depends' ) ) {
+            if( self.is( ':checked' ) ) {
+                self.parents( 'tr' ).find( '.rtm-notice' ).show();
+
+                self.parents( 'table' ).siblings( 'table' ).each( function () {
+                    if( $( this ).attr( 'data-depends' ) ) {
+                        $( this ).show();
+                    }
+                } );
+            } else {
+                self.parents( 'tr' ).find( '.rtm-notice' ).hide();
+
+                self.parents( 'table' ).siblings( 'table' ).each( function () {
+                    if( $( this ).attr( 'data-depends' ) ) {
+                        $( this ).hide();
+                    }
+                } );
+            }
+        }
+    } );
+
 	$( '.rtm-field-wrap .switch input[type=checkbox]' ).on( 'change', function () {
 		var self = $( this );
-		self.parents( 'tr' ).find( '.rtm-notice' ).slideToggle();
+        
+        if( !self.parents( 'table' ).attr( 'data-depends' ) ) {
+            if( self.is( ':checked' ) ) {
+                self.parents( 'tr' ).find( '.rtm-notice' ).slideToggle();
 
-		self.parents( 'table' ).siblings( 'table' ).each( function () {
-			if ( $( this ).attr( 'data-depends' ) ) {
-				$( this ).slideToggle();
-			}
-		} );
+                self.parents( 'table' ).siblings( 'table' ).each( function () {
+                    if( $( this ).attr( 'data-depends' ) ) {
+                        $( this ).slideToggle();
+                    }
+                } );
+            } else {
+                self.parents( 'tr' ).find( '.rtm-notice' ).slideToggle();
+
+                self.parents( 'table' ).siblings( 'table' ).each( function () {
+                    if( $( this ).attr( 'data-depends' ) ) {
+                        $( this ).slideToggle();
+                    }
+                } );
+            }
+        }
 	} );
 
 	// Theme section lightbox like WordPress
