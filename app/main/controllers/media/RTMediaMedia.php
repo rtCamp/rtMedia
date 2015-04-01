@@ -76,6 +76,7 @@ class RTMediaMedia {
 	 */
 	public function delete_hook() {
 		add_action( 'delete_attachment', array( $this, 'delete_wordpress_attachment' ) );
+		add_action( 'delete_user', array( $this, 'reassign_wordpress_user'), 10, 2 );
 	}
 
 	/**
@@ -266,7 +267,25 @@ class RTMediaMedia {
 			$this->delete( $media[ 0 ]->id, true );
 		}
 	}
-
+	
+	/**
+	 * Method to reassign media to another user while deleting user
+	 *
+	 * @param type $user_id, $reassign
+	 *
+	 */
+	public function reassign_wordpress_user( $user_id , $reassign ){
+		if( $reassign != null || $reassign != '' ){
+			// Updating media author
+			$rtmedia_model = new RTMediaModel();
+			$rtmedia_model->update( array( 'media_author' => $reassign ), array( 'media_author' => $user_id ) );
+			
+			// Updating user id from interaction
+			$rtmediainteraction = new RTMediaInteractionModel();
+			$rtmediainteraction->update( array( 'user_id' => $reassign ), array( 'user_id' =>  $user_id ) );
+		}
+	}
+	
 	/**
 	 * Generic method to delete a media
 	 *
