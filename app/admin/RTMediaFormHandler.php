@@ -601,6 +601,9 @@ class RTMediaFormHandler {
 						if ( ! isset( $section[ 'extn' ] ) || ! is_array( $section[ 'extn' ] ) ) {
 							$section[ 'extn' ] = array();
 						}
+                        
+                        $extensions = implode( ', ', $section[ 'extn' ] );
+                        $extensions = apply_filters( 'rtmedia_type_settings_filter_extension', $extensions, $key );
 						?>
 
 						<tr>
@@ -618,6 +621,10 @@ class RTMediaFormHandler {
 
 							<?php do_action( 'rtmedia_type_setting_columns_body', $key, $section ) ?>
 						</tr>
+                        <tr>
+                            <td><?php echo __( 'File Extensions', 'rtmedia' ); ?></td>
+                            <td colspan="2"><?php echo $extensions; ?></td>
+                        </tr>
 
 						<?php
 						do_action( 'rtmedia_type_settings_after_body', $key, $section );
