@@ -410,43 +410,50 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 					?>
 					<h3 class="rtm-option-title"><?php echo $meta_title; ?></h3>
 					<div id="support-form" class="bp-media-form rtm-support-form">
-						<ul>
-							<li>
-								<label class="bp-media-label" for="name"><?php _e( 'Name', 'rtmedia' ); ?> :</label>
-								<input class="bp-media-input" id="name" type="text" name="name" value="<?php echo ( isset( $_REQUEST[ 'name' ] ) ) ? esc_attr( stripslashes( trim( $_REQUEST[ 'name' ] ) ) ) : $current_user->display_name; ?>" required/>
-							</li>
-							<li>
-								<label class="bp-media-label" for="email"><?php _e( 'Email', 'rtmedia' ); ?> :</label>
-								<input id="email" class="bp-media-input" type="text" name="email" value="<?php echo ( isset( $_REQUEST[ 'email' ] ) ) ? esc_attr( stripslashes( trim( $_REQUEST[ 'email' ] ) ) ) : get_option( 'admin_email' ); ?>" required />
-							</li>
-							<li>
-								<label class="bp-media-label" for="website"><?php _e( 'Website', 'rtmedia' ); ?> :</label>
-								<input id="website" class="bp-media-input" type="text" name="website" value="<?php echo ( isset( $_REQUEST[ 'website' ] ) ) ? esc_attr( stripslashes( trim( $_REQUEST[ 'website' ] ) ) ) : get_bloginfo( 'url' ); ?>" required />
-							</li>
-							<li>
-								<label class="bp-media-label" for="phone"><?php _e( 'Phone', 'rtmedia' ); ?> :</label>
-								<input class="bp-media-input" id="phone" type="text" name="phone" value="<?php echo ( isset( $_REQUEST[ 'phone' ] ) ) ? esc_attr( stripslashes( trim( $_REQUEST[ 'phone' ] ) ) ) : ''; ?>" />
-							</li>
-							<li>
-								<label class="bp-media-label" for="subject"><?php _e( 'Subject', 'rtmedia' ); ?> :</label>
-								<input id="subject" class="bp-media-input" type="text" name="subject" value="<?php echo ( isset( $_REQUEST[ 'subject' ] ) ) ? esc_attr( stripslashes( trim( $_REQUEST[ 'subject' ] ) ) ) : ''; ?>" required />
-							</li>
-							<li>
-								<label class="bp-media-label" for="details"><?php _e( 'Details', 'rtmedia' ); ?> :</label>
-								<textarea id="details" class="bp-media-textarea" name="details" required><?php echo ( isset( $_REQUEST[ 'details' ] ) ) ? esc_textarea( stripslashes( trim( $_REQUEST[ 'details' ] ) ) ) : ''; ?></textarea>
 
-								<input type="hidden" name="request_type" value="<?php echo $form; ?>" />
-								<input type="hidden" name="request_id" value="<?php echo wp_create_nonce( date( 'YmdHis' ) ); ?>" />
-								<input type="hidden" name="server_address" value="<?php echo $_SERVER[ 'SERVER_ADDR' ]; ?>" />
-								<input type="hidden" name="ip_address" value="<?php echo $_SERVER[ 'REMOTE_ADDR' ]; ?>" />
-								<input type="hidden" name="server_type" value="<?php echo $_SERVER[ 'SERVER_SOFTWARE' ]; ?>" />
-								<input type="hidden" name="user_agent" value="<?php echo $_SERVER[ 'HTTP_USER_AGENT' ]; ?>" />
-							</li>
-						</ul>
+						<div class="rtm-form-filed">
+							<label class="bp-media-label" for="name"><?php _e( 'Name', 'rtmedia' ); ?> :</label>
+							<input class="bp-media-input" id="name" type="text" name="name" value="<?php echo ( isset( $_REQUEST[ 'name' ] ) ) ? esc_attr( stripslashes( trim( $_REQUEST[ 'name' ] ) ) ) : $current_user->display_name; ?>" required/>
+						</div>
+
+						<div class="rtm-form-filed">
+							<label class="bp-media-label" for="email"><?php _e( 'Email', 'rtmedia' ); ?> :</label>
+							<input id="email" class="bp-media-input" type="text" name="email" value="<?php echo ( isset( $_REQUEST[ 'email' ] ) ) ? esc_attr( stripslashes( trim( $_REQUEST[ 'email' ] ) ) ) : get_option( 'admin_email' ); ?>" required />
+						</div>
+
+						<div class="rtm-form-filed">
+							<label class="bp-media-label" for="website"><?php _e( 'Website', 'rtmedia' ); ?> :</label>
+							<input id="website" class="bp-media-input" type="text" name="website" value="<?php echo ( isset( $_REQUEST[ 'website' ] ) ) ? esc_attr( stripslashes( trim( $_REQUEST[ 'website' ] ) ) ) : get_bloginfo( 'url' ); ?>" required />
+						</div>
+
+						<div class="rtm-form-filed">
+							<label class="bp-media-label" for="phone"><?php _e( 'Phone', 'rtmedia' ); ?> :</label>
+							<input class="bp-media-input" id="phone" type="text" name="phone" value="<?php echo ( isset( $_REQUEST[ 'phone' ] ) ) ? esc_attr( stripslashes( trim( $_REQUEST[ 'phone' ] ) ) ) : ''; ?>" />
+						</div>
+
+						<div class="rtm-form-filed">
+							<label class="bp-media-label" for="subject"><?php _e( 'Subject', 'rtmedia' ); ?> :</label>
+							<input id="subject" class="bp-media-input" type="text" name="subject" value="<?php echo ( isset( $_REQUEST[ 'subject' ] ) ) ? esc_attr( stripslashes( trim( $_REQUEST[ 'subject' ] ) ) ) : ''; ?>" required />
+						</div>
+
+						<div class="rtm-form-filed">
+							<label class="bp-media-label" for="details"><?php _e( 'Details', 'rtmedia' ); ?> :</label>
+							<textarea id="details" class="bp-media-textarea" name="details" required><?php echo ( isset( $_REQUEST[ 'details' ] ) ) ? esc_textarea( stripslashes( trim( $_REQUEST[ 'details' ] ) ) ) : ''; ?></textarea>
+
+							<input type="hidden" name="request_type" value="<?php echo $form; ?>" />
+							<input type="hidden" name="request_id" value="<?php echo wp_create_nonce( date( 'YmdHis' ) ); ?>" />
+							<input type="hidden" name="server_address" value="<?php echo $_SERVER[ 'SERVER_ADDR' ]; ?>" />
+							<input type="hidden" name="ip_address" value="<?php echo $_SERVER[ 'REMOTE_ADDR' ]; ?>" />
+							<input type="hidden" name="server_type" value="<?php echo $_SERVER[ 'SERVER_SOFTWARE' ]; ?>" />
+							<input type="hidden" name="user_agent" value="<?php echo $_SERVER[ 'HTTP_USER_AGENT' ]; ?>" />
+						</div>
 					</div><!-- .submit-bug-box -->
 
-					<?php submit_button( 'Submit', 'primary', 'rtmedia-submit-request', false ); ?>
-					<?php submit_button( 'Cancel', 'secondary', 'cancel-request', false ); ?>
+					<div class="rtm-form-filed rtm-button-wrapper">
+						<?php submit_button( 'Submit', 'primary', 'rtmedia-submit-request', false ); ?>
+						<?php submit_button( 'Cancel', 'secondary', 'cancel-request', false ); ?>
+					</div>
+
 					<?php
 				}
 			}

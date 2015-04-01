@@ -46,6 +46,12 @@
 		}
 	}
 
+	.rtm-support-form {
+		.bp-media-input, .bp-media-textarea {
+			width: 45%;
+		}
+	}
+
 }
 
 
@@ -115,6 +121,10 @@
 	.theme-browser .theme:nth-child(2n+1) {
 		margin-right: 4%;
 	}
+
+	.rtmedia-settings-submit {
+		margin-bottom: 0 !important;
+	}
 }
 
 @media #{$medium-up} {
@@ -169,6 +179,21 @@
 			padding: 0 0 0 28px;
 			position: absolute;
 		}
+	}
+
+	.rtm-support-form {
+		label {
+			width: 100%;
+			margin-bottom: 5px;
+		}
+
+		.bp-media-input, .bp-media-textarea {
+			width: 90%;
+		}
+	}
+
+	.rtm-button-wrapper {
+		padding-left: 0;
 	}
 }
 
