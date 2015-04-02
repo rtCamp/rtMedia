@@ -48,14 +48,16 @@ class RTMediaGalleryShortcode {
         }
         wp_localize_script ( 'rtmedia-backbone', 'template_url', $template_url );
     	$url = trailingslashit ( $_SERVER[ "REQUEST_URI" ] );
-
-        if ( strpos ( $url, "/media" ) !== false ) {
-            $url_array = explode ( "/media", $url );
-            $url = trailingslashit ( $url_array[ 0 ] ) . "upload/";
+		$rtmedia_slug = "/".RTMEDIA_MEDIA_SLUG;
+        // check position of media slug from end of the URL
+		if ( strrpos ( $url, $rtmedia_slug ) !== false ) {
+			// split the url upto the last occurance of media slug
+			$url_upload = substr( $url, 0, strrpos ( $url, $rtmedia_slug ) );
+			$url = trailingslashit ( $url_upload ) . "upload/";
         } else {
             $url = trailingslashit ( $url ) . "upload/";
         }
-
+		
         $params = array(
             'url' => $url,
             'runtimes' => 'html5,flash,html4',
