@@ -601,9 +601,9 @@ class RTMediaFormHandler {
 						if ( ! isset( $section[ 'extn' ] ) || ! is_array( $section[ 'extn' ] ) ) {
 							$section[ 'extn' ] = array();
 						}
-                        
-                        $extensions = implode( ', ', $section[ 'extn' ] );
-                        $extensions = apply_filters( 'rtmedia_type_settings_filter_extension', $extensions, $key );
+
+						$extensions = implode( ', ', $section[ 'extn' ] );
+						$extensions = apply_filters( 'rtmedia_type_settings_filter_extension', $extensions, $key );
 						?>
 
 						<tr>
@@ -621,10 +621,13 @@ class RTMediaFormHandler {
 
 							<?php do_action( 'rtmedia_type_setting_columns_body', $key, $section ) ?>
 						</tr>
-                        <tr>
-                            <td><?php echo __( 'File Extensions', 'rtmedia' ); ?></td>
-                            <td colspan="2"><?php echo $extensions; ?></td>
-                        </tr>
+
+						<?php $colspan = defined( 'RTMEDIA_PRO_PATH' ) ? '4' : '2' ?>
+
+						<tr class="rtm-extensions">
+							<td><?php echo __( 'File Extensions', 'rtmedia' ); ?></td>
+							<td colspan="<?php echo $colspan; ?>"><?php echo $extensions; ?></td>
+						</tr>
 
 						<?php
 						do_action( 'rtmedia_type_settings_after_body', $key, $section );
@@ -1151,25 +1154,29 @@ class RTMediaFormHandler {
 			<tr>
 				<th>
 					<?php echo $option[ 'title' ]; ?>
-
 					<?php if ( isset( $option[ 'after_content' ] ) ) { ?>
-				<div class="rtm-message rtm-notice"><?php echo wpautop( $option[ 'after_content' ] ); ?></div>
-			<?php } ?>
-		</th>
-		<td>
-			<fieldset>
-				<span class="rtm-field-wrap"><?php call_user_func( $option[ 'callback' ], $option[ 'args' ] ); ?></span>
-				<span class="rtm-tooltip">
-					<i class="dashicons dashicons-info rtmicon"></i>
-					<span class="rtm-tip">
-						<?php echo ( isset( $option[ 'args' ][ 'desc' ] ) ) ? $option[ 'args' ][ 'desc' ] : 'NA'; ?>
-					</span>
-				</span>
-			</fieldset>
-		</td>
-		</tr>
+					<?php } ?>
+				</th>
+				<td>
+					<fieldset>
+						<span class="rtm-field-wrap"><?php call_user_func( $option[ 'callback' ], $option[ 'args' ] ); ?></span>
+						<span class="rtm-tooltip">
+							<i class="dashicons dashicons-info rtmicon"></i>
+							<span class="rtm-tip">
+								<?php echo ( isset( $option[ 'args' ][ 'desc' ] ) ) ? $option[ 'args' ][ 'desc' ] : 'NA'; ?>
+							</span>
+						</span>
+					</fieldset>
+				</td>
+			</tr>
 		</table>
+
 		<?php
+		$additional_info = wpautop( $option[ 'after_content' ] );
+		if ( ! empty( $additional_info ) ) {
+			?>
+			<div class="rtm-message rtm-notice"><?php echo wpautop( $option[ 'after_content' ] ); ?></div><?php
+		}
 	}
 
 }

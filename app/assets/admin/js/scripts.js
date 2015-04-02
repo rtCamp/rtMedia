@@ -19,7 +19,7 @@ jQuery( document ).ready( function ( $ ) {
 
 		if ( ! self.parents( 'table' ).attr( 'data-depends' ) ) {
 			if ( self.is( ':checked' ) ) {
-				self.parents( 'tr' ).find( '.rtm-notice' ).slideDown();
+				self.parents( 'table' ).next( '.rtm-notice' ).slideDown();
 
 				self.parents( 'table' ).siblings( 'table' ).each( function () {
 					if ( $( this ).attr( 'data-depends' ) ) {
@@ -27,7 +27,7 @@ jQuery( document ).ready( function ( $ ) {
 					}
 				} );
 			} else {
-				self.parents( 'tr' ).find( '.rtm-notice' ).slideUp();
+				self.parents( 'table' ).next( '.rtm-notice' ).slideUp();
 
 				self.parents( 'table' ).siblings( 'table' ).each( function () {
 					if ( $( this ).attr( 'data-depends' ) ) {
@@ -43,7 +43,7 @@ jQuery( document ).ready( function ( $ ) {
 
 		if ( ! self.parents( 'table' ).attr( 'data-depends' ) ) {
 
-			self.parents( 'tr' ).find( '.rtm-notice' ).slideToggle();
+			self.parents( 'table' ).next( '.rtm-notice' ).slideToggle();
 
 			self.parents( 'table' ).siblings( 'table' ).each( function () {
 				if ( $( this ).attr( 'data-depends' ) ) {
