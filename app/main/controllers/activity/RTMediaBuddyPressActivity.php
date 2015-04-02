@@ -211,15 +211,27 @@ class RTMediaBuddyPressActivity {
 		$activity_allowedtags['audio']['title']    = array();
 		$activity_allowedtags['audio']['width']    = array();
 		$activity_allowedtags['audio']['poster']   = array();
-		$activity_allowedtags['div']                 = array();
+
+		if( !isset( $activity_allowedtags['div'] ) ){
+			$activity_allowedtags['div']           = array();
+		}
 		$activity_allowedtags['div']['id']         = array();
 		$activity_allowedtags['div']['class']      = array();
-		$activity_allowedtags['a']                   = array();
+
+		if( !isset( $activity_allowedtags['a'] ) ){
+			$activity_allowedtags['a']                   = array();
+		}
 		$activity_allowedtags['a']['title']        = array();
 		$activity_allowedtags['a']['href']         = array();
-		$activity_allowedtags['ul']                  = array();
+
+		if( !isset( $activity_allowedtags['ul'] ) ){
+			$activity_allowedtags['ul']            = array();
+		}
 		$activity_allowedtags['ul']['class']       = array();
-		$activity_allowedtags['li']                  = array();
+
+		if( !isset( $activity_allowedtags['li'] ) ){
+			$activity_allowedtags['li']            = array();
+		}
 		$activity_allowedtags['li']['class']       = array();
 
 		/* Legacy Code */
