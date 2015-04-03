@@ -1,6 +1,6 @@
 <?php if ( is_array( $tabs ) && count( $tabs ) ) { ?>
 
-	<div class="rtmedia-container">
+	<div class="rtmedia-container rtnedia-uploader-div">
 
 		<?php
 		if ( isset( $attr[ 'rtmedia_simple_file_upload' ] ) && $attr[ 'rtmedia_simple_file_upload' ] == true ) {
