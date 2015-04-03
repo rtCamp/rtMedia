@@ -440,6 +440,14 @@ class RTMediaQuery {
 					}
 				}
 			}
+
+			/*
+			 * in gallery shortcode with uploader set to true, $this->is_gallery_shortcode won't be set for very first time and hence
+			 * will miss the check for "$this->query['uploader']"
+			*/
+			if( isset( $this->query['uploader'] ) ){
+				unset( $this->query['uploader'] );
+			}
 		}
 
 		if ( isset ( $this->query[ "context" ] ) && $this->query[ "context" ] == "activity" ){

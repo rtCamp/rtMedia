@@ -977,12 +977,12 @@ class RTMediaJsonApi{
             }
             $uploaded['rtmedia_upload_nonce'] =  wp_create_nonce ( 'rtmedia_upload_nonce' );
             $uploaded['rtmedia_simple_file_upload'] =   1;
-            $uploaded['context'] = 'profile';
-            $uploaded['context_id'] = $this->user_id;
+	        $uploaded['context'] = !empty($_POST['context']) ? $_POST['context'] : 'profile';
+	        $uploaded['context_id'] = !empty($_POST['context_id']) ? $_POST['context_id'] : $this->user_id;
             $uploaded['mode'] = 'file_upload';
             $uploaded['media_author'] = $this->user_id;
-            $uploaded['album_id'] = $this->user_id;
-            $uploaded['privacy'] = 0;
+            $uploaded['album_id'] = !empty($_POST['album_id']) ? $_POST['album_id'] : RTMediaAlbum::get_default();
+            $uploaded['privacy'] = !empty($_POST['privacy']) ? $_POST['privacy'] : get_rtmedia_default_privacy();
             $uploaded['title']  = $title;
             $uploaded['description']    = $description;
             $uploaded['taxonomy'] = array();

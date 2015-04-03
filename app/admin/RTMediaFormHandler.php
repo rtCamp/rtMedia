@@ -428,6 +428,7 @@ class RTMediaFormHandler {
 					'desc' => __( 'Add your affiliate-id along with footer link and get rewarded by our affiliation program.', 'rtmedia' ),
 				),
 				'group' => 100,
+                'depends' => 'rtmedia_add_linkback',
 				'after_content' => __( 'Signup for rtMedia affiliate program <a href="https://rtcamp.com/affiliates">here</a>' ),
 			), //
 			'rtmedia_enable_api' => array(

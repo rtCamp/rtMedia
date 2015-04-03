@@ -497,22 +497,34 @@ jQuery( 'document' ).ready( function ( $ ) {
 	}
 
 //    masonry code
-	if ( typeof rtmedia_masonry_layout != "undefined" && rtmedia_masonry_layout == "true" && jQuery( '.rtmedia-container .rtmedia-list.rtm-no-masonry' ).length == 0 ) {
-		rtm_masonry_container = jQuery( '.rtmedia-container .rtmedia-list' )
-		rtm_masonry_container.masonry( {
-			itemSelector: '.rtmedia-list-item'
-		} );
-		setInterval( function () {
-			jQuery.each( jQuery( '.rtmedia-list.masonry .rtmedia-item-title' ), function ( i, item ) {
-				jQuery( item ).width( jQuery( item ).siblings( '.rtmedia-item-thumbnail' ).children( 'img' ).width() );
-			} );
-			rtm_masonry_reload( rtm_masonry_container );
-		}, 1000 );
-		jQuery.each( jQuery( '.rtmedia-list.masonry .rtmedia-item-title' ), function ( i, item ) {
-			jQuery( item ).width( jQuery( item ).siblings( '.rtmedia-item-thumbnail' ).children( 'img' ).width() );
-		} );
-	}
-} );
+    if( typeof rtmedia_masonry_layout != "undefined" && rtmedia_masonry_layout == "true" && jQuery( '.rtmedia-container .rtmedia-list.rtm-no-masonry' ).length == 0 ) {
+        rtm_masonry_container = jQuery('.rtmedia-container .rtmedia-list')
+        rtm_masonry_container.masonry({
+            itemSelector: '.rtmedia-list-item'
+        });
+        setInterval( function(){
+            jQuery.each( jQuery('.rtmedia-list.masonry .rtmedia-item-title' ), function( i, item ) {
+                jQuery(item ).width( jQuery(item).siblings('.rtmedia-item-thumbnail' ).children('img').width());
+            });
+            rtm_masonry_reload( rtm_masonry_container );
+        } , 1000);
+        jQuery.each( jQuery('.rtmedia-list.masonry .rtmedia-item-title' ), function( i, item ) {
+            jQuery(item ).width( jQuery(item).siblings('.rtmedia-item-thumbnail' ).children('img').width());
+        });
+    }
+
+    if( jQuery( '.rtm-uploader-tabs' ).length > 0 ){
+        jQuery( '.rtm-uploader-tabs li' ).click( function( e ){
+            if( ! jQuery( this ).hasClass( 'active' ) ){
+                jQuery( this ).siblings().removeClass( 'active' );
+                jQuery( '.rtm-uploader-tabs' ).siblings().hide();
+                class_name = jQuery( this ).attr( 'class' );
+                jQuery( '.rtm-uploader-tabs' ).siblings('[data-id="' + class_name + '"]').show();
+                jQuery( this ).addClass( 'active' );
+            }
+        });
+    }
+});
 
 
 
