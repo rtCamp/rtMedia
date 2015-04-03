@@ -14,6 +14,9 @@ jQuery( document ).ready( function ( $ ) {
 		}
 	} );
 
+	// This is for chrome border issue
+	$( '.rtm-img-size-setting .form-table tr:nth-child(7) td:last-child' ).attr( 'colspan', '3' );
+
 	$( '.rtm-field-wrap .switch input[type=checkbox]' ).each( function () {
 		var self = $( this );
 
@@ -36,8 +39,8 @@ jQuery( document ).ready( function ( $ ) {
 				} );
 			}
 		}
-        
-        if ( self.parents( 'tr' ).next( 'tr' ).attr( 'data-depends' ) ) {
+
+		if ( self.parents( 'tr' ).next( 'tr' ).attr( 'data-depends' ) ) {
 			if ( self.is( ':checked' ) ) {
 				self.parents( 'tr' ).next( 'tr' ).slideDown();
 			} else {
@@ -59,8 +62,8 @@ jQuery( document ).ready( function ( $ ) {
 				}
 			} );
 		}
-        
-        if ( self.parents( 'tr' ).next( 'tr' ).attr( 'data-depends' ) ) {
+
+		if ( self.parents( 'tr' ).next( 'tr' ).attr( 'data-depends' ) ) {
 
 			self.parents( 'tr' ).next( 'tr' ).slideToggle();
 		}
