@@ -81,4 +81,10 @@
 		position: relative;
 		top: -3px;
 	}
+
+	&.rtm-set-top {
+		.dashicons {
+			top: 1px;
+		}
+	}
 }
