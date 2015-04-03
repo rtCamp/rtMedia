@@ -36,6 +36,14 @@ jQuery( document ).ready( function ( $ ) {
 				} );
 			}
 		}
+        
+        if ( self.parents( 'tr' ).next( 'tr' ).attr( 'data-depends' ) ) {
+			if ( self.is( ':checked' ) ) {
+				self.parents( 'tr' ).next( 'tr' ).slideDown();
+			} else {
+				self.parents( 'tr' ).next( 'tr' ).slideUp();
+			}
+		}
 	} );
 
 	$( '.rtm-field-wrap .switch input[type=checkbox]' ).on( 'change', function () {
@@ -50,6 +58,11 @@ jQuery( document ).ready( function ( $ ) {
 					$( this ).slideToggle();
 				}
 			} );
+		}
+        
+        if ( self.parents( 'tr' ).next( 'tr' ).attr( 'data-depends' ) ) {
+
+			self.parents( 'tr' ).next( 'tr' ).slideToggle();
 		}
 	} );
 

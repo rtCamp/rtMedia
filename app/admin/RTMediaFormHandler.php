@@ -603,16 +603,31 @@ class RTMediaFormHandler {
 						}
 
 						$extensions = implode( ', ', $section[ 'extn' ] );
-						$extensions = apply_filters( 'rtmedia_type_settings_filter_extension', $extensions, $key );
 						?>
 
 						<tr>
 							<td>
-								<?php echo $section[ 'name' ]; ?>
+								<?php 
+                                echo $section[ 'name' ]; 
+                                
+                                if( $key != 'other' ) {
+                                    ?>
+                                    <span class="rtm-tooltip rtm-extensions">
+                                        <i class="dashicons dashicons-info rtmicon"></i>
+                                        <span class="rtm-tip">
+                                            <strong><?php echo __( 'File Extensions', 'rtmedia' ); ?></strong><br />
+                                            <hr />
+                                            <?php echo $extensions; ?>
+                                        </span>
+                                    </span>
+                                    <?php 
+                                } 
+                                ?>
 							</td>
 
 							<td>
-								<?php echo $allow_upload_checkbox; ?>
+                                <span class="rtm-field-wrap">
+								<?php echo $allow_upload_checkbox; ?></span>
 							</td>
 
 							<td>
@@ -621,13 +636,8 @@ class RTMediaFormHandler {
 
 							<?php do_action( 'rtmedia_type_setting_columns_body', $key, $section ) ?>
 						</tr>
-
-						<?php $colspan = defined( 'RTMEDIA_PRO_PATH' ) ? '4' : '2' ?>
-
-						<tr class="rtm-extensions">
-							<td><?php echo __( 'File Extensions', 'rtmedia' ); ?></td>
-							<td colspan="<?php echo $colspan; ?>"><?php echo $extensions; ?></td>
-						</tr>
+                        
+                        <?php do_action( 'rtmedia_other_type_settings_textarea', $key ); ?>
 
 						<?php
 						do_action( 'rtmedia_type_settings_after_body', $key, $section );
@@ -1172,8 +1182,7 @@ class RTMediaFormHandler {
 		</table>
 
 		<?php
-		$additional_info = wpautop( $option[ 'after_content' ] );
-		if ( ! empty( $additional_info ) ) {
+		if ( isset( $option[ 'after_content' ] ) && $option[ 'after_content' ] != '' ) {
 			?>
 			<div class="rtm-message rtm-notice"><?php echo wpautop( $option[ 'after_content' ] ); ?></div><?php
 		}
