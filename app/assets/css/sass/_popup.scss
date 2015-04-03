@@ -90,6 +90,7 @@
 
 .rtm-options {
 	background: $gray;
+	color: $white;
 	display: none;
 	font-size: 14px;
 	list-style: none;
@@ -98,7 +99,7 @@
 	position: absolute;
 	left: 0;
 	top: 38px;
-	width: 150px;
+	width: 180px;
 	z-index: 10;
 
 	li {
