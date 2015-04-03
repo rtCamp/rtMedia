@@ -661,7 +661,9 @@ jQuery( document ).ready( function ( $ ) {
 		}
 	}, 100 );
 
-	$( '#whats-new-options' ).append( $( '.rtmedia-container' ) );
+    if( $( '#whats-new-options' ).length > 0 && $( 'rtnedia-uploader-div' ).length > 0 ) {
+        $( '#whats-new-options' ).append( $( 'rtnedia-uploader-div' ) );
+    }
 
 	$( "#whats-new-form" ).on( 'click', '#rtmedia-add-media-button-post-update', function ( e ) {
 		objUploadView.uploader.refresh();
