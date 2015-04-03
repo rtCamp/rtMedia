@@ -169,7 +169,7 @@ class RTMediaUploadEndpoint {
 				} else {
 					header( 'Content-type: application/json' );
 				}
-				echo json_encode( $data );
+				echo json_encode( apply_filters( 'rtmedia_upload_endpoint_response', $data ) );
 			}
 
 

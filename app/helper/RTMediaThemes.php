@@ -176,7 +176,7 @@ class RTMediaThemes {
 								</div>
 							</div>
 						</div>
-					</div>
+				</div>
 
 				<?php } ?>
 			</div>
@@ -197,7 +197,18 @@ class RTMediaThemes {
 	public function rtmedia_3rd_party_themes_content() {
 
 		$themes = array(
-			'sweetdate' => array(
+			'klein' => array(
+				'name' => __( 'Klein', 'rtmedia' ),
+				'version' => '1.0',
+				'image' => RTMEDIA_URL . 'app/assets/admin/img/rtmedia-theme-klein.jpg',
+				'demo_url' => 'http://rt.cx/klein',
+				'author' => __( 'dunhakdis', 'rtmedia' ),
+				'author_url' => 'http://themeforest.net/user/dunhakdis',
+				'buy_url' => 'http://rt.cx/klein',
+				'description' => __( 'Klein is an innovative WordPress theme built to support BuddyPress, bbPress, and WooCommerce out of the box. Perfect for websites that interacts with many users.', 'rtmedia' ),
+				'tags' => 'clean, responsive, creative, modern, landing page, social, BuddyPress, bbpress, woocommerce',
+			),
+            'sweetdate' => array(
 				'name' => __( 'SweetDate', 'rtmedia' ),
 				'version' => '1.0',
 				'image' => RTMEDIA_URL . 'app/assets/admin/img/rtmedia-theme-sweetdate.png',

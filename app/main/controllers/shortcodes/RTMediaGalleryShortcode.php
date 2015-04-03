@@ -48,10 +48,12 @@ class RTMediaGalleryShortcode {
         }
         wp_localize_script ( 'rtmedia-backbone', 'template_url', $template_url );
     	$url = trailingslashit ( $_SERVER[ "REQUEST_URI" ] );
-
-        if ( strpos ( $url, "/media" ) !== false ) {
-            $url_array = explode ( "/media", $url );
-            $url = trailingslashit ( $url_array[ 0 ] ) . "upload/";
+        $rtmedia_slug = "/".RTMEDIA_MEDIA_SLUG;
+        // check position of media slug from end of the URL
+        if ( strrpos ( $url, $rtmedia_slug ) !== false ) {
+            // split the url upto the last occurance of media slug
+            $url_upload = substr( $url, 0, strrpos ( $url, $rtmedia_slug ) );
+            $url = trailingslashit ( $url_upload ) . "upload/";
         } else {
             $url = trailingslashit ( $url ) . "upload/";
         }
@@ -116,8 +118,12 @@ class RTMediaGalleryShortcode {
                 if ( ! is_array ( $attr[ "attr" ] ) ) {
                     $attr[ "attr" ] = Array( );
                 }
-                if ( ! isset ( $attr[ "attr" ][ "context_id" ] ) && isset ( $post->ID ) ) {
-                    $attr[ "attr" ][ "context_id" ] = $post->ID;
+                if ( ! isset ( $attr[ "attr" ][ "context_id" ] )
+	                && isset ( $attr[ "attr" ][ "context" ] )
+	                && $attr[ "attr" ][ "context" ] == 'profile' ) {
+	                $attr[ "attr" ][ "context_id" ] = get_current_user_id();
+                } elseif( ! isset ( $attr[ "attr" ][ "context_id" ] ) && isset ( $post->ID ) ){
+	                $attr[ "attr" ][ "context_id" ] = $post->ID;
                 }
                 
                 //check if context is group, then the gallery should only be visible to users according to the group privacy

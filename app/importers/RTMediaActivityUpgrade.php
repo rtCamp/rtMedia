@@ -49,6 +49,8 @@ class RTMediaActivityUpgrade {
 					add_action( 'admin_notices', array( &$this, 'add_rtmedia_media_activity_upgrade_notice' ) );
 				}
 			}
+		} else {
+			rtmedia_update_site_option( 'rtmedia_activity_done_upgrade', true );
 		}
 	}
 

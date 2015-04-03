@@ -120,7 +120,12 @@ class RTMediaTemplate {
 							$rtaccount = 0;
 						}
 						//add_action("rtmedia_before_media_gallery",array(&$this,"")) ;
-						if ( isset( $shortcode_attr[ 'attr' ] ) && isset( $shortcode_attr[ 'attr' ][ 'uploader' ] ) && $shortcode_attr[ 'attr' ][ 'uploader' ] == "before" ){
+						$include_uploader = false;
+						if ( isset( $shortcode_attr[ 'attr' ] ) && isset( $shortcode_attr[ 'attr' ][ 'uploader' ] ) ){
+							$include_uploader = $shortcode_attr[ 'attr' ][ 'uploader' ];
+							unset( $shortcode_attr[ 'attr' ][ 'uploader' ] );
+						}
+						if ( $include_uploader == "before" ){
 							echo RTMediaUploadShortcode::pre_render( $shortcode_attr[ 'attr' ] );
 						}
 						echo "<div class='rtmedia_gallery_wrapper'>";
@@ -128,7 +133,7 @@ class RTMediaTemplate {
 						$gallery_template = apply_filters( "rtmedia-before-template", $template, $shortcode_attr );
 						include $this->locate_template( $gallery_template );
 						echo "</div>";
-						if ( isset( $shortcode_attr[ 'attr' ] ) && isset( $shortcode_attr[ 'attr' ][ 'uploader' ] ) && ( $shortcode_attr[ 'attr' ][ 'uploader' ] == "after" || $shortcode_attr[ 'attr' ][ 'uploader' ] == "true" ) ){
+						if ( $include_uploader == "after" || $include_uploader == "true" ){
 							echo RTMediaUploadShortcode::pre_render( $shortcode_attr[ 'attr' ] );
 						}
 					} else {
@@ -292,6 +297,7 @@ class RTMediaTemplate {
 				unset ( $data[ 'rtmedia_media_nonce' ] );
 				unset ( $data[ '_wp_http_referer' ] );
 				unset ( $data[ 'submit' ] );
+				$data       = rtmedia_sanitize_object( $_POST, $data );
 				$album = $model->get_media( array( 'id' => $rtmedia_query->media_query[ 'album_id' ] ), false, false );
 				$state = $media->update( $album[ 0 ]->id, $data, $album[ 0 ]->media_id );
 				global $rtmedia_points_media_id;
