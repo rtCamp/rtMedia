@@ -33,8 +33,11 @@ if ( typeof Object.create !== 'function' ) {
 			self.rtTabContent( activeTabContent = 'yes' );
 			self.rtClick();
 
+			// Datahash Variable
+			var datahash = ( self.$elem.attr( 'data-hash' ) === 'false' ) ? false : true;
+
 			/* This will keep on same tab as in hashtag */
-			if ( self.options.hashTag === true ) {
+			if ( datahash === true ) {
 				var hashTag = window.location.hash;
 
 				if ( hashTag ) {
@@ -72,8 +75,11 @@ if ( typeof Object.create !== 'function' ) {
 				var activeTab = $( this ).attr( 'href' );
 				$( activeTab ).removeClass( 'hide' );
 
+				// Datahash Variable
+				var datahash = ( self.$elem.attr( 'data-hash' ) === 'false' ) ? false : true;
+
 				/* Hash tag in URL */
-				if ( self.options.hashTag === true ) {
+				if ( datahash === true ) {
 					var pos = $( window ).scrollTop();
 					location.hash = $( this ).attr( 'href' );
 					$( window ).scrollTop( pos );
@@ -117,7 +123,6 @@ if ( typeof Object.create !== 'function' ) {
 
 	$.fn.rtTab.options = {
 		activeTab: 1,
-		hashTag: true,
 		onComplete: null
 	};
 
