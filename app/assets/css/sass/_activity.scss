@@ -93,7 +93,10 @@
 	margin-right: 10px;
 }
 
-// Video title make center align
-.rtmedia-list-item.media-type-video {
-	display: inline-block;
+// Video/Music title make center align
+.rtmedia-list-item {
+	&.media-type-music,
+	&.media-type-video {
+		display: inline-block;
+	}
 }
