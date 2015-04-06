@@ -1191,7 +1191,7 @@ function rtmedia_vedio_editor_title() {
 			}
 		}
 		if ( $flag ) {
-			echo '<dd><a href="#panel2"><i class="dashicons dashicons-format-image rtmicon"></i>' . __( 'Video Thumbnail', 'rtmedia' ) . '</a></dd>';
+			echo '<li><a href="#panel2"><i class="dashicons dashicons-format-image rtmicon"></i>' . __( 'Video Thumbnail', 'rtmedia' ) . '</a></li>';
 		}
 	}
 }
