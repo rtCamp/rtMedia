@@ -72,20 +72,21 @@ function rtmedia_album_name() {
 }
 
 function get_rtmedia_gallery_title() {
-	global $rtmedia_query, $rtmedia;
-	$title = false;
-	if ( isset( $rtmedia_query->query[ 'media_type' ] ) && $rtmedia_query->query[ 'media_type' ] == "album" && isset( $rtmedia_query->media_query[ 'album_id' ] ) && $rtmedia_query->media_query[ 'album_id' ] != "" ) {
-		$id = $rtmedia_query->media_query[ 'album_id' ];
-		$title = get_rtmedia_title( $id );
-	} elseif ( isset( $rtmedia_query->media_query[ 'media_type' ] ) && ! is_array( $rtmedia_query->media_query[ 'media_type' ] ) && $rtmedia_query->media_query[ 'media_type' ] != "" ) {
-		$current_media_type = $rtmedia_query->media_query[ 'media_type' ];
-		if ( $current_media_type != "" && is_array( $rtmedia->allowed_types ) && is_array( $rtmedia->allowed_types[ $current_media_type ] ) && isset( $rtmedia->allowed_types[ $current_media_type ][ 'plural_label' ] ) ) {
-			$title = sprintf( '%s %s', __( 'All', 'rtmedia' ), $rtmedia->allowed_types[ $current_media_type ][ 'plural_label' ] );
-		}
-	}
-	$title = apply_filters( 'rtmedia_gallery_title', $title );
+    global $rtmedia_query, $rtmedia;
+    $title = false;
+    if( isset( $rtmedia_query->query[ 'media_type' ] ) && $rtmedia_query->query[ 'media_type' ] == "album" && isset( $rtmedia_query->media_query[ 'album_id' ] ) && $rtmedia_query->media_query[ 'album_id' ] != "" ){
+        $id = $rtmedia_query->media_query[ 'album_id' ];
+        $title = get_rtmedia_title( $id );
+    } elseif( isset( $rtmedia_query->media_query[ 'media_type' ] ) && ! is_array( $rtmedia_query->media_query[ 'media_type' ] ) && $rtmedia_query->media_query[ 'media_type' ] != "" ){
+        $current_media_type = $rtmedia_query->media_query[ 'media_type' ];
+        
+        if( $current_media_type != "" && is_array( $rtmedia->allowed_types ) && isset( $rtmedia->allowed_types[ $current_media_type ] ) && is_array( $rtmedia->allowed_types[ $current_media_type ] ) && isset( $rtmedia->allowed_types[ $current_media_type ][ 'plural_label' ] ) ) {
+            $title = sprintf( '%s %s', __( 'All', 'rtmedia' ), $rtmedia->allowed_types[ $current_media_type ][ 'plural_label' ] );
+        }
+    }
+    $title = apply_filters( 'rtmedia_gallery_title', $title );
 
-	return $title;
+    return $title;
 }
 
 function get_rtmedia_title( $id ) {

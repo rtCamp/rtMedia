@@ -215,7 +215,7 @@ class RTMediaModel extends RTDBModel {
 			$sub_sql = "SELECT DISTINCT (album_id) FROM {$this->table_name} WHERE media_author = $author_id AND album_id IS NOT NULL AND media_type <> 'album' AND context <> 'group'";
 		}
 
-		$where = " WHERE (id IN( $sub_sql ) OR (media_author = $author_id ))
+		$where = " WHERE (id IN( $sub_sql ))
 			    AND media_type = 'album'
 			    AND (context = 'profile' or context is NULL) ";
 		if ( is_multisite() ){
@@ -241,9 +241,9 @@ class RTMediaModel extends RTDBModel {
 
 			$sql .= ' LIMIT ' . $offset . ',' . $per_page;
 		}
-
+        
 		$results = $wpdb->get_results( $sql );
-
+        
 		return $results;
 	}
 
