@@ -155,6 +155,19 @@ if ( ! class_exists( 'RTMediaAddon' ) ){
 		public function plugins_content( $args = '' ){
 			$img_src = RTMEDIA_URL . 'app/assets/img/';
 			$addons  = array(
+				'general' => array(
+					array(
+						'title' => __( 'rtMedia Social Sync', 'rtmedia' ),
+						'img_src' => $img_src . 'rtmedia-social-sync-240x184.png',
+						'product_link' => 'https://rtcamp.com/products/rtmedia-social-sync/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media',
+						'desc' => '<p>' . __( 'rtMedia Social Sync allows you to import media from your Facebook account.', 'rtmedia' ) . '</p> <p><strong>' . __( 'Important', 'rtmedia' ) . ':</strong> ' . __( 'Facebook app is required to work this add-on.', 'rtmedia' ) . '</p>',
+						'price' => '$49',
+						'demo_link' => 'http://demo.rtcamp.com/rtmedia/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media',
+						'buy_now' => 'https://rtcamp.com/products/rtmedia-social-sync/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media',
+						'category' => 'general',
+						'purchased' => ( defined( 'RTMEDIA_SOCIAL_SYNC_URL' ) || file_exists( WP_PLUGIN_DIR . '/rtmedia-social-sync/index.php' ) ) ? true : false,
+					),
+				),
 				'photo' => array(
 					array(
 						'title' => __( 'rtMedia Photo Watermark', 'rtmedia' ),
@@ -219,7 +232,7 @@ if ( ! class_exists( 'RTMediaAddon' ) ){
 						'title' => __( 'rtMedia Membership Add-on', 'rtmedia' ),
 						'img_src' => $img_src . 'rtmedia-membership-240x184.png',
 						'product_link' => 'https://rtcamp.com/products/rtmedia-membership/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media',
-						'desc' => '<p>' . __( 'rtMedia Membership addon provides membership functionality in your site.', 'rtmedia' ) . '</p> <p>' . __( 'It controls the number of files a member can upload and size of the files uploaded based on membership group.', 'rtmedia' ) . '</p>',
+						'desc' => '<p>' . __( 'rtMedia Membership add-on provides membership functionality in your site.', 'rtmedia' ) . '</p> <p>' . __( 'It controls the number of files a member can upload and size of the files uploaded based on membership group.', 'rtmedia' ) . '</p>',
 						'price' => '$99',
 						'buy_now' => 'https://rtcamp.com/products/rtmedia-membership/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media',
 						'category' => 'membership',
@@ -229,9 +242,18 @@ if ( ! class_exists( 'RTMediaAddon' ) ){
 			);
 			$addons  = apply_filters( 'rtmedia_addons', $addons );
 
+			$general_addons = $addons['general'];
 			$photo_addons = $addons['photo'];
 			$video_addons = $addons['video'];
 			$membership_addons = $addons['membership'];
+
+			echo '<h3>';
+			echo ( sizeof( $general_addons ) > 1 ) ? __( 'rtMedia Addons', 'rtmedia' ) : __( 'rtMedia Addon', 'rtmedia' );
+			echo '</h3>';
+
+			foreach ( $general_addons as $key => $value ) {
+				$this->addon( $value );
+			}
 
 			echo '<h3>';
 			_e( 'rtMedia Addons for Photos', 'rtmedia' );
