@@ -5,8 +5,11 @@
 		do_action( 'rtmedia_before_media' );
 
 		if ( have_rtmedia() ) : rtmedia();
+
+			global $rtmedia_media;
+			$type = ! empty( $rtmedia_media->media_type ) ? $rtmedia_media->media_type : 'none';
 			?>
-			<div id="rtmedia-single-media-container" class="rtmedia-single-media rtm-single-media">
+			<div id="rtmedia-single-media-container" class="rtmedia-single-media rtm-single-media rtm-media-type-<?php echo $type; ?>">
 				<?php if ( ! $rt_ajax_request ) { ?>
 
 					<span class="rtmedia-media-title">
@@ -96,7 +99,7 @@
 						</div>
 					<?php } ?>
 
-				<?php } else { // else for if ( $rt_ajax_request )?>
+				<?php } else { // else for if ( $rt_ajax_request ) ?>
 
 					<div class="rtmedia-item-actions rtm-single-actions rtm-item-actions clearfix">
 						<?php do_action( 'rtmedia_actions_without_lightbox' ); ?>

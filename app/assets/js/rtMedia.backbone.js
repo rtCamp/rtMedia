@@ -368,6 +368,14 @@ jQuery( function ( $ ) {
 				rtm_file_name_array = file.name.split( '.' );
 				file.title = rtm_file_name_array[0];
 
+				var hook_respo = rtMediaHook.call( 'rtmedia_js_file_added', [ up, file, "#rtmedia_uploader_filelist" ] );
+
+				if ( hook_respo == false ) {
+					file.status = - 1;
+					upload_remove_array.push( file.id );
+					return true;
+				}
+
 				jQuery( '.rtmedia-upload-input' ).attr( 'value', rtmedia_add_more_files_msg );
 				jQuery( '.start-media-upload' ).show();
 				if ( uploaderObj.uploader.settings.max_file_size < file.size ) {
@@ -661,9 +669,9 @@ jQuery( document ).ready( function ( $ ) {
 		}
 	}, 100 );
 
-    if( $( '#whats-new-options' ).length > 0 && $( 'rtnedia-uploader-div' ).length > 0 ) {
-        $( '#whats-new-options' ).append( $( 'rtnedia-uploader-div' ) );
-    }
+	if ( $( '#whats-new-options' ).length > 0 && $( 'rtnedia-uploader-div' ).length > 0 ) {
+		$( '#whats-new-options' ).append( $( 'rtnedia-uploader-div' ) );
+	}
 
 	$( "#whats-new-form" ).on( 'click', '#rtmedia-add-media-button-post-update', function ( e ) {
 		objUploadView.uploader.refresh();
@@ -682,10 +690,20 @@ jQuery( document ).ready( function ( $ ) {
 			rtm_file_name_array = file.name.split( '.' );
 			file.title = rtm_file_name_array[0];
 
+			var hook_respo = rtMediaHook.call( 'rtmedia_js_file_added', [ upl, file, "#rtmedia_uploader_filelist" ] );
+
+			if ( hook_respo == false ) {
+				file.status = - 1;
+				objUploadView.upload_remove_array.push( file.id );
+				return true;
+			}
+
 			if ( objUploadView.uploader.settings.max_file_size < file.size ) {
 				return true;
 			}
+
 			var tmp_array = file.name.split( "." );
+
 			if ( rtmedia_version_compare( rtm_wp_version, "3.9" ) ) { // plupload getting updated in 3.9
 				var ext_array = objUploadView.uploader.settings.filters.mime_types[0].extensions.split( ',' );
 			} else {

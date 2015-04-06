@@ -78,7 +78,7 @@
 		border: 0 none;
 		border-radius: 2px;
 		color: rgba($white, 0.5);
-		display: block;
+		float: left;
 		font-family: inherit;
 		font-weight: normal;
 		line-height: 24px;
@@ -403,4 +403,18 @@
 
 #rtm-mejs-video-container {
 	margin: 0 auto;
+}
+
+.rtmedia-media-name {
+    float: left;
+    max-width: 160px;
+    overflow: hidden;
+    text-align: left;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.rtm-single-media.rtm-media-type-video {
+	padding-left: 40px;
+	padding-right: 40px;
 }
