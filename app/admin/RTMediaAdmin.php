@@ -104,6 +104,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ){
 			add_action( 'wp_ajax_rtmedia_hide_template_override_notice', array( $this, 'rtmedia_hide_template_override_notice' ), 1 );
 			add_action( 'admin_init', array( $this, 'rtmedia_bp_add_update_type' ) );
 			add_action( 'wp_ajax_rtmedia_hide_inspirebook_release_notice', array( $this, 'rtmedia_hide_inspirebook_release_notice' ), 1 );
+			add_action( 'wp_ajax_rtmedia_hide_social_sync_notice', array( $this, 'rtmedia_hide_social_sync_notice' ), 1 );
 			$rtmedia_media_import = new RTMediaMediaSizeImporter(); // do not delete this line. We only need to create object of this class if we are in admin section
 			if ( class_exists( 'BuddyPress' ) ){
 				$rtmedia_activity_upgrade = new RTMediaActivityUpgrade();
@@ -153,7 +154,53 @@ if ( ! class_exists( 'RTMediaAdmin' ) ){
 				$this->rtmedia_addon_update_notice();
 				$this->rtmedia_update_template_notice();
 				$this->rtmedia_inspirebook_release_notice();
+				$this->rtmedia_social_sync_release_notice();
 			}
+		}
+
+		/*
+		 *  Show social sync release notice admin notice.
+		 */
+		function rtmedia_social_sync_release_notice(){
+			$site_option = rtmedia_get_site_option( 'rtmedia_social_sync_release_notice' );
+			if ( ! $site_option || 'hide' != $site_option ){
+				rtmedia_update_site_option( 'rtmedia_social_sync_release_notice', 'show' );
+				?>
+				<div class="updated rtmedia-social-sync-notice">
+					<p>
+						<span>
+							<b>rtMedia: </b> Meet
+							<a href="https://rtcamp.com/products/rtmedia-social-sync/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media" target="_blank">
+								<b>rtMedia Social Sync</b>
+							</a> which allows you to import media from your Facebook account.
+						</span>
+						<a href="#" onclick="rtmedia_hide_social_sync_notice()" style="float:right">Dismiss</a>
+					</p>
+				</div>
+				<script type="text/javascript">
+					function rtmedia_hide_social_sync_notice() {
+						var data = {action: 'rtmedia_hide_social_sync_notice'};
+						jQuery.post( ajaxurl, data, function ( response ) {
+							response = response.trim();
+							if ( response === "1" )
+								jQuery( '.rtmedia-social-sync-notice' ).remove();
+						} );
+					}
+				</script>
+			<?php
+			}
+		}
+
+		/*
+		 * Hide social sync release notice
+		 */
+		function rtmedia_hide_social_sync_notice(){
+			if ( rtmedia_update_site_option( 'rtmedia_social_sync_release_notice', 'hide' ) ){
+				echo '1';
+			} else {
+				echo '0';
+			}
+			die();
 		}
 
 		/**
@@ -174,11 +221,11 @@ if ( ! class_exists( 'RTMediaAdmin' ) ){
 					<p>
 						<span><a href="https://rtcamp.com/store/inspirebook/" target="_blank"><b>Meet
 									InspireBook</b></a> - First official rtMedia premium theme.</span>
-						<a href="#" onclick="rtmedia_hide_template_override_notice()" style="float:right">Dismiss</a>
+						<a href="#" onclick="rtmedia_hide_inspirebook_notice()" style="float:right">Dismiss</a>
 					</p>
 				</div>
 				<script type="text/javascript">
-					function rtmedia_hide_template_override_notice() {
+					function rtmedia_hide_inspirebook_notice() {
 						var data = {action: 'rtmedia_hide_inspirebook_release_notice'};
 						jQuery.post( ajaxurl, data, function ( response ) {
 							response = response.trim();
