@@ -925,7 +925,7 @@ Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_sou
 == Upgrade Notice ==
 
 = 3.7.36 =
-Requires BuddyPress 1.7 or higher, if using BuddyPress. Fix Media Url upload issue, fix delete attachment issue while reassigning user ,add Social Sync in add-on list
+Requires BuddyPress 1.7 or higher, if using BuddyPress. Fix Media Url upload issue, fix delete attachment issue while reassigning user, add Social Sync in add-on list
 
 == Sponsors ==
 
