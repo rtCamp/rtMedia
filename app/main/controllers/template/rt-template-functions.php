@@ -72,21 +72,21 @@ function rtmedia_album_name() {
 }
 
 function get_rtmedia_gallery_title() {
-    global $rtmedia_query, $rtmedia;
-    $title = false;
-    if( isset( $rtmedia_query->query[ 'media_type' ] ) && $rtmedia_query->query[ 'media_type' ] == "album" && isset( $rtmedia_query->media_query[ 'album_id' ] ) && $rtmedia_query->media_query[ 'album_id' ] != "" ){
-        $id = $rtmedia_query->media_query[ 'album_id' ];
-        $title = get_rtmedia_title( $id );
-    } elseif( isset( $rtmedia_query->media_query[ 'media_type' ] ) && ! is_array( $rtmedia_query->media_query[ 'media_type' ] ) && $rtmedia_query->media_query[ 'media_type' ] != "" ){
-        $current_media_type = $rtmedia_query->media_query[ 'media_type' ];
-        
-        if( $current_media_type != "" && is_array( $rtmedia->allowed_types ) && isset( $rtmedia->allowed_types[ $current_media_type ] ) && is_array( $rtmedia->allowed_types[ $current_media_type ] ) && isset( $rtmedia->allowed_types[ $current_media_type ][ 'plural_label' ] ) ) {
-            $title = sprintf( '%s %s', __( 'All', 'rtmedia' ), $rtmedia->allowed_types[ $current_media_type ][ 'plural_label' ] );
-        }
-    }
-    $title = apply_filters( 'rtmedia_gallery_title', $title );
+	global $rtmedia_query, $rtmedia;
+	$title = false;
+	if ( isset( $rtmedia_query->query[ 'media_type' ] ) && $rtmedia_query->query[ 'media_type' ] == "album" && isset( $rtmedia_query->media_query[ 'album_id' ] ) && $rtmedia_query->media_query[ 'album_id' ] != "" ) {
+		$id = $rtmedia_query->media_query[ 'album_id' ];
+		$title = get_rtmedia_title( $id );
+	} elseif ( isset( $rtmedia_query->media_query[ 'media_type' ] ) && ! is_array( $rtmedia_query->media_query[ 'media_type' ] ) && $rtmedia_query->media_query[ 'media_type' ] != "" ) {
+		$current_media_type = $rtmedia_query->media_query[ 'media_type' ];
 
-    return $title;
+		if ( $current_media_type != "" && is_array( $rtmedia->allowed_types ) && isset( $rtmedia->allowed_types[ $current_media_type ] ) && is_array( $rtmedia->allowed_types[ $current_media_type ] ) && isset( $rtmedia->allowed_types[ $current_media_type ][ 'plural_label' ] ) ) {
+			$title = sprintf( '%s %s', __( 'All', 'rtmedia' ), $rtmedia->allowed_types[ $current_media_type ][ 'plural_label' ] );
+		}
+	}
+	$title = apply_filters( 'rtmedia_gallery_title', $title );
+
+	return $title;
 }
 
 function get_rtmedia_title( $id ) {
@@ -1006,30 +1006,29 @@ function rtmedia_get_pagination_values() {
 	}
 
 	if ( 1 != $pages ) {
-		$rtmedia_media_pages .= "<div class='clear'></div><br />";
-		$rtmedia_media_pages .= "<div class='pagination text-right'>";
+		$rtmedia_media_pages .= "<div class='pagination rtm-pagination clearfix'>";
 
 		//if( $pages > 100 ) {
-		$rtmedia_media_pages .= "<div class='rtmedia-page-no'>";
+		$rtmedia_media_pages .= "<div class='rtmedia-page-no rtm-page-number'>";
+		$rtmedia_media_pages .= "<span class='rtm-label'>";
 		$rtmedia_media_pages .= apply_filters( 'rtmedia_goto_page_label', __( "Go to page no : ", 'rtmedia' ) );
+		$rtmedia_media_pages .= "</span>";
 		$rtmedia_media_pages .= "<input type='hidden' id='rtmedia_first_page' value='1' />";
 		$rtmedia_media_pages .= "<input type='hidden' id='rtmedia_last_page' value='" . $pages . "' />";
-		$rtmedia_media_pages .= "<input type='number' value='" . $paged . "' min='1' max='" . $pages . "' id='rtmedia_go_to_num' />";
-		$rtmedia_media_pages .= "<a class='rtmedia-page-link' data-page-type='num' href='#'>" . __( 'Go', 'rtmedia' ) . "</a>";
-		$rtmedia_media_pages .= "</div>";
+		$rtmedia_media_pages .= "<input type='number' value='" . $paged . "' min='1' max='" . $pages . "' class='rtm-go-to-num' id='rtmedia_go_to_num' />";
+		$rtmedia_media_pages .= "<a class='rtmedia-page-link button' data-page-type='num' href='#'>" . __( 'Go', 'rtmedia' ) . "</a>";
+		$rtmedia_media_pages .= "</div><div class='rtm-paginate'>";
 		//}
 
 		if ( $paged > 1 && $showitems < $pages ) {
 			$page_url = ( ( rtmedia_page() - 1 ) == 1 ) ? "" : "pg/" . ( rtmedia_page() - 1 );
-			$rtmedia_media_pages .= "<a class='rtmedia-page-link' data-page-type='prev' href='" . $page_url . "'>&lsaquo;</a>";
+			$rtmedia_media_pages .= "<a class='rtmedia-page-link' data-page-type='prev' href='" . $page_url . "'><i class='dashicons dashicons-arrow-left-alt2'></i></a>";
 		}
-
 
 		if ( $paged > 2 && $paged > $range + 1 && $showitems < $pages ) {
 			$page_url = 'pg/1';
 			$rtmedia_media_pages .= "<a class='rtmedia-page-link' data-page-type='page' data-page='1' href='" . $page_url . "'>1</a><span>...</span>";
 		}
-
 
 		for ( $i = 1; $i <= $pages; $i ++ ) {
 			if ( 1 != $pages && ( ! ($i >= $paged + $range + 1 || $i <= $paged - $range - 1) || $pages <= $showitems ) ) {
@@ -1043,14 +1042,12 @@ function rtmedia_get_pagination_values() {
 			$rtmedia_media_pages .= "<span>...</span><a class='rtmedia-page-link' data-page-type='page' data-page='" . $pages . "' href='" . $page_url . "'>" . $pages . "</a>";
 		}
 
-
 		if ( $paged < $pages && $showitems < $pages ) {
 			$page_url = 'pg/' . ( rtmedia_page() + 1 );
-			$rtmedia_media_pages .= "<a class='rtmedia-page-link' data-page-type='next' href='" . $page_url . "'>&rsaquo;</a>";
+			$rtmedia_media_pages .= "<a class='rtmedia-page-link' data-page-type='next' href='" . $page_url . "'><i class='dashicons dashicons-arrow-right-alt2'></i></a>";
 		}
 
-
-		$rtmedia_media_pages .= "</div>\n";
+		$rtmedia_media_pages .= "</div></div>\n";
 	}
 
 	return $rtmedia_media_pages;

@@ -1,49 +1,57 @@
 <div class="rtmedia-container">
-    <?php 
-    do_action( 'rtmedia_before_album_gallery' );
-    
+	<?php
+	do_action( 'rtmedia_before_album_gallery' );
+
 	$title = get_rtmedia_gallery_title();
-    ?>
+	?>
+
     <div id="rtm-gallery-title-container" class="clearfix">
         <h2 class="rtm-gallery-title">
-            <?php 
-            if( $title ) { 
-                echo $title;
-            } else { 
-                _e( 'Album List' , 'rtmedia' ) ;
-            } ?>
+			<?php
+			if ( $title ) {
+				echo $title;
+			} else {
+				_e( 'Album List', 'rtmedia' );
+			}
+			?>
         </h2>
+
         <div id="rtm-media-options" class="rtm-media-options">
-            <?php do_action( 'rtmedia_album_gallery_actions' ); ?>
+			<?php do_action( 'rtmedia_album_gallery_actions' ); ?>
         </div>
     </div>
+
 	<?php do_action( 'rtmedia_after_album_gallery_title' ); ?>
+
     <div id="rtm-media-gallery-uploader" class="rtm-media-gallery-uploader">
 		<?php rtmedia_uploader( array( 'is_up_shortcode' => false ) ); ?>
     </div>
-	<?php if( have_rtmedia() ) { ?>
+
+	<?php if ( have_rtmedia() ) { ?>
+
 		<ul class="rtmedia-list rtmedia-album-list">
-			<?php while( have_rtmedia() ) : rtmedia(); ?>
+			<?php while ( have_rtmedia() ) : rtmedia(); ?>
 				<?php include ('album-gallery-item.php'); ?>
 			<?php endwhile; ?>
 		</ul>
-		<div class="rtmedia_next_prev rtm-load-more">
+
+		<div class="rtmedia_next_prev rtm-load-more clearfix">
 			<!-- these links will be handled by backbone -->
 			<?php
 			global $rtmedia;
-            
+
 			$general_options = $rtmedia->options;
-            
-			if( isset( $rtmedia->options[ 'general_display_media' ] ) && $general_options[ 'general_display_media' ] == 'pagination' ) {
+
+			if ( isset( $rtmedia->options[ 'general_display_media' ] ) && $general_options[ 'general_display_media' ] == 'pagination' ) {
 				echo rtmedia_media_pagination();
 			} else {
 				$display = '';
-                
-				if( rtmedia_offset() + rtmedia_per_page_media() < rtmedia_count() ) {
+
+				if ( rtmedia_offset() + rtmedia_per_page_media() < rtmedia_count() ) {
 					$display = 'style="display:block;"';
-                } else {
+				} else {
 					$display = 'style="display:none;"';
-                }
+				}
 				?>
 				<a id="rtMedia-galary-next" <?php echo $display; ?> href="<?php echo rtmedia_pagination_next_link(); ?>"><?php echo __( 'Load More', 'rtmedia' ); ?></a>
 				<?php
@@ -54,11 +62,12 @@
 		<p class="rtmedia-no-media-found">
 			<?php
 			$message = __( "Sorry !! There's no media found for the request !!", "rtmedia" );
-            
+
 			echo apply_filters( 'rtmedia_no_media_found_message_filter', $message );
 			?>
 		</p>
 	<?php } ?>
+
 	<?php do_action( 'rtmedia_after_album_gallery' ); ?>
 </div>
 

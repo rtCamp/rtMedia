@@ -48,7 +48,7 @@
 
 		</ul>
 
-		<div class="rtmedia_next_prev rtm-load-more">
+		<div class="rtmedia_next_prev rtm-load-more clearfix">
 			<!-- these links will be handled by backbone -->
 			<?php
 			global $rtmedia;

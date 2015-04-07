@@ -121,6 +121,65 @@
 	}
 }
 
+// Pagination
+.rtmedia_next_prev {
+	padding: 0 10px;
+}
+
+.rtm-page-number {
+	float: left;
+
+	.rtm-label {
+		line-height: 30px;
+	}
+
+	.rtm-label,
+	.rtm-go-to-num,
+	.rtmedia-page-link {
+		float: left;
+	}
+}
+
+.rtm-pagination {
+
+	&.pagination {
+		box-shadow: 0 0 0;
+	}
+
+	.rtm-paginate {
+
+		float: right;
+		font-size: 15px;
+
+		a, span {
+			display: inline-block;
+			line-height: 1;
+			margin: 0 2px;
+			padding: 8px;
+		}
+
+		a.rtmedia-page-link {
+			padding: 8px;
+		}
+	}
+
+	.dashicons {
+		font-size: 14px;
+		height: auto;
+		line-height: 1.2;
+		margin: 0;
+		padding: 0;
+		width: auto;
+	}
+}
+
+#rtmedia_go_to_num {
+	font-size: 16px;
+	margin: 0 5px;
+	padding: 4px 5px;
+	width: 80px;
+}
+
 // Footer Link
 .rtmedia-footer-link {
 	clear: both;
