@@ -1195,6 +1195,9 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 								  enctype="multipart/form-data">
 								<div class="bp-media-metabox-holder">
 									<div class="rtm-button-container top">
+                                        <?php if( isset( $_GET[ 'settings-saved' ] ) && $_GET[ 'settings-saved' ] ) { ?>
+                                            <div class="rtm-warning rtm-fly-warning rtm-save-settings-msg"><?php _e( 'Settings saved successfully!', 'rtmedia' ); ?></div>
+                                        <?php } ?>
 										<input type="hidden" name="rtmedia-options-save" value="true">
 										<input type="submit" class="rtmedia-settings-submit button button-primary button-big" value="<?php _e( 'Save Settings', 'rtmedia' ); ?>">
 									</div>
