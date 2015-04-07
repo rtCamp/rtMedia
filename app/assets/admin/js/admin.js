@@ -1,4 +1,11 @@
 jQuery( document ).ready( function ( $ ) {
+    
+    // Hide settings saved message
+    if( $( '.rtm-save-settings-msg' ).length > 0 ) {
+        setTimeout( function() {
+            $( '.rtm-save-settings-msg' ).remove();
+        }, 10000 );
+    }
 
 	/* Linkback */
 	jQuery( '#spread-the-word' ).on( 'click', '#bp-media-add-linkback', function () {
@@ -123,7 +130,7 @@ jQuery( document ).ready( function ( $ ) {
 
 		if ( ! return_code ) {
 			e.preventDefault();
-		}
+        }
 	} );
 
 	jQuery( document ).on( 'click', "#bpm-services .encoding-try-now,#rtm-services .encoding-try-now", function ( e ) {

@@ -182,8 +182,12 @@ if ( ! class_exists( 'RTMediaSettings' ) ){
 				if ( $is_rewrite_rule_flush ){
 					flush_rewrite_rules( false );
 				}
+                $settings_saved = '';
+                if( !isset( $_GET[ 'settings-saved' ] ) ) {
+                    $settings_saved = '&settings-saved=true';
+                }
 				if( isset( $_SERVER['HTTP_REFERER'] ) ){
-					wp_redirect( $_SERVER['HTTP_REFERER'] );
+					wp_redirect( $_SERVER['HTTP_REFERER'] . $settings_saved );
 				}
 				global $rtmedia;
 				$rtmedia->options = $options;
