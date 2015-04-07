@@ -128,8 +128,16 @@ http://www.youtube.com/watch?v####dJrykKQGDcs
 
 Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "Visit rtMedia's Features page") to get some details about future releases.
 
+#### 3.7.36 ####
+* Fix Media Url upload issue
+* Fix delete attachment issue while reassigning user
+* Add Social Sync in add-on list
+
+#### 3.7.35 ####
+* Fix JSON API parameters bug.
+
 #### 3.7.34 ####
-* Added tabs support in rtMedia
+* Added tabs support in rtMedia uploader
 * Fix activity upgrade
 * Add klein theme in 3rd party theme list
 * Fix uplaoder param in gallery shortcode database error
@@ -914,8 +922,8 @@ Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_sou
 * HTML5 Audio Tag Support (with fallback)
 * HTML5 Video Tag Support (with fallback)
 
-#### 3.7.34 ####
-Requires BuddyPress 1.7 or higher, if using BuddyPress. Added tabs support in rtMedia, fix activity upgrade, add klein theme in 3rd party theme list, other bug fixes.
+#### 3.7.36 ####
+Requires BuddyPress 1.7 or higher, if using BuddyPress. Fix Media Url upload issue, fix delete attachment issue while reassigning user, add Social Sync in add-on list
 
 ## Sponsors ##
 
