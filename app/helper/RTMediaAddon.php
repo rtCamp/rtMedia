@@ -193,9 +193,18 @@ if ( ! class_exists( 'RTMediaAddon' ) ) {
 			);
 			$addons = apply_filters( 'rtmedia_addons', $addons );
 
+            $general_addons = $addons['general'];
 			$photo_addons = $addons[ 'photo' ];
 			$video_addons = $addons[ 'video' ];
 			$membership_addons = $addons[ 'membership' ];
+            
+            echo '<h3 class="rtm-option-title">';
+			_e( 'rtMedia Addons', 'rtmedia' );
+			echo '</h3>';
+
+			foreach ( $general_addons as $key => $value ) {
+				$this->addon( $value );
+			}
 
 			echo '<h3 class="rtm-option-title">';
 			_e( 'rtMedia Addons for Photos', 'rtmedia' );
