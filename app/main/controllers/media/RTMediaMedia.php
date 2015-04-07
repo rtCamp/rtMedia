@@ -76,7 +76,7 @@ class RTMediaMedia {
 	 */
 	public function delete_hook() {
 		add_action( 'delete_attachment', array( $this, 'delete_wordpress_attachment' ) );
-        add_action( 'delete_user', array( $this, 'reassign_wordpress_user'), 10, 2 );
+		add_action( 'delete_user', array( $this, 'reassign_wordpress_user'), 10, 2 );
 	}
 
 	/**
