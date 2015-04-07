@@ -143,6 +143,11 @@ if ( ! class_exists( 'RTMediaSettings' ) ){
 			if ( isset( $options['general_videothumbs'] ) && intval( $options['general_videothumbs'] ) > 10 ){
 				$options['general_videothumbs'] = 10;
 			}
+            
+            // Checking if video_thumbnails value is less then 0
+            if ( isset( $options['general_videothumbs'] ) && intval( $options['general_videothumbs'] ) <= 0 ){
+				$options['general_videothumbs'] = 2;
+			}
 
 			// Checking if number of media perpage is integer or not
 			if( isset( $options[ 'general_perPageMedia' ] ) ) {
@@ -152,7 +157,7 @@ if ( ! class_exists( 'RTMediaSettings' ) ){
 					$options[ 'general_perPageMedia' ] = round( $options[ 'general_perPageMedia' ] );
 				}
 			}
-
+            
 			return $options;
 		}
 

@@ -760,7 +760,7 @@ class RTMediaFormHandler {
 
 		<?php
 		$options = $rtmedia->options;
-
+        
 		// Checking if user has subscribed any plan for encoding
 		$rtmedia_encoding_api_key = get_rtmedia_encoding_api_key();
 
@@ -779,12 +779,10 @@ class RTMediaFormHandler {
 			);
 			?>
 
-			<div class="clearfix">
+			<div class="rtm-option-wrapper">
 				<?php self::render_option_group( __( 'Encoding Settings', 'rtmedia' ) ); ?>
+                <?php self::render_option_content( $render_video_thumb ); ?>
 			</div>
-
-			<?php self::render_option_content( $render_video_thumb ); ?>
-
 			<?php
 		}
 
