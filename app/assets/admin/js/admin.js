@@ -1,11 +1,11 @@
 jQuery( document ).ready( function ( $ ) {
-    
-    // Hide settings saved message
-    if( $( '.rtm-save-settings-msg' ).length > 0 ) {
-        setTimeout( function() {
-            $( '.rtm-save-settings-msg' ).remove();
-        }, 10000 );
-    }
+
+	// Hide settings saved message
+	if ( $( '.rtm-save-settings-msg' ).length > 0 ) {
+		setTimeout( function () {
+			$( '.rtm-save-settings-msg' ).remove();
+		}, 10000 );
+	}
 
 	/* Linkback */
 	jQuery( '#spread-the-word' ).on( 'click', '#bp-media-add-linkback', function () {
@@ -73,10 +73,10 @@ jQuery( document ).ready( function ( $ ) {
 			var error_msg = "";
 			var general_videothumb_val = 0;
 			if ( general_videothumb.val() <= 0 ) {
-				error_msg += "Number of video thumbnails to be generated should be greater than 0 in image sizes settings. Setting it to default value 2.";
+				error_msg += "Number of video thumbnails to be generated should be greater than 0 in media sizes settings. Setting it to default value 2.";
 				general_videothumb_val = 2;
 			} else if ( ! reg.test( general_videothumb.val() ) ) {
-				error_msg += 'Invalid value for Number of video thumbnails in image sizes settings. Setting it to round value ' + Math.round( general_videothumb.val() ) + ".";
+				error_msg += 'Invalid value for Number of video thumbnails in media sizes settings. Setting it to round value ' + Math.round( general_videothumb.val() ) + ".";
 				general_videothumb_val = Math.round( general_videothumb.val() );
 			}
 			if ( error_msg != "" ) {
@@ -92,13 +92,13 @@ jQuery( document ).ready( function ( $ ) {
 			var error_msg = "";
 			var general_jpeg_image_quality_val = 0;
 			if ( general_jpeg_image_quality.val() <= 0 ) {
-				error_msg += "Number of percentage in JPEG image quality should be greater than 0 in image sizes settings. Setting it to default value 90.";
+				error_msg += "Number of percentage in JPEG image quality should be greater than 0 in media sizes settings. Setting it to default value 90.";
 				general_jpeg_image_quality_val = 90;
 			} else if ( general_jpeg_image_quality.val() > 100 ) {
-				error_msg += "Number of percentage in JPEG image quality should be less than 100 in image sizes settings. Setting it to 100.";
+				error_msg += "Number of percentage in JPEG image quality should be less than 100 in media sizes settings. Setting it to 100.";
 				general_jpeg_image_quality_val = 100;
 			} else if ( ! reg.test( general_jpeg_image_quality.val() ) ) {
-				error_msg += 'Invalid value for percentage in JPEG image quality in image sizes settings. Setting it to round value ' + Math.round( general_jpeg_image_quality.val() ) + ".";
+				error_msg += 'Invalid value for percentage in JPEG image quality in media sizes settings. Setting it to round value ' + Math.round( general_jpeg_image_quality.val() ) + ".";
 				general_jpeg_image_quality_val = Math.round( general_jpeg_image_quality.val() );
 			}
 			if ( error_msg != "" ) {
@@ -130,7 +130,7 @@ jQuery( document ).ready( function ( $ ) {
 
 		if ( ! return_code ) {
 			e.preventDefault();
-        }
+		}
 	} );
 
 	jQuery( document ).on( 'click', "#bpm-services .encoding-try-now,#rtm-services .encoding-try-now", function ( e ) {

@@ -160,9 +160,10 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 		/*
 		 *  Show social sync release notice admin notice.
 		 */
-		function rtmedia_social_sync_release_notice(){
+
+		function rtmedia_social_sync_release_notice() {
 			$site_option = rtmedia_get_site_option( 'rtmedia_social_sync_release_notice' );
-			if ( ! $site_option || 'hide' != $site_option ){
+			if ( ! $site_option || 'hide' != $site_option ) {
 				rtmedia_update_site_option( 'rtmedia_social_sync_release_notice', 'show' );
 				?>
 				<div class="updated rtmedia-social-sync-notice">
@@ -178,7 +179,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 				</div>
 				<script type="text/javascript">
 					function rtmedia_hide_social_sync_notice() {
-						var data = {action: 'rtmedia_hide_social_sync_notice'};
+						var data = { action: 'rtmedia_hide_social_sync_notice' };
 						jQuery.post( ajaxurl, data, function ( response ) {
 							response = response.trim();
 							if ( response === "1" )
@@ -186,15 +187,16 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 						} );
 					}
 				</script>
-			<?php
+				<?php
 			}
 		}
 
 		/*
 		 * Hide social sync release notice
 		 */
-		function rtmedia_hide_social_sync_notice(){
-			if ( rtmedia_update_site_option( 'rtmedia_social_sync_release_notice', 'hide' ) ){
+
+		function rtmedia_hide_social_sync_notice() {
+			if ( rtmedia_update_site_option( 'rtmedia_social_sync_release_notice', 'hide' ) ) {
 				echo '1';
 			} else {
 				echo '0';
@@ -225,7 +227,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 				</div>
 				<script type="text/javascript">
 					function rtmedia_hide_inspirebook_notice() {
-						var data = {action: 'rtmedia_hide_inspirebook_release_notice'};
+						var data = { action: 'rtmedia_hide_inspirebook_release_notice' };
 						jQuery.post( ajaxurl, data, function ( response ) {
 							response = response.trim();
 							if ( response === "1" )
@@ -1195,9 +1197,9 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 								  enctype="multipart/form-data">
 								<div class="bp-media-metabox-holder">
 									<div class="rtm-button-container top">
-                                        <?php if( isset( $_GET[ 'settings-saved' ] ) && $_GET[ 'settings-saved' ] ) { ?>
-                                            <div class="rtm-warning rtm-fly-warning rtm-save-settings-msg"><?php _e( 'Settings saved successfully!', 'rtmedia' ); ?></div>
-                                        <?php } ?>
+										<?php if ( isset( $_GET[ 'settings-saved' ] ) && $_GET[ 'settings-saved' ] ) { ?>
+											<div class="rtm-warning rtm-fly-warning rtm-save-settings-msg"><?php _e( 'Settings saved successfully!', 'rtmedia' ); ?></div>
+				<?php } ?>
 										<input type="hidden" name="rtmedia-options-save" value="true">
 										<input type="submit" class="rtmedia-settings-submit button button-primary button-big" value="<?php _e( 'Save Settings', 'rtmedia' ); ?>">
 									</div>
@@ -1226,8 +1228,8 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 									</div>
 								</div>
 							</form><?php
-						} else {
-							?>
+								} else {
+									?>
 							<div class="bp-media-metabox-holder">
 								<?php
 								if ( 'rtmedia-addons' == $page ) {
@@ -1254,7 +1256,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 					</div>
 
 					<div class="metabox-holder bp-media-metabox-holder rtm-sidebar">
-						<?php $this->admin_sidebar(); ?>
+			<?php $this->admin_sidebar(); ?>
 					</div>
 
 				</div>
@@ -1448,7 +1450,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 				'href' => '#rtmedia-sizes',
 				'icon' => 'dashicons-editor-expand',
 				'title' => __( 'rtMedia Sizes', 'rtmedia' ),
-				'name' => __( 'Image Sizes', 'rtmedia' ),
+				'name' => __( 'Media Sizes', 'rtmedia' ),
 				'callback' => array( 'RTMediaFormHandler', 'sizes_content' )
 			);
 
@@ -1923,7 +1925,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 						?>
 						<li class="<?php echo $active_class ?>">
 							<a id="tab-<?php echo substr( $tab[ 'href' ], 1 ) ?>" title="<?php echo $tab[ 'title' ] ?>" href="<?php echo $tab[ 'href' ] ?>" class="rtmedia-tab-title <?php echo sanitize_title( $tab[ 'name' ] ) ?>">
-								<?php echo $icon ?><span><?php echo $tab[ 'name' ] ?></span>
+						<?php echo $icon ?><span><?php echo $tab[ 'name' ] ?></span>
 							</a>
 						</li>
 						<?php
