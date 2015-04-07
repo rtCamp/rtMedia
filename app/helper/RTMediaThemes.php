@@ -143,7 +143,8 @@ class RTMediaThemes {
 						<h3 class="theme-name"><?php echo $theme[ 'name' ]; ?></h3>
 
 						<div class="theme-actions">
-							<a class="button button-primary load-customize hide-if-no-customize" href="<?php echo $theme[ 'demo_url' ]; ?>"><?php _e( 'Live Demo' ); ?></a>
+							<a class="button load-customize hide-if-no-customize" href="<?php echo $theme[ 'demo_url' ]; ?>"><?php _e( 'Live Demo' ); ?></a>
+							<a class="button button-primary load-customize hide-if-no-customize" href="<?php echo $theme[ 'buy_url' ]; ?>"><?php _e( 'Buy Now' ); ?></a>
 						</div>
 
 						<div class="rtm-theme-content hide">
@@ -162,7 +163,7 @@ class RTMediaThemes {
 									</div>
 
 									<div class="theme-info">
-										<!--<span class="theme-version">Version: <?php //echo $theme[ 'version' ];      ?></span>-->
+										<!--<span class="theme-version">Version: <?php //echo $theme[ 'version' ];          ?></span>-->
 										<h3 class="theme-name"><?php echo $theme[ 'name' ]; ?></h3>
 										<h4 class="theme-author">By <a href="https://rtcamp.com/"><?php echo $theme[ 'author' ]; ?></a></h4>
 										<p class="theme-description"><?php echo $theme[ 'description' ]; ?> <a href="<?php echo $theme[ 'buy_url' ]; ?>" class="rtmedia-theme-inner-a" target="_blank"><?php _e( 'Read More' ); ?></a></p>
@@ -176,7 +177,7 @@ class RTMediaThemes {
 								</div>
 							</div>
 						</div>
-				</div>
+					</div>
 
 				<?php } ?>
 			</div>
@@ -208,7 +209,7 @@ class RTMediaThemes {
 				'description' => __( 'Klein is an innovative WordPress theme built to support BuddyPress, bbPress, and WooCommerce out of the box. Perfect for websites that interacts with many users.', 'rtmedia' ),
 				'tags' => 'clean, responsive, creative, modern, landing page, social, BuddyPress, bbpress, woocommerce',
 			),
-            'sweetdate' => array(
+			'sweetdate' => array(
 				'name' => __( 'SweetDate', 'rtmedia' ),
 				'version' => '1.0',
 				'image' => RTMEDIA_URL . 'app/assets/admin/img/rtmedia-theme-sweetdate.png',
@@ -251,7 +252,8 @@ class RTMediaThemes {
 						<h3 class="theme-name"><?php echo $theme[ 'name' ]; ?></h3>
 
 						<div class="theme-actions">
-							<a class="button button-primary load-customize hide-if-no-customize" href="<?php echo $theme[ 'demo_url' ]; ?>"><?php _e( 'Live Demo' ); ?></a>
+							<a class="button load-customize hide-if-no-customize" href="<?php echo $theme[ 'demo_url' ]; ?>"><?php _e( 'Live Demo' ); ?></a>
+							<a class="button button-primary load-customize hide-if-no-customize" href="<?php echo $theme[ 'buy_url' ]; ?>"><?php _e( 'Buy Now' ); ?></a>
 						</div>
 
 						<div class="rtm-theme-content hide">
@@ -278,7 +280,7 @@ class RTMediaThemes {
 								</div>
 
 								<div class="theme-actions">
-									<a class="button button-primary load-customize hide-if-no-customize" href="<?php echo $theme[ 'demo_url' ]; ?>"><?php _e( 'Live Demo' ); ?></a>
+									<a class="button load-customize hide-if-no-customize" href="<?php echo $theme[ 'demo_url' ]; ?>"><?php _e( 'Live Demo' ); ?></a>
 									<a class="button button-primary load-customize hide-if-no-customize" href="<?php echo $theme[ 'buy_url' ]; ?>"><?php _e( 'Buy Now' ); ?></a>
 								</div>
 							</div>
