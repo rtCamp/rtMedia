@@ -669,8 +669,8 @@ jQuery( document ).ready( function ( $ ) {
 		}
 	}, 100 );
 
-	if ( $( '#whats-new-options' ).length > 0 && $( 'rtnedia-uploader-div' ).length > 0 ) {
-		$( '#whats-new-options' ).append( $( 'rtnedia-uploader-div' ) );
+	if ( $( '#whats-new-options' ).length > 0 && $( '.rtmedia-uploader-div' ).length > 0 ) {
+		$( '#whats-new-options' ).append( $( '.rtmedia-uploader-div' ) );
 	}
 
 	$( "#whats-new-form" ).on( 'click', '#rtmedia-add-media-button-post-update', function ( e ) {
