@@ -428,7 +428,7 @@ class RTMediaFormHandler {
 					'desc' => __( 'Add your affiliate-id along with footer link and get rewarded by our affiliation program.', 'rtmedia' ),
 				),
 				'group' => 100,
-                'depends' => 'rtmedia_add_linkback',
+				'depends' => 'rtmedia_add_linkback',
 				'after_content' => __( 'Signup for rtMedia affiliate program <a href="https://rtcamp.com/affiliates">here</a>' ),
 			), //
 			'rtmedia_enable_api' => array(
@@ -608,27 +608,27 @@ class RTMediaFormHandler {
 
 						<tr>
 							<td>
-								<?php 
-                                echo $section[ 'name' ]; 
-                                
-                                if( $key != 'other' ) {
-                                    ?>
-                                    <span class="rtm-tooltip rtm-extensions">
-                                        <i class="dashicons dashicons-info rtmicon"></i>
-                                        <span class="rtm-tip">
-                                            <strong><?php echo __( 'File Extensions', 'rtmedia' ); ?></strong><br />
-                                            <hr />
-                                            <?php echo $extensions; ?>
-                                        </span>
-                                    </span>
-                                    <?php 
-                                } 
-                                ?>
+								<?php
+								echo $section[ 'name' ];
+
+								if ( $key != 'other' ) {
+									?>
+									<span class="rtm-tooltip rtm-extensions">
+										<i class="dashicons dashicons-info rtmicon"></i>
+										<span class="rtm-tip">
+											<strong><?php echo __( 'File Extensions', 'rtmedia' ); ?></strong><br />
+											<hr />
+											<?php echo $extensions; ?>
+										</span>
+									</span>
+									<?php
+								}
+								?>
 							</td>
 
 							<td>
-                                <span class="rtm-field-wrap">
-								<?php echo $allow_upload_checkbox; ?></span>
+								<span class="rtm-field-wrap">
+									<?php echo $allow_upload_checkbox; ?></span>
 							</td>
 
 							<td>
@@ -637,8 +637,8 @@ class RTMediaFormHandler {
 
 							<?php do_action( 'rtmedia_type_setting_columns_body', $key, $section ) ?>
 						</tr>
-                        
-                        <?php do_action( 'rtmedia_other_type_settings_textarea', $key ); ?>
+
+						<?php do_action( 'rtmedia_other_type_settings_textarea', $key ); ?>
 
 						<?php
 						do_action( 'rtmedia_type_settings_after_body', $key, $section );
@@ -778,10 +778,13 @@ class RTMediaFormHandler {
 				)
 			);
 			?>
-			<div class="postbox metabox-holder">
+
+			<div class="clearfix">
 				<?php self::render_option_group( __( 'Encoding Settings', 'rtmedia' ) ); ?>
 			</div>
+
 			<?php self::render_option_content( $render_video_thumb ); ?>
+
 			<?php
 		}
 
