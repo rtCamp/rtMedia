@@ -178,7 +178,7 @@
 .rtm-item-actions {
 	float: right;
 
-	.click-nav,
+	& > div,
 	& > form {
 		float: left;
 		margin: 0 2px;
@@ -407,7 +407,7 @@
 
 .rtmedia-media-name {
     float: left;
-    max-width: 160px;
+    max-width: 140px;
     overflow: hidden;
     text-align: left;
     text-overflow: ellipsis;
