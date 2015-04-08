@@ -318,7 +318,9 @@ class RTMediaMedia {
 						global $wpdb, $bp;
 						$wpdb->update( $bp->activity->table_name, array( "type" => "rtmedia_update", "content" => $objActivity->create_activity_html() ), array( "id" => $media[ 0 ]->activity_id ) );
 					} else {
-						bp_activity_delete_by_activity_id( $media[ 0 ]->activity_id );
+                        if( isset( $media[ 0 ] ) && isset( $media[ 0 ]->activity_id ) ) {
+                            bp_activity_delete_by_activity_id( $media[ 0 ]->activity_id );
+                        }
 					}
 				}
 			}
