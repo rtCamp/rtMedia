@@ -760,8 +760,8 @@ class RTMedia
 
 	function set_rtmedia_meta_wpdbfix() {
 		global $wpdb;
-		$wpdb->mediameta = $wpdb->prefix . 'rt_rtm_media_meta';
-		$wpdb->tables[] = 'mediameta';
+		$media_meta = new RTMediaMeta();
+		$wpdb->mediameta = $media_meta->model->table_name;
 	}
 
     function redirect_on_change_slug() {
