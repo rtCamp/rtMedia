@@ -1198,8 +1198,8 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 								<div class="bp-media-metabox-holder">
 									<div class="rtm-button-container top">
 										<?php if ( isset( $_GET[ 'settings-saved' ] ) && $_GET[ 'settings-saved' ] ) { ?>
-											<div class="rtm-warning rtm-fly-warning rtm-save-settings-msg"><?php _e( 'Settings saved successfully!', 'rtmedia' ); ?></div>
-				<?php } ?>
+											<div class="rtm-success rtm-fly-warning rtm-save-settings-msg"><?php _e( 'Settings saved successfully!', 'rtmedia' ); ?></div>
+										<?php } ?>
 										<input type="hidden" name="rtmedia-options-save" value="true">
 										<input type="submit" class="rtmedia-settings-submit button button-primary button-big" value="<?php _e( 'Save Settings', 'rtmedia' ); ?>">
 									</div>
@@ -1228,8 +1228,8 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 									</div>
 								</div>
 							</form><?php
-								} else {
-									?>
+						} else {
+							?>
 							<div class="bp-media-metabox-holder">
 								<?php
 								if ( 'rtmedia-addons' == $page ) {
@@ -1256,7 +1256,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 					</div>
 
 					<div class="metabox-holder bp-media-metabox-holder rtm-sidebar">
-			<?php $this->admin_sidebar(); ?>
+						<?php $this->admin_sidebar(); ?>
 					</div>
 
 				</div>
@@ -1925,7 +1925,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 						?>
 						<li class="<?php echo $active_class ?>">
 							<a id="tab-<?php echo substr( $tab[ 'href' ], 1 ) ?>" title="<?php echo $tab[ 'title' ] ?>" href="<?php echo $tab[ 'href' ] ?>" class="rtmedia-tab-title <?php echo sanitize_title( $tab[ 'name' ] ) ?>">
-						<?php echo $icon ?><span><?php echo $tab[ 'name' ] ?></span>
+								<?php echo $icon ?><span><?php echo $tab[ 'name' ] ?></span>
 							</a>
 						</li>
 						<?php
