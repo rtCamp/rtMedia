@@ -95,6 +95,7 @@
 
 // Video/Music title make center align
 .rtmedia-list-item {
+	&.media-type-document,
 	&.media-type-music,
 	&.media-type-video {
 		display: inline-block;
