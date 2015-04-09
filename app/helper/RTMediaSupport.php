@@ -409,16 +409,28 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 				} else {
 					?>
 					<h3 class="rtm-option-title"><?php echo $meta_title; ?></h3>
-					<div id="support-form" class="bp-media-form rtm-support-form">
+					<div id="support-form" class="bp-media-form rtm-support-form rtm-option-wrapper">
 
 						<div class="rtm-form-filed">
 							<label class="bp-media-label" for="name"><?php _e( 'Name', 'rtmedia' ); ?> :</label>
-							<input class="bp-media-input" id="name" type="text" name="name" value="<?php echo ( isset( $_REQUEST[ 'name' ] ) ) ? esc_attr( stripslashes( trim( $_REQUEST[ 'name' ] ) ) ) : $current_user->display_name; ?>" required/>
+							<input class="bp-media-input" id="name" type="text" name="name" value="" required />
+							<span class="rtm-tooltip">
+								<i class="dashicons dashicons-info rtmicon"></i>
+								<span class="rtm-tip">
+									<?php _e( 'Use actual user name which used during purchased.', 'rtmedia' ); ?>
+								</span>
+							</span>
 						</div>
 
 						<div class="rtm-form-filed">
 							<label class="bp-media-label" for="email"><?php _e( 'Email', 'rtmedia' ); ?> :</label>
-							<input id="email" class="bp-media-input" type="text" name="email" value="<?php echo ( isset( $_REQUEST[ 'email' ] ) ) ? esc_attr( stripslashes( trim( $_REQUEST[ 'email' ] ) ) ) : get_option( 'admin_email' ); ?>" required />
+							<input id="email" class="bp-media-input" type="text" name="email" value="" required />
+							<span class="rtm-tooltip">
+								<i class="dashicons dashicons-info rtmicon"></i>
+								<span class="rtm-tip">
+									<?php _e( 'Use email id which used during purchased', 'rtmedia' ); ?>
+								</span>
+							</span>
 						</div>
 
 						<div class="rtm-form-filed">
