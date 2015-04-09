@@ -48,8 +48,8 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 			$tabs = array();
 			global $rtmedia_admin;
 			$tabs[] = array(
-				'title' => __( 'Premium Support', 'rtmedia' ),
-				'name' => __( 'Premium Support', 'rtmedia' ),
+				'title' => __( 'Support', 'rtmedia' ),
+				'name' => __( 'Support', 'rtmedia' ),
 				'href' => '#support',
 				'icon' => 'dashicons-businessman',
 				'callback' => array( $this, 'call_get_form' ),
@@ -166,7 +166,7 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 			if ( isset( $_REQUEST[ 'page' ] ) && 'rtmedia-support' == $_REQUEST[ 'page' ] ) {
 				//echo "<h2 class='nav-tab-wrapper'>".$this->rtmedia_support_sub_tabs()."</h2>";
 				if ( 'support' == $this->curr_sub_tab ) {
-					echo "<div id='rtmedia_service_contact_container'><form name='rtmedia_service_contact_detail' method='post'>";
+					echo "<div id='rtmedia_service_contact_container' class='rtm-support-container'><form name='rtmedia_service_contact_detail' method='post'>";
 					$this->get_form( 'premium_support' );
 					echo '</form></div>';
 				}
@@ -395,15 +395,15 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 					$meta_title = __( 'Submit a New Feature Request', 'rtmedia' );
 					break;
 				case 'premium_support':
-					$meta_title = __( 'Submit a Premium Support Request', 'rtmedia' );
+					$meta_title = __( 'Submit Support Request', 'rtmedia' );
 					break;
 			}
 
 			if ( 'premium_support' == $form ) {
 				if ( ! defined( 'RTMEDIA_PRO_VERSION' ) ) {
 					$content = '<h3 class="rtm-option-title">' . $meta_title . '</h3>';
-					$content .= '<p>' . __( 'If your site has some issues due to BuddyPress Media and you want one on one support then you can create a support topic on the <a target="_blank" href="http://rtcamp.com/groups/buddypress-media/forum/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media">rtCamp Support Forum</a>.', 'rtmedia' ) . '</p>';
-					$content .= '<p>' . __( 'If you have any suggestions, enhancements or bug reports, then you can open a new issue on <a target="_blank" href="https://github.com/rtCamp/buddypress-media/issues/new">GitHub</a>.', 'rtmedia' ) . '</p>';
+					$content .= '<p>' . __( 'If your site has some issues due to rtMedia and you want support, feel free to create a support topic on <a target="_blank" href="http://community.rtcamp.com/c/rtmedia/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media">Community Forum</a>.', 'rtmedia' ) . '</p>';
+					$content .= '<p>' . __( 'If you have any suggestions, enhancements or bug reports, you can open a new issue on <a target="_blank" href="https://github.com/rtCamp/buddypress-media/issues/new">GitHub</a>.', 'rtmedia' ) . '</p>';
 
 					echo $content;
 				} else {

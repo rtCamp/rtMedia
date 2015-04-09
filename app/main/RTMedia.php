@@ -242,13 +242,13 @@ class RTMedia {
 
 	function custom_style_for_activity_image_size() {
 		?>
-		.rtmedia-activity-container .rtmedia-list .rtmedia-item-thumbnail,.bp_media_content img{
+		.rtmedia-activity-container .media-type-photo .rtmedia-item-thumbnail {
 		max-width: <?php echo $this->options[ "defaultSizes_photo_medium_width" ]; ?>px;
 		max-height: <?php echo $this->options[ "defaultSizes_photo_medium_height" ]; ?>px;
 		}
 		.rtmedia-activity-container .mejs-container.mejs-video{
-		min-height: <?php echo $this->options[ "defaultSizes_video_activityPlayer_height" ]; ?>px;
-		min-width: <?php echo $this->options[ "defaultSizes_video_activityPlayer_width" ]; ?>px;
+		max-height: <?php echo $this->options[ "defaultSizes_video_activityPlayer_height" ]; ?>px;
+		max-width: <?php echo $this->options[ "defaultSizes_video_activityPlayer_width" ]; ?>px;
 		}
 		<?php
 	}
