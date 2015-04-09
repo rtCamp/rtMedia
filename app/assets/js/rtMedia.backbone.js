@@ -417,44 +417,50 @@ jQuery( function ( $ ) {
 
 				// To change the name of the uploading file
 				$( "#label_" + file.id ).click( function ( e ) {
-					e.preventDefault();
+                    e.preventDefault();
 
-					rtm_file_label = this;
-					// Get td for editing
-					rtm_file_td = "#td_" + file.id;
+                    rtm_file_label = this;
+                    rtm_file_title_input = '#text_' + file.id;
+                    rtm_file_title_save = '#save_' + file.id;
 
-					jQuery( rtm_file_label ).hide();
+                    jQuery( rtm_file_label ).hide();
+                    jQuery( rtm_file_label ).siblings( '.plupload_file_name_wrapper' ).hide();
 
-					rtm_file_title_input = '#text_' + file.id;
+                    // show/create text box to edit media title
+                    if( jQuery( rtm_file_title_input ).length === 0 ) {
+                        jQuery( rtm_file_label ).parent( '.plupload_file_name' ).prepend( '<input type="text" id="text_' + file.id + '" value="' + file.title + '" style="width: 75%;" /><span id="save_' + file.id + '" title="Save Change" class="rtmicon dashicons dashicons-yes"></span>' );
+                    } else {
+                        jQuery( rtm_file_title_input ).show();
+                        jQuery( rtm_file_title_save ).show();
+                    }
 
-					// show/create text box to edit media title
-					if ( jQuery( rtm_file_title_input ).length == 0 ) {
-						jQuery( rtm_file_td ).append( '<input type="text" id="text_' + file.id + '" value="' + file.title + '" />' );
-					} else {
-						jQuery( rtm_file_title_input ).show();
-					}
-					jQuery( rtm_file_title_input ).focus();
+                    jQuery( rtm_file_title_input ).focus();
 
-					// set new media title
-					jQuery( rtm_file_title_input ).keyup( function ( e ) {
-						if ( this.value != '' ) {
-							file.title = this.value;
-						}
-						if ( e.keyCode == '13' ) {
-							return false;
-						}
-					} );
+                    // set new media title
+                    jQuery( rtm_file_title_input ).keyup( function( e ) {
+                        if( this.value != '' ) {
+                            file.title = this.value;
+                        }
 
-					// hide input box for media title and show label of media title
-					jQuery( rtm_file_title_input ).blur( function ( e ) {
-						if ( this.value != '' ) {
-							jQuery( rtm_file_title_input ).hide();
-							jQuery( rtm_file_label ).text( file.title + "." + rtm_file_name_array[1] );
-						}
-						jQuery( rtm_file_label ).show();
-					} );
-				} );
+                        if( e.keyCode == '13' ) {
+                            return false;
+                        }
+                    } );
+
+                    // hide input box for media title and show label of media title
+                    jQuery( rtm_file_title_input ).blur( function( e ) {
+                        if ( this.value != '' ) {
+                            jQuery( rtm_file_title_input ).hide();
+                            jQuery( rtm_file_title_save ).hide();
+                            jQuery( rtm_file_label ).siblings( '.plupload_file_name_wrapper' ).text( file.title + "." + rtm_file_name_array[ 1 ] );
+                        }
+
+                        jQuery( rtm_file_label ).siblings( '.plupload_file_name_wrapper' ).show();
+                        jQuery( rtm_file_label ).show();
+                    } );
+                } );
 			} );
+            
 			$.each( upload_remove_array, function ( i, rfile ) {
 				if ( up.getFile( rfile ) )
 					up.removeFile( up.getFile( rfile ) );
@@ -732,44 +738,49 @@ jQuery( document ).ready( function ( $ ) {
 			} );
 
 			// To change the name of the uploading file
-			$( "#label_" + file.id ).click( function ( e ) {
-				e.preventDefault();
+            $( "#label_" + file.id ).click( function ( e ) {
+                e.preventDefault();
 
-				rtm_file_label = this;
-				// Get td for editing
-				rtm_file_td = "#td_" + file.id;
+                rtm_file_label = this;
+                rtm_file_title_input = '#text_' + file.id;
+                rtm_file_title_save = '#save_' + file.id;
 
-				jQuery( rtm_file_label ).hide();
+                jQuery( rtm_file_label ).hide();
+                jQuery( rtm_file_label ).siblings( '.plupload_file_name_wrapper' ).hide();
 
-				rtm_file_title_input = '#text_' + file.id;
+                // show/create text box to edit media title
+                if( jQuery( rtm_file_title_input ).length === 0 ) {
+                    jQuery( rtm_file_label ).parent( '.plupload_file_name' ).prepend( '<input type="text" id="text_' + file.id + '" value="' + file.title + '" style="width: 75%;" /><span id="save_' + file.id + '" title="Save Change" class="rtmicon dashicons dashicons-yes"></span>' );
+                } else {
+                    jQuery( rtm_file_title_input ).show();
+                    jQuery( rtm_file_title_save ).show();
+                }
 
-				// show/create text box to edit media title
-				if ( jQuery( rtm_file_title_input ).length == 0 ) {
-					jQuery( rtm_file_td ).append( '<input type="text" id="text_' + file.id + '" value="' + file.title + '" />' );
-				} else {
-					jQuery( rtm_file_title_input ).show();
-				}
-				jQuery( rtm_file_title_input ).focus();
+                jQuery( rtm_file_title_input ).focus();
 
-				// set new media title
-				jQuery( rtm_file_title_input ).keyup( function ( e ) {
-					if ( this.value != '' ) {
-						file.title = this.value;
-					}
-					if ( e.keyCode == '13' ) {
-						return false;
-					}
-				} );
+                // set new media title
+                jQuery( rtm_file_title_input ).keyup( function( e ) {
+                    if( this.value != '' ) {
+                        file.title = this.value;
+                    }
 
-				// hide input box for media title and show label of media title
-				jQuery( rtm_file_title_input ).blur( function ( e ) {
-					if ( this.value != '' ) {
-						jQuery( rtm_file_title_input ).hide();
-						jQuery( rtm_file_label ).text( file.title + "." + rtm_file_name_array[1] );
-					}
-					jQuery( rtm_file_label ).show();
-				} );
-			} );
+                    if( e.keyCode == '13' ) {
+                        return false;
+                    }
+                } );
+
+                // hide input box for media title and show label of media title
+                jQuery( rtm_file_title_input ).blur( function( e ) {
+                    if ( this.value != '' ) {
+                        jQuery( rtm_file_title_input ).hide();
+                        jQuery( rtm_file_title_save ).hide();
+                        jQuery( rtm_file_label ).siblings( '.plupload_file_name_wrapper' ).text( file.title + "." + rtm_file_name_array[ 1 ] );
+                    }
+
+                    jQuery( rtm_file_label ).siblings( '.plupload_file_name_wrapper' ).show();
+                    jQuery( rtm_file_label ).show();
+                } );
+            } );
 		} );
 
 		$.each( objUploadView.upload_remove_array, function ( i, rfile ) {
@@ -1128,6 +1139,7 @@ function rtmedia_selected_file_list( plupload, file, uploader, error ) {
 	rtmedia_plupload_file += '<span class="plupload_file_name_wrapper">';
 	rtmedia_plupload_file += ( file.name ? file.name : '' );
 	rtmedia_plupload_file += '</span>';
+    rtmedia_plupload_file += '<span id="label_' + file.id + '" class="dashicons dashicons-edit rtmicon" title="Edit File Name"></span>';
 	rtmedia_plupload_file += '</div>';
 	rtmedia_plupload_file += '<div class="plupload_file_action">';
 	rtmedia_plupload_file += '<div class="plupload_action_icon ui-icon plupload_delete">';

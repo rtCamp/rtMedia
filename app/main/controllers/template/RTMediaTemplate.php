@@ -35,7 +35,6 @@ class RTMediaTemplate {
 		$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
 		wp_enqueue_script( 'wp-ajax-response' );
 		wp_enqueue_script( 'rtmedia-image-edit', admin_url( "js/image-edit$suffix.js" ), array( 'jquery', 'json2', 'imgareaselect' ), false, 1 );
-		wp_enqueue_style( 'rtmedia-image-edit', RTMEDIA_URL . 'app/assets/css/image-edit.css' );
 		wp_enqueue_style( 'rtmedia-image-area-select', includes_url( '/js/imgareaselect/imgareaselect.css' ) );
 	}
 
