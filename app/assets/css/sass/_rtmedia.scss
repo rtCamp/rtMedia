@@ -141,10 +141,17 @@
 }
 
 .rtm-pagination {
-
-	&.pagination {
-		box-shadow: 0 0 0;
-	}
+    
+    background: transparent;
+    border: none;
+    color: #888;
+    font-size: small;
+    margin: 0;
+    position: relative;
+    display: block;
+    float: left;
+    width: 100%;
+    padding: 10px 0;
 
 	.rtm-paginate {
 

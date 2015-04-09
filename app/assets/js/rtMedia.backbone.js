@@ -152,7 +152,7 @@ jQuery( function ( $ ) {
 						jQuery( '.rtmedia-container .rtmedia-list' ).css( 'opacity', '1' );
 						rtMediaHook.call( 'rtmedia_after_gallery_load' );
 
-						jQuery( '.rtmedia-container .rtmedia_next_prev .pagination' ).remove();
+						jQuery( '.rtmedia-container .rtmedia_next_prev .rtm-pagination' ).remove();
 						jQuery( '.rtmedia-container .rtmedia_next_prev .clear' ).remove();
 						jQuery( '.rtmedia-container .rtmedia_next_prev .rtm-media-loading' ).remove();
 						jQuery( '.rtmedia-container .rtmedia_next_prev br' ).remove();
@@ -253,7 +253,7 @@ jQuery( function ( $ ) {
 
 	$( document ).on( "click", ".rtmedia-page-link", function ( e ) {
 		if ( jQuery( '.rtm-media-loading' ).length == 0 ) {
-			$( '.pagination' ).before( "<div class='rtm-media-loading'><img src='" + rMedia_loading_media + "' /></div>" );
+			$( '.rtm-pagination' ).before( "<div class='rtm-media-loading'><img src='" + rMedia_loading_media + "' /></div>" );
 		} else {
 			jQuery( '.rtm-media-loading' ).show();
 		}
@@ -278,7 +278,7 @@ jQuery( function ( $ ) {
 		if ( $( this ).data( 'page-type' ) == 'num' ) {
 			galleryObj.getNext( nextpage, $( this ).parent().parent().parent().parent().parent(), $( this ).parent().parent() );
 		} else {
-			galleryObj.getNext( nextpage, $( this ).parent().parent().parent().parent(), $( this ).parent() );
+			galleryObj.getNext( nextpage, $( this ).parent().parent().parent().parent().parent(), $( this ).parent().parent() );
 		}
 	} );
 
