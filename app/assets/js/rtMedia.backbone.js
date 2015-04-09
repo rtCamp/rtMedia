@@ -353,6 +353,7 @@ jQuery( function ( $ ) {
                 }
             }
             jQuery( '.start-media-upload' ).hide();
+            apply_rtMagnificPopup( jQuery( '.rtmedia-list-media, .rtmedia-activity-container ul.rtmedia-list, #bp-media-list,.widget-item-listing,.bp-media-sc-list, li.media.album_updated ul,ul.bp-media-list-media, li.activity-item div.activity-content div.activity-inner div.bp_media_content' ) );
             window.onbeforeunload = null;
         } );
 
