@@ -141,7 +141,7 @@
 }
 
 .rtm-pagination {
-    
+
     background: transparent;
     border: none;
     color: #888;
@@ -193,6 +193,25 @@
     color: #c09853;
 	margin-bottom: 20px;
     padding: 10px 15px;
+}
+
+.plupload_file_name {
+	position: relative;
+
+	.dashicons {
+		background: $light;
+		color: $error;
+		font-size: 14px;
+		height: auto;
+		position: absolute;
+		right: 4px;
+		top: 0;
+		width: auto;
+	}
+
+	.dashicons-yes {
+		color: $success;
+	}
 }
 
 // Footer Link
