@@ -765,7 +765,7 @@ function rtmedia_actions() {
  */
 function rtmedia_comments( $echo = true ) {
 
-	$html = '<ul id="rtmedia_comment_ul" class="large-block-grid-1 rtm-comment-list" data-action="' . get_rtmedia_permalink( rtmedia_id() ) . 'delete-comment/">';
+	$html = '<ul id="rtmedia_comment_ul" class="rtm-comment-list" data-action="' . get_rtmedia_permalink( rtmedia_id() ) . 'delete-comment/">';
 
 	global $wpdb, $rtmedia_media;
 
