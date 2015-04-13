@@ -12,35 +12,39 @@ class RTMediaEncoding {
 	protected $merchant_id = 'paypal@rtcamp.com';
 	public $uploaded = array();
 	public $api_key = false;
+	public $stored_api_key = false;
 
 	public function __construct( $no_init = false ) {
 		$this->api_key = get_site_option( 'rtmedia-encoding-api-key' );
-		if ( $no_init )
+		$this->stored_api_key = get_site_option( 'rtmedia-encoding-api-key-stored' );
+		if ( $no_init ){
 			return;
-		if ( is_admin() ) {
-
-//            add_action('admin_init', array($this, 'encoding_settings'));
-
-			if ( $this->api_key )
-				add_action( 'rtmedia_before_default_admin_widgets', array( $this, 'usage_widget' ) );
+		}
+		if ( is_admin() && $this->api_key ) {
+			add_action( 'rtmedia_before_default_admin_widgets', array( $this, 'usage_widget' ) );
 		}
 
 		add_action( 'admin_init', array( $this, 'save_api_key' ), 1 );
 		if ( $this->api_key ) {
+			// store api key as different db key if user disable encoding service
+			if( !$this->stored_api_key ){
+				$this->stored_api_key = $this->api_key;
+				update_site_option( 'rtmedia-encoding-api-key-stored', $this->stored_api_key );
+			}
 			add_filter( 'rtmedia_allowed_types', array( $this, 'allowed_types_admin_settings' ), 10, 1 );
 			$usage_info = get_site_option( 'rtmedia-encoding-usage' );
 
 			if ( $usage_info ) {
 				if ( isset( $usage_info[ $this->api_key ]->status ) && $usage_info[ $this->api_key ]->status ) {
 					if ( isset( $usage_info[ $this->api_key ]->remaining ) && $usage_info[ $this->api_key ]->remaining > 0 ) {
-						if ( $usage_info[ $this->api_key ]->remaining < 524288000 && ! get_site_option( 'rtmedia-encoding-usage-limit-mail' ) )
-							$this->nearing_usage_limit( $usage_info ); elseif ( $usage_info[ $this->api_key ]->remaining > 524288000 && get_site_option( 'rtmedia-encoding-usage-limit-mail' ) )
+						if ( $usage_info[ $this->api_key ]->remaining < 524288000 && ! get_site_option( 'rtmedia-encoding-usage-limit-mail' ) ){
+							$this->nearing_usage_limit( $usage_info );
+						} elseif ( $usage_info[ $this->api_key ]->remaining > 524288000 && get_site_option( 'rtmedia-encoding-usage-limit-mail' ) ){
 							update_site_option( 'rtmedia-encoding-usage-limit-mail', 0 );
-						/**
-						 * @todo update class_name
-						 */
-						if ( ! class_exists( 'RTMediaFFMPEG' ) && ! class_exists( 'RTMediaKaltura' ) )
+						}
+						if ( ! class_exists( 'RTMediaFFMPEG' ) && ! class_exists( 'RTMediaKaltura' ) ){
 							add_filter( 'rtmedia_after_add_media', array( $this, 'encoding' ), 10, 3 );
+						}
 						$blacklist = array( 'localhost', '127.0.0.1' );
 						if ( ! in_array( $_SERVER[ 'HTTP_HOST' ], $blacklist ) ) {
 							add_filter( 'rtmedia_plupload_files_filter', array( $this, 'allowed_types' ), 10, 1 );
@@ -58,6 +62,7 @@ class RTMediaEncoding {
 		add_action( 'wp_ajax_rtmedia_hide_encoding_notice', array( $this, 'hide_encoding_notice' ), 1 );
 		add_action( 'wp_ajax_rtmedia_enter_api_key', array( $this, 'enter_api_key' ), 1 );
 		add_action( 'wp_ajax_rtmedia_disable_encoding', array( $this, 'disable_encoding' ), 1 );
+		add_action( 'wp_ajax_rtmedia_enable_encoding', array( $this, 'enable_encoding' ), 1 );
 		//add_action('wp_ajax_rtmedia_regenerate_thumbnails', array($this, 'rtmedia_regenerate_thumbnails'), 1);
 	}
 
@@ -302,93 +307,102 @@ class RTMediaEncoding {
 		<p><?php _e( 'rtMedia team has started offering an audio/video encoding service.', 'rtmedia' ); ?></p>
 		<p>
 			<label for="new-api-key"><?php _e( 'Enter API KEY', 'rtmedia' ); ?></label>
-			<input id="new-api-key" type="text" name="new-api-key" value="<?php echo $this->api_key; ?>" size="60"/>
-			<input type="submit" id="api-key-submit" name="api-key-submit"
-			       value="<?php echo __( 'Submit', 'rtmedia' ); ?>" class="button-primary"/>
-			<?php if ( $this->api_key ) { ?><br/><br/><input type="submit" id="disable-encoding" name="disable-encoding"
-			                                                 value="Disable Encoding"
-			                                                 class="button-secondary"/><?php } ?>
+			<input id="new-api-key" type="text" name="new-api-key" value="<?php echo $this->stored_api_key; ?>" size="60"/>
+			<input type="submit" id="api-key-submit" name="api-key-submit" value="<?php echo __( 'Save key', 'rtmedia' ); ?>" class="button-primary"/>
+		</p>
+		<p>
+		<?php
+			$enable_btn_style = 'style="display:none;"';
+			$disable_btn_style = 'style="display:none;"';
+			if ( $this->api_key ){
+				$enable_btn_style = 'style="display:block;"';
+			} else if( $this->stored_api_key ){
+				$disable_btn_style = 'style="display:block;"';
+			}
+		?>
+			<input type="submit" id="disable-encoding" name="disable-encoding" value="Disable Encoding" class="button-secondary" <?php echo $enable_btn_style; ?> />
+			<input type="submit" id="enable-encoding" name="enable-encoding" value="Enable Encoding" class="button-secondary" <?php echo $disable_btn_style; ?> />
 		</p>
 		<table class="bp-media-encoding-table widefat fixed" cellspacing="0">
-			<tbody>
+
 			<!-- Results table headers -->
 			<thead>
-			<tr>
-				<th><?php _e( 'Feature\Plan', 'rtmedia' ); ?></th>
-				<th><?php _e( 'Free', 'rtmedia' ); ?></th>
-				<th><?php _e( 'Silver', 'rtmedia' ); ?></th>
-				<th><?php _e( 'Gold', 'rtmedia' ); ?></th>
-				<th><?php _e( 'Platinum', 'rtmedia' ); ?></th>
-			</tr>
+				<tr>
+					<th><?php _e( 'Feature\Plan', 'rtmedia' ); ?></th>
+					<th><?php _e( 'Free', 'rtmedia' ); ?></th>
+					<th><?php _e( 'Silver', 'rtmedia' ); ?></th>
+					<th><?php _e( 'Gold', 'rtmedia' ); ?></th>
+					<th><?php _e( 'Platinum', 'rtmedia' ); ?></th>
+				</tr>
 			</thead>
-			<tr>
-				<th><?php _e( 'File Size Limit', 'rtmedia' ); ?></th>
-				<td>200MB (
-					<del>20MB</del>
-					)
-				</td>
-				<td colspan="3" class="column-posts">16GB (
-					<del>2GB</del>
-					)
-				</td>
-			</tr>
-			<tr>
-				<th><?php _e( 'Bandwidth (monthly)', 'rtmedia' ); ?></th>
-				<td>10GB (
-					<del>1GB</del>
-					)
-				</td>
-				<td>100GB</td>
-				<td>1TB</td>
-				<td>10TB</td>
-			</tr>
-			<tr>
-				<th><?php _e( 'Overage Bandwidth', 'rtmedia' ); ?></th>
-				<td><?php _e( 'Not Available', 'rtmedia' ); ?></td>
-				<td>$0.10 per GB</td>
-				<td>$0.08 per GB</td>
-				<td>$0.05 per GB</td>
-			</tr>
-			<tr>
-				<th><?php _e( 'Amazon S3 Support', 'rtmedia' ); ?></th>
-				<td><?php _e( 'Not Available', 'rtmedia' ); ?></td>
-				<td colspan="3" class="column-posts"><?php _e( 'Coming Soon', 'rtmedia' ); ?></td>
-			</tr>
-			<tr>
-				<th><?php _e( 'HD Profile', 'rtmedia' ); ?></th>
-				<td><?php _e( 'Not Available', 'rtmedia' ); ?></td>
-				<td colspan="3" class="column-posts"><?php _e( 'Coming Soon', 'rtmedia' ); ?></td>
-			</tr>
-			<tr>
-				<th><?php _e( 'Webcam Recording', 'rtmedia' ); ?></th>
-				<td colspan="4" class="column-posts"><?php _e( 'Coming Soon', 'rtmedia' ); ?></td>
-			</tr>
-			<tr>
-				<th><?php _e( 'Pricing', 'rtmedia' ); ?></th>
-				<td><?php _e( 'Free', 'rtmedia' ); ?></td>
-				<td><?php _e( '$9/month', 'rtmedia' ); ?></td>
-				<td><?php _e( '$99/month', 'rtmedia' ); ?></td>
-				<td><?php _e( '$999/month', 'rtmedia' ); ?></td>
-			</tr>
-			<tr>
-				<th></th>
-				<td><?php
-					$usage_details = get_site_option( 'rtmedia-encoding-usage' );
-					if ( isset( $usage_details[ $this->api_key ]->plan->name ) && ( strtolower( $usage_details[ $this->api_key ]->plan->name ) == 'free' ) ) {
-						echo '<button disabled="disabled" type="submit" class="encoding-try-now button button-primary">' . __( 'Current Plan', 'rtmedia' ) . '</button>';
-					} else {
+			<tbody>
+				<tr>
+					<th><?php _e( 'File Size Limit', 'rtmedia' ); ?></th>
+					<td>200MB (
+						<del>20MB</del>
+						)
+					</td>
+					<td colspan="3" class="column-posts">16GB (
+						<del>2GB</del>
+						)
+					</td>
+				</tr>
+				<tr>
+					<th><?php _e( 'Bandwidth (monthly)', 'rtmedia' ); ?></th>
+					<td>10GB (
+						<del>1GB</del>
+						)
+					</td>
+					<td>100GB</td>
+					<td>1TB</td>
+					<td>10TB</td>
+				</tr>
+				<tr>
+					<th><?php _e( 'Overage Bandwidth', 'rtmedia' ); ?></th>
+					<td><?php _e( 'Not Available', 'rtmedia' ); ?></td>
+					<td>$0.10 per GB</td>
+					<td>$0.08 per GB</td>
+					<td>$0.05 per GB</td>
+				</tr>
+				<tr>
+					<th><?php _e( 'Amazon S3 Support', 'rtmedia' ); ?></th>
+					<td><?php _e( 'Not Available', 'rtmedia' ); ?></td>
+					<td colspan="3" class="column-posts"><?php _e( 'Coming Soon', 'rtmedia' ); ?></td>
+				</tr>
+				<tr>
+					<th><?php _e( 'HD Profile', 'rtmedia' ); ?></th>
+					<td><?php _e( 'Not Available', 'rtmedia' ); ?></td>
+					<td colspan="3" class="column-posts"><?php _e( 'Coming Soon', 'rtmedia' ); ?></td>
+				</tr>
+				<tr>
+					<th><?php _e( 'Webcam Recording', 'rtmedia' ); ?></th>
+					<td colspan="4" class="column-posts"><?php _e( 'Coming Soon', 'rtmedia' ); ?></td>
+				</tr>
+				<tr>
+					<th><?php _e( 'Pricing', 'rtmedia' ); ?></th>
+					<td><?php _e( 'Free', 'rtmedia' ); ?></td>
+					<td><?php _e( '$9/month', 'rtmedia' ); ?></td>
+					<td><?php _e( '$99/month', 'rtmedia' ); ?></td>
+					<td><?php _e( '$999/month', 'rtmedia' ); ?></td>
+				</tr>
+				<tr>
+					<th></th>
+					<td><?php
+						$usage_details = get_site_option( 'rtmedia-encoding-usage' );
+						if ( isset( $usage_details[ $this->api_key ]->plan->name ) && ( strtolower( $usage_details[ $this->api_key ]->plan->name ) == 'free' ) ) {
+							echo '<button disabled="disabled" type="submit" class="encoding-try-now button button-primary">' . __( 'Current Plan', 'rtmedia' ) . '</button>';
+						} else {
+							?>
+							<form id="encoding-try-now-form" method="get" action="">
+							<button type="submit" class="encoding-try-now button button-primary"><?php _e( 'Try Now', 'rtmedia' ); ?></button>
+							</form><?php
+						}
 						?>
-						<form id="encoding-try-now-form" method="get" action="">
-						<button type="submit"
-						        class="encoding-try-now button button-primary"><?php _e( 'Try Now', 'rtmedia' ); ?></button>
-						</form><?php
-					}
-					?>
-				</td>
-				<td><?php echo $this->encoding_subscription_form( 'silver', 9.0 ) ?></td>
-				<td><?php echo $this->encoding_subscription_form( 'gold', 99.0 ) ?></td>
-				<td><?php echo $this->encoding_subscription_form( 'platinum', 999.0 ) ?></td>
-			</tr>
+					</td>
+					<td><?php echo $this->encoding_subscription_form( 'silver', 9.0 ) ?></td>
+					<td><?php echo $this->encoding_subscription_form( 'gold', 99.0 ) ?></td>
+					<td><?php echo $this->encoding_subscription_form( 'platinum', 999.0 ) ?></td>
+				</tr>
 			</tbody>
 		</table><br/><?php
 	}
@@ -625,6 +639,12 @@ class RTMediaEncoding {
 	public function disable_encoding() {
 		update_site_option( 'rtmedia-encoding-api-key', '' );
 		_e( 'Encoding disabled successfully.', 'rtmedia' );
+		die();
+	}
+
+	function enable_encoding(){
+		update_site_option( 'rtmedia-encoding-api-key', $this->stored_api_key );
+		_e( 'Encoding enabled successfully.', 'rtmedia' );
 		die();
 	}
 

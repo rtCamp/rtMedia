@@ -206,12 +206,18 @@ jQuery(document).ready(function($) {
             // since 2.8 ajaxurl is always defined in the admin header and points to admin-ajax.php
             jQuery.post(ajaxurl, data, function(response) {
                 if (response) {
-                    jQuery('settings-error-encoding-disabled').remove();
-                    jQuery('h2:first').after('<div class="updated" id="settings-encoding-successfully-disabled"><p>' + response + '</p></div>');
-                    jQuery('#bp-media-encoding-usage').remove();
-                    jQuery('#disable-encoding').next().remove();
-                    jQuery('#disable-encoding').remove();
-                    jQuery('#new-api-key').val('');
+                    jQuery('.settings-error-encoding-disabled').remove();
+
+	                if( jQuery( '#settings-encoding-successfully-updated' ).length > 0 ){
+		                jQuery( '#settings-encoding-successfully-updated p' ).html( response );
+                    } else {
+		                jQuery('h2:first').after('<div class="updated" id="settings-encoding-successfully-updated"><p>' + response + '</p></div>');
+	                }
+
+                    jQuery('#rtmedia-encoding-usage').hide();
+	                jQuery('#disable-encoding').next( 'img' ).remove();
+                    jQuery('#disable-encoding').hide();
+                    jQuery('#enable-encoding').show();
                 } else {
                     jQuery('#settings-error-encoding-disabled').remove();
                     jQuery('h2:first').after('<div class="error" id="settings-error-encoding-disabled"><p>' + rtmedia_admin_strings.something_went_wrong + '</p></div>');
@@ -219,6 +225,34 @@ jQuery(document).ready(function($) {
             });
         }
     });
+
+	jQuery(document).on('click', '#enable-encoding', function(e) {
+		e.preventDefault();
+		if (confirm(rtmedia_admin_strings.enable_encoding)) {
+			jQuery(this).after('<img style="margin: 0 0 0 10px" src="' + rtmedia_admin_url + 'images/wpspin_light.gif" />')
+			var data = {
+				action: 'rtmedia_enable_encoding'
+			};
+			jQuery.post(ajaxurl, data, function(response) {
+				if (response) {
+					jQuery('.settings-error-encoding-enabled').remove();
+
+					if( jQuery( '#settings-encoding-successfully-updated' ).length > 0 ){
+						jQuery( '#settings-encoding-successfully-updated p' ).html( response );
+					} else {
+						jQuery('h2:first').after('<div class="updated" id="settings-encoding-successfully-updated"><p>' + response + '</p></div>');
+					}
+
+					jQuery('#enable-encoding').next( 'img' ).remove();
+					jQuery('#enable-encoding').hide();
+					jQuery('#disable-encoding').show();
+				} else {
+					jQuery('#settings-error-encoding-disabled').remove();
+					jQuery('h2:first').after('<div class="error" id="settings-error-encoding-enabled"><p>' + rtmedia_admin_strings.something_went_wrong + '</p></div>');
+				}
+			});
+		}
+	});
 
     jQuery('.bp-media-encoding-table').on('click', '.bpm-unsubscribe', function(e) {
         e.preventDefault();
