@@ -163,7 +163,9 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 
 		function rtmedia_social_sync_release_notice() {
 			$site_option = rtmedia_get_site_option( 'rtmedia_social_sync_release_notice' );
-			if ( ! $site_option || 'hide' != $site_option ) {
+            $check_rtmedia_social_sync_installed = file_exists( trailingslashit( WP_PLUGIN_DIR ) . 'rtmedia-social-sync/index.php' );
+            
+			if ( ( ! $site_option || 'hide' != $site_option ) && !$check_rtmedia_social_sync_installed ){
 				rtmedia_update_site_option( 'rtmedia_social_sync_release_notice', 'show' );
 				?>
 				<div class="updated rtmedia-social-sync-notice">
@@ -744,7 +746,11 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 				wp_localize_script( 'rtmedia-admin', 'rtmedia_admin_url', admin_url() );
 
 				$rtmedia_admin_strings = array(
-					'no_refresh' => __( 'Please do not refresh this page.', 'rtmedia' ), 'something_went_wrong' => __( 'Something went wrong. Please <a href onclick="location.reload();">refresh</a> page.', 'rtmedia' ), 'are_you_sure' => __( 'This will subscribe you to the free plan.', 'rtmedia' ), 'disable_encoding' => __( 'Are you sure you want to disable the encoding service? Make sure you note your api key before disabling it, incase you want to activate it in future.', 'rtmedia' )
+					'no_refresh' => __( 'Please do not refresh this page.', 'rtmedia' ),
+					'something_went_wrong' => __( 'Something went wrong. Please <a href onclick="location.reload();">refresh</a> page.', 'rtmedia' ),
+					'are_you_sure' => __( 'This will subscribe you to the free plan.', 'rtmedia' ),
+					'disable_encoding' => __( 'Are you sure you want to disable the encoding service?', 'rtmedia' ),
+					'enable_encoding' => __( 'Are you sure you want to enable the encoding service?', 'rtmedia' ),
 				);
 
 				wp_localize_script( 'rtmedia-admin', 'rtmedia_admin_strings', $rtmedia_admin_strings );
