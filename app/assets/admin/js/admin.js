@@ -59,7 +59,7 @@ jQuery( document ).ready( function ( $ ) {
 		var reg = new RegExp( '^[0-9]+$' );
 
 		jQuery( "input[name*='defaultSizes']" ).each( function ( el ) {
-			if ( ! reg.test( jQuery( this ).val() ) ) {
+			if ( !reg.test( jQuery( this ).val() ) ) {
 				alert( "Invalid value for " + jQuery( this ).attr( 'name' ).replace( 'rtmedia-options[defaultSizes_', '' ).replace( ']', '' ).replace( /_/g, ' ' ).replace( /(\b)([a-zA-Z] )/g, function ( firstLetter ) {
 					return firstLetter.toUpperCase();
 				} ) );
@@ -75,7 +75,7 @@ jQuery( document ).ready( function ( $ ) {
 			if ( general_videothumb.val() <= 0 ) {
 				error_msg += "Number of video thumbnails to be generated should be greater than 0 in media sizes settings. Setting it to default value 2.";
 				general_videothumb_val = 2;
-			} else if ( ! reg.test( general_videothumb.val() ) ) {
+			} else if ( !reg.test( general_videothumb.val() ) ) {
 				error_msg += 'Invalid value for Number of video thumbnails in media sizes settings. Setting it to round value ' + Math.round( general_videothumb.val() ) + ".";
 				general_videothumb_val = Math.round( general_videothumb.val() );
 			}
@@ -97,7 +97,7 @@ jQuery( document ).ready( function ( $ ) {
 			} else if ( general_jpeg_image_quality.val() > 100 ) {
 				error_msg += "Number of percentage in JPEG image quality should be less than 100 in media sizes settings. Setting it to 100.";
 				general_jpeg_image_quality_val = 100;
-			} else if ( ! reg.test( general_jpeg_image_quality.val() ) ) {
+			} else if ( !reg.test( general_jpeg_image_quality.val() ) ) {
 				error_msg += 'Invalid value for percentage in JPEG image quality in media sizes settings. Setting it to round value ' + Math.round( general_jpeg_image_quality.val() ) + ".";
 				general_jpeg_image_quality_val = Math.round( general_jpeg_image_quality.val() );
 			}
@@ -128,7 +128,7 @@ jQuery( document ).ready( function ( $ ) {
 			}
 		}
 
-		if ( ! return_code ) {
+		if ( !return_code ) {
 			e.preventDefault();
 		}
 	} );
@@ -176,10 +176,10 @@ jQuery( document ).ready( function ( $ ) {
 				var hash = window.location.hash;
 				tempUrl = tempUrl.replace( hash, '' );
 
-				if ( tempUrl.toString().indexOf( '&apikey=' + response.apikey ) == - 1 ) {
+				if ( tempUrl.toString().indexOf( '&apikey=' + response.apikey ) == -1 ) {
 					tempUrl += '&apikey=' + response.apikey;
 				}
-				if ( tempUrl.toString().indexOf( '&update=true' ) == - 1 ) {
+				if ( tempUrl.toString().indexOf( '&update=true' ) == -1 ) {
 					tempUrl += '&update=true';
 				}
 
@@ -204,15 +204,49 @@ jQuery( document ).ready( function ( $ ) {
 			// since 2.8 ajaxurl is always defined in the admin header and points to admin-ajax.php
 			jQuery.post( ajaxurl, data, function ( response ) {
 				if ( response ) {
-					jQuery( 'settings-error-encoding-disabled' ).remove();
-					jQuery( 'h2:first' ).after( '<div class="updated" id="settings-encoding-successfully-disabled"><p>' + response + '</p></div>' );
-					jQuery( '#bp-media-encoding-usage' ).remove();
-					jQuery( '#disable-encoding' ).next().remove();
-					jQuery( '#disable-encoding' ).remove();
-					jQuery( '#new-api-key' ).val( '' );
+					jQuery( '.settings-error-encoding-disabled' ).remove();
+
+					if ( jQuery( '#settings-encoding-successfully-updated' ).length > 0 ) {
+						jQuery( '#settings-encoding-successfully-updated p' ).html( response );
+					} else {
+						jQuery( 'h2:first' ).after( '<div class="updated" id="settings-encoding-successfully-updated"><p>' + response + '</p></div>' );
+					}
+
+					jQuery( '#rtmedia-encoding-usage' ).hide();
+					jQuery( '#disable-encoding' ).next( 'img' ).remove();
+					jQuery( '#disable-encoding' ).hide();
+					jQuery( '#enable-encoding' ).show();
 				} else {
 					jQuery( '#settings-error-encoding-disabled' ).remove();
 					jQuery( 'h2:first' ).after( '<div class="error" id="settings-error-encoding-disabled"><p>' + rtmedia_admin_strings.something_went_wrong + '</p></div>' );
+				}
+			} );
+		}
+	} );
+
+	jQuery( document ).on( 'click', '#enable-encoding', function ( e ) {
+		e.preventDefault();
+		if ( confirm( rtmedia_admin_strings.enable_encoding ) ) {
+			jQuery( this ).after( '<img style="margin: 0 0 0 10px" src="' + rtmedia_admin_url + 'images/wpspin_light.gif" />' )
+			var data = {
+				action: 'rtmedia_enable_encoding'
+			};
+			jQuery.post( ajaxurl, data, function ( response ) {
+				if ( response ) {
+					jQuery( '.settings-error-encoding-enabled' ).remove();
+
+					if ( jQuery( '#settings-encoding-successfully-updated' ).length > 0 ) {
+						jQuery( '#settings-encoding-successfully-updated p' ).html( response );
+					} else {
+						jQuery( 'h2:first' ).after( '<div class="updated" id="settings-encoding-successfully-updated"><p>' + response + '</p></div>' );
+					}
+
+					jQuery( '#enable-encoding' ).next( 'img' ).remove();
+					jQuery( '#enable-encoding' ).hide();
+					jQuery( '#disable-encoding' ).show();
+				} else {
+					jQuery( '#settings-error-encoding-disabled' ).remove();
+					jQuery( 'h2:first' ).after( '<div class="error" id="settings-error-encoding-enabled"><p>' + rtmedia_admin_strings.something_went_wrong + '</p></div>' );
 				}
 			} );
 		}
@@ -263,7 +297,7 @@ jQuery( document ).ready( function ( $ ) {
 		return jQuery.post( ajaxurl, data, function ( response ) {
 			if ( response != 0 ) {
 				var redirect = false;
-				var progw = Math.ceil( ( ( ( parseInt( response ) * 20 ) + parseInt( data.values['finished'] ) ) / parseInt( data.values['total'] ) ) * 100 );
+				var progw = Math.ceil( ( ( ( parseInt( response ) * 20 ) + parseInt( data.values[ 'finished' ] ) ) / parseInt( data.values[ 'total' ] ) ) * 100 );
 				if ( progw > 100 ) {
 					progw = 100;
 					redirect = true
@@ -296,17 +330,17 @@ jQuery( document ).ready( function ( $ ) {
 		$progress_parent.find( '.rtprivacytype' ).each( function () {
 			$type = jQuery( this ).attr( 'id' );
 			if ( $type == 'total' ) {
-				$values = [ ];
+				$values = [];
 				jQuery( this ).find( 'input' ).each( function () {
 
-					$values [jQuery( this ).attr( 'name' )] = [ jQuery( this ).val() ];
+					$values [ jQuery( this ).attr( 'name' ) ] = [ jQuery( this ).val() ];
 
 				} );
-				$data = { };
-				for ( var i = 1; i <= $values['steps'][0]; i ++ ) {
+				$data = {};
+				for ( var i = 1; i <= $values[ 'steps' ][ 0 ]; i++ ) {
 					$count = 20;
-					if ( i == $values['steps'][0] ) {
-						$count = parseInt( $values['laststep'][0] );
+					if ( i == $values[ 'steps' ][ 0 ] ) {
+						$count = parseInt( $values[ 'laststep' ][ 0 ] );
 						if ( $count == 0 ) {
 							$count = 20
 						}
@@ -318,7 +352,7 @@ jQuery( document ).ready( function ( $ ) {
 						'count': $count,
 						'values': $values
 					}
-					$data[i] = newvals;
+					$data[ i ] = newvals;
 				}
 				var $startingpoint = jQuery.Deferred();
 				$startingpoint.resolve();
@@ -338,7 +372,7 @@ jQuery( document ).ready( function ( $ ) {
 			favorites = false;
 			if ( response ) {
 				var redirect = false;
-				var media_progw = Math.ceil( ( ( ( parseInt( response.page ) * 5 ) + parseInt( data.values['finished'] ) ) / parseInt( data.values['total'] ) ) * 100 );
+				var media_progw = Math.ceil( ( ( ( parseInt( response.page ) * 5 ) + parseInt( data.values[ 'finished' ] ) ) / parseInt( data.values[ 'total' ] ) ) * 100 );
 				comments_total = jQuery( '#bpmedia-bpalbumimporter .bp-album-comments span.total' ).html();
 				users_total = jQuery( '#bpmedia-bpalbumimporter .bp-album-users span.total' ).html();
 				media_total = jQuery( '#bpmedia-bpalbumimporter .bp-album-media span.total' ).html();
@@ -365,14 +399,14 @@ jQuery( document ).ready( function ( $ ) {
 					}
 					jQuery.post( ajaxurl, favorite_data, function ( response ) {
 						if ( response.favorites !== 0 || response.favorites !== '0' ) {
-							if ( ! jQuery( '.bp-album-favorites' ).length )
+							if ( !jQuery( '.bp-album-favorites' ).length )
 								jQuery( '.bp-album-comments' ).after( '<br /><div class="bp-album-favorites"><strong>User\'s Favorites: <span class="finished">0</span> / <span class="total">' + response.users + '</span></strong><div id="rtprogressbar"><div style="width:0%"></div></div></div>' );
-							$favorites = { };
+							$favorites = {};
 							if ( response.offset != 0 || response.offset != '0' )
 								start = response.offset * 1 + 1;
 							else
 								start = 1
-							for ( var i = start; i <= response.users; i ++ ) {
+							for ( var i = start; i <= response.users; i++ ) {
 								$count = 1;
 								if ( i == response.users ) {
 									$count = parseInt( response.users % $count );
@@ -386,7 +420,7 @@ jQuery( document ).ready( function ( $ ) {
 									'offset': ( i - 1 ) * 1,
 									'redirect': i == response.users
 								}
-								$favorites[i] = newvals;
+								$favorites[ i ] = newvals;
 							}
 							var $startingpoint = jQuery.Deferred();
 							$startingpoint.resolve();
@@ -441,20 +475,20 @@ jQuery( document ).ready( function ( $ ) {
 
 	jQuery( '#bpmedia-bpalbumimporter' ).on( 'click', '#bpmedia-bpalbumimport', function ( e ) {
 		e.preventDefault();
-		if ( ! jQuery( '#bp-album-import-accept' ).prop( 'checked' ) ) {
+		if ( !jQuery( '#bp-album-import-accept' ).prop( 'checked' ) ) {
 			jQuery( 'html, body' ).animate( {
 				scrollTop: jQuery( '#bp-album-import-accept' ).offset().top
 			}, 500 );
 			var $el = jQuery( '.bp-album-import-accept' ),
-					x = 500,
-					originalColor = '#FFEBE8',
-					i = 3; //counter
+				x = 500,
+				originalColor = '#FFEBE8',
+				i = 3; //counter
 
 			( function loop() { //recurisve IIFE
 				$el.css( "background-color", "#EE0000" );
 				setTimeout( function () {
 					$el.css( "background-color", originalColor );
-					if ( -- i )
+					if ( --i )
 						setTimeout( loop, x ); //restart loop
 				}, x );
 			}() );
@@ -463,25 +497,25 @@ jQuery( document ).ready( function ( $ ) {
 			jQuery( this ).prop( 'disabled', true );
 		}
 		wp_admin_url = ajaxurl.replace( 'admin-ajax.php', '' );
-		if ( ! jQuery( '.bpm-ajax-loader' ).length )
+		if ( !jQuery( '.bpm-ajax-loader' ).length )
 			jQuery( this ).after( ' <img class="bpm-ajax-loader" src="' + wp_admin_url + 'images/wpspin_light.gif" /> <strong>' + rtmedia_admin_strings.no_refresh + '</strong>' );
 
 
 		$progress_parent = jQuery( '#bpmedia-bpalbumimport' );
-		$values = [ ];
+		$values = [];
 		jQuery( this ).parent().find( 'input' ).each( function () {
-			$values [jQuery( this ).attr( 'name' )] = [ jQuery( this ).val() ];
+			$values [ jQuery( this ).attr( 'name' ) ] = [ jQuery( this ).val() ];
 
 		} );
 
-		if ( $values['steps'][0] == 0 )
-			$values['steps'][0] = 1;
+		if ( $values[ 'steps' ][ 0 ] == 0 )
+			$values[ 'steps' ][ 0 ] = 1;
 
-		$data = { };
-		for ( var i = 1; i <= $values['steps'][0]; i ++ ) {
+		$data = {};
+		for ( var i = 1; i <= $values[ 'steps' ][ 0 ]; i++ ) {
 			$count = 5;
-			if ( i == $values['steps'][0] ) {
-				$count = parseInt( $values['laststep'][0] );
+			if ( i == $values[ 'steps' ][ 0 ] ) {
+				$count = parseInt( $values[ 'laststep' ][ 0 ] );
 				if ( $count == 0 ) {
 					$count = 5
 				}
@@ -493,7 +527,7 @@ jQuery( document ).ready( function ( $ ) {
 				'count': $count,
 				'values': $values
 			}
-			$data[i] = newvals;
+			$data[ i ] = newvals;
 		}
 		var $startingpoint = jQuery.Deferred();
 		$startingpoint.resolve();
@@ -629,7 +663,20 @@ jQuery( document ).ready( function ( $ ) {
 		var ip_address = jQuery( 'input[name="ip_address"]' ).val();
 		var server_type = jQuery( 'input[name="server_type"]' ).val();
 		var user_agent = jQuery( 'input[name="user_agent"]' ).val();
-		var form_data = { name: name, email: email, website: website, phone: phone, subject: subject, details: details, request_id: request_id, request_type: 'premium_support', server_address: server_address, ip_address: ip_address, server_type: server_type, user_agent: user_agent };
+		var form_data = {
+			name: name,
+			email: email,
+			website: website,
+			phone: phone,
+			subject: subject,
+			details: details,
+			request_id: request_id,
+			request_type: 'premium_support',
+			server_address: server_address,
+			ip_address: ip_address,
+			server_type: server_type,
+			user_agent: user_agent
+		};
 		if ( request_type == "bug_report" ) {
 			var wp_admin_username = jQuery( '#wp_admin_username' ).val();
 			if ( wp_admin_username == "" ) {
@@ -656,10 +703,28 @@ jQuery( document ).ready( function ( $ ) {
 				alert( "Please enter SSH / FTP password." );
 				return false;
 			}
-			form_data = { name: name, email: email, website: website, phone: phone, subject: subject, details: details, request_id: request_id, request_type: 'premium_support', server_address: server_address, ip_address: ip_address, server_type: server_type, user_agent: user_agent, wp_admin_username: wp_admin_username, wp_admin_pwd: wp_admin_pwd, ssh_ftp_host: ssh_ftp_host, ssh_ftp_username: ssh_ftp_username, ssh_ftp_pwd: ssh_ftp_pwd };
+			form_data = {
+				name: name,
+				email: email,
+				website: website,
+				phone: phone,
+				subject: subject,
+				details: details,
+				request_id: request_id,
+				request_type: 'premium_support',
+				server_address: server_address,
+				ip_address: ip_address,
+				server_type: server_type,
+				user_agent: user_agent,
+				wp_admin_username: wp_admin_username,
+				wp_admin_pwd: wp_admin_pwd,
+				ssh_ftp_host: ssh_ftp_host,
+				ssh_ftp_username: ssh_ftp_username,
+				ssh_ftp_pwd: ssh_ftp_pwd
+			};
 		}
 		for ( formdata in form_data ) {
-			if ( form_data[formdata] == "" && formdata != 'phone' ) {
+			if ( form_data[ formdata ] == "" && formdata != 'phone' ) {
 				alert( "Please enter " + formdata.replace( "_", " " ) + " field." );
 				return false;
 			}
