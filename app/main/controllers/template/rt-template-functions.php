@@ -1006,7 +1006,7 @@ function rtmedia_get_pagination_values() {
 	}
 
 	if ( 1 != $pages ) {
-		$rtmedia_media_pages .= "<div class='pagination rtm-pagination clearfix'>";
+		$rtmedia_media_pages .= "<div class='rtm-pagination clearfix'>";
 
 		//if( $pages > 100 ) {
 		$rtmedia_media_pages .= "<div class='rtmedia-page-no rtm-page-number'>";
