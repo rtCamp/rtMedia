@@ -203,21 +203,43 @@ jQuery('document').ready(function($) {
     }
 
     jQuery.ajaxPrefilter(function(options, originalOptions, jqXHR) {
-	try{
-            if (originalOptions.data == null || typeof(originalOptions.data) == "undefined" || typeof(originalOptions.data.action) == "undefined" ) {
-                return true;
-            }
-        }catch(e){
-            return true;
-        }
-	if (originalOptions.data.action == 'activity_get_older_updates') {
-	    var orignalSuccess = originalOptions.success;
-	    options.success = function(response) {
-		orignalSuccess(response);
-		apply_rtMagnificPopup('.rtmedia-activity-container ul.rtmedia-list, #bp-media-list, .bp-media-sc-list, li.media.album_updated ul,ul.bp-media-list-media, li.activity-item div.activity-content div.activity-inner div.bp_media_content');
-		rtMediaHook.call('rtmedia_js_after_activity_added', []);
+		try{
+	        if (originalOptions.data == null || typeof(originalOptions.data) == "undefined" || typeof(originalOptions.data.action) == "undefined" ) {
+	            return true;
+	        }
+	    }catch(e){
+	        return true;
 	    }
-	}
+
+	    // Handle lightbox in BuddyPress activity loadmore
+	    if (originalOptions.data.action == 'activity_get_older_updates') {
+		    var orignalSuccess = originalOptions.success;
+		    options.success = function(response) {
+				orignalSuccess(response);
+				apply_rtMagnificPopup('.rtmedia-activity-container ul.rtmedia-list, #bp-media-list, .bp-media-sc-list, li.media.album_updated ul,ul.bp-media-list-media, li.activity-item div.activity-content div.activity-inner div.bp_media_content');
+				rtMediaHook.call('rtmedia_js_after_activity_added', []);
+		    }
+		} else if ( originalOptions.data.action == 'get_single_activity_content' ) {
+		    // Handle lightbox in BuddyPress single activity loadmore
+		    var orignalSuccess = originalOptions.success;
+		    options.success = function ( response ) {
+			    orignalSuccess( response );
+			    setTimeout( function(){
+				    apply_rtMagnificPopup('.rtmedia-activity-container ul.rtmedia-list, #bp-media-list, .bp-media-sc-list, li.media.album_updated ul,ul.bp-media-list-media, li.activity-item div.activity-content div.activity-inner div.bp_media_content');
+				    jQuery( 'ul.activity-list li.rtmedia_update:first-child .wp-audio-shortcode, ul.activity-list li.rtmedia_update:first-child .wp-video-shortcode' ).mediaelementplayer( {
+
+					    // if the <video width> is not specified, this is the default
+					    defaultVideoWidth: 480,
+					    // if the <video height> is not specified, this is the default
+					    defaultVideoHeight: 270
+					    // if set, overrides <video width>
+					    //videoWidth: 1,
+					    // if set, overrides <video height>
+					    //videoHeight: 1
+				    } );
+			    }, 900 );
+		    }
+	    }
     });
 
     jQuery('.rtmedia-container').on('click', '.select-all', function(e) {
