@@ -27,7 +27,7 @@
 					<div class='rtm-ltb-action-container clearfix'>
 						<div class='rtm-ltb-title'>
 							<span class="rtmedia-media-name <?php if ( rtmedia_album_name() ) { ?>rtmedia-media-name-width-50<?php } else { ?>rtmedia-media-name-width-100<?php } ?>">
-								<a href="<?php echo rtmedia_permalink(); ?>" title="<?php echo rtmedia_title(); ?>"><?php echo rtmedia_title(); ?></a>
+								&nbsp;<a href="<?php echo rtmedia_permalink(); ?>" title="<?php echo rtmedia_title(); ?>"><?php echo rtmedia_title(); ?></a>
 							</span>
 
 							<?php if ( rtmedia_album_name() ) { ?>

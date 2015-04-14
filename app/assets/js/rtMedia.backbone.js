@@ -1177,9 +1177,17 @@ function rtmedia_selected_file_list( plupload, file, uploader, error ) {
 		};
 
 		img.load( file.getSource() );
-	} else if ( /video/i.test( type ) ) {
-		jQuery( '<img src="' + rtmedia_media_thumbs[ 'video' ] + '" />' ).appendTo( '#file_thumb_' + file.id );
-	} else if ( /audio/i.test( type ) ) {
-		jQuery( '<img src="' + rtmedia_media_thumbs[ 'music' ] + '" />' ).appendTo( '#file_thumb_' + file.id );
-	}
+	} else {
+        var media_title = file.name;
+        var ext = media_title.substring( media_title.lastIndexOf( "." ) + 1, media_title.length );
+        
+        jQuery.each( rtmedia_exteansions, function( key, value ) {
+            if( value.indexOf( ext ) >= 0 ) {
+                jQuery( '<img src="' + rtmedia_media_thumbs[ key ] + '" />' ).appendTo( '#file_thumb_' + file.id );
+                
+                return false;
+            }
+        } );
+    }
+    
 }

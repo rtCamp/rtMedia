@@ -29,7 +29,7 @@
 
 	<?php if ( have_rtmedia() ) { ?>
 
-		<ul class="rtmedia-list rtmedia-album-list">
+		<ul class="rtmedia-list rtmedia-album-list clearfix">
 			<?php while ( have_rtmedia() ) : rtmedia(); ?>
 				<?php include ('album-gallery-item.php'); ?>
 			<?php endwhile; ?>

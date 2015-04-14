@@ -78,8 +78,16 @@ class RTMediaGalleryShortcode {
         if ( wp_is_mobile () )
             $params[ 'multi_selection' ] = false;
 
-	   $params = apply_filters("rtmedia_modify_upload_params",$params);
-
+	    $params = apply_filters("rtmedia_modify_upload_params",$params);
+       
+        global $rtmedia;
+        $rtmedia_extns = array();
+        
+        foreach( $rtmedia->allowed_types as $allowed_types_key => $allowed_types_value ) {
+            $rtmedia_extns[ $allowed_types_key ] = $allowed_types_value[ 'extn' ];
+        }
+        
+        wp_localize_script ( 'rtmedia-backbone', 'rtmedia_exteansions', $rtmedia_extns );
         wp_localize_script ( 'rtmedia-backbone', 'rtMedia_plupload_config', $params );
         wp_localize_script ( 'rtmedia-backbone', 'rMedia_loading_file', admin_url ( "/images/loading.gif" ) );
     }
