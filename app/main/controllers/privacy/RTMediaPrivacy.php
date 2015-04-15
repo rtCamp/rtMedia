@@ -110,7 +110,7 @@ class RTMediaPrivacy {
                 'selected'    => ($key == $default) ? 1 : 0
                     ) ;
         }
-        error_log( var_export( $attributes, true ) );
+        
         if ( $echo )
             echo $form -> get_select ( $attributes ) ;
         else
