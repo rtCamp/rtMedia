@@ -70,7 +70,7 @@
                             <?php echo strip_tags(rtmedia_description ( $echo = false)); ?>
                         </div>
 
-                        <?php if ( rtmedia_comments_enabled () ) { ?>
+                        <?php if ( rtmedia_comments_enabled () && apply_filters( 'rtmedia_show_media_comments', true ) ) { ?>
                             <div class="rtmedia-item-comments row">
                                 <div class="large-12 columns">
                                     <div class='rtmedia-actions-before-comments'>
@@ -89,7 +89,7 @@
                             </div>
                         <?php } ?>
                     </div>
-                    <?php if ( rtmedia_comments_enabled () && is_user_logged_in ()) { ?>
+                    <?php if ( rtmedia_comments_enabled () && is_user_logged_in () && apply_filters( 'rtmedia_allow_media_comment', true ) ) { ?>
                         <div class='rtm-media-single-comments'>
                             <?php rtmedia_comment_form (); ?>
                         </div>
