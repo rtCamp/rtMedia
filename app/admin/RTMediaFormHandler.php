@@ -284,8 +284,8 @@ class RTMediaFormHandler {
 	 */
 	static function display_render_options( $options ){
 		$radios                 = array();
-		$radios['load_more']  = '<strong>Load More</strong>';
-		$radios['pagination'] = '<strong>Pagination</strong>';
+		$radios['load_more']  = '<strong>' . __( 'Load More', 'rtmedia' ) .'</strong>';
+		$radios['pagination'] = '<strong>' . __( 'Pagination', 'rtmedia' ) .'</strong>';
 
 		if ( is_plugin_active( 'regenerate-thumbnails/regenerate-thumbnails.php' ) ){
 			$regenerate_link = admin_url( '/tools.php?page=regenerate-thumbnails' );
@@ -373,9 +373,9 @@ class RTMediaFormHandler {
 		//		$render_options = apply_filters('rtmedia_general_content_single_view_add_itmes',$render_options, $options);
 		$render_options      = apply_filters( 'rtmedia_display_content_add_itmes', $render_options, $options );
 		$general_group       = array();
-		$general_group[10] = 'Single Media View';
-		$general_group[15] = 'List Media View';
-		$general_group[18] = 'Masonry View';
+		$general_group[10] = __( 'Single Media View', 'rtmedia' );
+		$general_group[15] = __( 'List Media View', 'rtmedia' );
+		$general_group[18] = __( 'Masonry View', 'rtmedia' );
 		$general_group       = apply_filters( 'rtmedia_display_content_groups', $general_group );
 		ksort( $general_group );
 		$html = '';
@@ -508,10 +508,10 @@ class RTMediaFormHandler {
 		$render_options       = self::render_general_content( $options );
 		$render_options       = apply_filters( 'rtmedia_general_content_add_itmes', $render_options, $options );
 		$general_group        = array();
-		$general_group[10]  = 'Admin Settings';
-		$general_group[80]  = 'API Settings';
-		$general_group[90]  = 'Miscellaneous';
-		$general_group[100] = 'Footer Link';
+		$general_group[10]  = __( 'Admin Settings' ,'rtmedia' );
+		$general_group[80]  = __( 'API Settings', 'rtmedia' );
+		$general_group[90]  = __( 'Miscellaneous', 'rtmedia' );
+		$general_group[100] = __( 'Footer Link', 'rtmedia' );
 		$general_group        = apply_filters( 'rtmedia_general_content_groups', $general_group );
 		ksort( $general_group );
 		$html = '';
@@ -636,7 +636,7 @@ class RTMediaFormHandler {
 		?>
 		<div class="postbox metabox-holder">
 			<h3 class="hndle">
-				<span>Media Types Settings</span>
+				<span><?php _e( 'Media Types Settings', 'rtmedia' ); ?></span>
 				<?php do_action( 'rtmedia_media_type_setting_message' ); ?>
 			</h3>
 		</div>
@@ -751,7 +751,7 @@ class RTMediaFormHandler {
 		?>
 		<div class="postbox metabox-holder">
 			<h3 class="hndle">
-				<span>Media Size Settings</span>
+				<span><?php _e( 'Media Size Settings', 'rtmedia' ); ?></span>
 			</h3>
 		</div>
 		<?php
@@ -818,7 +818,7 @@ class RTMediaFormHandler {
             );
             ?>
             <div class="postbox metabox-holder">
-                <h3 class="hndle"><span>Encoding Settings</span></h3>
+                <h3 class="hndle"><span><?php _e( 'Encoding Settings', 'rtmedia' ); ?></span></h3>
             </div>
             <div class="row section">
                 <div class="columns large-9">
@@ -848,7 +848,7 @@ class RTMediaFormHandler {
 		);
         ?>
         <div class="postbox metabox-holder">
-			<h3 class="hndle"><span>Image Quality</span></h3>
+			<h3 class="hndle"><span><?php _e( 'Image Quality', 'rtmedia' ); ?></span></h3>
 		</div>
         <div class="row section">
 			<div class="columns large-9">
@@ -879,7 +879,7 @@ class RTMediaFormHandler {
 		$render_data = self::custom_css_render_options( $options );
 		?>
 		<div class="postbox metabox-holder">
-			<h3 class="hndle"><span>Custom CSS settings</span></h3>
+			<h3 class="hndle"><span><?php _e( 'Custom CSS settings', 'rtmedia' ); ?></span></h3>
 		</div>
 		<?php
 		echo '<div class="large-12">';
@@ -1014,7 +1014,7 @@ class RTMediaFormHandler {
 		$render_data = self::privacy_render_options( $options );
 		?>
 		<div class="postbox metabox-holder">
-			<h3 class="hndle"><span>Privacy Settings</span></h3>
+			<h3 class="hndle"><span><?php _e( 'Privacy Settings', 'rtmedia' ); ?></span></h3>
 		</div>
 		<?php
 		echo '<div class="large-12">';
@@ -1124,7 +1124,7 @@ class RTMediaFormHandler {
 		$options = self::extract_settings( 'buddypress', $rtmedia->options );
 		?>
 		<div class="postbox metabox-holder">
-		<h3 class="hndle"><span>Integration With BuddyPress Features</span></h3>
+		<h3 class="hndle"><span><?php _e( 'Integration With BuddyPress Features', 'rtmedia' ); ?></span></h3>
 		<?php
 		$render_data = self::buddypress_render_options( $options );
 
@@ -1148,7 +1148,7 @@ class RTMediaFormHandler {
 		echo '</div>';
 		?>
 		<div class="postbox metabox-holder">
-			<h3 class="hndle"><span>Album Settings</span></h3>
+			<h3 class="hndle"><span><?php _e( 'Album Settings', 'rtmedia' ); ?></span></h3>
 			<?php
 			$options = $rtmedia->options;
 			$render_options = array(
