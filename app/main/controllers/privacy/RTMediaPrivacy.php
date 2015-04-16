@@ -78,7 +78,8 @@ class RTMediaPrivacy {
             $default = $rtmedia_media -> privacy ;
         else {
             $default = get_user_meta ( get_current_user_id () , 'rtmedia-default-privacy' , true ) ;
-            if ( ! $default ) {
+            
+            if ( ( $default === false ) || $default === '' ) {
                 $default = get_rtmedia_default_privacy () ;
             }
         }
@@ -109,7 +110,7 @@ class RTMediaPrivacy {
                 'selected'    => ($key == $default) ? 1 : 0
                     ) ;
         }
-
+        
         if ( $echo )
             echo $form -> get_select ( $attributes ) ;
         else
@@ -261,7 +262,7 @@ class RTMediaPrivacy {
             update_user_meta ( get_current_user_id () , 'rtmedia-default-privacy' , $_POST[ "rtmedia-default-privacy" ] ) ;
         }
         $default_privacy = get_user_meta ( get_current_user_id () , 'rtmedia-default-privacy' , true ) ;
-        if ( $default_privacy === false ) {
+        if ( $default_privacy === false || $default_privacy === '' ) {
             $default_privacy = get_rtmedia_default_privacy () ;
         }
         global $rtmedia ;
