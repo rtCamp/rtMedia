@@ -13,6 +13,7 @@
 		border-bottom: 0;
 		float: left;
 		margin: 0 5px;
+		padding: 0; // 2013
 	}
 
 	a {
@@ -26,7 +27,7 @@
 		}
 
 		&:focus {
-			background: $white;
+			background: transparent;
 			box-shadow: 0 0 0;
 		}
 
