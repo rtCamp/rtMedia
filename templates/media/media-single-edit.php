@@ -47,9 +47,8 @@
 					</div>
 
 					<div class="rtmedia-editor-buttons">
-
-						<input type="submit" value="<?php _e( 'Save', 'rtmedia' ) ?>">
-						<a href="<?php rtmedia_permalink(); ?>"><input type="button" value="<?php _e( 'Back', 'rtmedia' ) ?>"></a>
+						<input type="submit" class="button rtm-button rtm-button-save" value="<?php _e( 'Save', 'rtmedia' ) ?>" />
+						<a class="button rtm-button rtm-button-back" href="<?php rtmedia_permalink(); ?>"><?php _e( 'Back', 'rtmedia' ) ?></a>
 					</div>
 				</div></form>
 

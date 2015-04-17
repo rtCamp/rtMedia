@@ -1338,7 +1338,7 @@ function rtmedia_image_editor_content( $type = 'photo' ) {
 		if ( current_user_can( 'edit_posts' ) ) {
 			include_once( ABSPATH . 'wp-admin/includes/image-edit.php' );
 			$nonce = wp_create_nonce( "image_editor-$media_id" );
-			$modify_button = '<p><input type="button" class="rtmedia-image-edit" id="imgedit-open-btn-' . $media_id . '" onclick="imageEdit.open( \'' . $media_id . '\', \'' . $nonce . '\' )" class="button" value="' . __( 'Modify Image', 'rtmedia' ) . '"> <span class="spinner"></span></p>';
+			$modify_button = '<p><input type="button" class="button rtmedia-image-edit" id="imgedit-open-btn-' . $media_id . '" onclick="imageEdit.open( \'' . $media_id . '\', \'' . $nonce . '\' )" value="' . __( 'Modify Image', 'rtmedia' ) . '"> <span class="spinner"></span></p>';
 		}
 		$image_path = rtmedia_image( 'rt_media_activity_image', $id, false );
 		echo '<div class="content" id="panel2">';

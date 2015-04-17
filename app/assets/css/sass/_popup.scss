@@ -97,21 +97,26 @@
 }
 
 .rtm-options {
-	background: $gray;
-	color: $white;
-	display: none;
-	font-size: 14px;
-	list-style: none;
-	margin: 0;
-	padding: 10px;
-	position: absolute;
-	left: 0;
-	top: 38px;
-	width: 180px;
-	z-index: 10;
+
+	&.rtm-options {
+		background: $gray;
+		color: $white;
+		display: none;
+		font-size: 14px;
+		list-style: none;
+		margin: 0;
+		padding: 8px 10px;
+		position: absolute;
+		left: 0;
+		top: 38px;
+		width: 180px;
+		z-index: 10;
+	}
 
 	li {
-		padding: 3px 0;
+		margin: 0; // 2012
+		overflow: hidden; // clear float
+		padding: 2px 0;
 	}
 
 	.rtm-media-options & {
@@ -165,6 +170,7 @@
 		border: 0;
 		color: #fff;
 		display: block;
+		text-decoration: none; // 2012
 	}
 }
 
@@ -291,9 +297,12 @@
 }
 
 .rtm-comment-list {
-	list-style: none;
-	margin: 0;
-	padding: 0;
+
+	&.rtm-comment-list {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+	}
 
 	li {
 		background: #edeff4;
@@ -310,6 +319,7 @@
 	}
 
 	.rtmedia-no-comments {
+		margin: 0; // 2012
 		padding: 5px 10px;
 	}
 }
