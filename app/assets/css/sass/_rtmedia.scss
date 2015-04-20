@@ -71,8 +71,18 @@
 	}
 }
 
+.rtmedia-uploader-div,
 .rtmedia-uploader {
 	clear: both;
+}
+
+button#rtmedia-add-media-button-post-update {
+	padding: 3px 6px;
+
+	.dashicons {
+		font-size: 18px;
+		line-height: 20px;
+	}
 }
 
 .plupload_file_name {
@@ -208,10 +218,12 @@
 	.dashicons {
 		background: $light;
 		color: $error;
+		cursor: pointer;
 		font-size: 14px;
 		height: auto;
+		padding: 0 2px 0 5px;
 		position: absolute;
-		right: 4px;
+		right: 0;
 		top: 0;
 		width: auto;
 	}

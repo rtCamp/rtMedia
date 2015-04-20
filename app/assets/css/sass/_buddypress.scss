@@ -16,11 +16,21 @@
     overflow: hidden;
 }
 
+#buddypress form#whats-new-form p.activity-greeting {
+	line-height: 1;
+}
+
 #buddypress form#whats-new-form #whats-new-options select {
     border: 1px solid #ccc;
     font-size: 13px;
     margin-top: 0;
-	padding: 4px 2px;
+	padding: 3px 2px;
+}
+
+#whats-new-submit #aw-whats-new-submit {
+	font-size: 12px;
+	line-height: 18px;
+	padding: 4px 6px;
 }
 
 #whats-new-post-in-box {
