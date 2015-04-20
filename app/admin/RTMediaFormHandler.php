@@ -280,10 +280,10 @@ class RTMediaFormHandler {
 	 *
 	 * @return array  $render
 	 */
-	static function display_render_options( $options ) {
-		$radios = array();
-		$radios[ 'load_more' ] = 'Load More';
-		$radios[ 'pagination' ] = 'Pagination';
+	static function display_render_options( $options ){
+		$radios                 = array();
+		$radios['load_more']  = '<strong>' . __( 'Load More', 'rtmedia' ) .'</strong>';
+		$radios['pagination'] = '<strong>' . __( 'Pagination', 'rtmedia' ) .'</strong>';
 
 		if ( is_plugin_active( 'regenerate-thumbnails/regenerate-thumbnails.php' ) ) {
 			$regenerate_link = admin_url( '/tools.php?page=regenerate-thumbnails' );
@@ -369,12 +369,12 @@ class RTMediaFormHandler {
 		$options = $rtmedia->options;
 		$render_options = self::display_render_options( $options );
 		//		$render_options = apply_filters('rtmedia_general_content_single_view_add_itmes',$render_options, $options);
-		$render_options = apply_filters( 'rtmedia_display_content_add_itmes', $render_options, $options );
-		$general_group = array();
-		$general_group[ 10 ] = 'Single Media View';
-		$general_group[ 15 ] = 'List Media View';
-		$general_group[ 18 ] = 'Masonry View';
-		$general_group = apply_filters( 'rtmedia_display_content_groups', $general_group );
+		$render_options      = apply_filters( 'rtmedia_display_content_add_itmes', $render_options, $options );
+		$general_group       = array();
+		$general_group[10] = __( 'Single Media View', 'rtmedia' );
+		$general_group[15] = __( 'List Media View', 'rtmedia' );
+		$general_group[18] = __( 'Masonry View', 'rtmedia' );
+		$general_group       = apply_filters( 'rtmedia_display_content_groups', $general_group );
 		ksort( $general_group );
 		self::render_tab_content( $render_options, $general_group, 20 );
 	}
@@ -459,15 +459,15 @@ class RTMediaFormHandler {
 	static function general_content( $options ) {
 		global $rtmedia;
 		//		$options = self::extract_settings('general', $rtmedia->options);
-		$options = $rtmedia->options;
-		$render_options = self::render_general_content( $options );
-		$render_options = apply_filters( 'rtmedia_general_content_add_itmes', $render_options, $options );
-		$general_group = array();
-		$general_group[ 10 ] = 'Admin Settings';
-		$general_group[ 80 ] = 'API Settings';
-		$general_group[ 90 ] = 'Miscellaneous';
-		$general_group[ 100 ] = 'Footer Link';
-		$general_group = apply_filters( 'rtmedia_general_content_groups', $general_group );
+		$options              = $rtmedia->options;
+		$render_options       = self::render_general_content( $options );
+		$render_options       = apply_filters( 'rtmedia_general_content_add_itmes', $render_options, $options );
+		$general_group        = array();
+		$general_group[10]  = __( 'Admin Settings' ,'rtmedia' );
+		$general_group[80]  = __( 'API Settings', 'rtmedia' );
+		$general_group[90]  = __( 'Miscellaneous', 'rtmedia' );
+		$general_group[100] = __( 'Footer Link', 'rtmedia' );
+		$general_group        = apply_filters( 'rtmedia_general_content_groups', $general_group );
 		ksort( $general_group );
 		$html = '';
 		self::render_tab_content( $render_options, $general_group, 90 );

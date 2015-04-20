@@ -1755,7 +1755,7 @@ function rtmedia_create_album_modal() {
 		<div class="mfp-hide rtmedia-popup" id="rtmedia-create-album-modal">
 			<div id="rtm-modal-container">
 				<?php do_action( "rtmedia_before_create_album_modal" ); ?>
-				<h2 class="rtm-modal-title"><?php _e( 'Create New Album', 'rtmedia' ); ?></h2>
+				<h2 class="rtm-modal-title"><?php _e( 'Create an Album', 'rtmedia' ); ?></h2>
 				<p>
 					<label class="rtm-modal-grid-title-column" for="rtmedia_album_name"><?php _e( 'Album Title : ', 'rtmedia' ); ?></label>
 					<input type="text" id="rtmedia_album_name" value="" class="rtm-input-medium"/>

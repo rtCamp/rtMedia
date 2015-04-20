@@ -72,16 +72,17 @@ class RTMediaPrivacy {
 		if ( ! is_rtmedia_privacy_user_overide() )
 			return false;
 
-		global $rtmedia_media;
-		$default = 0;
-		if ( isset( $rtmedia_media->privacy ) )
-			$default = $rtmedia_media->privacy;
-		else {
-			$default = get_user_meta( get_current_user_id(), 'rtmedia-default-privacy', true );
-			if ( ! $default ) {
-				$default = get_rtmedia_default_privacy();
-			}
-		}
+        global $rtmedia_media ;
+        $default = 0 ;
+        if ( isset ( $rtmedia_media -> privacy ) )
+            $default = $rtmedia_media -> privacy ;
+        else {
+            $default = get_user_meta ( get_current_user_id () , 'rtmedia-default-privacy' , true ) ;
+            
+            if ( ( $default === false ) || $default === '' ) {
+                $default = get_rtmedia_default_privacy () ;
+            }
+        }
 
 
 		$form = new rtForm();
@@ -92,27 +93,28 @@ class RTMediaPrivacy {
 		if ( $select_id && $select_id != "" ) {
 			$attributes[ 'id' ] = $select_id;
 		}
-		global $rtmedia;
-		$privacy_levels = $rtmedia->privacy_settings[ 'levels' ];
-		if ( class_exists( 'BuddyPress' ) ) {
-			if ( ! bp_is_active( 'friends' ) ) {
-				unset( $privacy_levels[ 40 ] );
+		global $rtmedia ;
+		$privacy_levels = $rtmedia -> privacy_settings[ 'levels' ] ;
+		if ( class_exists ( 'BuddyPress' ) ) {
+			if ( ! bp_is_active ( 'friends' ) ) {
+				unset ( $privacy_levels[ 40 ] ) ;
 			}
-		} else {
-			unset( $privacy_levels[ 40 ] );
+		}
+		else {
+			unset ( $privacy_levels[ 40 ] ) ;
 		}
 		foreach ( $privacy_levels as $key => $value ) {
-			$privacy = explode( ' - ', $value );
-			$attributes[ 'rtForm_options' ][] = array(
-				$privacy[ 0 ] => $key,
-				'selected' => ($key == $default) ? 1 : 0
-			);
+			$privacy                           = explode ( ' - ' , $value ) ;
+			$attributes[ 'rtForm_options' ][ ] = array (
+				$privacy[ 0 ] => $key ,
+				'selected'    => ($key == $default) ? 1 : 0
+			) ;
 		}
 
 		if ( $echo )
-			echo $form->get_select( $attributes );
+			echo $form -> get_select ( $attributes ) ;
 		else
-			return $form->get_select( $attributes );
+			return $form -> get_select ( $attributes ) ;
 	}
 
 	public
@@ -256,7 +258,7 @@ class RTMediaPrivacy {
 			update_user_meta( get_current_user_id(), 'rtmedia-default-privacy', $_POST[ "rtmedia-default-privacy" ] );
 		}
 		$default_privacy = get_user_meta( get_current_user_id(), 'rtmedia-default-privacy', true );
-		if ( $default_privacy === false ) {
+		if ( $default_privacy === false || $default_privacy === '' ) {
 			$default_privacy = get_rtmedia_default_privacy();
 		}
 		global $rtmedia;

@@ -582,7 +582,7 @@ class RTMediaMedia {
 
 		$media_str = constant( $media_const );
 
-		$action        = sprintf( _n( '%s added a %s', '%s added %d %s.', $count, 'rtmedia' ), $username, $media->media_type, $media_str );
+		$action = sprintf( ( $count == 1 ) ? __( '%1$s added a %2$s', 'rtmedia' ) : __( '%1$s added %4$d %3$s', 'rtmedia' ), $username, $media->media_type, $media_str, $count );
 		$action        = apply_filters( 'rtmedia_buddypress_action_text_fitler', $action, $username, $count, $user->user_nicename, $media->media_type );
 		$activity_args = array(
 			'user_id' => $user->ID,

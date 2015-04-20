@@ -128,6 +128,18 @@ http://www.youtube.com/watch?v####dJrykKQGDcs
 
 Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "Visit rtMedia's Features page") to get some details about future releases.
 
+#### 3.7.38 ####
+* Update Danish translations and add Bulgarian translations
+* Enable/disable encoding service
+* Fix translation issue and update strings
+* Fix default privacy issue
+* Fix rtMedia lightbox get disabled after BuddyPress activity load more
+* Template update
+
+#### 3.7.37 ####
+* Fix media meta table name in $wpdb
+* Bug fixes
+
 #### 3.7.36 ####
 * Fix Media Url upload issue
 * Fix delete attachment issue while reassigning user
@@ -922,8 +934,8 @@ Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_sou
 * HTML5 Audio Tag Support (with fallback)
 * HTML5 Video Tag Support (with fallback)
 
-#### 3.7.36 ####
-Requires BuddyPress 1.7 or higher, if using BuddyPress. Fix Media Url upload issue, fix delete attachment issue while reassigning user, add Social Sync in add-on list
+#### 3.7.38 ####
+Requires BuddyPress 1.7 or higher, if using BuddyPress. Update translations, enable/disable encoding service and template update.
 
 ## Sponsors ##
 

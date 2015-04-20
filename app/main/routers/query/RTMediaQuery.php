@@ -739,12 +739,10 @@ class RTMediaQuery {
 		$this->current_media = - 1;
 		if ( $this->action_query->action == 'comments' && ! isset ( $this->action_query->id ) ){
 			$this->media = $this->populate_comments();
+		} else if ( $this->is_album() && ! $this->shortcode_global ){
+			$this->media = $this->populate_album();
 		} else {
 			$this->media = $this->populate_media();
-		}
-
-		if ( $this->is_album() && ! $this->shortcode_global ){
-			$this->media = $this->populate_album();
 		}
 
 		if ( empty ( $this->media ) ){
