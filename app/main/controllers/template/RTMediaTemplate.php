@@ -330,7 +330,7 @@ class RTMediaTemplate {
 			} else {
 				$rtMediaNav->refresh_counts( $rtmedia_query->media_query['media_author'], array( "context" => "profile", 'media_author' => $rtmedia_query->media_query['media_author'] ) );
 			}
-			wp_safe_redirect( get_rtmedia_permalink( $rtmedia_query->media_query[ 'album_id' ] ) . 'edit/' );
+			wp_safe_redirect( esc_url_raw( get_rtmedia_permalink( $rtmedia_query->media_query[ 'album_id' ] ) . 'edit/' ) );
 			die();
 		} else {
 			_e( 'Ooops !!! Invalid access. No nonce was found !!', 'rtmedia' );
@@ -369,7 +369,7 @@ class RTMediaTemplate {
 				$media->delete( $id );
 			}
 		}
-		wp_safe_redirect( $_POST[ '_wp_http_referer' ] );
+		wp_safe_redirect( esc_url_raw( $_POST[ '_wp_http_referer' ] ) );
 		die();
 	}
 
@@ -415,7 +415,7 @@ class RTMediaTemplate {
 				}
 			}
 			$redirect_url = apply_filters( 'rtmedia_before_delete_media_redirect', $redirect_url );
-			wp_safe_redirect( $redirect_url );
+			wp_safe_redirect( esc_url_raw( $redirect_url ) );
 			die();
 		} else {
 			_e( 'Ooops !!! Invalid access. No nonce was found !!', 'rtmedia' );
@@ -437,9 +437,9 @@ class RTMediaTemplate {
 		if ( isset( $rtmedia_query->media_query[ 'context' ] ) && $rtmedia_query->media_query[ 'context' ] == "group" ){
 			global $bp;
 			$group_link = bp_get_group_permalink( $bp->groups->current_group );
-			wp_safe_redirect( trailingslashit( $group_link ) . RTMEDIA_MEDIA_SLUG . '/album/' );
+			wp_safe_redirect( esc_url_raw( trailingslashit( $group_link ) . RTMEDIA_MEDIA_SLUG . '/album/' ) );
 		} else {
-			wp_safe_redirect( trailingslashit( get_rtmedia_user_link( get_current_user_id() ) ) . RTMEDIA_MEDIA_SLUG . '/album/' );
+			wp_safe_redirect( esc_url_raw( trailingslashit( get_rtmedia_user_link( get_current_user_id() ) ) . RTMEDIA_MEDIA_SLUG . '/album/' ) );
 		}
 		exit;
 	}
@@ -468,9 +468,9 @@ class RTMediaTemplate {
 		if ( isset( $rtmedia_query->media_query[ 'context' ] ) && $rtmedia_query->media_query[ 'context' ] == "group" ){
 			global $bp;
 			$group_link = bp_get_group_permalink( $bp->groups->current_group );
-			wp_safe_redirect( trailingslashit( $group_link ) . RTMEDIA_MEDIA_SLUG . '/album/' );
+			wp_safe_redirect( esc_url_raw( trailingslashit( $group_link ) . RTMEDIA_MEDIA_SLUG . '/album/' ) );
 		} else {
-			wp_safe_redirect( trailingslashit( get_rtmedia_user_link( get_current_user_id() ) ) . RTMEDIA_MEDIA_SLUG . '/album/' );
+			wp_safe_redirect( esc_url_raw( trailingslashit( get_rtmedia_user_link( get_current_user_id() ) ) . RTMEDIA_MEDIA_SLUG . '/album/' ) );
 		}
 		exit;
 	}

@@ -49,12 +49,6 @@
                 <?php do_action ( 'rtmedia_before_uploader' ); ?>
 
                 <?php
-//            $tab_html = '<ul>';
-//            foreach ( $tabs as $key => $tab ) {
-//                $tab_html .= '<li class="'.$key.'"><a href="'.add_query_arg(array('mode' => $key)).'" title="'.esc_attr($tab['title']).'">'.$tab['title'].'</a></li>';
-//            }
-//            $tab_html .= '</ul>';
-//            echo $tab_html;
                 echo '<div class="rtm-tab-content-wrapper">';
                 echo '<div id="rtm-' . $mode . '-ui" class="rtm-tab-content">';
                 do_action ( 'rtmedia_before_' . $mode . '_ui' );

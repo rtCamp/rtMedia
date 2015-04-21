@@ -197,7 +197,7 @@ class RTMediaGroupFeatured extends RTMediaUserInteraction {
 			echo json_encode( $return );
 			die();
 		} else {
-			wp_safe_redirect( $_SERVER['HTTP_REFERER'] );
+			wp_safe_redirect( esc_url_raw( $_SERVER['HTTP_REFERER'] ) );
 		}
 	}
 

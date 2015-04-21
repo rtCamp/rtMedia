@@ -157,7 +157,7 @@ class BPMediaAlbumimporter extends BPMediaImporter {
 				echo '<button id="bpmedia-bpalbumimport-cleanup" class="button btn-warning">';
 				_e( 'Clean up Now', 'rtmedia' );
 				echo '</button>';
-				echo ' <a href="' . add_query_arg( array( 'page' => 'bp-media-settings' ), ( is_multisite() ? network_admin_url( 'admin.php' ) : admin_url( 'admin.php' ) ) ) . '" id="bpmedia-bpalbumimport-cleanup-later" class="button">';
+				echo ' <a href="' . esc_url( add_query_arg( array( 'page' => 'bp-media-settings' ), ( is_multisite() ? network_admin_url( 'admin.php' ) : admin_url( 'admin.php' ) ) ) ) . '" id="bpmedia-bpalbumimport-cleanup-later" class="button">';
 				_e( 'Clean up Later', 'rtmedia' );
 				echo '</a>';
 				echo '<br />';

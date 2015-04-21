@@ -2205,7 +2205,7 @@ function rtmedia_admin_premium_tab( $tabs ) {
 		$tabs = array();
 	}
 	$tabs[ ] = array(
-		'href' => get_admin_url( null, add_query_arg( array( 'page' => 'rtmedia-premium' ), 'admin.php' ) ), 'name' => __( 'Go PRO!', 'rtmedia' ), 'slug' => 'rtmedia-premium', 'class' => array( 'rtm-premium' )
+		'href' => get_admin_url( null, esc_url( add_query_arg( array( 'page' => 'rtmedia-premium' ), 'admin.php' ) ) ), 'name' => __( 'Go PRO!', 'rtmedia' ), 'slug' => 'rtmedia-premium', 'class' => array( 'rtm-premium' )
 	);
 
 	return $tabs;

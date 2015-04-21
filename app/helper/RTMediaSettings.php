@@ -366,7 +366,7 @@ if ( ! class_exists( 'RTMediaSettings' ) ){
 			if ( current_user_can( 'create_users' ) ){
 				//                if (BPMediaPrivacy::is_installed())
 				//                    return;
-				$url = add_query_arg( array( 'page' => 'rtmedia-privacy' ), ( is_multisite() ? network_admin_url( 'admin.php' ) : admin_url( 'admin.php' ) ) );
+				$url = esc_url( add_query_arg( array( 'page' => 'rtmedia-privacy' ), ( is_multisite() ? network_admin_url( 'admin.php' ) : admin_url( 'admin.php' ) ) ) );
 
 				$notice = '
                 <div class="error">

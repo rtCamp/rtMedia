@@ -90,7 +90,7 @@ class RTMediaEncoding {
 
 				$query_args = array( 'url' => urlencode( $single[ 'url' ] ), 'callbackurl' => urlencode( trailingslashit( home_url() ) . "index.php" ), 'force' => 0, 'size' => filesize( $single[ 'file' ] ), 'formats' => ( $autoformat === true ) ? ( ( $type_array[ 0 ] == 'video' ) ? 'mp4' : 'mp3' ) : $autoformat, 'thumbs' => $options_vedio_thumb, 'rt_id' => $media_ids[ $key ] );
 				$encoding_url = $this->api_url . 'job/new/';
-				$upload_url = add_query_arg( $query_args, $encoding_url . $this->api_key );
+				$upload_url = esc_url( add_query_arg( $query_args, $encoding_url . $this->api_key ) );
 				//error_log(var_export($upload_url, true));
 				//var_dump($upload_url);
 				$upload_page = wp_remote_get( $upload_url, array( 'timeout' => 200 ) );
@@ -191,9 +191,9 @@ class RTMediaEncoding {
 			update_site_option( 'rtmedia-encoding-api-key', $_GET[ 'apikey' ] );
 
 			$usage_info = $this->update_usage( $_GET[ 'apikey' ] );
-			$return_page = add_query_arg( array( 'page' => 'rtmedia-addons', 'api_key_updated' => $usage_info->plan->name ), admin_url( 'admin.php' ) );
+			$return_page = esc_url( add_query_arg( array( 'page' => 'rtmedia-addons', 'api_key_updated' => $usage_info->plan->name ), admin_url( 'admin.php' ) ) );
 
-			wp_safe_redirect( $return_page );
+			wp_safe_redirect( esc_url_raw( $return_page ) );
 
 			die();
 		}
@@ -230,7 +230,7 @@ class RTMediaEncoding {
 		if ( $this->api_key )
 			$this->update_usage( $this->api_key );
 		$action = $this->sandbox_testing ? 'https://sandbox.paypal.com/cgi-bin/webscr' : 'https://www.paypal.com/cgi-bin/webscr';
-		$return_page = add_query_arg( array( 'page' => 'rtmedia-addons' ), ( is_multisite() ? network_admin_url( 'admin.php' ) : admin_url( 'admin.php' ) ) );
+		$return_page = esc_url( add_query_arg( array( 'page' => 'rtmedia-addons' ), ( is_multisite() ? network_admin_url( 'admin.php' ) : admin_url( 'admin.php' ) ) ) );
 
 		$usage_details = get_site_option( 'rtmedia-encoding-usage' );
 		if ( isset( $usage_details[ $this->api_key ]->plan->name ) && ( strtolower( $usage_details[ $this->api_key ]->plan->name ) == strtolower( $name ) ) && $usage_details[ $this->api_key ]->sub_status && ! $force ) {
@@ -559,7 +559,7 @@ class RTMediaEncoding {
 			}
 
 			if ( $flag && $mail ) {
-				$download_link = add_query_arg( array( 'job_id' => $_GET[ 'job_id' ], 'download_url' => $_GET[ 'download_url' ] ), home_url() );
+				$download_link = esc_url( add_query_arg( array( 'job_id' => $_GET[ 'job_id' ], 'download_url' => $_GET[ 'download_url' ] ), home_url() ) );
 				$subject = __( 'rtMedia Encoding: Download Failed', 'rtmedia' );
 				$message = sprintf( __( '<p><a href="%s">Media</a> was successfully encoded but there was an error while downloading:</p>
                         <p><code>%s</code></p>
@@ -587,9 +587,9 @@ class RTMediaEncoding {
 		if ( isset( $usage_details[ $this->api_key ]->plan->name ) && ( strtolower( $usage_details[ $this->api_key ]->plan->name ) == 'free' ) ) {
 			echo json_encode( array( 'error' => 'Your free subscription is already activated.' ) );
 		} else {
-			$free_subscription_url = add_query_arg( array( 'email' => urlencode( $email ) ), trailingslashit( $this->api_url ) . 'api/free/' );
+			$free_subscription_url = esc_url( add_query_arg( array( 'email' => urlencode( $email ) ), trailingslashit( $this->api_url ) . 'api/free/' ) );
 			if ( $this->api_key ) {
-				$free_subscription_url = add_query_arg( array( 'email' => urlencode( $email ), 'apikey' => $this->api_key ), $free_subscription_url );
+				$free_subscription_url = esc_url( add_query_arg( array( 'email' => urlencode( $email ), 'apikey' => $this->api_key ), $free_subscription_url ) );
 			}
 			$free_subscribe_page = wp_remote_get( $free_subscription_url, array( 'timeout' => 120 ) );
 			if ( ! is_wp_error( $free_subscribe_page ) && ( ! isset( $free_subscribe_page[ 'headers' ][ 'status' ] ) || ( isset( $free_subscribe_page[ 'headers' ][ 'status' ] ) && ( $free_subscribe_page[ 'headers' ][ 'status' ] == 200 ) ) ) ) {
