@@ -92,6 +92,7 @@ class RTMediaMediaSizeImporter {
 		<div class="wrap">
 			<h2>rtMedia: Import Media Size</h2>
 			<?php
+			wp_nonce_field( 'rtmedia_media_size_import_nonce', 'rtmedia_media_size_import_nonce' );
 			echo '<span class="pending">' . rtmedia_migrate_formatseconds( $total - $done ) . ' (estimated)</span><br />';
 			echo '<span class="finished">' . $done . '</span>/<span class="total">' . $total . '</span>';
 			echo '<img src="images/loading.gif" alt="syncing" id="rtMediaSyncing" style="display:none" />';
@@ -118,7 +119,8 @@ class RTMediaMediaSizeImporter {
 						ajax_data = {
 							"action": "rtmedia_media_size_import",
 							"done": db_done,
-							"last_id": last_id
+							"last_id": last_id,
+							"nonce" : jQuery.trim( jQuery( '#rtmedia_media_size_import_nonce' ).val() )
 						}
 						jQuery.ajax( {
 							url: rtmedia_admin_ajax,
@@ -192,6 +194,7 @@ class RTMediaMediaSizeImporter {
 		$rtmedia_model = new RTMediaModel();
 		$query_pending = "SELECT COUNT(*) as pending from {$rtmedia_model->table_name} where file_size IS NULL AND media_type in ('photo','video','document','music','other')";
 		if ( $media_id ){
+			$media_id = intval( $media_id );
 			$query_pending = "SELECT COUNT(*) as pending from {$rtmedia_model->table_name} where file_size IS NULL AND media_type in ('photo','video','document','music','other') AND id > '" . $media_id . "'";
 		}
 		$pending_count = $wpdb->get_results( $query_pending );
@@ -216,19 +219,25 @@ class RTMediaMediaSizeImporter {
 
 	function rtmedia_media_size_import( $lastid = 0, $limit = 1 ){
 		global $wpdb;
-		$rtmedia_model = new RTMediaModel();
-		$get_media_sql = "SELECT * from {$rtmedia_model->table_name} where file_size is NULL and media_type in ('photo','video','document','music','other') order by id limit " . $limit;
-		if ( isset( $_REQUEST['last_id'] ) ){
-			$lastid = $_REQUEST['last_id'];
+		if( wp_verify_nonce( $_REQUEST['nonce'], 'rtmedia_media_size_import_nonce' ) ){
+			$rtmedia_model = new RTMediaModel();
+			$get_media_sql = "SELECT * from {$rtmedia_model->table_name} where file_size is NULL and media_type in ('photo','video','document','music','other') order by id limit " . $limit;
+			if ( isset( $_REQUEST['last_id'] ) ){
+				$lastid = intval( $_REQUEST['last_id'] );
+			}
+			if ( $lastid ){
+				$get_media_sql = "SELECT * from {$rtmedia_model->table_name} where id > '" . $lastid . "' AND file_size is NULL and media_type in ('photo','video','document','music','other') order by id limit " . $limit;
+			}
+			$result = $wpdb->get_results( $get_media_sql );
+			if ( $result && sizeof( $result ) > 0 ){
+				$migrate = $this->migrate_single_media( $result[0] );
+			}
+			$this->return_migration( $result[0], $migrate );
+		} else {
+			echo '0';
+			wp_die();
 		}
-		if ( $lastid ){
-			$get_media_sql = "SELECT * from {$rtmedia_model->table_name} where id > '" . $lastid . "' AND file_size is NULL and media_type in ('photo','video','document','music','other') order by id limit " . $limit;
-		}
-		$result = $wpdb->get_results( $get_media_sql );
-		if ( $result && sizeof( $result ) > 0 ){
-			$migrate = $this->migrate_single_media( $result[0] );
-		}
-		$this->return_migration( $result[0], $migrate );
+
 	}
 
 	function migrate_single_media( $result ){
@@ -252,7 +261,7 @@ class RTMediaMediaSizeImporter {
 		return $return;
 	}
 
-	function return_migration( $media, $migrate = true ){
+	function return_migration( $media = false, $migrate = true ){
 		$total   = $this->get_total_count();
 		$pending = $this->get_pending_count( $media->id );
 		$done    = $total - $pending;
