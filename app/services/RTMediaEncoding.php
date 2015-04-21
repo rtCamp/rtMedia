@@ -587,9 +587,9 @@ class RTMediaEncoding {
 		if ( isset( $usage_details[ $this->api_key ]->plan->name ) && ( strtolower( $usage_details[ $this->api_key ]->plan->name ) == 'free' ) ) {
 			echo json_encode( array( 'error' => 'Your free subscription is already activated.' ) );
 		} else {
-			$free_subscription_url = esc_url( add_query_arg( array( 'email' => urlencode( $email ) ), trailingslashit( $this->api_url ) . 'api/free/' ) );
+			$free_subscription_url = esc_url_raw( add_query_arg( array( 'email' => urlencode( $email ) ), trailingslashit( $this->api_url ) . 'api/free/' ) );
 			if ( $this->api_key ) {
-				$free_subscription_url = esc_url( add_query_arg( array( 'email' => urlencode( $email ), 'apikey' => $this->api_key ), $free_subscription_url ) );
+				$free_subscription_url = esc_url_raw( add_query_arg( array( 'email' => urlencode( $email ), 'apikey' => $this->api_key ), $free_subscription_url ) );
 			}
 			$free_subscribe_page = wp_remote_get( $free_subscription_url, array( 'timeout' => 120 ) );
 			if ( ! is_wp_error( $free_subscribe_page ) && ( ! isset( $free_subscribe_page[ 'headers' ][ 'status' ] ) || ( isset( $free_subscribe_page[ 'headers' ][ 'status' ] ) && ( $free_subscribe_page[ 'headers' ][ 'status' ] == 200 ) ) ) ) {
