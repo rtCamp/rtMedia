@@ -602,9 +602,9 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 		 *
 		 * @return void
 		 */
-		public function bulk_action_handler() {
-			if ( 'bulk_video_regenerate_thumbnails' == $_REQUEST[ 'action' ] && '' != $_REQUEST[ 'media' ] ) {
-				wp_safe_redirect( add_query_arg( array( 'media_ids' => urlencode( implode( ',', $_REQUEST[ 'media' ] ) ) ), admin_url( 'admin.php?page=rtmedia-regenerate' ) ) );
+		public function bulk_action_handler(){
+			if ( 'bulk_video_regenerate_thumbnails' == $_REQUEST['action'] && '' != $_REQUEST['media'] ){
+				wp_safe_redirect( esc_url_raw( add_query_arg( array( 'media_ids' => urlencode( implode( ',', $_REQUEST['media'] ) ) ), admin_url( 'admin.php?page=rtmedia-regenerate' ) ) ) );
 				exit;
 			}
 		}
@@ -754,9 +754,9 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 				);
 
 				wp_localize_script( 'rtmedia-admin', 'rtmedia_admin_strings', $rtmedia_admin_strings );
-				wp_localize_script( 'rtmedia-admin', 'settings_url', add_query_arg( array( 'page' => 'rtmedia-settings' ), ( is_multisite() ? network_admin_url( 'admin.php' ) : admin_url( 'admin.php' ) ) ) . '#privacy_enabled' );
-				wp_localize_script( 'rtmedia-admin', 'settings_rt_album_import_url', add_query_arg( array( 'page' => 'rtmedia-settings' ), ( is_multisite() ? network_admin_url( 'admin.php' ) : admin_url( 'admin.php' ) ) ) );
-
+				wp_localize_script( 'rtmedia-admin', 'settings_url', esc_url( add_query_arg( array( 'page' => 'rtmedia-settings' ), ( is_multisite() ? network_admin_url( 'admin.php' ) : admin_url( 'admin.php' ) ) ) ) . '#privacy_enabled' );
+				wp_localize_script( 'rtmedia-admin', 'settings_rt_album_import_url', esc_url( add_query_arg( array( 'page' => 'rtmedia-settings' ), ( is_multisite() ? network_admin_url( 'admin.php' ) : admin_url( 'admin.php' ) ) ) ) );
+				
 				/* Only one CSS file should enqueue */
 				wp_enqueue_style( 'rtmedia-admin', RTMEDIA_URL . 'app/assets/admin/css/admin.css', '', RTMEDIA_VERSION );
 			} else {
@@ -1292,10 +1292,10 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 			$tab = $this->get_current_tab();
 			/* rtMedia */
 			$tabs[] = array(
-				'href' => get_admin_url( null, add_query_arg( array( 'page' => 'rtmedia-settings' ), 'admin.php' ) ),
-				'title' => __( 'rtMedia', 'rtmedia' ),
-				'name' => __( 'rtMedia', 'rtmedia' ),
-				'class' => ( $tab == 'rtmedia-settings' || $tab == 'rtmedia-addons' || $tab == 'rtmedia-support' || $tab == 'rtmedia-importer' ) ? $active_class : $idle_class,
+					'href' => get_admin_url( null, esc_url( add_query_arg( array( 'page' => 'rtmedia-settings' ), 'admin.php' ) ) ),
+					'title' => __( 'rtMedia', 'rtmedia' ),
+					'name' => __( 'rtMedia', 'rtmedia' ),
+					'class' => ( $tab == 'rtmedia-settings' || $tab == 'rtmedia-addons' || $tab == 'rtmedia-support' || $tab == 'rtmedia-importer' ) ? $active_class : $idle_class,
 			);
 
 			foreach ( $tabs as $tab ) {
@@ -1322,23 +1322,23 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 			// Setup core admin tabs
 			$tabs = array(
 				array(
-					'href' => get_admin_url( null, add_query_arg( array( 'page' => 'rtmedia-settings' ), 'admin.php' ) ),
+					'href' => get_admin_url( null, esc_url( add_query_arg( array( 'page' => 'rtmedia-settings' ), 'admin.php' ) ) ),
 					'name' => __( 'Settings', 'rtmedia' ),
 					'slug' => 'rtmedia-settings',
 				), array(
-					'href' => get_admin_url( null, add_query_arg( array( 'page' => 'rtmedia-addons' ), 'admin.php' ) ),
+					'href' => get_admin_url( null, esc_url( add_query_arg( array( 'page' => 'rtmedia-addons' ), 'admin.php' ) ) ),
 					'name' => __( 'Addons', 'rtmedia' ),
 					'slug' => 'rtmedia-addons',
 				), array(
-					'href' => get_admin_url( null, add_query_arg( array( 'page' => 'rtmedia-themes' ), 'admin.php' ) ),
+					'href' => get_admin_url( null, esc_url( add_query_arg( array( 'page' => 'rtmedia-themes' ), 'admin.php' ) ) ),
 					'name' => __( 'Themes', 'rtmedia' ),
 					'slug' => 'rtmedia-themes',
 				), array(
-					'href' => get_admin_url( null, add_query_arg( array( 'page' => 'rtmedia-hire-us' ), 'admin.php' ) ),
+					'href' => get_admin_url( null, esc_url( add_query_arg( array( 'page' => 'rtmedia-hire-us' ), 'admin.php' ) ) ),
 					'name' => __( 'Hire Us', 'rtmedia' ),
 					'slug' => 'rtmedia-hire-us',
 				), array(
-					'href' => get_admin_url( null, add_query_arg( array( 'page' => 'rtmedia-support' ), 'admin.php' ) ),
+					'href' => get_admin_url( null, esc_url( add_query_arg( array( 'page' => 'rtmedia-support' ), 'admin.php' ) ) ),
 					'name' => __( 'Support', 'rtmedia' ),
 					'slug' => 'rtmedia-support',
 				),
@@ -1346,7 +1346,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 
 			if ( has_filter( 'rtmedia_license_tabs' ) || did_action( 'rtmedia_addon_license_details' ) ) {
 				$tabs[] = array(
-					'href' => get_admin_url( null, add_query_arg( array( 'page' => 'rtmedia-license' ), 'admin.php' ) ),
+					'href' => get_admin_url( null, esc_url( add_query_arg( array( 'page' => 'rtmedia-license' ), 'admin.php' ) ) ),
 					'name' => __( 'Licenses', 'rtmedia' ),
 					'slug' => 'rtmedia-license',
 				);
@@ -1558,7 +1558,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 				rtmedia_update_site_option( 'rtmedia_options', $_POST[ 'rtmedia_options' ] );
 				//
 				// redirect to settings page in network
-				wp_redirect( add_query_arg( array( 'page' => 'rtmedia-settings', 'updated' => 'true' ), ( is_multisite() ? network_admin_url( 'admin.php' ) : admin_url( 'admin.php' ) ) ) );
+				wp_redirect( esc_url_raw( add_query_arg( array( 'page' => 'rtmedia-settings', 'updated' => 'true' ), ( is_multisite() ? network_admin_url( 'admin.php' ) : admin_url( 'admin.php' ) ) ) ) );
 				exit;
 			}
 		}
@@ -1613,9 +1613,9 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 			die;
 		}
 
-		public function convert_videos_mailchimp_send() {
-			if ( 'Yes' == $_POST[ 'interested' ] && ! empty( $_POST[ 'choice' ] ) ) {
-				wp_remote_get( add_query_arg( array( 'rtmedia-convert-videos-form' => 1, 'choice' => $_POST[ 'choice' ], 'url' => urlencode( $_POST[ 'url' ] ), 'email' => $_POST[ 'email' ] ), 'http://rtcamp.com/' ) );
+		public function convert_videos_mailchimp_send(){
+			if ( 'Yes' == $_POST['interested'] && ! empty( $_POST['choice'] ) ){
+				wp_remote_get( esc_url_raw( add_query_arg( array( 'rtmedia-convert-videos-form' => 1, 'choice' => $_POST['choice'], 'url' => urlencode( $_POST['url'] ), 'email' => $_POST['email'] ), 'http://rtcamp.com/' ) ) );
 			} else {
 				rtmedia_update_site_option( 'rtmedia-survey', 0 );
 			}

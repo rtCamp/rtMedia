@@ -64,7 +64,7 @@
 		<div class="rtmedia-uploader no-js">
 			<div id="rtmedia-uploader-form">
 				<?php do_action( 'rtmedia_before_uploader' ); ?>
-
+				
 				<div class="rtm-tab-content-wrapper">
 					<div id="rtm-<?php echo $mode; ?>-ui" class="rtm-tab-content">
 						<?php

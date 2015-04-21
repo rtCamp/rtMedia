@@ -117,7 +117,7 @@ class RTMediaUploadEndpoint {
 								$redirect_url = get_rtmedia_permalink( $media[ 0 ]->id );
 							}
 							$redirect_url = apply_filters( "rtmedia_simple_file_upload_redirect_url_filter", $redirect_url );
-							wp_safe_redirect( $redirect_url );
+							wp_safe_redirect( esc_url_raw( $redirect_url ) );
 							die();
 						}
 

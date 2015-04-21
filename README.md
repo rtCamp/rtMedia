@@ -128,6 +128,10 @@ http://www.youtube.com/watch?v####dJrykKQGDcs
 
 Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "Visit rtMedia's Features page") to get some details about future releases.
 
+#### 3.7.39 ####
+* Fix possible XSS vulnerability
+* Update label for create album
+
 #### 3.7.38 ####
 * Update Danish translations and add Bulgarian translations
 * Enable/disable encoding service
@@ -934,8 +938,8 @@ Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_sou
 * HTML5 Audio Tag Support (with fallback)
 * HTML5 Video Tag Support (with fallback)
 
-#### 3.7.38 ####
-Requires BuddyPress 1.7 or higher, if using BuddyPress. Update translations, enable/disable encoding service and template update.
+#### 3.7.39 ####
+Requires BuddyPress 1.7 or higher, if using BuddyPress. Fix possible XSS vulnerability, update label for create album.
 
 ## Sponsors ##
 

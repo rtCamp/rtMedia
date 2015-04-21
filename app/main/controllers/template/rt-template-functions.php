@@ -79,8 +79,7 @@ function get_rtmedia_gallery_title() {
 		$title = get_rtmedia_title( $id );
 	} elseif ( isset( $rtmedia_query->media_query[ 'media_type' ] ) && ! is_array( $rtmedia_query->media_query[ 'media_type' ] ) && $rtmedia_query->media_query[ 'media_type' ] != "" ) {
 		$current_media_type = $rtmedia_query->media_query[ 'media_type' ];
-
-		if ( $current_media_type != "" && is_array( $rtmedia->allowed_types ) && isset( $rtmedia->allowed_types[ $current_media_type ] ) && is_array( $rtmedia->allowed_types[ $current_media_type ] ) && isset( $rtmedia->allowed_types[ $current_media_type ][ 'plural_label' ] ) ) {
+		if( $current_media_type != "" && is_array( $rtmedia->allowed_types ) && isset( $rtmedia->allowed_types[ $current_media_type ] ) && is_array( $rtmedia->allowed_types[ $current_media_type ] ) && isset( $rtmedia->allowed_types[ $current_media_type ][ 'plural_label' ] ) ) {
 			$title = sprintf( '%s %s', __( 'All', 'rtmedia' ), $rtmedia->allowed_types[ $current_media_type ][ 'plural_label' ] );
 		}
 	}
@@ -2186,8 +2185,8 @@ function rtmedia_admin_premium_tab( $tabs ) {
 	if ( sizeof( $tabs ) == 0 ) {
 		$tabs = array();
 	}
-	$tabs[] = array(
-		'href' => get_admin_url( null, add_query_arg( array( 'page' => 'rtmedia-premium' ), 'admin.php' ) ), 'name' => __( 'Go PRO!', 'rtmedia' ), 'slug' => 'rtmedia-premium', 'class' => array( 'rtm-premium' )
+	$tabs[ ] = array(
+		'href' => get_admin_url( null, esc_url( add_query_arg( array( 'page' => 'rtmedia-premium' ), 'admin.php' ) ) ), 'name' => __( 'Go PRO!', 'rtmedia' ), 'slug' => 'rtmedia-premium', 'class' => array( 'rtm-premium' )
 	);
 
 	return $tabs;
@@ -2487,7 +2486,7 @@ function rtmedia_convert_date( $_date ) { // $date --> time(); value
 		}
 		$value = sprintf( $time_unit_phrase . ' ', $no );
 
-		if ( ( $stf == 1 ) && ( $i >= 1 ) && ( ( $cur_tm - $_time ) > 0 ) ) {
+		if ( ( $stf == 1 ) && ( $i >= 1 ) && ( ( $cur_time - $_time ) > 0 ) ) {
 			$value .= rtmedia_convert_date( $_time );
 		}
 
