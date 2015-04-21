@@ -2339,7 +2339,7 @@ function rtmedia_admin_premium_page( $page ) {
 			</ul>
 
 			<div class="clearfix rtm-update-to-pro">
-				<a href="http://rtcamp.com/store/rtmedia-pro/" target="_blank" class="rtm-button rtm-button-success large" title="<?php _e( 'Upgrade to rtMedia PRO Now ', 'rtmedia' ); ?>">
+				<a href="http://rtcamp.com/products/rtmedia-pro/" target="_blank" class="rtm-button rtm-button-success large" title="<?php _e( 'Upgrade to rtMedia PRO Now ', 'rtmedia' ); ?>">
 					<?php _e( 'Upgrade to rtMedia PRO Now ', 'rtmedia' ); ?>
 				</a>
 			</div>

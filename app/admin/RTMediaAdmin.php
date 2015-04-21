@@ -163,9 +163,9 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 
 		function rtmedia_social_sync_release_notice() {
 			$site_option = rtmedia_get_site_option( 'rtmedia_social_sync_release_notice' );
-            $check_rtmedia_social_sync_installed = file_exists( trailingslashit( WP_PLUGIN_DIR ) . 'rtmedia-social-sync/index.php' );
-            
-			if ( ( ! $site_option || 'hide' != $site_option ) && !$check_rtmedia_social_sync_installed ){
+			$check_rtmedia_social_sync_installed = file_exists( trailingslashit( WP_PLUGIN_DIR ) . 'rtmedia-social-sync/index.php' );
+
+			if ( ( ! $site_option || 'hide' != $site_option ) && ! $check_rtmedia_social_sync_installed ) {
 				rtmedia_update_site_option( 'rtmedia_social_sync_release_notice', 'show' );
 				?>
 				<div class="updated rtmedia-social-sync-notice">
@@ -222,7 +222,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 				?>
 				<div class="updated rtmedia-inspire-book-notice">
 					<p>
-						<span><a href="https://rtcamp.com/store/inspirebook/" target="_blank"><b>Meet
+						<span><a href="https://rtcamp.com/products/inspirebook/" target="_blank"><b>Meet
 									InspireBook</b></a> - First official rtMedia premium theme.</span>
 						<a href="#" onclick="rtmedia_hide_inspirebook_notice()" style="float:right">Dismiss</a>
 					</p>
@@ -421,7 +421,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 			$src = RTMEDIA_URL . 'app/assets/admin/img/rtMedia-pro-ad.png'
 			?>
 			<div class='rtmedia-admin-ad'>
-				<a href='http://rtcamp.com/store/rtmedia-pro/' target='_blank' title='rtMedia Pro'>
+				<a href='http://rtcamp.com/products/rtmedia-pro/' target='_blank' title='rtMedia Pro'>
 					<img src='<?php echo $src; ?>' alt="<?php _e( 'rtMedia Pro is released', 'rtmedia' ); ?>"/>
 				</a>
 			</div>
@@ -1674,7 +1674,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 					$flag = true;
 				}
 			}
-			if ( $flag ){
+			if ( $flag ) {
 				?>
 				<script type="text/javascript">
 					jQuery( '.upload-filetype-network-settings-error' ).on( 'click', '.update-network-settings-upload-filetypes', function () {
@@ -1863,12 +1863,12 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 			}
 		}
 
-		function rtmedia_update_template_notice(){
+		function rtmedia_update_template_notice() {
 			$site_option = rtmedia_get_site_option( 'rtmedia-update-template-notice-v3_7_38' );
 
-			if ( ! $site_option || 'hide' != $site_option ){
+			if ( ! $site_option || 'hide' != $site_option ) {
 				rtmedia_update_site_option( 'rtmedia-update-template-notice-v3_7_38', 'show' );
-				if ( is_dir( get_template_directory() . '/rtmedia' ) ){
+				if ( is_dir( get_template_directory() . '/rtmedia' ) ) {
 					echo '<div class="error rtmedia-update-template-notice"><p>' . __( 'Please update rtMedia template files if you have overridden the default rtMedia templates in your theme. If not, you can ignore and hide this notice.' ) . '<a href="#" onclick="rtmedia_hide_template_override_notice()" style="float:right">' . __( 'Hide', 'rtmedia' ) . '</a>' . ' </p></div>';
 					?>
 					<script type="text/javascript">
@@ -1888,7 +1888,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 
 		function rtmedia_hide_template_override_notice() {
 
-			if ( rtmedia_update_site_option( 'rtmedia-update-template-notice-v3_7_38', 'hide' ) ){
+			if ( rtmedia_update_site_option( 'rtmedia-update-template-notice-v3_7_38', 'hide' ) ) {
 				echo '1';
 			} else {
 				echo '0';
