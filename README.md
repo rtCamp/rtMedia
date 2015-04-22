@@ -128,8 +128,11 @@ http://www.youtube.com/watch?v####dJrykKQGDcs
 
 Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "Visit rtMedia's Features page") to get some details about future releases.
 
+#### 3.7.41 ####
+* Fix album edit issue
+
 #### 3.7.40 ####
-* Security fix
+* Security fix, thanks to [James Hooker](https://research.g0blin.co.uk/) for reporting
 
 #### 3.7.39 ####
 * Fix possible XSS vulnerability
@@ -941,8 +944,8 @@ Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_sou
 * HTML5 Audio Tag Support (with fallback)
 * HTML5 Video Tag Support (with fallback)
 
-#### 3.7.40 ####
-Requires BuddyPress 1.7 or higher, if using BuddyPress. Security fix
+#### 3.7.41 ####
+Requires BuddyPress 1.7 or higher, if using BuddyPress. Fix album edit issue.
 
 ## Sponsors ##
 
