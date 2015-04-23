@@ -609,13 +609,24 @@ function rtmedia_description_input( $editor = true ) {
  * @global type $rtmedia_media
  */
 function rtmedia_description( $echo = true ) {
-	global $rtmedia_media;
 	if ( $echo ){
-		echo get_post_field( "post_content", $rtmedia_media->media_id );
+		echo rtmedia_get_media_description();
 	} else {
-		return get_post_field( "post_content", $rtmedia_media->media_id );
+		return rtmedia_get_media_description();
 	}
-	//echo $rtmedia_media->post_content;
+}
+
+/*
+ *  return media description
+ */
+function rtmedia_get_media_description( $id = false ){
+	if( $id ){
+		$media_post_id = rtmedia_media_id( $id );
+	} else {
+		global $rtmedia_media;
+		$media_post_id = $rtmedia_media->media_id;
+	}
+	return get_post_field( "post_content", $media_post_id );
 }
 
 /**
