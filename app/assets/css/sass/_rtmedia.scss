@@ -63,6 +63,10 @@
 		max-width: 110px;
 		padding: 5px;
 		position: relative;
+        
+        &.upload-error {
+            border: 1px solid red;
+        }
 	}
 
 	canvas {
