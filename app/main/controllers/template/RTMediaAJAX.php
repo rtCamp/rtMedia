@@ -47,7 +47,26 @@ class RTMediaAJAX {
 			}
 
 			$album = new RTMediaAlbum();
-			$rtmedia_id = $album->add( $_POST[ 'name' ], get_current_user_id(), true, false, $_POST[ 'context' ], $_POST[ 'context_id' ] );
+
+			// setup context values
+			$context = $_POST['context'];
+			if( $context == 'profile' ){
+				$context_id = get_current_user_id();
+			} else {
+				$context_id = ( is_int( $_POST['context_id'] ) ? $_POST['context_id'] : 0 );
+			}
+
+			// setup new album data
+			$album_data = apply_filters( 'rtmedia_create_album_data', array(
+				'title' => $_POST['name'],
+				'author' => get_current_user_id(),
+				'new' => true,
+				'post_id'=> false,
+				'context' => $context,
+				'context_id' => $context_id,
+			) );
+
+			$rtmedia_id = $album->add( $album_data['title'], $album_data['author'], $album_data['new'], $album_data['post_id'], $album_data['context'], $album_data['context_id'] );
 
 			$rtMediaNav = new RTMediaNav();
 
