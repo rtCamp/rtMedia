@@ -58,7 +58,7 @@ class RTMediaAJAX {
 			}
 
 			if( $rtmedia_id )
-				echo $rtmedia_id;
+				echo apply_filters( 'rtmedia_create_album_response', $rtmedia_id );
 			else
 				echo false;
 		} else {
