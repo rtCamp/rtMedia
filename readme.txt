@@ -6,7 +6,7 @@ License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires at least: WordPress 3.6
 Tested up to: WordPress 4.1 + BuddyPress 2.2.0
-Stable tag: 3.7.41
+Stable tag: 3.7.42
 
 Add albums, photo, audio/video encoding, privacy, sharing, front-end uploads & more. All this works on mobile/tablets devices.
 
@@ -127,6 +127,12 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 == Changelog ==
 
 Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "Visit rtMedia's Features page") to get some details about future releases.
+
+= 3.7.42 =
+* Added rtmedia_get_media_description function
+* js fix for uploader tabs
+* Update support link and github link
+* Fix multisite global album does not exist issue
 
 = 3.7.41 =
 * Fix album edit issue
@@ -946,8 +952,8 @@ Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_sou
 
 == Upgrade Notice ==
 
-= 3.7.41 =
-Requires BuddyPress 1.7 or higher, if using BuddyPress. Fix album edit issue.
+= 3.7.42 =
+Requires BuddyPress 1.7 or higher, if using BuddyPress. Added rtmedia_get_media_description function, fix multisite global album does not exist issue.
 
 == Sponsors ==
 
