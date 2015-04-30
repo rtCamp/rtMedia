@@ -128,6 +128,9 @@ http://www.youtube.com/watch?v####dJrykKQGDcs
 
 Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "Visit rtMedia's Features page") to get some details about future releases.
 
+#### 3.7.43 ####
+* Update tested upto information
+
 #### 3.7.42 ####
 * Added rtmedia_get_media_description function
 * js fix for uploader tabs
@@ -950,8 +953,8 @@ Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_sou
 * HTML5 Audio Tag Support (with fallback)
 * HTML5 Video Tag Support (with fallback)
 
-#### 3.7.42 ####
-Requires BuddyPress 1.7 or higher, if using BuddyPress. Added rtmedia_get_media_description function, fix multisite global album does not exist issue.
+#### 3.7.43 ####
+Requires BuddyPress 1.7 or higher, if using BuddyPress. Update tested upto information.
 
 ## Sponsors ##
 
