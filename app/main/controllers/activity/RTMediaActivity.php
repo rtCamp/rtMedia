@@ -57,7 +57,7 @@ class RTMediaActivity {
 		if ( intval( $limitActivityFeed ) > 0 ) {
 			$media_details = array_slice( $media_details, 0, $limitActivityFeed, true );
 		}
-		$rtmedia_activity_ul_class = apply_filters( 'rtmedia_activity_ul_class', 'large-block-grid-3' );
+		$rtmedia_activity_ul_class = apply_filters( 'rtmedia_activity_ul_class', 'rtm-activity-media-list' );
 		$li_content = '';
 		$count = 0;
 		foreach ( $media_details as $media ) {
