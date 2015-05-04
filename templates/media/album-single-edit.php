@@ -12,7 +12,7 @@ $rtmedia_media = $media[ 0 ];
 		<h2><?php echo __( 'Edit Album : ', 'rtmedia' ) . esc_attr( $media[ 0 ]->media_title ); ?></h2>
 
 		<div class="rtmedia-edit-media-tabs rtmedia-editor-main">
-			<ul class="tabs rtm-tabs clearfix">
+			<ul class="rtm-tabs clearfix">
 				<li class="active"><a href="#details-tab"><i class='dashicons dashicons-edit rtmicon'></i><?php _e( 'Details', 'rtmedia' ); ?></a></li>
 				<?php if ( ! is_rtmedia_group_album() ) { ?>
 					<li class=""><a href="#manage-media-tab"><i class='dashicons dashicons-list-view rtmicon'></i><?php _e( 'Manage Media', 'rtmedia' ); ?></a></li>
@@ -21,7 +21,7 @@ $rtmedia_media = $media[ 0 ];
 				<?php do_action( 'rtmedia_add_edit_tab_title', 'album' ); ?>
 			</ul>
 
-			<div class="tabs-content">
+			<div class="rtm-tabs-content">
 				<div class="content active" id="details-tab">
 					<form method="post" class="rtm-form">
 						<?php
