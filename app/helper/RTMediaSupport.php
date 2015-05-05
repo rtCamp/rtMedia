@@ -411,8 +411,8 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 					<h3 class="rtm-option-title"><?php echo $meta_title; ?></h3>
 					<div id="support-form" class="bp-media-form rtm-support-form rtm-option-wrapper">
 
-						<div class="rtm-form-filed">
-							<label class="bp-media-label" for="name"><?php _e( 'Name', 'rtmedia' ); ?> :</label>
+						<div class="rtm-form-filed clearfix">
+							<label class="bp-media-label" for="name"><?php _e( 'Name', 'rtmedia' ); ?></label>
 							<input class="bp-media-input" id="name" type="text" name="name" value="" required />
 							<span class="rtm-tooltip">
 								<i class="dashicons dashicons-info rtmicon"></i>
@@ -422,8 +422,8 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 							</span>
 						</div>
 
-						<div class="rtm-form-filed">
-							<label class="bp-media-label" for="email"><?php _e( 'Email', 'rtmedia' ); ?> :</label>
+						<div class="rtm-form-filed clearfix">
+							<label class="bp-media-label" for="email"><?php _e( 'Email', 'rtmedia' ); ?></label>
 							<input id="email" class="bp-media-input" type="text" name="email" value="" required />
 							<span class="rtm-tooltip">
 								<i class="dashicons dashicons-info rtmicon"></i>
@@ -433,23 +433,18 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 							</span>
 						</div>
 
-						<div class="rtm-form-filed">
-							<label class="bp-media-label" for="website"><?php _e( 'Website', 'rtmedia' ); ?> :</label>
+						<div class="rtm-form-filed clearfix">
+							<label class="bp-media-label" for="website"><?php _e( 'Website', 'rtmedia' ); ?></label>
 							<input id="website" class="bp-media-input" type="text" name="website" value="<?php echo ( isset( $_REQUEST[ 'website' ] ) ) ? esc_attr( stripslashes( trim( $_REQUEST[ 'website' ] ) ) ) : get_bloginfo( 'url' ); ?>" required />
 						</div>
 
-						<div class="rtm-form-filed">
-							<label class="bp-media-label" for="phone"><?php _e( 'Phone', 'rtmedia' ); ?> :</label>
-							<input class="bp-media-input" id="phone" type="text" name="phone" value="<?php echo ( isset( $_REQUEST[ 'phone' ] ) ) ? esc_attr( stripslashes( trim( $_REQUEST[ 'phone' ] ) ) ) : ''; ?>" />
-						</div>
-
-						<div class="rtm-form-filed">
-							<label class="bp-media-label" for="subject"><?php _e( 'Subject', 'rtmedia' ); ?> :</label>
+						<div class="rtm-form-filed clearfix">
+							<label class="bp-media-label" for="subject"><?php _e( 'Subject', 'rtmedia' ); ?></label>
 							<input id="subject" class="bp-media-input" type="text" name="subject" value="<?php echo ( isset( $_REQUEST[ 'subject' ] ) ) ? esc_attr( stripslashes( trim( $_REQUEST[ 'subject' ] ) ) ) : ''; ?>" required />
 						</div>
 
-						<div class="rtm-form-filed">
-							<label class="bp-media-label" for="details"><?php _e( 'Details', 'rtmedia' ); ?> :</label>
+						<div class="rtm-form-filed clearfix">
+							<label class="bp-media-label" for="details"><?php _e( 'Details', 'rtmedia' ); ?></label>
 							<textarea id="details" class="bp-media-textarea" name="details" required><?php echo ( isset( $_REQUEST[ 'details' ] ) ) ? esc_textarea( stripslashes( trim( $_REQUEST[ 'details' ] ) ) ) : ''; ?></textarea>
 
 							<input type="hidden" name="request_type" value="<?php echo $form; ?>" />
@@ -461,7 +456,7 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 						</div>
 					</div><!-- .submit-bug-box -->
 
-					<div class="rtm-form-filed rtm-button-wrapper">
+					<div class="rtm-form-filed rtm-button-wrapper clearfix">
 						<?php submit_button( 'Submit', 'primary', 'rtmedia-submit-request', false ); ?>
 						<?php submit_button( 'Cancel', 'secondary', 'cancel-request', false ); ?>
 					</div>

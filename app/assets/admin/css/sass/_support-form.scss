@@ -6,12 +6,13 @@
 .rtm-support-form {
 
 	.rtm-form-filed {
+		clear: both;
 		margin: 15px 0;
 	}
 
 	label {
 		float: left;
-		width: 20%;
+		width: 15%;
 	}
 
 	.bp-media-textarea {
@@ -21,5 +22,5 @@
 }
 
 .rtm-button-wrapper {
-	padding-left: 20%;
+	padding-left: 15%;
 }
