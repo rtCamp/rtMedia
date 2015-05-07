@@ -1156,31 +1156,34 @@ function rtmedia_selected_file_list( plupload, file, uploader, error ) {
 
 	jQuery( rtmedia_plupload_file ).appendTo( '#rtmedia_uploader_filelist' );
 	var type = file.type;
+    var media_title = file.name;
+    var ext = media_title.substring( media_title.lastIndexOf( "." ) + 1, media_title.length );
 
 	if ( /image/i.test( type ) ) {
-		var img = new mOxie.Image();
+        if( ext === 'gif' ) {
+            jQuery( '<img src="' + rtmedia_media_thumbs[ 'photo' ] + '" />' ).appendTo( '#file_thumb_' + file.id );
+        } else {
+            var img = new mOxie.Image();
 
-		img.onload = function () {
-			this.embed( jQuery( '#file_thumb_' + file.id ).get( 0 ), {
-				width: 100,
-				height: 60,
-				crop: true
-			} );
-		};
+            img.onload = function () {
+                this.embed( jQuery( '#file_thumb_' + file.id ).get( 0 ), {
+                    width: 100,
+                    height: 60,
+                    crop: true
+                } );
+            };
 
-		img.onembedded = function () {
-			this.destroy();
-		};
+            img.onembedded = function () {
+                this.destroy();
+            };
 
-		img.onerror = function () {
-			this.destroy();
-		};
+            img.onerror = function () {
+                this.destroy();
+            };
 
-		img.load( file.getSource() );
-	} else {
-        var media_title = file.name;
-        var ext = media_title.substring( media_title.lastIndexOf( "." ) + 1, media_title.length );
-        
+            img.load( file.getSource() );
+        }
+	} else {        
         jQuery.each( rtmedia_exteansions, function( key, value ) {
             if( value.indexOf( ext ) >= 0 ) {
                 jQuery( '<img src="' + rtmedia_media_thumbs[ key ] + '" />' ).appendTo( '#file_thumb_' + file.id );

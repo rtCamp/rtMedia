@@ -14,14 +14,14 @@
 
 			<form method="post" action="" name="rtmedia_media_single_edit" id="rtmedia_media_single_edit" class="rtm-form">
 				<div class="rtmedia-editor-main">
-					<ul class="tabs rtm-tabs clearfix">
+					<ul class="rtm-tabs clearfix">
 						<li class="active"><a href="#panel1"><i class='dashicons dashicons-edit rtmicon'></i><?php _e( 'Details', 'rtmedia' ); ?></a></li>
 						<!-- use this hook to add title of a new tab-->
 						<?php do_action( 'rtmedia_add_edit_tab_title', rtmedia_type() ); ?>
 					</ul>
 
-					<div class="tabs-content">
-						<div class="content active" id="panel1">
+					<div class="rtm-tabs-content">
+						<div class="content" id="panel1">
 							<!-- First tab i.e Details tab. Active by default-->
 							<div class="rtmedia-edit-title rtm-field-wrap">
 								<label><?php _e( 'Title : ', 'rtmedia' ); ?></label>

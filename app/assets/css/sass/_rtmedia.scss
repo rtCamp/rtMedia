@@ -49,7 +49,7 @@
 }
 
 // Uploader
-#rtmedia-uploader-form .rtm-plupload-list {
+#rtmedia-uploader-form .rtm-plupload-list, #rtmedia_uploader_filelist {
 	list-style: none;
 	margin-left: -4px;
 	margin-right: -4px;
@@ -63,11 +63,21 @@
 		max-width: 110px;
 		padding: 5px;
 		position: relative;
+
+        &.upload-error {
+            border: 1px solid red;
+        }
 	}
 
 	canvas {
 		display: block;
 		max-width: 100%;
+	}
+}
+
+.rtm-plupload-list {
+	&:empty {
+		display: none;
 	}
 }
 

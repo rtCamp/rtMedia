@@ -9,7 +9,7 @@ $container-min-height: 300px;
 	display: table;
     width: 100%;
 
-	.tabs-content {
+	.rtm-tabs-content {
 		background: $white;
 		border-left: 1px solid $border;
 		display: table-cell;
@@ -29,7 +29,7 @@ $container-min-height: 300px;
 .rtm-sidebar {
 
 	.postbox {
-		background: rgba($white, 0.8);
+		//background: rgba($white, 0.8);
 
 		.hndle {
 			cursor: default;

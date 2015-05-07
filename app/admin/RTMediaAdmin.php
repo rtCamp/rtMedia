@@ -602,9 +602,9 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 		 *
 		 * @return void
 		 */
-		public function bulk_action_handler(){
-			if ( 'bulk_video_regenerate_thumbnails' == $_REQUEST['action'] && '' != $_REQUEST['media'] ){
-				wp_safe_redirect( esc_url_raw( add_query_arg( array( 'media_ids' => urlencode( implode( ',', $_REQUEST['media'] ) ) ), admin_url( 'admin.php?page=rtmedia-regenerate' ) ) ) );
+		public function bulk_action_handler() {
+			if ( 'bulk_video_regenerate_thumbnails' == $_REQUEST[ 'action' ] && '' != $_REQUEST[ 'media' ] ) {
+				wp_safe_redirect( esc_url_raw( add_query_arg( array( 'media_ids' => urlencode( implode( ',', $_REQUEST[ 'media' ] ) ) ), admin_url( 'admin.php?page=rtmedia-regenerate' ) ) ) );
 				exit;
 			}
 		}
@@ -756,7 +756,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 				wp_localize_script( 'rtmedia-admin', 'rtmedia_admin_strings', $rtmedia_admin_strings );
 				wp_localize_script( 'rtmedia-admin', 'settings_url', esc_url( add_query_arg( array( 'page' => 'rtmedia-settings' ), ( is_multisite() ? network_admin_url( 'admin.php' ) : admin_url( 'admin.php' ) ) ) ) . '#privacy_enabled' );
 				wp_localize_script( 'rtmedia-admin', 'settings_rt_album_import_url', esc_url( add_query_arg( array( 'page' => 'rtmedia-settings' ), ( is_multisite() ? network_admin_url( 'admin.php' ) : admin_url( 'admin.php' ) ) ) ) );
-				
+
 				/* Only one CSS file should enqueue */
 				wp_enqueue_style( 'rtmedia-admin', RTMEDIA_URL . 'app/assets/admin/css/admin.css', '', RTMEDIA_VERSION );
 			} else {
@@ -1292,10 +1292,10 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 			$tab = $this->get_current_tab();
 			/* rtMedia */
 			$tabs[] = array(
-					'href' => get_admin_url( null, esc_url( add_query_arg( array( 'page' => 'rtmedia-settings' ), 'admin.php' ) ) ),
-					'title' => __( 'rtMedia', 'rtmedia' ),
-					'name' => __( 'rtMedia', 'rtmedia' ),
-					'class' => ( $tab == 'rtmedia-settings' || $tab == 'rtmedia-addons' || $tab == 'rtmedia-support' || $tab == 'rtmedia-importer' ) ? $active_class : $idle_class,
+				'href' => get_admin_url( null, esc_url( add_query_arg( array( 'page' => 'rtmedia-settings' ), 'admin.php' ) ) ),
+				'title' => __( 'rtMedia', 'rtmedia' ),
+				'name' => __( 'rtMedia', 'rtmedia' ),
+				'class' => ( $tab == 'rtmedia-settings' || $tab == 'rtmedia-addons' || $tab == 'rtmedia-support' || $tab == 'rtmedia-importer' ) ? $active_class : $idle_class,
 			);
 
 			foreach ( $tabs as $tab ) {
@@ -1613,9 +1613,9 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 			die;
 		}
 
-		public function convert_videos_mailchimp_send(){
-			if ( 'Yes' == $_POST['interested'] && ! empty( $_POST['choice'] ) ){
-				wp_remote_get( esc_url_raw( add_query_arg( array( 'rtmedia-convert-videos-form' => 1, 'choice' => $_POST['choice'], 'url' => urlencode( $_POST['url'] ), 'email' => $_POST['email'] ), 'http://rtcamp.com/' ) ) );
+		public function convert_videos_mailchimp_send() {
+			if ( 'Yes' == $_POST[ 'interested' ] && ! empty( $_POST[ 'choice' ] ) ) {
+				wp_remote_get( esc_url_raw( add_query_arg( array( 'rtmedia-convert-videos-form' => 1, 'choice' => $_POST[ 'choice' ], 'url' => urlencode( $_POST[ 'url' ] ), 'email' => $_POST[ 'email' ] ), 'http://rtcamp.com/' ) ) );
 			} else {
 				rtmedia_update_site_option( 'rtmedia-survey', 0 );
 			}
@@ -1940,7 +1940,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 					?>
 				</ul>
 
-				<div class="tabs-content rtm-tab-content">
+				<div class="tabs-content rtm-tabs-content">
 					<?php
 					$k = 1;
 					foreach ( $sub_tabs as $tab ) {

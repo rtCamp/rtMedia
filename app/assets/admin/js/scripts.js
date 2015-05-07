@@ -8,6 +8,8 @@ jQuery( document ).ready( function ( $ ) {
 
 	// Show notice on change option settings
 	$( 'input[name^="rtmedia-options"]' ).on( 'change', function () {
+		$( '.rtm-save-settings-msg' ).remove();
+
 		if ( $( '.rtm-fly-warning' ).length === 0 ) {
 			$( '.rtm-button-container.top' ).prepend( '<div class="rtm-warning rtm-fly-warning hide">Settings have changed, you should save them!</div>' );
 			$( '.rtm-fly-warning' ).slideDown();
