@@ -53,7 +53,7 @@ class RTMediaAJAX {
 			if( $context == 'profile' ){
 				$context_id = get_current_user_id();
 			} else {
-				$context_id = ( is_int( $_POST['context_id'] ) ? $_POST['context_id'] : 0 );
+				$context_id = ( isset( $_POST['context_id'] ) ? $_POST['context_id'] : 0 );
 			}
 
 			// setup new album data
