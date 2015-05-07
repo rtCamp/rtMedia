@@ -544,18 +544,18 @@ jQuery( 'document' ).ready( function ( $ ) {
 		} );
 	}
 
-	if ( jQuery( '.rtm-uploader-tabs' ).length > 0 ) {
-		jQuery( '.rtm-uploader-tabs li' ).click( function ( e ) {
-			if ( ! jQuery( this ).hasClass( 'active' ) ) {
-				jQuery( this ).siblings().removeClass( 'active' );
-				jQuery( '.rtm-uploader-tabs' ).siblings().hide();
-				class_name = jQuery( this ).attr( 'class' );
-				jQuery( '.rtm-uploader-tabs' ).siblings( '[data-id="' + class_name + '"]' ).show();
-				jQuery( this ).addClass( 'active' );
-			}
-		} );
-	}
-} );
+    if( jQuery( '.rtm-uploader-tabs' ).length > 0 ){
+        jQuery( '.rtm-uploader-tabs li' ).click( function( e ){
+            if( ! jQuery( this ).hasClass( 'active' ) ){
+                jQuery( this ).siblings().removeClass( 'active' );
+                jQuery( this ).parents( '.rtm-uploader-tabs' ).siblings().hide();
+                class_name = jQuery( this ).attr( 'class' );
+	            jQuery( this ).parents( '.rtm-uploader-tabs' ).siblings('[data-id="' + class_name + '"]').show();
+                jQuery( this ).addClass( 'active' );
+            }
+        });
+    }
+});
 
 
 

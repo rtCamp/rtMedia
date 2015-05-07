@@ -792,14 +792,25 @@ class RTMedia {
 			unset( $_POST[ "name" ] );
 		}
 
-		//**
-		global $rtmedia_error;
-		if ( isset( $rtmedia_error ) && $rtmedia_error === true )
-			return false;
-		if ( ! $global_album ) {
-			$global_album = $album->add_global( __( "Wall Posts", "rtmedia", true ) );
-		}
-	}
+        //**
+        global $rtmedia_error;
+        if (isset($rtmedia_error) && $rtmedia_error === true)
+            return false;
+        if (!$global_album) {
+            $global_album = $album->add_global( __( "Wall Posts", "rtmedia" ) );
+        }
+
+	    // fix multisite global album doesn't exist issue.
+	    if( is_multisite() && ! rtmedia_get_site_option( 'rtmedia_fix_multisite_global_albums', false ) ){
+		    $model = new RTMediaModel();
+		    $global_albums = rtmedia_global_albums();
+		    $album_objects = $model->get_media( array( 'id' => ( $global_albums ) ), false, false );
+		    if( empty( $album_objects ) ){
+			    $global_album = $album->add_global( __( "Wall Posts", "rtmedia" ) );
+		    }
+		    rtmedia_update_site_option( 'rtmedia_fix_multisite_global_albums', true );
+	    }
+    }
 
 	function default_count() {
 		$count = $this->posts_per_page;
