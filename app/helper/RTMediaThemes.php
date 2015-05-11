@@ -103,7 +103,6 @@ class RTMediaThemes {
 		$themes = array(
 			'rtdating' => array(
 				'name' => __( 'rtDating', 'rtmedia' ),
-				'version' => '1.0',
 				'image' => RTMEDIA_URL . 'app/assets/admin/img/rtDating.png',
 				'demo_url' => 'http://demo.rtcamp.com/rtdating/',
 				'author' => __( 'rtCamp', 'rtmedia' ),
@@ -114,7 +113,6 @@ class RTMediaThemes {
 			),
 			'inspirebook' => array(
 				'name' => __( 'InspireBook', 'rtmedia' ),
-				'version' => '1.0',
 				'image' => RTMEDIA_URL . 'app/assets/admin/img/rtmedia-theme-InspireBook.png',
 				'demo_url' => 'http://demo.rtcamp.com/inspirebook/',
 				'author' => __( 'rtCamp', 'rtmedia' ),
@@ -163,7 +161,6 @@ class RTMediaThemes {
 									</div>
 
 									<div class="theme-info">
-										<!--<span class="theme-version">Version: <?php //echo $theme[ 'version' ];          ?></span>-->
 										<h3 class="theme-name"><?php echo $theme[ 'name' ]; ?></h3>
 										<h4 class="theme-author">By <a href="https://rtcamp.com/"><?php echo $theme[ 'author' ]; ?></a></h4>
 										<p class="theme-description"><?php echo $theme[ 'description' ]; ?> <a href="<?php echo $theme[ 'buy_url' ]; ?>" class="rtmedia-theme-inner-a" target="_blank"><?php _e( 'Read More' ); ?></a></p>
@@ -198,35 +195,42 @@ class RTMediaThemes {
 	public function rtmedia_3rd_party_themes_content() {
 
 		$themes = array(
+			'msocial' => array(
+				'name' => __( '(M) SOCIAL NETWORK BUDDYPRESS THEME', 'rtmedia' ),
+				'image' => RTMEDIA_URL . 'app/assets/admin/img/rtmedia-theme-msocial.jpg',
+				'demo_url' => 'http://rt.cx/msocial',
+				'author' => __( 'gavick', 'rtmedia' ),
+				'author_url' => 'http://rt.cx/msocial',
+				'buy_url' => 'http://rt.cx/msocial',
+				'description' => __( '(M)Social is a sophisticated, vibrant community theme that offers incredible grid layouts, with full BuddyPress support so your users can interact with each other, create their own pages, and share their thoughts and images with the community. ', 'rtmedia' ),
+				'tags' => 'responsive, WPML, BuddyPress, social, business',
+			),
 			'klein' => array(
 				'name' => __( 'Klein', 'rtmedia' ),
-				'version' => '1.0',
 				'image' => RTMEDIA_URL . 'app/assets/admin/img/rtmedia-theme-klein.jpg',
 				'demo_url' => 'http://rt.cx/klein',
 				'author' => __( 'dunhakdis', 'rtmedia' ),
-				'author_url' => 'http://themeforest.net/user/dunhakdis',
+				'author_url' => 'http://rt.cx/klein',
 				'buy_url' => 'http://rt.cx/klein',
 				'description' => __( 'Klein is an innovative WordPress theme built to support BuddyPress, bbPress, and WooCommerce out of the box. Perfect for websites that interacts with many users.', 'rtmedia' ),
-				'tags' => 'clean, responsive, creative, modern, landing page, social, BuddyPress, bbpress, woocommerce',
+				'tags' => 'bbpress, bp, buddypress, buddypress flat design, buddypress theme, community, responsive buddypress, responsive buddypress theme, social network, wordpress community theme',
 			),
 			'sweetdate' => array(
 				'name' => __( 'SweetDate', 'rtmedia' ),
-				'version' => '1.0',
 				'image' => RTMEDIA_URL . 'app/assets/admin/img/rtmedia-theme-sweetdate.png',
 				'demo_url' => 'http://rt.cx/sweetdate',
 				'author' => __( 'SeventhQueen', 'rtmedia' ),
-				'author_url' => 'http://themeforest.net/user/SeventhQueen',
+				'author_url' => 'http://rt.cx/sweetdate',
 				'buy_url' => 'http://rt.cx/sweetdate',
 				'description' => __( 'SweetDate is a unique, clean and modern Premium Wordpress theme. It is perfect for a dating or community website but can be used as well for any other domain. They added all the things you need to create a perfect community system.', 'rtmedia' ),
-				'tags' => 'dating, clean, responsive, creative, minimal, modern, landing page, social, BuddyPress, bbpress, woocommerce',
+				'tags' => 'bbpress, buddypress, clean, community, creative, dating, facebook, foundation, mailchimp, retina, seo, social, woocommerce, wordpress, zurb',
 			),
-			'kelo' => array(
+			'kleo' => array(
 				'name' => __( 'KLEO', 'rtmedia' ),
-				'version' => '1.0',
 				'image' => RTMEDIA_URL . 'app/assets/admin/img/rtmedia-theme-kleo.png',
 				'demo_url' => 'http://rt.cx/kleo',
 				'author' => __( 'SeventhQueen', 'rtmedia' ),
-				'author_url' => 'http://themeforest.net/user/SeventhQueen',
+				'author_url' => 'http://rt.cx/kleo',
 				'buy_url' => 'http://rt.cx/kleo',
 				'description' => __( 'You no longer need to be a professional developer or designer to create an awesome website. Let your imagination run wild and create the site of your dreams. KLEO has all the tools to get you started.', 'rtmedia' ),
 				'tags' => 'bbpress, Bootstrap 3, buddypress, clean design, community theme, e-commerce theme, multi-purpose, responsive design, retina, woocommerce, wordpress theme',
@@ -273,7 +277,7 @@ class RTMediaThemes {
 
 									<div class="theme-info">
 										<h3 class="theme-name"><?php echo $theme[ 'name' ]; ?></h3>
-										<h4 class="theme-author">By <a href="https://rtcamp.com/"><?php echo $theme[ 'author' ]; ?></a></h4>
+										<h4 class="theme-author">By <a href="<?php echo $theme[ 'author_url' ]; ?>"><?php echo $theme[ 'author' ]; ?></a></h4>
 										<p class="theme-description"><?php echo $theme[ 'description' ]; ?> <a href="<?php echo $theme[ 'buy_url' ]; ?>" class="rtmedia-theme-inner-a" target="_blank"><?php _e( 'Read More' ); ?></a></p>
 										<p class="theme-tags"><span><?php _e( 'Tags:' ); ?></span><?php echo $theme[ 'tags' ]; ?></p>
 									</div>
