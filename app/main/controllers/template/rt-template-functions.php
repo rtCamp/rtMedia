@@ -1749,10 +1749,10 @@ function rtmedia_create_album( $options ) {
 	if ( $display === true ) {
 
 		add_action( 'rtmedia_before_media_gallery', 'rtmedia_create_album_modal' );
-		$options[] = "<a href='#rtmedia-create-album-modal' class='rtmedia-reveal-modal rtmedia-modal-link'  title='" . __( 'Create New Album', 'rtmedia' ) . "'><i class='dashicons dashicons-plus-alt rtmicon'></i>" . __( 'Add Album', 'rtmedia' ) . "</a>";
-
-		return $options;
+		$options[] = "<a href='#rtmedia-create-album-modal' class='rtmedia-reveal-modal rtmedia-modal-link'  title='" . __( 'Create New Album', 'rtmedia' ) . "'><i class='dashicons dashicons-plus-alt rtmicon'></i>" . __( 'Add Album', 'rtmedia' ) . "</a>";		
 	}
+    
+    return $options;
 }
 
 add_action( 'rtmedia_before_media_gallery', 'rtmedia_create_album_modal' );
