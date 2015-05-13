@@ -247,8 +247,8 @@ class RTMedia {
 		max-height: <?php echo $this->options[ "defaultSizes_photo_medium_height" ]; ?>px;
 		}
 		.rtmedia-activity-container .mejs-container.mejs-video{
-		max-height: <?php echo $this->options[ "defaultSizes_video_activityPlayer_height" ]; ?>px;
-		max-width: <?php echo $this->options[ "defaultSizes_video_activityPlayer_width" ]; ?>px;
+		min-height: <?php echo $this->options[ "defaultSizes_video_activityPlayer_height" ]; ?>px;
+		min-width: <?php echo $this->options[ "defaultSizes_video_activityPlayer_width" ]; ?>px;
 		}
 		<?php
 	}
