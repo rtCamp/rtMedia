@@ -349,6 +349,16 @@ class RTMediaFormHandler {
 				'group' => '18',
 				'after_content' => __( 'You might need to', 'rtmedia' ) . ' <a id="rtm-masonry-change-thumbnail-info" href="' . get_admin_url() . 'admin.php?page=rtmedia-settings#rtmedia-sizes">' . __( 'change thumbnail size', 'rtmedia' ) . '</a> ' . __( 'and uncheck the crop box for thumbnails.', 'rtmedia' ) . '<br /><br />' . __( 'To set gallery for fixed width, set image height to 0 and width as per your requirement and vice-versa.', 'rtmedia' ),
 			),
+            'general_direct_upload' => array(
+				'title' => __( 'Enable Direct Upload', 'rtmedia' ),
+				'callback' => array( 'RTMediaFormHandler', 'checkbox' ),
+				'args' => array(
+					'key' => 'general_direct_upload',
+					'value' => $options[ 'general_direct_upload' ],
+					'desc' => __( 'Uploading media directly as soon as it gets selected.', 'rtmedia' ),
+				),
+				'group' => '19',
+			),
 		);
 
 		return $render;
@@ -374,6 +384,7 @@ class RTMediaFormHandler {
 		$general_group[10] = __( 'Single Media View', 'rtmedia' );
 		$general_group[15] = __( 'List Media View', 'rtmedia' );
 		$general_group[18] = __( 'Masonry View', 'rtmedia' );
+        $general_group[19] = __( 'Direct Upload', 'rtmedia' );
 		$general_group       = apply_filters( 'rtmedia_display_content_groups', $general_group );
 		ksort( $general_group );
 		self::render_tab_content( $render_options, $general_group, 20 );

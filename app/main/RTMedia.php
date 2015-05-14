@@ -877,7 +877,10 @@ class RTMedia {
 		wp_localize_script( 'rtmedia-main', 'rtmedia_ajax_url', admin_url( 'admin-ajax.php' ) );
 		wp_localize_script( 'rtmedia-main', 'rtmedia_media_slug', RTMEDIA_MEDIA_SLUG );
 		wp_localize_script( 'rtmedia-main', 'rtmedia_lightbox_enabled', strval( $this->options[ "general_enableLightbox" ] ) );
-
+        
+        $direct_upload = ( isset( $this->options[ "general_direct_upload" ] ) ? $this->options[ "general_direct_upload" ] : '0' );
+        
+        wp_localize_script( 'rtmedia-main', 'rtmedia_direct_upload_enabled', $direct_upload );
 		//gallery reload after media upload, by default true
 		wp_localize_script( 'rtmedia-main', 'rtmedia_gallery_reload_on_upload', '1' );
 

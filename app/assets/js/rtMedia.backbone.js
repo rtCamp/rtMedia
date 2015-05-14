@@ -378,7 +378,11 @@ jQuery( function ( $ ) {
 				}
 
 				jQuery( '.rtmedia-upload-input' ).attr( 'value', rtmedia_add_more_files_msg );
-				jQuery( '.start-media-upload' ).show();
+                if( typeof rtmedia_direct_upload_enabled != 'undefined' && rtmedia_direct_upload_enabled == '1' ) {
+                    jQuery( '.start-media-upload' ).hide();
+                } else {
+                    jQuery( '.start-media-upload' ).show();
+                }
 				if ( uploaderObj.uploader.settings.max_file_size < file.size ) {
 					return true;
 				}
@@ -468,6 +472,10 @@ jQuery( function ( $ ) {
 			} );
 
 			rtMediaHook.call( 'rtmedia_js_after_files_added', [ up, files ] );
+            
+            if( typeof rtmedia_direct_upload_enabled != 'undefined' && rtmedia_direct_upload_enabled == '1' ) {
+                jQuery( '.start-media-upload' ).trigger( 'click' );
+            }
 
 		} );
 
@@ -500,15 +508,15 @@ jQuery( function ( $ ) {
 			return false;
 
 		} );
-
-		jQuery( '.start-media-upload' ).on( 'click', function ( e ) {
-			e.preventDefault();
-			var allow_upload = rtMediaHook.call( 'rtmedia_js_upload_file', true );
-			if ( allow_upload == false ) {
-				return false;
-			}
-			uploaderObj.uploadFiles();
-		} );
+            
+        jQuery( '.start-media-upload' ).on( 'click', function ( e ) {
+            e.preventDefault();
+            var allow_upload = rtMediaHook.call( 'rtmedia_js_upload_file', true );
+            if ( allow_upload == false ) {
+                return false;
+            }
+            uploaderObj.uploadFiles();
+        } );
 
 		uploaderObj.uploader.bind( 'UploadProgress', function ( up, file ) {
 			//$("#" + file.id + " .plupload_file_status").html(file.percent + "%");
@@ -729,9 +737,8 @@ jQuery( document ).ready( function ( $ ) {
 			rtmedia_selected_file_list( plupload, file, '', '' );
 
 			jQuery( '#whats-new-content' ).css( 'padding-bottom', '0px' );
-			$( "#rtm-upload-start-notice" ).css( 'display', 'block' ); // show the file upload notice to the user
-
-			$( "#" + file.id + " .plupload_delete" ).click( function ( e ) {
+            
+            $( "#" + file.id + " .plupload_delete" ).click( function ( e ) {
 				e.preventDefault();
 				objUploadView.uploader.removeFile( upl.getFile( file.id ) );
 				$( "#" + file.id ).remove();
@@ -788,6 +795,16 @@ jQuery( document ).ready( function ( $ ) {
 			if ( upl.getFile( rfile ) )
 				upl.removeFile( upl.getFile( rfile ) );
 		} );
+        
+        if( jQuery.trim( jQuery( "#whats-new" ).val() ) != "" ) {
+            var allow_upload = rtMediaHook.call( 'rtmedia_js_upload_file', true );
+            
+            if( allow_upload == false ) {
+                return false;
+            }
+            
+            objUploadView.uploadFiles();
+        }
 	} );
 
 	objUploadView.uploader.bind( 'FileUploaded', function ( up, file, res ) {
@@ -847,7 +864,7 @@ jQuery( document ).ready( function ( $ ) {
 				e.preventDefault();
 				jQuery( this ).parent().parent( 'li' ).remove();
 			} );
-		$( "#rtm-upload-start-notice" ).css( 'display', 'block' ); // show the file upload notice to the user
+		
 		return false;
 
 	} );
