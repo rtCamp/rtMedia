@@ -8,7 +8,7 @@ function apply_rtMagnificPopup( selector ) {
 		} else {
 			rt_load_more = rtmedia_load_more;
 		}
-		if ( rtmedia_lightbox_enabled == '1' ) { // if lightbox is enabled.
+		if ( typeof(rtmedia_lightbox_enabled) != 'undefined' && rtmedia_lightbox_enabled == '1' ) { // if lightbox is enabled.
 
 			if ( $( '.activity-item .rtmedia-activity-container .rtmedia-list-item > a' ).siblings( 'p' ).children( 'a' ).length > 0 ) {
 				$( '.activity-item .rtmedia-activity-container .rtmedia-list-item > a' ).siblings( 'p' ).children( 'a' ).addClass( 'no-popup' );
