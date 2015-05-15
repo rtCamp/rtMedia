@@ -353,7 +353,7 @@ jQuery( function ( $ ) {
 					galleryObj.reloadView();
 				}
 			}
-			jQuery( '#rtmedia_uploader_filelist li' ).remove();
+			jQuery( '#rtmedia_uploader_filelist li.plupload_queue_li' ).remove();
 			jQuery( '.start-media-upload' ).hide();
             apply_rtMagnificPopup( jQuery( '.rtmedia-list-media, .rtmedia-activity-container ul.rtmedia-list, #bp-media-list,.widget-item-listing,.bp-media-sc-list, li.media.album_updated ul,ul.bp-media-list-media, li.activity-item div.activity-content div.activity-inner div.bp_media_content' ) );
 			window.onbeforeunload = null;
@@ -897,7 +897,7 @@ jQuery( document ).ready( function ( $ ) {
 	objUploadView.uploader.bind( 'UploadComplete', function ( up, files ) {
 		media_uploading = true;
 		$( "#aw-whats-new-submit" ).click();
-		$( '#rtmedia_uploader_filelist li' ).remove();
+		$( '#rtmedia_uploader_filelist li.plupload_queue_li' ).remove();
 		//$("#aw-whats-new-submit").removeAttr('disabled');
 		window.onbeforeunload = null;
 	} );
@@ -1152,7 +1152,7 @@ function rtmedia_selected_file_list( plupload, file, uploader, error ) {
         icon = '<i class="dashicons dashicons-info rtmicon" ' + title + '></i>';
 	}
     
-	var rtmedia_plupload_file = '<li class="plupload_file ui-state-default" id="' + file.id + '" ' + title + '>';
+	var rtmedia_plupload_file = '<li class="plupload_file ui-state-default plupload_queue_li" id="' + file.id + '" ' + title + '>';
 	rtmedia_plupload_file += '<div id="file_thumb_' + file.id + '" class="plupload_file_thumb">';
 	rtmedia_plupload_file += '</div>';
 	rtmedia_plupload_file += '<div class="plupload_file_status">';
