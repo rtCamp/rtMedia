@@ -694,7 +694,9 @@ class RTMedia {
 			'featured' => false,
 			'GroupFeatured' => false,
 //            'Group' => false, will be constructed after rtmedia pro classes are constructed.
-			'ViewCount' => false
+			'ViewCount' => false,
+                        'CommentNotification' => false,
+                        'LikeNotification' => false,
 				//'query'		=> false
 		);
 		global $rtmedia_nav;

@@ -70,6 +70,7 @@ class RTMediaComment {
 		$id = $this->rtmedia_comment_model->insert($params);
 		global $rtmedia_points_media_id;
 		$rtmedia_points_media_id = rtmedia_id($params['comment_post_ID']);
+		$params['comment_id'] = $id;
 		do_action('rtmedia_after_add_comment', $params);
 
 		return $id;
