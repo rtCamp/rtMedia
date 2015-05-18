@@ -134,6 +134,7 @@ Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_sou
 * Template updates
 * Admin settings UI changes
 * Media gallery UI changes
+* Direct media upload on file selection
 * Bug fixes
 
 = 3.7.44 =
