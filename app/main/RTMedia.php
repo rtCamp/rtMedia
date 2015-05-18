@@ -156,8 +156,12 @@ class RTMedia {
 
 	function fix_group_media_privacy() {
 		//if buddypress is active and groups are enabled
-		if ( class_exists( 'BuddyPress' ) ) {
-			global $wpdb;
+		global $wpdb;
+		$table_exist = false;
+		if( $wpdb->query( "SHOW TABLES LIKE '{$wpdb->prefix}bp_groups'" ) ){
+			$table_exist = true;
+		}
+		if ( class_exists( 'BuddyPress' ) && $table_exist ) {
 			$model = new RTMediaModel();
 			$sql_group = " UPDATE $model->table_name m join {$wpdb->prefix}bp_groups bp on m.context_id = bp.id SET m.privacy = 0 where m.context = 'group' and bp.status = 'public' and m.privacy <> 80 ";
 			$wpdb->query( $sql_group );
