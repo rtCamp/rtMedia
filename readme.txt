@@ -129,8 +129,8 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "Visit rtMedia's Features page") to get some details about future releases.
 
 = 3.8 =
-* Removed foundation
-* Removed FontAwesome fonts and instead used WordPress dashicons
+* Removed ZURB Foundation
+* Removed FontAwesome fonts and instead used WordPress Dashicons
 * Template updates
 * Admin settings UI changes
 * Media gallery UI changes
