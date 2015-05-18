@@ -113,20 +113,28 @@ http://www.youtube.com/watch?v####dJrykKQGDcs
 
 1. Media Settings
 2. Privacy Settings
-3. Built-in Support
+3. BuddyPress Settings
 4. Media View
 5. Album View
 6. Uploader
-7. User Privacy Settings
-8. Single Media View
-9. Media Edit View
-10. Media Activity
-11. Media Widget
-12. Lightbox
+7. Uploader Thumbnails
+8. Lightbox
+9. Single Media View
+10. Media Edit View
+12. Media Activity
+12. User Privacy Settings
+13. Media Size Settings
+14. Custom CSS settings
+
 
 ## Changelog ##
 
 Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "Visit rtMedia's Features page") to get some details about future releases.
+
+#### 3.8.1 ####
+* Fix license page
+* Fix direct media upload in activity
+* Fix BuddyPress group table error on rtMedia update
 
 #### 3.8 ####
 * Removed ZURB Foundation
@@ -965,7 +973,7 @@ Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_sou
 * HTML5 Audio Tag Support (with fallback)
 * HTML5 Video Tag Support (with fallback)
 
-#### 3.8 ####
+#### 3.8.1 ####
 Requires BuddyPress 1.7 or higher, if using BuddyPress. Assets updated, media templates updated, admin settings updated and UI changes.
 
 ## Sponsors ##
