@@ -796,7 +796,7 @@ jQuery( document ).ready( function ( $ ) {
 				upl.removeFile( upl.getFile( rfile ) );
 		} );
         
-        if( jQuery.trim( jQuery( "#whats-new" ).val() ) != "" ) {
+        if( typeof rtmedia_direct_upload_enabled != 'undefined' && rtmedia_direct_upload_enabled == '1' && jQuery.trim( jQuery( "#whats-new" ).val() ) != "" ) {
             var allow_upload = rtMediaHook.call( 'rtmedia_js_upload_file', true );
             
             if( allow_upload == false ) {
