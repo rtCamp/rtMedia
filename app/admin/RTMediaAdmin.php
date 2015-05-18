@@ -705,7 +705,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 				),
 					)
 			);
-			if ( has_filter( 'rtmedia_license_tabs' ) || did_action( 'rtmedia_addon_license_details' ) ) {
+			if ( has_filter( 'rtmedia_license_tabs' ) || has_action( 'rtmedia_addon_license_details' ) ) {
 				$admin_bar->add_menu( array(
 					'id' => 'rt-media-license',
 					'parent' => 'rtMedia',
@@ -744,7 +744,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 				'rtmedia_page_rtmedia-premium',
 			);
 
-			if ( has_filter( 'rtmedia_license_tabs' ) || did_action( 'rtmedia_addon_license_details' ) ) {
+			if ( has_filter( 'rtmedia_license_tabs' ) || has_action( 'rtmedia_addon_license_details' ) ) {
 				$admin_pages[] = 'rtmedia_page_rtmedia-license';
 			}
 
@@ -801,7 +801,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 			add_submenu_page( 'rtmedia-settings', __( 'Support', 'rtmedia' ), __( 'Support', 'rtmedia' ), 'manage_options', 'rtmedia-support', array( $this, 'support_page' ) );
 			add_submenu_page( 'rtmedia-settings', __( 'Themes', 'rtmedia' ), __( 'Themes', 'rtmedia' ), 'manage_options', 'rtmedia-themes', array( $this, 'theme_page' ) );
 			add_submenu_page( 'rtmedia-settings', __( 'Hire Us', 'rtmedia' ), __( 'Hire Us', 'rtmedia' ), 'manage_options', 'rtmedia-hire-us', array( $this, 'hire_us_page' ) );
-			if ( has_filter( 'rtmedia_license_tabs' ) || did_action( 'rtmedia_addon_license_details' ) ) {
+			if ( has_filter( 'rtmedia_license_tabs' ) || has_action( 'rtmedia_addon_license_details' ) ) {
 				add_submenu_page( 'rtmedia-settings', __( 'Licenses', 'rtmedia' ), __( 'Licenses', 'rtmedia' ), 'manage_options', 'rtmedia-license', array( $this, 'license_page' ) );
 			}
 
@@ -1362,7 +1362,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 				),
 			);
 
-			if ( has_filter( 'rtmedia_license_tabs' ) || did_action( 'rtmedia_addon_license_details' ) ) {
+			if ( has_filter( 'rtmedia_license_tabs' ) || has_action( 'rtmedia_addon_license_details' ) ) {
 				$tabs[] = array(
 					'href' => get_admin_url( null, esc_url( add_query_arg( array( 'page' => 'rtmedia-license' ), 'admin.php' ) ) ),
 					'name' => __( 'Licenses', 'rtmedia' ),
