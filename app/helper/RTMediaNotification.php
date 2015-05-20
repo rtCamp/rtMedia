@@ -57,7 +57,11 @@ class RTMediaNotification {
             'secondary_item_id' => $user_id,
             'date_notified' => bp_core_current_time(),
         );
-        return bp_notifications_add_notification( $args_add_noification );
+        global $rtmedia;
+	if ( isset( $rtmedia->options[ "buddypress_enableNotification" ] ) && $rtmedia->options[ "buddypress_enableNotification" ] != "0" ) {
+            return bp_notifications_add_notification( $args_add_noification );
+        }
+        return false;
     }
 
     /**

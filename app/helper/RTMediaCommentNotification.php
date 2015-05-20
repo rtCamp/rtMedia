@@ -78,7 +78,9 @@ class RTMediaCommentNotification extends RTMediaNotification {
         }
         error_log(var_export($args, true));
         $comment_notification_id = $this->add_notification($post_id, $post_author_id, $args['user_id']);
-        add_comment_meta($comment_id, 'comment_notification_id', $comment_notification_id);
+        if( false != $comment_notification_id ) {
+            add_comment_meta($comment_id, 'comment_notification_id', $comment_notification_id);
+        }
     }
 
     /**
