@@ -60,7 +60,6 @@ if ( ! class_exists( 'RTMediaSettings' ) ){
                 'general_direct_upload' => 0,
 			);
 
-			$defaults = apply_filters( 'rtmedia_general_content_default_values', $defaults );
 			foreach ( $rtmedia->allowed_types as $type ) {
 				// invalid keys handled in sanitize method
 				$defaults[ 'allowedTypes_' . $type['name'] . '_enabled' ]  = 0;
@@ -103,6 +102,8 @@ if ( ! class_exists( 'RTMediaSettings' ) ){
                     $defaults['general_jpeg_image_quality'] = 90;
                 }                
             }
+
+			$defaults = apply_filters( 'rtmedia_general_content_default_values', $defaults );
 
 			return $defaults;
 		}
