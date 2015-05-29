@@ -1927,9 +1927,13 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 				$sub_tabs = apply_filters( 'rtmedia_pro_settings_tabs_content', $sub_tabs );
 				ksort( $sub_tabs );
 			}
+			$tab_position_class = 'rtm-vertical-tabs';
+			if( $page == 'rtmedia-addons' ){
+				$tab_position_class = 'rtm-horizotanl-tabs';
+			}
 			?>
 
-			<div class="clearfix rtm-vertical-tabs rtm-admin-tab-container <?php echo $wrapper_class; ?>">
+			<div class="clearfix <?php echo $tab_position_class; ?> rtm-admin-tab-container <?php echo $wrapper_class; ?>">
 				<ul class="rtm-tabs">
 					<?php
 					$i = 1;
@@ -1973,7 +1977,6 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 						$tab_without_hash = explode( '#', $tab[ 'href' ] );
 						$tab_without_hash = $tab_without_hash[ 1 ];
 						echo '<div class="content' . $active_class . '" id="' . $tab_without_hash . '">';
-						echo '<h3 class="rtm-setting-title">' . $tab[ 'name' ] . '</h3>';
 						if ( isset( $tab[ 'args' ] ) ) {
 							call_user_func( $tab[ 'callback' ], $page, $tab[ 'args' ] );
 						} else {

@@ -73,3 +73,35 @@
 		width: auto;
 	}
 }
+
+/*
+horizontal tab css
+*/
+.rtm-horizotanl-tabs{
+	.rtm-tabs {
+		list-style: none;
+		margin: 0;
+		display: block;
+		width: auto;
+		min-height: 0;
+	}
+	.rtm-tabs-content {
+		border-left: none;
+		background: $white;
+		min-height: $container-min-height;
+		padding: 20px 30px;
+		vertical-align: top;
+	}
+	.rtm-tabs{
+		a{
+			border-bottom: none;
+		}
+		li{
+			display: inline-block;
+		}
+	}
+}
+.rtm-horizotanl-tabs.rtm-admin-tab-container{
+	width: 100%;
+	display: block;
+}
