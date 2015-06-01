@@ -107,7 +107,7 @@ if ( ! class_exists( 'RTMediaAddon' ) ) {
 			$img_src = RTMEDIA_URL . 'app/assets/admin/img/';
 			$addons = array(
 					array(
-						'title' => __( 'rtMedia Social Sync', 'rtmedia' ),
+						'title' => __( 'Social Sync', 'rtmedia' ),
 						'img_src' => $img_src . 'rtmedia-social-sync-240x184.png',
 						'product_link' => 'https://rtcamp.com/products/rtmedia-social-sync/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media',
 						'desc' => '<p>' . __( 'rtMedia Social Sync allows you to import media from your Facebook account.', 'rtmedia' ) . '</p>',
@@ -118,7 +118,7 @@ if ( ! class_exists( 'RTMediaAddon' ) ) {
 						'purchased' => ( defined( 'RTMEDIA_SOCIAL_SYNC_URL' ) || file_exists( WP_PLUGIN_DIR . '/rtmedia-social-sync/index.php' ) ) ? true : false,
 					),
 					array(
-						'title' => __( 'rtMedia Photo Watermark', 'rtmedia' ),
+						'title' => __( 'Photo Watermark', 'rtmedia' ),
 						'img_src' => $img_src . 'rtmedia-watermark-240x184.png',
 						'product_link' => 'http://rtcamp.com/products/rtmedia-photo-watermark/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media',
 						'desc' => '<p>' . __( 'rtMedia Photo Watermark let you add watermark on your images uploaded using rtMedia.', 'rtmedia' ) . '</p>',
@@ -129,7 +129,7 @@ if ( ! class_exists( 'RTMediaAddon' ) ) {
 						'purchased' => ( defined( 'RTMEDIA_WATERMARK_URL' ) || file_exists( WP_PLUGIN_DIR . '/rtmedia-photo-watermak/index.php' ) ) ? true : false,
 					),
 					array(
-						'title' => __( 'rtMedia Photo Tagging', 'rtmedia' ),
+						'title' => __( 'Photo Tagging', 'rtmedia' ),
 						'img_src' => $img_src . 'rtmedia-phototagging-240x184.png',
 						'product_link' => 'http://rtcamp.com/products/rtmedia-photo-tagging/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media',
 						'desc' => '<p>' . __( 'rtMedia Photo Tagging enable users to tag their friends on photos uploaded using rtMedia.', 'rtmedia' ) . '</p>',
@@ -140,7 +140,7 @@ if ( ! class_exists( 'RTMediaAddon' ) ) {
 						'purchased' => ( defined( 'RTMEDIA_PHOTO_TAGGING_URL' ) || file_exists( WP_PLUGIN_DIR . '/bpm-photo-tag/index.php' ) ) ? true : false,
 					),
 					array(
-						'title' => __( 'rtMedia Instagram', 'rtmedia' ),
+						'title' => __( 'Instagram', 'rtmedia' ),
 						'img_src' => $img_src . 'rtmedia-instagram-240x184.png',
 						'product_link' => 'http://rtcamp.com/products/rtmedia-instagram/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media',
 						'desc' => '<p>' . __( 'rtMedia Instagram adds Instagram like filters to images uploaded with rtMedia.', 'rtmedia' ) . '</p>',
@@ -151,7 +151,7 @@ if ( ! class_exists( 'RTMediaAddon' ) ) {
 						'purchased' => ( defined( 'RTMEDIA_INSTAGRAM_URL' ) || file_exists( WP_PLUGIN_DIR . '/bpm-instagram/index.php' ) ) ? true : false,
 					),
 					array(
-						'title' => __( 'rtMedia Kaltura Add-on', 'rtmedia' ),
+						'title' => __( 'Kaltura Add-on', 'rtmedia' ),
 						'img_src' => $img_src . 'rtmedia-kaltura-240x184.png',
 						'product_link' => 'http://rtcamp.com/products/rtmedia-kaltura-add-on/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media',
 						'desc' => '<p>' . __( 'Add support for more video formats using Kaltura video solution. It works with Kaltura.com, self-hosted Kaltura-CE and Kaltura-on-premise.', 'rtmedia' ) . '</p>',
@@ -162,7 +162,7 @@ if ( ! class_exists( 'RTMediaAddon' ) ) {
 						'purchased' => ( defined( 'RTMEDIA_KALTURA_PATH' ) || file_exists( WP_PLUGIN_DIR . '/bpm-kaltura/index.php' ) ) ? true : false,
 					),
 					array(
-						'title' => __( 'rtMedia FFMPEG Add-on', 'rtmedia' ),
+						'title' => __( 'FFMPEG Add-on', 'rtmedia' ),
 						'img_src' => $img_src . 'rtmedia-ffmpeg-240x184.png',
 						'product_link' => 'http://rtcamp.com/products/buddypress-media-ffmpeg-converter/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media',
 						'desc' => '<p>' . __( 'Add supports for more audio & video formats using open-source media-node. Media node comes with automated setup script for Ubuntu/Debian.', 'rtmedia' ) . '</p>',
@@ -173,7 +173,7 @@ if ( ! class_exists( 'RTMediaAddon' ) ) {
 						'purchased' => ( defined( 'RTMEDIA_FFMPEG_URL' ) || file_exists( WP_PLUGIN_DIR . '/bpm-ffmpeg/index.php' ) ) ? true : false,
 					),
 					array(
-						'title' => __( 'rtMedia Membership Add-on', 'rtmedia' ),
+						'title' => __( 'Membership Add-on', 'rtmedia' ),
 						'img_src' => $img_src . 'rtmedia-membership-240x184.png',
 						'product_link' => 'https://rtcamp.com/products/rtmedia-membership/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media',
 						'desc' => '<p>' . __( 'rtMedia Membership add-on provides membership functionality in your site in terms of media upload.', 'rtmedia' ),
