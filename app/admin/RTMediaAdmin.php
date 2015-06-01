@@ -741,7 +741,6 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 				'rtmedia_page_rtmedia-hire-us',
 				'rtmedia_page_rtmedia-importer',
 				'rtmedia_page_rtmedia-regenerate',
-				'rtmedia_page_rtmedia-premium',
 			);
 
 			if ( has_filter( 'rtmedia_license_tabs' ) || has_action( 'rtmedia_addon_license_details' ) ) {
@@ -803,10 +802,6 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 			add_submenu_page( 'rtmedia-settings', __( 'Hire Us', 'rtmedia' ), __( 'Hire Us', 'rtmedia' ), 'manage_options', 'rtmedia-hire-us', array( $this, 'hire_us_page' ) );
 			if ( has_filter( 'rtmedia_license_tabs' ) || has_action( 'rtmedia_addon_license_details' ) ) {
 				add_submenu_page( 'rtmedia-settings', __( 'Licenses', 'rtmedia' ), __( 'Licenses', 'rtmedia' ), 'manage_options', 'rtmedia-license', array( $this, 'license_page' ) );
-			}
-
-			if ( ! defined( 'RTMEDIA_PRO_VERSION' ) ) {
-				add_submenu_page( 'rtmedia-settings', __( 'Premium', 'rtmedia' ), __( 'Premium ', 'rtmedia' ), 'manage_options', 'rtmedia-premium', array( $this, 'premium_page' ) );
 			}
 
 			$obj_encoding = new RTMediaEncoding( true );
@@ -1125,19 +1120,6 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 		 */
 		public function support_page() {
 			$this->render_page( 'rtmedia-support' );
-		}
-
-		/**
-		 * Render the rtmedia premium page.
-		 *
-		 * @access public
-		 *
-		 * @param  void
-		 *
-		 * @return void
-		 */
-		public function premium_page() {
-			$this->render_page( 'rtmedia-premium' );
 		}
 
 		/**
