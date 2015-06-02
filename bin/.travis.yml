@@ -1,42 +1,49 @@
 notifications:
   slack: rtcamp:BU5oabVFvVoFxDefYtBjTLcW
 
-language:
-    - php
-    - node_js
+sudo: required
 
-php:
-    - 5.3
-    - 5.4
-
+language: node_js
 node_js:
-    - 0.10
+- "0.10"
+
 
 env:
-    - WP_VERSION=3.8 WP_MULTISITE=0
-    - WP_VERSION=3.8 WP_MULTISITE=1
-    - WP_VERSION=latest WP_MULTISITE=0
-    - WP_VERSION=latest WP_MULTISITE=1
+- WP_VERSION=4.0 WP_MULTISITE=0
+
+before_install:
+- rm -rf ~/.gnupg
+- sudo apt-get install xvfb
 
 before_script:
-    - export PLUGIN_DIR=$(pwd)
-    - export PLUGIN_SLUG=$(basename $(pwd) | sed 's/^wp-//')
-    - pear config-set auto_discover 1
-    - pear install PHP_CodeSniffer
-    - cd $(pear config-get php_dir)/PHP/CodeSniffer/Standards/
-    - git clone git://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards.git
-    - cd $(pear config-get php_dir)/PHP/CodeSniffer/Standards/
-    - ln -s WordPress-Coding-Standards/WordPress WordPress
-    - ln -s WordPress-Coding-Standards/WordPress-Core WordPress-Core
-    - ln -s WordPress-Coding-Standards/WordPress-Extra WordPress-Extra
-    - ln -s WordPress-Coding-Standards/WordPress-VIP WordPress-VIP
-    - cd $PLUGIN_DIR
-    - phpenv rehash
-    - npm install -g jshint
-    - if [ -e phpunit.xml ] || [ -e phpunit.xml.dist ]; then bash bin/install-wp-tests.sh wordpress_test root '' localhost $WP_VERSION; fi
+- export PLUGIN_DIR=$(pwd)
+- sudo rm -rf /etc/mysql/
+- sudo apt-get -qq purge mysql* graphviz*
+- sudo apt-get -qq autoremove
+- sudo apt-get update
+- sudo bash -c 'echo -e "[user]\n\tname = abc\n\temail = root@localhost.com" > /home/travis/.gitconfig'
+- sudo wget -qO ee rt.cx/ee && sudo bash ee
+- source /etc/bash_completion.d/ee_auto.rc
+- sudo ee -v
+- sudo lsb_release  -a
+- sudo ee site create rtmediatest.com --wp --user=prabuddha --email=prabuddha.chakraborty@rtcamp.com --pass=QlNC0qIT4RHphf6
+- sudo chmod 777 -R /var/www
+- sudo bash -c 'echo "127.0.0.1	rtmediatest.com	www.rtmediatest.com" >> /etc/hosts'
+- cat ~/.my.cnf
+- sudo nginx -t
+- sudo service nginx reload
+- cd /var/www/rtmediatest.com/htdocs/ && ls
+- wp --allow-root plugin install https://github.com/rtCamp/rtMedia/archive/develop.zip
+- wp --allow-root plugin install https://downloads.wordpress.org/plugin/buddypress.2.2.3.1.zip
+- wp --allow-root plugin install https://downloads.wordpress.org/plugin/bbpress.2.5.7.zip
+- wp --allow-root plugin install https://downloads.wordpress.org/plugin/rtsocial.2.1.18.zip
+- wp plugin activate --all
+- cd $PLUGIN_DIR
+- cd tests
+- npm install -g nightwatch
+- npm install
+- wget -P ./resources http://akashqatester.rtcamp.net/testing/test_data.zip && unzip resources/test_data.zip -d resources/
 
 script:
-    - find . -path ./bin -prune -o \( -name '*.php' -o -name '*.inc' \) -exec php -lf {} \;
-    - if [ -e phpunit.xml ] || [ -e phpunit.xml.dist ]; then phpunit; fi
-    - phpcs --ignore='tests/*' --standard=WordPress-Core  $(find . -name '*.php')
-    - jshint .
+- xvfb-run --server-args="-screen 0, 1624x1068x24" nightwatch --test resources/setup.js
+- xvfb-run --server-args="-screen 0, 1624x1068x24" nightwatch --group test
