@@ -33,9 +33,8 @@ module.exports = {
           'step two: Upload and Check Album ' : function (browser) {
             browser
             .goToMedia()
-            .click('#user-media')
-
             .click('#rtmedia-nav-item-albums')
+            .pause(500)
             .click('#rtm-media-options-list .js .rtmedia-action-buttons')
             .click('#rtm-media-options-list .js .rtm-options .rtmedia-reveal-modal')
             .pause(500)
