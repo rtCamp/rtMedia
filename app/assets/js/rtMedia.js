@@ -555,6 +555,44 @@ jQuery( 'document' ).ready( function ( $ ) {
             }
         });
     }
+
+	// delete media from gallery page under the user's profile when user clicks the delete button on the gallery item.
+	jQuery( '.rtmedia-list-media' ).on( 'click', '.rtm-delete-media', function ( e ) {
+		e.preventDefault();
+		var confirmation = 'Are you sure you want to delete this media?';
+
+		if( typeof rtmedia_media_delete_confirmation != 'undefined' ){
+			confirmation = rtmedia_media_delete_confirmation;
+		}
+
+		if ( confirm( confirmation ) ) { // if user confirms, send ajax request to delete the selected media
+			var curr_li = jQuery( this ).closest( 'li' );
+			var nonce = jQuery( '#rtmedia-upload-container #rtmedia_media_delete_nonce' ).val();
+
+			var data = {
+				action: 'delete_uploaded_media',
+				nonce: nonce,
+				media_id: curr_li.attr( 'id' )
+			};
+
+			jQuery.ajax( {
+				url: ajaxurl,
+				type: 'post',
+				data: data,
+				success: function ( data ) {
+					if ( data == '1' ) {
+						//media delete
+						curr_li.remove();
+						if ( typeof rtmedia_masonry_layout != "undefined" && rtmedia_masonry_layout == "true" && jQuery( '.rtmedia-container .rtmedia-list.rtm-no-masonry' ).length == 0 ) {
+							rtm_masonry_reload( rtm_masonry_container );
+						}
+					} else { // show alert message
+						alert( rtmedia_file_not_deleted );
+					}
+				}
+			} );
+		}
+	} );
 });
 
 

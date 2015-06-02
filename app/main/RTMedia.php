@@ -688,7 +688,6 @@ class RTMedia {
 		$class_construct = array(
 			'deprecated' => true,
 			'interaction' => true,
-			//'template'	=> false,
 			'upload_shortcode' => false,
 			'gallery_shortcode' => false,
 			'upload_endpoint' => false,
@@ -697,9 +696,8 @@ class RTMedia {
 			'like' => false,
 			'featured' => false,
 			'GroupFeatured' => false,
-//            'Group' => false, will be constructed after rtmedia pro classes are constructed.
-			'ViewCount' => false
-				//'query'		=> false
+			'ViewCount' => false,
+			'GalleryItemAction' => false,
 		);
 		global $rtmedia_nav;
 
