@@ -54,11 +54,10 @@ module.exports = {
                       .click('.rtm-select-files')
                     .setValue('input[type=file]', require('path').resolve(data.path.TEST_MUSIC))
                           .click('.start-media-upload')
-                        .pause(8000)
+                        .pause(11000)
                         .refresh()
-
+                        .pause(1000)
                       .click('.rtmedia-item-thumbnail')
-
                       .getElementSize(".mejs-container", function(result) {  //#mep_0
 
                             this.assert.equal(result.value.width, 200);
