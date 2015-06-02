@@ -14,7 +14,7 @@ module.exports = {
           .click(data.selectors.buddypress.BUDDYPRESS)
           .pause(2000)
 
-          //select checkbox switch
+        
           .getAttribute(data.selectors.buddypress.ENABLE_MEDIA_ALBUM, "checked", function(result) {
                   if(result.value){
                           browser.verify.ok(result.value, 'Checkbox is selected');
@@ -29,9 +29,6 @@ module.exports = {
 
           },
 
-
-
-
         'step three: Login from Author' : function (browser) {
 
           var data = browser.globals;
@@ -39,7 +36,7 @@ module.exports = {
           browser
           .wplogin(data.urls.LOGIN,data.TESTAUTHOR,data.TESTAUTHORPASSWORD)
           .goToMedia()
-          .click('#user-media')
+
           .pause(500)
           .click('#rtmedia-nav-item-albums')
           .pause(1000)
@@ -62,7 +59,7 @@ module.exports = {
         browser
         .wplogin(data.urls.LOGIN,data.TESTSUBSCRIBER,data.TESTSUBSCRIBERPASSWORD)
         .goToMedia()
-        .click('#user-media')
+
         .pause(1000)
         .click('#rtmedia-nav-item-albums')
         .pause(1000)
@@ -87,7 +84,7 @@ module.exports = {
       browser
       .wplogin(data.urls.LOGIN,data.TESTCONTRIBUTOR,data.TESTCONTRIBUTORPASSWORD)
       .goToMedia()
-      .click('#user-media')
+
       .pause(1000)
       .click('#rtmedia-nav-item-albums')
       .pause(1000)
