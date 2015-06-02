@@ -155,7 +155,10 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 				$this->rtmedia_update_template_notice();
 				$this->rtmedia_inspirebook_release_notice();
 				$this->rtmedia_social_sync_release_notice();
-                $this->rtmedia_pro_split_release_notice();
+                
+                if( !defined( 'RTMEDIA_PRO_PATH' ) ) {
+                    $this->rtmedia_pro_split_release_notice();
+                }
 			}
 		}
         
@@ -171,7 +174,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 				<div class="updated rtmedia-pro-split-notice">
 					<p>
 						<span>
-                            <b>rtMedia: </b>We have released 30+ premium add-ons for rtMedia plugin. Read more about it <a href="https://rtcamp.com/blog/rtmedia-pro-splitting-major-change/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media" target="_blank">here</a>.
+                            <b>rtMedia: </b>We have released 30+ premium add-ons for rtMedia plugin. Read more about it <a href="https://rtcamp.com/blog/rtmedia-pro-splitting-major-change/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media" target="_blank">here</a>.                         
 						</span>
 						<a href="#" onclick="rtmedia_hide_pro_split_notice();" style="float:right">Dismiss</a>
 					</p>
