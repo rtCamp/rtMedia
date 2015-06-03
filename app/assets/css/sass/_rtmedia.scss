@@ -247,6 +247,20 @@ button#rtmedia-add-media-button-post-update {
 	}
 }
 
+.rtmedia-gallery-item-actions {
+	display: none;
+	position: absolute;
+	background-color :rgba(0, 0, 0, 0.6);
+	width: 100%;
+	text-align : center;
+	a {
+		margin: 0 5px;
+		padding: 5px 8px;
+		color : #fff;
+		font-size: 13px;
+	}
+}
+
 // Footer Link
 .rtmedia-footer-link {
 	clear: both;
