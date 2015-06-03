@@ -144,8 +144,9 @@ Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_sou
 
 = 3.8.2 =
 * Updated Spanish, Korean, Portuguese and Danish translations
-* Added Login popup for non logged in user
+* Added Login popup for non logged in user on upload button
 * Added quick edit/delete links on media gallery thumbs
+* Updated [premium add-ons](https://rtcamp.com/blog/rtmedia-pro-splitting-major-change/) content for rtMedia
 * Bug fixes
 
 = 3.8.1 =
