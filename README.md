@@ -142,6 +142,13 @@ http://www.youtube.com/watch?v####dJrykKQGDcs
 
 Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "Visit rtMedia's Features page") to get some details about future releases.
 
+#### 3.8.2 ####
+* Updated Spanish, Korean, Portuguese and Danish translations
+* Added Login popup for non logged in user on upload button
+* Added quick edit/delete links on media gallery thumbs
+* Updated [premium add-ons](https://rtcamp.com/blog/rtmedia-pro-splitting-major-change/) content for rtMedia
+* Bug fixes
+
 #### 3.8.1 ####
 * Fix license page
 * Fix direct media upload in activity
@@ -984,8 +991,8 @@ Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_sou
 * HTML5 Audio Tag Support (with fallback)
 * HTML5 Video Tag Support (with fallback)
 
-#### 3.8.1 ####
-Requires BuddyPress 1.7 or higher, if using BuddyPress. Assets updated, media templates updated, admin settings updated and UI changes.
+#### 3.8.2 ####
+Requires BuddyPress 1.7 or higher, if using BuddyPress. Updated Spanish, Korean, Portuguese and Danish translations, added Login popup for non logged in user, added quick edit/delete links on media gallery thumbs
 
 ## Sponsors ##
 
