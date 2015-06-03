@@ -97,7 +97,7 @@ class RTMediaEncoding {
 					'thumbs' => $options_vedio_thumb,
 					'rt_id' => $media_ids[ $key ] );
 				$encoding_url = $this->api_url . 'job/new/';
-				$upload_url = esc_url( add_query_arg( $query_args, $encoding_url . $this->api_key ) );
+				$upload_url = add_query_arg( $query_args, $encoding_url . $this->api_key );
 				//error_log(var_export($upload_url, true));
 				//var_dump($upload_url);
 				$upload_page = wp_remote_get( $upload_url, array( 'timeout' => 200 ) );
