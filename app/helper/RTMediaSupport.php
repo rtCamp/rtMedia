@@ -256,9 +256,7 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 			$debug_info[ 'OS' ] = PHP_OS;
 			if ( extension_loaded( 'imagick' ) ) {
 				$imagickobj = new Imagick();
-                $imagick = $message = preg_replace_callback( " #((http|https|ftp)://(\S*?\.\S*?))(\s|\;|\)|\]|\[|\{|\}|,|\"|'|:|\<|$|\.\s)#i", function( $m ) {
-                    return "<a href=\"" . $m[ 1 ] . "\" target=\"_blank\">" . $m[ 3 ] . "</a>" . $m[ 4 ] . "";
-                }, $imagickobj->getversion() );
+                $imagick = $message = preg_replace( " #((http|https|ftp)://(\S*?\.\S*?))(\s|\;|\)|\]|\[|\{|\}|,|\"|'|:|\<|$|\.\s)#i", "'<a href=\"$1\" target=\"_blank\">$3</a>$4'", $imagickobj->getversion() );
 			} else {
 				$imagick[ 'versionString' ] = 'Not Installed';
 			}
