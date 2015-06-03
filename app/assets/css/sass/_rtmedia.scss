@@ -247,17 +247,54 @@ button#rtmedia-add-media-button-post-update {
 	}
 }
 
+// Gallery Items on hover actions
 .rtmedia-gallery-item-actions {
-	display: none;
+	background-color: rgba(0, 0, 0, 0.6);
+	opacity: 0;
 	position: absolute;
-	background-color :rgba(0, 0, 0, 0.6);
+	text-align: center;
+	@include transition(all ease-in-out 0.4s);
 	width: 100%;
-	text-align : center;
+	z-index: 9;
+
+	// Image container
 	a {
-		margin: 0 5px;
-		padding: 5px 8px;
-		color : #fff;
-		font-size: 13px;
+		border: 0;
+		box-shadow: 0 0 0;
+		color: #fff;
+		display: inline-block;
+		font-size: 12px;
+		outline: none;
+		padding: 4px;
+		text-align: left;
+		text-decoration: none;
+		text-transform: uppercase;
+	}
+
+	// Icons
+	.dashicons {
+		font-size: 17px;
+		margin-right: 2px;
+		position: relative;
+		top: 3px;
+	}
+
+	.dashicons-trash {
+		font-size: 15px;
+	}
+
+}
+
+// Hover actions
+.rtm-pro-allow-action {
+    .rtmedia-list-item:hover {
+		.rtmedia-gallery-item-actions {
+			opacity: 1;
+		}
+
+		.rtmedia-bulk-edit-item-wrap + .rtmedia-gallery-item-actions {
+			opacity: 0;
+		}
 	}
 }
 
