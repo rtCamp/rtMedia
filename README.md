@@ -142,6 +142,9 @@ http://www.youtube.com/watch?v####dJrykKQGDcs
 
 Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "Visit rtMedia's Features page") to get some details about future releases.
 
+#### 3.8.5 ####
+* Fix upload URL in activity
+
 #### 3.8.4 ####
 * Fix syntax error on Support Page
 
@@ -997,8 +1000,8 @@ Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_sou
 * HTML5 Audio Tag Support (with fallback)
 * HTML5 Video Tag Support (with fallback)
 
-#### 3.8.4 ####
-Requires BuddyPress 1.7 or higher, if using BuddyPress. Fix syntax error on Support page
+#### 3.8.5 ####
+Requires BuddyPress 1.7 or higher, if using BuddyPress. Fix upload URL in activity
 
 ## Sponsors ##
 
