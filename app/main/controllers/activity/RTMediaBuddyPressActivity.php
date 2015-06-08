@@ -332,7 +332,9 @@ class RTMediaBuddyPressActivity {
                     $activities[ $index ]->action = sprintf( __( '%s added a %s', 'rtmedia' ), $user_link, $media_str );
                 } else {
                     // Checking all the media linked with activity are of same type
-                    if( count( array_unique( $rtmedia_media_type_array[ $activities[ $index ]->id ] ) ) == 1 ) {
+                    if( isset( $rtmedia_media_type_array[ $activities[ $index ]->id ] ) 
+                        && !empty( $rtmedia_media_type_array[ $activities[ $index ]->id ] ) 
+                        && count( array_unique( $rtmedia_media_type_array[ $activities[ $index ]->id ] ) ) == 1 ) {
                         $activities[ $index ]->action = sprintf( __( '%s added %d %s', 'rtmedia' ), $user_link, $count, $media_str );
                     } else {
                         $activities[ $index ]->action = sprintf( __( '%s added %d %s', 'rtmedia' ), $user_link, $count, __( 'media', 'rtmedia' ) );
