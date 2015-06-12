@@ -164,7 +164,7 @@ class RTMediaInteraction {
         global $wp_query;
         global $rtmedia_seo_title;
 
-        if ( ! array_key_exists ( 'media', $wp_query->query_vars ) )
+        if ( ! array_key_exists ( RTMEDIA_MEDIA_SLUG, $wp_query->query_vars ) )
             return $default;
         $title = "";
         $oldSep = " " . $sep . " ";
