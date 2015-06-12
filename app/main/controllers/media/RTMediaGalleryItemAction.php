@@ -67,7 +67,7 @@ class RTMediaGalleryItemAction {
 
 	function rtmedia_media_actions_backbone( $media_array ){
 		if( $media_array->media_author == get_current_user_id() ){
-			$media_array->media_actions = "<div class='rtmedia-gallery-item-actions'><a href='" . $media_array->rt_permalink . "edit' class='no-popup' target='_blank' title='" . __( 'Edit this media', 'rtmedia' ) ."'><i class='rtmicon-edit rtmicon-fw'></i>" . __( 'Edit', 'rtmedia' ) ."</a><a href='#' class='no-popup rtmp-delete-media' title='" . __( 'Delete this media', 'rtmedia' ) . "' ><i class='rtmicon-trash-o'></i>" . __( 'Delete', 'rtmedia' ) ."</a></div>";
+			$media_array->media_actions = "<div class='rtmedia-gallery-item-actions'><a href='" . $media_array->rt_permalink . "edit' class='no-popup' target='_blank' title='" . __( 'Edit this media', 'rtmedia' ) ."'><i class='dashicons dashicons-edit rtmicon'></i>" . __( 'Edit', 'rtmedia' ) ."</a><a href='#' class='no-popup rtm-delete-media' title='" . __( 'Delete this media', 'rtmedia' ) . "' ><i class='dashicons dashicons-trash rtmicon'></i>" . __( 'Delete', 'rtmedia' ) ."</a></div>";
 		} else {
 			$media_array->media_actions = "";
 		}
