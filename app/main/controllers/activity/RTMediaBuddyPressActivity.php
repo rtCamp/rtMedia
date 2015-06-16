@@ -305,7 +305,7 @@ class RTMediaBuddyPressActivity {
             for( $a = 0; $a < sizeof( $activity_ids ); $a++ ) {
                 // Getting index of activity which is being updated
                 $index = $activity_index_array[ $a ];
-                
+                //error_log( var_export( $activities[ $index ], true ) );
                 // This pattern is for getting name. User might have change display name as first name or something instead on nicename.
                 $pattern = "/<a ?.*>(.*)<\/a>/";
                 preg_match( $pattern, $activities[ $index ]->action, $matches );
@@ -326,20 +326,24 @@ class RTMediaBuddyPressActivity {
 					$media_str = __( 'media', 'rtmedia' );
 				}
 
-
+                $action = '';
+                $user = get_userdata( $activities[ $index ]->user_id );
                 // Updating activity based on count
                 if( $count == 1 ) {
-                    $activities[ $index ]->action = sprintf( __( '%s added a %s', 'rtmedia' ), $user_link, $media_str );
+                    $action = sprintf( __( '%s added a %s', 'rtmedia' ), $user_link, $media_str );
                 } else {
                     // Checking all the media linked with activity are of same type
                     if( isset( $rtmedia_media_type_array[ $activities[ $index ]->id ] ) 
                         && !empty( $rtmedia_media_type_array[ $activities[ $index ]->id ] ) 
                         && count( array_unique( $rtmedia_media_type_array[ $activities[ $index ]->id ] ) ) == 1 ) {
-                        $activities[ $index ]->action = sprintf( __( '%s added %d %s', 'rtmedia' ), $user_link, $count, $media_str );
+                        $action = sprintf( __( '%s added %d %s', 'rtmedia' ), $user_link, $count, $media_str );
                     } else {
-                        $activities[ $index ]->action = sprintf( __( '%s added %d %s', 'rtmedia' ), $user_link, $count, __( 'media', 'rtmedia' ) );
+                        $action = sprintf( __( '%s added %d %s', 'rtmedia' ), $user_link, $count, __( 'media', 'rtmedia' ) );
                     }
                 }
+                
+                $action = apply_filters( 'rtmedia_buddypress_action_text_fitler', $action, $user_link, $count, $user->user_nicename, $rtmedia_media_type_array[ $activities[ $index ]->id ][ 0 ], $activities[ $index ]->id );                
+                $activities[ $index ]->action = $action;
             }
         }
         

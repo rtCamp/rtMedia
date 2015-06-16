@@ -53,6 +53,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 			add_filter( 'attachment_fields_to_save', array( $this, 'save_video_thumbnail' ), null, 2 );
 			add_action( 'wp_ajax_rtmedia_hide_video_thumb_admin_notice', array( $this, 'rtmedia_hide_video_thumb_admin_notice' ), 1 );
 			add_action( 'wp_ajax_rtmedia_hide_addon_update_notice', array( $this, 'rtmedia_hide_addon_update_notice' ), 1 );
+                        add_filter( 'media_row_actions', array( $this, 'modify_medialibrary_permalink' ), 10, 3 );
 
 			$obj_encoding = new RTMediaEncoding( true );
 
@@ -114,6 +115,18 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 			add_action( 'admin_init', array( $this, 'rtmedia_addon_license_save_hook' ) );
 			add_action( 'admin_init', array( $this, 'rtmedia_migration' ) );
 		}
+                
+                function modify_medialibrary_permalink( $action, $post, $detached ) {
+                    $rtm_id = rtmedia_id( $post->ID );
+                    
+                    if ( $rtm_id ) {
+                        $link = get_rtmedia_permalink( $rtm_id );                  
+                        $title =_draft_or_post_title( $post->post_parent );
+                        $action[ 'view' ] = '<a href="' . $link . '" title="' . esc_attr( sprintf( __( 'View &#8220;%s&#8221;' ), $title ) ) . '" rel="permalink">' . __( 'View' ) . '</a>';
+                    }            
+                    
+                    return $action;
+                }
 
 		function rtmedia_migration() {
 			$rtMigration = new RTMediaMigration();

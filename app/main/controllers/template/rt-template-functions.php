@@ -306,7 +306,8 @@ function rtmedia_media( $size_flag = true, $echo = true, $media_size = "rt_media
 			$html .= '<video src="' . wp_get_attachment_url( $rtmedia_media->media_id ) . '" ' . $size . ' type="video/mp4" class="wp-video-shortcode" id="bp_media_video_' . $rtmedia_media->id . '" controls="controls" preload="true"></video>';
 			$html .= '</div>';
 		} elseif ( $rtmedia_media->media_type == 'music' ) {
-			$size = ' width="400" height="30" ';
+                    $width = $rtmedia->options[ 'defaultSizes_music_singlePlayer_width' ];
+                    $size = ' width="'. $width .'px" height="30" ';
 			if ( ! $size_flag ) {
 				$size = '';
 			}

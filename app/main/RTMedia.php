@@ -474,10 +474,10 @@ class RTMedia {
 		$bp_media_options = rtmedia_get_site_option( 'bp_media_options' );
 
 		$defaults = array(
-			'general_enableAlbums' => 0,
+			'general_enableAlbums' => 1,
 			'general_enableComments' => 0,
 			'general_downloadButton' => (isset( $bp_media_options[ 'download_enabled' ] )) ? $bp_media_options[ 'download_enabled' ] : 0,
-			'general_enableLightbox' => (isset( $bp_media_options[ 'enable_lightbox' ] )) ? $bp_media_options[ 'enable_lightbox' ] : 0,
+			'general_enableLightbox' => (isset( $bp_media_options[ 'enable_lightbox' ] )) ? $bp_media_options[ 'enable_lightbox' ] : 1,
 			'general_perPageMedia' => (isset( $bp_media_options[ 'default_count' ] )) ? $bp_media_options[ 'default_count' ] : 10,
 			'general_enableMediaEndPoint' => 0,
 			'general_showAdminMenu' => (isset( $bp_media_options[ 'show_admin_menu' ] )) ? $bp_media_options[ 'show_admin_menu' ] : 0,
