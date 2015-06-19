@@ -2272,13 +2272,16 @@ function get_rtmedia_privacy_symbol( $rtmedia_id = false ) {
 
 //
 function get_rtmedia_date_gmt( $rtmedia_id = false ) {
-	$media = get_post( rtmedia_media_id( rtmedia_id( $rtmedia_id ) ) );
-	$date_time = "";
-	if ( isset( $media->post_date_gmt ) && $media->post_date_gmt != "" ) {
-		$date_time = rtmedia_convert_date( $media->post_date_gmt );
-	}
+    $media = get_post( rtmedia_media_id( rtmedia_id( $rtmedia_id ) ) );
+    $date_time = "";
+    
+    if ( isset( $media->post_date_gmt ) && $media->post_date_gmt != "" ) {
+        $date_time = rtmedia_convert_date( $media->post_date_gmt );
+    }
 
-	return '<span>' . $date_time . '</span>';
+    $date_time = apply_filters( 'rtmedia_comment_date_format', $date_time, null );
+
+    return '<span>' . $date_time . '</span>';
 }
 
 //function to convert comment datetime to "time ago" format.
