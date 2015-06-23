@@ -7,3 +7,6 @@
 *.sass-cache
 node_modules
 npm-debug.log
+tests/functional/node_modules/
+/tests/functional/reports/
+selenium-*.jar
