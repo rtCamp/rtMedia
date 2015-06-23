@@ -1209,7 +1209,7 @@ add_action( 'rtmedia_add_edit_tab_content', 'rtmedia_vedio_editor_content', 1000
 
 function rtmedia_vedio_editor_content() {
 	global $rtmedia_query;
-	if ( isset( $rtmedia_query->media[ 0 ]->media_type ) && $rtmedia_query->media[ 0 ]->media_type == 'video' ) {
+	if ( isset( $rtmedia_query->media ) && is_array( $rtmedia_query->media ) && isset( $rtmedia_query->media[ 0 ]->media_type ) && $rtmedia_query->media[ 0 ]->media_type == 'video' ) {
 		$media_id = $rtmedia_query->media[ 0 ]->media_id;
 		$thumbnail_array = get_post_meta( $media_id, "rtmedia_media_thumbnails", true );
 		echo '<div class="content" id="panel2">';
