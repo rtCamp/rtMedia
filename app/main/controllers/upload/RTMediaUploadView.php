@@ -104,22 +104,44 @@ class RTMediaUploadView {
 
         $tabs = array(
             'file_upload' => array(
-                'default' => array( 'title' => __( 'File Upload', 'rtmedia' ),
+                'default' => array(
+	                'title' => __( 'File Upload', 'rtmedia' ),
                     'content' =>
-                    '<div id="rtmedia-upload-container" >'
-                        . '<div id="drag-drop-area" class="drag-drop clearfix">'
-                                . apply_filters( 'rtmedia_uploader_before_album_privacy', "" )
-                                . "<div class='rtm-album-privacy'>" . $album . $privacy . "</div>"
-                                . $upload_tab_html
-								. apply_filters( 'rtmedia_uploader_before_start_upload_button', "" )
-					. '<input type="button" class="start-media-upload" value="' . __( 'Start upload', 'rtmedia' ) . '"/>'
-								. apply_filters( 'rtmedia_uploader_after_start_upload_button', "" )
-                        . '</div>'
-					. '<div class="clearfix">'
-					. wp_nonce_field( 'rtmedia_' . get_current_user_id(), 'rtmedia_media_delete_nonce' )
-					. '<ul class="plupload_filelist_content ui-sortable rtm-plupload-list clearfix" id="rtmedia_uploader_filelist"></ul></div>'
-                    . '</div>' ),
-				'activity' => array( 'title' => __( 'File Upload', 'rtmedia' ), 'content' => '<div class="rtmedia-plupload-container rtmedia-container clearfix"><div id="rtmedia-action-update" class="clearfix"><div class="rtm-upload-button-wrapper"><div id="rtmedia-whts-new-upload-container"></div><button type="button" class="rtmedia-add-media-button" id="rtmedia-add-media-button-post-update" title="' . apply_filters( 'rtmedia_attach_media_button_title', __( 'Attach Media', 'rtmedia' ) ) . '"><span class="dashicons dashicons-admin-media"></span>' . apply_filters( 'rtmedia_attach_file_message', __( '', 'rtmedia' ) ) . '</button></div>' . $up_privacy . '</div></div><div class="rtmedia-plupload-notice"><ul class="plupload_filelist_content ui-sortable rtm-plupload-list clearfix" id="rtmedia_uploader_filelist"></ul></div>' )
+	                    '<div id="rtmedia-upload-container" >'
+	                        . '<div id="drag-drop-area" class="drag-drop clearfix">'
+	                                . apply_filters( 'rtmedia_uploader_before_album_privacy', "" )
+	                                . "<div class='rtm-album-privacy'>" . $album . $privacy . "</div>"
+	                                . $upload_tab_html
+									. apply_filters( 'rtmedia_uploader_before_start_upload_button', "" )
+						. '<input type="button" class="start-media-upload" value="' . __( 'Start upload', 'rtmedia' ) . '"/>'
+									. apply_filters( 'rtmedia_uploader_after_start_upload_button', "" )
+	                        . '</div>'
+						. '<div class="clearfix">'
+						. wp_nonce_field( 'rtmedia_' . get_current_user_id(), 'rtmedia_media_delete_nonce' )
+						. '<ul class="plupload_filelist_content ui-sortable rtm-plupload-list clearfix" id="rtmedia_uploader_filelist"></ul></div>'
+	                    . '</div>'
+                ),
+				'activity' => array(
+					'title' => __( 'File Upload', 'rtmedia' ),
+					'content' =>
+						'<div class="rtmedia-plupload-container rtmedia-container clearfix">'
+							.'<div id="rtmedia-action-update" class="clearfix">'
+								.'<div class="rtm-upload-button-wrapper">'
+									.'<div id="rtmedia-whts-new-upload-container">'
+									.'</div>'
+									.'<button type="button" class="rtmedia-add-media-button" id="rtmedia-add-media-button-post-update" title="' . apply_filters( 'rtmedia_attach_media_button_title', __( 'Attach Media', 'rtmedia' ) ) . '">'
+										.'<span class="dashicons dashicons-admin-media"></span>'
+										. apply_filters( 'rtmedia_attach_file_message', '' )
+									. '</button>'
+								.'</div>'
+								. $up_privacy
+							. '</div>'
+						.'</div>'
+						.'<div class="rtmedia-plupload-notice">'
+							.'<ul class="plupload_filelist_content ui-sortable rtm-plupload-list clearfix" id="rtmedia_uploader_filelist">'
+							.'</ul>'
+						.'</div>'
+				)
             ),
 //			'file_upload' => array( 'title' => __('File Upload','rtmedia'), 'content' => '<div id="rtmedia-uploader"><p>Your browser does not have HTML5 support.</p></div>'),
 			'link_input' => array( 'title' => __( 'Insert from URL', 'rtmedia' ), 'content' => '<input type="url" name="bp-media-url" class="rtmedia-upload-input rtmedia-url" />' ),
