@@ -1879,7 +1879,7 @@ add_action( 'rtmedia_before_item', 'rtmedia_item_select' );
 function rtmedia_item_select() {
 	global $rtmedia_query, $rtmedia_backbone;
 	if ( $rtmedia_backbone[ 'backbone' ] ) {
-		if ( $rtmedia_backbone[ 'is_album' ] && $rtmedia_backbone[ 'is_edit_allowed' ] ) {
+		if ( isset( $rtmedia_backbone[ 'is_album' ] ) && $rtmedia_backbone[ 'is_album' ] && isset( $rtmedia_backbone[ 'is_edit_allowed' ] ) && $rtmedia_backbone[ 'is_edit_allowed' ] ) {
 			echo '<span class="rtm-checkbox-wrap"><input type="checkbox" name="move[]" class="rtmedia-item-selector" value="<%= id %>" /></span>';
 		}
 	} else {
