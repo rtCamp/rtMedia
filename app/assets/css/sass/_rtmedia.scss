@@ -306,3 +306,98 @@ button#rtmedia-add-media-button-post-update {
 	position: relative;
 	text-align: center;
 }
+
+//table form Media list edit tab
+
+.rtmedia-text-link-decoration {
+    text-decoration: none;
+    &:hover { 
+        text-decoration: underline;
+    }
+}
+
+.rtmedia-container .rtmedia-edit-list-media-table {
+    max-height: 300px;
+    overflow-y: auto;
+    
+    thead {
+        tr {
+            background-color: #50A1D7;
+        }
+        
+        th {
+            text-align: center; 
+            color: #FFF; 
+        }
+    }
+    
+    tbody {
+        tr {
+            &:nth-child(odd) { 
+                background: #FFF; 
+            }
+        }
+        
+        tr {
+            &:nth-child(even) { 
+                background: #DCDCDC; 
+            }
+        }
+    }
+}
+
+table.rtmedia-edit-media-list {
+    tr {
+        line-height: 30px;
+        th { 
+            color: #333; 
+            padding: 4px 10px; 
+            line-height: 20px; 
+        }
+        .rtm-edit-media-list-heading {
+            width: 44%;
+        }
+        .rtm-edit-media-list-title-heading {
+            width: 56%;
+        }
+        
+        td.rtm-edit-media-list-edit, 
+        td.rtm-edit-media-list-delete, 
+        td.rtm-edit-media-list-title {
+            padding: 4px; 
+            font-size: 14px;
+            line-height: 24px;
+            
+            a,span { 
+                @extend .rtmedia-text-link-decoration; 
+            }
+        }
+        
+        td.rtm-edit-media-list-title {
+           
+            a { 
+                text-decoration: none; 
+                color: #333; 
+            }
+        }
+        
+        td.rtm-edit-media-list-edit {
+            text-align: center;
+            
+            a { 
+                color: #333; 
+                font-size: 13px; 
+            }
+        }
+        
+        td.rtm-edit-media-list-delete {
+            text-align: center;
+            
+            span { 
+                color: #FF0000; 
+                cursor: pointer; 
+                font-size: 13px;
+            }
+        }
+    }
+}
