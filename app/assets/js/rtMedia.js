@@ -35,7 +35,11 @@ function apply_rtMagnificPopup( selector ) {
 				},
 				callbacks: {
 					ajaxContentAdded: function () {
-
+                
+                        mfp = jQuery.magnificPopup.instance;
+                        if ( jQuery(mfp.items).size() === 1 ) {
+                            jQuery(".mfp-arrow").remove();
+                        }
 						// When last second media is encountered in lightbox, load more medias if available
 						var mfp = jQuery.magnificPopup.instance;
 						var current_media = mfp.currItem.el;
