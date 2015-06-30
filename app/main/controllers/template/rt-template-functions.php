@@ -2662,6 +2662,30 @@ function rtmedia_modify_activity_upload_url( $params ) {
 // Fix for BuddyPress multilingual plugin on activity pages
 add_filter( 'rtmedia_modify_upload_params', 'rtmedia_modify_activity_upload_url', 999, 1 );
 
+add_action( "rtmedia_admin_page_insert", "rtmedia_admin_pages_content", 99, 1 );
+
+function rtmedia_admin_pages_content( $page ){
+	if ( $page == "rtmedia-hire-us" ) {
+		$url = admin_url() . "admin.php?page=rtmedia-premium";
+		?>
+		<div class="rtm-hire-us-container rtm-page-container">
+			<h3 class="rtm-setting-title rtm-show"><?php _e( 'You can consider rtMedia Team for following :', 'rtmedia' ); ?></h3>
+
+			<ol class="rtm-hire-points">
+				<li><?php _e( 'rtMedia Customization ( in Upgrade Safe manner )', 'rtmedia' ); ?></li>
+				<li><?php _e( 'WordPress/BuddyPress Theme Design and Development', 'rtmedia' ); ?></li>
+				<li><?php _e( 'WordPress/BuddyPress Plugin Development', 'rtmedia' ); ?></li>
+			</ol>
+
+			<div class="clearfix">
+				<a href="https://rtcamp.com/contact" class="rtm-button rtm-success" target="_blank"><?php _e( 'Contact Us', 'rtmedia' ); ?></a>
+			</div>
+		</div>
+	<?php
+	}
+}
+
+
 // Get rtMedia Encoding API Key
 function get_rtmedia_encoding_api_key() {
 	return get_site_option( 'rtmedia-encoding-api-key' );
