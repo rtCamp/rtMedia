@@ -1,3 +1,5 @@
+[![Travis Build Status](https://travis-ci.org/rtCamp/rtMedia.svg "Travis Build Status")] (https://travis-ci.org/rtCamp/rtMedia)
+
 ![alt text](https://plugins.svn.wordpress.org/buddypress-media//assets/banner-772x250.jpg)
 
 # rtMedia for WordPress, BuddyPress and bbPress #
