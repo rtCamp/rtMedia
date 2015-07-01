@@ -211,10 +211,12 @@ function rtmedia_media_ext( $id = false ) {
 	if ( $id ) {
 		$model = new RTMediaModel();
 		$media = $model->get_media( array( 'id' => $id ), 0, 1 );
-		$filepath = get_attached_file( $media[ 0 ]->media_id );
-		$filetype = wp_check_filetype( $filepath );
+		if ( isset( $media[ 0 ] ) ) {
+			$filepath = get_attached_file( $media[ 0 ]->media_id );
+			$filetype = wp_check_filetype( $filepath );
 
-		return $filetype[ 'ext' ];
+			return $filetype[ 'ext' ];
+		}
 	} else {
 		global $rtmedia_media;
 
