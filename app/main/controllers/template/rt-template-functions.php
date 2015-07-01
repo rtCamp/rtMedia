@@ -780,11 +780,11 @@ function rtmedia_comments( $echo = true ) {
 
 	global $wpdb, $rtmedia_media;
 
-	$comments = $wpdb->get_results( "SELECT * FROM $wpdb->comments WHERE comment_post_ID = '" . $rtmedia_media->media_id . "'", ARRAY_A );
+	$comments = get_comments( array( 'post_id' => $rtmedia_media->media_id, 'order' => 'ASC' ) );
 
 	$comment_list = "";
 	foreach ( $comments as $comment ) {
-		$comment_list .= rmedia_single_comment( $comment );
+		$comment_list .= rmedia_single_comment( (array) $comment );
 	}
 
 	if ( $comment_list != "" ) {
