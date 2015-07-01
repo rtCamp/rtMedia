@@ -1,5 +1,3 @@
-[![Travis Build Status](https://travis-ci.org/rtCamp/rtMedia.svg "Travis Build Status")] (https://travis-ci.org/rtCamp/rtMedia)
-
 ![alt text](https://plugins.svn.wordpress.org/buddypress-media//assets/banner-772x250.jpg)
 
 # rtMedia for WordPress, BuddyPress and bbPress #
@@ -143,6 +141,13 @@ http://www.youtube.com/watch?v####dJrykKQGDcs
 ## Changelog ##
 
 Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "Visit rtMedia's Features page") to get some details about future releases.
+
+#### 3.8.7 ####
+* Update language files
+* Fix CSS conflict with BuddyPress Cover plugin in rtMedia admin settings
+* Update CSS
+* Added new filters
+* Bug fixes
 
 #### 3.8.6 ####
 * Fix activity music player width issue
@@ -1011,8 +1016,8 @@ Please visit [rtMedia's Roadmap page](http://rtcamp.com/rtmedia/roadmap/?utm_sou
 * HTML5 Audio Tag Support (with fallback)
 * HTML5 Video Tag Support (with fallback)
 
-#### 3.8.6 ####
-Requires BuddyPress 1.7 or higher, if using BuddyPress. Fixed activity music player width, Fixed view link in WordPress Media Library, Fixed pagination, Updated language files, Fixed browser title, CSS bug fixes
+#### 3.8.7 ####
+Requires BuddyPress 1.7 or higher, if using BuddyPress. Update language files, fix CSS conflict with BuddyPress Cover plugin in rtMedia admin settings, bug fixes.
 
 ## Sponsors ##
 
