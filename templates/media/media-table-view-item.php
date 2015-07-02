@@ -20,9 +20,9 @@ if ( isset( $_POST[ 'is_edit_allowed' ] ) ) {
 }
 ?>
 <?php
-                    // $rtmedia_title = rtmedia_title();
-                    $rtmedia_upload_date =  'N/A'; //rtmedia_get_upload_date();
-                    //$rtmedia_file_size = rtmedia_file_size();
+                    
+                    
+                    $rtmedia_file_size = rtmedia_file_size();
                     ?>
                     <tr class="rtmedia-table-list-row" id="<?php echo rtmedia_id(); ?>">
                         <td>
@@ -30,18 +30,18 @@ if ( isset( $_POST[ 'is_edit_allowed' ] ) ) {
                                 <img src="<?php rtmedia_image("rt_media_thumbnail"); ?>" alt="<?php rtmedia_image_alt(); ?>" />
                             </a>  
                         </td>
-                        <td data-value="<?php echo rtmedia_title() ?>" >
+                        <td data-value="<?php rtmedia_title(); ?>" >
                             <a href="<?php rtmedia_permalink(); ?>">
-                                <?php echo rtmedia_title() ?>
+                                <?php rtmedia_title(); ?>
                             </a>
                         </td>
-                        <td data-value="<?php echo $rtmedia_upload_date; ?>" >
-                            <?php echo $rtmedia_upload_date; ?>
+                        <td data-value="<?php rtmedia_media_upload_date() ?>" >
+                            <?php rtmedia_media_upload_date(); ?>
                         </td>
-                        <td data-value="<?php echo rtmedia_file_size() ?>" >
+                        <td data-value="<?php rtmedia_get_file_size_mb() ?>" >
                             <?php
                             if (function_exists('rtmedia_file_size')) {
-                                echo  rtmedia_file_size() . ' Bytes';
+                                rtmedia_get_file_size_mb();
                             } else {
                                 echo '--';
                             }

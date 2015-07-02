@@ -2510,6 +2510,17 @@ function rtmedia_file_size() {
 		}
 	}
 }
+/**
+ * echos the file size of media in MBs
+ */
+function rtmedia_get_file_size_mb() {
+		global $rtmedia_backbone;
+	if ( !  $rtmedia_backbone[ 'backbone' ]) {
+		echo round( rtmedia_file_size()  / ( 1024 * 1024 ), 2);
+	} else {
+		rtmedia_file_size();
+	}
+}
 
 /*
  * get rtmedia media type from file extension
@@ -2691,6 +2702,33 @@ function rtmedia_admin_pages_content( $page ){
 // Get rtMedia Encoding API Key
 function get_rtmedia_encoding_api_key() {
 	return get_site_option( 'rtmedia-encoding-api-key' );
+}
+
+function rtmedia_media_upload_date( $rtmedia_id = false ){
+	global $rtmedia_backbone;
+	if ( $rtmedia_backbone[ 'backbone' ] ) {
+		echo '<%= media_upload_date %>';
+	} else {
+		echo rtmedia_get_media_upload_date( $rtmedia_id );
+	}	
+}
+
+/*
+ * Get upload date of media
+ */
+function rtmedia_get_media_upload_date( $rtmedia_id = false ) {
+	
+	if ( ! $rtmedia_id ) {
+		global $rtmedia_media;
+		$rtmedia_id = $rtmedia_media->id;
+	}
+	$media = get_post( rtmedia_media_id( $rtmedia_id ) );
+	$date_time = '';
+	if ( isset( $media->post_date_gmt ) && $media->post_date_gmt != '' ) {
+		$date_time = date( "d-m-Y", strtotime( $media->post_date_gmt ) );
+	}
+
+	return apply_filters( 'rtmedia_get_upload_date', $date_time );
 }
 
 /*
