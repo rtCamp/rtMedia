@@ -185,6 +185,7 @@
 	}
 }
 
+/* Table-view */
 #rtm-media-options-list {
 	.rtmedia-delete-album {
 		background: transparent;
@@ -200,6 +201,35 @@
 			background: transparent;
 			border: 0;
 			color: $white;
+		}
+	}
+}
+
+.rtmedia-table-list{
+	width: 100%;
+        
+	td, th {
+		font-size: 13px;
+                vertical-align: middle;
+	}
+        th{
+           text-align: center;
+        }
+
+	.rtmedia-table-list-row {
+		height: 50px;
+		border-bottom: solid 1px #cccccc;
+
+		th:nth-child(4),
+			td:nth-child(4) {
+			text-align: right; padding-right: 10px;
+		}
+
+		th:nth-child(5),
+			th:nth-child(6),
+			td:nth-child(5),
+			td:nth-child(6) {
+			text-align: center;
 		}
 	}
 }

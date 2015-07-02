@@ -46,6 +46,7 @@ if ( ! class_exists( 'RTMediaSettings' ) ){
 				'general_enableLightbox' => 1,
 				'general_perPageMedia' => 10,
 				'general_display_media' => 'load_more',
+				'general_display_media_style' => 'media_gallery',
 				'general_enableMediaEndPoint' => 0,
 				'general_showAdminMenu' => 0,
 				'general_videothumbs' => 2,

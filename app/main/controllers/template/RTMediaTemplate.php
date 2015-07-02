@@ -723,13 +723,19 @@ class RTMediaTemplate {
         $located = '';
         
         if ( !$template ) {
-            global $rtmedia_query;
+			global $rtmedia;
+			$general_options = $rtmedia->options;
+			global $rtmedia_query;
 
             if ( is_rtmedia_album_gallery() ) {
                 $template = 'album-gallery';
             } elseif ( is_rtmedia_album() || is_rtmedia_gallery() ) {
-                $template = 'media-gallery';
-                
+				if ( isset( $rtmedia->options[ 'general_display_media_style' ] ) && $general_options[ 'general_display_media_style' ] == 'media_table') {
+					$template = 'media-table-view';
+				}
+				else{
+					$template = 'media-gallery';
+				}
                 if ( is_rtmedia_album() && isset( $rtmedia_query->media_query ) && $rtmedia_query->action_query->action == 'edit'
                 ) {
                     if ( rtmedia_is_album_editable() || is_rt_admin() ) {

@@ -284,6 +284,10 @@ class RTMediaFormHandler {
 		$radios                 = array();
 		$radios['load_more']  = '<strong>' . __( 'Load More', 'rtmedia' ) .'</strong>';
 		$radios['pagination'] = '<strong>' . __( 'Pagination', 'rtmedia' ) .'</strong>';
+		
+		$display_style_view                 = array();
+		$display_style_view['media_gallery']  = '<strong>' . __( 'Gallery Style View', 'rtmedia' ) .'</strong>';
+		$display_style_view['media_table'] = '<strong>' . __( 'Table Style View', 'rtmedia' ) .'</strong>';
 
 		if ( is_plugin_active( 'regenerate-thumbnails/regenerate-thumbnails.php' ) ) {
 			$regenerate_link = admin_url( '/tools.php?page=regenerate-thumbnails' );
@@ -337,7 +341,20 @@ class RTMediaFormHandler {
 					'class' => array( 'rtmedia-load-more-radio' ),
 				),
 				'group' => '15',
-			), 'general_masonry_layout' => array(
+			),
+			'general_display_media_style' => array(
+				'title' => __( 'Media display view style option', 'rtmedia' ),
+				'callback' => array( 'RTMediaFormHandler', 'radio' ),
+				'args' => array(
+					'key' => 'general_display_media_style',
+					'radios' => $display_style_view,
+					'default' => $options[ 'general_display_media_style' ],
+					'desc' => __( 'Choose whether you want the display media in Gallery style or Table view style.', 'rtmedia' ),
+					'class' => array( 'rtmedia-load-more-radio' ),
+				),
+				'group' => '15',
+			),
+			'general_masonry_layout' => array(
 				'title' => __( 'Enable', 'rtmedia' ) . ' <a href="http://masonry.desandro.com/" target="_blank">Masonry</a> ' . __( 'Cascading grid layout', 'rtmedia' ),
 				'callback' => array( 'RTMediaFormHandler', 'checkbox' ),
 				'args' => array(
