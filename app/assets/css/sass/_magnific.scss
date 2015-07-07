@@ -196,6 +196,12 @@ button::-moz-focus-inner {
 	.rtm-single-media:hover & {
 		opacity: 1;
 	}
+    @media (max-device-width: 640px){
+        display: none;
+       .rtm-single-media:hover & {
+		 display: none;
+	}
+    }
 }
 
 .mfp-arrow:active {
