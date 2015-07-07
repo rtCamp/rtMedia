@@ -373,7 +373,11 @@ jQuery( 'document' ).ready( function ( $ ) {
 			function () {
 				rtmedia_media_view_counts();
 				rtmedia_init_media_deleting();
-				rtmedia_init_popup_navigation();
+                mfp = jQuery.magnificPopup.instance;
+                if ( jQuery(mfp.items).size() > 1 ) {
+                    rtmedia_init_popup_navigation();
+                }
+				
 				rtmedia_disable_popup_navigation_comment_focus();
 				var height = $( window ).height();
 				jQuery( '.rtm-lightbox-container .mejs-video' ).css( { 'height': height * 0.8, 'max-height': height * 0.8, 'over-flow': 'hidden' } );
