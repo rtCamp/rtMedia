@@ -185,7 +185,7 @@ class RTMediaInteraction {
                     }
                 }
             } else {
-                if ( isset ( $rtmedia_query->media ) && count ( $rtmedia_query->media ) > 0 ) {
+                if ( isset ( $rtmedia_query->media ) && $rtmedia_query->media && count ( $rtmedia_query->media ) > 0 ) {
                     $title .= $sep . stripslashes( esc_html( ucfirst ( $rtmedia_query->media[ 0 ]->media_title ) ) );
                     $sep = $oldSep;
                 }

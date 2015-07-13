@@ -49,7 +49,7 @@ class RTMediaLoginPopup {
                     <p><?php _e( "You need to be logged in to upload Media or to create Album.", 'rtmedia' ); ?></p>
 
                     <p>
-                        <?php echo __( 'Click ' ) . '<a href="' . wp_login_url() . '" title="' . __( 'Login', 'rtmedia' ) . '">' . __( 'HERE', 'rtmedia' ) . '</a>' . __( ' to login.', 'rtmedia' ); ?>
+                        <?php echo __( 'Click ' ) . '<a href="' . wp_login_url( $_SERVER['REQUEST_URI'] ) . '" title="' . __( 'Login', 'rtmedia' ) . '">' . __( 'HERE', 'rtmedia' ) . '</a>' . __( ' to login.', 'rtmedia' ); ?>
                     </p>
                 </div>
             </div>

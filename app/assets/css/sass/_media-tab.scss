@@ -2,45 +2,48 @@
 	display: none;
 }
 
-.drag-drop {
-	border: 4px dashed #DDD;
-	text-align: center;
-	background: #fafafa;
-	overflow: hidden;
-	color: #AAAAAA;
-	margin-top: 20px;
-	padding: 25px 0;
+.rtmedia-uploader{
+	.drag-drop {
+		border: 4px dashed #DDD;
+		text-align: center;
+		background: #fafafa;
+		overflow: hidden;
+		color: #AAAAAA;
+		margin-top: 20px;
+		padding: 25px 0;
 
-	&.dragover {
-		border-color: #83b4d8;
-	}
+		&.dragover {
+			border-color: #83b4d8;
+		}
 
-	.drag-drop-info {
-		font-size: 20px;
-		line-height: 24px;
-	}
+		.drag-drop-info {
+			font-size: 20px;
+			line-height: 24px;
+		}
 
-	.rtm-select-files {
-		span {
+		.rtm-select-files {
+			span {
+				vertical-align: middle;
+			}
+		}
+
+		.rtm-seperator {
+			margin: 0px 20px;
+		}
+
+		.start-media-upload {
+			display: none;
+			margin-top: 20px;
+		}
+
+		.rtm-file-size-limit {
 			vertical-align: middle;
+			font-size: 16px;
+			line-height: 24px;
 		}
 	}
-
-	.rtm-seperator {
-		margin: 0px 20px;
-	}
-
-	.start-media-upload {
-		display: none;
-		margin-top: 20px;
-	}
-
-	.rtm-file-size-limit {
-		vertical-align: middle;
-		font-size: 16px;
-		line-height: 24px;
-	}
 }
+
 
 .rtm-uploader-main-wrapper {
     .rtm-uploader-tabs {

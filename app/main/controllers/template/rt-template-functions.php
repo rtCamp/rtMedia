@@ -211,10 +211,12 @@ function rtmedia_media_ext( $id = false ) {
 	if ( $id ) {
 		$model = new RTMediaModel();
 		$media = $model->get_media( array( 'id' => $id ), 0, 1 );
-		$filepath = get_attached_file( $media[ 0 ]->media_id );
-		$filetype = wp_check_filetype( $filepath );
+		if ( isset( $media[ 0 ] ) ) {
+			$filepath = get_attached_file( $media[ 0 ]->media_id );
+			$filetype = wp_check_filetype( $filepath );
 
-		return $filetype[ 'ext' ];
+			return $filetype[ 'ext' ];
+		}
 	} else {
 		global $rtmedia_media;
 
@@ -302,7 +304,7 @@ function rtmedia_media( $size_flag = true, $echo = true, $media_size = "rt_media
 			$html = "<img src='" . $src[ 0 ] . "' alt='" . $rtmedia_media->post_name . "' />";
 		} elseif ( $rtmedia_media->media_type == 'video' ) {
 			$size = " width=\"" . $rtmedia->options[ "defaultSizes_video_singlePlayer_width" ] . "\" height=\"" . $rtmedia->options[ "defaultSizes_video_singlePlayer_height" ] . "\" ";
-			$html = "<div id='rtm-mejs-video-container' style='width:" . $rtmedia->options[ "defaultSizes_video_singlePlayer_width" ] . "px;max-width:96%;height:" . $rtmedia->options[ "defaultSizes_video_singlePlayer_height" ] . "px;'>";
+			$html = "<div id='rtm-mejs-video-container' style='width:" . $rtmedia->options[ "defaultSizes_video_singlePlayer_width" ] . "px;max-width:96%;max-height:" . $rtmedia->options[ "defaultSizes_video_singlePlayer_height" ] . "px;'>";
 			$html .= '<video src="' . wp_get_attachment_url( $rtmedia_media->media_id ) . '" ' . $size . ' type="video/mp4" class="wp-video-shortcode" id="bp_media_video_' . $rtmedia_media->id . '" controls="controls" preload="true"></video>';
 			$html .= '</div>';
 		} elseif ( $rtmedia_media->media_type == 'music' ) {
@@ -780,11 +782,11 @@ function rtmedia_comments( $echo = true ) {
 
 	global $wpdb, $rtmedia_media;
 
-	$comments = $wpdb->get_results( "SELECT * FROM $wpdb->comments WHERE comment_post_ID = '" . $rtmedia_media->media_id . "'", ARRAY_A );
+	$comments = get_comments( array( 'post_id' => $rtmedia_media->media_id, 'order' => 'ASC' ) );
 
 	$comment_list = "";
 	foreach ( $comments as $comment ) {
-		$comment_list .= rmedia_single_comment( $comment );
+		$comment_list .= rmedia_single_comment( (array) $comment );
 	}
 
 	if ( $comment_list != "" ) {
@@ -1879,7 +1881,7 @@ add_action( 'rtmedia_before_item', 'rtmedia_item_select' );
 function rtmedia_item_select() {
 	global $rtmedia_query, $rtmedia_backbone;
 	if ( $rtmedia_backbone[ 'backbone' ] ) {
-		if ( $rtmedia_backbone[ 'is_album' ] && $rtmedia_backbone[ 'is_edit_allowed' ] ) {
+		if ( isset( $rtmedia_backbone[ 'is_album' ] ) && $rtmedia_backbone[ 'is_album' ] && isset( $rtmedia_backbone[ 'is_edit_allowed' ] ) && $rtmedia_backbone[ 'is_edit_allowed' ] ) {
 			echo '<span class="rtm-checkbox-wrap"><input type="checkbox" name="move[]" class="rtmedia-item-selector" value="<%= id %>" /></span>';
 		}
 	} else {
@@ -2661,6 +2663,30 @@ function rtmedia_modify_activity_upload_url( $params ) {
 
 // Fix for BuddyPress multilingual plugin on activity pages
 add_filter( 'rtmedia_modify_upload_params', 'rtmedia_modify_activity_upload_url', 999, 1 );
+
+add_action( "rtmedia_admin_page_insert", "rtmedia_admin_pages_content", 99, 1 );
+
+function rtmedia_admin_pages_content( $page ){
+	if ( $page == "rtmedia-hire-us" ) {
+		$url = admin_url() . "admin.php?page=rtmedia-premium";
+		?>
+		<div class="rtm-hire-us-container rtm-page-container">
+			<h3 class="rtm-setting-title rtm-show"><?php _e( 'You can consider rtMedia Team for following :', 'rtmedia' ); ?></h3>
+
+			<ol class="rtm-hire-points">
+				<li><?php _e( 'rtMedia Customization ( in Upgrade Safe manner )', 'rtmedia' ); ?></li>
+				<li><?php _e( 'WordPress/BuddyPress Theme Design and Development', 'rtmedia' ); ?></li>
+				<li><?php _e( 'WordPress/BuddyPress Plugin Development', 'rtmedia' ); ?></li>
+			</ol>
+
+			<div class="clearfix">
+				<a href="https://rtcamp.com/contact" class="rtm-button rtm-success" target="_blank"><?php _e( 'Contact Us', 'rtmedia' ); ?></a>
+			</div>
+		</div>
+	<?php
+	}
+}
+
 
 // Get rtMedia Encoding API Key
 function get_rtmedia_encoding_api_key() {
