@@ -78,7 +78,7 @@ class RTMediaLicense {
 							</th>
 							<td>
 								<input id="<?php echo $license_key_id ?>" name="<?php echo $license_key_id ?>" type="text"
-									   class="regular-text" value="<?php esc_attr_e( $license ); ?>"/>
+									   class="regular-text" value="<?php echo $license; ?>"/>
 							</td>
 						</tr>
 

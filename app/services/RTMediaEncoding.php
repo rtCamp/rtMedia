@@ -244,7 +244,7 @@ class RTMediaEncoding {
 		if ( isset( $usage_details[ $this->api_key ]->plan->name ) && (strtolower( $usage_details[ $this->api_key ]->plan->name ) == strtolower( $name )) && $usage_details[ $this->api_key ]->sub_status && ! $force ) {
 			$form = '<button data-plan="' . $name . '" data-price="' . $price . '" type="submit" class="button bpm-unsubscribe">' . __( 'Unsubscribe', 'rtmedia' ) . '</button>';
 			$form .= '<div id="bpm-unsubscribe-dialog" title="Unsubscribe">
-  <p>' . __( 'Just to improve our service we would like to know the reason for you to leave us.' ) . '</p>
+  <p>' . __( 'Just to improve our service we would like to know the reason for you to leave us.', 'rtmedia' ) . '</p>
   <p><textarea rows="3" cols="36" id="bpm-unsubscribe-note"></textarea></p>
 </div>';
 		} else {
@@ -577,9 +577,9 @@ class RTMediaEncoding {
 					add_filter( 'wp_mail_content_type', create_function( '', 'return "text/html";' ) );
 					wp_mail( $admin_email_ids, $subject, $message );
 				}
-				_e( $flag );
+				echo $flag;
 			} elseif ( $flag ) {
-				_e( $flag );
+				echo $flag;
 			} else {
 				_e( "Done", 'rtmedia' );
 			}
@@ -606,7 +606,7 @@ class RTMediaEncoding {
 					echo json_encode( array( 'error' => $subscription_info->message ) );
 				}
 			} else {
-				echo json_encode( array( 'error' => __( 'Something went wrong please try again.' ) ) );
+				echo json_encode( array( 'error' => __( 'Something went wrong please try again.', 'rtmedia' ) ) );
 			}
 		}
 		die();

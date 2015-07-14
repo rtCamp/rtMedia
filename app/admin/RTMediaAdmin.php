@@ -122,7 +122,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
                     if ( $rtm_id ) {
                         $link = get_rtmedia_permalink( $rtm_id );                  
                         $title =_draft_or_post_title( $post->post_parent );
-                        $action[ 'view' ] = '<a href="' . $link . '" title="' . esc_attr( sprintf( __( 'View &#8220;%s&#8221;' ), $title ) ) . '" rel="permalink">' . __( 'View' ) . '</a>';
+                        $action[ 'view' ] = '<a href="' . $link . '" title="' . esc_attr( sprintf( __( 'View &#8220;%s&#8221;', 'rtmedia' ), $title ) ) . '" rel="permalink">' . __( 'View', 'rtmedia' ) . '</a>';
                     }            
                     
                     return $action;
@@ -364,7 +364,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 		 */
 		public function rtmedia_permalink_notice() {
 			echo '<div class="error rtmedia-permalink-change-notice">
-		    <p> <b>' . __( 'rtMedia:' ) . '</b> ' . __( ' You must ' ) . '<a href="' . admin_url( 'options-permalink.php' ) . '">' . __( 'update permalink structure' ) . '</a>' . __( ' to something other than the default for it to work.', 'rtmedia' ) . ' </p>
+		    <p> <b>rtMedia:</b> ' . __( ' You must', 'rtmedia' ) . ' <a href="' . admin_url( 'options-permalink.php' ) . '">' . __( 'update permalink structure', 'rtmedia' ) . '</a> ' . __( 'to something other than the default for it to work.', 'rtmedia' ) . ' </p>
 		    </div>';
 		}
 
@@ -1932,7 +1932,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 			if ( ! $site_option || 'hide' != $site_option ) {
 				rtmedia_update_site_option( 'rtmedia-update-template-notice-v3_8', 'show' );
 				if ( is_dir( get_template_directory() . '/rtmedia' ) ) {
-					echo '<div class="error rtmedia-update-template-notice"><p>' . __( 'Please update rtMedia template files if you have overridden the default rtMedia templates in your theme. If not, you can ignore and hide this notice.' ) . '<a href="#" onclick="rtmedia_hide_template_override_notice()" style="float:right">' . __( 'Hide', 'rtmedia' ) . '</a>' . ' </p></div>';
+					echo '<div class="error rtmedia-update-template-notice"><p>' . __( 'Please update rtMedia template files if you have overridden the default rtMedia templates in your theme. If not, you can ignore and hide this notice.', 'rtmedia' ) . '<a href="#" onclick="rtmedia_hide_template_override_notice()" style="float:right">' . __( 'Hide', 'rtmedia' ) . '</a>' . ' </p></div>';
 					?>
 					<script type="text/javascript">
 						function rtmedia_hide_template_override_notice() {

@@ -828,7 +828,7 @@ function rmedia_single_comment( $comment ) {
 
 	global $rtmedia_media;
 	if ( is_rt_admin() || ( isset( $comment[ 'user_id' ] ) && ( get_current_user_id() == $comment[ 'user_id' ] || $rtmedia_media->media_author == get_current_user_id() ) ) || apply_filters( 'rtmedia_allow_comment_delete', false ) ) { // show delete button for comment author and admins
-		$html .= '<i data-id="' . $comment[ 'comment_ID' ] . '" class = "rtmedia-delete-comment dashicons dashicons-no-alt rtmicon" title="' . __( 'Delete Comment' ) . '"></i>';
+		$html .= '<i data-id="' . $comment[ 'comment_ID' ] . '" class = "rtmedia-delete-comment dashicons dashicons-no-alt rtmicon" title="' . __( 'Delete Comment', 'rtmedia' ) . '"></i>';
 	}
 
 	$html .= '<div class="clear"></div></div></div></li>';
@@ -2230,7 +2230,7 @@ function rtmedia_content_before_media() {
 
 	if ( $rt_ajax_request ) {
 		?>
-		<span class="rtm-mfp-close mfp-close dashicons dashicons-no-alt" title="<?php _e( "Close (Esc)" ); ?>"></span><?php
+		<span class="rtm-mfp-close mfp-close dashicons dashicons-no-alt" title="<?php _e( "Close (Esc)", 'rtmedia' ); ?>"></span><?php
 	}
 }
 

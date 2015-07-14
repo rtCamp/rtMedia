@@ -136,21 +136,21 @@ class RTMediaThemes {
 							<img src="<?php echo $theme[ 'image' ]; ?>" />
 						</div>
 
-						<span class="more-details"><?php _e( 'Theme Details' ); ?></span>
+						<span class="more-details"><?php _e( 'Theme Details', 'rtmedia' ); ?></span>
 
 						<h3 class="theme-name"><?php echo $theme[ 'name' ]; ?></h3>
 
 						<div class="theme-actions">
-							<a class="button load-customize hide-if-no-customize" href="<?php echo $theme[ 'demo_url' ]; ?>"><?php _e( 'Live Demo' ); ?></a>
-							<a class="button button-primary load-customize hide-if-no-customize" href="<?php echo $theme[ 'buy_url' ]; ?>"><?php _e( 'Buy Now' ); ?></a>
+							<a class="button load-customize hide-if-no-customize" href="<?php echo $theme[ 'demo_url' ]; ?>"><?php _e( 'Live Demo', 'rtmedia' ); ?></a>
+							<a class="button button-primary load-customize hide-if-no-customize" href="<?php echo $theme[ 'buy_url' ]; ?>"><?php _e( 'Buy Now', 'rtmedia' ); ?></a>
 						</div>
 
 						<div class="rtm-theme-content hide">
 							<div class="theme-wrap">
 								<div class="theme-header">
-									<button class="left rtm-previous dashicons dashicons-no"><span class="screen-reader-text"><?php _e( 'Show previous theme' ); ?></span></button>
-									<button class="right rtm-next dashicons dashicons-no"><span class="screen-reader-text"><?php _e( 'Show next theme' ); ?></span></button>
-									<button class="close rtm-close dashicons dashicons-no"><span class="screen-reader-text"><?php _e( 'Close overlay' ); ?></span></button>
+									<button class="left rtm-previous dashicons dashicons-no"><span class="screen-reader-text"><?php _e( 'Show previous theme', 'rtmedia' ); ?></span></button>
+									<button class="right rtm-next dashicons dashicons-no"><span class="screen-reader-text"><?php _e( 'Show next theme', 'rtmedia' ); ?></span></button>
+									<button class="close rtm-close dashicons dashicons-no"><span class="screen-reader-text"><?php _e( 'Close overlay', 'rtmedia' ); ?></span></button>
 								</div>
 
 								<div class="theme-about">
@@ -163,14 +163,14 @@ class RTMediaThemes {
 									<div class="theme-info">
 										<h3 class="theme-name"><?php echo $theme[ 'name' ]; ?></h3>
 										<h4 class="theme-author">By <a href="https://rtcamp.com/"><?php echo $theme[ 'author' ]; ?></a></h4>
-										<p class="theme-description"><?php echo $theme[ 'description' ]; ?> <a href="<?php echo $theme[ 'buy_url' ]; ?>" class="rtmedia-theme-inner-a" target="_blank"><?php _e( 'Read More' ); ?></a></p>
-										<p class="theme-tags"><span><?php _e( 'Tags:' ); ?></span><?php echo $theme[ 'tags' ]; ?></p>
+										<p class="theme-description"><?php echo $theme[ 'description' ]; ?> <a href="<?php echo $theme[ 'buy_url' ]; ?>" class="rtmedia-theme-inner-a" target="_blank"><?php _e( 'Read More', 'rtmedia' ); ?></a></p>
+										<p class="theme-tags"><span><?php _e( 'Tags:', 'rtmedia' ); ?></span><?php echo $theme[ 'tags' ]; ?></p>
 									</div>
 								</div>
 
 								<div class="theme-actions">
-									<a class="button load-customize hide-if-no-customize" href="<?php echo $theme[ 'demo_url' ]; ?>"><?php _e( 'Live Demo' ); ?></a>
-									<a class="button button-primary load-customize hide-if-no-customize" href="<?php echo $theme[ 'buy_url' ]; ?>"><?php _e( 'Buy Now' ); ?></a>
+									<a class="button load-customize hide-if-no-customize" href="<?php echo $theme[ 'demo_url' ]; ?>"><?php _e( 'Live Demo', 'rtmedia' ); ?></a>
+									<a class="button button-primary load-customize hide-if-no-customize" href="<?php echo $theme[ 'buy_url' ]; ?>"><?php _e( 'Buy Now', 'rtmedia' ); ?></a>
 								</div>
 							</div>
 						</div>
@@ -251,21 +251,21 @@ class RTMediaThemes {
 							<img src="<?php echo $theme[ 'image' ]; ?>" />
 						</div>
 
-						<span class="more-details"><?php _e( 'Theme Details' ); ?></span>
+						<span class="more-details"><?php _e( 'Theme Details', 'rtmedia' ); ?></span>
 
 						<h3 class="theme-name"><?php echo $theme[ 'name' ]; ?></h3>
 
 						<div class="theme-actions">
-							<a class="button load-customize hide-if-no-customize" href="<?php echo $theme[ 'demo_url' ]; ?>"><?php _e( 'Live Demo' ); ?></a>
-							<a class="button button-primary load-customize hide-if-no-customize" href="<?php echo $theme[ 'buy_url' ]; ?>"><?php _e( 'Buy Now' ); ?></a>
+							<a class="button load-customize hide-if-no-customize" href="<?php echo $theme[ 'demo_url' ]; ?>"><?php _e( 'Live Demo', 'rtmedia' ); ?></a>
+							<a class="button button-primary load-customize hide-if-no-customize" href="<?php echo $theme[ 'buy_url' ]; ?>"><?php _e( 'Buy Now', 'rtmedia' ); ?></a>
 						</div>
 
 						<div class="rtm-theme-content hide">
 							<div class="theme-wrap">
 								<div class="theme-header">
-									<button class="left rtm-previous dashicons dashicons-no"><span class="screen-reader-text"><?php _e( 'Show previous theme' ); ?></span></button>
-									<button class="right rtm-next dashicons dashicons-no"><span class="screen-reader-text"><?php _e( 'Show next theme' ); ?></span></button>
-									<button class="close rtm-close dashicons dashicons-no"><span class="screen-reader-text"><?php _e( 'Close overlay' ); ?></span></button>
+									<button class="left rtm-previous dashicons dashicons-no"><span class="screen-reader-text"><?php _e( 'Show previous theme', 'rtmedia' ); ?></span></button>
+									<button class="right rtm-next dashicons dashicons-no"><span class="screen-reader-text"><?php _e( 'Show next theme', 'rtmedia' ); ?></span></button>
+									<button class="close rtm-close dashicons dashicons-no"><span class="screen-reader-text"><?php _e( 'Close overlay', 'rtmedia' ); ?></span></button>
 								</div>
 
 								<div class="theme-about">
@@ -278,14 +278,14 @@ class RTMediaThemes {
 									<div class="theme-info">
 										<h3 class="theme-name"><?php echo $theme[ 'name' ]; ?></h3>
 										<h4 class="theme-author">By <a href="<?php echo $theme[ 'author_url' ]; ?>"><?php echo $theme[ 'author' ]; ?></a></h4>
-										<p class="theme-description"><?php echo $theme[ 'description' ]; ?> <a href="<?php echo $theme[ 'buy_url' ]; ?>" class="rtmedia-theme-inner-a" target="_blank"><?php _e( 'Read More' ); ?></a></p>
-										<p class="theme-tags"><span><?php _e( 'Tags:' ); ?></span><?php echo $theme[ 'tags' ]; ?></p>
+										<p class="theme-description"><?php echo $theme[ 'description' ]; ?> <a href="<?php echo $theme[ 'buy_url' ]; ?>" class="rtmedia-theme-inner-a" target="_blank"><?php _e( 'Read More', 'rtmedia' ); ?></a></p>
+										<p class="theme-tags"><span><?php _e( 'Tags:', 'rtmedia' ); ?></span><?php echo $theme[ 'tags' ]; ?></p>
 									</div>
 								</div>
 
 								<div class="theme-actions">
-									<a class="button load-customize hide-if-no-customize" href="<?php echo $theme[ 'demo_url' ]; ?>"><?php _e( 'Live Demo' ); ?></a>
-									<a class="button button-primary load-customize hide-if-no-customize" href="<?php echo $theme[ 'buy_url' ]; ?>"><?php _e( 'Buy Now' ); ?></a>
+									<a class="button load-customize hide-if-no-customize" href="<?php echo $theme[ 'demo_url' ]; ?>"><?php _e( 'Live Demo', 'rtmedia' ); ?></a>
+									<a class="button button-primary load-customize hide-if-no-customize" href="<?php echo $theme[ 'buy_url' ]; ?>"><?php _e( 'Buy Now', 'rtmedia' ); ?></a>
 								</div>
 							</div>
 						</div>
