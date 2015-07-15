@@ -9,7 +9,7 @@ module.exports = function ( grunt ) {
         // watch for changes and trigger sass, jshint, uglify and livereload
         watch: {
             sass: {
-                files: [ 'sass/**/*.{scss,sass}' ],
+                files: [ 'app/assets/admin/css/sass/**/*.{scss,sass}' ],
                 tasks: [ 'sass', 'autoprefixer' ]
             },
             js: {
@@ -33,6 +33,15 @@ module.exports = function ( grunt ) {
                     'app/assets/admin/css/admin.css': 'app/assets/admin/css/sass/admin.scss',
                     'app/assets/admin/css/widget.css': 'app/assets/admin/css/sass/widget.scss'
                 }
+            },
+            minify: {
+                options: {
+                    style: 'compressed'
+                },
+                files: {
+                    'app/assets/admin/css/admin.min.css': 'app/assets/admin/css/sass/admin.scss',
+                    'app/assets/admin/css/widget.min.css': 'app/assets/admin/css/sass/widget.scss'
+                }
             }
         },
         // autoprefixer
@@ -48,15 +57,6 @@ module.exports = function ( grunt ) {
                 dest: 'app/assets/admin/css/'
             }
         },
-        // cssmin
-        cssmin: {
-            compress: {
-                files: {
-                    'app/assets/admin/css/admin.min.css': [ 'app/assets/admin/css/admin.css' ],
-                    'app/assets/admin/css/widget.min.css': [ 'app/assets/admin/css/widget.css' ]
-                }
-            }
-        },        
         // Uglify Ref. https://npmjs.org/package/grunt-contrib-uglify
         uglify: {
             options: {
@@ -151,5 +151,5 @@ module.exports = function ( grunt ) {
 
     } );
     // register task
-    grunt.registerTask( 'default', [ 'sass', 'autoprefixer', 'cssmin', 'uglify', 'checktextdomain', 'makepot', 'watch' ] );
+    grunt.registerTask( 'default', [ 'sass', 'autoprefixer', 'uglify', 'checktextdomain', 'makepot', 'watch' ] );
 };
