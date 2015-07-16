@@ -28,6 +28,9 @@ class RTMediaBuddyPressActivity {
         
         // Filter bp_activity_prefetch_object_data for translatable activity actions
         add_filter( 'bp_activity_prefetch_object_data', array( $this, 'bp_prefetch_activity_object_data' ), 10, 1 );
+		
+		add_action( 'bp_activity_add_user_favorite', array( 'RTMediaBuddyPressActivity','rtm_bp_activity_sync'), 10, 2 );
+		add_action( 'bp_activity_remove_user_favorite', array( 'RTMediaBuddyPressActivity','rtm_bp_activity_sync'), 10, 2 );
 	}
 
 	function bp_activity_deleted_activities( $activity_ids_deleted ){
@@ -357,4 +360,15 @@ class RTMediaBuddyPressActivity {
         return $activities;
     }
 
+
+	static function rtm_bp_activity_sync( $activity_id, $user_id ) {
+		
+		$mediamodel = new RTMediaModel();
+		$media      = $mediamodel->get( array( 'activity_id' => $activity_id ) );
+		// if there is only single media in activity
+		if ( 1 == sizeof( $media ) && isset( $media[0]->media_id ) ){
+			$media_id =rtmedia_id($media[0]->media_id);
+			RTMediaLike::rtmedia_do_media_like_unlike($media_id, $user_id );
+		}
+	}
 }

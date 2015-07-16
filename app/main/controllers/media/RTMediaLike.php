@@ -108,6 +108,9 @@ class RTMediaLike extends RTMediaUserInteraction {
 		$return[ "count" ] = $actions;
 		$this->model->update( array( 'likes' => $actions ), array( 'id' => $this->action_query->id ) );
 		global $rtmedia_points_media_id;
+		if ( apply_filters( 'rtm_allow_buddypress_action_sync', true, 'likes' ) ) {
+			$this->snyc_favorite( $this->action_query->id, $value );
+		}
 		$rtmedia_points_media_id = $this->action_query->id;
 		do_action( "rtmedia_after_like_media", $this );
 		if ( isset( $_REQUEST[ "json" ] ) && $_REQUEST[ "json" ] == "true" ) {
@@ -225,5 +228,74 @@ class RTMediaLike extends RTMediaUserInteraction {
 		//	}
 		//$this->label =  "<span class='like-count'>" .$actions ."</span>" . $this->label;
 	}
+	
+	static function rtmedia_do_media_like_unlike( $media_id, $user_id ) {
 
+		$mediamodel = new RTMediaModel();
+		$actions = $mediamodel->get( array( 'id' => $media_id ) );
+		$rtmediainteraction = new RTMediaInteractionModel();
+
+		$action = 'like';
+		$check_action = $rtmediainteraction->check( $user_id, $media_id, $action );
+		if ( $check_action ) {
+			$results = $rtmediainteraction->get_row( $user_id, $media_id, $action );
+			$row = $results[ 0 ];
+			$curr_value = $row->value;
+
+			if ( $curr_value ) {
+				$value = '0';
+				$increase = false;
+			} else {
+				$value = '1';
+				$increase = true;
+			}
+
+			$update_data = array( 'value' => $value );
+			$where_columns = array(
+				'user_id' => $user_id, 'media_id' => $media_id, 'action' => $action,
+			);
+			$update = $rtmediainteraction->update( $update_data, $where_columns );
+		} else {
+			$value = "1";
+			$columns = array(
+				'user_id' => $user_id, 'media_id' => $media_id, 'action' => $action, 'value' => $value
+			);
+			$insert_id = $rtmediainteraction->insert( $columns );
+			$increase = true;
+		}
+
+		$actionwa = 'likes';
+		$actions = intval( $actions[ 0 ]->{$actionwa} );
+		if ( $increase === true ) {
+			$actions++;
+		} else {
+			$actions--;
+		}
+		if ( $actions < 0 ) {
+			$actions = 0;
+		}
+
+		$mediamodel->update( array( 'likes' => $actions ), array( 'id' => $media_id ) );
+	}
+	
+	function snyc_favorite( $media_id, $value ) {
+		remove_action( 'bp_activity_add_user_favorite', array( 'RTMediaBuddyPressActivity','rtm_bp_activity_sync'), 10, 2 );
+		remove_action( 'bp_activity_remove_user_favorite', array( 'RTMediaBuddyPressActivity','rtm_bp_activity_sync'), 10, 2 );
+		
+		$mediamodel = new RTMediaModel();
+		$actions = $mediamodel->get( array( 'id' => $media_id ) );
+		//error_log( var_export($actions, true ) );
+		$activity_id = $actions[0]->activity_id;
+		
+		$media      = $mediamodel->get( array( 'activity_id' => $activity_id ) );
+		// if there is only single media in activity
+		if ( 1 == sizeof( $media ) && isset( $media[0]->media_id ) ){
+			if ( "1" == $value ) {
+				bp_activity_add_user_favorite( $activity_id );
+			} else {
+				bp_activity_remove_user_favorite( $activity_id );
+			}
+		}
+	}
+		
 }
