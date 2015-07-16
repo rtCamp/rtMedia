@@ -824,7 +824,7 @@ function rmedia_single_comment( $comment ) {
 	$html .= '<span class ="rtmedia-comment-date"> ' . apply_filters( 'rtmedia_comment_date_format', rtmedia_convert_date( $comment[ 'comment_date_gmt' ] ), $comment ) . '</span>';
 
 	$comment_string = wp_kses( $comment[ 'comment_content' ], $allowedtags );
-	$html .= '<div class="rtmedia-comment-content">' . wpautop( make_clickable( $comment_string ) ) . '</div>';
+	$html .= '<div class="rtmedia-comment-content">' . wpautop( make_clickable( apply_filters( 'bp_get_activity_content', $comment_string ) ) ) . '</div>';
 
 	global $rtmedia_media;
 	if ( is_rt_admin() || ( isset( $comment[ 'user_id' ] ) && ( get_current_user_id() == $comment[ 'user_id' ] || $rtmedia_media->media_author == get_current_user_id() ) ) || apply_filters( 'rtmedia_allow_comment_delete', false ) ) { // show delete button for comment author and admins
