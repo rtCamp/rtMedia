@@ -870,9 +870,9 @@ class RTMedia {
 		// Dashicons: Needs if not loaded by WP
 		wp_enqueue_style( 'dashicons' );
 
-		// Dont enqueue main.css if default styles is checked false in rtmedia settings
+		// Dont enqueue rtmedia.min.css if default styles is checked false in rtmedia settings
 		if ( ! ( isset( $rtmedia->options ) && isset( $rtmedia->options[ 'styles_enabled' ] ) && $rtmedia->options[ 'styles_enabled' ] == 0) ) {
-			wp_enqueue_style( 'rtmedia-main', RTMEDIA_URL . 'app/assets/css/main.css', '', RTMEDIA_VERSION );
+			wp_enqueue_style( 'rtmedia-main', RTMEDIA_URL . 'app/assets/css/rtmedia.min.css', '', RTMEDIA_VERSION );
 		}
 
 		wp_enqueue_script( 'rtmedia-main', RTMEDIA_URL . 'app/assets/js/main.js', array( 'jquery', 'wp-mediaelement' ), RTMEDIA_VERSION );

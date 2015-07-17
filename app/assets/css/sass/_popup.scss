@@ -38,7 +38,7 @@
     padding: 0 10px;
     position: absolute;
     width: 100%;
-	@include transition(all 300ms ease-out);
+	transition: all 300ms ease-out;
 
 
 	.rtm-single-media:hover & {

@@ -817,7 +817,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 				$admin_ajax = admin_url( 'admin-ajax.php' );
 
 				/* Only one JS file should enqueue */
-				wp_enqueue_script( 'rtmedia-admin', RTMEDIA_URL . 'app/assets/admin/js/admin-min.js', array( 'backbone' ), RTMEDIA_VERSION );
+				wp_enqueue_script( 'rtmedia-admin', RTMEDIA_URL . 'app/assets/admin/js/admin.min.js', array( 'backbone' ), RTMEDIA_VERSION );
 
 				wp_localize_script( 'rtmedia-admin', 'rtmedia_on_label', __( 'ON', 'rtmedia' ) );
 				wp_localize_script( 'rtmedia-admin', 'rtmedia_off_label', __( 'OFF', 'rtmedia' ) );
@@ -838,11 +838,11 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 				wp_localize_script( 'rtmedia-admin', 'settings_rt_album_import_url', esc_url( add_query_arg( array( 'page' => 'rtmedia-settings' ), ( is_multisite() ? network_admin_url( 'admin.php' ) : admin_url( 'admin.php' ) ) ) ) );
 
 				/* Only one CSS file should enqueue */
-				wp_enqueue_style( 'rtmedia-admin', RTMEDIA_URL . 'app/assets/admin/css/admin.css', '', RTMEDIA_VERSION );
+				wp_enqueue_style( 'rtmedia-admin', RTMEDIA_URL . 'app/assets/admin/css/admin.min.css', '', RTMEDIA_VERSION );
 			} else {
 
 				/* This CSS is using for "Right Now in rtMedia" Widget section on Dashboard */
-				wp_enqueue_style( 'rtmedia-widget', RTMEDIA_URL . 'app/assets/admin/css/widget.css', '', RTMEDIA_VERSION );
+				wp_enqueue_style( 'rtmedia-widget', RTMEDIA_URL . 'app/assets/admin/css/widget.min.css', '', RTMEDIA_VERSION );
 			}
 		}
 
