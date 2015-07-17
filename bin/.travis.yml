@@ -25,12 +25,14 @@ before_script:
 - sudo lsb_release  -a
 - sudo ee site create wp.localtest.me --wp --user=ADMINUSER --email=prabuddha.chakraborty@rtcamp.com --pass=ADMINPASS
 - sudo chmod 777 -R /var/www
-#- sudo bash -c 'echo "127.0.0.1	rtmediatest.com	www.rtmediatest.com" >> /etc/hosts'
 - cat ~/.my.cnf
 - sudo nginx -t
 - sudo service nginx reload
-- cd /var/www/wp.localtest.me/htdocs/ && ls
-- wp --allow-root plugin install https://github.com/rtCamp/rtMedia/archive/master.zip
+- cd /var/www/wp.localtest.me/htdocs/wp-content/plugins/ && ls
+- mkdir rtmedia
+- cd $PLUGIN_DIR
+- cp -Rf * /var/www/wp.localtest.me/htdocs/wp-content/plugins/rtmedia/
+- cd /var/www/wp.localtest.me/htdocs/
 - wp --allow-root plugin install https://downloads.wordpress.org/plugin/buddypress.2.2.3.1.zip
 - wp --allow-root plugin install https://downloads.wordpress.org/plugin/bbpress.2.5.7.zip
 - wp --allow-root plugin install https://downloads.wordpress.org/plugin/rtsocial.2.1.18.zip
