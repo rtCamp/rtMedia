@@ -43,7 +43,7 @@ $rtmedia_media = $media[ 0 ];
 							RTMediaMedia::media_nonce_generator( rtmedia_id() );
 							?>
 						</div>
-
+						
 						<?php do_action( "rtmedia_album_edit_fields", 'album-edit' ); ?>
 						
 						<div>
