@@ -93,7 +93,7 @@ module.exports = function ( grunt ) {
                     'app/assets/admin/js/vendors/tabs.js',
                     'app/assets/js/rtMedia.js'
                 ],
-                dest: 'app/assets/js/main.js'
+                dest: 'app/assets/js/rtmedia.js'
             },
             backend: {
                 src: [
