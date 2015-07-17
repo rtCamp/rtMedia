@@ -1115,6 +1115,22 @@ jQuery( document ).ready( function ( $ ) {
 				} else {
 					$( '.rtmedia-like-info' ).addClass( 'hide' );
 				}
+                
+                if ( $('#activity-'+data.activity_id) != 'undefined' && data.is_single_media == true ) {
+                   
+                    if ( 'Unlike' === data.next ) {
+                        target = jQuery("#activity-" + data.activity_id + " div .fav");
+                        target.text(data.favorite);
+                        target.addClass('unfav');  
+                        target.removeClass('fav');
+
+                    } else if ( 'Like' === data.next ) {
+                        target = jQuery("#activity-" + data.activity_id + " div .unfav");
+                        target.text(data.favorite);
+                        target.addClass('fav');
+                        target.removeClass('unfav');
+                    }
+                }
 			}
 		} );
 

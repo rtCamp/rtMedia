@@ -92,7 +92,18 @@ class RTMediaLike extends RTMediaUserInteraction {
 		$actionwa = $this->action . 's';
 
 		$return = array();
+		
+		if ( apply_filters( 'rtm_allow_buddypress_action_sync', true, 'likes' ) ) {
+			$this->snyc_favorite( $this->action_query->id, $value );
+			$return['activity_id'] = $actions[ 0 ]->activity_id;
 
+			if ( NULL !== $return['activity_id'] ) {
+				$media      = $this->model->get( array( 'activity_id' => $actions[ 0 ]->activity_id ) );
+				$return['is_single_media'] = ( 1 == sizeof( $media ) && isset( $media[0]->media_id ) );
+				$return['favorite'] = ( $this->increase === true ) ? __( 'Remove Favorite', 'buddypress' ) : __( 'Favorite', 'buddypress' );
+			}
+		}
+		
 		$actions = intval( $actions[ 0 ]->{$actionwa} );
 		if ( $this->increase === true ) {
 			$actions ++;
@@ -104,13 +115,10 @@ class RTMediaLike extends RTMediaUserInteraction {
 		if ( $actions < 0 ) {
 			$actions = 0;
 		}
-
+		
 		$return[ "count" ] = $actions;
 		$this->model->update( array( 'likes' => $actions ), array( 'id' => $this->action_query->id ) );
 		global $rtmedia_points_media_id;
-		if ( apply_filters( 'rtm_allow_buddypress_action_sync', true, 'likes' ) ) {
-			$this->snyc_favorite( $this->action_query->id, $value );
-		}
 		$rtmedia_points_media_id = $this->action_query->id;
 		do_action( "rtmedia_after_like_media", $this );
 		if ( isset( $_REQUEST[ "json" ] ) && $_REQUEST[ "json" ] == "true" ) {
@@ -229,6 +237,11 @@ class RTMediaLike extends RTMediaUserInteraction {
 		//$this->label =  "<span class='like-count'>" .$actions ."</span>" . $this->label;
 	}
 	
+	/**
+	 * Process media like from Activity favorite
+	 * @param type $media_id
+	 * @param type $user_id
+	 */
 	static function rtmedia_do_media_like_unlike( $media_id, $user_id ) {
 
 		$mediamodel = new RTMediaModel();
@@ -278,13 +291,19 @@ class RTMediaLike extends RTMediaUserInteraction {
 		$mediamodel->update( array( 'likes' => $actions ), array( 'id' => $media_id ) );
 	}
 	
+	/**
+	 * This use to make activity favorite action based on media like.
+	 * Calls BuddyPress favorite action for activity_id 
+	 * 
+	 * @param type $media_id
+	 * @param type $value		value for add or remove activity favorite
+	 */
 	function snyc_favorite( $media_id, $value ) {
 		remove_action( 'bp_activity_add_user_favorite', array( 'RTMediaBuddyPressActivity','rtm_bp_activity_sync'), 10, 2 );
 		remove_action( 'bp_activity_remove_user_favorite', array( 'RTMediaBuddyPressActivity','rtm_bp_activity_sync'), 10, 2 );
 		
 		$mediamodel = new RTMediaModel();
 		$actions = $mediamodel->get( array( 'id' => $media_id ) );
-		//error_log( var_export($actions, true ) );
 		$activity_id = $actions[0]->activity_id;
 		
 		$media      = $mediamodel->get( array( 'activity_id' => $activity_id ) );
