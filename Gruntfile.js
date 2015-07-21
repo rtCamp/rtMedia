@@ -50,13 +50,19 @@ module.exports = function ( grunt ) {
         autoprefixer: {
             options: {
                 browsers: [ 'last 2 versions', 'ie 9', 'ios 6', 'android 4' ],
-                map: true
-            },
-            files: {
+                map: true,
                 expand: true,
                 flatten: true,
-                src: 'app/assets/admin/css/*.css',
-                dest: 'app/assets/admin/css/'
+            },
+            files: {
+                'app/assets/admin/css/admin.css': 'app/assets/admin/css/admin.css',
+                'app/assets/admin/css/widget.css': 'app/assets/admin/css/widget.css',
+                'app/assets/css/rtmedia.css': 'app/assets/css/rtmedia.css',
+                'app/assets/admin/css/admin.min.css': 'app/assets/admin/css/admin.min.css',
+                'app/assets/admin/css/widget.min.css': 'app/assets/admin/css/widget.min.css',
+                'app/assets/css/rtmedia.min.css': 'app/assets/css/rtmedia.min.css'
+                //src: 'app/assets/admin/css/*.css',
+                //dest: 'app/assets/admin/css/'
             }
         },
         // Uglify Ref. https://npmjs.org/package/grunt-contrib-uglify
@@ -153,23 +159,6 @@ module.exports = function ( grunt ) {
                     },
                     type: 'wp-plugin', // Type of project (wp-plugin or wp-theme).
                     updateTimestamp: true // Whether the POT-Creation-Date should be updated without other changes.
-                }
-            }
-        },
-        addtextdomain: {
-            options: {
-                //i18nToolsPath: '', // Path to the i18n tools directory.
-                textdomain: 'rtmedia', // Project text domain.
-                updateDomains: [ 'test' ]  // List of text domains to replace.
-            },
-            target: {
-                files: {
-                    src: [
-                        '*.php',
-                        '**/*.php',
-                        '!node_modules/**',
-                        '!tests/**'
-                    ]
                 }
             }
         }
