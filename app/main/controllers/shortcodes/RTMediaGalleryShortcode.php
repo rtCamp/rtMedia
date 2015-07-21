@@ -65,7 +65,7 @@ class RTMediaGalleryShortcode {
             'container' => 'rtmedia-upload-container',
             'drop_element' => 'drag-drop-area',
             'filters' => apply_filters ( 'rtmedia_plupload_files_filter', array( array( 'title' => "Media Files", 'extensions' => get_rtmedia_allowed_upload_type () ) ) ),
-            'max_file_size' => min ( array( ini_get ( 'upload_max_filesize' ), ini_get ( 'post_max_size' ) ) ),
+            'max_file_size' => ( wp_max_upload_size() ) / ( 1024 * 1024 ) . 'M',
             'multipart' => true,
             'urlstream_upload' => true,
             'flash_swf_url' => includes_url ( 'js/plupload/plupload.flash.swf' ),
