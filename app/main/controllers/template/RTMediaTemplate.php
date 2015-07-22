@@ -245,6 +245,12 @@ class RTMediaTemplate {
         $nonce = $_POST[ 'rtmedia_media_nonce' ];
         
         if ( wp_verify_nonce( $nonce, 'rtmedia_' . $rtmedia_query->action_query->id ) ) {
+
+	        /*
+	         * Need this file in order to use `wp_generate_attachment_metadata` function
+	         */
+	        require_once ( ABSPATH . 'wp-admin/includes/image.php');
+
             do_action( 'rtmedia_before_update_media', $rtmedia_query->action_query->id );
             
             $data_array = array( 'media_title', 'description', 'privacy' );
@@ -275,8 +281,15 @@ class RTMediaTemplate {
                     if ( $rtmedia_query->media[ 0 ]->media_id && !empty( $activity_id ) ) {
                         global $wpdb;
                         
-                        $media_data = $media->model->get( array( 'id' => $rtmedia_query->media[ 0 ]->id ) );
-                        $activity = new RTMediaActivity ( $rtmedia_query->media[ 0 ]->id, $media_data[ 0 ]->privacy );
+                        $related_media_data = $media->model->get( array( 'activity_id' => $activity_id ) );
+	                    $related_media = array();
+	                    foreach( $related_media_data as $activity_media ){
+							$related_media[] = $activity_media->id;
+	                    }
+	                    $activity_text = bp_activity_get_meta( $activity_id, 'bp_activity_text' );
+
+                        $activity = new RTMediaActivity ( $related_media, 0, $activity_text );
+
                         $activity_content_new = $activity->create_activity_html();
                         // Replacing the filename with new effected filename
                         $activity_content = str_replace( $_POST[ 'rtmedia-filepath-old' ], $thumbnailinfo[ 0 ], $activity_content_new );
