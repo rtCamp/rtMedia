@@ -30,22 +30,21 @@ class RTMediaAJAX {
 				$group_id = !empty( $_POST[ 'context_id' ] ) ? $_POST[ 'context_id' ] : '';
 
 				if( can_user_create_album_in_group( $group_id ) == false ) {
-					$return['error'] = __( 'You can not create album in group.', 'rtmedia' );
-					echo json_encode( $return );
-					wp_die();
+					$return['error'] = __( 'You can not create album in this group.', 'rtmedia' );
 				}
 			}
 
 			$create_album = apply_filters( "rtm_is_album_create_enable", true );
 			if( !$create_album ) {
-				$return['error'] = __( 'You can not create album.', 'rtmedia' ); 
-				echo json_encode( $return );
-				wp_die();
+				$return['error'] = __( 'You can not create album.', 'rtmedia' );
 			}
 
 			$create_album = apply_filters( "rtm_display_create_album_button", true, $_POST[ 'context_id' ] );
 			if( !$create_album ) {
 				$return['error'] = __( 'You can not create more albums, you exceed your album limit.', 'rtmedia' );
+			}
+
+			if( $return['error'] !== false ){
 				echo json_encode( $return );
 				wp_die();
 			}
