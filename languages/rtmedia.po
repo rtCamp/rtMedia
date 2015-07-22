@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: rtMedia for WordPress, BuddyPress and bbPress 3.8.10\n"
 "Report-Msgid-Bugs-To: http://community.rtcamp.com/c/rtmedia/\n"
-"POT-Creation-Date: 2015-07-21 14:22:43+00:00\n"
+"POT-Creation-Date: 2015-07-22 09:14:58+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -2391,23 +2391,39 @@ msgstr ""
 msgid "The web browser on your device cannot be used to upload files."
 msgstr ""
 
+#: app/main/controllers/template/RTMediaAJAX.php:33
+msgid "You can not create album in group."
+msgstr ""
+
+#: app/main/controllers/template/RTMediaAJAX.php:41
+msgid "You can not create album."
+msgstr ""
+
+#: app/main/controllers/template/RTMediaAJAX.php:48
+msgid "You can not create more albums, you exceed your album limit."
+msgstr ""
+
+#: app/main/controllers/template/RTMediaAJAX.php:90
+msgid "Data mismatch, Please insert data properly."
+msgstr ""
+
 #: app/main/controllers/template/RTMediaTemplate.php:97
 #: app/main/controllers/template/RTMediaTemplate.php:149
 msgid "Invalid attribute passed for rtmedia_gallery shortcode."
 msgstr ""
 
-#: app/main/controllers/template/RTMediaTemplate.php:314
-#: app/main/controllers/template/RTMediaTemplate.php:388
-#: app/main/controllers/template/RTMediaTemplate.php:477
-#: app/main/controllers/template/RTMediaTemplate.php:603
+#: app/main/controllers/template/RTMediaTemplate.php:327
+#: app/main/controllers/template/RTMediaTemplate.php:401
+#: app/main/controllers/template/RTMediaTemplate.php:490
+#: app/main/controllers/template/RTMediaTemplate.php:616
 msgid "Ooops !!! Invalid access. No nonce was found !!"
 msgstr ""
 
-#: app/main/controllers/template/RTMediaTemplate.php:321
+#: app/main/controllers/template/RTMediaTemplate.php:334
 msgid "Media updated Sucessfully"
 msgstr ""
 
-#: app/main/controllers/template/RTMediaTemplate.php:327
+#: app/main/controllers/template/RTMediaTemplate.php:340
 msgid "Error in updating Media"
 msgstr ""
 
@@ -2890,7 +2906,7 @@ msgstr ""
 msgid "Title : "
 msgstr ""
 
-#: templates/media/album-single-edit.php:42
+#: templates/media/album-single-edit.php:40
 #: templates/media/media-single-edit.php:32
 msgid "Description: "
 msgstr ""

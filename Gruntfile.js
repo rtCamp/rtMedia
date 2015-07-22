@@ -52,7 +52,7 @@ module.exports = function ( grunt ) {
                 browsers: [ 'last 2 versions', 'ie 9', 'ios 6', 'android 4' ],
                 map: true,
                 expand: true,
-                flatten: true,
+                flatten: true
             },
             files: {
                 'app/assets/admin/css/admin.css': 'app/assets/admin/css/admin.css',
@@ -152,8 +152,8 @@ module.exports = function ( grunt ) {
                     potFilename: 'rtmedia.po', // Name of the POT file.
                     potHeaders: { // Headers to add to the generated POT file.
                         poedit: true, // Includes common Poedit headers.
-                        'Last-Translator': 'rtCamp <support@rtcamp.com>',
-                        'Language-Team': 'rtCampers <support@rtcamp.com>',
+                        'Last-Translator': 'rtMedia <rtmedia@rtcamp.com>',
+                        'Language-Team': 'rtMedia <rtmedia@rtcamp.com>',
                         'report-msgid-bugs-to': 'http://community.rtcamp.com/c/rtmedia/',
                         'x-poedit-keywordslist': true // Include a list of all possible gettext functions.
                     },
