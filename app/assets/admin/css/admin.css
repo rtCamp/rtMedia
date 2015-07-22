@@ -542,15 +542,18 @@ horizontal tab css
   text-transform: uppercase;
   background: #b4b4b4;
   border-radius: inherit;
-  transition: 0.15s ease-out;
-  transition-property: opacity background;
+  -webkit-transition: 0.15s ease-out;
+          transition: 0.15s ease-out;
+  -webkit-transition-property: opacity background;
+          transition-property: opacity background;
 }
 .switch-label:before, .switch-label:after {
   position: absolute;
   top: 50%;
   margin-top: -.5em;
   line-height: 1;
-  transition: inherit;
+  -webkit-transition: inherit;
+          transition: inherit;
 }
 .switch-label:before {
   content: attr(data-off);
@@ -581,8 +584,10 @@ input[type=checkbox]:checked ~ .switch-label:after {
   background: white;
   border-radius: 10px;
   box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
+  background-image: -webkit-linear-gradient(top, white 40%, #f0f0f0);
   background-image: linear-gradient(to bottom, white 40%, #f0f0f0);
-  transition: left 0.15s ease-out;
+  -webkit-transition: left 0.15s ease-out;
+          transition: left 0.15s ease-out;
 }
 .switch-handle:before {
   content: '';
@@ -595,6 +600,7 @@ input[type=checkbox]:checked ~ .switch-label:after {
   background: #f9f9f9;
   border-radius: 6px;
   box-shadow: inset 0 1px rgba(0, 0, 0, 0.02);
+  background-image: -webkit-linear-gradient(top, #eee, white);
   background-image: linear-gradient(to bottom, #eee, white);
 }
 input[type=checkbox]:checked ~ .switch-handle {
@@ -635,7 +641,8 @@ input[type=checkbox]:checked ~ .switch-handle {
   visibility: hidden;
   width: 210px;
   z-index: 9999;
-  transition: all ease-in-out 0.4s;
+  -webkit-transition: all ease-in-out 0.4s;
+          transition: all ease-in-out 0.4s;
 }
 
 .rtm-tip-top {
@@ -1076,5 +1083,3 @@ body.rtl .theme-browser .theme {
 .rtmedia-license .rtm-tabs span {
   padding: 0;
 }
-
-/*# sourceMappingURL=admin.css.map */

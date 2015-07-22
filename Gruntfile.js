@@ -10,7 +10,11 @@ module.exports = function ( grunt ) {
         watch: {
             sass: {
                 files: [ 'app/assets/admin/css/sass/**/*.{scss,sass}', 'app/assets/css/sass/**/*.{scss,sass}' ],
-                tasks: [ 'sass', 'autoprefixer' ]
+                tasks: [ 'sass' ]
+            },
+            autoprefixer: {
+                files: [ 'app/assets/admin/css/*.css', 'app/assets/css/*css' ],
+                tasks: [ 'autoprefixer' ]
             },
             js: {
                 files: [ '<%= uglify.frontend.src %>', '<%= uglify.backend.src %>', '<%= concat.frontend.src %>', '<%= concat.backend.src %>' ],
@@ -27,7 +31,8 @@ module.exports = function ( grunt ) {
         sass: {
             dist: {
                 options: {
-                    style: 'expanded'
+                    style: 'expanded',
+                    sourcemap: 'none'
                 },
                 files: {
                     'app/assets/admin/css/admin.css': 'app/assets/admin/css/sass/admin.scss',
@@ -37,7 +42,8 @@ module.exports = function ( grunt ) {
             },
             minify: {
                 options: {
-                    style: 'compressed'
+                    style: 'compressed',
+                    sourcemap: 'none'
                 },
                 files: {
                     'app/assets/admin/css/admin.min.css': 'app/assets/admin/css/sass/admin.scss',
@@ -48,21 +54,20 @@ module.exports = function ( grunt ) {
         },
         // autoprefixer
         autoprefixer: {
-            options: {
-                browsers: [ 'last 2 versions', 'ie 9', 'ios 6', 'android 4' ],
-                map: true,
-                expand: true,
-                flatten: true
-            },
-            files: {
-                'app/assets/admin/css/admin.css': 'app/assets/admin/css/admin.css',
-                'app/assets/admin/css/widget.css': 'app/assets/admin/css/widget.css',
-                'app/assets/css/rtmedia.css': 'app/assets/css/rtmedia.css',
-                'app/assets/admin/css/admin.min.css': 'app/assets/admin/css/admin.min.css',
-                'app/assets/admin/css/widget.min.css': 'app/assets/admin/css/widget.min.css',
-                'app/assets/css/rtmedia.min.css': 'app/assets/css/rtmedia.min.css'
-                //src: 'app/assets/admin/css/*.css',
-                //dest: 'app/assets/admin/css/'
+            dist: {
+                options: {
+                    browsers: [ 'last 2 versions', 'ie 9', 'ios 6', 'android 4' ],
+                    expand: true,
+                    flatten: true
+                },
+                files: {
+                    'app/assets/admin/css/admin.css': 'app/assets/admin/css/admin.css',
+                    'app/assets/admin/css/admin.min.css': 'app/assets/admin/css/admin.min.css',
+                    'app/assets/admin/css/widget.css': 'app/assets/admin/css/widget.css',
+                    'app/assets/admin/css/widget.min.css': 'app/assets/admin/css/widget.min.css',
+                    'app/assets/css/rtmedia.css': 'app/assets/css/rtmedia.css',
+                    'app/assets/css/rtmedia.min.css': 'app/assets/css/rtmedia.min.css'
+                }
             }
         },
         // Uglify Ref. https://npmjs.org/package/grunt-contrib-uglify
