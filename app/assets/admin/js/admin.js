@@ -620,6 +620,11 @@ jQuery( document ).ready( function ( $ ) {
 //		}
 //	} );
 
+    if ( jQuery( '#rtmedia-bp-enable-activity' ).is( ":checked" ) ) {
+			jQuery( ".rtmedia-bp-activity-setting" ).prop( "disabled", false );
+		} else {
+			jQuery( ".rtmedia-bp-activity-setting" ).prop( "disabled", true );
+		}
 	jQuery( '#rtmedia-bp-enable-activity' ).on( "click", function ( e ) {
 		if ( jQuery( this ).is( ":checked" ) ) {
 			jQuery( ".rtmedia-bp-activity-setting" ).prop( "disabled", false );

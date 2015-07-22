@@ -83,6 +83,10 @@ function apply_rtMagnificPopup( selector ) {
 							//videoWidth: 1,
 							// if set, overrides <video height>
 							//videoHeight: 1
+                            success: function (mediaElement, domObject) { 
+                                // call the play method
+                                mediaElement.play();
+                            },
 						} );
 						$( '.mfp-content .mejs-audio .mejs-controls' ).css( 'position', 'relative' );
 						rtMediaHook.call( 'rtmedia_js_popup_after_content_added', [ ] );
@@ -285,10 +289,9 @@ jQuery( 'document' ).ready( function ( $ ) {
 			$( "#rtmedia_create_new_album" ).prepend( "<img src='" + rMedia_loading_file + "' />" );
 
 			jQuery.post( rtmedia_ajax_url, data, function ( response ) {
-				response = response.trim();
-
-				if ( response ) {
-					response = response.trim();
+				response = jQuery.parseJSON(response);
+				if ( typeof response.album != 'undefined' ) {
+					response =  jQuery.trim( response.album );
 					var flag = true;
 
 					jQuery( '.rtmedia-user-album-list' ).each( function () {
@@ -323,14 +326,16 @@ jQuery( 'document' ).ready( function ( $ ) {
 						galleryObj.reloadView();
 						jQuery( ".close-reveal-modal" ).click();
 					}, 2000 );
-				} else {
+				} else if ( typeof response.error != 'undefined' ) {
+                    alert( response.error );
+                } else {
 					alert( rtmedia_something_wrong_msg );
 				}
 
 				$( "#rtmedia_create_new_album" ).removeAttr( 'disabled' );
 				$( "#rtmedia_create_new_album" ).html( old_val );
 			} );
-		} else {
+        } else {
 			alert( rtmedia_empty_album_name_msg );
 		}
 	} );
@@ -394,7 +399,7 @@ jQuery( 'document' ).ready( function ( $ ) {
 				jQuery( ".rtm-more" ).shorten( { // shorten the media description to 100 characters
 					"showChars": 130
 				} );
-
+                 
 				//show gallery title in lightbox at bottom
 				var gal_title = $( '.rtm-gallery-title' ), title = "";
 				if ( ! $.isEmptyObject( gal_title ) ) {
