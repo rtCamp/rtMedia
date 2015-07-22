@@ -83,6 +83,10 @@ function apply_rtMagnificPopup( selector ) {
 							//videoWidth: 1,
 							// if set, overrides <video height>
 							//videoHeight: 1
+                            success: function (mediaElement, domObject) { 
+                                // call the play method
+                                mediaElement.play();
+                            },
 						} );
 						$( '.mfp-content .mejs-audio .mejs-controls' ).css( 'position', 'relative' );
 						rtMediaHook.call( 'rtmedia_js_popup_after_content_added', [ ] );
@@ -395,7 +399,7 @@ jQuery( 'document' ).ready( function ( $ ) {
 				jQuery( ".rtm-more" ).shorten( { // shorten the media description to 100 characters
 					"showChars": 130
 				} );
-
+                 
 				//show gallery title in lightbox at bottom
 				var gal_title = $( '.rtm-gallery-title' ), title = "";
 				if ( ! $.isEmptyObject( gal_title ) ) {
