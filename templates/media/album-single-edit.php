@@ -36,8 +36,6 @@ $rtmedia_media = $media[ 0 ];
 							<?php rtmedia_title_input(); ?>
 						</div>
 
-						<?php do_action( "rtmedia_add_album_privacy", 'album-edit' ); ?>
-
 						<div class="rtmedia-editor-description rtm-field-wrap">
 							<label for='description'><?php _e( 'Description: ', 'rtmedia' ) ?></label>
 							<?php
@@ -45,7 +43,9 @@ $rtmedia_media = $media[ 0 ];
 							RTMediaMedia::media_nonce_generator( rtmedia_id() );
 							?>
 						</div>
-
+						
+						<?php do_action( "rtmedia_album_edit_fields", 'album-edit' ); ?>
+						
 						<div>
 							<input type="submit" name="submit" class='rtmedia-save-album' value="<?php _e( 'Save Changes', 'rtmedia' ); ?>" />
 						</div>

@@ -24,25 +24,29 @@ class RTMediaAJAX {
 	function create_album() {
 		$nonce = $_POST[ 'create_album_nonce' ];
 
+		$return['error'] = false;
 		if( wp_verify_nonce( $nonce, 'rtmedia_create_album_nonce' ) && isset( $_POST[ 'name' ] ) && $_POST[ 'name' ] && is_rtmedia_album_enable() ) {
 			if( isset( $_POST[ 'context' ] ) && $_POST[ 'context' ] == "group" ) {
 				$group_id = !empty( $_POST[ 'context_id' ] ) ? $_POST[ 'context_id' ] : '';
 
 				if( can_user_create_album_in_group( $group_id ) == false ) {
-					echo false;
+					$return['error'] = __( 'You can not create album in group.', 'rtmedia' );
+					echo json_encode( $return );
 					wp_die();
 				}
 			}
 
 			$create_album = apply_filters( "rtm_is_album_create_enable", true );
 			if( !$create_album ) {
-				echo false;
+				$return['error'] = __( 'You can not create album.', 'rtmedia' ); 
+				echo json_encode( $return );
 				wp_die();
 			}
 
 			$create_album = apply_filters( "rtm_display_create_album_button", true, $_POST[ 'context_id' ] );
 			if( !$create_album ) {
-				echo false;
+				$return['error'] = __( 'You can not create more albums, you exceed your album limit.', 'rtmedia' );
+				echo json_encode( $return );
 				wp_die();
 			}
 
@@ -76,12 +80,15 @@ class RTMediaAJAX {
 				$rtMediaNav->refresh_counts( get_current_user_id(), array( "context" => "profile", 'media_author' => get_current_user_id() ) );
 			}
 
-			if( $rtmedia_id )
-				echo apply_filters( 'rtmedia_create_album_response', $rtmedia_id );
-			else
+			if( $rtmedia_id ){
+				$return['album'] = apply_filters( 'rtmedia_create_album_response', $rtmedia_id );
+				echo json_encode( $return );
+			} else {
 				echo false;
+			}
 		} else {
-			echo false;
+			$return['error'] = __( 'Data mismatch, Please insert data properly.', 'rtmedia' );
+			echo json_encode( $return );
 		}
 
 		wp_die();
