@@ -2288,7 +2288,7 @@ span.imgedit-scale-warn {
   cursor: pointer;
 }
 .rtm-media-options .rtm-media-options-list {
-  margin-right: 10px;
+  margin-right: 5px;
   padding-right: 10px;
   position: relative;
 }
@@ -2297,7 +2297,7 @@ span.imgedit-scale-warn {
   content: ' ';
   bottom: 3px;
   position: absolute;
-  height: 14px;
+  height: 18px;
   right: 0;
   width: 1px;
 }
