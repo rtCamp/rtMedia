@@ -565,6 +565,12 @@ jQuery( 'document' ).ready( function ( $ ) {
                 class_name = jQuery( this ).attr( 'class' );
 	            jQuery( this ).parents( '.rtm-uploader-tabs' ).siblings('[data-id="' + class_name + '"]').show();
                 jQuery( this ).addClass( 'active' );
+                
+                if( class_name != 'rtm-upload-tab' ){
+                    jQuery('div.moxie-shim').children('input[type=file]').hide();
+                } else {
+                    jQuery('div.moxie-shim').children('input[type=file]').show();
+                }
             }
         });
     }
