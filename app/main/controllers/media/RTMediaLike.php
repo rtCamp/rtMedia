@@ -93,7 +93,7 @@ class RTMediaLike extends RTMediaUserInteraction {
 
 		$return = array();
 		
-		if ( apply_filters( 'rtm_allow_buddypress_action_sync', true, 'likes' ) ) {
+		if ( function_exists( 'bp_activity_add_user_favorite' ) && apply_filters( 'rtm_allow_buddypress_action_sync', true, 'likes' ) ) {
 			$this->snyc_favorite( $this->action_query->id, $value );
 			$return['activity_id'] = $actions[ 0 ]->activity_id;
 
@@ -299,22 +299,22 @@ class RTMediaLike extends RTMediaUserInteraction {
 	 * @param type $value		value for add or remove activity favorite
 	 */
 	function snyc_favorite( $media_id, $value ) {
-		remove_action( 'bp_activity_add_user_favorite', array( 'RTMediaBuddyPressActivity','rtm_bp_activity_sync'), 10, 2 );
-		remove_action( 'bp_activity_remove_user_favorite', array( 'RTMediaBuddyPressActivity','rtm_bp_activity_sync'), 10, 2 );
-		
-		$mediamodel = new RTMediaModel();
-		$actions = $mediamodel->get( array( 'id' => $media_id ) );
-		$activity_id = $actions[0]->activity_id;
-		
-		$media      = $mediamodel->get( array( 'activity_id' => $activity_id ) );
-		// if there is only single media in activity
-		if ( 1 == sizeof( $media ) && isset( $media[0]->media_id ) ){
-			if ( "1" == $value ) {
-				bp_activity_add_user_favorite( $activity_id );
-			} else {
-				bp_activity_remove_user_favorite( $activity_id );
+			remove_action( 'bp_activity_add_user_favorite', array( 'RTMediaBuddyPressActivity','rtm_bp_activity_sync'), 10, 2 );
+			remove_action( 'bp_activity_remove_user_favorite', array( 'RTMediaBuddyPressActivity','rtm_bp_activity_sync'), 10, 2 );
+
+			$mediamodel = new RTMediaModel();
+			$actions = $mediamodel->get( array( 'id' => $media_id ) );
+			$activity_id = $actions[0]->activity_id;
+
+			$media      = $mediamodel->get( array( 'activity_id' => $activity_id ) );
+			// if there is only single media in activity
+			if ( 1 == sizeof( $media ) && isset( $media[0]->media_id ) ){
+				if ( "1" == $value ) {
+					bp_activity_add_user_favorite( $activity_id );
+				} else {
+					bp_activity_remove_user_favorite( $activity_id );
+				}
 			}
 		}
-	}
 		
 }
