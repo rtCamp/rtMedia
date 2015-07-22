@@ -17,8 +17,8 @@ module.exports = function ( grunt ) {
                 tasks: [ 'autoprefixer' ]
             },
             js: {
-                files: [ '<%= uglify.frontend.src %>', '<%= uglify.backend.src %>', '<%= concat.frontend.src %>', '<%= concat.backend.src %>' ],
-                tasks: [ 'uglify', 'concat' ]
+                files: [ '<%= uglify.frontend.src %>', '<%= uglify.backend.src %>' ],
+                tasks: [ 'uglify' ]
             },
             livereload: {
                 // Here we watch the files the sass task will compile to
@@ -92,29 +92,6 @@ module.exports = function ( grunt ) {
 				dest: 'app/assets/admin/js/admin.min.js'
 			}
         },
-        // Concat Ref. https://npmjs.org/package/grunt-contrib-concat
-        concat: {
-            options: {
-                separator: '\n\n',
-                banner: '/*! \n * rtMedia JavaScript Library \n * @package rtMedia \n */'
-            },
-            frontend: {
-                src: [
-                    'app/assets/js/vendors/magnific-popup.js',
-                    'app/assets/admin/js/vendors/tabs.js',
-                    'app/assets/js/rtMedia.js'
-                ],
-                dest: 'app/assets/js/rtmedia.js'
-            },
-            backend: {
-                src: [
-                    'app/assets/admin/js/vendors/tabs.js',
-                    'app/assets/admin/js/scripts.js',
-                    'app/assets/admin/js/settings.js'
-                ],
-                dest: 'app/assets/admin/js/admin.js'
-            }
-        },
         checktextdomain: {
             options: {
                 text_domain: 'rtmedia', //Specify allowed domain(s)
@@ -170,5 +147,5 @@ module.exports = function ( grunt ) {
 
     } );
     // register task
-    grunt.registerTask( 'default', [ 'sass', 'autoprefixer', 'uglify', 'concat', 'checktextdomain', 'makepot', 'watch' ] );
+    grunt.registerTask( 'default', [ 'sass', 'autoprefixer', 'uglify', 'checktextdomain', 'makepot', 'watch' ] );
 };
