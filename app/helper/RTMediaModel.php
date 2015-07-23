@@ -14,10 +14,10 @@ class RTMediaModel extends RTDBModel {
 
 	/**
 	 *
-	 * @param type $name
-	 * @param type $arguments
+	 * @param string $name
+	 * @param array $arguments
 	 *
-	 * @return type
+	 * @return array
 	 */
 	function __call( $name, $arguments ){
 		$result = parent::__call( $name, $arguments );
@@ -30,14 +30,14 @@ class RTMediaModel extends RTDBModel {
 
 	/**
 	 *
-	 * @global type $wpdb
+	 * @global object $wpdb
 	 *
-	 * @param type  $columns
-	 * @param type  $offset
-	 * @param type  $per_page
-	 * @param type  $order_by
+	 * @param array  $columns
+	 * @param mixed  $offset
+	 * @param mixed  $per_page
+	 * @param string  $order_by
 	 *
-	 * @return type
+	 * @return array
 	 */
 	function get( $columns, $offset = false, $per_page = false, $order_by = 'media_id desc', $count_flag = false ){
 		global $wpdb;
@@ -137,10 +137,10 @@ class RTMediaModel extends RTDBModel {
 
 	/**
 	 *
-	 * @param type $name
-	 * @param type $arguments
+	 * @param string $name
+	 * @param array $arguments
 	 *
-	 * @return type
+	 * @return array
 	 */
 	function populate_results_fallback( $name, $arguments ){
 		$result['result'] = false;
@@ -175,12 +175,12 @@ class RTMediaModel extends RTDBModel {
 
 	/**
 	 *
-	 * @param type $columns
-	 * @param type $offset
-	 * @param type $per_page
-	 * @param type $order_by
+	 * @param array $columns
+	 * @param mixed $offset
+	 * @param mixed $per_page
+	 * @param string $order_by
 	 *
-	 * @return type
+	 * @return array
 	 */
 	function get_media( $columns, $offset = false, $per_page = false, $order_by = 'media_id desc', $count_flag = false ){
 		if ( is_multisite() ){
@@ -194,12 +194,12 @@ class RTMediaModel extends RTDBModel {
 
 	/**
 	 *
-	 * @param  type $author_id
-	 * @param  type $offset
-	 * @param  type $per_page
-	 * @param  type $order_by
+	 * @param  integer $author_id
+	 * @param  mixed $offset
+	 * @param  mixed $per_page
+	 * @param  string $order_by
 	 *
-	 * @return type $results
+	 * @return array $results
 	 */
 	function get_user_albums( $author_id, $offset, $per_page, $order_by = 'media_id desc' ){
 		global $wpdb;
@@ -249,12 +249,12 @@ class RTMediaModel extends RTDBModel {
 
 	/**
 	 *
-	 * @param  type $group_id
-	 * @param  type $offset
-	 * @param  type $per_page
-	 * @param  type $order_by
+	 * @param  integer $group_id
+	 * @param  mixed $offset
+	 * @param  mixed $per_page
+	 * @param  string $order_by
 	 *
-	 * @return type $results
+	 * @return array $results
 	 */
 	function get_group_albums( $group_id, $offset, $per_page, $order_by = 'media_id desc' ){
 		global $wpdb;
@@ -297,10 +297,10 @@ class RTMediaModel extends RTDBModel {
 
 	/**
 	 *
-	 * @param  type $user_id
-	 * @param  type $where_query
+	 * @param  mixed $user_id
+	 * @param  mixed $where_query
 	 *
-	 * @return type $result
+	 * @return string $result
 	 */
 	function get_counts( $user_id = false, $where_query = false ){
 
@@ -360,8 +360,8 @@ class RTMediaModel extends RTDBModel {
 
 	/**
 	 *
-	 * @param  type $profile_id
-	 * @param  type $context
+	 * @param  integer $profile_id
+	 * @param  string $context
 	 *
 	 * @return int
 	 */

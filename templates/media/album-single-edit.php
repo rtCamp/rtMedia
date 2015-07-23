@@ -48,6 +48,7 @@ $rtmedia_media = $media[ 0 ];
 						
 						<div>
 							<input type="submit" name="submit" class='rtmedia-save-album' value="<?php _e( 'Save Changes', 'rtmedia' ); ?>" />
+							<a class="button rtm-button rtm-button-back" href="<?php rtmedia_permalink(); ?>"><?php _e( 'Back', 'rtmedia' ); ?></a>
 						</div>
 					</form>
 				</div>

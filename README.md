@@ -140,6 +140,11 @@ http://www.youtube.com/watch?v####dJrykKQGDcs
 
 ## Changelog ##
 
+#### 3.8.11 ####
+* Update album edit template
+* Fix BuddyPress activity content on media edit
+* Autoplay video in lightbox
+
 #### 3.8.10 ####
 * Fix BuddyPress comment filter issue
 * Fix plupload max_file_size parameters
@@ -1028,8 +1033,8 @@ http://www.youtube.com/watch?v####dJrykKQGDcs
 * HTML5 Audio Tag Support (with fallback)
 * HTML5 Video Tag Support (with fallback)
 
-#### 3.8.10 ####
-Requires BuddyPress 1.7 or higher, if using BuddyPress. Fix BuddyPress comment filter issue, fix plupload max_file_size parameters.
+#### 3.8.11 ####
+Requires BuddyPress 1.7 or higher, if using BuddyPress. Update album edit template, fix BuddyPress activity content on media edit, autoplay video in lightbox.
 
 ## Sponsors ##
 
