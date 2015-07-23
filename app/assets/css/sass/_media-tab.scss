@@ -146,15 +146,12 @@
 		margin-right: 10px;
 		padding-right: 10px;
 		position: relative;
+	}
 
-		&:after {
-			background: #999;
-			content: ' ';
-			bottom: 3px;
-			position: absolute;
-			height: 14px;
-			right: 0;
-			width: 1px;
+	& > * {
+		border-right: 1px solid #999;
+		&:last-child{
+			border-right: none;
 		}
 	}
 
