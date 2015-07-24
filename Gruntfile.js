@@ -73,7 +73,7 @@ module.exports = function ( grunt ) {
         // Uglify Ref. https://npmjs.org/package/grunt-contrib-uglify
         uglify: {
             options: {
-                banner: '/*! \n * rtMedia JavaScript Library \n * @package rtMedia \n */',
+                banner: '/*! \n * rtMedia JavaScript Library \n * @package rtMedia \n */\n',
             },
             frontend: {
                 src: [
