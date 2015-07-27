@@ -737,4 +737,8 @@ function rtmedia_single_media_alert_message( msg, action ) {
         jQuery( '.rtmedia-single-media .rtmedia-media' ).css( 'opacity', '1' );
         jQuery( ".rtmedia-message-container" ).remove()
     }, 3000 );
+    jQuery('.rtmedia-message-container').click( function() {
+        jQuery( '.rtmedia-single-media .rtmedia-media' ).css( 'opacity', '1' );
+        jQuery( ".rtmedia-message-container" ).remove()        
+    }); 
 }
