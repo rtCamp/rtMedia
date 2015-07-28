@@ -620,13 +620,20 @@ jQuery( document ).ready( function ( $ ) {
 //		}
 //	} );
 
+	if ( jQuery( '#rtmedia-bp-enable-activity' ).is( ":checked" ) ) {
+		jQuery( ".rtmedia-bp-activity-setting" ).prop( "readonly", false );
+	} else {
+		jQuery( ".rtmedia-bp-activity-setting" ).prop( "readonly", true );
+	}
+
 	jQuery( '#rtmedia-bp-enable-activity' ).on( "click", function ( e ) {
 		if ( jQuery( this ).is( ":checked" ) ) {
-			jQuery( ".rtmedia-bp-activity-setting" ).prop( "disabled", false );
+			jQuery( ".rtmedia-bp-activity-setting" ).prop( "readonly", false );
 		} else {
-			jQuery( ".rtmedia-bp-activity-setting" ).prop( "disabled", true );
+			jQuery( ".rtmedia-bp-activity-setting" ).prop( "readonly", true );
 		}
 	} );
+
 	var onData = '';
 	var offData = '';
 	if ( rtmedia_on_label !== undefined )

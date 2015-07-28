@@ -54,13 +54,23 @@
   display: none;
 }
 
-.rtmedia-success {
-  background-color: #dff0d8;
-  border-bottom: 1px solid #e7e7e7;
-  color: #468847;
+.rtmedia-success,
+.rtmedia-warning {
   margin: 10px 0;
   padding: 8px 14px 8px 14px;
   text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+  border-bottom: 1px solid #e7e7e7;
+  cursor: pointer;
+}
+
+.rtmedia-success {
+  background-color: #dff0d8;
+  color: #468847;
+}
+
+.rtmedia-warning {
+  background-color: #F0D8DD;
+  color: #884646;
 }
 
 /*------------------------------------*\
@@ -1004,6 +1014,19 @@ img.mfp-img {
 .rtm-single-media .mejs-container {
   margin: 0 auto;
   max-width: inherit;
+}
+.rtm-single-media .rtmedia-message-container {
+  position: absolute;
+  top: 45%;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+}
+@media (max-device-width: 640px) {
+  .rtm-single-media .rtmedia-message-container {
+    top: 25%;
+  }
 }
 
 .rtm-ltb-action-container {
@@ -2292,14 +2315,11 @@ span.imgedit-scale-warn {
   padding-right: 10px;
   position: relative;
 }
-.rtm-media-options .rtm-media-options-list:after {
-  background: #999;
-  content: ' ';
-  bottom: 3px;
-  position: absolute;
-  height: 18px;
-  right: 0;
-  width: 1px;
+.rtm-media-options > * {
+  border-right: 1px solid #999;
+}
+.rtm-media-options > *:last-child {
+  border-right: none;
 }
 .rtm-media-options .dashicons {
   font-size: inherit;

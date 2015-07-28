@@ -933,6 +933,8 @@ class RTMedia {
 			$rtmedia_media_thumbs[ $key_type ] = $value_type[ 'thumbnail' ];
 		}
 		wp_localize_script( 'rtmedia-backbone', 'rtmedia_media_thumbs', $rtmedia_media_thumbs );
+		wp_localize_script( 'rtmedia-backbone', 'rtmedia_set_featured_image_msg', __( 'Featured media set successfully.', "rtmedia" ) );
+		wp_localize_script( 'rtmedia-backbone', 'rtmedia_unset_featured_image_msg', __( 'Featured media removed successfully.', "rtmedia" ) );
 
 //      We are not using it anymore and hence commenting
 //		global $rtmedia_query;

@@ -65,13 +65,23 @@
 	display: none;
 }
 
-.rtmedia-success {
-	background-color: #dff0d8;
-    border-bottom: 1px solid #e7e7e7;
-    color: #468847;
-    margin: 10px 0;
+.rtmedia-success,
+.rtmedia-warning {
+	margin: 10px 0;
     padding: 8px 14px 8px 14px;
     text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+    border-bottom: 1px solid #e7e7e7;
+    cursor: pointer;
+}
+
+.rtmedia-success {
+    background-color: #dff0d8;
+    color: #468847;
+}
+
+.rtmedia-warning {
+    background-color: #F0D8DD;
+    color: #884646;
 }
 
 /*------------------------------------*\

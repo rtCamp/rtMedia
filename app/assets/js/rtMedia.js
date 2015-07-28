@@ -716,3 +716,24 @@ function rtmediaGetParameterByName( name ) {
 			results = regex.exec( location.search );
 	return results == null ? "" : decodeURIComponent( results[1].replace( /\+/g, " " ) );
 }
+
+function rtmedia_single_media_alert_message( msg, action ) {
+    var action_class = 'rtmedia-success';
+
+    if ( 'warning' == action ) {
+        action_class = 'rtmedia-warning';
+    }
+
+    jQuery( '.rtmedia-single-media .rtmedia-media' ).css( 'opacity', '0.2' );
+    jQuery( '.rtmedia-single-media .rtmedia-media' ).after( "<div class='rtmedia-message-container'><span class='"+ action_class +"'>" + msg + " </span></div>" );
+
+    setTimeout( function() {
+        jQuery( '.rtmedia-single-media .rtmedia-media' ).css( 'opacity', '1' );
+        jQuery( ".rtmedia-message-container" ).remove();
+    }, 3000 );
+
+    jQuery('.rtmedia-message-container').click( function() {
+        jQuery( '.rtmedia-single-media .rtmedia-media' ).css( 'opacity', '1' );
+        jQuery( ".rtmedia-message-container" ).remove();
+    } );
+}

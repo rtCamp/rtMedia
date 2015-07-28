@@ -146,17 +146,15 @@
 		margin-right: 5px;
 		padding-right: 10px;
 		position: relative;
-
-		&:after {
-			background: #999;
-			content: ' ';
-			bottom: 3px;
-			position: absolute;
-			height: 18px;
-			right: 0;
-			width: 1px;
-		}
 	}
+
+  	& > * {
+	    border-right: 1px solid #999;
+
+        &:last-child {
+          border-right: none;
+        }
+    }
 
 	.dashicons {
 		font-size: inherit;
