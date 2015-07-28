@@ -34,6 +34,10 @@
         right:0;
         margin-left:auto;
         margin-right:auto;
+        
+        @media (max-device-width: 640px){
+             top: 25%;
+        }
     }
 }
 
