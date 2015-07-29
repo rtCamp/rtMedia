@@ -26,6 +26,19 @@
 		margin: 0 auto;
 		max-width: inherit;
 	}
+    
+    .rtmedia-message-container{
+        position: absolute;
+        top: 45%;
+        left:0;
+        right:0;
+        margin-left:auto;
+        margin-right:auto;
+        
+        @media (max-device-width: 640px){
+             top: 25%;
+        }
+    }
 }
 
 .rtm-ltb-action-container {
@@ -44,6 +57,15 @@
 	.rtm-single-media:hover & {
 		opacity: 1;
 	}
+    @media (max-device-width: 640px){
+        clear:both;
+        position:relative;
+        opacity: 1;
+        .rtm-single-media:hover & {
+        	opacity: 1;
+        }
+    }
+    
 }
 
 #buddypress #rtmedia-single-media-container.rtmedia-single-media {

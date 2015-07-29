@@ -161,14 +161,31 @@ class RTMediaBuddyPressActivity {
 	}
 
 	function bp_after_activity_post_form(){
-		$url          = $_SERVER['REQUEST_URI'];
-		$url          = trailingslashit( $url );
+		$url = trailingslashit ( $_SERVER[ "REQUEST_URI" ] );
+		$slug_split = explode( '/', $url );
+		// check position of media slug for end of the URL
+		if ( $slug_split[ sizeof( $slug_split ) - 1 ] == RTMEDIA_MEDIA_SLUG ) {
+			// replace media slug with the blank space
+			$slug_split[ sizeof( $slug_split ) - 1 ] = '';
+			$url_upload = implode( '/', $slug_split );
+			$url = trailingslashit ( $url_upload ) . "upload/";
+		} else {
+			$url = trailingslashit ( $url ) . "upload/";
+		}
 		if ( rtmedia_is_uploader_view_allowed( true, 'activity' ) ){
 			$params = array(
-				'url'             => ( isset( $url ) && ( false !== strpos( $url, '/media/' ) ) ) ? str_replace( '/media/', '/upload/', $url ) : 'upload/', 'runtimes' => 'html5,flash,html4', 'browse_button' => 'rtmedia-add-media-button-post-update', // browse button assigned to "Attach Files" Button.
+				'url'             => $url,
+				'runtimes' => 'html5,flash,html4', 'browse_button' => 'rtmedia-add-media-button-post-update', // browse button assigned to "Attach Files" Button.
 				'container'       => 'rtmedia-whts-new-upload-container', 'drop_element' => 'whats-new-textarea', // drag-drop area assigned to activity update textarea
-				'filters'         => apply_filters( 'rtmedia_plupload_files_filter', array( array( 'title' => __( 'Media Files', 'rtmedia' ), 'extensions' => get_rtmedia_allowed_upload_type() ) ) ), 'max_file_size' => min( array( ini_get( 'upload_max_filesize' ), ini_get( 'post_max_size' ) ) ), 'multipart' => true, 'urlstream_upload' => true, 'flash_swf_url' => includes_url( 'js/plupload/plupload.flash.swf' ), 'silverlight_xap_url' => includes_url( 'js/plupload/plupload.silverlight.xap' ), 'file_data_name' => 'rtmedia_file', // key passed to $_FILE.
-				'multi_selection' => true, 'multipart_params' => apply_filters( 'rtmedia-multi-params', array( 'redirect' => 'no', 'rtmedia_update' => 'true', 'action' => 'wp_handle_upload', '_wp_http_referer' => $_SERVER['REQUEST_URI'], 'mode' => 'file_upload', 'rtmedia_upload_nonce' => RTMediaUploadView::upload_nonce_generator( false, true ) ) ), 'max_file_size_msg' => apply_filters( 'rtmedia_plupload_file_size_msg', min( array( ini_get( 'upload_max_filesize' ), ini_get( 'post_max_size' ) ) ) )
+				'filters'         => apply_filters( 'rtmedia_plupload_files_filter', array( array( 'title' => __( 'Media Files', 'rtmedia' ), 'extensions' => get_rtmedia_allowed_upload_type() ) ) ),
+				'max_file_size' => ( wp_max_upload_size() ) / ( 1024 * 1024 ) . 'M',
+				'multipart' => true, 'urlstream_upload' => true,
+				'flash_swf_url' => includes_url( 'js/plupload/plupload.flash.swf' ),
+				'silverlight_xap_url' => includes_url( 'js/plupload/plupload.silverlight.xap' ),
+				'file_data_name' => 'rtmedia_file', // key passed to $_FILE.
+				'multi_selection' => true,
+				'multipart_params' => apply_filters( 'rtmedia-multi-params', array( 'redirect' => 'no', 'rtmedia_update' => 'true', 'action' => 'wp_handle_upload', '_wp_http_referer' => $_SERVER['REQUEST_URI'], 'mode' => 'file_upload', 'rtmedia_upload_nonce' => RTMediaUploadView::upload_nonce_generator( false, true ) ) ),
+				'max_file_size_msg' => apply_filters( 'rtmedia_plupload_file_size_msg', min( array( ini_get( 'upload_max_filesize' ), ini_get( 'post_max_size' ) ) ) )
 			);
 			if ( wp_is_mobile() ){
 				$params['multi_selection'] = false;
@@ -295,7 +312,7 @@ class RTMediaBuddyPressActivity {
             for( $a = 0; $a < sizeof( $activity_ids ); $a++ ) {
                 // Getting index of activity which is being updated
                 $index = $activity_index_array[ $a ];
-                
+                //error_log( var_export( $activities[ $index ], true ) );
                 // This pattern is for getting name. User might have change display name as first name or something instead on nicename.
                 $pattern = "/<a ?.*>(.*)<\/a>/";
                 preg_match( $pattern, $activities[ $index ]->action, $matches );
@@ -316,18 +333,24 @@ class RTMediaBuddyPressActivity {
 					$media_str = __( 'media', 'rtmedia' );
 				}
 
-
+                $action = '';
+                $user = get_userdata( $activities[ $index ]->user_id );
                 // Updating activity based on count
                 if( $count == 1 ) {
-                    $activities[ $index ]->action = sprintf( __( '%s added a %s', 'rtmedia' ), $user_link, $media_str );
+                    $action = sprintf( __( '%s added a %s', 'rtmedia' ), $user_link, $media_str );
                 } else {
                     // Checking all the media linked with activity are of same type
-                    if( count( array_unique( $rtmedia_media_type_array[ $activities[ $index ]->id ] ) ) == 1 ) {
-                        $activities[ $index ]->action = sprintf( __( '%s added %d %s', 'rtmedia' ), $user_link, $count, $media_str );
+                    if( isset( $rtmedia_media_type_array[ $activities[ $index ]->id ] ) 
+                        && !empty( $rtmedia_media_type_array[ $activities[ $index ]->id ] ) 
+                        && count( array_unique( $rtmedia_media_type_array[ $activities[ $index ]->id ] ) ) == 1 ) {
+                        $action = sprintf( __( '%s added %d %s', 'rtmedia' ), $user_link, $count, $media_str );
                     } else {
-                        $activities[ $index ]->action = sprintf( __( '%s added %d %s', 'rtmedia' ), $user_link, $count, __( 'media', 'rtmedia' ) );
+                        $action = sprintf( __( '%s added %d %s', 'rtmedia' ), $user_link, $count, __( 'media', 'rtmedia' ) );
                     }
                 }
+                
+                $action = apply_filters( 'rtmedia_buddypress_action_text_fitler', $action, $user_link, $count, $user->user_nicename, $rtmedia_media_type_array[ $activities[ $index ]->id ][ 0 ], $activities[ $index ]->id );                
+                $activities[ $index ]->action = $action;
             }
         }
         

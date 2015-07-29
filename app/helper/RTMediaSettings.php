@@ -40,10 +40,10 @@ if ( ! class_exists( 'RTMediaSettings' ) ){
 			$options = $rtmedia->options;
 
 			$defaults = array(
-				'general_enableAlbums' => 0,
+				'general_enableAlbums' => 1,
 				'general_enableComments' => 0,
 				'general_downloadButton' => 0,
-				'general_enableLightbox' => 0,
+				'general_enableLightbox' => 1,
 				'general_perPageMedia' => 10,
 				'general_display_media' => 'load_more',
 				'general_enableMediaEndPoint' => 0,
@@ -60,7 +60,6 @@ if ( ! class_exists( 'RTMediaSettings' ) ){
                 'general_direct_upload' => 0,
 			);
 
-			$defaults = apply_filters( 'rtmedia_general_content_default_values', $defaults );
 			foreach ( $rtmedia->allowed_types as $type ) {
 				// invalid keys handled in sanitize method
 				$defaults[ 'allowedTypes_' . $type['name'] . '_enabled' ]  = 0;
@@ -81,9 +80,9 @@ if ( ! class_exists( 'RTMediaSettings' ) ){
 			$defaults['privacy_default']      = 0;
 			$defaults['privacy_userOverride'] = 0;
 
-			$defaults['buddypress_enableOnGroup']    = 0;
-			$defaults['buddypress_enableOnActivity'] = 0;
-			$defaults['buddypress_enableOnProfile']  = 0;
+			$defaults['buddypress_enableOnGroup']    = 1;
+			$defaults['buddypress_enableOnActivity'] = 1;
+			$defaults['buddypress_enableOnProfile']  = 1;
 			$defaults['buddypress_limitOnActivity']  = 0;
 			$defaults['styles_custom']               = '';
 			$defaults['styles_enabled']              = 1;
@@ -103,6 +102,8 @@ if ( ! class_exists( 'RTMediaSettings' ) ){
                     $defaults['general_jpeg_image_quality'] = 90;
                 }                
             }
+
+			$defaults = apply_filters( 'rtmedia_general_content_default_values', $defaults );
 
 			return $defaults;
 		}

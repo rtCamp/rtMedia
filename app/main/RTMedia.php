@@ -474,10 +474,10 @@ class RTMedia {
 		$bp_media_options = rtmedia_get_site_option( 'bp_media_options' );
 
 		$defaults = array(
-			'general_enableAlbums' => 0,
+			'general_enableAlbums' => 1,
 			'general_enableComments' => 0,
 			'general_downloadButton' => (isset( $bp_media_options[ 'download_enabled' ] )) ? $bp_media_options[ 'download_enabled' ] : 0,
-			'general_enableLightbox' => (isset( $bp_media_options[ 'enable_lightbox' ] )) ? $bp_media_options[ 'enable_lightbox' ] : 0,
+			'general_enableLightbox' => (isset( $bp_media_options[ 'enable_lightbox' ] )) ? $bp_media_options[ 'enable_lightbox' ] : 1,
 			'general_perPageMedia' => (isset( $bp_media_options[ 'default_count' ] )) ? $bp_media_options[ 'default_count' ] : 10,
 			'general_enableMediaEndPoint' => 0,
 			'general_showAdminMenu' => (isset( $bp_media_options[ 'show_admin_menu' ] )) ? $bp_media_options[ 'show_admin_menu' ] : 0,
@@ -688,7 +688,6 @@ class RTMedia {
 		$class_construct = array(
 			'deprecated' => true,
 			'interaction' => true,
-			//'template'	=> false,
 			'upload_shortcode' => false,
 			'gallery_shortcode' => false,
 			'upload_endpoint' => false,
@@ -697,9 +696,9 @@ class RTMedia {
 			'like' => false,
 			'featured' => false,
 			'GroupFeatured' => false,
-//            'Group' => false, will be constructed after rtmedia pro classes are constructed.
-			'ViewCount' => false
-				//'query'		=> false
+			'ViewCount' => false,
+			'GalleryItemAction' => false,
+            'LoginPopup' => false,
 		);
 		global $rtmedia_nav;
 
@@ -927,6 +926,8 @@ class RTMedia {
 			$rtmedia_media_thumbs[ $key_type ] = $value_type[ 'thumbnail' ];
 		}
 		wp_localize_script( 'rtmedia-backbone', 'rtmedia_media_thumbs', $rtmedia_media_thumbs );
+		wp_localize_script( 'rtmedia-backbone', 'rtmedia_set_featured_image_msg', __( 'Featured media set successfully.', "rtmedia" ) );
+		wp_localize_script( 'rtmedia-backbone', 'rtmedia_unset_featured_image_msg', __( 'Featured media removed successfully.', "rtmedia" ) );
 
 //      We are not using it anymore and hence commenting
 //		global $rtmedia_query;

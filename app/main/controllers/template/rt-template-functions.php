@@ -211,10 +211,12 @@ function rtmedia_media_ext( $id = false ) {
 	if ( $id ) {
 		$model = new RTMediaModel();
 		$media = $model->get_media( array( 'id' => $id ), 0, 1 );
-		$filepath = get_attached_file( $media[ 0 ]->media_id );
-		$filetype = wp_check_filetype( $filepath );
+		if ( isset( $media[ 0 ] ) ) {
+			$filepath = get_attached_file( $media[ 0 ]->media_id );
+			$filetype = wp_check_filetype( $filepath );
 
-		return $filetype[ 'ext' ];
+			return $filetype[ 'ext' ];
+		}
 	} else {
 		global $rtmedia_media;
 
@@ -302,11 +304,12 @@ function rtmedia_media( $size_flag = true, $echo = true, $media_size = "rt_media
 			$html = "<img src='" . $src[ 0 ] . "' alt='" . $rtmedia_media->post_name . "' />";
 		} elseif ( $rtmedia_media->media_type == 'video' ) {
 			$size = " width=\"" . $rtmedia->options[ "defaultSizes_video_singlePlayer_width" ] . "\" height=\"" . $rtmedia->options[ "defaultSizes_video_singlePlayer_height" ] . "\" ";
-			$html = "<div id='rtm-mejs-video-container' style='width:" . $rtmedia->options[ "defaultSizes_video_singlePlayer_width" ] . "px;max-width:96%;height:" . $rtmedia->options[ "defaultSizes_video_singlePlayer_height" ] . "px;'>";
+			$html = "<div id='rtm-mejs-video-container' style='width:" . $rtmedia->options[ "defaultSizes_video_singlePlayer_width" ] . "px;max-width:96%;max-height:" . $rtmedia->options[ "defaultSizes_video_singlePlayer_height" ] . "px;'>";
 			$html .= '<video src="' . wp_get_attachment_url( $rtmedia_media->media_id ) . '" ' . $size . ' type="video/mp4" class="wp-video-shortcode" id="bp_media_video_' . $rtmedia_media->id . '" controls="controls" preload="true"></video>';
 			$html .= '</div>';
 		} elseif ( $rtmedia_media->media_type == 'music' ) {
-			$size = ' width="400" height="30" ';
+                    $width = $rtmedia->options[ 'defaultSizes_music_singlePlayer_width' ];
+                    $size = ' width="'. $width .'px" height="30" ';
 			if ( ! $size_flag ) {
 				$size = '';
 			}
@@ -778,11 +781,11 @@ function rtmedia_comments( $echo = true ) {
 
 	global $wpdb, $rtmedia_media;
 
-	$comments = $wpdb->get_results( "SELECT * FROM $wpdb->comments WHERE comment_post_ID = '" . $rtmedia_media->media_id . "'", ARRAY_A );
+	$comments = get_comments( array( 'post_id' => $rtmedia_media->media_id, 'order' => 'ASC' ) );
 
 	$comment_list = "";
 	foreach ( $comments as $comment ) {
-		$comment_list .= rmedia_single_comment( $comment );
+		$comment_list .= rmedia_single_comment( (array) $comment );
 	}
 
 	if ( $comment_list != "" ) {
@@ -820,7 +823,7 @@ function rmedia_single_comment( $comment ) {
 	$html .= '<span class ="rtmedia-comment-date"> ' . apply_filters( 'rtmedia_comment_date_format', rtmedia_convert_date( $comment[ 'comment_date_gmt' ] ), $comment ) . '</span>';
 
 	$comment_string = wp_kses( $comment[ 'comment_content' ], $allowedtags );
-	$html .= '<div class="rtmedia-comment-content">' . wpautop( make_clickable( $comment_string ) ) . '</div>';
+	$html .= '<div class="rtmedia-comment-content">' . wpautop( make_clickable( apply_filters( 'bp_get_activity_content', $comment_string ) ) ) . '</div>';
 
 	global $rtmedia_media;
 	if ( is_rt_admin() || ( isset( $comment[ 'user_id' ] ) && ( get_current_user_id() == $comment[ 'user_id' ] || $rtmedia_media->media_author == get_current_user_id() ) ) || apply_filters( 'rtmedia_allow_comment_delete', false ) ) { // show delete button for comment author and admins
@@ -1207,7 +1210,7 @@ add_action( 'rtmedia_add_edit_tab_content', 'rtmedia_vedio_editor_content', 1000
 
 function rtmedia_vedio_editor_content() {
 	global $rtmedia_query;
-	if ( isset( $rtmedia_query->media[ 0 ]->media_type ) && $rtmedia_query->media[ 0 ]->media_type == 'video' ) {
+	if ( isset( $rtmedia_query->media ) && is_array( $rtmedia_query->media ) && isset( $rtmedia_query->media[ 0 ]->media_type ) && $rtmedia_query->media[ 0 ]->media_type == 'video' ) {
 		$media_id = $rtmedia_query->media[ 0 ]->media_id;
 		$thumbnail_array = get_post_meta( $media_id, "rtmedia_media_thumbnails", true );
 		echo '<div class="content" id="panel2">';
@@ -1877,7 +1880,7 @@ add_action( 'rtmedia_before_item', 'rtmedia_item_select' );
 function rtmedia_item_select() {
 	global $rtmedia_query, $rtmedia_backbone;
 	if ( $rtmedia_backbone[ 'backbone' ] ) {
-		if ( $rtmedia_backbone[ 'is_album' ] && $rtmedia_backbone[ 'is_edit_allowed' ] ) {
+		if ( isset( $rtmedia_backbone[ 'is_album' ] ) && $rtmedia_backbone[ 'is_album' ] && isset( $rtmedia_backbone[ 'is_edit_allowed' ] ) && $rtmedia_backbone[ 'is_edit_allowed' ] ) {
 			echo '<span class="rtm-checkbox-wrap"><input type="checkbox" name="move[]" class="rtmedia-item-selector" value="<%= id %>" /></span>';
 		}
 	} else {
@@ -2189,19 +2192,6 @@ function get_music_cover_art( $file, $id ) {
 	return false;
 }
 
-add_filter( "media_add_tabs", "rtmedia_admin_premium_tab", 99, 1 );
-
-function rtmedia_admin_premium_tab( $tabs ) {
-	if ( sizeof( $tabs ) == 0 ) {
-		$tabs = array();
-	}
-	$tabs[ ] = array(
-		'href' => get_admin_url( null, esc_url( add_query_arg( array( 'page' => 'rtmedia-premium' ), 'admin.php' ) ) ), 'name' => __( 'Go PRO!', 'rtmedia' ), 'slug' => 'rtmedia-premium', 'class' => array( 'rtm-premium' )
-	);
-
-	return $tabs;
-}
-
 function rtmedia_bp_activity_get_types( $actions ) {
 	$actions[ 'rtmedia_update' ] = "rtMedia update";
 
@@ -2209,172 +2199,6 @@ function rtmedia_bp_activity_get_types( $actions ) {
 }
 
 add_filter( 'bp_activity_get_types', 'rtmedia_bp_activity_get_types', 10, 1 );
-
-add_action( "rtmedia_admin_page_insert", "rtmedia_admin_premium_page", 99, 1 );
-
-function rtmedia_admin_premium_page( $page ) {
-	if ( 'rtmedia-premium' == $page ) {
-
-		$features = array(
-			'favlist' => array(
-				'icon' => 'dashicons-heart',
-				'title' => __( 'FavList', 'rtmedia' ),
-				'description' => __( 'Users can create their own list of favorite media.', 'rtmedia' ),
-			),
-			'media_attributes' => array(
-				'icon' => 'dashicons-tag',
-				'title' => __( 'Media Attributes', 'rtmedia' ),
-				'description' => __( 'Add media attributes and categories them.', 'rtmedia' ),
-			),
-			'sort_media' => array(
-				'icon' => 'dashicons-sort',
-				'title' => __( 'Sort Media', 'rtmedia' ),
-				'description' => __( 'Sort media from media gallery according to media size and the date of media upload.', 'rtmedia' ),
-			),
-			'direct_url_upload' => array(
-				'icon' => 'dashicons-admin-links',
-				'title' => __( 'Direct URL upload', 'rtmedia' ),
-				'description' => __( 'No need to download media from URL and then upload it. Just provide link and rtMedia will handle it.', 'rtmedia' ),
-			),
-			'user_upload' => array(
-				'icon' => 'dashicons-upload',
-				'title' => __( 'Per user upload quota', 'rtmedia' ),
-				'description' => __( 'Set upload quota for users on the daily, monthly and lifetime basis.', 'rtmedia' ),
-			),
-			'url_preveiw_in_bp' => array(
-				'icon' => 'dashicons-camera',
-				'title' => __( 'URL preview in BuddyPress activity', 'rtmedia' ),
-				'description' => __( 'Show URL previews in BuddyPress activity.', 'rtmedia' ),
-			),
-			'comment_attachment' => array(
-				'icon' => 'dashicons-admin-comments',
-				'title' => __( 'WP Comment Attachment', 'rtmedia' ),
-				'description' => __( 'You can attach files to WordPress comments.', 'rtmedia' ),
-			),
-			'bbpress_attachment' => array(
-				'icon' => 'dashicons-admin-users',
-				'title' => __( 'bbPress Attachment', 'rtmedia' ),
-				'description' => __( 'You can attach files to bbPress topic and reply.', 'rtmedia' ),
-			),
-			'bulk_media_edit' => array(
-				'icon' => 'dashicons-edit',
-				'title' => __( 'Bulk media edit', 'rtmedia' ),
-				'description' => __( 'You can edit media in bulk mode.', 'rtmedia' ),
-			),
-			'user_liked_media' => array(
-				'icon' => 'dashicons-smiley',
-				'title' => __( 'User\'s liked media page', 'rtmedia' ),
-				'description' => __( 'Now you can see user\'s liked media page. A new tab "Likes" has been added.', 'rtmedia' ),
-			),
-			'rss_feed' => array(
-				'icon' => 'dashicons-rss',
-				'title' => __( 'RSS Feed/Podcasting Support', 'rtmedia' ),
-				'description' => __( 'Consume rtMedia uploads from iTunes as well as any feed-reader/podcasting software.', 'rtmedia' ),
-			),
-			'doc_support' => array(
-				'icon' => 'dashicons-media-default',
-				'title' => __( 'Document Support', 'rtmedia' ),
-				'description' => __( 'Add, view and download documents like txt, doc, pdf, also add and upload other file types like zip, tar and tar.gz etc.', 'rtmedia' ),
-			),
-			'mycred' => array(
-				'icon' => 'dashicons-awards',
-				'title' => __( 'CubePoints &amp; MyCRED Integration', 'rtmedia' ),
-				'description' => __( 'Integrating CubePoints/myCRED with rtMedia, you can reward users with virtual points on rtMedia activities.', 'rtmedia' ),
-			),
-			'album_privacy' => array(
-				'icon' => 'dashicons-lock',
-				'title' => __( 'Album Privacy', 'rtmedia' ),
-				'description' => __( 'This will allow you to set album privacy while creating albums or change album privacy with editing albums too.', 'rtmedia' ),
-			),
-			'audio_playlist' => array(
-				'icon' => 'dashicons-controls-play',
-				'title' => __( 'Audio Playlist', 'rtmedia' ),
-				'description' => __( 'With this feature you can create your audio playlists and listen to your favorite music at will.', 'rtmedia' ),
-			),
-			'report_button' => array(
-				'icon' => 'dashicons-shield',
-				'title' => __( 'Report Button &amp; Moderation Tools', 'rtmedia' ),
-				'description' => __( 'Users can report media if they find it offensive. Set number of reports to automatically take down media.', 'rtmedia' ),
-			),
-			'download_button' => array(
-				'icon' => 'dashicons-download',
-				'title' => __( 'Download Button For Media', 'rtmedia' ),
-				'description' => __( 'Users can download photos, videos and music. Admin has option to allow download the media.', 'rtmedia' ),
-			),
-			'sidebar_widgets' => array(
-				'icon' => 'dashicons-editor-alignright',
-				'title' => __( 'Sidebar widgets', 'rtmedia' ),
-				'description' => __( 'These will let you display a gallery or an uploader in a sidebar. Several of them can be used in a single sidebar.', 'rtmedia' ),
-			),
-			'post_editor' => array(
-				'icon' => 'dashicons-edit',
-				'title' => __( 'Post-editor button', 'rtmedia' ),
-				'description' => __( 'With this button, a UI appears to quickly generate shortcodes for special pages like "Editorial Picks".', 'rtmedia' ),
-			),
-			'star_rating' => array(
-				'icon' => 'dashicons-star-filled',
-				'title' => __( 'Star-Rating option', 'rtmedia' ),
-				'description' => __( 'Users can give up to five stars to rate media. This data can be used for "Most Rated Media" in sidebars.', 'rtmedia' ),
-			),
-			'global_album' => array(
-				'icon' => 'dashicons-format-image',
-				'title' => __( 'Global Albums', 'rtmedia' ),
-				'description' => __( 'Multiple global albums can be created beforehand. One of these can be chosen as the default album.', 'rtmedia' ),
-			),
-			'premium_support' => array(
-				'icon' => 'dashicons-admin-tools',
-				'title' => __( 'Premium one-to-one support', 'rtmedia' ),
-				'description' => __( 'Without leaving your WordPress dashboard, you can contact us for help using a support form.', 'rtmedia' ),
-			),
-		);
-		?>
-		<div class="premium-page-container rtm-pro-info-wrapper rtm-page-container">
-			<h1 class="rtm-setting-title rtm-show"><?php _e( 'Reasons to buy rtMedia-PRO', 'rtmedia' ); ?></h1>
-
-			<ul class="rtm-pro-feature-list clearfix">
-				<?php foreach ( $features as $feature ) { ?>
-					<li>
-						<div class="rtm-icon-wrap">
-							<span class="dashicons <?php echo $feature[ 'icon' ]; ?>"></span>
-						</div>
-
-						<h2 class="rtm-title"><?php echo $feature[ 'title' ]; ?></h2>
-
-						<div class="rtm-content">
-							<?php echo $feature[ 'description' ]; ?>
-						</div>
-					</li>
-				<?php } ?>
-			</ul>
-
-			<div class="clearfix rtm-update-to-pro">
-				<a href="http://rtcamp.com/products/rtmedia-pro/" target="_blank" class="rtm-button rtm-button-success large" title="<?php _e( 'Upgrade to rtMedia PRO Now ', 'rtmedia' ); ?>">
-					<?php _e( 'Upgrade to rtMedia PRO Now ', 'rtmedia' ); ?>
-				</a>
-			</div>
-		</div>
-		<?php
-	} else {
-		if ( $page == "rtmedia-hire-us" ) {
-			$url = admin_url() . "admin.php?page=rtmedia-premium";
-			?>
-			<div class="rtm-hire-us-container rtm-page-container">
-				<h3 class="rtm-setting-title rtm-show"><?php _e( 'You can consider rtMedia Team for following :', 'rtmedia' ); ?></h3>
-
-				<ol class="rtm-hire-points">
-					<li><?php _e( 'rtMedia Customization ( in Upgrade Safe manner )', 'rtmedia' ); ?></li>
-					<li><?php _e( 'WordPress/BuddyPress Theme Design and Development', 'rtmedia' ); ?></li>
-					<li><?php _e( 'WordPress/BuddyPress Plugin Development', 'rtmedia' ); ?></li>
-				</ol>
-
-				<div class="clearfix">
-					<a href="https://rtcamp.com/contact" class="rtm-button button-primary" target="_blank"><?php _e( 'Contact Us', 'rtmedia' ); ?></a>
-				</div>
-			</div>
-			<?php
-		}
-	}
-}
 
 add_action( 'wp_footer', 'rtmedia_link_in_footer' );
 
@@ -2449,13 +2273,16 @@ function get_rtmedia_privacy_symbol( $rtmedia_id = false ) {
 
 //
 function get_rtmedia_date_gmt( $rtmedia_id = false ) {
-	$media = get_post( rtmedia_media_id( rtmedia_id( $rtmedia_id ) ) );
-	$date_time = "";
-	if ( isset( $media->post_date_gmt ) && $media->post_date_gmt != "" ) {
-		$date_time = rtmedia_convert_date( $media->post_date_gmt );
-	}
+    $media = get_post( rtmedia_media_id( rtmedia_id( $rtmedia_id ) ) );
+    $date_time = "";
+    
+    if ( isset( $media->post_date_gmt ) && $media->post_date_gmt != "" ) {
+        $date_time = rtmedia_convert_date( $media->post_date_gmt );
+    }
 
-	return '<span>' . $date_time . '</span>';
+    $date_time = apply_filters( 'rtmedia_comment_date_format', $date_time, null );
+
+    return '<span>' . $date_time . '</span>';
 }
 
 //function to convert comment datetime to "time ago" format.
@@ -2835,6 +2662,30 @@ function rtmedia_modify_activity_upload_url( $params ) {
 
 // Fix for BuddyPress multilingual plugin on activity pages
 add_filter( 'rtmedia_modify_upload_params', 'rtmedia_modify_activity_upload_url', 999, 1 );
+
+add_action( "rtmedia_admin_page_insert", "rtmedia_admin_pages_content", 99, 1 );
+
+function rtmedia_admin_pages_content( $page ){
+	if ( $page == "rtmedia-hire-us" ) {
+		$url = admin_url() . "admin.php?page=rtmedia-premium";
+		?>
+		<div class="rtm-hire-us-container rtm-page-container">
+			<h3 class="rtm-setting-title rtm-show"><?php _e( 'You can consider rtMedia Team for following :', 'rtmedia' ); ?></h3>
+
+			<ol class="rtm-hire-points">
+				<li><?php _e( 'rtMedia Customization ( in Upgrade Safe manner )', 'rtmedia' ); ?></li>
+				<li><?php _e( 'WordPress/BuddyPress Theme Design and Development', 'rtmedia' ); ?></li>
+				<li><?php _e( 'WordPress/BuddyPress Plugin Development', 'rtmedia' ); ?></li>
+			</ol>
+
+			<div class="clearfix">
+				<a href="https://rtcamp.com/contact" class="rtm-button rtm-success" target="_blank"><?php _e( 'Contact Us', 'rtmedia' ); ?></a>
+			</div>
+		</div>
+	<?php
+	}
+}
+
 
 // Get rtMedia Encoding API Key
 function get_rtmedia_encoding_api_key() {

@@ -1,9 +1,7 @@
 .rtm-plugin-card.plugin-card {
-	clear: none;
-    float: none;
-    margin: 0 0 20px;
+    margin: 1%;
     overflow: hidden;
-    width: 100%;
+    width: 48%;
 
 	.rtm-logo {
 		float: left;
@@ -14,7 +12,7 @@
 		img {
 			height: auto;
 			margin: -10px 0 0 -10px;
-			max-width: 100%;
+			max-width: 120px;
 		}
 	}
 

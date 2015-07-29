@@ -53,6 +53,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 			add_filter( 'attachment_fields_to_save', array( $this, 'save_video_thumbnail' ), null, 2 );
 			add_action( 'wp_ajax_rtmedia_hide_video_thumb_admin_notice', array( $this, 'rtmedia_hide_video_thumb_admin_notice' ), 1 );
 			add_action( 'wp_ajax_rtmedia_hide_addon_update_notice', array( $this, 'rtmedia_hide_addon_update_notice' ), 1 );
+                        add_filter( 'media_row_actions', array( $this, 'modify_medialibrary_permalink' ), 10, 3 );
 
 			$obj_encoding = new RTMediaEncoding( true );
 
@@ -104,6 +105,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 			add_action( 'admin_init', array( $this, 'rtmedia_bp_add_update_type' ) );
 			add_action( 'wp_ajax_rtmedia_hide_inspirebook_release_notice', array( $this, 'rtmedia_hide_inspirebook_release_notice' ), 1 );
 			add_action( 'wp_ajax_rtmedia_hide_social_sync_notice', array( $this, 'rtmedia_hide_social_sync_notice' ), 1 );
+            add_action( 'wp_ajax_rtmedia_hide_pro_split_notice', array( $this, 'rtmedia_hide_pro_split_notice' ), 1 );
 			$rtmedia_media_import = new RTMediaMediaSizeImporter(); // do not delete this line. We only need to create object of this class if we are in admin section
 			if ( class_exists( 'BuddyPress' ) ) {
 				$rtmedia_activity_upgrade = new RTMediaActivityUpgrade();
@@ -113,6 +115,18 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 			add_action( 'admin_init', array( $this, 'rtmedia_addon_license_save_hook' ) );
 			add_action( 'admin_init', array( $this, 'rtmedia_migration' ) );
 		}
+                
+                function modify_medialibrary_permalink( $action, $post, $detached ) {
+                    $rtm_id = rtmedia_id( $post->ID );
+                    
+                    if ( $rtm_id ) {
+                        $link = get_rtmedia_permalink( $rtm_id );                  
+                        $title =_draft_or_post_title( $post->post_parent );
+                        $action[ 'view' ] = '<a href="' . $link . '" title="' . esc_attr( sprintf( __( 'View &#8220;%s&#8221;' ), $title ) ) . '" rel="permalink">' . __( 'View' ) . '</a>';
+                    }            
+                    
+                    return $action;
+                }
 
 		function rtmedia_migration() {
 			$rtMigration = new RTMediaMigration();
@@ -154,7 +168,56 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 				$this->rtmedia_update_template_notice();
 				$this->rtmedia_inspirebook_release_notice();
 				$this->rtmedia_social_sync_release_notice();
+                
+                if( !defined( 'RTMEDIA_PRO_PATH' ) ) {
+                    $this->rtmedia_pro_split_release_notice();
+                }
 			}
+		}
+        
+        /*
+         * rtMedia Pro split release admin notice
+         */
+        public function rtmedia_pro_split_release_notice() {
+            $site_option = rtmedia_get_site_option( 'rtmedia_pro_split_release_notice' );
+			
+			if( ( !$site_option || 'hide' != $site_option ) ) {
+				rtmedia_update_site_option( 'rtmedia_pro_split_release_notice', 'show' );
+				?>
+				<div class="updated rtmedia-pro-split-notice">
+					<p>
+						<span>
+                            <b>rtMedia: </b>We have released 30+ premium add-ons for rtMedia plugin. Read more about it <a href="https://rtcamp.com/blog/rtmedia-pro-splitting-major-change/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media" target="_blank">here</a>.                         
+						</span>
+						<a href="#" onclick="rtmedia_hide_pro_split_notice();" style="float:right">Dismiss</a>
+					</p>
+				</div>
+				<script type="text/javascript">
+					function rtmedia_hide_pro_split_notice() {
+						var data = { action: 'rtmedia_hide_pro_split_notice' };
+						jQuery.post( ajaxurl, data, function ( response ) {
+							response = response.trim();
+							
+                            if( response === "1" )
+								jQuery( '.rtmedia-pro-split-notice' ).remove();
+						} );
+					}
+				</script>
+				<?php
+			}
+        }
+        
+        /*
+		 * Hide pro split release notice
+		 */
+
+		function rtmedia_hide_pro_split_notice() {
+			if ( rtmedia_update_site_option( 'rtmedia_pro_split_release_notice', 'hide' ) ) {
+				echo '1';
+			} else {
+				echo '0';
+			}
+			die();
 		}
 
 		/*
@@ -741,7 +804,6 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 				'rtmedia_page_rtmedia-hire-us',
 				'rtmedia_page_rtmedia-importer',
 				'rtmedia_page_rtmedia-regenerate',
-				'rtmedia_page_rtmedia-premium',
 			);
 
 			if ( has_filter( 'rtmedia_license_tabs' ) || has_action( 'rtmedia_addon_license_details' ) ) {
@@ -803,10 +865,6 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 			add_submenu_page( 'rtmedia-settings', __( 'Hire Us', 'rtmedia' ), __( 'Hire Us', 'rtmedia' ), 'manage_options', 'rtmedia-hire-us', array( $this, 'hire_us_page' ) );
 			if ( has_filter( 'rtmedia_license_tabs' ) || has_action( 'rtmedia_addon_license_details' ) ) {
 				add_submenu_page( 'rtmedia-settings', __( 'Licenses', 'rtmedia' ), __( 'Licenses', 'rtmedia' ), 'manage_options', 'rtmedia-license', array( $this, 'license_page' ) );
-			}
-
-			if ( ! defined( 'RTMEDIA_PRO_VERSION' ) ) {
-				add_submenu_page( 'rtmedia-settings', __( 'Premium', 'rtmedia' ), __( 'Premium ', 'rtmedia' ), 'manage_options', 'rtmedia-premium', array( $this, 'premium_page' ) );
 			}
 
 			$obj_encoding = new RTMediaEncoding( true );
@@ -1125,19 +1183,6 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 		 */
 		public function support_page() {
 			$this->render_page( 'rtmedia-support' );
-		}
-
-		/**
-		 * Render the rtmedia premium page.
-		 *
-		 * @access public
-		 *
-		 * @param  void
-		 *
-		 * @return void
-		 */
-		public function premium_page() {
-			$this->render_page( 'rtmedia-premium' );
 		}
 
 		/**
@@ -1927,9 +1972,13 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 				$sub_tabs = apply_filters( 'rtmedia_pro_settings_tabs_content', $sub_tabs );
 				ksort( $sub_tabs );
 			}
+			$tab_position_class = 'rtm-vertical-tabs';
+			if( $page == 'rtmedia-addons' ){
+				$tab_position_class = 'rtm-horizotanl-tabs';
+			}
 			?>
 
-			<div class="clearfix rtm-vertical-tabs rtm-admin-tab-container <?php echo $wrapper_class; ?>">
+			<div class="clearfix <?php echo $tab_position_class; ?> rtm-admin-tab-container <?php echo $wrapper_class; ?>">
 				<ul class="rtm-tabs">
 					<?php
 					$i = 1;
@@ -1972,8 +2021,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 						}
 						$tab_without_hash = explode( '#', $tab[ 'href' ] );
 						$tab_without_hash = $tab_without_hash[ 1 ];
-						echo '<div class="content' . $active_class . '" id="' . $tab_without_hash . '">';
-						echo '<h3 class="rtm-setting-title">' . $tab[ 'name' ] . '</h3>';
+						echo '<div class="rtm-content' . $active_class . '" id="' . $tab_without_hash . '">';
 						if ( isset( $tab[ 'args' ] ) ) {
 							call_user_func( $tab[ 'callback' ], $page, $tab[ 'args' ] );
 						} else {

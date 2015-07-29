@@ -164,7 +164,7 @@ class RTMediaInteraction {
         global $wp_query;
         global $rtmedia_seo_title;
 
-        if ( ! array_key_exists ( 'media', $wp_query->query_vars ) )
+        if ( ! array_key_exists ( RTMEDIA_MEDIA_SLUG, $wp_query->query_vars ) )
             return $default;
         $title = "";
         $oldSep = " " . $sep . " ";
@@ -185,7 +185,7 @@ class RTMediaInteraction {
                     }
                 }
             } else {
-                if ( isset ( $rtmedia_query->media ) && count ( $rtmedia_query->media ) > 0 ) {
+                if ( isset ( $rtmedia_query->media ) && $rtmedia_query->media && count ( $rtmedia_query->media ) > 0 ) {
                     $title .= $sep . stripslashes( esc_html( ucfirst ( $rtmedia_query->media[ 0 ]->media_title ) ) );
                     $sep = $oldSep;
                 }

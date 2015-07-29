@@ -256,9 +256,7 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 			$debug_info[ 'OS' ] = PHP_OS;
 			if ( extension_loaded( 'imagick' ) ) {
 				$imagickobj = new Imagick();
-                $imagick = $message = preg_replace_callback( " #((http|https|ftp)://(\S*?\.\S*?))(\s|\;|\)|\]|\[|\{|\}|,|\"|'|:|\<|$|\.\s)#i", function( $m ) {
-                    return "<a href=\"" . $m[ 1 ] . "\" target=\"_blank\">" . $m[ 3 ] . "</a>" . $m[ 4 ] . "";
-                }, $imagickobj->getversion() );
+                $imagick = $message = preg_replace( " #((http|https|ftp)://(\S*?\.\S*?))(\s|\;|\)|\]|\[|\{|\}|,|\"|'|:|\<|$|\.\s)#i", "'<a href=\"$1\" target=\"_blank\">$3</a>$4'", $imagickobj->getversion() );
 			} else {
 				$imagick[ 'versionString' ] = 'Not Installed';
 			}
@@ -578,7 +576,7 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 				$support_email = 'support@rtcamp.com';
 			}
 			$support_email = 'support@rtcamp.com';
-			if ( wp_mail( $support_email, '[rtmedia] ' . $mail_type . ' from ' . str_replace( array( 'http://', 'https://' ), '', $form_data[ 'website' ] ), $message, $headers ) ) {
+			if ( wp_mail( $support_email, '[rtmedia] ' . $mail_type . ' from ' . str_replace( array( 'http://', 'https://' ), '', $form_data[ 'website' ] ), stripslashes( $message ), $headers ) ) {
 				echo '<div class="rtmedia-success" style="margin:10px 0;">';
 				if ( 'new_feature' == $form_data[ 'request_type' ] ) {
 					echo '<p>' . __( 'Thank you for your Feedback/Suggestion.', 'rtmedia' ) . '</p>';
