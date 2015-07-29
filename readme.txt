@@ -5,8 +5,8 @@ Tags: BuddyPress, media, multimedia, album, audio, songs, music, video, photo, i
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires at least: WordPress 3.6
-Tested up to: WordPress 4.2.2 + BuddyPress 2.3.2.1
-Stable tag: 3.8.11
+Tested up to: WordPress 4.2.3 + BuddyPress 2.3.2.1
+Stable tag: 3.8.12
 
 Add albums, photo, audio/video encoding, privacy, sharing, front-end uploads & more. All this works on mobile/tablets devices.
 
@@ -139,6 +139,14 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 
 == Changelog ==
+
+= 3.8.12 =
+* Updated media gallery actions for BuddyPress groups
+* Updated action messages for single media
+* Updated view count process
+* Added SCRIPT_DEBUG support
+* Fixed bugs in admin settings
+* Bug fixes
 
 = 3.8.11 =
 * Update album edit template
@@ -1035,8 +1043,8 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 == Upgrade Notice ==
 
-= 3.8.11 =
-Requires BuddyPress 1.7 or higher, if using BuddyPress. Update album edit template, fix BuddyPress activity content on media edit, autoplay video in lightbox.
+= 3.8.12 =
+Requires BuddyPress 1.7 or higher, if using BuddyPress. Added SCRIPT_DEBUG support, Bug fixes.
 
 == Sponsors ==
 
