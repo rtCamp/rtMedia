@@ -268,7 +268,7 @@ class RTMediaPrivacy {
 					<div class="rtm-title"><h2><?php _e( 'Default Privacy', 'rtmedia' ); ?></h2></div>
 					<div class="rtm-privacy-levels">
 						<?php foreach ( $rtmedia->privacy_settings[ 'levels' ] as $level => $data ) { ?>
-							<label><input type='radio' value='<?php echo $level; ?>' name ='rtmedia-default-privacy' <?php echo ($default_privacy == $level) ? "checked" : ""; ?> /> <?php _e( $data ); ?></label><br/>
+							<label><input type='radio' value='<?php echo $level; ?>' name ='rtmedia-default-privacy' <?php echo ($default_privacy == $level) ? "checked" : ""; ?> /> <?php echo $data; ?></label><br/>
 						<?php } ?>
 					</div>
 				</div>

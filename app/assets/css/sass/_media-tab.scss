@@ -143,21 +143,22 @@
 	}
 
 	.rtm-media-options-list {
-		margin-right: 10px;
+		margin-right: 5px;
 		padding-right: 10px;
 		position: relative;
 	}
 
-	& > * {
-		border-right: 1px solid #999;
-		&:last-child{
-			border-right: none;
-		}
-	}
+  	& > * {
+	    border-right: 1px solid #999;
+
+        &:last-child {
+          border-right: none;
+        }
+    }
 
 	.dashicons {
 		font-size: inherit;
-		line-height: 1.6;
+		line-height: 1.4;
 	}
 }
 
@@ -180,7 +181,7 @@
 
 	.dashicons {
 		font-size: 16px;
-		line-height: 1.5;
+		line-height: 1.6;
 		margin-right: 5px;
 	}
 }

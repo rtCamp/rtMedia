@@ -1,69 +1,119 @@
+<?php
+global $rtmedia_query;
+$model = new RTMediaModel();
+$media = $model->get_media( array( 'id' => $rtmedia_query->media_query[ 'album_id' ] ), false, false );
+global $rtmedia_media;
+$rtmedia_media = $media[ 0 ];
+?>
 <div class="rtmedia-container rtmedia-single-container rtmedia-media-edit">
-    <?php
-    if ( have_rtmedia() ) : rtmedia();
-        if ( rtmedia_edit_allowed() ) {
-            global $rtmedia_media;
-            ?>
-            <div class="rtmedia-single-edit-title-container">
-                <h2 class="rtmedia-title"><?php echo __( 'Edit Media', 'rtmedia' ); ?></h2>
-            </div>
-            <form method="post" action="" name="rtmedia_media_single_edit" id="rtmedia_media_single_edit" class="rtm-form">
-                <div class="rtmedia-editor-main">
-                    <ul class="rtm-tabs clearfix">
-                        <li class="active">
-                            <a href="#panel1">
-                                <i class='dashicons dashicons-edit rtmicon'></i>
-                                <?php _e( 'Details', 'rtmedia' ); ?>
-                            </a>
-                        </li>
-                        <!-- use this hook to add title of a new tab-->
-                        <?php do_action( 'rtmedia_add_edit_tab_title', rtmedia_type() ); ?>
-                    </ul>
-                    <div class="rtm-tabs-content">
-                        <div class="content" id="panel1">
-                            <!-- First tab i.e Details tab. Active by default-->
-                            <div class="rtmedia-edit-title rtm-field-wrap">
-                                <label><?php _e( 'Title : ', 'rtmedia' ); ?></label>
-                                <?php rtmedia_title_input(); ?>
-                            </div>
-                            <!--This function shows the privacy dropdown-->
-                            <?php echo rtmedia_edit_media_privacy_ui(); ?>
-                            <div class="rtmedia-editor-description rtm-field-wrap">
-                                <label><?php _e( 'Description: ', 'rtmedia' ) ?></label>
-                                <?php
-                                echo rtmedia_description_input( $editor = false );
-                                
-                                RTMediaMedia::media_nonce_generator( rtmedia_id() );
-                                ?>
-                            </div>
-                            <!-- Use this hook to add new fields to the edit form-->
-                            <?php do_action( 'rtmedia_add_edit_fields', rtmedia_type() ); ?>
-                        </div>
-                        <!-- use this hook to add content of a new tab-->
-                        <?php do_action( 'rtmedia_add_edit_tab_content', rtmedia_type() ); ?>
-                    </div>
-                    <div class="rtmedia-editor-buttons">
-                        <input type="submit" class="button rtm-button rtm-button-save" value="<?php _e( 'Save', 'rtmedia' ); ?>" />
-                        <a class="button rtm-button rtm-button-back" href="<?php rtmedia_permalink(); ?>"><?php _e( 'Back', 'rtmedia' ); ?></a>
-                    </div>
-                </div>
-            </form>
-            <?php
-        } else {
-            ?>
-            <p><?php echo __( "Sorry !! You do not have rights to edit this media", "rtmedia" ); ?></p>
-            <?php
-        }
-    else:
-        ?>
-        <p class="rtmedia-no-media-found">
-            <?php
-            $message = __( "Sorry !! There's no media found for the request !!", "rtmedia" );
-            
-            echo apply_filters( 'rtmedia_no_media_found_message_filter', $message );
-            ?>
-        </p>
-        <?php
-    endif;
-    ?>
+	<?php if ( rtmedia_is_global_album( $rtmedia_query->media_query[ 'album_id' ] ) ) { ?>
+		<h2><?php echo __( 'Edit Album : ', 'rtmedia' ) . esc_attr( $media[ 0 ]->media_title ); ?></h2>
+
+		<div class="rtmedia-edit-media-tabs rtmedia-editor-main">
+			<ul class="rtm-tabs clearfix">
+				<li class="active"><a href="#details-tab"><i class='dashicons dashicons-edit rtmicon'></i><?php _e( 'Details', 'rtmedia' ); ?></a></li>
+				<?php if ( ! is_rtmedia_group_album() ) { ?>
+					<li class=""><a href="#manage-media-tab"><i class='dashicons dashicons-list-view rtmicon'></i><?php _e( 'Manage Media', 'rtmedia' ); ?></a></li>
+				<?php } ?>
+				<!-- use this hook to add title of a new tab-->
+				<?php do_action( 'rtmedia_add_edit_tab_title', 'album' ); ?>
+			</ul>
+
+			<div class="rtm-tabs-content">
+				<div class="content active" id="details-tab">
+					<form method="post" class="rtm-form">
+						<?php
+						RTMediaMedia::media_nonce_generator( $rtmedia_query->media_query[ 'album_id' ] );
+						$post_details = get_post( $media[ 0 ]->media_id );
+						$content = apply_filters( 'the_content', $post_details->post_content );
+						$content = $post_details->post_content;
+						?>
+
+						<div class="rtmedia-edit-title rtm-field-wrap">
+							<label for="media_title"><?php _e( 'Title : ', 'rtmedia' ); ?></label>
+							<?php rtmedia_title_input(); ?>
+						</div>
+
+						<div class="rtmedia-editor-description rtm-field-wrap">
+							<label for='description'><?php _e( 'Description: ', 'rtmedia' ) ?></label>
+							<?php
+							echo rtmedia_description_input( $editor = false );
+							RTMediaMedia::media_nonce_generator( rtmedia_id() );
+							?>
+						</div>
+
+						<?php do_action( "rtmedia_album_edit_fields", 'album-edit' ); ?>
+
+						<div>
+							<input type="submit" name="submit" class='rtmedia-save-album' value="<?php _e( 'Save Changes', 'rtmedia' ); ?>" />
+							<a class="button rtm-button rtm-button-back" href="<?php rtmedia_permalink(); ?>"><?php _e( 'Back', 'rtmedia' ); ?></a>
+						</div>
+					</form>
+				</div>
+
+				<!--media management tab-->
+				<?php if ( ! is_rtmedia_group_album() ) { ?>
+
+					<div class="content" id="manage-media-tab">
+						<?php if ( have_rtmedia() ) { ?>
+							<form class="rtmedia-album-edit rtmedia-bulk-actions" method="post" name="rtmedia_album_edit">
+								<?php wp_nonce_field( 'rtmedia_bulk_delete_nonce', 'rtmedia_bulk_delete_nonce' ); ?>
+								<?php RTMediaMedia::media_nonce_generator( $rtmedia_query->media_query[ 'album_id' ] ); ?>
+								<p>
+									<span><input type="checkbox" name="rtm-select-all" class="select-all" title="<?php _e( 'Select All Visible', 'rtmedia' ); ?>" /></span>
+									<button class="button rtmedia-move" type='button' title='<?php echo __( 'Move Selected media to another album.', 'rtmedia' ); ?>' ><?php _e( 'Move', 'rtmedia' ); ?></button>
+									<input type="hidden" name="move-selected" value="move">
+									<button type="button" name="delete-selected" class="button rtmedia-delete-selected" title='<?php echo __( 'Delete Selected media from the album.', 'rtmedia' ); ?>'><?php _e( 'Delete', 'rtmedia' ); ?></button>
+								</p>
+
+								<p class="rtmedia-move-container">
+									<?php $global_albums = rtmedia_get_site_option( 'rtmedia-global-albums' ); ?>
+									<span><?php _e( 'Move selected media to the album : ', 'rtmedia' ); ?></span>
+									<?php echo '<select name="album" class="rtmedia-user-album-list">' . rtmedia_user_album_list() . '</select>'; ?>
+									<input type="button" class="rtmedia-move-selected" name="move-selected" value="<?php _e( 'Move Selected', 'rtmedia' ); ?>" />
+								</p>
+
+								<ul class="rtmedia-list  large-block-grid-4 ">
+
+									<?php while ( have_rtmedia() ) : rtmedia(); ?>
+
+										<?php include ('media-gallery-item.php'); ?>
+
+									<?php endwhile; ?>
+
+								</ul>
+
+
+								<!-- these links will be handled by backbone -->
+								<?php
+								$display = '';
+								if ( rtmedia_offset() != 0 )
+									$display = 'style="display:block;"';
+								else
+									$display = 'style="display:none;"';
+								?>
+								<a id="rtMedia-galary-prev" <?php echo $display; ?> href="<?php echo rtmedia_pagination_prev_link(); ?>"><?php _e( 'Prev', 'rtmedia' ); ?></a>
+
+								<?php
+								$display = '';
+								if ( rtmedia_offset() + rtmedia_per_page_media() < rtmedia_count() )
+									$display = 'style="display:block;"';
+								else
+									$display = 'style="display:none;"';
+								?>
+								<a id="rtMedia-galary-next" <?php echo $display; ?> href="<?php echo rtmedia_pagination_next_link(); ?>"><?php _e( 'Next', 'rtmedia' ); ?></a>
+							</form>
+						<?php } else { ?>
+							<p><?php _e( 'The album is empty.', 'rtmedia' ); ?></p>
+						<?php } ?>
+					</div>
+				<?php } ?>
+
+				<!-- use this hook to add content of a new tab-->
+				<?php do_action( 'rtmedia_add_edit_tab_content', 'album' ); ?>
+			</div>
+		</div>
+	<?php } else { ?>
+		<p><?php echo __( "Sorry !! You can not edit this album.", "rtmedia" ); ?></p>
+	<?php } ?>
 </div>

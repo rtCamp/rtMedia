@@ -181,7 +181,7 @@ class BPMediaAlbumimporter extends BPMediaImporter {
 			}
 			echo '</div>';
 		} else {
-			echo '<p>' . __( 'Looks like you don\'t use BP Album. Is there any other BuddyPress Plugin you want an importer for?' ) . '</p>';
+			echo '<p>' . __( 'Looks like you don\'t use BP Album. Is there any other BuddyPress Plugin you want an importer for?', 'rtmedia' ) . '</p>';
 			echo '<p>' . sprintf( __( '<a href="%s">Create an issue</a> on GitHub requesting the same.', 'rtmedia' ), 'https://github.com/rtCamp/buddypress-media/issues/new' ) . '</p>';
 		}
 	}

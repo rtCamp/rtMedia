@@ -35,10 +35,10 @@ if ( ! class_exists( 'RTDBModel' ) ){
 
 		/**
 		 *
-		 * @global object   $wpdb
+		 * @global object $wpdb
 		 *
-		 * @param string    $table_name
-		 * @param mixed     $withprefix
+		 * @param string  $table_name
+		 * @param mixed   $withprefix
 		 */
 		public function set_table_name( $table_name, $withprefix = false ){
 			global $wpdb;
@@ -64,9 +64,9 @@ if ( ! class_exists( 'RTDBModel' ) ){
 		 * @global object $wpdb
 		 *
 		 * @param string  $name - Added get_by_<coulmname>(value,pagging=true,page_no=1)
-		 * @param array  $arguments
+		 * @param array   $arguments
 		 *
-		 * @return array result array
+		 * @return array  result array
 		 */
 		function __call( $name, $arguments ){
 			$column_name = str_replace( 'get_by_', '', strtolower( $name ) );
@@ -124,9 +124,9 @@ if ( ! class_exists( 'RTDBModel' ) ){
 
 		/**
 		 *
-		 * @global object $wpdb
+		 * @global object  $wpdb
 		 *
-		 * @param array  $row
+		 * @param array    $row
 		 *
 		 * @return integer
 		 */
@@ -148,8 +148,8 @@ if ( ! class_exists( 'RTDBModel' ) ){
 		 *
 		 * @global object $wpdb
 		 *
-		 * @param array  $data
-		 * @param array  $where
+		 * @param array   $data
+		 * @param array   $where
 		 */
 		function update( $data, $where ){
 			global $wpdb;
@@ -163,7 +163,7 @@ if ( ! class_exists( 'RTDBModel' ) ){
 		 *
 		 * @global object $wpdb
 		 *
-		 * @param array  $columns
+		 * @param array   $columns
 		 *
 		 * @return array
 		 */
@@ -215,7 +215,7 @@ if ( ! class_exists( 'RTDBModel' ) ){
 		 *
 		 * @global object $wpdb
 		 *
-		 * @param array $where
+		 * @param array   $where
 		 *
 		 * @return array
 		 */

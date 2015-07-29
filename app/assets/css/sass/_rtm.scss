@@ -253,7 +253,7 @@ button#rtmedia-add-media-button-post-update {
 	opacity: 0;
 	position: absolute;
 	text-align: center;
-	@include transition(all ease-in-out 0.4s);
+	transition: all ease-in-out 0.4s;
 	width: 100%;
 	z-index: 9;
 
@@ -276,7 +276,7 @@ button#rtmedia-add-media-button-post-update {
 		font-size: 17px;
 		margin-right: 2px;
 		position: relative;
-		top: 3px;
+		top: 1px;
 	}
 
 	.dashicons-trash {

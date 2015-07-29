@@ -20,7 +20,7 @@ jQuery( document ).ready( function ( $ ) {
 	/* Select Request */
 	jQuery( '#bp-media-settings-boxes' ).on( 'change', '#select-request', function () {
 		if ( jQuery( this ).val() ) {
-			jQuery( '#bp_media_settings_form .bp-media-metabox-holder' ).html()
+			jQuery( '#bp_media_settings_form .bp-media-metabox-holder' ).html();
 			jQuery( '#bp_media_settings_form .bp-media-metabox-holder' ).html( '<div class="support_form_loader"></div>' );
 			var data = {
 				action: 'rtmedia_select_request',
@@ -29,7 +29,7 @@ jQuery( document ).ready( function ( $ ) {
 
 			// since 2.8 ajaxurl is always defined in the admin header and points to admin-ajax.php
 			jQuery.post( ajaxurl, data, function ( response ) {
-				jQuery( '#bp_media_settings_form .bp-media-metabox-holder' ).html()
+				jQuery( '#bp_media_settings_form .bp-media-metabox-holder' ).html();
 				jQuery( '#bp_media_settings_form .bp-media-metabox-holder' ).html( response ).fadeIn( 'slow' );
 			} );
 		}
@@ -38,7 +38,7 @@ jQuery( document ).ready( function ( $ ) {
 	/* Cancel Request */
 	jQuery( '#bp-media-settings-boxes' ).on( 'click', '#cancel-request', function () {
 		if ( jQuery( this ).val() ) {
-			jQuery( '#bp_media_settings_form .bp-media-metabox-holder' ).html()
+			jQuery( '#bp_media_settings_form .bp-media-metabox-holder' ).html();
 			jQuery( '#bp_media_settings_form .bp-media-metabox-holder' ).html( '<div class="support_form_loader"></div>' );
 			var data = {
 				action: 'rtmedia_cancel_request'
@@ -46,7 +46,7 @@ jQuery( document ).ready( function ( $ ) {
 
 			// since 2.8 ajaxurl is always defined in the admin header and points to admin-ajax.php
 			jQuery.post( ajaxurl, data, function ( response ) {
-				jQuery( '#bp_media_settings_form .bp-media-metabox-holder' ).html()
+				jQuery( '#bp_media_settings_form .bp-media-metabox-holder' ).html();
 				jQuery( '#bp_media_settings_form .bp-media-metabox-holder' ).html( response ).fadeIn( 'slow' );
 			} );
 		}
@@ -620,11 +620,12 @@ jQuery( document ).ready( function ( $ ) {
 //		}
 //	} );
 
-    if ( jQuery( '#rtmedia-bp-enable-activity' ).is( ":checked" ) ) {
-			jQuery( ".rtmedia-bp-activity-setting" ).prop( "readonly", false );
-		} else {
-			jQuery( ".rtmedia-bp-activity-setting" ).prop( "readonly", true );
-		}
+	if ( jQuery( '#rtmedia-bp-enable-activity' ).is( ":checked" ) ) {
+		jQuery( ".rtmedia-bp-activity-setting" ).prop( "readonly", false );
+	} else {
+		jQuery( ".rtmedia-bp-activity-setting" ).prop( "readonly", true );
+	}
+
 	jQuery( '#rtmedia-bp-enable-activity' ).on( "click", function ( e ) {
 		if ( jQuery( this ).is( ":checked" ) ) {
 			jQuery( ".rtmedia-bp-activity-setting" ).prop( "readonly", false );
@@ -632,6 +633,7 @@ jQuery( document ).ready( function ( $ ) {
 			jQuery( ".rtmedia-bp-activity-setting" ).prop( "readonly", true );
 		}
 	} );
+
 	var onData = '';
 	var offData = '';
 	if ( rtmedia_on_label !== undefined )

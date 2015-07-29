@@ -35,7 +35,7 @@ class RTMediaLoginPopup {
     
     function rtmedia_add_upload_album_button_popup() {
         if ( ! is_user_logged_in() ) {
-            echo '<span><a href="#rtmedia-login-register-modal" class="primary rtmedia-upload-media-link rtmedia-modal-link" id="rtmedia-login-register-modal" title="' . __( 'Upload Media', 'rtmedia' ) . '"><i class="dashicons dashicons-upload rtmicon"></i>' . __( 'Upload' ) . '</a></span>';
+            echo '<span><a href="#rtmedia-login-register-modal" class="primary rtmedia-upload-media-link rtmedia-modal-link" id="rtmedia-login-register-modal" title="' . __( 'Upload Media', 'rtmedia' ) . '"><i class="dashicons dashicons-upload rtmicon"></i>' . __( 'Upload', 'rtmedia' ) . '</a></span>';
         }
     }
     
@@ -49,7 +49,7 @@ class RTMediaLoginPopup {
                     <p><?php _e( "You need to be logged in to upload Media or to create Album.", 'rtmedia' ); ?></p>
 
                     <p>
-                        <?php echo __( 'Click ' ) . '<a href="' . wp_login_url( $_SERVER['REQUEST_URI'] ) . '" title="' . __( 'Login', 'rtmedia' ) . '">' . __( 'HERE', 'rtmedia' ) . '</a>' . __( ' to login.', 'rtmedia' ); ?>
+                        <?php echo __( 'Click', 'rtmedia' ) . ' <a href="' . wp_login_url( $_SERVER['REQUEST_URI'] ) . '" title="' . __( 'Login', 'rtmedia' ) . '">' . __( 'HERE', 'rtmedia' ) . '</a>' . __( ' to login.', 'rtmedia' ); ?>
                     </p>
                 </div>
             </div>
