@@ -65,16 +65,21 @@ class RTMediaInteractionModel extends RTDBModel {
 	 * @return type $results
 	 */
 	function get_row( $user_id = '', $media_id = '', $action = '' ){
-		if ( $user_id == '' || $media_id == '' || $action == '' ){
+		if ( $user_id == '' && $media_id == '' && $action == '' ){
 			return false;
 		}
 
-		$columns = array(
-			'user_id' => $user_id,
-			'media_id' => $media_id,
-			'action' => $action,
-		);
-
+		$columns = array();
+		if ( '' != $user_id ) {
+			$columns['user_id'] = $user_id;
+		}
+		if ( '' != $media_id ) {
+			$columns['media_id'] = $media_id;
+		}
+		if ( '' != $action ) {
+			$columns['action'] = $action;
+		}
+		
 		$results = $this->get( $columns );
 
 		return $results;

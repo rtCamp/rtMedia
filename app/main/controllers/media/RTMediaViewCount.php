@@ -15,45 +15,23 @@ class RTMediaViewCount extends RTMediaUserInteraction {
 		$args = array(
 			'action' => 'view', 'label' => 'view', 'privacy' => 0
 		);
-		//add_action( 'init', array( $this,'register_session' ) );
 		parent::__construct( $args );
 		remove_filter( 'rtmedia_action_buttons_before_delete', array( $this, 'button_filter' ) );
 		add_filter( 'rtmedia_action_buttons_after_delete', array( $this, 'button_filter' ), 99 );
 	}
 
-	//    function register_session(){
-	//        if( !session_id() ) {
-	//	    session_start();
-	//	}
-	//    }
-
 	function render() {
-		if ( isset( $_SESSION[ 'rtmedia_media_view' ] ) && $_SESSION[ 'rtmedia_media_view' ] != "" && sizeof( $_SESSION[ 'rtmedia_media_view' ] > 0 ) ){
-			$key = array_search( $this->media->id, $_SESSION[ 'rtmedia_media_view' ] );
-			if ( ! $key ){
-				$_SESSION[ 'rtmedia_media_view' ][ ] = $this->media->id;
-				$this->rtmedia_update_view_meta( $this->media->id, $this->action );
-			}
-		} else {
-			$_SESSION[ 'rtmedia_media_view' ]    = array();
-			$_SESSION[ 'rtmedia_media_view' ][ ] = "do not consider 0 index in php";
-			$_SESSION[ 'rtmedia_media_view' ][ ] = $this->media->id;
-			$this->rtmedia_update_view_meta( $this->media->id, $this->action );
-		}
+		/**
+		 * We were using session to store view count for a media by a particular user.
+		 * Session will no more use in rtmedia.
+		 * 
+		 * All Media View reports will be genrated using rtmedia_interaction table only
+		 */
+		
 		$link = trailingslashit( get_rtmedia_permalink( $this->media->id ) ) . $this->action . '/';
 		//echo '<div style="clear:both"></div><form action="'. $link .'" id="rtmedia-media-view-form"></form>';
 		echo '<form action="' . $link . '" id="rtmedia-media-view-form"></form>';
 		do_action( "rtmedia_view_media_counts", $this );
-	}
-
-	function rtmedia_update_view_meta( $media_id, $action ) {
-		$curr_count = get_rtmedia_meta( $media_id, $action );
-		if ( ! $curr_count ){
-			$curr_count = 1;
-		} else {
-			$curr_count ++;
-		}
-		update_rtmedia_meta( $media_id, $action, $curr_count, false );
 	}
 
 	function process() {

@@ -207,7 +207,6 @@ jQuery( 'document' ).ready( function ( $ ) {
 			    setTimeout( function(){
 				    apply_rtMagnificPopup('.rtmedia-activity-container ul.rtmedia-list, #bp-media-list, .bp-media-sc-list, li.media.album_updated ul,ul.bp-media-list-media, li.activity-item div.activity-content div.activity-inner div.bp_media_content');
 				    jQuery( 'ul.activity-list li.rtmedia_update:first-child .wp-audio-shortcode, ul.activity-list li.rtmedia_update:first-child .wp-video-shortcode' ).mediaelementplayer( {
-
 					    // if the <video width> is not specified, this is the default
 					    defaultVideoWidth: 480,
 					    // if the <video height> is not specified, this is the default
@@ -443,34 +442,34 @@ jQuery( 'document' ).ready( function ( $ ) {
 	}
 
 	function rtmedia_disable_popup_navigation_comment_focus() {
-		jQuery( document ).on( 'focusin', '#comment_content', function () {
-			jQuery( document ).unbind( 'keydown' );
-		} );
-		jQuery( document ).on( 'focusout', '#comment_content', function () {
-			var rtm_mfp = jQuery.magnificPopup.instance;
-			jQuery( document ).on( 'keydown', function ( e ) {
-				if ( e.keyCode === 37 ) {
-					rtm_mfp.prev();
-				} else if ( e.keyCode === 39 ) {
-					rtm_mfp.next();
-				}
-			} );
-		} );
-	}
+        jQuery( document ).on( 'focusin', '#comment_content', function() {
+            jQuery( document ).unbind( 'keydown' );
+        } );
+        jQuery( document ).on( 'focusout', '#comment_content', function() {
+            var rtm_mfp = jQuery.magnificPopup.instance;
+            jQuery( document ).on( 'keydown', function( e ) {
+                if ( e.keyCode === 37 ) {
+                    rtm_mfp.prev();
+                } else if ( e.keyCode === 39 ) {
+                    rtm_mfp.next();
+                }
+            } );
+        } );
+    }
 
-	var dragArea = jQuery( "#drag-drop-area" );
-	var activityArea = jQuery( '#whats-new' );
-	var content = dragArea.html();
-	jQuery( '#rtmedia-upload-container' ).after( "<div id='rtm-drop-files-title'>" + rtmedia_drop_media_msg + "</div>" );
-	if ( typeof rtmedia_bp_enable_activity != "undefined" && rtmedia_bp_enable_activity == "1" ) {
-		jQuery( '#whats-new-textarea' ).append( "<div id='rtm-drop-files-title'>" + rtmedia_drop_media_msg + "</div>" );
-	}
-	jQuery( document )
-			.on( 'dragover', function ( e ) {
-				jQuery( '#rtm-media-gallery-uploader' ).show();
-				if ( typeof rtmedia_bp_enable_activity != "undefined" && rtmedia_bp_enable_activity == "1" ) {
-					activityArea.addClass( 'rtm-drag-drop-active' );
-				}
+    var dragArea = jQuery( "#drag-drop-area" );
+    var activityArea = jQuery( '#whats-new' );
+    var content = dragArea.html();
+    jQuery( '#rtmedia-upload-container' ).after( "<div id='rtm-drop-files-title'>" + rtmedia_drop_media_msg + "</div>" );
+    if ( typeof rtmedia_bp_enable_activity != "undefined" && rtmedia_bp_enable_activity == "1" ) {
+        jQuery( '#whats-new-textarea' ).append( "<div id='rtm-drop-files-title'>" + rtmedia_drop_media_msg + "</div>" );
+    }
+    jQuery( document )
+            .on( 'dragover', function( e ) {
+                jQuery( '#rtm-media-gallery-uploader' ).show();
+                if ( typeof rtmedia_bp_enable_activity != "undefined" && rtmedia_bp_enable_activity == "1" ) {
+                    activityArea.addClass( 'rtm-drag-drop-active' );
+                }
 
 //            activityArea.css('height','150px');
 				dragArea.addClass( 'rtm-drag-drop-active' );
@@ -565,6 +564,12 @@ jQuery( 'document' ).ready( function ( $ ) {
                 class_name = jQuery( this ).attr( 'class' );
 	            jQuery( this ).parents( '.rtm-uploader-tabs' ).siblings('[data-id="' + class_name + '"]').show();
                 jQuery( this ).addClass( 'active' );
+
+                if ( class_name != 'rtm-upload-tab' ) {
+                    jQuery( 'div.moxie-shim' ).children( 'input[type=file]' ).hide();
+                } else {
+                    jQuery( 'div.moxie-shim' ).children( 'input[type=file]' ).show();
+                }
             }
         });
     }
@@ -606,7 +611,7 @@ jQuery( 'document' ).ready( function ( $ ) {
 			} );
 		}
 	} );
-});
+}	);
 
 
 
