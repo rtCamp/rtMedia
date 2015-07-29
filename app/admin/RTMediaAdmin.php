@@ -811,7 +811,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 			}
 
 			$admin_pages = apply_filters( 'rtmedia_filter_admin_pages_array', $admin_pages );
-			$suffix = ( defined( 'SCRIPT_DEBUG' ) && constant( 'SCRIPT_DEBUG' ) === true ) ? '' : '.min';
+			$suffix = rtm_check_script_debug_constant();
 
 			if ( in_array( $hook, $admin_pages ) || strpos( $hook, 'rtmedia-migration' ) ) {
 

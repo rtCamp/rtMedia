@@ -871,7 +871,8 @@ class RTMedia {
 		wp_enqueue_style( 'dashicons' );
 
 		// Dont enqueue rtmedia.min.css if default styles is checked false in rtmedia settings
-		$suffix = ( defined( 'SCRIPT_DEBUG' ) && constant( 'SCRIPT_DEBUG' ) === true ) ? '' : '.min';
+		$suffix = rtm_check_script_debug_constant();
+
 		if ( ! ( isset( $rtmedia->options ) && isset( $rtmedia->options[ 'styles_enabled' ] ) && $rtmedia->options[ 'styles_enabled' ] == 0) ) {
 			wp_enqueue_style( 'rtmedia-main', RTMEDIA_URL . 'app/assets/css/rtmedia' . $suffix . '.css', '', RTMEDIA_VERSION );
 		}

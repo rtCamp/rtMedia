@@ -2722,3 +2722,12 @@ function rtm_filter_metaid_column_name( $q ) {
 	}
 	return $q;
 }
+
+/*
+ * Checking if SCRIPT_DEBUG constant is defined or not
+ */
+function rtm_check_script_debug_constant() {
+	$suffix = ( defined( 'SCRIPT_DEBUG' ) && constant( 'SCRIPT_DEBUG' ) === true ) ? '' : '.min';
+
+	return $suffix;
+}
