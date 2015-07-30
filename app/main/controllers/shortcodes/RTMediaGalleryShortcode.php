@@ -39,7 +39,7 @@ class RTMediaGalleryShortcode {
 		if( ! wp_script_is ( 'plupload-all' ) ) {
 			wp_enqueue_script ( 'plupload-all' );
 		}
-        wp_enqueue_script ( 'rtmedia-backbone', RTMEDIA_URL . 'app/assets/js/rtMedia.backbone.js', array( 'plupload-all', 'backbone' ), false, true );
+        wp_enqueue_script ( 'rtmedia-backbone', RTMEDIA_URL . 'app/assets/js/rtMedia.backbone.js', array( 'plupload-all', 'backbone' ), RTMEDIA_VERSION, true );
 
     	if(is_rtmedia_album_gallery()) {
     	    $template_url = esc_url( add_query_arg( array( "action" => 'rtmedia_get_template', "template" => "album-gallery-item" ),admin_url("admin-ajax.php") ), null, '' );
