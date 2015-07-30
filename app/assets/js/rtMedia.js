@@ -83,6 +83,10 @@ function apply_rtMagnificPopup( selector ) {
 							//videoWidth: 1,
 							// if set, overrides <video height>
 							//videoHeight: 1
+                            success: function (mediaElement, domObject) { 
+                                // call the play method
+                                mediaElement.play();
+                            },
 						} );
 						$( '.mfp-content .mejs-audio .mejs-controls' ).css( 'position', 'relative' );
 						rtMediaHook.call( 'rtmedia_js_popup_after_content_added', [ ] );
@@ -203,7 +207,6 @@ jQuery( 'document' ).ready( function ( $ ) {
 			    setTimeout( function(){
 				    apply_rtMagnificPopup('.rtmedia-activity-container ul.rtmedia-list, #bp-media-list, .bp-media-sc-list, li.media.album_updated ul,ul.bp-media-list-media, li.activity-item div.activity-content div.activity-inner div.bp_media_content');
 				    jQuery( 'ul.activity-list li.rtmedia_update:first-child .wp-audio-shortcode, ul.activity-list li.rtmedia_update:first-child .wp-video-shortcode' ).mediaelementplayer( {
-
 					    // if the <video width> is not specified, this is the default
 					    defaultVideoWidth: 480,
 					    // if the <video height> is not specified, this is the default
@@ -285,10 +288,9 @@ jQuery( 'document' ).ready( function ( $ ) {
 			$( "#rtmedia_create_new_album" ).prepend( "<img src='" + rMedia_loading_file + "' />" );
 
 			jQuery.post( rtmedia_ajax_url, data, function ( response ) {
-				response = response.trim();
-
-				if ( response ) {
-					response = response.trim();
+				response = jQuery.parseJSON(response);
+				if ( typeof response.album != 'undefined' ) {
+					response =  jQuery.trim( response.album );
 					var flag = true;
 
 					jQuery( '.rtmedia-user-album-list' ).each( function () {
@@ -323,14 +325,16 @@ jQuery( 'document' ).ready( function ( $ ) {
 						galleryObj.reloadView();
 						jQuery( ".close-reveal-modal" ).click();
 					}, 2000 );
-				} else {
+				} else if ( typeof response.error != 'undefined' ) {
+                    alert( response.error );
+                } else {
 					alert( rtmedia_something_wrong_msg );
 				}
 
 				$( "#rtmedia_create_new_album" ).removeAttr( 'disabled' );
 				$( "#rtmedia_create_new_album" ).html( old_val );
 			} );
-		} else {
+        } else {
 			alert( rtmedia_empty_album_name_msg );
 		}
 	} );
@@ -394,7 +398,7 @@ jQuery( 'document' ).ready( function ( $ ) {
 				jQuery( ".rtm-more" ).shorten( { // shorten the media description to 100 characters
 					"showChars": 130
 				} );
-
+                 
 				//show gallery title in lightbox at bottom
 				var gal_title = $( '.rtm-gallery-title' ), title = "";
 				if ( ! $.isEmptyObject( gal_title ) ) {
@@ -438,34 +442,34 @@ jQuery( 'document' ).ready( function ( $ ) {
 	}
 
 	function rtmedia_disable_popup_navigation_comment_focus() {
-		jQuery( document ).on( 'focusin', '#comment_content', function () {
-			jQuery( document ).unbind( 'keydown' );
-		} );
-		jQuery( document ).on( 'focusout', '#comment_content', function () {
-			var rtm_mfp = jQuery.magnificPopup.instance;
-			jQuery( document ).on( 'keydown', function ( e ) {
-				if ( e.keyCode === 37 ) {
-					rtm_mfp.prev();
-				} else if ( e.keyCode === 39 ) {
-					rtm_mfp.next();
-				}
-			} );
-		} );
-	}
+        jQuery( document ).on( 'focusin', '#comment_content', function() {
+            jQuery( document ).unbind( 'keydown' );
+        } );
+        jQuery( document ).on( 'focusout', '#comment_content', function() {
+            var rtm_mfp = jQuery.magnificPopup.instance;
+            jQuery( document ).on( 'keydown', function( e ) {
+                if ( e.keyCode === 37 ) {
+                    rtm_mfp.prev();
+                } else if ( e.keyCode === 39 ) {
+                    rtm_mfp.next();
+                }
+            } );
+        } );
+    }
 
-	var dragArea = jQuery( "#drag-drop-area" );
-	var activityArea = jQuery( '#whats-new' );
-	var content = dragArea.html();
-	jQuery( '#rtmedia-upload-container' ).after( "<div id='rtm-drop-files-title'>" + rtmedia_drop_media_msg + "</div>" );
-	if ( typeof rtmedia_bp_enable_activity != "undefined" && rtmedia_bp_enable_activity == "1" ) {
-		jQuery( '#whats-new-textarea' ).append( "<div id='rtm-drop-files-title'>" + rtmedia_drop_media_msg + "</div>" );
-	}
-	jQuery( document )
-			.on( 'dragover', function ( e ) {
-				jQuery( '#rtm-media-gallery-uploader' ).show();
-				if ( typeof rtmedia_bp_enable_activity != "undefined" && rtmedia_bp_enable_activity == "1" ) {
-					activityArea.addClass( 'rtm-drag-drop-active' );
-				}
+    var dragArea = jQuery( "#drag-drop-area" );
+    var activityArea = jQuery( '#whats-new' );
+    var content = dragArea.html();
+    jQuery( '#rtmedia-upload-container' ).after( "<div id='rtm-drop-files-title'>" + rtmedia_drop_media_msg + "</div>" );
+    if ( typeof rtmedia_bp_enable_activity != "undefined" && rtmedia_bp_enable_activity == "1" ) {
+        jQuery( '#whats-new-textarea' ).append( "<div id='rtm-drop-files-title'>" + rtmedia_drop_media_msg + "</div>" );
+    }
+    jQuery( document )
+            .on( 'dragover', function( e ) {
+                jQuery( '#rtm-media-gallery-uploader' ).show();
+                if ( typeof rtmedia_bp_enable_activity != "undefined" && rtmedia_bp_enable_activity == "1" ) {
+                    activityArea.addClass( 'rtm-drag-drop-active' );
+                }
 
 //            activityArea.css('height','150px');
 				dragArea.addClass( 'rtm-drag-drop-active' );
@@ -560,6 +564,12 @@ jQuery( 'document' ).ready( function ( $ ) {
                 class_name = jQuery( this ).attr( 'class' );
 	            jQuery( this ).parents( '.rtm-uploader-tabs' ).siblings('[data-id="' + class_name + '"]').show();
                 jQuery( this ).addClass( 'active' );
+
+                if ( class_name != 'rtm-upload-tab' ) {
+                    jQuery( 'div.moxie-shim' ).children( 'input[type=file]' ).hide();
+                } else {
+                    jQuery( 'div.moxie-shim' ).children( 'input[type=file]' ).show();
+                }
             }
         });
     }
@@ -601,7 +611,7 @@ jQuery( 'document' ).ready( function ( $ ) {
 			} );
 		}
 	} );
-});
+}	);
 
 
 
@@ -710,4 +720,25 @@ function rtmediaGetParameterByName( name ) {
 	var regex = new RegExp( "[\\?&]" + name + "=([^&#]*)" ),
 			results = regex.exec( location.search );
 	return results == null ? "" : decodeURIComponent( results[1].replace( /\+/g, " " ) );
+}
+
+function rtmedia_single_media_alert_message( msg, action ) {
+    var action_class = 'rtmedia-success';
+
+    if ( 'warning' == action ) {
+        action_class = 'rtmedia-warning';
+    }
+
+    jQuery( '.rtmedia-single-media .rtmedia-media' ).css( 'opacity', '0.2' );
+    jQuery( '.rtmedia-single-media .rtmedia-media' ).after( "<div class='rtmedia-message-container'><span class='"+ action_class +"'>" + msg + " </span></div>" );
+
+    setTimeout( function() {
+        jQuery( '.rtmedia-single-media .rtmedia-media' ).css( 'opacity', '1' );
+        jQuery( ".rtmedia-message-container" ).remove();
+    }, 3000 );
+
+    jQuery('.rtmedia-message-container').click( function() {
+        jQuery( '.rtmedia-single-media .rtmedia-media' ).css( 'opacity', '1' );
+        jQuery( ".rtmedia-message-container" ).remove();
+    } );
 }

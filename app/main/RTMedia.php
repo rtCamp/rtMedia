@@ -870,12 +870,20 @@ class RTMedia {
 		// Dashicons: Needs if not loaded by WP
 		wp_enqueue_style( 'dashicons' );
 
-		// Dont enqueue main.css if default styles is checked false in rtmedia settings
+		// Dont enqueue rtmedia.min.css if default styles is checked false in rtmedia settings
+		$suffix = ( function_exists( 'rtm_get_script_style_suffix' ) ) ? rtm_get_script_style_suffix() : '.min';
+
 		if ( ! ( isset( $rtmedia->options ) && isset( $rtmedia->options[ 'styles_enabled' ] ) && $rtmedia->options[ 'styles_enabled' ] == 0) ) {
-			wp_enqueue_style( 'rtmedia-main', RTMEDIA_URL . 'app/assets/css/main.css', '', RTMEDIA_VERSION );
+			wp_enqueue_style( 'rtmedia-main', RTMEDIA_URL . 'app/assets/css/rtmedia' . $suffix . '.css', '', RTMEDIA_VERSION );
 		}
 
-		wp_enqueue_script( 'rtmedia-main', RTMEDIA_URL . 'app/assets/js/main.js', array( 'jquery', 'wp-mediaelement' ), RTMEDIA_VERSION );
+		if( $suffix === '' ) {
+			wp_enqueue_script( 'rtmedia-magnific-popup', RTMEDIA_URL . 'app/assets/js/vendors/magnific-popup.js', array( 'jquery', 'wp-mediaelement' ), RTMEDIA_VERSION );
+			wp_enqueue_script( 'rtmedia-admin-tabs', RTMEDIA_URL . 'app/assets/admin/js/vendors/tabs.js', array( 'jquery', 'wp-mediaelement' ), RTMEDIA_VERSION );
+			wp_enqueue_script( 'rtmedia-main', RTMEDIA_URL . 'app/assets/js/rtMedia.js', array( 'jquery', 'wp-mediaelement' ), RTMEDIA_VERSION );
+		} else {
+			wp_enqueue_script( 'rtmedia-main', RTMEDIA_URL . 'app/assets/js/rtmedia.min.js', array( 'jquery', 'wp-mediaelement' ), RTMEDIA_VERSION );
+		}
 
 		wp_localize_script( 'rtmedia-main', 'rtmedia_ajax_url', admin_url( 'admin-ajax.php' ) );
 		wp_localize_script( 'rtmedia-main', 'rtmedia_media_slug', RTMEDIA_MEDIA_SLUG );
@@ -926,6 +934,8 @@ class RTMedia {
 			$rtmedia_media_thumbs[ $key_type ] = $value_type[ 'thumbnail' ];
 		}
 		wp_localize_script( 'rtmedia-backbone', 'rtmedia_media_thumbs', $rtmedia_media_thumbs );
+		wp_localize_script( 'rtmedia-backbone', 'rtmedia_set_featured_image_msg', __( 'Featured media set successfully.', "rtmedia" ) );
+		wp_localize_script( 'rtmedia-backbone', 'rtmedia_unset_featured_image_msg', __( 'Featured media removed successfully.', "rtmedia" ) );
 
 //      We are not using it anymore and hence commenting
 //		global $rtmedia_query;
@@ -963,6 +973,54 @@ class RTMedia {
 		}
 
 		wp_localize_script( 'rtmedia-backbone', 'rtmedia_upload_progress_error_message', __( "There are some uploads in progress. Do you want to cancel them?", 'rtmedia' ) );
+
+		// localise media size config
+		$media_size_config = array(
+			'photo' => array(
+				'thumb' => array(
+					'width' => $rtmedia->options[ 'defaultSizes_photo_thumbnail_width' ],
+					'height' => $rtmedia->options[ 'defaultSizes_photo_thumbnail_height' ],
+					'crop' => $rtmedia->options[ 'defaultSizes_photo_thumbnail_crop' ],
+				),
+				'medium' => array(
+					'width' => $rtmedia->options[ 'defaultSizes_photo_medium_width' ],
+					'height' => $rtmedia->options[ 'defaultSizes_photo_medium_height' ],
+					'crop' => $rtmedia->options[ 'defaultSizes_photo_medium_crop' ],
+				),
+				'large' => array(
+					'width' => $rtmedia->options[ 'defaultSizes_photo_large_width' ],
+					'height' => $rtmedia->options[ 'defaultSizes_photo_large_height' ],
+					'crop' => $rtmedia->options[ 'defaultSizes_photo_large_crop' ],
+				),
+			),
+			'video' => array(
+				'activity_media' => array(
+					'width' => $rtmedia->options[ 'defaultSizes_video_activityPlayer_width' ],
+					'height' => $rtmedia->options[ 'defaultSizes_video_activityPlayer_height' ],
+				),
+				'single_media' => array(
+					'width' => $rtmedia->options[ 'defaultSizes_video_singlePlayer_width' ],
+					'height' => $rtmedia->options[ 'defaultSizes_video_singlePlayer_height' ],
+				),
+			),
+			'music' => array(
+				'activity_media' => array(
+					'width' => $rtmedia->options[ 'defaultSizes_music_activityPlayer_width' ],
+				),
+				'single_media' => array(
+					'width' => $rtmedia->options[ 'defaultSizes_music_singlePlayer_width' ],
+				),
+			),
+			'featured' => array(
+				'default' => array(
+					'width' => $rtmedia->options[ 'defaultSizes_featured_default_width' ],
+					'height' => $rtmedia->options[ 'defaultSizes_featured_default_height' ],
+					'crop' => $rtmedia->options[ 'defaultSizes_featured_default_crop' ],
+				)
+			),
+		);
+		wp_localize_script( 'rtmedia-main', 'rtmedia_media_size_config', $media_size_config );
+
 	}
 
 	function set_bp_bar() {

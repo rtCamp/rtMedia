@@ -169,9 +169,11 @@ class RTMediaFeatured extends RTMediaUserInteraction {
 			if ( $this->action_query->id == $this->featured ){
 				$this->set( 0 );
 				$return['next'] = $this->label;
+				$return['action']= false;
 			} else {
 				$this->set( $this->action_query->id );
 				$return['next'] = $this->undo_label;
+				$return['action']= true;
 			}
 			$return['status'] = true;
 			global $rtmedia_points_media_id;

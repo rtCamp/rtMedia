@@ -36,8 +36,7 @@
     visibility: hidden;
     width: 210px;
     z-index: 9999;
-
-	@include transition(all ease-in-out 0.4s);
+    transition: all ease-in-out 0.4s;
 }
 
 .rtm-tip-top {

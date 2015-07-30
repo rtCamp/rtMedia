@@ -35,10 +35,10 @@ if ( ! class_exists( 'RTDBModel' ) ){
 
 		/**
 		 *
-		 * @global type  $wpdb
+		 * @global object $wpdb
 		 *
-		 * @param string $table_name
-		 * @param type   $withprefix
+		 * @param string  $table_name
+		 * @param mixed   $withprefix
 		 */
 		public function set_table_name( $table_name, $withprefix = false ){
 			global $wpdb;
@@ -51,7 +51,7 @@ if ( ! class_exists( 'RTDBModel' ) ){
 		/**
 		 * set number of rows per page for pagination
 		 *
-		 * @param type $per_page
+		 * @param integer $per_page
 		 */
 		public function set_per_page( $per_page ){
 			$this->per_page = $per_page;
@@ -61,12 +61,12 @@ if ( ! class_exists( 'RTDBModel' ) ){
 		 * Magic Method for getting DB rows by particular column.
 		 * E.g., get_by_<columnName>(params)
 		 *
-		 * @global type $wpdb
+		 * @global object $wpdb
 		 *
-		 * @param type  $name - Added get_by_<coulmname>(value,pagging=true,page_no=1)
-		 * @param type  $arguments
+		 * @param string  $name - Added get_by_<coulmname>(value,pagging=true,page_no=1)
+		 * @param array   $arguments
 		 *
-		 * @return type result array
+		 * @return array  result array
 		 */
 		function __call( $name, $arguments ){
 			$column_name = str_replace( 'get_by_', '', strtolower( $name ) );
@@ -124,11 +124,11 @@ if ( ! class_exists( 'RTDBModel' ) ){
 
 		/**
 		 *
-		 * @global type $wpdb
+		 * @global object  $wpdb
 		 *
-		 * @param type  $row
+		 * @param array    $row
 		 *
-		 * @return type
+		 * @return integer
 		 */
 		function insert( $row ){
 			global $wpdb;
@@ -146,10 +146,10 @@ if ( ! class_exists( 'RTDBModel' ) ){
 
 		/**
 		 *
-		 * @global type $wpdb
+		 * @global object $wpdb
 		 *
-		 * @param type  $data
-		 * @param type  $where
+		 * @param array   $data
+		 * @param array   $where
 		 */
 		function update( $data, $where ){
 			global $wpdb;
@@ -161,11 +161,11 @@ if ( ! class_exists( 'RTDBModel' ) ){
 		 * Get all the rows according to the columns set in $columns parameter.
 		 * offset and rows per page can also be passed for pagination.
 		 *
-		 * @global type $wpdb
+		 * @global object $wpdb
 		 *
-		 * @param type  $columns
+		 * @param array   $columns
 		 *
-		 * @return type
+		 * @return array
 		 */
 		function get( $columns, $offset = false, $per_page = false, $order_by = 'id desc' ){
 			$select = "SELECT * FROM {$this->table_name}";
@@ -213,11 +213,11 @@ if ( ! class_exists( 'RTDBModel' ) ){
 
 		/**
 		 *
-		 * @global type $wpdb
+		 * @global object $wpdb
 		 *
-		 * @param type  $where
+		 * @param array   $where
 		 *
-		 * @return type
+		 * @return array
 		 */
 		function delete( $where ){
 			global $wpdb;

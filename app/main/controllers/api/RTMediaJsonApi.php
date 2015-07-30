@@ -332,13 +332,13 @@ class RTMediaJsonApi{
 	$wpdb->update( $wpdb->users, array( 'user_activation_key' => $hashed ), array( 'user_login' => $user_login ) );
 
         //create email message
-        $message = __('Someone has asked to reset the password for the following site and username.') . "\r\n\r\n";
+        $message = __('Someone has asked to reset the password for the following site and username.', 'rtmedia') . "\r\n\r\n";
         $message .= get_option('siteurl') . "\r\n\r\n";
-        $message .= sprintf(__('Username: %s'), $user_login) . "\r\n\r\n";
-        $message .= __('To reset your password visit the following address, otherwise just ignore this email and nothing will happen.') . "\r\n\r\n";
+        $message .= sprintf(__('Username: %s', 'rtmedia'), $user_login) . "\r\n\r\n";
+        $message .= __('To reset your password visit the following address, otherwise just ignore this email and nothing will happen.', 'rtmedia') . "\r\n\r\n";
         $message .='<' . network_site_url("wp-login.php?action=rp&key=$key&login=" . rawurlencode($user_login), 'login') . ">\r\n";
         //send email meassage
-        if (FALSE == wp_mail($user_email, sprintf(__('[%s] Password Reset'), get_option('blogname')), $message))
+        if (FALSE == wp_mail($user_email, sprintf(__('[%s] Password Reset','rtmedia'), get_option('blogname')), $message))
             echo $this->rtmedia_api_response_object ('FALSE', $this->ec_server_error, $this->msg_server_error);
         else{
             echo $this->rtmedia_api_response_object ('TRUE', $ec_email_sent, $msg_email_sent);

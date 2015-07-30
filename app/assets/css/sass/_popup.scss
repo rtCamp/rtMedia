@@ -26,6 +26,19 @@
 		margin: 0 auto;
 		max-width: inherit;
 	}
+
+    .rtmedia-message-container {
+        position: absolute;
+        top: 45%;
+        left:0;
+        right:0;
+        margin-left:auto;
+        margin-right:auto;
+
+        @media (max-device-width: 640px) {
+            top: 25%;
+        }
+    }
 }
 
 .rtm-ltb-action-container {
@@ -38,7 +51,7 @@
     padding: 0 10px;
     position: absolute;
     width: 100%;
-	@include transition(all 300ms ease-out);
+	transition: all 300ms ease-out;
 
 
 	.rtm-single-media:hover & {

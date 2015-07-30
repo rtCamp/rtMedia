@@ -63,7 +63,7 @@ class RTMediaMediaSizeImporter {
 
 	function add_rtmedia_media_size_import_notice(){
 		if ( current_user_can( 'manage_options' ) ){
-			$this->create_notice( "<p><strong>rtMedia</strong>: Database table structure for rtMedia has been updated. Please <a href='" . admin_url( 'admin.php?page=rtmedia-migration-media-size-import&force=true' ) . "'>Click Here</a> to import media sizes. <a href='#' onclick='rtmedia_hide_media_size_import_notice()' style='float:right'>" . __( 'Hide' ) . '</a>  </p>' );
+			$this->create_notice( "<p><strong>rtMedia</strong>: Database table structure for rtMedia has been updated. Please <a href='" . admin_url( 'admin.php?page=rtmedia-migration-media-size-import&force=true' ) . "'>Click Here</a> to import media sizes. <a href='#' onclick='rtmedia_hide_media_size_import_notice()' style='float:right'>" . __( 'Hide', 'rtmedia' ) . '</a>  </p>' );
 			?>
 			<script type="text/javascript">
 				function rtmedia_hide_media_size_import_notice() {

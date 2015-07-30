@@ -440,7 +440,7 @@ class RTMediaFormHandler {
 				),
 				'group' => 100,
 				'depends' => 'rtmedia_add_linkback',
-				'after_content' => __( 'Signup for rtMedia affiliate program <a href="https://rtcamp.com/affiliates">here</a>' ),
+				'after_content' => __( 'Signup for', 'rtmedia' ) . ' rtMedia ' . __( 'affiliate program', 'rtmedia' ) . ' <a href="https://rtcamp.com/affiliates">' . __( 'here', 'rtmedia' ) . '</a>',
 			), //
 			'rtmedia_enable_api' => array(
 				'title' => __( 'Enable JSON API', 'rtmedia' ),
@@ -451,7 +451,7 @@ class RTMediaFormHandler {
 					'desc' => __( 'This will allow handling API requests for rtMedia sent through any mobile app.', 'rtmedia' ),
 				),
 				'group' => 80,
-				'after_content' => __( 'You can refer to the API document from <a href="https://rtcamp.com/rtmedia/docs/developer/json-api/">here</a>' ),
+				'after_content' => __( 'You can refer to the API document from', 'rtmedia' ) . ' <a href="http://docs.rtcamp.com/rtmedia/developers/json-api.html">' . __( 'here', 'rtmedia' ) . '</a>',
 			), //
 		);
 

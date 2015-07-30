@@ -1136,6 +1136,13 @@ jQuery( document ).ready( function ( $ ) {
 				} catch ( e ) {
 
 				}
+
+                if ( data.action ) {
+                    rtmedia_single_media_alert_message( rtmedia_set_featured_image_msg, 'success' );
+                } else {
+                    rtmedia_single_media_alert_message( rtmedia_unset_featured_image_msg, 'success' );
+                }
+
 				$( that ).find( 'span' ).html( data.next );
 				$( '.rtm-featured-loading' ).remove();
 				$( that ).removeAttr( 'disabled' );

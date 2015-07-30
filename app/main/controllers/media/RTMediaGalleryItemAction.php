@@ -49,7 +49,12 @@ class RTMediaGalleryItemAction {
 			if ( $rtmedia_backbone[ 'backbone' ] ){
 				echo "<%= media_actions %>";
 			} else {
-				if( is_rt_admin() || ( isset( $rtmedia_media ) && isset( $rtmedia_media->media_author ) && $rtmedia_media->media_author == get_current_user_id() ) ){
+				$context_id = $rtmedia_media->context_id;
+				$user_id    = get_current_user_id();
+
+				if( is_rt_admin()
+				    || ( function_exists( 'groups_is_user_mod' ) && groups_is_user_mod( $user_id, $context_id ) )
+				        || ( isset( $rtmedia_media ) && isset( $rtmedia_media->media_author ) && $rtmedia_media->media_author == get_current_user_id() ) ) {
 					?>
 					<div class='rtmedia-gallery-item-actions'>
 						<a href="<?php rtmedia_permalink(); ?>edit" class='no-popup' target='_blank' title='<?php _e( 'Edit this media', 'rtmedia' ); ?>'>
@@ -66,7 +71,12 @@ class RTMediaGalleryItemAction {
 	}
 
 	function rtmedia_media_actions_backbone( $media_array ){
-		if( $media_array->media_author == get_current_user_id() ){
+		$context_id = $media_array->context_id;
+		$user_id    = get_current_user_id();
+
+		if( is_rt_admin()
+			|| ( function_exists( 'groups_is_user_mod' ) && groups_is_user_mod( $user_id, $context_id ) )
+		        || $media_array->media_author == get_current_user_id() ) {
 			$media_array->media_actions = "<div class='rtmedia-gallery-item-actions'><a href='" . $media_array->rt_permalink . "edit' class='no-popup' target='_blank' title='" . __( 'Edit this media', 'rtmedia' ) ."'><i class='dashicons dashicons-edit rtmicon'></i>" . __( 'Edit', 'rtmedia' ) ."</a><a href='#' class='no-popup rtm-delete-media' title='" . __( 'Delete this media', 'rtmedia' ) . "' ><i class='dashicons dashicons-trash rtmicon'></i>" . __( 'Delete', 'rtmedia' ) ."</a></div>";
 		} else {
 			$media_array->media_actions = "";
