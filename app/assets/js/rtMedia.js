@@ -575,7 +575,7 @@ jQuery( 'document' ).ready( function ( $ ) {
     }
 
 	// delete media from gallery page under the user's profile when user clicks the delete button on the gallery item.
-	jQuery( '.rtmedia-list-media' ).on( 'click', '.rtm-delete-media', function ( e ) {
+	jQuery( '.rtmedia-container' ).on( 'click', '.rtm-delete-media', function ( e ) {
 		e.preventDefault();
 		var confirmation = 'Are you sure you want to delete this media?';
 
@@ -585,7 +585,7 @@ jQuery( 'document' ).ready( function ( $ ) {
 
 		if ( confirm( confirmation ) ) { // if user confirms, send ajax request to delete the selected media
 			var curr_li = jQuery( this ).closest( 'li' );
-			var nonce = jQuery( '#rtmedia-upload-container #rtmedia_media_delete_nonce' ).val();
+			var nonce = jQuery( '#rtmedia_media_delete_nonce' ).val();
 
 			var data = {
 				action: 'delete_uploaded_media',

@@ -2,9 +2,9 @@
 # This file is distributed under the same license as the rtMedia for WordPress, BuddyPress and bbPress package.
 msgid ""
 msgstr ""
-"Project-Id-Version: rtMedia for WordPress, BuddyPress and bbPress 3.8.11\n"
+"Project-Id-Version: rtMedia for WordPress, BuddyPress and bbPress 3.8.12\n"
 "Report-Msgid-Bugs-To: http://community.rtcamp.com/c/rtmedia/\n"
-"POT-Creation-Date: 2015-07-29 12:52:16+00:00\n"
+"POT-Creation-Date: 2015-07-30 10:13:59+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -393,7 +393,7 @@ msgid "Need to specify atleast two radios, else use a checkbox instead"
 msgstr ""
 
 #: app/admin/RTMediaFormHandler.php:285 templates/media/album-gallery.php:56
-#: templates/media/media-gallery.php:65
+#: templates/media/media-gallery.php:68
 msgid "Load More"
 msgstr ""
 
@@ -1095,12 +1095,12 @@ msgid ""
 msgstr ""
 
 #: app/helper/RTMediaAddon.php:485
-msgid "Instagram"
+msgid "Photo Filters"
 msgstr ""
 
 #: app/helper/RTMediaAddon.php:488
 msgid ""
-"rtMedia Instagram adds Instagram like filters to images uploaded with "
+"rtMedia Photo Filters adds Instagram like filters to images uploaded with "
 "rtMedia."
 msgstr ""
 
@@ -1372,7 +1372,7 @@ msgid "Subject"
 msgstr ""
 
 #: app/helper/RTMediaSupport.php:447 templates/media/album-single-edit.php:16
-#: templates/media/media-single-edit.php:14
+#: templates/media/media-single-edit.php:16
 msgid "Details"
 msgstr ""
 
@@ -1885,7 +1885,6 @@ msgid "Allowed File Formats"
 msgstr ""
 
 #: app/main/RTMedia.php:911 templates/media/album-single-edit.php:65
-#: templates/media/media-single-edit.php:63
 msgid "Select All Visible"
 msgstr ""
 
@@ -1939,11 +1938,10 @@ msgstr ""
 #: app/main/controllers/template/rt-template-functions.php:1465
 #: app/main/controllers/template/rt-template-functions.php:1472
 #: templates/media/album-single-edit.php:68
-#: templates/media/media-single-edit.php:66
 msgid "Delete"
 msgstr ""
 
-#: app/main/RTMedia.php:923
+#: app/main/RTMedia.php:923 templates/media/media-single-edit.php:8
 msgid "Edit Media"
 msgstr ""
 
@@ -2248,7 +2246,6 @@ msgstr ""
 #: app/main/controllers/group/RTMediaGroupExtension.php:113
 #: app/main/controllers/privacy/RTMediaPrivacy.php:277
 #: templates/media/album-single-edit.php:50
-#: templates/media/media-single-edit.php:48
 msgid "Save Changes"
 msgstr ""
 
@@ -2898,86 +2895,85 @@ msgstr ""
 msgid "Album List"
 msgstr ""
 
-#: templates/media/album-gallery.php:64 templates/media/media-single.php:146
+#: templates/media/album-gallery.php:64
+#: templates/media/media-single-edit.php:61
+#: templates/media/media-single.php:146
 msgid "Sorry !! There's no media found for the request !!"
 msgstr ""
 
 #: templates/media/album-single-edit.php:12
-#: templates/media/media-single-edit.php:10
 msgid "Edit Album : "
 msgstr ""
 
 #: templates/media/album-single-edit.php:18
-#: templates/media/media-single-edit.php:16
 msgid "Manage Media"
 msgstr ""
 
 #: templates/media/album-single-edit.php:35
-#: templates/media/media-single-edit.php:33
+#: templates/media/media-single-edit.php:26
 msgid "Title : "
 msgstr ""
 
 #: templates/media/album-single-edit.php:40
-#: templates/media/media-single-edit.php:38
+#: templates/media/media-single-edit.php:32
 msgid "Description: "
 msgstr ""
 
 #: templates/media/album-single-edit.php:51
-#: templates/media/media-single-edit.php:49
+#: templates/media/media-single-edit.php:47
 msgid "Back"
 msgstr ""
 
 #: templates/media/album-single-edit.php:66
-#: templates/media/media-single-edit.php:64
 msgid "Move Selected media to another album."
 msgstr ""
 
 #: templates/media/album-single-edit.php:66
-#: templates/media/media-single-edit.php:64
 msgid "Move"
 msgstr ""
 
 #: templates/media/album-single-edit.php:68
-#: templates/media/media-single-edit.php:66
 msgid "Delete Selected media from the album."
 msgstr ""
 
 #: templates/media/album-single-edit.php:73
-#: templates/media/media-single-edit.php:71
 msgid "Move selected media to the album : "
 msgstr ""
 
 #: templates/media/album-single-edit.php:75
-#: templates/media/media-single-edit.php:73
 msgid "Move Selected"
 msgstr ""
 
 #: templates/media/album-single-edit.php:97
-#: templates/media/media-single-edit.php:95
 msgid "Prev"
 msgstr ""
 
 #: templates/media/album-single-edit.php:106
-#: templates/media/media-single-edit.php:104
 msgid "Next"
 msgstr ""
 
 #: templates/media/album-single-edit.php:109
-#: templates/media/media-single-edit.php:107
 msgid "The album is empty."
 msgstr ""
 
 #: templates/media/album-single-edit.php:119
-#: templates/media/media-single-edit.php:117
 msgid "Sorry !! You can not edit this album."
 msgstr ""
 
-#: templates/media/media-gallery.php:9 templates/media/media-gallery.php:25
+#: templates/media/media-gallery.php:9 templates/media/media-gallery.php:28
 msgid "Media Gallery"
 msgstr ""
 
-#: templates/media/media-gallery.php:73
+#: templates/media/media-gallery.php:76
 msgid "Oops !! There's no media found for the request !!"
+msgstr ""
+
+#: templates/media/media-single-edit.php:46
+msgid "Save"
+msgstr ""
+
+#: templates/media/media-single-edit.php:54
+msgid "Sorry !! You do not have rights to edit this media"
 msgstr ""
 
 #: templates/media/media-single.php:35
