@@ -26,9 +26,6 @@ $rtmedia_media = $media[ 0 ];
 					<form method="post" class="rtm-form">
 						<?php
 						RTMediaMedia::media_nonce_generator( $rtmedia_query->media_query[ 'album_id' ] );
-						$post_details = get_post( $media[ 0 ]->media_id );
-						$content = apply_filters( 'the_content', $post_details->post_content );
-						$content = $post_details->post_content;
 						?>
 
 						<div class="rtmedia-edit-title rtm-field-wrap">
