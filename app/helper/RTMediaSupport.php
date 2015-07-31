@@ -403,7 +403,7 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 				if ( ! defined( 'RTMEDIA_PRO_VERSION' ) ) {
 					$content = '<h3 class="rtm-option-title">' . $meta_title . '</h3>';
 					$content .= '<p>' . __( 'If your site has some issues due to rtMedia and you want support, feel free to create a support topic on <a target="_blank" href="http://community.rtcamp.com/c/rtmedia/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media">Community Forum</a>.', 'rtmedia' ) . '</p>';
-					$content .= '<p>' . __( 'If you have any suggestions, enhancements or bug reports, you can open a new issue on <a target="_blank" href="https://github.com/rtCamp/buddypress-media/issues/new">GitHub</a>.', 'rtmedia' ) . '</p>';
+					$content .= '<p>' . __( 'If you have any suggestions, enhancements or bug reports, you can open a new issue on <a target="_blank" href="https://github.com/rtCamp/rtMedia/issues/new">GitHub</a>.', 'rtmedia' ) . '</p>';
 
 					echo $content;
 				} else {
