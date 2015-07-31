@@ -1646,7 +1646,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 		public function admin_sidebar() {
 			do_action( 'rtmedia_before_default_admin_widgets' );
 			$current_user = wp_get_current_user();
-			$message = sprintf( __( 'I use @buddypressmedia http://rt.cx/rtmedia on %s', 'rtmedia' ), home_url() );
+			$message = sprintf( __( 'I use @rtMediaWP http://rt.cx/rtmedia on %s', 'rtmedia' ), home_url() );
 			$addons = '<div id="social" class="rtm-social-share">
 											<p><a href="http://twitter.com/home/?status=' . $message . '" class="button twitter" target= "_blank" title="' . __( 'Post to Twitter Now', 'rtmedia' ) . '">' . __( 'Post to Twitter', 'rtmedia' ) . '<span class="dashicons dashicons-twitter"></span></a></p>
 											<p><a href="https://www.facebook.com/sharer/sharer.php?u=http://rtcamp.com/rtmedia/" class="button facebook" target="_blank" title="' . __( 'Share on Facebook Now', 'rtmedia' ) . '">' . __( 'Share on Facebook', 'rtmedia' ) . '<span class="dashicons dashicons-facebook"></span></a></p>
