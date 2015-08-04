@@ -34,6 +34,7 @@ class RTMediaInteraction {
         add_filter ( 'wpseo_opengraph_title', array( $this, 'set_title' ), 9999, 1 );
         add_filter ( 'wpseo_opengraph', array( $this, 'rtmedia_wpseo_og_image' ), 999, 1 );
         add_filter ( 'wpseo_opengraph_url', array( $this, 'rtmedia_wpseo_og_url' ), 999, 1 );
+	    add_filter( 'wpseo_opengraph_desc', array( $this, 'rtmedia_wpseo_og_desc' ), 999, 1 );
     }
 
     function flush_rules() {
@@ -255,7 +256,7 @@ class RTMediaInteraction {
 					if ( $media->media_type == 'photo' ) {
 						$img = wp_get_attachment_image_src ( $media->media_id, "full" );
 						if ( $img && isset ( $img[ 0 ] ) && $img[ 0 ] != "" )
-							echo "<meta property='og:image' content='" . esc_url ( $img[ 0 ] ) . "'/>";
+							echo "<meta property='og:image' content='" . esc_url ( $img[ 0 ] ) . "' />\n";
 						}
 					}
 				}
@@ -267,7 +268,7 @@ class RTMediaInteraction {
 				foreach ( $rtmedia_query->media as $media ) {
 					$img = wp_get_attachment_image_src ( $media->media_id, "full" );
 					if ( $img && isset ( $img[ 0 ] ) && $img[ 0 ] != "" )
-						echo "<meta property='og:image' content='" . esc_url ( $img[ 0 ] ) . "'/>";
+						echo "<meta property='og:image' content='" . esc_url ( $img[ 0 ] ) . "' />\n";
 				}
 			}
 		}
@@ -284,5 +285,31 @@ class RTMediaInteraction {
         $port = ($_SERVER[ "SERVER_PORT" ] == "80") ? "" : (":" . $_SERVER[ "SERVER_PORT" ]);
         return $protocol . "://" . $_SERVER[ 'SERVER_NAME' ] . $port . $_SERVER[ 'REQUEST_URI' ];
     }
+
+	/*
+	 * Change description using Yoast SEO plugin's filter
+	 */
+	function rtmedia_wpseo_og_desc( $desc ) {
+		global $wp_query;
+
+		if( !array_key_exists( 'media', $wp_query->query_vars ) ) {
+			return $desc;
+		}
+
+		global $rtmedia_query;
+		$new_desc = '';
+
+		if( isset( $rtmedia_query->media ) && count( $rtmedia_query->media ) > 0 ) {
+			$new_desc = get_post_field( 'post_content', $rtmedia_query->media[ 0 ]->media_id );
+
+			if( $new_desc == '' ) {
+				$new_desc = $rtmedia_query->media[ 0 ]->media_title;
+			}
+
+			echo '<meta property="og:description" content="' . $new_desc . '" />' . "\n";
+		}
+
+		return $desc;
+	}
 
 }
