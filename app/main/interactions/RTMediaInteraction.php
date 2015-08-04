@@ -292,7 +292,7 @@ class RTMediaInteraction {
 	function rtmedia_wpseo_og_desc( $desc ) {
 		global $wp_query;
 
-		if( !array_key_exists( 'media', $wp_query->query_vars ) ) {
+		if( !array_key_exists( RTMEDIA_MEDIA_SLUG, $wp_query->query_vars ) ) {
 			return $desc;
 		}
 
