@@ -596,9 +596,9 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 			<div class="rtm-meta-container">
 				<ul class="rtm-meta-links">
 					<li><b><?php _e( 'rtMedia Links:', 'rtmedia' ); ?></b></li>
-					<li><a href="http://rtcamp.com"><?php _e( 'Homepage', 'rtmedia' ); ?></a></li>
+					<li><a href="https://rtcamp.com/rtmedia/"><?php _e( 'Homepage', 'rtmedia' ); ?></a></li>
 					<li><a href="admin.php?page=rtmedia-support#rtmedia-general"><?php _e( 'Free Support', 'rtmedia' ); ?></a></li>
-					<li><a href="http://rtcamp.com/rtmedia/addons/"><?php _e( 'Premium Addons', 'rtmedia' ); ?></a></li>
+					<li><a href="https://rtcamp.com/products/category/rtmedia/"><?php _e( 'Premium Addons', 'rtmedia' ); ?></a></li>
 				</ul>
 			</div>
 			<?php
