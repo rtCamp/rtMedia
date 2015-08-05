@@ -492,7 +492,7 @@ table.rtmedia-edit-media-list tr td.rtm-edit-media-list-delete span {
 .rtm-tabs .dashicons {
   font-size: 16px;
   height: auto;
-  line-height: 2;
+  line-height: 20px;
   margin-right: 8px;
   width: auto;
 }
