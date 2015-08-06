@@ -903,8 +903,10 @@ function rtmedia_pagination_next_link() {
 		if ( function_exists( "bp_core_get_user_domain" ) ) {
 			if ( isset( $rtmedia_query->media_query[ 'context' ] ) && $rtmedia_query->media_query[ 'context' ] == 'profile' && isset( $rtmedia_query->media_query[ 'context_id' ] ) ) {
 				$user_id = $rtmedia_query->media_query[ 'context_id' ];
-			} else {
+			} else if( isset( $rtmedia_query->media_query[ 'media_author' ] ) ) {
 				$user_id = $rtmedia_query->media_query[ 'media_author' ];
+			} else {
+				$user_id = bp_displayed_user_id();
 			}
 			$link .= trailingslashit( bp_core_get_user_domain( $user_id ) );
 		} else {
