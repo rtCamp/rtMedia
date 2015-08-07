@@ -94,6 +94,7 @@ class RTMedia {
 		add_filter( 'intermediate_image_sizes', array( $this, 'filter_image_sizes' ) );
 		add_filter( "site_option_upload_filetypes", array( &$this, "filter_allow_mime_type_mu" ), 1, 1 );
 		add_filter( 'image_size_names_choose', array( $this, 'rtmedia_custom_image_sizes_choose' ) );
+		add_action( 'bp_loaded', array( $this, 'load_component' ) );
 	}
 
 	function filter_allow_mime_type_mu( $options ) {
@@ -671,7 +672,6 @@ class RTMedia {
 		 */
 		$this->set_site_options();
 
-
 		/**
 		 * Add a settings link to the Plugin list screen
 		 */
@@ -756,6 +756,11 @@ class RTMedia {
 
 		do_action( 'bp_media_init' ); // legacy For plugin using this actions
 		do_action( 'rtmedia_init' );
+	}
+
+	function load_component(){
+		global $bp;
+		$bp->media = new RTMediaBPComponent();
 	}
 
 	function set_rtmedia_meta_wpdbfix() {
