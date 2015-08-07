@@ -1489,6 +1489,9 @@ img.mfp-img {
   position: relative;
   top: -7px;
 }
+.rtmedia-album-edit .rtmedia-move-container {
+  display: none;
+}
 
 .rtm-single-actions.rtm-item-actions {
   float: none;

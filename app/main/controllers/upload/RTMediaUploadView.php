@@ -120,7 +120,6 @@ class RTMediaUploadView {
 									. apply_filters( 'rtmedia_uploader_after_start_upload_button', "" )
 	                        . '</div>'
 						. '<div class="clearfix">'
-						. wp_nonce_field( 'rtmedia_' . get_current_user_id(), 'rtmedia_media_delete_nonce' )
 						. '<ul class="plupload_filelist_content ui-sortable rtm-plupload-list clearfix" id="rtmedia_uploader_filelist"></ul></div>'
 	                    . '</div>'
                 ),

@@ -2733,3 +2733,26 @@ function rtm_get_script_style_suffix() {
 
 	return $suffix;
 }
+
+/**
+ * Adds delete nonce for all template file before tempalte load
+ */
+add_action( 'rtmedia_before_template_load', 'rtmedia_add_media_delete_nonce' );
+function rtmedia_add_media_delete_nonce() {
+	wp_nonce_field( 'rtmedia_' . get_current_user_id(), 'rtmedia_media_delete_nonce' );
+}
+
+
+/**
+ * 'rtmedia_before_template_load' will not fire for gallery shortcode
+ * To add delete nonce in gallery shortcode use rtmedia_pre_template hook
+ */
+add_action( 'rtmedia_pre_template', 'rtmedia_add_media_delete_nonce_shortcode' );
+//Adds delete nonce for gallery shortcode
+function rtmedia_add_media_delete_nonce_shortcode() {
+	global $rtmedia_query;
+	
+	if ( isset( $rtmedia_query->is_gallery_shortcode ) && $rtmedia_query->is_gallery_shortcode == true ) {
+		wp_nonce_field( 'rtmedia_' . get_current_user_id(), 'rtmedia_media_delete_nonce' );
+	}
+}
