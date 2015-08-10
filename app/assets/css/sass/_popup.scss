@@ -232,6 +232,9 @@
 		max-width: 100%; // Theme 2014/2013
 		width: auto;
 	}
+  @media only screen and ( max-device-width : 1024px ) {
+	margin: 40px 0;
+  }
 }
 
 .rtm-user-meta-details {
