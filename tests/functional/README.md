@@ -9,7 +9,7 @@ Running tests:
 
 `npm install -g nightwatch`
 
-* cd tests/functional/
+* `cd {project_root_folder}/tests/functional/`
 
 * $```npm install```
 
