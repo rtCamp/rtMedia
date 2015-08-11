@@ -1032,7 +1032,7 @@ jQuery( document ).ready( function ( $ ) {
 	jQuery( document ).on( "click", "#rt_media_comment_form #rt_media_comment_submit", function ( e ) {
 		e.preventDefault();
 		if ( $.trim( $( "#comment_content" ).val() ) == "" ) {
-			alert( rtmedia_empty_comment_msg );
+			rtmedia_single_media_alert_message( rtmedia_empty_comment_msg, 'warning' );
 			return false;
 		}
 

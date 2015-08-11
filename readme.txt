@@ -6,7 +6,7 @@ License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires at least: WordPress 3.6
 Tested up to: 4.3
-Stable tag: 3.8.13
+Stable tag: 3.8.14
 
 Add albums, photo, audio/video encoding, privacy, sharing, front-end uploads & more. All this works on mobile/tablets devices.
 
@@ -139,6 +139,11 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 
 == Changelog ==
+
+= 3.8.14 =
+* Enhanced delete media action in media gallery
+* CSS fixes
+* Other bug fixes
 
 = 3.8.13 =
 * Update links
@@ -1048,8 +1053,8 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 == Upgrade Notice ==
 
-= 3.8.13 =
-Requires BuddyPress 1.7 or higher, if using BuddyPress. Update links, added support for "og" meta tags for Yoast SEO plugin, update translations.
+= 3.8.14 =
+Requires BuddyPress 1.7 or higher, if using BuddyPress. Enhanced delete media action in media gallery, bug fixes.
 
 == Sponsors ==
 

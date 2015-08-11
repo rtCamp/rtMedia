@@ -462,3 +462,26 @@
 	padding-bottom: 40px;
 	padding-top: 40px;
 }
+
+.rtmedia-gallery-alert-container {
+  	position: fixed;
+  	top:0;
+  	left: 0;
+ 	height: 100%;
+  	width: 100%;
+  	background-color: rgba( 0, 0, 0, 0.6);
+}
+.rtmedia-gallery-message-box {
+  	z-index: 999998;
+	position: fixed;
+	top: 45%;
+	left:38%;
+	margin-left:auto;
+	margin-right:auto;
+
+	@media (max-device-width: 640px) {
+	  top: 30%;
+	  left: 14%;
+	  right:10%;
+	}
+}

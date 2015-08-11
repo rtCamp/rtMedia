@@ -166,7 +166,11 @@ jQuery( 'document' ).ready( function ( $ ) {
 
 	$( "#rt_media_comment_form" ).submit( function ( e ) {
 		if ( $.trim( $( "#comment_content" ).val() ) == "" ) {
-			alert( rtmedia_empty_comment_msg );
+			if ( jQuery('#rtmedia-single-media-container').length == 0 ) {
+				rtmedia_gallery_action_alert_message(rtmedia_empty_comment_msg, 'warning');
+			} else {
+				rtmedia_single_media_alert_message(rtmedia_empty_comment_msg, 'warning');
+			}
 			return false;
 		} else {
 			return true;
@@ -332,16 +336,16 @@ jQuery( 'document' ).ready( function ( $ ) {
 						jQuery( ".close-reveal-modal" ).click();
 					}, 2000 );
 				} else if ( typeof response.error != 'undefined' ) {
-                    alert( response.error );
+					rtmedia_gallery_action_alert_message( response.error, 'warning' );
                 } else {
-					alert( rtmedia_something_wrong_msg );
+					rtmedia_gallery_action_alert_message( rtmedia_something_wrong_msg, 'warning' );
 				}
 
 				$( "#rtmedia_create_new_album" ).removeAttr( 'disabled' );
 				$( "#rtmedia_create_new_album" ).html( old_val );
 			} );
         } else {
-			alert( rtmedia_empty_album_name_msg );
+			rtmedia_gallery_action_alert_message( rtmedia_empty_album_name_msg, 'warning' );
 		}
 	} );
 
@@ -351,7 +355,7 @@ jQuery( 'document' ).ready( function ( $ ) {
 				jQuery( this ).closest( 'form' ).attr( 'action', '../../../media/delete' ).submit();
 			}
 		} else {
-			alert( rtmedia_no_media_selected );
+			rtmedia_gallery_action_alert_message( rtmedia_no_media_selected, 'warning' );
 		}
 	} );
 
@@ -361,7 +365,7 @@ jQuery( 'document' ).ready( function ( $ ) {
 				jQuery( this ).closest( 'form' ).attr( 'action', '' ).submit();
 			}
 		} else {
-			alert( rtmedia_no_media_selected );
+			rtmedia_gallery_action_alert_message( rtmedia_no_media_selected, 'warning' );
 		}
 
 	} );
@@ -606,12 +610,13 @@ jQuery( 'document' ).ready( function ( $ ) {
 				success: function ( data ) {
 					if ( data == '1' ) {
 						//media delete
+						rtmedia_gallery_action_alert_message( 'file deleted succeessfully.', 'success' );
 						curr_li.remove();
 						if ( typeof rtmedia_masonry_layout != "undefined" && rtmedia_masonry_layout == "true" && jQuery( '.rtmedia-container .rtmedia-list.rtm-no-masonry' ).length == 0 ) {
 							rtm_masonry_reload( rtm_masonry_container );
 						}
 					} else { // show alert message
-						alert( rtmedia_file_not_deleted );
+						rtmedia_gallery_action_alert_message( rtmedia_file_not_deleted, 'warning' );
 					}
 				}
 			} );
@@ -747,4 +752,22 @@ function rtmedia_single_media_alert_message( msg, action ) {
         jQuery( '.rtmedia-single-media .rtmedia-media' ).css( 'opacity', '1' );
         jQuery( ".rtmedia-message-container" ).remove();
     } );
+}
+
+function rtmedia_gallery_action_alert_message( msg, action ) {
+	var action_class = 'rtmedia-success';
+
+	if ( 'warning' == action ) {
+		action_class = 'rtmedia-warning';
+	}
+	var container = '<div class="rtmedia-gallery-alert-container"> </div>';
+	jQuery( 'body' ).append( container );
+	jQuery( '.rtmedia-gallery-alert-container' ).append( "<div class='rtmedia-gallery-message-box'><span class='"+ action_class +"'>" + msg + " </span></div>" );
+
+	setTimeout( function() {		jQuery( ".rtmedia-gallery-alert-container" ).remove();
+	}, 3000 );
+
+	jQuery('.rtmedia-gallery-message-box').click( function() {
+		jQuery( ".rtmedia-gallery-alert-container" ).remove();
+	} );
 }
