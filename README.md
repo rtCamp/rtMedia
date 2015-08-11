@@ -140,6 +140,11 @@ http://www.youtube.com/watch?v####dJrykKQGDcs
 
 ## Changelog ##
 
+#### 3.8.13 ####
+* Update links
+* Added support for "og" meta tags for Yoast SEO plugin
+* Update French, Spanish, Persian and German translations
+
 #### 3.8.12 ####
 * Updated media gallery actions for BuddyPress groups
 * Updated action messages for single media
@@ -1041,8 +1046,8 @@ http://www.youtube.com/watch?v####dJrykKQGDcs
 * HTML5 Audio Tag Support (with fallback)
 * HTML5 Video Tag Support (with fallback)
 
-#### 3.8.12 ####
-Requires BuddyPress 1.7 or higher, if using BuddyPress. Added SCRIPT_DEBUG support, Bug fixes.
+#### 3.8.13 ####
+Requires BuddyPress 1.7 or higher, if using BuddyPress. Update links, added support for "og" meta tags for Yoast SEO plugin, update translations.
 
 ## Sponsors ##
 
