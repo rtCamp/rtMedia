@@ -23,7 +23,7 @@ class RTMediaInteraction {
 
 //        add_action ( 'init', array( $this, 'rewrite_rules' ) );
 //        add_action ( 'init', array( $this, 'rewrite_tags' ) );
-        add_action ( 'init', array( $this, 'endpoint' ) );
+//        add_action ( 'init', array( $this, 'endpoint' ) );
 //	    add_action ( 'init', array( $this, 'flush_rules' ) );
 
 

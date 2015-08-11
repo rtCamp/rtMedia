@@ -20,14 +20,11 @@ class RTMediaBPComponent extends BP_Component {
 		parent::start( 'media', 'MEDIA', RTMEDIA_PATH );
 		$bp->active_components[ $this->id ] = '1';
 	}
+
 	/**
-	 * Initialise the global variables of the BuddyPress Media
-	 * and its parent class.
-	 * Add necessary slugs and search functionality
-	 *
-	 * @global object $bp The global BuddyPress object
+	 * @param array $args
 	 */
-	function setup_globals() {
+	function setup_globals( $args = array() ) {
 		global $bp;
 		$globals = array(
 			'slug' => RTMEDIA_MEDIA_SLUG,
@@ -39,10 +36,10 @@ class RTMediaBPComponent extends BP_Component {
 		);
 		parent::setup_globals( $globals );
 	}
+
 	/**
-	 * Sets up BuddyPress Media navigation and tabs on profile
-	 *
-	 * @global object $bp The global BuddyPress object
+	 * @param array $main_nav
+	 * @param array $sub_nav
 	 */
 	function setup_nav( $main_nav = array(), $sub_nav = array() ) {
 
@@ -92,7 +89,12 @@ class RTMediaBPComponent extends BP_Component {
 	}
 
 	function media_screen () {
-		return;
+		global $bp;
+//		echo '<pre>';
+//		var_dump( $bp->current_component );
+//		var_dump( $bp->current_action );
+//		echo '</pre>';
+		bp_core_load_template( apply_filters( 'rtmedia_template_filter', 'members/single/profile' ) );
 	}
 
 }
