@@ -1194,6 +1194,11 @@ img.mfp-img {
   max-width: 100%;
   width: auto;
 }
+@media only screen and (max-device-width: 1024px) {
+  .rtmedia-media {
+    margin: 40px 0;
+  }
+}
 
 .rtm-user-meta-details .username {
   font-size: 16px;
@@ -1483,6 +1488,9 @@ img.mfp-img {
 .rtmedia-album-edit .rtmedia-item-selector {
   position: relative;
   top: -7px;
+}
+.rtmedia-album-edit .rtmedia-move-container {
+  display: none;
 }
 
 .rtm-single-actions.rtm-item-actions {
