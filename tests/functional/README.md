@@ -1,33 +1,34 @@
+
 **Automated testscript for rtMedia product**
 
 Running tests:
 
-Install node.js
+* Install node.js
 
-Install nightwatch
+* Install nightwatch
 
 `npm install -g nightwatch`
 
-cd tests/functional/
+* cd tests/functional/
 
-1. $`npm install`
+* $```npm install```
 
-2. configure res/constants.js
+* configure `res/constants.js`
 
-      change site admin username/password
+    `change site admin username/password`
 
-			`TESTADMINUSERNAME: 'ADMINUSER'`
+			  TESTADMINUSERNAME: 'ADMINUSER'
 
-    	 `TESTADMINPASSWORD: 'ADMINPASS'`
+    	      TESTADMINPASSWORD: 'ADMINPASS'
 
 
-			change url of site
-			```
+		change url of site
+
 				URLS: {
 
         		LOGIN: 'http://wp.localtest.me'
    					},
-  		```
+
 
 
  Run to test
