@@ -54,6 +54,12 @@ function apply_rtMagnificPopup( selector ) {
 							}
 						}
 
+						/*
+						 * On media popup change fire done tagging event
+						 */
+						if ( jQuery('.tagcontainer').length != 0 ) {
+							$( "button.bp-media-tag-done-button" ).trigger( "click" );
+						}
 						var items = mfp.items.length;
 						if ( mfp.index == ( items - 1 ) && ! ( li.is( ":last-child" ) ) ) {
 							current_media.click();
