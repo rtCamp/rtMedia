@@ -2334,8 +2334,11 @@ span.imgedit-scale-warn {
   line-height: 1.4;
 }
 
-a.rtmedia-upload-media-link {
+.rtmedia-upload-media-link {
   cursor: pointer;
+}
+
+a.rtmedia-upload-media-link {
   border: none;
 }
 
