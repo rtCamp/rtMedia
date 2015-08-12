@@ -1402,22 +1402,20 @@ img.mfp-img {
   height: 100%;
   width: 100%;
   background-color: rgba(0, 0, 0, 0.6);
+  z-index: 999997;
 }
 
 .rtmedia-gallery-message-box {
-  z-index: 999998;
   position: fixed;
-  top: 45%;
-  left: 38%;
+  top: 40%;
+  left: 50%;
   margin-left: auto;
   margin-right: auto;
+  z-index: 999999;
 }
-@media (max-device-width: 640px) {
-  .rtmedia-gallery-message-box {
-    top: 30%;
-    left: 14%;
-    right: 10%;
-  }
+.rtmedia-gallery-message-box span {
+  position: relative;
+  left: -50%;
 }
 
 .rtmedia-activity-container {
