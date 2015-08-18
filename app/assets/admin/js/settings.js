@@ -128,20 +128,6 @@ jQuery( document ).ready( function ( $ ) {
 			}
 		}
 
-		var general_enable_upload_terms = jQuery( 'input[name^="rtmedia-options[general_enable_upload_terms]"]');
-		if ( return_code && general_enable_upload_terms.length > 0 && typeof general_enable_upload_terms != "undefined" ) {
-			var error_msg = "";
-			if ( general_enable_upload_terms.prop('checked') == true ) {
-				var general_upload_terms_page_link = jQuery( 'input[name^="rtmedia-options[general_upload_terms_page_link]"]');
-				if ( ! /^(http|https|ftp):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/i.test( general_upload_terms_page_link.val() ) ) {
-					error_msg += 'Please enter valid URL.';
-					alert( error_msg );
-					return_code = false;
-					return false;
-				}
-			}
-		}
-
 		if ( !return_code ) {
 			e.preventDefault();
 		}

@@ -54,28 +54,12 @@ function apply_rtMagnificPopup( selector ) {
 							}
 						}
 
-						/*
-						 * On media popup change fire done tagging event
-						 */
-						if ( jQuery('.tagcontainer').length != 0 ) {
-							$( "button.bp-media-tag-done-button" ).trigger( "click" );
-						}
 						var items = mfp.items.length;
 						if ( mfp.index == ( items - 1 ) && ! ( li.is( ":last-child" ) ) ) {
 							current_media.click();
 							return;
 						}
 
-						$container = this.content.find( '.tagcontainer' );
-						if ( $container.length > 0 ) {
-							$context = $container.find( 'img' );
-							$container.find( '.tagcontainer' ).css(
-									{
-										'height': $context.css( 'height' ),
-										'width': $context.css( 'width' )
-									} );
-
-						}
 						var settings = { };
 
 						if ( typeof _wpmejsSettings !== 'undefined' )
