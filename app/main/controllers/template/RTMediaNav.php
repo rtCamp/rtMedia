@@ -136,6 +136,7 @@ class RTMediaNav {
 		    ) );
 		}
             }
+            do_action( 'rtmedia_add_admin_bar_media_sub_menu', 'my-account-' . RTMEDIA_MEDIA_SLUG  );
         }
     }
 

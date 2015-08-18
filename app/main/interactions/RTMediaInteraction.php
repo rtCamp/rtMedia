@@ -304,6 +304,7 @@ class RTMediaInteraction {
 
 			if( $new_desc == '' ) {
 				$new_desc = $rtmedia_query->media[ 0 ]->media_title;
+				$new_desc = apply_filters( "rtmedia_share_media_description", $new_desc, $rtmedia_query->media[ 0 ] );
 			}
 
 			echo '<meta property="og:description" content="' . $new_desc . '" />' . "\n";
