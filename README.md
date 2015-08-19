@@ -140,6 +140,10 @@ http://www.youtube.com/watch?v####dJrykKQGDcs
 
 ## Changelog ##
 
+#### 3.8.15 ####
+* CSS fixes
+* Added new filters and actions
+
 #### 3.8.14 ####
 * Enhanced delete media action in media gallery
 * CSS fixes
@@ -1051,8 +1055,8 @@ http://www.youtube.com/watch?v####dJrykKQGDcs
 * HTML5 Audio Tag Support (with fallback)
 * HTML5 Video Tag Support (with fallback)
 
-#### 3.8.14 ####
-Requires BuddyPress 1.7 or higher, if using BuddyPress. Enhanced delete media action in media gallery, bug fixes.
+#### 3.8.15 ####
+Requires BuddyPress 1.7 or higher, if using BuddyPress. CSS fixes and added new hooks.
 
 ## Sponsors ##
 
