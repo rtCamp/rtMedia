@@ -94,7 +94,30 @@ class RTMediaBPComponent extends BP_Component {
 //		var_dump( $bp->current_component );
 //		var_dump( $bp->current_action );
 //		echo '</pre>';
-		bp_core_load_template( apply_filters( 'rtmedia_template_filter', 'members/single/profile' ) );
+
+		// build media query
+		$query_param = array();
+		if( bp_is_user() ){
+			$query_param[ 'context' ] = 'profile';
+			$query_param[ 'context_id' ] = bp_displayed_user_id();
+		}
+		global $rtmedia_query;
+		$query_param = apply_filters( "rtmedia_query_filter", $query_param );
+		$rtmedia_query = new RTMediaQuery ( $query_param );
+
+		// setup gallery title and content
+		add_action( 'bp_template_title', array( $this, 'rtm_bp_template_title' ) );
+		add_action( 'bp_template_content', array( $this, 'rtm_bp_template_content' ) );
+
+		bp_core_load_template( apply_filters( 'rtmedia_template_filter', 'members/single/plugins' ) );
+	}
+
+	function rtm_bp_template_title(){
+		echo get_rtmedia_gallery_title();
+	}
+
+	function rtm_bp_template_content(){
+		include( RTMediaTemplate::locate_template( 'media-gallery' ) );
 	}
 
 }
