@@ -88,6 +88,57 @@ class RTMediaBPComponent extends BP_Component {
 
 	}
 
+	public function setup_admin_bar( $wp_admin_nav = array() ) {
+		global $rtmedia;
+		$bp = buddypress();
+
+		// Menus for logged in user
+		if ( is_user_logged_in() ) {
+
+			// Setup the logged in user variables
+			$user_domain = bp_loggedin_user_domain();
+
+			// Add the "My Account" sub menus
+			$wp_admin_nav[] = array(
+				'parent' => $bp->my_account_menu_id,
+				'id'     => 'my-account-' . $this->id,
+				'title'  => RTMEDIA_MEDIA_LABEL,
+				'href'   => trailingslashit( $user_domain . $this->slug )
+			);
+
+			if ( is_rtmedia_album_enable () ) {
+				$wp_admin_nav[] = array(
+					'parent' => 'my-account-' . $this->id,
+					'id' => 'my-account-' . $this->id . '-' . RTMEDIA_ALBUM_SLUG,
+					'title' => RTMEDIA_ALBUM_PLURAL_LABEL,
+					'href' => trailingslashit ( $user_domain . $this->slug ) . RTMEDIA_ALBUM_SLUG . '/',
+				);
+			}
+
+			foreach ( $rtmedia->allowed_types as $type ) {
+				if( isset( $rtmedia->options[ 'allowedTypes_' . $type[ 'name' ] . '_enabled' ] ) ) {
+					if ( ! $rtmedia->options[ 'allowedTypes_' . $type[ 'name' ] . '_enabled' ] )
+						continue;
+					$name = strtoupper ( $type[ 'name' ] );
+					$wp_admin_nav[] = array(
+						'parent' => 'my-account-' . constant ( 'RTMEDIA_MEDIA_SLUG' ),
+						'id' => 'my-account-media-' . constant ( 'RTMEDIA_' . $name . '_SLUG' ),
+						'title' => $type[ 'plural_label' ],
+						'href' => trailingslashit ( $user_domain . $this->slug ) . constant ( 'RTMEDIA_' . $name . '_SLUG' ) . '/',
+					);
+				}
+			}
+
+			apply_filters( 'rtmedia_admin_bar_nav', $wp_admin_nav, $this->id );
+
+			// Legacy rtMedia sub admin menu hook
+			do_action( 'rtmedia_add_admin_bar_media_sub_menu', 'my-account-' . RTMEDIA_MEDIA_SLUG  );
+
+		}
+
+		parent::setup_admin_bar( $wp_admin_nav );
+	}
+
 	function media_screen () {
 		global $bp;
 //		echo '<pre>';
