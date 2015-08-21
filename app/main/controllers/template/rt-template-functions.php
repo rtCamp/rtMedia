@@ -2762,7 +2762,7 @@ function rtmedia_add_media_delete_nonce_shortcode() {
 
 /**
  * To get list of allowed types in rtMedia
- * @since 3.8.15
+ * @since 3.8.16
  *
  * @return gives array of allowed types
  */
@@ -2778,7 +2778,7 @@ function rtmedia_get_allowed_types() {
 
 /**
  * To get list of allowed upload types in rtMedia
- * @since 3.8.15
+ * @since 3.8.16
  *
  * @return gives array of allowed upload types
  */
@@ -2795,7 +2795,7 @@ function rtmedia_get_allowed_upload_types (){
 
 /**
  * To get list of allowed upload type name in rtMedia
- * @since 3.8.15
+ * @since 3.8.16
  *
  * @return gives array of name of allowed upload media type
  */
