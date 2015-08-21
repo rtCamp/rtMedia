@@ -2759,3 +2759,49 @@ function rtmedia_add_media_delete_nonce_shortcode() {
 		wp_nonce_field( 'rtmedia_' . get_current_user_id(), 'rtmedia_media_delete_nonce' );
 	}
 }
+
+/**
+ * To get list of allowed types in rtMedia
+ * @since 3.8.16
+ *
+ * @return gives array of allowed types
+ */
+function rtmedia_get_allowed_types() {
+	global $rtmedia;
+
+	$allowed_media_type = $rtmedia->allowed_types;
+	$allowed_media_type = apply_filters( 'rtmedia_allowed_types', $allowed_media_type );
+
+	return $allowed_media_type;
+}
+
+
+/**
+ * To get list of allowed upload types in rtMedia
+ * @since 3.8.16
+ *
+ * @return gives array of allowed upload types
+ */
+function rtmedia_get_allowed_upload_types (){
+
+	$allowed_types = rtmedia_get_allowed_types();
+	foreach ($allowed_types as $type => $type_detail ) {
+		if ( !( function_exists( "is_rtmedia_upload_" . $type . "_enabled" ) && call_user_func( "is_rtmedia_upload_" . $type . "_enabled" ) ) ) {
+			unset($allowed_types[ $type ]);
+		}
+	}
+	return $allowed_types;
+}
+
+/**
+ * To get list of allowed upload type name in rtMedia
+ * @since 3.8.16
+ *
+ * @return gives array of name of allowed upload media type
+ */
+function rtmedia_get_allowed_upload_types_array() {
+	$allowed_types = rtmedia_get_allowed_upload_types();
+	$types= array_keys( $allowed_types );
+	return $types;
+}
+

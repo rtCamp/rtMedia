@@ -520,11 +520,8 @@ class RTMediaFormHandler {
 	 * @return array  $render
 	 */
 	static function types_render_options( $options ) {
-		global $rtmedia;
-
 		$render = array();
-		$allowed_media_type = $rtmedia->allowed_types;
-		$allowed_media_type = apply_filters( 'rtmedia_allowed_types', $allowed_media_type );
+		$allowed_media_type = rtmedia_get_allowed_types();
 
 		foreach ( $options as $key => $value ) {
 			$data = explode( '_', $key );
