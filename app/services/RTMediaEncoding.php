@@ -487,8 +487,8 @@ class RTMediaEncoding {
 	 */
 	public function handle_callback() {
 		require_once ( ABSPATH . 'wp-admin/includes/image.php');
-		if ( isset( $_REQUEST[ 'job_id' ] ) && isset( $_REQUEST[ 'download_url' ] ) && isset( $_POST[ 'thumbs' ] ) ) {
-			$response = $_POST[ 'thumbs' ];
+		if ( isset( $_REQUEST[ 'job_id' ] ) && isset( $_REQUEST[ 'download_url' ] ) ) {
+			$has_thumbs = isset( $_POST['thumbs'] ) ? true : false;
 			$flag = false;
 			global $wpdb;
 			$model = new RTDBModel( 'rtm_media_meta', false, 10, true );
@@ -505,9 +505,15 @@ class RTMediaEncoding {
 				$attachment_id = $media[ 0 ]->media_id;
 				//error_log(var_export($_POST,true));
 				update_post_meta( $attachment_id, 'rtmedia_encode_response', $_POST );
-				$cover_art = $this->add_media_thumbnails( $attachment_id );
-				if ( $_POST[ 'format' ] == 'thumbnails' )
+
+				if( $has_thumbs ){
+					$cover_art = $this->add_media_thumbnails( $attachment_id );
+				}
+
+				if ( isset( $_POST[ 'format' ] ) && $_POST[ 'format' ] == 'thumbnails' ){
 					die();
+				}
+
 				$this->uploaded[ "context" ] = $media[ 0 ]->context;
 				$this->uploaded[ "context_id" ] = $media[ 0 ]->context_id;
 				$this->uploaded[ "media_author" ] = $media[ 0 ]->media_author;
