@@ -2,6 +2,10 @@
 
 class RTMediaBPComponent extends BP_Component {
 
+	public $is_single_media;
+	public $is_media_gallery;
+	public $is_album_gallery;
+
 	var $messages = array(
 		'error' => array( ),
 		'info' => array( ),
@@ -43,6 +47,11 @@ class RTMediaBPComponent extends BP_Component {
 	 */
 	function setup_nav( $main_nav = array(), $sub_nav = array() ) {
 
+		global $bp;
+//		var_dump( $bp->current_component );
+//		var_dump( $bp->current_action );
+//		var_dump( $bp->action_variables );
+
 		// Determine user to use
 		if ( bp_displayed_user_domain() ) {
 			$user_domain = bp_displayed_user_domain();
@@ -61,11 +70,23 @@ class RTMediaBPComponent extends BP_Component {
 			'name'                    => RTMEDIA_MEDIA_LABEL,
 			'slug'                    => $slug,
 			'position'                => apply_filters('rtmedia_media_tab_position',99),
-			'screen_function'         => array( $this, 'media_screen' ),
+			'screen_function'         => array( $this, 'media_gallery_screen' ),
 			'default_subnav_slug'     => 'all',
 		);
 
-		$pos_index = 10;
+		if( is_rtmedia_album_enable() ){
+			$album_label = __( defined('RTMEDIA_ALBUM_PLURAL_LABEL') ? constant ( 'RTMEDIA_ALBUM_PLURAL_LABEL' ) : 'Albums', 'rtmedia' );
+			$sub_nav[] = array(
+				'name'            => $album_label,
+				'slug'            => constant ( 'RTMEDIA_ALBUM_SLUG' ),
+				'parent_url'      => $media_page_link,
+				'parent_slug'     => $slug,
+				'screen_function' => array( $this, 'album_gallery_screen' ),
+				'position'        => 10,
+			);
+		}
+
+		$pos_index = 20;
 		foreach ( $rtmedia->allowed_types as $type ) {
 
 			$name = strtoupper ( $type[ 'name' ] );
@@ -76,12 +97,27 @@ class RTMediaBPComponent extends BP_Component {
 				'slug'            => constant ( 'RTMEDIA_' . $name . '_SLUG' ),
 				'parent_url'      => $media_page_link,
 				'parent_slug'     => $slug,
-				'screen_function' => array( $this, 'media_screen' ),
+				'screen_function' => array( $this, 'media_gallery_screen' ),
 				'position'        => $pos_index,
 			);
 
 			$pos_index += 10;
+		}
 
+		if( is_numeric( $bp->current_action ) ){
+			$this->is_single_media = apply_filters( 'rtm_bp_is_single', true );
+			$sub_nav[] = array(
+				'name'            => $bp->current_action,
+				'slug'            => $bp->current_action,
+				'parent_url'      => $media_page_link,
+				'parent_slug'     => $slug,
+				'screen_function' => array( $this, 'single_media_screen' ),
+				'position'        => $pos_index,
+			);
+		} elseif( $bp->current_action == 'album' ){
+			$this->is_album_gallery = true;
+		} else {
+			$this->is_media_gallery = true;
 		}
 
 		parent::setup_nav( $main_nav, $sub_nav );
@@ -139,12 +175,39 @@ class RTMediaBPComponent extends BP_Component {
 		parent::setup_admin_bar( $wp_admin_nav );
 	}
 
-	function media_screen () {
+	function media_gallery_screen () {
+
 		global $bp;
-//		echo '<pre>';
-//		var_dump( $bp->current_component );
-//		var_dump( $bp->current_action );
-//		echo '</pre>';
+		// build media query
+		$query_param = array();
+		if( bp_is_user() ){
+			$query_param[ 'context' ] = 'profile';
+			$query_param[ 'context_id' ] = bp_displayed_user_id();
+		}
+
+		if( !empty( $bp->current_action ) ){
+			$query_param[ 'media_type' ] = $bp->current_action;
+		}
+
+		$this->init_media_query( $query_param );
+		$this->load_template();
+	}
+
+	function album_gallery_screen(){
+		// build media query
+		$query_param = array();
+		if( bp_is_user() ){
+			$query_param[ 'context' ] = 'profile';
+			$query_param[ 'context_id' ] = bp_displayed_user_id();
+			$query_param[ 'media_type' ] = 'album';
+		}
+
+		$this->init_media_query( $query_param );
+		$this->load_template();
+	}
+
+	function single_media_screen(){
+		global $bp;
 
 		// build media query
 		$query_param = array();
@@ -152,15 +215,28 @@ class RTMediaBPComponent extends BP_Component {
 			$query_param[ 'context' ] = 'profile';
 			$query_param[ 'context_id' ] = bp_displayed_user_id();
 		}
-		global $rtmedia_query;
-		$query_param = apply_filters( "rtmedia_query_filter", $query_param );
-		$rtmedia_query = new RTMediaQuery ( $query_param );
 
-		// setup gallery title and content
+		if( !empty( $bp->current_action ) ){
+			$query_param[ 'id' ] = $bp->current_action;
+		}
+
+
+		$this->init_media_query( $query_param );
+		$this->load_template();
+	}
+
+	function load_template(){
 		add_action( 'bp_template_title', array( $this, 'rtm_bp_template_title' ) );
 		add_action( 'bp_template_content', array( $this, 'rtm_bp_template_content' ) );
 
 		bp_core_load_template( apply_filters( 'rtmedia_template_filter', 'members/single/plugins' ) );
+	}
+
+	function init_media_query( $query_param = array() ){
+		global $rtmedia_query;
+		$query_param = apply_filters( "rtmedia_query_filter", $query_param );
+		$rtmedia_query = new RTMediaQuery ( $query_param );
+//		var_dump( $rtmedia_query );
 	}
 
 	function rtm_bp_template_title(){
@@ -168,7 +244,14 @@ class RTMediaBPComponent extends BP_Component {
 	}
 
 	function rtm_bp_template_content(){
-		include( RTMediaTemplate::locate_template( 'media-gallery' ) );
+		if( $this->is_single_media ){
+			$template = 'media-single';
+		} elseif( $this->is_album_gallery ){
+			$template = 'album-gallery';
+		} else {
+			$template = 'media-gallery';
+		}
+		include( RTMediaTemplate::locate_template( $template ) );
 	}
 
 }

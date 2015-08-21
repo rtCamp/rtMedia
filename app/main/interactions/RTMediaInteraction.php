@@ -23,7 +23,7 @@ class RTMediaInteraction {
 
 //        add_action ( 'init', array( $this, 'rewrite_rules' ) );
 //        add_action ( 'init', array( $this, 'rewrite_tags' ) );
-//        add_action ( 'init', array( $this, 'endpoint' ) );
+        add_action ( 'init', array( $this, 'endpoint' ) );
 //	    add_action ( 'init', array( $this, 'flush_rules' ) );
 
 
@@ -93,9 +93,10 @@ class RTMediaInteraction {
      */
     function endpoint () {
 
-        foreach ( $this->slugs as $slug ) {
-            add_rewrite_endpoint ( $slug, EP_ALL );
-        }
+        add_rewrite_endpoint ( 'upload', EP_ALL );
+//        foreach ( $this->slugs as $slug ) {
+//            add_rewrite_endpoint ( $slug, EP_ALL );
+//        }
     }
 
     function set_routers () {
