@@ -6,13 +6,13 @@ class RTMediaNav {
         if ( $action === false ) {
             return;
         }
-        add_action ( 'admin_bar_menu', array( $this, 'admin_nav' ), 99 );
+        //add_action ( 'admin_bar_menu', array( $this, 'admin_nav' ), 99 );
 
         if ( class_exists ( 'BuddyPress' ) ) {
-            add_action ( 'bp_init', array( $this, 'custom_media_nav_tab' ), 10, 1 );
+            //add_action ( 'bp_init', array( $this, 'custom_media_nav_tab' ), 10, 1 );
         }
         
-        add_filter( 'bp_settings_admin_nav', array( $this, 'setup_settings_privacy_nav' ), 3 );
+//        add_filter( 'bp_settings_admin_nav', array( $this, 'setup_settings_privacy_nav' ), 3 );
     }
 
     function media_screen () {
@@ -136,6 +136,7 @@ class RTMediaNav {
 		    ) );
 		}
             }
+            do_action( 'rtmedia_add_admin_bar_media_sub_menu', 'my-account-' . RTMEDIA_MEDIA_SLUG  );
         }
     }
 

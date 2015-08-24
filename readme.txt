@@ -1,12 +1,12 @@
 === rtMedia for WordPress, BuddyPress and bbPress ===
-Contributors: rtcamp, rittesh.patel, sanketparmar, sagarjadhav, pranalipatel, jignesh.nakrani, pushpak.pop, faishal, desaiuditd, rahul286, JoshuaAbenazer, gagan0123, saurabhshukla, nitun.lanjewar, umesh.nevase, suhasgirgaonkar, neerukoul, hrishiv90, kanakiyajay, jarretc, tobiaskluge, rafaelfunchal, UmeshSingla, mehulkaklotar, tannermirabel, kishores
+Contributors: rtcamp, rittesh.patel, sanket.parmar, sagarjadhav, pranalipatel, jignesh.nakrani, pushpak.pop, faishal, desaiuditd, rahul286, JoshuaAbenazer, gagan0123, saurabhshukla, nitun.lanjewar, umesh.nevase, suhasgirgaonkar, neerukoul, hrishiv90, kanakiyajay, jarretc, tobiaskluge, rafaelfunchal, UmeshSingla, mehulkaklotar, tannermirabel, kishores
 Donate link: http://rtcamp.com/donate/
 Tags: BuddyPress, media, multimedia, album, audio, songs, music, video, photo, image, upload, share, MediaElement.js, ffmpeg, kaltura, media-node, rtMedia, WordPress, bbPress, masonry
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires at least: WordPress 3.6
-Tested up to: 4.2.4
-Stable tag: 3.8.13
+Tested up to: 4.3
+Stable tag: 3.8.15
 
 Add albums, photo, audio/video encoding, privacy, sharing, front-end uploads & more. All this works on mobile/tablets devices.
 
@@ -139,6 +139,15 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 
 == Changelog ==
+
+= 3.8.15 =
+* CSS fixes
+* Added new filters and actions
+
+= 3.8.14 =
+* Enhanced delete media action in media gallery
+* CSS fixes
+* Other bug fixes
 
 = 3.8.13 =
 * Update links
@@ -1048,8 +1057,8 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 == Upgrade Notice ==
 
-= 3.8.13 =
-Requires BuddyPress 1.7 or higher, if using BuddyPress. Update links, added support for "og" meta tags for Yoast SEO plugin, update translations.
+= 3.8.15 =
+Requires BuddyPress 1.7 or higher, if using BuddyPress. CSS fixes and added new hooks.
 
 == Sponsors ==
 

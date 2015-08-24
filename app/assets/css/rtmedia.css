@@ -1194,6 +1194,11 @@ img.mfp-img {
   max-width: 100%;
   width: auto;
 }
+@media only screen and (max-device-width: 1024px) {
+  .rtmedia-media {
+    margin: 40px 0;
+  }
+}
 
 .rtm-user-meta-details .username {
   font-size: 16px;
@@ -1390,6 +1395,29 @@ img.mfp-img {
   padding-top: 40px;
 }
 
+.rtmedia-gallery-alert-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 999997;
+}
+
+.rtmedia-gallery-message-box {
+  position: fixed;
+  top: 40%;
+  left: 50%;
+  margin-left: auto;
+  margin-right: auto;
+  z-index: 999999;
+}
+.rtmedia-gallery-message-box span {
+  position: relative;
+  left: -50%;
+}
+
 .rtmedia-activity-container {
   box-sizing: border-box;
 }
@@ -1483,6 +1511,9 @@ img.mfp-img {
 .rtmedia-album-edit .rtmedia-item-selector {
   position: relative;
   top: -7px;
+}
+.rtmedia-album-edit .rtmedia-move-container {
+  display: none;
 }
 
 .rtm-single-actions.rtm-item-actions {
@@ -2328,6 +2359,10 @@ span.imgedit-scale-warn {
 
 .rtmedia-upload-media-link {
   cursor: pointer;
+}
+
+a.rtmedia-upload-media-link {
+  border: none;
 }
 
 .rtm-album-privacy span {

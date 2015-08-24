@@ -21,10 +21,10 @@ class RTMediaInteraction {
 
         // hook into the WordPress Rewrite Endpoint API
 
-        add_action ( 'init', array( $this, 'rewrite_rules' ) );
-        add_action ( 'init', array( $this, 'rewrite_tags' ) );
+//        add_action ( 'init', array( $this, 'rewrite_rules' ) );
+//        add_action ( 'init', array( $this, 'rewrite_tags' ) );
         add_action ( 'init', array( $this, 'endpoint' ) );
-	add_action ( 'init', array( $this, 'flush_rules' ) );
+//	    add_action ( 'init', array( $this, 'flush_rules' ) );
 
 
         // set up interaction and routes
@@ -93,9 +93,10 @@ class RTMediaInteraction {
      */
     function endpoint () {
 
-        foreach ( $this->slugs as $slug ) {
-            add_rewrite_endpoint ( $slug, EP_ALL );
-        }
+        add_rewrite_endpoint ( 'upload', EP_ALL );
+//        foreach ( $this->slugs as $slug ) {
+//            add_rewrite_endpoint ( $slug, EP_ALL );
+//        }
     }
 
     function set_routers () {
@@ -304,6 +305,7 @@ class RTMediaInteraction {
 
 			if( $new_desc == '' ) {
 				$new_desc = $rtmedia_query->media[ 0 ]->media_title;
+				$new_desc = apply_filters( "rtmedia_share_media_description", $new_desc, $rtmedia_query->media[ 0 ] );
 			}
 
 			echo '<meta property="og:description" content="' . $new_desc . '" />' . "\n";
