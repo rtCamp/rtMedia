@@ -2053,7 +2053,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 		 * @return array $removable_query_args
 		 */
 		function removable_query_args( $removable_query_args ) {
-			if ($_GET[page] = 'rtmedia-settings' ) {
+			if ( isset( $_GET['page'] ) && $_GET['page'] = 'rtmedia-settings' ) {
 				$removable_query_args[] = 'settings-saved';
 			}
 			return $removable_query_args;
