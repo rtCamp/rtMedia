@@ -114,6 +114,8 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 			add_action( 'network_admin_notices', array( $this, 'rtmedia_network_admin_notices' ) );
 			add_action( 'admin_init', array( $this, 'rtmedia_addon_license_save_hook' ) );
 			add_action( 'admin_init', array( $this, 'rtmedia_migration' ) );
+
+			add_filter( 'removable_query_args', array( $this, 'removable_query_args'), 10, 1 );
 		}
                 
                 function modify_medialibrary_permalink( $action, $post, $detached ) {
@@ -2043,6 +2045,19 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 			<?php
 		}
 
+
+		/**
+		 * To remove setting saved parameter from url once satting saved
+		 * Add parameter to this array WP will remove variable from Query string
+		 * @param $removable_query_args
+		 * @return array $removable_query_args
+		 */
+		function removable_query_args( $removable_query_args ) {
+			if ($_GET[page] = 'rtmedia-settings' ) {
+				$removable_query_args[] = 'settings-saved';
+			}
+			return $removable_query_args;
+		}
 	}
 
 }

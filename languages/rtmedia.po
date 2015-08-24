@@ -2,9 +2,9 @@
 # This file is distributed under the same license as the rtMedia for WordPress, BuddyPress and bbPress package.
 msgid ""
 msgstr ""
-"Project-Id-Version: rtMedia for WordPress, BuddyPress and bbPress 3.8.14\n"
+"Project-Id-Version: rtMedia for WordPress, BuddyPress and bbPress 3.8.15\n"
 "Report-Msgid-Bugs-To: http://community.rtcamp.com/c/rtmedia/\n"
-"POT-Creation-Date: 2015-08-18 08:37:04+00:00\n"
+"POT-Creation-Date: 2015-08-24 13:57:07+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -575,165 +575,165 @@ msgstr ""
 msgid "Footer Link"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:563
+#: app/admin/RTMediaFormHandler.php:560
 msgid "Media Types Settings"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:571 app/helper/RTMediaSettings.php:323
+#: app/admin/RTMediaFormHandler.php:568 app/helper/RTMediaSettings.php:323
 msgid "Media Type"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:576
+#: app/admin/RTMediaFormHandler.php:573
 msgid "Allow Upload"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:578
+#: app/admin/RTMediaFormHandler.php:575
 msgid "Allows you to upload a particular media type on your post."
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:586
+#: app/admin/RTMediaFormHandler.php:583
 msgid "Set Featured"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:588
+#: app/admin/RTMediaFormHandler.php:585
 msgid "Place a specific media as a featured content on the post."
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:630
+#: app/admin/RTMediaFormHandler.php:627
 msgid "File Extensions"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:718
+#: app/admin/RTMediaFormHandler.php:715
 msgid "Media Size Settings"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:723
+#: app/admin/RTMediaFormHandler.php:720
 msgid "Category"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:724
+#: app/admin/RTMediaFormHandler.php:721
 msgid "Entity"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:725
+#: app/admin/RTMediaFormHandler.php:722
 msgid "Width"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:726
+#: app/admin/RTMediaFormHandler.php:723
 msgid "Height"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:727
+#: app/admin/RTMediaFormHandler.php:724
 msgid "Crop"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:780
+#: app/admin/RTMediaFormHandler.php:777
 msgid "Number of thumbnails to generate on video upload"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:786
+#: app/admin/RTMediaFormHandler.php:783
 msgid ""
 " If you choose more than 1 thumbnail, your users will be able to change the "
 "thumbnail by going to video 'edit' section. Maximum value is 10."
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:794
+#: app/admin/RTMediaFormHandler.php:791
 msgid "Encoding Settings"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:801
+#: app/admin/RTMediaFormHandler.php:798
 msgid "JPEG/JPG image quality (1-100)"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:807
+#: app/admin/RTMediaFormHandler.php:804
 msgid "Enter JPEG/JPG Image Quality. Minimum value is 1. 100 is original quality."
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:815
+#: app/admin/RTMediaFormHandler.php:812
 msgid "Image Quality"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:837
+#: app/admin/RTMediaFormHandler.php:834
 msgid "Custom CSS settings"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:856
+#: app/admin/RTMediaFormHandler.php:853
 msgid "rtMedia default styles"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:862
+#: app/admin/RTMediaFormHandler.php:859
 msgid ""
 "Load default rtMedia styles. You need to write your own style for rtMedia "
 "if you disable it."
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:867
+#: app/admin/RTMediaFormHandler.php:864
 msgid "Paste your CSS code"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:873
+#: app/admin/RTMediaFormHandler.php:870
 msgid "Custom rtMedia CSS container"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:896
+#: app/admin/RTMediaFormHandler.php:893
 msgid "Enable privacy"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:902
+#: app/admin/RTMediaFormHandler.php:899
 msgid "Enable privacy in rtMedia"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:907
+#: app/admin/RTMediaFormHandler.php:904
 msgid "Default privacy"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:913
+#: app/admin/RTMediaFormHandler.php:910
 msgid "Set default privacy for media"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:919
+#: app/admin/RTMediaFormHandler.php:916
 msgid "Allow users to set privacy for their content"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:924
+#: app/admin/RTMediaFormHandler.php:921
 msgid ""
 "If you choose this, users will be able to change privacy of their own "
 "uploads."
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:928
+#: app/admin/RTMediaFormHandler.php:925
 msgid "For group uploads, BuddyPress groups privacy is used."
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:970
+#: app/admin/RTMediaFormHandler.php:967
 msgid "Enable media in profile"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:975
+#: app/admin/RTMediaFormHandler.php:972
 msgid "Enable Media on BuddyPress Profile"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:980
+#: app/admin/RTMediaFormHandler.php:977
 msgid "Enable media in group"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:985
+#: app/admin/RTMediaFormHandler.php:982
 msgid "Enable Media on BuddyPress Groups"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:990
+#: app/admin/RTMediaFormHandler.php:987
 msgid "Allow upload from activity stream"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:995
+#: app/admin/RTMediaFormHandler.php:992
 msgid "Allow upload using status update box present on activity stream page"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:1001
+#: app/admin/RTMediaFormHandler.php:998
 msgid "Number of media items to show in activity stream"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:1006
+#: app/admin/RTMediaFormHandler.php:1003
 msgid ""
 "With bulk uploads activity, the stream may get flooded. You can control the "
 "maximum number of media items or files per activity. This limit will not "
@@ -741,11 +741,11 @@ msgid ""
 "means unlimited."
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:1013
+#: app/admin/RTMediaFormHandler.php:1010
 msgid "Organize media into albums"
 msgstr ""
 
-#: app/admin/RTMediaFormHandler.php:1019
+#: app/admin/RTMediaFormHandler.php:1016
 msgid ""
 "This will add 'album' tab to BuddyPress profile and group depending on the "
 "^above^ settings."
@@ -2844,21 +2844,21 @@ msgstr ""
 msgid "Try Now"
 msgstr ""
 
-#: app/services/RTMediaEncoding.php:550
+#: app/services/RTMediaEncoding.php:556
 msgid "Could not read file."
 msgstr ""
 
-#: app/services/RTMediaEncoding.php:554
+#: app/services/RTMediaEncoding.php:560
 msgid ""
 "Something went wrong. The required attachment id does not exists. It must "
 "have been deleted."
 msgstr ""
 
-#: app/services/RTMediaEncoding.php:569
+#: app/services/RTMediaEncoding.php:575
 msgid "rtMedia Encoding: Download Failed"
 msgstr ""
 
-#: app/services/RTMediaEncoding.php:570
+#: app/services/RTMediaEncoding.php:576
 msgid ""
 "<p><a href=\"%s\">Media</a> was successfully encoded but there was an error "
 "while downloading:</p>\n"
@@ -2867,27 +2867,27 @@ msgid ""
 "download</a>.</p>"
 msgstr ""
 
-#: app/services/RTMediaEncoding.php:584
+#: app/services/RTMediaEncoding.php:590
 msgid "Done"
 msgstr ""
 
-#: app/services/RTMediaEncoding.php:609 app/services/RTMediaEncoding.php:631
+#: app/services/RTMediaEncoding.php:615 app/services/RTMediaEncoding.php:637
 msgid "Something went wrong please try again."
 msgstr ""
 
-#: app/services/RTMediaEncoding.php:628
+#: app/services/RTMediaEncoding.php:634
 msgid "Your subscription was cancelled successfully"
 msgstr ""
 
-#: app/services/RTMediaEncoding.php:640
+#: app/services/RTMediaEncoding.php:646
 msgid "Please enter the api key."
 msgstr ""
 
-#: app/services/RTMediaEncoding.php:647
+#: app/services/RTMediaEncoding.php:653
 msgid "Encoding disabled successfully."
 msgstr ""
 
-#: app/services/RTMediaEncoding.php:653
+#: app/services/RTMediaEncoding.php:659
 msgid "Encoding enabled successfully."
 msgstr ""
 
