@@ -25,12 +25,9 @@ class RTMediaBPComponent extends BP_Component {
 		global $bp;
 		parent::start( 'media', 'MEDIA', RTMEDIA_PATH );
 		$bp->active_components[ $this->id ] = '1';
-		$this->init();
-	}
 
-	function init(){
-		add_filter( 'rtmedia_query_filter', array( $this, 'remove_page_no_from_query' ), 10, 1 );
-		add_filter( 'rtmedia_action_query_in_populate_media', array( $this, 'add_current_page_in_fetch_media' ), 10, 2 );
+		// Add required actions and filters in this function.
+		$this->init();
 	}
 
 	/**
@@ -101,7 +98,7 @@ class RTMediaBPComponent extends BP_Component {
 				'slug'            => constant ( 'RTMEDIA_ALBUM_SLUG' ),
 				'parent_url'      => $media_page_link,
 				'parent_slug'     => $slug,
-				'screen_function' => array( $this, 'album_gallery_screen' ),
+				'screen_function' => array( $this, 'media_gallery_screen' ),
 				'position'        => $pos_index += 10,
 			);
 		}
@@ -127,7 +124,7 @@ class RTMediaBPComponent extends BP_Component {
 				'slug'            => $bp->current_action,
 				'parent_url'      => $media_page_link,
 				'parent_slug'     => $slug,
-				'screen_function' => array( $this, 'single_media_screen' ),
+				'screen_function' => array( $this, 'media_gallery_screen' ),
 				'position'        => $pos_index += 10,
 			);
 		}
@@ -157,13 +154,8 @@ class RTMediaBPComponent extends BP_Component {
 
 		parent::setup_nav( $main_nav, $sub_nav );
 
-		// setup current media page no.
+		// setup current media page no., handle /pg/{page_no} case
 		$this->setup_current_media_page_no();
-	}
-
-	public function is_single_media(){
-		global $bp;
-		return apply_filters( 'rtm_bp_is_single_media', is_numeric( $bp->current_action ) );
 	}
 
 	public function setup_admin_bar( $wp_admin_nav = array() ) {
@@ -217,39 +209,17 @@ class RTMediaBPComponent extends BP_Component {
 		parent::setup_admin_bar( $wp_admin_nav );
 	}
 
-	function add_current_page_in_fetch_media( $action_query, $media_for_total_count ){
-
-		if( isset( $action_query->page ) ){
-			$action_query->page = $this->current_media_page;
-		}
-
-		return $action_query;
-	}
-
-	function remove_page_no_from_query( $query_param ){
-		global $bp;
-
-		if( $bp->current_action == 'pg' ){
-			unset( $query_param[ 'media_type' ] );
-		}
-
-		return $query_param;
-	}
-
-	function setup_current_media_page_no(){
-		global $bp;
-
-		if( !empty( $bp->action_variables ) && is_array( $bp->action_variables ) ){
-			if( $bp->current_action == 'pg' ){
-				$this->current_media_page = $bp->action_variables[0];
-			} elseif( $bp->action_variables[0] == 'pg' ){
-				$this->current_media_page = $bp->action_variables[1];
-			}
-		}
-	}
-
 	function media_gallery_screen () {
+		if( $this->is_single_media_screen ){
+			$this->single_media_screen();
+		} elseif( $this->is_album_gallery_screen ){
+			$this->album_gallery_screen();
+		} else {
+			$this->default_gallery_screen();
+		}
+	}
 
+	function default_gallery_screen(){
 		global $bp;
 		// build media query
 		$query_param = array();
@@ -324,6 +294,56 @@ class RTMediaBPComponent extends BP_Component {
 			$template = 'media-gallery';
 		}
 		include( RTMediaTemplate::locate_template( $template ) );
+	}
+
+	/*
+	 *  ---------------------------------------------------------------------------------------------------------------
+	 *
+	 * Below function are for rtMedia, they are not component related but needed in order to integrate rtMedia with
+	 * BuddyPress component. Write all such functions in below section.
+	 *
+	 * ----------------------------------------------------------------------------------------------------------------
+	 */
+
+	function init(){
+		add_filter( 'rtmedia_query_filter', array( $this, 'remove_page_no_from_query' ), 10, 1 );
+		add_filter( 'rtmedia_action_query_in_populate_media', array( $this, 'add_current_page_in_fetch_media' ), 10, 2 );
+	}
+
+	function is_single_media(){
+		global $bp;
+		return apply_filters( 'rtm_bp_is_single_media', is_numeric( $bp->current_action ) );
+	}
+
+	function add_current_page_in_fetch_media( $action_query, $media_for_total_count ){
+
+		if( isset( $action_query->page ) ){
+			$action_query->page = $this->current_media_page;
+		}
+
+		return $action_query;
+	}
+
+	function remove_page_no_from_query( $query_param ){
+		global $bp;
+
+		if( $bp->current_action == 'pg' ){
+			unset( $query_param[ 'media_type' ] );
+		}
+
+		return $query_param;
+	}
+
+	function setup_current_media_page_no(){
+		global $bp;
+
+		if( !empty( $bp->action_variables ) && is_array( $bp->action_variables ) ){
+			if( $bp->current_action == 'pg' ){
+				$this->current_media_page = $bp->action_variables[0];
+			} elseif( $bp->action_variables[0] == 'pg' ){
+				$this->current_media_page = $bp->action_variables[1];
+			}
+		}
 	}
 
 }
