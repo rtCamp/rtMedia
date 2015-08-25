@@ -154,8 +154,7 @@ class RTMediaBPComponent extends BP_Component {
 
 		parent::setup_nav( $main_nav, $sub_nav );
 
-		// setup current media page no., handle /pg/{page_no} case
-		$this->setup_current_media_page_no();
+		do_action( 'rtmedia_bp_setup_nav' );
 	}
 
 	public function setup_admin_bar( $wp_admin_nav = array() ) {
@@ -308,6 +307,7 @@ class RTMediaBPComponent extends BP_Component {
 	function init(){
 		add_filter( 'rtmedia_query_filter', array( $this, 'remove_page_no_from_query' ), 10, 1 );
 		add_filter( 'rtmedia_action_query_in_populate_media', array( $this, 'add_current_page_in_fetch_media' ), 10, 2 );
+		add_action( 'rtmedia_bp_setup_nav', array( $this, 'setup_current_media_page_no' ) );
 	}
 
 	function is_single_media(){
