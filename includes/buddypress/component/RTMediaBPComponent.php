@@ -74,6 +74,15 @@ class RTMediaBPComponent extends BP_Component {
 			'default_subnav_slug'     => 'all',
 		);
 
+		$sub_nav[] = array(
+			'name'            => __( 'All', 'rtmedia' ),
+			'slug'            => 'all',
+			'parent_url'      => $media_page_link,
+			'parent_slug'     => $slug,
+			'screen_function' => array( $this, 'media_gallery_screen' ),
+			'position'        => 10,
+		);
+
 		if( is_rtmedia_album_enable() ){
 			$album_label = __( defined('RTMEDIA_ALBUM_PLURAL_LABEL') ? constant ( 'RTMEDIA_ALBUM_PLURAL_LABEL' ) : 'Albums', 'rtmedia' );
 			$sub_nav[] = array(
@@ -82,11 +91,11 @@ class RTMediaBPComponent extends BP_Component {
 				'parent_url'      => $media_page_link,
 				'parent_slug'     => $slug,
 				'screen_function' => array( $this, 'album_gallery_screen' ),
-				'position'        => 10,
+				'position'        => 20,
 			);
 		}
 
-		$pos_index = 20;
+		$pos_index = 30;
 		foreach ( $rtmedia->allowed_types as $type ) {
 
 			$name = strtoupper ( $type[ 'name' ] );
@@ -185,7 +194,7 @@ class RTMediaBPComponent extends BP_Component {
 			$query_param[ 'context_id' ] = bp_displayed_user_id();
 		}
 
-		if( !empty( $bp->current_action ) ){
+		if( !empty( $bp->current_action ) && $bp->current_action != 'all' ){
 			$query_param[ 'media_type' ] = $bp->current_action;
 		}
 
