@@ -666,6 +666,7 @@ class RTMedia {
 		$this->redirect_on_change_slug();
 		$this->set_default_sizes(); // set default sizes
 		$this->set_privacy(); // set privacy
+		$this->init_ajax_variable(); // set $rt_ajax_request global variable
 
 		/**
 		 * Load options/settings
@@ -756,6 +757,19 @@ class RTMedia {
 
 		do_action( 'bp_media_init' ); // legacy For plugin using this actions
 		do_action( 'rtmedia_init' );
+	}
+
+	function init_ajax_variable(){
+		global $rt_ajax_request;
+		$rt_ajax_request = false;
+
+		// check if it is an ajax request
+		if (
+			! empty( $_SERVER[ 'HTTP_X_REQUESTED_WITH' ] ) &&
+			strtolower( $_SERVER[ 'HTTP_X_REQUESTED_WITH' ] ) == 'xmlhttprequest'
+		){
+			$rt_ajax_request = true;
+		}
 	}
 
 	function load_component(){
