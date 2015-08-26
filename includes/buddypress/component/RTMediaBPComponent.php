@@ -248,7 +248,7 @@ class RTMediaBPComponent extends BP_Component {
 	function init_interaction(){
 		global $rtmedia_interaction, $bp;
 
-		if( ! $bp->current_action == 'all' ){
+		if( ! ( $bp->current_action == 'all' ) ){
 			$params = array_merge( (array) $bp->current_action, $bp->action_variables );
 		} else {
 			$params = $bp->action_variables;
@@ -256,7 +256,10 @@ class RTMediaBPComponent extends BP_Component {
 		if( ! $rtmedia_interaction ){
 			$rtmedia_interaction = new RTMediaInteraction();
 		}
-		$rtmedia_interaction->query_vars = apply_filters( 'rtm_bp_interaction_param', $params );
+		if( empty( $rtmedia_interaction->routes ) ){
+			$rtmedia_interaction->init();
+		}
+		$rtmedia_interaction->routes[ RTMEDIA_MEDIA_SLUG ]->query_vars = apply_filters( 'rtm_bp_interaction_param', $params );
 		do_action( 'rtm_bp_init_interaction' );
 	}
 

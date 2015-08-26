@@ -16,6 +16,21 @@ class RTMediaAJAX {
 		add_action( 'wp_ajax_rtmedia_backbone_template', array( $this, 'backbone_template' ) );
 		add_action( 'wp_ajax_rtmedia_create_album', array( $this, 'create_album' ) );
 		add_action( 'rtm_bp_init_media_query', array( $this, 'rtm_bp_load_more_media' ) );
+		add_action( 'rtm_bp_init_media_query', array( $this, 'rtm_bp_load_lightbox_media' ) );
+	}
+
+	/**
+	 * Hooked to "rtm_bp_init_media_query" action
+	 *
+	 * Check if current request is single media ajax request and load main template accordingly.
+	 */
+	function rtm_bp_load_lightbox_media(){
+		global $bp, $rt_ajax_request;
+		if( $rt_ajax_request && $bp->media->is_single_media_screen ){
+			status_header( 200 );
+			include( RTMediaTemplate::locate_template( 'main', '' ) );
+			die();
+		}
 	}
 
 	/**
