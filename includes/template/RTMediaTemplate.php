@@ -171,7 +171,6 @@ class RTMediaTemplate {
 
     function check_return_json() {
         global $rtmedia_query;
-        
         if ( $rtmedia_query->format == 'json' ) {
             $this->json_output();
         } else {
@@ -214,7 +213,7 @@ class RTMediaTemplate {
         if ( isset( $rtmedia->options[ 'general_display_media' ] ) && $options[ 'general_display_media' ] == 'pagination' ) {
             $return_array [ 'pagination' ] = rtmedia_get_pagination_values();
         }
-        
+
         echo json_encode( $return_array );
         die;
     }
@@ -722,7 +721,13 @@ class RTMediaTemplate {
      * @return type
      */
     function get_default_template() {
-        return apply_filters( 'rtmedia_media_template_include', self::locate_template( 'main', '' ) );
+	    $template = false;
+	    $context = false;
+	    if( ! class_exists( 'BuddyPress' ) ){
+		    $template = 'main';
+		    $context = '';
+	    }
+	    return apply_filters( 'rtmedia_media_template_include', self::locate_template( $template, $context ) );
     }
 
     /**

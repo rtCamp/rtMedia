@@ -15,6 +15,21 @@ class RTMediaAJAX {
 	public function __construct() {
 		add_action( 'wp_ajax_rtmedia_backbone_template', array( $this, 'backbone_template' ) );
 		add_action( 'wp_ajax_rtmedia_create_album', array( $this, 'create_album' ) );
+		add_action( 'rtm_bp_init_media_query', array( $this, 'rtm_bp_load_more_media' ) );
+	}
+
+	/**
+	 * Hooked to "rtm_bp_init_media_query" action
+	 *
+	 * Check and return JSON if current request for media is JSON.
+	 */
+	function rtm_bp_load_more_media(){
+		global $rtmedia_query;
+		if( is_a( $rtmedia_query, 'RTMediaQuery' ) && isset( $rtmedia_query->format ) && $rtmedia_query->format == 'json' ){
+			status_header ( 200 );
+			$rtmedia_template = new RTMediaTemplate();
+			$rtmedia_template->json_output();
+		}
 	}
 
 	function backbone_template() {
