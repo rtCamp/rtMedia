@@ -2215,7 +2215,7 @@ function rtm_get_music_cover_art( $media_object ){
 }
 
 /**
- * "get_music_cover_art" is to generic function name. It shouldn't added in very first place.
+ * "get_music_cover_art" is too generic function name. It shouldn't added in very first place.
  * It is renamed as "rtm_get_music_cover_art"
  */
 if( ! function_exists( 'get_music_cover_art' ) ){
