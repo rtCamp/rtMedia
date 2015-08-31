@@ -371,8 +371,8 @@ function rtmedia_image( $size = 'rt_media_thumbnail', $id = false, $recho = true
 		} else {
 			$thumbnail_id = false;
 		}
-		if ( $media_object->media_type == 'music' && $thumbnail_id == "" ) {
-			$thumbnail_id = get_music_cover_art( get_attached_file( $media_object->media_id ), $media_object->id );
+		if ( $media_object->media_type == 'music' && empty( $thumbnail_id ) ) {
+			$thumbnail_id = rtm_get_music_cover_art( $media_object );
 		}
 		if ( $media_object->media_type == 'music' && $thumbnail_id == "-1" ) {
 			$thumbnail_id = false;
@@ -2177,7 +2177,20 @@ function add_music_cover_art( $file_object, $upload_obj ) {
 	}
 }
 
-function get_music_cover_art( $file, $id ) {
+function rtm_get_music_cover_art( $media_object ){
+	// return URL if cover_art already set.
+	$url = $media_object->cover_art;
+	if( ! empty( $url ) && ! is_numeric( $url ) ){
+		return $url;
+	}
+
+	// return false if covert_art is already analyzed earlier
+	if( $url == '-1' ){
+		return false;
+	}
+
+	// Analyze media for the first time and set cover_art into database.
+	$file = get_attached_file( $media_object->media_id );
 	$mediaObj = new RTMediaMedia();
 
 	$media_tags = new RTMediaTags( $file );
@@ -2185,17 +2198,30 @@ function get_music_cover_art( $file, $id ) {
 	$image_info = $media_tags->image;
 	$image_mime = $image_info[ 'mime' ];
 	$mime = explode( "/", $image_mime );
+	$id = $media_object->id;
+	if( !empty( $image_info[ 'data' ] ) ){
 
-	$thumb_upload_info = wp_upload_bits( $title_info . "." . $mime[ sizeof( $mime ) - 1 ], null, $image_info[ 'data' ] );
-	if ( is_array( $thumb_upload_info ) && ! empty( $thumb_upload_info[ 'url' ] ) ) {
-		$mediaObj->model->update( array( 'cover_art' => $thumb_upload_info[ 'url' ] ), array( 'id' => $id ) );
+		$thumb_upload_info = wp_upload_bits( $title_info . "." . $mime[ sizeof( $mime ) - 1 ], null, $image_info[ 'data' ] );
+		if ( is_array( $thumb_upload_info ) && ! empty( $thumb_upload_info[ 'url' ] ) ) {
+			$mediaObj->model->update( array( 'cover_art' => $thumb_upload_info[ 'url' ] ), array( 'id' => $id ) );
 
-		return $thumb_upload_info[ 'url' ];
+			return $thumb_upload_info[ 'url' ];
+		}
 	}
 
 	$mediaObj->model->update( array( 'cover_art' => "-1" ), array( 'id' => $id ) );
 
 	return false;
+}
+
+/**
+ * "get_music_cover_art" is to generic function name. It shouldn't added in very first place.
+ * It is renamed as "rtm_get_music_cover_art"
+ */
+if( ! function_exists( 'get_music_cover_art' ) ){
+	function get_music_cover_art( $file, $id ) {
+		return false;
+	}
 }
 
 function rtmedia_bp_activity_get_types( $actions ) {
