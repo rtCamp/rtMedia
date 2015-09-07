@@ -254,7 +254,17 @@ class RTMediaPrivacy {
 			return;
 
 		if ( isset( $_POST[ "rtmedia-default-privacy" ] ) ) {
-			update_user_meta( get_current_user_id(), 'rtmedia-default-privacy', $_POST[ "rtmedia-default-privacy" ] );
+			$status = update_user_meta( get_current_user_id(), 'rtmedia-default-privacy', $_POST[ "rtmedia-default-privacy" ] );
+
+			if(false == $status ) {
+				$feedback = __( 'No changes were made to your account.', 'rtmedia' );
+				$feedback_type = 'error';
+			} else if ( true == $status ) {
+				$feedback = __( 'Your default privacy settings saved successfully.', 'rtmedia' );
+				$feedback_type = 'success';
+			}
+
+			echo '<script> rtmedia_gallery_action_alert_message("'. $feedback .'", "'. $feedback_type.'" ); </script>';
 		}
 		$default_privacy = get_user_meta( get_current_user_id(), 'rtmedia-default-privacy', true );
 		if ( $default_privacy === false || $default_privacy === '' ) {
