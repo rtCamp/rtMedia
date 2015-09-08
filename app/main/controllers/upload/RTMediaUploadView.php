@@ -43,7 +43,7 @@ class RTMediaUploadView {
 		global $rtmedia_query;
 		$album = '';
 		if ( apply_filters( 'rtmedia_render_select_album_upload', true ) ) {
-			if ( $rtmedia_query && isset( $rtmedia_query->media_query ) && isset( $rtmedia_query->media_query[ 'album_id' ] ) && is_rtmedia_album() ) {
+			if ( $rtmedia_query && isset( $rtmedia_query->media_query ) && isset( $rtmedia_query->media_query[ 'album_id' ] ) &&  is_rtmedia_album( $rtmedia_query->media_query[ 'album_id' ] ) ) {
 				$album = '<input class="rtmedia-current-album" type="hidden" name="rtmedia-current-album" value="' . $rtmedia_query->media_query[ 'album_id' ] . '" />';
 			} elseif ( is_rtmedia_album_enable() && $rtmedia_query && is_rtmedia_gallery() ) {
 

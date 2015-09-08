@@ -6,7 +6,7 @@ License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires at least: WordPress 3.6
 Tested up to: 4.3
-Stable tag: 3.8.15
+Stable tag: 3.8.16
 
 Add albums, photo, audio/video encoding, privacy, sharing, front-end uploads & more. All this works on mobile/tablets devices.
 
@@ -139,6 +139,12 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 
 == Changelog ==
+
+= 3.8.16 =
+* Update Persian translation and add Finnish translations
+* Add rtMedia SEO add-on
+* Fix encoding service for music files
+* Fix music file thumbnails
 
 = 3.8.15 =
 * CSS fixes
@@ -1057,8 +1063,8 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 == Upgrade Notice ==
 
-= 3.8.15 =
-Requires BuddyPress 1.7 or higher, if using BuddyPress. CSS fixes and added new hooks.
+= 3.8.16 =
+Requires BuddyPress 1.7 or higher, if using BuddyPress. Update Persian and Finnish translations, add rtMedia SEO add-on, fix encoding service for music files, fix music file thumbnails.
 
 == Sponsors ==
 

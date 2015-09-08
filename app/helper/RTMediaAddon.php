@@ -108,6 +108,16 @@ if ( ! class_exists( 'RTMediaAddon' ) ) {
 			$rtcamp_upload_url = 'https://rtcamp.r.worldssl.net/wp-content/uploads/';
 			$addons = array(
 				array(
+					'title' => __( 'SEO', 'rtmedia' ),
+					'img_src' => $rtcamp_upload_url . 'edd/2015/08/seo-xml.png',
+					'product_link' => 'https://rtcamp.com/products/rtmedia-seo/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media',
+					'desc' => '<p>' . __( 'Generate an XML sitemap for all the public media files uploaded via rtMedia plugin. These sitemaps can be useful to index search engine to improve website SEO.', 'rtmedia' ) . '</p>',
+					'price' => '$29',
+					'demo_link' => 'http://demo.rtcamp.com/rtmedia/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media',
+					'buy_now' => 'https://rtcamp.com/products/rtmedia-seo/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media',
+					'category' => 'general',
+					'purchased' => ( defined( 'RTMEDIA_SEO_URL' ) || file_exists( WP_PLUGIN_DIR . '/rtmedia-seo/index.php' ) ) ? true : false,
+				),array(
 					'title' => __( 'Moderation', 'rtmedia' ),
 					'img_src' => $rtcamp_upload_url . 'edd/2015/06/rtmedia-moderation.jpg',
 					'product_link' => 'https://rtcamp.com/products/rtmedia-moderation/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media',
