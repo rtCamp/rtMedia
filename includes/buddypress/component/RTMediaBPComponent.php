@@ -9,10 +9,11 @@ class RTMediaBPComponent extends BP_Component {
 	public $current_media_page = 1;
 
 	var $messages = array(
-		'error' => array( ),
-		'info' => array( ),
-		'updated' => array( )
+		'error'   => array(),
+		'info'    => array(),
+		'updated' => array()
 	);
+
 	/**
 	 * Initialise the component with appropriate parameters.
 	 * Add hook for plugins, themes, extensions to hook on to
@@ -36,11 +37,11 @@ class RTMediaBPComponent extends BP_Component {
 	function setup_globals( $args = array() ) {
 		global $bp;
 		$globals = array(
-			'slug' => RTMEDIA_MEDIA_SLUG,
-			'root_slug' => isset(
+			'slug'                  => RTMEDIA_MEDIA_SLUG,
+			'root_slug'             => isset(
 				$bp->pages->{$this->id}->slug ) ?
 				$bp->pages->{$this->id}->slug : RTMEDIA_MEDIA_SLUG,
-			'search_string' => __( 'Search Media...', 'rtmedia' ),
+			'search_string'         => __( 'Search Media...', 'rtmedia' ),
 			'notification_callback' => 'rtmedia_bp_notifications_callback'
 		);
 		parent::setup_globals( $globals );
@@ -66,18 +67,18 @@ class RTMediaBPComponent extends BP_Component {
 			return;
 		}
 
-		$slug        = apply_filters('rtmedia_media_tab_slug', RTMEDIA_MEDIA_SLUG );
+		$slug            = apply_filters( 'rtmedia_media_tab_slug', RTMEDIA_MEDIA_SLUG );
 		$media_page_link = trailingslashit( $user_domain . $slug );
 
 		global $rtmedia;
 
 		// set up nav
 		$main_nav = array(
-			'name'                    => RTMEDIA_MEDIA_LABEL,
-			'slug'                    => $slug,
-			'position'                => apply_filters('rtmedia_media_tab_position',99),
-			'screen_function'         => array( $this, 'media_gallery_screen' ),
-			'default_subnav_slug'     => 'all',
+			'name'                => RTMEDIA_MEDIA_LABEL,
+			'slug'                => $slug,
+			'position'            => apply_filters( 'rtmedia_media_tab_position', 99 ),
+			'screen_function'     => array( $this, 'media_gallery_screen' ),
+			'default_subnav_slug' => 'all',
 		);
 
 		$pos_index = 0;
@@ -91,11 +92,11 @@ class RTMediaBPComponent extends BP_Component {
 			'position'        => $pos_index += 10,
 		);
 
-		if( is_rtmedia_album_enable() ){
-			$album_label = __( defined('RTMEDIA_ALBUM_PLURAL_LABEL') ? constant ( 'RTMEDIA_ALBUM_PLURAL_LABEL' ) : 'Albums', 'rtmedia' );
-			$sub_nav[] = array(
+		if ( is_rtmedia_album_enable() ) {
+			$album_label = __( defined( 'RTMEDIA_ALBUM_PLURAL_LABEL' ) ? constant( 'RTMEDIA_ALBUM_PLURAL_LABEL' ) : 'Albums', 'rtmedia' );
+			$sub_nav[]   = array(
 				'name'            => $album_label,
-				'slug'            => constant ( 'RTMEDIA_ALBUM_SLUG' ),
+				'slug'            => constant( 'RTMEDIA_ALBUM_SLUG' ),
 				'parent_url'      => $media_page_link,
 				'parent_slug'     => $slug,
 				'screen_function' => array( $this, 'media_gallery_screen' ),
@@ -105,12 +106,12 @@ class RTMediaBPComponent extends BP_Component {
 
 		foreach ( $rtmedia->allowed_types as $type ) {
 
-			$name = strtoupper ( $type[ 'name' ] );
-			$type_label = __( defined('RTMEDIA_' . $name . '_PLURAL_LABEL') ? constant ( 'RTMEDIA_' . $name . '_PLURAL_LABEL' ) : $type[ 'plural_label' ], 'rtmedia' );
+			$name       = strtoupper( $type['name'] );
+			$type_label = __( defined( 'RTMEDIA_' . $name . '_PLURAL_LABEL' ) ? constant( 'RTMEDIA_' . $name . '_PLURAL_LABEL' ) : $type['plural_label'], 'rtmedia' );
 
 			$sub_nav[] = array(
 				'name'            => $type_label,
-				'slug'            => constant ( 'RTMEDIA_' . $name . '_SLUG' ),
+				'slug'            => constant( 'RTMEDIA_' . $name . '_SLUG' ),
 				'parent_url'      => $media_page_link,
 				'parent_slug'     => $slug,
 				'screen_function' => array( $this, 'media_gallery_screen' ),
@@ -118,7 +119,7 @@ class RTMediaBPComponent extends BP_Component {
 			);
 		}
 
-		if( $this->is_single_media() ){
+		if ( $this->is_single_media() ) {
 			$sub_nav[] = array(
 				'name'            => $bp->current_action,
 				'slug'            => $bp->current_action,
@@ -129,7 +130,7 @@ class RTMediaBPComponent extends BP_Component {
 			);
 		}
 
-		if( $bp->current_action == 'pg' ){
+		if ( $bp->current_action == 'pg' ) {
 			$sub_nav[] = array(
 				'name'            => $bp->current_action,
 				'slug'            => $bp->current_action,
@@ -141,9 +142,9 @@ class RTMediaBPComponent extends BP_Component {
 		}
 
 		// set template
-		if( $this->is_single_media() ){
+		if ( $this->is_single_media() ) {
 			$this->is_single_media_screen = true;
-		} elseif( $bp->current_action == 'album' ){
+		} elseif ( $bp->current_action == 'album' ) {
 			$this->is_album_gallery_screen = true;
 		} else {
 			$this->is_media_gallery_screen = true;
@@ -175,25 +176,26 @@ class RTMediaBPComponent extends BP_Component {
 				'href'   => trailingslashit( $user_domain . $this->slug )
 			);
 
-			if ( is_rtmedia_album_enable () ) {
+			if ( is_rtmedia_album_enable() ) {
 				$wp_admin_nav[] = array(
 					'parent' => 'my-account-' . $this->id,
-					'id' => 'my-account-' . $this->id . '-' . RTMEDIA_ALBUM_SLUG,
-					'title' => RTMEDIA_ALBUM_PLURAL_LABEL,
-					'href' => trailingslashit ( $user_domain . $this->slug ) . RTMEDIA_ALBUM_SLUG . '/',
+					'id'     => 'my-account-' . $this->id . '-' . RTMEDIA_ALBUM_SLUG,
+					'title'  => RTMEDIA_ALBUM_PLURAL_LABEL,
+					'href'   => trailingslashit( $user_domain . $this->slug ) . RTMEDIA_ALBUM_SLUG . '/',
 				);
 			}
 
 			foreach ( $rtmedia->allowed_types as $type ) {
-				if( isset( $rtmedia->options[ 'allowedTypes_' . $type[ 'name' ] . '_enabled' ] ) ) {
-					if ( ! $rtmedia->options[ 'allowedTypes_' . $type[ 'name' ] . '_enabled' ] )
+				if ( isset( $rtmedia->options[ 'allowedTypes_' . $type['name'] . '_enabled' ] ) ) {
+					if ( ! $rtmedia->options[ 'allowedTypes_' . $type['name'] . '_enabled' ] ) {
 						continue;
-					$name = strtoupper ( $type[ 'name' ] );
+					}
+					$name           = strtoupper( $type['name'] );
 					$wp_admin_nav[] = array(
-						'parent' => 'my-account-' . constant ( 'RTMEDIA_MEDIA_SLUG' ),
-						'id' => 'my-account-media-' . constant ( 'RTMEDIA_' . $name . '_SLUG' ),
-						'title' => $type[ 'plural_label' ],
-						'href' => trailingslashit ( $user_domain . $this->slug ) . constant ( 'RTMEDIA_' . $name . '_SLUG' ) . '/',
+						'parent' => 'my-account-' . constant( 'RTMEDIA_MEDIA_SLUG' ),
+						'id'     => 'my-account-media-' . constant( 'RTMEDIA_' . $name . '_SLUG' ),
+						'title'  => $type['plural_label'],
+						'href'   => trailingslashit( $user_domain . $this->slug ) . constant( 'RTMEDIA_' . $name . '_SLUG' ) . '/',
 					);
 				}
 			}
@@ -201,33 +203,33 @@ class RTMediaBPComponent extends BP_Component {
 			apply_filters( 'rtmedia_admin_bar_nav', $wp_admin_nav, $this->id );
 
 			// Legacy rtMedia sub admin menu hook
-			do_action( 'rtmedia_add_admin_bar_media_sub_menu', 'my-account-' . RTMEDIA_MEDIA_SLUG  );
+			do_action( 'rtmedia_add_admin_bar_media_sub_menu', 'my-account-' . RTMEDIA_MEDIA_SLUG );
 
 		}
 
 		parent::setup_admin_bar( $wp_admin_nav );
 	}
 
-	function media_gallery_screen () {
+	function media_gallery_screen() {
 		$this->init_interaction();
 		$this->init_media_query();
 		$this->load_template();
 	}
 
-	function load_template(){
+	function load_template() {
 		add_action( 'bp_template_title', array( $this, 'rtm_bp_template_title' ) );
 		add_action( 'bp_template_content', array( $this, 'rtm_bp_template_content' ) );
 
 		bp_core_load_template( apply_filters( 'rtmedia_template_filter', 'members/single/plugins' ) );
 	}
 
-	function rtm_bp_template_title(){
+	function rtm_bp_template_title() {
 		echo get_rtmedia_gallery_title();
 	}
 
-	function rtm_bp_template_content(){
+	function rtm_bp_template_content() {
 		global $rtmedia_template;
-		if( !$rtmedia_template ){
+		if ( ! $rtmedia_template ) {
 			$rtmedia_template = new RTMediaTemplate();
 		}
 
@@ -245,88 +247,92 @@ class RTMediaBPComponent extends BP_Component {
 	 * ----------------------------------------------------------------------------------------------------------------
 	 */
 
-	function init_interaction(){
+	function init_interaction() {
 		global $rtmedia_interaction, $bp;
 
-		if( ! ( $bp->current_action == 'all' ) ){
+		if ( ! ( $bp->current_action == 'all' ) ) {
 			$params = array_merge( (array) $bp->current_action, $bp->action_variables );
 		} else {
 			$params = $bp->action_variables;
 		}
-		if( ! $rtmedia_interaction ){
+		if ( ! $rtmedia_interaction ) {
 			$rtmedia_interaction = new RTMediaInteraction();
 		}
-		if( empty( $rtmedia_interaction->routes ) ){
+		if ( empty( $rtmedia_interaction->routes ) ) {
 			$rtmedia_interaction->init();
 		}
 		$rtmedia_interaction->routes[ RTMEDIA_MEDIA_SLUG ]->query_vars = apply_filters( 'rtm_bp_interaction_param', $params );
 		do_action( 'rtm_bp_init_interaction' );
 	}
 
-	function init_media_query(){
+	function init_media_query() {
 		global $rtmedia_query, $bp;
 
 		$query_param = array();
 
-		if( bp_is_user() ){
-			$query_param[ 'context' ] = 'profile';
-			$query_param[ 'context_id' ] = bp_displayed_user_id();
+		if ( bp_is_user() ) {
+			$query_param['context']    = 'profile';
+			$query_param['context_id'] = bp_displayed_user_id();
 		}
 
-		if( $this->is_single_media_screen ){
-			if( !empty( $bp->current_action ) ){
-				$query_param[ 'id' ] = $bp->current_action;
+		if ( $this->is_single_media_screen ) {
+			if ( ! empty( $bp->current_action ) ) {
+				$query_param['id'] = $bp->current_action;
 			}
-		} elseif( $this->is_album_gallery_screen ){
-			$query_param[ 'media_type' ] = 'album';
+		} elseif ( $this->is_album_gallery_screen ) {
+			$query_param['media_type'] = 'album';
 		} else {
-			if( !empty( $bp->current_action ) && $bp->current_action != 'all' ){
-				$query_param[ 'media_type' ] = $bp->current_action;
+			if ( ! empty( $bp->current_action ) && $bp->current_action != 'all' ) {
+				$query_param['media_type'] = $bp->current_action;
 			}
 		}
 
-		$query_param = apply_filters( "rtmedia_query_filter", $query_param );
+		$query_param   = apply_filters( "rtmedia_query_filter", $query_param );
 		$rtmedia_query = new RTMediaQuery( $query_param );
 		do_action( 'rtm_bp_init_media_query' );
 	}
 
-	function init(){
+	function init() {
 		add_filter( 'rtmedia_query_filter', array( $this, 'remove_page_no_from_query' ), 10, 1 );
-		add_filter( 'rtmedia_action_query_in_populate_media', array( $this, 'add_current_page_in_fetch_media' ), 10, 2 );
+		add_filter( 'rtmedia_action_query_in_populate_media', array(
+			$this,
+			'add_current_page_in_fetch_media'
+		), 10, 2 );
 		add_action( 'rtmedia_bp_setup_nav', array( $this, 'setup_current_media_page_no' ) );
 	}
 
-	function is_single_media(){
+	function is_single_media() {
 		global $bp;
+
 		return apply_filters( 'rtm_bp_is_single_media', is_numeric( $bp->current_action ) );
 	}
 
-	function add_current_page_in_fetch_media( $action_query, $media_for_total_count ){
+	function add_current_page_in_fetch_media( $action_query, $media_for_total_count ) {
 
-		if( isset( $action_query->page ) ){
+		if ( isset( $action_query->page ) ) {
 			$action_query->page = $this->current_media_page;
 		}
 
 		return $action_query;
 	}
 
-	function remove_page_no_from_query( $query_param ){
+	function remove_page_no_from_query( $query_param ) {
 		global $bp;
 
-		if( $bp->current_action == 'pg' ){
-			unset( $query_param[ 'media_type' ] );
+		if ( $bp->current_action == 'pg' ) {
+			unset( $query_param['media_type'] );
 		}
 
 		return $query_param;
 	}
 
-	function setup_current_media_page_no(){
+	function setup_current_media_page_no() {
 		global $bp;
 
-		if( $bp->current_component == RTMEDIA_MEDIA_SLUG &&!empty( $bp->action_variables ) && is_array( $bp->action_variables ) ){
-			if( $bp->current_action == 'pg' ){
+		if ( $bp->current_component == RTMEDIA_MEDIA_SLUG && ! empty( $bp->action_variables ) && is_array( $bp->action_variables ) ) {
+			if ( $bp->current_action == 'pg' ) {
 				$this->current_media_page = $bp->action_variables[0];
-			} elseif( $bp->action_variables[0] == 'pg' ){
+			} elseif ( $bp->action_variables[0] == 'pg' ) {
 				$this->current_media_page = $bp->action_variables[1];
 			}
 		}
@@ -334,12 +340,13 @@ class RTMediaBPComponent extends BP_Component {
 
 }
 
-function rtmedia_bp_notifications_callback($action, $media_id, $initiator_id, $total_items){
+function rtmedia_bp_notifications_callback( $action, $media_id, $initiator_id, $total_items ) {
 	$params = array(
-		'action'		=> $action,
-		'media_id'		=> $media_id,
-		'initiator_id'	=> $initiator_id,
-		'total_items'	=> $total_items
+		'action'       => $action,
+		'media_id'     => $media_id,
+		'initiator_id' => $initiator_id,
+		'total_items'  => $total_items
 	);
-	return apply_filters('bp_media_notifications',$params);
+
+	return apply_filters( 'bp_media_notifications', $params );
 }
