@@ -135,6 +135,15 @@ class RTMediaQuery {
 		return true;
 	}
 
+	function is_single_edit() {
+		$return = false;
+		if( $this->is_single() && isset( $this->action_query->action ) && $this->action_query->action == 'edit' ){
+			$return = true;
+		}
+
+		return $return;
+	}
+
 	function is_album() {
 		if ( isset ( $this->query[ 'media_type' ] ) && $this->query[ 'media_type' ] == 'album' ){
 			return true;

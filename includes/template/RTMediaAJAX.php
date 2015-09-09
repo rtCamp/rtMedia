@@ -15,12 +15,12 @@ class RTMediaAJAX {
 	public function __construct() {
 		add_action( 'wp_ajax_rtmedia_backbone_template', array( $this, 'backbone_template' ) );
 		add_action( 'wp_ajax_rtmedia_create_album', array( $this, 'create_album' ) );
-		add_action( 'rtm_bp_init_media_query', array( $this, 'rtm_bp_load_more_media' ) );
-		add_action( 'rtm_bp_init_media_query', array( $this, 'rtm_bp_load_lightbox_media' ) );
+		add_action( 'rtmedia_bp_media_query_init', array( $this, 'rtm_bp_load_more_media' ) );
+		add_action( 'rtmedia_bp_media_query_init', array( $this, 'rtm_bp_load_lightbox_media' ) );
 	}
 
 	/**
-	 * Hooked to "rtm_bp_init_media_query" action
+	 * Hooked to "rtmedia_bp_media_query_init" action
 	 *
 	 * Check if current request is single media ajax request and load main template accordingly.
 	 */
@@ -34,7 +34,7 @@ class RTMediaAJAX {
 	}
 
 	/**
-	 * Hooked to "rtm_bp_init_media_query" action
+	 * Hooked to "rtmedia_bp_media_query_init" action
 	 *
 	 * Check and return JSON if current request for media is JSON.
 	 */

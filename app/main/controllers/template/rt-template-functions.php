@@ -83,6 +83,16 @@ function get_rtmedia_gallery_title() {
 			$title = sprintf( '%s %s', __( 'All', 'rtmedia' ), $rtmedia->allowed_types[ $current_media_type ][ 'plural_label' ] );
 		}
 	}
+
+	if( isset( $rtmedia_query ) && $rtmedia_query->is_single() ){
+		global $rtmedia_media;
+		if( empty( $rtmedia_media ) && isset( $rtmedia_query->media[0] ) && isset( $rtmedia_query->media[0]->media_title ) ){
+			$title = $rtmedia_query->media[0]->media_title;
+		}
+	}
+	if( isset( $rtmedia_query ) && $rtmedia_query->is_single_edit() ){
+		$title = __( 'Edit Media', 'rtmedia' );
+	}
 	$title = apply_filters( 'rtmedia_gallery_title', $title );
 
 	return $title;

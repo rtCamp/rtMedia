@@ -208,3 +208,13 @@ a.rtmedia-upload-media-link {
 		}
 	}
 }
+
+.buddypress{
+    #rtm-single-media-nav-personal-li {
+        display: none;
+    }
+    .rtmedia-media-title, .rtmedia-single-edit-title-container {
+        display: none;
+    }
+}
+

@@ -54,108 +54,135 @@ class RTMediaBPComponent extends BP_Component {
 	function setup_nav( $main_nav = array(), $sub_nav = array() ) {
 
 		global $bp;
+//		echo '<pre>';
 //		var_dump( $bp->current_component );
 //		var_dump( $bp->current_action );
 //		var_dump( $bp->action_variables );
+//		echo '</pre>';
 
-		// Determine user to use
-		if ( bp_displayed_user_domain() ) {
-			$user_domain = bp_displayed_user_domain();
-		} elseif ( bp_loggedin_user_domain() ) {
-			$user_domain = bp_loggedin_user_domain();
-		} else {
-			return;
-		}
+		if( $bp->current_component ){
+			// Determine user to use
+			if ( bp_displayed_user_domain() ) {
+				$user_domain = bp_displayed_user_domain();
+			} elseif ( bp_loggedin_user_domain() ) {
+				$user_domain = bp_loggedin_user_domain();
+			} else {
+				return;
+			}
 
-		$slug            = apply_filters( 'rtmedia_media_tab_slug', RTMEDIA_MEDIA_SLUG );
-		$media_page_link = trailingslashit( $user_domain . $slug );
+			$slug            = apply_filters( 'rtmedia_media_tab_slug', RTMEDIA_MEDIA_SLUG );
+			$media_page_link = trailingslashit( $user_domain . $slug );
 
-		global $rtmedia;
+			global $rtmedia;
 
-		// set up nav
-		$main_nav = array(
-			'name'                => RTMEDIA_MEDIA_LABEL,
-			'slug'                => $slug,
-			'position'            => apply_filters( 'rtmedia_media_tab_position', 99 ),
-			'screen_function'     => array( $this, 'media_gallery_screen' ),
-			'default_subnav_slug' => 'all',
-		);
-
-		$pos_index = 0;
-
-		$sub_nav[] = array(
-			'name'            => __( 'All', 'rtmedia' ),
-			'slug'            => 'all',
-			'parent_url'      => $media_page_link,
-			'parent_slug'     => $slug,
-			'screen_function' => array( $this, 'media_gallery_screen' ),
-			'position'        => $pos_index += 10,
-		);
-
-		if ( is_rtmedia_album_enable() ) {
-			$album_label = __( defined( 'RTMEDIA_ALBUM_PLURAL_LABEL' ) ? constant( 'RTMEDIA_ALBUM_PLURAL_LABEL' ) : 'Albums', 'rtmedia' );
-			$sub_nav[]   = array(
-				'name'            => $album_label,
-				'slug'            => constant( 'RTMEDIA_ALBUM_SLUG' ),
-				'parent_url'      => $media_page_link,
-				'parent_slug'     => $slug,
-				'screen_function' => array( $this, 'media_gallery_screen' ),
-				'position'        => $pos_index += 10,
+			// set up nav
+			$main_nav = array(
+				'name'                => RTMEDIA_MEDIA_LABEL,
+				'slug'                => $slug,
+				'position'            => apply_filters( 'rtmedia_media_tab_position', 99 ),
+				'screen_function'     => array( $this, 'media_gallery_screen' ),
+				'default_subnav_slug' => 'all',
 			);
-		}
 
-		foreach ( $rtmedia->allowed_types as $type ) {
-
-			$name       = strtoupper( $type['name'] );
-			$type_label = __( defined( 'RTMEDIA_' . $name . '_PLURAL_LABEL' ) ? constant( 'RTMEDIA_' . $name . '_PLURAL_LABEL' ) : $type['plural_label'], 'rtmedia' );
+			$pos_index = 0;
 
 			$sub_nav[] = array(
-				'name'            => $type_label,
-				'slug'            => constant( 'RTMEDIA_' . $name . '_SLUG' ),
+				'name'            => __( 'All', 'rtmedia' ),
+				'slug'            => 'all',
 				'parent_url'      => $media_page_link,
 				'parent_slug'     => $slug,
 				'screen_function' => array( $this, 'media_gallery_screen' ),
 				'position'        => $pos_index += 10,
 			);
+
+			if ( is_rtmedia_album_enable() ) {
+				$album_label = __( defined( 'RTMEDIA_ALBUM_PLURAL_LABEL' ) ? constant( 'RTMEDIA_ALBUM_PLURAL_LABEL' ) : 'Albums', 'rtmedia' );
+				$sub_nav[]   = array(
+					'name'            => $album_label,
+					'slug'            => constant( 'RTMEDIA_ALBUM_SLUG' ),
+					'parent_url'      => $media_page_link,
+					'parent_slug'     => $slug,
+					'screen_function' => array( $this, 'media_gallery_screen' ),
+					'position'        => $pos_index += 10,
+				);
+			}
+
+			foreach ( $rtmedia->allowed_types as $type ) {
+
+				$name       = strtoupper( $type['name'] );
+				$type_label = __( defined( 'RTMEDIA_' . $name . '_PLURAL_LABEL' ) ? constant( 'RTMEDIA_' . $name . '_PLURAL_LABEL' ) : $type['plural_label'], 'rtmedia' );
+
+				$sub_nav[] = array(
+					'name'            => $type_label,
+					'slug'            => constant( 'RTMEDIA_' . $name . '_SLUG' ),
+					'parent_url'      => $media_page_link,
+					'parent_slug'     => $slug,
+					'screen_function' => array( $this, 'media_gallery_screen' ),
+					'position'        => $pos_index += 10,
+				);
+			}
+
+			// handle single media
+			if ( $this->is_single_media() ) {
+				$sub_nav[] = array(
+					'name'            => $bp->current_action,
+					'slug'            => $bp->current_action,
+					'parent_url'      => $media_page_link,
+					'parent_slug'     => $slug,
+					'screen_function' => array( $this, 'media_gallery_screen' ),
+					'position'        => $pos_index += 10,
+					'item_css_id'     => 'rtm-single-media-nav',
+				);
+			}
+
+			// handle load more
+			if ( $bp->current_action == 'pg' ) {
+				$sub_nav[] = array(
+					'name'            => $bp->current_action,
+					'slug'            => $bp->current_action,
+					'parent_url'      => $media_page_link,
+					'parent_slug'     => $slug,
+					'screen_function' => array( $this, 'media_gallery_screen' ),
+					'position'        => $pos_index += 10,
+				);
+			}
+
+			// handle comment
+			if ( $bp->current_action == 'comment' ) {
+				$sub_nav[] = array(
+					'name'            => $bp->current_action,
+					'slug'            => $bp->current_action,
+					'parent_url'      => $media_page_link,
+					'parent_slug'     => $slug,
+					'screen_function' => array( $this, 'media_gallery_screen' ),
+					'position'        => $pos_index += 10,
+				);
+			}
+
+			// set template
+			if ( $this->is_single_media() ) {
+				$this->is_single_media_screen = true;
+			} elseif ( $bp->current_action == 'album' ) {
+				$this->is_album_gallery_screen = true;
+			} else {
+				$this->is_media_gallery_screen = true;
+			}
+			$this->is_custom_gallery_screen = false;
+
+			//todo filter "is_media_gallery_screen", "is_album_gallery_screen" and "is_single_media_screen" and "is_custom_gallery_screen"
+
+			parent::setup_nav( $main_nav, $sub_nav );
+
+			do_action( 'rtmedia_bp_setup_nav' );
+
+			if( $bp->current_component == $slug ){
+				$this->init_interaction();
+				$this->init_media_query();
+				$this->handle_media_actions();
+			}
+
+			do_action( 'rtmedia_bp_media_query_init' );
 		}
-
-		if ( $this->is_single_media() ) {
-			$sub_nav[] = array(
-				'name'            => $bp->current_action,
-				'slug'            => $bp->current_action,
-				'parent_url'      => $media_page_link,
-				'parent_slug'     => $slug,
-				'screen_function' => array( $this, 'media_gallery_screen' ),
-				'position'        => $pos_index += 10,
-			);
-		}
-
-		if ( $bp->current_action == 'pg' ) {
-			$sub_nav[] = array(
-				'name'            => $bp->current_action,
-				'slug'            => $bp->current_action,
-				'parent_url'      => $media_page_link,
-				'parent_slug'     => $slug,
-				'screen_function' => array( $this, 'media_gallery_screen' ),
-				'position'        => $pos_index += 10,
-			);
-		}
-
-		// set template
-		if ( $this->is_single_media() ) {
-			$this->is_single_media_screen = true;
-		} elseif ( $bp->current_action == 'album' ) {
-			$this->is_album_gallery_screen = true;
-		} else {
-			$this->is_media_gallery_screen = true;
-		}
-		$this->is_custom_gallery_screen = false;
-
-		//todo filter "is_media_gallery_screen", "is_album_gallery_screen" and "is_single_media_screen" and "is_custom_gallery_screen"
-
-		parent::setup_nav( $main_nav, $sub_nav );
-
-		do_action( 'rtmedia_bp_setup_nav' );
 	}
 
 	public function setup_admin_bar( $wp_admin_nav = array() ) {
@@ -211,8 +238,6 @@ class RTMediaBPComponent extends BP_Component {
 	}
 
 	function media_gallery_screen() {
-		$this->init_interaction();
-		$this->init_media_query();
 		$this->load_template();
 	}
 
@@ -299,6 +324,15 @@ class RTMediaBPComponent extends BP_Component {
 			'add_current_page_in_fetch_media'
 		), 10, 2 );
 		add_action( 'rtmedia_bp_setup_nav', array( $this, 'setup_current_media_page_no' ) );
+	}
+
+	function handle_media_actions(){
+		global $rtmedia_query;
+		if ( isset( $rtmedia_query->action_query->action ) ) {
+			do_action( 'rtmedia_pre_action_' . $rtmedia_query->action_query->action );
+		} else {
+			do_action( 'rtmedia_pre_action_default' );
+		}
 	}
 
 	function is_single_media() {

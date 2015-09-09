@@ -2396,6 +2396,13 @@ a.rtmedia-upload-media-link {
   color: #FFFFFF;
 }
 
+.buddypress #rtm-single-media-nav-personal-li {
+  display: none;
+}
+.buddypress .rtmedia-media-title, .buddypress .rtmedia-single-edit-title-container {
+  display: none;
+}
+
 #buddypress .mejs-controls button {
   padding: 4px 8px;
   border: none;
