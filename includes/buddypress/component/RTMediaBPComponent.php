@@ -24,7 +24,7 @@ class RTMediaBPComponent extends BP_Component {
 	 */
 	function __construct() {
 		global $bp;
-		parent::start( 'media', 'MEDIA', RTMEDIA_PATH );
+		parent::start( RTMEDIA_BP_COMPONENT_ID, 'MEDIA', RTMEDIA_PATH );
 		$bp->active_components[ $this->id ] = '1';
 
 		// Add required actions and filters in this function.
@@ -41,10 +41,50 @@ class RTMediaBPComponent extends BP_Component {
 			'root_slug'             => isset(
 				$bp->pages->{$this->id}->slug ) ?
 				$bp->pages->{$this->id}->slug : RTMEDIA_MEDIA_SLUG,
-			'search_string'         => __( 'Search Media...', 'rtmedia' ),
+			'search_string'         => __( 'Search Media...', RTMEDIA_TEXT_DOMAIN ),
 			'notification_callback' => 'rtmedia_bp_notifications_callback'
 		);
 		parent::setup_globals( $globals );
+	}
+
+	/**
+	 * Include necessary files here
+	 *
+	 * @param array $includes
+	 */
+	function includes( $includes = array() ) {
+		parent::includes( $includes );
+	}
+
+	/**
+	 * Build media query here
+	 *
+	 * @param $query
+	 */
+	function parse_query( $query ) {
+		global $bp;
+
+		// set template
+		if ( $this->is_single_media() ) {
+			$this->is_single_media_screen = true;
+		} elseif ( $bp->current_action == 'album' ) {
+			$this->is_album_gallery_screen = true;
+		} else {
+			$this->is_media_gallery_screen = true;
+		}
+		$this->is_custom_gallery_screen = false;
+
+		//todo filter "is_media_gallery_screen", "is_album_gallery_screen" and "is_single_media_screen" and "is_custom_gallery_screen"
+
+		if ( $bp->current_component == $this->id ) {
+			$this->setup_current_media_page_no();
+			$this->init_interaction();
+			$this->init_media_query();
+			$this->init_templates();
+			$this->handle_media_actions();
+		}
+
+		parent::parse_query( $query );
 	}
 
 	/**
@@ -60,7 +100,7 @@ class RTMediaBPComponent extends BP_Component {
 //		var_dump( $bp->action_variables );
 //		echo '</pre>';
 
-		if( $bp->current_component ){
+		if ( $bp->current_component ) {
 			// Determine user to use
 			if ( bp_displayed_user_domain() ) {
 				$user_domain = bp_displayed_user_domain();
@@ -87,7 +127,7 @@ class RTMediaBPComponent extends BP_Component {
 			$pos_index = 0;
 
 			$sub_nav[] = array(
-				'name'            => __( 'All', 'rtmedia' ),
+				'name'            => __( 'All', RTMEDIA_TEXT_DOMAIN ),
 				'slug'            => 'all',
 				'parent_url'      => $media_page_link,
 				'parent_slug'     => $slug,
@@ -96,7 +136,7 @@ class RTMediaBPComponent extends BP_Component {
 			);
 
 			if ( is_rtmedia_album_enable() ) {
-				$album_label = __( defined( 'RTMEDIA_ALBUM_PLURAL_LABEL' ) ? constant( 'RTMEDIA_ALBUM_PLURAL_LABEL' ) : 'Albums', 'rtmedia' );
+				$album_label = __( defined( 'RTMEDIA_ALBUM_PLURAL_LABEL' ) ? constant( 'RTMEDIA_ALBUM_PLURAL_LABEL' ) : 'Albums', RTMEDIA_TEXT_DOMAIN );
 				$sub_nav[]   = array(
 					'name'            => $album_label,
 					'slug'            => constant( 'RTMEDIA_ALBUM_SLUG' ),
@@ -110,7 +150,7 @@ class RTMediaBPComponent extends BP_Component {
 			foreach ( $rtmedia->allowed_types as $type ) {
 
 				$name       = strtoupper( $type['name'] );
-				$type_label = __( defined( 'RTMEDIA_' . $name . '_PLURAL_LABEL' ) ? constant( 'RTMEDIA_' . $name . '_PLURAL_LABEL' ) : $type['plural_label'], 'rtmedia' );
+				$type_label = __( defined( 'RTMEDIA_' . $name . '_PLURAL_LABEL' ) ? constant( 'RTMEDIA_' . $name . '_PLURAL_LABEL' ) : $type['plural_label'], RTMEDIA_TEXT_DOMAIN );
 
 				$sub_nav[] = array(
 					'name'            => $type_label,
@@ -159,30 +199,7 @@ class RTMediaBPComponent extends BP_Component {
 				);
 			}
 
-			// set template
-			if ( $this->is_single_media() ) {
-				$this->is_single_media_screen = true;
-			} elseif ( $bp->current_action == 'album' ) {
-				$this->is_album_gallery_screen = true;
-			} else {
-				$this->is_media_gallery_screen = true;
-			}
-			$this->is_custom_gallery_screen = false;
-
-			//todo filter "is_media_gallery_screen", "is_album_gallery_screen" and "is_single_media_screen" and "is_custom_gallery_screen"
-
 			parent::setup_nav( $main_nav, $sub_nav );
-
-			do_action( 'rtmedia_bp_setup_nav' );
-
-			if( $bp->current_component == $slug ){
-				$this->init_interaction();
-				$this->init_media_query();
-				$this->init_templates();
-				$this->handle_media_actions();
-			}
-
-			do_action( 'rtmedia_bp_media_query_init' );
 		}
 	}
 
@@ -324,10 +341,9 @@ class RTMediaBPComponent extends BP_Component {
 			$this,
 			'add_current_page_in_fetch_media'
 		), 10, 2 );
-		add_action( 'rtmedia_bp_setup_nav', array( $this, 'setup_current_media_page_no' ) );
 	}
 
-	function handle_media_actions(){
+	function handle_media_actions() {
 		global $rtmedia_query;
 		if ( isset( $rtmedia_query->action_query->action ) ) {
 			do_action( 'rtmedia_pre_action_' . $rtmedia_query->action_query->action );
@@ -336,12 +352,12 @@ class RTMediaBPComponent extends BP_Component {
 		}
 
 		global $rtmedia_template;
-		if( !empty( $rtmedia_template ) ){
+		if ( ! empty( $rtmedia_template ) ) {
 			$rtmedia_template->check_return_media_action();
 		}
 	}
 
-	function init_templates(){
+	function init_templates() {
 		global $rtmedia_template;
 		if ( ! $rtmedia_template ) {
 			$rtmedia_template = new RTMediaTemplate();
@@ -375,8 +391,7 @@ class RTMediaBPComponent extends BP_Component {
 
 	function setup_current_media_page_no() {
 		global $bp;
-
-		if ( $bp->current_component == RTMEDIA_MEDIA_SLUG && ! empty( $bp->action_variables ) && is_array( $bp->action_variables ) ) {
+		if ( $bp->current_component == $this->id && ! empty( $bp->action_variables ) && is_array( $bp->action_variables ) ) {
 			if ( $bp->current_action == 'pg' ) {
 				$this->current_media_page = $bp->action_variables[0];
 			} elseif ( $bp->action_variables[0] == 'pg' ) {

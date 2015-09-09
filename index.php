@@ -53,6 +53,24 @@ if ( ! defined( 'RTMEDIA_BASE_NAME' ) ) {
 	define( 'RTMEDIA_BASE_NAME', plugin_basename( __FILE__ ) );
 }
 
+if ( ! defined( 'RTMEDIA_BP_COMPONENT_ID' ) ) {
+
+	/**
+	 * BuddyPress component ID of rtMedia
+	 *
+	 */
+	define( 'RTMEDIA_BP_COMPONENT_ID', 'media' );
+}
+
+if ( ! defined( 'RTMEDIA_TEXT_DOMAIN' ) ) {
+
+	/**
+	 * Textdomain for rtMedia
+	 *
+	 */
+	define( 'RTMEDIA_TEXT_DOMAIN', 'rtmedia' );
+}
+
 /**
  * Start session here to avoid header notice
  */
