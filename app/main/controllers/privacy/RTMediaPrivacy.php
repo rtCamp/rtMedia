@@ -258,8 +258,10 @@ class RTMediaPrivacy {
 			return;
 
 		if ( isset( $_POST[ "rtmedia-default-privacy" ] ) ) {
-			$status = update_user_meta( get_current_user_id(), 'rtmedia-default-privacy', $_POST[ "rtmedia-default-privacy" ] );
-
+			$status=false;
+			if ( wp_verify_nonce( $_POST['rtmedia_member_settings_privacy'],'rtmedia_member_settings_privacy' ) ) {
+				$status = update_user_meta(get_current_user_id(), 'rtmedia-default-privacy', $_POST["rtmedia-default-privacy"]);
+			}
 			if(false == $status ) {
 				$feedback = __( 'No changes were made to your account.', 'rtmedia' );
 				$feedback_type = 'error';
@@ -285,6 +287,7 @@ class RTMediaPrivacy {
 		?>
 		<form method="post">
 			<div class="rtm_bp_default_privacy">
+				<?php wp_nonce_field( 'rtmedia_member_settings_privacy', 'rtmedia_member_settings_privacy' ); ?>
 				<div class="section">
 					<div class="rtm-title"><h3><?php _e( 'Default Privacy', 'rtmedia' ); ?></h3></div>
 					<div class="rtm-privacy-levels">
