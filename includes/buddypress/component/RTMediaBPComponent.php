@@ -2,10 +2,10 @@
 
 class RTMediaBPComponent extends BP_Component {
 
-	public $is_single_media_screen;
-	public $is_media_gallery_screen;
-	public $is_album_gallery_screen;
-	public $is_custom_gallery_screen;
+	public $is_single_media_screen = false;
+	public $is_media_gallery_screen = false;
+	public $is_album_gallery_screen = false;
+	public $is_custom_gallery_screen = false;
 	public $current_media_page = 1;
 
 	var $messages = array(
@@ -178,6 +178,7 @@ class RTMediaBPComponent extends BP_Component {
 			if( $bp->current_component == $slug ){
 				$this->init_interaction();
 				$this->init_media_query();
+				$this->init_templates();
 				$this->handle_media_actions();
 			}
 
@@ -332,6 +333,18 @@ class RTMediaBPComponent extends BP_Component {
 			do_action( 'rtmedia_pre_action_' . $rtmedia_query->action_query->action );
 		} else {
 			do_action( 'rtmedia_pre_action_default' );
+		}
+
+		global $rtmedia_template;
+		if( !empty( $rtmedia_template ) ){
+			$rtmedia_template->check_return_media_action();
+		}
+	}
+
+	function init_templates(){
+		global $rtmedia_template;
+		if ( ! $rtmedia_template ) {
+			$rtmedia_template = new RTMediaTemplate();
 		}
 	}
 

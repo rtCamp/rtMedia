@@ -71,11 +71,7 @@ class RTMediaTemplate {
         $this->check_return_upload();
 
         if ( $rtmedia_interaction && isset( $rtmedia_interaction->context ) && in_array( $rtmedia_interaction->context->type, array( "profile", "group" ) ) ) {
-            $this->check_return_edit();
-            $this->check_return_delete();
-            $this->check_return_merge();
-            $this->check_return_comments();
-            $this->check_delete_comments();
+			$this->check_return_media_action();
             
             if ( isset( $rtmedia_query->is_gallery_shortcode ) && $rtmedia_query->is_gallery_shortcode == true && isset( $shortcode_attr[ 'name' ] ) && $shortcode_attr[ 'name' ] == 'gallery' ) {
                 $valid = $this->sanitize_gallery_attributes( $shortcode_attr[ 'attr' ] );
@@ -154,6 +150,14 @@ class RTMediaTemplate {
             }
         }
     }
+
+	function check_return_media_action(){
+		$this->check_return_edit();
+		$this->check_return_delete();
+		$this->check_return_merge();
+		$this->check_return_comments();
+		$this->check_delete_comments();
+	}
 
     function add_hidden_fields_in_gallery() {
         global $rtmedia_query;
