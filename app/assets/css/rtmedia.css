@@ -2399,7 +2399,7 @@ a.rtmedia-upload-media-link {
 .buddypress #rtm-single-media-nav-personal-li {
   display: none;
 }
-.buddypress .rtmedia-media-title, .buddypress .rtmedia-single-edit-title-container {
+.buddypress .rtm-gallery-title, .buddypress .rtmedia-media-title, .buddypress .rtmedia-single-edit-title-container {
   display: none;
 }
 
