@@ -322,8 +322,8 @@ class RTMediaBPComponent extends BP_Component {
 			if ( ! empty( $bp->current_action ) ) {
 				$query_param['id'] = $bp->current_action;
 			}
-		} elseif ( $this->is_album_gallery_screen ) {
-			$query_param['media_type'] = 'album';
+		//} elseif ( $this->is_album_gallery_screen ) {
+		//	$query_param['media_type'] = 'album';
 		} else {
 			if ( ! empty( $bp->current_action ) && $bp->current_action != 'all' ) {
 				$query_param['media_type'] = $bp->current_action;
@@ -337,7 +337,7 @@ class RTMediaBPComponent extends BP_Component {
 
 	function init() {
 		add_filter( 'rtmedia_query_filter', array( $this, 'remove_page_no_from_query' ), 10, 1 );
-		add_filter( 'rtmedia_action_query_in_populate_media', array(
+		add_filter( 'rtmedia_action_query_in_pop	ulate_media', array(
 			$this,
 			'add_current_page_in_fetch_media'
 		), 10, 2 );
