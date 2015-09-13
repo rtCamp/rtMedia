@@ -245,7 +245,7 @@ class RTMediaBPComponent extends BP_Component {
 				}
 			}
 
-			apply_filters( 'rtmedia_admin_bar_nav', $wp_admin_nav, $this->id );
+			$wp_admin_nav = apply_filters( 'rtmedia_admin_bar_nav', $wp_admin_nav, 'my-account-' . RTMEDIA_MEDIA_SLUG );
 
 			// Legacy rtMedia sub admin menu hook
 			do_action( 'rtmedia_add_admin_bar_media_sub_menu', 'my-account-' . RTMEDIA_MEDIA_SLUG );
