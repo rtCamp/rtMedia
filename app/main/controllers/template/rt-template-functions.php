@@ -303,8 +303,10 @@ function rtmedia_media( $size_flag = true, $echo = true, $media_size = "rt_media
 			$src = wp_get_attachment_image_src( $rtmedia_media->media_id, $media_size );
 			$html = "<img src='" . $src[ 0 ] . "' alt='" . $rtmedia_media->post_name . "' />";
 		} elseif ( $rtmedia_media->media_type == 'video' ) {
-			$size = " width=\"" . $rtmedia->options[ "defaultSizes_video_singlePlayer_width" ] . "\" height=\"" . $rtmedia->options[ "defaultSizes_video_singlePlayer_height" ] . "\" ";
-			$html = "<div id='rtm-mejs-video-container' style='width:" . $rtmedia->options[ "defaultSizes_video_singlePlayer_width" ] . "px;max-width:96%;max-height:" . $rtmedia->options[ "defaultSizes_video_singlePlayer_height" ] . "px;'>";
+			$height = $rtmedia->options[ "defaultSizes_video_singlePlayer_height" ];
+			$height = ( $height * 75 ) / 640;
+			$size = " width=\"" . $rtmedia->options[ "defaultSizes_video_singlePlayer_width" ] . "\" height=\"" . $height . "%\" ";
+			$html = "<div id='rtm-mejs-video-container' style='width:" . $rtmedia->options[ "defaultSizes_video_singlePlayer_width" ] . "px;height:".$height."%;  max-width:96%;max-height:80%;'>";
 			$html .= '<video src="' . wp_get_attachment_url( $rtmedia_media->media_id ) . '" ' . $size . ' type="video/mp4" class="wp-video-shortcode" id="bp_media_video_' . $rtmedia_media->id . '" controls="controls" preload="true"></video>';
 			$html .= '</div>';
 		} elseif ( $rtmedia_media->media_type == 'music' ) {
