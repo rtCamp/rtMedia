@@ -103,7 +103,7 @@ class RTMediaUploadFile {
 			$upload_dir[ 'url' ]  = trailingslashit( str_replace( $upload_dir[ 'subdir' ], '', $upload_dir[ 'url' ] ) ) . $rtmedia_folder_name . '/' . $rtmedia_upload_prefix . $id . $upload_dir[ 'subdir' ];
 		}
 
-		$upload_dir = apply_filters( "rtmedia_filter_upload_dir", $upload_dir );
+		$upload_dir = apply_filters( "rtmedia_filter_upload_dir", $upload_dir, $this->uploaded );
 
 		return $upload_dir;
 	}

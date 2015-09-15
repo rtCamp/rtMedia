@@ -684,15 +684,18 @@ class RTMediaEncoding {
 			$id = $this->media_author;
 		}
 
+		$rtmedia_folder_name = apply_filters( 'rtmedia_upload_folder_name', 'rtMedia' );
 
 		$upload_dir[ 'path' ] = trailingslashit(
 						str_replace( $upload_dir[ 'subdir' ], '', $upload_dir[ 'path' ] ) )
-				. 'rtMedia/' . $rtmedia_upload_prefix . $id .
+				. $rtmedia_folder_name . '/' . $rtmedia_upload_prefix . $id .
 				$upload_dir[ 'subdir' ];
 		$upload_dir[ 'url' ] = trailingslashit(
 						str_replace( $upload_dir[ 'subdir' ], '', $upload_dir[ 'url' ] ) )
-				. 'rtMedia/' . $rtmedia_upload_prefix . $id
+				. $rtmedia_folder_name . '/' . $rtmedia_upload_prefix . $id
 				. $upload_dir[ 'subdir' ];
+
+		$upload_dir = apply_filters( "rtmedia_filter_upload_dir", $upload_dir, $this->uploaded );
 
 		return $upload_dir;
 	}
