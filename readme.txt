@@ -6,7 +6,7 @@ License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires at least: WordPress 3.6
 Tested up to: 4.3
-Stable tag: 3.8.17
+Stable tag: 3.8.18
 
 Add albums, photo, audio/video encoding, privacy, sharing, front-end uploads & more. All this works on mobile/tablets devices.
 
@@ -139,6 +139,10 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 
 == Changelog ==
+
+= 3.8.18 =
+* Filter for media action text
+* Updated getid3 lib to latest version
 
 = 3.8.17 =
 * Fix upload dir filter
@@ -1068,8 +1072,8 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 == Upgrade Notice ==
 
-= 3.8.17 =
-Requires BuddyPress 1.7 or higher, if using BuddyPress. Fix upload dir filter, fix video max height in lightbox, fix shortcode issue with album uploader.
+= 3.8.18 =
+Requires BuddyPress 1.7 or higher, if using BuddyPress. Filter for media action text, updated getid3 lib to latest version.
 
 == Sponsors ==
 
