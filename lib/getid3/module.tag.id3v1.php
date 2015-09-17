@@ -3,6 +3,7 @@
 /// getID3() by James Heinrich <info@getid3.org>               //
 //  available at http://getid3.sourceforge.net                 //
 //            or http://www.getid3.org                         //
+//          also https://github.com/JamesHeinrich/getID3       //
 /////////////////////////////////////////////////////////////////
 // See readme.txt for more details                             //
 /////////////////////////////////////////////////////////////////
@@ -17,7 +18,7 @@
 class getid3_id3v1 extends getid3_handler
 {
 
-	function Analyze() {
+	public function Analyze() {
 		$info = &$this->getid3->info;
 
 		if (!getid3_lib::intValueSupported($info['filesize'])) {
@@ -25,9 +26,9 @@ class getid3_id3v1 extends getid3_handler
 			return false;
 		}
 
-		fseek($this->getid3->fp, -256, SEEK_END);
-		$preid3v1 = fread($this->getid3->fp, 128);
-		$id3v1tag = fread($this->getid3->fp, 128);
+		$this->fseek(-256, SEEK_END);
+		$preid3v1 = $this->fread(128);
+		$id3v1tag = $this->fread(128);
 
 		if (substr($id3v1tag, 0, 3) == 'TAG') {
 
@@ -102,11 +103,11 @@ class getid3_id3v1 extends getid3_handler
 		return true;
 	}
 
-	static function cutfield($str) {
+	public static function cutfield($str) {
 		return trim(substr($str, 0, strcspn($str, "\x00")));
 	}
 
-	static function ArrayOfGenres($allowSCMPXextended=false) {
+	public static function ArrayOfGenres($allowSCMPXextended=false) {
 		static $GenreLookup = array(
 			0    => 'Blues',
 			1    => 'Classic Rock',
@@ -290,7 +291,7 @@ class getid3_id3v1 extends getid3_handler
 		return ($allowSCMPXextended ? $GenreLookupSCMPX : $GenreLookup);
 	}
 
-	static function LookupGenreName($genreid, $allowSCMPXextended=true) {
+	public static function LookupGenreName($genreid, $allowSCMPXextended=true) {
 		switch ($genreid) {
 			case 'RX':
 			case 'CR':
@@ -302,12 +303,12 @@ class getid3_id3v1 extends getid3_handler
 				$genreid = intval($genreid); // to handle 3 or '3' or '03'
 				break;
 		}
-		$GenreLookup = getid3_id3v1::ArrayOfGenres($allowSCMPXextended);
+		$GenreLookup = self::ArrayOfGenres($allowSCMPXextended);
 		return (isset($GenreLookup[$genreid]) ? $GenreLookup[$genreid] : false);
 	}
 
-	static function LookupGenreID($genre, $allowSCMPXextended=false) {
-		$GenreLookup = getid3_id3v1::ArrayOfGenres($allowSCMPXextended);
+	public static function LookupGenreID($genre, $allowSCMPXextended=false) {
+		$GenreLookup = self::ArrayOfGenres($allowSCMPXextended);
 		$LowerCaseNoSpaceSearchTerm = strtolower(str_replace(' ', '', $genre));
 		foreach ($GenreLookup as $key => $value) {
 			if (strtolower(str_replace(' ', '', $value)) == $LowerCaseNoSpaceSearchTerm) {
@@ -317,14 +318,14 @@ class getid3_id3v1 extends getid3_handler
 		return false;
 	}
 
-	static function StandardiseID3v1GenreName($OriginalGenre) {
-		if (($GenreID = getid3_id3v1::LookupGenreID($OriginalGenre)) !== false) {
-			return getid3_id3v1::LookupGenreName($GenreID);
+	public static function StandardiseID3v1GenreName($OriginalGenre) {
+		if (($GenreID = self::LookupGenreID($OriginalGenre)) !== false) {
+			return self::LookupGenreName($GenreID);
 		}
 		return $OriginalGenre;
 	}
 
-	static function GenerateID3v1Tag($title, $artist, $album, $year, $genreid, $comment, $track='') {
+	public static function GenerateID3v1Tag($title, $artist, $album, $year, $genreid, $comment, $track='') {
 		$ID3v1Tag  = 'TAG';
 		$ID3v1Tag .= str_pad(trim(substr($title,  0, 30)), 30, "\x00", STR_PAD_RIGHT);
 		$ID3v1Tag .= str_pad(trim(substr($artist, 0, 30)), 30, "\x00", STR_PAD_RIGHT);
@@ -357,6 +358,3 @@ class getid3_id3v1 extends getid3_handler
 	}
 
 }
-
-
-?>

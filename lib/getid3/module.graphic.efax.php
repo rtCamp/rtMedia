@@ -3,6 +3,7 @@
 /// getID3() by James Heinrich <info@getid3.org>               //
 //  available at http://getid3.sourceforge.net                 //
 //            or http://www.getid3.org                         //
+//          also https://github.com/JamesHeinrich/getID3       //
 /////////////////////////////////////////////////////////////////
 // See readme.txt for more details                             //
 /////////////////////////////////////////////////////////////////
@@ -17,11 +18,11 @@
 class getid3_efax extends getid3_handler
 {
 
-	function Analyze() {
+	public function Analyze() {
 		$info = &$this->getid3->info;
 
-		fseek($this->getid3->fp, $info['avdataoffset'], SEEK_SET);
-		$efaxheader = fread($this->getid3->fp, 1024);
+		$this->fseek($info['avdataoffset']);
+		$efaxheader = $this->fread(1024);
 
 		$info['efax']['header']['magic'] = substr($efaxheader, 0, 2);
 		if ($info['efax']['header']['magic'] != "\xDC\xFE") {
@@ -48,6 +49,3 @@ return false;
 	}
 
 }
-
-
-?>

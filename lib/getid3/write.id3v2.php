@@ -3,6 +3,7 @@
 /// getID3() by James Heinrich <info@getid3.org>               //
 //  available at http://getid3.sourceforge.net                 //
 //            or http://www.getid3.org                         //
+//          also https://github.com/JamesHeinrich/getID3       //
 /////////////////////////////////////////////////////////////////
 // See readme.txt for more details                             //
 /////////////////////////////////////////////////////////////////
@@ -17,23 +18,23 @@ getid3_lib::IncludeDependency(GETID3_INCLUDEPATH.'module.tag.id3v2.php', __FILE_
 
 class getid3_write_id3v2
 {
-	var $filename;
-	var $tag_data;
-	var $fread_buffer_size           = 32768;    // read buffer size in bytes
-	var $paddedlength                = 4096;     // minimum length of ID3v2 tag in bytes
-	var $majorversion                = 3;        // ID3v2 major version (2, 3 (recommended), 4)
-	var $minorversion                = 0;        // ID3v2 minor version - always 0
-	var $merge_existing_data         = false;    // if true, merge new data with existing tags; if false, delete old tag data and only write new tags
-	var $id3v2_default_encodingid    = 0;        // default text encoding (ISO-8859-1) if not explicitly passed
-	var $id3v2_use_unsynchronisation = false;    // the specs say it should be TRUE, but most other ID3v2-aware programs are broken if unsynchronization is used, so by default don't use it.
-	var $warnings                    = array();  // any non-critical errors will be stored here
-	var $errors                      = array();  // any critical errors will be stored here
+	public $filename;
+	public $tag_data;
+	public $fread_buffer_size           = 32768;    // read buffer size in bytes
+	public $paddedlength                = 4096;     // minimum length of ID3v2 tag in bytes
+	public $majorversion                = 3;        // ID3v2 major version (2, 3 (recommended), 4)
+	public $minorversion                = 0;        // ID3v2 minor version - always 0
+	public $merge_existing_data         = false;    // if true, merge new data with existing tags; if false, delete old tag data and only write new tags
+	public $id3v2_default_encodingid    = 0;        // default text encoding (ISO-8859-1) if not explicitly passed
+	public $id3v2_use_unsynchronisation = false;    // the specs say it should be TRUE, but most other ID3v2-aware programs are broken if unsynchronization is used, so by default don't use it.
+	public $warnings                    = array();  // any non-critical errors will be stored here
+	public $errors                      = array();  // any critical errors will be stored here
 
-	function getid3_write_id3v2() {
+	public function getid3_write_id3v2() {
 		return true;
 	}
 
-	function WriteID3v2() {
+	public function WriteID3v2() {
 		// File MUST be writeable - CHMOD(646) at least. It's best if the
 		// directory is also writeable, because that method is both faster and less susceptible to errors.
 
@@ -91,7 +92,7 @@ class getid3_write_id3v2
 
 								rewind($fp_source);
 								if (!empty($OldThisFileInfo['avdataoffset'])) {
-									fseek($fp_source, $OldThisFileInfo['avdataoffset'], SEEK_SET);
+									fseek($fp_source, $OldThisFileInfo['avdataoffset']);
 								}
 
 								while ($buffer = fread($fp_source, $this->fread_buffer_size)) {
@@ -133,7 +134,7 @@ class getid3_write_id3v2
 		return false;
 	}
 
-	function RemoveID3v2() {
+	public function RemoveID3v2() {
 		// File MUST be writeable - CHMOD(646) at least. It's best if the
 		// directory is also writeable, because that method is both faster and less susceptible to errors.
 		if (is_writeable(dirname($this->filename))) {
@@ -152,7 +153,7 @@ class getid3_write_id3v2
 				}
 				rewind($fp_source);
 				if ($OldThisFileInfo['avdataoffset'] !== false) {
-					fseek($fp_source, $OldThisFileInfo['avdataoffset'], SEEK_SET);
+					fseek($fp_source, $OldThisFileInfo['avdataoffset']);
 				}
 				if (is_writable($this->filename) && is_file($this->filename) && ($fp_temp = fopen($this->filename.'getid3tmp', 'w+b'))) {
 					while ($buffer = fread($fp_source, $this->fread_buffer_size)) {
@@ -187,7 +188,7 @@ class getid3_write_id3v2
 				}
 				rewind($fp_source);
 				if ($OldThisFileInfo['avdataoffset'] !== false) {
-					fseek($fp_source, $OldThisFileInfo['avdataoffset'], SEEK_SET);
+					fseek($fp_source, $OldThisFileInfo['avdataoffset']);
 				}
 				if ($fp_temp = tmpfile()) {
 					while ($buffer = fread($fp_source, $this->fread_buffer_size)) {
@@ -225,7 +226,7 @@ class getid3_write_id3v2
 	}
 
 
-	function GenerateID3v2TagFlags($flags) {
+	public function GenerateID3v2TagFlags($flags) {
 		switch ($this->majorversion) {
 			case 4:
 				// %abcd0000
@@ -259,7 +260,7 @@ class getid3_write_id3v2
 	}
 
 
-	function GenerateID3v2FrameFlags($TagAlter=false, $FileAlter=false, $ReadOnly=false, $Compression=false, $Encryption=false, $GroupingIdentity=false, $Unsynchronisation=false, $DataLengthIndicator=false) {
+	public function GenerateID3v2FrameFlags($TagAlter=false, $FileAlter=false, $ReadOnly=false, $Compression=false, $Encryption=false, $GroupingIdentity=false, $Unsynchronisation=false, $DataLengthIndicator=false) {
 		switch ($this->majorversion) {
 			case 4:
 				// %0abc0000 %0h00kmnp
@@ -299,7 +300,7 @@ class getid3_write_id3v2
 		return chr(bindec($flag1)).chr(bindec($flag2));
 	}
 
-	function GenerateID3v2FrameData($frame_name, $source_data_array) {
+	public function GenerateID3v2FrameData($frame_name, $source_data_array) {
 		if (!getid3_id3v2::IsValidID3v2FrameName($frame_name, $this->majorversion)) {
 			return false;
 		}
@@ -1173,7 +1174,7 @@ class getid3_write_id3v2
 		return $framedata;
 	}
 
-	function ID3v2FrameIsAllowed($frame_name, $source_data_array) {
+	public function ID3v2FrameIsAllowed($frame_name, $source_data_array) {
 		static $PreviousFrames = array();
 
 		if ($frame_name === null) {
@@ -1530,7 +1531,7 @@ class getid3_write_id3v2
 		return true;
 	}
 
-	function GenerateID3v2Tag($noerrorsonly=true) {
+	public function GenerateID3v2Tag($noerrorsonly=true) {
 		$this->ID3v2FrameIsAllowed(null, ''); // clear static array in case this isn't the first call to $this->GenerateID3v2Tag()
 
 		$tagstring = '';
@@ -1542,6 +1543,9 @@ class getid3_write_id3v2
 						unset($frame_flags);
 						$frame_data = false;
 						if ($this->ID3v2FrameIsAllowed($frame_name, $source_data_array)) {
+							if(array_key_exists('description', $source_data_array) && array_key_exists('encodingid', $source_data_array) && array_key_exists('encoding', $this->tag_data)) {
+								$source_data_array['description'] = getid3_lib::iconv_fallback($this->tag_data['encoding'], $source_data_array['encoding'], $source_data_array['description']);
+							}
 							if ($frame_data = $this->GenerateID3v2FrameData($frame_name, $source_data_array)) {
 								$FrameUnsynchronisation = false;
 								if ($this->majorversion >= 4) {
@@ -1641,7 +1645,7 @@ class getid3_write_id3v2
 		return false;
 	}
 
-	function ID3v2IsValidPriceString($pricestring) {
+	public function ID3v2IsValidPriceString($pricestring) {
 		if (getid3_id3v2::LanguageLookup(substr($pricestring, 0, 3), true) == '') {
 			return false;
 		} elseif (!$this->IsANumber(substr($pricestring, 3), true)) {
@@ -1650,7 +1654,7 @@ class getid3_write_id3v2
 		return true;
 	}
 
-	function ID3v2FrameFlagsLookupTagAlter($framename) {
+	public function ID3v2FrameFlagsLookupTagAlter($framename) {
 		// unfinished
 		switch ($framename) {
 			case 'RGAD':
@@ -1662,7 +1666,7 @@ class getid3_write_id3v2
 		return $allow;
 	}
 
-	function ID3v2FrameFlagsLookupFileAlter($framename) {
+	public function ID3v2FrameFlagsLookupFileAlter($framename) {
 		// unfinished
 		switch ($framename) {
 			case 'RGAD':
@@ -1675,7 +1679,7 @@ class getid3_write_id3v2
 		}
 	}
 
-	function ID3v2IsValidETCOevent($eventid) {
+	public function ID3v2IsValidETCOevent($eventid) {
 		if (($eventid < 0) || ($eventid > 0xFF)) {
 			// outside range of 1 byte
 			return false;
@@ -1695,7 +1699,7 @@ class getid3_write_id3v2
 		return true;
 	}
 
-	function ID3v2IsValidSYLTtype($contenttype) {
+	public function ID3v2IsValidSYLTtype($contenttype) {
 		if (($contenttype >= 0) && ($contenttype <= 8) && ($this->majorversion == 4)) {
 			return true;
 		} elseif (($contenttype >= 0) && ($contenttype <= 6) && ($this->majorversion == 3)) {
@@ -1704,21 +1708,21 @@ class getid3_write_id3v2
 		return false;
 	}
 
-	function ID3v2IsValidRVA2channeltype($channeltype) {
+	public function ID3v2IsValidRVA2channeltype($channeltype) {
 		if (($channeltype >= 0) && ($channeltype <= 8) && ($this->majorversion == 4)) {
 			return true;
 		}
 		return false;
 	}
 
-	function ID3v2IsValidAPICpicturetype($picturetype) {
+	public function ID3v2IsValidAPICpicturetype($picturetype) {
 		if (($picturetype >= 0) && ($picturetype <= 0x14) && ($this->majorversion >= 2) && ($this->majorversion <= 4)) {
 			return true;
 		}
 		return false;
 	}
 
-	function ID3v2IsValidAPICimageformat($imageformat) {
+	public function ID3v2IsValidAPICimageformat($imageformat) {
 		if ($imageformat == '-->') {
 			return true;
 		} elseif ($this->majorversion == 2) {
@@ -1733,28 +1737,28 @@ class getid3_write_id3v2
 		return false;
 	}
 
-	function ID3v2IsValidCOMRreceivedAs($receivedas) {
+	public function ID3v2IsValidCOMRreceivedAs($receivedas) {
 		if (($this->majorversion >= 3) && ($receivedas >= 0) && ($receivedas <= 8)) {
 			return true;
 		}
 		return false;
 	}
 
-	function ID3v2IsValidRGADname($RGADname) {
+	public function ID3v2IsValidRGADname($RGADname) {
 		if (($RGADname >= 0) && ($RGADname <= 2)) {
 			return true;
 		}
 		return false;
 	}
 
-	function ID3v2IsValidRGADoriginator($RGADoriginator) {
+	public function ID3v2IsValidRGADoriginator($RGADoriginator) {
 		if (($RGADoriginator >= 0) && ($RGADoriginator <= 3)) {
 			return true;
 		}
 		return false;
 	}
 
-	function ID3v2IsValidTextEncoding($textencodingbyte) {
+	public function ID3v2IsValidTextEncoding($textencodingbyte) {
 		static $ID3v2IsValidTextEncoding_cache = array(
 			2 => array(true, true),
 			3 => array(true, true),
@@ -1762,7 +1766,7 @@ class getid3_write_id3v2
 		return isset($ID3v2IsValidTextEncoding_cache[$this->majorversion][$textencodingbyte]);
 	}
 
-	function Unsynchronise($data) {
+	public function Unsynchronise($data) {
 		// Whenever a false synchronisation is found within the tag, one zeroed
 		// byte is inserted after the first false synchronisation byte. The
 		// format of a correct sync that should be altered by ID3 encoders is as
@@ -1792,8 +1796,8 @@ class getid3_write_id3v2
 		return $unsyncheddata;
 	}
 
-	function is_hash($var) {
-		// written by dev-nullØchristophe*vg
+	public function is_hash($var) {
+		// written by dev-nullÃ˜christophe*vg
 		// taken from http://www.php.net/manual/en/function.array-merge-recursive.php
 		if (is_array($var)) {
 			$keys = array_keys($var);
@@ -1807,8 +1811,8 @@ class getid3_write_id3v2
 		return false;
 	}
 
-	function array_join_merge($arr1, $arr2) {
-		// written by dev-nullØchristophe*vg
+	public function array_join_merge($arr1, $arr2) {
+		// written by dev-nullÃ˜christophe*vg
 		// taken from http://www.php.net/manual/en/function.array-merge-recursive.php
 		if (is_array($arr1) && is_array($arr2)) {
 			// the same -> merge
@@ -1831,14 +1835,14 @@ class getid3_write_id3v2
 		}
 	}
 
-	function IsValidMIMEstring($mimestring) {
+	public function IsValidMIMEstring($mimestring) {
 		if ((strlen($mimestring) >= 3) && (strpos($mimestring, '/') > 0) && (strpos($mimestring, '/') < (strlen($mimestring) - 1))) {
 			return true;
 		}
 		return false;
 	}
 
-	function IsWithinBitRange($number, $maxbits, $signed=false) {
+	public function IsWithinBitRange($number, $maxbits, $signed=false) {
 		if ($signed) {
 			if (($number > (0 - pow(2, $maxbits - 1))) && ($number <= pow(2, $maxbits - 1))) {
 				return true;
@@ -1851,7 +1855,7 @@ class getid3_write_id3v2
 		return false;
 	}
 
-	function safe_parse_url($url) {
+	public function safe_parse_url($url) {
 		$parts = @parse_url($url);
 		$parts['scheme'] = (isset($parts['scheme']) ? $parts['scheme'] : '');
 		$parts['host']   = (isset($parts['host'])   ? $parts['host']   : '');
@@ -1862,7 +1866,7 @@ class getid3_write_id3v2
 		return $parts;
 	}
 
-	function IsValidURL($url, $allowUserPass=false) {
+	public function IsValidURL($url, $allowUserPass=false) {
 		if ($url == '') {
 			return false;
 		}
@@ -1893,7 +1897,7 @@ class getid3_write_id3v2
 		return false;
 	}
 
-	static function ID3v2ShortFrameNameLookup($majorversion, $long_description) {
+	public static function ID3v2ShortFrameNameLookup($majorversion, $long_description) {
 		$long_description = str_replace(' ', '_', strtolower(trim($long_description)));
 		static $ID3v2ShortFrameNameLookup = array();
 		if (empty($ID3v2ShortFrameNameLookup)) {
@@ -1920,6 +1924,7 @@ class getid3_write_id3v2
 			$ID3v2ShortFrameNameLookup[2]['publisher']                                        = 'TPB';
 			$ID3v2ShortFrameNameLookup[2]['isrc']                                             = 'TRC';
 			$ID3v2ShortFrameNameLookup[2]['tracknumber']                                      = 'TRK';
+			$ID3v2ShortFrameNameLookup[2]['track_number']                                     = 'TRK';
 			$ID3v2ShortFrameNameLookup[2]['size']                                             = 'TSI';
 			$ID3v2ShortFrameNameLookup[2]['encoder_settings']                                 = 'TSS';
 			$ID3v2ShortFrameNameLookup[2]['description']                                      = 'TT1';
@@ -1940,6 +1945,7 @@ class getid3_write_id3v2
 			// The following are common to ID3v2.3 and ID3v2.4
 			$ID3v2ShortFrameNameLookup[3]['audio_encryption']                                 = 'AENC';
 			$ID3v2ShortFrameNameLookup[3]['attached_picture']                                 = 'APIC';
+			$ID3v2ShortFrameNameLookup[3]['picture']                                          = 'APIC';
 			$ID3v2ShortFrameNameLookup[3]['comment']                                          = 'COMM';
 			$ID3v2ShortFrameNameLookup[3]['commercial']                                       = 'COMR';
 			$ID3v2ShortFrameNameLookup[3]['encryption_method_registration']                   = 'ENCR';
@@ -1987,6 +1993,7 @@ class getid3_write_id3v2
 			$ID3v2ShortFrameNameLookup[3]['part_of_a_set']                                    = 'TPOS';
 			$ID3v2ShortFrameNameLookup[3]['publisher']                                        = 'TPUB';
 			$ID3v2ShortFrameNameLookup[3]['tracknumber']                                      = 'TRCK';
+			$ID3v2ShortFrameNameLookup[3]['track_number']                                     = 'TRCK';
 			$ID3v2ShortFrameNameLookup[3]['internet_radio_station_name']                      = 'TRSN';
 			$ID3v2ShortFrameNameLookup[3]['internet_radio_station_owner']                     = 'TRSO';
 			$ID3v2ShortFrameNameLookup[3]['isrc']                                             = 'TSRC';
@@ -2047,4 +2054,3 @@ class getid3_write_id3v2
 
 }
 
-?>

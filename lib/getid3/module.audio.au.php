@@ -3,6 +3,7 @@
 /// getID3() by James Heinrich <info@getid3.org>               //
 //  available at http://getid3.sourceforge.net                 //
 //            or http://www.getid3.org                         //
+//          also https://github.com/JamesHeinrich/getID3       //
 /////////////////////////////////////////////////////////////////
 // See readme.txt for more details                             //
 /////////////////////////////////////////////////////////////////
@@ -17,11 +18,11 @@
 class getid3_au extends getid3_handler
 {
 
-	function Analyze() {
+	public function Analyze() {
 		$info = &$this->getid3->info;
 
-		fseek($this->getid3->fp, $info['avdataoffset'], SEEK_SET);
-		$AUheader  = fread($this->getid3->fp, 8);
+		$this->fseek($info['avdataoffset']);
+		$AUheader  = $this->fread(8);
 
 		$magic = '.snd';
 		if (substr($AUheader, 0, 4) != $magic) {
@@ -39,7 +40,7 @@ class getid3_au extends getid3_handler
 		$thisfile_au['encoding']               = 'ISO-8859-1';
 
 		$thisfile_au['header_length']   = getid3_lib::BigEndian2Int(substr($AUheader,  4, 4));
-		$AUheader .= fread($this->getid3->fp, $thisfile_au['header_length'] - 8);
+		$AUheader .= $this->fread($thisfile_au['header_length'] - 8);
 		$info['avdataoffset'] += $thisfile_au['header_length'];
 
 		$thisfile_au['data_size']             = getid3_lib::BigEndian2Int(substr($AUheader,  8, 4));
@@ -69,7 +70,7 @@ class getid3_au extends getid3_handler
 		return true;
 	}
 
-	function AUdataFormatNameLookup($id) {
+	public function AUdataFormatNameLookup($id) {
 		static $AUdataFormatNameLookup = array(
 			0  => 'unspecified format',
 			1  => '8-bit mu-law',
@@ -103,7 +104,7 @@ class getid3_au extends getid3_handler
 		return (isset($AUdataFormatNameLookup[$id]) ? $AUdataFormatNameLookup[$id] : false);
 	}
 
-	function AUdataFormatBitsPerSampleLookup($id) {
+	public function AUdataFormatBitsPerSampleLookup($id) {
 		static $AUdataFormatBitsPerSampleLookup = array(
 			1  => 8,
 			2  => 8,
@@ -131,7 +132,7 @@ class getid3_au extends getid3_handler
 		return (isset($AUdataFormatBitsPerSampleLookup[$id]) ? $AUdataFormatBitsPerSampleLookup[$id] : false);
 	}
 
-	function AUdataFormatUsedBitsPerSampleLookup($id) {
+	public function AUdataFormatUsedBitsPerSampleLookup($id) {
 		static $AUdataFormatUsedBitsPerSampleLookup = array(
 			1  => 8,
 			2  => 8,
@@ -160,6 +161,3 @@ class getid3_au extends getid3_handler
 	}
 
 }
-
-
-?>

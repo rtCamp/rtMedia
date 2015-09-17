@@ -3,6 +3,7 @@
 /// getID3() by James Heinrich <info@getid3.org>               //
 //  available at http://getid3.sourceforge.net                 //
 //            or http://www.getid3.org                         //
+//          also https://github.com/JamesHeinrich/getID3       //
 /////////////////////////////////////////////////////////////////
 // See readme.txt for more details                             //
 /////////////////////////////////////////////////////////////////
@@ -16,10 +17,10 @@
 
 class getid3_vqf extends getid3_handler
 {
-	function Analyze() {
+	public function Analyze() {
 		$info = &$this->getid3->info;
 
-		// based loosely on code from TTwinVQ by Jurgen Faul <jfaulØgmx*de>
+		// based loosely on code from TTwinVQ by Jurgen Faul <jfaulÃ˜gmx*de>
 		// http://jfaul.de/atl  or  http://j-faul.virtualave.net/atl/atl.html
 
 		$info['fileformat']            = 'vqf';
@@ -32,8 +33,8 @@ class getid3_vqf extends getid3_handler
 		$thisfile_vqf               = &$info['vqf'];
 		$thisfile_vqf_raw           = &$thisfile_vqf['raw'];
 
-		fseek($this->getid3->fp, $info['avdataoffset'], SEEK_SET);
-		$VQFheaderData = fread($this->getid3->fp, 16);
+		$this->fseek($info['avdataoffset']);
+		$VQFheaderData = $this->fread(16);
 
 		$offset = 0;
 		$thisfile_vqf_raw['header_tag'] = substr($VQFheaderData, $offset, 4);
@@ -50,11 +51,11 @@ class getid3_vqf extends getid3_handler
 		$thisfile_vqf_raw['size']    = getid3_lib::BigEndian2Int(substr($VQFheaderData, $offset, 4));
 		$offset += 4;
 
-		while (ftell($this->getid3->fp) < $info['avdataend']) {
+		while ($this->ftell() < $info['avdataend']) {
 
-			$ChunkBaseOffset = ftell($this->getid3->fp);
+			$ChunkBaseOffset = $this->ftell();
 			$chunkoffset = 0;
-			$ChunkData = fread($this->getid3->fp, 8);
+			$ChunkData = $this->fread(8);
 			$ChunkName = substr($ChunkData, $chunkoffset, 4);
 			if ($ChunkName == 'DATA') {
 				$info['avdataoffset'] = $ChunkBaseOffset;
@@ -63,12 +64,12 @@ class getid3_vqf extends getid3_handler
 			$chunkoffset += 4;
 			$ChunkSize = getid3_lib::BigEndian2Int(substr($ChunkData, $chunkoffset, 4));
 			$chunkoffset += 4;
-			if ($ChunkSize > ($info['avdataend'] - ftell($this->getid3->fp))) {
+			if ($ChunkSize > ($info['avdataend'] - $this->ftell())) {
 				$info['error'][] = 'Invalid chunk size ('.$ChunkSize.') for chunk "'.$ChunkName.'" at offset '.$ChunkBaseOffset;
 				break;
 			}
 			if ($ChunkSize > 0) {
-				$ChunkData .= fread($this->getid3->fp, $ChunkSize);
+				$ChunkData .= $this->fread($ChunkSize);
 			}
 
 			switch ($ChunkName) {
@@ -135,7 +136,7 @@ class getid3_vqf extends getid3_handler
 		return true;
 	}
 
-	function VQFchannelFrequencyLookup($frequencyid) {
+	public function VQFchannelFrequencyLookup($frequencyid) {
 		static $VQFchannelFrequencyLookup = array(
 			11 => 11025,
 			22 => 22050,
@@ -144,7 +145,7 @@ class getid3_vqf extends getid3_handler
 		return (isset($VQFchannelFrequencyLookup[$frequencyid]) ? $VQFchannelFrequencyLookup[$frequencyid] : $frequencyid * 1000);
 	}
 
-	function VQFcommentNiceNameLookup($shortname) {
+	public function VQFcommentNiceNameLookup($shortname) {
 		static $VQFcommentNiceNameLookup = array(
 			'NAME' => 'title',
 			'AUTH' => 'artist',
@@ -157,6 +158,3 @@ class getid3_vqf extends getid3_handler
 	}
 
 }
-
-
-?>

@@ -3,6 +3,7 @@
 /// getID3() by James Heinrich <info@getid3.org>               //
 //  available at http://getid3.sourceforge.net                 //
 //            or http://www.getid3.org                         //
+//          also https://github.com/JamesHeinrich/getID3       //
 /////////////////////////////////////////////////////////////////
 // See readme.txt for more details                             //
 /////////////////////////////////////////////////////////////////
@@ -14,7 +15,7 @@
 /////////////////////////////////////////////////////////////////
 //                                                             //
 // Module originally written by                                //
-//      Mike Mozolin <teddybearØmail*ru>                       //
+//      Mike Mozolin <teddybearÃ˜mail*ru>                       //
 //                                                             //
 /////////////////////////////////////////////////////////////////
 
@@ -22,7 +23,7 @@
 class getid3_tar extends getid3_handler
 {
 
-	function Analyze() {
+	public function Analyze() {
 		$info = &$this->getid3->info;
 
 		$info['fileformat'] = 'tar';
@@ -31,9 +32,9 @@ class getid3_tar extends getid3_handler
 		$unpack_header = 'a100fname/a8mode/a8uid/a8gid/a12size/a12mtime/a8chksum/a1typflag/a100lnkname/a6magic/a2ver/a32uname/a32gname/a8devmaj/a8devmin/a155prefix';
 		$null_512k = str_repeat("\x00", 512); // end-of-file marker
 
-		fseek($this->getid3->fp, 0);
+		$this->fseek(0);
 		while (!feof($this->getid3->fp)) {
-			$buffer = fread($this->getid3->fp, 512);
+			$buffer = $this->fread(512);
 			if (strlen($buffer) < 512) {
 				break;
 			}
@@ -82,12 +83,12 @@ class getid3_tar extends getid3_handler
 			}
 
 			// Read to the next chunk
-			fseek($this->getid3->fp, $size, SEEK_CUR);
+			$this->fseek($size, SEEK_CUR);
 
 			$diff = $size % 512;
 			if ($diff != 0) {
 				// Padding, throw away
-				fseek($this->getid3->fp, (512 - $diff), SEEK_CUR);
+				$this->fseek((512 - $diff), SEEK_CUR);
 			}
 			// Protect against tar-files with garbage at the end
 			if ($name == '') {
@@ -96,13 +97,13 @@ class getid3_tar extends getid3_handler
 			$info['tar']['file_details'][$name] = array (
 				'name'     => $name,
 				'mode_raw' => $mode,
-				'mode'     => getid3_tar::display_perms($mode),
+				'mode'     => self::display_perms($mode),
 				'uid'      => $uid,
 				'gid'      => $gid,
 				'size'     => $size,
 				'mtime'    => $mtime,
 				'chksum'   => $chksum,
-				'typeflag' => getid3_tar::get_flag_type($typflag),
+				'typeflag' => self::get_flag_type($typflag),
 				'linkname' => $lnkname,
 				'magic'    => $magic,
 				'version'  => $ver,
@@ -117,7 +118,7 @@ class getid3_tar extends getid3_handler
 	}
 
 	// Parses the file mode to file permissions
-	function display_perms($mode) {
+	public function display_perms($mode) {
 		// Determine Type
 		if     ($mode & 0x1000) $type='p'; // FIFO pipe
 		elseif ($mode & 0x2000) $type='c'; // Character special
@@ -152,7 +153,7 @@ class getid3_tar extends getid3_handler
 	}
 
 	// Converts the file type
-	function get_flag_type($typflag) {
+	public function get_flag_type($typflag) {
 		static $flag_types = array(
 			'0' => 'LF_NORMAL',
 			'1' => 'LF_LINK',
@@ -174,5 +175,3 @@ class getid3_tar extends getid3_handler
 	}
 
 }
-
-?>

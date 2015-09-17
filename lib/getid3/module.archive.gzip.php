@@ -3,6 +3,7 @@
 /// getID3() by James Heinrich <info@getid3.org>               //
 //  available at http://getid3.sourceforge.net                 //
 //            or http://www.getid3.org                         //
+//          also https://github.com/JamesHeinrich/getID3       //
 /////////////////////////////////////////////////////////////////
 // See readme.txt for more details                             //
 /////////////////////////////////////////////////////////////////
@@ -14,7 +15,7 @@
 /////////////////////////////////////////////////////////////////
 //                                                             //
 // Module originally written by                                //
-//      Mike Mozolin <teddybearØmail*ru>                       //
+//      Mike Mozolin <teddybearÃ˜mail*ru>                       //
 //                                                             //
 /////////////////////////////////////////////////////////////////
 
@@ -22,9 +23,9 @@
 class getid3_gzip extends getid3_handler {
 
 	// public: Optional file list - disable for speed.
-	var $option_gzip_parse_contents = false; // decode gzipped files, if possible, and parse recursively (.tar.gz for example)
+	public $option_gzip_parse_contents = false; // decode gzipped files, if possible, and parse recursively (.tar.gz for example)
 
-	function Analyze() {
+	public function Analyze() {
 		$info = &$this->getid3->info;
 
 		$info['fileformat'] = 'gzip';
@@ -35,12 +36,12 @@ class getid3_gzip extends getid3_handler {
 		//|ID1|ID2|CM |FLG|     MTIME     |XFL|OS |
 		//+---+---+---+---+---+---+---+---+---+---+
 
-		if ($info['filesize'] > $info['php_memory_limit']) {
+		if ($info['php_memory_limit'] && ($info['filesize'] > $info['php_memory_limit'])) {
 			$info['error'][] = 'File is too large ('.number_format($info['filesize']).' bytes) to read into memory (limit: '.number_format($info['php_memory_limit'] / 1048576).'MB)';
 			return false;
 		}
-		fseek($this->getid3->fp, 0);
-		$buffer = fread($this->getid3->fp, $info['filesize']);
+		$this->fseek(0);
+		$buffer = $this->fread($info['filesize']);
 
 		$arr_members = explode("\x1F\x8B\x08", $buffer);
 		while (true) {
@@ -55,7 +56,7 @@ class getid3_gzip extends getid3_handler {
 				$attr = unpack($unpack_header, substr($buf, 0, $start_length));
 				if (!$this->get_os_type(ord($attr['os']))) {
 					// Merge member with previous if wrong OS type
-					$arr_members[$i - 1] .= $buf;
+					$arr_members[($i - 1)] .= $buf;
 					$arr_members[$i] = '';
 					$is_wrong_members = true;
 					continue;
@@ -140,8 +141,9 @@ class getid3_gzip extends getid3_handler {
 			//|...original file name, zero-terminated...|
 			//+=========================================+
 			// GZIP files may have only one file, with no filename, so assume original filename is current filename without .gz
-			$thisInfo['filename'] = preg_replace('#\.gz$#i', '', $info['filename']);
+			$thisInfo['filename'] = preg_replace('#\\.gz$#i', '', $info['filename']);
 			if ($thisInfo['flags']['filename']) {
+				$thisInfo['filename'] = '';
 				while (true) {
 					if (ord($buff[$fpointer]) == 0) {
 						$fpointer++;
@@ -245,7 +247,7 @@ class getid3_gzip extends getid3_handler {
 	}
 
 	// Converts the OS type
-	function get_os_type($key) {
+	public function get_os_type($key) {
 		static $os_type = array(
 			'0'   => 'FAT filesystem (MS-DOS, OS/2, NT/Win32)',
 			'1'   => 'Amiga',
@@ -267,7 +269,7 @@ class getid3_gzip extends getid3_handler {
 	}
 
 	// Converts the eXtra FLags
-	function get_xflag_type($key) {
+	public function get_xflag_type($key) {
 		static $xflag_type = array(
 			'0' => 'unknown',
 			'2' => 'maximum compression',
@@ -277,4 +279,3 @@ class getid3_gzip extends getid3_handler {
 	}
 }
 
-?>

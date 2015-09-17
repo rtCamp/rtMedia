@@ -3,6 +3,7 @@
 /// getID3() by James Heinrich <info@getid3.org>               //
 //  available at http://getid3.sourceforge.net                 //
 //            or http://www.getid3.org                         //
+//          also https://github.com/JamesHeinrich/getID3       //
 /////////////////////////////////////////////////////////////////
 // See readme.txt for more details                             //
 /////////////////////////////////////////////////////////////////
@@ -17,11 +18,11 @@
 class getid3_rkau extends getid3_handler
 {
 
-	function Analyze() {
+	public function Analyze() {
 		$info = &$this->getid3->info;
 
-		fseek($this->getid3->fp, $info['avdataoffset'], SEEK_SET);
-		$RKAUHeader = fread($this->getid3->fp, 20);
+		$this->fseek($info['avdataoffset']);
+		$RKAUHeader = $this->fread(20);
 		$magic = 'RKA';
 		if (substr($RKAUHeader, 0, 3) != $magic) {
 			$info['error'][] = 'Expecting "'.getid3_lib::PrintHexBytes($magic).'" at offset '.$info['avdataoffset'].', found "'.getid3_lib::PrintHexBytes(substr($RKAUHeader, 0, 3)).'"';
@@ -76,7 +77,7 @@ class getid3_rkau extends getid3_handler
 	}
 
 
-	function RKAUqualityLookup(&$RKAUdata) {
+	public function RKAUqualityLookup(&$RKAUdata) {
 		$level   = ($RKAUdata['raw']['quality'] & 0xF0) >> 4;
 		$quality =  $RKAUdata['raw']['quality'] & 0x0F;
 
@@ -90,5 +91,3 @@ class getid3_rkau extends getid3_handler
 	}
 
 }
-
-?>

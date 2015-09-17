@@ -3,6 +3,7 @@
 /// getID3() by James Heinrich <info@getid3.org>               //
 //  available at http://getid3.sourceforge.net                 //
 //            or http://www.getid3.org                         //
+//          also https://github.com/JamesHeinrich/getID3       //
 /////////////////////////////////////////////////////////////////
 // See readme.txt for more details                             //
 /////////////////////////////////////////////////////////////////
@@ -10,43 +11,45 @@
 // module.audio-video.quicktime.php                            //
 // module for analyzing Quicktime and MP3-in-MP4 files         //
 // dependencies: module.audio.mp3.php                          //
+// dependencies: module.tag.id3v2.php                          //
 //                                                            ///
 /////////////////////////////////////////////////////////////////
 
 getid3_lib::IncludeDependency(GETID3_INCLUDEPATH.'module.audio.mp3.php', __FILE__, true);
+getid3_lib::IncludeDependency(GETID3_INCLUDEPATH.'module.tag.id3v2.php', __FILE__, true); // needed for ISO 639-2 language code lookup
 
 class getid3_quicktime extends getid3_handler
 {
 
-	var $ReturnAtomData        = true;
-	var $ParseAllPossibleAtoms = false;
+	public $ReturnAtomData        = true;
+	public $ParseAllPossibleAtoms = false;
 
-	function Analyze() {
+	public function Analyze() {
 		$info = &$this->getid3->info;
 
 		$info['fileformat'] = 'quicktime';
 		$info['quicktime']['hinting']    = false;
 		$info['quicktime']['controller'] = 'standard'; // may be overridden if 'ctyp' atom is present
 
-		fseek($this->getid3->fp, $info['avdataoffset'], SEEK_SET);
+		$this->fseek($info['avdataoffset']);
 
 		$offset      = 0;
 		$atomcounter = 0;
-
+		$atom_data_read_buffer_size = ($info['php_memory_limit'] ? round($info['php_memory_limit'] / 2) : $this->getid3->option_fread_buffer_size * 1024); // allow [default: 32MB] if PHP configured with no memory_limit
 		while ($offset < $info['avdataend']) {
 			if (!getid3_lib::intValueSupported($offset)) {
 				$info['error'][] = 'Unable to parse atom at offset '.$offset.' because beyond '.round(PHP_INT_MAX / 1073741824).'GB limit of PHP filesystem functions';
 				break;
 			}
-			fseek($this->getid3->fp, $offset, SEEK_SET);
-			$AtomHeader = fread($this->getid3->fp, 8);
+			$this->fseek($offset);
+			$AtomHeader = $this->fread(8);
 
 			$atomsize = getid3_lib::BigEndian2Int(substr($AtomHeader, 0, 4));
 			$atomname = substr($AtomHeader, 4, 4);
 
-			// 64-bit MOV patch by jlegateØktnc*com
+			// 64-bit MOV patch by jlegateÃ˜ktnc*com
 			if ($atomsize == 1) {
-				$atomsize = getid3_lib::BigEndian2Int(fread($this->getid3->fp, 8));
+				$atomsize = getid3_lib::BigEndian2Int($this->fread(8));
 			}
 
 			$info['quicktime'][$atomname]['name']   = $atomname;
@@ -64,58 +67,8 @@ class getid3_quicktime extends getid3_handler
 				// to read user data atoms, you should allow for the terminating 0.
 				break;
 			}
-			switch ($atomname) {
-				case 'mdat': // Media DATa atom
-					// 'mdat' contains the actual data for the audio/video
-					if (($atomsize > 8) && (!isset($info['avdataend_tmp']) || ($info['quicktime'][$atomname]['size'] > ($info['avdataend_tmp'] - $info['avdataoffset'])))) {
-
-						$info['avdataoffset'] = $info['quicktime'][$atomname]['offset'] + 8;
-						$OldAVDataEnd         = $info['avdataend'];
-						$info['avdataend']    = $info['quicktime'][$atomname]['offset'] + $info['quicktime'][$atomname]['size'];
-
-						$getid3_temp = new getID3();
-						$getid3_temp->openfile($this->getid3->filename);
-						$getid3_temp->info['avdataoffset'] = $info['avdataoffset'];
-						$getid3_temp->info['avdataend']    = $info['avdataend'];
-						$getid3_mp3 = new getid3_mp3($getid3_temp);
-						if ($getid3_mp3->MPEGaudioHeaderValid($getid3_mp3->MPEGaudioHeaderDecode(fread($this->getid3->fp, 4)))) {
-							$getid3_mp3->getOnlyMPEGaudioInfo($getid3_temp->info['avdataoffset'], false);
-							if (!empty($getid3_temp->info['warning'])) {
-								foreach ($getid3_temp->info['warning'] as $value) {
-									$info['warning'][] = $value;
-								}
-							}
-							if (!empty($getid3_temp->info['mpeg'])) {
-								$info['mpeg'] = $getid3_temp->info['mpeg'];
-								if (isset($info['mpeg']['audio'])) {
-									$info['audio']['dataformat']   = 'mp3';
-									$info['audio']['codec']        = (!empty($info['mpeg']['audio']['encoder']) ? $info['mpeg']['audio']['encoder'] : (!empty($info['mpeg']['audio']['codec']) ? $info['mpeg']['audio']['codec'] : (!empty($info['mpeg']['audio']['LAME']) ? 'LAME' :'mp3')));
-									$info['audio']['sample_rate']  = $info['mpeg']['audio']['sample_rate'];
-									$info['audio']['channels']     = $info['mpeg']['audio']['channels'];
-									$info['audio']['bitrate']      = $info['mpeg']['audio']['bitrate'];
-									$info['audio']['bitrate_mode'] = strtolower($info['mpeg']['audio']['bitrate_mode']);
-									$info['bitrate']               = $info['audio']['bitrate'];
-								}
-							}
-						}
-						unset($getid3_mp3, $getid3_temp);
-						$info['avdataend'] = $OldAVDataEnd;
-						unset($OldAVDataEnd);
-
-					}
-					break;
-
-				case 'free': // FREE space atom
-				case 'skip': // SKIP atom
-				case 'wide': // 64-bit expansion placeholder atom
-					// 'free', 'skip' and 'wide' are just padding, contains no useful data at all
-					break;
-
-				default:
-					$atomHierarchy = array();
-					$info['quicktime'][$atomname] = $this->QuicktimeParseAtom($atomname, $atomsize, fread($this->getid3->fp, $atomsize), $offset, $atomHierarchy, $this->ParseAllPossibleAtoms);
-					break;
-			}
+			$atomHierarchy = array();
+			$info['quicktime'][$atomname] = $this->QuicktimeParseAtom($atomname, $atomsize, $this->fread(min($atomsize, $atom_data_read_buffer_size)), $offset, $atomHierarchy, $this->ParseAllPossibleAtoms);
 
 			$offset += $atomsize;
 			$atomcounter++;
@@ -165,19 +118,18 @@ class getid3_quicktime extends getid3_handler
 		return true;
 	}
 
-	function QuicktimeParseAtom($atomname, $atomsize, $atom_data, $baseoffset, &$atomHierarchy, $ParseAllPossibleAtoms) {
+	public function QuicktimeParseAtom($atomname, $atomsize, $atom_data, $baseoffset, &$atomHierarchy, $ParseAllPossibleAtoms) {
 		// http://developer.apple.com/techpubs/quicktime/qtdevdocs/APIREF/INDEX/atomalphaindex.htm
+		// https://code.google.com/p/mp4v2/wiki/iTunesMetadata
 
 		$info = &$this->getid3->info;
 
-		$atom_parent = array_pop($atomHierarchy);
+		$atom_parent = end($atomHierarchy); // not array_pop($atomHierarchy); see http://www.getid3.org/phpBB3/viewtopic.php?t=1717
 		array_push($atomHierarchy, $atomname);
 		$atom_structure['hierarchy'] = implode(' ', $atomHierarchy);
 		$atom_structure['name']      = $atomname;
 		$atom_structure['size']      = $atomsize;
 		$atom_structure['offset']    = $baseoffset;
-//echo getid3_lib::PrintHexBytes(substr($atom_data, 0, 8)).'<br>';
-//echo getid3_lib::PrintHexBytes(substr($atom_data, 0, 8), false).'<br><br>';
 		switch ($atomname) {
 			case 'moov': // MOVie container atom
 			case 'trak': // TRAcK container atom
@@ -197,27 +149,27 @@ class getid3_quicktime extends getid3_handler
 				break;
 
 			case 'ilst': // Item LiST container atom
-				$atom_structure['subatoms'] = $this->QuicktimeParseContainerAtom($atom_data, $baseoffset + 8, $atomHierarchy, $ParseAllPossibleAtoms);
-
-				// some "ilst" atoms contain data atoms that have a numeric name, and the data is far more accessible if the returned array is compacted
-				$allnumericnames = true;
-				foreach ($atom_structure['subatoms'] as $subatomarray) {
-					if (!is_integer($subatomarray['name']) || (count($subatomarray['subatoms']) != 1)) {
-						$allnumericnames = false;
-						break;
-					}
-				}
-				if ($allnumericnames) {
-					$newData = array();
+				if ($atom_structure['subatoms'] = $this->QuicktimeParseContainerAtom($atom_data, $baseoffset + 8, $atomHierarchy, $ParseAllPossibleAtoms)) {
+					// some "ilst" atoms contain data atoms that have a numeric name, and the data is far more accessible if the returned array is compacted
+					$allnumericnames = true;
 					foreach ($atom_structure['subatoms'] as $subatomarray) {
-						foreach ($subatomarray['subatoms'] as $newData_subatomarray) {
-							unset($newData_subatomarray['hierarchy'], $newData_subatomarray['name']);
-							$newData[$subatomarray['name']] = $newData_subatomarray;
+						if (!is_integer($subatomarray['name']) || (count($subatomarray['subatoms']) != 1)) {
+							$allnumericnames = false;
 							break;
 						}
 					}
-					$atom_structure['data'] = $newData;
-					unset($atom_structure['subatoms']);
+					if ($allnumericnames) {
+						$newData = array();
+						foreach ($atom_structure['subatoms'] as $subatomarray) {
+							foreach ($subatomarray['subatoms'] as $newData_subatomarray) {
+								unset($newData_subatomarray['hierarchy'], $newData_subatomarray['name']);
+								$newData[$subatomarray['name']] = $newData_subatomarray;
+								break;
+							}
+						}
+						$atom_structure['data'] = $newData;
+						unset($atom_structure['subatoms']);
+					}
 				}
 				break;
 
@@ -271,81 +223,88 @@ class getid3_quicktime extends getid3_handler
 				break;
 
 
+			case "\xA9".'alb': // ALBum
+			case "\xA9".'ART': //
+			case "\xA9".'art': // ARTist
+			case "\xA9".'aut': //
+			case "\xA9".'cmt': // CoMmenT
+			case "\xA9".'com': // COMposer
+			case "\xA9".'cpy': //
+			case "\xA9".'day': // content created year
+			case "\xA9".'dir': //
+			case "\xA9".'ed1': //
+			case "\xA9".'ed2': //
+			case "\xA9".'ed3': //
+			case "\xA9".'ed4': //
+			case "\xA9".'ed5': //
+			case "\xA9".'ed6': //
+			case "\xA9".'ed7': //
+			case "\xA9".'ed8': //
+			case "\xA9".'ed9': //
+			case "\xA9".'enc': //
+			case "\xA9".'fmt': //
+			case "\xA9".'gen': // GENre
+			case "\xA9".'grp': // GRouPing
+			case "\xA9".'hst': //
+			case "\xA9".'inf': //
+			case "\xA9".'lyr': // LYRics
+			case "\xA9".'mak': //
+			case "\xA9".'mod': //
+			case "\xA9".'nam': // full NAMe
+			case "\xA9".'ope': //
+			case "\xA9".'PRD': //
+			case "\xA9".'prf': //
+			case "\xA9".'req': //
+			case "\xA9".'src': //
+			case "\xA9".'swr': //
+			case "\xA9".'too': // encoder
+			case "\xA9".'trk': // TRacK
+			case "\xA9".'url': //
+			case "\xA9".'wrn': //
+			case "\xA9".'wrt': // WRiTer
+			case '----': // itunes specific
 			case 'aART': // Album ARTist
+			case 'akID': // iTunes store account type
+			case 'apID': // Purchase Account
+			case 'atID': //
 			case 'catg': // CaTeGory
+			case 'cmID': //
+			case 'cnID': //
 			case 'covr': // COVeR artwork
 			case 'cpil': // ComPILation
 			case 'cprt': // CoPyRighT
 			case 'desc': // DESCription
 			case 'disk': // DISK number
 			case 'egid': // Episode Global ID
+			case 'geID': //
 			case 'gnre': // GeNRE
+			case 'hdvd': // HD ViDeo
 			case 'keyw': // KEYWord
-			case 'ldes':
+			case 'ldes': // Long DEScription
 			case 'pcst': // PodCaST
 			case 'pgap': // GAPless Playback
+			case 'plID': //
 			case 'purd': // PURchase Date
 			case 'purl': // Podcast URL
-			case 'rati':
-			case 'rndu':
-			case 'rpdu':
+			case 'rati': //
+			case 'rndu': //
+			case 'rpdu': //
 			case 'rtng': // RaTiNG
-			case 'stik':
+			case 'sfID': // iTunes store country
+			case 'soaa': // SOrt Album Artist
+			case 'soal': // SOrt ALbum
+			case 'soar': // SOrt ARtist
+			case 'soco': // SOrt COmposer
+			case 'sonm': // SOrt NaMe
+			case 'sosn': // SOrt Show Name
+			case 'stik': //
 			case 'tmpo': // TeMPO (BPM)
 			case 'trkn': // TRacK Number
+			case 'tven': // tvEpisodeID
 			case 'tves': // TV EpiSode
 			case 'tvnn': // TV Network Name
 			case 'tvsh': // TV SHow Name
 			case 'tvsn': // TV SeasoN
-			case 'akID': // iTunes store account type
-			case 'apID':
-			case 'atID':
-			case 'cmID':
-			case 'cnID':
-			case 'geID':
-			case 'plID':
-			case 'sfID': // iTunes store country
-			case '©alb': // ALBum
-			case '©art': // ARTist
-			case '©ART':
-			case '©aut':
-			case '©cmt': // CoMmenT
-			case '©com': // COMposer
-			case '©cpy':
-			case '©day': // content created year
-			case '©dir':
-			case '©ed1':
-			case '©ed2':
-			case '©ed3':
-			case '©ed4':
-			case '©ed5':
-			case '©ed6':
-			case '©ed7':
-			case '©ed8':
-			case '©ed9':
-			case '©enc':
-			case '©fmt':
-			case '©gen': // GENre
-			case '©grp': // GRouPing
-			case '©hst':
-			case '©inf':
-			case '©lyr': // LYRics
-			case '©mak':
-			case '©mod':
-			case '©nam': // full NAMe
-			case '©ope':
-			case '©PRD':
-			case '©prd':
-			case '©prf':
-			case '©req':
-			case '©src':
-			case '©swr':
-			case '©too': // encoder
-			case '©trk': // TRacK
-			case '©url':
-			case '©wrn':
-			case '©wrt': // WRiTer
-			case '----': // itunes specific
 				if ($atom_parent == 'udta') {
 					// User data atom handler
 					$atom_structure['data_length'] = getid3_lib::BigEndian2Int(substr($atom_data, 0, 2));
@@ -366,12 +325,18 @@ class getid3_quicktime extends getid3_handler
 							$boxsmallsize = getid3_lib::BigEndian2Int(substr($atom_data, $atomoffset,     2));
 							$boxsmalltype =                           substr($atom_data, $atomoffset + 2, 2);
 							$boxsmalldata =                           substr($atom_data, $atomoffset + 4, $boxsmallsize);
+							if ($boxsmallsize <= 1) {
+								$info['warning'][] = 'Invalid QuickTime atom smallbox size "'.$boxsmallsize.'" in atom "'.preg_replace('#[^a-zA-Z0-9 _\\-]#', '?', $atomname).'" at offset: '.($atom_structure['offset'] + $atomoffset);
+								$atom_structure['data'] = null;
+								$atomoffset = strlen($atom_data);
+								break;
+							}
 							switch ($boxsmalltype) {
 								case "\x10\xB5":
 									$atom_structure['data'] = $boxsmalldata;
 									break;
 								default:
-									$info['warning'][] = 'Unknown QuickTime smallbox type: "'.getid3_lib::PrintHexBytes($boxsmalltype).'" at offset '.$baseoffset;
+									$info['warning'][] = 'Unknown QuickTime smallbox type: "'.preg_replace('#[^a-zA-Z0-9 _\\-]#', '?', $boxsmalltype).'" ('.trim(getid3_lib::PrintHexBytes($boxsmalltype)).') at offset '.$baseoffset;
 									$atom_structure['data'] = $atom_data;
 									break;
 							}
@@ -382,6 +347,13 @@ class getid3_quicktime extends getid3_handler
 							$boxsize = getid3_lib::BigEndian2Int(substr($atom_data, $atomoffset, 4));
 							$boxtype =                           substr($atom_data, $atomoffset + 4, 4);
 							$boxdata =                           substr($atom_data, $atomoffset + 8, $boxsize - 8);
+							if ($boxsize <= 1) {
+								$info['warning'][] = 'Invalid QuickTime atom box size "'.$boxsize.'" in atom "'.preg_replace('#[^a-zA-Z0-9 _\\-]#', '?', $atomname).'" at offset: '.($atom_structure['offset'] + $atomoffset);
+								$atom_structure['data'] = null;
+								$atomoffset = strlen($atom_data);
+								break;
+							}
+							$atomoffset += $boxsize;
 
 							switch ($boxtype) {
 								case 'mean':
@@ -393,21 +365,25 @@ class getid3_quicktime extends getid3_handler
 									$atom_structure['version']   = getid3_lib::BigEndian2Int(substr($boxdata,  0, 1));
 									$atom_structure['flags_raw'] = getid3_lib::BigEndian2Int(substr($boxdata,  1, 3));
 									switch ($atom_structure['flags_raw']) {
-										case 0:  // data flag
+										case  0: // data flag
 										case 21: // tmpo/cpil flag
 											switch ($atomname) {
 												case 'cpil':
+												case 'hdvd':
 												case 'pcst':
 												case 'pgap':
+													// 8-bit integer (boolean)
 													$atom_structure['data'] = getid3_lib::BigEndian2Int(substr($boxdata, 8, 1));
 													break;
 
 												case 'tmpo':
+													// 16-bit integer
 													$atom_structure['data'] = getid3_lib::BigEndian2Int(substr($boxdata, 8, 2));
 													break;
 
 												case 'disk':
 												case 'trkn':
+													// binary
 													$num       = getid3_lib::BigEndian2Int(substr($boxdata, 10, 2));
 													$num_total = getid3_lib::BigEndian2Int(substr($boxdata, 12, 2));
 													$atom_structure['data']  = empty($num) ? '' : $num;
@@ -415,21 +391,25 @@ class getid3_quicktime extends getid3_handler
 													break;
 
 												case 'gnre':
+													// enum
 													$GenreID = getid3_lib::BigEndian2Int(substr($boxdata, 8, 4));
 													$atom_structure['data']    = getid3_id3v1::LookupGenreName($GenreID - 1);
 													break;
 
 												case 'rtng':
+													// 8-bit integer
 													$atom_structure[$atomname] = getid3_lib::BigEndian2Int(substr($boxdata, 8, 1));
 													$atom_structure['data']    = $this->QuicktimeContentRatingLookup($atom_structure[$atomname]);
 													break;
 
 												case 'stik':
+													// 8-bit integer (enum)
 													$atom_structure[$atomname] = getid3_lib::BigEndian2Int(substr($boxdata, 8, 1));
 													$atom_structure['data']    = $this->QuicktimeSTIKLookup($atom_structure[$atomname]);
 													break;
 
 												case 'sfID':
+													// 32-bit integer
 													$atom_structure[$atomname] = getid3_lib::BigEndian2Int(substr($boxdata, 8, 4));
 													$atom_structure['data']    = $this->QuicktimeStoreFrontCodeLookup($atom_structure[$atomname]);
 													break;
@@ -439,26 +419,45 @@ class getid3_quicktime extends getid3_handler
 													$atom_structure['data'] = substr($boxdata, 8);
 													break;
 
+												case 'plID':
+													// 64-bit integer
+													$atom_structure['data'] = getid3_lib::BigEndian2Int(substr($boxdata, 8, 8));
+
+												case 'atID':
+												case 'cnID':
+												case 'geID':
+												case 'tves':
+												case 'tvsn':
 												default:
+													// 32-bit integer
 													$atom_structure['data'] = getid3_lib::BigEndian2Int(substr($boxdata, 8, 4));
 											}
 											break;
 
-										case 1:  // text flag
+										case  1: // text flag
 										case 13: // image flag
 										default:
 											$atom_structure['data'] = substr($boxdata, 8);
+											if ($atomname == 'covr') {
+												// not a foolproof check, but better than nothing
+												if (preg_match('#^\xFF\xD8\xFF#', $atom_structure['data'])) {
+													$atom_structure['image_mime'] = 'image/jpeg';
+												} elseif (preg_match('#^\x89\x50\x4E\x47\x0D\x0A\x1A\x0A#', $atom_structure['data'])) {
+													$atom_structure['image_mime'] = 'image/png';
+												} elseif (preg_match('#^GIF#', $atom_structure['data'])) {
+													$atom_structure['image_mime'] = 'image/gif';
+												}
+											}
 											break;
 
 									}
 									break;
 
 								default:
-									$info['warning'][] = 'Unknown QuickTime box type: "'.getid3_lib::PrintHexBytes($boxtype).'" at offset '.$baseoffset;
+									$info['warning'][] = 'Unknown QuickTime box type: "'.preg_replace('#[^a-zA-Z0-9 _\\-]#', '?', $boxtype).'" ('.trim(getid3_lib::PrintHexBytes($boxtype)).') at offset '.$baseoffset;
 									$atom_structure['data'] = $atom_data;
 
 							}
-							$atomoffset += $boxsize;
 						}
 					}
 				}
@@ -495,7 +494,7 @@ class getid3_quicktime extends getid3_handler
 
 
 			case 'cmvd': // Compressed MooV Data atom
-				// Code by ubergeekØubergeek*tv based on information from
+				// Code by ubergeekÃ˜ubergeek*tv based on information from
 				// http://developer.apple.com/quicktime/icefloe/dispatch012.html
 				$atom_structure['unCompressedSize'] = getid3_lib::BigEndian2Int(substr($atom_data, 0, 4));
 
@@ -651,19 +650,65 @@ class getid3_quicktime extends getid3_handler
 					switch ($atom_structure['sample_description_table'][$i]['encoder_vendor']) {
 
 						case "\x00\x00\x00\x00":
-							// audio atom
+							// audio tracks
 							$atom_structure['sample_description_table'][$i]['audio_channels']       =   getid3_lib::BigEndian2Int(substr($atom_structure['sample_description_table'][$i]['data'],  8,  2));
 							$atom_structure['sample_description_table'][$i]['audio_bit_depth']      =   getid3_lib::BigEndian2Int(substr($atom_structure['sample_description_table'][$i]['data'], 10,  2));
 							$atom_structure['sample_description_table'][$i]['audio_compression_id'] =   getid3_lib::BigEndian2Int(substr($atom_structure['sample_description_table'][$i]['data'], 12,  2));
 							$atom_structure['sample_description_table'][$i]['audio_packet_size']    =   getid3_lib::BigEndian2Int(substr($atom_structure['sample_description_table'][$i]['data'], 14,  2));
 							$atom_structure['sample_description_table'][$i]['audio_sample_rate']    = getid3_lib::FixedPoint16_16(substr($atom_structure['sample_description_table'][$i]['data'], 16,  4));
 
+							// video tracks
+							// http://developer.apple.com/library/mac/#documentation/QuickTime/QTFF/QTFFChap3/qtff3.html
+							$atom_structure['sample_description_table'][$i]['temporal_quality'] =   getid3_lib::BigEndian2Int(substr($atom_structure['sample_description_table'][$i]['data'],  8,  4));
+							$atom_structure['sample_description_table'][$i]['spatial_quality']  =   getid3_lib::BigEndian2Int(substr($atom_structure['sample_description_table'][$i]['data'], 12,  4));
+							$atom_structure['sample_description_table'][$i]['width']            =   getid3_lib::BigEndian2Int(substr($atom_structure['sample_description_table'][$i]['data'], 16,  2));
+							$atom_structure['sample_description_table'][$i]['height']           =   getid3_lib::BigEndian2Int(substr($atom_structure['sample_description_table'][$i]['data'], 18,  2));
+							$atom_structure['sample_description_table'][$i]['resolution_x']     = getid3_lib::FixedPoint16_16(substr($atom_structure['sample_description_table'][$i]['data'], 24,  4));
+							$atom_structure['sample_description_table'][$i]['resolution_y']     = getid3_lib::FixedPoint16_16(substr($atom_structure['sample_description_table'][$i]['data'], 28,  4));
+							$atom_structure['sample_description_table'][$i]['data_size']        =   getid3_lib::BigEndian2Int(substr($atom_structure['sample_description_table'][$i]['data'], 32,  4));
+							$atom_structure['sample_description_table'][$i]['frame_count']      =   getid3_lib::BigEndian2Int(substr($atom_structure['sample_description_table'][$i]['data'], 36,  2));
+							$atom_structure['sample_description_table'][$i]['compressor_name']  =                             substr($atom_structure['sample_description_table'][$i]['data'], 38,  4);
+							$atom_structure['sample_description_table'][$i]['pixel_depth']      =   getid3_lib::BigEndian2Int(substr($atom_structure['sample_description_table'][$i]['data'], 42,  2));
+							$atom_structure['sample_description_table'][$i]['color_table_id']   =   getid3_lib::BigEndian2Int(substr($atom_structure['sample_description_table'][$i]['data'], 44,  2));
+
 							switch ($atom_structure['sample_description_table'][$i]['data_format']) {
+								case '2vuY':
 								case 'avc1':
+								case 'cvid':
+								case 'dvc ':
+								case 'dvcp':
+								case 'gif ':
+								case 'h263':
+								case 'jpeg':
+								case 'kpcd':
+								case 'mjpa':
+								case 'mjpb':
 								case 'mp4v':
+								case 'png ':
+								case 'raw ':
+								case 'rle ':
+								case 'rpza':
+								case 'smc ':
+								case 'SVQ1':
+								case 'SVQ3':
+								case 'tiff':
+								case 'v210':
+								case 'v216':
+								case 'v308':
+								case 'v408':
+								case 'v410':
+								case 'yuv2':
 									$info['fileformat'] = 'mp4';
 									$info['video']['fourcc'] = $atom_structure['sample_description_table'][$i]['data_format'];
-									//$info['warning'][] = 'This version of getID3() ['.$this->getid3->version().'] does not fully support MPEG-4 audio/video streams'; // 2011-02-18: why am I warning about this again? What's not supported?
+// http://www.getid3.org/phpBB3/viewtopic.php?t=1550
+//if ((!empty($atom_structure['sample_description_table'][$i]['width']) && !empty($atom_structure['sample_description_table'][$i]['width'])) && (empty($info['video']['resolution_x']) || empty($info['video']['resolution_y']) || (number_format($info['video']['resolution_x'], 6) != number_format(round($info['video']['resolution_x']), 6)) || (number_format($info['video']['resolution_y'], 6) != number_format(round($info['video']['resolution_y']), 6)))) { // ugly check for floating point numbers
+if (!empty($atom_structure['sample_description_table'][$i]['width']) && !empty($atom_structure['sample_description_table'][$i]['height'])) {
+	// assume that values stored here are more important than values stored in [tkhd] atom
+	$info['video']['resolution_x'] = $atom_structure['sample_description_table'][$i]['width'];
+	$info['video']['resolution_y'] = $atom_structure['sample_description_table'][$i]['height'];
+	$info['quicktime']['video']['resolution_x'] = $info['video']['resolution_x'];
+	$info['quicktime']['video']['resolution_y'] = $info['video']['resolution_y'];
+}
 									break;
 
 								case 'qtvr':
@@ -779,7 +824,12 @@ class getid3_quicktime extends getid3_handler
 				$sttsEntriesDataOffset = 8;
 				//$FrameRateCalculatorArray = array();
 				$frames_count = 0;
-				for ($i = 0; $i < $atom_structure['number_entries']; $i++) {
+
+				$max_stts_entries_to_scan = ($info['php_memory_limit'] ? min(floor($this->getid3->memory_limit / 10000), $atom_structure['number_entries']) : $atom_structure['number_entries']);
+				if ($max_stts_entries_to_scan < $atom_structure['number_entries']) {
+					$info['warning'][] = 'QuickTime atom "stts" has '.$atom_structure['number_entries'].' but only scanning the first '.$max_stts_entries_to_scan.' entries due to limited PHP memory available ('.floor($atom_structure['number_entries'] / 1048576).'MB).';
+				}
+				for ($i = 0; $i < $max_stts_entries_to_scan; $i++) {
 					$atom_structure['time_to_sample_table'][$i]['sample_count']    = getid3_lib::BigEndian2Int(substr($atom_data, $sttsEntriesDataOffset, 4));
 					$sttsEntriesDataOffset += 4;
 					$atom_structure['time_to_sample_table'][$i]['sample_duration'] = getid3_lib::BigEndian2Int(substr($atom_data, $sttsEntriesDataOffset, 4));
@@ -1025,8 +1075,8 @@ class getid3_quicktime extends getid3_handler
 			case 'sync': // SYNChronization atom
 			case 'scpt': // tranSCriPT atom
 			case 'ssrc': // non-primary SouRCe atom
-				for ($i = 0; $i < (strlen($atom_data) % 4); $i++) {
-					$atom_structure['track_id'][$i] = getid3_lib::BigEndian2Int(substr($atom_data, $i * 4, 4));
+				for ($i = 0; $i < strlen($atom_data); $i += 4) {
+					@$atom_structure['track_id'][] = getid3_lib::BigEndian2Int(substr($atom_data, $i, 4));
 				}
 				break;
 
@@ -1115,18 +1165,19 @@ class getid3_quicktime extends getid3_handler
 				$atom_structure['alternate_group']     =   getid3_lib::BigEndian2Int(substr($atom_data, 34, 2));
 				$atom_structure['volume']              =   getid3_lib::FixedPoint8_8(substr($atom_data, 36, 2));
 				$atom_structure['reserved3']           =   getid3_lib::BigEndian2Int(substr($atom_data, 38, 2));
+// http://developer.apple.com/library/mac/#documentation/QuickTime/RM/MovieBasics/MTEditing/K-Chapter/11MatrixFunctions.html
+// http://developer.apple.com/library/mac/#documentation/QuickTime/qtff/QTFFChap4/qtff4.html#//apple_ref/doc/uid/TP40000939-CH206-18737
 				$atom_structure['matrix_a']            = getid3_lib::FixedPoint16_16(substr($atom_data, 40, 4));
 				$atom_structure['matrix_b']            = getid3_lib::FixedPoint16_16(substr($atom_data, 44, 4));
-				$atom_structure['matrix_u']            = getid3_lib::FixedPoint16_16(substr($atom_data, 48, 4));
+				$atom_structure['matrix_u']            =  getid3_lib::FixedPoint2_30(substr($atom_data, 48, 4));
 				$atom_structure['matrix_c']            = getid3_lib::FixedPoint16_16(substr($atom_data, 52, 4));
 				$atom_structure['matrix_d']            = getid3_lib::FixedPoint16_16(substr($atom_data, 56, 4));
-				$atom_structure['matrix_v']            = getid3_lib::FixedPoint16_16(substr($atom_data, 60, 4));
-				$atom_structure['matrix_x']            =  getid3_lib::FixedPoint2_30(substr($atom_data, 64, 4));
-				$atom_structure['matrix_y']            =  getid3_lib::FixedPoint2_30(substr($atom_data, 68, 4));
+				$atom_structure['matrix_v']            =  getid3_lib::FixedPoint2_30(substr($atom_data, 60, 4));
+				$atom_structure['matrix_x']            = getid3_lib::FixedPoint16_16(substr($atom_data, 64, 4));
+				$atom_structure['matrix_y']            = getid3_lib::FixedPoint16_16(substr($atom_data, 68, 4));
 				$atom_structure['matrix_w']            =  getid3_lib::FixedPoint2_30(substr($atom_data, 72, 4));
 				$atom_structure['width']               = getid3_lib::FixedPoint16_16(substr($atom_data, 76, 4));
 				$atom_structure['height']              = getid3_lib::FixedPoint16_16(substr($atom_data, 80, 4));
-
 				$atom_structure['flags']['enabled']    = (bool) ($atom_structure['flags_raw'] & 0x0001);
 				$atom_structure['flags']['in_movie']   = (bool) ($atom_structure['flags_raw'] & 0x0002);
 				$atom_structure['flags']['in_preview'] = (bool) ($atom_structure['flags_raw'] & 0x0004);
@@ -1144,9 +1195,10 @@ class getid3_quicktime extends getid3_handler
 					$info['quicktime']['video']['resolution_x'] = $info['video']['resolution_x'];
 					$info['quicktime']['video']['resolution_y'] = $info['video']['resolution_y'];
 				} else {
-					if (isset($info['video']['resolution_x'])) { unset($info['video']['resolution_x']); }
-					if (isset($info['video']['resolution_y'])) { unset($info['video']['resolution_y']); }
-					if (isset($info['quicktime']['video']))    { unset($info['quicktime']['video']);    }
+					// see: http://www.getid3.org/phpBB3/viewtopic.php?t=1295
+					//if (isset($info['video']['resolution_x'])) { unset($info['video']['resolution_x']); }
+					//if (isset($info['video']['resolution_y'])) { unset($info['video']['resolution_y']); }
+					//if (isset($info['quicktime']['video']))    { unset($info['quicktime']['video']);    }
 				}
 				break;
 
@@ -1197,10 +1249,76 @@ class getid3_quicktime extends getid3_handler
 				break;
 
 			case 'mdat': // Media DATa atom
+				// 'mdat' contains the actual data for the audio/video, possibly also subtitles
+
+/* due to lack of known documentation, this is a kludge implementation. If you know of documentation on how mdat is properly structed, please send it to info@getid3.org */
+
+				// first, skip any 'wide' padding, and second 'mdat' header (with specified size of zero?)
+				$mdat_offset = 0;
+				while (true) {
+					if (substr($atom_data, $mdat_offset, 8) == "\x00\x00\x00\x08".'wide') {
+						$mdat_offset += 8;
+					} elseif (substr($atom_data, $mdat_offset, 8) == "\x00\x00\x00\x00".'mdat') {
+						$mdat_offset += 8;
+					} else {
+						break;
+					}
+				}
+
+				// check to see if it looks like chapter titles, in the form of unterminated strings with a leading 16-bit size field
+				while  (($chapter_string_length = getid3_lib::BigEndian2Int(substr($atom_data, $mdat_offset, 2)))
+					&& ($chapter_string_length < 1000)
+					&& ($chapter_string_length <= (strlen($atom_data) - $mdat_offset - 2))
+					&& preg_match('#^[\x20-\xFF]+$#', substr($atom_data, $mdat_offset + 2, $chapter_string_length), $chapter_matches)) {
+						$mdat_offset += (2 + $chapter_string_length);
+						@$info['quicktime']['comments']['chapters'][] = $chapter_matches[0];
+				}
+
+
+
+				if (($atomsize > 8) && (!isset($info['avdataend_tmp']) || ($info['quicktime'][$atomname]['size'] > ($info['avdataend_tmp'] - $info['avdataoffset'])))) {
+
+					$info['avdataoffset'] = $atom_structure['offset'] + 8;                       // $info['quicktime'][$atomname]['offset'] + 8;
+					$OldAVDataEnd         = $info['avdataend'];
+					$info['avdataend']    = $atom_structure['offset'] + $atom_structure['size']; // $info['quicktime'][$atomname]['offset'] + $info['quicktime'][$atomname]['size'];
+
+					$getid3_temp = new getID3();
+					$getid3_temp->openfile($this->getid3->filename);
+					$getid3_temp->info['avdataoffset'] = $info['avdataoffset'];
+					$getid3_temp->info['avdataend']    = $info['avdataend'];
+					$getid3_mp3 = new getid3_mp3($getid3_temp);
+					if ($getid3_mp3->MPEGaudioHeaderValid($getid3_mp3->MPEGaudioHeaderDecode($this->fread(4)))) {
+						$getid3_mp3->getOnlyMPEGaudioInfo($getid3_temp->info['avdataoffset'], false);
+						if (!empty($getid3_temp->info['warning'])) {
+							foreach ($getid3_temp->info['warning'] as $value) {
+								$info['warning'][] = $value;
+							}
+						}
+						if (!empty($getid3_temp->info['mpeg'])) {
+							$info['mpeg'] = $getid3_temp->info['mpeg'];
+							if (isset($info['mpeg']['audio'])) {
+								$info['audio']['dataformat']   = 'mp3';
+								$info['audio']['codec']        = (!empty($info['mpeg']['audio']['encoder']) ? $info['mpeg']['audio']['encoder'] : (!empty($info['mpeg']['audio']['codec']) ? $info['mpeg']['audio']['codec'] : (!empty($info['mpeg']['audio']['LAME']) ? 'LAME' :'mp3')));
+								$info['audio']['sample_rate']  = $info['mpeg']['audio']['sample_rate'];
+								$info['audio']['channels']     = $info['mpeg']['audio']['channels'];
+								$info['audio']['bitrate']      = $info['mpeg']['audio']['bitrate'];
+								$info['audio']['bitrate_mode'] = strtolower($info['mpeg']['audio']['bitrate_mode']);
+								$info['bitrate']               = $info['audio']['bitrate'];
+							}
+						}
+					}
+					unset($getid3_mp3, $getid3_temp);
+					$info['avdataend'] = $OldAVDataEnd;
+					unset($OldAVDataEnd);
+
+				}
+
+				unset($mdat_offset, $chapter_string_length, $chapter_matches);
+				break;
+
 			case 'free': // FREE space atom
 			case 'skip': // SKIP atom
 			case 'wide': // 64-bit expansion placeholder atom
-				// 'mdat' data is too big to deal with, contains no useful metadata
 				// 'free', 'skip' and 'wide' are just padding, contains no useful data at all
 
 				// When writing QuickTime files, it is sometimes necessary to update an atom's size.
@@ -1266,7 +1384,7 @@ class getid3_quicktime extends getid3_handler
 				//$atom_structure['data'] = $atom_data;
 				break;
 
-			case '©xyz':  // GPS latitude+longitude+altitude
+			case "\xA9".'xyz':  // GPS latitude+longitude+altitude
 				$atom_structure['data'] = $atom_data;
 				if (preg_match('#([\\+\\-][0-9\\.]+)([\\+\\-][0-9\\.]+)([\\+\\-][0-9\\.]+)?/$#i', $atom_data, $matches)) {
 					@list($all, $latitude, $longitude, $altitude) = $matches;
@@ -1276,7 +1394,7 @@ class getid3_quicktime extends getid3_handler
 						$info['quicktime']['comments']['gps_altitude'][] = floatval($altitude);
 					}
 				} else {
-					$info['warning'][] = 'QuickTime atom "©xyz" data does not match expected data pattern at offset '.$baseoffset.'. Please report as getID3() bug.';
+					$info['warning'][] = 'QuickTime atom "Â©xyz" data does not match expected data pattern at offset '.$baseoffset.'. Please report as getID3() bug.';
 				}
 				break;
 
@@ -1295,23 +1413,19 @@ class getid3_quicktime extends getid3_handler
 					$info['quicktime']['comments']['picture'][] = array('image_mime'=>$atom_structure['image_mime'], 'data'=>$atom_data, 'description'=>$atom_structure['description']);
 				}
 				break;
-			case 'NCHD': // MakerNoteVersion
-				// http://www.sno.phy.queensu.ca/~phil/exiftool/TagNames/Nikon.html
-				$atom_structure['data'] = $atom_data;
-				break;
-			case 'NCTG': // NikonTags
-				// http://www.sno.phy.queensu.ca/~phil/exiftool/TagNames/Nikon.html#NCTG
+			case 'NCTG': // Nikon - http://www.sno.phy.queensu.ca/~phil/exiftool/TagNames/Nikon.html#NCTG
 				$atom_structure['data'] = $this->QuicktimeParseNikonNCTG($atom_data);
 				break;
-			case 'NCDB': // NikonTags
-				// http://www.sno.phy.queensu.ca/~phil/exiftool/TagNames/Nikon.html
+			case 'NCHD': // Nikon:MakerNoteVersion  - http://www.sno.phy.queensu.ca/~phil/exiftool/TagNames/Nikon.html
+			case 'NCDB': // Nikon                   - http://www.sno.phy.queensu.ca/~phil/exiftool/TagNames/Nikon.html
+			case 'CNCV': // Canon:CompressorVersion - http://www.sno.phy.queensu.ca/~phil/exiftool/TagNames/Canon.html
 				$atom_structure['data'] = $atom_data;
 				break;
 
 			case "\x00\x00\x00\x00":
 			case 'meta': // METAdata atom
 				// some kind of metacontainer, may contain a big data dump such as:
-				// mdta keys  mdtacom.apple.quicktime.make (mdtacom.apple.quicktime.creationdate ,mdtacom.apple.quicktime.location.ISO6709 $mdtacom.apple.quicktime.software !mdtacom.apple.quicktime.model ilst   data DEApple 0  (data DE2011-05-11T17:54:04+0200 2  *data DE+52.4936+013.3897+040.247/   data DE4.3.1  data DEiPhone 4
+				// mdta keys \005 mdtacom.apple.quicktime.make (mdtacom.apple.quicktime.creationdate ,mdtacom.apple.quicktime.location.ISO6709 $mdtacom.apple.quicktime.software !mdtacom.apple.quicktime.model ilst \01D \001 \015data \001DE\010Apple 0 \002 (data \001DE\0102011-05-11T17:54:04+0200 2 \003 *data \001DE\010+52.4936+013.3897+040.247/ \01D \004 \015data \001DE\0104.3.1 \005 \018data \001DE\010iPhone 4
 				// http://www.geocities.com/xhelmboyx/quicktime/formats/qti-layout.txt
 
 	            $atom_structure['version']   =          getid3_lib::BigEndian2Int(substr($atom_data, 0, 1));
@@ -1328,7 +1442,7 @@ class getid3_quicktime extends getid3_handler
 				break;
 
 			default:
-				$info['warning'][] = 'Unknown QuickTime atom type: "'.getid3_lib::PrintHexBytes($atomname).'" at offset '.$baseoffset;
+				$info['warning'][] = 'Unknown QuickTime atom type: "'.preg_replace('#[^a-zA-Z0-9 _\\-]#', '?', $atomname).'" ('.trim(getid3_lib::PrintHexBytes($atomname)).') at offset '.$baseoffset;
 				$atom_structure['data'] = $atom_data;
 				break;
 		}
@@ -1336,7 +1450,7 @@ class getid3_quicktime extends getid3_handler
 		return $atom_structure;
 	}
 
-	function QuicktimeParseContainerAtom($atom_data, $baseoffset, &$atomHierarchy, $ParseAllPossibleAtoms) {
+	public function QuicktimeParseContainerAtom($atom_data, $baseoffset, &$atomHierarchy, $ParseAllPossibleAtoms) {
 //echo 'QuicktimeParseContainerAtom('.substr($atom_data, 4, 4).') @ '.$baseoffset.'<br><br>';
 		$atom_structure  = false;
 		$subatomoffset  = 0;
@@ -1364,7 +1478,7 @@ class getid3_quicktime extends getid3_handler
 	}
 
 
-	function quicktime_read_mp4_descr_length($data, &$offset) {
+	public function quicktime_read_mp4_descr_length($data, &$offset) {
 		// http://libquicktime.sourcearchive.com/documentation/2:1.0.2plus-pdebian-2build1/esds_8c-source.html
 		$num_bytes = 0;
 		$length    = 0;
@@ -1376,124 +1490,144 @@ class getid3_quicktime extends getid3_handler
 	}
 
 
-	function QuicktimeLanguageLookup($languageid) {
+	public function QuicktimeLanguageLookup($languageid) {
+		// http://developer.apple.com/library/mac/#documentation/QuickTime/QTFF/QTFFChap4/qtff4.html#//apple_ref/doc/uid/TP40000939-CH206-34353
 		static $QuicktimeLanguageLookup = array();
 		if (empty($QuicktimeLanguageLookup)) {
-			$QuicktimeLanguageLookup[0]   = 'English';
-			$QuicktimeLanguageLookup[1]   = 'French';
-			$QuicktimeLanguageLookup[2]   = 'German';
-			$QuicktimeLanguageLookup[3]   = 'Italian';
-			$QuicktimeLanguageLookup[4]   = 'Dutch';
-			$QuicktimeLanguageLookup[5]   = 'Swedish';
-			$QuicktimeLanguageLookup[6]   = 'Spanish';
-			$QuicktimeLanguageLookup[7]   = 'Danish';
-			$QuicktimeLanguageLookup[8]   = 'Portuguese';
-			$QuicktimeLanguageLookup[9]   = 'Norwegian';
-			$QuicktimeLanguageLookup[10]  = 'Hebrew';
-			$QuicktimeLanguageLookup[11]  = 'Japanese';
-			$QuicktimeLanguageLookup[12]  = 'Arabic';
-			$QuicktimeLanguageLookup[13]  = 'Finnish';
-			$QuicktimeLanguageLookup[14]  = 'Greek';
-			$QuicktimeLanguageLookup[15]  = 'Icelandic';
-			$QuicktimeLanguageLookup[16]  = 'Maltese';
-			$QuicktimeLanguageLookup[17]  = 'Turkish';
-			$QuicktimeLanguageLookup[18]  = 'Croatian';
-			$QuicktimeLanguageLookup[19]  = 'Chinese (Traditional)';
-			$QuicktimeLanguageLookup[20]  = 'Urdu';
-			$QuicktimeLanguageLookup[21]  = 'Hindi';
-			$QuicktimeLanguageLookup[22]  = 'Thai';
-			$QuicktimeLanguageLookup[23]  = 'Korean';
-			$QuicktimeLanguageLookup[24]  = 'Lithuanian';
-			$QuicktimeLanguageLookup[25]  = 'Polish';
-			$QuicktimeLanguageLookup[26]  = 'Hungarian';
-			$QuicktimeLanguageLookup[27]  = 'Estonian';
-			$QuicktimeLanguageLookup[28]  = 'Lettish';
-			$QuicktimeLanguageLookup[28]  = 'Latvian';
-			$QuicktimeLanguageLookup[29]  = 'Saamisk';
-			$QuicktimeLanguageLookup[29]  = 'Lappish';
-			$QuicktimeLanguageLookup[30]  = 'Faeroese';
-			$QuicktimeLanguageLookup[31]  = 'Farsi';
-			$QuicktimeLanguageLookup[31]  = 'Persian';
-			$QuicktimeLanguageLookup[32]  = 'Russian';
-			$QuicktimeLanguageLookup[33]  = 'Chinese (Simplified)';
-			$QuicktimeLanguageLookup[34]  = 'Flemish';
-			$QuicktimeLanguageLookup[35]  = 'Irish';
-			$QuicktimeLanguageLookup[36]  = 'Albanian';
-			$QuicktimeLanguageLookup[37]  = 'Romanian';
-			$QuicktimeLanguageLookup[38]  = 'Czech';
-			$QuicktimeLanguageLookup[39]  = 'Slovak';
-			$QuicktimeLanguageLookup[40]  = 'Slovenian';
-			$QuicktimeLanguageLookup[41]  = 'Yiddish';
-			$QuicktimeLanguageLookup[42]  = 'Serbian';
-			$QuicktimeLanguageLookup[43]  = 'Macedonian';
-			$QuicktimeLanguageLookup[44]  = 'Bulgarian';
-			$QuicktimeLanguageLookup[45]  = 'Ukrainian';
-			$QuicktimeLanguageLookup[46]  = 'Byelorussian';
-			$QuicktimeLanguageLookup[47]  = 'Uzbek';
-			$QuicktimeLanguageLookup[48]  = 'Kazakh';
-			$QuicktimeLanguageLookup[49]  = 'Azerbaijani';
-			$QuicktimeLanguageLookup[50]  = 'AzerbaijanAr';
-			$QuicktimeLanguageLookup[51]  = 'Armenian';
-			$QuicktimeLanguageLookup[52]  = 'Georgian';
-			$QuicktimeLanguageLookup[53]  = 'Moldavian';
-			$QuicktimeLanguageLookup[54]  = 'Kirghiz';
-			$QuicktimeLanguageLookup[55]  = 'Tajiki';
-			$QuicktimeLanguageLookup[56]  = 'Turkmen';
-			$QuicktimeLanguageLookup[57]  = 'Mongolian';
-			$QuicktimeLanguageLookup[58]  = 'MongolianCyr';
-			$QuicktimeLanguageLookup[59]  = 'Pashto';
-			$QuicktimeLanguageLookup[60]  = 'Kurdish';
-			$QuicktimeLanguageLookup[61]  = 'Kashmiri';
-			$QuicktimeLanguageLookup[62]  = 'Sindhi';
-			$QuicktimeLanguageLookup[63]  = 'Tibetan';
-			$QuicktimeLanguageLookup[64]  = 'Nepali';
-			$QuicktimeLanguageLookup[65]  = 'Sanskrit';
-			$QuicktimeLanguageLookup[66]  = 'Marathi';
-			$QuicktimeLanguageLookup[67]  = 'Bengali';
-			$QuicktimeLanguageLookup[68]  = 'Assamese';
-			$QuicktimeLanguageLookup[69]  = 'Gujarati';
-			$QuicktimeLanguageLookup[70]  = 'Punjabi';
-			$QuicktimeLanguageLookup[71]  = 'Oriya';
-			$QuicktimeLanguageLookup[72]  = 'Malayalam';
-			$QuicktimeLanguageLookup[73]  = 'Kannada';
-			$QuicktimeLanguageLookup[74]  = 'Tamil';
-			$QuicktimeLanguageLookup[75]  = 'Telugu';
-			$QuicktimeLanguageLookup[76]  = 'Sinhalese';
-			$QuicktimeLanguageLookup[77]  = 'Burmese';
-			$QuicktimeLanguageLookup[78]  = 'Khmer';
-			$QuicktimeLanguageLookup[79]  = 'Lao';
-			$QuicktimeLanguageLookup[80]  = 'Vietnamese';
-			$QuicktimeLanguageLookup[81]  = 'Indonesian';
-			$QuicktimeLanguageLookup[82]  = 'Tagalog';
-			$QuicktimeLanguageLookup[83]  = 'MalayRoman';
-			$QuicktimeLanguageLookup[84]  = 'MalayArabic';
-			$QuicktimeLanguageLookup[85]  = 'Amharic';
-			$QuicktimeLanguageLookup[86]  = 'Tigrinya';
-			$QuicktimeLanguageLookup[87]  = 'Galla';
-			$QuicktimeLanguageLookup[87]  = 'Oromo';
-			$QuicktimeLanguageLookup[88]  = 'Somali';
-			$QuicktimeLanguageLookup[89]  = 'Swahili';
-			$QuicktimeLanguageLookup[90]  = 'Ruanda';
-			$QuicktimeLanguageLookup[91]  = 'Rundi';
-			$QuicktimeLanguageLookup[92]  = 'Chewa';
-			$QuicktimeLanguageLookup[93]  = 'Malagasy';
-			$QuicktimeLanguageLookup[94]  = 'Esperanto';
-			$QuicktimeLanguageLookup[128] = 'Welsh';
-			$QuicktimeLanguageLookup[129] = 'Basque';
-			$QuicktimeLanguageLookup[130] = 'Catalan';
-			$QuicktimeLanguageLookup[131] = 'Latin';
-			$QuicktimeLanguageLookup[132] = 'Quechua';
-			$QuicktimeLanguageLookup[133] = 'Guarani';
-			$QuicktimeLanguageLookup[134] = 'Aymara';
-			$QuicktimeLanguageLookup[135] = 'Tatar';
-			$QuicktimeLanguageLookup[136] = 'Uighur';
-			$QuicktimeLanguageLookup[137] = 'Dzongkha';
-			$QuicktimeLanguageLookup[138] = 'JavaneseRom';
+			$QuicktimeLanguageLookup[0]     = 'English';
+			$QuicktimeLanguageLookup[1]     = 'French';
+			$QuicktimeLanguageLookup[2]     = 'German';
+			$QuicktimeLanguageLookup[3]     = 'Italian';
+			$QuicktimeLanguageLookup[4]     = 'Dutch';
+			$QuicktimeLanguageLookup[5]     = 'Swedish';
+			$QuicktimeLanguageLookup[6]     = 'Spanish';
+			$QuicktimeLanguageLookup[7]     = 'Danish';
+			$QuicktimeLanguageLookup[8]     = 'Portuguese';
+			$QuicktimeLanguageLookup[9]     = 'Norwegian';
+			$QuicktimeLanguageLookup[10]    = 'Hebrew';
+			$QuicktimeLanguageLookup[11]    = 'Japanese';
+			$QuicktimeLanguageLookup[12]    = 'Arabic';
+			$QuicktimeLanguageLookup[13]    = 'Finnish';
+			$QuicktimeLanguageLookup[14]    = 'Greek';
+			$QuicktimeLanguageLookup[15]    = 'Icelandic';
+			$QuicktimeLanguageLookup[16]    = 'Maltese';
+			$QuicktimeLanguageLookup[17]    = 'Turkish';
+			$QuicktimeLanguageLookup[18]    = 'Croatian';
+			$QuicktimeLanguageLookup[19]    = 'Chinese (Traditional)';
+			$QuicktimeLanguageLookup[20]    = 'Urdu';
+			$QuicktimeLanguageLookup[21]    = 'Hindi';
+			$QuicktimeLanguageLookup[22]    = 'Thai';
+			$QuicktimeLanguageLookup[23]    = 'Korean';
+			$QuicktimeLanguageLookup[24]    = 'Lithuanian';
+			$QuicktimeLanguageLookup[25]    = 'Polish';
+			$QuicktimeLanguageLookup[26]    = 'Hungarian';
+			$QuicktimeLanguageLookup[27]    = 'Estonian';
+			$QuicktimeLanguageLookup[28]    = 'Lettish';
+			$QuicktimeLanguageLookup[28]    = 'Latvian';
+			$QuicktimeLanguageLookup[29]    = 'Saamisk';
+			$QuicktimeLanguageLookup[29]    = 'Lappish';
+			$QuicktimeLanguageLookup[30]    = 'Faeroese';
+			$QuicktimeLanguageLookup[31]    = 'Farsi';
+			$QuicktimeLanguageLookup[31]    = 'Persian';
+			$QuicktimeLanguageLookup[32]    = 'Russian';
+			$QuicktimeLanguageLookup[33]    = 'Chinese (Simplified)';
+			$QuicktimeLanguageLookup[34]    = 'Flemish';
+			$QuicktimeLanguageLookup[35]    = 'Irish';
+			$QuicktimeLanguageLookup[36]    = 'Albanian';
+			$QuicktimeLanguageLookup[37]    = 'Romanian';
+			$QuicktimeLanguageLookup[38]    = 'Czech';
+			$QuicktimeLanguageLookup[39]    = 'Slovak';
+			$QuicktimeLanguageLookup[40]    = 'Slovenian';
+			$QuicktimeLanguageLookup[41]    = 'Yiddish';
+			$QuicktimeLanguageLookup[42]    = 'Serbian';
+			$QuicktimeLanguageLookup[43]    = 'Macedonian';
+			$QuicktimeLanguageLookup[44]    = 'Bulgarian';
+			$QuicktimeLanguageLookup[45]    = 'Ukrainian';
+			$QuicktimeLanguageLookup[46]    = 'Byelorussian';
+			$QuicktimeLanguageLookup[47]    = 'Uzbek';
+			$QuicktimeLanguageLookup[48]    = 'Kazakh';
+			$QuicktimeLanguageLookup[49]    = 'Azerbaijani';
+			$QuicktimeLanguageLookup[50]    = 'AzerbaijanAr';
+			$QuicktimeLanguageLookup[51]    = 'Armenian';
+			$QuicktimeLanguageLookup[52]    = 'Georgian';
+			$QuicktimeLanguageLookup[53]    = 'Moldavian';
+			$QuicktimeLanguageLookup[54]    = 'Kirghiz';
+			$QuicktimeLanguageLookup[55]    = 'Tajiki';
+			$QuicktimeLanguageLookup[56]    = 'Turkmen';
+			$QuicktimeLanguageLookup[57]    = 'Mongolian';
+			$QuicktimeLanguageLookup[58]    = 'MongolianCyr';
+			$QuicktimeLanguageLookup[59]    = 'Pashto';
+			$QuicktimeLanguageLookup[60]    = 'Kurdish';
+			$QuicktimeLanguageLookup[61]    = 'Kashmiri';
+			$QuicktimeLanguageLookup[62]    = 'Sindhi';
+			$QuicktimeLanguageLookup[63]    = 'Tibetan';
+			$QuicktimeLanguageLookup[64]    = 'Nepali';
+			$QuicktimeLanguageLookup[65]    = 'Sanskrit';
+			$QuicktimeLanguageLookup[66]    = 'Marathi';
+			$QuicktimeLanguageLookup[67]    = 'Bengali';
+			$QuicktimeLanguageLookup[68]    = 'Assamese';
+			$QuicktimeLanguageLookup[69]    = 'Gujarati';
+			$QuicktimeLanguageLookup[70]    = 'Punjabi';
+			$QuicktimeLanguageLookup[71]    = 'Oriya';
+			$QuicktimeLanguageLookup[72]    = 'Malayalam';
+			$QuicktimeLanguageLookup[73]    = 'Kannada';
+			$QuicktimeLanguageLookup[74]    = 'Tamil';
+			$QuicktimeLanguageLookup[75]    = 'Telugu';
+			$QuicktimeLanguageLookup[76]    = 'Sinhalese';
+			$QuicktimeLanguageLookup[77]    = 'Burmese';
+			$QuicktimeLanguageLookup[78]    = 'Khmer';
+			$QuicktimeLanguageLookup[79]    = 'Lao';
+			$QuicktimeLanguageLookup[80]    = 'Vietnamese';
+			$QuicktimeLanguageLookup[81]    = 'Indonesian';
+			$QuicktimeLanguageLookup[82]    = 'Tagalog';
+			$QuicktimeLanguageLookup[83]    = 'MalayRoman';
+			$QuicktimeLanguageLookup[84]    = 'MalayArabic';
+			$QuicktimeLanguageLookup[85]    = 'Amharic';
+			$QuicktimeLanguageLookup[86]    = 'Tigrinya';
+			$QuicktimeLanguageLookup[87]    = 'Galla';
+			$QuicktimeLanguageLookup[87]    = 'Oromo';
+			$QuicktimeLanguageLookup[88]    = 'Somali';
+			$QuicktimeLanguageLookup[89]    = 'Swahili';
+			$QuicktimeLanguageLookup[90]    = 'Ruanda';
+			$QuicktimeLanguageLookup[91]    = 'Rundi';
+			$QuicktimeLanguageLookup[92]    = 'Chewa';
+			$QuicktimeLanguageLookup[93]    = 'Malagasy';
+			$QuicktimeLanguageLookup[94]    = 'Esperanto';
+			$QuicktimeLanguageLookup[128]   = 'Welsh';
+			$QuicktimeLanguageLookup[129]   = 'Basque';
+			$QuicktimeLanguageLookup[130]   = 'Catalan';
+			$QuicktimeLanguageLookup[131]   = 'Latin';
+			$QuicktimeLanguageLookup[132]   = 'Quechua';
+			$QuicktimeLanguageLookup[133]   = 'Guarani';
+			$QuicktimeLanguageLookup[134]   = 'Aymara';
+			$QuicktimeLanguageLookup[135]   = 'Tatar';
+			$QuicktimeLanguageLookup[136]   = 'Uighur';
+			$QuicktimeLanguageLookup[137]   = 'Dzongkha';
+			$QuicktimeLanguageLookup[138]   = 'JavaneseRom';
+			$QuicktimeLanguageLookup[32767] = 'Unspecified';
+		}
+		if (($languageid > 138) && ($languageid < 32767)) {
+			/*
+			ISO Language Codes - http://www.loc.gov/standards/iso639-2/php/code_list.php
+			Because the language codes specified by ISO 639-2/T are three characters long, they must be packed to fit into a 16-bit field.
+			The packing algorithm must map each of the three characters, which are always lowercase, into a 5-bit integer and then concatenate
+			these integers into the least significant 15 bits of a 16-bit integer, leaving the 16-bit integer's most significant bit set to zero.
+
+			One algorithm for performing this packing is to treat each ISO character as a 16-bit integer. Subtract 0x60 from the first character
+			and multiply by 2^10 (0x400), subtract 0x60 from the second character and multiply by 2^5 (0x20), subtract 0x60 from the third character,
+			and add the three 16-bit values. This will result in a single 16-bit value with the three codes correctly packed into the 15 least
+			significant bits and the most significant bit set to zero.
+			*/
+			$iso_language_id  = '';
+			$iso_language_id .= chr((($languageid & 0x7C00) >> 10) + 0x60);
+			$iso_language_id .= chr((($languageid & 0x03E0) >>  5) + 0x60);
+			$iso_language_id .= chr((($languageid & 0x001F) >>  0) + 0x60);
+			$QuicktimeLanguageLookup[$languageid] = getid3_id3v2::LanguageLookup($iso_language_id);
 		}
 		return (isset($QuicktimeLanguageLookup[$languageid]) ? $QuicktimeLanguageLookup[$languageid] : 'invalid');
 	}
 
-	function QuicktimeVideoCodecLookup($codecid) {
+	public function QuicktimeVideoCodecLookup($codecid) {
 		static $QuicktimeVideoCodecLookup = array();
 		if (empty($QuicktimeVideoCodecLookup)) {
 			$QuicktimeVideoCodecLookup['.SGI'] = 'SGI';
@@ -1552,7 +1686,7 @@ class getid3_quicktime extends getid3_handler
 		return (isset($QuicktimeVideoCodecLookup[$codecid]) ? $QuicktimeVideoCodecLookup[$codecid] : '');
 	}
 
-	function QuicktimeAudioCodecLookup($codecid) {
+	public function QuicktimeAudioCodecLookup($codecid) {
 		static $QuicktimeAudioCodecLookup = array();
 		if (empty($QuicktimeAudioCodecLookup)) {
 			$QuicktimeAudioCodecLookup['.mp3']          = 'Fraunhofer MPEG Layer-III alias';
@@ -1597,7 +1731,7 @@ class getid3_quicktime extends getid3_handler
 		return (isset($QuicktimeAudioCodecLookup[$codecid]) ? $QuicktimeAudioCodecLookup[$codecid] : '');
 	}
 
-	function QuicktimeDCOMLookup($compressionid) {
+	public function QuicktimeDCOMLookup($compressionid) {
 		static $QuicktimeDCOMLookup = array();
 		if (empty($QuicktimeDCOMLookup)) {
 			$QuicktimeDCOMLookup['zlib'] = 'ZLib Deflate';
@@ -1606,7 +1740,7 @@ class getid3_quicktime extends getid3_handler
 		return (isset($QuicktimeDCOMLookup[$compressionid]) ? $QuicktimeDCOMLookup[$compressionid] : '');
 	}
 
-	function QuicktimeColorNameLookup($colordepthid) {
+	public function QuicktimeColorNameLookup($colordepthid) {
 		static $QuicktimeColorNameLookup = array();
 		if (empty($QuicktimeColorNameLookup)) {
 			$QuicktimeColorNameLookup[1]  = '2-color (monochrome)';
@@ -1624,7 +1758,7 @@ class getid3_quicktime extends getid3_handler
 		return (isset($QuicktimeColorNameLookup[$colordepthid]) ? $QuicktimeColorNameLookup[$colordepthid] : 'invalid');
 	}
 
-	function QuicktimeSTIKLookup($stik) {
+	public function QuicktimeSTIKLookup($stik) {
 		static $QuicktimeSTIKLookup = array();
 		if (empty($QuicktimeSTIKLookup)) {
 			$QuicktimeSTIKLookup[0]  = 'Movie';
@@ -1641,7 +1775,7 @@ class getid3_quicktime extends getid3_handler
 		return (isset($QuicktimeSTIKLookup[$stik]) ? $QuicktimeSTIKLookup[$stik] : 'invalid');
 	}
 
-	function QuicktimeIODSaudioProfileName($audio_profile_id) {
+	public function QuicktimeIODSaudioProfileName($audio_profile_id) {
 		static $QuicktimeIODSaudioProfileNameLookup = array();
 		if (empty($QuicktimeIODSaudioProfileNameLookup)) {
 			$QuicktimeIODSaudioProfileNameLookup = array(
@@ -1701,7 +1835,7 @@ class getid3_quicktime extends getid3_handler
 	}
 
 
-	function QuicktimeIODSvideoProfileName($video_profile_id) {
+	public function QuicktimeIODSvideoProfileName($video_profile_id) {
 		static $QuicktimeIODSvideoProfileNameLookup = array();
 		if (empty($QuicktimeIODSvideoProfileNameLookup)) {
 			$QuicktimeIODSvideoProfileNameLookup = array(
@@ -1773,7 +1907,7 @@ class getid3_quicktime extends getid3_handler
 	}
 
 
-	function QuicktimeContentRatingLookup($rtng) {
+	public function QuicktimeContentRatingLookup($rtng) {
 		static $QuicktimeContentRatingLookup = array();
 		if (empty($QuicktimeContentRatingLookup)) {
 			$QuicktimeContentRatingLookup[0]  = 'None';
@@ -1783,7 +1917,7 @@ class getid3_quicktime extends getid3_handler
 		return (isset($QuicktimeContentRatingLookup[$rtng]) ? $QuicktimeContentRatingLookup[$rtng] : 'invalid');
 	}
 
-	function QuicktimeStoreAccountTypeLookup($akid) {
+	public function QuicktimeStoreAccountTypeLookup($akid) {
 		static $QuicktimeStoreAccountTypeLookup = array();
 		if (empty($QuicktimeStoreAccountTypeLookup)) {
 			$QuicktimeStoreAccountTypeLookup[0] = 'iTunes';
@@ -1792,7 +1926,7 @@ class getid3_quicktime extends getid3_handler
 		return (isset($QuicktimeStoreAccountTypeLookup[$akid]) ? $QuicktimeStoreAccountTypeLookup[$akid] : 'invalid');
 	}
 
-	function QuicktimeStoreFrontCodeLookup($sfid) {
+	public function QuicktimeStoreFrontCodeLookup($sfid) {
 		static $QuicktimeStoreFrontCodeLookup = array();
 		if (empty($QuicktimeStoreFrontCodeLookup)) {
 			$QuicktimeStoreFrontCodeLookup[143460] = 'Australia';
@@ -1821,7 +1955,7 @@ class getid3_quicktime extends getid3_handler
 		return (isset($QuicktimeStoreFrontCodeLookup[$sfid]) ? $QuicktimeStoreFrontCodeLookup[$sfid] : 'invalid');
 	}
 
-	function QuicktimeParseNikonNCTG($atom_data) {
+	public function QuicktimeParseNikonNCTG($atom_data) {
 		// http://www.sno.phy.queensu.ca/~phil/exiftool/TagNames/Nikon.html#NCTG
 		// Nikon-specific QuickTime tags found in the NCDT atom of MOV videos from some Nikon cameras such as the Coolpix S8000 and D5100
 		// Data is stored as records of:
@@ -2000,81 +2134,88 @@ echo 'QuicktimeParseNikonNCTG()::unknown $data_size_type: '.$data_size_type.'<br
 	}
 
 
-	function CopyToAppropriateCommentsSection($keyname, $data, $boxname='') {
+	public function CopyToAppropriateCommentsSection($keyname, $data, $boxname='') {
 		static $handyatomtranslatorarray = array();
 		if (empty($handyatomtranslatorarray)) {
-			$handyatomtranslatorarray['©cpy'] = 'copyright';
-			$handyatomtranslatorarray['©day'] = 'creation_date';    // iTunes 4.0
-			$handyatomtranslatorarray['©dir'] = 'director';
-			$handyatomtranslatorarray['©ed1'] = 'edit1';
-			$handyatomtranslatorarray['©ed2'] = 'edit2';
-			$handyatomtranslatorarray['©ed3'] = 'edit3';
-			$handyatomtranslatorarray['©ed4'] = 'edit4';
-			$handyatomtranslatorarray['©ed5'] = 'edit5';
-			$handyatomtranslatorarray['©ed6'] = 'edit6';
-			$handyatomtranslatorarray['©ed7'] = 'edit7';
-			$handyatomtranslatorarray['©ed8'] = 'edit8';
-			$handyatomtranslatorarray['©ed9'] = 'edit9';
-			$handyatomtranslatorarray['©fmt'] = 'format';
-			$handyatomtranslatorarray['©inf'] = 'information';
-			$handyatomtranslatorarray['©prd'] = 'producer';
-			$handyatomtranslatorarray['©prf'] = 'performers';
-			$handyatomtranslatorarray['©req'] = 'system_requirements';
-			$handyatomtranslatorarray['©src'] = 'source_credit';
-			$handyatomtranslatorarray['©wrt'] = 'writer';
-
 			// http://www.geocities.com/xhelmboyx/quicktime/formats/qtm-layout.txt
-			$handyatomtranslatorarray['©nam'] = 'title';           // iTunes 4.0
-			$handyatomtranslatorarray['©cmt'] = 'comment';         // iTunes 4.0
-			$handyatomtranslatorarray['©wrn'] = 'warning';
-			$handyatomtranslatorarray['©hst'] = 'host_computer';
-			$handyatomtranslatorarray['©mak'] = 'make';
-			$handyatomtranslatorarray['©mod'] = 'model';
-			$handyatomtranslatorarray['©PRD'] = 'product';
-			$handyatomtranslatorarray['©swr'] = 'software';
-			$handyatomtranslatorarray['©aut'] = 'author';
-			$handyatomtranslatorarray['©ART'] = 'artist';
-			$handyatomtranslatorarray['©trk'] = 'track';
-			$handyatomtranslatorarray['©alb'] = 'album';           // iTunes 4.0
-			$handyatomtranslatorarray['©com'] = 'comment';
-			$handyatomtranslatorarray['©gen'] = 'genre';           // iTunes 4.0
-			$handyatomtranslatorarray['©ope'] = 'composer';
-			$handyatomtranslatorarray['©url'] = 'url';
-			$handyatomtranslatorarray['©enc'] = 'encoder';
-
-			// http://atomicparsley.sourceforge.net/mpeg-4files.html
-			$handyatomtranslatorarray['©art'] = 'artist';           // iTunes 4.0
-			$handyatomtranslatorarray['aART'] = 'album_artist';
-			$handyatomtranslatorarray['trkn'] = 'track_number';     // iTunes 4.0
-			$handyatomtranslatorarray['disk'] = 'disc_number';      // iTunes 4.0
-			$handyatomtranslatorarray['gnre'] = 'genre';            // iTunes 4.0
-			$handyatomtranslatorarray['©too'] = 'encoder';          // iTunes 4.0
-			$handyatomtranslatorarray['tmpo'] = 'bpm';              // iTunes 4.0
-			$handyatomtranslatorarray['cprt'] = 'copyright';        // iTunes 4.0?
-			$handyatomtranslatorarray['cpil'] = 'compilation';      // iTunes 4.0
-			$handyatomtranslatorarray['covr'] = 'picture';          // iTunes 4.0
-			$handyatomtranslatorarray['rtng'] = 'rating';           // iTunes 4.0
-			$handyatomtranslatorarray['©grp'] = 'grouping';         // iTunes 4.2
-			$handyatomtranslatorarray['stik'] = 'stik';             // iTunes 4.9
-			$handyatomtranslatorarray['pcst'] = 'podcast';          // iTunes 4.9
-			$handyatomtranslatorarray['catg'] = 'category';         // iTunes 4.9
-			$handyatomtranslatorarray['keyw'] = 'keyword';          // iTunes 4.9
-			$handyatomtranslatorarray['purl'] = 'podcast_url';      // iTunes 4.9
-			$handyatomtranslatorarray['egid'] = 'episode_guid';     // iTunes 4.9
-			$handyatomtranslatorarray['desc'] = 'description';      // iTunes 5.0
-			$handyatomtranslatorarray['©lyr'] = 'lyrics';           // iTunes 5.0
-			$handyatomtranslatorarray['tvnn'] = 'tv_network_name';  // iTunes 6.0
-			$handyatomtranslatorarray['tvsh'] = 'tv_show_name';     // iTunes 6.0
-			$handyatomtranslatorarray['tvsn'] = 'tv_season';        // iTunes 6.0
-			$handyatomtranslatorarray['tves'] = 'tv_episode';       // iTunes 6.0
-			$handyatomtranslatorarray['purd'] = 'purchase_date';    // iTunes 6.0.2
-			$handyatomtranslatorarray['pgap'] = 'gapless_playback'; // iTunes 7.0
-
 			// http://www.geocities.com/xhelmboyx/quicktime/formats/mp4-layout.txt
-
-
+			// http://atomicparsley.sourceforge.net/mpeg-4files.html
+			// https://code.google.com/p/mp4v2/wiki/iTunesMetadata
+			$handyatomtranslatorarray["\xA9".'alb'] = 'album';               // iTunes 4.0
+			$handyatomtranslatorarray["\xA9".'ART'] = 'artist';
+			$handyatomtranslatorarray["\xA9".'art'] = 'artist';              // iTunes 4.0
+			$handyatomtranslatorarray["\xA9".'aut'] = 'author';
+			$handyatomtranslatorarray["\xA9".'cmt'] = 'comment';             // iTunes 4.0
+			$handyatomtranslatorarray["\xA9".'com'] = 'comment';
+			$handyatomtranslatorarray["\xA9".'cpy'] = 'copyright';
+			$handyatomtranslatorarray["\xA9".'day'] = 'creation_date';       // iTunes 4.0
+			$handyatomtranslatorarray["\xA9".'dir'] = 'director';
+			$handyatomtranslatorarray["\xA9".'ed1'] = 'edit1';
+			$handyatomtranslatorarray["\xA9".'ed2'] = 'edit2';
+			$handyatomtranslatorarray["\xA9".'ed3'] = 'edit3';
+			$handyatomtranslatorarray["\xA9".'ed4'] = 'edit4';
+			$handyatomtranslatorarray["\xA9".'ed5'] = 'edit5';
+			$handyatomtranslatorarray["\xA9".'ed6'] = 'edit6';
+			$handyatomtranslatorarray["\xA9".'ed7'] = 'edit7';
+			$handyatomtranslatorarray["\xA9".'ed8'] = 'edit8';
+			$handyatomtranslatorarray["\xA9".'ed9'] = 'edit9';
+			$handyatomtranslatorarray["\xA9".'enc'] = 'encoded_by';
+			$handyatomtranslatorarray["\xA9".'fmt'] = 'format';
+			$handyatomtranslatorarray["\xA9".'gen'] = 'genre';               // iTunes 4.0
+			$handyatomtranslatorarray["\xA9".'grp'] = 'grouping';            // iTunes 4.2
+			$handyatomtranslatorarray["\xA9".'hst'] = 'host_computer';
+			$handyatomtranslatorarray["\xA9".'inf'] = 'information';
+			$handyatomtranslatorarray["\xA9".'lyr'] = 'lyrics';              // iTunes 5.0
+			$handyatomtranslatorarray["\xA9".'mak'] = 'make';
+			$handyatomtranslatorarray["\xA9".'mod'] = 'model';
+			$handyatomtranslatorarray["\xA9".'nam'] = 'title';               // iTunes 4.0
+			$handyatomtranslatorarray["\xA9".'ope'] = 'composer';
+			$handyatomtranslatorarray["\xA9".'prd'] = 'producer';
+			$handyatomtranslatorarray["\xA9".'PRD'] = 'product';
+			$handyatomtranslatorarray["\xA9".'prf'] = 'performers';
+			$handyatomtranslatorarray["\xA9".'req'] = 'system_requirements';
+			$handyatomtranslatorarray["\xA9".'src'] = 'source_credit';
+			$handyatomtranslatorarray["\xA9".'swr'] = 'software';
+			$handyatomtranslatorarray["\xA9".'too'] = 'encoding_tool';       // iTunes 4.0
+			$handyatomtranslatorarray["\xA9".'trk'] = 'track';
+			$handyatomtranslatorarray["\xA9".'url'] = 'url';
+			$handyatomtranslatorarray["\xA9".'wrn'] = 'warning';
+			$handyatomtranslatorarray["\xA9".'wrt'] = 'composer';
+			$handyatomtranslatorarray['aART'] = 'album_artist';
+			$handyatomtranslatorarray['apID'] = 'purchase_account';
+			$handyatomtranslatorarray['catg'] = 'category';            // iTunes 4.9
+			$handyatomtranslatorarray['covr'] = 'picture';             // iTunes 4.0
+			$handyatomtranslatorarray['cpil'] = 'compilation';         // iTunes 4.0
+			$handyatomtranslatorarray['cprt'] = 'copyright';           // iTunes 4.0?
+			$handyatomtranslatorarray['desc'] = 'description';         // iTunes 5.0
+			$handyatomtranslatorarray['disk'] = 'disc_number';         // iTunes 4.0
+			$handyatomtranslatorarray['egid'] = 'episode_guid';        // iTunes 4.9
+			$handyatomtranslatorarray['gnre'] = 'genre';               // iTunes 4.0
+			$handyatomtranslatorarray['hdvd'] = 'hd_video';            // iTunes 4.0
+			$handyatomtranslatorarray['ldes'] = 'description_long';    //
+			$handyatomtranslatorarray['keyw'] = 'keyword';             // iTunes 4.9
+			$handyatomtranslatorarray['pcst'] = 'podcast';             // iTunes 4.9
+			$handyatomtranslatorarray['pgap'] = 'gapless_playback';    // iTunes 7.0
+			$handyatomtranslatorarray['purd'] = 'purchase_date';       // iTunes 6.0.2
+			$handyatomtranslatorarray['purl'] = 'podcast_url';         // iTunes 4.9
+			$handyatomtranslatorarray['rtng'] = 'rating';              // iTunes 4.0
+			$handyatomtranslatorarray['soaa'] = 'sort_album_artist';   //
+			$handyatomtranslatorarray['soal'] = 'sort_album';          //
+			$handyatomtranslatorarray['soar'] = 'sort_artist';         //
+			$handyatomtranslatorarray['soco'] = 'sort_composer';       //
+			$handyatomtranslatorarray['sonm'] = 'sort_title';          //
+			$handyatomtranslatorarray['sosn'] = 'sort_show';           //
+			$handyatomtranslatorarray['stik'] = 'stik';                // iTunes 4.9
+			$handyatomtranslatorarray['tmpo'] = 'bpm';                 // iTunes 4.0
+			$handyatomtranslatorarray['trkn'] = 'track_number';        // iTunes 4.0
+			$handyatomtranslatorarray['tven'] = 'tv_episode_id';       //
+			$handyatomtranslatorarray['tves'] = 'tv_episode';          // iTunes 6.0
+			$handyatomtranslatorarray['tvnn'] = 'tv_network_name';     // iTunes 6.0
+			$handyatomtranslatorarray['tvsh'] = 'tv_show_name';        // iTunes 6.0
+			$handyatomtranslatorarray['tvsn'] = 'tv_season';           // iTunes 6.0
 
 			// boxnames:
+			/*
 			$handyatomtranslatorarray['iTunSMPB']                    = 'iTunSMPB';
 			$handyatomtranslatorarray['iTunNORM']                    = 'iTunNORM';
 			$handyatomtranslatorarray['Encoding Params']             = 'Encoding Params';
@@ -2087,11 +2228,16 @@ echo 'QuicktimeParseNikonNCTG()::unknown $data_size_type: '.$data_size_type.'<br
 			$handyatomtranslatorarray['MusicBrainz Album Artist Id'] = 'MusicBrainz Album Artist Id';
 			$handyatomtranslatorarray['MusicBrainz Track Id']        = 'MusicBrainz Track Id';
 			$handyatomtranslatorarray['MusicBrainz Disc Id']         = 'MusicBrainz Disc Id';
+
+			// http://age.hobba.nl/audio/tag_frame_reference.html
+			$handyatomtranslatorarray['PLAY_COUNTER']                = 'play_counter'; // Foobar2000 - http://www.getid3.org/phpBB3/viewtopic.php?t=1355
+			$handyatomtranslatorarray['MEDIATYPE']                   = 'mediatype';    // Foobar2000 - http://www.getid3.org/phpBB3/viewtopic.php?t=1355
+			*/
 		}
 		$info = &$this->getid3->info;
 		$comment_key = '';
-		if ($boxname && ($boxname != $keyname) && isset($handyatomtranslatorarray[$boxname])) {
-			$comment_key = $handyatomtranslatorarray[$boxname];
+		if ($boxname && ($boxname != $keyname)) {
+			$comment_key = (isset($handyatomtranslatorarray[$boxname]) ? $handyatomtranslatorarray[$boxname] : $boxname);
 		} elseif (isset($handyatomtranslatorarray[$keyname])) {
 			$comment_key = $handyatomtranslatorarray[$keyname];
 		}
@@ -2116,7 +2262,7 @@ echo 'QuicktimeParseNikonNCTG()::unknown $data_size_type: '.$data_size_type.'<br
 		return true;
 	}
 
-	function NoNullString($nullterminatedstring) {
+	public function NoNullString($nullterminatedstring) {
 		// remove the single null terminator on null terminated strings
 		if (substr($nullterminatedstring, strlen($nullterminatedstring) - 1, 1) === "\x00") {
 			return substr($nullterminatedstring, 0, strlen($nullterminatedstring) - 1);
@@ -2124,11 +2270,9 @@ echo 'QuicktimeParseNikonNCTG()::unknown $data_size_type: '.$data_size_type.'<br
 		return $nullterminatedstring;
 	}
 
-	function Pascal2String($pascalstring) {
+	public function Pascal2String($pascalstring) {
 		// Pascal strings have 1 unsigned byte at the beginning saying how many chars (1-255) are in the string
 		return substr($pascalstring, 1);
 	}
 
 }
-
-?>

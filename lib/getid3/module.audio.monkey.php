@@ -3,6 +3,7 @@
 /// getID3() by James Heinrich <info@getid3.org>               //
 //  available at http://getid3.sourceforge.net                 //
 //            or http://www.getid3.org                         //
+//          also https://github.com/JamesHeinrich/getID3       //
 /////////////////////////////////////////////////////////////////
 // See readme.txt for more details                             //
 /////////////////////////////////////////////////////////////////
@@ -17,10 +18,10 @@
 class getid3_monkey extends getid3_handler
 {
 
-	function Analyze() {
+	public function Analyze() {
 		$info = &$this->getid3->info;
 
-		// based loosely on code from TMonkey by Jurgen Faul <jfaulØgmx*de>
+		// based loosely on code from TMonkey by Jurgen Faul <jfaulÃ˜gmx*de>
 		// http://jfaul.de/atl  or  http://j-faul.virtualave.net/atl/atl.html
 
 		$info['fileformat']            = 'mac';
@@ -32,8 +33,8 @@ class getid3_monkey extends getid3_handler
 		$thisfile_monkeysaudio                = &$info['monkeys_audio'];
 		$thisfile_monkeysaudio_raw            = &$thisfile_monkeysaudio['raw'];
 
-		fseek($this->getid3->fp, $info['avdataoffset'], SEEK_SET);
-		$MACheaderData = fread($this->getid3->fp, 74);
+		$this->fseek($info['avdataoffset']);
+		$MACheaderData = $this->fread(74);
 
 		$thisfile_monkeysaudio_raw['magic'] = substr($MACheaderData, 0, 4);
 		$magic = 'MAC ';
@@ -176,7 +177,7 @@ class getid3_monkey extends getid3_handler
 		return true;
 	}
 
-	function MonkeyCompressionLevelNameLookup($compressionlevel) {
+	public function MonkeyCompressionLevelNameLookup($compressionlevel) {
 		static $MonkeyCompressionLevelNameLookup = array(
 			0     => 'unknown',
 			1000  => 'fast',
@@ -188,7 +189,7 @@ class getid3_monkey extends getid3_handler
 		return (isset($MonkeyCompressionLevelNameLookup[$compressionlevel]) ? $MonkeyCompressionLevelNameLookup[$compressionlevel] : 'invalid');
 	}
 
-	function MonkeySamplesPerFrame($versionid, $compressionlevel) {
+	public function MonkeySamplesPerFrame($versionid, $compressionlevel) {
 		if ($versionid >= 3950) {
 			return 73728 * 4;
 		} elseif ($versionid >= 3900) {
@@ -201,5 +202,3 @@ class getid3_monkey extends getid3_handler
 	}
 
 }
-
-?>
