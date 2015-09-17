@@ -96,10 +96,10 @@ class RTMediaLike extends RTMediaUserInteraction {
 		$actions = intval( $actions[ 0 ]->{$actionwa} );
 		if ( $this->increase === true ) {
 			$actions ++;
-			$return[ "next" ] = $this->undo_label;
+			$return[ "next" ] = apply_filters( 'rtmedia_' . $this->action . '_label_text', $this->undo_label );
 		} else {
 			$actions --;
-			$return[ "next" ] = $this->label;
+			$return[ "next" ] = apply_filters( 'rtmedia_' . $this->action . '_label_text', $this->label );
 		}
 		if ( $actions < 0 ) {
 			$actions = 0;
