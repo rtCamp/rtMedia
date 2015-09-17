@@ -140,6 +140,10 @@ http://www.youtube.com/watch?v####dJrykKQGDcs
 
 ## Changelog ##
 
+#### 3.8.18 ####
+* Filter for media action text
+* Updated getid3 lib to latest version
+
 #### 3.8.17 ####
 * Fix upload dir filter
 * Fix video max height in lightbox
@@ -1066,8 +1070,8 @@ http://www.youtube.com/watch?v####dJrykKQGDcs
 * HTML5 Audio Tag Support (with fallback)
 * HTML5 Video Tag Support (with fallback)
 
-#### 3.8.17 ####
-Requires BuddyPress 1.7 or higher, if using BuddyPress. Fix upload dir filter, fix video max height in lightbox, fix shortcode issue with album uploader.
+#### 3.8.18 ####
+Requires BuddyPress 1.7 or higher, if using BuddyPress. Filter for media action text, updated getid3 lib to latest version.
 
 ## Sponsors ##
 
