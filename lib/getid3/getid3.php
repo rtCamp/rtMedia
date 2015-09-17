@@ -10,6 +10,11 @@
 //                                                            ///
 /////////////////////////////////////////////////////////////////
 
+// Do not proceed getID3 if already exist.
+if ( class_exists ( "getID3" ) ) {
+	return;
+}
+
 // define a constant rather than looking up every time it is needed
 if (!defined('GETID3_OS_ISWINDOWS')) {
 	define('GETID3_OS_ISWINDOWS', (stripos(PHP_OS, 'WIN') === 0));
