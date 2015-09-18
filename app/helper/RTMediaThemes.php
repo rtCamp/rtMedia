@@ -120,6 +120,16 @@ class RTMediaThemes {
 				'buy_url' => 'https://rtcamp.com/products/inspirebook/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media',
 				'description' => __( 'InspireBook is a premium WordPress theme, designed especially for BuddyPress and rtMedia powered social-networks.', 'rtmedia' ),
 				'tags' => 'black, blue, white, light, one-column, two-columns, right-sidebar, custom-header, custom-background, custom-menu, editor-style, theme-options, threaded-comments, sticky-post, translation-ready, responsive-layout, full-width-template, buddypress',
+			),
+			'foodmania' => array(
+				'name' => __( 'Foodmania', 'rtmedia' ),
+				'image' => 'https://rtcamp-481283.c.cdn77.org/wp-content/uploads/edd/2015/08/foodmania-img1.png',
+				'demo_url' => 'http://demo.rtcamp.com/foodmania/',
+				'author' => __( 'rtCamp', 'rtmedia' ),
+				'author_url' => 'https://rtcamp.com/',
+				'buy_url' => 'https://rtcamp.com/products/foodmania/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media',
+				'description' => __( 'Its premium WordPress theme, designed especially for Food, recipe and photography community sites.', 'rtmedia' ),
+				'tags' => 'black, yellow, white, dark, one-column, two-columns, right-sidebar, custom-header, custom-background, custom-menu, editor-style, theme-options, threaded-comments, sticky-post, translation-ready, responsive-layout, full-width-template, buddypress',
 			)
 		);
 		?>
