@@ -23,10 +23,11 @@ class RTMediaUploadModel {
 
     /**
      *
-     * @return type
+     * @return array
      */
-    function set_post_object () {
-        $this->upload = wp_parse_args ( $_POST, $this->upload );
+    function set_post_object ( $upload_params = array() ) {
+	    $upload_array = empty( $upload_params ) ? $_POST : $upload_params;
+        $this->upload = wp_parse_args ( $upload_array, $this->upload );
         $this->sanitize_object ();
         return $this->upload;
     }
@@ -46,7 +47,7 @@ class RTMediaUploadModel {
      * @global type $rtmedia_interaction
      */
     function sanitize_object () {
-        
+
         if ( ! $this->has_context () ) {
             // Set context_id to Logged in user id if context is profile and context_id is not provided
             if( $this->upload[ 'context' ] == 'profile' ) {

@@ -16,7 +16,7 @@ class RTMediaUpload {
 
 	/**
 	 *
-	 * @param type $uploaded
+	 * @param array $uploaded
 	 *
 	 * @return boolean
 	 */

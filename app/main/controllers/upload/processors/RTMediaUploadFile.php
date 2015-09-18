@@ -60,7 +60,7 @@ class RTMediaUploadFile {
 					}
 					$uploaded_file[ $key ][ 'name' ] = $file[ 'name' ];
 				} catch ( RTMediaUploadException $e ) {
-					echo $e->getMessage();
+					return new WP_Error( 'upload_error', $e->getMessage() );
 				}
 
 				if ( strpos( $file[ 'type' ], 'image' ) !== false ){
@@ -101,6 +101,14 @@ class RTMediaUploadFile {
 		if ( strpos( $upload_dir[ 'path' ], $rtmedia_folder_name . '/' . $rtmedia_upload_prefix ) === false ){
 			$upload_dir[ 'path' ] = trailingslashit( str_replace( $upload_dir[ 'subdir' ], '', $upload_dir[ 'path' ] ) ) . $rtmedia_folder_name . '/' . $rtmedia_upload_prefix . $id . $upload_dir[ 'subdir' ];
 			$upload_dir[ 'url' ]  = trailingslashit( str_replace( $upload_dir[ 'subdir' ], '', $upload_dir[ 'url' ] ) ) . $rtmedia_folder_name . '/' . $rtmedia_upload_prefix . $id . $upload_dir[ 'subdir' ];
+		}
+
+		// set dir as per the upload date
+		if( isset( $this->uploaded['date'] ) ){
+			$year_month = date( 'Y/m', $this->uploaded['date'] );
+
+			$upload_dir[ 'path' ] = trailingslashit( str_replace( $upload_dir[ 'subdir' ], '', $upload_dir[ 'path' ] ) ) . $year_month;
+			$upload_dir[ 'url' ]  = trailingslashit( str_replace( $upload_dir[ 'subdir' ], '', $upload_dir[ 'url' ] ) ) . $year_month;
 		}
 
 		$upload_dir = apply_filters( "rtmedia_filter_upload_dir", $upload_dir, $this->uploaded );

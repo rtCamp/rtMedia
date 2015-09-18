@@ -2833,3 +2833,47 @@ function rtmedia_get_allowed_upload_types_array() {
 	return $types;
 }
 
+/**
+ *
+ * Upload and add media
+ *
+ * @param array $upload_params
+ *
+ * @return mixed $media_id
+ */
+function rtmedia_add_media( $upload_params = array() ){
+
+	if( empty( $upload_params ) ){
+		$upload_params = $_POST;
+	}
+
+	$upload_model = new RTMediaUploadModel();
+	$upload_array = $upload_model->set_post_object( $upload_params );
+
+	$rtupload = new RTMediaUpload ( $upload_array );
+	$media_id = isset( $rtupload->media_ids[ 0 ] ) ? $rtupload->media_ids[ 0 ] : false;
+
+	return $media_id;
+}
+
+/**
+ *
+ * Add multiple meta key and value for media.
+ *
+ * @param $media_id
+ * @param $meta_key_val
+ *
+ * @return array
+ */
+function rtmedia_add_multiple_meta( $media_id, $meta_key_val ){
+	$meta_ids = array();
+	if( !empty( $meta_key_val ) ){
+		$media_meta = new RTMediaMeta();
+		foreach( $meta_key_val as $meta_key => $meta_val ){
+			$meta_ids[] = $media_meta->add_meta( $media_id, $meta_key, $meta_val );;
+		}
+	}
+
+	return $meta_ids;
+}
+

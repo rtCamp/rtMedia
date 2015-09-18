@@ -440,10 +440,10 @@ class RTMediaMedia {
 
 		$attachments = array();
 
-		foreach ( $file_object as $file ) {
+		foreach ( $file_object as $index => $file ) {
 			$uploaded[ 'title' ] = wp_kses( $uploaded[ 'title' ], wp_kses_allowed_html() );
 			$uploaded[ 'description' ] = sanitize_text_field( $uploaded[ 'description' ] );
-			$attachments[ ] = array(
+			$attachments[$index] = array(
 				'post_mime_type' => $file[ 'type' ],
 				'guid' => $file[ 'url' ],
 				'post_title' => $uploaded[ 'title' ] ? $uploaded[ 'title' ] : preg_replace( "/\\.[^.\\s]{3,4}$/", "", $file[ 'name' ] ),
@@ -451,6 +451,10 @@ class RTMediaMedia {
 				'post_parent' => $album_id,
 				'post_author' => $uploaded[ 'media_author' ]
 			);
+
+			if( ! empty( $uploaded['date'] ) ){
+				$attachments[$index]['post_date'] = $uploaded['date'];
+			}
 		}
 
 		return $attachments;
