@@ -2867,7 +2867,7 @@ function rtmedia_add_media( $upload_params = array() ){
  */
 function rtmedia_add_multiple_meta( $media_id, $meta_key_val ){
 	$meta_ids = array();
-	if( !empty( $meta_key_val ) ){
+	if( !empty( $media_id ) && !empty( $meta_key_val ) ){
 		$media_meta = new RTMediaMeta();
 		foreach( $meta_key_val as $meta_key => $meta_val ){
 			$meta_ids[] = $media_meta->add_meta( $media_id, $meta_key, $meta_val );;

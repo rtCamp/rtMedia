@@ -105,7 +105,8 @@ class RTMediaUploadFile {
 
 		// set dir as per the upload date
 		if( isset( $this->uploaded['date'] ) ){
-			$year_month = date( 'Y/m', $this->uploaded['date'] );
+			$str_date = strtotime( $this->uploaded['date'] );
+			$year_month = date( 'Y/m', $str_date );
 
 			$upload_dir[ 'path' ] = trailingslashit( str_replace( $upload_dir[ 'subdir' ], '', $upload_dir[ 'path' ] ) ) . $year_month;
 			$upload_dir[ 'url' ]  = trailingslashit( str_replace( $upload_dir[ 'subdir' ], '', $upload_dir[ 'url' ] ) ) . $year_month;
