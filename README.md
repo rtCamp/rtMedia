@@ -40,7 +40,7 @@ http://www.youtube.com/watch?v####dJrykKQGDcs
  6. **Responsive** - Album Slideshow (Lightbox), video player, uploads work on mobiles & tablets. Support for swipe guestures.
  7. **Privacy** - Control who can see media files, albums and BuddyPress activities.
  8. **Templating system** - Completely customise rtMedia by modifying the template files. Just copy over the template folder to your theme.
- 9. **[Featured Media](http://docs.rtcamp.com/rtmedia/developer/featured-media/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "Featured Media documentation")** - This can be used for facebook-style cover photo on profiles.
+ 9. **[Featured Media](http://docs.rtcamp.com/rtmedia/developers/featured-media.html/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "Featured Media documentation")** - This can be used for facebook-style cover photo on profiles.
  10. **[rtMedia Uploader](http://docs.rtcamp.com/rtmedia/features/shortcodes/uploader-shortcode/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "rtMedia Uploader")** - Use `[rtmedia_uploader]` shortcode or `<?php rtmedia_uploader() ?>` template tag, to show drag-n-drop uploader in any WordPress area (post, page, custom-post, etc).
  11. **[rtMedia Gallery](http://docs.rtcamp.com/rtmedia/features/shortcodes/gallery-shortcode/?utm_source####readme&utm_medium####plugin&utm_campaign####buddypress-media "rtMedia Gallery")** - Display media gallery anywhere on your site using `[rtmedia_gallery]` shortcode or `<?php rtmedia_gallery ?>` template tag.
 
@@ -139,6 +139,11 @@ http://www.youtube.com/watch?v####dJrykKQGDcs
 
 
 ## Changelog ##
+
+#### 3.8.19 ####
+* Fix getid3 related issue
+* Added new theme: Foodmania
+* New wrapper functions to upload media
 
 #### 3.8.18 ####
 * Filter for media action text
@@ -1070,8 +1075,8 @@ http://www.youtube.com/watch?v####dJrykKQGDcs
 * HTML5 Audio Tag Support (with fallback)
 * HTML5 Video Tag Support (with fallback)
 
-#### 3.8.18 ####
-Requires BuddyPress 1.7 or higher, if using BuddyPress. Filter for media action text, updated getid3 lib to latest version.
+#### 3.8.19 ####
+Requires BuddyPress 1.7 or higher, if using BuddyPress. Fix getid3 related issue, new wrapper functions to upload media.
 
 ## Sponsors ##
 
