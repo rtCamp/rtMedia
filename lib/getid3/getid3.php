@@ -10,11 +10,6 @@
 //                                                            ///
 /////////////////////////////////////////////////////////////////
 
-// Do not proceed getID3 if already exist.
-if ( class_exists ( "getID3" ) ) {
-	return;
-}
-
 // define a constant rather than looking up every time it is needed
 if (!defined('GETID3_OS_ISWINDOWS')) {
 	define('GETID3_OS_ISWINDOWS', (stripos(PHP_OS, 'WIN') === 0));
@@ -72,6 +67,16 @@ if (!defined('GETID3_TEMP_DIR')) {
 unset($open_basedir, $temp_dir);
 
 // End: Defines
+
+// Do not proceed getID3 if already exist.
+if ( class_exists ( "getID3" ) ) {
+	return;
+}
+
+if ( class_exists ( "getid3_exception" ) ) {
+	return;
+}
+
 
 
 class getID3
@@ -1824,8 +1829,9 @@ abstract class getid3_handler {
 
 }
 
-
-class getid3_exception extends Exception
-{
-	public $message;
+if ( ! class_exists ( "getid3_exception" ) ) {
+	class getid3_exception extends Exception
+	{
+		public $message;
+	}
 }
