@@ -149,6 +149,10 @@ class RTMediaBPComponent extends BP_Component {
 
 			foreach ( $rtmedia->allowed_types as $type ) {
 
+				if( ! isset( $rtmedia->options[ 'allowedTypes_' . $type[ 'name' ] . '_enabled' ] ) )
+					continue;
+				if ( ! $rtmedia->options[ 'allowedTypes_' . $type[ 'name' ] . '_enabled' ] )
+					continue;
 				$name       = strtoupper( $type['name'] );
 				$type_label = __( defined( 'RTMEDIA_' . $name . '_PLURAL_LABEL' ) ? constant( 'RTMEDIA_' . $name . '_PLURAL_LABEL' ) : $type['plural_label'], RTMEDIA_TEXT_DOMAIN );
 
@@ -199,6 +203,7 @@ class RTMediaBPComponent extends BP_Component {
 				);
 			}
 
+			$sub_nav = apply_filters( 'rtmedia_sub_nav', $sub_nav, $slug, $media_page_link, $pos_index );
 			parent::setup_nav( $main_nav, $sub_nav );
 		}
 	}
