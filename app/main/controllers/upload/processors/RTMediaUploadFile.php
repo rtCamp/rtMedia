@@ -43,6 +43,8 @@ class RTMediaUploadFile {
 		include_once( ABSPATH . 'wp-admin/includes/image.php' );
 
 		$upload_type = $this->fake ? 'wp_handle_sideload' : 'wp_handle_upload';
+
+		//todo why use $rt_set_filter_uplaod_dir global variable if we can remove filter for upload_dir after upload finish
 		global $rt_set_filter_uplaod_dir;
 		if ( ! isset( $rt_set_filter_uplaod_dir ) ){
 			add_filter( 'upload_dir', array( $this, 'upload_dir' ) );
