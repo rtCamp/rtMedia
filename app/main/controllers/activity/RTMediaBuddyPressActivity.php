@@ -330,7 +330,7 @@ class RTMediaBuddyPressActivity {
 				if( defined( $media_const ) ){
 					$media_str = constant( $media_const );
 				} else {
-					$media_str = __( 'media', 'rtmedia' );
+					$media_str = RTMEDIA_MEDIA_SLUG;
 				}
 
                 $action = '';
@@ -345,7 +345,7 @@ class RTMediaBuddyPressActivity {
                         && count( array_unique( $rtmedia_media_type_array[ $activities[ $index ]->id ] ) ) == 1 ) {
                         $action = sprintf( __( '%s added %d %s', 'rtmedia' ), $user_link, $count, $media_str );
                     } else {
-                        $action = sprintf( __( '%s added %d %s', 'rtmedia' ), $user_link, $count, __( 'media', 'rtmedia' ) );
+                        $action = sprintf( __( '%s added %d %s', 'rtmedia' ), $user_link, $count, RTMEDIA_MEDIA_SLUG );
                     }
                 }
                 
