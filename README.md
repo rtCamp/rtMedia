@@ -140,6 +140,10 @@ http://www.youtube.com/watch?v####dJrykKQGDcs
 
 ## Changelog ##
 
+#### 3.8.20 ####
+* Fix getid3 related issue
+* Other bug fixes
+
 #### 3.8.19 ####
 * Fix getid3 related issue
 * Added new theme: Foodmania
@@ -1075,8 +1079,8 @@ http://www.youtube.com/watch?v####dJrykKQGDcs
 * HTML5 Audio Tag Support (with fallback)
 * HTML5 Video Tag Support (with fallback)
 
-#### 3.8.19 ####
-Requires BuddyPress 1.7 or higher, if using BuddyPress. Fix getid3 related issue, new wrapper functions to upload media.
+#### 3.8.20 ####
+Requires BuddyPress 1.7 or higher, if using BuddyPress. Fix getid3 related issue.
 
 ## Sponsors ##
 
