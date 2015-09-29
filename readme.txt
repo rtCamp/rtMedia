@@ -5,8 +5,8 @@ Tags: BuddyPress, media, multimedia, album, audio, songs, music, video, photo, i
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires at least: WordPress 3.6
-Tested up to: 4.3
-Stable tag: 3.8.19
+Tested up to: 4.3.1
+Stable tag: 3.8.20
 
 Add albums, photo, audio/video encoding, privacy, sharing, front-end uploads & more. All this works on mobile/tablets devices.
 
@@ -139,6 +139,10 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 
 == Changelog ==
+
+= 3.8.20 =
+* Fix getid3 related issue
+* Other bug fixes
 
 = 3.8.19 =
 * Fix getid3 related issue
@@ -1077,8 +1081,8 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 == Upgrade Notice ==
 
-= 3.8.19 =
-Requires BuddyPress 1.7 or higher, if using BuddyPress. Fix getid3 related issue, new wrapper functions to upload media.
+= 3.8.20 =
+Requires BuddyPress 1.7 or higher, if using BuddyPress. Fix getid3 related issue.
 
 == Sponsors ==
 
