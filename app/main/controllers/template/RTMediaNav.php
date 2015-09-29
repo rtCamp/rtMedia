@@ -78,8 +78,8 @@ class RTMediaNav {
                 $group_counts = $this->actual_counts ( $bp->groups->current_group->id, "group" );
                 $bp->bp_options_nav[ bp_get_current_group_slug () ][ 'media' ] = array(
                     'name' => RTMEDIA_MEDIA_LABEL . '<span>' . $group_counts[ 'total' ][ 'all' ] . '</span>',
-                    'link' => trailingslashit ( bp_get_root_domain () . '/' . bp_get_groups_root_slug () . '/' . bp_get_current_group_slug () . '/' ) . RTMEDIA_MEDIA_SLUG,
-                    'slug' => RTMEDIA_MEDIA_SLUG,
+                    'link' => trailingslashit ( bp_get_root_domain () . '/' . bp_get_groups_root_slug () . '/' . bp_get_current_group_slug () . '/' ) . apply_filters('rtmedia_group_media_tab_slug', RTMEDIA_MEDIA_SLUG ),
+                    'slug' => apply_filters('rtmedia_group_media_tab_slug', RTMEDIA_MEDIA_SLUG ),
                     'user_has_access' => true,
                     'css_id' => 'rtmedia-media-nav',
                     'position' => 99,
