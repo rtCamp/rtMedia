@@ -6,7 +6,7 @@
 	if ( isset( $rtmedia_query->is_gallery_shortcode ) && $rtmedia_query->is_gallery_shortcode == true ) { // if gallery is displayed using gallery shortcode
 		?>
 		<div id="rtm-gallery-title-container" class="clearfix">
-			<h2 class="rtm-gallery-title"><?php _e( 'Media Gallery', 'rtmedia' ); ?></h2>
+			<h2 class="rtm-gallery-title"><?php _e( 'Media Gallery', 'buddypress-media' ); ?></h2>
 			<div id="rtm-media-options" class="rtm-media-options">
 				<?php do_action( 'rtmedia_media_gallery_shortcode_actions' ); ?>
 			</div>
@@ -22,7 +22,7 @@
 				if ( $title ) {
 					echo $title;
 				} else {
-					_e( 'Media Gallery', 'rtmedia' );
+					_e( 'Media Gallery', 'buddypress-media' );
 				}
 				?>
 			</h2>
@@ -62,7 +62,7 @@
 				else
 					$display = 'style="display:none;"';
 				?>
-				<a id="rtMedia-galary-next" <?php echo $display; ?> href="<?php echo rtmedia_pagination_next_link(); ?>"><?php echo __( 'Load More', 'rtmedia' ); ?></a>
+				<a id="rtMedia-galary-next" <?php echo $display; ?> href="<?php echo rtmedia_pagination_next_link(); ?>"><?php echo __( 'Load More', 'buddypress-media' ); ?></a>
 				<?php
 			}
 			?>
@@ -70,7 +70,7 @@
 	<?php } else { ?>
 		<p class="rtmedia-no-media-found">
 			<?php
-			$message = __( "Oops !! There's no media found for the request !!", "rtmedia" );
+			$message = __( "Oops !! There's no media found for the request !!", 'buddypress-media' );
 			echo apply_filters( 'rtmedia_no_media_found_message_filter', $message );
 			?>
 		</p>

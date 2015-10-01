@@ -29,7 +29,7 @@ class RTMediaNav {
             $wp_admin_nav[] = array(
                 'parent' => 'my-account-' . buddypress()->settings->id,
                 'id' => 'my-account-' . buddypress()->settings->id . '-privacy',
-                'title' => _x( 'Privacy', 'My Account Privacy sub nav', 'rtmedia' ),
+                'title' => _x( 'Privacy', 'My Account Privacy sub nav', 'buddypress-media' ),
                 'href' => trailingslashit( $settings_link . 'privacy' )
             );
         }
@@ -173,7 +173,7 @@ class RTMediaNav {
 	if ( ! isset ( $rtmedia_query->action_query->media_type )) {
 	    $all = 'class="current selected"';
 	}
-	echo apply_filters ( 'rtmedia_sub_nav_all', '<li id="rtmedia-nav-item-all-li" ' . $all . '><a id="rtmedia-nav-item-all" href="' . trailingslashit ( $link ) . RTMEDIA_MEDIA_SLUG . '/">' . __ ( "All", "rtmedia" ) . '<span>' . ((isset ( $counts[ 'total' ][ 'all' ] )) ? $counts[ 'total' ][ 'all' ] : 0 ) . '</span>' . '</a></li>' );
+	echo apply_filters ( 'rtmedia_sub_nav_all', '<li id="rtmedia-nav-item-all-li" ' . $all . '><a id="rtmedia-nav-item-all" href="' . trailingslashit ( $link ) . RTMEDIA_MEDIA_SLUG . '/">' . __ ( "All", 'buddypress-media' ) . '<span>' . ((isset ( $counts[ 'total' ][ 'all' ] )) ? $counts[ 'total' ][ 'all' ] : 0 ) . '</span>' . '</a></li>' );
 
         if ( ! isset ( $rtmedia_query->action_query->action ) || empty ( $rtmedia_query->action_query->action ) ) {
             $default = true;
@@ -194,7 +194,7 @@ class RTMediaNav {
             }
 
             $counts[ 'total' ][ "album" ] = $counts[ 'total' ][ "album" ] + $other_count;
-	    $album_label = __( defined('RTMEDIA_ALBUM_PLURAL_LABEL') ? constant ( 'RTMEDIA_ALBUM_PLURAL_LABEL' ) : 'Albums', 'rtmedia' );
+	    $album_label = __( defined('RTMEDIA_ALBUM_PLURAL_LABEL') ? constant ( 'RTMEDIA_ALBUM_PLURAL_LABEL' ) : 'Albums', 'buddypress-media' );
             echo apply_filters ( 'rtmedia_sub_nav_albums', '<li id="rtmedia-nav-item-albums-li" ' . $albums . '><a id="rtmedia-nav-item-albums" href="' . trailingslashit ( $link ) . RTMEDIA_MEDIA_SLUG . '/album/">' . $album_label . '<span>' . ((isset ( $counts[ 'total' ][ "album" ] )) ? $counts[ 'total' ][ "album" ] : 0 ) . '</span>' . '</a></li>' );
         }
 
@@ -238,7 +238,7 @@ class RTMediaNav {
                 );
             }
 
-	    $type_label = __( defined('RTMEDIA_' . $name . '_PLURAL_LABEL') ? constant ( 'RTMEDIA_' . $name . '_PLURAL_LABEL' ) : $type[ 'plural_label' ], 'rtmedia' );
+	    $type_label = __( defined('RTMEDIA_' . $name . '_PLURAL_LABEL') ? constant ( 'RTMEDIA_' . $name . '_PLURAL_LABEL' ) : $type[ 'plural_label' ], 'buddypress-media' );
             echo apply_filters ( 'rtmedia_sub_nav_' . $type[ 'name' ], '<li id="rtmedia-nav-item-' . $type[ 'name' ]
                     . '-' . $context . '-' . $context_id . '-li" ' . $selected
                     . '><a id="rtmedia-nav-item-' . $type[ 'name' ] . '" href="'

@@ -57,11 +57,11 @@ class RTMediaGalleryItemAction {
 				        || ( isset( $rtmedia_media ) && isset( $rtmedia_media->media_author ) && $rtmedia_media->media_author == get_current_user_id() ) ) {
 					?>
 					<div class='rtmedia-gallery-item-actions'>
-						<a href="<?php rtmedia_permalink(); ?>edit" class='no-popup' target='_blank' title='<?php _e( 'Edit this media', 'rtmedia' ); ?>'>
-							<i class='dashicons dashicons-edit rtmicon'></i><?php _e( 'Edit', 'rtmedia' ); ?>
+						<a href="<?php rtmedia_permalink(); ?>edit" class='no-popup' target='_blank' title='<?php _e( 'Edit this media', 'buddypress-media' ); ?>'>
+							<i class='dashicons dashicons-edit rtmicon'></i><?php _e( 'Edit', 'buddypress-media' ); ?>
 						</a>
-						<a href="#" class="no-popup rtm-delete-media" title='<?php _e( 'Delete this media', 'rtmedia' ); ?>'>
-							<i class='dashicons dashicons-trash rtmicon'></i><?php _e( 'Delete', 'rtmedia' ); ?>
+						<a href="#" class="no-popup rtm-delete-media" title='<?php _e( 'Delete this media', 'buddypress-media' ); ?>'>
+							<i class='dashicons dashicons-trash rtmicon'></i><?php _e( 'Delete', 'buddypress-media' ); ?>
 						</a>
 					</div>
 				<?php
@@ -77,7 +77,7 @@ class RTMediaGalleryItemAction {
 		if( is_rt_admin()
 			|| ( function_exists( 'groups_is_user_mod' ) && groups_is_user_mod( $user_id, $context_id ) )
 		        || $media_array->media_author == get_current_user_id() ) {
-			$media_array->media_actions = "<div class='rtmedia-gallery-item-actions'><a href='" . $media_array->rt_permalink . "edit' class='no-popup' target='_blank' title='" . __( 'Edit this media', 'rtmedia' ) ."'><i class='dashicons dashicons-edit rtmicon'></i>" . __( 'Edit', 'rtmedia' ) ."</a><a href='#' class='no-popup rtm-delete-media' title='" . __( 'Delete this media', 'rtmedia' ) . "' ><i class='dashicons dashicons-trash rtmicon'></i>" . __( 'Delete', 'rtmedia' ) ."</a></div>";
+			$media_array->media_actions = "<div class='rtmedia-gallery-item-actions'><a href='" . $media_array->rt_permalink . "edit' class='no-popup' target='_blank' title='" . __( 'Edit this media', 'buddypress-media' ) ."'><i class='dashicons dashicons-edit rtmicon'></i>" . __( 'Edit', 'buddypress-media' ) ."</a><a href='#' class='no-popup rtm-delete-media' title='" . __( 'Delete this media', 'buddypress-media' ) . "' ><i class='dashicons dashicons-trash rtmicon'></i>" . __( 'Delete', 'buddypress-media' ) ."</a></div>";
 		} else {
 			$media_array->media_actions = "";
 		}

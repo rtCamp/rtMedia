@@ -17,7 +17,7 @@ class RTMediaActivityUpgrade {
 	}
 
 	function menu(){
-		add_submenu_page( 'rtmedia-setting', __( 'Media activity upgrade', 'rtmedia' ), __( 'Media activity upgrade', 'rtmedia' ), 'manage_options', 'rtmedia-activity-upgrade', array( $this, 'init' ) );
+		add_submenu_page( 'rtmedia-setting', __( 'Media activity upgrade', 'buddypress-media' ), __( 'Media activity upgrade', 'buddypress-media' ), 'manage_options', 'rtmedia-activity-upgrade', array( $this, 'init' ) );
 	}
 
 	function rtmedia_add_admin_page_array( $admin_pages ){

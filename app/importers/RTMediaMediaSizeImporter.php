@@ -22,7 +22,7 @@ class RTMediaMediaSizeImporter {
 	}
 
 	function menu(){
-		add_submenu_page( 'rtmedia-setting', __( 'Media Size Import', 'rtmedia' ), __( 'Media Size Import', 'rtmedia' ), 'manage_options', 'rtmedia-migration-media-size-import', array( $this, 'init' ) );
+		add_submenu_page( 'rtmedia-setting', __( 'Media Size Import', 'buddypress-media' ), __( 'Media Size Import', 'buddypress-media' ), 'manage_options', 'rtmedia-migration-media-size-import', array( $this, 'init' ) );
 	}
 
 	function rtmedia_add_admin_page_array( $admin_pages ){
@@ -63,7 +63,7 @@ class RTMediaMediaSizeImporter {
 
 	function add_rtmedia_media_size_import_notice(){
 		if ( current_user_can( 'manage_options' ) ){
-			$this->create_notice( "<p><strong>rtMedia</strong>: Database table structure for rtMedia has been updated. Please <a href='" . admin_url( 'admin.php?page=rtmedia-migration-media-size-import&force=true' ) . "'>Click Here</a> to import media sizes. <a href='#' onclick='rtmedia_hide_media_size_import_notice()' style='float:right'>" . __( 'Hide', 'rtmedia' ) . '</a>  </p>' );
+			$this->create_notice( "<p><strong>rtMedia</strong>: Database table structure for rtMedia has been updated. Please <a href='" . admin_url( 'admin.php?page=rtmedia-migration-media-size-import&force=true' ) . "'>Click Here</a> to import media sizes. <a href='#' onclick='rtmedia_hide_media_size_import_notice()' style='float:right'>" . __( 'Hide', 'buddypress-media' ) . '</a>  </p>' );
 			?>
 			<script type="text/javascript">
 				function rtmedia_hide_media_size_import_notice() {

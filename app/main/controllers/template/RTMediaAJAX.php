@@ -30,18 +30,18 @@ class RTMediaAJAX {
 				$group_id = !empty( $_POST[ 'context_id' ] ) ? $_POST[ 'context_id' ] : '';
 
 				if( can_user_create_album_in_group( $group_id ) == false ) {
-					$return['error'] = __( 'You can not create album in this group.', 'rtmedia' );
+					$return['error'] = __( 'You can not create album in this group.', 'buddypress-media' );
 				}
 			}
 
 			$create_album = apply_filters( "rtm_is_album_create_enable", true );
 			if( !$create_album ) {
-				$return['error'] = __( 'You can not create album.', 'rtmedia' );
+				$return['error'] = __( 'You can not create album.', 'buddypress-media' );
 			}
 
 			$create_album = apply_filters( "rtm_display_create_album_button", true, $_POST[ 'context_id' ] );
 			if( !$create_album ) {
-				$return['error'] = __( 'You can not create more albums, you exceed your album limit.', 'rtmedia' );
+				$return['error'] = __( 'You can not create more albums, you exceed your album limit.', 'buddypress-media' );
 			}
 
 			if( $return['error'] !== false ){
@@ -86,7 +86,7 @@ class RTMediaAJAX {
 				echo false;
 			}
 		} else {
-			$return['error'] = __( 'Data mismatch, Please insert data properly.', 'rtmedia' );
+			$return['error'] = __( 'Data mismatch, Please insert data properly.', 'buddypress-media' );
 			echo json_encode( $return );
 		}
 

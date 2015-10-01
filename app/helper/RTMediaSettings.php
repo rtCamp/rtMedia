@@ -29,7 +29,7 @@ if ( ! class_exists( 'RTMediaSettings' ) ){
 		 * Get default options.
 		 *
 		 * @access public
-		 * @global string 'rtmedia'
+		 * @global string 'buddypress-media'
 		 *
 		 * @param  void
 		 *
@@ -202,21 +202,21 @@ if ( ! class_exists( 'RTMediaSettings' ) ){
 
 			if ( function_exists( 'add_settings_section' ) ){
 				$rtmedia_addon = new RTMediaAddon();
-				add_settings_section( 'rtm-addons', __( 'BuddyPress Media Addons for Photos', 'rtmedia' ), array( $rtmedia_addon, 'get_addons' ), 'rtmedia-addons' );
+				add_settings_section( 'rtm-addons', __( 'BuddyPress Media Addons for Photos', 'buddypress-media' ), array( $rtmedia_addon, 'get_addons' ), 'rtmedia-addons' );
 				$rtmedia_support = new RTMediaSupport( false );
-				add_settings_section( 'rtm-support', __( 'Support', 'rtmedia' ), array( $rtmedia_support, 'get_support_content' ), 'rtmedia-support' );
+				add_settings_section( 'rtm-support', __( 'Support', 'buddypress-media' ), array( $rtmedia_support, 'get_support_content' ), 'rtmedia-support' );
 				$rtmedia_themes = new RTMediaThemes();
-				add_settings_section( 'rtm-themes', __( 'rtMedia Themes', 'rtmedia' ), array( $rtmedia_themes, 'get_themes' ), 'rtmedia-themes' );
+				add_settings_section( 'rtm-themes', __( 'rtMedia Themes', 'buddypress-media' ), array( $rtmedia_themes, 'get_themes' ), 'rtmedia-themes' );
 			}
 
 			//            if (!BPMediaPrivacy::is_installed()) {
 			//                $rtmedia_privacy = new BPMediaPrivacySettings();
 			//                add_filter('rtmedia_add_sub_tabs', array($rtmedia_privacy, 'ui'), 99, 2);
-			//                add_settings_section('rtm-privacy', __('Update Database', 'rtmedia'), array($rtmedia_privacy, 'init'), 'rtmedia-privacy');
+			//                add_settings_section('rtm-privacy', __('Update Database', 'buddypress-media'), array($rtmedia_privacy, 'init'), 'rtmedia-privacy');
 			//            }
 			//$rtmedia_album_importer = new BPMediaAlbumimporter();
-			//add_settings_section('rtm-rt-album-importer', __('BP-Album Importer', 'rtmedia'), array($rtmedia_album_importer, 'ui'), 'rtmedia-importer');
-			//register_setting('rtmedia', 'rtmedia_options', array($this, 'sanitize'));
+			//add_settings_section('rtm-rt-album-importer', __('BP-Album Importer', 'buddypress-media'), array($rtmedia_album_importer, 'ui'), 'rtmedia-importer');
+			//register_setting('buddypress-media', 'rtmedia_options', array($this, 'sanitize'));
 			if ( ! isset( $rtmedia_save_setting_single ) ){
 				$rtmedia_save_setting_single = true;
 			}
@@ -279,7 +279,7 @@ if ( ! class_exists( 'RTMediaSettings' ) ){
 			$allowed_types = rtmedia_get_site_option( 'upload_filetypes', 'jpg jpeg png gif' );
 			$allowed_types = explode( ' ', $allowed_types );
 			$allowed_types = implode( ', ', $allowed_types );
-			echo '<span class="description">' . sprintf( __( 'Currently your network allows uploading of the following file types. You can change the settings <a href="%s">here</a>.<br /><code>%s</code></span>', 'rtmedia' ), network_admin_url( 'settings.php#upload_filetypes' ), $allowed_types );
+			echo '<span class="description">' . sprintf( __( 'Currently your network allows uploading of the following file types. You can change the settings <a href="%s">here</a>.<br /><code>%s</code></span>', 'buddypress-media' ), network_admin_url( 'settings.php#upload_filetypes' ), $allowed_types );
 		}
 
 		/**
@@ -297,30 +297,30 @@ if ( ! class_exists( 'RTMediaSettings' ) ){
 			if ( isset( $_POST['refresh-count'] ) ){
 				if ( $rtmedia_admin->update_count() ){
 					if ( is_multisite() ){
-						rtmedia_update_site_option( 'rtm-recount-success', __( 'Recounting of media files done successfully', 'rtmedia' ) );
+						rtmedia_update_site_option( 'rtm-recount-success', __( 'Recounting of media files done successfully', 'buddypress-media' ) );
 					} else {
-						add_settings_error( __( 'Recount Success', 'rtmedia' ), 'rtm-recount-success', __( 'Recounting of media files done successfully', 'rtmedia' ), 'updated' );
+						add_settings_error( __( 'Recount Success', 'buddypress-media' ), 'rtm-recount-success', __( 'Recounting of media files done successfully', 'buddypress-media' ), 'updated' );
 					}
 				} else {
 					if ( is_multisite() ){
-						rtmedia_update_site_option( 'rtm-recount-fail', __( 'Recounting Failed', 'rtmedia' ) );
+						rtmedia_update_site_option( 'rtm-recount-fail', __( 'Recounting Failed', 'buddypress-media' ) );
 					} else {
-						add_settings_error( __( 'Recount Fail', 'rtmedia' ), 'rtm-recount-fail', __( 'Recounting Failed', 'rtmedia' ) );
+						add_settings_error( __( 'Recount Fail', 'buddypress-media' ), 'rtm-recount-fail', __( 'Recounting Failed', 'buddypress-media' ) );
 					}
 				}
 			}
 			//            if (!isset($_POST['rtmedia_options']['enable_on_profile']) && !isset($_POST['rtmedia_options']['enable_on_group'])) {
 			//                if (is_multisite())
-			//                    update_site_option('rtm-media-enable', __('Enable BuddyPress Media on either User Profiles or Groups or both. Atleast one should be selected.', 'rtmedia'));
+			//                    update_site_option('rtm-media-enable', __('Enable BuddyPress Media on either User Profiles or Groups or both. Atleast one should be selected.', 'buddypress-media'));
 			//                else
-			//                    add_settings_error(__('Enable BuddyPress Media', 'rtmedia'), 'rtm-media-enable', __('Enable BuddyPress Media on either User Profiles or Groups or both. Atleast one should be selected.', 'rtmedia'));
+			//                    add_settings_error(__('Enable BuddyPress Media', 'buddypress-media'), 'rtm-media-enable', __('Enable BuddyPress Media on either User Profiles or Groups or both. Atleast one should be selected.', 'buddypress-media'));
 			//                $input['enable_on_profile'] = 1;
 			//            }
 			if ( ! isset( $_POST['rtmedia_options']['videos_enabled'] ) && ! isset( $_POST['rtmedia_options']['audio_enabled'] ) && ! isset( $_POST['rtmedia_options']['images_enabled'] ) ){
 				if ( is_multisite() ){
-					rtmedia_update_site_option( 'rtm-media-type', __( 'Atleast one Media Type Must be selected', 'rtmedia' ) );
+					rtmedia_update_site_option( 'rtm-media-type', __( 'Atleast one Media Type Must be selected', 'buddypress-media' ) );
 				} else {
-					add_settings_error( __( 'Media Type', 'rtmedia' ), 'rtm-media-type', __( 'Atleast one Media Type Must be selected', 'rtmedia' ) );
+					add_settings_error( __( 'Media Type', 'buddypress-media' ), 'rtm-media-type', __( 'Atleast one Media Type Must be selected', 'buddypress-media' ) );
 				}
 				$input['images_enabled'] = 1;
 			}
@@ -329,14 +329,14 @@ if ( ! class_exists( 'RTMediaSettings' ) ){
 
 			if ( ! is_int( $input['default_count'] ) || ( $input['default_count'] < 0 ) || empty( $input['default_count'] ) ){
 				if ( is_multisite() ){
-					rtmedia_update_site_option( 'rtm-media-default-count', __( '"Number of media" count value should be numeric and greater than 0.', 'rtmedia' ) );
+					rtmedia_update_site_option( 'rtm-media-default-count', __( '"Number of media" count value should be numeric and greater than 0.', 'buddypress-media' ) );
 				} else {
-					add_settings_error( __( 'Default Count', 'rtmedia' ), 'rtm-media-default-count', __( '"Number of media" count value should be numeric and greater than 0.', 'rtmedia' ) );
+					add_settings_error( __( 'Default Count', 'buddypress-media' ), 'rtm-media-default-count', __( '"Number of media" count value should be numeric and greater than 0.', 'buddypress-media' ) );
 				}
 				$input['default_count'] = 10;
 			}
 			if ( is_multisite() ){
-				rtmedia_update_site_option( 'rtm-settings-saved', __( 'Settings saved.', 'rtmedia' ) );
+				rtmedia_update_site_option( 'rtm-settings-saved', __( 'Settings saved.', 'buddypress-media' ) );
 			}
 			do_action( 'rtmedia_sanitize_settings', $_POST, $input );
 
@@ -360,7 +360,7 @@ if ( ! class_exists( 'RTMediaSettings' ) ){
 			} else {
 				$regenerate_link = wp_nonce_url( admin_url( 'update.php?action=install-plugin&plugin=regenerate-thumbnails' ), 'install-plugin_regenerate-thumbnails' );
 			}
-			echo '<span class="description">' . sprintf( __( 'If you make changes to width, height or crop settings, you must use "<a href="%s">Regenerate Thumbnail Plugin</a>" to regenerate old images."', 'rtmedia' ), $regenerate_link ) . '</span>';
+			echo '<span class="description">' . sprintf( __( 'If you make changes to width, height or crop settings, you must use "<a href="%s">Regenerate Thumbnail Plugin</a>" to regenerate old images."', 'buddypress-media' ), $regenerate_link ) . '</span>';
 			echo '<div class="clearfix">&nbsp;</div>';
 		}
 
@@ -381,7 +381,7 @@ if ( ! class_exists( 'RTMediaSettings' ) ){
 
 				$notice = '
                 <div class="error">
-                <p>' . __( 'BuddyPress Media 2.6 requires a database upgrade. ', 'rtmedia' ) . '<a href="' . $url . '">' . __( 'Update Database', 'rtmedia' ) . '.</a></p>
+                <p>' . __( 'BuddyPress Media 2.6 requires a database upgrade. ', 'buddypress-media' ) . '<a href="' . $url . '">' . __( 'Update Database', 'buddypress-media' ) . '.</a></p>
                 </div>
                 ';
 				echo $notice;
@@ -398,8 +398,8 @@ if ( ! class_exists( 'RTMediaSettings' ) ){
 		 * @return void
 		 */
 		public function rtmedia_support_intro(){
-			echo '<p>' . __( 'If your site has some issues due to BuddyPress Media and you want one on one support then you can create a support topic on the <a target="_blank" href="http://community.rtcamp.com/c/rtmedia?utm_source=dashboard&utm_medium=plugin&utm_campaign=rtmedia">rtCamp Support Forum</a>.', 'rtmedia' ) . '</p>';
-			echo '<p>' . __( 'If you have any suggestions, enhancements or bug reports, then you can open a new issue on <a target="_blank" href="https://github.com/rtCamp/rtmedia/issues/new">GitHub</a>.', 'rtmedia' ) . '</p>';
+			echo '<p>' . __( 'If your site has some issues due to BuddyPress Media and you want one on one support then you can create a support topic on the <a target="_blank" href="http://community.rtcamp.com/c/rtmedia?utm_source=dashboard&utm_medium=plugin&utm_campaign=rtmedia">rtCamp Support Forum</a>.', 'buddypress-media' ) . '</p>';
+			echo '<p>' . __( 'If you have any suggestions, enhancements or bug reports, then you can open a new issue on <a target="_blank" href="https://github.com/rtCamp/rtmedia/issues/new">GitHub</a>.', 'buddypress-media' ) . '</p>';
 		}
 
 	}

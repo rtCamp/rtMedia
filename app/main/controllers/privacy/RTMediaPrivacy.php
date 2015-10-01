@@ -263,10 +263,10 @@ class RTMediaPrivacy {
 				$status = update_user_meta(get_current_user_id(), 'rtmedia-default-privacy', $_POST["rtmedia-default-privacy"]);
 			}
 			if(false == $status ) {
-				$feedback = __( 'No changes were made to your account.', 'rtmedia' );
+				$feedback = __( 'No changes were made to your account.', 'buddypress-media' );
 				$feedback_type = 'error';
 			} else if ( true == $status ) {
-				$feedback = __( 'Your default privacy settings saved successfully.', 'rtmedia' );
+				$feedback = __( 'Your default privacy settings saved successfully.', 'buddypress-media' );
 				$feedback_type = 'success';
 			}
 			bp_core_add_message( $feedback, $feedback_type );
@@ -289,7 +289,7 @@ class RTMediaPrivacy {
 			<div class="rtm_bp_default_privacy">
 				<?php wp_nonce_field( 'rtmedia_member_settings_privacy', 'rtmedia_member_settings_privacy' ); ?>
 				<div class="section">
-					<div class="rtm-title"><h3><?php _e( 'Default Privacy', 'rtmedia' ); ?></h3></div>
+					<div class="rtm-title"><h3><?php _e( 'Default Privacy', 'buddypress-media' ); ?></h3></div>
 					<div class="rtm-privacy-levels">
 						<?php foreach ( $rtmedia->privacy_settings[ 'levels' ] as $level => $data ) { ?>
 							<label><input type='radio' value='<?php echo $level; ?>' name ='rtmedia-default-privacy' <?php echo ($default_privacy == $level) ? "checked" : ""; ?> /> <?php echo $data; ?></label><br/>
@@ -298,14 +298,14 @@ class RTMediaPrivacy {
 				</div>
 			</div>
 			<div class="submit">
-				<input type="submit" name="submit" value="<?php esc_attr_e( 'Save Changes', 'rtmedia' ); ?>" id="submit" class="auto">
+				<input type="submit" name="submit" value="<?php esc_attr_e( 'Save Changes', 'buddypress-media' ); ?>" id="submit" class="auto">
 			</div>
 		</form>
 		<?php
 	}
 
 	function title() {
-		return __( 'Privacy', 'rtmedia' );
+		return __( 'Privacy', 'buddypress-media' );
 	}
 
 	function activity_privacy( $sql, $select_sql, $from_sql, $where_sql, $sort, $pag_sql = '' ) {

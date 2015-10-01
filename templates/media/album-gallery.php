@@ -11,7 +11,7 @@
 			if ( $title ) {
 				echo $title;
 			} else {
-				_e( 'Album List', 'rtmedia' );
+				_e( 'Album List', 'buddypress-media' );
 			}
 			?>
         </h2>
@@ -53,7 +53,7 @@
 					$display = 'style="display:none;"';
 				}
 				?>
-				<a id="rtMedia-galary-next" <?php echo $display; ?> href="<?php echo rtmedia_pagination_next_link(); ?>"><?php echo __( 'Load More', 'rtmedia' ); ?></a>
+				<a id="rtMedia-galary-next" <?php echo $display; ?> href="<?php echo rtmedia_pagination_next_link(); ?>"><?php echo __( 'Load More', 'buddypress-media' ); ?></a>
 				<?php
 			}
 			?>
@@ -61,7 +61,7 @@
 	<?php } else { ?>
 		<p class="rtmedia-no-media-found">
 			<?php
-			$message = __( "Sorry !! There's no media found for the request !!", "rtmedia" );
+			$message = __( "Sorry !! There's no media found for the request !!", 'buddypress-media' );
 
 			echo apply_filters( 'rtmedia_no_media_found_message_filter', $message );
 			?>

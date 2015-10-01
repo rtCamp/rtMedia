@@ -61,7 +61,7 @@ class RTMediaMigration {
 
 	function add_migration_notice(){
 		if ( current_user_can( 'manage_options' ) ){
-			$this->create_notice( '<p><strong>rtMedia</strong>: ' . __( 'Please Migrate your Database', 'rtmedia' ) . " <a href='" . admin_url( 'admin.php?page=rtmedia-migration&force=true' ) . "'>" . __( 'Click Here', 'rtmedia' ) . "</a>.  <a href='" . admin_url( 'admin.php?page=rtmedia-migration&hide=true' ) . "' style='float:right'>" . __( 'Hide', 'rtmedia' ) . '</a> </p>' );
+			$this->create_notice( '<p><strong>rtMedia</strong>: ' . __( 'Please Migrate your Database', 'buddypress-media' ) . " <a href='" . admin_url( 'admin.php?page=rtmedia-migration&force=true' ) . "'>" . __( 'Click Here', 'buddypress-media' ) . "</a>.  <a href='" . admin_url( 'admin.php?page=rtmedia-migration&hide=true' ) . "' style='float:right'>" . __( 'Hide', 'buddypress-media' ) . '</a> </p>' );
 		}
 	}
 
@@ -80,7 +80,7 @@ class RTMediaMigration {
 	}
 
 	function menu(){
-		add_submenu_page( 'rtmedia-setting', __( 'Migration', 'rtmedia' ), __( 'Migration', 'rtmedia' ), 'manage_options', 'rtmedia-migration', array( $this, 'test' ) );
+		add_submenu_page( 'rtmedia-setting', __( 'Migration', 'buddypress-media' ), __( 'Migration', 'buddypress-media' ), 'manage_options', 'rtmedia-migration', array( $this, 'test' ) );
 	}
 
 	function get_total_count(){
@@ -372,7 +372,7 @@ class RTMediaMigration {
 		} else {
 			?>
 			<div class="error">
-				<p><?php _e( 'Please Backup your <strong>DATABASE</strong> and <strong>UPLOAD</strong> folder before Migration.', 'rtmedia' ); ?></p>
+				<p><?php _e( 'Please Backup your <strong>DATABASE</strong> and <strong>UPLOAD</strong> folder before Migration.', 'buddypress-media' ); ?></p>
 			</div>
 		<?php
 		}
@@ -380,9 +380,9 @@ class RTMediaMigration {
 
 		<div class="wrap">
 
-			<h2><?php _e( 'rtMedia Migration', 'rtmedia' ); ?></h2>
+			<h2><?php _e( 'rtMedia Migration', 'buddypress-media' ); ?></h2>
 
-			<h3><?php _e( 'It will migrate following things', 'rtmedia' ); ?> </h3>
+			<h3><?php _e( 'It will migrate following things', 'buddypress-media' ); ?> </h3>
 			User Albums : <?php echo $_SESSION['migration_user_album']; ?><br/>
 			<?php if ( isset( $_SESSION['migration_group_album'] ) ){ ?>
 				Groups Albums : <?php echo $_SESSION['migration_group_album']; ?><br/>
@@ -450,7 +450,7 @@ class RTMediaMigration {
 								}
 							},
 							error: function () {
-								alert( "<?php _e( 'Error During Migration, Please Refresh Page then try again', 'rtmedia' ); ?>" );
+								alert( "<?php _e( 'Error During Migration, Please Refresh Page then try again', 'buddypress-media' ); ?>" );
 								jQuery( "#submit" ).removeAttr( 'disabled' );
 							}
 						} );
@@ -470,7 +470,7 @@ class RTMediaMigration {
 			</script>
 			<hr/>
 			<?php if ( ! ( isset( $rtmedia_error ) && true === $rtmedia_error ) ){ ?>
-				<input type="button" id="submit" value="<?php esc_attr_e( 'Start', 'rtmedia' ); ?>"
+				<input type="button" id="submit" value="<?php esc_attr_e( 'Start', 'buddypress-media' ); ?>"
 					   class="button button-primary"/>
 			<?php } ?>
 
@@ -1021,25 +1021,25 @@ class RTMediaMigration {
 		$timeComponents = array();
 
 		if ( $days > 0 ){
-			$timeComponents[] = $days . __( ' day', 'rtmedia' ) . ( $days > 1 ? 's' : '' );
+			$timeComponents[] = $days . __( ' day', 'buddypress-media' ) . ( $days > 1 ? 's' : '' );
 		}
 
 		if ( $hours > 0 ){
-			$timeComponents[] = $hours . __( ' hour', 'rtmedia' ) . ( $hours > 1 ? 's' : '' );
+			$timeComponents[] = $hours . __( ' hour', 'buddypress-media' ) . ( $hours > 1 ? 's' : '' );
 		}
 
 		if ( $minutes > 0 ){
-			$timeComponents[] = $minutes . __( ' minute', 'rtmedia' ) . ( $minutes > 1 ? 's' : '' );
+			$timeComponents[] = $minutes . __( ' minute', 'buddypress-media' ) . ( $minutes > 1 ? 's' : '' );
 		}
 
 		if ( $seconds > 0 ){
-			$timeComponents[] = $seconds . __( ' second', 'rtmedia' ) . ( $seconds > 1 ? 's' : '' );
+			$timeComponents[] = $seconds . __( ' second', 'buddypress-media' ) . ( $seconds > 1 ? 's' : '' );
 		}
 		if ( count( $timeComponents ) > 0 ){
 			$formattedTimeRemaining = implode( ', ', $timeComponents );
 			$formattedTimeRemaining = trim( $formattedTimeRemaining );
 		} else {
-			$formattedTimeRemaining = __( 'No time remaining.', 'rtmedia' );
+			$formattedTimeRemaining = __( 'No time remaining.', 'buddypress-media' );
 		}
 
 		return $formattedTimeRemaining;

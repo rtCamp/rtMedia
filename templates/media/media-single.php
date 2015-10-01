@@ -32,7 +32,7 @@
 
 							<?php if ( rtmedia_album_name() ) { ?>
 								<span class="rtmedia-album-name">
-									<span>&nbsp;<?php echo __( 'under', 'rtmedia' ); ?></span>
+									<span>&nbsp;<?php echo __( 'under', 'buddypress-media' ); ?></span>
 									<a href="<?php echo rtmedia_album_permalink(); ?>" title="<?php echo rtmedia_album_name(); ?>"><?php echo rtmedia_album_name(); ?></a>
 								</span>
 							<?php } ?>
@@ -79,7 +79,7 @@
 								<div class="rtmedia-actions-before-comments clearfix">
 									<?php do_action( 'rtmedia_actions_before_comments' ); ?>
 									<?php if ( is_user_logged_in() ) { ?>
-										<span><a href='#' class='rtmedia-comment-link'><?php _e( 'Comment', 'rtmedia' ); ?></a></span>
+										<span><a href='#' class='rtmedia-comment-link'><?php _e( 'Comment', 'buddypress-media' ); ?></a></span>
 									<?php } ?>
 								</div>
 								<div class="rtm-like-comments-info">
@@ -119,7 +119,7 @@
 							<div class="rtmedia-actions-before-comments clearfix">
 								<?php do_action( 'rtmedia_actions_before_comments' ); ?>
 								<?php if ( is_user_logged_in() ) { ?>
-									<span><a href='#' class='rtmedia-comment-link'><?php _e( 'Comment', 'rtmedia' ); ?></a></span>
+									<span><a href='#' class='rtmedia-comment-link'><?php _e( 'Comment', 'buddypress-media' ); ?></a></span>
 								<?php } ?>
 							</div>
 
@@ -143,7 +143,7 @@
 
 		<?php else: ?>
 			<p class="rtmedia-no-media-found"><?php
-				$message = __( "Sorry !! There's no media found for the request !!", "rtmedia" );
+				$message = __( "Sorry !! There's no media found for the request !!", 'buddypress-media' );
 				echo apply_filters( 'rtmedia_no_media_found_message_filter', $message );
 				?>
 			</p>

@@ -24,6 +24,6 @@ class RTMediaDeprecated {
 	}
 
 	static function generate_notice($method, $deprecated=false, $notice='') {
-		return sprintf(__("Deprecated %s. Please use %s.",'rtmedia' ), $deprecated, $method);
+		return sprintf(__("Deprecated %s. Please use %s.",'buddypress-media' ), $deprecated, $method);
 	}
 }

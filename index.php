@@ -6,7 +6,7 @@
   Description: This plugin adds missing media rich features like photos, videos and audio uploading to BuddyPress which are essential if you are building social network, seriously!
   Version: 3.8.20
   Author: rtCamp
-  Text Domain: rtmedia
+  Text Domain: buddypress-media
   Author URI: http://rtcamp.com/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media
  */
 

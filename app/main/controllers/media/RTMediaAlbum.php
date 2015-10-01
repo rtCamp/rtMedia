@@ -32,7 +32,7 @@ class RTMediaAlbum {
 
 	function rtmedia_album_custom_post_status() {
 		$args = array(
-			'label' => _x( 'hidden', 'Status General Name', 'rtmedia' ), 'label_count' => _n_noop( 'Hidden (%s)', 'Hidden (%s)', 'rtmedia' ), 'public' => false, 'show_in_admin_all_list' => false, 'show_in_admin_status_list' => false, 'exclude_from_search' => true,
+			'label' => _x( 'hidden', 'Status General Name', 'buddypress-media' ), 'label_count' => _n_noop( 'Hidden (%s)', 'Hidden (%s)', 'buddypress-media' ), 'public' => false, 'show_in_admin_all_list' => false, 'show_in_admin_status_list' => false, 'exclude_from_search' => true,
 		);
 		register_post_status( 'hidden', $args );
 	}
@@ -45,19 +45,19 @@ class RTMediaAlbum {
 
 		/* Set up Album labels */
 		$album_labels = array(
-			'name' => __( 'Albums', 'rtmedia' ),
-			'singular_name' => __( 'Album', 'rtmedia' ),
-			'add_new' => __( 'Create', 'rtmedia' ),
-			'add_new_item' => __( 'Create Album', 'rtmedia' ),
-			'edit_item' => __( 'Edit Album', 'rtmedia' ),
-			'new_item' => __( 'New Album', 'rtmedia' ),
-			'all_items' => __( 'All Albums', 'rtmedia' ),
-			'view_item' => __( 'View Album', 'rtmedia' ),
-			'search_items' => __( 'Search Albums', 'rtmedia' ),
-			'not_found' => __( 'No album found', 'rtmedia' ),
-			'not_found_in_trash' => __( 'No album found in Trash', 'rtmedia' ),
-			'parent_item_colon' => __( 'Parent', 'rtmedia' ),
-			'menu_name' => __( 'Albums', 'rtmedia' )
+			'name' => __( 'Albums', 'buddypress-media' ),
+			'singular_name' => __( 'Album', 'buddypress-media' ),
+			'add_new' => __( 'Create', 'buddypress-media' ),
+			'add_new_item' => __( 'Create Album', 'buddypress-media' ),
+			'edit_item' => __( 'Edit Album', 'buddypress-media' ),
+			'new_item' => __( 'New Album', 'buddypress-media' ),
+			'all_items' => __( 'All Albums', 'buddypress-media' ),
+			'view_item' => __( 'View Album', 'buddypress-media' ),
+			'search_items' => __( 'Search Albums', 'buddypress-media' ),
+			'not_found' => __( 'No album found', 'buddypress-media' ),
+			'not_found_in_trash' => __( 'No album found in Trash', 'buddypress-media' ),
+			'parent_item_colon' => __( 'Parent', 'buddypress-media' ),
+			'menu_name' => __( 'Albums', 'buddypress-media' )
 		);
 
 		$album_slug = apply_filters( 'rtmedia_album_rewrite_slug', 'rtmedia-album' );
@@ -142,7 +142,7 @@ class RTMediaAlbum {
 
 		/* Album Details which will be passed to Database query to add the album */
 		$post_vars = array(
-			'post_title' => ( empty ( $title ) ) ? __( 'Untitled Album', 'rtmedia' ) : $title, 'post_type' => 'rtmedia_album', 'post_author' => $author_id, 'post_status' => 'hidden'
+			'post_title' => ( empty ( $title ) ) ? __( 'Untitled Album', 'buddypress-media' ) : $title, 'post_type' => 'rtmedia_album', 'post_author' => $author_id, 'post_status' => 'hidden'
 		);
 
 		/* Check whether to create a new album in wp_post table

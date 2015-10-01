@@ -153,8 +153,8 @@ class RTMediaEncoding {
 	}
 
 	public function nearing_usage_limit( $usage_details ) {
-		$subject = __( 'rtMedia Encoding: Nearing quota limit.', 'rtmedia' );
-		$message = __( '<p>You are nearing the quota limit for your rtMedia encoding service.</p><p>Following are the details:</p><p><strong>Used:</strong> %s</p><p><strong>Remaining</strong>: %s</p><p><strong>Total:</strong> %s</p>', 'rtmedia' );
+		$subject = __( 'rtMedia Encoding: Nearing quota limit.', 'buddypress-media' );
+		$message = __( '<p>You are nearing the quota limit for your rtMedia encoding service.</p><p>Following are the details:</p><p><strong>Used:</strong> %s</p><p><strong>Remaining</strong>: %s</p><p><strong>Total:</strong> %s</p>', 'buddypress-media' );
 		$users = get_users( array( 'role' => 'administrator' ) );
 		if ( $users ) {
 			foreach ( $users as $user )
@@ -168,8 +168,8 @@ class RTMediaEncoding {
 	public function usage_quota_over() {
 		$usage_details = get_site_option( 'rtmedia-encoding-usage' );
 		if ( ! $usage_details[ $this->api_key ]->remaining ) {
-			$subject = __( 'rtMedia Encoding: Usage quota over.', 'rtmedia' );
-			$message = __( '<p>Your usage quota is over. Upgrade your plan</p><p>Following are the details:</p><p><strong>Used:</strong> %s</p><p><strong>Remaining</strong>: %s</p><p><strong>Total:</strong> %s</p>', 'rtmedia' );
+			$subject = __( 'rtMedia Encoding: Usage quota over.', 'buddypress-media' );
+			$message = __( '<p>Your usage quota is over. Upgrade your plan</p><p>Following are the details:</p><p><strong>Used:</strong> %s</p><p><strong>Remaining</strong>: %s</p><p><strong>Total:</strong> %s</p>', 'buddypress-media' );
 			$users = get_users( array( 'role' => 'administrator' ) );
 			if ( $users ) {
 				foreach ( $users as $user )
@@ -230,7 +230,7 @@ class RTMediaEncoding {
 	public function successfully_subscribed_notice() {
 		?>
 		<div class="updated">
-			<p><?php printf( __( 'You have successfully subscribed for the <strong>%s</strong> plan', 'rtmedia' ), $_GET[ 'api_key_updated' ] ); ?></p>
+			<p><?php printf( __( 'You have successfully subscribed for the <strong>%s</strong> plan', 'buddypress-media' ), $_GET[ 'api_key_updated' ] ); ?></p>
 		</div><?php
 	}
 
@@ -242,9 +242,9 @@ class RTMediaEncoding {
 
 		$usage_details = get_site_option( 'rtmedia-encoding-usage' );
 		if ( isset( $usage_details[ $this->api_key ]->plan->name ) && (strtolower( $usage_details[ $this->api_key ]->plan->name ) == strtolower( $name )) && $usage_details[ $this->api_key ]->sub_status && ! $force ) {
-			$form = '<button data-plan="' . $name . '" data-price="' . $price . '" type="submit" class="button bpm-unsubscribe">' . __( 'Unsubscribe', 'rtmedia' ) . '</button>';
+			$form = '<button data-plan="' . $name . '" data-price="' . $price . '" type="submit" class="button bpm-unsubscribe">' . __( 'Unsubscribe', 'buddypress-media' ) . '</button>';
 			$form .= '<div id="bpm-unsubscribe-dialog" title="Unsubscribe">
-  <p>' . __( 'Just to improve our service we would like to know the reason for you to leave us.', 'rtmedia' ) . '</p>
+  <p>' . __( 'Just to improve our service we would like to know the reason for you to leave us.', 'buddypress-media' ) . '</p>
   <p><textarea rows="3" cols="36" id="bpm-unsubscribe-note"></textarea></p>
 </div>';
 		} else {
@@ -293,34 +293,34 @@ class RTMediaEncoding {
 		$content = '';
 		if ( $usage_details && isset( $usage_details[ $this->api_key ]->status ) && $usage_details[ $this->api_key ]->status ) {
 			if ( isset( $usage_details[ $this->api_key ]->plan->name ) )
-				$content .= '<p><strong>' . __( 'Current Plan', 'rtmedia' ) . ':</strong> ' . $usage_details[ $this->api_key ]->plan->name . ($usage_details[ $this->api_key ]->sub_status ? '' : ' (' . __( 'Unsubscribed', 'rtmedia' ) . ')') . '</p>';
+				$content .= '<p><strong>' . __( 'Current Plan', 'buddypress-media' ) . ':</strong> ' . $usage_details[ $this->api_key ]->plan->name . ($usage_details[ $this->api_key ]->sub_status ? '' : ' (' . __( 'Unsubscribed', 'buddypress-media' ) . ')') . '</p>';
 			if ( isset( $usage_details[ $this->api_key ]->used ) )
-				$content .= '<p><span class="encoding-used"></span><strong>' . __( 'Used', 'rtmedia' ) . ':</strong> ' . (($used_size = size_format( $usage_details[ $this->api_key ]->used, 2 )) ? $used_size : '0MB') . '</p>';
+				$content .= '<p><span class="encoding-used"></span><strong>' . __( 'Used', 'buddypress-media' ) . ':</strong> ' . (($used_size = size_format( $usage_details[ $this->api_key ]->used, 2 )) ? $used_size : '0MB') . '</p>';
 			if ( isset( $usage_details[ $this->api_key ]->remaining ) )
-				$content .= '<p><span class="encoding-remaining"></span><strong>' . __( 'Remaining', 'rtmedia' ) . ':</strong> ' . (($remaining_size = size_format( $usage_details[ $this->api_key ]->remaining, 2 )) ? $remaining_size : '0MB') . '</p>';
+				$content .= '<p><span class="encoding-remaining"></span><strong>' . __( 'Remaining', 'buddypress-media' ) . ':</strong> ' . (($remaining_size = size_format( $usage_details[ $this->api_key ]->remaining, 2 )) ? $remaining_size : '0MB') . '</p>';
 			if ( isset( $usage_details[ $this->api_key ]->total ) )
-				$content .= '<p><strong>' . __( 'Total', 'rtmedia' ) . ':</strong> ' . size_format( $usage_details[ $this->api_key ]->total, 2 ) . '</p>';
+				$content .= '<p><strong>' . __( 'Total', 'buddypress-media' ) . ':</strong> ' . size_format( $usage_details[ $this->api_key ]->total, 2 ) . '</p>';
 			$usage = new rtProgress();
 			$content .= $usage->progress_ui( $usage->progress( $usage_details[ $this->api_key ]->used, $usage_details[ $this->api_key ]->total ), false );
 			if ( $usage_details[ $this->api_key ]->remaining <= 0 )
-				$content .= '<div class="error below-h2"><p>' . __( 'Your usage limit has been reached. Upgrade your plan.', 'rtmedia' ) . '</p></div>';
+				$content .= '<div class="error below-h2"><p>' . __( 'Your usage limit has been reached. Upgrade your plan.', 'buddypress-media' ) . '</p></div>';
 		} else {
-			$content .= '<div class="error below-h2"><p>' . __( 'Your API key is not valid or is expired.', 'rtmedia' ) . '</p></div>';
+			$content .= '<div class="error below-h2"><p>' . __( 'Your API key is not valid or is expired.', 'buddypress-media' ) . '</p></div>';
 		}
-		new RTMediaAdminWidget( 'rtmedia-encoding-usage', __( 'Encoding Usage', 'rtmedia' ), $content );
+		new RTMediaAdminWidget( 'rtmedia-encoding-usage', __( 'Encoding Usage', 'buddypress-media' ), $content );
 	}
 
 	public function encoding_service_intro() {
 		?>
 
-		<h3 class="rtm-option-title"><?php _e( 'Audio/Video encoding service', 'rtmedia' ); ?></h3>
+		<h3 class="rtm-option-title"><?php _e( 'Audio/Video encoding service', 'buddypress-media' ); ?></h3>
 
-		<p><?php _e( 'rtMedia team has started offering an audio/video encoding service.', 'rtmedia' ); ?></p>
+		<p><?php _e( 'rtMedia team has started offering an audio/video encoding service.', 'buddypress-media' ); ?></p>
 
 		<p>
-			<label for="new-api-key"><?php _e( 'Enter API KEY', 'rtmedia' ); ?></label>
+			<label for="new-api-key"><?php _e( 'Enter API KEY', 'buddypress-media' ); ?></label>
 			<input id="new-api-key" type="text" name="new-api-key" value="<?php echo $this->stored_api_key; ?>" size="60" />
-			<input type="submit" id="api-key-submit" name="api-key-submit" value="<?php echo __( 'Save Key', 'rtmedia' ); ?>" class="button-primary" />
+			<input type="submit" id="api-key-submit" name="api-key-submit" value="<?php echo __( 'Save Key', 'buddypress-media' ); ?>" class="button-primary" />
 		</p>
 
 		<p>
@@ -341,65 +341,65 @@ class RTMediaEncoding {
 		<table  class="bp-media-encoding-table fixed widefat rtm-encoding-table">
 			<thead>
 				<tr>
-					<th><?php _e( 'Feature\Plan', 'rtmedia' ); ?></th>
-					<th><?php _e( 'Free', 'rtmedia' ); ?></th>
-					<th><?php _e( 'Silver', 'rtmedia' ); ?></th>
-					<th><?php _e( 'Gold', 'rtmedia' ); ?></th>
-					<th><?php _e( 'Platinum', 'rtmedia' ); ?></th>
+					<th><?php _e( 'Feature\Plan', 'buddypress-media' ); ?></th>
+					<th><?php _e( 'Free', 'buddypress-media' ); ?></th>
+					<th><?php _e( 'Silver', 'buddypress-media' ); ?></th>
+					<th><?php _e( 'Gold', 'buddypress-media' ); ?></th>
+					<th><?php _e( 'Platinum', 'buddypress-media' ); ?></th>
 				</tr>
 			</thead>
 
 			<tbody>
 				<tr>
-					<th><?php _e( 'File Size Limit', 'rtmedia' ); ?></th>
+					<th><?php _e( 'File Size Limit', 'buddypress-media' ); ?></th>
 					<td>200MB (<del>20MB</del>)</td>
 					<td colspan="3" class="column-posts">16GB (<del>2GB</del>)</td>
 				</tr>
 				<tr>
-					<th><?php _e( 'Bandwidth (monthly)', 'rtmedia' ); ?></th>
+					<th><?php _e( 'Bandwidth (monthly)', 'buddypress-media' ); ?></th>
 					<td>10GB (<del>1GB</del>)</td>
 					<td>100GB</td>
 					<td>1TB</td>
 					<td>10TB</td>
 				</tr>
 				<tr>
-					<th><?php _e( 'Overage Bandwidth', 'rtmedia' ); ?></th>
-					<td><?php _e( 'Not Available', 'rtmedia' ); ?></td>
+					<th><?php _e( 'Overage Bandwidth', 'buddypress-media' ); ?></th>
+					<td><?php _e( 'Not Available', 'buddypress-media' ); ?></td>
 					<td>$0.10 per GB</td>
 					<td>$0.08 per GB</td>
 					<td>$0.05 per GB</td>
 				</tr>
 				<tr>
-					<th><?php _e( 'Amazon S3 Support', 'rtmedia' ); ?></th>
-					<td><?php _e( 'Not Available', 'rtmedia' ); ?></td>
-					<td colspan="3" class="column-posts"><?php _e( 'Coming Soon', 'rtmedia' ); ?></td>
+					<th><?php _e( 'Amazon S3 Support', 'buddypress-media' ); ?></th>
+					<td><?php _e( 'Not Available', 'buddypress-media' ); ?></td>
+					<td colspan="3" class="column-posts"><?php _e( 'Coming Soon', 'buddypress-media' ); ?></td>
 				</tr>
 				<tr>
-					<th><?php _e( 'HD Profile', 'rtmedia' ); ?></th>
-					<td><?php _e( 'Not Available', 'rtmedia' ); ?></td>
-					<td colspan="3" class="column-posts"><?php _e( 'Coming Soon', 'rtmedia' ); ?></td>
+					<th><?php _e( 'HD Profile', 'buddypress-media' ); ?></th>
+					<td><?php _e( 'Not Available', 'buddypress-media' ); ?></td>
+					<td colspan="3" class="column-posts"><?php _e( 'Coming Soon', 'buddypress-media' ); ?></td>
 				</tr>
 				<tr>
-					<th><?php _e( 'Webcam Recording', 'rtmedia' ); ?></th>
-					<td colspan="4" class="column-posts"><?php _e( 'Coming Soon', 'rtmedia' ); ?></td>
+					<th><?php _e( 'Webcam Recording', 'buddypress-media' ); ?></th>
+					<td colspan="4" class="column-posts"><?php _e( 'Coming Soon', 'buddypress-media' ); ?></td>
 				</tr>
 				<tr>
-					<th><?php _e( 'Pricing', 'rtmedia' ); ?></th>
-					<td><?php _e( 'Free', 'rtmedia' ); ?></td>
-					<td><?php _e( '$9/month', 'rtmedia' ); ?></td>
-					<td><?php _e( '$99/month', 'rtmedia' ); ?></td>
-					<td><?php _e( '$999/month', 'rtmedia' ); ?></td>
+					<th><?php _e( 'Pricing', 'buddypress-media' ); ?></th>
+					<td><?php _e( 'Free', 'buddypress-media' ); ?></td>
+					<td><?php _e( '$9/month', 'buddypress-media' ); ?></td>
+					<td><?php _e( '$99/month', 'buddypress-media' ); ?></td>
+					<td><?php _e( '$999/month', 'buddypress-media' ); ?></td>
 				</tr>
 				<tr>
 					<th>&nbsp;</th>
 					<td><?php
 						$usage_details = get_site_option( 'rtmedia-encoding-usage' );
 						if ( isset( $usage_details[ $this->api_key ]->plan->name ) && (strtolower( $usage_details[ $this->api_key ]->plan->name ) == 'free') ) {
-							echo '<button disabled="disabled" type="submit" class="encoding-try-now button button-primary">' . __( 'Current Plan', 'rtmedia' ) . '</button>';
+							echo '<button disabled="disabled" type="submit" class="encoding-try-now button button-primary">' . __( 'Current Plan', 'buddypress-media' ) . '</button>';
 						} else {
 							?>
 							<form id="encoding-try-now-form" method="get">
-								<button type="submit" class="encoding-try-now button button-primary"><?php _e( 'Try Now', 'rtmedia' ); ?></button>
+								<button type="submit" class="encoding-try-now button button-primary"><?php _e( 'Try Now', 'buddypress-media' ); ?></button>
 							</form><?php }
 						?>
 					</td>
@@ -553,11 +553,11 @@ class RTMediaEncoding {
 						$wpdb->update( $wpdb->base_prefix . 'bp_activity', array( 'content' => $activity_content ), array( 'id' => $activity_id ) );
 					}
 				} else {
-					$flag = __( 'Could not read file.', 'rtmedia' );
+					$flag = __( 'Could not read file.', 'buddypress-media' );
 					error_log( $flag );
 				}
 			} else {
-				$flag = __( 'Something went wrong. The required attachment id does not exists. It must have been deleted.', 'rtmedia' );
+				$flag = __( 'Something went wrong. The required attachment id does not exists. It must have been deleted.', 'buddypress-media' );
 				error_log( $flag );
 			}
 
@@ -572,10 +572,10 @@ class RTMediaEncoding {
 
 			if ( $flag && $mail ) {
 				$download_link = esc_url( add_query_arg( array( 'job_id' => $_GET[ 'job_id' ], 'download_url' => $_GET[ 'download_url' ] ), home_url() ) );
-				$subject = __( 'rtMedia Encoding: Download Failed', 'rtmedia' );
+				$subject = __( 'rtMedia Encoding: Download Failed', 'buddypress-media' );
 				$message = sprintf( __( '<p><a href="%s">Media</a> was successfully encoded but there was an error while downloading:</p>
                         <p><code>%s</code></p>
-                        <p>You can <a href="%s">retry the download</a>.</p>', 'rtmedia' ), get_edit_post_link( $attachment_id ), $flag, $download_link );
+                        <p>You can <a href="%s">retry the download</a>.</p>', 'buddypress-media' ), get_edit_post_link( $attachment_id ), $flag, $download_link );
 				$users = get_users( array( 'role' => 'administrator' ) );
 				if ( $users ) {
 					foreach ( $users as $user )
@@ -587,7 +587,7 @@ class RTMediaEncoding {
 			} elseif ( $flag ) {
 				echo $flag;
 			} else {
-				_e( "Done", 'rtmedia' );
+				_e( "Done", 'buddypress-media' );
 			}
 			die();
 		}
@@ -612,7 +612,7 @@ class RTMediaEncoding {
 					echo json_encode( array( 'error' => $subscription_info->message ) );
 				}
 			} else {
-				echo json_encode( array( 'error' => __( 'Something went wrong please try again.', 'rtmedia' ) ) );
+				echo json_encode( array( 'error' => __( 'Something went wrong please try again.', 'buddypress-media' ) ) );
 			}
 		}
 		die();
@@ -631,10 +631,10 @@ class RTMediaEncoding {
 		if ( ! is_wp_error( $unsubscribe_page ) && ( ! isset( $unsubscribe_page[ 'headers' ][ 'status' ] ) || (isset( $unsubscribe_page[ 'headers' ][ 'status' ] ) && ($unsubscribe_page[ 'headers' ][ 'status' ] == 200))) ) {
 			$subscription_info = json_decode( $unsubscribe_page[ 'body' ] );
 			if ( isset( $subscription_info->status ) && $subscription_info->status ) {
-				echo json_encode( array( 'updated' => __( 'Your subscription was cancelled successfully', 'rtmedia' ), 'form' => $this->encoding_subscription_form( $_GET[ 'plan' ], $_GET[ 'price' ] ) ) );
+				echo json_encode( array( 'updated' => __( 'Your subscription was cancelled successfully', 'buddypress-media' ), 'form' => $this->encoding_subscription_form( $_GET[ 'plan' ], $_GET[ 'price' ] ) ) );
 			}
 		} else {
-			echo json_encode( array( 'error' => __( 'Something went wrong please try again.', 'rtmedia' ) ) );
+			echo json_encode( array( 'error' => __( 'Something went wrong please try again.', 'buddypress-media' ) ) );
 		}
 		die();
 	}
@@ -643,20 +643,20 @@ class RTMediaEncoding {
 		if ( isset( $_GET[ 'apikey' ] ) && $_GET[ 'apikey' ] != '' ) {
 			echo json_encode( array( 'apikey' => $_GET[ 'apikey' ] ) );
 		} else {
-			echo json_encode( array( 'error' => __( 'Please enter the api key.', 'rtmedia' ) ) );
+			echo json_encode( array( 'error' => __( 'Please enter the api key.', 'buddypress-media' ) ) );
 		}
 		die();
 	}
 
 	public function disable_encoding() {
 		update_site_option( 'rtmedia-encoding-api-key', '' );
-		_e( 'Encoding disabled successfully.', 'rtmedia' );
+		_e( 'Encoding disabled successfully.', 'buddypress-media' );
 		die();
 	}
 
 	function enable_encoding(){
 		update_site_option( 'rtmedia-encoding-api-key', $this->stored_api_key );
-		_e( 'Encoding enabled successfully.', 'rtmedia' );
+		_e( 'Encoding enabled successfully.', 'buddypress-media' );
 		die();
 	}
 

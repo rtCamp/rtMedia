@@ -179,7 +179,7 @@ class RTMediaGalleryShortcode {
                 }
                 
             } else { //if user cannot view the media gallery (when context is 'group'), show message
-                echo __ ( 'You do not have sufficient privileges to view this gallery', 'rtmedia' );
+                echo __ ( 'You do not have sufficient privileges to view this gallery', 'buddypress-media' );
                 return false;
             }
 

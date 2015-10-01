@@ -9,13 +9,13 @@ $rtmedia_media = $media[ 0 ];
 ?>
 <div class="rtmedia-container rtmedia-single-container rtmedia-media-edit">
 	<?php if ( rtmedia_is_global_album( $rtmedia_query->media_query[ 'album_id' ] ) ) { ?>
-		<h2><?php echo __( 'Edit Album : ', 'rtmedia' ) . esc_attr( $media[ 0 ]->media_title ); ?></h2>
+		<h2><?php echo __( 'Edit Album : ', 'buddypress-media' ) . esc_attr( $media[ 0 ]->media_title ); ?></h2>
 
 		<div class="rtmedia-edit-media-tabs rtmedia-editor-main">
 			<ul class="rtm-tabs clearfix">
-				<li class="active"><a href="#details-tab"><i class='dashicons dashicons-edit rtmicon'></i><?php _e( 'Details', 'rtmedia' ); ?></a></li>
+				<li class="active"><a href="#details-tab"><i class='dashicons dashicons-edit rtmicon'></i><?php _e( 'Details', 'buddypress-media' ); ?></a></li>
 				<?php if ( ! is_rtmedia_group_album() ) { ?>
-					<li class=""><a href="#manage-media-tab"><i class='dashicons dashicons-list-view rtmicon'></i><?php _e( 'Manage Media', 'rtmedia' ); ?></a></li>
+					<li class=""><a href="#manage-media-tab"><i class='dashicons dashicons-list-view rtmicon'></i><?php _e( 'Manage Media', 'buddypress-media' ); ?></a></li>
 				<?php } ?>
 				<!-- use this hook to add title of a new tab-->
 				<?php do_action( 'rtmedia_add_edit_tab_title', 'album' ); ?>
@@ -29,12 +29,12 @@ $rtmedia_media = $media[ 0 ];
 						?>
 
 						<div class="rtmedia-edit-title rtm-field-wrap">
-							<label for="media_title"><?php _e( 'Title : ', 'rtmedia' ); ?></label>
+							<label for="media_title"><?php _e( 'Title : ', 'buddypress-media' ); ?></label>
 							<?php rtmedia_title_input(); ?>
 						</div>
 
 						<div class="rtmedia-editor-description rtm-field-wrap">
-							<label for='description'><?php _e( 'Description: ', 'rtmedia' ) ?></label>
+							<label for='description'><?php _e( 'Description: ', 'buddypress-media' ) ?></label>
 							<?php
 							echo rtmedia_description_input( $editor = false );
 							RTMediaMedia::media_nonce_generator( rtmedia_id() );
@@ -44,8 +44,8 @@ $rtmedia_media = $media[ 0 ];
 						<?php do_action( "rtmedia_album_edit_fields", 'album-edit' ); ?>
 						
 						<div>
-							<input type="submit" name="submit" class='rtmedia-save-album' value="<?php _e( 'Save Changes', 'rtmedia' ); ?>" />
-							<a class="button rtm-button rtm-button-back" href="<?php rtmedia_permalink(); ?>"><?php _e( 'Back', 'rtmedia' ); ?></a>
+							<input type="submit" name="submit" class='rtmedia-save-album' value="<?php _e( 'Save Changes', 'buddypress-media' ); ?>" />
+							<a class="button rtm-button rtm-button-back" href="<?php rtmedia_permalink(); ?>"><?php _e( 'Back', 'buddypress-media' ); ?></a>
 						</div>
 					</form>
 				</div>
@@ -59,17 +59,17 @@ $rtmedia_media = $media[ 0 ];
 								<?php wp_nonce_field( 'rtmedia_bulk_delete_nonce', 'rtmedia_bulk_delete_nonce' ); ?>
 								<?php RTMediaMedia::media_nonce_generator( $rtmedia_query->media_query[ 'album_id' ] ); ?>
 								<p>
-									<span><input type="checkbox" name="rtm-select-all" class="select-all" title="<?php _e( 'Select All Visible', 'rtmedia' ); ?>" /></span>
-									<button class="button rtmedia-move" type='button' title='<?php echo __( 'Move Selected media to another album.', 'rtmedia' ); ?>' ><?php _e( 'Move', 'rtmedia' ); ?></button>
+									<span><input type="checkbox" name="rtm-select-all" class="select-all" title="<?php _e( 'Select All Visible', 'buddypress-media' ); ?>" /></span>
+									<button class="button rtmedia-move" type='button' title='<?php echo __( 'Move Selected media to another album.', 'buddypress-media' ); ?>' ><?php _e( 'Move', 'buddypress-media' ); ?></button>
 									<input type="hidden" name="move-selected" value="move">
-									<button type="button" name="delete-selected" class="button rtmedia-delete-selected" title='<?php echo __( 'Delete Selected media from the album.', 'rtmedia' ); ?>'><?php _e( 'Delete', 'rtmedia' ); ?></button>
+									<button type="button" name="delete-selected" class="button rtmedia-delete-selected" title='<?php echo __( 'Delete Selected media from the album.', 'buddypress-media' ); ?>'><?php _e( 'Delete', 'buddypress-media' ); ?></button>
 								</p>
 
 								<p class="rtmedia-move-container">
 									<?php $global_albums = rtmedia_get_site_option( 'rtmedia-global-albums' ); ?>
-									<span><?php _e( 'Move selected media to the album : ', 'rtmedia' ); ?></span>
+									<span><?php _e( 'Move selected media to the album : ', 'buddypress-media' ); ?></span>
 									<?php echo '<select name="album" class="rtmedia-user-album-list">' . rtmedia_user_album_list() . '</select>'; ?>
-									<input type="button" class="rtmedia-move-selected" name="move-selected" value="<?php _e( 'Move Selected', 'rtmedia' ); ?>" />
+									<input type="button" class="rtmedia-move-selected" name="move-selected" value="<?php _e( 'Move Selected', 'buddypress-media' ); ?>" />
 								</p>
 
 								<ul class="rtmedia-list  large-block-grid-4 ">
@@ -91,7 +91,7 @@ $rtmedia_media = $media[ 0 ];
 								else
 									$display = 'style="display:none;"';
 								?>
-								<a id="rtMedia-galary-prev" <?php echo $display; ?> href="<?php echo rtmedia_pagination_prev_link(); ?>"><?php _e( 'Prev', 'rtmedia' ); ?></a>
+								<a id="rtMedia-galary-prev" <?php echo $display; ?> href="<?php echo rtmedia_pagination_prev_link(); ?>"><?php _e( 'Prev', 'buddypress-media' ); ?></a>
 
 								<?php
 								$display = '';
@@ -100,10 +100,10 @@ $rtmedia_media = $media[ 0 ];
 								else
 									$display = 'style="display:none;"';
 								?>
-								<a id="rtMedia-galary-next" <?php echo $display; ?> href="<?php echo rtmedia_pagination_next_link(); ?>"><?php _e( 'Next', 'rtmedia' ); ?></a>
+								<a id="rtMedia-galary-next" <?php echo $display; ?> href="<?php echo rtmedia_pagination_next_link(); ?>"><?php _e( 'Next', 'buddypress-media' ); ?></a>
 							</form>
 						<?php } else { ?>
-							<p><?php _e( 'The album is empty.', 'rtmedia' ); ?></p>
+							<p><?php _e( 'The album is empty.', 'buddypress-media' ); ?></p>
 						<?php } ?>
 					</div>
 				<?php } ?>
@@ -113,6 +113,6 @@ $rtmedia_media = $media[ 0 ];
 			</div>
 		</div>
 	<?php } else { ?>
-		<p><?php echo __( "Sorry !! You can not edit this album.", "rtmedia" ); ?></p>
+		<p><?php echo __( "Sorry !! You can not edit this album.", 'buddypress-media' ); ?></p>
 	<?php } ?>
 </div>

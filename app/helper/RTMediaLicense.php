@@ -53,10 +53,10 @@ class RTMediaLicense {
 
 		if ( $status !== false && $status == 'valid' ) {
 			$status_class = 'activated rtm-success';
-			$status_value = __( 'Activated', 'rtmedia' );
+			$status_value = __( 'Activated', 'buddypress-media' );
 		} else {
 			$status_class = 'deactivated rtm-warning';
-			$status_value = __( 'Deactivated', 'rtmedia' );
+			$status_value = __( 'Deactivated', 'buddypress-media' );
 		}
 
 		$el_id = $args[ 'addon_id' ];
@@ -65,7 +65,7 @@ class RTMediaLicense {
 		?>
 		<div class="rtm-addon-license">
 			<div class="rtm-license-status-wrap <?php echo $status_class ?>">
-				<span class="rtm-addon-license-status-label"><?php _e( 'Status: ', 'rtmedia' ); ?></span>
+				<span class="rtm-addon-license-status-label"><?php _e( 'Status: ', 'buddypress-media' ); ?></span>
 				<span class="rtm-addon-license-status"><?php echo $status_value; ?></span>
 			</div>
 
@@ -74,7 +74,7 @@ class RTMediaLicense {
 					<tbody>
 						<tr>
 							<th scope="row">
-								<?php _e( 'License Key', 'rtmedia' ); ?>
+								<?php _e( 'License Key', 'buddypress-media' ); ?>
 							</th>
 							<td>
 								<input id="<?php echo $license_key_id ?>" name="<?php echo $license_key_id ?>" type="text"
@@ -85,7 +85,7 @@ class RTMediaLicense {
 						<?php if ( false !== $license ) { ?>
 							<tr>
 								<th scope="row">
-									<?php _e( 'Activate / Deactivate License', 'rtmedia' ); ?>
+									<?php _e( 'Activate / Deactivate License', 'buddypress-media' ); ?>
 								</th>
 								<td>
 									<?php
@@ -93,10 +93,10 @@ class RTMediaLicense {
 									$nonce_name = 'edd_' . $el_id . '_nonce';
 									if ( $status !== false && $status == 'valid' ) {
 										$btn_name = 'edd_' . $el_id . '_license_deactivate';
-										$btn_val = __( 'Deactivate License', 'rtmedia' );
+										$btn_val = __( 'Deactivate License', 'buddypress-media' );
 									} else {
 										$btn_name = 'edd_' . $el_id . '_license_activate';
-										$btn_val = __( 'Activate License', 'rtmedia' );
+										$btn_val = __( 'Activate License', 'buddypress-media' );
 									}
 									?>
 									<?php wp_nonce_field( $nonce_action, $nonce_name ); ?>

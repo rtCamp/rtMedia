@@ -96,7 +96,7 @@ class RTMediaUploadEndpoint {
 							global $wpdb, $bp;
 							$user     = get_userdata( $same_medias[ 0 ]->media_author );
 							$username = '<a href="' . get_rtmedia_user_link( $same_medias[ 0 ]->media_author ) . '">' . $user->user_nicename . '</a>';
-							$action   = sprintf( __( '%s added %d %s', 'rtmedia' ), $username, sizeof( $same_medias ), RTMEDIA_MEDIA_SLUG );
+							$action   = sprintf( __( '%s added %d %s', 'buddypress-media' ), $username, sizeof( $same_medias ), RTMEDIA_MEDIA_SLUG );
 							$action   = apply_filters( 'rtmedia_buddypress_action_text_fitler_multiple_media', $action, $username, sizeof( $same_medias ), $user->user_nicename );
 							$wpdb->update( $bp->activity->table_name, array( "type" => "rtmedia_update", "content" => $objActivity->create_activity_html(), 'action' => $action ), array( "id" => $activity_id ) );
 						}

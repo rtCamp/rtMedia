@@ -29,7 +29,7 @@ if ( ! class_exists( 'RTMediaAdminWidget' ) ){
 				    <div class="inside"><?php echo $content; ?></div>
 				</div><?php
 			} else {
-				trigger_error( __( 'Argument missing. id is required.', 'rtmedia' ) );
+				trigger_error( __( 'Argument missing. id is required.', 'buddypress-media' ) );
 			}
 		}
 

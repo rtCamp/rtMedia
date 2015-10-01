@@ -88,7 +88,7 @@ $flag = ( ! (  is_home () || is_post_type_archive () || is_author ()))
 
 	    if ( self::display_allowed () || ( isset( $attr['allow_anonymous'] ) && $attr['allow_anonymous'] === true ) ) {
 		if ( ! _device_can_upload () ) {
-		    echo '<p>' . __( 'The web browser on your device cannot be used to upload files.', 'rtmedia' ) . '</p>';
+		    echo '<p>' . __( 'The web browser on your device cannot be used to upload files.', 'buddypress-media' ) . '</p>';
 		    return;
 		}
 		ob_start ();
@@ -100,7 +100,7 @@ $flag = ( ! (  is_home () || is_post_type_archive () || is_author ()))
 		return ob_get_clean ();
 	    }
 	} else {
-	    echo "<div class='rtmedia-upload-not-allowed'>" . apply_filters( 'rtmedia_upload_not_allowed_message', __('You are not allowed to upload/attach media.','rtmedia'), 'uploader_shortcode' ) . "</div>";
+	    echo "<div class='rtmedia-upload-not-allowed'>" . apply_filters( 'rtmedia_upload_not_allowed_message', __('You are not allowed to upload/attach media.','buddypress-media'), 'uploader_shortcode' ) . "</div>";
 	}
     }
 

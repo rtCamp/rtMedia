@@ -14,9 +14,9 @@ class RTMediaGroupFeatured extends RTMediaUserInteraction {
 	function __construct( $group_id = false, $flag = true ){
 		$args = array(
 			'action' => 'group-featured',
-			'label' => __( 'Set as Featured', 'rtmedia' ),
+			'label' => __( 'Set as Featured', 'buddypress-media' ),
 			'plural' => '',
-			'undo_label' => __( 'Unset Featured', 'rtmedia' ),
+			'undo_label' => __( 'Unset Featured', 'buddypress-media' ),
 			'privacy' => 20,
 			'countable' => false,
 			'single' => true,
@@ -191,7 +191,7 @@ class RTMediaGroupFeatured extends RTMediaUserInteraction {
 			do_action( 'rtmedia_after_set_featured', $this );
 		} else {
 			$return['status'] = false;
-			$return['error']  = __( 'Media type is not allowed', 'rtmedia' );
+			$return['error']  = __( 'Media type is not allowed', 'buddypress-media' );
 		}
 		if ( isset( $_REQUEST['json'] ) && 'true' == $_REQUEST['json'] ){
 			echo json_encode( $return );

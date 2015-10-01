@@ -163,16 +163,16 @@ class RTMediaJsonApi{
     function rtmedia_api_process_wp_login_request(){
         //Login Errors and Messages
         $ec_user_pass_missing = 200001;
-        $msg_user_pass_missing = __('username/password empty', 'rtmedia' );
+        $msg_user_pass_missing = __('username/password empty', 'buddypress-media' );
 
         $ec_incorrect_username = 200002;
-        $msg_incorrect_username = __('incorrect username', 'rtmedia' );
+        $msg_incorrect_username = __('incorrect username', 'buddypress-media' );
 
         $ec_incorrect_pass = 200003;
-        $msg_incorrect_pass = __('incorrect password', 'rtmedia' );
+        $msg_incorrect_pass = __('incorrect password', 'buddypress-media' );
 
         $ec_login_success = 200004;
-        $msg_login_success = __('login success', 'rtmedia' );
+        $msg_login_success = __('login success', 'buddypress-media' );
 
         if ( empty( $_POST['username'] ) || empty( $_POST['password'] ) ){
             echo $this->rtmedia_api_response_object( 'FALSE', $ec_user_pass_missing, $msg_user_pass_missing );
@@ -218,22 +218,22 @@ class RTMediaJsonApi{
     function rtmedia_api_process_wp_register_request(){
         //Registration errors and messages
         $ec_register_fields_missing = 300001;
-        $msg_register_fields_missing = __('fields empty', 'rtmedia' );
+        $msg_register_fields_missing = __('fields empty', 'buddypress-media' );
 
         $ec_invalid_email = 300002;
-        $msg_invalid_email = __('invalid email', 'rtmedia' );
+        $msg_invalid_email = __('invalid email', 'buddypress-media' );
 
         $ec_pass_do_not_match = 300003;
-        $msg_pass_do_not_match = __('password do not match', 'rtmedia' );
+        $msg_pass_do_not_match = __('password do not match', 'buddypress-media' );
 
         $ec_username_exists = 300004;
-        $msg_username_exists = __('username already registered', 'rtmedia' );
+        $msg_username_exists = __('username already registered', 'buddypress-media' );
 
         $ec_email_exists = 300005;
-        $msg_email_existsh = __('email already exists', 'rtmedia' );
+        $msg_email_existsh = __('email already exists', 'buddypress-media' );
 
         $ec_user_insert_success = 300007;
-        $msg_user_insert_success = __('new user created', 'rtmedia' );
+        $msg_user_insert_success = __('new user created', 'buddypress-media' );
 
         $registration_fields = array('username', 'email', 'password', 'password_confirm');
         //fields empty field_1, field_4
@@ -294,13 +294,13 @@ class RTMediaJsonApi{
         global $wpdb;
          //Registration errors and messages
         $ec_email_missing = 500001;
-        $msg_email_missing = __('email empty', 'rtmedia' );
+        $msg_email_missing = __('email empty', 'buddypress-media' );
 
         $ec_username_email_not_registered = 500002;
-        $msg_username_email_not_registered = __('username/email not registered', 'rtmedia' );
+        $msg_username_email_not_registered = __('username/email not registered', 'buddypress-media' );
 
         $ec_email_sent = 500003;
-        $msg_email_sent = __('reset link sent', 'rtmedia' );
+        $msg_email_sent = __('reset link sent', 'buddypress-media' );
 
         if ( empty( $_POST['user_login'] ) ) { echo $this->rtmedia_api_response_object('FALSE', $ec_email_missing, $msg_email_missing ); exit; }
 
@@ -332,13 +332,13 @@ class RTMediaJsonApi{
 	$wpdb->update( $wpdb->users, array( 'user_activation_key' => $hashed ), array( 'user_login' => $user_login ) );
 
         //create email message
-        $message = __('Someone has asked to reset the password for the following site and username.', 'rtmedia') . "\r\n\r\n";
+        $message = __('Someone has asked to reset the password for the following site and username.', 'buddypress-media') . "\r\n\r\n";
         $message .= get_option('siteurl') . "\r\n\r\n";
-        $message .= sprintf(__('Username: %s', 'rtmedia'), $user_login) . "\r\n\r\n";
-        $message .= __('To reset your password visit the following address, otherwise just ignore this email and nothing will happen.', 'rtmedia') . "\r\n\r\n";
+        $message .= sprintf(__('Username: %s', 'buddypress-media'), $user_login) . "\r\n\r\n";
+        $message .= __('To reset your password visit the following address, otherwise just ignore this email and nothing will happen.', 'buddypress-media') . "\r\n\r\n";
         $message .='<' . network_site_url("wp-login.php?action=rp&key=$key&login=" . rawurlencode($user_login), 'login') . ">\r\n";
         //send email meassage
-        if (FALSE == wp_mail($user_email, sprintf(__('[%s] Password Reset','rtmedia'), get_option('blogname')), $message))
+        if (FALSE == wp_mail($user_email, sprintf(__('[%s] Password Reset','buddypress-media'), get_option('blogname')), $message))
             echo $this->rtmedia_api_response_object ('FALSE', $this->ec_server_error, $this->msg_server_error);
         else{
             echo $this->rtmedia_api_response_object ('TRUE', $ec_email_sent, $msg_email_sent);
@@ -353,10 +353,10 @@ class RTMediaJsonApi{
         $this->rtmediajsonapifunction->rtmedia_api_verfiy_token();
         //Feed Errors
         $ec_latest_feed = 700001;
-        $msg_latest_feed = __('bp activities', 'rtmedia' );
+        $msg_latest_feed = __('bp activities', 'buddypress-media' );
 
         $ec_my_looks = 700002;
-        $msg_my_looks = __('user activities', 'rtmedia' );
+        $msg_my_looks = __('user activities', 'buddypress-media' );
 
         //Fetch user id from token
         $activity_user_id = '';
@@ -386,10 +386,10 @@ class RTMediaJsonApi{
         $this->rtmediajsonapifunction->rtmedia_api_media_activity_id_missing();
         //Post comment errors
         $ec_comment_content_missing = 800001;
-        $msg_comment_content_missing = __('comment content missing', 'rtmedia' );
+        $msg_comment_content_missing = __('comment content missing', 'buddypress-media' );
 
         $ec_comment_posted = 800002;
-        $msg_comment_posted = __('comment posted', 'rtmedia' );
+        $msg_comment_posted = __('comment posted', 'buddypress-media' );
 
          //Fetch user id from token
         $user_data = get_userdata( $this->user_id );
@@ -436,10 +436,10 @@ class RTMediaJsonApi{
 
         //Like errors
         $ec_already_liked = 900001;
-        $msg_already_liked = __('unliked media', 'rtmedia' );
+        $msg_already_liked = __('unliked media', 'buddypress-media' );
 
         $ec_liked_media = 900002;
-        $msg_liked_media = __('liked media', 'rtmedia' );
+        $msg_liked_media = __('liked media', 'buddypress-media' );
 
         extract($_POST);
 
@@ -523,13 +523,13 @@ class RTMediaJsonApi{
         $this->rtmediajsonapifunction->rtmedia_api_verfiy_token();
         //Errors Fetching comment
         $ec_no_comments = 800003;
-        $msg_no_comments = __('no comments', 'rtmedia' );
+        $msg_no_comments = __('no comments', 'buddypress-media' );
 
         $ec_media_comments = 800004;
-        $msg_media_comments = __('media comments', 'rtmedia' );
+        $msg_media_comments = __('media comments', 'buddypress-media' );
 
         $ec_my_comments = 800005;
-        $msg_my_comments = __('my comments', 'rtmedia' );
+        $msg_my_comments = __('my comments', 'buddypress-media' );
 
         extract($_REQUEST);
         global $wpdb;
@@ -579,10 +579,10 @@ class RTMediaJsonApi{
         global $wpdb;
         //Errors Fetching Likes
         $ec_no_likes = 900003;
-        $msg_no_likes = __('no likes', 'rtmedia' );
+        $msg_no_likes = __('no likes', 'buddypress-media' );
 
         $ec_media_likes = 900004;
-        $msg_media_likes = __('media likes', 'rtmedia' );
+        $msg_media_likes = __('media likes', 'buddypress-media' );
         $media_like_users = array();
         $media_likes = array();
         $media_likes['user'] = array();
@@ -624,13 +624,13 @@ class RTMediaJsonApi{
         //Errors Deleting comment
 
         $ec_comment_not_found = 800007;
-        $msg_comment_not_found = __('invalid comment/media id', 'rtmedia' );
+        $msg_comment_not_found = __('invalid comment/media id', 'buddypress-media' );
 
         $ec_no_comment_id = 800008;
-        $msg_no_comment_id = __('no comment id', 'rtmedia' );
+        $msg_no_comment_id = __('no comment id', 'buddypress-media' );
 
         $ec_comment_deleted = 800009;
-        $msg_comment_deleted = __('comment deleted', 'rtmedia' );
+        $msg_comment_deleted = __('comment deleted', 'buddypress-media' );
         extract($_POST);
 
         if ( empty( $comment_id ) ){
@@ -673,10 +673,10 @@ class RTMediaJsonApi{
         $this->rtmediajsonapifunction->rtmedia_api_verfiy_token();
         //Errors
         $ec_no_fields = 400001;
-        $msg_no_fields = __('no profile found', 'rtmedia' );
+        $msg_no_fields = __('no profile found', 'buddypress-media' );
 
         $ec_profile_fields = 400002;
-        $msg_profile_fields = __('profile fields', 'rtmedia' );
+        $msg_profile_fields = __('profile fields', 'buddypress-media' );
 
         $profile_fields = array();
         $user_id = $loggedin_user_id = '';
@@ -770,13 +770,13 @@ class RTMediaJsonApi{
     function rtmedia_api_process_follow_request(){
         $this->rtmediajsonapifunction->rtmedia_api_verfiy_token();
         $ec_empty_follow_id = 400003;
-        $msg_empty_follow_id = __('follow user id missing', 'rtmedia' );
+        $msg_empty_follow_id = __('follow user id missing', 'buddypress-media' );
 
         $ec_started_following = 400004;
-        $msg_started_following = __('started following', 'rtmedia' );
+        $msg_started_following = __('started following', 'buddypress-media' );
 
         $ec_already_following = 400005;
-        $msg_already_following = __('already following', 'rtmedia' );
+        $msg_already_following = __('already following', 'buddypress-media' );
 
         extract($_POST);
 
@@ -808,13 +808,13 @@ class RTMediaJsonApi{
         $this->rtmediajsonapifunction->rtmedia_api_verfiy_token();
 
         $ec_empty_unfollow_id = 400006;
-        $msg_empty_unfollow_id = __('unfollow id missing', 'rtmedia' );
+        $msg_empty_unfollow_id = __('unfollow id missing', 'buddypress-media' );
 
         $ec_stopped_following = 400007;
-        $msg_stopped_following = __('stopped following', 'rtmedia' );
+        $msg_stopped_following = __('stopped following', 'buddypress-media' );
 
         $ec_not_following = 400008;
-        $msg_not_following = __('not following', 'rtmedia' );
+        $msg_not_following = __('not following', 'buddypress-media' );
 
         extract($_POST);
 
@@ -846,10 +846,10 @@ class RTMediaJsonApi{
     function rtmedia_api_process_update_profile_request(){
         $this->rtmediajsonapifunction->rtmedia_api_verfiy_token();
         $ec_empty_name_location = 120001;
-        $msg_empty_name_location = __('name/location empty', 'rtmedia' );
+        $msg_empty_name_location = __('name/location empty', 'buddypress-media' );
 
         $ec_profile_updated = 120002;
-        $msg_profile_updated = __('profile updated', 'rtmedia' );
+        $msg_profile_updated = __('profile updated', 'buddypress-media' );
         extract($_POST);
 
         for ( $i=1; $i<=12; $i++ ){
@@ -875,13 +875,13 @@ class RTMediaJsonApi{
 
         $this->rtmediajsonapifunction->rtmedia_api_verfiy_token();
         $ec_no_file = 130001;
-        $msg_no_file = __('no file', 'rtmedia' );
+        $msg_no_file = __('no file', 'buddypress-media' );
 
         $ec_invalid_image = 130002;
-        $msg_invalid_image = __('upload failed, check size and file type', 'rtmedia' );
+        $msg_invalid_image = __('upload failed, check size and file type', 'buddypress-media' );
 
         $ec_avatar_updated = 130003;
-        $msg_avatar_updated = __('avatar updated', 'rtmedia' );
+        $msg_avatar_updated = __('avatar updated', 'buddypress-media' );
         extract($_POST);
         if( empty( $_FILES['file'] )){
             echo $this->rtmedia_api_response_object( 'FALSE', $ec_no_file, $msg_no_file );
@@ -902,22 +902,22 @@ class RTMediaJsonApi{
         $this->rtmediajsonapifunction->rtmedia_api_verfiy_token();
         //Error Codes for new look
         $ec_no_file = 140001;
-        $msg_no_file = __('no file', 'rtmedia' );
+        $msg_no_file = __('no file', 'buddypress-media' );
 
         $ec_invalid_file_string = 140005;
-        $msg_invalid_file_string = __('invalid file string', 'rtmedia' );
+        $msg_invalid_file_string = __('invalid file string', 'buddypress-media' );
 
         $ec_image_type_missing = 140006;
-        $msg_image_type_missing = __('image type missing', 'rtmedia' );
+        $msg_image_type_missing = __('image type missing', 'buddypress-media' );
 
         $ec_no_file_title = 140002;
-        $msg_no_file_title = __('no title', 'rtmedia' );
+        $msg_no_file_title = __('no title', 'buddypress-media' );
 
         $ec_invalid_image = 140003;
-        $msg_invalid_image = __('upload failed, check size and file type', 'rtmedia' );
+        $msg_invalid_image = __('upload failed, check size and file type', 'buddypress-media' );
 
         $ec_look_updated = 140004;
-        $msg_look_updated = __('media updated', 'rtmedia' );
+        $msg_look_updated = __('media updated', 'buddypress-media' );
 
         $description = '';
         extract($_POST);
@@ -1047,13 +1047,13 @@ class RTMediaJsonApi{
         $this->rtmediajsonapifunction->rtmedia_api_verfiy_token();
         //Errors
         $ec_media = 160002;
-        $msg_media = __('media list', 'rtmedia' );
+        $msg_media = __('media list', 'buddypress-media' );
 
         $ec_no_media = 160003;
-        $msg_no_media = __('no media found for requested media type', 'rtmedia' );
+        $msg_no_media = __('no media found for requested media type', 'buddypress-media' );
 
         $ec_invalid_media_type = 160004;
-        $msg_invalid_media_type = __('media_type not allowed', 'rtmedia' );
+        $msg_invalid_media_type = __('media_type not allowed', 'buddypress-media' );
 
         global $rtmedia;
         $rtmediamodel = new RTMediaModel();
@@ -1143,7 +1143,7 @@ class RTMediaJsonApi{
         $this->rtmediajsonapifunction->rtmedia_api_media_activity_id_missing();
         //Errors
         $ec_single_media = 150002;
-        $msg_single_media = __('single media', 'rtmedia' );
+        $msg_single_media = __('single media', 'buddypress-media' );
 
         extract($_REQUEST);
         $id = rtmedia_media_id( $media_id );

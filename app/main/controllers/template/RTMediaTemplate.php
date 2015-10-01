@@ -94,7 +94,7 @@ class RTMediaTemplate {
                     
                     echo "</div>";
                 } else {
-                    echo __( 'Invalid attribute passed for rtmedia_gallery shortcode.', 'rtmedia' );
+                    echo __( 'Invalid attribute passed for rtmedia_gallery shortcode.', 'buddypress-media' );
 
                     return false;
                 }
@@ -146,7 +146,7 @@ class RTMediaTemplate {
                             echo RTMediaUploadShortcode::pre_render( $shortcode_attr[ 'attr' ] );
                         }
                     } else {
-                        echo __( 'Invalid attribute passed for rtmedia_gallery shortcode.', 'rtmedia' );
+                        echo __( 'Invalid attribute passed for rtmedia_gallery shortcode.', 'buddypress-media' );
 
                         return false;
                     }
@@ -324,21 +324,21 @@ class RTMediaTemplate {
                 add_action( "rtmedia_before_template_load", array( &$this, "media_update_success_error" ) );
             }
         } else {
-            _e( 'Ooops !!! Invalid access. No nonce was found !!', 'rtmedia' );
+            _e( 'Ooops !!! Invalid access. No nonce was found !!', 'buddypress-media' );
         }
         
         remove_filter( 'intermediate_image_sizes_advanced', array( $this, 'filter_image_sizes_details' ) );
     }
 
     function media_update_success_messege() {
-        $message = apply_filters( "rtmedia_update_media_message", __( 'Media updated Sucessfully', 'rtmedia' ), false );
-        $html = "<div class='rtmedia-success media-edit-messge'>" . __( $message, "rtmedia" ) . "</div>";
+        $message = apply_filters( "rtmedia_update_media_message", __( 'Media updated Sucessfully', 'buddypress-media' ), false );
+        $html = "<div class='rtmedia-success media-edit-messge'>" . __( $message, 'buddypress-media' ) . "</div>";
         echo apply_filters( "rtmedia_update_media_message_html", $html, $message, false );
     }
 
     function media_update_success_error() {
-        $message = apply_filters( "rtmedia_update_media_message", __( 'Error in updating Media', 'rtmedia' ), true );
-        $html = "<div class='rtmedia-error  media-edit-messge'>" . __( $message, "rtmedia" ) . "</div>";
+        $message = apply_filters( "rtmedia_update_media_message", __( 'Error in updating Media', 'buddypress-media' ), true );
+        $html = "<div class='rtmedia-error  media-edit-messge'>" . __( $message, 'buddypress-media' ) . "</div>";
         
         echo apply_filters( "rtmedia_update_media_message_html", $html, $message, true );
     }
@@ -398,7 +398,7 @@ class RTMediaTemplate {
             wp_safe_redirect( esc_url_raw( get_rtmedia_permalink( $rtmedia_query->media_query[ 'album_id' ] ) . 'edit/' ) );
             die();
         } else {
-            _e( 'Ooops !!! Invalid access. No nonce was found !!', 'rtmedia' );
+            _e( 'Ooops !!! Invalid access. No nonce was found !!', 'buddypress-media' );
         }
     }
 
@@ -487,7 +487,7 @@ class RTMediaTemplate {
             wp_safe_redirect( esc_url_raw( $redirect_url ) );
             die();
         } else {
-            _e( 'Ooops !!! Invalid access. No nonce was found !!', 'rtmedia' );
+            _e( 'Ooops !!! Invalid access. No nonce was found !!', 'buddypress-media' );
         }
     }
 
@@ -613,7 +613,7 @@ class RTMediaTemplate {
                     exit;
                 }
             } else {
-                _e( 'Ooops !!! Invalid access. No nonce was found !!', 'rtmedia' );
+                _e( 'Ooops !!! Invalid access. No nonce was found !!', 'buddypress-media' );
             }
         }
     }

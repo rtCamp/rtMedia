@@ -48,10 +48,10 @@ class RTMediaUploadView {
 			} elseif ( is_rtmedia_album_enable() && $rtmedia_query && is_rtmedia_gallery() ) {
 
 				if ( isset( $rtmedia_query->query[ 'context' ] ) && $rtmedia_query->query[ 'context' ] == 'profile' ) {
-					$album = '<span> <label> <i class="dashicons dashicons-format-gallery rtmicon"></i>' . __( 'Album', 'rtmedia' ) . ': </label><select name="album" class="rtmedia-user-album-list">' . rtmedia_user_album_list() . '</select></span>';
+					$album = '<span> <label> <i class="dashicons dashicons-format-gallery rtmicon"></i>' . __( 'Album', 'buddypress-media' ) . ': </label><select name="album" class="rtmedia-user-album-list">' . rtmedia_user_album_list() . '</select></span>';
 				}
 				if ( isset( $rtmedia_query->query[ 'context' ] ) && $rtmedia_query->query[ 'context' ] == 'group' ) {
-					$album = '<span> <label> <i class="dashicons dashicons-format-gallery rtmicon"></i>' . __( 'Album', 'rtmedia' ) . ': </label><select name="album" class="rtmedia-user-album-list">' . rtmedia_group_album_list() . '</select></span>';
+					$album = '<span> <label> <i class="dashicons dashicons-format-gallery rtmicon"></i>' . __( 'Album', 'buddypress-media' ) . ': </label><select name="album" class="rtmedia-user-album-list">' . rtmedia_group_album_list() . '</select></span>';
 				}
 			}
 		}
@@ -67,19 +67,19 @@ class RTMediaUploadView {
                 $up_privacy = new RTMediaPrivacy();
 				$up_privacy = $up_privacy->select_privacy_ui( false, 'rtSelectPrivacy' );
 				if ( $up_privacy ) {
-					$privacy = "<span> <label for='privacy'> <i class='dashicons dashicons-visibility rtmicon'></i> " . __( 'Privacy: ', 'rtmedia' ) . "</label>" . $up_privacy . "</span>";
+					$privacy = "<span> <label for='privacy'> <i class='dashicons dashicons-visibility rtmicon'></i> " . __( 'Privacy: ', 'buddypress-media' ) . "</label>" . $up_privacy . "</span>";
                 }
             }
         }
 
 		$upload_tabs = array(
 			'file_upload' => array(
-				'title' => __( 'File Upload', 'rtmedia' ),
+				'title' => __( 'File Upload', 'buddypress-media' ),
 				'class' => array( 'rtm-upload-tab', 'active' ),
 				'content' => '<div class="rtm-upload-tab-content" data-id="rtm-upload-tab">'
 					. apply_filters( 'rtmedia_uploader_before_select_files', "" )
-					. '<div class="rtm-select-files"><input id="rtMedia-upload-button" value="' . __( "Select your files", "rtmedia" ) . '" type="button" class="rtmedia-upload-input rtmedia-file" />'
-					. '<span class="rtm-seperator">' . __('or','rtmedia') .'</span><span class="drag-drop-info">' . __('Drop your files here', 'rtmedia') . '</span> <i class="rtm-file-size-limit rtmicon-info-circle rtmicon-fw"></i></div>'
+					. '<div class="rtm-select-files"><input id="rtMedia-upload-button" value="' . __( "Select your files", 'buddypress-media' ) . '" type="button" class="rtmedia-upload-input rtmedia-file" />'
+					. '<span class="rtm-seperator">' . __('or','buddypress-media') .'</span><span class="drag-drop-info">' . __('Drop your files here', 'buddypress-media') . '</span> <i class="rtm-file-size-limit rtmicon-info-circle rtmicon-fw"></i></div>'
 					. apply_filters( 'rtmedia_uploader_after_select_files', "" )
 					. '</div>',
 			),
@@ -108,7 +108,7 @@ class RTMediaUploadView {
         $tabs = array(
             'file_upload' => array(
                 'default' => array(
-	                'title' => __( 'File Upload', 'rtmedia' ),
+	                'title' => __( 'File Upload', 'buddypress-media' ),
                     'content' =>
 	                    '<div id="rtmedia-upload-container" >'
 	                        . '<div id="drag-drop-area" class="drag-drop clearfix">'
@@ -116,7 +116,7 @@ class RTMediaUploadView {
 	                                . "<div class='rtm-album-privacy'>" . $album . $privacy . "</div>"
 	                                . $upload_tab_html
 									. apply_filters( 'rtmedia_uploader_before_start_upload_button', "" )
-						. '<input type="button" class="start-media-upload" value="' . __( 'Start upload', 'rtmedia' ) . '"/>'
+						. '<input type="button" class="start-media-upload" value="' . __( 'Start upload', 'buddypress-media' ) . '"/>'
 									. apply_filters( 'rtmedia_uploader_after_start_upload_button', "" )
 	                        . '</div>'
 						. '<div class="clearfix">'
@@ -124,14 +124,14 @@ class RTMediaUploadView {
 	                    . '</div>'
                 ),
 				'activity' => array(
-					'title' => __( 'File Upload', 'rtmedia' ),
+					'title' => __( 'File Upload', 'buddypress-media' ),
 					'content' =>
 						'<div class="rtmedia-plupload-container rtmedia-container clearfix">'
 							.'<div id="rtmedia-action-update" class="clearfix">'
 								.'<div class="rtm-upload-button-wrapper">'
 									.'<div id="rtmedia-whts-new-upload-container">'
 									.'</div>'
-									.'<button type="button" class="rtmedia-add-media-button" id="rtmedia-add-media-button-post-update" title="' . apply_filters( 'rtmedia_attach_media_button_title', __( 'Attach Media', 'rtmedia' ) ) . '">'
+									.'<button type="button" class="rtmedia-add-media-button" id="rtmedia-add-media-button-post-update" title="' . apply_filters( 'rtmedia_attach_media_button_title', __( 'Attach Media', 'buddypress-media' ) ) . '">'
 										.'<span class="dashicons dashicons-admin-media"></span>'
 										. apply_filters( 'rtmedia_attach_file_message', '' )
 									. '</button>'
@@ -145,8 +145,8 @@ class RTMediaUploadView {
 						.'</div>'
 				)
             ),
-//			'file_upload' => array( 'title' => __('File Upload','rtmedia'), 'content' => '<div id="rtmedia-uploader"><p>Your browser does not have HTML5 support.</p></div>'),
-			'link_input' => array( 'title' => __( 'Insert from URL', 'rtmedia' ), 'content' => '<input type="url" name="bp-media-url" class="rtmedia-upload-input rtmedia-url" />' ),
+//			'file_upload' => array( 'title' => __('File Upload','buddypress-media'), 'content' => '<div id="rtmedia-uploader"><p>Your browser does not have HTML5 support.</p></div>'),
+			'link_input' => array( 'title' => __( 'Insert from URL', 'buddypress-media' ), 'content' => '<input type="url" name="bp-media-url" class="rtmedia-upload-input rtmedia-url" />' ),
 		);
 		$tabs = apply_filters( 'rtmedia_upload_tabs', $tabs );
 
