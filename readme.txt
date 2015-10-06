@@ -6,7 +6,7 @@ License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires at least: WordPress 3.6
 Tested up to: 4.3.1
-Stable tag: 3.8.20
+Stable tag: 3.8.21
 
 Add albums, photo, audio/video encoding, privacy, sharing, front-end uploads & more. All this works on mobile/tablets devices.
 
@@ -139,6 +139,9 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 
 == Changelog ==
+
+= 3.8.21 =
+* Rename plugin text domain from 'rtmedia' to 'buddypress-media'
 
 = 3.8.20 =
 * Fix getid3 related issue
@@ -1081,8 +1084,8 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 == Upgrade Notice ==
 
-= 3.8.20 =
-Requires BuddyPress 1.7 or higher, if using BuddyPress. Fix getid3 related issue.
+= 3.8.21 =
+Requires BuddyPress 1.7 or higher, if using BuddyPress. Rename plugin text domain from 'rtmedia' to 'buddypress-media'.
 
 == Sponsors ==
 
