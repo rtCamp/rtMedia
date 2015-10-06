@@ -570,11 +570,6 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
                 </html>';
 			add_filter( 'wp_mail_content_type', create_function( '', 'return "text/html";' ) );
 			$headers = 'From: ' . $form_data[ 'name' ] . ' <' . $form_data[ 'email' ] . '>' . "\r\n";
-			if ( isset( $rtmedia->support_email ) ) {
-				$support_email = $rtmedia->support_email;
-			} else {
-				$support_email = 'support@rtcamp.com';
-			}
 			$support_email = 'support@rtcamp.com';
 			if ( wp_mail( $support_email, '[rtmedia] ' . $mail_type . ' from ' . str_replace( array( 'http://', 'https://' ), '', $form_data[ 'website' ] ), stripslashes( $message ), $headers ) ) {
 				echo '<div class="rtmedia-success" style="margin:10px 0;">';
@@ -589,7 +584,7 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 				echo '<div class="rtmedia-error">';
 				echo '<p>' . __( 'Your server failed to send an email.', 'buddypress-media' ) . '</p>';
 				echo '<p>' . __( 'Kindly contact your server support to fix this.', 'buddypress-media' ) . '</p>';
-				echo '<p>' . sprintf( __( 'You can alternatively create a support request <a href="%s">here</a>', 'buddypress-media' ), $rtmedia->support_url ) . '</p>';
+				echo '<p>' . __( 'You can alternatively create a support request <a href="https://rtcamp.com/premium-support/" target="_blank">here</a>', 'buddypress-media' ) . '</p>';
 				echo '</div>';
 			}
 			die();
