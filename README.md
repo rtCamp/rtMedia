@@ -140,6 +140,9 @@ http://www.youtube.com/watch?v####dJrykKQGDcs
 
 ## Changelog ##
 
+#### 3.8.21 ####
+* Rename plugin text domain from 'rtmedia' to 'buddypress-media'
+
 #### 3.8.20 ####
 * Fix getid3 related issue
 * Other bug fixes
@@ -1079,8 +1082,8 @@ http://www.youtube.com/watch?v####dJrykKQGDcs
 * HTML5 Audio Tag Support (with fallback)
 * HTML5 Video Tag Support (with fallback)
 
-#### 3.8.20 ####
-Requires BuddyPress 1.7 or higher, if using BuddyPress. Fix getid3 related issue.
+#### 3.8.21 ####
+Requires BuddyPress 1.7 or higher, if using BuddyPress. Rename plugin text domain from 'rtmedia' to 'buddypress-media'.
 
 ## Sponsors ##
 
