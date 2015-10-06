@@ -584,7 +584,7 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 				echo '<div class="rtmedia-error">';
 				echo '<p>' . __( 'Your server failed to send an email.', 'rtmedia' ) . '</p>';
 				echo '<p>' . __( 'Kindly contact your server support to fix this.', 'rtmedia' ) . '</p>';
-				echo '<p>' . sprintf( __( 'You can alternatively create a support request <a href="%s">here</a>', 'rtmedia' ), $rtmedia->support_url ) . '</p>';
+				echo '<p>' . sprintf( __( 'You can alternatively create a support request <a href="%s">here</a>', 'rtmedia' ), 'https://rtcamp.com/premium-support/' ) . '</p>';
 				echo '</div>';
 			}
 			die();
