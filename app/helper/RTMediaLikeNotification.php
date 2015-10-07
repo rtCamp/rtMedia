@@ -78,7 +78,7 @@ class RTMediaLikeNotification extends RTMediaNotification {
                 $text = $liked_by . ' ' . __('and one more friend liked your', 'rtmedia') .' ' . $media_type;
             } else {
                 $count = $like_count - 1;
-                $text = $liked_by . ' ' . __('and') . ' ' . $count . ' ' . __('other friends liked your') . ' ' . $media_type;
+                $text = $liked_by . ' ' . __( 'and' ,'rtmedia' ) . ' ' . $count . ' ' . __('other friends liked your', 'rtmedia' ) . ' ' . $media_type;
             }
 
             if ($format == 'string') {
