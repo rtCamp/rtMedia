@@ -47,7 +47,7 @@ function apply_rtMagnificPopup( selector ) {
 						if ( ! li.is( 'li' ) ) {
 							li = li.parent();
 						}
-						if ( li.is( ':nth-last-child(2)' ) ) { // if its last second media
+						if ( li.is( ':nth-last-child(2)' ) || li.is( ':last-child' ) ) { // if its last second media
 							var last_li = li.next();
 							if ( jQuery( '#rtMedia-galary-next' ).css( 'display' ) == 'block' ) { // if more medias are available
 								jQuery( '#rtMedia-galary-next' ).click(); // load more
