@@ -41,6 +41,7 @@ class RTMediaFeatured extends RTMediaUserInteraction {
 			add_filter( 'rtmedia_addons_action_buttons', array( $this, 'button_filter' ) );
 			add_filter( 'rtmedia_author_media_options', array( $this, 'button_filter' ), 12, 1 );
 		}
+		add_action( 'rtmedia_featured_button_filter', array( $this, 'featured_button_filter_nonce' ), 10, 1 );
 		//$this->get();
 	}
 
@@ -161,7 +162,13 @@ class RTMediaFeatured extends RTMediaUserInteraction {
 		if ( ! isset( $this->action_query->id ) ){
 			return;
 		}
+		if( ! wp_verify_nonce( $_POST[ "featured_nonce" ], 'rtm_media_featured_nonce'.$this->media->id ) ){
+			$return['nonce'] = true;
+			echo json_encode( $return );
+			die();
+		}
 		$return      = array();
+		$return['nonce'] = false;
 		$this->model = new RTMediaModel();
 		$actions     = $this->model->get( array( 'id' => $this->action_query->id ) );
 		$this->get();
@@ -183,7 +190,7 @@ class RTMediaFeatured extends RTMediaUserInteraction {
 			$return['status'] = false;
 			$return['error']  = __( 'Media type is not allowed', 'buddypress-media' );
 		}
-		if ( isset( $_REQUEST['json'] ) && 'true' == $_REQUEST['json'] ){
+		if ( isset( $_POST['json'] ) && 'true' == $_POST['json'] ){
 			echo json_encode( $return );
 			die();
 		} else {
@@ -191,6 +198,10 @@ class RTMediaFeatured extends RTMediaUserInteraction {
 		}
 	}
 
+	function featured_button_filter_nonce( $button ) {
+		$button .= wp_nonce_field( 'rtm_media_featured_nonce' . $this->media->id, 'rtm_media_featured_nonce',true, false );
+		return $button;
+	}
 }
 
 function rtmedia_featured( $user_id = false ){
