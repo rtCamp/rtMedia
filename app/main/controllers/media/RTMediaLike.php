@@ -59,7 +59,7 @@ class RTMediaLike extends RTMediaUserInteraction {
 	function process() {
 		$actions = $this->model->get( array( 'id' => $this->action_query->id ) );
 
-		if( ! wp_verify_nonce( $_REQUEST[ "like_nonce" ], 'rtm_media_like_nonce'.$this->media->id ) ){
+		if( ! wp_verify_nonce( $_POST[ "like_nonce" ], 'rtm_media_like_nonce'.$this->media->id ) ){
 			die();
 		}
 		$rtmediainteraction = new RTMediaInteractionModel();
@@ -113,7 +113,7 @@ class RTMediaLike extends RTMediaUserInteraction {
 		global $rtmedia_points_media_id;
 		$rtmedia_points_media_id = $this->action_query->id;
 		do_action( "rtmedia_after_like_media", $this );
-		if ( isset( $_REQUEST[ "json" ] ) && $_REQUEST[ "json" ] == "true" ) {
+		if ( isset( $_POST[ "json" ] ) && $_POST[ "json" ] == "true" ) {
 			echo json_encode( $return );
 			die();
 		} else {

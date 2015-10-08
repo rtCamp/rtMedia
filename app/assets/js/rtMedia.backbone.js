@@ -1094,7 +1094,7 @@ jQuery( document ).ready( function ( $ ) {
 		$.ajax( {
 			url: url,
 			type: 'post',
-			data: "json=true&like_nonce="+like_nonce,
+			data: { json: true, like_nonce: like_nonce },
 			success: function ( data ) {
 				try {
 					data = JSON.parse( data );
@@ -1126,7 +1126,7 @@ jQuery( document ).ready( function ( $ ) {
 		$.ajax( {
 			url: url,
 			type: 'post',
-			data: "json=true&featured_nonce="+featured_nonce,
+			data:  { json:true, featured_nonce:featured_nonce },
 			success: function ( data ) {
 				try {
 					data = JSON.parse( data );
