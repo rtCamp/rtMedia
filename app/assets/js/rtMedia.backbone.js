@@ -1087,13 +1087,14 @@ jQuery( document ).ready( function ( $ ) {
 	$( document ).on( "click", '.rtmedia-like', function ( e ) {
 		e.preventDefault();
 		var that = this;
+		var like_nonce = $(this).siblings('#rtm_media_like_nonce').val();
 		$( this ).attr( 'disabled', 'disabled' );
 		var url = $( this ).parent().attr( "action" );
 		$( that ).prepend( "<img class='rtm-like-loading' src='" + rMedia_loading_file + "' style='width:10px' />" );
 		$.ajax( {
 			url: url,
 			type: 'post',
-			data: "json=true",
+			data: { json: true, like_nonce: like_nonce },
 			success: function ( data ) {
 				try {
 					data = JSON.parse( data );
@@ -1119,12 +1120,13 @@ jQuery( document ).ready( function ( $ ) {
 		e.preventDefault();
 		var that = this;
 		$( this ).attr( 'disabled', 'disabled' );
+		var featured_nonce = $(this).siblings('#rtm_media_featured_nonce').val();
 		var url = $( this ).parent().attr( "action" );
 		$( that ).prepend( "<img class='rtm-featured-loading' src='" + rMedia_loading_file + "' />" );
 		$.ajax( {
 			url: url,
 			type: 'post',
-			data: "json=true",
+			data:  { json:true, featured_nonce:featured_nonce },
 			success: function ( data ) {
 				try {
 					data = JSON.parse( data );
@@ -1132,12 +1134,15 @@ jQuery( document ).ready( function ( $ ) {
 
 				}
 
-                if ( data.action ) {
-                    rtmedia_single_media_alert_message( rtmedia_set_featured_image_msg, 'success' );
-                } else {
-                    rtmedia_single_media_alert_message( rtmedia_unset_featured_image_msg, 'success' );
-                }
-
+				if ( data.nonce ){
+					rtmedia_single_media_alert_message( rtmedia_something_wrong_msg, 'warning');
+				} else {
+					if (data.action) {
+						rtmedia_single_media_alert_message(rtmedia_set_featured_image_msg, 'success');
+					} else {
+						rtmedia_single_media_alert_message(rtmedia_unset_featured_image_msg, 'success');
+					}
+				}
 				$( that ).find( 'span' ).html( data.next );
 				$( '.rtm-featured-loading' ).remove();
 				$( that ).removeAttr( 'disabled' );
