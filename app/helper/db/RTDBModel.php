@@ -180,7 +180,7 @@ if ( ! class_exists( 'RTDBModel' ) ){
 					if ( ! isset( $colvalue['value'] ) ){
 						$colvalue['value'] = $colvalue;
 					}
-					$col_val_comapare = ( $colvalue['value'] ) ? '(\'' . implode( "','", $colvalue['value'] ) . '\')' : '';
+					$col_val_comapare = ( is_array( $colvalue['value'] ) ) ? '(\'' . implode( "','", $colvalue['value'] ) . '\')' : '(\'' . $colvalue['value'] . '\')';
 					$where .= " AND {$this->table_name}.{$colname} {$compare} {$col_val_comapare}";
 				} else {
 					$where .= " AND {$this->table_name}.{$colname} = '{$colvalue}'";
