@@ -29,6 +29,8 @@ class RTMediaPrivacy {
 			add_filter( 'bp_activity_has_more_items', array( $this, 'enable_buddypress_load_more' ), 10, 1 );
 			add_action( 'bp_actions', array( $this,'rt_privacy_settings_action' ) );
 		}
+		add_action( 'friends_friendship_accepted', array( 'RTMediaFriends', 'refresh_friends_cache' ) );
+		add_action( 'friends_friendship_deleted', array( 'RTMediaFriends', 'refresh_friends_cache' ) );
 	}
 
 	function enable_buddypress_load_more( $has_more_items ) {
