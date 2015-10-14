@@ -17,6 +17,9 @@ class RTMediaBuddyPressActivity {
 		if ( 0 != $rtmedia->options['buddypress_enableOnActivity'] ){
 			add_action( 'bp_after_activity_post_form', array( &$this, 'bp_after_activity_post_form' ) );
 			add_action( 'bp_activity_posted_update', array( &$this, 'bp_activity_posted_update' ), 99, 3 );
+
+			// manage user's last activity update.
+			add_action( 'bp_activity_posted_update', array( &$this, 'manage_user_last_activity_update' ), 999, 3 );
 			add_action( 'bp_groups_posted_update', array( &$this, 'bp_groups_posted_update' ), 99, 4 );
 		}
 		add_action( 'bp_init', array( $this, 'non_threaded_comments' ) );
@@ -156,6 +159,63 @@ class RTMediaBuddyPressActivity {
 				$rtmedia_activity_model->insert( array( 'activity_id' => $activity_id, 'user_id' => $user_id, 'privacy' => $privacy ) );
 			} else {
 				$rtmedia_activity_model->update( array( 'activity_id' => $activity_id, 'user_id' => $user_id, 'privacy' => $privacy ), array( 'activity_id' => $activity_id ) );
+			}
+		}
+	}
+
+	/**
+	 * Update `bp_latest_update` user meta with lasted public update.
+	 *
+	 * @param $content
+	 * @param $user_id
+	 * @param $activity_id
+	 */
+	function manage_user_last_activity_update( $content, $user_id, $activity_id ){
+		global $wpdb,$bp;
+
+		// do not proceed if not allowed
+		if( ! apply_filters( 'rtm_manage_user_last_activity_update', true, $activity_id ) ){
+			return;
+		}
+		$rtm_activity_model = new RTMediaActivityModel();
+
+		$rtm_activity_obj = $rtm_activity_model->get( array( 'activity_id' => $activity_id ) );
+
+		if( !empty( $rtm_activity_obj ) ){
+			if( isset( $rtm_activity_obj[0]->privacy ) && $rtm_activity_obj[0]->privacy > 0 ){
+
+				$get_columns = array(
+					'activity_id' => array(
+						'compare' => '<',
+						'value' => $activity_id
+					),
+					'user_id' => $user_id,
+					'privacy' => array(
+						'compare' => '<=',
+						'value' => 0
+					),
+				);
+
+				// get user's latest public activity update
+				$new_last_activity_obj = $rtm_activity_model->get( $get_columns, 0, 1 );
+
+				if( !empty( $new_last_activity_obj ) ){
+					// latest public activity id
+					$public_activity_id = $new_last_activity_obj[0]->activity_id;
+
+					// latest public activity content
+					$activity_content = bp_activity_get_meta( $public_activity_id, 'bp_activity_text' );
+					if( empty( $activity_content ) ){
+						$activity_content = $wpdb->get_var( "SELECT content FROM {$bp->activity->table_name} WHERE id = $public_activity_id" );
+					}
+					$activity_content = apply_filters( 'bp_activity_latest_update_content', $activity_content, $activity_content );
+
+					// update user's latest update
+					bp_update_user_meta( $user_id, 'bp_latest_update', array(
+						'id'      => $public_activity_id,
+						'content' => $activity_content
+					) );
+				}
 			}
 		}
 	}
