@@ -77,6 +77,12 @@ class RTMediaUploadEndpoint {
 					}
 					if ( $create_activity !== false && class_exists( 'BuddyPress' ) ){
 						$allow_single_activity = apply_filters( 'rtmedia_media_single_activity', false );
+
+						// Following will not apply to activity uploads. For first time activity won't be generated.
+						// Create activity first and pass activity id in response.
+
+						// todo fixme rtmedia_media_single_activity filter. It will create 2 activity with same media if uploaded from activity page.
+
 						if ( ( $activity_id == - 1 && ( ! ( isset ( $_POST[ "rtmedia_update" ] ) && $_POST[ "rtmedia_update" ] == "true" ) ) ) || $allow_single_activity ){
 							$activity_id = $mediaObj->insert_activity( $media[ 0 ]->media_id, $media[ 0 ] );
 						} else {
@@ -99,6 +105,11 @@ class RTMediaUploadEndpoint {
 							$action   = sprintf( __( '%s added %d %s', 'buddypress-media' ), $username, sizeof( $same_medias ), RTMEDIA_MEDIA_SLUG );
 							$action   = apply_filters( 'rtmedia_buddypress_action_text_fitler_multiple_media', $action, $username, sizeof( $same_medias ), $user->user_nicename );
 							$wpdb->update( $bp->activity->table_name, array( "type" => "rtmedia_update", "content" => $objActivity->create_activity_html(), 'action' => $action ), array( "id" => $activity_id ) );
+						}
+
+						// update group last active
+						if ( $media[ 0 ]->context == "group" ){
+							RTMediaGroup::update_last_active( $media[ 0 ]->context_id );
 						}
 					}
 				}
