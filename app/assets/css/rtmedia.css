@@ -454,6 +454,10 @@ table.rtmedia-edit-media-list tr td.rtm-edit-media-list-delete span {
   font-size: 13px;
 }
 
+.rtm-hide {
+  display: none;
+}
+
 .rtm-tabs.rtm-tabs {
   border-bottom: 1px solid #EEEEEE;
   list-style: none;
