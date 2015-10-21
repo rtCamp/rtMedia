@@ -961,10 +961,9 @@ jQuery( document ).ready( function ( $ ) {
 			var orignalSuccess = originalOptions.success;
 			options.beforeSend = function () {
 				if ( originalOptions.data.action == 'post_update' ) {
-					if ( $.trim( $( "#whats-new" ).val() ) == "" ) {
-						$( '#whats-new-form' ).prepend( '<div id="message" class="error"><p>' + rtmedia_empty_activity_msg + '</p></div>' );
-						$( "#aw-whats-new-submit" ).prop( "disabled", true ).removeClass( 'loading' );
-						return false;
+					if ( $.trim( $( "#whats-new" ).val() ) == "" && objUploadView.uploader.files.length > 0 ) {
+						$( "#whats-new").css('color', 'transparent');
+						$( "#whats-new" ).val('&nbsp;');
 					}
 				}
 				if ( ! media_uploading && objUploadView.uploader.files.length > 0 ) {
@@ -1015,6 +1014,7 @@ jQuery( document ).ready( function ( $ ) {
 				}
 				$( "#whats-new-post-in" ).removeAttr( 'disabled' );
 				$( "#rtmedia-add-media-button-post-update" ).removeAttr( 'disabled' );
+				$( "#whats-new").css('color', '');
 
 			}
 		}
