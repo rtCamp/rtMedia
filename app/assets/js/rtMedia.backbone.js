@@ -718,6 +718,7 @@ jQuery( document ).ready( function ( $ ) {
 		objUploadView.uploader.refresh();
 		$( '#rtmedia-whts-new-upload-container > div' ).css( 'top', '0' );
 		$( '#rtmedia-whts-new-upload-container > div' ).css( 'left', '0' );
+		$( '#aw-whats-new-submit' ).prop("disabled", false);
 	} );
 	//whats-new-post-in
 
