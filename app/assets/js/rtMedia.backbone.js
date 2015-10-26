@@ -496,7 +496,11 @@ jQuery( function ( $ ) {
 			rtMediaHook.call( 'rtmedia_js_after_files_added', [ up, files ] );
             
             if( typeof rtmedia_direct_upload_enabled != 'undefined' && rtmedia_direct_upload_enabled == '1' ) {
-                jQuery( '.start-media-upload' ).trigger( 'click' );
+				var allow_upload = rtMediaHook.call( 'rtmedia_js_upload_file', true );
+				if ( allow_upload == false ) {
+					return false;
+				}
+				uploaderObj.uploadFiles();
             }
 
 		} );
@@ -714,6 +718,9 @@ jQuery( document ).ready( function ( $ ) {
 		objUploadView.uploader.refresh();
 		$( '#rtmedia-whts-new-upload-container > div' ).css( 'top', '0' );
 		$( '#rtmedia-whts-new-upload-container > div' ).css( 'left', '0' );
+
+		//Enable 'post update' button when media get select
+		$( '#aw-whats-new-submit' ).prop("disabled", false);
 	} );
 	//whats-new-post-in
 
@@ -819,6 +826,7 @@ jQuery( document ).ready( function ( $ ) {
 		} );
         
         if( typeof rtmedia_direct_upload_enabled != 'undefined' && rtmedia_direct_upload_enabled == '1' && jQuery.trim( jQuery( "#whats-new" ).val() ) != "" ) {
+           	//Call upload event direct when direct upload is enabled (removed UPLOAD button and its triggered event)
             var allow_upload = rtMediaHook.call( 'rtmedia_js_upload_file', true );
             
             if( allow_upload == false ) {
@@ -961,10 +969,13 @@ jQuery( document ).ready( function ( $ ) {
 			var orignalSuccess = originalOptions.success;
 			options.beforeSend = function () {
 				if ( originalOptions.data.action == 'post_update' ) {
-					if ( $.trim( $( "#whats-new" ).val() ) == "" ) {
-						$( '#whats-new-form' ).prepend( '<div id="message" class="error"><p>' + rtmedia_empty_activity_msg + '</p></div>' );
-						$( "#aw-whats-new-submit" ).prop( "disabled", true ).removeClass( 'loading' );
-						return false;
+					if ( $.trim( $( "#whats-new" ).val() ) == "" && objUploadView.uploader.files.length > 0 ) {
+						/*
+						 *Added $nbsp; as activity text to post activity without TEXT
+						 * Disabled TextBox color(transparent)
+						 */
+						$( "#whats-new").css('color', 'transparent');
+						$( "#whats-new" ).val('&nbsp;');
 					}
 				}
 				if ( ! media_uploading && objUploadView.uploader.files.length > 0 ) {
@@ -1015,6 +1026,8 @@ jQuery( document ).ready( function ( $ ) {
 				}
 				$( "#whats-new-post-in" ).removeAttr( 'disabled' );
 				$( "#rtmedia-add-media-button-post-update" ).removeAttr( 'disabled' );
+				// Enabled TextBox color back to normal
+				$( "#whats-new").css('color', '');
 
 			}
 		}
