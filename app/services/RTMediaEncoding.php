@@ -209,11 +209,13 @@ class RTMediaEncoding {
 
 	public function allowed_types( $types ) {
 		if ( isset( $types[ 0 ] ) && isset( $types[ 0 ][ 'extensions' ] ) ) {
-			if ( is_rtmedia_upload_video_enabled() )
+			if ( is_rtmedia_upload_video_enabled() && strpos( ',mov,m4v,m2v,avi,mpg,flv,wmv,mkv,webm,ogv,mxf,asf,vob,mts,qt,mpeg,x-msvideo', $types[ 0 ][ 'extensions' ] ) ) {
 				$types[ 0 ][ 'extensions' ] .= ',mov,m4v,m2v,avi,mpg,flv,wmv,mkv,webm,ogv,mxf,asf,vob,mts,qt,mpeg,x-msvideo'; //Allow all types of file to be uploded
-			if ( is_rtmedia_upload_music_enabled() )
+			}
+			if ( is_rtmedia_upload_music_enabled() && strpos( ',wma,ogg,wav,m4a', $types[ 0 ] ) ){
 				$types[ 0 ][ 'extensions' ] .= ',wma,ogg,wav,m4a'; //Allow all types of file to be uploded
-		}
+			}
+		}		
 		return $types;
 	}
 
