@@ -13,6 +13,8 @@ class RTMediaEncoding {
 	public $uploaded = array();
 	public $api_key = false;
 	public $stored_api_key = false;
+	public $video_extensions = ',mov,m4v,m2v,avi,mpg,flv,wmv,mkv,webm,ogv,mxf,asf,vob,mts,qt,mpeg,x-msvideo';
+	public $music_extensions = ',wma,ogg,wav,m4a';
 
 	public function __construct( $no_init = false ) {
 		$this->api_key = get_site_option( 'rtmedia-encoding-api-key' );
@@ -209,11 +211,11 @@ class RTMediaEncoding {
 
 	public function allowed_types( $types ) {
 		if ( isset( $types[ 0 ] ) && isset( $types[ 0 ][ 'extensions' ] ) ) {
-			if ( is_rtmedia_upload_video_enabled() && strpos( ',mov,m4v,m2v,avi,mpg,flv,wmv,mkv,webm,ogv,mxf,asf,vob,mts,qt,mpeg,x-msvideo', $types[ 0 ][ 'extensions' ] ) ) {
-				$types[ 0 ][ 'extensions' ] .= ',mov,m4v,m2v,avi,mpg,flv,wmv,mkv,webm,ogv,mxf,asf,vob,mts,qt,mpeg,x-msvideo'; //Allow all types of file to be uploded
+			if ( is_rtmedia_upload_video_enabled() && strpos( $this->video_extensions, $types[ 0 ][ 'extensions' ] ) ) {
+				$types[ 0 ][ 'extensions' ] .= $this->video_extensions; //Allow all types of file to be uploded
 			}
-			if ( is_rtmedia_upload_music_enabled() && strpos( ',wma,ogg,wav,m4a', $types[ 0 ] ) ){
-				$types[ 0 ][ 'extensions' ] .= ',wma,ogg,wav,m4a'; //Allow all types of file to be uploded
+			if ( is_rtmedia_upload_music_enabled() && strpos( $this->music_extensions, $types[ 0 ] ) ){
+				$types[ 0 ][ 'extensions' ] .= $this->music_extensions; //Allow all types of file to be uploded
 			}
 		}		
 		return $types;
@@ -222,8 +224,8 @@ class RTMediaEncoding {
 	public function allowed_types_admin_settings( $types ) {
 		$allowed_video_string = implode( ",", $types[ 'video' ][ 'extn' ] );
 		$allowed_audio_string = implode( ",", $types[ 'music' ][ 'extn' ] );
-		$allowed_video = explode( ",", $allowed_video_string . ',mov,m4v,m2v,avi,mpg,flv,wmv,mkv,webm,ogv,mxf,asf,vob,mts,qt,mpeg,x-msvideo' );
-		$allowed_audio = explode( ",", $allowed_audio_string . ',wma,ogg,wav,m4a' );
+		$allowed_video = explode( ",", $allowed_video_string . $this->video_extensions );
+		$allowed_audio = explode( ",", $allowed_audio_string . $this->music_extensions );
 		$types[ 'video' ][ 'extn' ] = array_unique( $allowed_video );
 		$types[ 'music' ][ 'extn' ] = array_unique( $allowed_audio );
 		return $types;
