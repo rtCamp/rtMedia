@@ -105,7 +105,6 @@ class RTMediaUploadView {
 			$upload_tab_html = '';
 		}
 		global $rtmedia;
-		error_log( var_export( ! isset( $rtmedia->options[ "general_direct_upload" ] ), true ) );
 		$upload_button = ( ! ( isset( $rtmedia->options[ "general_direct_upload" ] )&& $rtmedia->options[ "general_direct_upload" ] == 1 ) ? '<input type="button" class="start-media-upload" value="' . __( 'Start upload', 'buddypress-media' ) . '"/>'  : '' );
         $tabs = array(
             'file_upload' => array(
