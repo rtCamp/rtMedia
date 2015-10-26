@@ -496,7 +496,11 @@ jQuery( function ( $ ) {
 			rtMediaHook.call( 'rtmedia_js_after_files_added', [ up, files ] );
             
             if( typeof rtmedia_direct_upload_enabled != 'undefined' && rtmedia_direct_upload_enabled == '1' ) {
-                jQuery( '.start-media-upload' ).trigger( 'click' );
+				var allow_upload = rtMediaHook.call( 'rtmedia_js_upload_file', true );
+				if ( allow_upload == false ) {
+					return false;
+				}
+				uploaderObj.uploadFiles();
             }
 
 		} );
