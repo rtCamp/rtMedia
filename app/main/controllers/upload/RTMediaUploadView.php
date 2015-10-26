@@ -105,6 +105,7 @@ class RTMediaUploadView {
 			$upload_tab_html = '';
 		}
 		global $rtmedia;
+		//Render UPLOAD button only if direct upload is disabled
 		$upload_button = ( ! ( isset( $rtmedia->options[ "general_direct_upload" ] )&& $rtmedia->options[ "general_direct_upload" ] == 1 ) ? '<input type="button" class="start-media-upload" value="' . __( 'Start upload', 'buddypress-media' ) . '"/>'  : '' );
         $tabs = array(
             'file_upload' => array(
