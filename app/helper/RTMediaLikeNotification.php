@@ -11,16 +11,31 @@ class RTMediaLikeNotification extends RTMediaNotification {
     public $component_action = 'new_like_to_media';
 
     function __construct() {
-        $args = array('component_id' => 'rt_like_notifier',
-            'component_slug' => 'rt_like',
-            'component_callback' => 'like_notifications_callback',
-            'component_action' => $this->component_action,
-        );
-        parent::__construct($args);
-        add_filter('rtmedia_like_notifications', array($this, 'format_like_notifications'));
-        add_action('rtmedia_after_like_media', array($this, 'add_like_notify'));
-        add_action('rtmedia_after_media', array($this, 'mark_notification_unread'));
+
+	    if( class_exists( 'BuddyPress' ) ){
+		    $args = array(
+			    'component_id' => 'rt_like_notifier',
+			    'component_slug' => 'rt_like',
+			    'component_callback' => 'like_notifications_callback',
+			    'component_action' => $this->component_action,
+		    );
+
+		    parent::__construct($args);
+
+		    add_action( 'bp_init', array( $this, 'init' ) );
+	    }
     }
+
+	/**
+	 *  Hooked to bp_init.
+	 */
+	function init(){
+		if( bp_is_active( 'notifications' ) ){
+			add_filter('rtmedia_like_notifications', array($this, 'format_like_notifications'));
+			add_action('rtmedia_after_like_media', array($this, 'add_like_notify'));
+			add_action('rtmedia_after_media', array($this, 'mark_notification_unread'));
+		}
+	}
 
     /**
      * add notification using  bp_notifications_add_notification function

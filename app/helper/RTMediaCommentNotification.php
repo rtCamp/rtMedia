@@ -11,19 +11,32 @@ class RTMediaCommentNotification extends RTMediaNotification {
     public $component_action = 'new_comment_to_media';
 
     function __construct() {
-        $args = array('component_id' => 'rt_comment_notifier',
-            'component_slug' => 'rt_comment',
-            'component_callback' => 'rt_comment_notifications_callback',
-            'component_action' => $this->component_action,
-        );
-        parent::__construct($args);
 
+	    if( class_exists( 'BuddyPress' ) ){
+		    $args = array(
+			    'component_id' => 'rt_comment_notifier',
+			    'component_slug' => 'rt_comment',
+			    'component_callback' => 'rt_comment_notifications_callback',
+			    'component_action' => $this->component_action,
+		    );
 
-        add_filter('rtmedia_comment_notifications', array($this, 'format_comment_notifications'));
-        add_action('rtmedia_after_add_comment', array($this, 'add_comment_notify'));
-        add_action('rtmedia_after_media', array($this, 'mark_notification_unread'));
-        add_action('rtmedia_before_remove_comment', array($this, 'remove_comment_notification'));
+		    parent::__construct($args);
+
+		    add_action( 'bp_init', array( $this, 'init' ) );
+	    }
     }
+
+	/**
+	 *  Hooked to bp_init.
+	 */
+	function init(){
+		if( bp_is_active( 'notifications' ) ){
+			add_filter('rtmedia_comment_notifications', array($this, 'format_comment_notifications'));
+			add_action('rtmedia_after_add_comment', array($this, 'add_comment_notify'));
+			add_action('rtmedia_after_media', array($this, 'mark_notification_unread'));
+			add_action('rtmedia_before_remove_comment', array($this, 'remove_comment_notification'));
+		}
+	}
 
     /**
      * format the new notification in String or array
