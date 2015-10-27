@@ -699,6 +699,8 @@ class RTMedia {
 			'ViewCount' => false,
 			'GalleryItemAction' => false,
             'LoginPopup' => false,
+			'CommentNotification' => false,
+			'LikeNotification' => false,
 		);
 		global $rtmedia_nav;
 
