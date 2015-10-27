@@ -2,7 +2,7 @@
 
 # rtMedia for WordPress, BuddyPress and bbPress #
 
-* **Contributors:** [rtcamp] (http://profiles.wordpress.org/rtcamp), [rittesh.patel] (http://profiles.wordpress.org/rittesh.patel), [sanket.parmar] (http://profiles.wordpress.org/sanket.parmar), [sagarjadhav] (http://profiles.wordpress.org/sagarjadhav), [pranalipatel] (http://profiles.wordpress.org/pranalipatel), [jignesh.nakrani] (http://profiles.wordpress.org/jignesh.nakrani), [pushpak.pop] (http://profiles.wordpress.org/pushpak.pop), [faishal] (http://profiles.wordpress.org/faishal), [desaiuditd] (http://profiles.wordpress.org/desaiuditd), [rahul286] (http://profiles.wordpress.org/rahul286), [JoshuaAbenazer] (http://profiles.wordpress.org/JoshuaAbenazer), [gagan0123] (http://profiles.wordpress.org/gagan0123), [saurabhshukla] (http://profiles.wordpress.org/saurabhshukla), [nitun.lanjewar] (http://profiles.wordpress.org/nitun.lanjewar), [umesh.nevase] (http://profiles.wordpress.org/umesh.nevase), [suhasgirgaonkar] (http://profiles.wordpress.org/suhasgirgaonkar), [neerukoul] (http://profiles.wordpress.org/neerukoul), [hrishiv90] (http://profiles.wordpress.org/hrishiv90), [kanakiyajay] (http://profiles.wordpress.org/kanakiyajay), [jarretc] (http://profiles.wordpress.org/jarretc), [tobiaskluge] (http://profiles.wordpress.org/tobiaskluge), [rafaelfunchal] (http://profiles.wordpress.org/rafaelfunchal), [UmeshSingla] (http://profiles.wordpress.org/UmeshSingla), [mehulkaklotar] (http://profiles.wordpress.org/mehulkaklotar), [tannermirabel] (http://profiles.wordpress.org/tannermirabel), [kishores] (http://profiles.wordpress.org/kishores),
+* **Contributors:** [rtcamp] (http://profiles.wordpress.org/rtcamp), [rittesh.patel] (http://profiles.wordpress.org/rittesh.patel), [sanket.parmar] (http://profiles.wordpress.org/sanket.parmar), [pranalipatel] (http://profiles.wordpress.org/pranalipatel), [jignesh.nakrani] (http://profiles.wordpress.org/jignesh.nakrani), [sagarjadhav] (http://profiles.wordpress.org/sagarjadhav), [pushpak.pop] (http://profiles.wordpress.org/pushpak.pop), [faishal] (http://profiles.wordpress.org/faishal), [desaiuditd] (http://profiles.wordpress.org/desaiuditd), [rahul286] (http://profiles.wordpress.org/rahul286), [JoshuaAbenazer] (http://profiles.wordpress.org/JoshuaAbenazer), [gagan0123] (http://profiles.wordpress.org/gagan0123), [saurabhshukla] (http://profiles.wordpress.org/saurabhshukla), [nitun.lanjewar] (http://profiles.wordpress.org/nitun.lanjewar), [umesh.nevase] (http://profiles.wordpress.org/umesh.nevase), [suhasgirgaonkar] (http://profiles.wordpress.org/suhasgirgaonkar), [neerukoul] (http://profiles.wordpress.org/neerukoul), [hrishiv90] (http://profiles.wordpress.org/hrishiv90), [kanakiyajay] (http://profiles.wordpress.org/kanakiyajay), [jarretc] (http://profiles.wordpress.org/jarretc), [tobiaskluge] (http://profiles.wordpress.org/tobiaskluge), [rafaelfunchal] (http://profiles.wordpress.org/rafaelfunchal), [UmeshSingla] (http://profiles.wordpress.org/UmeshSingla), [mehulkaklotar] (http://profiles.wordpress.org/mehulkaklotar), [tannermirabel] (http://profiles.wordpress.org/tannermirabel), [kishores] (http://profiles.wordpress.org/kishores),
 
 * **License:** [GPL v2 or later] ( http://www.gnu.org/licenses/gpl-2.0.html)
 
@@ -139,6 +139,13 @@ http://www.youtube.com/watch?v####dJrykKQGDcs
 
 
 ## Changelog ##
+
+#### 3.9 ####
+* BP Notification feature for media likes and comments
+* Upload media from BP activity without activity update text
+* Privacy issue fix
+* Update korean and chinese language files
+* Other bug fixes
 
 #### 3.8.21 ####
 * Rename plugin text domain from 'rtmedia' to 'buddypress-media'
@@ -1082,8 +1089,8 @@ http://www.youtube.com/watch?v####dJrykKQGDcs
 * HTML5 Audio Tag Support (with fallback)
 * HTML5 Video Tag Support (with fallback)
 
-#### 3.8.21 ####
-Requires BuddyPress 1.7 or higher, if using BuddyPress. Rename plugin text domain from 'rtmedia' to 'buddypress-media'.
+#### 3.9 ####
+Requires BuddyPress 1.7 or higher, if using BuddyPress. BP Notification feature for media likes and comments, upload media from BP activity without activity update text, bug fixes.
 
 ## Sponsors ##
 
