@@ -212,10 +212,10 @@ class RTMediaEncoding {
 	public function allowed_types( $types ) {
 		if ( isset( $types[ 0 ] ) && isset( $types[ 0 ][ 'extensions' ] ) ) {
 			if ( is_rtmedia_upload_video_enabled() && strpos( $this->video_extensions, $types[ 0 ][ 'extensions' ] ) ) {
-				$types[ 0 ][ 'extensions' ] .= $this->video_extensions; //Allow all types of file to be uploded
+				$types[ 0 ][ 'extensions' ] .= $this->video_extensions; //Allow all types of video file to be uploded
 			}
-			if ( is_rtmedia_upload_music_enabled() && strpos( $this->music_extensions, $types[ 0 ] ) ){
-				$types[ 0 ][ 'extensions' ] .= $this->music_extensions; //Allow all types of file to be uploded
+			if ( is_rtmedia_upload_music_enabled() && strpos( $this->music_extensions, $types[ 0 ][ 'extensions' ] ) ){
+				$types[ 0 ][ 'extensions' ] .= $this->music_extensions; //Allow all types of music file to be uploded
 			}
 		}		
 		return $types;
