@@ -205,6 +205,16 @@ class RTMediaThemes {
 	public function rtmedia_3rd_party_themes_content() {
 
 		$themes = array(
+			'thrive' => array(
+				'name' => __( 'Thrive - Intranet & Community WordPress Theme', 'buddypress-media' ),
+				'image' => RTMEDIA_URL . 'app/assets/admin/img/rtmedia-theme-thrive.jpg',
+				'demo_url' => 'http://rt.cx/thrive',
+				'author' => __( 'dunhakdis', 'buddypress-media' ),
+				'author_url' => 'http://rt.cx/thrive',
+				'buy_url' => 'http://rt.cx/thrive',
+				'description' => __( 'Thrive is an innovative WordPress Theme designed to cater company portals, organisational websites, company intranet and extranets.', 'buddypress-media' ),
+				'tags' => 'community, events, extranet, forums, intranet, membership, network, polls, project management, rtl, social, tasks',
+			),
 			'msocial' => array(
 				'name' => __( '(M) SOCIAL NETWORK BUDDYPRESS THEME', 'buddypress-media' ),
 				'image' => RTMEDIA_URL . 'app/assets/admin/img/rtmedia-theme-msocial.jpg',
@@ -212,7 +222,7 @@ class RTMediaThemes {
 				'author' => __( 'gavick', 'buddypress-media' ),
 				'author_url' => 'http://rt.cx/msocial',
 				'buy_url' => 'http://rt.cx/msocial',
-				'description' => __( '(M)Social is a sophisticated, vibrant community theme that offers incredible grid layouts, with full BuddyPress support so your users can interact with each other, create their own pages, and share their thoughts and images with the community. ', 'buddypress-media' ),
+				'description' => __( '(M)Social is a sophisticated, vibrant community theme that offers incredible grid layouts, with full BuddyPress support so your users can interact with each other, create their own pages, and share their thoughts and images with the community.', 'buddypress-media' ),
 				'tags' => 'responsive, WPML, BuddyPress, social, business',
 			),
 			'klein' => array(
