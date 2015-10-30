@@ -2428,6 +2428,10 @@ a.rtmedia-upload-media-link {
   padding: 10px 3px 0;
 }
 
+.rtmedia-media .mejs-playpause-button.mejs-play button:before, .rtmedia-media .mejs-volume-button.mejs-mute button:before, .rtmedia-media .mejs-fullscreen-button button:before {
+  content: '';
+}
+
 @media only screen and (min-width: 1025px) {
   .mfp-content .rtm-lightbox-container {
     display: table;

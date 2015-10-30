@@ -47,5 +47,15 @@
 }
 
 .mejs-container .mejs-controls .mejs-time {
-	padding: 10px 3px 0;
+	padding: 10px 3px 0;content: '';
+}
+
+.rtmedia-media {
+	.mejs-playpause-button.mejs-play, .mejs-volume-button.mejs-mute, .mejs-fullscreen-button{
+		button {
+			&:before {
+				content: '';
+			}
+		}
+	}
 }
