@@ -88,12 +88,12 @@ class RTMediaLikeNotification extends RTMediaNotification {
             if ($like_count == 0) {
                 $this->delete_notification_by_item_id($initiator_id, $post_id);
             } elseif ($like_count == 1) {
-                $text = $liked_by . ' ' . __('liked your', 'rtmedia') . ' ' . $media_type;
+                $text = $liked_by . ' ' . __('liked your', 'buddypress-media') . ' ' . $media_type;
             } elseif ($like_count == 2) {
-                $text = $liked_by . ' ' . __('and one more friend liked your', 'rtmedia') .' ' . $media_type;
+                $text = $liked_by . ' ' . __('and one more friend liked your', 'buddypress-media') .' ' . $media_type;
             } else {
                 $count = $like_count - 1;
-                $text = $liked_by . ' ' . __( 'and' ,'rtmedia' ) . ' ' . $count . ' ' . __('other friends liked your', 'rtmedia' ) . ' ' . $media_type;
+                $text = $liked_by . ' ' . __( 'and' ,'buddypress-media' ) . ' ' . $count . ' ' . __('other friends liked your', 'buddypress-media' ) . ' ' . $media_type;
             }
 
             if ($format == 'string') {

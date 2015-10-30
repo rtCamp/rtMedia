@@ -57,9 +57,9 @@ class RTMediaCommentNotification extends RTMediaNotification {
             $media_type = rtmedia_type(rtmedia_id($post_id));
 
             if ($total_items == 1) {
-                $text = $comment_author . ' ' . __('commented on your', 'rtmedia') . ' ' . $media_type;
+                $text = $comment_author . ' ' . __('commented on your', 'buddypress-media') . ' ' . $media_type;
             } else {
-                $text = $total_items . ' ' . __('new comments on your', 'rtmedia') . ' ' . $media_type;
+                $text = $total_items . ' ' . __('new comments on your', 'buddypress-media') . ' ' . $media_type;
             }
             $link = $media_url;
             if ($format == 'string') {
