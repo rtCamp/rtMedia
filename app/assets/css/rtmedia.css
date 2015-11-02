@@ -2434,7 +2434,7 @@ a.rtmedia-upload-media-link {
   content: '';
 }
 
-.rtmedia-activity-container .mejs-playpause-button.mejs-play button:before, .rtmedia-activity-container .mejs-volume-button.mejs-mute button:before, .rtmedia-activity-container .mejs-fullscreen-button button:before, .rtmedia-media .mejs-playpause-button.mejs-play button:before, .rtmedia-media .mejs-volume-button.mejs-mute button:before, .rtmedia-media .mejs-fullscreen-button button:before {
+.rtmedia-activity-container .mejs-playpause-button.mejs-play button:before, .rtmedia-activity-container .mejs-playpause-button.mejs-pause button:before, .rtmedia-activity-container .mejs-volume-button.mejs-mute button:before, .rtmedia-activity-container .mejs-fullscreen-button button:before, .rtmedia-media .mejs-playpause-button.mejs-play button:before, .rtmedia-media .mejs-playpause-button.mejs-pause button:before, .rtmedia-media .mejs-volume-button.mejs-mute button:before, .rtmedia-media .mejs-fullscreen-button button:before {
   content: '';
 }
 
