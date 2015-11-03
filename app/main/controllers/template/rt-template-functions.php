@@ -795,7 +795,7 @@ function rtmedia_comments( $echo = true ) {
 	if ( $comment_list != "" ) {
 		$html .= $comment_list;
 	} else {
-		$html .= "<li id='rtmedia-no-comments' class='rtmedia-no-comments'>" . __( apply_filters( 'rtmedia_single_media_no_comment_messege', __( 'There are no comments on this media yet.', 'buddypress-media' ) ) ) . "</li>";
+		$html .= "<li id='rtmedia-no-comments' class='rtmedia-no-comments'>" . apply_filters( 'rtmedia_single_media_no_comment_messege', __( 'There are no comments on this media yet.', 'buddypress-media' ) ) . "</li>";
 	}
 
 	$html .= '</ul>';
