@@ -113,7 +113,7 @@ rtMedia has 3 premium solutions to take care of audio/video conversion.
 
 Please visit [rtMedia's FAQ page](http://rtcamp.com/rtmedia/faq/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media "Visit rtMedia's FAQ page").
 
-Read rtMedia [Documentation](http://rtcamp.com/rtmedia/docs/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media)
+Read rtMedia [Documentation](http://docs.rtcamp.com/rtmedia/?utm_source=readme&utm_medium=plugin&utm_campaign=buddypress-media)
 
 == Screenshots ==
 
