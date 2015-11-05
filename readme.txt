@@ -6,7 +6,7 @@ License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires at least: WordPress 3.6
 Tested up to: 4.3.1
-Stable tag: 3.9
+Stable tag: 3.9.1
 
 Add albums, photo, audio/video encoding, privacy, sharing, front-end uploads & more. All this works on mobile/tablets devices.
 
@@ -140,55 +140,62 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 == Changelog ==
 
-= 3.9 =
+= 3.9.1 [Nov 05, 2015] =
+* Fix encoding service key save issue
+* Added thrive theme under rtMedia 3rd party themes
+* Audio/video player CSS issue fix
+* Fix translation text domain
+* Update chinese translations
+
+= 3.9 [Oct 27, 2015] =
 * BP Notification feature for media likes and comments
 * Upload media from BP activity without activity update text
 * Privacy issue fix
 * Update korean and chinese language files
 * Other bug fixes
 
-= 3.8.21 =
+= 3.8.21 [Oct 06, 2015] =
 * Rename plugin text domain from 'rtmedia' to 'buddypress-media'
 
-= 3.8.20 =
+= 3.8.20 [Sep 29, 2015] =
 * Fix getid3 related issue
 * Other bug fixes
 
-= 3.8.19 =
+= 3.8.19 [Sep 21, 2015] =
 * Fix getid3 related issue
 * Added new theme: Foodmania
 * New wrapper functions to upload media
 
-= 3.8.18 =
+= 3.8.18 [Sep 17, 2015] =
 * Filter for media action text
 * Updated getid3 lib to latest version
 
-= 3.8.17 =
+= 3.8.17 [Sep 15, 2015] =
 * Fix upload dir filter
 * Fix video max height in lightbox
 * Fix shortcode issue with album uploader
 
-= 3.8.16 =
+= 3.8.16 [Aug 31, 2015] =
 * Update Persian translation and add Finnish translations
 * Add rtMedia SEO add-on
 * Fix encoding service for music files
 * Fix music file thumbnails
 
-= 3.8.15 =
+= 3.8.15 [Aug 18, 2015] =
 * CSS fixes
 * Added new filters and actions
 
-= 3.8.14 =
+= 3.8.14 [Aug 11, 2015] =
 * Enhanced delete media action in media gallery
 * CSS fixes
 * Other bug fixes
 
-= 3.8.13 =
+= 3.8.13 [Aug 05, 2015] =
 * Update links
 * Added support for "og" meta tags for Yoast SEO plugin
 * Update French, Spanish, Persian and German translations
 
-= 3.8.12 =
+= 3.8.12 [Jul 29, 2015] =
 * Updated media gallery actions for BuddyPress groups
 * Updated action messages for single media
 * Updated view count process
@@ -196,33 +203,33 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 * Fixed bugs in admin settings
 * Bug fixes
 
-= 3.8.11 =
+= 3.8.11 [Jul 22, 2015] =
 * Update album edit template
 * Fix BuddyPress activity content on media edit
 * Autoplay video in lightbox
 
-= 3.8.10 =
+= 3.8.10 [Jul 16, 2015] =
 * Fix BuddyPress comment filter issue
 * Fix plupload max_file_size parameters
 
-= 3.8.9 =
+= 3.8.9 [Jul 09, 2015] =
 * Fix CSS conflict with BuddyPress change profile picture
 
-= 3.8.8 =
+= 3.8.8 [Jul 07, 2015] =
 * Fix media comment ordering
 * Fix login popup
 * Lightbox changes for mobile devices
 * Added privacy option in uploader shortcode
 * Update Dutch and Danish translations
 
-= 3.8.7 =
+= 3.8.7 [Jun 30, 2015] =
 * Update language files
 * Fix CSS conflict with BuddyPress Cover plugin in rtMedia admin settings
 * Update CSS
 * Added new filters
 * Bug fixes
 
-= 3.8.6 =
+= 3.8.6 [Jun 16, 2015] =
 * Fix activity music player width issue
 * Fix view link in WordPress Media Library
 * Fix pagination on pressing enter key
@@ -231,28 +238,28 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 * Added Privacy link in BuddyPress Settings profile menu
 * CSS bug fixes
 
-= 3.8.5 =
+= 3.8.5 [Jun 08, 2015] =
 * Fix upload URL in activity
 
-= 3.8.4 =
+= 3.8.4 [Jun 03, 2015] =
 * Fix syntax error on Support Page
 
-= 3.8.3 =
+= 3.8.3 [Jun 03, 2015] =
 * Fix encoding service issue
 
-= 3.8.2 =
+= 3.8.2 [Jun 03, 2015] =
 * Updated Spanish, Korean, Portuguese and Danish translations
 * Added Login popup for non logged in user on upload button
 * Added quick edit/delete links on media gallery thumbs
 * Updated [premium add-ons](https://rtcamp.com/blog/rtmedia-pro-splitting-major-change/) content for rtMedia
 * Bug fixes
 
-= 3.8.1 =
+= 3.8.1 [May 18, 2015] =
 * Fix license page
 * Fix direct media upload in activity
 * Fix BuddyPress group table error on rtMedia update
 
-= 3.8 =
+= 3.8 [May 18, 2015] =
 * Removed ZURB Foundation
 * Removed FontAwesome fonts and instead used WordPress Dashicons
 * Template updates
@@ -1091,8 +1098,8 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 == Upgrade Notice ==
 
-= 3.9 =
-Requires BuddyPress 1.7 or higher, if using BuddyPress. BP Notification feature for media likes and comments, upload media from BP activity without activity update text, bug fixes.
+= 3.9.1 =
+Requires BuddyPress 1.7 or higher, if using BuddyPress.  Fix encoding service key save issue, fix translation text domain, update chinese translations.
 
 == Sponsors ==
 
