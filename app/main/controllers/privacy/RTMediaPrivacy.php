@@ -28,9 +28,27 @@ class RTMediaPrivacy {
 			add_filter( 'bp_use_legacy_activity_query', array( $this, 'enable_buddypress_privacy' ), 10, 3 );
 			add_filter( 'bp_activity_has_more_items', array( $this, 'enable_buddypress_load_more' ), 10, 1 );
 			add_action( 'bp_actions', array( $this,'rt_privacy_settings_action' ) );
+
+			// show change privacy option in activity meta
+			if( ! has_action( 'bp_activity_entry_meta', array( 'RTMediaPrivacy', 'update_activity_privacy_option' ) ) ){
+				add_action( 'bp_activity_entry_meta', array( 'RTMediaPrivacy', 'update_activity_privacy_option' ) );
+			}
 		}
 		add_action( 'friends_friendship_accepted', array( 'RTMediaFriends', 'refresh_friends_cache' ) );
 		add_action( 'friends_friendship_deleted', array( 'RTMediaFriends', 'refresh_friends_cache' ) );
+	}
+
+	/**
+	 * Hooked to `bp_activity_entry_meta`
+	 *
+	 * Show privacy dropdown inside activity loop along with activity meta buttons.
+	 */
+	static function update_activity_privacy_option(){
+		if( function_exists( 'bp_activity_user_can_delete' ) && bp_activity_user_can_delete()
+		    && is_rtmedia_privacy_enable() && is_rtmedia_privacy_user_overide()
+		){
+			self::select_privacy_ui();
+		}
 	}
 
 	function enable_buddypress_load_more( $has_more_items ) {
