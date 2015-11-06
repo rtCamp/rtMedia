@@ -25,14 +25,28 @@ class RTMediaPrivacy {
 			add_action( 'bp_init', array( $this, 'add_nav' ) );
 			add_action( 'bp_template_content', array( $this, 'content' ) );
 			add_filter( 'bp_activity_get_user_join_filter', array( $this, 'activity_privacy' ), 10, 6 );
+
+			// Filter bp_activity_get_user_join_filter to get activity privacy field in loop
+			add_filter( 'bp_activity_get_user_join_filter', array( $this, 'activity_privacy_sql_field' ), 10, 6 );
+
 			add_filter( 'bp_use_legacy_activity_query', array( $this, 'enable_buddypress_privacy' ), 10, 3 );
 			add_filter( 'bp_activity_has_more_items', array( $this, 'enable_buddypress_load_more' ), 10, 1 );
 			add_action( 'bp_actions', array( $this,'rt_privacy_settings_action' ) );
 
-			// show change privacy option in activity meta
+			// show change privacy option in activity meta.
+			// Checking has_action because there might be multiple instance of RTMediaPrivacy class.
 			if( ! has_action( 'bp_activity_entry_meta', array( 'RTMediaPrivacy', 'update_activity_privacy_option' ) ) ){
 				add_action( 'bp_activity_entry_meta', array( 'RTMediaPrivacy', 'update_activity_privacy_option' ) );
 			}
+
+			// Add nonce field to change activity privacy option
+			if( ! has_action( 'template_notices', array( 'RTMediaPrivacy', 'add_activity_privacy_nonce' ) ) && empty( $_POST['page'] ) ){
+				add_action( 'template_notices', array( 'RTMediaPrivacy', 'add_activity_privacy_nonce' ) );
+			}
+
+			// save update privacy value
+			add_action( 'wp_ajax_rtm_change_activity_privacy', array( $this, 'rtm_change_activity_privacy' ) );
+
 		}
 		add_action( 'friends_friendship_accepted', array( 'RTMediaFriends', 'refresh_friends_cache' ) );
 		add_action( 'friends_friendship_deleted', array( 'RTMediaFriends', 'refresh_friends_cache' ) );
@@ -47,7 +61,30 @@ class RTMediaPrivacy {
 		if( function_exists( 'bp_activity_user_can_delete' ) && bp_activity_user_can_delete()
 		    && is_rtmedia_privacy_enable() && is_rtmedia_privacy_user_overide()
 		){
-			self::select_privacy_ui();
+			global $activities_template;
+
+			$selected = 0;
+			if( isset( $activities_template->activity->privacy ) ){
+				$selected = intval( $activities_template->activity->privacy );
+			}
+
+			//todo strict standard error
+			self::select_privacy_ui( true, 'rtm-ac-privacy-' . $activities_template->activity->id , array( 'rtm-activity-privacy-opt' ), $selected );
+		}
+	}
+
+	static function add_activity_privacy_nonce(){
+		wp_nonce_field( 'rtmedia_activity_privacy_nonce', 'rtmedia_activity_privacy_nonce' );
+	}
+
+	function rtm_change_activity_privacy(){
+		$data = $_POST;
+
+		if( wp_verify_nonce( $data[ 'nonce' ], 'rtmedia_activity_privacy_nonce' ) ){
+			$rtm_activity_model = new RTMediaActivityModel();
+			$rtm_activity_model->update( array( 'privacy' => intval( $data['privacy'] ) ), array( 'activity_id' => $data['activity_id'] ) );
+			echo "true";
+			die();
 		}
 	}
 
@@ -84,7 +121,7 @@ class RTMediaPrivacy {
 		}
 	}
 
-	function select_privacy_ui( $echo = true, $select_id = false ) {
+	function select_privacy_ui( $echo = true, $element_id = false, $element_class = array(), $selected = false ) {
 		global $rtmedia;
 
 		if ( ! is_rtmedia_privacy_enable() )
@@ -94,12 +131,13 @@ class RTMediaPrivacy {
 			return false;
 
 		global $rtmedia_media;
-		$default = 0;
-		if ( isset( $rtmedia_media->privacy ) )
-			$default = $rtmedia_media->privacy;
-		else {
-			$default = get_user_meta( get_current_user_id(), 'rtmedia-default-privacy', true );
 
+		if( $selected !== false ){
+			$default = $selected;
+		} elseif ( isset( $rtmedia_media->privacy ) ){
+			$default = $rtmedia_media->privacy;
+		} else {
+			$default = get_user_meta( get_current_user_id(), 'rtmedia-default-privacy', true );
 			if ( ( $default === false ) || $default === '' ) {
 				$default = get_rtmedia_default_privacy();
 			}
@@ -107,12 +145,22 @@ class RTMediaPrivacy {
 
 
 		$form = new rtForm();
+
+		$attributes_class = array( 'privacy' );
+
+		if( !empty( $element_class ) ){
+			if( ! is_array( $element_class ) ){
+				$attributes_class = array_merge( $attributes_class, (array) $element_class );
+			} else {
+				$attributes_class = array_merge( $attributes_class, $element_class );
+			}
+		}
 		$attributes = array(
 			'name' => 'privacy',
-			'class' => array( 'privacy' )
+			'class' => $attributes_class
 		);
-		if ( $select_id && $select_id != "" ) {
-			$attributes[ 'id' ] = $select_id;
+		if ( $element_id && $element_id != "" ) {
+			$attributes[ 'id' ] = $element_id;
 		}
 		global $rtmedia;
 		$privacy_levels = $rtmedia->privacy_settings[ 'levels' ];
@@ -371,7 +419,7 @@ class RTMediaPrivacy {
 			if ( strpos( $select_sql, "SELECT DISTINCT" ) === false ) {
 				$select_sql = str_replace( "SELECT", "SELECT DISTINCT", $select_sql );
 			}
-			$from_sql = " FROM {$bp->activity->table_name} a LEFT JOIN {$wpdb->users} u ON a.user_id = u.ID LEFT JOIN {$rtmedia_model->table_name} m ON ( a.id = m.activity_id AND m.blog_id = '" . get_current_blog_id() . "' ) LEFT JOIN {$rtmedia_activity_model->table_name} ra ON ( a.id = ra.activity_id and ra.blog_id = '" . get_current_blog_id() . "' ) ";
+			$from_sql = " FROM {$bp->activity->table_name} a LEFT JOIN {$wpdb->users} u ON a.user_id = u.ID LEFT JOIN {$rtmedia_activity_model->table_name} ra ON ( a.id = ra.activity_id and ra.blog_id = '" . get_current_blog_id() . "' ) ";
 			$where_sql = $where_sql . " AND (NOT EXISTS (SELECT m.activity_id FROM {$bp_prefix}bp_activity_meta m WHERE m.meta_key='rtmedia_privacy' AND m.activity_id=a.id) OR ( {$where} ) )";
 			$newsql = "{$select_sql} {$from_sql} {$where_sql} ORDER BY a.date_recorded {$sort} {$pag_sql}";
 		} else {
@@ -404,6 +452,15 @@ class RTMediaPrivacy {
 			$newsql = "{$select_sql} {$from_sql} {$where_sql} ORDER BY a.date_recorded {$sort} {$pag_sql}";
 		}
 		return $newsql;
+	}
+
+	function activity_privacy_sql_field( $sql, $select_sql, $from_sql, $where_sql, $sort, $pag_sql = '' ){
+
+		$rtmedia_activity_model = new RTMediaActivityModel();
+		if( strpos( $sql, $rtmedia_activity_model->table_name ) !== false ){
+			//todo filter SQL select to get activity privacy field in activity loop.
+		}
+		return $sql;
 	}
 
 }

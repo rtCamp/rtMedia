@@ -354,6 +354,39 @@ jQuery( 'document' ).ready( function ( $ ) {
 
 	} );
 
+    jQuery( '#buddypress' ).on( 'change', '.rtm-activity-privacy-opt', function(){
+
+        var activity_id = jQuery( this ).attr( 'id');
+        activity_id = activity_id.split( '-' );
+        activity_id = activity_id[ activity_id.length - 1 ];
+
+        var that = this;
+
+        data = {
+            activity_id : activity_id,
+            privacy : jQuery( this ).val(),
+            nonce : jQuery( '#rtmedia_activity_privacy_nonce' ).val(),
+            action : 'rtm_change_activity_privacy'
+        };
+
+        jQuery.post( ajaxurl, data, function( res ){
+            var message = '';
+            var css_class = '';
+            if( res == "true" ){
+                message = "Privacy updated successfully.";
+                css_class = 'success';
+            } else {
+                message = "Couldn't change privacy, please try again.";
+                css_class = 'fail';
+            }
+
+            jQuery( that ).after( '<p class="rtm-ac-privacy-updated '+ css_class +'">'+ message +'</p>' );
+            setTimeout( function(){
+                jQuery( that ).siblings( '.rtm-ac-privacy-updated').remove();
+            }, 2000 );
+        } );
+    } );
+
 	function rtmedia_media_view_counts() {
 		//var view_count_action = jQuery('#rtmedia-media-view-form').attr("action");
 		if ( jQuery( '#rtmedia-media-view-form' ).length > 0 ) {

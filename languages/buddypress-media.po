@@ -2,9 +2,9 @@
 # This file is distributed under the same license as the rtMedia for WordPress, BuddyPress and bbPress package.
 msgid ""
 msgstr ""
-"Project-Id-Version: rtMedia for WordPress, BuddyPress and bbPress 3.9\n"
+"Project-Id-Version: rtMedia for WordPress, BuddyPress and bbPress 3.9.1\n"
 "Report-Msgid-Bugs-To: http://community.rtcamp.com/c/rtmedia/\n"
-"POT-Creation-Date: 2015-11-03 06:34:43+00:00\n"
+"POT-Creation-Date: 2015-11-06 12:11:28+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -263,7 +263,7 @@ msgid "rtMedia Privacy"
 msgstr ""
 
 #: app/admin/RTMediaAdmin.php:1539
-#: app/main/controllers/privacy/RTMediaPrivacy.php:310
+#: app/main/controllers/privacy/RTMediaPrivacy.php:360
 msgid "Privacy"
 msgstr ""
 
@@ -2306,7 +2306,7 @@ msgid "Group Admin only"
 msgstr ""
 
 #: app/main/controllers/group/RTMediaGroupExtension.php:113
-#: app/main/controllers/privacy/RTMediaPrivacy.php:303
+#: app/main/controllers/privacy/RTMediaPrivacy.php:353
 #: templates/media/album-single-edit.php:47
 msgid "Save Changes"
 msgstr ""
@@ -2449,15 +2449,15 @@ msgstr ""
 msgid "%1$s added %4$d %3$s"
 msgstr ""
 
-#: app/main/controllers/privacy/RTMediaPrivacy.php:268
+#: app/main/controllers/privacy/RTMediaPrivacy.php:318
 msgid "No changes were made to your account."
 msgstr ""
 
-#: app/main/controllers/privacy/RTMediaPrivacy.php:271
+#: app/main/controllers/privacy/RTMediaPrivacy.php:321
 msgid "Your default privacy settings saved successfully."
 msgstr ""
 
-#: app/main/controllers/privacy/RTMediaPrivacy.php:294
+#: app/main/controllers/privacy/RTMediaPrivacy.php:344
 msgid "Default Privacy"
 msgstr ""
 
