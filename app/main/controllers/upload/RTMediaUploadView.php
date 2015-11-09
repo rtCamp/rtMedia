@@ -64,7 +64,7 @@ class RTMediaUploadView {
                 // if the context is group, then set the media privacy to public
                 $privacy = "<input type='hidden' name='privacy' value='0'/>";
 			} else {
-                $up_privacy = new RTMediaPrivacy();
+                $up_privacy = new RTMediaPrivacy( false );
 				$up_privacy = $up_privacy->select_privacy_ui( false, 'rtSelectPrivacy' );
 				if ( $up_privacy ) {
 					$privacy = "<span> <label for='privacy'> <i class='dashicons dashicons-visibility rtmicon'></i> " . __( 'Privacy: ', 'buddypress-media' ) . "</label>" . $up_privacy . "</span>";

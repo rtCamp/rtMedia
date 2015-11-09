@@ -1951,7 +1951,7 @@ function rtmedia_edit_media_privacy_ui() {
 		//if context is group i.e editing a group media, dont show the privacy dropdown
 		return false;
 	}
-	$privacymodel = new RTMediaPrivacy();
+	$privacymodel = new RTMediaPrivacy( false );
 	$privacy = $privacymodel->select_privacy_ui( $echo = false );
 	if ( $privacy ) {
 		return "<div class='rtmedia-edit-privacy rtm-field-wrap'><label for='privacy'>" . __( 'Privacy : ', 'buddypress-media' ) . "</label>" . $privacy . "</div>";

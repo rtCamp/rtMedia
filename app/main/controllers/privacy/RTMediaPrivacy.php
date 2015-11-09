@@ -15,8 +15,9 @@ class RTMediaPrivacy {
 	 *
 	 * @var object default application wide privacy levels
 	 */
-	public
-			$default_privacy;
+	public $default_privacy;
+
+	public $rtm_activity_table_alias = 'ra';
 
 	function __construct( $flag = true ) {
 		if ( is_rtmedia_privacy_enable() && $flag ) {
@@ -34,15 +35,10 @@ class RTMediaPrivacy {
 			add_action( 'bp_actions', array( $this,'rt_privacy_settings_action' ) );
 
 			// show change privacy option in activity meta.
-			// Checking has_action because there might be multiple instance of RTMediaPrivacy class.
-			if( ! has_action( 'bp_activity_entry_meta', array( 'RTMediaPrivacy', 'update_activity_privacy_option' ) ) ){
-				add_action( 'bp_activity_entry_meta', array( 'RTMediaPrivacy', 'update_activity_privacy_option' ) );
-			}
+			add_action( 'bp_activity_entry_meta', array( $this, 'update_activity_privacy_option' ) );
 
 			// Add nonce field to change activity privacy option
-			if( ! has_action( 'template_notices', array( 'RTMediaPrivacy', 'add_activity_privacy_nonce' ) ) && empty( $_POST['page'] ) ){
-				add_action( 'template_notices', array( 'RTMediaPrivacy', 'add_activity_privacy_nonce' ) );
-			}
+			add_action( 'template_notices', array( $this, 'add_activity_privacy_nonce' ) );
 
 			// save update privacy value
 			add_action( 'wp_ajax_rtm_change_activity_privacy', array( $this, 'rtm_change_activity_privacy' ) );
@@ -57,7 +53,7 @@ class RTMediaPrivacy {
 	 *
 	 * Show privacy dropdown inside activity loop along with activity meta buttons.
 	 */
-	static function update_activity_privacy_option(){
+	function update_activity_privacy_option(){
 		if( function_exists( 'bp_activity_user_can_delete' ) && bp_activity_user_can_delete()
 		    && is_rtmedia_privacy_enable() && is_rtmedia_privacy_user_overide()
 		){
@@ -73,7 +69,10 @@ class RTMediaPrivacy {
 		}
 	}
 
-	static function add_activity_privacy_nonce(){
+	/**
+	 * Add nonce field for activity privacy change action verification
+	 */
+	function add_activity_privacy_nonce(){
 		wp_nonce_field( 'rtmedia_activity_privacy_nonce', 'rtmedia_activity_privacy_nonce' );
 	}
 
@@ -82,9 +81,28 @@ class RTMediaPrivacy {
 
 		if( wp_verify_nonce( $data[ 'nonce' ], 'rtmedia_activity_privacy_nonce' ) ){
 			$rtm_activity_model = new RTMediaActivityModel();
-			$rtm_activity_model->update( array( 'privacy' => intval( $data['privacy'] ) ), array( 'activity_id' => $data['activity_id'] ) );
-			echo "true";
-			die();
+			$is_ac_privacy_exist = $rtm_activity_model->check( $data[ 'activity_id' ] );
+
+			if( ! $is_ac_privacy_exist ){
+				// Very first privacy entry for this activity
+				$status = $rtm_activity_model->insert( array(
+					'privacy' => intval( $data['privacy'] ),
+					'activity_id' => intval( $data[ 'activity_id' ] ),
+					'user_id' => get_current_user_id(),
+				) );
+			} else {
+				// Just update the existing value
+				$status = $rtm_activity_model->update( array( 'privacy' => intval( $data['privacy'] ) ), array( 'activity_id' => intval( $data['activity_id'] ) ) );
+			}
+
+			if( $status === false ){
+				$status = 'false';
+			} else {
+				$status = 'true';
+			}
+
+			echo $status;
+			wp_die();
 		}
 	}
 
@@ -391,36 +409,36 @@ class RTMediaPrivacy {
 			$user = 0;
 		}
 
-		$activity_upgrade_done = rtmedia_get_site_option( 'rtmedia_activity_done_upgrade' );
-
 		// admin has upgraded rtmedia activity so we can use rt_rtm_activity table for rtmedia related activity filters
-		if ( $activity_upgrade_done ) {
+		if ( $this->can_use_rtm_ac_privacy() ) {
 			$rtmedia_activity_model = new RTMediaActivityModel();
-			$where .= " (ra.privacy is NULL OR ra.privacy <= 0) ";
+			$where .= " ({$this->rtm_activity_table_alias}.privacy is NULL OR {$this->rtm_activity_table_alias}.privacy <= 0) ";
 			if ( $user ) {
-				$where .= "OR ((ra.privacy=20)";
-				$where .= " OR (a.user_id={$user} AND ra.privacy >= 40)";
+				$where .= "OR (({$this->rtm_activity_table_alias}.privacy=20)";
+				$where .= " OR (a.user_id={$user} AND {$this->rtm_activity_table_alias}.privacy >= 40)";
 				if ( class_exists( 'BuddyPress' ) ) {
 					if ( bp_is_active( 'friends' ) ) {
 						$friendship = new RTMediaFriends();
 						$friends = $friendship->get_friends_cache( $user );
 						if ( isset( $friends ) && ! empty( $friends ) != "" ) {
-							$where .= " OR (ra.privacy=40 AND a.user_id IN ('" . implode( "','", $friends ) . "'))";
+							$where .= " OR ({$this->rtm_activity_table_alias}.privacy=40 AND a.user_id IN ('" . implode( "','", $friends ) . "'))";
 						}
 					}
 				}
 				$where .= ')';
 			}
-			if ( function_exists( "bp_core_get_table_prefix" ) ) {
-				$bp_prefix = bp_core_get_table_prefix();
-			} else {
-				$bp_prefix = "";
-			}
+
 			if ( strpos( $select_sql, "SELECT DISTINCT" ) === false ) {
 				$select_sql = str_replace( "SELECT", "SELECT DISTINCT", $select_sql );
 			}
-			$from_sql = " FROM {$bp->activity->table_name} a LEFT JOIN {$wpdb->users} u ON a.user_id = u.ID LEFT JOIN {$rtmedia_activity_model->table_name} ra ON ( a.id = ra.activity_id and ra.blog_id = '" . get_current_blog_id() . "' ) ";
-			$where_sql = $where_sql . " AND (NOT EXISTS (SELECT m.activity_id FROM {$bp_prefix}bp_activity_meta m WHERE m.meta_key='rtmedia_privacy' AND m.activity_id=a.id) OR ( {$where} ) )";
+
+			$select_sql .= " ,{$this->rtm_activity_table_alias}.privacy ";
+
+			$from_sql = " FROM {$bp->activity->table_name} a LEFT JOIN {$wpdb->users} u ON a.user_id = u.ID LEFT JOIN {$rtmedia_activity_model->table_name} {$this->rtm_activity_table_alias} ON ( a.id = {$this->rtm_activity_table_alias}.activity_id and ra.blog_id = '" . get_current_blog_id() . "' ) ";
+
+			// removed NOT EXISTS check for `rtmedia_privacy` activty meta value.
+			// check git history for more details ;)
+			$where_sql = $where_sql . " AND {$where}";
 			$newsql = "{$select_sql} {$from_sql} {$where_sql} ORDER BY a.date_recorded {$sort} {$pag_sql}";
 		} else {
 			$where .= " (m.max_privacy is NULL OR m.max_privacy <= 0) ";
@@ -454,13 +472,42 @@ class RTMediaPrivacy {
 		return $newsql;
 	}
 
+	/**
+	 * Hooked to `bp_activity_get_user_join_filter` filter. Get activity privacy field inside loop.
+	 *
+	 * Use only if current user has admin capability because for non admin users privacy field will be added in
+	 * privacy filter query itself.
+	 *
+	 * @param $sql
+	 * @param $select_sql
+	 * @param $from_sql
+	 * @param $where_sql
+	 * @param $sort
+	 * @param string $pag_sql
+	 *
+	 * @return string
+	 */
 	function activity_privacy_sql_field( $sql, $select_sql, $from_sql, $where_sql, $sort, $pag_sql = '' ){
+		global $wpdb, $bp;
 
-		$rtmedia_activity_model = new RTMediaActivityModel();
-		if( strpos( $sql, $rtmedia_activity_model->table_name ) !== false ){
-			//todo filter SQL select to get activity privacy field in activity loop.
+		if( $this->can_use_rtm_ac_privacy() && is_rt_admin() ){
+			$rtmedia_activity_model = new RTMediaActivityModel();
+			if( strpos( $sql, $rtmedia_activity_model->table_name ) === false ){
+				$select_sql .= " ,{$this->rtm_activity_table_alias}.privacy ";
+				$from_sql = " FROM {$bp->activity->table_name} a LEFT JOIN {$wpdb->users} u ON a.user_id = u.ID LEFT JOIN {$rtmedia_activity_model->table_name} {$this->rtm_activity_table_alias} ON ( a.id = {$this->rtm_activity_table_alias}.activity_id and ra.blog_id = '" . get_current_blog_id() . "' ) ";
+				$sql = "{$select_sql} {$from_sql} {$where_sql} ORDER BY a.date_recorded {$sort} {$pag_sql}";
+			}
 		}
 		return $sql;
+	}
+
+	/**
+	 * Check if activity privacy migration is done or not.
+	 *
+	 * @return bool|mixed|void
+	 */
+	function can_use_rtm_ac_privacy(){
+		return rtmedia_get_site_option( 'rtmedia_activity_done_upgrade' );
 	}
 
 }
