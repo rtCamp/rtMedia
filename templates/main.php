@@ -36,7 +36,16 @@ if ( ! $rt_ajax_request ) {
 	<?php do_action( 'bp_before_member_home_content' ); ?>
 	<div id="item-header" role="complementary">
 
-		<?php bp_get_template_part ( 'members/single/member-header' ) ?>
+		<?php
+		/**
+		 * If the cover image feature is enabled, use a specific header
+		 */
+		if ( function_exists( 'bp_displayed_user_use_cover_image_header' ) && bp_displayed_user_use_cover_image_header() ) :
+			bp_get_template_part( 'members/single/cover-image-header' );
+		else :
+			bp_get_template_part( 'members/single/member-header' );
+		endif;
+		?>
 
 	</div><!--#item-header-->
 
