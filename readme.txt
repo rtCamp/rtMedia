@@ -140,6 +140,10 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 == Changelog ==
 
+= 3.9.2 [Nov 15, 2015] =
+* Update rtMedia main template
+* Fix undefined JS error
+
 = 3.9.1 [Nov 05, 2015] =
 * Fix encoding service key save issue
 * Added thrive theme under rtMedia 3rd party themes
@@ -1098,8 +1102,8 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 == Upgrade Notice ==
 
-= 3.9.1 =
-Requires BuddyPress 1.7 or higher, if using BuddyPress.  Fix encoding service key save issue, fix translation text domain, update chinese translations.
+= 3.9.2 =
+Requires BuddyPress 1.7 or higher, if using BuddyPress. Update rtMedia main template, fix undefined JS error.
 
 == Sponsors ==
 
