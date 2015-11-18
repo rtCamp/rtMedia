@@ -98,7 +98,7 @@ if ( ! $rt_ajax_request ) {
 		/**
 		 * If the cover image feature is enabled, use a specific header
 		 */
-		if ( bp_group_use_cover_image_header() ) :
+		if ( function_exists( 'bp_group_use_cover_image_header' ) && bp_group_use_cover_image_header() ) :
 			bp_get_template_part( 'groups/single/cover-image-header' );
 		else :
 			bp_get_template_part( 'groups/single/group-header' );
