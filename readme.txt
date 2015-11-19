@@ -6,7 +6,7 @@ License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires at least: WordPress 3.6
 Tested up to: 4.3.1
-Stable tag: 3.9.2
+Stable tag: 3.9.3
 
 Add albums, photo, audio/video encoding, privacy, sharing, front-end uploads & more. All this works on mobile/tablets devices.
 
@@ -139,6 +139,10 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 
 == Changelog ==
+
+= 3.9.3 [Nov 19, 2015] =
+* Update rtMedia main template
+* Fix undefined function call error
 
 = 3.9.2 [Nov 15, 2015] =
 * Update rtMedia main template
@@ -1102,8 +1106,8 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 == Upgrade Notice ==
 
-= 3.9.2 =
-Requires BuddyPress 1.7 or higher, if using BuddyPress. Update rtMedia main template, fix undefined JS error.
+= 3.9.3 =
+Requires BuddyPress 1.7 or higher, if using BuddyPress. Update rtMedia main template.
 
 == Sponsors ==
 
