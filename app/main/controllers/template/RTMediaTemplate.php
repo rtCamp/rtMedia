@@ -274,7 +274,7 @@ class RTMediaTemplate {
             if ( isset( $_POST[ 'rtmedia-filepath-old' ] ) ) {
                 $is_valid_url = preg_match( "/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i", $_POST[ 'rtmedia-filepath-old' ] );
                 
-                if ( $is_valid_url && bp_is_active( 'activity' ) ) {
+                if ( $is_valid_url && function_exists( 'bp_is_active' ) && bp_is_active( 'activity' ) ) {
                     $thumbnailinfo = wp_get_attachment_image_src( $rtmedia_query->media[ 0 ]->media_id, 'rt_media_activity_image' );
                     $activity_id = rtmedia_activity_id( $rtmedia_query->media[ 0 ]->id );
 
