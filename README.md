@@ -140,6 +140,10 @@ http://www.youtube.com/watch?v####dJrykKQGDcs
 
 ## Changelog ##
 
+#### 3.9.3 [Nov 19, 2015] ####
+* Update rtMedia main template
+* Fix undefined function call error
+
 #### 3.9.2 [Nov 15, 2015] ####
 * Update rtMedia main template
 * Fix undefined JS error
@@ -1100,8 +1104,8 @@ http://www.youtube.com/watch?v####dJrykKQGDcs
 * HTML5 Audio Tag Support (with fallback)
 * HTML5 Video Tag Support (with fallback)
 
-#### 3.9.2 ####
-Requires BuddyPress 1.7 or higher, if using BuddyPress. Update rtMedia main template, fix undefined JS error.
+#### 3.9.3 ####
+Requires BuddyPress 1.7 or higher, if using BuddyPress. Update rtMedia main template.
 
 ## Sponsors ##
 
