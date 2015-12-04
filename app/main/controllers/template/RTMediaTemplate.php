@@ -478,9 +478,9 @@ class RTMediaTemplate {
 
             if ( strpos( $_SERVER[ "HTTP_REFERER" ], "/" . $rtmedia_query->media[ 0 ]->id ) > 0 ) {
                 if ( $context == 'profile' && isset( $rtmedia_query->media[ 0 ]->album_id ) && intval( $rtmedia_query->media[ 0 ]->album_id ) > 0 ) {
-                    $redirect_url = trailingslashit( $parent_link ) . "media/" . $rtmedia_query->media[ 0 ]->album_id;
+                    $redirect_url = trailingslashit( $parent_link ) . RTMEDIA_MEDIA_SLUG . '/' . $rtmedia_query->media[ 0 ]->album_id;
                 } else {
-                    $redirect_url = trailingslashit( $parent_link ) . "media/";
+                    $redirect_url = trailingslashit( $parent_link ) . RTMEDIA_MEDIA_SLUG . '/';
                 }
             }
             
