@@ -923,7 +923,7 @@ class RTMediaQuery {
 			$parent_link = get_author_posts_url( $rtmedia_media->media_author );
 		}
 
-		$link = trailingslashit( $parent_link . 'media/' . $rtmedia_media->id );
+		$link = trailingslashit( $parent_link . RTMEDIA_MEDIA_SLUG . $rtmedia_media->id );
 
 		return $link;
 	}
