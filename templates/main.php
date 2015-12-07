@@ -36,7 +36,16 @@ if ( ! $rt_ajax_request ) {
 	<?php do_action( 'bp_before_member_home_content' ); ?>
 	<div id="item-header" role="complementary">
 
-		<?php bp_get_template_part ( 'members/single/member-header' ) ?>
+		<?php
+		/**
+		 * If the cover image feature is enabled, use a specific header
+		 */
+		if ( function_exists( 'bp_displayed_user_use_cover_image_header' ) && bp_displayed_user_use_cover_image_header() ) :
+			bp_get_template_part( 'members/single/cover-image-header' );
+		else :
+			bp_get_template_part( 'members/single/member-header' );
+		endif;
+		?>
 
 	</div><!--#item-header-->
 
@@ -73,9 +82,28 @@ if ( ! $rt_ajax_request ) {
 	?>
 
 	<?php if (bp_has_groups()) : while (bp_groups()) : bp_the_group(); ?>
-	<div id="item-header">
 
-		<?php bp_get_template_part( 'groups/single/group-header' ); ?>
+	<?php
+
+	/**
+	 * Fires before the display of the group home content.
+	 *
+	 * @since 1.2.0
+	 */
+	do_action( 'bp_before_group_home_content' ); ?>
+
+	<div id="item-header" role="complementary">
+
+		<?php
+		/**
+		 * If the cover image feature is enabled, use a specific header
+		 */
+		if ( function_exists( 'bp_group_use_cover_image_header' ) && bp_group_use_cover_image_header() ) :
+			bp_get_template_part( 'groups/single/cover-image-header' );
+		else :
+			bp_get_template_part( 'groups/single/group-header' );
+		endif;
+		?>
 
 	</div><!--#item-header-->
 

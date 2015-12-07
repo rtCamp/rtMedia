@@ -36,4 +36,5 @@ if ( isset( $_POST[ 'is_edit_allowed' ] ) ) {
 		<?php } ?>
 
 	</a>
+	<?php do_action( 'rtmedia_after_album_gallery_item' ) ?>
 </li>

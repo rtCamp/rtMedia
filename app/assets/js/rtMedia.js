@@ -336,7 +336,7 @@ jQuery( 'document' ).ready( function ( $ ) {
 	jQuery( '.rtmedia-container' ).on( 'click', '.rtmedia-delete-selected', function ( e ) {
 		if ( jQuery( '.rtmedia-list :checkbox:checked' ).length > 0 ) {
 			if ( confirm( rtmedia_selected_media_delete_confirmation ) ) {
-				jQuery( this ).closest( 'form' ).attr( 'action', '../../../media/delete' ).submit();
+                jQuery( this ).closest( 'form' ).attr( 'action', '../../../' + rtmedia_media_slug + '/delete' ).submit();
 			}
 		} else {
 			rtmedia_gallery_action_alert_message( rtmedia_no_media_selected, 'warning' );
@@ -625,6 +625,7 @@ jQuery( 'document' ).ready( function ( $ ) {
 				type: 'post',
 				data: data,
 				success: function ( data ) {
+                                    
 					if ( data == '1' ) {
 						//media delete
 						rtmedia_gallery_action_alert_message( 'file deleted successfully.', 'success' );

@@ -274,7 +274,7 @@ class RTMediaTemplate {
             if ( isset( $_POST[ 'rtmedia-filepath-old' ] ) ) {
                 $is_valid_url = preg_match( "/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i", $_POST[ 'rtmedia-filepath-old' ] );
                 
-                if ( $is_valid_url && bp_is_active( 'activity' ) ) {
+                if ( $is_valid_url && function_exists( 'bp_is_active' ) && bp_is_active( 'activity' ) ) {
                     $thumbnailinfo = wp_get_attachment_image_src( $rtmedia_query->media[ 0 ]->media_id, 'rt_media_activity_image' );
                     $activity_id = rtmedia_activity_id( $rtmedia_query->media[ 0 ]->id );
 
@@ -478,9 +478,9 @@ class RTMediaTemplate {
 
             if ( strpos( $_SERVER[ "HTTP_REFERER" ], "/" . $rtmedia_query->media[ 0 ]->id ) > 0 ) {
                 if ( $context == 'profile' && isset( $rtmedia_query->media[ 0 ]->album_id ) && intval( $rtmedia_query->media[ 0 ]->album_id ) > 0 ) {
-                    $redirect_url = trailingslashit( $parent_link ) . "media/" . $rtmedia_query->media[ 0 ]->album_id;
+                    $redirect_url = trailingslashit( $parent_link ) . RTMEDIA_MEDIA_SLUG . '/' . $rtmedia_query->media[ 0 ]->album_id;
                 } else {
-                    $redirect_url = trailingslashit( $parent_link ) . "media/";
+                    $redirect_url = trailingslashit( $parent_link ) . RTMEDIA_MEDIA_SLUG . '/';
                 }
             }
             

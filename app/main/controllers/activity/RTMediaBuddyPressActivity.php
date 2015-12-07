@@ -409,7 +409,7 @@ class RTMediaBuddyPressActivity {
                     }
                 }
                 
-                $action = apply_filters( 'rtmedia_buddypress_action_text_fitler', $action, $user_link, $count, $user->user_nicename, $rtmedia_media_type_array[ $activities[ $index ]->id ][ 0 ], $activities[ $index ]->id );                
+                $action = apply_filters( 'rtmedia_bp_activity_action_text', $action, $user_link, $count, $user, $rtmedia_media_type_array[ $activities[ $index ]->id ][ 0 ], $activities[ $index ]->id );
                 $activities[ $index ]->action = $action;
             }
         }

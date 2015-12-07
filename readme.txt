@@ -5,8 +5,8 @@ Tags: BuddyPress, media, multimedia, album, audio, songs, music, video, photo, i
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires at least: WordPress 3.6
-Tested up to: 4.3.1
-Stable tag: 3.9.1
+Tested up to: 4.4
+Stable tag: 3.9.4
 
 Add albums, photo, audio/video encoding, privacy, sharing, front-end uploads & more. All this works on mobile/tablets devices.
 
@@ -139,6 +139,18 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 
 == Changelog ==
+
+= 3.9.4 [Dec 07, 2015] =
+* Fixed media slug issue while deleting media
+* Added new hook in album gallery template
+
+= 3.9.3 [Nov 19, 2015] =
+* Update rtMedia main template
+* Fix undefined function call error
+
+= 3.9.2 [Nov 15, 2015] =
+* Update rtMedia main template
+* Fix undefined JS error
 
 = 3.9.1 [Nov 05, 2015] =
 * Fix encoding service key save issue
@@ -1098,8 +1110,8 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 == Upgrade Notice ==
 
-= 3.9.1 =
-Requires BuddyPress 1.7 or higher, if using BuddyPress.  Fix encoding service key save issue, fix translation text domain, update chinese translations.
+= 3.9.4 =
+Requires BuddyPress 1.7 or higher, if using BuddyPress. Fixed media slug issue while deleting media, added new hook in album gallery template.
 
 == Sponsors ==
 

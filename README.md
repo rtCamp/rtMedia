@@ -140,6 +140,18 @@ http://www.youtube.com/watch?v####dJrykKQGDcs
 
 ## Changelog ##
 
+#### 3.9.4 [Dec 07, 2015] ####
+* Fixed media slug issue while deleting media
+* Added new hook in album gallery template
+
+#### 3.9.3 [Nov 19, 2015] ####
+* Update rtMedia main template
+* Fix undefined function call error
+
+#### 3.9.2 [Nov 15, 2015] ####
+* Update rtMedia main template
+* Fix undefined JS error
+
 #### 3.9.1 [Nov 05, 2015] ####
 * Fix encoding service key save issue
 * Added thrive theme under rtMedia 3rd party themes
@@ -1096,8 +1108,8 @@ http://www.youtube.com/watch?v####dJrykKQGDcs
 * HTML5 Audio Tag Support (with fallback)
 * HTML5 Video Tag Support (with fallback)
 
-#### 3.9.1 ####
-Requires BuddyPress 1.7 or higher, if using BuddyPress.  Fix encoding service key save issue, fix translation text domain, update chinese translations.
+#### 3.9.4 ####
+Requires BuddyPress 1.7 or higher, if using BuddyPress. Fixed media slug issue while deleting media, added new hook in album gallery template.
 
 ## Sponsors ##
 

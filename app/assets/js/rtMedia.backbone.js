@@ -907,7 +907,7 @@ jQuery( document ).ready( function ( $ ) {
 		} );
 
 		var object = '';
-		var item_id = jq( "#whats-new-post-in" ).val();
+		var item_id = jQuery( "#whats-new-post-in" ).val();
 		if ( item_id == undefined )
 			item_id = 0;
 		if ( item_id > 0 ) {
