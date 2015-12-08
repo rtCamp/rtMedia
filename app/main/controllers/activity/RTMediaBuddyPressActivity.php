@@ -35,6 +35,8 @@ class RTMediaBuddyPressActivity {
 		// BuddyPress activity for media like and comment actions
 		if ( isset( $rtmedia->options['buddypress_mediaLikeCommentActivity'] ) && 0 != $rtmedia->options['buddypress_mediaLikeCommentActivity'] ){
 			add_action( 'rtmedia_after_like_media', array( $this, 'activity_after_media_like' ) );
+			add_action( 'rtmedia_after_add_comment', array( $this, 'activity_after_media_comment' ) );
+			add_action( 'rtmedia_before_remove_comment', array( $this, 'remove_activity_after_media_comment_delete' ) );
 		}
 	}
 
@@ -461,7 +463,7 @@ class RTMediaBuddyPressActivity {
 				if( $media_obj->context == 'group' ){
 					$group_data = groups_get_group( array( 'group_id' => $media_obj->context_id ) );
 					$group_name = '<a href="' . bp_get_group_permalink( $group_data ) . '">' . $group_data->name . '</a>';
-					$action = sprintf( __( '%1$s liked a %2$s from group %3$s', 'buddypress-media' ), $username, $media_str, $group_name );
+					$action = sprintf( __( '%1$s liked a %2$s in the group %3$s', 'buddypress-media' ), $username, $media_str, $group_name );
 				} else {
 					if( $user_id == $media_author ){
 						$action = sprintf( __( '%1$s liked their %2$s', 'buddypress-media' ), $username, $media_str );
@@ -497,13 +499,126 @@ class RTMediaBuddyPressActivity {
 				$activity_id = bp_activity_add( $activity_args );
 
 				// Store activity id into user meta for reference
-				update_user_meta( $user_id, 'rtm-bp-like-activity-' . $media_id, $activity_id );
+				update_user_meta( $user_id, 'rtm-bp-media-like-activity-' . $media_id, $activity_id );
 			} else {
+
+				$meta_key = 'rtm-bp-media-like-activity-' . $media_id;
 				// Delete activity when user remove his like.
-				$activity_id = get_user_meta( $user_id, 'rtm-bp-like-activity-' . $media_id, true );
+				$activity_id = get_user_meta( $user_id, $meta_key, true );
 
 				if( ! empty( $activity_id ) ){
-					bp_activity_delete( array( 'id' => $activity_id ) );
+					if( bp_activity_delete( array( 'id' => $activity_id ) ) ){
+						delete_user_meta( $user_id, $meta_key );
+					}
+				}
+			}
+		}
+	}
+
+	/**
+	 * Create BuddyPress activity when user comment on media
+	 *
+	 * @param $params array
+	 */
+	function activity_after_media_comment( $params ){
+
+		if( isset( $params['comment_post_ID'] ) ){
+
+			// get media details
+			$media_model = new RTMediaModel();
+			$media_obj = $media_model->get( array( 'media_id' => $params['comment_post_ID'] ) );
+			$media_obj = $media_obj[0];
+
+			// only proceed if corresponding media is exist.
+			if( ! empty( $media_obj ) && ( $media_obj->context == 'profile' || $media_obj->context == 'group' ) ){
+
+				$media_id = $media_obj->id;
+
+				$user_id = $params['user_id'];
+				$user = get_userdata( $user_id );
+				$username = '<a href="' . get_rtmedia_user_link( $user_id ) . '">' . $user->display_name . '</a>';
+
+				$primary_link = get_rtmedia_permalink( $media_id );
+
+				$media_const = 'RTMEDIA_' . strtoupper( $media_obj->media_type ) . '_LABEL';
+				$media_str = '<a href="'. $primary_link .'">' . constant( $media_const ) . '</a>';
+
+				$media_author = $media_obj->media_author;
+
+				if( $media_obj->context == 'group' ){
+					$group_data = groups_get_group( array( 'group_id' => $media_obj->context_id ) );
+					$group_name = '<a href="' . bp_get_group_permalink( $group_data ) . '">' . $group_data->name . '</a>';
+					$action = sprintf( __( '%1$s commented on a %2$s in the group %3$s', 'buddypress-media' ), $username, $media_str, $group_name );
+				} else {
+					if( $user_id == $media_author ){
+						$action = sprintf( __( '%1$s commented on their %2$s', 'buddypress-media' ), $username, $media_str );
+					} else {
+						$media_author_data = get_userdata( $media_author );
+						$media_author_name = '<a href="' . get_rtmedia_user_link( $media_author ) . '">' . $media_author_data->display_name . '</a>';
+						$action = sprintf( __( '%1$s commented on %2$s\'s %3$s', 'buddypress-media' ), $username, $media_author_name, $media_str );
+					}
+				}
+
+				$comment_content = $params['comment_content'];
+				$wp_comment_id = $params['comment_id'];
+
+				// prepare activity arguments
+				$activity_args = array(
+					'user_id' => $user_id,
+					'action' => $action,
+					'content' => $comment_content,
+					'type' => 'rtmedia_comment_activity',
+					'primary_link' => $primary_link,
+					'item_id' => $media_id,
+					'secondary_item_id' => $wp_comment_id
+				);
+
+				// set activity component
+				if( $media_obj->context == 'group' || $media_obj->context == 'profile' ) {
+					$activity_args[ 'component' ] = $media_obj->context;
+					if( $media_obj->context == 'group' ) {
+						$activity_args[ 'component' ] = "groups";
+						$activity_args[ 'item_id' ] = $media_obj->context_id;
+					}
+				}
+
+				// create BuddyPress activity
+				$activity_id = bp_activity_add( $activity_args );
+
+				// Store activity id into user meta for reference
+				update_user_meta( $user_id, 'rtm-bp-media-comment-activity-' . $media_id, $activity_id );
+			}
+		}
+	}
+
+	/**
+	 * Remove activity when comment on media is deleted
+	 *
+	 * @param $comment_id
+	 */
+	function remove_activity_after_media_comment_delete( $comment_id ){
+		if( !empty( $comment_id ) ) {
+
+			// get comment details from comment id
+			$comment = get_comment( $comment_id );
+			$user_id = $comment->user_id;
+
+			if( isset( $comment->comment_post_ID ) && isset( $comment->user_id ) ){
+				$model = new RTMediaModel();
+				$media_obj = $model->get( array( 'media_id' => $comment->comment_post_ID ) );
+				$media_obj = $media_obj[0];
+
+				if( ! empty( $media_obj ) ){
+					$meta_key = 'rtm-bp-media-comment-activity-' . $media_obj->id;
+
+					// Delete activity when user remove his comment.
+					$activity_id = get_user_meta( $user_id, $meta_key, true );
+
+					if( ! empty( $activity_id ) ){
+						if( bp_activity_delete( array( 'id' => $activity_id ) ) ){
+							delete_user_meta( $user_id, $meta_key );
+						}
+					}
 				}
 			}
 		}
