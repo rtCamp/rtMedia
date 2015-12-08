@@ -181,6 +181,13 @@
   display: block;
   max-width: 100%;
 }
+#rtmedia-uploader-form .rtm-plupload-list .rtm-upload-edit-title, #rtmedia_uploader_filelist .rtm-upload-edit-title {
+  font-size: 12px;
+}
+#rtmedia-uploader-form .rtm-plupload-list .rtm-upload-edit-desc, #rtmedia_uploader_filelist .rtm-upload-edit-desc {
+  font-size: 12px;
+  display: block;
+}
 
 .rtm-plupload-list:empty {
   display: none;

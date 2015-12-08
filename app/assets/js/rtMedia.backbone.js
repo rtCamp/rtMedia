@@ -448,6 +448,7 @@ jQuery( function ( $ ) {
 
                     rtm_file_label = this;
                     rtm_file_title_input = '#text_' + file.id;
+                    rtm_file_desc_input = '#rtm_desc_' + file.id;
                     rtm_file_title_save = '#save_' + file.id;
 
                     jQuery( rtm_file_label ).hide();
@@ -455,35 +456,35 @@ jQuery( function ( $ ) {
 
                     // show/create text box to edit media title
                     if( jQuery( rtm_file_title_input ).length === 0 ) {
-                        jQuery( rtm_file_label ).parent( '.plupload_file_name' ).prepend( '<input type="text" id="text_' + file.id + '" value="' + file.title + '" style="width: 75%;" /><span id="save_' + file.id + '" title="Save Change" class="rtmicon dashicons dashicons-yes"></span>' );
+                        jQuery( rtm_file_label ).parent( '.plupload_file_name' ).prepend( '<input type="text" class="rtm-upload-edit-title" id="text_' + file.id + '" value="' + file.title + '" style="width: 75%;" /><textarea class="rtm-upload-edit-desc" id="rtm_desc_' + file.id + '"></textarea><span id="save_' + file.id + '" title="Save Change" class="rtmicon dashicons dashicons-yes"></span>' );
                     } else {
                         jQuery( rtm_file_title_input ).show();
+                        jQuery( rtm_file_desc_input ).show();
                         jQuery( rtm_file_title_save ).show();
                     }
 
                     jQuery( rtm_file_title_input ).focus();
 
-                    // set new media title
-                    jQuery( rtm_file_title_input ).keyup( function( e ) {
-                        if( this.value != '' ) {
-                            file.title = this.value;
+                    // set media title and description in file object
+                    jQuery( rtm_file_title_save ).click( function(){
+                        var file_title_val = jQuery( rtm_file_title_input ).val();
+                        var file_desc_val = jQuery( rtm_file_desc_input ).val();
+                        var file_name_wrapper_el = jQuery( rtm_file_label ).siblings( '.plupload_file_name_wrapper' );
+
+                        if( file_title_val != '' ){
+                            file_name_wrapper_el.text( file_title_val + "." + rtm_file_name_array[ 1 ] );
+                            file.title = file_title_val;
                         }
 
-                        if( e.keyCode == '13' ) {
-                            return false;
-                        }
-                    } );
-
-                    // hide input box for media title and show label of media title
-                    jQuery( rtm_file_title_input ).blur( function( e ) {
-                        if ( this.value != '' ) {
-                            jQuery( rtm_file_title_input ).hide();
-                            jQuery( rtm_file_title_save ).hide();
-                            jQuery( rtm_file_label ).siblings( '.plupload_file_name_wrapper' ).text( file.title + "." + rtm_file_name_array[ 1 ] );
+                        if( file_desc_val != '' ){
+                            file.description = file_desc_val;
                         }
 
-                        jQuery( rtm_file_label ).siblings( '.plupload_file_name_wrapper' ).show();
+                        jQuery( rtm_file_title_input ).hide();
+                        jQuery( rtm_file_desc_input ).hide();
+                        file_name_wrapper_el.show();jQuery( rtm_file_label ).siblings( '.plupload_file_name_wrapper' )
                         jQuery( rtm_file_label ).show();
+                        jQuery( this ).hide();
                     } );
                 } );
 			} );
@@ -561,6 +562,11 @@ jQuery( function ( $ ) {
 
 		uploaderObj.uploader.bind( 'BeforeUpload', function ( up, file ) {
 			up.settings.multipart_params.title = file.title.split( '.' )[ 0 ];
+
+            if( typeof file.description != "undefined" ){
+                up.settings.multipart_params.description = file.description;
+            }
+
 			var privacy = $( "#rtm-file_upload-ui select.privacy" ).val();
 			if ( privacy !== undefined ) {
 				up.settings.multipart_params.privacy = $( "#rtm-file_upload-ui select.privacy" ).val();
@@ -780,6 +786,7 @@ jQuery( document ).ready( function ( $ ) {
 
                 rtm_file_label = this;
                 rtm_file_title_input = '#text_' + file.id;
+                rtm_file_desc_input = '#rtm_desc_' + file.id;
                 rtm_file_title_save = '#save_' + file.id;
 
                 jQuery( rtm_file_label ).hide();
@@ -787,7 +794,7 @@ jQuery( document ).ready( function ( $ ) {
 
                 // show/create text box to edit media title
                 if( jQuery( rtm_file_title_input ).length === 0 ) {
-                    jQuery( rtm_file_label ).parent( '.plupload_file_name' ).prepend( '<input type="text" id="text_' + file.id + '" value="' + file.title + '" style="width: 75%;" /><span id="save_' + file.id + '" title="Save Change" class="rtmicon dashicons dashicons-yes"></span>' );
+                    jQuery( rtm_file_label ).parent( '.plupload_file_name' ).prepend( '<input type="text" class="rtm-upload-edit-title" id="text_' + file.id + '" value="' + file.title + '" style="width: 75%;" /><textarea class="rtm-upload-edit-desc" id="rtm_desc_' + file.id + '"></textarea><span id="save_' + file.id + '" title="Save Change" class="rtmicon dashicons dashicons-yes"></span>' );
                 } else {
                     jQuery( rtm_file_title_input ).show();
                     jQuery( rtm_file_title_save ).show();
@@ -795,27 +802,25 @@ jQuery( document ).ready( function ( $ ) {
 
                 jQuery( rtm_file_title_input ).focus();
 
-                // set new media title
-                jQuery( rtm_file_title_input ).keyup( function( e ) {
-                    if( this.value != '' ) {
-                        file.title = this.value;
+                jQuery( rtm_file_title_save).click( function(){
+                    var file_title_val = jQuery( rtm_file_title_input ).val();
+                    var file_desc_val = jQuery( rtm_file_desc_input ).val();
+                    var file_name_wrapper_el = jQuery( rtm_file_label ).siblings( '.plupload_file_name_wrapper' );
+
+                    if( file_title_val != '' ){
+                        file_name_wrapper_el.text( file_title_val + "." + rtm_file_name_array[ 1 ] );
+                        file.title = file_title_val;
                     }
 
-                    if( e.keyCode == '13' ) {
-                        return false;
-                    }
-                } );
-
-                // hide input box for media title and show label of media title
-                jQuery( rtm_file_title_input ).blur( function( e ) {
-                    if ( this.value != '' ) {
-                        jQuery( rtm_file_title_input ).hide();
-                        jQuery( rtm_file_title_save ).hide();
-                        jQuery( rtm_file_label ).siblings( '.plupload_file_name_wrapper' ).text( file.title + "." + rtm_file_name_array[ 1 ] );
+                    if( file_desc_val != '' ){
+                        file.description = file_desc_val;
                     }
 
-                    jQuery( rtm_file_label ).siblings( '.plupload_file_name_wrapper' ).show();
+                    jQuery( rtm_file_title_input ).hide();
+                    jQuery( rtm_file_desc_input ).hide();
+                    file_name_wrapper_el.show();jQuery( rtm_file_label ).siblings( '.plupload_file_name_wrapper' )
                     jQuery( rtm_file_label ).show();
+                    jQuery( this ).hide();
                 } );
             } );
 		} );
@@ -919,6 +924,11 @@ jQuery( document ).ready( function ( $ ) {
 		up.settings.multipart_params.context = object;
 		up.settings.multipart_params.context_id = item_id;
 		up.settings.multipart_params.title = files.title.split( '.' )[ 0 ];
+
+        if( typeof files.description != "undefined" ){
+            up.settings.multipart_params.description = files.description;
+        }
+
 		// if privacy dropdown is not disabled, then get the privacy value of the update
 		if ( jQuery( "select.privacy" ).prop( 'disabled' ) === false ) {
 			up.settings.multipart_params.privacy = jQuery( "select.privacy" ).val();
