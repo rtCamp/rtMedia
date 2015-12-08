@@ -601,7 +601,7 @@ class RTMediaMedia {
             $activity_args[ "hide_sitewide" ] = true;
         }
 
-        if( $media->context == 'group' || 'profile' ) {
+        if( $media->context == 'group' || $media->context == 'profile' ) {
             $activity_args[ 'component' ] = $media->context;
             if( $media->context == 'group' ) {
                 $activity_args[ 'component' ] = "groups";

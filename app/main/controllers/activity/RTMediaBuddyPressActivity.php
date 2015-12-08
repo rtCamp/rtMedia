@@ -31,6 +31,11 @@ class RTMediaBuddyPressActivity {
         
         // Filter bp_activity_prefetch_object_data for translatable activity actions
         add_filter( 'bp_activity_prefetch_object_data', array( $this, 'bp_prefetch_activity_object_data' ), 10, 1 );
+
+		// BuddyPress activity for media like and comment actions
+		if ( isset( $rtmedia->options['buddypress_mediaLikeCommentActivity'] ) && 0 != $rtmedia->options['buddypress_mediaLikeCommentActivity'] ){
+			add_action( 'rtmedia_after_like_media', array( $this, 'activity_after_media_like' ) );
+		}
 	}
 
 	function bp_activity_deleted_activities( $activity_ids_deleted ){
@@ -416,5 +421,92 @@ class RTMediaBuddyPressActivity {
         
         return $activities;
     }
+
+	/**
+	 * Create BP activity when user like and delete associated activity when user remove like.
+	 *
+	 * @param $obj RTMediaLike
+	 */
+	function activity_after_media_like( $obj ){
+		global $rtmedia_points_media_id;
+		if( is_a( $obj, 'RTMediaLike' ) && isset( $obj->action_query->id ) ){
+			$media_id = $obj->action_query->id;
+		} elseif( ! empty( $rtmedia_points_media_id ) ){
+			$media_id = $rtmedia_points_media_id;
+		} else {
+			$media_id = false;
+		}
+
+		$media_obj = $obj->media;
+
+		// Proceed only if we have media to process.
+		if( $media_id !== false && ( $media_obj->context == 'profile' || $media_obj->context == 'group' ) ){
+
+			$user_id = $obj->interactor;
+
+			// If $obj->increase is true than request is to like the media.
+			if( $obj->increase ){
+
+				// Create activity on media like
+				$user = get_userdata( $user_id );
+				$username = '<a href="' . get_rtmedia_user_link( $user_id ) . '">' . $user->display_name . '</a>';
+
+				$media_author = $obj->owner;
+
+				$primary_link = get_rtmedia_permalink( $media_id );
+
+				$media_const = 'RTMEDIA_' . strtoupper( $obj->media->media_type ) . '_LABEL';
+				$media_str = '<a href="'. $primary_link .'">' . constant( $media_const ) . '</a>';
+
+				if( $media_obj->context == 'group' ){
+					$group_data = groups_get_group( array( 'group_id' => $media_obj->context_id ) );
+					$group_name = '<a href="' . bp_get_group_permalink( $group_data ) . '">' . $group_data->name . '</a>';
+					$action = sprintf( __( '%1$s liked a %2$s from group %3$s', 'buddypress-media' ), $username, $media_str, $group_name );
+				} else {
+					if( $user_id == $media_author ){
+						$action = sprintf( __( '%1$s liked their %2$s', 'buddypress-media' ), $username, $media_str );
+					} else {
+						$media_author_data = get_userdata( $media_author );
+						$media_author_name = '<a href="' . get_rtmedia_user_link( $media_author ) . '">' . $media_author_data->display_name . '</a>';
+						$action = sprintf( __( '%1$s liked %2$s\'s %3$s', 'buddypress-media' ), $username, $media_author_name, $media_str );
+					}
+				}
+
+				$action = apply_filters( 'rtm_bp_like_activity_action', $action, $media_id, $user_id );
+				$primary_link = get_rtmedia_permalink( $media_id );
+
+				// generate activity arguments.
+				$activity_args = array(
+					'user_id' => $user_id,
+					'action' => $action,
+					'type' => 'rtmedia_like_activity',
+					'primary_link' => $primary_link,
+					'item_id' => $media_id,
+				);
+
+				// set activity component
+				if( $media_obj->context == 'group' || $media_obj->context == 'profile' ) {
+					$activity_args[ 'component' ] = $media_obj->context;
+					if( $media_obj->context == 'group' ) {
+						$activity_args[ 'component' ] = "groups";
+						$activity_args[ 'item_id' ] = $media_obj->context_id;
+					}
+				}
+
+				// add BP activity
+				$activity_id = bp_activity_add( $activity_args );
+
+				// Store activity id into user meta for reference
+				update_user_meta( $user_id, 'rtm-bp-like-activity-' . $media_id, $activity_id );
+			} else {
+				// Delete activity when user remove his like.
+				$activity_id = get_user_meta( $user_id, 'rtm-bp-like-activity-' . $media_id, true );
+
+				if( ! empty( $activity_id ) ){
+					bp_activity_delete( array( 'id' => $activity_id ) );
+				}
+			}
+		}
+	}
 
 }
