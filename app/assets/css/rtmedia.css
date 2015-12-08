@@ -188,6 +188,9 @@
   font-size: 12px;
   display: block;
 }
+#rtmedia-uploader-form .rtm-plupload-list .rtm-upload-edit-title-wrapper label, #rtmedia-uploader-form .rtm-plupload-list .rtm-upload-edit-desc-wrapper label, #rtmedia_uploader_filelist .rtm-upload-edit-title-wrapper label, #rtmedia_uploader_filelist .rtm-upload-edit-desc-wrapper label {
+  display: block;
+}
 
 .rtm-plupload-list:empty {
   display: none;

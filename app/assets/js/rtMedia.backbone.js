@@ -447,26 +447,36 @@ jQuery( function ( $ ) {
                     e.preventDefault();
 
                     rtm_file_label = this;
-                    rtm_file_title_input = '#text_' + file.id;
-                    rtm_file_desc_input = '#rtm_desc_' + file.id;
-                    rtm_file_title_save = '#save_' + file.id;
+
+                    rtm_file_title_id = 'text_' + file.id;
+                    rtm_file_title_input = '#' + rtm_file_title_id;
+                    rtm_file_title_wrapper_id = 'rtm_title_wp_' + file.id;
+                    rtm_file_title_wrapper = '#' + rtm_file_title_wrapper_id;
+
+                    rtm_file_desc_id = 'rtm_desc_' + file.id;
+                    rtm_file_desc_input = '#' + rtm_file_desc_id;
+                    rtm_file_desc_wrapper_id = 'rtm_desc_wp_' + file.id;
+                    rtm_file_desc_wrapper = '#' + rtm_file_desc_wrapper_id;
+
+                    rtm_file_save_id = 'save_' + file.id;
+                    rtm_file_save_el = '#' + rtm_file_save_id;
 
                     jQuery( rtm_file_label ).hide();
                     jQuery( rtm_file_label ).siblings( '.plupload_file_name_wrapper' ).hide();
 
                     // show/create text box to edit media title
                     if( jQuery( rtm_file_title_input ).length === 0 ) {
-                        jQuery( rtm_file_label ).parent( '.plupload_file_name' ).prepend( '<input type="text" class="rtm-upload-edit-title" id="text_' + file.id + '" value="' + file.title + '" style="width: 75%;" /><textarea class="rtm-upload-edit-desc" id="rtm_desc_' + file.id + '"></textarea><span id="save_' + file.id + '" title="Save Change" class="rtmicon dashicons dashicons-yes"></span>' );
+                        jQuery( rtm_file_label ).parent( '.plupload_file_name' ).prepend( '<div id="' + rtm_file_title_wrapper_id + '" class="rtm-upload-edit-title-wrapper"><label>' + rtmedia_edit_media_info_upload.title + '</label><input type="text" class="rtm-upload-edit-title" id="' + rtm_file_title_id + '" value="' + file.title + '" style="width: 75%;" /></div><div id="' + rtm_file_desc_wrapper_id + '" class="rtm-upload-edit-desc-wrapper"><label>' + rtmedia_edit_media_info_upload.description + '</label><textarea class="rtm-upload-edit-desc" id="' + rtm_file_desc_id + '"></textarea></div><span id="' + rtm_file_save_id + '" title="Save Change" class="rtmicon dashicons dashicons-yes"></span>' );
                     } else {
-                        jQuery( rtm_file_title_input ).show();
-                        jQuery( rtm_file_desc_input ).show();
-                        jQuery( rtm_file_title_save ).show();
+                        jQuery( rtm_file_title_wrapper ).show();
+                        jQuery( rtm_file_desc_wrapper ).show();
+                        jQuery( rtm_file_save_el ).show();
                     }
 
                     jQuery( rtm_file_title_input ).focus();
 
                     // set media title and description in file object
-                    jQuery( rtm_file_title_save ).click( function(){
+                    jQuery( rtm_file_save_el ).click( function(){
                         var file_title_val = jQuery( rtm_file_title_input ).val();
                         var file_desc_val = jQuery( rtm_file_desc_input ).val();
                         var file_name_wrapper_el = jQuery( rtm_file_label ).siblings( '.plupload_file_name_wrapper' );
@@ -480,9 +490,10 @@ jQuery( function ( $ ) {
                             file.description = file_desc_val;
                         }
 
-                        jQuery( rtm_file_title_input ).hide();
-                        jQuery( rtm_file_desc_input ).hide();
-                        file_name_wrapper_el.show();jQuery( rtm_file_label ).siblings( '.plupload_file_name_wrapper' )
+                        jQuery( rtm_file_title_wrapper ).hide();
+                        jQuery( rtm_file_desc_wrapper ).hide();
+                        file_name_wrapper_el.show();
+                        jQuery( rtm_file_label ).siblings( '.plupload_file_name_wrapper' )
                         jQuery( rtm_file_label ).show();
                         jQuery( this ).hide();
                     } );
@@ -785,24 +796,35 @@ jQuery( document ).ready( function ( $ ) {
                 e.preventDefault();
 
                 rtm_file_label = this;
-                rtm_file_title_input = '#text_' + file.id;
-                rtm_file_desc_input = '#rtm_desc_' + file.id;
-                rtm_file_title_save = '#save_' + file.id;
+
+                rtm_file_title_id = 'text_' + file.id;
+                rtm_file_title_input = '#' + rtm_file_title_id;
+                rtm_file_title_wrapper_id = 'rtm_title_wp_' + file.id;
+                rtm_file_title_wrapper = '#' + rtm_file_title_wrapper_id;
+
+                rtm_file_desc_id = 'rtm_desc_' + file.id;
+                rtm_file_desc_input = '#' + rtm_file_desc_id;
+                rtm_file_desc_wrapper_id = 'rtm_desc_wp_' + file.id;
+                rtm_file_desc_wrapper = '#' + rtm_file_desc_wrapper_id;
+
+                rtm_file_save_id = 'save_' + file.id;
+                rtm_file_save_el = '#' + rtm_file_save_id;
 
                 jQuery( rtm_file_label ).hide();
                 jQuery( rtm_file_label ).siblings( '.plupload_file_name_wrapper' ).hide();
 
                 // show/create text box to edit media title
                 if( jQuery( rtm_file_title_input ).length === 0 ) {
-                    jQuery( rtm_file_label ).parent( '.plupload_file_name' ).prepend( '<input type="text" class="rtm-upload-edit-title" id="text_' + file.id + '" value="' + file.title + '" style="width: 75%;" /><textarea class="rtm-upload-edit-desc" id="rtm_desc_' + file.id + '"></textarea><span id="save_' + file.id + '" title="Save Change" class="rtmicon dashicons dashicons-yes"></span>' );
+                    jQuery( rtm_file_label ).parent( '.plupload_file_name' ).prepend( '<div id="' + rtm_file_title_wrapper_id + '" class="rtm-upload-edit-title-wrapper"><label>' + rtmedia_edit_media_info_upload.title + '</label><input type="text" class="rtm-upload-edit-title" id="' + rtm_file_title_id + '" value="' + file.title + '" style="width: 75%;" /></div><div id="' + rtm_file_desc_wrapper_id + '" class="rtm-upload-edit-desc-wrapper"><label>' + rtmedia_edit_media_info_upload.description + '</label><textarea class="rtm-upload-edit-desc" id="' + rtm_file_desc_id + '"></textarea></div><span id="' + rtm_file_save_id + '" title="Save Change" class="rtmicon dashicons dashicons-yes"></span>' );
                 } else {
-                    jQuery( rtm_file_title_input ).show();
-                    jQuery( rtm_file_title_save ).show();
+                    jQuery( rtm_file_title_wrapper ).show();
+                    jQuery( rtm_file_desc_wrapper ).show();
+                    jQuery( rtm_file_save_el ).show();
                 }
 
                 jQuery( rtm_file_title_input ).focus();
 
-                jQuery( rtm_file_title_save).click( function(){
+                jQuery( rtm_file_save_el).click( function(){
                     var file_title_val = jQuery( rtm_file_title_input ).val();
                     var file_desc_val = jQuery( rtm_file_desc_input ).val();
                     var file_name_wrapper_el = jQuery( rtm_file_label ).siblings( '.plupload_file_name_wrapper' );
@@ -816,9 +838,10 @@ jQuery( document ).ready( function ( $ ) {
                         file.description = file_desc_val;
                     }
 
-                    jQuery( rtm_file_title_input ).hide();
-                    jQuery( rtm_file_desc_input ).hide();
-                    file_name_wrapper_el.show();jQuery( rtm_file_label ).siblings( '.plupload_file_name_wrapper' )
+                    jQuery( rtm_file_title_wrapper ).hide();
+                    jQuery( rtm_file_desc_wrapper ).hide();
+                    file_name_wrapper_el.show();
+                    jQuery( rtm_file_label ).siblings( '.plupload_file_name_wrapper' )
                     jQuery( rtm_file_label ).show();
                     jQuery( this ).hide();
                 } );

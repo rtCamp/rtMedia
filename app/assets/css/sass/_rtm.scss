@@ -85,6 +85,11 @@
 		font-size: 12px;
 		display: block;
 	}
+	.rtm-upload-edit-title-wrapper, .rtm-upload-edit-desc-wrapper {
+		label {
+			display: block;
+		}
+	}	
 }
 
 .rtm-plupload-list {
