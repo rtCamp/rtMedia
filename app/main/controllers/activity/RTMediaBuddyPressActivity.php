@@ -586,7 +586,7 @@ class RTMediaBuddyPressActivity {
 				$activity_id = bp_activity_add( $activity_args );
 
 				// Store activity id into user meta for reference
-				update_user_meta( $user_id, 'rtm-bp-media-comment-activity-' . $media_id, $activity_id );
+				update_user_meta( $user_id, 'rtm-bp-media-comment-activity-' . $media_id . '-' . $wp_comment_id, $activity_id );
 			}
 		}
 	}
@@ -609,7 +609,7 @@ class RTMediaBuddyPressActivity {
 				$media_obj = $media_obj[0];
 
 				if( ! empty( $media_obj ) ){
-					$meta_key = 'rtm-bp-media-comment-activity-' . $media_obj->id;
+					$meta_key = 'rtm-bp-media-comment-activity-' . $media_obj->id . '-' . $comment_id;
 
 					// Delete activity when user remove his comment.
 					$activity_id = get_user_meta( $user_id, $meta_key, true );
