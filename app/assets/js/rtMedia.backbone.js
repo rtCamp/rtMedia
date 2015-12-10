@@ -576,6 +576,8 @@ jQuery( function ( $ ) {
 
             if( typeof file.description != "undefined" ){
                 up.settings.multipart_params.description = file.description;
+            } else {
+                up.settings.multipart_params.description = '';
             }
 
 			var privacy = $( "#rtm-file_upload-ui select.privacy" ).val();
@@ -952,6 +954,8 @@ jQuery( document ).ready( function ( $ ) {
 
         if( typeof files.description != "undefined" ){
             up.settings.multipart_params.description = files.description;
+        } else {
+            up.settings.multipart_params.description = '';
         }
 
 		// if privacy dropdown is not disabled, then get the privacy value of the update
