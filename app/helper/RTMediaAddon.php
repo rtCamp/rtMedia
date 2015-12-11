@@ -105,7 +105,7 @@ if ( ! class_exists( 'RTMediaAddon' ) ) {
 		 */
 		public function plugins_content( $args = '' ) {
 			$img_src = RTMEDIA_URL . 'app/assets/admin/img/';
-			$rtcamp_upload_url = 'https://rtcamp.r.worldssl.net/wp-content/uploads/';
+			$rtcamp_upload_url = 'https://rtcamp-481283.c.cdn77.org/wp-content/uploads/';
 			$addons = array(
 				array(
 					'title' => __( 'SEO', 'buddypress-media' ),
