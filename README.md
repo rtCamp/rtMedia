@@ -140,6 +140,11 @@ http://www.youtube.com/watch?v####dJrykKQGDcs
 
 ## Changelog ##
 
+#### 3.9.5 [Dec 11, 2015] ####
+* Added new filters
+* Update chinese translations
+* Fix rtMedia add-on broken images
+
 #### 3.9.4 [Dec 07, 2015] ####
 * Fixed media slug issue while deleting media
 * Added new hook in album gallery template
@@ -1108,8 +1113,8 @@ http://www.youtube.com/watch?v####dJrykKQGDcs
 * HTML5 Audio Tag Support (with fallback)
 * HTML5 Video Tag Support (with fallback)
 
-#### 3.9.4 ####
-Requires BuddyPress 1.7 or higher, if using BuddyPress. Fixed media slug issue while deleting media, added new hook in album gallery template.
+#### 3.9.5 ####
+Requires BuddyPress 1.7 or higher, if using BuddyPress. Added new filters, update chinese translations, fix rtMedia add-on broken images.
 
 ## Sponsors ##
 
