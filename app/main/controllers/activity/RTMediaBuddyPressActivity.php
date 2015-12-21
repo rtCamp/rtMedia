@@ -32,9 +32,13 @@ class RTMediaBuddyPressActivity {
         // Filter bp_activity_prefetch_object_data for translatable activity actions
         add_filter( 'bp_activity_prefetch_object_data', array( $this, 'bp_prefetch_activity_object_data' ), 10, 1 );
 
-		// BuddyPress activity for media like and comment actions
-		if ( isset( $rtmedia->options['buddypress_mediaLikeCommentActivity'] ) && 0 != $rtmedia->options['buddypress_mediaLikeCommentActivity'] ){
+		// BuddyPress activity for media like action
+		if ( isset( $rtmedia->options['buddypress_mediaLikeActivity'] ) && 0 != $rtmedia->options['buddypress_mediaLikeActivity'] ){
 			add_action( 'rtmedia_after_like_media', array( $this, 'activity_after_media_like' ) );
+		}
+
+		// BuddyPress activity for media comment action
+		if ( isset( $rtmedia->options['buddypress_mediaCommentActivity'] ) && 0 != $rtmedia->options['buddypress_mediaCommentActivity'] ){
 			add_action( 'rtmedia_after_add_comment', array( $this, 'activity_after_media_comment' ) );
 			add_action( 'rtmedia_before_remove_comment', array( $this, 'remove_activity_after_media_comment_delete' ) );
 		}
