@@ -571,9 +571,16 @@ class RTMediaQuery {
 
 				}
 			}
+
+			// Multiple context_id support
 			if ( isset( $this->media_query[ 'context_id' ] ) && sizeof( explode( ',', $this->media_query[ 'context_id' ] ) ) > 1 ){
 				$this->media_query[ 'context_id' ] = array( 'compare' => 'in', 'value' => explode( ',', $this->media_query[ 'context_id' ] ) );
 			}
+		}
+
+		// Multiple album_id support
+		if ( isset( $this->media_query[ 'album_id' ] ) && sizeof( explode( ',', $this->media_query[ 'album_id' ] ) ) > 1 ){
+			$this->media_query[ 'album_id' ] = array( 'compare' => 'in', 'value' => explode( ',', $this->media_query[ 'album_id' ] ) );
 		}
 
 		if ( isset( $this->media_query[ 'per_page' ] ) ){

@@ -1634,7 +1634,7 @@ function rtmedia_user_album_list( $get_all = false, $selected_album_id = false )
 			}
 		}
 	}
-	$option = "$global_option";
+	$option = apply_filters( 'rtmedia_global_albums_in_uploader', "$global_option" );
 	if ( $profile_option != "" ) {
 		$option .= "<optgroup label='" . __( "Profile Albums", 'buddypress-media' ) . " ' value = 'profile'>$profile_option</optgroup>";
 	}

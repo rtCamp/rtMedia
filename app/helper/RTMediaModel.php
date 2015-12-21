@@ -55,7 +55,10 @@ class RTMediaModel extends RTDBModel {
 			$where .= " AND {$this->table_name}.blog_id = '" . get_current_blog_id() . "' ";
 		}
 		$temp = 65;
-		foreach ( $columns as $colname => $colvalue ) {
+
+		$columns = apply_filters( 'rtmedia-model-query-columns', $columns, $count_flag );
+
+		foreach ( (array) $columns as $colname => $colvalue ) {
 			if ( 'meta_query' == strtolower( $colname ) ){
 				foreach ( $colvalue as $meta_query ) {
 					if ( ! isset( $meta_query['compare'] ) ){
