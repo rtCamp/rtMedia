@@ -6,7 +6,7 @@ License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires at least: WordPress 3.6
 Tested up to: 4.4
-Stable tag: 3.9.5
+Stable tag: 3.10
 
 Add albums, photo, audio/video encoding, privacy, sharing, front-end uploads & more. All this works on mobile/tablets devices.
 
@@ -139,6 +139,10 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 
 == Changelog ==
+
+= 3.10 [Dec 22, 2015] =
+* Added update BuddyPress activity privacy feature
+* Added BuddyPress activity for media likes and comments feature
 
 = 3.9.5 [Dec 11, 2015] =
 * Added new filters
@@ -1115,8 +1119,8 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 == Upgrade Notice ==
 
-= 3.9.5 =
-Requires BuddyPress 1.7 or higher, if using BuddyPress. Added new filters, update chinese translations, fix rtMedia add-on broken images.
+= 3.10 =
+Requires BuddyPress 1.7 or higher, if using BuddyPress. Added update BuddyPress activity privacy feature, added BuddyPress activity for media likes and comments feature.
 
 == Sponsors ==
 
