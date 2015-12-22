@@ -56,6 +56,7 @@ class RTMediaPrivacy {
 	function update_activity_privacy_option(){
 		if( function_exists( 'bp_activity_user_can_delete' ) && bp_activity_user_can_delete()
 		    && is_rtmedia_privacy_enable() && is_rtmedia_privacy_user_overide()
+			&& apply_filters( 'rtm_load_bp_activity_privacy_update_ui', true )
 		){
 			global $activities_template;
 
