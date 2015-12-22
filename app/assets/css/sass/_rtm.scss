@@ -77,6 +77,19 @@
 		display: block;
 		max-width: 100%;
 	}
+
+	.rtm-upload-edit-title {
+		font-size: 12px;
+	}
+	.rtm-upload-edit-desc {
+		font-size: 12px;
+		display: block;
+	}
+	.rtm-upload-edit-title-wrapper, .rtm-upload-edit-desc-wrapper {
+		label {
+			display: block;
+		}
+	}	
 }
 
 .rtm-plupload-list {
