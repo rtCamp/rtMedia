@@ -1006,7 +1006,7 @@ class RTMediaFormHandler {
 				),
 				'group' => 10,
 			),
-                        'rtmedia-enable-notification' => array(
+            'rtmedia-enable-notification' => array(
 				'title' => __( 'Enable media notification', 'buddypress-media' ),
 				'callback' => array( 'RTMediaFormHandler', 'checkbox' ),
 				'args' => array(
@@ -1014,6 +1014,28 @@ class RTMediaFormHandler {
 					'value' => $options[ 'buddypress_enableNotification' ],
 					'desc' => __( 'This will enable notifications to media authors for media likes and comments.', 'buddypress-media' ),
 					
+				),
+				'group' => 10,
+			),
+			'rtmedia-enable-like-activity' => array(
+				'title' => __( 'Create activity for media likes', 'buddypress-media' ),
+				'callback' => array( 'RTMediaFormHandler', 'checkbox' ),
+				'args' => array(
+					'key' => 'buddypress_mediaLikeActivity',
+					'value' => $options[ 'buddypress_mediaLikeActivity' ],
+					'desc' => __( 'Enabling this setting will create BuddyPress activity for media likes.', 'buddypress-media' ),
+
+				),
+				'group' => 10,
+			),
+			'rtmedia-enable-comment-activity' => array(
+				'title' => __( 'Create activity for media comments', 'buddypress-media' ),
+				'callback' => array( 'RTMediaFormHandler', 'checkbox' ),
+				'args' => array(
+					'key' => 'buddypress_mediaCommentActivity',
+					'value' => $options[ 'buddypress_mediaCommentActivity' ],
+					'desc' => __( 'Enabling this setting will create BuddyPress activity for media comments.', 'buddypress-media' ),
+
 				),
 				'group' => 10,
 			),
