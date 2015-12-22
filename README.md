@@ -140,6 +140,10 @@ http://www.youtube.com/watch?v####dJrykKQGDcs
 
 ## Changelog ##
 
+#### 3.10 [Dec 22, 2015] ####
+* Added update BuddyPress activity privacy feature
+* Added BuddyPress activity for media likes and comments feature
+
 #### 3.9.5 [Dec 11, 2015] ####
 * Added new filters
 * Update chinese translations
@@ -1113,8 +1117,8 @@ http://www.youtube.com/watch?v####dJrykKQGDcs
 * HTML5 Audio Tag Support (with fallback)
 * HTML5 Video Tag Support (with fallback)
 
-#### 3.9.5 ####
-Requires BuddyPress 1.7 or higher, if using BuddyPress. Added new filters, update chinese translations, fix rtMedia add-on broken images.
+#### 3.10 ####
+Requires BuddyPress 1.7 or higher, if using BuddyPress. Added update BuddyPress activity privacy feature, added BuddyPress activity for media likes and comments feature.
 
 ## Sponsors ##
 
