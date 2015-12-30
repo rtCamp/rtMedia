@@ -84,16 +84,32 @@ class RTMediaPrivacy {
 			$rtm_activity_model = new RTMediaActivityModel();
 			$is_ac_privacy_exist = $rtm_activity_model->check( $data[ 'activity_id' ] );
 
+			$privacy = intval( $data['privacy'] );
+			$activity_id = intval( $data[ 'activity_id' ] );
+
 			if( ! $is_ac_privacy_exist ){
 				// Very first privacy entry for this activity
 				$status = $rtm_activity_model->insert( array(
-					'privacy' => intval( $data['privacy'] ),
-					'activity_id' => intval( $data[ 'activity_id' ] ),
+					'privacy' => $privacy,
+					'activity_id' => $activity_id,
 					'user_id' => get_current_user_id(),
 				) );
 			} else {
 				// Just update the existing value
-				$status = $rtm_activity_model->update( array( 'privacy' => intval( $data['privacy'] ) ), array( 'activity_id' => intval( $data['activity_id'] ) ) );
+				$status = $rtm_activity_model->update( array( 'privacy' => $privacy ), array( 'activity_id' => $activity_id ) );
+			}
+
+			// update privacy of corresponding media
+			$media_model = new RTMediaModel();
+			$activity_media = $media_model->get( array( 'activity_id' => $activity_id ) );
+			if( ! empty( $activity_media ) && is_array( $activity_media ) ){
+				foreach( $activity_media as $single_media ){
+					$where = array( 'id' => $single_media->id );
+					$columns = array( 'privacy' => $privacy );
+
+					// update media privacy
+					$media_model->update( $columns, $where );
+				}
 			}
 
 			if( $status === false ){
@@ -439,7 +455,7 @@ class RTMediaPrivacy {
 
 			// removed NOT EXISTS check for `rtmedia_privacy` activty meta value.
 			// check git history for more details ;)
-			$where_sql = $where_sql . " AND {$where}";
+			$where_sql = $where_sql . " AND ({$where})";
 			$newsql = "{$select_sql} {$from_sql} {$where_sql} ORDER BY a.date_recorded {$sort} {$pag_sql}";
 		} else {
 			$where .= " (m.max_privacy is NULL OR m.max_privacy <= 0) ";

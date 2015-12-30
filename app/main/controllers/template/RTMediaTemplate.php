@@ -599,6 +599,8 @@ class RTMediaTemplate {
                     
                     if ( function_exists( 'bp_activity_new_comment' ) ) {
                         $comment_activity_id = bp_activity_new_comment( array( 'content' => $_POST[ 'comment_content' ], 'activity_id' => $result[ 0 ]->activity_id ) );
+
+	                    do_action( 'rtm_bp_activity_comment_posted', $comment_activity_id, $result[0] );
                     }
                 }
                 
