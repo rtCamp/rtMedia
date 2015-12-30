@@ -140,6 +140,11 @@ http://www.youtube.com/watch?v####dJrykKQGDcs
 
 ## Changelog ##
 
+#### 3.10.1 [Dec 30, 2015]
+* Set media description before upload feature
+* Update privacy of all attached media on update of activity privacy
+* Update BuddyPress activity query filter for activity privacy
+
 #### 3.10 [Dec 22, 2015] ####
 * Added update BuddyPress activity privacy feature
 * Added BuddyPress activity for media likes and comments feature
@@ -1117,8 +1122,8 @@ http://www.youtube.com/watch?v####dJrykKQGDcs
 * HTML5 Audio Tag Support (with fallback)
 * HTML5 Video Tag Support (with fallback)
 
-#### 3.10 ####
-Requires BuddyPress 1.7 or higher, if using BuddyPress. Added update BuddyPress activity privacy feature, added BuddyPress activity for media likes and comments feature.
+#### 3.10.1 ####
+Requires BuddyPress 1.7 or higher, if using BuddyPress. Set media description before upload feature and bug fixes.
 
 ## Sponsors ##
 
