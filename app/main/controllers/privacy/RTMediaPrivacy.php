@@ -455,7 +455,7 @@ class RTMediaPrivacy {
 
 			// removed NOT EXISTS check for `rtmedia_privacy` activty meta value.
 			// check git history for more details ;)
-			$where_sql = $where_sql . " AND {$where}";
+			$where_sql = $where_sql . " AND ({$where})";
 			$newsql = "{$select_sql} {$from_sql} {$where_sql} ORDER BY a.date_recorded {$sort} {$pag_sql}";
 		} else {
 			$where .= " (m.max_privacy is NULL OR m.max_privacy <= 0) ";
