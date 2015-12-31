@@ -140,7 +140,7 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 == Changelog ==
 
-= 3.10.1 [Dec 30, 2015]
+= 3.10.1 [Dec 30, 2015] =
 * Set media description before upload feature
 * Update privacy of all attached media on update of activity privacy
 * Update BuddyPress activity query filter for activity privacy
