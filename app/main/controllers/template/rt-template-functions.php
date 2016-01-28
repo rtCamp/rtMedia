@@ -1625,7 +1625,7 @@ function rtmedia_user_album_list( $get_all = false, $selected_album_id = false )
 				}
 				if ( $album->context == 'profile' ) {
 
-					$profile_option .= '<option value="' . $album->id . '" ' . $selected . '>' . $album->media_title . '</option>';
+					$profile_option .= '<option value="' . $album->id . '" ' . $selected . '>' . esc_html( $album->media_title ) . '</option>';
 				}
 				//                else
 				//                    $option_group .= '<option value="' . $album->id . '">' . $album->media_title . '</option>';
