@@ -1,5 +1,16 @@
 <?php
 	/**
+	 * @package     Freemius
+	 * @copyright   Copyright (c) 2015, Freemius, Inc.
+	 * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
+	 * @since       1.0.6
+	 */
+
+	if ( ! defined( 'ABSPATH' ) ) {
+		exit;
+	}
+
+	/**
 	 * @var FS_Plugin $plugin
 	 */
 	$plugin = $VARS['plugin'];
@@ -39,7 +50,7 @@
 <?php if ( ! empty( $plugin->info->screenshots ) ) : ?>
 	<?php $screenshots = $plugin->info->screenshots ?>
 	<div class="fs-screenshots clearfix">
-		<h2><?php _efs( 'screenshots' ) ?></h2>
+		<h2><?php _efs( 'screenshots', $plugin->slug ) ?></h2>
 		<ul>
 			<?php $i = 0;
 				foreach ( $screenshots as $s => $url ) : ?>
@@ -49,12 +60,13 @@
 					$url = 'http' . ( WP_FS__IS_HTTPS ? 's' : '' ) . ':' . $url; ?>
 					<li class="<?php echo ( 0 === $i % 2 ) ? 'odd' : 'even' ?>">
 						<style>
-							#section-description .fs-screenshots .fs-screenshot-<?php echo $i ?>
+							#section-description .fs-screenshots <?php echo ".fs-screenshot-{$i}" ?>
 							{
 								background-image: url('<?php echo $url ?>');
 							}
 						</style>
-						<a href="<?php echo $url ?>" title="<?php printf( __fs( 'view-full-size-x' ), $i ) ?>"
+						<a href="<?php echo $url ?>"
+						   title="<?php printf( __fs( 'view-full-size-x', $plugin->slug ), $i ) ?>"
 						   class="fs-screenshot-<?php echo $i ?>"></a>
 					</li>
 					<?php $i ++; endforeach ?>
