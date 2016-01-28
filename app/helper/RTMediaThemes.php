@@ -205,6 +205,16 @@ class RTMediaThemes {
 	public function rtmedia_3rd_party_themes_content() {
 
 		$themes = array(
+			'woffice' => array(
+				'name' => __( 'Woffice - Intranet/Extranet WordPress Theme', 'buddypress-media' ),
+				'image' => RTMEDIA_URL . 'app/assets/admin/img/rtmedia-theme-woffice.jpg',
+				'demo_url' => 'http://rt.cx/woffice',
+				'author' => __( 'Alkaweb', 'buddypress-media' ),
+				'author_url' => 'http://rt.cx/woffice',
+				'buy_url' => 'http://rt.cx/woffice',
+				'description' => __( 'Woffice is a feature rich, powerful Multipurpose Intranet/Extranet Wordpress theme.', 'buddypress-media' ),
+				'tags' => 'association, community, extranet, intranet, management, network, office, private, projects, school, wiki',
+			),
 			'thrive' => array(
 				'name' => __( 'Thrive - Intranet & Community WordPress Theme', 'buddypress-media' ),
 				'image' => RTMEDIA_URL . 'app/assets/admin/img/rtmedia-theme-thrive.jpg',
