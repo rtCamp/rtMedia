@@ -72,7 +72,7 @@ class BPMediaAlbumimporter extends BPMediaImporter {
 					echo '<p>' . __( 'If you have set "WP_DEBUG" in you wp-config.php file, please make sure it is set to "false", so that it doesn\'t conflict with the import process.', 'buddypress-media' ) . '</p></div>';
 					echo '<div class="bp-album-import-accept"><p><strong><label for="bp-album-import-accept"><input type="checkbox" value="accept" name="bp-album-import-accept" id="bp-album-import-accept" /> ' . __( 'I have taken a backup of the database and files of this site.', 'buddypress-media' ) . '</label></strong></p></div>';
 					echo '<button id="bpmedia-bpalbumimport" class="button button-primary">';
-					_e( 'Start Import', 'buddypress-media' );
+					esc_html_e( 'Start Import', 'buddypress-media' );
 					echo '</button>';
 					echo '<div class="bp-album-importer-wizard">';
 					echo '<div class="bp-album-users">';
@@ -155,10 +155,10 @@ class BPMediaAlbumimporter extends BPMediaImporter {
 				echo '<p>' . __( 'However, a lot of unnecessary files and a database table are still eating up your resources. If everything seems fine, you can clean this data up.', 'buddypress-media' ) . '</p>';
 				echo '<br />';
 				echo '<button id="bpmedia-bpalbumimport-cleanup" class="button btn-warning">';
-				_e( 'Clean up Now', 'buddypress-media' );
+				esc_html_e( 'Clean up Now', 'buddypress-media' );
 				echo '</button>';
 				echo ' <a href="' . esc_url( add_query_arg( array( 'page' => 'bp-media-settings' ), ( is_multisite() ? network_admin_url( 'admin.php' ) : admin_url( 'admin.php' ) ) ) ) . '" id="bpmedia-bpalbumimport-cleanup-later" class="button">';
-				_e( 'Clean up Later', 'buddypress-media' );
+				esc_html_e( 'Clean up Later', 'buddypress-media' );
 				echo '</a>';
 				echo '<br />';
 				echo '<br />';

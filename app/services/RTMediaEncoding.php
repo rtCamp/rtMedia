@@ -317,12 +317,12 @@ class RTMediaEncoding {
 	public function encoding_service_intro() {
 		?>
 
-		<h3 class="rtm-option-title"><?php _e( 'Audio/Video encoding service', 'buddypress-media' ); ?></h3>
+		<h3 class="rtm-option-title"><?php esc_html_e( 'Audio/Video encoding service', 'buddypress-media' ); ?></h3>
 
-		<p><?php _e( 'rtMedia team has started offering an audio/video encoding service.', 'buddypress-media' ); ?></p>
+		<p><?php esc_html_e( 'rtMedia team has started offering an audio/video encoding service.', 'buddypress-media' ); ?></p>
 
 		<p>
-			<label for="new-api-key"><?php _e( 'Enter API KEY', 'buddypress-media' ); ?></label>
+			<label for="new-api-key"><?php esc_html_e( 'Enter API KEY', 'buddypress-media' ); ?></label>
 			<input id="new-api-key" type="text" name="new-api-key" value="<?php echo $this->stored_api_key; ?>" size="60" />
 			<input type="submit" id="api-key-submit" name="api-key-submit" value="<?php echo __( 'Save Key', 'buddypress-media' ); ?>" class="button-primary" />
 		</p>
@@ -345,54 +345,54 @@ class RTMediaEncoding {
 		<table  class="bp-media-encoding-table fixed widefat rtm-encoding-table">
 			<thead>
 				<tr>
-					<th><?php _e( 'Feature\Plan', 'buddypress-media' ); ?></th>
-					<th><?php _e( 'Free', 'buddypress-media' ); ?></th>
-					<th><?php _e( 'Silver', 'buddypress-media' ); ?></th>
-					<th><?php _e( 'Gold', 'buddypress-media' ); ?></th>
-					<th><?php _e( 'Platinum', 'buddypress-media' ); ?></th>
+					<th><?php esc_html_e( 'Feature\Plan', 'buddypress-media' ); ?></th>
+					<th><?php esc_html_e( 'Free', 'buddypress-media' ); ?></th>
+					<th><?php esc_html_e( 'Silver', 'buddypress-media' ); ?></th>
+					<th><?php esc_html_e( 'Gold', 'buddypress-media' ); ?></th>
+					<th><?php esc_html_e( 'Platinum', 'buddypress-media' ); ?></th>
 				</tr>
 			</thead>
 
 			<tbody>
 				<tr>
-					<th><?php _e( 'File Size Limit', 'buddypress-media' ); ?></th>
+					<th><?php esc_html_e( 'File Size Limit', 'buddypress-media' ); ?></th>
 					<td>200MB (<del>20MB</del>)</td>
 					<td colspan="3" class="column-posts">16GB (<del>2GB</del>)</td>
 				</tr>
 				<tr>
-					<th><?php _e( 'Bandwidth (monthly)', 'buddypress-media' ); ?></th>
+					<th><?php esc_html_e( 'Bandwidth (monthly)', 'buddypress-media' ); ?></th>
 					<td>10GB (<del>1GB</del>)</td>
 					<td>100GB</td>
 					<td>1TB</td>
 					<td>10TB</td>
 				</tr>
 				<tr>
-					<th><?php _e( 'Overage Bandwidth', 'buddypress-media' ); ?></th>
-					<td><?php _e( 'Not Available', 'buddypress-media' ); ?></td>
+					<th><?php esc_html_e( 'Overage Bandwidth', 'buddypress-media' ); ?></th>
+					<td><?php esc_html_e( 'Not Available', 'buddypress-media' ); ?></td>
 					<td>$0.10 per GB</td>
 					<td>$0.08 per GB</td>
 					<td>$0.05 per GB</td>
 				</tr>
 				<tr>
-					<th><?php _e( 'Amazon S3 Support', 'buddypress-media' ); ?></th>
-					<td><?php _e( 'Not Available', 'buddypress-media' ); ?></td>
-					<td colspan="3" class="column-posts"><?php _e( 'Coming Soon', 'buddypress-media' ); ?></td>
+					<th><?php esc_html_e( 'Amazon S3 Support', 'buddypress-media' ); ?></th>
+					<td><?php esc_html_e( 'Not Available', 'buddypress-media' ); ?></td>
+					<td colspan="3" class="column-posts"><?php esc_html_e( 'Coming Soon', 'buddypress-media' ); ?></td>
 				</tr>
 				<tr>
-					<th><?php _e( 'HD Profile', 'buddypress-media' ); ?></th>
-					<td><?php _e( 'Not Available', 'buddypress-media' ); ?></td>
-					<td colspan="3" class="column-posts"><?php _e( 'Coming Soon', 'buddypress-media' ); ?></td>
+					<th><?php esc_html_e( 'HD Profile', 'buddypress-media' ); ?></th>
+					<td><?php esc_html_e( 'Not Available', 'buddypress-media' ); ?></td>
+					<td colspan="3" class="column-posts"><?php esc_html_e( 'Coming Soon', 'buddypress-media' ); ?></td>
 				</tr>
 				<tr>
-					<th><?php _e( 'Webcam Recording', 'buddypress-media' ); ?></th>
-					<td colspan="4" class="column-posts"><?php _e( 'Coming Soon', 'buddypress-media' ); ?></td>
+					<th><?php esc_html_e( 'Webcam Recording', 'buddypress-media' ); ?></th>
+					<td colspan="4" class="column-posts"><?php esc_html_e( 'Coming Soon', 'buddypress-media' ); ?></td>
 				</tr>
 				<tr>
-					<th><?php _e( 'Pricing', 'buddypress-media' ); ?></th>
-					<td><?php _e( 'Free', 'buddypress-media' ); ?></td>
-					<td><?php _e( '$9/month', 'buddypress-media' ); ?></td>
-					<td><?php _e( '$99/month', 'buddypress-media' ); ?></td>
-					<td><?php _e( '$999/month', 'buddypress-media' ); ?></td>
+					<th><?php esc_html_e( 'Pricing', 'buddypress-media' ); ?></th>
+					<td><?php esc_html_e( 'Free', 'buddypress-media' ); ?></td>
+					<td><?php esc_html_e( '$9/month', 'buddypress-media' ); ?></td>
+					<td><?php esc_html_e( '$99/month', 'buddypress-media' ); ?></td>
+					<td><?php esc_html_e( '$999/month', 'buddypress-media' ); ?></td>
 				</tr>
 				<tr>
 					<th>&nbsp;</th>
@@ -403,7 +403,7 @@ class RTMediaEncoding {
 						} else {
 							?>
 							<form id="encoding-try-now-form" method="get">
-								<button type="submit" class="encoding-try-now button button-primary"><?php _e( 'Try Now', 'buddypress-media' ); ?></button>
+								<button type="submit" class="encoding-try-now button button-primary"><?php esc_html_e( 'Try Now', 'buddypress-media' ); ?></button>
 							</form><?php }
 						?>
 					</td>

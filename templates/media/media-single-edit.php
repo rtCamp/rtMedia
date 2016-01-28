@@ -13,7 +13,7 @@
 						<li class="active">
 							<a href="#panel1">
 								<i class='dashicons dashicons-edit rtmicon'></i>
-								<?php _e( 'Details', 'buddypress-media' ); ?>
+								<?php esc_html_e( 'Details', 'buddypress-media' ); ?>
 							</a>
 						</li>
 						<!-- use this hook to add title of a new tab-->
@@ -23,13 +23,13 @@
 						<div class="content" id="panel1">
 							<!-- First tab i.e Details tab. Active by default-->
 							<div class="rtmedia-edit-title rtm-field-wrap">
-								<label><?php _e( 'Title : ', 'buddypress-media' ); ?></label>
+								<label><?php esc_html_e( 'Title : ', 'buddypress-media' ); ?></label>
 								<?php rtmedia_title_input(); ?>
 							</div>
 							<!--This function shows the privacy dropdown-->
 							<?php echo rtmedia_edit_media_privacy_ui(); ?>
 							<div class="rtmedia-editor-description rtm-field-wrap">
-								<label><?php _e( 'Description: ', 'buddypress-media' ) ?></label>
+								<label><?php esc_html_e( 'Description: ', 'buddypress-media' ) ?></label>
 								<?php
 								echo rtmedia_description_input( $editor = false );
 
@@ -43,8 +43,8 @@
 						<?php do_action( 'rtmedia_add_edit_tab_content', rtmedia_type() ); ?>
 					</div>
 					<div class="rtmedia-editor-buttons">
-						<input type="submit" class="button rtm-button rtm-button-save" value="<?php _e( 'Save', 'buddypress-media' ); ?>" />
-						<a class="button rtm-button rtm-button-back" href="<?php rtmedia_permalink(); ?>"><?php _e( 'Back', 'buddypress-media' ); ?></a>
+						<input type="submit" class="button rtm-button rtm-button-save" value="<?php esc_html_e( 'Save', 'buddypress-media' ); ?>" />
+						<a class="button rtm-button rtm-button-back" href="<?php rtmedia_permalink(); ?>"><?php esc_html_e( 'Back', 'buddypress-media' ); ?></a>
 					</div>
 				</div>
 			</form>

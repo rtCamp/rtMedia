@@ -1256,7 +1256,7 @@ function rtmedia_vedio_editor_content() {
 				if ( is_array( $rtmedia_video_thumbs ) ) {
 					?>
 					<div class="rtmedia-change-cover-arts">
-						<p><?php _e( 'Video Thumbnail:', 'buddypress-media' ); ?></p>
+						<p><?php esc_html_e( 'Video Thumbnail:', 'buddypress-media' ); ?></p>
 						<ul>
 							<?php
 							foreach ( $rtmedia_video_thumbs as $key => $attachment_id ) {
@@ -1388,7 +1388,7 @@ function rtmedia_add_album_selection_field( $media_type ) {
 		}
 		?>
 		<div class="rtmedia-edit-change-album rtm-field-wrap">
-			<label for=""><?php _e( 'Album', 'buddypress-media' ); ?> : </label>
+			<label for=""><?php esc_html_e( 'Album', 'buddypress-media' ); ?> : </label>
 			<?php
 			if ( isset( $rtmedia_query->query[ 'context' ] ) && $rtmedia_query->query[ 'context' ] == 'group' ) {
 				//show group album list.
@@ -1431,8 +1431,8 @@ function rtmedia_comment_form() {
 		<form method="post" id="rt_media_comment_form" class="rt_media_comment_form"
 			  action="<?php echo esc_url( get_rtmedia_permalink( rtmedia_id() ) ); ?>comment/">
 
-			<textarea style="width:100%" placeholder="<?php _e( 'Type Comment...', 'buddypress-media' ); ?>" name="comment_content" id="comment_content"></textarea>
-			<input type="submit" id="rt_media_comment_submit" class="rt_media_comment_submit" value="<?php _e( 'Comment', 'buddypress-media' ); ?>">
+			<textarea style="width:100%" placeholder="<?php esc_html_e( 'Type Comment...', 'buddypress-media' ); ?>" name="comment_content" id="comment_content"></textarea>
+			<input type="submit" id="rt_media_comment_submit" class="rt_media_comment_submit" value="<?php esc_html_e( 'Comment', 'buddypress-media' ); ?>">
 
 			<?php RTMediaComment::comment_nonce_generator(); ?>
 		</form>
@@ -1773,9 +1773,9 @@ function rtmedia_create_album_modal() {
 		<div class="mfp-hide rtmedia-popup" id="rtmedia-create-album-modal">
 			<div id="rtm-modal-container">
 				<?php do_action( "rtmedia_before_create_album_modal" ); ?>
-				<h2 class="rtm-modal-title"><?php _e( 'Create an Album', 'buddypress-media' ); ?></h2>
+				<h2 class="rtm-modal-title"><?php esc_html_e( 'Create an Album', 'buddypress-media' ); ?></h2>
 				<p>
-					<label class="rtm-modal-grid-title-column" for="rtmedia_album_name"><?php _e( 'Album Title : ', 'buddypress-media' ); ?></label>
+					<label class="rtm-modal-grid-title-column" for="rtmedia_album_name"><?php esc_html_e( 'Album Title : ', 'buddypress-media' ); ?></label>
 					<input type="text" id="rtmedia_album_name" value="" class="rtm-input-medium"/>
 				</p>
 				<?php do_action( "rtmedia_add_album_privacy" ); ?>
@@ -1783,7 +1783,7 @@ function rtmedia_create_album_modal() {
 				<input type="hidden" id="rtmedia_album_context_id" value="<?php echo $rtmedia_query->query[ 'context_id' ]; ?>">
 				<?php wp_nonce_field( 'rtmedia_create_album_nonce', 'rtmedia_create_album_nonce' ); ?>
 				<p>
-					<button type="button" id="rtmedia_create_new_album"><?php _e( "Create Album", 'buddypress-media' ); ?></button>
+					<button type="button" id="rtmedia_create_new_album"><?php esc_html_e( "Create Album", 'buddypress-media' ); ?></button>
 				</p>
 				<?php do_action( "rtmedia_after_create_album_modal" ); ?>
 			</div>
@@ -1814,14 +1814,14 @@ function rtmedia_merge_album_modal() {
 		?>
 		<div class="rtmedia-merge-container rtmedia-popup mfp-hide" id="rtmedia-merge">
 			<div id="rtm-modal-container">
-				<h2 class="rtm-modal-title"><?php _e( 'Merge Album', 'buddypress-media' ); ?></h2>
+				<h2 class="rtm-modal-title"><?php esc_html_e( 'Merge Album', 'buddypress-media' ); ?></h2>
 
 				<form method="post" class="album-merge-form" action="merge/">
-					<p><span><?php _e( 'Select Album to merge with : ', 'buddypress-media' ); ?></span>
+					<p><span><?php esc_html_e( 'Select Album to merge with : ', 'buddypress-media' ); ?></span>
 						<?php echo '<select name="album" class="rtmedia-merge-user-album-list">' . $album_list . '</select>'; ?>
 					</p>
 					<?php wp_nonce_field( 'rtmedia_merge_album_' . $rtmedia_query->media_query[ 'album_id' ], 'rtmedia_merge_album_nonce' ); ?>
-					<input type="submit" class="rtmedia-merge-selected" name="merge-album" value="<?php _e( 'Merge Album', 'buddypress-media' ); ?>" />
+					<input type="submit" class="rtmedia-merge-selected" name="merge-album" value="<?php esc_html_e( 'Merge Album', 'buddypress-media' ); ?>" />
 				</form>
 			</div>
 		</div>
@@ -2145,7 +2145,7 @@ function show_rtmedia_like_counts() {
 		}
 		?>'><i class="rtmicon-thumbs-up rtmicon-fw"></i> <span
 				class="rtmedia-like-counter-wrap"><span
-					class="rtmedia-like-counter"><?php echo $count; ?></span> <?php _e( 'people like this', 'buddypress-media' ); ?></span>
+					class="rtmedia-like-counter"><?php echo $count; ?></span> <?php esc_html_e( 'people like this', 'buddypress-media' ); ?></span>
 		</div>
 		<?php
 	}
@@ -2261,7 +2261,7 @@ function rtmedia_content_before_media() {
 
 	if ( $rt_ajax_request ) {
 		?>
-		<span class="rtm-mfp-close mfp-close dashicons dashicons-no-alt" title="<?php _e( "Close (Esc)", 'buddypress-media' ); ?>"></span><?php
+		<span class="rtm-mfp-close mfp-close dashicons dashicons-no-alt" title="<?php esc_html_e( "Close (Esc)", 'buddypress-media' ); ?>"></span><?php
 	}
 }
 
@@ -2702,16 +2702,16 @@ function rtmedia_admin_pages_content( $page ){
 		$url = admin_url() . "admin.php?page=rtmedia-premium";
 		?>
 		<div class="rtm-hire-us-container rtm-page-container">
-			<h3 class="rtm-setting-title rtm-show"><?php _e( 'You can consider rtMedia Team for following :', 'buddypress-media' ); ?></h3>
+			<h3 class="rtm-setting-title rtm-show"><?php esc_html_e( 'You can consider rtMedia Team for following :', 'buddypress-media' ); ?></h3>
 
 			<ol class="rtm-hire-points">
-				<li><?php _e( 'rtMedia Customization ( in Upgrade Safe manner )', 'buddypress-media' ); ?></li>
-				<li><?php _e( 'WordPress/BuddyPress Theme Design and Development', 'buddypress-media' ); ?></li>
-				<li><?php _e( 'WordPress/BuddyPress Plugin Development', 'buddypress-media' ); ?></li>
+				<li><?php esc_html_e( 'rtMedia Customization ( in Upgrade Safe manner )', 'buddypress-media' ); ?></li>
+				<li><?php esc_html_e( 'WordPress/BuddyPress Theme Design and Development', 'buddypress-media' ); ?></li>
+				<li><?php esc_html_e( 'WordPress/BuddyPress Plugin Development', 'buddypress-media' ); ?></li>
 			</ol>
 
 			<div class="clearfix">
-				<a href="https://rtcamp.com/contact" class="rtm-button rtm-success" target="_blank"><?php _e( 'Contact Us', 'buddypress-media' ); ?></a>
+				<a href="https://rtcamp.com/contact" class="rtm-button rtm-success" target="_blank"><?php esc_html_e( 'Contact Us', 'buddypress-media' ); ?></a>
 			</div>
 		</div>
 	<?php
