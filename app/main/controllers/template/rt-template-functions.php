@@ -1595,7 +1595,7 @@ function rtmedia_global_album_list( $selected_album_id = false ) {
 			}
 
 			//if ( ( isset ( $rtmedia_query->media_query[ 'album_id' ] ) && ( $album_objects[ 0 ]->id != $rtmedia_query->media_query[ 'album_id' ] ) ) || ! isset ( $rtmedia_query->media_query[ 'album_id' ] ) ){
-			$option .= '<option value="' . $album->id . '" ' . $selected . '>' . $album->media_title . '</option>';
+			$option .= '<option value="' . $album->id . '" ' . $selected . '>' . esc_html( $album->media_title ) . '</option>';
 			//}
 		}
 	}
@@ -1667,7 +1667,7 @@ function rtmedia_group_album_list( $selected_album_id = false ) { //by default, 
 			}
 
 			if ( ! in_array( $album->id, $global_albums ) && ( ( isset( $rtmedia_query->media_query[ 'album_id' ] ) && ( $album->id != $rtmedia_query->media_query[ 'album_id' ] ) ) || ! isset( $rtmedia_query->media_query[ 'album_id' ] ) ) ) {
-				$option_group .= '<option value="' . $album->id . '" ' . $selected . '>' . $album->media_title . '</option>';
+				$option_group .= '<option value="' . $album->id . '" ' . $selected . '>' . esc_html( $album->media_title ) . '</option>';
 			}
 		}
 	}

@@ -415,7 +415,7 @@ if ( ! class_exists( 'rtForm' ) ) {
 						break;
 					case 'rtSelect' :
 						$selected = ( $attrib[ 'selected' ] ) ? 'selected=selected' : '';
-						$data = '<option value="' . $attrib[ 'value' ] . '" ' . $selected . '>' . $attrib[ 'key' ] . '</option>';
+						$data = '<option value="' . esc_attr( $attrib[ 'value' ] ) . '" ' . $selected . '>' . esc_html( $attrib[ 'key' ] ) . '</option>';
 						break;
 				}
 
