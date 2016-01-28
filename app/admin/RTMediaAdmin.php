@@ -505,7 +505,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 			?>
 			<div class='rtmedia-admin-ad'>
 				<a href='http://rtcamp.com/products/rtmedia-pro/' target='_blank' title='rtMedia Pro'>
-					<img src='<?php echo esc_url($src); ?>' alt="<?php esc_html_e( 'rtMedia Pro is released', 'buddypress-media' ); ?>"/>
+					<img src='<?php echo esc_url($src); ?>' alt="<?php esc_attr_e( 'rtMedia Pro is released', 'buddypress-media' ); ?>"/>
 				</a>
 			</div>
 			<?php
@@ -1013,7 +1013,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 					if ( isset( $videos_without_thumbs ) && is_array( $videos_without_thumbs ) && sizeof( $videos_without_thumbs ) > 0 ) {
 						echo '<div class="error rtmedia-regenerate-video-thumb-error">
 								<p>
-								' . sprintf( kses ( __( "You have %s videos without thumbnails. Click <a href='%s'> here </a> to generate thumbnails. <a href='#' onclick='rtmedia_hide_video_thumb_notice()' style='float:right'>Hide</a>", 'buddypress-media' )), sizeof( $videos_without_thumbs ), admin_url( 'admin.php?page=rtmedia-regenerate' ) ) . '
+								' . sprintf(  __( "You have %s videos without thumbnails. Click <a href='%s'> here </a> to generate thumbnails. <a href='#' onclick='rtmedia_hide_video_thumb_notice()' style='float:right'>Hide</a>", 'buddypress-media' ), sizeof( $videos_without_thumbs ), admin_url( 'admin.php?page=rtmedia-regenerate' ) ) . '
 								</p>
 								</div>';
 						?>
@@ -1650,10 +1650,10 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 			$current_user = wp_get_current_user();
 			$message = sprintf( esc_html__( 'I use @rtMediaWP http://rt.cx/rtmedia on %s', 'buddypress-media' ), home_url() );
 			$addons = '<div id="social" class="rtm-social-share">
-											<p><a href="http://twitter.com/home/?status=' . $message . '" class="button twitter" target= "_blank" title="' . esc_html__( 'Post to Twitter Now', 'buddypress-media' ) . '">' . esc_html__( 'Post to Twitter', 'buddypress-media' ) . '<span class="dashicons dashicons-twitter"></span></a></p>
-											<p><a href="https://www.facebook.com/sharer/sharer.php?u=http://rtcamp.com/rtmedia/" class="button facebook" target="_blank" title="' . esc_html__( 'Share on Facebook Now', 'buddypress-media' ) . '">' . esc_html__( 'Share on Facebook', 'buddypress-media' ) . '<span class="dashicons dashicons-facebook"></span></a></p>
-											<p><a href="http://wordpress.org/support/view/plugin-reviews/buddypress-media?rate=5#postform" class="button wordpress" target= "_blank" title="' . esc_html__( 'Rate rtMedia on Wordpress.org', 'buddypress-media' ) . '">' . esc_html__( 'Rate on Wordpress.org', 'buddypress-media' ) . '<span class="dashicons dashicons-wordpress"></span></a></p>
-											<p><a href="' . sprintf( '%s', 'https://rtcamp.com/feed/' ) . '" class="button rss" target="_blank" title="' . esc_html__( 'Subscribe to our Feeds', 'buddypress-media' ) . '">' . esc_html__( 'Subscribe to our Feeds', 'buddypress-media' ) . '<span class="dashicons dashicons-rss"></span></a></p>
+											<p><a href="http://twitter.com/home/?status=' . $message . '" class="button twitter" target= "_blank" title="' . esc_attr_e( 'Post to Twitter Now', 'buddypress-media' ) . '">' . esc_html__( 'Post to Twitter', 'buddypress-media' ) . '<span class="dashicons dashicons-twitter"></span></a></p>
+											<p><a href="https://www.facebook.com/sharer/sharer.php?u=http://rtcamp.com/rtmedia/" class="button facebook" target="_blank" title="' . esc_attr_e( 'Share on Facebook Now', 'buddypress-media' ) . '">' . esc_html__( 'Share on Facebook', 'buddypress-media' ) . '<span class="dashicons dashicons-facebook"></span></a></p>
+											<p><a href="http://wordpress.org/support/view/plugin-reviews/buddypress-media?rate=5#postform" class="button wordpress" target= "_blank" title="' . esc_attr_e( 'Rate rtMedia on Wordpress.org', 'buddypress-media' ) . '">' . esc_html__( 'Rate on Wordpress.org', 'buddypress-media' ) . '<span class="dashicons dashicons-wordpress"></span></a></p>
+											<p><a href="' . sprintf( '%s', 'https://rtcamp.com/feed/' ) . '" class="button rss" target="_blank" title="' . esc_attr_e( 'Subscribe to our Feeds', 'buddypress-media' ) . '">' . esc_html__( 'Subscribe to our Feeds', 'buddypress-media' ) . '<span class="dashicons dashicons-rss"></span></a></p>
 								</div>';
 
 			new RTMediaAdminWidget( 'spread-the-word', esc_html__( 'Spread the Word', 'buddypress-media' ), $addons );
@@ -1703,7 +1703,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 
 		public function plugin_meta_premium_addon_link( $plugin_meta, $plugin_file, $plugin_data, $status ) {
 			if ( plugin_basename( RTMEDIA_PATH . 'index.php' ) == $plugin_file ) {
-				$plugin_meta[] = '<a href="https://rtcamp.com/rtmedia/addons/?utm_source=dashboard&#038;utm_medium=plugin&#038;utm_campaign=buddypress-media" title="' . esc_html__( 'Premium Add-ons', 'buddypress-media' ) . '">' . esc_html__( 'Premium Add-ons', 'buddypress-media' ) . '</a>';
+				$plugin_meta[] = '<a href="https://rtcamp.com/rtmedia/addons/?utm_source=dashboard&#038;utm_medium=plugin&#038;utm_campaign=buddypress-media" title="' . esc_attr_e( 'Premium Add-ons', 'buddypress-media' ) . '">' . esc_html__( 'Premium Add-ons', 'buddypress-media' ) . '</a>';
 			}
 
 			return $plugin_meta;
