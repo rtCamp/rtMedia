@@ -5,8 +5,8 @@ Tags: BuddyPress, media, multimedia, album, audio, songs, music, video, photo, i
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires at least: WordPress 3.6
-Tested up to: 4.4
-Stable tag: 3.10.1
+Tested up to: 4.4.1
+Stable tag: 3.10.2
 
 Add albums, photo, audio/video encoding, privacy, sharing, front-end uploads & more. All this works on mobile/tablets devices.
 
@@ -139,6 +139,10 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 
 == Changelog ==
+
+= 3.10.2 [Jan 28, 2015] =
+* Fix XSS vulnerability (thanks to [Brajesh](https://profiles.wordpress.org/sbrajesh/))
+* Updated Freemius SDK
 
 = 3.10.1 [Dec 30, 2015] =
 * Set media description before upload feature
@@ -1124,8 +1128,8 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 == Upgrade Notice ==
 
-= 3.10.1 =
-Requires BuddyPress 1.7 or higher, if using BuddyPress. Set media description before upload feature and bug fixes.
+= 3.10.2 =
+Requires BuddyPress 1.7 or higher, if using BuddyPress. Fix XSS vulnerability.
 
 == Sponsors ==
 
