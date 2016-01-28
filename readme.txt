@@ -6,7 +6,7 @@ License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires at least: WordPress 3.6
 Tested up to: 4.4.1
-Stable tag: 3.10.2
+Stable tag: 3.10.3
 
 Add albums, photo, audio/video encoding, privacy, sharing, front-end uploads & more. All this works on mobile/tablets devices.
 
@@ -139,6 +139,9 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 
 == Changelog ==
+
+= 3.10.3 [Jan 28, 2015] =
+* Fix issues
 
 = 3.10.2 [Jan 28, 2015] =
 * Fix XSS vulnerability (thanks to [Brajesh](https://profiles.wordpress.org/sbrajesh/))
@@ -1128,7 +1131,7 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 == Upgrade Notice ==
 
-= 3.10.2 =
+= 3.10.3 =
 Requires BuddyPress 1.7 or higher, if using BuddyPress. Fix XSS vulnerability.
 
 == Sponsors ==
