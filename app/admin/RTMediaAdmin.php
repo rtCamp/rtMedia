@@ -1719,7 +1719,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 				if ( ! empty( $not_supported_image ) ) {
 					echo '<div class="error upload-filetype-network-settings-error">
                         <p>
-                        ' . sprintf( esc_html__( 'You have images enabled on rtMedia but your network allowed filetypes do not permit uploading of %s. Click <a href="%s">here</a> to change your settings manually.', 'buddypress-media' ), implode( ', ', $not_supported_image ), network_admin_url( 'settings.php#upload_filetypes' ) ) . '
+                        ' . sprintf( __( 'You have images enabled on rtMedia but your network allowed filetypes do not permit uploading of %s. Click <a href="%s">here</a> to change your settings manually.', 'buddypress-media' ), implode( ', ', $not_supported_image ), network_admin_url( 'settings.php#upload_filetypes' ) ) . '
                             <br /><strong>' . esc_html__( 'Recommended', 'buddypress-media' ) . ':</strong> <input type="button" class="button update-network-settings-upload-filetypes" class="button" value="' . esc_html__( 'Update Network Settings Automatically', 'buddypress-media' ) . '"> <img style="display:none;" src="' . admin_url( 'images/wpspin_light.gif' ) . '" />
                         </p>
                         </div>';
@@ -1730,7 +1730,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 				if ( ! in_array( 'mp4', $upload_filetypes ) ) {
 					echo '<div class="error upload-filetype-network-settings-error">
                         <p>
-                        ' . sprintf( esc_html__( 'You have video enabled on BuddyPress Media but your network allowed filetypes do not permit uploading of mp4. Click <a href="%s">here</a> to change your settings manually.', 'buddypress-media' ), network_admin_url( 'settings.php#upload_filetypes' ) ) . '
+                        ' . sprintf( __( 'You have video enabled on BuddyPress Media but your network allowed filetypes do not permit uploading of mp4. Click <a href="%s">here</a> to change your settings manually.', 'buddypress-media' ), network_admin_url( 'settings.php#upload_filetypes' ) ) . '
                             <br /><strong>' . esc_html__( 'Recommended', 'buddypress-media' ) . ':</strong> <input type="button" class="button update-network-settings-upload-filetypes" class="button" value="' . esc_html__( 'Update Network Settings Automatically', 'buddypress-media' ) . '"> <img style="display:none;" src="' . admin_url( 'images/wpspin_light.gif' ) . '" />
                         </p>
                         </div>';
