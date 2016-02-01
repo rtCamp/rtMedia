@@ -140,7 +140,14 @@ http://www.youtube.com/watch?v####dJrykKQGDcs
 
 ## Changelog ##
 
-#### 3.10.1 [Dec 30, 2015]
+#### 3.10.3 [Jan 28, 2015] ####
+* Fix issues
+
+#### 3.10.2 [Jan 28, 2015] ####
+* Fix XSS vulnerability (thanks to [Brajesh](https://profiles.wordpress.org/sbrajesh/))
+* Updated Freemius SDK
+
+#### 3.10.1 [Dec 30, 2015] ####
 * Set media description before upload feature
 * Update privacy of all attached media on update of activity privacy
 * Update BuddyPress activity query filter for activity privacy
@@ -1122,8 +1129,8 @@ http://www.youtube.com/watch?v####dJrykKQGDcs
 * HTML5 Audio Tag Support (with fallback)
 * HTML5 Video Tag Support (with fallback)
 
-#### 3.10.1 ####
-Requires BuddyPress 1.7 or higher, if using BuddyPress. Set media description before upload feature and bug fixes.
+#### 3.10.3 ####
+Requires BuddyPress 1.7 or higher, if using BuddyPress. Fix XSS vulnerability.
 
 ## Sponsors ##
 

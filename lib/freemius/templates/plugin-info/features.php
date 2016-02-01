@@ -1,4 +1,20 @@
 <?php
+	/**
+	 * @package     Freemius
+	 * @copyright   Copyright (c) 2015, Freemius, Inc.
+	 * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
+	 * @since       1.0.6
+	 */
+
+	if ( ! defined( 'ABSPATH' ) ) {
+		exit;
+	}
+
+	/**
+	 * @var FS_Plugin $plugin
+	 */
+	$plugin = $VARS['plugin'];
+
 	$plans = $VARS['plans'];
 
 	$features_plan_map = array();
@@ -20,7 +36,7 @@
 			if ( ! isset( $features_plan_map['support'] ) ) {
 				$support_feature        = new stdClass();
 				$support_feature->id    = 'support';
-				$support_feature->title = __fs( 'Support' );
+				$support_feature->title = __fs( 'Support', $plugin->slug );
 				$features_plan_map[ $support_feature->id ] = array( 'feature' => $support_feature, 'plans' => array() );
 			} else {
 				$support_feature = $features_plan_map['support'];
@@ -33,7 +49,7 @@
 	// Add updates as a feature for all plans.
 	$updates_feature        = new stdClass();
 	$updates_feature->id    = 'updates';
-	$updates_feature->title = __fs( 'unlimited-updates' );
+	$updates_feature->title = __fs( 'unlimited-updates', $plugin->slug );
 	$features_plan_map[ $updates_feature->id ] = array( 'feature' => $updates_feature, 'plans' => array() );
 	foreach ( $plans as $plan ) {
 		$features_plan_map[ $updates_feature->id ]['plans'][ $plan->id ] = $updates_feature;

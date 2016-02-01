@@ -78,7 +78,7 @@
 
 			parent::__construct( $site );
 
-			if ( is_object( $site ) && isset( $site->plan_id ) ) {
+			if ( is_object( $site ) ) {
 				$this->plan->id = $site->plan_id;
 			}
 		}

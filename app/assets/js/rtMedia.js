@@ -257,7 +257,7 @@ jQuery( 'document' ).ready( function ( $ ) {
 	} );
 
 	jQuery( '#rtmedia-create-album-modal' ).on( 'click', '#rtmedia_create_new_album', function ( e ) {
-		$albumname = jQuery.trim( jQuery( '#rtmedia_album_name' ).val() );
+		$albumname = jQuery( '<span/>' ).text( jQuery.trim( jQuery( '#rtmedia_album_name' ).val()  ) ).html();
 		$context = jQuery.trim( jQuery( '#rtmedia_album_context' ).val() );
 		$context_id = jQuery.trim( jQuery( '#rtmedia_album_context_id' ).val() );
 		$privacy = jQuery.trim( jQuery( '#rtmedia_select_album_privacy' ).val() );
