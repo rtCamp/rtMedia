@@ -94,7 +94,7 @@ class RTMediaTemplate {
                     
                     echo "</div>";
                 } else {
-                    echo __( 'Invalid attribute passed for rtmedia_gallery shortcode.', 'buddypress-media' );
+                    echo esc_html__( 'Invalid attribute passed for rtmedia_gallery shortcode.', 'buddypress-media' );
 
                     return false;
                 }
@@ -146,7 +146,7 @@ class RTMediaTemplate {
                             echo RTMediaUploadShortcode::pre_render( $shortcode_attr[ 'attr' ] );
                         }
                     } else {
-                        echo __( 'Invalid attribute passed for rtmedia_gallery shortcode.', 'buddypress-media' );
+                        echo esc_html__( 'Invalid attribute passed for rtmedia_gallery shortcode.', 'buddypress-media' );
 
                         return false;
                     }

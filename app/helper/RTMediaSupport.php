@@ -574,17 +574,17 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 			if ( wp_mail( $support_email, '[rtmedia] ' . $mail_type . ' from ' . str_replace( array( 'http://', 'https://' ), '', $form_data[ 'website' ] ), stripslashes( $message ), $headers ) ) {
 				echo '<div class="rtmedia-success" style="margin:10px 0;">';
 				if ( 'new_feature' == $form_data[ 'request_type' ] ) {
-					echo '<p>' . __( 'Thank you for your Feedback/Suggestion.', 'buddypress-media' ) . '</p>';
+					echo '<p>' . esc_html__( 'Thank you for your Feedback/Suggestion.', 'buddypress-media' ) . '</p>';
 				} else {
-					echo '<p>' . __( 'Thank you for posting your support request.', 'buddypress-media' ) . '</p>';
-					echo '<p>' . __( 'We will get back to you shortly.', 'buddypress-media' ) . '</p>';
+					echo '<p>' . esc_html__( 'Thank you for posting your support request.', 'buddypress-media' ) . '</p>';
+					echo '<p>' . esc_html__( 'We will get back to you shortly.', 'buddypress-media' ) . '</p>';
 				}
 				echo '</div>';
 			} else {
 				echo '<div class="rtmedia-error">';
-				echo '<p>' . __( 'Your server failed to send an email.', 'buddypress-media' ) . '</p>';
-				echo '<p>' . __( 'Kindly contact your server support to fix this.', 'buddypress-media' ) . '</p>';
-				echo '<p>' . __( 'You can alternatively create a support request <a href="https://rtcamp.com/premium-support/" target="_blank">here</a>', 'buddypress-media' ) . '</p>';
+				echo '<p>' . esc_html__( 'Your server failed to send an email.', 'buddypress-media' ) . '</p>';
+				echo '<p>' . esc_html__( 'Kindly contact your server support to fix this.', 'buddypress-media' ) . '</p>';
+				echo '<p>' . esc_attr__( 'You can alternatively create a support request <a href="https://rtcamp.com/premium-support/" target="_blank">here</a>', 'buddypress-media' ) . '</p>';
 				echo '</div>';
 			}
 			die();

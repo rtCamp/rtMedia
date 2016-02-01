@@ -1207,7 +1207,7 @@ function rtmedia_vedio_editor_title() {
 			}
 		}
 		if ( $flag ) {
-			echo '<li><a href="#panel2"><i class="dashicons dashicons-format-image rtmicon"></i>' . __( 'Video Thumbnail', 'buddypress-media' ) . '</a></li>';
+			echo '<li><a href="#panel2"><i class="dashicons dashicons-format-image rtmicon"></i>' . esc_html__( 'Video Thumbnail', 'buddypress-media' ) . '</a></li>';
 		}
 	}
 }
@@ -1339,7 +1339,7 @@ add_action( 'rtmedia_add_edit_tab_title', 'rtmedia_image_editor_title', 12, 1 );
 function rtmedia_image_editor_title( $type = 'photo' ) {
 	global $rtmedia_query;
 	if ( isset( $rtmedia_query->media[ 0 ]->media_type ) && $rtmedia_query->media[ 0 ]->media_type == 'photo' && $type == 'photo' ) {
-		echo '<li><a href="#panel2" class="rtmedia-modify-image"><i class="dashicons dashicons-format-image rtmicon"></i>' . __( "Image", 'buddypress-media' ) . '</a></li>';
+		echo '<li><a href="#panel2" class="rtmedia-modify-image"><i class="dashicons dashicons-format-image rtmicon"></i>' . esc_html__( "Image", 'buddypress-media' ) . '</a></li>';
 	}
 }
 
@@ -1468,14 +1468,14 @@ function rtmedia_delete_form( $echo = true ) {
 			echo $html;
 			RTMediaMedia::media_nonce_generator( rtmedia_id(), true );
 			do_action( "rtmedia_media_single_delete_form" );
-			echo '<button type="submit" title="' . __( 'Delete Media', 'buddypress-media' ) . '" class="rtmedia-delete-media rtmedia-action-buttons button">' . __( 'Delete', 'buddypress-media' ) . '</button></form>';
+			echo '<button type="submit" title="' . esc_html__( 'Delete Media', 'buddypress-media' ) . '" class="rtmedia-delete-media rtmedia-action-buttons button">' . __( 'Delete', 'buddypress-media' ) . '</button></form>';
 		} else {
 			$output = $html;
 			$rtm_nonce = RTMediaMedia::media_nonce_generator( rtmedia_id(), false );
 			$rtm_nonce = json_decode( $rtm_nonce );
 			$rtm_nonce_field = wp_nonce_field( 'rtmedia_' . rtmedia_id(), $rtm_nonce->action, true, false );
 			do_action( "rtmedia_media_single_delete_form" );
-			$output .= $rtm_nonce_field . '<button type="submit" title="' . __( 'Delete Media', 'buddypress-media' ) . '" class="rtmedia-delete-media rtmedia-action-buttons button">' . __( 'Delete', 'buddypress-media' ) . '</button></form>';
+			$output .= $rtm_nonce_field . '<button type="submit" title="' . esc_html__( 'Delete Media', 'buddypress-media' ) . '" class="rtmedia-delete-media rtmedia-action-buttons button">' . __( 'Delete', 'buddypress-media' ) . '</button></form>';
 
 			return $output;
 		}
@@ -2157,11 +2157,11 @@ add_action( 'rtmedia_album_gallery_actions', 'add_upload_button', 99 );
 function add_upload_button() {
 	if ( function_exists( 'bp_is_blog_page' ) && ! bp_is_blog_page() ) {
 		if ( function_exists( 'bp_is_user' ) && bp_is_user() && function_exists( 'bp_displayed_user_id' ) && bp_displayed_user_id() == get_current_user_id() ) {
-			echo '<span class="primary rtmedia-upload-media-link" id="rtm_show_upload_ui" title="' . __( 'Upload Media', 'buddypress-media' ) . '"><i class="dashicons dashicons-upload rtmicon"></i>' . __( 'Upload', 'buddypress-media' ) . '</span>';
+			echo '<span class="primary rtmedia-upload-media-link" id="rtm_show_upload_ui" title="' . esc_attr__( 'Upload Media', 'buddypress-media' ) . '"><i class="dashicons dashicons-upload rtmicon"></i>' . esc_html__( 'Upload', 'buddypress-media' ) . '</span>';
 		} else {
 			if ( function_exists( 'bp_is_group' ) && bp_is_group() ) {
 				if ( can_user_upload_in_group() ) {
-					echo '<span class="rtmedia-upload-media-link primary" id="rtm_show_upload_ui" title="' . __( 'Upload Media', 'buddypress-media' ) . '"><i class="dashicons dashicons-upload rtmicon"></i>' . __( 'Upload', 'buddypress-media' ) . '</span>';
+					echo '<span class="rtmedia-upload-media-link primary" id="rtm_show_upload_ui" title="' . esc_attr__( 'Upload Media', 'buddypress-media' ) . '"><i class="dashicons dashicons-upload rtmicon"></i>' . esc_html__( 'Upload', 'buddypress-media' ) . '</span>';
 				}
 			}
 		}
@@ -2244,10 +2244,10 @@ function rtmedia_link_in_footer() {
 		?>
 
 		<div class='rtmedia-footer-link'>
-			<?php echo __( "Empowering your community with ", 'buddypress-media' ); ?>
+			<?php echo esc_html__( "Empowering your community with ", 'buddypress-media' ); ?>
 			<a href='<?php echo esc_url( $href ) ?>'
-			   title='<?php echo __( 'The only complete media solution for WordPress, BuddyPress and bbPress', 'buddypress-media' ); ?> '>
-				rtMedia</a>
+			   title='<?php echo esc_attr__( 'The only complete media solution for WordPress, BuddyPress and bbPress', 'buddypress-media' ); ?> '>
+				<?php echo  esc_html__( 'rtMedia', 'buddypress-media' );?></a>
 		</div>
 		<?php
 	}
