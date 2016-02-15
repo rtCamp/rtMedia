@@ -20,10 +20,10 @@ class RTMediaMeta {
 	}
 
 	public function get_meta( $id = false, $key = false ) {
-		if ( $id === false ){
+		if ( false === $id ) {
 			return false;
 		}
-		if ( $key === false ){
+		if ( false === $key ) {
 			return $this->get_all_meta( $id );
 		} else {
 			return $this->get_single_meta( $id, $key );
@@ -31,7 +31,7 @@ class RTMediaMeta {
 	}
 
 	private function get_all_meta( $id = false ) {
-		if ( $id === false ){
+		if ( false === $id) {
 			return false;
 		}
 
@@ -39,15 +39,15 @@ class RTMediaMeta {
 	}
 
 	private function get_single_meta( $id = false, $key = false ) {
-		if ( $id === false ){
+		if ( false === $id ) {
 			return false;
 		}
-		if ( $key === false ){
+		if ( false === $key ) {
 			return false;
 		}
 		$value = $this->model->get( array( 'media_id' => $id, 'meta_key' => $key ) );
-		if ( isset( $value[ 0 ] ) ){
-			return maybe_unserialize( $value[ 0 ]->meta_value );
+		if ( isset( $value[0] ) ) {
+			return maybe_unserialize( $value[0]->meta_value );
 		} else {
 			return false;
 		}
@@ -58,21 +58,21 @@ class RTMediaMeta {
 	}
 
 	public function update_meta( $id = false, $key = false, $value = false, $duplicate = false ) {
-		if ( $id === false ){
+		if ( false === $id ) {
 			return false;
 		}
-		if ( $key === false ){
+		if ( false === $key ) {
 			return false;
 		}
-		if ( $value === false ){
+		if ( false === $value ) {
 			return false;
 		}
 		$value = maybe_serialize( $value );
 
-		if ( $duplicate === true ){
+		if ( true === $duplicate ) {
 			$media_meta = $this->model->insert( array( 'media_id' => $id, 'meta_key' => $key, 'meta_value' => $value ) );
 		} else {
-			if ( $this->get_single_meta( $id, $key ) ){
+			if ( $this->get_single_meta( $id, $key ) ) {
 				$meta       = array( 'meta_value' => $value );
 				$where      = array( 'media_id' => $id, 'meta_key' => $key );
 				$media_meta = $this->model->update( $meta, $where );
@@ -85,10 +85,10 @@ class RTMediaMeta {
 	}
 
 	public function delete_meta( $id = false, $key = false ) {
-		if ( $id === false ){
+		if ( false === $id ) {
 			return false;
 		}
-		if ( $key === false ){
+		if ( false === $key ) {
 			$where = array( 'media_id' => $id );
 		} else {
 			$where = array( 'media_id' => $id, 'meta_key' => $key );
@@ -96,5 +96,4 @@ class RTMediaMeta {
 
 		return $this->model->delete( $where );
 	}
-
 }

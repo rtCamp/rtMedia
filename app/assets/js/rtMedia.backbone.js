@@ -1077,6 +1077,10 @@ jQuery( document ).ready( function ( $ ) {
  */
 jQuery( document ).ready( function ( $ ) {
 	jQuery( document ).on( "click", "#rt_media_comment_form #rt_media_comment_submit", function ( e ) {
+        var comment_content_el = jQuery( '#comment_content' );
+        var comment_form_el = jQuery( "#rt_media_comment_form" );
+        var that = this;
+
 		e.preventDefault();
 		if ( $.trim( $( "#comment_content" ).val() ) == "" ) {
 			rtmedia_single_media_alert_message( rtmedia_empty_comment_msg, 'warning' );
@@ -1085,15 +1089,18 @@ jQuery( document ).ready( function ( $ ) {
 
 		$( this ).attr( 'disabled', 'disabled' );
 
+        // sanitize comment content and escape html tags
+        comment_content_el.val( jQuery( '<span/>' ).text( jQuery.trim( comment_content_el.val() ) ).html() );
+
 		$.ajax( {
-			url: jQuery( "#rt_media_comment_form" ).attr( "action" ),
+			url: comment_form_el.attr( "action" ),
 			type: 'post',
-			data: jQuery( "#rt_media_comment_form" ).serialize() + "&rtajax=true",
+			data: comment_form_el.serialize() + "&rtajax=true",
 			success: function ( data ) {
 				$( '#rtmedia-no-comments' ).remove();
 				$( "#rtmedia_comment_ul" ).append( data );
-				$( "#comment_content" ).val( "" );
-				$( "#rt_media_comment_form #rt_media_comment_submit" ).removeAttr( 'disabled' );
+                comment_content_el.val( "" );
+				$( that ).removeAttr( 'disabled' );
 				rtMediaHook.call( 'rtmedia_js_after_comment_added', [ ] );
 			}
 		} );

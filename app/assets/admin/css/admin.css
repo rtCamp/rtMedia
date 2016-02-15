@@ -699,7 +699,7 @@ input[type=checkbox]:checked ~ .switch-handle {
 }
 .rtm-plugin-card.plugin-card .rtm-logo img {
   height: auto;
-  margin: -10px 0 0 -10px;
+  /*margin: -10px 0 0 -10px;*/
   max-width: 120px;
 }
 .rtm-plugin-card.plugin-card .desc, .rtm-plugin-card.plugin-card .name {
@@ -709,6 +709,7 @@ input[type=checkbox]:checked ~ .switch-handle {
 }
 .rtm-plugin-card.plugin-card h4 {
   margin-bottom: 0;
+  margin-top: 0;
 }
 .rtm-plugin-card.plugin-card a {
   text-decoration: none;
@@ -727,6 +728,9 @@ input[type=checkbox]:checked ~ .switch-handle {
 }
 #rtm-plugins .rtm-setting-title + .rtm-option-title {
   margin-top: 0;
+}
+#rtm-plugins .plugin-card-top {
+  padding: 10px;
 }
 
 .rtm-encoding-table {

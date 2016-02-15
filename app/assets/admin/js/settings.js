@@ -395,10 +395,11 @@ jQuery( document ).ready( function ( $ ) {
 				jQuery( '#bpmedia-bpalbumimporter .bp-album-users span.finished' ).html( parseInt( response.users ) );
 				if ( favorites ) {
 					favorite_data = {
-						'action': 'rtmedia_rt_album_import_favorites'
+						'action': 'rtmedia_rt_album_import_favorites',
+						rtm_wpnonce: jQuery('#bpaimporter_wpnonce').val()
 					}
 					jQuery.post( ajaxurl, favorite_data, function ( response ) {
-						if ( response.favorites !== 0 || response.favorites !== '0' ) {
+						if (response.hasOwnProperty(favorites) && (response.favorites !== 0 || response.favorites !== '0')) {
 							if ( !jQuery( '.bp-album-favorites' ).length )
 								jQuery( '.bp-album-comments' ).after( '<br /><div class="bp-album-favorites"><strong>User\'s Favorites: <span class="finished">0</span> / <span class="total">' + response.users + '</span></strong><div id="rtprogressbar"><div style="width:0%"></div></div></div>' );
 							$favorites = {};
@@ -418,7 +419,8 @@ jQuery( document ).ready( function ( $ ) {
 								newvals = {
 									'action': 'rtmedia_rt_album_import_step_favorites',
 									'offset': ( i - 1 ) * 1,
-									'redirect': i == response.users
+									'redirect': i == response.users,
+									'rtm_wpnonce': jQuery('#bpaimporter_wpnonce').val()
 								}
 								$favorites[ i ] = newvals;
 							}
@@ -436,7 +438,11 @@ jQuery( document ).ready( function ( $ ) {
 					}, 'json' );
 				}
 			} else {
-				jQuery( '#map_progress_msgs' ).html( '<div class="map_mapping_failure">Row ' + response.page + ' failed.</div>' );
+				if (data.hasOwnProperty(page)) {
+					jQuery('#map_progress_msgs').html('<div class="map_mapping_failure">Row ' + response.page + ' failed.</div>');
+				} else {
+					jQuery('#map_progress_msgs').html('<div class="map_mapping_failure">Request failed.</div>');
+				}
 			}
 		} );
 	}
@@ -466,7 +472,8 @@ jQuery( document ).ready( function ( $ ) {
 	jQuery( '#bpmedia-bpalbumimport-cleanup' ).click( function ( e ) {
 		e.preventDefault();
 		jQuery.post( ajaxurl, {
-			action: 'rtmedia_rt_album_cleanup'
+			action: 'rtmedia_rt_album_cleanup',
+			rtm_wpnonce: jQuery('#bpaimporter_wpnonce').val()
 		}, function ( response ) {
 			window.location = settings_rt_album_import_url;
 		} );
@@ -525,7 +532,8 @@ jQuery( document ).ready( function ( $ ) {
 				'page': i,
 				'action': 'rtmedia_rt_album_import',
 				'count': $count,
-				'values': $values
+				'values': $values,
+				rtm_wpnonce: jQuery('#bpaimporter_wpnonce').val()
 			}
 			$data[ i ] = newvals;
 		}
@@ -568,7 +576,8 @@ jQuery( document ).ready( function ( $ ) {
 		e.preventDefault();
 		$bpalbum = jQuery( this );
 		var data = {
-			action: 'rtmedia_rt_album_deactivate'
+			action: 'rtmedia_rt_album_deactivate',
+			rtm_wpnonce: jQuery('#bpaimporter_wpnonce').val()
 		}
 		jQuery.get( ajaxurl, data, function ( response ) {
 			if ( response )
@@ -738,7 +747,8 @@ jQuery( document ).ready( function ( $ ) {
 		}
 		data = {
 			action: "rtmedia_submit_request",
-			form_data: form_data
+			form_data: form_data,
+			support_wpnonce: jQuery('#support_wpnonce').val()
 		};
 		jQuery.post( ajaxurl, data, function ( data ) {
 			data = data.trim();

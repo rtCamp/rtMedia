@@ -8,7 +8,7 @@
  * version 1.1
  */
 
-if ( ! class_exists( 'RTDBUpdate' ) ){
+if ( ! class_exists( 'RTDBUpdate' ) ) {
 	class RTDBUpdate {
 		/**
 		 *
@@ -27,15 +27,15 @@ if ( ! class_exists( 'RTDBUpdate' ) ){
 		 *
 		 * @param type string $current_version Optional if not defined then will use plugin version
 		 */
-		public function __construct( $current_version = false, $plugin_path = false, $schema_path = false, $mu_single_table = false ){
+		public function __construct( $current_version = false, $plugin_path = false, $schema_path = false, $mu_single_table = false ) {
 
-			if ( false != $schema_path ){
+			if ( false !== $schema_path ) {
 				$this->schema_path = $schema_path;
 			} else {
 				$this->schema_path = realpath( dirname( __FILE__ ) . $this->schema_path );
 			}
 
-			if ( false != $plugin_path ){
+			if ( false !== $plugin_path ) {
 				$this->plugin_path = $plugin_path;
 			} else {
 				$this->plugin_path = realpath( dirname( __FILE__ ) . $this->plugin_path );
@@ -44,7 +44,7 @@ if ( ! class_exists( 'RTDBUpdate' ) ){
 			$this->mu_single_table = $mu_single_table;
 
 			$this->rt_plugin_info = new rt_plugin_info( $this->plugin_path );
-			if ( false == $current_version ){
+			if ( false === $current_version ) {
 				$current_version = $this->rt_plugin_info->version;
 			}
 			$this->db_version             = $current_version;
@@ -61,7 +61,7 @@ if ( ! class_exists( 'RTDBUpdate' ) ){
 		 *
 		 * @return void
 		 */
-		public function create_table( $sql ){
+		public function create_table( $sql ) {
 			require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
 			dbDelta( $sql );
 		}
@@ -75,7 +75,7 @@ if ( ! class_exists( 'RTDBUpdate' ) ){
 		 *
 		 * @return string
 		 */
-		public function get_db_version_option_name(){
+		public function get_db_version_option_name() {
 			return strtoupper( 'RT_' . str_replace( '-', '_', sanitize_title( $this->rt_plugin_info->name ) ) . '_DB_VERSIONS' );
 		}
 
@@ -88,7 +88,7 @@ if ( ! class_exists( 'RTDBUpdate' ) ){
 		 *
 		 * @return string
 		 */
-		public function get_install_db_version(){
+		public function get_install_db_version() {
 			return ( $this->mu_single_table ) ? get_site_option( $this->db_version_option_name, '0.0' ) : get_option( $this->db_version_option_name, '0.0' );
 		}
 
@@ -101,7 +101,7 @@ if ( ! class_exists( 'RTDBUpdate' ) ){
 		 *
 		 * @return bool
 		 */
-		public function check_upgrade(){
+		public function check_upgrade() {
 			return version_compare( $this->db_version, $this->install_db_version, '>' );
 		}
 
@@ -115,24 +115,23 @@ if ( ! class_exists( 'RTDBUpdate' ) ){
 		 *
 		 * @return void
 		 */
-		public function do_upgrade(){
+		public function do_upgrade() {
 			global $wpdb;
-			if ( version_compare( $this->db_version, $this->install_db_version, '>' ) ){
+			if ( version_compare( $this->db_version, $this->install_db_version, '>' ) ) {
 				$path = $this->schema_path;
-				if ( $handle = opendir( $path ) ){
+				if ( $handle = opendir( $path ) ) {
 					while ( false !== ( $entry = readdir( $handle ) ) ) {
-						if ( $entry != '.' && $entry != '..' ){
-							if (  false !== strpos( $entry, '.schema' )  && file_exists( $path . '/' . $entry ) ){
-								if ( is_multisite() ){
+						if ( '.' !== $entry && '..' !== $entry ) {
+							if ( false !== strpos( $entry, '.schema' ) && file_exists( $path . '/' . $entry ) ) {
+								if ( is_multisite() ) {
 									$table_name  = str_replace( '.schema', '', strtolower( $entry ) );
-									$check_table = "SHOW TABLES LIKE '%rt_" . $table_name . "'";
-									$check_res   = $wpdb->get_results( $check_table, ARRAY_N );
-									if ( $check_res && sizeof( $check_res ) > 0 && is_array( $check_res ) && isset( $check_res[0][0] ) ){
+									$check_res   = $wpdb->get_results( $wpdb->prepare( 'SHOW TABLES LIKE %s', '%rt_' . $table_name ), ARRAY_N );
+									if ( $check_res && count( $check_res ) > 0 && is_array( $check_res ) && isset( $check_res[0][0] ) ) {
 										$tb_name    = $check_res[0][0];
 										$table_name = ( ( $this->mu_single_table ) ? $wpdb->base_prefix : $wpdb->prefix ) . 'rt_' . $table_name;
-										if ( $tb_name != $table_name ){
+										if ( $tb_name !== $table_name ) {
 											$alter_sql = 'ALTER TABLE ' . $tb_name . ' RENAME TO ' . $table_name;
-											$wpdb->query( $alter_sql );
+											$wpdb->query( $alter_sql ); // @codingStandardsIgnoreLine
 										}
 									}
 								}
@@ -142,7 +141,7 @@ if ( ! class_exists( 'RTDBUpdate' ) ){
 					}
 					closedir( $handle );
 				}
-				if ( $this->mu_single_table ){
+				if ( $this->mu_single_table ) {
 					update_site_option( $this->db_version_option_name, $this->db_version );
 				} else {
 					update_option( $this->db_version_option_name, $this->db_version );
@@ -160,10 +159,10 @@ if ( ! class_exists( 'RTDBUpdate' ) ){
 		 *
 		 * @return bool
 		 */
-		static function table_exists( $table ){
+		static function table_exists( $table ) {
 			global $wpdb;
 
-			if ( 1 == $wpdb->query( "SHOW TABLES LIKE '" . $table . "'" )  ){
+			if ( 1 === intval( $wpdb->query( $wpdb->prepare( 'SHOW TABLES LIKE %s', $table ) ) ) ) {
 				return true;
 			}
 
@@ -180,7 +179,7 @@ if ( ! class_exists( 'RTDBUpdate' ) ){
 		 *
 		 * @return string sql query
 		 */
-		public function genrate_sql( $file_name, $file_content ){
+		public function genrate_sql( $file_name, $file_content ) {
 			return sprintf( $file_content, $this->genrate_table_name( $file_name ) );
 		}
 
@@ -193,12 +192,11 @@ if ( ! class_exists( 'RTDBUpdate' ) ){
 		 *
 		 * @return string
 		 */
-		public function genrate_table_name( $file_name ){
+		public function genrate_table_name( $file_name ) {
 			global $wpdb;
 
 			return ( ( $this->mu_single_table ) ? $wpdb->base_prefix : $wpdb->prefix ) . 'rt_' . str_replace( '.schema', '', strtolower( $file_name ) );
 		}
-
 	}
 
 }

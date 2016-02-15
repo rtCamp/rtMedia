@@ -58,5 +58,4 @@ class RTMediaFriends {
 
 		return $friends;
 	}
-
 }

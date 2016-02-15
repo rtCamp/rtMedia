@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<ruleset name="rtMedia">
+    <description>A custom set of rules to check for a rtMedia WordPress project</description>
+    <exclude-pattern>lib/*</exclude-pattern>
+    <exclude-pattern>test/*</exclude-pattern>
+    <exclude-pattern>node_modules/*</exclude-pattern>
+    <exclude-pattern>bin/*</exclude-pattern>
+    <exclude-pattern>.sass-cache/*</exclude-pattern>
+    <exclude-pattern>app/main/routers/query/RTMediaQuery.php</exclude-pattern>
+
+    <rule ref="Squiz.PHP.CommentedOutCode"/>
+    <rule ref="Squiz.WhiteSpace.SuperfluousWhitespace"/>
+    <rule ref="Generic.CodeAnalysis.UnusedFunctionParameter"/>
+    <rule ref="Generic.Commenting.Todo"/>
+    <rule ref="Generic.ControlStructures.InlineControlStructure"/>
+
+    <!--
+    We may also want to to include all the rules in a standard
+    -->
+    <rule ref="WordPress-Extra">
+        <!--
+        We may want a middle ground though. The best way to do this is add the
+        entire ruleset, then rule by rule, remove ones that don't suit a project. We
+        can do this by running `phpcs` with the '-s' flag, to see the names of the
+        different Sniffs, as their rules are broken. From here, we can opt to
+        exclude problematic sniffs like so.
+        -->
+
+        <exclude name="WordPress.WhiteSpace.ControlStructureSpacing" />
+        <exclude name="PEAR.Functions.FunctionCallSignature.Indent" />
+        <exclude name="WordPress.NamingConventions.ValidVariableName.NotSnakeCaseMemberVar" />
+        <exclude name="Generic.Files.LowercasedFilename.NotFound" />
+        <exclude name="WordPress.NamingConventions.ValidVariableName.NotSnakeCase" />
+        <exclude name="WordPress.NamingConventions.ValidFunctionName.FunctionNameInvalid" />
+        <exclude name="WordPress.Files.FileName.UnderscoresNotAllowed" />
+        <exclude name="WordPress.Classes.ValidClassName.NotCamelCaps" />
+        <exclude name="Generic.Strings.UnnecessaryStringConcat.Found" />
+        <exclude name="WordPress.PHP.YodaConditions.NotYoda" />
+    </rule>
+</ruleset>
