@@ -4,7 +4,6 @@ language: node_js
 node_js:
 - "0.10"
 
-
 env:
 - WP_VERSION=4.0 WP_MULTISITE=0
 
@@ -29,14 +28,19 @@ before_script:
 - sudo nginx -t
 - sudo service nginx reload
 - cd /var/www/wp.localtest.me/htdocs/wp-content/plugins/ && ls
-- mkdir rtmedia
+- mkdir buddypress-media
 - cd $PLUGIN_DIR
-- cp -Rf * /var/www/wp.localtest.me/htdocs/wp-content/plugins/rtmedia/
+- cp -Rf * /var/www/wp.localtest.me/htdocs/wp-content/plugins/buddypress-media/
 - cd /var/www/wp.localtest.me/htdocs/
 - wp --allow-root plugin install https://downloads.wordpress.org/plugin/buddypress.2.2.3.1.zip
 - wp --allow-root plugin install https://downloads.wordpress.org/plugin/bbpress.2.5.7.zip
 - wp --allow-root plugin install https://downloads.wordpress.org/plugin/rtsocial.2.1.18.zip
 - wp plugin activate --all
+- wp user create AUTHORUSER auser@wp.localtest.me --role=author --user_pass=AUTHORPASS --allow-root
+- wp user create EDITORUSER euser@wp.localtest.me --role=editor --user_pass=EDITORPASS --allow-root
+- wp user create CONTRIBUTORUSER cuser@wp.localtest.me --role=contributor --user_pass=CONTRIBUTORPASS --allow-root
+- wp user create SUBSCRIBERUSER suser@wp.localtest.me --role=subscriber --user_pass=SUBSCRIBERPASS --allow-root
+- wp user list --allow-root
 - cd $PLUGIN_DIR
 - cd tests/functional/
 - npm install -g nightwatch

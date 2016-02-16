@@ -2,15 +2,17 @@
 
 exports.command = function() {
 var client = this;
+var data = client.globals;
+var logouturl = data.URLS.LOGIN + "/wp-login.php?action=logout" ;
 
 client
     .pause(1000)
-    .moveToElement('#wp-admin-bar-my-account a.ab-item',1,1)  //move to top RHS
-    .click('#wp-admin-bar-logout a.ab-item')
+    .url(logouturl)
     .pause(2000)
-    .waitForElementVisible('body', 2000)
+    .click('#error-page > p:nth-child(2) > a')
+    .pause(2000)
     .getTitle(function(title) {
-        console.log("Logged out..");
+        console.log("Logged out....");
       })
 
 return this;
