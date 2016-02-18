@@ -154,7 +154,7 @@ class RTMedia {
 		global $wpdb;
 		$model      = new RTMediaModel();
 		$update_sql = "UPDATE {$model->table_name} SET privacy = '80' where privacy = '-1' ";
-		$wpdb->query( $wpdb->prepare( $update_sql ) ); // @codingStandardsIgnoreLine
+		$wpdb->query( $update_sql ); // @codingStandardsIgnoreLine
 	}
 
 	/*
@@ -183,11 +183,11 @@ class RTMedia {
 		$model             = new RTMediaModel();
 		$interaction_model = new RTMediaInteractionModel();
 		$update_media_sql  = 'ALTER TABLE ' . $model->table_name . ' CONVERT TO CHARACTER SET utf8 COLLATE utf8_general_ci';
-		$wpdb->query( $wpdb->prepare( $update_media_sql ) ); // @codingStandardsIgnoreLine
+		$wpdb->query( $update_media_sql ); // @codingStandardsIgnoreLine
 		$update_media_meta_sql = 'ALTER TABLE ' . $wpdb->base_prefix . $model->meta_table_name . ' CONVERT TO CHARACTER SET utf8 COLLATE utf8_general_ci';
-		$wpdb->query( $wpdb->prepare( $update_media_meta_sql ) ); // @codingStandardsIgnoreLine
+		$wpdb->query( $update_media_meta_sql ); // @codingStandardsIgnoreLine
 		$update_media_interaction_sql = 'ALTER TABLE ' . $interaction_model->table_name . ' CONVERT TO CHARACTER SET utf8 COLLATE utf8_general_ci';
-		$wpdb->query( $wpdb->prepare( $update_media_interaction_sql ) ); // @codingStandardsIgnoreLine
+		$wpdb->query( $update_media_interaction_sql ); // @codingStandardsIgnoreLine
 	}
 
 	function set_site_options() {

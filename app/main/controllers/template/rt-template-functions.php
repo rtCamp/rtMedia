@@ -658,7 +658,7 @@ function rtmedia_description_input( $editor = true, $echo = false ) {
 function rtmedia_description( $echo = true ) {
 	if ( $echo ) {
 		// escape description for any html tags and reformat using `wpautop`
-		echo wpautop( rtmedia_get_media_description() ); // @codingStandardsIgnoreLine
+		echo strip_tags( str_replace( '</p>', '</p><br>', rtmedia_description( $echo = false ) ), '<br>' ); // @codingStandardsIgnoreLine
 	} else {
 		return rtmedia_get_media_description();
 	}

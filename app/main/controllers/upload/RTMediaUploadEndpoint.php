@@ -100,7 +100,7 @@ class RTMediaUploadEndpoint {
 						// todo fixme rtmedia_media_single_activity filter. It will create 2 activity with same media if uploaded from activity page.
 
 						$_rtmedia_update = filter_input( INPUT_POST, 'rtmedia_update', FILTER_SANITIZE_STRING );
-						if ( ( - 1 === $activity_id && ( ! ( 'true' === $_rtmedia_update ) ) ) || $allow_single_activity ) {
+						if ( ( -1 === intval( $activity_id ) && ( ! ( isset( $_rtmedia_update ) && 'true' === $_rtmedia_update ) ) ) || $allow_single_activity ) {
 							$activity_id = $media_obj->insert_activity( $media[0]->media_id, $media[0] );
 						} else {
 							$media_obj->model->update( array( 'activity_id' => $activity_id ), array( 'id' => $rtupload->media_ids[0] ) );
@@ -173,7 +173,6 @@ class RTMediaUploadEndpoint {
 					$redirect_url = get_rtmedia_permalink( $media[0]->id );
 				}
 			}
-
 			// Ha ha ha
 			ob_end_clean();
 			//check for simpe

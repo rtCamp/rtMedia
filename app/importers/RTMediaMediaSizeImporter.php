@@ -214,7 +214,7 @@ class RTMediaMediaSizeImporter {
 	function get_total_count() {
 		global $wpdb;
 		$rtmedia_model = new RTMediaModel();
-		$query_total   = $wpdb->prepare( "SELECT COUNT(*) as total from {$rtmedia_model->table_name} where media_type in ('photo','video','document','music','other') " ); // @codingStandardsIgnoreLine
+		$query_total   = "SELECT COUNT(*) as total from {$rtmedia_model->table_name} where media_type in ('photo','video','document','music','other') "; // @codingStandardsIgnoreLine
 		$total_count   = $wpdb->get_results( $query_total ); // @codingStandardsIgnoreLine
 		if ( $total_count && count( $total_count ) > 0 ) {
 			return $total_count[0]->total;

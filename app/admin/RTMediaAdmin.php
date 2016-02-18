@@ -213,7 +213,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 								target="_blank"><?php esc_html_e( 'here', 'buddypress-media' ) ?></a>.
 						</span>
 						<a href="#"
-						   onclick="rtmedia_hide_pro_split_notice('<?php echo esc_js( wp_nonce_field( 'rtcamp_pro_split' ) ); ?>');"
+						   onclick="rtmedia_hide_pro_split_notice('<?php echo esc_js( wp_create_nonce( 'rtcamp_pro_split' ) ); ?>');"
 						   style="float:right">Dismiss</a>
 					</p>
 				</div>
@@ -268,7 +268,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 							<?php esc_html_e( ' which allows you to import media from your Facebook account.', 'buddypress-media' ); ?>
 						</span>
 						<a href="#"
-						   onclick="rtmedia_hide_social_sync_notice('<?php echo esc_js( wp_create_nonce( 'social_sync' ) ); ?>'')"
+						   onclick="rtmedia_hide_social_sync_notice('<?php echo esc_js( wp_create_nonce( 'social_sync' ) ); ?>')"
 						   style="float:right">Dismiss</a>
 					</p>
 				</div>
