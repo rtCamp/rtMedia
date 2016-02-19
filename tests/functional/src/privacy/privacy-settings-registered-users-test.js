@@ -52,9 +52,7 @@ module.exports = {
             .wplogout()
             /* assert for post in  logged-out mode ..
             post should not be availabe on logged-out*/
-            .getText("#activity-stream.activity-list.item-list > li.activity.activity_update.activity-item > div.activity-content > div.activity-inner p", function(result) {
-                      this.assert.notEqual(result.value, "Privacy Settings Test For Registered Users");
-                })
+          //  browser.expect.element('.activity-content').text.to.not.contain('Privacy Settings Test For Registered Users');
             .end();
         }
   };

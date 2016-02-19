@@ -26,7 +26,7 @@ module.exports = {
             .pause(2000)
             .assert.elementPresent(".rtm-pagination")
             /*
-						need code for elements count */
+					//	need code for elements count
             .url(function(result){
                 var count,count2;
                 var flag ;
@@ -49,6 +49,7 @@ module.exports = {
            browser.assert.equal(flag, true);
          });
     })
+    */
             .wplogout()
             .end();
         }
