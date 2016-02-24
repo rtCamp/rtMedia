@@ -2875,3 +2875,25 @@ function rtmedia_add_multiple_meta( $media_id, $meta_key_val ){
 	return $meta_ids;
 }
 
+/**
+ * WordPress filter to change browser title if theme has title-tag support
+ *
+ * @param array $title
+ *
+ * @return array
+ */
+function rtm_modify_document_title_parts( $title = array() ) {
+	if( is_rtmedia_page() ) {
+		global $rtmedia_query;
+
+		if ( isset( $rtmedia_query->action_query->media_type ) ) {
+			( !class_exists( 'BuddyPress' ) ) ? array_unshift( $title, ucfirst( $rtmedia_query->action_query->media_type ), RTMEDIA_MEDIA_LABEL ) : array_unshift( $title, ucfirst( $rtmedia_query->action_query->media_type ) );
+		} else {
+			( !class_exists( 'BuddyPress' ) ) ? array_unshift( $title, RTMEDIA_MEDIA_LABEL ) : '';
+		}
+	}
+
+	return $title;
+}
+
+add_filter( 'document_title_parts', 'rtm_modify_document_title_parts', 30, 1 );
