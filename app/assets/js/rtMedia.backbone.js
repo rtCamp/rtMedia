@@ -997,6 +997,7 @@ jQuery( document ).ready( function ( $ ) {
 		} catch ( e ) {
 			return true;
 		}
+
 		if ( originalOptions.data.action == 'post_update' || originalOptions.data.action == 'activity_widget_filter' ) {
 			var temp = activity_attachemnt_ids;
 			while ( activity_attachemnt_ids.length > 0 ) {

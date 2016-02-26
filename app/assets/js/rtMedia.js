@@ -228,6 +228,18 @@ jQuery( 'document' ).ready( function ( $ ) {
 			options.success = function ( response ) {
 				orignalSuccess( response );
 				apply_rtMagnificPopup( '.rtmedia-activity-container ul.rtmedia-list, #bp-media-list, .bp-media-sc-list, li.media.album_updated ul,ul.bp-media-list-media, li.activity-item div.activity-content div.activity-inner div.bp_media_content' );
+
+				jQuery( 'ul.activity-list li.rtmedia_update .wp-audio-shortcode, ul.activity-list li.rtmedia_update .wp-video-shortcode' ).mediaelementplayer( {
+					// if the <video width> is not specified, this is the default
+					defaultVideoWidth: 480,
+					// if the <video height> is not specified, this is the default
+					defaultVideoHeight: 270
+					// if set, overrides <video width>
+					//videoWidth: 1,
+					// if set, overrides <video height>
+					//videoHeight: 1
+				} );
+
 				rtMediaHook.call( 'rtmedia_js_after_activity_added', [ ] );
 			}
 		}
