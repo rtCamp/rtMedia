@@ -27,20 +27,20 @@ if ( class_exists ( 'BP_Group_Extension' ) ) :// Recommended, to prevent problem
             <div class='rtmedia-group-media-settings'>
             <?php if( isset($options['general_enableAlbums']) && $options['general_enableAlbums'] == 1){  // album is enabled ?>
 
-                    <h4><?php _e( 'Album Creation Control', 'buddypress-media' ); ?></h4>
-                    <p><?php _e( 'Who can create Albums in this group?', 'buddypress-media' ); ?></p>
+                    <h4><?php esc_html_e( 'Album Creation Control', 'buddypress-media' ); ?></h4>
+                    <p><?php esc_html_e( 'Who can create Albums in this group?', 'buddypress-media' ); ?></p>
                     <div class="radio">
                         <label>
                             <input name="rt_album_creation_control" type="radio" id="rt_media_group_level_all" checked="checked" value="all">
-                            <strong><?php _e( 'All Group Members', 'buddypress-media' ); ?></strong>
+                            <strong><?php esc_html_e( 'All Group Members', 'buddypress-media' ); ?></strong>
                         </label>
                         <label>
                             <input name="rt_album_creation_control" type="radio" id="rt_media_group_level_moderators" value="moderators">
-                            <strong><?php _e( 'Group Admins and Mods only', 'buddypress-media' ); ?></strong>
+                            <strong><?php esc_html_e( 'Group Admins and Mods only', 'buddypress-media' ); ?></strong>
                         </label>
                         <label>
                             <input name="rt_album_creation_control" type="radio" id="rt_media_group_level_admin" value="admin">
-                            <strong><?php _e( 'Group Admin only', 'buddypress-media' ); ?></strong>
+                            <strong><?php esc_html_e( 'Group Admin only', 'buddypress-media' ); ?></strong>
                         </label>
                     </div>
 
@@ -89,16 +89,16 @@ if ( class_exists ( 'BP_Group_Extension' ) ) :// Recommended, to prevent problem
                 $options = $rtmedia->options;
                 if( isset($options['general_enableAlbums']) && $options['general_enableAlbums'] == 1){ // album is enabled ?>
 
-                    <h4><?php _e( 'Album Creation Control', 'buddypress-media' ); ?></h4>
-                    <p><?php _e( 'Who can create Albums in this group?', 'buddypress-media' ); ?></p>
+                    <h4><?php esc_html_e( 'Album Creation Control', 'buddypress-media' ); ?></h4>
+                    <p><?php esc_html_e( 'Who can create Albums in this group?', 'buddypress-media' ); ?></p>
                     <div class="radio">
                         <label>
                             <input name="rt_album_creation_control" type="radio" id="rt_media_group_level_moderators"  value="all"<?php checked ( $current_level, 'all', true ) ?>>
-                            <strong><?php _e( 'All Group Members', 'buddypress-media' ); ?></strong>
+                            <strong><?php esc_html_e( 'All Group Members', 'buddypress-media' ); ?></strong>
                         </label>
                         <label>
                             <input name="rt_album_creation_control" type="radio" id="rt_media_group_level_moderators" value="moderators" <?php checked ( $current_level, 'moderators', true ) ?>>
-                            <strong><?php _e( 'Group Admins and Mods only', 'buddypress-media' ); ?></strong>
+                            <strong><?php esc_html_e( 'Group Admins and Mods only', 'buddypress-media' ); ?></strong>
                         </label>
                         <label>
                             <input name="rt_album_creation_control" type="radio" id="rt_media_group_level_admin" value="admin" <?php checked ( $current_level, 'admin', true ) ?>>
@@ -110,7 +110,7 @@ if ( class_exists ( 'BP_Group_Extension' ) ) :// Recommended, to prevent problem
 
                 <?php do_action('rtmedia_playlist_creation_settings_groups_edit'); ?>
             </div>
-            <input type="submit" name="save" value="<?php _e( 'Save Changes', 'buddypress-media' ); ?>" />
+            <input type="submit" name="save" value="<?php esc_html_e( 'Save Changes', 'buddypress-media' ); ?>" />
             <?php
             wp_nonce_field ( 'groups_edit_save_' . $this->slug );
         }
@@ -161,7 +161,7 @@ if ( class_exists ( 'BP_Group_Extension' ) ) :// Recommended, to prevent problem
             <div class="info-group" >
                 <h4><?php echo esc_attr ( $this->name ) ?></h4>
                 <p>
-                    <?php _e( 'You could display a small snippet of information from your group extension here. It will show on the group
+                    <?php esc_html_e( 'You could display a small snippet of information from your group extension here. It will show on the group
 	                home screen.', 'buddypress-media' ); ?>
                 </p>
             </div>

@@ -6,7 +6,7 @@
 	if ( isset( $rtmedia_query->is_gallery_shortcode ) && $rtmedia_query->is_gallery_shortcode == true ) { // if gallery is displayed using gallery shortcode
 		?>
 		<div id="rtm-gallery-title-container" class="clearfix">
-			<h2 class="rtm-gallery-title"><?php _e( 'Media Gallery', 'buddypress-media' ); ?></h2>
+			<h2 class="rtm-gallery-title"><?php esc_html_e( 'Media Gallery', 'buddypress-media' ); ?></h2>
 			<div id="rtm-media-options" class="rtm-media-options">
 				<?php do_action( 'rtmedia_media_gallery_shortcode_actions' ); ?>
 			</div>

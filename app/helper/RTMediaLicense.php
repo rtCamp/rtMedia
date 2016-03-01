@@ -65,7 +65,7 @@ class RTMediaLicense {
 		?>
 		<div class="rtm-addon-license">
 			<div class="rtm-license-status-wrap <?php echo $status_class ?>">
-				<span class="rtm-addon-license-status-label"><?php _e( 'Status: ', 'buddypress-media' ); ?></span>
+				<span class="rtm-addon-license-status-label"><?php esc_html_e( 'Status: ', 'buddypress-media' ); ?></span>
 				<span class="rtm-addon-license-status"><?php echo $status_value; ?></span>
 			</div>
 
@@ -74,7 +74,7 @@ class RTMediaLicense {
 					<tbody>
 						<tr>
 							<th scope="row">
-								<?php _e( 'License Key', 'buddypress-media' ); ?>
+								<?php esc_html_e( 'License Key', 'buddypress-media' ); ?>
 							</th>
 							<td>
 								<input id="<?php echo $license_key_id ?>" name="<?php echo $license_key_id ?>" type="text"
@@ -85,7 +85,7 @@ class RTMediaLicense {
 						<?php if ( false !== $license ) { ?>
 							<tr>
 								<th scope="row">
-									<?php _e( 'Activate / Deactivate License', 'buddypress-media' ); ?>
+									<?php esc_html_e( 'Activate / Deactivate License', 'buddypress-media' ); ?>
 								</th>
 								<td>
 									<?php

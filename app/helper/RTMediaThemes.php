@@ -146,21 +146,21 @@ class RTMediaThemes {
 							<img src="<?php echo $theme[ 'image' ]; ?>" />
 						</div>
 
-						<span class="more-details"><?php _e( 'Theme Details', 'buddypress-media' ); ?></span>
+						<span class="more-details"><?php esc_html_e( 'Theme Details', 'buddypress-media' ); ?></span>
 
 						<h3 class="theme-name"><?php echo $theme[ 'name' ]; ?></h3>
 
 						<div class="theme-actions">
-							<a class="button load-customize hide-if-no-customize" href="<?php echo $theme[ 'demo_url' ]; ?>"><?php _e( 'Live Demo', 'buddypress-media' ); ?></a>
-							<a class="button button-primary load-customize hide-if-no-customize" href="<?php echo $theme[ 'buy_url' ]; ?>"><?php _e( 'Buy Now', 'buddypress-media' ); ?></a>
+							<a class="button load-customize hide-if-no-customize" href="<?php echo $theme[ 'demo_url' ]; ?>"><?php esc_html_e( 'Live Demo', 'buddypress-media' ); ?></a>
+							<a class="button button-primary load-customize hide-if-no-customize" href="<?php echo $theme[ 'buy_url' ]; ?>"><?php esc_html_e( 'Buy Now', 'buddypress-media' ); ?></a>
 						</div>
 
 						<div class="rtm-theme-content hide">
 							<div class="theme-wrap">
 								<div class="theme-header">
-									<button class="left rtm-previous dashicons dashicons-no"><span class="screen-reader-text"><?php _e( 'Show previous theme', 'buddypress-media' ); ?></span></button>
-									<button class="right rtm-next dashicons dashicons-no"><span class="screen-reader-text"><?php _e( 'Show next theme', 'buddypress-media' ); ?></span></button>
-									<button class="close rtm-close dashicons dashicons-no"><span class="screen-reader-text"><?php _e( 'Close overlay', 'buddypress-media' ); ?></span></button>
+									<button class="left rtm-previous dashicons dashicons-no"><span class="screen-reader-text"><?php esc_html_e( 'Show previous theme', 'buddypress-media' ); ?></span></button>
+									<button class="right rtm-next dashicons dashicons-no"><span class="screen-reader-text"><?php esc_html_e( 'Show next theme', 'buddypress-media' ); ?></span></button>
+									<button class="close rtm-close dashicons dashicons-no"><span class="screen-reader-text"><?php esc_html_e( 'Close overlay', 'buddypress-media' ); ?></span></button>
 								</div>
 
 								<div class="theme-about">
@@ -173,14 +173,14 @@ class RTMediaThemes {
 									<div class="theme-info">
 										<h3 class="theme-name"><?php echo $theme[ 'name' ]; ?></h3>
 										<h4 class="theme-author">By <a href="https://rtcamp.com/"><?php echo $theme[ 'author' ]; ?></a></h4>
-										<p class="theme-description"><?php echo $theme[ 'description' ]; ?> <a href="<?php echo $theme[ 'buy_url' ]; ?>" class="rtmedia-theme-inner-a" target="_blank"><?php _e( 'Read More', 'buddypress-media' ); ?></a></p>
-										<p class="theme-tags"><span><?php _e( 'Tags:', 'buddypress-media' ); ?></span><?php echo $theme[ 'tags' ]; ?></p>
+										<p class="theme-description"><?php echo $theme[ 'description' ]; ?> <a href="<?php echo $theme[ 'buy_url' ]; ?>" class="rtmedia-theme-inner-a" target="_blank"><?php esc_html_e( 'Read More', 'buddypress-media' ); ?></a></p>
+										<p class="theme-tags"><span><?php esc_html_e( 'Tags:', 'buddypress-media' ); ?></span><?php echo $theme[ 'tags' ]; ?></p>
 									</div>
 								</div>
 
 								<div class="theme-actions">
-									<a class="button load-customize hide-if-no-customize" href="<?php echo $theme[ 'demo_url' ]; ?>"><?php _e( 'Live Demo', 'buddypress-media' ); ?></a>
-									<a class="button button-primary load-customize hide-if-no-customize" href="<?php echo $theme[ 'buy_url' ]; ?>"><?php _e( 'Buy Now', 'buddypress-media' ); ?></a>
+									<a class="button load-customize hide-if-no-customize" href="<?php echo $theme[ 'demo_url' ]; ?>"><?php esc_html_e( 'Live Demo', 'buddypress-media' ); ?></a>
+									<a class="button button-primary load-customize hide-if-no-customize" href="<?php echo $theme[ 'buy_url' ]; ?>"><?php esc_html_e( 'Buy Now', 'buddypress-media' ); ?></a>
 								</div>
 							</div>
 						</div>
@@ -281,21 +281,21 @@ class RTMediaThemes {
 							<img src="<?php echo $theme[ 'image' ]; ?>" />
 						</div>
 
-						<span class="more-details"><?php _e( 'Theme Details', 'buddypress-media' ); ?></span>
+						<span class="more-details"><?php esc_html_e( 'Theme Details', 'buddypress-media' ); ?></span>
 
 						<h3 class="theme-name"><?php echo $theme[ 'name' ]; ?></h3>
 
 						<div class="theme-actions">
-							<a class="button load-customize hide-if-no-customize" href="<?php echo $theme[ 'demo_url' ]; ?>"><?php _e( 'Live Demo', 'buddypress-media' ); ?></a>
-							<a class="button button-primary load-customize hide-if-no-customize" href="<?php echo $theme[ 'buy_url' ]; ?>"><?php _e( 'Buy Now', 'buddypress-media' ); ?></a>
+							<a class="button load-customize hide-if-no-customize" href="<?php echo $theme[ 'demo_url' ]; ?>"><?php esc_html_e( 'Live Demo', 'buddypress-media' ); ?></a>
+							<a class="button button-primary load-customize hide-if-no-customize" href="<?php echo $theme[ 'buy_url' ]; ?>"><?php esc_html_e( 'Buy Now', 'buddypress-media' ); ?></a>
 						</div>
 
 						<div class="rtm-theme-content hide">
 							<div class="theme-wrap">
 								<div class="theme-header">
-									<button class="left rtm-previous dashicons dashicons-no"><span class="screen-reader-text"><?php _e( 'Show previous theme', 'buddypress-media' ); ?></span></button>
-									<button class="right rtm-next dashicons dashicons-no"><span class="screen-reader-text"><?php _e( 'Show next theme', 'buddypress-media' ); ?></span></button>
-									<button class="close rtm-close dashicons dashicons-no"><span class="screen-reader-text"><?php _e( 'Close overlay', 'buddypress-media' ); ?></span></button>
+									<button class="left rtm-previous dashicons dashicons-no"><span class="screen-reader-text"><?php esc_html_e( 'Show previous theme', 'buddypress-media' ); ?></span></button>
+									<button class="right rtm-next dashicons dashicons-no"><span class="screen-reader-text"><?php esc_html_e( 'Show next theme', 'buddypress-media' ); ?></span></button>
+									<button class="close rtm-close dashicons dashicons-no"><span class="screen-reader-text"><?php esc_html_e( 'Close overlay', 'buddypress-media' ); ?></span></button>
 								</div>
 
 								<div class="theme-about">
@@ -308,14 +308,14 @@ class RTMediaThemes {
 									<div class="theme-info">
 										<h3 class="theme-name"><?php echo $theme[ 'name' ]; ?></h3>
 										<h4 class="theme-author">By <a href="<?php echo $theme[ 'author_url' ]; ?>"><?php echo $theme[ 'author' ]; ?></a></h4>
-										<p class="theme-description"><?php echo $theme[ 'description' ]; ?> <a href="<?php echo $theme[ 'buy_url' ]; ?>" class="rtmedia-theme-inner-a" target="_blank"><?php _e( 'Read More', 'buddypress-media' ); ?></a></p>
-										<p class="theme-tags"><span><?php _e( 'Tags:', 'buddypress-media' ); ?></span><?php echo $theme[ 'tags' ]; ?></p>
+										<p class="theme-description"><?php echo $theme[ 'description' ]; ?> <a href="<?php echo $theme[ 'buy_url' ]; ?>" class="rtmedia-theme-inner-a" target="_blank"><?php esc_html_e( 'Read More', 'buddypress-media' ); ?></a></p>
+										<p class="theme-tags"><span><?php esc_html_e( 'Tags:', 'buddypress-media' ); ?></span><?php echo $theme[ 'tags' ]; ?></p>
 									</div>
 								</div>
 
 								<div class="theme-actions">
-									<a class="button load-customize hide-if-no-customize" href="<?php echo $theme[ 'demo_url' ]; ?>"><?php _e( 'Live Demo', 'buddypress-media' ); ?></a>
-									<a class="button button-primary load-customize hide-if-no-customize" href="<?php echo $theme[ 'buy_url' ]; ?>"><?php _e( 'Buy Now', 'buddypress-media' ); ?></a>
+									<a class="button load-customize hide-if-no-customize" href="<?php echo $theme[ 'demo_url' ]; ?>"><?php esc_html_e( 'Live Demo', 'buddypress-media' ); ?></a>
+									<a class="button button-primary load-customize hide-if-no-customize" href="<?php echo $theme[ 'buy_url' ]; ?>"><?php esc_html_e( 'Buy Now', 'buddypress-media' ); ?></a>
 								</div>
 							</div>
 						</div>
@@ -325,14 +325,14 @@ class RTMediaThemes {
 			</div>
 		</div>
 
-		<div class="rtmedia-theme-warning rtm-warning"><?php _e( 'These are the third party themes. For any issues or queries regarding these themes please contact theme developers.', 'buddypress-media' ) ?></div>
+		<div class="rtmedia-theme-warning rtm-warning"><?php esc_html_e( 'These are the third party themes. For any issues or queries regarding these themes please contact theme developers.', 'buddypress-media' ) ?></div>
 
 		<div>
-			<h3 class="rtm-option-title"><?php _e( 'Are you a developer?', 'buddypress-media' ); ?></h3>
+			<h3 class="rtm-option-title"><?php esc_html_e( 'Are you a developer?', 'buddypress-media' ); ?></h3>
 
 			<p>
-				<?php _e( 'If you have developed a rtMedia compatible theme and would like it to list here, please email us at', 'buddypress-media' ) ?>
-				<a href="mailto:product@rtcamp.com"><?php _e( 'product@rtcamp.com', 'buddypress-media' ) ?></a>.
+				<?php esc_html_e( 'If you have developed a rtMedia compatible theme and would like it to list here, please email us at', 'buddypress-media' ) ?>
+				<a href="mailto:product@rtcamp.com"><?php esc_html_e( 'product@rtcamp.com', 'buddypress-media' ) ?></a>.
 			</p>
 		</div>
 		<?php

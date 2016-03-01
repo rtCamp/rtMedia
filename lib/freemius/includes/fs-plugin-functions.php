@@ -248,51 +248,51 @@
 				<h3><?php _efs( 'details', $api->slug ) ?></h3>
 				<ul>
 					<?php if ( ! empty( $api->version ) ) { ?>
-						<li><strong><?php _e( 'Version:' ); ?></strong> <?php echo $api->version; ?></li>
+						<li><strong><?php esc_html_e( 'Version:' ); ?></strong> <?php echo $api->version; ?></li>
 					<?php }
 						if ( ! empty( $api->author ) ) { ?>
 							<li>
-								<strong><?php _e( 'Author:' ); ?></strong> <?php echo links_add_target( $api->author, '_blank' ); ?>
+								<strong><?php esc_html_e( 'Author:' ); ?></strong> <?php echo links_add_target( $api->author, '_blank' ); ?>
 							</li>
 						<?php }
 						if ( ! empty( $api->last_updated ) ) { ?>
-							<li><strong><?php _e( 'Last Updated:' ); ?></strong> <span
+							<li><strong><?php esc_html_e( 'Last Updated:' ); ?></strong> <span
 									title="<?php echo $api->last_updated; ?>">
 				<?php printf( __( '%s ago' ), human_time_diff( strtotime( $api->last_updated ) ) ); ?>
 			</span></li>
 						<?php }
 						if ( ! empty( $api->requires ) ) { ?>
 							<li>
-								<strong><?php _e( 'Requires WordPress Version:' ); ?></strong> <?php printf( __( '%s or higher' ), $api->requires ); ?>
+								<strong><?php esc_html_e( 'Requires WordPress Version:' ); ?></strong> <?php printf( __( '%s or higher' ), $api->requires ); ?>
 							</li>
 						<?php }
 						if ( ! empty( $api->tested ) ) { ?>
-							<li><strong><?php _e( 'Compatible up to:' ); ?></strong> <?php echo $api->tested; ?></li>
+							<li><strong><?php esc_html_e( 'Compatible up to:' ); ?></strong> <?php echo $api->tested; ?></li>
 						<?php }
 						if ( ! empty( $api->downloaded ) ) { ?>
 							<li>
-								<strong><?php _e( 'Downloaded:' ); ?></strong> <?php printf( _n( '%s time', '%s times', $api->downloaded ), number_format_i18n( $api->downloaded ) ); ?>
+								<strong><?php esc_html_e( 'Downloaded:' ); ?></strong> <?php printf( _n( '%s time', '%s times', $api->downloaded ), number_format_i18n( $api->downloaded ) ); ?>
 							</li>
 						<?php }
 						if ( ! empty( $api->slug ) && empty( $api->external ) ) { ?>
 							<li><a target="_blank"
-							       href="https://wordpress.org/plugins/<?php echo $api->slug; ?>/"><?php _e( 'WordPress.org Plugin Page &#187;' ); ?></a>
+							       href="https://wordpress.org/plugins/<?php echo $api->slug; ?>/"><?php esc_html_e( 'WordPress.org Plugin Page &#187;' ); ?></a>
 							</li>
 						<?php }
 						if ( ! empty( $api->homepage ) ) { ?>
 							<li><a target="_blank"
-							       href="<?php echo esc_url( $api->homepage ); ?>"><?php _e( 'Plugin Homepage &#187;' ); ?></a>
+							       href="<?php echo esc_url( $api->homepage ); ?>"><?php esc_html_e( 'Plugin Homepage &#187;' ); ?></a>
 							</li>
 						<?php }
 						if ( ! empty( $api->donate_link ) && empty( $api->contributors ) ) { ?>
 							<li><a target="_blank"
-							       href="<?php echo esc_url( $api->donate_link ); ?>"><?php _e( 'Donate to this plugin &#187;' ); ?></a>
+							       href="<?php echo esc_url( $api->donate_link ); ?>"><?php esc_html_e( 'Donate to this plugin &#187;' ); ?></a>
 							</li>
 						<?php } ?>
 				</ul>
 			</div>
 			<?php if ( ! empty( $api->rating ) ) { ?>
-				<h3><?php _e( 'Average Rating' ); ?></h3>
+				<h3><?php esc_html_e( 'Average Rating' ); ?></h3>
 				<?php wp_star_rating( array(
 						'rating' => $api->rating,
 						'type'   => 'percent',
@@ -322,7 +322,7 @@
 				}
 				if ( ! empty( $api->contributors ) ) {
 					?>
-					<h3><?php _e( 'Contributors' ); ?></h3>
+					<h3><?php esc_html_e( 'Contributors' ); ?></h3>
 					<ul class="contributors">
 						<?php
 							foreach ( (array) $api->contributors as $contrib_username => $contrib_profile ) {
@@ -343,7 +343,7 @@
 					</ul>
 					<?php if ( ! empty( $api->donate_link ) ) { ?>
 						<a target="_blank"
-						   href="<?php echo esc_url( $api->donate_link ); ?>"><?php _e( 'Donate to this plugin &#187;' ); ?></a>
+						   href="<?php echo esc_url( $api->donate_link ); ?>"><?php esc_html_e( 'Donate to this plugin &#187;' ); ?></a>
 					<?php } ?>
 				<?php } ?>
 		</div>

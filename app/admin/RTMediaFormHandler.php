@@ -37,7 +37,7 @@ class RTMediaFormHandler {
 		}
 
 		$chkObj = new rtForm();
-		echo $chkObj->get_select( $args );
+		echo esc_attr($chkObj->get_select( $args ));
 	}
 
 	/**
@@ -62,7 +62,7 @@ class RTMediaFormHandler {
 		extract( $args );
 
 		if ( ! isset( $value ) ) {
-			trigger_error( __( 'Please provide a "value" in the argument.', 'buddypress-media' ) );
+			trigger_error( esc_html__( 'Please provide a "value" in the argument.', 'buddypress-media' ) );
 
 			return;
 		}
@@ -76,7 +76,7 @@ class RTMediaFormHandler {
 		$chkObj = new rtForm();
 
 		if ( $echo ) {
-			echo $chkObj->get_textarea( $args );
+			echo esc_attr($chkObj->get_textarea( $args ));
 		} else {
 			return $chkObj->get_textarea( $args );
 		}
@@ -104,7 +104,7 @@ class RTMediaFormHandler {
 		extract( $args );
 
 		if ( ! isset( $value ) ) {
-			trigger_error( __( 'Please provide a "value" in the argument.', 'buddypress-media' ) );
+			trigger_error( esc_html__( 'Please provide a "value" in the argument.', 'buddypress-media' ) );
 
 			return;
 		}
@@ -118,7 +118,7 @@ class RTMediaFormHandler {
 		$chkObj = new rtForm();
 		//		echo $chkObj->get_checkbox($args);
 		if ( $echo ) {
-			echo $chkObj->get_switch( $args );
+			echo esc_attr($chkObj->get_switch( $args ));
 		} else {
 			return $chkObj->get_switch( $args );
 		}
@@ -147,7 +147,7 @@ class RTMediaFormHandler {
 		extract( $args );
 
 		if ( 2 > count( $radios ) ) {
-			trigger_error( __( 'Need to specify atleast two radios, else use a checkbox instead', 'buddypress-media' ) );
+			trigger_error( esc_html__( 'Need to specify atleast two radios, else use a checkbox instead', 'buddypress-media' ) );
 
 			return;
 		}
@@ -165,7 +165,7 @@ class RTMediaFormHandler {
 		}
 
 		$objRad = new rtForm();
-		echo $objRad->get_radio( $args );
+		echo esc_attr($objRad->get_radio( $args ));
 	}
 
 	/**
@@ -176,7 +176,7 @@ class RTMediaFormHandler {
 	 */
 	public static function dimensions( $args ) {
 		$dmnObj = new rtDimensions();
-		echo $dmnObj->get_dimensions( $args );
+		echo esc_attr($dmnObj->get_dimensions( $args ));
 	}
 
 	/**
@@ -199,7 +199,7 @@ class RTMediaFormHandler {
 		extract( $args );
 
 		if ( ! isset( $value ) ) {
-			trigger_error( __( 'Please provide a "value" in the argument.', 'buddypress-media' ) );
+			trigger_error( esc_html__( 'Please provide a "value" in the argument.', 'buddypress-media' ) );
 
 			return;
 		}
@@ -211,7 +211,7 @@ class RTMediaFormHandler {
 		$args[ 'value' ] = $value;
 
 		$numObj = new rtForm();
-		echo $numObj->get_number( $args );
+		echo esc_attr($numObj->get_number( $args ));
 	}
 
 	/**
@@ -234,7 +234,7 @@ class RTMediaFormHandler {
 		extract( $args );
 
 		if ( ! isset( $value ) ) {
-			trigger_error( __( 'Please provide a "value" in the argument.', 'buddypress-media' ) );
+			trigger_error( esc_html__( 'Please provide a "value" in the argument.', 'buddypress-media' ) );
 
 			return;
 		}
@@ -246,7 +246,7 @@ class RTMediaFormHandler {
 		$args[ 'value' ] = $value;
 
 		$numObj = new rtForm();
-		echo $numObj->get_textbox( $args );
+		echo esc_attr($numObj->get_textbox( $args ));
 	}
 
 	/**
@@ -557,7 +557,7 @@ class RTMediaFormHandler {
 			<?php do_action( 'rtmedia_media_type_setting_message' ); ?>
 
 			<h3 class="rtm-option-title">
-				<?php _e( 'Media Types Settings', 'buddypress-media' ); ?>
+				<?php esc_html_e( 'Media Types Settings', 'buddypress-media' ); ?>
 			</h3>
 
 			<table class="form-table">
@@ -565,14 +565,14 @@ class RTMediaFormHandler {
 				<?php do_action( 'rtmedia_type_settings_before_heading' ); ?>
 
 				<tr>
-					<th><strong><?php _e( 'Media Type', 'buddypress-media' ) ?></strong></th>
+					<th><strong><?php esc_html_e( 'Media Type', 'buddypress-media' ) ?></strong></th>
 
 					<th>
 
 						<span class="rtm-tooltip bottom">
-							<strong class="rtm-title"><?php _e( 'Allow Upload', 'buddypress-media' ); ?></strong>
+							<strong class="rtm-title"><?php esc_html_e( 'Allow Upload', 'buddypress-media' ); ?></strong>
 							<span class="rtm-tip-top">
-								<?php _e( 'Allows you to upload a particular media type on your post.', 'buddypress-media' ); ?>
+								<?php esc_html_e( 'Allows you to upload a particular media type on your post.', 'buddypress-media' ); ?>
 							</span>
 						</span>
 					</th>
@@ -580,9 +580,9 @@ class RTMediaFormHandler {
 					<th>
 
 						<span class="rtm-tooltip bottom">
-							<strong class="rtm-title"><?php _e( 'Set Featured', 'buddypress-media' ); ?></strong>
+							<strong class="rtm-title"><?php esc_html_e( 'Set Featured', 'buddypress-media' ); ?></strong>
 							<span class="rtm-tip-top">
-								<?php _e( 'Place a specific media as a featured content on the post.', 'buddypress-media' ); ?>
+								<?php esc_html_e( 'Place a specific media as a featured content on the post.', 'buddypress-media' ); ?>
 							</span>
 						</span>
 					</th>
@@ -617,16 +617,16 @@ class RTMediaFormHandler {
 						<tr>
 							<td>
 								<?php
-								echo $section[ 'name' ];
+								echo esc_attr($section[ 'name' ]);
 
 								if ( $key != 'other' ) {
 									?>
 									<span class="rtm-tooltip rtm-extensions">
 										<i class="dashicons dashicons-info rtmicon"></i>
 										<span class="rtm-tip">
-											<strong><?php echo __( 'File Extensions', 'buddypress-media' ); ?></strong><br />
+											<strong><?php echo esc_html__( 'File Extensions', 'buddypress-media' ); ?></strong><br />
 											<hr />
-											<?php echo $extensions; ?>
+											<?php echo esc_attr($extensions); ?>
 										</span>
 									</span>
 									<?php
@@ -636,11 +636,11 @@ class RTMediaFormHandler {
 
 							<td>
 								<span class="rtm-field-wrap">
-									<?php echo $allow_upload_checkbox; ?></span>
+									<?php echo esc_attr($allow_upload_checkbox); ?></span>
 							</td>
 
 							<td>
-								<?php echo $featured_checkbox; ?>
+								<?php echo esc_attr($featured_checkbox); ?>
 							</td>
 
 							<?php do_action( 'rtmedia_type_setting_columns_body', $key, $section ) ?>
@@ -653,8 +653,8 @@ class RTMediaFormHandler {
 					} else {
 						echo '<tr class="hide">';
 						echo '<td colspan="3">';
-						echo "<input type='hidden' value='1' name='rtmedia-options[allowedTypes_" . $key . "_enabled]'>";
-						echo "<input type='hidden' value='0' name='rtmedia-options[allowedTypes_" . $key . "_featured]'>";
+						echo "<input type='hidden' value='1' name='rtmedia-options[allowedTypes_" . esc_attr($key) . "_enabled]'>";
+						echo "<input type='hidden' value='0' name='rtmedia-options[allowedTypes_" . esc_attr($key) . "_featured]'>";
 						echo '</td>';
 						echo '</tr>';
 					}
@@ -712,16 +712,16 @@ class RTMediaFormHandler {
 
 		<div class="rtm-option-wrapper rtm-img-size-setting">
 			<h3 class="rtm-option-title">
-				<?php _e( 'Media Size Settings', 'buddypress-media' ); ?>
+				<?php esc_html_e( 'Media Size Settings', 'buddypress-media' ); ?>
 			</h3>
 
 			<table class="form-table">
 				<tr>
-					<th><strong><?php _e( 'Category', 'buddypress-media' ) ?></strong></th>
-					<th><strong><?php _e( 'Entity', 'buddypress-media' ); ?></strong></th>
-					<th><strong><?php _e( 'Width', 'buddypress-media' ); ?></strong></th>
-					<th><strong><?php _e( 'Height', 'buddypress-media' ); ?></strong></th>
-					<th><strong><?php _e( 'Crop', 'buddypress-media' ); ?></strong></th>
+					<th><strong><?php esc_html_e( 'Category', 'buddypress-media' ) ?></strong></th>
+					<th><strong><?php esc_html_e( 'Entity', 'buddypress-media' ); ?></strong></th>
+					<th><strong><?php esc_html_e( 'Width', 'buddypress-media' ); ?></strong></th>
+					<th><strong><?php esc_html_e( 'Height', 'buddypress-media' ); ?></strong></th>
+					<th><strong><?php esc_html_e( 'Crop', 'buddypress-media' ); ?></strong></th>
 				</tr>
 
 				<?php
@@ -736,14 +736,14 @@ class RTMediaFormHandler {
 							<?php
 							if ( $count == 0 ) {
 								?>
-								<td class="rtm-row-title" rowspan="<?php echo $row_span; ?>">
-									<?php echo ucfirst( $section[ 'title' ] ); ?>
+								<td class="rtm-row-title" rowspan="<?php echo esc_attr($row_span); ?>">
+									<?php echo esc_attr(ucfirst( $section[ 'title' ] )); ?>
 								</td>
 								<?php
 							}
 							?>
 							<td>
-								<?php echo ucfirst( $entity[ 'title' ] ); ?>
+								<?php echo esc_attr(ucfirst( $entity[ 'title' ] )); ?>
 							</td>
 							<?php
 							$args = array(
@@ -1187,7 +1187,7 @@ class RTMediaFormHandler {
 
 	public static function render_option_group( $group ) {
 		?>
-		<h3 class="rtm-option-title"><?php echo $group; ?></h3>
+		<h3 class="rtm-option-title"><?php echo esc_attr($group); ?></h3>
 		<?php
 	}
 
@@ -1206,7 +1206,7 @@ class RTMediaFormHandler {
 		?>>
 			<tr>
 				<th>
-					<?php echo $option[ 'title' ]; ?>
+					<?php echo esc_attr($option[ 'title' ]); ?>
 					<?php if ( isset( $option[ 'after_content' ] ) ) { ?>
 					<?php } ?>
 				</th>

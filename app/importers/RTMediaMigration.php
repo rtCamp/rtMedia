@@ -372,7 +372,7 @@ class RTMediaMigration {
 		} else {
 			?>
 			<div class="error">
-				<p><?php _e( 'Please Backup your <strong>DATABASE</strong> and <strong>UPLOAD</strong> folder before Migration.', 'buddypress-media' ); ?></p>
+				<p><?php esc_html_e( 'Please Backup your <strong>DATABASE</strong> and <strong>UPLOAD</strong> folder before Migration.', 'buddypress-media' ); ?></p>
 			</div>
 		<?php
 		}
@@ -380,9 +380,9 @@ class RTMediaMigration {
 
 		<div class="wrap">
 
-			<h2><?php _e( 'rtMedia Migration', 'buddypress-media' ); ?></h2>
+			<h2><?php esc_html_e( 'rtMedia Migration', 'buddypress-media' ); ?></h2>
 
-			<h3><?php _e( 'It will migrate following things', 'buddypress-media' ); ?> </h3>
+			<h3><?php esc_html_e( 'It will migrate following things', 'buddypress-media' ); ?> </h3>
 			User Albums : <?php echo $_SESSION['migration_user_album']; ?><br/>
 			<?php if ( isset( $_SESSION['migration_group_album'] ) ){ ?>
 				Groups Albums : <?php echo $_SESSION['migration_group_album']; ?><br/>
@@ -450,7 +450,7 @@ class RTMediaMigration {
 								}
 							},
 							error: function () {
-								alert( "<?php _e( 'Error During Migration, Please Refresh Page then try again', 'buddypress-media' ); ?>" );
+								alert( "<?php esc_html_e( 'Error During Migration, Please Refresh Page then try again', 'buddypress-media' ); ?>" );
 								jQuery( "#submit" ).removeAttr( 'disabled' );
 							}
 						} );

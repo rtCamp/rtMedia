@@ -854,7 +854,7 @@ class RTMedia {
 	function create_table_error_notice() {
 		global $rtmedia_error;
 		$rtmedia_error = true;
-		echo "<div class='error'><p><strong>rtMedia</strong>" . __( ": Can't Create Database table. Please check create table permission.", 'buddypress-media' ) . "</p></div>";
+		echo "<div class='error'><p><strong>rtMedia</strong>" . esc_html__( ": Can't Create Database table. Please check create table permission.", 'buddypress-media' ) . "</p></div>";
 	}
 
 	function enqueue_scripts_styles() {

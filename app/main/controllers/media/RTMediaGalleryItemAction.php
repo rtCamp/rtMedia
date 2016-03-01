@@ -57,11 +57,11 @@ class RTMediaGalleryItemAction {
 				        || ( isset( $rtmedia_media ) && isset( $rtmedia_media->media_author ) && $rtmedia_media->media_author == get_current_user_id() ) ) {
 					?>
 					<div class='rtmedia-gallery-item-actions'>
-						<a href="<?php rtmedia_permalink(); ?>edit" class='no-popup' target='_blank' title='<?php _e( 'Edit this media', 'buddypress-media' ); ?>'>
-							<i class='dashicons dashicons-edit rtmicon'></i><?php _e( 'Edit', 'buddypress-media' ); ?>
+						<a href="<?php rtmedia_permalink(); ?>edit" class='no-popup' target='_blank' title='<?php esc_html_e( 'Edit this media', 'buddypress-media' ); ?>'>
+							<i class='dashicons dashicons-edit rtmicon'></i><?php esc_html_e( 'Edit', 'buddypress-media' ); ?>
 						</a>
-						<a href="#" class="no-popup rtm-delete-media" title='<?php _e( 'Delete this media', 'buddypress-media' ); ?>'>
-							<i class='dashicons dashicons-trash rtmicon'></i><?php _e( 'Delete', 'buddypress-media' ); ?>
+						<a href="#" class="no-popup rtm-delete-media" title='<?php esc_html_e( 'Delete this media', 'buddypress-media' ); ?>'>
+							<i class='dashicons dashicons-trash rtmicon'></i><?php esc_html_e( 'Delete', 'buddypress-media' ); ?>
 						</a>
 					</div>
 				<?php

@@ -79,7 +79,7 @@
 								<div class="rtmedia-actions-before-comments clearfix">
 									<?php do_action( 'rtmedia_actions_before_comments' ); ?>
 									<?php if ( is_user_logged_in() ) { ?>
-										<span><a href='#' class='rtmedia-comment-link'><?php _e( 'Comment', 'buddypress-media' ); ?></a></span>
+										<span><a href='#' class='rtmedia-comment-link'><?php esc_html_e( 'Comment', 'buddypress-media' ); ?></a></span>
 									<?php } ?>
 								</div>
 								<div class="rtm-like-comments-info">
@@ -119,7 +119,7 @@
 							<div class="rtmedia-actions-before-comments clearfix">
 								<?php do_action( 'rtmedia_actions_before_comments' ); ?>
 								<?php if ( is_user_logged_in() ) { ?>
-									<span><a href='#' class='rtmedia-comment-link'><?php _e( 'Comment', 'buddypress-media' ); ?></a></span>
+									<span><a href='#' class='rtmedia-comment-link'><?php esc_html_e( 'Comment', 'buddypress-media' ); ?></a></span>
 								<?php } ?>
 							</div>
 

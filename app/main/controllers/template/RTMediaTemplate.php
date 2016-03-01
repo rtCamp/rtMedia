@@ -94,7 +94,7 @@ class RTMediaTemplate {
                     
                     echo "</div>";
                 } else {
-                    echo __( 'Invalid attribute passed for rtmedia_gallery shortcode.', 'buddypress-media' );
+                    echo esc_html__( 'Invalid attribute passed for rtmedia_gallery shortcode.', 'buddypress-media' );
 
                     return false;
                 }
@@ -146,7 +146,7 @@ class RTMediaTemplate {
                             echo RTMediaUploadShortcode::pre_render( $shortcode_attr[ 'attr' ] );
                         }
                     } else {
-                        echo __( 'Invalid attribute passed for rtmedia_gallery shortcode.', 'buddypress-media' );
+                        echo esc_html__( 'Invalid attribute passed for rtmedia_gallery shortcode.', 'buddypress-media' );
 
                         return false;
                     }
@@ -326,7 +326,7 @@ class RTMediaTemplate {
                 add_action( "rtmedia_before_template_load", array( &$this, "media_update_success_error" ) );
             }
         } else {
-            _e( 'Ooops !!! Invalid access. No nonce was found !!', 'buddypress-media' );
+            esc_html_e( 'Ooops !!! Invalid access. No nonce was found !!', 'buddypress-media' );
         }
         
         remove_filter( 'intermediate_image_sizes_advanced', array( $this, 'filter_image_sizes_details' ) );
@@ -400,7 +400,7 @@ class RTMediaTemplate {
             wp_safe_redirect( esc_url_raw( get_rtmedia_permalink( $rtmedia_query->media_query[ 'album_id' ] ) . 'edit/' ) );
             die();
         } else {
-            _e( 'Ooops !!! Invalid access. No nonce was found !!', 'buddypress-media' );
+            esc_html_e( 'Ooops !!! Invalid access. No nonce was found !!', 'buddypress-media' );
         }
     }
 
@@ -489,7 +489,7 @@ class RTMediaTemplate {
             wp_safe_redirect( esc_url_raw( $redirect_url ) );
             die();
         } else {
-            _e( 'Ooops !!! Invalid access. No nonce was found !!', 'buddypress-media' );
+            esc_html_e( 'Ooops !!! Invalid access. No nonce was found !!', 'buddypress-media' );
         }
     }
 
@@ -617,7 +617,7 @@ class RTMediaTemplate {
                     exit;
                 }
             } else {
-                _e( 'Ooops !!! Invalid access. No nonce was found !!', 'buddypress-media' );
+                esc_html_e( 'Ooops !!! Invalid access. No nonce was found !!', 'buddypress-media' );
             }
         }
     }

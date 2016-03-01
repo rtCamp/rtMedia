@@ -125,26 +125,26 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 			<div>
 				<form name="rtmedia_service_select_form" method="post">
 					<p>
-						<label class="bp-media-label" for="select_support"><?php _e( 'Service', 'buddypress-media' ); ?>:</label>
+						<label class="bp-media-label" for="select_support"><?php esc_html_e( 'Service', 'buddypress-media' ); ?>:</label>
 						<select name="rtmedia_service_select">
 							<option
 								value="premium_support" <?php
 								if ( 'premium_support' == $_POST[ 'form' ] ) {
 									echo 'selected';
 								}
-								?>><?php _e( 'Premium Support', 'buddypress-media' ); ?></option>
+								?>><?php esc_html_e( 'Premium Support', 'buddypress-media' ); ?></option>
 							<option
 								value="bug_report" <?php
 								if ( 'bug_report' == $_POST[ 'form' ] ) {
 									echo 'selected';
 								}
-								?>><?php _e( 'Bug Report', 'buddypress-media' ); ?></option>
+								?>><?php esc_html_e( 'Bug Report', 'buddypress-media' ); ?></option>
 							<option
 								value="new_feature" <?php
 								if ( 'new_feature' == $_POST[ 'form' ] ) {
 									echo 'selected';
 								}
-								?>><?php _e( 'New Feature', 'buddypress-media' ); ?></option>
+								?>><?php esc_html_e( 'New Feature', 'buddypress-media' ); ?></option>
 						</select>
 						<input name="support_submit" value="<?php esc_attr_e( 'Submit', 'buddypress-media' ); ?>" type="submit" class="button"/>
 					</p>
@@ -302,7 +302,7 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 			$this->debug_info();
 			?>
 			<div id="debug-info" class="rtm-option-wrapper">
-				<h3 class="rtm-option-title"><?php _e( 'Debug Info', 'buddypress-media' ); ?></h3>
+				<h3 class="rtm-option-title"><?php esc_html_e( 'Debug Info', 'buddypress-media' ); ?></h3>
 				<table class="form-table rtm-debug-info">
 					<tbody>
 						<?php
@@ -412,39 +412,39 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 					<div id="support-form" class="bp-media-form rtm-support-form rtm-option-wrapper">
 
 						<div class="rtm-form-filed clearfix">
-							<label class="bp-media-label" for="name"><?php _e( 'Name', 'buddypress-media' ); ?></label>
+							<label class="bp-media-label" for="name"><?php esc_html_e( 'Name', 'buddypress-media' ); ?></label>
 							<input class="bp-media-input" id="name" type="text" name="name" value="" required />
 							<span class="rtm-tooltip">
 								<i class="dashicons dashicons-info rtmicon"></i>
 								<span class="rtm-tip">
-									<?php _e( 'Use actual user name which used during purchased.', 'buddypress-media' ); ?>
+									<?php esc_html_e( 'Use actual user name which used during purchased.', 'buddypress-media' ); ?>
 								</span>
 							</span>
 						</div>
 
 						<div class="rtm-form-filed clearfix">
-							<label class="bp-media-label" for="email"><?php _e( 'Email', 'buddypress-media' ); ?></label>
+							<label class="bp-media-label" for="email"><?php esc_html_e( 'Email', 'buddypress-media' ); ?></label>
 							<input id="email" class="bp-media-input" type="text" name="email" value="" required />
 							<span class="rtm-tooltip">
 								<i class="dashicons dashicons-info rtmicon"></i>
 								<span class="rtm-tip">
-									<?php _e( 'Use email id which used during purchased', 'buddypress-media' ); ?>
+									<?php esc_html_e( 'Use email id which used during purchased', 'buddypress-media' ); ?>
 								</span>
 							</span>
 						</div>
 
 						<div class="rtm-form-filed clearfix">
-							<label class="bp-media-label" for="website"><?php _e( 'Website', 'buddypress-media' ); ?></label>
+							<label class="bp-media-label" for="website"><?php esc_html_e( 'Website', 'buddypress-media' ); ?></label>
 							<input id="website" class="bp-media-input" type="text" name="website" value="<?php echo ( isset( $_REQUEST[ 'website' ] ) ) ? esc_attr( stripslashes( trim( $_REQUEST[ 'website' ] ) ) ) : get_bloginfo( 'url' ); ?>" required />
 						</div>
 
 						<div class="rtm-form-filed clearfix">
-							<label class="bp-media-label" for="subject"><?php _e( 'Subject', 'buddypress-media' ); ?></label>
+							<label class="bp-media-label" for="subject"><?php esc_html_e( 'Subject', 'buddypress-media' ); ?></label>
 							<input id="subject" class="bp-media-input" type="text" name="subject" value="<?php echo ( isset( $_REQUEST[ 'subject' ] ) ) ? esc_attr( stripslashes( trim( $_REQUEST[ 'subject' ] ) ) ) : ''; ?>" required />
 						</div>
 
 						<div class="rtm-form-filed clearfix">
-							<label class="bp-media-label" for="details"><?php _e( 'Details', 'buddypress-media' ); ?></label>
+							<label class="bp-media-label" for="details"><?php esc_html_e( 'Details', 'buddypress-media' ); ?></label>
 							<textarea id="details" class="bp-media-textarea" name="details" required><?php echo ( isset( $_REQUEST[ 'details' ] ) ) ? esc_textarea( stripslashes( trim( $_REQUEST[ 'details' ] ) ) ) : ''; ?></textarea>
 
 							<input type="hidden" name="request_type" value="<?php echo $form; ?>" />
@@ -574,17 +574,17 @@ if ( ! class_exists( 'RTMediaSupport' ) ) {
 			if ( wp_mail( $support_email, '[rtmedia] ' . $mail_type . ' from ' . str_replace( array( 'http://', 'https://' ), '', $form_data[ 'website' ] ), stripslashes( $message ), $headers ) ) {
 				echo '<div class="rtmedia-success" style="margin:10px 0;">';
 				if ( 'new_feature' == $form_data[ 'request_type' ] ) {
-					echo '<p>' . __( 'Thank you for your Feedback/Suggestion.', 'buddypress-media' ) . '</p>';
+					echo '<p>' . esc_html__( 'Thank you for your Feedback/Suggestion.', 'buddypress-media' ) . '</p>';
 				} else {
-					echo '<p>' . __( 'Thank you for posting your support request.', 'buddypress-media' ) . '</p>';
-					echo '<p>' . __( 'We will get back to you shortly.', 'buddypress-media' ) . '</p>';
+					echo '<p>' . esc_html__( 'Thank you for posting your support request.', 'buddypress-media' ) . '</p>';
+					echo '<p>' . esc_html__( 'We will get back to you shortly.', 'buddypress-media' ) . '</p>';
 				}
 				echo '</div>';
 			} else {
 				echo '<div class="rtmedia-error">';
-				echo '<p>' . __( 'Your server failed to send an email.', 'buddypress-media' ) . '</p>';
-				echo '<p>' . __( 'Kindly contact your server support to fix this.', 'buddypress-media' ) . '</p>';
-				echo '<p>' . __( 'You can alternatively create a support request <a href="https://rtcamp.com/premium-support/" target="_blank">here</a>', 'buddypress-media' ) . '</p>';
+				echo '<p>' . esc_html__( 'Your server failed to send an email.', 'buddypress-media' ) . '</p>';
+				echo '<p>' . esc_html__( 'Kindly contact your server support to fix this.', 'buddypress-media' ) . '</p>';
+				echo '<p>' . esc_attr__( 'You can alternatively create a support request <a href="https://rtcamp.com/premium-support/" target="_blank">here</a>', 'buddypress-media' ) . '</p>';
 				echo '</div>';
 			}
 			die();

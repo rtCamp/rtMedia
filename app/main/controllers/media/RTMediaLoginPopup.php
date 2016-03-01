@@ -35,7 +35,7 @@ class RTMediaLoginPopup {
     
     function rtmedia_add_upload_album_button_popup() {
         if ( ! is_user_logged_in() ) {
-            echo '<span><a href="#rtmedia-login-register-modal" class="primary rtmedia-upload-media-link rtmedia-modal-link" id="rtmedia-login-register-modal" title="' . __( 'Upload Media', 'buddypress-media' ) . '"><i class="dashicons dashicons-upload rtmicon"></i>' . __( 'Upload', 'buddypress-media' ) . '</a></span>';
+            echo '<span><a href="#rtmedia-login-register-modal" class="primary rtmedia-upload-media-link rtmedia-modal-link" id="rtmedia-login-register-modal" title="' . esc_attr__( 'Upload Media', 'buddypress-media' ) . '"><i class="dashicons dashicons-upload rtmicon"></i>' . esc_html__( 'Upload', 'buddypress-media' ) . '</a></span>';
         }
     }
     
@@ -44,12 +44,12 @@ class RTMediaLoginPopup {
             ?>
             <div class="rtmedia-popup mfp-hide rtm-modal" id="rtmedia-login-register-modal">
                 <div id="rtm-modal-container">
-                    <h2 class="rtm-modal-title"><?php _e( 'Please login', 'buddypress-media' ); ?></h2>
+                    <h2 class="rtm-modal-title"><?php esc_html_e( 'Please login', 'buddypress-media' ); ?></h2>
 
-                    <p><?php _e( "You need to be logged in to upload Media or to create Album.", 'buddypress-media' ); ?></p>
+                    <p><?php esc_html_e( "You need to be logged in to upload Media or to create Album.", 'buddypress-media' ); ?></p>
 
                     <p>
-                        <?php echo __( 'Click', 'buddypress-media' ) . ' <a href="' . wp_login_url( $_SERVER['REQUEST_URI'] ) . '" title="' . __( 'Login', 'buddypress-media' ) . '">' . __( 'HERE', 'buddypress-media' ) . '</a>' . __( ' to login.', 'buddypress-media' ); ?>
+                        <?php echo esc_html__( 'Click', 'buddypress-media' ) . ' <a href="' . wp_login_url( $_SERVER['REQUEST_URI'] ) . '" title="' . esc_attr__( 'Login', 'buddypress-media' ) . '">' . esc_html__( 'HERE', 'buddypress-media' ) . '</a>' . esc_html__( ' to login.', 'buddypress-media' ); ?>
                     </p>
                 </div>
             </div>

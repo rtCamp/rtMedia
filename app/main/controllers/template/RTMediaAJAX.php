@@ -83,7 +83,7 @@ class RTMediaAJAX {
 				$return['album'] = apply_filters( 'rtmedia_create_album_response', $rtmedia_id );
 				echo json_encode( $return );
 			} else {
-				echo false;
+				echo esc_attr(false);
 			}
 		} else {
 			$return['error'] = __( 'Data mismatch, Please insert data properly.', 'buddypress-media' );
