@@ -30,7 +30,7 @@ class RTMediaUploadView {
 				'nonce'  => wp_create_nonce( 'rtmedia_upload_nonce' ),
 			);
 
-			return json_encode( $token );
+			return wp_json_encode( $token );
 		}
 	}
 
@@ -45,7 +45,7 @@ class RTMediaUploadView {
 		$album = '';
 		if ( apply_filters( 'rtmedia_render_select_album_upload', true ) ) {
 			if ( $rtmedia_query && isset( $rtmedia_query->media_query ) && isset( $rtmedia_query->media_query['album_id'] ) && is_rtmedia_album( $rtmedia_query->media_query['album_id'] ) ) {
-				$album = '<input class="rtmedia-current-album" type="hidden" name="rtmedia-current-album" value="' . $rtmedia_query->media_query['album_id'] . '" />';
+				$album = '<input class="rtmedia-current-album" type="hidden" name="rtmedia-current-album" value="' . esc_attr( $rtmedia_query->media_query['album_id'] ) . '" />';
 			} elseif ( is_rtmedia_album_enable() && $rtmedia_query && is_rtmedia_gallery() ) {
 
 				if ( isset( $rtmedia_query->query['context'] ) && 'profile' === $rtmedia_query->query['context'] ) {

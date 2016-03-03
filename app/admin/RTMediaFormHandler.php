@@ -35,9 +35,7 @@ class RTMediaFormHandler {
 		}
 
 		$chkObj = new rtForm();
-
-		//escaping done in inner function helper/rtForm.php
-		echo $chkObj->get_select( $args ); // @codingStandardsIgnoreLine
+		$chkObj->display_select( $args );
 	}
 
 	/**
@@ -74,8 +72,7 @@ class RTMediaFormHandler {
 		$chkObj = new rtForm();
 
 		if ( $echo ) {
-			//escaping done in inner function helper/rtForm.php
-			echo $chkObj->get_textarea( $args ); // @codingStandardsIgnoreLine
+			$chkObj->display_textarea( $args );
 		} else {
 			return $chkObj->get_textarea( $args ); // @codingStandardsIgnoreLine
 		}
@@ -116,8 +113,7 @@ class RTMediaFormHandler {
 		$chkObj = new rtForm();
 
 		if ( $echo ) {
-			//escaping done in inner function helper/rtForm.php
-			echo $chkObj->get_switch( $args ); // @codingStandardsIgnoreLine
+			$chkObj->display_switch( $args );
 		} else {
 			return $chkObj->get_switch( $args );
 		}
@@ -162,9 +158,7 @@ class RTMediaFormHandler {
 		}
 
 		$objRad = new rtForm();
-
-		//escaping done in inner function helper/rtForm.php
-		echo $objRad->get_radio( $args ); // @codingStandardsIgnoreLine
+		$objRad->display_radio( $args );
 	}
 
 	/**
@@ -175,9 +169,7 @@ class RTMediaFormHandler {
 	 */
 	public static function dimensions( $args ) {
 		$dmnObj = new rtDimensions();
-
-		//escaping done in inner function helper/rtForm.php
-		echo $dmnObj->get_dimensions( $args ); // @codingStandardsIgnoreLine
+		$dmnObj->display_dimensions( $args );
 	}
 
 	/**
@@ -212,9 +204,7 @@ class RTMediaFormHandler {
 		$args['value'] = $value;
 
 		$numObj = new rtForm();
-
-		//escaping done in inner function helper/rtForm.php
-		echo $numObj->get_number( $args ); // @codingStandardsIgnoreLine
+		$numObj->display_number( $args );
 	}
 
 	/**
@@ -249,9 +239,7 @@ class RTMediaFormHandler {
 		$args['value'] = $value;
 
 		$numObj = new rtForm();
-
-		//escaping done in inner function helper/rtForm.php
-		echo $numObj->get_textbox( $args ); // @codingStandardsIgnoreLine
+		$numObj->display_textbox( $args );
 	}
 
 	/**
@@ -644,12 +632,53 @@ class RTMediaFormHandler {
 							<td>
 								<span class="rtm-field-wrap">
 									<?php //escaping done into inner function
-									echo $allow_upload_checkbox; // @codingStandardsIgnoreLine  ?></span>
+									// @codingStandardsIgnoreLine
+									echo wp_kses( $allow_upload_checkbox, array(
+										'span' => array(
+											'class' => array(),
+                                            'data-on' => array(),
+                                            'data-off' => array()
+										),
+										'label' => array(
+											'for' => array(),
+											'class' => array()
+										),
+										'input' => array(
+											'type' => array(),
+											'checked' => array(),
+	                                        'data-toggle' => array(),
+	                                        'id' => array(),
+	                                        'name' => array(),
+	                                        'value' => array()
+										)
+									) );
+									?>
+								</span>
 							</td>
 
 							<td>
 								<?php //escaping done into inner function
-								echo $featured_checkbox;// @codingStandardsIgnoreLine ?>
+								// @codingStandardsIgnoreLine
+								echo wp_kses( $featured_checkbox, array(
+									'span' => array(
+										'class' => array(),
+										'data-on' => array(),
+										'data-off' => array()
+									),
+									'label' => array(
+										'for' => array(),
+										'class' => array()
+									),
+									'input' => array(
+										'type' => array(),
+										'checked' => array(),
+										'data-toggle' => array(),
+										'id' => array(),
+										'name' => array(),
+										'value' => array()
+									)
+								) );
+								?>
 							</td>
 
 							<?php do_action( 'rtmedia_type_setting_columns_body', $key, $section ) ?>

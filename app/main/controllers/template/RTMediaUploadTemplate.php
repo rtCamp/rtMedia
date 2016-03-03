@@ -69,7 +69,7 @@ class RTMediaUploadTemplate {
 
 		echo "<script type='text/javascript'>\n"; // CDATA and type='text/javascript' is not needed for HTML 5
 		echo "/* <![CDATA[ */\n";
-		echo 'var bpm_plupload_params = ' . json_encode( $params ) . ";\n";
+		echo 'var bpm_plupload_params = ' . wp_json_encode( $params ) . ";\n";
 		echo "/* ]]> */\n";
 		echo "</script>\n";
 

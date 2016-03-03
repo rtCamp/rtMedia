@@ -59,24 +59,25 @@ class RTMediaCommentNotification extends RTMediaNotification {
 			$media_type     = rtmedia_type( rtmedia_id( $post_id ) );
 
 			if ( 1 === $total_items ) {
-				$text = $comment_author . ' ' . esc_html__( 'commented on your', 'buddypress-media' ) . ' ' . $media_type;
+				$text = $comment_author . ' ' . __( 'commented on your', 'buddypress-media' ) . ' ' . $media_type;
 			} else {
-				$text = $total_items . ' ' . esc_html__( 'new comments on your', 'buddypress-media' ) . ' ' . $media_type;
+				$text = $total_items . ' ' . __( 'new comments on your', 'buddypress-media' ) . ' ' . $media_type;
 			}
 			$link = esc_url( $media_url );
-			if ( 'string' === $format ) {
-				$return = apply_filters( 'rtmedia_before_comment_notification', '<a href="' . esc_url( $link ) . '">' . esc_html( $text ) . '</a>', (int) $total_items );
-			} else {
-				$return = apply_filters( 'rtmedia_before_comment_notification',
-					array(
-						'link' => $link,
-						'text' => $text,
-					),
-					(int) $total_items
-				);
-			}
 
-			return $return;
+			$return = apply_filters( 'rtmedia_before_comment_notification',
+				array(
+					'link' => $link,
+					'text' => $text,
+				),
+				(int) $total_items
+			);
+
+			if ( 'string' === $format ) {
+				return '<a href="' . esc_url( $return['link'] ) . '">' . esc_html( $return['text'] ) . '</a>';
+			} else {
+				return $return;
+			}
 		}
 	}
 

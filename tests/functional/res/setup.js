@@ -22,7 +22,6 @@ module.exports = {
             console.log("creating users for various roles...");
 		         })
 
-        /*
              //test editor
           .url(adduser)
           .waitForElementVisible('input[id="user_login"]', 2500)
@@ -68,12 +67,6 @@ module.exports = {
           .click('#createusersub')
           .pause(200)
         //upload media to medias
-          */
-          .openrtMediaSettings()
-          .pause(1000)
-          .click('a[tabindex="2"]')
-          .pause(1000)
-          
           .goToMedia()
           .getTitle(function(title) {
             console.log(title);
@@ -96,22 +89,20 @@ module.exports = {
           .click('input[name="bp_components[groups]"]')
           .click('#bp-admin-component-submit')
 
-                //creating demo groups
+    //creating demo groups
           .url(urll + '/groups/create/step/group-details/')
           .pause(200)
-          .setValue('input[id="group-name"]','test')
-          .setValue('textarea[id="group-desc"]','creating test group')
-          .click('input[value="Create Group and Continue"]')
-          .pause(1000)
+          .setValue('#group-name','test')
+          .setValue('#group-desc','creating test')
+          .click('#group-creation-create')
+          .pause(200)
           .click('#group-creation-next')
-          .pause(1000)
-          .click('input[id="bbp-create-group-forum"]')
+          .click('#bbp-create-group-forum')
           .click('#group-creation-next')
-          .pause(1000)
+          .pause(200)
           .click('#group-creation-finish')
-          .pause(1000)
+          .pause(200)
           .wplogout()
-
 
    //login for others
           .wplogin(urll,data.TESTAUTHORUSERNAME,data.TESTAUTHORPASSWORD)

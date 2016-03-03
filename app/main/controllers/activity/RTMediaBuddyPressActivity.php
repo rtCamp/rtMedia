@@ -432,7 +432,7 @@ class RTMediaBuddyPressActivity {
 				preg_match( $pattern, $activities[ $index ]->action, $matches );
 
 				// Generating user_link with name
-				$user_link = '<a href="' . esc_url( $activities[ $index ]->primary_link ) . '">' . $matches[1] . '</a>';
+				$user_link = '<a href="' . esc_url( $activities[ $index ]->primary_link ) . '">' . esc_html( $matches[1] ) . '</a>';
 				// Counting media linked with activity
 				$count = count( $rtmedia_media_type_array[ $activities[ $index ]->id ] );
 				// Getting constant with single label or plural label
@@ -499,7 +499,7 @@ class RTMediaBuddyPressActivity {
 
 				// Create activity on media like
 				$user     = get_userdata( $user_id );
-				$username = '<a href="' . esc_url( get_rtmedia_user_link( $user_id ) ) . '">' . $user->display_name . '</a>';
+				$username = '<a href="' . esc_url( get_rtmedia_user_link( $user_id ) ) . '">' . esc_html( $user->display_name ) . '</a>';
 
 				$media_author = $obj->owner;
 

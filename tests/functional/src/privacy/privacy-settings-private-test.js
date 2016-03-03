@@ -48,7 +48,9 @@ module.exports = {
             .wplogout()
             /* assert for post in  logged-out mode ..
             post should not be availabe on logged-out*/
-            //browser.expect.element('.activity-content').text.to.not.contain('test privacy for private');
-            .end();
+            .getText("#activity-stream.activity-list.item-list > li.activity.activity_update.activity-item > div.activity-content > div.activity-inner p", function(result) {
+                      this.assert.notEqual(result.value, "test privacy for private");
+                })
+          .end();
         }
   };

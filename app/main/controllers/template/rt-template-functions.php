@@ -2383,8 +2383,8 @@ function rtmedia_convert_date( $_date ) {
 	$length   = array( 1, 60, 3600, 86400 );
 	$ago_text = esc_html__( '%s ago ', 'buddypress-media' );
 
-	for ( $i = count( $length ) - 1; ; $i -- ) {
-		if ( ( $i >= 0 ) && ( ( $no = $diff / $length[ $i ] ) <= 1 ) ) {
+	for ( $i = count( $length ) - 1; $i >= 0; $i -- ) {
+		if ( ( ( $no = $diff / $length[ $i ] ) <= 1 ) ) {
 			break;
 		}
 	}

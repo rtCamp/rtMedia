@@ -97,7 +97,7 @@ class RTMediaMigration {
 		} else {
 			$bp_prefix = '';
 		}
-		$sql_album_usercount = $wpdb->prepare( "select count(*) FROM $wpdb->usermeta where meta_key ='bp-media-default-album' " );
+		$sql_album_usercount = "select count(*) FROM $wpdb->usermeta where meta_key ='bp-media-default-album' ";
 
 		$_SESSION['migration_user_album'] = $wpdb->get_var( $sql_album_usercount ); // @codingStandardsIgnoreLine
 		$count                            = intval( $_SESSION['migration_user_album'] );
@@ -256,7 +256,7 @@ class RTMediaMigration {
 		rtmedia_update_site_option( 'rtMigration-pending-count', $pending );
 		$pending_time = $this->formatSeconds( $pending );
 
-		echo json_encode( array( 'status' => true, 'done' => $done, 'total' => $total, 'pending' => $pending_time ) );
+		echo wp_json_encode( array( 'status' => true, 'done' => $done, 'total' => $total, 'pending' => $pending_time ) );
 		die();
 	}
 
@@ -563,7 +563,7 @@ class RTMediaMigration {
 			global $wp_rewrite;
 			//Call flush_rules() as a method of the $wp_rewrite object
 			$wp_rewrite->flush_rules( true );
-			//            echo json_encode(array("status" => false, "done" => $done, "total" => $this->get_total_count()));
+			//            echo wp_json_encode(array("status" => false, "done" => $done, "total" => $this->get_total_count()));
 			//            die();
 		}
 		$this->return_migration();

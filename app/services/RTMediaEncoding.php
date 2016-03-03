@@ -183,7 +183,7 @@ class RTMediaEncoding {
 			$subject = esc_html__( 'rtMedia Encoding: Usage quota over.', 'buddypress-media' );
 			$message = '<p>' . esc_html__( 'Your usage quota is over. Upgrade your plan' , 'buddypress-media' ) . '</p><p>' .
 			           esc_html__( 'Following are the details:', 'buddypress-media' ) . '</p><p><strong>' . esc_html__( 'Used:' , 'buddypress-media' ) .
-			           '</strong> %s</p><p><strong>' . esc_html__( 'Remaining' . 'buddypress-media' ) . '</strong>: %s</p><p><strong>' . esc_html__( 'Total:', 'buddypress-media' ) . '</strong> %s</p>';
+			           '</strong> %s</p><p><strong>' . esc_html__( 'Remaining' , 'buddypress-media' ) . '</strong>: %s</p><p><strong>' . esc_html__( 'Total:', 'buddypress-media' ) . '</strong> %s</p>';
 			$users   = get_users( array( 'role' => 'administrator' ) );
 			if ( $users ) {
 				foreach ( $users as $user ) {
@@ -273,7 +273,7 @@ class RTMediaEncoding {
 
 		$usage_details = get_site_option( 'rtmedia-encoding-usage' );
 		if ( isset( $usage_details[ $this->api_key ]->plan->name ) && ( strtolower( $usage_details[ $this->api_key ]->plan->name ) === strtolower( $name ) ) && $usage_details[ $this->api_key ]->sub_status && ! $force ) {
-			$form = '<button data-plan="' . $name . '" data-price="' . $price . '" type="submit" class="button bpm-unsubscribe">' . esc_html__( 'Unsubscribe', 'buddypress-media' ) . '</button>';
+			$form = '<button data-plan="' . esc_attr( $name ) . '" data-price="' . esc_attr( $price ) . '" type="submit" class="button bpm-unsubscribe">' . esc_html__( 'Unsubscribe', 'buddypress-media' ) . '</button>';
 			$form .= '<div id="bpm-unsubscribe-dialog" title="Unsubscribe">
 						<p>' . esc_html__( 'Just to improve our service we would like to know the reason for you to leave us.', 'buddypress-media' ) . '</p>
 						<p><textarea rows="3" cols="36" id="bpm-unsubscribe-note"></textarea></p>
@@ -625,7 +625,7 @@ class RTMediaEncoding {
 		$email         = get_site_option( 'admin_email' );
 		$usage_details = get_site_option( 'rtmedia-encoding-usage' );
 		if ( isset( $usage_details[ $this->api_key ]->plan->name ) && ( 'free' === strtolower( $usage_details[ $this->api_key ]->plan->name ) ) ) {
-			echo json_encode( array( 'error' => 'Your free subscription is already activated.' ) );
+			echo wp_json_encode( array( 'error' => 'Your free subscription is already activated.' ) );
 		} else {
 			$free_subscription_url = esc_url_raw( add_query_arg( array( 'email' => urlencode( $email ) ), trailingslashit( $this->api_url ) . 'api/free/' ) );
 			if ( $this->api_key ) {
@@ -638,12 +638,12 @@ class RTMediaEncoding {
 			if ( ! is_wp_error( $free_subscribe_page ) && ( ! isset( $free_subscribe_page['headers']['status'] ) || ( isset( $free_subscribe_page['headers']['status'] ) && ( 200 === $free_subscribe_page['headers']['status'] ) ) ) ) {
 				$subscription_info = json_decode( $free_subscribe_page['body'] );
 				if ( isset( $subscription_info->status ) && $subscription_info->status ) {
-					echo json_encode( array( 'apikey' => $subscription_info->apikey ) );
+					echo wp_json_encode( array( 'apikey' => $subscription_info->apikey ) );
 				} else {
-					echo json_encode( array( 'error' => $subscription_info->message ) );
+					echo wp_json_encode( array( 'error' => $subscription_info->message ) );
 				}
 			} else {
-				echo json_encode( array( 'error' => esc_html__( 'Something went wrong please try again.', 'buddypress-media' ) ) );
+				echo wp_json_encode( array( 'error' => esc_html__( 'Something went wrong please try again.', 'buddypress-media' ) ) );
 			}
 		}
 		die();
@@ -665,22 +665,22 @@ class RTMediaEncoding {
 		if ( ! is_wp_error( $unsubscribe_page ) && ( ! isset( $unsubscribe_page['headers']['status'] ) || ( isset( $unsubscribe_page['headers']['status'] ) && ( 200 === $unsubscribe_page['headers']['status'] ) ) ) ) {
 			$subscription_info = json_decode( $unsubscribe_page['body'] );
 			if ( isset( $subscription_info->status ) && $subscription_info->status ) {
-				echo json_encode( array(
+				echo wp_json_encode( array(
 					'updated' => esc_html__( 'Your subscription was cancelled successfully', 'buddypress-media' ),
 					'form'    => $this->encoding_subscription_form( $_GET['plan'], $_GET['price'] ), // @codingStandardsIgnoreLine
 				) );
 			}
 		} else {
-			echo json_encode( array( 'error' => esc_html__( 'Something went wrong please try again.', 'buddypress-media' ) ) );
+			echo wp_json_encode( array( 'error' => esc_html__( 'Something went wrong please try again.', 'buddypress-media' ) ) );
 		}
 		die();
 	}
 
 	public function enter_api_key() {
 		if ( isset( $_GET['apikey'] ) && '' !== $_GET['apikey'] ) {
-			echo json_encode( array( 'apikey' => $_GET['apikey'] ) );
+			echo wp_json_encode( array( 'apikey' => $_GET['apikey'] ) );
 		} else {
-			echo json_encode( array( 'error' => esc_html__( 'Please enter the api key.', 'buddypress-media' ) ) );
+			echo wp_json_encode( array( 'error' => esc_html__( 'Please enter the api key.', 'buddypress-media' ) ) );
 		}
 		die();
 	}
